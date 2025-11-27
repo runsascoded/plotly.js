@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>plotly.js zorder Pan Bug - Before/After Fix</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { font-family: sans-serif; margin: 0; padding: 20px; background: #f5f5f5; }
+    h1 { margin: 0 0 10px 0; font-size: 24px; }
+    .description { margin-bottom: 20px; color: #333; }
+    code { background: #e0e0e0; padding: 2px 6px; border-radius: 3px; }
+    .container { display: flex; gap: 20px; height: calc(100vh - 180px); min-height: 400px; }
+    .panel { flex: 1; display: flex; flex-direction: column; }
+    .panel h2 { margin: 0 0 10px 0; font-size: 18px; }
+    .panel.before h2 { color: #c00; }
+    .panel.after h2 { color: #080; }
+    iframe { flex: 1; border: 2px solid #ccc; border-radius: 4px; background: white; }
+    .panel.before iframe { border-color: #c00; }
+    .panel.after iframe { border-color: #080; }
+    .instructions { margin-top: 20px; padding: 15px; background: white; border-radius: 4px; }
+    .instructions ol { margin: 10px 0 0 0; padding-left: 20px; }
+    .instructions li { margin: 5px 0; }
+  </style>
+</head>
+<body>
+  <h1>plotly.js: <code>zorder</code> Pan Bug</h1>
+  <p class="description">
+    When traces have different <code>zorder</code> values and <code>Plotly.Plots.resize()</code> is called
+    (as react-plotly.js does on mount), the first pan interaction fails — traces freeze while grid lines move.
+  </p>
+
+  <div class="container">
+    <div class="panel before">
+      <h2>Before Fix (v3.3.0 CDN) — BUG</h2>
+      <iframe src="plot.html?src=cdn"></iframe>
+    </div>
+    <div class="panel after">
+      <h2>After Fix — WORKING</h2>
+      <iframe src="plot.html?src=fix"></iframe>
+    </div>
+  </div>
+
+  <div class="instructions">
+    <strong>To reproduce the bug (left panel):</strong>
+    <ol>
+      <li>Drag the left chart to pan</li>
+      <li>Notice: grid lines move, but <strong>traces stay frozen</strong></li>
+      <li>Release and drag again — now it works</li>
+      <li>Compare with the right panel (with fix) — first drag works correctly</li>
+    </ol>
+  </div>
+</body>
+</html>

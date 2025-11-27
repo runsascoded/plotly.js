@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <style>
+    body { font-family: sans-serif; margin: 0; padding: 10px; }
+    #plot { width: 100%; height: calc(100vh - 60px); }
+    .info { font-size: 12px; color: #666; margin-bottom: 10px; }
+  </style>
+</head>
+<body>
+  <div class="info">
+    Plotly.js <span id="version"></span> |
+    Drag to pan. With <code>zorder</code>, first pan fails (traces freeze, only grid moves).
+  </div>
+  <div id="plot"></div>
+
+  <script>
+    // Version injected by query param: ?src=cdn or ?src=fix
+    const params = new URLSearchParams(window.location.search);
+    const src = params.get('src') || 'cdn';
+
+    const script = document.createElement('script');
+    script.src = src === 'fix'
+      ? 'https://cdn.jsdelivr.net/gh/runsascoded/plotly.js@fix-zorder-pan-dist/dist/plotly.min.js'
+      : 'https://cdn.plot.ly/plotly-3.3.0.min.js';
+
+    script.onload = () => {
+      document.getElementById('version').textContent = Plotly.version + (src === 'fix' ? ' (with fix)' : ' (CDN)');
+
+      const n = 50;
+      const x = Array.from({length: n}, (_, i) => i);
+      const y1 = x.map(i => Math.sin(i / 5) * 10 + 20);
+      const y2 = x.map(i => Math.cos(i / 5) * 100 + 500);
+
+      Plotly.newPlot('plot', [
+        { x, y: y1, mode: 'lines', name: 'Primary', line: { color: 'red', width: 2 }, zorder: 10 },
+        { x, y: y2, mode: 'lines', name: 'Secondary', yaxis: 'y2', line: { color: 'blue', width: 2 }, zorder: 1 }
+      ], {
+        xaxis: { range: [0, 30] },
+        yaxis: { fixedrange: true, title: 'Primary' },
+        yaxis2: { overlaying: 'y', side: 'right', fixedrange: true, title: 'Secondary' },
+        dragmode: 'pan',
+        margin: { t: 10, b: 40, l: 50, r: 50 }
+      }, { responsive: true }).then(() => {
+        // Trigger resize to reproduce the bug (as react-plotly.js does on mount)
+        Plotly.Plots.resize('plot');
+      });
+    };
+    document.head.appendChild(script);
+  </script>
+</body>
+</html>
