@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>plotly.js zorder Pan Bug Fix Demo</title>
   <style>
-    body { font-family: -apple-system, sans-serif; max-width: 800px; margin: 40px auto; padding: 20px; }
+    body { font-family: -apple-system, sans-serif; max-width: 800px; margin: 40px auto; padding: 20px; line-height: 1.6; }
     h1 { margin-bottom: 10px; }
     code { background: #f0f0f0; padding: 2px 6px; border-radius: 3px; }
     .links { display: flex; gap: 20px; margin: 30px 0; }
@@ -20,42 +20,50 @@
     .links a.before { background: #fee; color: #c00; border: 2px solid #c00; }
     .links a.after { background: #efe; color: #080; border: 2px solid #080; }
     .links a:hover { opacity: 0.8; }
-    .description { line-height: 1.6; }
-    .pr-link { margin-top: 30px; padding: 15px; background: #f5f5f5; border-radius: 4px; }
+    .source-links { margin-top: 30px; padding: 15px; background: #f5f5f5; border-radius: 4px; }
+    .source-links a { color: #0066cc; }
+    .source-links ul { margin: 10px 0 0 0; padding-left: 20px; }
+    .source-links li { margin: 5px 0; }
   </style>
 </head>
 <body>
   <h1><code>zorder</code> Pan Bug Fix</h1>
-  <p class="description">
-    When traces have different <code>zorder</code> values and <code>Plotly.Plots.resize()</code>
-    is called (as react-plotly.js does on mount), the first pan interaction fails — traces freeze
-    while grid lines move.
+
+  <p>
+    <strong>Bug:</strong> When traces have different <code>zorder</code> values and
+    <code>Plotly.Plots.resize()</code> is called (as react-plotly.js does on mount),
+    the <strong>first</strong> pan interaction fails — traces freeze while grid lines move.
+    The <strong>second</strong> pan (and all subsequent pans) work correctly.
   </p>
 
   <div class="links">
     <a href="before/" class="before">
       Before Fix<br>
-      <small>(Bug present)</small>
+      <small>(First pan broken, second works)</small>
     </a>
     <a href="after/" class="after">
       After Fix<br>
-      <small>(Working)</small>
+      <small>(All pans work)</small>
     </a>
   </div>
 
-  <h2>To Reproduce</h2>
+  <h2>To Reproduce the Bug</h2>
   <ol>
-    <li>Open the <strong>Before Fix</strong> demo</li>
+    <li>Open the <a href="before/"><strong>Before Fix</strong></a> demo</li>
     <li>Drag the chart to pan horizontally</li>
-    <li>Notice: grid lines move but traces stay frozen</li>
-    <li>Release and drag again — now it works</li>
-    <li>Compare with <strong>After Fix</strong> — first drag works correctly</li>
+    <li><strong>First drag:</strong> grid lines move but traces stay frozen</li>
+    <li>Release the mouse and drag again</li>
+    <li><strong>Second drag:</strong> now traces move correctly</li>
+    <li>Compare with <a href="after/"><strong>After Fix</strong></a> — first drag works correctly</li>
   </ol>
 
-  <div class="pr-link">
-    <strong>Pull Request:</strong>
-    <a href="https://github.com/plotly/plotly.js/pull/XXXX">plotly/plotly.js#XXXX</a>
-    (update this link after PR is created)
+  <div class="source-links">
+    <strong>Source Code:</strong>
+    <ul>
+      <li><a href="https://github.com/runsascoded/plotly.js/tree/fix-zorder-pan">Fix branch</a> (PR source)</li>
+      <li><a href="https://github.com/runsascoded/plotly.js/tree/fix-zorder-pan-dist">Demo branch</a> (this site)</li>
+      <li><a href="https://github.com/runsascoded/plotly.js/tree/fix-zorder-pan-dist/demo-src">React demo app source</a></li>
+    </ul>
   </div>
 </body>
 </html>

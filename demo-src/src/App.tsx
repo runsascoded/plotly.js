@@ -154,11 +154,11 @@ export function App() {
 
       <p style={{ marginBottom: 20 }}>
         {isFixed ? (
-          <>This version includes the fix. <strong>Pan should work correctly on first drag.</strong></>
+          <>This version includes the fix. <strong>Pan works correctly on all drags, including the first.</strong></>
         ) : (
           <>
-            <strong>Bug:</strong> When traces have <code>zorder</code> set, the first pan/drag fails —
-            traces freeze while grid lines move. Release and drag again to see it work.
+            <strong>Bug:</strong> When traces have <code>zorder</code> set, the <strong>first</strong> pan fails —
+            traces freeze while grid lines move. Release and drag again: the <strong>second</strong> pan works correctly.
           </>
         )}
       </p>
@@ -180,10 +180,16 @@ export function App() {
         <strong>Instructions:</strong>
         <ol style={{ marginTop: 5 }}>
           <li>Drag the chart to pan horizontally</li>
-          {!isFixed && <li>Notice: grid lines move but <strong>traces stay frozen</strong></li>}
-          {!isFixed && <li>Release mouse and drag again — now it works</li>}
-          {isFixed && <li>Pan works correctly on first drag!</li>}
+          {!isFixed && <li><strong>First drag:</strong> grid lines move but traces stay frozen</li>}
+          {!isFixed && <li>Release mouse and drag again</li>}
+          {!isFixed && <li><strong>Second drag:</strong> traces move correctly</li>}
+          {isFixed && <li>All drags work correctly, including the first!</li>}
         </ol>
+        <p style={{ marginTop: 15 }}>
+          <a href="https://github.com/runsascoded/plotly.js/tree/fix-zorder-pan-dist/demo-src" style={{ color: '#0066cc' }}>
+            View source on GitHub
+          </a>
+        </p>
       </div>
     </div>
   )
