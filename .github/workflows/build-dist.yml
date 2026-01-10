@@ -12,13 +12,52 @@ jobs:
   build-dist:
     runs-on: ubuntu-latest
     steps:
-      - uses: runsascoded/gh-pnpm-dist@main
+      - uses: actions/checkout@v4
         with:
-          source_ref: ${{ inputs.source_ref || github.ref_name }}
-          build_command: 'npm run bundle'
-          node_version: '20'
-          pnpm_version: '10'
-          dist_branch: '${{ inputs.source_ref || github.ref_name }}-dist'
-          build_dir: 'dist'
-          extra_files: 'lib'
-          pkg_kvs: '{"main":"./lib/index.js","module":"./dist/plotly.min.js"}'
+          ref: ${{ inputs.source_ref || github.ref_name }}
+          fetch-depth: 0
+
+      - name: Get source SHA
+        id: info
+        run: echo "source_sha=$(git rev-parse HEAD)" >> $GITHUB_OUTPUT
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build bundle
+        run: npm run bundle
+
+      - name: Create dist branch
+        env:
+          SOURCE_REF: ${{ inputs.source_ref || github.ref_name }}
+          SOURCE_SHA: ${{ steps.info.outputs.source_sha }}
+        run: |
+          DIST_BRANCH="${SOURCE_REF}-dist"
+
+          # Configure git
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          # Create orphan dist branch
+          git checkout --orphan "$DIST_BRANCH"
+          git rm -rf .
+
+          # Restore only dist files and essential package files
+          git checkout "$SOURCE_SHA" -- dist/ lib/ package.json package-lock.json
+
+          # Commit
+          git add -A
+          git commit -m "dist: build from ${SOURCE_REF} (${SOURCE_SHA:0:7})"
+
+          # Push
+          git push origin "$DIST_BRANCH" --force
+
+          echo "✅ Pushed $DIST_BRANCH"
+          echo ""
+          echo "Install with:"
+          echo "  pnpm add github:${{ github.repository }}#$DIST_BRANCH"
