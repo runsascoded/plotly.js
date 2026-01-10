@@ -1,0 +1,24 @@
+name: Build dist branch
+
+on:
+  workflow_dispatch:
+    inputs:
+      source_ref:
+        description: 'Source branch to build from'
+        required: false
+        default: ''
+
+jobs:
+  build-dist:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: runsascoded/gh-pnpm-dist@main
+        with:
+          source_ref: ${{ inputs.source_ref || github.ref_name }}
+          build_command: 'npm run bundle'
+          node_version: '20'
+          pnpm_version: '10'
+          dist_branch: '${{ inputs.source_ref || github.ref_name }}-dist'
+          build_dir: 'dist'
+          extra_files: 'lib'
+          pkg_kvs: '{"main":"./lib/index.js","module":"./dist/plotly.min.js"}'
