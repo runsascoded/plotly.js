@@ -1268,8 +1268,10 @@ plots.supplyTraceDefaults = function(traceIn, traceOut, colorIndex, layout, trac
                 _module.attributes.showlegend ? _module.attributes : plots.attributes,
                 'showlegend'
             );
-
-            coerce('legend');
+            Lib.coerce(traceIn, traceOut,
+                _module.attributes.legend ? _module.attributes : plots.attributes,
+                'legend'
+            );
             coerce('legendwidth');
             coerce('legendgroup');
             coerce('legendgrouptitle.text');
@@ -1464,7 +1466,7 @@ plots.supplyLayoutGlobalDefaults = function(layoutIn, layoutOut, formatObj) {
 function getComputedSize(attr) {
     return (
         (typeof attr === 'string') &&
-        (attr.substr(attr.length - 2) === 'px') &&
+        (attr.slice(-2) === 'px') &&
         parseFloat(attr)
     );
 }
@@ -2113,7 +2115,7 @@ plots.graphJson = function(gd, dataonly, mode, output, useDefaults, includeConfi
                 // look for src/data matches and remove the appropriate one
                 if(mode === 'keepdata') {
                     // keepdata: remove all ...src tags
-                    if(v.substr(v.length - 3) === 'src') {
+                    if(v.slice(-3) === 'src') {
                         return;
                     }
                 } else if(mode === 'keepstream') {
