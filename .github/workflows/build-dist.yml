@@ -43,12 +43,18 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
+          # Save freshly built dist files (npm run bundle just ran)
+          cp -r dist /tmp/dist-built
+          cp -r lib /tmp/lib-built
+
           # Create orphan dist branch
           git checkout --orphan "$DIST_BRANCH"
           git rm -rf .
 
-          # Restore only dist files and essential package files
-          git checkout "$SOURCE_SHA" -- dist/ lib/ package.json package-lock.json
+          # Restore freshly built files and package files from source
+          mv /tmp/dist-built dist
+          mv /tmp/lib-built lib
+          git checkout "$SOURCE_SHA" -- package.json package-lock.json
 
           # Commit
           git add -A
