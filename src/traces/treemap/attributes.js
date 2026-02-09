@@ -58,6 +58,16 @@ module.exports = {
             description: ['Determines if the positions obtained from solver are flipped on each axis.'].join(' ')
         },
 
+        transpose: {
+            valType: 'boolean',
+            dflt: false,
+            editType: 'plot',
+            description: [
+                'When true, swaps the X and Y axes of the layout,',
+                'producing a transposed (row-major) tiling instead of the default column-major.'
+            ].join(' ')
+        },
+
         pad: {
             valType: 'number',
             min: 0,

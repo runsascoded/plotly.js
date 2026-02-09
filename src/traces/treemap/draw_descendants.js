@@ -48,6 +48,7 @@ module.exports = function drawDescendants(gd, cd, entry, slices, opts) {
         squarifyratio: trace.tiling.squarifyratio,
         flipX: trace.tiling.flip.indexOf('x') > -1,
         flipY: trace.tiling.flip.indexOf('y') > -1,
+        transpose: trace.tiling.transpose,
         pad: {
             inner: trace.tiling.pad,
             top: trace.marker.pad.t,
