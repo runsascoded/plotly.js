@@ -1,6 +1,8 @@
 name: Build dist branch
 
 on:
+  push:
+    branches: [main]
   workflow_dispatch:
     inputs:
       source_ref:
@@ -42,7 +44,12 @@ jobs:
           SHORT_SHA: ${{ steps.info.outputs.short_sha }}
           SOURCE_VERSION: ${{ steps.info.outputs.version }}
         run: |
-          DIST_BRANCH="${SOURCE_REF}-dist"
+          # `main` pushes to `dist` (matching pds convention); other branches get namespaced
+          if [ "$SOURCE_REF" = "main" ]; then
+            DIST_BRANCH="dist"
+          else
+            DIST_BRANCH="${SOURCE_REF}-dist"
+          fi
           DIST_VERSION="${SOURCE_VERSION}-dist.${SHORT_SHA}"
 
           # Configure git
@@ -63,7 +70,8 @@ jobs:
             git rm -rf .
           fi
 
-          # Clean and restore dist files
+          # Clean working tree and restore only dist files
+          git clean -fdx
           rm -rf dist/
           cp -r /tmp/dist-build/dist/ ./
           cp /tmp/dist-build/package.json ./
@@ -73,8 +81,8 @@ jobs:
           jq --arg v "$DIST_VERSION" '.version = $v' package.json > package.json.tmp
           mv package.json.tmp package.json
 
-          # Commit
-          git add -A
+          # Commit only the intended files
+          git add dist/ package.json package-lock.json
           git commit -m "plotly.js@${DIST_VERSION}
 
           Built from ${SOURCE_SHA}"
