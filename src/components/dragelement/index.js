@@ -110,6 +110,10 @@ dragElement.init = function init(options) {
     var clampFn = options.clampFn || _clampFn;
 
     function onStart(e) {
+        // On touch-only devices, ignore synthetic mouse events the browser
+        // generates after touch — they would trigger a duplicate plotly_click.
+        if(!hasHover && e.type === 'mousedown') return;
+
         // make dragging and dragged into properties of gd
         // so that others can look at and modify them
         gd._dragged = false;
@@ -156,9 +160,21 @@ dragElement.init = function init(options) {
             e.preventDefault();
             document.addEventListener('mousemove', onMove);
             document.addEventListener('touchmove', onMove, {passive: false});
+        } else if(!hasHover) {
+            // Track touch movement for tap-vs-scroll discrimination even
+            // when dragging is disabled. Don't preventDefault (allow scrolling).
+            document.addEventListener('touchmove', onScrollTrack, {passive: true});
         }
 
         return;
+    }
+
+    function onScrollTrack(e) {
+        var offset = pointerOffset(e);
+        var minDrag = options.minDrag || constants.MINDRAG;
+        if(Math.abs(offset[0] - startX) > minDrag || Math.abs(offset[1] - startY) > minDrag) {
+            gd._dragged = true;
+        }
     }
 
     function onMove(e) {
@@ -194,6 +210,8 @@ dragElement.init = function init(options) {
             e.preventDefault();
             document.removeEventListener('mousemove', onMove);
             document.removeEventListener('touchmove', onMove);
+        } else if(!hasHover) {
+            document.removeEventListener('touchmove', onScrollTrack);
         }
 
         document.removeEventListener('mouseup', onDone);
@@ -251,7 +269,10 @@ dragElement.init = function init(options) {
             // coverSlip changing the element, the natural system might not generate one,
             // so we need to make our own. But right clicks don't normally generate
             // click events, only contextmenu events, which happen on mousedown.
-            if(!rightClick) {
+            // On touch devices (!hasHover), there's no coverSlip (document is the
+            // dragCover), so the browser's synthetic click fires naturally — dispatching
+            // another one causes plotly_click to fire twice per tap.
+            if(!rightClick && hasHover) {
                 initialTarget.dispatchEvent(new MouseEvent('click', e));
             }
         }
