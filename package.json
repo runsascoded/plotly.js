@@ -182,5 +182,21 @@
     "falafel": {
       "acorn": "^8.1.1"
     }
+  },
+  "exports": {
+    ".": "./lib/index.js",
+    "./basic": "./lib/index-basic.js",
+    "./cartesian": "./lib/index-cartesian.js",
+    "./finance": "./lib/index-finance.js",
+    "./geo": "./lib/index-geo.js",
+    "./gl2d": "./lib/index-gl2d.js",
+    "./gl3d": "./lib/index-gl3d.js",
+    "./map": "./lib/index-map.js",
+    "./mapbox": "./lib/index-mapbox.js",
+    "./strict": "./lib/index-strict.js",
+    "./core": "./lib/core.js",
+    "./lib/*": "./lib/*",
+    "./src/*": "./src/*",
+    "./dist/*": "./dist/*"
   }
 }
