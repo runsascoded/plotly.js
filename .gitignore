@@ -4,8 +4,12 @@ build/*
 !build/plotcss.js
 !build/README.md
 
-dist/*.LICENSE.txt
-dist/*.css
+dist/
+!dist/topojson/
+!dist/README.md
+!dist/plot-schema.json
+!dist/plotly-geo-assets.js
+!dist/translation-keys.txt
 
 npm-debug.log*
 *.sublime*
