@@ -951,7 +951,7 @@ function computeLegendDimensions(gd, groups, traces, legendObj) {
         }
         var w = isEditable ? textGap : (toggleRectWidth || traceWidth);
         if(!isVertical && !isFraction) {
-            w += itemGap / 2;
+            w += itemGap;
         }
         Drawing.setRect(traceToggle, 0, -h / 2, w, h);
     });
