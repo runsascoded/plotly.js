@@ -92,6 +92,20 @@ module.exports = {
         editType: 'style',
         description: 'Sets the width (in px or fraction) of the legend for this trace.',
     },
+    legendsymbol: {
+        path: {
+            valType: 'string',
+            dflt: '',
+            editType: 'style',
+            description: [
+                'Sets a custom SVG path to use as the legend symbol for this trace,',
+                'replacing the default colored square/line.',
+                'The path is scaled to fit the legend item dimensions',
+                'and filled with the trace color.'
+            ].join(' ')
+        },
+        editType: 'style',
+    },
     opacity: {
         valType: 'number',
         min: 0,

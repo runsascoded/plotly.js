@@ -112,6 +112,7 @@ function groupDefaults(legendId, layoutIn, layoutOut, fullData) {
             }
 
             Lib.coerceFont(traceCoerce, 'legendgrouptitle.font', grouptitlefont);
+            traceCoerce('legendsymbol.path');
         }
         if((!isShape && Registry.traceIs(trace, 'bar') && layoutOut.barmode === 'stack') ||
             ['tonextx', 'tonexty'].indexOf(trace.fill) !== -1) {

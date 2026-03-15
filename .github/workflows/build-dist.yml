@@ -64,7 +64,7 @@ jobs:
 
           # Fetch and checkout dist branch (or create orphan)
           if git fetch origin "$DIST_BRANCH" 2>/dev/null; then
-            git checkout "$DIST_BRANCH"
+            git checkout -f "$DIST_BRANCH" --
           else
             git checkout --orphan "$DIST_BRANCH"
             git rm -rf .

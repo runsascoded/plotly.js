@@ -93,7 +93,37 @@ module.exports = function style(s, gd, legend) {
     .each(styleLines)
     .each(stylePoints)
     .each(styleCandles)
-    .each(styleOHLC);
+    .each(styleOHLC)
+    .each(styleCustomSymbol);
+
+    function styleCustomSymbol(d) {
+        var trace = d[0].trace;
+        var legendsymbol = trace.legendsymbol;
+        var customPath = legendsymbol && legendsymbol.path;
+        if(!customPath) return;
+
+        var thisGroup = d3.select(this);
+
+        // Remove all default symbol elements created by prior style functions
+        thisGroup.select('.legendfill').selectAll('*').remove();
+        thisGroup.select('.legendlines').selectAll('*').remove();
+        var ptgroup = thisGroup.select('g.legendpoints');
+        ptgroup.selectAll(':not(.legendcustomsymbol)').remove();
+
+        // Render custom SVG path
+        var pts = ptgroup.selectAll('path.legendcustomsymbol')
+            .data([d]);
+        pts.enter().append('path')
+            .classed('legendcustomsymbol', true)
+            .attr('transform', centerTransform);
+        pts.exit().remove();
+
+        var fillColor = (trace.marker && trace.marker.color) ||
+            (trace.line && trace.line.color) || null;
+        pts.attr('d', customPath)
+            .style('fill', fillColor)
+            .style('stroke', 'none');
+    }
 
     function styleLines(d) {
         var styleGuide = getStyleGuide(d);
