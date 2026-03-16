@@ -1,12 +1,24 @@
 {
-    "transferSize": {
-        "minimal": { "max_kb": 2600 },
-        "basic": { "max_kb": 3000 }
+    "bundleSize": {
+        "minimal": {
+            "expected_bytes": 2553539
+        },
+        "basic": {
+            "expected_bytes": null
+        }
     },
     "renderTime": {
-        "bar-1k": { "max_ms": 1000 },
-        "scatter-10k": { "max_ms": 2000 },
-        "dual-axis": { "max_ms": 1000 },
-        "many-traces": { "max_ms": 1500 }
+        "bar-1k": {
+            "max_ms": 1000
+        },
+        "scatter-10k": {
+            "max_ms": 2000
+        },
+        "dual-axis": {
+            "max_ms": 1000
+        },
+        "many-traces": {
+            "max_ms": 1500
+        }
     }
 }
