@@ -376,7 +376,13 @@ function _doPlot(gd, data, layout, config) {
         return result;
     }
 
-    var seq = [Plots.previousPromises, addFrames, drawFramework, timedMarginPushers, marginPushersAgain];
+    var deferAutoMargin = gd._context.deferAutoMargin;
+
+    var seq = [Plots.previousPromises, addFrames, drawFramework];
+
+    if (!deferAutoMargin) {
+        seq.push(timedMarginPushers, marginPushersAgain);
+    }
 
     if (hasCartesian) seq.push(positionAndAutorange);
 
@@ -401,14 +407,20 @@ function _doPlot(gd, data, layout, config) {
         Plots.addLinks,
         Plots.rehover,
         Plots.redrag,
-        Plots.reselect,
-        // TODO: doAutoMargin is only needed here for axis automargin, which
-        // happens outside of marginPushers where all the other automargins are
-        // calculated. Would be much better to separate margin calculations from
-        // component drawing - see https://github.com/plotly/plotly.js/issues/2704
-        Plots.doAutoMargin,
-        Plots.previousPromises
+        Plots.reselect
     );
+
+    if (!deferAutoMargin) {
+        seq.push(
+            // TODO: doAutoMargin is only needed here for axis automargin, which
+            // happens outside of marginPushers where all the other automargins are
+            // calculated. Would be much better to separate margin calculations from
+            // component drawing - see https://github.com/plotly/plotly.js/issues/2704
+            Plots.doAutoMargin
+        );
+    }
+
+    seq.push(Plots.previousPromises);
 
     // even if everything we did was synchronous, return a promise
     // so that the caller doesn't care which route we took
@@ -419,6 +431,32 @@ function _doPlot(gd, data, layout, config) {
         performance.mark('plotly-total-end');
         performance.measure('plotly-total', 'plotly-total-start', 'plotly-total-end');
         emitAfterPlot(gd);
+
+        // Deferred margin correction: schedule precise margin calculation
+        // in the next animation frame so traces are visible immediately
+        if (deferAutoMargin) {
+            requestAnimationFrame(function () {
+                performance.mark('plotly-deferredMargin-start');
+
+                var deferredSeq = [timedMarginPushers, marginPushersAgain];
+                if (hasCartesian) deferredSeq.push(positionAndAutorange);
+                deferredSeq.push(subroutines.layoutStyles);
+                if (hasCartesian) deferredSeq.push(drawAxes);
+                deferredSeq.push(
+                    timedDrawData,
+                    subroutines.finalDraw,
+                    Plots.doAutoMargin
+                );
+
+                var deferredDone = Lib.syncOrAsync(deferredSeq, gd);
+                if (!deferredDone || !deferredDone.then) deferredDone = Promise.resolve();
+                deferredDone.then(function () {
+                    performance.mark('plotly-deferredMargin-end');
+                    performance.measure('plotly-deferredMargin', 'plotly-deferredMargin-start', 'plotly-deferredMargin-end');
+                });
+            });
+        }
+
         return gd;
     });
 }

@@ -18,6 +18,7 @@ body { margin: 0; font-family: system-ui, sans-serif; }
 (function() {
     var params = new URLSearchParams(location.search);
     var plotName = params.get('plot') || 'bar-1k';
+    var deferMargin = params.get('defer') === '1';
     var config = window.__PLOTLY_PLOTS__[plotName];
     if(!config) {
         document.getElementById('status').textContent = 'Unknown plot: ' + plotName;
@@ -34,7 +35,10 @@ body { margin: 0; font-family: system-ui, sans-serif; }
     document.getElementById('status').textContent = 'Rendering ' + plotName + '...';
 
     var t0 = performance.now();
-    Plotly.newPlot(el, config.data, layout, { displayModeBar: false }).then(function() {
+    var plotConfig = { displayModeBar: false };
+    if(deferMargin) plotConfig.deferAutoMargin = true;
+
+    Plotly.newPlot(el, config.data, layout, plotConfig).then(function() {
         var wallTime = performance.now() - t0;
         var measures = performance.getEntriesByType('measure')
             .filter(function(e) { return e.name.startsWith('plotly-'); })

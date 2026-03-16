@@ -28,6 +28,7 @@ const useLite = args.includes('--lite');
 const headed = args.includes('--headed');
 const update = args.includes('--update');
 const minify = args.includes('--minify');
+const defer = args.includes('--defer');
 const bundleName = (useBasic ? 'basic' : useLite ? 'lite' : 'minimal') + (minify ? '-min' : '');
 
 function startServer() {
@@ -107,7 +108,8 @@ async function runBench() {
         });
 
         const navStart = Date.now();
-        await page.goto(`${baseUrl}/?plot=${plotName}`, { waitUntil: 'domcontentloaded' });
+        const plotUrl = `${baseUrl}/?plot=${plotName}${defer ? '&defer=1' : ''}`;
+        await page.goto(plotUrl, { waitUntil: 'domcontentloaded' });
         await page.waitForFunction('window.__PLOTLY_PERF__', { timeout: 30000 });
         const navEnd = Date.now();
 

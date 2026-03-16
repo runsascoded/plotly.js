@@ -136,6 +136,16 @@ var configAttributes = {
             'In v3, this option will be removed and will always be true.'
         ].join(' ')
     },
+    deferAutoMargin: {
+        valType: 'boolean',
+        dflt: false,
+        description: [
+            'When true, defers margin calculation (legend/title/axis label measurement)',
+            'to a requestAnimationFrame after the initial render. This gets traces',
+            'on screen faster at the cost of a possible single-frame layout shift',
+            'as margins adjust. Best used with explicit layout.width and layout.height.'
+        ].join(' ')
+    },
     fillFrame: {
         valType: 'boolean',
         dflt: false,
