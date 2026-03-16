@@ -14,6 +14,9 @@ Provide a customized plotly.js for use across several projects (NJ crashes, PATH
 - **Custom legend symbols**: `legendsymbol.path` trace attribute for custom SVG legend icons
 - **Treemap transpose**: Add `tiling.transpose` attribute for treemap traces
 - **`exports` map**: Subpath imports (`plotly.js/basic`, `plotly.js/core`, etc.) via `lib/`
+- **Lite bundle**: `plotly.js/lite` — scatter + bar with only essential components (949 KB minified)
+- **Deferred margins**: `config.deferAutoMargin` for 15-29% faster first paint
+- **Perf instrumentation**: `performance.measure()` around key render phases
 
 ## Build & dist
 
@@ -28,6 +31,30 @@ npm run extra-bundles
 ```
 
 `dist/topojson/`, `dist/plot-schema.json`, `dist/plotly-geo-assets.js`, and `dist/translation-keys.txt` are tracked (source/data files that live under `dist/`). The JS/CSS bundles are gitignored.
+
+## Bundle variants
+
+| Bundle | Entry point | Minified | Contents |
+|---|---|---|---|
+| **lite** | `plotly.js/lite` | 949 KB | scatter + bar, 6 components (legend, fx, shapes, errorbars, colorscale, modebar) |
+| minimal | `plotly.js/minimal` | 1,051 KB | scatter + bar, all 15 components |
+| basic | `plotly.js/basic` | 1,157 KB | scatter + bar + pie + calendars, all 15 components |
+
+## Performance testing
+
+```bash
+npm run perf        # benchmark minimal bundle
+npm run perf:lite   # benchmark lite bundle
+npm run perf:basic  # benchmark basic bundle
+
+# Options:
+node perf/bench.mjs --lite --minify   # minified bundle
+node perf/bench.mjs --lite --defer    # with deferAutoMargin
+node perf/bench.mjs --lite --update   # accept new bundle size
+node perf/bench.mjs --lite --headed   # visible browser
+```
+
+Bundle sizes are asserted at the exact byte level in `perf/thresholds.json`. If the size changes, the test fails; pass `--update` to accept the new size. Render times are tracked in JSONL history files under `perf/results/`.
 
 ## Downstream stack
 
@@ -71,12 +98,14 @@ Instead, these should be handled by plotly.js (rendering) and pltly (React integ
 
 **Keep in fork** (unlikely to be accepted upstream):
 - Custom legend symbols/icons
+- Lite bundle / component stripping
 - Any breaking changes to legend behavior
 
 **Consider upstreaming** (bug fixes, non-breaking):
 - Flush legend toggle rects (PR-able)
 - z-order relayout fix (PR-able)
 - Touch interaction fixes
+- `deferAutoMargin` config option
 
 ## Specs
 
@@ -84,6 +113,9 @@ Completed specs live in `specs/done/`:
 - `flush-legend-toggle-rects.md` — expand legend item hit areas
 - `legend-icon-symbols.md` — custom SVG legend symbols via `legendsymbol.path`
 - `dist-extra-bundles.md` — build all bundles for dist branch
+- `custom-minimal-bundle.md` — lite/minimal bundle analysis
+- `perf-harness.md` — automated Playwright perf benchmark
+- `fast-initial-render.md` — deferred margin calculation, perf instrumentation
 
 [plotly/plotly.js]: https://github.com/plotly/plotly.js
 [runsascoded/plotly.js]: https://github.com/runsascoded/plotly.js
