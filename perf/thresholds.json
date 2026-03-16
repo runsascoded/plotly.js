@@ -3,6 +3,9 @@
         "minimal": {
             "expected_bytes": 2553539
         },
+        "lite": {
+            "expected_bytes": 2310871
+        },
         "basic": {
             "expected_bytes": 2894881
         }

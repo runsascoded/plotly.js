@@ -24,14 +24,16 @@ import { fileURLToPath } from 'url';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const args = process.argv.slice(2);
 const useBasic = args.includes('--basic');
+const useLite = args.includes('--lite');
 const headed = args.includes('--headed');
 const update = args.includes('--update');
-const bundleName = useBasic ? 'basic' : 'minimal';
+const bundleName = useBasic ? 'basic' : useLite ? 'lite' : 'minimal';
 
 function startServer() {
     return new Promise((resolve, reject) => {
         const serverArgs = [join(__dirname, 'server.mjs')];
         if(useBasic) serverArgs.push('--basic');
+        else if(useLite) serverArgs.push('--lite');
 
         const proc = spawn('node', serverArgs, {
             stdio: ['ignore', 'pipe', 'inherit'],

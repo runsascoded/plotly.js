@@ -8,7 +8,9 @@ import { build } from 'esbuild';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const root = join(__dirname, '..');
 
-const bundle = process.argv.includes('--basic') ? 'index-basic' : 'index-minimal';
+const bundle = process.argv.includes('--basic') ? 'index-basic'
+    : process.argv.includes('--lite') ? 'index-lite'
+    : 'index-minimal';
 const port = parseInt(process.env.PORT || '0', 10);
 
 // Build plotly bundle once at startup
