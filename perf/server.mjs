@@ -11,6 +11,7 @@ const root = join(__dirname, '..');
 const bundle = process.argv.includes('--basic') ? 'index-basic'
     : process.argv.includes('--lite') ? 'index-lite'
     : 'index-minimal';
+const minify = process.argv.includes('--minify');
 const port = parseInt(process.env.PORT || '0', 10);
 
 // Build plotly bundle once at startup
@@ -21,7 +22,7 @@ const result = await build({
     format: 'iife',
     globalName: 'Plotly',
     write: false,
-    minify: false,
+    minify: minify,
     sourcemap: false,
     platform: 'browser',
     define: { 'process.env.NODE_ENV': '"production"', 'global': 'window' },

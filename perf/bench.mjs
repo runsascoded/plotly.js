@@ -27,13 +27,15 @@ const useBasic = args.includes('--basic');
 const useLite = args.includes('--lite');
 const headed = args.includes('--headed');
 const update = args.includes('--update');
-const bundleName = useBasic ? 'basic' : useLite ? 'lite' : 'minimal';
+const minify = args.includes('--minify');
+const bundleName = (useBasic ? 'basic' : useLite ? 'lite' : 'minimal') + (minify ? '-min' : '');
 
 function startServer() {
     return new Promise((resolve, reject) => {
         const serverArgs = [join(__dirname, 'server.mjs')];
         if(useBasic) serverArgs.push('--basic');
         else if(useLite) serverArgs.push('--lite');
+        if(minify) serverArgs.push('--minify');
 
         const proc = spawn('node', serverArgs, {
             stdio: ['ignore', 'pipe', 'inherit'],

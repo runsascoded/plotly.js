@@ -1,13 +1,22 @@
 {
     "bundleSize": {
-        "minimal": {
-            "expected_bytes": 2553539
-        },
         "lite": {
             "expected_bytes": 2310871
         },
+        "lite-min": {
+            "expected_bytes": 971655
+        },
+        "minimal": {
+            "expected_bytes": 2553539
+        },
+        "minimal-min": {
+            "expected_bytes": 1075750
+        },
         "basic": {
             "expected_bytes": 2894881
+        },
+        "basic-min": {
+            "expected_bytes": 1184516
         }
     },
     "renderTime": {
