@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Plotly.js Perf Demo</title>
+<style>
+body { margin: 0; font-family: system-ui, sans-serif; }
+#plot { width: 800px; height: 500px; margin: 20px auto; }
+#status { text-align: center; padding: 10px; font-size: 14px; color: #666; }
+</style>
+</head>
+<body>
+<div id="status">Loading...</div>
+<div id="plot"></div>
+<script src="/plotly.js"></script>
+<script src="/plots.js"></script>
+<script>
+(function() {
+    var params = new URLSearchParams(location.search);
+    var plotName = params.get('plot') || 'bar-1k';
+    var config = window.__PLOTLY_PLOTS__[plotName];
+    if(!config) {
+        document.getElementById('status').textContent = 'Unknown plot: ' + plotName;
+        window.__PLOTLY_PERF__ = { error: 'unknown plot: ' + plotName };
+        return;
+    }
+
+    var el = document.getElementById('plot');
+    var layout = Object.assign({}, config.layout, {
+        width: 800,
+        height: 500,
+    });
+
+    document.getElementById('status').textContent = 'Rendering ' + plotName + '...';
+
+    var t0 = performance.now();
+    Plotly.newPlot(el, config.data, layout, { displayModeBar: false }).then(function() {
+        var wallTime = performance.now() - t0;
+        var measures = performance.getEntriesByType('measure')
+            .filter(function(e) { return e.name.startsWith('plotly-'); })
+            .map(function(e) { return { name: e.name, duration: Math.round(e.duration * 100) / 100 }; });
+
+        window.__PLOTLY_PERF__ = {
+            plot: plotName,
+            wallTime: Math.round(wallTime * 100) / 100,
+            measures: measures,
+            timestamp: Date.now(),
+        };
+
+        document.getElementById('status').textContent =
+            plotName + ': ' + Math.round(wallTime) + 'ms total';
+    });
+})();
+</script>
+</body>
+</html>
