@@ -22,7 +22,8 @@ var Drawing = require('../components/drawing');
 var Color = require('../components/color');
 var initInteractions = require('../plots/cartesian/graph_interact').initInteractions;
 var xmlnsNamespaces = require('../constants/xmlns_namespaces');
-var clearOutline = require('../components/selections').clearOutline;
+// Lazy-resolve to avoid pulling in ~70KB selections module in lite bundle
+function clearOutline(gd) { return Registry.getComponentMethod('selections', 'clearOutline')(gd); }
 
 var dfltConfig = require('./plot_config').dfltConfig;
 var manageArrays = require('./manage_arrays');

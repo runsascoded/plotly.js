@@ -26,9 +26,12 @@ var redrawReglTraces = require('../../plot_api/subroutines').redrawReglTraces;
 var Plots = require('../plots');
 
 var getFromId = require('./axis_ids').getFromId;
-var prepSelect = require('../../components/selections').prepSelect;
-var clearOutline = require('../../components/selections').clearOutline;
-var selectOnClick = require('../../components/selections').selectOnClick;
+// Lazy-resolve selections via Registry to avoid pulling in ~70KB when
+// the selections component isn't registered (e.g. in the lite bundle).
+// Returns the function if registered, noop otherwise.
+function prepSelect() { return Registry.getComponentMethod('selections', 'prepSelect').apply(null, arguments); }
+function clearOutline() { return Registry.getComponentMethod('selections', 'clearOutline').apply(null, arguments); }
+function selectOnClick() { return Registry.getComponentMethod('selections', 'selectOnClick').apply(null, arguments); }
 var scaleZoom = require('./scale_zoom');
 
 var constants = require('./constants');
