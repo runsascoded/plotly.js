@@ -186,6 +186,7 @@
   "exports": {
     ".": "./lib/index.js",
     "./basic": "./lib/index-basic.js",
+    "./minimal": "./lib/index-minimal.js",
     "./cartesian": "./lib/index-cartesian.js",
     "./finance": "./lib/index-finance.js",
     "./geo": "./lib/index-geo.js",

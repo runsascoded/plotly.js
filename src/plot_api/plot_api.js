@@ -72,6 +72,8 @@ function _doPlot(gd, data, layout, config) {
         frames = obj.frames;
     }
 
+    performance.mark('plotly-total-start');
+
     var okToPlot = Events.triggerHandler(gd, 'plotly_beforeplot', [data, layout, config]);
     if (okToPlot === false) return Promise.reject();
 
@@ -128,7 +130,10 @@ function _doPlot(gd, data, layout, config) {
         gd.layout = helpers.cleanLayout(layout);
     }
 
+    performance.mark('plotly-supplyDefaults-start');
     Plots.supplyDefaults(gd);
+    performance.mark('plotly-supplyDefaults-end');
+    performance.measure('plotly-supplyDefaults', 'plotly-supplyDefaults-start', 'plotly-supplyDefaults-end');
 
     var fullLayout = gd._fullLayout;
     var hasCartesian = fullLayout._has('cartesian');
@@ -158,7 +163,12 @@ function _doPlot(gd, data, layout, config) {
     // generate calcdata, if we need to
     // to force redoing calcdata, just delete it before calling _doPlot
     var recalc = !gd.calcdata || gd.calcdata.length !== (gd._fullData || []).length;
-    if (recalc) Plots.doCalcdata(gd);
+    if (recalc) {
+        performance.mark('plotly-calcdata-start');
+        Plots.doCalcdata(gd);
+        performance.mark('plotly-calcdata-end');
+        performance.measure('plotly-calcdata', 'plotly-calcdata-start', 'plotly-calcdata-end');
+    }
 
     // in case it has changed, attach fullData traces to calcdata
     for (var i = 0; i < gd.calcdata.length; i++) {
@@ -278,7 +288,6 @@ function _doPlot(gd, data, layout, config) {
         return Plots.previousPromises(gd);
     }
 
-    // draw anything that can affect margins.
     function marginPushers() {
         // First reset the list of things that are allowed to change the margins
         // So any deleted traces or components will be wiped out of the
@@ -351,7 +360,23 @@ function _doPlot(gd, data, layout, config) {
         return Axes.draw(gd, graphWasEmpty ? '' : 'redraw');
     }
 
-    var seq = [Plots.previousPromises, addFrames, drawFramework, marginPushers, marginPushersAgain];
+    function timedMarginPushers() {
+        performance.mark('plotly-marginPushers-start');
+        var result = marginPushers();
+        performance.mark('plotly-marginPushers-end');
+        performance.measure('plotly-marginPushers', 'plotly-marginPushers-start', 'plotly-marginPushers-end');
+        return result;
+    }
+
+    function timedDrawData() {
+        performance.mark('plotly-drawData-start');
+        var result = subroutines.drawData(gd);
+        performance.mark('plotly-drawData-end');
+        performance.measure('plotly-drawData', 'plotly-drawData-start', 'plotly-drawData-end');
+        return result;
+    }
+
+    var seq = [Plots.previousPromises, addFrames, drawFramework, timedMarginPushers, marginPushersAgain];
 
     if (hasCartesian) seq.push(positionAndAutorange);
 
@@ -370,7 +395,7 @@ function _doPlot(gd, data, layout, config) {
     }
 
     seq.push(
-        subroutines.drawData,
+        timedDrawData,
         subroutines.finalDraw,
         initInteractions,
         Plots.addLinks,
@@ -391,6 +416,8 @@ function _doPlot(gd, data, layout, config) {
     if (!plotDone || !plotDone.then) plotDone = Promise.resolve();
 
     return plotDone.then(function () {
+        performance.mark('plotly-total-end');
+        performance.measure('plotly-total', 'plotly-total-start', 'plotly-total-end');
         emitAfterPlot(gd);
         return gd;
     });
