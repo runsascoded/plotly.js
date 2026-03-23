@@ -11398,6 +11398,10 @@ var Plotly = (() => {
           valType: "boolean",
           dflt: false
         },
+        deferAutoMargin: {
+          valType: "boolean",
+          dflt: false
+        },
         fillFrame: {
           valType: "boolean",
           dflt: false
@@ -38912,3706 +38916,6 @@ var Plotly = (() => {
     }
   });
 
-  // src/components/selections/draw.js
-  var require_draw3 = __commonJS({
-    "src/components/selections/draw.js"(exports, module) {
-      "use strict";
-      var readPaths = require_helpers7().readPaths;
-      var displayOutlines = require_display_outlines();
-      var clearOutlineControllers = require_handle_outline().clearOutlineControllers;
-      var Color2 = require_color();
-      var Drawing = require_drawing();
-      var arrayEditor = require_plot_template().arrayEditor;
-      var helpers = require_helpers8();
-      var getPathString = helpers.getPathString;
-      module.exports = {
-        draw,
-        drawOne,
-        activateLastSelection
-      };
-      function draw(gd) {
-        var fullLayout = gd._fullLayout;
-        clearOutlineControllers(gd);
-        fullLayout._selectionLayer.selectAll("path").remove();
-        for (var k in fullLayout._plots) {
-          var selectionLayer = fullLayout._plots[k].selectionLayer;
-          if (selectionLayer) selectionLayer.selectAll("path").remove();
-        }
-        for (var i = 0; i < fullLayout.selections.length; i++) {
-          drawOne(gd, i);
-        }
-      }
-      function couldHaveActiveSelection(gd) {
-        return gd._context.editSelection;
-      }
-      function drawOne(gd, index) {
-        gd._fullLayout._paperdiv.selectAll('.selectionlayer [data-index="' + index + '"]').remove();
-        var o = helpers.makeSelectionsOptionsAndPlotinfo(gd, index);
-        var options = o.options;
-        var plotinfo = o.plotinfo;
-        if (!options._input) return;
-        drawSelection(gd._fullLayout._selectionLayer);
-        function drawSelection(selectionLayer) {
-          var d = getPathString(gd, options);
-          var attrs = {
-            "data-index": index,
-            "fill-rule": "evenodd",
-            d
-          };
-          var opacity = options.opacity;
-          var fillColor = "rgba(0,0,0,0)";
-          var lineColor = options.line.color || Color2.contrast(gd._fullLayout.plot_bgcolor);
-          var lineWidth = options.line.width;
-          var lineDash = options.line.dash;
-          if (!lineWidth) {
-            lineWidth = 5;
-            lineDash = "solid";
-          }
-          var isActiveSelection = couldHaveActiveSelection(gd) && gd._fullLayout._activeSelectionIndex === index;
-          if (isActiveSelection) {
-            fillColor = gd._fullLayout.activeselection.fillcolor;
-            opacity = gd._fullLayout.activeselection.opacity;
-          }
-          var allPaths = [];
-          for (var sensory = 1; sensory >= 0; sensory--) {
-            var path = selectionLayer.append("path").attr(attrs).style("opacity", sensory ? 0.1 : opacity).call(Color2.stroke, lineColor).call(Color2.fill, fillColor).call(
-              Drawing.dashLine,
-              sensory ? "solid" : lineDash,
-              sensory ? 4 + lineWidth : lineWidth
-            );
-            setClipPath(path, gd, options);
-            if (isActiveSelection) {
-              var editHelpers = arrayEditor(gd.layout, "selections", options);
-              path.style({
-                cursor: "move"
-              });
-              var dragOptions = {
-                element: path.node(),
-                plotinfo,
-                gd,
-                editHelpers,
-                isActiveSelection: true
-                // i.e. to enable controllers
-              };
-              var polygons = readPaths(d, gd);
-              displayOutlines(polygons, path, dragOptions);
-            } else {
-              path.style("pointer-events", sensory ? "all" : "none");
-            }
-            allPaths[sensory] = path;
-          }
-          var forePath = allPaths[0];
-          var backPath = allPaths[1];
-          backPath.node().addEventListener("click", function() {
-            return activateSelection(gd, forePath);
-          });
-        }
-      }
-      function setClipPath(selectionPath, gd, selectionOptions) {
-        var clipAxes = selectionOptions.xref + selectionOptions.yref;
-        Drawing.setClipUrl(
-          selectionPath,
-          "clip" + gd._fullLayout._uid + clipAxes,
-          gd
-        );
-      }
-      function activateSelection(gd, path) {
-        if (!couldHaveActiveSelection(gd)) return;
-        var element = path.node();
-        var id = +element.getAttribute("data-index");
-        if (id >= 0) {
-          if (id === gd._fullLayout._activeSelectionIndex) {
-            deactivateSelection(gd);
-            return;
-          }
-          gd._fullLayout._activeSelectionIndex = id;
-          gd._fullLayout._deactivateSelection = deactivateSelection;
-          draw(gd);
-        }
-      }
-      function activateLastSelection(gd) {
-        if (!couldHaveActiveSelection(gd)) return;
-        var id = gd._fullLayout.selections.length - 1;
-        gd._fullLayout._activeSelectionIndex = id;
-        gd._fullLayout._deactivateSelection = deactivateSelection;
-        draw(gd);
-      }
-      function deactivateSelection(gd) {
-        if (!couldHaveActiveSelection(gd)) return;
-        var id = gd._fullLayout._activeSelectionIndex;
-        if (id >= 0) {
-          clearOutlineControllers(gd);
-          delete gd._fullLayout._activeSelectionIndex;
-          draw(gd);
-        }
-      }
-    }
-  });
-
-  // node_modules/polybooljs/lib/build-log.js
-  var require_build_log = __commonJS({
-    "node_modules/polybooljs/lib/build-log.js"(exports, module) {
-      function BuildLog() {
-        var my;
-        var nextSegmentId = 0;
-        var curVert = false;
-        function push(type, data) {
-          my.list.push({
-            type,
-            data: data ? JSON.parse(JSON.stringify(data)) : void 0
-          });
-          return my;
-        }
-        my = {
-          list: [],
-          segmentId: function() {
-            return nextSegmentId++;
-          },
-          checkIntersection: function(seg1, seg2) {
-            return push("check", { seg1, seg2 });
-          },
-          segmentChop: function(seg, end) {
-            push("div_seg", { seg, pt: end });
-            return push("chop", { seg, pt: end });
-          },
-          statusRemove: function(seg) {
-            return push("pop_seg", { seg });
-          },
-          segmentUpdate: function(seg) {
-            return push("seg_update", { seg });
-          },
-          segmentNew: function(seg, primary) {
-            return push("new_seg", { seg, primary });
-          },
-          segmentRemove: function(seg) {
-            return push("rem_seg", { seg });
-          },
-          tempStatus: function(seg, above, below) {
-            return push("temp_status", { seg, above, below });
-          },
-          rewind: function(seg) {
-            return push("rewind", { seg });
-          },
-          status: function(seg, above, below) {
-            return push("status", { seg, above, below });
-          },
-          vert: function(x) {
-            if (x === curVert)
-              return my;
-            curVert = x;
-            return push("vert", { x });
-          },
-          log: function(data) {
-            if (typeof data !== "string")
-              data = JSON.stringify(data, false, "  ");
-            return push("log", { txt: data });
-          },
-          reset: function() {
-            return push("reset");
-          },
-          selected: function(segs) {
-            return push("selected", { segs });
-          },
-          chainStart: function(seg) {
-            return push("chain_start", { seg });
-          },
-          chainRemoveHead: function(index, pt) {
-            return push("chain_rem_head", { index, pt });
-          },
-          chainRemoveTail: function(index, pt) {
-            return push("chain_rem_tail", { index, pt });
-          },
-          chainNew: function(pt1, pt2) {
-            return push("chain_new", { pt1, pt2 });
-          },
-          chainMatch: function(index) {
-            return push("chain_match", { index });
-          },
-          chainClose: function(index) {
-            return push("chain_close", { index });
-          },
-          chainAddHead: function(index, pt) {
-            return push("chain_add_head", { index, pt });
-          },
-          chainAddTail: function(index, pt) {
-            return push("chain_add_tail", { index, pt });
-          },
-          chainConnect: function(index1, index2) {
-            return push("chain_con", { index1, index2 });
-          },
-          chainReverse: function(index) {
-            return push("chain_rev", { index });
-          },
-          chainJoin: function(index1, index2) {
-            return push("chain_join", { index1, index2 });
-          },
-          done: function() {
-            return push("done");
-          }
-        };
-        return my;
-      }
-      module.exports = BuildLog;
-    }
-  });
-
-  // node_modules/polybooljs/lib/epsilon.js
-  var require_epsilon = __commonJS({
-    "node_modules/polybooljs/lib/epsilon.js"(exports, module) {
-      function Epsilon(eps) {
-        if (typeof eps !== "number")
-          eps = 1e-10;
-        var my = {
-          epsilon: function(v) {
-            if (typeof v === "number")
-              eps = v;
-            return eps;
-          },
-          pointAboveOrOnLine: function(pt, left, right) {
-            var Ax = left[0];
-            var Ay = left[1];
-            var Bx = right[0];
-            var By = right[1];
-            var Cx = pt[0];
-            var Cy = pt[1];
-            return (Bx - Ax) * (Cy - Ay) - (By - Ay) * (Cx - Ax) >= -eps;
-          },
-          pointBetween: function(p, left, right) {
-            var d_py_ly = p[1] - left[1];
-            var d_rx_lx = right[0] - left[0];
-            var d_px_lx = p[0] - left[0];
-            var d_ry_ly = right[1] - left[1];
-            var dot = d_px_lx * d_rx_lx + d_py_ly * d_ry_ly;
-            if (dot < eps)
-              return false;
-            var sqlen = d_rx_lx * d_rx_lx + d_ry_ly * d_ry_ly;
-            if (dot - sqlen > -eps)
-              return false;
-            return true;
-          },
-          pointsSameX: function(p1, p2) {
-            return Math.abs(p1[0] - p2[0]) < eps;
-          },
-          pointsSameY: function(p1, p2) {
-            return Math.abs(p1[1] - p2[1]) < eps;
-          },
-          pointsSame: function(p1, p2) {
-            return my.pointsSameX(p1, p2) && my.pointsSameY(p1, p2);
-          },
-          pointsCompare: function(p1, p2) {
-            if (my.pointsSameX(p1, p2))
-              return my.pointsSameY(p1, p2) ? 0 : p1[1] < p2[1] ? -1 : 1;
-            return p1[0] < p2[0] ? -1 : 1;
-          },
-          pointsCollinear: function(pt1, pt2, pt3) {
-            var dx1 = pt1[0] - pt2[0];
-            var dy1 = pt1[1] - pt2[1];
-            var dx2 = pt2[0] - pt3[0];
-            var dy2 = pt2[1] - pt3[1];
-            return Math.abs(dx1 * dy2 - dx2 * dy1) < eps;
-          },
-          linesIntersect: function(a0, a1, b0, b1) {
-            var adx = a1[0] - a0[0];
-            var ady = a1[1] - a0[1];
-            var bdx = b1[0] - b0[0];
-            var bdy = b1[1] - b0[1];
-            var axb = adx * bdy - ady * bdx;
-            if (Math.abs(axb) < eps)
-              return false;
-            var dx = a0[0] - b0[0];
-            var dy = a0[1] - b0[1];
-            var A2 = (bdx * dy - bdy * dx) / axb;
-            var B2 = (adx * dy - ady * dx) / axb;
-            var ret = {
-              alongA: 0,
-              alongB: 0,
-              pt: [
-                a0[0] + A2 * adx,
-                a0[1] + A2 * ady
-              ]
-            };
-            if (A2 <= -eps)
-              ret.alongA = -2;
-            else if (A2 < eps)
-              ret.alongA = -1;
-            else if (A2 - 1 <= -eps)
-              ret.alongA = 0;
-            else if (A2 - 1 < eps)
-              ret.alongA = 1;
-            else
-              ret.alongA = 2;
-            if (B2 <= -eps)
-              ret.alongB = -2;
-            else if (B2 < eps)
-              ret.alongB = -1;
-            else if (B2 - 1 <= -eps)
-              ret.alongB = 0;
-            else if (B2 - 1 < eps)
-              ret.alongB = 1;
-            else
-              ret.alongB = 2;
-            return ret;
-          },
-          pointInsideRegion: function(pt, region) {
-            var x = pt[0];
-            var y = pt[1];
-            var last_x = region[region.length - 1][0];
-            var last_y = region[region.length - 1][1];
-            var inside = false;
-            for (var i = 0; i < region.length; i++) {
-              var curr_x = region[i][0];
-              var curr_y = region[i][1];
-              if (curr_y - y > eps != last_y - y > eps && (last_x - curr_x) * (y - curr_y) / (last_y - curr_y) + curr_x - x > eps)
-                inside = !inside;
-              last_x = curr_x;
-              last_y = curr_y;
-            }
-            return inside;
-          }
-        };
-        return my;
-      }
-      module.exports = Epsilon;
-    }
-  });
-
-  // node_modules/polybooljs/lib/linked-list.js
-  var require_linked_list = __commonJS({
-    "node_modules/polybooljs/lib/linked-list.js"(exports, module) {
-      var LinkedList = {
-        create: function() {
-          var my = {
-            root: { root: true, next: null },
-            exists: function(node) {
-              if (node === null || node === my.root)
-                return false;
-              return true;
-            },
-            isEmpty: function() {
-              return my.root.next === null;
-            },
-            getHead: function() {
-              return my.root.next;
-            },
-            insertBefore: function(node, check) {
-              var last = my.root;
-              var here = my.root.next;
-              while (here !== null) {
-                if (check(here)) {
-                  node.prev = here.prev;
-                  node.next = here;
-                  here.prev.next = node;
-                  here.prev = node;
-                  return;
-                }
-                last = here;
-                here = here.next;
-              }
-              last.next = node;
-              node.prev = last;
-              node.next = null;
-            },
-            findTransition: function(check) {
-              var prev = my.root;
-              var here = my.root.next;
-              while (here !== null) {
-                if (check(here))
-                  break;
-                prev = here;
-                here = here.next;
-              }
-              return {
-                before: prev === my.root ? null : prev,
-                after: here,
-                insert: function(node) {
-                  node.prev = prev;
-                  node.next = here;
-                  prev.next = node;
-                  if (here !== null)
-                    here.prev = node;
-                  return node;
-                }
-              };
-            }
-          };
-          return my;
-        },
-        node: function(data) {
-          data.prev = null;
-          data.next = null;
-          data.remove = function() {
-            data.prev.next = data.next;
-            if (data.next)
-              data.next.prev = data.prev;
-            data.prev = null;
-            data.next = null;
-          };
-          return data;
-        }
-      };
-      module.exports = LinkedList;
-    }
-  });
-
-  // node_modules/polybooljs/lib/intersecter.js
-  var require_intersecter = __commonJS({
-    "node_modules/polybooljs/lib/intersecter.js"(exports, module) {
-      var LinkedList = require_linked_list();
-      function Intersecter(selfIntersection, eps, buildLog) {
-        function segmentNew(start, end) {
-          return {
-            id: buildLog ? buildLog.segmentId() : -1,
-            start,
-            end,
-            myFill: {
-              above: null,
-              // is there fill above us?
-              below: null
-              // is there fill below us?
-            },
-            otherFill: null
-          };
-        }
-        function segmentCopy(start, end, seg) {
-          return {
-            id: buildLog ? buildLog.segmentId() : -1,
-            start,
-            end,
-            myFill: {
-              above: seg.myFill.above,
-              below: seg.myFill.below
-            },
-            otherFill: null
-          };
-        }
-        var event_root = LinkedList.create();
-        function eventCompare(p1_isStart, p1_1, p1_2, p2_isStart, p2_1, p2_2) {
-          var comp = eps.pointsCompare(p1_1, p2_1);
-          if (comp !== 0)
-            return comp;
-          if (eps.pointsSame(p1_2, p2_2))
-            return 0;
-          if (p1_isStart !== p2_isStart)
-            return p1_isStart ? 1 : -1;
-          return eps.pointAboveOrOnLine(
-            p1_2,
-            p2_isStart ? p2_1 : p2_2,
-            // order matters
-            p2_isStart ? p2_2 : p2_1
-          ) ? 1 : -1;
-        }
-        function eventAdd(ev, other_pt) {
-          event_root.insertBefore(ev, function(here) {
-            var comp = eventCompare(
-              ev.isStart,
-              ev.pt,
-              other_pt,
-              here.isStart,
-              here.pt,
-              here.other.pt
-            );
-            return comp < 0;
-          });
-        }
-        function eventAddSegmentStart(seg, primary) {
-          var ev_start = LinkedList.node({
-            isStart: true,
-            pt: seg.start,
-            seg,
-            primary,
-            other: null,
-            status: null
-          });
-          eventAdd(ev_start, seg.end);
-          return ev_start;
-        }
-        function eventAddSegmentEnd(ev_start, seg, primary) {
-          var ev_end = LinkedList.node({
-            isStart: false,
-            pt: seg.end,
-            seg,
-            primary,
-            other: ev_start,
-            status: null
-          });
-          ev_start.other = ev_end;
-          eventAdd(ev_end, ev_start.pt);
-        }
-        function eventAddSegment(seg, primary) {
-          var ev_start = eventAddSegmentStart(seg, primary);
-          eventAddSegmentEnd(ev_start, seg, primary);
-          return ev_start;
-        }
-        function eventUpdateEnd(ev, end) {
-          if (buildLog)
-            buildLog.segmentChop(ev.seg, end);
-          ev.other.remove();
-          ev.seg.end = end;
-          ev.other.pt = end;
-          eventAdd(ev.other, ev.pt);
-        }
-        function eventDivide(ev, pt) {
-          var ns = segmentCopy(pt, ev.seg.end, ev.seg);
-          eventUpdateEnd(ev, pt);
-          return eventAddSegment(ns, ev.primary);
-        }
-        function calculate(primaryPolyInverted, secondaryPolyInverted) {
-          var status_root = LinkedList.create();
-          function statusCompare(ev1, ev2) {
-            var a1 = ev1.seg.start;
-            var a2 = ev1.seg.end;
-            var b1 = ev2.seg.start;
-            var b2 = ev2.seg.end;
-            if (eps.pointsCollinear(a1, b1, b2)) {
-              if (eps.pointsCollinear(a2, b1, b2))
-                return 1;
-              return eps.pointAboveOrOnLine(a2, b1, b2) ? 1 : -1;
-            }
-            return eps.pointAboveOrOnLine(a1, b1, b2) ? 1 : -1;
-          }
-          function statusFindSurrounding(ev2) {
-            return status_root.findTransition(function(here) {
-              var comp = statusCompare(ev2, here.ev);
-              return comp > 0;
-            });
-          }
-          function checkIntersection(ev1, ev2) {
-            var seg1 = ev1.seg;
-            var seg2 = ev2.seg;
-            var a1 = seg1.start;
-            var a2 = seg1.end;
-            var b1 = seg2.start;
-            var b2 = seg2.end;
-            if (buildLog)
-              buildLog.checkIntersection(seg1, seg2);
-            var i = eps.linesIntersect(a1, a2, b1, b2);
-            if (i === false) {
-              if (!eps.pointsCollinear(a1, a2, b1))
-                return false;
-              if (eps.pointsSame(a1, b2) || eps.pointsSame(a2, b1))
-                return false;
-              var a1_equ_b1 = eps.pointsSame(a1, b1);
-              var a2_equ_b2 = eps.pointsSame(a2, b2);
-              if (a1_equ_b1 && a2_equ_b2)
-                return ev2;
-              var a1_between = !a1_equ_b1 && eps.pointBetween(a1, b1, b2);
-              var a2_between = !a2_equ_b2 && eps.pointBetween(a2, b1, b2);
-              if (a1_equ_b1) {
-                if (a2_between) {
-                  eventDivide(ev2, a2);
-                } else {
-                  eventDivide(ev1, b2);
-                }
-                return ev2;
-              } else if (a1_between) {
-                if (!a2_equ_b2) {
-                  if (a2_between) {
-                    eventDivide(ev2, a2);
-                  } else {
-                    eventDivide(ev1, b2);
-                  }
-                }
-                eventDivide(ev2, a1);
-              }
-            } else {
-              if (i.alongA === 0) {
-                if (i.alongB === -1)
-                  eventDivide(ev1, b1);
-                else if (i.alongB === 0)
-                  eventDivide(ev1, i.pt);
-                else if (i.alongB === 1)
-                  eventDivide(ev1, b2);
-              }
-              if (i.alongB === 0) {
-                if (i.alongA === -1)
-                  eventDivide(ev2, a1);
-                else if (i.alongA === 0)
-                  eventDivide(ev2, i.pt);
-                else if (i.alongA === 1)
-                  eventDivide(ev2, a2);
-              }
-            }
-            return false;
-          }
-          var segments = [];
-          while (!event_root.isEmpty()) {
-            var ev = event_root.getHead();
-            if (buildLog)
-              buildLog.vert(ev.pt[0]);
-            if (ev.isStart) {
-              let checkBothIntersections2 = function() {
-                if (above) {
-                  var eve2 = checkIntersection(ev, above);
-                  if (eve2)
-                    return eve2;
-                }
-                if (below)
-                  return checkIntersection(ev, below);
-                return false;
-              };
-              var checkBothIntersections = checkBothIntersections2;
-              if (buildLog)
-                buildLog.segmentNew(ev.seg, ev.primary);
-              var surrounding = statusFindSurrounding(ev);
-              var above = surrounding.before ? surrounding.before.ev : null;
-              var below = surrounding.after ? surrounding.after.ev : null;
-              if (buildLog) {
-                buildLog.tempStatus(
-                  ev.seg,
-                  above ? above.seg : false,
-                  below ? below.seg : false
-                );
-              }
-              var eve = checkBothIntersections2();
-              if (eve) {
-                if (selfIntersection) {
-                  var toggle;
-                  if (ev.seg.myFill.below === null)
-                    toggle = true;
-                  else
-                    toggle = ev.seg.myFill.above !== ev.seg.myFill.below;
-                  if (toggle)
-                    eve.seg.myFill.above = !eve.seg.myFill.above;
-                } else {
-                  eve.seg.otherFill = ev.seg.myFill;
-                }
-                if (buildLog)
-                  buildLog.segmentUpdate(eve.seg);
-                ev.other.remove();
-                ev.remove();
-              }
-              if (event_root.getHead() !== ev) {
-                if (buildLog)
-                  buildLog.rewind(ev.seg);
-                continue;
-              }
-              if (selfIntersection) {
-                var toggle;
-                if (ev.seg.myFill.below === null)
-                  toggle = true;
-                else
-                  toggle = ev.seg.myFill.above !== ev.seg.myFill.below;
-                if (!below) {
-                  ev.seg.myFill.below = primaryPolyInverted;
-                } else {
-                  ev.seg.myFill.below = below.seg.myFill.above;
-                }
-                if (toggle)
-                  ev.seg.myFill.above = !ev.seg.myFill.below;
-                else
-                  ev.seg.myFill.above = ev.seg.myFill.below;
-              } else {
-                if (ev.seg.otherFill === null) {
-                  var inside;
-                  if (!below) {
-                    inside = ev.primary ? secondaryPolyInverted : primaryPolyInverted;
-                  } else {
-                    if (ev.primary === below.primary)
-                      inside = below.seg.otherFill.above;
-                    else
-                      inside = below.seg.myFill.above;
-                  }
-                  ev.seg.otherFill = {
-                    above: inside,
-                    below: inside
-                  };
-                }
-              }
-              if (buildLog) {
-                buildLog.status(
-                  ev.seg,
-                  above ? above.seg : false,
-                  below ? below.seg : false
-                );
-              }
-              ev.other.status = surrounding.insert(LinkedList.node({ ev }));
-            } else {
-              var st = ev.status;
-              if (st === null) {
-                throw new Error("PolyBool: Zero-length segment detected; your epsilon is probably too small or too large");
-              }
-              if (status_root.exists(st.prev) && status_root.exists(st.next))
-                checkIntersection(st.prev.ev, st.next.ev);
-              if (buildLog)
-                buildLog.statusRemove(st.ev.seg);
-              st.remove();
-              if (!ev.primary) {
-                var s = ev.seg.myFill;
-                ev.seg.myFill = ev.seg.otherFill;
-                ev.seg.otherFill = s;
-              }
-              segments.push(ev.seg);
-            }
-            event_root.getHead().remove();
-          }
-          if (buildLog)
-            buildLog.done();
-          return segments;
-        }
-        if (!selfIntersection) {
-          return {
-            calculate: function(segments1, inverted1, segments2, inverted2) {
-              segments1.forEach(function(seg) {
-                eventAddSegment(segmentCopy(seg.start, seg.end, seg), true);
-              });
-              segments2.forEach(function(seg) {
-                eventAddSegment(segmentCopy(seg.start, seg.end, seg), false);
-              });
-              return calculate(inverted1, inverted2);
-            }
-          };
-        }
-        return {
-          addRegion: function(region) {
-            var pt1;
-            var pt2 = region[region.length - 1];
-            for (var i = 0; i < region.length; i++) {
-              pt1 = pt2;
-              pt2 = region[i];
-              var forward = eps.pointsCompare(pt1, pt2);
-              if (forward === 0)
-                continue;
-              eventAddSegment(
-                segmentNew(
-                  forward < 0 ? pt1 : pt2,
-                  forward < 0 ? pt2 : pt1
-                ),
-                true
-              );
-            }
-          },
-          calculate: function(inverted) {
-            return calculate(inverted, false);
-          }
-        };
-      }
-      module.exports = Intersecter;
-    }
-  });
-
-  // node_modules/polybooljs/lib/segment-chainer.js
-  var require_segment_chainer = __commonJS({
-    "node_modules/polybooljs/lib/segment-chainer.js"(exports, module) {
-      function SegmentChainer(segments, eps, buildLog) {
-        var chains = [];
-        var regions = [];
-        segments.forEach(function(seg) {
-          var pt1 = seg.start;
-          var pt2 = seg.end;
-          if (eps.pointsSame(pt1, pt2)) {
-            console.warn("PolyBool: Warning: Zero-length segment detected; your epsilon is probably too small or too large");
-            return;
-          }
-          if (buildLog)
-            buildLog.chainStart(seg);
-          var first_match = {
-            index: 0,
-            matches_head: false,
-            matches_pt1: false
-          };
-          var second_match = {
-            index: 0,
-            matches_head: false,
-            matches_pt1: false
-          };
-          var next_match = first_match;
-          function setMatch(index2, matches_head, matches_pt1) {
-            next_match.index = index2;
-            next_match.matches_head = matches_head;
-            next_match.matches_pt1 = matches_pt1;
-            if (next_match === first_match) {
-              next_match = second_match;
-              return false;
-            }
-            next_match = null;
-            return true;
-          }
-          for (var i = 0; i < chains.length; i++) {
-            var chain = chains[i];
-            var head = chain[0];
-            var head2 = chain[1];
-            var tail = chain[chain.length - 1];
-            var tail2 = chain[chain.length - 2];
-            if (eps.pointsSame(head, pt1)) {
-              if (setMatch(i, true, true))
-                break;
-            } else if (eps.pointsSame(head, pt2)) {
-              if (setMatch(i, true, false))
-                break;
-            } else if (eps.pointsSame(tail, pt1)) {
-              if (setMatch(i, false, true))
-                break;
-            } else if (eps.pointsSame(tail, pt2)) {
-              if (setMatch(i, false, false))
-                break;
-            }
-          }
-          if (next_match === first_match) {
-            chains.push([pt1, pt2]);
-            if (buildLog)
-              buildLog.chainNew(pt1, pt2);
-            return;
-          }
-          if (next_match === second_match) {
-            if (buildLog)
-              buildLog.chainMatch(first_match.index);
-            var index = first_match.index;
-            var pt = first_match.matches_pt1 ? pt2 : pt1;
-            var addToHead = first_match.matches_head;
-            var chain = chains[index];
-            var grow = addToHead ? chain[0] : chain[chain.length - 1];
-            var grow2 = addToHead ? chain[1] : chain[chain.length - 2];
-            var oppo = addToHead ? chain[chain.length - 1] : chain[0];
-            var oppo2 = addToHead ? chain[chain.length - 2] : chain[1];
-            if (eps.pointsCollinear(grow2, grow, pt)) {
-              if (addToHead) {
-                if (buildLog)
-                  buildLog.chainRemoveHead(first_match.index, pt);
-                chain.shift();
-              } else {
-                if (buildLog)
-                  buildLog.chainRemoveTail(first_match.index, pt);
-                chain.pop();
-              }
-              grow = grow2;
-            }
-            if (eps.pointsSame(oppo, pt)) {
-              chains.splice(index, 1);
-              if (eps.pointsCollinear(oppo2, oppo, grow)) {
-                if (addToHead) {
-                  if (buildLog)
-                    buildLog.chainRemoveTail(first_match.index, grow);
-                  chain.pop();
-                } else {
-                  if (buildLog)
-                    buildLog.chainRemoveHead(first_match.index, grow);
-                  chain.shift();
-                }
-              }
-              if (buildLog)
-                buildLog.chainClose(first_match.index);
-              regions.push(chain);
-              return;
-            }
-            if (addToHead) {
-              if (buildLog)
-                buildLog.chainAddHead(first_match.index, pt);
-              chain.unshift(pt);
-            } else {
-              if (buildLog)
-                buildLog.chainAddTail(first_match.index, pt);
-              chain.push(pt);
-            }
-            return;
-          }
-          function reverseChain(index2) {
-            if (buildLog)
-              buildLog.chainReverse(index2);
-            chains[index2].reverse();
-          }
-          function appendChain(index1, index2) {
-            var chain1 = chains[index1];
-            var chain2 = chains[index2];
-            var tail3 = chain1[chain1.length - 1];
-            var tail22 = chain1[chain1.length - 2];
-            var head3 = chain2[0];
-            var head22 = chain2[1];
-            if (eps.pointsCollinear(tail22, tail3, head3)) {
-              if (buildLog)
-                buildLog.chainRemoveTail(index1, tail3);
-              chain1.pop();
-              tail3 = tail22;
-            }
-            if (eps.pointsCollinear(tail3, head3, head22)) {
-              if (buildLog)
-                buildLog.chainRemoveHead(index2, head3);
-              chain2.shift();
-            }
-            if (buildLog)
-              buildLog.chainJoin(index1, index2);
-            chains[index1] = chain1.concat(chain2);
-            chains.splice(index2, 1);
-          }
-          var F = first_match.index;
-          var S = second_match.index;
-          if (buildLog)
-            buildLog.chainConnect(F, S);
-          var reverseF = chains[F].length < chains[S].length;
-          if (first_match.matches_head) {
-            if (second_match.matches_head) {
-              if (reverseF) {
-                reverseChain(F);
-                appendChain(F, S);
-              } else {
-                reverseChain(S);
-                appendChain(S, F);
-              }
-            } else {
-              appendChain(S, F);
-            }
-          } else {
-            if (second_match.matches_head) {
-              appendChain(F, S);
-            } else {
-              if (reverseF) {
-                reverseChain(F);
-                appendChain(S, F);
-              } else {
-                reverseChain(S);
-                appendChain(F, S);
-              }
-            }
-          }
-        });
-        return regions;
-      }
-      module.exports = SegmentChainer;
-    }
-  });
-
-  // node_modules/polybooljs/lib/segment-selector.js
-  var require_segment_selector = __commonJS({
-    "node_modules/polybooljs/lib/segment-selector.js"(exports, module) {
-      function select(segments, selection, buildLog) {
-        var result = [];
-        segments.forEach(function(seg) {
-          var index = (seg.myFill.above ? 8 : 0) + (seg.myFill.below ? 4 : 0) + (seg.otherFill && seg.otherFill.above ? 2 : 0) + (seg.otherFill && seg.otherFill.below ? 1 : 0);
-          if (selection[index] !== 0) {
-            result.push({
-              id: buildLog ? buildLog.segmentId() : -1,
-              start: seg.start,
-              end: seg.end,
-              myFill: {
-                above: selection[index] === 1,
-                // 1 if filled above
-                below: selection[index] === 2
-                // 2 if filled below
-              },
-              otherFill: null
-            });
-          }
-        });
-        if (buildLog)
-          buildLog.selected(result);
-        return result;
-      }
-      var SegmentSelector = {
-        union: function(segments, buildLog) {
-          return select(segments, [
-            0,
-            2,
-            1,
-            0,
-            2,
-            2,
-            0,
-            0,
-            1,
-            0,
-            1,
-            0,
-            0,
-            0,
-            0,
-            0
-          ], buildLog);
-        },
-        intersect: function(segments, buildLog) {
-          return select(segments, [
-            0,
-            0,
-            0,
-            0,
-            0,
-            2,
-            0,
-            2,
-            0,
-            0,
-            1,
-            1,
-            0,
-            2,
-            1,
-            0
-          ], buildLog);
-        },
-        difference: function(segments, buildLog) {
-          return select(segments, [
-            0,
-            0,
-            0,
-            0,
-            2,
-            0,
-            2,
-            0,
-            1,
-            1,
-            0,
-            0,
-            0,
-            1,
-            2,
-            0
-          ], buildLog);
-        },
-        differenceRev: function(segments, buildLog) {
-          return select(segments, [
-            0,
-            2,
-            1,
-            0,
-            0,
-            0,
-            1,
-            1,
-            0,
-            2,
-            0,
-            2,
-            0,
-            0,
-            0,
-            0
-          ], buildLog);
-        },
-        xor: function(segments, buildLog) {
-          return select(segments, [
-            0,
-            2,
-            1,
-            0,
-            2,
-            0,
-            0,
-            1,
-            1,
-            0,
-            0,
-            2,
-            0,
-            1,
-            2,
-            0
-          ], buildLog);
-        }
-      };
-      module.exports = SegmentSelector;
-    }
-  });
-
-  // node_modules/polybooljs/lib/geojson.js
-  var require_geojson = __commonJS({
-    "node_modules/polybooljs/lib/geojson.js"(exports, module) {
-      var GeoJSON = {
-        // convert a GeoJSON object to a PolyBool polygon
-        toPolygon: function(PolyBool, geojson) {
-          function GeoPoly(coords) {
-            if (coords.length <= 0)
-              return PolyBool.segments({ inverted: false, regions: [] });
-            function LineString(ls) {
-              var reg = ls.slice(0, ls.length - 1);
-              return PolyBool.segments({ inverted: false, regions: [reg] });
-            }
-            var out2 = LineString(coords[0]);
-            for (var i2 = 1; i2 < coords.length; i2++)
-              out2 = PolyBool.selectDifference(PolyBool.combine(out2, LineString(coords[i2])));
-            return out2;
-          }
-          if (geojson.type === "Polygon") {
-            return PolyBool.polygon(GeoPoly(geojson.coordinates));
-          } else if (geojson.type === "MultiPolygon") {
-            var out = PolyBool.segments({ inverted: false, regions: [] });
-            for (var i = 0; i < geojson.coordinates.length; i++)
-              out = PolyBool.selectUnion(PolyBool.combine(out, GeoPoly(geojson.coordinates[i])));
-            return PolyBool.polygon(out);
-          }
-          throw new Error("PolyBool: Cannot convert GeoJSON object to PolyBool polygon");
-        },
-        // convert a PolyBool polygon to a GeoJSON object
-        fromPolygon: function(PolyBool, eps, poly) {
-          poly = PolyBool.polygon(PolyBool.segments(poly));
-          function regionInsideRegion(r1, r2) {
-            return eps.pointInsideRegion([
-              (r1[0][0] + r1[1][0]) * 0.5,
-              (r1[0][1] + r1[1][1]) * 0.5
-            ], r2);
-          }
-          function newNode(region2) {
-            return {
-              region: region2,
-              children: []
-            };
-          }
-          var roots = newNode(null);
-          function addChild(root, region2) {
-            for (var i2 = 0; i2 < root.children.length; i2++) {
-              var child = root.children[i2];
-              if (regionInsideRegion(region2, child.region)) {
-                addChild(child, region2);
-                return;
-              }
-            }
-            var node = newNode(region2);
-            for (var i2 = 0; i2 < root.children.length; i2++) {
-              var child = root.children[i2];
-              if (regionInsideRegion(child.region, region2)) {
-                node.children.push(child);
-                root.children.splice(i2, 1);
-                i2--;
-              }
-            }
-            root.children.push(node);
-          }
-          for (var i = 0; i < poly.regions.length; i++) {
-            var region = poly.regions[i];
-            if (region.length < 3)
-              continue;
-            addChild(roots, region);
-          }
-          function forceWinding(region2, clockwise) {
-            var winding = 0;
-            var last_x = region2[region2.length - 1][0];
-            var last_y = region2[region2.length - 1][1];
-            var copy = [];
-            for (var i2 = 0; i2 < region2.length; i2++) {
-              var curr_x = region2[i2][0];
-              var curr_y = region2[i2][1];
-              copy.push([curr_x, curr_y]);
-              winding += curr_y * last_x - curr_x * last_y;
-              last_x = curr_x;
-              last_y = curr_y;
-            }
-            var isclockwise = winding < 0;
-            if (isclockwise !== clockwise)
-              copy.reverse();
-            copy.push([copy[0][0], copy[0][1]]);
-            return copy;
-          }
-          var geopolys = [];
-          function addExterior(node) {
-            var poly2 = [forceWinding(node.region, false)];
-            geopolys.push(poly2);
-            for (var i2 = 0; i2 < node.children.length; i2++)
-              poly2.push(getInterior(node.children[i2]));
-          }
-          function getInterior(node) {
-            for (var i2 = 0; i2 < node.children.length; i2++)
-              addExterior(node.children[i2]);
-            return forceWinding(node.region, true);
-          }
-          for (var i = 0; i < roots.children.length; i++)
-            addExterior(roots.children[i]);
-          if (geopolys.length <= 0)
-            return { type: "Polygon", coordinates: [] };
-          if (geopolys.length == 1)
-            return { type: "Polygon", coordinates: geopolys[0] };
-          return {
-            // otherwise, use a GeoJSON MultiPolygon
-            type: "MultiPolygon",
-            coordinates: geopolys
-          };
-        }
-      };
-      module.exports = GeoJSON;
-    }
-  });
-
-  // node_modules/polybooljs/index.js
-  var require_polybooljs = __commonJS({
-    "node_modules/polybooljs/index.js"(exports, module) {
-      var BuildLog = require_build_log();
-      var Epsilon = require_epsilon();
-      var Intersecter = require_intersecter();
-      var SegmentChainer = require_segment_chainer();
-      var SegmentSelector = require_segment_selector();
-      var GeoJSON = require_geojson();
-      var buildLog = false;
-      var epsilon = Epsilon();
-      var PolyBool;
-      PolyBool = {
-        // getter/setter for buildLog
-        buildLog: function(bl) {
-          if (bl === true)
-            buildLog = BuildLog();
-          else if (bl === false)
-            buildLog = false;
-          return buildLog === false ? false : buildLog.list;
-        },
-        // getter/setter for epsilon
-        epsilon: function(v) {
-          return epsilon.epsilon(v);
-        },
-        // core API
-        segments: function(poly) {
-          var i = Intersecter(true, epsilon, buildLog);
-          poly.regions.forEach(i.addRegion);
-          return {
-            segments: i.calculate(poly.inverted),
-            inverted: poly.inverted
-          };
-        },
-        combine: function(segments1, segments2) {
-          var i3 = Intersecter(false, epsilon, buildLog);
-          return {
-            combined: i3.calculate(
-              segments1.segments,
-              segments1.inverted,
-              segments2.segments,
-              segments2.inverted
-            ),
-            inverted1: segments1.inverted,
-            inverted2: segments2.inverted
-          };
-        },
-        selectUnion: function(combined) {
-          return {
-            segments: SegmentSelector.union(combined.combined, buildLog),
-            inverted: combined.inverted1 || combined.inverted2
-          };
-        },
-        selectIntersect: function(combined) {
-          return {
-            segments: SegmentSelector.intersect(combined.combined, buildLog),
-            inverted: combined.inverted1 && combined.inverted2
-          };
-        },
-        selectDifference: function(combined) {
-          return {
-            segments: SegmentSelector.difference(combined.combined, buildLog),
-            inverted: combined.inverted1 && !combined.inverted2
-          };
-        },
-        selectDifferenceRev: function(combined) {
-          return {
-            segments: SegmentSelector.differenceRev(combined.combined, buildLog),
-            inverted: !combined.inverted1 && combined.inverted2
-          };
-        },
-        selectXor: function(combined) {
-          return {
-            segments: SegmentSelector.xor(combined.combined, buildLog),
-            inverted: combined.inverted1 !== combined.inverted2
-          };
-        },
-        polygon: function(segments) {
-          return {
-            regions: SegmentChainer(segments.segments, epsilon, buildLog),
-            inverted: segments.inverted
-          };
-        },
-        // GeoJSON converters
-        polygonFromGeoJSON: function(geojson) {
-          return GeoJSON.toPolygon(PolyBool, geojson);
-        },
-        polygonToGeoJSON: function(poly) {
-          return GeoJSON.fromPolygon(PolyBool, epsilon, poly);
-        },
-        // helper functions for common operations
-        union: function(poly1, poly2) {
-          return operate(poly1, poly2, PolyBool.selectUnion);
-        },
-        intersect: function(poly1, poly2) {
-          return operate(poly1, poly2, PolyBool.selectIntersect);
-        },
-        difference: function(poly1, poly2) {
-          return operate(poly1, poly2, PolyBool.selectDifference);
-        },
-        differenceRev: function(poly1, poly2) {
-          return operate(poly1, poly2, PolyBool.selectDifferenceRev);
-        },
-        xor: function(poly1, poly2) {
-          return operate(poly1, poly2, PolyBool.selectXor);
-        }
-      };
-      function operate(poly1, poly2, selector) {
-        var seg1 = PolyBool.segments(poly1);
-        var seg2 = PolyBool.segments(poly2);
-        var comb = PolyBool.combine(seg1, seg2);
-        var seg3 = selector(comb);
-        return PolyBool.polygon(seg3);
-      }
-      if (typeof window === "object")
-        window.PolyBool = PolyBool;
-      module.exports = PolyBool;
-    }
-  });
-
-  // node_modules/point-in-polygon/nested.js
-  var require_nested = __commonJS({
-    "node_modules/point-in-polygon/nested.js"(exports, module) {
-      module.exports = function pointInPolygonNested(point, vs, start, end) {
-        var x = point[0], y = point[1];
-        var inside = false;
-        if (start === void 0) start = 0;
-        if (end === void 0) end = vs.length;
-        var len = end - start;
-        for (var i = 0, j = len - 1; i < len; j = i++) {
-          var xi = vs[i + start][0], yi = vs[i + start][1];
-          var xj = vs[j + start][0], yj = vs[j + start][1];
-          var intersect = yi > y !== yj > y && x < (xj - xi) * (y - yi) / (yj - yi) + xi;
-          if (intersect) inside = !inside;
-        }
-        return inside;
-      };
-    }
-  });
-
-  // src/lib/polygon.js
-  var require_polygon = __commonJS({
-    "src/lib/polygon.js"(exports, module) {
-      "use strict";
-      var dot = require_matrix().dot;
-      var BADNUM = require_numerical().BADNUM;
-      var polygon = module.exports = {};
-      polygon.tester = function tester(ptsIn) {
-        var pts = ptsIn.slice();
-        var xmin = pts[0][0];
-        var xmax = xmin;
-        var ymin = pts[0][1];
-        var ymax = ymin;
-        var i;
-        if (pts[pts.length - 1][0] !== pts[0][0] || pts[pts.length - 1][1] !== pts[0][1]) {
-          pts.push(pts[0]);
-        }
-        for (i = 1; i < pts.length; i++) {
-          xmin = Math.min(xmin, pts[i][0]);
-          xmax = Math.max(xmax, pts[i][0]);
-          ymin = Math.min(ymin, pts[i][1]);
-          ymax = Math.max(ymax, pts[i][1]);
-        }
-        var isRect = false;
-        var rectFirstEdgeTest;
-        if (pts.length === 5) {
-          if (pts[0][0] === pts[1][0]) {
-            if (pts[2][0] === pts[3][0] && pts[0][1] === pts[3][1] && pts[1][1] === pts[2][1]) {
-              isRect = true;
-              rectFirstEdgeTest = function(pt) {
-                return pt[0] === pts[0][0];
-              };
-            }
-          } else if (pts[0][1] === pts[1][1]) {
-            if (pts[2][1] === pts[3][1] && pts[0][0] === pts[3][0] && pts[1][0] === pts[2][0]) {
-              isRect = true;
-              rectFirstEdgeTest = function(pt) {
-                return pt[1] === pts[0][1];
-              };
-            }
-          }
-        }
-        function rectContains(pt, omitFirstEdge) {
-          var x = pt[0];
-          var y = pt[1];
-          if (x === BADNUM || x < xmin || x > xmax || y === BADNUM || y < ymin || y > ymax) {
-            return false;
-          }
-          if (omitFirstEdge && rectFirstEdgeTest(pt)) return false;
-          return true;
-        }
-        function contains(pt, omitFirstEdge) {
-          var x = pt[0];
-          var y = pt[1];
-          if (x === BADNUM || x < xmin || x > xmax || y === BADNUM || y < ymin || y > ymax) {
-            return false;
-          }
-          var imax = pts.length;
-          var x1 = pts[0][0];
-          var y1 = pts[0][1];
-          var crossings = 0;
-          var i2;
-          var x0;
-          var y0;
-          var xmini;
-          var ycross;
-          for (i2 = 1; i2 < imax; i2++) {
-            x0 = x1;
-            y0 = y1;
-            x1 = pts[i2][0];
-            y1 = pts[i2][1];
-            xmini = Math.min(x0, x1);
-            if (x < xmini || x > Math.max(x0, x1) || y > Math.max(y0, y1)) {
-              continue;
-            } else if (y < Math.min(y0, y1)) {
-              if (x !== xmini) crossings++;
-            } else {
-              if (x1 === x0) ycross = y;
-              else ycross = y0 + (x - x0) * (y1 - y0) / (x1 - x0);
-              if (y === ycross) {
-                if (i2 === 1 && omitFirstEdge) return false;
-                return true;
-              }
-              if (y <= ycross && x !== xmini) crossings++;
-            }
-          }
-          return crossings % 2 === 1;
-        }
-        var degenerate = true;
-        var lastPt = pts[0];
-        for (i = 1; i < pts.length; i++) {
-          if (lastPt[0] !== pts[i][0] || lastPt[1] !== pts[i][1]) {
-            degenerate = false;
-            break;
-          }
-        }
-        return {
-          xmin,
-          xmax,
-          ymin,
-          ymax,
-          pts,
-          contains: isRect ? rectContains : contains,
-          isRect,
-          degenerate
-        };
-      };
-      polygon.isSegmentBent = function isSegmentBent(pts, start, end, tolerance) {
-        var startPt = pts[start];
-        var segment = [pts[end][0] - startPt[0], pts[end][1] - startPt[1]];
-        var segmentSquared = dot(segment, segment);
-        var segmentLen = Math.sqrt(segmentSquared);
-        var unitPerp = [-segment[1] / segmentLen, segment[0] / segmentLen];
-        var i;
-        var part;
-        var partParallel;
-        for (i = start + 1; i < end; i++) {
-          part = [pts[i][0] - startPt[0], pts[i][1] - startPt[1]];
-          partParallel = dot(part, segment);
-          if (partParallel < 0 || partParallel > segmentSquared || Math.abs(dot(part, unitPerp)) > tolerance) return true;
-        }
-        return false;
-      };
-      polygon.filter = function filter(pts, tolerance) {
-        var ptsFiltered = [pts[0]];
-        var doneRawIndex = 0;
-        var doneFilteredIndex = 0;
-        function addPt(pt) {
-          pts.push(pt);
-          var prevFilterLen = ptsFiltered.length;
-          var iLast = doneRawIndex;
-          ptsFiltered.splice(doneFilteredIndex + 1);
-          for (var i = iLast + 1; i < pts.length; i++) {
-            if (i === pts.length - 1 || polygon.isSegmentBent(pts, iLast, i + 1, tolerance)) {
-              ptsFiltered.push(pts[i]);
-              if (ptsFiltered.length < prevFilterLen - 2) {
-                doneRawIndex = i;
-                doneFilteredIndex = ptsFiltered.length - 1;
-              }
-              iLast = i;
-            }
-          }
-        }
-        if (pts.length > 1) {
-          var lastPt = pts.pop();
-          addPt(lastPt);
-        }
-        return {
-          addPt,
-          raw: pts,
-          filtered: ptsFiltered
-        };
-      };
-    }
-  });
-
-  // src/components/selections/constants.js
-  var require_constants7 = __commonJS({
-    "src/components/selections/constants.js"(exports, module) {
-      "use strict";
-      module.exports = {
-        // max pixels off straight before a lasso select line counts as bent
-        BENDPX: 1.5,
-        // smallest dimension allowed for a select box
-        MINSELECT: 12,
-        // throttling limit (ms) for selectPoints calls
-        SELECTDELAY: 100,
-        // cache ID suffix for throttle
-        SELECTID: "-select"
-      };
-    }
-  });
-
-  // src/components/selections/select.js
-  var require_select = __commonJS({
-    "src/components/selections/select.js"(exports, module) {
-      "use strict";
-      var polybool = require_polybooljs();
-      var pointInPolygon = require_nested();
-      var Registry = require_registry();
-      var dashStyle = require_drawing().dashStyle;
-      var Color2 = require_color();
-      var Fx = require_fx();
-      var makeEventData = require_helpers2().makeEventData;
-      var dragHelpers = require_helpers5();
-      var freeMode = dragHelpers.freeMode;
-      var rectMode = dragHelpers.rectMode;
-      var drawMode = dragHelpers.drawMode;
-      var openMode = dragHelpers.openMode;
-      var selectMode = dragHelpers.selectMode;
-      var shapeHelpers = require_helpers8();
-      var shapeConstants = require_constants5();
-      var displayOutlines = require_display_outlines();
-      var clearOutline = require_handle_outline().clearOutline;
-      var newShapeHelpers = require_helpers7();
-      var handleEllipse = newShapeHelpers.handleEllipse;
-      var readPaths = newShapeHelpers.readPaths;
-      var newShapes = require_newshapes().newShapes;
-      var newSelections = require_newselections();
-      var activateLastSelection = require_draw3().activateLastSelection;
-      var Lib = require_lib();
-      var ascending = Lib.sorterAsc;
-      var libPolygon = require_polygon();
-      var throttle = require_throttle();
-      var getFromId = require_axis_ids().getFromId;
-      var clearGlCanvases = require_clear_gl_canvases();
-      var redrawReglTraces = require_subroutines().redrawReglTraces;
-      var constants = require_constants7();
-      var MINSELECT = constants.MINSELECT;
-      var filteredPolygon = libPolygon.filter;
-      var polygonTester = libPolygon.tester;
-      var helpers = require_helpers6();
-      var p2r = helpers.p2r;
-      var axValue = helpers.axValue;
-      var getTransform = helpers.getTransform;
-      function hasSubplot(dragOptions) {
-        return dragOptions.subplot !== void 0;
-      }
-      function prepSelect(evt, startX, startY, dragOptions, mode) {
-        var isCartesian = !hasSubplot(dragOptions);
-        var isFreeMode = freeMode(mode);
-        var isRectMode = rectMode(mode);
-        var isOpenMode = openMode(mode);
-        var isDrawMode = drawMode(mode);
-        var isSelectMode = selectMode(mode);
-        var isLine = mode === "drawline";
-        var isEllipse = mode === "drawcircle";
-        var isLineOrEllipse = isLine || isEllipse;
-        var gd = dragOptions.gd;
-        var fullLayout = gd._fullLayout;
-        var immediateSelect = isSelectMode && fullLayout.newselection.mode === "immediate" && isCartesian;
-        var zoomLayer = fullLayout._zoomlayer;
-        var dragBBox = dragOptions.element.getBoundingClientRect();
-        var plotinfo = dragOptions.plotinfo;
-        var transform = getTransform(plotinfo);
-        var x0 = startX - dragBBox.left;
-        var y0 = startY - dragBBox.top;
-        fullLayout._calcInverseTransform(gd);
-        var transformedCoords = Lib.apply3DTransform(fullLayout._invTransform)(x0, y0);
-        x0 = transformedCoords[0];
-        y0 = transformedCoords[1];
-        var scaleX = fullLayout._invScaleX;
-        var scaleY = fullLayout._invScaleY;
-        var x1 = x0;
-        var y1 = y0;
-        var path0 = "M" + x0 + "," + y0;
-        var xAxis = dragOptions.xaxes[0];
-        var yAxis = dragOptions.yaxes[0];
-        var pw = xAxis._length;
-        var ph = yAxis._length;
-        var subtract = evt.altKey && !(drawMode(mode) && isOpenMode);
-        var filterPoly, selectionTesters, mergedPolygons, currentPolygon;
-        var i, searchInfo, eventData;
-        coerceSelectionsCache(evt, gd, dragOptions);
-        if (isFreeMode) {
-          filterPoly = filteredPolygon([[x0, y0]], constants.BENDPX);
-        }
-        var outlines = zoomLayer.selectAll("path.select-outline-" + plotinfo.id).data([1]);
-        var newStyle = isDrawMode ? fullLayout.newshape : fullLayout.newselection;
-        if (isDrawMode) {
-          dragOptions.hasText = newStyle.label.text || newStyle.label.texttemplate;
-        }
-        var fillC = isDrawMode && !isOpenMode ? newStyle.fillcolor : "rgba(0,0,0,0)";
-        var strokeC = newStyle.line.color || (isCartesian ? Color2.contrast(gd._fullLayout.plot_bgcolor) : "#7f7f7f");
-        outlines.enter().append("path").attr("class", "select-outline select-outline-" + plotinfo.id).style({
-          opacity: isDrawMode ? newStyle.opacity / 2 : 1,
-          "stroke-dasharray": dashStyle(newStyle.line.dash, newStyle.line.width),
-          "stroke-width": newStyle.line.width + "px",
-          "shape-rendering": "crispEdges"
-        }).call(Color2.stroke, strokeC).call(Color2.fill, fillC).attr("fill-rule", "evenodd").classed("cursor-move", isDrawMode ? true : false).attr("transform", transform).attr("d", path0 + "Z");
-        var corners = zoomLayer.append("path").attr("class", "zoombox-corners").style({
-          fill: Color2.background,
-          stroke: Color2.defaultLine,
-          "stroke-width": 1
-        }).attr("transform", transform).attr("d", "M0,0Z");
-        if (isDrawMode && dragOptions.hasText) {
-          var shapeGroup = zoomLayer.select(".label-temp");
-          if (shapeGroup.empty()) {
-            shapeGroup = zoomLayer.append("g").classed("label-temp", true).classed("select-outline", true).style({ opacity: 0.8 });
-          }
-        }
-        var throttleID = fullLayout._uid + constants.SELECTID;
-        var selection = [];
-        var searchTraces = determineSearchTraces(
-          gd,
-          dragOptions.xaxes,
-          dragOptions.yaxes,
-          dragOptions.subplot
-        );
-        if (immediateSelect && !evt.shiftKey) {
-          dragOptions._clearSubplotSelections = function() {
-            if (!isCartesian) return;
-            var xRef = xAxis._id;
-            var yRef = yAxis._id;
-            deselectSubplot(gd, xRef, yRef, searchTraces);
-            var selections = (gd.layout || {}).selections || [];
-            var list = [];
-            var selectionErased = false;
-            for (var q = 0; q < selections.length; q++) {
-              var s = fullLayout.selections[q];
-              if (!s || s.xref !== xRef || s.yref !== yRef) {
-                list.push(selections[q]);
-              } else {
-                selectionErased = true;
-              }
-            }
-            if (selectionErased) {
-              gd._fullLayout._noEmitSelectedAtStart = true;
-              Registry.call("_guiRelayout", gd, {
-                selections: list
-              });
-            }
-          };
-        }
-        var fillRangeItems = getFillRangeItems(dragOptions);
-        dragOptions.moveFn = function(dx0, dy0) {
-          if (dragOptions._clearSubplotSelections) {
-            dragOptions._clearSubplotSelections();
-            dragOptions._clearSubplotSelections = void 0;
-          }
-          x1 = Math.max(0, Math.min(pw, scaleX * dx0 + x0));
-          y1 = Math.max(0, Math.min(ph, scaleY * dy0 + y0));
-          var dx = Math.abs(x1 - x0);
-          var dy = Math.abs(y1 - y0);
-          if (isRectMode) {
-            var direction;
-            var start, end;
-            if (isSelectMode) {
-              var q = fullLayout.selectdirection;
-              if (q === "any") {
-                if (dy < Math.min(dx * 0.6, MINSELECT)) {
-                  direction = "h";
-                } else if (dx < Math.min(dy * 0.6, MINSELECT)) {
-                  direction = "v";
-                } else {
-                  direction = "d";
-                }
-              } else {
-                direction = q;
-              }
-              switch (direction) {
-                case "h":
-                  start = isEllipse ? ph / 2 : 0;
-                  end = ph;
-                  break;
-                case "v":
-                  start = isEllipse ? pw / 2 : 0;
-                  end = pw;
-                  break;
-              }
-            }
-            if (isDrawMode) {
-              switch (fullLayout.newshape.drawdirection) {
-                case "vertical":
-                  direction = "h";
-                  start = isEllipse ? ph / 2 : 0;
-                  end = ph;
-                  break;
-                case "horizontal":
-                  direction = "v";
-                  start = isEllipse ? pw / 2 : 0;
-                  end = pw;
-                  break;
-                case "ortho":
-                  if (dx < dy) {
-                    direction = "h";
-                    start = y0;
-                    end = y1;
-                  } else {
-                    direction = "v";
-                    start = x0;
-                    end = x1;
-                  }
-                  break;
-                default:
-                  direction = "d";
-              }
-            }
-            if (direction === "h") {
-              currentPolygon = isLineOrEllipse ? handleEllipse(isEllipse, [x1, start], [x1, end]) : (
-                // using x1 instead of x0 allows adjusting the line while drawing
-                [[x0, start], [x0, end], [x1, end], [x1, start]]
-              );
-              currentPolygon.xmin = isLineOrEllipse ? x1 : Math.min(x0, x1);
-              currentPolygon.xmax = isLineOrEllipse ? x1 : Math.max(x0, x1);
-              currentPolygon.ymin = Math.min(start, end);
-              currentPolygon.ymax = Math.max(start, end);
-              corners.attr("d", "M" + currentPolygon.xmin + "," + (y0 - MINSELECT) + "h-4v" + 2 * MINSELECT + "h4ZM" + (currentPolygon.xmax - 1) + "," + (y0 - MINSELECT) + "h4v" + 2 * MINSELECT + "h-4Z");
-            } else if (direction === "v") {
-              currentPolygon = isLineOrEllipse ? handleEllipse(isEllipse, [start, y1], [end, y1]) : (
-                // using y1 instead of y0 allows adjusting the line while drawing
-                [[start, y0], [start, y1], [end, y1], [end, y0]]
-              );
-              currentPolygon.xmin = Math.min(start, end);
-              currentPolygon.xmax = Math.max(start, end);
-              currentPolygon.ymin = isLineOrEllipse ? y1 : Math.min(y0, y1);
-              currentPolygon.ymax = isLineOrEllipse ? y1 : Math.max(y0, y1);
-              corners.attr("d", "M" + (x0 - MINSELECT) + "," + currentPolygon.ymin + "v-4h" + 2 * MINSELECT + "v4ZM" + (x0 - MINSELECT) + "," + (currentPolygon.ymax - 1) + "v4h" + 2 * MINSELECT + "v-4Z");
-            } else if (direction === "d") {
-              currentPolygon = isLineOrEllipse ? handleEllipse(isEllipse, [x0, y0], [x1, y1]) : [[x0, y0], [x0, y1], [x1, y1], [x1, y0]];
-              currentPolygon.xmin = Math.min(x0, x1);
-              currentPolygon.xmax = Math.max(x0, x1);
-              currentPolygon.ymin = Math.min(y0, y1);
-              currentPolygon.ymax = Math.max(y0, y1);
-              corners.attr("d", "M0,0Z");
-            }
-          } else if (isFreeMode) {
-            filterPoly.addPt([x1, y1]);
-            currentPolygon = filterPoly.filtered;
-          }
-          if (dragOptions.selectionDefs && dragOptions.selectionDefs.length) {
-            mergedPolygons = mergePolygons(dragOptions.mergedPolygons, currentPolygon, subtract);
-            currentPolygon.subtract = subtract;
-            selectionTesters = multiTester(dragOptions.selectionDefs.concat([currentPolygon]));
-          } else {
-            mergedPolygons = [currentPolygon];
-            selectionTesters = polygonTester(currentPolygon);
-          }
-          displayOutlines(convertPoly(mergedPolygons, isOpenMode), outlines, dragOptions);
-          if (isSelectMode) {
-            var _res = reselect(gd, false);
-            var extraPoints = _res.eventData ? _res.eventData.points.slice() : [];
-            _res = reselect(gd, false, selectionTesters, searchTraces, dragOptions);
-            selectionTesters = _res.selectionTesters;
-            eventData = _res.eventData;
-            var poly;
-            if (filterPoly) {
-              poly = filterPoly.filtered;
-            } else {
-              poly = castMultiPolygon(mergedPolygons);
-            }
-            throttle.throttle(
-              throttleID,
-              constants.SELECTDELAY,
-              function() {
-                selection = _doSelect(selectionTesters, searchTraces);
-                var newPoints = selection.slice();
-                for (var w = 0; w < extraPoints.length; w++) {
-                  var p = extraPoints[w];
-                  var found = false;
-                  for (var u = 0; u < newPoints.length; u++) {
-                    if (newPoints[u].curveNumber === p.curveNumber && newPoints[u].pointNumber === p.pointNumber) {
-                      found = true;
-                      break;
-                    }
-                  }
-                  if (!found) newPoints.push(p);
-                }
-                if (newPoints.length) {
-                  if (!eventData) eventData = {};
-                  eventData.points = newPoints;
-                }
-                fillRangeItems(eventData, poly);
-                emitSelecting(gd, eventData);
-              }
-            );
-          }
-        };
-        dragOptions.clickFn = function(numClicks, evt2) {
-          corners.remove();
-          if (gd._fullLayout._activeShapeIndex >= 0) {
-            gd._fullLayout._deactivateShape(gd);
-            return;
-          }
-          if (isDrawMode) return;
-          var clickmode = fullLayout.clickmode;
-          throttle.done(throttleID).then(function() {
-            throttle.clear(throttleID);
-            if (numClicks === 2) {
-              outlines.remove();
-              for (i = 0; i < searchTraces.length; i++) {
-                searchInfo = searchTraces[i];
-                searchInfo._module.selectPoints(searchInfo, false);
-              }
-              updateSelectedState(gd, searchTraces);
-              clearSelectionsCache(dragOptions);
-              emitDeselect(gd);
-              if (searchTraces.length) {
-                var clickedXaxis = searchTraces[0].xaxis;
-                var clickedYaxis = searchTraces[0].yaxis;
-                if (clickedXaxis && clickedYaxis) {
-                  var subSelections = [];
-                  var allSelections = gd._fullLayout.selections;
-                  for (var k = 0; k < allSelections.length; k++) {
-                    var s = allSelections[k];
-                    if (!s) continue;
-                    if (s.xref !== clickedXaxis._id || s.yref !== clickedYaxis._id) {
-                      subSelections.push(s);
-                    }
-                  }
-                  if (subSelections.length < allSelections.length) {
-                    gd._fullLayout._noEmitSelectedAtStart = true;
-                    Registry.call("_guiRelayout", gd, {
-                      selections: subSelections
-                    });
-                  }
-                }
-              }
-            } else {
-              if (clickmode.indexOf("select") > -1) {
-                selectOnClick(
-                  evt2,
-                  gd,
-                  dragOptions.xaxes,
-                  dragOptions.yaxes,
-                  dragOptions.subplot,
-                  dragOptions,
-                  outlines
-                );
-              }
-              if (clickmode === "event") {
-                emitSelected(gd, void 0);
-              }
-            }
-            Fx.click(gd, evt2, plotinfo.id);
-          }).catch(Lib.error);
-        };
-        dragOptions.doneFn = function() {
-          corners.remove();
-          throttle.done(throttleID).then(function() {
-            throttle.clear(throttleID);
-            if (!immediateSelect && currentPolygon && dragOptions.selectionDefs) {
-              currentPolygon.subtract = subtract;
-              dragOptions.selectionDefs.push(currentPolygon);
-              dragOptions.mergedPolygons.length = 0;
-              [].push.apply(dragOptions.mergedPolygons, mergedPolygons);
-            }
-            if (immediateSelect || isDrawMode) {
-              clearSelectionsCache(dragOptions, immediateSelect);
-            }
-            if (dragOptions.doneFnCompleted) {
-              dragOptions.doneFnCompleted(selection);
-            }
-            if (isSelectMode) {
-              emitSelected(gd, eventData);
-            }
-          }).catch(Lib.error);
-        };
-      }
-      function selectOnClick(evt, gd, xAxes, yAxes, subplot, dragOptions, polygonOutlines) {
-        var hoverData = gd._hoverdata;
-        var fullLayout = gd._fullLayout;
-        var clickmode = fullLayout.clickmode;
-        var sendEvents = clickmode.indexOf("event") > -1;
-        var selection = [];
-        var searchTraces, searchInfo, currentSelectionDef, selectionTesters, traceSelection;
-        var thisTracesSelection, pointOrBinSelected, subtract, eventData, i;
-        if (isHoverDataSet(hoverData)) {
-          coerceSelectionsCache(evt, gd, dragOptions);
-          searchTraces = determineSearchTraces(gd, xAxes, yAxes, subplot);
-          var clickedPtInfo = extractClickedPtInfo(hoverData, searchTraces);
-          var isBinnedTrace = clickedPtInfo.pointNumbers.length > 0;
-          if (isBinnedTrace ? isOnlyThisBinSelected(searchTraces, clickedPtInfo) : isOnlyOnePointSelected(searchTraces) && (pointOrBinSelected = isPointOrBinSelected(clickedPtInfo))) {
-            if (polygonOutlines) polygonOutlines.remove();
-            for (i = 0; i < searchTraces.length; i++) {
-              searchInfo = searchTraces[i];
-              searchInfo._module.selectPoints(searchInfo, false);
-            }
-            updateSelectedState(gd, searchTraces);
-            clearSelectionsCache(dragOptions);
-            if (sendEvents) {
-              emitDeselect(gd);
-            }
-          } else {
-            subtract = evt.shiftKey && (pointOrBinSelected !== void 0 ? pointOrBinSelected : isPointOrBinSelected(clickedPtInfo));
-            currentSelectionDef = newPointSelectionDef(clickedPtInfo.pointNumber, clickedPtInfo.searchInfo, subtract);
-            var allSelectionDefs = dragOptions.selectionDefs.concat([currentSelectionDef]);
-            selectionTesters = multiTester(allSelectionDefs, selectionTesters);
-            for (i = 0; i < searchTraces.length; i++) {
-              traceSelection = searchTraces[i]._module.selectPoints(searchTraces[i], selectionTesters);
-              thisTracesSelection = fillSelectionItem(traceSelection, searchTraces[i]);
-              if (selection.length) {
-                for (var j = 0; j < thisTracesSelection.length; j++) {
-                  selection.push(thisTracesSelection[j]);
-                }
-              } else selection = thisTracesSelection;
-            }
-            eventData = { points: selection };
-            updateSelectedState(gd, searchTraces, eventData);
-            if (currentSelectionDef && dragOptions) {
-              dragOptions.selectionDefs.push(currentSelectionDef);
-            }
-            if (polygonOutlines) {
-              var polygons = dragOptions.mergedPolygons;
-              var isOpenMode = openMode(dragOptions.dragmode);
-              displayOutlines(convertPoly(polygons, isOpenMode), polygonOutlines, dragOptions);
-            }
-            if (sendEvents) {
-              emitSelected(gd, eventData);
-            }
-          }
-        }
-      }
-      function newPointSelectionDef(pointNumber, searchInfo, subtract) {
-        return {
-          pointNumber,
-          searchInfo,
-          subtract: !!subtract
-        };
-      }
-      function isPointSelectionDef(o) {
-        return "pointNumber" in o && "searchInfo" in o;
-      }
-      function newPointNumTester(pointSelectionDef) {
-        return {
-          xmin: 0,
-          xmax: 0,
-          ymin: 0,
-          ymax: 0,
-          pts: [],
-          contains: function(pt, omitFirstEdge, pointNumber, searchInfo) {
-            var idxWantedTrace = pointSelectionDef.searchInfo.cd[0].trace.index;
-            var idxActualTrace = searchInfo.cd[0].trace.index;
-            return idxActualTrace === idxWantedTrace && pointNumber === pointSelectionDef.pointNumber;
-          },
-          isRect: false,
-          degenerate: false,
-          subtract: !!pointSelectionDef.subtract
-        };
-      }
-      function multiTester(list) {
-        if (!list.length) return;
-        var testers = [];
-        var xmin = isPointSelectionDef(list[0]) ? 0 : list[0][0][0];
-        var xmax = xmin;
-        var ymin = isPointSelectionDef(list[0]) ? 0 : list[0][0][1];
-        var ymax = ymin;
-        for (var i = 0; i < list.length; i++) {
-          if (isPointSelectionDef(list[i])) {
-            testers.push(newPointNumTester(list[i]));
-          } else {
-            var tester = polygonTester(list[i]);
-            tester.subtract = !!list[i].subtract;
-            testers.push(tester);
-            xmin = Math.min(xmin, tester.xmin);
-            xmax = Math.max(xmax, tester.xmax);
-            ymin = Math.min(ymin, tester.ymin);
-            ymax = Math.max(ymax, tester.ymax);
-          }
-        }
-        function contains(pt, arg, pointNumber, searchInfo) {
-          var contained = false;
-          for (var i2 = 0; i2 < testers.length; i2++) {
-            if (testers[i2].contains(pt, arg, pointNumber, searchInfo)) {
-              contained = !testers[i2].subtract;
-            }
-          }
-          return contained;
-        }
-        return {
-          xmin,
-          xmax,
-          ymin,
-          ymax,
-          pts: [],
-          contains,
-          isRect: false,
-          degenerate: false
-        };
-      }
-      function coerceSelectionsCache(evt, gd, dragOptions) {
-        var fullLayout = gd._fullLayout;
-        var plotinfo = dragOptions.plotinfo;
-        var dragmode = dragOptions.dragmode;
-        var selectingOnSameSubplot = fullLayout._lastSelectedSubplot && fullLayout._lastSelectedSubplot === plotinfo.id;
-        var hasModifierKey = (evt.shiftKey || evt.altKey) && !(drawMode(dragmode) && openMode(dragmode));
-        if (selectingOnSameSubplot && hasModifierKey && plotinfo.selection && plotinfo.selection.selectionDefs && !dragOptions.selectionDefs) {
-          dragOptions.selectionDefs = plotinfo.selection.selectionDefs;
-          dragOptions.mergedPolygons = plotinfo.selection.mergedPolygons;
-        } else if (!hasModifierKey || !plotinfo.selection) {
-          clearSelectionsCache(dragOptions);
-        }
-        if (!selectingOnSameSubplot) {
-          clearOutline(gd);
-          fullLayout._lastSelectedSubplot = plotinfo.id;
-        }
-      }
-      function hasActiveShape(gd) {
-        return gd._fullLayout._activeShapeIndex >= 0;
-      }
-      function hasActiveSelection(gd) {
-        return gd._fullLayout._activeSelectionIndex >= 0;
-      }
-      function clearSelectionsCache(dragOptions, immediateSelect) {
-        var dragmode = dragOptions.dragmode;
-        var plotinfo = dragOptions.plotinfo;
-        var gd = dragOptions.gd;
-        if (hasActiveShape(gd)) {
-          gd._fullLayout._deactivateShape(gd);
-        }
-        if (hasActiveSelection(gd)) {
-          gd._fullLayout._deactivateSelection(gd);
-        }
-        var fullLayout = gd._fullLayout;
-        var zoomLayer = fullLayout._zoomlayer;
-        var isDrawMode = drawMode(dragmode);
-        var isSelectMode = selectMode(dragmode);
-        if (isDrawMode || isSelectMode) {
-          var outlines = zoomLayer.selectAll(".select-outline-" + plotinfo.id);
-          if (outlines && gd._fullLayout._outlining) {
-            var shapes;
-            if (isDrawMode) {
-              shapes = newShapes(outlines, dragOptions);
-            }
-            if (shapes) {
-              Registry.call("_guiRelayout", gd, {
-                shapes
-              });
-            }
-            var selections;
-            if (isSelectMode && !hasSubplot(dragOptions)) {
-              selections = newSelections(outlines, dragOptions);
-            }
-            if (selections) {
-              gd._fullLayout._noEmitSelectedAtStart = true;
-              Registry.call("_guiRelayout", gd, {
-                selections
-              }).then(function() {
-                if (immediateSelect) {
-                  activateLastSelection(gd);
-                }
-              });
-            }
-            gd._fullLayout._outlining = false;
-          }
-        }
-        plotinfo.selection = {};
-        plotinfo.selection.selectionDefs = dragOptions.selectionDefs = [];
-        plotinfo.selection.mergedPolygons = dragOptions.mergedPolygons = [];
-      }
-      function getAxId(ax) {
-        return ax._id;
-      }
-      function determineSearchTraces(gd, xAxes, yAxes, subplot) {
-        if (!gd.calcdata) return [];
-        var searchTraces = [];
-        var xAxisIds = xAxes.map(getAxId);
-        var yAxisIds = yAxes.map(getAxId);
-        var cd, trace, i;
-        for (i = 0; i < gd.calcdata.length; i++) {
-          cd = gd.calcdata[i];
-          trace = cd[0].trace;
-          if (trace.visible !== true || !trace._module || !trace._module.selectPoints) continue;
-          if (hasSubplot({ subplot }) && (trace.subplot === subplot || trace.geo === subplot)) {
-            searchTraces.push(createSearchInfo(trace._module, cd, xAxes[0], yAxes[0]));
-          } else if (trace.type === "splom") {
-            if (trace._xaxes[xAxisIds[0]] && trace._yaxes[yAxisIds[0]]) {
-              var info = createSearchInfo(trace._module, cd, xAxes[0], yAxes[0]);
-              info.scene = gd._fullLayout._splomScenes[trace.uid];
-              searchTraces.push(info);
-            }
-          } else if (trace.type === "sankey") {
-            var sankeyInfo = createSearchInfo(trace._module, cd, xAxes[0], yAxes[0]);
-            searchTraces.push(sankeyInfo);
-          } else {
-            if (xAxisIds.indexOf(trace.xaxis) === -1 && (!trace._xA || !trace._xA.overlaying)) continue;
-            if (yAxisIds.indexOf(trace.yaxis) === -1 && (!trace._yA || !trace._yA.overlaying)) continue;
-            searchTraces.push(createSearchInfo(
-              trace._module,
-              cd,
-              getFromId(gd, trace.xaxis),
-              getFromId(gd, trace.yaxis)
-            ));
-          }
-        }
-        return searchTraces;
-      }
-      function createSearchInfo(module2, calcData, xaxis, yaxis) {
-        return {
-          _module: module2,
-          cd: calcData,
-          xaxis,
-          yaxis
-        };
-      }
-      function isHoverDataSet(hoverData) {
-        return hoverData && Array.isArray(hoverData) && hoverData[0].hoverOnBox !== true;
-      }
-      function extractClickedPtInfo(hoverData, searchTraces) {
-        var hoverDatum = hoverData[0];
-        var pointNumber = -1;
-        var pointNumbers = [];
-        var searchInfo, i;
-        for (i = 0; i < searchTraces.length; i++) {
-          searchInfo = searchTraces[i];
-          if (hoverDatum.fullData.index === searchInfo.cd[0].trace.index) {
-            if (hoverDatum.hoverOnBox === true) {
-              break;
-            }
-            if (hoverDatum.pointNumber !== void 0) {
-              pointNumber = hoverDatum.pointNumber;
-            } else if (hoverDatum.binNumber !== void 0) {
-              pointNumber = hoverDatum.binNumber;
-              pointNumbers = hoverDatum.pointNumbers;
-            }
-            break;
-          }
-        }
-        return {
-          pointNumber,
-          pointNumbers,
-          searchInfo
-        };
-      }
-      function isPointOrBinSelected(clickedPtInfo) {
-        var trace = clickedPtInfo.searchInfo.cd[0].trace;
-        var ptNum = clickedPtInfo.pointNumber;
-        var ptNums = clickedPtInfo.pointNumbers;
-        var ptNumsSet = ptNums.length > 0;
-        var ptNumToTest = ptNumsSet ? ptNums[0] : ptNum;
-        return trace.selectedpoints ? trace.selectedpoints.indexOf(ptNumToTest) > -1 : false;
-      }
-      function isOnlyThisBinSelected(searchTraces, clickedPtInfo) {
-        var tracesWithSelectedPts = [];
-        var searchInfo, trace, isSameTrace, i;
-        for (i = 0; i < searchTraces.length; i++) {
-          searchInfo = searchTraces[i];
-          if (searchInfo.cd[0].trace.selectedpoints && searchInfo.cd[0].trace.selectedpoints.length > 0) {
-            tracesWithSelectedPts.push(searchInfo);
-          }
-        }
-        if (tracesWithSelectedPts.length === 1) {
-          isSameTrace = tracesWithSelectedPts[0] === clickedPtInfo.searchInfo;
-          if (isSameTrace) {
-            trace = clickedPtInfo.searchInfo.cd[0].trace;
-            if (trace.selectedpoints.length === clickedPtInfo.pointNumbers.length) {
-              for (i = 0; i < clickedPtInfo.pointNumbers.length; i++) {
-                if (trace.selectedpoints.indexOf(clickedPtInfo.pointNumbers[i]) < 0) {
-                  return false;
-                }
-              }
-              return true;
-            }
-          }
-        }
-        return false;
-      }
-      function isOnlyOnePointSelected(searchTraces) {
-        var len = 0;
-        var searchInfo, trace, i;
-        for (i = 0; i < searchTraces.length; i++) {
-          searchInfo = searchTraces[i];
-          trace = searchInfo.cd[0].trace;
-          if (trace.selectedpoints) {
-            if (trace.selectedpoints.length > 1) return false;
-            len += trace.selectedpoints.length;
-            if (len > 1) return false;
-          }
-        }
-        return len === 1;
-      }
-      function updateSelectedState(gd, searchTraces, eventData) {
-        var i;
-        for (i = 0; i < searchTraces.length; i++) {
-          var fullInputTrace = searchTraces[i].cd[0].trace._fullInput;
-          var tracePreGUI = gd._fullLayout._tracePreGUI[fullInputTrace.uid] || {};
-          if (tracePreGUI.selectedpoints === void 0) {
-            tracePreGUI.selectedpoints = fullInputTrace._input.selectedpoints || null;
-          }
-        }
-        var trace;
-        if (eventData) {
-          var pts = eventData.points || [];
-          for (i = 0; i < searchTraces.length; i++) {
-            trace = searchTraces[i].cd[0].trace;
-            trace._input.selectedpoints = trace._fullInput.selectedpoints = [];
-            if (trace._fullInput !== trace) trace.selectedpoints = [];
-          }
-          for (var k = 0; k < pts.length; k++) {
-            var pt = pts[k];
-            var data = pt.data;
-            var fullData = pt.fullData;
-            var pointIndex = pt.pointIndex;
-            var pointIndices = pt.pointIndices;
-            if (pointIndices) {
-              [].push.apply(data.selectedpoints, pointIndices);
-              if (trace._fullInput !== trace) {
-                [].push.apply(fullData.selectedpoints, pointIndices);
-              }
-            } else {
-              data.selectedpoints.push(pointIndex);
-              if (trace._fullInput !== trace) {
-                fullData.selectedpoints.push(pointIndex);
-              }
-            }
-          }
-        } else {
-          for (i = 0; i < searchTraces.length; i++) {
-            trace = searchTraces[i].cd[0].trace;
-            delete trace.selectedpoints;
-            delete trace._input.selectedpoints;
-            if (trace._fullInput !== trace) {
-              delete trace._fullInput.selectedpoints;
-            }
-          }
-        }
-        updateReglSelectedState(gd, searchTraces);
-      }
-      function updateReglSelectedState(gd, searchTraces) {
-        var hasRegl = false;
-        for (var i = 0; i < searchTraces.length; i++) {
-          var searchInfo = searchTraces[i];
-          var cd = searchInfo.cd;
-          if (Registry.traceIs(cd[0].trace, "regl")) {
-            hasRegl = true;
-          }
-          var _module = searchInfo._module;
-          var fn = _module.styleOnSelect || _module.style;
-          if (fn) {
-            fn(gd, cd, cd[0].node3);
-            if (cd[0].nodeRangePlot3) fn(gd, cd, cd[0].nodeRangePlot3);
-          }
-        }
-        if (hasRegl) {
-          clearGlCanvases(gd);
-          redrawReglTraces(gd);
-        }
-      }
-      function mergePolygons(list, poly, subtract) {
-        var fn = subtract ? polybool.difference : polybool.union;
-        var res = fn({
-          regions: list
-        }, {
-          regions: [poly]
-        });
-        var allPolygons = res.regions.reverse();
-        for (var i = 0; i < allPolygons.length; i++) {
-          var polygon = allPolygons[i];
-          polygon.subtract = getSubtract(polygon, allPolygons.slice(0, i));
-        }
-        return allPolygons;
-      }
-      function fillSelectionItem(selection, searchInfo) {
-        if (Array.isArray(selection)) {
-          var cd = searchInfo.cd;
-          var trace = searchInfo.cd[0].trace;
-          for (var i = 0; i < selection.length; i++) {
-            selection[i] = makeEventData(selection[i], trace, cd);
-          }
-        }
-        return selection;
-      }
-      function convertPoly(polygonsIn, isOpenMode) {
-        var polygonsOut = [];
-        for (var i = 0; i < polygonsIn.length; i++) {
-          polygonsOut[i] = [];
-          for (var j = 0; j < polygonsIn[i].length; j++) {
-            polygonsOut[i][j] = [];
-            polygonsOut[i][j][0] = j ? "L" : "M";
-            for (var k = 0; k < polygonsIn[i][j].length; k++) {
-              polygonsOut[i][j].push(
-                polygonsIn[i][j][k]
-              );
-            }
-          }
-          if (!isOpenMode) {
-            polygonsOut[i].push([
-              "Z",
-              polygonsOut[i][0][1],
-              // initial x
-              polygonsOut[i][0][2]
-              // initial y
-            ]);
-          }
-        }
-        return polygonsOut;
-      }
-      function _doSelect(selectionTesters, searchTraces) {
-        var allSelections = [];
-        var thisSelection;
-        var traceSelections = [];
-        var traceSelection;
-        for (var i = 0; i < searchTraces.length; i++) {
-          var searchInfo = searchTraces[i];
-          traceSelection = searchInfo._module.selectPoints(searchInfo, selectionTesters);
-          traceSelections.push(traceSelection);
-          thisSelection = fillSelectionItem(traceSelection, searchInfo);
-          allSelections = allSelections.concat(thisSelection);
-        }
-        return allSelections;
-      }
-      function reselect(gd, mayEmitSelected, selectionTesters, searchTraces, dragOptions) {
-        var hadSearchTraces = !!searchTraces;
-        var plotinfo, xRef, yRef;
-        if (dragOptions) {
-          plotinfo = dragOptions.plotinfo;
-          xRef = dragOptions.xaxes[0]._id;
-          yRef = dragOptions.yaxes[0]._id;
-        }
-        var allSelections = [];
-        var allSearchTraces = [];
-        var layoutPolygons = getLayoutPolygons(gd);
-        var fullLayout = gd._fullLayout;
-        if (plotinfo) {
-          var zoomLayer = fullLayout._zoomlayer;
-          var mode = fullLayout.dragmode;
-          var isDrawMode = drawMode(mode);
-          var isSelectMode = selectMode(mode);
-          if (isDrawMode || isSelectMode) {
-            var xaxis = getFromId(gd, xRef, "x");
-            var yaxis = getFromId(gd, yRef, "y");
-            if (xaxis && yaxis) {
-              var outlines = zoomLayer.selectAll(".select-outline-" + plotinfo.id);
-              if (outlines && gd._fullLayout._outlining) {
-                if (outlines.length) {
-                  var e = outlines[0][0];
-                  var d = e.getAttribute("d");
-                  var outlinePolys = readPaths(d, gd, plotinfo);
-                  var draftPolygons = [];
-                  for (var u = 0; u < outlinePolys.length; u++) {
-                    var p = outlinePolys[u];
-                    var polygon = [];
-                    for (var t = 0; t < p.length; t++) {
-                      polygon.push([
-                        convert(xaxis, p[t][1]),
-                        convert(yaxis, p[t][2])
-                      ]);
-                    }
-                    polygon.xref = xRef;
-                    polygon.yref = yRef;
-                    polygon.subtract = getSubtract(polygon, draftPolygons);
-                    draftPolygons.push(polygon);
-                  }
-                  layoutPolygons = layoutPolygons.concat(draftPolygons);
-                }
-              }
-            }
-          }
-        }
-        var subplots = xRef && yRef ? [xRef + yRef] : fullLayout._subplots.cartesian;
-        epmtySplomSelectionBatch(gd);
-        var seenSplom = {};
-        for (var i = 0; i < subplots.length; i++) {
-          var subplot = subplots[i];
-          var yAt = subplot.indexOf("y");
-          var _xRef = subplot.slice(0, yAt);
-          var _yRef = subplot.slice(yAt);
-          var _selectionTesters = xRef && yRef ? selectionTesters : void 0;
-          _selectionTesters = addTester(layoutPolygons, _xRef, _yRef, _selectionTesters);
-          if (_selectionTesters) {
-            var _searchTraces = searchTraces;
-            if (!hadSearchTraces) {
-              var _xA = getFromId(gd, _xRef, "x");
-              var _yA = getFromId(gd, _yRef, "y");
-              _searchTraces = determineSearchTraces(
-                gd,
-                [_xA],
-                [_yA],
-                subplot
-              );
-              for (var w = 0; w < _searchTraces.length; w++) {
-                var s = _searchTraces[w];
-                var cd0 = s.cd[0];
-                var trace = cd0.trace;
-                if (s._module.name === "scattergl" && !cd0.t.xpx) {
-                  var x = trace.x;
-                  var y = trace.y;
-                  var len = trace._length;
-                  cd0.t.xpx = [];
-                  cd0.t.ypx = [];
-                  for (var j = 0; j < len; j++) {
-                    cd0.t.xpx[j] = _xA.c2p(x[j]);
-                    cd0.t.ypx[j] = _yA.c2p(y[j]);
-                  }
-                }
-                if (s._module.name === "splom") {
-                  if (!seenSplom[trace.uid]) {
-                    seenSplom[trace.uid] = true;
-                  }
-                }
-              }
-            }
-            var selection = _doSelect(_selectionTesters, _searchTraces);
-            allSelections = allSelections.concat(selection);
-            allSearchTraces = allSearchTraces.concat(_searchTraces);
-          }
-        }
-        var eventData = { points: allSelections };
-        updateSelectedState(gd, allSearchTraces, eventData);
-        var clickmode = fullLayout.clickmode;
-        var sendEvents = clickmode.indexOf("event") > -1 && mayEmitSelected;
-        if (!plotinfo && // get called from plot_api & plots
-        mayEmitSelected) {
-          var activePolygons = getLayoutPolygons(gd, true);
-          if (activePolygons.length) {
-            var xref = activePolygons[0].xref;
-            var yref = activePolygons[0].yref;
-            if (xref && yref) {
-              var poly = castMultiPolygon(activePolygons);
-              var fillRangeItems = makeFillRangeItems([
-                getFromId(gd, xref, "x"),
-                getFromId(gd, yref, "y")
-              ]);
-              fillRangeItems(eventData, poly);
-            }
-          }
-          if (gd._fullLayout._noEmitSelectedAtStart) {
-            gd._fullLayout._noEmitSelectedAtStart = false;
-          } else {
-            if (sendEvents) emitSelected(gd, eventData);
-          }
-          fullLayout._reselect = false;
-        }
-        if (!plotinfo && // get called from plot_api & plots
-        fullLayout._deselect) {
-          var deselect = fullLayout._deselect;
-          xRef = deselect.xref;
-          yRef = deselect.yref;
-          if (!subplotSelected(xRef, yRef, allSearchTraces)) {
-            deselectSubplot(gd, xRef, yRef, searchTraces);
-          }
-          if (sendEvents) {
-            if (eventData.points.length) {
-              emitSelected(gd, eventData);
-            } else {
-              emitDeselect(gd);
-            }
-          }
-          fullLayout._deselect = false;
-        }
-        return {
-          eventData,
-          selectionTesters
-        };
-      }
-      function epmtySplomSelectionBatch(gd) {
-        var cd = gd.calcdata;
-        if (!cd) return;
-        for (var i = 0; i < cd.length; i++) {
-          var cd0 = cd[i][0];
-          var trace = cd0.trace;
-          var splomScenes = gd._fullLayout._splomScenes;
-          if (splomScenes) {
-            var scene = splomScenes[trace.uid];
-            if (scene) {
-              scene.selectBatch = [];
-            }
-          }
-        }
-      }
-      function subplotSelected(xRef, yRef, searchTraces) {
-        for (var i = 0; i < searchTraces.length; i++) {
-          var s = searchTraces[i];
-          if (s.xaxis && s.xaxis._id === xRef && (s.yaxis && s.yaxis._id === yRef)) {
-            return true;
-          }
-        }
-        return false;
-      }
-      function deselectSubplot(gd, xRef, yRef, searchTraces) {
-        searchTraces = determineSearchTraces(
-          gd,
-          [getFromId(gd, xRef, "x")],
-          [getFromId(gd, yRef, "y")],
-          xRef + yRef
-        );
-        for (var k = 0; k < searchTraces.length; k++) {
-          var searchInfo = searchTraces[k];
-          searchInfo._module.selectPoints(searchInfo, false);
-        }
-        updateSelectedState(gd, searchTraces);
-      }
-      function addTester(layoutPolygons, xRef, yRef, selectionTesters) {
-        var mergedPolygons;
-        for (var i = 0; i < layoutPolygons.length; i++) {
-          var currentPolygon = layoutPolygons[i];
-          if (xRef !== currentPolygon.xref || yRef !== currentPolygon.yref) continue;
-          if (mergedPolygons) {
-            var subtract = !!currentPolygon.subtract;
-            mergedPolygons = mergePolygons(mergedPolygons, currentPolygon, subtract);
-            selectionTesters = multiTester(mergedPolygons);
-          } else {
-            mergedPolygons = [currentPolygon];
-            selectionTesters = polygonTester(currentPolygon);
-          }
-        }
-        return selectionTesters;
-      }
-      function getLayoutPolygons(gd, onlyActiveOnes) {
-        var allPolygons = [];
-        var fullLayout = gd._fullLayout;
-        var allSelections = fullLayout.selections;
-        var len = allSelections.length;
-        for (var i = 0; i < len; i++) {
-          if (onlyActiveOnes && i !== fullLayout._activeSelectionIndex) continue;
-          var selection = allSelections[i];
-          if (!selection) continue;
-          var xref = selection.xref;
-          var yref = selection.yref;
-          var xaxis = getFromId(gd, xref, "x");
-          var yaxis = getFromId(gd, yref, "y");
-          var xmin, xmax, ymin, ymax;
-          var polygon;
-          if (selection.type === "rect") {
-            polygon = [];
-            var x0 = convert(xaxis, selection.x0);
-            var x1 = convert(xaxis, selection.x1);
-            var y0 = convert(yaxis, selection.y0);
-            var y1 = convert(yaxis, selection.y1);
-            polygon = [[x0, y0], [x0, y1], [x1, y1], [x1, y0]];
-            xmin = Math.min(x0, x1);
-            xmax = Math.max(x0, x1);
-            ymin = Math.min(y0, y1);
-            ymax = Math.max(y0, y1);
-            polygon.xmin = xmin;
-            polygon.xmax = xmax;
-            polygon.ymin = ymin;
-            polygon.ymax = ymax;
-            polygon.xref = xref;
-            polygon.yref = yref;
-            polygon.subtract = false;
-            polygon.isRect = true;
-            allPolygons.push(polygon);
-          } else if (selection.type === "path") {
-            var segments = selection.path.split("Z");
-            var multiPolygons = [];
-            for (var j = 0; j < segments.length; j++) {
-              var path = segments[j];
-              if (!path) continue;
-              path += "Z";
-              var allX = shapeHelpers.extractPathCoords(path, shapeConstants.paramIsX, "raw");
-              var allY = shapeHelpers.extractPathCoords(path, shapeConstants.paramIsY, "raw");
-              xmin = Infinity;
-              xmax = -Infinity;
-              ymin = Infinity;
-              ymax = -Infinity;
-              polygon = [];
-              for (var k = 0; k < allX.length; k++) {
-                var x = convert(xaxis, allX[k]);
-                var y = convert(yaxis, allY[k]);
-                polygon.push([x, y]);
-                xmin = Math.min(x, xmin);
-                xmax = Math.max(x, xmax);
-                ymin = Math.min(y, ymin);
-                ymax = Math.max(y, ymax);
-              }
-              polygon.xmin = xmin;
-              polygon.xmax = xmax;
-              polygon.ymin = ymin;
-              polygon.ymax = ymax;
-              polygon.xref = xref;
-              polygon.yref = yref;
-              polygon.subtract = getSubtract(polygon, multiPolygons);
-              multiPolygons.push(polygon);
-              allPolygons.push(polygon);
-            }
-          }
-        }
-        return allPolygons;
-      }
-      function getSubtract(polygon, previousPolygons) {
-        var subtract = false;
-        for (var i = 0; i < previousPolygons.length; i++) {
-          var previousPolygon = previousPolygons[i];
-          for (var k = 0; k < polygon.length; k++) {
-            if (pointInPolygon(polygon[k], previousPolygon)) {
-              subtract = !subtract;
-              break;
-            }
-          }
-        }
-        return subtract;
-      }
-      function convert(ax, d) {
-        if (ax.type === "date") d = d.replace("_", " ");
-        return ax.type === "log" ? ax.c2p(d) : ax.r2p(d, null, ax.calendar);
-      }
-      function castMultiPolygon(allPolygons) {
-        var len = allPolygons.length;
-        var p = [];
-        for (var i = 0; i < len; i++) {
-          var polygon = allPolygons[i];
-          p = p.concat(polygon);
-          p = p.concat([polygon[0]]);
-        }
-        return computeRectAndRanges(p);
-      }
-      function computeRectAndRanges(poly) {
-        poly.isRect = poly.length === 5 && poly[0][0] === poly[4][0] && poly[0][1] === poly[4][1] && (poly[0][0] === poly[1][0] && poly[2][0] === poly[3][0] && poly[0][1] === poly[3][1] && poly[1][1] === poly[2][1]) || poly[0][1] === poly[1][1] && poly[2][1] === poly[3][1] && poly[0][0] === poly[3][0] && poly[1][0] === poly[2][0];
-        if (poly.isRect) {
-          poly.xmin = Math.min(poly[0][0], poly[2][0]);
-          poly.xmax = Math.max(poly[0][0], poly[2][0]);
-          poly.ymin = Math.min(poly[0][1], poly[2][1]);
-          poly.ymax = Math.max(poly[0][1], poly[2][1]);
-        }
-        return poly;
-      }
-      function makeFillRangeItems(allAxes) {
-        return function(eventData, poly) {
-          var range;
-          var lassoPoints;
-          for (var i = 0; i < allAxes.length; i++) {
-            var ax = allAxes[i];
-            var id = ax._id;
-            var axLetter = id.charAt(0);
-            if (poly.isRect) {
-              if (!range) range = {};
-              var min = poly[axLetter + "min"];
-              var max = poly[axLetter + "max"];
-              if (min !== void 0 && max !== void 0) {
-                range[id] = [
-                  p2r(ax, min),
-                  p2r(ax, max)
-                ].sort(ascending);
-              }
-            } else {
-              if (!lassoPoints) lassoPoints = {};
-              lassoPoints[id] = poly.map(axValue(ax));
-            }
-          }
-          if (range) {
-            eventData.range = range;
-          }
-          if (lassoPoints) {
-            eventData.lassoPoints = lassoPoints;
-          }
-        };
-      }
-      function getFillRangeItems(dragOptions) {
-        var plotinfo = dragOptions.plotinfo;
-        return plotinfo.fillRangeItems || // allow subplots (i.e. geo, mapbox, map, sankey) to override fillRangeItems routine
-        makeFillRangeItems(dragOptions.xaxes.concat(dragOptions.yaxes));
-      }
-      function emitSelecting(gd, eventData) {
-        gd.emit("plotly_selecting", eventData);
-      }
-      function emitSelected(gd, eventData) {
-        if (eventData) {
-          eventData.selections = (gd.layout || {}).selections || [];
-        }
-        gd.emit("plotly_selected", eventData);
-      }
-      function emitDeselect(gd) {
-        gd.emit("plotly_deselect", null);
-      }
-      module.exports = {
-        reselect,
-        prepSelect,
-        clearOutline,
-        clearSelectionsCache,
-        selectOnClick
-      };
-    }
-  });
-
-  // src/components/annotations/arrow_paths.js
-  var require_arrow_paths = __commonJS({
-    "src/components/annotations/arrow_paths.js"(exports, module) {
-      "use strict";
-      module.exports = [
-        // no arrow
-        {
-          path: "",
-          backoff: 0
-        },
-        // wide with flat back
-        {
-          path: "M-2.4,-3V3L0.6,0Z",
-          backoff: 0.6
-        },
-        // narrower with flat back
-        {
-          path: "M-3.7,-2.5V2.5L1.3,0Z",
-          backoff: 1.3
-        },
-        // barbed
-        {
-          path: "M-4.45,-3L-1.65,-0.2V0.2L-4.45,3L1.55,0Z",
-          backoff: 1.55
-        },
-        // wide line-drawn
-        {
-          path: "M-2.2,-2.2L-0.2,-0.2V0.2L-2.2,2.2L-1.4,3L1.6,0L-1.4,-3Z",
-          backoff: 1.6
-        },
-        // narrower line-drawn
-        {
-          path: "M-4.4,-2.1L-0.6,-0.2V0.2L-4.4,2.1L-4,3L2,0L-4,-3Z",
-          backoff: 2
-        },
-        // circle
-        {
-          path: "M2,0A2,2 0 1,1 0,-2A2,2 0 0,1 2,0Z",
-          backoff: 0,
-          noRotate: true
-        },
-        // square
-        {
-          path: "M2,2V-2H-2V2Z",
-          backoff: 0,
-          noRotate: true
-        }
-      ];
-    }
-  });
-
-  // src/constants/axis_placeable_objects.js
-  var require_axis_placeable_objects = __commonJS({
-    "src/constants/axis_placeable_objects.js"(exports, module) {
-      "use strict";
-      module.exports = {
-        axisRefDescription: function(axisname, lower, upper) {
-          return [
-            "If set to a",
-            axisname,
-            "axis id (e.g. *" + axisname + "* or",
-            "*" + axisname + "2*), the `" + axisname + "` position refers to a",
-            axisname,
-            "coordinate. If set to *paper*, the `" + axisname + "`",
-            "position refers to the distance from the",
-            lower,
-            "of the plotting",
-            "area in normalized coordinates where *0* (*1*) corresponds to the",
-            lower,
-            "(" + upper + "). If set to a",
-            axisname,
-            "axis ID followed by",
-            "*domain* (separated by a space), the position behaves like for",
-            "*paper*, but refers to the distance in fractions of the domain",
-            "length from the",
-            lower,
-            "of the domain of that axis: e.g.,",
-            "*" + axisname + "2 domain* refers to the domain of the second",
-            axisname,
-            " axis and a",
-            axisname,
-            "position of 0.5 refers to the",
-            "point between the",
-            lower,
-            "and the",
-            upper,
-            "of the domain of the",
-            "second",
-            axisname,
-            "axis."
-          ].join(" ");
-        }
-      };
-    }
-  });
-
-  // src/components/annotations/attributes.js
-  var require_attributes11 = __commonJS({
-    "src/components/annotations/attributes.js"(exports, module) {
-      "use strict";
-      var ARROWPATHS = require_arrow_paths();
-      var fontAttrs = require_font_attributes();
-      var cartesianConstants = require_constants2();
-      var templatedArray = require_plot_template().templatedArray;
-      var axisPlaceableObjs = require_axis_placeable_objects();
-      module.exports = templatedArray("annotation", {
-        visible: {
-          valType: "boolean",
-          dflt: true,
-          editType: "calc+arraydraw"
-        },
-        text: {
-          valType: "string",
-          editType: "calc+arraydraw"
-        },
-        textangle: {
-          valType: "angle",
-          dflt: 0,
-          editType: "calc+arraydraw"
-        },
-        font: fontAttrs({
-          editType: "calc+arraydraw",
-          colorEditType: "arraydraw"
-        }),
-        width: {
-          valType: "number",
-          min: 1,
-          dflt: null,
-          editType: "calc+arraydraw"
-        },
-        height: {
-          valType: "number",
-          min: 1,
-          dflt: null,
-          editType: "calc+arraydraw"
-        },
-        opacity: {
-          valType: "number",
-          min: 0,
-          max: 1,
-          dflt: 1,
-          editType: "arraydraw"
-        },
-        align: {
-          valType: "enumerated",
-          values: ["left", "center", "right"],
-          dflt: "center",
-          editType: "arraydraw"
-        },
-        valign: {
-          valType: "enumerated",
-          values: ["top", "middle", "bottom"],
-          dflt: "middle",
-          editType: "arraydraw"
-        },
-        bgcolor: {
-          valType: "color",
-          dflt: "rgba(0,0,0,0)",
-          editType: "arraydraw"
-        },
-        bordercolor: {
-          valType: "color",
-          dflt: "rgba(0,0,0,0)",
-          editType: "arraydraw"
-        },
-        borderpad: {
-          valType: "number",
-          min: 0,
-          dflt: 1,
-          editType: "calc+arraydraw"
-        },
-        borderwidth: {
-          valType: "number",
-          min: 0,
-          dflt: 1,
-          editType: "calc+arraydraw"
-        },
-        // arrow
-        showarrow: {
-          valType: "boolean",
-          dflt: true,
-          editType: "calc+arraydraw"
-        },
-        arrowcolor: {
-          valType: "color",
-          editType: "arraydraw"
-        },
-        arrowhead: {
-          valType: "integer",
-          min: 0,
-          max: ARROWPATHS.length,
-          dflt: 1,
-          editType: "arraydraw"
-        },
-        startarrowhead: {
-          valType: "integer",
-          min: 0,
-          max: ARROWPATHS.length,
-          dflt: 1,
-          editType: "arraydraw"
-        },
-        arrowside: {
-          valType: "flaglist",
-          flags: ["end", "start"],
-          extras: ["none"],
-          dflt: "end",
-          editType: "arraydraw"
-        },
-        arrowsize: {
-          valType: "number",
-          min: 0.3,
-          dflt: 1,
-          editType: "calc+arraydraw"
-        },
-        startarrowsize: {
-          valType: "number",
-          min: 0.3,
-          dflt: 1,
-          editType: "calc+arraydraw"
-        },
-        arrowwidth: {
-          valType: "number",
-          min: 0.1,
-          editType: "calc+arraydraw"
-        },
-        standoff: {
-          valType: "number",
-          min: 0,
-          dflt: 0,
-          editType: "calc+arraydraw"
-        },
-        startstandoff: {
-          valType: "number",
-          min: 0,
-          dflt: 0,
-          editType: "calc+arraydraw"
-        },
-        ax: {
-          valType: "any",
-          editType: "calc+arraydraw"
-        },
-        ay: {
-          valType: "any",
-          editType: "calc+arraydraw"
-        },
-        axref: {
-          valType: "enumerated",
-          dflt: "pixel",
-          values: [
-            "pixel",
-            cartesianConstants.idRegex.x.toString()
-          ],
-          editType: "calc"
-        },
-        ayref: {
-          valType: "enumerated",
-          dflt: "pixel",
-          values: [
-            "pixel",
-            cartesianConstants.idRegex.y.toString()
-          ],
-          editType: "calc"
-        },
-        // positioning
-        xref: {
-          valType: "enumerated",
-          values: [
-            "paper",
-            cartesianConstants.idRegex.x.toString()
-          ],
-          editType: "calc"
-        },
-        x: {
-          valType: "any",
-          editType: "calc+arraydraw"
-        },
-        xanchor: {
-          valType: "enumerated",
-          values: ["auto", "left", "center", "right"],
-          dflt: "auto",
-          editType: "calc+arraydraw"
-        },
-        xshift: {
-          valType: "number",
-          dflt: 0,
-          editType: "calc+arraydraw"
-        },
-        yref: {
-          valType: "enumerated",
-          values: [
-            "paper",
-            cartesianConstants.idRegex.y.toString()
-          ],
-          editType: "calc"
-        },
-        y: {
-          valType: "any",
-          editType: "calc+arraydraw"
-        },
-        yanchor: {
-          valType: "enumerated",
-          values: ["auto", "top", "middle", "bottom"],
-          dflt: "auto",
-          editType: "calc+arraydraw"
-        },
-        yshift: {
-          valType: "number",
-          dflt: 0,
-          editType: "calc+arraydraw"
-        },
-        clicktoshow: {
-          valType: "enumerated",
-          values: [false, "onoff", "onout"],
-          dflt: false,
-          editType: "arraydraw"
-        },
-        xclick: {
-          valType: "any",
-          editType: "arraydraw"
-        },
-        yclick: {
-          valType: "any",
-          editType: "arraydraw"
-        },
-        hovertext: {
-          valType: "string",
-          editType: "arraydraw"
-        },
-        hoverlabel: {
-          bgcolor: {
-            valType: "color",
-            editType: "arraydraw"
-          },
-          bordercolor: {
-            valType: "color",
-            editType: "arraydraw"
-          },
-          font: fontAttrs({
-            editType: "arraydraw"
-          }),
-          editType: "arraydraw"
-        },
-        captureevents: {
-          valType: "boolean",
-          editType: "arraydraw"
-        },
-        editType: "calc"
-      });
-    }
-  });
-
-  // src/traces/scatter/constants.js
-  var require_constants8 = __commonJS({
-    "src/traces/scatter/constants.js"(exports, module) {
-      "use strict";
-      module.exports = {
-        PTS_LINESONLY: 20,
-        // fixed parameters of clustering and clipping algorithms
-        // fraction of clustering tolerance "so close we don't even consider it a new point"
-        minTolerance: 0.2,
-        // how fast does clustering tolerance increase as you get away from the visible region
-        toleranceGrowth: 10,
-        // number of viewport sizes away from the visible region
-        // at which we clip all lines to the perimeter
-        maxScreensAway: 20,
-        eventDataKeys: []
-      };
-    }
-  });
-
-  // src/traces/scatter/fillcolor_attribute.js
-  var require_fillcolor_attribute = __commonJS({
-    "src/traces/scatter/fillcolor_attribute.js"(exports, module) {
-      "use strict";
-      module.exports = function makeFillcolorAttr(hasFillgradient) {
-        return {
-          valType: "color",
-          editType: "style",
-          anim: true
-        };
-      };
-    }
-  });
-
-  // src/traces/scatter/attributes.js
-  var require_attributes12 = __commonJS({
-    "src/traces/scatter/attributes.js"(exports, module) {
-      "use strict";
-      var axisHoverFormat = require_axis_format_attributes().axisHoverFormat;
-      var { hovertemplateAttrs, texttemplateAttrs, templatefallbackAttrs } = require_template_attributes();
-      var colorScaleAttrs = require_attributes8();
-      var fontAttrs = require_font_attributes();
-      var dash = require_attributes4().dash;
-      var pattern = require_attributes4().pattern;
-      var Drawing = require_drawing();
-      var constants = require_constants8();
-      var extendFlat = require_extend().extendFlat;
-      var makeFillcolorAttr = require_fillcolor_attribute();
-      function axisPeriod(axis) {
-        return {
-          valType: "any",
-          dflt: 0,
-          editType: "calc"
-        };
-      }
-      function axisPeriod0(axis) {
-        return {
-          valType: "any",
-          editType: "calc"
-        };
-      }
-      function axisPeriodAlignment(axis) {
-        return {
-          valType: "enumerated",
-          values: ["start", "middle", "end"],
-          dflt: "middle",
-          editType: "calc"
-        };
-      }
-      module.exports = {
-        x: {
-          valType: "data_array",
-          editType: "calc+clearAxisTypes",
-          anim: true
-        },
-        x0: {
-          valType: "any",
-          dflt: 0,
-          editType: "calc+clearAxisTypes",
-          anim: true
-        },
-        dx: {
-          valType: "number",
-          dflt: 1,
-          editType: "calc",
-          anim: true
-        },
-        y: {
-          valType: "data_array",
-          editType: "calc+clearAxisTypes",
-          anim: true
-        },
-        y0: {
-          valType: "any",
-          dflt: 0,
-          editType: "calc+clearAxisTypes",
-          anim: true
-        },
-        dy: {
-          valType: "number",
-          dflt: 1,
-          editType: "calc",
-          anim: true
-        },
-        xperiod: axisPeriod("x"),
-        yperiod: axisPeriod("y"),
-        xperiod0: axisPeriod0("x0"),
-        yperiod0: axisPeriod0("y0"),
-        xperiodalignment: axisPeriodAlignment("x"),
-        yperiodalignment: axisPeriodAlignment("y"),
-        xhoverformat: axisHoverFormat("x"),
-        yhoverformat: axisHoverFormat("y"),
-        offsetgroup: {
-          valType: "string",
-          dflt: "",
-          editType: "calc"
-        },
-        alignmentgroup: {
-          valType: "string",
-          dflt: "",
-          editType: "calc"
-        },
-        stackgroup: {
-          valType: "string",
-          dflt: "",
-          editType: "calc"
-        },
-        orientation: {
-          valType: "enumerated",
-          values: ["v", "h"],
-          editType: "calc"
-        },
-        groupnorm: {
-          valType: "enumerated",
-          values: ["", "fraction", "percent"],
-          dflt: "",
-          editType: "calc"
-        },
-        stackgaps: {
-          valType: "enumerated",
-          values: ["infer zero", "interpolate"],
-          dflt: "infer zero",
-          editType: "calc"
-        },
-        text: {
-          valType: "string",
-          dflt: "",
-          arrayOk: true,
-          editType: "calc"
-        },
-        texttemplate: texttemplateAttrs(),
-        texttemplatefallback: templatefallbackAttrs({ editType: "calc" }),
-        hovertext: {
-          valType: "string",
-          dflt: "",
-          arrayOk: true,
-          editType: "style"
-        },
-        mode: {
-          valType: "flaglist",
-          flags: ["lines", "markers", "text"],
-          extras: ["none"],
-          editType: "calc"
-        },
-        hoveron: {
-          valType: "flaglist",
-          flags: ["points", "fills"],
-          editType: "style"
-        },
-        hovertemplate: hovertemplateAttrs({}, { keys: constants.eventDataKeys }),
-        hovertemplatefallback: templatefallbackAttrs(),
-        line: {
-          color: {
-            valType: "color",
-            editType: "style",
-            anim: true
-          },
-          width: {
-            valType: "number",
-            min: 0,
-            dflt: 2,
-            editType: "style",
-            anim: true
-          },
-          shape: {
-            valType: "enumerated",
-            values: ["linear", "spline", "hv", "vh", "hvh", "vhv"],
-            dflt: "linear",
-            editType: "plot"
-          },
-          smoothing: {
-            valType: "number",
-            min: 0,
-            max: 1.3,
-            dflt: 1,
-            editType: "plot"
-          },
-          dash: extendFlat({}, dash, { editType: "style" }),
-          backoff: {
-            // we want to have a similar option for the start of the line
-            valType: "number",
-            min: 0,
-            dflt: "auto",
-            arrayOk: true,
-            editType: "plot"
-          },
-          simplify: {
-            valType: "boolean",
-            dflt: true,
-            editType: "plot"
-          },
-          editType: "plot"
-        },
-        connectgaps: {
-          valType: "boolean",
-          dflt: false,
-          editType: "calc"
-        },
-        cliponaxis: {
-          valType: "boolean",
-          dflt: true,
-          editType: "plot"
-        },
-        fill: {
-          valType: "enumerated",
-          values: ["none", "tozeroy", "tozerox", "tonexty", "tonextx", "toself", "tonext"],
-          editType: "calc"
-        },
-        fillcolor: makeFillcolorAttr(true),
-        fillgradient: extendFlat({
-          type: {
-            valType: "enumerated",
-            values: ["radial", "horizontal", "vertical", "none"],
-            dflt: "none",
-            editType: "calc"
-          },
-          start: {
-            valType: "number",
-            editType: "calc"
-          },
-          stop: {
-            valType: "number",
-            editType: "calc"
-          },
-          colorscale: {
-            valType: "colorscale",
-            editType: "style"
-          },
-          editType: "calc"
-        }),
-        fillpattern: pattern,
-        marker: extendFlat(
-          {
-            symbol: {
-              valType: "enumerated",
-              values: Drawing.symbolList,
-              dflt: "circle",
-              arrayOk: true,
-              editType: "style"
-            },
-            opacity: {
-              valType: "number",
-              min: 0,
-              max: 1,
-              arrayOk: true,
-              editType: "style",
-              anim: true
-            },
-            angle: {
-              valType: "angle",
-              dflt: 0,
-              arrayOk: true,
-              editType: "plot",
-              anim: false
-              // TODO: possibly set to true in future
-            },
-            angleref: {
-              valType: "enumerated",
-              values: ["previous", "up"],
-              dflt: "up",
-              editType: "plot",
-              anim: false
-            },
-            standoff: {
-              valType: "number",
-              min: 0,
-              dflt: 0,
-              arrayOk: true,
-              editType: "plot",
-              anim: true
-            },
-            size: {
-              valType: "number",
-              min: 0,
-              dflt: 6,
-              arrayOk: true,
-              editType: "calc",
-              anim: true
-            },
-            maxdisplayed: {
-              valType: "number",
-              min: 0,
-              dflt: 0,
-              editType: "plot"
-            },
-            sizeref: {
-              valType: "number",
-              dflt: 1,
-              editType: "calc"
-            },
-            sizemin: {
-              valType: "number",
-              min: 0,
-              dflt: 0,
-              editType: "calc"
-            },
-            sizemode: {
-              valType: "enumerated",
-              values: ["diameter", "area"],
-              dflt: "diameter",
-              editType: "calc"
-            },
-            line: extendFlat(
-              {
-                width: {
-                  valType: "number",
-                  min: 0,
-                  arrayOk: true,
-                  editType: "style",
-                  anim: true
-                },
-                editType: "calc"
-              },
-              colorScaleAttrs("marker.line", { anim: true })
-            ),
-            gradient: {
-              type: {
-                valType: "enumerated",
-                values: ["radial", "horizontal", "vertical", "none"],
-                arrayOk: true,
-                dflt: "none",
-                editType: "calc"
-              },
-              color: {
-                valType: "color",
-                arrayOk: true,
-                editType: "calc"
-              },
-              editType: "calc"
-            },
-            editType: "calc"
-          },
-          colorScaleAttrs("marker", { anim: true })
-        ),
-        selected: {
-          marker: {
-            opacity: {
-              valType: "number",
-              min: 0,
-              max: 1,
-              editType: "style"
-            },
-            color: {
-              valType: "color",
-              editType: "style"
-            },
-            size: {
-              valType: "number",
-              min: 0,
-              editType: "style"
-            },
-            editType: "style"
-          },
-          textfont: {
-            color: {
-              valType: "color",
-              editType: "style"
-            },
-            editType: "style"
-          },
-          editType: "style"
-        },
-        unselected: {
-          marker: {
-            opacity: {
-              valType: "number",
-              min: 0,
-              max: 1,
-              editType: "style"
-            },
-            color: {
-              valType: "color",
-              editType: "style"
-            },
-            size: {
-              valType: "number",
-              min: 0,
-              editType: "style"
-            },
-            editType: "style"
-          },
-          textfont: {
-            color: {
-              valType: "color",
-              editType: "style"
-            },
-            editType: "style"
-          },
-          editType: "style"
-        },
-        textposition: {
-          valType: "enumerated",
-          values: [
-            "top left",
-            "top center",
-            "top right",
-            "middle left",
-            "middle center",
-            "middle right",
-            "bottom left",
-            "bottom center",
-            "bottom right"
-          ],
-          dflt: "middle center",
-          arrayOk: true,
-          editType: "calc"
-        },
-        textfont: fontAttrs({
-          editType: "calc",
-          colorEditType: "style",
-          arrayOk: true
-        }),
-        zorder: {
-          valType: "integer",
-          dflt: 0,
-          editType: "plot"
-        }
-      };
-    }
-  });
-
-  // src/components/selections/attributes.js
-  var require_attributes13 = __commonJS({
-    "src/components/selections/attributes.js"(exports, module) {
-      "use strict";
-      var annAttrs = require_attributes11();
-      var scatterLineAttrs = require_attributes12().line;
-      var dash = require_attributes4().dash;
-      var extendFlat = require_extend().extendFlat;
-      var overrideAll = require_edit_types().overrideAll;
-      var templatedArray = require_plot_template().templatedArray;
-      var axisPlaceableObjs = require_axis_placeable_objects();
-      module.exports = overrideAll(templatedArray("selection", {
-        type: {
-          valType: "enumerated",
-          values: ["rect", "path"]
-        },
-        xref: extendFlat({}, annAttrs.xref, {}),
-        yref: extendFlat({}, annAttrs.yref, {}),
-        x0: {
-          valType: "any"
-        },
-        x1: {
-          valType: "any"
-        },
-        y0: {
-          valType: "any"
-        },
-        y1: {
-          valType: "any"
-        },
-        path: {
-          valType: "string",
-          editType: "arraydraw"
-        },
-        opacity: {
-          valType: "number",
-          min: 0,
-          max: 1,
-          dflt: 0.7,
-          editType: "arraydraw"
-        },
-        line: {
-          color: scatterLineAttrs.color,
-          width: extendFlat({}, scatterLineAttrs.width, {
-            min: 1,
-            dflt: 1
-          }),
-          dash: extendFlat({}, dash, {
-            dflt: "dot"
-          })
-        }
-      }), "arraydraw", "from-root");
-    }
-  });
-
-  // src/components/selections/defaults.js
-  var require_defaults6 = __commonJS({
-    "src/components/selections/defaults.js"(exports, module) {
-      "use strict";
-      var Lib = require_lib();
-      var Axes = require_axes();
-      var handleArrayContainerDefaults = require_array_container_defaults();
-      var attributes = require_attributes13();
-      var helpers = require_helpers8();
-      module.exports = function supplyLayoutDefaults(layoutIn, layoutOut) {
-        handleArrayContainerDefaults(layoutIn, layoutOut, {
-          name: "selections",
-          handleItemDefaults: handleSelectionDefaults
-        });
-        var selections = layoutOut.selections;
-        for (var i = 0; i < selections.length; i++) {
-          var selection = selections[i];
-          if (!selection) continue;
-          if (selection.path === void 0) {
-            if (selection.x0 === void 0 || selection.x1 === void 0 || selection.y0 === void 0 || selection.y1 === void 0) {
-              layoutOut.selections[i] = null;
-            }
-          }
-        }
-      };
-      function handleSelectionDefaults(selectionIn, selectionOut, fullLayout) {
-        function coerce(attr, dflt) {
-          return Lib.coerce(selectionIn, selectionOut, attributes, attr, dflt);
-        }
-        var path = coerce("path");
-        var dfltType = path ? "path" : "rect";
-        var selectionType = coerce("type", dfltType);
-        var noPath = selectionType !== "path";
-        if (noPath) delete selectionOut.path;
-        coerce("opacity");
-        coerce("line.color");
-        coerce("line.width");
-        coerce("line.dash");
-        var axLetters = ["x", "y"];
-        for (var i = 0; i < 2; i++) {
-          var axLetter = axLetters[i];
-          var gdMock = { _fullLayout: fullLayout };
-          var ax;
-          var pos2r;
-          var r2pos;
-          var axRef = Axes.coerceRef(selectionIn, selectionOut, gdMock, axLetter);
-          ax = Axes.getFromId(gdMock, axRef);
-          ax._selectionIndices.push(selectionOut._index);
-          r2pos = helpers.rangeToShapePosition(ax);
-          pos2r = helpers.shapePositionToRange(ax);
-          if (noPath) {
-            var attr0 = axLetter + "0";
-            var attr1 = axLetter + "1";
-            var in0 = selectionIn[attr0];
-            var in1 = selectionIn[attr1];
-            selectionIn[attr0] = pos2r(selectionIn[attr0], true);
-            selectionIn[attr1] = pos2r(selectionIn[attr1], true);
-            Axes.coercePosition(selectionOut, gdMock, coerce, axRef, attr0);
-            Axes.coercePosition(selectionOut, gdMock, coerce, axRef, attr1);
-            var p0 = selectionOut[attr0];
-            var p1 = selectionOut[attr1];
-            if (p0 !== void 0 && p1 !== void 0) {
-              selectionOut[attr0] = r2pos(p0);
-              selectionOut[attr1] = r2pos(p1);
-              selectionIn[attr0] = in0;
-              selectionIn[attr1] = in1;
-            }
-          }
-        }
-        if (noPath) {
-          Lib.noneOrAll(selectionIn, selectionOut, ["x0", "x1", "y0", "y1"]);
-        }
-      }
-    }
-  });
-
-  // src/components/selections/draw_newselection/defaults.js
-  var require_defaults7 = __commonJS({
-    "src/components/selections/draw_newselection/defaults.js"(exports, module) {
-      "use strict";
-      module.exports = function supplyDrawNewSelectionDefaults(layoutIn, layoutOut, coerce) {
-        coerce("newselection.mode");
-        var newselectionLineWidth = coerce("newselection.line.width");
-        if (newselectionLineWidth) {
-          coerce("newselection.line.color");
-          coerce("newselection.line.dash");
-        }
-        coerce("activeselection.fillcolor");
-        coerce("activeselection.opacity");
-      };
-    }
-  });
-
-  // src/plots/cartesian/include_components.js
-  var require_include_components = __commonJS({
-    "src/plots/cartesian/include_components.js"(exports, module) {
-      "use strict";
-      var Registry = require_registry();
-      var Lib = require_lib();
-      var axisIds = require_axis_ids();
-      module.exports = function makeIncludeComponents(containerArrayName) {
-        return function includeComponents(layoutIn, layoutOut) {
-          var array = layoutIn[containerArrayName];
-          if (!Array.isArray(array)) return;
-          var Cartesian = Registry.subplotsRegistry.cartesian;
-          var idRegex = Cartesian.idRegex;
-          var subplots = layoutOut._subplots;
-          var xaList = subplots.xaxis;
-          var yaList = subplots.yaxis;
-          var cartesianList = subplots.cartesian;
-          var hasCartesian = layoutOut._has("cartesian");
-          for (var i = 0; i < array.length; i++) {
-            var itemi = array[i];
-            if (!Lib.isPlainObject(itemi)) continue;
-            var xref = axisIds.cleanId(itemi.xref, "x", false);
-            var yref = axisIds.cleanId(itemi.yref, "y", false);
-            var hasXref = idRegex.x.test(xref);
-            var hasYref = idRegex.y.test(yref);
-            if (hasXref || hasYref) {
-              if (!hasCartesian) Lib.pushUnique(layoutOut._basePlotModules, Cartesian);
-              var newAxis = false;
-              if (hasXref && xaList.indexOf(xref) === -1) {
-                xaList.push(xref);
-                newAxis = true;
-              }
-              if (hasYref && yaList.indexOf(yref) === -1) {
-                yaList.push(yref);
-                newAxis = true;
-              }
-              if (newAxis && hasXref && hasYref) {
-                cartesianList.push(xref + yref);
-              }
-            }
-          }
-        };
-      };
-    }
-  });
-
-  // src/components/selections/index.js
-  var require_selections = __commonJS({
-    "src/components/selections/index.js"(exports, module) {
-      "use strict";
-      var drawModule = require_draw3();
-      var select = require_select();
-      module.exports = {
-        moduleType: "component",
-        name: "selections",
-        layoutAttributes: require_attributes13(),
-        supplyLayoutDefaults: require_defaults6(),
-        supplyDrawNewSelectionDefaults: require_defaults7(),
-        includeBasePlot: require_include_components()("selections"),
-        draw: drawModule.draw,
-        drawOne: drawModule.drawOne,
-        reselect: select.reselect,
-        prepSelect: select.prepSelect,
-        clearOutline: select.clearOutline,
-        clearSelectionsCache: select.clearSelectionsCache,
-        selectOnClick: select.selectOnClick
-      };
-    }
-  });
-
   // src/plots/cartesian/dragbox.js
   var require_dragbox = __commonJS({
     "src/plots/cartesian/dragbox.js"(exports, module) {
@@ -42638,9 +38942,15 @@ var Plotly = (() => {
       var redrawReglTraces = require_subroutines().redrawReglTraces;
       var Plots = require_plots();
       var getFromId = require_axis_ids().getFromId;
-      var prepSelect = require_selections().prepSelect;
-      var clearOutline = require_selections().clearOutline;
-      var selectOnClick = require_selections().selectOnClick;
+      function prepSelect() {
+        return Registry.getComponentMethod("selections", "prepSelect").apply(null, arguments);
+      }
+      function clearOutline() {
+        return Registry.getComponentMethod("selections", "clearOutline").apply(null, arguments);
+      }
+      function selectOnClick() {
+        return Registry.getComponentMethod("selections", "selectOnClick").apply(null, arguments);
+      }
       var scaleZoom = require_scale_zoom();
       var constants = require_constants2();
       var MINDRAG = constants.MINDRAG;
@@ -44320,7 +40630,9 @@ var Plotly = (() => {
       var Color2 = require_color();
       var initInteractions = require_graph_interact().initInteractions;
       var xmlnsNamespaces = require_xmlns_namespaces();
-      var clearOutline = require_selections().clearOutline;
+      function clearOutline(gd) {
+        return Registry.getComponentMethod("selections", "clearOutline")(gd);
+      }
       var dfltConfig = require_plot_config().dfltConfig;
       var manageArrays = require_manage_arrays();
       var helpers = require_helpers9();
@@ -44340,6 +40652,7 @@ var Plotly = (() => {
           config = obj.config;
           frames = obj.frames;
         }
+        performance.mark("plotly-total-start");
         var okToPlot = Events.triggerHandler(gd, "plotly_beforeplot", [data, layout, config]);
         if (okToPlot === false) return Promise.reject();
         if (!data && !layout && !Lib.isPlotDiv(gd)) {
@@ -44365,7 +40678,10 @@ var Plotly = (() => {
         if (!gd.layout || graphWasEmpty) {
           gd.layout = helpers.cleanLayout(layout);
         }
+        performance.mark("plotly-supplyDefaults-start");
         Plots.supplyDefaults(gd);
+        performance.mark("plotly-supplyDefaults-end");
+        performance.measure("plotly-supplyDefaults", "plotly-supplyDefaults-start", "plotly-supplyDefaults-end");
         var fullLayout = gd._fullLayout;
         var hasCartesian = fullLayout._has("cartesian");
         fullLayout._replotting = true;
@@ -44379,7 +40695,12 @@ var Plotly = (() => {
         Drawing.initPatterns(gd);
         if (graphWasEmpty) Axes.saveShowSpikeInitial(gd);
         var recalc = !gd.calcdata || gd.calcdata.length !== (gd._fullData || []).length;
-        if (recalc) Plots.doCalcdata(gd);
+        if (recalc) {
+          performance.mark("plotly-calcdata-start");
+          Plots.doCalcdata(gd);
+          performance.mark("plotly-calcdata-end");
+          performance.measure("plotly-calcdata", "plotly-calcdata-start", "plotly-calcdata-end");
+        }
         for (var i = 0; i < gd.calcdata.length; i++) {
           gd.calcdata[i][0].trace = gd._fullData[i];
         }
@@ -44507,7 +40828,25 @@ var Plotly = (() => {
         function drawAxes() {
           return Axes.draw(gd, graphWasEmpty ? "" : "redraw");
         }
-        var seq = [Plots.previousPromises, addFrames2, drawFramework, marginPushers, marginPushersAgain];
+        function timedMarginPushers() {
+          performance.mark("plotly-marginPushers-start");
+          var result = marginPushers();
+          performance.mark("plotly-marginPushers-end");
+          performance.measure("plotly-marginPushers", "plotly-marginPushers-start", "plotly-marginPushers-end");
+          return result;
+        }
+        function timedDrawData() {
+          performance.mark("plotly-drawData-start");
+          var result = subroutines.drawData(gd);
+          performance.mark("plotly-drawData-end");
+          performance.measure("plotly-drawData", "plotly-drawData-start", "plotly-drawData-end");
+          return result;
+        }
+        var deferAutoMargin = gd._context.deferAutoMargin;
+        var seq = [Plots.previousPromises, addFrames2, drawFramework];
+        if (!deferAutoMargin) {
+          seq.push(timedMarginPushers, marginPushersAgain);
+        }
         if (hasCartesian) seq.push(positionAndAutorange);
         seq.push(subroutines.layoutStyles);
         if (hasCartesian) {
@@ -44522,24 +40861,50 @@ var Plotly = (() => {
           });
         }
         seq.push(
-          subroutines.drawData,
+          timedDrawData,
           subroutines.finalDraw,
           initInteractions,
           Plots.addLinks,
           Plots.rehover,
           Plots.redrag,
-          Plots.reselect,
-          // TODO: doAutoMargin is only needed here for axis automargin, which
-          // happens outside of marginPushers where all the other automargins are
-          // calculated. Would be much better to separate margin calculations from
-          // component drawing - see https://github.com/plotly/plotly.js/issues/2704
-          Plots.doAutoMargin,
-          Plots.previousPromises
+          Plots.reselect
         );
+        if (!deferAutoMargin) {
+          seq.push(
+            // TODO: doAutoMargin is only needed here for axis automargin, which
+            // happens outside of marginPushers where all the other automargins are
+            // calculated. Would be much better to separate margin calculations from
+            // component drawing - see https://github.com/plotly/plotly.js/issues/2704
+            Plots.doAutoMargin
+          );
+        }
+        seq.push(Plots.previousPromises);
         var plotDone = Lib.syncOrAsync(seq, gd);
         if (!plotDone || !plotDone.then) plotDone = Promise.resolve();
         return plotDone.then(function() {
+          performance.mark("plotly-total-end");
+          performance.measure("plotly-total", "plotly-total-start", "plotly-total-end");
           emitAfterPlot(gd);
+          if (deferAutoMargin) {
+            requestAnimationFrame(function() {
+              performance.mark("plotly-deferredMargin-start");
+              var deferredSeq = [timedMarginPushers, marginPushersAgain];
+              if (hasCartesian) deferredSeq.push(positionAndAutorange);
+              deferredSeq.push(subroutines.layoutStyles);
+              if (hasCartesian) deferredSeq.push(drawAxes);
+              deferredSeq.push(
+                timedDrawData,
+                subroutines.finalDraw,
+                Plots.doAutoMargin
+              );
+              var deferredDone = Lib.syncOrAsync(deferredSeq, gd);
+              if (!deferredDone || !deferredDone.then) deferredDone = Promise.resolve();
+              deferredDone.then(function() {
+                performance.mark("plotly-deferredMargin-end");
+                performance.measure("plotly-deferredMargin", "plotly-deferredMargin-start", "plotly-deferredMargin-end");
+              });
+            });
+          }
           return gd;
         });
       }
@@ -47802,6 +44167,446 @@ var Plotly = (() => {
     }
   });
 
+  // src/traces/scatter/constants.js
+  var require_constants7 = __commonJS({
+    "src/traces/scatter/constants.js"(exports, module) {
+      "use strict";
+      module.exports = {
+        PTS_LINESONLY: 20,
+        // fixed parameters of clustering and clipping algorithms
+        // fraction of clustering tolerance "so close we don't even consider it a new point"
+        minTolerance: 0.2,
+        // how fast does clustering tolerance increase as you get away from the visible region
+        toleranceGrowth: 10,
+        // number of viewport sizes away from the visible region
+        // at which we clip all lines to the perimeter
+        maxScreensAway: 20,
+        eventDataKeys: []
+      };
+    }
+  });
+
+  // src/traces/scatter/fillcolor_attribute.js
+  var require_fillcolor_attribute = __commonJS({
+    "src/traces/scatter/fillcolor_attribute.js"(exports, module) {
+      "use strict";
+      module.exports = function makeFillcolorAttr(hasFillgradient) {
+        return {
+          valType: "color",
+          editType: "style",
+          anim: true
+        };
+      };
+    }
+  });
+
+  // src/traces/scatter/attributes.js
+  var require_attributes11 = __commonJS({
+    "src/traces/scatter/attributes.js"(exports, module) {
+      "use strict";
+      var axisHoverFormat = require_axis_format_attributes().axisHoverFormat;
+      var { hovertemplateAttrs, texttemplateAttrs, templatefallbackAttrs } = require_template_attributes();
+      var colorScaleAttrs = require_attributes8();
+      var fontAttrs = require_font_attributes();
+      var dash = require_attributes4().dash;
+      var pattern = require_attributes4().pattern;
+      var Drawing = require_drawing();
+      var constants = require_constants7();
+      var extendFlat = require_extend().extendFlat;
+      var makeFillcolorAttr = require_fillcolor_attribute();
+      function axisPeriod(axis) {
+        return {
+          valType: "any",
+          dflt: 0,
+          editType: "calc"
+        };
+      }
+      function axisPeriod0(axis) {
+        return {
+          valType: "any",
+          editType: "calc"
+        };
+      }
+      function axisPeriodAlignment(axis) {
+        return {
+          valType: "enumerated",
+          values: ["start", "middle", "end"],
+          dflt: "middle",
+          editType: "calc"
+        };
+      }
+      module.exports = {
+        x: {
+          valType: "data_array",
+          editType: "calc+clearAxisTypes",
+          anim: true
+        },
+        x0: {
+          valType: "any",
+          dflt: 0,
+          editType: "calc+clearAxisTypes",
+          anim: true
+        },
+        dx: {
+          valType: "number",
+          dflt: 1,
+          editType: "calc",
+          anim: true
+        },
+        y: {
+          valType: "data_array",
+          editType: "calc+clearAxisTypes",
+          anim: true
+        },
+        y0: {
+          valType: "any",
+          dflt: 0,
+          editType: "calc+clearAxisTypes",
+          anim: true
+        },
+        dy: {
+          valType: "number",
+          dflt: 1,
+          editType: "calc",
+          anim: true
+        },
+        xperiod: axisPeriod("x"),
+        yperiod: axisPeriod("y"),
+        xperiod0: axisPeriod0("x0"),
+        yperiod0: axisPeriod0("y0"),
+        xperiodalignment: axisPeriodAlignment("x"),
+        yperiodalignment: axisPeriodAlignment("y"),
+        xhoverformat: axisHoverFormat("x"),
+        yhoverformat: axisHoverFormat("y"),
+        offsetgroup: {
+          valType: "string",
+          dflt: "",
+          editType: "calc"
+        },
+        alignmentgroup: {
+          valType: "string",
+          dflt: "",
+          editType: "calc"
+        },
+        stackgroup: {
+          valType: "string",
+          dflt: "",
+          editType: "calc"
+        },
+        orientation: {
+          valType: "enumerated",
+          values: ["v", "h"],
+          editType: "calc"
+        },
+        groupnorm: {
+          valType: "enumerated",
+          values: ["", "fraction", "percent"],
+          dflt: "",
+          editType: "calc"
+        },
+        stackgaps: {
+          valType: "enumerated",
+          values: ["infer zero", "interpolate"],
+          dflt: "infer zero",
+          editType: "calc"
+        },
+        text: {
+          valType: "string",
+          dflt: "",
+          arrayOk: true,
+          editType: "calc"
+        },
+        texttemplate: texttemplateAttrs(),
+        texttemplatefallback: templatefallbackAttrs({ editType: "calc" }),
+        hovertext: {
+          valType: "string",
+          dflt: "",
+          arrayOk: true,
+          editType: "style"
+        },
+        mode: {
+          valType: "flaglist",
+          flags: ["lines", "markers", "text"],
+          extras: ["none"],
+          editType: "calc"
+        },
+        hoveron: {
+          valType: "flaglist",
+          flags: ["points", "fills"],
+          editType: "style"
+        },
+        hovertemplate: hovertemplateAttrs({}, { keys: constants.eventDataKeys }),
+        hovertemplatefallback: templatefallbackAttrs(),
+        line: {
+          color: {
+            valType: "color",
+            editType: "style",
+            anim: true
+          },
+          width: {
+            valType: "number",
+            min: 0,
+            dflt: 2,
+            editType: "style",
+            anim: true
+          },
+          shape: {
+            valType: "enumerated",
+            values: ["linear", "spline", "hv", "vh", "hvh", "vhv"],
+            dflt: "linear",
+            editType: "plot"
+          },
+          smoothing: {
+            valType: "number",
+            min: 0,
+            max: 1.3,
+            dflt: 1,
+            editType: "plot"
+          },
+          dash: extendFlat({}, dash, { editType: "style" }),
+          backoff: {
+            // we want to have a similar option for the start of the line
+            valType: "number",
+            min: 0,
+            dflt: "auto",
+            arrayOk: true,
+            editType: "plot"
+          },
+          simplify: {
+            valType: "boolean",
+            dflt: true,
+            editType: "plot"
+          },
+          editType: "plot"
+        },
+        connectgaps: {
+          valType: "boolean",
+          dflt: false,
+          editType: "calc"
+        },
+        cliponaxis: {
+          valType: "boolean",
+          dflt: true,
+          editType: "plot"
+        },
+        fill: {
+          valType: "enumerated",
+          values: ["none", "tozeroy", "tozerox", "tonexty", "tonextx", "toself", "tonext"],
+          editType: "calc"
+        },
+        fillcolor: makeFillcolorAttr(true),
+        fillgradient: extendFlat({
+          type: {
+            valType: "enumerated",
+            values: ["radial", "horizontal", "vertical", "none"],
+            dflt: "none",
+            editType: "calc"
+          },
+          start: {
+            valType: "number",
+            editType: "calc"
+          },
+          stop: {
+            valType: "number",
+            editType: "calc"
+          },
+          colorscale: {
+            valType: "colorscale",
+            editType: "style"
+          },
+          editType: "calc"
+        }),
+        fillpattern: pattern,
+        marker: extendFlat(
+          {
+            symbol: {
+              valType: "enumerated",
+              values: Drawing.symbolList,
+              dflt: "circle",
+              arrayOk: true,
+              editType: "style"
+            },
+            opacity: {
+              valType: "number",
+              min: 0,
+              max: 1,
+              arrayOk: true,
+              editType: "style",
+              anim: true
+            },
+            angle: {
+              valType: "angle",
+              dflt: 0,
+              arrayOk: true,
+              editType: "plot",
+              anim: false
+              // TODO: possibly set to true in future
+            },
+            angleref: {
+              valType: "enumerated",
+              values: ["previous", "up"],
+              dflt: "up",
+              editType: "plot",
+              anim: false
+            },
+            standoff: {
+              valType: "number",
+              min: 0,
+              dflt: 0,
+              arrayOk: true,
+              editType: "plot",
+              anim: true
+            },
+            size: {
+              valType: "number",
+              min: 0,
+              dflt: 6,
+              arrayOk: true,
+              editType: "calc",
+              anim: true
+            },
+            maxdisplayed: {
+              valType: "number",
+              min: 0,
+              dflt: 0,
+              editType: "plot"
+            },
+            sizeref: {
+              valType: "number",
+              dflt: 1,
+              editType: "calc"
+            },
+            sizemin: {
+              valType: "number",
+              min: 0,
+              dflt: 0,
+              editType: "calc"
+            },
+            sizemode: {
+              valType: "enumerated",
+              values: ["diameter", "area"],
+              dflt: "diameter",
+              editType: "calc"
+            },
+            line: extendFlat(
+              {
+                width: {
+                  valType: "number",
+                  min: 0,
+                  arrayOk: true,
+                  editType: "style",
+                  anim: true
+                },
+                editType: "calc"
+              },
+              colorScaleAttrs("marker.line", { anim: true })
+            ),
+            gradient: {
+              type: {
+                valType: "enumerated",
+                values: ["radial", "horizontal", "vertical", "none"],
+                arrayOk: true,
+                dflt: "none",
+                editType: "calc"
+              },
+              color: {
+                valType: "color",
+                arrayOk: true,
+                editType: "calc"
+              },
+              editType: "calc"
+            },
+            editType: "calc"
+          },
+          colorScaleAttrs("marker", { anim: true })
+        ),
+        selected: {
+          marker: {
+            opacity: {
+              valType: "number",
+              min: 0,
+              max: 1,
+              editType: "style"
+            },
+            color: {
+              valType: "color",
+              editType: "style"
+            },
+            size: {
+              valType: "number",
+              min: 0,
+              editType: "style"
+            },
+            editType: "style"
+          },
+          textfont: {
+            color: {
+              valType: "color",
+              editType: "style"
+            },
+            editType: "style"
+          },
+          editType: "style"
+        },
+        unselected: {
+          marker: {
+            opacity: {
+              valType: "number",
+              min: 0,
+              max: 1,
+              editType: "style"
+            },
+            color: {
+              valType: "color",
+              editType: "style"
+            },
+            size: {
+              valType: "number",
+              min: 0,
+              editType: "style"
+            },
+            editType: "style"
+          },
+          textfont: {
+            color: {
+              valType: "color",
+              editType: "style"
+            },
+            editType: "style"
+          },
+          editType: "style"
+        },
+        textposition: {
+          valType: "enumerated",
+          values: [
+            "top left",
+            "top center",
+            "top right",
+            "middle left",
+            "middle center",
+            "middle right",
+            "bottom left",
+            "bottom center",
+            "bottom right"
+          ],
+          dflt: "middle center",
+          arrayOk: true,
+          editType: "calc"
+        },
+        textfont: fontAttrs({
+          editType: "calc",
+          colorEditType: "style",
+          arrayOk: true
+        }),
+        zorder: {
+          valType: "integer",
+          dflt: 0,
+          editType: "plot"
+        }
+      };
+    }
+  });
+
   // src/traces/scatter/xy_defaults.js
   var require_xy_defaults = __commonJS({
     "src/traces/scatter/xy_defaults.js"(exports, module) {
@@ -48105,13 +44910,13 @@ var Plotly = (() => {
   });
 
   // src/traces/scatter/defaults.js
-  var require_defaults8 = __commonJS({
+  var require_defaults6 = __commonJS({
     "src/traces/scatter/defaults.js"(exports, module) {
       "use strict";
       var Lib = require_lib();
       var Registry = require_registry();
-      var attributes = require_attributes12();
-      var constants = require_constants8();
+      var attributes = require_attributes11();
+      var constants = require_constants7();
       var subTypes = require_subtypes();
       var handleXYDefaults = require_xy_defaults();
       var handlePeriodDefaults = require_period_defaults();
@@ -48232,7 +45037,7 @@ var Plotly = (() => {
       "use strict";
       var Lib = require_lib();
       var handleGroupingDefaults = require_grouping_defaults();
-      var attributes = require_attributes12();
+      var attributes = require_attributes11();
       module.exports = function crossTraceDefaults(fullData, fullLayout) {
         var traceIn, traceOut, i;
         var scattermode = fullLayout.scattermode;
@@ -49532,7 +46337,7 @@ var Plotly = (() => {
       var Lib = require_lib();
       var segmentsIntersect = Lib.segmentsIntersect;
       var constrain = Lib.constrain;
-      var constants = require_constants8();
+      var constants = require_constants7();
       module.exports = function linePoints(d, opts) {
         var trace = opts.trace || {};
         var xa = opts.xaxis;
@@ -49935,6 +46740,162 @@ var Plotly = (() => {
           }
         }
         return cdscatterSorted;
+      };
+    }
+  });
+
+  // src/lib/polygon.js
+  var require_polygon = __commonJS({
+    "src/lib/polygon.js"(exports, module) {
+      "use strict";
+      var dot = require_matrix().dot;
+      var BADNUM = require_numerical().BADNUM;
+      var polygon = module.exports = {};
+      polygon.tester = function tester(ptsIn) {
+        var pts = ptsIn.slice();
+        var xmin = pts[0][0];
+        var xmax = xmin;
+        var ymin = pts[0][1];
+        var ymax = ymin;
+        var i;
+        if (pts[pts.length - 1][0] !== pts[0][0] || pts[pts.length - 1][1] !== pts[0][1]) {
+          pts.push(pts[0]);
+        }
+        for (i = 1; i < pts.length; i++) {
+          xmin = Math.min(xmin, pts[i][0]);
+          xmax = Math.max(xmax, pts[i][0]);
+          ymin = Math.min(ymin, pts[i][1]);
+          ymax = Math.max(ymax, pts[i][1]);
+        }
+        var isRect = false;
+        var rectFirstEdgeTest;
+        if (pts.length === 5) {
+          if (pts[0][0] === pts[1][0]) {
+            if (pts[2][0] === pts[3][0] && pts[0][1] === pts[3][1] && pts[1][1] === pts[2][1]) {
+              isRect = true;
+              rectFirstEdgeTest = function(pt) {
+                return pt[0] === pts[0][0];
+              };
+            }
+          } else if (pts[0][1] === pts[1][1]) {
+            if (pts[2][1] === pts[3][1] && pts[0][0] === pts[3][0] && pts[1][0] === pts[2][0]) {
+              isRect = true;
+              rectFirstEdgeTest = function(pt) {
+                return pt[1] === pts[0][1];
+              };
+            }
+          }
+        }
+        function rectContains(pt, omitFirstEdge) {
+          var x = pt[0];
+          var y = pt[1];
+          if (x === BADNUM || x < xmin || x > xmax || y === BADNUM || y < ymin || y > ymax) {
+            return false;
+          }
+          if (omitFirstEdge && rectFirstEdgeTest(pt)) return false;
+          return true;
+        }
+        function contains(pt, omitFirstEdge) {
+          var x = pt[0];
+          var y = pt[1];
+          if (x === BADNUM || x < xmin || x > xmax || y === BADNUM || y < ymin || y > ymax) {
+            return false;
+          }
+          var imax = pts.length;
+          var x1 = pts[0][0];
+          var y1 = pts[0][1];
+          var crossings = 0;
+          var i2;
+          var x0;
+          var y0;
+          var xmini;
+          var ycross;
+          for (i2 = 1; i2 < imax; i2++) {
+            x0 = x1;
+            y0 = y1;
+            x1 = pts[i2][0];
+            y1 = pts[i2][1];
+            xmini = Math.min(x0, x1);
+            if (x < xmini || x > Math.max(x0, x1) || y > Math.max(y0, y1)) {
+              continue;
+            } else if (y < Math.min(y0, y1)) {
+              if (x !== xmini) crossings++;
+            } else {
+              if (x1 === x0) ycross = y;
+              else ycross = y0 + (x - x0) * (y1 - y0) / (x1 - x0);
+              if (y === ycross) {
+                if (i2 === 1 && omitFirstEdge) return false;
+                return true;
+              }
+              if (y <= ycross && x !== xmini) crossings++;
+            }
+          }
+          return crossings % 2 === 1;
+        }
+        var degenerate = true;
+        var lastPt = pts[0];
+        for (i = 1; i < pts.length; i++) {
+          if (lastPt[0] !== pts[i][0] || lastPt[1] !== pts[i][1]) {
+            degenerate = false;
+            break;
+          }
+        }
+        return {
+          xmin,
+          xmax,
+          ymin,
+          ymax,
+          pts,
+          contains: isRect ? rectContains : contains,
+          isRect,
+          degenerate
+        };
+      };
+      polygon.isSegmentBent = function isSegmentBent(pts, start, end, tolerance) {
+        var startPt = pts[start];
+        var segment = [pts[end][0] - startPt[0], pts[end][1] - startPt[1]];
+        var segmentSquared = dot(segment, segment);
+        var segmentLen = Math.sqrt(segmentSquared);
+        var unitPerp = [-segment[1] / segmentLen, segment[0] / segmentLen];
+        var i;
+        var part;
+        var partParallel;
+        for (i = start + 1; i < end; i++) {
+          part = [pts[i][0] - startPt[0], pts[i][1] - startPt[1]];
+          partParallel = dot(part, segment);
+          if (partParallel < 0 || partParallel > segmentSquared || Math.abs(dot(part, unitPerp)) > tolerance) return true;
+        }
+        return false;
+      };
+      polygon.filter = function filter(pts, tolerance) {
+        var ptsFiltered = [pts[0]];
+        var doneRawIndex = 0;
+        var doneFilteredIndex = 0;
+        function addPt(pt) {
+          pts.push(pt);
+          var prevFilterLen = ptsFiltered.length;
+          var iLast = doneRawIndex;
+          ptsFiltered.splice(doneFilteredIndex + 1);
+          for (var i = iLast + 1; i < pts.length; i++) {
+            if (i === pts.length - 1 || polygon.isSegmentBent(pts, iLast, i + 1, tolerance)) {
+              ptsFiltered.push(pts[i]);
+              if (ptsFiltered.length < prevFilterLen - 2) {
+                doneRawIndex = i;
+                doneFilteredIndex = ptsFiltered.length - 1;
+              }
+              iLast = i;
+            }
+          }
+        }
+        if (pts.length > 1) {
+          var lastPt = pts.pop();
+          addPt(lastPt);
+        }
+        return {
+          addPt,
+          raw: pts,
+          filtered: ptsFiltered
+        };
       };
     }
   });
@@ -50667,7 +47628,7 @@ var Plotly = (() => {
   });
 
   // src/traces/scatter/select.js
-  var require_select2 = __commonJS({
+  var require_select = __commonJS({
     "src/traces/scatter/select.js"(exports, module) {
       "use strict";
       var subtypes = require_subtypes();
@@ -50710,7 +47671,7 @@ var Plotly = (() => {
   });
 
   // src/plots/cartesian/attributes.js
-  var require_attributes14 = __commonJS({
+  var require_attributes12 = __commonJS({
     "src/plots/cartesian/attributes.js"(exports, module) {
       "use strict";
       module.exports = {
@@ -51728,7 +48689,7 @@ var Plotly = (() => {
       exports.idRoot = ["x", "y"];
       exports.idRegex = constants.idRegex;
       exports.attrRegex = constants.attrRegex;
-      exports.attributes = require_attributes14();
+      exports.attributes = require_attributes12();
       exports.layoutAttributes = require_layout_attributes4();
       exports.supplyLayoutDefaults = require_layout_defaults4();
       exports.transitionAxes = require_transition_axes();
@@ -52247,9 +49208,9 @@ var Plotly = (() => {
         hasMarkers: subtypes.hasMarkers,
         hasText: subtypes.hasText,
         isBubble: subtypes.isBubble,
-        attributes: require_attributes12(),
+        attributes: require_attributes11(),
         layoutAttributes: require_layout_attributes3(),
-        supplyDefaults: require_defaults8(),
+        supplyDefaults: require_defaults6(),
         crossTraceDefaults: require_cross_trace_defaults2(),
         supplyLayoutDefaults: require_layout_defaults3(),
         calc: require_calc3().calc,
@@ -52261,7 +49222,7 @@ var Plotly = (() => {
         style: require_style2().style,
         styleOnSelect: require_style2().styleOnSelect,
         hoverPoints: require_hover2(),
-        selectPoints: require_select2(),
+        selectPoints: require_select(),
         animatable: true,
         moduleType: "trace",
         name: "scatter",
@@ -52277,6 +49238,57 @@ var Plotly = (() => {
         ],
         meta: {}
       };
+    }
+  });
+
+  // src/components/annotations/arrow_paths.js
+  var require_arrow_paths = __commonJS({
+    "src/components/annotations/arrow_paths.js"(exports, module) {
+      "use strict";
+      module.exports = [
+        // no arrow
+        {
+          path: "",
+          backoff: 0
+        },
+        // wide with flat back
+        {
+          path: "M-2.4,-3V3L0.6,0Z",
+          backoff: 0.6
+        },
+        // narrower with flat back
+        {
+          path: "M-3.7,-2.5V2.5L1.3,0Z",
+          backoff: 1.3
+        },
+        // barbed
+        {
+          path: "M-4.45,-3L-1.65,-0.2V0.2L-4.45,3L1.55,0Z",
+          backoff: 1.55
+        },
+        // wide line-drawn
+        {
+          path: "M-2.2,-2.2L-0.2,-0.2V0.2L-2.2,2.2L-1.4,3L1.6,0L-1.4,-3Z",
+          backoff: 1.6
+        },
+        // narrower line-drawn
+        {
+          path: "M-4.4,-2.1L-0.6,-0.2V0.2L-4.4,2.1L-4,3L2,0L-4,-3Z",
+          backoff: 2
+        },
+        // circle
+        {
+          path: "M2,0A2,2 0 1,1 0,-2A2,2 0 0,1 2,0Z",
+          backoff: 0,
+          noRotate: true
+        },
+        // square
+        {
+          path: "M2,2V-2H-2V2Z",
+          backoff: 0,
+          noRotate: true
+        }
+      ];
     }
   });
 
@@ -52379,7 +49391,7 @@ var Plotly = (() => {
   });
 
   // src/components/annotations/draw.js
-  var require_draw4 = __commonJS({
+  var require_draw3 = __commonJS({
     "src/components/annotations/draw.js"(exports, module) {
       "use strict";
       var d3 = require_d3();
@@ -53002,6 +50014,306 @@ var Plotly = (() => {
     }
   });
 
+  // src/constants/axis_placeable_objects.js
+  var require_axis_placeable_objects = __commonJS({
+    "src/constants/axis_placeable_objects.js"(exports, module) {
+      "use strict";
+      module.exports = {
+        axisRefDescription: function(axisname, lower, upper) {
+          return [
+            "If set to a",
+            axisname,
+            "axis id (e.g. *" + axisname + "* or",
+            "*" + axisname + "2*), the `" + axisname + "` position refers to a",
+            axisname,
+            "coordinate. If set to *paper*, the `" + axisname + "`",
+            "position refers to the distance from the",
+            lower,
+            "of the plotting",
+            "area in normalized coordinates where *0* (*1*) corresponds to the",
+            lower,
+            "(" + upper + "). If set to a",
+            axisname,
+            "axis ID followed by",
+            "*domain* (separated by a space), the position behaves like for",
+            "*paper*, but refers to the distance in fractions of the domain",
+            "length from the",
+            lower,
+            "of the domain of that axis: e.g.,",
+            "*" + axisname + "2 domain* refers to the domain of the second",
+            axisname,
+            " axis and a",
+            axisname,
+            "position of 0.5 refers to the",
+            "point between the",
+            lower,
+            "and the",
+            upper,
+            "of the domain of the",
+            "second",
+            axisname,
+            "axis."
+          ].join(" ");
+        }
+      };
+    }
+  });
+
+  // src/components/annotations/attributes.js
+  var require_attributes13 = __commonJS({
+    "src/components/annotations/attributes.js"(exports, module) {
+      "use strict";
+      var ARROWPATHS = require_arrow_paths();
+      var fontAttrs = require_font_attributes();
+      var cartesianConstants = require_constants2();
+      var templatedArray = require_plot_template().templatedArray;
+      var axisPlaceableObjs = require_axis_placeable_objects();
+      module.exports = templatedArray("annotation", {
+        visible: {
+          valType: "boolean",
+          dflt: true,
+          editType: "calc+arraydraw"
+        },
+        text: {
+          valType: "string",
+          editType: "calc+arraydraw"
+        },
+        textangle: {
+          valType: "angle",
+          dflt: 0,
+          editType: "calc+arraydraw"
+        },
+        font: fontAttrs({
+          editType: "calc+arraydraw",
+          colorEditType: "arraydraw"
+        }),
+        width: {
+          valType: "number",
+          min: 1,
+          dflt: null,
+          editType: "calc+arraydraw"
+        },
+        height: {
+          valType: "number",
+          min: 1,
+          dflt: null,
+          editType: "calc+arraydraw"
+        },
+        opacity: {
+          valType: "number",
+          min: 0,
+          max: 1,
+          dflt: 1,
+          editType: "arraydraw"
+        },
+        align: {
+          valType: "enumerated",
+          values: ["left", "center", "right"],
+          dflt: "center",
+          editType: "arraydraw"
+        },
+        valign: {
+          valType: "enumerated",
+          values: ["top", "middle", "bottom"],
+          dflt: "middle",
+          editType: "arraydraw"
+        },
+        bgcolor: {
+          valType: "color",
+          dflt: "rgba(0,0,0,0)",
+          editType: "arraydraw"
+        },
+        bordercolor: {
+          valType: "color",
+          dflt: "rgba(0,0,0,0)",
+          editType: "arraydraw"
+        },
+        borderpad: {
+          valType: "number",
+          min: 0,
+          dflt: 1,
+          editType: "calc+arraydraw"
+        },
+        borderwidth: {
+          valType: "number",
+          min: 0,
+          dflt: 1,
+          editType: "calc+arraydraw"
+        },
+        // arrow
+        showarrow: {
+          valType: "boolean",
+          dflt: true,
+          editType: "calc+arraydraw"
+        },
+        arrowcolor: {
+          valType: "color",
+          editType: "arraydraw"
+        },
+        arrowhead: {
+          valType: "integer",
+          min: 0,
+          max: ARROWPATHS.length,
+          dflt: 1,
+          editType: "arraydraw"
+        },
+        startarrowhead: {
+          valType: "integer",
+          min: 0,
+          max: ARROWPATHS.length,
+          dflt: 1,
+          editType: "arraydraw"
+        },
+        arrowside: {
+          valType: "flaglist",
+          flags: ["end", "start"],
+          extras: ["none"],
+          dflt: "end",
+          editType: "arraydraw"
+        },
+        arrowsize: {
+          valType: "number",
+          min: 0.3,
+          dflt: 1,
+          editType: "calc+arraydraw"
+        },
+        startarrowsize: {
+          valType: "number",
+          min: 0.3,
+          dflt: 1,
+          editType: "calc+arraydraw"
+        },
+        arrowwidth: {
+          valType: "number",
+          min: 0.1,
+          editType: "calc+arraydraw"
+        },
+        standoff: {
+          valType: "number",
+          min: 0,
+          dflt: 0,
+          editType: "calc+arraydraw"
+        },
+        startstandoff: {
+          valType: "number",
+          min: 0,
+          dflt: 0,
+          editType: "calc+arraydraw"
+        },
+        ax: {
+          valType: "any",
+          editType: "calc+arraydraw"
+        },
+        ay: {
+          valType: "any",
+          editType: "calc+arraydraw"
+        },
+        axref: {
+          valType: "enumerated",
+          dflt: "pixel",
+          values: [
+            "pixel",
+            cartesianConstants.idRegex.x.toString()
+          ],
+          editType: "calc"
+        },
+        ayref: {
+          valType: "enumerated",
+          dflt: "pixel",
+          values: [
+            "pixel",
+            cartesianConstants.idRegex.y.toString()
+          ],
+          editType: "calc"
+        },
+        // positioning
+        xref: {
+          valType: "enumerated",
+          values: [
+            "paper",
+            cartesianConstants.idRegex.x.toString()
+          ],
+          editType: "calc"
+        },
+        x: {
+          valType: "any",
+          editType: "calc+arraydraw"
+        },
+        xanchor: {
+          valType: "enumerated",
+          values: ["auto", "left", "center", "right"],
+          dflt: "auto",
+          editType: "calc+arraydraw"
+        },
+        xshift: {
+          valType: "number",
+          dflt: 0,
+          editType: "calc+arraydraw"
+        },
+        yref: {
+          valType: "enumerated",
+          values: [
+            "paper",
+            cartesianConstants.idRegex.y.toString()
+          ],
+          editType: "calc"
+        },
+        y: {
+          valType: "any",
+          editType: "calc+arraydraw"
+        },
+        yanchor: {
+          valType: "enumerated",
+          values: ["auto", "top", "middle", "bottom"],
+          dflt: "auto",
+          editType: "calc+arraydraw"
+        },
+        yshift: {
+          valType: "number",
+          dflt: 0,
+          editType: "calc+arraydraw"
+        },
+        clicktoshow: {
+          valType: "enumerated",
+          values: [false, "onoff", "onout"],
+          dflt: false,
+          editType: "arraydraw"
+        },
+        xclick: {
+          valType: "any",
+          editType: "arraydraw"
+        },
+        yclick: {
+          valType: "any",
+          editType: "arraydraw"
+        },
+        hovertext: {
+          valType: "string",
+          editType: "arraydraw"
+        },
+        hoverlabel: {
+          bgcolor: {
+            valType: "color",
+            editType: "arraydraw"
+          },
+          bordercolor: {
+            valType: "color",
+            editType: "arraydraw"
+          },
+          font: fontAttrs({
+            editType: "arraydraw"
+          }),
+          editType: "arraydraw"
+        },
+        captureevents: {
+          valType: "boolean",
+          editType: "arraydraw"
+        },
+        editType: "calc"
+      });
+    }
+  });
+
   // src/components/annotations/common_defaults.js
   var require_common_defaults = __commonJS({
     "src/components/annotations/common_defaults.js"(exports, module) {
@@ -53063,14 +50375,14 @@ var Plotly = (() => {
   });
 
   // src/components/annotations/defaults.js
-  var require_defaults9 = __commonJS({
+  var require_defaults7 = __commonJS({
     "src/components/annotations/defaults.js"(exports, module) {
       "use strict";
       var Lib = require_lib();
       var Axes = require_axes();
       var handleArrayContainerDefaults = require_array_container_defaults();
       var handleAnnotationCommonDefaults = require_common_defaults();
-      var attributes = require_attributes11();
+      var attributes = require_attributes13();
       module.exports = function supplyLayoutDefaults(layoutIn, layoutOut) {
         handleArrayContainerDefaults(layoutIn, layoutOut, {
           name: "annotations",
@@ -53130,13 +50442,59 @@ var Plotly = (() => {
     }
   });
 
+  // src/plots/cartesian/include_components.js
+  var require_include_components = __commonJS({
+    "src/plots/cartesian/include_components.js"(exports, module) {
+      "use strict";
+      var Registry = require_registry();
+      var Lib = require_lib();
+      var axisIds = require_axis_ids();
+      module.exports = function makeIncludeComponents(containerArrayName) {
+        return function includeComponents(layoutIn, layoutOut) {
+          var array = layoutIn[containerArrayName];
+          if (!Array.isArray(array)) return;
+          var Cartesian = Registry.subplotsRegistry.cartesian;
+          var idRegex = Cartesian.idRegex;
+          var subplots = layoutOut._subplots;
+          var xaList = subplots.xaxis;
+          var yaList = subplots.yaxis;
+          var cartesianList = subplots.cartesian;
+          var hasCartesian = layoutOut._has("cartesian");
+          for (var i = 0; i < array.length; i++) {
+            var itemi = array[i];
+            if (!Lib.isPlainObject(itemi)) continue;
+            var xref = axisIds.cleanId(itemi.xref, "x", false);
+            var yref = axisIds.cleanId(itemi.yref, "y", false);
+            var hasXref = idRegex.x.test(xref);
+            var hasYref = idRegex.y.test(yref);
+            if (hasXref || hasYref) {
+              if (!hasCartesian) Lib.pushUnique(layoutOut._basePlotModules, Cartesian);
+              var newAxis = false;
+              if (hasXref && xaList.indexOf(xref) === -1) {
+                xaList.push(xref);
+                newAxis = true;
+              }
+              if (hasYref && yaList.indexOf(yref) === -1) {
+                yaList.push(yref);
+                newAxis = true;
+              }
+              if (newAxis && hasXref && hasYref) {
+                cartesianList.push(xref + yref);
+              }
+            }
+          }
+        };
+      };
+    }
+  });
+
   // src/components/annotations/calc_autorange.js
   var require_calc_autorange = __commonJS({
     "src/components/annotations/calc_autorange.js"(exports, module) {
       "use strict";
       var Lib = require_lib();
       var Axes = require_axes();
-      var draw = require_draw4().draw;
+      var draw = require_draw3().draw;
       module.exports = function calcAutorange(gd) {
         var fullLayout = gd._fullLayout;
         var annotationList = Lib.filterVisible(fullLayout.annotations);
@@ -53236,13 +50594,13 @@ var Plotly = (() => {
   var require_annotations = __commonJS({
     "src/components/annotations/index.js"(exports, module) {
       "use strict";
-      var drawModule = require_draw4();
+      var drawModule = require_draw3();
       var clickModule = require_click2();
       module.exports = {
         moduleType: "component",
         name: "annotations",
-        layoutAttributes: require_attributes11(),
-        supplyLayoutDefaults: require_defaults9(),
+        layoutAttributes: require_attributes13(),
+        supplyLayoutDefaults: require_defaults7(),
         includeBasePlot: require_include_components()("annotations"),
         calcAutorange: require_calc_autorange(),
         draw: drawModule.draw,
@@ -53256,10 +50614,10 @@ var Plotly = (() => {
   });
 
   // src/components/annotations3d/attributes.js
-  var require_attributes15 = __commonJS({
+  var require_attributes14 = __commonJS({
     "src/components/annotations3d/attributes.js"(exports, module) {
       "use strict";
-      var annAttrs = require_attributes11();
+      var annAttrs = require_attributes13();
       var overrideAll = require_edit_types().overrideAll;
       var templatedArray = require_plot_template().templatedArray;
       module.exports = overrideAll(templatedArray("annotation", {
@@ -53323,14 +50681,14 @@ var Plotly = (() => {
   });
 
   // src/components/annotations3d/defaults.js
-  var require_defaults10 = __commonJS({
+  var require_defaults8 = __commonJS({
     "src/components/annotations3d/defaults.js"(exports, module) {
       "use strict";
       var Lib = require_lib();
       var Axes = require_axes();
       var handleArrayContainerDefaults = require_array_container_defaults();
       var handleAnnotationCommonDefaults = require_common_defaults();
-      var attributes = require_attributes15();
+      var attributes = require_attributes14();
       module.exports = function handleDefaults(sceneLayoutIn, sceneLayoutOut, opts) {
         handleArrayContainerDefaults(sceneLayoutIn, sceneLayoutOut, {
           name: "annotations",
@@ -53450,10 +50808,10 @@ var Plotly = (() => {
   });
 
   // src/components/annotations3d/draw.js
-  var require_draw5 = __commonJS({
+  var require_draw4 = __commonJS({
     "src/components/annotations3d/draw.js"(exports, module) {
       "use strict";
-      var drawRaw = require_draw4().drawRaw;
+      var drawRaw = require_draw3().drawRaw;
       var project = require_project();
       var axLetters = ["x", "y", "z"];
       module.exports = function draw(scene) {
@@ -53499,14 +50857,14 @@ var Plotly = (() => {
         name: "annotations3d",
         schema: {
           subplots: {
-            scene: { annotations: require_attributes15() }
+            scene: { annotations: require_attributes14() }
           }
         },
-        layoutAttributes: require_attributes15(),
-        handleDefaults: require_defaults10(),
+        layoutAttributes: require_attributes14(),
+        handleDefaults: require_defaults8(),
         includeBasePlot: includeGL3D,
         convert: require_convert(),
-        draw: require_draw5()
+        draw: require_draw4()
       };
       function includeGL3D(layoutIn, layoutOut) {
         var GL3D = Registry.subplotsRegistry.gl3d;
@@ -53524,13 +50882,2720 @@ var Plotly = (() => {
     }
   });
 
+  // src/components/selections/draw.js
+  var require_draw5 = __commonJS({
+    "src/components/selections/draw.js"(exports, module) {
+      "use strict";
+      var readPaths = require_helpers7().readPaths;
+      var displayOutlines = require_display_outlines();
+      var clearOutlineControllers = require_handle_outline().clearOutlineControllers;
+      var Color2 = require_color();
+      var Drawing = require_drawing();
+      var arrayEditor = require_plot_template().arrayEditor;
+      var helpers = require_helpers8();
+      var getPathString = helpers.getPathString;
+      module.exports = {
+        draw,
+        drawOne,
+        activateLastSelection
+      };
+      function draw(gd) {
+        var fullLayout = gd._fullLayout;
+        clearOutlineControllers(gd);
+        fullLayout._selectionLayer.selectAll("path").remove();
+        for (var k in fullLayout._plots) {
+          var selectionLayer = fullLayout._plots[k].selectionLayer;
+          if (selectionLayer) selectionLayer.selectAll("path").remove();
+        }
+        for (var i = 0; i < fullLayout.selections.length; i++) {
+          drawOne(gd, i);
+        }
+      }
+      function couldHaveActiveSelection(gd) {
+        return gd._context.editSelection;
+      }
+      function drawOne(gd, index) {
+        gd._fullLayout._paperdiv.selectAll('.selectionlayer [data-index="' + index + '"]').remove();
+        var o = helpers.makeSelectionsOptionsAndPlotinfo(gd, index);
+        var options = o.options;
+        var plotinfo = o.plotinfo;
+        if (!options._input) return;
+        drawSelection(gd._fullLayout._selectionLayer);
+        function drawSelection(selectionLayer) {
+          var d = getPathString(gd, options);
+          var attrs = {
+            "data-index": index,
+            "fill-rule": "evenodd",
+            d
+          };
+          var opacity = options.opacity;
+          var fillColor = "rgba(0,0,0,0)";
+          var lineColor = options.line.color || Color2.contrast(gd._fullLayout.plot_bgcolor);
+          var lineWidth = options.line.width;
+          var lineDash = options.line.dash;
+          if (!lineWidth) {
+            lineWidth = 5;
+            lineDash = "solid";
+          }
+          var isActiveSelection = couldHaveActiveSelection(gd) && gd._fullLayout._activeSelectionIndex === index;
+          if (isActiveSelection) {
+            fillColor = gd._fullLayout.activeselection.fillcolor;
+            opacity = gd._fullLayout.activeselection.opacity;
+          }
+          var allPaths = [];
+          for (var sensory = 1; sensory >= 0; sensory--) {
+            var path = selectionLayer.append("path").attr(attrs).style("opacity", sensory ? 0.1 : opacity).call(Color2.stroke, lineColor).call(Color2.fill, fillColor).call(
+              Drawing.dashLine,
+              sensory ? "solid" : lineDash,
+              sensory ? 4 + lineWidth : lineWidth
+            );
+            setClipPath(path, gd, options);
+            if (isActiveSelection) {
+              var editHelpers = arrayEditor(gd.layout, "selections", options);
+              path.style({
+                cursor: "move"
+              });
+              var dragOptions = {
+                element: path.node(),
+                plotinfo,
+                gd,
+                editHelpers,
+                isActiveSelection: true
+                // i.e. to enable controllers
+              };
+              var polygons = readPaths(d, gd);
+              displayOutlines(polygons, path, dragOptions);
+            } else {
+              path.style("pointer-events", sensory ? "all" : "none");
+            }
+            allPaths[sensory] = path;
+          }
+          var forePath = allPaths[0];
+          var backPath = allPaths[1];
+          backPath.node().addEventListener("click", function() {
+            return activateSelection(gd, forePath);
+          });
+        }
+      }
+      function setClipPath(selectionPath, gd, selectionOptions) {
+        var clipAxes = selectionOptions.xref + selectionOptions.yref;
+        Drawing.setClipUrl(
+          selectionPath,
+          "clip" + gd._fullLayout._uid + clipAxes,
+          gd
+        );
+      }
+      function activateSelection(gd, path) {
+        if (!couldHaveActiveSelection(gd)) return;
+        var element = path.node();
+        var id = +element.getAttribute("data-index");
+        if (id >= 0) {
+          if (id === gd._fullLayout._activeSelectionIndex) {
+            deactivateSelection(gd);
+            return;
+          }
+          gd._fullLayout._activeSelectionIndex = id;
+          gd._fullLayout._deactivateSelection = deactivateSelection;
+          draw(gd);
+        }
+      }
+      function activateLastSelection(gd) {
+        if (!couldHaveActiveSelection(gd)) return;
+        var id = gd._fullLayout.selections.length - 1;
+        gd._fullLayout._activeSelectionIndex = id;
+        gd._fullLayout._deactivateSelection = deactivateSelection;
+        draw(gd);
+      }
+      function deactivateSelection(gd) {
+        if (!couldHaveActiveSelection(gd)) return;
+        var id = gd._fullLayout._activeSelectionIndex;
+        if (id >= 0) {
+          clearOutlineControllers(gd);
+          delete gd._fullLayout._activeSelectionIndex;
+          draw(gd);
+        }
+      }
+    }
+  });
+
+  // node_modules/polybooljs/lib/build-log.js
+  var require_build_log = __commonJS({
+    "node_modules/polybooljs/lib/build-log.js"(exports, module) {
+      function BuildLog() {
+        var my;
+        var nextSegmentId = 0;
+        var curVert = false;
+        function push(type, data) {
+          my.list.push({
+            type,
+            data: data ? JSON.parse(JSON.stringify(data)) : void 0
+          });
+          return my;
+        }
+        my = {
+          list: [],
+          segmentId: function() {
+            return nextSegmentId++;
+          },
+          checkIntersection: function(seg1, seg2) {
+            return push("check", { seg1, seg2 });
+          },
+          segmentChop: function(seg, end) {
+            push("div_seg", { seg, pt: end });
+            return push("chop", { seg, pt: end });
+          },
+          statusRemove: function(seg) {
+            return push("pop_seg", { seg });
+          },
+          segmentUpdate: function(seg) {
+            return push("seg_update", { seg });
+          },
+          segmentNew: function(seg, primary) {
+            return push("new_seg", { seg, primary });
+          },
+          segmentRemove: function(seg) {
+            return push("rem_seg", { seg });
+          },
+          tempStatus: function(seg, above, below) {
+            return push("temp_status", { seg, above, below });
+          },
+          rewind: function(seg) {
+            return push("rewind", { seg });
+          },
+          status: function(seg, above, below) {
+            return push("status", { seg, above, below });
+          },
+          vert: function(x) {
+            if (x === curVert)
+              return my;
+            curVert = x;
+            return push("vert", { x });
+          },
+          log: function(data) {
+            if (typeof data !== "string")
+              data = JSON.stringify(data, false, "  ");
+            return push("log", { txt: data });
+          },
+          reset: function() {
+            return push("reset");
+          },
+          selected: function(segs) {
+            return push("selected", { segs });
+          },
+          chainStart: function(seg) {
+            return push("chain_start", { seg });
+          },
+          chainRemoveHead: function(index, pt) {
+            return push("chain_rem_head", { index, pt });
+          },
+          chainRemoveTail: function(index, pt) {
+            return push("chain_rem_tail", { index, pt });
+          },
+          chainNew: function(pt1, pt2) {
+            return push("chain_new", { pt1, pt2 });
+          },
+          chainMatch: function(index) {
+            return push("chain_match", { index });
+          },
+          chainClose: function(index) {
+            return push("chain_close", { index });
+          },
+          chainAddHead: function(index, pt) {
+            return push("chain_add_head", { index, pt });
+          },
+          chainAddTail: function(index, pt) {
+            return push("chain_add_tail", { index, pt });
+          },
+          chainConnect: function(index1, index2) {
+            return push("chain_con", { index1, index2 });
+          },
+          chainReverse: function(index) {
+            return push("chain_rev", { index });
+          },
+          chainJoin: function(index1, index2) {
+            return push("chain_join", { index1, index2 });
+          },
+          done: function() {
+            return push("done");
+          }
+        };
+        return my;
+      }
+      module.exports = BuildLog;
+    }
+  });
+
+  // node_modules/polybooljs/lib/epsilon.js
+  var require_epsilon = __commonJS({
+    "node_modules/polybooljs/lib/epsilon.js"(exports, module) {
+      function Epsilon(eps) {
+        if (typeof eps !== "number")
+          eps = 1e-10;
+        var my = {
+          epsilon: function(v) {
+            if (typeof v === "number")
+              eps = v;
+            return eps;
+          },
+          pointAboveOrOnLine: function(pt, left, right) {
+            var Ax = left[0];
+            var Ay = left[1];
+            var Bx = right[0];
+            var By = right[1];
+            var Cx = pt[0];
+            var Cy = pt[1];
+            return (Bx - Ax) * (Cy - Ay) - (By - Ay) * (Cx - Ax) >= -eps;
+          },
+          pointBetween: function(p, left, right) {
+            var d_py_ly = p[1] - left[1];
+            var d_rx_lx = right[0] - left[0];
+            var d_px_lx = p[0] - left[0];
+            var d_ry_ly = right[1] - left[1];
+            var dot = d_px_lx * d_rx_lx + d_py_ly * d_ry_ly;
+            if (dot < eps)
+              return false;
+            var sqlen = d_rx_lx * d_rx_lx + d_ry_ly * d_ry_ly;
+            if (dot - sqlen > -eps)
+              return false;
+            return true;
+          },
+          pointsSameX: function(p1, p2) {
+            return Math.abs(p1[0] - p2[0]) < eps;
+          },
+          pointsSameY: function(p1, p2) {
+            return Math.abs(p1[1] - p2[1]) < eps;
+          },
+          pointsSame: function(p1, p2) {
+            return my.pointsSameX(p1, p2) && my.pointsSameY(p1, p2);
+          },
+          pointsCompare: function(p1, p2) {
+            if (my.pointsSameX(p1, p2))
+              return my.pointsSameY(p1, p2) ? 0 : p1[1] < p2[1] ? -1 : 1;
+            return p1[0] < p2[0] ? -1 : 1;
+          },
+          pointsCollinear: function(pt1, pt2, pt3) {
+            var dx1 = pt1[0] - pt2[0];
+            var dy1 = pt1[1] - pt2[1];
+            var dx2 = pt2[0] - pt3[0];
+            var dy2 = pt2[1] - pt3[1];
+            return Math.abs(dx1 * dy2 - dx2 * dy1) < eps;
+          },
+          linesIntersect: function(a0, a1, b0, b1) {
+            var adx = a1[0] - a0[0];
+            var ady = a1[1] - a0[1];
+            var bdx = b1[0] - b0[0];
+            var bdy = b1[1] - b0[1];
+            var axb = adx * bdy - ady * bdx;
+            if (Math.abs(axb) < eps)
+              return false;
+            var dx = a0[0] - b0[0];
+            var dy = a0[1] - b0[1];
+            var A2 = (bdx * dy - bdy * dx) / axb;
+            var B2 = (adx * dy - ady * dx) / axb;
+            var ret = {
+              alongA: 0,
+              alongB: 0,
+              pt: [
+                a0[0] + A2 * adx,
+                a0[1] + A2 * ady
+              ]
+            };
+            if (A2 <= -eps)
+              ret.alongA = -2;
+            else if (A2 < eps)
+              ret.alongA = -1;
+            else if (A2 - 1 <= -eps)
+              ret.alongA = 0;
+            else if (A2 - 1 < eps)
+              ret.alongA = 1;
+            else
+              ret.alongA = 2;
+            if (B2 <= -eps)
+              ret.alongB = -2;
+            else if (B2 < eps)
+              ret.alongB = -1;
+            else if (B2 - 1 <= -eps)
+              ret.alongB = 0;
+            else if (B2 - 1 < eps)
+              ret.alongB = 1;
+            else
+              ret.alongB = 2;
+            return ret;
+          },
+          pointInsideRegion: function(pt, region) {
+            var x = pt[0];
+            var y = pt[1];
+            var last_x = region[region.length - 1][0];
+            var last_y = region[region.length - 1][1];
+            var inside = false;
+            for (var i = 0; i < region.length; i++) {
+              var curr_x = region[i][0];
+              var curr_y = region[i][1];
+              if (curr_y - y > eps != last_y - y > eps && (last_x - curr_x) * (y - curr_y) / (last_y - curr_y) + curr_x - x > eps)
+                inside = !inside;
+              last_x = curr_x;
+              last_y = curr_y;
+            }
+            return inside;
+          }
+        };
+        return my;
+      }
+      module.exports = Epsilon;
+    }
+  });
+
+  // node_modules/polybooljs/lib/linked-list.js
+  var require_linked_list = __commonJS({
+    "node_modules/polybooljs/lib/linked-list.js"(exports, module) {
+      var LinkedList = {
+        create: function() {
+          var my = {
+            root: { root: true, next: null },
+            exists: function(node) {
+              if (node === null || node === my.root)
+                return false;
+              return true;
+            },
+            isEmpty: function() {
+              return my.root.next === null;
+            },
+            getHead: function() {
+              return my.root.next;
+            },
+            insertBefore: function(node, check) {
+              var last = my.root;
+              var here = my.root.next;
+              while (here !== null) {
+                if (check(here)) {
+                  node.prev = here.prev;
+                  node.next = here;
+                  here.prev.next = node;
+                  here.prev = node;
+                  return;
+                }
+                last = here;
+                here = here.next;
+              }
+              last.next = node;
+              node.prev = last;
+              node.next = null;
+            },
+            findTransition: function(check) {
+              var prev = my.root;
+              var here = my.root.next;
+              while (here !== null) {
+                if (check(here))
+                  break;
+                prev = here;
+                here = here.next;
+              }
+              return {
+                before: prev === my.root ? null : prev,
+                after: here,
+                insert: function(node) {
+                  node.prev = prev;
+                  node.next = here;
+                  prev.next = node;
+                  if (here !== null)
+                    here.prev = node;
+                  return node;
+                }
+              };
+            }
+          };
+          return my;
+        },
+        node: function(data) {
+          data.prev = null;
+          data.next = null;
+          data.remove = function() {
+            data.prev.next = data.next;
+            if (data.next)
+              data.next.prev = data.prev;
+            data.prev = null;
+            data.next = null;
+          };
+          return data;
+        }
+      };
+      module.exports = LinkedList;
+    }
+  });
+
+  // node_modules/polybooljs/lib/intersecter.js
+  var require_intersecter = __commonJS({
+    "node_modules/polybooljs/lib/intersecter.js"(exports, module) {
+      var LinkedList = require_linked_list();
+      function Intersecter(selfIntersection, eps, buildLog) {
+        function segmentNew(start, end) {
+          return {
+            id: buildLog ? buildLog.segmentId() : -1,
+            start,
+            end,
+            myFill: {
+              above: null,
+              // is there fill above us?
+              below: null
+              // is there fill below us?
+            },
+            otherFill: null
+          };
+        }
+        function segmentCopy(start, end, seg) {
+          return {
+            id: buildLog ? buildLog.segmentId() : -1,
+            start,
+            end,
+            myFill: {
+              above: seg.myFill.above,
+              below: seg.myFill.below
+            },
+            otherFill: null
+          };
+        }
+        var event_root = LinkedList.create();
+        function eventCompare(p1_isStart, p1_1, p1_2, p2_isStart, p2_1, p2_2) {
+          var comp = eps.pointsCompare(p1_1, p2_1);
+          if (comp !== 0)
+            return comp;
+          if (eps.pointsSame(p1_2, p2_2))
+            return 0;
+          if (p1_isStart !== p2_isStart)
+            return p1_isStart ? 1 : -1;
+          return eps.pointAboveOrOnLine(
+            p1_2,
+            p2_isStart ? p2_1 : p2_2,
+            // order matters
+            p2_isStart ? p2_2 : p2_1
+          ) ? 1 : -1;
+        }
+        function eventAdd(ev, other_pt) {
+          event_root.insertBefore(ev, function(here) {
+            var comp = eventCompare(
+              ev.isStart,
+              ev.pt,
+              other_pt,
+              here.isStart,
+              here.pt,
+              here.other.pt
+            );
+            return comp < 0;
+          });
+        }
+        function eventAddSegmentStart(seg, primary) {
+          var ev_start = LinkedList.node({
+            isStart: true,
+            pt: seg.start,
+            seg,
+            primary,
+            other: null,
+            status: null
+          });
+          eventAdd(ev_start, seg.end);
+          return ev_start;
+        }
+        function eventAddSegmentEnd(ev_start, seg, primary) {
+          var ev_end = LinkedList.node({
+            isStart: false,
+            pt: seg.end,
+            seg,
+            primary,
+            other: ev_start,
+            status: null
+          });
+          ev_start.other = ev_end;
+          eventAdd(ev_end, ev_start.pt);
+        }
+        function eventAddSegment(seg, primary) {
+          var ev_start = eventAddSegmentStart(seg, primary);
+          eventAddSegmentEnd(ev_start, seg, primary);
+          return ev_start;
+        }
+        function eventUpdateEnd(ev, end) {
+          if (buildLog)
+            buildLog.segmentChop(ev.seg, end);
+          ev.other.remove();
+          ev.seg.end = end;
+          ev.other.pt = end;
+          eventAdd(ev.other, ev.pt);
+        }
+        function eventDivide(ev, pt) {
+          var ns = segmentCopy(pt, ev.seg.end, ev.seg);
+          eventUpdateEnd(ev, pt);
+          return eventAddSegment(ns, ev.primary);
+        }
+        function calculate(primaryPolyInverted, secondaryPolyInverted) {
+          var status_root = LinkedList.create();
+          function statusCompare(ev1, ev2) {
+            var a1 = ev1.seg.start;
+            var a2 = ev1.seg.end;
+            var b1 = ev2.seg.start;
+            var b2 = ev2.seg.end;
+            if (eps.pointsCollinear(a1, b1, b2)) {
+              if (eps.pointsCollinear(a2, b1, b2))
+                return 1;
+              return eps.pointAboveOrOnLine(a2, b1, b2) ? 1 : -1;
+            }
+            return eps.pointAboveOrOnLine(a1, b1, b2) ? 1 : -1;
+          }
+          function statusFindSurrounding(ev2) {
+            return status_root.findTransition(function(here) {
+              var comp = statusCompare(ev2, here.ev);
+              return comp > 0;
+            });
+          }
+          function checkIntersection(ev1, ev2) {
+            var seg1 = ev1.seg;
+            var seg2 = ev2.seg;
+            var a1 = seg1.start;
+            var a2 = seg1.end;
+            var b1 = seg2.start;
+            var b2 = seg2.end;
+            if (buildLog)
+              buildLog.checkIntersection(seg1, seg2);
+            var i = eps.linesIntersect(a1, a2, b1, b2);
+            if (i === false) {
+              if (!eps.pointsCollinear(a1, a2, b1))
+                return false;
+              if (eps.pointsSame(a1, b2) || eps.pointsSame(a2, b1))
+                return false;
+              var a1_equ_b1 = eps.pointsSame(a1, b1);
+              var a2_equ_b2 = eps.pointsSame(a2, b2);
+              if (a1_equ_b1 && a2_equ_b2)
+                return ev2;
+              var a1_between = !a1_equ_b1 && eps.pointBetween(a1, b1, b2);
+              var a2_between = !a2_equ_b2 && eps.pointBetween(a2, b1, b2);
+              if (a1_equ_b1) {
+                if (a2_between) {
+                  eventDivide(ev2, a2);
+                } else {
+                  eventDivide(ev1, b2);
+                }
+                return ev2;
+              } else if (a1_between) {
+                if (!a2_equ_b2) {
+                  if (a2_between) {
+                    eventDivide(ev2, a2);
+                  } else {
+                    eventDivide(ev1, b2);
+                  }
+                }
+                eventDivide(ev2, a1);
+              }
+            } else {
+              if (i.alongA === 0) {
+                if (i.alongB === -1)
+                  eventDivide(ev1, b1);
+                else if (i.alongB === 0)
+                  eventDivide(ev1, i.pt);
+                else if (i.alongB === 1)
+                  eventDivide(ev1, b2);
+              }
+              if (i.alongB === 0) {
+                if (i.alongA === -1)
+                  eventDivide(ev2, a1);
+                else if (i.alongA === 0)
+                  eventDivide(ev2, i.pt);
+                else if (i.alongA === 1)
+                  eventDivide(ev2, a2);
+              }
+            }
+            return false;
+          }
+          var segments = [];
+          while (!event_root.isEmpty()) {
+            var ev = event_root.getHead();
+            if (buildLog)
+              buildLog.vert(ev.pt[0]);
+            if (ev.isStart) {
+              let checkBothIntersections2 = function() {
+                if (above) {
+                  var eve2 = checkIntersection(ev, above);
+                  if (eve2)
+                    return eve2;
+                }
+                if (below)
+                  return checkIntersection(ev, below);
+                return false;
+              };
+              var checkBothIntersections = checkBothIntersections2;
+              if (buildLog)
+                buildLog.segmentNew(ev.seg, ev.primary);
+              var surrounding = statusFindSurrounding(ev);
+              var above = surrounding.before ? surrounding.before.ev : null;
+              var below = surrounding.after ? surrounding.after.ev : null;
+              if (buildLog) {
+                buildLog.tempStatus(
+                  ev.seg,
+                  above ? above.seg : false,
+                  below ? below.seg : false
+                );
+              }
+              var eve = checkBothIntersections2();
+              if (eve) {
+                if (selfIntersection) {
+                  var toggle;
+                  if (ev.seg.myFill.below === null)
+                    toggle = true;
+                  else
+                    toggle = ev.seg.myFill.above !== ev.seg.myFill.below;
+                  if (toggle)
+                    eve.seg.myFill.above = !eve.seg.myFill.above;
+                } else {
+                  eve.seg.otherFill = ev.seg.myFill;
+                }
+                if (buildLog)
+                  buildLog.segmentUpdate(eve.seg);
+                ev.other.remove();
+                ev.remove();
+              }
+              if (event_root.getHead() !== ev) {
+                if (buildLog)
+                  buildLog.rewind(ev.seg);
+                continue;
+              }
+              if (selfIntersection) {
+                var toggle;
+                if (ev.seg.myFill.below === null)
+                  toggle = true;
+                else
+                  toggle = ev.seg.myFill.above !== ev.seg.myFill.below;
+                if (!below) {
+                  ev.seg.myFill.below = primaryPolyInverted;
+                } else {
+                  ev.seg.myFill.below = below.seg.myFill.above;
+                }
+                if (toggle)
+                  ev.seg.myFill.above = !ev.seg.myFill.below;
+                else
+                  ev.seg.myFill.above = ev.seg.myFill.below;
+              } else {
+                if (ev.seg.otherFill === null) {
+                  var inside;
+                  if (!below) {
+                    inside = ev.primary ? secondaryPolyInverted : primaryPolyInverted;
+                  } else {
+                    if (ev.primary === below.primary)
+                      inside = below.seg.otherFill.above;
+                    else
+                      inside = below.seg.myFill.above;
+                  }
+                  ev.seg.otherFill = {
+                    above: inside,
+                    below: inside
+                  };
+                }
+              }
+              if (buildLog) {
+                buildLog.status(
+                  ev.seg,
+                  above ? above.seg : false,
+                  below ? below.seg : false
+                );
+              }
+              ev.other.status = surrounding.insert(LinkedList.node({ ev }));
+            } else {
+              var st = ev.status;
+              if (st === null) {
+                throw new Error("PolyBool: Zero-length segment detected; your epsilon is probably too small or too large");
+              }
+              if (status_root.exists(st.prev) && status_root.exists(st.next))
+                checkIntersection(st.prev.ev, st.next.ev);
+              if (buildLog)
+                buildLog.statusRemove(st.ev.seg);
+              st.remove();
+              if (!ev.primary) {
+                var s = ev.seg.myFill;
+                ev.seg.myFill = ev.seg.otherFill;
+                ev.seg.otherFill = s;
+              }
+              segments.push(ev.seg);
+            }
+            event_root.getHead().remove();
+          }
+          if (buildLog)
+            buildLog.done();
+          return segments;
+        }
+        if (!selfIntersection) {
+          return {
+            calculate: function(segments1, inverted1, segments2, inverted2) {
+              segments1.forEach(function(seg) {
+                eventAddSegment(segmentCopy(seg.start, seg.end, seg), true);
+              });
+              segments2.forEach(function(seg) {
+                eventAddSegment(segmentCopy(seg.start, seg.end, seg), false);
+              });
+              return calculate(inverted1, inverted2);
+            }
+          };
+        }
+        return {
+          addRegion: function(region) {
+            var pt1;
+            var pt2 = region[region.length - 1];
+            for (var i = 0; i < region.length; i++) {
+              pt1 = pt2;
+              pt2 = region[i];
+              var forward = eps.pointsCompare(pt1, pt2);
+              if (forward === 0)
+                continue;
+              eventAddSegment(
+                segmentNew(
+                  forward < 0 ? pt1 : pt2,
+                  forward < 0 ? pt2 : pt1
+                ),
+                true
+              );
+            }
+          },
+          calculate: function(inverted) {
+            return calculate(inverted, false);
+          }
+        };
+      }
+      module.exports = Intersecter;
+    }
+  });
+
+  // node_modules/polybooljs/lib/segment-chainer.js
+  var require_segment_chainer = __commonJS({
+    "node_modules/polybooljs/lib/segment-chainer.js"(exports, module) {
+      function SegmentChainer(segments, eps, buildLog) {
+        var chains = [];
+        var regions = [];
+        segments.forEach(function(seg) {
+          var pt1 = seg.start;
+          var pt2 = seg.end;
+          if (eps.pointsSame(pt1, pt2)) {
+            console.warn("PolyBool: Warning: Zero-length segment detected; your epsilon is probably too small or too large");
+            return;
+          }
+          if (buildLog)
+            buildLog.chainStart(seg);
+          var first_match = {
+            index: 0,
+            matches_head: false,
+            matches_pt1: false
+          };
+          var second_match = {
+            index: 0,
+            matches_head: false,
+            matches_pt1: false
+          };
+          var next_match = first_match;
+          function setMatch(index2, matches_head, matches_pt1) {
+            next_match.index = index2;
+            next_match.matches_head = matches_head;
+            next_match.matches_pt1 = matches_pt1;
+            if (next_match === first_match) {
+              next_match = second_match;
+              return false;
+            }
+            next_match = null;
+            return true;
+          }
+          for (var i = 0; i < chains.length; i++) {
+            var chain = chains[i];
+            var head = chain[0];
+            var head2 = chain[1];
+            var tail = chain[chain.length - 1];
+            var tail2 = chain[chain.length - 2];
+            if (eps.pointsSame(head, pt1)) {
+              if (setMatch(i, true, true))
+                break;
+            } else if (eps.pointsSame(head, pt2)) {
+              if (setMatch(i, true, false))
+                break;
+            } else if (eps.pointsSame(tail, pt1)) {
+              if (setMatch(i, false, true))
+                break;
+            } else if (eps.pointsSame(tail, pt2)) {
+              if (setMatch(i, false, false))
+                break;
+            }
+          }
+          if (next_match === first_match) {
+            chains.push([pt1, pt2]);
+            if (buildLog)
+              buildLog.chainNew(pt1, pt2);
+            return;
+          }
+          if (next_match === second_match) {
+            if (buildLog)
+              buildLog.chainMatch(first_match.index);
+            var index = first_match.index;
+            var pt = first_match.matches_pt1 ? pt2 : pt1;
+            var addToHead = first_match.matches_head;
+            var chain = chains[index];
+            var grow = addToHead ? chain[0] : chain[chain.length - 1];
+            var grow2 = addToHead ? chain[1] : chain[chain.length - 2];
+            var oppo = addToHead ? chain[chain.length - 1] : chain[0];
+            var oppo2 = addToHead ? chain[chain.length - 2] : chain[1];
+            if (eps.pointsCollinear(grow2, grow, pt)) {
+              if (addToHead) {
+                if (buildLog)
+                  buildLog.chainRemoveHead(first_match.index, pt);
+                chain.shift();
+              } else {
+                if (buildLog)
+                  buildLog.chainRemoveTail(first_match.index, pt);
+                chain.pop();
+              }
+              grow = grow2;
+            }
+            if (eps.pointsSame(oppo, pt)) {
+              chains.splice(index, 1);
+              if (eps.pointsCollinear(oppo2, oppo, grow)) {
+                if (addToHead) {
+                  if (buildLog)
+                    buildLog.chainRemoveTail(first_match.index, grow);
+                  chain.pop();
+                } else {
+                  if (buildLog)
+                    buildLog.chainRemoveHead(first_match.index, grow);
+                  chain.shift();
+                }
+              }
+              if (buildLog)
+                buildLog.chainClose(first_match.index);
+              regions.push(chain);
+              return;
+            }
+            if (addToHead) {
+              if (buildLog)
+                buildLog.chainAddHead(first_match.index, pt);
+              chain.unshift(pt);
+            } else {
+              if (buildLog)
+                buildLog.chainAddTail(first_match.index, pt);
+              chain.push(pt);
+            }
+            return;
+          }
+          function reverseChain(index2) {
+            if (buildLog)
+              buildLog.chainReverse(index2);
+            chains[index2].reverse();
+          }
+          function appendChain(index1, index2) {
+            var chain1 = chains[index1];
+            var chain2 = chains[index2];
+            var tail3 = chain1[chain1.length - 1];
+            var tail22 = chain1[chain1.length - 2];
+            var head3 = chain2[0];
+            var head22 = chain2[1];
+            if (eps.pointsCollinear(tail22, tail3, head3)) {
+              if (buildLog)
+                buildLog.chainRemoveTail(index1, tail3);
+              chain1.pop();
+              tail3 = tail22;
+            }
+            if (eps.pointsCollinear(tail3, head3, head22)) {
+              if (buildLog)
+                buildLog.chainRemoveHead(index2, head3);
+              chain2.shift();
+            }
+            if (buildLog)
+              buildLog.chainJoin(index1, index2);
+            chains[index1] = chain1.concat(chain2);
+            chains.splice(index2, 1);
+          }
+          var F = first_match.index;
+          var S = second_match.index;
+          if (buildLog)
+            buildLog.chainConnect(F, S);
+          var reverseF = chains[F].length < chains[S].length;
+          if (first_match.matches_head) {
+            if (second_match.matches_head) {
+              if (reverseF) {
+                reverseChain(F);
+                appendChain(F, S);
+              } else {
+                reverseChain(S);
+                appendChain(S, F);
+              }
+            } else {
+              appendChain(S, F);
+            }
+          } else {
+            if (second_match.matches_head) {
+              appendChain(F, S);
+            } else {
+              if (reverseF) {
+                reverseChain(F);
+                appendChain(S, F);
+              } else {
+                reverseChain(S);
+                appendChain(F, S);
+              }
+            }
+          }
+        });
+        return regions;
+      }
+      module.exports = SegmentChainer;
+    }
+  });
+
+  // node_modules/polybooljs/lib/segment-selector.js
+  var require_segment_selector = __commonJS({
+    "node_modules/polybooljs/lib/segment-selector.js"(exports, module) {
+      function select(segments, selection, buildLog) {
+        var result = [];
+        segments.forEach(function(seg) {
+          var index = (seg.myFill.above ? 8 : 0) + (seg.myFill.below ? 4 : 0) + (seg.otherFill && seg.otherFill.above ? 2 : 0) + (seg.otherFill && seg.otherFill.below ? 1 : 0);
+          if (selection[index] !== 0) {
+            result.push({
+              id: buildLog ? buildLog.segmentId() : -1,
+              start: seg.start,
+              end: seg.end,
+              myFill: {
+                above: selection[index] === 1,
+                // 1 if filled above
+                below: selection[index] === 2
+                // 2 if filled below
+              },
+              otherFill: null
+            });
+          }
+        });
+        if (buildLog)
+          buildLog.selected(result);
+        return result;
+      }
+      var SegmentSelector = {
+        union: function(segments, buildLog) {
+          return select(segments, [
+            0,
+            2,
+            1,
+            0,
+            2,
+            2,
+            0,
+            0,
+            1,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0
+          ], buildLog);
+        },
+        intersect: function(segments, buildLog) {
+          return select(segments, [
+            0,
+            0,
+            0,
+            0,
+            0,
+            2,
+            0,
+            2,
+            0,
+            0,
+            1,
+            1,
+            0,
+            2,
+            1,
+            0
+          ], buildLog);
+        },
+        difference: function(segments, buildLog) {
+          return select(segments, [
+            0,
+            0,
+            0,
+            0,
+            2,
+            0,
+            2,
+            0,
+            1,
+            1,
+            0,
+            0,
+            0,
+            1,
+            2,
+            0
+          ], buildLog);
+        },
+        differenceRev: function(segments, buildLog) {
+          return select(segments, [
+            0,
+            2,
+            1,
+            0,
+            0,
+            0,
+            1,
+            1,
+            0,
+            2,
+            0,
+            2,
+            0,
+            0,
+            0,
+            0
+          ], buildLog);
+        },
+        xor: function(segments, buildLog) {
+          return select(segments, [
+            0,
+            2,
+            1,
+            0,
+            2,
+            0,
+            0,
+            1,
+            1,
+            0,
+            0,
+            2,
+            0,
+            1,
+            2,
+            0
+          ], buildLog);
+        }
+      };
+      module.exports = SegmentSelector;
+    }
+  });
+
+  // node_modules/polybooljs/lib/geojson.js
+  var require_geojson = __commonJS({
+    "node_modules/polybooljs/lib/geojson.js"(exports, module) {
+      var GeoJSON = {
+        // convert a GeoJSON object to a PolyBool polygon
+        toPolygon: function(PolyBool, geojson) {
+          function GeoPoly(coords) {
+            if (coords.length <= 0)
+              return PolyBool.segments({ inverted: false, regions: [] });
+            function LineString(ls) {
+              var reg = ls.slice(0, ls.length - 1);
+              return PolyBool.segments({ inverted: false, regions: [reg] });
+            }
+            var out2 = LineString(coords[0]);
+            for (var i2 = 1; i2 < coords.length; i2++)
+              out2 = PolyBool.selectDifference(PolyBool.combine(out2, LineString(coords[i2])));
+            return out2;
+          }
+          if (geojson.type === "Polygon") {
+            return PolyBool.polygon(GeoPoly(geojson.coordinates));
+          } else if (geojson.type === "MultiPolygon") {
+            var out = PolyBool.segments({ inverted: false, regions: [] });
+            for (var i = 0; i < geojson.coordinates.length; i++)
+              out = PolyBool.selectUnion(PolyBool.combine(out, GeoPoly(geojson.coordinates[i])));
+            return PolyBool.polygon(out);
+          }
+          throw new Error("PolyBool: Cannot convert GeoJSON object to PolyBool polygon");
+        },
+        // convert a PolyBool polygon to a GeoJSON object
+        fromPolygon: function(PolyBool, eps, poly) {
+          poly = PolyBool.polygon(PolyBool.segments(poly));
+          function regionInsideRegion(r1, r2) {
+            return eps.pointInsideRegion([
+              (r1[0][0] + r1[1][0]) * 0.5,
+              (r1[0][1] + r1[1][1]) * 0.5
+            ], r2);
+          }
+          function newNode(region2) {
+            return {
+              region: region2,
+              children: []
+            };
+          }
+          var roots = newNode(null);
+          function addChild(root, region2) {
+            for (var i2 = 0; i2 < root.children.length; i2++) {
+              var child = root.children[i2];
+              if (regionInsideRegion(region2, child.region)) {
+                addChild(child, region2);
+                return;
+              }
+            }
+            var node = newNode(region2);
+            for (var i2 = 0; i2 < root.children.length; i2++) {
+              var child = root.children[i2];
+              if (regionInsideRegion(child.region, region2)) {
+                node.children.push(child);
+                root.children.splice(i2, 1);
+                i2--;
+              }
+            }
+            root.children.push(node);
+          }
+          for (var i = 0; i < poly.regions.length; i++) {
+            var region = poly.regions[i];
+            if (region.length < 3)
+              continue;
+            addChild(roots, region);
+          }
+          function forceWinding(region2, clockwise) {
+            var winding = 0;
+            var last_x = region2[region2.length - 1][0];
+            var last_y = region2[region2.length - 1][1];
+            var copy = [];
+            for (var i2 = 0; i2 < region2.length; i2++) {
+              var curr_x = region2[i2][0];
+              var curr_y = region2[i2][1];
+              copy.push([curr_x, curr_y]);
+              winding += curr_y * last_x - curr_x * last_y;
+              last_x = curr_x;
+              last_y = curr_y;
+            }
+            var isclockwise = winding < 0;
+            if (isclockwise !== clockwise)
+              copy.reverse();
+            copy.push([copy[0][0], copy[0][1]]);
+            return copy;
+          }
+          var geopolys = [];
+          function addExterior(node) {
+            var poly2 = [forceWinding(node.region, false)];
+            geopolys.push(poly2);
+            for (var i2 = 0; i2 < node.children.length; i2++)
+              poly2.push(getInterior(node.children[i2]));
+          }
+          function getInterior(node) {
+            for (var i2 = 0; i2 < node.children.length; i2++)
+              addExterior(node.children[i2]);
+            return forceWinding(node.region, true);
+          }
+          for (var i = 0; i < roots.children.length; i++)
+            addExterior(roots.children[i]);
+          if (geopolys.length <= 0)
+            return { type: "Polygon", coordinates: [] };
+          if (geopolys.length == 1)
+            return { type: "Polygon", coordinates: geopolys[0] };
+          return {
+            // otherwise, use a GeoJSON MultiPolygon
+            type: "MultiPolygon",
+            coordinates: geopolys
+          };
+        }
+      };
+      module.exports = GeoJSON;
+    }
+  });
+
+  // node_modules/polybooljs/index.js
+  var require_polybooljs = __commonJS({
+    "node_modules/polybooljs/index.js"(exports, module) {
+      var BuildLog = require_build_log();
+      var Epsilon = require_epsilon();
+      var Intersecter = require_intersecter();
+      var SegmentChainer = require_segment_chainer();
+      var SegmentSelector = require_segment_selector();
+      var GeoJSON = require_geojson();
+      var buildLog = false;
+      var epsilon = Epsilon();
+      var PolyBool;
+      PolyBool = {
+        // getter/setter for buildLog
+        buildLog: function(bl) {
+          if (bl === true)
+            buildLog = BuildLog();
+          else if (bl === false)
+            buildLog = false;
+          return buildLog === false ? false : buildLog.list;
+        },
+        // getter/setter for epsilon
+        epsilon: function(v) {
+          return epsilon.epsilon(v);
+        },
+        // core API
+        segments: function(poly) {
+          var i = Intersecter(true, epsilon, buildLog);
+          poly.regions.forEach(i.addRegion);
+          return {
+            segments: i.calculate(poly.inverted),
+            inverted: poly.inverted
+          };
+        },
+        combine: function(segments1, segments2) {
+          var i3 = Intersecter(false, epsilon, buildLog);
+          return {
+            combined: i3.calculate(
+              segments1.segments,
+              segments1.inverted,
+              segments2.segments,
+              segments2.inverted
+            ),
+            inverted1: segments1.inverted,
+            inverted2: segments2.inverted
+          };
+        },
+        selectUnion: function(combined) {
+          return {
+            segments: SegmentSelector.union(combined.combined, buildLog),
+            inverted: combined.inverted1 || combined.inverted2
+          };
+        },
+        selectIntersect: function(combined) {
+          return {
+            segments: SegmentSelector.intersect(combined.combined, buildLog),
+            inverted: combined.inverted1 && combined.inverted2
+          };
+        },
+        selectDifference: function(combined) {
+          return {
+            segments: SegmentSelector.difference(combined.combined, buildLog),
+            inverted: combined.inverted1 && !combined.inverted2
+          };
+        },
+        selectDifferenceRev: function(combined) {
+          return {
+            segments: SegmentSelector.differenceRev(combined.combined, buildLog),
+            inverted: !combined.inverted1 && combined.inverted2
+          };
+        },
+        selectXor: function(combined) {
+          return {
+            segments: SegmentSelector.xor(combined.combined, buildLog),
+            inverted: combined.inverted1 !== combined.inverted2
+          };
+        },
+        polygon: function(segments) {
+          return {
+            regions: SegmentChainer(segments.segments, epsilon, buildLog),
+            inverted: segments.inverted
+          };
+        },
+        // GeoJSON converters
+        polygonFromGeoJSON: function(geojson) {
+          return GeoJSON.toPolygon(PolyBool, geojson);
+        },
+        polygonToGeoJSON: function(poly) {
+          return GeoJSON.fromPolygon(PolyBool, epsilon, poly);
+        },
+        // helper functions for common operations
+        union: function(poly1, poly2) {
+          return operate(poly1, poly2, PolyBool.selectUnion);
+        },
+        intersect: function(poly1, poly2) {
+          return operate(poly1, poly2, PolyBool.selectIntersect);
+        },
+        difference: function(poly1, poly2) {
+          return operate(poly1, poly2, PolyBool.selectDifference);
+        },
+        differenceRev: function(poly1, poly2) {
+          return operate(poly1, poly2, PolyBool.selectDifferenceRev);
+        },
+        xor: function(poly1, poly2) {
+          return operate(poly1, poly2, PolyBool.selectXor);
+        }
+      };
+      function operate(poly1, poly2, selector) {
+        var seg1 = PolyBool.segments(poly1);
+        var seg2 = PolyBool.segments(poly2);
+        var comb = PolyBool.combine(seg1, seg2);
+        var seg3 = selector(comb);
+        return PolyBool.polygon(seg3);
+      }
+      if (typeof window === "object")
+        window.PolyBool = PolyBool;
+      module.exports = PolyBool;
+    }
+  });
+
+  // node_modules/point-in-polygon/nested.js
+  var require_nested = __commonJS({
+    "node_modules/point-in-polygon/nested.js"(exports, module) {
+      module.exports = function pointInPolygonNested(point, vs, start, end) {
+        var x = point[0], y = point[1];
+        var inside = false;
+        if (start === void 0) start = 0;
+        if (end === void 0) end = vs.length;
+        var len = end - start;
+        for (var i = 0, j = len - 1; i < len; j = i++) {
+          var xi = vs[i + start][0], yi = vs[i + start][1];
+          var xj = vs[j + start][0], yj = vs[j + start][1];
+          var intersect = yi > y !== yj > y && x < (xj - xi) * (y - yi) / (yj - yi) + xi;
+          if (intersect) inside = !inside;
+        }
+        return inside;
+      };
+    }
+  });
+
+  // src/components/selections/constants.js
+  var require_constants8 = __commonJS({
+    "src/components/selections/constants.js"(exports, module) {
+      "use strict";
+      module.exports = {
+        // max pixels off straight before a lasso select line counts as bent
+        BENDPX: 1.5,
+        // smallest dimension allowed for a select box
+        MINSELECT: 12,
+        // throttling limit (ms) for selectPoints calls
+        SELECTDELAY: 100,
+        // cache ID suffix for throttle
+        SELECTID: "-select"
+      };
+    }
+  });
+
+  // src/components/selections/select.js
+  var require_select2 = __commonJS({
+    "src/components/selections/select.js"(exports, module) {
+      "use strict";
+      var polybool = require_polybooljs();
+      var pointInPolygon = require_nested();
+      var Registry = require_registry();
+      var dashStyle = require_drawing().dashStyle;
+      var Color2 = require_color();
+      var Fx = require_fx();
+      var makeEventData = require_helpers2().makeEventData;
+      var dragHelpers = require_helpers5();
+      var freeMode = dragHelpers.freeMode;
+      var rectMode = dragHelpers.rectMode;
+      var drawMode = dragHelpers.drawMode;
+      var openMode = dragHelpers.openMode;
+      var selectMode = dragHelpers.selectMode;
+      var shapeHelpers = require_helpers8();
+      var shapeConstants = require_constants5();
+      var displayOutlines = require_display_outlines();
+      var clearOutline = require_handle_outline().clearOutline;
+      var newShapeHelpers = require_helpers7();
+      var handleEllipse = newShapeHelpers.handleEllipse;
+      var readPaths = newShapeHelpers.readPaths;
+      var newShapes = require_newshapes().newShapes;
+      var newSelections = require_newselections();
+      var activateLastSelection = require_draw5().activateLastSelection;
+      var Lib = require_lib();
+      var ascending = Lib.sorterAsc;
+      var libPolygon = require_polygon();
+      var throttle = require_throttle();
+      var getFromId = require_axis_ids().getFromId;
+      var clearGlCanvases = require_clear_gl_canvases();
+      var redrawReglTraces = require_subroutines().redrawReglTraces;
+      var constants = require_constants8();
+      var MINSELECT = constants.MINSELECT;
+      var filteredPolygon = libPolygon.filter;
+      var polygonTester = libPolygon.tester;
+      var helpers = require_helpers6();
+      var p2r = helpers.p2r;
+      var axValue = helpers.axValue;
+      var getTransform = helpers.getTransform;
+      function hasSubplot(dragOptions) {
+        return dragOptions.subplot !== void 0;
+      }
+      function prepSelect(evt, startX, startY, dragOptions, mode) {
+        var isCartesian = !hasSubplot(dragOptions);
+        var isFreeMode = freeMode(mode);
+        var isRectMode = rectMode(mode);
+        var isOpenMode = openMode(mode);
+        var isDrawMode = drawMode(mode);
+        var isSelectMode = selectMode(mode);
+        var isLine = mode === "drawline";
+        var isEllipse = mode === "drawcircle";
+        var isLineOrEllipse = isLine || isEllipse;
+        var gd = dragOptions.gd;
+        var fullLayout = gd._fullLayout;
+        var immediateSelect = isSelectMode && fullLayout.newselection.mode === "immediate" && isCartesian;
+        var zoomLayer = fullLayout._zoomlayer;
+        var dragBBox = dragOptions.element.getBoundingClientRect();
+        var plotinfo = dragOptions.plotinfo;
+        var transform = getTransform(plotinfo);
+        var x0 = startX - dragBBox.left;
+        var y0 = startY - dragBBox.top;
+        fullLayout._calcInverseTransform(gd);
+        var transformedCoords = Lib.apply3DTransform(fullLayout._invTransform)(x0, y0);
+        x0 = transformedCoords[0];
+        y0 = transformedCoords[1];
+        var scaleX = fullLayout._invScaleX;
+        var scaleY = fullLayout._invScaleY;
+        var x1 = x0;
+        var y1 = y0;
+        var path0 = "M" + x0 + "," + y0;
+        var xAxis = dragOptions.xaxes[0];
+        var yAxis = dragOptions.yaxes[0];
+        var pw = xAxis._length;
+        var ph = yAxis._length;
+        var subtract = evt.altKey && !(drawMode(mode) && isOpenMode);
+        var filterPoly, selectionTesters, mergedPolygons, currentPolygon;
+        var i, searchInfo, eventData;
+        coerceSelectionsCache(evt, gd, dragOptions);
+        if (isFreeMode) {
+          filterPoly = filteredPolygon([[x0, y0]], constants.BENDPX);
+        }
+        var outlines = zoomLayer.selectAll("path.select-outline-" + plotinfo.id).data([1]);
+        var newStyle = isDrawMode ? fullLayout.newshape : fullLayout.newselection;
+        if (isDrawMode) {
+          dragOptions.hasText = newStyle.label.text || newStyle.label.texttemplate;
+        }
+        var fillC = isDrawMode && !isOpenMode ? newStyle.fillcolor : "rgba(0,0,0,0)";
+        var strokeC = newStyle.line.color || (isCartesian ? Color2.contrast(gd._fullLayout.plot_bgcolor) : "#7f7f7f");
+        outlines.enter().append("path").attr("class", "select-outline select-outline-" + plotinfo.id).style({
+          opacity: isDrawMode ? newStyle.opacity / 2 : 1,
+          "stroke-dasharray": dashStyle(newStyle.line.dash, newStyle.line.width),
+          "stroke-width": newStyle.line.width + "px",
+          "shape-rendering": "crispEdges"
+        }).call(Color2.stroke, strokeC).call(Color2.fill, fillC).attr("fill-rule", "evenodd").classed("cursor-move", isDrawMode ? true : false).attr("transform", transform).attr("d", path0 + "Z");
+        var corners = zoomLayer.append("path").attr("class", "zoombox-corners").style({
+          fill: Color2.background,
+          stroke: Color2.defaultLine,
+          "stroke-width": 1
+        }).attr("transform", transform).attr("d", "M0,0Z");
+        if (isDrawMode && dragOptions.hasText) {
+          var shapeGroup = zoomLayer.select(".label-temp");
+          if (shapeGroup.empty()) {
+            shapeGroup = zoomLayer.append("g").classed("label-temp", true).classed("select-outline", true).style({ opacity: 0.8 });
+          }
+        }
+        var throttleID = fullLayout._uid + constants.SELECTID;
+        var selection = [];
+        var searchTraces = determineSearchTraces(
+          gd,
+          dragOptions.xaxes,
+          dragOptions.yaxes,
+          dragOptions.subplot
+        );
+        if (immediateSelect && !evt.shiftKey) {
+          dragOptions._clearSubplotSelections = function() {
+            if (!isCartesian) return;
+            var xRef = xAxis._id;
+            var yRef = yAxis._id;
+            deselectSubplot(gd, xRef, yRef, searchTraces);
+            var selections = (gd.layout || {}).selections || [];
+            var list = [];
+            var selectionErased = false;
+            for (var q = 0; q < selections.length; q++) {
+              var s = fullLayout.selections[q];
+              if (!s || s.xref !== xRef || s.yref !== yRef) {
+                list.push(selections[q]);
+              } else {
+                selectionErased = true;
+              }
+            }
+            if (selectionErased) {
+              gd._fullLayout._noEmitSelectedAtStart = true;
+              Registry.call("_guiRelayout", gd, {
+                selections: list
+              });
+            }
+          };
+        }
+        var fillRangeItems = getFillRangeItems(dragOptions);
+        dragOptions.moveFn = function(dx0, dy0) {
+          if (dragOptions._clearSubplotSelections) {
+            dragOptions._clearSubplotSelections();
+            dragOptions._clearSubplotSelections = void 0;
+          }
+          x1 = Math.max(0, Math.min(pw, scaleX * dx0 + x0));
+          y1 = Math.max(0, Math.min(ph, scaleY * dy0 + y0));
+          var dx = Math.abs(x1 - x0);
+          var dy = Math.abs(y1 - y0);
+          if (isRectMode) {
+            var direction;
+            var start, end;
+            if (isSelectMode) {
+              var q = fullLayout.selectdirection;
+              if (q === "any") {
+                if (dy < Math.min(dx * 0.6, MINSELECT)) {
+                  direction = "h";
+                } else if (dx < Math.min(dy * 0.6, MINSELECT)) {
+                  direction = "v";
+                } else {
+                  direction = "d";
+                }
+              } else {
+                direction = q;
+              }
+              switch (direction) {
+                case "h":
+                  start = isEllipse ? ph / 2 : 0;
+                  end = ph;
+                  break;
+                case "v":
+                  start = isEllipse ? pw / 2 : 0;
+                  end = pw;
+                  break;
+              }
+            }
+            if (isDrawMode) {
+              switch (fullLayout.newshape.drawdirection) {
+                case "vertical":
+                  direction = "h";
+                  start = isEllipse ? ph / 2 : 0;
+                  end = ph;
+                  break;
+                case "horizontal":
+                  direction = "v";
+                  start = isEllipse ? pw / 2 : 0;
+                  end = pw;
+                  break;
+                case "ortho":
+                  if (dx < dy) {
+                    direction = "h";
+                    start = y0;
+                    end = y1;
+                  } else {
+                    direction = "v";
+                    start = x0;
+                    end = x1;
+                  }
+                  break;
+                default:
+                  direction = "d";
+              }
+            }
+            if (direction === "h") {
+              currentPolygon = isLineOrEllipse ? handleEllipse(isEllipse, [x1, start], [x1, end]) : (
+                // using x1 instead of x0 allows adjusting the line while drawing
+                [[x0, start], [x0, end], [x1, end], [x1, start]]
+              );
+              currentPolygon.xmin = isLineOrEllipse ? x1 : Math.min(x0, x1);
+              currentPolygon.xmax = isLineOrEllipse ? x1 : Math.max(x0, x1);
+              currentPolygon.ymin = Math.min(start, end);
+              currentPolygon.ymax = Math.max(start, end);
+              corners.attr("d", "M" + currentPolygon.xmin + "," + (y0 - MINSELECT) + "h-4v" + 2 * MINSELECT + "h4ZM" + (currentPolygon.xmax - 1) + "," + (y0 - MINSELECT) + "h4v" + 2 * MINSELECT + "h-4Z");
+            } else if (direction === "v") {
+              currentPolygon = isLineOrEllipse ? handleEllipse(isEllipse, [start, y1], [end, y1]) : (
+                // using y1 instead of y0 allows adjusting the line while drawing
+                [[start, y0], [start, y1], [end, y1], [end, y0]]
+              );
+              currentPolygon.xmin = Math.min(start, end);
+              currentPolygon.xmax = Math.max(start, end);
+              currentPolygon.ymin = isLineOrEllipse ? y1 : Math.min(y0, y1);
+              currentPolygon.ymax = isLineOrEllipse ? y1 : Math.max(y0, y1);
+              corners.attr("d", "M" + (x0 - MINSELECT) + "," + currentPolygon.ymin + "v-4h" + 2 * MINSELECT + "v4ZM" + (x0 - MINSELECT) + "," + (currentPolygon.ymax - 1) + "v4h" + 2 * MINSELECT + "v-4Z");
+            } else if (direction === "d") {
+              currentPolygon = isLineOrEllipse ? handleEllipse(isEllipse, [x0, y0], [x1, y1]) : [[x0, y0], [x0, y1], [x1, y1], [x1, y0]];
+              currentPolygon.xmin = Math.min(x0, x1);
+              currentPolygon.xmax = Math.max(x0, x1);
+              currentPolygon.ymin = Math.min(y0, y1);
+              currentPolygon.ymax = Math.max(y0, y1);
+              corners.attr("d", "M0,0Z");
+            }
+          } else if (isFreeMode) {
+            filterPoly.addPt([x1, y1]);
+            currentPolygon = filterPoly.filtered;
+          }
+          if (dragOptions.selectionDefs && dragOptions.selectionDefs.length) {
+            mergedPolygons = mergePolygons(dragOptions.mergedPolygons, currentPolygon, subtract);
+            currentPolygon.subtract = subtract;
+            selectionTesters = multiTester(dragOptions.selectionDefs.concat([currentPolygon]));
+          } else {
+            mergedPolygons = [currentPolygon];
+            selectionTesters = polygonTester(currentPolygon);
+          }
+          displayOutlines(convertPoly(mergedPolygons, isOpenMode), outlines, dragOptions);
+          if (isSelectMode) {
+            var _res = reselect(gd, false);
+            var extraPoints = _res.eventData ? _res.eventData.points.slice() : [];
+            _res = reselect(gd, false, selectionTesters, searchTraces, dragOptions);
+            selectionTesters = _res.selectionTesters;
+            eventData = _res.eventData;
+            var poly;
+            if (filterPoly) {
+              poly = filterPoly.filtered;
+            } else {
+              poly = castMultiPolygon(mergedPolygons);
+            }
+            throttle.throttle(
+              throttleID,
+              constants.SELECTDELAY,
+              function() {
+                selection = _doSelect(selectionTesters, searchTraces);
+                var newPoints = selection.slice();
+                for (var w = 0; w < extraPoints.length; w++) {
+                  var p = extraPoints[w];
+                  var found = false;
+                  for (var u = 0; u < newPoints.length; u++) {
+                    if (newPoints[u].curveNumber === p.curveNumber && newPoints[u].pointNumber === p.pointNumber) {
+                      found = true;
+                      break;
+                    }
+                  }
+                  if (!found) newPoints.push(p);
+                }
+                if (newPoints.length) {
+                  if (!eventData) eventData = {};
+                  eventData.points = newPoints;
+                }
+                fillRangeItems(eventData, poly);
+                emitSelecting(gd, eventData);
+              }
+            );
+          }
+        };
+        dragOptions.clickFn = function(numClicks, evt2) {
+          corners.remove();
+          if (gd._fullLayout._activeShapeIndex >= 0) {
+            gd._fullLayout._deactivateShape(gd);
+            return;
+          }
+          if (isDrawMode) return;
+          var clickmode = fullLayout.clickmode;
+          throttle.done(throttleID).then(function() {
+            throttle.clear(throttleID);
+            if (numClicks === 2) {
+              outlines.remove();
+              for (i = 0; i < searchTraces.length; i++) {
+                searchInfo = searchTraces[i];
+                searchInfo._module.selectPoints(searchInfo, false);
+              }
+              updateSelectedState(gd, searchTraces);
+              clearSelectionsCache(dragOptions);
+              emitDeselect(gd);
+              if (searchTraces.length) {
+                var clickedXaxis = searchTraces[0].xaxis;
+                var clickedYaxis = searchTraces[0].yaxis;
+                if (clickedXaxis && clickedYaxis) {
+                  var subSelections = [];
+                  var allSelections = gd._fullLayout.selections;
+                  for (var k = 0; k < allSelections.length; k++) {
+                    var s = allSelections[k];
+                    if (!s) continue;
+                    if (s.xref !== clickedXaxis._id || s.yref !== clickedYaxis._id) {
+                      subSelections.push(s);
+                    }
+                  }
+                  if (subSelections.length < allSelections.length) {
+                    gd._fullLayout._noEmitSelectedAtStart = true;
+                    Registry.call("_guiRelayout", gd, {
+                      selections: subSelections
+                    });
+                  }
+                }
+              }
+            } else {
+              if (clickmode.indexOf("select") > -1) {
+                selectOnClick(
+                  evt2,
+                  gd,
+                  dragOptions.xaxes,
+                  dragOptions.yaxes,
+                  dragOptions.subplot,
+                  dragOptions,
+                  outlines
+                );
+              }
+              if (clickmode === "event") {
+                emitSelected(gd, void 0);
+              }
+            }
+            Fx.click(gd, evt2, plotinfo.id);
+          }).catch(Lib.error);
+        };
+        dragOptions.doneFn = function() {
+          corners.remove();
+          throttle.done(throttleID).then(function() {
+            throttle.clear(throttleID);
+            if (!immediateSelect && currentPolygon && dragOptions.selectionDefs) {
+              currentPolygon.subtract = subtract;
+              dragOptions.selectionDefs.push(currentPolygon);
+              dragOptions.mergedPolygons.length = 0;
+              [].push.apply(dragOptions.mergedPolygons, mergedPolygons);
+            }
+            if (immediateSelect || isDrawMode) {
+              clearSelectionsCache(dragOptions, immediateSelect);
+            }
+            if (dragOptions.doneFnCompleted) {
+              dragOptions.doneFnCompleted(selection);
+            }
+            if (isSelectMode) {
+              emitSelected(gd, eventData);
+            }
+          }).catch(Lib.error);
+        };
+      }
+      function selectOnClick(evt, gd, xAxes, yAxes, subplot, dragOptions, polygonOutlines) {
+        var hoverData = gd._hoverdata;
+        var fullLayout = gd._fullLayout;
+        var clickmode = fullLayout.clickmode;
+        var sendEvents = clickmode.indexOf("event") > -1;
+        var selection = [];
+        var searchTraces, searchInfo, currentSelectionDef, selectionTesters, traceSelection;
+        var thisTracesSelection, pointOrBinSelected, subtract, eventData, i;
+        if (isHoverDataSet(hoverData)) {
+          coerceSelectionsCache(evt, gd, dragOptions);
+          searchTraces = determineSearchTraces(gd, xAxes, yAxes, subplot);
+          var clickedPtInfo = extractClickedPtInfo(hoverData, searchTraces);
+          var isBinnedTrace = clickedPtInfo.pointNumbers.length > 0;
+          if (isBinnedTrace ? isOnlyThisBinSelected(searchTraces, clickedPtInfo) : isOnlyOnePointSelected(searchTraces) && (pointOrBinSelected = isPointOrBinSelected(clickedPtInfo))) {
+            if (polygonOutlines) polygonOutlines.remove();
+            for (i = 0; i < searchTraces.length; i++) {
+              searchInfo = searchTraces[i];
+              searchInfo._module.selectPoints(searchInfo, false);
+            }
+            updateSelectedState(gd, searchTraces);
+            clearSelectionsCache(dragOptions);
+            if (sendEvents) {
+              emitDeselect(gd);
+            }
+          } else {
+            subtract = evt.shiftKey && (pointOrBinSelected !== void 0 ? pointOrBinSelected : isPointOrBinSelected(clickedPtInfo));
+            currentSelectionDef = newPointSelectionDef(clickedPtInfo.pointNumber, clickedPtInfo.searchInfo, subtract);
+            var allSelectionDefs = dragOptions.selectionDefs.concat([currentSelectionDef]);
+            selectionTesters = multiTester(allSelectionDefs, selectionTesters);
+            for (i = 0; i < searchTraces.length; i++) {
+              traceSelection = searchTraces[i]._module.selectPoints(searchTraces[i], selectionTesters);
+              thisTracesSelection = fillSelectionItem(traceSelection, searchTraces[i]);
+              if (selection.length) {
+                for (var j = 0; j < thisTracesSelection.length; j++) {
+                  selection.push(thisTracesSelection[j]);
+                }
+              } else selection = thisTracesSelection;
+            }
+            eventData = { points: selection };
+            updateSelectedState(gd, searchTraces, eventData);
+            if (currentSelectionDef && dragOptions) {
+              dragOptions.selectionDefs.push(currentSelectionDef);
+            }
+            if (polygonOutlines) {
+              var polygons = dragOptions.mergedPolygons;
+              var isOpenMode = openMode(dragOptions.dragmode);
+              displayOutlines(convertPoly(polygons, isOpenMode), polygonOutlines, dragOptions);
+            }
+            if (sendEvents) {
+              emitSelected(gd, eventData);
+            }
+          }
+        }
+      }
+      function newPointSelectionDef(pointNumber, searchInfo, subtract) {
+        return {
+          pointNumber,
+          searchInfo,
+          subtract: !!subtract
+        };
+      }
+      function isPointSelectionDef(o) {
+        return "pointNumber" in o && "searchInfo" in o;
+      }
+      function newPointNumTester(pointSelectionDef) {
+        return {
+          xmin: 0,
+          xmax: 0,
+          ymin: 0,
+          ymax: 0,
+          pts: [],
+          contains: function(pt, omitFirstEdge, pointNumber, searchInfo) {
+            var idxWantedTrace = pointSelectionDef.searchInfo.cd[0].trace.index;
+            var idxActualTrace = searchInfo.cd[0].trace.index;
+            return idxActualTrace === idxWantedTrace && pointNumber === pointSelectionDef.pointNumber;
+          },
+          isRect: false,
+          degenerate: false,
+          subtract: !!pointSelectionDef.subtract
+        };
+      }
+      function multiTester(list) {
+        if (!list.length) return;
+        var testers = [];
+        var xmin = isPointSelectionDef(list[0]) ? 0 : list[0][0][0];
+        var xmax = xmin;
+        var ymin = isPointSelectionDef(list[0]) ? 0 : list[0][0][1];
+        var ymax = ymin;
+        for (var i = 0; i < list.length; i++) {
+          if (isPointSelectionDef(list[i])) {
+            testers.push(newPointNumTester(list[i]));
+          } else {
+            var tester = polygonTester(list[i]);
+            tester.subtract = !!list[i].subtract;
+            testers.push(tester);
+            xmin = Math.min(xmin, tester.xmin);
+            xmax = Math.max(xmax, tester.xmax);
+            ymin = Math.min(ymin, tester.ymin);
+            ymax = Math.max(ymax, tester.ymax);
+          }
+        }
+        function contains(pt, arg, pointNumber, searchInfo) {
+          var contained = false;
+          for (var i2 = 0; i2 < testers.length; i2++) {
+            if (testers[i2].contains(pt, arg, pointNumber, searchInfo)) {
+              contained = !testers[i2].subtract;
+            }
+          }
+          return contained;
+        }
+        return {
+          xmin,
+          xmax,
+          ymin,
+          ymax,
+          pts: [],
+          contains,
+          isRect: false,
+          degenerate: false
+        };
+      }
+      function coerceSelectionsCache(evt, gd, dragOptions) {
+        var fullLayout = gd._fullLayout;
+        var plotinfo = dragOptions.plotinfo;
+        var dragmode = dragOptions.dragmode;
+        var selectingOnSameSubplot = fullLayout._lastSelectedSubplot && fullLayout._lastSelectedSubplot === plotinfo.id;
+        var hasModifierKey = (evt.shiftKey || evt.altKey) && !(drawMode(dragmode) && openMode(dragmode));
+        if (selectingOnSameSubplot && hasModifierKey && plotinfo.selection && plotinfo.selection.selectionDefs && !dragOptions.selectionDefs) {
+          dragOptions.selectionDefs = plotinfo.selection.selectionDefs;
+          dragOptions.mergedPolygons = plotinfo.selection.mergedPolygons;
+        } else if (!hasModifierKey || !plotinfo.selection) {
+          clearSelectionsCache(dragOptions);
+        }
+        if (!selectingOnSameSubplot) {
+          clearOutline(gd);
+          fullLayout._lastSelectedSubplot = plotinfo.id;
+        }
+      }
+      function hasActiveShape(gd) {
+        return gd._fullLayout._activeShapeIndex >= 0;
+      }
+      function hasActiveSelection(gd) {
+        return gd._fullLayout._activeSelectionIndex >= 0;
+      }
+      function clearSelectionsCache(dragOptions, immediateSelect) {
+        var dragmode = dragOptions.dragmode;
+        var plotinfo = dragOptions.plotinfo;
+        var gd = dragOptions.gd;
+        if (hasActiveShape(gd)) {
+          gd._fullLayout._deactivateShape(gd);
+        }
+        if (hasActiveSelection(gd)) {
+          gd._fullLayout._deactivateSelection(gd);
+        }
+        var fullLayout = gd._fullLayout;
+        var zoomLayer = fullLayout._zoomlayer;
+        var isDrawMode = drawMode(dragmode);
+        var isSelectMode = selectMode(dragmode);
+        if (isDrawMode || isSelectMode) {
+          var outlines = zoomLayer.selectAll(".select-outline-" + plotinfo.id);
+          if (outlines && gd._fullLayout._outlining) {
+            var shapes;
+            if (isDrawMode) {
+              shapes = newShapes(outlines, dragOptions);
+            }
+            if (shapes) {
+              Registry.call("_guiRelayout", gd, {
+                shapes
+              });
+            }
+            var selections;
+            if (isSelectMode && !hasSubplot(dragOptions)) {
+              selections = newSelections(outlines, dragOptions);
+            }
+            if (selections) {
+              gd._fullLayout._noEmitSelectedAtStart = true;
+              Registry.call("_guiRelayout", gd, {
+                selections
+              }).then(function() {
+                if (immediateSelect) {
+                  activateLastSelection(gd);
+                }
+              });
+            }
+            gd._fullLayout._outlining = false;
+          }
+        }
+        plotinfo.selection = {};
+        plotinfo.selection.selectionDefs = dragOptions.selectionDefs = [];
+        plotinfo.selection.mergedPolygons = dragOptions.mergedPolygons = [];
+      }
+      function getAxId(ax) {
+        return ax._id;
+      }
+      function determineSearchTraces(gd, xAxes, yAxes, subplot) {
+        if (!gd.calcdata) return [];
+        var searchTraces = [];
+        var xAxisIds = xAxes.map(getAxId);
+        var yAxisIds = yAxes.map(getAxId);
+        var cd, trace, i;
+        for (i = 0; i < gd.calcdata.length; i++) {
+          cd = gd.calcdata[i];
+          trace = cd[0].trace;
+          if (trace.visible !== true || !trace._module || !trace._module.selectPoints) continue;
+          if (hasSubplot({ subplot }) && (trace.subplot === subplot || trace.geo === subplot)) {
+            searchTraces.push(createSearchInfo(trace._module, cd, xAxes[0], yAxes[0]));
+          } else if (trace.type === "splom") {
+            if (trace._xaxes[xAxisIds[0]] && trace._yaxes[yAxisIds[0]]) {
+              var info = createSearchInfo(trace._module, cd, xAxes[0], yAxes[0]);
+              info.scene = gd._fullLayout._splomScenes[trace.uid];
+              searchTraces.push(info);
+            }
+          } else if (trace.type === "sankey") {
+            var sankeyInfo = createSearchInfo(trace._module, cd, xAxes[0], yAxes[0]);
+            searchTraces.push(sankeyInfo);
+          } else {
+            if (xAxisIds.indexOf(trace.xaxis) === -1 && (!trace._xA || !trace._xA.overlaying)) continue;
+            if (yAxisIds.indexOf(trace.yaxis) === -1 && (!trace._yA || !trace._yA.overlaying)) continue;
+            searchTraces.push(createSearchInfo(
+              trace._module,
+              cd,
+              getFromId(gd, trace.xaxis),
+              getFromId(gd, trace.yaxis)
+            ));
+          }
+        }
+        return searchTraces;
+      }
+      function createSearchInfo(module2, calcData, xaxis, yaxis) {
+        return {
+          _module: module2,
+          cd: calcData,
+          xaxis,
+          yaxis
+        };
+      }
+      function isHoverDataSet(hoverData) {
+        return hoverData && Array.isArray(hoverData) && hoverData[0].hoverOnBox !== true;
+      }
+      function extractClickedPtInfo(hoverData, searchTraces) {
+        var hoverDatum = hoverData[0];
+        var pointNumber = -1;
+        var pointNumbers = [];
+        var searchInfo, i;
+        for (i = 0; i < searchTraces.length; i++) {
+          searchInfo = searchTraces[i];
+          if (hoverDatum.fullData.index === searchInfo.cd[0].trace.index) {
+            if (hoverDatum.hoverOnBox === true) {
+              break;
+            }
+            if (hoverDatum.pointNumber !== void 0) {
+              pointNumber = hoverDatum.pointNumber;
+            } else if (hoverDatum.binNumber !== void 0) {
+              pointNumber = hoverDatum.binNumber;
+              pointNumbers = hoverDatum.pointNumbers;
+            }
+            break;
+          }
+        }
+        return {
+          pointNumber,
+          pointNumbers,
+          searchInfo
+        };
+      }
+      function isPointOrBinSelected(clickedPtInfo) {
+        var trace = clickedPtInfo.searchInfo.cd[0].trace;
+        var ptNum = clickedPtInfo.pointNumber;
+        var ptNums = clickedPtInfo.pointNumbers;
+        var ptNumsSet = ptNums.length > 0;
+        var ptNumToTest = ptNumsSet ? ptNums[0] : ptNum;
+        return trace.selectedpoints ? trace.selectedpoints.indexOf(ptNumToTest) > -1 : false;
+      }
+      function isOnlyThisBinSelected(searchTraces, clickedPtInfo) {
+        var tracesWithSelectedPts = [];
+        var searchInfo, trace, isSameTrace, i;
+        for (i = 0; i < searchTraces.length; i++) {
+          searchInfo = searchTraces[i];
+          if (searchInfo.cd[0].trace.selectedpoints && searchInfo.cd[0].trace.selectedpoints.length > 0) {
+            tracesWithSelectedPts.push(searchInfo);
+          }
+        }
+        if (tracesWithSelectedPts.length === 1) {
+          isSameTrace = tracesWithSelectedPts[0] === clickedPtInfo.searchInfo;
+          if (isSameTrace) {
+            trace = clickedPtInfo.searchInfo.cd[0].trace;
+            if (trace.selectedpoints.length === clickedPtInfo.pointNumbers.length) {
+              for (i = 0; i < clickedPtInfo.pointNumbers.length; i++) {
+                if (trace.selectedpoints.indexOf(clickedPtInfo.pointNumbers[i]) < 0) {
+                  return false;
+                }
+              }
+              return true;
+            }
+          }
+        }
+        return false;
+      }
+      function isOnlyOnePointSelected(searchTraces) {
+        var len = 0;
+        var searchInfo, trace, i;
+        for (i = 0; i < searchTraces.length; i++) {
+          searchInfo = searchTraces[i];
+          trace = searchInfo.cd[0].trace;
+          if (trace.selectedpoints) {
+            if (trace.selectedpoints.length > 1) return false;
+            len += trace.selectedpoints.length;
+            if (len > 1) return false;
+          }
+        }
+        return len === 1;
+      }
+      function updateSelectedState(gd, searchTraces, eventData) {
+        var i;
+        for (i = 0; i < searchTraces.length; i++) {
+          var fullInputTrace = searchTraces[i].cd[0].trace._fullInput;
+          var tracePreGUI = gd._fullLayout._tracePreGUI[fullInputTrace.uid] || {};
+          if (tracePreGUI.selectedpoints === void 0) {
+            tracePreGUI.selectedpoints = fullInputTrace._input.selectedpoints || null;
+          }
+        }
+        var trace;
+        if (eventData) {
+          var pts = eventData.points || [];
+          for (i = 0; i < searchTraces.length; i++) {
+            trace = searchTraces[i].cd[0].trace;
+            trace._input.selectedpoints = trace._fullInput.selectedpoints = [];
+            if (trace._fullInput !== trace) trace.selectedpoints = [];
+          }
+          for (var k = 0; k < pts.length; k++) {
+            var pt = pts[k];
+            var data = pt.data;
+            var fullData = pt.fullData;
+            var pointIndex = pt.pointIndex;
+            var pointIndices = pt.pointIndices;
+            if (pointIndices) {
+              [].push.apply(data.selectedpoints, pointIndices);
+              if (trace._fullInput !== trace) {
+                [].push.apply(fullData.selectedpoints, pointIndices);
+              }
+            } else {
+              data.selectedpoints.push(pointIndex);
+              if (trace._fullInput !== trace) {
+                fullData.selectedpoints.push(pointIndex);
+              }
+            }
+          }
+        } else {
+          for (i = 0; i < searchTraces.length; i++) {
+            trace = searchTraces[i].cd[0].trace;
+            delete trace.selectedpoints;
+            delete trace._input.selectedpoints;
+            if (trace._fullInput !== trace) {
+              delete trace._fullInput.selectedpoints;
+            }
+          }
+        }
+        updateReglSelectedState(gd, searchTraces);
+      }
+      function updateReglSelectedState(gd, searchTraces) {
+        var hasRegl = false;
+        for (var i = 0; i < searchTraces.length; i++) {
+          var searchInfo = searchTraces[i];
+          var cd = searchInfo.cd;
+          if (Registry.traceIs(cd[0].trace, "regl")) {
+            hasRegl = true;
+          }
+          var _module = searchInfo._module;
+          var fn = _module.styleOnSelect || _module.style;
+          if (fn) {
+            fn(gd, cd, cd[0].node3);
+            if (cd[0].nodeRangePlot3) fn(gd, cd, cd[0].nodeRangePlot3);
+          }
+        }
+        if (hasRegl) {
+          clearGlCanvases(gd);
+          redrawReglTraces(gd);
+        }
+      }
+      function mergePolygons(list, poly, subtract) {
+        var fn = subtract ? polybool.difference : polybool.union;
+        var res = fn({
+          regions: list
+        }, {
+          regions: [poly]
+        });
+        var allPolygons = res.regions.reverse();
+        for (var i = 0; i < allPolygons.length; i++) {
+          var polygon = allPolygons[i];
+          polygon.subtract = getSubtract(polygon, allPolygons.slice(0, i));
+        }
+        return allPolygons;
+      }
+      function fillSelectionItem(selection, searchInfo) {
+        if (Array.isArray(selection)) {
+          var cd = searchInfo.cd;
+          var trace = searchInfo.cd[0].trace;
+          for (var i = 0; i < selection.length; i++) {
+            selection[i] = makeEventData(selection[i], trace, cd);
+          }
+        }
+        return selection;
+      }
+      function convertPoly(polygonsIn, isOpenMode) {
+        var polygonsOut = [];
+        for (var i = 0; i < polygonsIn.length; i++) {
+          polygonsOut[i] = [];
+          for (var j = 0; j < polygonsIn[i].length; j++) {
+            polygonsOut[i][j] = [];
+            polygonsOut[i][j][0] = j ? "L" : "M";
+            for (var k = 0; k < polygonsIn[i][j].length; k++) {
+              polygonsOut[i][j].push(
+                polygonsIn[i][j][k]
+              );
+            }
+          }
+          if (!isOpenMode) {
+            polygonsOut[i].push([
+              "Z",
+              polygonsOut[i][0][1],
+              // initial x
+              polygonsOut[i][0][2]
+              // initial y
+            ]);
+          }
+        }
+        return polygonsOut;
+      }
+      function _doSelect(selectionTesters, searchTraces) {
+        var allSelections = [];
+        var thisSelection;
+        var traceSelections = [];
+        var traceSelection;
+        for (var i = 0; i < searchTraces.length; i++) {
+          var searchInfo = searchTraces[i];
+          traceSelection = searchInfo._module.selectPoints(searchInfo, selectionTesters);
+          traceSelections.push(traceSelection);
+          thisSelection = fillSelectionItem(traceSelection, searchInfo);
+          allSelections = allSelections.concat(thisSelection);
+        }
+        return allSelections;
+      }
+      function reselect(gd, mayEmitSelected, selectionTesters, searchTraces, dragOptions) {
+        var hadSearchTraces = !!searchTraces;
+        var plotinfo, xRef, yRef;
+        if (dragOptions) {
+          plotinfo = dragOptions.plotinfo;
+          xRef = dragOptions.xaxes[0]._id;
+          yRef = dragOptions.yaxes[0]._id;
+        }
+        var allSelections = [];
+        var allSearchTraces = [];
+        var layoutPolygons = getLayoutPolygons(gd);
+        var fullLayout = gd._fullLayout;
+        if (plotinfo) {
+          var zoomLayer = fullLayout._zoomlayer;
+          var mode = fullLayout.dragmode;
+          var isDrawMode = drawMode(mode);
+          var isSelectMode = selectMode(mode);
+          if (isDrawMode || isSelectMode) {
+            var xaxis = getFromId(gd, xRef, "x");
+            var yaxis = getFromId(gd, yRef, "y");
+            if (xaxis && yaxis) {
+              var outlines = zoomLayer.selectAll(".select-outline-" + plotinfo.id);
+              if (outlines && gd._fullLayout._outlining) {
+                if (outlines.length) {
+                  var e = outlines[0][0];
+                  var d = e.getAttribute("d");
+                  var outlinePolys = readPaths(d, gd, plotinfo);
+                  var draftPolygons = [];
+                  for (var u = 0; u < outlinePolys.length; u++) {
+                    var p = outlinePolys[u];
+                    var polygon = [];
+                    for (var t = 0; t < p.length; t++) {
+                      polygon.push([
+                        convert(xaxis, p[t][1]),
+                        convert(yaxis, p[t][2])
+                      ]);
+                    }
+                    polygon.xref = xRef;
+                    polygon.yref = yRef;
+                    polygon.subtract = getSubtract(polygon, draftPolygons);
+                    draftPolygons.push(polygon);
+                  }
+                  layoutPolygons = layoutPolygons.concat(draftPolygons);
+                }
+              }
+            }
+          }
+        }
+        var subplots = xRef && yRef ? [xRef + yRef] : fullLayout._subplots.cartesian;
+        epmtySplomSelectionBatch(gd);
+        var seenSplom = {};
+        for (var i = 0; i < subplots.length; i++) {
+          var subplot = subplots[i];
+          var yAt = subplot.indexOf("y");
+          var _xRef = subplot.slice(0, yAt);
+          var _yRef = subplot.slice(yAt);
+          var _selectionTesters = xRef && yRef ? selectionTesters : void 0;
+          _selectionTesters = addTester(layoutPolygons, _xRef, _yRef, _selectionTesters);
+          if (_selectionTesters) {
+            var _searchTraces = searchTraces;
+            if (!hadSearchTraces) {
+              var _xA = getFromId(gd, _xRef, "x");
+              var _yA = getFromId(gd, _yRef, "y");
+              _searchTraces = determineSearchTraces(
+                gd,
+                [_xA],
+                [_yA],
+                subplot
+              );
+              for (var w = 0; w < _searchTraces.length; w++) {
+                var s = _searchTraces[w];
+                var cd0 = s.cd[0];
+                var trace = cd0.trace;
+                if (s._module.name === "scattergl" && !cd0.t.xpx) {
+                  var x = trace.x;
+                  var y = trace.y;
+                  var len = trace._length;
+                  cd0.t.xpx = [];
+                  cd0.t.ypx = [];
+                  for (var j = 0; j < len; j++) {
+                    cd0.t.xpx[j] = _xA.c2p(x[j]);
+                    cd0.t.ypx[j] = _yA.c2p(y[j]);
+                  }
+                }
+                if (s._module.name === "splom") {
+                  if (!seenSplom[trace.uid]) {
+                    seenSplom[trace.uid] = true;
+                  }
+                }
+              }
+            }
+            var selection = _doSelect(_selectionTesters, _searchTraces);
+            allSelections = allSelections.concat(selection);
+            allSearchTraces = allSearchTraces.concat(_searchTraces);
+          }
+        }
+        var eventData = { points: allSelections };
+        updateSelectedState(gd, allSearchTraces, eventData);
+        var clickmode = fullLayout.clickmode;
+        var sendEvents = clickmode.indexOf("event") > -1 && mayEmitSelected;
+        if (!plotinfo && // get called from plot_api & plots
+        mayEmitSelected) {
+          var activePolygons = getLayoutPolygons(gd, true);
+          if (activePolygons.length) {
+            var xref = activePolygons[0].xref;
+            var yref = activePolygons[0].yref;
+            if (xref && yref) {
+              var poly = castMultiPolygon(activePolygons);
+              var fillRangeItems = makeFillRangeItems([
+                getFromId(gd, xref, "x"),
+                getFromId(gd, yref, "y")
+              ]);
+              fillRangeItems(eventData, poly);
+            }
+          }
+          if (gd._fullLayout._noEmitSelectedAtStart) {
+            gd._fullLayout._noEmitSelectedAtStart = false;
+          } else {
+            if (sendEvents) emitSelected(gd, eventData);
+          }
+          fullLayout._reselect = false;
+        }
+        if (!plotinfo && // get called from plot_api & plots
+        fullLayout._deselect) {
+          var deselect = fullLayout._deselect;
+          xRef = deselect.xref;
+          yRef = deselect.yref;
+          if (!subplotSelected(xRef, yRef, allSearchTraces)) {
+            deselectSubplot(gd, xRef, yRef, searchTraces);
+          }
+          if (sendEvents) {
+            if (eventData.points.length) {
+              emitSelected(gd, eventData);
+            } else {
+              emitDeselect(gd);
+            }
+          }
+          fullLayout._deselect = false;
+        }
+        return {
+          eventData,
+          selectionTesters
+        };
+      }
+      function epmtySplomSelectionBatch(gd) {
+        var cd = gd.calcdata;
+        if (!cd) return;
+        for (var i = 0; i < cd.length; i++) {
+          var cd0 = cd[i][0];
+          var trace = cd0.trace;
+          var splomScenes = gd._fullLayout._splomScenes;
+          if (splomScenes) {
+            var scene = splomScenes[trace.uid];
+            if (scene) {
+              scene.selectBatch = [];
+            }
+          }
+        }
+      }
+      function subplotSelected(xRef, yRef, searchTraces) {
+        for (var i = 0; i < searchTraces.length; i++) {
+          var s = searchTraces[i];
+          if (s.xaxis && s.xaxis._id === xRef && (s.yaxis && s.yaxis._id === yRef)) {
+            return true;
+          }
+        }
+        return false;
+      }
+      function deselectSubplot(gd, xRef, yRef, searchTraces) {
+        searchTraces = determineSearchTraces(
+          gd,
+          [getFromId(gd, xRef, "x")],
+          [getFromId(gd, yRef, "y")],
+          xRef + yRef
+        );
+        for (var k = 0; k < searchTraces.length; k++) {
+          var searchInfo = searchTraces[k];
+          searchInfo._module.selectPoints(searchInfo, false);
+        }
+        updateSelectedState(gd, searchTraces);
+      }
+      function addTester(layoutPolygons, xRef, yRef, selectionTesters) {
+        var mergedPolygons;
+        for (var i = 0; i < layoutPolygons.length; i++) {
+          var currentPolygon = layoutPolygons[i];
+          if (xRef !== currentPolygon.xref || yRef !== currentPolygon.yref) continue;
+          if (mergedPolygons) {
+            var subtract = !!currentPolygon.subtract;
+            mergedPolygons = mergePolygons(mergedPolygons, currentPolygon, subtract);
+            selectionTesters = multiTester(mergedPolygons);
+          } else {
+            mergedPolygons = [currentPolygon];
+            selectionTesters = polygonTester(currentPolygon);
+          }
+        }
+        return selectionTesters;
+      }
+      function getLayoutPolygons(gd, onlyActiveOnes) {
+        var allPolygons = [];
+        var fullLayout = gd._fullLayout;
+        var allSelections = fullLayout.selections;
+        var len = allSelections.length;
+        for (var i = 0; i < len; i++) {
+          if (onlyActiveOnes && i !== fullLayout._activeSelectionIndex) continue;
+          var selection = allSelections[i];
+          if (!selection) continue;
+          var xref = selection.xref;
+          var yref = selection.yref;
+          var xaxis = getFromId(gd, xref, "x");
+          var yaxis = getFromId(gd, yref, "y");
+          var xmin, xmax, ymin, ymax;
+          var polygon;
+          if (selection.type === "rect") {
+            polygon = [];
+            var x0 = convert(xaxis, selection.x0);
+            var x1 = convert(xaxis, selection.x1);
+            var y0 = convert(yaxis, selection.y0);
+            var y1 = convert(yaxis, selection.y1);
+            polygon = [[x0, y0], [x0, y1], [x1, y1], [x1, y0]];
+            xmin = Math.min(x0, x1);
+            xmax = Math.max(x0, x1);
+            ymin = Math.min(y0, y1);
+            ymax = Math.max(y0, y1);
+            polygon.xmin = xmin;
+            polygon.xmax = xmax;
+            polygon.ymin = ymin;
+            polygon.ymax = ymax;
+            polygon.xref = xref;
+            polygon.yref = yref;
+            polygon.subtract = false;
+            polygon.isRect = true;
+            allPolygons.push(polygon);
+          } else if (selection.type === "path") {
+            var segments = selection.path.split("Z");
+            var multiPolygons = [];
+            for (var j = 0; j < segments.length; j++) {
+              var path = segments[j];
+              if (!path) continue;
+              path += "Z";
+              var allX = shapeHelpers.extractPathCoords(path, shapeConstants.paramIsX, "raw");
+              var allY = shapeHelpers.extractPathCoords(path, shapeConstants.paramIsY, "raw");
+              xmin = Infinity;
+              xmax = -Infinity;
+              ymin = Infinity;
+              ymax = -Infinity;
+              polygon = [];
+              for (var k = 0; k < allX.length; k++) {
+                var x = convert(xaxis, allX[k]);
+                var y = convert(yaxis, allY[k]);
+                polygon.push([x, y]);
+                xmin = Math.min(x, xmin);
+                xmax = Math.max(x, xmax);
+                ymin = Math.min(y, ymin);
+                ymax = Math.max(y, ymax);
+              }
+              polygon.xmin = xmin;
+              polygon.xmax = xmax;
+              polygon.ymin = ymin;
+              polygon.ymax = ymax;
+              polygon.xref = xref;
+              polygon.yref = yref;
+              polygon.subtract = getSubtract(polygon, multiPolygons);
+              multiPolygons.push(polygon);
+              allPolygons.push(polygon);
+            }
+          }
+        }
+        return allPolygons;
+      }
+      function getSubtract(polygon, previousPolygons) {
+        var subtract = false;
+        for (var i = 0; i < previousPolygons.length; i++) {
+          var previousPolygon = previousPolygons[i];
+          for (var k = 0; k < polygon.length; k++) {
+            if (pointInPolygon(polygon[k], previousPolygon)) {
+              subtract = !subtract;
+              break;
+            }
+          }
+        }
+        return subtract;
+      }
+      function convert(ax, d) {
+        if (ax.type === "date") d = d.replace("_", " ");
+        return ax.type === "log" ? ax.c2p(d) : ax.r2p(d, null, ax.calendar);
+      }
+      function castMultiPolygon(allPolygons) {
+        var len = allPolygons.length;
+        var p = [];
+        for (var i = 0; i < len; i++) {
+          var polygon = allPolygons[i];
+          p = p.concat(polygon);
+          p = p.concat([polygon[0]]);
+        }
+        return computeRectAndRanges(p);
+      }
+      function computeRectAndRanges(poly) {
+        poly.isRect = poly.length === 5 && poly[0][0] === poly[4][0] && poly[0][1] === poly[4][1] && (poly[0][0] === poly[1][0] && poly[2][0] === poly[3][0] && poly[0][1] === poly[3][1] && poly[1][1] === poly[2][1]) || poly[0][1] === poly[1][1] && poly[2][1] === poly[3][1] && poly[0][0] === poly[3][0] && poly[1][0] === poly[2][0];
+        if (poly.isRect) {
+          poly.xmin = Math.min(poly[0][0], poly[2][0]);
+          poly.xmax = Math.max(poly[0][0], poly[2][0]);
+          poly.ymin = Math.min(poly[0][1], poly[2][1]);
+          poly.ymax = Math.max(poly[0][1], poly[2][1]);
+        }
+        return poly;
+      }
+      function makeFillRangeItems(allAxes) {
+        return function(eventData, poly) {
+          var range;
+          var lassoPoints;
+          for (var i = 0; i < allAxes.length; i++) {
+            var ax = allAxes[i];
+            var id = ax._id;
+            var axLetter = id.charAt(0);
+            if (poly.isRect) {
+              if (!range) range = {};
+              var min = poly[axLetter + "min"];
+              var max = poly[axLetter + "max"];
+              if (min !== void 0 && max !== void 0) {
+                range[id] = [
+                  p2r(ax, min),
+                  p2r(ax, max)
+                ].sort(ascending);
+              }
+            } else {
+              if (!lassoPoints) lassoPoints = {};
+              lassoPoints[id] = poly.map(axValue(ax));
+            }
+          }
+          if (range) {
+            eventData.range = range;
+          }
+          if (lassoPoints) {
+            eventData.lassoPoints = lassoPoints;
+          }
+        };
+      }
+      function getFillRangeItems(dragOptions) {
+        var plotinfo = dragOptions.plotinfo;
+        return plotinfo.fillRangeItems || // allow subplots (i.e. geo, mapbox, map, sankey) to override fillRangeItems routine
+        makeFillRangeItems(dragOptions.xaxes.concat(dragOptions.yaxes));
+      }
+      function emitSelecting(gd, eventData) {
+        gd.emit("plotly_selecting", eventData);
+      }
+      function emitSelected(gd, eventData) {
+        if (eventData) {
+          eventData.selections = (gd.layout || {}).selections || [];
+        }
+        gd.emit("plotly_selected", eventData);
+      }
+      function emitDeselect(gd) {
+        gd.emit("plotly_deselect", null);
+      }
+      module.exports = {
+        reselect,
+        prepSelect,
+        clearOutline,
+        clearSelectionsCache,
+        selectOnClick
+      };
+    }
+  });
+
+  // src/components/selections/attributes.js
+  var require_attributes15 = __commonJS({
+    "src/components/selections/attributes.js"(exports, module) {
+      "use strict";
+      var annAttrs = require_attributes13();
+      var scatterLineAttrs = require_attributes11().line;
+      var dash = require_attributes4().dash;
+      var extendFlat = require_extend().extendFlat;
+      var overrideAll = require_edit_types().overrideAll;
+      var templatedArray = require_plot_template().templatedArray;
+      var axisPlaceableObjs = require_axis_placeable_objects();
+      module.exports = overrideAll(templatedArray("selection", {
+        type: {
+          valType: "enumerated",
+          values: ["rect", "path"]
+        },
+        xref: extendFlat({}, annAttrs.xref, {}),
+        yref: extendFlat({}, annAttrs.yref, {}),
+        x0: {
+          valType: "any"
+        },
+        x1: {
+          valType: "any"
+        },
+        y0: {
+          valType: "any"
+        },
+        y1: {
+          valType: "any"
+        },
+        path: {
+          valType: "string",
+          editType: "arraydraw"
+        },
+        opacity: {
+          valType: "number",
+          min: 0,
+          max: 1,
+          dflt: 0.7,
+          editType: "arraydraw"
+        },
+        line: {
+          color: scatterLineAttrs.color,
+          width: extendFlat({}, scatterLineAttrs.width, {
+            min: 1,
+            dflt: 1
+          }),
+          dash: extendFlat({}, dash, {
+            dflt: "dot"
+          })
+        }
+      }), "arraydraw", "from-root");
+    }
+  });
+
+  // src/components/selections/defaults.js
+  var require_defaults9 = __commonJS({
+    "src/components/selections/defaults.js"(exports, module) {
+      "use strict";
+      var Lib = require_lib();
+      var Axes = require_axes();
+      var handleArrayContainerDefaults = require_array_container_defaults();
+      var attributes = require_attributes15();
+      var helpers = require_helpers8();
+      module.exports = function supplyLayoutDefaults(layoutIn, layoutOut) {
+        handleArrayContainerDefaults(layoutIn, layoutOut, {
+          name: "selections",
+          handleItemDefaults: handleSelectionDefaults
+        });
+        var selections = layoutOut.selections;
+        for (var i = 0; i < selections.length; i++) {
+          var selection = selections[i];
+          if (!selection) continue;
+          if (selection.path === void 0) {
+            if (selection.x0 === void 0 || selection.x1 === void 0 || selection.y0 === void 0 || selection.y1 === void 0) {
+              layoutOut.selections[i] = null;
+            }
+          }
+        }
+      };
+      function handleSelectionDefaults(selectionIn, selectionOut, fullLayout) {
+        function coerce(attr, dflt) {
+          return Lib.coerce(selectionIn, selectionOut, attributes, attr, dflt);
+        }
+        var path = coerce("path");
+        var dfltType = path ? "path" : "rect";
+        var selectionType = coerce("type", dfltType);
+        var noPath = selectionType !== "path";
+        if (noPath) delete selectionOut.path;
+        coerce("opacity");
+        coerce("line.color");
+        coerce("line.width");
+        coerce("line.dash");
+        var axLetters = ["x", "y"];
+        for (var i = 0; i < 2; i++) {
+          var axLetter = axLetters[i];
+          var gdMock = { _fullLayout: fullLayout };
+          var ax;
+          var pos2r;
+          var r2pos;
+          var axRef = Axes.coerceRef(selectionIn, selectionOut, gdMock, axLetter);
+          ax = Axes.getFromId(gdMock, axRef);
+          ax._selectionIndices.push(selectionOut._index);
+          r2pos = helpers.rangeToShapePosition(ax);
+          pos2r = helpers.shapePositionToRange(ax);
+          if (noPath) {
+            var attr0 = axLetter + "0";
+            var attr1 = axLetter + "1";
+            var in0 = selectionIn[attr0];
+            var in1 = selectionIn[attr1];
+            selectionIn[attr0] = pos2r(selectionIn[attr0], true);
+            selectionIn[attr1] = pos2r(selectionIn[attr1], true);
+            Axes.coercePosition(selectionOut, gdMock, coerce, axRef, attr0);
+            Axes.coercePosition(selectionOut, gdMock, coerce, axRef, attr1);
+            var p0 = selectionOut[attr0];
+            var p1 = selectionOut[attr1];
+            if (p0 !== void 0 && p1 !== void 0) {
+              selectionOut[attr0] = r2pos(p0);
+              selectionOut[attr1] = r2pos(p1);
+              selectionIn[attr0] = in0;
+              selectionIn[attr1] = in1;
+            }
+          }
+        }
+        if (noPath) {
+          Lib.noneOrAll(selectionIn, selectionOut, ["x0", "x1", "y0", "y1"]);
+        }
+      }
+    }
+  });
+
+  // src/components/selections/draw_newselection/defaults.js
+  var require_defaults10 = __commonJS({
+    "src/components/selections/draw_newselection/defaults.js"(exports, module) {
+      "use strict";
+      module.exports = function supplyDrawNewSelectionDefaults(layoutIn, layoutOut, coerce) {
+        coerce("newselection.mode");
+        var newselectionLineWidth = coerce("newselection.line.width");
+        if (newselectionLineWidth) {
+          coerce("newselection.line.color");
+          coerce("newselection.line.dash");
+        }
+        coerce("activeselection.fillcolor");
+        coerce("activeselection.opacity");
+      };
+    }
+  });
+
+  // src/components/selections/index.js
+  var require_selections = __commonJS({
+    "src/components/selections/index.js"(exports, module) {
+      "use strict";
+      var drawModule = require_draw5();
+      var select = require_select2();
+      module.exports = {
+        moduleType: "component",
+        name: "selections",
+        layoutAttributes: require_attributes15(),
+        supplyLayoutDefaults: require_defaults9(),
+        supplyDrawNewSelectionDefaults: require_defaults10(),
+        includeBasePlot: require_include_components()("selections"),
+        draw: drawModule.draw,
+        drawOne: drawModule.drawOne,
+        reselect: select.reselect,
+        prepSelect: select.prepSelect,
+        clearOutline: select.clearOutline,
+        clearSelectionsCache: select.clearSelectionsCache,
+        selectOnClick: select.selectOnClick
+      };
+    }
+  });
+
   // src/components/shapes/attributes.js
   var require_attributes16 = __commonJS({
     "src/components/shapes/attributes.js"(exports, module) {
       "use strict";
-      var annAttrs = require_attributes11();
+      var annAttrs = require_attributes13();
       var fontAttrs = require_font_attributes();
-      var scatterLineAttrs = require_attributes12().line;
+      var scatterLineAttrs = require_attributes11().line;
       var dash = require_attributes4().dash;
       var extendFlat = require_extend().extendFlat;
       var templatedArray = require_plot_template().templatedArray;
@@ -59256,7 +59321,7 @@ var Plotly = (() => {
   var require_attributes23 = __commonJS({
     "src/traces/bar/attributes.js"(exports, module) {
       "use strict";
-      var scatterAttrs = require_attributes12();
+      var scatterAttrs = require_attributes11();
       var axisHoverFormat = require_axis_format_attributes().axisHoverFormat;
       var { hovertemplateAttrs, texttemplateAttrs, templatefallbackAttrs } = require_template_attributes();
       var colorScaleAttrs = require_attributes8();
@@ -62282,7 +62347,7 @@ var Plotly = (() => {
     "src/traces/funnel/attributes.js"(exports, module) {
       "use strict";
       var barAttrs = require_attributes23();
-      var lineAttrs = require_attributes12().line;
+      var lineAttrs = require_attributes11().line;
       var baseAttrs = require_attributes2();
       var axisHoverFormat = require_axis_format_attributes().axisHoverFormat;
       var { hovertemplateAttrs, texttemplateAttrs, templatefallbackAttrs } = require_template_attributes();
@@ -62933,7 +62998,7 @@ var Plotly = (() => {
     "src/traces/waterfall/attributes.js"(exports, module) {
       "use strict";
       var barAttrs = require_attributes23();
-      var lineAttrs = require_attributes12().line;
+      var lineAttrs = require_attributes11().line;
       var baseAttrs = require_attributes2();
       var axisHoverFormat = require_axis_format_attributes().axisHoverFormat;
       var { hovertemplateAttrs, texttemplateAttrs, templatefallbackAttrs } = require_template_attributes();
@@ -67888,7 +67953,7 @@ var Plotly = (() => {
     "src/traces/ohlc/attributes.js"(exports, module) {
       "use strict";
       var extendFlat = require_lib().extendFlat;
-      var scatterAttrs = require_attributes12();
+      var scatterAttrs = require_attributes11();
       var axisHoverFormat = require_axis_format_attributes().axisHoverFormat;
       var { hovertemplateAttrs, templatefallbackAttrs } = require_template_attributes();
       var dash = require_attributes4().dash;
@@ -68439,7 +68504,7 @@ var Plotly = (() => {
     "src/traces/box/attributes.js"(exports, module) {
       "use strict";
       var makeFillcolorAttr = require_fillcolor_attribute();
-      var scatterAttrs = require_attributes12();
+      var scatterAttrs = require_attributes11();
       var barAttrs = require_attributes23();
       var colorAttrs = require_attributes3();
       var axisHoverFormat = require_axis_format_attributes().axisHoverFormat;
