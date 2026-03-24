@@ -27,7 +27,7 @@ var allTraces = fs.readdirSync(path.join(pathToSrc, 'traces'))
 var pathToTopojsonSrc = path.join(pathToRoot, 'topojson/dist');
 
 var partialBundleNames = [
-    'basic', 'cartesian', 'geo', 'gl3d', 'gl2d', 'mapbox', 'finance', 'strict'
+    'basic', 'cartesian', 'geo', 'gl3d', 'gl2d', 'mapbox', 'finance', 'strict',
 ];
 
 var partialBundleTraces = {
@@ -145,8 +145,8 @@ function makePartialBundleOpts(name) {
         traceList: partialBundleTraces[name],
         calendars: true,
         index: path.join(pathToLib, 'index-' + name + '.js'),
-        dist: path.join(pathToDist, 'plotly-' + name + '.js'),
-        distMin: path.join(pathToDist, 'plotly-' + name + '.min.js')
+        dist: path.join(pathToDist, name + '.js'),
+        distMin: path.join(pathToDist, name + '.min.js')
     };
 }
 
@@ -177,8 +177,8 @@ module.exports = {
     pathToPlotlyDist: path.join(pathToDist, 'plotly.js'),
     pathToPlotlyDistMin: path.join(pathToDist, 'plotly.min.js'),
     pathToPlotlyDistWithMeta: path.join(pathToDist, 'plotly-with-meta.js'),
-    pathToPlotlyStrictDist: path.join(pathToDist, 'plotly-strict.js'),
-    pathToPlotlyStrictDistMin: path.join(pathToDist, 'plotly-strict.min.js'),
+    pathToPlotlyStrictDist: path.join(pathToDist, 'strict.js'),
+    pathToPlotlyStrictDistMin: path.join(pathToDist, 'strict.min.js'),
 
     pathToSchemaDiff: path.join(pathToTest, 'plot-schema.json'),
     pathToSchemaDist: path.join(pathToDist, 'plot-schema.json'),
@@ -213,9 +213,7 @@ module.exports = {
     pathToJasmineTests: path.join(pathToRoot, 'test/jasmine/tests'),
     pathToJasmineBundleTests: path.join(pathToRoot, 'test/jasmine/bundle_tests'),
 
-    // this mapbox access token is 'public', no need to hide it
-    // more info: https://www.mapbox.com/help/define-access-token/
-    mapboxAccessToken: 'pk.eyJ1IjoicGxvdGx5LWRvY3MiLCJhIjoiY2xpMGYyNWgxMGJhdzNzbXhtNGI0Nnk0aSJ9.0oBvi_UUZ0O1N0xk0yfRwg',
+    mapboxAccessToken: process.env.MAPBOX_ACCESS_TOKEN || '',
     pathToCredentials: path.join(pathToBuild, 'credentials.json'),
 
     testContainerImage: 'plotly/testbed:latest',

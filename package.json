@@ -35,7 +35,8 @@
     "use-draftlogs": "node tasks/use_draftlogs.js",
     "empty-draftlogs": "node tasks/empty_draftlogs.js",
     "empty-dist": "node tasks/empty_dist.js",
-    "build": "npm run empty-dist && npm run preprocess && npm run find-strings && npm run bundle && npm run extra-bundles && npm run locales && npm run schema dist && npm run stats",
+    "fork-bundles": "node tasks/fork_bundles.mjs",
+    "build": "npm run empty-dist && npm run preprocess && npm run find-strings && npm run bundle && npm run extra-bundles && npm run fork-bundles && npm run locales && npm run schema dist && npm run stats",
     "regl-codegen": "node devtools/regl_codegen/server.mjs",
     "cibuild": "npm run empty-dist && npm run preprocess && node tasks/cibundle.mjs",
     "lint": "npx @biomejs/biome lint",
@@ -165,6 +166,7 @@
     "lodash": "^4.17.21",
     "madge": "^8.0.0",
     "minify-stream": "^2.1.0",
+    "minimist": "^1.2.8",
     "npm-link-check": "^5.0.1",
     "open": "^8.4.2",
     "pixelmatch": "^5.3.0",
@@ -204,5 +206,15 @@
     "./lib/*": "./lib/*",
     "./src/*": "./src/*",
     "./dist/*": "./dist/*"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild",
+      "canvas",
+      "@parcel/watcher"
+    ],
+    "overrides": {
+      "falafel>acorn": "^8.1.1"
+    }
   }
 }

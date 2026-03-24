@@ -14,83 +14,26 @@ jobs:
   build-dist:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: runsascoded/npm-dist@v1
         with:
-          ref: ${{ inputs.source_ref || github.ref_name }}
-          fetch-depth: 0
-
-      - name: Get source info
-        id: info
-        run: |
-          echo "source_sha=$(git rev-parse HEAD)" >> $GITHUB_OUTPUT
-          echo "short_sha=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
-          echo "version=$(jq -r .version package.json)" >> $GITHUB_OUTPUT
-
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-          cache: 'npm'
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Build all bundles
-        run: npm run build
-
-      - name: Create dist branch
-        env:
-          SOURCE_REF: ${{ inputs.source_ref || github.ref_name }}
-          SOURCE_SHA: ${{ steps.info.outputs.source_sha }}
-          SHORT_SHA: ${{ steps.info.outputs.short_sha }}
-          SOURCE_VERSION: ${{ steps.info.outputs.version }}
-        run: |
-          # `main` pushes to `dist` (matching pds convention); other branches get namespaced
-          if [ "$SOURCE_REF" = "main" ]; then
-            DIST_BRANCH="dist"
-          else
-            DIST_BRANCH="${SOURCE_REF}-dist"
-          fi
-          DIST_VERSION="${SOURCE_VERSION}-dist.${SHORT_SHA}"
-
-          # Configure git
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-
-          # Save files we need before switching branches
-          mkdir -p /tmp/dist-build
-          cp -r dist/ /tmp/dist-build/
-          cp package.json /tmp/dist-build/
-          cp package-lock.json /tmp/dist-build/
-
-          # Fetch and checkout dist branch (or create orphan)
-          if git fetch origin "$DIST_BRANCH" 2>/dev/null; then
-            git checkout -f "$DIST_BRANCH" --
-          else
-            git checkout --orphan "$DIST_BRANCH"
-            git rm -rf .
-          fi
-
-          # Clean working tree and restore only dist files
-          git clean -fdx
-          rm -rf dist/
-          cp -r /tmp/dist-build/dist/ ./
-          cp /tmp/dist-build/package.json ./
-          cp /tmp/dist-build/package-lock.json ./
-
-          # Update version in package.json
-          jq --arg v "$DIST_VERSION" '.version = $v' package.json > package.json.tmp
-          mv package.json.tmp package.json
-
-          # Commit only the intended files
-          git add dist/ package.json package-lock.json
-          git commit -m "plotly.js@${DIST_VERSION}
-
-          Built from ${SOURCE_SHA}"
-
-          # Push
-          git push origin "$DIST_BRANCH" --force
-
-          echo "✅ Pushed $DIST_BRANCH with version $DIST_VERSION"
-          echo ""
-          echo "Install with:"
-          echo "  pnpm add github:${{ github.repository }}#$DIST_BRANCH"
+          source_ref: ${{ inputs.source_ref || github.ref_name }}
+          node_version: '20'
+          build_command: pnpm run build
+          preserve_dirs: dist
+          extra_files: pnpm-lock.yaml
+          exports_map: >-
+            {
+              "./lib/index.js": "./dist/plotly.min.js",
+              "./lib/index-basic.js": "./dist/basic.min.js",
+              "./lib/index-minimal.js": "./dist/minimal.min.js",
+              "./lib/index-lite.js": "./dist/lite.min.js",
+              "./lib/index-cartesian.js": "./dist/cartesian.min.js",
+              "./lib/index-finance.js": "./dist/finance.min.js",
+              "./lib/index-geo.js": "./dist/geo.min.js",
+              "./lib/index-gl2d.js": "./dist/gl2d.min.js",
+              "./lib/index-gl3d.js": "./dist/gl3d.min.js",
+              "./lib/index-mapbox.js": "./dist/mapbox.min.js",
+              "./lib/index-strict.js": "./dist/strict.min.js",
+              "./lib/core.js": "./dist/plotly.min.js"
+            }
+          dist_branch: ${{ (inputs.source_ref || github.ref_name) == 'main' && 'dist' || format('{0}-dist', inputs.source_ref || github.ref_name) }}

@@ -5,11 +5,6 @@ build/*
 !build/README.md
 
 dist/
-!dist/topojson/
-!dist/README.md
-!dist/plot-schema.json
-!dist/plotly-geo-assets.js
-!dist/translation-keys.txt
 
 npm-debug.log*
 *.sublime*
