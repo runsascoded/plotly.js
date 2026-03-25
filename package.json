@@ -1,6 +1,6 @@
 {
   "name": "plotly.js",
-  "version": "3.3.1-dist.904fcb5",
+  "version": "3.3.1-dist.7b2500a",
   "description": "The open source javascript graphing library that powers plotly",
   "license": "MIT",
   "main": "./dist/plotly.min.js",
@@ -198,8 +198,8 @@
     "./gl2d": "./dist/gl2d.min.js",
     "./gl3d": "./dist/gl3d.min.js",
     "./mapbox": "./dist/mapbox.min.js",
-    "./strict": "./dist/strict.min.js",
     "./core": "./dist/plotly.min.js",
     "./dist/*": "./*"
-  }
+  },
+  "type": "module"
 }
