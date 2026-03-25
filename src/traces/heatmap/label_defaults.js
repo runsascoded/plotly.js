@@ -1,8 +1,6 @@
-'use strict';
+import Lib from '../../lib/index.js';
 
-var Lib = require('../../lib');
-
-module.exports = function handleHeatmapLabelDefaults(coerce, layout) {
+export default function handleHeatmapLabelDefaults(coerce, layout) {
     coerce('texttemplate');
     coerce('texttemplatefallback');
 
@@ -11,4 +9,4 @@ module.exports = function handleHeatmapLabelDefaults(coerce, layout) {
         size: 'auto'
     });
     Lib.coerceFont(coerce, 'textfont', fontDflt);
-};
+}

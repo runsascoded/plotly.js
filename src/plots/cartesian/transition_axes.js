@@ -1,29 +1,10 @@
-'use strict';
+import d3 from '@plotly/d3';
+import Registry from '../../registry.js';
+import Lib from '../../lib/index.js';
+import Drawing from '../../components/drawing/index.js';
+import Axes from './axes.js';
 
-var d3 = require('@plotly/d3');
-
-var Registry = require('../../registry');
-var Lib = require('../../lib');
-var Drawing = require('../../components/drawing');
-var Axes = require('./axes');
-
-/**
- * transitionAxes
- *
- * transition axes from one set of ranges to another, using a svg
- * transformations, similar to during panning.
- *
- * @param {DOM element | object} gd
- * @param {array} edits : array of 'edits', each item with
- * - plotinfo {object} subplot object
- * - xr0 {array} initial x-range
- * - xr1 {array} end x-range
- * - yr0 {array} initial y-range
- * - yr1 {array} end y-range
- * @param {object} transitionOpts
- * @param {function} makeOnCompleteCallback
- */
-module.exports = function transitionAxes(gd, edits, transitionOpts, makeOnCompleteCallback) {
+export default function transitionAxes(gd, edits, transitionOpts, makeOnCompleteCallback) {
     var fullLayout = gd._fullLayout;
 
     // special case for redraw:false Plotly.animate that relies on this
@@ -200,4 +181,4 @@ module.exports = function transitionAxes(gd, edits, transitionOpts, makeOnComple
     raf = window.requestAnimationFrame(doFrame);
 
     return Promise.resolve();
-};
+}

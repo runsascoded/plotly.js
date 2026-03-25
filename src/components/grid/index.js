@@ -1,10 +1,9 @@
-'use strict';
-
-var Lib = require('../../lib');
-var counterRegex = require('../../lib/regex').counter;
-var domainAttrs = require('../../plots/domain').attributes;
-var cartesianIdRegex = require('../../plots/cartesian/constants').idRegex;
-var Template = require('../../plot_api/plot_template');
+import Lib from '../../lib/index.js';
+import { counter as counterRegex } from '../../lib/regex.js';
+import { attributes as domainAttrs } from '../../plots/domain.js';
+import _constants from '../../plots/cartesian/constants.js';
+const { idRegex: cartesianIdRegex } = _constants;
+import Template from '../../plot_api/plot_template.js';
 
 var gridAttrs = {
     rows: {
@@ -397,7 +396,7 @@ function fillGridAxes(axesIn, axesAllowed, len, axisMap, axLetter) {
     return out;
 }
 
-module.exports = {
+export default {
     moduleType: 'component',
     name: 'grid',
 

@@ -1,20 +1,17 @@
-'use strict';
-
-var d3 = require('@plotly/d3');
-var Lib = require('../../lib');
-var Drawing = require('../../components/drawing');
-var svgTextUtils = require('../../lib/svg_text_utils');
-
-var partition = require('./partition');
-var styleOne = require('./style').styleOne;
-var constants = require('../treemap/constants');
-var helpers = require('../sunburst/helpers');
-var attachFxHandlers = require('../sunburst/fx');
-var formatSliceLabel = require('../sunburst/plot').formatSliceLabel;
+import d3 from '@plotly/d3';
+import Lib from '../../lib/index.js';
+import Drawing from '../../components/drawing/index.js';
+import svgTextUtils from '../../lib/svg_text_utils.js';
+import partition from './partition.js';
+import { styleOne } from './style.js';
+import constants from '../treemap/constants.js';
+import helpers from '../sunburst/helpers.js';
+import attachFxHandlers from '../sunburst/fx.js';
+import { formatSliceLabel } from '../sunburst/plot.js';
 
 var onPathbar = false; // for Descendants
 
-module.exports = function drawDescendants(gd, cd, entry, slices, opts) {
+export default function drawDescendants(gd, cd, entry, slices, opts) {
     var width = opts.width;
     var height = opts.height;
     var viewX = opts.viewX;
@@ -205,4 +202,4 @@ module.exports = function drawDescendants(gd, cd, entry, slices, opts) {
     });
 
     return nextOfPrevEntry;
-};
+}

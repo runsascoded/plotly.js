@@ -1,12 +1,10 @@
-'use strict';
-
-var extendFlat = require('../../lib').extendFlat;
-var scatterAttrs = require('../scatter/attributes');
-var axisHoverFormat = require('../../plots/cartesian/axis_format_attributes').axisHoverFormat;
-const { hovertemplateAttrs, templatefallbackAttrs } = require('../../plots/template_attributes');
-var dash = require('../../components/drawing/attributes').dash;
-var fxAttrs = require('../../components/fx/attributes');
-var delta = require('../../constants/delta.js');
+import { extendFlat } from '../../lib/index.js';
+import scatterAttrs from '../scatter/attributes.js';
+import { axisHoverFormat } from '../../plots/cartesian/axis_format_attributes.js';
+import { hovertemplateAttrs, templatefallbackAttrs } from '../../plots/template_attributes.js';
+import { dash } from '../../components/drawing/attributes.js';
+import fxAttrs from '../../components/fx/attributes.js';
+import delta from '../../constants/delta.js';
 
 var INCREASING_COLOR = delta.INCREASING.COLOR;
 var DECREASING_COLOR = delta.DECREASING.COLOR;
@@ -25,7 +23,7 @@ function directionAttrs(lineColorDefault) {
     };
 }
 
-module.exports = {
+export default {
     xperiod: scatterAttrs.xperiod,
     xperiod0: scatterAttrs.xperiod0,
     xperiodalignment: scatterAttrs.xperiodalignment,

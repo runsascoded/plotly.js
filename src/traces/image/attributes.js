@@ -1,10 +1,8 @@
-'use strict';
-
-var baseAttrs = require('../../plots/attributes');
-var zorder = require('../scatter/attributes').zorder;
-const { hovertemplateAttrs, templatefallbackAttrs } = require('../../plots/template_attributes');
-var extendFlat = require('../../lib/extend').extendFlat;
-var colormodel = require('./constants').colormodel;
+import baseAttrs from '../../plots/attributes.js';
+import { zorder } from '../scatter/attributes.js';
+import { hovertemplateAttrs, templatefallbackAttrs } from '../../plots/template_attributes.js';
+import { extendFlat } from '../../lib/extend.js';
+import { colormodel } from './constants.js';
 
 var cm = ['rgb', 'rgba', 'rgba256', 'hsl', 'hsla'];
 var zminDesc = [];
@@ -15,7 +13,7 @@ for (var i = 0; i < cm.length; i++) {
     zmaxDesc.push('For the `' + cm[i] + '` colormodel, it is [' + (cr.zmaxDflt || cr.max).join(', ') + '].');
 }
 
-module.exports = extendFlat({
+export default extendFlat({
     source: {
         valType: 'string',
         editType: 'calc',

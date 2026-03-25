@@ -1,17 +1,13 @@
-'use strict';
-
-var d3 = require('@plotly/d3');
-
-var Lib = require('../../lib');
-var getTopojsonFeatures = require('../../lib/topojson_utils').getTopojsonFeatures;
-var geoJsonUtils = require('../../lib/geojson_utils');
-var geoUtils = require('../../lib/geo_location_utils');
-var findExtremes = require('../../plots/cartesian/autorange').findExtremes;
-var BADNUM = require('../../constants/numerical').BADNUM;
-
-var calcMarkerSize = require('../scatter/calc').calcMarkerSize;
-var subTypes = require('../scatter/subtypes');
-var style = require('./style');
+import d3 from '@plotly/d3';
+import Lib from '../../lib/index.js';
+import { getTopojsonFeatures } from '../../lib/topojson_utils.js';
+import geoJsonUtils from '../../lib/geojson_utils.js';
+import geoUtils from '../../lib/geo_location_utils.js';
+import { findExtremes } from '../../plots/cartesian/autorange.js';
+import { BADNUM } from '../../constants/numerical.js';
+import { calcMarkerSize } from '../scatter/calc.js';
+import subTypes from '../scatter/subtypes.js';
+import style from './style.js';
 
 function plot(gd, geo, calcData) {
     var scatterLayer = geo.layers.frontplot.select('.scatterlayer');
@@ -113,7 +109,7 @@ function calcGeoJSON(calcTrace, fullLayout) {
     trace._extremes.lat = findExtremes(geoLayout.lataxis._ax, latArray, opts);
 }
 
-module.exports = {
+export default {
     calcGeoJSON: calcGeoJSON,
     plot: plot
 };

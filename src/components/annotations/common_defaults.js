@@ -1,10 +1,7 @@
-'use strict';
+import Lib from '../../lib/index.js';
+import Color from '../color/index.js';
 
-var Lib = require('../../lib');
-var Color = require('../color');
-
-// defaults common to 'annotations' and 'annotations3d'
-module.exports = function handleAnnotationCommonDefaults(annIn, annOut, fullLayout, coerce) {
+export default function handleAnnotationCommonDefaults(annIn, annOut, fullLayout, coerce) {
     coerce('opacity');
     var bgColor = coerce('bgcolor');
 
@@ -67,4 +64,4 @@ module.exports = function handleAnnotationCommonDefaults(annIn, annOut, fullLayo
     }
 
     coerce('captureevents', !!hoverText);
-};
+}

@@ -1,8 +1,6 @@
-'use strict';
-
-var constants = require('../constants/pixelated_image');
-var Drawing = require('../components/drawing');
-var Lib = require('../lib');
+import constants from '../constants/pixelated_image.js';
+import Drawing from '../components/drawing/index.js';
+import Lib from '../lib/index.js';
 
 var _supportsPixelated = null;
 
@@ -51,4 +49,4 @@ function supportsPixelatedImage() {
     return _supportsPixelated;
 }
 
-module.exports = supportsPixelatedImage;
+export default supportsPixelatedImage;

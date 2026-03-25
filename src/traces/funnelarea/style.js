@@ -1,11 +1,8 @@
-'use strict';
+import d3 from '@plotly/d3';
+import styleOne from '../pie/style_one.js';
+import { resizeText } from '../bar/uniform_text.js';
 
-var d3 = require('@plotly/d3');
-
-var styleOne = require('../pie/style_one');
-var resizeText = require('../bar/uniform_text').resizeText;
-
-module.exports = function style(gd) {
+export default function style(gd) {
     var s = gd._fullLayout._funnelarealayer.selectAll('.trace');
     resizeText(gd, s, 'funnelarea');
 
@@ -20,4 +17,4 @@ module.exports = function style(gd) {
             d3.select(this).call(styleOne, pt, trace, gd);
         });
     });
-};
+}

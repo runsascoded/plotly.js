@@ -1,7 +1,4 @@
-'use strict';
-
-
-module.exports = {
+export default {
     scattermode: {
         valType: 'enumerated',
         values: ['group', 'overlay'],

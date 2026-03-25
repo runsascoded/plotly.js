@@ -1,6 +1,4 @@
-'use strict';
-
-module.exports = {
+export default {
     // not really a 'subplot' attribute container,
     // but this is the flag we use to denote attributes that
     // support yaxis, yaxis2, yaxis3, ... counters

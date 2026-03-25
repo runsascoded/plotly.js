@@ -1,7 +1,4 @@
-'use strict';
-
-// more info: http://stackoverflow.com/questions/18531624/isplainobject-thing
-module.exports = function isPlainObject(obj) {
+export default function isPlainObject(obj) {
     // We need to be a little less strict in the `imagetest` container because
     // of how async image requests are handled.
     //
@@ -14,4 +11,4 @@ module.exports = function isPlainObject(obj) {
         Object.prototype.toString.call(obj) === '[object Object]' &&
         Object.getPrototypeOf(obj).hasOwnProperty('hasOwnProperty')
     );
-};
+}

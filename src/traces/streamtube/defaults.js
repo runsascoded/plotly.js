@@ -1,11 +1,8 @@
-'use strict';
+import Lib from '../../lib/index.js';
+import colorscaleDefaults from '../../components/colorscale/defaults.js';
+import attributes from './attributes.js';
 
-var Lib = require('../../lib');
-
-var colorscaleDefaults = require('../../components/colorscale/defaults');
-var attributes = require('./attributes');
-
-module.exports = function supplyDefaults(traceIn, traceOut, defaultColor, layout) {
+export default function supplyDefaults(traceIn, traceOut, defaultColor, layout) {
     function coerce(attr, dflt) {
         return Lib.coerce(traceIn, traceOut, attributes, attr, dflt);
     }
@@ -69,4 +66,4 @@ module.exports = function supplyDefaults(traceIn, traceOut, defaultColor, layout
     // x/y/z and u/v/w have matching lengths,
     // but they don't have to match with starts.(x|y|z)
     traceOut._length = null;
-};
+}

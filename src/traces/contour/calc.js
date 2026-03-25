@@ -1,15 +1,9 @@
-'use strict';
+import Colorscale from '../../components/colorscale/index.js';
+import heatmapCalc from '../heatmap/calc.js';
+import setContours from './set_contours.js';
+import endPlus from './end_plus.js';
 
-var Colorscale = require('../../components/colorscale');
-
-var heatmapCalc = require('../heatmap/calc');
-var setContours = require('./set_contours');
-var endPlus = require('./end_plus');
-
-// most is the same as heatmap calc, then adjust it
-// though a few things inside heatmap calc still look for
-// contour maps, because the makeBoundArray calls are too entangled
-module.exports = function calc(gd, trace) {
+export default function calc(gd, trace) {
     var cd = heatmapCalc(gd, trace);
 
     var zOut = cd[0].z;
@@ -40,4 +34,4 @@ module.exports = function calc(gd, trace) {
     Colorscale.calc(gd, trace, {vals: cVals, cLetter: 'z'});
 
     return cd;
-};
+}

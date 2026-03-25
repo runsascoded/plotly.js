@@ -1,22 +1,19 @@
-'use strict';
+import d3 from '@plotly/d3';
+import map1dArray from '../carpet/map_1d_array.js';
+import makepath from '../carpet/makepath.js';
+import Drawing from '../../components/drawing/index.js';
+import Lib from '../../lib/index.js';
+import makeCrossings from '../contour/make_crossings.js';
+import findAllPaths from '../contour/find_all_paths.js';
+import contourPlot from '../contour/plot.js';
+import constants from '../contour/constants.js';
+import convertToConstraints from '../contour/convert_to_constraints.js';
+import emptyPathinfo from '../contour/empty_pathinfo.js';
+import closeBoundaries from '../contour/close_boundaries.js';
+import lookupCarpet from '../carpet/lookup_carpetid.js';
+import axisAlignedLine from '../carpet/axis_aligned_line.js';
 
-var d3 = require('@plotly/d3');
-var map1dArray = require('../carpet/map_1d_array');
-var makepath = require('../carpet/makepath');
-var Drawing = require('../../components/drawing');
-var Lib = require('../../lib');
-
-var makeCrossings = require('../contour/make_crossings');
-var findAllPaths = require('../contour/find_all_paths');
-var contourPlot = require('../contour/plot');
-var constants = require('../contour/constants');
-var convertToConstraints = require('../contour/convert_to_constraints');
-var emptyPathinfo = require('../contour/empty_pathinfo');
-var closeBoundaries = require('../contour/close_boundaries');
-var lookupCarpet = require('../carpet/lookup_carpetid');
-var axisAlignedLine = require('../carpet/axis_aligned_line');
-
-module.exports = function plot(gd, plotinfo, cdcontours, contourcarpetLayer) {
+export default function plot(gd, plotinfo, cdcontours, contourcarpetLayer) {
     var xa = plotinfo.xaxis;
     var ya = plotinfo.yaxis;
 
@@ -105,7 +102,7 @@ module.exports = function plot(gd, plotinfo, cdcontours, contourcarpetLayer) {
         // Clip the boundary of the plot
         Drawing.setClipUrl(plotGroup, carpet._clipPathId, gd);
     });
-};
+}
 
 function mapPathinfo(pathinfo, map) {
     var i, j, k, pi, pedgepaths, ppaths, pedgepath, ppath, path;
@@ -168,7 +165,6 @@ function makeLinesAndLabels(plotgroup, pathinfo, gd, cd0, contours, plotinfo, ca
             [xLen, yLen],
             [0, yLen]
         ]];
-
 
         var labelData = [];
 

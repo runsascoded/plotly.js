@@ -1,7 +1,5 @@
-'use strict';
-
-var Color = require('../../color');
-var Lib = require('../../../lib');
+import Color from '../../color/index.js';
+import Lib from '../../../lib/index.js';
 
 function dfltLabelYanchor(isLine, labelTextPosition) {
     // If shape is a line, default y-anchor is 'bottom' (so that text is above line by default)
@@ -16,7 +14,7 @@ function dfltLabelYanchor(isLine, labelTextPosition) {
             : 'middle';
 }
 
-module.exports = function supplyDrawNewShapeDefaults(layoutIn, layoutOut, coerce) {
+export default function supplyDrawNewShapeDefaults(layoutIn, layoutOut, coerce) {
     coerce('newshape.visible');
     coerce('newshape.name');
     coerce('newshape.showlegend');
@@ -54,4 +52,4 @@ module.exports = function supplyDrawNewShapeDefaults(layoutIn, layoutOut, coerce
 
     coerce('activeshape.fillcolor');
     coerce('activeshape.opacity');
-};
+}

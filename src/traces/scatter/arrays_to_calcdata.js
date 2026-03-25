@@ -1,10 +1,6 @@
-'use strict';
+import Lib from '../../lib/index.js';
 
-var Lib = require('../../lib');
-
-
-// arrayOk attributes, merge them into calcdata array
-module.exports = function arraysToCalcdata(cd, trace) {
+export default function arraysToCalcdata(cd, trace) {
     // so each point knows which index it originally came from
     for(var i = 0; i < cd.length; i++) cd[i].i = i;
 
@@ -46,4 +42,4 @@ module.exports = function arraysToCalcdata(cd, trace) {
             Lib.mergeArray(markerGradient.color, cd, 'mgc');
         }
     }
-};
+}

@@ -1,9 +1,7 @@
-'use strict';
+import Lib from '../../lib/index.js';
+import layoutAttributes from './layout_attributes.js';
 
-var Lib = require('../../lib');
-var layoutAttributes = require('./layout_attributes');
-
-module.exports = function(layoutIn, layoutOut, fullData) {
+export default function(layoutIn, layoutOut, fullData) {
     var hasTraceType = false;
 
     function coerce(attr, dflt) {
@@ -24,4 +22,4 @@ module.exports = function(layoutIn, layoutOut, fullData) {
         coerce('waterfallgap', 0.2);
         coerce('waterfallgroupgap');
     }
-};
+}

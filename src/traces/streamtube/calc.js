@@ -1,7 +1,5 @@
-'use strict';
-
-var Lib = require('../../lib');
-var colorscaleCalc = require('../../components/colorscale/calc');
+import Lib from '../../lib/index.js';
+import colorscaleCalc from '../../components/colorscale/calc.js';
 
 function calc(gd, trace) {
     trace._len = Math.min(
@@ -239,7 +237,7 @@ function filter(arr, len) {
     return values;
 }
 
-module.exports = {
+export default {
     calc: calc,
     filter: filter,
     processGrid: processGrid

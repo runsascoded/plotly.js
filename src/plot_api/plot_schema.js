@@ -1,15 +1,12 @@
-'use strict';
-
-var Registry = require('../registry');
-var Lib = require('../lib');
-
-var baseAttributes = require('../plots/attributes');
-var baseLayoutAttributes = require('../plots/layout_attributes');
-var frameAttributes = require('../plots/frame_attributes');
-var animationAttributes = require('../plots/animation_attributes');
-var configAttributes = require('./plot_config').configAttributes;
-
-var editTypes = require('./edit_types');
+import Registry from '../registry.js';
+import Lib from '../lib/index.js';
+import baseAttributes from '../plots/attributes.js';
+import baseLayoutAttributes from '../plots/layout_attributes.js';
+import frameAttributes from '../plots/frame_attributes.js';
+import animationAttributes from '../plots/animation_attributes.js';
+import _plot_config from './plot_config.js';
+const { configAttributes } = _plot_config;
+import editTypes from './edit_types.js';
 
 var extendDeepAll = Lib.extendDeepAll;
 var isPlainObject = Lib.isPlainObject;
@@ -23,22 +20,12 @@ var ARRAY_ATTR_REGEXPS = '_arrayAttrRegexps';
 var DEPRECATED = '_deprecated';
 var UNDERSCORE_ATTRS = [IS_SUBPLOT_OBJ, IS_LINKED_TO_ARRAY, ARRAY_ATTR_REGEXPS, DEPRECATED];
 
-exports.IS_SUBPLOT_OBJ = IS_SUBPLOT_OBJ;
-exports.IS_LINKED_TO_ARRAY = IS_LINKED_TO_ARRAY;
-exports.DEPRECATED = DEPRECATED;
-exports.UNDERSCORE_ATTRS = UNDERSCORE_ATTRS;
+export { IS_SUBPLOT_OBJ };
+export { IS_LINKED_TO_ARRAY };
+export { DEPRECATED };
+export { UNDERSCORE_ATTRS };
 
-/** Outputs the full plotly.js plot schema
- *
- * @return {object}
- *  - defs
- *  - traces
- *  - layout
- *  - frames
- *  - animations
- *  - config
- */
-exports.get = function() {
+export var get = function() {
     var traces = {};
 
     Registry.allTypes.forEach(function(type) {
@@ -83,35 +70,7 @@ exports.get = function() {
     };
 };
 
-/**
- * Crawl the attribute tree, recursively calling a callback function
- *
- * @param {object} attrs
- *  The node of the attribute tree (e.g. the root) from which recursion originates
- * @param {Function} callback
- *  A callback function with the signature:
- *          @callback callback
- *          @param {object} attr an attribute
- *          @param {String} attrName name string
- *          @param {object[]} attrs all the attributes
- *          @param {Number} level the recursion level, 0 at the root
- *          @param {String} fullAttrString full attribute name (ie 'marker.line')
- * @param {Number} [specifiedLevel]
- *  The level in the tree, in order to let the callback function detect descend or backtrack,
- *  typically unsupplied (implied 0), just used by the self-recursive call.
- *  The necessity arises because the tree traversal is not controlled by callback return values.
- *  The decision to not use callback return values for controlling tree pruning arose from
- *  the goal of keeping the crawler backwards compatible. Observe that one of the pruning conditions
- *  precedes the callback call.
- * @param {string} [attrString]
- *  the path to the current attribute, as an attribute string (ie 'marker.line')
- *  typically unsupplied, but you may supply it if you want to disambiguate which attrs tree you
- *  are starting from
- *
- * @return {object} transformOut
- *  copy of transformIn that contains attribute defaults
- */
-exports.crawl = function(attrs, callback, specifiedLevel, attrString) {
+export var crawl = function(attrs, callback, specifiedLevel, attrString) {
     var level = specifiedLevel || 0;
     attrString = attrString || '';
 
@@ -123,36 +82,19 @@ exports.crawl = function(attrs, callback, specifiedLevel, attrString) {
         var fullAttrString = (attrString ? attrString + '.' : '') + attrName;
         callback(attr, attrName, attrs, level, fullAttrString);
 
-        if(exports.isValObject(attr)) return;
+        if(isValObject(attr)) return;
 
         if(isPlainObject(attr) && attrName !== 'impliedEdits') {
-            exports.crawl(attr, callback, level + 1, fullAttrString);
+            crawl(attr, callback, level + 1, fullAttrString);
         }
     });
 };
 
-/** Is object a value object (or a container object)?
- *
- * @param {object} obj
- * @return {boolean}
- *  returns true for a valid value object and
- *  false for tree nodes in the attribute hierarchy
- */
-exports.isValObject = function(obj) {
+export var isValObject = function(obj) {
     return obj && obj.valType !== undefined;
 };
 
-/**
- * Find all data array attributes in a given trace object - including
- * `arrayOk` attributes.
- *
- * @param {object} trace
- *  full trace object that contains a reference to `_module.attributes`
- *
- * @return {array} arrayAttributes
- *  list of array attributes for the given trace
- */
-exports.findArrayAttributes = function(trace) {
+export var findArrayAttributes = function(trace) {
     var arrayAttributes = [];
     var stack = [];
     var isArrayStack = [];
@@ -204,30 +146,15 @@ exports.findArrayAttributes = function(trace) {
 
     baseContainer = trace;
     baseAttrName = '';
-    exports.crawl(baseAttributes, callback);
+    crawl(baseAttributes, callback);
     if(trace._module && trace._module.attributes) {
-        exports.crawl(trace._module.attributes, callback);
+        crawl(trace._module.attributes, callback);
     }
 
     return arrayAttributes;
 };
 
-/*
- * Find the valObject for one attribute in an existing trace
- *
- * @param {object} trace
- *  full trace object that contains a reference to `_module.attributes`
- * @param {object} parts
- *  an array of parts, like ['transforms', 1, 'value']
- *  typically from nestedProperty(...).parts
- *
- * @return {object|false}
- *  the valObject for this attribute, or the last found parent
- *  in some cases the innermost valObject will not exist, for example
- *  `valType: 'any'` attributes where we might set a part of the attribute.
- *  In that case, stop at the deepest valObject we *do* find.
- */
-exports.getTraceValObject = function(trace, parts) {
+export var getTraceValObject = function(trace, parts) {
     var head = parts[0];
     var i = 1; // index to start recursing from
     var moduleAttrs, valObject;
@@ -255,20 +182,7 @@ exports.getTraceValObject = function(trace, parts) {
     return recurseIntoValObject(valObject, parts, i);
 };
 
-/*
- * Find the valObject for one layout attribute
- *
- * @param {array} parts
- *  an array of parts, like ['annotations', 1, 'x']
- *  typically from nestedProperty(...).parts
- *
- * @return {object|false}
- *  the valObject for this attribute, or the last found parent
- *  in some cases the innermost valObject will not exist, for example
- *  `valType: 'any'` attributes where we might set a part of the attribute.
- *  In that case, stop at the deepest valObject we *do* find.
- */
-exports.getLayoutValObject = function(fullLayout, parts) {
+export var getLayoutValObject = function(fullLayout, parts) {
     var valObject = layoutHeadAttr(fullLayout, parts[0]);
 
     return recurseIntoValObject(valObject, parts, 1);
@@ -399,7 +313,7 @@ function getTraceAttributes(type) {
     var copyModuleAttributes = extendDeepAll({}, _module.attributes);
 
     // prune global-level trace attributes that are already defined in a trace
-    exports.crawl(copyModuleAttributes, function(attr, attrName, attrs, level, fullAttrString) {
+    crawl(copyModuleAttributes, function(attr, attrName, attrs, level, fullAttrString) {
         nestedProperty(copyBaseAttributes, fullAttrString).set(undefined);
         // Prune undefined attributes
         if(attr === undefined) nestedProperty(copyModuleAttributes, fullAttrString).set(undefined);
@@ -453,8 +367,8 @@ function getTraceAttributes(type) {
 
     // drop anim:true in non-animatable modules
     if(!_module.animatable) {
-        exports.crawl(out, function(attr) {
-            if(exports.isValObject(attr) && 'anim' in attr) {
+        crawl(out, function(attr) {
+            if(isValObject(attr) && 'anim' in attr) {
                 delete attr.anim;
             }
         });
@@ -556,7 +470,7 @@ function mergeValTypeAndRole(attrs) {
     }
 
     function callback(attr, attrName, attrs) {
-        if(exports.isValObject(attr)) {
+        if(isValObject(attr)) {
             if(attr.arrayOk === true || attr.valType === 'data_array') {
                 // all 'arrayOk' and 'data_array' attrs have a corresponding 'src' attr
                 attrs[attrName + 'src'] = makeSrcAttr(attrName);
@@ -567,7 +481,7 @@ function mergeValTypeAndRole(attrs) {
         }
     }
 
-    exports.crawl(attrs, callback);
+    crawl(attrs, callback);
 }
 
 function formatArrayContainers(attrs) {
@@ -585,7 +499,7 @@ function formatArrayContainers(attrs) {
         attrs[attrName].role = 'object';
     }
 
-    exports.crawl(attrs, callback);
+    crawl(attrs, callback);
 }
 
 // this can take around 10ms and should only be run from PlotSchema.get(),
@@ -611,7 +525,6 @@ function stringify(attrs) {
     walk(attrs);
 }
 
-
 function handleBasePlotModule(layoutAttributes, _module, astr) {
     var np = nestedProperty(layoutAttributes, astr);
     var attrs = extendDeepAll({}, _module.layoutAttributes);
@@ -625,3 +538,5 @@ function insertAttrs(baseAttrs, newAttrs, astr) {
 
     np.set(extendDeepAll(np.get() || {}, newAttrs));
 }
+
+export default { get, crawl, isValObject, findArrayAttributes, getTraceValObject, getLayoutValObject, IS_SUBPLOT_OBJ, IS_LINKED_TO_ARRAY, DEPRECATED, UNDERSCORE_ATTRS };

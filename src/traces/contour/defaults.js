@@ -1,16 +1,13 @@
-'use strict';
+import Lib from '../../lib/index.js';
+import handleXYZDefaults from '../heatmap/xyz_defaults.js';
+import handlePeriodDefaults from '../scatter/period_defaults.js';
+import handleConstraintDefaults from './constraint_defaults.js';
+import handleContoursDefaults from './contours_defaults.js';
+import handleStyleDefaults from './style_defaults.js';
+import handleHeatmapLabelDefaults from '../heatmap/label_defaults.js';
+import attributes from './attributes.js';
 
-var Lib = require('../../lib');
-
-var handleXYZDefaults = require('../heatmap/xyz_defaults');
-var handlePeriodDefaults = require('../scatter/period_defaults');
-var handleConstraintDefaults = require('./constraint_defaults');
-var handleContoursDefaults = require('./contours_defaults');
-var handleStyleDefaults = require('./style_defaults');
-var handleHeatmapLabelDefaults = require('../heatmap/label_defaults');
-var attributes = require('./attributes');
-
-module.exports = function supplyDefaults(traceIn, traceOut, defaultColor, layout) {
+export default function supplyDefaults(traceIn, traceOut, defaultColor, layout) {
     function coerce(attr, dflt) {
         return Lib.coerce(traceIn, traceOut, attributes, attr, dflt);
     }
@@ -49,4 +46,4 @@ module.exports = function supplyDefaults(traceIn, traceOut, defaultColor, layout
         handleHeatmapLabelDefaults(coerce, layout);
     }
     coerce('zorder');
-};
+}

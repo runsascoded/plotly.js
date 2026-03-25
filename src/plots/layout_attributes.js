@@ -1,12 +1,10 @@
-'use strict';
-
-var fontAttrs = require('./font_attributes');
-var animationAttrs = require('./animation_attributes');
-var colorAttrs = require('../components/color/attributes');
-var drawNewShapeAttrs = require('../components/shapes/draw_newshape/attributes');
-var drawNewSelectionAttrs = require('../components/selections/draw_newselection/attributes');
-var padAttrs = require('./pad_attributes');
-var extendFlat = require('../lib/extend').extendFlat;
+import fontAttrs from './font_attributes.js';
+import animationAttrs from './animation_attributes.js';
+import colorAttrs from '../components/color/attributes.js';
+import drawNewShapeAttrs from '../components/shapes/draw_newshape/attributes.js';
+import drawNewSelectionAttrs from '../components/selections/draw_newselection/attributes.js';
+import padAttrs from './pad_attributes.js';
+import { extendFlat } from '../lib/extend.js';
 
 var globalFont = fontAttrs({
     editType: 'calc',
@@ -20,7 +18,7 @@ globalFont.family.dflt = '"Open Sans", verdana, arial, sans-serif';
 globalFont.size.dflt = 12;
 globalFont.color.dflt = colorAttrs.defaultLine;
 
-module.exports = {
+export default {
     font: globalFont,
     title: {
         text: {

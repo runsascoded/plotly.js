@@ -1,15 +1,4 @@
-'use strict';
-
-/**
- * Creates a set of padding attributes.
- *
- * @param {object} opts
- *   @param {string} editType:
- *     the editType for all pieces of this padding definition
- *
- * @return {object} attributes object containing {t, r, b, l} as specified
- */
-module.exports = function(opts) {
+export default function(opts) {
     var editType = opts.editType;
     return {
         t: {
@@ -38,4 +27,4 @@ module.exports = function(opts) {
         },
         editType: editType
     };
-};
+}

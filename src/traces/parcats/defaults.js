@@ -1,14 +1,11 @@
-'use strict';
-
-var Lib = require('../../lib');
-var hasColorscale = require('../../components/colorscale/helpers').hasColorscale;
-var colorscaleDefaults = require('../../components/colorscale/defaults');
-var handleDomainDefaults = require('../../plots/domain').defaults;
-var handleArrayContainerDefaults = require('../../plots/array_container_defaults');
-
-var attributes = require('./attributes');
-var mergeLength = require('../parcoords/merge_length');
-var isTypedArraySpec = require('../../lib/array').isTypedArraySpec;
+import Lib from '../../lib/index.js';
+import { hasColorscale } from '../../components/colorscale/helpers.js';
+import colorscaleDefaults from '../../components/colorscale/defaults.js';
+import { defaults as handleDomainDefaults } from '../../plots/domain.js';
+import handleArrayContainerDefaults from '../../plots/array_container_defaults.js';
+import attributes from './attributes.js';
+import mergeLength from '../parcoords/merge_length.js';
+import { isTypedArraySpec } from '../../lib/array.js';
 
 function handleLineDefaults(traceIn, traceOut, defaultColor, layout, coerce) {
     coerce('line.shape');
@@ -68,7 +65,7 @@ function dimensionDefaults(dimensionIn, dimensionOut) {
     }
 }
 
-module.exports = function supplyDefaults(traceIn, traceOut, defaultColor, layout) {
+export default function supplyDefaults(traceIn, traceOut, defaultColor, layout) {
     function coerce(attr, dflt) {
         return Lib.coerce(traceIn, traceOut, attributes, attr, dflt);
     }
@@ -110,4 +107,4 @@ module.exports = function supplyDefaults(traceIn, traceOut, defaultColor, layout
             size: Math.round(layoutFont.size / 1.2)
         }
     });
-};
+}

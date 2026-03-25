@@ -1,27 +1,13 @@
-'use strict';
-
-var Lib = require('../lib');
+import Lib from '../lib/index.js';
+import PlotSchema from './plot_schema.js';
+import Plots from '../plots/plots.js';
+import plotAttributes from '../plots/attributes.js';
+import Template from './plot_template.js';
+import _plot_config from './plot_config.js';
+const { dfltConfig } = _plot_config;
 var isPlainObject = Lib.isPlainObject;
-var PlotSchema = require('./plot_schema');
-var Plots = require('../plots/plots');
-var plotAttributes = require('../plots/attributes');
-var Template = require('./plot_template');
-var dfltConfig = require('./plot_config').dfltConfig;
 
-/**
- * Plotly.makeTemplate: create a template off an existing figure to reuse
- * style attributes on other figures.
- *
- * Note: separated from the rest of templates because otherwise we get circular
- * references due to PlotSchema.
- *
- * @param {object|DOM element|string} figure: The figure to base the template on
- *     should contain a trace array `figure.data`
- *     and a layout object `figure.layout`
- * @returns {object} template: the extracted template - can then be used as
- *     `layout.template` in another figure.
- */
-exports.makeTemplate = function(figure) {
+export var makeTemplate = function(figure) {
     figure = Lib.isPlainObject(figure) ? figure : Lib.getGraphDiv(figure);
     figure = Lib.extendDeep({_context: dfltConfig}, {data: figure.data, layout: figure.layout});
     Plots.supplyDefaults(figure);
@@ -257,25 +243,7 @@ function getNextPath(parent, key, path) {
     return nextPath;
 }
 
-/**
- * validateTemplate: Test for consistency between the given figure and
- * a template, either already included in the figure or given separately.
- * Note that not every issue we identify here is necessarily a problem,
- * it depends on what you're using the template for.
- *
- * @param {object|DOM element} figure: the plot, with {data, layout} members,
- *     to test the template against
- * @param {Optional(object)} template: the template, with its own {data, layout},
- *     to test. If omitted, we will look for a template already attached as the
- *     plot's `layout.template` attribute.
- *
- * @returns {array} array of error objects each containing:
- *  - {string} code
- *      error code ('missing', 'unused', 'reused', 'noLayout', 'noData')
- *  - {string} msg
- *      a full readable description of the issue.
- */
-exports.validateTemplate = function(figureIn, template) {
+export var validateTemplate = function(figureIn, template) {
     var figure = Lib.extendDeep({}, {
         _context: dfltConfig,
         data: figureIn.data,
@@ -449,3 +417,5 @@ function format(opts) {
 
     return opts;
 }
+
+export default { makeTemplate, validateTemplate };

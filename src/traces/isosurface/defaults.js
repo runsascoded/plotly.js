@@ -1,9 +1,7 @@
-'use strict';
-
-var Lib = require('../../lib');
-var Registry = require('../../registry');
-var attributes = require('./attributes');
-var colorscaleDefaults = require('../../components/colorscale/defaults');
+import Lib from '../../lib/index.js';
+import Registry from '../../registry.js';
+import attributes from './attributes.js';
+import colorscaleDefaults from '../../components/colorscale/defaults.js';
 
 function supplyDefaults(traceIn, traceOut, defaultColor, layout) {
     function coerce(attr, dflt) {
@@ -104,7 +102,7 @@ function supplyIsoDefaults(traceIn, traceOut, defaultColor, layout, coerce) {
     traceOut._length = null;
 }
 
-module.exports = {
+export default {
     supplyDefaults: supplyDefaults,
     supplyIsoDefaults: supplyIsoDefaults
 };

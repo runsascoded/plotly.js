@@ -1,18 +1,8 @@
-'use strict';
+import Registry from '../registry.js';
+import _constants from './cartesian/constants.js';
+const { SUBPLOT_PATTERN } = _constants;
 
-var Registry = require('../registry');
-var SUBPLOT_PATTERN = require('./cartesian/constants').SUBPLOT_PATTERN;
-
-/**
- * Get calcdata trace(s) associated with a given subplot
- *
- * @param {array} calcData: as in gd.calcdata
- * @param {string} type: subplot type
- * @param {string} subplotId: subplot id to look for
- *
- * @return {array} array of calcdata traces
- */
-exports.getSubplotCalcData = function(calcData, type, subplotId) {
+export var getSubplotCalcData = function(calcData, type, subplotId) {
     var basePlotModule = Registry.subplotsRegistry[type];
     if(!basePlotModule) return [];
 
@@ -28,21 +18,8 @@ exports.getSubplotCalcData = function(calcData, type, subplotId) {
 
     return subplotCalcData;
 };
-/**
- * Get calcdata trace(s) that can be plotted with a given module
- * NOTE: this isn't necessarily just exactly matching trace type,
- * if multiple trace types use the same plotting routine, they will be
- * collected here.
- * In order to not plot the same thing multiple times, we return two arrays,
- * the calcdata we *will* plot with this module, and the ones we *won't*
- *
- * @param {array} calcdata: as in gd.calcdata
- * @param {object|string|fn} arg1:
- *  the plotting module, or its name, or its plot method
- * @param {int} arg2: (optional) zorder to filter on
- * @return {array[array]} [foundCalcdata, remainingCalcdata]
- */
-exports.getModuleCalcData = function(calcdata, arg1, arg2) {
+
+export var getModuleCalcData = function(calcdata, arg1, arg2) {
     var moduleCalcData = [];
     var remainingCalcData = [];
 
@@ -82,17 +59,7 @@ exports.getModuleCalcData = function(calcdata, arg1, arg2) {
     return [moduleCalcData, remainingCalcData];
 };
 
-/**
- * Get the data trace(s) associated with a given subplot.
- *
- * @param {array} data  plotly full data array.
- * @param {string} type subplot type to look for.
- * @param {string} subplotId subplot id to look for.
- *
- * @return {array} list of trace objects.
- *
- */
-exports.getSubplotData = function getSubplotData(data, type, subplotId) {
+export var getSubplotData = function getSubplotData(data, type, subplotId) {
     if(!Registry.subplotsRegistry[type]) return [];
 
     var attr = Registry.subplotsRegistry[type].attr;
@@ -107,3 +74,5 @@ exports.getSubplotData = function getSubplotData(data, type, subplotId) {
 
     return subplotData;
 };
+
+export default { getSubplotCalcData, getModuleCalcData, getSubplotData };

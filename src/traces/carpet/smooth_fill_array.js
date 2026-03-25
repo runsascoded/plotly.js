@@ -1,12 +1,4 @@
-'use strict';
-
-/*
- * Fill in a 1D array via linear interpolation. This *is* the basis, so we
- * don't have to scale this by some basis as we do for the 2D version. That
- * makes this much simpler. Just loop over it and do the best we can to fill
- * the array.
- */
-module.exports = function smoothFillArray(data) {
+export default function smoothFillArray(data) {
     var i, i0, i1;
     var n = data.length;
 
@@ -87,4 +79,4 @@ module.exports = function smoothFillArray(data) {
     }
 
     return data;
-};
+}

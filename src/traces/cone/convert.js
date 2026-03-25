@@ -1,13 +1,11 @@
-'use strict';
-
-var conePlot = require('../../../stackgl_modules').gl_cone3d;
-var createConeMesh = require('../../../stackgl_modules').gl_cone3d.createConeMesh;
-
-var simpleMap = require('../../lib').simpleMap;
-var parseColorScale = require('../../lib/gl_format_color').parseColorScale;
-var extractOpts = require('../../components/colorscale').extractOpts;
-var isArrayOrTypedArray = require('../../lib').isArrayOrTypedArray;
-var zip3 = require('../../plots/gl3d/zip3');
+import { gl_cone3d as conePlot } from '../../../stackgl_modules/index.js';
+import { simpleMap } from '../../lib/index.js';
+import { parseColorScale } from '../../lib/gl_format_color.js';
+import { extractOpts } from '../../components/colorscale/index.js';
+import { isArrayOrTypedArray } from '../../lib/index.js';
+import zip3 from '../../plots/gl3d/zip3.js';
+import { gl_cone3d as _req0 } from '../../../stackgl_modules/index.js';
+var createConeMesh = _req0.createConeMesh;
 
 function Cone(scene, uid) {
     this.scene = scene;
@@ -79,7 +77,6 @@ function convert(scene, trace) {
     coneOpts.vertexIntensityBounds = [cOpts.min / trace._normMax, cOpts.max / trace._normMax];
     coneOpts.coneOffset = anchor2coneOffset[trace.anchor];
 
-
     var sizemode = trace.sizemode;
     if(sizemode === 'scaled') {
         // unitless sizeref
@@ -140,4 +137,4 @@ function createConeTrace(scene, data) {
     return cone;
 }
 
-module.exports = createConeTrace;
+export default createConeTrace;

@@ -1,7 +1,5 @@
-'use strict';
-
-var d3 = require('@plotly/d3');
-var Lib = require('../../lib');
+import d3 from '@plotly/d3';
+import Lib from '../../lib/index.js';
 
 function resizeText(gd, gTrace, traceType) {
     var fullLayout = gd._fullLayout;
@@ -70,7 +68,7 @@ function getMinKey(traceType) {
     return '_' + traceType + 'Text_minsize';
 }
 
-module.exports = {
+export default {
     recordMinTextSize: recordMinTextSize,
     clearMinTextSize: clearMinTextSize,
     resizeText: resizeText

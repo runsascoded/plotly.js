@@ -1,6 +1,4 @@
-'use strict';
-
-var str2RGBArray = require('../../../lib/str2rgbarray');
+import str2RGBArray from '../../../lib/str2rgbarray.js';
 
 var AXES_NAMES = ['xaxis', 'yaxis', 'zaxis'];
 
@@ -38,4 +36,4 @@ function createSpikeOptions(layout) {
     return result;
 }
 
-module.exports = createSpikeOptions;
+export default createSpikeOptions;

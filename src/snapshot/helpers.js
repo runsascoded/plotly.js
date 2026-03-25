@@ -1,8 +1,6 @@
-'use strict';
+import Registry from '../registry.js';
 
-var Registry = require('../registry');
-
-exports.getDelay = function(fullLayout) {
+export var getDelay = function(fullLayout) {
     if(!fullLayout._has) return 0;
 
     return (
@@ -12,31 +10,31 @@ exports.getDelay = function(fullLayout) {
     ) ? 500 : 0;
 };
 
-exports.getRedrawFunc = function(gd) {
+export var getRedrawFunc = function(gd) {
     return function() {
         Registry.getComponentMethod('colorbar', 'draw')(gd);
     };
 };
 
-exports.encodeSVG = function(svg) {
+export var encodeSVG = function(svg) {
     return 'data:image/svg+xml,' + encodeURIComponent(svg);
 };
 
-exports.encodeJSON = function(json) {
+export var encodeJSON = function(json) {
     return 'data:application/json,' + encodeURIComponent(json);
 };
 
 var DOM_URL = window.URL || window.webkitURL;
 
-exports.createObjectURL = function(blob) {
+export var createObjectURL = function(blob) {
     return DOM_URL.createObjectURL(blob);
 };
 
-exports.revokeObjectURL = function(url) {
+export var revokeObjectURL = function(url) {
     return DOM_URL.revokeObjectURL(url);
 };
 
-exports.createBlob = function(url, format) {
+export var createBlob = function(url, format) {
     if(format === 'svg') {
         return new window.Blob([url], {type: 'image/svg+xml;charset=utf-8'});
     } else if(format === 'full-json') {
@@ -47,7 +45,7 @@ exports.createBlob = function(url, format) {
     }
 };
 
-exports.octetStream = function(s) {
+export var octetStream = function(s) {
     document.location.href = 'data:application/octet-stream' + s;
 };
 
@@ -62,4 +60,6 @@ function fixBinary(b) {
     return buf;
 }
 
-exports.IMAGE_URL_PREFIX = /^data:image\/\w+;base64,/;
+export var IMAGE_URL_PREFIX = /^data:image\/\w+;base64,/;
+
+export default { getDelay, getRedrawFunc, encodeSVG, encodeJSON, createObjectURL, revokeObjectURL, createBlob, octetStream, IMAGE_URL_PREFIX };

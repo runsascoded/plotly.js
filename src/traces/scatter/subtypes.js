@@ -1,9 +1,7 @@
-'use strict';
+import Lib from '../../lib/index.js';
+import { isTypedArraySpec } from '../../lib/array.js';
 
-var Lib = require('../../lib');
-var isTypedArraySpec = require('../../lib/array').isTypedArraySpec;
-
-module.exports = {
+export default {
     hasLines: function(trace) {
         return trace.visible && trace.mode &&
             trace.mode.indexOf('lines') !== -1;

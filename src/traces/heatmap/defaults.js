@@ -1,15 +1,12 @@
-'use strict';
+import Lib from '../../lib/index.js';
+import handleXYZDefaults from './xyz_defaults.js';
+import handleHeatmapLabelDefaults from './label_defaults.js';
+import handlePeriodDefaults from '../scatter/period_defaults.js';
+import handleStyleDefaults from './style_defaults.js';
+import colorscaleDefaults from '../../components/colorscale/defaults.js';
+import attributes from './attributes.js';
 
-var Lib = require('../../lib');
-
-var handleXYZDefaults = require('./xyz_defaults');
-var handleHeatmapLabelDefaults = require('./label_defaults');
-var handlePeriodDefaults = require('../scatter/period_defaults');
-var handleStyleDefaults = require('./style_defaults');
-var colorscaleDefaults = require('../../components/colorscale/defaults');
-var attributes = require('./attributes');
-
-module.exports = function supplyDefaults(traceIn, traceOut, defaultColor, layout) {
+export default function supplyDefaults(traceIn, traceOut, defaultColor, layout) {
     function coerce(attr, dflt) {
         return Lib.coerce(traceIn, traceOut, attributes, attr, dflt);
     }
@@ -37,4 +34,4 @@ module.exports = function supplyDefaults(traceIn, traceOut, defaultColor, layout
 
     colorscaleDefaults(traceIn, traceOut, layout, coerce, { prefix: '', cLetter: 'z' });
     coerce('zorder');
-};
+}

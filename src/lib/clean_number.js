@@ -1,17 +1,11 @@
-'use strict';
-
-var isNumeric = require('fast-isnumeric');
-
-var BADNUM = require('../constants/numerical').BADNUM;
+import isNumeric from 'fast-isnumeric';
+import _numerical from '../constants/numerical.js';
+const { BADNUM } = _numerical;
 
 // precompile for speed
 var JUNK = /^['"%,$#\s']+|[, ]|['"%,$#\s']+$/g;
 
-/**
- * cleanNumber: remove common leading and trailing cruft
- * Always returns either a number or BADNUM.
- */
-module.exports = function cleanNumber(v) {
+export default function cleanNumber(v) {
     if(typeof v === 'string') {
         v = v.replace(JUNK, '');
     }
@@ -19,4 +13,4 @@ module.exports = function cleanNumber(v) {
     if(isNumeric(v)) return Number(v);
 
     return BADNUM;
-};
+}

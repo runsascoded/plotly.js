@@ -1,6 +1,4 @@
-'use strict';
-
-module.exports = {
+export default {
     // padding in pixels around text
     TEXTPAD: 3,
     // 'value' and 'label' are not really necessary for bar traces,

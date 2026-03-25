@@ -1,9 +1,6 @@
-'use strict';
-
-var isNumeric = require('fast-isnumeric');
-var tinycolor = require('tinycolor2');
-
-var Color = require('../../components/color');
+import isNumeric from 'fast-isnumeric';
+import tinycolor from 'tinycolor2';
+import Color from '../../components/color/index.js';
 
 var extendedColorWayList = {};
 
@@ -166,7 +163,7 @@ function generateExtendedColors(colorList, extendedColorWays) {
     return colors;
 }
 
-module.exports = {
+export default {
     calc: calc,
     crossTraceCalc: crossTraceCalc,
 

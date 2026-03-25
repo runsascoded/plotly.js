@@ -1,9 +1,7 @@
-'use strict';
+import heatmapHover from '../heatmap/hover.js';
+import { hoverLabelText } from '../../plots/cartesian/axes.js';
 
-var heatmapHover = require('../heatmap/hover');
-var hoverLabelText = require('../../plots/cartesian/axes').hoverLabelText;
-
-module.exports = function hoverPoints(pointData, xval, yval, hovermode, opts) {
+export default function hoverPoints(pointData, xval, yval, hovermode, opts) {
     var pts = heatmapHover(pointData, xval, yval, hovermode, opts);
 
     if(!pts) return;
@@ -21,4 +19,4 @@ module.exports = function hoverPoints(pointData, xval, yval, hovermode, opts) {
     pointData.yLabel = hoverLabelText(pointData.ya, [yRange[0], yRange[1]], trace.yhoverformat);
 
     return pts;
-};
+}

@@ -1,17 +1,15 @@
-'use strict';
-
-var d3 = require('@plotly/d3');
-var Color = require('../../components/color');
-var Drawing = require('../../components/drawing');
-var Lib = require('../../lib');
-var Registry = require('../../registry');
-
-var resizeText = require('./uniform_text').resizeText;
-var attributes = require('./attributes');
+import d3 from '@plotly/d3';
+import Color from '../../components/color/index.js';
+import Drawing from '../../components/drawing/index.js';
+import Lib from '../../lib/index.js';
+import Registry from '../../registry.js';
+import _uniform_text from './uniform_text.js';
+const { resizeText } = _uniform_text;
+import attributes from './attributes.js';
+import helpers from './helpers.js';
 var attributeTextFont = attributes.textfont;
 var attributeInsideTextFont = attributes.insidetextfont;
 var attributeOutsideTextFont = attributes.outsidetextfont;
-var helpers = require('./helpers');
 
 function style(gd) {
     var s = d3.select(gd).selectAll('g[class^="barlayer"]').selectAll('g.trace');
@@ -185,7 +183,7 @@ function getBarColor(cd, trace) {
     return cd.mcc || cd.mc || trace.marker.color;
 }
 
-module.exports = {
+export default {
     style: style,
     styleTextPoints: styleTextPoints,
     styleOnSelect: styleOnSelect,

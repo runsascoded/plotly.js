@@ -1,8 +1,6 @@
-'use strict';
-
 var perStackAttrs = ['orientation', 'groupnorm', 'stackgaps'];
 
-module.exports = function handleStackDefaults(traceIn, traceOut, layout, coerce) {
+export default function handleStackDefaults(traceIn, traceOut, layout, coerce) {
     var stackOpts = layout._scatterStackOpts;
 
     var stackGroup = coerce('stackgroup');
@@ -92,4 +90,4 @@ module.exports = function handleStackDefaults(traceIn, traceOut, layout, coerce)
         }
         return groupOpts;
     }
-};
+}

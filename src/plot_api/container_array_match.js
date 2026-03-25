@@ -1,21 +1,6 @@
-'use strict';
+import Registry from '../registry.js';
 
-var Registry = require('../registry');
-
-/*
- * containerArrayMatch: does this attribute string point into a
- * layout container array?
- *
- * @param {String} astr: an attribute string, like *annotations[2].text*
- *
- * @returns {Object | false} Returns false if `astr` doesn't match a container
- *  array. If it does, returns:
- *     {array: {String}, index: {Number}, property: {String}}
- *  ie the attribute string for the array, the index within the array (or ''
- *  if the whole array) and the property within that (or '' if the whole array
- *  or the whole object)
- */
-module.exports = function containerArrayMatch(astr) {
+export default function containerArrayMatch(astr) {
     var rootContainers = Registry.layoutArrayContainers;
     var regexpContainers = Registry.layoutArrayRegexes;
     var rootPart = astr.split('[')[0];
@@ -44,4 +29,4 @@ module.exports = function containerArrayMatch(astr) {
     if(!match) return false;
 
     return {array: arrayStr, index: Number(match[1]), property: match[3] || ''};
-};
+}

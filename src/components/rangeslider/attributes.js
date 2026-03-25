@@ -1,8 +1,6 @@
-'use strict';
+import colorAttributes from '../color/attributes.js';
 
-var colorAttributes = require('../color/attributes');
-
-module.exports = {
+export default {
     bgcolor: {
         valType: 'color',
         dflt: colorAttributes.background,

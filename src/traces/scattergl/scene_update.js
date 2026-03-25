@@ -1,9 +1,6 @@
-'use strict';
+import Lib from '../../lib/index.js';
 
-var Lib = require('../../lib');
-
-// make sure scene exists on subplot, return it
-module.exports = function sceneUpdate(gd, subplot) {
+export default function sceneUpdate(gd, subplot) {
     var scene = subplot._scene;
 
     var resetOpts = {
@@ -145,4 +142,4 @@ module.exports = function sceneUpdate(gd, subplot) {
     }
 
     return scene;
-};
+}

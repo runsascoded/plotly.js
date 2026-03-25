@@ -1,14 +1,15 @@
-'use strict';
+import annAttrs from '../annotations/attributes.js';
+import _attributes from '../../traces/scatter/attributes.js';
+const { line: scatterLineAttrs } = _attributes;
+import { dash } from '../drawing/attributes.js';
+import _extend from '../../lib/extend.js';
+const { extendFlat } = _extend;
+import _editTypes from '../../plot_api/edit_types.js';
+const { overrideAll } = _editTypes;
+import { templatedArray } from '../../plot_api/plot_template.js';
+import axisPlaceableObjs from '../../constants/axis_placeable_objects.js';
 
-var annAttrs = require('../annotations/attributes');
-var scatterLineAttrs = require('../../traces/scatter/attributes').line;
-var dash = require('../drawing/attributes').dash;
-var extendFlat = require('../../lib/extend').extendFlat;
-var overrideAll = require('../../plot_api/edit_types').overrideAll;
-var templatedArray = require('../../plot_api/plot_template').templatedArray;
-var axisPlaceableObjs = require('../../constants/axis_placeable_objects');
-
-module.exports = overrideAll(templatedArray('selection', {
+export default overrideAll(templatedArray('selection', {
     type: {
         valType: 'enumerated',
         values: ['rect', 'path'],

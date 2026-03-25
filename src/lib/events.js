@@ -1,6 +1,4 @@
-'use strict';
-
-var EventEmitter = require('events').EventEmitter;
+import { EventEmitter } from 'events';
 
 var Events = {
 
@@ -145,4 +143,4 @@ var Events = {
 
 };
 
-module.exports = Events;
+export default Events;

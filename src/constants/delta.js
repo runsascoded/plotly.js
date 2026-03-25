@@ -1,6 +1,4 @@
-'use strict';
-
-module.exports = {
+export default {
     INCREASING: {
         COLOR: '#3D9970',
         SYMBOL: '▲'

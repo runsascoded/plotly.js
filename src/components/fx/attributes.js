@@ -1,10 +1,9 @@
-'use strict';
+import fontAttrs from '../../plots/font_attributes.js';
+import _layout_attributes from './layout_attributes.js';
+const { hoverlabel: hoverLabelAttrs } = _layout_attributes;
+import { extendFlat } from '../../lib/extend.js';
 
-var fontAttrs = require('../../plots/font_attributes');
-var hoverLabelAttrs = require('./layout_attributes').hoverlabel;
-var extendFlat = require('../../lib/extend').extendFlat;
-
-module.exports = {
+export default {
     hoverlabel: {
         bgcolor: extendFlat({}, hoverLabelAttrs.bgcolor, {
             arrayOk: true,

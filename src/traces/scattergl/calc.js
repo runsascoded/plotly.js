@@ -1,24 +1,19 @@
-'use strict';
-
-var cluster = require('@plotly/point-cluster');
-
-var Lib = require('../../lib');
-var AxisIDs = require('../../plots/cartesian/axis_ids');
-var findExtremes = require('../../plots/cartesian/autorange').findExtremes;
-var alignPeriod = require('../../plots/cartesian/align_period');
-
-var scatterCalc = require('../scatter/calc');
+import cluster from '@plotly/point-cluster';
+import Lib from '../../lib/index.js';
+import AxisIDs from '../../plots/cartesian/axis_ids.js';
+import { findExtremes } from '../../plots/cartesian/autorange.js';
+import alignPeriod from '../../plots/cartesian/align_period.js';
+import scatterCalc from '../scatter/calc.js';
+import calcColorscale from '../scatter/colorscale_calc.js';
+import convert from './convert.js';
+import sceneUpdate from './scene_update.js';
+import { BADNUM } from '../../constants/numerical.js';
+import { TOO_MANY_POINTS } from './constants.js';
 var calcMarkerSize = scatterCalc.calcMarkerSize;
 var calcAxisExpansion = scatterCalc.calcAxisExpansion;
 var setFirstScatter = scatterCalc.setFirstScatter;
-var calcColorscale = require('../scatter/colorscale_calc');
-var convert = require('./convert');
-var sceneUpdate = require('./scene_update');
 
-var BADNUM = require('../../constants/numerical').BADNUM;
-var TOO_MANY_POINTS = require('./constants').TOO_MANY_POINTS;
-
-module.exports = function calc(gd, trace) {
+export default function calc(gd, trace) {
     var fullLayout = gd._fullLayout;
     var xa = trace._xA = AxisIDs.getFromId(gd, trace.xaxis, 'x');
     var ya = trace._yA = AxisIDs.getFromId(gd, trace.yaxis, 'y');
@@ -129,7 +124,7 @@ module.exports = function calc(gd, trace) {
     scene.count++;
 
     return [{x: false, y: false, t: stash, trace: trace}];
-};
+}
 
 function expandForErrorBars(trace, ax, opts) {
     var extremes = trace._extremes[ax._id];

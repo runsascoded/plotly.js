@@ -1,18 +1,15 @@
-'use strict';
-
-var Drawing = require('../../components/drawing');
-var numConstants = require('../../constants/numerical');
+import Drawing from '../../components/drawing/index.js';
+import numConstants from '../../constants/numerical.js';
+import Lib from '../../lib/index.js';
+import constants from './constants.js';
 var BADNUM = numConstants.BADNUM;
 var LOG_CLIP = numConstants.LOG_CLIP;
 var LOG_CLIP_PLUS = LOG_CLIP + 0.5;
 var LOG_CLIP_MINUS = LOG_CLIP - 0.5;
-var Lib = require('../../lib');
 var segmentsIntersect = Lib.segmentsIntersect;
 var constrain = Lib.constrain;
-var constants = require('./constants');
 
-
-module.exports = function linePoints(d, opts) {
+export default function linePoints(d, opts) {
     var trace = opts.trace || {};
     var xa = opts.xaxis;
     var ya = opts.yaxis;
@@ -460,7 +457,6 @@ module.exports = function linePoints(d, opts) {
         segments.push(pts.slice(0, pti));
     }
 
-
     var lastShapeChar = shape.slice(shape.length - 1);
     if(backoff && lastShapeChar !== 'h' && lastShapeChar !== 'v') {
         var trimmed = false;
@@ -492,4 +488,4 @@ module.exports = function linePoints(d, opts) {
     }
 
     return segments;
-};
+}

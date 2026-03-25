@@ -1,10 +1,8 @@
-'use strict';
+import d3 from '@plotly/d3';
+import Drawing from '../../components/drawing/index.js';
+import Color from '../../components/color/index.js';
 
-var d3 = require('@plotly/d3');
-var Drawing = require('../../components/drawing');
-var Color = require('../../components/color');
-
-module.exports = function style(gd, cd, sel) {
+export default function style(gd, cd, sel) {
     var s = sel ? sel : d3.select(gd).selectAll('g.ohlclayer').selectAll('g.trace');
 
     s.style('opacity', function(d) {
@@ -26,4 +24,4 @@ module.exports = function style(gd, cd, sel) {
                 .style('opacity', trace.selectedpoints && !di.selected ? 0.3 : 1);
         });
     });
-};
+}

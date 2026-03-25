@@ -1,21 +1,18 @@
-'use strict';
-
-const { hovertemplateAttrs, texttemplateAttrs, templatefallbackAttrs } = require('../../plots/template_attributes');
-var makeFillcolorAttr = require('../scatter/fillcolor_attribute');
-var scatterGeoAttrs = require('../scattergeo/attributes');
-var scatterAttrs = require('../scatter/attributes');
-var mapboxAttrs = require('../../plots/mapbox/layout_attributes');
-var baseAttrs = require('../../plots/attributes');
-var colorScaleAttrs = require('../../components/colorscale/attributes');
-
-var extendFlat = require('../../lib/extend').extendFlat;
-var overrideAll = require('../../plot_api/edit_types').overrideAll;
-var mapboxLayoutAtributes = require('../../plots/mapbox/layout_attributes');
+import { hovertemplateAttrs, texttemplateAttrs, templatefallbackAttrs } from '../../plots/template_attributes.js';
+import makeFillcolorAttr from '../scatter/fillcolor_attribute.js';
+import scatterGeoAttrs from '../scattergeo/attributes.js';
+import scatterAttrs from '../scatter/attributes.js';
+import mapboxAttrs from '../../plots/mapbox/layout_attributes.js';
+import baseAttrs from '../../plots/attributes.js';
+import colorScaleAttrs from '../../components/colorscale/attributes.js';
+import { extendFlat } from '../../lib/extend.js';
+import { overrideAll } from '../../plot_api/edit_types.js';
+import mapboxLayoutAtributes from '../../plots/mapbox/layout_attributes.js';
 
 var lineAttrs = scatterGeoAttrs.line;
 var markerAttrs = scatterGeoAttrs.marker;
 
-module.exports = overrideAll(
+export default overrideAll(
     {
         lon: scatterGeoAttrs.lon,
         lat: scatterGeoAttrs.lat,

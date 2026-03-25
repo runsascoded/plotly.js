@@ -1,7 +1,4 @@
-'use strict';
-
-var Lib = require('../../lib');
-
+import Lib from '../../lib/index.js';
 
 // set cursors pointing toward the closest corner/side,
 // to indicate alignment
@@ -12,7 +9,7 @@ var cursorset = [
     ['nw-resize', 'n-resize', 'ne-resize']
 ];
 
-module.exports = function getCursor(x, y, xanchor, yanchor) {
+export default function getCursor(x, y, xanchor, yanchor) {
     if(xanchor === 'left') x = 0;
     else if(xanchor === 'center') x = 1;
     else if(xanchor === 'right') x = 2;
@@ -24,4 +21,4 @@ module.exports = function getCursor(x, y, xanchor, yanchor) {
     else y = Lib.constrain(Math.floor(y * 3), 0, 2);
 
     return cursorset[y][x];
-};
+}

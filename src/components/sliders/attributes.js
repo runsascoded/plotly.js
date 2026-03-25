@@ -1,12 +1,11 @@
-'use strict';
-
-var fontAttrs = require('../../plots/font_attributes');
-var padAttrs = require('../../plots/pad_attributes');
-var extendDeepAll = require('../../lib/extend').extendDeepAll;
-var overrideAll = require('../../plot_api/edit_types').overrideAll;
-var animationAttrs = require('../../plots/animation_attributes');
-var templatedArray = require('../../plot_api/plot_template').templatedArray;
-var constants = require('./constants');
+import fontAttrs from '../../plots/font_attributes.js';
+import padAttrs from '../../plots/pad_attributes.js';
+import { extendDeepAll } from '../../lib/extend.js';
+import _edit_types from '../../plot_api/edit_types.js';
+const { overrideAll } = _edit_types;
+import animationAttrs from '../../plots/animation_attributes.js';
+import { templatedArray } from '../../plot_api/plot_template.js';
+import constants from './constants.js';
 
 var stepsAttrs = templatedArray('step', {
     visible: {
@@ -65,7 +64,7 @@ var stepsAttrs = templatedArray('step', {
     }
 });
 
-module.exports = overrideAll(templatedArray('slider', {
+export default overrideAll(templatedArray('slider', {
     visible: {
         valType: 'boolean',
         dflt: true,

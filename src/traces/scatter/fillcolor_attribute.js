@@ -1,6 +1,4 @@
-'use strict';
-
-module.exports = function makeFillcolorAttr(hasFillgradient) {
+export default function makeFillcolorAttr(hasFillgradient) {
     return {
         valType: 'color',
         editType: 'style',
@@ -15,4 +13,4 @@ module.exports = function makeFillcolorAttr(hasFillgradient) {
             )
         ].join(' ')
     };
-};
+}

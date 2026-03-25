@@ -1,6 +1,4 @@
-'use strict';
-
-var Lib = require('../../lib');
+import Lib from '../../lib/index.js';
 
 // Maybe add kernels more down the road,
 // but note that the default `spanmode: 'soft'` bounds might have
@@ -11,7 +9,7 @@ var kernels = {
     }
 };
 
-exports.makeKDE = function(calcItem, trace, vals) {
+export var makeKDE = function(calcItem, trace, vals) {
     var len = vals.length;
     var kernel = kernels.gaussian;
     var bandwidth = calcItem.bandwidth;
@@ -27,7 +25,7 @@ exports.makeKDE = function(calcItem, trace, vals) {
     };
 };
 
-exports.getPositionOnKdePath = function(calcItem, trace, valuePx) {
+export var getPositionOnKdePath = function(calcItem, trace, valuePx) {
     var posLetter, valLetter;
 
     if(trace.orientation === 'h') {
@@ -54,10 +52,12 @@ exports.getPositionOnKdePath = function(calcItem, trace, valuePx) {
     return [posOnPath0, posOnPath1];
 };
 
-exports.getKdeValue = function(calcItem, trace, valueDist) {
-    var vals = calcItem.pts.map(exports.extractVal);
-    var kde = exports.makeKDE(calcItem, trace, vals);
+export var getKdeValue = function(calcItem, trace, valueDist) {
+    var vals = calcItem.pts.map(extractVal);
+    var kde = makeKDE(calcItem, trace, vals);
     return kde(valueDist) / calcItem.posDensityScale;
 };
 
-exports.extractVal = function(o) { return o.v; };
+export var extractVal = function(o) { return o.v; };
+
+export default { makeKDE, getPositionOnKdePath, getKdeValue, extractVal };

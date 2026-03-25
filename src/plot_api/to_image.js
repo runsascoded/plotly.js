@@ -1,15 +1,11 @@
-'use strict';
-
-var isNumeric = require('fast-isnumeric');
-
-var plotApi = require('./plot_api');
-var plots = require('../plots/plots');
-var Lib = require('../lib');
-
-var helpers = require('../snapshot/helpers');
-var toSVG = require('../snapshot/tosvg');
-var svgToImg = require('../snapshot/svgtoimg');
-var version = require('../version').version;
+import isNumeric from 'fast-isnumeric';
+import plotApi from './plot_api.js';
+import plots from '../plots/plots.js';
+import Lib from '../lib/index.js';
+import helpers from '../snapshot/helpers.js';
+import toSVG from '../snapshot/tosvg.js';
+import svgToImg from '../snapshot/svgtoimg.js';
+import { version } from '../version.js';
 
 var attrs = {
     format: {
@@ -230,4 +226,4 @@ function toImage(gd, opts) {
     });
 }
 
-module.exports = toImage;
+export default toImage;

@@ -1,10 +1,8 @@
-'use strict';
-
-var ARROWPATHS = require('./arrow_paths');
-var fontAttrs = require('../../plots/font_attributes');
-var cartesianConstants = require('../../plots/cartesian/constants');
-var templatedArray = require('../../plot_api/plot_template').templatedArray;
-var axisPlaceableObjs = require('../../constants/axis_placeable_objects');
+import ARROWPATHS from './arrow_paths.js';
+import fontAttrs from '../../plots/font_attributes.js';
+import cartesianConstants from '../../plots/cartesian/constants.js';
+import { templatedArray } from '../../plot_api/plot_template.js';
+import axisPlaceableObjs from '../../constants/axis_placeable_objects.js';
 
 function arrowAxisRefDescription(axis) {
     return [
@@ -33,7 +31,7 @@ function arrowCoordinateDescription(axis, lower, upper) {
     ].join(' ');
 }
 
-module.exports = templatedArray('annotation', {
+export default templatedArray('annotation', {
     visible: {
         valType: 'boolean',
         dflt: true,

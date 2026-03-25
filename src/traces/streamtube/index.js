@@ -1,19 +1,23 @@
-'use strict';
+import _req0 from '../../plots/gl3d/index.js';
+import _req1 from './attributes.js';
+import _req2 from './defaults.js';
+import { calc as _req3 } from './calc.js';
+import _req4 from './convert.js';
 
-module.exports = {
+export default {
     moduleType: 'trace',
     name: 'streamtube',
-    basePlotModule: require('../../plots/gl3d'),
+    basePlotModule: _req0,
     categories: ['gl3d', 'showLegend'],
 
-    attributes: require('./attributes'),
-    supplyDefaults: require('./defaults'),
+    attributes: _req1,
+    supplyDefaults: _req2,
     colorbar: {
         min: 'cmin',
         max: 'cmax'
     },
-    calc: require('./calc').calc,
-    plot: require('./convert'),
+    calc: _req3,
+    plot: _req4,
     eventData: function(out, pt) {
         out.tubex = out.x;
         out.tubey = out.y;

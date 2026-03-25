@@ -1,9 +1,7 @@
-'use strict';
-
-var helpers = require('./helpers');
-var calcHover = require('../scattergl/hover').calcHover;
-var getFromId = require('../../plots/cartesian/axes').getFromId;
-var extendFlat = require('../../lib/extend').extendFlat;
+import helpers from './helpers.js';
+import { calcHover } from '../scattergl/hover.js';
+import { getFromId } from '../../plots/cartesian/axes.js';
+import { extendFlat } from '../../lib/extend.js';
 
 function hoverPoints(pointData, xval, yval, hovermode, opts) {
     if(!opts) opts = {};
@@ -91,6 +89,6 @@ function _hoverPoints(pointData, xval, yval, axisHoversubplots) {
     return [calcHover(pointData, x, y, trace)];
 }
 
-module.exports = {
+export default {
     hoverPoints: hoverPoints
 };

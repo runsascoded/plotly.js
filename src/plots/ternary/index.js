@@ -1,20 +1,15 @@
-'use strict';
-
-var Ternary = require('./ternary');
-
-var getSubplotCalcData = require('../../plots/get_data').getSubplotCalcData;
-var counterRegex = require('../../lib').counterRegex;
+import Ternary from './ternary.js';
+import { getSubplotCalcData } from '../../plots/get_data.js';
+import { counterRegex } from '../../lib/index.js';
+import _req0 from './layout_attributes.js';
+import _req1 from './layout_defaults.js';
 var TERNARY = 'ternary';
 
-exports.name = TERNARY;
-
-var attr = exports.attr = 'subplot';
-
-exports.idRoot = TERNARY;
-
-exports.idRegex = exports.attrRegex = counterRegex(TERNARY);
-
-var attributes = exports.attributes = {};
+export var name = TERNARY;
+export var attr = 'subplot';
+export var idRoot = TERNARY;
+export var idRegex = counterRegex(TERNARY);
+export var attributes = {};
 attributes[attr] = {
     valType: 'subplotid',
     dflt: 'ternary',
@@ -27,11 +22,10 @@ attributes[attr] = {
     ].join(' ')
 };
 
-exports.layoutAttributes = require('./layout_attributes');
+export var layoutAttributes = _req0;
+export var supplyLayoutDefaults = _req1;
 
-exports.supplyLayoutDefaults = require('./layout_defaults');
-
-exports.plot = function plot(gd) {
+export var plot = function plot(gd) {
     var fullLayout = gd._fullLayout;
     var calcData = gd.calcdata;
     var ternaryIds = fullLayout._subplots[TERNARY];
@@ -58,7 +52,7 @@ exports.plot = function plot(gd) {
     }
 };
 
-exports.clean = function(newFullData, newFullLayout, oldFullData, oldFullLayout) {
+export var clean = function(newFullData, newFullLayout, oldFullData, oldFullLayout) {
     var oldTernaryKeys = oldFullLayout._subplots[TERNARY] || [];
 
     for(var i = 0; i < oldTernaryKeys.length; i++) {
@@ -76,9 +70,11 @@ exports.clean = function(newFullData, newFullLayout, oldFullData, oldFullLayout)
     }
 };
 
-exports.updateFx = function(gd) {
+export var updateFx = function(gd) {
     var fullLayout = gd._fullLayout;
     fullLayout._ternarylayer
         .selectAll('g.toplevel')
         .style('cursor', fullLayout.dragmode === 'pan' ? 'move' : 'crosshair');
 };
+
+export default { name, attr, idRoot, idRegex, attributes, layoutAttributes, supplyLayoutDefaults, plot, clean, updateFx };

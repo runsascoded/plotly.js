@@ -1,9 +1,7 @@
-'use strict';
+import d3Hierarchy from 'd3-hierarchy';
+import flipTree from '../treemap/flip_tree.js';
 
-var d3Hierarchy = require('d3-hierarchy');
-var flipTree = require('../treemap/flip_tree');
-
-module.exports = function partition(entry, size, opts) {
+export default function partition(entry, size, opts) {
     var flipX = opts.flipX;
     var flipY = opts.flipY;
     var swapXY = opts.orientation === 'h';
@@ -31,4 +29,4 @@ module.exports = function partition(entry, size, opts) {
         });
     }
     return result;
-};
+}

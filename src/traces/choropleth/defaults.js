@@ -1,8 +1,6 @@
-'use strict';
-
-var Lib = require('../../lib');
-var colorscaleDefaults = require('../../components/colorscale/defaults');
-var attributes = require('./attributes');
+import Lib from '../../lib/index.js';
+import colorscaleDefaults from '../../components/colorscale/defaults.js';
+import attributes from './attributes.js';
 
 const locationmodeBreakingChangeWarning = [
     'The library used by the *country names* `locationmode` option is changing in the next major version.',
@@ -10,7 +8,7 @@ const locationmodeBreakingChangeWarning = [
     'To ensure consistent behavior, consider setting `locationmode` to *ISO-3*.'
 ].join(' ');
 
-module.exports = function supplyDefaults(traceIn, traceOut, defaultColor, layout) {
+export default function supplyDefaults(traceIn, traceOut, defaultColor, layout) {
     function coerce(attr, dflt) {
         return Lib.coerce(traceIn, traceOut, attributes, attr, dflt);
     }
@@ -54,4 +52,4 @@ module.exports = function supplyDefaults(traceIn, traceOut, defaultColor, layout
     colorscaleDefaults(traceIn, traceOut, layout, coerce, { prefix: '', cLetter: 'z' });
 
     Lib.coerceSelectionMarkerOpacity(traceOut, coerce);
-};
+}

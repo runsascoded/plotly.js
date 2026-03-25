@@ -1,6 +1,4 @@
-'use strict';
-
-module.exports = {
+export default {
     undo: {
         width: 857.1,
         height: 1000,

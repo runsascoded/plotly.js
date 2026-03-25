@@ -1,6 +1,4 @@
-'use strict';
-
-var sortObjectKeys = require('../../lib/sort_object_keys');
+import sortObjectKeys from '../../lib/sort_object_keys.js';
 
 var requiredVersion = '1.13.4';
 
@@ -167,7 +165,7 @@ var stylesNonMapbox = {
 
 var styleValuesNonMapbox = sortObjectKeys(stylesNonMapbox);
 
-module.exports = {
+export default {
     requiredVersion: requiredVersion,
 
     styleUrlPrefix: 'mapbox://styles/mapbox/',

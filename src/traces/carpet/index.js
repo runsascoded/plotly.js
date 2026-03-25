@@ -1,16 +1,20 @@
-'use strict';
+import _req0 from './attributes.js';
+import _req1 from './defaults.js';
+import _req2 from './plot.js';
+import _req3 from './calc.js';
+import _req4 from '../../plots/cartesian/index.js';
 
-module.exports = {
-    attributes: require('./attributes'),
-    supplyDefaults: require('./defaults'),
-    plot: require('./plot'),
-    calc: require('./calc'),
+export default {
+    attributes: _req0,
+    supplyDefaults: _req1,
+    plot: _req2,
+    calc: _req3,
     animatable: true,
     isContainer: true, // so carpet traces get `calc` before other traces
 
     moduleType: 'trace',
     name: 'carpet',
-    basePlotModule: require('../../plots/cartesian'),
+    basePlotModule: _req4,
     categories: ['cartesian', 'svg', 'carpet', 'carpetAxis', 'notLegendIsolatable', 'noMultiCategory', 'noHover', 'noSortingByValue'],
     meta: {
         description: [

@@ -1,10 +1,8 @@
-'use strict';
+import { opacity } from '../../components/color/index.js';
+import { hoverOnBars } from '../bar/hover.js';
+import { formatPercent } from '../../lib/index.js';
 
-var opacity = require('../../components/color').opacity;
-var hoverOnBars = require('../bar/hover').hoverOnBars;
-var formatPercent = require('../../lib').formatPercent;
-
-module.exports = function hoverPoints(pointData, xval, yval, hovermode, opts) {
+export default function hoverPoints(pointData, xval, yval, hovermode, opts) {
     var point = hoverOnBars(pointData, xval, yval, hovermode, opts);
     if(!point) return;
 
@@ -51,7 +49,7 @@ module.exports = function hoverPoints(pointData, xval, yval, hovermode, opts) {
     point.color = getTraceColor(trace, di);
 
     return [point];
-};
+}
 
 function getTraceColor(trace, di) {
     var cont = trace.marker;

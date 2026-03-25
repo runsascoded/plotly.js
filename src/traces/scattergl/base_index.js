@@ -1,21 +1,27 @@
-'use strict';
+import hover from './hover.js';
+import _req0 from '../../plots/cartesian/index.js';
+import _req1 from './attributes.js';
+import _req2 from './defaults.js';
+import _req3 from '../scatter/cross_trace_defaults.js';
+import _req4 from '../scatter/marker_colorbar.js';
+import _req5 from './format_labels.js';
+import _req6 from './calc.js';
+import _req7 from './select.js';
 
-var hover = require('./hover');
-
-module.exports = {
+export default {
     moduleType: 'trace',
     name: 'scattergl',
-    basePlotModule: require('../../plots/cartesian'),
+    basePlotModule: _req0,
     categories: ['gl', 'regl', 'cartesian', 'symbols', 'errorBarsOK', 'showLegend', 'scatter-like'],
 
-    attributes: require('./attributes'),
-    supplyDefaults: require('./defaults'),
-    crossTraceDefaults: require('../scatter/cross_trace_defaults'),
-    colorbar: require('../scatter/marker_colorbar'),
-    formatLabels: require('./format_labels'),
-    calc: require('./calc'),
+    attributes: _req1,
+    supplyDefaults: _req2,
+    crossTraceDefaults: _req3,
+    colorbar: _req4,
+    formatLabels: _req5,
+    calc: _req6,
     hoverPoints: hover.hoverPoints,
-    selectPoints: require('./select'),
+    selectPoints: _req7,
 
     meta: {
         hrName: 'scatter_gl',

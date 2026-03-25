@@ -1,14 +1,6 @@
-'use strict';
+import Lib from '../../lib/index.js';
 
-var Lib = require('../../lib');
-
-// The contour extraction is great, except it totally fails for constraints because we
-// need weird range loops and flipped contours instead of the usual format. This function
-// does some weird manipulation of the extracted pathinfo data such that it magically
-// draws contours correctly *as* constraints.
-//
-// ** I do not know which "weird range loops" the comment above is referring to.
-module.exports = function(pathinfo, operation) {
+export default function(pathinfo, operation) {
     var i, pi0, pi1;
 
     var op0 = function(arr) { return arr.reverse(); };
@@ -79,7 +71,7 @@ module.exports = function(pathinfo, operation) {
 
             return [pi0];
     }
-};
+}
 
 function copyPathinfo(pi) {
     return Lib.extendFlat({}, pi, {

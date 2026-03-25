@@ -1,16 +1,13 @@
-'use strict';
-
-var isNumeric = require('fast-isnumeric');
-
-var calcColorscale = require('../scatter/colorscale_calc');
-var arraysToCalcdata = require('../scatter/arrays_to_calcdata');
-var calcSelection = require('../scatter/calc_selection');
-var calcMarkerSize = require('../scatter/calc').calcMarkerSize;
+import isNumeric from 'fast-isnumeric';
+import calcColorscale from '../scatter/colorscale_calc.js';
+import arraysToCalcdata from '../scatter/arrays_to_calcdata.js';
+import calcSelection from '../scatter/calc_selection.js';
+import { calcMarkerSize } from '../scatter/calc.js';
 
 var dataArrays = ['a', 'b', 'c'];
 var arraysToFill = {a: ['b', 'c'], b: ['a', 'c'], c: ['a', 'b']};
 
-module.exports = function calc(gd, trace) {
+export default function calc(gd, trace) {
     var ternary = gd._fullLayout[trace.subplot];
     var displaySum = ternary.sum;
     var normSum = trace.sum || displaySum;
@@ -71,4 +68,4 @@ module.exports = function calc(gd, trace) {
     calcSelection(cd, trace);
 
     return cd;
-};
+}

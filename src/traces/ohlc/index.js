@@ -1,9 +1,16 @@
-'use strict';
+import _req0 from '../../plots/cartesian/index.js';
+import _req1 from './attributes.js';
+import _req2 from './defaults.js';
+import { calc as _req3 } from './calc.js';
+import _req4 from './plot.js';
+import _req5 from './style.js';
+import { hoverPoints as _req6 } from './hover.js';
+import _req7 from './select.js';
 
-module.exports = {
+export default {
     moduleType: 'trace',
     name: 'ohlc',
-    basePlotModule: require('../../plots/cartesian'),
+    basePlotModule: _req0,
     categories: ['cartesian', 'svg', 'showLegend'],
     meta: {
         description: [
@@ -21,11 +28,11 @@ module.exports = {
         ].join(' ')
     },
 
-    attributes: require('./attributes'),
-    supplyDefaults: require('./defaults'),
-    calc: require('./calc').calc,
-    plot: require('./plot'),
-    style: require('./style'),
-    hoverPoints: require('./hover').hoverPoints,
-    selectPoints: require('./select')
+    attributes: _req1,
+    supplyDefaults: _req2,
+    calc: _req3,
+    plot: _req4,
+    style: _req5,
+    hoverPoints: _req6,
+    selectPoints: _req7
 };

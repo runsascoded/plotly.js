@@ -1,12 +1,10 @@
-'use strict';
-
-var tarjan = require('strongly-connected-components');
-var Lib = require('../../lib');
-var wrap = require('../../lib/gup').wrap;
+import tarjan from 'strongly-connected-components';
+import Lib from '../../lib/index.js';
+import { wrap } from '../../lib/gup.js';
+import Colorscale from '../../components/colorscale/index.js';
 
 var isArrayOrTypedArray = Lib.isArrayOrTypedArray;
 var isIndex = Lib.isIndex;
-var Colorscale = require('../../components/colorscale');
 
 function convertToD3Sankey(trace) {
     var nodeSpec = trace.node;
@@ -166,7 +164,7 @@ function circularityPresent(nodeLen, sources, targets) {
     });
 }
 
-module.exports = function calc(gd, trace) {
+export default function calc(gd, trace) {
     var result = convertToD3Sankey(trace);
 
     return wrap({
@@ -178,4 +176,4 @@ module.exports = function calc(gd, trace) {
         _groups: result.groups,
         _groupLookup: result.groupLookup,
     });
-};
+}

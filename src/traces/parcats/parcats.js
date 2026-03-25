@@ -1,14 +1,12 @@
-'use strict';
-
-var d3 = require('@plotly/d3');
-var interpolateNumber = require('d3-interpolate').interpolateNumber;
-var Plotly = require('../../plot_api/plot_api');
-var Fx = require('../../components/fx');
-var Lib = require('../../lib');
+import d3 from '@plotly/d3';
+import { interpolateNumber } from 'd3-interpolate';
+import Plotly from '../../plot_api/plot_api.js';
+import Fx from '../../components/fx/index.js';
+import Lib from '../../lib/index.js';
+import Drawing from '../../components/drawing/index.js';
+import tinycolor from 'tinycolor2';
+import svgTextUtils from '../../lib/svg_text_utils.js';
 var strTranslate = Lib.strTranslate;
-var Drawing = require('../../components/drawing');
-var tinycolor = require('tinycolor2');
-var svgTextUtils = require('../../lib/svg_text_utils');
 
 function performPlot(parcatsModels, graphDiv, layout, svg) {
     var isStatic = graphDiv._context.staticPlot;
@@ -143,13 +141,11 @@ function performPlot(parcatsModels, graphDiv, layout, svg) {
             return strTranslate(0, d.y);
         });
 
-
     // Initialize rectangle
     categoryGroupEnterSelection
         .append('rect')
         .attr('class', 'catrect')
         .attr('pointer-events', 'none');
-
 
     // Update rectangle
     categorySelection.select('rect.catrect')
@@ -316,7 +312,6 @@ function performPlot(parcatsModels, graphDiv, layout, svg) {
         .on('drag', dragDimension)
         .on('dragend', dragDimensionEnd));
 
-
     // Save off selections to view models
     traceSelection.each(function(d) {
         d.traceSelection = d3.select(this);
@@ -328,17 +323,9 @@ function performPlot(parcatsModels, graphDiv, layout, svg) {
     traceSelection.exit().remove();
 }
 
-/**
- * Create / update parcat traces
- *
- * @param {Object} graphDiv
- * @param {Object} svg
- * @param {Array.<ParcatsModel>} parcatsModels
- * @param {Layout} layout
- */
-module.exports = function(graphDiv, svg, parcatsModels, layout) {
+export default function(graphDiv, svg, parcatsModels, layout) {
     performPlot(parcatsModels, graphDiv, layout, svg);
-};
+}
 
 /**
  * Function the returns the key property of an object for use with as D3 join function
@@ -348,8 +335,8 @@ function key(d) {
     return d.key;
 }
 
- /** True if a category view model is in the right-most display dimension
-  * @param {CategoryViewModel} d */
+/** True if a category view model is in the right-most display dimension
+ * @param {CategoryViewModel} d */
 function catInRightDim(d) {
     var numDims = d.parcatsViewModel.dimensions.length;
     var leftDimInd = d.parcatsViewModel.dimensions[numDims - 1].model.dimensionInd;
@@ -628,7 +615,6 @@ function selectPathsThroughCategoryBandColor(catBandViewModel) {
             });
 }
 
-
 /**
  * Perform hover styling for all paths that pass though the specified band element's category
  *
@@ -680,7 +666,6 @@ function styleForColorHovermode(bandElement) {
             styleBandsHover(d3.select(this));
         });
 }
-
 
 /**
  * @param {HTMLElement} bandElement
@@ -1023,7 +1008,6 @@ function mouseoverCategoryBand(bandViewModel) {
     }
 }
 
-
 /**
  * Handle dimension mouseover
  * @param {CategoryBandViewModel} bandViewModel
@@ -1060,7 +1044,6 @@ function mouseoutCategory(bandViewModel) {
     }
 }
 
-
 /**
  * Handle dimension drag start
  * @param {DimensionViewModel} d
@@ -1086,7 +1069,6 @@ function dragDimensionStart(d) {
             function(catViewModel) {
                 var catMouseX = d3.mouse(this)[0];
                 var catMouseY = d3.mouse(this)[1];
-
 
                 if(-2 <= catMouseX && catMouseX <= catViewModel.width + 2 &&
                     -2 <= catMouseY && catMouseY <= catViewModel.height + 2) {
@@ -1216,7 +1198,6 @@ function dragDimension(d) {
     updateSvgCategories(d.parcatsViewModel);
     updateSvgPaths(d.parcatsViewModel);
 }
-
 
 /**
  * Handle dimension drag end
@@ -1751,7 +1732,6 @@ function updatePathViewModels(parcatsViewModel) {
     var totalHeight = dimensionViewModels[0].categories
         .map(function(c) { return c.height; })
         .reduce(function(v1, v2) { return v1 + v2; });
-
 
     for(var pathNumber = 0; pathNumber < pathModels.length; pathNumber++) {
         var pathModel = pathModels[pathNumber];

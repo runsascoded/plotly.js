@@ -1,9 +1,8 @@
-'use strict';
+import { dot } from './matrix.js';
+import _numerical from '../constants/numerical.js';
+const { BADNUM } = _numerical;
 
-var dot = require('./matrix').dot;
-var BADNUM = require('../constants/numerical').BADNUM;
-
-var polygon = module.exports = {};
+var polygon = {};
 
 /**
  * Turn an array of [x, y] pairs into a polygon object
@@ -246,3 +245,5 @@ polygon.filter = function filter(pts, tolerance) {
         filtered: ptsFiltered
     };
 };
+
+export default polygon;

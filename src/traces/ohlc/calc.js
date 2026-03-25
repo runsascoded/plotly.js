@@ -1,10 +1,8 @@
-'use strict';
-
-var Lib = require('../../lib');
+import Lib from '../../lib/index.js';
+import Axes from '../../plots/cartesian/axes.js';
+import alignPeriod from '../../plots/cartesian/align_period.js';
+import { BADNUM } from '../../constants/numerical.js';
 var _ = Lib._;
-var Axes = require('../../plots/cartesian/axes');
-var alignPeriod = require('../../plots/cartesian/align_period');
-var BADNUM = require('../../constants/numerical').BADNUM;
 
 function calc(gd, trace) {
     var xa = Axes.getFromId(gd, trace.xaxis);
@@ -40,7 +38,6 @@ function ptFunc(o, h, l, c) {
         c: c
     };
 }
-
 
 // shared between OHLC and candlestick
 // ptFunc makes a calcdata point specific to each trace type, from oi, hi, li, ci
@@ -165,7 +162,7 @@ function convertTickWidth(gd, xa, trace) {
     return minDiff * trace.tickwidth;
 }
 
-module.exports = {
+export default {
     calc: calc,
     calcCommon: calcCommon
 };

@@ -1,10 +1,11 @@
-'use strict';
-
-var d3 = require('@plotly/d3');
-var utcFormat = require('d3-time-format').utcFormat;
-var Lib = require('../../lib');
+import d3 from '@plotly/d3';
+import { utcFormat } from 'd3-time-format';
+import Lib from '../../lib/index.js';
+import isNumeric from 'fast-isnumeric';
+import numConstants from '../../constants/numerical.js';
+import axisIds from './axis_ids.js';
+import constants from './constants.js';
 var numberFormat = Lib.numberFormat;
-var isNumeric = require('fast-isnumeric');
 
 var cleanNumber = Lib.cleanNumber;
 var ms2DateTime = Lib.ms2DateTime;
@@ -12,7 +13,6 @@ var dateTime2ms = Lib.dateTime2ms;
 var ensureNumber = Lib.ensureNumber;
 var isArrayOrTypedArray = Lib.isArrayOrTypedArray;
 
-var numConstants = require('../../constants/numerical');
 var FP_SAFE = numConstants.FP_SAFE;
 var BADNUM = numConstants.BADNUM;
 var LOG_CLIP = numConstants.LOG_CLIP;
@@ -22,8 +22,6 @@ var ONEHOUR = numConstants.ONEHOUR;
 var ONEMIN = numConstants.ONEMIN;
 var ONESEC = numConstants.ONESEC;
 
-var axisIds = require('./axis_ids');
-var constants = require('./constants');
 var HOUR_PATTERN = constants.HOUR_PATTERN;
 var WEEKDAY_PATTERN = constants.WEEKDAY_PATTERN;
 
@@ -35,32 +33,7 @@ function isValidCategory(v) {
     return v !== null && v !== undefined;
 }
 
-/**
- * Define the conversion functions for an axis data is used in 5 ways:
- *
- *  d: data, in whatever form it's provided
- *  c: calcdata: turned into numbers, but not linearized
- *  l: linearized - same as c except for log axes (and other nonlinear
- *      mappings later?) this is used when we need to know if it's
- *      *possible* to show some data on this axis, without caring about
- *      the current range
- *  p: pixel value - mapped to the screen with current size and zoom
- *  r: ranges, tick0, and annotation positions match one of the above
- *     but are handled differently for different types:
- *     - linear and date: data format (d)
- *     - category: calcdata format (c), and will stay that way because
- *       the data format has no continuous mapping
- *     - log: linearized (l) format
- *       TODO: in v3.0 we plan to change it to data format. At that point
- *       shapes will work the same way as ranges, tick0, and annotations
- *       so they can use this conversion too.
- *
- * Creates/updates these conversion functions, and a few more utilities
- * like cleanRange, and makeCalcdata
- *
- * also clears ._minDtick, ._forceTick0
- */
-module.exports = function setConvert(ax, fullLayout) {
+export default function setConvert(ax, fullLayout) {
     fullLayout = fullLayout || {};
 
     var axId = (ax._id || 'x');
@@ -644,7 +617,6 @@ module.exports = function setConvert(ax, fullLayout) {
         var rangebreaksIn = ax.rangebreaks || [];
         var bnds, b0, b1, vb, vDate;
 
-
         if(!rangebreaksIn._cachedPatterns) {
             rangebreaksIn._cachedPatterns = rangebreaksIn.map(function(brk) {
                 return brk.enabled && brk.bounds ? Lib.simpleMap(brk.bounds, brk.pattern ?
@@ -658,7 +630,6 @@ module.exports = function setConvert(ax, fullLayout) {
                 return brk.enabled && brk.values ? Lib.simpleMap(brk.values, ax.d2c).sort(Lib.sorterAsc) : null;
             });
         }
-
 
         for(var i = 0; i < rangebreaksIn.length; i++) {
             var brk = rangebreaksIn[i];
@@ -1026,4 +997,4 @@ module.exports = function setConvert(ax, fullLayout) {
     // and for bar charts and box plots: reset forced minimum tick spacing
     delete ax._minDtick;
     delete ax._forceTick0;
-};
+}

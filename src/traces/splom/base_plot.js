@@ -1,13 +1,10 @@
-'use strict';
-
-var createLine = require('regl-line2d');
-
-var Registry = require('../../registry');
-var prepareRegl = require('../../lib/prepare_regl');
-var getModuleCalcData = require('../../plots/get_data').getModuleCalcData;
-var Cartesian = require('../../plots/cartesian');
-var getFromId = require('../../plots/cartesian/axis_ids').getFromId;
-var shouldShowZeroLine = require('../../plots/cartesian/axes').shouldShowZeroLine;
+import createLine from 'regl-line2d';
+import Registry from '../../registry.js';
+import prepareRegl from '../../lib/prepare_regl.js';
+import { getModuleCalcData } from '../../plots/get_data.js';
+import Cartesian from '../../plots/cartesian/index.js';
+import { getFromId } from '../../plots/cartesian/axis_ids.js';
+import { shouldShowZeroLine } from '../../plots/cartesian/axes.js';
 
 var SPLOM = 'splom';
 
@@ -209,7 +206,7 @@ function clean(newFullData, newFullLayout, oldFullData, oldFullLayout) {
     Cartesian.clean(newFullData, newFullLayout, oldFullData, oldFullLayout);
 }
 
-module.exports = {
+export default {
     name: SPLOM,
     attr: Cartesian.attr,
     attrRegex: Cartesian.attrRegex,

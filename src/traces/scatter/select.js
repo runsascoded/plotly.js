@@ -1,8 +1,6 @@
-'use strict';
+import subtypes from './subtypes.js';
 
-var subtypes = require('./subtypes');
-
-module.exports = function selectPoints(searchInfo, selectionTester) {
+export default function selectPoints(searchInfo, selectionTester) {
     var cd = searchInfo.cd;
     var xa = searchInfo.xaxis;
     var ya = searchInfo.yaxis;
@@ -40,4 +38,4 @@ module.exports = function selectPoints(searchInfo, selectionTester) {
     }
 
     return selection;
-};
+}

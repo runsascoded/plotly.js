@@ -1,9 +1,7 @@
-'use strict';
+import scatterHover from '../scatter/hover.js';
+import { fillText } from '../../lib/index.js';
 
-var scatterHover = require('../scatter/hover');
-var fillText = require('../../lib').fillText;
-
-module.exports = function hoverPoints(pointData, xval, yval, hovermode) {
+export default function hoverPoints(pointData, xval, yval, hovermode) {
     var scatterPointData = scatterHover(pointData, xval, yval, hovermode);
     if(!scatterPointData || scatterPointData[0].index === false) return;
 
@@ -59,7 +57,6 @@ module.exports = function hoverPoints(pointData, xval, yval, hovermode) {
         text.push(prefix + ': ' + val.toFixed(3) + ax.labelsuffix);
     }
 
-
     if(!trace.hovertemplate) {
         var hoverinfo = cdi.hi || trace.hoverinfo;
         var parts = hoverinfo.split('+');
@@ -78,4 +75,4 @@ module.exports = function hoverPoints(pointData, xval, yval, hovermode) {
     }
 
     return scatterPointData;
-};
+}

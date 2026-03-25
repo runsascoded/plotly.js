@@ -1,24 +1,20 @@
-'use strict';
-
-var d3 = require('@plotly/d3');
-
-var Lib = require('../../lib');
-var Drawing = require('../../components/drawing');
-var Colorscale = require('../../components/colorscale');
-var svgTextUtils = require('../../lib/svg_text_utils');
-var Axes = require('../../plots/cartesian/axes');
-var setConvert = require('../../plots/cartesian/set_convert');
-
-var heatmapPlot = require('../heatmap/plot');
-var makeCrossings = require('./make_crossings');
-var findAllPaths = require('./find_all_paths');
-var emptyPathinfo = require('./empty_pathinfo');
-var convertToConstraints = require('./convert_to_constraints');
-var closeBoundaries = require('./close_boundaries');
-var constants = require('./constants');
+import d3 from '@plotly/d3';
+import Lib from '../../lib/index.js';
+import Drawing from '../../components/drawing/index.js';
+import Colorscale from '../../components/colorscale/index.js';
+import svgTextUtils from '../../lib/svg_text_utils.js';
+import Axes from '../../plots/cartesian/axes.js';
+import setConvert from '../../plots/cartesian/set_convert.js';
+import heatmapPlot from '../heatmap/plot.js';
+import makeCrossings from './make_crossings.js';
+import findAllPaths from './find_all_paths.js';
+import emptyPathinfo from './empty_pathinfo.js';
+import convertToConstraints from './convert_to_constraints.js';
+import closeBoundaries from './close_boundaries.js';
+import constants from './constants.js';
 var costConstants = constants.LABELOPTIMIZER;
 
-exports.plot = function plot(gd, plotinfo, cdcontours, contourLayer) {
+export var plot = function plot(gd, plotinfo, cdcontours, contourLayer) {
     var xa = plotinfo.xaxis;
     var ya = plotinfo.yaxis;
 
@@ -210,9 +206,9 @@ function makeLinesAndLabels(plotgroup, pathinfo, gd, cd0, contours) {
     // if we're showing labels, because the fill paths include the perimeter
     // so can't be used to position the labels correctly.
     // In this case we'll remove the lines after making the labels.
-    var linegroup = exports.createLines(lineContainer, showLines || showLabels, pathinfo, isStatic);
+    var linegroup = createLines(lineContainer, showLines || showLabels, pathinfo, isStatic);
 
-    var lineClip = exports.createLineClip(lineContainer, clipLinesForLabels, gd, cd0.trace.uid);
+    var lineClip = createLineClip(lineContainer, clipLinesForLabels, gd, cd0.trace.uid);
 
     var labelGroup = plotgroup.selectAll('g.contourlabels')
         .data(showLabels ? [0] : []);
@@ -229,7 +225,7 @@ function makeLinesAndLabels(plotgroup, pathinfo, gd, cd0, contours) {
         // invalidate the getTextLocation cache in case paths changed
         Lib.clearLocationCache();
 
-        var contourFormat = exports.labelFormatter(gd, cd0);
+        var contourFormat = labelFormatter(gd, cd0);
 
         var dummyText = Drawing.tester.append('text')
             .attr('data-notex', 1)
@@ -287,7 +283,7 @@ function makeLinesAndLabels(plotgroup, pathinfo, gd, cd0, contours) {
             Math.max(1, pathinfo.length / constants.LABELINCREASE);
 
         linegroup.each(function(d) {
-            var textOpts = exports.calcTextOpts(d.level, contourFormat, dummyText, gd);
+            var textOpts = calcTextOpts(d.level, contourFormat, dummyText, gd);
 
             d3.select(this).selectAll('path').each(function() {
                 var path = this;
@@ -300,26 +296,26 @@ function makeLinesAndLabels(plotgroup, pathinfo, gd, cd0, contours) {
                     constants.LABELMAX);
 
                 for(var i = 0; i < maxLabels; i++) {
-                    var loc = exports.findBestTextLocation(path, pathBounds, textOpts,
+                    var loc = findBestTextLocation(path, pathBounds, textOpts,
                         labelData, bounds);
 
                     if(!loc) break;
 
-                    exports.addLabelData(loc, textOpts, labelData, labelClipPathData);
+                    addLabelData(loc, textOpts, labelData, labelClipPathData);
                 }
             });
         });
 
         dummyText.remove();
 
-        exports.drawLabels(labelGroup, labelData, gd, lineClip,
+        drawLabels(labelGroup, labelData, gd, lineClip,
             clipLinesForLabels ? labelClipPathData : null);
     }
 
     if(showLabels && !showLines) linegroup.remove();
 }
 
-exports.createLines = function(lineContainer, makeLines, pathinfo, isStatic) {
+export var createLines = function(lineContainer, makeLines, pathinfo, isStatic) {
     var smoothing = pathinfo[0].smoothing;
 
     var linegroup = lineContainer.selectAll('g.contourlevel')
@@ -364,7 +360,7 @@ exports.createLines = function(lineContainer, makeLines, pathinfo, isStatic) {
     return linegroup;
 };
 
-exports.createLineClip = function(lineContainer, clipLinesForLabels, gd, uid) {
+export var createLineClip = function(lineContainer, clipLinesForLabels, gd, uid) {
     var clips = gd._fullLayout._clips;
     var clipId = clipLinesForLabels ? ('clipline' + uid) : null;
 
@@ -381,7 +377,7 @@ exports.createLineClip = function(lineContainer, clipLinesForLabels, gd, uid) {
     return lineClip;
 };
 
-exports.labelFormatter = function(gd, cd0) {
+export var labelFormatter = function(gd, cd0) {
     var fullLayout = gd._fullLayout;
     var trace = cd0.trace;
     var contours = trace.contours;
@@ -426,7 +422,7 @@ exports.labelFormatter = function(gd, cd0) {
     return function(v) { return Axes.tickText(formatAxis, v).text; };
 };
 
-exports.calcTextOpts = function(level, contourFormat, dummyText, gd) {
+export var calcTextOpts = function(level, contourFormat, dummyText, gd) {
     var text = contourFormat(level);
     dummyText.text(text)
         .call(svgTextUtils.convertToTspans, gd);
@@ -444,7 +440,7 @@ exports.calcTextOpts = function(level, contourFormat, dummyText, gd) {
     };
 };
 
-exports.findBestTextLocation = function(path, pathBounds, textOpts, labelData, plotBounds) {
+export var findBestTextLocation = function(path, pathBounds, textOpts, labelData, plotBounds) {
     var textWidth = textOpts.width;
 
     var p0, dp, pMax, pMin, loc;
@@ -537,7 +533,7 @@ function locationCost(loc, textOpts, labelData, bounds) {
     return cost;
 }
 
-exports.addLabelData = function(loc, textOpts, labelData, labelClipPathData) {
+export var addLabelData = function(loc, textOpts, labelData, labelClipPathData) {
     var fontSize = textOpts.fontSize;
     var w = textOpts.width + fontSize / 3;
     var h = Math.max(0, textOpts.height - fontSize / 3);
@@ -577,7 +573,7 @@ exports.addLabelData = function(loc, textOpts, labelData, labelClipPathData) {
     labelClipPathData.push(bBoxPts);
 };
 
-exports.drawLabels = function(labelGroup, labelData, gd, lineClip, labelClipPathData) {
+export var drawLabels = function(labelGroup, labelData, gd, lineClip, labelClipPathData) {
     var labels = labelGroup.selectAll('text')
         .data(labelData, function(d) {
             return d.text + ',' + d.x + ',' + d.y + ',' + d.theta;
@@ -679,3 +675,5 @@ function makeClipMask(cd0) {
     cd0.zmask = z;
     return z;
 }
+
+export default { plot, createLines, createLineClip, labelFormatter, calcTextOpts, findBestTextLocation, addLabelData, drawLabels };

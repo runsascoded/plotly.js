@@ -1,10 +1,8 @@
-'use strict';
+import Lib from '../../lib/index.js';
+import _helpers from './helpers.js';
+const { hasColorscale, extractOpts } = _helpers;
 
-var Lib = require('../../lib');
-var hasColorscale = require('./helpers').hasColorscale;
-var extractOpts = require('./helpers').extractOpts;
-
-module.exports = function crossTraceDefaults(fullData, fullLayout) {
+export default function crossTraceDefaults(fullData, fullLayout) {
     function replace(cont, k) {
         var val = cont['_' + k];
         if(val !== undefined) {
@@ -64,4 +62,4 @@ module.exports = function crossTraceDefaults(fullData, fullLayout) {
     for(var k in fullLayout._colorAxes) {
         relinkColorAttrs(fullLayout[k], {min: 'cmin', max: 'cmax'});
     }
-};
+}

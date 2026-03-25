@@ -1,14 +1,11 @@
-'use strict';
-
-var Lib = require('../../lib');
-
-var handleGroupingDefaults = require('../scatter/grouping_defaults');
-var handleText = require('../bar/defaults').handleText;
-var handleXYDefaults = require('../scatter/xy_defaults');
-var handlePeriodDefaults = require('../scatter/period_defaults');
-var attributes = require('./attributes');
-var Color = require('../../components/color');
-var delta = require('../../constants/delta.js');
+import Lib from '../../lib/index.js';
+import handleGroupingDefaults from '../scatter/grouping_defaults.js';
+import { handleText } from '../bar/defaults.js';
+import handleXYDefaults from '../scatter/xy_defaults.js';
+import handlePeriodDefaults from '../scatter/period_defaults.js';
+import attributes from './attributes.js';
+import Color from '../../components/color/index.js';
+import delta from '../../constants/delta.js';
 
 var INCREASING_COLOR = delta.INCREASING.COLOR;
 var DECREASING_COLOR = delta.DECREASING.COLOR;
@@ -96,7 +93,7 @@ function crossTraceDefaults(fullData, fullLayout) {
     }
 }
 
-module.exports = {
+export default {
     supplyDefaults: supplyDefaults,
     crossTraceDefaults: crossTraceDefaults
 };

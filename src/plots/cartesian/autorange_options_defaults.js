@@ -1,6 +1,4 @@
-'use strict';
-
-module.exports = function handleAutorangeOptionsDefaults(coerce, autorange, range) {
+export default function handleAutorangeOptionsDefaults(coerce, autorange, range) {
     var minRange, maxRange;
     if(range) {
         var isReversed = (
@@ -20,4 +18,4 @@ module.exports = function handleAutorangeOptionsDefaults(coerce, autorange, rang
     if(maxallowed === undefined) coerce('autorangeoptions.clipmax');
 
     coerce('autorangeoptions.include');
-};
+}

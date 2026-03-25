@@ -1,17 +1,15 @@
-'use strict';
-
-var makeFillcolorAttr = require('../scatter/fillcolor_attribute');
-var scatterAttrs = require('../scatter/attributes');
-var barAttrs = require('../bar/attributes');
-var colorAttrs = require('../../components/color/attributes');
-var axisHoverFormat = require('../../plots/cartesian/axis_format_attributes').axisHoverFormat;
-const { hovertemplateAttrs, templatefallbackAttrs } = require('../../plots/template_attributes');
-var extendFlat = require('../../lib/extend').extendFlat;
+import makeFillcolorAttr from '../scatter/fillcolor_attribute.js';
+import scatterAttrs from '../scatter/attributes.js';
+import barAttrs from '../bar/attributes.js';
+import colorAttrs from '../../components/color/attributes.js';
+import { axisHoverFormat } from '../../plots/cartesian/axis_format_attributes.js';
+import { hovertemplateAttrs, templatefallbackAttrs } from '../../plots/template_attributes.js';
+import { extendFlat } from '../../lib/extend.js';
 
 var scatterMarkerAttrs = scatterAttrs.marker;
 var scatterMarkerLineAttrs = scatterMarkerAttrs.line;
 
-module.exports = {
+export default {
     y: {
         valType: 'data_array',
         editType: 'calc+clearAxisTypes',

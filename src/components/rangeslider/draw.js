@@ -1,25 +1,18 @@
-'use strict';
-
-var d3 = require('@plotly/d3');
-
-var Registry = require('../../registry');
-var Plots = require('../../plots/plots');
-
-var Lib = require('../../lib');
+import d3 from '@plotly/d3';
+import Registry from '../../registry.js';
+import Plots from '../../plots/plots.js';
+import Lib from '../../lib/index.js';
+import Drawing from '../drawing/index.js';
+import Color from '../color/index.js';
+import Titles from '../titles/index.js';
+import Cartesian from '../../plots/cartesian/index.js';
+import axisIDs from '../../plots/cartesian/axis_ids.js';
+import dragElement from '../dragelement/index.js';
+import setCursor from '../../lib/setcursor.js';
+import constants from './constants.js';
 var strTranslate = Lib.strTranslate;
-var Drawing = require('../drawing');
-var Color = require('../color');
-var Titles = require('../titles');
 
-var Cartesian = require('../../plots/cartesian');
-var axisIDs = require('../../plots/cartesian/axis_ids');
-
-var dragElement = require('../dragelement');
-var setCursor = require('../../lib/setcursor');
-
-var constants = require('./constants');
-
-module.exports = function(gd) {
+export default function(gd) {
     var fullLayout = gd._fullLayout;
     var rangeSliderData = fullLayout._rangeSliderData;
     for(var i = 0; i < rangeSliderData.length; i++) {
@@ -222,7 +215,7 @@ module.exports = function(gd) {
             });
         }
     });
-};
+}
 
 function eventX(event) {
     if(typeof event.clientX === 'number') {

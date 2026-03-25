@@ -1,10 +1,6 @@
-'use strict';
+import colorscaleCalc from '../../components/colorscale/calc.js';
 
-var colorscaleCalc = require('../../components/colorscale/calc');
-
-
-// Compute auto-z and autocolorscale if applicable
-module.exports = function calc(gd, trace) {
+export default function calc(gd, trace) {
     if(trace.surfacecolor) {
         colorscaleCalc(gd, trace, {
             vals: trace.surfacecolor,
@@ -18,4 +14,4 @@ module.exports = function calc(gd, trace) {
             cLetter: 'c'
         });
     }
-};
+}

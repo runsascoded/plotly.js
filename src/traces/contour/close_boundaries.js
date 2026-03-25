@@ -1,6 +1,4 @@
-'use strict';
-
-module.exports = function(pathinfo, contours) {
+export default function(pathinfo, contours) {
     var pi0 = pathinfo[0];
     var z = pi0.z;
     var i;
@@ -77,4 +75,4 @@ module.exports = function(pathinfo, contours) {
             }
             break;
     }
-};
+}

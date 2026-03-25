@@ -1,15 +1,11 @@
-'use strict';
+import Lib from '../lib/index.js';
+import PlotSchema from '../plot_api/plot_schema.js';
+import Plots from '../plots/plots.js';
+import { pointsAccessorFunction } from './helpers.js';
+export var moduleType = 'transform';
+export var name = 'groupby';
 
-var Lib = require('../lib');
-var PlotSchema = require('../plot_api/plot_schema');
-var Plots = require('../plots/plots');
-var pointsAccessorFunction = require('./helpers').pointsAccessorFunction;
-
-exports.moduleType = 'transform';
-
-exports.name = 'groupby';
-
-exports.attributes = {
+export var attributes = {
     enabled: {
         valType: 'boolean',
         dflt: true,
@@ -68,27 +64,12 @@ exports.attributes = {
     editType: 'calc'
 };
 
-/**
- * Supply transform attributes defaults
- *
- * @param {object} transformIn
- *  object linked to trace.transforms[i] with 'type' set to exports.name
- * @param {object} traceOut
- *  the _fullData trace this transform applies to
- * @param {object} layout
- *  the plot's (not-so-full) layout
- * @param {object} traceIn
- *  the input data trace this transform applies to
- *
- * @return {object} transformOut
- *  copy of transformIn that contains attribute defaults
- */
-exports.supplyDefaults = function(transformIn, traceOut, layout) {
+export var supplyDefaults = function(transformIn, traceOut, layout) {
     var i;
     var transformOut = {};
 
     function coerce(attr, dflt) {
-        return Lib.coerce(transformIn, transformOut, exports.attributes, attr, dflt);
+        return Lib.coerce(transformIn, transformOut, attributes, attr, dflt);
     }
 
     var enabled = coerce('enabled');
@@ -104,8 +85,8 @@ exports.supplyDefaults = function(transformIn, traceOut, layout) {
     if(styleIn) {
         for(i = 0; i < styleIn.length; i++) {
             var thisStyle = styleOut[i] = {};
-            Lib.coerce(styleIn[i], styleOut[i], exports.attributes.styles, 'target');
-            var value = Lib.coerce(styleIn[i], styleOut[i], exports.attributes.styles, 'value');
+            Lib.coerce(styleIn[i], styleOut[i], attributes.styles, 'target');
+            var value = Lib.coerce(styleIn[i], styleOut[i], attributes.styles, 'value');
 
             // so that you can edit value in place and have Plotly.react notice it, or
             // rebuild it every time and have Plotly.react NOT think it changed:
@@ -118,24 +99,7 @@ exports.supplyDefaults = function(transformIn, traceOut, layout) {
     return transformOut;
 };
 
-
-/**
- * Apply transform !!!
- *
- * @param {array} data
- *  array of transformed traces (is [fullTrace] upon first transform)
- *
- * @param {object} state
- *  state object which includes:
- *      - transform {object} full transform attributes
- *      - fullTrace {object} full trace object which is being transformed
- *      - fullData {array} full pre-transform(s) data array
- *      - layout {object} the plot's (not-so-full) layout
- *
- * @return {object} newData
- *  array of transformed traces
- */
-exports.transform = function(data, state) {
+export var transform = function(data, state) {
     var newTraces, i, j;
     var newData = [];
 
@@ -267,3 +231,5 @@ function transformOne(trace, state) {
 
     return newData;
 }
+
+export default { moduleType, name, attributes, supplyDefaults, transform };

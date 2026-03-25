@@ -1,18 +1,15 @@
-'use strict';
+import d3 from '@plotly/d3';
+import { getModuleCalcData } from '../../plots/get_data.js';
+import parcoordsPlot from './plot.js';
+import xmlnsNamespaces from '../../constants/xmlns_namespaces.js';
+export var name = 'parcoords';
 
-var d3 = require('@plotly/d3');
-var getModuleCalcData = require('../../plots/get_data').getModuleCalcData;
-var parcoordsPlot = require('./plot');
-var xmlnsNamespaces = require('../../constants/xmlns_namespaces');
-
-exports.name = 'parcoords';
-
-exports.plot = function(gd) {
+export var plot = function(gd) {
     var calcData = getModuleCalcData(gd.calcdata, 'parcoords')[0];
     if(calcData.length) parcoordsPlot(gd, calcData);
 };
 
-exports.clean = function(newFullData, newFullLayout, oldFullData, oldFullLayout) {
+export var clean = function(newFullData, newFullLayout, oldFullData, oldFullLayout) {
     var hadParcoords = (oldFullLayout._has && oldFullLayout._has('parcoords'));
     var hasParcoords = (newFullLayout._has && newFullLayout._has('parcoords'));
 
@@ -22,7 +19,7 @@ exports.clean = function(newFullData, newFullLayout, oldFullData, oldFullLayout)
     }
 };
 
-exports.toSVG = function(gd) {
+export var toSVG = function(gd) {
     var imageRoot = gd._fullLayout._glimages;
     var root = d3.select(gd).selectAll('.svg-container');
     var canvases = root.filter(function(d, i) {return i === root.size() - 1;})
@@ -55,3 +52,5 @@ exports.toSVG = function(gd) {
             .attr('id', 'filterBarPattern');
     }, 60);
 };
+
+export default { name, plot, clean, toSVG };

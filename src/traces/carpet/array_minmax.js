@@ -1,10 +1,8 @@
-'use strict';
+import { isArrayOrTypedArray } from '../../lib/index.js';
 
-var isArrayOrTypedArray = require('../../lib').isArrayOrTypedArray;
-
-module.exports = function(a) {
+export default function(a) {
     return minMax(a, 0);
-};
+}
 
 function minMax(a, depth) {
     // Limit to ten dimensional datasets. This seems *exceedingly* unlikely to

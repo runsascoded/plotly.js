@@ -1,19 +1,15 @@
-'use strict';
+import Lib from '../../lib/index.js';
+import AxisIDs from '../../plots/cartesian/axis_ids.js';
+import { calcMarkerSize } from '../scatter/calc.js';
+import { calcAxisExpansion } from '../scatter/calc.js';
+import calcColorscale from '../scatter/colorscale_calc.js';
+import { markerSelection as convertMarkerSelection } from '../scattergl/convert.js';
+import { markerStyle as convertMarkerStyle } from '../scattergl/convert.js';
+import sceneUpdate from './scene_update.js';
+import { BADNUM } from '../../constants/numerical.js';
+import { TOO_MANY_POINTS } from '../scattergl/constants.js';
 
-var Lib = require('../../lib');
-var AxisIDs = require('../../plots/cartesian/axis_ids');
-
-var calcMarkerSize = require('../scatter/calc').calcMarkerSize;
-var calcAxisExpansion = require('../scatter/calc').calcAxisExpansion;
-var calcColorscale = require('../scatter/colorscale_calc');
-var convertMarkerSelection = require('../scattergl/convert').markerSelection;
-var convertMarkerStyle = require('../scattergl/convert').markerStyle;
-var sceneUpdate = require('./scene_update');
-
-var BADNUM = require('../../constants/numerical').BADNUM;
-var TOO_MANY_POINTS = require('../scattergl/constants').TOO_MANY_POINTS;
-
-module.exports = function calc(gd, trace) {
+export default function calc(gd, trace) {
     var dimensions = trace.dimensions;
     var commonLength = trace._length;
     var opts = {};
@@ -98,4 +94,4 @@ module.exports = function calc(gd, trace) {
     scene.unselectedOptions = convertMarkerSelection(gd, trace, trace.unselected);
 
     return [{x: false, y: false, t: {}, trace: trace}];
-};
+}

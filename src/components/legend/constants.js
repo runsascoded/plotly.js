@@ -1,6 +1,4 @@
-'use strict';
-
-module.exports = {
+export default {
     scrollBarWidth: 6,
     scrollBarMinHeight: 20,
     scrollBarColor: '#808BA4',

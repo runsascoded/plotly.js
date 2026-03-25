@@ -1,12 +1,10 @@
-'use strict';
+import calcColorscale from '../scatter/colorscale_calc.js';
+import { calcMarkerSize } from '../scatter/calc.js';
+import convert from '../scattergl/convert.js';
+import Axes from '../../plots/cartesian/axes.js';
+import { TOO_MANY_POINTS } from '../scattergl/constants.js';
 
-var calcColorscale = require('../scatter/colorscale_calc');
-var calcMarkerSize = require('../scatter/calc').calcMarkerSize;
-var convert = require('../scattergl/convert');
-var Axes = require('../../plots/cartesian/axes');
-var TOO_MANY_POINTS = require('../scattergl/constants').TOO_MANY_POINTS;
-
-module.exports = function calc(gd, trace) {
+export default function calc(gd, trace) {
     var fullLayout = gd._fullLayout;
     var subplotId = trace.subplot;
     var radialAxis = fullLayout[subplotId].radialaxis;
@@ -39,4 +37,4 @@ module.exports = function calc(gd, trace) {
     trace._extremes.x = Axes.findExtremes(radialAxis, rArray, {ppad: ppad});
 
     return [{x: false, y: false, t: stash, trace: trace}];
-};
+}

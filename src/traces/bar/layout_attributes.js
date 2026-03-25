@@ -1,7 +1,4 @@
-'use strict';
-
-
-module.exports = {
+export default {
     barmode: {
         valType: 'enumerated',
         values: ['stack', 'group', 'overlay', 'relative'],

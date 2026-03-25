@@ -1,17 +1,15 @@
-'use strict';
+import Lib from '../../lib/index.js';
+import autorange from './autorange.js';
+import { id2name } from './axis_ids.js';
+import layoutAttributes from './layout_attributes.js';
+import scaleZoom from './scale_zoom.js';
+import setConvert from './set_convert.js';
+import _numerical from '../../constants/numerical.js';
+const { ALMOST_EQUAL } = _numerical;
+import _alignment from '../../constants/alignment.js';
+const { FROM_BL } = _alignment;
 
-var Lib = require('../../lib');
-
-var autorange = require('./autorange');
-var id2name = require('./axis_ids').id2name;
-var layoutAttributes = require('./layout_attributes');
-var scaleZoom = require('./scale_zoom');
-var setConvert = require('./set_convert');
-
-var ALMOST_EQUAL = require('../../constants/numerical').ALMOST_EQUAL;
-var FROM_BL = require('../../constants/alignment').FROM_BL;
-
-exports.handleDefaults = function(layoutIn, layoutOut, opts) {
+export var handleDefaults = function(layoutIn, layoutOut, opts) {
     var axIds = opts.axIds;
     var axHasImage = opts.axHasImage;
 
@@ -440,7 +438,7 @@ function finalRatios(group, fullLayout) {
     return out;
 }
 
-exports.enforce = function enforce(gd) {
+export var enforce = function enforce(gd) {
     var fullLayout = gd._fullLayout;
     var constraintGroups = fullLayout._axisConstraintGroups || [];
 
@@ -603,7 +601,7 @@ exports.enforce = function enforce(gd) {
     }
 };
 
-exports.getAxisGroup = function getAxisGroup(fullLayout, axId) {
+export var getAxisGroup = function getAxisGroup(fullLayout, axId) {
     var matchGroups = fullLayout._axisMatchGroups;
 
     for(var i = 0; i < matchGroups.length; i++) {
@@ -613,9 +611,7 @@ exports.getAxisGroup = function getAxisGroup(fullLayout, axId) {
     return axId;
 };
 
-// For use before autoranging, check if this axis was previously constrained
-// by domain but no longer is
-exports.clean = function clean(gd, ax) {
+export var clean = function clean(gd, ax) {
     if(ax._inputDomain) {
         var isConstrained = false;
         var axId = ax._id;
@@ -644,3 +640,5 @@ function updateDomain(ax, factor) {
     ];
     ax.setScale();
 }
+
+export default { handleDefaults, enforce, getAxisGroup, clean };

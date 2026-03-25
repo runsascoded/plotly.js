@@ -1,15 +1,13 @@
-'use strict';
+import Lib from '../../lib/index.js';
+import attributes from './attributes.js';
+import Color from '../../components/color/index.js';
+import tinycolor from 'tinycolor2';
+import { defaults as handleDomainDefaults } from '../../plots/domain.js';
+import handleHoverLabelDefaults from '../../components/fx/hoverlabel_defaults.js';
+import Template from '../../plot_api/plot_template.js';
+import handleArrayContainerDefaults from '../../plots/array_container_defaults.js';
 
-var Lib = require('../../lib');
-var attributes = require('./attributes');
-var Color = require('../../components/color');
-var tinycolor = require('tinycolor2');
-var handleDomainDefaults = require('../../plots/domain').defaults;
-var handleHoverLabelDefaults = require('../../components/fx/hoverlabel_defaults');
-var Template = require('../../plot_api/plot_template');
-var handleArrayContainerDefaults = require('../../plots/array_container_defaults');
-
-module.exports = function supplyDefaults(traceIn, traceOut, defaultColor, layout) {
+export default function supplyDefaults(traceIn, traceOut, defaultColor, layout) {
     function coerce(attr, dflt) {
         return Lib.coerce(traceIn, traceOut, attributes, attr, dflt);
     }
@@ -111,7 +109,7 @@ module.exports = function supplyDefaults(traceIn, traceOut, defaultColor, layout
     // disable 1D transforms - arrays here are 1D but their lengths/meanings
     // don't match, between nodes and links
     traceOut._length = null;
-};
+}
 
 function concentrationscalesDefaults(In, Out) {
     function coerce(attr, dflt) {

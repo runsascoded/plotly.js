@@ -1,12 +1,10 @@
-'use strict';
+import Axes from '../../plots/cartesian/axes.js';
+import alignPeriod from '../../plots/cartesian/align_period.js';
+import arraysToCalcdata from './arrays_to_calcdata.js';
+import calcSelection from '../scatter/calc_selection.js';
+import { BADNUM } from '../../constants/numerical.js';
 
-var Axes = require('../../plots/cartesian/axes');
-var alignPeriod = require('../../plots/cartesian/align_period');
-var arraysToCalcdata = require('./arrays_to_calcdata');
-var calcSelection = require('../scatter/calc_selection');
-var BADNUM = require('../../constants/numerical').BADNUM;
-
-module.exports = function calc(gd, trace) {
+export default function calc(gd, trace) {
     var xa = Axes.getFromId(gd, trace.xaxis || 'x');
     var ya = Axes.getFromId(gd, trace.yaxis || 'y');
     var size, pos, origPos, pObj, hasPeriod, pLetter, i, cdi;
@@ -91,7 +89,7 @@ module.exports = function calc(gd, trace) {
     calcSelection(cd, trace);
 
     return cd;
-};
+}
 
 function fixNum(a) {
     return (a === BADNUM) ? 0 : a;

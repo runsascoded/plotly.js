@@ -1,22 +1,19 @@
-'use strict';
-
-var fontAttrs = require('../../plots/font_attributes');
-var axisAttrs = require('./axis_attributes');
-var colorAttrs = require('../../components/color/attributes');
+import fontAttrs from '../../plots/font_attributes.js';
+import axisAttrs from './axis_attributes.js';
+import colorAttrs from '../../components/color/attributes.js';
+import { zorder } from '../scatter/attributes.js';
 
 var carpetFont = fontAttrs({
     editType: 'calc',
     description: 'The default font used for axis & tick labels on this carpet'
 });
 
-var zorder = require('../scatter/attributes').zorder;
-
 // TODO: inherit from global font
 carpetFont.family.dflt = '"Open Sans", verdana, arial, sans-serif';
 carpetFont.size.dflt = 12;
 carpetFont.color.dflt = colorAttrs.defaultLine;
 
-module.exports = {
+export default {
     carpet: {
         valType: 'string',
         editType: 'calc',

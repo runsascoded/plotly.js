@@ -1,9 +1,7 @@
-'use strict';
+import Registry from '../../registry.js';
+import { hover } from './hover.js';
 
-var Registry = require('../../registry');
-var hover = require('./hover').hover;
-
-module.exports = function click(gd, evt, subplot) {
+export default function click(gd, evt, subplot) {
     var annotationsDone = Registry.getComponentMethod('annotations', 'onClick')(gd, gd._hoverdata);
 
     // fallback to fail-safe in case the plot type's hover method doesn't pass the subplot.
@@ -24,4 +22,4 @@ module.exports = function click(gd, evt, subplot) {
         // why do we get a double event without this???
         if(evt.stopImmediatePropagation) evt.stopImmediatePropagation();
     }
-};
+}

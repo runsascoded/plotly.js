@@ -1,6 +1,4 @@
-'use strict';
-
-exports.dash = {
+export var dash = {
     valType: 'string',
     // string type usually doesn't take values... this one should really be
     // a special type or at least a special coercion function, from the GUI
@@ -16,7 +14,7 @@ exports.dash = {
     ].join(' ')
 };
 
-exports.pattern = {
+export var pattern = {
     shape: {
         valType: 'enumerated',
         values: ['', '/', '\\', 'x', '-', '|', '+', '.'],
@@ -110,3 +108,5 @@ exports.pattern = {
         'Sets the pattern within the marker.'
     ].join(' '),
 };
+
+export default { dash, pattern };

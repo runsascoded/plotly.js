@@ -1,13 +1,9 @@
-'use strict';
+import Lib from '../../lib/index.js';
+import handleSubplotDefaults from '../subplot_defaults.js';
+import handleArrayContainerDefaults from '../array_container_defaults.js';
+import layoutAttributes from './layout_attributes.js';
 
-var Lib = require('../../lib');
-
-var handleSubplotDefaults = require('../subplot_defaults');
-var handleArrayContainerDefaults = require('../array_container_defaults');
-var layoutAttributes = require('./layout_attributes');
-
-
-module.exports = function supplyLayoutDefaults(layoutIn, layoutOut, fullData) {
+export default function supplyLayoutDefaults(layoutIn, layoutOut, fullData) {
     handleSubplotDefaults(layoutIn, layoutOut, fullData, {
         type: 'mapbox',
         attributes: layoutAttributes,
@@ -15,7 +11,7 @@ module.exports = function supplyLayoutDefaults(layoutIn, layoutOut, fullData) {
         partition: 'y',
         accessToken: layoutOut._mapboxAccessToken
     });
-};
+}
 
 function handleDefaults(containerIn, containerOut, coerce, opts) {
     coerce('accesstoken', opts.accessToken);

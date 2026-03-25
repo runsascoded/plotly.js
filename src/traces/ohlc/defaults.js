@@ -1,11 +1,9 @@
-'use strict';
+import Lib from '../../lib/index.js';
+import handleOHLC from './ohlc_defaults.js';
+import handlePeriodDefaults from '../scatter/period_defaults.js';
+import attributes from './attributes.js';
 
-var Lib = require('../../lib');
-var handleOHLC = require('./ohlc_defaults');
-var handlePeriodDefaults = require('../scatter/period_defaults');
-var attributes = require('./attributes');
-
-module.exports = function supplyDefaults(traceIn, traceOut, defaultColor, layout) {
+export default function supplyDefaults(traceIn, traceOut, defaultColor, layout) {
     function coerce(attr, dflt) {
         return Lib.coerce(traceIn, traceOut, attributes, attr, dflt);
     }
@@ -36,7 +34,7 @@ module.exports = function supplyDefaults(traceIn, traceOut, defaultColor, layout
     layout._requestRangeslider[traceOut.xaxis] = true;
 
     coerce('zorder');
-};
+}
 
 function handleDirection(traceIn, traceOut, coerce, direction) {
     coerce(direction + '.line.color');

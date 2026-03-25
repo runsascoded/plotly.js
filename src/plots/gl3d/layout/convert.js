@@ -1,7 +1,5 @@
-'use strict';
-
-var str2RgbaArray = require('../../../lib/str2rgbarray');
-var Lib = require('../../../lib');
+import str2RgbaArray from '../../../lib/str2rgbarray.js';
+import Lib from '../../../lib/index.js';
 
 var AXES_NAMES = ['xaxis', 'yaxis', 'zaxis'];
 
@@ -157,11 +155,10 @@ proto.merge = function(fullLayout, sceneLayout) {
     }
 };
 
-
 function createAxesOptions(fullLayout, sceneLayout) {
     var result = new AxesOptions();
     result.merge(fullLayout, sceneLayout);
     return result;
 }
 
-module.exports = createAxesOptions;
+export default createAxesOptions;

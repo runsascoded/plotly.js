@@ -1,8 +1,6 @@
-'use strict';
-
-var Registry = require('../../registry');
-var Lib = require('../../lib');
-var getTraceColor = require('../scatter/get_trace_color');
+import Registry from '../../registry.js';
+import Lib from '../../lib/index.js';
+import getTraceColor from '../scatter/get_trace_color.js';
 
 function hoverPoints(pointData, xval, yval, hovermode) {
     var cd = pointData.cd;
@@ -216,7 +214,7 @@ function calcHover(pointData, x, y, trace) {
     return pointData2;
 }
 
-module.exports = {
+export default {
     hoverPoints: hoverPoints,
     calcHover: calcHover
 };

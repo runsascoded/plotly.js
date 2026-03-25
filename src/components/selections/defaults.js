@@ -1,13 +1,10 @@
-'use strict';
+import Lib from '../../lib/index.js';
+import Axes from '../../plots/cartesian/axes.js';
+import handleArrayContainerDefaults from '../../plots/array_container_defaults.js';
+import attributes from './attributes.js';
+import helpers from '../shapes/helpers.js';
 
-var Lib = require('../../lib');
-var Axes = require('../../plots/cartesian/axes');
-var handleArrayContainerDefaults = require('../../plots/array_container_defaults');
-
-var attributes = require('./attributes');
-var helpers = require('../shapes/helpers');
-
-module.exports = function supplyLayoutDefaults(layoutIn, layoutOut) {
+export default function supplyLayoutDefaults(layoutIn, layoutOut) {
     handleArrayContainerDefaults(layoutIn, layoutOut, {
         name: 'selections',
         handleItemDefaults: handleSelectionDefaults
@@ -32,7 +29,7 @@ module.exports = function supplyLayoutDefaults(layoutIn, layoutOut) {
             }
         }
     }
-};
+}
 
 function handleSelectionDefaults(selectionIn, selectionOut, fullLayout) {
     function coerce(attr, dflt) {

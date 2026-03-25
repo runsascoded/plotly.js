@@ -1,9 +1,6 @@
-'use strict';
-
-var d3 = require('@plotly/d3');
-
-var Lib = require('../../lib');
-var Drawing = require('../../components/drawing');
+import d3 from '@plotly/d3';
+import Lib from '../../lib/index.js';
+import Drawing from '../../components/drawing/index.js';
 
 // constants for dynamic jitter (ie less jitter for sparser points)
 var JITTERCOUNT = 5; // points either side of this to include
@@ -343,7 +340,7 @@ function plotBoxMean(sel, axes, trace, t) {
     });
 }
 
-module.exports = {
+export default {
     plot: plot,
     plotBoxAndWhiskers: plotBoxAndWhiskers,
     plotPoints: plotPoints,

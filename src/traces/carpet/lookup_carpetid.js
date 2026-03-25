@@ -1,9 +1,4 @@
-'use strict';
-
-/*
- * Given a trace, look up the carpet axis by carpet.
- */
-module.exports = function(gd, trace) {
+export default function(gd, trace) {
     var n = gd._fullData.length;
     var firstAxis;
     for(var i = 0; i < n; i++) {
@@ -23,4 +18,4 @@ module.exports = function(gd, trace) {
     }
 
     return firstAxis;
-};
+}

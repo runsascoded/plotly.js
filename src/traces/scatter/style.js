@@ -1,8 +1,6 @@
-'use strict';
-
-var d3 = require('@plotly/d3');
-var Drawing = require('../../components/drawing');
-var Registry = require('../../registry');
+import d3 from '@plotly/d3';
+import Drawing from '../../components/drawing/index.js';
+import Registry from '../../registry.js';
 
 function style(gd) {
     var s = d3.select(gd).selectAll('g.trace.scatter');
@@ -52,7 +50,7 @@ function styleOnSelect(gd, cd, sel) {
     }
 }
 
-module.exports = {
+export default {
     style: style,
     stylePoints: stylePoints,
     styleText: styleText,

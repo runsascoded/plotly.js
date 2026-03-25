@@ -1,20 +1,9 @@
-'use strict';
+import tinycolor from 'tinycolor2';
+var colorMix = tinycolor.mix;
+import colorAttrs from '../../components/color/attributes.js';
+import Lib from '../../lib/index.js';
 
-var colorMix = require('tinycolor2').mix;
-var colorAttrs = require('../../components/color/attributes');
-var Lib = require('../../lib');
-
-/**
- * @param {object} opts :
- *   - dfltColor {string} : default axis color
- *   - bgColor {string} : combined subplot bg color
- *   - blend {number, optional} : blend percentage (to compute dflt grid color)
- *   - showLine {boolean} : show line by default
- *   - showGrid {boolean} : show grid by default
- *   - noZeroLine {boolean} : don't coerce zeroline* attributes
- *   - attributes {object} : attribute object associated with input containers
- */
-module.exports = function handleLineGridDefaults(containerIn, containerOut, coerce, opts) {
+export default function handleLineGridDefaults(containerIn, containerOut, coerce, opts) {
     opts = opts || {};
 
     var dfltColor = opts.dfltColor;
@@ -78,4 +67,4 @@ module.exports = function handleLineGridDefaults(containerIn, containerOut, coer
             delete containerOut.zerolinewidth;
         }
     }
-};
+}

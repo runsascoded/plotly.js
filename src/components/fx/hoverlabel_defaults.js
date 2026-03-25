@@ -1,10 +1,8 @@
-'use strict';
+import Lib from '../../lib/index.js';
+import Color from '../color/index.js';
+import { isUnifiedHover } from './helpers.js';
 
-var Lib = require('../../lib');
-var Color = require('../color');
-var isUnifiedHover = require('./helpers').isUnifiedHover;
-
-module.exports = function handleHoverLabelDefaults(contIn, contOut, coerce, opts) {
+export default function handleHoverLabelDefaults(contIn, contOut, coerce, opts) {
     opts = opts || {};
 
     var hasLegend = contOut.legend;
@@ -39,4 +37,4 @@ module.exports = function handleHoverLabelDefaults(contIn, contOut, coerce, opts
     coerce('hoverlabel.showarrow', opts.showarrow);
     Lib.coerceFont(coerce, 'hoverlabel.font', opts.font);
     coerce('hoverlabel.align', opts.align);
-};
+}

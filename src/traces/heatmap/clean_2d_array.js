@@ -1,10 +1,8 @@
-'use strict';
+import isNumeric from 'fast-isnumeric';
+import Lib from '../../lib/index.js';
+import { BADNUM } from '../../constants/numerical.js';
 
-var isNumeric = require('fast-isnumeric');
-var Lib = require('../../lib');
-var BADNUM = require('../../constants/numerical').BADNUM;
-
-module.exports = function clean2dArray(zOld, trace, xa, ya) {
+export default function clean2dArray(zOld, trace, xa, ya) {
     var rowlen, collen, getCollen, old2new, i, j;
 
     function cleanZvalue(v) {
@@ -64,4 +62,4 @@ module.exports = function clean2dArray(zOld, trace, xa, ya) {
     }
 
     return zNew;
-};
+}

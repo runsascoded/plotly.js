@@ -1,13 +1,9 @@
-'use strict';
-
-var d3 = require('@plotly/d3');
-
-var Lib = require('../../lib');
-var geoUtils = require('../../lib/geo_location_utils');
-var getTopojsonFeatures = require('../../lib/topojson_utils').getTopojsonFeatures;
-var findExtremes = require('../../plots/cartesian/autorange').findExtremes;
-
-var style = require('./style').style;
+import d3 from '@plotly/d3';
+import Lib from '../../lib/index.js';
+import geoUtils from '../../lib/geo_location_utils.js';
+import { getTopojsonFeatures } from '../../lib/topojson_utils.js';
+import { findExtremes } from '../../plots/cartesian/autorange.js';
+import { style } from './style.js';
 
 function plot(gd, geo, calcData) {
     var choroplethLayer = geo.layers.backplot.select('.choroplethlayer');
@@ -72,7 +68,7 @@ function calcGeoJSON(calcTrace, fullLayout) {
     trace._extremes.lat = findExtremes(geoLayout.lataxis._ax, latArray, opts);
 }
 
-module.exports = {
+export default {
     calcGeoJSON: calcGeoJSON,
     plot: plot
 };

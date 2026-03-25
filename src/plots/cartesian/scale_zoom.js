@@ -1,8 +1,7 @@
-'use strict';
+import _alignment from '../../constants/alignment.js';
+const { FROM_BL } = _alignment;
 
-var FROM_BL = require('../../constants/alignment').FROM_BL;
-
-module.exports = function scaleZoom(ax, factor, centerFraction) {
+export default function scaleZoom(ax, factor, centerFraction) {
     if(centerFraction === undefined) {
         centerFraction = FROM_BL[ax.constraintoward || 'center'];
     }
@@ -15,4 +14,4 @@ module.exports = function scaleZoom(ax, factor, centerFraction) {
         ax.l2r(center + (rangeLinear[1] - center) * factor)
     ];
     ax.setScale();
-};
+}

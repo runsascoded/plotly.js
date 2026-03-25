@@ -1,18 +1,16 @@
-'use strict';
+import Lib from '../../lib/index.js';
+import Axes from '../../plots/cartesian/axes.js';
+import handleArrayContainerDefaults from '../../plots/array_container_defaults.js';
+import handleAnnotationCommonDefaults from '../annotations/common_defaults.js';
+import attributes from './attributes.js';
 
-var Lib = require('../../lib');
-var Axes = require('../../plots/cartesian/axes');
-var handleArrayContainerDefaults = require('../../plots/array_container_defaults');
-var handleAnnotationCommonDefaults = require('../annotations/common_defaults');
-var attributes = require('./attributes');
-
-module.exports = function handleDefaults(sceneLayoutIn, sceneLayoutOut, opts) {
+export default function handleDefaults(sceneLayoutIn, sceneLayoutOut, opts) {
     handleArrayContainerDefaults(sceneLayoutIn, sceneLayoutOut, {
         name: 'annotations',
         handleItemDefaults: handleAnnotationDefaults,
         fullLayout: opts.fullLayout
     });
-};
+}
 
 function handleAnnotationDefaults(annIn, annOut, sceneLayout, opts) {
     function coerce(attr, dflt) {
@@ -28,7 +26,6 @@ function handleAnnotationDefaults(annIn, annOut, sceneLayout, opts) {
 
         return Axes.coercePosition(annOut, gdMock, coerce, axLetter, axLetter, 0.5);
     }
-
 
     var visible = coerce('visible');
     if(!visible) return;

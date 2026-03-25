@@ -1,10 +1,8 @@
-'use strict';
-
-var Axes = require('../../plots/cartesian/axes');
-var alignPeriod = require('../../plots/cartesian/align_period');
-var mergeArray = require('../../lib').mergeArray;
-var calcSelection = require('../scatter/calc_selection');
-var BADNUM = require('../../constants/numerical').BADNUM;
+import Axes from '../../plots/cartesian/axes.js';
+import alignPeriod from '../../plots/cartesian/align_period.js';
+import { mergeArray } from '../../lib/index.js';
+import calcSelection from '../scatter/calc_selection.js';
+import { BADNUM } from '../../constants/numerical.js';
 
 function isAbsolute(a) {
     return (a === 'a' || a === 'absolute');
@@ -14,7 +12,7 @@ function isTotal(a) {
     return (a === 't' || a === 'total');
 }
 
-module.exports = function calc(gd, trace) {
+export default function calc(gd, trace) {
     var xa = Axes.getFromId(gd, trace.xaxis || 'x');
     var ya = Axes.getFromId(gd, trace.yaxis || 'y');
     var size, pos, origPos, pObj, hasPeriod, pLetter;
@@ -105,4 +103,4 @@ module.exports = function calc(gd, trace) {
     calcSelection(cd, trace);
 
     return cd;
-};
+}

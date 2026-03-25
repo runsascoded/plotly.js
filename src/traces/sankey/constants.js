@@ -1,6 +1,4 @@
-'use strict';
-
-module.exports = {
+export default {
     nodeTextOffsetHorizontal: 4,
     nodeTextOffsetVertical: 3,
     nodePadAcross: 10,

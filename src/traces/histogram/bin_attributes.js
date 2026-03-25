@@ -1,6 +1,4 @@
-'use strict';
-
-module.exports = function makeBinAttrs(axLetter, match) {
+export default function makeBinAttrs(axLetter, match) {
     return {
         start: {
             valType: 'any', // for date axes
@@ -60,4 +58,4 @@ module.exports = function makeBinAttrs(axLetter, match) {
         },
         editType: 'calc'
     };
-};
+}

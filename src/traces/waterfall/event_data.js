@@ -1,6 +1,4 @@
-'use strict';
-
-module.exports = function eventData(out, pt /* , trace, cd, pointNumber */) {
+export default function eventData(out, pt /* , trace, cd, pointNumber */) {
     // standard cartesian event data
     out.x = 'xVal' in pt ? pt.xVal : pt.x;
     out.y = 'yVal' in pt ? pt.yVal : pt.y;
@@ -14,4 +12,4 @@ module.exports = function eventData(out, pt /* , trace, cd, pointNumber */) {
     if(pt.ya) out.yaxis = pt.ya;
 
     return out;
-};
+}

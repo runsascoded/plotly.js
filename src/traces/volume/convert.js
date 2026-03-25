@@ -1,15 +1,11 @@
-'use strict';
-
-var createMesh = require('../../../stackgl_modules').gl_mesh3d;
-
-var parseColorScale = require('../../lib/gl_format_color').parseColorScale;
-var isArrayOrTypedArray = require('../../lib').isArrayOrTypedArray;
-var str2RgbaArray = require('../../lib/str2rgbarray');
-var extractOpts = require('../../components/colorscale').extractOpts;
-var zip3 = require('../../plots/gl3d/zip3');
-
-var findNearestOnAxis = require('../isosurface/convert').findNearestOnAxis;
-var generateIsoMeshes = require('../isosurface/convert').generateIsoMeshes;
+import { gl_mesh3d as createMesh } from '../../../stackgl_modules/index.js';
+import { parseColorScale } from '../../lib/gl_format_color.js';
+import { isArrayOrTypedArray } from '../../lib/index.js';
+import str2RgbaArray from '../../lib/str2rgbarray.js';
+import { extractOpts } from '../../components/colorscale/index.js';
+import zip3 from '../../plots/gl3d/zip3.js';
+import { findNearestOnAxis } from '../isosurface/convert.js';
+import { generateIsoMeshes } from '../isosurface/convert.js';
 
 function VolumeTrace(scene, mesh, uid) {
     this.scene = scene;
@@ -121,4 +117,4 @@ function createVolumeTrace(scene, data) {
     return result;
 }
 
-module.exports = createVolumeTrace;
+export default createVolumeTrace;

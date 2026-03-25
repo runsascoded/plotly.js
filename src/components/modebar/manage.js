@@ -1,24 +1,15 @@
-'use strict';
+import axisIds from '../../plots/cartesian/axis_ids.js';
+import scatterSubTypes from '../../traces/scatter/subtypes.js';
+import Registry from '../../registry.js';
+import { isUnifiedHover } from '../fx/helpers.js';
+import createModeBar from './modebar.js';
+import modeBarButtons from './buttons.js';
+import _constants from './constants.js';
+const { DRAW_MODES } = _constants;
+import _index from '../../lib/index.js';
+const { extendDeep } = _index;
 
-var axisIds = require('../../plots/cartesian/axis_ids');
-var scatterSubTypes = require('../../traces/scatter/subtypes');
-var Registry = require('../../registry');
-var isUnifiedHover = require('../fx/helpers').isUnifiedHover;
-
-var createModeBar = require('./modebar');
-var modeBarButtons = require('./buttons');
-var DRAW_MODES = require('./constants').DRAW_MODES;
-var extendDeep = require('../../lib').extendDeep;
-
-/**
- * ModeBar wrapper around 'create' and 'update',
- * chooses buttons to pass to ModeBar constructor based on
- * plot type and plot config.
- *
- * @param {object} gd main plot object
- *
- */
-module.exports = function manageModeBar(gd) {
+export default function manageModeBar(gd) {
     var fullLayout = gd._fullLayout;
     var context = gd._context;
     var modeBar = fullLayout._modeBar;
@@ -58,7 +49,7 @@ module.exports = function manageModeBar(gd) {
 
     if(modeBar) modeBar.update(gd, buttonGroups);
     else fullLayout._modeBar = createModeBar(gd, buttonGroups);
-};
+}
 
 // logic behind which buttons are displayed by default
 function getButtonGroups(gd) {

@@ -1,9 +1,8 @@
-'use strict';
-
-var getSubplotCalcData = require('../../plots/get_data').getSubplotCalcData;
-var counterRegex = require('../../lib').counterRegex;
-
-var createGeo = require('./geo');
+import { getSubplotCalcData } from '../../plots/get_data.js';
+import { counterRegex } from '../../lib/index.js';
+import createGeo from './geo.js';
+import _req0 from './layout_attributes.js';
+import _req1 from './layout_defaults.js';
 
 var GEO = 'geo';
 var counter = counterRegex(GEO);
@@ -75,15 +74,15 @@ function updateFx(gd) {
     }
 }
 
-module.exports = {
+export default {
     attr: GEO,
     name: GEO,
     idRoot: GEO,
     idRegex: counter,
     attrRegex: counter,
     attributes: attributes,
-    layoutAttributes: require('./layout_attributes'),
-    supplyLayoutDefaults: require('./layout_defaults'),
+    layoutAttributes: _req0,
+    supplyLayoutDefaults: _req1,
     plot: plotGeo,
     updateFx: updateFx,
     clean: clean

@@ -1,26 +1,23 @@
-'use strict';
-
-var d3 = require('@plotly/d3');
-var d3Hierarchy = require('d3-hierarchy');
-var interpolate = require('d3-interpolate').interpolate;
-
-var Drawing = require('../../components/drawing');
-var Lib = require('../../lib');
-var svgTextUtils = require('../../lib/svg_text_utils');
-var uniformText = require('../bar/uniform_text');
+import d3 from '@plotly/d3';
+import d3Hierarchy from 'd3-hierarchy';
+import { interpolate } from 'd3-interpolate';
+import Drawing from '../../components/drawing/index.js';
+import Lib from '../../lib/index.js';
+import svgTextUtils from '../../lib/svg_text_utils.js';
+import uniformText from '../bar/uniform_text.js';
+import piePlot from '../pie/plot.js';
+import { getRotationAngle } from '../pie/helpers.js';
+import { styleOne } from './style.js';
+import { resizeText } from '../bar/style.js';
+import attachFxHandlers from './fx.js';
+import constants from './constants.js';
+import helpers from './helpers.js';
 var recordMinTextSize = uniformText.recordMinTextSize;
 var clearMinTextSize = uniformText.clearMinTextSize;
-var piePlot = require('../pie/plot');
-var getRotationAngle = require('../pie/helpers').getRotationAngle;
 var computeTransform = piePlot.computeTransform;
 var transformInsideText = piePlot.transformInsideText;
-var styleOne = require('./style').styleOne;
-var resizeText = require('../bar/style').resizeText;
-var attachFxHandlers = require('./fx');
-var constants = require('./constants');
-var helpers = require('./helpers');
 
-exports.plot = function (gd, cdmodule, transitionOpts, makeOnCompleteCallback) {
+export var plot = function (gd, cdmodule, transitionOpts, makeOnCompleteCallback) {
     var fullLayout = gd._fullLayout;
     var layer = fullLayout._sunburstlayer;
     var join, onComplete;
@@ -288,7 +285,7 @@ function plotOne(gd, cd, element, transitionOpts) {
         var font = Lib.ensureUniformFontSize(gd, helpers.determineTextFont(trace, pt, fullLayout.font));
 
         sliceText
-            .text(exports.formatSliceLabel(pt, entry, trace, cd, fullLayout))
+            .text(formatSliceLabel(pt, entry, trace, cd, fullLayout))
             .classed('slicetext', true)
             .attr('text-anchor', 'middle')
             .call(Drawing.font, font)
@@ -526,7 +523,7 @@ function partition(entry) {
     return d3Hierarchy.partition().size([2 * Math.PI, entry.height + 1])(entry);
 }
 
-exports.formatSliceLabel = function (pt, entry, trace, cd, fullLayout) {
+export var formatSliceLabel = function (pt, entry, trace, cd, fullLayout) {
     var texttemplate = trace.texttemplate;
     var textinfo = trace.textinfo;
 
@@ -657,3 +654,5 @@ function getTextXY(d) {
 function getCoords(r, angle) {
     return [r * Math.sin(angle), -r * Math.cos(angle)];
 }
+
+export default { plot, formatSliceLabel };

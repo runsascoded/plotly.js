@@ -1,8 +1,5 @@
-'use strict';
-
-var constants = require('./constants');
-
-var fontAttrs = require('../../plots/font_attributes');
+import constants from './constants.js';
+import fontAttrs from '../../plots/font_attributes.js';
 
 var font = fontAttrs({
     editType: 'none',
@@ -11,7 +8,7 @@ var font = fontAttrs({
 font.family.dflt = constants.HOVERFONT;
 font.size.dflt = constants.HOVERFONTSIZE;
 
-module.exports = {
+export default {
     clickmode: {
         valType: 'flaglist',
         flags: ['event', 'select'],

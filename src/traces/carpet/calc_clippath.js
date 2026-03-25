@@ -1,6 +1,4 @@
-'use strict';
-
-module.exports = function makeClipPath(xctrl, yctrl, aax, bax) {
+export default function makeClipPath(xctrl, yctrl, aax, bax) {
     var i, x, y;
     var segments = [];
 
@@ -38,4 +36,4 @@ module.exports = function makeClipPath(xctrl, yctrl, aax, bax) {
     segments.push({x: x, y: y, bicubic: bsmoothing});
 
     return segments;
-};
+}

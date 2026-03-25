@@ -1,16 +1,12 @@
-'use strict';
+import isNumeric from 'fast-isnumeric';
+import { BADNUM } from '../../constants/numerical.js';
+import Axes from '../../plots/cartesian/axes.js';
+import calcColorscale from '../scatter/colorscale_calc.js';
+import arraysToCalcdata from '../scatter/arrays_to_calcdata.js';
+import calcSelection from '../scatter/calc_selection.js';
+import { calcMarkerSize } from '../scatter/calc.js';
 
-var isNumeric = require('fast-isnumeric');
-var BADNUM = require('../../constants/numerical').BADNUM;
-
-var Axes = require('../../plots/cartesian/axes');
-
-var calcColorscale = require('../scatter/colorscale_calc');
-var arraysToCalcdata = require('../scatter/arrays_to_calcdata');
-var calcSelection = require('../scatter/calc_selection');
-var calcMarkerSize = require('../scatter/calc').calcMarkerSize;
-
-module.exports = function calc(gd, trace) {
+export default function calc(gd, trace) {
     var fullLayout = gd._fullLayout;
     var subplotId = trace.subplot;
     var radialAxis = fullLayout[subplotId].radialaxis;
@@ -41,4 +37,4 @@ module.exports = function calc(gd, trace) {
     calcSelection(cd, trace);
 
     return cd;
-};
+}

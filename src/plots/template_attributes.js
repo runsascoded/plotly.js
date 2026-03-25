@@ -1,5 +1,5 @@
-'use strict';
-const { DATE_FORMAT_LINK, FORMAT_LINK } = require('../constants/docs');
+import _docs from '../constants/docs.js';
+const { DATE_FORMAT_LINK, FORMAT_LINK } = _docs;
 
 const MISSING_UNDEFINED_DESCRIPTION = [
     "Variables that can't be found will be replaced with the specifier.",
@@ -23,7 +23,7 @@ function templateFormatStringDescription({ supportOther } = {}) {
         MISSING_UNDEFINED_DESCRIPTION
     ].join(' ');
 }
-exports.templateFormatStringDescription = templateFormatStringDescription;
+export { templateFormatStringDescription };
 
 function describeVariables({ description, keys = [] }) {
     let descPart = description ? ' ' : '';
@@ -40,7 +40,7 @@ function describeVariables({ description, keys = [] }) {
     return descPart;
 }
 
-exports.hovertemplateAttrs = ({ editType = 'none', arrayOk } = {}, extra = {}) => ({
+export var hovertemplateAttrs = ({ editType = 'none', arrayOk } = {}, extra = {}) => ({
     valType: 'string',
     dflt: '',
     editType,
@@ -57,7 +57,7 @@ exports.hovertemplateAttrs = ({ editType = 'none', arrayOk } = {}, extra = {}) =
     ...(arrayOk !== false ? { arrayOk: true } : {})
 });
 
-exports.texttemplateAttrs = ({ editType = 'calc', arrayOk } = {}, extra = {}) => ({
+export var texttemplateAttrs = ({ editType = 'calc', arrayOk } = {}, extra = {}) => ({
     valType: 'string',
     dflt: '',
     editType,
@@ -71,7 +71,7 @@ exports.texttemplateAttrs = ({ editType = 'calc', arrayOk } = {}, extra = {}) =>
     ...(arrayOk !== false ? { arrayOk: true } : {})
 });
 
-exports.shapeTexttemplateAttrs = ({ editType = 'arraydraw', newshape } = {}, extra = {}) => ({
+export var shapeTexttemplateAttrs = ({ editType = 'arraydraw', newshape } = {}, extra = {}) => ({
     valType: 'string',
     dflt: '',
     editType,
@@ -95,7 +95,7 @@ exports.shapeTexttemplateAttrs = ({ editType = 'arraydraw', newshape } = {}, ext
     ].join(' ')
 });
 
-exports.templatefallbackAttrs = ({ editType = 'none' } = {}) => ({
+export var templatefallbackAttrs = ({ editType = 'none' } = {}) => ({
     valType: 'any',
     dflt: '-',
     editType,
@@ -104,3 +104,5 @@ exports.templatefallbackAttrs = ({ editType = 'none' } = {}) => ({
         "If the boolean value 'false' is passed in, the specifier with the missing variable will be displayed."
     ].join(' ')
 });
+
+export default { hovertemplateAttrs, texttemplateAttrs, shapeTexttemplateAttrs, templatefallbackAttrs, templateFormatStringDescription };

@@ -1,18 +1,15 @@
-'use strict';
+import Lib from '../../lib/index.js';
+import Axes from '../../plots/cartesian/axes.js';
+import handleArrayContainerDefaults from '../../plots/array_container_defaults.js';
+import attributes from './attributes.js';
+import helpers from './helpers.js';
 
-var Lib = require('../../lib');
-var Axes = require('../../plots/cartesian/axes');
-var handleArrayContainerDefaults = require('../../plots/array_container_defaults');
-
-var attributes = require('./attributes');
-var helpers = require('./helpers');
-
-module.exports = function supplyLayoutDefaults(layoutIn, layoutOut) {
+export default function supplyLayoutDefaults(layoutIn, layoutOut) {
     handleArrayContainerDefaults(layoutIn, layoutOut, {
         name: 'shapes',
         handleItemDefaults: handleShapeDefaults
     });
-};
+}
 
 function dfltLabelYanchor(isLine, labelTextPosition) {
     // If shape is a line, default y-anchor is 'bottom' (so that text is above line by default)

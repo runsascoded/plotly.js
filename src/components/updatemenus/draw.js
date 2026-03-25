@@ -1,20 +1,16 @@
-'use strict';
+import d3 from '@plotly/d3';
+import Plots from '../../plots/plots.js';
+import Color from '../color/index.js';
+import Drawing from '../drawing/index.js';
+import Lib from '../../lib/index.js';
+import svgTextUtils from '../../lib/svg_text_utils.js';
+import { arrayEditor } from '../../plot_api/plot_template.js';
+import _alignment from '../../constants/alignment.js';
+const { LINE_SPACING } = _alignment;
+import constants from './constants.js';
+import ScrollBox from './scrollbox.js';
 
-var d3 = require('@plotly/d3');
-
-var Plots = require('../../plots/plots');
-var Color = require('../color');
-var Drawing = require('../drawing');
-var Lib = require('../../lib');
-var svgTextUtils = require('../../lib/svg_text_utils');
-var arrayEditor = require('../../plot_api/plot_template').arrayEditor;
-
-var LINE_SPACING = require('../../constants/alignment').LINE_SPACING;
-
-var constants = require('./constants');
-var ScrollBox = require('./scrollbox');
-
-module.exports = function draw(gd) {
+export default function draw(gd) {
     var fullLayout = gd._fullLayout;
     var menuData = Lib.filterVisible(fullLayout[constants.name]);
 
@@ -126,7 +122,7 @@ module.exports = function draw(gd) {
             drawButtons(gd, gHeader, null, null, menuOpts);
         }
     });
-};
+}
 
 // Note that '_index' is set at the default step,
 // it corresponds to the menu index in the user layout update menu container.
@@ -533,7 +529,6 @@ function findDimensions(gd, menuOpts) {
     } else {
         dims.totalWidth -= constants.gapButton;
     }
-
 
     dims.headerWidth = dims.width1 + constants.arrowPadX;
     dims.headerHeight = dims.height1;

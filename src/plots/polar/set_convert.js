@@ -1,44 +1,10 @@
-'use strict';
-
-var Lib = require('../../lib');
-var setConvertCartesian = require('../cartesian/set_convert');
+import Lib from '../../lib/index.js';
+import setConvertCartesian from '../cartesian/set_convert.js';
 
 var deg2rad = Lib.deg2rad;
 var rad2deg = Lib.rad2deg;
 
-/**
- * setConvert for polar axes!
- *
- * @param {object} ax
- *   axis in question (works for both radial and angular axes)
- * @param {object} polarLayout
- *   full polar layout of the subplot associated with 'ax'
- * @param {object} fullLayout
- *   full layout
- *
- * Here, reuse some of the Cartesian setConvert logic,
- * but we must extend some of it, as both radial and angular axes
- * don't have domains and angular axes don't have _true_ ranges.
- *
- * Moreover, we introduce two new coordinate systems:
- * - 'g' for geometric coordinates and
- * - 't' for angular ticks
- *
- * Radial axis coordinate systems:
- * - d, c and l: same as for cartesian axes
- * - g: like calcdata but translated about `radialaxis.range[0]` & `polar.hole`
- *
- * Angular axis coordinate systems:
- * - d: data, in whatever form it's provided
- * - c: calcdata, turned into radians (for linear axes)
- *      or category indices (category axes)
- * - t: tick calcdata, just like 'c' but in degrees for linear axes
- * - g: geometric calcdata, radians coordinates that take into account
- *      axis rotation and direction
- *
- * Then, 'g'eometric data is ready to be converted to (x,y).
- */
-module.exports = function setConvert(ax, polarLayout, fullLayout) {
+export default function setConvert(ax, polarLayout, fullLayout) {
     setConvertCartesian(ax, fullLayout);
 
     switch(ax._id) {
@@ -50,7 +16,7 @@ module.exports = function setConvert(ax, polarLayout, fullLayout) {
             setConvertAngular(ax, polarLayout);
             break;
     }
-};
+}
 
 function setConvertRadial(ax, polarLayout) {
     var subplot = polarLayout._subplot;

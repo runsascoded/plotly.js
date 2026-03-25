@@ -1,8 +1,6 @@
-'use strict';
+import colorscaleCalc from '../../components/colorscale/calc.js';
 
-var colorscaleCalc = require('../../components/colorscale/calc');
-
-module.exports = function calc(gd, trace) {
+export default function calc(gd, trace) {
     var u = trace.u;
     var v = trace.v;
     var w = trace.w;
@@ -31,4 +29,4 @@ module.exports = function calc(gd, trace) {
         containerStr: '',
         cLetter: 'c'
     });
-};
+}

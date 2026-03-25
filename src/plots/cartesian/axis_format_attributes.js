@@ -1,6 +1,4 @@
-'use strict';
-
-var docs = require('../../constants/docs');
+import docs from '../../constants/docs.js';
 var FORMAT_LINK = docs.FORMAT_LINK;
 var DATE_FORMAT_LINK = docs.DATE_FORMAT_LINK;
 
@@ -40,7 +38,7 @@ function descriptionWithDates(label, x) {
     ].join(' ');
 }
 
-module.exports = {
+export default {
     axisHoverFormat: axisHoverFormat,
     descriptionOnlyNumbers: descriptionOnlyNumbers,
     descriptionWithDates: descriptionWithDates

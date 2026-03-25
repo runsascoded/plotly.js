@@ -1,7 +1,6 @@
-'use strict';
-
-var dateTick0 = require('../../lib').dateTick0;
-var numConstants = require('../../constants/numerical');
+import _index from '../../lib/index.js';
+const { dateTick0 } = _index;
+import numConstants from '../../constants/numerical.js';
 var ONEWEEK = numConstants.ONEWEEK;
 
 function getPeriod0Dflt(period, calendar) {
@@ -11,7 +10,7 @@ function getPeriod0Dflt(period, calendar) {
     return dateTick0(calendar, 0);
 }
 
-module.exports = function handlePeriodDefaults(traceIn, traceOut, layout, coerce, opts) {
+export default function handlePeriodDefaults(traceIn, traceOut, layout, coerce, opts) {
     if(!opts) {
         opts = {
             x: true,
@@ -34,4 +33,4 @@ module.exports = function handlePeriodDefaults(traceIn, traceOut, layout, coerce
             coerce('yperiodalignment');
         }
     }
-};
+}

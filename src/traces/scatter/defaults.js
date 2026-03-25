@@ -1,22 +1,20 @@
-'use strict';
+import Lib from '../../lib/index.js';
+import Registry from '../../registry.js';
+import attributes from './attributes.js';
+import constants from './constants.js';
+import subTypes from './subtypes.js';
+import handleXYDefaults from './xy_defaults.js';
+import handlePeriodDefaults from './period_defaults.js';
+import handleStackDefaults from './stack_defaults.js';
+import handleMarkerDefaults from './marker_defaults.js';
+import handleLineDefaults from './line_defaults.js';
+import handleLineShapeDefaults from './line_shape_defaults.js';
+import handleTextDefaults from './text_defaults.js';
+import handleFillColorDefaults from './fillcolor_defaults.js';
+import _index from '../../lib/index.js';
+const { coercePattern } = _index;
 
-var Lib = require('../../lib');
-var Registry = require('../../registry');
-
-var attributes = require('./attributes');
-var constants = require('./constants');
-var subTypes = require('./subtypes');
-var handleXYDefaults = require('./xy_defaults');
-var handlePeriodDefaults = require('./period_defaults');
-var handleStackDefaults = require('./stack_defaults');
-var handleMarkerDefaults = require('./marker_defaults');
-var handleLineDefaults = require('./line_defaults');
-var handleLineShapeDefaults = require('./line_shape_defaults');
-var handleTextDefaults = require('./text_defaults');
-var handleFillColorDefaults = require('./fillcolor_defaults');
-var coercePattern = require('../../lib').coercePattern;
-
-module.exports = function supplyDefaults(traceIn, traceOut, defaultColor, layout) {
+export default function supplyDefaults(traceIn, traceOut, defaultColor, layout) {
     function coerce(attr, dflt) {
         return Lib.coerce(traceIn, traceOut, attributes, attr, dflt);
     }
@@ -94,4 +92,4 @@ module.exports = function supplyDefaults(traceIn, traceOut, defaultColor, layout
     errorBarsSupplyDefaults(traceIn, traceOut, lineColor || markerColor || defaultColor, { axis: 'x', inherit: 'y' });
 
     Lib.coerceSelectionMarkerOpacity(traceOut, coerce);
-};
+}

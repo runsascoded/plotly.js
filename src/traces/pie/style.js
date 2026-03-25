@@ -1,11 +1,9 @@
-'use strict';
+import d3 from '@plotly/d3';
+import styleOne from './style_one.js';
+import _uniform_text from '../bar/uniform_text.js';
+const { resizeText } = _uniform_text;
 
-var d3 = require('@plotly/d3');
-
-var styleOne = require('./style_one');
-var resizeText = require('../bar/uniform_text').resizeText;
-
-module.exports = function style(gd) {
+export default function style(gd) {
     var s = gd._fullLayout._pielayer.selectAll('.trace');
     resizeText(gd, s, 'pie');
 
@@ -20,4 +18,4 @@ module.exports = function style(gd) {
             d3.select(this).call(styleOne, pt, trace, gd);
         });
     });
-};
+}

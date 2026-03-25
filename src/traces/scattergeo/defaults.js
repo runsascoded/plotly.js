@@ -1,14 +1,10 @@
-'use strict';
-
-var Lib = require('../../lib');
-
-var subTypes = require('../scatter/subtypes');
-var handleMarkerDefaults = require('../scatter/marker_defaults');
-var handleLineDefaults = require('../scatter/line_defaults');
-var handleTextDefaults = require('../scatter/text_defaults');
-var handleFillColorDefaults = require('../scatter/fillcolor_defaults');
-
-var attributes = require('./attributes');
+import Lib from '../../lib/index.js';
+import subTypes from '../scatter/subtypes.js';
+import handleMarkerDefaults from '../scatter/marker_defaults.js';
+import handleLineDefaults from '../scatter/line_defaults.js';
+import handleTextDefaults from '../scatter/text_defaults.js';
+import handleFillColorDefaults from '../scatter/fillcolor_defaults.js';
+import attributes from './attributes.js';
 
 const locationmodeBreakingChangeWarning = [
     'The library used by the *country names* `locationmode` option is changing in the next major version.',
@@ -16,7 +12,7 @@ const locationmodeBreakingChangeWarning = [
     'To ensure consistent behavior, consider setting `locationmode` to *ISO-3*.'
 ].join(' ');
 
-module.exports = function supplyDefaults(traceIn, traceOut, defaultColor, layout) {
+export default function supplyDefaults(traceIn, traceOut, defaultColor, layout) {
     function coerce(attr, dflt) {
         return Lib.coerce(traceIn, traceOut, attributes, attr, dflt);
     }
@@ -82,4 +78,4 @@ module.exports = function supplyDefaults(traceIn, traceOut, defaultColor, layout
     }
 
     Lib.coerceSelectionMarkerOpacity(traceOut, coerce);
-};
+}

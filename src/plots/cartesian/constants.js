@@ -1,8 +1,6 @@
-'use strict';
+import { counter as counterRegex } from '../../lib/regex.js';
 
-var counterRegex = require('../../lib/regex').counter;
-
-module.exports = {
+export default {
     idRegex: {
         x: counterRegex('x', '( domain)?'),
         y: counterRegex('y', '( domain)?')

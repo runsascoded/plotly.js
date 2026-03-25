@@ -1,8 +1,6 @@
-'use strict';
-
 var LINKEDFILLS = {tonextx: 1, tonexty: 1, tonext: 1};
 
-module.exports = function linkTraces(gd, plotinfo, cdscatter) {
+export default function linkTraces(gd, plotinfo, cdscatter) {
     var trace, i, group, prevtrace, groupIndex;
 
     // first sort traces to keep stacks & filled-together groups together
@@ -77,4 +75,4 @@ module.exports = function linkTraces(gd, plotinfo, cdscatter) {
     }
 
     return cdscatterSorted;
-};
+}

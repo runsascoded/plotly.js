@@ -1,9 +1,7 @@
-'use strict';
-
-var Axes = require('../../plots/cartesian/axes');
-var Lib = require('../../lib');
-var Fx = require('../../components/fx');
-var Color = require('../../components/color');
+import Axes from '../../plots/cartesian/axes.js';
+import Lib from '../../lib/index.js';
+import Fx from '../../components/fx/index.js';
+import Color from '../../components/color/index.js';
 var fillText = Lib.fillText;
 
 function hoverPoints(pointData, xval, yval, hovermode) {
@@ -287,7 +285,7 @@ function hoverOnPoints(pointData, xval, yval) {
     return closePtData;
 }
 
-module.exports = {
+export default {
     hoverPoints: hoverPoints,
     hoverOnBoxes: hoverOnBoxes,
     hoverOnPoints: hoverOnPoints

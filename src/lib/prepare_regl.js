@@ -1,24 +1,7 @@
-'use strict';
+import showNoWebGlMsg from './show_no_webgl_msg.js';
+import createRegl from '@plotly/regl';
 
-var showNoWebGlMsg = require('./show_no_webgl_msg');
-
-// Note that this module should be ONLY required into
-// files corresponding to regl trace modules
-// so that bundles with non-regl only don't include
-// regl and all its bytes.
-var createRegl = require('@plotly/regl');
-
-/**
- * Idempotent version of createRegl. Create regl instances
- * in the correct canvases with the correct attributes and
- * options
- *
- * @param {DOM node or object} gd : graph div object
- * @param {array} extensions : list of extension to pass to createRegl
- *
- * @return {boolean} true if all createRegl calls succeeded, false otherwise
- */
-module.exports = function prepareRegl(gd, extensions, reglPrecompiled) {
+export default function prepareRegl(gd, extensions, reglPrecompiled) {
     var fullLayout = gd._fullLayout;
     var success = true;
 
@@ -63,4 +46,4 @@ module.exports = function prepareRegl(gd, extensions, reglPrecompiled) {
         showNoWebGlMsg({container: fullLayout._glcontainer.node()});
     }
     return success;
-};
+}

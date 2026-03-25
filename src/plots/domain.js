@@ -1,29 +1,6 @@
-'use strict';
+import { extendFlat } from '../lib/extend.js';
 
-var extendFlat = require('../lib/extend').extendFlat;
-
-/**
- * Make a xy domain attribute group
- *
- * @param {object} opts
- *   @param {string}
- *     opts.name: name to be inserted in the default description
- *   @param {boolean}
- *     opts.trace: set to true for trace containers
- *   @param {string}
- *     opts.editType: editType for all pieces
- *   @param {boolean}
- *     opts.noGridCell: set to true to omit `row` and `column`
- *
- * @param {object} extra
- *   @param {string}
- *     extra.description: extra description. N.B we use
- *     a separate extra container to make it compatible with
- *     the compress_attributes transform.
- *
- * @return {object} attributes object containing {x,y} as specified
- */
-exports.attributes = function(opts, extra) {
+export var attributes = function(opts, extra) {
     opts = opts || {};
     extra = extra || {};
 
@@ -97,7 +74,7 @@ exports.attributes = function(opts, extra) {
     return out;
 };
 
-exports.defaults = function(containerOut, layout, coerce, dfltDomains) {
+export var defaults = function(containerOut, layout, coerce, dfltDomains) {
     var dfltX = (dfltDomains && dfltDomains.x) || [0, 1];
     var dfltY = (dfltDomains && dfltDomains.y) || [0, 1];
 
@@ -123,3 +100,5 @@ exports.defaults = function(containerOut, layout, coerce, dfltDomains) {
     if(!(x[0] < x[1])) containerOut.domain.x = dfltX.slice();
     if(!(y[0] < y[1])) containerOut.domain.y = dfltY.slice();
 };
+
+export default { attributes, defaults };

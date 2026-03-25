@@ -1,60 +1,15 @@
-'use strict';
-
-var colorbarAttrs = require('../colorbar/attributes');
-var counterRegex = require('../../lib/regex').counter;
-var sortObjectKeys = require('../../lib/sort_object_keys');
-
-var palettes = require('./scales.js').scales;
+import colorbarAttrs from '../colorbar/attributes.js';
+import { counter as counterRegex } from '../../lib/regex.js';
+import sortObjectKeys from '../../lib/sort_object_keys.js';
+import _scales from './scales.js';
+const { scales: palettes } = _scales;
 var paletteStr = sortObjectKeys(palettes);
 
 function code(s) {
     return '`' + s + '`';
 }
 
-/**
- * Make colorscale attribute declarations for
- *
- * - colorscale,
- * - (c|z)auto, (c|z)min, (c|z)max,
- * - autocolorscale, reversescale,
- * - showscale (optionally)
- * - color (optionally)
- *
- * @param {string} context (dflt: '', i.e. from trace root):
- *     the container this is in ('', *marker*, *marker.line* etc)
- *
- * @param {object} opts:
- *   - cLetter {string} (dflt: 'c'):
- *     leading letter for 'min', 'max and 'auto' attribute (either 'z' or 'c')
- *
- *   - colorAttr {string} (dflt: 'z' if `cLetter: 'z'`, 'color' if `cLetter: 'c'`):
- *     (for descriptions) sets the name of the color attribute that maps to the colorscale.
- *
- *     N.B. if `colorAttr: 'color'`, we include the `color` declaration here.
- *
- *   - onlyIfNumerical {string} (dflt: false' if `cLetter: 'z'`, true if `cLetter: 'c'`):
- *     (for descriptions) set to true if colorscale attribute only
- *
- *   - colorscaleDflt {string}:
- *     overrides the colorscale dflt
- *
- *   - autoColorDflt {boolean} (dflt true):
- *     normally autocolorscale.dflt is `true`, but pass `false` to override
- *
- *   - noScale {boolean} (dflt: true if `context: 'marker.line'`, false otherwise):
- *     set to `false` to not include showscale attribute (e.g. for 'marker.line')
- *
- *   - showScaleDflt {boolean} (dflt: true if `cLetter: 'z'`, false otherwise)
- *
- *   - editTypeOverride {boolean} (dflt: ''):
- *     most of these attributes already require a recalc, but the ones that do not
- *     have editType *style* or *plot* unless you override (presumably with *calc*)
- *
- *   - anim {boolean) (dflt: undefined): is 'color' animatable?
- *
- * @return {object}
- */
-module.exports = function colorScaleAttrs(context, opts) {
+export default function colorScaleAttrs(context, opts) {
     context = context || '';
     opts = opts || {};
 
@@ -240,4 +195,4 @@ module.exports = function colorScaleAttrs(context, opts) {
     }
 
     return attrs;
-};
+}

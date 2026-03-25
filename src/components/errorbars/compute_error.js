@@ -1,22 +1,4 @@
-'use strict';
-
-
-/**
- * Error bar computing function generator
- *
- * N.B. The generated function does not clean the dataPt entries. Non-numeric
- * entries result in undefined error magnitudes.
- *
- * @param {object} opts error bar attributes
- *
- * @return {function} :
- *      @param {numeric} dataPt data point from where to compute the error magnitude
- *      @param {number} index index of dataPt in its corresponding data array
- *      @return {array}
- *        - error[0] : error magnitude in the negative direction
- *        - error[1] : " " " " positive "
- */
-module.exports = function makeComputeError(opts) {
+export default function makeComputeError(opts) {
     var type = opts.type;
     var symmetric = opts.symmetric;
 
@@ -60,7 +42,7 @@ module.exports = function makeComputeError(opts) {
             };
         }
     }
-};
+}
 
 /**
  * Compute error bar magnitude (for all types except data)

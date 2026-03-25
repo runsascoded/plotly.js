@@ -1,22 +1,17 @@
-'use strict';
-
-var timeFormat = require('d3-time-format').timeFormat;
-var isNumeric = require('fast-isnumeric');
-
-var Loggers = require('./loggers');
-var mod = require('./mod').mod;
-
-var constants = require('../constants/numerical');
+import { timeFormat } from 'd3-time-format';
+import isNumeric from 'fast-isnumeric';
+import Loggers from './loggers.js';
+import _mod from './mod.js';
+const { mod } = _mod;
+import constants from '../constants/numerical.js';
+import Registry from '../registry.js';
+import { utcFormat } from 'd3-time-format';
 var BADNUM = constants.BADNUM;
 var ONEDAY = constants.ONEDAY;
 var ONEHOUR = constants.ONEHOUR;
 var ONEMIN = constants.ONEMIN;
 var ONESEC = constants.ONESEC;
 var EPOCHJD = constants.EPOCHJD;
-
-var Registry = require('../registry');
-
-var utcFormat = require('d3-time-format').utcFormat;
 
 var DATETIME_REGEXP = /^\s*(-?\d\d\d\d|\d\d)(-(\d?\d)(-(\d?\d)([ Tt]([01]?\d|2[0-3])(:([0-5]\d)(:([0-5]\d(\.\d+)?))?(Z|z|[+\-]\d\d(:?\d\d)?)?)?)?)?)?\s*$/m;
 // special regex for chinese calendars to support yyyy-mmi-dd etc for intercalary months
@@ -33,18 +28,13 @@ function isWorldCalendar(calendar) {
     );
 }
 
-/*
- * dateTick0: get the canonical tick for this calendar
- *
- * integer weekdays : Saturday: 0, Sunday: 1, Monday: 2, etc.
- */
-exports.dateTick0 = function(calendar, dayOfWeek) {
+export var dateTick0 = function(calendar, dayOfWeek) {
     var tick0 = _dateTick0(calendar, !!dayOfWeek);
     if(dayOfWeek < 2) return tick0;
 
-    var v = exports.dateTime2ms(tick0, calendar);
+    var v = dateTime2ms(tick0, calendar);
     v += ONEDAY * (dayOfWeek - 1); // shift Sunday to Monday, etc.
-    return exports.ms2DateTime(v, 0, calendar);
+    return ms2DateTime(v, 0, calendar);
 };
 
 /*
@@ -62,10 +52,7 @@ function _dateTick0(calendar, sunday) {
     }
 }
 
-/*
- * dfltRange: for each calendar, give a valid default range
- */
-exports.dfltRange = function(calendar) {
+export var dfltRange = function(calendar) {
     if(isWorldCalendar(calendar)) {
         return Registry.getComponentMethod('calendars', 'DFLTRANGE')[calendar];
     } else {
@@ -73,8 +60,7 @@ exports.dfltRange = function(calendar) {
     }
 };
 
-// is an object a javascript date?
-exports.isJSDate = function(v) {
+export var isJSDate = function(v) {
     return typeof v === 'object' && v !== null && typeof v.getTime === 'function';
 };
 
@@ -83,63 +69,9 @@ exports.isJSDate = function(v) {
 // but we use dateTime2ms to calculate them (after defining it!)
 var MIN_MS, MAX_MS;
 
-/**
- * dateTime2ms - turn a date object or string s into milliseconds
- * (relative to 1970-01-01, per javascript standard)
- * optional calendar (string) to use a non-gregorian calendar
- *
- * Returns BADNUM if it doesn't find a date
- *
- * strings should have the form:
- *
- *    -?YYYY-mm-dd<sep>HH:MM:SS.sss<tzInfo>?
- *
- * <sep>: space (our normal standard) or T or t (ISO-8601)
- * <tzInfo>: Z, z, [+\-]HH:?MM or [+\-]HH and we THROW IT AWAY
- * this format comes from https://tools.ietf.org/html/rfc3339#section-5.6
- * and 4.2.5.1 Difference between local time and UTC of day (ISO-8601)
- * but we allow it even with a space as the separator
- *
- * May truncate after any full field, and sss can be any length
- * even >3 digits, though javascript dates truncate to milliseconds,
- * we keep as much as javascript numeric precision can hold, but we only
- * report back up to 100 microsecond precision, because most dates support
- * this precision (close to 1970 support more, very far away support less)
- *
- * Expanded to support negative years to -9999 but you must always
- * give 4 digits, except for 2-digit positive years which we assume are
- * near the present time.
- * Note that we follow ISO 8601:2004: there *is* a year 0, which
- * is 1BC/BCE, and -1===2BC etc.
- *
- * World calendars: not all of these *have* agreed extensions to this full range,
- * if you have another calendar system but want a date range outside its validity,
- * you can use a gregorian date string prefixed with 'G' or 'g'.
- *
- * Where to cut off 2-digit years between 1900s and 2000s?
- * from https://docs.microsoft.com/en-us/office/troubleshoot/excel/two-digit-year-numbers#the-2029-rule:
- *   1930-2029 (the most retro of all...)
- * but in my mac chrome from eg. d=new Date(Date.parse('8/19/50')):
- *   1950-2049
- * by Java, from http://stackoverflow.com/questions/2024273/:
- *   now-80 - now+19
- * or FileMaker Pro, from
- *      https://fmhelp.filemaker.com/help/18/fmp/en/index.html#page/FMP_Help/dates-with-two-digit-years.html:
- *   now-70 - now+29
- * but python strptime etc, via
- *      http://docs.python.org/py3k/library/time.html:
- *   1969-2068 (super forward-looking, but static, not sliding!)
- *
- * lets go with now-70 to now+29, and if anyone runs into this problem
- * they can learn the hard way not to use 2-digit years, as no choice we
- * make now will cover all possibilities. mostly this will all be taken
- * care of in initial parsing, should only be an issue for hand-entered data
- * currently (2016) this range is:
- *   1946-2045
- */
-exports.dateTime2ms = function(s, calendar) {
+export var dateTime2ms = function(s, calendar) {
     // first check if s is a date object
-    if(exports.isJSDate(s)) {
+    if(isJSDate(s)) {
         // Convert to the UTC milliseconds that give the same
         // hours as this date has in the local timezone
         var tzOffset = s.getTimezoneOffset() * ONEMIN;
@@ -224,12 +156,11 @@ exports.dateTime2ms = function(s, calendar) {
     return date.getTime() + S * ONESEC;
 };
 
-MIN_MS = exports.MIN_MS = exports.dateTime2ms('-9999');
-MAX_MS = exports.MAX_MS = exports.dateTime2ms('9999-12-31 23:59:59.9999');
+MIN_MS = dateTime2ms('-9999');
+MAX_MS = dateTime2ms('9999-12-31 23:59:59.9999');
 
-// is string s a date? (see above)
-exports.isDateTime = function(s, calendar) {
-    return (exports.dateTime2ms(s, calendar) !== BADNUM);
+export var isDateTime = function(s, calendar) {
+    return (dateTime2ms(s, calendar) !== BADNUM);
 };
 
 // pad a number with zeroes, to given # of digits before the decimal point
@@ -248,7 +179,8 @@ function lpad(val, digits) {
 var NINETYDAYS = 90 * ONEDAY;
 var THREEHOURS = 3 * ONEHOUR;
 var FIVEMIN = 5 * ONEMIN;
-exports.ms2DateTime = function(ms, r, calendar) {
+
+export var ms2DateTime = function(ms, r, calendar) {
     if(typeof ms !== 'number' || !(ms >= MIN_MS && ms <= MAX_MS)) return BADNUM;
 
     if(!r) r = 0;
@@ -300,13 +232,7 @@ exports.ms2DateTime = function(ms, r, calendar) {
     return includeTime(dateStr, h, m, s, msec10);
 };
 
-// For converting old-style milliseconds to date strings,
-// we use the local timezone rather than UTC like we use
-// everywhere else, both for backward compatibility and
-// because that's how people mostly use javasript date objects.
-// Clip one extra day off our date range though so we can't get
-// thrown beyond the range by the timezone shift.
-exports.ms2DateTimeLocal = function(ms) {
+export var ms2DateTimeLocal = function(ms) {
     if(!(ms >= MIN_MS + ONEDAY && ms <= MAX_MS - ONEDAY)) return BADNUM;
 
     var msecTenths = Math.floor(mod(ms + 0.05, 1) * 10);
@@ -339,13 +265,10 @@ function includeTime(dateStr, h, m, s, msec10) {
     return dateStr;
 }
 
-// normalize date format to date string, in case it starts as
-// a Date object or milliseconds
-// optional dflt is the return value if cleaning fails
-exports.cleanDate = function(v, dflt, calendar) {
+export var cleanDate = function(v, dflt, calendar) {
     // let us use cleanDate to provide a missing default without an error
     if(v === BADNUM) return dflt;
-    if(exports.isJSDate(v) || (typeof v === 'number' && isFinite(v))) {
+    if(isJSDate(v) || (typeof v === 'number' && isFinite(v))) {
         // do not allow milliseconds (old) or jsdate objects (inherently
         // described as gregorian dates) with world calendars
         if(isWorldCalendar(calendar)) {
@@ -356,9 +279,9 @@ exports.cleanDate = function(v, dflt, calendar) {
         // NOTE: if someone puts in a year as a number rather than a string,
         // this will mistakenly convert it thinking it's milliseconds from 1970
         // that is: '2012' -> Jan. 1, 2012, but 2012 -> 2012 epoch milliseconds
-        v = exports.ms2DateTimeLocal(+v);
+        v = ms2DateTimeLocal(+v);
         if(!v && dflt !== undefined) return dflt;
-    } else if(!exports.isDateTime(v, calendar)) {
+    } else if(!isDateTime(v, calendar)) {
         Loggers.error('unrecognized date', v);
         return dflt;
     }
@@ -451,24 +374,7 @@ function formatTime(x, tr) {
     return timeStr;
 }
 
-/*
- * formatDate: turn a date into tick or hover label text.
- *
- *   x: milliseconds, the value to convert
- *   fmt: optional, an explicit format string (d3 format, even for world calendars)
- *   tr: tickround ('y', 'm', 'd', 'M', 'S', or # digits)
- *      used if no explicit fmt is provided
- *   formatter: locale-aware d3 date formatter for standard gregorian calendars
- *      should be the result of exports.getD3DateFormat(gd)
- *   calendar: optional string, the world calendar system to use
- *
- * returns the date/time as a string, potentially with the leading portion
- * on a separate line (after '\n')
- * Note that this means if you provide an explicit format which includes '\n'
- * the axis may choose to strip things after it when they don't change from
- * one tick to the next (as it does with automatic formatting)
- */
-exports.formatDate = function(x, fmt, tr, formatter, calendar, extraFormat) {
+export var formatDate = function(x, fmt, tr, formatter, calendar, extraFormat) {
     calendar = isWorldCalendar(calendar) && calendar;
 
     if(!fmt) {
@@ -511,7 +417,8 @@ exports.formatDate = function(x, fmt, tr, formatter, calendar, extraFormat) {
  * and ticks on these days incrementing by month would be very unusual
  */
 var THREEDAYS = 3 * ONEDAY;
-exports.incrementMonth = function(ms, dMonth, calendar) {
+
+export var incrementMonth = function(ms, dMonth, calendar) {
     calendar = isWorldCalendar(calendar) && calendar;
 
     // pull time out and operate on pure dates, then add time back at the end
@@ -540,13 +447,7 @@ exports.incrementMonth = function(ms, dMonth, calendar) {
     return y.setUTCMonth(y.getUTCMonth() + dMonth) + timeMs - THREEDAYS;
 };
 
-/*
- * findExactDates: what fraction of data is exact days, months, or years?
- *
- * data: array of millisecond values
- * calendar (string) the calendar to test against
- */
-exports.findExactDates = function(data, calendar) {
+export var findExactDates = function(data, calendar) {
     var exactYears = 0;
     var exactMonths = 0;
     var exactDays = 0;
@@ -600,3 +501,6 @@ exports.findExactDates = function(data, calendar) {
         exactDays: exactDays / dataCount
     };
 };
+
+export default { dateTick0, dfltRange, isJSDate, dateTime2ms, isDateTime, ms2DateTime, ms2DateTimeLocal, cleanDate, formatDate, incrementMonth, findExactDates };
+export { MIN_MS, MAX_MS };

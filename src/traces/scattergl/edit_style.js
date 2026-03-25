@@ -1,9 +1,6 @@
-'use strict';
-
-var Lib = require('../../lib');
-var Color = require('../../components/color');
-
-var DESELECTDIM = require('../../constants/interactions').DESELECTDIM;
+import Lib from '../../lib/index.js';
+import Color from '../../components/color/index.js';
+import { DESELECTDIM } from '../../constants/interactions.js';
 
 function styleTextSelection(cd) {
     var cd0 = cd[0];
@@ -41,6 +38,6 @@ function styleTextSelection(cd) {
     scene.glText[index].update(opts);
 }
 
-module.exports = {
+export default {
     styleTextSelection: styleTextSelection
 };

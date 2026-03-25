@@ -1,18 +1,8 @@
-'use strict';
-
-var Color = require('../components/color');
+import Color from '../components/color/index.js';
 
 var noop = function() {};
 
-
-/**
- * Prints a no webgl error message into the scene container
- * @param {scene instance} scene
- *
- * Expects 'scene' to have property 'container'
- *
- */
-module.exports = function showNoWebGlMsg(scene) {
+export default function showNoWebGlMsg(scene) {
     for(var prop in scene) {
         if(typeof scene[prop] === 'function') scene[prop] = noop;
     }
@@ -50,4 +40,4 @@ module.exports = function showNoWebGlMsg(scene) {
 
     // return before setting up camera and onrender methods
     return false;
-};
+}

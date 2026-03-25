@@ -1,13 +1,11 @@
-'use strict';
+import Lib from '../../lib/index.js';
+import constants from './constants.js';
+import isNumeric from 'fast-isnumeric';
+import Axes from '../../plots/cartesian/axes.js';
+import { maxRowLength } from '../../lib/index.js';
+import { getImageSize } from './helpers.js';
 
-var Lib = require('../../lib');
-var constants = require('./constants');
-var isNumeric = require('fast-isnumeric');
-var Axes = require('../../plots/cartesian/axes');
-var maxRowLength = require('../../lib').maxRowLength;
-var getImageSize = require('./helpers').getImageSize;
-
-module.exports = function calc(gd, trace) {
+export default function calc(gd, trace) {
     var h;
     var w;
     if(trace._hasZ) {
@@ -43,7 +41,7 @@ module.exports = function calc(gd, trace) {
         h: h
     };
     return [cd0];
-};
+}
 
 function scale(zero, ratio, min, max) {
     return function(c) {

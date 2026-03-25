@@ -1,10 +1,9 @@
-'use strict';
+import { list as listAxes } from '../../plots/cartesian/axis_ids.js';
+import _autorange from '../../plots/cartesian/autorange.js';
+const { getAutoRange } = _autorange;
+import constants from './constants.js';
 
-var listAxes = require('../../plots/cartesian/axis_ids').list;
-var getAutoRange = require('../../plots/cartesian/autorange').getAutoRange;
-var constants = require('./constants');
-
-module.exports = function calcAutorange(gd) {
+export default function calcAutorange(gd) {
     var axes = listAxes(gd, 'x', true);
 
     // Compute new slider range using axis autorange if necessary.
@@ -21,4 +20,4 @@ module.exports = function calcAutorange(gd) {
             opts._input.range = opts.range = getAutoRange(gd, ax);
         }
     }
-};
+}

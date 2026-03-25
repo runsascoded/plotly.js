@@ -1,14 +1,9 @@
-'use strict';
+import d3 from '@plotly/d3';
+import Drawing from '../../components/drawing/index.js';
+import heatmapStyle from '../heatmap/style.js';
+import makeColorMap from './make_color_map.js';
 
-var d3 = require('@plotly/d3');
-
-var Drawing = require('../../components/drawing');
-var heatmapStyle = require('../heatmap/style');
-
-var makeColorMap = require('./make_color_map');
-
-
-module.exports = function style(gd) {
+export default function style(gd) {
     var contours = d3.select(gd).selectAll('g.contour');
 
     contours.style('opacity', function(d) {
@@ -73,4 +68,4 @@ module.exports = function style(gd) {
     });
 
     heatmapStyle(gd);
-};
+}

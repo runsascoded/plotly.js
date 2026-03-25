@@ -1,9 +1,7 @@
-'use strict';
-
-var d3 = require('@plotly/d3');
-var loggers = require('./loggers');
-var matrix = require('./matrix');
-var mat4X4 = require('gl-mat4');
+import d3 from '@plotly/d3';
+import loggers from './loggers.js';
+import matrix from './matrix.js';
+import mat4X4 from 'gl-mat4';
 
 /**
  * Allow referencing a graph DOM element either directly
@@ -203,7 +201,8 @@ function equalDomRects(a, b) {
     );
 }
 
-module.exports = {
+export { addStyleRule };
+export default {
     getGraphDiv: getGraphDiv,
     isPlotDiv: isPlotDiv,
     removeElement: removeElement,

@@ -1,6 +1,4 @@
-'use strict';
-
-module.exports = function incrementNumeric(x, delta) {
+export default function incrementNumeric(x, delta) {
     if(!delta) return x;
 
     // Note 1:
@@ -28,4 +26,4 @@ module.exports = function incrementNumeric(x, delta) {
     }
 
     return newX;
-};
+}

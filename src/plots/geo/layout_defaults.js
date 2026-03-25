@@ -1,15 +1,12 @@
-'use strict';
-
-var Lib = require('../../lib');
-var handleSubplotDefaults = require('../subplot_defaults');
-var getSubplotData = require('../get_data').getSubplotData;
-
-var constants = require('./constants');
-var layoutAttributes = require('./layout_attributes');
+import Lib from '../../lib/index.js';
+import handleSubplotDefaults from '../subplot_defaults.js';
+import { getSubplotData } from '../get_data.js';
+import constants from './constants.js';
+import layoutAttributes from './layout_attributes.js';
 
 var axesNames = constants.axesNames;
 
-module.exports = function supplyLayoutDefaults(layoutIn, layoutOut, fullData) {
+export default function supplyLayoutDefaults(layoutIn, layoutOut, fullData) {
     handleSubplotDefaults(layoutIn, layoutOut, fullData, {
         type: 'geo',
         attributes: layoutAttributes,
@@ -17,7 +14,7 @@ module.exports = function supplyLayoutDefaults(layoutIn, layoutOut, fullData) {
         fullData: fullData,
         partition: 'y'
     });
-};
+}
 
 function handleGeoDefaults(geoLayoutIn, geoLayoutOut, coerce, opts) {
     var subplotData = getSubplotData(opts.fullData, 'geo', opts.id);

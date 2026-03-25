@@ -1,16 +1,13 @@
-'use strict';
+import histogramAttrs from '../histogram/attributes.js';
+import makeBinAttrs from '../histogram/bin_attributes.js';
+import heatmapAttrs from '../heatmap/attributes.js';
+import baseAttrs from '../../plots/attributes.js';
+import { axisHoverFormat } from '../../plots/cartesian/axis_format_attributes.js';
+import { hovertemplateAttrs, texttemplateAttrs, templatefallbackAttrs } from '../../plots/template_attributes.js';
+import colorScaleAttrs from '../../components/colorscale/attributes.js';
+import { extendFlat } from '../../lib/extend.js';
 
-var histogramAttrs = require('../histogram/attributes');
-var makeBinAttrs = require('../histogram/bin_attributes');
-var heatmapAttrs = require('../heatmap/attributes');
-var baseAttrs = require('../../plots/attributes');
-var axisHoverFormat = require('../../plots/cartesian/axis_format_attributes').axisHoverFormat;
-const { hovertemplateAttrs, texttemplateAttrs, templatefallbackAttrs } = require('../../plots/template_attributes');
-var colorScaleAttrs = require('../../components/colorscale/attributes');
-
-var extendFlat = require('../../lib/extend').extendFlat;
-
-module.exports = extendFlat(
+export default extendFlat(
     {
         x: histogramAttrs.x,
         y: histogramAttrs.y,

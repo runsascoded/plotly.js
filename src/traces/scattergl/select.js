@@ -1,9 +1,7 @@
-'use strict';
+import subTypes from '../scatter/subtypes.js';
+import { styleTextSelection } from './edit_style.js';
 
-var subTypes = require('../scatter/subtypes');
-var styleTextSelection = require('./edit_style').styleTextSelection;
-
-module.exports = function select(searchInfo, selectionTester) {
+export default function select(searchInfo, selectionTester) {
     var cd = searchInfo.cd;
     var xa = searchInfo.xaxis;
     var ya = searchInfo.yaxis;
@@ -68,4 +66,4 @@ module.exports = function select(searchInfo, selectionTester) {
     }
 
     return selection;
-};
+}

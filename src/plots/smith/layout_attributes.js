@@ -1,10 +1,8 @@
-'use strict';
-
-var colorAttrs = require('../../components/color/attributes');
-var axesAttrs = require('../cartesian/layout_attributes');
-var domainAttrs = require('../domain').attributes;
-var extendFlat = require('../../lib').extendFlat;
-var overrideAll = require('../../plot_api/edit_types').overrideAll;
+import colorAttrs from '../../components/color/attributes.js';
+import axesAttrs from '../cartesian/layout_attributes.js';
+import { attributes as domainAttrs } from '../domain.js';
+import { extendFlat } from '../../lib/index.js';
+import { overrideAll } from '../../plot_api/edit_types.js';
 
 var axisLineGridAttr = overrideAll({
     color: axesAttrs.color,
@@ -88,7 +86,7 @@ var imaginaryAxisAttrs = extendFlat({
     editType: 'calc'
 }, axisLineGridAttr, axisTickAttrs);
 
-module.exports = {
+export default {
     domain: domainAttrs({name: 'smith', editType: 'plot'}),
 
     bgcolor: {

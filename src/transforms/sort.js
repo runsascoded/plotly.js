@@ -1,16 +1,11 @@
-'use strict';
+import Lib from '../lib/index.js';
+import Axes from '../plots/cartesian/axes.js';
+import { pointsAccessorFunction } from './helpers.js';
+import { BADNUM } from '../constants/numerical.js';
+export var moduleType = 'transform';
+export var name = 'sort';
 
-var Lib = require('../lib');
-var Axes = require('../plots/cartesian/axes');
-var pointsAccessorFunction = require('./helpers').pointsAccessorFunction;
-
-var BADNUM = require('../constants/numerical').BADNUM;
-
-exports.moduleType = 'transform';
-
-exports.name = 'sort';
-
-exports.attributes = {
+export var attributes = {
     enabled: {
         valType: 'boolean',
         dflt: true,
@@ -51,11 +46,11 @@ exports.attributes = {
     editType: 'calc'
 };
 
-exports.supplyDefaults = function(transformIn) {
+export var supplyDefaults = function(transformIn) {
     var transformOut = {};
 
     function coerce(attr, dflt) {
-        return Lib.coerce(transformIn, transformOut, exports.attributes, attr, dflt);
+        return Lib.coerce(transformIn, transformOut, attributes, attr, dflt);
     }
 
     var enabled = coerce('enabled');
@@ -68,7 +63,7 @@ exports.supplyDefaults = function(transformIn) {
     return transformOut;
 };
 
-exports.calcTransform = function(gd, trace, opts) {
+export var calcTransform = function(gd, trace, opts) {
     if(!opts.enabled) return;
 
     var targetArray = Lib.getTargetArray(trace, opts);
@@ -152,3 +147,5 @@ function getSortFunc(opts, d2c) {
             };
     }
 }
+
+export default { moduleType, name, attributes, supplyDefaults, calcTransform };

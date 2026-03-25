@@ -1,36 +1,4 @@
-'use strict';
-
-/*
- * Evaluates the derivative of a list of control point arrays. That is, it expects an array or arrays
- * that are expanded relative to the raw data to include the bicubic control points, if applicable. If
- * only linear interpolation is desired, then the data points correspond 1-1 along that axis to the
- * data itself. Since it's catmull-rom splines in either direction note in particular that the
- * derivatives are discontinuous across cell boundaries. That's the reason you need both the *cell*
- * and the *point within the cell*.
- *
- * Also note that the discontinuity of the derivative is in magnitude only. The direction *is*
- * continuous across cell boundaries.
- *
- * For example, to compute the derivative of the xcoordinate halfway between the 7 and 8th i-gridpoints
- * and the 10th and 11th j-gridpoints given bicubic smoothing in both dimensions, you'd write:
- *
- *     var deriv = createIDerivativeEvaluator([x], 1, 1);
- *
- *     var dxdi = deriv([], 7, 10, 0.5, 0.5);
- *     // => [0.12345]
- *
- * Since there'd be a bunch of duplicate computation to compute multiple derivatives, you can double
- * this up by providing more arrays:
- *
- *     var deriv = createIDerivativeEvaluator([x, y], 1, 1);
- *
- *     var dxdi = deriv([], 7, 10, 0.5, 0.5);
- *     // => [0.12345, 0.78910]
- *
- * NB: It's presumed that at this point all data has been sanitized and is valid numerical data arrays
- * of the correct dimension.
- */
-module.exports = function(arrays, asmoothing, bsmoothing) {
+export default function(arrays, asmoothing, bsmoothing) {
     if(asmoothing && bsmoothing) {
         return function(out, i0, j0, u, v) {
             if(!out) out = [];
@@ -139,4 +107,4 @@ module.exports = function(arrays, asmoothing, bsmoothing) {
             return out;
         };
     }
-};
+}

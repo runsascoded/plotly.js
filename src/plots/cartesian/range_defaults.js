@@ -1,8 +1,6 @@
-'use strict';
+import handleAutorangeOptionsDefaults from './autorange_options_defaults.js';
 
-var handleAutorangeOptionsDefaults = require('./autorange_options_defaults');
-
-module.exports = function handleRangeDefaults(containerIn, containerOut, coerce, options) {
+export default function handleRangeDefaults(containerIn, containerOut, coerce, options) {
     var axTemplate = containerOut._template || {};
     var axType = containerOut.type || axTemplate.type || '-';
 
@@ -58,4 +56,4 @@ module.exports = function handleRangeDefaults(containerIn, containerOut, coerce,
     }
 
     containerOut.cleanRange();
-};
+}

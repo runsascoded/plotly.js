@@ -1,16 +1,13 @@
-'use strict';
-
-var Lib = require('../../lib');
-var attributes = require('./attributes');
-var handleDomainDefaults = require('../../plots/domain').defaults;
-var Template = require('../../plot_api/plot_template');
-var handleArrayContainerDefaults = require('../../plots/array_container_defaults');
-var cn = require('./constants.js');
-
-var handleTickValueDefaults = require('../../plots/cartesian/tick_value_defaults');
-var handleTickMarkDefaults = require('../../plots/cartesian/tick_mark_defaults');
-var handleTickLabelDefaults = require('../../plots/cartesian/tick_label_defaults');
-var handlePrefixSuffixDefaults = require('../../plots/cartesian/prefix_suffix_defaults');
+import Lib from '../../lib/index.js';
+import attributes from './attributes.js';
+import { defaults as handleDomainDefaults } from '../../plots/domain.js';
+import Template from '../../plot_api/plot_template.js';
+import handleArrayContainerDefaults from '../../plots/array_container_defaults.js';
+import cn from './constants.js';
+import handleTickValueDefaults from '../../plots/cartesian/tick_value_defaults.js';
+import handleTickMarkDefaults from '../../plots/cartesian/tick_mark_defaults.js';
+import handleTickLabelDefaults from '../../plots/cartesian/tick_label_defaults.js';
+import handlePrefixSuffixDefaults from '../../plots/cartesian/prefix_suffix_defaults.js';
 
 function supplyDefaults(traceIn, traceOut, defaultColor, layout) {
     function coerce(attr, dflt) {
@@ -162,6 +159,6 @@ function stepDefaults(stepIn, stepOut) {
     coerce('thickness');
 }
 
-module.exports = {
+export default {
     supplyDefaults: supplyDefaults
 };

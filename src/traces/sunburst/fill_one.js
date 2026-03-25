@@ -1,9 +1,7 @@
-'use strict';
+import Drawing from '../../components/drawing/index.js';
+import Color from '../../components/color/index.js';
 
-var Drawing = require('../../components/drawing');
-var Color = require('../../components/color');
-
-module.exports = function fillOne(s, pt, trace, gd, fadedColor) {
+export default function fillOne(s, pt, trace, gd, fadedColor) {
     var cdi = pt.data.data;
     var ptNumber = cdi.i;
 
@@ -27,4 +25,4 @@ module.exports = function fillOne(s, pt, trace, gd, fadedColor) {
     } else {
         Color.fill(s, color);
     }
-};
+}

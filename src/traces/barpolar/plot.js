@@ -1,13 +1,10 @@
-'use strict';
+import d3 from '@plotly/d3';
+import isNumeric from 'fast-isnumeric';
+import Lib from '../../lib/index.js';
+import Drawing from '../../components/drawing/index.js';
+import helpers from '../../plots/polar/helpers.js';
 
-var d3 = require('@plotly/d3');
-var isNumeric = require('fast-isnumeric');
-
-var Lib = require('../../lib');
-var Drawing = require('../../components/drawing');
-var helpers = require('../../plots/polar/helpers');
-
-module.exports = function plot(gd, subplot, cdbar) {
+export default function plot(gd, subplot, cdbar) {
     var isStatic = gd._context.staticPlot;
     var xa = subplot.xaxis;
     var ya = subplot.yaxis;
@@ -68,7 +65,7 @@ module.exports = function plot(gd, subplot, cdbar) {
             gd
         );
     });
-};
+}
 
 function makePathFn(subplot) {
     var cxx = subplot.cxx;

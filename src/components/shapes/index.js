@@ -1,17 +1,20 @@
-'use strict';
+import drawModule from './draw.js';
+import _req0 from './attributes.js';
+import _req1 from './defaults.js';
+import _req2 from './draw_newshape/defaults.js';
+import _req3 from '../../plots/cartesian/include_components.js';
+import _req4 from './calc_autorange.js';
 
-var drawModule = require('./draw');
-
-module.exports = {
+export default {
     moduleType: 'component',
     name: 'shapes',
 
-    layoutAttributes: require('./attributes'),
-    supplyLayoutDefaults: require('./defaults'),
-    supplyDrawNewShapeDefaults: require('./draw_newshape/defaults'),
-    includeBasePlot: require('../../plots/cartesian/include_components')('shapes'),
+    layoutAttributes: _req0,
+    supplyLayoutDefaults: _req1,
+    supplyDrawNewShapeDefaults: _req2,
+    includeBasePlot: _req3('shapes'),
 
-    calcAutorange: require('./calc_autorange'),
+    calcAutorange: _req4,
     draw: drawModule.draw,
     drawOne: drawModule.drawOne
 };

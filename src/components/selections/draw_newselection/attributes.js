@@ -1,9 +1,7 @@
-'use strict';
+import { dash } from '../../drawing/attributes.js';
+import { extendFlat } from '../../../lib/extend.js';
 
-var dash = require('../../drawing/attributes').dash;
-var extendFlat = require('../../../lib/extend').extendFlat;
-
-module.exports = {
+export default {
     newselection: {
         mode: {
             valType: 'enumerated',

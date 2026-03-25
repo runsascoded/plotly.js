@@ -1,6 +1,4 @@
-'use strict';
-
-module.exports = function makePath(xp, yp, isBicubic) {
+export default function makePath(xp, yp, isBicubic) {
     // Prevent d3 errors that would result otherwise:
     if(xp.length === 0) return '';
 
@@ -19,4 +17,4 @@ module.exports = function makePath(xp, yp, isBicubic) {
         }
     }
     return path.join(isBicubic ? '' : 'L');
-};
+}

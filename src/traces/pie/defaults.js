@@ -1,11 +1,11 @@
-'use strict';
-
-var isNumeric = require('fast-isnumeric');
-var Lib = require('../../lib');
-var attributes = require('./attributes');
-var handleDomainDefaults = require('../../plots/domain').defaults;
-var handleText = require('../bar/defaults').handleText;
-var coercePattern = require('../../lib').coercePattern;
+import isNumeric from 'fast-isnumeric';
+import Lib from '../../lib/index.js';
+import attributes from './attributes.js';
+import { defaults as handleDomainDefaults } from '../../plots/domain.js';
+import _defaults from '../bar/defaults.js';
+const { handleText } = _defaults;
+import _index from '../../lib/index.js';
+const { coercePattern } = _index;
 
 function handleLabelsAndValues(labels, values) {
     var hasLabels = Lib.isArrayOrTypedArray(labels);
@@ -128,7 +128,7 @@ function supplyDefaults(traceIn, traceOut, defaultColor, layout) {
     coerce('pull');
 }
 
-module.exports = {
+export default {
     handleLabelsAndValues: handleLabelsAndValues,
     handleMarkerDefaults: handleMarkerDefaults,
     supplyDefaults: supplyDefaults

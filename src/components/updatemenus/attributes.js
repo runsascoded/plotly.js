@@ -1,11 +1,10 @@
-'use strict';
-
-var fontAttrs = require('../../plots/font_attributes');
-var colorAttrs = require('../color/attributes');
-var extendFlat = require('../../lib/extend').extendFlat;
-var overrideAll = require('../../plot_api/edit_types').overrideAll;
-var padAttrs = require('../../plots/pad_attributes');
-var templatedArray = require('../../plot_api/plot_template').templatedArray;
+import fontAttrs from '../../plots/font_attributes.js';
+import colorAttrs from '../color/attributes.js';
+import { extendFlat } from '../../lib/extend.js';
+import _edit_types from '../../plot_api/edit_types.js';
+const { overrideAll } = _edit_types;
+import padAttrs from '../../plots/pad_attributes.js';
+import { templatedArray } from '../../plot_api/plot_template.js';
 
 var buttonsAttrs = templatedArray('button', {
     visible: {
@@ -70,7 +69,7 @@ var buttonsAttrs = templatedArray('button', {
     }
 });
 
-module.exports = overrideAll(templatedArray('updatemenu', {
+export default overrideAll(templatedArray('updatemenu', {
     _arrayAttrRegexps: [/^updatemenus\[(0|[1-9][0-9]+)\]\.buttons/],
 
     visible: {

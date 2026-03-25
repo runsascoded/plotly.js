@@ -1,10 +1,7 @@
-'use strict';
+import Lib from '../../lib/index.js';
+import layoutAttributes from './layout_attributes.js';
 
-var Lib = require('../../lib');
-
-var layoutAttributes = require('./layout_attributes');
-
-module.exports = function(layoutIn, layoutOut) {
+export default function(layoutIn, layoutOut) {
     function coerce(attr, dflt) {
         return Lib.coerce(layoutIn, layoutOut, layoutAttributes, attr, dflt);
     }
@@ -14,4 +11,4 @@ module.exports = function(layoutIn, layoutOut) {
     if(layoutOut.scattermode === 'group') {
         coerce('scattergap', groupBarmode ? layoutOut.bargap : 0.2);
     }
-};
+}

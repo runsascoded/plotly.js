@@ -1,14 +1,10 @@
-'use strict';
+import isNumeric from 'fast-isnumeric';
+import { isArrayOrTypedArray } from '../../lib/index.js';
+import { BADNUM } from '../../constants/numerical.js';
+import colorscaleCalc from '../../components/colorscale/calc.js';
+import { _ } from '../../lib/index.js';
 
-var isNumeric = require('fast-isnumeric');
-
-var isArrayOrTypedArray = require('../../lib').isArrayOrTypedArray;
-var BADNUM = require('../../constants/numerical').BADNUM;
-
-var colorscaleCalc = require('../../components/colorscale/calc');
-var _ = require('../../lib')._;
-
-module.exports = function calc(gd, trace) {
+export default function calc(gd, trace) {
     var len = trace._length;
     var calcTrace = new Array(len);
     var z = trace.z;
@@ -46,4 +42,4 @@ module.exports = function calc(gd, trace) {
     }
 
     return calcTrace;
-};
+}

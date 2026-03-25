@@ -1,15 +1,15 @@
-'use strict';
+import { isTypedArray } from '../../lib/index.js';
 
-var isTypedArray = require('../../lib').isTypedArray;
-
-exports.convertTypedArray = function(a) {
+export var convertTypedArray = function(a) {
     return isTypedArray(a) ? Array.prototype.slice.call(a) : a;
 };
 
-exports.isOrdinal = function(dimension) {
+export var isOrdinal = function(dimension) {
     return !!dimension.tickvals;
 };
 
-exports.isVisible = function(dimension) {
+export var isVisible = function(dimension) {
     return dimension.visible || !('visible' in dimension);
 };
+
+export default { convertTypedArray, isOrdinal, isVisible };

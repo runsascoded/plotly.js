@@ -1,25 +1,7 @@
-'use strict';
+import Registry from '../registry.js';
+import Lib from '../lib/index.js';
 
-var Registry = require('../registry');
-var Lib = require('../lib');
-
-/*
- * Create or update an observer. This function is designed to be
- * idempotent so that it can be called over and over as the component
- * updates, and will attach and detach listeners as needed.
- *
- * @param {optional object} container
- *      An object on which the observer is stored. This is the mechanism
- *      by which it is idempotent. If it already exists, another won't be
- *      added. Each time it's called, the value lookup table is updated.
- * @param {array} commandList
- *      An array of commands, following either `buttons` of `updatemenus`
- *      or `steps` of `sliders`.
- * @param {function} onchange
- *      A listener called when the value is changed. Receives data object
- *      with information about the new state.
- */
-exports.manageCommandObserver = function(gd, container, commandList, onchange) {
+export var manageCommandObserver = function(gd, container, commandList, onchange) {
     var ret = {};
     var enabled = true;
 
@@ -34,7 +16,7 @@ exports.manageCommandObserver = function(gd, container, commandList, onchange) {
     // Either create or just recompute this:
     ret.lookupTable = {};
 
-    var binding = exports.hasSimpleAPICommandBindings(gd, commandList, ret.lookupTable);
+    var binding = hasSimpleAPICommandBindings(gd, commandList, ret.lookupTable);
 
     if(container && container._commandObserver) {
         if(!binding) {
@@ -124,16 +106,7 @@ exports.manageCommandObserver = function(gd, container, commandList, onchange) {
     return ret;
 };
 
-/*
- * This function checks to see if an array of objects containing
- * method and args properties is compatible with automatic two-way
- * binding. The criteria right now are that
- *
- *   1. multiple traces may be affected
- *   2. only one property may be affected
- *   3. the same property must be affected by all commands
- */
-exports.hasSimpleAPICommandBindings = function(gd, commandList, bindingsByValue) {
+export var hasSimpleAPICommandBindings = function(gd, commandList, bindingsByValue) {
     var i;
     var n = commandList.length;
 
@@ -151,7 +124,7 @@ exports.hasSimpleAPICommandBindings = function(gd, commandList, bindingsByValue)
         if(!method) {
             return false;
         }
-        var bindings = exports.computeAPICommandBindings(gd, method, args);
+        var bindings = computeAPICommandBindings(gd, method, args);
 
         // Right now, handle one and *only* one property being set:
         if(bindings.length !== 1) {
@@ -239,18 +212,7 @@ function bindingValueHasChanged(gd, binding, cache) {
     };
 }
 
-/*
- * Execute an API command. There's really not much to this; it just provides
- * a common hook so that implementations don't need to be synchronized across
- * multiple components with the ability to invoke API commands.
- *
- * @param {string} method
- *      The name of the plotly command to execute. Must be one of 'animate',
- *      'restyle', 'relayout', 'update'.
- * @param {array} args
- *      A list of arguments passed to the API command
- */
-exports.executeAPICommand = function(gd, method, args) {
+export var executeAPICommand = function(gd, method, args) {
     if(method === 'skip') return Promise.resolve();
 
     var _method = Registry.apiMethodRegistry[method];
@@ -267,7 +229,7 @@ exports.executeAPICommand = function(gd, method, args) {
     });
 };
 
-exports.computeAPICommandBindings = function(gd, method, args) {
+export var computeAPICommandBindings = function(gd, method, args) {
     var bindings;
 
     if(!Array.isArray(args)) args = [];
@@ -415,3 +377,5 @@ function crawl(attrs, callback, path, depth) {
         }
     });
 }
+
+export default { manageCommandObserver, hasSimpleAPICommandBindings, executeAPICommand, computeAPICommandBindings };

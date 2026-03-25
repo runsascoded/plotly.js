@@ -1,10 +1,9 @@
-'use strict';
-
-var drawRaw = require('../annotations/draw').drawRaw;
-var project = require('../../plots/gl3d/project');
+import _draw from '../annotations/draw.js';
+const { drawRaw } = _draw;
+import project from '../../plots/gl3d/project.js';
 var axLetters = ['x', 'y', 'z'];
 
-module.exports = function draw(scene) {
+export default function draw(scene) {
     var fullSceneLayout = scene.fullSceneLayout;
     var dataScale = scene.dataScale;
     var anns = fullSceneLayout.annotations;
@@ -39,4 +38,4 @@ module.exports = function draw(scene) {
             drawRaw(scene.graphDiv, ann, i, scene.id, ann._xa, ann._ya);
         }
     }
-};
+}

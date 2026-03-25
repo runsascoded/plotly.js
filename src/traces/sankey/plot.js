@@ -1,12 +1,10 @@
-'use strict';
-
-var d3 = require('@plotly/d3');
-var Lib = require('../../lib');
+import d3 from '@plotly/d3';
+import Lib from '../../lib/index.js';
+import render from './render.js';
+import Fx from '../../components/fx/index.js';
+import Color from '../../components/color/index.js';
+import { cn } from './constants.js';
 var numberFormat = Lib.numberFormat;
-var render = require('./render');
-var Fx = require('../../components/fx');
-var Color = require('../../components/color');
-var cn = require('./constants').cn;
 
 var _ = Lib._;
 
@@ -131,7 +129,7 @@ function castHoverOption(trace, attr) {
     return Array.isArray(val) ? false : val;
 }
 
-module.exports = function plot(gd, calcData) {
+export default function plot(gd, calcData) {
     var fullLayout = gd._fullLayout;
     var svg = fullLayout._paper;
     var size = fullLayout._size;
@@ -392,4 +390,4 @@ module.exports = function plot(gd, calcData) {
             }
         }
     );
-};
+}

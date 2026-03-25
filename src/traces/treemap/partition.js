@@ -1,9 +1,7 @@
-'use strict';
+import d3Hierarchy from 'd3-hierarchy';
+import flipTree from './flip_tree.js';
 
-var d3Hierarchy = require('d3-hierarchy');
-var flipTree = require('./flip_tree');
-
-module.exports = function partition(entry, size, opts) {
+export default function partition(entry, size, opts) {
     var flipX = opts.flipX;
     var flipY = opts.flipY;
     // For squarify, transpose is handled via a custom tiling function that
@@ -49,7 +47,7 @@ module.exports = function partition(entry, size, opts) {
         });
     }
     return result;
-};
+}
 
 function getTilingMethod(key, squarifyratio, transpose) {
     switch(key) {

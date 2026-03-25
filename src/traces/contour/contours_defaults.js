@@ -1,6 +1,4 @@
-'use strict';
-
-module.exports = function handleContourDefaults(traceIn, traceOut, coerce, coerce2) {
+export default function handleContourDefaults(traceIn, traceOut, coerce, coerce2) {
     var contourStart = coerce2('contours.start');
     var contourEnd = coerce2('contours.end');
     var missingEnd = (contourStart === false) || (contourEnd === false);
@@ -16,4 +14,4 @@ module.exports = function handleContourDefaults(traceIn, traceOut, coerce, coerc
     else autoContour = coerce('autocontour', false);
 
     if(autoContour || !contourSize) coerce('ncontours');
-};
+}

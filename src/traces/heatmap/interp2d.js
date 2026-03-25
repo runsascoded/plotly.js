@@ -1,6 +1,4 @@
-'use strict';
-
-var Lib = require('../../lib');
+import Lib from '../../lib/index.js';
 
 var INTERPTHRESHOLD = 1e-2;
 var NEIGHBORSHIFTS = [[-1, 0], [1, 0], [0, -1], [0, 1]];
@@ -11,23 +9,7 @@ function correctionOvershoot(maxFractionalChange) {
     return 0.5 - 0.25 * Math.min(1, maxFractionalChange * 0.5);
 }
 
-/*
- * interp2d: Fill in missing data from a 2D array using an iterative
- *   poisson equation solver with zero-derivative BC at edges.
- *   Amazingly, this just amounts to repeatedly averaging all the existing
- *   nearest neighbors, at least if we don't take x/y scaling into account,
- *   which is the right approach here where x and y may not even have the
- *   same units.
- *
- * @param {array of arrays} z
- *      The 2D array to fill in. Will be mutated here. Assumed to already be
- *      cleaned, so all entries are numbers except gaps, which are `undefined`.
- * @param {array of arrays} emptyPoints
- *      Each entry [i, j, neighborCount] for empty points z[i][j] and the number
- *      of neighbors that are *not* missing. Assumed to be sorted from most to
- *      least neighbors, as produced by heatmap/find_empties.
- */
-module.exports = function interp2d(z, emptyPoints) {
+export default function interp2d(z, emptyPoints) {
     var maxFractionalChange = 1;
     var i;
 
@@ -51,7 +33,7 @@ module.exports = function interp2d(z, emptyPoints) {
     }
 
     return z;
-};
+}
 
 function iterateInterp2d(z, emptyPoints, overshoot) {
     var maxFractionalChange = 0;

@@ -1,8 +1,6 @@
-'use strict';
+import Axes from '../../plots/cartesian/axes.js';
 
-var Axes = require('../../plots/cartesian/axes');
-
-module.exports = function formatLabels(cdi, trace, fullLayout) {
+export default function formatLabels(cdi, trace, fullLayout) {
     var labels = {};
 
     var subplot = fullLayout[trace.subplot]._subplot;
@@ -11,4 +9,4 @@ module.exports = function formatLabels(cdi, trace, fullLayout) {
     labels.cLabel = Axes.tickText(subplot.caxis, cdi.c, true).text;
 
     return labels;
-};
+}

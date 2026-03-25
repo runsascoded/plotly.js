@@ -1,6 +1,4 @@
-'use strict';
-
-var isPlainObject = require('./is_plain_object.js');
+import isPlainObject from './is_plain_object.js';
 var isArray = Array.isArray;
 
 function primitivesLoopSplice(source, target) {
@@ -17,19 +15,19 @@ function primitivesLoopSplice(source, target) {
     return true;
 }
 
-exports.extendFlat = function() {
+export var extendFlat = function() {
     return _extend(arguments, false, false, false);
 };
 
-exports.extendDeep = function() {
+export var extendDeep = function() {
     return _extend(arguments, true, false, false);
 };
 
-exports.extendDeepAll = function() {
+export var extendDeepAll = function() {
     return _extend(arguments, true, true, false);
 };
 
-exports.extendDeepNoArrays = function() {
+export var extendDeepNoArrays = function() {
     return _extend(arguments, true, false, true);
 };
 
@@ -101,3 +99,5 @@ function _extend(inputs, isDeep, keepAllKeys, noArrayCopies) {
 
     return target;
 }
+
+export default { extendFlat, extendDeep, extendDeepAll, extendDeepNoArrays };

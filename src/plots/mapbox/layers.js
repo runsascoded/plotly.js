@@ -1,9 +1,7 @@
-'use strict';
-
-var Lib = require('../../lib');
-var sanitizeHTML = require('../../lib/svg_text_utils').sanitizeHTML;
-var convertTextOpts = require('./convert_text_opts');
-var constants = require('./constants');
+import Lib from '../../lib/index.js';
+import { sanitizeHTML } from '../../lib/svg_text_utils.js';
+import convertTextOpts from './convert_text_opts.js';
+import constants from './constants.js';
 
 function MapboxLayer(subplot, index) {
     this.subplot = subplot;
@@ -290,10 +288,10 @@ function convertSourceOpts(opts) {
     return sourceOpts;
 }
 
-module.exports = function createMapboxLayer(subplot, index, opts) {
+export default function createMapboxLayer(subplot, index, opts) {
     var mapboxLayer = new MapboxLayer(subplot, index);
 
     mapboxLayer.update(opts);
 
     return mapboxLayer;
-};
+}

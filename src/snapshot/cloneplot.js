@@ -1,7 +1,5 @@
-'use strict';
-
-var Registry = require('../registry');
-var Lib = require('../lib');
+import Registry from '../registry.js';
+import Lib from '../lib/index.js';
 
 var extendFlat = Lib.extendFlat;
 var extendDeep = Lib.extendDeep;
@@ -39,7 +37,6 @@ function cloneLayoutOverride(tileClass) {
             override = {};
     }
 
-
     return override;
 }
 
@@ -48,8 +45,7 @@ function keyIsAxis(keyName) {
     return (types.indexOf(keyName.slice(0, 5)) > -1);
 }
 
-
-module.exports = function clonePlot(graphObj, options) {
+export default function clonePlot(graphObj, options) {
     var i;
     var oldData = graphObj.data;
     var oldLayout = graphObj.layout;
@@ -155,4 +151,4 @@ module.exports = function clonePlot(graphObj, options) {
     plotTile.gd.defaultLayout = cloneLayoutOverride(options.tileClass);
 
     return plotTile;
-};
+}

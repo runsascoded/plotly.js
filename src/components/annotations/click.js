@@ -1,10 +1,8 @@
-'use strict';
+import Lib from '../../lib/index.js';
+import Registry from '../../registry.js';
+import { arrayEditor } from '../../plot_api/plot_template.js';
 
-var Lib = require('../../lib');
-var Registry = require('../../registry');
-var arrayEditor = require('../../plot_api/plot_template').arrayEditor;
-
-module.exports = {
+export default {
     hasClickToShow: hasClickToShow,
     onClick: onClick
 };

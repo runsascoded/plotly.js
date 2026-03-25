@@ -1,5 +1,3 @@
-'use strict';
-
 // var Lib = require('../../lib');
 
 function calc(gd, trace) {
@@ -22,6 +20,6 @@ function calc(gd, trace) {
     return cd;
 }
 
-module.exports = {
+export default {
     calc: calc
 };

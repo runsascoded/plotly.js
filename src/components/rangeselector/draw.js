@@ -1,25 +1,20 @@
-'use strict';
-
-var d3 = require('@plotly/d3');
-
-var Registry = require('../../registry');
-var Plots = require('../../plots/plots');
-var Color = require('../color');
-var Drawing = require('../drawing');
-var Lib = require('../../lib');
+import d3 from '@plotly/d3';
+import Registry from '../../registry.js';
+import Plots from '../../plots/plots.js';
+import Color from '../color/index.js';
+import Drawing from '../drawing/index.js';
+import Lib from '../../lib/index.js';
+import svgTextUtils from '../../lib/svg_text_utils.js';
+import axisIds from '../../plots/cartesian/axis_ids.js';
+import alignmentConstants from '../../constants/alignment.js';
+import constants from './constants.js';
+import getUpdateObject from './get_update_object.js';
 var strTranslate = Lib.strTranslate;
-var svgTextUtils = require('../../lib/svg_text_utils');
-var axisIds = require('../../plots/cartesian/axis_ids');
-
-var alignmentConstants = require('../../constants/alignment');
 var LINE_SPACING = alignmentConstants.LINE_SPACING;
 var FROM_TL = alignmentConstants.FROM_TL;
 var FROM_BR = alignmentConstants.FROM_BR;
 
-var constants = require('./constants');
-var getUpdateObject = require('./get_update_object');
-
-module.exports = function draw(gd) {
+export default function draw(gd) {
     var fullLayout = gd._fullLayout;
 
     var selectors = fullLayout._infolayer.selectAll('.rangeselector')
@@ -76,7 +71,7 @@ module.exports = function draw(gd) {
 
         reposition(gd, buttons, selectorLayout, axisLayout._name, selector);
     });
-};
+}
 
 function makeSelectorData(gd) {
     var axes = axisIds.list(gd, 'x', true);

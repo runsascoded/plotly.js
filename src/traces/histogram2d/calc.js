@@ -1,15 +1,12 @@
-'use strict';
+import Lib from '../../lib/index.js';
+import Axes from '../../plots/cartesian/axes.js';
+import binFunctions from '../histogram/bin_functions.js';
+import normFunctions from '../histogram/norm_functions.js';
+import doAvg from '../histogram/average.js';
+import getBinSpanLabelRound from '../histogram/bin_label_vals.js';
+import { calcAllAutoBins } from '../histogram/calc.js';
 
-var Lib = require('../../lib');
-var Axes = require('../../plots/cartesian/axes');
-
-var binFunctions = require('../histogram/bin_functions');
-var normFunctions = require('../histogram/norm_functions');
-var doAvg = require('../histogram/average');
-var getBinSpanLabelRound = require('../histogram/bin_label_vals');
-var calcAllAutoBins = require('../histogram/calc').calcAllAutoBins;
-
-module.exports = function calc(gd, trace) {
+export default function calc(gd, trace) {
     var xa = Axes.getFromId(gd, trace.xaxis);
     var ya = Axes.getFromId(gd, trace.yaxis);
 
@@ -171,7 +168,7 @@ module.exports = function calc(gd, trace) {
         z: z,
         pts: inputPoints
     };
-};
+}
 
 function makeIncrements(len, bins, dv, nonuniform) {
     var out = new Array(len);

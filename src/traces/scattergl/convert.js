@@ -1,22 +1,18 @@
-'use strict';
-
-var isNumeric = require('fast-isnumeric');
-var svgSdf = require('svg-path-sdf');
-var rgba = require('color-normalize');
-
-var Registry = require('../../registry');
-var Lib = require('../../lib');
+import isNumeric from 'fast-isnumeric';
+import svgSdf from 'svg-path-sdf';
+import rgba from 'color-normalize';
+import Registry from '../../registry.js';
+import Lib from '../../lib/index.js';
+import Drawing from '../../components/drawing/index.js';
+import AxisIDs from '../../plots/cartesian/axis_ids.js';
+import { formatColor } from '../../lib/gl_format_color.js';
+import subTypes from '../scatter/subtypes.js';
+import makeBubbleSizeFn from '../scatter/make_bubble_size_func.js';
+import helpers from './helpers.js';
+import constants from './constants.js';
+import { DESELECTDIM } from '../../constants/interactions.js';
+import { appendArrayPointValue } from '../../components/fx/helpers.js';
 var isArrayOrTypedArray = Lib.isArrayOrTypedArray;
-var Drawing = require('../../components/drawing');
-var AxisIDs = require('../../plots/cartesian/axis_ids');
-
-var formatColor = require('../../lib/gl_format_color').formatColor;
-var subTypes = require('../scatter/subtypes');
-var makeBubbleSizeFn = require('../scatter/make_bubble_size_func');
-
-var helpers = require('./helpers');
-var constants = require('./constants');
-var DESELECTDIM = require('../../constants/interactions').DESELECTDIM;
 
 var TEXTOFFSETSIGN = {
     start: 1,
@@ -28,8 +24,6 @@ var TEXTOFFSETSIGN = {
     bottom: 1,
     top: -1
 };
-
-var appendArrayPointValue = require('../../components/fx/helpers').appendArrayPointValue;
 
 function convertStyle(gd, trace) {
     var i;
@@ -720,7 +714,7 @@ function convertTextPosition(gd, trace, textOpts, markerOpts) {
     return out;
 }
 
-module.exports = {
+export default {
     style: convertStyle,
 
     markerStyle: convertMarkerStyle,

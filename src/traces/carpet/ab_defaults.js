@@ -1,9 +1,7 @@
-'use strict';
+import handleAxisDefaults from './axis_defaults.js';
+import Template from '../../plot_api/plot_template.js';
 
-var handleAxisDefaults = require('./axis_defaults');
-var Template = require('../../plot_api/plot_template');
-
-module.exports = function handleABDefaults(traceIn, traceOut, fullLayout, coerce, dfltColor) {
+export default function handleABDefaults(traceIn, traceOut, fullLayout, coerce, dfltColor) {
     var a = coerce('a');
 
     if(!a) {
@@ -19,7 +17,7 @@ module.exports = function handleABDefaults(traceIn, traceOut, fullLayout, coerce
     }
 
     mimickAxisDefaults(traceIn, traceOut, fullLayout, dfltColor);
-};
+}
 
 function mimickAxisDefaults(traceIn, traceOut, fullLayout, dfltColor) {
     var axesList = ['aaxis', 'baxis'];

@@ -1,20 +1,18 @@
-'use strict';
-
-var c = require('./constants');
-var d3 = require('@plotly/d3');
-var Lib = require('../../lib');
+import c from './constants.js';
+import d3 from '@plotly/d3';
+import Lib from '../../lib/index.js';
+import gup from '../../lib/gup.js';
+import Drawing from '../../components/drawing/index.js';
+import svgUtil from '../../lib/svg_text_utils.js';
+import { raiseToTop } from '../../lib/index.js';
+import { strTranslate } from '../../lib/index.js';
+import { cancelTransition as cancelEeaseColumn } from '../../lib/index.js';
+import prepareData from './data_preparation_helper.js';
+import splitData from './data_split_helpers.js';
+import Color from '../../components/color/index.js';
 var numberFormat = Lib.numberFormat;
-var gup = require('../../lib/gup');
-var Drawing = require('../../components/drawing');
-var svgUtil = require('../../lib/svg_text_utils');
-var raiseToTop = require('../../lib').raiseToTop;
-var strTranslate = require('../../lib').strTranslate;
-var cancelEeaseColumn = require('../../lib').cancelTransition;
-var prepareData = require('./data_preparation_helper');
-var splitData = require('./data_split_helpers');
-var Color = require('../../components/color');
 
-module.exports = function plot(gd, wrappedTraceHolders) {
+export default function plot(gd, wrappedTraceHolders) {
     var dynamic = !gd._context.staticPlot;
 
     var table = gd._fullLayout._paper.selectAll('.' + c.cn.table)
@@ -240,7 +238,7 @@ module.exports = function plot(gd, wrappedTraceHolders) {
         .attr('y', function(d) { return -roundHalfWidth(d); });
 
     updateBlockYPosition(null, cellsColumnBlock, tableControlView);
-};
+}
 
 function roundHalfWidth(d) {
     return Math.ceil(d.calcdata.maxLineWidth / 2);

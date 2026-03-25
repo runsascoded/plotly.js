@@ -1,6 +1,4 @@
-'use strict';
-
-var nestedProperty = require('./nested_property');
+import nestedProperty from './nested_property.js';
 
 var SIMPLE_PROPERTY_REGEX = /^\w*$/;
 
@@ -22,7 +20,7 @@ var VALUE = 2;
 var BOTH = 3;
 var UNSET = 4;
 
-module.exports = function keyedContainer(baseObj, path, keyName, valueName) {
+export default function keyedContainer(baseObj, path, keyName, valueName) {
     keyName = keyName || 'name';
     valueName = valueName || 'value';
     var i, arr, baseProp;
@@ -180,4 +178,4 @@ module.exports = function keyedContainer(baseObj, path, keyName, valueName) {
     };
 
     return obj;
-};
+}

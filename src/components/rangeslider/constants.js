@@ -1,6 +1,4 @@
-'use strict';
-
-module.exports = {
+export default {
 
     // attribute container name
     name: 'rangeslider',

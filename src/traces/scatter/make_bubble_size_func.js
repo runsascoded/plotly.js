@@ -1,11 +1,6 @@
-'use strict';
+import isNumeric from 'fast-isnumeric';
 
-var isNumeric = require('fast-isnumeric');
-
-
-// used in the drawing step for 'scatter' and 'scattegeo' and
-// in the convert step for 'scatter3d'
-module.exports = function makeBubbleSizeFn(trace, factor) {
+export default function makeBubbleSizeFn(trace, factor) {
     if(!factor) {
         factor = 2;
     }
@@ -31,4 +26,4 @@ module.exports = function makeBubbleSizeFn(trace, factor) {
             Math.max(baseSize, sizeMin) :
             0;
     };
-};
+}

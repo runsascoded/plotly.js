@@ -1,16 +1,13 @@
-'use strict';
-
-var Lib = require('../../lib');
-var attributes = require('./attributes');
-var handleDomainDefaults = require('../../plots/domain').defaults;
-var handleText = require('../bar/defaults').handleText;
-var handleMarkerDefaults = require('../pie/defaults').handleMarkerDefaults;
-
-var Colorscale = require('../../components/colorscale');
+import Lib from '../../lib/index.js';
+import attributes from './attributes.js';
+import { defaults as handleDomainDefaults } from '../../plots/domain.js';
+import { handleText } from '../bar/defaults.js';
+import { handleMarkerDefaults } from '../pie/defaults.js';
+import Colorscale from '../../components/colorscale/index.js';
 var hasColorscale = Colorscale.hasColorscale;
 var colorscaleDefaults = Colorscale.handleDefaults;
 
-module.exports = function supplyDefaults(traceIn, traceOut, defaultColor, layout) {
+export default function supplyDefaults(traceIn, traceOut, defaultColor, layout) {
     function coerce(attr, dflt) {
         return Lib.coerce(traceIn, traceOut, attributes, attr, dflt);
     }
@@ -74,4 +71,4 @@ module.exports = function supplyDefaults(traceIn, traceOut, defaultColor, layout
 
     // do not support transforms for now
     traceOut._length = null;
-};
+}

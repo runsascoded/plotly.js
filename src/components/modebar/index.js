@@ -1,11 +1,13 @@
-'use strict';
+import _req0 from './attributes.js';
+import _req1 from './defaults.js';
+import _req2 from './manage.js';
 
-module.exports = {
+export default {
     moduleType: 'component',
     name: 'modebar',
 
-    layoutAttributes: require('./attributes'),
-    supplyLayoutDefaults: require('./defaults'),
+    layoutAttributes: _req0,
+    supplyLayoutDefaults: _req1,
 
-    manage: require('./manage')
+    manage: _req2
 };

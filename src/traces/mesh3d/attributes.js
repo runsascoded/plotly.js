@@ -1,14 +1,11 @@
-'use strict';
+import colorScaleAttrs from '../../components/colorscale/attributes.js';
+import { axisHoverFormat } from '../../plots/cartesian/axis_format_attributes.js';
+import { hovertemplateAttrs, templatefallbackAttrs } from '../../plots/template_attributes.js';
+import surfaceAttrs from '../surface/attributes.js';
+import baseAttrs from '../../plots/attributes.js';
+import { extendFlat } from '../../lib/extend.js';
 
-var colorScaleAttrs = require('../../components/colorscale/attributes');
-var axisHoverFormat = require('../../plots/cartesian/axis_format_attributes').axisHoverFormat;
-const { hovertemplateAttrs, templatefallbackAttrs } = require('../../plots/template_attributes');
-var surfaceAttrs = require('../surface/attributes');
-var baseAttrs = require('../../plots/attributes');
-
-var extendFlat = require('../../lib/extend').extendFlat;
-
-module.exports = extendFlat(
+export default extendFlat(
     {
         x: {
             valType: 'data_array',

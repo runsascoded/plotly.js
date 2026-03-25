@@ -1,13 +1,9 @@
-'use strict';
+import Lib from '../../lib/index.js';
+import Axes from '../../plots/cartesian/axes.js';
+import constants from './constants.js';
+import helpers from './helpers.js';
 
-var Lib = require('../../lib');
-var Axes = require('../../plots/cartesian/axes');
-
-var constants = require('./constants');
-var helpers = require('./helpers');
-
-
-module.exports = function calcAutorange(gd) {
+export default function calcAutorange(gd) {
     var fullLayout = gd._fullLayout;
     var shapeList = Lib.filterVisible(fullLayout.shapes);
 
@@ -40,7 +36,7 @@ module.exports = function calcAutorange(gd) {
             }
         }
     }
-};
+}
 
 function calcXPaddingOptions(shape) {
     return calcPaddingOptions(shape.line.width, shape.xsizemode, shape.x0, shape.x1, shape.path, false);

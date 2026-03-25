@@ -1,6 +1,4 @@
-'use strict';
-
-module.exports = {
+export default {
     // hover labels for multiple horizontal bars get tilted by this angle
     YANGLE: 60,
 

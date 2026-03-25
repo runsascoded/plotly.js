@@ -1,18 +1,15 @@
-'use strict';
-
-var d3 = require('@plotly/d3');
-var isNumeric = require('fast-isnumeric');
-
-var Plots = require('../../plots/plots');
-var Registry = require('../../registry');
-var Lib = require('../../lib');
+import d3 from '@plotly/d3';
+import isNumeric from 'fast-isnumeric';
+import Plots from '../../plots/plots.js';
+import Registry from '../../registry.js';
+import Lib from '../../lib/index.js';
+import Drawing from '../drawing/index.js';
+import Color from '../color/index.js';
+import svgTextUtils from '../../lib/svg_text_utils.js';
+import interactConstants from '../../constants/interactions.js';
+import _alignment from '../../constants/alignment.js';
+const { OPPOSITE_SIDE } = _alignment;
 var strTranslate = Lib.strTranslate;
-var Drawing = require('../drawing');
-var Color = require('../color');
-var svgTextUtils = require('../../lib/svg_text_utils');
-var interactConstants = require('../../constants/interactions');
-
-var OPPOSITE_SIDE = require('../../constants/alignment').OPPOSITE_SIDE;
 var numStripRE = / [XY][0-9]* /;
 var SUBTITLE_PADDING_MATHJAX_EM = 1.6;
 var SUBTITLE_PADDING_EM = 1.6;
@@ -167,7 +164,6 @@ function draw(gd, titleClass, options) {
         subtitleEl.text(subtitleTxt).attr('class', subtitleClass);
         subtitleEl.exit().remove();
     }
-
 
     if(!elShouldExist) return group;
 
@@ -410,7 +406,7 @@ function draw(gd, titleClass, options) {
     return group;
 }
 
-module.exports = {
+export default {
     draw: draw,
     SUBTITLE_PADDING_EM: SUBTITLE_PADDING_EM,
     SUBTITLE_PADDING_MATHJAX_EM: SUBTITLE_PADDING_MATHJAX_EM,

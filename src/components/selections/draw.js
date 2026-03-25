@@ -1,28 +1,14 @@
-'use strict';
-
-var readPaths = require('../shapes/draw_newshape/helpers').readPaths;
-var displayOutlines = require('../shapes/display_outlines');
-
-var clearOutlineControllers = require('../shapes/handle_outline').clearOutlineControllers;
-
-var Color = require('../color');
-var Drawing = require('../drawing');
-var arrayEditor = require('../../plot_api/plot_template').arrayEditor;
-
-var helpers = require('../shapes/helpers');
+import { readPaths } from '../shapes/draw_newshape/helpers.js';
+import displayOutlines from '../shapes/display_outlines.js';
+import _handle_outline from '../shapes/handle_outline.js';
+const { clearOutlineControllers } = _handle_outline;
+import Color from '../color/index.js';
+import Drawing from '../drawing/index.js';
+import { arrayEditor } from '../../plot_api/plot_template.js';
+import helpers from '../shapes/helpers.js';
 var getPathString = helpers.getPathString;
 
-
-// Selections are stored in gd.layout.selections, an array of objects
-// index can point to one item in this array,
-//  or non-numeric to simply add a new one
-//  or -1 to modify all existing
-// opt can be the full options object, or one key (to be set to value)
-//  or undefined to simply redraw
-// if opt is blank, val can be 'add' or a full options object to add a new
-//  annotation at that point in the array, or 'remove' to delete this one
-
-module.exports = {
+export default {
     draw: draw,
     drawOne: drawOne,
     activateLastSelection: activateLastSelection
@@ -150,7 +136,6 @@ function setClipPath(selectionPath, gd, selectionOptions) {
         gd
     );
 }
-
 
 function activateSelection(gd, path) {
     if(!couldHaveActiveSelection(gd)) return;

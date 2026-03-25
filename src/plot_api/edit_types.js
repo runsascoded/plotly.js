@@ -1,7 +1,5 @@
-'use strict';
-
-var extendFlat = require('../lib/extend').extendFlat;
-var isPlainObject = require('../lib/is_plain_object');
+import { extendFlat } from '../lib/extend.js';
+import isPlainObject from '../lib/is_plain_object.js';
 
 var traceOpts = {
     valType: 'flaglist',
@@ -54,7 +52,7 @@ var traceEditTypeFlags = traceOpts.flags.slice()
 var layoutEditTypeFlags = layoutOpts.flags.slice()
     .concat('layoutReplot');
 
-module.exports = {
+export default {
     traces: traceOpts,
     layout: layoutOpts,
     /*

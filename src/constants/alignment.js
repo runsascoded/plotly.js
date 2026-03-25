@@ -1,7 +1,4 @@
-'use strict';
-
-// fraction of some size to get to a named position
-module.exports = {
+export default {
     // from bottom left: this is the origin of our paper-reference
     // positioning system
     FROM_BL: {

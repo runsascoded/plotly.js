@@ -1,19 +1,15 @@
-'use strict';
+import Lib from '../../lib/index.js';
+import Axes from '../../plots/cartesian/axes.js';
+import handleArrayContainerDefaults from '../../plots/array_container_defaults.js';
+import handleAnnotationCommonDefaults from './common_defaults.js';
+import attributes from './attributes.js';
 
-var Lib = require('../../lib');
-var Axes = require('../../plots/cartesian/axes');
-var handleArrayContainerDefaults = require('../../plots/array_container_defaults');
-
-var handleAnnotationCommonDefaults = require('./common_defaults');
-var attributes = require('./attributes');
-
-
-module.exports = function supplyLayoutDefaults(layoutIn, layoutOut) {
+export default function supplyLayoutDefaults(layoutIn, layoutOut) {
     handleArrayContainerDefaults(layoutIn, layoutOut, {
         name: 'annotations',
         handleItemDefaults: handleAnnotationDefaults
     });
-};
+}
 
 function handleAnnotationDefaults(annIn, annOut, fullLayout) {
     function coerce(attr, dflt) {

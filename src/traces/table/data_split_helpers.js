@@ -1,10 +1,6 @@
-'use strict';
+import { extendFlat } from '../../lib/extend.js';
 
-var extendFlat = require('../../lib/extend').extendFlat;
-
-// pure functions, don't alter but passes on `gd` and parts of `trace` without deep copying
-
-exports.splitToPanels = function(d) {
+export var splitToPanels = function(d) {
     var prevPages = [0, 0];
     var headerPanel = extendFlat({}, d, {
         key: 'header',
@@ -41,7 +37,7 @@ exports.splitToPanels = function(d) {
     return [revolverPanel1, revolverPanel2, headerPanel];
 };
 
-exports.splitToCells = function(d) {
+export var splitToCells = function(d) {
     var fromTo = rowFromTo(d);
     return (d.values || []).slice(fromTo[0], fromTo[1]).map(function(v, i) {
         // By keeping identical key, a DOM node removal, creation and addition is spared, important when visible
@@ -71,3 +67,5 @@ function rowFromTo(d) {
     var rowTo = rowBlock ? rowFrom + rowBlock.rows.length : 0;
     return [rowFrom, rowTo];
 }
+
+export default { splitToPanels, splitToCells };

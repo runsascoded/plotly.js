@@ -1,13 +1,10 @@
-'use strict';
-
-var baseAttrs = require('../../plots/attributes');
-var domainAttrs = require('../../plots/domain').attributes;
-var fontAttrs = require('../../plots/font_attributes');
-var colorAttrs = require('../../components/color/attributes');
-const { hovertemplateAttrs, texttemplateAttrs, templatefallbackAttrs } = require('../../plots/template_attributes');
-
-var extendFlat = require('../../lib/extend').extendFlat;
-var pattern = require('../../components/drawing/attributes').pattern;
+import baseAttrs from '../../plots/attributes.js';
+import { attributes as domainAttrs } from '../../plots/domain.js';
+import fontAttrs from '../../plots/font_attributes.js';
+import colorAttrs from '../../components/color/attributes.js';
+import { hovertemplateAttrs, texttemplateAttrs, templatefallbackAttrs } from '../../plots/template_attributes.js';
+import { extendFlat } from '../../lib/extend.js';
+import { pattern } from '../../components/drawing/attributes.js';
 
 var textFontAttrs = fontAttrs({
     editType: 'plot',
@@ -16,7 +13,7 @@ var textFontAttrs = fontAttrs({
     description: 'Sets the font used for `textinfo`.'
 });
 
-module.exports = {
+export default {
     labels: {
         valType: 'data_array',
         editType: 'calc',

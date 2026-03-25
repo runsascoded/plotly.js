@@ -1,20 +1,17 @@
-'use strict';
+import Lib from '../../lib/index.js';
+import Registry from '../../registry.js';
+import helpers from './helpers.js';
+import attributes from './attributes.js';
+import constants from '../scatter/constants.js';
+import subTypes from '../scatter/subtypes.js';
+import handleXYDefaults from '../scatter/xy_defaults.js';
+import handlePeriodDefaults from '../scatter/period_defaults.js';
+import handleMarkerDefaults from '../scatter/marker_defaults.js';
+import handleLineDefaults from '../scatter/line_defaults.js';
+import handleFillColorDefaults from '../scatter/fillcolor_defaults.js';
+import handleTextDefaults from '../scatter/text_defaults.js';
 
-var Lib = require('../../lib');
-var Registry = require('../../registry');
-
-var helpers = require('./helpers');
-var attributes = require('./attributes');
-var constants = require('../scatter/constants');
-var subTypes = require('../scatter/subtypes');
-var handleXYDefaults = require('../scatter/xy_defaults');
-var handlePeriodDefaults = require('../scatter/period_defaults');
-var handleMarkerDefaults = require('../scatter/marker_defaults');
-var handleLineDefaults = require('../scatter/line_defaults');
-var handleFillColorDefaults = require('../scatter/fillcolor_defaults');
-var handleTextDefaults = require('../scatter/text_defaults');
-
-module.exports = function supplyDefaults(traceIn, traceOut, defaultColor, layout) {
+export default function supplyDefaults(traceIn, traceOut, defaultColor, layout) {
     function coerce(attr, dflt) {
         return Lib.coerce(traceIn, traceOut, attributes, attr, dflt);
     }
@@ -74,4 +71,4 @@ module.exports = function supplyDefaults(traceIn, traceOut, defaultColor, layout
     errorBarsSupplyDefaults(traceIn, traceOut, lineColor || markerColor || defaultColor, { axis: 'x', inherit: 'y' });
 
     Lib.coerceSelectionMarkerOpacity(traceOut, coerce);
-};
+}

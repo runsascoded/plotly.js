@@ -1,10 +1,10 @@
-'use strict';
+import _index from '../../lib/index.js';
+const { isArrayOrTypedArray } = _index;
+import _helpers from '../../components/colorscale/helpers.js';
+const { hasColorscale } = _helpers;
+import colorscaleDefaults from '../../components/colorscale/defaults.js';
 
-var isArrayOrTypedArray = require('../../lib').isArrayOrTypedArray;
-var hasColorscale = require('../../components/colorscale/helpers').hasColorscale;
-var colorscaleDefaults = require('../../components/colorscale/defaults');
-
-module.exports = function lineDefaults(traceIn, traceOut, defaultColor, layout, coerce, opts) {
+export default function lineDefaults(traceIn, traceOut, defaultColor, layout, coerce, opts) {
     if(!opts) opts = {};
 
     var markerColor = (traceIn.marker || {}).color;
@@ -23,4 +23,4 @@ module.exports = function lineDefaults(traceIn, traceOut, defaultColor, layout, 
 
     if(!opts.noDash) coerce('line.dash');
     if(opts.backoff) coerce('line.backoff');
-};
+}

@@ -1,13 +1,14 @@
-'use strict';
+import constants from './constants.js';
+import _req0 from './attributes.js';
+import _req1 from './defaults.js';
+import _req2 from './draw.js';
 
-var constants = require('./constants');
-
-module.exports = {
+export default {
     moduleType: 'component',
     name: constants.name,
 
-    layoutAttributes: require('./attributes'),
-    supplyLayoutDefaults: require('./defaults'),
+    layoutAttributes: _req0,
+    supplyLayoutDefaults: _req1,
 
-    draw: require('./draw')
+    draw: _req2
 };

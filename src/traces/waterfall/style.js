@@ -1,12 +1,9 @@
-'use strict';
-
-var d3 = require('@plotly/d3');
-
-var Drawing = require('../../components/drawing');
-var Color = require('../../components/color');
-var DESELECTDIM = require('../../constants/interactions').DESELECTDIM;
-var barStyle = require('../bar/style');
-var resizeText = require('../bar/uniform_text').resizeText;
+import d3 from '@plotly/d3';
+import Drawing from '../../components/drawing/index.js';
+import Color from '../../components/color/index.js';
+import { DESELECTDIM } from '../../constants/interactions.js';
+import barStyle from '../bar/style.js';
+import { resizeText } from '../bar/uniform_text.js';
 var styleTextPoints = barStyle.styleTextPoints;
 
 function style(gd, cd, sel) {
@@ -46,6 +43,6 @@ function style(gd, cd, sel) {
     });
 }
 
-module.exports = {
+export default {
     style: style
 };

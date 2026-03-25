@@ -1,8 +1,6 @@
-'use strict';
-
-var convert = require('./convert').convert;
-var convertOnSelect = require('./convert').convertOnSelect;
-var LAYER_PREFIX = require('../../plots/mapbox/constants').traceLayerPrefix;
+import { convert } from './convert.js';
+import { convertOnSelect } from './convert.js';
+import { traceLayerPrefix as LAYER_PREFIX } from '../../plots/mapbox/constants.js';
 
 function ChoroplethMapbox(subplot, uid) {
     this.type = 'choroplethmapbox';
@@ -99,7 +97,7 @@ proto.dispose = function() {
     map.removeSource(this.sourceId);
 };
 
-module.exports = function createChoroplethMapbox(subplot, calcTrace) {
+export default function createChoroplethMapbox(subplot, calcTrace) {
     var trace = calcTrace[0].trace;
     var choroplethMapbox = new ChoroplethMapbox(subplot, trace.uid);
     var sourceId = choroplethMapbox.sourceId;
@@ -117,4 +115,4 @@ module.exports = function createChoroplethMapbox(subplot, calcTrace) {
     calcTrace[0].trace._glTrace = choroplethMapbox;
 
     return choroplethMapbox;
-};
+}

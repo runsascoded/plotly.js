@@ -1,18 +1,15 @@
-'use strict';
-var isNumeric = require('fast-isnumeric');
-
-var handleLabelDefaults = require('./label_defaults');
-
-var Color = require('../../components/color');
+import isNumeric from 'fast-isnumeric';
+import handleLabelDefaults from './label_defaults.js';
+import Color from '../../components/color/index.js';
+import filterOps from '../../constants/filter_ops.js';
+import { isArrayOrTypedArray } from '../../lib/index.js';
 var addOpacity = Color.addOpacity;
 var opacity = Color.opacity;
 
-var filterOps = require('../../constants/filter_ops');
-var isArrayOrTypedArray = require('../../lib').isArrayOrTypedArray;
 var CONSTRAINT_REDUCTION = filterOps.CONSTRAINT_REDUCTION;
 var COMPARISON_OPS2 = filterOps.COMPARISON_OPS2;
 
-module.exports = function handleConstraintDefaults(traceIn, traceOut, coerce, layout, defaultColor, opts) {
+export default function handleConstraintDefaults(traceIn, traceOut, coerce, layout, defaultColor, opts) {
     var contours = traceOut.contours;
     var showLines, lineColor, fillColor;
 
@@ -42,7 +39,7 @@ module.exports = function handleConstraintDefaults(traceIn, traceOut, coerce, la
     coerce('line.smoothing');
 
     handleLabelDefaults(coerce, layout, lineColor, opts);
-};
+}
 
 function handleConstraintValueDefaults(coerce, contours) {
     var zvalue;

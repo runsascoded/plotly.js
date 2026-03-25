@@ -1,21 +1,17 @@
-'use strict';
-
-var Lib = require('../../lib');
-var Axes = require('../../plots/cartesian/axes');
-var handleArrayContainerDefaults = require('../../plots/array_container_defaults');
-
-var attributes = require('./attributes');
+import Lib from '../../lib/index.js';
+import Axes from '../../plots/cartesian/axes.js';
+import handleArrayContainerDefaults from '../../plots/array_container_defaults.js';
+import attributes from './attributes.js';
 var name = 'images';
 
-module.exports = function supplyLayoutDefaults(layoutIn, layoutOut) {
+export default function supplyLayoutDefaults(layoutIn, layoutOut) {
     var opts = {
         name: name,
         handleItemDefaults: imageDefaults
     };
 
     handleArrayContainerDefaults(layoutIn, layoutOut, opts);
-};
-
+}
 
 function imageDefaults(imageIn, imageOut, fullLayout) {
     function coerce(attr, dflt) {

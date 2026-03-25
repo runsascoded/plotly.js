@@ -1,20 +1,24 @@
-'use strict';
+import scales from './scales.js';
+import helpers from './helpers.js';
+import _req0 from './attributes.js';
+import _req1 from './layout_attributes.js';
+import _req2 from './layout_defaults.js';
+import _req3 from './defaults.js';
+import _req4 from './cross_trace_defaults.js';
+import _req5 from './calc.js';
 
-var scales = require('./scales');
-var helpers = require('./helpers');
-
-module.exports = {
+export default {
     moduleType: 'component',
     name: 'colorscale',
 
-    attributes: require('./attributes'),
-    layoutAttributes: require('./layout_attributes'),
+    attributes: _req0,
+    layoutAttributes: _req1,
 
-    supplyLayoutDefaults: require('./layout_defaults'),
-    handleDefaults: require('./defaults'),
-    crossTraceDefaults: require('./cross_trace_defaults'),
+    supplyLayoutDefaults: _req2,
+    handleDefaults: _req3,
+    crossTraceDefaults: _req4,
 
-    calc: require('./calc'),
+    calc: _req5,
 
     // ./scales.js is required in lib/coerce.js ;
     // it needs to be a separate module to avoid a circular dependency

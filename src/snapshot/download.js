@@ -1,11 +1,7 @@
-'use strict';
-
-var Lib = require('../lib');
-
-var toImage = require('../plot_api/to_image');
-
-var fileSaver = require('./filesaver');
-var helpers = require('./helpers');
+import Lib from '../lib/index.js';
+import toImage from '../plot_api/to_image.js';
+import fileSaver from './filesaver.js';
+import helpers from './helpers.js';
 
 /**
  * Plotly.downloadImage
@@ -50,4 +46,4 @@ function downloadImage(gd, opts) {
     });
 }
 
-module.exports = downloadImage;
+export default downloadImage;

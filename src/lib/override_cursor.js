@@ -1,17 +1,9 @@
-'use strict';
-
-var setCursor = require('./setcursor');
+import setCursor from './setcursor.js';
 
 var STASHATTR = 'data-savedcursor';
 var NO_CURSOR = '!!';
 
-/*
- * works with our CSS cursor classes (see css/_cursor.scss)
- * to override a previous cursor set on d3 single-element selections,
- * by moving the name of the original cursor to the data-savedcursor attr.
- * omit cursor to revert to the previously set value.
- */
-module.exports = function overrideCursor(el3, csr) {
+export default function overrideCursor(el3, csr) {
     var savedCursor = el3.attr(STASHATTR);
     if(csr) {
         if(!savedCursor) {
@@ -34,4 +26,4 @@ module.exports = function overrideCursor(el3, csr) {
         if(savedCursor === NO_CURSOR) setCursor(el3);
         else setCursor(el3, savedCursor);
     }
-};
+}

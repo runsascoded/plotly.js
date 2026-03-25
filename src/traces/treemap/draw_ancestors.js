@@ -1,19 +1,16 @@
-'use strict';
-
-var d3 = require('@plotly/d3');
-var Lib = require('../../lib');
-var Drawing = require('../../components/drawing');
-var svgTextUtils = require('../../lib/svg_text_utils');
-
-var partition = require('./partition');
-var styleOne = require('./style').styleOne;
-var constants = require('./constants');
-var helpers = require('../sunburst/helpers');
-var attachFxHandlers = require('../sunburst/fx');
+import d3 from '@plotly/d3';
+import Lib from '../../lib/index.js';
+import Drawing from '../../components/drawing/index.js';
+import svgTextUtils from '../../lib/svg_text_utils.js';
+import partition from './partition.js';
+import { styleOne } from './style.js';
+import constants from './constants.js';
+import helpers from '../sunburst/helpers.js';
+import attachFxHandlers from '../sunburst/fx.js';
 
 var onPathbar = true; // for Ancestors
 
-module.exports = function drawAncestors(gd, cd, entry, slices, opts) {
+export default function drawAncestors(gd, cd, entry, slices, opts) {
     var barDifY = opts.barDifY;
     var width = opts.width;
     var height = opts.height;
@@ -167,4 +164,4 @@ module.exports = function drawAncestors(gd, cd, entry, slices, opts) {
             sliceText.attr('transform', strTransform(pt));
         }
     });
-};
+}

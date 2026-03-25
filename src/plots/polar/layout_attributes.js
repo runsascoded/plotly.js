@@ -1,10 +1,8 @@
-'use strict';
-
-var colorAttrs = require('../../components/color/attributes');
-var axesAttrs = require('../cartesian/layout_attributes');
-var domainAttrs = require('../domain').attributes;
-var extendFlat = require('../../lib').extendFlat;
-var overrideAll = require('../../plot_api/edit_types').overrideAll;
+import colorAttrs from '../../components/color/attributes.js';
+import axesAttrs from '../cartesian/layout_attributes.js';
+import { attributes as domainAttrs } from '../domain.js';
+import { extendFlat } from '../../lib/index.js';
+import { overrideAll } from '../../plot_api/edit_types.js';
 
 var axisLineGridAttr = overrideAll({
     color: axesAttrs.color,
@@ -119,7 +117,6 @@ var radialAxisAttrs = {
             'the tick and tick labels appear.'
         ].join(' ')
     },
-
 
     title: {
         // radial title is not gui-editable at the moment,
@@ -262,7 +259,7 @@ extendFlat(
     axisTickAttrs
 );
 
-module.exports = {
+export default {
     // TODO for x/y/zoom system for paper-based zooming:
     // x: {},
     // y: {},

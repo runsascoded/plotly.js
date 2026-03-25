@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   "version": 8,
   "name": "orto",
   "metadata": {"maputnik:renderer": "mlgljs"},

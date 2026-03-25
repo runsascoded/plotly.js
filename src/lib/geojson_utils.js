@@ -1,19 +1,6 @@
-'use strict';
+import { BADNUM } from '../constants/numerical.js';
 
-var BADNUM = require('../constants/numerical').BADNUM;
-
-/**
- * Convert calcTrace to GeoJSON 'MultiLineString' coordinate arrays
- *
- * @param {object} calcTrace
- *  gd.calcdata item.
- *  Note that calcTrace[i].lonlat is assumed to be defined
- *
- * @return {array}
- *  return line coords array (or array of arrays)
- *
- */
-exports.calcTraceToLineCoords = function(calcTrace) {
+export var calcTraceToLineCoords = function(calcTrace) {
     var trace = calcTrace[0].trace;
     var connectgaps = trace.connectgaps;
 
@@ -39,17 +26,7 @@ exports.calcTraceToLineCoords = function(calcTrace) {
     return coords;
 };
 
-
-/**
- * Make line ('LineString' or 'MultiLineString') GeoJSON
- *
- * @param {array} coords
- *  results form calcTraceToLineCoords
- * @return {object} out
- *  GeoJSON object
- *
- */
-exports.makeLine = function(coords) {
+export var makeLine = function(coords) {
     if(coords.length === 1) {
         return {
             type: 'LineString',
@@ -63,15 +40,7 @@ exports.makeLine = function(coords) {
     }
 };
 
-/**
- * Make polygon ('Polygon' or 'MultiPolygon') GeoJSON
- *
- * @param {array} coords
- *  results form calcTraceToLineCoords
- * @return {object} out
- *  GeoJSON object
- */
-exports.makePolygon = function(coords) {
+export var makePolygon = function(coords) {
     if(coords.length === 1) {
         return {
             type: 'Polygon',
@@ -91,16 +60,11 @@ exports.makePolygon = function(coords) {
     }
 };
 
-/**
- * Make blank GeoJSON
- *
- * @return {object}
- *  Blank GeoJSON object
- *
- */
-exports.makeBlank = function() {
+export var makeBlank = function() {
     return {
         type: 'Point',
         coordinates: []
     };
 };
+
+export default { calcTraceToLineCoords, makeLine, makePolygon, makeBlank };

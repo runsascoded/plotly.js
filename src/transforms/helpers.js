@@ -1,6 +1,4 @@
-'use strict';
-
-exports.pointsAccessorFunction = function(transforms, opts) {
+export var pointsAccessorFunction = function(transforms, opts) {
     var tr;
     var prevIndexToPoints;
     for(var i = 0; i < transforms.length; i++) {
@@ -14,3 +12,5 @@ exports.pointsAccessorFunction = function(transforms, opts) {
         function(i) {return [i];};
     return originalPointsAccessor;
 };
+
+export default { pointsAccessorFunction };

@@ -1,15 +1,6 @@
-'use strict';
+import parcats from './parcats.js';
 
-
-var parcats = require('./parcats');
-
-/**
- * Create / update parcat traces
- *
- * @param {Object} graphDiv
- * @param {Array.<ParcatsModel>} parcatsModels
- */
-module.exports = function plot(graphDiv, parcatsModels, transitionOpts, makeOnCompleteCallback) {
+export default function plot(graphDiv, parcatsModels, transitionOpts, makeOnCompleteCallback) {
     var fullLayout = graphDiv._fullLayout;
     var svg = fullLayout._paper;
     var size = fullLayout._size;
@@ -31,4 +22,4 @@ module.exports = function plot(graphDiv, parcatsModels, transitionOpts, makeOnCo
         transitionOpts,
         makeOnCompleteCallback
     );
-};
+}

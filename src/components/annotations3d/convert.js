@@ -1,9 +1,7 @@
-'use strict';
+import Lib from '../../lib/index.js';
+import Axes from '../../plots/cartesian/axes.js';
 
-var Lib = require('../../lib');
-var Axes = require('../../plots/cartesian/axes');
-
-module.exports = function convert(scene) {
+export default function convert(scene) {
     var fullSceneLayout = scene.fullSceneLayout;
     var anns = fullSceneLayout.annotations;
 
@@ -14,7 +12,7 @@ module.exports = function convert(scene) {
     scene.fullLayout._infolayer
         .selectAll('.annotation-' + scene.id)
         .remove();
-};
+}
 
 function mockAnnAxes(ann, scene) {
     var fullSceneLayout = scene.fullSceneLayout;

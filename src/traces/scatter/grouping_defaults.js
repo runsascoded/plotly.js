@@ -1,8 +1,6 @@
-'use strict';
+import { getAxisGroup } from '../../plots/cartesian/constraints.js';
 
-var getAxisGroup = require('../../plots/cartesian/constraints').getAxisGroup;
-
-module.exports = function handleGroupingDefaults(traceIn, traceOut, fullLayout, coerce, barmode) {
+export default function handleGroupingDefaults(traceIn, traceOut, fullLayout, coerce, barmode) {
     var orientation = traceOut.orientation;
     // N.B. grouping is done across all trace types that support it
     var posAxId = traceOut[{v: 'x', h: 'y'}[orientation] + 'axis'];
@@ -41,4 +39,4 @@ module.exports = function handleGroupingDefaults(traceIn, traceOut, fullLayout, 
 
         traceOut._offsetIndex = offsetGroupOpts.offsetIndex;
     }
-};
+}

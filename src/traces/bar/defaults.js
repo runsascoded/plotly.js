@@ -1,16 +1,12 @@
-'use strict';
-
-var isNumeric = require('fast-isnumeric');
-
-var Lib = require('../../lib');
-var Color = require('../../components/color');
-var Registry = require('../../registry');
-
-var handleXYDefaults = require('../scatter/xy_defaults');
-var handlePeriodDefaults = require('../scatter/period_defaults');
-var handleStyleDefaults = require('./style_defaults');
-var handleGroupingDefaults = require('../scatter/grouping_defaults');
-var attributes = require('./attributes');
+import isNumeric from 'fast-isnumeric';
+import Lib from '../../lib/index.js';
+import Color from '../../components/color/index.js';
+import Registry from '../../registry.js';
+import handleXYDefaults from '../scatter/xy_defaults.js';
+import handlePeriodDefaults from '../scatter/period_defaults.js';
+import handleStyleDefaults from './style_defaults.js';
+import handleGroupingDefaults from '../scatter/grouping_defaults.js';
+import attributes from './attributes.js';
 
 var coerceFont = Lib.coerceFont;
 
@@ -161,7 +157,7 @@ function handleText(traceIn, traceOut, layout, coerce, textposition, opts) {
     }
 }
 
-module.exports = {
+export default {
     supplyDefaults: supplyDefaults,
     crossTraceDefaults: crossTraceDefaults,
     handleText: handleText,

@@ -1,8 +1,6 @@
-'use strict';
-
-module.exports = Sieve;
-
-var distinctVals = require('../../lib').distinctVals;
+import _index from '../../lib/index.js';
+const { distinctVals } = _index;
+export default Sieve;
 
 /**
  * Helper class to sieve data from traces into bins

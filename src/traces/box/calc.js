@@ -1,15 +1,11 @@
-'use strict';
-
-var isNumeric = require('fast-isnumeric');
-
-var Axes = require('../../plots/cartesian/axes');
-var alignPeriod = require('../../plots/cartesian/align_period');
-var Lib = require('../../lib');
-
-var BADNUM = require('../../constants/numerical').BADNUM;
+import isNumeric from 'fast-isnumeric';
+import Axes from '../../plots/cartesian/axes.js';
+import alignPeriod from '../../plots/cartesian/align_period.js';
+import Lib from '../../lib/index.js';
+import { BADNUM } from '../../constants/numerical.js';
 var _ = Lib._;
 
-module.exports = function calc(gd, trace) {
+export default function calc(gd, trace) {
     var fullLayout = gd._fullLayout;
     var xa = Axes.getFromId(gd, trace.xaxis || 'x');
     var ya = Axes.getFromId(gd, trace.yaxis || 'y');
@@ -300,7 +296,7 @@ module.exports = function calc(gd, trace) {
     } else {
         return [{t: {empty: true}}];
     }
-};
+}
 
 // In vertical (horizontal) box plots:
 // if no x (y) data, use x0 (y0), or name

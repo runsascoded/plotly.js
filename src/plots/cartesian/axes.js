@@ -1,21 +1,21 @@
-'use strict';
-
-var d3 = require('@plotly/d3');
-var isNumeric = require('fast-isnumeric');
-var Plots = require('../../plots/plots');
-
-var Registry = require('../../registry');
-var Lib = require('../../lib');
+import d3 from '@plotly/d3';
+import isNumeric from 'fast-isnumeric';
+import Plots from '../../plots/plots.js';
+import Registry from '../../registry.js';
+import Lib from '../../lib/index.js';
+import svgTextUtils from '../../lib/svg_text_utils.js';
+import Titles from '../../components/titles/index.js';
+import Color from '../../components/color/index.js';
+import Drawing from '../../components/drawing/index.js';
+import axAttrs from './layout_attributes.js';
+import cleanTicks from './clean_ticks.js';
+import constants from '../../constants/numerical.js';
+import alignmentConstants from '../../constants/alignment.js';
+import autoType from './axis_autotype.js';
+import axisIds from './axis_ids.js';
+import autorange from './autorange.js';
+import _req0 from './set_convert.js';
 var strTranslate = Lib.strTranslate;
-var svgTextUtils = require('../../lib/svg_text_utils');
-var Titles = require('../../components/titles');
-var Color = require('../../components/color');
-var Drawing = require('../../components/drawing');
-
-var axAttrs = require('./layout_attributes');
-var cleanTicks = require('./clean_ticks');
-
-var constants = require('../../constants/numerical');
 var ONEMAXYEAR = constants.ONEMAXYEAR;
 var ONEAVGYEAR = constants.ONEAVGYEAR;
 var ONEMINYEAR = constants.ONEMINYEAR;
@@ -50,7 +50,6 @@ var MARGIN_MAPPING = {
     bottom: ['b', 'yb']
 };
 
-var alignmentConstants = require('../../constants/alignment');
 var MID_SHIFT = alignmentConstants.MID_SHIFT;
 var CAP_SHIFT = alignmentConstants.CAP_SHIFT;
 var LINE_SPACING = alignmentConstants.LINE_SPACING;
@@ -58,12 +57,9 @@ var OPPOSITE_SIDE = alignmentConstants.OPPOSITE_SIDE;
 
 var TEXTPAD = 3;
 
-var axes = module.exports = {};
+var axes = {};
 
-axes.setConvert = require('./set_convert');
-var autoType = require('./axis_autotype');
-
-var axisIds = require('./axis_ids');
+axes.setConvert = _req0;
 var idSort = axisIds.idSort;
 var isLinked = axisIds.isLinked;
 
@@ -76,7 +72,6 @@ axes.listIds = axisIds.listIds;
 axes.getFromId = axisIds.getFromId;
 axes.getFromTrace = axisIds.getFromTrace;
 
-var autorange = require('./autorange');
 axes.getAutoRange = autorange.getAutoRange;
 axes.findExtremes = autorange.findExtremes;
 
@@ -469,7 +464,6 @@ axes.autoBin = function(data, ax, nbins, is2d, calendar, size) {
     };
 };
 
-
 function autoShiftNumericBins(binStart, data, ax, dataMin, dataMax) {
     var edgecount = 0;
     var midcount = 0;
@@ -517,7 +511,6 @@ function autoShiftNumericBins(binStart, data, ax, dataMin, dataMax) {
     }
     return binStart;
 }
-
 
 function autoShiftMonthBins(binStart, data, dtick, dataMin, calendar) {
     var stats = Lib.findExactDates(data, calendar);
@@ -1343,7 +1336,6 @@ function arrayTicks(ax, majorOnly) {
         var text = !isMinor ? ax.ticktext : [];
         if(!vals) continue;
 
-
         // without a text array, just format the given values as any other ticks
         // except with more precision to the numbers
         if(!Lib.isArrayOrTypedArray(text)) text = [];
@@ -2080,7 +2072,6 @@ const isSIFormat = (exponentFormat) => ['SI', 'SI extended','B'].includes(expone
 function beyondSI(exponent) {
     return exponent > 14 || exponent < -15;
 }
-
 
 // are we beyond the range of all SI prefixes?
 // 10^-31 -> 1x10^-31
@@ -3921,7 +3912,7 @@ axes.drawLabels = function(gd, ax, opts) {
                     , autoTickAnglesRadians[0]
                 );
             }
-            var newAngle = angleRadians * (180 / Math.PI /* to degrees */);
+            var newAngle = angleRadians * ((180 / Math.PI) /* to degrees */);
 
             if(preventOverlapWithTick) {
                 var gap = 2;
@@ -4677,3 +4668,5 @@ function periodCompatibleWithTickformat(period, tickformat) {
         true
     );
 }
+
+export default axes;

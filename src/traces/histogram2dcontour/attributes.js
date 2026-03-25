@@ -1,13 +1,10 @@
-'use strict';
+import histogram2dAttrs from '../histogram2d/attributes.js';
+import contourAttrs from '../contour/attributes.js';
+import colorScaleAttrs from '../../components/colorscale/attributes.js';
+import { axisHoverFormat } from '../../plots/cartesian/axis_format_attributes.js';
+import { extendFlat } from '../../lib/extend.js';
 
-var histogram2dAttrs = require('../histogram2d/attributes');
-var contourAttrs = require('../contour/attributes');
-var colorScaleAttrs = require('../../components/colorscale/attributes');
-var axisHoverFormat = require('../../plots/cartesian/axis_format_attributes').axisHoverFormat;
-
-var extendFlat = require('../../lib/extend').extendFlat;
-
-module.exports = extendFlat(
+export default extendFlat(
     {
         x: histogram2dAttrs.x,
         y: histogram2dAttrs.y,

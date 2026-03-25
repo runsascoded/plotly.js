@@ -1,39 +1,42 @@
-'use strict';
+import main from './plot_api.js';
+import _dom from '../lib/dom.js';
+const { getGraphDiv } = _dom;
+import _draw from '../components/shapes/draw.js';
+const { eraseActiveShape } = _draw;
+import templateApi from './template_api.js';
+import _req0 from './to_image.js';
+import _req1 from './validate.js';
+import _req2 from '../snapshot/download.js';
+export var _doPlot = main._doPlot;
+export var newPlot = main.newPlot;
+export var restyle = main.restyle;
+export var relayout = main.relayout;
+export var redraw = main.redraw;
+export var update = main.update;
+export var _guiRestyle = main._guiRestyle;
+export var _guiRelayout = main._guiRelayout;
+export var _guiUpdate = main._guiUpdate;
+export var _storeDirectGUIEdit = main._storeDirectGUIEdit;
+export var react = main.react;
+export var extendTraces = main.extendTraces;
+export var prependTraces = main.prependTraces;
+export var addTraces = main.addTraces;
+export var deleteTraces = main.deleteTraces;
+export var moveTraces = main.moveTraces;
+export var purge = main.purge;
+export var addFrames = main.addFrames;
+export var deleteFrames = main.deleteFrames;
+export var animate = main.animate;
+export var setPlotConfig = main.setPlotConfig;
 
-var main = require('./plot_api');
-
-exports._doPlot = main._doPlot;
-exports.newPlot = main.newPlot;
-exports.restyle = main.restyle;
-exports.relayout = main.relayout;
-exports.redraw = main.redraw;
-exports.update = main.update;
-exports._guiRestyle = main._guiRestyle;
-exports._guiRelayout = main._guiRelayout;
-exports._guiUpdate = main._guiUpdate;
-exports._storeDirectGUIEdit = main._storeDirectGUIEdit;
-exports.react = main.react;
-exports.extendTraces = main.extendTraces;
-exports.prependTraces = main.prependTraces;
-exports.addTraces = main.addTraces;
-exports.deleteTraces = main.deleteTraces;
-exports.moveTraces = main.moveTraces;
-exports.purge = main.purge;
-exports.addFrames = main.addFrames;
-exports.deleteFrames = main.deleteFrames;
-exports.animate = main.animate;
-exports.setPlotConfig = main.setPlotConfig;
-
-var getGraphDiv = require('../lib/dom').getGraphDiv;
-var eraseActiveShape = require('../components/shapes/draw').eraseActiveShape;
-exports.deleteActiveShape = function(gd) {
+export var deleteActiveShape = function(gd) {
     return eraseActiveShape(getGraphDiv(gd));
 };
 
-exports.toImage = require('./to_image');
-exports.validate = require('./validate');
-exports.downloadImage = require('../snapshot/download');
+export var toImage = _req0;
+export var validate = _req1;
+export var downloadImage = _req2;
+export var makeTemplate = templateApi.makeTemplate;
+export var validateTemplate = templateApi.validateTemplate;
 
-var templateApi = require('./template_api');
-exports.makeTemplate = templateApi.makeTemplate;
-exports.validateTemplate = templateApi.validateTemplate;
+export default { _doPlot, newPlot, restyle, relayout, redraw, update, _guiRestyle, _guiRelayout, _guiUpdate, _storeDirectGUIEdit, react, extendTraces, prependTraces, addTraces, deleteTraces, moveTraces, purge, addFrames, deleteFrames, animate, setPlotConfig, deleteActiveShape, toImage, validate, downloadImage, makeTemplate, validateTemplate };

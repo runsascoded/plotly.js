@@ -1,12 +1,9 @@
-'use strict';
+import Lib from '../../lib/index.js';
+import { handleRThetaDefaults } from '../scatterpolar/defaults.js';
+import handleStyleDefaults from '../bar/style_defaults.js';
+import attributes from './attributes.js';
 
-var Lib = require('../../lib');
-
-var handleRThetaDefaults = require('../scatterpolar/defaults').handleRThetaDefaults;
-var handleStyleDefaults = require('../bar/style_defaults');
-var attributes = require('./attributes');
-
-module.exports = function supplyDefaults(traceIn, traceOut, defaultColor, layout) {
+export default function supplyDefaults(traceIn, traceOut, defaultColor, layout) {
     function coerce(attr, dflt) {
         return Lib.coerce(traceIn, traceOut, attributes, attr, dflt);
     }
@@ -47,4 +44,4 @@ module.exports = function supplyDefaults(traceIn, traceOut, defaultColor, layout
     handleStyleDefaults(traceIn, traceOut, coerce, defaultColor, layout);
 
     Lib.coerceSelectionMarkerOpacity(traceOut, coerce);
-};
+}

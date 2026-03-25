@@ -1,14 +1,11 @@
-'use strict';
+import Registry from '../../registry.js';
+import Lib from '../../lib/index.js';
+import Color from '../../components/color/index.js';
+import { handleText } from '../bar/defaults.js';
+import handleStyleDefaults from '../bar/style_defaults.js';
+import attributes from './attributes.js';
 
-var Registry = require('../../registry');
-var Lib = require('../../lib');
-var Color = require('../../components/color');
-
-var handleText = require('../bar/defaults').handleText;
-var handleStyleDefaults = require('../bar/style_defaults');
-var attributes = require('./attributes');
-
-module.exports = function supplyDefaults(traceIn, traceOut, defaultColor, layout) {
+export default function supplyDefaults(traceIn, traceOut, defaultColor, layout) {
     function coerce(attr, dflt) {
         return Lib.coerce(traceIn, traceOut, attributes, attr, dflt);
     }
@@ -76,4 +73,4 @@ module.exports = function supplyDefaults(traceIn, traceOut, defaultColor, layout
     errorBarsSupplyDefaults(traceIn, traceOut, lineColor || Color.defaultLine, { axis: 'x', inherit: 'y' });
 
     coerce('zorder');
-};
+}

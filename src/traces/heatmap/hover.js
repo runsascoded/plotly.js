@@ -1,12 +1,10 @@
-'use strict';
-
-var Fx = require('../../components/fx');
-var Lib = require('../../lib');
+import Fx from '../../components/fx/index.js';
+import Lib from '../../lib/index.js';
+import Axes from '../../plots/cartesian/axes.js';
+import { extractOpts } from '../../components/colorscale/index.js';
 var isArrayOrTypedArray = Lib.isArrayOrTypedArray;
-var Axes = require('../../plots/cartesian/axes');
-var extractOpts = require('../../components/colorscale').extractOpts;
 
-module.exports = function hoverPoints(pointData, xval, yval, hovermode, opts) {
+export default function hoverPoints(pointData, xval, yval, hovermode, opts) {
     if(!opts) opts = {};
     var isContour = opts.isContour;
 
@@ -129,4 +127,4 @@ module.exports = function hoverPoints(pointData, xval, yval, hovermode, opts) {
         zLabel: zLabel,
         text: text
     })];
-};
+}

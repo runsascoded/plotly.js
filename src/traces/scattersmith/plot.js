@@ -1,11 +1,9 @@
-'use strict';
-
-var scatterPlot = require('../scatter/plot');
-var BADNUM = require('../../constants/numerical').BADNUM;
-var helpers = require('../../plots/smith/helpers');
+import scatterPlot from '../scatter/plot.js';
+import { BADNUM } from '../../constants/numerical.js';
+import helpers from '../../plots/smith/helpers.js';
 var smith = helpers.smith;
 
-module.exports = function plot(gd, subplot, moduleCalcData) {
+export default function plot(gd, subplot, moduleCalcData) {
     var mlayer = subplot.layers.frontplot.select('g.scatterlayer');
 
     var xa = subplot.xaxis;
@@ -44,4 +42,4 @@ module.exports = function plot(gd, subplot, moduleCalcData) {
     }
 
     scatterPlot(gd, plotinfo, moduleCalcData, mlayer);
-};
+}

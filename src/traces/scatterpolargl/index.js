@@ -1,7 +1,6 @@
-'use strict';
+import index from './base_index.js';
+import _req0 from './plot.js';
 
-var index = require('./base_index');
+index.plot = _req0;
 
-index.plot = require('./plot');
-
-module.exports = index;
+export default index;

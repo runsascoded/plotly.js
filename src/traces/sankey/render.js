@@ -1,27 +1,22 @@
-'use strict';
-
-var d3Force = require('d3-force');
-var interpolateNumber = require('d3-interpolate').interpolateNumber;
-var d3 = require('@plotly/d3');
-var d3Sankey = require('@plotly/d3-sankey');
-var d3SankeyCircular = require('@plotly/d3-sankey-circular');
-
-var c = require('./constants');
-var tinycolor = require('tinycolor2');
-var Color = require('../../components/color');
-var Drawing = require('../../components/drawing');
-var Lib = require('../../lib');
+import d3Force from 'd3-force';
+import { interpolateNumber } from 'd3-interpolate';
+import d3 from '@plotly/d3';
+import d3Sankey from '@plotly/d3-sankey';
+import d3SankeyCircular from '@plotly/d3-sankey-circular';
+import c from './constants.js';
+import tinycolor from 'tinycolor2';
+import Color from '../../components/color/index.js';
+import Drawing from '../../components/drawing/index.js';
+import Lib from '../../lib/index.js';
+import gup from '../../lib/gup.js';
+import svgTextUtils from '../../lib/svg_text_utils.js';
+import Registry from '../../registry.js';
+import alignmentConstants from '../../constants/alignment.js';
 var strTranslate = Lib.strTranslate;
 var strRotate = Lib.strRotate;
-var gup = require('../../lib/gup');
 var keyFun = gup.keyFun;
 var repeat = gup.repeat;
 var unwrap = gup.unwrap;
-var svgTextUtils = require('../../lib/svg_text_utils');
-
-var Registry = require('../../registry');
-
-var alignmentConstants = require('../../constants/alignment');
 var CAP_SHIFT = alignmentConstants.CAP_SHIFT;
 var LINE_SPACING = alignmentConstants.LINE_SPACING;
 var TEXTPAD = 3;
@@ -263,7 +258,6 @@ function sankeyModel(layout, d, traceIndex) {
         // Update links
         sankey.update(graph);
     }
-
 
     return {
         circular: circular,
@@ -859,8 +853,7 @@ function switchToSankeyFormat(nodes) {
     }
 }
 
-// scene graph
-module.exports = function(gd, svg, calcData, layout, callbacks) {
+export default function(gd, svg, calcData, layout, callbacks) {
     var isStatic = gd._context.staticPlot;
 
     // To prevent animation on first render
@@ -1081,4 +1074,4 @@ module.exports = function(gd, svg, calcData, layout, callbacks) {
     nodeLabel
         .transition()
         .ease(c.ease).duration(c.duration);
-};
+}

@@ -1,16 +1,13 @@
-'use strict';
-
-const { hovertemplateAttrs, templatefallbackAttrs } = require('../../plots/template_attributes');
-var scatterGeoAttrs = require('../scattergeo/attributes');
-var colorScaleAttrs = require('../../components/colorscale/attributes');
-var baseAttrs = require('../../plots/attributes');
-var defaultLine = require('../../components/color/attributes').defaultLine;
-
-var extendFlat = require('../../lib/extend').extendFlat;
+import { hovertemplateAttrs, templatefallbackAttrs } from '../../plots/template_attributes.js';
+import scatterGeoAttrs from '../scattergeo/attributes.js';
+import colorScaleAttrs from '../../components/colorscale/attributes.js';
+import baseAttrs from '../../plots/attributes.js';
+import { defaultLine } from '../../components/color/attributes.js';
+import { extendFlat } from '../../lib/extend.js';
 
 var scatterGeoMarkerLineAttrs = scatterGeoAttrs.marker.line;
 
-module.exports = extendFlat(
+export default extendFlat(
     {
         locations: {
             valType: 'data_array',

@@ -1,8 +1,6 @@
-'use strict';
-
-var Lib = require('../../lib');
-var convert = require('./convert');
-var LAYER_PREFIX = require('../../plots/mapbox/constants').traceLayerPrefix;
+import Lib from '../../lib/index.js';
+import convert from './convert.js';
+import { traceLayerPrefix as LAYER_PREFIX } from '../../plots/mapbox/constants.js';
 var ORDER = {
     cluster: ['cluster', 'clusterCount', 'circle'],
     nonCluster: ['fill', 'line', 'circle', 'symbol'],
@@ -211,7 +209,7 @@ proto.dispose = function dispose() {
     }
 };
 
-module.exports = function createScatterMapbox(subplot, calcTrace) {
+export default function createScatterMapbox(subplot, calcTrace) {
     var trace = calcTrace[0].trace;
     var hasCluster = trace.cluster && trace.cluster.enabled;
     var isHidden = trace.visible !== true;
@@ -247,4 +245,4 @@ module.exports = function createScatterMapbox(subplot, calcTrace) {
     calcTrace[0].trace._glTrace = scatterMapbox;
 
     return scatterMapbox;
-};
+}

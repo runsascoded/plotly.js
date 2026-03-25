@@ -1,38 +1,39 @@
-'use strict';
+import _req0 from './attributes.js';
+import _req1 from '../bar/layout_attributes.js';
+import _req2 from './defaults.js';
+import _req3 from './cross_trace_defaults.js';
+import _req4 from '../bar/layout_defaults.js';
+import { calc as _req5 } from './calc.js';
+import { crossTraceCalc as _req6 } from '../bar/cross_trace_calc.js';
+import { plot as _req7 } from '../bar/plot.js';
+import { style as _req8 } from '../bar/style.js';
+import { styleOnSelect as _req9 } from '../bar/style.js';
+import _req10 from '../scatter/marker_colorbar.js';
+import _req11 from './hover.js';
+import _req12 from '../bar/select.js';
+import _req13 from './event_data.js';
+import _req14 from '../../plots/cartesian/index.js';
 
-/**
- * Histogram has its own attribute, defaults and calc steps,
- * but uses bar's plot to display
- * and bar's crossTraceCalc (formerly known as setPositions) for stacking and grouping
- */
-
-/**
- * histogram errorBarsOK is debatable, but it's put in for backward compat.
- * there are use cases for it - sqrt for a simple histogram works right now,
- * constant and % work but they're not so meaningful. I guess it could be cool
- * to allow quadrature combination of errors in summed histograms...
- */
-
-module.exports = {
-    attributes: require('./attributes'),
-    layoutAttributes: require('../bar/layout_attributes'),
-    supplyDefaults: require('./defaults'),
-    crossTraceDefaults: require('./cross_trace_defaults'),
-    supplyLayoutDefaults: require('../bar/layout_defaults'),
-    calc: require('./calc').calc,
-    crossTraceCalc: require('../bar/cross_trace_calc').crossTraceCalc,
-    plot: require('../bar/plot').plot,
+export default {
+    attributes: _req0,
+    layoutAttributes: _req1,
+    supplyDefaults: _req2,
+    crossTraceDefaults: _req3,
+    supplyLayoutDefaults: _req4,
+    calc: _req5,
+    crossTraceCalc: _req6,
+    plot: _req7,
     layerName: 'barlayer',
-    style: require('../bar/style').style,
-    styleOnSelect: require('../bar/style').styleOnSelect,
-    colorbar: require('../scatter/marker_colorbar'),
-    hoverPoints: require('./hover'),
-    selectPoints: require('../bar/select'),
-    eventData: require('./event_data'),
+    style: _req8,
+    styleOnSelect: _req9,
+    colorbar: _req10,
+    hoverPoints: _req11,
+    selectPoints: _req12,
+    eventData: _req13,
 
     moduleType: 'trace',
     name: 'histogram',
-    basePlotModule: require('../../plots/cartesian'),
+    basePlotModule: _req14,
     categories: ['bar-like', 'cartesian', 'svg', 'bar', 'histogram', 'oriented', 'errorBarsOK', 'showLegend'],
     meta: {
         description: [

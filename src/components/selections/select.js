@@ -1,51 +1,46 @@
-'use strict';
-
-var polybool = require('polybooljs');
-var pointInPolygon = require('point-in-polygon/nested'); // could we use contains lib/polygon instead?
-
-var Registry = require('../../registry');
-var dashStyle = require('../drawing').dashStyle;
-var Color = require('../color');
-var Fx = require('../fx');
-var makeEventData = require('../fx/helpers').makeEventData;
-var dragHelpers = require('../dragelement/helpers');
+import polybool from 'polybooljs';
+import pointInPolygon from 'point-in-polygon/nested';
+import Registry from '../../registry.js';
+import _index from '../drawing/index.js';
+const { dashStyle } = _index;
+import Color from '../color/index.js';
+import Fx from '../fx/index.js';
+import { makeEventData } from '../fx/helpers.js';
+import dragHelpers from '../dragelement/helpers.js';
+import shapeHelpers from '../shapes/helpers.js';
+import shapeConstants from '../shapes/constants.js';
+import displayOutlines from '../shapes/display_outlines.js';
+import _handle_outline from '../shapes/handle_outline.js';
+const { clearOutline } = _handle_outline;
+import newShapeHelpers from '../shapes/draw_newshape/helpers.js';
+import _newshapes from '../shapes/draw_newshape/newshapes.js';
+const { newShapes } = _newshapes;
+import newSelections from './draw_newselection/newselections.js';
+import _draw from './draw.js';
+const { activateLastSelection } = _draw;
+import Lib from '../../lib/index.js';
+import libPolygon from '../../lib/polygon.js';
+import throttle from '../../lib/throttle.js';
+import { getFromId } from '../../plots/cartesian/axis_ids.js';
+import clearGlCanvases from '../../lib/clear_gl_canvases.js';
+import { redrawReglTraces } from '../../plot_api/subroutines.js';
+import constants from './constants.js';
+import helpers from './helpers.js';
 var freeMode = dragHelpers.freeMode;
 var rectMode = dragHelpers.rectMode;
 var drawMode = dragHelpers.drawMode;
 var openMode = dragHelpers.openMode;
 var selectMode = dragHelpers.selectMode;
 
-var shapeHelpers = require('../shapes/helpers');
-var shapeConstants = require('../shapes/constants');
-
-var displayOutlines = require('../shapes/display_outlines');
-var clearOutline = require('../shapes/handle_outline').clearOutline;
-
-var newShapeHelpers = require('../shapes/draw_newshape/helpers');
 var handleEllipse = newShapeHelpers.handleEllipse;
 var readPaths = newShapeHelpers.readPaths;
 
-var newShapes = require('../shapes/draw_newshape/newshapes').newShapes;
-
-var newSelections = require('./draw_newselection/newselections');
-var activateLastSelection = require('./draw').activateLastSelection;
-
-var Lib = require('../../lib');
 var ascending = Lib.sorterAsc;
-var libPolygon = require('../../lib/polygon');
-var throttle = require('../../lib/throttle');
-var getFromId = require('../../plots/cartesian/axis_ids').getFromId;
-var clearGlCanvases = require('../../lib/clear_gl_canvases');
-
-var redrawReglTraces = require('../../plot_api/subroutines').redrawReglTraces;
-
-var constants = require('./constants');
 var MINSELECT = constants.MINSELECT;
 
 var filteredPolygon = libPolygon.filter;
 var polygonTester = libPolygon.tester;
 
-var helpers = require('./helpers');
 var p2r = helpers.p2r;
 var axValue = helpers.axValue;
 var getTransform = helpers.getTransform;
@@ -119,9 +114,7 @@ function prepSelect(evt, startX, startY, dragOptions, mode) {
     var fillC = (isDrawMode && !isOpenMode) ? newStyle.fillcolor : 'rgba(0,0,0,0)';
 
     var strokeC = newStyle.line.color || (
-        isCartesian ?
-            Color.contrast(gd._fullLayout.plot_bgcolor) :
-            '#7f7f7f' // non-cartesian subplot
+        (isCartesian ? Color.contrast(gd._fullLayout.plot_bgcolor) : '#7f7f7f') // non-cartesian subplot
     );
 
     outlines.enter()
@@ -506,7 +499,6 @@ function selectOnClick(evt, gd, xAxes, yAxes, subplot, dragOptions, polygonOutli
         searchTraces = determineSearchTraces(gd, xAxes, yAxes, subplot);
         var clickedPtInfo = extractClickedPtInfo(hoverData, searchTraces);
         var isBinnedTrace = clickedPtInfo.pointNumbers.length > 0;
-
 
         // Note: potentially costly operation isPointOrBinSelected is
         // called as late as possible through the use of an assignment
@@ -1571,7 +1563,7 @@ function emitDeselect(gd) {
     gd.emit('plotly_deselect', null);
 }
 
-module.exports = {
+export default {
     reselect: reselect,
     prepSelect: prepSelect,
     clearOutline: clearOutline,

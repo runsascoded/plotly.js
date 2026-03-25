@@ -1,4 +1,13 @@
-'use strict';
+import _req0 from './attributes.js';
+import _req1 from './defaults.js';
+import _req2 from '../scatter/marker_colorbar.js';
+import _req3 from './format_labels.js';
+import _req4 from '../scattergeo/calc.js';
+import _req5 from './plot.js';
+import { hoverPoints as _req6 } from './hover.js';
+import _req7 from './event_data.js';
+import _req8 from './select.js';
+import _req9 from '../../plots/mapbox/index.js';
 
 var deprecationWarning = [
     '*scattermapbox* trace is deprecated!',
@@ -7,16 +16,16 @@ var deprecationWarning = [
     'as well as https://plotly.com/javascript/maplibre-migration/'
 ].join(' ');
 
-module.exports = {
-    attributes: require('./attributes'),
-    supplyDefaults: require('./defaults'),
-    colorbar: require('../scatter/marker_colorbar'),
-    formatLabels: require('./format_labels'),
-    calc: require('../scattergeo/calc'),
-    plot: require('./plot'),
-    hoverPoints: require('./hover').hoverPoints,
-    eventData: require('./event_data'),
-    selectPoints: require('./select'),
+export default {
+    attributes: _req0,
+    supplyDefaults: _req1,
+    colorbar: _req2,
+    formatLabels: _req3,
+    calc: _req4,
+    plot: _req5,
+    hoverPoints: _req6,
+    eventData: _req7,
+    selectPoints: _req8,
 
     styleOnSelect: function(_, cd) {
         if(cd) {
@@ -27,7 +36,7 @@ module.exports = {
 
     moduleType: 'trace',
     name: 'scattermapbox',
-    basePlotModule: require('../../plots/mapbox'),
+    basePlotModule: _req9,
     categories: ['mapbox', 'gl', 'symbols', 'showLegend', 'scatter-like'],
     meta: {
         hrName: 'scatter_mapbox',

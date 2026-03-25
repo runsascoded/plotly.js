@@ -1,9 +1,7 @@
-'use strict';
+import Registry from '../../registry.js';
+import helpers from './helpers.js';
 
-var Registry = require('../../registry');
-var helpers = require('./helpers');
-
-module.exports = function getLegendData(calcdata, opts, hasMultipleLegends) {
+export default function getLegendData(calcdata, opts, hasMultipleLegends) {
     var inHover = opts._inHover;
     var grouped = helpers.isGrouped(opts);
     var reversed = helpers.isReversed(opts);
@@ -111,15 +109,15 @@ module.exports = function getLegendData(calcdata, opts, hasMultipleLegends) {
 
     var orderFn1 = function(a, b) {
         return (
-            (a[0]._groupMinRank - b[0]._groupMinRank) ||
-            (a[0]._preGroupSort - b[0]._preGroupSort) // fallback for old Chrome < 70 https://bugs.chromium.org/p/v8/issues/detail?id=90
+            // fallback for old Chrome < 70 https://bugs.chromium.org/p/v8/issues/detail?id=90
+            ((a[0]._groupMinRank - b[0]._groupMinRank) || (a[0]._preGroupSort - b[0]._preGroupSort))
         );
     };
 
     var orderFn2 = function(a, b) {
         return (
-            (a.trace.legendrank - b.trace.legendrank) ||
-            (a._preSort - b._preSort) // fallback for old Chrome < 70 https://bugs.chromium.org/p/v8/issues/detail?id=90
+            // fallback for old Chrome < 70 https://bugs.chromium.org/p/v8/issues/detail?id=90
+            ((a.trace.legendrank - b.trace.legendrank) || (a._preSort - b._preSort))
         );
     };
 
@@ -183,4 +181,4 @@ module.exports = function getLegendData(calcdata, opts, hasMultipleLegends) {
     opts._maxNameLength = maxNameLength;
 
     return legendData;
-};
+}

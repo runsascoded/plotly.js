@@ -1,18 +1,10 @@
-'use strict';
+import Color from '../../components/color/index.js';
+import _helpers from '../../components/colorscale/helpers.js';
+const { hasColorscale } = _helpers;
+import colorscaleDefaults from '../../components/colorscale/defaults.js';
+import subTypes from './subtypes.js';
 
-var Color = require('../../components/color');
-var hasColorscale = require('../../components/colorscale/helpers').hasColorscale;
-var colorscaleDefaults = require('../../components/colorscale/defaults');
-
-var subTypes = require('./subtypes');
-
-/*
- * opts: object of flags to control features not all marker users support
- *   noLine: caller does not support marker lines
- *   gradient: caller supports gradients
- *   noSelect: caller does not support selected/unselected attribute containers
- */
-module.exports = function markerDefaults(traceIn, traceOut, defaultColor, layout, coerce, opts) {
+export default function markerDefaults(traceIn, traceOut, defaultColor, layout, coerce, opts) {
     var isBubble = subTypes.isBubble(traceIn);
     var lineColor = (traceIn.line || {}).color;
     var defaultMLC;
@@ -78,4 +70,4 @@ module.exports = function markerDefaults(traceIn, traceOut, defaultColor, layout
             coerce('marker.gradient.color');
         }
     }
-};
+}

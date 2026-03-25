@@ -1,10 +1,8 @@
-'use strict';
+import { isArrayOrTypedArray } from '../../lib/index.js';
+import Colorscale from '../../components/colorscale/index.js';
+import { wrap } from '../../lib/gup.js';
 
-var isArrayOrTypedArray = require('../../lib').isArrayOrTypedArray;
-var Colorscale = require('../../components/colorscale');
-var wrap = require('../../lib/gup').wrap;
-
-module.exports = function calc(gd, trace) {
+export default function calc(gd, trace) {
     var lineColor;
     var cscale;
 
@@ -23,7 +21,7 @@ module.exports = function calc(gd, trace) {
     }
 
     return wrap({lineColor: lineColor, cscale: cscale});
-};
+}
 
 function constHalf(len) {
     var out = new Array(len);

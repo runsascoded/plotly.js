@@ -1,15 +1,11 @@
-'use strict';
+import Lib from '../../lib/index.js';
+import Color from '../color/index.js';
+import Template from '../../plot_api/plot_template.js';
+import handleArrayContainerDefaults from '../../plots/array_container_defaults.js';
+import attributes from './attributes.js';
+import constants from './constants.js';
 
-var Lib = require('../../lib');
-var Color = require('../color');
-var Template = require('../../plot_api/plot_template');
-var handleArrayContainerDefaults = require('../../plots/array_container_defaults');
-
-var attributes = require('./attributes');
-var constants = require('./constants');
-
-
-module.exports = function handleDefaults(containerIn, containerOut, layout, counterAxes, calendar) {
+export default function handleDefaults(containerIn, containerOut, layout, counterAxes, calendar) {
     var selectorIn = containerIn.rangeselector || {};
     var selectorOut = Template.newContainer(containerOut, 'rangeselector');
 
@@ -40,7 +36,7 @@ module.exports = function handleDefaults(containerIn, containerOut, layout, coun
         coerce('bordercolor');
         coerce('borderwidth');
     }
-};
+}
 
 function buttonDefaults(buttonIn, buttonOut, selectorOut, opts) {
     var calendar = opts.calendar;

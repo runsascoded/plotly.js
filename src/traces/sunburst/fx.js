@@ -1,18 +1,15 @@
-'use strict';
-
-var d3 = require('@plotly/d3');
-var Registry = require('../../registry');
-var appendArrayPointValue = require('../../components/fx/helpers').appendArrayPointValue;
-var Fx = require('../../components/fx');
-var Lib = require('../../lib');
-var Events = require('../../lib/events');
-
-var helpers = require('./helpers');
-var pieHelpers = require('../pie/helpers');
+import d3 from '@plotly/d3';
+import Registry from '../../registry.js';
+import { appendArrayPointValue } from '../../components/fx/helpers.js';
+import Fx from '../../components/fx/index.js';
+import Lib from '../../lib/index.js';
+import Events from '../../lib/events.js';
+import helpers from './helpers.js';
+import pieHelpers from '../pie/helpers.js';
 
 var formatValue = pieHelpers.formatPieValue;
 
-module.exports = function attachFxHandlers(sliceTop, entry, gd, cd, opts) {
+export default function attachFxHandlers(sliceTop, entry, gd, cd, opts) {
     var cd0 = cd[0];
     var trace = cd0.trace;
     var hierarchy = cd0.hierarchy;
@@ -290,7 +287,7 @@ module.exports = function attachFxHandlers(sliceTop, entry, gd, cd, opts) {
     sliceTop.on('mouseover', onMouseOver);
     sliceTop.on('mouseout', onMouseOut);
     sliceTop.on('click', onClick);
-};
+}
 
 function makeEventData(pt, trace, keys) {
     var cdi = pt.data.data;

@@ -1,11 +1,9 @@
-'use strict';
+import Color from '../../../components/color/index.js';
+import axesAttrs from '../../cartesian/layout_attributes.js';
+import { extendFlat } from '../../../lib/extend.js';
+import { overrideAll } from '../../../plot_api/edit_types.js';
 
-var Color = require('../../../components/color');
-var axesAttrs = require('../../cartesian/layout_attributes');
-var extendFlat = require('../../../lib/extend').extendFlat;
-var overrideAll = require('../../../plot_api/edit_types').overrideAll;
-
-module.exports = overrideAll({
+export default overrideAll({
     visible: axesAttrs.visible,
     showspikes: {
         valType: 'boolean',

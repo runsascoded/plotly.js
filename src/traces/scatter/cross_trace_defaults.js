@@ -1,11 +1,8 @@
-'use strict';
+import Lib from '../../lib/index.js';
+import handleGroupingDefaults from './grouping_defaults.js';
+import attributes from './attributes.js';
 
-var Lib = require('../../lib');
-var handleGroupingDefaults = require('./grouping_defaults');
-var attributes = require('./attributes');
-
-// remove opacity for any trace that has a fill or is filled to
-module.exports = function crossTraceDefaults(fullData, fullLayout) {
+export default function crossTraceDefaults(fullData, fullLayout) {
     var traceIn, traceOut, i;
     var scattermode = fullLayout.scattermode;
 
@@ -46,4 +43,4 @@ module.exports = function crossTraceDefaults(fullData, fullLayout) {
             }
         }
     }
-};
+}

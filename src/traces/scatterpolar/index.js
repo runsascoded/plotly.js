@@ -1,21 +1,31 @@
-'use strict';
+import _req0 from '../../plots/polar/index.js';
+import _req1 from './attributes.js';
+import { supplyDefaults as _req2 } from './defaults.js';
+import _req3 from '../scatter/marker_colorbar.js';
+import _req4 from './format_labels.js';
+import _req5 from './calc.js';
+import _req6 from './plot.js';
+import { style as _req7 } from '../scatter/style.js';
+import { styleOnSelect as _req8 } from '../scatter/style.js';
+import { hoverPoints as _req9 } from './hover.js';
+import _req10 from '../scatter/select.js';
 
-module.exports = {
+export default {
     moduleType: 'trace',
     name: 'scatterpolar',
-    basePlotModule: require('../../plots/polar'),
+    basePlotModule: _req0,
     categories: ['polar', 'symbols', 'showLegend', 'scatter-like'],
 
-    attributes: require('./attributes'),
-    supplyDefaults: require('./defaults').supplyDefaults,
-    colorbar: require('../scatter/marker_colorbar'),
-    formatLabels: require('./format_labels'),
-    calc: require('./calc'),
-    plot: require('./plot'),
-    style: require('../scatter/style').style,
-    styleOnSelect: require('../scatter/style').styleOnSelect,
-    hoverPoints: require('./hover').hoverPoints,
-    selectPoints: require('../scatter/select'),
+    attributes: _req1,
+    supplyDefaults: _req2,
+    colorbar: _req3,
+    formatLabels: _req4,
+    calc: _req5,
+    plot: _req6,
+    style: _req7,
+    styleOnSelect: _req8,
+    hoverPoints: _req9,
+    selectPoints: _req10,
 
     meta: {
         hrName: 'scatter_polar',

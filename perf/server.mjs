@@ -31,9 +31,9 @@ const result = await build({
 const plotlyJs = Buffer.from(result.outputFiles[0].contents);
 console.error(`Bundle size: ${(plotlyJs.length / 1024).toFixed(0)} KB`);
 
-// Build plots.js for browser use
+// Build plots.cjs for browser use
 const plotsResult = await build({
-    entryPoints: [join(__dirname, 'plots.js')],
+    entryPoints: [join(__dirname, 'plots.cjs')],
     bundle: true,
     format: 'iife',
     globalName: '__PLOTLY_PLOTS__',
@@ -66,7 +66,7 @@ const server = createServer((req, res) => {
             'Content-Length': plotlyJs.length,
         });
         res.end(plotlyJs);
-    } else if(path === '/plots.js') {
+    } else if(path === "/plots.js") {
         res.writeHead(200, {
             'Content-Type': 'application/javascript',
             'Content-Length': plotsJs.length,

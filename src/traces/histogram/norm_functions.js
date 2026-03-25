@@ -1,7 +1,4 @@
-'use strict';
-
-
-module.exports = {
+export default {
     percent: function(size, total) {
         var nMax = size.length;
         var norm = 100 / total;

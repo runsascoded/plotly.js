@@ -1,9 +1,7 @@
-'use strict';
+import Lib from '../../lib/index.js';
+import constants from './constants.js';
 
-var Lib = require('../../lib');
-var constants = require('./constants');
-
-module.exports = function findAllPaths(pathinfo, xtol, ytol) {
+export default function findAllPaths(pathinfo, xtol, ytol) {
     var cnt,
         startLoc,
         i,
@@ -30,7 +28,7 @@ module.exports = function findAllPaths(pathinfo, xtol, ytol) {
         }
         if(cnt === 10000) Lib.log('Infinite loop in contour?');
     }
-};
+}
 
 function equalPts(pt1, pt2, xtol, ytol) {
     return Math.abs(pt1[0] - pt2[0]) < xtol &&

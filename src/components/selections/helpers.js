@@ -1,6 +1,5 @@
-'use strict';
-
-var strTranslate = require('../../lib').strTranslate;
+import _index from '../../lib/index.js';
+const { strTranslate } = _index;
 
 // in v3 (once log ranges are fixed),
 // we'll be able to p2r here for all axis types
@@ -38,7 +37,7 @@ function getTransform(plotinfo) {
     );
 }
 
-module.exports = {
+export default {
     p2r: p2r,
     r2p: r2p,
     axValue: axValue,

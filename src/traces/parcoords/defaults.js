@@ -1,16 +1,13 @@
-'use strict';
-
-var Lib = require('../../lib');
-var hasColorscale = require('../../components/colorscale/helpers').hasColorscale;
-var colorscaleDefaults = require('../../components/colorscale/defaults');
-var handleDomainDefaults = require('../../plots/domain').defaults;
-var handleArrayContainerDefaults = require('../../plots/array_container_defaults');
-var Axes = require('../../plots/cartesian/axes');
-
-var attributes = require('./attributes');
-var axisBrush = require('./axisbrush');
-var maxDimensionCount = require('./constants').maxDimensionCount;
-var mergeLength = require('./merge_length');
+import Lib from '../../lib/index.js';
+import { hasColorscale } from '../../components/colorscale/helpers.js';
+import colorscaleDefaults from '../../components/colorscale/defaults.js';
+import { defaults as handleDomainDefaults } from '../../plots/domain.js';
+import handleArrayContainerDefaults from '../../plots/array_container_defaults.js';
+import Axes from '../../plots/cartesian/axes.js';
+import attributes from './attributes.js';
+import axisBrush from './axisbrush.js';
+import { maxDimensionCount } from './constants.js';
+import mergeLength from './merge_length.js';
 
 function handleLineDefaults(traceIn, traceOut, defaultColor, layout, coerce) {
     var lineColor = coerce('line.color', defaultColor);
@@ -66,7 +63,7 @@ function dimensionDefaults(dimensionIn, dimensionOut, parentOut, opts) {
     }
 }
 
-module.exports = function supplyDefaults(traceIn, traceOut, defaultColor, layout) {
+export default function supplyDefaults(traceIn, traceOut, defaultColor, layout) {
     function coerce(attr, dflt) {
         return Lib.coerce(traceIn, traceOut, attributes, attr, dflt);
     }
@@ -108,4 +105,4 @@ module.exports = function supplyDefaults(traceIn, traceOut, defaultColor, layout
 
     coerce('unselected.line.color');
     coerce('unselected.line.opacity');
-};
+}

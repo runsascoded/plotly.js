@@ -1,6 +1,4 @@
-'use strict';
-
-module.exports = {
+export default {
     iciclecolorway: {
         valType: 'colorlist',
         editType: 'calc',

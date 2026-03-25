@@ -1,23 +1,35 @@
-'use strict';
+import _req0 from './attributes.js';
+import _req1 from './layout_attributes.js';
+import { supplyDefaults as _req2 } from './defaults.js';
+import { crossTraceDefaults as _req3 } from './defaults.js';
+import _req4 from './layout_defaults.js';
+import _req5 from './calc.js';
+import _req6 from './cross_trace_calc.js';
+import _req7 from './plot.js';
+import { style as _req8 } from './style.js';
+import _req9 from './hover.js';
+import _req10 from './event_data.js';
+import _req11 from '../bar/select.js';
+import _req12 from '../../plots/cartesian/index.js';
 
-module.exports = {
-    attributes: require('./attributes'),
-    layoutAttributes: require('./layout_attributes'),
-    supplyDefaults: require('./defaults').supplyDefaults,
-    crossTraceDefaults: require('./defaults').crossTraceDefaults,
-    supplyLayoutDefaults: require('./layout_defaults'),
-    calc: require('./calc'),
-    crossTraceCalc: require('./cross_trace_calc'),
-    plot: require('./plot'),
-    style: require('./style').style,
-    hoverPoints: require('./hover'),
-    eventData: require('./event_data'),
+export default {
+    attributes: _req0,
+    layoutAttributes: _req1,
+    supplyDefaults: _req2,
+    crossTraceDefaults: _req3,
+    supplyLayoutDefaults: _req4,
+    calc: _req5,
+    crossTraceCalc: _req6,
+    plot: _req7,
+    style: _req8,
+    hoverPoints: _req9,
+    eventData: _req10,
 
-    selectPoints: require('../bar/select'),
+    selectPoints: _req11,
 
     moduleType: 'trace',
     name: 'funnel',
-    basePlotModule: require('../../plots/cartesian'),
+    basePlotModule: _req12,
     categories: ['bar-like', 'cartesian', 'svg', 'oriented', 'showLegend', 'zoomScale'],
     meta: {
         description: [

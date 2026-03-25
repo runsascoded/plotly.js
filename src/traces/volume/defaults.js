@@ -1,11 +1,9 @@
-'use strict';
+import Lib from '../../lib/index.js';
+import attributes from './attributes.js';
+import { supplyIsoDefaults } from '../isosurface/defaults.js';
+import { opacityscaleDefaults } from '../surface/defaults.js';
 
-var Lib = require('../../lib');
-var attributes = require('./attributes');
-var supplyIsoDefaults = require('../isosurface/defaults').supplyIsoDefaults;
-var opacityscaleDefaults = require('../surface/defaults').opacityscaleDefaults;
-
-module.exports = function supplyDefaults(traceIn, traceOut, defaultColor, layout) {
+export default function supplyDefaults(traceIn, traceOut, defaultColor, layout) {
     function coerce(attr, dflt) {
         return Lib.coerce(traceIn, traceOut, attributes, attr, dflt);
     }
@@ -13,4 +11,4 @@ module.exports = function supplyDefaults(traceIn, traceOut, defaultColor, layout
     supplyIsoDefaults(traceIn, traceOut, defaultColor, layout, coerce);
 
     opacityscaleDefaults(traceIn, traceOut, layout, coerce);
-};
+}

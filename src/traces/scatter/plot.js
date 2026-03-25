@@ -1,19 +1,23 @@
-'use strict';
-
-var d3 = require('@plotly/d3');
-
-var Registry = require('../../registry');
-var Lib = require('../../lib');
+import d3 from '@plotly/d3';
+import Registry from '../../registry.js';
+import Lib from '../../lib/index.js';
+import Drawing from '../../components/drawing/index.js';
+import subTypes from './subtypes.js';
+import linePoints from './line_points.js';
+import linkTraces from './link_traces.js';
+import _polygon from '../../lib/polygon.js';
+const { tester: polygonTester } = _polygon;
 var ensureSingle = Lib.ensureSingle;
 var identity = Lib.identity;
-var Drawing = require('../../components/drawing');
 
-var subTypes = require('./subtypes');
-var linePoints = require('./line_points');
-var linkTraces = require('./link_traces');
-var polygonTester = require('../../lib/polygon').tester;
-
-module.exports = function plot(gd, plotinfo, cdscatter, scatterLayer, transitionOpts, makeOnCompleteCallback) {
+export default function plot(
+    gd,
+    plotinfo,
+    cdscatter,
+    scatterLayer,
+    transitionOpts,
+    makeOnCompleteCallback
+) {
     var join, onComplete;
 
     // If transition config is provided, then it is only a partial replot and traces not
@@ -74,7 +78,7 @@ module.exports = function plot(gd, plotinfo, cdscatter, scatterLayer, transition
 
     // remove paths that didn't get used
     scatterLayer.selectAll('path:not([d])').remove();
-};
+}
 
 function createFills(gd, traceJoin, plotinfo) {
     traceJoin.each(function(d) {
@@ -450,7 +454,6 @@ function plotOne(gd, idx, plotinfo, cdscatter, cdscatterAll, element, transition
         trace._prevRevpath = null;
     }
     trace._ownPolygons = thisPolygons;
-
 
     function visFilter(d) {
         return d.filter(function(v) { return !v.gap && v.vis; });

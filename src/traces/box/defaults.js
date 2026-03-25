@@ -1,12 +1,10 @@
-'use strict';
-
-var Lib = require('../../lib');
-var Registry = require('../../registry');
-var Color = require('../../components/color');
-var handlePeriodDefaults = require('../scatter/period_defaults');
-var handleGroupingDefaults = require('../scatter/grouping_defaults');
-var autoType = require('../../plots/cartesian/axis_autotype');
-var attributes = require('./attributes');
+import Lib from '../../lib/index.js';
+import Registry from '../../registry.js';
+import Color from '../../components/color/index.js';
+import handlePeriodDefaults from '../scatter/period_defaults.js';
+import handleGroupingDefaults from '../scatter/grouping_defaults.js';
+import autoType from '../../plots/cartesian/axis_autotype.js';
+import attributes from './attributes.js';
 
 function supplyDefaults(traceIn, traceOut, defaultColor, layout) {
     function coerce(attr, dflt) {
@@ -304,7 +302,7 @@ function crossTraceDefaults(fullData, fullLayout) {
     }
 }
 
-module.exports = {
+export default {
     supplyDefaults: supplyDefaults,
     crossTraceDefaults: crossTraceDefaults,
 

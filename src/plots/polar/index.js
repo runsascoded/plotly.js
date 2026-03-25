@@ -1,10 +1,10 @@
-'use strict';
-
-var getSubplotCalcData = require('../get_data').getSubplotCalcData;
-var counterRegex = require('../../lib').counterRegex;
-
-var createPolar = require('./polar');
-var constants = require('./constants');
+import { getSubplotCalcData } from '../get_data.js';
+import { counterRegex } from '../../lib/index.js';
+import createPolar from './polar.js';
+import constants from './constants.js';
+import _req0 from './layout_attributes.js';
+import _req1 from './layout_defaults.js';
+import { toSVG as _req2 } from '../cartesian/index.js';
 
 var attr = constants.attr;
 var name = constants.name;
@@ -68,16 +68,16 @@ function clean(newFullData, newFullLayout, oldFullData, oldFullLayout) {
     }
 }
 
-module.exports = {
+export default {
     attr: attr,
     name: name,
     idRoot: name,
     idRegex: counter,
     attrRegex: counter,
     attributes: attributes,
-    layoutAttributes: require('./layout_attributes'),
-    supplyLayoutDefaults: require('./layout_defaults'),
+    layoutAttributes: _req0,
+    supplyLayoutDefaults: _req1,
     plot: plot,
     clean: clean,
-    toSVG: require('../cartesian').toSVG
+    toSVG: _req2
 };

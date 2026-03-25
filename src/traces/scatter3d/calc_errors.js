@@ -1,6 +1,4 @@
-'use strict';
-
-var Registry = require('../../registry');
+import Registry from '../../registry.js';
 
 function calculateAxisErrors(data, params, scaleFactor, axis) {
     if(!params || !params.visible) return null;
@@ -74,4 +72,4 @@ function calculateErrors(data, scaleFactor, sceneLayout) {
     return errorBounds;
 }
 
-module.exports = calculateErrors;
+export default calculateErrors;

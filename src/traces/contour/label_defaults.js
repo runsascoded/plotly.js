@@ -1,8 +1,6 @@
-'use strict';
+import Lib from '../../lib/index.js';
 
-var Lib = require('../../lib');
-
-module.exports = function handleLabelDefaults(coerce, layout, lineColor, opts) {
+export default function handleLabelDefaults(coerce, layout, lineColor, opts) {
     if(!opts) opts = {};
     var showLabels = coerce('contours.showlabels');
     if(showLabels) {
@@ -14,4 +12,4 @@ module.exports = function handleLabelDefaults(coerce, layout, lineColor, opts) {
     }
 
     if(opts.hasHover !== false) coerce('zhoverformat');
-};
+}

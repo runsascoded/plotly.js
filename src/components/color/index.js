@@ -1,12 +1,10 @@
-'use strict';
+import tinycolor from 'tinycolor2';
+import isNumeric from 'fast-isnumeric';
+import { isTypedArray } from '../../lib/array.js';
+import colorAttrs from './attributes.js';
 
-var tinycolor = require('tinycolor2');
-var isNumeric = require('fast-isnumeric');
-var isTypedArray = require('../../lib/array').isTypedArray;
+var color = {};
 
-var color = module.exports = {};
-
-var colorAttrs = require('./attributes');
 color.defaults = colorAttrs.defaults;
 var defaultLine = color.defaultLine = colorAttrs.defaultLine;
 color.lightLine = colorAttrs.lightLine;
@@ -181,3 +179,5 @@ function cleanOne(val) {
     if(rgba) return 'rgba(' + rgbStr + ', ' + parts[3] + ')';
     return 'rgb(' + rgbStr + ')';
 }
+
+export default color;

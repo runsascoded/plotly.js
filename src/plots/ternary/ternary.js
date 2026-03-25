@@ -1,29 +1,26 @@
-'use strict';
-
-var d3 = require('@plotly/d3');
-var tinycolor = require('tinycolor2');
-
-var Registry = require('../../registry');
-var Lib = require('../../lib');
+import d3 from '@plotly/d3';
+import tinycolor from 'tinycolor2';
+import Registry from '../../registry.js';
+import Lib from '../../lib/index.js';
+import Color from '../../components/color/index.js';
+import Drawing from '../../components/drawing/index.js';
+import setConvert from '../cartesian/set_convert.js';
+import { extendFlat } from '../../lib/extend.js';
+import Plots from '../plots.js';
+import Axes from '../cartesian/axes.js';
+import dragElement from '../../components/dragelement/index.js';
+import Fx from '../../components/fx/index.js';
+import dragHelpers from '../../components/dragelement/helpers.js';
+import Titles from '../../components/titles/index.js';
+import { prepSelect } from '../../components/selections/index.js';
+import { selectOnClick } from '../../components/selections/index.js';
+import { clearOutline } from '../../components/selections/index.js';
+import { clearSelectionsCache } from '../../components/selections/index.js';
+import constants from '../cartesian/constants.js';
 var strTranslate = Lib.strTranslate;
 var _ = Lib._;
-var Color = require('../../components/color');
-var Drawing = require('../../components/drawing');
-var setConvert = require('../cartesian/set_convert');
-var extendFlat = require('../../lib/extend').extendFlat;
-var Plots = require('../plots');
-var Axes = require('../cartesian/axes');
-var dragElement = require('../../components/dragelement');
-var Fx = require('../../components/fx');
-var dragHelpers = require('../../components/dragelement/helpers');
 var freeMode = dragHelpers.freeMode;
 var rectMode = dragHelpers.rectMode;
-var Titles = require('../../components/titles');
-var prepSelect = require('../../components/selections').prepSelect;
-var selectOnClick = require('../../components/selections').selectOnClick;
-var clearOutline = require('../../components/selections').clearOutline;
-var clearSelectionsCache = require('../../components/selections').clearSelectionsCache;
-var constants = require('../cartesian/constants');
 
 function Ternary(options, fullLayout) {
     this.id = options.id;
@@ -39,7 +36,7 @@ function Ternary(options, fullLayout) {
     this.cTickLayout = null;
 }
 
-module.exports = Ternary;
+export default Ternary;
 
 var proto = Ternary.prototype;
 

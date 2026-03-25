@@ -1,8 +1,4 @@
-'use strict';
-
-
-// IMPORTANT - default colors should be in hex for compatibility
-exports.defaults = [
+export var defaults = [
     '#1f77b4',  // muted blue
     '#ff7f0e',  // safety orange
     '#2ca02c',  // cooked asparagus green
@@ -15,16 +11,10 @@ exports.defaults = [
     '#17becf'   // blue-teal
 ];
 
-exports.defaultLine = '#444';
+export var defaultLine = '#444';
+export var lightLine = '#eee';
+export var background = '#fff';
+export var borderLine = '#BEC8D9';
+export var lightFraction = 100 * (0xe - 0x4) / (0xf - 0x4);
 
-exports.lightLine = '#eee';
-
-exports.background = '#fff';
-
-exports.borderLine = '#BEC8D9';
-
-// with axis.color and Color.interp we aren't using lightLine
-// itself anymore, instead interpolating between axis.color
-// and the background color using tinycolor.mix. lightFraction
-// gives back exactly lightLine if the other colors are defaults.
-exports.lightFraction = 100 * (0xe - 0x4) / (0xf - 0x4);
+export default { defaults, defaultLine, lightLine, background, borderLine, lightFraction };

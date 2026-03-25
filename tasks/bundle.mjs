@@ -1,8 +1,8 @@
 import runSeries from 'run-series';
 import prependFile from 'prepend-file';
 
-import constants from './util/constants.js';
-import common from './util/common.js';
+import constants from './util/constants.cjs';
+import common from './util/common.cjs';
 import _bundle from './util/bundle_wrapper.mjs';
 
 var header = constants.licenseDist + '\n';
@@ -22,7 +22,7 @@ var pathToPlotlyGeoAssetsDist = constants.pathToPlotlyGeoAssetsDist;
 var doesFileExist = common.doesFileExist;
 if(!doesFileExist(constants.pathToCSSBuild)) {
     throw new Error([
-        'build/plotcss.js is missing',
+        'build/plotcss.cjs is missing',
         'Please run `npm run preprocess` first'
     ].join('\n'));
 }

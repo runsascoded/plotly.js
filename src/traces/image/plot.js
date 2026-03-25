@@ -1,14 +1,12 @@
-'use strict';
-
-var d3 = require('@plotly/d3');
-var Lib = require('../../lib');
+import d3 from '@plotly/d3';
+import Lib from '../../lib/index.js';
+import xmlnsNamespaces from '../../constants/xmlns_namespaces.js';
+import constants from './constants.js';
+import supportsPixelatedImage from '../../lib/supports_pixelated_image.js';
+import { STYLE as PIXELATED_IMAGE_STYLE } from '../../constants/pixelated_image.js';
 var strTranslate = Lib.strTranslate;
-var xmlnsNamespaces = require('../../constants/xmlns_namespaces');
-var constants = require('./constants');
-var supportsPixelatedImage = require('../../lib/supports_pixelated_image');
-var PIXELATED_IMAGE_STYLE = require('../../constants/pixelated_image').STYLE;
 
-module.exports = function plot(gd, plotinfo, cdimage, imageLayer) {
+export default function plot(gd, plotinfo, cdimage, imageLayer) {
     var xa = plotinfo.xaxis;
     var ya = plotinfo.yaxis;
 
@@ -222,4 +220,4 @@ module.exports = function plot(gd, plotinfo, cdimage, imageLayer) {
 
         gd._promises.push(p);
     });
-};
+}

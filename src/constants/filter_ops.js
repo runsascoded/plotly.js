@@ -1,6 +1,4 @@
-'use strict';
-
-module.exports = {
+export default {
     COMPARISON_OPS: ['=', '!=', '<', '>=', '>', '<='],
     COMPARISON_OPS2: ['=', '<', '>=', '>', '<='],
     INTERVAL_OPS: ['[]', '()', '[)', '(]', '][', ')(', '](', ')['],

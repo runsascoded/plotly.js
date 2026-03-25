@@ -1,6 +1,4 @@
-'use strict';
-
-module.exports = function flipTree(node, size, opts) {
+export default function flipTree(node, size, opts) {
     var tmp;
 
     if(opts.swapXY) {
@@ -33,4 +31,4 @@ module.exports = function flipTree(node, size, opts) {
             flipTree(children[i], size, opts);
         }
     }
-};
+}

@@ -1,18 +1,9 @@
-'use strict';
-
-var d3 = require('@plotly/d3');
-var isNumeric = require('fast-isnumeric');
+import d3 from '@plotly/d3';
+import isNumeric from 'fast-isnumeric';
 
 var NOTEDATA = [];
 
-/**
- * notifier
- * @param {String} text The person's user name
- * @param {Number} [delay=1000] The delay time in milliseconds
- *          or 'long' which provides 2000 ms delay time.
- * @return {undefined} this function does not return a value
- */
-module.exports = function(text, displayLength) {
+export default function(text, displayLength) {
     if(NOTEDATA.indexOf(text) !== -1) return;
 
     NOTEDATA.push(text);
@@ -74,4 +65,4 @@ module.exports = function(text, displayLength) {
                         .call(killNote);
             }
         });
-};
+}

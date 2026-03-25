@@ -1,6 +1,4 @@
-'use strict';
-
-module.exports = function selectPoints(searchInfo, selectionTester) {
+export default function selectPoints(searchInfo, selectionTester) {
     var cd = searchInfo.cd;
     var xa = searchInfo.xaxis;
     var ya = searchInfo.yaxis;
@@ -34,7 +32,7 @@ module.exports = function selectPoints(searchInfo, selectionTester) {
     }
 
     return selection;
-};
+}
 
 function getCentroid(d, xa, ya, isHorizontal, isFunnel) {
     var x0 = xa.c2p(isHorizontal ? d.s0 : d.p0, true);

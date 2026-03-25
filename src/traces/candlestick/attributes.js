@@ -1,9 +1,7 @@
-'use strict';
-
-var extendFlat = require('../../lib').extendFlat;
-var axisHoverFormat = require('../../plots/cartesian/axis_format_attributes').axisHoverFormat;
-var OHLCattrs = require('../ohlc/attributes');
-var boxAttrs = require('../box/attributes');
+import { extendFlat } from '../../lib/index.js';
+import { axisHoverFormat } from '../../plots/cartesian/axis_format_attributes.js';
+import OHLCattrs from '../ohlc/attributes.js';
+import boxAttrs from '../box/attributes.js';
 
 function directionAttrs(lineColorDefault) {
     return {
@@ -18,7 +16,7 @@ function directionAttrs(lineColorDefault) {
     };
 }
 
-module.exports = {
+export default {
     xperiod: OHLCattrs.xperiod,
     xperiod0: OHLCattrs.xperiod0,
     xperiodalignment: OHLCattrs.xperiodalignment,

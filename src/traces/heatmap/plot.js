@@ -1,22 +1,19 @@
-'use strict';
-
-var d3 = require('@plotly/d3');
-var tinycolor = require('tinycolor2');
-
-var Registry = require('../../registry');
-var Drawing = require('../../components/drawing');
-var Axes = require('../../plots/cartesian/axes');
-var Lib = require('../../lib');
-var svgTextUtils = require('../../lib/svg_text_utils');
-var formatLabels = require('../scatter/format_labels');
-var Color = require('../../components/color');
-var extractOpts = require('../../components/colorscale').extractOpts;
-var makeColorScaleFuncFromTrace = require('../../components/colorscale').makeColorScaleFuncFromTrace;
-var xmlnsNamespaces = require('../../constants/xmlns_namespaces');
-var alignmentConstants = require('../../constants/alignment');
+import d3 from '@plotly/d3';
+import tinycolor from 'tinycolor2';
+import Registry from '../../registry.js';
+import Drawing from '../../components/drawing/index.js';
+import Axes from '../../plots/cartesian/axes.js';
+import Lib from '../../lib/index.js';
+import svgTextUtils from '../../lib/svg_text_utils.js';
+import formatLabels from '../scatter/format_labels.js';
+import Color from '../../components/color/index.js';
+import { extractOpts } from '../../components/colorscale/index.js';
+import { makeColorScaleFuncFromTrace } from '../../components/colorscale/index.js';
+import xmlnsNamespaces from '../../constants/xmlns_namespaces.js';
+import alignmentConstants from '../../constants/alignment.js';
+import supportsPixelatedImage from '../../lib/supports_pixelated_image.js';
+import { STYLE as PIXELATED_IMAGE_STYLE } from '../../constants/pixelated_image.js';
 var LINE_SPACING = alignmentConstants.LINE_SPACING;
-var supportsPixelatedImage = require('../../lib/supports_pixelated_image');
-var PIXELATED_IMAGE_STYLE = require('../../constants/pixelated_image').STYLE;
 
 var labelClass = 'heatmap-label';
 
@@ -28,7 +25,7 @@ function removeLabels(plotGroup) {
     selectLabels(plotGroup).remove();
 }
 
-module.exports = function (gd, plotinfo, cdheatmaps, heatmapLayer) {
+export default function(gd, plotinfo, cdheatmaps, heatmapLayer) {
     var xa = plotinfo.xaxis;
     var ya = plotinfo.yaxis;
 
@@ -563,7 +560,7 @@ module.exports = function (gd, plotinfo, cdheatmaps, heatmapLayer) {
                 });
         }
     });
-};
+}
 
 // get interpolated bin value. Returns {bin0:closest bin, frac:fractional dist to next, bin1:next bin}
 function findInterp(pixel, pixArray) {

@@ -1,6 +1,4 @@
-'use strict';
-
-module.exports = function eventData(out, pt, trace, cd, pointNumber) {
+export default function eventData(out, pt, trace, cd, pointNumber) {
     var cdi = cd[pointNumber];
 
     out.a = cdi.a;
@@ -8,4 +6,4 @@ module.exports = function eventData(out, pt, trace, cd, pointNumber) {
     out.y = cdi.y;
 
     return out;
-};
+}

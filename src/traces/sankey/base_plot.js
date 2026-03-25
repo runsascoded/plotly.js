@@ -1,31 +1,28 @@
-'use strict';
-
-var overrideAll = require('../../plot_api/edit_types').overrideAll;
-var getModuleCalcData = require('../../plots/get_data').getModuleCalcData;
-var plot = require('./plot');
-var fxAttrs = require('../../components/fx/layout_attributes');
-
-var setCursor = require('../../lib/setcursor');
-var dragElement = require('../../components/dragelement');
-var prepSelect = require('../../components/selections').prepSelect;
-var Lib = require('../../lib');
-var Registry = require('../../registry');
+import { overrideAll } from '../../plot_api/edit_types.js';
+import { getModuleCalcData } from '../../plots/get_data.js';
+import sankeyPlot from './plot.js';
+import fxAttrs from '../../components/fx/layout_attributes.js';
+import setCursor from '../../lib/setcursor.js';
+import dragElement from '../../components/dragelement/index.js';
+import { prepSelect } from '../../components/selections/index.js';
+import Lib from '../../lib/index.js';
+import Registry from '../../registry.js';
 
 var SANKEY = 'sankey';
 
-exports.name = SANKEY;
+export var name = SANKEY;
 
-exports.baseLayoutAttrOverrides = overrideAll({
+export var baseLayoutAttrOverrides = overrideAll({
     hoverlabel: fxAttrs.hoverlabel
 }, 'plot', 'nested');
 
-exports.plot = function(gd) {
+export var plot = function(gd) {
     var calcData = getModuleCalcData(gd.calcdata, SANKEY)[0];
-    plot(gd, calcData);
-    exports.updateFx(gd);
+    sankeyPlot(gd, calcData);
+    updateFx(gd);
 };
 
-exports.clean = function(newFullData, newFullLayout, oldFullData, oldFullLayout) {
+export var clean = function(newFullData, newFullLayout, oldFullData, oldFullLayout) {
     var hadPlot = (oldFullLayout._has && oldFullLayout._has(SANKEY));
     var hasPlot = (newFullLayout._has && newFullLayout._has(SANKEY));
 
@@ -35,7 +32,7 @@ exports.clean = function(newFullData, newFullLayout, oldFullData, oldFullLayout)
     }
 };
 
-exports.updateFx = function(gd) {
+export var updateFx = function(gd) {
     for(var i = 0; i < gd._fullData.length; i++) {
         subplotUpdateFx(gd, i);
     }
@@ -128,3 +125,5 @@ function subplotUpdateFx(gd, index) {
 
     dragElement.init(dragOptions);
 }
+
+export default { name, baseLayoutAttrOverrides, plot, clean, updateFx };

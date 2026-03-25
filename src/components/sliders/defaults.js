@@ -1,21 +1,17 @@
-'use strict';
-
-var Lib = require('../../lib');
-var handleArrayContainerDefaults = require('../../plots/array_container_defaults');
-
-var attributes = require('./attributes');
-var constants = require('./constants');
+import Lib from '../../lib/index.js';
+import handleArrayContainerDefaults from '../../plots/array_container_defaults.js';
+import attributes from './attributes.js';
+import constants from './constants.js';
 
 var name = constants.name;
 var stepAttrs = attributes.steps;
 
-
-module.exports = function slidersDefaults(layoutIn, layoutOut) {
+export default function slidersDefaults(layoutIn, layoutOut) {
     handleArrayContainerDefaults(layoutIn, layoutOut, {
         name: name,
         handleItemDefaults: sliderDefaults
     });
-};
+}
 
 function sliderDefaults(sliderIn, sliderOut, layoutOut) {
     function coerce(attr, dflt) {

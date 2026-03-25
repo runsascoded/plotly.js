@@ -1,11 +1,8 @@
-'use strict';
+import d3 from '@plotly/d3';
+import Colorscale from '../../components/colorscale/index.js';
+import endPlus from './end_plus.js';
 
-var d3 = require('@plotly/d3');
-
-var Colorscale = require('../../components/colorscale');
-var endPlus = require('./end_plus');
-
-module.exports = function makeColorMap(trace) {
+export default function makeColorMap(trace) {
     var contours = trace.contours;
     var start = contours.start;
     var end = endPlus(contours);
@@ -97,4 +94,4 @@ module.exports = function makeColorMap(trace) {
         {domain: domain, range: range},
         {noNumericCheck: true}
     );
-};
+}

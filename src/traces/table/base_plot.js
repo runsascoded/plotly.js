@@ -1,18 +1,16 @@
-'use strict';
-
-var getModuleCalcData = require('../../plots/get_data').getModuleCalcData;
-var tablePlot = require('./plot');
+import { getModuleCalcData } from '../../plots/get_data.js';
+import tablePlot from './plot.js';
 
 var TABLE = 'table';
 
-exports.name = TABLE;
+export var name = TABLE;
 
-exports.plot = function(gd) {
+export var plot = function(gd) {
     var calcData = getModuleCalcData(gd.calcdata, TABLE)[0];
     if(calcData.length) tablePlot(gd, calcData);
 };
 
-exports.clean = function(newFullData, newFullLayout, oldFullData, oldFullLayout) {
+export var clean = function(newFullData, newFullLayout, oldFullData, oldFullLayout) {
     var hadTable = (oldFullLayout._has && oldFullLayout._has(TABLE));
     var hasTable = (newFullLayout._has && newFullLayout._has(TABLE));
 
@@ -20,3 +18,5 @@ exports.clean = function(newFullData, newFullLayout, oldFullData, oldFullLayout)
         oldFullLayout._paperdiv.selectAll('.table').remove();
     }
 };
+
+export default { name, plot, clean };

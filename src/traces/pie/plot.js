@@ -1,23 +1,21 @@
-'use strict';
-
-var d3 = require('@plotly/d3');
-
-var Plots = require('../../plots/plots');
-var Fx = require('../../components/fx');
-var Color = require('../../components/color');
-var Drawing = require('../../components/drawing');
-var Lib = require('../../lib');
+import d3 from '@plotly/d3';
+import Plots from '../../plots/plots.js';
+import Fx from '../../components/fx/index.js';
+import Color from '../../components/color/index.js';
+import Drawing from '../../components/drawing/index.js';
+import Lib from '../../lib/index.js';
+import svgTextUtils from '../../lib/svg_text_utils.js';
+import uniformText from '../bar/uniform_text.js';
+import _constants from '../bar/constants.js';
+const { TEXTPAD } = _constants;
+import helpers from './helpers.js';
+import eventData from './event_data.js';
+import _index from '../../lib/index.js';
+const { isValidTextValue } = _index;
 var strScale = Lib.strScale;
 var strTranslate = Lib.strTranslate;
-var svgTextUtils = require('../../lib/svg_text_utils');
-var uniformText = require('../bar/uniform_text');
 var recordMinTextSize = uniformText.recordMinTextSize;
 var clearMinTextSize = uniformText.clearMinTextSize;
-var TEXTPAD = require('../bar/constants').TEXTPAD;
-
-var helpers = require('./helpers');
-var eventData = require('./event_data');
-var isValidTextValue = require('../../lib').isValidTextValue;
 
 function plot(gd, cdModule) {
     var isStatic = gd._context.staticPlot;
@@ -1296,7 +1294,7 @@ function computeTransform(
     transform.noCenter = true;
 }
 
-module.exports = {
+export default {
     plot: plot,
     formatSliceLabel: formatSliceLabel,
     transformInsideText: transformInsideText,

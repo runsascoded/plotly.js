@@ -1,7 +1,4 @@
-'use strict';
-
-
-module.exports = {
+export default {
 
     // 'y' position pad above counter axis domain
     yPad: 0.02,

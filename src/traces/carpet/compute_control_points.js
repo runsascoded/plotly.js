@@ -1,7 +1,5 @@
-'use strict';
-
-var makeControlPoints = require('./catmull_rom');
-var ensureArray = require('../../lib').ensureArray;
+import makeControlPoints from './catmull_rom.js';
+import { ensureArray } from '../../lib/index.js';
 
 /*
  * Turns a coarse grid into a fine grid with control points.
@@ -64,7 +62,6 @@ var ensureArray = require('../../lib').ensureArray;
  * Wow!
  */
 
-
 /*
  * Catmull-rom is biased at the boundaries toward the interior and we actually
  * can't use catmull-rom to compute the control point closest to (but inside)
@@ -119,7 +116,7 @@ function inferCubicControlPoint(p0, p2, p3) {
     ];
 }
 
-module.exports = function computeControlPoints(xe, ye, x, y, asmoothing, bsmoothing) {
+export default function computeControlPoints(xe, ye, x, y, asmoothing, bsmoothing) {
     var i, j, ie, je, xej, yej, xj, yj, cp, p1;
     // At this point, we know these dimensions are correct and representative of
     // the whole 2D arrays:
@@ -339,4 +336,4 @@ module.exports = function computeControlPoints(xe, ye, x, y, asmoothing, bsmooth
     }
 
     return [xe, ye];
-};
+}

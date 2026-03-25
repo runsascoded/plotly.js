@@ -1,6 +1,4 @@
-'use strict';
-
-module.exports = function selectPoints(searchInfo, selectionTester) {
+export default function selectPoints(searchInfo, selectionTester) {
     var cd = searchInfo.cd;
     var selection = [];
     var fullData = cd[0].trace;
@@ -25,4 +23,4 @@ module.exports = function selectPoints(searchInfo, selectionTester) {
         }
     }
     return selection;
-};
+}

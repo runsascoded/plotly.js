@@ -1,8 +1,6 @@
-'use strict';
+import colorscaleCalc from '../../components/colorscale/calc.js';
 
-var colorscaleCalc = require('../../components/colorscale/calc');
-
-module.exports = function calc(gd, trace) {
+export default function calc(gd, trace) {
     if(trace.intensity) {
         colorscaleCalc(gd, trace, {
             vals: trace.intensity,
@@ -10,4 +8,4 @@ module.exports = function calc(gd, trace) {
             cLetter: 'c'
         });
     }
-};
+}

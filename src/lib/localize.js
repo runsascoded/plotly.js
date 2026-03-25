@@ -1,17 +1,6 @@
-'use strict';
+import Registry from '../registry.js';
 
-var Registry = require('../registry');
-
-/**
- * localize: translate a string for the current locale
- *
- * @param {object} gd: the graphDiv for context
- *  gd._context.locale determines the language (& optional region/country)
- *  the dictionary for each locale may either be supplied in
- *  gd._context.locales or globally via Plotly.register
- * @param {string} s: the string to translate
- */
-module.exports = function localize(gd, s) {
+export default function localize(gd, s) {
     var locale = gd._context.locale;
 
     /*
@@ -42,4 +31,4 @@ module.exports = function localize(gd, s) {
     }
 
     return s;
-};
+}

@@ -1,16 +1,14 @@
-'use strict';
-
-var hoverLabelText = require('../../plots/cartesian/axes').hoverLabelText;
-var opacity = require('../../components/color').opacity;
-var hoverOnBars = require('../bar/hover').hoverOnBars;
-var delta = require('../../constants/delta.js');
+import { hoverLabelText } from '../../plots/cartesian/axes.js';
+import { opacity } from '../../components/color/index.js';
+import { hoverOnBars } from '../bar/hover.js';
+import delta from '../../constants/delta.js';
 
 var DIRSYMBOL = {
     increasing: delta.INCREASING.SYMBOL,
     decreasing: delta.DECREASING.SYMBOL
 };
 
-module.exports = function hoverPoints(pointData, xval, yval, hovermode, opts) {
+export default function hoverPoints(pointData, xval, yval, hovermode, opts) {
     var point = hoverOnBars(pointData, xval, yval, hovermode, opts);
     if(!point) return;
 
@@ -72,7 +70,7 @@ module.exports = function hoverPoints(pointData, xval, yval, hovermode, opts) {
     point.color = getTraceColor(trace, di);
 
     return [point];
-};
+}
 
 function getTraceColor(trace, di) {
     var cont = trace[di.dir].marker;

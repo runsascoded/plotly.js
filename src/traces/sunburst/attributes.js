@@ -1,16 +1,13 @@
-'use strict';
+import baseAttrs from '../../plots/attributes.js';
+import { hovertemplateAttrs, texttemplateAttrs, templatefallbackAttrs } from '../../plots/template_attributes.js';
+import colorScaleAttrs from '../../components/colorscale/attributes.js';
+import { attributes as domainAttrs } from '../../plots/domain.js';
+import pieAttrs from '../pie/attributes.js';
+import constants from './constants.js';
+import { extendFlat } from '../../lib/extend.js';
+import { pattern } from '../../components/drawing/attributes.js';
 
-var baseAttrs = require('../../plots/attributes');
-const { hovertemplateAttrs, texttemplateAttrs, templatefallbackAttrs } = require('../../plots/template_attributes');
-
-var colorScaleAttrs = require('../../components/colorscale/attributes');
-var domainAttrs = require('../../plots/domain').attributes;
-var pieAttrs = require('../pie/attributes');
-var constants = require('./constants');
-var extendFlat = require('../../lib/extend').extendFlat;
-var pattern = require('../../components/drawing/attributes').pattern;
-
-module.exports = {
+export default {
     labels: {
         valType: 'data_array',
         editType: 'calc',

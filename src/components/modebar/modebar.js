@@ -1,11 +1,8 @@
-'use strict';
-
-var d3 = require('@plotly/d3');
-var isNumeric = require('fast-isnumeric');
-
-var Lib = require('../../lib');
-var Icons = require('../../fonts/ploticon');
-var version = require('../../version').version;
+import d3 from '@plotly/d3';
+import isNumeric from 'fast-isnumeric';
+import Lib from '../../lib/index.js';
+import Icons from '../../fonts/ploticon.js';
+import { version } from '../../version.js';
 
 var Parser = new DOMParser();
 
@@ -365,4 +362,4 @@ function createModeBar(gd, buttons) {
     return modeBar;
 }
 
-module.exports = createModeBar;
+export default createModeBar;

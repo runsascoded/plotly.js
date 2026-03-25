@@ -1,10 +1,8 @@
-'use strict';
+import d3 from '@plotly/d3';
+import Color from '../../components/color/index.js';
+import { stylePoints } from '../scatter/style.js';
 
-var d3 = require('@plotly/d3');
-var Color = require('../../components/color');
-var stylePoints = require('../scatter/style').stylePoints;
-
-module.exports = function style(gd) {
+export default function style(gd) {
     var s = d3.select(gd).selectAll('g.trace.violins');
 
     s.style('opacity', function(d) { return d[0].trace.opacity; });
@@ -42,4 +40,4 @@ module.exports = function style(gd) {
 
         stylePoints(sel, trace, gd);
     });
-};
+}

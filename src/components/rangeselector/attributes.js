@@ -1,8 +1,6 @@
-'use strict';
-
-var fontAttrs = require('../../plots/font_attributes');
-var colorAttrs = require('../color/attributes');
-var templatedArray = require('../../plot_api/plot_template').templatedArray;
+import fontAttrs from '../../plots/font_attributes.js';
+import colorAttrs from '../color/attributes.js';
+import { templatedArray } from '../../plot_api/plot_template.js';
 
 var buttonAttrs = templatedArray('button', {
     visible: {
@@ -61,7 +59,7 @@ var buttonAttrs = templatedArray('button', {
     ].join(' ')
 });
 
-module.exports = {
+export default {
     visible: {
         valType: 'boolean',
         editType: 'plot',

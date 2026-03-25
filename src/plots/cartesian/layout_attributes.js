@@ -1,15 +1,14 @@
-'use strict';
-
-var fontAttrs = require('../font_attributes');
-var colorAttrs = require('../../components/color/attributes');
-var dash = require('../../components/drawing/attributes').dash;
-var extendFlat = require('../../lib/extend').extendFlat;
-var templatedArray = require('../../plot_api/plot_template').templatedArray;
-var templateFormatStringDescription = require('../../plots/template_attributes').templateFormatStringDescription;
-var descriptionWithDates = require('../../plots/cartesian/axis_format_attributes').descriptionWithDates;
-
-var ONEDAY = require('../../constants/numerical').ONEDAY;
-var constants = require('./constants');
+import fontAttrs from '../font_attributes.js';
+import colorAttrs from '../../components/color/attributes.js';
+import { dash } from '../../components/drawing/attributes.js';
+import { extendFlat } from '../../lib/extend.js';
+import { templatedArray } from '../../plot_api/plot_template.js';
+import { templateFormatStringDescription } from '../../plots/template_attributes.js';
+import _axis_format_attributes from '../../plots/cartesian/axis_format_attributes.js';
+const { descriptionWithDates } = _axis_format_attributes;
+import _numerical from '../../constants/numerical.js';
+const { ONEDAY } = _numerical;
+import constants from './constants.js';
 var HOUR = constants.HOUR_PATTERN;
 var DAY_OF_WEEK = constants.WEEKDAY_PATTERN;
 
@@ -183,7 +182,7 @@ var showgrid = {
     ].join(' ')
 };
 
-module.exports = {
+export default {
     visible: {
         valType: 'boolean',
         editType: 'plot',

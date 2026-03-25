@@ -1,11 +1,9 @@
-'use strict';
-
-var Lib = require('../../lib');
+import Lib from '../../lib/index.js';
+import subTypes from '../scatter/subtypes.js';
+import helpers from './helpers.js';
 var pushUnique = Lib.pushUnique;
-var subTypes = require('../scatter/subtypes');
-var helpers = require('./helpers');
 
-module.exports = function select(searchInfo, selectionTester) {
+export default function select(searchInfo, selectionTester) {
     var cd = searchInfo.cd;
     var trace = cd[0].trace;
     var stash = cd[0].t;
@@ -66,4 +64,4 @@ module.exports = function select(searchInfo, selectionTester) {
     scene.unselectBatch = unels;
 
     return selection;
-};
+}

@@ -1,5 +1,3 @@
-'use strict';
-
 // ASCEND: chop off the last nesting level - either [<n>] or .<key> - to ascend
 // the attribute tree. the remaining attrString is in match[1]
 var ASCEND = /^(.*)(\.[^\.\[\]]+|\[\d\])$/;
@@ -7,23 +5,7 @@ var ASCEND = /^(.*)(\.[^\.\[\]]+|\[\d\])$/;
 // SIMPLEATTR: is this an un-nested attribute? (no dots or brackets)
 var SIMPLEATTR = /^[^\.\[\]]+$/;
 
-/*
- * calculate a relative attribute string, similar to a relative path
- *
- * @param {string} baseAttr:
- *   an attribute string, such as 'annotations[3].x'. The "current location"
- *   is the attribute string minus the last component ('annotations[3]')
- * @param {string} relativeAttr:
- *   a route to the desired attribute string, using '^' to ascend
- *
- * @return {string} attrString:
- *   for example:
- *     relativeAttr('annotations[3].x', 'y') = 'annotations[3].y'
- *     relativeAttr('annotations[3].x', '^[2].z') = 'annotations[2].z'
- *     relativeAttr('annotations[3].x', '^^margin') = 'margin'
- *     relativeAttr('annotations[3].x', '^^margin.r') = 'margin.r'
- */
-module.exports = function(baseAttr, relativeAttr) {
+export default function(baseAttr, relativeAttr) {
     while(relativeAttr) {
         var match = baseAttr.match(ASCEND);
 
@@ -39,4 +21,4 @@ module.exports = function(baseAttr, relativeAttr) {
         return baseAttr + '.' + relativeAttr;
     }
     return baseAttr + relativeAttr;
-};
+}

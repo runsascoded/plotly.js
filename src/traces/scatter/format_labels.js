@@ -1,8 +1,6 @@
-'use strict';
+import Axes from '../../plots/cartesian/axes.js';
 
-var Axes = require('../../plots/cartesian/axes');
-
-module.exports = function formatLabels(cdi, trace, fullLayout) {
+export default function formatLabels(cdi, trace, fullLayout) {
     var labels = {};
 
     var mockGd = {_fullLayout: fullLayout};
@@ -19,4 +17,4 @@ module.exports = function formatLabels(cdi, trace, fullLayout) {
     labels.yLabel = Axes.tickText(ya, ya.c2l(y), true).text;
 
     return labels;
-};
+}

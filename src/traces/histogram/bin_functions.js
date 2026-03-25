@@ -1,9 +1,6 @@
-'use strict';
+import isNumeric from 'fast-isnumeric';
 
-var isNumeric = require('fast-isnumeric');
-
-
-module.exports = {
+export default {
     count: function(n, i, size) {
         size[n]++;
         return 1;

@@ -1,14 +1,11 @@
-'use strict';
+import Registry from '../../registry.js';
+import Axes from '../../plots/cartesian/axes.js';
+import Lib from '../../lib/index.js';
+import layoutAttributes from './layout_attributes.js';
+import _defaults from './defaults.js';
+const { validateCornerradius } = _defaults;
 
-var Registry = require('../../registry');
-var Axes = require('../../plots/cartesian/axes');
-var Lib = require('../../lib');
-
-var layoutAttributes = require('./layout_attributes');
-var validateCornerradius = require('./defaults').validateCornerradius;
-
-
-module.exports = function(layoutIn, layoutOut, fullData) {
+export default function(layoutIn, layoutOut, fullData) {
     function coerce(attr, dflt) {
         return Lib.coerce(layoutIn, layoutOut, layoutAttributes, attr, dflt);
     }
@@ -59,4 +56,4 @@ module.exports = function(layoutIn, layoutOut, fullData) {
     coerce('bargroupgap');
     var r = coerce('barcornerradius');
     layoutOut.barcornerradius = validateCornerradius(r);
-};
+}

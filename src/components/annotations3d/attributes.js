@@ -1,10 +1,9 @@
-'use strict';
+import annAttrs from '../annotations/attributes.js';
+import _edit_types from '../../plot_api/edit_types.js';
+const { overrideAll } = _edit_types;
+import { templatedArray } from '../../plot_api/plot_template.js';
 
-var annAttrs = require('../annotations/attributes');
-var overrideAll = require('../../plot_api/edit_types').overrideAll;
-var templatedArray = require('../../plot_api/plot_template').templatedArray;
-
-module.exports = overrideAll(templatedArray('annotation', {
+export default overrideAll(templatedArray('annotation', {
     visible: annAttrs.visible,
     x: {
         valType: 'any',

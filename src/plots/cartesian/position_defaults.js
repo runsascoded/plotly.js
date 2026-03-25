@@ -1,11 +1,7 @@
-'use strict';
+import isNumeric from 'fast-isnumeric';
+import Lib from '../../lib/index.js';
 
-var isNumeric = require('fast-isnumeric');
-
-var Lib = require('../../lib');
-
-
-module.exports = function handlePositionDefaults(containerIn, containerOut, coerce, options) {
+export default function handlePositionDefaults(containerIn, containerOut, coerce, options) {
     var counterAxes = options.counterAxes || [];
     var overlayableAxes = options.overlayableAxes || [];
     var letter = options.letter;
@@ -94,4 +90,4 @@ module.exports = function handlePositionDefaults(containerIn, containerOut, coer
     coerce('layer');
 
     return containerOut;
-};
+}

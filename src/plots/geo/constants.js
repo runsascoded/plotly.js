@@ -1,7 +1,4 @@
-'use strict';
-
-// projection names to d3 function name
-exports.projNames = {
+export var projNames = {
     airy: 'airy',
     aitoff: 'aitoff',
     'albers usa': 'albersUsa',
@@ -119,11 +116,9 @@ exports.projNames = {
     winkel3: 'winkel3',
 };
 
-// name of the axes
-exports.axesNames = ['lonaxis', 'lataxis'];
+export var axesNames = ['lonaxis', 'lataxis'];
 
-// max longitudinal angular span (EXPERIMENTAL)
-exports.lonaxisSpan = {
+export var lonaxisSpan = {
     orthographic: 180,
     'azimuthal equal area': 360,
     'azimuthal equidistant': 360,
@@ -134,15 +129,13 @@ exports.lonaxisSpan = {
     '*': 360
 };
 
-// max latitudinal angular span (EXPERIMENTAL)
-exports.lataxisSpan = {
+export var lataxisSpan = {
     'conic conformal': 150,
     stereographic: 179.5,
     '*': 180
 };
 
-// defaults for each scope
-exports.scopeDefaults = {
+export var scopeDefaults = {
     world: {
         lonaxisRange: [-180, 180],
         lataxisRange: [-90, 90],
@@ -200,37 +193,26 @@ exports.scopeDefaults = {
     },
 };
 
-// angular pad to avoid rounding error around clip angles
-exports.clipPad = 1e-3;
+export var clipPad = 1e-3;
+export var precision = 0.1;
+export var landColor = '#F0DC82';
+export var waterColor = '#3399FF';
 
-// map projection precision
-exports.precision = 0.1;
-
-// default land and water fill colors
-exports.landColor = '#F0DC82';
-exports.waterColor = '#3399FF';
-
-// locationmode to layer name
-exports.locationmodeToLayer = {
+export var locationmodeToLayer = {
     'ISO-3': 'countries',
     'USA-states': 'subunits',
     'country names': 'countries'
 };
 
-// SVG element for a sphere (use to frame maps)
-exports.sphereSVG = {type: 'Sphere'};
+export var sphereSVG = {type: 'Sphere'};
 
-// N.B. base layer names must be the same as in the topojson files
-
-// base layer with a fill color
-exports.fillLayers = {
+export var fillLayers = {
     ocean: 1,
     land: 1,
     lakes: 1
 };
 
-// base layer with a only a line color
-exports.lineLayers = {
+export var lineLayers = {
     subunits: 1,
     countries: 1,
     coastlines: 1,
@@ -238,7 +220,7 @@ exports.lineLayers = {
     frame: 1
 };
 
-exports.layers = [
+export var layers = [
     'bg',
     'ocean', 'land', 'lakes',
     'subunits', 'countries', 'coastlines', 'rivers',
@@ -247,7 +229,7 @@ exports.layers = [
     'frontplot'
 ];
 
-exports.layersForChoropleth = [
+export var layersForChoropleth = [
     'bg',
     'ocean', 'land',
     'subunits', 'countries', 'coastlines',
@@ -257,7 +239,7 @@ exports.layersForChoropleth = [
     'frontplot'
 ];
 
-exports.layerNameToAdjective = {
+export var layerNameToAdjective = {
     ocean: 'ocean',
     land: 'land',
     lakes: 'lake',
@@ -267,3 +249,5 @@ exports.layerNameToAdjective = {
     rivers: 'river',
     frame: 'frame'
 };
+
+export default { projNames, axesNames, lonaxisSpan, lataxisSpan, scopeDefaults, clipPad, precision, landColor, waterColor, locationmodeToLayer, sphereSVG, fillLayers, lineLayers, layers, layersForChoropleth, layerNameToAdjective };

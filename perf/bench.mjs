@@ -72,7 +72,7 @@ async function runBench() {
     const thresholdsPath = join(__dirname, 'thresholds.json');
     const thresholds = JSON.parse(await readFile(thresholdsPath, 'utf-8'));
 
-    const plots = await import(join(__dirname, 'plots.js'));
+    const plots = await import(join(__dirname, 'plots.cjs'));
     const plotNames = Object.keys(plots).filter(k =>
         k !== 'default' && k !== '__esModule' && k !== 'module' && !k.startsWith('__')
         && typeof plots[k] === 'object' && plots[k].data

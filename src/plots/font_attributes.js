@@ -1,21 +1,4 @@
-'use strict';
-
-/*
- * make a font attribute group
- *
- * @param {object} opts
- *   @param {string}
- *     opts.description: where & how this font is used
- *   @param {optional bool} arrayOk:
- *     should each part (family, size, color) be arrayOk? default false.
- *   @param {string} editType:
- *     the editType for all pieces of this font
- *   @param {optional string} colorEditType:
- *     a separate editType just for color
- *
- * @return {object} attributes object containing {family, size, color} as specified
- */
-module.exports = function(opts) {
+export default function(opts) {
     var variantValues = opts.variantValues;
     var editType = opts.editType;
     var colorEditType = opts.colorEditType;
@@ -159,4 +142,4 @@ module.exports = function(opts) {
     }
 
     return attrs;
-};
+}

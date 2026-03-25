@@ -1,16 +1,17 @@
-'use strict';
-
-var d3 = require('@plotly/d3');
-
-var Registry = require('../../registry');
-var Lib = require('../../lib');
-var Plots = require('../plots');
-var Drawing = require('../../components/drawing');
-
-var getModuleCalcData = require('../get_data').getModuleCalcData;
-var axisIds = require('./axis_ids');
-var constants = require('./constants');
-var xmlnsNamespaces = require('../../constants/xmlns_namespaces');
+import d3 from '@plotly/d3';
+import Registry from '../../registry.js';
+import Lib from '../../lib/index.js';
+import Plots from '../plots.js';
+import Drawing from '../../components/drawing/index.js';
+import { getModuleCalcData } from '../get_data.js';
+import axisIds from './axis_ids.js';
+import constants from './constants.js';
+import xmlnsNamespaces from '../../constants/xmlns_namespaces.js';
+import _req0 from './attributes.js';
+import _req1 from './layout_attributes.js';
+import _req2 from './layout_defaults.js';
+import _req3 from './transition_axes.js';
+import { updateFx as _req4 } from './graph_interact.js';
 
 var ensureSingle = Lib.ensureSingle;
 
@@ -22,25 +23,17 @@ function ensureSingleAndAddDatum(parent, nodeType, className) {
 
 var zindexSeparator = constants.zindexSeparator;
 
-exports.name = 'cartesian';
+export var name = 'cartesian';
+export var attr = ['xaxis', 'yaxis'];
+export var idRoot = ['x', 'y'];
+export var idRegex = constants.idRegex;
+export var attrRegex = constants.attrRegex;
+export var attributes = _req0;
+export var layoutAttributes = _req1;
+export var supplyLayoutDefaults = _req2;
+export var transitionAxes = _req3;
 
-exports.attr = ['xaxis', 'yaxis'];
-
-exports.idRoot = ['x', 'y'];
-
-exports.idRegex = constants.idRegex;
-
-exports.attrRegex = constants.attrRegex;
-
-exports.attributes = require('./attributes');
-
-exports.layoutAttributes = require('./layout_attributes');
-
-exports.supplyLayoutDefaults = require('./layout_defaults');
-
-exports.transitionAxes = require('./transition_axes');
-
-exports.finalizeSubplots = function(layoutIn, layoutOut) {
+export var finalizeSubplots = function(layoutIn, layoutOut) {
     var subplots = layoutOut._subplots;
     var xList = subplots.xaxis;
     var yList = subplots.yaxis;
@@ -114,19 +107,7 @@ exports.finalizeSubplots = function(layoutIn, layoutOut) {
     }
 };
 
-/**
- * Cartesian.plot
- *
- * @param {DOM div | object} gd
- * @param {array (optional)} traces
- *  array of traces indices to plot
- *  if undefined, plots all cartesian traces,
- * @param {object} (optional) transitionOpts
- *  transition option object
- * @param {function} (optional) makeOnCompleteCallback
- *  transition make callback function from Plots.transition
- */
-exports.plot = function(gd, traces, transitionOpts, makeOnCompleteCallback) {
+export var plot = function(gd, traces, transitionOpts, makeOnCompleteCallback) {
     var fullLayout = gd._fullLayout;
     var subplots = fullLayout._subplots.cartesian;
     var calcdata = gd.calcdata;
@@ -318,7 +299,7 @@ function plotOne(gd, plotinfo, cdSubplot, transitionOpts, makeOnCompleteCallback
     }
 }
 
-exports.clean = function(newFullData, newFullLayout, oldFullData, oldFullLayout) {
+export var clean = function(newFullData, newFullLayout, oldFullData, oldFullLayout) {
     var oldPlots = oldFullLayout._plots || {};
     var newPlots = newFullLayout._plots || {};
     var oldSubplotList = oldFullLayout._subplots || {};
@@ -385,7 +366,7 @@ exports.clean = function(newFullData, newFullLayout, oldFullData, oldFullLayout)
     }
 };
 
-exports.drawFramework = function(gd) {
+export var drawFramework = function(gd) {
     var fullLayout = gd._fullLayout;
     var calcdata = gd.calcdata;
     var i;
@@ -430,7 +411,6 @@ exports.drawFramework = function(gd) {
     var subplotLayers = fullLayout._cartesianlayer.selectAll('.subplot')
         .data(subplotData, String);
 
-
     subplotLayers.enter().append('g')
         .attr('class', function(d) { return 'subplot ' + d[0]; });
 
@@ -472,7 +452,7 @@ exports.drawFramework = function(gd) {
     });
 };
 
-exports.rangePlot = function(gd, plotinfo, cdSubplot) {
+export var rangePlot = function(gd, plotinfo, cdSubplot) {
     makeSubplotLayer(gd, plotinfo);
     plotOne(gd, plotinfo, cdSubplot);
     Plots.style(gd);
@@ -735,7 +715,7 @@ function removeSubplotExtras(subplotId, fullLayout) {
     fullLayout._defs.select('#clip' + fullLayout._uid + subplotId + 'plot').remove();
 }
 
-exports.toSVG = function(gd) {
+export var toSVG = function(gd) {
     var imageRoot = gd._fullLayout._glimages;
     var root = d3.select(gd).selectAll('.svg-container');
     var canvases = root.filter(function(d, i) {return i === root.size() - 1;})
@@ -760,4 +740,6 @@ exports.toSVG = function(gd) {
     canvases.each(canvasToImage);
 };
 
-exports.updateFx = require('./graph_interact').updateFx;
+export var updateFx = _req4;
+
+export default { name, attr, idRoot, idRegex, attrRegex, attributes, layoutAttributes, supplyLayoutDefaults, transitionAxes, finalizeSubplots, plot, clean, drawFramework, rangePlot, toSVG, updateFx };

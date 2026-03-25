@@ -1,6 +1,4 @@
-'use strict';
-
-module.exports = function supplyDrawNewSelectionDefaults(layoutIn, layoutOut, coerce) {
+export default function supplyDrawNewSelectionDefaults(layoutIn, layoutOut, coerce) {
     coerce('newselection.mode');
 
     var newselectionLineWidth = coerce('newselection.line.width');
@@ -11,4 +9,4 @@ module.exports = function supplyDrawNewSelectionDefaults(layoutIn, layoutOut, co
 
     coerce('activeselection.fillcolor');
     coerce('activeselection.opacity');
-};
+}

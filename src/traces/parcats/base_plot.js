@@ -1,12 +1,10 @@
-'use strict';
-
-var getModuleCalcData = require('../../plots/get_data').getModuleCalcData;
-var parcatsPlot = require('./plot');
+import { getModuleCalcData } from '../../plots/get_data.js';
+import parcatsPlot from './plot.js';
 
 var PARCATS = 'parcats';
-exports.name = PARCATS;
+export var name = PARCATS;
 
-exports.plot = function(gd, traces, transitionOpts, makeOnCompleteCallback) {
+export var plot = function(gd, traces, transitionOpts, makeOnCompleteCallback) {
     var cdModuleAndOthers = getModuleCalcData(gd.calcdata, PARCATS);
 
     if(cdModuleAndOthers.length) {
@@ -15,7 +13,7 @@ exports.plot = function(gd, traces, transitionOpts, makeOnCompleteCallback) {
     }
 };
 
-exports.clean = function(newFullData, newFullLayout, oldFullData, oldFullLayout) {
+export var clean = function(newFullData, newFullLayout, oldFullData, oldFullLayout) {
     var hadTable = (oldFullLayout._has && oldFullLayout._has('parcats'));
     var hasTable = (newFullLayout._has && newFullLayout._has('parcats'));
 
@@ -23,3 +21,5 @@ exports.clean = function(newFullData, newFullLayout, oldFullData, oldFullLayout)
         oldFullLayout._paperdiv.selectAll('.parcats').remove();
     }
 };
+
+export default { name, plot, clean };

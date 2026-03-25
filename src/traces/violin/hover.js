@@ -1,12 +1,10 @@
-'use strict';
+import Color from '../../components/color/index.js';
+import Lib from '../../lib/index.js';
+import Axes from '../../plots/cartesian/axes.js';
+import boxHoverPoints from '../box/hover.js';
+import helpers from './helpers.js';
 
-var Color = require('../../components/color');
-var Lib = require('../../lib');
-var Axes = require('../../plots/cartesian/axes');
-var boxHoverPoints = require('../box/hover');
-var helpers = require('./helpers');
-
-module.exports = function hoverPoints(pointData, xval, yval, hovermode, opts) {
+export default function hoverPoints(pointData, xval, yval, hovermode, opts) {
     if(!opts) opts = {};
     var hoverLayer = opts.hoverLayer;
 
@@ -111,4 +109,4 @@ module.exports = function hoverPoints(pointData, xval, yval, hovermode, opts) {
         return closeData;
     }
     return closeData;
-};
+}

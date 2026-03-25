@@ -1,14 +1,10 @@
-'use strict';
-
-var EventEmitter = require('events').EventEmitter;
-
-var Registry = require('../registry');
-var Lib = require('../lib');
-
-var helpers = require('./helpers');
-var clonePlot = require('./cloneplot');
-var toSVG = require('./tosvg');
-var svgToImg = require('./svgtoimg');
+import { EventEmitter } from 'events';
+import Registry from '../registry.js';
+import Lib from '../lib/index.js';
+import helpers from './helpers.js';
+import clonePlot from './cloneplot.js';
+import toSVG from './tosvg.js';
+import svgToImg from './svgtoimg.js';
 
 /**
  * @param {object} gd figure Object
@@ -60,8 +56,7 @@ function toImage(gd, opts) {
             ev.emit('error', err);
         });
 
-
     return ev;
 }
 
-module.exports = toImage;
+export default toImage;

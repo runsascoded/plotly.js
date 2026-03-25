@@ -1,12 +1,9 @@
-'use strict';
-
-var tube2mesh = require('../../../stackgl_modules').gl_streamtube3d;
+import { gl_streamtube3d as tube2mesh } from '../../../stackgl_modules/index.js';
+import Lib from '../../lib/index.js';
+import { parseColorScale } from '../../lib/gl_format_color.js';
+import { extractOpts } from '../../components/colorscale/index.js';
+import zip3 from '../../plots/gl3d/zip3.js';
 var createTubeMesh = tube2mesh.createTubeMesh;
-
-var Lib = require('../../lib');
-var parseColorScale = require('../../lib/gl_format_color').parseColorScale;
-var extractOpts = require('../../components/colorscale').extractOpts;
-var zip3 = require('../../plots/gl3d/zip3');
 
 var axisName2scaleIndex = {xaxis: 0, yaxis: 1, zaxis: 2};
 
@@ -213,4 +210,4 @@ function createStreamtubeTrace(scene, data) {
     return streamtube;
 }
 
-module.exports = createStreamtubeTrace;
+export default createStreamtubeTrace;

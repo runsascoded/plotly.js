@@ -1,14 +1,11 @@
-'use strict';
-
-var Lib = require('../../lib');
-var axisIds = require('../../plots/cartesian/axis_ids');
-
-var traceIs = require('../../registry').traceIs;
-var handleGroupingDefaults = require('../scatter/grouping_defaults');
-var validateCornerradius = require('../bar/defaults').validateCornerradius;
+import Lib from '../../lib/index.js';
+import axisIds from '../../plots/cartesian/axis_ids.js';
+import { traceIs } from '../../registry.js';
+import handleGroupingDefaults from '../scatter/grouping_defaults.js';
+import { validateCornerradius } from '../bar/defaults.js';
+import { getAxisGroup } from '../../plots/cartesian/constraints.js';
 
 var nestedProperty = Lib.nestedProperty;
-var getAxisGroup = require('../../plots/cartesian/constraints').getAxisGroup;
 
 var BINATTRS = [
     {aStr: {x: 'xbins.start', y: 'ybins.start'}, name: 'start'},
@@ -19,8 +16,7 @@ var BINATTRS = [
 
 var BINDIRECTIONS = ['x', 'y'];
 
-// handle bin attrs and relink auto-determined values so fullData is complete
-module.exports = function crossTraceDefaults(fullData, fullLayout) {
+export default function crossTraceDefaults(fullData, fullLayout) {
     var allBinOpts = fullLayout._histogramBinOpts = {};
     var histTraces = [];
     var mustMatchTracesLookup = {};
@@ -272,4 +268,4 @@ module.exports = function crossTraceDefaults(fullData, fullLayout) {
             }
         }
     }
-};
+}

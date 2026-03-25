@@ -1,8 +1,6 @@
-'use strict';
-
-var Lib = require('../../lib');
-var attributes = require('./attributes');
-var handleDomainDefaults = require('../../plots/domain').defaults;
+import Lib from '../../lib/index.js';
+import attributes from './attributes.js';
+import { defaults as handleDomainDefaults } from '../../plots/domain.js';
 
 function defaultColumnOrder(traceOut, coerce) {
     var specifiedColumnOrder = traceOut.columnorder || [];
@@ -16,7 +14,7 @@ function defaultColumnOrder(traceOut, coerce) {
     coerce('columnorder', oneStepped);
 }
 
-module.exports = function supplyDefaults(traceIn, traceOut, defaultColor, layout) {
+export default function supplyDefaults(traceIn, traceOut, defaultColor, layout) {
     function coerce(attr, dflt) {
         return Lib.coerce(traceIn, traceOut, attributes, attr, dflt);
     }
@@ -52,4 +50,4 @@ module.exports = function supplyDefaults(traceIn, traceOut, defaultColor, layout
 
     // disable 1D transforms
     traceOut._length = null;
-};
+}

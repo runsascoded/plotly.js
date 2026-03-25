@@ -1,8 +1,6 @@
-'use strict';
-
-var Colorscale = require('../../components/colorscale');
-var makeColorMap = require('./make_color_map');
-var endPlus = require('./end_plus');
+import Colorscale from '../../components/colorscale/index.js';
+import makeColorMap from './make_color_map.js';
+import endPlus from './end_plus.js';
 
 function calc(gd, trace, opts) {
     var contours = trace.contours;
@@ -34,7 +32,7 @@ function calc(gd, trace, opts) {
     };
 }
 
-module.exports = {
+export default {
     min: 'zmin',
     max: 'zmax',
     calc: calc

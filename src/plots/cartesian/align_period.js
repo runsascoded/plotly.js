@@ -1,13 +1,11 @@
-'use strict';
-
-var isNumeric = require('fast-isnumeric');
-var Lib = require('../../lib');
+import isNumeric from 'fast-isnumeric';
+import Lib from '../../lib/index.js';
+import constants from '../../constants/numerical.js';
 var dateTime2ms = Lib.dateTime2ms;
 var incrementMonth = Lib.incrementMonth;
-var constants = require('../../constants/numerical');
 var ONEAVGMONTH = constants.ONEAVGMONTH;
 
-module.exports = function alignPeriod(trace, ax, axLetter, vals) {
+export default function alignPeriod(trace, ax, axLetter, vals) {
     if(ax.type !== 'date') return {vals: vals};
 
     var alignment = trace[axLetter + 'periodalignment'];
@@ -90,4 +88,4 @@ module.exports = function alignPeriod(trace, ax, axLetter, vals) {
         starts: starts,
         ends: ends
     };
-};
+}

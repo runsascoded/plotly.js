@@ -1,5 +1,3 @@
-'use strict';
-
 // Wrapper functions to handle paper-referenced shapes, which have no axis
 
 function d2l(v, axis) {
@@ -9,7 +7,6 @@ function d2l(v, axis) {
 function l2d(v, axis) {
     return axis ? axis.l2d(v) : v;
 }
-
 
 function x0Fn(shape) { return shape.x0; }
 function x1Fn(shape) { return shape.x1; }
@@ -59,7 +56,7 @@ function slopeFn(shape, xa, ya) {
     );
 }
 
-module.exports = {
+export default {
     x0: x0Fn,
     x1: x1Fn,
     y0: y0Fn,

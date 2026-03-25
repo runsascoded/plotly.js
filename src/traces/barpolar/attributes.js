@@ -1,11 +1,9 @@
-'use strict';
+import { hovertemplateAttrs, templatefallbackAttrs } from '../../plots/template_attributes.js';
+import { extendFlat } from '../../lib/extend.js';
+import scatterPolarAttrs from '../scatterpolar/attributes.js';
+import barAttrs from '../bar/attributes.js';
 
-const { hovertemplateAttrs, templatefallbackAttrs } = require('../../plots/template_attributes');
-var extendFlat = require('../../lib/extend').extendFlat;
-var scatterPolarAttrs = require('../scatterpolar/attributes');
-var barAttrs = require('../bar/attributes');
-
-module.exports = {
+export default {
     r: scatterPolarAttrs.r,
     theta: scatterPolarAttrs.theta,
     r0: scatterPolarAttrs.r0,

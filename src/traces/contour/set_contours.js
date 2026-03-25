@@ -1,9 +1,7 @@
-'use strict';
+import Axes from '../../plots/cartesian/axes.js';
+import Lib from '../../lib/index.js';
 
-var Axes = require('../../plots/cartesian/axes');
-var Lib = require('../../lib');
-
-module.exports = function setContours(trace, vals) {
+export default function setContours(trace, vals) {
     var contours = trace.contours;
 
     // check if we need to auto-choose contour levels
@@ -65,8 +63,7 @@ module.exports = function setContours(trace, vals) {
             inputContours.size = contours.size = sizeOut;
         }
     }
-};
-
+}
 
 /*
  * autoContours: make a dummy axis object with dtick we can use

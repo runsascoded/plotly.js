@@ -1,6 +1,4 @@
-'use strict';
-
-var modeBarButtons = require('./buttons');
+import modeBarButtons from './buttons.js';
 var buttonList = Object.keys(modeBarButtons);
 
 var DRAW_MODES = [
@@ -34,7 +32,7 @@ buttonList.forEach(function(k) {
 });
 foreButtons.sort();
 
-module.exports = {
+export default {
     DRAW_MODES: DRAW_MODES,
     backButtons: backButtons,
     foreButtons: foreButtons

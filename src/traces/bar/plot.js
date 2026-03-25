@@ -1,29 +1,23 @@
-'use strict';
-
-var d3 = require('@plotly/d3');
-var isNumeric = require('fast-isnumeric');
-
-var Lib = require('../../lib');
-var svgTextUtils = require('../../lib/svg_text_utils');
-
-var Color = require('../../components/color');
-var Drawing = require('../../components/drawing');
-var Registry = require('../../registry');
-var tickText = require('../../plots/cartesian/axes').tickText;
-
-var uniformText = require('./uniform_text');
+import d3 from '@plotly/d3';
+import isNumeric from 'fast-isnumeric';
+import Lib from '../../lib/index.js';
+import svgTextUtils from '../../lib/svg_text_utils.js';
+import Color from '../../components/color/index.js';
+import Drawing from '../../components/drawing/index.js';
+import Registry from '../../registry.js';
+import _axes from '../../plots/cartesian/axes.js';
+const { tickText } = _axes;
+import uniformText from './uniform_text.js';
+import style from './style.js';
+import helpers from './helpers.js';
+import constants from './constants.js';
+import attributes from './attributes.js';
+import { appendArrayPointValue } from '../../components/fx/helpers.js';
 var recordMinTextSize = uniformText.recordMinTextSize;
 var clearMinTextSize = uniformText.clearMinTextSize;
 
-var style = require('./style');
-var helpers = require('./helpers');
-var constants = require('./constants');
-var attributes = require('./attributes');
-
 var attributeText = attributes.text;
 var attributeTextPosition = attributes.textposition;
-
-var appendArrayPointValue = require('../../components/fx/helpers').appendArrayPointValue;
 
 var TEXTPAD = constants.TEXTPAD;
 
@@ -1158,7 +1152,7 @@ function calcTextinfo(cd, index, xa, ya) {
     return text.join('<br>');
 }
 
-module.exports = {
+export default {
     plot: plot,
     toMoveInsideBar: toMoveInsideBar
 };

@@ -1,9 +1,6 @@
-'use strict';
+import Lib from '../../lib/index.js';
 
-var Lib = require('../../lib');
-
-// arrayOk attributes, merge them into calcdata array
-module.exports = function arraysToCalcdata(cd, trace) {
+export default function arraysToCalcdata(cd, trace) {
     for(var i = 0; i < cd.length; i++) cd[i].i = i;
 
     Lib.mergeArray(trace.text, cd, 'tx');
@@ -20,4 +17,4 @@ module.exports = function arraysToCalcdata(cd, trace) {
             Lib.mergeArrayCastPositive(markerLine.width, cd, 'mlw');
         }
     }
-};
+}

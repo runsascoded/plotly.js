@@ -1,17 +1,20 @@
-'use strict';
+import drawModule from './draw.js';
+import clickModule from './click.js';
+import _req0 from './attributes.js';
+import _req1 from './defaults.js';
+import _req2 from '../../plots/cartesian/include_components.js';
+import _req3 from './calc_autorange.js';
+import _req4 from './convert_coords.js';
 
-var drawModule = require('./draw');
-var clickModule = require('./click');
-
-module.exports = {
+export default {
     moduleType: 'component',
     name: 'annotations',
 
-    layoutAttributes: require('./attributes'),
-    supplyLayoutDefaults: require('./defaults'),
-    includeBasePlot: require('../../plots/cartesian/include_components')('annotations'),
+    layoutAttributes: _req0,
+    supplyLayoutDefaults: _req1,
+    includeBasePlot: _req2('annotations'),
 
-    calcAutorange: require('./calc_autorange'),
+    calcAutorange: _req3,
     draw: drawModule.draw,
     drawOne: drawModule.drawOne,
     drawRaw: drawModule.drawRaw,
@@ -19,5 +22,5 @@ module.exports = {
     hasClickToShow: clickModule.hasClickToShow,
     onClick: clickModule.onClick,
 
-    convertCoords: require('./convert_coords')
+    convertCoords: _req4
 };

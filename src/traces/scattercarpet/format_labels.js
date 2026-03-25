@@ -1,6 +1,4 @@
-'use strict';
-
-module.exports = function formatLabels(cdi, trace) {
+export default function formatLabels(cdi, trace) {
     var labels = {};
 
     var carpet = trace._carpet;
@@ -14,4 +12,4 @@ module.exports = function formatLabels(cdi, trace) {
     labels.yLabel = xy[1].toFixed(3);
 
     return labels;
-};
+}

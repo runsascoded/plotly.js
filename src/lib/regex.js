@@ -1,16 +1,4 @@
-'use strict';
-
-/*
- * make a regex for matching counter ids/names ie xaxis, xaxis2, xaxis10...
- *
- * @param {string} head: the head of the pattern, eg 'x' matches 'x', 'x2', 'x10' etc.
- *      'xy' is a special case for cartesian subplots: it matches 'x2y3' etc
- * @param {Optional(string)} tail: a fixed piece after the id
- *      eg counterRegex('scene', '.annotations') for scene2.annotations etc.
- * @param {boolean} openEnded: if true, the string may continue past the match.
- * @param {boolean} matchBeginning: if false, the string may start before the match.
- */
-exports.counter = function(head, tail, openEnded, matchBeginning) {
+export var counter = function(head, tail, openEnded, matchBeginning) {
     var fullTail = (tail || '') + (openEnded ? '' : '$');
     var startWithPrefix = matchBeginning === false ? '' : '^';
     if(head === 'xy') {
@@ -18,3 +6,5 @@ exports.counter = function(head, tail, openEnded, matchBeginning) {
     }
     return new RegExp(startWithPrefix + head + '([2-9]|[1-9][0-9]+)?' + fullTail);
 };
+
+export default { counter };

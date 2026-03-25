@@ -1,6 +1,4 @@
-'use strict';
-
-module.exports = {
+export default {
     CLICK_TRANSITION_TIME: 750,
     CLICK_TRANSITION_EASING: 'linear',
     eventDataKeys: [

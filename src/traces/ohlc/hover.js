@@ -1,11 +1,9 @@
-'use strict';
-
-var Axes = require('../../plots/cartesian/axes');
-var Lib = require('../../lib');
-var Fx = require('../../components/fx');
-var Color = require('../../components/color');
-var fillText = require('../../lib').fillText;
-var delta = require('../../constants/delta.js');
+import Axes from '../../plots/cartesian/axes.js';
+import Lib from '../../lib/index.js';
+import Fx from '../../components/fx/index.js';
+import Color from '../../components/color/index.js';
+import { fillText } from '../../lib/index.js';
+import delta from '../../constants/delta.js';
 
 var DIRSYMBOL = {
     increasing: delta.INCREASING.SYMBOL,
@@ -185,7 +183,7 @@ function hoverOnPoints(pointData, xval, yval, hovermode) {
     return [closestPoint];
 }
 
-module.exports = {
+export default {
     hoverPoints: hoverPoints,
     hoverSplit: hoverSplit,
     hoverOnPoints: hoverOnPoints

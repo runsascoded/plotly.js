@@ -1,45 +1,21 @@
-'use strict';
+import isNumeric from 'fast-isnumeric';
+import Registry from '../../registry.js';
+import Lib from '../../lib/index.js';
+import Template from '../../plot_api/plot_template.js';
+import handleArrayContainerDefaults from '../array_container_defaults.js';
+import layoutAttributes from './layout_attributes.js';
+import handleTickValueDefaults from './tick_value_defaults.js';
+import handleTickMarkDefaults from './tick_mark_defaults.js';
+import handleTickLabelDefaults from './tick_label_defaults.js';
+import handlePrefixSuffixDefaults from './prefix_suffix_defaults.js';
+import handleCategoryOrderDefaults from './category_order_defaults.js';
+import handleLineGridDefaults from './line_grid_defaults.js';
+import handleRangeDefaults from './range_defaults.js';
+import setConvert from './set_convert.js';
+import _constants from './constants.js';
+const { WEEKDAY_PATTERN: DAY_OF_WEEK, HOUR_PATTERN: HOUR } = _constants;
 
-var isNumeric = require('fast-isnumeric');
-
-var Registry = require('../../registry');
-var Lib = require('../../lib');
-var Template = require('../../plot_api/plot_template');
-
-var handleArrayContainerDefaults = require('../array_container_defaults');
-
-var layoutAttributes = require('./layout_attributes');
-var handleTickValueDefaults = require('./tick_value_defaults');
-var handleTickMarkDefaults = require('./tick_mark_defaults');
-var handleTickLabelDefaults = require('./tick_label_defaults');
-var handlePrefixSuffixDefaults = require('./prefix_suffix_defaults');
-var handleCategoryOrderDefaults = require('./category_order_defaults');
-var handleLineGridDefaults = require('./line_grid_defaults');
-var handleRangeDefaults = require('./range_defaults');
-var setConvert = require('./set_convert');
-
-var DAY_OF_WEEK = require('./constants').WEEKDAY_PATTERN;
-var HOUR = require('./constants').HOUR_PATTERN;
-
-/**
- * options: object containing:
- *
- *  letter: 'x' or 'y'
- *  title: name of the axis (ie 'Colorbar') to go in default title
- *  font: the default font to inherit
- *  outerTicks: boolean, should ticks default to outside?
- *  showGrid: boolean, should gridlines be shown by default?
- *  noHover: boolean, this axis doesn't support hover effects?
- *  noTickson: boolean, this axis doesn't support 'tickson'
- *  data: the plot data, used to manage categories
- *  bgColor: the plot background color, to calculate default gridline colors
- *  calendar:
- *  splomStash:
- *  visibleDflt: boolean
- *  reverseDflt: boolean
- *  automargin: boolean
- */
-module.exports = function handleAxisDefaults(containerIn, containerOut, coerce, options, layoutOut) {
+export default function handleAxisDefaults(containerIn, containerOut, coerce, options, layoutOut) {
     var letter = options.letter;
     var font = options.font || {};
     var splomStash = options.splomStash || {};
@@ -222,7 +198,7 @@ module.exports = function handleAxisDefaults(containerIn, containerOut, coerce, 
     }
 
     return containerOut;
-};
+}
 
 function rangebreaksDefaults(itemIn, itemOut, containerOut) {
     function coerce(attr, dflt) {

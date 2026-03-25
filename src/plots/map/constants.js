@@ -1,9 +1,6 @@
-'use strict';
-
-var sortObjectKeys = require('../../lib/sort_object_keys');
-var arcgisSatHybrid = require('./styles/arcgis-sat-hybrid'); // https://raw.githubusercontent.com/go2garret/maps/v1.0.0/LICENSE
-var arcgisSat = require('./styles/arcgis-sat');
-
+import sortObjectKeys from '../../lib/sort_object_keys.js';
+import arcgisSatHybrid from './styles/arcgis-sat-hybrid.js';
+import arcgisSat from './styles/arcgis-sat.js';
 
 var OSM = '© <a target="_blank" href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
 
@@ -13,7 +10,6 @@ var cartoVoyager = 'https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json
 var cartoPositronNoLabels = 'https://basemaps.cartocdn.com/gl/positron-nolabels-gl-style/style.json';
 var cartoDarkmatterNoLabels = 'https://basemaps.cartocdn.com/gl/dark-matter-nolabels-gl-style/style.json';
 var cartoVoyagerNoLabels = 'https://basemaps.cartocdn.com/gl/voyager-nolabels-gl-style/style.json';
-
 
 var stylesMap = {
     basic: cartoVoyager,
@@ -68,7 +64,7 @@ var stylesMap = {
 
 var styleValuesMap = sortObjectKeys(stylesMap);
 
-module.exports = {
+export default {
     styleValueDflt: 'basic',
     stylesMap: stylesMap,
     styleValuesMap: styleValuesMap,
@@ -76,15 +72,12 @@ module.exports = {
     traceLayerPrefix: 'plotly-trace-layer-',
     layoutLayerPrefix: 'plotly-layout-layer-',
 
-
     missingStyleErrorMsg: [
         'No valid maplibre style found, please set `map.style` to one of:',
         styleValuesMap.join(', '),
         'or use a tile service.'
     ].join('\n'),
 
-
     mapOnErrorMsg: 'Map error.',
-
 
 };

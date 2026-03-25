@@ -1,14 +1,13 @@
-'use strict';
+import _edit_types from '../../../plot_api/edit_types.js';
+const { overrideAll } = _edit_types;
+import basePlotAttributes from '../../../plots/attributes.js';
+import fontAttrs from '../../../plots/font_attributes.js';
+import { dash } from '../../drawing/attributes.js';
+import { extendFlat } from '../../../lib/extend.js';
+import { shapeTexttemplateAttrs, templatefallbackAttrs } from '../../../plots/template_attributes.js';
+import shapeLabelTexttemplateVars from '../label_texttemplate.js';
 
-var overrideAll = require('../../../plot_api/edit_types').overrideAll;
-var basePlotAttributes = require('../../../plots/attributes');
-var fontAttrs = require('../../../plots/font_attributes');
-var dash = require('../../drawing/attributes').dash;
-var extendFlat = require('../../../lib/extend').extendFlat;
-const { shapeTexttemplateAttrs, templatefallbackAttrs } = require('../../../plots/template_attributes');
-var shapeLabelTexttemplateVars = require('../label_texttemplate');
-
-module.exports = overrideAll(
+export default overrideAll(
     {
         newshape: {
             visible: extendFlat({}, basePlotAttributes.visible, {

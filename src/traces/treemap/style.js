@@ -1,11 +1,9 @@
-'use strict';
-
-var d3 = require('@plotly/d3');
-var Color = require('../../components/color');
-var Lib = require('../../lib');
-var helpers = require('../sunburst/helpers');
-var resizeText = require('../bar/uniform_text').resizeText;
-var fillOne = require('../sunburst/fill_one');
+import d3 from '@plotly/d3';
+import Color from '../../components/color/index.js';
+import Lib from '../../lib/index.js';
+import helpers from '../sunburst/helpers.js';
+import { resizeText } from '../bar/uniform_text.js';
+import fillOne from '../sunburst/fill_one.js';
 
 function style(gd) {
     var s = gd._fullLayout._treemaplayer.selectAll('.trace');
@@ -87,7 +85,7 @@ function styleOne(s, pt, trace, gd, opts) {
         .style('opacity', opacity);
 }
 
-module.exports = {
+export default {
     style: style,
     styleOne: styleOne
 };

@@ -1,8 +1,6 @@
-'use strict';
+import { setGroupPositions } from '../bar/cross_trace_calc.js';
 
-var setGroupPositions = require('../bar/cross_trace_calc').setGroupPositions;
-
-module.exports = function crossTraceCalc(gd, plotinfo) {
+export default function crossTraceCalc(gd, plotinfo) {
     var fullLayout = gd._fullLayout;
     var fullData = gd._fullData;
     var calcdata = gd.calcdata;
@@ -58,4 +56,4 @@ module.exports = function crossTraceCalc(gd, plotinfo) {
             }
         }
     }
-};
+}

@@ -1,16 +1,12 @@
-'use strict';
-
-var Lib = require('../../lib');
-
-var subTypes = require('../scatter/subtypes');
-var handleMarkerDefaults = require('../scatter/marker_defaults');
-var handleLineDefaults = require('../scatter/line_defaults');
-var handleLineShapeDefaults = require('../scatter/line_shape_defaults');
-var handleTextDefaults = require('../scatter/text_defaults');
-var handleFillColorDefaults = require('../scatter/fillcolor_defaults');
-var PTS_LINESONLY = require('../scatter/constants').PTS_LINESONLY;
-
-var attributes = require('./attributes');
+import Lib from '../../lib/index.js';
+import subTypes from '../scatter/subtypes.js';
+import handleMarkerDefaults from '../scatter/marker_defaults.js';
+import handleLineDefaults from '../scatter/line_defaults.js';
+import handleLineShapeDefaults from '../scatter/line_shape_defaults.js';
+import handleTextDefaults from '../scatter/text_defaults.js';
+import handleFillColorDefaults from '../scatter/fillcolor_defaults.js';
+import { PTS_LINESONLY } from '../scatter/constants.js';
+import attributes from './attributes.js';
 
 function supplyDefaults(traceIn, traceOut, defaultColor, layout) {
     function coerce(attr, dflt) {
@@ -104,7 +100,7 @@ function handleRThetaDefaults(traceIn, traceOut, layout, coerce) {
     return len;
 }
 
-module.exports = {
+export default {
     handleRThetaDefaults: handleRThetaDefaults,
     supplyDefaults: supplyDefaults
 };

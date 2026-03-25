@@ -1,24 +1,12 @@
-'use strict';
+import { wrap } from '../../lib/gup.js';
+import { hasColorscale } from '../../components/colorscale/helpers.js';
+import colorscaleCalc from '../../components/colorscale/calc.js';
+import filterUnique from '../../lib/filter_unique.js';
+import Drawing from '../../components/drawing/index.js';
+import Lib from '../../lib/index.js';
+import isNumeric from 'fast-isnumeric';
 
-// Requirements
-// ============
-var wrap = require('../../lib/gup').wrap;
-var hasColorscale = require('../../components/colorscale/helpers').hasColorscale;
-var colorscaleCalc = require('../../components/colorscale/calc');
-var filterUnique = require('../../lib/filter_unique.js');
-var Drawing = require('../../components/drawing');
-var Lib = require('../../lib');
-var isNumeric = require('fast-isnumeric');
-
-/**
- * Create a wrapped ParcatsModel object from trace
- *
- * Note: trace defaults have already been applied
- * @param {Object} gd
- * @param {Object} trace
- * @return {Array.<ParcatsModel>}
- */
-module.exports = function calc(gd, trace) {
+export default function calc(gd, trace) {
     var visibleDims = Lib.filterVisible(trace.dimensions);
 
     if(visibleDims.length === 0) return [];
@@ -149,7 +137,6 @@ module.exports = function calc(gd, trace) {
         return createDimensionModel(i, di._index, di._displayindex, di.label, totalCount);
     });
 
-
     for(valueInd = 0; valueInd < numValues; valueInd++) {
         count = counts[valueInd % counts.length];
 
@@ -170,7 +157,7 @@ module.exports = function calc(gd, trace) {
 
     // Compute unique
     return wrap(createParcatsModel(dimensionModels, pathModels, totalCount));
-};
+}
 
 // Models
 // ======
@@ -308,7 +295,6 @@ function updateCategoryModel(categoryModel, valueInd, count) {
     categoryModel.count += count;
 }
 
-
 // Path Model
 // ----------
 /**
@@ -436,7 +422,6 @@ function getUniqueInfo(values, uniqueValues) {
     };
 }
 
-
 /**
  * Validate the requested display order for the dimensions.
  * If the display order is a permutation of 0 through dimensions.length - 1, link to _displayindex
@@ -457,7 +442,6 @@ function validateDimensionDisplayInds(visibleDims) {
         }
     }
 }
-
 
 /**
  * Update category properties based on the unique values found for this dimension

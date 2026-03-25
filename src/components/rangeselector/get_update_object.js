@@ -1,9 +1,8 @@
-'use strict';
+import * as d3Time from 'd3-time';
+import _index from '../../lib/index.js';
+const { titleCase } = _index;
 
-var d3Time = require('d3-time');
-var titleCase = require('../../lib').titleCase;
-
-module.exports = function getUpdateObject(axisLayout, buttonLayout) {
+export default function getUpdateObject(axisLayout, buttonLayout) {
     var axName = axisLayout._name;
     var update = {};
 
@@ -17,7 +16,7 @@ module.exports = function getUpdateObject(axisLayout, buttonLayout) {
     }
 
     return update;
-};
+}
 
 function getXRange(axisLayout, buttonLayout) {
     var currentRange = axisLayout.range;

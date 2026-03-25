@@ -1,10 +1,8 @@
-'use strict';
-
-var identity = require('./identity');
+import identity from './identity.js';
 
 function wrap(d) {return [d];}
 
-module.exports = {
+export default {
 
     // The D3 data binding concept and the General Update Pattern promotes the idea of
     // traversing into the scenegraph by using the `.data(fun, keyFun)` call.

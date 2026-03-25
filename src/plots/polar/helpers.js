@@ -1,7 +1,5 @@
-'use strict';
-
-var Lib = require('../../lib');
-var polygonTester = require('../../lib/polygon').tester;
+import Lib from '../../lib/index.js';
+import { tester as polygonTester } from '../../lib/polygon.js';
 
 var findIndexOfMin = Lib.findIndexOfMin;
 var isAngleInsideSector = Lib.isAngleInsideSector;
@@ -273,7 +271,7 @@ function pathPolygonAnnulus(r0, r1, a0, a1, vangles, cx, cy) {
     return 'M' + outer.reverse().join('L') + 'M' + inner.join('L');
 }
 
-module.exports = {
+export default {
     isPtInsidePolygon: isPtInsidePolygon,
     findPolygonOffset: findPolygonOffset,
     findEnclosingVertexAngles: findEnclosingVertexAngles,

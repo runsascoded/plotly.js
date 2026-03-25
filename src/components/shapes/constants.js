@@ -1,7 +1,4 @@
-'use strict';
-
-
-module.exports = {
+export default {
     segmentRE: /[MLHVQCTSZ][^MLHVQCTSZ]*/g,
     paramRE: /[^\s,]+/g,
 

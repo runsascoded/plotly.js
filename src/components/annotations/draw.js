@@ -1,32 +1,19 @@
-'use strict';
-
-var d3 = require('@plotly/d3');
-
-var Registry = require('../../registry');
-var Plots = require('../../plots/plots');
-var Lib = require('../../lib');
+import d3 from '@plotly/d3';
+import Registry from '../../registry.js';
+import Plots from '../../plots/plots.js';
+import Lib from '../../lib/index.js';
+import Axes from '../../plots/cartesian/axes.js';
+import Color from '../color/index.js';
+import Drawing from '../drawing/index.js';
+import Fx from '../fx/index.js';
+import svgTextUtils from '../../lib/svg_text_utils.js';
+import setCursor from '../../lib/setcursor.js';
+import dragElement from '../dragelement/index.js';
+import { arrayEditor } from '../../plot_api/plot_template.js';
+import drawArrowHead from './draw_arrow_head.js';
 var strTranslate = Lib.strTranslate;
-var Axes = require('../../plots/cartesian/axes');
-var Color = require('../color');
-var Drawing = require('../drawing');
-var Fx = require('../fx');
-var svgTextUtils = require('../../lib/svg_text_utils');
-var setCursor = require('../../lib/setcursor');
-var dragElement = require('../dragelement');
-var arrayEditor = require('../../plot_api/plot_template').arrayEditor;
 
-var drawArrowHead = require('./draw_arrow_head');
-
-// Annotations are stored in gd.layout.annotations, an array of objects
-// index can point to one item in this array,
-//  or non-numeric to simply add a new one
-//  or -1 to modify all existing
-// opt can be the full options object, or one key (to be set to value)
-//  or undefined to simply redraw
-// if opt is blank, val can be 'add' or a full options object to add a new
-//  annotation at that point in the array, or 'remove' to delete this one
-
-module.exports = {
+export default {
     draw: draw,
     drawOne: drawOne,
     drawRaw: drawRaw

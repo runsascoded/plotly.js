@@ -1,10 +1,8 @@
-'use strict';
+import Lib from '../../lib/index.js';
+import subtypes from '../scatter/subtypes.js';
+import { BADNUM } from '../../constants/numerical.js';
 
-var Lib = require('../../lib');
-var subtypes = require('../scatter/subtypes');
-var BADNUM = require('../../constants/numerical').BADNUM;
-
-module.exports = function selectPoints(searchInfo, selectionTester) {
+export default function selectPoints(searchInfo, selectionTester) {
     var cd = searchInfo.cd;
     var xa = searchInfo.xaxis;
     var ya = searchInfo.yaxis;
@@ -42,4 +40,4 @@ module.exports = function selectPoints(searchInfo, selectionTester) {
     }
 
     return selection;
-};
+}

@@ -1,7 +1,5 @@
-'use strict';
-var b64decode = require('base64-arraybuffer').decode;
-
-var isPlainObject = require('./is_plain_object');
+import { decode as b64decode } from 'base64-arraybuffer';
+import isPlainObject from './is_plain_object.js';
 
 var isArray = Array.isArray;
 
@@ -11,12 +9,12 @@ var dv = DataView;
 function isTypedArray(a) {
     return ab.isView(a) && !(a instanceof dv);
 }
-exports.isTypedArray = isTypedArray;
+export { isTypedArray };
 
 function isArrayOrTypedArray(a) {
     return isArray(a) || isTypedArray(a);
 }
-exports.isArrayOrTypedArray = isArrayOrTypedArray;
+export { isArrayOrTypedArray };
 
 /*
  * Test whether an input object is 1D.
@@ -29,17 +27,9 @@ exports.isArrayOrTypedArray = isArrayOrTypedArray;
 function isArray1D(a) {
     return !isArrayOrTypedArray(a[0]);
 }
-exports.isArray1D = isArray1D;
+export { isArray1D };
 
-/*
- * Ensures an array has the right amount of storage space. If it doesn't
- * exist, it creates an array. If it does exist, it returns it if too
- * short or truncates it in-place.
- *
- * The goal is to just reuse memory to avoid a bit of excessive garbage
- * collection.
- */
-exports.ensureArray = function(out, n) {
+export var ensureArray = function(out, n) {
     // TODO: typed array support here? This is only used in
     // traces/carpet/compute_control_points
     if(!isArray(out)) out = [];
@@ -102,9 +92,9 @@ typedArrays.float64 = typedArrays.f8;
 function isArrayBuffer(a) {
     return a.constructor === ArrayBuffer;
 }
-exports.isArrayBuffer = isArrayBuffer;
+export { isArrayBuffer };
 
-exports.decodeTypedArraySpec = function(vIn) {
+export var decodeTypedArraySpec = function(vIn) {
     var out = [];
     var v = coerceTypedArraySpec(vIn);
     var dtype = v.dtype;
@@ -164,7 +154,7 @@ exports.decodeTypedArraySpec = function(vIn) {
     return out;
 };
 
-exports.isTypedArraySpec = function(v) {
+export var isTypedArraySpec = function(v) {
     return (
         isPlainObject(v) &&
         v.hasOwnProperty('dtype') && (typeof v.dtype === 'string') &&
@@ -185,14 +175,7 @@ function coerceTypedArraySpec(v) {
     };
 }
 
-/*
- * TypedArray-compatible concatenation of n arrays
- * if all arrays are the same type it will preserve that type,
- * otherwise it falls back on Array.
- * Also tries to avoid copying, in case one array has zero length
- * But never mutates an existing array
- */
-exports.concat = function() {
+export var concat = function() {
     var args = [];
     var allArray = true;
     var totalLen = 0;
@@ -253,11 +236,11 @@ exports.concat = function() {
     return out;
 };
 
-exports.maxRowLength = function(z) {
+export var maxRowLength = function(z) {
     return _rowLength(z, Math.max, 0);
 };
 
-exports.minRowLength = function(z) {
+export var minRowLength = function(z) {
     return _rowLength(z, Math.min, Infinity);
 };
 
@@ -275,3 +258,5 @@ function _rowLength(z, fn, len0) {
     }
     return 0;
 }
+
+export default { ensureArray, decodeTypedArraySpec, isTypedArraySpec, concat, maxRowLength, minRowLength, isTypedArray, isArrayOrTypedArray, isArray1D, isArrayBuffer };

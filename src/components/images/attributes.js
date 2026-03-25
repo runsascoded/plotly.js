@@ -1,11 +1,8 @@
-'use strict';
+import cartesianConstants from '../../plots/cartesian/constants.js';
+import { templatedArray } from '../../plot_api/plot_template.js';
+import axisPlaceableObjs from '../../constants/axis_placeable_objects.js';
 
-var cartesianConstants = require('../../plots/cartesian/constants');
-var templatedArray = require('../../plot_api/plot_template').templatedArray;
-var axisPlaceableObjs = require('../../constants/axis_placeable_objects');
-
-
-module.exports = templatedArray('image', {
+export default templatedArray('image', {
     visible: {
         valType: 'boolean',
         dflt: true,

@@ -1,17 +1,15 @@
-'use strict';
-
-var d3 = require('@plotly/d3');
-var Drawing = require('../../components/drawing');
-var map1dArray = require('./map_1d_array');
-var makepath = require('./makepath');
-var orientText = require('./orient_text');
-var svgTextUtils = require('../../lib/svg_text_utils');
-var Lib = require('../../lib');
+import d3 from '@plotly/d3';
+import Drawing from '../../components/drawing/index.js';
+import map1dArray from './map_1d_array.js';
+import makepath from './makepath.js';
+import orientText from './orient_text.js';
+import svgTextUtils from '../../lib/svg_text_utils.js';
+import Lib from '../../lib/index.js';
+import alignmentConstants from '../../constants/alignment.js';
 var strRotate = Lib.strRotate;
 var strTranslate = Lib.strTranslate;
-var alignmentConstants = require('../../constants/alignment');
 
-module.exports = function plot(gd, plotinfo, cdcarpet, carpetLayer) {
+export default function plot(gd, plotinfo, cdcarpet, carpetLayer) {
     var isStatic = gd._context.staticPlot;
     var xa = plotinfo.xaxis;
     var ya = plotinfo.yaxis;
@@ -49,7 +47,7 @@ module.exports = function plot(gd, plotinfo, cdcarpet, carpetLayer) {
 
         drawClipPath(trace, cd0, clipLayer, xa, ya);
     });
-};
+}
 
 function drawClipPath(trace, t, layer, xaxis, yaxis) {
     var seg, xp, yp, i;

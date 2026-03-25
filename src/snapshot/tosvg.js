@@ -1,12 +1,8 @@
-'use strict';
-
-var d3 = require('@plotly/d3');
-
-var Lib = require('../lib');
-var Drawing = require('../components/drawing');
-var Color = require('../components/color');
-
-var xmlnsNamespaces = require('../constants/xmlns_namespaces');
+import d3 from '@plotly/d3';
+import Lib from '../lib/index.js';
+import Drawing from '../components/drawing/index.js';
+import Color from '../components/color/index.js';
+import xmlnsNamespaces from '../constants/xmlns_namespaces.js';
 var DOUBLEQUOTE_REGEX = /"/g;
 var DUMMY_SUB = 'TOBESTRIPPED';
 var DUMMY_REGEX = new RegExp('("' + DUMMY_SUB + ')|(' + DUMMY_SUB + '")', 'g');
@@ -27,7 +23,7 @@ function xmlEntityEncode(str) {
     return str.replace(/&(?!\w+;|\#[0-9]+;| \#x[0-9A-F]+;)/g, '&amp;');
 }
 
-module.exports = function toSVG(gd, format, scale) {
+export default function toSVG(gd, format, scale) {
     var fullLayout = gd._fullLayout;
     var svg = fullLayout._paper;
     var toppaper = fullLayout._toppaper;
@@ -157,4 +153,4 @@ module.exports = function toSVG(gd, format, scale) {
     s = s.replace(DUMMY_REGEX, '\'');
 
     return s;
-};
+}

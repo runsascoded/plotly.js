@@ -1,14 +1,11 @@
-'use strict';
+import d3 from '@plotly/d3';
+import Lib from '../../lib/index.js';
+import Drawing from '../../components/drawing/index.js';
+import boxPlot from '../box/plot.js';
+import linePoints from '../scatter/line_points.js';
+import helpers from './helpers.js';
 
-var d3 = require('@plotly/d3');
-var Lib = require('../../lib');
-var Drawing = require('../../components/drawing');
-
-var boxPlot = require('../box/plot');
-var linePoints = require('../scatter/line_points');
-var helpers = require('./helpers');
-
-module.exports = function plot(gd, plotinfo, cdViolins, violinLayer) {
+export default function plot(gd, plotinfo, cdViolins, violinLayer) {
     var isStatic = gd._context.staticPlot;
     var fullLayout = gd._fullLayout;
     var xa = plotinfo.xaxis;
@@ -179,4 +176,4 @@ module.exports = function plot(gd, plotinfo, cdViolins, violinLayer) {
 
         boxPlot.plotPoints(plotGroup, {x: xa, y: ya}, trace, t);
     });
-};
+}

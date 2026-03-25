@@ -1,19 +1,6 @@
-'use strict';
+import Lib from '../../lib/index.js';
 
-var Lib = require('../../lib');
-
-/**
- * Convert plotly.js 'textposition' to map-gl 'anchor' and 'offset'
- * (with the help of the icon size).
- *
- * @param {string} textpostion : plotly.js textposition value
- * @param {number} iconSize : plotly.js icon size (e.g. marker.size for traces)
- *
- * @return {object}
- *      - anchor
- *      - offset
- */
-module.exports = function convertTextOpts(textposition, iconSize) {
+export default function convertTextOpts(textposition, iconSize) {
     var parts = textposition.split(' ');
     var vPos = parts[0];
     var hPos = parts[1];
@@ -59,4 +46,4 @@ module.exports = function convertTextOpts(textposition, iconSize) {
     else anchor = 'center';
 
     return { anchor: anchor, offset: offset };
-};
+}

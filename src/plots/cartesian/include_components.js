@@ -1,21 +1,8 @@
-'use strict';
+import Registry from '../../registry.js';
+import Lib from '../../lib/index.js';
+import axisIds from './axis_ids.js';
 
-var Registry = require('../../registry');
-var Lib = require('../../lib');
-var axisIds = require('./axis_ids');
-
-/**
- * Factory function for checking component arrays for subplot references.
- *
- * @param {string} containerArrayName: the top-level array in gd.layout to check
- *   If an item in this container is found that references a cartesian x and/or y axis,
- *   ensure cartesian is marked as a base plot module and record the axes (and subplot
- *   if both refs are axes) in gd._fullLayout
- *
- * @return {function}: with args layoutIn (gd.layout) and layoutOut (gd._fullLayout)
- * as expected of a component includeBasePlot method
- */
-module.exports = function makeIncludeComponents(containerArrayName) {
+export default function makeIncludeComponents(containerArrayName) {
     return function includeComponents(layoutIn, layoutOut) {
         var array = layoutIn[containerArrayName];
         if(!Array.isArray(array)) return;
@@ -64,4 +51,4 @@ module.exports = function makeIncludeComponents(containerArrayName) {
             }
         }
     };
-};
+}

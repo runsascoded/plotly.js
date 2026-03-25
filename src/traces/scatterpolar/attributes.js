@@ -1,13 +1,11 @@
-'use strict';
-
-const { hovertemplateAttrs, texttemplateAttrs, templatefallbackAttrs } = require('../../plots/template_attributes');
-var extendFlat = require('../../lib/extend').extendFlat;
-var makeFillcolorAttr = require('../scatter/fillcolor_attribute');
-var scatterAttrs = require('../scatter/attributes');
-var baseAttrs = require('../../plots/attributes');
+import { hovertemplateAttrs, texttemplateAttrs, templatefallbackAttrs } from '../../plots/template_attributes.js';
+import { extendFlat } from '../../lib/extend.js';
+import makeFillcolorAttr from '../scatter/fillcolor_attribute.js';
+import scatterAttrs from '../scatter/attributes.js';
+import baseAttrs from '../../plots/attributes.js';
 var lineAttrs = scatterAttrs.line;
 
-module.exports = {
+export default {
     mode: scatterAttrs.mode,
 
     r: {

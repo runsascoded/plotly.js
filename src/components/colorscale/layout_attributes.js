@@ -1,13 +1,11 @@
-'use strict';
-
-var extendFlat = require('../../lib/extend').extendFlat;
-
-var colorScaleAttrs = require('./attributes');
-var scales = require('./scales').scales;
+import { extendFlat } from '../../lib/extend.js';
+import colorScaleAttrs from './attributes.js';
+import _scales from './scales.js';
+const { scales } = _scales;
 
 var msg = 'Note that `autocolorscale` must be true for this attribute to work.';
 
-module.exports = {
+export default {
     editType: 'calc',
 
     colorscale: {

@@ -1,13 +1,13 @@
-'use strict';
-
-var Fx = require('../../components/fx');
-var Registry = require('../../registry');
-var Color = require('../../components/color');
-
-var fillText = require('../../lib').fillText;
-var getLineWidth = require('./helpers').getLineWidth;
-var hoverLabelText = require('../../plots/cartesian/axes').hoverLabelText;
-var BADNUM = require('../../constants/numerical').BADNUM;
+import Fx from '../../components/fx/index.js';
+import Registry from '../../registry.js';
+import Color from '../../components/color/index.js';
+import _index from '../../lib/index.js';
+const { fillText } = _index;
+import { getLineWidth } from './helpers.js';
+import _axes from '../../plots/cartesian/axes.js';
+const { hoverLabelText } = _axes;
+import _numerical from '../../constants/numerical.js';
+const { BADNUM } = _numerical;
 
 function hoverPoints(pointData, xval, yval, hovermode, opts) {
     var barPointData = hoverOnBars(pointData, xval, yval, hovermode, opts);
@@ -216,7 +216,7 @@ function getTraceColor(trace, di) {
     else if(Color.opacity(mlc) && mlw) return mlc;
 }
 
-module.exports = {
+export default {
     hoverPoints: hoverPoints,
     hoverOnBars: hoverOnBars,
     getTraceColor: getTraceColor

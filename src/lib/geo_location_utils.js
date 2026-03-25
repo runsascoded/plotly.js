@@ -1,16 +1,13 @@
-'use strict';
-
-var d3 = require('@plotly/d3');
-var countryRegex = require('country-regex');
-var { area: turfArea } = require('@turf/area');
-var { centroid: turfCentroid } = require('@turf/centroid');
-var { bbox: turfBbox } = require('@turf/bbox');
-
-var identity = require('./identity');
-var loggers = require('./loggers');
-var isPlainObject = require('./is_plain_object');
-var nestedProperty = require('./nested_property');
-var polygon = require('./polygon');
+import d3 from '@plotly/d3';
+import countryRegex from 'country-regex';
+import { area as turfArea } from '@turf/area';
+import { centroid as turfCentroid } from '@turf/centroid';
+import { bbox as turfBbox } from '@turf/bbox';
+import identity from './identity.js';
+import loggers from './loggers.js';
+import isPlainObject from './is_plain_object.js';
+import nestedProperty from './nested_property.js';
+import polygon from './polygon.js';
 
 // make list of all country iso3 ids from at runtime
 var countryIds = Object.keys(countryRegex);
@@ -369,7 +366,7 @@ function computeBbox(d) {
     return turfBbox(d);
 }
 
-module.exports = {
+export default {
     locationToFeature: locationToFeature,
     feature2polygons: feature2polygons,
     getTraceGeojson: getTraceGeojson,

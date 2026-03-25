@@ -1,5 +1,3 @@
-'use strict';
-
 /**
  * sanitized modulus function that always returns in the range [0, d)
  * rather than (-d, 0] if v is negative
@@ -19,7 +17,7 @@ function modHalf(v, d) {
         v;
 }
 
-module.exports = {
+export default {
     mod: mod,
     modHalf: modHalf
 };

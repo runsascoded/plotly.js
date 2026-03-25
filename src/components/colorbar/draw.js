@@ -1,32 +1,28 @@
-'use strict';
-
-var d3 = require('@plotly/d3');
-var tinycolor = require('tinycolor2');
-
-var Plots = require('../../plots/plots');
-var Registry = require('../../registry');
-var Axes = require('../../plots/cartesian/axes');
-var dragElement = require('../dragelement');
-var Lib = require('../../lib');
+import d3 from '@plotly/d3';
+import tinycolor from 'tinycolor2';
+import Plots from '../../plots/plots.js';
+import Registry from '../../registry.js';
+import Axes from '../../plots/cartesian/axes.js';
+import dragElement from '../dragelement/index.js';
+import Lib from '../../lib/index.js';
+import { extendFlat } from '../../lib/extend.js';
+import setCursor from '../../lib/setcursor.js';
+import Drawing from '../drawing/index.js';
+import Color from '../color/index.js';
+import Titles from '../titles/index.js';
+import svgTextUtils from '../../lib/svg_text_utils.js';
+import _helpers from '../colorscale/helpers.js';
+const { flipScale } = _helpers;
+import handleAxisDefaults from '../../plots/cartesian/axis_defaults.js';
+import handleAxisPositionDefaults from '../../plots/cartesian/position_defaults.js';
+import axisLayoutAttrs from '../../plots/cartesian/layout_attributes.js';
+import alignmentConstants from '../../constants/alignment.js';
+import _constants from './constants.js';
+const { cn } = _constants;
 var strTranslate = Lib.strTranslate;
-var extendFlat = require('../../lib/extend').extendFlat;
-var setCursor = require('../../lib/setcursor');
-var Drawing = require('../drawing');
-var Color = require('../color');
-var Titles = require('../titles');
-var svgTextUtils = require('../../lib/svg_text_utils');
-var flipScale = require('../colorscale/helpers').flipScale;
-
-var handleAxisDefaults = require('../../plots/cartesian/axis_defaults');
-var handleAxisPositionDefaults = require('../../plots/cartesian/position_defaults');
-var axisLayoutAttrs = require('../../plots/cartesian/layout_attributes');
-
-var alignmentConstants = require('../../constants/alignment');
 var LINE_SPACING = alignmentConstants.LINE_SPACING;
 var FROM_TL = alignmentConstants.FROM_TL;
 var FROM_BR = alignmentConstants.FROM_BR;
-
-var cn = require('./constants').cn;
 
 function draw(gd) {
     var fullLayout = gd._fullLayout;
@@ -1019,6 +1015,6 @@ function mockColorBarAxis(gd, opts, zrange) {
     return cbAxisOut;
 }
 
-module.exports = {
+export default {
     draw: draw
 };

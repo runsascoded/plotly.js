@@ -1,13 +1,10 @@
-'use strict';
-
-var Registry = require('../../registry');
-var Lib = require('../../lib');
-var Template = require('../../plot_api/plot_template');
-
-var plotsAttrs = require('../../plots/attributes');
-var attributes = require('./attributes');
-var basePlotLayoutAttributes = require('../../plots/layout_attributes');
-var helpers = require('./helpers');
+import Registry from '../../registry.js';
+import Lib from '../../lib/index.js';
+import Template from '../../plot_api/plot_template.js';
+import plotsAttrs from '../../plots/attributes.js';
+import attributes from './attributes.js';
+import basePlotLayoutAttributes from '../../plots/layout_attributes.js';
+import helpers from './helpers.js';
 
 function groupDefaults(legendId, layoutIn, layoutOut, fullData) {
     var containerIn = layoutIn[legendId] || {};
@@ -242,7 +239,7 @@ function groupDefaults(legendId, layoutIn, layoutOut, fullData) {
     }
 }
 
-module.exports = function legendDefaults(layoutIn, layoutOut, fullData) {
+export default function legendDefaults(layoutIn, layoutOut, fullData) {
     var i;
 
     var allLegendsData = fullData.slice();
@@ -286,4 +283,4 @@ module.exports = function legendDefaults(layoutIn, layoutOut, fullData) {
 
         layoutOut._legends.push(legendId);
     }
-};
+}

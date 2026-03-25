@@ -1,6 +1,4 @@
-'use strict';
-
-module.exports = {
+export default {
     hiddenlabels: {
         valType: 'data_array',
         editType: 'calc',

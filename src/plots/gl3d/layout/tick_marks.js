@@ -1,12 +1,6 @@
-/* eslint block-scoped-var: 0*/
-/* eslint no-redeclare: 0*/
-
-'use strict';
-
-module.exports = computeTickMarks;
-
-var Axes = require('../../cartesian/axes');
-var Lib = require('../../../lib');
+import Axes from '../../cartesian/axes.js';
+import Lib from '../../../lib/index.js';
+export default computeTickMarks;
 
 var AXES_NAMES = ['xaxis', 'yaxis', 'zaxis'];
 
@@ -71,7 +65,6 @@ function computeTickMarks(scene) {
                 }
             }
             ticks[i] = dataTicks;
-
 
             axes.tickmode = tickModeCached;
         }

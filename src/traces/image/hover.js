@@ -1,11 +1,9 @@
-'use strict';
-
-var Fx = require('../../components/fx');
-var Lib = require('../../lib');
+import Fx from '../../components/fx/index.js';
+import Lib from '../../lib/index.js';
+import constants from './constants.js';
 var isArrayOrTypedArray = Lib.isArrayOrTypedArray;
-var constants = require('./constants');
 
-module.exports = function hoverPoints(pointData, xval, yval) {
+export default function hoverPoints(pointData, xval, yval) {
     var cd0 = pointData.cd[0];
     var trace = cd0.trace;
     var xa = pointData.xa;
@@ -88,4 +86,4 @@ module.exports = function hoverPoints(pointData, xval, yval) {
             'color[3]Label': c[3] + s[3]
         }
     })];
-};
+}

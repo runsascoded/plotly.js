@@ -1,13 +1,10 @@
-'use strict';
+import Fx from '../../components/fx/index.js';
+import { BADNUM } from '../../constants/numerical.js';
+import getTraceColor from '../scatter/get_trace_color.js';
+import { fillText } from '../../lib/index.js';
+import attributes from './attributes.js';
 
-var Fx = require('../../components/fx');
-var BADNUM = require('../../constants/numerical').BADNUM;
-
-var getTraceColor = require('../scatter/get_trace_color');
-var fillText = require('../../lib').fillText;
-var attributes = require('./attributes');
-
-module.exports = function hoverPoints(pointData, xval, yval) {
+export default function hoverPoints(pointData, xval, yval) {
     var cd = pointData.cd;
     var trace = cd[0].trace;
     var xa = pointData.xa;
@@ -65,7 +62,7 @@ module.exports = function hoverPoints(pointData, xval, yval) {
     pointData.hovertemplate = trace.hovertemplate;
 
     return [pointData];
-};
+}
 
 function getExtraText(trace, pt, pointData, labels) {
     if(trace.hovertemplate) return;

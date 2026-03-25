@@ -1,13 +1,10 @@
-'use strict';
+import pieAttrs from '../pie/attributes.js';
+import baseAttrs from '../../plots/attributes.js';
+import { attributes as domainAttrs } from '../../plots/domain.js';
+import { hovertemplateAttrs, texttemplateAttrs, templatefallbackAttrs } from '../../plots/template_attributes.js';
+import { extendFlat } from '../../lib/extend.js';
 
-var pieAttrs = require('../pie/attributes');
-var baseAttrs = require('../../plots/attributes');
-var domainAttrs = require('../../plots/domain').attributes;
-const { hovertemplateAttrs, texttemplateAttrs, templatefallbackAttrs } = require('../../plots/template_attributes');
-
-var extendFlat = require('../../lib/extend').extendFlat;
-
-module.exports = {
+export default {
     labels: pieAttrs.labels,
     // equivalent of x0 and dx, if label is missing
     label0: pieAttrs.label0,

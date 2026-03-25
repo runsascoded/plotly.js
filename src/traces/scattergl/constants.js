@@ -1,8 +1,6 @@
-'use strict';
-
 var SYMBOL_SIZE = 20;
 
-module.exports = {
+export default {
     TOO_MANY_POINTS: 1e5,
 
     SYMBOL_SDF_SIZE: 200,

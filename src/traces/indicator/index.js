@@ -1,18 +1,22 @@
-'use strict';
+import _req0 from './base_plot.js';
+import _req1 from './attributes.js';
+import { supplyDefaults as _req2 } from './defaults.js';
+import { calc as _req3 } from './calc.js';
+import _req4 from './plot.js';
 
-module.exports = {
+export default {
     moduleType: 'trace',
     name: 'indicator',
-    basePlotModule: require('./base_plot'),
+    basePlotModule: _req0,
     categories: ['svg', 'noOpacity', 'noHover'],
     animatable: true,
 
-    attributes: require('./attributes'),
-    supplyDefaults: require('./defaults').supplyDefaults,
+    attributes: _req1,
+    supplyDefaults: _req2,
 
-    calc: require('./calc').calc,
+    calc: _req3,
 
-    plot: require('./plot'),
+    plot: _req4,
 
     meta: {
         description: [

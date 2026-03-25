@@ -1,13 +1,15 @@
-'use strict';
+import _req0 from './attributes.js';
+import _req1 from './defaults.js';
+import _req2 from './draw.js';
+import _req3 from './style.js';
 
-
-module.exports = {
+export default {
     moduleType: 'component',
     name: 'legend',
 
-    layoutAttributes: require('./attributes'),
-    supplyLayoutDefaults: require('./defaults'),
+    layoutAttributes: _req0,
+    supplyLayoutDefaults: _req1,
 
-    draw: require('./draw'),
-    style: require('./style')
+    draw: _req2,
+    style: _req3
 };

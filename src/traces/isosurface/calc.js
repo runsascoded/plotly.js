@@ -1,10 +1,8 @@
-'use strict';
+import colorscaleCalc from '../../components/colorscale/calc.js';
+import { processGrid } from '../streamtube/calc.js';
+import { filter } from '../streamtube/calc.js';
 
-var colorscaleCalc = require('../../components/colorscale/calc');
-var processGrid = require('../streamtube/calc').processGrid;
-var filter = require('../streamtube/calc').filter;
-
-module.exports = function calc(gd, trace) {
+export default function calc(gd, trace) {
     trace._len = Math.min(
         trace.x.length,
         trace.y.length,
@@ -42,4 +40,4 @@ module.exports = function calc(gd, trace) {
         containerStr: '',
         cLetter: 'c'
     });
-};
+}

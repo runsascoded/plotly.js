@@ -1,9 +1,7 @@
-'use strict';
+import Axes from '../../plots/cartesian/axes.js';
+import { extendFlat } from '../../lib/extend.js';
 
-var Axes = require('../../plots/cartesian/axes');
-var extendFlat = require('../../lib/extend').extendFlat;
-
-module.exports = function calcLabels(trace, axis) {
+export default function calcLabels(trace, axis) {
     var i, tobj, prefix, suffix, gridline;
 
     var labels = axis._labels = [];
@@ -48,4 +46,4 @@ module.exports = function calcLabels(trace, axis) {
             labels.push(tobj);
         }
     }
-};
+}

@@ -1,13 +1,9 @@
-'use strict';
-
-var colorMix = require('tinycolor2').mix;
-
-var Lib = require('../../../lib');
-var Template = require('../../../plot_api/plot_template');
-
-var layoutAttributes = require('./axis_attributes');
-var handleTypeDefaults = require('../../cartesian/type_defaults');
-var handleAxisDefaults = require('../../cartesian/axis_defaults');
+import { mix as colorMix } from 'tinycolor2';
+import Lib from '../../../lib/index.js';
+import Template from '../../../plot_api/plot_template.js';
+import layoutAttributes from './axis_attributes.js';
+import handleTypeDefaults from '../../cartesian/type_defaults.js';
+import handleAxisDefaults from '../../cartesian/axis_defaults.js';
 
 var axesNames = ['xaxis', 'yaxis', 'zaxis'];
 
@@ -15,7 +11,7 @@ var axesNames = ['xaxis', 'yaxis', 'zaxis'];
 // that differ from other subplot types.
 var gridLightness = 100 * (204 - 0x44) / (255 - 0x44);
 
-module.exports = function supplyLayoutDefaults(layoutIn, layoutOut, options) {
+export default function supplyLayoutDefaults(layoutIn, layoutOut, options) {
     var containerIn, containerOut;
 
     function coerce(attr, dflt) {
@@ -72,4 +68,4 @@ module.exports = function supplyLayoutDefaults(layoutIn, layoutOut, options) {
         coerce('showaxeslabels');
         if(coerce('showbackground')) coerce('backgroundcolor');
     }
-};
+}

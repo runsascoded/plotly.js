@@ -1,11 +1,9 @@
-'use strict';
+import isNumeric from 'fast-isnumeric';
+import Lib from '../../lib/index.js';
+import _helpers from './helpers.js';
+const { extractOpts } = _helpers;
 
-var isNumeric = require('fast-isnumeric');
-
-var Lib = require('../../lib');
-var extractOpts = require('./helpers').extractOpts;
-
-module.exports = function calc(gd, trace, opts) {
+export default function calc(gd, trace, opts) {
     var fullLayout = gd._fullLayout;
     var vals = opts.vals;
     var containerStr = opts.containerStr;
@@ -66,4 +64,4 @@ module.exports = function calc(gd, trace, opts) {
         else scl = fullLayout.colorscale.sequentialminus;
         cOpts._sync('colorscale', scl);
     }
-};
+}

@@ -1,5 +1,4 @@
-'use strict';
-module.exports = {
+export default {
     // some constants to help with marching squares algorithm
     // where does the path start for each index?
     BOTTOMSTART: [1, 9, 13, 104, 713],

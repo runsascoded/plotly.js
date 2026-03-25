@@ -1,9 +1,12 @@
-'use strict';
-
-var Lib = require('../../lib');
-var overrideAll = require('../../plot_api/edit_types').overrideAll;
-
-var attributes = require('./attributes');
+import Lib from '../../lib/index.js';
+import _edit_types from '../../plot_api/edit_types.js';
+const { overrideAll } = _edit_types;
+import attributes from './attributes.js';
+import _req0 from './defaults.js';
+import _req1 from './calc.js';
+import _req2 from './compute_error.js';
+import _req3 from './plot.js';
+import _req4 from './style.js';
 
 var xyAttrs = {
     error_x: Lib.extendFlat({}, attributes),
@@ -23,7 +26,7 @@ delete xyzAttrs.error_y.copy_ystyle;
 delete xyzAttrs.error_z.copy_ystyle;
 delete xyzAttrs.error_z.copy_zstyle;
 
-module.exports = {
+export default {
     moduleType: 'component',
     name: 'errorbars',
 
@@ -37,13 +40,13 @@ module.exports = {
         }
     },
 
-    supplyDefaults: require('./defaults'),
+    supplyDefaults: _req0,
 
-    calc: require('./calc'),
-    makeComputeError: require('./compute_error'),
+    calc: _req1,
+    makeComputeError: _req2,
 
-    plot: require('./plot'),
-    style: require('./style'),
+    plot: _req3,
+    style: _req4,
     hoverInfo: hoverInfo
 };
 

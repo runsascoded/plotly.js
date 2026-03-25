@@ -1,8 +1,6 @@
-'use strict';
-
-var convert = require('./convert').convert;
-var convertOnSelect = require('./convert').convertOnSelect;
-var LAYER_PREFIX = require('../../plots/map/constants').traceLayerPrefix;
+import { convert } from './convert.js';
+import { convertOnSelect } from './convert.js';
+import { traceLayerPrefix as LAYER_PREFIX } from '../../plots/map/constants.js';
 
 function ChoroplethMap(subplot, uid) {
     this.type = 'choroplethmap';
@@ -99,7 +97,7 @@ proto.dispose = function() {
     map.removeSource(this.sourceId);
 };
 
-module.exports = function createChoroplethMap(subplot, calcTrace) {
+export default function createChoroplethMap(subplot, calcTrace) {
     var trace = calcTrace[0].trace;
     var choroplethMap = new ChoroplethMap(subplot, trace.uid);
     var sourceId = choroplethMap.sourceId;
@@ -117,4 +115,4 @@ module.exports = function createChoroplethMap(subplot, calcTrace) {
     calcTrace[0].trace._glTrace = choroplethMap;
 
     return choroplethMap;
-};
+}

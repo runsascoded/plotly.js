@@ -1,70 +1,20 @@
-'use strict';
+import isPlainObject from '../lib/is_plain_object.js';
+import noop from '../lib/noop.js';
+import Loggers from '../lib/loggers.js';
+import { sorterAsc } from '../lib/search.js';
+import Registry from '../registry.js';
+import _req0 from './container_array_match.js';
+export var containerArrayMatch = _req0;
 
-var isPlainObject = require('../lib/is_plain_object');
-var noop = require('../lib/noop');
-var Loggers = require('../lib/loggers');
-var sorterAsc = require('../lib/search').sorterAsc;
-var Registry = require('../registry');
-
-
-exports.containerArrayMatch = require('./container_array_match');
-
-var isAddVal = exports.isAddVal = function isAddVal(val) {
+export var isAddVal = function isAddVal(val) {
     return val === 'add' || isPlainObject(val);
 };
 
-var isRemoveVal = exports.isRemoveVal = function isRemoveVal(val) {
+export var isRemoveVal = function isRemoveVal(val) {
     return val === null || val === 'remove';
 };
 
-/*
- * applyContainerArrayChanges: for managing arrays of layout components in relayout
- * handles them all with a consistent interface.
- *
- * Here are the supported actions -> relayout calls -> edits we get here
- * (as prepared in _relayout):
- *
- * add an empty obj -> {'annotations[2]': 'add'} -> {2: {'': 'add'}}
- * add a specific obj -> {'annotations[2]': {attrs}} -> {2: {'': {attrs}}}
- * delete an obj -> {'annotations[2]': 'remove'} -> {2: {'': 'remove'}}
- *               -> {'annotations[2]': null} -> {2: {'': null}}
- * delete the whole array -> {'annotations': 'remove'} -> {'': {'': 'remove'}}
- *                        -> {'annotations': null} -> {'': {'': null}}
- * edit an object -> {'annotations[2].text': 'boo'} -> {2: {'text': 'boo'}}
- *
- * You can combine many edits to different objects. Objects are added and edited
- * in ascending order, then removed in descending order.
- * For example, starting with [a, b, c], if you want to:
- * - replace b with d:
- *   {'annotations[1]': d, 'annotations[2]': null} (b is item 2 after adding d)
- * - add a new item d between a and b, and edit b:
- *    {'annotations[1]': d, 'annotations[2].x': newX} (b is item 2 after adding d)
- * - delete b and edit c:
- *    {'annotations[1]': null, 'annotations[2].x': newX} (c is edited before b is removed)
- *
- * You CANNOT combine adding/deleting an item at index `i` with edits to the same index `i`
- * You CANNOT combine replacing/deleting the whole array with anything else (for the same array).
- *
- * @param {HTMLDivElement} gd
- *  the DOM element of the graph container div
- * @param {Lib.nestedProperty} componentType: the array we are editing
- * @param {Object} edits
- *  the changes to make; keys are indices to edit, values are themselves objects:
- *  {attr: newValue} of changes to make to that index (with add/remove behavior
- *  in special values of the empty attr)
- * @param {Object} flags
- *  the flags for which actions we're going to perform to display these (and
- *  any other) changes. If we're already `recalc`ing, we don't need to redraw
- *  individual items
- * @param {function} _nestedProperty
- *  a (possibly modified for gui edits) nestedProperty constructor
- *  The modified version takes a 3rd argument, for a prefix to the attribute
- *  string necessary for storing GUI edits
- *
- * @returns {bool} `true` if it managed to complete drawing of the changes
- *  `false` would mean the parent should replot.
- */
-exports.applyContainerArrayChanges = function applyContainerArrayChanges(gd, np, edits, flags, _nestedProperty) {
+export var applyContainerArrayChanges = function applyContainerArrayChanges(gd, np, edits, flags, _nestedProperty) {
     var componentType = np.astr;
     var supplyComponentDefaults = Registry.getComponentMethod(componentType, 'supplyLayoutDefaults');
     var draw = Registry.getComponentMethod(componentType, 'draw');
@@ -200,3 +150,5 @@ exports.applyContainerArrayChanges = function applyContainerArrayChanges(gd, np,
 
     return true;
 };
+
+export default { containerArrayMatch, isAddVal, isRemoveVal, applyContainerArrayChanges };

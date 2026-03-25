@@ -1,10 +1,7 @@
-'use strict';
-
-var Registry = require('../../registry');
-var Lib = require('../../lib');
-
-var colorscaleDefaults = require('../../components/colorscale/defaults');
-var attributes = require('./attributes');
+import Registry from '../../registry.js';
+import Lib from '../../lib/index.js';
+import colorscaleDefaults from '../../components/colorscale/defaults.js';
+import attributes from './attributes.js';
 
 var MIN = 0.1; // Note: often we don't want the data cube to be disappeared
 
@@ -149,7 +146,7 @@ function opacityscaleDefaults(traceIn, traceOut, layout, coerce) {
     }
 }
 
-module.exports = {
+export default {
     supplyDefaults: supplyDefaults,
     opacityscaleDefaults: opacityscaleDefaults
 };

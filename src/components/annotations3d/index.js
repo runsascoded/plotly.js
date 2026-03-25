@@ -1,24 +1,27 @@
-'use strict';
+import Registry from '../../registry.js';
+import Lib from '../../lib/index.js';
+import _req0 from './attributes.js';
+import _req1 from './attributes.js';
+import _req2 from './defaults.js';
+import _req3 from './convert.js';
+import _req4 from './draw.js';
 
-var Registry = require('../../registry');
-var Lib = require('../../lib');
-
-module.exports = {
+export default {
     moduleType: 'component',
     name: 'annotations3d',
 
     schema: {
         subplots: {
-            scene: {annotations: require('./attributes')}
+            scene: {annotations: _req0}
         }
     },
 
-    layoutAttributes: require('./attributes'),
-    handleDefaults: require('./defaults'),
+    layoutAttributes: _req1,
+    handleDefaults: _req2,
     includeBasePlot: includeGL3D,
 
-    convert: require('./convert'),
-    draw: require('./draw')
+    convert: _req3,
+    draw: _req4
 };
 
 function includeGL3D(layoutIn, layoutOut) {

@@ -1,14 +1,11 @@
-'use strict';
+import isNumeric from 'fast-isnumeric';
+import calcColorscale from '../scatter/colorscale_calc.js';
+import arraysToCalcdata from '../scatter/arrays_to_calcdata.js';
+import calcSelection from '../scatter/calc_selection.js';
+import { calcMarkerSize } from '../scatter/calc.js';
+import lookupCarpet from '../carpet/lookup_carpetid.js';
 
-var isNumeric = require('fast-isnumeric');
-
-var calcColorscale = require('../scatter/colorscale_calc');
-var arraysToCalcdata = require('../scatter/arrays_to_calcdata');
-var calcSelection = require('../scatter/calc_selection');
-var calcMarkerSize = require('../scatter/calc').calcMarkerSize;
-var lookupCarpet = require('../carpet/lookup_carpetid');
-
-module.exports = function calc(gd, trace) {
+export default function calc(gd, trace) {
     var carpet = trace._carpetTrace = lookupCarpet(gd, trace);
     if(!carpet || !carpet.visible || carpet.visible === 'legendonly') return;
     var i;
@@ -45,4 +42,4 @@ module.exports = function calc(gd, trace) {
     calcSelection(cd, trace);
 
     return cd;
-};
+}

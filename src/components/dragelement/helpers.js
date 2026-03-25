@@ -1,13 +1,11 @@
-'use strict';
-
-exports.selectMode = function(dragmode) {
+export var selectMode = function(dragmode) {
     return (
         dragmode === 'lasso' ||
         dragmode === 'select'
     );
 };
 
-exports.drawMode = function(dragmode) {
+export var drawMode = function(dragmode) {
     return (
         dragmode === 'drawclosedpath' ||
         dragmode === 'drawopenpath' ||
@@ -17,14 +15,14 @@ exports.drawMode = function(dragmode) {
     );
 };
 
-exports.openMode = function(dragmode) {
+export var openMode = function(dragmode) {
     return (
         dragmode === 'drawline' ||
         dragmode === 'drawopenpath'
     );
 };
 
-exports.rectMode = function(dragmode) {
+export var rectMode = function(dragmode) {
     return (
         dragmode === 'select' ||
         dragmode === 'drawline' ||
@@ -33,7 +31,7 @@ exports.rectMode = function(dragmode) {
     );
 };
 
-exports.freeMode = function(dragmode) {
+export var freeMode = function(dragmode) {
     return (
         dragmode === 'lasso' ||
         dragmode === 'drawclosedpath' ||
@@ -41,9 +39,8 @@ exports.freeMode = function(dragmode) {
     );
 };
 
-exports.selectingOrDrawing = function(dragmode) {
-    return (
-        exports.freeMode(dragmode) ||
-        exports.rectMode(dragmode)
-    );
+export var selectingOrDrawing = function(dragmode) {
+    return (freeMode(dragmode) || rectMode(dragmode));
 };
+
+export default { selectMode, drawMode, openMode, rectMode, freeMode, selectingOrDrawing };

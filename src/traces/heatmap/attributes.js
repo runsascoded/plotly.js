@@ -1,14 +1,12 @@
-'use strict';
+import colorScaleAttrs from '../../components/colorscale/attributes.js';
+import { extendFlat } from '../../lib/extend.js';
+import baseAttrs from '../../plots/attributes.js';
+import { axisHoverFormat } from '../../plots/cartesian/axis_format_attributes.js';
+import fontAttrs from '../../plots/font_attributes.js';
+import { hovertemplateAttrs, templatefallbackAttrs, texttemplateAttrs } from '../../plots/template_attributes.js';
+import scatterAttrs from '../scatter/attributes.js';
 
-const colorScaleAttrs = require('../../components/colorscale/attributes');
-const { extendFlat } = require('../../lib/extend');
-const baseAttrs = require('../../plots/attributes');
-const { axisHoverFormat } = require('../../plots/cartesian/axis_format_attributes');
-const fontAttrs = require('../../plots/font_attributes');
-const { hovertemplateAttrs, templatefallbackAttrs, texttemplateAttrs } = require('../../plots/template_attributes');
-const scatterAttrs = require('../scatter/attributes');
-
-module.exports = extendFlat(
+export default extendFlat(
     {
         z: {
             valType: 'data_array',

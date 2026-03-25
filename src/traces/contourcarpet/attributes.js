@@ -1,14 +1,11 @@
-'use strict';
-
-var heatmapAttrs = require('../heatmap/attributes');
-var contourAttrs = require('../contour/attributes');
-var colorScaleAttrs = require('../../components/colorscale/attributes');
-
-var extendFlat = require('../../lib/extend').extendFlat;
+import heatmapAttrs from '../heatmap/attributes.js';
+import contourAttrs from '../contour/attributes.js';
+import colorScaleAttrs from '../../components/colorscale/attributes.js';
+import { extendFlat } from '../../lib/extend.js';
 
 var contourContourAttrs = contourAttrs.contours;
 
-module.exports = extendFlat({
+export default extendFlat({
     carpet: {
         valType: 'string',
         editType: 'calc',

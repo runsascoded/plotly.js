@@ -1,5 +1,3 @@
-'use strict';
-
 // Must use one of the following fonts as the family, else default to 'Open Sans Regular'
 // See https://github.com/openmaptiles/fonts/blob/gh-pages/fontstacks.json
 var supportedFonts = [
@@ -38,7 +36,7 @@ var supportedFonts = [
     'Klokantech Noto Sans Regular'
 ];
 
-module.exports = {
+export default {
     isSupportedFont: function(a) {
         return supportedFonts.indexOf(a) !== -1;
     }

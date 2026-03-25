@@ -1,11 +1,9 @@
-'use strict';
+import Lib from '../../lib/index.js';
+import layoutAttributes from './layout_attributes.js';
+import handleHoverModeDefaults from './hovermode_defaults.js';
+import handleHoverLabelDefaults from './hoverlabel_defaults.js';
 
-var Lib = require('../../lib');
-var layoutAttributes = require('./layout_attributes');
-var handleHoverModeDefaults = require('./hovermode_defaults');
-var handleHoverLabelDefaults = require('./hoverlabel_defaults');
-
-module.exports = function supplyLayoutDefaults(layoutIn, layoutOut) {
+export default function supplyLayoutDefaults(layoutIn, layoutOut) {
     function coerce(attr, dflt) {
         return Lib.coerce(layoutIn, layoutOut, layoutAttributes, attr, dflt);
     }
@@ -37,4 +35,4 @@ module.exports = function supplyLayoutDefaults(layoutIn, layoutOut) {
     handleHoverLabelDefaults(layoutIn, layoutOut, coerce);
 
     Lib.coerceFont(coerce, 'hoverlabel.grouptitlefont', layoutOut.hoverlabel.font);
-};
+}

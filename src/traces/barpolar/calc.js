@@ -1,13 +1,11 @@
-'use strict';
-
-var hasColorscale = require('../../components/colorscale/helpers').hasColorscale;
-var colorscaleCalc = require('../../components/colorscale/calc');
-var isArrayOrTypedArray = require('../../lib').isArrayOrTypedArray;
-var arraysToCalcdata = require('../bar/arrays_to_calcdata');
-var setGroupPositions = require('../bar/cross_trace_calc').setGroupPositions;
-var calcSelection = require('../scatter/calc_selection');
-var traceIs = require('../../registry').traceIs;
-var extendFlat = require('../../lib').extendFlat;
+import { hasColorscale } from '../../components/colorscale/helpers.js';
+import colorscaleCalc from '../../components/colorscale/calc.js';
+import { isArrayOrTypedArray } from '../../lib/index.js';
+import arraysToCalcdata from '../bar/arrays_to_calcdata.js';
+import { setGroupPositions } from '../bar/cross_trace_calc.js';
+import calcSelection from '../scatter/calc_selection.js';
+import { traceIs } from '../../registry.js';
+import { extendFlat } from '../../lib/index.js';
 
 function calc(gd, trace) {
     var fullLayout = gd._fullLayout;
@@ -97,7 +95,7 @@ function crossTraceCalc(gd, polarLayout, subplotId) {
     });
 }
 
-module.exports = {
+export default {
     calc: calc,
     crossTraceCalc: crossTraceCalc
 };

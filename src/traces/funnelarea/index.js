@@ -1,22 +1,31 @@
-'use strict';
+import _req0 from './base_plot.js';
+import _req1 from './attributes.js';
+import _req2 from './layout_attributes.js';
+import _req3 from './defaults.js';
+import _req4 from './layout_defaults.js';
+import { calc as _req5 } from './calc.js';
+import { crossTraceCalc as _req6 } from './calc.js';
+import _req7 from './plot.js';
+import _req8 from './style.js';
+import _req9 from '../pie/style_one.js';
 
-module.exports = {
+export default {
     moduleType: 'trace',
     name: 'funnelarea',
-    basePlotModule: require('./base_plot'),
+    basePlotModule: _req0,
     categories: ['pie-like', 'funnelarea', 'showLegend'],
 
-    attributes: require('./attributes'),
-    layoutAttributes: require('./layout_attributes'),
-    supplyDefaults: require('./defaults'),
-    supplyLayoutDefaults: require('./layout_defaults'),
+    attributes: _req1,
+    layoutAttributes: _req2,
+    supplyDefaults: _req3,
+    supplyLayoutDefaults: _req4,
 
-    calc: require('./calc').calc,
-    crossTraceCalc: require('./calc').crossTraceCalc,
+    calc: _req5,
+    crossTraceCalc: _req6,
 
-    plot: require('./plot'),
-    style: require('./style'),
-    styleOne: require('../pie/style_one'),
+    plot: _req7,
+    style: _req8,
+    styleOne: _req9,
 
     meta: {
         description: [

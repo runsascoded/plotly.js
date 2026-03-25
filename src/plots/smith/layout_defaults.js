@@ -1,19 +1,14 @@
-'use strict';
-
-var Lib = require('../../lib');
-var Color = require('../../components/color');
-var Template = require('../../plot_api/plot_template');
-
-var handleSubplotDefaults = require('../subplot_defaults');
-var getSubplotData = require('../get_data').getSubplotData;
-
-var handlePrefixSuffixDefaults = require('../cartesian/prefix_suffix_defaults');
-var handleTickLabelDefaults = require('../cartesian/tick_label_defaults');
-var handleLineGridDefaults = require('../cartesian/line_grid_defaults');
-var setConvertCartesian = require('../cartesian/set_convert');
-
-var layoutAttributes = require('./layout_attributes');
-var constants = require('./constants');
+import Lib from '../../lib/index.js';
+import Color from '../../components/color/index.js';
+import Template from '../../plot_api/plot_template.js';
+import handleSubplotDefaults from '../subplot_defaults.js';
+import { getSubplotData } from '../get_data.js';
+import handlePrefixSuffixDefaults from '../cartesian/prefix_suffix_defaults.js';
+import handleTickLabelDefaults from '../cartesian/tick_label_defaults.js';
+import handleLineGridDefaults from '../cartesian/line_grid_defaults.js';
+import setConvertCartesian from '../cartesian/set_convert.js';
+import layoutAttributes from './layout_attributes.js';
+import constants from './constants.js';
 var axisNames = constants.axisNames;
 
 var makeImagDflt = memoize(function(realTickvals) {
@@ -135,7 +130,7 @@ function handleDefaults(contIn, contOut, coerce, opts) {
     }
 }
 
-module.exports = function supplyLayoutDefaults(layoutIn, layoutOut, fullData) {
+export default function supplyLayoutDefaults(layoutIn, layoutOut, fullData) {
     handleSubplotDefaults(layoutIn, layoutOut, fullData, {
         noUirevision: true,
         type: constants.name,
@@ -146,7 +141,7 @@ module.exports = function supplyLayoutDefaults(layoutIn, layoutOut, fullData) {
         fullData: fullData,
         layoutOut: layoutOut
     });
-};
+}
 
 function memoize(fn, keyFn) {
     var cache = {};

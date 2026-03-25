@@ -1,7 +1,4 @@
-'use strict';
-
-
-module.exports = {
+export default {
     visible: {
         valType: 'boolean',
         editType: 'calc',

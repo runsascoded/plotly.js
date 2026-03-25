@@ -1,9 +1,7 @@
-'use strict';
+import Registry from '../../registry.js';
+import { isArrayOrTypedArray } from '../../lib/index.js';
 
-var Registry = require('../../registry');
-var isArrayOrTypedArray = require('../../lib').isArrayOrTypedArray;
-
-module.exports = function makeBoundArray(trace, arrayIn, v0In, dvIn, numbricks, ax) {
+export default function makeBoundArray(trace, arrayIn, v0In, dvIn, numbricks, ax) {
     var arrayOut = [];
     var isContour = Registry.traceIs(trace, 'contour');
     var isHist = Registry.traceIs(trace, 'histogram');
@@ -98,4 +96,4 @@ module.exports = function makeBoundArray(trace, arrayIn, v0In, dvIn, numbricks, 
     }
 
     return arrayOut;
-};
+}

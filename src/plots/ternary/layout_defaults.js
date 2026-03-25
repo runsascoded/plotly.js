@@ -1,20 +1,17 @@
-'use strict';
-
-var Color = require('../../components/color');
-var Template = require('../../plot_api/plot_template');
-var Lib = require('../../lib');
-
-var handleSubplotDefaults = require('../subplot_defaults');
-var handleTickLabelDefaults = require('../cartesian/tick_label_defaults');
-var handlePrefixSuffixDefaults = require('../cartesian/prefix_suffix_defaults');
-var handleTickMarkDefaults = require('../cartesian/tick_mark_defaults');
-var handleTickValueDefaults = require('../cartesian/tick_value_defaults');
-var handleLineGridDefaults = require('../cartesian/line_grid_defaults');
-var layoutAttributes = require('./layout_attributes');
+import Color from '../../components/color/index.js';
+import Template from '../../plot_api/plot_template.js';
+import Lib from '../../lib/index.js';
+import handleSubplotDefaults from '../subplot_defaults.js';
+import handleTickLabelDefaults from '../cartesian/tick_label_defaults.js';
+import handlePrefixSuffixDefaults from '../cartesian/prefix_suffix_defaults.js';
+import handleTickMarkDefaults from '../cartesian/tick_mark_defaults.js';
+import handleTickValueDefaults from '../cartesian/tick_value_defaults.js';
+import handleLineGridDefaults from '../cartesian/line_grid_defaults.js';
+import layoutAttributes from './layout_attributes.js';
 
 var axesNames = ['aaxis', 'baxis', 'caxis'];
 
-module.exports = function supplyLayoutDefaults(layoutIn, layoutOut, fullData) {
+export default function supplyLayoutDefaults(layoutIn, layoutOut, fullData) {
     handleSubplotDefaults(layoutIn, layoutOut, fullData, {
         type: 'ternary',
         attributes: layoutAttributes,
@@ -22,7 +19,7 @@ module.exports = function supplyLayoutDefaults(layoutIn, layoutOut, fullData) {
         font: layoutOut.font,
         paper_bgcolor: layoutOut.paper_bgcolor
     });
-};
+}
 
 function handleTernaryDefaults(ternaryLayoutIn, ternaryLayoutOut, coerce, options) {
     var bgColor = coerce('bgcolor');

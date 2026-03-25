@@ -1,10 +1,7 @@
-'use strict';
+import colorscaleDefaults from '../../components/colorscale/defaults.js';
+import handleLabelDefaults from './label_defaults.js';
 
-var colorscaleDefaults = require('../../components/colorscale/defaults');
-var handleLabelDefaults = require('./label_defaults');
-
-
-module.exports = function handleStyleDefaults(traceIn, traceOut, coerce, layout, opts) {
+export default function handleStyleDefaults(traceIn, traceOut, coerce, layout, opts) {
     var coloring = coerce('contours.coloring');
 
     var showLines;
@@ -31,4 +28,4 @@ module.exports = function handleStyleDefaults(traceIn, traceOut, coerce, layout,
     coerce('line.smoothing');
 
     handleLabelDefaults(coerce, layout, lineColor, opts);
-};
+}

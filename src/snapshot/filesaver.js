@@ -1,7 +1,5 @@
-'use strict';
-
-var Lib = require('../lib');
-var helpers = require('./helpers');
+import Lib from '../lib/index.js';
+import helpers from './helpers.js';
 
 /*
 * substantial portions of this code from FileSaver.js
@@ -52,5 +50,4 @@ function fileSaver(url, name, format) {
     return promise;
 }
 
-
-module.exports = fileSaver;
+export default fileSaver;

@@ -1,6 +1,4 @@
-'use strict';
-
-exports.getDimIndex = function getDimIndex(trace, ax) {
+export var getDimIndex = function getDimIndex(trace, ax) {
     var axId = ax._id;
     var axLetter = axId.charAt(0);
     var ind = {x: 0, y: 1}[axLetter];
@@ -12,3 +10,5 @@ exports.getDimIndex = function getDimIndex(trace, ax) {
     }
     return false;
 };
+
+export default { getDimIndex };

@@ -1,14 +1,12 @@
-'use strict';
+import barAttrs from '../bar/attributes.js';
+import { axisHoverFormat } from '../../plots/cartesian/axis_format_attributes.js';
+import { hovertemplateAttrs, texttemplateAttrs, templatefallbackAttrs } from '../../plots/template_attributes.js';
+import fontAttrs from '../../plots/font_attributes.js';
+import makeBinAttrs from './bin_attributes.js';
+import constants from './constants.js';
+import { extendFlat } from '../../lib/extend.js';
 
-var barAttrs = require('../bar/attributes');
-var axisHoverFormat = require('../../plots/cartesian/axis_format_attributes').axisHoverFormat;
-const { hovertemplateAttrs, texttemplateAttrs, templatefallbackAttrs } = require('../../plots/template_attributes');
-var fontAttrs = require('../../plots/font_attributes');
-var makeBinAttrs = require('./bin_attributes');
-var constants = require('./constants');
-var extendFlat = require('../../lib/extend').extendFlat;
-
-module.exports = {
+export default {
     x: {
         valType: 'data_array',
         editType: 'calc+clearAxisTypes',

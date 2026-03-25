@@ -1,23 +1,18 @@
-'use strict';
+import isNumeric from 'fast-isnumeric';
+import Lib from '../../lib/index.js';
+import { BADNUM } from '../../constants/numerical.js';
+import geoJsonUtils from '../../lib/geojson_utils.js';
+import Colorscale from '../../components/colorscale/index.js';
+import Drawing from '../../components/drawing/index.js';
+import makeBubbleSizeFn from '../scatter/make_bubble_size_func.js';
+import subTypes from '../scatter/subtypes.js';
+import { isSupportedFont } from './constants.js';
+import convertTextOpts from '../../plots/map/convert_text_opts.js';
+import { appendArrayPointValue } from '../../components/fx/helpers.js';
+import { NEWLINES } from '../../lib/svg_text_utils.js';
+import { BR_TAG_ALL } from '../../lib/svg_text_utils.js';
 
-var isNumeric = require('fast-isnumeric');
-
-var Lib = require('../../lib');
-var BADNUM = require('../../constants/numerical').BADNUM;
-var geoJsonUtils = require('../../lib/geojson_utils');
-
-var Colorscale = require('../../components/colorscale');
-var Drawing = require('../../components/drawing');
-var makeBubbleSizeFn = require('../scatter/make_bubble_size_func');
-var subTypes = require('../scatter/subtypes');
-var isSupportedFont = require('./constants').isSupportedFont;
-var convertTextOpts = require('../../plots/map/convert_text_opts');
-var appendArrayPointValue = require('../../components/fx/helpers').appendArrayPointValue;
-
-var NEWLINES = require('../../lib/svg_text_utils').NEWLINES;
-var BR_TAG_ALL = require('../../lib/svg_text_utils').BR_TAG_ALL;
-
-module.exports = function convert(gd, calcTrace) {
+export default function convert(gd, calcTrace) {
     var trace = calcTrace[0].trace;
 
     var isVisible = trace.visible === true && trace._length !== 0;
@@ -168,7 +163,7 @@ module.exports = function convert(gd, calcTrace) {
     }
 
     return opts;
-};
+}
 
 function initContainer(type) {
     return {

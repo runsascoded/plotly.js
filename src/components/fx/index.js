@@ -1,29 +1,34 @@
-'use strict';
+import d3 from '@plotly/d3';
+import Lib from '../../lib/index.js';
+import dragElement from '../dragelement/index.js';
+import helpers from './helpers.js';
+import layoutAttributes from './layout_attributes.js';
+import hoverModule from './hover.js';
+import _req0 from './constants.js';
+import _req1 from './attributes.js';
+import _req2 from './layout_global_defaults.js';
+import _req3 from './defaults.js';
+import _req4 from './layout_defaults.js';
+import _req5 from './calc.js';
+import _req6 from './click.js';
 
-var d3 = require('@plotly/d3');
-var Lib = require('../../lib');
-var dragElement = require('../dragelement');
-var helpers = require('./helpers');
-var layoutAttributes = require('./layout_attributes');
-var hoverModule = require('./hover');
-
-module.exports = {
+export default {
     moduleType: 'component',
     name: 'fx',
 
-    constants: require('./constants'),
+    constants: _req0,
     schema: {
         layout: layoutAttributes
     },
 
-    attributes: require('./attributes'),
+    attributes: _req1,
     layoutAttributes: layoutAttributes,
 
-    supplyLayoutGlobalDefaults: require('./layout_global_defaults'),
-    supplyDefaults: require('./defaults'),
-    supplyLayoutDefaults: require('./layout_defaults'),
+    supplyLayoutGlobalDefaults: _req2,
+    supplyDefaults: _req3,
+    supplyLayoutDefaults: _req4,
 
-    calc: require('./calc'),
+    calc: _req5,
 
     getDistanceFunction: helpers.getDistanceFunction,
     getClosest: helpers.getClosest,
@@ -40,7 +45,7 @@ module.exports = {
     loneHover: hoverModule.loneHover,
     loneUnhover: loneUnhover,
 
-    click: require('./click')
+    click: _req6
 };
 
 function loneUnhover(containerOrSelection) {

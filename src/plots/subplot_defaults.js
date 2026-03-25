@@ -1,38 +1,8 @@
-'use strict';
+import Lib from '../lib/index.js';
+import Template from '../plot_api/plot_template.js';
+import { defaults as handleDomainDefaults } from './domain.js';
 
-var Lib = require('../lib');
-var Template = require('../plot_api/plot_template');
-var handleDomainDefaults = require('./domain').defaults;
-
-
-/**
- * Find and supply defaults to all subplots of a given type
- * This handles subplots that are contained within one container - so
- * gl3d, geo, ternary... but not 2d axes which have separate x and y axes
- * finds subplots, coerces their `domain` attributes, then calls the
- * given handleDefaults function to fill in everything else.
- *
- * layoutIn: the complete user-supplied input layout
- * layoutOut: the complete finished layout
- * fullData: the finished data array, used only to find subplots
- * opts: {
- *  type: subplot type string
- *  attributes: subplot attributes object
- *  partition: 'x' or 'y', which direction to divide domain space by default
- *      (default 'x', ie side-by-side subplots)
- *      TODO: this option is only here because 3D and geo made opposite
- *      choices in this regard previously and I didn't want to change it.
- *      Instead we should do:
- *      - something consistent
- *      - something more square (4 cuts 2x2, 5/6 cuts 2x3, etc.)
- *      - something that includes all subplot types in one arrangement,
- *        now that we can have them together!
- *  handleDefaults: function of (subplotLayoutIn, subplotLayoutOut, coerce, opts)
- *      this opts object is passed through to handleDefaults, so attach any
- *      additional items needed by this function here as well
- * }
- */
-module.exports = function handleSubplotDefaults(layoutIn, layoutOut, fullData, opts) {
+export default function handleSubplotDefaults(layoutIn, layoutOut, fullData, opts) {
     var subplotType = opts.type;
     var subplotAttributes = opts.attributes;
     var handleDefaults = opts.handleDefaults;
@@ -67,4 +37,4 @@ module.exports = function handleSubplotDefaults(layoutIn, layoutOut, fullData, o
         opts.id = id;
         handleDefaults(subplotLayoutIn, subplotLayoutOut, coerce, opts);
     }
-};
+}

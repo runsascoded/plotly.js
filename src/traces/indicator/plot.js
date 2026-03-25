@@ -1,24 +1,19 @@
-'use strict';
-
-var d3 = require('@plotly/d3');
-var interpolate = require('d3-interpolate').interpolate;
-var interpolateNumber = require('d3-interpolate').interpolateNumber;
-
-var Lib = require('../../lib');
+import d3 from '@plotly/d3';
+import { interpolate } from 'd3-interpolate';
+import { interpolateNumber } from 'd3-interpolate';
+import Lib from '../../lib/index.js';
+import { MID_SHIFT } from '../../constants/alignment.js';
+import Drawing from '../../components/drawing/index.js';
+import cn from './constants.js';
+import svgTextUtils from '../../lib/svg_text_utils.js';
+import Axes from '../../plots/cartesian/axes.js';
+import handleAxisDefaults from '../../plots/cartesian/axis_defaults.js';
+import handleAxisPositionDefaults from '../../plots/cartesian/position_defaults.js';
+import axisLayoutAttrs from '../../plots/cartesian/layout_attributes.js';
+import Color from '../../components/color/index.js';
 var strScale = Lib.strScale;
 var strTranslate = Lib.strTranslate;
 var rad2deg = Lib.rad2deg;
-var MID_SHIFT = require('../../constants/alignment').MID_SHIFT;
-var Drawing = require('../../components/drawing');
-var cn = require('./constants');
-var svgTextUtils = require('../../lib/svg_text_utils');
-
-var Axes = require('../../plots/cartesian/axes');
-var handleAxisDefaults = require('../../plots/cartesian/axis_defaults');
-var handleAxisPositionDefaults = require('../../plots/cartesian/position_defaults');
-var axisLayoutAttrs = require('../../plots/cartesian/layout_attributes');
-
-var Color = require('../../components/color');
 var anchor = {
     left: 'start',
     center: 'middle',
@@ -38,7 +33,7 @@ function hasTransition(transitionOpts) {
     return transitionOpts && transitionOpts.duration > 0;
 }
 
-module.exports = function plot(gd, cdModule, transitionOpts, makeOnCompleteCallback) {
+export default function plot(gd, cdModule, transitionOpts, makeOnCompleteCallback) {
     var fullLayout = gd._fullLayout;
     var onComplete;
 
@@ -219,7 +214,7 @@ module.exports = function plot(gd, cdModule, transitionOpts, makeOnCompleteCallb
             return strTranslate(titleX, titleY);
         });
     });
-};
+}
 
 function drawBulletGauge(gd, plotGroup, cd, opts) {
     var trace = cd[0].trace;

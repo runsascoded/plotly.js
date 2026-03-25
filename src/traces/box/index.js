@@ -1,23 +1,36 @@
-'use strict';
+import _req0 from './attributes.js';
+import _req1 from './layout_attributes.js';
+import { supplyDefaults as _req2 } from './defaults.js';
+import { crossTraceDefaults as _req3 } from './defaults.js';
+import { supplyLayoutDefaults as _req4 } from './layout_defaults.js';
+import _req5 from './calc.js';
+import { crossTraceCalc as _req6 } from './cross_trace_calc.js';
+import { plot as _req7 } from './plot.js';
+import { style as _req8 } from './style.js';
+import { styleOnSelect as _req9 } from './style.js';
+import { hoverPoints as _req10 } from './hover.js';
+import _req11 from './event_data.js';
+import _req12 from './select.js';
+import _req13 from '../../plots/cartesian/index.js';
 
-module.exports = {
-    attributes: require('./attributes'),
-    layoutAttributes: require('./layout_attributes'),
-    supplyDefaults: require('./defaults').supplyDefaults,
-    crossTraceDefaults: require('./defaults').crossTraceDefaults,
-    supplyLayoutDefaults: require('./layout_defaults').supplyLayoutDefaults,
-    calc: require('./calc'),
-    crossTraceCalc: require('./cross_trace_calc').crossTraceCalc,
-    plot: require('./plot').plot,
-    style: require('./style').style,
-    styleOnSelect: require('./style').styleOnSelect,
-    hoverPoints: require('./hover').hoverPoints,
-    eventData: require('./event_data'),
-    selectPoints: require('./select'),
+export default {
+    attributes: _req0,
+    layoutAttributes: _req1,
+    supplyDefaults: _req2,
+    crossTraceDefaults: _req3,
+    supplyLayoutDefaults: _req4,
+    calc: _req5,
+    crossTraceCalc: _req6,
+    plot: _req7,
+    style: _req8,
+    styleOnSelect: _req9,
+    hoverPoints: _req10,
+    eventData: _req11,
+    selectPoints: _req12,
 
     moduleType: 'trace',
     name: 'box',
-    basePlotModule: require('../../plots/cartesian'),
+    basePlotModule: _req13,
     categories: ['cartesian', 'svg', 'symbols', 'oriented', 'box-violin', 'showLegend', 'boxLayout', 'zoomScale'],
     meta: {
         description: [

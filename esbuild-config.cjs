@@ -2,7 +2,7 @@ const { environmentPlugin } = require('esbuild-plugin-environment');
 const { glsl } = require('esbuild-plugin-glsl');
 const InlineCSSPlugin = require('esbuild-plugin-inline-css');
 const path = require('path');
-const constants = require('./tasks/util/constants.js');
+const constants = require('./tasks/util/constants.cjs');
 
 // Default config used when building library
 const esbuildConfig = {

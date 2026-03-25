@@ -1,6 +1,4 @@
-'use strict';
-
-module.exports = {
+export default {
     // Defaults for delta
     defaultNumberFontSize: 80,
     bulletNumberDomainSize: 0.25,

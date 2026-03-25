@@ -1,12 +1,6 @@
-'use strict';
+import { isArrayOrTypedArray } from '../../lib/index.js';
 
-var isArrayOrTypedArray = require('../../lib').isArrayOrTypedArray;
-
-/*
- * Construct a 2D array of cheater values given a, b, and a slope.
- * If
- */
-module.exports = function(a, b, cheaterslope) {
+export default function(a, b, cheaterslope) {
     var i, j, ascal, bscal, aval, bval;
     var data = [];
 
@@ -55,4 +49,4 @@ module.exports = function(a, b, cheaterslope) {
     }
 
     return data;
-};
+}

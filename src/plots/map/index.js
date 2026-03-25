@@ -1,27 +1,23 @@
-'use strict';
-
-var Lib = require('../../lib');
+import Lib from '../../lib/index.js';
+import { getSubplotCalcData } from '../get_data.js';
+import xmlnsNamespaces from '../../constants/xmlns_namespaces.js';
+import d3 from '@plotly/d3';
+import Drawing from '../../components/drawing/index.js';
+import svgTextUtils from '../../lib/svg_text_utils.js';
+import Map from './map.js';
+import _req0 from './layout_attributes.js';
+import _req1 from './layout_defaults.js';
 var strTranslate = Lib.strTranslate;
 var strScale = Lib.strScale;
-var getSubplotCalcData = require('../get_data').getSubplotCalcData;
-var xmlnsNamespaces = require('../../constants/xmlns_namespaces');
-var d3 = require('@plotly/d3');
-var Drawing = require('../../components/drawing');
-var svgTextUtils = require('../../lib/svg_text_utils');
-
-var Map = require('./map');
 
 var MAP = 'map';
 
-exports.name = MAP;
+export var name = MAP;
+export var attr = 'subplot';
+export var idRoot = MAP;
+export var idRegex = Lib.counterRegex(MAP);
 
-exports.attr = 'subplot';
-
-exports.idRoot = MAP;
-
-exports.idRegex = exports.attrRegex = Lib.counterRegex(MAP);
-
-exports.attributes = {
+export var attributes = {
     subplot: {
         valType: 'subplotid',
         dflt: 'map',
@@ -35,11 +31,10 @@ exports.attributes = {
     }
 };
 
-exports.layoutAttributes = require('./layout_attributes');
+export var layoutAttributes = _req0;
+export var supplyLayoutDefaults = _req1;
 
-exports.supplyLayoutDefaults = require('./layout_defaults');
-
-exports.plot = function plot(gd) {
+export var plot = function plot(gd) {
     var fullLayout = gd._fullLayout;
     var calcData = gd.calcdata;
     var mapIds = fullLayout._subplots[MAP];
@@ -68,7 +63,7 @@ exports.plot = function plot(gd) {
     }
 };
 
-exports.clean = function(newFullData, newFullLayout, oldFullData, oldFullLayout) {
+export var clean = function(newFullData, newFullLayout, oldFullData, oldFullLayout) {
     var oldMapKeys = oldFullLayout._subplots[MAP] || [];
 
     for(var i = 0; i < oldMapKeys.length; i++) {
@@ -80,7 +75,7 @@ exports.clean = function(newFullData, newFullLayout, oldFullData, oldFullLayout)
     }
 };
 
-exports.toSVG = function(gd) {
+export var toSVG = function(gd) {
     var fullLayout = gd._fullLayout;
     var subplotIds = fullLayout._subplots[MAP];
     var size = fullLayout._size;
@@ -159,7 +154,7 @@ exports.toSVG = function(gd) {
     }
 };
 
-exports.updateFx = function(gd) {
+export var updateFx = function(gd) {
     var fullLayout = gd._fullLayout;
     var subplotIds = fullLayout._subplots[MAP];
 
@@ -168,3 +163,5 @@ exports.updateFx = function(gd) {
         subplotObj.updateFx(fullLayout);
     }
 };
+
+export default { name, attr, idRoot, idRegex, attributes, layoutAttributes, supplyLayoutDefaults, plot, clean, toSVG, updateFx };

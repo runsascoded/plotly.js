@@ -1,12 +1,9 @@
-'use strict';
-
-var isNumeric = require('fast-isnumeric');
-var tinycolor = require('tinycolor2');
-var rgba = require('color-normalize');
-
-var Colorscale = require('../components/colorscale');
-var colorDflt = require('../components/color/attributes').defaultLine;
-var isArrayOrTypedArray = require('./array').isArrayOrTypedArray;
+import isNumeric from 'fast-isnumeric';
+import tinycolor from 'tinycolor2';
+import rgba from 'color-normalize';
+import Colorscale from '../components/colorscale/index.js';
+import { defaultLine as colorDflt } from '../components/color/attributes.js';
+import { isArrayOrTypedArray } from './array.js';
 
 var colorDfltRgba = rgba(colorDflt);
 var opacityDflt = 1;
@@ -87,7 +84,7 @@ function parseColorScale(cont) {
     });
 }
 
-module.exports = {
+export default {
     formatColor: formatColor,
     parseColorScale: parseColorScale
 };

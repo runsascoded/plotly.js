@@ -1,8 +1,6 @@
-'use strict';
+import { hiddenlabels } from '../pie/layout_attributes.js';
 
-var hiddenlabels = require('../pie/layout_attributes').hiddenlabels;
-
-module.exports = {
+export default {
     hiddenlabels: hiddenlabels,
 
     funnelareacolorway: {

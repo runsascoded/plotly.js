@@ -1,9 +1,7 @@
-'use strict';
+import Registry from '../../registry.js';
+import Lib from '../../lib/index.js';
 
-var Registry = require('../../registry');
-var Lib = require('../../lib');
-
-module.exports = function handleSampleDefaults(traceIn, traceOut, coerce, layout) {
+export default function handleSampleDefaults(traceIn, traceOut, coerce, layout) {
     var x = coerce('x');
     var y = coerce('y');
     var xlen = Lib.minRowLength(x);
@@ -32,4 +30,4 @@ module.exports = function handleSampleDefaults(traceIn, traceOut, coerce, layout
     // autobin(x|y) are only included here to appease Plotly.validate
     coerce('autobinx');
     coerce('autobiny');
-};
+}

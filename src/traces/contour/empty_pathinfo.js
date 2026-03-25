@@ -1,10 +1,8 @@
-'use strict';
+import Lib from '../../lib/index.js';
+import constraintMapping from './constraint_mapping.js';
+import endPlus from './end_plus.js';
 
-var Lib = require('../../lib');
-var constraintMapping = require('./constraint_mapping');
-var endPlus = require('./end_plus');
-
-module.exports = function emptyPathinfo(contours, plotinfo, cd0) {
+export default function emptyPathinfo(contours, plotinfo, cd0) {
     var contoursFinal = (contours.type === 'constraint') ?
         constraintMapping[contours._operation](contours.value) :
         contours;
@@ -51,4 +49,4 @@ module.exports = function emptyPathinfo(contours, plotinfo, cd0) {
         }
     }
     return pathinfo;
-};
+}

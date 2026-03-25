@@ -1,16 +1,12 @@
-'use strict';
+import Axes from '../plots/cartesian/axes.js';
+import Lib from '../lib/index.js';
+import PlotSchema from '../plot_api/plot_schema.js';
+import { pointsAccessorFunction } from './helpers.js';
+import { BADNUM } from '../constants/numerical.js';
+export var moduleType = 'transform';
+export var name = 'aggregate';
 
-var Axes = require('../plots/cartesian/axes');
-var Lib = require('../lib');
-var PlotSchema = require('../plot_api/plot_schema');
-var pointsAccessorFunction = require('./helpers').pointsAccessorFunction;
-var BADNUM = require('../constants/numerical').BADNUM;
-
-exports.moduleType = 'transform';
-
-exports.name = 'aggregate';
-
-var attrs = exports.attributes = {
+export var attrs = {
     enabled: {
         valType: 'boolean',
         dflt: true,
@@ -104,22 +100,7 @@ var attrs = exports.attributes = {
 
 var aggAttrs = attrs.aggregations;
 
-/**
- * Supply transform attributes defaults
- *
- * @param {object} transformIn
- *  object linked to trace.transforms[i] with 'func' set to exports.name
- * @param {object} traceOut
- *  the _fullData trace this transform applies to
- * @param {object} layout
- *  the plot's (not-so-full) layout
- * @param {object} traceIn
- *  the input data trace this transform applies to
- *
- * @return {object} transformOut
- *  copy of transformIn that contains attribute defaults
- */
-exports.supplyDefaults = function(transformIn, traceOut) {
+export var supplyDefaults = function(transformIn, traceOut) {
     var transformOut = {};
     var i;
 
@@ -194,8 +175,7 @@ exports.supplyDefaults = function(transformIn, traceOut) {
     return transformOut;
 };
 
-
-exports.calcTransform = function(gd, trace, opts) {
+export var calcTransform = function(gd, trace, opts) {
     if(!opts.enabled) return;
 
     var groups = opts.groups;
@@ -448,3 +428,5 @@ function first(array, indices) {
 function last(array, indices) {
     return array[indices[indices.length - 1]];
 }
+
+export default { moduleType, name, attrs, supplyDefaults, calcTransform };

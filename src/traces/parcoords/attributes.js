@@ -1,14 +1,11 @@
-'use strict';
+import colorScaleAttrs from '../../components/colorscale/attributes.js';
+import axesAttrs from '../../plots/cartesian/layout_attributes.js';
+import fontAttrs from '../../plots/font_attributes.js';
+import { attributes as domainAttrs } from '../../plots/domain.js';
+import { extendFlat } from '../../lib/extend.js';
+import { templatedArray } from '../../plot_api/plot_template.js';
 
-var colorScaleAttrs = require('../../components/colorscale/attributes');
-var axesAttrs = require('../../plots/cartesian/layout_attributes');
-var fontAttrs = require('../../plots/font_attributes');
-var domainAttrs = require('../../plots/domain').attributes;
-
-var extendFlat = require('../../lib/extend').extendFlat;
-var templatedArray = require('../../plot_api/plot_template').templatedArray;
-
-module.exports = {
+export default {
     domain: domainAttrs({name: 'parcoords', trace: true, editType: 'plot'}),
 
     labelangle: {

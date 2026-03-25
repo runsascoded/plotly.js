@@ -1,16 +1,13 @@
-'use strict';
-
-var d3 = require('@plotly/d3');
-var Drawing = require('../../components/drawing');
-var Color = require('../../components/color');
-
-var scatterStyle = require('../scatter/style');
+import d3 from '@plotly/d3';
+import Drawing from '../../components/drawing/index.js';
+import Color from '../../components/color/index.js';
+import scatterStyle from '../scatter/style.js';
 var stylePoints = scatterStyle.stylePoints;
 var styleText = scatterStyle.styleText;
 
-module.exports = function style(gd, calcTrace) {
+export default function style(gd, calcTrace) {
     if(calcTrace) styleTrace(gd, calcTrace);
-};
+}
 
 function styleTrace(gd, calcTrace) {
     var trace = calcTrace[0].trace;

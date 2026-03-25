@@ -1,7 +1,6 @@
-'use strict';
-
-var Color = require('../../components/color');
-var isArrayOrTypedArray = require('../../lib').isArrayOrTypedArray;
+import Color from '../../components/color/index.js';
+import _index from '../../lib/index.js';
+const { isArrayOrTypedArray } = _index;
 
 function averageColors(colorscale) {
     var color = Color.interpolate(colorscale[0][1], colorscale[1][1], 0.5);
@@ -12,7 +11,7 @@ function averageColors(colorscale) {
     return color;
 }
 
-module.exports = function fillColorDefaults(traceIn, traceOut, defaultColor, coerce, opts) {
+export default function fillColorDefaults(traceIn, traceOut, defaultColor, coerce, opts) {
     if(!opts) opts = {};
 
     var inheritColorFromMarker = false;
@@ -53,4 +52,4 @@ module.exports = function fillColorDefaults(traceIn, traceOut, defaultColor, coe
         averageGradientColor ||
         defaultColor, 0.5
     ));
-};
+}

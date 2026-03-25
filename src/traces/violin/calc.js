@@ -1,12 +1,10 @@
-'use strict';
+import Lib from '../../lib/index.js';
+import Axes from '../../plots/cartesian/axes.js';
+import boxCalc from '../box/calc.js';
+import helpers from './helpers.js';
+import { BADNUM } from '../../constants/numerical.js';
 
-var Lib = require('../../lib');
-var Axes = require('../../plots/cartesian/axes');
-var boxCalc = require('../box/calc');
-var helpers = require('./helpers');
-var BADNUM = require('../../constants/numerical').BADNUM;
-
-module.exports = function calc(gd, trace) {
+export default function calc(gd, trace) {
     var cd = boxCalc(gd, trace);
 
     if(cd[0].t.empty) return cd;
@@ -88,7 +86,7 @@ module.exports = function calc(gd, trace) {
     cd[0].t.labels.kde = Lib._(gd, 'kde:');
 
     return cd;
-};
+}
 
 // Default to Silveman's rule of thumb
 // - https://stats.stackexchange.com/a/6671

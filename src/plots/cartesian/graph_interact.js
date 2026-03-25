@@ -1,15 +1,13 @@
-'use strict';
+import d3 from '@plotly/d3';
+import Fx from '../../components/fx/index.js';
+import dragElement from '../../components/dragelement/index.js';
+import setCursor from '../../lib/setcursor.js';
+import _dragbox from './dragbox.js';
+const { makeDragBox } = _dragbox;
+import _constants from './constants.js';
+const { DRAGGERSIZE } = _constants;
 
-var d3 = require('@plotly/d3');
-
-var Fx = require('../../components/fx');
-var dragElement = require('../../components/dragelement');
-var setCursor = require('../../lib/setcursor');
-
-var makeDragBox = require('./dragbox').makeDragBox;
-var DRAGGERSIZE = require('./constants').DRAGGERSIZE;
-
-exports.initInteractions = function initInteractions(gd) {
+export var initInteractions = function initInteractions(gd) {
     var fullLayout = gd._fullLayout;
 
     if(gd._context.staticPlot) {
@@ -142,16 +140,13 @@ exports.initInteractions = function initInteractions(gd) {
         gd._fullLayout._lasthover.onmousedown(evt);
     };
 
-    exports.updateFx(gd);
+    updateFx(gd);
 };
 
-// Minimal set of update needed on 'modebar' edits.
-// We only need to update the <g .draglayer> cursor style.
-//
-// Note that changing the axis configuration and/or the fixedrange attribute
-// should trigger a full initInteractions.
-exports.updateFx = function(gd) {
+export var updateFx = function(gd) {
     var fullLayout = gd._fullLayout;
     var cursor = fullLayout.dragmode === 'pan' ? 'move' : 'crosshair';
     setCursor(fullLayout._draggers, cursor);
 };
+
+export default { initInteractions, updateFx };

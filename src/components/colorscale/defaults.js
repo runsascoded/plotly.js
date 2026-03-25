@@ -1,13 +1,10 @@
-'use strict';
-
-var isNumeric = require('fast-isnumeric');
-
-var Lib = require('../../lib');
-var hasColorbar = require('../colorbar/has_colorbar');
-var colorbarDefaults = require('../colorbar/defaults');
-
-var isValidScale = require('./scales').isValid;
-var traceIs = require('../../registry').traceIs;
+import isNumeric from 'fast-isnumeric';
+import Lib from '../../lib/index.js';
+import hasColorbar from '../colorbar/has_colorbar.js';
+import colorbarDefaults from '../colorbar/defaults.js';
+import _scales from './scales.js';
+const { isValid: isValidScale } = _scales;
+import { traceIs } from '../../registry.js';
 
 function npMaybe(parentCont, prefix) {
     var containerStr = prefix.slice(0, prefix.length - 1);
@@ -16,18 +13,7 @@ function npMaybe(parentCont, prefix) {
         parentCont;
 }
 
-/**
- * Colorscale / colorbar default handler
- *
- * @param {object} parentContIn : user (input) parent container (e.g. trace or layout coloraxis object)
- * @param {object} parentContOut : full parent container
- * @param {object} layout : (full) layout object
- * @param {fn} coerce : Lib.coerce wrapper
- * @param {object} opts :
- * - prefix {string} : attr string prefix to colorscale container from parent root
- * - cLetter {string} : 'c or 'z' color letter
- */
-module.exports = function colorScaleDefaults(parentContIn, parentContOut, layout, coerce, opts) {
+export default function colorScaleDefaults(parentContIn, parentContOut, layout, coerce, opts) {
     var prefix = opts.prefix;
     var cLetter = opts.cLetter;
     var inTrace = '_module' in parentContOut;
@@ -112,4 +98,4 @@ module.exports = function colorScaleDefaults(parentContIn, parentContOut, layout
             colorbarDefaults(containerIn, containerOut, layout);
         }
     }
-};
+}

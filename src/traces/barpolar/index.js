@@ -1,28 +1,41 @@
-'use strict';
+import _req0 from '../../plots/polar/index.js';
+import _req1 from './attributes.js';
+import _req2 from './layout_attributes.js';
+import _req3 from './defaults.js';
+import _req4 from './layout_defaults.js';
+import { calc as _req5 } from './calc.js';
+import { crossTraceCalc as _req6 } from './calc.js';
+import _req7 from './plot.js';
+import _req8 from '../scatter/marker_colorbar.js';
+import _req9 from '../scatterpolar/format_labels.js';
+import { style as _req10 } from '../bar/style.js';
+import { styleOnSelect as _req11 } from '../bar/style.js';
+import _req12 from './hover.js';
+import _req13 from '../bar/select.js';
 
-module.exports = {
+export default {
     moduleType: 'trace',
     name: 'barpolar',
-    basePlotModule: require('../../plots/polar'),
+    basePlotModule: _req0,
     categories: ['polar', 'bar', 'showLegend'],
 
-    attributes: require('./attributes'),
-    layoutAttributes: require('./layout_attributes'),
-    supplyDefaults: require('./defaults'),
-    supplyLayoutDefaults: require('./layout_defaults'),
+    attributes: _req1,
+    layoutAttributes: _req2,
+    supplyDefaults: _req3,
+    supplyLayoutDefaults: _req4,
 
-    calc: require('./calc').calc,
-    crossTraceCalc: require('./calc').crossTraceCalc,
+    calc: _req5,
+    crossTraceCalc: _req6,
 
-    plot: require('./plot'),
-    colorbar: require('../scatter/marker_colorbar'),
-    formatLabels: require('../scatterpolar/format_labels'),
+    plot: _req7,
+    colorbar: _req8,
+    formatLabels: _req9,
 
-    style: require('../bar/style').style,
-    styleOnSelect: require('../bar/style').styleOnSelect,
+    style: _req10,
+    styleOnSelect: _req11,
 
-    hoverPoints: require('./hover'),
-    selectPoints: require('../bar/select'),
+    hoverPoints: _req12,
+    selectPoints: _req13,
 
     meta: {
         hrName: 'bar_polar',

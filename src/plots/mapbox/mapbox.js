@@ -1,25 +1,19 @@
-'use strict';
-
-var mapboxgl = require('@plotly/mapbox-gl/dist/mapbox-gl-unminified');
-
-var Lib = require('../../lib');
-var geoUtils = require('../../lib/geo_location_utils');
-var Registry = require('../../registry');
-var Axes = require('../cartesian/axes');
-var dragElement = require('../../components/dragelement');
-
-var Fx = require('../../components/fx');
-var dragHelpers = require('../../components/dragelement/helpers');
+import mapboxgl from '@plotly/mapbox-gl/dist/mapbox-gl-unminified';
+import Lib from '../../lib/index.js';
+import geoUtils from '../../lib/geo_location_utils.js';
+import Registry from '../../registry.js';
+import Axes from '../cartesian/axes.js';
+import dragElement from '../../components/dragelement/index.js';
+import Fx from '../../components/fx/index.js';
+import dragHelpers from '../../components/dragelement/helpers.js';
+import { prepSelect } from '../../components/selections/index.js';
+import { clearOutline } from '../../components/selections/index.js';
+import { clearSelectionsCache } from '../../components/selections/index.js';
+import { selectOnClick } from '../../components/selections/index.js';
+import constants from './constants.js';
+import createMapboxLayer from './layers.js';
 var drawMode = dragHelpers.drawMode;
 var selectMode = dragHelpers.selectMode;
-
-var prepSelect = require('../../components/selections').prepSelect;
-var clearOutline = require('../../components/selections').clearOutline;
-var clearSelectionsCache = require('../../components/selections').clearSelectionsCache;
-var selectOnClick = require('../../components/selections').selectOnClick;
-
-var constants = require('./constants');
-var createMapboxLayer = require('./layers');
 
 function Mapbox(gd, id) {
     this.id = id;
@@ -116,7 +110,6 @@ proto.createMap = function(calcData, fullLayout, resolve, reject) {
     .addControl(new mapboxgl.AttributionControl({
         compact: true
     }));
-
 
     // make sure canvas does not inherit left and top css
     map._canvas.style.left = '0px';
@@ -813,4 +806,4 @@ function convertCenter(center) {
     return [center.lon, center.lat];
 }
 
-module.exports = Mapbox;
+export default Mapbox;

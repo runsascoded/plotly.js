@@ -1,15 +1,11 @@
-'use strict';
-
-var d3 = require('@plotly/d3');
-
-var helpers = require('../sunburst/helpers');
-var uniformText = require('../bar/uniform_text');
+import d3 from '@plotly/d3';
+import helpers from '../sunburst/helpers.js';
+import uniformText from '../bar/uniform_text.js';
+import { resizeText } from '../bar/style.js';
+import plotOne from './plot_one.js';
 var clearMinTextSize = uniformText.clearMinTextSize;
-var resizeText = require('../bar/style').resizeText;
 
-var plotOne = require('./plot_one');
-
-module.exports = function _plot(gd, cdmodule, transitionOpts, makeOnCompleteCallback, opts) {
+export default function _plot(gd, cdmodule, transitionOpts, makeOnCompleteCallback, opts) {
     var type = opts.type;
     var drawDescendants = opts.drawDescendants;
 
@@ -66,4 +62,4 @@ module.exports = function _plot(gd, cdmodule, transitionOpts, makeOnCompleteCall
     if(isFullReplot) {
         join.exit().remove();
     }
-};
+}

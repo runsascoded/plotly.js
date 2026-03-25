@@ -1,37 +1,31 @@
-'use strict';
-
-var d3 = require('@plotly/d3');
-var isNumeric = require('fast-isnumeric');
-var hasHover = require('has-hover');
-
-var Lib = require('../lib');
+import d3 from '@plotly/d3';
+import isNumeric from 'fast-isnumeric';
+import hasHover from 'has-hover';
+import Lib from '../lib/index.js';
+import Events from '../lib/events.js';
+import Queue from '../lib/queue.js';
+import Registry from '../registry.js';
+import PlotSchema from './plot_schema.js';
+import Plots from '../plots/plots.js';
+import Axes from '../plots/cartesian/axes.js';
+import handleRangeDefaults from '../plots/cartesian/range_defaults.js';
+import cartesianLayoutAttributes from '../plots/cartesian/layout_attributes.js';
+import Drawing from '../components/drawing/index.js';
+import Color from '../components/color/index.js';
+import { initInteractions } from '../plots/cartesian/graph_interact.js';
+import xmlnsNamespaces from '../constants/xmlns_namespaces.js';
+import _plot_config from './plot_config.js';
+const { dfltConfig } = _plot_config;
+import manageArrays from './manage_arrays.js';
+import helpers from './helpers.js';
+import subroutines from './subroutines.js';
+import editTypes from './edit_types.js';
+import _constants from '../plots/cartesian/constants.js';
+const { AX_NAME_PATTERN } = _constants;
 var nestedProperty = Lib.nestedProperty;
 
-var Events = require('../lib/events');
-var Queue = require('../lib/queue');
-
-var Registry = require('../registry');
-var PlotSchema = require('./plot_schema');
-var Plots = require('../plots/plots');
-
-var Axes = require('../plots/cartesian/axes');
-var handleRangeDefaults = require('../plots/cartesian/range_defaults');
-
-var cartesianLayoutAttributes = require('../plots/cartesian/layout_attributes');
-var Drawing = require('../components/drawing');
-var Color = require('../components/color');
-var initInteractions = require('../plots/cartesian/graph_interact').initInteractions;
-var xmlnsNamespaces = require('../constants/xmlns_namespaces');
 // Lazy-resolve to avoid pulling in ~70KB selections module in lite bundle
 function clearOutline(gd) { return Registry.getComponentMethod('selections', 'clearOutline')(gd); }
-
-var dfltConfig = require('./plot_config').dfltConfig;
-var manageArrays = require('./manage_arrays');
-var helpers = require('./helpers');
-var subroutines = require('./subroutines');
-var editTypes = require('./edit_types');
-
-var AX_NAME_PATTERN = require('../plots/cartesian/constants').AX_NAME_PATTERN;
 
 var numericNameWarningCount = 0;
 var numericNameWarningCountLimit = 5;
@@ -86,7 +80,7 @@ function _doPlot(gd, data, layout, config) {
 
     function addFrames() {
         if (frames) {
-            return exports.addFrames(gd, frames);
+            return addFrames(gd, frames);
         }
     }
 
@@ -603,7 +597,7 @@ function redraw(gd) {
     helpers.cleanLayout(gd.layout);
 
     gd.calcdata = undefined;
-    return exports._doPlot(gd).then(function () {
+    return _doPlot(gd).then(function () {
         gd.emit('plotly_redraw');
         return gd;
     });
@@ -624,7 +618,7 @@ function newPlot(gd, data, layout, config) {
     Plots.cleanPlot([], {}, gd._fullData || [], gd._fullLayout || {});
 
     Plots.purge(gd);
-    return exports._doPlot(gd, data, layout, config);
+    return _doPlot(gd, data, layout, config);
 }
 
 /**
@@ -996,9 +990,9 @@ function extendTraces(gd, update, indices, maxPoints) {
     }
 
     var undo = spliceTraces(gd, update, indices, maxPoints, updateArray);
-    var promise = exports.redraw(gd);
+    var promise = redraw(gd);
     var undoArgs = [gd, undo.update, indices, undo.maxPoints];
-    Queue.add(gd, exports.prependTraces, undoArgs, extendTraces, arguments);
+    Queue.add(gd, prependTraces, undoArgs, extendTraces, arguments);
 
     return promise;
 }
@@ -1051,9 +1045,9 @@ function prependTraces(gd, update, indices, maxPoints) {
     }
 
     var undo = spliceTraces(gd, update, indices, maxPoints, updateArray);
-    var promise = exports.redraw(gd);
+    var promise = redraw(gd);
     var undoArgs = [gd, undo.update, indices, undo.maxPoints];
-    Queue.add(gd, exports.extendTraces, undoArgs, prependTraces, arguments);
+    Queue.add(gd, extendTraces, undoArgs, prependTraces, arguments);
 
     return promise;
 }
@@ -1071,7 +1065,7 @@ function addTraces(gd, traces, newIndices) {
     gd = Lib.getGraphDiv(gd);
 
     var currentIndices = [];
-    var undoFunc = exports.deleteTraces;
+    var undoFunc = deleteTraces;
     var redoFunc = addTraces;
     var undoArgs = [gd, currentIndices];
     var redoArgs = [gd, traces]; // no newIndices here
@@ -1106,7 +1100,7 @@ function addTraces(gd, traces, newIndices) {
     // if the user didn't define newIndices, they just want the traces appended
     // i.e., we can simply redraw and be done
     if (typeof newIndices === 'undefined') {
-        promise = exports.redraw(gd);
+        promise = redraw(gd);
         Queue.add(gd, undoFunc, undoArgs, redoFunc, redoArgs);
         return promise;
     }
@@ -1129,7 +1123,7 @@ function addTraces(gd, traces, newIndices) {
     // this requires some extra work that moveTraces will do
     Queue.startSequence(gd);
     Queue.add(gd, undoFunc, undoArgs, redoFunc, redoArgs);
-    promise = exports.moveTraces(gd, currentIndices, newIndices);
+    promise = moveTraces(gd, currentIndices, newIndices);
     Queue.stopSequence(gd);
     return promise;
 }
@@ -1145,7 +1139,7 @@ function deleteTraces(gd, indices) {
     gd = Lib.getGraphDiv(gd);
 
     var traces = [];
-    var undoFunc = exports.addTraces;
+    var undoFunc = addTraces;
     var redoFunc = deleteTraces;
     var undoArgs = [gd, traces, indices];
     var redoArgs = [gd, indices];
@@ -1170,7 +1164,7 @@ function deleteTraces(gd, indices) {
         traces.push(deletedTrace);
     }
 
-    var promise = exports.redraw(gd);
+    var promise = redraw(gd);
     Queue.add(gd, undoFunc, undoArgs, redoFunc, redoArgs);
 
     return promise;
@@ -1267,7 +1261,7 @@ function moveTraces(gd, currentIndices, newIndices) {
 
     gd.data = newData;
 
-    var promise = exports.redraw(gd);
+    var promise = redraw(gd);
     Queue.add(gd, undoFunc, undoArgs, redoFunc, redoArgs);
 
     return promise;
@@ -1333,7 +1327,7 @@ function restyle(gd, astr, val, _traces) {
     var seq = [];
 
     if (flags.fullReplot) {
-        seq.push(exports._doPlot);
+        seq.push(_doPlot);
     } else {
         seq.push(Plots.previousPromises);
 
@@ -2330,7 +2324,7 @@ function update(gd, traceUpdate, layoutUpdate, _traces) {
         // relayoutFlags.layoutReplot and restyleFlags.fullReplot are true
         seq.push(subroutines.layoutReplot);
     } else if (restyleFlags.fullReplot) {
-        seq.push(exports._doPlot);
+        seq.push(_doPlot);
     } else {
         seq.push(Plots.previousPromises);
         axRangeSupplyDefaultsByPass(gd, relayoutFlags, relayoutSpecs) || Plots.supplyDefaults(gd);
@@ -2648,7 +2642,7 @@ function react(gd, data, layout, config) {
     var frames, plotDone;
 
     function addFrames() {
-        return exports.addFrames(gd, frames);
+        return addFrames(gd, frames);
     }
 
     gd = Lib.getGraphDiv(gd);
@@ -2659,7 +2653,7 @@ function react(gd, data, layout, config) {
 
     // you can use this as the initial draw as well as to update
     if (!Lib.isPlotDiv(gd) || !oldFullData || !oldFullLayout) {
-        plotDone = exports.newPlot(gd, data, layout, config);
+        plotDone = newPlot(gd, data, layout, config);
     } else {
         if (Lib.isPlainObject(data)) {
             var obj = data;
@@ -2682,13 +2676,13 @@ function react(gd, data, layout, config) {
         if (configChanged) {
             // Save event listeners as newPlot will remove them
             const eventListeners = gd._ev.eventNames().map((name) => [name, gd._ev.listeners(name)]);
-            plotDone = exports.newPlot(gd, data, layout, config).then(() => {
+            plotDone = newPlot(gd, data, layout, config).then(() => {
                 for (const [name, callbacks] of eventListeners) {
                     callbacks.forEach((cb) => gd.on(name, cb));
                 }
 
                 // Call react in case transition should have occurred along with config change
-                return exports.react(gd, data, layout, config);
+                return react(gd, data, layout, config);
             });
         } else {
             gd.data = data || [];
@@ -2767,7 +2761,7 @@ function react(gd, data, layout, config) {
                 });
             } else if (restyleFlags.fullReplot || relayoutFlags.layoutReplot) {
                 gd._fullLayout._skipDefaults = true;
-                seq.push(exports._doPlot);
+                seq.push(_doPlot);
             } else {
                 for (var componentType in relayoutFlags.arrays) {
                     var indices = relayoutFlags.arrays[componentType];
@@ -3872,31 +3866,26 @@ function makePlotFramework(gd) {
     gd.emit('plotly_framework');
 }
 
-exports.animate = animate;
-exports.addFrames = addFrames;
-exports.deleteFrames = deleteFrames;
+export { animate };
+export { addFrames };
+export { deleteFrames };
+export { addTraces };
+export { deleteTraces };
+export { extendTraces };
+export { moveTraces };
+export { prependTraces };
+export { newPlot };
+export { _doPlot };
+export { purge };
+export { react };
+export { redraw };
+export { relayout };
+export { restyle };
+export { setPlotConfig };
+export { update };
+export var _guiRelayout = guiEdit(relayout);
+export var _guiRestyle = guiEdit(restyle);
+export var _guiUpdate = guiEdit(update);
+export { _storeDirectGUIEdit };
 
-exports.addTraces = addTraces;
-exports.deleteTraces = deleteTraces;
-exports.extendTraces = extendTraces;
-exports.moveTraces = moveTraces;
-exports.prependTraces = prependTraces;
-
-exports.newPlot = newPlot;
-exports._doPlot = _doPlot;
-exports.purge = purge;
-
-exports.react = react;
-exports.redraw = redraw;
-exports.relayout = relayout;
-exports.restyle = restyle;
-
-exports.setPlotConfig = setPlotConfig;
-
-exports.update = update;
-
-exports._guiRelayout = guiEdit(relayout);
-exports._guiRestyle = guiEdit(restyle);
-exports._guiUpdate = guiEdit(update);
-
-exports._storeDirectGUIEdit = _storeDirectGUIEdit;
+export default { _guiRelayout, _guiRestyle, _guiUpdate, animate, addFrames, deleteFrames, addTraces, deleteTraces, extendTraces, moveTraces, prependTraces, newPlot, _doPlot, purge, react, redraw, relayout, restyle, setPlotConfig, update, _storeDirectGUIEdit };

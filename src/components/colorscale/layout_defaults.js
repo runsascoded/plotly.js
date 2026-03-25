@@ -1,12 +1,9 @@
-'use strict';
+import Lib from '../../lib/index.js';
+import Template from '../../plot_api/plot_template.js';
+import colorScaleAttrs from './layout_attributes.js';
+import colorScaleDefaults from './defaults.js';
 
-var Lib = require('../../lib');
-var Template = require('../../plot_api/plot_template');
-
-var colorScaleAttrs = require('./layout_attributes');
-var colorScaleDefaults = require('./defaults');
-
-module.exports = function supplyLayoutDefaults(layoutIn, layoutOut) {
+export default function supplyLayoutDefaults(layoutIn, layoutOut) {
     function coerce(attr, dflt) {
         return Lib.coerce(layoutIn, layoutOut, colorScaleAttrs, attr, dflt);
     }
@@ -38,4 +35,4 @@ module.exports = function supplyLayoutDefaults(layoutIn, layoutOut) {
             delete layoutOut._colorAxes[k];
         }
     }
-};
+}

@@ -1,22 +1,18 @@
-'use strict';
-
-var d3 = require('@plotly/d3');
-
-var Plots = require('../../plots/plots');
-var Color = require('../color');
-var Drawing = require('../drawing');
-var Lib = require('../../lib');
+import d3 from '@plotly/d3';
+import Plots from '../../plots/plots.js';
+import Color from '../color/index.js';
+import Drawing from '../drawing/index.js';
+import Lib from '../../lib/index.js';
+import svgTextUtils from '../../lib/svg_text_utils.js';
+import { arrayEditor } from '../../plot_api/plot_template.js';
+import constants from './constants.js';
+import alignmentConstants from '../../constants/alignment.js';
 var strTranslate = Lib.strTranslate;
-var svgTextUtils = require('../../lib/svg_text_utils');
-var arrayEditor = require('../../plot_api/plot_template').arrayEditor;
-
-var constants = require('./constants');
-var alignmentConstants = require('../../constants/alignment');
 var LINE_SPACING = alignmentConstants.LINE_SPACING;
 var FROM_TL = alignmentConstants.FROM_TL;
 var FROM_BR = alignmentConstants.FROM_BR;
 
-module.exports = function draw(gd) {
+export default function draw(gd) {
     var staticPlot = gd._context.staticPlot;
     var fullLayout = gd._fullLayout;
     var sliderData = makeSliderData(fullLayout, gd);
@@ -89,7 +85,7 @@ module.exports = function draw(gd) {
 
         drawSlider(gd, d3.select(this), sliderOpts);
     });
-};
+}
 
 function autoMarginId(sliderOpts) {
     return constants.autoMarginIdRoot + sliderOpts._index;

@@ -1,9 +1,7 @@
-'use strict';
+import Lib from '../../lib/index.js';
+import Axes from '../../plots/cartesian/axes.js';
 
-var Lib = require('../../lib');
-var Axes = require('../../plots/cartesian/axes');
-
-module.exports = function formatLabels(cdi, trace, fullLayout) {
+export default function formatLabels(cdi, trace, fullLayout) {
     var labels = {};
 
     var subplot = fullLayout[trace.subplot]._subplot;
@@ -29,4 +27,4 @@ module.exports = function formatLabels(cdi, trace, fullLayout) {
     labels.thetaLabel = Axes.tickText(angularAxis, thetaVal, true).text;
 
     return labels;
-};
+}

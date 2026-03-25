@@ -1,10 +1,8 @@
-'use strict';
+import scatterPlot from '../scatter/plot.js';
+import Axes from '../../plots/cartesian/axes.js';
+import Drawing from '../../components/drawing/index.js';
 
-var scatterPlot = require('../scatter/plot');
-var Axes = require('../../plots/cartesian/axes');
-var Drawing = require('../../components/drawing');
-
-module.exports = function plot(gd, plotinfoproxy, data, layer) {
+export default function plot(gd, plotinfoproxy, data, layer) {
     var i, trace, node;
 
     var carpet = data[0][0].carpet;
@@ -41,4 +39,4 @@ module.exports = function plot(gd, plotinfoproxy, data, layer) {
         // necessary. That makes this a potential optimization.
         Drawing.setClipUrl(node, data[i][0].carpet._clipPathId, gd);
     }
-};
+}

@@ -1,18 +1,14 @@
-'use strict';
-
-var axisHoverFormat = require('../../plots/cartesian/axis_format_attributes').axisHoverFormat;
-const { hovertemplateAttrs, texttemplateAttrs, templatefallbackAttrs } = require('../../plots/template_attributes');
-var colorScaleAttrs = require('../../components/colorscale/attributes');
-var fontAttrs = require('../../plots/font_attributes');
-var dash = require('../../components/drawing/attributes').dash;
-var pattern = require('../../components/drawing/attributes').pattern;
-
-var Drawing = require('../../components/drawing');
-var constants = require('./constants');
-
-var extendFlat = require('../../lib/extend').extendFlat;
-
-var makeFillcolorAttr = require('./fillcolor_attribute');
+import _axis_format_attributes from '../../plots/cartesian/axis_format_attributes.js';
+const { axisHoverFormat } = _axis_format_attributes;
+import { hovertemplateAttrs, texttemplateAttrs, templatefallbackAttrs } from '../../plots/template_attributes.js';
+import colorScaleAttrs from '../../components/colorscale/attributes.js';
+import fontAttrs from '../../plots/font_attributes.js';
+import { dash } from '../../components/drawing/attributes.js';
+import { pattern } from '../../components/drawing/attributes.js';
+import Drawing from '../../components/drawing/index.js';
+import constants from './constants.js';
+import { extendFlat } from '../../lib/extend.js';
+import makeFillcolorAttr from './fillcolor_attribute.js';
 
 function axisPeriod(axis) {
     return {
@@ -55,7 +51,7 @@ function axisPeriodAlignment(axis) {
     };
 }
 
-module.exports = {
+export default {
     x: {
         valType: 'data_array',
         editType: 'calc+clearAxisTypes',

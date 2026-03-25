@@ -1,8 +1,6 @@
-'use strict';
-
-var d3 = require('@plotly/d3');
-var Lib = require('../../lib');
-var Registry = require('../../registry');
+import d3 from '@plotly/d3';
+import Lib from '../../lib/index.js';
+import Registry from '../../registry.js';
 
 var radians = Math.PI / 180;
 var degrees = 180 / Math.PI;
@@ -26,7 +24,7 @@ function createGeoZoom(geo, geoLayout) {
     return zoomConstructor(geo, projection);
 }
 
-module.exports = createGeoZoom;
+export default createGeoZoom;
 
 // common to all zoom types
 function initZoom(geo, projection) {

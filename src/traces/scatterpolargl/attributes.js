@@ -1,7 +1,8 @@
-'use strict';
+import _req0 from '../scatterpolar/attributes.js';
+import _req1 from '../scattergl/attributes.js';
 
 // No cliponaxis or hoveron
-const { cliponaxis, hoveron, ...scatterPolarAttrs } = require('../scatterpolar/attributes');
+const { cliponaxis, hoveron, ...scatterPolarAttrs } = _req0;
 const {
     connectgaps,
     line: { color, dash, width },
@@ -10,9 +11,9 @@ const {
     marker,
     textfont,
     textposition
-} = require('../scattergl/attributes');
+} = _req1;
 
-module.exports = {
+export default {
     ...scatterPolarAttrs,
     connectgaps,
     fill,

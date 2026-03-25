@@ -1,12 +1,8 @@
-'use strict';
+import _plot_config from '../plot_api/plot_config.js';
+const { dfltConfig } = _plot_config;
+import notifier from './notifier.js';
 
-/* eslint-disable no-console */
-
-var dfltConfig = require('../plot_api/plot_config').dfltConfig;
-
-var notifier = require('./notifier');
-
-var loggers = module.exports = {};
+var loggers = {};
 
 /**
  * ------------------------------------------
@@ -73,3 +69,5 @@ loggers.error = function() {
         notifier(lines.join('<br>'), 'stick');
     }
 };
+
+export default loggers;

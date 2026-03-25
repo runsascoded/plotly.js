@@ -1,10 +1,8 @@
-'use strict';
-
-var d3 = require('@plotly/d3');
-var Color = require('../../components/color');
-var Lib = require('../../lib');
-var resizeText = require('../bar/uniform_text').resizeText;
-var fillOne = require('../sunburst/fill_one');
+import d3 from '@plotly/d3';
+import Color from '../../components/color/index.js';
+import Lib from '../../lib/index.js';
+import { resizeText } from '../bar/uniform_text.js';
+import fillOne from '../sunburst/fill_one.js';
 
 function style(gd) {
     var s = gd._fullLayout._iciclelayer.selectAll('.trace');
@@ -36,7 +34,7 @@ function styleOne(s, pt, trace, gd) {
         .style('opacity', isLeaf ? trace.leaf.opacity : null);
 }
 
-module.exports = {
+export default {
     style: style,
     styleOne: styleOne
 };

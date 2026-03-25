@@ -1,19 +1,4 @@
-'use strict';
-
-/*
- * Return a function that evaluates a set of linear or bicubic control points.
- * This will get evaluated a lot, so we'll at least do a bit of extra work to
- * flatten some of the choices. In particular, we'll unroll the linear/bicubic
- * combinations and we'll allow computing results in parallel to cut down
- * on repeated arithmetic.
- *
- * Take note that we don't search for the correct range in this function. The
- * reason is for consistency due to the corrresponding derivative function. In
- * particular, the derivatives aren't continuous across cells, so it's important
- * to be able control whether the derivative at a cell boundary is approached
- * from one side or the other.
- */
-module.exports = function(arrays, na, nb, asmoothing, bsmoothing) {
+export default function(arrays, na, nb, asmoothing, bsmoothing) {
     var imax = na - 2;
     var jmax = nb - 2;
 
@@ -137,4 +122,4 @@ module.exports = function(arrays, na, nb, asmoothing, bsmoothing) {
             return out;
         };
     }
-};
+}

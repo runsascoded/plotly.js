@@ -1,13 +1,11 @@
-'use strict';
-
-var Lib = require('../../lib');
-var Fx = require('../../components/fx');
-var Registry = require('../../registry');
-var getTraceColor = require('./get_trace_color');
-var Color = require('../../components/color');
+import Lib from '../../lib/index.js';
+import Fx from '../../components/fx/index.js';
+import Registry from '../../registry.js';
+import getTraceColor from './get_trace_color.js';
+import Color from '../../components/color/index.js';
 var fillText = Lib.fillText;
 
-module.exports = function hoverPoints(pointData, xval, yval, hovermode) {
+export default function hoverPoints(pointData, xval, yval, hovermode) {
     var cd = pointData.cd;
     var trace = cd[0].trace;
     var xa = pointData.xa;
@@ -260,4 +258,4 @@ module.exports = function hoverPoints(pointData, xval, yval, hovermode) {
             return [pointData];
         }
     }
-};
+}

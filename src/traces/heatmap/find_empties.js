@@ -1,15 +1,6 @@
-'use strict';
+import { maxRowLength } from '../../lib/index.js';
 
-var maxRowLength = require('../../lib').maxRowLength;
-
-/* Return a list of empty points in 2D array z
- * each empty point z[i][j] gives an array [i, j, neighborCount]
- * neighborCount is the count of 4 nearest neighbors that DO exist
- * this is to give us an order of points to evaluate for interpolation.
- * if no neighbors exist, we iteratively look for neighbors that HAVE
- * neighbors, and add a fractional neighborCount
- */
-module.exports = function findEmpties(z) {
+export default function findEmpties(z) {
     var empties = [];
     var neighborHash = {};
     var noNeighborList = [];
@@ -92,4 +83,4 @@ module.exports = function findEmpties(z) {
 
     // sort the full list in descending order of neighbor count
     return empties.sort(function(a, b) { return b[2] - a[2]; });
-};
+}

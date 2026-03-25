@@ -1,39 +1,22 @@
-'use strict';
-
-var d3 = require('@plotly/d3');
-
-var Registry = require('../../registry');
-var Lib = require('../../lib');
-var Axes = require('../../plots/cartesian/axes');
-
-var readPaths = require('./draw_newshape/helpers').readPaths;
-var displayOutlines = require('./display_outlines');
-var drawLabel = require('./display_labels');
-
-var clearOutlineControllers = require('./handle_outline').clearOutlineControllers;
-
-var Color = require('../color');
-var Drawing = require('../drawing');
-var arrayEditor = require('../../plot_api/plot_template').arrayEditor;
-
-var dragElement = require('../dragelement');
-var setCursor = require('../../lib/setcursor');
-
-var constants = require('./constants');
-var helpers = require('./helpers');
+import d3 from '@plotly/d3';
+import Registry from '../../registry.js';
+import Lib from '../../lib/index.js';
+import Axes from '../../plots/cartesian/axes.js';
+import { readPaths } from './draw_newshape/helpers.js';
+import displayOutlines from './display_outlines.js';
+import drawLabel from './display_labels.js';
+import _handle_outline from './handle_outline.js';
+const { clearOutlineControllers } = _handle_outline;
+import Color from '../color/index.js';
+import Drawing from '../drawing/index.js';
+import { arrayEditor } from '../../plot_api/plot_template.js';
+import dragElement from '../dragelement/index.js';
+import setCursor from '../../lib/setcursor.js';
+import constants from './constants.js';
+import helpers from './helpers.js';
 var getPathString = helpers.getPathString;
 
-
-// Shapes are stored in gd.layout.shapes, an array of objects
-// index can point to one item in this array,
-//  or non-numeric to simply add a new one
-//  or -1 to modify all existing
-// opt can be the full options object, or one key (to be set to value)
-//  or undefined to simply redraw
-// if opt is blank, val can be 'add' or a full options object to add a new
-//  annotation at that point in the array, or 'remove' to delete this one
-
-module.exports = {
+export default {
     draw: draw,
     drawOne: drawOne,
     eraseActiveShape: eraseActiveShape,

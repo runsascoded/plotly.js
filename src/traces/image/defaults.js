@@ -1,11 +1,9 @@
-'use strict';
+import Lib from '../../lib/index.js';
+import attributes from './attributes.js';
+import constants from './constants.js';
+import { IMAGE_URL_PREFIX as dataUri } from '../../snapshot/helpers.js';
 
-var Lib = require('../../lib');
-var attributes = require('./attributes');
-var constants = require('./constants');
-var dataUri = require('../../snapshot/helpers').IMAGE_URL_PREFIX;
-
-module.exports = function supplyDefaults(traceIn, traceOut) {
+export default function supplyDefaults(traceIn, traceOut) {
     function coerce(attr, dflt) {
         return Lib.coerce(traceIn, traceOut, attributes, attr, dflt);
     }
@@ -48,4 +46,4 @@ module.exports = function supplyDefaults(traceIn, traceOut) {
     traceOut._length = null;
 
     coerce('zorder');
-};
+}

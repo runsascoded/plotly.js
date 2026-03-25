@@ -1,8 +1,6 @@
-'use strict';
+import Lib from '../../lib/index.js';
 
-var Lib = require('../../lib');
-
-module.exports = function sceneUpdate(gd, trace) {
+export default function sceneUpdate(gd, trace) {
     var fullLayout = gd._fullLayout;
     var uid = trace.uid;
 
@@ -59,4 +57,4 @@ module.exports = function sceneUpdate(gd, trace) {
     }
 
     return scene;
-};
+}

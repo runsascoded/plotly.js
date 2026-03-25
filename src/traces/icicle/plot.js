@@ -1,11 +1,9 @@
-'use strict';
+import draw from '../treemap/draw.js';
+import drawDescendants from './draw_descendants.js';
 
-var draw = require('../treemap/draw');
-var drawDescendants = require('./draw_descendants');
-
-module.exports = function _plot(gd, cdmodule, transitionOpts, makeOnCompleteCallback) {
+export default function _plot(gd, cdmodule, transitionOpts, makeOnCompleteCallback) {
     return draw(gd, cdmodule, transitionOpts, makeOnCompleteCallback, {
         type: 'icicle',
         drawDescendants: drawDescendants
     });
-};
+}

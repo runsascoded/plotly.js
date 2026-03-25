@@ -1,19 +1,14 @@
-'use strict';
-
-var isNumeric = require('fast-isnumeric');
-
-var Lib = require('../../lib');
-var Registry = require('../../registry');
-var Axes = require('../../plots/cartesian/axes');
-const { hasColorscale } = require('../../components/colorscale/helpers');
-const colorscaleCalc = require('../../components/colorscale/calc');
-
-
-var arraysToCalcdata = require('../bar/arrays_to_calcdata');
-var binFunctions = require('./bin_functions');
-var normFunctions = require('./norm_functions');
-var doAvg = require('./average');
-var getBinSpanLabelRound = require('./bin_label_vals');
+import isNumeric from 'fast-isnumeric';
+import Lib from '../../lib/index.js';
+import Registry from '../../registry.js';
+import Axes from '../../plots/cartesian/axes.js';
+import { hasColorscale } from '../../components/colorscale/helpers.js';
+import colorscaleCalc from '../../components/colorscale/calc.js';
+import arraysToCalcdata from '../bar/arrays_to_calcdata.js';
+import binFunctions from './bin_functions.js';
+import normFunctions from './norm_functions.js';
+import doAvg from './average.js';
+import getBinSpanLabelRound from './bin_label_vals.js';
 
 function calc(gd, trace) {
     var pos = [];
@@ -585,7 +580,7 @@ function cdf(size, direction, currentBin) {
     }
 }
 
-module.exports = {
+export default {
     calc: calc,
     calcAllAutoBins: calcAllAutoBins
 };

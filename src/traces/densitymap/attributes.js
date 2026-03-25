@@ -1,35 +1,10 @@
-'use strict';
+import colorScaleAttrs from '../../components/colorscale/attributes.js';
+import { hovertemplateAttrs, templatefallbackAttrs } from '../../plots/template_attributes.js';
+import baseAttrs from '../../plots/attributes.js';
+import scatterMapAttrs from '../scattermap/attributes.js';
+import { extendFlat } from '../../lib/extend.js';
 
-var colorScaleAttrs = require('../../components/colorscale/attributes');
-const { hovertemplateAttrs, templatefallbackAttrs } = require('../../plots/template_attributes');
-var baseAttrs = require('../../plots/attributes');
-var scatterMapAttrs = require('../scattermap/attributes');
-
-var extendFlat = require('../../lib/extend').extendFlat;
-
-/*
- * - https://docs.map.com/help/tutorials/make-a-heatmap-with-mapbox-gl-js/
- * - https://docs.mapbox.com/mapbox-gl-js/example/heatmap-layer/
- * - https://docs.mapbox.com/mapbox-gl-js/style-spec/#layers-heatmap
- * - https://blog.map.com/introducing-heatmaps-in-mapbox-gl-js-71355ada9e6c
- *
- * Gotchas:
- * - https://github.com/mapbox/mapbox-gl-js/issues/6463
- * - https://github.com/mapbox/mapbox-gl-js/issues/6112
- */
-
-/*
- *
- * In mathematical terms, Map GL heatmaps are a bivariate (2D) kernel density
- * estimation with a Gaussian kernel. It means that each data point has an area
- * of “influence” around it (called a kernel) where the numerical value of
- * influence (which we call density) decreases as you go further from the point.
- * If we sum density values of all points in every pixel of the screen, we get a
- * combined density value which we then map to a heatmap color.
- *
- */
-
-module.exports = extendFlat(
+export default extendFlat(
     {
         lon: scatterMapAttrs.lon,
         lat: scatterMapAttrs.lat,

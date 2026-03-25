@@ -1,4 +1,5 @@
-'use strict';
+import { maxDimensionCount as maxDim } from './constants.js';
+import Lib from '../../lib/index.js';
 
 var vertexShaderSource = [
     'precision highp float;',
@@ -135,10 +136,6 @@ var fragmentShaderSource = [
     '    gl_FragColor = fragColor;',
     '}'
 ].join('\n');
-
-var maxDim = require('./constants').maxDimensionCount;
-
-var Lib = require('../../lib');
 
 // don't change; otherwise near/far plane lines are lost
 var depthLimitEpsilon = 1e-6;
@@ -369,7 +366,7 @@ function expandedPixelRange(bounds) {
     ];
 }
 
-module.exports = function(canvasGL, d) {
+export default function(canvasGL, d) {
     // context & pick describe which canvas we're talking about - won't change with new data
     var isContext = d.context;
     var isPick = d.pick;
@@ -673,4 +670,4 @@ module.exports = function(canvasGL, d) {
         destroy: destroy,
         update: update
     };
-};
+}

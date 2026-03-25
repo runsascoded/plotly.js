@@ -1,22 +1,17 @@
-'use strict';
-
-var createLinePlot = require('../../../stackgl_modules').gl_line3d;
-var createScatterPlot = require('../../../stackgl_modules').gl_scatter3d;
-var createErrorBars = require('../../../stackgl_modules').gl_error3d;
-var createMesh = require('../../../stackgl_modules').gl_mesh3d;
-var triangulate = require('../../../stackgl_modules').delaunay_triangulate;
-
-var Lib = require('../../lib');
-var str2RgbaArray = require('../../lib/str2rgbarray');
-var formatColor = require('../../lib/gl_format_color').formatColor;
-var makeBubbleSizeFn = require('../scatter/make_bubble_size_func');
-var DASH_PATTERNS = require('../../constants/gl3d_dashes');
-var MARKER_SYMBOLS = require('../../constants/gl3d_markers');
-
-var Axes = require('../../plots/cartesian/axes');
-var appendArrayPointValue = require('../../components/fx/helpers').appendArrayPointValue;
-
-var calculateError = require('./calc_errors');
+import { gl_line3d as createLinePlot } from '../../../stackgl_modules/index.js';
+import { gl_scatter3d as createScatterPlot } from '../../../stackgl_modules/index.js';
+import { gl_error3d as createErrorBars } from '../../../stackgl_modules/index.js';
+import { gl_mesh3d as createMesh } from '../../../stackgl_modules/index.js';
+import { delaunay_triangulate as triangulate } from '../../../stackgl_modules/index.js';
+import Lib from '../../lib/index.js';
+import str2RgbaArray from '../../lib/str2rgbarray.js';
+import { formatColor } from '../../lib/gl_format_color.js';
+import makeBubbleSizeFn from '../scatter/make_bubble_size_func.js';
+import DASH_PATTERNS from '../../constants/gl3d_dashes.js';
+import MARKER_SYMBOLS from '../../constants/gl3d_markers.js';
+import Axes from '../../plots/cartesian/axes.js';
+import { appendArrayPointValue } from '../../components/fx/helpers.js';
+import calculateError from './calc_errors.js';
 
 function LineWithMarkers(scene, uid) {
     this.scene = scene;
@@ -547,4 +542,4 @@ function createLineWithMarkers(scene, data) {
     return plot;
 }
 
-module.exports = createLineWithMarkers;
+export default createLineWithMarkers;

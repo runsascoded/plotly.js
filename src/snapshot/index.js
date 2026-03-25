@@ -1,15 +1,18 @@
-'use strict';
-
-var helpers = require('./helpers');
+import helpers from './helpers.js';
+import _req0 from './cloneplot.js';
+import _req1 from './tosvg.js';
+import _req2 from './svgtoimg.js';
+import _req3 from './toimage.js';
+import _req4 from './download.js';
 
 var Snapshot = {
     getDelay: helpers.getDelay,
     getRedrawFunc: helpers.getRedrawFunc,
-    clone: require('./cloneplot'),
-    toSVG: require('./tosvg'),
-    svgToImg: require('./svgtoimg'),
-    toImage: require('./toimage'),
-    downloadImage: require('./download')
+    clone: _req0,
+    toSVG: _req1,
+    svgToImg: _req2,
+    toImage: _req3,
+    downloadImage: _req4
 };
 
-module.exports = Snapshot;
+export default Snapshot;

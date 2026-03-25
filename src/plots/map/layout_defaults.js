@@ -1,20 +1,16 @@
-'use strict';
+import Lib from '../../lib/index.js';
+import handleSubplotDefaults from '../subplot_defaults.js';
+import handleArrayContainerDefaults from '../array_container_defaults.js';
+import layoutAttributes from './layout_attributes.js';
 
-var Lib = require('../../lib');
-
-var handleSubplotDefaults = require('../subplot_defaults');
-var handleArrayContainerDefaults = require('../array_container_defaults');
-var layoutAttributes = require('./layout_attributes');
-
-
-module.exports = function supplyLayoutDefaults(layoutIn, layoutOut, fullData) {
+export default function supplyLayoutDefaults(layoutIn, layoutOut, fullData) {
     handleSubplotDefaults(layoutIn, layoutOut, fullData, {
         type: 'map',
         attributes: layoutAttributes,
         handleDefaults: handleDefaults,
         partition: 'y'
     });
-};
+}
 
 function handleDefaults(containerIn, containerOut, coerce) {
     coerce('style');

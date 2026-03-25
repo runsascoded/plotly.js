@@ -1,13 +1,9 @@
-'use strict';
-
-var isNumeric = require('fast-isnumeric');
-
-var Lib = require('../../lib');
-var Colorscale = require('../../components/colorscale');
-var Drawing = require('../../components/drawing');
-
-var makeBlank = require('../../lib/geojson_utils').makeBlank;
-var geoUtils = require('../../lib/geo_location_utils');
+import isNumeric from 'fast-isnumeric';
+import Lib from '../../lib/index.js';
+import Colorscale from '../../components/colorscale/index.js';
+import Drawing from '../../components/drawing/index.js';
+import { makeBlank } from '../../lib/geojson_utils.js';
+import geoUtils from '../../lib/geo_location_utils.js';
 
 /* N.B.
  *
@@ -140,7 +136,7 @@ function convertOnSelect(calcTrace) {
     return opts;
 }
 
-module.exports = {
+export default {
     convert: convert,
     convertOnSelect: convertOnSelect
 };

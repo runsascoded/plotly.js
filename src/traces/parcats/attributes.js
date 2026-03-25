@@ -1,11 +1,9 @@
-'use strict';
-
-var extendFlat = require('../../lib/extend').extendFlat;
-var baseAttrs = require('../../plots/attributes');
-var fontAttrs = require('../../plots/font_attributes');
-var colorScaleAttrs = require('../../components/colorscale/attributes');
-const { hovertemplateAttrs, templatefallbackAttrs } = require('../../plots/template_attributes');
-var domainAttrs = require('../../plots/domain').attributes;
+import { extendFlat } from '../../lib/extend.js';
+import baseAttrs from '../../plots/attributes.js';
+import fontAttrs from '../../plots/font_attributes.js';
+import colorScaleAttrs from '../../components/colorscale/attributes.js';
+import { hovertemplateAttrs, templatefallbackAttrs } from '../../plots/template_attributes.js';
+import { attributes as domainAttrs } from '../../plots/domain.js';
 
 var line = extendFlat({ editType: 'calc' }, colorScaleAttrs('line', { editTypeOverride: 'calc' }), {
     shape: {
@@ -33,7 +31,7 @@ var line = extendFlat({ editType: 'calc' }, colorScaleAttrs('line', { editTypeOv
     hovertemplatefallback: templatefallbackAttrs({ editType: 'plot' })
 });
 
-module.exports = {
+export default {
     domain: domainAttrs({ name: 'parcats', trace: true, editType: 'calc' }),
 
     hoverinfo: extendFlat({}, baseAttrs.hoverinfo, {

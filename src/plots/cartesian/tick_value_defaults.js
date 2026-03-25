@@ -1,11 +1,10 @@
-'use strict';
+import cleanTicks from './clean_ticks.js';
+import _index from '../../lib/index.js';
+const { isArrayOrTypedArray } = _index;
+import { isTypedArraySpec } from '../../lib/array.js';
+import { decodeTypedArraySpec } from '../../lib/array.js';
 
-var cleanTicks = require('./clean_ticks');
-var isArrayOrTypedArray = require('../../lib').isArrayOrTypedArray;
-var isTypedArraySpec = require('../../lib/array').isTypedArraySpec;
-var decodeTypedArraySpec = require('../../lib/array').decodeTypedArraySpec;
-
-module.exports = function handleTickValueDefaults(containerIn, containerOut, coerce, axType, opts) {
+export default function handleTickValueDefaults(containerIn, containerOut, coerce, axType, opts) {
     if(!opts) opts = {};
     var isMinor = opts.isMinor;
     var cIn = isMinor ? containerIn.minor || {} : containerIn;
@@ -45,4 +44,4 @@ module.exports = function handleTickValueDefaults(containerIn, containerOut, coe
         if(tickvals === undefined) cOut.tickmode = 'auto';
         else if(!isMinor) coerce('ticktext');
     }
-};
+}

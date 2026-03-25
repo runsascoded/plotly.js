@@ -1,9 +1,12 @@
-'use strict';
+import _req0 from './attributes.js';
+import _req1 from './defaults.js';
+import _req2 from './calc.js';
+import _req3 from './base_plot.js';
 
-module.exports = {
-    attributes: require('./attributes'),
-    supplyDefaults: require('./defaults'),
-    calc: require('./calc'),
+export default {
+    attributes: _req0,
+    supplyDefaults: _req1,
+    calc: _req2,
     colorbar: {
         container: 'line',
         min: 'cmin',
@@ -12,7 +15,7 @@ module.exports = {
 
     moduleType: 'trace',
     name: 'parcoords',
-    basePlotModule: require('./base_plot'),
+    basePlotModule: _req3,
     categories: ['gl', 'regl', 'noOpacity', 'noHover'],
     meta: {
         description: [

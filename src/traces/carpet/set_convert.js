@@ -1,22 +1,11 @@
-'use strict';
+import constants from './constants.js';
+import { findBin as search } from '../../lib/search.js';
+import computeControlPoints from './compute_control_points.js';
+import createSplineEvaluator from './create_spline_evaluator.js';
+import createIDerivativeEvaluator from './create_i_derivative_evaluator.js';
+import createJDerivativeEvaluator from './create_j_derivative_evaluator.js';
 
-var constants = require('./constants');
-var search = require('../../lib/search').findBin;
-var computeControlPoints = require('./compute_control_points');
-var createSplineEvaluator = require('./create_spline_evaluator');
-var createIDerivativeEvaluator = require('./create_i_derivative_evaluator');
-var createJDerivativeEvaluator = require('./create_j_derivative_evaluator');
-
-/*
- * Create conversion functions to go from one basis to another. In particular the letter
- * abbreviations are:
- *
- *   i: i/j coordinates along the grid. Integer values correspond to data points
- *   a: real-valued coordinates along the a/b axes
- *   c: cartesian x-y coordinates
- *   p: screen-space pixel coordinates
- */
-module.exports = function setConvert(trace) {
+export default function setConvert(trace) {
     var a = trace._a;
     var b = trace._b;
     var na = a.length;
@@ -186,7 +175,6 @@ module.exports = function setConvert(trace) {
         return pt;
     };
 
-
     trace.c2p = function(xy, xa, ya) {
         return [xa.c2p(xy[0]), ya.c2p(xy[1])];
     };
@@ -270,4 +258,4 @@ module.exports = function setConvert(trace) {
     trace.dpdy = function(ya) {
         return ya._m;
     };
-};
+}

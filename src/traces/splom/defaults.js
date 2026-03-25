@@ -1,15 +1,12 @@
-'use strict';
+import Lib from '../../lib/index.js';
+import handleArrayContainerDefaults from '../../plots/array_container_defaults.js';
+import attributes from './attributes.js';
+import subTypes from '../scatter/subtypes.js';
+import handleMarkerDefaults from '../scatter/marker_defaults.js';
+import mergeLength from '../parcoords/merge_length.js';
+import { isOpenSymbol } from '../scattergl/helpers.js';
 
-var Lib = require('../../lib');
-var handleArrayContainerDefaults = require('../../plots/array_container_defaults');
-
-var attributes = require('./attributes');
-var subTypes = require('../scatter/subtypes');
-var handleMarkerDefaults = require('../scatter/marker_defaults');
-var mergeLength = require('../parcoords/merge_length');
-var isOpenSymbol = require('../scattergl/helpers').isOpenSymbol;
-
-module.exports = function supplyDefaults(traceIn, traceOut, defaultColor, layout) {
+export default function supplyDefaults(traceIn, traceOut, defaultColor, layout) {
     function coerce(attr, dflt) {
         return Lib.coerce(traceIn, traceOut, attributes, attr, dflt);
     }
@@ -46,7 +43,7 @@ module.exports = function supplyDefaults(traceIn, traceOut, defaultColor, layout
     handleAxisDefaults(traceIn, traceOut, layout, coerce);
 
     Lib.coerceSelectionMarkerOpacity(traceOut, coerce);
-};
+}
 
 function dimensionDefaults(dimIn, dimOut) {
     function coerce(attr, dflt) {

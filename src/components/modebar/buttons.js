@@ -1,14 +1,13 @@
-'use strict';
-
-var Registry = require('../../registry');
-var Plots = require('../../plots/plots');
-var axisIds = require('../../plots/cartesian/axis_ids');
-var Icons = require('../../fonts/ploticon');
-var eraseActiveShape = require('../shapes/draw').eraseActiveShape;
-var Lib = require('../../lib');
+import Registry from '../../registry.js';
+import Plots from '../../plots/plots.js';
+import axisIds from '../../plots/cartesian/axis_ids.js';
+import Icons from '../../fonts/ploticon.js';
+import _draw from '../shapes/draw.js';
+const { eraseActiveShape } = _draw;
+import Lib from '../../lib/index.js';
 var _ = Lib._;
 
-var modeBarButtons = module.exports = {};
+var modeBarButtons = {};
 
 /**
  * ModeBar buttons configuration
@@ -778,3 +777,5 @@ function resetView(gd, subplotType) {
 
     Registry.call('_guiRelayout', gd, aObj);
 }
+
+export default modeBarButtons;

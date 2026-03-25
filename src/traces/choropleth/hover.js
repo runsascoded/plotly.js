@@ -1,10 +1,8 @@
-'use strict';
+import Axes from '../../plots/cartesian/axes.js';
+import attributes from './attributes.js';
+import { fillText } from '../../lib/index.js';
 
-var Axes = require('../../plots/cartesian/axes');
-var attributes = require('./attributes');
-var fillText = require('../../lib').fillText;
-
-module.exports = function hoverPoints(pointData, xval, yval) {
+export default function hoverPoints(pointData, xval, yval) {
     var cd = pointData.cd;
     var trace = cd[0].trace;
     var geo = pointData.subplot;
@@ -47,7 +45,7 @@ module.exports = function hoverPoints(pointData, xval, yval) {
     makeHoverInfo(pointData, trace, pt);
 
     return [pointData];
-};
+}
 
 function makeHoverInfo(pointData, trace, pt) {
     if(trace.hovertemplate) return;

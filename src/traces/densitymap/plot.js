@@ -1,7 +1,5 @@
-'use strict';
-
-var convert = require('./convert');
-var LAYER_PREFIX = require('../../plots/map/constants').traceLayerPrefix;
+import convert from './convert.js';
+import { traceLayerPrefix as LAYER_PREFIX } from '../../plots/map/constants.js';
 
 function DensityMap(subplot, uid) {
     this.type = 'densitymap';
@@ -86,7 +84,7 @@ proto.dispose = function() {
     map.removeSource(this.sourceId);
 };
 
-module.exports = function createDensityMap(subplot, calcTrace) {
+export default function createDensityMap(subplot, calcTrace) {
     var trace = calcTrace[0].trace;
     var densityMap = new DensityMap(subplot, trace.uid);
     var sourceId = densityMap.sourceId;
@@ -101,4 +99,4 @@ module.exports = function createDensityMap(subplot, calcTrace) {
     densityMap._addLayers(optsAll, below);
 
     return densityMap;
-};
+}

@@ -1,12 +1,12 @@
-'use strict';
-
-var axis_ids = require('../../../plots/cartesian/axis_ids');
-
-var dragHelpers = require('../../dragelement/helpers');
+import axis_ids from '../../../plots/cartesian/axis_ids.js';
+import dragHelpers from '../../dragelement/helpers.js';
+import constants from './constants.js';
+import cartesianHelpers from '../../selections/helpers.js';
+import handleOutline from '.././handle_outline.js';
+import helpers from './helpers.js';
 var drawMode = dragHelpers.drawMode;
 var openMode = dragHelpers.openMode;
 
-var constants = require('./constants');
 var i000 = constants.i000;
 var i090 = constants.i090;
 var i180 = constants.i180;
@@ -14,14 +14,11 @@ var i270 = constants.i270;
 var cos45 = constants.cos45;
 var sin45 = constants.sin45;
 
-var cartesianHelpers = require('../../selections/helpers');
 var p2r = cartesianHelpers.p2r;
 var r2p = cartesianHelpers.r2p;
 
-var handleOutline = require('.././handle_outline');
 var clearOutline = handleOutline.clearOutline;
 
-var helpers = require('./helpers');
 var readPaths = helpers.readPaths;
 var writePaths = helpers.writePaths;
 var ellipseOver = helpers.ellipseOver;
@@ -269,7 +266,7 @@ function createShapeObj(outlines, dragOptions, dragmode) {
     return newShape;
 }
 
-module.exports = {
+export default {
     newShapes: newShapes,
     createShapeObj: createShapeObj,
 };

@@ -1,17 +1,15 @@
-'use strict';
-
-var dragHelpers = require('../../dragelement/helpers');
+import dragHelpers from '../../dragelement/helpers.js';
+import handleOutline from '../../shapes/handle_outline.js';
+import helpers from '../../shapes/draw_newshape/helpers.js';
 var selectMode = dragHelpers.selectMode;
 
-var handleOutline = require('../../shapes/handle_outline');
 var clearOutline = handleOutline.clearOutline;
 
-var helpers = require('../../shapes/draw_newshape/helpers');
 var readPaths = helpers.readPaths;
 var writePaths = helpers.writePaths;
 var fixDatesForPaths = helpers.fixDatesForPaths;
 
-module.exports = function newSelections(outlines, dragOptions) {
+export default function newSelections(outlines, dragOptions) {
     if(!outlines.length) return;
     var e = outlines[0][0]; // pick first
     if(!e) return;
@@ -121,4 +119,4 @@ module.exports = function newSelections(outlines, dragOptions) {
     }
 
     return editHelpers ? editHelpers.getUpdateObj() : {};
-};
+}

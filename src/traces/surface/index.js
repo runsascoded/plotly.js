@@ -1,18 +1,22 @@
-'use strict';
+import _req0 from './attributes.js';
+import { supplyDefaults as _req1 } from './defaults.js';
+import _req2 from './calc.js';
+import _req3 from './convert.js';
+import _req4 from '../../plots/gl3d/index.js';
 
-module.exports = {
-    attributes: require('./attributes'),
-    supplyDefaults: require('./defaults').supplyDefaults,
+export default {
+    attributes: _req0,
+    supplyDefaults: _req1,
     colorbar: {
         min: 'cmin',
         max: 'cmax'
     },
-    calc: require('./calc'),
-    plot: require('./convert'),
+    calc: _req2,
+    plot: _req3,
 
     moduleType: 'trace',
     name: 'surface',
-    basePlotModule: require('../../plots/gl3d'),
+    basePlotModule: _req4,
     categories: ['gl3d', '2dMap', 'showLegend'],
     meta: {
         description: [

@@ -1,27 +1,24 @@
-'use strict';
-
-var d3 = require('@plotly/d3');
-var Lib = require('../../lib');
+import d3 from '@plotly/d3';
+import Lib from '../../lib/index.js';
+import isNumeric from 'fast-isnumeric';
+import tinycolor from 'tinycolor2';
+import Registry from '../../registry.js';
+import Color from '../color/index.js';
+import Colorscale from '../colorscale/index.js';
+import svgTextUtils from '../../lib/svg_text_utils.js';
+import xmlnsNamespaces from '../../constants/xmlns_namespaces.js';
+import alignment from '../../constants/alignment.js';
+import _interactions from '../../constants/interactions.js';
+const { DESELECTDIM } = _interactions;
+import subTypes from '../../traces/scatter/subtypes.js';
+import makeBubbleSizeFn from '../../traces/scatter/make_bubble_size_func.js';
+import { appendArrayPointValue } from '../../components/fx/helpers.js';
+import SYMBOLDEFS from './symbol_defs.js';
 var numberFormat = Lib.numberFormat;
-var isNumeric = require('fast-isnumeric');
-var tinycolor = require('tinycolor2');
-
-var Registry = require('../../registry');
-var Color = require('../color');
-var Colorscale = require('../colorscale');
 var strTranslate = Lib.strTranslate;
-var svgTextUtils = require('../../lib/svg_text_utils');
-
-var xmlnsNamespaces = require('../../constants/xmlns_namespaces');
-var alignment = require('../../constants/alignment');
 var LINE_SPACING = alignment.LINE_SPACING;
-var DESELECTDIM = require('../../constants/interactions').DESELECTDIM;
 
-var subTypes = require('../../traces/scatter/subtypes');
-var makeBubbleSizeFn = require('../../traces/scatter/make_bubble_size_func');
-var appendArrayPointValue = require('../../components/fx/helpers').appendArrayPointValue;
-
-var drawing = (module.exports = {});
+var drawing = ({});
 
 // -----------------------------------------------------
 // styling functions for plot elements
@@ -318,8 +315,6 @@ drawing.fillGroupStyle = function (s, gd, forLegend) {
         }
     });
 };
-
-var SYMBOLDEFS = require('./symbol_defs');
 
 drawing.symbolNames = [];
 drawing.symbolFuncs = [];
@@ -1967,3 +1962,5 @@ function getMarkerAngle(d, trace) {
 }
 
 drawing.getMarkerAngle = getMarkerAngle;
+
+export default drawing;

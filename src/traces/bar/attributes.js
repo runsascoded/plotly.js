@@ -1,14 +1,12 @@
-'use strict';
-
-var scatterAttrs = require('../scatter/attributes');
-var axisHoverFormat = require('../../plots/cartesian/axis_format_attributes').axisHoverFormat;
-const { hovertemplateAttrs, texttemplateAttrs, templatefallbackAttrs } = require('../../plots/template_attributes');
-var colorScaleAttrs = require('../../components/colorscale/attributes');
-var fontAttrs = require('../../plots/font_attributes');
-var constants = require('./constants');
-var pattern = require('../../components/drawing/attributes').pattern;
-
-var extendFlat = require('../../lib/extend').extendFlat;
+import scatterAttrs from '../scatter/attributes.js';
+import _axis_format_attributes from '../../plots/cartesian/axis_format_attributes.js';
+const { axisHoverFormat } = _axis_format_attributes;
+import { hovertemplateAttrs, texttemplateAttrs, templatefallbackAttrs } from '../../plots/template_attributes.js';
+import colorScaleAttrs from '../../components/colorscale/attributes.js';
+import fontAttrs from '../../plots/font_attributes.js';
+import constants from './constants.js';
+import { pattern } from '../../components/drawing/attributes.js';
+import { extendFlat } from '../../lib/extend.js';
 
 var textFontAttrs = fontAttrs({
     editType: 'calc',
@@ -59,7 +57,7 @@ var marker = extendFlat(
     }
 );
 
-module.exports = {
+export default {
     x: scatterAttrs.x,
     x0: scatterAttrs.x0,
     dx: scatterAttrs.dx,

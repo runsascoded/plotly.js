@@ -1,7 +1,4 @@
-'use strict';
-
-
-module.exports = {
+export default {
     scene: {
         valType: 'subplotid',
         dflt: 'scene',

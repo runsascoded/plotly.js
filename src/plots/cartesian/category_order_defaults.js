@@ -1,6 +1,4 @@
-'use strict';
-
-var isTypedArraySpec = require('../../lib/array').isTypedArraySpec;
+import { isTypedArraySpec } from '../../lib/array.js';
 
 function findCategories(ax, opts) {
     var dataAttr = opts.dataAttr || ax._id.charAt(0);
@@ -35,19 +33,7 @@ function findCategories(ax, opts) {
     return Object.keys(lookup);
 }
 
-/**
- * Fills in category* default and initial categories.
- *
- * @param {object} containerIn : input axis object
- * @param {object} containerOut : full axis object
- * @param {function} coerce : Lib.coerce fn wrapper
- * @param {object} opts :
- *   - data {array} : (full) data trace
- * OR
- *   - axData {array} : (full) data associated with axis being coerced here
- *   - dataAttr {string} : attribute name corresponding to coordinate array
- */
-module.exports = function handleCategoryOrderDefaults(containerIn, containerOut, coerce, opts) {
+export default function handleCategoryOrderDefaults(containerIn, containerOut, coerce, opts) {
     if(containerOut.type !== 'category') return;
 
     var arrayIn = containerIn.categoryarray;
@@ -84,4 +70,4 @@ module.exports = function handleCategoryOrderDefaults(containerIn, containerOut,
             containerOut._initialCategories = array.reverse();
         }
     }
-};
+}

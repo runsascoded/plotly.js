@@ -1,7 +1,6 @@
-'use strict';
-
-var Lib = require('../lib');
-var dfltConfig = require('../plot_api/plot_config').dfltConfig;
+import Lib from '../lib/index.js';
+import _plot_config from '../plot_api/plot_config.js';
+const { dfltConfig } = _plot_config;
 
 /**
  * Copy arg array *without* removing `undefined` values from objects.
@@ -28,11 +27,9 @@ function copyArgArray(gd, args) {
     return copy;
 }
 
-
 // -----------------------------------------------------
 // Undo/Redo queue for plots
 // -----------------------------------------------------
-
 
 var queue = {};
 
@@ -187,4 +184,4 @@ queue.plotDo = function(gd, func, args) {
     func.apply(null, args);
 };
 
-module.exports = queue;
+export default queue;

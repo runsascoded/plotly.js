@@ -1,12 +1,9 @@
-'use strict';
+import d3 from '@plotly/d3';
+import isNumeric from 'fast-isnumeric';
+import Drawing from '../drawing/index.js';
+import subTypes from '../../traces/scatter/subtypes.js';
 
-var d3 = require('@plotly/d3');
-var isNumeric = require('fast-isnumeric');
-
-var Drawing = require('../drawing');
-var subTypes = require('../../traces/scatter/subtypes');
-
-module.exports = function plot(gd, traces, plotinfo, transitionOpts) {
+export default function plot(gd, traces, plotinfo, transitionOpts) {
     var isNew;
 
     var xa = plotinfo.xaxis;
@@ -78,7 +75,6 @@ module.exports = function plot(gd, traces, plotinfo, transitionOpts) {
                     coords.yh + 'h' + (2 * yw) + // hat
                     'm-' + yw + ',0V' + coords.ys; // bar
 
-
                 if(!coords.noYS) path += 'm-' + yw + ',0h' + (2 * yw); // shoe
 
                 isNew = !yerror.size();
@@ -126,7 +122,7 @@ module.exports = function plot(gd, traces, plotinfo, transitionOpts) {
             } else xerror.remove();
         });
     });
-};
+}
 
 // compute the coordinates of the error-bar objects
 function errorCoords(d, xa, ya) {

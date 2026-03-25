@@ -1,10 +1,7 @@
-'use strict';
+import Color from '../../components/color/index.js';
+import heatmapHoverPoints from '../heatmap/hover.js';
 
-var Color = require('../../components/color');
-
-var heatmapHoverPoints = require('../heatmap/hover');
-
-module.exports = function hoverPoints(pointData, xval, yval, hovermode, opts) {
+export default function hoverPoints(pointData, xval, yval, hovermode, opts) {
     if(!opts) opts = {};
     opts.isContour = true;
 
@@ -24,4 +21,4 @@ module.exports = function hoverPoints(pointData, xval, yval, hovermode, opts) {
     }
 
     return hoverData;
-};
+}

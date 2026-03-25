@@ -1,18 +1,16 @@
-'use strict';
+import Axes from '../../plots/cartesian/axes.js';
+import { isArray1D } from '../../lib/index.js';
+import cheaterBasis from './cheater_basis.js';
+import arrayMinmax from './array_minmax.js';
+import calcGridlines from './calc_gridlines.js';
+import calcLabels from './calc_labels.js';
+import calcClipPath from './calc_clippath.js';
+import clean2dArray from '../heatmap/clean_2d_array.js';
+import smoothFill2dArray from './smooth_fill_2d_array.js';
+import convertColumnData from '../heatmap/convert_column_xyz.js';
+import setConvert from './set_convert.js';
 
-var Axes = require('../../plots/cartesian/axes');
-var isArray1D = require('../../lib').isArray1D;
-var cheaterBasis = require('./cheater_basis');
-var arrayMinmax = require('./array_minmax');
-var calcGridlines = require('./calc_gridlines');
-var calcLabels = require('./calc_labels');
-var calcClipPath = require('./calc_clippath');
-var clean2dArray = require('../heatmap/clean_2d_array');
-var smoothFill2dArray = require('./smooth_fill_2d_array');
-var convertColumnData = require('../heatmap/convert_column_xyz');
-var setConvert = require('./set_convert');
-
-module.exports = function calc(gd, trace) {
+export default function calc(gd, trace) {
     var xa = Axes.getFromId(gd, trace.xaxis);
     var ya = Axes.getFromId(gd, trace.yaxis);
     var aax = trace.aaxis;
@@ -97,4 +95,4 @@ module.exports = function calc(gd, trace) {
     t.b = b;
 
     return [t];
-};
+}

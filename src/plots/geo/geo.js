@@ -1,33 +1,26 @@
-'use strict';
-
-/* global PlotlyGeoAssets:false */
-
-var d3 = require('@plotly/d3');
-var geo = require('d3-geo');
+import d3 from '@plotly/d3';
+import geo from 'd3-geo';
+import geoProjection from 'd3-geo-projection';
+import Registry from '../../registry.js';
+import Lib from '../../lib/index.js';
+import Color from '../../components/color/index.js';
+import Drawing from '../../components/drawing/index.js';
+import Fx from '../../components/fx/index.js';
+import Plots from '../plots.js';
+import Axes from '../cartesian/axes.js';
+import { getAutoRange } from '../cartesian/autorange.js';
+import dragElement from '../../components/dragelement/index.js';
+import { prepSelect } from '../../components/selections/index.js';
+import { clearOutline } from '../../components/selections/index.js';
+import { selectOnClick } from '../../components/selections/index.js';
+import createGeoZoom from './zoom.js';
+import constants from './constants.js';
+import geoUtils from '../../lib/geo_location_utils.js';
+import topojsonUtils from '../../lib/topojson_utils.js';
+import { feature as topojsonFeature } from 'topojson-client';
 var geoPath = geo.geoPath;
 var geoDistance = geo.geoDistance;
-var geoProjection = require('d3-geo-projection');
-
-var Registry = require('../../registry');
-var Lib = require('../../lib');
 var strTranslate = Lib.strTranslate;
-var Color = require('../../components/color');
-var Drawing = require('../../components/drawing');
-var Fx = require('../../components/fx');
-var Plots = require('../plots');
-var Axes = require('../cartesian/axes');
-var getAutoRange = require('../cartesian/autorange').getAutoRange;
-var dragElement = require('../../components/dragelement');
-var prepSelect = require('../../components/selections').prepSelect;
-var clearOutline = require('../../components/selections').clearOutline;
-var selectOnClick = require('../../components/selections').selectOnClick;
-
-var createGeoZoom = require('./zoom');
-var constants = require('./constants');
-
-var geoUtils = require('../../lib/geo_location_utils');
-var topojsonUtils = require('../../lib/topojson_utils');
-var topojsonFeature = require('topojson-client').feature;
 
 function Geo(opts) {
     this.id = opts.id;
@@ -63,9 +56,9 @@ function Geo(opts) {
 
 var proto = Geo.prototype;
 
-module.exports = function createGeo(opts) {
+export default function createGeo(opts) {
     return new Geo(opts);
-};
+}
 
 proto.plot = function(geoCalcData, fullLayout, promises, replot) {
     var _this = this;

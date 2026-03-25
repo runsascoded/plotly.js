@@ -1,27 +1,22 @@
-'use strict';
-
-var d3 = require('@plotly/d3');
-var Lib = require('../../lib');
+import d3 from '@plotly/d3';
+import Lib from '../../lib/index.js';
+import { default as rgba } from 'color-rgba';
+import Axes from '../../plots/cartesian/axes.js';
+import svgTextUtils from '../../lib/svg_text_utils.js';
+import Drawing from '../../components/drawing/index.js';
+import Colorscale from '../../components/colorscale/index.js';
+import gup from '../../lib/gup.js';
+import helpers from './helpers.js';
+import c from './constants.js';
+import brush from './axisbrush.js';
+import lineLayerMaker from './lines.js';
 var isArrayOrTypedArray = Lib.isArrayOrTypedArray;
 var numberFormat = Lib.numberFormat;
-var rgba = require('color-rgba').default;
-
-var Axes = require('../../plots/cartesian/axes');
 var strRotate = Lib.strRotate;
 var strTranslate = Lib.strTranslate;
-var svgTextUtils = require('../../lib/svg_text_utils');
-var Drawing = require('../../components/drawing');
-var Colorscale = require('../../components/colorscale');
-
-var gup = require('../../lib/gup');
 var keyFun = gup.keyFun;
 var repeat = gup.repeat;
 var unwrap = gup.unwrap;
-
-var helpers = require('./helpers');
-var c = require('./constants');
-var brush = require('./axisbrush');
-var lineLayerMaker = require('./lines');
 
 function findExtreme(fn, values, len) {
     return Lib.aggNums(fn, null, values, len);
@@ -436,8 +431,7 @@ function extremeText(d, isTop) {
     return linearFormat(d.model.dimensions[d.visibleIndex], v);
 }
 
-
-module.exports = function parcoords(gd, cdModule, layout, callbacks) {
+export default function parcoords(gd, cdModule, layout, callbacks) {
     var isStatic = gd._context.staticPlot;
 
     var fullLayout = gd._fullLayout;
@@ -763,4 +757,4 @@ module.exports = function parcoords(gd, cdModule, layout, callbacks) {
         .each(function(d) { Drawing.font(d3.select(this), d.model.rangeFont); });
 
     brush.ensureAxisBrush(axisOverlays, paperColor, gd);
-};
+}

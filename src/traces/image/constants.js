@@ -1,6 +1,4 @@
-'use strict';
-
-module.exports = {
+export default {
     colormodel: {
         // min and max define the numerical range accepted in CSS
         // If z(min|max)Dflt are not defined, z(min|max) will default to min/max

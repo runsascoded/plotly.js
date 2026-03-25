@@ -1,15 +1,13 @@
-'use strict';
-
-var extendFlat = require('../../lib/extend').extendFlat;
-var extendDeep = require('../../lib/extend').extendDeep;
-var overrideAll = require('../../plot_api/edit_types').overrideAll;
-var fontAttrs = require('../../plots/font_attributes');
-var colorAttrs = require('../../components/color/attributes');
-var domainAttrs = require('../../plots/domain').attributes;
-var axesAttrs = require('../../plots/cartesian/layout_attributes');
-var templatedArray = require('../../plot_api/plot_template').templatedArray;
-var delta = require('../../constants/delta.js');
-var descriptionOnlyNumbers = require('../../plots/cartesian/axis_format_attributes').descriptionOnlyNumbers;
+import { extendFlat } from '../../lib/extend.js';
+import { extendDeep } from '../../lib/extend.js';
+import { overrideAll } from '../../plot_api/edit_types.js';
+import fontAttrs from '../../plots/font_attributes.js';
+import colorAttrs from '../../components/color/attributes.js';
+import { attributes as domainAttrs } from '../../plots/domain.js';
+import axesAttrs from '../../plots/cartesian/layout_attributes.js';
+import { templatedArray } from '../../plot_api/plot_template.js';
+import delta from '../../constants/delta.js';
+import { descriptionOnlyNumbers } from '../../plots/cartesian/axis_format_attributes.js';
 
 var textFontAttrs = fontAttrs({
     editType: 'plot',
@@ -83,7 +81,7 @@ var stepsAttrs = templatedArray('step', extendDeep({}, gaugeBarAttrs, {
     range: rangeAttr
 }));
 
-module.exports = {
+export default {
     mode: {
         valType: 'flaglist',
         editType: 'calc',

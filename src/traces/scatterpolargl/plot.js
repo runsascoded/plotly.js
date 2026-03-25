@@ -1,19 +1,14 @@
-'use strict';
-
-var cluster = require('@plotly/point-cluster');
-var isNumeric = require('fast-isnumeric');
-
-var scatterglPlot = require('../scattergl/plot');
-var sceneUpdate = require('../scattergl/scene_update');
-var convert = require('../scattergl/convert');
-
-var Lib = require('../../lib');
-
-var TOO_MANY_POINTS = require('../scattergl/constants').TOO_MANY_POINTS;
+import cluster from '@plotly/point-cluster';
+import isNumeric from 'fast-isnumeric';
+import scatterglPlot from '../scattergl/plot.js';
+import sceneUpdate from '../scattergl/scene_update.js';
+import convert from '../scattergl/convert.js';
+import Lib from '../../lib/index.js';
+import { TOO_MANY_POINTS } from '../scattergl/constants.js';
 
 var reglPrecompiled = {};
 
-module.exports = function plot(gd, subplot, cdata) {
+export default function plot(gd, subplot, cdata) {
     if(!cdata.length) return;
 
     var radialAxis = subplot.radialAxis;
@@ -127,6 +122,6 @@ module.exports = function plot(gd, subplot, cdata) {
     });
 
     return scatterglPlot(gd, subplot, cdata);
-};
+}
 
-module.exports.reglPrecompiled = reglPrecompiled;
+export { reglPrecompiled };

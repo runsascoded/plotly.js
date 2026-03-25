@@ -1,9 +1,7 @@
-'use strict';
+import { wrap } from '../../lib/gup.js';
 
-var wrap = require('../../lib/gup').wrap;
-
-module.exports = function calc() {
+export default function calc() {
     // we don't actually need to include the trace here, since that will be added
     // by Plots.doCalcdata, and that's all we actually need later.
     return wrap({});
-};
+}

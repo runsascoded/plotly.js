@@ -1,6 +1,4 @@
-'use strict';
-
-module.exports = function eventData(out, pt) {
+export default function eventData(out, pt) {
     if('xVal' in pt) out.x = pt.xVal;
     if('yVal' in pt) out.y = pt.yVal;
     if(pt.xa) out.xaxis = pt.xa;
@@ -9,4 +7,4 @@ module.exports = function eventData(out, pt) {
     out.colormodel = pt.trace.colormodel;
     if(!out.z) out.z = pt.color;
     return out;
-};
+}

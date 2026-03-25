@@ -1,9 +1,7 @@
-'use strict';
+import isNumeric from 'fast-isnumeric';
+import isMobileOrTablet from 'is-mobile';
 
-var isNumeric = require('fast-isnumeric');
-var isMobileOrTablet = require('is-mobile');
-
-module.exports = function preserveDrawingBuffer(opts) {
+export default function preserveDrawingBuffer(opts) {
     var ua;
 
     if(opts && opts.hasOwnProperty('userAgent')) {
@@ -39,7 +37,7 @@ module.exports = function preserveDrawingBuffer(opts) {
     }
 
     return enable;
-};
+}
 
 function getUserAgent() {
     // similar to https://github.com/juliangruber/is-mobile/blob/91ca39ccdd4cfc5edfb5391e2515b923a730fbea/index.js#L14-L17

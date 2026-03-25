@@ -1,9 +1,10 @@
 import { build } from 'esbuild';
 import fs from 'fs';
 import path from 'path';
-import { localDevConfig } from '../esbuild-config.js';
+import _esbuildConfig from '../esbuild-config.cjs';
+var { localDevConfig } = _esbuildConfig;
 
-import constants from './util/constants.js';
+import constants from './util/constants.cjs';
 import plotlyNode from './util/plotly_node.mjs';
 
 const caseInsensitive = (a, b) => a.toLowerCase().localeCompare(b.toLowerCase());

@@ -1,18 +1,15 @@
-'use strict';
+import createMatrix from 'regl-splom';
+import Lib from '../../lib/index.js';
+import AxisIDs from '../../plots/cartesian/axis_ids.js';
+import { selectMode } from '../../components/dragelement/helpers.js';
 
-var createMatrix = require('regl-splom');
-
-var Lib = require('../../lib');
-var AxisIDs = require('../../plots/cartesian/axis_ids');
-var selectMode = require('../../components/dragelement/helpers').selectMode;
-
-module.exports = function plot(gd, _, splomCalcData) {
+export default function plot(gd, _, splomCalcData) {
     if(!splomCalcData.length) return;
 
     for(var i = 0; i < splomCalcData.length; i++) {
         plotOne(gd, splomCalcData[i][0]);
     }
-};
+}
 
 function plotOne(gd, cd0) {
     var fullLayout = gd._fullLayout;

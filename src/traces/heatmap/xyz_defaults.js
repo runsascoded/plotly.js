@@ -1,11 +1,8 @@
-'use strict';
+import isNumeric from 'fast-isnumeric';
+import Lib from '../../lib/index.js';
+import Registry from '../../registry.js';
 
-var isNumeric = require('fast-isnumeric');
-var Lib = require('../../lib');
-
-var Registry = require('../../registry');
-
-module.exports = function handleXYZDefaults(traceIn, traceOut, coerce, layout, xName, yName) {
+export default function handleXYZDefaults(traceIn, traceOut, coerce, layout, xName, yName) {
     var z = coerce('z');
     xName = xName || 'x';
     yName = yName || 'y';
@@ -40,7 +37,7 @@ module.exports = function handleXYZDefaults(traceIn, traceOut, coerce, layout, x
     handleCalendarDefaults(traceIn, traceOut, [xName, yName], layout);
 
     return true;
-};
+}
 
 function coordDefaults(coordStr, coerce) {
     var coord = coerce(coordStr);

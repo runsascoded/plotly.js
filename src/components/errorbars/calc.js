@@ -1,14 +1,10 @@
-'use strict';
+import isNumeric from 'fast-isnumeric';
+import Registry from '../../registry.js';
+import Axes from '../../plots/cartesian/axes.js';
+import Lib from '../../lib/index.js';
+import makeComputeError from './compute_error.js';
 
-var isNumeric = require('fast-isnumeric');
-
-var Registry = require('../../registry');
-var Axes = require('../../plots/cartesian/axes');
-var Lib = require('../../lib');
-
-var makeComputeError = require('./compute_error');
-
-module.exports = function calc(gd) {
+export default function calc(gd) {
     var calcdata = gd.calcdata;
 
     for(var i = 0; i < calcdata.length; i++) {
@@ -22,7 +18,7 @@ module.exports = function calc(gd) {
             calcOneAxis(calcTrace, trace, ya, 'y');
         }
     }
-};
+}
 
 function calcOneAxis(calcTrace, trace, axis, coord) {
     var opts = trace['error_' + coord] || {};

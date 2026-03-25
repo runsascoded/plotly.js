@@ -1,8 +1,6 @@
-'use strict';
+import getShowAttrDflt from './show_dflt.js';
 
-var getShowAttrDflt = require('./show_dflt');
-
-module.exports = function handlePrefixSuffixDefaults(containerIn, containerOut, coerce, axType, options) {
+export default function handlePrefixSuffixDefaults(containerIn, containerOut, coerce, axType, options) {
     if(!options) options = {};
     var tickSuffixDflt = options.tickSuffixDflt;
 
@@ -13,4 +11,4 @@ module.exports = function handlePrefixSuffixDefaults(containerIn, containerOut, 
 
     var tickSuffix = coerce('ticksuffix', tickSuffixDflt);
     if(tickSuffix) coerce('showticksuffix', showAttrDflt);
-};
+}

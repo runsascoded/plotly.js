@@ -2,7 +2,7 @@ import minimist from 'minimist';
 import runSeries from 'run-series';
 
 import partialBundle from './partial_bundle.mjs';
-import constants from './util/constants.js';
+import constants from './util/constants.cjs';
 var partialBundlePaths = constants.partialBundleNames.map(constants.makePartialBundleOpts);
 
 var list = partialBundlePaths;

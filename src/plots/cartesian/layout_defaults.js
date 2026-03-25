@@ -1,25 +1,21 @@
-'use strict';
-
-var Lib = require('../../lib');
-var Color = require('../../components/color');
-var isUnifiedHover = require('../../components/fx/helpers').isUnifiedHover;
-var handleHoverModeDefaults = require('../../components/fx/hovermode_defaults');
-var Template = require('../../plot_api/plot_template');
-var basePlotLayoutAttributes = require('../layout_attributes');
-
-var layoutAttributes = require('./layout_attributes');
-var handleTypeDefaults = require('./type_defaults');
-var handleAxisDefaults = require('./axis_defaults');
-var constraints = require('./constraints');
-var handlePositionDefaults = require('./position_defaults');
-
-var axisIds = require('./axis_ids');
+import Lib from '../../lib/index.js';
+import Color from '../../components/color/index.js';
+import { isUnifiedHover } from '../../components/fx/helpers.js';
+import handleHoverModeDefaults from '../../components/fx/hovermode_defaults.js';
+import Template from '../../plot_api/plot_template.js';
+import basePlotLayoutAttributes from '../layout_attributes.js';
+import layoutAttributes from './layout_attributes.js';
+import handleTypeDefaults from './type_defaults.js';
+import handleAxisDefaults from './axis_defaults.js';
+import constraints from './constraints.js';
+import handlePositionDefaults from './position_defaults.js';
+import axisIds from './axis_ids.js';
+import _constants from './constants.js';
+const { AX_ID_PATTERN } = _constants;
+import Registry from '../../registry.js';
 var id2name = axisIds.id2name;
 var name2id = axisIds.name2id;
 
-var AX_ID_PATTERN = require('./constants').AX_ID_PATTERN;
-
-var Registry = require('../../registry');
 var traceIs = Registry.traceIs;
 var getComponentMethod = Registry.getComponentMethod;
 
@@ -28,7 +24,7 @@ function appendList(cont, k, item) {
     else cont[k] = [item];
 }
 
-module.exports = function supplyLayoutDefaults(layoutIn, layoutOut, fullData) {
+export default function supplyLayoutDefaults(layoutIn, layoutOut, fullData) {
     var autotypenumbersDflt = layoutOut.autotypenumbers;
 
     var ax2traces = {};
@@ -392,4 +388,4 @@ module.exports = function supplyLayoutDefaults(layoutIn, layoutOut, fullData) {
         axIds: allAxisIds.concat(missingMatchedAxisIds).sort(axisIds.idSort),
         axHasImage: axHasImage
     });
-};
+}

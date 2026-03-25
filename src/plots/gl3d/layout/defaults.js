@@ -1,17 +1,14 @@
-'use strict';
-
-var Lib = require('../../../lib');
-var Color = require('../../../components/color');
-var Registry = require('../../../registry');
-
-var handleSubplotDefaults = require('../../subplot_defaults');
-var supplyGl3dAxisLayoutDefaults = require('./axis_defaults');
-var layoutAttributes = require('./layout_attributes');
-var getSubplotData = require('../../get_data').getSubplotData;
+import Lib from '../../../lib/index.js';
+import Color from '../../../components/color/index.js';
+import Registry from '../../../registry.js';
+import handleSubplotDefaults from '../../subplot_defaults.js';
+import supplyGl3dAxisLayoutDefaults from './axis_defaults.js';
+import layoutAttributes from './layout_attributes.js';
+import { getSubplotData } from '../../get_data.js';
 
 var GL3D = 'gl3d';
 
-module.exports = function supplyLayoutDefaults(layoutIn, layoutOut, fullData) {
+export default function supplyLayoutDefaults(layoutIn, layoutOut, fullData) {
     var hasNon3D = layoutOut._basePlotModules.length > 1;
 
     // some layout-wide attribute are used in all scenes
@@ -35,7 +32,7 @@ module.exports = function supplyLayoutDefaults(layoutIn, layoutOut, fullData) {
         paper_bgcolor: layoutOut.paper_bgcolor,
         calendar: layoutOut.calendar
     });
-};
+}
 
 function handleGl3dDefaults(sceneLayoutIn, sceneLayoutOut, coerce, opts) {
     /*

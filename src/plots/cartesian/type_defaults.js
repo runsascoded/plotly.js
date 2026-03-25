@@ -1,13 +1,7 @@
-'use strict';
+import { traceIs } from '../../registry.js';
+import autoType from './axis_autotype.js';
 
-var traceIs = require('../../registry').traceIs;
-var autoType = require('./axis_autotype');
-
-/*
- *  data: the plot data to use in choosing auto type
- *  name: axis object name (ie 'xaxis') if one should be stored
- */
-module.exports = function handleTypeDefaults(containerIn, containerOut, coerce, options) {
+export default function handleTypeDefaults(containerIn, containerOut, coerce, options) {
     coerce('autotypenumbers', options.autotypenumbersDflt);
     var axType = coerce('type', (options.splomStash || {}).type);
 
@@ -24,7 +18,7 @@ module.exports = function handleTypeDefaults(containerIn, containerOut, coerce, 
             containerIn.type = containerOut.type;
         }
     }
-};
+}
 
 function setAutoType(ax, data) {
     // new logic: let people specify any type they want,

@@ -1,7 +1,6 @@
-'use strict';
-
-var calc = require('./calc');
-var setGroupPositions = require('../bar/cross_trace_calc').setGroupPositions;
+import calc from './calc.js';
+import _cross_trace_calc from '../bar/cross_trace_calc.js';
+const { setGroupPositions } = _cross_trace_calc;
 
 function groupCrossTraceCalc(gd, plotinfo) {
     var xa = plotinfo.xaxis;
@@ -38,12 +37,7 @@ function groupCrossTraceCalc(gd, plotinfo) {
     setGroupPositions(gd, ya, xa, calcTracesHorz, opts);
 }
 
-/*
- * Scatter stacking & normalization calculations
- * runs per subplot, and can handle multiple stacking groups
- */
-
-module.exports = function crossTraceCalc(gd, plotinfo) {
+export default function crossTraceCalc(gd, plotinfo) {
     if(gd._fullLayout.scattermode === 'group') {
         groupCrossTraceCalc(gd, plotinfo);
     }
@@ -166,7 +160,7 @@ module.exports = function crossTraceCalc(gd, plotinfo) {
             cd[0].t.orientation = groupOpts.orientation;
         }
     }
-};
+}
 
 function insertBlank(calcTrace, index, position, traceIndex, hasAnyBlanks, interpolate, posAttr) {
     hasAnyBlanks[traceIndex] = true;

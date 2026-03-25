@@ -1,13 +1,10 @@
-'use strict';
+import c from './constants.js';
+import { extendFlat } from '../../lib/extend.js';
+import isNumeric from 'fast-isnumeric';
+import { isTypedArray } from '../../lib/array.js';
+import { isArrayOrTypedArray } from '../../lib/array.js';
 
-var c = require('./constants');
-var extendFlat = require('../../lib/extend').extendFlat;
-var isNumeric = require('fast-isnumeric');
-var isTypedArray = require('../../lib/array').isTypedArray;
-var isArrayOrTypedArray = require('../../lib/array').isArrayOrTypedArray;
-
-// pure functions, don't alter but passes on `gd` and parts of `trace` without deep copying
-module.exports = function calc(gd, trace) {
+export default function calc(gd, trace) {
     var cellsValues = squareStringMatrix(trace.cells.values);
     var slicer = function(a) {
         return a.slice(trace.header.values.length, a.length);
@@ -98,7 +95,7 @@ module.exports = function calc(gd, trace) {
     });
 
     return calcdata;
-};
+}
 
 function arrayMax(maybeArray) {
     if(isArrayOrTypedArray(maybeArray)) {

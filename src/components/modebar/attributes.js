@@ -1,8 +1,6 @@
-'use strict';
+import constants from './constants.js';
 
-var constants = require('./constants');
-
-module.exports = {
+export default {
     editType: 'modebar',
 
     orientation: {

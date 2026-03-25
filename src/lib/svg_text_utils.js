@@ -1,19 +1,15 @@
-'use strict';
-
-/* global MathJax:false */
-
-var d3 = require('@plotly/d3');
-
-var Lib = require('../lib');
+import d3 from '@plotly/d3';
+import Lib from '../lib/index.js';
+import xmlnsNamespaces from '../constants/xmlns_namespaces.js';
+import _alignment from '../constants/alignment.js';
+const { LINE_SPACING } = _alignment;
 var strTranslate = Lib.strTranslate;
-var xmlnsNamespaces = require('../constants/xmlns_namespaces');
-var LINE_SPACING = require('../constants/alignment').LINE_SPACING;
 
 // text converter
 
 var FIND_TEX = /([^$]*)([$]+[^$]*[$]+)([^$]*)/;
 
-exports.convertToTspans = function(_context, gd, _callback) {
+export var convertToTspans = function(_context, gd, _callback) {
     var str = _context.text();
 
     // Until we get tex integrated more fully (so it can be used along with non-tex)
@@ -57,7 +53,7 @@ exports.convertToTspans = function(_context, gd, _callback) {
             _context.style('pointer-events', 'all');
         }
 
-        exports.positionText(_context);
+        positionText(_context);
 
         if(_callback) _callback.call(_context);
     }
@@ -162,7 +158,6 @@ exports.convertToTspans = function(_context, gd, _callback) {
 
     return _context;
 };
-
 
 // MathJax
 
@@ -360,14 +355,14 @@ var ZERO_WIDTH_SPACE = '\u200b';
  */
 var PROTOCOLS = ['http:', 'https:', 'mailto:', '', undefined, ':'];
 
-var NEWLINES = exports.NEWLINES = /(\r\n?|\n)/g;
+export var NEWLINES = /(\r\n?|\n)/g;
 
 var SPLIT_TAGS = /(<[^<>]*>)/;
 
 var ONE_TAG = /<(\/?)([^ >]*)(\s+(.*))?>/i;
 
 var BR_TAG = /<br(\s+.*)?>/i;
-exports.BR_TAG_ALL = /<br(\s+.*)?>/gi;
+export var BR_TAG_ALL = /<br(\s+.*)?>/gi;
 
 /*
  * style and href: pull them out of either single or double quotes. Also
@@ -410,16 +405,7 @@ function getQuotedMatch(_str, re) {
 
 var COLORMATCH = /(^|;)\s*color:/;
 
-/**
- * Strip string of tags
- *
- * @param {string} _str : input string
- * @param {object} opts :
- * - len {number} max length of output string
- * - allowedTags {array} list of pseudo-html tags to NOT strip
- * @return {string}
- */
-exports.plainText = function(_str, opts) {
+export var plainText = function(_str, opts) {
     opts = opts || {};
 
     var len = (opts.len !== undefined && opts.len !== -1) ? opts.len : Infinity;
@@ -518,7 +504,7 @@ function convertEntities(_str) {
         return outChar || fullMatch;
     });
 }
-exports.convertEntities = convertEntities;
+export { convertEntities };
 
 function fromCodePoint(code) {
     // Don't allow overflow. In Chrome this turns into � but I feel like it's
@@ -742,13 +728,7 @@ function sanitizeHref(href) {
     }
 }
 
-/*
- * sanitizeHTML: port of buildSVGText aimed at providing a clean subset of HTML
- * @param {string} str: the html string to clean
- * @returns {string}: a cleaned and normalized version of the input,
- *     supporting only a small subset of html
- */
-exports.sanitizeHTML = function sanitizeHTML(str) {
+export var sanitizeHTML = function sanitizeHTML(str) {
     str = str.replace(NEWLINES, ' ');
 
     var rootNode = document.createElement('p');
@@ -804,11 +784,11 @@ exports.sanitizeHTML = function sanitizeHTML(str) {
     return rootNode[key];
 };
 
-exports.lineCount = function lineCount(s) {
+export var lineCount = function lineCount(s) {
     return s.selectAll('tspan.line').size() || 1;
 };
 
-exports.positionText = function positionText(s, x, y) {
+export var positionText = function positionText(s, x, y) {
     return s.each(function() {
         var text = d3.select(this);
 
@@ -881,7 +861,7 @@ function alignHTMLWith(_base, container, options) {
 
 var onePx = '1px ';
 
-exports.makeTextShadow = function(color) {
+export var makeTextShadow = function(color) {
     var x = onePx;
     var y = onePx;
     var b = onePx;
@@ -891,22 +871,7 @@ exports.makeTextShadow = function(color) {
         '-' + x + y + b + color;
 };
 
-/*
- * Editable title
- * @param {d3.selection} context: the element being edited. Normally text,
- *   but if it isn't, you should provide the styling options
- * @param {object} options:
- *   @param {div} options.gd: graphDiv
- *   @param {d3.selection} options.delegate: item to bind events to if not this
- *   @param {boolean} options.immediate: start editing now (true) or on click (false, default)
- *   @param {string} options.fill: font color if not as shown
- *   @param {string} options.background: background color if not as shown
- *   @param {string} options.text: initial text, if not as shown
- *   @param {string} options.horizontalAlign: alignment of the edit box wrt. the bound element
- *   @param {string} options.verticalAlign: alignment of the edit box wrt. the bound element
- */
-
-exports.makeEditable = function(context, options) {
+export var makeEditable = function(context, options) {
     var gd = options.gd;
     var _delegate = options.delegate;
     var dispatch = d3.dispatch('edit', 'input', 'cancel');
@@ -1014,3 +979,5 @@ exports.makeEditable = function(context, options) {
 
     return d3.rebind(context, dispatch, 'on');
 };
+
+export default { convertToTspans, NEWLINES, BR_TAG_ALL, plainText, sanitizeHTML, lineCount, positionText, makeTextShadow, makeEditable, convertEntities };

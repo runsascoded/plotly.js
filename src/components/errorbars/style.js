@@ -1,11 +1,7 @@
-'use strict';
+import d3 from '@plotly/d3';
+import Color from '../color/index.js';
 
-var d3 = require('@plotly/d3');
-
-var Color = require('../color');
-
-
-module.exports = function style(traces) {
+export default function style(traces) {
     traces.each(function(d) {
         var trace = d[0].trace;
         var yObj = trace.error_y || {};
@@ -23,4 +19,4 @@ module.exports = function style(traces) {
             .style('stroke-width', xObj.thickness + 'px')
             .call(Color.stroke, xObj.color);
     });
-};
+}

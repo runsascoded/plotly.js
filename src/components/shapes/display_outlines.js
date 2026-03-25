@@ -1,36 +1,32 @@
-'use strict';
-
-var Lib = require('../../lib');
+import Lib from '../../lib/index.js';
+import dragElement from '../dragelement/index.js';
+import dragHelpers from '../dragelement/helpers.js';
+import Registry from '../../registry.js';
+import Color from '../color/index.js';
+import constants from './draw_newshape/constants.js';
+import handleOutline from './handle_outline.js';
+import helpers from './draw_newshape/helpers.js';
+import _newshapes from './draw_newshape/newshapes.js';
+const { newShapes, createShapeObj } = _newshapes;
+import newSelections from '../selections/draw_newselection/newselections.js';
+import drawLabel from './display_labels.js';
 var strTranslate = Lib.strTranslate;
 
-var dragElement = require('../dragelement');
-var dragHelpers = require('../dragelement/helpers');
 var drawMode = dragHelpers.drawMode;
 var selectMode = dragHelpers.selectMode;
 
-var Registry = require('../../registry');
-var Color = require('../color');
-
-var constants = require('./draw_newshape/constants');
 var i000 = constants.i000;
 var i090 = constants.i090;
 var i180 = constants.i180;
 var i270 = constants.i270;
 
-var handleOutline = require('./handle_outline');
 var clearOutlineControllers = handleOutline.clearOutlineControllers;
 
-var helpers = require('./draw_newshape/helpers');
 var pointsOnRectangle = helpers.pointsOnRectangle;
 var pointsOnEllipse = helpers.pointsOnEllipse;
 var writePaths = helpers.writePaths;
-var newShapes = require('./draw_newshape/newshapes').newShapes;
-var createShapeObj = require('./draw_newshape/newshapes').createShapeObj;
-var newSelections = require('../selections/draw_newselection/newselections');
-var drawLabel = require('./display_labels');
 
-
-module.exports = function displayOutlines(polygons, outlines, dragOptions, nCalls) {
+export default function displayOutlines(polygons, outlines, dragOptions, nCalls) {
     if(!nCalls) nCalls = 0;
 
     var gd = dragOptions.gd;
@@ -340,7 +336,7 @@ module.exports = function displayOutlines(polygons, outlines, dragOptions, nCall
 
         dragElement.init(groupDragOptions[i]);
     }
-};
+}
 
 function recordPositions(polygonsOut, polygonsIn) {
     for(var i = 0; i < polygonsIn.length; i++) {

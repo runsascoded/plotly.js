@@ -1,6 +1,4 @@
-'use strict';
-
-var tinycolor = require('tinycolor2');
+import tinycolor from 'tinycolor2';
 
 var scales = {
     Greys: [
@@ -157,7 +155,6 @@ function getScale(scl, dflt) {
     return scl;
 }
 
-
 function isValidScaleArray(scl) {
     var highestVal = 0;
 
@@ -185,7 +182,7 @@ function isValidScale(scl) {
     else return isValidScaleArray(scl);
 }
 
-module.exports = {
+export default {
     scales: scales,
     defaultScale: defaultScale,
 

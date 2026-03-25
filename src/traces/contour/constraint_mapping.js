@@ -1,11 +1,7 @@
-'use strict';
+import filterOps from '../../constants/filter_ops.js';
+import isNumeric from 'fast-isnumeric';
 
-var filterOps = require('../../constants/filter_ops');
-var isNumeric = require('fast-isnumeric');
-
-// This syntax conforms to the existing filter transform syntax, but we don't care
-// about open vs. closed intervals for simply drawing contours constraints:
-module.exports = {
+export default {
     '[]': makeRangeSettings('[]'),
     '][': makeRangeSettings(']['),
     '>': makeInequalitySettings('>'),

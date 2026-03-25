@@ -1,6 +1,4 @@
-'use strict';
-
-module.exports = {
+export default {
     waterfallmode: {
         valType: 'enumerated',
         values: ['group', 'overlay'],

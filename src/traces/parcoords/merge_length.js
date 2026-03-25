@@ -1,15 +1,4 @@
-'use strict';
-
-/**
- * mergeLength: set trace length as the minimum of all dimension data lengths
- *     and propagates this length into each dimension
- *
- * @param {object} traceOut: the fullData trace
- * @param {Array(object)} dimensions: array of dimension objects
- * @param {string} dataAttr: the attribute of each dimension containing the data
- * @param {integer} len: an already-existing length from other attributes
- */
-module.exports = function(traceOut, dimensions, dataAttr, len) {
+export default function(traceOut, dimensions, dataAttr, len) {
     if(!len) len = Infinity;
     var i, dimi;
     for(i = 0; i < dimensions.length; i++) {
@@ -25,4 +14,4 @@ module.exports = function(traceOut, dimensions, dataAttr, len) {
     }
 
     return len;
-};
+}

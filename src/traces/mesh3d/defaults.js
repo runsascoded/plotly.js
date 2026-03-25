@@ -1,11 +1,9 @@
-'use strict';
+import Registry from '../../registry.js';
+import Lib from '../../lib/index.js';
+import colorscaleDefaults from '../../components/colorscale/defaults.js';
+import attributes from './attributes.js';
 
-var Registry = require('../../registry');
-var Lib = require('../../lib');
-var colorscaleDefaults = require('../../components/colorscale/defaults');
-var attributes = require('./attributes');
-
-module.exports = function supplyDefaults(traceIn, traceOut, defaultColor, layout) {
+export default function supplyDefaults(traceIn, traceOut, defaultColor, layout) {
     function coerce(attr, dflt) {
         return Lib.coerce(traceIn, traceOut, attributes, attr, dflt);
     }
@@ -96,4 +94,4 @@ module.exports = function supplyDefaults(traceIn, traceOut, defaultColor, layout
     // x/y/z should match lengths, and i/j/k should match as well, but
     // the two sets have different lengths so transforms wouldn't work.
     traceOut._length = null;
-};
+}

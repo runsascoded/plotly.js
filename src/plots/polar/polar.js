@@ -1,35 +1,30 @@
-'use strict';
-
-var d3 = require('@plotly/d3');
-var tinycolor = require('tinycolor2');
-
-var Registry = require('../../registry');
-var Lib = require('../../lib');
+import d3 from '@plotly/d3';
+import tinycolor from 'tinycolor2';
+import Registry from '../../registry.js';
+import Lib from '../../lib/index.js';
+import Color from '../../components/color/index.js';
+import Drawing from '../../components/drawing/index.js';
+import Plots from '../plots.js';
+import Axes from '../../plots/cartesian/axes.js';
+import setConvertCartesian from '../cartesian/set_convert.js';
+import setConvertPolar from './set_convert.js';
+import { doAutoRange } from '../cartesian/autorange.js';
+import dragBox from '../cartesian/dragbox.js';
+import dragElement from '../../components/dragelement/index.js';
+import Fx from '../../components/fx/index.js';
+import Titles from '../../components/titles/index.js';
+import { prepSelect } from '../../components/selections/index.js';
+import { selectOnClick } from '../../components/selections/index.js';
+import { clearOutline } from '../../components/selections/index.js';
+import setCursor from '../../lib/setcursor.js';
+import clearGlCanvases from '../../lib/clear_gl_canvases.js';
+import { redrawReglTraces } from '../../plot_api/subroutines.js';
+import { MID_SHIFT } from '../../constants/alignment.js';
+import constants from './constants.js';
+import helpers from './helpers.js';
+import smithHelpers from '../smith/helpers.js';
 var strRotate = Lib.strRotate;
 var strTranslate = Lib.strTranslate;
-var Color = require('../../components/color');
-var Drawing = require('../../components/drawing');
-var Plots = require('../plots');
-var Axes = require('../../plots/cartesian/axes');
-var setConvertCartesian = require('../cartesian/set_convert');
-var setConvertPolar = require('./set_convert');
-var doAutoRange = require('../cartesian/autorange').doAutoRange;
-var dragBox = require('../cartesian/dragbox');
-var dragElement = require('../../components/dragelement');
-var Fx = require('../../components/fx');
-var Titles = require('../../components/titles');
-var prepSelect = require('../../components/selections').prepSelect;
-var selectOnClick = require('../../components/selections').selectOnClick;
-var clearOutline = require('../../components/selections').clearOutline;
-var setCursor = require('../../lib/setcursor');
-var clearGlCanvases = require('../../lib/clear_gl_canvases');
-var redrawReglTraces = require('../../plot_api/subroutines').redrawReglTraces;
-
-var MID_SHIFT = require('../../constants/alignment').MID_SHIFT;
-var constants = require('./constants');
-var helpers = require('./helpers');
-
-var smithHelpers = require('../smith/helpers');
 var smith = smithHelpers.smith;
 var reactanceArc = smithHelpers.reactanceArc;
 var resistanceArc = smithHelpers.resistanceArc;
@@ -91,9 +86,9 @@ function Polar(gd, id, isSmith) {
 
 var proto = Polar.prototype;
 
-module.exports = function createPolar(gd, id, isSmith) {
+export default function createPolar(gd, id, isSmith) {
     return new Polar(gd, id, isSmith);
-};
+}
 
 proto.plot = function(polarCalcData, fullLayout) {
     var _this = this;

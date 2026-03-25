@@ -1,13 +1,10 @@
-'use strict';
+import Lib from '../../lib/index.js';
+import Template from '../../plot_api/plot_template.js';
+import axisIds from '../../plots/cartesian/axis_ids.js';
+import attributes from './attributes.js';
+import oppAxisAttrs from './oppaxis_attributes.js';
 
-var Lib = require('../../lib');
-var Template = require('../../plot_api/plot_template');
-var axisIds = require('../../plots/cartesian/axis_ids');
-
-var attributes = require('./attributes');
-var oppAxisAttrs = require('./oppaxis_attributes');
-
-module.exports = function handleDefaults(layoutIn, layoutOut, axName) {
+export default function handleDefaults(layoutIn, layoutOut, axName) {
     var axIn = layoutIn[axName];
     var axOut = layoutOut[axName];
 
@@ -73,4 +70,4 @@ module.exports = function handleDefaults(layoutIn, layoutOut, axName) {
 
     // to map back range slider (auto) range
     containerOut._input = containerIn;
-};
+}

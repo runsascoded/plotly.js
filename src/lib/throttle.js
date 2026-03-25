@@ -1,22 +1,6 @@
-'use strict';
-
 var timerCache = {};
 
-/**
- * Throttle a callback. `callback` executes synchronously only if
- * more than `minInterval` milliseconds have already elapsed since the latest
- * call (if any). Otherwise we wait until `minInterval` is over and execute the
- * last callback received while waiting.
- * So the first and last events in a train are always executed (eventually)
- * but some of the events in the middle can be dropped.
- *
- * @param {string} id: an identifier to mark events to throttle together
- * @param {number} minInterval: minimum time, in milliseconds, between
- *   invocations of `callback`
- * @param {function} callback: the function to throttle. `callback` itself
- *   should be a purely synchronous function.
- */
-exports.throttle = function throttle(id, minInterval, callback) {
+export var throttle = function throttle(id, minInterval, callback) {
     var cache = timerCache[id];
     var now = Date.now();
 
@@ -56,7 +40,7 @@ exports.throttle = function throttle(id, minInterval, callback) {
     }, minInterval);
 };
 
-exports.done = function(id) {
+export var done = function(id) {
     var cache = timerCache[id];
     if(!cache || !cache.timer) return Promise.resolve();
 
@@ -70,18 +54,12 @@ exports.done = function(id) {
     });
 };
 
-/**
- * Clear the throttle cache for one or all timers
- * @param {optional string} id:
- *   if provided, clear just this timer
- *   if omitted, clear all timers (mainly useful for testing)
- */
-exports.clear = function(id) {
+export var clear = function(id) {
     if(id) {
         _clearTimeout(timerCache[id]);
         delete timerCache[id];
     } else {
-        for(var idi in timerCache) exports.clear(idi);
+        for(var idi in timerCache) clear(idi);
     }
 };
 
@@ -91,3 +69,5 @@ function _clearTimeout(cache) {
         cache.timer = null;
     }
 }
+
+export default { throttle, done, clear };

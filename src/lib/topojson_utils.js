@@ -1,9 +1,7 @@
-'use strict';
+import { locationmodeToLayer } from '../plots/geo/constants.js';
+import { feature as topojsonFeature } from 'topojson-client';
 
-var topojsonUtils = module.exports = {};
-
-var locationmodeToLayer = require('../plots/geo/constants').locationmodeToLayer;
-var topojsonFeature = require('topojson-client').feature;
+var topojsonUtils = {};
 
 topojsonUtils.getTopojsonName = function(geoLayout) {
     return [
@@ -24,3 +22,5 @@ topojsonUtils.getTopojsonFeatures = function(trace, topojson) {
 
     return topojsonFeature(topojson, obj).features;
 };
+
+export default topojsonUtils;

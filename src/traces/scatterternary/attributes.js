@@ -1,19 +1,16 @@
-'use strict';
-
-const { hovertemplateAttrs, texttemplateAttrs, templatefallbackAttrs } = require('../../plots/template_attributes');
-var makeFillcolorAttr = require('../scatter/fillcolor_attribute');
-var scatterAttrs = require('../scatter/attributes');
-var baseAttrs = require('../../plots/attributes');
-var colorScaleAttrs = require('../../components/colorscale/attributes');
-var dash = require('../../components/drawing/attributes').dash;
-
-var extendFlat = require('../../lib/extend').extendFlat;
+import { hovertemplateAttrs, texttemplateAttrs, templatefallbackAttrs } from '../../plots/template_attributes.js';
+import makeFillcolorAttr from '../scatter/fillcolor_attribute.js';
+import scatterAttrs from '../scatter/attributes.js';
+import baseAttrs from '../../plots/attributes.js';
+import colorScaleAttrs from '../../components/colorscale/attributes.js';
+import { dash } from '../../components/drawing/attributes.js';
+import { extendFlat } from '../../lib/extend.js';
 
 var scatterMarkerAttrs = scatterAttrs.marker;
 var scatterLineAttrs = scatterAttrs.line;
 var scatterMarkerLineAttrs = scatterMarkerAttrs.line;
 
-module.exports = {
+export default {
     a: {
         valType: 'data_array',
         editType: 'calc',

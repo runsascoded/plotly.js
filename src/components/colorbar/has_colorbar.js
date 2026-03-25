@@ -1,8 +1,5 @@
-'use strict';
+import Lib from '../../lib/index.js';
 
-var Lib = require('../../lib');
-
-
-module.exports = function hasColorbar(container) {
+export default function hasColorbar(container) {
     return Lib.isPlainObject(container.colorbar);
-};
+}

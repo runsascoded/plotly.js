@@ -1,15 +1,11 @@
-'use strict';
+import isNumeric from 'fast-isnumeric';
+import Lib from '../../lib/index.js';
+import Color from '../../components/color/index.js';
+import Colorscale from '../../components/colorscale/index.js';
+import { BADNUM } from '../../constants/numerical.js';
+import { makeBlank } from '../../lib/geojson_utils.js';
 
-var isNumeric = require('fast-isnumeric');
-
-var Lib = require('../../lib');
-var Color = require('../../components/color');
-var Colorscale = require('../../components/colorscale');
-
-var BADNUM = require('../../constants/numerical').BADNUM;
-var makeBlank = require('../../lib/geojson_utils').makeBlank;
-
-module.exports = function convert(calcTrace) {
+export default function convert(calcTrace) {
     var trace = calcTrace[0].trace;
     var isVisible = (trace.visible === true && trace._length !== 0);
 
@@ -103,4 +99,4 @@ module.exports = function convert(calcTrace) {
     opts.heatmap.layout.visibility = 'visible';
 
     return opts;
-};
+}

@@ -1,27 +1,13 @@
-'use strict';
-
-var numConstants = require('../../constants/numerical');
+import numConstants from '../../constants/numerical.js';
+import { tickIncrement } from '../../plots/cartesian/axes.js';
 var oneYear = numConstants.ONEAVGYEAR;
 var oneMonth = numConstants.ONEAVGMONTH;
 var oneDay = numConstants.ONEDAY;
 var oneHour = numConstants.ONEHOUR;
 var oneMin = numConstants.ONEMIN;
 var oneSec = numConstants.ONESEC;
-var tickIncrement = require('../../plots/cartesian/axes').tickIncrement;
 
-
-/*
- * make a function that will find rounded bin edges
- * @param {number} leftGap: how far from the left edge of any bin is the closest data value?
- * @param {number} rightGap: how far from the right edge of any bin is the closest data value?
- * @param {Array[number]} binEdges: the actual edge values used in binning
- * @param {object} pa: the position axis
- * @param {string} calendar: the data calendar
- *
- * @return {function(v, isRightEdge)}:
- *   find the start (isRightEdge is falsy) or end (truthy) label value for a bin edge `v`
- */
-module.exports = function getBinSpanLabelRound(leftGap, rightGap, binEdges, pa, calendar) {
+export default function getBinSpanLabelRound(leftGap, rightGap, binEdges, pa, calendar) {
     // the rounding digit is the largest digit that changes in *all* of 4 regions:
     // - inside the rightGap before binEdges[0] (shifted 10% to the left)
     // - inside the leftGap after binEdges[0] (expanded by 10% of rightGap on each end)
@@ -91,7 +77,7 @@ module.exports = function getBinSpanLabelRound(leftGap, rightGap, binEdges, pa, 
         }
         return roundedV;
     };
-};
+}
 
 /*
  * Find the largest digit that changes within a (calcdata) region [v1, v2]

@@ -1,20 +1,16 @@
-'use strict';
-
-var d3 = require('@plotly/d3');
-
-var Drawing = require('../../components/drawing');
-var Lib = require('../../lib');
+import d3 from '@plotly/d3';
+import Drawing from '../../components/drawing/index.js';
+import Lib from '../../lib/index.js';
+import svgTextUtils from '../../lib/svg_text_utils.js';
+import barPlot from '../bar/plot.js';
+import uniformText from '../bar/uniform_text.js';
+import pieHelpers from '../pie/helpers.js';
+import piePlot from '../pie/plot.js';
 var strScale = Lib.strScale;
 var strTranslate = Lib.strTranslate;
-var svgTextUtils = require('../../lib/svg_text_utils');
-
-var barPlot = require('../bar/plot');
 var toMoveInsideBar = barPlot.toMoveInsideBar;
-var uniformText = require('../bar/uniform_text');
 var recordMinTextSize = uniformText.recordMinTextSize;
 var clearMinTextSize = uniformText.clearMinTextSize;
-var pieHelpers = require('../pie/helpers');
-var piePlot = require('../pie/plot');
 
 var attachFxHandlers = piePlot.attachFxHandlers;
 var determineInsideTextFont = piePlot.determineInsideTextFont;
@@ -24,7 +20,7 @@ var prerenderTitles = piePlot.prerenderTitles;
 var positionTitleOutside = piePlot.positionTitleOutside;
 var formatSliceLabel = piePlot.formatSliceLabel;
 
-module.exports = function plot(gd, cdModule) {
+export default function plot(gd, cdModule) {
     var isStatic = gd._context.staticPlot;
 
     var fullLayout = gd._fullLayout;
@@ -169,7 +165,7 @@ module.exports = function plot(gd, cdModule) {
             });
         });
     });
-};
+}
 
 function line(a, b) {
     var dx = b[0] - a[0];

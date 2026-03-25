@@ -1,19 +1,16 @@
-'use strict';
+import Lib from '../../lib/index.js';
+import Axes from '../../plots/cartesian/axes.js';
+import _draw from './draw.js';
+const { draw } = _draw;
 
-var Lib = require('../../lib');
-var Axes = require('../../plots/cartesian/axes');
-
-var draw = require('./draw').draw;
-
-
-module.exports = function calcAutorange(gd) {
+export default function calcAutorange(gd) {
     var fullLayout = gd._fullLayout;
     var annotationList = Lib.filterVisible(fullLayout.annotations);
 
     if(annotationList.length && gd._fullData.length) {
         return Lib.syncOrAsync([draw, annAutorange], gd);
     }
-};
+}
 
 function annAutorange(gd) {
     var fullLayout = gd._fullLayout;

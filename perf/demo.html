@@ -34,11 +34,14 @@ body { margin: 0; font-family: system-ui, sans-serif; }
 
     document.getElementById('status').textContent = 'Rendering ' + plotName + '...';
 
+    // Handle ESM default export wrapper from esbuild IIFE
+    var PlotlyMod = window.Plotly.default || window.Plotly;
+
     var t0 = performance.now();
     var plotConfig = { displayModeBar: false };
     if(deferMargin) plotConfig.deferAutoMargin = true;
 
-    Plotly.newPlot(el, config.data, layout, plotConfig).then(function() {
+    PlotlyMod.newPlot(el, config.data, layout, plotConfig).then(function() {
         var wallTime = performance.now() - t0;
         var measures = performance.getEntriesByType('measure')
             .filter(function(e) { return e.name.startsWith('plotly-'); })

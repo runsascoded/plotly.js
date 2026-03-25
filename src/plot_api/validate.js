@@ -1,36 +1,14 @@
-'use strict';
-
-var Lib = require('../lib');
-var Plots = require('../plots/plots');
-var PlotSchema = require('./plot_schema');
-var dfltConfig = require('./plot_config').dfltConfig;
+import Lib from '../lib/index.js';
+import Plots from '../plots/plots.js';
+import PlotSchema from './plot_schema.js';
+import _plot_config from './plot_config.js';
+const { dfltConfig } = _plot_config;
 
 var isPlainObject = Lib.isPlainObject;
 var isArray = Array.isArray;
 var isArrayOrTypedArray = Lib.isArrayOrTypedArray;
 
-/**
- * Validate a data array and layout object.
- *
- * @param {array} data
- * @param {object} layout
- *
- * @return {array} array of error objects each containing:
- *  - {string} code
- *      error code ('object', 'array', 'schema', 'unused', 'invisible' or 'value')
- *  - {string} container
- *      container where the error occurs ('data' or 'layout')
- *  - {number} trace
- *      trace index of the 'data' container where the error occurs
- *  - {array} path
- *      nested path to the key that causes the error
- *  - {string} astr
- *      attribute string variant of 'path' compatible with Plotly.restyle and
- *      Plotly.relayout.
- *  - {string} msg
- *      error message (shown in console in logger config argument is enable)
- */
-module.exports = function validate(data, layout) {
+export default function validate(data, layout) {
     if(data === undefined) data = [];
     if(layout === undefined) layout = {};
 
@@ -103,7 +81,7 @@ module.exports = function validate(data, layout) {
 
     // return undefined if no validation errors were found
     return (errorList.length === 0) ? void(0) : errorList;
-};
+}
 
 function crawl(objIn, objOut, schema, list, base, path) {
     path = path || [];

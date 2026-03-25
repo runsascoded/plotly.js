@@ -1,22 +1,19 @@
-'use strict';
-
-var heatmapAttrs = require('../heatmap/attributes');
-var scatterAttrs = require('../scatter/attributes');
-var axisFormat = require('../../plots/cartesian/axis_format_attributes');
+import heatmapAttrs from '../heatmap/attributes.js';
+import scatterAttrs from '../scatter/attributes.js';
+import axisFormat from '../../plots/cartesian/axis_format_attributes.js';
+import colorScaleAttrs from '../../components/colorscale/attributes.js';
+import { dash } from '../../components/drawing/attributes.js';
+import fontAttrs from '../../plots/font_attributes.js';
+import { extendFlat } from '../../lib/extend.js';
+import filterOps from '../../constants/filter_ops.js';
 var axisHoverFormat = axisFormat.axisHoverFormat;
 var descriptionOnlyNumbers = axisFormat.descriptionOnlyNumbers;
-var colorScaleAttrs = require('../../components/colorscale/attributes');
-var dash = require('../../components/drawing/attributes').dash;
-var fontAttrs = require('../../plots/font_attributes');
-var extendFlat = require('../../lib/extend').extendFlat;
-
-var filterOps = require('../../constants/filter_ops');
 var COMPARISON_OPS2 = filterOps.COMPARISON_OPS2;
 var INTERVAL_OPS = filterOps.INTERVAL_OPS;
 
 var scatterLineAttrs = scatterAttrs.line;
 
-module.exports = extendFlat(
+export default extendFlat(
     {
         z: heatmapAttrs.z,
         x: heatmapAttrs.x,

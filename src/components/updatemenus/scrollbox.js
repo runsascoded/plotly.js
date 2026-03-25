@@ -1,13 +1,8 @@
-'use strict';
-
-module.exports = ScrollBox;
-
-var d3 = require('@plotly/d3');
-
-var Color = require('../color');
-var Drawing = require('../drawing');
-
-var Lib = require('../../lib');
+import d3 from '@plotly/d3';
+import Color from '../color/index.js';
+import Drawing from '../drawing/index.js';
+import Lib from '../../lib/index.js';
+export default ScrollBox;
 
 /**
  * Helper class to setup a scroll box

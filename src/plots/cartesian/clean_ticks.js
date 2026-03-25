@@ -1,19 +1,10 @@
-'use strict';
-
-var isNumeric = require('fast-isnumeric');
-var Lib = require('../../lib');
-var constants = require('../../constants/numerical');
+import isNumeric from 'fast-isnumeric';
+import Lib from '../../lib/index.js';
+import constants from '../../constants/numerical.js';
 var ONEDAY = constants.ONEDAY;
 var ONEWEEK = constants.ONEWEEK;
 
-/**
- * Return a validated dtick value for this axis
- *
- * @param {any} dtick: the candidate dtick. valid values are numbers and strings,
- *     and further constrained depending on the axis type.
- * @param {string} axType: the axis type
- */
-exports.dtick = function(dtick, axType) {
+export var dtick = function(dtick, axType) {
     var isLog = axType === 'log';
     var isDate = axType === 'date';
     var isCat = axType === 'category';
@@ -45,11 +36,10 @@ exports.dtick = function(dtick, axType) {
 
     if((dtickNum <= 0) || !(
             // "M<n>" gives ticks every (integer) n months
+            (// "D1" gives powers of 10 with all small digits between, "D2" gives only 2 and 5
             (isDate && prefix === 'M' && dtickNum === Math.round(dtickNum)) ||
             // "L<f>" gives ticks linearly spaced in data (not in position) every (float) f
-            (isLog && prefix === 'L') ||
-            // "D1" gives powers of 10 with all small digits between, "D2" gives only 2 and 5
-            (isLog && prefix === 'D' && (dtickNum === 1 || dtickNum === 2))
+            (isLog && prefix === 'L') || (isLog && prefix === 'D' && (dtickNum === 1 || dtickNum === 2)))
         )) {
         return dtickDflt;
     }
@@ -57,17 +47,7 @@ exports.dtick = function(dtick, axType) {
     return dtick;
 };
 
-/**
- * Return a validated tick0 for this axis
- *
- * @param {any} tick0: the candidate tick0. Valid values are numbers and strings,
- *     further constrained depending on the axis type
- * @param {string} axType: the axis type
- * @param {string} calendar: for date axes, the calendar to validate/convert with
- * @param {any} dtick: an already valid dtick. Only used for D1 and D2 log dticks,
- *     which do not support tick0 at all.
- */
-exports.tick0 = function(tick0, axType, calendar, dtick) {
+export var tick0 = function(tick0, axType, calendar, dtick) {
     if(axType === 'date') {
         return Lib.cleanDate(tick0,
             Lib.dateTick0(calendar, (dtick % ONEWEEK === 0) ? 1 : 0)
@@ -80,3 +60,5 @@ exports.tick0 = function(tick0, axType, calendar, dtick) {
     // Aside from date axes, tick0 must be numeric
     return isNumeric(tick0) ? Number(tick0) : 0;
 };
+
+export default { dtick, tick0 };

@@ -1,10 +1,9 @@
-'use strict';
+import isNumeric from 'fast-isnumeric';
+import tinycolor from 'tinycolor2';
+import _index from '../../lib/index.js';
+const { isArrayOrTypedArray } = _index;
 
-var isNumeric = require('fast-isnumeric');
-var tinycolor = require('tinycolor2');
-var isArrayOrTypedArray = require('../../lib').isArrayOrTypedArray;
-
-exports.coerceString = function(attributeDefinition, value, defaultValue) {
+export var coerceString = function(attributeDefinition, value, defaultValue) {
     if(typeof value === 'string') {
         if(value || !attributeDefinition.noBlank) return value;
     } else if(typeof value === 'number' || value === true) {
@@ -16,7 +15,7 @@ exports.coerceString = function(attributeDefinition, value, defaultValue) {
       attributeDefinition.dflt;
 };
 
-exports.coerceNumber = function(attributeDefinition, value, defaultValue) {
+export var coerceNumber = function(attributeDefinition, value, defaultValue) {
     if(isNumeric(value)) {
         value = +value;
 
@@ -33,7 +32,7 @@ exports.coerceNumber = function(attributeDefinition, value, defaultValue) {
       attributeDefinition.dflt;
 };
 
-exports.coerceColor = function(attributeDefinition, value, defaultValue) {
+export var coerceColor = function(attributeDefinition, value, defaultValue) {
     if(tinycolor(value).isValid()) return value;
 
     return (defaultValue !== undefined) ?
@@ -41,7 +40,7 @@ exports.coerceColor = function(attributeDefinition, value, defaultValue) {
       attributeDefinition.dflt;
 };
 
-exports.coerceEnumerated = function(attributeDefinition, value, defaultValue) {
+export var coerceEnumerated = function(attributeDefinition, value, defaultValue) {
     if(attributeDefinition.coerceNumber) value = +value;
 
     if(attributeDefinition.values.indexOf(value) !== -1) return value;
@@ -51,14 +50,14 @@ exports.coerceEnumerated = function(attributeDefinition, value, defaultValue) {
       attributeDefinition.dflt;
 };
 
-exports.getValue = function(arrayOrScalar, index) {
+export var getValue = function(arrayOrScalar, index) {
     var value;
     if(!isArrayOrTypedArray(arrayOrScalar)) value = arrayOrScalar;
     else if(index < arrayOrScalar.length) value = arrayOrScalar[index];
     return value;
 };
 
-exports.getLineWidth = function(trace, di) {
+export var getLineWidth = function(trace, di) {
     var w =
         (0 < di.mlw) ? di.mlw :
         !isArrayOrTypedArray(trace.marker.line.width) ? trace.marker.line.width :
@@ -66,3 +65,5 @@ exports.getLineWidth = function(trace, di) {
 
     return w;
 };
+
+export default { coerceString, coerceNumber, coerceColor, coerceEnumerated, getValue, getLineWidth };

@@ -1,16 +1,12 @@
-'use strict';
+import Registry from '../../registry.js';
+import Lib from '../../lib/index.js';
+import subTypes from '../scatter/subtypes.js';
+import handleMarkerDefaults from '../scatter/marker_defaults.js';
+import handleLineDefaults from '../scatter/line_defaults.js';
+import handleTextDefaults from '../scatter/text_defaults.js';
+import attributes from './attributes.js';
 
-var Registry = require('../../registry');
-var Lib = require('../../lib');
-
-var subTypes = require('../scatter/subtypes');
-var handleMarkerDefaults = require('../scatter/marker_defaults');
-var handleLineDefaults = require('../scatter/line_defaults');
-var handleTextDefaults = require('../scatter/text_defaults');
-
-var attributes = require('./attributes');
-
-module.exports = function supplyDefaults(traceIn, traceOut, defaultColor, layout) {
+export default function supplyDefaults(traceIn, traceOut, defaultColor, layout) {
     function coerce(attr, dflt) {
         return Lib.coerce(traceIn, traceOut, attributes, attr, dflt);
     }
@@ -68,7 +64,7 @@ module.exports = function supplyDefaults(traceIn, traceOut, defaultColor, layout
     errorBarsSupplyDefaults(traceIn, traceOut, lineColor || markerColor || defaultColor, { axis: 'z' });
     errorBarsSupplyDefaults(traceIn, traceOut, lineColor || markerColor || defaultColor, { axis: 'y', inherit: 'z' });
     errorBarsSupplyDefaults(traceIn, traceOut, lineColor || markerColor || defaultColor, { axis: 'x', inherit: 'z' });
-};
+}
 
 function handleXYZDefaults(traceIn, traceOut, coerce, layout) {
     var len = 0;

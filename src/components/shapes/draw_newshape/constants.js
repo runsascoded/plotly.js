@@ -1,8 +1,6 @@
-'use strict';
-
 var CIRCLE_SIDES = 32;  // should be divisible by 4
 
-module.exports = {
+export default {
     CIRCLE_SIDES: CIRCLE_SIDES,
     i000: 0,
     i090: CIRCLE_SIDES / 4,

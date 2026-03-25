@@ -1,16 +1,14 @@
-'use strict';
-
-var isNumeric = require('fast-isnumeric');
-
-var Lib = require('../../lib');
-var BADNUM = require('../../constants/numerical').BADNUM;
+import isNumeric from 'fast-isnumeric';
+import Lib from '../../lib/index.js';
+import _numerical from '../../constants/numerical.js';
+const { BADNUM } = _numerical;
 
 var isArrayOrTypedArray = Lib.isArrayOrTypedArray;
 var isDateTime = Lib.isDateTime;
 var cleanNumber = Lib.cleanNumber;
 var round = Math.round;
 
-module.exports = function autoType(array, calendar, opts) {
+export default function autoType(array, calendar, opts) {
     var a = array;
 
     var noMultiCategory = opts.noMultiCategory;
@@ -35,7 +33,7 @@ module.exports = function autoType(array, calendar, opts) {
     if(linearOK(a, convertNumeric)) return 'linear';
 
     return '-';
-};
+}
 
 function hasTypeNumber(v, convertNumeric) {
     return convertNumeric ? isNumeric(v) : typeof v === 'number';

@@ -1,15 +1,10 @@
-'use strict';
+import isNumeric from 'fast-isnumeric';
+import Registry from '../../registry.js';
+import Lib from '../../lib/index.js';
+import Template from '../../plot_api/plot_template.js';
+import attributes from './attributes.js';
 
-var isNumeric = require('fast-isnumeric');
-
-var Registry = require('../../registry');
-var Lib = require('../../lib');
-var Template = require('../../plot_api/plot_template');
-
-var attributes = require('./attributes');
-
-
-module.exports = function(traceIn, traceOut, defaultColor, opts) {
+export default function(traceIn, traceOut, defaultColor, opts) {
     var objName = 'error_' + opts.axis;
     var containerOut = Template.newContainer(traceOut, objName);
     var containerIn = traceIn[objName] || {};
@@ -62,4 +57,4 @@ module.exports = function(traceIn, traceOut, defaultColor, opts) {
         coerce('thickness');
         coerce('width', Registry.traceIs(traceOut, 'gl3d') ? 0 : 4);
     }
-};
+}

@@ -1,14 +1,11 @@
-'use strict';
-
-const { hovertemplateAttrs, texttemplateAttrs, templatefallbackAttrs } = require('../../plots/template_attributes');
-var makeFillcolorAttr = require('../scatter/fillcolor_attribute');
-var scatterAttrs = require('../scatter/attributes');
-var baseAttrs = require('../../plots/attributes');
-var colorAttributes = require('../../components/colorscale/attributes');
-var dash = require('../../components/drawing/attributes').dash;
-
-var extendFlat = require('../../lib/extend').extendFlat;
-var overrideAll = require('../../plot_api/edit_types').overrideAll;
+import { hovertemplateAttrs, texttemplateAttrs, templatefallbackAttrs } from '../../plots/template_attributes.js';
+import makeFillcolorAttr from '../scatter/fillcolor_attribute.js';
+import scatterAttrs from '../scatter/attributes.js';
+import baseAttrs from '../../plots/attributes.js';
+import colorAttributes from '../../components/colorscale/attributes.js';
+import { dash } from '../../components/drawing/attributes.js';
+import { extendFlat } from '../../lib/extend.js';
+import { overrideAll } from '../../plot_api/edit_types.js';
 
 var scatterMarkerAttrs = scatterAttrs.marker;
 var scatterLineAttrs = scatterAttrs.line;
@@ -19,7 +16,7 @@ const breakingChangeWarning = [
     'Country names in existing plots may not work in the new version.'
 ].join(' ');
 
-module.exports = overrideAll(
+export default overrideAll(
     {
         lon: {
             valType: 'data_array',

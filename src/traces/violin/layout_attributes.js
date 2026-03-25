@@ -1,9 +1,7 @@
-'use strict';
+import boxLayoutAttrs from '../box/layout_attributes.js';
+import { extendFlat } from '../../lib/index.js';
 
-var boxLayoutAttrs = require('../box/layout_attributes');
-var extendFlat = require('../../lib').extendFlat;
-
-module.exports = {
+export default {
     violinmode: extendFlat({}, boxLayoutAttrs.boxmode, {
         description: [
             'Determines how violins at the same location coordinate',

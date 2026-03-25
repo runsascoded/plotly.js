@@ -1,14 +1,11 @@
-'use strict';
+import Lib from '../../lib/index.js';
+import handleSampleDefaults from '../histogram2d/sample_defaults.js';
+import handleContoursDefaults from '../contour/contours_defaults.js';
+import handleStyleDefaults from '../contour/style_defaults.js';
+import handleHeatmapLabelDefaults from '../heatmap/label_defaults.js';
+import attributes from './attributes.js';
 
-var Lib = require('../../lib');
-
-var handleSampleDefaults = require('../histogram2d/sample_defaults');
-var handleContoursDefaults = require('../contour/contours_defaults');
-var handleStyleDefaults = require('../contour/style_defaults');
-var handleHeatmapLabelDefaults = require('../heatmap/label_defaults');
-var attributes = require('./attributes');
-
-module.exports = function supplyDefaults(traceIn, traceOut, defaultColor, layout) {
+export default function supplyDefaults(traceIn, traceOut, defaultColor, layout) {
     function coerce(attr, dflt) {
         return Lib.coerce(traceIn, traceOut, attributes, attr, dflt);
     }
@@ -29,4 +26,4 @@ module.exports = function supplyDefaults(traceIn, traceOut, defaultColor, layout
     if (traceOut.contours && traceOut.contours.coloring === 'heatmap') {
         handleHeatmapLabelDefaults(coerce, layout);
     }
-};
+}

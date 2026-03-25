@@ -1,11 +1,9 @@
-'use strict';
-
-var createMesh = require('../../../stackgl_modules').gl_mesh3d;
-var parseColorScale = require('../../lib/gl_format_color').parseColorScale;
-var isArrayOrTypedArray = require('../../lib').isArrayOrTypedArray;
-var str2RgbaArray = require('../../lib/str2rgbarray');
-var extractOpts = require('../../components/colorscale').extractOpts;
-var zip3 = require('../../plots/gl3d/zip3');
+import { gl_mesh3d as createMesh } from '../../../stackgl_modules/index.js';
+import { parseColorScale } from '../../lib/gl_format_color.js';
+import { isArrayOrTypedArray } from '../../lib/index.js';
+import str2RgbaArray from '../../lib/str2rgbarray.js';
+import { extractOpts } from '../../components/colorscale/index.js';
+import zip3 from '../../plots/gl3d/zip3.js';
 
 var findNearestOnAxis = function(w, arr) {
     for(var q = arr.length - 1; q > 0; q--) {
@@ -1040,7 +1038,7 @@ function createIsosurfaceTrace(scene, data) {
     return result;
 }
 
-module.exports = {
+export default {
     findNearestOnAxis: findNearestOnAxis,
     generateIsoMeshes: generateIsoMeshes,
     createIsosurfaceTrace: createIsosurfaceTrace,

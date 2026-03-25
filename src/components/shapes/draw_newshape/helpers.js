@@ -1,19 +1,16 @@
-'use strict';
-
-var parseSvgPath = require('parse-svg-path');
-
-var constants = require('./constants');
+import parseSvgPath from 'parse-svg-path';
+import constants from './constants.js';
+import cartesianHelpers from '../../selections/helpers.js';
 var CIRCLE_SIDES = constants.CIRCLE_SIDES;
 var SQRT2 = constants.SQRT2;
 
-var cartesianHelpers = require('../../selections/helpers');
 var p2r = cartesianHelpers.p2r;
 var r2p = cartesianHelpers.r2p;
 
 var iC = [0, 3, 4, 5, 6, 1, 2];
 var iQS = [0, 3, 4, 1, 2];
 
-exports.writePaths = function(polygons) {
+export var writePaths = function(polygons) {
     var nI = polygons.length;
     if(!nI) return 'M0,0Z';
 
@@ -46,7 +43,7 @@ exports.writePaths = function(polygons) {
     return str;
 };
 
-exports.readPaths = function(str, gd, plotinfo, isActiveShape) {
+export var readPaths = function(str, gd, plotinfo, isActiveShape) {
     var cmd = parseSvgPath(str);
 
     var polys = [];
@@ -221,7 +218,7 @@ function dist(a, b) {
     );
 }
 
-exports.pointsOnRectangle = function(cell) {
+export var pointsOnRectangle = function(cell) {
     var len = cell.length;
     if(len !== 5) return false;
 
@@ -249,7 +246,7 @@ exports.pointsOnRectangle = function(cell) {
     );
 };
 
-exports.pointsOnEllipse = function(cell) {
+export var pointsOnEllipse = function(cell) {
     var len = cell.length;
     if(len !== CIRCLE_SIDES + 1) return false;
 
@@ -269,10 +266,10 @@ exports.pointsOnEllipse = function(cell) {
     return true;
 };
 
-exports.handleEllipse = function(isEllipse, start, end) {
+export var handleEllipse = function(isEllipse, start, end) {
     if(!isEllipse) return [start, end]; // i.e. case of line
 
-    var pos = exports.ellipseOver({
+    var pos = ellipseOver({
         x0: start[0],
         y0: start[1],
         x1: end[0],
@@ -299,7 +296,7 @@ exports.handleEllipse = function(isEllipse, start, end) {
     return cell;
 };
 
-exports.ellipseOver = function(pos) {
+export var ellipseOver = function(pos) {
     var x0 = pos.x0;
     var y0 = pos.y0;
     var x1 = pos.x1;
@@ -326,7 +323,7 @@ exports.ellipseOver = function(pos) {
     };
 };
 
-exports.fixDatesForPaths = function(polygons, xaxis, yaxis) {
+export var fixDatesForPaths = function(polygons, xaxis, yaxis) {
     var xIsDate = xaxis.type === 'date';
     var yIsDate = yaxis.type === 'date';
     if(!xIsDate && !yIsDate) return polygons;
@@ -342,3 +339,5 @@ exports.fixDatesForPaths = function(polygons, xaxis, yaxis) {
 
     return polygons;
 };
+
+export default { writePaths, readPaths, pointsOnRectangle, pointsOnEllipse, handleEllipse, ellipseOver, fixDatesForPaths };

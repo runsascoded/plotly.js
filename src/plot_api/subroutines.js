@@ -1,32 +1,28 @@
-'use strict';
-
-var d3 = require('@plotly/d3');
-var Registry = require('../registry');
-var Plots = require('../plots/plots');
-
-var Lib = require('../lib');
-var svgTextUtils = require('../lib/svg_text_utils');
-var clearGlCanvases = require('../lib/clear_gl_canvases');
-
-var Color = require('../components/color');
-var Drawing = require('../components/drawing');
-var Titles = require('../components/titles');
-var ModeBar = require('../components/modebar');
-
-var Axes = require('../plots/cartesian/axes');
-var alignmentConstants = require('../constants/alignment');
-var axisConstraints = require('../plots/cartesian/constraints');
+import d3 from '@plotly/d3';
+import Registry from '../registry.js';
+import Plots from '../plots/plots.js';
+import Lib from '../lib/index.js';
+import svgTextUtils from '../lib/svg_text_utils.js';
+import clearGlCanvases from '../lib/clear_gl_canvases.js';
+import Color from '../components/color/index.js';
+import Drawing from '../components/drawing/index.js';
+import Titles from '../components/titles/index.js';
+import ModeBar from '../components/modebar/index.js';
+import Axes from '../plots/cartesian/axes.js';
+import alignmentConstants from '../constants/alignment.js';
+import axisConstraints from '../plots/cartesian/constraints.js';
+import _autorange from '../plots/cartesian/autorange.js';
+const { doAutoRange } = _autorange;
+import _constants from '../plots/cartesian/constants.js';
+const { zindexSeparator } = _constants;
 var enforceAxisConstraints = axisConstraints.enforce;
 var cleanAxisConstraints = axisConstraints.clean;
-var doAutoRange = require('../plots/cartesian/autorange').doAutoRange;
 
 var SVG_TEXT_ANCHOR_START = 'start';
 var SVG_TEXT_ANCHOR_MIDDLE = 'middle';
 var SVG_TEXT_ANCHOR_END = 'end';
 
-var zindexSeparator = require('../plots/cartesian/constants').zindexSeparator;
-
-exports.layoutStyles = function(gd) {
+export var layoutStyles = function(gd) {
     return Lib.syncOrAsync([Plots.doAutoMargin, lsInner], gd);
 };
 
@@ -68,7 +64,7 @@ function lsInner(gd) {
     .call(Drawing.setSize, fullLayout.width, fullLayout.height);
     gd._context.setBackground(gd, fullLayout.paper_bgcolor);
 
-    exports.drawMainTitle(gd);
+    drawMainTitle(gd);
     ModeBar.manage(gd);
 
     // _has('cartesian') means SVG specifically
@@ -405,7 +401,7 @@ function findCounterAxisLineWidth(ax, side, counterAx, axList) {
     return 0;
 }
 
-exports.drawMainTitle = function(gd) {
+export var drawMainTitle = function(gd) {
     var title = gd._fullLayout.title;
     var fullLayout = gd._fullLayout;
     var textAnchor = getMainTitleTextAnchor(fullLayout);
@@ -471,7 +467,6 @@ exports.drawMainTitle = function(gd) {
         }
     }
 };
-
 
 function isOutsideContainer(gd, title, position, y, titleHeight) {
     var plotHeight = title.yref === 'paper' ? gd._fullLayout._size.h : gd._fullLayout.height;
@@ -629,7 +624,7 @@ function getMainTitleDy(fullLayout) {
     return dy;
 }
 
-exports.doTraceStyle = function(gd) {
+export var doTraceStyle = function(gd) {
     var calcdata = gd.calcdata;
     var editStyleCalls = [];
     var i;
@@ -657,7 +652,7 @@ exports.doTraceStyle = function(gd) {
             edit.fn(gd, edit.cd0);
         }
         clearGlCanvases(gd);
-        exports.redrawReglTraces(gd);
+        redrawReglTraces(gd);
     }
 
     Plots.style(gd);
@@ -666,37 +661,36 @@ exports.doTraceStyle = function(gd) {
     return Plots.previousPromises(gd);
 };
 
-exports.doColorBars = function(gd) {
+export var doColorBars = function(gd) {
     Registry.getComponentMethod('colorbar', 'draw')(gd);
     return Plots.previousPromises(gd);
 };
 
-// force plot() to redo the layout and replot with the modified layout
-exports.layoutReplot = function(gd) {
+export var layoutReplot = function(gd) {
     var layout = gd.layout;
     gd.layout = undefined;
     return Registry.call('_doPlot', gd, '', layout);
 };
 
-exports.doLegend = function(gd) {
+export var doLegend = function(gd) {
     Registry.getComponentMethod('legend', 'draw')(gd);
     return Plots.previousPromises(gd);
 };
 
-exports.doTicksRelayout = function(gd) {
+export var doTicksRelayout = function(gd) {
     Axes.draw(gd, 'redraw');
 
     if(gd._fullLayout._hasOnlyLargeSploms) {
         Registry.subplotsRegistry.splom.updateGrid(gd);
         clearGlCanvases(gd);
-        exports.redrawReglTraces(gd);
+        redrawReglTraces(gd);
     }
 
-    exports.drawMainTitle(gd);
+    drawMainTitle(gd);
     return Plots.previousPromises(gd);
 };
 
-exports.doModeBar = function(gd) {
+export var doModeBar = function(gd) {
     var fullLayout = gd._fullLayout;
 
     ModeBar.manage(gd);
@@ -709,7 +703,7 @@ exports.doModeBar = function(gd) {
     return Plots.previousPromises(gd);
 };
 
-exports.doCamera = function(gd) {
+export var doCamera = function(gd) {
     var fullLayout = gd._fullLayout;
     var sceneIds = fullLayout._subplots.gl3d;
 
@@ -721,7 +715,7 @@ exports.doCamera = function(gd) {
     }
 };
 
-exports.drawData = function(gd) {
+export var drawData = function(gd) {
     var fullLayout = gd._fullLayout;
 
     clearGlCanvases(gd);
@@ -732,7 +726,7 @@ exports.drawData = function(gd) {
         basePlotModules[i].plot(gd);
     }
 
-    exports.redrawReglTraces(gd);
+    redrawReglTraces(gd);
 
     // styling separate from drawing
     Plots.style(gd);
@@ -750,20 +744,7 @@ exports.drawData = function(gd) {
     return Plots.previousPromises(gd);
 };
 
-// Draw (or redraw) all regl-based traces in one go,
-// useful during drag and selection where buffers of targeted traces are updated,
-// but all traces need to be redrawn following clearGlCanvases.
-//
-// Note that _module.plot for regl trace does NOT draw things
-// on the canvas, they only update the buffers.
-// Drawing is perform here.
-//
-// TODO try adding per-subplot option using gl.SCISSOR_TEST for
-// non-overlaying, disjoint subplots.
-//
-// TODO try to include parcoords in here.
-// https://github.com/plotly/plotly.js/issues/3069
-exports.redrawReglTraces = function(gd) {
+export var redrawReglTraces = function(gd) {
     var fullLayout = gd._fullLayout;
 
     if(fullLayout._has('regl')) {
@@ -806,7 +787,7 @@ exports.redrawReglTraces = function(gd) {
     }
 };
 
-exports.doAutoRangeAndConstraints = function(gd) {
+export var doAutoRangeAndConstraints = function(gd) {
     var axList = Axes.list(gd, '', true);
     var ax;
 
@@ -838,10 +819,7 @@ exports.doAutoRangeAndConstraints = function(gd) {
     enforceAxisConstraints(gd);
 };
 
-// An initial paint must be completed before these components can be
-// correctly sized and the whole plot re-margined. fullLayout._replotting must
-// be set to false before these will work properly.
-exports.finalDraw = function(gd) {
+export var finalDraw = function(gd) {
     // TODO: rangesliders really belong in marginPushers but they need to be
     // drawn after data - can we at least get the margin pushing part separated
     // out and done earlier?
@@ -853,10 +831,12 @@ exports.finalDraw = function(gd) {
     Registry.getComponentMethod('rangeselector', 'draw')(gd);
 };
 
-exports.drawMarginPushers = function(gd) {
+export var drawMarginPushers = function(gd) {
     Registry.getComponentMethod('legend', 'draw')(gd);
     Registry.getComponentMethod('rangeselector', 'draw')(gd);
     Registry.getComponentMethod('sliders', 'draw')(gd);
     Registry.getComponentMethod('updatemenus', 'draw')(gd);
     Registry.getComponentMethod('colorbar', 'draw')(gd);
 };
+
+export default { layoutStyles, drawMainTitle, doTraceStyle, doColorBars, layoutReplot, doLegend, doTicksRelayout, doModeBar, doCamera, drawData, redrawReglTraces, doAutoRangeAndConstraints, finalDraw, drawMarginPushers };

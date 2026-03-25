@@ -1,13 +1,4 @@
-'use strict';
-
-/** Filter out object items with visible !== true
- *  insider array container.
- *
- *  @param {array of objects} container
- *  @return {array of objects} of length <= container
- *
- */
-module.exports = function filterVisible(container) {
+export default function filterVisible(container) {
     var filterFn = isCalcData(container) ? calcDataFilter : baseFilter;
     var out = [];
 
@@ -17,7 +8,7 @@ module.exports = function filterVisible(container) {
     }
 
     return out;
-};
+}
 
 function baseFilter(item) {
     return item.visible === true;

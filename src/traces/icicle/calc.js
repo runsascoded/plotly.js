@@ -1,11 +1,11 @@
-'use strict';
+import sunburstCalc from '../sunburst/calc.js';
 
-var calc = require('../sunburst/calc');
-
-exports.calc = function(gd, trace) {
-    return calc.calc(gd, trace);
+export var calc = function(gd, trace) {
+    return sunburstCalc.calc(gd, trace);
 };
 
-exports.crossTraceCalc = function(gd) {
+export var crossTraceCalc = function(gd) {
     return calc._runCrossTraceCalc('icicle', gd);
 };
+
+export default { calc, crossTraceCalc };

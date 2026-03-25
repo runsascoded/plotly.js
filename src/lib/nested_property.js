@@ -1,23 +1,7 @@
-'use strict';
+import isNumeric from 'fast-isnumeric';
+import { isArrayOrTypedArray } from './array.js';
 
-var isNumeric = require('fast-isnumeric');
-var isArrayOrTypedArray = require('./array').isArrayOrTypedArray;
-
-/**
- * convert a string s (such as 'xaxis.range[0]')
- * representing a property of nested object into set and get methods
- * also return the string and object so we don't have to keep track of them
- * allows [-1] for an array index, to set a property inside all elements
- * of an array
- * eg if obj = {arr: [{a: 1}, {a: 2}]}
- * you can do p = nestedProperty(obj, 'arr[-1].a')
- * but you cannot set the array itself this way, to do that
- * just set the whole array.
- * eg if obj = {arr: [1, 2, 3]}
- * you can't do nestedProperty(obj, 'arr[-1]').set(5)
- * but you can do nestedProperty(obj, 'arr').set([5, 5, 5])
- */
-module.exports = function nestedProperty(container, propStr) {
+export default function nestedProperty(container, propStr) {
     if(isNumeric(propStr)) propStr = String(propStr);
     else if(typeof propStr !== 'string' ||
             propStr.slice(-4) === '[-1]') {
@@ -70,7 +54,7 @@ module.exports = function nestedProperty(container, propStr) {
         parts: propParts,
         obj: container
     };
-};
+}
 
 function npGet(cont, parts) {
     return function(retainNull) {

@@ -1,10 +1,8 @@
-'use strict';
+import Axes from '../../plots/cartesian/axes.js';
+import { hoverPoints as scatterMapHoverPoints } from '../scattermap/hover.js';
+import { getExtraText } from '../scattermap/hover.js';
 
-var Axes = require('../../plots/cartesian/axes');
-var scatterMapHoverPoints = require('../scattermap/hover').hoverPoints;
-var getExtraText = require('../scattermap/hover').getExtraText;
-
-module.exports = function hoverPoints(pointData, xval, yval) {
+export default function hoverPoints(pointData, xval, yval) {
     var pts = scatterMapHoverPoints(pointData, xval, yval);
     if(!pts) return;
 
@@ -25,4 +23,4 @@ module.exports = function hoverPoints(pointData, xval, yval) {
     newPointData.extraText = getExtraText(trace, di, cd[0].t.labels);
 
     return [newPointData];
-};
+}

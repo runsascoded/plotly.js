@@ -1,12 +1,11 @@
-'use strict';
+import Lib from '../../lib/index.js';
+import _index from '../../components/color/index.js';
+const { contrast } = _index;
+import layoutAttributes from './layout_attributes.js';
+import getShowAttrDflt from './show_dflt.js';
+import handleArrayContainerDefaults from '../array_container_defaults.js';
 
-var Lib = require('../../lib');
-var contrast = require('../../components/color').contrast;
-var layoutAttributes = require('./layout_attributes');
-var getShowAttrDflt = require('./show_dflt');
-var handleArrayContainerDefaults = require('../array_container_defaults');
-
-module.exports = function handleTickLabelDefaults(containerIn, containerOut, coerce, axType, options) {
+export default function handleTickLabelDefaults(containerIn, containerOut, coerce, axType, options) {
     if(!options) options = {};
 
     var labelalias = coerce('labelalias');
@@ -75,7 +74,7 @@ module.exports = function handleTickLabelDefaults(containerIn, containerOut, coe
             coerce('minorloglabels');
         }
     }
-};
+}
 
 function tickformatstopDefaults(valueIn, valueOut) {
     function coerce(attr, dflt) {

@@ -1,8 +1,6 @@
-'use strict';
+import scatterPlot from '../scatter/plot.js';
 
-var scatterPlot = require('../scatter/plot');
-
-module.exports = function plot(gd, ternary, moduleCalcData) {
+export default function plot(gd, ternary, moduleCalcData) {
     var plotContainer = ternary.plotContainer;
 
     // remove all nodes inside the scatter layer
@@ -30,4 +28,4 @@ module.exports = function plot(gd, ternary, moduleCalcData) {
     }
 
     scatterPlot(gd, plotinfo, moduleCalcData, scatterLayer);
-};
+}

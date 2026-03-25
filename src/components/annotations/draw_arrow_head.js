@@ -1,37 +1,12 @@
-'use strict';
-
-var d3 = require('@plotly/d3');
-
-var Color = require('../color');
-
-var ARROWPATHS = require('./arrow_paths');
-
-var Lib = require('../../lib');
+import d3 from '@plotly/d3';
+import Color from '../color/index.js';
+import ARROWPATHS from './arrow_paths.js';
+import Lib from '../../lib/index.js';
 var strScale = Lib.strScale;
 var strRotate = Lib.strRotate;
 var strTranslate = Lib.strTranslate;
 
-/**
- * Add arrowhead(s) to a path or line element
- *
- * @param {d3.selection} el3: a d3-selected line or path element
- *
- * @param {string} ends: 'none', 'start', 'end', or 'start+end' for which ends get arrowheads
- *
- * @param {object} options: style information. Must have all the following:
- * @param {number} options.arrowhead: end head style - see ./arrow_paths
- * @param {number} options.startarrowhead: start head style - see ./arrow_paths
- * @param {number} options.arrowsize: relative size of the end head vs line width
- * @param {number} options.startarrowsize: relative size of the start head vs line width
- * @param {number} options.standoff: distance in px to move the end arrow point from its target
- * @param {number} options.startstandoff: distance in px to move the start arrow point from its target
- * @param {number} options.arrowwidth: width of the arrow line
- * @param {string} options.arrowcolor: color of the arrow line, for the head to match
- *     Note that the opacity of this color is ignored, as it's assumed the container
- *     of both the line and head has opacity applied to it so there isn't greater opacity
- *     where they overlap.
- */
-module.exports = function drawArrowHead(el3, ends, options) {
+export default function drawArrowHead(el3, ends, options) {
     var el = el3.node();
     var headStyle = ARROWPATHS[options.arrowhead || 0];
     var startHeadStyle = ARROWPATHS[options.startarrowhead || 0];
@@ -98,7 +73,6 @@ module.exports = function drawArrowHead(el3, ends, options) {
             return;
         }
 
-
         var start0 = el.getPointAtLength(0);
         var dstart = el.getPointAtLength(0.1);
 
@@ -142,4 +116,4 @@ module.exports = function drawArrowHead(el3, ends, options) {
 
     if(doStart) drawhead(startHeadStyle, start, startRot, startScale);
     if(doEnd) drawhead(headStyle, end, endRot, scale);
-};
+}

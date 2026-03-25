@@ -1,30 +1,15 @@
-'use strict';
+import carpetAttrs from './attributes.js';
+import { addOpacity } from '../../components/color/index.js';
+import Registry from '../../registry.js';
+import Lib from '../../lib/index.js';
+import handleTickValueDefaults from '../../plots/cartesian/tick_value_defaults.js';
+import handleTickLabelDefaults from '../../plots/cartesian/tick_label_defaults.js';
+import handlePrefixSuffixDefaults from '../../plots/cartesian/prefix_suffix_defaults.js';
+import handleCategoryOrderDefaults from '../../plots/cartesian/category_order_defaults.js';
+import setConvert from '../../plots/cartesian/set_convert.js';
+import autoType from '../../plots/cartesian/axis_autotype.js';
 
-var carpetAttrs = require('./attributes');
-
-var addOpacity = require('../../components/color').addOpacity;
-var Registry = require('../../registry');
-var Lib = require('../../lib');
-var handleTickValueDefaults = require('../../plots/cartesian/tick_value_defaults');
-var handleTickLabelDefaults = require('../../plots/cartesian/tick_label_defaults');
-var handlePrefixSuffixDefaults = require('../../plots/cartesian/prefix_suffix_defaults');
-var handleCategoryOrderDefaults = require('../../plots/cartesian/category_order_defaults');
-var setConvert = require('../../plots/cartesian/set_convert');
-var autoType = require('../../plots/cartesian/axis_autotype');
-
-/**
- * options: object containing:
- *
- *  letter: 'a' or 'b'
- *  title: name of the axis (ie 'Colorbar') to go in default title
- *  name: axis object name (ie 'xaxis') if one should be stored
- *  font: the default font to inherit
- *  outerTicks: boolean, should ticks default to outside?
- *  showGrid: boolean, should gridlines be shown by default?
- *  data: the plot data to use in choosing auto type
- *  bgColor: the plot background color, to calculate default gridline colors
- */
-module.exports = function handleAxisDefaults(containerIn, containerOut, options) {
+export default function handleAxisDefaults(containerIn, containerOut, options) {
     var letter = options.letter;
     var font = options.font || {};
     var attributes = carpetAttrs[letter + 'axis'];
@@ -90,7 +75,6 @@ module.exports = function handleAxisDefaults(containerIn, containerOut, options)
     coerce('labelpadding');
 
     containerOut._hovertitle = letter;
-
 
     if(axType === 'date') {
         var handleCalendarDefaults = Registry.getComponentMethod('calendars', 'handleDefaults');
@@ -205,7 +189,7 @@ module.exports = function handleAxisDefaults(containerIn, containerOut, options)
     coerce('tickmode');
 
     return containerOut;
-};
+}
 
 function setAutoType(ax, data) {
     // new logic: let people specify any type they want,

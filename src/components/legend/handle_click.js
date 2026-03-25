@@ -1,12 +1,10 @@
-'use strict';
-
-var Registry = require('../../registry');
-var Lib = require('../../lib');
+import Registry from '../../registry.js';
+import Lib from '../../lib/index.js';
 var pushUnique = Lib.pushUnique;
 
 var SHOWISOLATETIP = true;
 
-module.exports = function handleClick(g, gd, numClicks) {
+export default function handleClick(g, gd, numClicks) {
     var fullLayout = gd._fullLayout;
 
     if(gd._dragged || gd._editing) return;
@@ -268,4 +266,4 @@ module.exports = function handleClick(g, gd, numClicks) {
             Registry.call('_guiRestyle', gd, dataUpdate, dataIndices);
         }
     }
-};
+}

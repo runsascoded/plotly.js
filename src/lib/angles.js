@@ -1,6 +1,4 @@
-'use strict';
-
-var modModule = require('./mod');
+import modModule from './mod.js';
 var mod = modModule.mod;
 var modHalf = modModule.modHalf;
 
@@ -217,7 +215,7 @@ function pathAnnulus(r0, r1, a0, a1, cx, cy) {
     return _path(r0, r1, a0, a1, cx, cy, 1);
 }
 
-module.exports = {
+export default {
     deg2rad: deg2rad,
     rad2deg: rad2deg,
     angleDelta: angleDelta,

@@ -1,6 +1,4 @@
-'use strict';
-
-module.exports = {
+export default {
     cellPad: 8,
     columnExtentOffset: 10,
     columnTitleOffset: 28,

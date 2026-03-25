@@ -1,9 +1,7 @@
-'use strict';
-
-var gl3dAxisAttrs = require('./axis_attributes');
-var domainAttrs = require('../../domain').attributes;
-var extendFlat = require('../../../lib/extend').extendFlat;
-var counterRegex = require('../../../lib').counterRegex;
+import gl3dAxisAttrs from './axis_attributes.js';
+import { attributes as domainAttrs } from '../../domain.js';
+import { extendFlat } from '../../../lib/extend.js';
+import { counterRegex } from '../../../lib/index.js';
 
 function makeCameraVector(x, y, z) {
     return {
@@ -26,7 +24,7 @@ function makeCameraVector(x, y, z) {
     };
 }
 
-module.exports = {
+export default {
     _arrayAttrRegexps: [counterRegex('scene', '.annotations', true)],
 
     bgcolor: {

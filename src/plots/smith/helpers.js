@@ -1,5 +1,3 @@
-'use strict';
-
 function sign(x) {
     return (
         x < 0 ? -1 :
@@ -85,7 +83,7 @@ function resistanceArc(subplot, R, X1, X2) {
     ].join(' ');
 }
 
-module.exports = {
+export default {
     smith: smith,
     reactanceArc: reactanceArc,
     resistanceArc: resistanceArc,

@@ -1,6 +1,4 @@
-'use strict';
-
-var scatterHover = require('../scatter/hover');
+import scatterHover from '../scatter/hover.js';
 
 function hoverPoints(pointData, xval, yval, hovermode) {
     var scatterPointData = scatterHover(pointData, xval, yval, hovermode);
@@ -60,7 +58,7 @@ function makeHoverPointText(cdi, trace, subplot, pointData) {
     }
 }
 
-module.exports = {
+export default {
     hoverPoints: hoverPoints,
     makeHoverPointText: makeHoverPointText
 };

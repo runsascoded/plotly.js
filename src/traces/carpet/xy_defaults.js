@@ -1,8 +1,6 @@
-'use strict';
+import { isArray1D } from '../../lib/index.js';
 
-var isArray1D = require('../../lib').isArray1D;
-
-module.exports = function handleXYDefaults(traceIn, traceOut, coerce) {
+export default function handleXYDefaults(traceIn, traceOut, coerce) {
     var x = coerce('x');
     var hasX = x && x.length;
     var y = coerce('y');
@@ -20,4 +18,4 @@ module.exports = function handleXYDefaults(traceIn, traceOut, coerce) {
     } else traceOut._length = null;
 
     return true;
-};
+}

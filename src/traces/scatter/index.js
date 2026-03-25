@@ -1,33 +1,48 @@
-'use strict';
+import subtypes from './subtypes.js';
+import _req0 from './attributes.js';
+import _req1 from './layout_attributes.js';
+import _req2 from './defaults.js';
+import _req3 from './cross_trace_defaults.js';
+import _req4 from './layout_defaults.js';
+import _calc from './calc.js';
+const { calc: _req5 } = _calc;
+import _req6 from './cross_trace_calc.js';
+import _req7 from './arrays_to_calcdata.js';
+import _req8 from './plot.js';
+import _req9 from './marker_colorbar.js';
+import _req10 from './format_labels.js';
+import _style from './style.js';
+const { style: _req11, styleOnSelect: _req12 } = _style;
+import _req13 from './hover.js';
+import _req14 from './select.js';
+import _req15 from '../../plots/cartesian/index.js';
 
-var subtypes = require('./subtypes');
-
-module.exports = {
+export default {
     hasLines: subtypes.hasLines,
     hasMarkers: subtypes.hasMarkers,
     hasText: subtypes.hasText,
     isBubble: subtypes.isBubble,
 
-    attributes: require('./attributes'),
-    layoutAttributes: require('./layout_attributes'),
-    supplyDefaults: require('./defaults'),
-    crossTraceDefaults: require('./cross_trace_defaults'),
-    supplyLayoutDefaults: require('./layout_defaults'),
-    calc: require('./calc').calc,
-    crossTraceCalc: require('./cross_trace_calc'),
-    arraysToCalcdata: require('./arrays_to_calcdata'),
-    plot: require('./plot'),
-    colorbar: require('./marker_colorbar'),
-    formatLabels: require('./format_labels'),
-    style: require('./style').style,
-    styleOnSelect: require('./style').styleOnSelect,
-    hoverPoints: require('./hover'),
-    selectPoints: require('./select'),
+    attributes: _req0,
+    layoutAttributes: _req1,
+    supplyDefaults: _req2,
+    crossTraceDefaults: _req3,
+    supplyLayoutDefaults: _req4,
+    calc: _req5,
+    crossTraceCalc: _req6,
+    arraysToCalcdata: _req7,
+    plot: _req8,
+    colorbar: _req9,
+    formatLabels: _req10,
+    style: _req11,
+    styleOnSelect: _req12,
+    hoverPoints: _req13,
+    selectPoints: _req14,
     animatable: true,
 
     moduleType: 'trace',
     name: 'scatter',
-    basePlotModule: require('../../plots/cartesian'),
+    basePlotModule: _req15,
     categories: [
         'cartesian', 'svg', 'symbols', 'errorBarsOK', 'showLegend', 'scatter-like',
         'zoomScale'

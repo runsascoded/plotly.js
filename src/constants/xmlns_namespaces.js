@@ -1,13 +1,10 @@
-'use strict';
+export var xmlns = 'http://www.w3.org/2000/xmlns/';
+export var svg = 'http://www.w3.org/2000/svg';
+export var xlink = 'http://www.w3.org/1999/xlink';
 
-
-exports.xmlns = 'http://www.w3.org/2000/xmlns/';
-exports.svg = 'http://www.w3.org/2000/svg';
-exports.xlink = 'http://www.w3.org/1999/xlink';
-
-// the 'old' d3 quirk got fix in v3.5.7
-// https://github.com/mbostock/d3/commit/a6f66e9dd37f764403fc7c1f26be09ab4af24fed
-exports.svgAttrs = {
-    xmlns: exports.svg,
-    'xmlns:xlink': exports.xlink
+export var svgAttrs = {
+    xmlns: svg,
+    'xmlns:xlink': xlink
 };
+
+export default { xmlns, svg, xlink, svgAttrs };

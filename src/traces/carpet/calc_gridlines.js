@@ -1,9 +1,7 @@
-'use strict';
+import Axes from '../../plots/cartesian/axes.js';
+import { extendFlat } from '../../lib/extend.js';
 
-var Axes = require('../../plots/cartesian/axes');
-var extendFlat = require('../../lib/extend').extendFlat;
-
-module.exports = function calcGridlines(trace, axisLetter, crossAxisLetter) {
+export default function calcGridlines(trace, axisLetter, crossAxisLetter) {
     var i, j, j0;
     var eps, bounds, n1, n2, n, value, v;
     var j1, v0, v1, d;
@@ -334,4 +332,4 @@ module.exports = function calcGridlines(trace, axisLetter, crossAxisLetter) {
             }));
         }
     }
-};
+}

@@ -1,9 +1,7 @@
-'use strict';
+import Lib from '../../lib/index.js';
+import Registry from '../../registry.js';
 
-var Lib = require('../../lib');
-var Registry = require('../../registry');
-
-module.exports = function calc(gd) {
+export default function calc(gd) {
     var calcdata = gd.calcdata;
     var fullLayout = gd._fullLayout;
 
@@ -42,7 +40,7 @@ module.exports = function calc(gd) {
         fillFn(trace.hoverlabel.align, cd, 'hta');
         fillFn(trace.hoverlabel.showarrow, cd, 'htsa');
     }
-};
+}
 
 function paste(traceAttr, cd, cdAttr, fn) {
     fn = fn || Lib.identity;

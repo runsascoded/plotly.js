@@ -1,7 +1,4 @@
-'use strict';
-
-
-module.exports = {
+export default {
     /**
      * Standardize all missing data in calcdata to use undefined
      * never null or NaN.

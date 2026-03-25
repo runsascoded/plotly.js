@@ -1,10 +1,7 @@
-'use strict';
+import fontAttrs from '../../plots/font_attributes.js';
+import colorAttrs from '../color/attributes.js';
 
-var fontAttrs = require('../../plots/font_attributes');
-var colorAttrs = require('../color/attributes');
-
-
-module.exports = {
+export default {
     // not really a 'subplot' attribute container,
     // but this is the flag we use to denote attributes that
     // support yaxis, yaxis2, yaxis3, ... counters

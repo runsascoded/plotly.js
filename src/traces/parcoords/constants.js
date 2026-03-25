@@ -1,7 +1,4 @@
-'use strict';
-
-
-module.exports = {
+export default {
     maxDimensionCount: 60, // this cannot be increased without WebGL code refactoring
     overdrag: 45,
     verticalPadding: 2, // otherwise, horizontal lines on top or bottom are of lower width

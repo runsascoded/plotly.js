@@ -1,5 +1,3 @@
-'use strict';
-
 /**
  * This will be transferred over to gd and overridden by
  * config args to Plotly.newPlot.
@@ -492,7 +490,7 @@ function crawl(src, target) {
 
 crawl(configAttributes, dfltConfig);
 
-module.exports = {
+export default {
     configAttributes: configAttributes,
     dfltConfig: dfltConfig
 };

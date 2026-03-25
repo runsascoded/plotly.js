@@ -1,5 +1,3 @@
-'use strict';
-
 /*
  * Compute the tangent vector according to catmull-rom cubic splines (centripetal,
  * I think). That differs from the control point in two ways:
@@ -11,7 +9,8 @@
  * math works out this way if you work through the bezier derivatives)
  */
 var CatmullRomExp = 0.5;
-module.exports = function makeControlPoints(p0, p1, p2, smoothness) {
+
+export default function makeControlPoints(p0, p1, p2, smoothness) {
     var d1x = p0[0] - p1[0];
     var d1y = p0[1] - p1[1];
     var d2x = p2[0] - p1[0];
@@ -30,4 +29,4 @@ module.exports = function makeControlPoints(p0, p1, p2, smoothness) {
         p1[0] - (denom2 && numx / denom2),
         p1[1] - (denom2 && numy / denom2)
     ]];
-};
+}

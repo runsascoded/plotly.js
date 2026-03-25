@@ -1,23 +1,34 @@
-'use strict';
+import _req0 from 'world-calendars/dist/main';
+import _req1 from 'world-calendars/dist/plus';
+import _req2 from 'world-calendars/dist/calendars/chinese';
+import _req3 from 'world-calendars/dist/calendars/coptic';
+import _req4 from 'world-calendars/dist/calendars/discworld';
+import _req5 from 'world-calendars/dist/calendars/ethiopian';
+import _req6 from 'world-calendars/dist/calendars/hebrew';
+import _req7 from 'world-calendars/dist/calendars/islamic';
+import _req8 from 'world-calendars/dist/calendars/julian';
+import _req9 from 'world-calendars/dist/calendars/mayan';
+import _req10 from 'world-calendars/dist/calendars/nanakshahi';
+import _req11 from 'world-calendars/dist/calendars/nepali';
+import _req12 from 'world-calendars/dist/calendars/persian';
+import _req13 from 'world-calendars/dist/calendars/taiwan';
+import _req14 from 'world-calendars/dist/calendars/thai';
+import _req15 from 'world-calendars/dist/calendars/ummalqura';
+export default _req0;
 
-// a trimmed down version of:
-// https://github.com/alexcjohnson/world-calendars/blob/master/dist/index.js
+_req1;
 
-module.exports = require('world-calendars/dist/main');
-
-require('world-calendars/dist/plus');
-
-require('world-calendars/dist/calendars/chinese');
-require('world-calendars/dist/calendars/coptic');
-require('world-calendars/dist/calendars/discworld');
-require('world-calendars/dist/calendars/ethiopian');
-require('world-calendars/dist/calendars/hebrew');
-require('world-calendars/dist/calendars/islamic');
-require('world-calendars/dist/calendars/julian');
-require('world-calendars/dist/calendars/mayan');
-require('world-calendars/dist/calendars/nanakshahi');
-require('world-calendars/dist/calendars/nepali');
-require('world-calendars/dist/calendars/persian');
-require('world-calendars/dist/calendars/taiwan');
-require('world-calendars/dist/calendars/thai');
-require('world-calendars/dist/calendars/ummalqura');
+_req2;
+_req3;
+_req4;
+_req5;
+_req6;
+_req7;
+_req8;
+_req9;
+_req10;
+_req11;
+_req12;
+_req13;
+_req14;
+_req15;

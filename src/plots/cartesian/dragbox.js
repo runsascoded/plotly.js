@@ -1,40 +1,35 @@
-'use strict';
-
-var d3 = require('@plotly/d3');
-var Lib = require('../../lib');
+import d3 from '@plotly/d3';
+import Lib from '../../lib/index.js';
+import tinycolor from 'tinycolor2';
+import supportsPassive from 'has-passive-events';
+import Registry from '../../registry.js';
+import svgTextUtils from '../../lib/svg_text_utils.js';
+import Color from '../../components/color/index.js';
+import Drawing from '../../components/drawing/index.js';
+import Fx from '../../components/fx/index.js';
+import Axes from './axes.js';
+import setCursor from '../../lib/setcursor.js';
+import dragElement from '../../components/dragelement/index.js';
+import helpers from '../../components/dragelement/helpers.js';
+import _alignment from '../../constants/alignment.js';
+const { FROM_TL } = _alignment;
+import clearGlCanvases from '../../lib/clear_gl_canvases.js';
+import { redrawReglTraces } from '../../plot_api/subroutines.js';
+import Plots from '../plots.js';
+import { getFromId } from './axis_ids.js';
+import scaleZoom from './scale_zoom.js';
+import constants from './constants.js';
 var numberFormat = Lib.numberFormat;
-var tinycolor = require('tinycolor2');
-var supportsPassive = require('has-passive-events');
-
-var Registry = require('../../registry');
 var strTranslate = Lib.strTranslate;
-var svgTextUtils = require('../../lib/svg_text_utils');
-var Color = require('../../components/color');
-var Drawing = require('../../components/drawing');
-var Fx = require('../../components/fx');
-var Axes = require('./axes');
-var setCursor = require('../../lib/setcursor');
-var dragElement = require('../../components/dragelement');
-var helpers = require('../../components/dragelement/helpers');
 var selectingOrDrawing = helpers.selectingOrDrawing;
 var freeMode = helpers.freeMode;
 
-var FROM_TL = require('../../constants/alignment').FROM_TL;
-var clearGlCanvases = require('../../lib/clear_gl_canvases');
-var redrawReglTraces = require('../../plot_api/subroutines').redrawReglTraces;
-
-var Plots = require('../plots');
-
-var getFromId = require('./axis_ids').getFromId;
 // Lazy-resolve selections via Registry to avoid pulling in ~70KB when
 // the selections component isn't registered (e.g. in the lite bundle).
 // Returns the function if registered, noop otherwise.
 function prepSelect() { return Registry.getComponentMethod('selections', 'prepSelect').apply(null, arguments); }
 function clearOutline() { return Registry.getComponentMethod('selections', 'clearOutline').apply(null, arguments); }
 function selectOnClick() { return Registry.getComponentMethod('selections', 'selectOnClick').apply(null, arguments); }
-var scaleZoom = require('./scale_zoom');
-
-var constants = require('./constants');
 var MINDRAG = constants.MINDRAG;
 var MINZOOM = constants.MINZOOM;
 
@@ -1370,7 +1365,7 @@ function hashValues(hash) {
     return out;
 }
 
-module.exports = {
+export default {
     makeDragBox: makeDragBox,
 
     makeDragger: makeDragger,

@@ -1,13 +1,11 @@
-'use strict';
-
-var Fx = require('../../components/fx');
-var Lib = require('../../lib');
-var getTraceColor = require('../bar/hover').getTraceColor;
+import Fx from '../../components/fx/index.js';
+import Lib from '../../lib/index.js';
+import { getTraceColor } from '../bar/hover.js';
+import { makeHoverPointText } from '../scatterpolar/hover.js';
+import { isPtInsidePolygon } from '../../plots/polar/helpers.js';
 var fillText = Lib.fillText;
-var makeHoverPointText = require('../scatterpolar/hover').makeHoverPointText;
-var isPtInsidePolygon = require('../../plots/polar/helpers').isPtInsidePolygon;
 
-module.exports = function hoverPoints(pointData, xval, yval) {
+export default function hoverPoints(pointData, xval, yval) {
     var cd = pointData.cd;
     var trace = cd[0].trace;
 
@@ -62,4 +60,4 @@ module.exports = function hoverPoints(pointData, xval, yval) {
     }
 
     return [pointData];
-};
+}

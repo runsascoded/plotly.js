@@ -1,10 +1,8 @@
-'use strict';
+import Lib from '../../lib/index.js';
+import { BADNUM } from '../../constants/numerical.js';
+import alignPeriod from '../../plots/cartesian/align_period.js';
 
-var Lib = require('../../lib');
-var BADNUM = require('../../constants/numerical').BADNUM;
-var alignPeriod = require('../../plots/cartesian/align_period');
-
-module.exports = function convertColumnData(trace, ax1, ax2, var1Name, var2Name, arrayVarNames) {
+export default function convertColumnData(trace, ax1, ax2, var1Name, var2Name, arrayVarNames) {
     var colLen = trace._length;
     var col1 = ax1.makeCalcdata(trace, var1Name);
     var col2 = ax2.makeCalcdata(trace, var2Name);
@@ -76,4 +74,4 @@ module.exports = function convertColumnData(trace, ax1, ax2, var1Name, var2Name,
     }
 
     trace._after2before = after2before;
-};
+}

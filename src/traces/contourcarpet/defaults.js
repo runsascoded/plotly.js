@@ -1,14 +1,11 @@
-'use strict';
+import Lib from '../../lib/index.js';
+import handleXYZDefaults from '../heatmap/xyz_defaults.js';
+import attributes from './attributes.js';
+import handleConstraintDefaults from '../contour/constraint_defaults.js';
+import handleContoursDefaults from '../contour/contours_defaults.js';
+import handleStyleDefaults from '../contour/style_defaults.js';
 
-var Lib = require('../../lib');
-
-var handleXYZDefaults = require('../heatmap/xyz_defaults');
-var attributes = require('./attributes');
-var handleConstraintDefaults = require('../contour/constraint_defaults');
-var handleContoursDefaults = require('../contour/contours_defaults');
-var handleStyleDefaults = require('../contour/style_defaults');
-
-module.exports = function supplyDefaults(traceIn, traceOut, defaultColor, layout) {
+export default function supplyDefaults(traceIn, traceOut, defaultColor, layout) {
     function coerce(attr, dflt) {
         return Lib.coerce(traceIn, traceOut, attributes, attr, dflt);
     }
@@ -56,4 +53,4 @@ module.exports = function supplyDefaults(traceIn, traceOut, defaultColor, layout
         traceOut._length = null;
     }
     coerce('zorder');
-};
+}

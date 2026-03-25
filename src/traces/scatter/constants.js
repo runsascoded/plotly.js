@@ -1,6 +1,4 @@
-'use strict';
-
-module.exports = {
+export default {
     PTS_LINESONLY: 20,
 
     // fixed parameters of clustering and clipping algorithms

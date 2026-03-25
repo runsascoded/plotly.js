@@ -1,13 +1,11 @@
-'use strict';
-
-var scatterAttrs = require('../scatter/attributes');
-var colorScaleAttrs = require('../../components/colorscale/attributes');
-var axisHoverFormat = require('../../plots/cartesian/axis_format_attributes').axisHoverFormat;
-const { hovertemplateAttrs, templatefallbackAttrs } = require('../../plots/template_attributes');
-var scatterGlAttrs = require('../scattergl/attributes');
-var cartesianIdRegex = require('../../plots/cartesian/constants').idRegex;
-var templatedArray = require('../../plot_api/plot_template').templatedArray;
-var extendFlat = require('../../lib/extend').extendFlat;
+import scatterAttrs from '../scatter/attributes.js';
+import colorScaleAttrs from '../../components/colorscale/attributes.js';
+import { axisHoverFormat } from '../../plots/cartesian/axis_format_attributes.js';
+import { hovertemplateAttrs, templatefallbackAttrs } from '../../plots/template_attributes.js';
+import scatterGlAttrs from '../scattergl/attributes.js';
+import { idRegex as cartesianIdRegex } from '../../plots/cartesian/constants.js';
+import { templatedArray } from '../../plot_api/plot_template.js';
+import { extendFlat } from '../../lib/extend.js';
 
 var scatterMarkerAttrs = scatterAttrs.marker;
 var scatterMarkerLineAttrs = scatterMarkerAttrs.line;
@@ -54,7 +52,7 @@ function makeAxesValObject(axLetter) {
     };
 }
 
-module.exports = {
+export default {
     dimensions: templatedArray('dimension', {
         visible: {
             valType: 'boolean',

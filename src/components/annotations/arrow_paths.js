@@ -1,21 +1,4 @@
-'use strict';
-
-/**
- * All paths are tuned for maximum scalability of the arrowhead,
- * ie throughout arrowwidth=0.3..3 the head is joined smoothly
- * to the line, with the line coming from the left and ending at (0, 0).
- *
- * `backoff` is the distance to move the arrowhead and the end of the line,
- * in order that the arrowhead points to the desired place, either at
- * the tip of the arrow or (in the case of circle or square)
- * the center of the symbol.
- *
- * `noRotate`, if truthy, says that this arrowhead should not rotate with the
- * arrow. That's the case for squares, which should always be straight, and
- * circles, for which it's irrelevant.
- */
-
-module.exports = [
+export default [
     // no arrow
     {
         path: '',

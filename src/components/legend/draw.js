@@ -1,32 +1,27 @@
-'use strict';
-
-var d3 = require('@plotly/d3');
-
-var Lib = require('../../lib');
-var Plots = require('../../plots/plots');
-var Registry = require('../../registry');
-var Events = require('../../lib/events');
-var dragElement = require('../dragelement');
-var Drawing = require('../drawing');
-var Color = require('../color');
-var svgTextUtils = require('../../lib/svg_text_utils');
-var handleClick = require('./handle_click');
-
-var constants = require('./constants');
-var alignmentConstants = require('../../constants/alignment');
+import d3 from '@plotly/d3';
+import Lib from '../../lib/index.js';
+import Plots from '../../plots/plots.js';
+import Registry from '../../registry.js';
+import Events from '../../lib/events.js';
+import dragElement from '../dragelement/index.js';
+import Drawing from '../drawing/index.js';
+import Color from '../color/index.js';
+import svgTextUtils from '../../lib/svg_text_utils.js';
+import handleClick from './handle_click.js';
+import constants from './constants.js';
+import alignmentConstants from '../../constants/alignment.js';
+import getLegendData from './get_legend_data.js';
+import style from './style.js';
+import helpers from './helpers.js';
 var LINE_SPACING = alignmentConstants.LINE_SPACING;
 var FROM_TL = alignmentConstants.FROM_TL;
 var FROM_BR = alignmentConstants.FROM_BR;
-
-var getLegendData = require('./get_legend_data');
-var style = require('./style');
-var helpers = require('./helpers');
 
 var MAIN_TITLE = 1;
 
 var LEGEND_PATTERN = /^legend[0-9]*$/;
 
-module.exports = function draw(gd, opts) {
+export default function draw(gd, opts) {
     if(opts) {
         drawOne(gd, opts);
     } else {
@@ -52,7 +47,7 @@ module.exports = function draw(gd, opts) {
             drawOne(gd, legendObj);
         }
     }
-};
+}
 
 // After legend dimensions are calculated the title can be aligned horizontally left, center, right
 function horizontalAlignTitle(titleEl, legendObj, bw) {
@@ -76,7 +71,6 @@ function horizontalAlignTitle(titleEl, legendObj, bw) {
         bw + lineHeight
     );
 }
-
 
 function drawOne(gd, opts) {
     var legendObj = opts || {};

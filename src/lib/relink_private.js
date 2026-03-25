@@ -1,16 +1,7 @@
-'use strict';
+import { isArrayOrTypedArray } from './array.js';
+import isPlainObject from './is_plain_object.js';
 
-var isArrayOrTypedArray = require('./array').isArrayOrTypedArray;
-var isPlainObject = require('./is_plain_object');
-
-/**
- * Relink private _keys and keys with a function value from one container
- * to the new container.
- * Relink means copying if object is pass-by-value and adding a reference
- * if object is pass-by-ref.
- * This prevents deepCopying massive structures like a webgl context.
- */
-module.exports = function relinkPrivateKeys(toContainer, fromContainer) {
+export default function relinkPrivateKeys(toContainer, fromContainer) {
     for(var k in fromContainer) {
         var fromVal = fromContainer[k];
         var toVal = toContainer[k];
@@ -43,4 +34,4 @@ module.exports = function relinkPrivateKeys(toContainer, fromContainer) {
             if(!Object.keys(toVal).length) delete toContainer[k];
         }
     }
-};
+}

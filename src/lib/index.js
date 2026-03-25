@@ -1,16 +1,47 @@
-'use strict';
-
-var d3 = require('@plotly/d3');
-var utcFormat = require('d3-time-format').utcFormat;
-var d3Format = require('d3-format').format;
-var isNumeric = require('fast-isnumeric');
-
-var numConstants = require('../constants/numerical');
+import d3 from '@plotly/d3';
+import { utcFormat } from 'd3-time-format';
+import { format as d3Format } from 'd3-format';
+import isNumeric from 'fast-isnumeric';
+import numConstants from '../constants/numerical.js';
+import arrayModule from './array.js';
+import modModule from './mod.js';
+import coerceModule from './coerce.js';
+import datesModule from './dates.js';
+import searchModule from './search.js';
+import statsModule from './stats.js';
+import matrixModule from './matrix.js';
+import anglesModule from './angles.js';
+import anchorUtils from './anchor_utils.js';
+import geom2dModule from './geometry2d.js';
+import extendModule from './extend.js';
+import loggersModule from './loggers.js';
+import regexModule from './regex.js';
+import throttleModule from './throttle.js';
+import domModule from './dom.js';
+import _req0 from './nested_property.js';
+import _req1 from './keyed_container.js';
+import _req2 from './relative_attr.js';
+import _req3 from './is_plain_object.js';
+import _req4 from './to_log_range.js';
+import _req5 from './relink_private.js';
+import _req6 from './sort_object_keys.js';
+import _req7 from './clear_responsive.js';
+import _req8 from './preserve_drawing_buffer.js';
+import _req9 from './make_trace_groups.js';
+import _req10 from './localize.js';
+import _req11 from './notifier.js';
+import _req12 from './filter_unique.js';
+import _req13 from './filter_visible.js';
+import _req14 from './push_unique.js';
+import _req15 from './increment.js';
+import _req16 from './clean_number.js';
+import _req17 from './noop.js';
+import _req18 from './identity.js';
 var MAX_SAFE = numConstants.FP_SAFE;
 var MIN_SAFE = -MAX_SAFE;
 var BADNUM = numConstants.BADNUM;
 
-var lib = (module.exports = {});
+var lib = ({});
 
 lib.adjustFormat = function adjustFormat(formatStr) {
     if (!formatStr || /^\d[.]\df/.test(formatStr) || /[.]\d%/.test(formatStr)) return formatStr;
@@ -50,14 +81,13 @@ lib.numberFormat = function (formatStr) {
     return fn;
 };
 
-lib.nestedProperty = require('./nested_property');
-lib.keyedContainer = require('./keyed_container');
-lib.relativeAttr = require('./relative_attr');
-lib.isPlainObject = require('./is_plain_object');
-lib.toLogRange = require('./to_log_range');
-lib.relinkPrivateKeys = require('./relink_private');
+lib.nestedProperty = _req0;
+lib.keyedContainer = _req1;
+lib.relativeAttr = _req2;
+lib.isPlainObject = _req3;
+lib.toLogRange = _req4;
+lib.relinkPrivateKeys = _req5;
 
-var arrayModule = require('./array');
 lib.isArrayBuffer = arrayModule.isArrayBuffer;
 lib.isTypedArray = arrayModule.isTypedArray;
 lib.isArrayOrTypedArray = arrayModule.isArrayOrTypedArray;
@@ -67,11 +97,9 @@ lib.concat = arrayModule.concat;
 lib.maxRowLength = arrayModule.maxRowLength;
 lib.minRowLength = arrayModule.minRowLength;
 
-var modModule = require('./mod');
 lib.mod = modModule.mod;
 lib.modHalf = modModule.modHalf;
 
-var coerceModule = require('./coerce');
 lib.valObjectMeta = coerceModule.valObjectMeta;
 lib.coerce = coerceModule.coerce;
 lib.coerce2 = coerceModule.coerce2;
@@ -81,7 +109,6 @@ lib.coerceHoverinfo = coerceModule.coerceHoverinfo;
 lib.coerceSelectionMarkerOpacity = coerceModule.coerceSelectionMarkerOpacity;
 lib.validate = coerceModule.validate;
 
-var datesModule = require('./dates');
 lib.dateTime2ms = datesModule.dateTime2ms;
 lib.isDateTime = datesModule.isDateTime;
 lib.ms2DateTime = datesModule.ms2DateTime;
@@ -96,7 +123,6 @@ lib.findExactDates = datesModule.findExactDates;
 lib.MIN_MS = datesModule.MIN_MS;
 lib.MAX_MS = datesModule.MAX_MS;
 
-var searchModule = require('./search');
 lib.findBin = searchModule.findBin;
 lib.sorterAsc = searchModule.sorterAsc;
 lib.sorterDes = searchModule.sorterDes;
@@ -105,9 +131,8 @@ lib.roundUp = searchModule.roundUp;
 lib.sort = searchModule.sort;
 lib.findIndexOfMin = searchModule.findIndexOfMin;
 
-lib.sortObjectKeys = require('./sort_object_keys');
+lib.sortObjectKeys = _req6;
 
-var statsModule = require('./stats');
 lib.aggNums = statsModule.aggNums;
 lib.len = statsModule.len;
 lib.mean = statsModule.mean;
@@ -118,7 +143,6 @@ lib.variance = statsModule.variance;
 lib.stdev = statsModule.stdev;
 lib.interp = statsModule.interp;
 
-var matrixModule = require('./matrix');
 lib.init2dArray = matrixModule.init2dArray;
 lib.transposeRagged = matrixModule.transposeRagged;
 lib.dot = matrixModule.dot;
@@ -131,7 +155,6 @@ lib.apply2DTransform2 = matrixModule.apply2DTransform2;
 lib.convertCssMatrix = matrixModule.convertCssMatrix;
 lib.inverseTransformMatrix = matrixModule.inverseTransformMatrix;
 
-var anglesModule = require('./angles');
 lib.deg2rad = anglesModule.deg2rad;
 lib.rad2deg = anglesModule.rad2deg;
 lib.angleDelta = anglesModule.angleDelta;
@@ -143,7 +166,6 @@ lib.pathArc = anglesModule.pathArc;
 lib.pathSector = anglesModule.pathSector;
 lib.pathAnnulus = anglesModule.pathAnnulus;
 
-var anchorUtils = require('./anchor_utils');
 lib.isLeftAnchor = anchorUtils.isLeftAnchor;
 lib.isCenterAnchor = anchorUtils.isCenterAnchor;
 lib.isRightAnchor = anchorUtils.isRightAnchor;
@@ -151,7 +173,6 @@ lib.isTopAnchor = anchorUtils.isTopAnchor;
 lib.isMiddleAnchor = anchorUtils.isMiddleAnchor;
 lib.isBottomAnchor = anchorUtils.isBottomAnchor;
 
-var geom2dModule = require('./geometry2d');
 lib.segmentsIntersect = geom2dModule.segmentsIntersect;
 lib.segmentDistance = geom2dModule.segmentDistance;
 lib.getTextLocation = geom2dModule.getTextLocation;
@@ -159,26 +180,21 @@ lib.clearLocationCache = geom2dModule.clearLocationCache;
 lib.getVisibleSegment = geom2dModule.getVisibleSegment;
 lib.findPointOnPath = geom2dModule.findPointOnPath;
 
-var extendModule = require('./extend');
 lib.extendFlat = extendModule.extendFlat;
 lib.extendDeep = extendModule.extendDeep;
 lib.extendDeepAll = extendModule.extendDeepAll;
 lib.extendDeepNoArrays = extendModule.extendDeepNoArrays;
 
-var loggersModule = require('./loggers');
 lib.log = loggersModule.log;
 lib.warn = loggersModule.warn;
 lib.error = loggersModule.error;
 
-var regexModule = require('./regex');
 lib.counterRegex = regexModule.counter;
 
-var throttleModule = require('./throttle');
 lib.throttle = throttleModule.throttle;
 lib.throttleDone = throttleModule.done;
 lib.clearThrottle = throttleModule.clear;
 
-var domModule = require('./dom');
 lib.getGraphDiv = domModule.getGraphDiv;
 lib.isPlotDiv = domModule.isPlotDiv;
 lib.removeElement = domModule.removeElement;
@@ -191,22 +207,22 @@ lib.getElementTransformMatrix = domModule.getElementTransformMatrix;
 lib.getElementAndAncestors = domModule.getElementAndAncestors;
 lib.equalDomRects = domModule.equalDomRects;
 
-lib.clearResponsive = require('./clear_responsive');
-lib.preserveDrawingBuffer = require('./preserve_drawing_buffer');
+lib.clearResponsive = _req7;
+lib.preserveDrawingBuffer = _req8;
 
-lib.makeTraceGroups = require('./make_trace_groups');
+lib.makeTraceGroups = _req9;
 
-lib._ = require('./localize');
+lib._ = _req10;
 
-lib.notifier = require('./notifier');
+lib.notifier = _req11;
 
-lib.filterUnique = require('./filter_unique');
-lib.filterVisible = require('./filter_visible');
-lib.pushUnique = require('./push_unique');
+lib.filterUnique = _req12;
+lib.filterVisible = _req13;
+lib.pushUnique = _req14;
 
-lib.increment = require('./increment');
+lib.increment = _req15;
 
-lib.cleanNumber = require('./clean_number');
+lib.cleanNumber = _req16;
 
 lib.ensureNumber = function ensureNumber(v) {
     if (!isNumeric(v)) return BADNUM;
@@ -227,8 +243,8 @@ lib.isIndex = function (v, len) {
     return isNumeric(v) && v >= 0 && v % 1 === 0;
 };
 
-lib.noop = require('./noop');
-lib.identity = require('./identity');
+lib.noop = _req17;
+lib.identity = _req18;
 
 /**
  * create an array of length 'cnt' filled with 'v' at all indices
@@ -1413,3 +1429,5 @@ lib.getPositionFromD3Event = function () {
         return [d3.event.offsetX, d3.event.offsetY];
     }
 };
+
+export default lib;

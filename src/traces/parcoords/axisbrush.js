@@ -1,11 +1,9 @@
-'use strict';
-
-var c = require('./constants');
-var d3 = require('@plotly/d3');
-var keyFun = require('../../lib/gup').keyFun;
-var repeat = require('../../lib/gup').repeat;
-var sortAsc = require('../../lib').sorterAsc;
-var strTranslate = require('../../lib').strTranslate;
+import c from './constants.js';
+import d3 from '@plotly/d3';
+import { keyFun } from '../../lib/gup.js';
+import { repeat } from '../../lib/gup.js';
+import { sorterAsc as sortAsc } from '../../lib/index.js';
+import { strTranslate } from '../../lib/index.js';
 
 var snapRatio = c.bar.snapRatio;
 function snapOvershoot(v, vAdjacent) { return v * (1 - snapRatio) + vAdjacent * snapRatio; }
@@ -530,7 +528,7 @@ function cleanRanges(ranges, dimension) {
     return ranges.length > 1 ? ranges : ranges[0];
 }
 
-module.exports = {
+export default {
     makeBrush: makeBrush,
     ensureAxisBrush: ensureAxisBrush,
     cleanRanges: cleanRanges

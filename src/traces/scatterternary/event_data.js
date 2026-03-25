@@ -1,6 +1,4 @@
-'use strict';
-
-module.exports = function eventData(out, pt, trace, cd, pointNumber) {
+export default function eventData(out, pt, trace, cd, pointNumber) {
     if(pt.xa) out.xaxis = pt.xa;
     if(pt.ya) out.yaxis = pt.ya;
 
@@ -19,4 +17,4 @@ module.exports = function eventData(out, pt, trace, cd, pointNumber) {
     }
 
     return out;
-};
+}

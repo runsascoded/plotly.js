@@ -1,9 +1,7 @@
-'use strict';
-
-var d3 = require('@plotly/d3');
-var Color = require('../../components/color');
-var Drawing = require('../../components/drawing');
-var Colorscale = require('../../components/colorscale');
+import d3 from '@plotly/d3';
+import Color from '../../components/color/index.js';
+import Drawing from '../../components/drawing/index.js';
+import Colorscale from '../../components/colorscale/index.js';
 
 function style(gd, calcTrace) {
     if(calcTrace) styleTrace(gd, calcTrace);
@@ -40,7 +38,7 @@ function styleOnSelect(gd, calcTrace) {
     }
 }
 
-module.exports = {
+export default {
     style: style,
     styleOnSelect: styleOnSelect
 };

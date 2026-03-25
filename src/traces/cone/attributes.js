@@ -1,12 +1,9 @@
-'use strict';
-
-var colorScaleAttrs = require('../../components/colorscale/attributes');
-var axisHoverFormat = require('../../plots/cartesian/axis_format_attributes').axisHoverFormat;
-const { hovertemplateAttrs, templatefallbackAttrs } = require('../../plots/template_attributes');
-var mesh3dAttrs = require('../mesh3d/attributes');
-var baseAttrs = require('../../plots/attributes');
-
-var extendFlat = require('../../lib/extend').extendFlat;
+import colorScaleAttrs from '../../components/colorscale/attributes.js';
+import { axisHoverFormat } from '../../plots/cartesian/axis_format_attributes.js';
+import { hovertemplateAttrs, templatefallbackAttrs } from '../../plots/template_attributes.js';
+import mesh3dAttrs from '../mesh3d/attributes.js';
+import baseAttrs from '../../plots/attributes.js';
+import { extendFlat } from '../../lib/extend.js';
 
 var attrs = {
     x: {
@@ -178,4 +175,4 @@ attrs.hoverinfo = extendFlat({}, baseAttrs.hoverinfo, {
     dflt: 'x+y+z+norm+text+name'
 });
 
-module.exports = attrs;
+export default attrs;

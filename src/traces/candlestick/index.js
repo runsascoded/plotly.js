@@ -1,9 +1,19 @@
-'use strict';
+import _req0 from '../../plots/cartesian/index.js';
+import _req1 from './attributes.js';
+import _req2 from '../box/layout_attributes.js';
+import { supplyLayoutDefaults as _req3 } from '../box/layout_defaults.js';
+import { crossTraceCalc as _req4 } from '../box/cross_trace_calc.js';
+import _req5 from './defaults.js';
+import _req6 from './calc.js';
+import { plot as _req7 } from '../box/plot.js';
+import { style as _req8 } from '../box/style.js';
+import { hoverPoints as _req9 } from '../ohlc/hover.js';
+import _req10 from '../ohlc/select.js';
 
-module.exports = {
+export default {
     moduleType: 'trace',
     name: 'candlestick',
-    basePlotModule: require('../../plots/cartesian'),
+    basePlotModule: _req0,
     categories: ['cartesian', 'svg', 'showLegend', 'candlestick', 'boxLayout'],
     meta: {
         description: [
@@ -21,15 +31,15 @@ module.exports = {
         ].join(' ')
     },
 
-    attributes: require('./attributes'),
-    layoutAttributes: require('../box/layout_attributes'),
-    supplyLayoutDefaults: require('../box/layout_defaults').supplyLayoutDefaults,
-    crossTraceCalc: require('../box/cross_trace_calc').crossTraceCalc,
-    supplyDefaults: require('./defaults'),
-    calc: require('./calc'),
-    plot: require('../box/plot').plot,
+    attributes: _req1,
+    layoutAttributes: _req2,
+    supplyLayoutDefaults: _req3,
+    crossTraceCalc: _req4,
+    supplyDefaults: _req5,
+    calc: _req6,
+    plot: _req7,
     layerName: 'boxlayer',
-    style: require('../box/style').style,
-    hoverPoints: require('../ohlc/hover').hoverPoints,
-    selectPoints: require('../ohlc/select')
+    style: _req8,
+    hoverPoints: _req9,
+    selectPoints: _req10
 };

@@ -1,9 +1,7 @@
-'use strict';
+import fontAttrs from './font_attributes.js';
+import fxAttrs from '../components/fx/attributes.js';
 
-var fontAttrs = require('./font_attributes');
-var fxAttrs = require('../components/fx/attributes');
-
-module.exports = {
+export default {
     type: {
         valType: 'enumerated',
         values: [],     // listed dynamically

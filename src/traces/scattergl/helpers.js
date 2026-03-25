@@ -1,15 +1,15 @@
-'use strict';
+import constants from './constants.js';
 
-var constants = require('./constants');
-
-exports.isOpenSymbol = function(symbol) {
+export var isOpenSymbol = function(symbol) {
     return (typeof symbol === 'string') ?
         constants.OPEN_RE.test(symbol) :
         symbol % 200 > 100;
 };
 
-exports.isDotSymbol = function(symbol) {
+export var isDotSymbol = function(symbol) {
     return (typeof symbol === 'string') ?
         constants.DOT_RE.test(symbol) :
         symbol > 200;
 };
+
+export default { isOpenSymbol, isDotSymbol };

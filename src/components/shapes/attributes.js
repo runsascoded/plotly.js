@@ -1,17 +1,16 @@
-'use strict';
+import annAttrs from '../annotations/attributes.js';
+import fontAttrs from '../../plots/font_attributes.js';
+import _attributes from '../../traces/scatter/attributes.js';
+const { line: scatterLineAttrs } = _attributes;
+import { dash } from '../drawing/attributes.js';
+import { extendFlat } from '../../lib/extend.js';
+import { templatedArray } from '../../plot_api/plot_template.js';
+import axisPlaceableObjs from '../../constants/axis_placeable_objects.js';
+import basePlotAttributes from '../../plots/attributes.js';
+import { shapeTexttemplateAttrs, templatefallbackAttrs } from '../../plots/template_attributes.js';
+import shapeLabelTexttemplateVars from './label_texttemplate.js';
 
-var annAttrs = require('../annotations/attributes');
-var fontAttrs = require('../../plots/font_attributes');
-var scatterLineAttrs = require('../../traces/scatter/attributes').line;
-var dash = require('../drawing/attributes').dash;
-var extendFlat = require('../../lib/extend').extendFlat;
-var templatedArray = require('../../plot_api/plot_template').templatedArray;
-var axisPlaceableObjs = require('../../constants/axis_placeable_objects');
-var basePlotAttributes = require('../../plots/attributes');
-const { shapeTexttemplateAttrs, templatefallbackAttrs } = require('../../plots/template_attributes');
-var shapeLabelTexttemplateVars = require('./label_texttemplate');
-
-module.exports = templatedArray('shape', {
+export default templatedArray('shape', {
     visible: extendFlat({}, basePlotAttributes.visible, {
         editType: 'calc+arraydraw',
         description: [

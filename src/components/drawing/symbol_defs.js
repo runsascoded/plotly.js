@@ -1,6 +1,4 @@
-'use strict';
-
-var parseSvgPath = require('parse-svg-path');
+import parseSvgPath from 'parse-svg-path';
 var round = // require('@plotly/d3').round;
     function(x, n) {
         return n ? Math.round(x * (n = Math.pow(10, n))) / n : Math.round(x);
@@ -14,7 +12,6 @@ var round = // require('@plotly/d3').round;
  * add both and you get both
  */
 
-
 var emptyPath = 'M0,0Z';
 var sqrt2 = Math.sqrt(2);
 var sqrt3 = Math.sqrt(3);
@@ -22,7 +19,7 @@ var PI = Math.PI;
 var cos = Math.cos;
 var sin = Math.sin;
 
-module.exports = {
+export default {
     circle: {
         n: 0,
         f: function(r, angle, standoff) {
@@ -793,7 +790,6 @@ function align(angle, standoff, path) {
         var B = rotate(t, [x, y]);
 
         if(op === 'H' || op === 'V') op = 'L';
-
 
         if(
             op === 'M' || op === 'L' ||

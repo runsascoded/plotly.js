@@ -1,18 +1,17 @@
-'use strict';
-
-var axisIDs = require('../../plots/cartesian/axis_ids');
-var svgTextUtils = require('../../lib/svg_text_utils');
-var constants = require('./constants');
-var LINE_SPACING = require('../../constants/alignment').LINE_SPACING;
+import axisIDs from '../../plots/cartesian/axis_ids.js';
+import svgTextUtils from '../../lib/svg_text_utils.js';
+import constants from './constants.js';
+import _alignment from '../../constants/alignment.js';
+const { LINE_SPACING } = _alignment;
 var name = constants.name;
 
 function isVisible(ax) {
     var rangeSlider = ax && ax[name];
     return rangeSlider && rangeSlider.visible;
 }
-exports.isVisible = isVisible;
+export { isVisible };
 
-exports.makeData = function(fullLayout) {
+export var makeData = function(fullLayout) {
     var axes = axisIDs.list({ _fullLayout: fullLayout }, 'x', true);
     var margin = fullLayout.margin;
     var rangeSliderData = [];
@@ -33,7 +32,7 @@ exports.makeData = function(fullLayout) {
     fullLayout._rangeSliderData = rangeSliderData;
 };
 
-exports.autoMarginOpts = function(gd, ax) {
+export var autoMarginOpts = function(gd, ax) {
     var fullLayout = gd._fullLayout;
     var opts = ax[name];
     var axLetter = ax._id.charAt(0);
@@ -61,3 +60,5 @@ exports.autoMarginOpts = function(gd, ax) {
         pad: constants.extraPad + opts._offsetShift * 2
     };
 };
+
+export default { makeData, autoMarginOpts, isVisible };

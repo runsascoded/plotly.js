@@ -1,6 +1,4 @@
-'use strict';
-
-module.exports = {
+export default {
     solid: [[], 0],
     dot: [[0.5, 1], 200],
     dash: [[0.5, 1], 50],

@@ -1,5 +1,3 @@
-'use strict';
-
-module.exports = function sortObjectKeys(obj) {
+export default function sortObjectKeys(obj) {
     return Object.keys(obj).sort();
-};
+}

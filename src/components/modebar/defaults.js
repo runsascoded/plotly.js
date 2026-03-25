@@ -1,11 +1,9 @@
-'use strict';
+import Lib from '../../lib/index.js';
+import Color from '../color/index.js';
+import Template from '../../plot_api/plot_template.js';
+import attributes from './attributes.js';
 
-var Lib = require('../../lib');
-var Color = require('../color');
-var Template = require('../../plot_api/plot_template');
-var attributes = require('./attributes');
-
-module.exports = function supplyLayoutDefaults(layoutIn, layoutOut) {
+export default function supplyLayoutDefaults(layoutIn, layoutOut) {
     var containerIn = layoutIn.modebar || {};
     var containerOut = Template.newContainer(layoutOut, 'modebar');
 
@@ -21,4 +19,4 @@ module.exports = function supplyLayoutDefaults(layoutIn, layoutOut) {
     coerce('uirevision', layoutOut.uirevision);
     coerce('add');
     coerce('remove');
-};
+}

@@ -1,24 +1,33 @@
-'use strict';
+import _req0 from './base_plot.js';
+import _req1 from './attributes.js';
+import _req2 from './layout_attributes.js';
+import _req3 from './defaults.js';
+import _req4 from './layout_defaults.js';
+import { calc as _req5 } from './calc.js';
+import { crossTraceCalc as _req6 } from './calc.js';
+import { plot as _req7 } from './plot.js';
+import { style as _req8 } from './style.js';
+import _req9 from '../scatter/marker_colorbar.js';
 
-module.exports = {
+export default {
     moduleType: 'trace',
     name: 'sunburst',
-    basePlotModule: require('./base_plot'),
+    basePlotModule: _req0,
     categories: [],
     animatable: true,
 
-    attributes: require('./attributes'),
-    layoutAttributes: require('./layout_attributes'),
-    supplyDefaults: require('./defaults'),
-    supplyLayoutDefaults: require('./layout_defaults'),
+    attributes: _req1,
+    layoutAttributes: _req2,
+    supplyDefaults: _req3,
+    supplyLayoutDefaults: _req4,
 
-    calc: require('./calc').calc,
-    crossTraceCalc: require('./calc').crossTraceCalc,
+    calc: _req5,
+    crossTraceCalc: _req6,
 
-    plot: require('./plot').plot,
-    style: require('./style').style,
+    plot: _req7,
+    style: _req8,
 
-    colorbar: require('../scatter/marker_colorbar'),
+    colorbar: _req9,
 
     meta: {
         description: [

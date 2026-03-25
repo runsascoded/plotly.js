@@ -1,27 +1,7 @@
-'use strict';
+import isNumeric from 'fast-isnumeric';
+import toLogRange from '../../lib/to_log_range.js';
 
-var isNumeric = require('fast-isnumeric');
-var toLogRange = require('../../lib/to_log_range');
-
-/*
- * convertCoords: when converting an axis between log and linear
- * you need to alter any images on that axis to keep them
- * pointing at the same data point.
- * In v3.0 this will become obsolete (or perhaps size will still need conversion?)
- * we convert size by declaring that the maximum extent *in data units* should be
- * the same, assuming the image is anchored by its center (could remove that restriction
- * if we think it's important) even though the actual left and right values will not be
- * quite the same since the scale becomes nonlinear (and central anchor means the pixel
- * center of the image, not the data units center)
- *
- * gd: the plot div
- * ax: the axis being changed
- * newType: the type it's getting
- * doExtra: function(attr, val) from inside relayout that sets the attribute.
- *     Use this to make the changes as it's aware if any other changes in the
- *     same relayout call should override this conversion.
- */
-module.exports = function convertCoords(gd, ax, newType, doExtra) {
+export default function convertCoords(gd, ax, newType, doExtra) {
     ax = ax || {};
 
     var toLog = (newType === 'log') && (ax.type === 'linear');
@@ -67,4 +47,4 @@ module.exports = function convertCoords(gd, ax, newType, doExtra) {
             doExtra(attrPrefix + 'size' + axLetter, newSize);
         }
     }
-};
+}

@@ -1,13 +1,6 @@
-'use strict';
+import { isArrayOrTypedArray } from '../../lib/index.js';
 
-var isArrayOrTypedArray = require('../../lib').isArrayOrTypedArray;
-
-/*
- * Map an array of x or y coordinates (c) to screen-space pixel coordinates (p).
- * The output array is optional, but if provided, it will be reused without
- * reallocation to the extent possible.
- */
-module.exports = function mapArray(out, data, func) {
+export default function mapArray(out, data, func) {
     var i;
 
     if(!isArrayOrTypedArray(out)) {
@@ -24,4 +17,4 @@ module.exports = function mapArray(out, data, func) {
     }
 
     return out;
-};
+}

@@ -1,4 +1,3 @@
-'use strict';
+export var version = '3.3.1';
 
-// package version injected by `npm run preprocess`
-exports.version = '3.3.1';
+export default { version };

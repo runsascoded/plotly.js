@@ -1,13 +1,11 @@
-'use strict';
+import d3 from '@plotly/d3';
+import Lib from '../../lib/index.js';
+import Drawing from '../../components/drawing/index.js';
+import { BADNUM } from '../../constants/numerical.js';
+import barPlot from '../bar/plot.js';
+import { clearMinTextSize } from '../bar/uniform_text.js';
 
-var d3 = require('@plotly/d3');
-var Lib = require('../../lib');
-var Drawing = require('../../components/drawing');
-var BADNUM = require('../../constants/numerical').BADNUM;
-var barPlot = require('../bar/plot');
-var clearMinTextSize = require('../bar/uniform_text').clearMinTextSize;
-
-module.exports = function plot(gd, plotinfo, cdModule, traceLayer) {
+export default function plot(gd, plotinfo, cdModule, traceLayer) {
     var fullLayout = gd._fullLayout;
 
     clearMinTextSize('waterfall', fullLayout);
@@ -20,7 +18,7 @@ module.exports = function plot(gd, plotinfo, cdModule, traceLayer) {
     });
 
     plotConnectors(gd, plotinfo, cdModule, traceLayer);
-};
+}
 
 function plotConnectors(gd, plotinfo, cdModule, traceLayer) {
     var xa = plotinfo.xaxis;

@@ -1,9 +1,6 @@
-'use strict';
-
-var plot = require('./plot');
-
-var reglPrecompiled = require('./regl_precompiled');
+import plot from './plot.js';
+import reglPrecompiled from './regl_precompiled.js';
 
 Object.assign(plot.reglPrecompiled, reglPrecompiled);
 
-module.exports = plot;
+export default plot;

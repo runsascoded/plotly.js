@@ -1,10 +1,8 @@
-'use strict';
+import boxAttrs from '../box/attributes.js';
+import { extendFlat } from '../../lib/extend.js';
+import { axisHoverFormat } from '../../plots/cartesian/axis_format_attributes.js';
 
-var boxAttrs = require('../box/attributes');
-var extendFlat = require('../../lib/extend').extendFlat;
-var axisHoverFormat = require('../../plots/cartesian/axis_format_attributes').axisHoverFormat;
-
-module.exports = {
+export default {
     y: boxAttrs.y,
     x: boxAttrs.x,
     x0: boxAttrs.x0,

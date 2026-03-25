@@ -1,17 +1,20 @@
-'use strict';
+import _req0 from './attributes.js';
+import _req1 from './attributes.js';
+import _req2 from './defaults.js';
+import _req3 from './draw.js';
 
-module.exports = {
+export default {
     moduleType: 'component',
     name: 'rangeselector',
 
     schema: {
         subplots: {
-            xaxis: {rangeselector: require('./attributes')}
+            xaxis: {rangeselector: _req0}
         }
     },
 
-    layoutAttributes: require('./attributes'),
-    handleDefaults: require('./defaults'),
+    layoutAttributes: _req1,
+    handleDefaults: _req2,
 
-    draw: require('./draw')
+    draw: _req3
 };

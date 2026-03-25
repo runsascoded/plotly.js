@@ -1,10 +1,8 @@
-'use strict';
+import Lib from '../../lib/index.js';
+import calcColorscale from '../scatter/colorscale_calc.js';
+import { markerStyle as convertMarkerStyle } from '../scattergl/convert.js';
 
-var Lib = require('../../lib');
-var calcColorscale = require('../scatter/colorscale_calc');
-var convertMarkerStyle = require('../scattergl/convert').markerStyle;
-
-module.exports = function editStyle(gd, cd0) {
+export default function editStyle(gd, cd0) {
     var trace = cd0.trace;
     var scene = gd._fullLayout._splomScenes[trace.uid];
 
@@ -19,4 +17,4 @@ module.exports = function editStyle(gd, cd0) {
         // TODO this is too long for arrayOk attributes!
         scene.matrix.update(opts, null);
     }
-};
+}

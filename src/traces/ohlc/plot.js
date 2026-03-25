@@ -1,10 +1,7 @@
-'use strict';
+import d3 from '@plotly/d3';
+import Lib from '../../lib/index.js';
 
-var d3 = require('@plotly/d3');
-
-var Lib = require('../../lib');
-
-module.exports = function plot(gd, plotinfo, cdOHLC, ohlcLayer) {
+export default function plot(gd, plotinfo, cdOHLC, ohlcLayer) {
     var ya = plotinfo.yaxis;
     var xa = plotinfo.xaxis;
     var posHasRangeBreaks = !!xa.rangebreaks;
@@ -45,4 +42,4 @@ module.exports = function plot(gd, plotinfo, cdOHLC, ohlcLayer) {
                 'M' + xc + ',' + yc + 'H' + x;
         });
     });
-};
+}

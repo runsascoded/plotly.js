@@ -1,6 +1,4 @@
-'use strict';
-
-module.exports = {
+export default {
     axisRefDescription: function(axisname, lower, upper) {
         return [
             'If set to a', axisname, 'axis id (e.g. *' + axisname + '* or',

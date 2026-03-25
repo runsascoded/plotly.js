@@ -1,12 +1,10 @@
-'use strict';
+import choroplethAttrs from '../choropleth/attributes.js';
+import colorScaleAttrs from '../../components/colorscale/attributes.js';
+import { hovertemplateAttrs, templatefallbackAttrs } from '../../plots/template_attributes.js';
+import baseAttrs from '../../plots/attributes.js';
+import { extendFlat } from '../../lib/extend.js';
 
-var choroplethAttrs = require('../choropleth/attributes');
-var colorScaleAttrs = require('../../components/colorscale/attributes');
-const { hovertemplateAttrs, templatefallbackAttrs } = require('../../plots/template_attributes');
-var baseAttrs = require('../../plots/attributes');
-var extendFlat = require('../../lib/extend').extendFlat;
-
-module.exports = extendFlat(
+export default extendFlat(
     {
         locations: {
             valType: 'data_array',

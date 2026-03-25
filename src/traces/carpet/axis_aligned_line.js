@@ -1,15 +1,6 @@
-'use strict';
+import { isArrayOrTypedArray } from '../../lib/index.js';
 
-var isArrayOrTypedArray = require('../../lib').isArrayOrTypedArray;
-
-/* This function retrns a set of control points that define a curve aligned along
- * either the a or b axis. Exactly one of a or b must be an array defining the range
- * spanned.
- *
- * Honestly this is the most complicated function I've implemente here so far because
- * of the way it handles knot insertion and direction/axis-agnostic slices.
- */
-module.exports = function(carpet, carpetcd, a, b) {
+export default function(carpet, carpetcd, a, b) {
     var idx, tangent, tanIsoIdx, tanIsoPar, segment, refidx;
     var p0, p1, v0, v1, start, end, range;
 
@@ -94,4 +85,4 @@ module.exports = function(carpet, carpetcd, a, b) {
     }
 
     return segments;
-};
+}

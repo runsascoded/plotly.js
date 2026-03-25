@@ -1,5 +1,3 @@
-'use strict';
-
 function clearOutlineControllers(gd) {
     var zoomLayer = gd._fullLayout._zoomlayer;
     if(zoomLayer) {
@@ -19,7 +17,7 @@ function clearOutline(gd) {
     gd._fullLayout._outlining = false;
 }
 
-module.exports = {
+export default {
     clearOutlineControllers: clearOutlineControllers,
     clearOutline: clearOutline
 };

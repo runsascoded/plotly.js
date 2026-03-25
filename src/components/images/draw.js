@@ -1,12 +1,10 @@
-'use strict';
+import d3 from '@plotly/d3';
+import Drawing from '../drawing/index.js';
+import Axes from '../../plots/cartesian/axes.js';
+import axisIds from '../../plots/cartesian/axis_ids.js';
+import xmlnsNamespaces from '../../constants/xmlns_namespaces.js';
 
-var d3 = require('@plotly/d3');
-var Drawing = require('../drawing');
-var Axes = require('../../plots/cartesian/axes');
-var axisIds = require('../../plots/cartesian/axis_ids');
-var xmlnsNamespaces = require('../../constants/xmlns_namespaces');
-
-module.exports = function draw(gd) {
+export default function draw(gd) {
     var fullLayout = gd._fullLayout;
     var imageDataAbove = [];
     var imageDataSubplot = {};
@@ -48,7 +46,6 @@ module.exports = function draw(gd) {
         }
     }
 
-
     var anchors = {
         x: {
             left: { sizing: 'xMin', offset: 0 },
@@ -61,7 +58,6 @@ module.exports = function draw(gd) {
             bottom: { sizing: 'YMax', offset: -1 }
         }
     };
-
 
     // Images must be converted to dataURL's for exporting.
     function setImage(d) {
@@ -190,7 +186,6 @@ module.exports = function draw(gd) {
             opacity: d.opacity
         });
 
-
         // Set proper clipping on images
         var xId = xa && (Axes.getRefType(d.xref) !== 'domain') ? xa._id : '';
         var yId = ya && (Axes.getRefType(d.yref) !== 'domain') ? ya._id : '';
@@ -253,4 +248,4 @@ module.exports = function draw(gd) {
         });
         imagesOnSubplot.sort(imgSort);
     }
-};
+}

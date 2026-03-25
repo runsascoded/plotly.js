@@ -1,5 +1,5 @@
 import runSeries from 'run-series';
-import constants from './util/constants.js';
+import constants from './util/constants.cjs';
 import _bundle from './util/bundle_wrapper.mjs';
 
 /*

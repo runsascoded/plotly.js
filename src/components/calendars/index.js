@@ -1,9 +1,6 @@
-'use strict';
-
-var calendars = require('./calendars');
-
-var Lib = require('../../lib');
-var constants = require('../../constants/numerical');
+import calendars from './calendars.js';
+import Lib from '../../lib/index.js';
+import constants from '../../constants/numerical.js';
 
 var EPOCHJD = constants.EPOCHJD;
 var ONEDAY = constants.ONEDAY;
@@ -188,7 +185,7 @@ var axisAttrs = makeAttrs([
     'or via the global `layout.calendar`'
 ].join(' '));
 
-module.exports = {
+export default {
     moduleType: 'component',
     name: 'calendars',
 

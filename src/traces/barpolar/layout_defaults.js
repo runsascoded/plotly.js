@@ -1,9 +1,7 @@
-'use strict';
+import Lib from '../../lib/index.js';
+import attrs from './layout_attributes.js';
 
-var Lib = require('../../lib');
-var attrs = require('./layout_attributes');
-
-module.exports = function(layoutIn, layoutOut, fullData) {
+export default function(layoutIn, layoutOut, fullData) {
     var subplotsDone = {};
     var sp;
 
@@ -22,4 +20,4 @@ module.exports = function(layoutIn, layoutOut, fullData) {
             }
         }
     }
-};
+}

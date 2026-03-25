@@ -1,6 +1,4 @@
-'use strict';
-
-module.exports = function zip3(x, y, z, len) {
+export default function zip3(x, y, z, len) {
     len = len || x.length;
 
     var result = new Array(len);
@@ -8,4 +6,4 @@ module.exports = function zip3(x, y, z, len) {
         result[i] = [x[i], y[i], z[i]];
     }
     return result;
-};
+}

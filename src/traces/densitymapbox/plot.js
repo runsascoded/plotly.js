@@ -1,7 +1,5 @@
-'use strict';
-
-var convert = require('./convert');
-var LAYER_PREFIX = require('../../plots/mapbox/constants').traceLayerPrefix;
+import convert from './convert.js';
+import { traceLayerPrefix as LAYER_PREFIX } from '../../plots/mapbox/constants.js';
 
 function DensityMapbox(subplot, uid) {
     this.type = 'densitymapbox';
@@ -86,7 +84,7 @@ proto.dispose = function() {
     map.removeSource(this.sourceId);
 };
 
-module.exports = function createDensityMapbox(subplot, calcTrace) {
+export default function createDensityMapbox(subplot, calcTrace) {
     var trace = calcTrace[0].trace;
     var densityMapbox = new DensityMapbox(subplot, trace.uid);
     var sourceId = densityMapbox.sourceId;
@@ -101,4 +99,4 @@ module.exports = function createDensityMapbox(subplot, calcTrace) {
     densityMapbox._addLayers(optsAll, below);
 
     return densityMapbox;
-};
+}

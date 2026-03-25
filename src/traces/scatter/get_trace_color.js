@@ -1,10 +1,7 @@
-'use strict';
+import Color from '../../components/color/index.js';
+import subtypes from './subtypes.js';
 
-var Color = require('../../components/color');
-var subtypes = require('./subtypes');
-
-
-module.exports = function getTraceColor(trace, di) {
+export default function getTraceColor(trace, di) {
     var lc, tc;
 
     // TODO: text modes
@@ -35,4 +32,4 @@ module.exports = function getTraceColor(trace, di) {
                     lc : trace.fillcolor;
         }
     }
-};
+}

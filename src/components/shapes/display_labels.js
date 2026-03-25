@@ -1,19 +1,15 @@
-'use strict';
-
-var Lib = require('../../lib');
-var Axes = require('../../plots/cartesian/axes');
-var svgTextUtils = require('../../lib/svg_text_utils');
-
-var Drawing = require('../drawing');
-
-var readPaths = require('./draw_newshape/helpers').readPaths;
-var helpers = require('./helpers');
+import Lib from '../../lib/index.js';
+import Axes from '../../plots/cartesian/axes.js';
+import svgTextUtils from '../../lib/svg_text_utils.js';
+import Drawing from '../drawing/index.js';
+import { readPaths } from './draw_newshape/helpers.js';
+import helpers from './helpers.js';
+import shapeLabelTexttemplateVars from './label_texttemplate.js';
+import _alignment from '../../constants/alignment.js';
+const { FROM_TL } = _alignment;
 var getPathString = helpers.getPathString;
-var shapeLabelTexttemplateVars = require('./label_texttemplate');
 
-var FROM_TL = require('../../constants/alignment').FROM_TL;
-
-module.exports = function drawLabel(gd, index, options, shapeGroup) {
+export default function drawLabel(gd, index, options, shapeGroup) {
     // Remove existing label
     shapeGroup.selectAll('.shape-label').remove();
 
@@ -145,7 +141,7 @@ module.exports = function drawLabel(gd, index, options, shapeGroup) {
             transform: 'rotate(' + textangle + ',' + textx + ',' + texty + ')'
         })
         .call(svgTextUtils.positionText, textx, texty);
-};
+}
 
 function calcTextAngle(shapex0, shapey0, shapex1, shapey1) {
     var dy, dx;

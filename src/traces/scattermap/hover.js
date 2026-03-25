@@ -1,11 +1,9 @@
-'use strict';
-
-var Fx = require('../../components/fx');
-var Lib = require('../../lib');
-var getTraceColor = require('../scatter/get_trace_color');
+import Fx from '../../components/fx/index.js';
+import Lib from '../../lib/index.js';
+import getTraceColor from '../scatter/get_trace_color.js';
+import { BADNUM } from '../../constants/numerical.js';
+import { traceLayerPrefix as LAYER_PREFIX } from '../../plots/map/constants.js';
 var fillText = Lib.fillText;
-var BADNUM = require('../../constants/numerical').BADNUM;
-var LAYER_PREFIX = require('../../plots/map/constants').traceLayerPrefix;
 
 function hoverPoints(pointData, xval, yval) {
     var cd = pointData.cd;
@@ -110,7 +108,7 @@ function getExtraText(trace, di, labels) {
     return text.join('<br>');
 }
 
-module.exports = {
+export default {
     hoverPoints: hoverPoints,
     getExtraText: getExtraText
 };

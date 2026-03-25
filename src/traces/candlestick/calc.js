@@ -1,12 +1,9 @@
-'use strict';
+import Lib from '../../lib/index.js';
+import Axes from '../../plots/cartesian/axes.js';
+import alignPeriod from '../../plots/cartesian/align_period.js';
+import { calcCommon } from '../ohlc/calc.js';
 
-var Lib = require('../../lib');
-var Axes = require('../../plots/cartesian/axes');
-var alignPeriod = require('../../plots/cartesian/align_period');
-
-var calcCommon = require('../ohlc/calc').calcCommon;
-
-module.exports = function(gd, trace) {
+export default function(gd, trace) {
     var fullLayout = gd._fullLayout;
     var xa = Axes.getFromId(gd, trace.xaxis);
     var ya = Axes.getFromId(gd, trace.yaxis);
@@ -29,7 +26,7 @@ module.exports = function(gd, trace) {
     } else {
         return [{t: {empty: true}}];
     }
-};
+}
 
 function ptFunc(o, h, l, c) {
     return {

@@ -1,11 +1,8 @@
-'use strict';
-
-var colorAttrs = require('../../components/color/attributes');
-var domainAttrs = require('../domain').attributes;
-var axesAttrs = require('../cartesian/layout_attributes');
-
-var overrideAll = require('../../plot_api/edit_types').overrideAll;
-var extendFlat = require('../../lib/extend').extendFlat;
+import colorAttrs from '../../components/color/attributes.js';
+import { attributes as domainAttrs } from '../domain.js';
+import axesAttrs from '../cartesian/layout_attributes.js';
+import { overrideAll } from '../../plot_api/edit_types.js';
+import { extendFlat } from '../../lib/extend.js';
 
 var ternaryAxesAttrs = {
     title: {
@@ -64,27 +61,7 @@ var ternaryAxesAttrs = {
     },
 };
 
-var attrs = module.exports = overrideAll({
-    domain: domainAttrs({name: 'ternary'}),
-
-    bgcolor: {
-        valType: 'color',
-        dflt: colorAttrs.background,
-        description: 'Set the background color of the subplot'
-    },
-    sum: {
-        valType: 'number',
-        dflt: 1,
-        min: 0,
-        description: [
-            'The number each triplet should sum to,',
-            'and the maximum range of each axis'
-        ].join(' ')
-    },
-    aaxis: ternaryAxesAttrs,
-    baxis: ternaryAxesAttrs,
-    caxis: ternaryAxesAttrs
-}, 'plot', 'from-root');
+var attrs = {};
 
 // set uirevisions outside of `overrideAll` so we can get `editType: none`
 attrs.uirevision = {
@@ -106,3 +83,5 @@ attrs.aaxis.uirevision = attrs.baxis.uirevision = attrs.caxis.uirevision = {
         'Defaults to `ternary<N>.uirevision`.'
     ].join(' ')
 };
+
+export default attrs;

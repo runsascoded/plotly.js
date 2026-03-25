@@ -1,23 +1,29 @@
-'use strict';
+import Registry from '../../registry.js';
+import Grid from '../../components/grid/index.js';
+import _req0 from './attributes.js';
+import _req1 from './defaults.js';
+import _req2 from '../scatter/marker_colorbar.js';
+import _req3 from './calc.js';
+import _req4 from './plot.js';
+import { hoverPoints as _req5 } from './hover.js';
+import _req6 from './select.js';
+import _req7 from './edit_style.js';
 
-var Registry = require('../../registry');
-var Grid = require('../../components/grid');
-
-module.exports = {
+export default {
     moduleType: 'trace',
     name: 'splom',
 
     categories: ['gl', 'regl', 'cartesian', 'symbols', 'showLegend', 'scatter-like'],
 
-    attributes: require('./attributes'),
-    supplyDefaults: require('./defaults'),
-    colorbar: require('../scatter/marker_colorbar'),
+    attributes: _req0,
+    supplyDefaults: _req1,
+    colorbar: _req2,
 
-    calc: require('./calc'),
-    plot: require('./plot'),
-    hoverPoints: require('./hover').hoverPoints,
-    selectPoints: require('./select'),
-    editStyle: require('./edit_style'),
+    calc: _req3,
+    plot: _req4,
+    hoverPoints: _req5,
+    selectPoints: _req6,
+    editStyle: _req7,
 
     meta: {
         description: [

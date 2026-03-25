@@ -1,8 +1,6 @@
-'use strict';
-
-var Axes = require('../../plots/cartesian/axes');
-var Lib = require('../../lib');
-var getAxisGroup = require('../../plots/cartesian/constraints').getAxisGroup;
+import Axes from '../../plots/cartesian/axes.js';
+import Lib from '../../lib/index.js';
+import { getAxisGroup } from '../../plots/cartesian/constraints.js';
 
 var orientations = ['v', 'h'];
 
@@ -217,7 +215,7 @@ function setPositionOffset(traceType, gd, boxList, posAxis) {
     }
 }
 
-module.exports = {
+export default {
     crossTraceCalc: crossTraceCalc,
     setPositionOffset: setPositionOffset
 };

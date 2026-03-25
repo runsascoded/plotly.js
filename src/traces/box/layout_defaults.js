@@ -1,8 +1,6 @@
-'use strict';
-
-var Registry = require('../../registry');
-var Lib = require('../../lib');
-var layoutAttributes = require('./layout_attributes');
+import Registry from '../../registry.js';
+import Lib from '../../lib/index.js';
+import layoutAttributes from './layout_attributes.js';
 
 function _supply(layoutIn, layoutOut, fullData, coerce, traceType) {
     var category = traceType + 'Layout';
@@ -30,7 +28,7 @@ function supplyLayoutDefaults(layoutIn, layoutOut, fullData) {
     _supply(layoutIn, layoutOut, fullData, coerce, 'box');
 }
 
-module.exports = {
+export default {
     supplyLayoutDefaults: supplyLayoutDefaults,
     _supply: _supply
 };

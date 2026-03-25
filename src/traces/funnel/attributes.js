@@ -1,15 +1,13 @@
-'use strict';
+import barAttrs from '../bar/attributes.js';
+import { line as lineAttrs } from '../scatter/attributes.js';
+import baseAttrs from '../../plots/attributes.js';
+import { axisHoverFormat } from '../../plots/cartesian/axis_format_attributes.js';
+import { hovertemplateAttrs, texttemplateAttrs, templatefallbackAttrs } from '../../plots/template_attributes.js';
+import constants from './constants.js';
+import { extendFlat } from '../../lib/extend.js';
+import Color from '../../components/color/index.js';
 
-var barAttrs = require('../bar/attributes');
-var lineAttrs = require('../scatter/attributes').line;
-var baseAttrs = require('../../plots/attributes');
-var axisHoverFormat = require('../../plots/cartesian/axis_format_attributes').axisHoverFormat;
-const { hovertemplateAttrs, texttemplateAttrs, templatefallbackAttrs } = require('../../plots/template_attributes');
-var constants = require('./constants');
-var extendFlat = require('../../lib/extend').extendFlat;
-var Color = require('../../components/color');
-
-module.exports = {
+export default {
     x: barAttrs.x,
     x0: barAttrs.x0,
     dx: barAttrs.dx,

@@ -1,7 +1,4 @@
-'use strict';
-
-
-module.exports = function doAvg(size, counts) {
+export default function doAvg(size, counts) {
     var nMax = size.length;
     var total = 0;
     for(var i = 0; i < nMax; i++) {
@@ -11,4 +8,4 @@ module.exports = function doAvg(size, counts) {
         } else size[i] = null;
     }
     return total;
-};
+}

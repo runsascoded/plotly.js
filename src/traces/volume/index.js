@@ -1,18 +1,22 @@
-'use strict';
+import _req0 from './attributes.js';
+import _req1 from './defaults.js';
+import _req2 from '../isosurface/calc.js';
+import _req3 from './convert.js';
+import _req4 from '../../plots/gl3d/index.js';
 
-module.exports = {
-    attributes: require('./attributes'),
-    supplyDefaults: require('./defaults'),
-    calc: require('../isosurface/calc'),
+export default {
+    attributes: _req0,
+    supplyDefaults: _req1,
+    calc: _req2,
     colorbar: {
         min: 'cmin',
         max: 'cmax'
     },
-    plot: require('./convert'),
+    plot: _req3,
 
     moduleType: 'trace',
     name: 'volume',
-    basePlotModule: require('../../plots/gl3d'),
+    basePlotModule: _req4,
     categories: ['gl3d', 'showLegend'],
     meta: {
         description: [

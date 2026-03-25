@@ -1,21 +1,17 @@
-'use strict';
-
-var d3Hierarchy = require('d3-hierarchy');
-var isNumeric = require('fast-isnumeric');
-
-var Lib = require('../../lib');
-var makeColorScaleFn = require('../../components/colorscale').makeColorScaleFuncFromTrace;
-var makePullColorFn = require('../pie/calc').makePullColorFn;
-var generateExtendedColors = require('../pie/calc').generateExtendedColors;
-var colorscaleCalc = require('../../components/colorscale').calc;
-
-var ALMOST_EQUAL = require('../../constants/numerical').ALMOST_EQUAL;
+import d3Hierarchy from 'd3-hierarchy';
+import isNumeric from 'fast-isnumeric';
+import Lib from '../../lib/index.js';
+import { makeColorScaleFuncFromTrace as makeColorScaleFn } from '../../components/colorscale/index.js';
+import { makePullColorFn } from '../pie/calc.js';
+import { generateExtendedColors } from '../pie/calc.js';
+import { calc as colorscaleCalc } from '../../components/colorscale/index.js';
+import { ALMOST_EQUAL } from '../../constants/numerical.js';
 
 var sunburstExtendedColorWays = {};
 var treemapExtendedColorWays = {};
 var icicleExtendedColorWays = {};
 
-exports.calc = function(gd, trace) {
+export var calc = function(gd, trace) {
     var fullLayout = gd._fullLayout;
     var ids = trace.ids;
     var hasIds = Lib.isArrayOrTypedArray(ids);
@@ -231,14 +227,7 @@ exports.calc = function(gd, trace) {
     return cd;
 };
 
-/*
- * `calc` filled in (and collated) explicit colors.
- * Now we need to propagate these explicit colors to other traces,
- * and fill in default colors.
- * This is done after sorting, so we pick defaults
- * in the order slices will be displayed
- */
-exports._runCrossTraceCalc = function(desiredType, gd) {
+export var _runCrossTraceCalc = function(desiredType, gd) {
     var fullLayout = gd._fullLayout;
     var calcdata = gd.calcdata;
     var colorWay = fullLayout[desiredType + 'colorway'];
@@ -288,8 +277,8 @@ exports._runCrossTraceCalc = function(desiredType, gd) {
     }
 };
 
-exports.crossTraceCalc = function(gd) {
-    return exports._runCrossTraceCalc('sunburst', gd);
+export var crossTraceCalc = function(gd) {
+    return _runCrossTraceCalc('sunburst', gd);
 };
 
 function countDescendants(node, trace, opts) {
@@ -317,3 +306,5 @@ function countDescendants(node, trace, opts) {
 
     return nChild;
 }
+
+export default { calc, _runCrossTraceCalc, crossTraceCalc };

@@ -1,18 +1,18 @@
-'use strict';
+import mouseOffset from 'mouse-event-offset';
+import hasHover from 'has-hover';
+import supportsPassive from 'has-passive-events';
+import _index from '../../lib/index.js';
+const { removeElement } = _index;
+import constants from '../../plots/cartesian/constants.js';
+import unhover from './unhover.js';
+import _req0 from './align.js';
+import _req1 from './cursor.js';
 
-var mouseOffset = require('mouse-event-offset');
-var hasHover = require('has-hover');
-var supportsPassive = require('has-passive-events');
+var dragElement = {};
 
-var removeElement = require('../../lib').removeElement;
-var constants = require('../../plots/cartesian/constants');
+dragElement.align = _req0;
+dragElement.getCursor = _req1;
 
-var dragElement = module.exports = {};
-
-dragElement.align = require('./align');
-dragElement.getCursor = require('./cursor');
-
-var unhover = require('./unhover');
 dragElement.unhover = unhover.wrapped;
 dragElement.unhoverRaw = unhover.raw;
 
@@ -309,3 +309,5 @@ function pointerOffset(e) {
         document.body
     );
 }
+
+export default dragElement;

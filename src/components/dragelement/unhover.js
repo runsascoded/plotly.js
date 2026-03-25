@@ -1,12 +1,10 @@
-'use strict';
+import Events from '../../lib/events.js';
+import throttle from '../../lib/throttle.js';
+import _dom from '../../lib/dom.js';
+const { getGraphDiv } = _dom;
+import hoverConstants from '../fx/constants.js';
 
-var Events = require('../../lib/events');
-var throttle = require('../../lib/throttle');
-var getGraphDiv = require('../../lib/dom').getGraphDiv;
-
-var hoverConstants = require('../fx/constants');
-
-var unhover = module.exports = {};
+var unhover = {};
 
 unhover.wrapped = function(gd, evt, subplot) {
     gd = getGraphDiv(gd);
@@ -18,7 +16,6 @@ unhover.wrapped = function(gd, evt, subplot) {
 
     unhover.raw(gd, evt, subplot);
 };
-
 
 // remove hover effects on mouse out, and emit unhover event
 unhover.raw = function raw(gd, evt) {
@@ -43,3 +40,5 @@ unhover.raw = function raw(gd, evt) {
         });
     }
 };
+
+export default unhover;

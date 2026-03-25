@@ -1,13 +1,10 @@
-'use strict';
-
-var d3 = require('@plotly/d3');
-var tinycolor = require('tinycolor2');
-var isNumeric = require('fast-isnumeric');
-
-var Lib = require('../../lib');
-var Color = require('../color');
-
-var isValidScale = require('./scales').isValid;
+import d3 from '@plotly/d3';
+import tinycolor from 'tinycolor2';
+import isNumeric from 'fast-isnumeric';
+import Lib from '../../lib/index.js';
+import Color from '../color/index.js';
+import _scales from './scales.js';
+const { isValid: isValidScale } = _scales;
 
 function hasColorscale(trace, containerStr, colorKey) {
     var container = containerStr ?
@@ -222,7 +219,7 @@ function colorArray2rbga(colorArray) {
     return tinycolor(colorObj).toRgbString();
 }
 
-module.exports = {
+export default {
     hasColorscale: hasColorscale,
     extractOpts: extractOpts,
     extractScale: extractScale,

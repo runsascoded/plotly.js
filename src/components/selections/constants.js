@@ -1,6 +1,4 @@
-'use strict';
-
-module.exports = {
+export default {
     // max pixels off straight before a lasso select line counts as bent
     BENDPX: 1.5,
 

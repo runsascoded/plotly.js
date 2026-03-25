@@ -1,6 +1,4 @@
-'use strict';
-
-module.exports = function(arrays, asmoothing, bsmoothing) {
+export default function(arrays, asmoothing, bsmoothing) {
     if(asmoothing && bsmoothing) {
         return function(out, i0, j0, u, v) {
             if(!out) out = [];
@@ -114,4 +112,4 @@ module.exports = function(arrays, asmoothing, bsmoothing) {
             return out;
         };
     }
-};
+}

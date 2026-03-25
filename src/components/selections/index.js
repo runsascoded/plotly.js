@@ -1,16 +1,18 @@
-'use strict';
+import drawModule from './draw.js';
+import select from './select.js';
+import _req0 from './attributes.js';
+import _req1 from './defaults.js';
+import _req2 from './draw_newselection/defaults.js';
+import _req3 from '../../plots/cartesian/include_components.js';
 
-var drawModule = require('./draw');
-var select = require('./select');
-
-module.exports = {
+export default {
     moduleType: 'component',
     name: 'selections',
 
-    layoutAttributes: require('./attributes'),
-    supplyLayoutDefaults: require('./defaults'),
-    supplyDrawNewSelectionDefaults: require('./draw_newselection/defaults'),
-    includeBasePlot: require('../../plots/cartesian/include_components')('selections'),
+    layoutAttributes: _req0,
+    supplyLayoutDefaults: _req1,
+    supplyDrawNewSelectionDefaults: _req2,
+    includeBasePlot: _req3('selections'),
 
     draw: drawModule.draw,
     drawOne: drawModule.drawOne,

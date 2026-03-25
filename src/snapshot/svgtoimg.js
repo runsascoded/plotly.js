@@ -1,9 +1,6 @@
-'use strict';
-
-var Lib = require('../lib');
-var EventEmitter = require('events').EventEmitter;
-
-var helpers = require('./helpers');
+import Lib from '../lib/index.js';
+import { EventEmitter } from 'events';
+import helpers from './helpers.js';
 
 function svgToImg(opts) {
     var ev = opts.emitter || new EventEmitter();
@@ -101,4 +98,4 @@ function svgToImg(opts) {
     return ev;
 }
 
-module.exports = svgToImg;
+export default svgToImg;

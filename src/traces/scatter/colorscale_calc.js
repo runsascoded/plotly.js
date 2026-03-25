@@ -1,11 +1,9 @@
-'use strict';
+import _helpers from '../../components/colorscale/helpers.js';
+const { hasColorscale } = _helpers;
+import calcColorscale from '../../components/colorscale/calc.js';
+import subTypes from './subtypes.js';
 
-var hasColorscale = require('../../components/colorscale/helpers').hasColorscale;
-var calcColorscale = require('../../components/colorscale/calc');
-
-var subTypes = require('./subtypes');
-
-module.exports = function calcMarkerColorscale(gd, trace) {
+export default function calcMarkerColorscale(gd, trace) {
     if(subTypes.hasLines(trace) && hasColorscale(trace, 'line')) {
         calcColorscale(gd, trace, {
             vals: trace.line.color,
@@ -30,4 +28,4 @@ module.exports = function calcMarkerColorscale(gd, trace) {
             });
         }
     }
-};
+}

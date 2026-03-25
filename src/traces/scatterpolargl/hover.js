@@ -1,7 +1,5 @@
-'use strict';
-
-var hover = require('../scattergl/hover');
-var makeHoverPointText = require('../scatterpolar/hover').makeHoverPointText;
+import hover from '../scattergl/hover.js';
+import { makeHoverPointText } from '../scatterpolar/hover.js';
 
 function hoverPoints(pointData, xval, yval, hovermode) {
     var cd = pointData.cd;
@@ -35,6 +33,6 @@ function hoverPoints(pointData, xval, yval, hovermode) {
     return scatterPointData;
 }
 
-module.exports = {
+export default {
     hoverPoints: hoverPoints
 };

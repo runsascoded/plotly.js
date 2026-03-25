@@ -1,12 +1,6 @@
-'use strict';
-
-var mod = require('./mod').mod;
-
-/*
- * look for intersection of two line segments
- *   (1->2 and 3->4) - returns array [x,y] if they do, null if not
- */
-exports.segmentsIntersect = segmentsIntersect;
+import _mod from './mod.js';
+const { mod } = _mod;
+export { segmentsIntersect };
 function segmentsIntersect(x1, y1, x2, y2, x3, y3, x4, y4) {
     var a = x2 - x1;
     var b = x3 - x1;
@@ -26,10 +20,7 @@ function segmentsIntersect(x1, y1, x2, y2, x3, y3, x4, y4) {
     return {x: x1 + a * t, y: y1 + d * t};
 }
 
-/*
- * find the minimum distance between two line segments (1->2 and 3->4)
- */
-exports.segmentDistance = function segmentDistance(x1, y1, x2, y2, x3, y3, x4, y4) {
+export var segmentDistance = function segmentDistance(x1, y1, x2, y2, x3, y3, x4, y4) {
     if(segmentsIntersect(x1, y1, x2, y2, x3, y3, x4, y4)) return 0;
 
     // the two segments and their lengths squared
@@ -79,8 +70,7 @@ function perpDistance2(xab, yab, llab, xac, yac) {
 // invalidated as soon as we look at a different path
 var locationCache, workingPath, workingTextWidth;
 
-// turn a path and position along it into x, y, and angle for the given text
-exports.getTextLocation = function getTextLocation(path, totalPathLen, positionOnPath, textWidth) {
+export var getTextLocation = function getTextLocation(path, totalPathLen, positionOnPath, textWidth) {
     if(path !== workingPath || textWidth !== workingTextWidth) {
         locationCache = {};
         workingPath = path;
@@ -107,35 +97,11 @@ exports.getTextLocation = function getTextLocation(path, totalPathLen, positionO
     return out;
 };
 
-exports.clearLocationCache = function() {
+export var clearLocationCache = function() {
     workingPath = null;
 };
 
-/*
- * Find the segment of `path` that's within the visible area
- * given by `bounds` {left, right, top, bottom}, to within a
- * precision of `buffer` px
- *
- * returns: undefined if nothing is visible, else object:
- * {
- *   min: position where the path first enters bounds, or 0 if it
- *        starts within bounds
- *   max: position where the path last exits bounds, or the path length
- *        if it finishes within bounds
- *   len: max - min, ie the length of visible path
- *   total: the total path length - just included so the caller doesn't
- *        need to call path.getTotalLength() again
- *   isClosed: true iff the start and end points of the path are both visible
- *        and are at the same point
- * }
- *
- * Works by starting from either end and repeatedly finding the distance from
- * that point to the plot area, and if it's outside the plot, moving along the
- * path by that distance (because the plot must be at least that far away on
- * the path). Note that if a path enters, exits, and re-enters the plot, we
- * will not capture this behavior.
- */
-exports.getVisibleSegment = function getVisibleSegment(path, bounds, buffer) {
+export var getVisibleSegment = function getVisibleSegment(path, bounds, buffer) {
     var left = bounds.left;
     var right = bounds.right;
     var top = bounds.top;
@@ -184,19 +150,7 @@ exports.getVisibleSegment = function getVisibleSegment(path, bounds, buffer) {
     };
 };
 
-/**
- * Find point on SVG path corresponding to a given constraint coordinate
- *
- * @param {SVGPathElement} path
- * @param {Number} val : constraint coordinate value
- * @param {String} coord : 'x' or 'y' the constraint coordinate
- * @param {Object} opts :
- *  - {Number} pathLength : supply total path length before hand
- *  - {Number} tolerance
- *  - {Number} iterationLimit
- * @return {SVGPoint}
- */
-exports.findPointOnPath = function findPointOnPath(path, val, coord, opts) {
+export var findPointOnPath = function findPointOnPath(path, val, coord, opts) {
     opts = opts || {};
 
     var pathLength = opts.pathLength || path.getTotalLength();
@@ -232,3 +186,5 @@ exports.findPointOnPath = function findPointOnPath(path, val, coord, opts) {
     }
     return pt;
 };
+
+export default { segmentDistance, getTextLocation, clearLocationCache, getVisibleSegment, findPointOnPath, segmentsIntersect };

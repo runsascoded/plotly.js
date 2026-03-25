@@ -1,19 +1,15 @@
-'use strict';
-
-var d3 = require('@plotly/d3');
-
-var Registry = require('../../registry');
-var Lib = require('../../lib');
+import d3 from '@plotly/d3';
+import Registry from '../../registry.js';
+import Lib from '../../lib/index.js';
+import Drawing from '../drawing/index.js';
+import Color from '../color/index.js';
+import _helpers from '../colorscale/helpers.js';
+const { extractOpts } = _helpers;
+import subTypes from '../../traces/scatter/subtypes.js';
+import stylePie from '../../traces/pie/style_one.js';
+import { castOption as pieCastOption } from '../../traces/pie/helpers.js';
+import constants from './constants.js';
 var strTranslate = Lib.strTranslate;
-var Drawing = require('../drawing');
-var Color = require('../color');
-var extractOpts = require('../colorscale/helpers').extractOpts;
-
-var subTypes = require('../../traces/scatter/subtypes');
-var stylePie = require('../../traces/pie/style_one');
-var pieCastOption = require('../../traces/pie/helpers').castOption;
-
-var constants = require('./constants');
 
 var CST_MARKER_SIZE = 12;
 var CST_LINE_WIDTH = 5;
@@ -21,7 +17,7 @@ var CST_MARKER_LINE_WIDTH = 2;
 var MAX_LINE_WIDTH = 10;
 var MAX_MARKER_LINE_WIDTH = 5;
 
-module.exports = function style(s, gd, legend) {
+export default function style(s, gd, legend) {
     var fullLayout = gd._fullLayout;
     if(!legend) legend = fullLayout.legend;
     var constantItemSizing = legend.itemsizing === 'constant';
@@ -683,7 +679,7 @@ module.exports = function style(s, gd, legend) {
             }
         });
     }
-};
+}
 
 function getGradientDirection(reversescale, isRadial) {
     var str = isRadial ? 'radial' : 'horizontal';

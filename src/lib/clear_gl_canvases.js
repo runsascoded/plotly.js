@@ -1,13 +1,4 @@
-'use strict';
-
-/**
- * Clear gl frame (if any). This is a common pattern as
- * we usually set `preserveDrawingBuffer: true` during
- * gl context creation (e.g. via `reglUtils.prepare`).
- *
- * @param {DOM node or object} gd : graph div object
- */
-module.exports = function clearGlCanvases(gd) {
+export default function clearGlCanvases(gd) {
     var fullLayout = gd._fullLayout;
 
     if(fullLayout._glcanvas && fullLayout._glcanvas.size()) {
@@ -15,4 +6,4 @@ module.exports = function clearGlCanvases(gd) {
             if(d.regl) d.regl.clear({color: true, depth: true});
         });
     }
-};
+}

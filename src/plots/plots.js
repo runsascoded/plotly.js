@@ -1,42 +1,41 @@
-'use strict';
-
-var d3 = require('@plotly/d3');
-var timeFormatLocale = require('d3-time-format').timeFormatLocale;
-var formatLocale = require('d3-format').formatLocale;
-var isNumeric = require('fast-isnumeric');
-var b64encode = require('base64-arraybuffer');
-
-var Registry = require('../registry');
-var PlotSchema = require('../plot_api/plot_schema');
-var Template = require('../plot_api/plot_template');
-var Lib = require('../lib');
-var Color = require('../components/color');
-var BADNUM = require('../constants/numerical').BADNUM;
-
-var axisIDs = require('./cartesian/axis_ids');
-var cartesianConstants = require('./cartesian/constants');
-var clearOutline = require('../components/shapes/handle_outline').clearOutline;
-var scatterAttrs = require('../traces/scatter/layout_attributes');
-
-var animationAttrs = require('./animation_attributes');
-var frameAttrs = require('./frame_attributes');
-
-var getModuleCalcData = require('../plots/get_data').getModuleCalcData;
+import d3 from '@plotly/d3';
+import { timeFormatLocale } from 'd3-time-format';
+import { formatLocale } from 'd3-format';
+import isNumeric from 'fast-isnumeric';
+import * as b64encode from 'base64-arraybuffer';
+import Registry from '../registry.js';
+import PlotSchema from '../plot_api/plot_schema.js';
+import Template from '../plot_api/plot_template.js';
+import Lib from '../lib/index.js';
+import Color from '../components/color/index.js';
+import _numerical from '../constants/numerical.js';
+const { BADNUM } = _numerical;
+import axisIDs from './cartesian/axis_ids.js';
+import cartesianConstants from './cartesian/constants.js';
+import _handle_outline from '../components/shapes/handle_outline.js';
+const { clearOutline } = _handle_outline;
+import scatterAttrs from '../traces/scatter/layout_attributes.js';
+import animationAttrs from './animation_attributes.js';
+import frameAttrs from './frame_attributes.js';
+import { getModuleCalcData } from '../plots/get_data.js';
+import commandModule from './command.js';
+import _req0 from './attributes.js';
+import _req1 from './font_attributes.js';
+import _req2 from './layout_attributes.js';
 
 var relinkPrivateKeys = Lib.relinkPrivateKeys;
 var _ = Lib._;
 
-var plots = module.exports = {};
+var plots = {};
 
 // Expose registry methods on Plots for backward-compatibility
 Lib.extendFlat(plots, Registry);
 
-plots.attributes = require('./attributes');
+plots.attributes = _req0;
 plots.attributes.type.values = plots.allTypes;
-plots.fontAttrs = require('./font_attributes');
-plots.layoutAttributes = require('./layout_attributes');
+plots.fontAttrs = _req1;
+plots.layoutAttributes = _req2;
 
-var commandModule = require('./command');
 plots.executeAPICommand = commandModule.executeAPICommand;
 plots.computeAPICommandBindings = commandModule.computeAPICommandBindings;
 plots.manageCommandObserver = commandModule.manageCommandObserver;
@@ -103,7 +102,6 @@ plots.resize = function(gd) {
     if(resolveLastResize) resolveLastResize(p);
     return p;
 };
-
 
 // for use in Lib.syncOrAsync, check if there are any
 // pending promises in this plot and wait for them
@@ -479,7 +477,6 @@ plots.supplyDefaults = function(gd, opts) {
             _fullLayout: oldFullLayout
         });
     }
-
 
     // fill in meta helpers
     fillMetaTextHelpers(newFullData, newFullLayout);
@@ -1053,7 +1050,6 @@ plots.clearExpandedTraceDefaultColors = function(trace) {
     }
 };
 
-
 plots.supplyDataDefaults = function(dataIn, dataOut, layout, fullLayout) {
     var modules = fullLayout._modules;
     var visibleModules = fullLayout._visibleModules;
@@ -1470,7 +1466,6 @@ function getComputedSize(attr) {
         parseFloat(attr)
     );
 }
-
 
 plots.plotAutoSize = function plotAutoSize(gd, layout, fullLayout) {
     var context = gd._context || {};
@@ -1907,7 +1902,6 @@ plots.doAutoMargin = function(gd) {
             b: {val: 0, size: mb}
         };
 
-
         // make sure that the reservedMargin is the minimum needed
         for(var s in reservedMargins) {
             var autoMarginPush = 0;
@@ -1994,7 +1988,6 @@ plots.doAutoMargin = function(gd) {
             mt /= rH;
         }
     }
-
 
     gs.l = Math.round(ml) + reservedMargins.l;
     gs.r = Math.round(mr) + reservedMargins.r;
@@ -3389,3 +3382,5 @@ plots.cleanBasePlot = function(desiredType, newFullData, newFullLayout, oldFullD
         oldFullLayout['_' + desiredType + 'layer'].selectAll('g.trace').remove();
     }
 };
+
+export default plots;

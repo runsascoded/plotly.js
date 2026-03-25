@@ -1,9 +1,7 @@
-'use strict';
+import { hoverPoints as barHover } from '../bar/hover.js';
+import { hoverLabelText } from '../../plots/cartesian/axes.js';
 
-var barHover = require('../bar/hover').hoverPoints;
-var hoverLabelText = require('../../plots/cartesian/axes').hoverLabelText;
-
-module.exports = function hoverPoints(pointData, xval, yval, hovermode, opts) {
+export default function hoverPoints(pointData, xval, yval, hovermode, opts) {
     var pts = barHover(pointData, xval, yval, hovermode, opts);
 
     if(!pts) return;
@@ -19,4 +17,4 @@ module.exports = function hoverPoints(pointData, xval, yval, hovermode, opts) {
     }
 
     return pts;
-};
+}

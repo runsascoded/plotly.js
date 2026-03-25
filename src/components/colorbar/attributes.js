@@ -1,12 +1,10 @@
-'use strict';
+import axesAttrs from '../../plots/cartesian/layout_attributes.js';
+import fontAttrs from '../../plots/font_attributes.js';
+import { extendFlat } from '../../lib/extend.js';
+import _edit_types from '../../plot_api/edit_types.js';
+const { overrideAll } = _edit_types;
 
-var axesAttrs = require('../../plots/cartesian/layout_attributes');
-var fontAttrs = require('../../plots/font_attributes');
-var extendFlat = require('../../lib/extend').extendFlat;
-var overrideAll = require('../../plot_api/edit_types').overrideAll;
-
-
-module.exports = overrideAll({
+export default overrideAll({
     orientation: {
         valType: 'enumerated',
         values: ['h', 'v'],

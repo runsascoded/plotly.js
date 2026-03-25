@@ -1,13 +1,11 @@
-'use strict';
+import Drawing from '../../components/drawing/index.js';
+import Color from '../../components/color/index.js';
 
-var Drawing = require('../../components/drawing');
-var Color = require('../../components/color');
-
-module.exports = function fillOne(s, pt, trace, gd) {
+export default function fillOne(s, pt, trace, gd) {
     var pattern = trace.marker.pattern;
     if(pattern && pattern.shape) {
         Drawing.pointStyle(s, trace, gd, pt);
     } else {
         Color.fill(s, pt.color);
     }
-};
+}

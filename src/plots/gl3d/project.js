@@ -1,5 +1,3 @@
-'use strict';
-
 function xformMatrix(m, v) {
     var out = [0, 0, 0, 0];
     var i, j;
@@ -20,4 +18,4 @@ function project(camera, v) {
     return p;
 }
 
-module.exports = project;
+export default project;

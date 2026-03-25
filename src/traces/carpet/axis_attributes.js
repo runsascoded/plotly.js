@@ -1,15 +1,12 @@
-'use strict';
+import fontAttrs from '../../plots/font_attributes.js';
+import colorAttrs from '../../components/color/attributes.js';
+import axesAttrs from '../../plots/cartesian/layout_attributes.js';
+import { descriptionWithDates } from '../../plots/cartesian/axis_format_attributes.js';
+import { overrideAll } from '../../plot_api/edit_types.js';
+import { dash } from '../../components/drawing/attributes.js';
+import { extendFlat } from '../../lib/extend.js';
 
-var fontAttrs = require('../../plots/font_attributes');
-var colorAttrs = require('../../components/color/attributes');
-var axesAttrs = require('../../plots/cartesian/layout_attributes');
-var descriptionWithDates = require('../../plots/cartesian/axis_format_attributes').descriptionWithDates;
-var overrideAll = require('../../plot_api/edit_types').overrideAll;
-var dash = require('../../components/drawing/attributes').dash;
-var extendFlat = require('../../lib/extend').extendFlat;
-
-
-module.exports = {
+export default {
     color: {
         valType: 'color',
         editType: 'calc',

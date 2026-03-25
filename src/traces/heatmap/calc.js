@@ -1,20 +1,17 @@
-'use strict';
+import Registry from '../../registry.js';
+import Lib from '../../lib/index.js';
+import Axes from '../../plots/cartesian/axes.js';
+import alignPeriod from '../../plots/cartesian/align_period.js';
+import histogram2dCalc from '../histogram2d/calc.js';
+import colorscaleCalc from '../../components/colorscale/calc.js';
+import convertColumnData from './convert_column_xyz.js';
+import clean2dArray from './clean_2d_array.js';
+import interp2d from './interp2d.js';
+import findEmpties from './find_empties.js';
+import makeBoundArray from './make_bound_array.js';
+import { BADNUM } from '../../constants/numerical.js';
 
-var Registry = require('../../registry');
-var Lib = require('../../lib');
-var Axes = require('../../plots/cartesian/axes');
-var alignPeriod = require('../../plots/cartesian/align_period');
-
-var histogram2dCalc = require('../histogram2d/calc');
-var colorscaleCalc = require('../../components/colorscale/calc');
-var convertColumnData = require('./convert_column_xyz');
-var clean2dArray = require('./clean_2d_array');
-var interp2d = require('./interp2d');
-var findEmpties = require('./find_empties');
-var makeBoundArray = require('./make_bound_array');
-var BADNUM = require('../../constants/numerical').BADNUM;
-
-module.exports = function calc(gd, trace) {
+export default function calc(gd, trace) {
     // prepare the raw data
     // run makeCalcdata on x and y even for heatmaps, in case of category mappings
     var xa = Axes.getFromId(gd, trace.xaxis || 'x');
@@ -165,7 +162,7 @@ module.exports = function calc(gd, trace) {
     }
 
     return [cd0];
-};
+}
 
 function skipBreaks(a) {
     var b = [];

@@ -1,9 +1,7 @@
-'use strict';
+import Registry from '../../registry.js';
+import Lib from '../../lib/index.js';
 
-var Registry = require('../../registry');
-var Lib = require('../../lib');
-
-module.exports = function handleOHLC(traceIn, traceOut, coerce, layout) {
+export default function handleOHLC(traceIn, traceOut, coerce, layout) {
     var x = coerce('x');
     var open = coerce('open');
     var high = coerce('high');
@@ -22,4 +20,4 @@ module.exports = function handleOHLC(traceIn, traceOut, coerce, layout) {
     traceOut._length = len;
 
     return len;
-};
+}

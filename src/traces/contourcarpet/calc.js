@@ -1,21 +1,15 @@
-'use strict';
+import colorscaleCalc from '../../components/colorscale/calc.js';
+import Lib from '../../lib/index.js';
+import convertColumnData from '../heatmap/convert_column_xyz.js';
+import clean2dArray from '../heatmap/clean_2d_array.js';
+import interp2d from '../heatmap/interp2d.js';
+import findEmpties from '../heatmap/find_empties.js';
+import makeBoundArray from '../heatmap/make_bound_array.js';
+import supplyDefaults from './defaults.js';
+import lookupCarpet from '../carpet/lookup_carpetid.js';
+import setContours from '../contour/set_contours.js';
 
-var colorscaleCalc = require('../../components/colorscale/calc');
-var Lib = require('../../lib');
-
-var convertColumnData = require('../heatmap/convert_column_xyz');
-var clean2dArray = require('../heatmap/clean_2d_array');
-var interp2d = require('../heatmap/interp2d');
-var findEmpties = require('../heatmap/find_empties');
-var makeBoundArray = require('../heatmap/make_bound_array');
-var supplyDefaults = require('./defaults');
-var lookupCarpet = require('../carpet/lookup_carpetid');
-var setContours = require('../contour/set_contours');
-
-// most is the same as heatmap calc, then adjust it
-// though a few things inside heatmap calc still look for
-// contour maps, because the makeBoundArray calls are too entangled
-module.exports = function calc(gd, trace) {
+export default function calc(gd, trace) {
     var carpet = trace._carpetTrace = lookupCarpet(gd, trace);
     if(!carpet || !carpet.visible || carpet.visible === 'legendonly') return;
 
@@ -40,7 +34,7 @@ module.exports = function calc(gd, trace) {
     setContours(trace, trace._z);
 
     return cd;
-};
+}
 
 function heatmappishCalc(gd, trace) {
     // prepare the raw data

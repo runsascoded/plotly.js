@@ -1,13 +1,12 @@
-'use strict';
-
-var isNumeric = require('fast-isnumeric');
-var isArrayOrTypedArray = require('../../lib').isArrayOrTypedArray;
-var BADNUM = require('../../constants/numerical').BADNUM;
-
-var Registry = require('../../registry');
-var Axes = require('../../plots/cartesian/axes');
-var getAxisGroup = require('../../plots/cartesian/constraints').getAxisGroup;
-var Sieve = require('./sieve.js');
+import isNumeric from 'fast-isnumeric';
+import _index from '../../lib/index.js';
+const { isArrayOrTypedArray } = _index;
+import _numerical from '../../constants/numerical.js';
+const { BADNUM } = _numerical;
+import Registry from '../../registry.js';
+import Axes from '../../plots/cartesian/axes.js';
+import { getAxisGroup } from '../../plots/cartesian/constraints.js';
+import Sieve from './sieve.js';
 
 /*
  * Bar chart stacking/grouping positioning and autoscaling calculations
@@ -864,7 +863,7 @@ function getAxisLetter(ax) {
     return ax._id.charAt(0);
 }
 
-module.exports = {
+export default {
     crossTraceCalc: crossTraceCalc,
     setGroupPositions: setGroupPositions
 };

@@ -1,20 +1,16 @@
-'use strict';
-
-var isNumeric = require('fast-isnumeric');
-var BADNUM = require('../../constants/numerical').BADNUM;
-
-var calcMarkerColorscale = require('../scatter/colorscale_calc');
-var arraysToCalcdata = require('../scatter/arrays_to_calcdata');
-var calcSelection = require('../scatter/calc_selection');
-var isArrayOrTypedArray = require('../../lib').isArrayOrTypedArray;
-
-var _ = require('../../lib')._;
+import isNumeric from 'fast-isnumeric';
+import { BADNUM } from '../../constants/numerical.js';
+import calcMarkerColorscale from '../scatter/colorscale_calc.js';
+import arraysToCalcdata from '../scatter/arrays_to_calcdata.js';
+import calcSelection from '../scatter/calc_selection.js';
+import { isArrayOrTypedArray } from '../../lib/index.js';
+import { _ } from '../../lib/index.js';
 
 function isNonBlankString(v) {
     return v && typeof v === 'string';
 }
 
-module.exports = function calc(gd, trace) {
+export default function calc(gd, trace) {
     var hasLocationData = isArrayOrTypedArray(trace.locations);
     var len = hasLocationData ? trace.locations.length : trace._length;
     var calcTrace = new Array(len);
@@ -55,4 +51,4 @@ module.exports = function calc(gd, trace) {
     }
 
     return calcTrace;
-};
+}

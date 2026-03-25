@@ -1,17 +1,13 @@
-'use strict';
-
-var createSurface = require('../../../stackgl_modules').gl_surface3d;
-
-var ndarray = require('../../../stackgl_modules').ndarray;
-var ndarrayInterp2d = require('../../../stackgl_modules').ndarray_linear_interpolate.d2;
-
-var interp2d = require('../heatmap/interp2d');
-var findEmpties = require('../heatmap/find_empties');
-
-var isArrayOrTypedArray = require('../../lib').isArrayOrTypedArray;
-var parseColorScale = require('../../lib/gl_format_color').parseColorScale;
-var str2RgbaArray = require('../../lib/str2rgbarray');
-var extractOpts = require('../../components/colorscale').extractOpts;
+import { gl_surface3d as createSurface } from '../../../stackgl_modules/index.js';
+import { ndarray } from '../../../stackgl_modules/index.js';
+import interp2d from '../heatmap/interp2d.js';
+import findEmpties from '../heatmap/find_empties.js';
+import { isArrayOrTypedArray } from '../../lib/index.js';
+import { parseColorScale } from '../../lib/gl_format_color.js';
+import str2RgbaArray from '../../lib/str2rgbarray.js';
+import { extractOpts } from '../../components/colorscale/index.js';
+import { ndarray_linear_interpolate as _req0 } from '../../../stackgl_modules/index.js';
+var ndarrayInterp2d = _req0.d2;
 
 function SurfaceTrace(scene, surface, uid) {
     this.scene = scene;
@@ -686,4 +682,4 @@ function createSurfaceTrace(scene, data) {
     return result;
 }
 
-module.exports = createSurfaceTrace;
+export default createSurfaceTrace;

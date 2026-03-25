@@ -1,20 +1,16 @@
-'use strict';
-
-var Lib = require('../lib');
-var Registry = require('../registry');
-var Axes = require('../plots/cartesian/axes');
-var pointsAccessorFunction = require('./helpers').pointsAccessorFunction;
-
-var filterOps = require('../constants/filter_ops');
+import Lib from '../lib/index.js';
+import Registry from '../registry.js';
+import Axes from '../plots/cartesian/axes.js';
+import { pointsAccessorFunction } from './helpers.js';
+import filterOps from '../constants/filter_ops.js';
 var COMPARISON_OPS = filterOps.COMPARISON_OPS;
 var INTERVAL_OPS = filterOps.INTERVAL_OPS;
 var SET_OPS = filterOps.SET_OPS;
 
-exports.moduleType = 'transform';
+export var moduleType = 'transform';
+export var name = 'filter';
 
-exports.name = 'filter';
-
-exports.attributes = {
+export var attributes = {
     enabled: {
         valType: 'boolean',
         dflt: true,
@@ -115,11 +111,11 @@ exports.attributes = {
     editType: 'calc'
 };
 
-exports.supplyDefaults = function(transformIn) {
+export var supplyDefaults = function(transformIn) {
     var transformOut = {};
 
     function coerce(attr, dflt) {
-        return Lib.coerce(transformIn, transformOut, exports.attributes, attr, dflt);
+        return Lib.coerce(transformIn, transformOut, attributes, attr, dflt);
     }
 
     var enabled = coerce('enabled');
@@ -144,7 +140,7 @@ exports.supplyDefaults = function(transformIn) {
     return transformOut;
 };
 
-exports.calcTransform = function(gd, trace, opts) {
+export var calcTransform = function(gd, trace, opts) {
     if(!opts.enabled) return;
 
     var targetArray = Lib.getTargetArray(trace, opts);
@@ -321,3 +317,5 @@ function getFilterFunc(opts, d2c, targetCalendar) {
             };
     }
 }
+
+export default { moduleType, name, attributes, supplyDefaults, calcTransform };

@@ -1,18 +1,15 @@
-'use strict';
-
-var d3 = require('@plotly/d3');
-var isNumeric = require('fast-isnumeric');
-
-var Lib = require('../../lib');
-var FP_SAFE = require('../../constants/numerical').FP_SAFE;
-var Registry = require('../../registry');
-var Drawing = require('../../components/drawing');
-
-var axIds = require('./axis_ids');
+import d3 from '@plotly/d3';
+import isNumeric from 'fast-isnumeric';
+import Lib from '../../lib/index.js';
+import _numerical from '../../constants/numerical.js';
+const { FP_SAFE } = _numerical;
+import Registry from '../../registry.js';
+import Drawing from '../../components/drawing/index.js';
+import axIds from './axis_ids.js';
 var getFromId = axIds.getFromId;
 var isLinked = axIds.isLinked;
 
-module.exports = {
+export default {
     applyAutorangeOptions: applyAutorangeOptions,
     getAutoRange: getAutoRange,
     makePadFn: makePadFn,

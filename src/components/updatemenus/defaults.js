@@ -1,23 +1,19 @@
-'use strict';
-
-var Lib = require('../../lib');
-var handleArrayContainerDefaults = require('../../plots/array_container_defaults');
-
-var attributes = require('./attributes');
-var constants = require('./constants');
+import Lib from '../../lib/index.js';
+import handleArrayContainerDefaults from '../../plots/array_container_defaults.js';
+import attributes from './attributes.js';
+import constants from './constants.js';
 
 var name = constants.name;
 var buttonAttrs = attributes.buttons;
 
-
-module.exports = function updateMenusDefaults(layoutIn, layoutOut) {
+export default function updateMenusDefaults(layoutIn, layoutOut) {
     var opts = {
         name: name,
         handleItemDefaults: menuDefaults
     };
 
     handleArrayContainerDefaults(layoutIn, layoutOut, opts);
-};
+}
 
 function menuDefaults(menuIn, menuOut, layoutOut) {
     function coerce(attr, dflt) {

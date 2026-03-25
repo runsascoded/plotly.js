@@ -1,23 +1,20 @@
-'use strict';
+import isNumeric from 'fast-isnumeric';
+import tinycolor from 'tinycolor2';
+import { extendFlat } from './extend.js';
+import baseTraceAttrs from '../plots/attributes.js';
+import colorscales from '../components/colorscale/scales.js';
+import Color from '../components/color/index.js';
+import _interactions from '../constants/interactions.js';
+const { DESELECTDIM } = _interactions;
+import nestedProperty from './nested_property.js';
+import { counter as counterRegex } from './regex.js';
+import _mod from './mod.js';
+const { modHalf } = _mod;
+import { isArrayOrTypedArray } from './array.js';
+import { isTypedArraySpec } from './array.js';
+import { decodeTypedArraySpec } from './array.js';
 
-var isNumeric = require('fast-isnumeric');
-var tinycolor = require('tinycolor2');
-
-var extendFlat = require('./extend').extendFlat;
-
-var baseTraceAttrs = require('../plots/attributes');
-var colorscales = require('../components/colorscale/scales');
-var Color = require('../components/color');
-var DESELECTDIM = require('../constants/interactions').DESELECTDIM;
-
-var nestedProperty = require('./nested_property');
-var counterRegex = require('./regex').counter;
-var modHalf = require('./mod').modHalf;
-var isArrayOrTypedArray = require('./array').isArrayOrTypedArray;
-var isTypedArraySpec = require('./array').isTypedArraySpec;
-var decodeTypedArraySpec = require('./array').decodeTypedArraySpec;
-
-exports.valObjectMeta = {
+export var valObjectMeta = {
     data_array: {
         // You can use *dflt=[] to force said array to exist though.
         description: [
@@ -314,7 +311,7 @@ exports.valObjectMeta = {
 
                 if(dflt === undefined) dflt = opts.dflt;
 
-                exports.valObjectMeta[opts.valType].coerceFunction(v, propPart, dflt, opts);
+                valObjectMeta[opts.valType].coerceFunction(v, propPart, dflt, opts);
 
                 return out;
             }
@@ -394,19 +391,7 @@ exports.valObjectMeta = {
     }
 };
 
-/**
- * Ensures that container[attribute] has a valid value.
- *
- * attributes[attribute] is an object with possible keys:
- * - valType: data_array, enumerated, boolean, ... as in valObjectMeta
- * - values: (enumerated only) array of allowed vals
- * - min, max: (number, integer only) inclusive bounds on allowed vals
- *      either or both may be omitted
- * - dflt: if attribute is invalid or missing, use this default
- *      if dflt is provided as an argument to lib.coerce it takes precedence
- *      as a convenience, returns the value it finally set
- */
-exports.coerce = function(containerIn, containerOut, attributes, attribute, dflt) {
+export var coerce = function(containerIn, containerOut, attributes, attribute, dflt) {
     var opts = nestedProperty(attributes, attribute).get();
     var propIn = nestedProperty(containerIn, attribute);
     var propOut = nestedProperty(containerOut, attribute);
@@ -441,7 +426,7 @@ exports.coerce = function(containerIn, containerOut, attributes, attribute, dflt
         }
     }
 
-    var coerceFunction = exports.valObjectMeta[opts.valType].coerceFunction;
+    var coerceFunction = valObjectMeta[opts.valType].coerceFunction;
     coerceFunction(v, propOut, dflt, opts);
 
     var out = propOut.get();
@@ -455,27 +440,15 @@ exports.coerce = function(containerIn, containerOut, attributes, attribute, dflt
     return out;
 };
 
-/**
- * Variation on coerce
- *
- * Uses coerce to get attribute value if user input is valid,
- * returns attribute default if user input it not valid or
- * returns false if there is no user input.
- */
-exports.coerce2 = function(containerIn, containerOut, attributes, attribute, dflt) {
+export var coerce2 = function(containerIn, containerOut, attributes, attribute, dflt) {
     var propIn = nestedProperty(containerIn, attribute);
-    var propOut = exports.coerce(containerIn, containerOut, attributes, attribute, dflt);
+    var propOut = coerce(containerIn, containerOut, attributes, attribute, dflt);
     var valIn = propIn.get();
 
     return (valIn !== undefined && valIn !== null) ? propOut : false;
 };
 
-/*
- * Shortcut to coerce the three font attributes
- *
- * 'coerce' is a lib.coerce wrapper with implied first three arguments
- */
-exports.coerceFont = function(coerce, attr, dfltObj, opts) {
+export var coerceFont = function(coerce, attr, dfltObj, opts) {
     if(!opts) opts = {};
     dfltObj = extendFlat({}, dfltObj);
     dfltObj = extendFlat(dfltObj, opts.overrideDflt || {});
@@ -502,10 +475,7 @@ exports.coerceFont = function(coerce, attr, dfltObj, opts) {
     return out;
 };
 
-/*
- * Shortcut to coerce the pattern attributes
- */
-exports.coercePattern = function(coerce, attr, markerColor, hasMarkerColorscale) {
+export var coercePattern = function(coerce, attr, markerColor, hasMarkerColorscale) {
     var shape = coerce(attr + '.shape');
     var path;
     if(!shape) {
@@ -538,15 +508,7 @@ exports.coercePattern = function(coerce, attr, markerColor, hasMarkerColorscale)
     }
 };
 
-/** Coerce shortcut for 'hoverinfo'
- * handling 1-vs-multi-trace dflt logic
- *
- * @param {object} traceIn : user trace object
- * @param {object} traceOut : full trace object (requires _module ref)
- * @param {object} layoutOut : full layout object (require _dataLength ref)
- * @return {any} : the coerced value
- */
-exports.coerceHoverinfo = function(traceIn, traceOut, layoutOut) {
+export var coerceHoverinfo = function(traceIn, traceOut, layoutOut) {
     var moduleAttrs = traceOut._module.attributes;
     var attrs = moduleAttrs.hoverinfo ? moduleAttrs : baseTraceAttrs;
 
@@ -562,21 +524,10 @@ exports.coerceHoverinfo = function(traceIn, traceOut, layoutOut) {
         dflt = flags.join('+');
     }
 
-    return exports.coerce(traceIn, traceOut, attrs, 'hoverinfo', dflt);
+    return coerce(traceIn, traceOut, attrs, 'hoverinfo', dflt);
 };
 
-/** Coerce shortcut for [un]selected.marker.opacity,
- *  which has special default logic, to ensure that it corresponds to the
- *  default selection behavior while allowing to be overtaken by any other
- *  [un]selected attribute.
- *
- *  N.B. This must be called *after* coercing all the other [un]selected attrs,
- *  to give the intended result.
- *
- * @param {object} traceOut : fullData item
- * @param {function} coerce : lib.coerce wrapper with implied first three arguments
- */
-exports.coerceSelectionMarkerOpacity = function(traceOut, coerce) {
+export var coerceSelectionMarkerOpacity = function(traceOut, coerce) {
     if(!traceOut.marker) return;
 
     var mo = traceOut.marker.opacity;
@@ -601,7 +552,7 @@ exports.coerceSelectionMarkerOpacity = function(traceOut, coerce) {
 };
 
 function validate(value, opts) {
-    var valObjectDef = exports.valObjectMeta[opts.valType];
+    var valObjectDef = valObjectMeta[opts.valType];
 
     if(opts.arrayOk && isArrayOrTypedArray(value)) return true;
 
@@ -618,4 +569,6 @@ function validate(value, opts) {
     valObjectDef.coerceFunction(value, propMock, failed, opts);
     return out !== failed;
 }
-exports.validate = validate;
+export { validate };
+
+export default { valObjectMeta, coerce, coerce2, coerceFont, coercePattern, coerceHoverinfo, coerceSelectionMarkerOpacity, validate };

@@ -1,18 +1,14 @@
-'use strict';
-
-var d3 = require('@plotly/d3');
-var interpolate = require('d3-interpolate').interpolate;
-
-var helpers = require('../sunburst/helpers');
-
-var Lib = require('../../lib');
-var TEXTPAD = require('../bar/constants').TEXTPAD;
-var barPlot = require('../bar/plot');
+import d3 from '@plotly/d3';
+import { interpolate } from 'd3-interpolate';
+import helpers from '../sunburst/helpers.js';
+import Lib from '../../lib/index.js';
+import { TEXTPAD } from '../bar/constants.js';
+import barPlot from '../bar/plot.js';
+import uniformText from '../bar/uniform_text.js';
+import constants from './constants.js';
+import drawAncestors from './draw_ancestors.js';
 var toMoveInsideBar = barPlot.toMoveInsideBar;
-var uniformText = require('../bar/uniform_text');
 var recordMinTextSize = uniformText.recordMinTextSize;
-var constants = require('./constants');
-var drawAncestors = require('./draw_ancestors');
 
 function getKey(pt) {
     return helpers.isHierarchyRoot(pt) ?
@@ -20,7 +16,7 @@ function getKey(pt) {
         helpers.getPtId(pt);
 }
 
-module.exports = function plotOne(gd, cd, element, transitionOpts, drawDescendants) {
+export default function plotOne(gd, cd, element, transitionOpts, drawDescendants) {
     var fullLayout = gd._fullLayout;
     var cd0 = cd[0];
     var trace = cd0.trace;
@@ -599,4 +595,4 @@ module.exports = function plotOne(gd, cd, element, transitionOpts, drawDescendan
     } else {
         selAncestors.remove();
     }
-};
+}

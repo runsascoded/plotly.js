@@ -1,28 +1,21 @@
-'use strict';
-
-var glPlot3d = require('../../../stackgl_modules').gl_plot3d;
+import { gl_plot3d as glPlot3d } from '../../../stackgl_modules/index.js';
+import getContext from 'webgl-context';
+import passiveSupported from 'has-passive-events';
+import Registry from '../../registry.js';
+import Lib from '../../lib/index.js';
+import Axes from '../../plots/cartesian/axes.js';
+import Fx from '../../components/fx/index.js';
+import str2RGBAarray from '../../lib/str2rgbarray.js';
+import showNoWebGlMsg from '../../lib/show_no_webgl_msg.js';
+import project from './project.js';
+import createAxesOptions from './layout/convert.js';
+import createSpikeOptions from './layout/spikes.js';
+import computeTickMarks from './layout/tick_marks.js';
+import { applyAutorangeOptions } from '../cartesian/autorange.js';
 var createCamera = glPlot3d.createCamera;
 var createPlot = glPlot3d.createScene;
 
-var getContext = require('webgl-context');
-var passiveSupported = require('has-passive-events');
-
-var Registry = require('../../registry');
-var Lib = require('../../lib');
 var preserveDrawingBuffer = Lib.preserveDrawingBuffer();
-
-var Axes = require('../../plots/cartesian/axes');
-var Fx = require('../../components/fx');
-
-var str2RGBAarray = require('../../lib/str2rgbarray');
-var showNoWebGlMsg = require('../../lib/show_no_webgl_msg');
-
-var project = require('./project');
-var createAxesOptions = require('./layout/convert');
-var createSpikeOptions = require('./layout/spikes');
-var computeTickMarks = require('./layout/tick_marks');
-
-var applyAutorangeOptions = require('../cartesian/autorange').applyAutorangeOptions;
 
 var STATIC_CANVAS, STATIC_CONTEXT;
 
@@ -1157,4 +1150,4 @@ proto.make4thDimension = function() {
     Axes.setConvert(scene._mockAxis, fullLayout);
 };
 
-module.exports = Scene;
+export default Scene;

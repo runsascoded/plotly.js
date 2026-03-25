@@ -1,29 +1,24 @@
-'use strict';
-
-var mapboxgl = require('@plotly/mapbox-gl/dist/mapbox-gl-unminified');
-
-var Lib = require('../../lib');
+import mapboxgl from '@plotly/mapbox-gl/dist/mapbox-gl-unminified';
+import Lib from '../../lib/index.js';
+import { getSubplotCalcData } from '../../plots/get_data.js';
+import xmlnsNamespaces from '../../constants/xmlns_namespaces.js';
+import d3 from '@plotly/d3';
+import Drawing from '../../components/drawing/index.js';
+import svgTextUtils from '../../lib/svg_text_utils.js';
+import Mapbox from './mapbox.js';
+import _req0 from './constants.js';
+import _req1 from './layout_attributes.js';
+import _req2 from './layout_defaults.js';
 var strTranslate = Lib.strTranslate;
 var strScale = Lib.strScale;
-var getSubplotCalcData = require('../../plots/get_data').getSubplotCalcData;
-var xmlnsNamespaces = require('../../constants/xmlns_namespaces');
-var d3 = require('@plotly/d3');
-var Drawing = require('../../components/drawing');
-var svgTextUtils = require('../../lib/svg_text_utils');
-
-var Mapbox = require('./mapbox');
 
 var MAPBOX = 'mapbox';
 
-var constants = exports.constants = require('./constants');
-
-exports.name = MAPBOX;
-
-exports.attr = 'subplot';
-
-exports.idRoot = MAPBOX;
-
-exports.idRegex = exports.attrRegex = Lib.counterRegex(MAPBOX);
+export var constants = _req0;
+export var name = MAPBOX;
+export var attr = 'subplot';
+export var idRoot = MAPBOX;
+export var idRegex = Lib.counterRegex(MAPBOX);
 
 var deprecationWarning = [
     'mapbox subplots and traces are deprecated!',
@@ -32,7 +27,7 @@ var deprecationWarning = [
     'as well as https://plotly.com/javascript/maplibre-migration/'
 ].join(' ');
 
-exports.attributes = {
+export var attributes = {
     subplot: {
         valType: 'subplotid',
         dflt: 'mapbox',
@@ -47,13 +42,12 @@ exports.attributes = {
     }
 };
 
-exports.layoutAttributes = require('./layout_attributes');
-
-exports.supplyLayoutDefaults = require('./layout_defaults');
+export var layoutAttributes = _req1;
+export var supplyLayoutDefaults = _req2;
 
 var firstPlot = true;
 
-exports.plot = function plot(gd) {
+export var plot = function plot(gd) {
     if(firstPlot) {
         firstPlot = false;
         Lib.warn(deprecationWarning);
@@ -94,7 +88,7 @@ exports.plot = function plot(gd) {
     }
 };
 
-exports.clean = function(newFullData, newFullLayout, oldFullData, oldFullLayout) {
+export var clean = function(newFullData, newFullLayout, oldFullData, oldFullLayout) {
     var oldMapboxKeys = oldFullLayout._subplots[MAPBOX] || [];
 
     for(var i = 0; i < oldMapboxKeys.length; i++) {
@@ -106,7 +100,7 @@ exports.clean = function(newFullData, newFullLayout, oldFullData, oldFullLayout)
     }
 };
 
-exports.toSVG = function(gd) {
+export var toSVG = function(gd) {
     var fullLayout = gd._fullLayout;
     var subplotIds = fullLayout._subplots[MAPBOX];
     var size = fullLayout._size;
@@ -286,7 +280,7 @@ function isStyleRequireAccessToken(s) {
     );
 }
 
-exports.updateFx = function(gd) {
+export var updateFx = function(gd) {
     var fullLayout = gd._fullLayout;
     var subplotIds = fullLayout._subplots[MAPBOX];
 
@@ -295,3 +289,5 @@ exports.updateFx = function(gd) {
         subplotObj.updateFx(fullLayout);
     }
 };
+
+export default { constants, name, attr, idRoot, idRegex, attributes, layoutAttributes, supplyLayoutDefaults, plot, clean, toSVG, updateFx };

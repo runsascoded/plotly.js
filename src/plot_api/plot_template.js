@@ -1,7 +1,5 @@
-'use strict';
-
-var Lib = require('../lib');
-var plotAttributes = require('../plots/attributes');
+import Lib from '../lib/index.js';
+import plotAttributes from '../plots/attributes.js';
 
 var TEMPLATEITEMNAME = 'templateitemname';
 
@@ -34,38 +32,14 @@ templateAttrs[TEMPLATEITEMNAME] = {
     ].join(' ')
 };
 
-/**
- * templatedArray: decorate an attributes object with templating (and array)
- * properties.
- *
- * @param {string} name: the singular form of the array name. Sets
- *     `_isLinkedToArray` to this, so the schema knows to treat this as an array.
- * @param {object} attrs: the item attributes. Since all callers are expected
- *     to be constructing this object on the spot, we mutate it here for
- *     performance, rather than extending a new object with it.
- *
- * @returns {object}: the decorated `attrs` object
- */
-exports.templatedArray = function(name, attrs) {
+export var templatedArray = function(name, attrs) {
     attrs._isLinkedToArray = name;
     attrs.name = templateAttrs.name;
     attrs[TEMPLATEITEMNAME] = templateAttrs[TEMPLATEITEMNAME];
     return attrs;
 };
 
-/**
- * traceTemplater: logic for matching traces to trace templates
- *
- * @param {object} dataTemplate: collection of {traceType: [{template}, ...]}
- *     ie each type the template applies to contains a list of template objects,
- *     to be provided cyclically to data traces of that type.
- *
- * @returns {object}: {newTrace}, a function:
- *     newTrace(traceIn): that takes the input traceIn, coerces its type, then
- *         uses that type to find the next template to apply. returns the output
- *         traceOut with template attached, ready to continue supplyDefaults.
- */
-exports.traceTemplater = function(dataTemplate) {
+export var traceTemplater = function(dataTemplate) {
     var traceCounts = {};
     var traceType, typeTemplates;
 
@@ -105,21 +79,7 @@ exports.traceTemplater = function(dataTemplate) {
     };
 };
 
-/**
- * newContainer: Create a new sub-container inside `container` and propagate any
- * applicable template to it. If there's no template, still propagates
- * `undefined` so relinkPrivate will not retain an old template!
- *
- * @param {object} container: the outer container, should already have _template
- *     if there *is* a template for this plot
- * @param {string} name: the key of the new container to make
- * @param {string} baseName: if applicable, a base attribute to take the
- *     template from, ie for xaxis3 the base would be xaxis
- *
- * @returns {object}: an object for inclusion _full*, empty except for the
- *     appropriate template piece
- */
-exports.newContainer = function(container, name, baseName) {
+export var newContainer = function(container, name, baseName) {
     var template = container._template;
     var part = template && (template[name] || (baseName && template[baseName]));
     if(!Lib.isPlainObject(part)) part = null;
@@ -128,26 +88,7 @@ exports.newContainer = function(container, name, baseName) {
     return out;
 };
 
-/**
- * arrayTemplater: special logic for templating both defaults and specific items
- * in a container array (annotations etc)
- *
- * @param {object} container: the outer container, should already have _template
- *     if there *is* a template for this plot
- * @param {string} name: the name of the array to template (ie 'annotations')
- *     will be used to find default ('annotationdefaults' object) and specific
- *     ('annotations' array) template specs.
- * @param {string} inclusionAttr: the attribute determining this item's
- *     inclusion in the output, usually 'visible' or 'enabled'
- *
- * @returns {object}: {newItem, defaultItems}, both functions:
- *     newItem(itemIn): create an output item, bare except for the correct
- *         template and name(s), as the base for supplyDefaults
- *     defaultItems(): to be called after all newItem calls, return any
- *         specific template items that have not already beeen included,
- *         also as bare output items ready for supplyDefaults.
- */
-exports.arrayTemplater = function(container, name, inclusionAttr) {
+export var arrayTemplater = function(container, name, inclusionAttr) {
     var template = container._template;
     var defaultsTemplate = template && template[arrayDefaultKey(name)];
     var templateItems = template && template[name];
@@ -234,31 +175,9 @@ function arrayDefaultKey(name) {
     }
     return name.slice(0, -1) + 'defaults';
 }
-exports.arrayDefaultKey = arrayDefaultKey;
+export { arrayDefaultKey };
 
-/**
- * arrayEditor: helper for editing array items that may have come from
- *     template defaults (in which case they will not exist in the input yet)
- *
- * @param {object} parentIn: the input container (eg gd.layout)
- * @param {string} containerStr: the attribute string for the container inside
- *     `parentIn`.
- * @param {object} itemOut: the _full* item (eg gd._fullLayout.annotations[0])
- *     that we'll be editing. Assumed to have been created by `arrayTemplater`.
- *
- * @returns {object}: {modifyBase, modifyItem, getUpdateObj, applyUpdate}, all functions:
- *     modifyBase(attr, value): Add an update that's *not* related to the item.
- *         `attr` is the full attribute string.
- *     modifyItem(attr, value): Add an update to the item. `attr` is just the
- *         portion of the attribute string inside the item.
- *     getUpdateObj(): Get the final constructed update object, to use in
- *         `restyle` or `relayout`. Also resets the update object in case this
- *         update was canceled.
- *     applyUpdate(attr, value): optionally add an update `attr: value`,
- *         then apply it to `parent` which should be the parent of `containerIn`,
- *         ie the object to which `containerStr` is the attribute string.
- */
-exports.arrayEditor = function(parentIn, containerStr, itemOut) {
+export var arrayEditor = function(parentIn, containerStr, itemOut) {
     var lengthIn = (Lib.nestedProperty(parentIn, containerStr).get() || []).length;
     var index = itemOut._index;
     // Check that we are indeed off the end of this container.
@@ -313,3 +232,5 @@ exports.arrayEditor = function(parentIn, containerStr, itemOut) {
         applyUpdate: applyUpdate
     };
 };
+
+export default { templatedArray, traceTemplater, newContainer, arrayTemplater, arrayEditor, arrayDefaultKey };

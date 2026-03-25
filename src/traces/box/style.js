@@ -1,8 +1,6 @@
-'use strict';
-
-var d3 = require('@plotly/d3');
-var Color = require('../../components/color');
-var Drawing = require('../../components/drawing');
+import d3 from '@plotly/d3';
+import Color from '../../components/color/index.js';
+import Drawing from '../../components/drawing/index.js';
 
 function style(gd, cd, sel) {
     var s = sel ? sel : d3.select(gd).selectAll('g.trace.boxes');
@@ -58,7 +56,7 @@ function styleOnSelect(gd, cd, sel) {
     }
 }
 
-module.exports = {
+export default {
     style: style,
     styleOnSelect: styleOnSelect
 };

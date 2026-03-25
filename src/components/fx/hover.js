@@ -1,28 +1,24 @@
-'use strict';
-
-var d3 = require('@plotly/d3');
-var isNumeric = require('fast-isnumeric');
-var tinycolor = require('tinycolor2');
-
-var Lib = require('../../lib');
+import d3 from '@plotly/d3';
+import isNumeric from 'fast-isnumeric';
+import tinycolor from 'tinycolor2';
+import Lib from '../../lib/index.js';
+import Events from '../../lib/events.js';
+import svgTextUtils from '../../lib/svg_text_utils.js';
+import overrideCursor from '../../lib/override_cursor.js';
+import Drawing from '../drawing/index.js';
+import Color from '../color/index.js';
+import dragElement from '../dragelement/index.js';
+import Axes from '../../plots/cartesian/axes.js';
+import _constants from '../../plots/cartesian/constants.js';
+const { zindexSeparator } = _constants;
+import Registry from '../../registry.js';
+import helpers from './helpers.js';
+import constants from './constants.js';
+import legendSupplyDefaults from '../legend/defaults.js';
+import legendDraw from '../legend/draw.js';
 var pushUnique = Lib.pushUnique;
 var strTranslate = Lib.strTranslate;
 var strRotate = Lib.strRotate;
-var Events = require('../../lib/events');
-var svgTextUtils = require('../../lib/svg_text_utils');
-var overrideCursor = require('../../lib/override_cursor');
-var Drawing = require('../drawing');
-var Color = require('../color');
-var dragElement = require('../dragelement');
-var Axes = require('../../plots/cartesian/axes');
-var zindexSeparator = require('../../plots/cartesian/constants').zindexSeparator;
-var Registry = require('../../registry');
-
-var helpers = require('./helpers');
-var constants = require('./constants');
-
-var legendSupplyDefaults = require('../legend/defaults');
-var legendDraw = require('../legend/draw');
 
 // hover labels for multiple horizontal bars get tilted by some angle,
 // then need to be offset differently if they overlap
@@ -58,31 +54,7 @@ function distanceSort(a, b) {
     return a.distance - b.distance;
 }
 
-// fx.hover: highlight data on hover
-// evt can be a mousemove event, or an object with data about what points
-//   to hover on
-//      {xpx,ypx[,hovermode]} - pixel locations from top left
-//          (with optional overriding hovermode)
-//      {xval,yval[,hovermode]} - data values
-//      [{curveNumber,(pointNumber|xval and/or yval)}] -
-//              array of specific points to highlight
-//          pointNumber is a single integer if gd.data[curveNumber] is 1D,
-//              or a two-element array if it's 2D
-//          xval and yval are data values,
-//              1D data may specify either or both,
-//              2D data must specify both
-// subplot is an id string (default "xy")
-// makes use of gl.hovermode, which can be:
-//      x (find the points with the closest x values, ie a column),
-//      closest (find the single closest point)
-//    internally there are two more that occasionally get used:
-//      y (pick out a row - only used for multiple horizontal bar charts)
-//      array (used when the user specifies an explicit
-//          array of points to hover on)
-//
-// We wrap the hovers in a timer, to limit their frequency.
-// The actual rendering is done by private function _hover.
-exports.hover = function hover(gd, evt, subplot, noHoverEvent) {
+export var hover = function hover(gd, evt, subplot, noHoverEvent) {
     gd = Lib.getGraphDiv(gd);
     // The 'target' property changes when bubbling out of Shadow DOM.
     // Throttling can delay reading the target, so we save the current value.
@@ -92,40 +64,7 @@ exports.hover = function hover(gd, evt, subplot, noHoverEvent) {
     });
 };
 
-/*
- * Draw a single hover item or an array of hover item in a pre-existing svg container somewhere
- * hoverItem should have keys:
- *    - x and y (or x0, x1, y0, and y1):
- *      the pixel position to mark, relative to opts.container
- *    - xLabel, yLabel, zLabel, text, and name:
- *      info to go in the label
- *    - color:
- *      the background color for the label.
- *    - idealAlign (optional):
- *      'left' or 'right' for which side of the x/y box to try to put this on first
- *    - borderColor (optional):
- *      color for the border, defaults to strongest contrast with color
- *    - fontFamily (optional):
- *      string, the font for this label, defaults to constants.HOVERFONT
- *    - fontSize (optional):
- *      the label font size, defaults to constants.HOVERFONTSIZE
- *    - fontColor (optional):
- *      defaults to borderColor
- * opts should have keys:
- *    - bgColor:
- *      the background color this is against, used if the trace is
- *      non-opaque, and for the name, which goes outside the box
- *    - container:
- *      a <svg> or <g> element to add the hover label to
- *    - outerContainer:
- *      normally a parent of `container`, sets the bounding box to use to
- *      constrain the hover label and determine whether to show it on the left or right
- * opts can have optional keys:
- *    - anchorIndex:
-        the index of the hover item used as an anchor for positioning.
-        The other hover items will be pushed up or down to prevent overlap.
- */
-exports.loneHover = function loneHover(hoverItems, opts) {
+export var loneHover = function loneHover(hoverItems, opts) {
     var multiHover = true;
     if (!Array.isArray(hoverItems)) {
         multiHover = false;
@@ -2517,3 +2456,5 @@ function getBoundingClientRect(gd, node) {
         bottom: Math.max(Ay, By)
     };
 }
+
+export default { hover, loneHover };

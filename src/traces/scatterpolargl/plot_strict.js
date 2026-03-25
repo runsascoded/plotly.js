@@ -1,13 +1,9 @@
-'use strict';
-
-var plot = require('./plot');
-
-var reglPrecompiled = require('./regl_precompiled');
-
-var reglPrecompiledDep = require('../scattergl/regl_precompiled');
+import plot from './plot.js';
+import reglPrecompiled from './regl_precompiled.js';
+import reglPrecompiledDep from '../scattergl/regl_precompiled.js';
 
 Object.assign(plot.reglPrecompiled, reglPrecompiled);
 
 Object.assign(plot.reglPrecompiled, reglPrecompiledDep);
 
-module.exports = plot;
+export default plot;

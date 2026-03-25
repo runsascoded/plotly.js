@@ -1,16 +1,13 @@
-'use strict';
-
-var isNumeric = require('fast-isnumeric');
-var Lib = require('../../lib');
-
-var Axes = require('../../plots/cartesian/axes');
-var alignPeriod = require('../../plots/cartesian/align_period');
-var BADNUM = require('../../constants/numerical').BADNUM;
-
-var subTypes = require('./subtypes');
-var calcColorscale = require('./colorscale_calc');
-var arraysToCalcdata = require('./arrays_to_calcdata');
-var calcSelection = require('./calc_selection');
+import isNumeric from 'fast-isnumeric';
+import Lib from '../../lib/index.js';
+import Axes from '../../plots/cartesian/axes.js';
+import alignPeriod from '../../plots/cartesian/align_period.js';
+import _numerical from '../../constants/numerical.js';
+const { BADNUM } = _numerical;
+import subTypes from './subtypes.js';
+import calcColorscale from './colorscale_calc.js';
+import arraysToCalcdata from './arrays_to_calcdata.js';
+import calcSelection from './calc_selection.js';
 
 function calc(gd, trace) {
     var fullLayout = gd._fullLayout;
@@ -193,8 +190,7 @@ function calcAxisExpansion(gd, trace, xa, ya, x, y, ppad) {
     } else if(!(trace.error_y || {}).visible && (
         // if no error bars, markers or text, or fill to y=0 remove x padding
 
-            (fill === 'tonexty' || fill === 'tozeroy') ||
-            (!subTypes.hasMarkers(trace) && !subTypes.hasText(trace))
+            ((fill === 'tonexty' || fill === 'tozeroy') || (!subTypes.hasMarkers(trace) && !subTypes.hasText(trace)))
         )) {
         xOptions.padded = false;
         xOptions.ppad = 0;
@@ -286,7 +282,7 @@ function getStackOpts(trace, fullLayout, xa, ya) {
     if(stackAx.type === 'linear' || stackAx.type === 'log') return stackOpts;
 }
 
-module.exports = {
+export default {
     calc: calc,
     calcMarkerSize: calcMarkerSize,
     calcAxisExpansion: calcAxisExpansion,

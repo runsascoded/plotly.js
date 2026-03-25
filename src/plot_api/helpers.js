@@ -1,12 +1,9 @@
-'use strict';
-
-var isNumeric = require('fast-isnumeric');
-
-var Registry = require('../registry');
-var Lib = require('../lib');
-var Plots = require('../plots/plots');
-var AxisIds = require('../plots/cartesian/axis_ids');
-var Color = require('../components/color');
+import isNumeric from 'fast-isnumeric';
+import Registry from '../registry.js';
+import Lib from '../lib/index.js';
+import Plots from '../plots/plots.js';
+import AxisIds from '../plots/cartesian/axis_ids.js';
+import Color from '../components/color/index.js';
 
 var cleanId = AxisIds.cleanId;
 var getFromTrace = AxisIds.getFromTrace;
@@ -14,8 +11,7 @@ var traceIs = Registry.traceIs;
 
 const AX_LETTERS = ['x', 'y', 'z'];
 
-// clear the promise queue if one of them got rejected
-exports.clearPromiseQueue = function (gd) {
+export var clearPromiseQueue = function (gd) {
     if (Array.isArray(gd._promises) && gd._promises.length > 0) {
         Lib.log('Clearing previous rejected promises from queue.');
     }
@@ -23,10 +19,7 @@ exports.clearPromiseQueue = function (gd) {
     gd._promises = [];
 };
 
-// make a few changes to the layout right away
-// before it gets used for anything
-// backward compatibility and cleanup of nonstandard options
-exports.cleanLayout = function (layout) {
+export var cleanLayout = function (layout) {
     var i, j;
 
     if (!layout) layout = {};
@@ -146,7 +139,7 @@ exports.cleanLayout = function (layout) {
 
     // clean the layout container in layout.template
     if (layout.template && layout.template.layout) {
-        exports.cleanLayout(layout.template.layout);
+        cleanLayout(layout.template.layout);
     }
 
     return layout;
@@ -160,14 +153,7 @@ function cleanAxRef(container, attr) {
     }
 }
 
-/*
- * cleanData: Make a few changes to the data for backward compatibility
- * before it gets used for anything. Modifies the data traces users provide.
- *
- * Important: if you're going to add something here that modifies a data array,
- * update it in place so the new array === the old one.
- */
-exports.cleanData = function (data) {
+export var cleanData = function (data) {
     for (var tracei = 0; tracei < data.length; tracei++) {
         var trace = data[tracei];
         var i;
@@ -180,7 +166,7 @@ exports.cleanData = function (data) {
 
         // now we have only one 1D histogram type, and whether
         // it uses x or y data depends on trace.orientation
-        if (trace.type === 'histogramy') exports.swapXYData(trace);
+        if (trace.type === 'histogramy') swapXYData(trace);
         if (trace.type === 'histogramx' || trace.type === 'histogramy') {
             trace.type = 'histogram';
         }
@@ -347,8 +333,7 @@ function emptyContainer(outer, innerStr) {
     return innerStr in outer && typeof outer[innerStr] === 'object' && Object.keys(outer[innerStr]).length === 0;
 }
 
-// swap all the data and data attributes associated with x and y
-exports.swapXYData = function (trace) {
+export var swapXYData = function (trace) {
     var i;
     Lib.swapAttrs(trace, ['?', '?0', 'd?', '?bins', 'nbins?', 'autobin?', '?src', 'error_?']);
     if (Array.isArray(trace.z) && Array.isArray(trace.z[0])) {
@@ -374,8 +359,7 @@ exports.swapXYData = function (trace) {
     }
 };
 
-// coerce traceIndices input to array of trace indices
-exports.coerceTraceIndices = function (gd, traceIndices) {
+export var coerceTraceIndices = function (gd, traceIndices) {
     if (isNumeric(traceIndices)) {
         return [traceIndices];
     } else if (!Array.isArray(traceIndices) || !traceIndices.length) {
@@ -397,19 +381,7 @@ exports.coerceTraceIndices = function (gd, traceIndices) {
     return traceIndices;
 };
 
-/**
- * Manages logic around array container item creation / deletion / update
- * that nested property alone can't handle.
- *
- * @param {Object} np
- *  nested property of update attribute string about trace or layout object
- * @param {*} newVal
- *  update value passed to restyle / relayout / update
- * @param {Object} undoit
- *  undo hash (N.B. undoit may be mutated here).
- *
- */
-exports.manageArrayContainers = function (np, newVal, undoit) {
+export var manageArrayContainers = function (np, newVal, undoit) {
     var obj = np.obj;
     var parts = np.parts;
     var pLength = parts.length;
@@ -456,18 +428,7 @@ function getParent(attr) {
     if (tail > 0) return attr.slice(0, tail);
 }
 
-/**
- * hasParent: does an attribute object contain a parent of the given attribute?
- * for example, given 'images[2].x' do we also have 'images' or 'images[2]'?
- *
- * @param {Object} aobj
- *  update object, whose keys are attribute strings and values are their new settings
- * @param {string} attr
- *  the attribute string to test against
- * @returns {Boolean}
- *  is a parent of attr present in aobj?
- */
-exports.hasParent = function (aobj, attr) {
+export var hasParent = function (aobj, attr) {
     var attrParent = getParent(attr);
     while (attrParent) {
         if (attrParent in aobj) return true;
@@ -476,15 +437,7 @@ exports.hasParent = function (aobj, attr) {
     return false;
 };
 
-/**
- * Empty out types for all axes containing these traces so we auto-set them again
- *
- * @param {object} gd
- * @param {[integer]} traces: trace indices to search for axes to clear the types of
- * @param {object} layoutUpdate: any update being done concurrently to the layout,
- *   which may supercede clearing the axis types
- */
-exports.clearAxisTypes = function (gd, traces, layoutUpdate) {
+export var clearAxisTypes = function (gd, traces, layoutUpdate) {
     for (var i = 0; i < traces.length; i++) {
         var trace = gd._fullData[i];
         for (var j = 0; j < 3; j++) {
@@ -547,4 +500,6 @@ const collectionsAreEqual = (collection1, collection2) => {
 
     return false;
 };
-exports.collectionsAreEqual = collectionsAreEqual;
+export { collectionsAreEqual };
+
+export default { clearPromiseQueue, cleanLayout, cleanData, swapXYData, coerceTraceIndices, manageArrayContainers, hasParent, clearAxisTypes, collectionsAreEqual };

@@ -1,9 +1,7 @@
-'use strict';
-
-var setPositionOffset = require('../box/cross_trace_calc').setPositionOffset;
+import { setPositionOffset } from '../box/cross_trace_calc.js';
 var orientations = ['v', 'h'];
 
-module.exports = function crossTraceCalc(gd, plotinfo) {
+export default function crossTraceCalc(gd, plotinfo) {
     var calcdata = gd.calcdata;
     var xa = plotinfo.xaxis;
     var ya = plotinfo.yaxis;
@@ -30,4 +28,4 @@ module.exports = function crossTraceCalc(gd, plotinfo) {
 
         setPositionOffset('violin', gd, violinList, posAxis);
     }
-};
+}

@@ -4,10 +4,12 @@ import prependFile from 'prepend-file';
 
 import { build } from 'esbuild';
 
-import { esbuildConfig } from '../../esbuild-config.js';
-import esbuildPluginStripMeta from '../../tasks/compress_attributes.js';
+import _esbuildConfig from '../../esbuild-config.cjs';
+var { esbuildConfig } = _esbuildConfig;
+import _compressAttrs from '../../tasks/compress_attributes.cjs';
+var esbuildPluginStripMeta = _compressAttrs.default || _compressAttrs;
 
-import common from './common.js';
+import common from './common.cjs';
 
 var basePlugins = esbuildConfig.plugins;
 
