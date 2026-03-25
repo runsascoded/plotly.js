@@ -1,15 +1,31 @@
-# ESM conversion
+# ESM Conversion
 
 ## Problem
 
-Plotly.js uses CommonJS (`require()`/`module.exports`) throughout its 971 source files. This prevents tree-shaking — bundlers like Vite/esbuild can only eliminate unused code from ES modules (`import`/`export`). Even the lite bundle at 949 KB minified includes code paths that consumer apps never execute.
+Plotly.js uses CommonJS (`require()`/`module.exports`) throughout its source files. This causes:
+
+1. **No tree-shaking** — bundlers can only eliminate unused code from ES modules. Even the lite bundle includes unused code paths.
+2. **Separate `plotly.js-dist-min` package** — consumers can't bundle from source efficiently, so pre-built min bundles exist as a separate npm package. This creates a confusing dep story and cross-package resolution issues.
+3. **Dev/build divergence** — Vite pre-bundles CJS deps differently in dev vs build mode, causing bugs where local dev works but production doesn't (e.g. touch-click fix present in dev but not prod).
+4. **`pds` complexity** — `pds l` (local symlink) vs `pds g` (GH dist) behave differently because CJS resolution differs between symlinked source and installed dist bundles.
+
+## What ESM conversion eliminates
+
+Beyond tree-shaking, converting to ESM removes an entire class of build tooling workarounds:
+
+- **`plotly.js-dist-min` npm package** — consumers import `plotly.js` or `plotly.js/lite` directly; bundlers tree-shake from source
+- **Vite `resolve.alias` hacks** — no need to alias `plotly.js-dist-min` → fork's dist file
+- **`pdsPlugin({ extra: ['plotly.js-dist-min'] })` workaround** — the `extra` option was specifically for this cross-package mapping
+- **Pre-built `dist/*.min.js` bundles** (for bundler consumers) — bundlers produce better output from ESM source than from re-bundling a pre-minified CJS blob. (Keep dist bundles for CDN/script-tag usage only.)
+- **`optimizeDeps` configuration** — Vite's CJS pre-bundling is the source of dev/build divergence; ESM deps skip pre-bundling entirely
+- **`pds l` / `pds g` divergence** — with ESM source, local symlink and GH dist behave identically
 
 ## Scope
 
-- 971 JS files in `src/` and `lib/`
+- ~971 JS files in `src/` and `lib/`
 - ~3900 `require()` calls
 - ~890 `module.exports` assignments
-- Zero conditional/dynamic requires (all top-level)
+- Zero conditional/dynamic requires (all top-level) — fully mechanical conversion
 
 ## Conversion patterns
 
@@ -82,27 +98,37 @@ Convert all files under `src/` from CJS to ESM. This is the bulk of the work but
 Convert `lib/core.js`, `lib/core-lite.js`, `lib/index-*.js` to ESM.
 
 ### Phase 3: Package.json
-Add `"type": "module"` to `package.json`, or use `.mjs` extensions (`.js` with `"type": "module"` is cleaner).
+Add `"type": "module"` to `package.json`. Update `exports` map:
+```json
+{
+  "type": "module",
+  "exports": {
+    ".": "./lib/index.js",
+    "./lite": "./lib/index-lite.js",
+    "./basic": "./lib/index-basic.js",
+    ...
+  }
+}
+```
 
 ### Phase 4: Build/test infrastructure
 Update `tasks/`, `test/`, and `devtools/` scripts as needed.
 
+### Phase 5: Downstream updates
+After ESM conversion ships:
+- **pltly**: change `import('plotly.js-dist-min')` → `import('plotly.js')` (or `plotly.js/lite`). Let consumer's bundler tree-shake.
+- **Consumer apps** (hudson-transit etc.): remove `plotly.js-dist-min` dep, vite alias hack, `pdsPlugin` extra config. Just `pds [l|g] plotly.js` works.
+
 ## What enables tree-shaking after conversion
 
 With ESM, bundlers can:
-1. **Drop unused trace types** — if you only `import scatter` and `import bar`, other traces are eliminated
-2. **Drop unused components** — if legend is the only component imported, others are dead code
+1. **Drop unused trace types** — import only scatter + bar, others eliminated
+2. **Drop unused components** — unused legend, rangeslider, etc. are dead code
 3. **Drop unused functions within modules** — named exports that are never imported get eliminated
-
-This could reduce the lite bundle from 949 KB to potentially 600-700 KB (estimated).
 
 ## Risks
 
-- **Circular dependencies**: CJS handles circular deps differently from ESM. Need to audit.
+- **Circular dependencies**: CJS handles circular deps differently from ESM. Need to audit and break cycles.
 - **Build tool compat**: The existing npm build scripts use CJS assumptions. Need updating.
 - **Test infrastructure**: Karma/Jasmine test setup uses CJS. May need migration.
-- **Upstream merge conflicts**: Converting to ESM makes future cherry-picks from upstream plotly/plotly.js harder (they're still CJS).
-
-## Decision
-
-Given the risks with upstream merges, consider converting only the critical path files (core, components, traces used by consumer apps) rather than the entire codebase. This gives tree-shaking benefits where they matter most without making the fork unmergeable.
+- **Upstream merge conflicts**: Converting to ESM makes future cherry-picks from upstream plotly/plotly.js harder. Acceptable given low upstream velocity and existing fork divergence.
