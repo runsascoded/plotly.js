@@ -5,7 +5,8 @@ import _req1 from './defaults.js';
 import _req2 from '../scatter/marker_colorbar.js';
 import _req3 from './calc.js';
 import _req4 from './plot.js';
-import { hoverPoints as _req5 } from './hover.js';
+import _hover from './hover.js';
+const { hoverPoints: _req5 } = _hover;
 import _req6 from './select.js';
 import _req7 from './edit_style.js';
 

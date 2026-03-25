@@ -1,7 +1,8 @@
 import d3 from '@plotly/d3';
 import helpers from '../sunburst/helpers.js';
 import uniformText from '../bar/uniform_text.js';
-import { resizeText } from '../bar/style.js';
+import _style from '../bar/style.js';
+const { resizeText } = _style;
 import plotOne from './plot_one.js';
 var clearMinTextSize = uniformText.clearMinTextSize;
 

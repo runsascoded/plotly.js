@@ -1,8 +1,10 @@
 import Lib from '../../lib/index.js';
 import attributes from './attributes.js';
 import { defaults as handleDomainDefaults } from '../../plots/domain.js';
-import { handleText } from '../bar/defaults.js';
-import { handleMarkerDefaults } from '../pie/defaults.js';
+import _defaults from '../bar/defaults.js';
+const { handleText } = _defaults;
+import _defaults2 from '../pie/defaults.js';
+const { handleMarkerDefaults } = _defaults2;
 import Colorscale from '../../components/colorscale/index.js';
 var hasColorscale = Colorscale.hasColorscale;
 var colorscaleDefaults = Colorscale.handleDefaults;

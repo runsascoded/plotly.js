@@ -2,7 +2,8 @@ import isNumeric from 'fast-isnumeric';
 import Lib from '../../lib/index.js';
 import Color from '../../components/color/index.js';
 import Colorscale from '../../components/colorscale/index.js';
-import { BADNUM } from '../../constants/numerical.js';
+import _numerical from '../../constants/numerical.js';
+const { BADNUM } = _numerical;
 import { makeBlank } from '../../lib/geojson_utils.js';
 
 export default function convert(calcTrace) {

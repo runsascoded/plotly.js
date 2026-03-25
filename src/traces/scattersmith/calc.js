@@ -1,9 +1,11 @@
 import isNumeric from 'fast-isnumeric';
-import { BADNUM } from '../../constants/numerical.js';
+import _numerical from '../../constants/numerical.js';
+const { BADNUM } = _numerical;
 import calcColorscale from '../scatter/colorscale_calc.js';
 import arraysToCalcdata from '../scatter/arrays_to_calcdata.js';
 import calcSelection from '../scatter/calc_selection.js';
-import { calcMarkerSize } from '../scatter/calc.js';
+import _calc from '../scatter/calc.js';
+const { calcMarkerSize } = _calc;
 
 export default function calc(gd, trace) {
     var fullLayout = gd._fullLayout;

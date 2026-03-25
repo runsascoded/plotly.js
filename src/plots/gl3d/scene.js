@@ -11,7 +11,8 @@ import project from './project.js';
 import createAxesOptions from './layout/convert.js';
 import createSpikeOptions from './layout/spikes.js';
 import computeTickMarks from './layout/tick_marks.js';
-import { applyAutorangeOptions } from '../cartesian/autorange.js';
+import _autorange from '../cartesian/autorange.js';
+const { applyAutorangeOptions } = _autorange;
 var createCamera = glPlot3d.createCamera;
 var createPlot = glPlot3d.createScene;
 

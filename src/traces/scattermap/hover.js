@@ -1,8 +1,10 @@
 import Fx from '../../components/fx/index.js';
 import Lib from '../../lib/index.js';
 import getTraceColor from '../scatter/get_trace_color.js';
-import { BADNUM } from '../../constants/numerical.js';
-import { traceLayerPrefix as LAYER_PREFIX } from '../../plots/map/constants.js';
+import _numerical from '../../constants/numerical.js';
+const { BADNUM } = _numerical;
+import _constants from '../../plots/map/constants.js';
+const { traceLayerPrefix: LAYER_PREFIX } = _constants;
 var fillText = Lib.fillText;
 
 function hoverPoints(pointData, xval, yval) {

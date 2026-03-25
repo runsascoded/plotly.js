@@ -1,7 +1,8 @@
 import gl3dAxisAttrs from './axis_attributes.js';
 import { attributes as domainAttrs } from '../../domain.js';
 import { extendFlat } from '../../../lib/extend.js';
-import { counterRegex } from '../../../lib/index.js';
+import _index from '../../../lib/index.js';
+const { counterRegex } = _index;
 
 function makeCameraVector(x, y, z) {
     return {

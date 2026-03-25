@@ -1,11 +1,13 @@
-import { hasColorscale } from '../../components/colorscale/helpers.js';
+import _helpers from '../../components/colorscale/helpers.js';
+const { hasColorscale } = _helpers;
 import colorscaleCalc from '../../components/colorscale/calc.js';
-import { isArrayOrTypedArray } from '../../lib/index.js';
+import _index from '../../lib/index.js';
+const { isArrayOrTypedArray, extendFlat } = _index;
 import arraysToCalcdata from '../bar/arrays_to_calcdata.js';
-import { setGroupPositions } from '../bar/cross_trace_calc.js';
+import _cross_trace_calc from '../bar/cross_trace_calc.js';
+const { setGroupPositions } = _cross_trace_calc;
 import calcSelection from '../scatter/calc_selection.js';
 import { traceIs } from '../../registry.js';
-import { extendFlat } from '../../lib/index.js';
 
 function calc(gd, trace) {
     var fullLayout = gd._fullLayout;

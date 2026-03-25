@@ -1,10 +1,12 @@
 import _req0 from '../../plots/cartesian/index.js';
 import _req1 from './attributes.js';
 import _req2 from './defaults.js';
-import { calc as _req3 } from './calc.js';
+import _calc from './calc.js';
+const { calc: _req3 } = _calc;
 import _req4 from './plot.js';
 import _req5 from './style.js';
-import { hoverPoints as _req6 } from './hover.js';
+import _hover from './hover.js';
+const { hoverPoints: _req6 } = _hover;
 import _req7 from './select.js';
 
 export default {

@@ -1,7 +1,8 @@
 import Color from '../../../components/color/index.js';
 import axesAttrs from '../../cartesian/layout_attributes.js';
 import { extendFlat } from '../../../lib/extend.js';
-import { overrideAll } from '../../../plot_api/edit_types.js';
+import _edit_types from '../../../plot_api/edit_types.js';
+const { overrideAll } = _edit_types;
 
 export default overrideAll({
     visible: axesAttrs.visible,

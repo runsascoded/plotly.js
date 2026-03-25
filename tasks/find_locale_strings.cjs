@@ -4,10 +4,10 @@ var fs = require('fs');
 var falafel = require('falafel');
 var { glob } = require('glob');
 
-var constants = require('./util/constants');
+var constants = require('./util/constants.cjs');
 var srcGlob = path.join(constants.pathToSrc, '**/*.js');
 
-var common = require('./util/common');
+var common = require('./util/common.cjs');
 
 var EXIT_CODE = 0;
 
@@ -28,7 +28,7 @@ function findLocaleStrings() {
             var code = fs.readFileSync(file, 'utf-8');
             var filePartialPath = file.substr(constants.pathToSrc.length);
 
-            falafel(code, { ecmaVersion: 'latest', locations: true }, function(node) {
+            falafel(code, { ecmaVersion: 'latest', sourceType: 'module', locations: true }, function(node) {
                 if(node.type === 'CallExpression' &&
                     (node.callee.name === '_' || node.callee.source() === 'Lib._')
                 ) {

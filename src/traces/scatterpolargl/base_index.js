@@ -4,7 +4,8 @@ import _req2 from './defaults.js';
 import _req3 from '../scatter/marker_colorbar.js';
 import _req4 from './format_labels.js';
 import _req5 from './calc.js';
-import { hoverPoints as _req6 } from './hover.js';
+import _hover from './hover.js';
+const { hoverPoints: _req6 } = _hover;
 import _req7 from '../scattergl/select.js';
 
 export default {

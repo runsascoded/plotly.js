@@ -2,7 +2,8 @@ import Axes from '../plots/cartesian/axes.js';
 import Lib from '../lib/index.js';
 import PlotSchema from '../plot_api/plot_schema.js';
 import { pointsAccessorFunction } from './helpers.js';
-import { BADNUM } from '../constants/numerical.js';
+import _numerical from '../constants/numerical.js';
+const { BADNUM } = _numerical;
 export var moduleType = 'transform';
 export var name = 'aggregate';
 

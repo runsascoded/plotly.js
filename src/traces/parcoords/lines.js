@@ -1,4 +1,5 @@
-import { maxDimensionCount as maxDim } from './constants.js';
+import _constants from './constants.js';
+const { maxDimensionCount: maxDim } = _constants;
 import Lib from '../../lib/index.js';
 
 var vertexShaderSource = [

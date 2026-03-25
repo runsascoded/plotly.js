@@ -1,5 +1,6 @@
 import colorScaleAttrs from '../../components/colorscale/attributes.js';
-import { axisHoverFormat } from '../../plots/cartesian/axis_format_attributes.js';
+import _axis_format_attributes from '../../plots/cartesian/axis_format_attributes.js';
+const { axisHoverFormat } = _axis_format_attributes;
 import { hovertemplateAttrs, templatefallbackAttrs } from '../../plots/template_attributes.js';
 import mesh3dAttrs from '../mesh3d/attributes.js';
 import baseAttrs from '../../plots/attributes.js';

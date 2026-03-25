@@ -1,8 +1,10 @@
 import fontAttrs from '../../plots/font_attributes.js';
 import colorAttrs from '../../components/color/attributes.js';
 import axesAttrs from '../../plots/cartesian/layout_attributes.js';
-import { descriptionWithDates } from '../../plots/cartesian/axis_format_attributes.js';
-import { overrideAll } from '../../plot_api/edit_types.js';
+import _axis_format_attributes from '../../plots/cartesian/axis_format_attributes.js';
+const { descriptionWithDates } = _axis_format_attributes;
+import _edit_types from '../../plot_api/edit_types.js';
+const { overrideAll } = _edit_types;
 import { dash } from '../../components/drawing/attributes.js';
 import { extendFlat } from '../../lib/extend.js';
 

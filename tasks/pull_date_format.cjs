@@ -1,7 +1,7 @@
 var path = require('path');
 var fs = require('fs');
-var constants = require('./util/constants');
-var common = require('./util/common');
+var constants = require('./util/constants.cjs');
+var common = require('./util/common.cjs');
 
 var args = process.argv.slice(2);
 var argLocale = args[0];

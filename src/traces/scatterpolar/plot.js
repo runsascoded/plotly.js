@@ -1,5 +1,6 @@
 import scatterPlot from '../scatter/plot.js';
-import { BADNUM } from '../../constants/numerical.js';
+import _numerical from '../../constants/numerical.js';
+const { BADNUM } = _numerical;
 
 export default function plot(gd, subplot, moduleCalcData) {
     var mlayer = subplot.layers.frontplot.select('g.scatterlayer');

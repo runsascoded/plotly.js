@@ -1,5 +1,6 @@
 import barAttrs from '../bar/attributes.js';
-import { axisHoverFormat } from '../../plots/cartesian/axis_format_attributes.js';
+import _axis_format_attributes from '../../plots/cartesian/axis_format_attributes.js';
+const { axisHoverFormat } = _axis_format_attributes;
 import { hovertemplateAttrs, texttemplateAttrs, templatefallbackAttrs } from '../../plots/template_attributes.js';
 import fontAttrs from '../../plots/font_attributes.js';
 import makeBinAttrs from './bin_attributes.js';

@@ -1,9 +1,10 @@
 import Lib from '../../lib/index.js';
 import attributes from './attributes.js';
 import { defaults as handleDomainDefaults } from '../../plots/domain.js';
-import { handleText } from '../bar/defaults.js';
-import { handleLabelsAndValues } from '../pie/defaults.js';
-import { handleMarkerDefaults } from '../pie/defaults.js';
+import _defaults from '../bar/defaults.js';
+const { handleText } = _defaults;
+import _defaults2 from '../pie/defaults.js';
+const { handleLabelsAndValues, handleMarkerDefaults } = _defaults2;
 
 export default function supplyDefaults(traceIn, traceOut, defaultColor, layout) {
     function coerce(attr, dflt) {

@@ -1,5 +1,6 @@
 import carpetAttrs from './attributes.js';
-import { addOpacity } from '../../components/color/index.js';
+import _index from '../../components/color/index.js';
+const { addOpacity } = _index;
 import Registry from '../../registry.js';
 import Lib from '../../lib/index.js';
 import handleTickValueDefaults from '../../plots/cartesian/tick_value_defaults.js';

@@ -2,7 +2,8 @@ import makeFillcolorAttr from '../scatter/fillcolor_attribute.js';
 import scatterAttrs from '../scatter/attributes.js';
 import barAttrs from '../bar/attributes.js';
 import colorAttrs from '../../components/color/attributes.js';
-import { axisHoverFormat } from '../../plots/cartesian/axis_format_attributes.js';
+import _axis_format_attributes from '../../plots/cartesian/axis_format_attributes.js';
+const { axisHoverFormat } = _axis_format_attributes;
 import { hovertemplateAttrs, templatefallbackAttrs } from '../../plots/template_attributes.js';
 import { extendFlat } from '../../lib/extend.js';
 

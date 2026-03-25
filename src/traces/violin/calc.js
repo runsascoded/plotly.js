@@ -2,7 +2,8 @@ import Lib from '../../lib/index.js';
 import Axes from '../../plots/cartesian/axes.js';
 import boxCalc from '../box/calc.js';
 import helpers from './helpers.js';
-import { BADNUM } from '../../constants/numerical.js';
+import _numerical from '../../constants/numerical.js';
+const { BADNUM } = _numerical;
 
 export default function calc(gd, trace) {
     var cd = boxCalc(gd, trace);

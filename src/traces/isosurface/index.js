@@ -1,7 +1,9 @@
 import _req0 from './attributes.js';
-import { supplyDefaults as _req1 } from './defaults.js';
+import _defaults from './defaults.js';
+const { supplyDefaults: _req1 } = _defaults;
 import _req2 from './calc.js';
-import { createIsosurfaceTrace as _req3 } from './convert.js';
+import _convert from './convert.js';
+const { createIsosurfaceTrace: _req3 } = _convert;
 import _req4 from '../../plots/gl3d/index.js';
 
 export default {

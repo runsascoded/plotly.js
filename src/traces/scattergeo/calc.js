@@ -1,10 +1,11 @@
 import isNumeric from 'fast-isnumeric';
-import { BADNUM } from '../../constants/numerical.js';
+import _numerical from '../../constants/numerical.js';
+const { BADNUM } = _numerical;
 import calcMarkerColorscale from '../scatter/colorscale_calc.js';
 import arraysToCalcdata from '../scatter/arrays_to_calcdata.js';
 import calcSelection from '../scatter/calc_selection.js';
-import { isArrayOrTypedArray } from '../../lib/index.js';
-import { _ } from '../../lib/index.js';
+import _index from '../../lib/index.js';
+const { isArrayOrTypedArray, _ } = _index;
 
 function isNonBlankString(v) {
     return v && typeof v === 'string';

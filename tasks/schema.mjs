@@ -1,73 +1,65 @@
 import { build } from 'esbuild';
 import fs from 'fs';
 import path from 'path';
-import _esbuildConfig from '../esbuild-config.cjs';
-var { localDevConfig } = _esbuildConfig;
+import { JSDOM } from 'jsdom';
 
 import constants from './util/constants.cjs';
-import plotlyNode from './util/plotly_node.mjs';
 
 const caseInsensitive = (a, b) => a.toLowerCase().localeCompare(b.toLowerCase());
-
 const { isArray } = Array;
-
 const isObject = (v) => typeof v === 'object' && v !== null && !isArray(v);
-
 const isArrayOfObjects = (v) => isArray(v) && isObject(v[0]);
-
 const typeHandle = (v) => (isArrayOfObjects(v) ? sortArrayOfObjects(v) : isObject(v) ? sortObject(v) : v);
 
 function sortArrayOfObjects(list) {
-    const newList = [];
-    for (let i = 0; i < list.length; i++) {
-        newList[i] = typeHandle(list[i]);
-    }
-
-    return newList;
+    return list.map(item => typeHandle(item));
 }
 
 function sortObject(obj) {
-    const allKeys = Object.keys(obj);
-    allKeys.sort(caseInsensitive);
-
-    const newObj = {};
-    for (let i = 0; i < allKeys.length; i++) {
-        const key = allKeys[i];
-        newObj[key] = typeHandle(obj[key]);
+    const sorted = {};
+    for (const key of Object.keys(obj).sort(caseInsensitive)) {
+        sorted[key] = typeHandle(obj[key]);
     }
-
-    return newObj;
+    return sorted;
 }
 
-function makeSchema(plotlyPath, schemaPath) {
-    const Plotly = plotlyNode(plotlyPath);
-    const obj = Plotly.PlotSchema.get();
-    const sortedObj = sortObject(obj);
-    const plotSchemaRaw = JSON.stringify(obj, null, 2);
-    const plotSchemaStr = JSON.stringify(sortedObj, null, 2);
+// Build plotly as a self-contained IIFE for jsdom evaluation
+// This is the same approach as the old schema task but uses ESM source
+const result = await build({
+    entryPoints: ['src/core.js'],
+    bundle: true,
+    format: 'iife',
+    globalName: 'Plotly',
+    write: false,
+    platform: 'browser',
+    loader: { '.css': 'empty' },
+    define: { 'process.env.NODE_ENV': '"production"', global: 'window' },
+    logLevel: 'warning',
+});
 
-    fs.writeFileSync(schemaPath, plotSchemaStr);
+const bundleCode = new TextDecoder().decode(result.outputFiles[0].contents);
 
-    const lenBeforeSort = plotSchemaRaw.length;
-    const lenAfterSort = plotSchemaStr.length;
-    const linesBeforeSort = plotSchemaRaw.split('\n').length;
-    const linesAfterSort = plotSchemaStr.split('\n').length;
-    if (linesAfterSort !== linesBeforeSort || lenAfterSort !== lenBeforeSort) {
-        throw 'plot schema should have the same length & number of lines before and after sort';
-    } else {
-        console.log('ok ' + path.basename(schemaPath));
-    }
+// Run in jsdom
+const dom = new JSDOM('', { runScripts: 'dangerously' });
+dom.window.URL.createObjectURL = function() {};
+
+const scriptEl = dom.window.document.createElement('script');
+scriptEl.textContent = bundleCode;
+dom.window.document.body.appendChild(scriptEl);
+
+const Plotly = dom.window.Plotly?.default || dom.window.Plotly;
+
+if (!Plotly || !Plotly.PlotSchema) {
+    console.error('Failed to load Plotly. Keys:', Object.keys(dom.window.Plotly || {}));
+    process.exit(1);
 }
+
+const obj = Plotly.PlotSchema.get();
+const sortedObj = sortObject(obj);
+const plotSchemaStr = JSON.stringify(sortedObj, null, 2);
 
 const isDist = process.argv.indexOf('dist') !== -1;
-
 const pathToSchema = isDist ? constants.pathToSchemaDist : constants.pathToSchemaDiff;
 
-const pathToPlotly = isDist ? constants.pathToPlotlyDistWithMeta : constants.pathToPlotlyBuild;
-
-// Build plotly.js to ensure changes to attributes are picked up. This is the same
-// process used in the test dashboard server script, but run only once.
-await build(localDevConfig);
-
-// output plot-schema JSON
-makeSchema(pathToPlotly, pathToSchema);
+fs.writeFileSync(pathToSchema, plotSchemaStr);
+console.log('ok ' + path.basename(pathToSchema));

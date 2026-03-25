@@ -1,8 +1,11 @@
 import Fx from '../../components/fx/index.js';
 import Lib from '../../lib/index.js';
-import { getTraceColor } from '../bar/hover.js';
-import { makeHoverPointText } from '../scatterpolar/hover.js';
-import { isPtInsidePolygon } from '../../plots/polar/helpers.js';
+import _hover from '../bar/hover.js';
+const { getTraceColor } = _hover;
+import _hover2 from '../scatterpolar/hover.js';
+const { makeHoverPointText } = _hover2;
+import _helpers from '../../plots/polar/helpers.js';
+const { isPtInsidePolygon } = _helpers;
 var fillText = Lib.fillText;
 
 export default function hoverPoints(pointData, xval, yval) {

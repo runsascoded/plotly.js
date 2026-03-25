@@ -1,8 +1,8 @@
-import d3Force from 'd3-force';
+import * as d3Force from 'd3-force';
 import { interpolateNumber } from 'd3-interpolate';
 import d3 from '@plotly/d3';
-import d3Sankey from '@plotly/d3-sankey';
-import d3SankeyCircular from '@plotly/d3-sankey-circular';
+import * as d3Sankey from '@plotly/d3-sankey';
+import * as d3SankeyCircular from '@plotly/d3-sankey-circular';
 import c from './constants.js';
 import tinycolor from 'tinycolor2';
 import Color from '../../components/color/index.js';

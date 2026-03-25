@@ -5,8 +5,8 @@ var falafel = require('falafel');
 var { glob } = require('glob');
 var minimist = require('minimist');
 
-var pathToJasmineTests = require('./util/constants').pathToJasmineTests;
-var isJasmineTestIt = require('./util/common').isJasmineTestIt;
+var pathToJasmineTests = require('./util/constants.cjs').pathToJasmineTests;
+var isJasmineTestIt = require('./util/common.cjs').isJasmineTestIt;
 
 var argv = minimist(process.argv.slice(2), {
     string: ['tag', 'limit'],

@@ -4,7 +4,8 @@ import binFunctions from '../histogram/bin_functions.js';
 import normFunctions from '../histogram/norm_functions.js';
 import doAvg from '../histogram/average.js';
 import getBinSpanLabelRound from '../histogram/bin_label_vals.js';
-import { calcAllAutoBins } from '../histogram/calc.js';
+import _calc from '../histogram/calc.js';
+const { calcAllAutoBins } = _calc;
 
 export default function calc(gd, trace) {
     var xa = Axes.getFromId(gd, trace.xaxis);

@@ -1,5 +1,6 @@
 import makeControlPoints from './catmull_rom.js';
-import { ensureArray } from '../../lib/index.js';
+import _index from '../../lib/index.js';
+const { ensureArray } = _index;
 
 /*
  * Turns a coarse grid into a fine grid with control points.

@@ -1,9 +1,11 @@
 import scatterAttrs from '../scatter/attributes.js';
 import colorScaleAttrs from '../../components/colorscale/attributes.js';
-import { axisHoverFormat } from '../../plots/cartesian/axis_format_attributes.js';
+import _axis_format_attributes from '../../plots/cartesian/axis_format_attributes.js';
+const { axisHoverFormat } = _axis_format_attributes;
 import { hovertemplateAttrs, templatefallbackAttrs } from '../../plots/template_attributes.js';
 import scatterGlAttrs from '../scattergl/attributes.js';
-import { idRegex as cartesianIdRegex } from '../../plots/cartesian/constants.js';
+import _constants from '../../plots/cartesian/constants.js';
+const { idRegex: cartesianIdRegex } = _constants;
 import { templatedArray } from '../../plot_api/plot_template.js';
 import { extendFlat } from '../../lib/extend.js';
 

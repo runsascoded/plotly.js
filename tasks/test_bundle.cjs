@@ -3,7 +3,7 @@ var exec = require('child_process').exec;
 var { glob } = require('glob');
 var runSeries = require('run-series');
 
-var constants = require('./util/constants');
+var constants = require('./util/constants.cjs');
 var pathToJasmineBundleTests = constants.pathToJasmineBundleTests;
 
 /**

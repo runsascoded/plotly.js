@@ -1,7 +1,7 @@
 var fs = require('fs');
 
-var constants = require('./util/constants');
-var common = require('./util/common');
+var constants = require('./util/constants.cjs');
+var common = require('./util/common.cjs');
 
 // main
 makeCredentialsFile();

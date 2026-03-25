@@ -1,6 +1,7 @@
 import Ternary from './ternary.js';
 import { getSubplotCalcData } from '../../plots/get_data.js';
-import { counterRegex } from '../../lib/index.js';
+import _index from '../../lib/index.js';
+const { counterRegex } = _index;
 import _req0 from './layout_attributes.js';
 import _req1 from './layout_defaults.js';
 var TERNARY = 'ternary';

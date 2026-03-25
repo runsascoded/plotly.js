@@ -1,6 +1,7 @@
 import boxAttrs from '../box/attributes.js';
 import { extendFlat } from '../../lib/extend.js';
-import { axisHoverFormat } from '../../plots/cartesian/axis_format_attributes.js';
+import _axis_format_attributes from '../../plots/cartesian/axis_format_attributes.js';
+const { axisHoverFormat } = _axis_format_attributes;
 
 export default {
     y: boxAttrs.y,

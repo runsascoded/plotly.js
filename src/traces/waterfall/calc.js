@@ -1,8 +1,10 @@
 import Axes from '../../plots/cartesian/axes.js';
 import alignPeriod from '../../plots/cartesian/align_period.js';
-import { mergeArray } from '../../lib/index.js';
+import _index from '../../lib/index.js';
+const { mergeArray } = _index;
 import calcSelection from '../scatter/calc_selection.js';
-import { BADNUM } from '../../constants/numerical.js';
+import _numerical from '../../constants/numerical.js';
+const { BADNUM } = _numerical;
 
 function isAbsolute(a) {
     return (a === 'a' || a === 'absolute');

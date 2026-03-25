@@ -7,12 +7,12 @@ var madge = require('madge');
 var readLastLines = require('read-last-lines');
 var trueCasePath = require('true-case-path').trueCasePathSync;
 
-var common = require('./util/common');
+var common = require('./util/common.cjs');
 var isJasmineTestIt = common.isJasmineTestIt;
 var isJasmineTestDescribe = common.isJasmineTestDescribe;
 var hasJasmineTestTag = common.hasJasmineTestTag;
 
-var constants = require('./util/constants');
+var constants = require('./util/constants.cjs');
 var srcGlob = path.join(constants.pathToSrc, '**/*.js');
 var libGlob = path.join(constants.pathToLib, '**/*.js');
 var testGlob = path.join(constants.pathToJasmineTests, '**/*.js');

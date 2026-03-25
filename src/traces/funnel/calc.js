@@ -2,7 +2,8 @@ import Axes from '../../plots/cartesian/axes.js';
 import alignPeriod from '../../plots/cartesian/align_period.js';
 import arraysToCalcdata from './arrays_to_calcdata.js';
 import calcSelection from '../scatter/calc_selection.js';
-import { BADNUM } from '../../constants/numerical.js';
+import _numerical from '../../constants/numerical.js';
+const { BADNUM } = _numerical;
 
 export default function calc(gd, trace) {
     var xa = Axes.getFromId(gd, trace.xaxis || 'x');

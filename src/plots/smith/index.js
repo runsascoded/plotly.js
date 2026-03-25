@@ -1,5 +1,6 @@
 import { getSubplotCalcData } from '../get_data.js';
-import { counterRegex } from '../../lib/index.js';
+import _index from '../../lib/index.js';
+const { counterRegex } = _index;
 import createPolar from '../polar/polar.js';
 import constants from './constants.js';
 import _req0 from './layout_attributes.js';

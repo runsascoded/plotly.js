@@ -1,8 +1,9 @@
 import isNumeric from 'fast-isnumeric';
-import { isArrayOrTypedArray } from '../../lib/index.js';
-import { BADNUM } from '../../constants/numerical.js';
+import _index from '../../lib/index.js';
+const { isArrayOrTypedArray, _ } = _index;
+import _numerical from '../../constants/numerical.js';
+const { BADNUM } = _numerical;
 import colorscaleCalc from '../../components/colorscale/calc.js';
-import { _ } from '../../lib/index.js';
 
 export default function calc(gd, trace) {
     var len = trace._length;

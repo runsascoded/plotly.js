@@ -1,6 +1,7 @@
 import Lib from '../../lib/index.js';
 import calcColorscale from '../scatter/colorscale_calc.js';
-import { markerStyle as convertMarkerStyle } from '../scattergl/convert.js';
+import _convert from '../scattergl/convert.js';
+const { markerStyle: convertMarkerStyle } = _convert;
 
 export default function editStyle(gd, cd0) {
     var trace = cd0.trace;

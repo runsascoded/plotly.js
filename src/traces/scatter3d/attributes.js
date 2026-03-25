@@ -1,13 +1,15 @@
 import scatterAttrs from '../scatter/attributes.js';
 import fontAttrs from '../../plots/font_attributes.js';
 import colorAttributes from '../../components/colorscale/attributes.js';
-import { axisHoverFormat } from '../../plots/cartesian/axis_format_attributes.js';
+import _axis_format_attributes from '../../plots/cartesian/axis_format_attributes.js';
+const { axisHoverFormat } = _axis_format_attributes;
 import { hovertemplateAttrs, texttemplateAttrs, templatefallbackAttrs } from '../../plots/template_attributes.js';
 import baseAttrs from '../../plots/attributes.js';
 import DASHES from '../../constants/gl3d_dashes.js';
 import MARKER_SYMBOLS from '../../constants/gl3d_markers.js';
 import { extendFlat } from '../../lib/extend.js';
-import { overrideAll } from '../../plot_api/edit_types.js';
+import _edit_types from '../../plot_api/edit_types.js';
+const { overrideAll } = _edit_types;
 import sortObjectKeys from '../../lib/sort_object_keys.js';
 
 var scatterLineAttrs = scatterAttrs.line;

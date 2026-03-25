@@ -1,7 +1,8 @@
 import _req0 from '../../plots/gl3d/index.js';
 import _req1 from './attributes.js';
 import _req2 from './defaults.js';
-import { calc as _req3 } from './calc.js';
+import _calc from './calc.js';
+const { calc: _req3 } = _calc;
 import _req4 from './convert.js';
 
 export default {

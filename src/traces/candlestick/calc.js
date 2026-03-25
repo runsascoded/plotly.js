@@ -1,7 +1,8 @@
 import Lib from '../../lib/index.js';
 import Axes from '../../plots/cartesian/axes.js';
 import alignPeriod from '../../plots/cartesian/align_period.js';
-import { calcCommon } from '../ohlc/calc.js';
+import _calc from '../ohlc/calc.js';
+const { calcCommon } = _calc;
 
 export default function(gd, trace) {
     var fullLayout = gd._fullLayout;

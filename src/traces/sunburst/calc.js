@@ -1,11 +1,12 @@
-import d3Hierarchy from 'd3-hierarchy';
+import * as d3Hierarchy from 'd3-hierarchy';
 import isNumeric from 'fast-isnumeric';
 import Lib from '../../lib/index.js';
-import { makeColorScaleFuncFromTrace as makeColorScaleFn } from '../../components/colorscale/index.js';
-import { makePullColorFn } from '../pie/calc.js';
-import { generateExtendedColors } from '../pie/calc.js';
-import { calc as colorscaleCalc } from '../../components/colorscale/index.js';
-import { ALMOST_EQUAL } from '../../constants/numerical.js';
+import _index from '../../components/colorscale/index.js';
+const { makeColorScaleFuncFromTrace: makeColorScaleFn, calc: colorscaleCalc } = _index;
+import _calc from '../pie/calc.js';
+const { makePullColorFn, generateExtendedColors } = _calc;
+import _numerical from '../../constants/numerical.js';
+const { ALMOST_EQUAL } = _numerical;
 
 var sunburstExtendedColorWays = {};
 var treemapExtendedColorWays = {};

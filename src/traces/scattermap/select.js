@@ -1,6 +1,7 @@
 import Lib from '../../lib/index.js';
 import subtypes from '../scatter/subtypes.js';
-import { BADNUM } from '../../constants/numerical.js';
+import _numerical from '../../constants/numerical.js';
+const { BADNUM } = _numerical;
 
 export default function selectPoints(searchInfo, selectionTester) {
     var cd = searchInfo.cd;

@@ -1,8 +1,10 @@
 import calcColorscale from '../scatter/colorscale_calc.js';
-import { calcMarkerSize } from '../scatter/calc.js';
+import _calc from '../scatter/calc.js';
+const { calcMarkerSize } = _calc;
 import convert from '../scattergl/convert.js';
 import Axes from '../../plots/cartesian/axes.js';
-import { TOO_MANY_POINTS } from '../scattergl/constants.js';
+import _constants from '../scattergl/constants.js';
+const { TOO_MANY_POINTS } = _constants;
 
 export default function calc(gd, trace) {
     var fullLayout = gd._fullLayout;

@@ -1,4 +1,5 @@
-import { setGroupPositions } from '../bar/cross_trace_calc.js';
+import _cross_trace_calc from '../bar/cross_trace_calc.js';
+const { setGroupPositions } = _cross_trace_calc;
 
 export default function crossTraceCalc(gd, plotinfo) {
     var fullLayout = gd._fullLayout;

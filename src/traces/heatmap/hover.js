@@ -1,7 +1,8 @@
 import Fx from '../../components/fx/index.js';
 import Lib from '../../lib/index.js';
 import Axes from '../../plots/cartesian/axes.js';
-import { extractOpts } from '../../components/colorscale/index.js';
+import _index from '../../components/colorscale/index.js';
+const { extractOpts } = _index;
 var isArrayOrTypedArray = Lib.isArrayOrTypedArray;
 
 export default function hoverPoints(pointData, xval, yval, hovermode, opts) {

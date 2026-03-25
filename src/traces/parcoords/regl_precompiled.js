@@ -1,7 +1,7 @@
-import v0 from '../../generated/regl-codegen/453a70fefa48db31713162aeb1ac438cb8579f54504f3b23acf32128df3dfd45.js';
-import v1 from '../../generated/regl-codegen/30680f8f6712ef1af5cf7547e0af35b036fb300c67b07967cf448492ff4de4d0.js';
-import v2 from '../../generated/regl-codegen/a3970baf1d8cac9305ee830c7026550387343d4dde2353dd86a4d082c97d3470.js';
-import v3 from '../../generated/regl-codegen/3fd666968f3ce90d1c048b7a9aab515f3ce387a5401a10f8b66121c9469d1c0d.js';
+import v0 from '../../generated/regl-codegen/453a70fefa48db31713162aeb1ac438cb8579f54504f3b23acf32128df3dfd45';
+import v1 from '../../generated/regl-codegen/30680f8f6712ef1af5cf7547e0af35b036fb300c67b07967cf448492ff4de4d0';
+import v2 from '../../generated/regl-codegen/a3970baf1d8cac9305ee830c7026550387343d4dde2353dd86a4d082c97d3470';
+import v3 from '../../generated/regl-codegen/3fd666968f3ce90d1c048b7a9aab515f3ce387a5401a10f8b66121c9469d1c0d';
 
 export default {
     '453a70fefa48db31713162aeb1ac438cb8579f54504f3b23acf32128df3dfd45': v0,

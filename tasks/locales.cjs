@@ -1,8 +1,8 @@
 var path = require('path');
 var { glob } = require('glob');
 
-var constants = require('./util/constants');
-var wrapLocale = require('./util/wrap_locale');
+var constants = require('./util/constants.cjs');
+var wrapLocale = require('./util/wrap_locale.cjs');
 
 var pathToLib = constants.pathToLib;
 var pathToDist = constants.pathToDist;

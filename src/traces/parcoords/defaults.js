@@ -1,12 +1,14 @@
 import Lib from '../../lib/index.js';
-import { hasColorscale } from '../../components/colorscale/helpers.js';
+import _helpers from '../../components/colorscale/helpers.js';
+const { hasColorscale } = _helpers;
 import colorscaleDefaults from '../../components/colorscale/defaults.js';
 import { defaults as handleDomainDefaults } from '../../plots/domain.js';
 import handleArrayContainerDefaults from '../../plots/array_container_defaults.js';
 import Axes from '../../plots/cartesian/axes.js';
 import attributes from './attributes.js';
 import axisBrush from './axisbrush.js';
-import { maxDimensionCount } from './constants.js';
+import _constants from './constants.js';
+const { maxDimensionCount } = _constants;
 import mergeLength from './merge_length.js';
 
 function handleLineDefaults(traceIn, traceOut, defaultColor, layout, coerce) {

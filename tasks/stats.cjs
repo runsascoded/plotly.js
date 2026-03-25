@@ -4,8 +4,8 @@ var fs = require('fs');
 var gzipSize = require('gzip-size');
 var prettySize = require('prettysize');
 
-var common = require('./util/common');
-var constants = require('./util/constants');
+var common = require('./util/common.cjs');
+var constants = require('./util/constants.cjs');
 var pkgVersion = require('../package.json').version;
 
 var pathDistREADME = path.join(constants.pathToDist, 'README.md');

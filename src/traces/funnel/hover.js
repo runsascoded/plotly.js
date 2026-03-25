@@ -1,6 +1,9 @@
-import { opacity } from '../../components/color/index.js';
-import { hoverOnBars } from '../bar/hover.js';
-import { formatPercent } from '../../lib/index.js';
+import _index from '../../components/color/index.js';
+const { opacity } = _index;
+import _hover from '../bar/hover.js';
+const { hoverOnBars } = _hover;
+import _index2 from '../../lib/index.js';
+const { formatPercent } = _index2;
 
 export default function hoverPoints(pointData, xval, yval, hovermode, opts) {
     var point = hoverOnBars(pointData, xval, yval, hovermode, opts);

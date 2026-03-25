@@ -2,7 +2,8 @@ import Lib from '../../lib/index.js';
 import constants from './constants.js';
 import isNumeric from 'fast-isnumeric';
 import Axes from '../../plots/cartesian/axes.js';
-import { maxRowLength } from '../../lib/index.js';
+import _index from '../../lib/index.js';
+const { maxRowLength } = _index;
 import { getImageSize } from './helpers.js';
 
 export default function calc(gd, trace) {

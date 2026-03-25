@@ -1,5 +1,6 @@
 import Lib from '../../lib/index.js';
-import { tester as polygonTester } from '../../lib/polygon.js';
+import _polygon from '../../lib/polygon.js';
+const { tester: polygonTester } = _polygon;
 
 var findIndexOfMin = Lib.findIndexOfMin;
 var isAngleInsideSector = Lib.isAngleInsideSector;

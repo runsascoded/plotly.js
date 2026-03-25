@@ -1,9 +1,11 @@
 import d3 from '@plotly/d3';
 import Drawing from '../../components/drawing/index.js';
 import Color from '../../components/color/index.js';
-import { DESELECTDIM } from '../../constants/interactions.js';
+import _interactions from '../../constants/interactions.js';
+const { DESELECTDIM } = _interactions;
 import barStyle from '../bar/style.js';
-import { resizeText } from '../bar/uniform_text.js';
+import _uniform_text from '../bar/uniform_text.js';
+const { resizeText } = _uniform_text;
 var styleTextPoints = barStyle.styleTextPoints;
 
 function style(gd, cd, sel) {

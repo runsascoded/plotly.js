@@ -1,6 +1,7 @@
 import tarjan from 'strongly-connected-components';
 import Lib from '../../lib/index.js';
-import { wrap } from '../../lib/gup.js';
+import _gup from '../../lib/gup.js';
+const { wrap } = _gup;
 import Colorscale from '../../components/colorscale/index.js';
 
 var isArrayOrTypedArray = Lib.isArrayOrTypedArray;

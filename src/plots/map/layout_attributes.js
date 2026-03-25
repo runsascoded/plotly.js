@@ -1,9 +1,12 @@
 import Lib from '../../lib/index.js';
-import { defaultLine } from '../../components/color/index.js';
+import _index from '../../components/color/index.js';
+const { defaultLine } = _index;
 import { attributes as domainAttrs } from '../domain.js';
 import fontAttrs from '../font_attributes.js';
-import { textposition } from '../../traces/scatter/attributes.js';
-import { overrideAll } from '../../plot_api/edit_types.js';
+import _attributes from '../../traces/scatter/attributes.js';
+const { textposition } = _attributes;
+import _edit_types from '../../plot_api/edit_types.js';
+const { overrideAll } = _edit_types;
 import { templatedArray } from '../../plot_api/plot_template.js';
 import constants from './constants.js';
 

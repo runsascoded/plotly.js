@@ -5,7 +5,8 @@ import baseAttrs from '../../plots/attributes.js';
 import colorAttributes from '../../components/colorscale/attributes.js';
 import { dash } from '../../components/drawing/attributes.js';
 import { extendFlat } from '../../lib/extend.js';
-import { overrideAll } from '../../plot_api/edit_types.js';
+import _edit_types from '../../plot_api/edit_types.js';
+const { overrideAll } = _edit_types;
 
 var scatterMarkerAttrs = scatterAttrs.marker;
 var scatterLineAttrs = scatterAttrs.line;

@@ -2,7 +2,8 @@ import Lib from '../../lib/index.js';
 import axisIds from '../../plots/cartesian/axis_ids.js';
 import { traceIs } from '../../registry.js';
 import handleGroupingDefaults from '../scatter/grouping_defaults.js';
-import { validateCornerradius } from '../bar/defaults.js';
+import _defaults from '../bar/defaults.js';
+const { validateCornerradius } = _defaults;
 import { getAxisGroup } from '../../plots/cartesian/constraints.js';
 
 var nestedProperty = Lib.nestedProperty;

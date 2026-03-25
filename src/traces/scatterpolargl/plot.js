@@ -4,7 +4,8 @@ import scatterglPlot from '../scattergl/plot.js';
 import sceneUpdate from '../scattergl/scene_update.js';
 import convert from '../scattergl/convert.js';
 import Lib from '../../lib/index.js';
-import { TOO_MANY_POINTS } from '../scattergl/constants.js';
+import _constants from '../scattergl/constants.js';
+const { TOO_MANY_POINTS } = _constants;
 
 var reglPrecompiled = {};
 

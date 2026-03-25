@@ -1,4 +1,5 @@
-import { isArray1D } from '../../lib/index.js';
+import _index from '../../lib/index.js';
+const { isArray1D } = _index;
 
 export default function handleXYDefaults(traceIn, traceOut, coerce) {
     var x = coerce('x');

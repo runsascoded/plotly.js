@@ -1,7 +1,8 @@
 import Lib from '../../lib/index.js';
 import Axes from '../../plots/cartesian/axes.js';
 import alignPeriod from '../../plots/cartesian/align_period.js';
-import { BADNUM } from '../../constants/numerical.js';
+import _numerical from '../../constants/numerical.js';
+const { BADNUM } = _numerical;
 var _ = Lib._;
 
 function calc(gd, trace) {

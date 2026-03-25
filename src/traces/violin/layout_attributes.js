@@ -1,5 +1,6 @@
 import boxLayoutAttrs from '../box/layout_attributes.js';
-import { extendFlat } from '../../lib/index.js';
+import _index from '../../lib/index.js';
+const { extendFlat } = _index;
 
 export default {
     violinmode: extendFlat({}, boxLayoutAttrs.boxmode, {

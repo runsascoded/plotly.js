@@ -1,7 +1,8 @@
 import Lib from '../lib/index.js';
 import Axes from '../plots/cartesian/axes.js';
 import { pointsAccessorFunction } from './helpers.js';
-import { BADNUM } from '../constants/numerical.js';
+import _numerical from '../constants/numerical.js';
+const { BADNUM } = _numerical;
 export var moduleType = 'transform';
 export var name = 'sort';
 

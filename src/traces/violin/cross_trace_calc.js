@@ -1,4 +1,5 @@
-import { setPositionOffset } from '../box/cross_trace_calc.js';
+import _cross_trace_calc from '../box/cross_trace_calc.js';
+const { setPositionOffset } = _cross_trace_calc;
 var orientations = ['v', 'h'];
 
 export default function crossTraceCalc(gd, plotinfo) {

@@ -1,6 +1,7 @@
 import Lib from '../../lib/index.js';
 import convert from './convert.js';
-import { traceLayerPrefix as LAYER_PREFIX } from '../../plots/mapbox/constants.js';
+import _constants from '../../plots/mapbox/constants.js';
+const { traceLayerPrefix: LAYER_PREFIX } = _constants;
 var ORDER = {
     cluster: ['cluster', 'clusterCount', 'circle'],
     nonCluster: ['fill', 'line', 'circle', 'symbol'],

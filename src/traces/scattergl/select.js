@@ -1,5 +1,6 @@
 import subTypes from '../scatter/subtypes.js';
-import { styleTextSelection } from './edit_style.js';
+import _edit_style from './edit_style.js';
+const { styleTextSelection } = _edit_style;
 
 export default function select(searchInfo, selectionTester) {
     var cd = searchInfo.cd;

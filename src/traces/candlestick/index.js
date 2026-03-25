@@ -1,13 +1,18 @@
 import _req0 from '../../plots/cartesian/index.js';
 import _req1 from './attributes.js';
 import _req2 from '../box/layout_attributes.js';
-import { supplyLayoutDefaults as _req3 } from '../box/layout_defaults.js';
-import { crossTraceCalc as _req4 } from '../box/cross_trace_calc.js';
+import _layout_defaults from '../box/layout_defaults.js';
+const { supplyLayoutDefaults: _req3 } = _layout_defaults;
+import _cross_trace_calc from '../box/cross_trace_calc.js';
+const { crossTraceCalc: _req4 } = _cross_trace_calc;
 import _req5 from './defaults.js';
 import _req6 from './calc.js';
-import { plot as _req7 } from '../box/plot.js';
-import { style as _req8 } from '../box/style.js';
-import { hoverPoints as _req9 } from '../ohlc/hover.js';
+import _plot from '../box/plot.js';
+const { plot: _req7 } = _plot;
+import _style from '../box/style.js';
+const { style: _req8 } = _style;
+import _hover from '../ohlc/hover.js';
+const { hoverPoints: _req9 } = _hover;
 import _req10 from '../ohlc/select.js';
 
 export default {

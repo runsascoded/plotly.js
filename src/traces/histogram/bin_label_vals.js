@@ -1,5 +1,6 @@
 import numConstants from '../../constants/numerical.js';
-import { tickIncrement } from '../../plots/cartesian/axes.js';
+import _axes from '../../plots/cartesian/axes.js';
+const { tickIncrement } = _axes;
 var oneYear = numConstants.ONEAVGYEAR;
 var oneMonth = numConstants.ONEAVGMONTH;
 var oneDay = numConstants.ONEDAY;

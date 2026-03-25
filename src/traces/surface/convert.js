@@ -2,10 +2,13 @@ import { gl_surface3d as createSurface } from '../../../stackgl_modules/index.js
 import { ndarray } from '../../../stackgl_modules/index.js';
 import interp2d from '../heatmap/interp2d.js';
 import findEmpties from '../heatmap/find_empties.js';
-import { isArrayOrTypedArray } from '../../lib/index.js';
-import { parseColorScale } from '../../lib/gl_format_color.js';
+import _index from '../../lib/index.js';
+const { isArrayOrTypedArray } = _index;
+import _gl_format_color from '../../lib/gl_format_color.js';
+const { parseColorScale } = _gl_format_color;
 import str2RgbaArray from '../../lib/str2rgbarray.js';
-import { extractOpts } from '../../components/colorscale/index.js';
+import _index2 from '../../components/colorscale/index.js';
+const { extractOpts } = _index2;
 import { ndarray_linear_interpolate as _req0 } from '../../../stackgl_modules/index.js';
 var ndarrayInterp2d = _req0.d2;
 

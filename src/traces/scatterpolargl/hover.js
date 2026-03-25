@@ -1,5 +1,6 @@
 import hover from '../scattergl/hover.js';
-import { makeHoverPointText } from '../scatterpolar/hover.js';
+import _hover from '../scatterpolar/hover.js';
+const { makeHoverPointText } = _hover;
 
 function hoverPoints(pointData, xval, yval, hovermode) {
     var cd = pointData.cd;

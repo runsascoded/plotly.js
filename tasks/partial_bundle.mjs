@@ -30,17 +30,17 @@ export default function partialBundle(tasks, opts) {
             var excludes = all.filter(function(e) { return includes.indexOf(e) === -1; });
 
             excludes.forEach(function(t) {
-                var WHITESPACE_BEFORE = '\\s*';
-                // remove require
-                var regEx = WHITESPACE_BEFORE + 'require\\(\'\\./' + t + '\'\\),';
-                if(strict) {
-                    regEx += '|require\\(\'\\.\\./src/traces/' + t + '/strict\'\\),';
-                }
-                var newCode = partialIndex.replace(new RegExp(regEx, 'g'), '');
+                // Remove ESM import line: import tracename_trace from "./tracename.js";
+                var importRegex = new RegExp('^import ' + t + '_trace from ["\']\./' + t + '\.js["\'];\\n?', 'gm');
+                var newCode = partialIndex.replace(importRegex, '');
+
+                // Remove the variable from the register array
+                var varRegex = new RegExp('\\s*\\b' + t + '_trace\\b,?\\n?', 'g');
+                newCode = newCode.replace(varRegex, '\n');
 
                 // test removal
                 if(newCode === partialIndex) {
-                    console.error('Unable to find and drop require for ' + t);
+                    console.error('Unable to find and drop import for ' + t);
                     throw 'Error generating index for partial bundle!';
                 }
 

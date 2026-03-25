@@ -1,8 +1,10 @@
 import baseAttrs from '../../plots/attributes.js';
-import { zorder } from '../scatter/attributes.js';
+import _attributes from '../scatter/attributes.js';
+const { zorder } = _attributes;
 import { hovertemplateAttrs, templatefallbackAttrs } from '../../plots/template_attributes.js';
 import { extendFlat } from '../../lib/extend.js';
-import { colormodel } from './constants.js';
+import _constants from './constants.js';
+const { colormodel } = _constants;
 
 var cm = ['rgb', 'rgba', 'rgba256', 'hsl', 'hsla'];
 var zminDesc = [];

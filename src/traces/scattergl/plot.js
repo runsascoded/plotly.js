@@ -7,7 +7,8 @@ import { selectMode } from '../../components/dragelement/helpers.js';
 import prepareRegl from '../../lib/prepare_regl.js';
 import subTypes from '../scatter/subtypes.js';
 import linkTraces from '../scatter/link_traces.js';
-import { styleTextSelection } from './edit_style.js';
+import _edit_style from './edit_style.js';
+const { styleTextSelection } = _edit_style;
 
 var reglPrecompiled = {};
 

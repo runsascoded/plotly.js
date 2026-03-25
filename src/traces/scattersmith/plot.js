@@ -1,5 +1,6 @@
 import scatterPlot from '../scatter/plot.js';
-import { BADNUM } from '../../constants/numerical.js';
+import _numerical from '../../constants/numerical.js';
+const { BADNUM } = _numerical;
 import helpers from '../../plots/smith/helpers.js';
 var smith = helpers.smith;
 

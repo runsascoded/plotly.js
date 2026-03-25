@@ -1,4 +1,5 @@
-import { hiddenlabels } from '../pie/layout_attributes.js';
+import _layout_attributes from '../pie/layout_attributes.js';
+const { hiddenlabels } = _layout_attributes;
 
 export default {
     hiddenlabels: hiddenlabels,

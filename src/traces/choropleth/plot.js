@@ -1,9 +1,12 @@
 import d3 from '@plotly/d3';
 import Lib from '../../lib/index.js';
 import geoUtils from '../../lib/geo_location_utils.js';
-import { getTopojsonFeatures } from '../../lib/topojson_utils.js';
-import { findExtremes } from '../../plots/cartesian/autorange.js';
-import { style } from './style.js';
+import _topojson_utils from '../../lib/topojson_utils.js';
+const { getTopojsonFeatures } = _topojson_utils;
+import _autorange from '../../plots/cartesian/autorange.js';
+const { findExtremes } = _autorange;
+import _style from './style.js';
+const { style } = _style;
 
 function plot(gd, geo, calcData) {
     var choroplethLayer = geo.layers.backplot.select('.choroplethlayer');

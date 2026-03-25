@@ -5,12 +5,14 @@ import Registry from '../../registry.js';
 import Lib from '../../lib/index.js';
 import Drawing from '../../components/drawing/index.js';
 import AxisIDs from '../../plots/cartesian/axis_ids.js';
-import { formatColor } from '../../lib/gl_format_color.js';
+import _gl_format_color from '../../lib/gl_format_color.js';
+const { formatColor } = _gl_format_color;
 import subTypes from '../scatter/subtypes.js';
 import makeBubbleSizeFn from '../scatter/make_bubble_size_func.js';
 import helpers from './helpers.js';
 import constants from './constants.js';
-import { DESELECTDIM } from '../../constants/interactions.js';
+import _interactions from '../../constants/interactions.js';
+const { DESELECTDIM } = _interactions;
 import { appendArrayPointValue } from '../../components/fx/helpers.js';
 var isArrayOrTypedArray = Lib.isArrayOrTypedArray;
 

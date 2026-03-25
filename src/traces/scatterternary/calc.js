@@ -2,7 +2,8 @@ import isNumeric from 'fast-isnumeric';
 import calcColorscale from '../scatter/colorscale_calc.js';
 import arraysToCalcdata from '../scatter/arrays_to_calcdata.js';
 import calcSelection from '../scatter/calc_selection.js';
-import { calcMarkerSize } from '../scatter/calc.js';
+import _calc from '../scatter/calc.js';
+const { calcMarkerSize } = _calc;
 
 var dataArrays = ['a', 'b', 'c'];
 var arraysToFill = {a: ['b', 'c'], b: ['a', 'c'], c: ['a', 'b']};

@@ -1,6 +1,6 @@
 var path = require('path');
 var fs = require('fs-extra');
-var common = require('./common');
+var common = require('./common.cjs');
 
 module.exports = {
     emptyDir: emptyDir,

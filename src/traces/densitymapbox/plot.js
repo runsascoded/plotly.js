@@ -1,5 +1,6 @@
 import convert from './convert.js';
-import { traceLayerPrefix as LAYER_PREFIX } from '../../plots/mapbox/constants.js';
+import _constants from '../../plots/mapbox/constants.js';
+const { traceLayerPrefix: LAYER_PREFIX } = _constants;
 
 function DensityMapbox(subplot, uid) {
     this.type = 'densitymapbox';

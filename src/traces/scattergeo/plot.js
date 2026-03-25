@@ -1,11 +1,15 @@
 import d3 from '@plotly/d3';
 import Lib from '../../lib/index.js';
-import { getTopojsonFeatures } from '../../lib/topojson_utils.js';
+import _topojson_utils from '../../lib/topojson_utils.js';
+const { getTopojsonFeatures } = _topojson_utils;
 import geoJsonUtils from '../../lib/geojson_utils.js';
 import geoUtils from '../../lib/geo_location_utils.js';
-import { findExtremes } from '../../plots/cartesian/autorange.js';
-import { BADNUM } from '../../constants/numerical.js';
-import { calcMarkerSize } from '../scatter/calc.js';
+import _autorange from '../../plots/cartesian/autorange.js';
+const { findExtremes } = _autorange;
+import _numerical from '../../constants/numerical.js';
+const { BADNUM } = _numerical;
+import _calc from '../scatter/calc.js';
+const { calcMarkerSize } = _calc;
 import subTypes from '../scatter/subtypes.js';
 import style from './style.js';
 

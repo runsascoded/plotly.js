@@ -1,7 +1,9 @@
 import { gl_streamtube3d as tube2mesh } from '../../../stackgl_modules/index.js';
 import Lib from '../../lib/index.js';
-import { parseColorScale } from '../../lib/gl_format_color.js';
-import { extractOpts } from '../../components/colorscale/index.js';
+import _gl_format_color from '../../lib/gl_format_color.js';
+const { parseColorScale } = _gl_format_color;
+import _index from '../../components/colorscale/index.js';
+const { extractOpts } = _index;
 import zip3 from '../../plots/gl3d/zip3.js';
 var createTubeMesh = tube2mesh.createTubeMesh;
 

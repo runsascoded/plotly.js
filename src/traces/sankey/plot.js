@@ -3,7 +3,8 @@ import Lib from '../../lib/index.js';
 import render from './render.js';
 import Fx from '../../components/fx/index.js';
 import Color from '../../components/color/index.js';
-import { cn } from './constants.js';
+import _constants from './constants.js';
+const { cn } = _constants;
 var numberFormat = Lib.numberFormat;
 
 var _ = Lib._;

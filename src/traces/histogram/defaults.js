@@ -1,7 +1,8 @@
 import Registry from '../../registry.js';
 import Lib from '../../lib/index.js';
 import Color from '../../components/color/index.js';
-import { handleText } from '../bar/defaults.js';
+import _defaults from '../bar/defaults.js';
+const { handleText } = _defaults;
 import handleStyleDefaults from '../bar/style_defaults.js';
 import attributes from './attributes.js';
 

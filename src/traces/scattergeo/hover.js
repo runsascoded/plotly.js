@@ -1,7 +1,9 @@
 import Fx from '../../components/fx/index.js';
-import { BADNUM } from '../../constants/numerical.js';
+import _numerical from '../../constants/numerical.js';
+const { BADNUM } = _numerical;
 import getTraceColor from '../scatter/get_trace_color.js';
-import { fillText } from '../../lib/index.js';
+import _index from '../../lib/index.js';
+const { fillText } = _index;
 import attributes from './attributes.js';
 
 export default function hoverPoints(pointData, xval, yval) {

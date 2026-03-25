@@ -1,5 +1,6 @@
 import isNumeric from 'fast-isnumeric';
-import { BADNUM } from '../../constants/numerical.js';
+import _numerical from '../../constants/numerical.js';
+const { BADNUM } = _numerical;
 import colorscaleCalc from '../../components/colorscale/calc.js';
 import arraysToCalcdata from '../scatter/arrays_to_calcdata.js';
 import calcSelection from '../scatter/calc_selection.js';

@@ -1,4 +1,4 @@
-import d3Hierarchy from 'd3-hierarchy';
+import * as d3Hierarchy from 'd3-hierarchy';
 import flipTree from './flip_tree.js';
 
 export default function partition(entry, size, opts) {

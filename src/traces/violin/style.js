@@ -1,6 +1,7 @@
 import d3 from '@plotly/d3';
 import Color from '../../components/color/index.js';
-import { stylePoints } from '../scatter/style.js';
+import _style from '../scatter/style.js';
+const { stylePoints } = _style;
 
 export default function style(gd) {
     var s = d3.select(gd).selectAll('g.trace.violins');

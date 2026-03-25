@@ -1,6 +1,7 @@
 import isNumeric from 'fast-isnumeric';
 import Lib from '../../lib/index.js';
-import { BADNUM } from '../../constants/numerical.js';
+import _numerical from '../../constants/numerical.js';
+const { BADNUM } = _numerical;
 
 export default function clean2dArray(zOld, trace, xa, ya) {
     var rowlen, collen, getCollen, old2new, i, j;

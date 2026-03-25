@@ -1,4 +1,5 @@
-import { isArrayOrTypedArray } from '../../lib/index.js';
+import _index from '../../lib/index.js';
+const { isArrayOrTypedArray } = _index;
 
 export default function(a) {
     return minMax(a, 0);

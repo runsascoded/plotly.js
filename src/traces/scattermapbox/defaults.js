@@ -5,7 +5,8 @@ import handleLineDefaults from '../scatter/line_defaults.js';
 import handleTextDefaults from '../scatter/text_defaults.js';
 import handleFillColorDefaults from '../scatter/fillcolor_defaults.js';
 import attributes from './attributes.js';
-import { isSupportedFont } from './constants.js';
+import _constants from './constants.js';
+const { isSupportedFont } = _constants;
 
 export default function supplyDefaults(traceIn, traceOut, defaultColor, layout) {
     function coerce(attr, dflt) {

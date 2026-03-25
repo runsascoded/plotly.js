@@ -2,7 +2,8 @@ import d3 from '@plotly/d3';
 import Color from '../../components/color/index.js';
 import Lib from '../../lib/index.js';
 import helpers from '../sunburst/helpers.js';
-import { resizeText } from '../bar/uniform_text.js';
+import _uniform_text from '../bar/uniform_text.js';
+const { resizeText } = _uniform_text;
 import fillOne from '../sunburst/fill_one.js';
 
 function style(gd) {

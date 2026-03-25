@@ -2,7 +2,8 @@ import Axes from '../../plots/cartesian/axes.js';
 import Lib from '../../lib/index.js';
 import Fx from '../../components/fx/index.js';
 import Color from '../../components/color/index.js';
-import { fillText } from '../../lib/index.js';
+import _index from '../../lib/index.js';
+const { fillText } = _index;
 import delta from '../../constants/delta.js';
 
 var DIRSYMBOL = {

@@ -1,6 +1,8 @@
 import helpers from './helpers.js';
-import { calcHover } from '../scattergl/hover.js';
-import { getFromId } from '../../plots/cartesian/axes.js';
+import _hover from '../scattergl/hover.js';
+const { calcHover } = _hover;
+import _axes from '../../plots/cartesian/axes.js';
+const { getFromId } = _axes;
 import { extendFlat } from '../../lib/extend.js';
 
 function hoverPoints(pointData, xval, yval, hovermode, opts) {

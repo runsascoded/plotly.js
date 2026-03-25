@@ -5,7 +5,8 @@ import handleLineDefaults from '../scatter/line_defaults.js';
 import handleLineShapeDefaults from '../scatter/line_shape_defaults.js';
 import handleTextDefaults from '../scatter/text_defaults.js';
 import handleFillColorDefaults from '../scatter/fillcolor_defaults.js';
-import { PTS_LINESONLY } from '../scatter/constants.js';
+import _constants from '../scatter/constants.js';
+const { PTS_LINESONLY } = _constants;
 import attributes from './attributes.js';
 
 export default function supplyDefaults(traceIn, traceOut, defaultColor, layout) {

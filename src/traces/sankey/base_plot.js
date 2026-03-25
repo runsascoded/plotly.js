@@ -1,10 +1,12 @@
-import { overrideAll } from '../../plot_api/edit_types.js';
+import _edit_types from '../../plot_api/edit_types.js';
+const { overrideAll } = _edit_types;
 import { getModuleCalcData } from '../../plots/get_data.js';
 import sankeyPlot from './plot.js';
 import fxAttrs from '../../components/fx/layout_attributes.js';
 import setCursor from '../../lib/setcursor.js';
 import dragElement from '../../components/dragelement/index.js';
-import { prepSelect } from '../../components/selections/index.js';
+import _index from '../../components/selections/index.js';
+const { prepSelect } = _index;
 import Lib from '../../lib/index.js';
 import Registry from '../../registry.js';
 

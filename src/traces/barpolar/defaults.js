@@ -1,5 +1,6 @@
 import Lib from '../../lib/index.js';
-import { handleRThetaDefaults } from '../scatterpolar/defaults.js';
+import _defaults from '../scatterpolar/defaults.js';
+const { handleRThetaDefaults } = _defaults;
 import handleStyleDefaults from '../bar/style_defaults.js';
 import attributes from './attributes.js';
 

@@ -1,13 +1,15 @@
 import _req0 from './attributes.js';
 import _req1 from './layout_attributes.js';
 import _req2 from './defaults.js';
-import { crossTraceDefaults as _req3 } from '../box/defaults.js';
+import _defaults from '../box/defaults.js';
+const { crossTraceDefaults: _req3 } = _defaults;
 import _req4 from './layout_defaults.js';
 import _req5 from './calc.js';
 import _req6 from './cross_trace_calc.js';
 import _req7 from './plot.js';
 import _req8 from './style.js';
-import { styleOnSelect as _req9 } from '../scatter/style.js';
+import _style from '../scatter/style.js';
+const { styleOnSelect: _req9 } = _style;
 import _req10 from './hover.js';
 import _req11 from '../box/select.js';
 import _req12 from '../../plots/cartesian/index.js';

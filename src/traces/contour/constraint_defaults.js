@@ -2,7 +2,8 @@ import isNumeric from 'fast-isnumeric';
 import handleLabelDefaults from './label_defaults.js';
 import Color from '../../components/color/index.js';
 import filterOps from '../../constants/filter_ops.js';
-import { isArrayOrTypedArray } from '../../lib/index.js';
+import _index from '../../lib/index.js';
+const { isArrayOrTypedArray } = _index;
 var addOpacity = Color.addOpacity;
 var opacity = Color.opacity;
 

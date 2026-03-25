@@ -1,6 +1,8 @@
-import { isArrayOrTypedArray } from '../../lib/index.js';
+import _index from '../../lib/index.js';
+const { isArrayOrTypedArray } = _index;
 import Colorscale from '../../components/colorscale/index.js';
-import { wrap } from '../../lib/gup.js';
+import _gup from '../../lib/gup.js';
+const { wrap } = _gup;
 
 export default function calc(gd, trace) {
     var lineColor;

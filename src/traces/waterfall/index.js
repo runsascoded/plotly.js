@@ -1,12 +1,13 @@
 import _req0 from './attributes.js';
 import _req1 from './layout_attributes.js';
-import { supplyDefaults as _req2 } from './defaults.js';
-import { crossTraceDefaults as _req3 } from './defaults.js';
+import _defaults from './defaults.js';
+const { supplyDefaults: _req2, crossTraceDefaults: _req3 } = _defaults;
 import _req4 from './layout_defaults.js';
 import _req5 from './calc.js';
 import _req6 from './cross_trace_calc.js';
 import _req7 from './plot.js';
-import { style as _req8 } from './style.js';
+import _style from './style.js';
+const { style: _req8 } = _style;
 import _req9 from './hover.js';
 import _req10 from './event_data.js';
 import _req11 from '../bar/select.js';

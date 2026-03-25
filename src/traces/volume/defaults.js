@@ -1,7 +1,9 @@
 import Lib from '../../lib/index.js';
 import attributes from './attributes.js';
-import { supplyIsoDefaults } from '../isosurface/defaults.js';
-import { opacityscaleDefaults } from '../surface/defaults.js';
+import _defaults from '../isosurface/defaults.js';
+const { supplyIsoDefaults } = _defaults;
+import _defaults2 from '../surface/defaults.js';
+const { opacityscaleDefaults } = _defaults2;
 
 export default function supplyDefaults(traceIn, traceOut, defaultColor, layout) {
     function coerce(attr, dflt) {

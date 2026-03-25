@@ -1,5 +1,6 @@
 import scatterHover from '../scatter/hover.js';
-import { fillText } from '../../lib/index.js';
+import _index from '../../lib/index.js';
+const { fillText } = _index;
 
 export default function hoverPoints(pointData, xval, yval, hovermode) {
     var scatterPointData = scatterHover(pointData, xval, yval, hovermode);

@@ -1,4 +1,5 @@
-import { BADNUM } from '../constants/numerical.js';
+import _numerical from '../constants/numerical.js';
+const { BADNUM } = _numerical;
 
 export var calcTraceToLineCoords = function(calcTrace) {
     var trace = calcTrace[0].trace;

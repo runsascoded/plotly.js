@@ -7,7 +7,7 @@ var intoStream = require('into-stream');
 var prefix = 'var locale=';
 var suffix = ';if(typeof Plotly === \'undefined\') {window.PlotlyLocales = window.PlotlyLocales || []; window.PlotlyLocales.push(locale);} else {Plotly.register(locale);}';
 
-var moduleMarker = 'module.exports = ';
+var moduleMarker = 'export default ';
 
 /** Wrap a locale json file into a standalone js file
  *

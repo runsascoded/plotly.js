@@ -1,5 +1,7 @@
-import { wrap } from '../../lib/gup.js';
-import { hasColorscale } from '../../components/colorscale/helpers.js';
+import _gup from '../../lib/gup.js';
+const { wrap } = _gup;
+import _helpers from '../../components/colorscale/helpers.js';
+const { hasColorscale } = _helpers;
 import colorscaleCalc from '../../components/colorscale/calc.js';
 import filterUnique from '../../lib/filter_unique.js';
 import Drawing from '../../components/drawing/index.js';

@@ -2,10 +2,13 @@ import { gl_mesh3d as createMesh } from '../../../stackgl_modules/index.js';
 import { delaunay_triangulate as triangulate } from '../../../stackgl_modules/index.js';
 import { alpha_shape as alphaShape } from '../../../stackgl_modules/index.js';
 import { convex_hull as convexHull } from '../../../stackgl_modules/index.js';
-import { parseColorScale } from '../../lib/gl_format_color.js';
-import { isArrayOrTypedArray } from '../../lib/index.js';
+import _gl_format_color from '../../lib/gl_format_color.js';
+const { parseColorScale } = _gl_format_color;
+import _index from '../../lib/index.js';
+const { isArrayOrTypedArray } = _index;
 import str2RgbaArray from '../../lib/str2rgbarray.js';
-import { extractOpts } from '../../components/colorscale/index.js';
+import _index2 from '../../components/colorscale/index.js';
+const { extractOpts } = _index2;
 import zip3 from '../../plots/gl3d/zip3.js';
 
 function Mesh3DTrace(scene, mesh, uid) {

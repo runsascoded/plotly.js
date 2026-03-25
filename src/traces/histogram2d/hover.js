@@ -1,5 +1,6 @@
 import heatmapHover from '../heatmap/hover.js';
-import { hoverLabelText } from '../../plots/cartesian/axes.js';
+import _axes from '../../plots/cartesian/axes.js';
+const { hoverLabelText } = _axes;
 
 export default function hoverPoints(pointData, xval, yval, hovermode, opts) {
     var pts = heatmapHover(pointData, xval, yval, hovermode, opts);

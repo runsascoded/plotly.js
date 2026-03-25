@@ -1,9 +1,9 @@
 import c from './constants.js';
 import d3 from '@plotly/d3';
-import { keyFun } from '../../lib/gup.js';
-import { repeat } from '../../lib/gup.js';
-import { sorterAsc as sortAsc } from '../../lib/index.js';
-import { strTranslate } from '../../lib/index.js';
+import _gup from '../../lib/gup.js';
+const { keyFun, repeat } = _gup;
+import _index from '../../lib/index.js';
+const { sorterAsc: sortAsc, strTranslate } = _index;
 
 var snapRatio = c.bar.snapRatio;
 function snapOvershoot(v, vAdjacent) { return v * (1 - snapRatio) + vAdjacent * snapRatio; }

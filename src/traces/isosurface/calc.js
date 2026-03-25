@@ -1,6 +1,6 @@
 import colorscaleCalc from '../../components/colorscale/calc.js';
-import { processGrid } from '../streamtube/calc.js';
-import { filter } from '../streamtube/calc.js';
+import _calc from '../streamtube/calc.js';
+const { processGrid, filter } = _calc;
 
 export default function calc(gd, trace) {
     trace._len = Math.min(

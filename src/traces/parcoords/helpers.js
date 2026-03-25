@@ -1,4 +1,5 @@
-import { isTypedArray } from '../../lib/index.js';
+import _index from '../../lib/index.js';
+const { isTypedArray } = _index;
 
 export var convertTypedArray = function(a) {
     return isTypedArray(a) ? Array.prototype.slice.call(a) : a;

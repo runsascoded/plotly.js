@@ -1,13 +1,15 @@
 import Lib from '../../lib/index.js';
 import AxisIDs from '../../plots/cartesian/axis_ids.js';
-import { calcMarkerSize } from '../scatter/calc.js';
-import { calcAxisExpansion } from '../scatter/calc.js';
+import _calc from '../scatter/calc.js';
+const { calcMarkerSize, calcAxisExpansion } = _calc;
 import calcColorscale from '../scatter/colorscale_calc.js';
-import { markerSelection as convertMarkerSelection } from '../scattergl/convert.js';
-import { markerStyle as convertMarkerStyle } from '../scattergl/convert.js';
+import _convert from '../scattergl/convert.js';
+const { markerSelection: convertMarkerSelection, markerStyle: convertMarkerStyle } = _convert;
 import sceneUpdate from './scene_update.js';
-import { BADNUM } from '../../constants/numerical.js';
-import { TOO_MANY_POINTS } from '../scattergl/constants.js';
+import _numerical from '../../constants/numerical.js';
+const { BADNUM } = _numerical;
+import _constants from '../scattergl/constants.js';
+const { TOO_MANY_POINTS } = _constants;
 
 export default function calc(gd, trace) {
     var dimensions = trace.dimensions;

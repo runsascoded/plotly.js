@@ -1,5 +1,6 @@
 import Axes from '../../plots/cartesian/axes.js';
-import { isArray1D } from '../../lib/index.js';
+import _index from '../../lib/index.js';
+const { isArray1D } = _index;
 import cheaterBasis from './cheater_basis.js';
 import arrayMinmax from './array_minmax.js';
 import calcGridlines from './calc_gridlines.js';

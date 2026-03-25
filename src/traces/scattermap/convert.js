@@ -1,12 +1,14 @@
 import isNumeric from 'fast-isnumeric';
 import Lib from '../../lib/index.js';
-import { BADNUM } from '../../constants/numerical.js';
+import _numerical from '../../constants/numerical.js';
+const { BADNUM } = _numerical;
 import geoJsonUtils from '../../lib/geojson_utils.js';
 import Colorscale from '../../components/colorscale/index.js';
 import Drawing from '../../components/drawing/index.js';
 import makeBubbleSizeFn from '../scatter/make_bubble_size_func.js';
 import subTypes from '../scatter/subtypes.js';
-import { isSupportedFont } from './constants.js';
+import _constants from './constants.js';
+const { isSupportedFont } = _constants;
 import convertTextOpts from '../../plots/map/convert_text_opts.js';
 import { appendArrayPointValue } from '../../components/fx/helpers.js';
 import { NEWLINES } from '../../lib/svg_text_utils.js';

@@ -1,7 +1,8 @@
 import fontAttrs from '../../plots/font_attributes.js';
 import axisAttrs from './axis_attributes.js';
 import colorAttrs from '../../components/color/attributes.js';
-import { zorder } from '../scatter/attributes.js';
+import _attributes from '../scatter/attributes.js';
+const { zorder } = _attributes;
 
 var carpetFont = fontAttrs({
     editType: 'calc',

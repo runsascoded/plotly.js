@@ -1,11 +1,14 @@
 import { gl_mesh3d as createMesh } from '../../../stackgl_modules/index.js';
-import { parseColorScale } from '../../lib/gl_format_color.js';
-import { isArrayOrTypedArray } from '../../lib/index.js';
+import _gl_format_color from '../../lib/gl_format_color.js';
+const { parseColorScale } = _gl_format_color;
+import _index from '../../lib/index.js';
+const { isArrayOrTypedArray } = _index;
 import str2RgbaArray from '../../lib/str2rgbarray.js';
-import { extractOpts } from '../../components/colorscale/index.js';
+import _index2 from '../../components/colorscale/index.js';
+const { extractOpts } = _index2;
 import zip3 from '../../plots/gl3d/zip3.js';
-import { findNearestOnAxis } from '../isosurface/convert.js';
-import { generateIsoMeshes } from '../isosurface/convert.js';
+import _convert from '../isosurface/convert.js';
+const { findNearestOnAxis, generateIsoMeshes } = _convert;
 
 function VolumeTrace(scene, mesh, uid) {
     this.scene = scene;

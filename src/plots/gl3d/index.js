@@ -1,4 +1,5 @@
-import { overrideAll } from '../../plot_api/edit_types.js';
+import _edit_types from '../../plot_api/edit_types.js';
+const { overrideAll } = _edit_types;
 import fxAttrs from '../../components/fx/layout_attributes.js';
 import Scene from './scene.js';
 import { getSubplotData } from '../get_data.js';

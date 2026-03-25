@@ -36,16 +36,14 @@ module.exports = function pullCSS(data, pathOut) {
     var rulesStr = JSON.stringify(rules, null, 4).replace(/\"(\w+)\":/g, '$1:');
 
     var outStr = [
-        '\'use strict\';',
-        '',
-        'var Lib = require(\'../src/lib\');',
+        'import { addStyleRule } from \'../src/lib/dom.js\';',
         'var rules = ' + rulesStr + ';',
         '',
         'for(var selector in rules) {',
         '    var fullSelector = selector.replace(/^,/,\' ,\')',
         '        .replace(/X/g, \'.js-plotly-plot .plotly\')',
         '        .replace(/Y/g, \'.plotly-notifier\');',
-        '    Lib.addStyleRule(fullSelector, rules[selector]);',
+        '    addStyleRule(fullSelector, rules[selector]);',
         '}',
         ''
     ].join('\n');

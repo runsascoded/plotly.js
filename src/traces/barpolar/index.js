@@ -3,13 +3,13 @@ import _req1 from './attributes.js';
 import _req2 from './layout_attributes.js';
 import _req3 from './defaults.js';
 import _req4 from './layout_defaults.js';
-import { calc as _req5 } from './calc.js';
-import { crossTraceCalc as _req6 } from './calc.js';
+import _calc from './calc.js';
+const { calc: _req5, crossTraceCalc: _req6 } = _calc;
 import _req7 from './plot.js';
 import _req8 from '../scatter/marker_colorbar.js';
 import _req9 from '../scatterpolar/format_labels.js';
-import { style as _req10 } from '../bar/style.js';
-import { styleOnSelect as _req11 } from '../bar/style.js';
+import _style from '../bar/style.js';
+const { style: _req10, styleOnSelect: _req11 } = _style;
 import _req12 from './hover.js';
 import _req13 from '../bar/select.js';
 

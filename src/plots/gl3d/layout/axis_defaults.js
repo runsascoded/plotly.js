@@ -1,4 +1,5 @@
-import { mix as colorMix } from 'tinycolor2';
+import tinycolor from 'tinycolor2';
+var colorMix = tinycolor.mix;
 import Lib from '../../../lib/index.js';
 import Template from '../../../plot_api/plot_template.js';
 import layoutAttributes from './axis_attributes.js';

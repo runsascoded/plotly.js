@@ -1,8 +1,10 @@
 import colorAttrs from '../../components/color/attributes.js';
 import axesAttrs from '../cartesian/layout_attributes.js';
 import { attributes as domainAttrs } from '../domain.js';
-import { extendFlat } from '../../lib/index.js';
-import { overrideAll } from '../../plot_api/edit_types.js';
+import _index from '../../lib/index.js';
+const { extendFlat } = _index;
+import _edit_types from '../../plot_api/edit_types.js';
+const { overrideAll } = _edit_types;
 
 var axisLineGridAttr = overrideAll({
     color: axesAttrs.color,

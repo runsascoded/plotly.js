@@ -1,6 +1,8 @@
-import { extendFlat } from '../../lib/index.js';
+import _index from '../../lib/index.js';
+const { extendFlat } = _index;
 import scatterAttrs from '../scatter/attributes.js';
-import { axisHoverFormat } from '../../plots/cartesian/axis_format_attributes.js';
+import _axis_format_attributes from '../../plots/cartesian/axis_format_attributes.js';
+const { axisHoverFormat } = _axis_format_attributes;
 import { hovertemplateAttrs, templatefallbackAttrs } from '../../plots/template_attributes.js';
 import { dash } from '../../components/drawing/attributes.js';
 import fxAttrs from '../../components/fx/attributes.js';

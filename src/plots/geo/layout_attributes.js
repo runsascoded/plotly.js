@@ -2,7 +2,8 @@ import colorAttrs from '../../components/color/attributes.js';
 import { attributes as domainAttrs } from '../domain.js';
 import { dash } from '../../components/drawing/attributes.js';
 import constants from './constants.js';
-import { overrideAll } from '../../plot_api/edit_types.js';
+import _edit_types from '../../plot_api/edit_types.js';
+const { overrideAll } = _edit_types;
 import sortObjectKeys from '../../lib/sort_object_keys.js';
 
 var geoAxesAttrs = {

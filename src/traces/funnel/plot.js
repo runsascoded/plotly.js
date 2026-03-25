@@ -1,9 +1,11 @@
 import d3 from '@plotly/d3';
 import Lib from '../../lib/index.js';
 import Drawing from '../../components/drawing/index.js';
-import { BADNUM } from '../../constants/numerical.js';
+import _numerical from '../../constants/numerical.js';
+const { BADNUM } = _numerical;
 import barPlot from '../bar/plot.js';
-import { clearMinTextSize } from '../bar/uniform_text.js';
+import _uniform_text from '../bar/uniform_text.js';
+const { clearMinTextSize } = _uniform_text;
 
 export default function plot(gd, plotinfo, cdModule, traceLayer) {
     var fullLayout = gd._fullLayout;

@@ -1,7 +1,8 @@
 import histogram2dAttrs from '../histogram2d/attributes.js';
 import contourAttrs from '../contour/attributes.js';
 import colorScaleAttrs from '../../components/colorscale/attributes.js';
-import { axisHoverFormat } from '../../plots/cartesian/axis_format_attributes.js';
+import _axis_format_attributes from '../../plots/cartesian/axis_format_attributes.js';
+const { axisHoverFormat } = _axis_format_attributes;
 import { extendFlat } from '../../lib/extend.js';
 
 export default extendFlat(

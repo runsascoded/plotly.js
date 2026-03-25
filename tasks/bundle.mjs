@@ -52,26 +52,26 @@ tasks.push(function(done) {
     });
 });
 
-// Bundle plotly.js-strict
-tasks.push(function(done) {
-    _bundle(pathToPlotlyStrict, pathToPlotlyStrictDist, {
-    }, function() {
-        prependFile.sync(pathToPlotlyStrictDist, header.replace('plotly.js', 'plotly.js (strict)'), common.throwOnError);
-
-        done();
+// Strict bundle requires regl-codegen (npm run regl-codegen); skip in fork
+if(false && common.doesFileExist(pathToPlotlyStrict)) {
+    tasks.push(function(done) {
+        _bundle(pathToPlotlyStrict, pathToPlotlyStrictDist, {
+        }, function() {
+            prependFile.sync(pathToPlotlyStrictDist, header.replace('plotly.js', 'plotly.js (strict)'), common.throwOnError);
+            done();
+        });
     });
-});
 
-// Bundle plotly.min.js-strict
-tasks.push(function(done) {
-    _bundle(pathToPlotlyStrict, pathToPlotlyStrictDistMin, {
-        minify: true,
-    }, function() {
-        prependFile.sync(pathToPlotlyStrictDistMin, header.replace('plotly.js', 'plotly.js (strict - minified)'), common.throwOnError);
+    tasks.push(function(done) {
+        _bundle(pathToPlotlyStrict, pathToPlotlyStrictDistMin, {
+            minify: true,
+        }, function() {
+            prependFile.sync(pathToPlotlyStrictDistMin, header.replace('plotly.js', 'plotly.js (strict - minified)'), common.throwOnError);
 
-        done();
+            done();
+        });
     });
-});
+}
 
 // Bundle the geo assets
 tasks.push(function(done) {

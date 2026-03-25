@@ -1,6 +1,9 @@
-import { hoverLabelText } from '../../plots/cartesian/axes.js';
-import { opacity } from '../../components/color/index.js';
-import { hoverOnBars } from '../bar/hover.js';
+import _axes from '../../plots/cartesian/axes.js';
+const { hoverLabelText } = _axes;
+import _index from '../../components/color/index.js';
+const { opacity } = _index;
+import _hover from '../bar/hover.js';
+const { hoverOnBars } = _hover;
 import delta from '../../constants/delta.js';
 
 var DIRSYMBOL = {

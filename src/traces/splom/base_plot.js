@@ -4,7 +4,8 @@ import prepareRegl from '../../lib/prepare_regl.js';
 import { getModuleCalcData } from '../../plots/get_data.js';
 import Cartesian from '../../plots/cartesian/index.js';
 import { getFromId } from '../../plots/cartesian/axis_ids.js';
-import { shouldShowZeroLine } from '../../plots/cartesian/axes.js';
+import _axes from '../../plots/cartesian/axes.js';
+const { shouldShowZeroLine } = _axes;
 
 var SPLOM = 'splom';
 

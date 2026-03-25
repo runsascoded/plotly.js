@@ -1,6 +1,7 @@
 import d3 from '@plotly/d3';
 import styleOne from '../pie/style_one.js';
-import { resizeText } from '../bar/uniform_text.js';
+import _uniform_text from '../bar/uniform_text.js';
+const { resizeText } = _uniform_text;
 
 export default function style(gd) {
     var s = gd._fullLayout._funnelarealayer.selectAll('.trace');

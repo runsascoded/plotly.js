@@ -1,7 +1,9 @@
 import _req0 from './base_plot.js';
 import _req1 from './attributes.js';
-import { supplyDefaults as _req2 } from './defaults.js';
-import { calc as _req3 } from './calc.js';
+import _defaults from './defaults.js';
+const { supplyDefaults: _req2 } = _defaults;
+import _calc from './calc.js';
+const { calc: _req3 } = _calc;
 import _req4 from './plot.js';
 
 export default {

@@ -1,6 +1,7 @@
 import Lib from '../../lib/index.js';
 import handleGroupingDefaults from '../scatter/grouping_defaults.js';
-import { handleText } from '../bar/defaults.js';
+import _defaults from '../bar/defaults.js';
+const { handleText } = _defaults;
 import handleXYDefaults from '../scatter/xy_defaults.js';
 import handlePeriodDefaults from '../scatter/period_defaults.js';
 import attributes from './attributes.js';

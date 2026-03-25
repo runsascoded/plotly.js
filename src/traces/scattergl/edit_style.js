@@ -1,6 +1,7 @@
 import Lib from '../../lib/index.js';
 import Color from '../../components/color/index.js';
-import { DESELECTDIM } from '../../constants/interactions.js';
+import _interactions from '../../constants/interactions.js';
+const { DESELECTDIM } = _interactions;
 
 function styleTextSelection(cd) {
     var cd0 = cd[0];

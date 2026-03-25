@@ -1,6 +1,7 @@
-import { convert } from './convert.js';
-import { convertOnSelect } from './convert.js';
-import { traceLayerPrefix as LAYER_PREFIX } from '../../plots/map/constants.js';
+import _convert from './convert.js';
+const { convert, convertOnSelect } = _convert;
+import _constants from '../../plots/map/constants.js';
+const { traceLayerPrefix: LAYER_PREFIX } = _constants;
 
 function ChoroplethMap(subplot, uid) {
     this.type = 'choroplethmap';

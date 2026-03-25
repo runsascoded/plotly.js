@@ -1,4 +1,5 @@
-import { maxRowLength } from '../../lib/index.js';
+import _index from '../../lib/index.js';
+const { maxRowLength } = _index;
 
 export default function findEmpties(z) {
     var empties = [];

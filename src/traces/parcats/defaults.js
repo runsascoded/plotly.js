@@ -1,5 +1,6 @@
 import Lib from '../../lib/index.js';
-import { hasColorscale } from '../../components/colorscale/helpers.js';
+import _helpers from '../../components/colorscale/helpers.js';
+const { hasColorscale } = _helpers;
 import colorscaleDefaults from '../../components/colorscale/defaults.js';
 import { defaults as handleDomainDefaults } from '../../plots/domain.js';
 import handleArrayContainerDefaults from '../../plots/array_container_defaults.js';

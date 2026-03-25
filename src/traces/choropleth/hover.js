@@ -1,6 +1,7 @@
 import Axes from '../../plots/cartesian/axes.js';
 import attributes from './attributes.js';
-import { fillText } from '../../lib/index.js';
+import _index from '../../lib/index.js';
+const { fillText } = _index;
 
 export default function hoverPoints(pointData, xval, yval) {
     var cd = pointData.cd;

@@ -5,9 +5,10 @@ import _req3 from '../scatter/marker_colorbar.js';
 import _req4 from './format_labels.js';
 import _req5 from './calc.js';
 import _req6 from './plot.js';
-import { style as _req7 } from '../scatter/style.js';
-import { styleOnSelect as _req8 } from '../scatter/style.js';
-import { hoverPoints as _req9 } from './hover.js';
+import _style from '../scatter/style.js';
+const { style: _req7, styleOnSelect: _req8 } = _style;
+import _hover from './hover.js';
+const { hoverPoints: _req9 } = _hover;
 import _req10 from '../scatter/select.js';
 
 export default {

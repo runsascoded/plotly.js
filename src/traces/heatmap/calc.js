@@ -9,7 +9,8 @@ import clean2dArray from './clean_2d_array.js';
 import interp2d from './interp2d.js';
 import findEmpties from './find_empties.js';
 import makeBoundArray from './make_bound_array.js';
-import { BADNUM } from '../../constants/numerical.js';
+import _numerical from '../../constants/numerical.js';
+const { BADNUM } = _numerical;
 
 export default function calc(gd, trace) {
     // prepare the raw data

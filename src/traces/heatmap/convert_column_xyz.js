@@ -1,5 +1,6 @@
 import Lib from '../../lib/index.js';
-import { BADNUM } from '../../constants/numerical.js';
+import _numerical from '../../constants/numerical.js';
+const { BADNUM } = _numerical;
 import alignPeriod from '../../plots/cartesian/align_period.js';
 
 export default function convertColumnData(trace, ax1, ax2, var1Name, var2Name, arrayVarNames) {

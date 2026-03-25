@@ -6,7 +6,8 @@ import mapboxAttrs from '../../plots/mapbox/layout_attributes.js';
 import baseAttrs from '../../plots/attributes.js';
 import colorScaleAttrs from '../../components/colorscale/attributes.js';
 import { extendFlat } from '../../lib/extend.js';
-import { overrideAll } from '../../plot_api/edit_types.js';
+import _edit_types from '../../plot_api/edit_types.js';
+const { overrideAll } = _edit_types;
 import mapboxLayoutAtributes from '../../plots/mapbox/layout_attributes.js';
 
 var lineAttrs = scatterGeoAttrs.line;
