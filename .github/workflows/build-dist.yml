@@ -19,21 +19,6 @@ jobs:
           source_ref: ${{ inputs.source_ref || github.ref_name }}
           node_version: '20'
           build_command: pnpm run build
-          preserve_dirs: dist
+          preserve_dirs: dist,lib,src,build
           extra_files: pnpm-lock.yaml
-          exports_map: >-
-            {
-              "./lib/index.js": "./dist/plotly.min.js",
-              "./lib/index-basic.js": "./dist/basic.min.js",
-              "./lib/index-minimal.js": "./dist/minimal.min.js",
-              "./lib/index-lite.js": "./dist/lite.min.js",
-              "./lib/index-cartesian.js": "./dist/cartesian.min.js",
-              "./lib/index-finance.js": "./dist/finance.min.js",
-              "./lib/index-geo.js": "./dist/geo.min.js",
-              "./lib/index-gl2d.js": "./dist/gl2d.min.js",
-              "./lib/index-gl3d.js": "./dist/gl3d.min.js",
-              "./lib/index-mapbox.js": "./dist/mapbox.min.js",
-              "./lib/index-strict.js": "./dist/strict.min.js",
-              "./lib/core.js": "./dist/plotly.min.js"
-            }
           dist_branch: ${{ (inputs.source_ref || github.ref_name) == 'main' && 'dist' || format('{0}-dist', inputs.source_ref || github.ref_name) }}
