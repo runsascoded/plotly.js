@@ -1,0 +1,44 @@
+import Lib from '../../lib/index.js';
+import subtypes from '../scatter/subtypes.js';
+import _numerical from '../../constants/numerical.js';
+const { BADNUM } = _numerical;
+
+export default function selectPoints(searchInfo, selectionTester) {
+    var cd = searchInfo.cd;
+    var xa = searchInfo.xaxis;
+    var ya = searchInfo.yaxis;
+    var selection = [];
+    var trace = cd[0].trace;
+    var i;
+
+    if(!subtypes.hasMarkers(trace)) return [];
+
+    if(selectionTester === false) {
+        for(i = 0; i < cd.length; i++) {
+            cd[i].selected = 0;
+        }
+    } else {
+        for(i = 0; i < cd.length; i++) {
+            var di = cd[i];
+            var lonlat = di.lonlat;
+
+            if(lonlat[0] !== BADNUM) {
+                var lonlat2 = [Lib.modHalf(lonlat[0], 360), lonlat[1]];
+                var xy = [xa.c2p(lonlat2), ya.c2p(lonlat2)];
+
+                if(selectionTester.contains(xy, null, i, searchInfo)) {
+                    selection.push({
+                        pointNumber: i,
+                        lon: lonlat[0],
+                        lat: lonlat[1]
+                    });
+                    di.selected = 1;
+                } else {
+                    di.selected = 0;
+                }
+            }
+        }
+    }
+
+    return selection;
+}

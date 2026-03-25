@@ -1,9 +1,9 @@
 {
   "name": "plotly.js",
-  "version": "3.3.1-dist.7b2500a",
+  "version": "3.3.1-dist.590fd2c",
   "description": "The open source javascript graphing library that powers plotly",
   "license": "MIT",
-  "main": "./dist/plotly.min.js",
+  "main": "./lib/index.js",
   "webpack": "./dist/plotly.js",
   "repository": {
     "type": "git",
@@ -188,18 +188,22 @@
     }
   },
   "exports": {
-    ".": "./dist/plotly.min.js",
-    "./basic": "./dist/basic.min.js",
-    "./minimal": "./dist/minimal.min.js",
-    "./lite": "./dist/lite.min.js",
-    "./cartesian": "./dist/cartesian.min.js",
-    "./finance": "./dist/finance.min.js",
-    "./geo": "./dist/geo.min.js",
-    "./gl2d": "./dist/gl2d.min.js",
-    "./gl3d": "./dist/gl3d.min.js",
-    "./mapbox": "./dist/mapbox.min.js",
-    "./core": "./dist/plotly.min.js",
-    "./dist/*": "./*"
+    ".": "./lib/index.js",
+    "./basic": "./lib/index-basic.js",
+    "./minimal": "./lib/index-minimal.js",
+    "./lite": "./lib/index-lite.js",
+    "./cartesian": "./lib/index-cartesian.js",
+    "./finance": "./lib/index-finance.js",
+    "./geo": "./lib/index-geo.js",
+    "./gl2d": "./lib/index-gl2d.js",
+    "./gl3d": "./lib/index-gl3d.js",
+    "./mapbox": "./lib/index-mapbox.js",
+    "./core": "./lib/core.js",
+    "./dist/*": "./*",
+    "./map": "./lib/index-map.js",
+    "./strict": "./lib/index-strict.js",
+    "./lib/*": "./lib/*",
+    "./src/*": "./src/*"
   },
   "type": "module"
 }
