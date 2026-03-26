@@ -20,36 +20,8 @@ export default function partialBundle(tasks, opts) {
     var calendars = opts.calendars;
     var strict = opts.strict;
 
-    // skip strict bundle which is no longer a partial bundle and has a special index file for regl traces
-    if(name !== 'strict') {
-        tasks.push(function(done) {
-            var partialIndex = (strict) ? strictIndex : mainIndex;
-
-            var all = ['calendars'].concat(allTraces);
-            var includes = (calendars ? ['calendars'] : []).concat(traceList);
-            var excludes = all.filter(function(e) { return includes.indexOf(e) === -1; });
-
-            excludes.forEach(function(t) {
-                // Remove ESM import line: import tracename_trace from "./tracename.js";
-                var importRegex = new RegExp('^import ' + t + '_trace from ["\']\./' + t + '\.js["\'];\\n?', 'gm');
-                var newCode = partialIndex.replace(importRegex, '');
-
-                // Remove the variable from the register array
-                var varRegex = new RegExp('\\s*\\b' + t + '_trace\\b,?\\n?', 'g');
-                newCode = newCode.replace(varRegex, '\n');
-
-                // test removal
-                if(newCode === partialIndex) {
-                    console.error('Unable to find and drop import for ' + t);
-                    throw 'Error generating index for partial bundle!';
-                }
-
-                partialIndex = newCode;
-            });
-
-            common.writeFile(index, partialIndex, done);
-        });
-    }
+    // Entry point files (lib/index-*.js) are maintained as static ESM files.
+    // Skip the old regex-based index generation — just bundle from the existing file.
 
     tasks.push(function(done) {
         var bundleOpts = {
