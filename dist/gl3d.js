@@ -36,8 +36,8 @@ var Plotly = (() => {
     return a;
   };
   var __spreadProps = (a, b) => __defProps(a, __getOwnPropDescs(b));
-  var __commonJS = (cb, mod5) => function __require() {
-    return mod5 || (0, cb[__getOwnPropNames(cb)[0]])((mod5 = { exports: {} }).exports, mod5), mod5.exports;
+  var __commonJS = (cb, mod7) => function __require() {
+    return mod7 || (0, cb[__getOwnPropNames(cb)[0]])((mod7 = { exports: {} }).exports, mod7), mod7.exports;
   };
   var __export = (target, all) => {
     for (var name7 in all)
@@ -51,15 +51,15 @@ var Plotly = (() => {
     }
     return to;
   };
-  var __toESM = (mod5, isNodeMode, target) => (target = mod5 != null ? __create(__getProtoOf(mod5)) : {}, __copyProps(
+  var __toESM = (mod7, isNodeMode, target) => (target = mod7 != null ? __create(__getProtoOf(mod7)) : {}, __copyProps(
     // If the importer is in node compatibility mode or this is not an ESM
     // file that has been converted to a CommonJS file using a Babel-
     // compatible transform (i.e. "__esModule" has not been set), then set
     // "default" to the CommonJS "module.exports" for node compatibility.
-    isNodeMode || !mod5 || !mod5.__esModule ? __defProp(target, "default", { value: mod5, enumerable: true }) : target,
-    mod5
+    isNodeMode || !mod7 || !mod7.__esModule ? __defProp(target, "default", { value: mod7, enumerable: true }) : target,
+    mod7
   ));
-  var __toCommonJS = (mod5) => __copyProps(__defProp({}, "__esModule", { value: true }), mod5);
+  var __toCommonJS = (mod7) => __copyProps(__defProp({}, "__esModule", { value: true }), mod7);
 
   // node_modules/.pnpm/@plotly+d3@3.8.2/node_modules/@plotly/d3/d3.js
   var require_d3 = __commonJS({
@@ -7906,20 +7906,6 @@ var Plotly = (() => {
         lookAt: require_lookAt(),
         str: require_str()
       };
-    }
-  });
-
-  // node_modules/.pnpm/maplibre-gl@4.7.1/node_modules/maplibre-gl/dist/maplibre-gl.css
-  var require_maplibre_gl = __commonJS({
-    "node_modules/.pnpm/maplibre-gl@4.7.1/node_modules/maplibre-gl/dist/maplibre-gl.css"() {
-      (function() {
-        if (!document.getElementById("7f24433f8636d956cf03b2146157def59cd8ca1f9b240f99a92801035c6ac25a")) {
-          var e = document.createElement("style");
-          e.id = "7f24433f8636d956cf03b2146157def59cd8ca1f9b240f99a92801035c6ac25a";
-          e.textContent = `.maplibregl-map{font:12px/20px Helvetica Neue,Arial,Helvetica,sans-serif;overflow:hidden;position:relative;-webkit-tap-highlight-color:rgb(0 0 0/0)}.maplibregl-canvas{left:0;position:absolute;top:0}.maplibregl-map:fullscreen{height:100%;width:100%}.maplibregl-ctrl-group button.maplibregl-ctrl-compass{touch-action:none}.maplibregl-canvas-container.maplibregl-interactive,.maplibregl-ctrl-group button.maplibregl-ctrl-compass{cursor:grab;-webkit-user-select:none;-moz-user-select:none;user-select:none}.maplibregl-canvas-container.maplibregl-interactive.maplibregl-track-pointer{cursor:pointer}.maplibregl-canvas-container.maplibregl-interactive:active,.maplibregl-ctrl-group button.maplibregl-ctrl-compass:active{cursor:grabbing}.maplibregl-canvas-container.maplibregl-touch-zoom-rotate,.maplibregl-canvas-container.maplibregl-touch-zoom-rotate .maplibregl-canvas{touch-action:pan-x pan-y}.maplibregl-canvas-container.maplibregl-touch-drag-pan,.maplibregl-canvas-container.maplibregl-touch-drag-pan .maplibregl-canvas{touch-action:pinch-zoom}.maplibregl-canvas-container.maplibregl-touch-zoom-rotate.maplibregl-touch-drag-pan,.maplibregl-canvas-container.maplibregl-touch-zoom-rotate.maplibregl-touch-drag-pan .maplibregl-canvas{touch-action:none}.maplibregl-canvas-container.maplibregl-touch-drag-pan.maplibregl-cooperative-gestures,.maplibregl-canvas-container.maplibregl-touch-drag-pan.maplibregl-cooperative-gestures .maplibregl-canvas{touch-action:pan-x pan-y}.maplibregl-ctrl-bottom-left,.maplibregl-ctrl-bottom-right,.maplibregl-ctrl-top-left,.maplibregl-ctrl-top-right{pointer-events:none;position:absolute;z-index:2}.maplibregl-ctrl-top-left{left:0;top:0}.maplibregl-ctrl-top-right{right:0;top:0}.maplibregl-ctrl-bottom-left{bottom:0;left:0}.maplibregl-ctrl-bottom-right{bottom:0;right:0}.maplibregl-ctrl{clear:both;pointer-events:auto;transform:translate(0)}.maplibregl-ctrl-top-left .maplibregl-ctrl{float:left;margin:10px 0 0 10px}.maplibregl-ctrl-top-right .maplibregl-ctrl{float:right;margin:10px 10px 0 0}.maplibregl-ctrl-bottom-left .maplibregl-ctrl{float:left;margin:0 0 10px 10px}.maplibregl-ctrl-bottom-right .maplibregl-ctrl{float:right;margin:0 10px 10px 0}.maplibregl-ctrl-group{background:#fff;border-radius:4px}.maplibregl-ctrl-group:not(:empty){box-shadow:0 0 0 2px rgba(0,0,0,.1)}@media (forced-colors:active){.maplibregl-ctrl-group:not(:empty){box-shadow:0 0 0 2px ButtonText}}.maplibregl-ctrl-group button{background-color:transparent;border:0;box-sizing:border-box;cursor:pointer;display:block;height:29px;outline:none;padding:0;width:29px}.maplibregl-ctrl-group button+button{border-top:1px solid #ddd}.maplibregl-ctrl button .maplibregl-ctrl-icon{background-position:50%;background-repeat:no-repeat;display:block;height:100%;width:100%}@media (forced-colors:active){.maplibregl-ctrl-icon{background-color:transparent}.maplibregl-ctrl-group button+button{border-top:1px solid ButtonText}}.maplibregl-ctrl button::-moz-focus-inner{border:0;padding:0}.maplibregl-ctrl-attrib-button:focus,.maplibregl-ctrl-group button:focus{box-shadow:0 0 2px 2px #0096ff}.maplibregl-ctrl button:disabled{cursor:not-allowed}.maplibregl-ctrl button:disabled .maplibregl-ctrl-icon{opacity:.25}.maplibregl-ctrl button:not(:disabled):hover{background-color:rgb(0 0 0/5%)}.maplibregl-ctrl-group button:focus:focus-visible{box-shadow:0 0 2px 2px #0096ff}.maplibregl-ctrl-group button:focus:not(:focus-visible){box-shadow:none}.maplibregl-ctrl-group button:focus:first-child{border-radius:4px 4px 0 0}.maplibregl-ctrl-group button:focus:last-child{border-radius:0 0 4px 4px}.maplibregl-ctrl-group button:focus:only-child{border-radius:inherit}.maplibregl-ctrl button.maplibregl-ctrl-zoom-out .maplibregl-ctrl-icon{background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='29' height='29' fill='%23333' viewBox='0 0 29 29'%3E%3Cpath d='M10 13c-.75 0-1.5.75-1.5 1.5S9.25 16 10 16h9c.75 0 1.5-.75 1.5-1.5S19.75 13 19 13z'/%3E%3C/svg%3E")}.maplibregl-ctrl button.maplibregl-ctrl-zoom-in .maplibregl-ctrl-icon{background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='29' height='29' fill='%23333' viewBox='0 0 29 29'%3E%3Cpath d='M14.5 8.5c-.75 0-1.5.75-1.5 1.5v3h-3c-.75 0-1.5.75-1.5 1.5S9.25 16 10 16h3v3c0 .75.75 1.5 1.5 1.5S16 19.75 16 19v-3h3c.75 0 1.5-.75 1.5-1.5S19.75 13 19 13h-3v-3c0-.75-.75-1.5-1.5-1.5'/%3E%3C/svg%3E")}@media (forced-colors:active){.maplibregl-ctrl button.maplibregl-ctrl-zoom-out .maplibregl-ctrl-icon{background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='29' height='29' fill='%23fff' viewBox='0 0 29 29'%3E%3Cpath d='M10 13c-.75 0-1.5.75-1.5 1.5S9.25 16 10 16h9c.75 0 1.5-.75 1.5-1.5S19.75 13 19 13z'/%3E%3C/svg%3E")}.maplibregl-ctrl button.maplibregl-ctrl-zoom-in .maplibregl-ctrl-icon{background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='29' height='29' fill='%23fff' viewBox='0 0 29 29'%3E%3Cpath d='M14.5 8.5c-.75 0-1.5.75-1.5 1.5v3h-3c-.75 0-1.5.75-1.5 1.5S9.25 16 10 16h3v3c0 .75.75 1.5 1.5 1.5S16 19.75 16 19v-3h3c.75 0 1.5-.75 1.5-1.5S19.75 13 19 13h-3v-3c0-.75-.75-1.5-1.5-1.5'/%3E%3C/svg%3E")}}@media (forced-colors:active) and (prefers-color-scheme:light){.maplibregl-ctrl button.maplibregl-ctrl-zoom-out .maplibregl-ctrl-icon{background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='29' height='29' viewBox='0 0 29 29'%3E%3Cpath d='M10 13c-.75 0-1.5.75-1.5 1.5S9.25 16 10 16h9c.75 0 1.5-.75 1.5-1.5S19.75 13 19 13z'/%3E%3C/svg%3E")}.maplibregl-ctrl button.maplibregl-ctrl-zoom-in .maplibregl-ctrl-icon{background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='29' height='29' viewBox='0 0 29 29'%3E%3Cpath d='M14.5 8.5c-.75 0-1.5.75-1.5 1.5v3h-3c-.75 0-1.5.75-1.5 1.5S9.25 16 10 16h3v3c0 .75.75 1.5 1.5 1.5S16 19.75 16 19v-3h3c.75 0 1.5-.75 1.5-1.5S19.75 13 19 13h-3v-3c0-.75-.75-1.5-1.5-1.5'/%3E%3C/svg%3E")}}.maplibregl-ctrl button.maplibregl-ctrl-fullscreen .maplibregl-ctrl-icon{background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='29' height='29' fill='%23333' viewBox='0 0 29 29'%3E%3Cpath d='M24 16v5.5c0 1.75-.75 2.5-2.5 2.5H16v-1l3-1.5-4-5.5 1-1 5.5 4 1.5-3zM6 16l1.5 3 5.5-4 1 1-4 5.5 3 1.5v1H7.5C5.75 24 5 23.25 5 21.5V16zm7-11v1l-3 1.5 4 5.5-1 1-5.5-4L6 13H5V7.5C5 5.75 5.75 5 7.5 5zm11 2.5c0-1.75-.75-2.5-2.5-2.5H16v1l3 1.5-4 5.5 1 1 5.5-4 1.5 3h1z'/%3E%3C/svg%3E")}.maplibregl-ctrl button.maplibregl-ctrl-shrink .maplibregl-ctrl-icon{background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='29' height='29' viewBox='0 0 29 29'%3E%3Cpath d='M18.5 16c-1.75 0-2.5.75-2.5 2.5V24h1l1.5-3 5.5 4 1-1-4-5.5 3-1.5v-1zM13 18.5c0-1.75-.75-2.5-2.5-2.5H5v1l3 1.5L4 24l1 1 5.5-4 1.5 3h1zm3-8c0 1.75.75 2.5 2.5 2.5H24v-1l-3-1.5L25 5l-1-1-5.5 4L17 5h-1zM10.5 13c1.75 0 2.5-.75 2.5-2.5V5h-1l-1.5 3L5 4 4 5l4 5.5L5 12v1z'/%3E%3C/svg%3E")}@media (forced-colors:active){.maplibregl-ctrl button.maplibregl-ctrl-fullscreen .maplibregl-ctrl-icon{background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='29' height='29' fill='%23fff' viewBox='0 0 29 29'%3E%3Cpath d='M24 16v5.5c0 1.75-.75 2.5-2.5 2.5H16v-1l3-1.5-4-5.5 1-1 5.5 4 1.5-3zM6 16l1.5 3 5.5-4 1 1-4 5.5 3 1.5v1H7.5C5.75 24 5 23.25 5 21.5V16zm7-11v1l-3 1.5 4 5.5-1 1-5.5-4L6 13H5V7.5C5 5.75 5.75 5 7.5 5zm11 2.5c0-1.75-.75-2.5-2.5-2.5H16v1l3 1.5-4 5.5 1 1 5.5-4 1.5 3h1z'/%3E%3C/svg%3E")}.maplibregl-ctrl button.maplibregl-ctrl-shrink .maplibregl-ctrl-icon{background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='29' height='29' fill='%23fff' viewBox='0 0 29 29'%3E%3Cpath d='M18.5 16c-1.75 0-2.5.75-2.5 2.5V24h1l1.5-3 5.5 4 1-1-4-5.5 3-1.5v-1zM13 18.5c0-1.75-.75-2.5-2.5-2.5H5v1l3 1.5L4 24l1 1 5.5-4 1.5 3h1zm3-8c0 1.75.75 2.5 2.5 2.5H24v-1l-3-1.5L25 5l-1-1-5.5 4L17 5h-1zM10.5 13c1.75 0 2.5-.75 2.5-2.5V5h-1l-1.5 3L5 4 4 5l4 5.5L5 12v1z'/%3E%3C/svg%3E")}}@media (forced-colors:active) and (prefers-color-scheme:light){.maplibregl-ctrl button.maplibregl-ctrl-fullscreen .maplibregl-ctrl-icon{background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='29' height='29' viewBox='0 0 29 29'%3E%3Cpath d='M24 16v5.5c0 1.75-.75 2.5-2.5 2.5H16v-1l3-1.5-4-5.5 1-1 5.5 4 1.5-3zM6 16l1.5 3 5.5-4 1 1-4 5.5 3 1.5v1H7.5C5.75 24 5 23.25 5 21.5V16zm7-11v1l-3 1.5 4 5.5-1 1-5.5-4L6 13H5V7.5C5 5.75 5.75 5 7.5 5zm11 2.5c0-1.75-.75-2.5-2.5-2.5H16v1l3 1.5-4 5.5 1 1 5.5-4 1.5 3h1z'/%3E%3C/svg%3E")}.maplibregl-ctrl button.maplibregl-ctrl-shrink .maplibregl-ctrl-icon{background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='29' height='29' viewBox='0 0 29 29'%3E%3Cpath d='M18.5 16c-1.75 0-2.5.75-2.5 2.5V24h1l1.5-3 5.5 4 1-1-4-5.5 3-1.5v-1zM13 18.5c0-1.75-.75-2.5-2.5-2.5H5v1l3 1.5L4 24l1 1 5.5-4 1.5 3h1zm3-8c0 1.75.75 2.5 2.5 2.5H24v-1l-3-1.5L25 5l-1-1-5.5 4L17 5h-1zM10.5 13c1.75 0 2.5-.75 2.5-2.5V5h-1l-1.5 3L5 4 4 5l4 5.5L5 12v1z'/%3E%3C/svg%3E")}}.maplibregl-ctrl button.maplibregl-ctrl-compass .maplibregl-ctrl-icon{background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='29' height='29' fill='%23333' viewBox='0 0 29 29'%3E%3Cpath d='m10.5 14 4-8 4 8z'/%3E%3Cpath fill='%23ccc' d='m10.5 16 4 8 4-8z'/%3E%3C/svg%3E")}@media (forced-colors:active){.maplibregl-ctrl button.maplibregl-ctrl-compass .maplibregl-ctrl-icon{background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='29' height='29' fill='%23fff' viewBox='0 0 29 29'%3E%3Cpath d='m10.5 14 4-8 4 8z'/%3E%3Cpath fill='%23ccc' d='m10.5 16 4 8 4-8z'/%3E%3C/svg%3E")}}@media (forced-colors:active) and (prefers-color-scheme:light){.maplibregl-ctrl button.maplibregl-ctrl-compass .maplibregl-ctrl-icon{background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='29' height='29' viewBox='0 0 29 29'%3E%3Cpath d='m10.5 14 4-8 4 8z'/%3E%3Cpath fill='%23ccc' d='m10.5 16 4 8 4-8z'/%3E%3C/svg%3E")}}.maplibregl-ctrl button.maplibregl-ctrl-terrain .maplibregl-ctrl-icon{background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='22' height='22' fill='%23333' viewBox='0 0 22 22'%3E%3Cpath d='m1.754 13.406 4.453-4.851 3.09 3.09 3.281 3.277.969-.969-3.309-3.312 3.844-4.121 6.148 6.886h1.082v-.855l-7.207-8.07-4.84 5.187L6.169 6.57l-5.48 5.965v.871ZM.688 16.844h20.625v1.375H.688Zm0 0'/%3E%3C/svg%3E")}.maplibregl-ctrl button.maplibregl-ctrl-terrain-enabled .maplibregl-ctrl-icon{background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='22' height='22' fill='%2333b5e5' viewBox='0 0 22 22'%3E%3Cpath d='m1.754 13.406 4.453-4.851 3.09 3.09 3.281 3.277.969-.969-3.309-3.312 3.844-4.121 6.148 6.886h1.082v-.855l-7.207-8.07-4.84 5.187L6.169 6.57l-5.48 5.965v.871ZM.688 16.844h20.625v1.375H.688Zm0 0'/%3E%3C/svg%3E")}.maplibregl-ctrl button.maplibregl-ctrl-geolocate .maplibregl-ctrl-icon{background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='29' height='29' fill='%23333' viewBox='0 0 20 20'%3E%3Cpath d='M10 4C9 4 9 5 9 5v.1A5 5 0 0 0 5.1 9H5s-1 0-1 1 1 1 1 1h.1A5 5 0 0 0 9 14.9v.1s0 1 1 1 1-1 1-1v-.1a5 5 0 0 0 3.9-3.9h.1s1 0 1-1-1-1-1-1h-.1A5 5 0 0 0 11 5.1V5s0-1-1-1m0 2.5a3.5 3.5 0 1 1 0 7 3.5 3.5 0 1 1 0-7'/%3E%3Ccircle cx='10' cy='10' r='2'/%3E%3C/svg%3E")}.maplibregl-ctrl button.maplibregl-ctrl-geolocate:disabled .maplibregl-ctrl-icon{background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='29' height='29' fill='%23aaa' viewBox='0 0 20 20'%3E%3Cpath d='M10 4C9 4 9 5 9 5v.1A5 5 0 0 0 5.1 9H5s-1 0-1 1 1 1 1 1h.1A5 5 0 0 0 9 14.9v.1s0 1 1 1 1-1 1-1v-.1a5 5 0 0 0 3.9-3.9h.1s1 0 1-1-1-1-1-1h-.1A5 5 0 0 0 11 5.1V5s0-1-1-1m0 2.5a3.5 3.5 0 1 1 0 7 3.5 3.5 0 1 1 0-7'/%3E%3Ccircle cx='10' cy='10' r='2'/%3E%3Cpath fill='red' d='m14 5 1 1-9 9-1-1z'/%3E%3C/svg%3E")}.maplibregl-ctrl button.maplibregl-ctrl-geolocate.maplibregl-ctrl-geolocate-active .maplibregl-ctrl-icon{background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='29' height='29' fill='%2333b5e5' viewBox='0 0 20 20'%3E%3Cpath d='M10 4C9 4 9 5 9 5v.1A5 5 0 0 0 5.1 9H5s-1 0-1 1 1 1 1 1h.1A5 5 0 0 0 9 14.9v.1s0 1 1 1 1-1 1-1v-.1a5 5 0 0 0 3.9-3.9h.1s1 0 1-1-1-1-1-1h-.1A5 5 0 0 0 11 5.1V5s0-1-1-1m0 2.5a3.5 3.5 0 1 1 0 7 3.5 3.5 0 1 1 0-7'/%3E%3Ccircle cx='10' cy='10' r='2'/%3E%3C/svg%3E")}.maplibregl-ctrl button.maplibregl-ctrl-geolocate.maplibregl-ctrl-geolocate-active-error .maplibregl-ctrl-icon{background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='29' height='29' fill='%23e58978' viewBox='0 0 20 20'%3E%3Cpath d='M10 4C9 4 9 5 9 5v.1A5 5 0 0 0 5.1 9H5s-1 0-1 1 1 1 1 1h.1A5 5 0 0 0 9 14.9v.1s0 1 1 1 1-1 1-1v-.1a5 5 0 0 0 3.9-3.9h.1s1 0 1-1-1-1-1-1h-.1A5 5 0 0 0 11 5.1V5s0-1-1-1m0 2.5a3.5 3.5 0 1 1 0 7 3.5 3.5 0 1 1 0-7'/%3E%3Ccircle cx='10' cy='10' r='2'/%3E%3C/svg%3E")}.maplibregl-ctrl button.maplibregl-ctrl-geolocate.maplibregl-ctrl-geolocate-background .maplibregl-ctrl-icon{background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='29' height='29' fill='%2333b5e5' viewBox='0 0 20 20'%3E%3Cpath d='M10 4C9 4 9 5 9 5v.1A5 5 0 0 0 5.1 9H5s-1 0-1 1 1 1 1 1h.1A5 5 0 0 0 9 14.9v.1s0 1 1 1 1-1 1-1v-.1a5 5 0 0 0 3.9-3.9h.1s1 0 1-1-1-1-1-1h-.1A5 5 0 0 0 11 5.1V5s0-1-1-1m0 2.5a3.5 3.5 0 1 1 0 7 3.5 3.5 0 1 1 0-7'/%3E%3C/svg%3E")}.maplibregl-ctrl button.maplibregl-ctrl-geolocate.maplibregl-ctrl-geolocate-background-error .maplibregl-ctrl-icon{background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='29' height='29' fill='%23e54e33' viewBox='0 0 20 20'%3E%3Cpath d='M10 4C9 4 9 5 9 5v.1A5 5 0 0 0 5.1 9H5s-1 0-1 1 1 1 1 1h.1A5 5 0 0 0 9 14.9v.1s0 1 1 1 1-1 1-1v-.1a5 5 0 0 0 3.9-3.9h.1s1 0 1-1-1-1-1-1h-.1A5 5 0 0 0 11 5.1V5s0-1-1-1m0 2.5a3.5 3.5 0 1 1 0 7 3.5 3.5 0 1 1 0-7'/%3E%3C/svg%3E")}.maplibregl-ctrl button.maplibregl-ctrl-geolocate.maplibregl-ctrl-geolocate-waiting .maplibregl-ctrl-icon{animation:maplibregl-spin 2s linear infinite}@media (forced-colors:active){.maplibregl-ctrl button.maplibregl-ctrl-geolocate .maplibregl-ctrl-icon{background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='29' height='29' fill='%23fff' viewBox='0 0 20 20'%3E%3Cpath d='M10 4C9 4 9 5 9 5v.1A5 5 0 0 0 5.1 9H5s-1 0-1 1 1 1 1 1h.1A5 5 0 0 0 9 14.9v.1s0 1 1 1 1-1 1-1v-.1a5 5 0 0 0 3.9-3.9h.1s1 0 1-1-1-1-1-1h-.1A5 5 0 0 0 11 5.1V5s0-1-1-1m0 2.5a3.5 3.5 0 1 1 0 7 3.5 3.5 0 1 1 0-7'/%3E%3Ccircle cx='10' cy='10' r='2'/%3E%3C/svg%3E")}.maplibregl-ctrl button.maplibregl-ctrl-geolocate:disabled .maplibregl-ctrl-icon{background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='29' height='29' fill='%23999' viewBox='0 0 20 20'%3E%3Cpath d='M10 4C9 4 9 5 9 5v.1A5 5 0 0 0 5.1 9H5s-1 0-1 1 1 1 1 1h.1A5 5 0 0 0 9 14.9v.1s0 1 1 1 1-1 1-1v-.1a5 5 0 0 0 3.9-3.9h.1s1 0 1-1-1-1-1-1h-.1A5 5 0 0 0 11 5.1V5s0-1-1-1m0 2.5a3.5 3.5 0 1 1 0 7 3.5 3.5 0 1 1 0-7'/%3E%3Ccircle cx='10' cy='10' r='2'/%3E%3Cpath fill='red' d='m14 5 1 1-9 9-1-1z'/%3E%3C/svg%3E")}.maplibregl-ctrl button.maplibregl-ctrl-geolocate.maplibregl-ctrl-geolocate-active .maplibregl-ctrl-icon{background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='29' height='29' fill='%2333b5e5' viewBox='0 0 20 20'%3E%3Cpath d='M10 4C9 4 9 5 9 5v.1A5 5 0 0 0 5.1 9H5s-1 0-1 1 1 1 1 1h.1A5 5 0 0 0 9 14.9v.1s0 1 1 1 1-1 1-1v-.1a5 5 0 0 0 3.9-3.9h.1s1 0 1-1-1-1-1-1h-.1A5 5 0 0 0 11 5.1V5s0-1-1-1m0 2.5a3.5 3.5 0 1 1 0 7 3.5 3.5 0 1 1 0-7'/%3E%3Ccircle cx='10' cy='10' r='2'/%3E%3C/svg%3E")}.maplibregl-ctrl button.maplibregl-ctrl-geolocate.maplibregl-ctrl-geolocate-active-error .maplibregl-ctrl-icon{background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='29' height='29' fill='%23e58978' viewBox='0 0 20 20'%3E%3Cpath d='M10 4C9 4 9 5 9 5v.1A5 5 0 0 0 5.1 9H5s-1 0-1 1 1 1 1 1h.1A5 5 0 0 0 9 14.9v.1s0 1 1 1 1-1 1-1v-.1a5 5 0 0 0 3.9-3.9h.1s1 0 1-1-1-1-1-1h-.1A5 5 0 0 0 11 5.1V5s0-1-1-1m0 2.5a3.5 3.5 0 1 1 0 7 3.5 3.5 0 1 1 0-7'/%3E%3Ccircle cx='10' cy='10' r='2'/%3E%3C/svg%3E")}.maplibregl-ctrl button.maplibregl-ctrl-geolocate.maplibregl-ctrl-geolocate-background .maplibregl-ctrl-icon{background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='29' height='29' fill='%2333b5e5' viewBox='0 0 20 20'%3E%3Cpath d='M10 4C9 4 9 5 9 5v.1A5 5 0 0 0 5.1 9H5s-1 0-1 1 1 1 1 1h.1A5 5 0 0 0 9 14.9v.1s0 1 1 1 1-1 1-1v-.1a5 5 0 0 0 3.9-3.9h.1s1 0 1-1-1-1-1-1h-.1A5 5 0 0 0 11 5.1V5s0-1-1-1m0 2.5a3.5 3.5 0 1 1 0 7 3.5 3.5 0 1 1 0-7'/%3E%3C/svg%3E")}.maplibregl-ctrl button.maplibregl-ctrl-geolocate.maplibregl-ctrl-geolocate-background-error .maplibregl-ctrl-icon{background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='29' height='29' fill='%23e54e33' viewBox='0 0 20 20'%3E%3Cpath d='M10 4C9 4 9 5 9 5v.1A5 5 0 0 0 5.1 9H5s-1 0-1 1 1 1 1 1h.1A5 5 0 0 0 9 14.9v.1s0 1 1 1 1-1 1-1v-.1a5 5 0 0 0 3.9-3.9h.1s1 0 1-1-1-1-1-1h-.1A5 5 0 0 0 11 5.1V5s0-1-1-1m0 2.5a3.5 3.5 0 1 1 0 7 3.5 3.5 0 1 1 0-7'/%3E%3C/svg%3E")}}@media (forced-colors:active) and (prefers-color-scheme:light){.maplibregl-ctrl button.maplibregl-ctrl-geolocate .maplibregl-ctrl-icon{background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='29' height='29' viewBox='0 0 20 20'%3E%3Cpath d='M10 4C9 4 9 5 9 5v.1A5 5 0 0 0 5.1 9H5s-1 0-1 1 1 1 1 1h.1A5 5 0 0 0 9 14.9v.1s0 1 1 1 1-1 1-1v-.1a5 5 0 0 0 3.9-3.9h.1s1 0 1-1-1-1-1-1h-.1A5 5 0 0 0 11 5.1V5s0-1-1-1m0 2.5a3.5 3.5 0 1 1 0 7 3.5 3.5 0 1 1 0-7'/%3E%3Ccircle cx='10' cy='10' r='2'/%3E%3C/svg%3E")}.maplibregl-ctrl button.maplibregl-ctrl-geolocate:disabled .maplibregl-ctrl-icon{background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='29' height='29' fill='%23666' viewBox='0 0 20 20'%3E%3Cpath d='M10 4C9 4 9 5 9 5v.1A5 5 0 0 0 5.1 9H5s-1 0-1 1 1 1 1 1h.1A5 5 0 0 0 9 14.9v.1s0 1 1 1 1-1 1-1v-.1a5 5 0 0 0 3.9-3.9h.1s1 0 1-1-1-1-1-1h-.1A5 5 0 0 0 11 5.1V5s0-1-1-1m0 2.5a3.5 3.5 0 1 1 0 7 3.5 3.5 0 1 1 0-7'/%3E%3Ccircle cx='10' cy='10' r='2'/%3E%3Cpath fill='red' d='m14 5 1 1-9 9-1-1z'/%3E%3C/svg%3E")}}@keyframes maplibregl-spin{0%{transform:rotate(0deg)}to{transform:rotate(1turn)}}a.maplibregl-ctrl-logo{background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='88' height='23' fill='none'%3E%3Cpath fill='%23000' fill-opacity='.4' fill-rule='evenodd' d='M17.408 16.796h-1.827l2.501-12.095h.198l3.324 6.533.988 2.19.988-2.19 3.258-6.533h.181l2.6 12.095h-1.81l-1.218-5.644-.362-1.71-.658 1.71-2.929 5.644h-.098l-2.914-5.644-.757-1.71-.345 1.71zm1.958-3.42-.726 3.663a1.255 1.255 0 0 1-1.232 1.011h-1.827a1.255 1.255 0 0 1-1.229-1.509l2.501-12.095a1.255 1.255 0 0 1 1.23-1.001h.197a1.25 1.25 0 0 1 1.12.685l3.19 6.273 3.125-6.263a1.25 1.25 0 0 1 1.123-.695h.181a1.255 1.255 0 0 1 1.227.991l1.443 6.71a5 5 0 0 1 .314-.787l.009-.016a4.6 4.6 0 0 1 1.777-1.887c.782-.46 1.668-.667 2.611-.667a4.6 4.6 0 0 1 1.7.32l.306.134c.21-.16.474-.256.759-.256h1.694a1.255 1.255 0 0 1 1.212.925 1.255 1.255 0 0 1 1.212-.925h1.711c.284 0 .545.094.755.252.613-.3 1.312-.45 2.075-.45 1.356 0 2.557.445 3.482 1.4q.47.48.763 1.064V4.701a1.255 1.255 0 0 1 1.255-1.255h1.86A1.255 1.255 0 0 1 54.44 4.7v9.194h2.217c.19 0 .37.043.532.118v-4.77c0-.356.147-.678.385-.906a2.42 2.42 0 0 1-.682-1.71c0-.665.267-1.253.735-1.7a2.45 2.45 0 0 1 1.722-.674 2.43 2.43 0 0 1 1.705.675q.318.302.504.683V4.7a1.255 1.255 0 0 1 1.255-1.255h1.744A1.255 1.255 0 0 1 65.812 4.7v3.335a4.8 4.8 0 0 1 1.526-.246c.938 0 1.817.214 2.59.69a4.47 4.47 0 0 1 1.67 1.743v-.98a1.255 1.255 0 0 1 1.256-1.256h1.777c.233 0 .451.064.639.174a3.4 3.4 0 0 1 1.567-.372c.346 0 .861.02 1.285.232a1.25 1.25 0 0 1 .689 1.004 4.7 4.7 0 0 1 .853-.588c.795-.44 1.675-.647 2.61-.647 1.385 0 2.65.39 3.525 1.396.836.938 1.168 2.173 1.168 3.528q-.001.515-.056 1.051a1.255 1.255 0 0 1-.947 1.09l.408.952a1.255 1.255 0 0 1-.477 1.552c-.418.268-.92.463-1.458.612-.613.171-1.304.244-2.049.244-1.06 0-2.043-.207-2.886-.698l-.015-.008c-.798-.48-1.419-1.135-1.818-1.963l-.004-.008a5.8 5.8 0 0 1-.548-2.512q0-.429.053-.843a1.3 1.3 0 0 1-.333-.086l-.166-.004c-.223 0-.426.062-.643.228-.03.024-.142.139-.142.59v3.883a1.255 1.255 0 0 1-1.256 1.256h-1.777a1.255 1.255 0 0 1-1.256-1.256V15.69l-.032.057a4.8 4.8 0 0 1-1.86 1.833 5.04 5.04 0 0 1-2.484.634 4.5 4.5 0 0 1-1.935-.424 1.25 1.25 0 0 1-.764.258h-1.71a1.255 1.255 0 0 1-1.256-1.255V7.687a2.4 2.4 0 0 1-.428.625c.253.23.412.561.412.93v7.553a1.255 1.255 0 0 1-1.256 1.255h-1.843a1.25 1.25 0 0 1-.894-.373c-.228.23-.544.373-.894.373H51.32a1.255 1.255 0 0 1-1.256-1.255v-1.251l-.061.117a4.7 4.7 0 0 1-1.782 1.884 4.77 4.77 0 0 1-2.485.67 5.6 5.6 0 0 1-1.485-.188l.009 2.764a1.255 1.255 0 0 1-1.255 1.259h-1.729a1.255 1.255 0 0 1-1.255-1.255v-3.537a1.255 1.255 0 0 1-1.167.793h-1.679a1.25 1.25 0 0 1-.77-.263 4.5 4.5 0 0 1-1.945.429c-.885 0-1.724-.21-2.495-.632l-.017-.01a5 5 0 0 1-1.081-.836 1.255 1.255 0 0 1-1.254 1.312h-1.81a1.255 1.255 0 0 1-1.228-.99l-.782-3.625-2.044 3.939a1.25 1.25 0 0 1-1.115.676h-.098a1.25 1.25 0 0 1-1.116-.68l-2.061-3.994zM35.92 16.63l.207-.114.223-.15q.493-.356.735-.785l.061-.118.033 1.332h1.678V9.242h-1.694l-.033 1.267q-.133-.329-.526-.658l-.032-.028a3.2 3.2 0 0 0-.668-.428l-.27-.12a3.3 3.3 0 0 0-1.235-.23q-1.136-.001-1.974.493a3.36 3.36 0 0 0-1.3 1.382q-.445.89-.444 2.074 0 1.2.51 2.107a3.8 3.8 0 0 0 1.382 1.381 3.9 3.9 0 0 0 1.893.477q.795 0 1.455-.33zm-2.789-5.38q-.576.675-.575 1.762 0 1.102.559 1.794.576.675 1.645.675a2.25 2.25 0 0 0 .934-.19 2.2 2.2 0 0 0 .468-.29l.178-.161a2.2 2.2 0 0 0 .397-.561q.244-.5.244-1.15v-.115q0-.708-.296-1.267l-.043-.077a2.2 2.2 0 0 0-.633-.709l-.13-.086-.047-.028a2.1 2.1 0 0 0-1.073-.285q-1.052 0-1.629.692zm2.316 2.706c.163-.17.28-.407.28-.83v-.114c0-.292-.06-.508-.15-.68a.96.96 0 0 0-.353-.389.85.85 0 0 0-.464-.127c-.4 0-.56.114-.664.239l-.01.012c-.148.174-.275.45-.275.945 0 .506.122.801.27.99.097.11.266.224.68.224.303 0 .504-.09.687-.269zm7.545 1.705a2.6 2.6 0 0 0 .331.423q.319.33.755.548l.173.074q.65.255 1.49.255 1.02 0 1.844-.493a3.45 3.45 0 0 0 1.316-1.4q.493-.904.493-2.089 0-1.909-.988-2.913-.988-1.02-2.584-1.02-.898 0-1.575.347a3 3 0 0 0-.415.262l-.199.166a3.4 3.4 0 0 0-.64.82V9.242h-1.712v11.553h1.729l-.017-5.134zm.53-1.138q.206.29.48.5l.155.11.053.034q.51.296 1.119.297 1.07 0 1.645-.675.577-.69.576-1.762 0-1.119-.576-1.777-.558-.675-1.645-.675-.435 0-.835.16a2 2 0 0 0-.284.136 2 2 0 0 0-.363.254 2.2 2.2 0 0 0-.46.569l-.082.162a2.6 2.6 0 0 0-.213 1.072v.115q0 .707.296 1.267l.135.211zm.964-.818a1.1 1.1 0 0 0 .367.385.94.94 0 0 0 .476.118c.423 0 .59-.117.687-.23.159-.194.28-.478.28-.95 0-.53-.133-.8-.266-.952l-.021-.025c-.078-.094-.231-.221-.68-.221a1 1 0 0 0-.503.135l-.012.007a.86.86 0 0 0-.335.343c-.073.133-.132.324-.132.614v.115a1.4 1.4 0 0 0 .14.66zm15.7-6.222q.347-.346.346-.856a1.05 1.05 0 0 0-.345-.79 1.18 1.18 0 0 0-.84-.329q-.51 0-.855.33a1.05 1.05 0 0 0-.346.79q0 .51.346.855.345.346.856.346.51 0 .839-.346zm4.337 9.314.033-1.332q.191.403.59.747l.098.081a4 4 0 0 0 .316.224l.223.122a3.2 3.2 0 0 0 1.44.322 3.8 3.8 0 0 0 1.875-.477 3.5 3.5 0 0 0 1.382-1.366q.527-.89.526-2.09 0-1.184-.444-2.073a3.24 3.24 0 0 0-1.283-1.399q-.823-.51-1.942-.51a3.5 3.5 0 0 0-1.527.344l-.086.043-.165.09a3 3 0 0 0-.33.214q-.432.315-.656.707a2 2 0 0 0-.099.198l.082-1.283V4.701h-1.744v12.095zm.473-2.509a2.5 2.5 0 0 0 .566.7q.117.098.245.18l.144.08a2.1 2.1 0 0 0 .975.232q1.07 0 1.645-.675.576-.69.576-1.778 0-1.102-.576-1.777-.56-.691-1.645-.692a2.2 2.2 0 0 0-1.015.235q-.22.113-.415.282l-.15.142a2.1 2.1 0 0 0-.42.594q-.223.479-.223 1.1v.115q0 .705.293 1.26zm2.616-.293c.157-.191.28-.479.28-.967 0-.51-.13-.79-.276-.961l-.021-.026c-.082-.1-.232-.225-.67-.225a.87.87 0 0 0-.681.279l-.012.011c-.154.155-.274.38-.274.807v.115c0 .285.057.499.144.669a1.1 1.1 0 0 0 .367.405c.137.082.28.123.455.123.423 0 .59-.118.686-.23zm8.266-3.013q.345-.13.724-.14l.069-.002q.493 0 .642.099l.247-1.794q-.196-.099-.717-.099a2.3 2.3 0 0 0-.545.063 2 2 0 0 0-.411.148 2.2 2.2 0 0 0-.4.249 2.5 2.5 0 0 0-.485.499 2.7 2.7 0 0 0-.32.581l-.05.137v-1.48h-1.778v7.553h1.777v-3.884q0-.546.159-.943a1.5 1.5 0 0 1 .466-.636 2.5 2.5 0 0 1 .399-.253 2 2 0 0 1 .224-.099zm9.784 2.656.05-.922q0-1.743-.856-2.698-.838-.97-2.584-.97-1.119-.001-2.007.493a3.46 3.46 0 0 0-1.4 1.382q-.493.906-.493 2.106 0 1.07.428 1.975.428.89 1.332 1.432.906.526 2.255.526.973 0 1.668-.185l.044-.012.135-.04q.613-.184.984-.421l-.542-1.267q-.3.162-.642.274l-.297.087q-.51.131-1.3.131-.954 0-1.497-.444a1.6 1.6 0 0 1-.192-.193q-.366-.44-.512-1.234l-.004-.021zm-5.427-1.256-.003.022h3.752v-.138q-.011-.727-.288-1.118a1 1 0 0 0-.156-.176q-.46-.428-1.316-.428-.986 0-1.494.604-.379.45-.494 1.234zm-27.053 2.77V4.7h-1.86v12.095h5.333V15.15zm7.103-5.908v7.553h-1.843V9.242h1.843z'/%3E%3Cpath fill='%23fff' d='m19.63 11.151-.757-1.71-.345 1.71-1.12 5.644h-1.827L18.083 4.7h.197l3.325 6.533.988 2.19.988-2.19L26.839 4.7h.181l2.6 12.095h-1.81l-1.218-5.644-.362-1.71-.658 1.71-2.93 5.644h-.098l-2.913-5.644zm14.836 5.81q-1.02 0-1.893-.478a3.8 3.8 0 0 1-1.381-1.382q-.51-.906-.51-2.106 0-1.185.444-2.074a3.36 3.36 0 0 1 1.3-1.382q.839-.494 1.974-.494a3.3 3.3 0 0 1 1.234.231 3.3 3.3 0 0 1 .97.575q.396.33.527.659l.033-1.267h1.694v7.553H37.18l-.033-1.332q-.279.593-1.02 1.053a3.17 3.17 0 0 1-1.662.444zm.296-1.482q.938 0 1.58-.642.642-.66.642-1.711v-.115q0-.708-.296-1.267a2.2 2.2 0 0 0-.807-.872 2.1 2.1 0 0 0-1.119-.313q-1.053 0-1.629.692-.575.675-.575 1.76 0 1.103.559 1.795.577.675 1.645.675zm6.521-6.237h1.711v1.4q.906-1.597 2.83-1.597 1.596 0 2.584 1.02.988 1.005.988 2.914 0 1.185-.493 2.09a3.46 3.46 0 0 1-1.316 1.399 3.5 3.5 0 0 1-1.844.493q-.954 0-1.662-.329a2.67 2.67 0 0 1-1.086-.97l.017 5.134h-1.728zm4.048 6.22q1.07 0 1.645-.674.577-.69.576-1.762 0-1.119-.576-1.777-.558-.675-1.645-.675-.592 0-1.12.296-.51.28-.822.823-.296.527-.296 1.234v.115q0 .708.296 1.267.313.543.823.855.51.296 1.119.297z'/%3E%3Cpath fill='%23e1e3e9' d='M51.325 4.7h1.86v10.45h3.473v1.646h-5.333zm7.12 4.542h1.843v7.553h-1.843zm.905-1.415a1.16 1.16 0 0 1-.856-.346 1.17 1.17 0 0 1-.346-.856 1.05 1.05 0 0 1 .346-.79q.346-.329.856-.329.494 0 .839.33a1.05 1.05 0 0 1 .345.79 1.16 1.16 0 0 1-.345.855q-.33.346-.84.346zm7.875 9.133a3.17 3.17 0 0 1-1.662-.444q-.723-.46-1.004-1.053l-.033 1.332h-1.71V4.701h1.743v4.657l-.082 1.283q.279-.658 1.086-1.119a3.5 3.5 0 0 1 1.778-.477q1.119 0 1.942.51a3.24 3.24 0 0 1 1.283 1.4q.445.888.444 2.072 0 1.201-.526 2.09a3.5 3.5 0 0 1-1.382 1.366 3.8 3.8 0 0 1-1.876.477zm-.296-1.481q1.069 0 1.645-.675.577-.69.577-1.778 0-1.102-.577-1.776-.56-.691-1.645-.692a2.12 2.12 0 0 0-1.58.659q-.642.641-.642 1.694v.115q0 .71.296 1.267a2.4 2.4 0 0 0 .807.872 2.1 2.1 0 0 0 1.119.313zm5.927-6.237h1.777v1.481q.263-.757.856-1.217a2.14 2.14 0 0 1 1.349-.46q.527 0 .724.098l-.247 1.794q-.149-.099-.642-.099-.774 0-1.416.494-.626.493-.626 1.58v3.883h-1.777V9.242zm9.534 7.718q-1.35 0-2.255-.526-.904-.543-1.332-1.432a4.6 4.6 0 0 1-.428-1.975q0-1.2.493-2.106a3.46 3.46 0 0 1 1.4-1.382q.889-.495 2.007-.494 1.744 0 2.584.97.855.956.856 2.7 0 .444-.05.92h-5.43q.18 1.005.708 1.45.542.443 1.497.443.79 0 1.3-.131a4 4 0 0 0 .938-.362l.542 1.267q-.411.263-1.119.46-.708.198-1.711.197zm1.596-4.558q.016-1.02-.444-1.432-.46-.428-1.316-.428-1.728 0-1.991 1.86z'/%3E%3Cpath d='M5.074 15.948a.484.657 0 0 0-.486.659v1.84a.484.657 0 0 0 .486.659h4.101a.484.657 0 0 0 .486-.659v-1.84a.484.657 0 0 0-.486-.659zm3.56 1.16H5.617v.838h3.017z' style='fill:%23fff;fill-rule:evenodd;stroke-width:1.03600001'/%3E%3Cg style='stroke-width:1.12603545'%3E%3Cpath d='M-9.408-1.416c-3.833-.025-7.056 2.912-7.08 6.615-.02 3.08 1.653 4.832 3.107 6.268.903.892 1.721 1.74 2.32 2.902l-.525-.004c-.543-.003-.992.304-1.24.639a1.87 1.87 0 0 0-.362 1.121l-.011 1.877c-.003.402.104.787.347 1.125.244.338.688.653 1.23.656l4.142.028c.542.003.99-.306 1.238-.641a1.87 1.87 0 0 0 .363-1.121l.012-1.875a1.87 1.87 0 0 0-.348-1.127c-.243-.338-.688-.653-1.23-.656l-.518-.004c.597-1.145 1.425-1.983 2.348-2.87 1.473-1.414 3.18-3.149 3.2-6.226-.016-3.59-2.923-6.684-6.993-6.707m-.006 1.1v.002c3.274.02 5.92 2.532 5.9 5.6-.017 2.706-1.39 4.026-2.863 5.44-1.034.994-2.118 2.033-2.814 3.633-.018.041-.052.055-.075.065q-.013.004-.02.01a.34.34 0 0 1-.226.084.34.34 0 0 1-.224-.086l-.092-.077c-.699-1.615-1.768-2.669-2.781-3.67-1.454-1.435-2.797-2.762-2.78-5.478.02-3.067 2.7-5.545 5.975-5.523m-.02 2.826c-1.62-.01-2.944 1.315-2.955 2.96-.01 1.646 1.295 2.988 2.916 2.999h.002c1.621.01 2.943-1.316 2.953-2.961.011-1.646-1.294-2.988-2.916-2.998m-.005 1.1c1.017.006 1.829.83 1.822 1.89s-.83 1.874-1.848 1.867c-1.018-.006-1.829-.83-1.822-1.89s.83-1.874 1.848-1.868m-2.155 11.857 4.14.025c.271.002.49.305.487.676l-.013 1.875c-.003.37-.224.67-.495.668l-4.14-.025c-.27-.002-.487-.306-.485-.676l.012-1.875c.003-.37.224-.67.494-.668' style='color:%23000;font-style:normal;font-variant:normal;font-weight:400;font-stretch:normal;font-size:medium;line-height:normal;font-family:sans-serif;font-variant-ligatures:normal;font-variant-position:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-alternates:normal;font-feature-settings:normal;text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:%23000;letter-spacing:normal;word-spacing:normal;text-transform:none;writing-mode:lr-tb;direction:ltr;text-orientation:mixed;dominant-baseline:auto;baseline-shift:baseline;text-anchor:start;white-space:normal;shape-padding:0;clip-rule:evenodd;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:%23000;solid-opacity:1;vector-effect:none;fill:%23000;fill-opacity:.4;fill-rule:evenodd;stroke:none;stroke-width:2.47727823;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto' transform='translate(15.553 2.85)scale(.88807)'/%3E%3Cpath d='M-9.415-.316C-12.69-.338-15.37 2.14-15.39 5.207c-.017 2.716 1.326 4.041 2.78 5.477 1.013 1 2.081 2.055 2.78 3.67l.092.076a.34.34 0 0 0 .225.086.34.34 0 0 0 .227-.083l.019-.01c.022-.009.057-.024.074-.064.697-1.6 1.78-2.64 2.814-3.634 1.473-1.414 2.847-2.733 2.864-5.44.02-3.067-2.627-5.58-5.901-5.601m-.057 8.784c1.621.011 2.944-1.315 2.955-2.96.01-1.646-1.295-2.988-2.916-2.999-1.622-.01-2.945 1.315-2.955 2.96s1.295 2.989 2.916 3' style='clip-rule:evenodd;fill:%23e1e3e9;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:2.47727823;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:.4' transform='translate(15.553 2.85)scale(.88807)'/%3E%3Cpath d='M-11.594 15.465c-.27-.002-.492.297-.494.668l-.012 1.876c-.003.371.214.673.485.675l4.14.027c.271.002.492-.298.495-.668l.012-1.877c.003-.37-.215-.672-.485-.674z' style='clip-rule:evenodd;fill:%23fff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:2.47727823;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:.4' transform='translate(15.553 2.85)scale(.88807)'/%3E%3C/g%3E%3C/svg%3E");background-repeat:no-repeat;cursor:pointer;display:block;height:23px;margin:0 0 -4px -4px;overflow:hidden;width:88px}a.maplibregl-ctrl-logo.maplibregl-compact{width:14px}@media (forced-colors:active){a.maplibregl-ctrl-logo{background-color:transparent;background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='88' height='23' fill='none'%3E%3Cpath fill='%23000' fill-opacity='.4' fill-rule='evenodd' d='M17.408 16.796h-1.827l2.501-12.095h.198l3.324 6.533.988 2.19.988-2.19 3.258-6.533h.181l2.6 12.095h-1.81l-1.218-5.644-.362-1.71-.658 1.71-2.929 5.644h-.098l-2.914-5.644-.757-1.71-.345 1.71zm1.958-3.42-.726 3.663a1.255 1.255 0 0 1-1.232 1.011h-1.827a1.255 1.255 0 0 1-1.229-1.509l2.501-12.095a1.255 1.255 0 0 1 1.23-1.001h.197a1.25 1.25 0 0 1 1.12.685l3.19 6.273 3.125-6.263a1.25 1.25 0 0 1 1.123-.695h.181a1.255 1.255 0 0 1 1.227.991l1.443 6.71a5 5 0 0 1 .314-.787l.009-.016a4.6 4.6 0 0 1 1.777-1.887c.782-.46 1.668-.667 2.611-.667a4.6 4.6 0 0 1 1.7.32l.306.134c.21-.16.474-.256.759-.256h1.694a1.255 1.255 0 0 1 1.212.925 1.255 1.255 0 0 1 1.212-.925h1.711c.284 0 .545.094.755.252.613-.3 1.312-.45 2.075-.45 1.356 0 2.557.445 3.482 1.4q.47.48.763 1.064V4.701a1.255 1.255 0 0 1 1.255-1.255h1.86A1.255 1.255 0 0 1 54.44 4.7v9.194h2.217c.19 0 .37.043.532.118v-4.77c0-.356.147-.678.385-.906a2.42 2.42 0 0 1-.682-1.71c0-.665.267-1.253.735-1.7a2.45 2.45 0 0 1 1.722-.674 2.43 2.43 0 0 1 1.705.675q.318.302.504.683V4.7a1.255 1.255 0 0 1 1.255-1.255h1.744A1.255 1.255 0 0 1 65.812 4.7v3.335a4.8 4.8 0 0 1 1.526-.246c.938 0 1.817.214 2.59.69a4.47 4.47 0 0 1 1.67 1.743v-.98a1.255 1.255 0 0 1 1.256-1.256h1.777c.233 0 .451.064.639.174a3.4 3.4 0 0 1 1.567-.372c.346 0 .861.02 1.285.232a1.25 1.25 0 0 1 .689 1.004 4.7 4.7 0 0 1 .853-.588c.795-.44 1.675-.647 2.61-.647 1.385 0 2.65.39 3.525 1.396.836.938 1.168 2.173 1.168 3.528q-.001.515-.056 1.051a1.255 1.255 0 0 1-.947 1.09l.408.952a1.255 1.255 0 0 1-.477 1.552c-.418.268-.92.463-1.458.612-.613.171-1.304.244-2.049.244-1.06 0-2.043-.207-2.886-.698l-.015-.008c-.798-.48-1.419-1.135-1.818-1.963l-.004-.008a5.8 5.8 0 0 1-.548-2.512q0-.429.053-.843a1.3 1.3 0 0 1-.333-.086l-.166-.004c-.223 0-.426.062-.643.228-.03.024-.142.139-.142.59v3.883a1.255 1.255 0 0 1-1.256 1.256h-1.777a1.255 1.255 0 0 1-1.256-1.256V15.69l-.032.057a4.8 4.8 0 0 1-1.86 1.833 5.04 5.04 0 0 1-2.484.634 4.5 4.5 0 0 1-1.935-.424 1.25 1.25 0 0 1-.764.258h-1.71a1.255 1.255 0 0 1-1.256-1.255V7.687a2.4 2.4 0 0 1-.428.625c.253.23.412.561.412.93v7.553a1.255 1.255 0 0 1-1.256 1.255h-1.843a1.25 1.25 0 0 1-.894-.373c-.228.23-.544.373-.894.373H51.32a1.255 1.255 0 0 1-1.256-1.255v-1.251l-.061.117a4.7 4.7 0 0 1-1.782 1.884 4.77 4.77 0 0 1-2.485.67 5.6 5.6 0 0 1-1.485-.188l.009 2.764a1.255 1.255 0 0 1-1.255 1.259h-1.729a1.255 1.255 0 0 1-1.255-1.255v-3.537a1.255 1.255 0 0 1-1.167.793h-1.679a1.25 1.25 0 0 1-.77-.263 4.5 4.5 0 0 1-1.945.429c-.885 0-1.724-.21-2.495-.632l-.017-.01a5 5 0 0 1-1.081-.836 1.255 1.255 0 0 1-1.254 1.312h-1.81a1.255 1.255 0 0 1-1.228-.99l-.782-3.625-2.044 3.939a1.25 1.25 0 0 1-1.115.676h-.098a1.25 1.25 0 0 1-1.116-.68l-2.061-3.994zM35.92 16.63l.207-.114.223-.15q.493-.356.735-.785l.061-.118.033 1.332h1.678V9.242h-1.694l-.033 1.267q-.133-.329-.526-.658l-.032-.028a3.2 3.2 0 0 0-.668-.428l-.27-.12a3.3 3.3 0 0 0-1.235-.23q-1.136-.001-1.974.493a3.36 3.36 0 0 0-1.3 1.382q-.445.89-.444 2.074 0 1.2.51 2.107a3.8 3.8 0 0 0 1.382 1.381 3.9 3.9 0 0 0 1.893.477q.795 0 1.455-.33zm-2.789-5.38q-.576.675-.575 1.762 0 1.102.559 1.794.576.675 1.645.675a2.25 2.25 0 0 0 .934-.19 2.2 2.2 0 0 0 .468-.29l.178-.161a2.2 2.2 0 0 0 .397-.561q.244-.5.244-1.15v-.115q0-.708-.296-1.267l-.043-.077a2.2 2.2 0 0 0-.633-.709l-.13-.086-.047-.028a2.1 2.1 0 0 0-1.073-.285q-1.052 0-1.629.692zm2.316 2.706c.163-.17.28-.407.28-.83v-.114c0-.292-.06-.508-.15-.68a.96.96 0 0 0-.353-.389.85.85 0 0 0-.464-.127c-.4 0-.56.114-.664.239l-.01.012c-.148.174-.275.45-.275.945 0 .506.122.801.27.99.097.11.266.224.68.224.303 0 .504-.09.687-.269zm7.545 1.705a2.6 2.6 0 0 0 .331.423q.319.33.755.548l.173.074q.65.255 1.49.255 1.02 0 1.844-.493a3.45 3.45 0 0 0 1.316-1.4q.493-.904.493-2.089 0-1.909-.988-2.913-.988-1.02-2.584-1.02-.898 0-1.575.347a3 3 0 0 0-.415.262l-.199.166a3.4 3.4 0 0 0-.64.82V9.242h-1.712v11.553h1.729l-.017-5.134zm.53-1.138q.206.29.48.5l.155.11.053.034q.51.296 1.119.297 1.07 0 1.645-.675.577-.69.576-1.762 0-1.119-.576-1.777-.558-.675-1.645-.675-.435 0-.835.16a2 2 0 0 0-.284.136 2 2 0 0 0-.363.254 2.2 2.2 0 0 0-.46.569l-.082.162a2.6 2.6 0 0 0-.213 1.072v.115q0 .707.296 1.267l.135.211zm.964-.818a1.1 1.1 0 0 0 .367.385.94.94 0 0 0 .476.118c.423 0 .59-.117.687-.23.159-.194.28-.478.28-.95 0-.53-.133-.8-.266-.952l-.021-.025c-.078-.094-.231-.221-.68-.221a1 1 0 0 0-.503.135l-.012.007a.86.86 0 0 0-.335.343c-.073.133-.132.324-.132.614v.115a1.4 1.4 0 0 0 .14.66zm15.7-6.222q.347-.346.346-.856a1.05 1.05 0 0 0-.345-.79 1.18 1.18 0 0 0-.84-.329q-.51 0-.855.33a1.05 1.05 0 0 0-.346.79q0 .51.346.855.345.346.856.346.51 0 .839-.346zm4.337 9.314.033-1.332q.191.403.59.747l.098.081a4 4 0 0 0 .316.224l.223.122a3.2 3.2 0 0 0 1.44.322 3.8 3.8 0 0 0 1.875-.477 3.5 3.5 0 0 0 1.382-1.366q.527-.89.526-2.09 0-1.184-.444-2.073a3.24 3.24 0 0 0-1.283-1.399q-.823-.51-1.942-.51a3.5 3.5 0 0 0-1.527.344l-.086.043-.165.09a3 3 0 0 0-.33.214q-.432.315-.656.707a2 2 0 0 0-.099.198l.082-1.283V4.701h-1.744v12.095zm.473-2.509a2.5 2.5 0 0 0 .566.7q.117.098.245.18l.144.08a2.1 2.1 0 0 0 .975.232q1.07 0 1.645-.675.576-.69.576-1.778 0-1.102-.576-1.777-.56-.691-1.645-.692a2.2 2.2 0 0 0-1.015.235q-.22.113-.415.282l-.15.142a2.1 2.1 0 0 0-.42.594q-.223.479-.223 1.1v.115q0 .705.293 1.26zm2.616-.293c.157-.191.28-.479.28-.967 0-.51-.13-.79-.276-.961l-.021-.026c-.082-.1-.232-.225-.67-.225a.87.87 0 0 0-.681.279l-.012.011c-.154.155-.274.38-.274.807v.115c0 .285.057.499.144.669a1.1 1.1 0 0 0 .367.405c.137.082.28.123.455.123.423 0 .59-.118.686-.23zm8.266-3.013q.345-.13.724-.14l.069-.002q.493 0 .642.099l.247-1.794q-.196-.099-.717-.099a2.3 2.3 0 0 0-.545.063 2 2 0 0 0-.411.148 2.2 2.2 0 0 0-.4.249 2.5 2.5 0 0 0-.485.499 2.7 2.7 0 0 0-.32.581l-.05.137v-1.48h-1.778v7.553h1.777v-3.884q0-.546.159-.943a1.5 1.5 0 0 1 .466-.636 2.5 2.5 0 0 1 .399-.253 2 2 0 0 1 .224-.099zm9.784 2.656.05-.922q0-1.743-.856-2.698-.838-.97-2.584-.97-1.119-.001-2.007.493a3.46 3.46 0 0 0-1.4 1.382q-.493.906-.493 2.106 0 1.07.428 1.975.428.89 1.332 1.432.906.526 2.255.526.973 0 1.668-.185l.044-.012.135-.04q.613-.184.984-.421l-.542-1.267q-.3.162-.642.274l-.297.087q-.51.131-1.3.131-.954 0-1.497-.444a1.6 1.6 0 0 1-.192-.193q-.366-.44-.512-1.234l-.004-.021zm-5.427-1.256-.003.022h3.752v-.138q-.011-.727-.288-1.118a1 1 0 0 0-.156-.176q-.46-.428-1.316-.428-.986 0-1.494.604-.379.45-.494 1.234zm-27.053 2.77V4.7h-1.86v12.095h5.333V15.15zm7.103-5.908v7.553h-1.843V9.242h1.843z'/%3E%3Cpath fill='%23fff' d='m19.63 11.151-.757-1.71-.345 1.71-1.12 5.644h-1.827L18.083 4.7h.197l3.325 6.533.988 2.19.988-2.19L26.839 4.7h.181l2.6 12.095h-1.81l-1.218-5.644-.362-1.71-.658 1.71-2.93 5.644h-.098l-2.913-5.644zm14.836 5.81q-1.02 0-1.893-.478a3.8 3.8 0 0 1-1.381-1.382q-.51-.906-.51-2.106 0-1.185.444-2.074a3.36 3.36 0 0 1 1.3-1.382q.839-.494 1.974-.494a3.3 3.3 0 0 1 1.234.231 3.3 3.3 0 0 1 .97.575q.396.33.527.659l.033-1.267h1.694v7.553H37.18l-.033-1.332q-.279.593-1.02 1.053a3.17 3.17 0 0 1-1.662.444zm.296-1.482q.938 0 1.58-.642.642-.66.642-1.711v-.115q0-.708-.296-1.267a2.2 2.2 0 0 0-.807-.872 2.1 2.1 0 0 0-1.119-.313q-1.053 0-1.629.692-.575.675-.575 1.76 0 1.103.559 1.795.577.675 1.645.675zm6.521-6.237h1.711v1.4q.906-1.597 2.83-1.597 1.596 0 2.584 1.02.988 1.005.988 2.914 0 1.185-.493 2.09a3.46 3.46 0 0 1-1.316 1.399 3.5 3.5 0 0 1-1.844.493q-.954 0-1.662-.329a2.67 2.67 0 0 1-1.086-.97l.017 5.134h-1.728zm4.048 6.22q1.07 0 1.645-.674.577-.69.576-1.762 0-1.119-.576-1.777-.558-.675-1.645-.675-.592 0-1.12.296-.51.28-.822.823-.296.527-.296 1.234v.115q0 .708.296 1.267.313.543.823.855.51.296 1.119.297z'/%3E%3Cpath fill='%23e1e3e9' d='M51.325 4.7h1.86v10.45h3.473v1.646h-5.333zm7.12 4.542h1.843v7.553h-1.843zm.905-1.415a1.16 1.16 0 0 1-.856-.346 1.17 1.17 0 0 1-.346-.856 1.05 1.05 0 0 1 .346-.79q.346-.329.856-.329.494 0 .839.33a1.05 1.05 0 0 1 .345.79 1.16 1.16 0 0 1-.345.855q-.33.346-.84.346zm7.875 9.133a3.17 3.17 0 0 1-1.662-.444q-.723-.46-1.004-1.053l-.033 1.332h-1.71V4.701h1.743v4.657l-.082 1.283q.279-.658 1.086-1.119a3.5 3.5 0 0 1 1.778-.477q1.119 0 1.942.51a3.24 3.24 0 0 1 1.283 1.4q.445.888.444 2.072 0 1.201-.526 2.09a3.5 3.5 0 0 1-1.382 1.366 3.8 3.8 0 0 1-1.876.477zm-.296-1.481q1.069 0 1.645-.675.577-.69.577-1.778 0-1.102-.577-1.776-.56-.691-1.645-.692a2.12 2.12 0 0 0-1.58.659q-.642.641-.642 1.694v.115q0 .71.296 1.267a2.4 2.4 0 0 0 .807.872 2.1 2.1 0 0 0 1.119.313zm5.927-6.237h1.777v1.481q.263-.757.856-1.217a2.14 2.14 0 0 1 1.349-.46q.527 0 .724.098l-.247 1.794q-.149-.099-.642-.099-.774 0-1.416.494-.626.493-.626 1.58v3.883h-1.777V9.242zm9.534 7.718q-1.35 0-2.255-.526-.904-.543-1.332-1.432a4.6 4.6 0 0 1-.428-1.975q0-1.2.493-2.106a3.46 3.46 0 0 1 1.4-1.382q.889-.495 2.007-.494 1.744 0 2.584.97.855.956.856 2.7 0 .444-.05.92h-5.43q.18 1.005.708 1.45.542.443 1.497.443.79 0 1.3-.131a4 4 0 0 0 .938-.362l.542 1.267q-.411.263-1.119.46-.708.198-1.711.197zm1.596-4.558q.016-1.02-.444-1.432-.46-.428-1.316-.428-1.728 0-1.991 1.86z'/%3E%3Cpath d='M5.074 15.948a.484.657 0 0 0-.486.659v1.84a.484.657 0 0 0 .486.659h4.101a.484.657 0 0 0 .486-.659v-1.84a.484.657 0 0 0-.486-.659zm3.56 1.16H5.617v.838h3.017z' style='fill:%23fff;fill-rule:evenodd;stroke-width:1.03600001'/%3E%3Cg style='stroke-width:1.12603545'%3E%3Cpath d='M-9.408-1.416c-3.833-.025-7.056 2.912-7.08 6.615-.02 3.08 1.653 4.832 3.107 6.268.903.892 1.721 1.74 2.32 2.902l-.525-.004c-.543-.003-.992.304-1.24.639a1.87 1.87 0 0 0-.362 1.121l-.011 1.877c-.003.402.104.787.347 1.125.244.338.688.653 1.23.656l4.142.028c.542.003.99-.306 1.238-.641a1.87 1.87 0 0 0 .363-1.121l.012-1.875a1.87 1.87 0 0 0-.348-1.127c-.243-.338-.688-.653-1.23-.656l-.518-.004c.597-1.145 1.425-1.983 2.348-2.87 1.473-1.414 3.18-3.149 3.2-6.226-.016-3.59-2.923-6.684-6.993-6.707m-.006 1.1v.002c3.274.02 5.92 2.532 5.9 5.6-.017 2.706-1.39 4.026-2.863 5.44-1.034.994-2.118 2.033-2.814 3.633-.018.041-.052.055-.075.065q-.013.004-.02.01a.34.34 0 0 1-.226.084.34.34 0 0 1-.224-.086l-.092-.077c-.699-1.615-1.768-2.669-2.781-3.67-1.454-1.435-2.797-2.762-2.78-5.478.02-3.067 2.7-5.545 5.975-5.523m-.02 2.826c-1.62-.01-2.944 1.315-2.955 2.96-.01 1.646 1.295 2.988 2.916 2.999h.002c1.621.01 2.943-1.316 2.953-2.961.011-1.646-1.294-2.988-2.916-2.998m-.005 1.1c1.017.006 1.829.83 1.822 1.89s-.83 1.874-1.848 1.867c-1.018-.006-1.829-.83-1.822-1.89s.83-1.874 1.848-1.868m-2.155 11.857 4.14.025c.271.002.49.305.487.676l-.013 1.875c-.003.37-.224.67-.495.668l-4.14-.025c-.27-.002-.487-.306-.485-.676l.012-1.875c.003-.37.224-.67.494-.668' style='color:%23000;font-style:normal;font-variant:normal;font-weight:400;font-stretch:normal;font-size:medium;line-height:normal;font-family:sans-serif;font-variant-ligatures:normal;font-variant-position:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-alternates:normal;font-feature-settings:normal;text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:%23000;letter-spacing:normal;word-spacing:normal;text-transform:none;writing-mode:lr-tb;direction:ltr;text-orientation:mixed;dominant-baseline:auto;baseline-shift:baseline;text-anchor:start;white-space:normal;shape-padding:0;clip-rule:evenodd;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:%23000;solid-opacity:1;vector-effect:none;fill:%23000;fill-opacity:.4;fill-rule:evenodd;stroke:none;stroke-width:2.47727823;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto' transform='translate(15.553 2.85)scale(.88807)'/%3E%3Cpath d='M-9.415-.316C-12.69-.338-15.37 2.14-15.39 5.207c-.017 2.716 1.326 4.041 2.78 5.477 1.013 1 2.081 2.055 2.78 3.67l.092.076a.34.34 0 0 0 .225.086.34.34 0 0 0 .227-.083l.019-.01c.022-.009.057-.024.074-.064.697-1.6 1.78-2.64 2.814-3.634 1.473-1.414 2.847-2.733 2.864-5.44.02-3.067-2.627-5.58-5.901-5.601m-.057 8.784c1.621.011 2.944-1.315 2.955-2.96.01-1.646-1.295-2.988-2.916-2.999-1.622-.01-2.945 1.315-2.955 2.96s1.295 2.989 2.916 3' style='clip-rule:evenodd;fill:%23e1e3e9;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:2.47727823;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:.4' transform='translate(15.553 2.85)scale(.88807)'/%3E%3Cpath d='M-11.594 15.465c-.27-.002-.492.297-.494.668l-.012 1.876c-.003.371.214.673.485.675l4.14.027c.271.002.492-.298.495-.668l.012-1.877c.003-.37-.215-.672-.485-.674z' style='clip-rule:evenodd;fill:%23fff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:2.47727823;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:.4' transform='translate(15.553 2.85)scale(.88807)'/%3E%3C/g%3E%3C/svg%3E")}}@media (forced-colors:active) and (prefers-color-scheme:light){a.maplibregl-ctrl-logo{background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='88' height='23' fill='none'%3E%3Cpath fill='%23000' fill-opacity='.4' fill-rule='evenodd' d='M17.408 16.796h-1.827l2.501-12.095h.198l3.324 6.533.988 2.19.988-2.19 3.258-6.533h.181l2.6 12.095h-1.81l-1.218-5.644-.362-1.71-.658 1.71-2.929 5.644h-.098l-2.914-5.644-.757-1.71-.345 1.71zm1.958-3.42-.726 3.663a1.255 1.255 0 0 1-1.232 1.011h-1.827a1.255 1.255 0 0 1-1.229-1.509l2.501-12.095a1.255 1.255 0 0 1 1.23-1.001h.197a1.25 1.25 0 0 1 1.12.685l3.19 6.273 3.125-6.263a1.25 1.25 0 0 1 1.123-.695h.181a1.255 1.255 0 0 1 1.227.991l1.443 6.71a5 5 0 0 1 .314-.787l.009-.016a4.6 4.6 0 0 1 1.777-1.887c.782-.46 1.668-.667 2.611-.667a4.6 4.6 0 0 1 1.7.32l.306.134c.21-.16.474-.256.759-.256h1.694a1.255 1.255 0 0 1 1.212.925 1.255 1.255 0 0 1 1.212-.925h1.711c.284 0 .545.094.755.252.613-.3 1.312-.45 2.075-.45 1.356 0 2.557.445 3.482 1.4q.47.48.763 1.064V4.701a1.255 1.255 0 0 1 1.255-1.255h1.86A1.255 1.255 0 0 1 54.44 4.7v9.194h2.217c.19 0 .37.043.532.118v-4.77c0-.356.147-.678.385-.906a2.42 2.42 0 0 1-.682-1.71c0-.665.267-1.253.735-1.7a2.45 2.45 0 0 1 1.722-.674 2.43 2.43 0 0 1 1.705.675q.318.302.504.683V4.7a1.255 1.255 0 0 1 1.255-1.255h1.744A1.255 1.255 0 0 1 65.812 4.7v3.335a4.8 4.8 0 0 1 1.526-.246c.938 0 1.817.214 2.59.69a4.47 4.47 0 0 1 1.67 1.743v-.98a1.255 1.255 0 0 1 1.256-1.256h1.777c.233 0 .451.064.639.174a3.4 3.4 0 0 1 1.567-.372c.346 0 .861.02 1.285.232a1.25 1.25 0 0 1 .689 1.004 4.7 4.7 0 0 1 .853-.588c.795-.44 1.675-.647 2.61-.647 1.385 0 2.65.39 3.525 1.396.836.938 1.168 2.173 1.168 3.528q-.001.515-.056 1.051a1.255 1.255 0 0 1-.947 1.09l.408.952a1.255 1.255 0 0 1-.477 1.552c-.418.268-.92.463-1.458.612-.613.171-1.304.244-2.049.244-1.06 0-2.043-.207-2.886-.698l-.015-.008c-.798-.48-1.419-1.135-1.818-1.963l-.004-.008a5.8 5.8 0 0 1-.548-2.512q0-.429.053-.843a1.3 1.3 0 0 1-.333-.086l-.166-.004c-.223 0-.426.062-.643.228-.03.024-.142.139-.142.59v3.883a1.255 1.255 0 0 1-1.256 1.256h-1.777a1.255 1.255 0 0 1-1.256-1.256V15.69l-.032.057a4.8 4.8 0 0 1-1.86 1.833 5.04 5.04 0 0 1-2.484.634 4.5 4.5 0 0 1-1.935-.424 1.25 1.25 0 0 1-.764.258h-1.71a1.255 1.255 0 0 1-1.256-1.255V7.687a2.4 2.4 0 0 1-.428.625c.253.23.412.561.412.93v7.553a1.255 1.255 0 0 1-1.256 1.255h-1.843a1.25 1.25 0 0 1-.894-.373c-.228.23-.544.373-.894.373H51.32a1.255 1.255 0 0 1-1.256-1.255v-1.251l-.061.117a4.7 4.7 0 0 1-1.782 1.884 4.77 4.77 0 0 1-2.485.67 5.6 5.6 0 0 1-1.485-.188l.009 2.764a1.255 1.255 0 0 1-1.255 1.259h-1.729a1.255 1.255 0 0 1-1.255-1.255v-3.537a1.255 1.255 0 0 1-1.167.793h-1.679a1.25 1.25 0 0 1-.77-.263 4.5 4.5 0 0 1-1.945.429c-.885 0-1.724-.21-2.495-.632l-.017-.01a5 5 0 0 1-1.081-.836 1.255 1.255 0 0 1-1.254 1.312h-1.81a1.255 1.255 0 0 1-1.228-.99l-.782-3.625-2.044 3.939a1.25 1.25 0 0 1-1.115.676h-.098a1.25 1.25 0 0 1-1.116-.68l-2.061-3.994zM35.92 16.63l.207-.114.223-.15q.493-.356.735-.785l.061-.118.033 1.332h1.678V9.242h-1.694l-.033 1.267q-.133-.329-.526-.658l-.032-.028a3.2 3.2 0 0 0-.668-.428l-.27-.12a3.3 3.3 0 0 0-1.235-.23q-1.136-.001-1.974.493a3.36 3.36 0 0 0-1.3 1.382q-.445.89-.444 2.074 0 1.2.51 2.107a3.8 3.8 0 0 0 1.382 1.381 3.9 3.9 0 0 0 1.893.477q.795 0 1.455-.33zm-2.789-5.38q-.576.675-.575 1.762 0 1.102.559 1.794.576.675 1.645.675a2.25 2.25 0 0 0 .934-.19 2.2 2.2 0 0 0 .468-.29l.178-.161a2.2 2.2 0 0 0 .397-.561q.244-.5.244-1.15v-.115q0-.708-.296-1.267l-.043-.077a2.2 2.2 0 0 0-.633-.709l-.13-.086-.047-.028a2.1 2.1 0 0 0-1.073-.285q-1.052 0-1.629.692zm2.316 2.706c.163-.17.28-.407.28-.83v-.114c0-.292-.06-.508-.15-.68a.96.96 0 0 0-.353-.389.85.85 0 0 0-.464-.127c-.4 0-.56.114-.664.239l-.01.012c-.148.174-.275.45-.275.945 0 .506.122.801.27.99.097.11.266.224.68.224.303 0 .504-.09.687-.269zm7.545 1.705a2.6 2.6 0 0 0 .331.423q.319.33.755.548l.173.074q.65.255 1.49.255 1.02 0 1.844-.493a3.45 3.45 0 0 0 1.316-1.4q.493-.904.493-2.089 0-1.909-.988-2.913-.988-1.02-2.584-1.02-.898 0-1.575.347a3 3 0 0 0-.415.262l-.199.166a3.4 3.4 0 0 0-.64.82V9.242h-1.712v11.553h1.729l-.017-5.134zm.53-1.138q.206.29.48.5l.155.11.053.034q.51.296 1.119.297 1.07 0 1.645-.675.577-.69.576-1.762 0-1.119-.576-1.777-.558-.675-1.645-.675-.435 0-.835.16a2 2 0 0 0-.284.136 2 2 0 0 0-.363.254 2.2 2.2 0 0 0-.46.569l-.082.162a2.6 2.6 0 0 0-.213 1.072v.115q0 .707.296 1.267l.135.211zm.964-.818a1.1 1.1 0 0 0 .367.385.94.94 0 0 0 .476.118c.423 0 .59-.117.687-.23.159-.194.28-.478.28-.95 0-.53-.133-.8-.266-.952l-.021-.025c-.078-.094-.231-.221-.68-.221a1 1 0 0 0-.503.135l-.012.007a.86.86 0 0 0-.335.343c-.073.133-.132.324-.132.614v.115a1.4 1.4 0 0 0 .14.66zm15.7-6.222q.347-.346.346-.856a1.05 1.05 0 0 0-.345-.79 1.18 1.18 0 0 0-.84-.329q-.51 0-.855.33a1.05 1.05 0 0 0-.346.79q0 .51.346.855.345.346.856.346.51 0 .839-.346zm4.337 9.314.033-1.332q.191.403.59.747l.098.081a4 4 0 0 0 .316.224l.223.122a3.2 3.2 0 0 0 1.44.322 3.8 3.8 0 0 0 1.875-.477 3.5 3.5 0 0 0 1.382-1.366q.527-.89.526-2.09 0-1.184-.444-2.073a3.24 3.24 0 0 0-1.283-1.399q-.823-.51-1.942-.51a3.5 3.5 0 0 0-1.527.344l-.086.043-.165.09a3 3 0 0 0-.33.214q-.432.315-.656.707a2 2 0 0 0-.099.198l.082-1.283V4.701h-1.744v12.095zm.473-2.509a2.5 2.5 0 0 0 .566.7q.117.098.245.18l.144.08a2.1 2.1 0 0 0 .975.232q1.07 0 1.645-.675.576-.69.576-1.778 0-1.102-.576-1.777-.56-.691-1.645-.692a2.2 2.2 0 0 0-1.015.235q-.22.113-.415.282l-.15.142a2.1 2.1 0 0 0-.42.594q-.223.479-.223 1.1v.115q0 .705.293 1.26zm2.616-.293c.157-.191.28-.479.28-.967 0-.51-.13-.79-.276-.961l-.021-.026c-.082-.1-.232-.225-.67-.225a.87.87 0 0 0-.681.279l-.012.011c-.154.155-.274.38-.274.807v.115c0 .285.057.499.144.669a1.1 1.1 0 0 0 .367.405c.137.082.28.123.455.123.423 0 .59-.118.686-.23zm8.266-3.013q.345-.13.724-.14l.069-.002q.493 0 .642.099l.247-1.794q-.196-.099-.717-.099a2.3 2.3 0 0 0-.545.063 2 2 0 0 0-.411.148 2.2 2.2 0 0 0-.4.249 2.5 2.5 0 0 0-.485.499 2.7 2.7 0 0 0-.32.581l-.05.137v-1.48h-1.778v7.553h1.777v-3.884q0-.546.159-.943a1.5 1.5 0 0 1 .466-.636 2.5 2.5 0 0 1 .399-.253 2 2 0 0 1 .224-.099zm9.784 2.656.05-.922q0-1.743-.856-2.698-.838-.97-2.584-.97-1.119-.001-2.007.493a3.46 3.46 0 0 0-1.4 1.382q-.493.906-.493 2.106 0 1.07.428 1.975.428.89 1.332 1.432.906.526 2.255.526.973 0 1.668-.185l.044-.012.135-.04q.613-.184.984-.421l-.542-1.267q-.3.162-.642.274l-.297.087q-.51.131-1.3.131-.954 0-1.497-.444a1.6 1.6 0 0 1-.192-.193q-.366-.44-.512-1.234l-.004-.021zm-5.427-1.256-.003.022h3.752v-.138q-.011-.727-.288-1.118a1 1 0 0 0-.156-.176q-.46-.428-1.316-.428-.986 0-1.494.604-.379.45-.494 1.234zm-27.053 2.77V4.7h-1.86v12.095h5.333V15.15zm7.103-5.908v7.553h-1.843V9.242h1.843z'/%3E%3Cpath fill='%23fff' d='m19.63 11.151-.757-1.71-.345 1.71-1.12 5.644h-1.827L18.083 4.7h.197l3.325 6.533.988 2.19.988-2.19L26.839 4.7h.181l2.6 12.095h-1.81l-1.218-5.644-.362-1.71-.658 1.71-2.93 5.644h-.098l-2.913-5.644zm14.836 5.81q-1.02 0-1.893-.478a3.8 3.8 0 0 1-1.381-1.382q-.51-.906-.51-2.106 0-1.185.444-2.074a3.36 3.36 0 0 1 1.3-1.382q.839-.494 1.974-.494a3.3 3.3 0 0 1 1.234.231 3.3 3.3 0 0 1 .97.575q.396.33.527.659l.033-1.267h1.694v7.553H37.18l-.033-1.332q-.279.593-1.02 1.053a3.17 3.17 0 0 1-1.662.444zm.296-1.482q.938 0 1.58-.642.642-.66.642-1.711v-.115q0-.708-.296-1.267a2.2 2.2 0 0 0-.807-.872 2.1 2.1 0 0 0-1.119-.313q-1.053 0-1.629.692-.575.675-.575 1.76 0 1.103.559 1.795.577.675 1.645.675zm6.521-6.237h1.711v1.4q.906-1.597 2.83-1.597 1.596 0 2.584 1.02.988 1.005.988 2.914 0 1.185-.493 2.09a3.46 3.46 0 0 1-1.316 1.399 3.5 3.5 0 0 1-1.844.493q-.954 0-1.662-.329a2.67 2.67 0 0 1-1.086-.97l.017 5.134h-1.728zm4.048 6.22q1.07 0 1.645-.674.577-.69.576-1.762 0-1.119-.576-1.777-.558-.675-1.645-.675-.592 0-1.12.296-.51.28-.822.823-.296.527-.296 1.234v.115q0 .708.296 1.267.313.543.823.855.51.296 1.119.297z'/%3E%3Cpath fill='%23e1e3e9' d='M51.325 4.7h1.86v10.45h3.473v1.646h-5.333zm7.12 4.542h1.843v7.553h-1.843zm.905-1.415a1.16 1.16 0 0 1-.856-.346 1.17 1.17 0 0 1-.346-.856 1.05 1.05 0 0 1 .346-.79q.346-.329.856-.329.494 0 .839.33a1.05 1.05 0 0 1 .345.79 1.16 1.16 0 0 1-.345.855q-.33.346-.84.346zm7.875 9.133a3.17 3.17 0 0 1-1.662-.444q-.723-.46-1.004-1.053l-.033 1.332h-1.71V4.701h1.743v4.657l-.082 1.283q.279-.658 1.086-1.119a3.5 3.5 0 0 1 1.778-.477q1.119 0 1.942.51a3.24 3.24 0 0 1 1.283 1.4q.445.888.444 2.072 0 1.201-.526 2.09a3.5 3.5 0 0 1-1.382 1.366 3.8 3.8 0 0 1-1.876.477zm-.296-1.481q1.069 0 1.645-.675.577-.69.577-1.778 0-1.102-.577-1.776-.56-.691-1.645-.692a2.12 2.12 0 0 0-1.58.659q-.642.641-.642 1.694v.115q0 .71.296 1.267a2.4 2.4 0 0 0 .807.872 2.1 2.1 0 0 0 1.119.313zm5.927-6.237h1.777v1.481q.263-.757.856-1.217a2.14 2.14 0 0 1 1.349-.46q.527 0 .724.098l-.247 1.794q-.149-.099-.642-.099-.774 0-1.416.494-.626.493-.626 1.58v3.883h-1.777V9.242zm9.534 7.718q-1.35 0-2.255-.526-.904-.543-1.332-1.432a4.6 4.6 0 0 1-.428-1.975q0-1.2.493-2.106a3.46 3.46 0 0 1 1.4-1.382q.889-.495 2.007-.494 1.744 0 2.584.97.855.956.856 2.7 0 .444-.05.92h-5.43q.18 1.005.708 1.45.542.443 1.497.443.79 0 1.3-.131a4 4 0 0 0 .938-.362l.542 1.267q-.411.263-1.119.46-.708.198-1.711.197zm1.596-4.558q.016-1.02-.444-1.432-.46-.428-1.316-.428-1.728 0-1.991 1.86z'/%3E%3Cpath d='M5.074 15.948a.484.657 0 0 0-.486.659v1.84a.484.657 0 0 0 .486.659h4.101a.484.657 0 0 0 .486-.659v-1.84a.484.657 0 0 0-.486-.659zm3.56 1.16H5.617v.838h3.017z' style='fill:%23fff;fill-rule:evenodd;stroke-width:1.03600001'/%3E%3Cg style='stroke-width:1.12603545'%3E%3Cpath d='M-9.408-1.416c-3.833-.025-7.056 2.912-7.08 6.615-.02 3.08 1.653 4.832 3.107 6.268.903.892 1.721 1.74 2.32 2.902l-.525-.004c-.543-.003-.992.304-1.24.639a1.87 1.87 0 0 0-.362 1.121l-.011 1.877c-.003.402.104.787.347 1.125.244.338.688.653 1.23.656l4.142.028c.542.003.99-.306 1.238-.641a1.87 1.87 0 0 0 .363-1.121l.012-1.875a1.87 1.87 0 0 0-.348-1.127c-.243-.338-.688-.653-1.23-.656l-.518-.004c.597-1.145 1.425-1.983 2.348-2.87 1.473-1.414 3.18-3.149 3.2-6.226-.016-3.59-2.923-6.684-6.993-6.707m-.006 1.1v.002c3.274.02 5.92 2.532 5.9 5.6-.017 2.706-1.39 4.026-2.863 5.44-1.034.994-2.118 2.033-2.814 3.633-.018.041-.052.055-.075.065q-.013.004-.02.01a.34.34 0 0 1-.226.084.34.34 0 0 1-.224-.086l-.092-.077c-.699-1.615-1.768-2.669-2.781-3.67-1.454-1.435-2.797-2.762-2.78-5.478.02-3.067 2.7-5.545 5.975-5.523m-.02 2.826c-1.62-.01-2.944 1.315-2.955 2.96-.01 1.646 1.295 2.988 2.916 2.999h.002c1.621.01 2.943-1.316 2.953-2.961.011-1.646-1.294-2.988-2.916-2.998m-.005 1.1c1.017.006 1.829.83 1.822 1.89s-.83 1.874-1.848 1.867c-1.018-.006-1.829-.83-1.822-1.89s.83-1.874 1.848-1.868m-2.155 11.857 4.14.025c.271.002.49.305.487.676l-.013 1.875c-.003.37-.224.67-.495.668l-4.14-.025c-.27-.002-.487-.306-.485-.676l.012-1.875c.003-.37.224-.67.494-.668' style='color:%23000;font-style:normal;font-variant:normal;font-weight:400;font-stretch:normal;font-size:medium;line-height:normal;font-family:sans-serif;font-variant-ligatures:normal;font-variant-position:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-alternates:normal;font-feature-settings:normal;text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:%23000;letter-spacing:normal;word-spacing:normal;text-transform:none;writing-mode:lr-tb;direction:ltr;text-orientation:mixed;dominant-baseline:auto;baseline-shift:baseline;text-anchor:start;white-space:normal;shape-padding:0;clip-rule:evenodd;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:%23000;solid-opacity:1;vector-effect:none;fill:%23000;fill-opacity:.4;fill-rule:evenodd;stroke:none;stroke-width:2.47727823;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto' transform='translate(15.553 2.85)scale(.88807)'/%3E%3Cpath d='M-9.415-.316C-12.69-.338-15.37 2.14-15.39 5.207c-.017 2.716 1.326 4.041 2.78 5.477 1.013 1 2.081 2.055 2.78 3.67l.092.076a.34.34 0 0 0 .225.086.34.34 0 0 0 .227-.083l.019-.01c.022-.009.057-.024.074-.064.697-1.6 1.78-2.64 2.814-3.634 1.473-1.414 2.847-2.733 2.864-5.44.02-3.067-2.627-5.58-5.901-5.601m-.057 8.784c1.621.011 2.944-1.315 2.955-2.96.01-1.646-1.295-2.988-2.916-2.999-1.622-.01-2.945 1.315-2.955 2.96s1.295 2.989 2.916 3' style='clip-rule:evenodd;fill:%23e1e3e9;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:2.47727823;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:.4' transform='translate(15.553 2.85)scale(.88807)'/%3E%3Cpath d='M-11.594 15.465c-.27-.002-.492.297-.494.668l-.012 1.876c-.003.371.214.673.485.675l4.14.027c.271.002.492-.298.495-.668l.012-1.877c.003-.37-.215-.672-.485-.674z' style='clip-rule:evenodd;fill:%23fff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:2.47727823;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:.4' transform='translate(15.553 2.85)scale(.88807)'/%3E%3C/g%3E%3C/svg%3E")}}.maplibregl-ctrl.maplibregl-ctrl-attrib{background-color:hsla(0,0%,100%,.5);margin:0;padding:0 5px}@media screen{.maplibregl-ctrl-attrib.maplibregl-compact{background-color:#fff;border-radius:12px;box-sizing:content-box;color:#000;margin:10px;min-height:20px;padding:2px 24px 2px 0;position:relative}.maplibregl-ctrl-attrib.maplibregl-compact-show{padding:2px 28px 2px 8px;visibility:visible}.maplibregl-ctrl-bottom-left>.maplibregl-ctrl-attrib.maplibregl-compact-show,.maplibregl-ctrl-top-left>.maplibregl-ctrl-attrib.maplibregl-compact-show{border-radius:12px;padding:2px 8px 2px 28px}.maplibregl-ctrl-attrib.maplibregl-compact .maplibregl-ctrl-attrib-inner{display:none}.maplibregl-ctrl-attrib-button{background-color:hsla(0,0%,100%,.5);background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' fill-rule='evenodd' viewBox='0 0 20 20'%3E%3Cpath d='M4 10a6 6 0 1 0 12 0 6 6 0 1 0-12 0m5-3a1 1 0 1 0 2 0 1 1 0 1 0-2 0m0 3a1 1 0 1 1 2 0v3a1 1 0 1 1-2 0'/%3E%3C/svg%3E");border:0;border-radius:12px;box-sizing:border-box;cursor:pointer;display:none;height:24px;outline:none;position:absolute;right:0;top:0;width:24px}.maplibregl-ctrl-attrib summary.maplibregl-ctrl-attrib-button{-webkit-appearance:none;-moz-appearance:none;appearance:none;list-style:none}.maplibregl-ctrl-attrib summary.maplibregl-ctrl-attrib-button::-webkit-details-marker{display:none}.maplibregl-ctrl-bottom-left .maplibregl-ctrl-attrib-button,.maplibregl-ctrl-top-left .maplibregl-ctrl-attrib-button{left:0}.maplibregl-ctrl-attrib.maplibregl-compact .maplibregl-ctrl-attrib-button,.maplibregl-ctrl-attrib.maplibregl-compact-show .maplibregl-ctrl-attrib-inner{display:block}.maplibregl-ctrl-attrib.maplibregl-compact-show .maplibregl-ctrl-attrib-button{background-color:rgb(0 0 0/5%)}.maplibregl-ctrl-bottom-right>.maplibregl-ctrl-attrib.maplibregl-compact:after{bottom:0;right:0}.maplibregl-ctrl-top-right>.maplibregl-ctrl-attrib.maplibregl-compact:after{right:0;top:0}.maplibregl-ctrl-top-left>.maplibregl-ctrl-attrib.maplibregl-compact:after{left:0;top:0}.maplibregl-ctrl-bottom-left>.maplibregl-ctrl-attrib.maplibregl-compact:after{bottom:0;left:0}}@media screen and (forced-colors:active){.maplibregl-ctrl-attrib.maplibregl-compact:after{background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' fill='%23fff' fill-rule='evenodd' viewBox='0 0 20 20'%3E%3Cpath d='M4 10a6 6 0 1 0 12 0 6 6 0 1 0-12 0m5-3a1 1 0 1 0 2 0 1 1 0 1 0-2 0m0 3a1 1 0 1 1 2 0v3a1 1 0 1 1-2 0'/%3E%3C/svg%3E")}}@media screen and (forced-colors:active) and (prefers-color-scheme:light){.maplibregl-ctrl-attrib.maplibregl-compact:after{background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' fill-rule='evenodd' viewBox='0 0 20 20'%3E%3Cpath d='M4 10a6 6 0 1 0 12 0 6 6 0 1 0-12 0m5-3a1 1 0 1 0 2 0 1 1 0 1 0-2 0m0 3a1 1 0 1 1 2 0v3a1 1 0 1 1-2 0'/%3E%3C/svg%3E")}}.maplibregl-ctrl-attrib a{color:rgba(0,0,0,.75);text-decoration:none}.maplibregl-ctrl-attrib a:hover{color:inherit;text-decoration:underline}.maplibregl-attrib-empty{display:none}.maplibregl-ctrl-scale{background-color:hsla(0,0%,100%,.75);border:2px solid #333;border-top:#333;box-sizing:border-box;color:#333;font-size:10px;padding:0 5px}.maplibregl-popup{display:flex;left:0;pointer-events:none;position:absolute;top:0;will-change:transform}.maplibregl-popup-anchor-top,.maplibregl-popup-anchor-top-left,.maplibregl-popup-anchor-top-right{flex-direction:column}.maplibregl-popup-anchor-bottom,.maplibregl-popup-anchor-bottom-left,.maplibregl-popup-anchor-bottom-right{flex-direction:column-reverse}.maplibregl-popup-anchor-left{flex-direction:row}.maplibregl-popup-anchor-right{flex-direction:row-reverse}.maplibregl-popup-tip{border:10px solid transparent;height:0;width:0;z-index:1}.maplibregl-popup-anchor-top .maplibregl-popup-tip{align-self:center;border-bottom-color:#fff;border-top:none}.maplibregl-popup-anchor-top-left .maplibregl-popup-tip{align-self:flex-start;border-bottom-color:#fff;border-left:none;border-top:none}.maplibregl-popup-anchor-top-right .maplibregl-popup-tip{align-self:flex-end;border-bottom-color:#fff;border-right:none;border-top:none}.maplibregl-popup-anchor-bottom .maplibregl-popup-tip{align-self:center;border-bottom:none;border-top-color:#fff}.maplibregl-popup-anchor-bottom-left .maplibregl-popup-tip{align-self:flex-start;border-bottom:none;border-left:none;border-top-color:#fff}.maplibregl-popup-anchor-bottom-right .maplibregl-popup-tip{align-self:flex-end;border-bottom:none;border-right:none;border-top-color:#fff}.maplibregl-popup-anchor-left .maplibregl-popup-tip{align-self:center;border-left:none;border-right-color:#fff}.maplibregl-popup-anchor-right .maplibregl-popup-tip{align-self:center;border-left-color:#fff;border-right:none}.maplibregl-popup-close-button{background-color:transparent;border:0;border-radius:0 3px 0 0;cursor:pointer;position:absolute;right:0;top:0}.maplibregl-popup-close-button:hover{background-color:rgb(0 0 0/5%)}.maplibregl-popup-content{background:#fff;border-radius:3px;box-shadow:0 1px 2px rgba(0,0,0,.1);padding:15px 10px;pointer-events:auto;position:relative}.maplibregl-popup-anchor-top-left .maplibregl-popup-content{border-top-left-radius:0}.maplibregl-popup-anchor-top-right .maplibregl-popup-content{border-top-right-radius:0}.maplibregl-popup-anchor-bottom-left .maplibregl-popup-content{border-bottom-left-radius:0}.maplibregl-popup-anchor-bottom-right .maplibregl-popup-content{border-bottom-right-radius:0}.maplibregl-popup-track-pointer{display:none}.maplibregl-popup-track-pointer *{pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.maplibregl-map:hover .maplibregl-popup-track-pointer{display:flex}.maplibregl-map:active .maplibregl-popup-track-pointer{display:none}.maplibregl-marker{left:0;position:absolute;top:0;transition:opacity .2s;will-change:transform}.maplibregl-user-location-dot,.maplibregl-user-location-dot:before{background-color:#1da1f2;border-radius:50%;height:15px;width:15px}.maplibregl-user-location-dot:before{animation:maplibregl-user-location-dot-pulse 2s infinite;content:"";position:absolute}.maplibregl-user-location-dot:after{border:2px solid #fff;border-radius:50%;box-shadow:0 0 3px rgba(0,0,0,.35);box-sizing:border-box;content:"";height:19px;left:-2px;position:absolute;top:-2px;width:19px}@keyframes maplibregl-user-location-dot-pulse{0%{opacity:1;transform:scale(1)}70%{opacity:0;transform:scale(3)}to{opacity:0;transform:scale(1)}}.maplibregl-user-location-dot-stale{background-color:#aaa}.maplibregl-user-location-dot-stale:after{display:none}.maplibregl-user-location-accuracy-circle{background-color:#1da1f233;border-radius:100%;height:1px;width:1px}.maplibregl-crosshair,.maplibregl-crosshair .maplibregl-interactive,.maplibregl-crosshair .maplibregl-interactive:active{cursor:crosshair}.maplibregl-boxzoom{background:#fff;border:2px dotted #202020;height:0;left:0;opacity:.5;position:absolute;top:0;width:0}.maplibregl-cooperative-gesture-screen{align-items:center;background:rgba(0,0,0,.4);color:#fff;display:flex;font-size:1.4em;inset:0;justify-content:center;line-height:1.2;opacity:0;padding:1rem;pointer-events:none;position:absolute;transition:opacity 1s ease 1s;z-index:99999}.maplibregl-cooperative-gesture-screen.maplibregl-show{opacity:1;transition:opacity .05s}.maplibregl-cooperative-gesture-screen .maplibregl-mobile-message{display:none}@media (hover:none),(width <= 480px){.maplibregl-cooperative-gesture-screen .maplibregl-desktop-message{display:none}.maplibregl-cooperative-gesture-screen .maplibregl-mobile-message{display:block}}.maplibregl-pseudo-fullscreen{height:100%!important;left:0!important;position:fixed!important;top:0!important;width:100%!important;z-index:99999}`;
-          document.head.appendChild(e);
-        }
-      })();
     }
   });
 
@@ -29082,8 +29068,8 @@ var Plotly = (() => {
                   limbLen--;
                   limbPow = limbPow / base | 0;
                   var total = number.length - start;
-                  var mod5 = total % limbLen;
-                  var end = Math.min(total, total - mod5) + start;
+                  var mod7 = total % limbLen;
+                  var end = Math.min(total, total - mod7) + start;
                   var word = 0;
                   for (var i = start; i < end; i += limbLen) {
                     word = parseBase(number, i, i + limbLen, base);
@@ -29094,10 +29080,10 @@ var Plotly = (() => {
                       this._iaddn(word);
                     }
                   }
-                  if (mod5 !== 0) {
+                  if (mod7 !== 0) {
                     var pow = 1;
                     word = parseBase(number, i, number.length, base);
-                    for (i = 0; i < mod5; i++) {
+                    for (i = 0; i < mod7; i++) {
                       pow *= base;
                     }
                     this.imuln(pow);
@@ -30808,21 +30794,21 @@ var Plotly = (() => {
                       mod: new BN(0)
                     };
                   }
-                  var div, mod5, res;
+                  var div, mod7, res;
                   if (this.negative !== 0 && num.negative === 0) {
                     res = this.neg().divmod(num, mode);
                     if (mode !== "mod") {
                       div = res.div.neg();
                     }
                     if (mode !== "div") {
-                      mod5 = res.mod.neg();
-                      if (positive && mod5.negative !== 0) {
-                        mod5.iadd(num);
+                      mod7 = res.mod.neg();
+                      if (positive && mod7.negative !== 0) {
+                        mod7.iadd(num);
                       }
                     }
                     return {
                       div,
-                      mod: mod5
+                      mod: mod7
                     };
                   }
                   if (this.negative === 0 && num.negative !== 0) {
@@ -30838,14 +30824,14 @@ var Plotly = (() => {
                   if ((this.negative & num.negative) !== 0) {
                     res = this.neg().divmod(num.neg(), mode);
                     if (mode !== "div") {
-                      mod5 = res.mod.neg();
-                      if (positive && mod5.negative !== 0) {
-                        mod5.isub(num);
+                      mod7 = res.mod.neg();
+                      if (positive && mod7.negative !== 0) {
+                        mod7.isub(num);
                       }
                     }
                     return {
                       div: res.div,
-                      mod: mod5
+                      mod: mod7
                     };
                   }
                   if (num.length > this.length || this.cmp(num) < 0) {
@@ -30877,7 +30863,7 @@ var Plotly = (() => {
                 BN.prototype.div = function div(num) {
                   return this.divmod(num, "div", false).div;
                 };
-                BN.prototype.mod = function mod5(num) {
+                BN.prototype.mod = function mod7(num) {
                   return this.divmod(num, "mod", false).mod;
                 };
                 BN.prototype.umod = function umod(num) {
@@ -30886,10 +30872,10 @@ var Plotly = (() => {
                 BN.prototype.divRound = function divRound(num) {
                   var dm = this.divmod(num);
                   if (dm.mod.isZero()) return dm.div;
-                  var mod5 = dm.div.negative !== 0 ? dm.mod.isub(num) : dm.mod;
+                  var mod7 = dm.div.negative !== 0 ? dm.mod.isub(num) : dm.mod;
                   var half = num.ushrn(1);
                   var r2 = num.andln(1);
-                  var cmp = mod5.cmp(half);
+                  var cmp = mod7.cmp(half);
                   if (cmp < 0 || r2 === 1 && cmp === 0) return dm.div;
                   return dm.div.negative !== 0 ? dm.div.isubn(1) : dm.div.iaddn(1);
                 };
@@ -44335,7 +44321,7 @@ var Plotly = (() => {
   // node_modules/.pnpm/world-calendars@1.0.4/node_modules/world-calendars/dist/main.js
   var require_main = __commonJS({
     "node_modules/.pnpm/world-calendars@1.0.4/node_modules/world-calendars/dist/main.js"(exports, module) {
-      var assign = require_object_assign();
+      var assign16 = require_object_assign();
       function Calendars() {
         this.regionalOptions = [];
         this.regionalOptions[""] = {
@@ -44349,7 +44335,7 @@ var Plotly = (() => {
         this.calendars = {};
         this._localCals = {};
       }
-      assign(Calendars.prototype, {
+      assign16(Calendars.prototype, {
         /** Obtain a calendar implementation and localisation.
             @memberof Calendars
             @param [name='gregorian'] {string} The name of the calendar, e.g. 'gregorian', 'persian', 'islamic'.
@@ -44428,7 +44414,7 @@ var Plotly = (() => {
         value = "" + value;
         return "000000".substring(0, length - value.length) + value;
       }
-      assign(CDate.prototype, {
+      assign16(CDate.prototype, {
         /** Create a new date.
             @memberof CDate
             @param [year] {CDate|number} The date to copy or the year for the date (default this date).
@@ -44618,7 +44604,7 @@ var Plotly = (() => {
       function BaseCalendar() {
         this.shortYearCutoff = "+10";
       }
-      assign(BaseCalendar.prototype, {
+      assign16(BaseCalendar.prototype, {
         _validateLevel: 0,
         // "Stack" to turn validation on/off
         /** Create a new date within this calendar - today if no parameters given.
@@ -44982,7 +44968,7 @@ var Plotly = (() => {
         this.local = this.regionalOptions[language] || this.regionalOptions[""];
       }
       GregorianCalendar.prototype = new BaseCalendar();
-      assign(GregorianCalendar.prototype, {
+      assign16(GregorianCalendar.prototype, {
         /** The calendar name.
             @memberof GregorianCalendar */
         name: "Gregorian",
@@ -45183,6926 +45169,6 @@ var Plotly = (() => {
       _exports.cdate = CDate;
       _exports.baseCalendar = BaseCalendar;
       _exports.calendars.gregorian = GregorianCalendar;
-    }
-  });
-
-  // node_modules/.pnpm/world-calendars@1.0.4/node_modules/world-calendars/dist/plus.js
-  var require_plus = __commonJS({
-    "node_modules/.pnpm/world-calendars@1.0.4/node_modules/world-calendars/dist/plus.js"() {
-      var assign = require_object_assign();
-      var main = require_main();
-      assign(main.regionalOptions[""], {
-        invalidArguments: "Invalid arguments",
-        invalidFormat: "Cannot format a date from another calendar",
-        missingNumberAt: "Missing number at position {0}",
-        unknownNameAt: "Unknown name at position {0}",
-        unexpectedLiteralAt: "Unexpected literal at position {0}",
-        unexpectedText: "Additional text found at end"
-      });
-      main.local = main.regionalOptions[""];
-      assign(main.cdate.prototype, {
-        /** Format this date.
-            Found in the <code>jquery.calendars.plus.js</code> module.
-            @memberof CDate
-            @param [format] {string} The date format to use (see <a href="BaseCalendar.html#formatDate"><code>formatDate</code></a>).
-            @param [settings] {object} Options for the <code>formatDate</code> function.
-            @return {string} The formatted date. */
-        formatDate: function(format4, settings) {
-          if (typeof format4 !== "string") {
-            settings = format4;
-            format4 = "";
-          }
-          return this._calendar.formatDate(format4 || "", this, settings);
-        }
-      });
-      assign(main.baseCalendar.prototype, {
-        UNIX_EPOCH: main.instance().newDate(1970, 1, 1).toJD(),
-        SECS_PER_DAY: 24 * 60 * 60,
-        TICKS_EPOCH: main.instance().jdEpoch,
-        // 1 January 0001 CE
-        TICKS_PER_DAY: 24 * 60 * 60 * 1e7,
-        /** Date form for ATOM (RFC 3339/ISO 8601).
-            Found in the <code>jquery.calendars.plus.js</code> module.
-            @memberof BaseCalendar */
-        ATOM: "yyyy-mm-dd",
-        /** Date form for cookies.
-            Found in the <code>jquery.calendars.plus.js</code> module.
-            @memberof BaseCalendar */
-        COOKIE: "D, dd M yyyy",
-        /** Date form for full date.
-            Found in the <code>jquery.calendars.plus.js</code> module.
-            @memberof BaseCalendar */
-        FULL: "DD, MM d, yyyy",
-        /** Date form for ISO 8601.
-            Found in the <code>jquery.calendars.plus.js</code> module.
-            @memberof BaseCalendar */
-        ISO_8601: "yyyy-mm-dd",
-        /** Date form for Julian date.
-            Found in the <code>jquery.calendars.plus.js</code> module.
-            @memberof BaseCalendar */
-        JULIAN: "J",
-        /** Date form for RFC 822.
-            Found in the <code>jquery.calendars.plus.js</code> module.
-            @memberof BaseCalendar */
-        RFC_822: "D, d M yy",
-        /** Date form for RFC 850.
-            Found in the <code>jquery.calendars.plus.js</code> module.
-            @memberof BaseCalendar */
-        RFC_850: "DD, dd-M-yy",
-        /** Date form for RFC 1036.
-            Found in the <code>jquery.calendars.plus.js</code> module.
-            @memberof BaseCalendar */
-        RFC_1036: "D, d M yy",
-        /** Date form for RFC 1123.
-            Found in the <code>jquery.calendars.plus.js</code> module.
-            @memberof BaseCalendar */
-        RFC_1123: "D, d M yyyy",
-        /** Date form for RFC 2822.
-            Found in the <code>jquery.calendars.plus.js</code> module.
-            @memberof BaseCalendar */
-        RFC_2822: "D, d M yyyy",
-        /** Date form for RSS (RFC 822).
-            Found in the <code>jquery.calendars.plus.js</code> module.
-            @memberof BaseCalendar */
-        RSS: "D, d M yy",
-        /** Date form for Windows ticks.
-            Found in the <code>jquery.calendars.plus.js</code> module.
-            @memberof BaseCalendar */
-        TICKS: "!",
-        /** Date form for Unix timestamp.
-            Found in the <code>jquery.calendars.plus.js</code> module.
-            @memberof BaseCalendar */
-        TIMESTAMP: "@",
-        /** Date form for W3c (ISO 8601).
-            Found in the <code>jquery.calendars.plus.js</code> module.
-            @memberof BaseCalendar */
-        W3C: "yyyy-mm-dd",
-        /** Format a date object into a string value.
-            The format can be combinations of the following:
-            <ul>
-            <li>d  - day of month (no leading zero)</li>
-            <li>dd - day of month (two digit)</li>
-            <li>o  - day of year (no leading zeros)</li>
-            <li>oo - day of year (three digit)</li>
-            <li>D  - day name short</li>
-            <li>DD - day name long</li>
-            <li>w  - week of year (no leading zero)</li>
-            <li>ww - week of year (two digit)</li>
-            <li>m  - month of year (no leading zero)</li>
-            <li>mm - month of year (two digit)</li>
-            <li>M  - month name short</li>
-            <li>MM - month name long</li>
-            <li>yy - year (two digit)</li>
-            <li>yyyy - year (four digit)</li>
-            <li>YYYY - formatted year</li>
-            <li>J  - Julian date (days since January 1, 4713 BCE Greenwich noon)</li>
-            <li>@  - Unix timestamp (s since 01/01/1970)</li>
-            <li>!  - Windows ticks (100ns since 01/01/0001)</li>
-            <li>'...' - literal text</li>
-            <li>'' - single quote</li>
-            </ul>
-            Found in the <code>jquery.calendars.plus.js</code> module.
-            @memberof BaseCalendar
-            @param [format] {string} The desired format of the date (defaults to calendar format).
-            @param date {CDate} The date value to format.
-            @param [settings] {object} Addition options, whose attributes include:
-            @property [dayNamesShort] {string[]} Abbreviated names of the days from Sunday.
-            @property [dayNames] {string[]} Names of the days from Sunday.
-            @property [monthNamesShort] {string[]} Abbreviated names of the months.
-            @property [monthNames] {string[]} Names of the months.
-            @property [calculateWeek] {CalendarsPickerCalculateWeek} Function that determines week of the year.
-            @property [localNumbers=false] {boolean} <code>true</code> to localise numbers (if available),
-                      <code>false</code> to use normal Arabic numerals.
-            @return {string} The date in the above format.
-            @throws Errors if the date is from a different calendar. */
-        formatDate: function(format4, date, settings) {
-          if (typeof format4 !== "string") {
-            settings = date;
-            date = format4;
-            format4 = "";
-          }
-          if (!date) {
-            return "";
-          }
-          if (date.calendar() !== this) {
-            throw main.local.invalidFormat || main.regionalOptions[""].invalidFormat;
-          }
-          format4 = format4 || this.local.dateFormat;
-          settings = settings || {};
-          var dayNamesShort = settings.dayNamesShort || this.local.dayNamesShort;
-          var dayNames = settings.dayNames || this.local.dayNames;
-          var monthNumbers = settings.monthNumbers || this.local.monthNumbers;
-          var monthNamesShort = settings.monthNamesShort || this.local.monthNamesShort;
-          var monthNames = settings.monthNames || this.local.monthNames;
-          var calculateWeek = settings.calculateWeek || this.local.calculateWeek;
-          var doubled = function(match, step) {
-            var matches = 1;
-            while (iFormat + matches < format4.length && format4.charAt(iFormat + matches) === match) {
-              matches++;
-            }
-            iFormat += matches - 1;
-            return Math.floor(matches / (step || 1)) > 1;
-          };
-          var formatNumber = function(match, value, len2, step) {
-            var num = "" + value;
-            if (doubled(match, step)) {
-              while (num.length < len2) {
-                num = "0" + num;
-              }
-            }
-            return num;
-          };
-          var formatName = function(match, value, shortNames, longNames) {
-            return doubled(match) ? longNames[value] : shortNames[value];
-          };
-          var calendar = this;
-          var formatMonth = function(date2) {
-            return typeof monthNumbers === "function" ? monthNumbers.call(calendar, date2, doubled("m")) : localiseNumbers(formatNumber("m", date2.month(), 2));
-          };
-          var formatMonthName = function(date2, useLongName) {
-            if (useLongName) {
-              return typeof monthNames === "function" ? monthNames.call(calendar, date2) : monthNames[date2.month() - calendar.minMonth];
-            } else {
-              return typeof monthNamesShort === "function" ? monthNamesShort.call(calendar, date2) : monthNamesShort[date2.month() - calendar.minMonth];
-            }
-          };
-          var digits = this.local.digits;
-          var localiseNumbers = function(value) {
-            return settings.localNumbers && digits ? digits(value) : value;
-          };
-          var output = "";
-          var literal = false;
-          for (var iFormat = 0; iFormat < format4.length; iFormat++) {
-            if (literal) {
-              if (format4.charAt(iFormat) === "'" && !doubled("'")) {
-                literal = false;
-              } else {
-                output += format4.charAt(iFormat);
-              }
-            } else {
-              switch (format4.charAt(iFormat)) {
-                case "d":
-                  output += localiseNumbers(formatNumber("d", date.day(), 2));
-                  break;
-                case "D":
-                  output += formatName(
-                    "D",
-                    date.dayOfWeek(),
-                    dayNamesShort,
-                    dayNames
-                  );
-                  break;
-                case "o":
-                  output += formatNumber("o", date.dayOfYear(), 3);
-                  break;
-                case "w":
-                  output += formatNumber("w", date.weekOfYear(), 2);
-                  break;
-                case "m":
-                  output += formatMonth(date);
-                  break;
-                case "M":
-                  output += formatMonthName(date, doubled("M"));
-                  break;
-                case "y":
-                  output += doubled("y", 2) ? date.year() : (date.year() % 100 < 10 ? "0" : "") + date.year() % 100;
-                  break;
-                case "Y":
-                  doubled("Y", 2);
-                  output += date.formatYear();
-                  break;
-                case "J":
-                  output += date.toJD();
-                  break;
-                case "@":
-                  output += (date.toJD() - this.UNIX_EPOCH) * this.SECS_PER_DAY;
-                  break;
-                case "!":
-                  output += (date.toJD() - this.TICKS_EPOCH) * this.TICKS_PER_DAY;
-                  break;
-                case "'":
-                  if (doubled("'")) {
-                    output += "'";
-                  } else {
-                    literal = true;
-                  }
-                  break;
-                default:
-                  output += format4.charAt(iFormat);
-              }
-            }
-          }
-          return output;
-        },
-        /** Parse a string value into a date object.
-            See <a href="#formatDate"><code>formatDate</code></a> for the possible formats, plus:
-            <ul>
-            <li>* - ignore rest of string</li>
-            </ul>
-            Found in the <code>jquery.calendars.plus.js</code> module.
-            @memberof BaseCalendar
-            @param format {string} The expected format of the date ('' for default calendar format).
-            @param value {string} The date in the above format.
-            @param [settings] {object} Additional options whose attributes include:
-            @property [shortYearCutoff] {number} The cutoff year for determining the century.
-            @property [dayNamesShort] {string[]} Abbreviated names of the days from Sunday.
-            @property [dayNames] {string[]} Names of the days from Sunday.
-            @property [monthNamesShort] {string[]} Abbreviated names of the months.
-            @property [monthNames] {string[]} Names of the months.
-            @return {CDate} The extracted date value or <code>null</code> if value is blank.
-            @throws Errors if the format and/or value are missing,
-                    if the value doesn't match the format, or if the date is invalid. */
-        parseDate: function(format4, value, settings) {
-          if (value == null) {
-            throw main.local.invalidArguments || main.regionalOptions[""].invalidArguments;
-          }
-          value = typeof value === "object" ? value.toString() : value + "";
-          if (value === "") {
-            return null;
-          }
-          format4 = format4 || this.local.dateFormat;
-          settings = settings || {};
-          var shortYearCutoff = settings.shortYearCutoff || this.shortYearCutoff;
-          shortYearCutoff = typeof shortYearCutoff !== "string" ? shortYearCutoff : this.today().year() % 100 + parseInt(shortYearCutoff, 10);
-          var dayNamesShort = settings.dayNamesShort || this.local.dayNamesShort;
-          var dayNames = settings.dayNames || this.local.dayNames;
-          var parseMonth = settings.parseMonth || this.local.parseMonth;
-          var monthNumbers = settings.monthNumbers || this.local.monthNumbers;
-          var monthNamesShort = settings.monthNamesShort || this.local.monthNamesShort;
-          var monthNames = settings.monthNames || this.local.monthNames;
-          var jd = -1;
-          var year2 = -1;
-          var month2 = -1;
-          var day2 = -1;
-          var doy = -1;
-          var shortYear = false;
-          var literal = false;
-          var doubled = function(match, step) {
-            var matches = 1;
-            while (iFormat + matches < format4.length && format4.charAt(iFormat + matches) === match) {
-              matches++;
-            }
-            iFormat += matches - 1;
-            return Math.floor(matches / (step || 1)) > 1;
-          };
-          var getNumber = function(match, step) {
-            var isDoubled = doubled(match, step);
-            var size = [2, 3, isDoubled ? 4 : 2, isDoubled ? 4 : 2, 10, 11, 20]["oyYJ@!".indexOf(match) + 1];
-            var digits = new RegExp("^-?\\d{1," + size + "}");
-            var num = value.substring(iValue).match(digits);
-            if (!num) {
-              throw (main.local.missingNumberAt || main.regionalOptions[""].missingNumberAt).replace(/\{0\}/, iValue);
-            }
-            iValue += num[0].length;
-            return parseInt(num[0], 10);
-          };
-          var calendar = this;
-          var getMonthNumber = function() {
-            if (typeof monthNumbers === "function") {
-              doubled("m");
-              var month3 = monthNumbers.call(calendar, value.substring(iValue));
-              iValue += month3.length;
-              return month3;
-            }
-            return getNumber("m");
-          };
-          var getName = function(match, shortNames, longNames, step) {
-            var names2 = doubled(match, step) ? longNames : shortNames;
-            for (var i = 0; i < names2.length; i++) {
-              if (value.substr(iValue, names2[i].length).toLowerCase() === names2[i].toLowerCase()) {
-                iValue += names2[i].length;
-                return i + calendar.minMonth;
-              }
-            }
-            throw (main.local.unknownNameAt || main.regionalOptions[""].unknownNameAt).replace(/\{0\}/, iValue);
-          };
-          var getMonthName = function() {
-            if (typeof monthNames === "function") {
-              var month3 = doubled("M") ? monthNames.call(calendar, value.substring(iValue)) : monthNamesShort.call(calendar, value.substring(iValue));
-              iValue += month3.length;
-              return month3;
-            }
-            return getName("M", monthNamesShort, monthNames);
-          };
-          var checkLiteral = function() {
-            if (value.charAt(iValue) !== format4.charAt(iFormat)) {
-              throw (main.local.unexpectedLiteralAt || main.regionalOptions[""].unexpectedLiteralAt).replace(/\{0\}/, iValue);
-            }
-            iValue++;
-          };
-          var iValue = 0;
-          for (var iFormat = 0; iFormat < format4.length; iFormat++) {
-            if (literal) {
-              if (format4.charAt(iFormat) === "'" && !doubled("'")) {
-                literal = false;
-              } else {
-                checkLiteral();
-              }
-            } else {
-              switch (format4.charAt(iFormat)) {
-                case "d":
-                  day2 = getNumber("d");
-                  break;
-                case "D":
-                  getName("D", dayNamesShort, dayNames);
-                  break;
-                case "o":
-                  doy = getNumber("o");
-                  break;
-                case "w":
-                  getNumber("w");
-                  break;
-                case "m":
-                  month2 = getMonthNumber();
-                  break;
-                case "M":
-                  month2 = getMonthName();
-                  break;
-                case "y":
-                  var iSave = iFormat;
-                  shortYear = !doubled("y", 2);
-                  iFormat = iSave;
-                  year2 = getNumber("y", 2);
-                  break;
-                case "Y":
-                  year2 = getNumber("Y", 2);
-                  break;
-                case "J":
-                  jd = getNumber("J") + 0.5;
-                  if (value.charAt(iValue) === ".") {
-                    iValue++;
-                    getNumber("J");
-                  }
-                  break;
-                case "@":
-                  jd = getNumber("@") / this.SECS_PER_DAY + this.UNIX_EPOCH;
-                  break;
-                case "!":
-                  jd = getNumber("!") / this.TICKS_PER_DAY + this.TICKS_EPOCH;
-                  break;
-                case "*":
-                  iValue = value.length;
-                  break;
-                case "'":
-                  if (doubled("'")) {
-                    checkLiteral();
-                  } else {
-                    literal = true;
-                  }
-                  break;
-                default:
-                  checkLiteral();
-              }
-            }
-          }
-          if (iValue < value.length) {
-            throw main.local.unexpectedText || main.regionalOptions[""].unexpectedText;
-          }
-          if (year2 === -1) {
-            year2 = this.today().year();
-          } else if (year2 < 100 && shortYear) {
-            year2 += shortYearCutoff === -1 ? 1900 : this.today().year() - this.today().year() % 100 - (year2 <= shortYearCutoff ? 0 : 100);
-          }
-          if (typeof month2 === "string") {
-            month2 = parseMonth.call(this, year2, month2);
-          }
-          if (doy > -1) {
-            month2 = 1;
-            day2 = doy;
-            for (var dim = this.daysInMonth(year2, month2); day2 > dim; dim = this.daysInMonth(year2, month2)) {
-              month2++;
-              day2 -= dim;
-            }
-          }
-          return jd > -1 ? this.fromJD(jd) : this.newDate(year2, month2, day2);
-        },
-        /** A date may be specified as an exact value or a relative one.
-            Found in the <code>jquery.calendars.plus.js</code> module.
-            @memberof BaseCalendar
-            @param dateSpec {CDate|number|string} The date as an object or string in the given format or
-                    an offset - numeric days from today, or string amounts and periods, e.g. '+1m +2w'.
-            @param defaultDate {CDate} The date to use if no other supplied, may be <code>null</code>.
-            @param currentDate {CDate} The current date as a possible basis for relative dates,
-                    if <code>null</code> today is used (optional)
-            @param [dateFormat] {string} The expected date format - see <a href="#formatDate"><code>formatDate</code></a>.
-            @param [settings] {object} Additional options whose attributes include:
-            @property [shortYearCutoff] {number} The cutoff year for determining the century.
-            @property [dayNamesShort] {string[]} Abbreviated names of the days from Sunday.
-            @property [dayNames] {string[]} Names of the days from Sunday.
-            @property [monthNamesShort] {string[]} Abbreviated names of the months.
-            @property [monthNames] {string[]} Names of the months.
-            @return {CDate} The decoded date. */
-        determineDate: function(dateSpec, defaultDate, currentDate, dateFormat, settings) {
-          if (currentDate && typeof currentDate !== "object") {
-            settings = dateFormat;
-            dateFormat = currentDate;
-            currentDate = null;
-          }
-          if (typeof dateFormat !== "string") {
-            settings = dateFormat;
-            dateFormat = "";
-          }
-          var calendar = this;
-          var offsetString = function(offset) {
-            try {
-              return calendar.parseDate(dateFormat, offset, settings);
-            } catch (e) {
-            }
-            offset = offset.toLowerCase();
-            var date = (offset.match(/^c/) && currentDate ? currentDate.newDate() : null) || calendar.today();
-            var pattern2 = /([+-]?[0-9]+)\s*(d|w|m|y)?/g;
-            var matches = pattern2.exec(offset);
-            while (matches) {
-              date.add(parseInt(matches[1], 10), matches[2] || "d");
-              matches = pattern2.exec(offset);
-            }
-            return date;
-          };
-          defaultDate = defaultDate ? defaultDate.newDate() : null;
-          dateSpec = dateSpec == null ? defaultDate : typeof dateSpec === "string" ? offsetString(dateSpec) : typeof dateSpec === "number" ? isNaN(dateSpec) || dateSpec === Infinity || dateSpec === -Infinity ? defaultDate : calendar.today().add(dateSpec, "d") : calendar.newDate(dateSpec);
-          return dateSpec;
-        }
-      });
-    }
-  });
-
-  // node_modules/.pnpm/world-calendars@1.0.4/node_modules/world-calendars/dist/calendars/chinese.js
-  var require_chinese = __commonJS({
-    "node_modules/.pnpm/world-calendars@1.0.4/node_modules/world-calendars/dist/calendars/chinese.js"() {
-      var main = require_main();
-      var assign = require_object_assign();
-      var gregorianCalendar = main.instance();
-      function ChineseCalendar(language) {
-        this.local = this.regionalOptions[language || ""] || this.regionalOptions[""];
-      }
-      ChineseCalendar.prototype = new main.baseCalendar();
-      assign(ChineseCalendar.prototype, {
-        /** The calendar name.
-            @memberof ChineseCalendar */
-        name: "Chinese",
-        /** Julian date of start of Gregorian epoch: 1 January 0001 CE.
-           @memberof GregorianCalendar */
-        jdEpoch: 17214255e-1,
-        /** <code>true</code> if has a year zero, <code>false</code> if not.
-            @memberof ChineseCalendar */
-        hasYearZero: false,
-        /** The minimum month number.
-            This calendar uses month indices to account for intercalary months. 
-            @memberof ChineseCalendar */
-        minMonth: 0,
-        /** The first month in the year.
-            This calendar uses month indices to account for intercalary months. 
-            @memberof ChineseCalendar */
-        firstMonth: 0,
-        /** The minimum day number.
-            @memberof ChineseCalendar */
-        minDay: 1,
-        /** Localisations for the plugin.
-            Entries are objects indexed by the language code ('' being the default US/English).
-            Each object has the following attributes.
-            @memberof ChineseCalendar
-            @property name {string} The calendar name.
-            @property epochs {string[]} The epoch names.
-            @property monthNames {string[]} The long names of the months of the year.
-            @property monthNamesShort {string[]} The short names of the months of the year.
-            @property dayNames {string[]} The long names of the days of the week.
-            @property dayNamesShort {string[]} The short names of the days of the week.
-            @property dayNamesMin {string[]} The minimal names of the days of the week.
-            @property dateFormat {string} The date format for this calendar.
-                    See the options on <a href="BaseCalendar.html#formatDate"><code>formatDate</code></a> for details.
-            @property firstDay {number} The number of the first day of the week, starting at 0.
-            @property isRTL {number} <code>true</code> if this localisation reads right-to-left. */
-        regionalOptions: {
-          // Localisations
-          "": {
-            name: "Chinese",
-            epochs: ["BEC", "EC"],
-            monthNumbers: function(date, padded) {
-              if (typeof date === "string") {
-                var match = date.match(MONTH_NUMBER_REGEXP);
-                return match ? match[0] : "";
-              }
-              var year2 = this._validateYear(date);
-              var monthIndex = date.month();
-              var month2 = "" + this.toChineseMonth(year2, monthIndex);
-              if (padded && month2.length < 2) {
-                month2 = "0" + month2;
-              }
-              if (this.isIntercalaryMonth(year2, monthIndex)) {
-                month2 += "i";
-              }
-              return month2;
-            },
-            monthNames: function(date) {
-              if (typeof date === "string") {
-                var match = date.match(MONTH_NAME_REGEXP);
-                return match ? match[0] : "";
-              }
-              var year2 = this._validateYear(date);
-              var monthIndex = date.month();
-              var month2 = this.toChineseMonth(year2, monthIndex);
-              var monthName = [
-                "\u4E00\u6708",
-                "\u4E8C\u6708",
-                "\u4E09\u6708",
-                "\u56DB\u6708",
-                "\u4E94\u6708",
-                "\u516D\u6708",
-                "\u4E03\u6708",
-                "\u516B\u6708",
-                "\u4E5D\u6708",
-                "\u5341\u6708",
-                "\u5341\u4E00\u6708",
-                "\u5341\u4E8C\u6708"
-              ][month2 - 1];
-              if (this.isIntercalaryMonth(year2, monthIndex)) {
-                monthName = "\u95F0" + monthName;
-              }
-              return monthName;
-            },
-            monthNamesShort: function(date) {
-              if (typeof date === "string") {
-                var match = date.match(MONTH_SHORT_NAME_REGEXP);
-                return match ? match[0] : "";
-              }
-              var year2 = this._validateYear(date);
-              var monthIndex = date.month();
-              var month2 = this.toChineseMonth(year2, monthIndex);
-              var monthName = [
-                "\u4E00",
-                "\u4E8C",
-                "\u4E09",
-                "\u56DB",
-                "\u4E94",
-                "\u516D",
-                "\u4E03",
-                "\u516B",
-                "\u4E5D",
-                "\u5341",
-                "\u5341\u4E00",
-                "\u5341\u4E8C"
-              ][month2 - 1];
-              if (this.isIntercalaryMonth(year2, monthIndex)) {
-                monthName = "\u95F0" + monthName;
-              }
-              return monthName;
-            },
-            parseMonth: function(year2, monthString) {
-              year2 = this._validateYear(year2);
-              var month2 = parseInt(monthString);
-              var isIntercalary;
-              if (!isNaN(month2)) {
-                var i = monthString[monthString.length - 1];
-                isIntercalary = i === "i" || i === "I";
-              } else {
-                if (monthString[0] === "\u95F0") {
-                  isIntercalary = true;
-                  monthString = monthString.substring(1);
-                }
-                if (monthString[monthString.length - 1] === "\u6708") {
-                  monthString = monthString.substring(0, monthString.length - 1);
-                }
-                month2 = 1 + [
-                  "\u4E00",
-                  "\u4E8C",
-                  "\u4E09",
-                  "\u56DB",
-                  "\u4E94",
-                  "\u516D",
-                  "\u4E03",
-                  "\u516B",
-                  "\u4E5D",
-                  "\u5341",
-                  "\u5341\u4E00",
-                  "\u5341\u4E8C"
-                ].indexOf(monthString);
-              }
-              var monthIndex = this.toMonthIndex(year2, month2, isIntercalary);
-              return monthIndex;
-            },
-            dayNames: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-            dayNamesShort: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
-            dayNamesMin: ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"],
-            digits: null,
-            dateFormat: "yyyy/mm/dd",
-            firstDay: 1,
-            isRTL: false
-          }
-        },
-        /** Check that a candidate date is from the same calendar and is valid.
-            @memberof BaseCalendar
-            @private
-            @param year {CDate|number} The date or the year to validate.
-            @param error {string} Error message if invalid.
-            @return {number} The year.
-            @throws Error if year out of range. */
-        _validateYear: function(year2, error) {
-          if (year2.year) {
-            year2 = year2.year();
-          }
-          if (typeof year2 !== "number" || year2 < 1888 || year2 > 2111) {
-            throw error.replace(/\{0\}/, this.local.name);
-          }
-          return year2;
-        },
-        /** Retrieve the month index (i.e. accounting for intercalary months).
-            @memberof ChineseCalendar
-            @param year {number} The year.
-            @param month {number} The month (1 for first month).
-            @param [isIntercalary=false] {boolean} If month is intercalary.
-            @return {number} The month index (0 for first month).
-            @throws Error if an invalid month/year or a different calendar used. */
-        toMonthIndex: function(year2, month2, isIntercalary) {
-          var intercalaryMonth = this.intercalaryMonth(year2);
-          var invalidIntercalaryMonth = isIntercalary && month2 !== intercalaryMonth;
-          if (invalidIntercalaryMonth || month2 < 1 || month2 > 12) {
-            throw main.local.invalidMonth.replace(/\{0\}/, this.local.name);
-          }
-          var monthIndex;
-          if (!intercalaryMonth) {
-            monthIndex = month2 - 1;
-          } else if (!isIntercalary && month2 <= intercalaryMonth) {
-            monthIndex = month2 - 1;
-          } else {
-            monthIndex = month2;
-          }
-          return monthIndex;
-        },
-        /** Retrieve the month (i.e. accounting for intercalary months).
-            @memberof ChineseCalendar
-            @param year {CDate|number} The date or the year to examine.
-            @param monthIndex {number} The month index (0 for first month).
-            @return {number} The month (1 for first month).
-            @throws Error if an invalid month/year or a different calendar used. */
-        toChineseMonth: function(year2, monthIndex) {
-          if (year2.year) {
-            year2 = year2.year();
-            monthIndex = year2.month();
-          }
-          var intercalaryMonth = this.intercalaryMonth(year2);
-          var maxMonthIndex = intercalaryMonth ? 12 : 11;
-          if (monthIndex < 0 || monthIndex > maxMonthIndex) {
-            throw main.local.invalidMonth.replace(/\{0\}/, this.local.name);
-          }
-          var month2;
-          if (!intercalaryMonth) {
-            month2 = monthIndex + 1;
-          } else if (monthIndex < intercalaryMonth) {
-            month2 = monthIndex + 1;
-          } else {
-            month2 = monthIndex;
-          }
-          return month2;
-        },
-        /** Determine the intercalary month of a year (if any).
-            @memberof ChineseCalendar
-            @param year {CDate|number} The date to examine or the year to examine.
-            @return {number} The intercalary month number, or 0 if none.
-            @throws Error if an invalid year or a different calendar used. */
-        intercalaryMonth: function(year2) {
-          year2 = this._validateYear(year2);
-          var monthDaysTable = LUNAR_MONTH_DAYS[year2 - LUNAR_MONTH_DAYS[0]];
-          var intercalaryMonth = monthDaysTable >> 13;
-          return intercalaryMonth;
-        },
-        /** Determine whether this date is an intercalary month.
-            @memberof ChineseCalendar
-            @param year {CDate|number} The date to examine or the year to examine.
-            @param [monthIndex] {number} The month index to examine.
-            @return {boolean} <code>true</code> if this is an intercalary month, <code>false</code> if not.
-            @throws Error if an invalid year or a different calendar used. */
-        isIntercalaryMonth: function(year2, monthIndex) {
-          if (year2.year) {
-            year2 = year2.year();
-            monthIndex = year2.month();
-          }
-          var intercalaryMonth = this.intercalaryMonth(year2);
-          return !!intercalaryMonth && intercalaryMonth === monthIndex;
-        },
-        /** Determine whether this date is in a leap year.
-            @memberof ChineseCalendar
-            @param year {CDate|number} The date to examine or the year to examine.
-            @return {boolean} <code>true</code> if this is a leap year, <code>false</code> if not.
-            @throws Error if an invalid year or a different calendar used. */
-        leapYear: function(year2) {
-          return this.intercalaryMonth(year2) !== 0;
-        },
-        /** Determine the week of the year for a date - ISO 8601.
-            @memberof ChineseCalendar
-            @param year {CDate|number} The date to examine or the year to examine.
-            @param [monthIndex] {number} The month index to examine.
-            @param [day] {number} The day to examine.
-            @return {number} The week of the year.
-            @throws Error if an invalid date or a different calendar used. */
-        weekOfYear: function(year2, monthIndex, day2) {
-          var validatedYear = this._validateYear(year2, main.local.invalidyear);
-          var packedDate = CHINESE_NEW_YEAR[validatedYear - CHINESE_NEW_YEAR[0]];
-          var y = packedDate >> 9 & 4095;
-          var m = packedDate >> 5 & 15;
-          var d = packedDate & 31;
-          var firstThursday;
-          firstThursday = gregorianCalendar.newDate(y, m, d);
-          firstThursday.add(4 - (firstThursday.dayOfWeek() || 7), "d");
-          var offset = this.toJD(year2, monthIndex, day2) - firstThursday.toJD();
-          return 1 + Math.floor(offset / 7);
-        },
-        /** Retrieve the number of months in a year.
-            @memberof ChineseCalendar
-            @param year {CDate|number} The date to examine or the year to examine.
-            @return {number} The number of months.
-            @throws Error if an invalid year or a different calendar used. */
-        monthsInYear: function(year2) {
-          return this.leapYear(year2) ? 13 : 12;
-        },
-        /** Retrieve the number of days in a month.
-            @memberof ChineseCalendar
-            @param year {CDate|number} The date to examine or the year of the month.
-            @param [monthIndex] {number} The month index.
-            @return {number} The number of days in this month.
-            @throws Error if an invalid month/year or a different calendar used. */
-        daysInMonth: function(year2, monthIndex) {
-          if (year2.year) {
-            monthIndex = year2.month();
-            year2 = year2.year();
-          }
-          year2 = this._validateYear(year2);
-          var monthDaysTable = LUNAR_MONTH_DAYS[year2 - LUNAR_MONTH_DAYS[0]];
-          var intercalaryMonth = monthDaysTable >> 13;
-          var maxMonthIndex = intercalaryMonth ? 12 : 11;
-          if (monthIndex > maxMonthIndex) {
-            throw main.local.invalidMonth.replace(/\{0\}/, this.local.name);
-          }
-          var daysInMonth = monthDaysTable & 1 << 12 - monthIndex ? 30 : 29;
-          return daysInMonth;
-        },
-        /** Determine whether this date is a week day.
-            @memberof ChineseCalendar
-            @param year {CDate|number} The date to examine or the year to examine.
-            @param [monthIndex] {number} The month index to examine.
-            @param [day] {number} The day to examine.
-            @return {boolean} <code>true</code> if a week day, <code>false</code> if not.
-            @throws Error if an invalid date or a different calendar used. */
-        weekDay: function(year2, monthIndex, day2) {
-          return (this.dayOfWeek(year2, monthIndex, day2) || 7) < 6;
-        },
-        /** Retrieve the Julian date equivalent for this date,
-            i.e. days since January 1, 4713 BCE Greenwich noon.
-            @memberof ChineseCalendar
-            @param year {CDate|number} The date to convert or the year to convert.
-            @param [monthIndex] {number} The month index to convert.
-            @param [day] {number} The day to convert.
-            @return {number} The equivalent Julian date.
-            @throws Error if an invalid date or a different calendar used. */
-        toJD: function(year2, monthIndex, day2) {
-          var date = this._validate(year2, month2, day2, main.local.invalidDate);
-          year2 = this._validateYear(date.year());
-          monthIndex = date.month();
-          day2 = date.day();
-          var isIntercalary = this.isIntercalaryMonth(year2, monthIndex);
-          var month2 = this.toChineseMonth(year2, monthIndex);
-          var solar = toSolar(year2, month2, day2, isIntercalary);
-          return gregorianCalendar.toJD(solar.year, solar.month, solar.day);
-        },
-        /** Create a new date from a Julian date.
-            @memberof ChineseCalendar
-            @param jd {number} The Julian date to convert.
-            @return {CDate} The equivalent date. */
-        fromJD: function(jd) {
-          var date = gregorianCalendar.fromJD(jd);
-          var lunar = toLunar(date.year(), date.month(), date.day());
-          var monthIndex = this.toMonthIndex(
-            lunar.year,
-            lunar.month,
-            lunar.isIntercalary
-          );
-          return this.newDate(lunar.year, monthIndex, lunar.day);
-        },
-        /** Create a new date from a string.
-            @memberof ChineseCalendar
-            @param dateString {string} String representing a Chinese date
-            @return {CDate} The new date.
-            @throws Error if an invalid date. */
-        fromString: function(dateString) {
-          var match = dateString.match(DATE_REGEXP);
-          var year2 = this._validateYear(+match[1]);
-          var month2 = +match[2];
-          var isIntercalary = !!match[3];
-          var monthIndex = this.toMonthIndex(year2, month2, isIntercalary);
-          var day2 = +match[4];
-          return this.newDate(year2, monthIndex, day2);
-        },
-        /** Add period(s) to a date.
-            Cater for no year zero.
-            @memberof ChineseCalendar
-            @param date {CDate} The starting date.
-            @param offset {number} The number of periods to adjust by.
-            @param period {string} One of 'y' for year, 'm' for month, 'w' for week, 'd' for day.
-            @return {CDate} The updated date.
-            @throws Error if a different calendar used. */
-        add: function(date, offset, period) {
-          var year2 = date.year();
-          var monthIndex = date.month();
-          var isIntercalary = this.isIntercalaryMonth(year2, monthIndex);
-          var month2 = this.toChineseMonth(year2, monthIndex);
-          var cdate = Object.getPrototypeOf(ChineseCalendar.prototype).add.call(this, date, offset, period);
-          if (period === "y") {
-            var resultYear = cdate.year();
-            var resultMonthIndex = cdate.month();
-            var resultCanBeIntercalaryMonth = this.isIntercalaryMonth(resultYear, month2);
-            var correctedMonthIndex = isIntercalary && resultCanBeIntercalaryMonth ? this.toMonthIndex(resultYear, month2, true) : this.toMonthIndex(resultYear, month2, false);
-            if (correctedMonthIndex !== resultMonthIndex) {
-              cdate.month(correctedMonthIndex);
-            }
-          }
-          return cdate;
-        }
-      });
-      var DATE_REGEXP = /^\s*(-?\d\d\d\d|\d\d)[-/](\d?\d)([iI]?)[-/](\d?\d)/m;
-      var MONTH_NUMBER_REGEXP = /^\d?\d[iI]?/m;
-      var MONTH_NAME_REGEXP = /^闰?十?[一二三四五六七八九]?月/m;
-      var MONTH_SHORT_NAME_REGEXP = /^闰?十?[一二三四五六七八九]?/m;
-      main.calendars.chinese = ChineseCalendar;
-      var LUNAR_MONTH_DAYS = [
-        1887,
-        5780,
-        5802,
-        19157,
-        2742,
-        50359,
-        1198,
-        2646,
-        46378,
-        7466,
-        3412,
-        30122,
-        5482,
-        67949,
-        2396,
-        5294,
-        43597,
-        6732,
-        6954,
-        36181,
-        2772,
-        4954,
-        18781,
-        2396,
-        54427,
-        5274,
-        6730,
-        47781,
-        5800,
-        6868,
-        21210,
-        4790,
-        59703,
-        2350,
-        5270,
-        46667,
-        3402,
-        3496,
-        38325,
-        1388,
-        4782,
-        18735,
-        2350,
-        52374,
-        6804,
-        7498,
-        44457,
-        2906,
-        1388,
-        29294,
-        4700,
-        63789,
-        6442,
-        6804,
-        56138,
-        5802,
-        2772,
-        38235,
-        1210,
-        4698,
-        22827,
-        5418,
-        63125,
-        3476,
-        5802,
-        43701,
-        2484,
-        5302,
-        27223,
-        2646,
-        70954,
-        7466,
-        3412,
-        54698,
-        5482,
-        2412,
-        38062,
-        5294,
-        2636,
-        32038,
-        6954,
-        60245,
-        2772,
-        4826,
-        43357,
-        2394,
-        5274,
-        39501,
-        6730,
-        72357,
-        5800,
-        5844,
-        53978,
-        4790,
-        2358,
-        38039,
-        5270,
-        87627,
-        3402,
-        3496,
-        54708,
-        5484,
-        4782,
-        43311,
-        2350,
-        3222,
-        27978,
-        7498,
-        68965,
-        2904,
-        5484,
-        45677,
-        4700,
-        6444,
-        39573,
-        6804,
-        6986,
-        19285,
-        2772,
-        62811,
-        1210,
-        4698,
-        47403,
-        5418,
-        5780,
-        38570,
-        5546,
-        76469,
-        2420,
-        5302,
-        51799,
-        2646,
-        5414,
-        36501,
-        3412,
-        5546,
-        18869,
-        2412,
-        54446,
-        5276,
-        6732,
-        48422,
-        6822,
-        2900,
-        28010,
-        4826,
-        92509,
-        2394,
-        5274,
-        55883,
-        6730,
-        6820,
-        47956,
-        5812,
-        2778,
-        18779,
-        2358,
-        62615,
-        5270,
-        5450,
-        46757,
-        3492,
-        5556,
-        27318,
-        4718,
-        67887,
-        2350,
-        3222,
-        52554,
-        7498,
-        3428,
-        38252,
-        5468,
-        4700,
-        31022,
-        6444,
-        64149,
-        6804,
-        6986,
-        43861,
-        2772,
-        5338,
-        35421,
-        2650,
-        70955,
-        5418,
-        5780,
-        54954,
-        5546,
-        2740,
-        38074,
-        5302,
-        2646,
-        29991,
-        3366,
-        61011,
-        3412,
-        5546,
-        43445,
-        2412,
-        5294,
-        35406,
-        6732,
-        72998,
-        6820,
-        6996,
-        52586,
-        2778,
-        2396,
-        38045,
-        5274,
-        6698,
-        23333,
-        6820,
-        64338,
-        5812,
-        2746,
-        43355,
-        2358,
-        5270,
-        39499,
-        5450,
-        79525,
-        3492,
-        5548
-      ];
-      var CHINESE_NEW_YEAR = [
-        1887,
-        966732,
-        967231,
-        967733,
-        968265,
-        968766,
-        969297,
-        969798,
-        970298,
-        970829,
-        971330,
-        971830,
-        972362,
-        972863,
-        973395,
-        973896,
-        974397,
-        974928,
-        975428,
-        975929,
-        976461,
-        976962,
-        977462,
-        977994,
-        978494,
-        979026,
-        979526,
-        980026,
-        980558,
-        981059,
-        981559,
-        982091,
-        982593,
-        983124,
-        983624,
-        984124,
-        984656,
-        985157,
-        985656,
-        986189,
-        986690,
-        987191,
-        987722,
-        988222,
-        988753,
-        989254,
-        989754,
-        990286,
-        990788,
-        991288,
-        991819,
-        992319,
-        992851,
-        993352,
-        993851,
-        994383,
-        994885,
-        995385,
-        995917,
-        996418,
-        996918,
-        997450,
-        997949,
-        998481,
-        998982,
-        999483,
-        1000014,
-        1000515,
-        1001016,
-        1001548,
-        1002047,
-        1002578,
-        1003080,
-        1003580,
-        1004111,
-        1004613,
-        1005113,
-        1005645,
-        1006146,
-        1006645,
-        1007177,
-        1007678,
-        1008209,
-        1008710,
-        1009211,
-        1009743,
-        1010243,
-        1010743,
-        1011275,
-        1011775,
-        1012306,
-        1012807,
-        1013308,
-        1013840,
-        1014341,
-        1014841,
-        1015373,
-        1015874,
-        1016404,
-        1016905,
-        1017405,
-        1017937,
-        1018438,
-        1018939,
-        1019471,
-        1019972,
-        1020471,
-        1021002,
-        1021503,
-        1022035,
-        1022535,
-        1023036,
-        1023568,
-        1024069,
-        1024568,
-        1025100,
-        1025601,
-        1026102,
-        1026633,
-        1027133,
-        1027666,
-        1028167,
-        1028666,
-        1029198,
-        1029699,
-        1030199,
-        1030730,
-        1031231,
-        1031763,
-        1032264,
-        1032764,
-        1033296,
-        1033797,
-        1034297,
-        1034828,
-        1035329,
-        1035830,
-        1036362,
-        1036861,
-        1037393,
-        1037894,
-        1038394,
-        1038925,
-        1039427,
-        1039927,
-        1040459,
-        1040959,
-        1041491,
-        1041992,
-        1042492,
-        1043023,
-        1043524,
-        1044024,
-        1044556,
-        1045057,
-        1045558,
-        1046090,
-        1046590,
-        1047121,
-        1047622,
-        1048122,
-        1048654,
-        1049154,
-        1049655,
-        1050187,
-        1050689,
-        1051219,
-        1051720,
-        1052220,
-        1052751,
-        1053252,
-        1053752,
-        1054284,
-        1054786,
-        1055285,
-        1055817,
-        1056317,
-        1056849,
-        1057349,
-        1057850,
-        1058382,
-        1058883,
-        1059383,
-        1059915,
-        1060415,
-        1060947,
-        1061447,
-        1061947,
-        1062479,
-        1062981,
-        1063480,
-        1064012,
-        1064514,
-        1065014,
-        1065545,
-        1066045,
-        1066577,
-        1067078,
-        1067578,
-        1068110,
-        1068611,
-        1069112,
-        1069642,
-        1070142,
-        1070674,
-        1071175,
-        1071675,
-        1072207,
-        1072709,
-        1073209,
-        1073740,
-        1074241,
-        1074741,
-        1075273,
-        1075773,
-        1076305,
-        1076807,
-        1077308,
-        1077839,
-        1078340,
-        1078840,
-        1079372,
-        1079871,
-        1080403,
-        1080904
-      ];
-      function toLunar(yearOrDate, monthOrResult, day2, result) {
-        var solarDate;
-        var lunarDate;
-        if (typeof yearOrDate === "object") {
-          solarDate = yearOrDate;
-          lunarDate = monthOrResult || {};
-        } else {
-          var isValidYear = typeof yearOrDate === "number" && yearOrDate >= 1888 && yearOrDate <= 2111;
-          if (!isValidYear)
-            throw new Error("Solar year outside range 1888-2111");
-          var isValidMonth = typeof monthOrResult === "number" && monthOrResult >= 1 && monthOrResult <= 12;
-          if (!isValidMonth)
-            throw new Error("Solar month outside range 1 - 12");
-          var isValidDay = typeof day2 === "number" && day2 >= 1 && day2 <= 31;
-          if (!isValidDay)
-            throw new Error("Solar day outside range 1 - 31");
-          solarDate = {
-            year: yearOrDate,
-            month: monthOrResult,
-            day: day2
-          };
-          lunarDate = result || {};
-        }
-        var chineseNewYearPackedDate = CHINESE_NEW_YEAR[solarDate.year - CHINESE_NEW_YEAR[0]];
-        var packedDate = solarDate.year << 9 | solarDate.month << 5 | solarDate.day;
-        lunarDate.year = packedDate >= chineseNewYearPackedDate ? solarDate.year : solarDate.year - 1;
-        chineseNewYearPackedDate = CHINESE_NEW_YEAR[lunarDate.year - CHINESE_NEW_YEAR[0]];
-        var y = chineseNewYearPackedDate >> 9 & 4095;
-        var m = chineseNewYearPackedDate >> 5 & 15;
-        var d = chineseNewYearPackedDate & 31;
-        var daysFromNewYear;
-        var chineseNewYearJSDate = new Date(y, m - 1, d);
-        var jsDate = new Date(solarDate.year, solarDate.month - 1, solarDate.day);
-        daysFromNewYear = Math.round(
-          (jsDate - chineseNewYearJSDate) / (24 * 3600 * 1e3)
-        );
-        var monthDaysTable = LUNAR_MONTH_DAYS[lunarDate.year - LUNAR_MONTH_DAYS[0]];
-        var i;
-        for (i = 0; i < 13; i++) {
-          var daysInMonth = monthDaysTable & 1 << 12 - i ? 30 : 29;
-          if (daysFromNewYear < daysInMonth) {
-            break;
-          }
-          daysFromNewYear -= daysInMonth;
-        }
-        var intercalaryMonth = monthDaysTable >> 13;
-        if (!intercalaryMonth || i < intercalaryMonth) {
-          lunarDate.isIntercalary = false;
-          lunarDate.month = 1 + i;
-        } else if (i === intercalaryMonth) {
-          lunarDate.isIntercalary = true;
-          lunarDate.month = i;
-        } else {
-          lunarDate.isIntercalary = false;
-          lunarDate.month = i;
-        }
-        lunarDate.day = 1 + daysFromNewYear;
-        return lunarDate;
-      }
-      function toSolar(yearOrDate, monthOrResult, day2, isIntercalaryOrResult, result) {
-        var solarDate;
-        var lunarDate;
-        if (typeof yearOrDate === "object") {
-          lunarDate = yearOrDate;
-          solarDate = monthOrResult || {};
-        } else {
-          var isValidYear = typeof yearOrDate === "number" && yearOrDate >= 1888 && yearOrDate <= 2111;
-          if (!isValidYear)
-            throw new Error("Lunar year outside range 1888-2111");
-          var isValidMonth = typeof monthOrResult === "number" && monthOrResult >= 1 && monthOrResult <= 12;
-          if (!isValidMonth)
-            throw new Error("Lunar month outside range 1 - 12");
-          var isValidDay = typeof day2 === "number" && day2 >= 1 && day2 <= 30;
-          if (!isValidDay)
-            throw new Error("Lunar day outside range 1 - 30");
-          var isIntercalary;
-          if (typeof isIntercalaryOrResult === "object") {
-            isIntercalary = false;
-            solarDate = isIntercalaryOrResult;
-          } else {
-            isIntercalary = !!isIntercalaryOrResult;
-            solarDate = result || {};
-          }
-          lunarDate = {
-            year: yearOrDate,
-            month: monthOrResult,
-            day: day2,
-            isIntercalary
-          };
-        }
-        var daysFromNewYear;
-        daysFromNewYear = lunarDate.day - 1;
-        var monthDaysTable = LUNAR_MONTH_DAYS[lunarDate.year - LUNAR_MONTH_DAYS[0]];
-        var intercalaryMonth = monthDaysTable >> 13;
-        var monthsFromNewYear;
-        if (!intercalaryMonth) {
-          monthsFromNewYear = lunarDate.month - 1;
-        } else if (lunarDate.month > intercalaryMonth) {
-          monthsFromNewYear = lunarDate.month;
-        } else if (lunarDate.isIntercalary) {
-          monthsFromNewYear = lunarDate.month;
-        } else {
-          monthsFromNewYear = lunarDate.month - 1;
-        }
-        for (var i = 0; i < monthsFromNewYear; i++) {
-          var daysInMonth = monthDaysTable & 1 << 12 - i ? 30 : 29;
-          daysFromNewYear += daysInMonth;
-        }
-        var packedDate = CHINESE_NEW_YEAR[lunarDate.year - CHINESE_NEW_YEAR[0]];
-        var y = packedDate >> 9 & 4095;
-        var m = packedDate >> 5 & 15;
-        var d = packedDate & 31;
-        var jsDate = new Date(y, m - 1, d + daysFromNewYear);
-        solarDate.year = jsDate.getFullYear();
-        solarDate.month = 1 + jsDate.getMonth();
-        solarDate.day = jsDate.getDate();
-        return solarDate;
-      }
-    }
-  });
-
-  // node_modules/.pnpm/world-calendars@1.0.4/node_modules/world-calendars/dist/calendars/coptic.js
-  var require_coptic = __commonJS({
-    "node_modules/.pnpm/world-calendars@1.0.4/node_modules/world-calendars/dist/calendars/coptic.js"() {
-      var main = require_main();
-      var assign = require_object_assign();
-      function CopticCalendar(language) {
-        this.local = this.regionalOptions[language || ""] || this.regionalOptions[""];
-      }
-      CopticCalendar.prototype = new main.baseCalendar();
-      assign(CopticCalendar.prototype, {
-        /** The calendar name.
-            @memberof CopticCalendar */
-        name: "Coptic",
-        /** Julian date of start of Coptic epoch: 29 August 284 CE (Gregorian).
-            @memberof CopticCalendar */
-        jdEpoch: 18250295e-1,
-        /** Days per month in a common year.
-            @memberof CopticCalendar */
-        daysPerMonth: [30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 5],
-        /** <code>true</code> if has a year zero, <code>false</code> if not.
-            @memberof CopticCalendar */
-        hasYearZero: false,
-        /** The minimum month number.
-            @memberof CopticCalendar */
-        minMonth: 1,
-        /** The first month in the year.
-            @memberof CopticCalendar */
-        firstMonth: 1,
-        /** The minimum day number.
-            @memberof CopticCalendar */
-        minDay: 1,
-        /** Localisations for the plugin.
-            Entries are objects indexed by the language code ('' being the default US/English).
-            Each object has the following attributes.
-            @memberof CopticCalendar
-            @property name {string} The calendar name.
-            @property epochs {string[]} The epoch names.
-            @property monthNames {string[]} The long names of the months of the year.
-            @property monthNamesShort {string[]} The short names of the months of the year.
-            @property dayNames {string[]} The long names of the days of the week.
-            @property dayNamesShort {string[]} The short names of the days of the week.
-            @property dayNamesMin {string[]} The minimal names of the days of the week.
-            @property dateFormat {string} The date format for this calendar.
-                    See the options on <a href="BaseCalendar.html#formatDate"><code>formatDate</code></a> for details.
-            @property firstDay {number} The number of the first day of the week, starting at 0.
-            @property isRTL {number} <code>true</code> if this localisation reads right-to-left. */
-        regionalOptions: {
-          // Localisations
-          "": {
-            name: "Coptic",
-            epochs: ["BAM", "AM"],
-            monthNames: [
-              "Thout",
-              "Paopi",
-              "Hathor",
-              "Koiak",
-              "Tobi",
-              "Meshir",
-              "Paremhat",
-              "Paremoude",
-              "Pashons",
-              "Paoni",
-              "Epip",
-              "Mesori",
-              "Pi Kogi Enavot"
-            ],
-            monthNamesShort: [
-              "Tho",
-              "Pao",
-              "Hath",
-              "Koi",
-              "Tob",
-              "Mesh",
-              "Pat",
-              "Pad",
-              "Pash",
-              "Pao",
-              "Epi",
-              "Meso",
-              "PiK"
-            ],
-            dayNames: ["Tkyriaka", "Pesnau", "Pshoment", "Peftoou", "Ptiou", "Psoou", "Psabbaton"],
-            dayNamesShort: ["Tky", "Pes", "Psh", "Pef", "Pti", "Pso", "Psa"],
-            dayNamesMin: ["Tk", "Pes", "Psh", "Pef", "Pt", "Pso", "Psa"],
-            digits: null,
-            dateFormat: "dd/mm/yyyy",
-            firstDay: 0,
-            isRTL: false
-          }
-        },
-        /** Determine whether this date is in a leap year.
-            @memberof CopticCalendar
-            @param year {CDate|number} The date to examine or the year to examine.
-            @return {boolean} <code>true</code> if this is a leap year, <code>false</code> if not.
-            @throws Error if an invalid year or a different calendar used. */
-        leapYear: function(year2) {
-          var date = this._validate(year2, this.minMonth, this.minDay, main.local.invalidYear);
-          var year2 = date.year() + (date.year() < 0 ? 1 : 0);
-          return year2 % 4 === 3 || year2 % 4 === -1;
-        },
-        /** Retrieve the number of months in a year.
-            @memberof CopticCalendar
-            @param year {CDate|number} The date to examine or the year to examine.
-            @return {number} The number of months.
-            @throws Error if an invalid year or a different calendar used. */
-        monthsInYear: function(year2) {
-          this._validate(
-            year2,
-            this.minMonth,
-            this.minDay,
-            main.local.invalidYear || main.regionalOptions[""].invalidYear
-          );
-          return 13;
-        },
-        /** Determine the week of the year for a date.
-            @memberof CopticCalendar
-            @param year {CDate|number} The date to examine or the year to examine.
-            @param [month] {number) the month to examine.
-            @param [day] {number} The day to examine.
-            @return {number} The week of the year.
-            @throws Error if an invalid date or a different calendar used. */
-        weekOfYear: function(year2, month2, day2) {
-          var checkDate = this.newDate(year2, month2, day2);
-          checkDate.add(-checkDate.dayOfWeek(), "d");
-          return Math.floor((checkDate.dayOfYear() - 1) / 7) + 1;
-        },
-        /** Retrieve the number of days in a month.
-            @memberof CopticCalendar
-            @param year {CDate|number} The date to examine or the year of the month.
-            @param [month] {number} The month.
-            @return {number} The number of days in this month.
-            @throws Error if an invalid month/year or a different calendar used. */
-        daysInMonth: function(year2, month2) {
-          var date = this._validate(year2, month2, this.minDay, main.local.invalidMonth);
-          return this.daysPerMonth[date.month() - 1] + (date.month() === 13 && this.leapYear(date.year()) ? 1 : 0);
-        },
-        /** Determine whether this date is a week day.
-            @memberof CopticCalendar
-            @param year {CDate|number} The date to examine or the year to examine.
-            @param month {number} The month to examine.
-            @param day {number} The day to examine.
-            @return {boolean} <code>true</code> if a week day, <code>false</code> if not.
-            @throws Error if an invalid date or a different calendar used. */
-        weekDay: function(year2, month2, day2) {
-          return (this.dayOfWeek(year2, month2, day2) || 7) < 6;
-        },
-        /** Retrieve the Julian date equivalent for this date,
-            i.e. days since January 1, 4713 BCE Greenwich noon.
-            @memberof CopticCalendar
-            @param year {CDate|number} The date to convert or the year to convert.
-            @param [month] {number) the month to convert.
-            @param [day] {number} The day to convert.
-            @return {number} The equivalent Julian date.
-            @throws Error if an invalid date or a different calendar used. */
-        toJD: function(year2, month2, day2) {
-          var date = this._validate(year2, month2, day2, main.local.invalidDate);
-          year2 = date.year();
-          if (year2 < 0) {
-            year2++;
-          }
-          return date.day() + (date.month() - 1) * 30 + (year2 - 1) * 365 + Math.floor(year2 / 4) + this.jdEpoch - 1;
-        },
-        /** Create a new date from a Julian date.
-            @memberof CopticCalendar
-            @param jd {number} The Julian date to convert.
-            @return {CDate} The equivalent date. */
-        fromJD: function(jd) {
-          var c = Math.floor(jd) + 0.5 - this.jdEpoch;
-          var year2 = Math.floor((c - Math.floor((c + 366) / 1461)) / 365) + 1;
-          if (year2 <= 0) {
-            year2--;
-          }
-          c = Math.floor(jd) + 0.5 - this.newDate(year2, 1, 1).toJD();
-          var month2 = Math.floor(c / 30) + 1;
-          var day2 = c - (month2 - 1) * 30 + 1;
-          return this.newDate(year2, month2, day2);
-        }
-      });
-      main.calendars.coptic = CopticCalendar;
-    }
-  });
-
-  // node_modules/.pnpm/world-calendars@1.0.4/node_modules/world-calendars/dist/calendars/discworld.js
-  var require_discworld = __commonJS({
-    "node_modules/.pnpm/world-calendars@1.0.4/node_modules/world-calendars/dist/calendars/discworld.js"() {
-      var main = require_main();
-      var assign = require_object_assign();
-      function DiscworldCalendar(language) {
-        this.local = this.regionalOptions[language || ""] || this.regionalOptions[""];
-      }
-      DiscworldCalendar.prototype = new main.baseCalendar();
-      assign(DiscworldCalendar.prototype, {
-        /** The calendar name.
-            @memberof DiscworldCalendar */
-        name: "Discworld",
-        /** Julian date of start of Discworld epoch: 1 January 0001 CE.
-            @memberof DiscworldCalendar */
-        jdEpoch: 17214255e-1,
-        /** Days per month in a common year.
-            @memberof DiscworldCalendar */
-        daysPerMonth: [16, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32],
-        /** <code>true</code> if has a year zero, <code>false</code> if not.
-            @memberof DiscworldCalendar */
-        hasYearZero: false,
-        /** The minimum month number.
-            @memberof DiscworldCalendar */
-        minMonth: 1,
-        /** The first month in the year.
-            @memberof DiscworldCalendar */
-        firstMonth: 1,
-        /** The minimum day number.
-            @memberof DiscworldCalendar */
-        minDay: 1,
-        /** Localisations for the plugin.
-            Entries are objects indexed by the language code ('' being the default US/English).
-            Each object has the following attributes.
-            @memberof DiscworldCalendar
-            @property name {string} The calendar name.
-            @property epochs {string[]} The epoch names.
-            @property monthNames {string[]} The long names of the months of the year.
-            @property monthNamesShort {string[]} The short names of the months of the year.
-            @property dayNames {string[]} The long names of the days of the week.
-            @property dayNamesShort {string[]} The short names of the days of the week.
-            @property dayNamesMin {string[]} The minimal names of the days of the week.
-            @property dateFormat {string} The date format for this calendar.
-                    See the options on <a href="BaseCalendar.html#formatDate"><code>formatDate</code></a> for details.
-            @property firstDay {number} The number of the first day of the week, starting at 0.
-            @property isRTL {number} <code>true</code> if this localisation reads right-to-left. */
-        regionalOptions: {
-          // Localisations
-          "": {
-            name: "Discworld",
-            epochs: ["BUC", "UC"],
-            monthNames: [
-              "Ick",
-              "Offle",
-              "February",
-              "March",
-              "April",
-              "May",
-              "June",
-              "Grune",
-              "August",
-              "Spune",
-              "Sektober",
-              "Ember",
-              "December"
-            ],
-            monthNamesShort: ["Ick", "Off", "Feb", "Mar", "Apr", "May", "Jun", "Gru", "Aug", "Spu", "Sek", "Emb", "Dec"],
-            dayNames: ["Sunday", "Octeday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-            dayNamesShort: ["Sun", "Oct", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
-            dayNamesMin: ["Su", "Oc", "Mo", "Tu", "We", "Th", "Fr", "Sa"],
-            digits: null,
-            dateFormat: "yyyy/mm/dd",
-            firstDay: 2,
-            isRTL: false
-          }
-        },
-        /** Determine whether this date is in a leap year.
-            @memberof DiscworldCalendar
-            @param year {CDate|number} The date to examine or the year to examine.
-            @return {boolean} <code>true</code> if this is a leap year, <code>false</code> if not.
-            @throws Error if an invalid year or a different calendar used. */
-        leapYear: function(year2) {
-          this._validate(year2, this.minMonth, this.minDay, main.local.invalidYear);
-          return false;
-        },
-        /** Retrieve the number of months in a year.
-            @memberof DiscworldCalendar
-            @param year {CDate|number} The date to examine or the year to examine.
-            @return {number} The number of months.
-            @throws Error if an invalid year or a different calendar used. */
-        monthsInYear: function(year2) {
-          this._validate(year2, this.minMonth, this.minDay, main.local.invalidYear);
-          return 13;
-        },
-        /** Retrieve the number of days in a year.
-            @memberof DiscworldCalendar
-            @param year {CDate|number} The date to examine or the year to examine.
-            @return {number} The number of days.
-            @throws Error if an invalid year or a different calendar used. */
-        daysInYear: function(year2) {
-          this._validate(year2, this.minMonth, this.minDay, main.local.invalidYear);
-          return 400;
-        },
-        /** Determine the week of the year for a date.
-            @memberof DiscworldCalendar
-            @param year {CDate|number} The date to examine or the year to examine.
-            @param [month] {number} The month to examine.
-            @param [day] {number} The day to examine.
-            @return {number} The week of the year.
-            @throws Error if an invalid date or a different calendar used. */
-        weekOfYear: function(year2, month2, day2) {
-          var checkDate = this.newDate(year2, month2, day2);
-          checkDate.add(-checkDate.dayOfWeek(), "d");
-          return Math.floor((checkDate.dayOfYear() - 1) / 8) + 1;
-        },
-        /** Retrieve the number of days in a month.
-            @memberof DiscworldCalendar
-            @param year {CDate|number} The date to examine or the year of the month.
-            @param [month] {number} The month.
-            @return {number} The number of days in this month.
-            @throws Error if an invalid month/year or a different calendar used. */
-        daysInMonth: function(year2, month2) {
-          var date = this._validate(year2, month2, this.minDay, main.local.invalidMonth);
-          return this.daysPerMonth[date.month() - 1];
-        },
-        /** Retrieve the number of days in a week.
-            @memberof DiscworldCalendar
-            @return {number} The number of days. */
-        daysInWeek: function() {
-          return 8;
-        },
-        /** Retrieve the day of the week for a date.
-            @memberof DiscworldCalendar
-            @param year {CDate|number} The date to examine or the year to examine.
-            @param [month] {number} The month to examine.
-            @param [day] {number} The day to examine.
-            @return {number} The day of the week: 0 to number of days - 1.
-            @throws Error if an invalid date or a different calendar used. */
-        dayOfWeek: function(year2, month2, day2) {
-          var date = this._validate(year2, month2, day2, main.local.invalidDate);
-          return (date.day() + 1) % 8;
-        },
-        /** Determine whether this date is a week day.
-            @memberof DiscworldCalendar
-            @param year {CDate|number} The date to examine or the year to examine.
-            @param [month] {number} The month to examine.
-            @param [day] {number} The day to examine.
-            @return {boolean} <code>true</code> if a week day, <code>false</code> if not.
-            @throws Error if an invalid date or a different calendar used. */
-        weekDay: function(year2, month2, day2) {
-          var dow = this.dayOfWeek(year2, month2, day2);
-          return dow >= 2 && dow <= 6;
-        },
-        /** Retrieve additional information about a date.
-            @memberof DiscworldCalendar
-            @param year {CDate|number} The date to examine or the year to examine.
-            @param [month] {number} The month to examine.
-            @param [day] {number} The day to examine.
-            @return {object} Additional information - contents depends on calendar.
-            @throws Error if an invalid date or a different calendar used. */
-        extraInfo: function(year2, month2, day2) {
-          var date = this._validate(year2, month2, day2, main.local.invalidDate);
-          return { century: centuries[Math.floor((date.year() - 1) / 100) + 1] || "" };
-        },
-        /** Retrieve the Julian date equivalent for this date,
-            i.e. days since January 1, 4713 BCE Greenwich noon.
-            @memberof DiscworldCalendar
-            @param year {CDate|number} The date to convert or the year to convert.
-            @param [month] {number} The month to convert.
-            @param [day] {number} The day to convert.
-            @return {number} The equivalent Julian date.
-            @throws Error if an invalid date or a different calendar used. */
-        toJD: function(year2, month2, day2) {
-          var date = this._validate(year2, month2, day2, main.local.invalidDate);
-          year2 = date.year() + (date.year() < 0 ? 1 : 0);
-          month2 = date.month();
-          day2 = date.day();
-          return day2 + (month2 > 1 ? 16 : 0) + (month2 > 2 ? (month2 - 2) * 32 : 0) + (year2 - 1) * 400 + this.jdEpoch - 1;
-        },
-        /** Create a new date from a Julian date.
-            @memberof DiscworldCalendar
-            @param jd {number} The Julian date to convert.
-            @return {CDate} The equivalent date. */
-        fromJD: function(jd) {
-          jd = Math.floor(jd + 0.5) - Math.floor(this.jdEpoch) - 1;
-          var year2 = Math.floor(jd / 400) + 1;
-          jd -= (year2 - 1) * 400;
-          jd += jd > 15 ? 16 : 0;
-          var month2 = Math.floor(jd / 32) + 1;
-          var day2 = jd - (month2 - 1) * 32 + 1;
-          return this.newDate(year2 <= 0 ? year2 - 1 : year2, month2, day2);
-        }
-      });
-      var centuries = {
-        20: "Fruitbat",
-        21: "Anchovy"
-      };
-      main.calendars.discworld = DiscworldCalendar;
-    }
-  });
-
-  // node_modules/.pnpm/world-calendars@1.0.4/node_modules/world-calendars/dist/calendars/ethiopian.js
-  var require_ethiopian = __commonJS({
-    "node_modules/.pnpm/world-calendars@1.0.4/node_modules/world-calendars/dist/calendars/ethiopian.js"() {
-      var main = require_main();
-      var assign = require_object_assign();
-      function EthiopianCalendar(language) {
-        this.local = this.regionalOptions[language || ""] || this.regionalOptions[""];
-      }
-      EthiopianCalendar.prototype = new main.baseCalendar();
-      assign(EthiopianCalendar.prototype, {
-        /** The calendar name.
-            @memberof EthiopianCalendar */
-        name: "Ethiopian",
-        /** Julian date of start of Ethiopian epoch: 27 August 8 CE (Gregorian).
-            @memberof EthiopianCalendar */
-        jdEpoch: 17242205e-1,
-        /** Days per month in a common year.
-            @memberof EthiopianCalendar */
-        daysPerMonth: [30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 5],
-        /** <code>true</code> if has a year zero, <code>false</code> if not.
-            @memberof EthiopianCalendar */
-        hasYearZero: false,
-        /** The minimum month number.
-            @memberof EthiopianCalendar */
-        minMonth: 1,
-        /** The first month in the year.
-            @memberof EthiopianCalendar */
-        firstMonth: 1,
-        /** The minimum day number.
-            @memberof EthiopianCalendar */
-        minDay: 1,
-        /** Localisations for the plugin.
-            Entries are objects indexed by the language code ('' being the default US/English).
-            Each object has the following attributes.
-            @memberof EthiopianCalendar
-            @property name {string} The calendar name.
-            @property epochs {string[]} The epoch names.
-            @property monthNames {string[]} The long names of the months of the year.
-            @property monthNamesShort {string[]} The short names of the months of the year.
-            @property dayNames {string[]} The long names of the days of the week.
-            @property dayNamesShort {string[]} The short names of the days of the week.
-            @property dayNamesMin {string[]} The minimal names of the days of the week.
-            @property dateFormat {string} The date format for this calendar.
-                    See the options on <a href="BaseCalendar.html#formatDate"><code>formatDate</code></a> for details.
-            @property firstDay {number} The number of the first day of the week, starting at 0.
-            @property isRTL {number} <code>true</code> if this localisation reads right-to-left. */
-        regionalOptions: {
-          // Localisations
-          "": {
-            name: "Ethiopian",
-            epochs: ["BEE", "EE"],
-            monthNames: [
-              "Meskerem",
-              "Tikemet",
-              "Hidar",
-              "Tahesas",
-              "Tir",
-              "Yekatit",
-              "Megabit",
-              "Miazia",
-              "Genbot",
-              "Sene",
-              "Hamle",
-              "Nehase",
-              "Pagume"
-            ],
-            monthNamesShort: [
-              "Mes",
-              "Tik",
-              "Hid",
-              "Tah",
-              "Tir",
-              "Yek",
-              "Meg",
-              "Mia",
-              "Gen",
-              "Sen",
-              "Ham",
-              "Neh",
-              "Pag"
-            ],
-            dayNames: ["Ehud", "Segno", "Maksegno", "Irob", "Hamus", "Arb", "Kidame"],
-            dayNamesShort: ["Ehu", "Seg", "Mak", "Iro", "Ham", "Arb", "Kid"],
-            dayNamesMin: ["Eh", "Se", "Ma", "Ir", "Ha", "Ar", "Ki"],
-            digits: null,
-            dateFormat: "dd/mm/yyyy",
-            firstDay: 0,
-            isRTL: false
-          }
-        },
-        /** Determine whether this date is in a leap year.
-            @memberof EthiopianCalendar
-            @param year {CDate|number} The date to examine or the year to examine.
-            @return {boolean} <code>true</code> if this is a leap year, <code>false</code> if not.
-            @throws Error if an invalid year or a different calendar used. */
-        leapYear: function(year2) {
-          var date = this._validate(year2, this.minMonth, this.minDay, main.local.invalidYear);
-          var year2 = date.year() + (date.year() < 0 ? 1 : 0);
-          return year2 % 4 === 3 || year2 % 4 === -1;
-        },
-        /** Retrieve the number of months in a year.
-            @memberof EthiopianCalendar
-            @param year {CDate|number} The date to examine or the year to examine.
-            @return {number} The number of months.
-            @throws Error if an invalid year or a different calendar used. */
-        monthsInYear: function(year2) {
-          this._validate(
-            year2,
-            this.minMonth,
-            this.minDay,
-            main.local.invalidYear || main.regionalOptions[""].invalidYear
-          );
-          return 13;
-        },
-        /** Determine the week of the year for a date.
-            @memberof EthiopianCalendar
-            @param year {CDate|number} The date to examine or the year to examine.
-            @param [month] {number} The month to examine.
-            @param [day] {number} The day to examine.
-            @return {number} The week of the year.
-            @throws Error if an invalid date or a different calendar used. */
-        weekOfYear: function(year2, month2, day2) {
-          var checkDate = this.newDate(year2, month2, day2);
-          checkDate.add(-checkDate.dayOfWeek(), "d");
-          return Math.floor((checkDate.dayOfYear() - 1) / 7) + 1;
-        },
-        /** Retrieve the number of days in a month.
-            @memberof EthiopianCalendar
-            @param year {CDate|number} The date to examine or the year of the month.
-            @param [month] {number} The month.
-            @return {number} The number of days in this month.
-            @throws Error if an invalid month/year or a different calendar used. */
-        daysInMonth: function(year2, month2) {
-          var date = this._validate(year2, month2, this.minDay, main.local.invalidMonth);
-          return this.daysPerMonth[date.month() - 1] + (date.month() === 13 && this.leapYear(date.year()) ? 1 : 0);
-        },
-        /** Determine whether this date is a week day.
-            @memberof EthiopianCalendar
-            @param year {CDate|number} The date to examine or the year to examine.
-            @param [month] {number} The month to examine.
-            @param [day] {number} The day to examine.
-            @return {boolean} <code>true</code> if a week day, <code>false</code> if not.
-            @throws Error if an invalid date or a different calendar used. */
-        weekDay: function(year2, month2, day2) {
-          return (this.dayOfWeek(year2, month2, day2) || 7) < 6;
-        },
-        /** Retrieve the Julian date equivalent for this date,
-            i.e. days since January 1, 4713 BCE Greenwich noon.
-            @memberof EthiopianCalendar
-            @param year {CDate|number} The date to convert or the year to convert.
-            @param [month] {number} The month to convert.
-            @param [day] {number} The day to convert.
-            @return {number} The equivalent Julian date.
-            @throws Error if an invalid date or a different calendar used. */
-        toJD: function(year2, month2, day2) {
-          var date = this._validate(year2, month2, day2, main.local.invalidDate);
-          year2 = date.year();
-          if (year2 < 0) {
-            year2++;
-          }
-          return date.day() + (date.month() - 1) * 30 + (year2 - 1) * 365 + Math.floor(year2 / 4) + this.jdEpoch - 1;
-        },
-        /** Create a new date from a Julian date.
-            @memberof EthiopianCalendar
-            @param jd {number} the Julian date to convert.
-            @return {CDate} the equivalent date. */
-        fromJD: function(jd) {
-          var c = Math.floor(jd) + 0.5 - this.jdEpoch;
-          var year2 = Math.floor((c - Math.floor((c + 366) / 1461)) / 365) + 1;
-          if (year2 <= 0) {
-            year2--;
-          }
-          c = Math.floor(jd) + 0.5 - this.newDate(year2, 1, 1).toJD();
-          var month2 = Math.floor(c / 30) + 1;
-          var day2 = c - (month2 - 1) * 30 + 1;
-          return this.newDate(year2, month2, day2);
-        }
-      });
-      main.calendars.ethiopian = EthiopianCalendar;
-    }
-  });
-
-  // node_modules/.pnpm/world-calendars@1.0.4/node_modules/world-calendars/dist/calendars/hebrew.js
-  var require_hebrew = __commonJS({
-    "node_modules/.pnpm/world-calendars@1.0.4/node_modules/world-calendars/dist/calendars/hebrew.js"() {
-      var main = require_main();
-      var assign = require_object_assign();
-      function HebrewCalendar(language) {
-        this.local = this.regionalOptions[language || ""] || this.regionalOptions[""];
-      }
-      HebrewCalendar.prototype = new main.baseCalendar();
-      assign(HebrewCalendar.prototype, {
-        /** The calendar name.
-            @memberof HebrewCalendar */
-        name: "Hebrew",
-        /** Julian date of start of Hebrew epoch: 7 October 3761 BCE.
-            @memberof HebrewCalendar */
-        jdEpoch: 347995.5,
-        /** Days per month in a common year.
-            @memberof HebrewCalendar */
-        daysPerMonth: [30, 29, 30, 29, 30, 29, 30, 29, 30, 29, 30, 29, 29],
-        /** <code>true</code> if has a year zero, <code>false</code> if not.
-            @memberof HebrewCalendar */
-        hasYearZero: false,
-        /** The minimum month number.
-            @memberof HebrewCalendar */
-        minMonth: 1,
-        /** The first month in the year.
-            @memberof HebrewCalendar */
-        firstMonth: 7,
-        /** The minimum day number.
-            @memberof HebrewCalendar */
-        minDay: 1,
-        /** Localisations for the plugin.
-            Entries are objects indexed by the language code ('' being the default US/English).
-            Each object has the following attributes.
-            @memberof HebrewCalendar
-            @property name {string} The calendar name.
-            @property epochs {string[]} The epoch names.
-            @property monthNames {string[]} The long names of the months of the year.
-            @property monthNamesShort {string[]} The short names of the months of the year.
-            @property dayNames {string[]} The long names of the days of the week.
-            @property dayNamesShort {string[]} The short names of the days of the week.
-            @property dayNamesMin {string[]} The minimal names of the days of the week.
-            @property dateFormat {string} The date format for this calendar.
-                    See the options on <a href="BaseCalendar.html#formatDate"><code>formatDate</code></a> for details.
-            @property firstDay {number} The number of the first day of the week, starting at 0.
-            @property isRTL {number} <code>true</code> if this localisation reads right-to-left. */
-        regionalOptions: {
-          // Localisations
-          "": {
-            name: "Hebrew",
-            epochs: ["BAM", "AM"],
-            monthNames: [
-              "Nisan",
-              "Iyar",
-              "Sivan",
-              "Tammuz",
-              "Av",
-              "Elul",
-              "Tishrei",
-              "Cheshvan",
-              "Kislev",
-              "Tevet",
-              "Shevat",
-              "Adar",
-              "Adar II"
-            ],
-            monthNamesShort: ["Nis", "Iya", "Siv", "Tam", "Av", "Elu", "Tis", "Che", "Kis", "Tev", "She", "Ada", "Ad2"],
-            dayNames: ["Yom Rishon", "Yom Sheni", "Yom Shlishi", "Yom Revi'i", "Yom Chamishi", "Yom Shishi", "Yom Shabbat"],
-            dayNamesShort: ["Ris", "She", "Shl", "Rev", "Cha", "Shi", "Sha"],
-            dayNamesMin: ["Ri", "She", "Shl", "Re", "Ch", "Shi", "Sha"],
-            digits: null,
-            dateFormat: "dd/mm/yyyy",
-            firstDay: 0,
-            isRTL: false
-          }
-        },
-        /** Determine whether this date is in a leap year.
-            @memberof HebrewCalendar
-            @param year {CDate|number} The date to examine or the year to examine.
-            @return {boolean} <code>true</code> if this is a leap year, <code>false</code> if not.
-            @throws Error if an invalid year or a different calendar used. */
-        leapYear: function(year2) {
-          var date = this._validate(year2, this.minMonth, this.minDay, main.local.invalidYear);
-          return this._leapYear(date.year());
-        },
-        /** Determine whether this date is in a leap year.
-            @memberof HebrewCalendar
-            @private
-            @param year {number} The year to examine.
-            @return {boolean} <code>true</code> if this is a leap year, <code>false</code> if not.
-            @throws Error if an invalid year or a different calendar used. */
-        _leapYear: function(year2) {
-          year2 = year2 < 0 ? year2 + 1 : year2;
-          return mod5(year2 * 7 + 1, 19) < 7;
-        },
-        /** Retrieve the number of months in a year.
-            @memberof HebrewCalendar
-            @param year {CDate|number} The date to examine or the year to examine.
-            @return {number} The number of months.
-            @throws Error if an invalid year or a different calendar used. */
-        monthsInYear: function(year2) {
-          this._validate(year2, this.minMonth, this.minDay, main.local.invalidYear);
-          return this._leapYear(year2.year ? year2.year() : year2) ? 13 : 12;
-        },
-        /** Determine the week of the year for a date.
-            @memberof HebrewCalendar
-            @param year {CDate|number} The date to examine or the year to examine.
-            @param [month] {number} The month to examine.
-            @param [day] {number} The day to examine.
-            @return {number} The week of the year.
-            @throws Error if an invalid date or a different calendar used. */
-        weekOfYear: function(year2, month2, day2) {
-          var checkDate = this.newDate(year2, month2, day2);
-          checkDate.add(-checkDate.dayOfWeek(), "d");
-          return Math.floor((checkDate.dayOfYear() - 1) / 7) + 1;
-        },
-        /** Retrieve the number of days in a year.
-            @memberof HebrewCalendar
-            @param year {CDate|number} The date to examine or the year to examine.
-            @return {number} The number of days.
-            @throws Error if an invalid year or a different calendar used. */
-        daysInYear: function(year2) {
-          var date = this._validate(year2, this.minMonth, this.minDay, main.local.invalidYear);
-          year2 = date.year();
-          return this.toJD(year2 === -1 ? 1 : year2 + 1, 7, 1) - this.toJD(year2, 7, 1);
-        },
-        /** Retrieve the number of days in a month.
-            @memberof HebrewCalendar
-            @param year {CDate|number} The date to examine or the year of the month.
-            @param [month] {number} The month.
-            @return {number} The number of days in this month.
-            @throws Error if an invalid month/year or a different calendar used. */
-        daysInMonth: function(year2, month2) {
-          if (year2.year) {
-            month2 = year2.month();
-            year2 = year2.year();
-          }
-          this._validate(year2, month2, this.minDay, main.local.invalidMonth);
-          return month2 === 12 && this.leapYear(year2) ? 30 : (
-            // Adar I
-            month2 === 8 && mod5(this.daysInYear(year2), 10) === 5 ? 30 : (
-              // Cheshvan in shlemah year
-              month2 === 9 && mod5(this.daysInYear(year2), 10) === 3 ? 29 : (
-                // Kislev in chaserah year
-                this.daysPerMonth[month2 - 1]
-              )
-            )
-          );
-        },
-        /** Determine whether this date is a week day.
-            @memberof HebrewCalendar
-            @param year {CDate|number} The date to examine or the year to examine.
-            @param [month] {number} The month to examine.
-            @param [day] {number} The day to examine.
-            @return {boolean} <code>true</code> if a week day, <code>false</code> if not.
-            @throws Error if an invalid date or a different calendar used. */
-        weekDay: function(year2, month2, day2) {
-          return this.dayOfWeek(year2, month2, day2) !== 6;
-        },
-        /** Retrieve additional information about a date - year type.
-            @memberof HebrewCalendar
-            @param year {CDate|number} The date to examine or the year to examine.
-            @param [month] {number} The month to examine.
-            @param [day] {number} The day to examine.
-            @return {object} Additional information - contents depends on calendar.
-            @throws Error if an invalid date or a different calendar used. */
-        extraInfo: function(year2, month2, day2) {
-          var date = this._validate(year2, month2, day2, main.local.invalidDate);
-          return { yearType: (this.leapYear(date) ? "embolismic" : "common") + " " + ["deficient", "regular", "complete"][this.daysInYear(date) % 10 - 3] };
-        },
-        /** Retrieve the Julian date equivalent for this date,
-            i.e. days since January 1, 4713 BCE Greenwich noon.
-            @memberof HebrewCalendar
-            @param year {CDate)|number} The date to convert or the year to convert.
-            @param [month] {number} The month to convert.
-            @param [day] {number} The day to convert.
-            @return {number} The equivalent Julian date.
-            @throws Error if an invalid date or a different calendar used. */
-        toJD: function(year2, month2, day2) {
-          var date = this._validate(year2, month2, day2, main.local.invalidDate);
-          year2 = date.year();
-          month2 = date.month();
-          day2 = date.day();
-          var adjYear = year2 <= 0 ? year2 + 1 : year2;
-          var jd = this.jdEpoch + this._delay1(adjYear) + this._delay2(adjYear) + day2 + 1;
-          if (month2 < 7) {
-            for (var m = 7; m <= this.monthsInYear(year2); m++) {
-              jd += this.daysInMonth(year2, m);
-            }
-            for (var m = 1; m < month2; m++) {
-              jd += this.daysInMonth(year2, m);
-            }
-          } else {
-            for (var m = 7; m < month2; m++) {
-              jd += this.daysInMonth(year2, m);
-            }
-          }
-          return jd;
-        },
-        /** Test for delay of start of new year and to avoid
-            Sunday, Wednesday, or Friday as start of the new year.
-            @memberof HebrewCalendar
-            @private
-            @param year {number} The year to examine.
-            @return {number} The days to offset by. */
-        _delay1: function(year2) {
-          var months2 = Math.floor((235 * year2 - 234) / 19);
-          var parts = 12084 + 13753 * months2;
-          var day2 = months2 * 29 + Math.floor(parts / 25920);
-          if (mod5(3 * (day2 + 1), 7) < 3) {
-            day2++;
-          }
-          return day2;
-        },
-        /** Check for delay in start of new year due to length of adjacent years.
-            @memberof HebrewCalendar
-            @private
-            @param year {number} The year to examine.
-            @return {number} The days to offset by. */
-        _delay2: function(year2) {
-          var last = this._delay1(year2 - 1);
-          var present = this._delay1(year2);
-          var next = this._delay1(year2 + 1);
-          return next - present === 356 ? 2 : present - last === 382 ? 1 : 0;
-        },
-        /** Create a new date from a Julian date.
-            @memberof HebrewCalendar
-            @param jd {number} The Julian date to convert.
-            @return {CDate} The equivalent date. */
-        fromJD: function(jd) {
-          jd = Math.floor(jd) + 0.5;
-          var year2 = Math.floor((jd - this.jdEpoch) * 98496 / 35975351) - 1;
-          while (jd >= this.toJD(year2 === -1 ? 1 : year2 + 1, 7, 1)) {
-            year2++;
-          }
-          var month2 = jd < this.toJD(year2, 1, 1) ? 7 : 1;
-          while (jd > this.toJD(year2, month2, this.daysInMonth(year2, month2))) {
-            month2++;
-          }
-          var day2 = jd - this.toJD(year2, month2, 1) + 1;
-          return this.newDate(year2, month2, day2);
-        }
-      });
-      function mod5(a, b) {
-        return a - b * Math.floor(a / b);
-      }
-      main.calendars.hebrew = HebrewCalendar;
-    }
-  });
-
-  // node_modules/.pnpm/world-calendars@1.0.4/node_modules/world-calendars/dist/calendars/islamic.js
-  var require_islamic = __commonJS({
-    "node_modules/.pnpm/world-calendars@1.0.4/node_modules/world-calendars/dist/calendars/islamic.js"() {
-      var main = require_main();
-      var assign = require_object_assign();
-      function IslamicCalendar(language) {
-        this.local = this.regionalOptions[language || ""] || this.regionalOptions[""];
-      }
-      IslamicCalendar.prototype = new main.baseCalendar();
-      assign(IslamicCalendar.prototype, {
-        /** The calendar name.
-            @memberof IslamicCalendar */
-        name: "Islamic",
-        /** Julian date of start of Islamic epoch: 16 July 622 CE.
-            @memberof IslamicCalendar */
-        jdEpoch: 19484395e-1,
-        /** Days per month in a common year.
-            @memberof IslamicCalendar */
-        daysPerMonth: [30, 29, 30, 29, 30, 29, 30, 29, 30, 29, 30, 29],
-        /** <code>true</code> if has a year zero, <code>false</code> if not.
-            @memberof IslamicCalendar */
-        hasYearZero: false,
-        /** The minimum month number.
-            @memberof IslamicCalendar */
-        minMonth: 1,
-        /** The first month in the year.
-            @memberof IslamicCalendar */
-        firstMonth: 1,
-        /** The minimum day number.
-            @memberof IslamicCalendar */
-        minDay: 1,
-        /** Localisations for the plugin.
-            Entries are objects indexed by the language code ('' being the default US/English).
-            Each object has the following attributes.
-            @memberof IslamicCalendar
-            @property name {string} The calendar name.
-            @property epochs {string[]} The epoch names.
-            @property monthNames {string[]} The long names of the months of the year.
-            @property monthNamesShort {string[]} The short names of the months of the year.
-            @property dayNames {string[]} The long names of the days of the week.
-            @property dayNamesShort {string[]} The short names of the days of the week.
-            @property dayNamesMin {string[]} The minimal names of the days of the week.
-            @property dateFormat {string} The date format for this calendar.
-                    See the options on <a href="BaseCalendar.html#formatDate"><code>formatDate</code></a> for details.
-            @property firstDay {number} The number of the first day of the week, starting at 0.
-            @property isRTL {number} <code>true</code> if this localisation reads right-to-left. */
-        regionalOptions: {
-          // Localisations
-          "": {
-            name: "Islamic",
-            epochs: ["BH", "AH"],
-            monthNames: [
-              "Muharram",
-              "Safar",
-              "Rabi' al-awwal",
-              "Rabi' al-thani",
-              "Jumada al-awwal",
-              "Jumada al-thani",
-              "Rajab",
-              "Sha'aban",
-              "Ramadan",
-              "Shawwal",
-              "Dhu al-Qi'dah",
-              "Dhu al-Hijjah"
-            ],
-            monthNamesShort: ["Muh", "Saf", "Rab1", "Rab2", "Jum1", "Jum2", "Raj", "Sha'", "Ram", "Shaw", "DhuQ", "DhuH"],
-            dayNames: [
-              "Yawm al-ahad",
-              "Yawm al-ithnayn",
-              "Yawm ath-thulaathaa'",
-              "Yawm al-arbi'aa'",
-              "Yawm al-kham\u012Bs",
-              "Yawm al-jum'a",
-              "Yawm as-sabt"
-            ],
-            dayNamesShort: ["Aha", "Ith", "Thu", "Arb", "Kha", "Jum", "Sab"],
-            dayNamesMin: ["Ah", "It", "Th", "Ar", "Kh", "Ju", "Sa"],
-            digits: null,
-            dateFormat: "yyyy/mm/dd",
-            firstDay: 6,
-            isRTL: false
-          }
-        },
-        /** Determine whether this date is in a leap year.
-            @memberof IslamicCalendar
-            @param year {CDate|number} The date to examine or the year to examine.
-            @return {boolean} <code>true</code> if this is a leap year, <code>false</code> if not.
-            @throws Error if an invalid year or a different calendar used. */
-        leapYear: function(year2) {
-          var date = this._validate(year2, this.minMonth, this.minDay, main.local.invalidYear);
-          return (date.year() * 11 + 14) % 30 < 11;
-        },
-        /** Determine the week of the year for a date.
-            @memberof IslamicCalendar
-            @param year {CDate|number} The date to examine or the year to examine.
-            @param [month] {number} The month to examine.
-            @param [day] {number} The day to examine.
-            @return {number} The week of the year.
-            @throws Error if an invalid date or a different calendar used. */
-        weekOfYear: function(year2, month2, day2) {
-          var checkDate = this.newDate(year2, month2, day2);
-          checkDate.add(-checkDate.dayOfWeek(), "d");
-          return Math.floor((checkDate.dayOfYear() - 1) / 7) + 1;
-        },
-        /** Retrieve the number of days in a year.
-            @memberof IslamicCalendar
-            @param year {CDate|number} The date to examine or the year to examine.
-            @return {number} The number of days.
-            @throws Error if an invalid year or a different calendar used. */
-        daysInYear: function(year2) {
-          return this.leapYear(year2) ? 355 : 354;
-        },
-        /** Retrieve the number of days in a month.
-            @memberof IslamicCalendar
-            @param year {CDate|number} The date to examine or the year of the month.
-            @param [month] {number} The month.
-            @return {number} The number of days in this month.
-            @throws Error if an invalid month/year or a different calendar used. */
-        daysInMonth: function(year2, month2) {
-          var date = this._validate(year2, month2, this.minDay, main.local.invalidMonth);
-          return this.daysPerMonth[date.month() - 1] + (date.month() === 12 && this.leapYear(date.year()) ? 1 : 0);
-        },
-        /** Determine whether this date is a week day.
-            @memberof IslamicCalendar
-            @param year {CDate|number} The date to examine or the year to examine.
-            @param [month] {number} The month to examine.
-            @param [day] {number} The day to examine.
-            @return {boolean} <code>true</code> if a week day, <code>false</code> if not.
-            @throws Error if an invalid date or a different calendar used. */
-        weekDay: function(year2, month2, day2) {
-          return this.dayOfWeek(year2, month2, day2) !== 5;
-        },
-        /** Retrieve the Julian date equivalent for this date,
-            i.e. days since January 1, 4713 BCE Greenwich noon.
-            @memberof IslamicCalendar
-            @param year {CDate|number} The date to convert or the year to convert.
-            @param [month] {number} The month to convert.
-            @param [day] {number} The day to convert.
-            @return {number} The equivalent Julian date.
-            @throws Error if an invalid date or a different calendar used. */
-        toJD: function(year2, month2, day2) {
-          var date = this._validate(year2, month2, day2, main.local.invalidDate);
-          year2 = date.year();
-          month2 = date.month();
-          day2 = date.day();
-          year2 = year2 <= 0 ? year2 + 1 : year2;
-          return day2 + Math.ceil(29.5 * (month2 - 1)) + (year2 - 1) * 354 + Math.floor((3 + 11 * year2) / 30) + this.jdEpoch - 1;
-        },
-        /** Create a new date from a Julian date.
-            @memberof IslamicCalendar
-            @param jd {number} The Julian date to convert.
-            @return {CDate} The equivalent date. */
-        fromJD: function(jd) {
-          jd = Math.floor(jd) + 0.5;
-          var year2 = Math.floor((30 * (jd - this.jdEpoch) + 10646) / 10631);
-          year2 = year2 <= 0 ? year2 - 1 : year2;
-          var month2 = Math.min(12, Math.ceil((jd - 29 - this.toJD(year2, 1, 1)) / 29.5) + 1);
-          var day2 = jd - this.toJD(year2, month2, 1) + 1;
-          return this.newDate(year2, month2, day2);
-        }
-      });
-      main.calendars.islamic = IslamicCalendar;
-    }
-  });
-
-  // node_modules/.pnpm/world-calendars@1.0.4/node_modules/world-calendars/dist/calendars/julian.js
-  var require_julian = __commonJS({
-    "node_modules/.pnpm/world-calendars@1.0.4/node_modules/world-calendars/dist/calendars/julian.js"() {
-      var main = require_main();
-      var assign = require_object_assign();
-      function JulianCalendar(language) {
-        this.local = this.regionalOptions[language || ""] || this.regionalOptions[""];
-      }
-      JulianCalendar.prototype = new main.baseCalendar();
-      assign(JulianCalendar.prototype, {
-        /** The calendar name.
-            @memberof JulianCalendar */
-        name: "Julian",
-        /** Julian date of start of Julian epoch: 1 January 0001 AD = 30 December 0001 BCE.
-            @memberof JulianCalendar */
-        jdEpoch: 17214235e-1,
-        /** Days per month in a common year.
-            @memberof JulianCalendar */
-        daysPerMonth: [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31],
-        /** <code>true</code> if has a year zero, <code>false</code> if not.
-            @memberof JulianCalendar */
-        hasYearZero: false,
-        /** The minimum month number.
-            @memberof JulianCalendar */
-        minMonth: 1,
-        /** The first month in the year.
-            @memberof JulianCalendar */
-        firstMonth: 1,
-        /** The minimum day number.
-            @memberof JulianCalendar */
-        minDay: 1,
-        /** Localisations for the plugin.
-            Entries are objects indexed by the language code ('' being the default US/English).
-            Each object has the following attributes.
-            @memberof JulianCalendar
-            @property name {string} The calendar name.
-            @property epochs {string[]} The epoch names.
-            @property monthNames {string[]} The long names of the months of the year.
-            @property monthNamesShort {string[]} The short names of the months of the year.
-            @property dayNames {string[]} The long names of the days of the week.
-            @property dayNamesShort {string[]} The short names of the days of the week.
-            @property dayNamesMin {string[]} The minimal names of the days of the week.
-            @property dateFormat {string} The date format for this calendar.
-                    See the options on <a href="BaseCalendar.html#formatDate"><code>formatDate</code></a> for details.
-            @property firstDay {number} The number of the first day of the week, starting at 0.
-            @property isRTL {number} <code>true</code> if this localisation reads right-to-left. */
-        regionalOptions: {
-          // Localisations
-          "": {
-            name: "Julian",
-            epochs: ["BC", "AD"],
-            monthNames: [
-              "January",
-              "February",
-              "March",
-              "April",
-              "May",
-              "June",
-              "July",
-              "August",
-              "September",
-              "October",
-              "November",
-              "December"
-            ],
-            monthNamesShort: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-            dayNames: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-            dayNamesShort: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
-            dayNamesMin: ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"],
-            digits: null,
-            dateFormat: "mm/dd/yyyy",
-            firstDay: 0,
-            isRTL: false
-          }
-        },
-        /** Determine whether this date is in a leap year.
-            @memberof JulianCalendar
-            @param year {CDate|number} The date to examine or the year to examine.
-            @return {boolean} <code>true</code> if this is a leap year, <code>false</code> if not.
-            @throws Error if an invalid year or a different calendar used. */
-        leapYear: function(year2) {
-          var date = this._validate(year2, this.minMonth, this.minDay, main.local.invalidYear);
-          var year2 = date.year() < 0 ? date.year() + 1 : date.year();
-          return year2 % 4 === 0;
-        },
-        /** Determine the week of the year for a date - ISO 8601.
-            @memberof JulianCalendar
-            @param year {CDate|number} The date to examine or the year to examine.
-            @param [month] {number} The month to examine.
-            @param [day] {number} The day to examine.
-            @return {number} The week of the year.
-            @throws Error if an invalid date or a different calendar used. */
-        weekOfYear: function(year2, month2, day2) {
-          var checkDate = this.newDate(year2, month2, day2);
-          checkDate.add(4 - (checkDate.dayOfWeek() || 7), "d");
-          return Math.floor((checkDate.dayOfYear() - 1) / 7) + 1;
-        },
-        /** Retrieve the number of days in a month.
-            @memberof JulianCalendar
-            @param year {CDate|number} The date to examine or the year of the month.
-            @param [month] {number} The month.
-            @return {number} The number of days in this month.
-            @throws Error if an invalid month/year or a different calendar used. */
-        daysInMonth: function(year2, month2) {
-          var date = this._validate(year2, month2, this.minDay, main.local.invalidMonth);
-          return this.daysPerMonth[date.month() - 1] + (date.month() === 2 && this.leapYear(date.year()) ? 1 : 0);
-        },
-        /** Determine whether this date is a week day.
-            @memberof JulianCalendar
-            @param year {CDate|number} The date to examine or the year to examine.
-            @param [month] {number} The month to examine.
-            @param [day] {number} The day to examine.
-            @return {boolean} True if a week day, false if not.
-            @throws Error if an invalid date or a different calendar used. */
-        weekDay: function(year2, month2, day2) {
-          return (this.dayOfWeek(year2, month2, day2) || 7) < 6;
-        },
-        /** Retrieve the Julian date equivalent for this date,
-            i.e. days since January 1, 4713 BCE Greenwich noon.
-            @memberof JulianCalendar
-            @param year {CDate|number} The date to convert or the year to convert.
-            @param [month] {number} The month to convert.
-            @param [day] {number} The day to convert.
-            @return {number} The equivalent Julian date.
-            @throws Error if an invalid date or a different calendar used. */
-        toJD: function(year2, month2, day2) {
-          var date = this._validate(year2, month2, day2, main.local.invalidDate);
-          year2 = date.year();
-          month2 = date.month();
-          day2 = date.day();
-          if (year2 < 0) {
-            year2++;
-          }
-          if (month2 <= 2) {
-            year2--;
-            month2 += 12;
-          }
-          return Math.floor(365.25 * (year2 + 4716)) + Math.floor(30.6001 * (month2 + 1)) + day2 - 1524.5;
-        },
-        /** Create a new date from a Julian date.
-            @memberof JulianCalendar
-            @param jd {number} The Julian date to convert.
-            @return {CDate} The equivalent date. */
-        fromJD: function(jd) {
-          var a = Math.floor(jd + 0.5);
-          var b = a + 1524;
-          var c = Math.floor((b - 122.1) / 365.25);
-          var d = Math.floor(365.25 * c);
-          var e = Math.floor((b - d) / 30.6001);
-          var month2 = e - Math.floor(e < 14 ? 1 : 13);
-          var year2 = c - Math.floor(month2 > 2 ? 4716 : 4715);
-          var day2 = b - d - Math.floor(30.6001 * e);
-          if (year2 <= 0) {
-            year2--;
-          }
-          return this.newDate(year2, month2, day2);
-        }
-      });
-      main.calendars.julian = JulianCalendar;
-    }
-  });
-
-  // node_modules/.pnpm/world-calendars@1.0.4/node_modules/world-calendars/dist/calendars/mayan.js
-  var require_mayan = __commonJS({
-    "node_modules/.pnpm/world-calendars@1.0.4/node_modules/world-calendars/dist/calendars/mayan.js"() {
-      var main = require_main();
-      var assign = require_object_assign();
-      function MayanCalendar(language) {
-        this.local = this.regionalOptions[language || ""] || this.regionalOptions[""];
-      }
-      MayanCalendar.prototype = new main.baseCalendar();
-      assign(MayanCalendar.prototype, {
-        /** The calendar name.
-            @memberof MayanCalendar */
-        name: "Mayan",
-        /** Julian date of start of Mayan epoch: 11 August 3114 BCE.
-            @memberof MayanCalendar */
-        jdEpoch: 584282.5,
-        /** <code>true</code> if has a year zero, <code>false</code> if not.
-            @memberof MayanCalendar */
-        hasYearZero: true,
-        /** The minimum month number.
-            @memberof MayanCalendar */
-        minMonth: 0,
-        /** The first month in the year.
-            @memberof MayanCalendar */
-        firstMonth: 0,
-        /** The minimum day number.
-            @memberof MayanCalendar */
-        minDay: 0,
-        /** Localisations for the plugin.
-            Entries are objects indexed by the language code ('' being the default US/English).
-            Each object has the following attributes.
-            @memberof MayanCalendar
-            @property name {string} The calendar name.
-            @property epochs {string[]} The epoch names.
-            @property monthNames {string[]} The long names of the months of the year.
-            @property monthNamesShort {string[]} The short names of the months of the year.
-            @property dayNames {string[]} The long names of the days of the week.
-            @property dayNamesShort {string[]} The short names of the days of the week.
-            @property dayNamesMin {string[]} The minimal names of the days of the week.
-            @property dateFormat {string} The date format for this calendar.
-                    See the options on <a href="BaseCalendar.html#formatDate"><code>formatDate</code></a> for details.
-            @property firstDay {number} The number of the first day of the week, starting at 0.
-            @property isRTL {number} <code>true</code> if this localisation reads right-to-left.
-            @property haabMonths {string[]} The names of the Haab months.
-            @property tzolkinMonths {string[]} The names of the Tzolkin months. */
-        regionalOptions: {
-          // Localisations
-          "": {
-            name: "Mayan",
-            epochs: ["", ""],
-            monthNames: [
-              "0",
-              "1",
-              "2",
-              "3",
-              "4",
-              "5",
-              "6",
-              "7",
-              "8",
-              "9",
-              "10",
-              "11",
-              "12",
-              "13",
-              "14",
-              "15",
-              "16",
-              "17"
-            ],
-            monthNamesShort: [
-              "0",
-              "1",
-              "2",
-              "3",
-              "4",
-              "5",
-              "6",
-              "7",
-              "8",
-              "9",
-              "10",
-              "11",
-              "12",
-              "13",
-              "14",
-              "15",
-              "16",
-              "17"
-            ],
-            dayNames: [
-              "0",
-              "1",
-              "2",
-              "3",
-              "4",
-              "5",
-              "6",
-              "7",
-              "8",
-              "9",
-              "10",
-              "11",
-              "12",
-              "13",
-              "14",
-              "15",
-              "16",
-              "17",
-              "18",
-              "19"
-            ],
-            dayNamesShort: [
-              "0",
-              "1",
-              "2",
-              "3",
-              "4",
-              "5",
-              "6",
-              "7",
-              "8",
-              "9",
-              "10",
-              "11",
-              "12",
-              "13",
-              "14",
-              "15",
-              "16",
-              "17",
-              "18",
-              "19"
-            ],
-            dayNamesMin: [
-              "0",
-              "1",
-              "2",
-              "3",
-              "4",
-              "5",
-              "6",
-              "7",
-              "8",
-              "9",
-              "10",
-              "11",
-              "12",
-              "13",
-              "14",
-              "15",
-              "16",
-              "17",
-              "18",
-              "19"
-            ],
-            digits: null,
-            dateFormat: "YYYY.m.d",
-            firstDay: 0,
-            isRTL: false,
-            haabMonths: [
-              "Pop",
-              "Uo",
-              "Zip",
-              "Zotz",
-              "Tzec",
-              "Xul",
-              "Yaxkin",
-              "Mol",
-              "Chen",
-              "Yax",
-              "Zac",
-              "Ceh",
-              "Mac",
-              "Kankin",
-              "Muan",
-              "Pax",
-              "Kayab",
-              "Cumku",
-              "Uayeb"
-            ],
-            tzolkinMonths: [
-              "Imix",
-              "Ik",
-              "Akbal",
-              "Kan",
-              "Chicchan",
-              "Cimi",
-              "Manik",
-              "Lamat",
-              "Muluc",
-              "Oc",
-              "Chuen",
-              "Eb",
-              "Ben",
-              "Ix",
-              "Men",
-              "Cib",
-              "Caban",
-              "Etznab",
-              "Cauac",
-              "Ahau"
-            ]
-          }
-        },
-        /** Determine whether this date is in a leap year.
-            @memberof MayanCalendar
-            @param year {CDate|number} The date to examine or the year to examine.
-            @return {boolean} <code>true</code> if this is a leap year, <code>false</code> if not.
-            @throws Error if an invalid year or a different calendar used. */
-        leapYear: function(year2) {
-          this._validate(year2, this.minMonth, this.minDay, main.local.invalidYear);
-          return false;
-        },
-        /** Format the year, if not a simple sequential number.
-            @memberof MayanCalendar
-            @param year {CDate|number} The date to format or the year to format.
-            @return {string} The formatted year.
-            @throws Error if an invalid year or a different calendar used. */
-        formatYear: function(year2) {
-          var date = this._validate(year2, this.minMonth, this.minDay, main.local.invalidYear);
-          year2 = date.year();
-          var baktun = Math.floor(year2 / 400);
-          year2 = year2 % 400;
-          year2 += year2 < 0 ? 400 : 0;
-          var katun = Math.floor(year2 / 20);
-          return baktun + "." + katun + "." + year2 % 20;
-        },
-        /** Convert from the formatted year back to a single number.
-            @memberof MayanCalendar
-            @param years {string} The year as n.n.n.
-            @return {number} The sequential year.
-            @throws Error if an invalid value is supplied. */
-        forYear: function(years2) {
-          years2 = years2.split(".");
-          if (years2.length < 3) {
-            throw "Invalid Mayan year";
-          }
-          var year2 = 0;
-          for (var i = 0; i < years2.length; i++) {
-            var y = parseInt(years2[i], 10);
-            if (Math.abs(y) > 19 || i > 0 && y < 0) {
-              throw "Invalid Mayan year";
-            }
-            year2 = year2 * 20 + y;
-          }
-          return year2;
-        },
-        /** Retrieve the number of months in a year.
-            @memberof MayanCalendar
-            @param year {CDate|number} The date to examine or the year to examine.
-            @return {number} The number of months.
-            @throws Error if an invalid year or a different calendar used. */
-        monthsInYear: function(year2) {
-          this._validate(year2, this.minMonth, this.minDay, main.local.invalidYear);
-          return 18;
-        },
-        /** Determine the week of the year for a date.
-            @memberof MayanCalendar
-            @param year {CDate|number} The date to examine or the year to examine.
-            @param [month] {number} The month to examine.
-            @param [day] {number} The day to examine.
-            @return {number} The week of the year.
-            @throws Error if an invalid date or a different calendar used. */
-        weekOfYear: function(year2, month2, day2) {
-          this._validate(year2, month2, day2, main.local.invalidDate);
-          return 0;
-        },
-        /** Retrieve the number of days in a year.
-            @memberof MayanCalendar
-            @param year {CDate|number} The date to examine or the year to examine.
-            @return {number} The number of days.
-            @throws Error if an invalid year or a different calendar used. */
-        daysInYear: function(year2) {
-          this._validate(year2, this.minMonth, this.minDay, main.local.invalidYear);
-          return 360;
-        },
-        /** Retrieve the number of days in a month.
-            @memberof MayanCalendar
-            @param year {CDate|number} The date to examine or the year of the month.
-            @param [month] {number} The month.
-            @return {number} The number of days in this month.
-            @throws Error if an invalid month/year or a different calendar used. */
-        daysInMonth: function(year2, month2) {
-          this._validate(year2, month2, this.minDay, main.local.invalidMonth);
-          return 20;
-        },
-        /** Retrieve the number of days in a week.
-            @memberof MayanCalendar
-            @return {number} The number of days. */
-        daysInWeek: function() {
-          return 5;
-        },
-        /** Retrieve the day of the week for a date.
-            @memberof MayanCalendar
-            @param year {CDate|number} The date to examine or the year to examine.
-            @param [month] {number} The month to examine.
-            @param [day] {number} The day to examine.
-            @return {number} The day of the week: 0 to number of days - 1.
-            @throws Error if an invalid date or a different calendar used. */
-        dayOfWeek: function(year2, month2, day2) {
-          var date = this._validate(year2, month2, day2, main.local.invalidDate);
-          return date.day();
-        },
-        /** Determine whether this date is a week day.
-            @memberof MayanCalendar
-            @param year {CDate|number} The date to examine or the year to examine.
-            @param [month] {number} The month to examine.
-            @param [day] {number} The day to examine.
-            @return {boolean} <code>true</code> if a week day, <code>false</code> if not.
-            @throws Error if an invalid date or a different calendar used. */
-        weekDay: function(year2, month2, day2) {
-          this._validate(year2, month2, day2, main.local.invalidDate);
-          return true;
-        },
-        /** Retrieve additional information about a date - Haab and Tzolkin equivalents.
-            @memberof MayanCalendar
-            @param year {CDate|number} The date to examine or the year to examine.
-            @param [month] {number} The month to examine.
-            @param [day] {number} The day to examine.
-            @return {object} Additional information - contents depends on calendar.
-            @throws Error if an invalid date or a different calendar used. */
-        extraInfo: function(year2, month2, day2) {
-          var date = this._validate(year2, month2, day2, main.local.invalidDate);
-          var jd = date.toJD();
-          var haab = this._toHaab(jd);
-          var tzolkin = this._toTzolkin(jd);
-          return {
-            haabMonthName: this.local.haabMonths[haab[0] - 1],
-            haabMonth: haab[0],
-            haabDay: haab[1],
-            tzolkinDayName: this.local.tzolkinMonths[tzolkin[0] - 1],
-            tzolkinDay: tzolkin[0],
-            tzolkinTrecena: tzolkin[1]
-          };
-        },
-        /** Retrieve Haab date from a Julian date.
-            @memberof MayanCalendar
-            @private
-            @param jd  {number} The Julian date.
-            @return {number[]} Corresponding Haab month and day. */
-        _toHaab: function(jd) {
-          jd -= this.jdEpoch;
-          var day2 = mod5(jd + 8 + (18 - 1) * 20, 365);
-          return [Math.floor(day2 / 20) + 1, mod5(day2, 20)];
-        },
-        /** Retrieve Tzolkin date from a Julian date.
-            @memberof MayanCalendar
-            @private
-            @param jd {number} The Julian date.
-            @return {number[]} Corresponding Tzolkin day and trecena. */
-        _toTzolkin: function(jd) {
-          jd -= this.jdEpoch;
-          return [amod(jd + 20, 20), amod(jd + 4, 13)];
-        },
-        /** Retrieve the Julian date equivalent for this date,
-            i.e. days since January 1, 4713 BCE Greenwich noon.
-            @memberof MayanCalendar
-            @param year {CDate|number} The date to convert or the year to convert.
-            @param [month] {number} The month to convert.
-            @param [day] {number} The day to convert.
-            @return {number} The equivalent Julian date.
-            @throws Error if an invalid date or a different calendar used. */
-        toJD: function(year2, month2, day2) {
-          var date = this._validate(year2, month2, day2, main.local.invalidDate);
-          return date.day() + date.month() * 20 + date.year() * 360 + this.jdEpoch;
-        },
-        /** Create a new date from a Julian date.
-            @memberof MayanCalendar
-            @param jd {number} The Julian date to convert.
-            @return {CDate} The equivalent date. */
-        fromJD: function(jd) {
-          jd = Math.floor(jd) + 0.5 - this.jdEpoch;
-          var year2 = Math.floor(jd / 360);
-          jd = jd % 360;
-          jd += jd < 0 ? 360 : 0;
-          var month2 = Math.floor(jd / 20);
-          var day2 = jd % 20;
-          return this.newDate(year2, month2, day2);
-        }
-      });
-      function mod5(a, b) {
-        return a - b * Math.floor(a / b);
-      }
-      function amod(a, b) {
-        return mod5(a - 1, b) + 1;
-      }
-      main.calendars.mayan = MayanCalendar;
-    }
-  });
-
-  // node_modules/.pnpm/world-calendars@1.0.4/node_modules/world-calendars/dist/calendars/nanakshahi.js
-  var require_nanakshahi = __commonJS({
-    "node_modules/.pnpm/world-calendars@1.0.4/node_modules/world-calendars/dist/calendars/nanakshahi.js"() {
-      var main = require_main();
-      var assign = require_object_assign();
-      function NanakshahiCalendar(language) {
-        this.local = this.regionalOptions[language || ""] || this.regionalOptions[""];
-      }
-      NanakshahiCalendar.prototype = new main.baseCalendar();
-      var gregorian = main.instance("gregorian");
-      assign(NanakshahiCalendar.prototype, {
-        /** The calendar name.
-            @memberof NanakshahiCalendar */
-        name: "Nanakshahi",
-        /** Julian date of start of Nanakshahi epoch: 14 March 1469 CE.
-            @memberof NanakshahiCalendar */
-        jdEpoch: 22576735e-1,
-        /** Days per month in a common year.
-            @memberof NanakshahiCalendar */
-        daysPerMonth: [31, 31, 31, 31, 31, 30, 30, 30, 30, 30, 30, 30],
-        /** <code>true</code> if has a year zero, <code>false</code> if not.
-            @memberof NanakshahiCalendar */
-        hasYearZero: false,
-        /** The minimum month number.
-            @memberof NanakshahiCalendar */
-        minMonth: 1,
-        /** The first month in the year.
-            @memberof NanakshahiCalendar */
-        firstMonth: 1,
-        /** The minimum day number.
-            @memberof NanakshahiCalendar */
-        minDay: 1,
-        /** Localisations for the plugin.
-            Entries are objects indexed by the language code ('' being the default US/English).
-            Each object has the following attributes.
-            @memberof NanakshahiCalendar
-            @property name {string} The calendar name.
-            @property epochs {string[]} The epoch names.
-            @property monthNames {string[]} The long names of the months of the year.
-            @property monthNamesShort {string[]} The short names of the months of the year.
-            @property dayNames {string[]} The long names of the days of the week.
-            @property dayNamesShort {string[]} The short names of the days of the week.
-            @property dayNamesMin {string[]} The minimal names of the days of the week.
-            @property dateFormat {string} The date format for this calendar.
-                    See the options on <a href="BaseCalendar.html#formatDate"><code>formatDate</code></a> for details.
-            @property firstDay {number} The number of the first day of the week, starting at 0.
-            @property isRTL {number} <code>true</code> if this localisation reads right-to-left. */
-        regionalOptions: {
-          // Localisations
-          "": {
-            name: "Nanakshahi",
-            epochs: ["BN", "AN"],
-            monthNames: [
-              "Chet",
-              "Vaisakh",
-              "Jeth",
-              "Harh",
-              "Sawan",
-              "Bhadon",
-              "Assu",
-              "Katak",
-              "Maghar",
-              "Poh",
-              "Magh",
-              "Phagun"
-            ],
-            monthNamesShort: ["Che", "Vai", "Jet", "Har", "Saw", "Bha", "Ass", "Kat", "Mgr", "Poh", "Mgh", "Pha"],
-            dayNames: ["Somvaar", "Mangalvar", "Budhvaar", "Veervaar", "Shukarvaar", "Sanicharvaar", "Etvaar"],
-            dayNamesShort: ["Som", "Mangal", "Budh", "Veer", "Shukar", "Sanichar", "Et"],
-            dayNamesMin: ["So", "Ma", "Bu", "Ve", "Sh", "Sa", "Et"],
-            digits: null,
-            dateFormat: "dd-mm-yyyy",
-            firstDay: 0,
-            isRTL: false
-          }
-        },
-        /** Determine whether this date is in a leap year.
-            @memberof NanakshahiCalendar
-            @param year {CDate|number} The date to examine or the year to examine.
-            @return {boolean} <code>true</code> if this is a leap year, <code>false</code> if not.
-            @throws Error if an invalid year or a different calendar used. */
-        leapYear: function(year2) {
-          var date = this._validate(
-            year2,
-            this.minMonth,
-            this.minDay,
-            main.local.invalidYear || main.regionalOptions[""].invalidYear
-          );
-          return gregorian.leapYear(date.year() + (date.year() < 1 ? 1 : 0) + 1469);
-        },
-        /** Determine the week of the year for a date.
-            @memberof NanakshahiCalendar
-            @param year {CDate|number} The date to examine or the year to examine.
-            @param [month] {number} The month to examine.
-            @param [day] {number} The day to examine.
-            @return {number} The week of the year.
-            @throws Error if an invalid date or a different calendar used. */
-        weekOfYear: function(year2, month2, day2) {
-          var checkDate = this.newDate(year2, month2, day2);
-          checkDate.add(1 - (checkDate.dayOfWeek() || 7), "d");
-          return Math.floor((checkDate.dayOfYear() - 1) / 7) + 1;
-        },
-        /** Retrieve the number of days in a month.
-            @memberof NanakshahiCalendar
-            @param year {CDate|number} The date to examine or the year of the month.
-            @param [month] {number} The month.
-            @return {number} The number of days in this month.
-            @throws Error if an invalid month/year or a different calendar used. */
-        daysInMonth: function(year2, month2) {
-          var date = this._validate(year2, month2, this.minDay, main.local.invalidMonth);
-          return this.daysPerMonth[date.month() - 1] + (date.month() === 12 && this.leapYear(date.year()) ? 1 : 0);
-        },
-        /** Determine whether this date is a week day.
-            @memberof NanakshahiCalendar
-            @param year {CDate|number} The date to examine or the year to examine.
-            @param [month] {number} The month to examine.
-            @param [day] {number} The day to examine.
-            @return {boolean} <code>true</code> if a week day, <code>false</code> if not.
-            @throws Error if an invalid date or a different calendar used. */
-        weekDay: function(year2, month2, day2) {
-          return (this.dayOfWeek(year2, month2, day2) || 7) < 6;
-        },
-        /** Retrieve the Julian date equivalent for this date,
-            i.e. days since January 1, 4713 BCE Greenwich noon.
-            @memberof NanakshahiCalendar
-            @param year {CDate|number} The date to convert or the year to convert.
-            @param [month] {number} The month to convert.
-            @param [day] {number} The day to convert.
-            @return {number} The equivalent Julian date.
-            @throws Error if an invalid date or a different calendar used. */
-        toJD: function(year2, month2, day2) {
-          var date = this._validate(year2, month2, day2, main.local.invalidMonth);
-          var year2 = date.year();
-          if (year2 < 0) {
-            year2++;
-          }
-          var doy = date.day();
-          for (var m = 1; m < date.month(); m++) {
-            doy += this.daysPerMonth[m - 1];
-          }
-          return doy + gregorian.toJD(year2 + 1468, 3, 13);
-        },
-        /** Create a new date from a Julian date.
-            @memberof NanakshahiCalendar
-            @param jd {number} The Julian date to convert.
-            @return {CDate} The equivalent date. */
-        fromJD: function(jd) {
-          jd = Math.floor(jd + 0.5);
-          var year2 = Math.floor((jd - (this.jdEpoch - 1)) / 366);
-          while (jd >= this.toJD(year2 + 1, 1, 1)) {
-            year2++;
-          }
-          var day2 = jd - Math.floor(this.toJD(year2, 1, 1) + 0.5) + 1;
-          var month2 = 1;
-          while (day2 > this.daysInMonth(year2, month2)) {
-            day2 -= this.daysInMonth(year2, month2);
-            month2++;
-          }
-          return this.newDate(year2, month2, day2);
-        }
-      });
-      main.calendars.nanakshahi = NanakshahiCalendar;
-    }
-  });
-
-  // node_modules/.pnpm/world-calendars@1.0.4/node_modules/world-calendars/dist/calendars/nepali.js
-  var require_nepali = __commonJS({
-    "node_modules/.pnpm/world-calendars@1.0.4/node_modules/world-calendars/dist/calendars/nepali.js"() {
-      var main = require_main();
-      var assign = require_object_assign();
-      function NepaliCalendar(language) {
-        this.local = this.regionalOptions[language || ""] || this.regionalOptions[""];
-      }
-      NepaliCalendar.prototype = new main.baseCalendar();
-      assign(NepaliCalendar.prototype, {
-        /** The calendar name.
-            @memberof NepaliCalendar */
-        name: "Nepali",
-        /** Julian date of start of Nepali epoch: 14 April 57 BCE.
-            @memberof NepaliCalendar */
-        jdEpoch: 17007095e-1,
-        /** Days per month in a common year.
-            @memberof NepaliCalendar */
-        daysPerMonth: [31, 31, 32, 32, 31, 30, 30, 29, 30, 29, 30, 30],
-        /** <code>true</code> if has a year zero, <code>false</code> if not.
-            @memberof NepaliCalendar */
-        hasYearZero: false,
-        /** The minimum month number.
-            @memberof NepaliCalendar */
-        minMonth: 1,
-        /** The first month in the year.
-            @memberof NepaliCalendar */
-        firstMonth: 1,
-        /** The minimum day number.
-            @memberof NepaliCalendar */
-        minDay: 1,
-        /** The number of days in the year.
-            @memberof NepaliCalendar */
-        daysPerYear: 365,
-        /** Localisations for the plugin.
-            Entries are objects indexed by the language code ('' being the default US/English).
-            Each object has the following attributes.
-            @memberof NepaliCalendar
-            @property name {string} The calendar name.
-            @property epochs {string[]} The epoch names.
-            @property monthNames {string[]} The long names of the months of the year.
-            @property monthNamesShort {string[]} The short names of the months of the year.
-            @property dayNames {string[]} The long names of the days of the week.
-            @property dayNamesShort {string[]} The short names of the days of the week.
-            @property dayNamesMin {string[]} The minimal names of the days of the week.
-            @property dateFormat {string} The date format for this calendar.
-                    See the options on <a href="BaseCalendar.html#formatDate"><code>formatDate</code></a> for details.
-            @property firstDay {number} The number of the first day of the week, starting at 0.
-            @property isRTL {number} <code>true</code> if this localisation reads right-to-left. */
-        regionalOptions: {
-          // Localisations
-          "": {
-            name: "Nepali",
-            epochs: ["BBS", "ABS"],
-            monthNames: [
-              "Baisakh",
-              "Jestha",
-              "Ashadh",
-              "Shrawan",
-              "Bhadra",
-              "Ashwin",
-              "Kartik",
-              "Mangsir",
-              "Paush",
-              "Mangh",
-              "Falgun",
-              "Chaitra"
-            ],
-            monthNamesShort: ["Bai", "Je", "As", "Shra", "Bha", "Ash", "Kar", "Mang", "Pau", "Ma", "Fal", "Chai"],
-            dayNames: ["Aaitabaar", "Sombaar", "Manglbaar", "Budhabaar", "Bihibaar", "Shukrabaar", "Shanibaar"],
-            dayNamesShort: ["Aaita", "Som", "Mangl", "Budha", "Bihi", "Shukra", "Shani"],
-            dayNamesMin: ["Aai", "So", "Man", "Bu", "Bi", "Shu", "Sha"],
-            digits: null,
-            dateFormat: "dd/mm/yyyy",
-            firstDay: 1,
-            isRTL: false
-          }
-        },
-        /** Determine whether this date is in a leap year.
-            @memberof NepaliCalendar
-            @param year {CDate|number} The date to examine or the year to examine.
-            @return {boolean} <code>true</code> if this is a leap year, <code>false</code> if not.
-            @throws Error if an invalid year or a different calendar used. */
-        leapYear: function(year2) {
-          return this.daysInYear(year2) !== this.daysPerYear;
-        },
-        /** Determine the week of the year for a date.
-            @memberof NepaliCalendar
-            @param year {CDate|number} The date to examine or the year to examine.
-            @param [month] {number} The month to examine.
-            @param [day] {number} The day to examine.
-            @return {number} The week of the year.
-            @throws Error if an invalid date or a different calendar used. */
-        weekOfYear: function(year2, month2, day2) {
-          var checkDate = this.newDate(year2, month2, day2);
-          checkDate.add(-checkDate.dayOfWeek(), "d");
-          return Math.floor((checkDate.dayOfYear() - 1) / 7) + 1;
-        },
-        /** Retrieve the number of days in a year.
-            @memberof NepaliCalendar
-            @param year {CDate|number} The date to examine or the year to examine.
-            @return {number} The number of days.
-            @throws Error if an invalid year or a different calendar used. */
-        daysInYear: function(year2) {
-          var date = this._validate(year2, this.minMonth, this.minDay, main.local.invalidYear);
-          year2 = date.year();
-          if (typeof this.NEPALI_CALENDAR_DATA[year2] === "undefined") {
-            return this.daysPerYear;
-          }
-          var daysPerYear = 0;
-          for (var month_number = this.minMonth; month_number <= 12; month_number++) {
-            daysPerYear += this.NEPALI_CALENDAR_DATA[year2][month_number];
-          }
-          return daysPerYear;
-        },
-        /** Retrieve the number of days in a month.
-            @memberof NepaliCalendar
-            @param year {CDate|number| The date to examine or the year of the month.
-            @param [month] {number} The month.
-            @return {number} The number of days in this month.
-            @throws Error if an invalid month/year or a different calendar used. */
-        daysInMonth: function(year2, month2) {
-          if (year2.year) {
-            month2 = year2.month();
-            year2 = year2.year();
-          }
-          this._validate(year2, month2, this.minDay, main.local.invalidMonth);
-          return typeof this.NEPALI_CALENDAR_DATA[year2] === "undefined" ? this.daysPerMonth[month2 - 1] : this.NEPALI_CALENDAR_DATA[year2][month2];
-        },
-        /** Determine whether this date is a week day.
-            @memberof NepaliCalendar
-            @param year {CDate|number} The date to examine or the year to examine.
-            @param [month] {number} The month to examine.
-            @param [day] {number} The day to examine.
-            @return {boolean} <code>true</code> if a week day, <code>false</code> if not.
-            @throws Error if an invalid date or a different calendar used. */
-        weekDay: function(year2, month2, day2) {
-          return this.dayOfWeek(year2, month2, day2) !== 6;
-        },
-        /** Retrieve the Julian date equivalent for this date,
-            i.e. days since January 1, 4713 BCE Greenwich noon.
-            @memberof NepaliCalendar
-            @param year {CDate|number} The date to convert or the year to convert.
-            @param [month] {number} The month to convert.
-            @param [day] {number} The day to convert.
-            @return {number} The equivalent Julian date.
-            @throws Error if an invalid date or a different calendar used. */
-        toJD: function(nepaliYear, nepaliMonth, nepaliDay) {
-          var date = this._validate(nepaliYear, nepaliMonth, nepaliDay, main.local.invalidDate);
-          nepaliYear = date.year();
-          nepaliMonth = date.month();
-          nepaliDay = date.day();
-          var gregorianCalendar = main.instance();
-          var gregorianDayOfYear = 0;
-          var nepaliMonthToCheck = nepaliMonth;
-          var nepaliYearToCheck = nepaliYear;
-          this._createMissingCalendarData(nepaliYear);
-          var gregorianYear = nepaliYear - (nepaliMonthToCheck > 9 || nepaliMonthToCheck === 9 && nepaliDay >= this.NEPALI_CALENDAR_DATA[nepaliYearToCheck][0] ? 56 : 57);
-          if (nepaliMonth !== 9) {
-            gregorianDayOfYear = nepaliDay;
-            nepaliMonthToCheck--;
-          }
-          while (nepaliMonthToCheck !== 9) {
-            if (nepaliMonthToCheck <= 0) {
-              nepaliMonthToCheck = 12;
-              nepaliYearToCheck--;
-            }
-            gregorianDayOfYear += this.NEPALI_CALENDAR_DATA[nepaliYearToCheck][nepaliMonthToCheck];
-            nepaliMonthToCheck--;
-          }
-          if (nepaliMonth === 9) {
-            gregorianDayOfYear += nepaliDay - this.NEPALI_CALENDAR_DATA[nepaliYearToCheck][0];
-            if (gregorianDayOfYear < 0) {
-              gregorianDayOfYear += gregorianCalendar.daysInYear(gregorianYear);
-            }
-          } else {
-            gregorianDayOfYear += this.NEPALI_CALENDAR_DATA[nepaliYearToCheck][9] - this.NEPALI_CALENDAR_DATA[nepaliYearToCheck][0];
-          }
-          return gregorianCalendar.newDate(gregorianYear, 1, 1).add(gregorianDayOfYear, "d").toJD();
-        },
-        /** Create a new date from a Julian date.
-            @memberof NepaliCalendar
-            @param jd {number} The Julian date to convert.
-            @return {CDate} The equivalent date. */
-        fromJD: function(jd) {
-          var gregorianCalendar = main.instance();
-          var gregorianDate = gregorianCalendar.fromJD(jd);
-          var gregorianYear = gregorianDate.year();
-          var gregorianDayOfYear = gregorianDate.dayOfYear();
-          var nepaliYear = gregorianYear + 56;
-          this._createMissingCalendarData(nepaliYear);
-          var nepaliMonth = 9;
-          var dayOfFirstJanInPaush = this.NEPALI_CALENDAR_DATA[nepaliYear][0];
-          var daysSinceJanFirstToEndOfNepaliMonth = this.NEPALI_CALENDAR_DATA[nepaliYear][nepaliMonth] - dayOfFirstJanInPaush + 1;
-          while (gregorianDayOfYear > daysSinceJanFirstToEndOfNepaliMonth) {
-            nepaliMonth++;
-            if (nepaliMonth > 12) {
-              nepaliMonth = 1;
-              nepaliYear++;
-            }
-            daysSinceJanFirstToEndOfNepaliMonth += this.NEPALI_CALENDAR_DATA[nepaliYear][nepaliMonth];
-          }
-          var nepaliDayOfMonth = this.NEPALI_CALENDAR_DATA[nepaliYear][nepaliMonth] - (daysSinceJanFirstToEndOfNepaliMonth - gregorianDayOfYear);
-          return this.newDate(nepaliYear, nepaliMonth, nepaliDayOfMonth);
-        },
-        /** Creates missing data in the NEPALI_CALENDAR_DATA table.
-            This data will not be correct but just give an estimated result. Mostly -/+ 1 day
-            @private
-            @param nepaliYear {number} The missing year number. */
-        _createMissingCalendarData: function(nepaliYear) {
-          var tmp_calendar_data = this.daysPerMonth.slice(0);
-          tmp_calendar_data.unshift(17);
-          for (var nepaliYearToCreate = nepaliYear - 1; nepaliYearToCreate < nepaliYear + 2; nepaliYearToCreate++) {
-            if (typeof this.NEPALI_CALENDAR_DATA[nepaliYearToCreate] === "undefined") {
-              this.NEPALI_CALENDAR_DATA[nepaliYearToCreate] = tmp_calendar_data;
-            }
-          }
-        },
-        NEPALI_CALENDAR_DATA: {
-          // These data are from http://www.ashesh.com.np
-          1970: [18, 31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30],
-          1971: [18, 31, 31, 32, 31, 32, 30, 30, 29, 30, 29, 30, 30],
-          1972: [17, 31, 32, 31, 32, 31, 30, 30, 30, 29, 29, 30, 30],
-          1973: [19, 30, 32, 31, 32, 31, 30, 30, 30, 29, 30, 29, 31],
-          1974: [19, 31, 31, 32, 30, 31, 31, 30, 29, 30, 29, 30, 30],
-          1975: [18, 31, 31, 32, 32, 30, 31, 30, 29, 30, 29, 30, 30],
-          1976: [17, 31, 32, 31, 32, 31, 30, 30, 30, 29, 29, 30, 31],
-          1977: [18, 31, 32, 31, 32, 31, 31, 29, 30, 29, 30, 29, 31],
-          1978: [18, 31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30],
-          1979: [18, 31, 31, 32, 32, 31, 30, 30, 29, 30, 29, 30, 30],
-          1980: [17, 31, 32, 31, 32, 31, 30, 30, 30, 29, 29, 30, 31],
-          1981: [18, 31, 31, 31, 32, 31, 31, 29, 30, 30, 29, 30, 30],
-          1982: [18, 31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30],
-          1983: [18, 31, 31, 32, 32, 31, 30, 30, 29, 30, 29, 30, 30],
-          1984: [17, 31, 32, 31, 32, 31, 30, 30, 30, 29, 29, 30, 31],
-          1985: [18, 31, 31, 31, 32, 31, 31, 29, 30, 30, 29, 30, 30],
-          1986: [18, 31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30],
-          1987: [18, 31, 32, 31, 32, 31, 30, 30, 29, 30, 29, 30, 30],
-          1988: [17, 31, 32, 31, 32, 31, 30, 30, 30, 29, 29, 30, 31],
-          1989: [18, 31, 31, 31, 32, 31, 31, 30, 29, 30, 29, 30, 30],
-          1990: [18, 31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30],
-          1991: [18, 31, 32, 31, 32, 31, 30, 30, 29, 30, 29, 30, 30],
-          // These data are from http://nepalicalendar.rat32.com/index.php
-          1992: [17, 31, 32, 31, 32, 31, 30, 30, 30, 29, 30, 29, 31],
-          1993: [18, 31, 31, 31, 32, 31, 31, 30, 29, 30, 29, 30, 30],
-          1994: [18, 31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30],
-          1995: [17, 31, 32, 31, 32, 31, 30, 30, 30, 29, 29, 30, 30],
-          1996: [17, 31, 32, 31, 32, 31, 30, 30, 30, 29, 30, 29, 31],
-          1997: [18, 31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30],
-          1998: [18, 31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30],
-          1999: [17, 31, 32, 31, 32, 31, 30, 30, 30, 29, 29, 30, 31],
-          2e3: [17, 30, 32, 31, 32, 31, 30, 30, 30, 29, 30, 29, 31],
-          2001: [18, 31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30],
-          2002: [18, 31, 31, 32, 32, 31, 30, 30, 29, 30, 29, 30, 30],
-          2003: [17, 31, 32, 31, 32, 31, 30, 30, 30, 29, 29, 30, 31],
-          2004: [17, 30, 32, 31, 32, 31, 30, 30, 30, 29, 30, 29, 31],
-          2005: [18, 31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30],
-          2006: [18, 31, 31, 32, 32, 31, 30, 30, 29, 30, 29, 30, 30],
-          2007: [17, 31, 32, 31, 32, 31, 30, 30, 30, 29, 29, 30, 31],
-          2008: [17, 31, 31, 31, 32, 31, 31, 29, 30, 30, 29, 29, 31],
-          2009: [18, 31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30],
-          2010: [18, 31, 31, 32, 32, 31, 30, 30, 29, 30, 29, 30, 30],
-          2011: [17, 31, 32, 31, 32, 31, 30, 30, 30, 29, 29, 30, 31],
-          2012: [17, 31, 31, 31, 32, 31, 31, 29, 30, 30, 29, 30, 30],
-          2013: [18, 31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30],
-          2014: [18, 31, 31, 32, 32, 31, 30, 30, 29, 30, 29, 30, 30],
-          2015: [17, 31, 32, 31, 32, 31, 30, 30, 30, 29, 29, 30, 31],
-          2016: [17, 31, 31, 31, 32, 31, 31, 29, 30, 30, 29, 30, 30],
-          2017: [18, 31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30],
-          2018: [18, 31, 32, 31, 32, 31, 30, 30, 29, 30, 29, 30, 30],
-          2019: [17, 31, 32, 31, 32, 31, 30, 30, 30, 29, 30, 29, 31],
-          2020: [17, 31, 31, 31, 32, 31, 31, 30, 29, 30, 29, 30, 30],
-          2021: [18, 31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30],
-          2022: [17, 31, 32, 31, 32, 31, 30, 30, 30, 29, 29, 30, 30],
-          2023: [17, 31, 32, 31, 32, 31, 30, 30, 30, 29, 30, 29, 31],
-          2024: [17, 31, 31, 31, 32, 31, 31, 30, 29, 30, 29, 30, 30],
-          2025: [18, 31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30],
-          2026: [17, 31, 32, 31, 32, 31, 30, 30, 30, 29, 29, 30, 31],
-          2027: [17, 30, 32, 31, 32, 31, 30, 30, 30, 29, 30, 29, 31],
-          2028: [17, 31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30],
-          2029: [18, 31, 31, 32, 31, 32, 30, 30, 29, 30, 29, 30, 30],
-          2030: [17, 31, 32, 31, 32, 31, 30, 30, 30, 30, 30, 30, 31],
-          2031: [17, 31, 32, 31, 32, 31, 31, 31, 31, 31, 31, 31, 31],
-          2032: [17, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32],
-          2033: [18, 31, 31, 32, 32, 31, 30, 30, 29, 30, 29, 30, 30],
-          2034: [17, 31, 32, 31, 32, 31, 30, 30, 30, 29, 29, 30, 31],
-          2035: [17, 30, 32, 31, 32, 31, 31, 29, 30, 30, 29, 29, 31],
-          2036: [17, 31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30],
-          2037: [18, 31, 31, 32, 32, 31, 30, 30, 29, 30, 29, 30, 30],
-          2038: [17, 31, 32, 31, 32, 31, 30, 30, 30, 29, 29, 30, 31],
-          2039: [17, 31, 31, 31, 32, 31, 31, 29, 30, 30, 29, 30, 30],
-          2040: [17, 31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30],
-          2041: [18, 31, 31, 32, 32, 31, 30, 30, 29, 30, 29, 30, 30],
-          2042: [17, 31, 32, 31, 32, 31, 30, 30, 30, 29, 29, 30, 31],
-          2043: [17, 31, 31, 31, 32, 31, 31, 29, 30, 30, 29, 30, 30],
-          2044: [17, 31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30],
-          2045: [18, 31, 32, 31, 32, 31, 30, 30, 29, 30, 29, 30, 30],
-          2046: [17, 31, 32, 31, 32, 31, 30, 30, 30, 29, 29, 30, 31],
-          2047: [17, 31, 31, 31, 32, 31, 31, 30, 29, 30, 29, 30, 30],
-          2048: [17, 31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30],
-          2049: [17, 31, 32, 31, 32, 31, 30, 30, 30, 29, 29, 30, 30],
-          2050: [17, 31, 32, 31, 32, 31, 30, 30, 30, 29, 30, 29, 31],
-          2051: [17, 31, 31, 31, 32, 31, 31, 30, 29, 30, 29, 30, 30],
-          2052: [17, 31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30],
-          2053: [17, 31, 32, 31, 32, 31, 30, 30, 30, 29, 29, 30, 30],
-          2054: [17, 31, 32, 31, 32, 31, 30, 30, 30, 29, 30, 29, 31],
-          2055: [17, 31, 31, 32, 31, 31, 31, 30, 29, 30, 30, 29, 30],
-          2056: [17, 31, 31, 32, 31, 32, 30, 30, 29, 30, 29, 30, 30],
-          2057: [17, 31, 32, 31, 32, 31, 30, 30, 30, 29, 29, 30, 31],
-          2058: [17, 30, 32, 31, 32, 31, 30, 30, 30, 29, 30, 29, 31],
-          2059: [17, 31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30],
-          2060: [17, 31, 31, 32, 32, 31, 30, 30, 29, 30, 29, 30, 30],
-          2061: [17, 31, 32, 31, 32, 31, 30, 30, 30, 29, 29, 30, 31],
-          2062: [17, 30, 32, 31, 32, 31, 31, 29, 30, 29, 30, 29, 31],
-          2063: [17, 31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30],
-          2064: [17, 31, 31, 32, 32, 31, 30, 30, 29, 30, 29, 30, 30],
-          2065: [17, 31, 32, 31, 32, 31, 30, 30, 30, 29, 29, 30, 31],
-          2066: [17, 31, 31, 31, 32, 31, 31, 29, 30, 30, 29, 29, 31],
-          2067: [17, 31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30],
-          2068: [17, 31, 31, 32, 32, 31, 30, 30, 29, 30, 29, 30, 30],
-          2069: [17, 31, 32, 31, 32, 31, 30, 30, 30, 29, 29, 30, 31],
-          2070: [17, 31, 31, 31, 32, 31, 31, 29, 30, 30, 29, 30, 30],
-          2071: [17, 31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30],
-          2072: [17, 31, 32, 31, 32, 31, 30, 30, 29, 30, 29, 30, 30],
-          2073: [17, 31, 32, 31, 32, 31, 30, 30, 30, 29, 29, 30, 31],
-          2074: [17, 31, 31, 31, 32, 31, 31, 30, 29, 30, 29, 30, 30],
-          2075: [17, 31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30],
-          2076: [16, 31, 32, 31, 32, 31, 30, 30, 30, 29, 29, 30, 30],
-          2077: [17, 31, 32, 31, 32, 31, 30, 30, 30, 29, 30, 29, 31],
-          2078: [17, 31, 31, 31, 32, 31, 31, 30, 29, 30, 29, 30, 30],
-          2079: [17, 31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30],
-          2080: [16, 31, 32, 31, 32, 31, 30, 30, 30, 29, 29, 30, 30],
-          // These data are from http://www.ashesh.com.np/nepali-calendar/
-          2081: [17, 31, 31, 32, 32, 31, 30, 30, 30, 29, 30, 30, 30],
-          2082: [17, 31, 32, 31, 32, 31, 30, 30, 30, 29, 30, 30, 30],
-          2083: [17, 31, 31, 32, 31, 31, 30, 30, 30, 29, 30, 30, 30],
-          2084: [17, 31, 31, 32, 31, 31, 30, 30, 30, 29, 30, 30, 30],
-          2085: [17, 31, 32, 31, 32, 31, 31, 30, 30, 29, 30, 30, 30],
-          2086: [17, 31, 32, 31, 32, 31, 30, 30, 30, 29, 30, 30, 30],
-          2087: [16, 31, 31, 32, 31, 31, 31, 30, 30, 29, 30, 30, 30],
-          2088: [16, 30, 31, 32, 32, 30, 31, 30, 30, 29, 30, 30, 30],
-          2089: [17, 31, 32, 31, 32, 31, 30, 30, 30, 29, 30, 30, 30],
-          2090: [17, 31, 32, 31, 32, 31, 30, 30, 30, 29, 30, 30, 30],
-          2091: [16, 31, 31, 32, 31, 31, 31, 30, 30, 29, 30, 30, 30],
-          2092: [16, 31, 31, 32, 32, 31, 30, 30, 30, 29, 30, 30, 30],
-          2093: [17, 31, 32, 31, 32, 31, 30, 30, 30, 29, 30, 30, 30],
-          2094: [17, 31, 31, 32, 31, 31, 30, 30, 30, 29, 30, 30, 30],
-          2095: [17, 31, 31, 32, 31, 31, 31, 30, 29, 30, 30, 30, 30],
-          2096: [17, 30, 31, 32, 32, 31, 30, 30, 29, 30, 29, 30, 30],
-          2097: [17, 31, 32, 31, 32, 31, 30, 30, 30, 29, 30, 30, 30],
-          2098: [17, 31, 31, 32, 31, 31, 31, 29, 30, 29, 30, 30, 31],
-          2099: [17, 31, 31, 32, 31, 31, 31, 30, 29, 29, 30, 30, 30],
-          2100: [17, 31, 32, 31, 32, 30, 31, 30, 29, 30, 29, 30, 30]
-        }
-      });
-      main.calendars.nepali = NepaliCalendar;
-    }
-  });
-
-  // node_modules/.pnpm/world-calendars@1.0.4/node_modules/world-calendars/dist/calendars/persian.js
-  var require_persian = __commonJS({
-    "node_modules/.pnpm/world-calendars@1.0.4/node_modules/world-calendars/dist/calendars/persian.js"() {
-      var main = require_main();
-      var assign = require_object_assign();
-      function PersianCalendar(language) {
-        this.local = this.regionalOptions[language || ""] || this.regionalOptions[""];
-      }
-      function _leapYear(year2) {
-        var x = year2 - 475;
-        if (year2 < 0) x++;
-        var c = 0.242197;
-        var v0 = c * x;
-        var v1 = c * (x + 1);
-        var r0 = v0 - Math.floor(v0);
-        var r1 = v1 - Math.floor(v1);
-        return r0 > r1;
-      }
-      PersianCalendar.prototype = new main.baseCalendar();
-      assign(PersianCalendar.prototype, {
-        /** The calendar name.
-            @memberof PersianCalendar */
-        name: "Persian",
-        /** Julian date of start of Persian epoch: 19 March 622 CE.
-            @memberof PersianCalendar */
-        jdEpoch: 19483205e-1,
-        /** Days per month in a common year.
-            @memberof PersianCalendar */
-        daysPerMonth: [31, 31, 31, 31, 31, 31, 30, 30, 30, 30, 30, 29],
-        /** <code>true</code> if has a year zero, <code>false</code> if not.
-            @memberof PersianCalendar */
-        hasYearZero: false,
-        /** The minimum month number.
-            @memberof PersianCalendar */
-        minMonth: 1,
-        /** The first month in the year.
-            @memberof PersianCalendar */
-        firstMonth: 1,
-        /** The minimum day number.
-            @memberof PersianCalendar */
-        minDay: 1,
-        /** Localisations for the plugin.
-            Entries are objects indexed by the language code ('' being the default US/English).
-            Each object has the following attributes.
-            @memberof PersianCalendar
-            @property name {string} The calendar name.
-            @property epochs {string[]} The epoch names.
-            @property monthNames {string[]} The long names of the months of the year.
-            @property monthNamesShort {string[]} The short names of the months of the year.
-            @property dayNames {string[]} The long names of the days of the week.
-            @property dayNamesShort {string[]} The short names of the days of the week.
-            @property dayNamesMin {string[]} The minimal names of the days of the week.
-            @property dateFormat {string} The date format for this calendar.
-                    See the options on <a href="BaseCalendar.html#formatDate"><code>formatDate</code></a> for details.
-            @property firstDay {number} The number of the first day of the week, starting at 0.
-            @property isRTL {number} <code>true</code> if this localisation reads right-to-left. */
-        regionalOptions: {
-          // Localisations
-          "": {
-            name: "Persian",
-            epochs: ["BP", "AP"],
-            monthNames: [
-              "Farvardin",
-              "Ordibehesht",
-              "Khordad",
-              "Tir",
-              "Mordad",
-              "Shahrivar",
-              "Mehr",
-              "Aban",
-              "Azar",
-              "Dey",
-              "Bahman",
-              "Esfand"
-            ],
-            monthNamesShort: ["Far", "Ord", "Kho", "Tir", "Mor", "Sha", "Meh", "Aba", "Aza", "Dey", "Bah", "Esf"],
-            dayNames: ["Yekshanbeh", "Doshanbeh", "Seshanbeh", "Chah\u0101rshanbeh", "Panjshanbeh", "Jom'eh", "Shanbeh"],
-            dayNamesShort: ["Yek", "Do", "Se", "Cha", "Panj", "Jom", "Sha"],
-            dayNamesMin: ["Ye", "Do", "Se", "Ch", "Pa", "Jo", "Sh"],
-            digits: null,
-            dateFormat: "yyyy/mm/dd",
-            firstDay: 6,
-            isRTL: false
-          }
-        },
-        /** Determine whether this date is in a leap year.
-            @memberof PersianCalendar
-            @param year {CDate|number} The date to examine or the year to examine.
-            @return {boolean} <code>true</code> if this is a leap year, <code>false</code> if not.
-            @throws Error if an invalid year or a different calendar used. */
-        leapYear: function(year2) {
-          var date = this._validate(year2, this.minMonth, this.minDay, main.local.invalidYear);
-          return _leapYear(date.year());
-        },
-        /** Determine the week of the year for a date.
-            @memberof PersianCalendar
-            @param year {CDate|number} The date to examine or the year to examine.
-            @param [month] {number} The month to examine.
-            @param [day] {number} The day to examine.
-            @return {number} The week of the year.
-            @throws Error if an invalid date or a different calendar used. */
-        weekOfYear: function(year2, month2, day2) {
-          var checkDate = this.newDate(year2, month2, day2);
-          checkDate.add(-((checkDate.dayOfWeek() + 1) % 7), "d");
-          return Math.floor((checkDate.dayOfYear() - 1) / 7) + 1;
-        },
-        /** Retrieve the number of days in a month.
-            @memberof PersianCalendar
-            @param year {CDate|number} The date to examine or the year of the month.
-            @param [month] {number} The month.
-            @return {number} The number of days in this month.
-            @throws Error if an invalid month/year or a different calendar used. */
-        daysInMonth: function(year2, month2) {
-          var date = this._validate(year2, month2, this.minDay, main.local.invalidMonth);
-          return this.daysPerMonth[date.month() - 1] + (date.month() === 12 && this.leapYear(date.year()) ? 1 : 0);
-        },
-        /** Determine whether this date is a week day.
-            @memberof PersianCalendar
-            @param year {CDate|number} The date to examine or the year to examine.
-            @param [month] {number} The month to examine.
-            @param [day] {number} The day to examine.
-            @return {boolean} <code>true</code> if a week day, <code>false</code> if not.
-            @throws Error if an invalid date or a different calendar used. */
-        weekDay: function(year2, month2, day2) {
-          return this.dayOfWeek(year2, month2, day2) !== 5;
-        },
-        /** Retrieve the Julian date equivalent for this date,
-            i.e. days since January 1, 4713 BCE Greenwich noon.
-            @memberof PersianCalendar
-            @param year {CDate|number} The date to convert or the year to convert.
-            @param [month] {number} The month to convert.
-            @param [day] {number} The day to convert.
-            @return {number} The equivalent Julian date.
-            @throws Error if an invalid date or a different calendar used. */
-        toJD: function(year2, month2, day2) {
-          var date = this._validate(year2, month2, day2, main.local.invalidDate);
-          year2 = date.year();
-          month2 = date.month();
-          day2 = date.day();
-          var nLeapYearsSince = 0;
-          if (year2 > 0) {
-            for (var i = 1; i < year2; i++) {
-              if (_leapYear(i)) nLeapYearsSince++;
-            }
-          } else if (year2 < 0) {
-            for (var i = year2; i < 0; i++) {
-              if (_leapYear(i)) nLeapYearsSince--;
-            }
-          }
-          return day2 + (month2 <= 7 ? (month2 - 1) * 31 : (month2 - 1) * 30 + 6) + (year2 > 0 ? year2 - 1 : year2) * 365 + nLeapYearsSince + this.jdEpoch - 1;
-        },
-        /** Create a new date from a Julian date.
-            @memberof PersianCalendar
-            @param jd {number} The Julian date to convert.
-            @return {CDate} The equivalent date. */
-        fromJD: function(jd) {
-          jd = Math.floor(jd) + 0.5;
-          var y = 475 + (jd - this.toJD(475, 1, 1)) / 365.242197;
-          var year2 = Math.floor(y);
-          if (year2 <= 0) year2--;
-          if (jd > this.toJD(year2, 12, _leapYear(year2) ? 30 : 29)) {
-            year2++;
-            if (year2 === 0) year2++;
-          }
-          var yday = jd - this.toJD(year2, 1, 1) + 1;
-          var month2 = yday <= 186 ? Math.ceil(yday / 31) : Math.ceil((yday - 6) / 30);
-          var day2 = jd - this.toJD(year2, month2, 1) + 1;
-          return this.newDate(year2, month2, day2);
-        }
-      });
-      main.calendars.persian = PersianCalendar;
-      main.calendars.jalali = PersianCalendar;
-    }
-  });
-
-  // node_modules/.pnpm/world-calendars@1.0.4/node_modules/world-calendars/dist/calendars/taiwan.js
-  var require_taiwan = __commonJS({
-    "node_modules/.pnpm/world-calendars@1.0.4/node_modules/world-calendars/dist/calendars/taiwan.js"() {
-      var main = require_main();
-      var assign = require_object_assign();
-      var gregorianCalendar = main.instance();
-      function TaiwanCalendar(language) {
-        this.local = this.regionalOptions[language || ""] || this.regionalOptions[""];
-      }
-      TaiwanCalendar.prototype = new main.baseCalendar();
-      assign(TaiwanCalendar.prototype, {
-        /** The calendar name.
-            @memberof TaiwanCalendar */
-        name: "Taiwan",
-        /** Julian date of start of Taiwan epoch: 1 January 1912 CE (Gregorian).
-            @memberof TaiwanCalendar */
-        jdEpoch: 24194025e-1,
-        /** Difference in years between Taiwan and Gregorian calendars.
-            @memberof TaiwanCalendar */
-        yearsOffset: 1911,
-        /** Days per month in a common year.
-            @memberof TaiwanCalendar */
-        daysPerMonth: [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31],
-        /** <code>true</code> if has a year zero, <code>false</code> if not.
-            @memberof TaiwanCalendar */
-        hasYearZero: false,
-        /** The minimum month number.
-            @memberof TaiwanCalendar */
-        minMonth: 1,
-        /** The first month in the year.
-            @memberof TaiwanCalendar */
-        firstMonth: 1,
-        /** The minimum day number.
-            @memberof TaiwanCalendar */
-        minDay: 1,
-        /** Localisations for the plugin.
-            Entries are objects indexed by the language code ('' being the default US/English).
-            Each object has the following attributes.
-            @memberof TaiwanCalendar
-            @property name {string} The calendar name.
-            @property epochs {string[]} The epoch names.
-            @property monthNames {string[]} The long names of the months of the year.
-            @property monthNamesShort {string[]} The short names of the months of the year.
-            @property dayNames {string[]} The long names of the days of the week.
-            @property dayNamesShort {string[]} The short names of the days of the week.
-            @property dayNamesMin {string[]} The minimal names of the days of the week.
-            @property dateFormat {string} The date format for this calendar.
-                    See the options on <a href="BaseCalendar.html#formatDate"><code>formatDate</code></a> for details.
-            @property firstDay {number} The number of the first day of the week, starting at 0.
-            @property isRTL {number} <code>true</code> if this localisation reads right-to-left. */
-        regionalOptions: {
-          // Localisations
-          "": {
-            name: "Taiwan",
-            epochs: ["BROC", "ROC"],
-            monthNames: [
-              "January",
-              "February",
-              "March",
-              "April",
-              "May",
-              "June",
-              "July",
-              "August",
-              "September",
-              "October",
-              "November",
-              "December"
-            ],
-            monthNamesShort: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-            dayNames: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-            dayNamesShort: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
-            dayNamesMin: ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"],
-            digits: null,
-            dateFormat: "yyyy/mm/dd",
-            firstDay: 1,
-            isRTL: false
-          }
-        },
-        /** Determine whether this date is in a leap year.
-            @memberof TaiwanCalendar
-            @param year {CDate|number} The date to examine or the year to examine.
-            @return {boolean} <code>true</code> if this is a leap year, <code>false</code> if not.
-            @throws Error if an invalid year or a different calendar used. */
-        leapYear: function(year2) {
-          var date = this._validate(year2, this.minMonth, this.minDay, main.local.invalidYear);
-          var year2 = this._t2gYear(date.year());
-          return gregorianCalendar.leapYear(year2);
-        },
-        /** Determine the week of the year for a date - ISO 8601.
-            @memberof TaiwanCalendar
-            @param year {CDate|number} The date to examine or the year to examine.
-            @param [month] {number} The month to examine.
-            @param [day] {number} The day to examine.
-            @return {number} The week of the year.
-            @throws Error if an invalid date or a different calendar used. */
-        weekOfYear: function(year2, month2, day2) {
-          var date = this._validate(year2, this.minMonth, this.minDay, main.local.invalidYear);
-          var year2 = this._t2gYear(date.year());
-          return gregorianCalendar.weekOfYear(year2, date.month(), date.day());
-        },
-        /** Retrieve the number of days in a month.
-            @memberof TaiwanCalendar
-            @param year {CDate|number} The date to examine or the year of the month.
-            @param [month] {number} The month.
-            @return {number} The number of days in this month.
-            @throws Error if an invalid month/year or a different calendar used. */
-        daysInMonth: function(year2, month2) {
-          var date = this._validate(year2, month2, this.minDay, main.local.invalidMonth);
-          return this.daysPerMonth[date.month() - 1] + (date.month() === 2 && this.leapYear(date.year()) ? 1 : 0);
-        },
-        /** Determine whether this date is a week day.
-            @memberof TaiwanCalendar
-            @param year {CDate|number} The date to examine or the year to examine.
-            @param [month] {number} The month to examine.
-            @param [day] {number} The day to examine.
-            @return {boolean} <code>true</code> if a week day, <code>false</code> if not.
-            @throws Error if an invalid date or a different calendar used. */
-        weekDay: function(year2, month2, day2) {
-          return (this.dayOfWeek(year2, month2, day2) || 7) < 6;
-        },
-        /** Retrieve the Julian date equivalent for this date,
-            i.e. days since January 1, 4713 BCE Greenwich noon.
-            @memberof TaiwanCalendar
-            @param year {CDate|number} The date to convert or the year to convert.
-            @param [month] {number} The month to convert.
-            @param [day] {number} The day to convert.
-            @return {number} The equivalent Julian date.
-            @throws Error if an invalid date or a different calendar used. */
-        toJD: function(year2, month2, day2) {
-          var date = this._validate(year2, month2, day2, main.local.invalidDate);
-          var year2 = this._t2gYear(date.year());
-          return gregorianCalendar.toJD(year2, date.month(), date.day());
-        },
-        /** Create a new date from a Julian date.
-            @memberof TaiwanCalendar
-            @param jd {number} The Julian date to convert.
-            @return {CDate} The equivalent date. */
-        fromJD: function(jd) {
-          var date = gregorianCalendar.fromJD(jd);
-          var year2 = this._g2tYear(date.year());
-          return this.newDate(year2, date.month(), date.day());
-        },
-        /** Convert Taiwanese to Gregorian year.
-            @memberof TaiwanCalendar
-            @private
-            @param year {number} The Taiwanese year.
-            @return {number} The corresponding Gregorian year. */
-        _t2gYear: function(year2) {
-          return year2 + this.yearsOffset + (year2 >= -this.yearsOffset && year2 <= -1 ? 1 : 0);
-        },
-        /** Convert Gregorian to Taiwanese year.
-            @memberof TaiwanCalendar
-            @private
-            @param year {number} The Gregorian year.
-            @return {number} The corresponding Taiwanese year. */
-        _g2tYear: function(year2) {
-          return year2 - this.yearsOffset - (year2 >= 1 && year2 <= this.yearsOffset ? 1 : 0);
-        }
-      });
-      main.calendars.taiwan = TaiwanCalendar;
-    }
-  });
-
-  // node_modules/.pnpm/world-calendars@1.0.4/node_modules/world-calendars/dist/calendars/thai.js
-  var require_thai = __commonJS({
-    "node_modules/.pnpm/world-calendars@1.0.4/node_modules/world-calendars/dist/calendars/thai.js"() {
-      var main = require_main();
-      var assign = require_object_assign();
-      var gregorianCalendar = main.instance();
-      function ThaiCalendar(language) {
-        this.local = this.regionalOptions[language || ""] || this.regionalOptions[""];
-      }
-      ThaiCalendar.prototype = new main.baseCalendar();
-      assign(ThaiCalendar.prototype, {
-        /** The calendar name.
-            @memberof ThaiCalendar */
-        name: "Thai",
-        /** Julian date of start of Thai epoch: 1 January 543 BCE (Gregorian).
-            @memberof ThaiCalendar */
-        jdEpoch: 15230985e-1,
-        /** Difference in years between Thai and Gregorian calendars.
-            @memberof ThaiCalendar */
-        yearsOffset: 543,
-        /** Days per month in a common year.
-            @memberof ThaiCalendar */
-        daysPerMonth: [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31],
-        /** <code>true</code> if has a year zero, <code>false</code> if not.
-            @memberof ThaiCalendar */
-        hasYearZero: false,
-        /** The minimum month number.
-            @memberof ThaiCalendar */
-        minMonth: 1,
-        /** The first month in the year.
-            @memberof ThaiCalendar */
-        firstMonth: 1,
-        /** The minimum day number.
-            @memberof ThaiCalendar */
-        minDay: 1,
-        /** Localisations for the plugin.
-            Entries are objects indexed by the language code ('' being the default US/English).
-            Each object has the following attributes.
-            @memberof ThaiCalendar
-            @property name {string} The calendar name.
-            @property epochs {string[]} The epoch names.
-            @property monthNames {string[]} The long names of the months of the year.
-            @property monthNamesShort {string[]} The short names of the months of the year.
-            @property dayNames {string[]} The long names of the days of the week.
-            @property dayNamesShort {string[]} The short names of the days of the week.
-            @property dayNamesMin {string[]} The minimal names of the days of the week.
-            @property dateFormat {string} The date format for this calendar.
-                    See the options on <a href="BaseCalendar.html#formatDate"><code>formatDate</code></a> for details.
-            @property firstDay {number} The number of the first day of the week, starting at 0.
-            @property isRTL {number} <code>true</code> if this localisation reads right-to-left. */
-        regionalOptions: {
-          // Localisations
-          "": {
-            name: "Thai",
-            epochs: ["BBE", "BE"],
-            monthNames: [
-              "January",
-              "February",
-              "March",
-              "April",
-              "May",
-              "June",
-              "July",
-              "August",
-              "September",
-              "October",
-              "November",
-              "December"
-            ],
-            monthNamesShort: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-            dayNames: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-            dayNamesShort: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
-            dayNamesMin: ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"],
-            digits: null,
-            dateFormat: "dd/mm/yyyy",
-            firstDay: 0,
-            isRTL: false
-          }
-        },
-        /** Determine whether this date is in a leap year.
-            @memberof ThaiCalendar
-            @param year {CDate|number} The date to examine or the year to examine.
-            @return {boolean} <code>true</code> if this is a leap year, <code>false</code> if not.
-            @throws Error if an invalid year or a different calendar used. */
-        leapYear: function(year2) {
-          var date = this._validate(year2, this.minMonth, this.minDay, main.local.invalidYear);
-          var year2 = this._t2gYear(date.year());
-          return gregorianCalendar.leapYear(year2);
-        },
-        /** Determine the week of the year for a date - ISO 8601.
-            @memberof ThaiCalendar
-            @param year {CDate|number} The date to examine or the year to examine.
-            @param [month] {number} The month to examine.
-            @param [day] {number} The day to examine.
-            @return {number} The week of the year.
-            @throws Error if an invalid date or a different calendar used. */
-        weekOfYear: function(year2, month2, day2) {
-          var date = this._validate(year2, this.minMonth, this.minDay, main.local.invalidYear);
-          var year2 = this._t2gYear(date.year());
-          return gregorianCalendar.weekOfYear(year2, date.month(), date.day());
-        },
-        /** Retrieve the number of days in a month.
-            @memberof ThaiCalendar
-            @param year {CDate|number} The date to examine or the year of the month.
-            @param [month] {number} The month.
-            @return {number} The number of days in this month.
-            @throws Error if an invalid month/year or a different calendar used. */
-        daysInMonth: function(year2, month2) {
-          var date = this._validate(year2, month2, this.minDay, main.local.invalidMonth);
-          return this.daysPerMonth[date.month() - 1] + (date.month() === 2 && this.leapYear(date.year()) ? 1 : 0);
-        },
-        /** Determine whether this date is a week day.
-            @memberof ThaiCalendar
-            @param year {CDate|number} The date to examine or the year to examine.
-            @param [month] {number} The month to examine.
-            @param [day] {number} The day to examine.
-            @return {boolean} <code>true</code> if a week day, <code>false</code> if not.
-            @throws Error if an invalid date or a different calendar used. */
-        weekDay: function(year2, month2, day2) {
-          return (this.dayOfWeek(year2, month2, day2) || 7) < 6;
-        },
-        /** Retrieve the Julian date equivalent for this date,
-            i.e. days since January 1, 4713 BCE Greenwich noon.
-            @memberof ThaiCalendar
-            @param year {CDate|number} The date to convert or the year to convert.
-            @param [month] {number} The month to convert.
-            @param [day] {number} The day to convert.
-            @return {number} The equivalent Julian date.
-            @throws Error if an invalid date or a different calendar used. */
-        toJD: function(year2, month2, day2) {
-          var date = this._validate(year2, month2, day2, main.local.invalidDate);
-          var year2 = this._t2gYear(date.year());
-          return gregorianCalendar.toJD(year2, date.month(), date.day());
-        },
-        /** Create a new date from a Julian date.
-            @memberof ThaiCalendar
-            @param jd {number} The Julian date to convert.
-            @return {CDate} The equivalent date. */
-        fromJD: function(jd) {
-          var date = gregorianCalendar.fromJD(jd);
-          var year2 = this._g2tYear(date.year());
-          return this.newDate(year2, date.month(), date.day());
-        },
-        /** Convert Thai to Gregorian year.
-            @memberof ThaiCalendar
-            @private
-            @param year {number} The Thai year.
-            @return {number} The corresponding Gregorian year. */
-        _t2gYear: function(year2) {
-          return year2 - this.yearsOffset - (year2 >= 1 && year2 <= this.yearsOffset ? 1 : 0);
-        },
-        /** Convert Gregorian to Thai year.
-            @memberof ThaiCalendar
-            @private
-            @param year {number} The Gregorian year.
-            @return {number} The corresponding Thai year. */
-        _g2tYear: function(year2) {
-          return year2 + this.yearsOffset + (year2 >= -this.yearsOffset && year2 <= -1 ? 1 : 0);
-        }
-      });
-      main.calendars.thai = ThaiCalendar;
-    }
-  });
-
-  // node_modules/.pnpm/world-calendars@1.0.4/node_modules/world-calendars/dist/calendars/ummalqura.js
-  var require_ummalqura = __commonJS({
-    "node_modules/.pnpm/world-calendars@1.0.4/node_modules/world-calendars/dist/calendars/ummalqura.js"() {
-      var main = require_main();
-      var assign = require_object_assign();
-      function UmmAlQuraCalendar(language) {
-        this.local = this.regionalOptions[language || ""] || this.regionalOptions[""];
-      }
-      UmmAlQuraCalendar.prototype = new main.baseCalendar();
-      assign(UmmAlQuraCalendar.prototype, {
-        /** The calendar name.
-            @memberof UmmAlQuraCalendar */
-        name: "UmmAlQura",
-        //jdEpoch: 1948440, // Julian date of start of UmmAlQura epoch: 14 March 1937 CE
-        //daysPerMonth: // Days per month in a common year, replaced by a method.
-        /** <code>true</code> if has a year zero, <code>false</code> if not.
-            @memberof UmmAlQuraCalendar */
-        hasYearZero: false,
-        /** The minimum month number.
-            @memberof UmmAlQuraCalendar */
-        minMonth: 1,
-        /** The first month in the year.
-            @memberof UmmAlQuraCalendar */
-        firstMonth: 1,
-        /** The minimum day number.
-            @memberof UmmAlQuraCalendar */
-        minDay: 1,
-        /** Localisations for the plugin.
-            Entries are objects indexed by the language code ('' being the default US/English).
-            Each object has the following attributes.
-            @memberof UmmAlQuraCalendar
-            @property name {string} The calendar name.
-            @property epochs {string[]} The epoch names.
-            @property monthNames {string[]} The long names of the months of the year.
-            @property monthNamesShort {string[]} The short names of the months of the year.
-            @property dayNames {string[]} The long names of the days of the week.
-            @property dayNamesShort {string[]} The short names of the days of the week.
-            @property dayNamesMin {string[]} The minimal names of the days of the week.
-            @property dateFormat {string} The date format for this calendar.
-                    See the options on <a href="BaseCalendar.html#formatDate"><code>formatDate</code></a> for details.
-            @property firstDay {number} The number of the first day of the week, starting at 0.
-            @property isRTL {number} <code>true</code> if this localisation reads right-to-left. */
-        regionalOptions: {
-          // Localisations
-          "": {
-            name: "Umm al-Qura",
-            epochs: ["BH", "AH"],
-            monthNames: [
-              "Al-Muharram",
-              "Safar",
-              "Rabi' al-awwal",
-              "Rabi' Al-Thani",
-              "Jumada Al-Awwal",
-              "Jumada Al-Thani",
-              "Rajab",
-              "Sha'aban",
-              "Ramadan",
-              "Shawwal",
-              "Dhu al-Qi'dah",
-              "Dhu al-Hijjah"
-            ],
-            monthNamesShort: ["Muh", "Saf", "Rab1", "Rab2", "Jum1", "Jum2", "Raj", "Sha'", "Ram", "Shaw", "DhuQ", "DhuH"],
-            dayNames: ["Yawm al-Ahad", "Yawm al-Ithnain", "Yawm al-Thal\u0101th\u0101\u2019", "Yawm al-Arba\u2018\u0101\u2019", "Yawm al-Kham\u012Bs", "Yawm al-Jum\u2018a", "Yawm al-Sabt"],
-            dayNamesMin: ["Ah", "Ith", "Th", "Ar", "Kh", "Ju", "Sa"],
-            digits: null,
-            dateFormat: "yyyy/mm/dd",
-            firstDay: 6,
-            isRTL: true
-          }
-        },
-        /** Determine whether this date is in a leap year.
-            @memberof UmmAlQuraCalendar
-            @param year {CDate|number} The date to examine or the year to examine.
-            @return {boolean} <code>true</code> if this is a leap year, <code>false</code> if not.
-            @throws Error if an invalid year or a different calendar used. */
-        leapYear: function(year2) {
-          var date = this._validate(year2, this.minMonth, this.minDay, main.local.invalidYear);
-          return this.daysInYear(date.year()) === 355;
-        },
-        /** Determine the week of the year for a date.
-            @memberof UmmAlQuraCalendar
-            @param year {CDate|number} The date to examine or the year to examine.
-            @param [month] {number} The month to examine.
-            @param [day] {number} The day to examine.
-            @return {number} The week of the year.
-            @throws Error if an invalid date or a different calendar used. */
-        weekOfYear: function(year2, month2, day2) {
-          var checkDate = this.newDate(year2, month2, day2);
-          checkDate.add(-checkDate.dayOfWeek(), "d");
-          return Math.floor((checkDate.dayOfYear() - 1) / 7) + 1;
-        },
-        /** Retrieve the number of days in a year.
-            @memberof UmmAlQuraCalendar
-            @param year {CDate|number} The date to examine or the year to examine.
-            @return {number} The number of days.
-            @throws Error if an invalid year or a different calendar used. */
-        daysInYear: function(year2) {
-          var daysCount = 0;
-          for (var i = 1; i <= 12; i++) {
-            daysCount += this.daysInMonth(year2, i);
-          }
-          return daysCount;
-        },
-        /** Retrieve the number of days in a month.
-            @memberof UmmAlQuraCalendar
-            @param year {CDate|number} The date to examine or the year of the month.
-            @param [month] {number} The month.
-            @return {number} The number of days in this month.
-            @throws Error if an invalid month/year or a different calendar used. */
-        daysInMonth: function(year2, month2) {
-          var date = this._validate(year2, month2, this.minDay, main.local.invalidMonth);
-          var mcjdn = date.toJD() - 24e5 + 0.5;
-          var index = 0;
-          for (var i = 0; i < ummalqura_dat.length; i++) {
-            if (ummalqura_dat[i] > mcjdn) {
-              return ummalqura_dat[index] - ummalqura_dat[index - 1];
-            }
-            index++;
-          }
-          return 30;
-        },
-        /** Determine whether this date is a week day.
-            @memberof UmmAlQuraCalendar
-            @param year {CDate|number} The date to examine or the year to examine.
-            @param [month] {number} The month to examine.
-            @param [day] {number} The day to examine.
-            @return {boolean} <code>true</code> if a week day, <code>false</code> if not.
-            @throws Error if an invalid date or a different calendar used. */
-        weekDay: function(year2, month2, day2) {
-          return this.dayOfWeek(year2, month2, day2) !== 5;
-        },
-        /** Retrieve the Julian date equivalent for this date,
-            i.e. days since January 1, 4713 BCE Greenwich noon.
-            @memberof UmmAlQuraCalendar
-            @param year {CDate|number} The date to convert or the year to convert.
-            @param [month] {number} The month to convert.
-            @param [day] {number} The day to convert.
-            @return {number} The equivalent Julian date.
-            @throws Error if an invalid date or a different calendar used. */
-        toJD: function(year2, month2, day2) {
-          var date = this._validate(year2, month2, day2, main.local.invalidDate);
-          var index = 12 * (date.year() - 1) + date.month() - 15292;
-          var mcjdn = date.day() + ummalqura_dat[index - 1] - 1;
-          return mcjdn + 24e5 - 0.5;
-        },
-        /** Create a new date from a Julian date.
-            @memberof UmmAlQuraCalendar
-            @param jd {number} The Julian date to convert.
-            @return {CDate} The equivalent date. */
-        fromJD: function(jd) {
-          var mcjdn = jd - 24e5 + 0.5;
-          var index = 0;
-          for (var i = 0; i < ummalqura_dat.length; i++) {
-            if (ummalqura_dat[i] > mcjdn) break;
-            index++;
-          }
-          var lunation = index + 15292;
-          var ii = Math.floor((lunation - 1) / 12);
-          var year2 = ii + 1;
-          var month2 = lunation - 12 * ii;
-          var day2 = mcjdn - ummalqura_dat[index - 1] + 1;
-          return this.newDate(year2, month2, day2);
-        },
-        /** Determine whether a date is valid for this calendar.
-            @memberof UmmAlQuraCalendar
-            @param year {number} The year to examine.
-            @param month {number} The month to examine.
-            @param day {number} The day to examine.
-            @return {boolean} <code>true</code> if a valid date, <code>false</code> if not. */
-        isValid: function(year2, month2, day2) {
-          var valid = main.baseCalendar.prototype.isValid.apply(this, arguments);
-          if (valid) {
-            year2 = year2.year != null ? year2.year : year2;
-            valid = year2 >= 1276 && year2 <= 1500;
-          }
-          return valid;
-        },
-        /** Check that a candidate date is from the same calendar and is valid.
-            @memberof UmmAlQuraCalendar
-            @private
-            @param year {CDate|number} The date to validate or the year to validate.
-            @param month {number} The month to validate.
-            @param day {number} The day to validate.
-            @param error {string} Error message if invalid.
-            @throws Error if different calendars used or invalid date. */
-        _validate: function(year2, month2, day2, error) {
-          var date = main.baseCalendar.prototype._validate.apply(this, arguments);
-          if (date.year < 1276 || date.year > 1500) {
-            throw error.replace(/\{0\}/, this.local.name);
-          }
-          return date;
-        }
-      });
-      main.calendars.ummalqura = UmmAlQuraCalendar;
-      var ummalqura_dat = [
-        20,
-        50,
-        79,
-        109,
-        138,
-        168,
-        197,
-        227,
-        256,
-        286,
-        315,
-        345,
-        374,
-        404,
-        433,
-        463,
-        492,
-        522,
-        551,
-        581,
-        611,
-        641,
-        670,
-        700,
-        729,
-        759,
-        788,
-        818,
-        847,
-        877,
-        906,
-        936,
-        965,
-        995,
-        1024,
-        1054,
-        1083,
-        1113,
-        1142,
-        1172,
-        1201,
-        1231,
-        1260,
-        1290,
-        1320,
-        1350,
-        1379,
-        1409,
-        1438,
-        1468,
-        1497,
-        1527,
-        1556,
-        1586,
-        1615,
-        1645,
-        1674,
-        1704,
-        1733,
-        1763,
-        1792,
-        1822,
-        1851,
-        1881,
-        1910,
-        1940,
-        1969,
-        1999,
-        2028,
-        2058,
-        2087,
-        2117,
-        2146,
-        2176,
-        2205,
-        2235,
-        2264,
-        2294,
-        2323,
-        2353,
-        2383,
-        2413,
-        2442,
-        2472,
-        2501,
-        2531,
-        2560,
-        2590,
-        2619,
-        2649,
-        2678,
-        2708,
-        2737,
-        2767,
-        2796,
-        2826,
-        2855,
-        2885,
-        2914,
-        2944,
-        2973,
-        3003,
-        3032,
-        3062,
-        3091,
-        3121,
-        3150,
-        3180,
-        3209,
-        3239,
-        3268,
-        3298,
-        3327,
-        3357,
-        3386,
-        3416,
-        3446,
-        3476,
-        3505,
-        3535,
-        3564,
-        3594,
-        3623,
-        3653,
-        3682,
-        3712,
-        3741,
-        3771,
-        3800,
-        3830,
-        3859,
-        3889,
-        3918,
-        3948,
-        3977,
-        4007,
-        4036,
-        4066,
-        4095,
-        4125,
-        4155,
-        4185,
-        4214,
-        4244,
-        4273,
-        4303,
-        4332,
-        4362,
-        4391,
-        4421,
-        4450,
-        4480,
-        4509,
-        4539,
-        4568,
-        4598,
-        4627,
-        4657,
-        4686,
-        4716,
-        4745,
-        4775,
-        4804,
-        4834,
-        4863,
-        4893,
-        4922,
-        4952,
-        4981,
-        5011,
-        5040,
-        5070,
-        5099,
-        5129,
-        5158,
-        5188,
-        5218,
-        5248,
-        5277,
-        5307,
-        5336,
-        5366,
-        5395,
-        5425,
-        5454,
-        5484,
-        5513,
-        5543,
-        5572,
-        5602,
-        5631,
-        5661,
-        5690,
-        5720,
-        5749,
-        5779,
-        5808,
-        5838,
-        5867,
-        5897,
-        5926,
-        5956,
-        5985,
-        6015,
-        6044,
-        6074,
-        6103,
-        6133,
-        6162,
-        6192,
-        6221,
-        6251,
-        6281,
-        6311,
-        6340,
-        6370,
-        6399,
-        6429,
-        6458,
-        6488,
-        6517,
-        6547,
-        6576,
-        6606,
-        6635,
-        6665,
-        6694,
-        6724,
-        6753,
-        6783,
-        6812,
-        6842,
-        6871,
-        6901,
-        6930,
-        6960,
-        6989,
-        7019,
-        7048,
-        7078,
-        7107,
-        7137,
-        7166,
-        7196,
-        7225,
-        7255,
-        7284,
-        7314,
-        7344,
-        7374,
-        7403,
-        7433,
-        7462,
-        7492,
-        7521,
-        7551,
-        7580,
-        7610,
-        7639,
-        7669,
-        7698,
-        7728,
-        7757,
-        7787,
-        7816,
-        7846,
-        7875,
-        7905,
-        7934,
-        7964,
-        7993,
-        8023,
-        8053,
-        8083,
-        8112,
-        8142,
-        8171,
-        8201,
-        8230,
-        8260,
-        8289,
-        8319,
-        8348,
-        8378,
-        8407,
-        8437,
-        8466,
-        8496,
-        8525,
-        8555,
-        8584,
-        8614,
-        8643,
-        8673,
-        8702,
-        8732,
-        8761,
-        8791,
-        8821,
-        8850,
-        8880,
-        8909,
-        8938,
-        8968,
-        8997,
-        9027,
-        9056,
-        9086,
-        9115,
-        9145,
-        9175,
-        9205,
-        9234,
-        9264,
-        9293,
-        9322,
-        9352,
-        9381,
-        9410,
-        9440,
-        9470,
-        9499,
-        9529,
-        9559,
-        9589,
-        9618,
-        9648,
-        9677,
-        9706,
-        9736,
-        9765,
-        9794,
-        9824,
-        9853,
-        9883,
-        9913,
-        9943,
-        9972,
-        10002,
-        10032,
-        10061,
-        10090,
-        10120,
-        10149,
-        10178,
-        10208,
-        10237,
-        10267,
-        10297,
-        10326,
-        10356,
-        10386,
-        10415,
-        10445,
-        10474,
-        10504,
-        10533,
-        10562,
-        10592,
-        10621,
-        10651,
-        10680,
-        10710,
-        10740,
-        10770,
-        10799,
-        10829,
-        10858,
-        10888,
-        10917,
-        10947,
-        10976,
-        11005,
-        11035,
-        11064,
-        11094,
-        11124,
-        11153,
-        11183,
-        11213,
-        11242,
-        11272,
-        11301,
-        11331,
-        11360,
-        11389,
-        11419,
-        11448,
-        11478,
-        11507,
-        11537,
-        11567,
-        11596,
-        11626,
-        11655,
-        11685,
-        11715,
-        11744,
-        11774,
-        11803,
-        11832,
-        11862,
-        11891,
-        11921,
-        11950,
-        11980,
-        12010,
-        12039,
-        12069,
-        12099,
-        12128,
-        12158,
-        12187,
-        12216,
-        12246,
-        12275,
-        12304,
-        12334,
-        12364,
-        12393,
-        12423,
-        12453,
-        12483,
-        12512,
-        12542,
-        12571,
-        12600,
-        12630,
-        12659,
-        12688,
-        12718,
-        12747,
-        12777,
-        12807,
-        12837,
-        12866,
-        12896,
-        12926,
-        12955,
-        12984,
-        13014,
-        13043,
-        13072,
-        13102,
-        13131,
-        13161,
-        13191,
-        13220,
-        13250,
-        13280,
-        13310,
-        13339,
-        13368,
-        13398,
-        13427,
-        13456,
-        13486,
-        13515,
-        13545,
-        13574,
-        13604,
-        13634,
-        13664,
-        13693,
-        13723,
-        13752,
-        13782,
-        13811,
-        13840,
-        13870,
-        13899,
-        13929,
-        13958,
-        13988,
-        14018,
-        14047,
-        14077,
-        14107,
-        14136,
-        14166,
-        14195,
-        14224,
-        14254,
-        14283,
-        14313,
-        14342,
-        14372,
-        14401,
-        14431,
-        14461,
-        14490,
-        14520,
-        14550,
-        14579,
-        14609,
-        14638,
-        14667,
-        14697,
-        14726,
-        14756,
-        14785,
-        14815,
-        14844,
-        14874,
-        14904,
-        14933,
-        14963,
-        14993,
-        15021,
-        15051,
-        15081,
-        15110,
-        15140,
-        15169,
-        15199,
-        15228,
-        15258,
-        15287,
-        15317,
-        15347,
-        15377,
-        15406,
-        15436,
-        15465,
-        15494,
-        15524,
-        15553,
-        15582,
-        15612,
-        15641,
-        15671,
-        15701,
-        15731,
-        15760,
-        15790,
-        15820,
-        15849,
-        15878,
-        15908,
-        15937,
-        15966,
-        15996,
-        16025,
-        16055,
-        16085,
-        16114,
-        16144,
-        16174,
-        16204,
-        16233,
-        16262,
-        16292,
-        16321,
-        16350,
-        16380,
-        16409,
-        16439,
-        16468,
-        16498,
-        16528,
-        16558,
-        16587,
-        16617,
-        16646,
-        16676,
-        16705,
-        16734,
-        16764,
-        16793,
-        16823,
-        16852,
-        16882,
-        16912,
-        16941,
-        16971,
-        17001,
-        17030,
-        17060,
-        17089,
-        17118,
-        17148,
-        17177,
-        17207,
-        17236,
-        17266,
-        17295,
-        17325,
-        17355,
-        17384,
-        17414,
-        17444,
-        17473,
-        17502,
-        17532,
-        17561,
-        17591,
-        17620,
-        17650,
-        17679,
-        17709,
-        17738,
-        17768,
-        17798,
-        17827,
-        17857,
-        17886,
-        17916,
-        17945,
-        17975,
-        18004,
-        18034,
-        18063,
-        18093,
-        18122,
-        18152,
-        18181,
-        18211,
-        18241,
-        18270,
-        18300,
-        18330,
-        18359,
-        18388,
-        18418,
-        18447,
-        18476,
-        18506,
-        18535,
-        18565,
-        18595,
-        18625,
-        18654,
-        18684,
-        18714,
-        18743,
-        18772,
-        18802,
-        18831,
-        18860,
-        18890,
-        18919,
-        18949,
-        18979,
-        19008,
-        19038,
-        19068,
-        19098,
-        19127,
-        19156,
-        19186,
-        19215,
-        19244,
-        19274,
-        19303,
-        19333,
-        19362,
-        19392,
-        19422,
-        19452,
-        19481,
-        19511,
-        19540,
-        19570,
-        19599,
-        19628,
-        19658,
-        19687,
-        19717,
-        19746,
-        19776,
-        19806,
-        19836,
-        19865,
-        19895,
-        19924,
-        19954,
-        19983,
-        20012,
-        20042,
-        20071,
-        20101,
-        20130,
-        20160,
-        20190,
-        20219,
-        20249,
-        20279,
-        20308,
-        20338,
-        20367,
-        20396,
-        20426,
-        20455,
-        20485,
-        20514,
-        20544,
-        20573,
-        20603,
-        20633,
-        20662,
-        20692,
-        20721,
-        20751,
-        20780,
-        20810,
-        20839,
-        20869,
-        20898,
-        20928,
-        20957,
-        20987,
-        21016,
-        21046,
-        21076,
-        21105,
-        21135,
-        21164,
-        21194,
-        21223,
-        21253,
-        21282,
-        21312,
-        21341,
-        21371,
-        21400,
-        21430,
-        21459,
-        21489,
-        21519,
-        21548,
-        21578,
-        21607,
-        21637,
-        21666,
-        21696,
-        21725,
-        21754,
-        21784,
-        21813,
-        21843,
-        21873,
-        21902,
-        21932,
-        21962,
-        21991,
-        22021,
-        22050,
-        22080,
-        22109,
-        22138,
-        22168,
-        22197,
-        22227,
-        22256,
-        22286,
-        22316,
-        22346,
-        22375,
-        22405,
-        22434,
-        22464,
-        22493,
-        22522,
-        22552,
-        22581,
-        22611,
-        22640,
-        22670,
-        22700,
-        22730,
-        22759,
-        22789,
-        22818,
-        22848,
-        22877,
-        22906,
-        22936,
-        22965,
-        22994,
-        23024,
-        23054,
-        23083,
-        23113,
-        23143,
-        23173,
-        23202,
-        23232,
-        23261,
-        23290,
-        23320,
-        23349,
-        23379,
-        23408,
-        23438,
-        23467,
-        23497,
-        23527,
-        23556,
-        23586,
-        23616,
-        23645,
-        23674,
-        23704,
-        23733,
-        23763,
-        23792,
-        23822,
-        23851,
-        23881,
-        23910,
-        23940,
-        23970,
-        23999,
-        24029,
-        24058,
-        24088,
-        24117,
-        24147,
-        24176,
-        24206,
-        24235,
-        24265,
-        24294,
-        24324,
-        24353,
-        24383,
-        24413,
-        24442,
-        24472,
-        24501,
-        24531,
-        24560,
-        24590,
-        24619,
-        24648,
-        24678,
-        24707,
-        24737,
-        24767,
-        24796,
-        24826,
-        24856,
-        24885,
-        24915,
-        24944,
-        24974,
-        25003,
-        25032,
-        25062,
-        25091,
-        25121,
-        25150,
-        25180,
-        25210,
-        25240,
-        25269,
-        25299,
-        25328,
-        25358,
-        25387,
-        25416,
-        25446,
-        25475,
-        25505,
-        25534,
-        25564,
-        25594,
-        25624,
-        25653,
-        25683,
-        25712,
-        25742,
-        25771,
-        25800,
-        25830,
-        25859,
-        25888,
-        25918,
-        25948,
-        25977,
-        26007,
-        26037,
-        26067,
-        26096,
-        26126,
-        26155,
-        26184,
-        26214,
-        26243,
-        26272,
-        26302,
-        26332,
-        26361,
-        26391,
-        26421,
-        26451,
-        26480,
-        26510,
-        26539,
-        26568,
-        26598,
-        26627,
-        26656,
-        26686,
-        26715,
-        26745,
-        26775,
-        26805,
-        26834,
-        26864,
-        26893,
-        26923,
-        26952,
-        26982,
-        27011,
-        27041,
-        27070,
-        27099,
-        27129,
-        27159,
-        27188,
-        27218,
-        27248,
-        27277,
-        27307,
-        27336,
-        27366,
-        27395,
-        27425,
-        27454,
-        27484,
-        27513,
-        27542,
-        27572,
-        27602,
-        27631,
-        27661,
-        27691,
-        27720,
-        27750,
-        27779,
-        27809,
-        27838,
-        27868,
-        27897,
-        27926,
-        27956,
-        27985,
-        28015,
-        28045,
-        28074,
-        28104,
-        28134,
-        28163,
-        28193,
-        28222,
-        28252,
-        28281,
-        28310,
-        28340,
-        28369,
-        28399,
-        28428,
-        28458,
-        28488,
-        28517,
-        28547,
-        28577,
-        // From 1356
-        28607,
-        28636,
-        28665,
-        28695,
-        28724,
-        28754,
-        28783,
-        28813,
-        28843,
-        28872,
-        28901,
-        28931,
-        28960,
-        28990,
-        29019,
-        29049,
-        29078,
-        29108,
-        29137,
-        29167,
-        29196,
-        29226,
-        29255,
-        29285,
-        29315,
-        29345,
-        29375,
-        29404,
-        29434,
-        29463,
-        29492,
-        29522,
-        29551,
-        29580,
-        29610,
-        29640,
-        29669,
-        29699,
-        29729,
-        29759,
-        29788,
-        29818,
-        29847,
-        29876,
-        29906,
-        29935,
-        29964,
-        29994,
-        30023,
-        30053,
-        30082,
-        30112,
-        30141,
-        30171,
-        30200,
-        30230,
-        30259,
-        30289,
-        30318,
-        30348,
-        30378,
-        30408,
-        30437,
-        30467,
-        30496,
-        30526,
-        30555,
-        30585,
-        30614,
-        30644,
-        30673,
-        30703,
-        30732,
-        30762,
-        30791,
-        30821,
-        30850,
-        30880,
-        30909,
-        30939,
-        30968,
-        30998,
-        31027,
-        31057,
-        31086,
-        31116,
-        31145,
-        31175,
-        31204,
-        31234,
-        31263,
-        31293,
-        31322,
-        31352,
-        31381,
-        31411,
-        31441,
-        31471,
-        31500,
-        31530,
-        31559,
-        31589,
-        31618,
-        31648,
-        31676,
-        31706,
-        31736,
-        31766,
-        31795,
-        31825,
-        31854,
-        31884,
-        31913,
-        31943,
-        31972,
-        32002,
-        32031,
-        32061,
-        32090,
-        32120,
-        32150,
-        32180,
-        32209,
-        32239,
-        32268,
-        32298,
-        32327,
-        32357,
-        32386,
-        32416,
-        32445,
-        32475,
-        32504,
-        32534,
-        32563,
-        32593,
-        32622,
-        32652,
-        32681,
-        32711,
-        32740,
-        32770,
-        32799,
-        32829,
-        32858,
-        32888,
-        32917,
-        32947,
-        32976,
-        33006,
-        33035,
-        33065,
-        33094,
-        33124,
-        33153,
-        33183,
-        33213,
-        33243,
-        33272,
-        33302,
-        33331,
-        33361,
-        33390,
-        33420,
-        33450,
-        33479,
-        33509,
-        33539,
-        33568,
-        33598,
-        33627,
-        33657,
-        33686,
-        33716,
-        33745,
-        33775,
-        33804,
-        33834,
-        33863,
-        33893,
-        33922,
-        33952,
-        33981,
-        34011,
-        34040,
-        34069,
-        34099,
-        34128,
-        34158,
-        34187,
-        34217,
-        34247,
-        34277,
-        34306,
-        34336,
-        34365,
-        34395,
-        34424,
-        34454,
-        34483,
-        34512,
-        34542,
-        34571,
-        34601,
-        34631,
-        34660,
-        34690,
-        34719,
-        34749,
-        34778,
-        34808,
-        34837,
-        34867,
-        34896,
-        34926,
-        34955,
-        34985,
-        35015,
-        35044,
-        35074,
-        35103,
-        35133,
-        35162,
-        35192,
-        35222,
-        35251,
-        35280,
-        35310,
-        35340,
-        35370,
-        35399,
-        35429,
-        35458,
-        35488,
-        35517,
-        35547,
-        35576,
-        35605,
-        35635,
-        35665,
-        35694,
-        35723,
-        35753,
-        35782,
-        35811,
-        35841,
-        35871,
-        35901,
-        35930,
-        35960,
-        35989,
-        36019,
-        36048,
-        36078,
-        36107,
-        36136,
-        36166,
-        36195,
-        36225,
-        36254,
-        36284,
-        36314,
-        36343,
-        36373,
-        36403,
-        36433,
-        36462,
-        36492,
-        36521,
-        36551,
-        36580,
-        36610,
-        36639,
-        36669,
-        36698,
-        36728,
-        36757,
-        36786,
-        36816,
-        36845,
-        36875,
-        36904,
-        36934,
-        36963,
-        36993,
-        37022,
-        37052,
-        37081,
-        37111,
-        37141,
-        37170,
-        37200,
-        37229,
-        37259,
-        37288,
-        37318,
-        37347,
-        37377,
-        37406,
-        37436,
-        37465,
-        37495,
-        37524,
-        37554,
-        37584,
-        37613,
-        37643,
-        37672,
-        37701,
-        37731,
-        37760,
-        37790,
-        37819,
-        37849,
-        37878,
-        37908,
-        37938,
-        37967,
-        37997,
-        38027,
-        38056,
-        38085,
-        38115,
-        38144,
-        38174,
-        38203,
-        38233,
-        38262,
-        38292,
-        38322,
-        38351,
-        38381,
-        38410,
-        38440,
-        38469,
-        38499,
-        38528,
-        38558,
-        38587,
-        38617,
-        38646,
-        38676,
-        38705,
-        38735,
-        38764,
-        38794,
-        38823,
-        38853,
-        38882,
-        38912,
-        38941,
-        38971,
-        39001,
-        39030,
-        39059,
-        39089,
-        39118,
-        39148,
-        39178,
-        39208,
-        39237,
-        39267,
-        39297,
-        39326,
-        39355,
-        39385,
-        39414,
-        39444,
-        39473,
-        39503,
-        39532,
-        39562,
-        39592,
-        39621,
-        39650,
-        39680,
-        39709,
-        39739,
-        39768,
-        39798,
-        39827,
-        39857,
-        39886,
-        39916,
-        39946,
-        39975,
-        40005,
-        40035,
-        40064,
-        40094,
-        40123,
-        40153,
-        40182,
-        40212,
-        40241,
-        40271,
-        40300,
-        40330,
-        40359,
-        40389,
-        40418,
-        40448,
-        40477,
-        40507,
-        40536,
-        40566,
-        40595,
-        40625,
-        40655,
-        40685,
-        40714,
-        40744,
-        40773,
-        40803,
-        40832,
-        40862,
-        40892,
-        40921,
-        40951,
-        40980,
-        41009,
-        41039,
-        41068,
-        41098,
-        41127,
-        41157,
-        41186,
-        41216,
-        41245,
-        41275,
-        41304,
-        41334,
-        41364,
-        41393,
-        41422,
-        41452,
-        41481,
-        41511,
-        41540,
-        41570,
-        41599,
-        41629,
-        41658,
-        41688,
-        41718,
-        41748,
-        41777,
-        41807,
-        41836,
-        41865,
-        41894,
-        41924,
-        41953,
-        41983,
-        42012,
-        42042,
-        42072,
-        42102,
-        42131,
-        42161,
-        42190,
-        42220,
-        42249,
-        42279,
-        42308,
-        42337,
-        42367,
-        42397,
-        42426,
-        42456,
-        42485,
-        42515,
-        42545,
-        42574,
-        42604,
-        42633,
-        42662,
-        42692,
-        42721,
-        42751,
-        42780,
-        42810,
-        42839,
-        42869,
-        42899,
-        42929,
-        42958,
-        42988,
-        43017,
-        43046,
-        43076,
-        43105,
-        43135,
-        43164,
-        43194,
-        43223,
-        43253,
-        43283,
-        43312,
-        43342,
-        43371,
-        43401,
-        43430,
-        43460,
-        43489,
-        43519,
-        43548,
-        43578,
-        43607,
-        43637,
-        43666,
-        43696,
-        43726,
-        43755,
-        43785,
-        43814,
-        43844,
-        43873,
-        43903,
-        43932,
-        43962,
-        43991,
-        44021,
-        44050,
-        44080,
-        44109,
-        44139,
-        44169,
-        44198,
-        44228,
-        44258,
-        44287,
-        44317,
-        44346,
-        44375,
-        44405,
-        44434,
-        44464,
-        44493,
-        44523,
-        44553,
-        44582,
-        44612,
-        44641,
-        44671,
-        44700,
-        44730,
-        44759,
-        44788,
-        44818,
-        44847,
-        44877,
-        44906,
-        44936,
-        44966,
-        44996,
-        45025,
-        45055,
-        45084,
-        45114,
-        45143,
-        45172,
-        45202,
-        45231,
-        45261,
-        45290,
-        45320,
-        45350,
-        45380,
-        45409,
-        45439,
-        45468,
-        45498,
-        45527,
-        45556,
-        45586,
-        45615,
-        45644,
-        45674,
-        45704,
-        45733,
-        45763,
-        45793,
-        45823,
-        45852,
-        45882,
-        45911,
-        45940,
-        45970,
-        45999,
-        46028,
-        46058,
-        46088,
-        46117,
-        46147,
-        46177,
-        46206,
-        46236,
-        46265,
-        46295,
-        46324,
-        46354,
-        46383,
-        46413,
-        46442,
-        46472,
-        46501,
-        46531,
-        46560,
-        46590,
-        46620,
-        46649,
-        46679,
-        46708,
-        46738,
-        46767,
-        46797,
-        46826,
-        46856,
-        46885,
-        46915,
-        46944,
-        46974,
-        47003,
-        47033,
-        47063,
-        47092,
-        47122,
-        47151,
-        47181,
-        47210,
-        47240,
-        47269,
-        47298,
-        47328,
-        47357,
-        47387,
-        47417,
-        47446,
-        47476,
-        47506,
-        47535,
-        47565,
-        47594,
-        47624,
-        47653,
-        47682,
-        47712,
-        47741,
-        47771,
-        47800,
-        47830,
-        47860,
-        47890,
-        47919,
-        47949,
-        47978,
-        48008,
-        48037,
-        48066,
-        48096,
-        48125,
-        48155,
-        48184,
-        48214,
-        48244,
-        48273,
-        48303,
-        48333,
-        48362,
-        48392,
-        48421,
-        48450,
-        48480,
-        48509,
-        48538,
-        48568,
-        48598,
-        48627,
-        48657,
-        48687,
-        48717,
-        48746,
-        48776,
-        48805,
-        48834,
-        48864,
-        48893,
-        48922,
-        48952,
-        48982,
-        49011,
-        49041,
-        49071,
-        49100,
-        49130,
-        49160,
-        49189,
-        49218,
-        49248,
-        49277,
-        49306,
-        49336,
-        49365,
-        49395,
-        49425,
-        49455,
-        49484,
-        49514,
-        49543,
-        49573,
-        49602,
-        49632,
-        49661,
-        49690,
-        49720,
-        49749,
-        49779,
-        49809,
-        49838,
-        49868,
-        49898,
-        49927,
-        49957,
-        49986,
-        50016,
-        50045,
-        50075,
-        50104,
-        50133,
-        50163,
-        50192,
-        50222,
-        50252,
-        50281,
-        50311,
-        50340,
-        50370,
-        50400,
-        50429,
-        50459,
-        50488,
-        50518,
-        50547,
-        50576,
-        50606,
-        50635,
-        50665,
-        50694,
-        50724,
-        50754,
-        50784,
-        50813,
-        50843,
-        50872,
-        50902,
-        50931,
-        50960,
-        50990,
-        51019,
-        51049,
-        51078,
-        51108,
-        51138,
-        51167,
-        51197,
-        51227,
-        51256,
-        51286,
-        51315,
-        51345,
-        51374,
-        51403,
-        51433,
-        51462,
-        51492,
-        51522,
-        51552,
-        51582,
-        51611,
-        51641,
-        51670,
-        51699,
-        51729,
-        51758,
-        51787,
-        51816,
-        51846,
-        51876,
-        51906,
-        51936,
-        51965,
-        51995,
-        52025,
-        52054,
-        52083,
-        52113,
-        52142,
-        52171,
-        52200,
-        52230,
-        52260,
-        52290,
-        52319,
-        52349,
-        52379,
-        52408,
-        52438,
-        52467,
-        52497,
-        52526,
-        52555,
-        52585,
-        52614,
-        52644,
-        52673,
-        52703,
-        52733,
-        52762,
-        52792,
-        52822,
-        52851,
-        52881,
-        52910,
-        52939,
-        52969,
-        52998,
-        53028,
-        53057,
-        53087,
-        53116,
-        53146,
-        53176,
-        53205,
-        53235,
-        53264,
-        53294,
-        53324,
-        53353,
-        53383,
-        53412,
-        53441,
-        53471,
-        53500,
-        53530,
-        53559,
-        53589,
-        53619,
-        53648,
-        53678,
-        53708,
-        53737,
-        53767,
-        53796,
-        53825,
-        53855,
-        53884,
-        53913,
-        53943,
-        53973,
-        54003,
-        54032,
-        54062,
-        54092,
-        54121,
-        54151,
-        54180,
-        54209,
-        54239,
-        54268,
-        54297,
-        54327,
-        54357,
-        54387,
-        54416,
-        54446,
-        54476,
-        54505,
-        54535,
-        54564,
-        54593,
-        54623,
-        54652,
-        54681,
-        54711,
-        54741,
-        54770,
-        54800,
-        54830,
-        54859,
-        54889,
-        54919,
-        54948,
-        54977,
-        55007,
-        55036,
-        55066,
-        55095,
-        55125,
-        55154,
-        55184,
-        55213,
-        55243,
-        55273,
-        55302,
-        55332,
-        55361,
-        55391,
-        55420,
-        55450,
-        55479,
-        55508,
-        55538,
-        55567,
-        55597,
-        55627,
-        55657,
-        55686,
-        55716,
-        55745,
-        55775,
-        55804,
-        55834,
-        55863,
-        55892,
-        55922,
-        55951,
-        55981,
-        56011,
-        56040,
-        56070,
-        56100,
-        56129,
-        56159,
-        56188,
-        56218,
-        56247,
-        56276,
-        56306,
-        56335,
-        56365,
-        56394,
-        56424,
-        56454,
-        56483,
-        56513,
-        56543,
-        56572,
-        56601,
-        56631,
-        56660,
-        56690,
-        56719,
-        56749,
-        56778,
-        56808,
-        56837,
-        56867,
-        56897,
-        56926,
-        56956,
-        56985,
-        57015,
-        57044,
-        57074,
-        57103,
-        57133,
-        57162,
-        57192,
-        57221,
-        57251,
-        57280,
-        57310,
-        57340,
-        57369,
-        57399,
-        57429,
-        57458,
-        57487,
-        57517,
-        57546,
-        57576,
-        57605,
-        57634,
-        57664,
-        57694,
-        57723,
-        57753,
-        57783,
-        57813,
-        57842,
-        57871,
-        57901,
-        57930,
-        57959,
-        57989,
-        58018,
-        58048,
-        58077,
-        58107,
-        58137,
-        58167,
-        58196,
-        58226,
-        58255,
-        58285,
-        58314,
-        58343,
-        58373,
-        58402,
-        58432,
-        58461,
-        58491,
-        58521,
-        58551,
-        58580,
-        58610,
-        58639,
-        58669,
-        58698,
-        58727,
-        58757,
-        58786,
-        58816,
-        58845,
-        58875,
-        58905,
-        58934,
-        58964,
-        58994,
-        59023,
-        59053,
-        59082,
-        59111,
-        59141,
-        59170,
-        59200,
-        59229,
-        59259,
-        59288,
-        59318,
-        59348,
-        59377,
-        59407,
-        59436,
-        59466,
-        59495,
-        59525,
-        59554,
-        59584,
-        59613,
-        59643,
-        59672,
-        59702,
-        59731,
-        59761,
-        59791,
-        59820,
-        59850,
-        59879,
-        59909,
-        59939,
-        59968,
-        59997,
-        60027,
-        60056,
-        60086,
-        60115,
-        60145,
-        60174,
-        60204,
-        60234,
-        60264,
-        60293,
-        60323,
-        60352,
-        60381,
-        60411,
-        60440,
-        60469,
-        60499,
-        60528,
-        60558,
-        60588,
-        60618,
-        60648,
-        60677,
-        60707,
-        60736,
-        60765,
-        60795,
-        60824,
-        60853,
-        60883,
-        60912,
-        60942,
-        60972,
-        61002,
-        61031,
-        61061,
-        61090,
-        61120,
-        61149,
-        61179,
-        61208,
-        61237,
-        61267,
-        61296,
-        61326,
-        61356,
-        61385,
-        61415,
-        61445,
-        61474,
-        61504,
-        61533,
-        61563,
-        61592,
-        61621,
-        61651,
-        61680,
-        61710,
-        61739,
-        61769,
-        61799,
-        61828,
-        61858,
-        61888,
-        61917,
-        61947,
-        61976,
-        62006,
-        62035,
-        62064,
-        62094,
-        62123,
-        62153,
-        62182,
-        62212,
-        62242,
-        62271,
-        62301,
-        62331,
-        62360,
-        62390,
-        62419,
-        62448,
-        62478,
-        62507,
-        62537,
-        62566,
-        62596,
-        62625,
-        62655,
-        62685,
-        62715,
-        62744,
-        62774,
-        62803,
-        62832,
-        62862,
-        62891,
-        62921,
-        62950,
-        62980,
-        63009,
-        63039,
-        63069,
-        63099,
-        63128,
-        63157,
-        63187,
-        63216,
-        63246,
-        63275,
-        63305,
-        63334,
-        63363,
-        63393,
-        63423,
-        63453,
-        63482,
-        63512,
-        63541,
-        63571,
-        63600,
-        63630,
-        63659,
-        63689,
-        63718,
-        63747,
-        63777,
-        63807,
-        63836,
-        63866,
-        63895,
-        63925,
-        63955,
-        63984,
-        64014,
-        64043,
-        64073,
-        64102,
-        64131,
-        64161,
-        64190,
-        64220,
-        64249,
-        64279,
-        64309,
-        64339,
-        64368,
-        64398,
-        64427,
-        64457,
-        64486,
-        64515,
-        64545,
-        64574,
-        64603,
-        64633,
-        64663,
-        64692,
-        64722,
-        64752,
-        64782,
-        64811,
-        64841,
-        64870,
-        64899,
-        64929,
-        64958,
-        64987,
-        65017,
-        65047,
-        65076,
-        65106,
-        65136,
-        65166,
-        65195,
-        65225,
-        65254,
-        65283,
-        65313,
-        65342,
-        65371,
-        65401,
-        65431,
-        65460,
-        65490,
-        65520,
-        65549,
-        65579,
-        65608,
-        65638,
-        65667,
-        65697,
-        65726,
-        65755,
-        65785,
-        65815,
-        65844,
-        65874,
-        65903,
-        65933,
-        65963,
-        65992,
-        66022,
-        66051,
-        66081,
-        66110,
-        66140,
-        66169,
-        66199,
-        66228,
-        66258,
-        66287,
-        66317,
-        66346,
-        66376,
-        66405,
-        66435,
-        66465,
-        66494,
-        66524,
-        66553,
-        66583,
-        66612,
-        66641,
-        66671,
-        66700,
-        66730,
-        66760,
-        66789,
-        66819,
-        66849,
-        66878,
-        66908,
-        66937,
-        66967,
-        66996,
-        67025,
-        67055,
-        67084,
-        67114,
-        67143,
-        67173,
-        67203,
-        67233,
-        67262,
-        67292,
-        67321,
-        67351,
-        67380,
-        67409,
-        67439,
-        67468,
-        67497,
-        67527,
-        67557,
-        67587,
-        67617,
-        67646,
-        67676,
-        67705,
-        67735,
-        67764,
-        67793,
-        67823,
-        67852,
-        67882,
-        67911,
-        67941,
-        67971,
-        68e3,
-        68030,
-        68060,
-        68089,
-        68119,
-        68148,
-        68177,
-        68207,
-        68236,
-        68266,
-        68295,
-        68325,
-        68354,
-        68384,
-        68414,
-        68443,
-        68473,
-        68502,
-        68532,
-        68561,
-        68591,
-        68620,
-        68650,
-        68679,
-        68708,
-        68738,
-        68768,
-        68797,
-        68827,
-        68857,
-        68886,
-        68916,
-        68946,
-        68975,
-        69004,
-        69034,
-        69063,
-        69092,
-        69122,
-        69152,
-        69181,
-        69211,
-        69240,
-        69270,
-        69300,
-        69330,
-        69359,
-        69388,
-        69418,
-        69447,
-        69476,
-        69506,
-        69535,
-        69565,
-        69595,
-        69624,
-        69654,
-        69684,
-        69713,
-        69743,
-        69772,
-        69802,
-        69831,
-        69861,
-        69890,
-        69919,
-        69949,
-        69978,
-        70008,
-        70038,
-        70067,
-        70097,
-        70126,
-        70156,
-        70186,
-        70215,
-        70245,
-        70274,
-        70303,
-        70333,
-        70362,
-        70392,
-        70421,
-        70451,
-        70481,
-        70510,
-        70540,
-        70570,
-        70599,
-        70629,
-        70658,
-        70687,
-        70717,
-        70746,
-        70776,
-        70805,
-        70835,
-        70864,
-        70894,
-        70924,
-        70954,
-        70983,
-        71013,
-        71042,
-        71071,
-        71101,
-        71130,
-        71159,
-        71189,
-        71218,
-        71248,
-        71278,
-        71308,
-        71337,
-        71367,
-        71397,
-        71426,
-        71455,
-        71485,
-        71514,
-        71543,
-        71573,
-        71602,
-        71632,
-        71662,
-        71691,
-        71721,
-        71751,
-        71781,
-        71810,
-        71839,
-        71869,
-        71898,
-        71927,
-        71957,
-        71986,
-        72016,
-        72046,
-        72075,
-        72105,
-        72135,
-        72164,
-        72194,
-        72223,
-        72253,
-        72282,
-        72311,
-        72341,
-        72370,
-        72400,
-        72429,
-        72459,
-        72489,
-        72518,
-        72548,
-        72577,
-        72607,
-        72637,
-        72666,
-        72695,
-        72725,
-        72754,
-        72784,
-        72813,
-        72843,
-        72872,
-        72902,
-        72931,
-        72961,
-        72991,
-        73020,
-        73050,
-        73080,
-        73109,
-        73139,
-        73168,
-        73197,
-        73227,
-        73256,
-        73286,
-        73315,
-        73345,
-        73375,
-        73404,
-        73434,
-        73464,
-        73493,
-        73523,
-        73552,
-        73581,
-        73611,
-        73640,
-        73669,
-        73699,
-        73729,
-        73758,
-        73788,
-        73818,
-        73848,
-        73877,
-        73907,
-        73936,
-        73965,
-        73995,
-        74024,
-        74053,
-        74083,
-        74113,
-        74142,
-        74172,
-        74202,
-        74231,
-        74261,
-        74291,
-        74320,
-        74349,
-        74379,
-        74408,
-        74437,
-        74467,
-        74497,
-        74526,
-        74556,
-        74586,
-        74615,
-        74645,
-        74675,
-        74704,
-        74733,
-        74763,
-        74792,
-        74822,
-        74851,
-        74881,
-        74910,
-        74940,
-        74969,
-        74999,
-        75029,
-        75058,
-        75088,
-        75117,
-        75147,
-        75176,
-        75206,
-        75235,
-        75264,
-        75294,
-        75323,
-        75353,
-        75383,
-        75412,
-        75442,
-        75472,
-        75501,
-        75531,
-        75560,
-        75590,
-        75619,
-        75648,
-        75678,
-        75707,
-        75737,
-        75766,
-        75796,
-        75826,
-        75856,
-        75885,
-        75915,
-        75944,
-        75974,
-        76003,
-        76032,
-        76062,
-        76091,
-        76121,
-        76150,
-        76180,
-        76210,
-        76239,
-        76269,
-        76299,
-        76328,
-        76358,
-        76387,
-        76416,
-        76446,
-        76475,
-        76505,
-        76534,
-        76564,
-        76593,
-        76623,
-        76653,
-        76682,
-        76712,
-        76741,
-        76771,
-        76801,
-        76830,
-        76859,
-        76889,
-        76918,
-        76948,
-        76977,
-        77007,
-        77036,
-        77066,
-        77096,
-        77125,
-        77155,
-        77185,
-        77214,
-        77243,
-        77273,
-        77302,
-        77332,
-        77361,
-        77390,
-        77420,
-        77450,
-        77479,
-        77509,
-        77539,
-        77569,
-        77598,
-        77627,
-        77657,
-        77686,
-        77715,
-        77745,
-        77774,
-        77804,
-        77833,
-        77863,
-        77893,
-        77923,
-        77952,
-        77982,
-        78011,
-        78041,
-        78070,
-        78099,
-        78129,
-        78158,
-        78188,
-        78217,
-        78247,
-        78277,
-        78307,
-        78336,
-        78366,
-        78395,
-        78425,
-        78454,
-        78483,
-        78513,
-        78542,
-        78572,
-        78601,
-        78631,
-        78661,
-        78690,
-        78720,
-        78750,
-        78779,
-        78808,
-        78838,
-        78867,
-        78897,
-        78926,
-        78956,
-        78985,
-        79015,
-        79044,
-        79074,
-        79104,
-        79133,
-        79163,
-        79192,
-        79222,
-        79251,
-        79281,
-        79310,
-        79340,
-        79369,
-        79399,
-        79428,
-        79458,
-        79487,
-        79517,
-        79546,
-        79576,
-        79606,
-        79635,
-        79665,
-        79695,
-        79724,
-        79753,
-        79783,
-        79812,
-        79841,
-        79871,
-        79900,
-        79930,
-        79960,
-        79990
-      ];
     }
   });
 
@@ -53995,8 +47061,17 @@ var Plotly = (() => {
     })
   };
 
+  // node_modules/.pnpm/maplibre-gl@4.7.1/node_modules/maplibre-gl/dist/maplibre-gl.css
+  (function() {
+    if (!document.getElementById("7f24433f8636d956cf03b2146157def59cd8ca1f9b240f99a92801035c6ac25a")) {
+      var e = document.createElement("style");
+      e.id = "7f24433f8636d956cf03b2146157def59cd8ca1f9b240f99a92801035c6ac25a";
+      e.textContent = `.maplibregl-map{font:12px/20px Helvetica Neue,Arial,Helvetica,sans-serif;overflow:hidden;position:relative;-webkit-tap-highlight-color:rgb(0 0 0/0)}.maplibregl-canvas{left:0;position:absolute;top:0}.maplibregl-map:fullscreen{height:100%;width:100%}.maplibregl-ctrl-group button.maplibregl-ctrl-compass{touch-action:none}.maplibregl-canvas-container.maplibregl-interactive,.maplibregl-ctrl-group button.maplibregl-ctrl-compass{cursor:grab;-webkit-user-select:none;-moz-user-select:none;user-select:none}.maplibregl-canvas-container.maplibregl-interactive.maplibregl-track-pointer{cursor:pointer}.maplibregl-canvas-container.maplibregl-interactive:active,.maplibregl-ctrl-group button.maplibregl-ctrl-compass:active{cursor:grabbing}.maplibregl-canvas-container.maplibregl-touch-zoom-rotate,.maplibregl-canvas-container.maplibregl-touch-zoom-rotate .maplibregl-canvas{touch-action:pan-x pan-y}.maplibregl-canvas-container.maplibregl-touch-drag-pan,.maplibregl-canvas-container.maplibregl-touch-drag-pan .maplibregl-canvas{touch-action:pinch-zoom}.maplibregl-canvas-container.maplibregl-touch-zoom-rotate.maplibregl-touch-drag-pan,.maplibregl-canvas-container.maplibregl-touch-zoom-rotate.maplibregl-touch-drag-pan .maplibregl-canvas{touch-action:none}.maplibregl-canvas-container.maplibregl-touch-drag-pan.maplibregl-cooperative-gestures,.maplibregl-canvas-container.maplibregl-touch-drag-pan.maplibregl-cooperative-gestures .maplibregl-canvas{touch-action:pan-x pan-y}.maplibregl-ctrl-bottom-left,.maplibregl-ctrl-bottom-right,.maplibregl-ctrl-top-left,.maplibregl-ctrl-top-right{pointer-events:none;position:absolute;z-index:2}.maplibregl-ctrl-top-left{left:0;top:0}.maplibregl-ctrl-top-right{right:0;top:0}.maplibregl-ctrl-bottom-left{bottom:0;left:0}.maplibregl-ctrl-bottom-right{bottom:0;right:0}.maplibregl-ctrl{clear:both;pointer-events:auto;transform:translate(0)}.maplibregl-ctrl-top-left .maplibregl-ctrl{float:left;margin:10px 0 0 10px}.maplibregl-ctrl-top-right .maplibregl-ctrl{float:right;margin:10px 10px 0 0}.maplibregl-ctrl-bottom-left .maplibregl-ctrl{float:left;margin:0 0 10px 10px}.maplibregl-ctrl-bottom-right .maplibregl-ctrl{float:right;margin:0 10px 10px 0}.maplibregl-ctrl-group{background:#fff;border-radius:4px}.maplibregl-ctrl-group:not(:empty){box-shadow:0 0 0 2px rgba(0,0,0,.1)}@media (forced-colors:active){.maplibregl-ctrl-group:not(:empty){box-shadow:0 0 0 2px ButtonText}}.maplibregl-ctrl-group button{background-color:transparent;border:0;box-sizing:border-box;cursor:pointer;display:block;height:29px;outline:none;padding:0;width:29px}.maplibregl-ctrl-group button+button{border-top:1px solid #ddd}.maplibregl-ctrl button .maplibregl-ctrl-icon{background-position:50%;background-repeat:no-repeat;display:block;height:100%;width:100%}@media (forced-colors:active){.maplibregl-ctrl-icon{background-color:transparent}.maplibregl-ctrl-group button+button{border-top:1px solid ButtonText}}.maplibregl-ctrl button::-moz-focus-inner{border:0;padding:0}.maplibregl-ctrl-attrib-button:focus,.maplibregl-ctrl-group button:focus{box-shadow:0 0 2px 2px #0096ff}.maplibregl-ctrl button:disabled{cursor:not-allowed}.maplibregl-ctrl button:disabled .maplibregl-ctrl-icon{opacity:.25}.maplibregl-ctrl button:not(:disabled):hover{background-color:rgb(0 0 0/5%)}.maplibregl-ctrl-group button:focus:focus-visible{box-shadow:0 0 2px 2px #0096ff}.maplibregl-ctrl-group button:focus:not(:focus-visible){box-shadow:none}.maplibregl-ctrl-group button:focus:first-child{border-radius:4px 4px 0 0}.maplibregl-ctrl-group button:focus:last-child{border-radius:0 0 4px 4px}.maplibregl-ctrl-group button:focus:only-child{border-radius:inherit}.maplibregl-ctrl button.maplibregl-ctrl-zoom-out .maplibregl-ctrl-icon{background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='29' height='29' fill='%23333' viewBox='0 0 29 29'%3E%3Cpath d='M10 13c-.75 0-1.5.75-1.5 1.5S9.25 16 10 16h9c.75 0 1.5-.75 1.5-1.5S19.75 13 19 13z'/%3E%3C/svg%3E")}.maplibregl-ctrl button.maplibregl-ctrl-zoom-in .maplibregl-ctrl-icon{background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='29' height='29' fill='%23333' viewBox='0 0 29 29'%3E%3Cpath d='M14.5 8.5c-.75 0-1.5.75-1.5 1.5v3h-3c-.75 0-1.5.75-1.5 1.5S9.25 16 10 16h3v3c0 .75.75 1.5 1.5 1.5S16 19.75 16 19v-3h3c.75 0 1.5-.75 1.5-1.5S19.75 13 19 13h-3v-3c0-.75-.75-1.5-1.5-1.5'/%3E%3C/svg%3E")}@media (forced-colors:active){.maplibregl-ctrl button.maplibregl-ctrl-zoom-out .maplibregl-ctrl-icon{background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='29' height='29' fill='%23fff' viewBox='0 0 29 29'%3E%3Cpath d='M10 13c-.75 0-1.5.75-1.5 1.5S9.25 16 10 16h9c.75 0 1.5-.75 1.5-1.5S19.75 13 19 13z'/%3E%3C/svg%3E")}.maplibregl-ctrl button.maplibregl-ctrl-zoom-in .maplibregl-ctrl-icon{background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='29' height='29' fill='%23fff' viewBox='0 0 29 29'%3E%3Cpath d='M14.5 8.5c-.75 0-1.5.75-1.5 1.5v3h-3c-.75 0-1.5.75-1.5 1.5S9.25 16 10 16h3v3c0 .75.75 1.5 1.5 1.5S16 19.75 16 19v-3h3c.75 0 1.5-.75 1.5-1.5S19.75 13 19 13h-3v-3c0-.75-.75-1.5-1.5-1.5'/%3E%3C/svg%3E")}}@media (forced-colors:active) and (prefers-color-scheme:light){.maplibregl-ctrl button.maplibregl-ctrl-zoom-out .maplibregl-ctrl-icon{background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='29' height='29' viewBox='0 0 29 29'%3E%3Cpath d='M10 13c-.75 0-1.5.75-1.5 1.5S9.25 16 10 16h9c.75 0 1.5-.75 1.5-1.5S19.75 13 19 13z'/%3E%3C/svg%3E")}.maplibregl-ctrl button.maplibregl-ctrl-zoom-in .maplibregl-ctrl-icon{background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='29' height='29' viewBox='0 0 29 29'%3E%3Cpath d='M14.5 8.5c-.75 0-1.5.75-1.5 1.5v3h-3c-.75 0-1.5.75-1.5 1.5S9.25 16 10 16h3v3c0 .75.75 1.5 1.5 1.5S16 19.75 16 19v-3h3c.75 0 1.5-.75 1.5-1.5S19.75 13 19 13h-3v-3c0-.75-.75-1.5-1.5-1.5'/%3E%3C/svg%3E")}}.maplibregl-ctrl button.maplibregl-ctrl-fullscreen .maplibregl-ctrl-icon{background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='29' height='29' fill='%23333' viewBox='0 0 29 29'%3E%3Cpath d='M24 16v5.5c0 1.75-.75 2.5-2.5 2.5H16v-1l3-1.5-4-5.5 1-1 5.5 4 1.5-3zM6 16l1.5 3 5.5-4 1 1-4 5.5 3 1.5v1H7.5C5.75 24 5 23.25 5 21.5V16zm7-11v1l-3 1.5 4 5.5-1 1-5.5-4L6 13H5V7.5C5 5.75 5.75 5 7.5 5zm11 2.5c0-1.75-.75-2.5-2.5-2.5H16v1l3 1.5-4 5.5 1 1 5.5-4 1.5 3h1z'/%3E%3C/svg%3E")}.maplibregl-ctrl button.maplibregl-ctrl-shrink .maplibregl-ctrl-icon{background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='29' height='29' viewBox='0 0 29 29'%3E%3Cpath d='M18.5 16c-1.75 0-2.5.75-2.5 2.5V24h1l1.5-3 5.5 4 1-1-4-5.5 3-1.5v-1zM13 18.5c0-1.75-.75-2.5-2.5-2.5H5v1l3 1.5L4 24l1 1 5.5-4 1.5 3h1zm3-8c0 1.75.75 2.5 2.5 2.5H24v-1l-3-1.5L25 5l-1-1-5.5 4L17 5h-1zM10.5 13c1.75 0 2.5-.75 2.5-2.5V5h-1l-1.5 3L5 4 4 5l4 5.5L5 12v1z'/%3E%3C/svg%3E")}@media (forced-colors:active){.maplibregl-ctrl button.maplibregl-ctrl-fullscreen .maplibregl-ctrl-icon{background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='29' height='29' fill='%23fff' viewBox='0 0 29 29'%3E%3Cpath d='M24 16v5.5c0 1.75-.75 2.5-2.5 2.5H16v-1l3-1.5-4-5.5 1-1 5.5 4 1.5-3zM6 16l1.5 3 5.5-4 1 1-4 5.5 3 1.5v1H7.5C5.75 24 5 23.25 5 21.5V16zm7-11v1l-3 1.5 4 5.5-1 1-5.5-4L6 13H5V7.5C5 5.75 5.75 5 7.5 5zm11 2.5c0-1.75-.75-2.5-2.5-2.5H16v1l3 1.5-4 5.5 1 1 5.5-4 1.5 3h1z'/%3E%3C/svg%3E")}.maplibregl-ctrl button.maplibregl-ctrl-shrink .maplibregl-ctrl-icon{background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='29' height='29' fill='%23fff' viewBox='0 0 29 29'%3E%3Cpath d='M18.5 16c-1.75 0-2.5.75-2.5 2.5V24h1l1.5-3 5.5 4 1-1-4-5.5 3-1.5v-1zM13 18.5c0-1.75-.75-2.5-2.5-2.5H5v1l3 1.5L4 24l1 1 5.5-4 1.5 3h1zm3-8c0 1.75.75 2.5 2.5 2.5H24v-1l-3-1.5L25 5l-1-1-5.5 4L17 5h-1zM10.5 13c1.75 0 2.5-.75 2.5-2.5V5h-1l-1.5 3L5 4 4 5l4 5.5L5 12v1z'/%3E%3C/svg%3E")}}@media (forced-colors:active) and (prefers-color-scheme:light){.maplibregl-ctrl button.maplibregl-ctrl-fullscreen .maplibregl-ctrl-icon{background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='29' height='29' viewBox='0 0 29 29'%3E%3Cpath d='M24 16v5.5c0 1.75-.75 2.5-2.5 2.5H16v-1l3-1.5-4-5.5 1-1 5.5 4 1.5-3zM6 16l1.5 3 5.5-4 1 1-4 5.5 3 1.5v1H7.5C5.75 24 5 23.25 5 21.5V16zm7-11v1l-3 1.5 4 5.5-1 1-5.5-4L6 13H5V7.5C5 5.75 5.75 5 7.5 5zm11 2.5c0-1.75-.75-2.5-2.5-2.5H16v1l3 1.5-4 5.5 1 1 5.5-4 1.5 3h1z'/%3E%3C/svg%3E")}.maplibregl-ctrl button.maplibregl-ctrl-shrink .maplibregl-ctrl-icon{background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='29' height='29' viewBox='0 0 29 29'%3E%3Cpath d='M18.5 16c-1.75 0-2.5.75-2.5 2.5V24h1l1.5-3 5.5 4 1-1-4-5.5 3-1.5v-1zM13 18.5c0-1.75-.75-2.5-2.5-2.5H5v1l3 1.5L4 24l1 1 5.5-4 1.5 3h1zm3-8c0 1.75.75 2.5 2.5 2.5H24v-1l-3-1.5L25 5l-1-1-5.5 4L17 5h-1zM10.5 13c1.75 0 2.5-.75 2.5-2.5V5h-1l-1.5 3L5 4 4 5l4 5.5L5 12v1z'/%3E%3C/svg%3E")}}.maplibregl-ctrl button.maplibregl-ctrl-compass .maplibregl-ctrl-icon{background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='29' height='29' fill='%23333' viewBox='0 0 29 29'%3E%3Cpath d='m10.5 14 4-8 4 8z'/%3E%3Cpath fill='%23ccc' d='m10.5 16 4 8 4-8z'/%3E%3C/svg%3E")}@media (forced-colors:active){.maplibregl-ctrl button.maplibregl-ctrl-compass .maplibregl-ctrl-icon{background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='29' height='29' fill='%23fff' viewBox='0 0 29 29'%3E%3Cpath d='m10.5 14 4-8 4 8z'/%3E%3Cpath fill='%23ccc' d='m10.5 16 4 8 4-8z'/%3E%3C/svg%3E")}}@media (forced-colors:active) and (prefers-color-scheme:light){.maplibregl-ctrl button.maplibregl-ctrl-compass .maplibregl-ctrl-icon{background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='29' height='29' viewBox='0 0 29 29'%3E%3Cpath d='m10.5 14 4-8 4 8z'/%3E%3Cpath fill='%23ccc' d='m10.5 16 4 8 4-8z'/%3E%3C/svg%3E")}}.maplibregl-ctrl button.maplibregl-ctrl-terrain .maplibregl-ctrl-icon{background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='22' height='22' fill='%23333' viewBox='0 0 22 22'%3E%3Cpath d='m1.754 13.406 4.453-4.851 3.09 3.09 3.281 3.277.969-.969-3.309-3.312 3.844-4.121 6.148 6.886h1.082v-.855l-7.207-8.07-4.84 5.187L6.169 6.57l-5.48 5.965v.871ZM.688 16.844h20.625v1.375H.688Zm0 0'/%3E%3C/svg%3E")}.maplibregl-ctrl button.maplibregl-ctrl-terrain-enabled .maplibregl-ctrl-icon{background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='22' height='22' fill='%2333b5e5' viewBox='0 0 22 22'%3E%3Cpath d='m1.754 13.406 4.453-4.851 3.09 3.09 3.281 3.277.969-.969-3.309-3.312 3.844-4.121 6.148 6.886h1.082v-.855l-7.207-8.07-4.84 5.187L6.169 6.57l-5.48 5.965v.871ZM.688 16.844h20.625v1.375H.688Zm0 0'/%3E%3C/svg%3E")}.maplibregl-ctrl button.maplibregl-ctrl-geolocate .maplibregl-ctrl-icon{background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='29' height='29' fill='%23333' viewBox='0 0 20 20'%3E%3Cpath d='M10 4C9 4 9 5 9 5v.1A5 5 0 0 0 5.1 9H5s-1 0-1 1 1 1 1 1h.1A5 5 0 0 0 9 14.9v.1s0 1 1 1 1-1 1-1v-.1a5 5 0 0 0 3.9-3.9h.1s1 0 1-1-1-1-1-1h-.1A5 5 0 0 0 11 5.1V5s0-1-1-1m0 2.5a3.5 3.5 0 1 1 0 7 3.5 3.5 0 1 1 0-7'/%3E%3Ccircle cx='10' cy='10' r='2'/%3E%3C/svg%3E")}.maplibregl-ctrl button.maplibregl-ctrl-geolocate:disabled .maplibregl-ctrl-icon{background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='29' height='29' fill='%23aaa' viewBox='0 0 20 20'%3E%3Cpath d='M10 4C9 4 9 5 9 5v.1A5 5 0 0 0 5.1 9H5s-1 0-1 1 1 1 1 1h.1A5 5 0 0 0 9 14.9v.1s0 1 1 1 1-1 1-1v-.1a5 5 0 0 0 3.9-3.9h.1s1 0 1-1-1-1-1-1h-.1A5 5 0 0 0 11 5.1V5s0-1-1-1m0 2.5a3.5 3.5 0 1 1 0 7 3.5 3.5 0 1 1 0-7'/%3E%3Ccircle cx='10' cy='10' r='2'/%3E%3Cpath fill='red' d='m14 5 1 1-9 9-1-1z'/%3E%3C/svg%3E")}.maplibregl-ctrl button.maplibregl-ctrl-geolocate.maplibregl-ctrl-geolocate-active .maplibregl-ctrl-icon{background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='29' height='29' fill='%2333b5e5' viewBox='0 0 20 20'%3E%3Cpath d='M10 4C9 4 9 5 9 5v.1A5 5 0 0 0 5.1 9H5s-1 0-1 1 1 1 1 1h.1A5 5 0 0 0 9 14.9v.1s0 1 1 1 1-1 1-1v-.1a5 5 0 0 0 3.9-3.9h.1s1 0 1-1-1-1-1-1h-.1A5 5 0 0 0 11 5.1V5s0-1-1-1m0 2.5a3.5 3.5 0 1 1 0 7 3.5 3.5 0 1 1 0-7'/%3E%3Ccircle cx='10' cy='10' r='2'/%3E%3C/svg%3E")}.maplibregl-ctrl button.maplibregl-ctrl-geolocate.maplibregl-ctrl-geolocate-active-error .maplibregl-ctrl-icon{background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='29' height='29' fill='%23e58978' viewBox='0 0 20 20'%3E%3Cpath d='M10 4C9 4 9 5 9 5v.1A5 5 0 0 0 5.1 9H5s-1 0-1 1 1 1 1 1h.1A5 5 0 0 0 9 14.9v.1s0 1 1 1 1-1 1-1v-.1a5 5 0 0 0 3.9-3.9h.1s1 0 1-1-1-1-1-1h-.1A5 5 0 0 0 11 5.1V5s0-1-1-1m0 2.5a3.5 3.5 0 1 1 0 7 3.5 3.5 0 1 1 0-7'/%3E%3Ccircle cx='10' cy='10' r='2'/%3E%3C/svg%3E")}.maplibregl-ctrl button.maplibregl-ctrl-geolocate.maplibregl-ctrl-geolocate-background .maplibregl-ctrl-icon{background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='29' height='29' fill='%2333b5e5' viewBox='0 0 20 20'%3E%3Cpath d='M10 4C9 4 9 5 9 5v.1A5 5 0 0 0 5.1 9H5s-1 0-1 1 1 1 1 1h.1A5 5 0 0 0 9 14.9v.1s0 1 1 1 1-1 1-1v-.1a5 5 0 0 0 3.9-3.9h.1s1 0 1-1-1-1-1-1h-.1A5 5 0 0 0 11 5.1V5s0-1-1-1m0 2.5a3.5 3.5 0 1 1 0 7 3.5 3.5 0 1 1 0-7'/%3E%3C/svg%3E")}.maplibregl-ctrl button.maplibregl-ctrl-geolocate.maplibregl-ctrl-geolocate-background-error .maplibregl-ctrl-icon{background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='29' height='29' fill='%23e54e33' viewBox='0 0 20 20'%3E%3Cpath d='M10 4C9 4 9 5 9 5v.1A5 5 0 0 0 5.1 9H5s-1 0-1 1 1 1 1 1h.1A5 5 0 0 0 9 14.9v.1s0 1 1 1 1-1 1-1v-.1a5 5 0 0 0 3.9-3.9h.1s1 0 1-1-1-1-1-1h-.1A5 5 0 0 0 11 5.1V5s0-1-1-1m0 2.5a3.5 3.5 0 1 1 0 7 3.5 3.5 0 1 1 0-7'/%3E%3C/svg%3E")}.maplibregl-ctrl button.maplibregl-ctrl-geolocate.maplibregl-ctrl-geolocate-waiting .maplibregl-ctrl-icon{animation:maplibregl-spin 2s linear infinite}@media (forced-colors:active){.maplibregl-ctrl button.maplibregl-ctrl-geolocate .maplibregl-ctrl-icon{background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='29' height='29' fill='%23fff' viewBox='0 0 20 20'%3E%3Cpath d='M10 4C9 4 9 5 9 5v.1A5 5 0 0 0 5.1 9H5s-1 0-1 1 1 1 1 1h.1A5 5 0 0 0 9 14.9v.1s0 1 1 1 1-1 1-1v-.1a5 5 0 0 0 3.9-3.9h.1s1 0 1-1-1-1-1-1h-.1A5 5 0 0 0 11 5.1V5s0-1-1-1m0 2.5a3.5 3.5 0 1 1 0 7 3.5 3.5 0 1 1 0-7'/%3E%3Ccircle cx='10' cy='10' r='2'/%3E%3C/svg%3E")}.maplibregl-ctrl button.maplibregl-ctrl-geolocate:disabled .maplibregl-ctrl-icon{background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='29' height='29' fill='%23999' viewBox='0 0 20 20'%3E%3Cpath d='M10 4C9 4 9 5 9 5v.1A5 5 0 0 0 5.1 9H5s-1 0-1 1 1 1 1 1h.1A5 5 0 0 0 9 14.9v.1s0 1 1 1 1-1 1-1v-.1a5 5 0 0 0 3.9-3.9h.1s1 0 1-1-1-1-1-1h-.1A5 5 0 0 0 11 5.1V5s0-1-1-1m0 2.5a3.5 3.5 0 1 1 0 7 3.5 3.5 0 1 1 0-7'/%3E%3Ccircle cx='10' cy='10' r='2'/%3E%3Cpath fill='red' d='m14 5 1 1-9 9-1-1z'/%3E%3C/svg%3E")}.maplibregl-ctrl button.maplibregl-ctrl-geolocate.maplibregl-ctrl-geolocate-active .maplibregl-ctrl-icon{background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='29' height='29' fill='%2333b5e5' viewBox='0 0 20 20'%3E%3Cpath d='M10 4C9 4 9 5 9 5v.1A5 5 0 0 0 5.1 9H5s-1 0-1 1 1 1 1 1h.1A5 5 0 0 0 9 14.9v.1s0 1 1 1 1-1 1-1v-.1a5 5 0 0 0 3.9-3.9h.1s1 0 1-1-1-1-1-1h-.1A5 5 0 0 0 11 5.1V5s0-1-1-1m0 2.5a3.5 3.5 0 1 1 0 7 3.5 3.5 0 1 1 0-7'/%3E%3Ccircle cx='10' cy='10' r='2'/%3E%3C/svg%3E")}.maplibregl-ctrl button.maplibregl-ctrl-geolocate.maplibregl-ctrl-geolocate-active-error .maplibregl-ctrl-icon{background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='29' height='29' fill='%23e58978' viewBox='0 0 20 20'%3E%3Cpath d='M10 4C9 4 9 5 9 5v.1A5 5 0 0 0 5.1 9H5s-1 0-1 1 1 1 1 1h.1A5 5 0 0 0 9 14.9v.1s0 1 1 1 1-1 1-1v-.1a5 5 0 0 0 3.9-3.9h.1s1 0 1-1-1-1-1-1h-.1A5 5 0 0 0 11 5.1V5s0-1-1-1m0 2.5a3.5 3.5 0 1 1 0 7 3.5 3.5 0 1 1 0-7'/%3E%3Ccircle cx='10' cy='10' r='2'/%3E%3C/svg%3E")}.maplibregl-ctrl button.maplibregl-ctrl-geolocate.maplibregl-ctrl-geolocate-background .maplibregl-ctrl-icon{background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='29' height='29' fill='%2333b5e5' viewBox='0 0 20 20'%3E%3Cpath d='M10 4C9 4 9 5 9 5v.1A5 5 0 0 0 5.1 9H5s-1 0-1 1 1 1 1 1h.1A5 5 0 0 0 9 14.9v.1s0 1 1 1 1-1 1-1v-.1a5 5 0 0 0 3.9-3.9h.1s1 0 1-1-1-1-1-1h-.1A5 5 0 0 0 11 5.1V5s0-1-1-1m0 2.5a3.5 3.5 0 1 1 0 7 3.5 3.5 0 1 1 0-7'/%3E%3C/svg%3E")}.maplibregl-ctrl button.maplibregl-ctrl-geolocate.maplibregl-ctrl-geolocate-background-error .maplibregl-ctrl-icon{background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='29' height='29' fill='%23e54e33' viewBox='0 0 20 20'%3E%3Cpath d='M10 4C9 4 9 5 9 5v.1A5 5 0 0 0 5.1 9H5s-1 0-1 1 1 1 1 1h.1A5 5 0 0 0 9 14.9v.1s0 1 1 1 1-1 1-1v-.1a5 5 0 0 0 3.9-3.9h.1s1 0 1-1-1-1-1-1h-.1A5 5 0 0 0 11 5.1V5s0-1-1-1m0 2.5a3.5 3.5 0 1 1 0 7 3.5 3.5 0 1 1 0-7'/%3E%3C/svg%3E")}}@media (forced-colors:active) and (prefers-color-scheme:light){.maplibregl-ctrl button.maplibregl-ctrl-geolocate .maplibregl-ctrl-icon{background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='29' height='29' viewBox='0 0 20 20'%3E%3Cpath d='M10 4C9 4 9 5 9 5v.1A5 5 0 0 0 5.1 9H5s-1 0-1 1 1 1 1 1h.1A5 5 0 0 0 9 14.9v.1s0 1 1 1 1-1 1-1v-.1a5 5 0 0 0 3.9-3.9h.1s1 0 1-1-1-1-1-1h-.1A5 5 0 0 0 11 5.1V5s0-1-1-1m0 2.5a3.5 3.5 0 1 1 0 7 3.5 3.5 0 1 1 0-7'/%3E%3Ccircle cx='10' cy='10' r='2'/%3E%3C/svg%3E")}.maplibregl-ctrl button.maplibregl-ctrl-geolocate:disabled .maplibregl-ctrl-icon{background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='29' height='29' fill='%23666' viewBox='0 0 20 20'%3E%3Cpath d='M10 4C9 4 9 5 9 5v.1A5 5 0 0 0 5.1 9H5s-1 0-1 1 1 1 1 1h.1A5 5 0 0 0 9 14.9v.1s0 1 1 1 1-1 1-1v-.1a5 5 0 0 0 3.9-3.9h.1s1 0 1-1-1-1-1-1h-.1A5 5 0 0 0 11 5.1V5s0-1-1-1m0 2.5a3.5 3.5 0 1 1 0 7 3.5 3.5 0 1 1 0-7'/%3E%3Ccircle cx='10' cy='10' r='2'/%3E%3Cpath fill='red' d='m14 5 1 1-9 9-1-1z'/%3E%3C/svg%3E")}}@keyframes maplibregl-spin{0%{transform:rotate(0deg)}to{transform:rotate(1turn)}}a.maplibregl-ctrl-logo{background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='88' height='23' fill='none'%3E%3Cpath fill='%23000' fill-opacity='.4' fill-rule='evenodd' d='M17.408 16.796h-1.827l2.501-12.095h.198l3.324 6.533.988 2.19.988-2.19 3.258-6.533h.181l2.6 12.095h-1.81l-1.218-5.644-.362-1.71-.658 1.71-2.929 5.644h-.098l-2.914-5.644-.757-1.71-.345 1.71zm1.958-3.42-.726 3.663a1.255 1.255 0 0 1-1.232 1.011h-1.827a1.255 1.255 0 0 1-1.229-1.509l2.501-12.095a1.255 1.255 0 0 1 1.23-1.001h.197a1.25 1.25 0 0 1 1.12.685l3.19 6.273 3.125-6.263a1.25 1.25 0 0 1 1.123-.695h.181a1.255 1.255 0 0 1 1.227.991l1.443 6.71a5 5 0 0 1 .314-.787l.009-.016a4.6 4.6 0 0 1 1.777-1.887c.782-.46 1.668-.667 2.611-.667a4.6 4.6 0 0 1 1.7.32l.306.134c.21-.16.474-.256.759-.256h1.694a1.255 1.255 0 0 1 1.212.925 1.255 1.255 0 0 1 1.212-.925h1.711c.284 0 .545.094.755.252.613-.3 1.312-.45 2.075-.45 1.356 0 2.557.445 3.482 1.4q.47.48.763 1.064V4.701a1.255 1.255 0 0 1 1.255-1.255h1.86A1.255 1.255 0 0 1 54.44 4.7v9.194h2.217c.19 0 .37.043.532.118v-4.77c0-.356.147-.678.385-.906a2.42 2.42 0 0 1-.682-1.71c0-.665.267-1.253.735-1.7a2.45 2.45 0 0 1 1.722-.674 2.43 2.43 0 0 1 1.705.675q.318.302.504.683V4.7a1.255 1.255 0 0 1 1.255-1.255h1.744A1.255 1.255 0 0 1 65.812 4.7v3.335a4.8 4.8 0 0 1 1.526-.246c.938 0 1.817.214 2.59.69a4.47 4.47 0 0 1 1.67 1.743v-.98a1.255 1.255 0 0 1 1.256-1.256h1.777c.233 0 .451.064.639.174a3.4 3.4 0 0 1 1.567-.372c.346 0 .861.02 1.285.232a1.25 1.25 0 0 1 .689 1.004 4.7 4.7 0 0 1 .853-.588c.795-.44 1.675-.647 2.61-.647 1.385 0 2.65.39 3.525 1.396.836.938 1.168 2.173 1.168 3.528q-.001.515-.056 1.051a1.255 1.255 0 0 1-.947 1.09l.408.952a1.255 1.255 0 0 1-.477 1.552c-.418.268-.92.463-1.458.612-.613.171-1.304.244-2.049.244-1.06 0-2.043-.207-2.886-.698l-.015-.008c-.798-.48-1.419-1.135-1.818-1.963l-.004-.008a5.8 5.8 0 0 1-.548-2.512q0-.429.053-.843a1.3 1.3 0 0 1-.333-.086l-.166-.004c-.223 0-.426.062-.643.228-.03.024-.142.139-.142.59v3.883a1.255 1.255 0 0 1-1.256 1.256h-1.777a1.255 1.255 0 0 1-1.256-1.256V15.69l-.032.057a4.8 4.8 0 0 1-1.86 1.833 5.04 5.04 0 0 1-2.484.634 4.5 4.5 0 0 1-1.935-.424 1.25 1.25 0 0 1-.764.258h-1.71a1.255 1.255 0 0 1-1.256-1.255V7.687a2.4 2.4 0 0 1-.428.625c.253.23.412.561.412.93v7.553a1.255 1.255 0 0 1-1.256 1.255h-1.843a1.25 1.25 0 0 1-.894-.373c-.228.23-.544.373-.894.373H51.32a1.255 1.255 0 0 1-1.256-1.255v-1.251l-.061.117a4.7 4.7 0 0 1-1.782 1.884 4.77 4.77 0 0 1-2.485.67 5.6 5.6 0 0 1-1.485-.188l.009 2.764a1.255 1.255 0 0 1-1.255 1.259h-1.729a1.255 1.255 0 0 1-1.255-1.255v-3.537a1.255 1.255 0 0 1-1.167.793h-1.679a1.25 1.25 0 0 1-.77-.263 4.5 4.5 0 0 1-1.945.429c-.885 0-1.724-.21-2.495-.632l-.017-.01a5 5 0 0 1-1.081-.836 1.255 1.255 0 0 1-1.254 1.312h-1.81a1.255 1.255 0 0 1-1.228-.99l-.782-3.625-2.044 3.939a1.25 1.25 0 0 1-1.115.676h-.098a1.25 1.25 0 0 1-1.116-.68l-2.061-3.994zM35.92 16.63l.207-.114.223-.15q.493-.356.735-.785l.061-.118.033 1.332h1.678V9.242h-1.694l-.033 1.267q-.133-.329-.526-.658l-.032-.028a3.2 3.2 0 0 0-.668-.428l-.27-.12a3.3 3.3 0 0 0-1.235-.23q-1.136-.001-1.974.493a3.36 3.36 0 0 0-1.3 1.382q-.445.89-.444 2.074 0 1.2.51 2.107a3.8 3.8 0 0 0 1.382 1.381 3.9 3.9 0 0 0 1.893.477q.795 0 1.455-.33zm-2.789-5.38q-.576.675-.575 1.762 0 1.102.559 1.794.576.675 1.645.675a2.25 2.25 0 0 0 .934-.19 2.2 2.2 0 0 0 .468-.29l.178-.161a2.2 2.2 0 0 0 .397-.561q.244-.5.244-1.15v-.115q0-.708-.296-1.267l-.043-.077a2.2 2.2 0 0 0-.633-.709l-.13-.086-.047-.028a2.1 2.1 0 0 0-1.073-.285q-1.052 0-1.629.692zm2.316 2.706c.163-.17.28-.407.28-.83v-.114c0-.292-.06-.508-.15-.68a.96.96 0 0 0-.353-.389.85.85 0 0 0-.464-.127c-.4 0-.56.114-.664.239l-.01.012c-.148.174-.275.45-.275.945 0 .506.122.801.27.99.097.11.266.224.68.224.303 0 .504-.09.687-.269zm7.545 1.705a2.6 2.6 0 0 0 .331.423q.319.33.755.548l.173.074q.65.255 1.49.255 1.02 0 1.844-.493a3.45 3.45 0 0 0 1.316-1.4q.493-.904.493-2.089 0-1.909-.988-2.913-.988-1.02-2.584-1.02-.898 0-1.575.347a3 3 0 0 0-.415.262l-.199.166a3.4 3.4 0 0 0-.64.82V9.242h-1.712v11.553h1.729l-.017-5.134zm.53-1.138q.206.29.48.5l.155.11.053.034q.51.296 1.119.297 1.07 0 1.645-.675.577-.69.576-1.762 0-1.119-.576-1.777-.558-.675-1.645-.675-.435 0-.835.16a2 2 0 0 0-.284.136 2 2 0 0 0-.363.254 2.2 2.2 0 0 0-.46.569l-.082.162a2.6 2.6 0 0 0-.213 1.072v.115q0 .707.296 1.267l.135.211zm.964-.818a1.1 1.1 0 0 0 .367.385.94.94 0 0 0 .476.118c.423 0 .59-.117.687-.23.159-.194.28-.478.28-.95 0-.53-.133-.8-.266-.952l-.021-.025c-.078-.094-.231-.221-.68-.221a1 1 0 0 0-.503.135l-.012.007a.86.86 0 0 0-.335.343c-.073.133-.132.324-.132.614v.115a1.4 1.4 0 0 0 .14.66zm15.7-6.222q.347-.346.346-.856a1.05 1.05 0 0 0-.345-.79 1.18 1.18 0 0 0-.84-.329q-.51 0-.855.33a1.05 1.05 0 0 0-.346.79q0 .51.346.855.345.346.856.346.51 0 .839-.346zm4.337 9.314.033-1.332q.191.403.59.747l.098.081a4 4 0 0 0 .316.224l.223.122a3.2 3.2 0 0 0 1.44.322 3.8 3.8 0 0 0 1.875-.477 3.5 3.5 0 0 0 1.382-1.366q.527-.89.526-2.09 0-1.184-.444-2.073a3.24 3.24 0 0 0-1.283-1.399q-.823-.51-1.942-.51a3.5 3.5 0 0 0-1.527.344l-.086.043-.165.09a3 3 0 0 0-.33.214q-.432.315-.656.707a2 2 0 0 0-.099.198l.082-1.283V4.701h-1.744v12.095zm.473-2.509a2.5 2.5 0 0 0 .566.7q.117.098.245.18l.144.08a2.1 2.1 0 0 0 .975.232q1.07 0 1.645-.675.576-.69.576-1.778 0-1.102-.576-1.777-.56-.691-1.645-.692a2.2 2.2 0 0 0-1.015.235q-.22.113-.415.282l-.15.142a2.1 2.1 0 0 0-.42.594q-.223.479-.223 1.1v.115q0 .705.293 1.26zm2.616-.293c.157-.191.28-.479.28-.967 0-.51-.13-.79-.276-.961l-.021-.026c-.082-.1-.232-.225-.67-.225a.87.87 0 0 0-.681.279l-.012.011c-.154.155-.274.38-.274.807v.115c0 .285.057.499.144.669a1.1 1.1 0 0 0 .367.405c.137.082.28.123.455.123.423 0 .59-.118.686-.23zm8.266-3.013q.345-.13.724-.14l.069-.002q.493 0 .642.099l.247-1.794q-.196-.099-.717-.099a2.3 2.3 0 0 0-.545.063 2 2 0 0 0-.411.148 2.2 2.2 0 0 0-.4.249 2.5 2.5 0 0 0-.485.499 2.7 2.7 0 0 0-.32.581l-.05.137v-1.48h-1.778v7.553h1.777v-3.884q0-.546.159-.943a1.5 1.5 0 0 1 .466-.636 2.5 2.5 0 0 1 .399-.253 2 2 0 0 1 .224-.099zm9.784 2.656.05-.922q0-1.743-.856-2.698-.838-.97-2.584-.97-1.119-.001-2.007.493a3.46 3.46 0 0 0-1.4 1.382q-.493.906-.493 2.106 0 1.07.428 1.975.428.89 1.332 1.432.906.526 2.255.526.973 0 1.668-.185l.044-.012.135-.04q.613-.184.984-.421l-.542-1.267q-.3.162-.642.274l-.297.087q-.51.131-1.3.131-.954 0-1.497-.444a1.6 1.6 0 0 1-.192-.193q-.366-.44-.512-1.234l-.004-.021zm-5.427-1.256-.003.022h3.752v-.138q-.011-.727-.288-1.118a1 1 0 0 0-.156-.176q-.46-.428-1.316-.428-.986 0-1.494.604-.379.45-.494 1.234zm-27.053 2.77V4.7h-1.86v12.095h5.333V15.15zm7.103-5.908v7.553h-1.843V9.242h1.843z'/%3E%3Cpath fill='%23fff' d='m19.63 11.151-.757-1.71-.345 1.71-1.12 5.644h-1.827L18.083 4.7h.197l3.325 6.533.988 2.19.988-2.19L26.839 4.7h.181l2.6 12.095h-1.81l-1.218-5.644-.362-1.71-.658 1.71-2.93 5.644h-.098l-2.913-5.644zm14.836 5.81q-1.02 0-1.893-.478a3.8 3.8 0 0 1-1.381-1.382q-.51-.906-.51-2.106 0-1.185.444-2.074a3.36 3.36 0 0 1 1.3-1.382q.839-.494 1.974-.494a3.3 3.3 0 0 1 1.234.231 3.3 3.3 0 0 1 .97.575q.396.33.527.659l.033-1.267h1.694v7.553H37.18l-.033-1.332q-.279.593-1.02 1.053a3.17 3.17 0 0 1-1.662.444zm.296-1.482q.938 0 1.58-.642.642-.66.642-1.711v-.115q0-.708-.296-1.267a2.2 2.2 0 0 0-.807-.872 2.1 2.1 0 0 0-1.119-.313q-1.053 0-1.629.692-.575.675-.575 1.76 0 1.103.559 1.795.577.675 1.645.675zm6.521-6.237h1.711v1.4q.906-1.597 2.83-1.597 1.596 0 2.584 1.02.988 1.005.988 2.914 0 1.185-.493 2.09a3.46 3.46 0 0 1-1.316 1.399 3.5 3.5 0 0 1-1.844.493q-.954 0-1.662-.329a2.67 2.67 0 0 1-1.086-.97l.017 5.134h-1.728zm4.048 6.22q1.07 0 1.645-.674.577-.69.576-1.762 0-1.119-.576-1.777-.558-.675-1.645-.675-.592 0-1.12.296-.51.28-.822.823-.296.527-.296 1.234v.115q0 .708.296 1.267.313.543.823.855.51.296 1.119.297z'/%3E%3Cpath fill='%23e1e3e9' d='M51.325 4.7h1.86v10.45h3.473v1.646h-5.333zm7.12 4.542h1.843v7.553h-1.843zm.905-1.415a1.16 1.16 0 0 1-.856-.346 1.17 1.17 0 0 1-.346-.856 1.05 1.05 0 0 1 .346-.79q.346-.329.856-.329.494 0 .839.33a1.05 1.05 0 0 1 .345.79 1.16 1.16 0 0 1-.345.855q-.33.346-.84.346zm7.875 9.133a3.17 3.17 0 0 1-1.662-.444q-.723-.46-1.004-1.053l-.033 1.332h-1.71V4.701h1.743v4.657l-.082 1.283q.279-.658 1.086-1.119a3.5 3.5 0 0 1 1.778-.477q1.119 0 1.942.51a3.24 3.24 0 0 1 1.283 1.4q.445.888.444 2.072 0 1.201-.526 2.09a3.5 3.5 0 0 1-1.382 1.366 3.8 3.8 0 0 1-1.876.477zm-.296-1.481q1.069 0 1.645-.675.577-.69.577-1.778 0-1.102-.577-1.776-.56-.691-1.645-.692a2.12 2.12 0 0 0-1.58.659q-.642.641-.642 1.694v.115q0 .71.296 1.267a2.4 2.4 0 0 0 .807.872 2.1 2.1 0 0 0 1.119.313zm5.927-6.237h1.777v1.481q.263-.757.856-1.217a2.14 2.14 0 0 1 1.349-.46q.527 0 .724.098l-.247 1.794q-.149-.099-.642-.099-.774 0-1.416.494-.626.493-.626 1.58v3.883h-1.777V9.242zm9.534 7.718q-1.35 0-2.255-.526-.904-.543-1.332-1.432a4.6 4.6 0 0 1-.428-1.975q0-1.2.493-2.106a3.46 3.46 0 0 1 1.4-1.382q.889-.495 2.007-.494 1.744 0 2.584.97.855.956.856 2.7 0 .444-.05.92h-5.43q.18 1.005.708 1.45.542.443 1.497.443.79 0 1.3-.131a4 4 0 0 0 .938-.362l.542 1.267q-.411.263-1.119.46-.708.198-1.711.197zm1.596-4.558q.016-1.02-.444-1.432-.46-.428-1.316-.428-1.728 0-1.991 1.86z'/%3E%3Cpath d='M5.074 15.948a.484.657 0 0 0-.486.659v1.84a.484.657 0 0 0 .486.659h4.101a.484.657 0 0 0 .486-.659v-1.84a.484.657 0 0 0-.486-.659zm3.56 1.16H5.617v.838h3.017z' style='fill:%23fff;fill-rule:evenodd;stroke-width:1.03600001'/%3E%3Cg style='stroke-width:1.12603545'%3E%3Cpath d='M-9.408-1.416c-3.833-.025-7.056 2.912-7.08 6.615-.02 3.08 1.653 4.832 3.107 6.268.903.892 1.721 1.74 2.32 2.902l-.525-.004c-.543-.003-.992.304-1.24.639a1.87 1.87 0 0 0-.362 1.121l-.011 1.877c-.003.402.104.787.347 1.125.244.338.688.653 1.23.656l4.142.028c.542.003.99-.306 1.238-.641a1.87 1.87 0 0 0 .363-1.121l.012-1.875a1.87 1.87 0 0 0-.348-1.127c-.243-.338-.688-.653-1.23-.656l-.518-.004c.597-1.145 1.425-1.983 2.348-2.87 1.473-1.414 3.18-3.149 3.2-6.226-.016-3.59-2.923-6.684-6.993-6.707m-.006 1.1v.002c3.274.02 5.92 2.532 5.9 5.6-.017 2.706-1.39 4.026-2.863 5.44-1.034.994-2.118 2.033-2.814 3.633-.018.041-.052.055-.075.065q-.013.004-.02.01a.34.34 0 0 1-.226.084.34.34 0 0 1-.224-.086l-.092-.077c-.699-1.615-1.768-2.669-2.781-3.67-1.454-1.435-2.797-2.762-2.78-5.478.02-3.067 2.7-5.545 5.975-5.523m-.02 2.826c-1.62-.01-2.944 1.315-2.955 2.96-.01 1.646 1.295 2.988 2.916 2.999h.002c1.621.01 2.943-1.316 2.953-2.961.011-1.646-1.294-2.988-2.916-2.998m-.005 1.1c1.017.006 1.829.83 1.822 1.89s-.83 1.874-1.848 1.867c-1.018-.006-1.829-.83-1.822-1.89s.83-1.874 1.848-1.868m-2.155 11.857 4.14.025c.271.002.49.305.487.676l-.013 1.875c-.003.37-.224.67-.495.668l-4.14-.025c-.27-.002-.487-.306-.485-.676l.012-1.875c.003-.37.224-.67.494-.668' style='color:%23000;font-style:normal;font-variant:normal;font-weight:400;font-stretch:normal;font-size:medium;line-height:normal;font-family:sans-serif;font-variant-ligatures:normal;font-variant-position:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-alternates:normal;font-feature-settings:normal;text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:%23000;letter-spacing:normal;word-spacing:normal;text-transform:none;writing-mode:lr-tb;direction:ltr;text-orientation:mixed;dominant-baseline:auto;baseline-shift:baseline;text-anchor:start;white-space:normal;shape-padding:0;clip-rule:evenodd;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:%23000;solid-opacity:1;vector-effect:none;fill:%23000;fill-opacity:.4;fill-rule:evenodd;stroke:none;stroke-width:2.47727823;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto' transform='translate(15.553 2.85)scale(.88807)'/%3E%3Cpath d='M-9.415-.316C-12.69-.338-15.37 2.14-15.39 5.207c-.017 2.716 1.326 4.041 2.78 5.477 1.013 1 2.081 2.055 2.78 3.67l.092.076a.34.34 0 0 0 .225.086.34.34 0 0 0 .227-.083l.019-.01c.022-.009.057-.024.074-.064.697-1.6 1.78-2.64 2.814-3.634 1.473-1.414 2.847-2.733 2.864-5.44.02-3.067-2.627-5.58-5.901-5.601m-.057 8.784c1.621.011 2.944-1.315 2.955-2.96.01-1.646-1.295-2.988-2.916-2.999-1.622-.01-2.945 1.315-2.955 2.96s1.295 2.989 2.916 3' style='clip-rule:evenodd;fill:%23e1e3e9;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:2.47727823;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:.4' transform='translate(15.553 2.85)scale(.88807)'/%3E%3Cpath d='M-11.594 15.465c-.27-.002-.492.297-.494.668l-.012 1.876c-.003.371.214.673.485.675l4.14.027c.271.002.492-.298.495-.668l.012-1.877c.003-.37-.215-.672-.485-.674z' style='clip-rule:evenodd;fill:%23fff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:2.47727823;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:.4' transform='translate(15.553 2.85)scale(.88807)'/%3E%3C/g%3E%3C/svg%3E");background-repeat:no-repeat;cursor:pointer;display:block;height:23px;margin:0 0 -4px -4px;overflow:hidden;width:88px}a.maplibregl-ctrl-logo.maplibregl-compact{width:14px}@media (forced-colors:active){a.maplibregl-ctrl-logo{background-color:transparent;background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='88' height='23' fill='none'%3E%3Cpath fill='%23000' fill-opacity='.4' fill-rule='evenodd' d='M17.408 16.796h-1.827l2.501-12.095h.198l3.324 6.533.988 2.19.988-2.19 3.258-6.533h.181l2.6 12.095h-1.81l-1.218-5.644-.362-1.71-.658 1.71-2.929 5.644h-.098l-2.914-5.644-.757-1.71-.345 1.71zm1.958-3.42-.726 3.663a1.255 1.255 0 0 1-1.232 1.011h-1.827a1.255 1.255 0 0 1-1.229-1.509l2.501-12.095a1.255 1.255 0 0 1 1.23-1.001h.197a1.25 1.25 0 0 1 1.12.685l3.19 6.273 3.125-6.263a1.25 1.25 0 0 1 1.123-.695h.181a1.255 1.255 0 0 1 1.227.991l1.443 6.71a5 5 0 0 1 .314-.787l.009-.016a4.6 4.6 0 0 1 1.777-1.887c.782-.46 1.668-.667 2.611-.667a4.6 4.6 0 0 1 1.7.32l.306.134c.21-.16.474-.256.759-.256h1.694a1.255 1.255 0 0 1 1.212.925 1.255 1.255 0 0 1 1.212-.925h1.711c.284 0 .545.094.755.252.613-.3 1.312-.45 2.075-.45 1.356 0 2.557.445 3.482 1.4q.47.48.763 1.064V4.701a1.255 1.255 0 0 1 1.255-1.255h1.86A1.255 1.255 0 0 1 54.44 4.7v9.194h2.217c.19 0 .37.043.532.118v-4.77c0-.356.147-.678.385-.906a2.42 2.42 0 0 1-.682-1.71c0-.665.267-1.253.735-1.7a2.45 2.45 0 0 1 1.722-.674 2.43 2.43 0 0 1 1.705.675q.318.302.504.683V4.7a1.255 1.255 0 0 1 1.255-1.255h1.744A1.255 1.255 0 0 1 65.812 4.7v3.335a4.8 4.8 0 0 1 1.526-.246c.938 0 1.817.214 2.59.69a4.47 4.47 0 0 1 1.67 1.743v-.98a1.255 1.255 0 0 1 1.256-1.256h1.777c.233 0 .451.064.639.174a3.4 3.4 0 0 1 1.567-.372c.346 0 .861.02 1.285.232a1.25 1.25 0 0 1 .689 1.004 4.7 4.7 0 0 1 .853-.588c.795-.44 1.675-.647 2.61-.647 1.385 0 2.65.39 3.525 1.396.836.938 1.168 2.173 1.168 3.528q-.001.515-.056 1.051a1.255 1.255 0 0 1-.947 1.09l.408.952a1.255 1.255 0 0 1-.477 1.552c-.418.268-.92.463-1.458.612-.613.171-1.304.244-2.049.244-1.06 0-2.043-.207-2.886-.698l-.015-.008c-.798-.48-1.419-1.135-1.818-1.963l-.004-.008a5.8 5.8 0 0 1-.548-2.512q0-.429.053-.843a1.3 1.3 0 0 1-.333-.086l-.166-.004c-.223 0-.426.062-.643.228-.03.024-.142.139-.142.59v3.883a1.255 1.255 0 0 1-1.256 1.256h-1.777a1.255 1.255 0 0 1-1.256-1.256V15.69l-.032.057a4.8 4.8 0 0 1-1.86 1.833 5.04 5.04 0 0 1-2.484.634 4.5 4.5 0 0 1-1.935-.424 1.25 1.25 0 0 1-.764.258h-1.71a1.255 1.255 0 0 1-1.256-1.255V7.687a2.4 2.4 0 0 1-.428.625c.253.23.412.561.412.93v7.553a1.255 1.255 0 0 1-1.256 1.255h-1.843a1.25 1.25 0 0 1-.894-.373c-.228.23-.544.373-.894.373H51.32a1.255 1.255 0 0 1-1.256-1.255v-1.251l-.061.117a4.7 4.7 0 0 1-1.782 1.884 4.77 4.77 0 0 1-2.485.67 5.6 5.6 0 0 1-1.485-.188l.009 2.764a1.255 1.255 0 0 1-1.255 1.259h-1.729a1.255 1.255 0 0 1-1.255-1.255v-3.537a1.255 1.255 0 0 1-1.167.793h-1.679a1.25 1.25 0 0 1-.77-.263 4.5 4.5 0 0 1-1.945.429c-.885 0-1.724-.21-2.495-.632l-.017-.01a5 5 0 0 1-1.081-.836 1.255 1.255 0 0 1-1.254 1.312h-1.81a1.255 1.255 0 0 1-1.228-.99l-.782-3.625-2.044 3.939a1.25 1.25 0 0 1-1.115.676h-.098a1.25 1.25 0 0 1-1.116-.68l-2.061-3.994zM35.92 16.63l.207-.114.223-.15q.493-.356.735-.785l.061-.118.033 1.332h1.678V9.242h-1.694l-.033 1.267q-.133-.329-.526-.658l-.032-.028a3.2 3.2 0 0 0-.668-.428l-.27-.12a3.3 3.3 0 0 0-1.235-.23q-1.136-.001-1.974.493a3.36 3.36 0 0 0-1.3 1.382q-.445.89-.444 2.074 0 1.2.51 2.107a3.8 3.8 0 0 0 1.382 1.381 3.9 3.9 0 0 0 1.893.477q.795 0 1.455-.33zm-2.789-5.38q-.576.675-.575 1.762 0 1.102.559 1.794.576.675 1.645.675a2.25 2.25 0 0 0 .934-.19 2.2 2.2 0 0 0 .468-.29l.178-.161a2.2 2.2 0 0 0 .397-.561q.244-.5.244-1.15v-.115q0-.708-.296-1.267l-.043-.077a2.2 2.2 0 0 0-.633-.709l-.13-.086-.047-.028a2.1 2.1 0 0 0-1.073-.285q-1.052 0-1.629.692zm2.316 2.706c.163-.17.28-.407.28-.83v-.114c0-.292-.06-.508-.15-.68a.96.96 0 0 0-.353-.389.85.85 0 0 0-.464-.127c-.4 0-.56.114-.664.239l-.01.012c-.148.174-.275.45-.275.945 0 .506.122.801.27.99.097.11.266.224.68.224.303 0 .504-.09.687-.269zm7.545 1.705a2.6 2.6 0 0 0 .331.423q.319.33.755.548l.173.074q.65.255 1.49.255 1.02 0 1.844-.493a3.45 3.45 0 0 0 1.316-1.4q.493-.904.493-2.089 0-1.909-.988-2.913-.988-1.02-2.584-1.02-.898 0-1.575.347a3 3 0 0 0-.415.262l-.199.166a3.4 3.4 0 0 0-.64.82V9.242h-1.712v11.553h1.729l-.017-5.134zm.53-1.138q.206.29.48.5l.155.11.053.034q.51.296 1.119.297 1.07 0 1.645-.675.577-.69.576-1.762 0-1.119-.576-1.777-.558-.675-1.645-.675-.435 0-.835.16a2 2 0 0 0-.284.136 2 2 0 0 0-.363.254 2.2 2.2 0 0 0-.46.569l-.082.162a2.6 2.6 0 0 0-.213 1.072v.115q0 .707.296 1.267l.135.211zm.964-.818a1.1 1.1 0 0 0 .367.385.94.94 0 0 0 .476.118c.423 0 .59-.117.687-.23.159-.194.28-.478.28-.95 0-.53-.133-.8-.266-.952l-.021-.025c-.078-.094-.231-.221-.68-.221a1 1 0 0 0-.503.135l-.012.007a.86.86 0 0 0-.335.343c-.073.133-.132.324-.132.614v.115a1.4 1.4 0 0 0 .14.66zm15.7-6.222q.347-.346.346-.856a1.05 1.05 0 0 0-.345-.79 1.18 1.18 0 0 0-.84-.329q-.51 0-.855.33a1.05 1.05 0 0 0-.346.79q0 .51.346.855.345.346.856.346.51 0 .839-.346zm4.337 9.314.033-1.332q.191.403.59.747l.098.081a4 4 0 0 0 .316.224l.223.122a3.2 3.2 0 0 0 1.44.322 3.8 3.8 0 0 0 1.875-.477 3.5 3.5 0 0 0 1.382-1.366q.527-.89.526-2.09 0-1.184-.444-2.073a3.24 3.24 0 0 0-1.283-1.399q-.823-.51-1.942-.51a3.5 3.5 0 0 0-1.527.344l-.086.043-.165.09a3 3 0 0 0-.33.214q-.432.315-.656.707a2 2 0 0 0-.099.198l.082-1.283V4.701h-1.744v12.095zm.473-2.509a2.5 2.5 0 0 0 .566.7q.117.098.245.18l.144.08a2.1 2.1 0 0 0 .975.232q1.07 0 1.645-.675.576-.69.576-1.778 0-1.102-.576-1.777-.56-.691-1.645-.692a2.2 2.2 0 0 0-1.015.235q-.22.113-.415.282l-.15.142a2.1 2.1 0 0 0-.42.594q-.223.479-.223 1.1v.115q0 .705.293 1.26zm2.616-.293c.157-.191.28-.479.28-.967 0-.51-.13-.79-.276-.961l-.021-.026c-.082-.1-.232-.225-.67-.225a.87.87 0 0 0-.681.279l-.012.011c-.154.155-.274.38-.274.807v.115c0 .285.057.499.144.669a1.1 1.1 0 0 0 .367.405c.137.082.28.123.455.123.423 0 .59-.118.686-.23zm8.266-3.013q.345-.13.724-.14l.069-.002q.493 0 .642.099l.247-1.794q-.196-.099-.717-.099a2.3 2.3 0 0 0-.545.063 2 2 0 0 0-.411.148 2.2 2.2 0 0 0-.4.249 2.5 2.5 0 0 0-.485.499 2.7 2.7 0 0 0-.32.581l-.05.137v-1.48h-1.778v7.553h1.777v-3.884q0-.546.159-.943a1.5 1.5 0 0 1 .466-.636 2.5 2.5 0 0 1 .399-.253 2 2 0 0 1 .224-.099zm9.784 2.656.05-.922q0-1.743-.856-2.698-.838-.97-2.584-.97-1.119-.001-2.007.493a3.46 3.46 0 0 0-1.4 1.382q-.493.906-.493 2.106 0 1.07.428 1.975.428.89 1.332 1.432.906.526 2.255.526.973 0 1.668-.185l.044-.012.135-.04q.613-.184.984-.421l-.542-1.267q-.3.162-.642.274l-.297.087q-.51.131-1.3.131-.954 0-1.497-.444a1.6 1.6 0 0 1-.192-.193q-.366-.44-.512-1.234l-.004-.021zm-5.427-1.256-.003.022h3.752v-.138q-.011-.727-.288-1.118a1 1 0 0 0-.156-.176q-.46-.428-1.316-.428-.986 0-1.494.604-.379.45-.494 1.234zm-27.053 2.77V4.7h-1.86v12.095h5.333V15.15zm7.103-5.908v7.553h-1.843V9.242h1.843z'/%3E%3Cpath fill='%23fff' d='m19.63 11.151-.757-1.71-.345 1.71-1.12 5.644h-1.827L18.083 4.7h.197l3.325 6.533.988 2.19.988-2.19L26.839 4.7h.181l2.6 12.095h-1.81l-1.218-5.644-.362-1.71-.658 1.71-2.93 5.644h-.098l-2.913-5.644zm14.836 5.81q-1.02 0-1.893-.478a3.8 3.8 0 0 1-1.381-1.382q-.51-.906-.51-2.106 0-1.185.444-2.074a3.36 3.36 0 0 1 1.3-1.382q.839-.494 1.974-.494a3.3 3.3 0 0 1 1.234.231 3.3 3.3 0 0 1 .97.575q.396.33.527.659l.033-1.267h1.694v7.553H37.18l-.033-1.332q-.279.593-1.02 1.053a3.17 3.17 0 0 1-1.662.444zm.296-1.482q.938 0 1.58-.642.642-.66.642-1.711v-.115q0-.708-.296-1.267a2.2 2.2 0 0 0-.807-.872 2.1 2.1 0 0 0-1.119-.313q-1.053 0-1.629.692-.575.675-.575 1.76 0 1.103.559 1.795.577.675 1.645.675zm6.521-6.237h1.711v1.4q.906-1.597 2.83-1.597 1.596 0 2.584 1.02.988 1.005.988 2.914 0 1.185-.493 2.09a3.46 3.46 0 0 1-1.316 1.399 3.5 3.5 0 0 1-1.844.493q-.954 0-1.662-.329a2.67 2.67 0 0 1-1.086-.97l.017 5.134h-1.728zm4.048 6.22q1.07 0 1.645-.674.577-.69.576-1.762 0-1.119-.576-1.777-.558-.675-1.645-.675-.592 0-1.12.296-.51.28-.822.823-.296.527-.296 1.234v.115q0 .708.296 1.267.313.543.823.855.51.296 1.119.297z'/%3E%3Cpath fill='%23e1e3e9' d='M51.325 4.7h1.86v10.45h3.473v1.646h-5.333zm7.12 4.542h1.843v7.553h-1.843zm.905-1.415a1.16 1.16 0 0 1-.856-.346 1.17 1.17 0 0 1-.346-.856 1.05 1.05 0 0 1 .346-.79q.346-.329.856-.329.494 0 .839.33a1.05 1.05 0 0 1 .345.79 1.16 1.16 0 0 1-.345.855q-.33.346-.84.346zm7.875 9.133a3.17 3.17 0 0 1-1.662-.444q-.723-.46-1.004-1.053l-.033 1.332h-1.71V4.701h1.743v4.657l-.082 1.283q.279-.658 1.086-1.119a3.5 3.5 0 0 1 1.778-.477q1.119 0 1.942.51a3.24 3.24 0 0 1 1.283 1.4q.445.888.444 2.072 0 1.201-.526 2.09a3.5 3.5 0 0 1-1.382 1.366 3.8 3.8 0 0 1-1.876.477zm-.296-1.481q1.069 0 1.645-.675.577-.69.577-1.778 0-1.102-.577-1.776-.56-.691-1.645-.692a2.12 2.12 0 0 0-1.58.659q-.642.641-.642 1.694v.115q0 .71.296 1.267a2.4 2.4 0 0 0 .807.872 2.1 2.1 0 0 0 1.119.313zm5.927-6.237h1.777v1.481q.263-.757.856-1.217a2.14 2.14 0 0 1 1.349-.46q.527 0 .724.098l-.247 1.794q-.149-.099-.642-.099-.774 0-1.416.494-.626.493-.626 1.58v3.883h-1.777V9.242zm9.534 7.718q-1.35 0-2.255-.526-.904-.543-1.332-1.432a4.6 4.6 0 0 1-.428-1.975q0-1.2.493-2.106a3.46 3.46 0 0 1 1.4-1.382q.889-.495 2.007-.494 1.744 0 2.584.97.855.956.856 2.7 0 .444-.05.92h-5.43q.18 1.005.708 1.45.542.443 1.497.443.79 0 1.3-.131a4 4 0 0 0 .938-.362l.542 1.267q-.411.263-1.119.46-.708.198-1.711.197zm1.596-4.558q.016-1.02-.444-1.432-.46-.428-1.316-.428-1.728 0-1.991 1.86z'/%3E%3Cpath d='M5.074 15.948a.484.657 0 0 0-.486.659v1.84a.484.657 0 0 0 .486.659h4.101a.484.657 0 0 0 .486-.659v-1.84a.484.657 0 0 0-.486-.659zm3.56 1.16H5.617v.838h3.017z' style='fill:%23fff;fill-rule:evenodd;stroke-width:1.03600001'/%3E%3Cg style='stroke-width:1.12603545'%3E%3Cpath d='M-9.408-1.416c-3.833-.025-7.056 2.912-7.08 6.615-.02 3.08 1.653 4.832 3.107 6.268.903.892 1.721 1.74 2.32 2.902l-.525-.004c-.543-.003-.992.304-1.24.639a1.87 1.87 0 0 0-.362 1.121l-.011 1.877c-.003.402.104.787.347 1.125.244.338.688.653 1.23.656l4.142.028c.542.003.99-.306 1.238-.641a1.87 1.87 0 0 0 .363-1.121l.012-1.875a1.87 1.87 0 0 0-.348-1.127c-.243-.338-.688-.653-1.23-.656l-.518-.004c.597-1.145 1.425-1.983 2.348-2.87 1.473-1.414 3.18-3.149 3.2-6.226-.016-3.59-2.923-6.684-6.993-6.707m-.006 1.1v.002c3.274.02 5.92 2.532 5.9 5.6-.017 2.706-1.39 4.026-2.863 5.44-1.034.994-2.118 2.033-2.814 3.633-.018.041-.052.055-.075.065q-.013.004-.02.01a.34.34 0 0 1-.226.084.34.34 0 0 1-.224-.086l-.092-.077c-.699-1.615-1.768-2.669-2.781-3.67-1.454-1.435-2.797-2.762-2.78-5.478.02-3.067 2.7-5.545 5.975-5.523m-.02 2.826c-1.62-.01-2.944 1.315-2.955 2.96-.01 1.646 1.295 2.988 2.916 2.999h.002c1.621.01 2.943-1.316 2.953-2.961.011-1.646-1.294-2.988-2.916-2.998m-.005 1.1c1.017.006 1.829.83 1.822 1.89s-.83 1.874-1.848 1.867c-1.018-.006-1.829-.83-1.822-1.89s.83-1.874 1.848-1.868m-2.155 11.857 4.14.025c.271.002.49.305.487.676l-.013 1.875c-.003.37-.224.67-.495.668l-4.14-.025c-.27-.002-.487-.306-.485-.676l.012-1.875c.003-.37.224-.67.494-.668' style='color:%23000;font-style:normal;font-variant:normal;font-weight:400;font-stretch:normal;font-size:medium;line-height:normal;font-family:sans-serif;font-variant-ligatures:normal;font-variant-position:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-alternates:normal;font-feature-settings:normal;text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:%23000;letter-spacing:normal;word-spacing:normal;text-transform:none;writing-mode:lr-tb;direction:ltr;text-orientation:mixed;dominant-baseline:auto;baseline-shift:baseline;text-anchor:start;white-space:normal;shape-padding:0;clip-rule:evenodd;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:%23000;solid-opacity:1;vector-effect:none;fill:%23000;fill-opacity:.4;fill-rule:evenodd;stroke:none;stroke-width:2.47727823;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto' transform='translate(15.553 2.85)scale(.88807)'/%3E%3Cpath d='M-9.415-.316C-12.69-.338-15.37 2.14-15.39 5.207c-.017 2.716 1.326 4.041 2.78 5.477 1.013 1 2.081 2.055 2.78 3.67l.092.076a.34.34 0 0 0 .225.086.34.34 0 0 0 .227-.083l.019-.01c.022-.009.057-.024.074-.064.697-1.6 1.78-2.64 2.814-3.634 1.473-1.414 2.847-2.733 2.864-5.44.02-3.067-2.627-5.58-5.901-5.601m-.057 8.784c1.621.011 2.944-1.315 2.955-2.96.01-1.646-1.295-2.988-2.916-2.999-1.622-.01-2.945 1.315-2.955 2.96s1.295 2.989 2.916 3' style='clip-rule:evenodd;fill:%23e1e3e9;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:2.47727823;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:.4' transform='translate(15.553 2.85)scale(.88807)'/%3E%3Cpath d='M-11.594 15.465c-.27-.002-.492.297-.494.668l-.012 1.876c-.003.371.214.673.485.675l4.14.027c.271.002.492-.298.495-.668l.012-1.877c.003-.37-.215-.672-.485-.674z' style='clip-rule:evenodd;fill:%23fff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:2.47727823;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:.4' transform='translate(15.553 2.85)scale(.88807)'/%3E%3C/g%3E%3C/svg%3E")}}@media (forced-colors:active) and (prefers-color-scheme:light){a.maplibregl-ctrl-logo{background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='88' height='23' fill='none'%3E%3Cpath fill='%23000' fill-opacity='.4' fill-rule='evenodd' d='M17.408 16.796h-1.827l2.501-12.095h.198l3.324 6.533.988 2.19.988-2.19 3.258-6.533h.181l2.6 12.095h-1.81l-1.218-5.644-.362-1.71-.658 1.71-2.929 5.644h-.098l-2.914-5.644-.757-1.71-.345 1.71zm1.958-3.42-.726 3.663a1.255 1.255 0 0 1-1.232 1.011h-1.827a1.255 1.255 0 0 1-1.229-1.509l2.501-12.095a1.255 1.255 0 0 1 1.23-1.001h.197a1.25 1.25 0 0 1 1.12.685l3.19 6.273 3.125-6.263a1.25 1.25 0 0 1 1.123-.695h.181a1.255 1.255 0 0 1 1.227.991l1.443 6.71a5 5 0 0 1 .314-.787l.009-.016a4.6 4.6 0 0 1 1.777-1.887c.782-.46 1.668-.667 2.611-.667a4.6 4.6 0 0 1 1.7.32l.306.134c.21-.16.474-.256.759-.256h1.694a1.255 1.255 0 0 1 1.212.925 1.255 1.255 0 0 1 1.212-.925h1.711c.284 0 .545.094.755.252.613-.3 1.312-.45 2.075-.45 1.356 0 2.557.445 3.482 1.4q.47.48.763 1.064V4.701a1.255 1.255 0 0 1 1.255-1.255h1.86A1.255 1.255 0 0 1 54.44 4.7v9.194h2.217c.19 0 .37.043.532.118v-4.77c0-.356.147-.678.385-.906a2.42 2.42 0 0 1-.682-1.71c0-.665.267-1.253.735-1.7a2.45 2.45 0 0 1 1.722-.674 2.43 2.43 0 0 1 1.705.675q.318.302.504.683V4.7a1.255 1.255 0 0 1 1.255-1.255h1.744A1.255 1.255 0 0 1 65.812 4.7v3.335a4.8 4.8 0 0 1 1.526-.246c.938 0 1.817.214 2.59.69a4.47 4.47 0 0 1 1.67 1.743v-.98a1.255 1.255 0 0 1 1.256-1.256h1.777c.233 0 .451.064.639.174a3.4 3.4 0 0 1 1.567-.372c.346 0 .861.02 1.285.232a1.25 1.25 0 0 1 .689 1.004 4.7 4.7 0 0 1 .853-.588c.795-.44 1.675-.647 2.61-.647 1.385 0 2.65.39 3.525 1.396.836.938 1.168 2.173 1.168 3.528q-.001.515-.056 1.051a1.255 1.255 0 0 1-.947 1.09l.408.952a1.255 1.255 0 0 1-.477 1.552c-.418.268-.92.463-1.458.612-.613.171-1.304.244-2.049.244-1.06 0-2.043-.207-2.886-.698l-.015-.008c-.798-.48-1.419-1.135-1.818-1.963l-.004-.008a5.8 5.8 0 0 1-.548-2.512q0-.429.053-.843a1.3 1.3 0 0 1-.333-.086l-.166-.004c-.223 0-.426.062-.643.228-.03.024-.142.139-.142.59v3.883a1.255 1.255 0 0 1-1.256 1.256h-1.777a1.255 1.255 0 0 1-1.256-1.256V15.69l-.032.057a4.8 4.8 0 0 1-1.86 1.833 5.04 5.04 0 0 1-2.484.634 4.5 4.5 0 0 1-1.935-.424 1.25 1.25 0 0 1-.764.258h-1.71a1.255 1.255 0 0 1-1.256-1.255V7.687a2.4 2.4 0 0 1-.428.625c.253.23.412.561.412.93v7.553a1.255 1.255 0 0 1-1.256 1.255h-1.843a1.25 1.25 0 0 1-.894-.373c-.228.23-.544.373-.894.373H51.32a1.255 1.255 0 0 1-1.256-1.255v-1.251l-.061.117a4.7 4.7 0 0 1-1.782 1.884 4.77 4.77 0 0 1-2.485.67 5.6 5.6 0 0 1-1.485-.188l.009 2.764a1.255 1.255 0 0 1-1.255 1.259h-1.729a1.255 1.255 0 0 1-1.255-1.255v-3.537a1.255 1.255 0 0 1-1.167.793h-1.679a1.25 1.25 0 0 1-.77-.263 4.5 4.5 0 0 1-1.945.429c-.885 0-1.724-.21-2.495-.632l-.017-.01a5 5 0 0 1-1.081-.836 1.255 1.255 0 0 1-1.254 1.312h-1.81a1.255 1.255 0 0 1-1.228-.99l-.782-3.625-2.044 3.939a1.25 1.25 0 0 1-1.115.676h-.098a1.25 1.25 0 0 1-1.116-.68l-2.061-3.994zM35.92 16.63l.207-.114.223-.15q.493-.356.735-.785l.061-.118.033 1.332h1.678V9.242h-1.694l-.033 1.267q-.133-.329-.526-.658l-.032-.028a3.2 3.2 0 0 0-.668-.428l-.27-.12a3.3 3.3 0 0 0-1.235-.23q-1.136-.001-1.974.493a3.36 3.36 0 0 0-1.3 1.382q-.445.89-.444 2.074 0 1.2.51 2.107a3.8 3.8 0 0 0 1.382 1.381 3.9 3.9 0 0 0 1.893.477q.795 0 1.455-.33zm-2.789-5.38q-.576.675-.575 1.762 0 1.102.559 1.794.576.675 1.645.675a2.25 2.25 0 0 0 .934-.19 2.2 2.2 0 0 0 .468-.29l.178-.161a2.2 2.2 0 0 0 .397-.561q.244-.5.244-1.15v-.115q0-.708-.296-1.267l-.043-.077a2.2 2.2 0 0 0-.633-.709l-.13-.086-.047-.028a2.1 2.1 0 0 0-1.073-.285q-1.052 0-1.629.692zm2.316 2.706c.163-.17.28-.407.28-.83v-.114c0-.292-.06-.508-.15-.68a.96.96 0 0 0-.353-.389.85.85 0 0 0-.464-.127c-.4 0-.56.114-.664.239l-.01.012c-.148.174-.275.45-.275.945 0 .506.122.801.27.99.097.11.266.224.68.224.303 0 .504-.09.687-.269zm7.545 1.705a2.6 2.6 0 0 0 .331.423q.319.33.755.548l.173.074q.65.255 1.49.255 1.02 0 1.844-.493a3.45 3.45 0 0 0 1.316-1.4q.493-.904.493-2.089 0-1.909-.988-2.913-.988-1.02-2.584-1.02-.898 0-1.575.347a3 3 0 0 0-.415.262l-.199.166a3.4 3.4 0 0 0-.64.82V9.242h-1.712v11.553h1.729l-.017-5.134zm.53-1.138q.206.29.48.5l.155.11.053.034q.51.296 1.119.297 1.07 0 1.645-.675.577-.69.576-1.762 0-1.119-.576-1.777-.558-.675-1.645-.675-.435 0-.835.16a2 2 0 0 0-.284.136 2 2 0 0 0-.363.254 2.2 2.2 0 0 0-.46.569l-.082.162a2.6 2.6 0 0 0-.213 1.072v.115q0 .707.296 1.267l.135.211zm.964-.818a1.1 1.1 0 0 0 .367.385.94.94 0 0 0 .476.118c.423 0 .59-.117.687-.23.159-.194.28-.478.28-.95 0-.53-.133-.8-.266-.952l-.021-.025c-.078-.094-.231-.221-.68-.221a1 1 0 0 0-.503.135l-.012.007a.86.86 0 0 0-.335.343c-.073.133-.132.324-.132.614v.115a1.4 1.4 0 0 0 .14.66zm15.7-6.222q.347-.346.346-.856a1.05 1.05 0 0 0-.345-.79 1.18 1.18 0 0 0-.84-.329q-.51 0-.855.33a1.05 1.05 0 0 0-.346.79q0 .51.346.855.345.346.856.346.51 0 .839-.346zm4.337 9.314.033-1.332q.191.403.59.747l.098.081a4 4 0 0 0 .316.224l.223.122a3.2 3.2 0 0 0 1.44.322 3.8 3.8 0 0 0 1.875-.477 3.5 3.5 0 0 0 1.382-1.366q.527-.89.526-2.09 0-1.184-.444-2.073a3.24 3.24 0 0 0-1.283-1.399q-.823-.51-1.942-.51a3.5 3.5 0 0 0-1.527.344l-.086.043-.165.09a3 3 0 0 0-.33.214q-.432.315-.656.707a2 2 0 0 0-.099.198l.082-1.283V4.701h-1.744v12.095zm.473-2.509a2.5 2.5 0 0 0 .566.7q.117.098.245.18l.144.08a2.1 2.1 0 0 0 .975.232q1.07 0 1.645-.675.576-.69.576-1.778 0-1.102-.576-1.777-.56-.691-1.645-.692a2.2 2.2 0 0 0-1.015.235q-.22.113-.415.282l-.15.142a2.1 2.1 0 0 0-.42.594q-.223.479-.223 1.1v.115q0 .705.293 1.26zm2.616-.293c.157-.191.28-.479.28-.967 0-.51-.13-.79-.276-.961l-.021-.026c-.082-.1-.232-.225-.67-.225a.87.87 0 0 0-.681.279l-.012.011c-.154.155-.274.38-.274.807v.115c0 .285.057.499.144.669a1.1 1.1 0 0 0 .367.405c.137.082.28.123.455.123.423 0 .59-.118.686-.23zm8.266-3.013q.345-.13.724-.14l.069-.002q.493 0 .642.099l.247-1.794q-.196-.099-.717-.099a2.3 2.3 0 0 0-.545.063 2 2 0 0 0-.411.148 2.2 2.2 0 0 0-.4.249 2.5 2.5 0 0 0-.485.499 2.7 2.7 0 0 0-.32.581l-.05.137v-1.48h-1.778v7.553h1.777v-3.884q0-.546.159-.943a1.5 1.5 0 0 1 .466-.636 2.5 2.5 0 0 1 .399-.253 2 2 0 0 1 .224-.099zm9.784 2.656.05-.922q0-1.743-.856-2.698-.838-.97-2.584-.97-1.119-.001-2.007.493a3.46 3.46 0 0 0-1.4 1.382q-.493.906-.493 2.106 0 1.07.428 1.975.428.89 1.332 1.432.906.526 2.255.526.973 0 1.668-.185l.044-.012.135-.04q.613-.184.984-.421l-.542-1.267q-.3.162-.642.274l-.297.087q-.51.131-1.3.131-.954 0-1.497-.444a1.6 1.6 0 0 1-.192-.193q-.366-.44-.512-1.234l-.004-.021zm-5.427-1.256-.003.022h3.752v-.138q-.011-.727-.288-1.118a1 1 0 0 0-.156-.176q-.46-.428-1.316-.428-.986 0-1.494.604-.379.45-.494 1.234zm-27.053 2.77V4.7h-1.86v12.095h5.333V15.15zm7.103-5.908v7.553h-1.843V9.242h1.843z'/%3E%3Cpath fill='%23fff' d='m19.63 11.151-.757-1.71-.345 1.71-1.12 5.644h-1.827L18.083 4.7h.197l3.325 6.533.988 2.19.988-2.19L26.839 4.7h.181l2.6 12.095h-1.81l-1.218-5.644-.362-1.71-.658 1.71-2.93 5.644h-.098l-2.913-5.644zm14.836 5.81q-1.02 0-1.893-.478a3.8 3.8 0 0 1-1.381-1.382q-.51-.906-.51-2.106 0-1.185.444-2.074a3.36 3.36 0 0 1 1.3-1.382q.839-.494 1.974-.494a3.3 3.3 0 0 1 1.234.231 3.3 3.3 0 0 1 .97.575q.396.33.527.659l.033-1.267h1.694v7.553H37.18l-.033-1.332q-.279.593-1.02 1.053a3.17 3.17 0 0 1-1.662.444zm.296-1.482q.938 0 1.58-.642.642-.66.642-1.711v-.115q0-.708-.296-1.267a2.2 2.2 0 0 0-.807-.872 2.1 2.1 0 0 0-1.119-.313q-1.053 0-1.629.692-.575.675-.575 1.76 0 1.103.559 1.795.577.675 1.645.675zm6.521-6.237h1.711v1.4q.906-1.597 2.83-1.597 1.596 0 2.584 1.02.988 1.005.988 2.914 0 1.185-.493 2.09a3.46 3.46 0 0 1-1.316 1.399 3.5 3.5 0 0 1-1.844.493q-.954 0-1.662-.329a2.67 2.67 0 0 1-1.086-.97l.017 5.134h-1.728zm4.048 6.22q1.07 0 1.645-.674.577-.69.576-1.762 0-1.119-.576-1.777-.558-.675-1.645-.675-.592 0-1.12.296-.51.28-.822.823-.296.527-.296 1.234v.115q0 .708.296 1.267.313.543.823.855.51.296 1.119.297z'/%3E%3Cpath fill='%23e1e3e9' d='M51.325 4.7h1.86v10.45h3.473v1.646h-5.333zm7.12 4.542h1.843v7.553h-1.843zm.905-1.415a1.16 1.16 0 0 1-.856-.346 1.17 1.17 0 0 1-.346-.856 1.05 1.05 0 0 1 .346-.79q.346-.329.856-.329.494 0 .839.33a1.05 1.05 0 0 1 .345.79 1.16 1.16 0 0 1-.345.855q-.33.346-.84.346zm7.875 9.133a3.17 3.17 0 0 1-1.662-.444q-.723-.46-1.004-1.053l-.033 1.332h-1.71V4.701h1.743v4.657l-.082 1.283q.279-.658 1.086-1.119a3.5 3.5 0 0 1 1.778-.477q1.119 0 1.942.51a3.24 3.24 0 0 1 1.283 1.4q.445.888.444 2.072 0 1.201-.526 2.09a3.5 3.5 0 0 1-1.382 1.366 3.8 3.8 0 0 1-1.876.477zm-.296-1.481q1.069 0 1.645-.675.577-.69.577-1.778 0-1.102-.577-1.776-.56-.691-1.645-.692a2.12 2.12 0 0 0-1.58.659q-.642.641-.642 1.694v.115q0 .71.296 1.267a2.4 2.4 0 0 0 .807.872 2.1 2.1 0 0 0 1.119.313zm5.927-6.237h1.777v1.481q.263-.757.856-1.217a2.14 2.14 0 0 1 1.349-.46q.527 0 .724.098l-.247 1.794q-.149-.099-.642-.099-.774 0-1.416.494-.626.493-.626 1.58v3.883h-1.777V9.242zm9.534 7.718q-1.35 0-2.255-.526-.904-.543-1.332-1.432a4.6 4.6 0 0 1-.428-1.975q0-1.2.493-2.106a3.46 3.46 0 0 1 1.4-1.382q.889-.495 2.007-.494 1.744 0 2.584.97.855.956.856 2.7 0 .444-.05.92h-5.43q.18 1.005.708 1.45.542.443 1.497.443.79 0 1.3-.131a4 4 0 0 0 .938-.362l.542 1.267q-.411.263-1.119.46-.708.198-1.711.197zm1.596-4.558q.016-1.02-.444-1.432-.46-.428-1.316-.428-1.728 0-1.991 1.86z'/%3E%3Cpath d='M5.074 15.948a.484.657 0 0 0-.486.659v1.84a.484.657 0 0 0 .486.659h4.101a.484.657 0 0 0 .486-.659v-1.84a.484.657 0 0 0-.486-.659zm3.56 1.16H5.617v.838h3.017z' style='fill:%23fff;fill-rule:evenodd;stroke-width:1.03600001'/%3E%3Cg style='stroke-width:1.12603545'%3E%3Cpath d='M-9.408-1.416c-3.833-.025-7.056 2.912-7.08 6.615-.02 3.08 1.653 4.832 3.107 6.268.903.892 1.721 1.74 2.32 2.902l-.525-.004c-.543-.003-.992.304-1.24.639a1.87 1.87 0 0 0-.362 1.121l-.011 1.877c-.003.402.104.787.347 1.125.244.338.688.653 1.23.656l4.142.028c.542.003.99-.306 1.238-.641a1.87 1.87 0 0 0 .363-1.121l.012-1.875a1.87 1.87 0 0 0-.348-1.127c-.243-.338-.688-.653-1.23-.656l-.518-.004c.597-1.145 1.425-1.983 2.348-2.87 1.473-1.414 3.18-3.149 3.2-6.226-.016-3.59-2.923-6.684-6.993-6.707m-.006 1.1v.002c3.274.02 5.92 2.532 5.9 5.6-.017 2.706-1.39 4.026-2.863 5.44-1.034.994-2.118 2.033-2.814 3.633-.018.041-.052.055-.075.065q-.013.004-.02.01a.34.34 0 0 1-.226.084.34.34 0 0 1-.224-.086l-.092-.077c-.699-1.615-1.768-2.669-2.781-3.67-1.454-1.435-2.797-2.762-2.78-5.478.02-3.067 2.7-5.545 5.975-5.523m-.02 2.826c-1.62-.01-2.944 1.315-2.955 2.96-.01 1.646 1.295 2.988 2.916 2.999h.002c1.621.01 2.943-1.316 2.953-2.961.011-1.646-1.294-2.988-2.916-2.998m-.005 1.1c1.017.006 1.829.83 1.822 1.89s-.83 1.874-1.848 1.867c-1.018-.006-1.829-.83-1.822-1.89s.83-1.874 1.848-1.868m-2.155 11.857 4.14.025c.271.002.49.305.487.676l-.013 1.875c-.003.37-.224.67-.495.668l-4.14-.025c-.27-.002-.487-.306-.485-.676l.012-1.875c.003-.37.224-.67.494-.668' style='color:%23000;font-style:normal;font-variant:normal;font-weight:400;font-stretch:normal;font-size:medium;line-height:normal;font-family:sans-serif;font-variant-ligatures:normal;font-variant-position:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-alternates:normal;font-feature-settings:normal;text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:%23000;letter-spacing:normal;word-spacing:normal;text-transform:none;writing-mode:lr-tb;direction:ltr;text-orientation:mixed;dominant-baseline:auto;baseline-shift:baseline;text-anchor:start;white-space:normal;shape-padding:0;clip-rule:evenodd;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:%23000;solid-opacity:1;vector-effect:none;fill:%23000;fill-opacity:.4;fill-rule:evenodd;stroke:none;stroke-width:2.47727823;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto' transform='translate(15.553 2.85)scale(.88807)'/%3E%3Cpath d='M-9.415-.316C-12.69-.338-15.37 2.14-15.39 5.207c-.017 2.716 1.326 4.041 2.78 5.477 1.013 1 2.081 2.055 2.78 3.67l.092.076a.34.34 0 0 0 .225.086.34.34 0 0 0 .227-.083l.019-.01c.022-.009.057-.024.074-.064.697-1.6 1.78-2.64 2.814-3.634 1.473-1.414 2.847-2.733 2.864-5.44.02-3.067-2.627-5.58-5.901-5.601m-.057 8.784c1.621.011 2.944-1.315 2.955-2.96.01-1.646-1.295-2.988-2.916-2.999-1.622-.01-2.945 1.315-2.955 2.96s1.295 2.989 2.916 3' style='clip-rule:evenodd;fill:%23e1e3e9;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:2.47727823;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:.4' transform='translate(15.553 2.85)scale(.88807)'/%3E%3Cpath d='M-11.594 15.465c-.27-.002-.492.297-.494.668l-.012 1.876c-.003.371.214.673.485.675l4.14.027c.271.002.492-.298.495-.668l.012-1.877c.003-.37-.215-.672-.485-.674z' style='clip-rule:evenodd;fill:%23fff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:2.47727823;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:.4' transform='translate(15.553 2.85)scale(.88807)'/%3E%3C/g%3E%3C/svg%3E")}}.maplibregl-ctrl.maplibregl-ctrl-attrib{background-color:hsla(0,0%,100%,.5);margin:0;padding:0 5px}@media screen{.maplibregl-ctrl-attrib.maplibregl-compact{background-color:#fff;border-radius:12px;box-sizing:content-box;color:#000;margin:10px;min-height:20px;padding:2px 24px 2px 0;position:relative}.maplibregl-ctrl-attrib.maplibregl-compact-show{padding:2px 28px 2px 8px;visibility:visible}.maplibregl-ctrl-bottom-left>.maplibregl-ctrl-attrib.maplibregl-compact-show,.maplibregl-ctrl-top-left>.maplibregl-ctrl-attrib.maplibregl-compact-show{border-radius:12px;padding:2px 8px 2px 28px}.maplibregl-ctrl-attrib.maplibregl-compact .maplibregl-ctrl-attrib-inner{display:none}.maplibregl-ctrl-attrib-button{background-color:hsla(0,0%,100%,.5);background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' fill-rule='evenodd' viewBox='0 0 20 20'%3E%3Cpath d='M4 10a6 6 0 1 0 12 0 6 6 0 1 0-12 0m5-3a1 1 0 1 0 2 0 1 1 0 1 0-2 0m0 3a1 1 0 1 1 2 0v3a1 1 0 1 1-2 0'/%3E%3C/svg%3E");border:0;border-radius:12px;box-sizing:border-box;cursor:pointer;display:none;height:24px;outline:none;position:absolute;right:0;top:0;width:24px}.maplibregl-ctrl-attrib summary.maplibregl-ctrl-attrib-button{-webkit-appearance:none;-moz-appearance:none;appearance:none;list-style:none}.maplibregl-ctrl-attrib summary.maplibregl-ctrl-attrib-button::-webkit-details-marker{display:none}.maplibregl-ctrl-bottom-left .maplibregl-ctrl-attrib-button,.maplibregl-ctrl-top-left .maplibregl-ctrl-attrib-button{left:0}.maplibregl-ctrl-attrib.maplibregl-compact .maplibregl-ctrl-attrib-button,.maplibregl-ctrl-attrib.maplibregl-compact-show .maplibregl-ctrl-attrib-inner{display:block}.maplibregl-ctrl-attrib.maplibregl-compact-show .maplibregl-ctrl-attrib-button{background-color:rgb(0 0 0/5%)}.maplibregl-ctrl-bottom-right>.maplibregl-ctrl-attrib.maplibregl-compact:after{bottom:0;right:0}.maplibregl-ctrl-top-right>.maplibregl-ctrl-attrib.maplibregl-compact:after{right:0;top:0}.maplibregl-ctrl-top-left>.maplibregl-ctrl-attrib.maplibregl-compact:after{left:0;top:0}.maplibregl-ctrl-bottom-left>.maplibregl-ctrl-attrib.maplibregl-compact:after{bottom:0;left:0}}@media screen and (forced-colors:active){.maplibregl-ctrl-attrib.maplibregl-compact:after{background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' fill='%23fff' fill-rule='evenodd' viewBox='0 0 20 20'%3E%3Cpath d='M4 10a6 6 0 1 0 12 0 6 6 0 1 0-12 0m5-3a1 1 0 1 0 2 0 1 1 0 1 0-2 0m0 3a1 1 0 1 1 2 0v3a1 1 0 1 1-2 0'/%3E%3C/svg%3E")}}@media screen and (forced-colors:active) and (prefers-color-scheme:light){.maplibregl-ctrl-attrib.maplibregl-compact:after{background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' fill-rule='evenodd' viewBox='0 0 20 20'%3E%3Cpath d='M4 10a6 6 0 1 0 12 0 6 6 0 1 0-12 0m5-3a1 1 0 1 0 2 0 1 1 0 1 0-2 0m0 3a1 1 0 1 1 2 0v3a1 1 0 1 1-2 0'/%3E%3C/svg%3E")}}.maplibregl-ctrl-attrib a{color:rgba(0,0,0,.75);text-decoration:none}.maplibregl-ctrl-attrib a:hover{color:inherit;text-decoration:underline}.maplibregl-attrib-empty{display:none}.maplibregl-ctrl-scale{background-color:hsla(0,0%,100%,.75);border:2px solid #333;border-top:#333;box-sizing:border-box;color:#333;font-size:10px;padding:0 5px}.maplibregl-popup{display:flex;left:0;pointer-events:none;position:absolute;top:0;will-change:transform}.maplibregl-popup-anchor-top,.maplibregl-popup-anchor-top-left,.maplibregl-popup-anchor-top-right{flex-direction:column}.maplibregl-popup-anchor-bottom,.maplibregl-popup-anchor-bottom-left,.maplibregl-popup-anchor-bottom-right{flex-direction:column-reverse}.maplibregl-popup-anchor-left{flex-direction:row}.maplibregl-popup-anchor-right{flex-direction:row-reverse}.maplibregl-popup-tip{border:10px solid transparent;height:0;width:0;z-index:1}.maplibregl-popup-anchor-top .maplibregl-popup-tip{align-self:center;border-bottom-color:#fff;border-top:none}.maplibregl-popup-anchor-top-left .maplibregl-popup-tip{align-self:flex-start;border-bottom-color:#fff;border-left:none;border-top:none}.maplibregl-popup-anchor-top-right .maplibregl-popup-tip{align-self:flex-end;border-bottom-color:#fff;border-right:none;border-top:none}.maplibregl-popup-anchor-bottom .maplibregl-popup-tip{align-self:center;border-bottom:none;border-top-color:#fff}.maplibregl-popup-anchor-bottom-left .maplibregl-popup-tip{align-self:flex-start;border-bottom:none;border-left:none;border-top-color:#fff}.maplibregl-popup-anchor-bottom-right .maplibregl-popup-tip{align-self:flex-end;border-bottom:none;border-right:none;border-top-color:#fff}.maplibregl-popup-anchor-left .maplibregl-popup-tip{align-self:center;border-left:none;border-right-color:#fff}.maplibregl-popup-anchor-right .maplibregl-popup-tip{align-self:center;border-left-color:#fff;border-right:none}.maplibregl-popup-close-button{background-color:transparent;border:0;border-radius:0 3px 0 0;cursor:pointer;position:absolute;right:0;top:0}.maplibregl-popup-close-button:hover{background-color:rgb(0 0 0/5%)}.maplibregl-popup-content{background:#fff;border-radius:3px;box-shadow:0 1px 2px rgba(0,0,0,.1);padding:15px 10px;pointer-events:auto;position:relative}.maplibregl-popup-anchor-top-left .maplibregl-popup-content{border-top-left-radius:0}.maplibregl-popup-anchor-top-right .maplibregl-popup-content{border-top-right-radius:0}.maplibregl-popup-anchor-bottom-left .maplibregl-popup-content{border-bottom-left-radius:0}.maplibregl-popup-anchor-bottom-right .maplibregl-popup-content{border-bottom-right-radius:0}.maplibregl-popup-track-pointer{display:none}.maplibregl-popup-track-pointer *{pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.maplibregl-map:hover .maplibregl-popup-track-pointer{display:flex}.maplibregl-map:active .maplibregl-popup-track-pointer{display:none}.maplibregl-marker{left:0;position:absolute;top:0;transition:opacity .2s;will-change:transform}.maplibregl-user-location-dot,.maplibregl-user-location-dot:before{background-color:#1da1f2;border-radius:50%;height:15px;width:15px}.maplibregl-user-location-dot:before{animation:maplibregl-user-location-dot-pulse 2s infinite;content:"";position:absolute}.maplibregl-user-location-dot:after{border:2px solid #fff;border-radius:50%;box-shadow:0 0 3px rgba(0,0,0,.35);box-sizing:border-box;content:"";height:19px;left:-2px;position:absolute;top:-2px;width:19px}@keyframes maplibregl-user-location-dot-pulse{0%{opacity:1;transform:scale(1)}70%{opacity:0;transform:scale(3)}to{opacity:0;transform:scale(1)}}.maplibregl-user-location-dot-stale{background-color:#aaa}.maplibregl-user-location-dot-stale:after{display:none}.maplibregl-user-location-accuracy-circle{background-color:#1da1f233;border-radius:100%;height:1px;width:1px}.maplibregl-crosshair,.maplibregl-crosshair .maplibregl-interactive,.maplibregl-crosshair .maplibregl-interactive:active{cursor:crosshair}.maplibregl-boxzoom{background:#fff;border:2px dotted #202020;height:0;left:0;opacity:.5;position:absolute;top:0;width:0}.maplibregl-cooperative-gesture-screen{align-items:center;background:rgba(0,0,0,.4);color:#fff;display:flex;font-size:1.4em;inset:0;justify-content:center;line-height:1.2;opacity:0;padding:1rem;pointer-events:none;position:absolute;transition:opacity 1s ease 1s;z-index:99999}.maplibregl-cooperative-gesture-screen.maplibregl-show{opacity:1;transition:opacity .05s}.maplibregl-cooperative-gesture-screen .maplibregl-mobile-message{display:none}@media (hover:none),(width <= 480px){.maplibregl-cooperative-gesture-screen .maplibregl-desktop-message{display:none}.maplibregl-cooperative-gesture-screen .maplibregl-mobile-message{display:block}}.maplibregl-pseudo-fullscreen{height:100%!important;left:0!important;position:fixed!important;top:0!important;width:100%!important;z-index:99999}`;
+      document.head.appendChild(e);
+    }
+  })();
+
   // src/registry.js
-  var import_maplibre_gl = __toESM(require_maplibre_gl(), 1);
   var { addStyleRule: addStyleRule2 } = dom_default;
   var extendFlat2 = extend_default.extendFlat;
   var extendDeepAll2 = extend_default.extendDeepAll;
@@ -54111,7 +47186,7 @@ var Plotly = (() => {
       }
     }
     if (bpmName === "map") {
-      import_maplibre_gl.default;
+      _req0;
     }
     if ((bpmName === "geo" || bpmName === "mapbox" || bpmName === "map") && window.PlotlyGeoAssets === void 0) {
       window.PlotlyGeoAssets = { topojson: {} };
@@ -56158,7 +49233,7 @@ var Plotly = (() => {
     h = bound01(h, 360) * 6;
     s = bound01(s, 100);
     v = bound01(v, 100);
-    var i = Math.floor(h), f = h - i, p = v * (1 - s), q = v * (1 - f * s), t = v * (1 - (1 - f) * s), mod5 = i % 6, r = [v, q, p, p, t, v][mod5], g = [t, v, v, q, p, p][mod5], b = [p, p, t, v, v, q][mod5];
+    var i = Math.floor(h), f = h - i, p = v * (1 - s), q = v * (1 - f * s), t = v * (1 - (1 - f) * s), mod7 = i % 6, r = [v, q, p, p, t, v][mod7], g = [t, v, v, q, p, p][mod7], b = [p, p, t, v, v, q][mod7];
     return {
       r: r * 255,
       g: g * 255,
@@ -71307,8 +64382,8 @@ var Plotly = (() => {
   axes.getTickSigns = function(ax, minor) {
     var axLetter = ax._id.charAt(0);
     var sideOpposite = { x: "top", y: "right" }[axLetter];
-    var main = ax.side === sideOpposite ? 1 : -1;
-    var out = [-1, 1, main, -main];
+    var main16 = ax.side === sideOpposite ? 1 : -1;
+    var out = [-1, 1, main16, -main16];
     var ticks2 = minor ? (ax.minor || {}).ticks : ax.ticks;
     if (ticks2 !== "inside" === (axLetter === "x")) {
       out = out.map(function(v) {
@@ -104442,21 +97517,6868 @@ var Plotly = (() => {
 
   // src/components/calendars/calendars.js
   var import_main = __toESM(require_main(), 1);
-  var import_plus = __toESM(require_plus(), 1);
-  var import_chinese = __toESM(require_chinese(), 1);
-  var import_coptic = __toESM(require_coptic(), 1);
-  var import_discworld = __toESM(require_discworld(), 1);
-  var import_ethiopian = __toESM(require_ethiopian(), 1);
-  var import_hebrew = __toESM(require_hebrew(), 1);
-  var import_islamic = __toESM(require_islamic(), 1);
-  var import_julian = __toESM(require_julian(), 1);
-  var import_mayan = __toESM(require_mayan(), 1);
-  var import_nanakshahi = __toESM(require_nanakshahi(), 1);
-  var import_nepali = __toESM(require_nepali(), 1);
-  var import_persian = __toESM(require_persian(), 1);
-  var import_taiwan = __toESM(require_taiwan(), 1);
-  var import_thai = __toESM(require_thai(), 1);
-  var import_ummalqura = __toESM(require_ummalqura(), 1);
+
+  // node_modules/.pnpm/world-calendars@1.0.4/node_modules/world-calendars/dist/plus.js
+  var assign = require_object_assign();
+  var main = require_main();
+  assign(main.regionalOptions[""], {
+    invalidArguments: "Invalid arguments",
+    invalidFormat: "Cannot format a date from another calendar",
+    missingNumberAt: "Missing number at position {0}",
+    unknownNameAt: "Unknown name at position {0}",
+    unexpectedLiteralAt: "Unexpected literal at position {0}",
+    unexpectedText: "Additional text found at end"
+  });
+  main.local = main.regionalOptions[""];
+  assign(main.cdate.prototype, {
+    /** Format this date.
+        Found in the <code>jquery.calendars.plus.js</code> module.
+        @memberof CDate
+        @param [format] {string} The date format to use (see <a href="BaseCalendar.html#formatDate"><code>formatDate</code></a>).
+        @param [settings] {object} Options for the <code>formatDate</code> function.
+        @return {string} The formatted date. */
+    formatDate: function(format4, settings) {
+      if (typeof format4 !== "string") {
+        settings = format4;
+        format4 = "";
+      }
+      return this._calendar.formatDate(format4 || "", this, settings);
+    }
+  });
+  assign(main.baseCalendar.prototype, {
+    UNIX_EPOCH: main.instance().newDate(1970, 1, 1).toJD(),
+    SECS_PER_DAY: 24 * 60 * 60,
+    TICKS_EPOCH: main.instance().jdEpoch,
+    // 1 January 0001 CE
+    TICKS_PER_DAY: 24 * 60 * 60 * 1e7,
+    /** Date form for ATOM (RFC 3339/ISO 8601).
+        Found in the <code>jquery.calendars.plus.js</code> module.
+        @memberof BaseCalendar */
+    ATOM: "yyyy-mm-dd",
+    /** Date form for cookies.
+        Found in the <code>jquery.calendars.plus.js</code> module.
+        @memberof BaseCalendar */
+    COOKIE: "D, dd M yyyy",
+    /** Date form for full date.
+        Found in the <code>jquery.calendars.plus.js</code> module.
+        @memberof BaseCalendar */
+    FULL: "DD, MM d, yyyy",
+    /** Date form for ISO 8601.
+        Found in the <code>jquery.calendars.plus.js</code> module.
+        @memberof BaseCalendar */
+    ISO_8601: "yyyy-mm-dd",
+    /** Date form for Julian date.
+        Found in the <code>jquery.calendars.plus.js</code> module.
+        @memberof BaseCalendar */
+    JULIAN: "J",
+    /** Date form for RFC 822.
+        Found in the <code>jquery.calendars.plus.js</code> module.
+        @memberof BaseCalendar */
+    RFC_822: "D, d M yy",
+    /** Date form for RFC 850.
+        Found in the <code>jquery.calendars.plus.js</code> module.
+        @memberof BaseCalendar */
+    RFC_850: "DD, dd-M-yy",
+    /** Date form for RFC 1036.
+        Found in the <code>jquery.calendars.plus.js</code> module.
+        @memberof BaseCalendar */
+    RFC_1036: "D, d M yy",
+    /** Date form for RFC 1123.
+        Found in the <code>jquery.calendars.plus.js</code> module.
+        @memberof BaseCalendar */
+    RFC_1123: "D, d M yyyy",
+    /** Date form for RFC 2822.
+        Found in the <code>jquery.calendars.plus.js</code> module.
+        @memberof BaseCalendar */
+    RFC_2822: "D, d M yyyy",
+    /** Date form for RSS (RFC 822).
+        Found in the <code>jquery.calendars.plus.js</code> module.
+        @memberof BaseCalendar */
+    RSS: "D, d M yy",
+    /** Date form for Windows ticks.
+        Found in the <code>jquery.calendars.plus.js</code> module.
+        @memberof BaseCalendar */
+    TICKS: "!",
+    /** Date form for Unix timestamp.
+        Found in the <code>jquery.calendars.plus.js</code> module.
+        @memberof BaseCalendar */
+    TIMESTAMP: "@",
+    /** Date form for W3c (ISO 8601).
+        Found in the <code>jquery.calendars.plus.js</code> module.
+        @memberof BaseCalendar */
+    W3C: "yyyy-mm-dd",
+    /** Format a date object into a string value.
+        The format can be combinations of the following:
+        <ul>
+        <li>d  - day of month (no leading zero)</li>
+        <li>dd - day of month (two digit)</li>
+        <li>o  - day of year (no leading zeros)</li>
+        <li>oo - day of year (three digit)</li>
+        <li>D  - day name short</li>
+        <li>DD - day name long</li>
+        <li>w  - week of year (no leading zero)</li>
+        <li>ww - week of year (two digit)</li>
+        <li>m  - month of year (no leading zero)</li>
+        <li>mm - month of year (two digit)</li>
+        <li>M  - month name short</li>
+        <li>MM - month name long</li>
+        <li>yy - year (two digit)</li>
+        <li>yyyy - year (four digit)</li>
+        <li>YYYY - formatted year</li>
+        <li>J  - Julian date (days since January 1, 4713 BCE Greenwich noon)</li>
+        <li>@  - Unix timestamp (s since 01/01/1970)</li>
+        <li>!  - Windows ticks (100ns since 01/01/0001)</li>
+        <li>'...' - literal text</li>
+        <li>'' - single quote</li>
+        </ul>
+        Found in the <code>jquery.calendars.plus.js</code> module.
+        @memberof BaseCalendar
+        @param [format] {string} The desired format of the date (defaults to calendar format).
+        @param date {CDate} The date value to format.
+        @param [settings] {object} Addition options, whose attributes include:
+        @property [dayNamesShort] {string[]} Abbreviated names of the days from Sunday.
+        @property [dayNames] {string[]} Names of the days from Sunday.
+        @property [monthNamesShort] {string[]} Abbreviated names of the months.
+        @property [monthNames] {string[]} Names of the months.
+        @property [calculateWeek] {CalendarsPickerCalculateWeek} Function that determines week of the year.
+        @property [localNumbers=false] {boolean} <code>true</code> to localise numbers (if available),
+                  <code>false</code> to use normal Arabic numerals.
+        @return {string} The date in the above format.
+        @throws Errors if the date is from a different calendar. */
+    formatDate: function(format4, date, settings) {
+      if (typeof format4 !== "string") {
+        settings = date;
+        date = format4;
+        format4 = "";
+      }
+      if (!date) {
+        return "";
+      }
+      if (date.calendar() !== this) {
+        throw main.local.invalidFormat || main.regionalOptions[""].invalidFormat;
+      }
+      format4 = format4 || this.local.dateFormat;
+      settings = settings || {};
+      var dayNamesShort = settings.dayNamesShort || this.local.dayNamesShort;
+      var dayNames = settings.dayNames || this.local.dayNames;
+      var monthNumbers = settings.monthNumbers || this.local.monthNumbers;
+      var monthNamesShort = settings.monthNamesShort || this.local.monthNamesShort;
+      var monthNames = settings.monthNames || this.local.monthNames;
+      var calculateWeek = settings.calculateWeek || this.local.calculateWeek;
+      var doubled = function(match, step) {
+        var matches = 1;
+        while (iFormat + matches < format4.length && format4.charAt(iFormat + matches) === match) {
+          matches++;
+        }
+        iFormat += matches - 1;
+        return Math.floor(matches / (step || 1)) > 1;
+      };
+      var formatNumber = function(match, value, len2, step) {
+        var num = "" + value;
+        if (doubled(match, step)) {
+          while (num.length < len2) {
+            num = "0" + num;
+          }
+        }
+        return num;
+      };
+      var formatName = function(match, value, shortNames, longNames) {
+        return doubled(match) ? longNames[value] : shortNames[value];
+      };
+      var calendar = this;
+      var formatMonth = function(date2) {
+        return typeof monthNumbers === "function" ? monthNumbers.call(calendar, date2, doubled("m")) : localiseNumbers(formatNumber("m", date2.month(), 2));
+      };
+      var formatMonthName = function(date2, useLongName) {
+        if (useLongName) {
+          return typeof monthNames === "function" ? monthNames.call(calendar, date2) : monthNames[date2.month() - calendar.minMonth];
+        } else {
+          return typeof monthNamesShort === "function" ? monthNamesShort.call(calendar, date2) : monthNamesShort[date2.month() - calendar.minMonth];
+        }
+      };
+      var digits = this.local.digits;
+      var localiseNumbers = function(value) {
+        return settings.localNumbers && digits ? digits(value) : value;
+      };
+      var output = "";
+      var literal = false;
+      for (var iFormat = 0; iFormat < format4.length; iFormat++) {
+        if (literal) {
+          if (format4.charAt(iFormat) === "'" && !doubled("'")) {
+            literal = false;
+          } else {
+            output += format4.charAt(iFormat);
+          }
+        } else {
+          switch (format4.charAt(iFormat)) {
+            case "d":
+              output += localiseNumbers(formatNumber("d", date.day(), 2));
+              break;
+            case "D":
+              output += formatName(
+                "D",
+                date.dayOfWeek(),
+                dayNamesShort,
+                dayNames
+              );
+              break;
+            case "o":
+              output += formatNumber("o", date.dayOfYear(), 3);
+              break;
+            case "w":
+              output += formatNumber("w", date.weekOfYear(), 2);
+              break;
+            case "m":
+              output += formatMonth(date);
+              break;
+            case "M":
+              output += formatMonthName(date, doubled("M"));
+              break;
+            case "y":
+              output += doubled("y", 2) ? date.year() : (date.year() % 100 < 10 ? "0" : "") + date.year() % 100;
+              break;
+            case "Y":
+              doubled("Y", 2);
+              output += date.formatYear();
+              break;
+            case "J":
+              output += date.toJD();
+              break;
+            case "@":
+              output += (date.toJD() - this.UNIX_EPOCH) * this.SECS_PER_DAY;
+              break;
+            case "!":
+              output += (date.toJD() - this.TICKS_EPOCH) * this.TICKS_PER_DAY;
+              break;
+            case "'":
+              if (doubled("'")) {
+                output += "'";
+              } else {
+                literal = true;
+              }
+              break;
+            default:
+              output += format4.charAt(iFormat);
+          }
+        }
+      }
+      return output;
+    },
+    /** Parse a string value into a date object.
+        See <a href="#formatDate"><code>formatDate</code></a> for the possible formats, plus:
+        <ul>
+        <li>* - ignore rest of string</li>
+        </ul>
+        Found in the <code>jquery.calendars.plus.js</code> module.
+        @memberof BaseCalendar
+        @param format {string} The expected format of the date ('' for default calendar format).
+        @param value {string} The date in the above format.
+        @param [settings] {object} Additional options whose attributes include:
+        @property [shortYearCutoff] {number} The cutoff year for determining the century.
+        @property [dayNamesShort] {string[]} Abbreviated names of the days from Sunday.
+        @property [dayNames] {string[]} Names of the days from Sunday.
+        @property [monthNamesShort] {string[]} Abbreviated names of the months.
+        @property [monthNames] {string[]} Names of the months.
+        @return {CDate} The extracted date value or <code>null</code> if value is blank.
+        @throws Errors if the format and/or value are missing,
+                if the value doesn't match the format, or if the date is invalid. */
+    parseDate: function(format4, value, settings) {
+      if (value == null) {
+        throw main.local.invalidArguments || main.regionalOptions[""].invalidArguments;
+      }
+      value = typeof value === "object" ? value.toString() : value + "";
+      if (value === "") {
+        return null;
+      }
+      format4 = format4 || this.local.dateFormat;
+      settings = settings || {};
+      var shortYearCutoff = settings.shortYearCutoff || this.shortYearCutoff;
+      shortYearCutoff = typeof shortYearCutoff !== "string" ? shortYearCutoff : this.today().year() % 100 + parseInt(shortYearCutoff, 10);
+      var dayNamesShort = settings.dayNamesShort || this.local.dayNamesShort;
+      var dayNames = settings.dayNames || this.local.dayNames;
+      var parseMonth = settings.parseMonth || this.local.parseMonth;
+      var monthNumbers = settings.monthNumbers || this.local.monthNumbers;
+      var monthNamesShort = settings.monthNamesShort || this.local.monthNamesShort;
+      var monthNames = settings.monthNames || this.local.monthNames;
+      var jd = -1;
+      var year2 = -1;
+      var month2 = -1;
+      var day2 = -1;
+      var doy = -1;
+      var shortYear = false;
+      var literal = false;
+      var doubled = function(match, step) {
+        var matches = 1;
+        while (iFormat + matches < format4.length && format4.charAt(iFormat + matches) === match) {
+          matches++;
+        }
+        iFormat += matches - 1;
+        return Math.floor(matches / (step || 1)) > 1;
+      };
+      var getNumber = function(match, step) {
+        var isDoubled = doubled(match, step);
+        var size = [2, 3, isDoubled ? 4 : 2, isDoubled ? 4 : 2, 10, 11, 20]["oyYJ@!".indexOf(match) + 1];
+        var digits = new RegExp("^-?\\d{1," + size + "}");
+        var num = value.substring(iValue).match(digits);
+        if (!num) {
+          throw (main.local.missingNumberAt || main.regionalOptions[""].missingNumberAt).replace(/\{0\}/, iValue);
+        }
+        iValue += num[0].length;
+        return parseInt(num[0], 10);
+      };
+      var calendar = this;
+      var getMonthNumber = function() {
+        if (typeof monthNumbers === "function") {
+          doubled("m");
+          var month3 = monthNumbers.call(calendar, value.substring(iValue));
+          iValue += month3.length;
+          return month3;
+        }
+        return getNumber("m");
+      };
+      var getName = function(match, shortNames, longNames, step) {
+        var names2 = doubled(match, step) ? longNames : shortNames;
+        for (var i = 0; i < names2.length; i++) {
+          if (value.substr(iValue, names2[i].length).toLowerCase() === names2[i].toLowerCase()) {
+            iValue += names2[i].length;
+            return i + calendar.minMonth;
+          }
+        }
+        throw (main.local.unknownNameAt || main.regionalOptions[""].unknownNameAt).replace(/\{0\}/, iValue);
+      };
+      var getMonthName = function() {
+        if (typeof monthNames === "function") {
+          var month3 = doubled("M") ? monthNames.call(calendar, value.substring(iValue)) : monthNamesShort.call(calendar, value.substring(iValue));
+          iValue += month3.length;
+          return month3;
+        }
+        return getName("M", monthNamesShort, monthNames);
+      };
+      var checkLiteral = function() {
+        if (value.charAt(iValue) !== format4.charAt(iFormat)) {
+          throw (main.local.unexpectedLiteralAt || main.regionalOptions[""].unexpectedLiteralAt).replace(/\{0\}/, iValue);
+        }
+        iValue++;
+      };
+      var iValue = 0;
+      for (var iFormat = 0; iFormat < format4.length; iFormat++) {
+        if (literal) {
+          if (format4.charAt(iFormat) === "'" && !doubled("'")) {
+            literal = false;
+          } else {
+            checkLiteral();
+          }
+        } else {
+          switch (format4.charAt(iFormat)) {
+            case "d":
+              day2 = getNumber("d");
+              break;
+            case "D":
+              getName("D", dayNamesShort, dayNames);
+              break;
+            case "o":
+              doy = getNumber("o");
+              break;
+            case "w":
+              getNumber("w");
+              break;
+            case "m":
+              month2 = getMonthNumber();
+              break;
+            case "M":
+              month2 = getMonthName();
+              break;
+            case "y":
+              var iSave = iFormat;
+              shortYear = !doubled("y", 2);
+              iFormat = iSave;
+              year2 = getNumber("y", 2);
+              break;
+            case "Y":
+              year2 = getNumber("Y", 2);
+              break;
+            case "J":
+              jd = getNumber("J") + 0.5;
+              if (value.charAt(iValue) === ".") {
+                iValue++;
+                getNumber("J");
+              }
+              break;
+            case "@":
+              jd = getNumber("@") / this.SECS_PER_DAY + this.UNIX_EPOCH;
+              break;
+            case "!":
+              jd = getNumber("!") / this.TICKS_PER_DAY + this.TICKS_EPOCH;
+              break;
+            case "*":
+              iValue = value.length;
+              break;
+            case "'":
+              if (doubled("'")) {
+                checkLiteral();
+              } else {
+                literal = true;
+              }
+              break;
+            default:
+              checkLiteral();
+          }
+        }
+      }
+      if (iValue < value.length) {
+        throw main.local.unexpectedText || main.regionalOptions[""].unexpectedText;
+      }
+      if (year2 === -1) {
+        year2 = this.today().year();
+      } else if (year2 < 100 && shortYear) {
+        year2 += shortYearCutoff === -1 ? 1900 : this.today().year() - this.today().year() % 100 - (year2 <= shortYearCutoff ? 0 : 100);
+      }
+      if (typeof month2 === "string") {
+        month2 = parseMonth.call(this, year2, month2);
+      }
+      if (doy > -1) {
+        month2 = 1;
+        day2 = doy;
+        for (var dim = this.daysInMonth(year2, month2); day2 > dim; dim = this.daysInMonth(year2, month2)) {
+          month2++;
+          day2 -= dim;
+        }
+      }
+      return jd > -1 ? this.fromJD(jd) : this.newDate(year2, month2, day2);
+    },
+    /** A date may be specified as an exact value or a relative one.
+        Found in the <code>jquery.calendars.plus.js</code> module.
+        @memberof BaseCalendar
+        @param dateSpec {CDate|number|string} The date as an object or string in the given format or
+                an offset - numeric days from today, or string amounts and periods, e.g. '+1m +2w'.
+        @param defaultDate {CDate} The date to use if no other supplied, may be <code>null</code>.
+        @param currentDate {CDate} The current date as a possible basis for relative dates,
+                if <code>null</code> today is used (optional)
+        @param [dateFormat] {string} The expected date format - see <a href="#formatDate"><code>formatDate</code></a>.
+        @param [settings] {object} Additional options whose attributes include:
+        @property [shortYearCutoff] {number} The cutoff year for determining the century.
+        @property [dayNamesShort] {string[]} Abbreviated names of the days from Sunday.
+        @property [dayNames] {string[]} Names of the days from Sunday.
+        @property [monthNamesShort] {string[]} Abbreviated names of the months.
+        @property [monthNames] {string[]} Names of the months.
+        @return {CDate} The decoded date. */
+    determineDate: function(dateSpec, defaultDate, currentDate, dateFormat, settings) {
+      if (currentDate && typeof currentDate !== "object") {
+        settings = dateFormat;
+        dateFormat = currentDate;
+        currentDate = null;
+      }
+      if (typeof dateFormat !== "string") {
+        settings = dateFormat;
+        dateFormat = "";
+      }
+      var calendar = this;
+      var offsetString = function(offset) {
+        try {
+          return calendar.parseDate(dateFormat, offset, settings);
+        } catch (e) {
+        }
+        offset = offset.toLowerCase();
+        var date = (offset.match(/^c/) && currentDate ? currentDate.newDate() : null) || calendar.today();
+        var pattern2 = /([+-]?[0-9]+)\s*(d|w|m|y)?/g;
+        var matches = pattern2.exec(offset);
+        while (matches) {
+          date.add(parseInt(matches[1], 10), matches[2] || "d");
+          matches = pattern2.exec(offset);
+        }
+        return date;
+      };
+      defaultDate = defaultDate ? defaultDate.newDate() : null;
+      dateSpec = dateSpec == null ? defaultDate : typeof dateSpec === "string" ? offsetString(dateSpec) : typeof dateSpec === "number" ? isNaN(dateSpec) || dateSpec === Infinity || dateSpec === -Infinity ? defaultDate : calendar.today().add(dateSpec, "d") : calendar.newDate(dateSpec);
+      return dateSpec;
+    }
+  });
+
+  // node_modules/.pnpm/world-calendars@1.0.4/node_modules/world-calendars/dist/calendars/chinese.js
+  var main2 = require_main();
+  var assign2 = require_object_assign();
+  var gregorianCalendar = main2.instance();
+  function ChineseCalendar(language) {
+    this.local = this.regionalOptions[language || ""] || this.regionalOptions[""];
+  }
+  ChineseCalendar.prototype = new main2.baseCalendar();
+  assign2(ChineseCalendar.prototype, {
+    /** The calendar name.
+        @memberof ChineseCalendar */
+    name: "Chinese",
+    /** Julian date of start of Gregorian epoch: 1 January 0001 CE.
+       @memberof GregorianCalendar */
+    jdEpoch: 17214255e-1,
+    /** <code>true</code> if has a year zero, <code>false</code> if not.
+        @memberof ChineseCalendar */
+    hasYearZero: false,
+    /** The minimum month number.
+        This calendar uses month indices to account for intercalary months. 
+        @memberof ChineseCalendar */
+    minMonth: 0,
+    /** The first month in the year.
+        This calendar uses month indices to account for intercalary months. 
+        @memberof ChineseCalendar */
+    firstMonth: 0,
+    /** The minimum day number.
+        @memberof ChineseCalendar */
+    minDay: 1,
+    /** Localisations for the plugin.
+        Entries are objects indexed by the language code ('' being the default US/English).
+        Each object has the following attributes.
+        @memberof ChineseCalendar
+        @property name {string} The calendar name.
+        @property epochs {string[]} The epoch names.
+        @property monthNames {string[]} The long names of the months of the year.
+        @property monthNamesShort {string[]} The short names of the months of the year.
+        @property dayNames {string[]} The long names of the days of the week.
+        @property dayNamesShort {string[]} The short names of the days of the week.
+        @property dayNamesMin {string[]} The minimal names of the days of the week.
+        @property dateFormat {string} The date format for this calendar.
+                See the options on <a href="BaseCalendar.html#formatDate"><code>formatDate</code></a> for details.
+        @property firstDay {number} The number of the first day of the week, starting at 0.
+        @property isRTL {number} <code>true</code> if this localisation reads right-to-left. */
+    regionalOptions: {
+      // Localisations
+      "": {
+        name: "Chinese",
+        epochs: ["BEC", "EC"],
+        monthNumbers: function(date, padded) {
+          if (typeof date === "string") {
+            var match = date.match(MONTH_NUMBER_REGEXP);
+            return match ? match[0] : "";
+          }
+          var year2 = this._validateYear(date);
+          var monthIndex = date.month();
+          var month2 = "" + this.toChineseMonth(year2, monthIndex);
+          if (padded && month2.length < 2) {
+            month2 = "0" + month2;
+          }
+          if (this.isIntercalaryMonth(year2, monthIndex)) {
+            month2 += "i";
+          }
+          return month2;
+        },
+        monthNames: function(date) {
+          if (typeof date === "string") {
+            var match = date.match(MONTH_NAME_REGEXP);
+            return match ? match[0] : "";
+          }
+          var year2 = this._validateYear(date);
+          var monthIndex = date.month();
+          var month2 = this.toChineseMonth(year2, monthIndex);
+          var monthName = [
+            "\u4E00\u6708",
+            "\u4E8C\u6708",
+            "\u4E09\u6708",
+            "\u56DB\u6708",
+            "\u4E94\u6708",
+            "\u516D\u6708",
+            "\u4E03\u6708",
+            "\u516B\u6708",
+            "\u4E5D\u6708",
+            "\u5341\u6708",
+            "\u5341\u4E00\u6708",
+            "\u5341\u4E8C\u6708"
+          ][month2 - 1];
+          if (this.isIntercalaryMonth(year2, monthIndex)) {
+            monthName = "\u95F0" + monthName;
+          }
+          return monthName;
+        },
+        monthNamesShort: function(date) {
+          if (typeof date === "string") {
+            var match = date.match(MONTH_SHORT_NAME_REGEXP);
+            return match ? match[0] : "";
+          }
+          var year2 = this._validateYear(date);
+          var monthIndex = date.month();
+          var month2 = this.toChineseMonth(year2, monthIndex);
+          var monthName = [
+            "\u4E00",
+            "\u4E8C",
+            "\u4E09",
+            "\u56DB",
+            "\u4E94",
+            "\u516D",
+            "\u4E03",
+            "\u516B",
+            "\u4E5D",
+            "\u5341",
+            "\u5341\u4E00",
+            "\u5341\u4E8C"
+          ][month2 - 1];
+          if (this.isIntercalaryMonth(year2, monthIndex)) {
+            monthName = "\u95F0" + monthName;
+          }
+          return monthName;
+        },
+        parseMonth: function(year2, monthString) {
+          year2 = this._validateYear(year2);
+          var month2 = parseInt(monthString);
+          var isIntercalary;
+          if (!isNaN(month2)) {
+            var i = monthString[monthString.length - 1];
+            isIntercalary = i === "i" || i === "I";
+          } else {
+            if (monthString[0] === "\u95F0") {
+              isIntercalary = true;
+              monthString = monthString.substring(1);
+            }
+            if (monthString[monthString.length - 1] === "\u6708") {
+              monthString = monthString.substring(0, monthString.length - 1);
+            }
+            month2 = 1 + [
+              "\u4E00",
+              "\u4E8C",
+              "\u4E09",
+              "\u56DB",
+              "\u4E94",
+              "\u516D",
+              "\u4E03",
+              "\u516B",
+              "\u4E5D",
+              "\u5341",
+              "\u5341\u4E00",
+              "\u5341\u4E8C"
+            ].indexOf(monthString);
+          }
+          var monthIndex = this.toMonthIndex(year2, month2, isIntercalary);
+          return monthIndex;
+        },
+        dayNames: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+        dayNamesShort: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+        dayNamesMin: ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"],
+        digits: null,
+        dateFormat: "yyyy/mm/dd",
+        firstDay: 1,
+        isRTL: false
+      }
+    },
+    /** Check that a candidate date is from the same calendar and is valid.
+        @memberof BaseCalendar
+        @private
+        @param year {CDate|number} The date or the year to validate.
+        @param error {string} Error message if invalid.
+        @return {number} The year.
+        @throws Error if year out of range. */
+    _validateYear: function(year2, error) {
+      if (year2.year) {
+        year2 = year2.year();
+      }
+      if (typeof year2 !== "number" || year2 < 1888 || year2 > 2111) {
+        throw error.replace(/\{0\}/, this.local.name);
+      }
+      return year2;
+    },
+    /** Retrieve the month index (i.e. accounting for intercalary months).
+        @memberof ChineseCalendar
+        @param year {number} The year.
+        @param month {number} The month (1 for first month).
+        @param [isIntercalary=false] {boolean} If month is intercalary.
+        @return {number} The month index (0 for first month).
+        @throws Error if an invalid month/year or a different calendar used. */
+    toMonthIndex: function(year2, month2, isIntercalary) {
+      var intercalaryMonth = this.intercalaryMonth(year2);
+      var invalidIntercalaryMonth = isIntercalary && month2 !== intercalaryMonth;
+      if (invalidIntercalaryMonth || month2 < 1 || month2 > 12) {
+        throw main2.local.invalidMonth.replace(/\{0\}/, this.local.name);
+      }
+      var monthIndex;
+      if (!intercalaryMonth) {
+        monthIndex = month2 - 1;
+      } else if (!isIntercalary && month2 <= intercalaryMonth) {
+        monthIndex = month2 - 1;
+      } else {
+        monthIndex = month2;
+      }
+      return monthIndex;
+    },
+    /** Retrieve the month (i.e. accounting for intercalary months).
+        @memberof ChineseCalendar
+        @param year {CDate|number} The date or the year to examine.
+        @param monthIndex {number} The month index (0 for first month).
+        @return {number} The month (1 for first month).
+        @throws Error if an invalid month/year or a different calendar used. */
+    toChineseMonth: function(year2, monthIndex) {
+      if (year2.year) {
+        year2 = year2.year();
+        monthIndex = year2.month();
+      }
+      var intercalaryMonth = this.intercalaryMonth(year2);
+      var maxMonthIndex = intercalaryMonth ? 12 : 11;
+      if (monthIndex < 0 || monthIndex > maxMonthIndex) {
+        throw main2.local.invalidMonth.replace(/\{0\}/, this.local.name);
+      }
+      var month2;
+      if (!intercalaryMonth) {
+        month2 = monthIndex + 1;
+      } else if (monthIndex < intercalaryMonth) {
+        month2 = monthIndex + 1;
+      } else {
+        month2 = monthIndex;
+      }
+      return month2;
+    },
+    /** Determine the intercalary month of a year (if any).
+        @memberof ChineseCalendar
+        @param year {CDate|number} The date to examine or the year to examine.
+        @return {number} The intercalary month number, or 0 if none.
+        @throws Error if an invalid year or a different calendar used. */
+    intercalaryMonth: function(year2) {
+      year2 = this._validateYear(year2);
+      var monthDaysTable = LUNAR_MONTH_DAYS[year2 - LUNAR_MONTH_DAYS[0]];
+      var intercalaryMonth = monthDaysTable >> 13;
+      return intercalaryMonth;
+    },
+    /** Determine whether this date is an intercalary month.
+        @memberof ChineseCalendar
+        @param year {CDate|number} The date to examine or the year to examine.
+        @param [monthIndex] {number} The month index to examine.
+        @return {boolean} <code>true</code> if this is an intercalary month, <code>false</code> if not.
+        @throws Error if an invalid year or a different calendar used. */
+    isIntercalaryMonth: function(year2, monthIndex) {
+      if (year2.year) {
+        year2 = year2.year();
+        monthIndex = year2.month();
+      }
+      var intercalaryMonth = this.intercalaryMonth(year2);
+      return !!intercalaryMonth && intercalaryMonth === monthIndex;
+    },
+    /** Determine whether this date is in a leap year.
+        @memberof ChineseCalendar
+        @param year {CDate|number} The date to examine or the year to examine.
+        @return {boolean} <code>true</code> if this is a leap year, <code>false</code> if not.
+        @throws Error if an invalid year or a different calendar used. */
+    leapYear: function(year2) {
+      return this.intercalaryMonth(year2) !== 0;
+    },
+    /** Determine the week of the year for a date - ISO 8601.
+        @memberof ChineseCalendar
+        @param year {CDate|number} The date to examine or the year to examine.
+        @param [monthIndex] {number} The month index to examine.
+        @param [day] {number} The day to examine.
+        @return {number} The week of the year.
+        @throws Error if an invalid date or a different calendar used. */
+    weekOfYear: function(year2, monthIndex, day2) {
+      var validatedYear = this._validateYear(year2, main2.local.invalidyear);
+      var packedDate = CHINESE_NEW_YEAR[validatedYear - CHINESE_NEW_YEAR[0]];
+      var y = packedDate >> 9 & 4095;
+      var m = packedDate >> 5 & 15;
+      var d = packedDate & 31;
+      var firstThursday;
+      firstThursday = gregorianCalendar.newDate(y, m, d);
+      firstThursday.add(4 - (firstThursday.dayOfWeek() || 7), "d");
+      var offset = this.toJD(year2, monthIndex, day2) - firstThursday.toJD();
+      return 1 + Math.floor(offset / 7);
+    },
+    /** Retrieve the number of months in a year.
+        @memberof ChineseCalendar
+        @param year {CDate|number} The date to examine or the year to examine.
+        @return {number} The number of months.
+        @throws Error if an invalid year or a different calendar used. */
+    monthsInYear: function(year2) {
+      return this.leapYear(year2) ? 13 : 12;
+    },
+    /** Retrieve the number of days in a month.
+        @memberof ChineseCalendar
+        @param year {CDate|number} The date to examine or the year of the month.
+        @param [monthIndex] {number} The month index.
+        @return {number} The number of days in this month.
+        @throws Error if an invalid month/year or a different calendar used. */
+    daysInMonth: function(year2, monthIndex) {
+      if (year2.year) {
+        monthIndex = year2.month();
+        year2 = year2.year();
+      }
+      year2 = this._validateYear(year2);
+      var monthDaysTable = LUNAR_MONTH_DAYS[year2 - LUNAR_MONTH_DAYS[0]];
+      var intercalaryMonth = monthDaysTable >> 13;
+      var maxMonthIndex = intercalaryMonth ? 12 : 11;
+      if (monthIndex > maxMonthIndex) {
+        throw main2.local.invalidMonth.replace(/\{0\}/, this.local.name);
+      }
+      var daysInMonth = monthDaysTable & 1 << 12 - monthIndex ? 30 : 29;
+      return daysInMonth;
+    },
+    /** Determine whether this date is a week day.
+        @memberof ChineseCalendar
+        @param year {CDate|number} The date to examine or the year to examine.
+        @param [monthIndex] {number} The month index to examine.
+        @param [day] {number} The day to examine.
+        @return {boolean} <code>true</code> if a week day, <code>false</code> if not.
+        @throws Error if an invalid date or a different calendar used. */
+    weekDay: function(year2, monthIndex, day2) {
+      return (this.dayOfWeek(year2, monthIndex, day2) || 7) < 6;
+    },
+    /** Retrieve the Julian date equivalent for this date,
+        i.e. days since January 1, 4713 BCE Greenwich noon.
+        @memberof ChineseCalendar
+        @param year {CDate|number} The date to convert or the year to convert.
+        @param [monthIndex] {number} The month index to convert.
+        @param [day] {number} The day to convert.
+        @return {number} The equivalent Julian date.
+        @throws Error if an invalid date or a different calendar used. */
+    toJD: function(year2, monthIndex, day2) {
+      var date = this._validate(year2, month2, day2, main2.local.invalidDate);
+      year2 = this._validateYear(date.year());
+      monthIndex = date.month();
+      day2 = date.day();
+      var isIntercalary = this.isIntercalaryMonth(year2, monthIndex);
+      var month2 = this.toChineseMonth(year2, monthIndex);
+      var solar = toSolar(year2, month2, day2, isIntercalary);
+      return gregorianCalendar.toJD(solar.year, solar.month, solar.day);
+    },
+    /** Create a new date from a Julian date.
+        @memberof ChineseCalendar
+        @param jd {number} The Julian date to convert.
+        @return {CDate} The equivalent date. */
+    fromJD: function(jd) {
+      var date = gregorianCalendar.fromJD(jd);
+      var lunar = toLunar(date.year(), date.month(), date.day());
+      var monthIndex = this.toMonthIndex(
+        lunar.year,
+        lunar.month,
+        lunar.isIntercalary
+      );
+      return this.newDate(lunar.year, monthIndex, lunar.day);
+    },
+    /** Create a new date from a string.
+        @memberof ChineseCalendar
+        @param dateString {string} String representing a Chinese date
+        @return {CDate} The new date.
+        @throws Error if an invalid date. */
+    fromString: function(dateString) {
+      var match = dateString.match(DATE_REGEXP);
+      var year2 = this._validateYear(+match[1]);
+      var month2 = +match[2];
+      var isIntercalary = !!match[3];
+      var monthIndex = this.toMonthIndex(year2, month2, isIntercalary);
+      var day2 = +match[4];
+      return this.newDate(year2, monthIndex, day2);
+    },
+    /** Add period(s) to a date.
+        Cater for no year zero.
+        @memberof ChineseCalendar
+        @param date {CDate} The starting date.
+        @param offset {number} The number of periods to adjust by.
+        @param period {string} One of 'y' for year, 'm' for month, 'w' for week, 'd' for day.
+        @return {CDate} The updated date.
+        @throws Error if a different calendar used. */
+    add: function(date, offset, period) {
+      var year2 = date.year();
+      var monthIndex = date.month();
+      var isIntercalary = this.isIntercalaryMonth(year2, monthIndex);
+      var month2 = this.toChineseMonth(year2, monthIndex);
+      var cdate = Object.getPrototypeOf(ChineseCalendar.prototype).add.call(this, date, offset, period);
+      if (period === "y") {
+        var resultYear = cdate.year();
+        var resultMonthIndex = cdate.month();
+        var resultCanBeIntercalaryMonth = this.isIntercalaryMonth(resultYear, month2);
+        var correctedMonthIndex = isIntercalary && resultCanBeIntercalaryMonth ? this.toMonthIndex(resultYear, month2, true) : this.toMonthIndex(resultYear, month2, false);
+        if (correctedMonthIndex !== resultMonthIndex) {
+          cdate.month(correctedMonthIndex);
+        }
+      }
+      return cdate;
+    }
+  });
+  var DATE_REGEXP = /^\s*(-?\d\d\d\d|\d\d)[-/](\d?\d)([iI]?)[-/](\d?\d)/m;
+  var MONTH_NUMBER_REGEXP = /^\d?\d[iI]?/m;
+  var MONTH_NAME_REGEXP = /^闰?十?[一二三四五六七八九]?月/m;
+  var MONTH_SHORT_NAME_REGEXP = /^闰?十?[一二三四五六七八九]?/m;
+  main2.calendars.chinese = ChineseCalendar;
+  var LUNAR_MONTH_DAYS = [
+    1887,
+    5780,
+    5802,
+    19157,
+    2742,
+    50359,
+    1198,
+    2646,
+    46378,
+    7466,
+    3412,
+    30122,
+    5482,
+    67949,
+    2396,
+    5294,
+    43597,
+    6732,
+    6954,
+    36181,
+    2772,
+    4954,
+    18781,
+    2396,
+    54427,
+    5274,
+    6730,
+    47781,
+    5800,
+    6868,
+    21210,
+    4790,
+    59703,
+    2350,
+    5270,
+    46667,
+    3402,
+    3496,
+    38325,
+    1388,
+    4782,
+    18735,
+    2350,
+    52374,
+    6804,
+    7498,
+    44457,
+    2906,
+    1388,
+    29294,
+    4700,
+    63789,
+    6442,
+    6804,
+    56138,
+    5802,
+    2772,
+    38235,
+    1210,
+    4698,
+    22827,
+    5418,
+    63125,
+    3476,
+    5802,
+    43701,
+    2484,
+    5302,
+    27223,
+    2646,
+    70954,
+    7466,
+    3412,
+    54698,
+    5482,
+    2412,
+    38062,
+    5294,
+    2636,
+    32038,
+    6954,
+    60245,
+    2772,
+    4826,
+    43357,
+    2394,
+    5274,
+    39501,
+    6730,
+    72357,
+    5800,
+    5844,
+    53978,
+    4790,
+    2358,
+    38039,
+    5270,
+    87627,
+    3402,
+    3496,
+    54708,
+    5484,
+    4782,
+    43311,
+    2350,
+    3222,
+    27978,
+    7498,
+    68965,
+    2904,
+    5484,
+    45677,
+    4700,
+    6444,
+    39573,
+    6804,
+    6986,
+    19285,
+    2772,
+    62811,
+    1210,
+    4698,
+    47403,
+    5418,
+    5780,
+    38570,
+    5546,
+    76469,
+    2420,
+    5302,
+    51799,
+    2646,
+    5414,
+    36501,
+    3412,
+    5546,
+    18869,
+    2412,
+    54446,
+    5276,
+    6732,
+    48422,
+    6822,
+    2900,
+    28010,
+    4826,
+    92509,
+    2394,
+    5274,
+    55883,
+    6730,
+    6820,
+    47956,
+    5812,
+    2778,
+    18779,
+    2358,
+    62615,
+    5270,
+    5450,
+    46757,
+    3492,
+    5556,
+    27318,
+    4718,
+    67887,
+    2350,
+    3222,
+    52554,
+    7498,
+    3428,
+    38252,
+    5468,
+    4700,
+    31022,
+    6444,
+    64149,
+    6804,
+    6986,
+    43861,
+    2772,
+    5338,
+    35421,
+    2650,
+    70955,
+    5418,
+    5780,
+    54954,
+    5546,
+    2740,
+    38074,
+    5302,
+    2646,
+    29991,
+    3366,
+    61011,
+    3412,
+    5546,
+    43445,
+    2412,
+    5294,
+    35406,
+    6732,
+    72998,
+    6820,
+    6996,
+    52586,
+    2778,
+    2396,
+    38045,
+    5274,
+    6698,
+    23333,
+    6820,
+    64338,
+    5812,
+    2746,
+    43355,
+    2358,
+    5270,
+    39499,
+    5450,
+    79525,
+    3492,
+    5548
+  ];
+  var CHINESE_NEW_YEAR = [
+    1887,
+    966732,
+    967231,
+    967733,
+    968265,
+    968766,
+    969297,
+    969798,
+    970298,
+    970829,
+    971330,
+    971830,
+    972362,
+    972863,
+    973395,
+    973896,
+    974397,
+    974928,
+    975428,
+    975929,
+    976461,
+    976962,
+    977462,
+    977994,
+    978494,
+    979026,
+    979526,
+    980026,
+    980558,
+    981059,
+    981559,
+    982091,
+    982593,
+    983124,
+    983624,
+    984124,
+    984656,
+    985157,
+    985656,
+    986189,
+    986690,
+    987191,
+    987722,
+    988222,
+    988753,
+    989254,
+    989754,
+    990286,
+    990788,
+    991288,
+    991819,
+    992319,
+    992851,
+    993352,
+    993851,
+    994383,
+    994885,
+    995385,
+    995917,
+    996418,
+    996918,
+    997450,
+    997949,
+    998481,
+    998982,
+    999483,
+    1000014,
+    1000515,
+    1001016,
+    1001548,
+    1002047,
+    1002578,
+    1003080,
+    1003580,
+    1004111,
+    1004613,
+    1005113,
+    1005645,
+    1006146,
+    1006645,
+    1007177,
+    1007678,
+    1008209,
+    1008710,
+    1009211,
+    1009743,
+    1010243,
+    1010743,
+    1011275,
+    1011775,
+    1012306,
+    1012807,
+    1013308,
+    1013840,
+    1014341,
+    1014841,
+    1015373,
+    1015874,
+    1016404,
+    1016905,
+    1017405,
+    1017937,
+    1018438,
+    1018939,
+    1019471,
+    1019972,
+    1020471,
+    1021002,
+    1021503,
+    1022035,
+    1022535,
+    1023036,
+    1023568,
+    1024069,
+    1024568,
+    1025100,
+    1025601,
+    1026102,
+    1026633,
+    1027133,
+    1027666,
+    1028167,
+    1028666,
+    1029198,
+    1029699,
+    1030199,
+    1030730,
+    1031231,
+    1031763,
+    1032264,
+    1032764,
+    1033296,
+    1033797,
+    1034297,
+    1034828,
+    1035329,
+    1035830,
+    1036362,
+    1036861,
+    1037393,
+    1037894,
+    1038394,
+    1038925,
+    1039427,
+    1039927,
+    1040459,
+    1040959,
+    1041491,
+    1041992,
+    1042492,
+    1043023,
+    1043524,
+    1044024,
+    1044556,
+    1045057,
+    1045558,
+    1046090,
+    1046590,
+    1047121,
+    1047622,
+    1048122,
+    1048654,
+    1049154,
+    1049655,
+    1050187,
+    1050689,
+    1051219,
+    1051720,
+    1052220,
+    1052751,
+    1053252,
+    1053752,
+    1054284,
+    1054786,
+    1055285,
+    1055817,
+    1056317,
+    1056849,
+    1057349,
+    1057850,
+    1058382,
+    1058883,
+    1059383,
+    1059915,
+    1060415,
+    1060947,
+    1061447,
+    1061947,
+    1062479,
+    1062981,
+    1063480,
+    1064012,
+    1064514,
+    1065014,
+    1065545,
+    1066045,
+    1066577,
+    1067078,
+    1067578,
+    1068110,
+    1068611,
+    1069112,
+    1069642,
+    1070142,
+    1070674,
+    1071175,
+    1071675,
+    1072207,
+    1072709,
+    1073209,
+    1073740,
+    1074241,
+    1074741,
+    1075273,
+    1075773,
+    1076305,
+    1076807,
+    1077308,
+    1077839,
+    1078340,
+    1078840,
+    1079372,
+    1079871,
+    1080403,
+    1080904
+  ];
+  function toLunar(yearOrDate, monthOrResult, day2, result) {
+    var solarDate;
+    var lunarDate;
+    if (typeof yearOrDate === "object") {
+      solarDate = yearOrDate;
+      lunarDate = monthOrResult || {};
+    } else {
+      var isValidYear = typeof yearOrDate === "number" && yearOrDate >= 1888 && yearOrDate <= 2111;
+      if (!isValidYear)
+        throw new Error("Solar year outside range 1888-2111");
+      var isValidMonth = typeof monthOrResult === "number" && monthOrResult >= 1 && monthOrResult <= 12;
+      if (!isValidMonth)
+        throw new Error("Solar month outside range 1 - 12");
+      var isValidDay = typeof day2 === "number" && day2 >= 1 && day2 <= 31;
+      if (!isValidDay)
+        throw new Error("Solar day outside range 1 - 31");
+      solarDate = {
+        year: yearOrDate,
+        month: monthOrResult,
+        day: day2
+      };
+      lunarDate = result || {};
+    }
+    var chineseNewYearPackedDate = CHINESE_NEW_YEAR[solarDate.year - CHINESE_NEW_YEAR[0]];
+    var packedDate = solarDate.year << 9 | solarDate.month << 5 | solarDate.day;
+    lunarDate.year = packedDate >= chineseNewYearPackedDate ? solarDate.year : solarDate.year - 1;
+    chineseNewYearPackedDate = CHINESE_NEW_YEAR[lunarDate.year - CHINESE_NEW_YEAR[0]];
+    var y = chineseNewYearPackedDate >> 9 & 4095;
+    var m = chineseNewYearPackedDate >> 5 & 15;
+    var d = chineseNewYearPackedDate & 31;
+    var daysFromNewYear;
+    var chineseNewYearJSDate = new Date(y, m - 1, d);
+    var jsDate = new Date(solarDate.year, solarDate.month - 1, solarDate.day);
+    daysFromNewYear = Math.round(
+      (jsDate - chineseNewYearJSDate) / (24 * 3600 * 1e3)
+    );
+    var monthDaysTable = LUNAR_MONTH_DAYS[lunarDate.year - LUNAR_MONTH_DAYS[0]];
+    var i;
+    for (i = 0; i < 13; i++) {
+      var daysInMonth = monthDaysTable & 1 << 12 - i ? 30 : 29;
+      if (daysFromNewYear < daysInMonth) {
+        break;
+      }
+      daysFromNewYear -= daysInMonth;
+    }
+    var intercalaryMonth = monthDaysTable >> 13;
+    if (!intercalaryMonth || i < intercalaryMonth) {
+      lunarDate.isIntercalary = false;
+      lunarDate.month = 1 + i;
+    } else if (i === intercalaryMonth) {
+      lunarDate.isIntercalary = true;
+      lunarDate.month = i;
+    } else {
+      lunarDate.isIntercalary = false;
+      lunarDate.month = i;
+    }
+    lunarDate.day = 1 + daysFromNewYear;
+    return lunarDate;
+  }
+  function toSolar(yearOrDate, monthOrResult, day2, isIntercalaryOrResult, result) {
+    var solarDate;
+    var lunarDate;
+    if (typeof yearOrDate === "object") {
+      lunarDate = yearOrDate;
+      solarDate = monthOrResult || {};
+    } else {
+      var isValidYear = typeof yearOrDate === "number" && yearOrDate >= 1888 && yearOrDate <= 2111;
+      if (!isValidYear)
+        throw new Error("Lunar year outside range 1888-2111");
+      var isValidMonth = typeof monthOrResult === "number" && monthOrResult >= 1 && monthOrResult <= 12;
+      if (!isValidMonth)
+        throw new Error("Lunar month outside range 1 - 12");
+      var isValidDay = typeof day2 === "number" && day2 >= 1 && day2 <= 30;
+      if (!isValidDay)
+        throw new Error("Lunar day outside range 1 - 30");
+      var isIntercalary;
+      if (typeof isIntercalaryOrResult === "object") {
+        isIntercalary = false;
+        solarDate = isIntercalaryOrResult;
+      } else {
+        isIntercalary = !!isIntercalaryOrResult;
+        solarDate = result || {};
+      }
+      lunarDate = {
+        year: yearOrDate,
+        month: monthOrResult,
+        day: day2,
+        isIntercalary
+      };
+    }
+    var daysFromNewYear;
+    daysFromNewYear = lunarDate.day - 1;
+    var monthDaysTable = LUNAR_MONTH_DAYS[lunarDate.year - LUNAR_MONTH_DAYS[0]];
+    var intercalaryMonth = monthDaysTable >> 13;
+    var monthsFromNewYear;
+    if (!intercalaryMonth) {
+      monthsFromNewYear = lunarDate.month - 1;
+    } else if (lunarDate.month > intercalaryMonth) {
+      monthsFromNewYear = lunarDate.month;
+    } else if (lunarDate.isIntercalary) {
+      monthsFromNewYear = lunarDate.month;
+    } else {
+      monthsFromNewYear = lunarDate.month - 1;
+    }
+    for (var i = 0; i < monthsFromNewYear; i++) {
+      var daysInMonth = monthDaysTable & 1 << 12 - i ? 30 : 29;
+      daysFromNewYear += daysInMonth;
+    }
+    var packedDate = CHINESE_NEW_YEAR[lunarDate.year - CHINESE_NEW_YEAR[0]];
+    var y = packedDate >> 9 & 4095;
+    var m = packedDate >> 5 & 15;
+    var d = packedDate & 31;
+    var jsDate = new Date(y, m - 1, d + daysFromNewYear);
+    solarDate.year = jsDate.getFullYear();
+    solarDate.month = 1 + jsDate.getMonth();
+    solarDate.day = jsDate.getDate();
+    return solarDate;
+  }
+
+  // node_modules/.pnpm/world-calendars@1.0.4/node_modules/world-calendars/dist/calendars/coptic.js
+  var main3 = require_main();
+  var assign3 = require_object_assign();
+  function CopticCalendar(language) {
+    this.local = this.regionalOptions[language || ""] || this.regionalOptions[""];
+  }
+  CopticCalendar.prototype = new main3.baseCalendar();
+  assign3(CopticCalendar.prototype, {
+    /** The calendar name.
+        @memberof CopticCalendar */
+    name: "Coptic",
+    /** Julian date of start of Coptic epoch: 29 August 284 CE (Gregorian).
+        @memberof CopticCalendar */
+    jdEpoch: 18250295e-1,
+    /** Days per month in a common year.
+        @memberof CopticCalendar */
+    daysPerMonth: [30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 5],
+    /** <code>true</code> if has a year zero, <code>false</code> if not.
+        @memberof CopticCalendar */
+    hasYearZero: false,
+    /** The minimum month number.
+        @memberof CopticCalendar */
+    minMonth: 1,
+    /** The first month in the year.
+        @memberof CopticCalendar */
+    firstMonth: 1,
+    /** The minimum day number.
+        @memberof CopticCalendar */
+    minDay: 1,
+    /** Localisations for the plugin.
+        Entries are objects indexed by the language code ('' being the default US/English).
+        Each object has the following attributes.
+        @memberof CopticCalendar
+        @property name {string} The calendar name.
+        @property epochs {string[]} The epoch names.
+        @property monthNames {string[]} The long names of the months of the year.
+        @property monthNamesShort {string[]} The short names of the months of the year.
+        @property dayNames {string[]} The long names of the days of the week.
+        @property dayNamesShort {string[]} The short names of the days of the week.
+        @property dayNamesMin {string[]} The minimal names of the days of the week.
+        @property dateFormat {string} The date format for this calendar.
+                See the options on <a href="BaseCalendar.html#formatDate"><code>formatDate</code></a> for details.
+        @property firstDay {number} The number of the first day of the week, starting at 0.
+        @property isRTL {number} <code>true</code> if this localisation reads right-to-left. */
+    regionalOptions: {
+      // Localisations
+      "": {
+        name: "Coptic",
+        epochs: ["BAM", "AM"],
+        monthNames: [
+          "Thout",
+          "Paopi",
+          "Hathor",
+          "Koiak",
+          "Tobi",
+          "Meshir",
+          "Paremhat",
+          "Paremoude",
+          "Pashons",
+          "Paoni",
+          "Epip",
+          "Mesori",
+          "Pi Kogi Enavot"
+        ],
+        monthNamesShort: [
+          "Tho",
+          "Pao",
+          "Hath",
+          "Koi",
+          "Tob",
+          "Mesh",
+          "Pat",
+          "Pad",
+          "Pash",
+          "Pao",
+          "Epi",
+          "Meso",
+          "PiK"
+        ],
+        dayNames: ["Tkyriaka", "Pesnau", "Pshoment", "Peftoou", "Ptiou", "Psoou", "Psabbaton"],
+        dayNamesShort: ["Tky", "Pes", "Psh", "Pef", "Pti", "Pso", "Psa"],
+        dayNamesMin: ["Tk", "Pes", "Psh", "Pef", "Pt", "Pso", "Psa"],
+        digits: null,
+        dateFormat: "dd/mm/yyyy",
+        firstDay: 0,
+        isRTL: false
+      }
+    },
+    /** Determine whether this date is in a leap year.
+        @memberof CopticCalendar
+        @param year {CDate|number} The date to examine or the year to examine.
+        @return {boolean} <code>true</code> if this is a leap year, <code>false</code> if not.
+        @throws Error if an invalid year or a different calendar used. */
+    leapYear: function(year2) {
+      var date = this._validate(year2, this.minMonth, this.minDay, main3.local.invalidYear);
+      var year2 = date.year() + (date.year() < 0 ? 1 : 0);
+      return year2 % 4 === 3 || year2 % 4 === -1;
+    },
+    /** Retrieve the number of months in a year.
+        @memberof CopticCalendar
+        @param year {CDate|number} The date to examine or the year to examine.
+        @return {number} The number of months.
+        @throws Error if an invalid year or a different calendar used. */
+    monthsInYear: function(year2) {
+      this._validate(
+        year2,
+        this.minMonth,
+        this.minDay,
+        main3.local.invalidYear || main3.regionalOptions[""].invalidYear
+      );
+      return 13;
+    },
+    /** Determine the week of the year for a date.
+        @memberof CopticCalendar
+        @param year {CDate|number} The date to examine or the year to examine.
+        @param [month] {number) the month to examine.
+        @param [day] {number} The day to examine.
+        @return {number} The week of the year.
+        @throws Error if an invalid date or a different calendar used. */
+    weekOfYear: function(year2, month2, day2) {
+      var checkDate = this.newDate(year2, month2, day2);
+      checkDate.add(-checkDate.dayOfWeek(), "d");
+      return Math.floor((checkDate.dayOfYear() - 1) / 7) + 1;
+    },
+    /** Retrieve the number of days in a month.
+        @memberof CopticCalendar
+        @param year {CDate|number} The date to examine or the year of the month.
+        @param [month] {number} The month.
+        @return {number} The number of days in this month.
+        @throws Error if an invalid month/year or a different calendar used. */
+    daysInMonth: function(year2, month2) {
+      var date = this._validate(year2, month2, this.minDay, main3.local.invalidMonth);
+      return this.daysPerMonth[date.month() - 1] + (date.month() === 13 && this.leapYear(date.year()) ? 1 : 0);
+    },
+    /** Determine whether this date is a week day.
+        @memberof CopticCalendar
+        @param year {CDate|number} The date to examine or the year to examine.
+        @param month {number} The month to examine.
+        @param day {number} The day to examine.
+        @return {boolean} <code>true</code> if a week day, <code>false</code> if not.
+        @throws Error if an invalid date or a different calendar used. */
+    weekDay: function(year2, month2, day2) {
+      return (this.dayOfWeek(year2, month2, day2) || 7) < 6;
+    },
+    /** Retrieve the Julian date equivalent for this date,
+        i.e. days since January 1, 4713 BCE Greenwich noon.
+        @memberof CopticCalendar
+        @param year {CDate|number} The date to convert or the year to convert.
+        @param [month] {number) the month to convert.
+        @param [day] {number} The day to convert.
+        @return {number} The equivalent Julian date.
+        @throws Error if an invalid date or a different calendar used. */
+    toJD: function(year2, month2, day2) {
+      var date = this._validate(year2, month2, day2, main3.local.invalidDate);
+      year2 = date.year();
+      if (year2 < 0) {
+        year2++;
+      }
+      return date.day() + (date.month() - 1) * 30 + (year2 - 1) * 365 + Math.floor(year2 / 4) + this.jdEpoch - 1;
+    },
+    /** Create a new date from a Julian date.
+        @memberof CopticCalendar
+        @param jd {number} The Julian date to convert.
+        @return {CDate} The equivalent date. */
+    fromJD: function(jd) {
+      var c = Math.floor(jd) + 0.5 - this.jdEpoch;
+      var year2 = Math.floor((c - Math.floor((c + 366) / 1461)) / 365) + 1;
+      if (year2 <= 0) {
+        year2--;
+      }
+      c = Math.floor(jd) + 0.5 - this.newDate(year2, 1, 1).toJD();
+      var month2 = Math.floor(c / 30) + 1;
+      var day2 = c - (month2 - 1) * 30 + 1;
+      return this.newDate(year2, month2, day2);
+    }
+  });
+  main3.calendars.coptic = CopticCalendar;
+
+  // node_modules/.pnpm/world-calendars@1.0.4/node_modules/world-calendars/dist/calendars/discworld.js
+  var main4 = require_main();
+  var assign4 = require_object_assign();
+  function DiscworldCalendar(language) {
+    this.local = this.regionalOptions[language || ""] || this.regionalOptions[""];
+  }
+  DiscworldCalendar.prototype = new main4.baseCalendar();
+  assign4(DiscworldCalendar.prototype, {
+    /** The calendar name.
+        @memberof DiscworldCalendar */
+    name: "Discworld",
+    /** Julian date of start of Discworld epoch: 1 January 0001 CE.
+        @memberof DiscworldCalendar */
+    jdEpoch: 17214255e-1,
+    /** Days per month in a common year.
+        @memberof DiscworldCalendar */
+    daysPerMonth: [16, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32],
+    /** <code>true</code> if has a year zero, <code>false</code> if not.
+        @memberof DiscworldCalendar */
+    hasYearZero: false,
+    /** The minimum month number.
+        @memberof DiscworldCalendar */
+    minMonth: 1,
+    /** The first month in the year.
+        @memberof DiscworldCalendar */
+    firstMonth: 1,
+    /** The minimum day number.
+        @memberof DiscworldCalendar */
+    minDay: 1,
+    /** Localisations for the plugin.
+        Entries are objects indexed by the language code ('' being the default US/English).
+        Each object has the following attributes.
+        @memberof DiscworldCalendar
+        @property name {string} The calendar name.
+        @property epochs {string[]} The epoch names.
+        @property monthNames {string[]} The long names of the months of the year.
+        @property monthNamesShort {string[]} The short names of the months of the year.
+        @property dayNames {string[]} The long names of the days of the week.
+        @property dayNamesShort {string[]} The short names of the days of the week.
+        @property dayNamesMin {string[]} The minimal names of the days of the week.
+        @property dateFormat {string} The date format for this calendar.
+                See the options on <a href="BaseCalendar.html#formatDate"><code>formatDate</code></a> for details.
+        @property firstDay {number} The number of the first day of the week, starting at 0.
+        @property isRTL {number} <code>true</code> if this localisation reads right-to-left. */
+    regionalOptions: {
+      // Localisations
+      "": {
+        name: "Discworld",
+        epochs: ["BUC", "UC"],
+        monthNames: [
+          "Ick",
+          "Offle",
+          "February",
+          "March",
+          "April",
+          "May",
+          "June",
+          "Grune",
+          "August",
+          "Spune",
+          "Sektober",
+          "Ember",
+          "December"
+        ],
+        monthNamesShort: ["Ick", "Off", "Feb", "Mar", "Apr", "May", "Jun", "Gru", "Aug", "Spu", "Sek", "Emb", "Dec"],
+        dayNames: ["Sunday", "Octeday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+        dayNamesShort: ["Sun", "Oct", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+        dayNamesMin: ["Su", "Oc", "Mo", "Tu", "We", "Th", "Fr", "Sa"],
+        digits: null,
+        dateFormat: "yyyy/mm/dd",
+        firstDay: 2,
+        isRTL: false
+      }
+    },
+    /** Determine whether this date is in a leap year.
+        @memberof DiscworldCalendar
+        @param year {CDate|number} The date to examine or the year to examine.
+        @return {boolean} <code>true</code> if this is a leap year, <code>false</code> if not.
+        @throws Error if an invalid year or a different calendar used. */
+    leapYear: function(year2) {
+      this._validate(year2, this.minMonth, this.minDay, main4.local.invalidYear);
+      return false;
+    },
+    /** Retrieve the number of months in a year.
+        @memberof DiscworldCalendar
+        @param year {CDate|number} The date to examine or the year to examine.
+        @return {number} The number of months.
+        @throws Error if an invalid year or a different calendar used. */
+    monthsInYear: function(year2) {
+      this._validate(year2, this.minMonth, this.minDay, main4.local.invalidYear);
+      return 13;
+    },
+    /** Retrieve the number of days in a year.
+        @memberof DiscworldCalendar
+        @param year {CDate|number} The date to examine or the year to examine.
+        @return {number} The number of days.
+        @throws Error if an invalid year or a different calendar used. */
+    daysInYear: function(year2) {
+      this._validate(year2, this.minMonth, this.minDay, main4.local.invalidYear);
+      return 400;
+    },
+    /** Determine the week of the year for a date.
+        @memberof DiscworldCalendar
+        @param year {CDate|number} The date to examine or the year to examine.
+        @param [month] {number} The month to examine.
+        @param [day] {number} The day to examine.
+        @return {number} The week of the year.
+        @throws Error if an invalid date or a different calendar used. */
+    weekOfYear: function(year2, month2, day2) {
+      var checkDate = this.newDate(year2, month2, day2);
+      checkDate.add(-checkDate.dayOfWeek(), "d");
+      return Math.floor((checkDate.dayOfYear() - 1) / 8) + 1;
+    },
+    /** Retrieve the number of days in a month.
+        @memberof DiscworldCalendar
+        @param year {CDate|number} The date to examine or the year of the month.
+        @param [month] {number} The month.
+        @return {number} The number of days in this month.
+        @throws Error if an invalid month/year or a different calendar used. */
+    daysInMonth: function(year2, month2) {
+      var date = this._validate(year2, month2, this.minDay, main4.local.invalidMonth);
+      return this.daysPerMonth[date.month() - 1];
+    },
+    /** Retrieve the number of days in a week.
+        @memberof DiscworldCalendar
+        @return {number} The number of days. */
+    daysInWeek: function() {
+      return 8;
+    },
+    /** Retrieve the day of the week for a date.
+        @memberof DiscworldCalendar
+        @param year {CDate|number} The date to examine or the year to examine.
+        @param [month] {number} The month to examine.
+        @param [day] {number} The day to examine.
+        @return {number} The day of the week: 0 to number of days - 1.
+        @throws Error if an invalid date or a different calendar used. */
+    dayOfWeek: function(year2, month2, day2) {
+      var date = this._validate(year2, month2, day2, main4.local.invalidDate);
+      return (date.day() + 1) % 8;
+    },
+    /** Determine whether this date is a week day.
+        @memberof DiscworldCalendar
+        @param year {CDate|number} The date to examine or the year to examine.
+        @param [month] {number} The month to examine.
+        @param [day] {number} The day to examine.
+        @return {boolean} <code>true</code> if a week day, <code>false</code> if not.
+        @throws Error if an invalid date or a different calendar used. */
+    weekDay: function(year2, month2, day2) {
+      var dow = this.dayOfWeek(year2, month2, day2);
+      return dow >= 2 && dow <= 6;
+    },
+    /** Retrieve additional information about a date.
+        @memberof DiscworldCalendar
+        @param year {CDate|number} The date to examine or the year to examine.
+        @param [month] {number} The month to examine.
+        @param [day] {number} The day to examine.
+        @return {object} Additional information - contents depends on calendar.
+        @throws Error if an invalid date or a different calendar used. */
+    extraInfo: function(year2, month2, day2) {
+      var date = this._validate(year2, month2, day2, main4.local.invalidDate);
+      return { century: centuries[Math.floor((date.year() - 1) / 100) + 1] || "" };
+    },
+    /** Retrieve the Julian date equivalent for this date,
+        i.e. days since January 1, 4713 BCE Greenwich noon.
+        @memberof DiscworldCalendar
+        @param year {CDate|number} The date to convert or the year to convert.
+        @param [month] {number} The month to convert.
+        @param [day] {number} The day to convert.
+        @return {number} The equivalent Julian date.
+        @throws Error if an invalid date or a different calendar used. */
+    toJD: function(year2, month2, day2) {
+      var date = this._validate(year2, month2, day2, main4.local.invalidDate);
+      year2 = date.year() + (date.year() < 0 ? 1 : 0);
+      month2 = date.month();
+      day2 = date.day();
+      return day2 + (month2 > 1 ? 16 : 0) + (month2 > 2 ? (month2 - 2) * 32 : 0) + (year2 - 1) * 400 + this.jdEpoch - 1;
+    },
+    /** Create a new date from a Julian date.
+        @memberof DiscworldCalendar
+        @param jd {number} The Julian date to convert.
+        @return {CDate} The equivalent date. */
+    fromJD: function(jd) {
+      jd = Math.floor(jd + 0.5) - Math.floor(this.jdEpoch) - 1;
+      var year2 = Math.floor(jd / 400) + 1;
+      jd -= (year2 - 1) * 400;
+      jd += jd > 15 ? 16 : 0;
+      var month2 = Math.floor(jd / 32) + 1;
+      var day2 = jd - (month2 - 1) * 32 + 1;
+      return this.newDate(year2 <= 0 ? year2 - 1 : year2, month2, day2);
+    }
+  });
+  var centuries = {
+    20: "Fruitbat",
+    21: "Anchovy"
+  };
+  main4.calendars.discworld = DiscworldCalendar;
+
+  // node_modules/.pnpm/world-calendars@1.0.4/node_modules/world-calendars/dist/calendars/ethiopian.js
+  var main5 = require_main();
+  var assign5 = require_object_assign();
+  function EthiopianCalendar(language) {
+    this.local = this.regionalOptions[language || ""] || this.regionalOptions[""];
+  }
+  EthiopianCalendar.prototype = new main5.baseCalendar();
+  assign5(EthiopianCalendar.prototype, {
+    /** The calendar name.
+        @memberof EthiopianCalendar */
+    name: "Ethiopian",
+    /** Julian date of start of Ethiopian epoch: 27 August 8 CE (Gregorian).
+        @memberof EthiopianCalendar */
+    jdEpoch: 17242205e-1,
+    /** Days per month in a common year.
+        @memberof EthiopianCalendar */
+    daysPerMonth: [30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 5],
+    /** <code>true</code> if has a year zero, <code>false</code> if not.
+        @memberof EthiopianCalendar */
+    hasYearZero: false,
+    /** The minimum month number.
+        @memberof EthiopianCalendar */
+    minMonth: 1,
+    /** The first month in the year.
+        @memberof EthiopianCalendar */
+    firstMonth: 1,
+    /** The minimum day number.
+        @memberof EthiopianCalendar */
+    minDay: 1,
+    /** Localisations for the plugin.
+        Entries are objects indexed by the language code ('' being the default US/English).
+        Each object has the following attributes.
+        @memberof EthiopianCalendar
+        @property name {string} The calendar name.
+        @property epochs {string[]} The epoch names.
+        @property monthNames {string[]} The long names of the months of the year.
+        @property monthNamesShort {string[]} The short names of the months of the year.
+        @property dayNames {string[]} The long names of the days of the week.
+        @property dayNamesShort {string[]} The short names of the days of the week.
+        @property dayNamesMin {string[]} The minimal names of the days of the week.
+        @property dateFormat {string} The date format for this calendar.
+                See the options on <a href="BaseCalendar.html#formatDate"><code>formatDate</code></a> for details.
+        @property firstDay {number} The number of the first day of the week, starting at 0.
+        @property isRTL {number} <code>true</code> if this localisation reads right-to-left. */
+    regionalOptions: {
+      // Localisations
+      "": {
+        name: "Ethiopian",
+        epochs: ["BEE", "EE"],
+        monthNames: [
+          "Meskerem",
+          "Tikemet",
+          "Hidar",
+          "Tahesas",
+          "Tir",
+          "Yekatit",
+          "Megabit",
+          "Miazia",
+          "Genbot",
+          "Sene",
+          "Hamle",
+          "Nehase",
+          "Pagume"
+        ],
+        monthNamesShort: [
+          "Mes",
+          "Tik",
+          "Hid",
+          "Tah",
+          "Tir",
+          "Yek",
+          "Meg",
+          "Mia",
+          "Gen",
+          "Sen",
+          "Ham",
+          "Neh",
+          "Pag"
+        ],
+        dayNames: ["Ehud", "Segno", "Maksegno", "Irob", "Hamus", "Arb", "Kidame"],
+        dayNamesShort: ["Ehu", "Seg", "Mak", "Iro", "Ham", "Arb", "Kid"],
+        dayNamesMin: ["Eh", "Se", "Ma", "Ir", "Ha", "Ar", "Ki"],
+        digits: null,
+        dateFormat: "dd/mm/yyyy",
+        firstDay: 0,
+        isRTL: false
+      }
+    },
+    /** Determine whether this date is in a leap year.
+        @memberof EthiopianCalendar
+        @param year {CDate|number} The date to examine or the year to examine.
+        @return {boolean} <code>true</code> if this is a leap year, <code>false</code> if not.
+        @throws Error if an invalid year or a different calendar used. */
+    leapYear: function(year2) {
+      var date = this._validate(year2, this.minMonth, this.minDay, main5.local.invalidYear);
+      var year2 = date.year() + (date.year() < 0 ? 1 : 0);
+      return year2 % 4 === 3 || year2 % 4 === -1;
+    },
+    /** Retrieve the number of months in a year.
+        @memberof EthiopianCalendar
+        @param year {CDate|number} The date to examine or the year to examine.
+        @return {number} The number of months.
+        @throws Error if an invalid year or a different calendar used. */
+    monthsInYear: function(year2) {
+      this._validate(
+        year2,
+        this.minMonth,
+        this.minDay,
+        main5.local.invalidYear || main5.regionalOptions[""].invalidYear
+      );
+      return 13;
+    },
+    /** Determine the week of the year for a date.
+        @memberof EthiopianCalendar
+        @param year {CDate|number} The date to examine or the year to examine.
+        @param [month] {number} The month to examine.
+        @param [day] {number} The day to examine.
+        @return {number} The week of the year.
+        @throws Error if an invalid date or a different calendar used. */
+    weekOfYear: function(year2, month2, day2) {
+      var checkDate = this.newDate(year2, month2, day2);
+      checkDate.add(-checkDate.dayOfWeek(), "d");
+      return Math.floor((checkDate.dayOfYear() - 1) / 7) + 1;
+    },
+    /** Retrieve the number of days in a month.
+        @memberof EthiopianCalendar
+        @param year {CDate|number} The date to examine or the year of the month.
+        @param [month] {number} The month.
+        @return {number} The number of days in this month.
+        @throws Error if an invalid month/year or a different calendar used. */
+    daysInMonth: function(year2, month2) {
+      var date = this._validate(year2, month2, this.minDay, main5.local.invalidMonth);
+      return this.daysPerMonth[date.month() - 1] + (date.month() === 13 && this.leapYear(date.year()) ? 1 : 0);
+    },
+    /** Determine whether this date is a week day.
+        @memberof EthiopianCalendar
+        @param year {CDate|number} The date to examine or the year to examine.
+        @param [month] {number} The month to examine.
+        @param [day] {number} The day to examine.
+        @return {boolean} <code>true</code> if a week day, <code>false</code> if not.
+        @throws Error if an invalid date or a different calendar used. */
+    weekDay: function(year2, month2, day2) {
+      return (this.dayOfWeek(year2, month2, day2) || 7) < 6;
+    },
+    /** Retrieve the Julian date equivalent for this date,
+        i.e. days since January 1, 4713 BCE Greenwich noon.
+        @memberof EthiopianCalendar
+        @param year {CDate|number} The date to convert or the year to convert.
+        @param [month] {number} The month to convert.
+        @param [day] {number} The day to convert.
+        @return {number} The equivalent Julian date.
+        @throws Error if an invalid date or a different calendar used. */
+    toJD: function(year2, month2, day2) {
+      var date = this._validate(year2, month2, day2, main5.local.invalidDate);
+      year2 = date.year();
+      if (year2 < 0) {
+        year2++;
+      }
+      return date.day() + (date.month() - 1) * 30 + (year2 - 1) * 365 + Math.floor(year2 / 4) + this.jdEpoch - 1;
+    },
+    /** Create a new date from a Julian date.
+        @memberof EthiopianCalendar
+        @param jd {number} the Julian date to convert.
+        @return {CDate} the equivalent date. */
+    fromJD: function(jd) {
+      var c = Math.floor(jd) + 0.5 - this.jdEpoch;
+      var year2 = Math.floor((c - Math.floor((c + 366) / 1461)) / 365) + 1;
+      if (year2 <= 0) {
+        year2--;
+      }
+      c = Math.floor(jd) + 0.5 - this.newDate(year2, 1, 1).toJD();
+      var month2 = Math.floor(c / 30) + 1;
+      var day2 = c - (month2 - 1) * 30 + 1;
+      return this.newDate(year2, month2, day2);
+    }
+  });
+  main5.calendars.ethiopian = EthiopianCalendar;
+
+  // node_modules/.pnpm/world-calendars@1.0.4/node_modules/world-calendars/dist/calendars/hebrew.js
+  var main6 = require_main();
+  var assign6 = require_object_assign();
+  function HebrewCalendar(language) {
+    this.local = this.regionalOptions[language || ""] || this.regionalOptions[""];
+  }
+  HebrewCalendar.prototype = new main6.baseCalendar();
+  assign6(HebrewCalendar.prototype, {
+    /** The calendar name.
+        @memberof HebrewCalendar */
+    name: "Hebrew",
+    /** Julian date of start of Hebrew epoch: 7 October 3761 BCE.
+        @memberof HebrewCalendar */
+    jdEpoch: 347995.5,
+    /** Days per month in a common year.
+        @memberof HebrewCalendar */
+    daysPerMonth: [30, 29, 30, 29, 30, 29, 30, 29, 30, 29, 30, 29, 29],
+    /** <code>true</code> if has a year zero, <code>false</code> if not.
+        @memberof HebrewCalendar */
+    hasYearZero: false,
+    /** The minimum month number.
+        @memberof HebrewCalendar */
+    minMonth: 1,
+    /** The first month in the year.
+        @memberof HebrewCalendar */
+    firstMonth: 7,
+    /** The minimum day number.
+        @memberof HebrewCalendar */
+    minDay: 1,
+    /** Localisations for the plugin.
+        Entries are objects indexed by the language code ('' being the default US/English).
+        Each object has the following attributes.
+        @memberof HebrewCalendar
+        @property name {string} The calendar name.
+        @property epochs {string[]} The epoch names.
+        @property monthNames {string[]} The long names of the months of the year.
+        @property monthNamesShort {string[]} The short names of the months of the year.
+        @property dayNames {string[]} The long names of the days of the week.
+        @property dayNamesShort {string[]} The short names of the days of the week.
+        @property dayNamesMin {string[]} The minimal names of the days of the week.
+        @property dateFormat {string} The date format for this calendar.
+                See the options on <a href="BaseCalendar.html#formatDate"><code>formatDate</code></a> for details.
+        @property firstDay {number} The number of the first day of the week, starting at 0.
+        @property isRTL {number} <code>true</code> if this localisation reads right-to-left. */
+    regionalOptions: {
+      // Localisations
+      "": {
+        name: "Hebrew",
+        epochs: ["BAM", "AM"],
+        monthNames: [
+          "Nisan",
+          "Iyar",
+          "Sivan",
+          "Tammuz",
+          "Av",
+          "Elul",
+          "Tishrei",
+          "Cheshvan",
+          "Kislev",
+          "Tevet",
+          "Shevat",
+          "Adar",
+          "Adar II"
+        ],
+        monthNamesShort: ["Nis", "Iya", "Siv", "Tam", "Av", "Elu", "Tis", "Che", "Kis", "Tev", "She", "Ada", "Ad2"],
+        dayNames: ["Yom Rishon", "Yom Sheni", "Yom Shlishi", "Yom Revi'i", "Yom Chamishi", "Yom Shishi", "Yom Shabbat"],
+        dayNamesShort: ["Ris", "She", "Shl", "Rev", "Cha", "Shi", "Sha"],
+        dayNamesMin: ["Ri", "She", "Shl", "Re", "Ch", "Shi", "Sha"],
+        digits: null,
+        dateFormat: "dd/mm/yyyy",
+        firstDay: 0,
+        isRTL: false
+      }
+    },
+    /** Determine whether this date is in a leap year.
+        @memberof HebrewCalendar
+        @param year {CDate|number} The date to examine or the year to examine.
+        @return {boolean} <code>true</code> if this is a leap year, <code>false</code> if not.
+        @throws Error if an invalid year or a different calendar used. */
+    leapYear: function(year2) {
+      var date = this._validate(year2, this.minMonth, this.minDay, main6.local.invalidYear);
+      return this._leapYear(date.year());
+    },
+    /** Determine whether this date is in a leap year.
+        @memberof HebrewCalendar
+        @private
+        @param year {number} The year to examine.
+        @return {boolean} <code>true</code> if this is a leap year, <code>false</code> if not.
+        @throws Error if an invalid year or a different calendar used. */
+    _leapYear: function(year2) {
+      year2 = year2 < 0 ? year2 + 1 : year2;
+      return mod5(year2 * 7 + 1, 19) < 7;
+    },
+    /** Retrieve the number of months in a year.
+        @memberof HebrewCalendar
+        @param year {CDate|number} The date to examine or the year to examine.
+        @return {number} The number of months.
+        @throws Error if an invalid year or a different calendar used. */
+    monthsInYear: function(year2) {
+      this._validate(year2, this.minMonth, this.minDay, main6.local.invalidYear);
+      return this._leapYear(year2.year ? year2.year() : year2) ? 13 : 12;
+    },
+    /** Determine the week of the year for a date.
+        @memberof HebrewCalendar
+        @param year {CDate|number} The date to examine or the year to examine.
+        @param [month] {number} The month to examine.
+        @param [day] {number} The day to examine.
+        @return {number} The week of the year.
+        @throws Error if an invalid date or a different calendar used. */
+    weekOfYear: function(year2, month2, day2) {
+      var checkDate = this.newDate(year2, month2, day2);
+      checkDate.add(-checkDate.dayOfWeek(), "d");
+      return Math.floor((checkDate.dayOfYear() - 1) / 7) + 1;
+    },
+    /** Retrieve the number of days in a year.
+        @memberof HebrewCalendar
+        @param year {CDate|number} The date to examine or the year to examine.
+        @return {number} The number of days.
+        @throws Error if an invalid year or a different calendar used. */
+    daysInYear: function(year2) {
+      var date = this._validate(year2, this.minMonth, this.minDay, main6.local.invalidYear);
+      year2 = date.year();
+      return this.toJD(year2 === -1 ? 1 : year2 + 1, 7, 1) - this.toJD(year2, 7, 1);
+    },
+    /** Retrieve the number of days in a month.
+        @memberof HebrewCalendar
+        @param year {CDate|number} The date to examine or the year of the month.
+        @param [month] {number} The month.
+        @return {number} The number of days in this month.
+        @throws Error if an invalid month/year or a different calendar used. */
+    daysInMonth: function(year2, month2) {
+      if (year2.year) {
+        month2 = year2.month();
+        year2 = year2.year();
+      }
+      this._validate(year2, month2, this.minDay, main6.local.invalidMonth);
+      return month2 === 12 && this.leapYear(year2) ? 30 : (
+        // Adar I
+        month2 === 8 && mod5(this.daysInYear(year2), 10) === 5 ? 30 : (
+          // Cheshvan in shlemah year
+          month2 === 9 && mod5(this.daysInYear(year2), 10) === 3 ? 29 : (
+            // Kislev in chaserah year
+            this.daysPerMonth[month2 - 1]
+          )
+        )
+      );
+    },
+    /** Determine whether this date is a week day.
+        @memberof HebrewCalendar
+        @param year {CDate|number} The date to examine or the year to examine.
+        @param [month] {number} The month to examine.
+        @param [day] {number} The day to examine.
+        @return {boolean} <code>true</code> if a week day, <code>false</code> if not.
+        @throws Error if an invalid date or a different calendar used. */
+    weekDay: function(year2, month2, day2) {
+      return this.dayOfWeek(year2, month2, day2) !== 6;
+    },
+    /** Retrieve additional information about a date - year type.
+        @memberof HebrewCalendar
+        @param year {CDate|number} The date to examine or the year to examine.
+        @param [month] {number} The month to examine.
+        @param [day] {number} The day to examine.
+        @return {object} Additional information - contents depends on calendar.
+        @throws Error if an invalid date or a different calendar used. */
+    extraInfo: function(year2, month2, day2) {
+      var date = this._validate(year2, month2, day2, main6.local.invalidDate);
+      return { yearType: (this.leapYear(date) ? "embolismic" : "common") + " " + ["deficient", "regular", "complete"][this.daysInYear(date) % 10 - 3] };
+    },
+    /** Retrieve the Julian date equivalent for this date,
+        i.e. days since January 1, 4713 BCE Greenwich noon.
+        @memberof HebrewCalendar
+        @param year {CDate)|number} The date to convert or the year to convert.
+        @param [month] {number} The month to convert.
+        @param [day] {number} The day to convert.
+        @return {number} The equivalent Julian date.
+        @throws Error if an invalid date or a different calendar used. */
+    toJD: function(year2, month2, day2) {
+      var date = this._validate(year2, month2, day2, main6.local.invalidDate);
+      year2 = date.year();
+      month2 = date.month();
+      day2 = date.day();
+      var adjYear = year2 <= 0 ? year2 + 1 : year2;
+      var jd = this.jdEpoch + this._delay1(adjYear) + this._delay2(adjYear) + day2 + 1;
+      if (month2 < 7) {
+        for (var m = 7; m <= this.monthsInYear(year2); m++) {
+          jd += this.daysInMonth(year2, m);
+        }
+        for (var m = 1; m < month2; m++) {
+          jd += this.daysInMonth(year2, m);
+        }
+      } else {
+        for (var m = 7; m < month2; m++) {
+          jd += this.daysInMonth(year2, m);
+        }
+      }
+      return jd;
+    },
+    /** Test for delay of start of new year and to avoid
+        Sunday, Wednesday, or Friday as start of the new year.
+        @memberof HebrewCalendar
+        @private
+        @param year {number} The year to examine.
+        @return {number} The days to offset by. */
+    _delay1: function(year2) {
+      var months2 = Math.floor((235 * year2 - 234) / 19);
+      var parts = 12084 + 13753 * months2;
+      var day2 = months2 * 29 + Math.floor(parts / 25920);
+      if (mod5(3 * (day2 + 1), 7) < 3) {
+        day2++;
+      }
+      return day2;
+    },
+    /** Check for delay in start of new year due to length of adjacent years.
+        @memberof HebrewCalendar
+        @private
+        @param year {number} The year to examine.
+        @return {number} The days to offset by. */
+    _delay2: function(year2) {
+      var last = this._delay1(year2 - 1);
+      var present = this._delay1(year2);
+      var next = this._delay1(year2 + 1);
+      return next - present === 356 ? 2 : present - last === 382 ? 1 : 0;
+    },
+    /** Create a new date from a Julian date.
+        @memberof HebrewCalendar
+        @param jd {number} The Julian date to convert.
+        @return {CDate} The equivalent date. */
+    fromJD: function(jd) {
+      jd = Math.floor(jd) + 0.5;
+      var year2 = Math.floor((jd - this.jdEpoch) * 98496 / 35975351) - 1;
+      while (jd >= this.toJD(year2 === -1 ? 1 : year2 + 1, 7, 1)) {
+        year2++;
+      }
+      var month2 = jd < this.toJD(year2, 1, 1) ? 7 : 1;
+      while (jd > this.toJD(year2, month2, this.daysInMonth(year2, month2))) {
+        month2++;
+      }
+      var day2 = jd - this.toJD(year2, month2, 1) + 1;
+      return this.newDate(year2, month2, day2);
+    }
+  });
+  function mod5(a, b) {
+    return a - b * Math.floor(a / b);
+  }
+  main6.calendars.hebrew = HebrewCalendar;
+
+  // node_modules/.pnpm/world-calendars@1.0.4/node_modules/world-calendars/dist/calendars/islamic.js
+  var main7 = require_main();
+  var assign7 = require_object_assign();
+  function IslamicCalendar(language) {
+    this.local = this.regionalOptions[language || ""] || this.regionalOptions[""];
+  }
+  IslamicCalendar.prototype = new main7.baseCalendar();
+  assign7(IslamicCalendar.prototype, {
+    /** The calendar name.
+        @memberof IslamicCalendar */
+    name: "Islamic",
+    /** Julian date of start of Islamic epoch: 16 July 622 CE.
+        @memberof IslamicCalendar */
+    jdEpoch: 19484395e-1,
+    /** Days per month in a common year.
+        @memberof IslamicCalendar */
+    daysPerMonth: [30, 29, 30, 29, 30, 29, 30, 29, 30, 29, 30, 29],
+    /** <code>true</code> if has a year zero, <code>false</code> if not.
+        @memberof IslamicCalendar */
+    hasYearZero: false,
+    /** The minimum month number.
+        @memberof IslamicCalendar */
+    minMonth: 1,
+    /** The first month in the year.
+        @memberof IslamicCalendar */
+    firstMonth: 1,
+    /** The minimum day number.
+        @memberof IslamicCalendar */
+    minDay: 1,
+    /** Localisations for the plugin.
+        Entries are objects indexed by the language code ('' being the default US/English).
+        Each object has the following attributes.
+        @memberof IslamicCalendar
+        @property name {string} The calendar name.
+        @property epochs {string[]} The epoch names.
+        @property monthNames {string[]} The long names of the months of the year.
+        @property monthNamesShort {string[]} The short names of the months of the year.
+        @property dayNames {string[]} The long names of the days of the week.
+        @property dayNamesShort {string[]} The short names of the days of the week.
+        @property dayNamesMin {string[]} The minimal names of the days of the week.
+        @property dateFormat {string} The date format for this calendar.
+                See the options on <a href="BaseCalendar.html#formatDate"><code>formatDate</code></a> for details.
+        @property firstDay {number} The number of the first day of the week, starting at 0.
+        @property isRTL {number} <code>true</code> if this localisation reads right-to-left. */
+    regionalOptions: {
+      // Localisations
+      "": {
+        name: "Islamic",
+        epochs: ["BH", "AH"],
+        monthNames: [
+          "Muharram",
+          "Safar",
+          "Rabi' al-awwal",
+          "Rabi' al-thani",
+          "Jumada al-awwal",
+          "Jumada al-thani",
+          "Rajab",
+          "Sha'aban",
+          "Ramadan",
+          "Shawwal",
+          "Dhu al-Qi'dah",
+          "Dhu al-Hijjah"
+        ],
+        monthNamesShort: ["Muh", "Saf", "Rab1", "Rab2", "Jum1", "Jum2", "Raj", "Sha'", "Ram", "Shaw", "DhuQ", "DhuH"],
+        dayNames: [
+          "Yawm al-ahad",
+          "Yawm al-ithnayn",
+          "Yawm ath-thulaathaa'",
+          "Yawm al-arbi'aa'",
+          "Yawm al-kham\u012Bs",
+          "Yawm al-jum'a",
+          "Yawm as-sabt"
+        ],
+        dayNamesShort: ["Aha", "Ith", "Thu", "Arb", "Kha", "Jum", "Sab"],
+        dayNamesMin: ["Ah", "It", "Th", "Ar", "Kh", "Ju", "Sa"],
+        digits: null,
+        dateFormat: "yyyy/mm/dd",
+        firstDay: 6,
+        isRTL: false
+      }
+    },
+    /** Determine whether this date is in a leap year.
+        @memberof IslamicCalendar
+        @param year {CDate|number} The date to examine or the year to examine.
+        @return {boolean} <code>true</code> if this is a leap year, <code>false</code> if not.
+        @throws Error if an invalid year or a different calendar used. */
+    leapYear: function(year2) {
+      var date = this._validate(year2, this.minMonth, this.minDay, main7.local.invalidYear);
+      return (date.year() * 11 + 14) % 30 < 11;
+    },
+    /** Determine the week of the year for a date.
+        @memberof IslamicCalendar
+        @param year {CDate|number} The date to examine or the year to examine.
+        @param [month] {number} The month to examine.
+        @param [day] {number} The day to examine.
+        @return {number} The week of the year.
+        @throws Error if an invalid date or a different calendar used. */
+    weekOfYear: function(year2, month2, day2) {
+      var checkDate = this.newDate(year2, month2, day2);
+      checkDate.add(-checkDate.dayOfWeek(), "d");
+      return Math.floor((checkDate.dayOfYear() - 1) / 7) + 1;
+    },
+    /** Retrieve the number of days in a year.
+        @memberof IslamicCalendar
+        @param year {CDate|number} The date to examine or the year to examine.
+        @return {number} The number of days.
+        @throws Error if an invalid year or a different calendar used. */
+    daysInYear: function(year2) {
+      return this.leapYear(year2) ? 355 : 354;
+    },
+    /** Retrieve the number of days in a month.
+        @memberof IslamicCalendar
+        @param year {CDate|number} The date to examine or the year of the month.
+        @param [month] {number} The month.
+        @return {number} The number of days in this month.
+        @throws Error if an invalid month/year or a different calendar used. */
+    daysInMonth: function(year2, month2) {
+      var date = this._validate(year2, month2, this.minDay, main7.local.invalidMonth);
+      return this.daysPerMonth[date.month() - 1] + (date.month() === 12 && this.leapYear(date.year()) ? 1 : 0);
+    },
+    /** Determine whether this date is a week day.
+        @memberof IslamicCalendar
+        @param year {CDate|number} The date to examine or the year to examine.
+        @param [month] {number} The month to examine.
+        @param [day] {number} The day to examine.
+        @return {boolean} <code>true</code> if a week day, <code>false</code> if not.
+        @throws Error if an invalid date or a different calendar used. */
+    weekDay: function(year2, month2, day2) {
+      return this.dayOfWeek(year2, month2, day2) !== 5;
+    },
+    /** Retrieve the Julian date equivalent for this date,
+        i.e. days since January 1, 4713 BCE Greenwich noon.
+        @memberof IslamicCalendar
+        @param year {CDate|number} The date to convert or the year to convert.
+        @param [month] {number} The month to convert.
+        @param [day] {number} The day to convert.
+        @return {number} The equivalent Julian date.
+        @throws Error if an invalid date or a different calendar used. */
+    toJD: function(year2, month2, day2) {
+      var date = this._validate(year2, month2, day2, main7.local.invalidDate);
+      year2 = date.year();
+      month2 = date.month();
+      day2 = date.day();
+      year2 = year2 <= 0 ? year2 + 1 : year2;
+      return day2 + Math.ceil(29.5 * (month2 - 1)) + (year2 - 1) * 354 + Math.floor((3 + 11 * year2) / 30) + this.jdEpoch - 1;
+    },
+    /** Create a new date from a Julian date.
+        @memberof IslamicCalendar
+        @param jd {number} The Julian date to convert.
+        @return {CDate} The equivalent date. */
+    fromJD: function(jd) {
+      jd = Math.floor(jd) + 0.5;
+      var year2 = Math.floor((30 * (jd - this.jdEpoch) + 10646) / 10631);
+      year2 = year2 <= 0 ? year2 - 1 : year2;
+      var month2 = Math.min(12, Math.ceil((jd - 29 - this.toJD(year2, 1, 1)) / 29.5) + 1);
+      var day2 = jd - this.toJD(year2, month2, 1) + 1;
+      return this.newDate(year2, month2, day2);
+    }
+  });
+  main7.calendars.islamic = IslamicCalendar;
+
+  // node_modules/.pnpm/world-calendars@1.0.4/node_modules/world-calendars/dist/calendars/julian.js
+  var main8 = require_main();
+  var assign8 = require_object_assign();
+  function JulianCalendar(language) {
+    this.local = this.regionalOptions[language || ""] || this.regionalOptions[""];
+  }
+  JulianCalendar.prototype = new main8.baseCalendar();
+  assign8(JulianCalendar.prototype, {
+    /** The calendar name.
+        @memberof JulianCalendar */
+    name: "Julian",
+    /** Julian date of start of Julian epoch: 1 January 0001 AD = 30 December 0001 BCE.
+        @memberof JulianCalendar */
+    jdEpoch: 17214235e-1,
+    /** Days per month in a common year.
+        @memberof JulianCalendar */
+    daysPerMonth: [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31],
+    /** <code>true</code> if has a year zero, <code>false</code> if not.
+        @memberof JulianCalendar */
+    hasYearZero: false,
+    /** The minimum month number.
+        @memberof JulianCalendar */
+    minMonth: 1,
+    /** The first month in the year.
+        @memberof JulianCalendar */
+    firstMonth: 1,
+    /** The minimum day number.
+        @memberof JulianCalendar */
+    minDay: 1,
+    /** Localisations for the plugin.
+        Entries are objects indexed by the language code ('' being the default US/English).
+        Each object has the following attributes.
+        @memberof JulianCalendar
+        @property name {string} The calendar name.
+        @property epochs {string[]} The epoch names.
+        @property monthNames {string[]} The long names of the months of the year.
+        @property monthNamesShort {string[]} The short names of the months of the year.
+        @property dayNames {string[]} The long names of the days of the week.
+        @property dayNamesShort {string[]} The short names of the days of the week.
+        @property dayNamesMin {string[]} The minimal names of the days of the week.
+        @property dateFormat {string} The date format for this calendar.
+                See the options on <a href="BaseCalendar.html#formatDate"><code>formatDate</code></a> for details.
+        @property firstDay {number} The number of the first day of the week, starting at 0.
+        @property isRTL {number} <code>true</code> if this localisation reads right-to-left. */
+    regionalOptions: {
+      // Localisations
+      "": {
+        name: "Julian",
+        epochs: ["BC", "AD"],
+        monthNames: [
+          "January",
+          "February",
+          "March",
+          "April",
+          "May",
+          "June",
+          "July",
+          "August",
+          "September",
+          "October",
+          "November",
+          "December"
+        ],
+        monthNamesShort: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+        dayNames: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+        dayNamesShort: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+        dayNamesMin: ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"],
+        digits: null,
+        dateFormat: "mm/dd/yyyy",
+        firstDay: 0,
+        isRTL: false
+      }
+    },
+    /** Determine whether this date is in a leap year.
+        @memberof JulianCalendar
+        @param year {CDate|number} The date to examine or the year to examine.
+        @return {boolean} <code>true</code> if this is a leap year, <code>false</code> if not.
+        @throws Error if an invalid year or a different calendar used. */
+    leapYear: function(year2) {
+      var date = this._validate(year2, this.minMonth, this.minDay, main8.local.invalidYear);
+      var year2 = date.year() < 0 ? date.year() + 1 : date.year();
+      return year2 % 4 === 0;
+    },
+    /** Determine the week of the year for a date - ISO 8601.
+        @memberof JulianCalendar
+        @param year {CDate|number} The date to examine or the year to examine.
+        @param [month] {number} The month to examine.
+        @param [day] {number} The day to examine.
+        @return {number} The week of the year.
+        @throws Error if an invalid date or a different calendar used. */
+    weekOfYear: function(year2, month2, day2) {
+      var checkDate = this.newDate(year2, month2, day2);
+      checkDate.add(4 - (checkDate.dayOfWeek() || 7), "d");
+      return Math.floor((checkDate.dayOfYear() - 1) / 7) + 1;
+    },
+    /** Retrieve the number of days in a month.
+        @memberof JulianCalendar
+        @param year {CDate|number} The date to examine or the year of the month.
+        @param [month] {number} The month.
+        @return {number} The number of days in this month.
+        @throws Error if an invalid month/year or a different calendar used. */
+    daysInMonth: function(year2, month2) {
+      var date = this._validate(year2, month2, this.minDay, main8.local.invalidMonth);
+      return this.daysPerMonth[date.month() - 1] + (date.month() === 2 && this.leapYear(date.year()) ? 1 : 0);
+    },
+    /** Determine whether this date is a week day.
+        @memberof JulianCalendar
+        @param year {CDate|number} The date to examine or the year to examine.
+        @param [month] {number} The month to examine.
+        @param [day] {number} The day to examine.
+        @return {boolean} True if a week day, false if not.
+        @throws Error if an invalid date or a different calendar used. */
+    weekDay: function(year2, month2, day2) {
+      return (this.dayOfWeek(year2, month2, day2) || 7) < 6;
+    },
+    /** Retrieve the Julian date equivalent for this date,
+        i.e. days since January 1, 4713 BCE Greenwich noon.
+        @memberof JulianCalendar
+        @param year {CDate|number} The date to convert or the year to convert.
+        @param [month] {number} The month to convert.
+        @param [day] {number} The day to convert.
+        @return {number} The equivalent Julian date.
+        @throws Error if an invalid date or a different calendar used. */
+    toJD: function(year2, month2, day2) {
+      var date = this._validate(year2, month2, day2, main8.local.invalidDate);
+      year2 = date.year();
+      month2 = date.month();
+      day2 = date.day();
+      if (year2 < 0) {
+        year2++;
+      }
+      if (month2 <= 2) {
+        year2--;
+        month2 += 12;
+      }
+      return Math.floor(365.25 * (year2 + 4716)) + Math.floor(30.6001 * (month2 + 1)) + day2 - 1524.5;
+    },
+    /** Create a new date from a Julian date.
+        @memberof JulianCalendar
+        @param jd {number} The Julian date to convert.
+        @return {CDate} The equivalent date. */
+    fromJD: function(jd) {
+      var a = Math.floor(jd + 0.5);
+      var b = a + 1524;
+      var c = Math.floor((b - 122.1) / 365.25);
+      var d = Math.floor(365.25 * c);
+      var e = Math.floor((b - d) / 30.6001);
+      var month2 = e - Math.floor(e < 14 ? 1 : 13);
+      var year2 = c - Math.floor(month2 > 2 ? 4716 : 4715);
+      var day2 = b - d - Math.floor(30.6001 * e);
+      if (year2 <= 0) {
+        year2--;
+      }
+      return this.newDate(year2, month2, day2);
+    }
+  });
+  main8.calendars.julian = JulianCalendar;
+
+  // node_modules/.pnpm/world-calendars@1.0.4/node_modules/world-calendars/dist/calendars/mayan.js
+  var main9 = require_main();
+  var assign9 = require_object_assign();
+  function MayanCalendar(language) {
+    this.local = this.regionalOptions[language || ""] || this.regionalOptions[""];
+  }
+  MayanCalendar.prototype = new main9.baseCalendar();
+  assign9(MayanCalendar.prototype, {
+    /** The calendar name.
+        @memberof MayanCalendar */
+    name: "Mayan",
+    /** Julian date of start of Mayan epoch: 11 August 3114 BCE.
+        @memberof MayanCalendar */
+    jdEpoch: 584282.5,
+    /** <code>true</code> if has a year zero, <code>false</code> if not.
+        @memberof MayanCalendar */
+    hasYearZero: true,
+    /** The minimum month number.
+        @memberof MayanCalendar */
+    minMonth: 0,
+    /** The first month in the year.
+        @memberof MayanCalendar */
+    firstMonth: 0,
+    /** The minimum day number.
+        @memberof MayanCalendar */
+    minDay: 0,
+    /** Localisations for the plugin.
+        Entries are objects indexed by the language code ('' being the default US/English).
+        Each object has the following attributes.
+        @memberof MayanCalendar
+        @property name {string} The calendar name.
+        @property epochs {string[]} The epoch names.
+        @property monthNames {string[]} The long names of the months of the year.
+        @property monthNamesShort {string[]} The short names of the months of the year.
+        @property dayNames {string[]} The long names of the days of the week.
+        @property dayNamesShort {string[]} The short names of the days of the week.
+        @property dayNamesMin {string[]} The minimal names of the days of the week.
+        @property dateFormat {string} The date format for this calendar.
+                See the options on <a href="BaseCalendar.html#formatDate"><code>formatDate</code></a> for details.
+        @property firstDay {number} The number of the first day of the week, starting at 0.
+        @property isRTL {number} <code>true</code> if this localisation reads right-to-left.
+        @property haabMonths {string[]} The names of the Haab months.
+        @property tzolkinMonths {string[]} The names of the Tzolkin months. */
+    regionalOptions: {
+      // Localisations
+      "": {
+        name: "Mayan",
+        epochs: ["", ""],
+        monthNames: [
+          "0",
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6",
+          "7",
+          "8",
+          "9",
+          "10",
+          "11",
+          "12",
+          "13",
+          "14",
+          "15",
+          "16",
+          "17"
+        ],
+        monthNamesShort: [
+          "0",
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6",
+          "7",
+          "8",
+          "9",
+          "10",
+          "11",
+          "12",
+          "13",
+          "14",
+          "15",
+          "16",
+          "17"
+        ],
+        dayNames: [
+          "0",
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6",
+          "7",
+          "8",
+          "9",
+          "10",
+          "11",
+          "12",
+          "13",
+          "14",
+          "15",
+          "16",
+          "17",
+          "18",
+          "19"
+        ],
+        dayNamesShort: [
+          "0",
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6",
+          "7",
+          "8",
+          "9",
+          "10",
+          "11",
+          "12",
+          "13",
+          "14",
+          "15",
+          "16",
+          "17",
+          "18",
+          "19"
+        ],
+        dayNamesMin: [
+          "0",
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6",
+          "7",
+          "8",
+          "9",
+          "10",
+          "11",
+          "12",
+          "13",
+          "14",
+          "15",
+          "16",
+          "17",
+          "18",
+          "19"
+        ],
+        digits: null,
+        dateFormat: "YYYY.m.d",
+        firstDay: 0,
+        isRTL: false,
+        haabMonths: [
+          "Pop",
+          "Uo",
+          "Zip",
+          "Zotz",
+          "Tzec",
+          "Xul",
+          "Yaxkin",
+          "Mol",
+          "Chen",
+          "Yax",
+          "Zac",
+          "Ceh",
+          "Mac",
+          "Kankin",
+          "Muan",
+          "Pax",
+          "Kayab",
+          "Cumku",
+          "Uayeb"
+        ],
+        tzolkinMonths: [
+          "Imix",
+          "Ik",
+          "Akbal",
+          "Kan",
+          "Chicchan",
+          "Cimi",
+          "Manik",
+          "Lamat",
+          "Muluc",
+          "Oc",
+          "Chuen",
+          "Eb",
+          "Ben",
+          "Ix",
+          "Men",
+          "Cib",
+          "Caban",
+          "Etznab",
+          "Cauac",
+          "Ahau"
+        ]
+      }
+    },
+    /** Determine whether this date is in a leap year.
+        @memberof MayanCalendar
+        @param year {CDate|number} The date to examine or the year to examine.
+        @return {boolean} <code>true</code> if this is a leap year, <code>false</code> if not.
+        @throws Error if an invalid year or a different calendar used. */
+    leapYear: function(year2) {
+      this._validate(year2, this.minMonth, this.minDay, main9.local.invalidYear);
+      return false;
+    },
+    /** Format the year, if not a simple sequential number.
+        @memberof MayanCalendar
+        @param year {CDate|number} The date to format or the year to format.
+        @return {string} The formatted year.
+        @throws Error if an invalid year or a different calendar used. */
+    formatYear: function(year2) {
+      var date = this._validate(year2, this.minMonth, this.minDay, main9.local.invalidYear);
+      year2 = date.year();
+      var baktun = Math.floor(year2 / 400);
+      year2 = year2 % 400;
+      year2 += year2 < 0 ? 400 : 0;
+      var katun = Math.floor(year2 / 20);
+      return baktun + "." + katun + "." + year2 % 20;
+    },
+    /** Convert from the formatted year back to a single number.
+        @memberof MayanCalendar
+        @param years {string} The year as n.n.n.
+        @return {number} The sequential year.
+        @throws Error if an invalid value is supplied. */
+    forYear: function(years2) {
+      years2 = years2.split(".");
+      if (years2.length < 3) {
+        throw "Invalid Mayan year";
+      }
+      var year2 = 0;
+      for (var i = 0; i < years2.length; i++) {
+        var y = parseInt(years2[i], 10);
+        if (Math.abs(y) > 19 || i > 0 && y < 0) {
+          throw "Invalid Mayan year";
+        }
+        year2 = year2 * 20 + y;
+      }
+      return year2;
+    },
+    /** Retrieve the number of months in a year.
+        @memberof MayanCalendar
+        @param year {CDate|number} The date to examine or the year to examine.
+        @return {number} The number of months.
+        @throws Error if an invalid year or a different calendar used. */
+    monthsInYear: function(year2) {
+      this._validate(year2, this.minMonth, this.minDay, main9.local.invalidYear);
+      return 18;
+    },
+    /** Determine the week of the year for a date.
+        @memberof MayanCalendar
+        @param year {CDate|number} The date to examine or the year to examine.
+        @param [month] {number} The month to examine.
+        @param [day] {number} The day to examine.
+        @return {number} The week of the year.
+        @throws Error if an invalid date or a different calendar used. */
+    weekOfYear: function(year2, month2, day2) {
+      this._validate(year2, month2, day2, main9.local.invalidDate);
+      return 0;
+    },
+    /** Retrieve the number of days in a year.
+        @memberof MayanCalendar
+        @param year {CDate|number} The date to examine or the year to examine.
+        @return {number} The number of days.
+        @throws Error if an invalid year or a different calendar used. */
+    daysInYear: function(year2) {
+      this._validate(year2, this.minMonth, this.minDay, main9.local.invalidYear);
+      return 360;
+    },
+    /** Retrieve the number of days in a month.
+        @memberof MayanCalendar
+        @param year {CDate|number} The date to examine or the year of the month.
+        @param [month] {number} The month.
+        @return {number} The number of days in this month.
+        @throws Error if an invalid month/year or a different calendar used. */
+    daysInMonth: function(year2, month2) {
+      this._validate(year2, month2, this.minDay, main9.local.invalidMonth);
+      return 20;
+    },
+    /** Retrieve the number of days in a week.
+        @memberof MayanCalendar
+        @return {number} The number of days. */
+    daysInWeek: function() {
+      return 5;
+    },
+    /** Retrieve the day of the week for a date.
+        @memberof MayanCalendar
+        @param year {CDate|number} The date to examine or the year to examine.
+        @param [month] {number} The month to examine.
+        @param [day] {number} The day to examine.
+        @return {number} The day of the week: 0 to number of days - 1.
+        @throws Error if an invalid date or a different calendar used. */
+    dayOfWeek: function(year2, month2, day2) {
+      var date = this._validate(year2, month2, day2, main9.local.invalidDate);
+      return date.day();
+    },
+    /** Determine whether this date is a week day.
+        @memberof MayanCalendar
+        @param year {CDate|number} The date to examine or the year to examine.
+        @param [month] {number} The month to examine.
+        @param [day] {number} The day to examine.
+        @return {boolean} <code>true</code> if a week day, <code>false</code> if not.
+        @throws Error if an invalid date or a different calendar used. */
+    weekDay: function(year2, month2, day2) {
+      this._validate(year2, month2, day2, main9.local.invalidDate);
+      return true;
+    },
+    /** Retrieve additional information about a date - Haab and Tzolkin equivalents.
+        @memberof MayanCalendar
+        @param year {CDate|number} The date to examine or the year to examine.
+        @param [month] {number} The month to examine.
+        @param [day] {number} The day to examine.
+        @return {object} Additional information - contents depends on calendar.
+        @throws Error if an invalid date or a different calendar used. */
+    extraInfo: function(year2, month2, day2) {
+      var date = this._validate(year2, month2, day2, main9.local.invalidDate);
+      var jd = date.toJD();
+      var haab = this._toHaab(jd);
+      var tzolkin = this._toTzolkin(jd);
+      return {
+        haabMonthName: this.local.haabMonths[haab[0] - 1],
+        haabMonth: haab[0],
+        haabDay: haab[1],
+        tzolkinDayName: this.local.tzolkinMonths[tzolkin[0] - 1],
+        tzolkinDay: tzolkin[0],
+        tzolkinTrecena: tzolkin[1]
+      };
+    },
+    /** Retrieve Haab date from a Julian date.
+        @memberof MayanCalendar
+        @private
+        @param jd  {number} The Julian date.
+        @return {number[]} Corresponding Haab month and day. */
+    _toHaab: function(jd) {
+      jd -= this.jdEpoch;
+      var day2 = mod6(jd + 8 + (18 - 1) * 20, 365);
+      return [Math.floor(day2 / 20) + 1, mod6(day2, 20)];
+    },
+    /** Retrieve Tzolkin date from a Julian date.
+        @memberof MayanCalendar
+        @private
+        @param jd {number} The Julian date.
+        @return {number[]} Corresponding Tzolkin day and trecena. */
+    _toTzolkin: function(jd) {
+      jd -= this.jdEpoch;
+      return [amod(jd + 20, 20), amod(jd + 4, 13)];
+    },
+    /** Retrieve the Julian date equivalent for this date,
+        i.e. days since January 1, 4713 BCE Greenwich noon.
+        @memberof MayanCalendar
+        @param year {CDate|number} The date to convert or the year to convert.
+        @param [month] {number} The month to convert.
+        @param [day] {number} The day to convert.
+        @return {number} The equivalent Julian date.
+        @throws Error if an invalid date or a different calendar used. */
+    toJD: function(year2, month2, day2) {
+      var date = this._validate(year2, month2, day2, main9.local.invalidDate);
+      return date.day() + date.month() * 20 + date.year() * 360 + this.jdEpoch;
+    },
+    /** Create a new date from a Julian date.
+        @memberof MayanCalendar
+        @param jd {number} The Julian date to convert.
+        @return {CDate} The equivalent date. */
+    fromJD: function(jd) {
+      jd = Math.floor(jd) + 0.5 - this.jdEpoch;
+      var year2 = Math.floor(jd / 360);
+      jd = jd % 360;
+      jd += jd < 0 ? 360 : 0;
+      var month2 = Math.floor(jd / 20);
+      var day2 = jd % 20;
+      return this.newDate(year2, month2, day2);
+    }
+  });
+  function mod6(a, b) {
+    return a - b * Math.floor(a / b);
+  }
+  function amod(a, b) {
+    return mod6(a - 1, b) + 1;
+  }
+  main9.calendars.mayan = MayanCalendar;
+
+  // node_modules/.pnpm/world-calendars@1.0.4/node_modules/world-calendars/dist/calendars/nanakshahi.js
+  var main10 = require_main();
+  var assign10 = require_object_assign();
+  function NanakshahiCalendar(language) {
+    this.local = this.regionalOptions[language || ""] || this.regionalOptions[""];
+  }
+  NanakshahiCalendar.prototype = new main10.baseCalendar();
+  var gregorian = main10.instance("gregorian");
+  assign10(NanakshahiCalendar.prototype, {
+    /** The calendar name.
+        @memberof NanakshahiCalendar */
+    name: "Nanakshahi",
+    /** Julian date of start of Nanakshahi epoch: 14 March 1469 CE.
+        @memberof NanakshahiCalendar */
+    jdEpoch: 22576735e-1,
+    /** Days per month in a common year.
+        @memberof NanakshahiCalendar */
+    daysPerMonth: [31, 31, 31, 31, 31, 30, 30, 30, 30, 30, 30, 30],
+    /** <code>true</code> if has a year zero, <code>false</code> if not.
+        @memberof NanakshahiCalendar */
+    hasYearZero: false,
+    /** The minimum month number.
+        @memberof NanakshahiCalendar */
+    minMonth: 1,
+    /** The first month in the year.
+        @memberof NanakshahiCalendar */
+    firstMonth: 1,
+    /** The minimum day number.
+        @memberof NanakshahiCalendar */
+    minDay: 1,
+    /** Localisations for the plugin.
+        Entries are objects indexed by the language code ('' being the default US/English).
+        Each object has the following attributes.
+        @memberof NanakshahiCalendar
+        @property name {string} The calendar name.
+        @property epochs {string[]} The epoch names.
+        @property monthNames {string[]} The long names of the months of the year.
+        @property monthNamesShort {string[]} The short names of the months of the year.
+        @property dayNames {string[]} The long names of the days of the week.
+        @property dayNamesShort {string[]} The short names of the days of the week.
+        @property dayNamesMin {string[]} The minimal names of the days of the week.
+        @property dateFormat {string} The date format for this calendar.
+                See the options on <a href="BaseCalendar.html#formatDate"><code>formatDate</code></a> for details.
+        @property firstDay {number} The number of the first day of the week, starting at 0.
+        @property isRTL {number} <code>true</code> if this localisation reads right-to-left. */
+    regionalOptions: {
+      // Localisations
+      "": {
+        name: "Nanakshahi",
+        epochs: ["BN", "AN"],
+        monthNames: [
+          "Chet",
+          "Vaisakh",
+          "Jeth",
+          "Harh",
+          "Sawan",
+          "Bhadon",
+          "Assu",
+          "Katak",
+          "Maghar",
+          "Poh",
+          "Magh",
+          "Phagun"
+        ],
+        monthNamesShort: ["Che", "Vai", "Jet", "Har", "Saw", "Bha", "Ass", "Kat", "Mgr", "Poh", "Mgh", "Pha"],
+        dayNames: ["Somvaar", "Mangalvar", "Budhvaar", "Veervaar", "Shukarvaar", "Sanicharvaar", "Etvaar"],
+        dayNamesShort: ["Som", "Mangal", "Budh", "Veer", "Shukar", "Sanichar", "Et"],
+        dayNamesMin: ["So", "Ma", "Bu", "Ve", "Sh", "Sa", "Et"],
+        digits: null,
+        dateFormat: "dd-mm-yyyy",
+        firstDay: 0,
+        isRTL: false
+      }
+    },
+    /** Determine whether this date is in a leap year.
+        @memberof NanakshahiCalendar
+        @param year {CDate|number} The date to examine or the year to examine.
+        @return {boolean} <code>true</code> if this is a leap year, <code>false</code> if not.
+        @throws Error if an invalid year or a different calendar used. */
+    leapYear: function(year2) {
+      var date = this._validate(
+        year2,
+        this.minMonth,
+        this.minDay,
+        main10.local.invalidYear || main10.regionalOptions[""].invalidYear
+      );
+      return gregorian.leapYear(date.year() + (date.year() < 1 ? 1 : 0) + 1469);
+    },
+    /** Determine the week of the year for a date.
+        @memberof NanakshahiCalendar
+        @param year {CDate|number} The date to examine or the year to examine.
+        @param [month] {number} The month to examine.
+        @param [day] {number} The day to examine.
+        @return {number} The week of the year.
+        @throws Error if an invalid date or a different calendar used. */
+    weekOfYear: function(year2, month2, day2) {
+      var checkDate = this.newDate(year2, month2, day2);
+      checkDate.add(1 - (checkDate.dayOfWeek() || 7), "d");
+      return Math.floor((checkDate.dayOfYear() - 1) / 7) + 1;
+    },
+    /** Retrieve the number of days in a month.
+        @memberof NanakshahiCalendar
+        @param year {CDate|number} The date to examine or the year of the month.
+        @param [month] {number} The month.
+        @return {number} The number of days in this month.
+        @throws Error if an invalid month/year or a different calendar used. */
+    daysInMonth: function(year2, month2) {
+      var date = this._validate(year2, month2, this.minDay, main10.local.invalidMonth);
+      return this.daysPerMonth[date.month() - 1] + (date.month() === 12 && this.leapYear(date.year()) ? 1 : 0);
+    },
+    /** Determine whether this date is a week day.
+        @memberof NanakshahiCalendar
+        @param year {CDate|number} The date to examine or the year to examine.
+        @param [month] {number} The month to examine.
+        @param [day] {number} The day to examine.
+        @return {boolean} <code>true</code> if a week day, <code>false</code> if not.
+        @throws Error if an invalid date or a different calendar used. */
+    weekDay: function(year2, month2, day2) {
+      return (this.dayOfWeek(year2, month2, day2) || 7) < 6;
+    },
+    /** Retrieve the Julian date equivalent for this date,
+        i.e. days since January 1, 4713 BCE Greenwich noon.
+        @memberof NanakshahiCalendar
+        @param year {CDate|number} The date to convert or the year to convert.
+        @param [month] {number} The month to convert.
+        @param [day] {number} The day to convert.
+        @return {number} The equivalent Julian date.
+        @throws Error if an invalid date or a different calendar used. */
+    toJD: function(year2, month2, day2) {
+      var date = this._validate(year2, month2, day2, main10.local.invalidMonth);
+      var year2 = date.year();
+      if (year2 < 0) {
+        year2++;
+      }
+      var doy = date.day();
+      for (var m = 1; m < date.month(); m++) {
+        doy += this.daysPerMonth[m - 1];
+      }
+      return doy + gregorian.toJD(year2 + 1468, 3, 13);
+    },
+    /** Create a new date from a Julian date.
+        @memberof NanakshahiCalendar
+        @param jd {number} The Julian date to convert.
+        @return {CDate} The equivalent date. */
+    fromJD: function(jd) {
+      jd = Math.floor(jd + 0.5);
+      var year2 = Math.floor((jd - (this.jdEpoch - 1)) / 366);
+      while (jd >= this.toJD(year2 + 1, 1, 1)) {
+        year2++;
+      }
+      var day2 = jd - Math.floor(this.toJD(year2, 1, 1) + 0.5) + 1;
+      var month2 = 1;
+      while (day2 > this.daysInMonth(year2, month2)) {
+        day2 -= this.daysInMonth(year2, month2);
+        month2++;
+      }
+      return this.newDate(year2, month2, day2);
+    }
+  });
+  main10.calendars.nanakshahi = NanakshahiCalendar;
+
+  // node_modules/.pnpm/world-calendars@1.0.4/node_modules/world-calendars/dist/calendars/nepali.js
+  var main11 = require_main();
+  var assign11 = require_object_assign();
+  function NepaliCalendar(language) {
+    this.local = this.regionalOptions[language || ""] || this.regionalOptions[""];
+  }
+  NepaliCalendar.prototype = new main11.baseCalendar();
+  assign11(NepaliCalendar.prototype, {
+    /** The calendar name.
+        @memberof NepaliCalendar */
+    name: "Nepali",
+    /** Julian date of start of Nepali epoch: 14 April 57 BCE.
+        @memberof NepaliCalendar */
+    jdEpoch: 17007095e-1,
+    /** Days per month in a common year.
+        @memberof NepaliCalendar */
+    daysPerMonth: [31, 31, 32, 32, 31, 30, 30, 29, 30, 29, 30, 30],
+    /** <code>true</code> if has a year zero, <code>false</code> if not.
+        @memberof NepaliCalendar */
+    hasYearZero: false,
+    /** The minimum month number.
+        @memberof NepaliCalendar */
+    minMonth: 1,
+    /** The first month in the year.
+        @memberof NepaliCalendar */
+    firstMonth: 1,
+    /** The minimum day number.
+        @memberof NepaliCalendar */
+    minDay: 1,
+    /** The number of days in the year.
+        @memberof NepaliCalendar */
+    daysPerYear: 365,
+    /** Localisations for the plugin.
+        Entries are objects indexed by the language code ('' being the default US/English).
+        Each object has the following attributes.
+        @memberof NepaliCalendar
+        @property name {string} The calendar name.
+        @property epochs {string[]} The epoch names.
+        @property monthNames {string[]} The long names of the months of the year.
+        @property monthNamesShort {string[]} The short names of the months of the year.
+        @property dayNames {string[]} The long names of the days of the week.
+        @property dayNamesShort {string[]} The short names of the days of the week.
+        @property dayNamesMin {string[]} The minimal names of the days of the week.
+        @property dateFormat {string} The date format for this calendar.
+                See the options on <a href="BaseCalendar.html#formatDate"><code>formatDate</code></a> for details.
+        @property firstDay {number} The number of the first day of the week, starting at 0.
+        @property isRTL {number} <code>true</code> if this localisation reads right-to-left. */
+    regionalOptions: {
+      // Localisations
+      "": {
+        name: "Nepali",
+        epochs: ["BBS", "ABS"],
+        monthNames: [
+          "Baisakh",
+          "Jestha",
+          "Ashadh",
+          "Shrawan",
+          "Bhadra",
+          "Ashwin",
+          "Kartik",
+          "Mangsir",
+          "Paush",
+          "Mangh",
+          "Falgun",
+          "Chaitra"
+        ],
+        monthNamesShort: ["Bai", "Je", "As", "Shra", "Bha", "Ash", "Kar", "Mang", "Pau", "Ma", "Fal", "Chai"],
+        dayNames: ["Aaitabaar", "Sombaar", "Manglbaar", "Budhabaar", "Bihibaar", "Shukrabaar", "Shanibaar"],
+        dayNamesShort: ["Aaita", "Som", "Mangl", "Budha", "Bihi", "Shukra", "Shani"],
+        dayNamesMin: ["Aai", "So", "Man", "Bu", "Bi", "Shu", "Sha"],
+        digits: null,
+        dateFormat: "dd/mm/yyyy",
+        firstDay: 1,
+        isRTL: false
+      }
+    },
+    /** Determine whether this date is in a leap year.
+        @memberof NepaliCalendar
+        @param year {CDate|number} The date to examine or the year to examine.
+        @return {boolean} <code>true</code> if this is a leap year, <code>false</code> if not.
+        @throws Error if an invalid year or a different calendar used. */
+    leapYear: function(year2) {
+      return this.daysInYear(year2) !== this.daysPerYear;
+    },
+    /** Determine the week of the year for a date.
+        @memberof NepaliCalendar
+        @param year {CDate|number} The date to examine or the year to examine.
+        @param [month] {number} The month to examine.
+        @param [day] {number} The day to examine.
+        @return {number} The week of the year.
+        @throws Error if an invalid date or a different calendar used. */
+    weekOfYear: function(year2, month2, day2) {
+      var checkDate = this.newDate(year2, month2, day2);
+      checkDate.add(-checkDate.dayOfWeek(), "d");
+      return Math.floor((checkDate.dayOfYear() - 1) / 7) + 1;
+    },
+    /** Retrieve the number of days in a year.
+        @memberof NepaliCalendar
+        @param year {CDate|number} The date to examine or the year to examine.
+        @return {number} The number of days.
+        @throws Error if an invalid year or a different calendar used. */
+    daysInYear: function(year2) {
+      var date = this._validate(year2, this.minMonth, this.minDay, main11.local.invalidYear);
+      year2 = date.year();
+      if (typeof this.NEPALI_CALENDAR_DATA[year2] === "undefined") {
+        return this.daysPerYear;
+      }
+      var daysPerYear = 0;
+      for (var month_number = this.minMonth; month_number <= 12; month_number++) {
+        daysPerYear += this.NEPALI_CALENDAR_DATA[year2][month_number];
+      }
+      return daysPerYear;
+    },
+    /** Retrieve the number of days in a month.
+        @memberof NepaliCalendar
+        @param year {CDate|number| The date to examine or the year of the month.
+        @param [month] {number} The month.
+        @return {number} The number of days in this month.
+        @throws Error if an invalid month/year or a different calendar used. */
+    daysInMonth: function(year2, month2) {
+      if (year2.year) {
+        month2 = year2.month();
+        year2 = year2.year();
+      }
+      this._validate(year2, month2, this.minDay, main11.local.invalidMonth);
+      return typeof this.NEPALI_CALENDAR_DATA[year2] === "undefined" ? this.daysPerMonth[month2 - 1] : this.NEPALI_CALENDAR_DATA[year2][month2];
+    },
+    /** Determine whether this date is a week day.
+        @memberof NepaliCalendar
+        @param year {CDate|number} The date to examine or the year to examine.
+        @param [month] {number} The month to examine.
+        @param [day] {number} The day to examine.
+        @return {boolean} <code>true</code> if a week day, <code>false</code> if not.
+        @throws Error if an invalid date or a different calendar used. */
+    weekDay: function(year2, month2, day2) {
+      return this.dayOfWeek(year2, month2, day2) !== 6;
+    },
+    /** Retrieve the Julian date equivalent for this date,
+        i.e. days since January 1, 4713 BCE Greenwich noon.
+        @memberof NepaliCalendar
+        @param year {CDate|number} The date to convert or the year to convert.
+        @param [month] {number} The month to convert.
+        @param [day] {number} The day to convert.
+        @return {number} The equivalent Julian date.
+        @throws Error if an invalid date or a different calendar used. */
+    toJD: function(nepaliYear, nepaliMonth, nepaliDay) {
+      var date = this._validate(nepaliYear, nepaliMonth, nepaliDay, main11.local.invalidDate);
+      nepaliYear = date.year();
+      nepaliMonth = date.month();
+      nepaliDay = date.day();
+      var gregorianCalendar4 = main11.instance();
+      var gregorianDayOfYear = 0;
+      var nepaliMonthToCheck = nepaliMonth;
+      var nepaliYearToCheck = nepaliYear;
+      this._createMissingCalendarData(nepaliYear);
+      var gregorianYear = nepaliYear - (nepaliMonthToCheck > 9 || nepaliMonthToCheck === 9 && nepaliDay >= this.NEPALI_CALENDAR_DATA[nepaliYearToCheck][0] ? 56 : 57);
+      if (nepaliMonth !== 9) {
+        gregorianDayOfYear = nepaliDay;
+        nepaliMonthToCheck--;
+      }
+      while (nepaliMonthToCheck !== 9) {
+        if (nepaliMonthToCheck <= 0) {
+          nepaliMonthToCheck = 12;
+          nepaliYearToCheck--;
+        }
+        gregorianDayOfYear += this.NEPALI_CALENDAR_DATA[nepaliYearToCheck][nepaliMonthToCheck];
+        nepaliMonthToCheck--;
+      }
+      if (nepaliMonth === 9) {
+        gregorianDayOfYear += nepaliDay - this.NEPALI_CALENDAR_DATA[nepaliYearToCheck][0];
+        if (gregorianDayOfYear < 0) {
+          gregorianDayOfYear += gregorianCalendar4.daysInYear(gregorianYear);
+        }
+      } else {
+        gregorianDayOfYear += this.NEPALI_CALENDAR_DATA[nepaliYearToCheck][9] - this.NEPALI_CALENDAR_DATA[nepaliYearToCheck][0];
+      }
+      return gregorianCalendar4.newDate(gregorianYear, 1, 1).add(gregorianDayOfYear, "d").toJD();
+    },
+    /** Create a new date from a Julian date.
+        @memberof NepaliCalendar
+        @param jd {number} The Julian date to convert.
+        @return {CDate} The equivalent date. */
+    fromJD: function(jd) {
+      var gregorianCalendar4 = main11.instance();
+      var gregorianDate = gregorianCalendar4.fromJD(jd);
+      var gregorianYear = gregorianDate.year();
+      var gregorianDayOfYear = gregorianDate.dayOfYear();
+      var nepaliYear = gregorianYear + 56;
+      this._createMissingCalendarData(nepaliYear);
+      var nepaliMonth = 9;
+      var dayOfFirstJanInPaush = this.NEPALI_CALENDAR_DATA[nepaliYear][0];
+      var daysSinceJanFirstToEndOfNepaliMonth = this.NEPALI_CALENDAR_DATA[nepaliYear][nepaliMonth] - dayOfFirstJanInPaush + 1;
+      while (gregorianDayOfYear > daysSinceJanFirstToEndOfNepaliMonth) {
+        nepaliMonth++;
+        if (nepaliMonth > 12) {
+          nepaliMonth = 1;
+          nepaliYear++;
+        }
+        daysSinceJanFirstToEndOfNepaliMonth += this.NEPALI_CALENDAR_DATA[nepaliYear][nepaliMonth];
+      }
+      var nepaliDayOfMonth = this.NEPALI_CALENDAR_DATA[nepaliYear][nepaliMonth] - (daysSinceJanFirstToEndOfNepaliMonth - gregorianDayOfYear);
+      return this.newDate(nepaliYear, nepaliMonth, nepaliDayOfMonth);
+    },
+    /** Creates missing data in the NEPALI_CALENDAR_DATA table.
+        This data will not be correct but just give an estimated result. Mostly -/+ 1 day
+        @private
+        @param nepaliYear {number} The missing year number. */
+    _createMissingCalendarData: function(nepaliYear) {
+      var tmp_calendar_data = this.daysPerMonth.slice(0);
+      tmp_calendar_data.unshift(17);
+      for (var nepaliYearToCreate = nepaliYear - 1; nepaliYearToCreate < nepaliYear + 2; nepaliYearToCreate++) {
+        if (typeof this.NEPALI_CALENDAR_DATA[nepaliYearToCreate] === "undefined") {
+          this.NEPALI_CALENDAR_DATA[nepaliYearToCreate] = tmp_calendar_data;
+        }
+      }
+    },
+    NEPALI_CALENDAR_DATA: {
+      // These data are from http://www.ashesh.com.np
+      1970: [18, 31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30],
+      1971: [18, 31, 31, 32, 31, 32, 30, 30, 29, 30, 29, 30, 30],
+      1972: [17, 31, 32, 31, 32, 31, 30, 30, 30, 29, 29, 30, 30],
+      1973: [19, 30, 32, 31, 32, 31, 30, 30, 30, 29, 30, 29, 31],
+      1974: [19, 31, 31, 32, 30, 31, 31, 30, 29, 30, 29, 30, 30],
+      1975: [18, 31, 31, 32, 32, 30, 31, 30, 29, 30, 29, 30, 30],
+      1976: [17, 31, 32, 31, 32, 31, 30, 30, 30, 29, 29, 30, 31],
+      1977: [18, 31, 32, 31, 32, 31, 31, 29, 30, 29, 30, 29, 31],
+      1978: [18, 31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30],
+      1979: [18, 31, 31, 32, 32, 31, 30, 30, 29, 30, 29, 30, 30],
+      1980: [17, 31, 32, 31, 32, 31, 30, 30, 30, 29, 29, 30, 31],
+      1981: [18, 31, 31, 31, 32, 31, 31, 29, 30, 30, 29, 30, 30],
+      1982: [18, 31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30],
+      1983: [18, 31, 31, 32, 32, 31, 30, 30, 29, 30, 29, 30, 30],
+      1984: [17, 31, 32, 31, 32, 31, 30, 30, 30, 29, 29, 30, 31],
+      1985: [18, 31, 31, 31, 32, 31, 31, 29, 30, 30, 29, 30, 30],
+      1986: [18, 31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30],
+      1987: [18, 31, 32, 31, 32, 31, 30, 30, 29, 30, 29, 30, 30],
+      1988: [17, 31, 32, 31, 32, 31, 30, 30, 30, 29, 29, 30, 31],
+      1989: [18, 31, 31, 31, 32, 31, 31, 30, 29, 30, 29, 30, 30],
+      1990: [18, 31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30],
+      1991: [18, 31, 32, 31, 32, 31, 30, 30, 29, 30, 29, 30, 30],
+      // These data are from http://nepalicalendar.rat32.com/index.php
+      1992: [17, 31, 32, 31, 32, 31, 30, 30, 30, 29, 30, 29, 31],
+      1993: [18, 31, 31, 31, 32, 31, 31, 30, 29, 30, 29, 30, 30],
+      1994: [18, 31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30],
+      1995: [17, 31, 32, 31, 32, 31, 30, 30, 30, 29, 29, 30, 30],
+      1996: [17, 31, 32, 31, 32, 31, 30, 30, 30, 29, 30, 29, 31],
+      1997: [18, 31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30],
+      1998: [18, 31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30],
+      1999: [17, 31, 32, 31, 32, 31, 30, 30, 30, 29, 29, 30, 31],
+      2e3: [17, 30, 32, 31, 32, 31, 30, 30, 30, 29, 30, 29, 31],
+      2001: [18, 31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30],
+      2002: [18, 31, 31, 32, 32, 31, 30, 30, 29, 30, 29, 30, 30],
+      2003: [17, 31, 32, 31, 32, 31, 30, 30, 30, 29, 29, 30, 31],
+      2004: [17, 30, 32, 31, 32, 31, 30, 30, 30, 29, 30, 29, 31],
+      2005: [18, 31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30],
+      2006: [18, 31, 31, 32, 32, 31, 30, 30, 29, 30, 29, 30, 30],
+      2007: [17, 31, 32, 31, 32, 31, 30, 30, 30, 29, 29, 30, 31],
+      2008: [17, 31, 31, 31, 32, 31, 31, 29, 30, 30, 29, 29, 31],
+      2009: [18, 31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30],
+      2010: [18, 31, 31, 32, 32, 31, 30, 30, 29, 30, 29, 30, 30],
+      2011: [17, 31, 32, 31, 32, 31, 30, 30, 30, 29, 29, 30, 31],
+      2012: [17, 31, 31, 31, 32, 31, 31, 29, 30, 30, 29, 30, 30],
+      2013: [18, 31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30],
+      2014: [18, 31, 31, 32, 32, 31, 30, 30, 29, 30, 29, 30, 30],
+      2015: [17, 31, 32, 31, 32, 31, 30, 30, 30, 29, 29, 30, 31],
+      2016: [17, 31, 31, 31, 32, 31, 31, 29, 30, 30, 29, 30, 30],
+      2017: [18, 31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30],
+      2018: [18, 31, 32, 31, 32, 31, 30, 30, 29, 30, 29, 30, 30],
+      2019: [17, 31, 32, 31, 32, 31, 30, 30, 30, 29, 30, 29, 31],
+      2020: [17, 31, 31, 31, 32, 31, 31, 30, 29, 30, 29, 30, 30],
+      2021: [18, 31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30],
+      2022: [17, 31, 32, 31, 32, 31, 30, 30, 30, 29, 29, 30, 30],
+      2023: [17, 31, 32, 31, 32, 31, 30, 30, 30, 29, 30, 29, 31],
+      2024: [17, 31, 31, 31, 32, 31, 31, 30, 29, 30, 29, 30, 30],
+      2025: [18, 31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30],
+      2026: [17, 31, 32, 31, 32, 31, 30, 30, 30, 29, 29, 30, 31],
+      2027: [17, 30, 32, 31, 32, 31, 30, 30, 30, 29, 30, 29, 31],
+      2028: [17, 31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30],
+      2029: [18, 31, 31, 32, 31, 32, 30, 30, 29, 30, 29, 30, 30],
+      2030: [17, 31, 32, 31, 32, 31, 30, 30, 30, 30, 30, 30, 31],
+      2031: [17, 31, 32, 31, 32, 31, 31, 31, 31, 31, 31, 31, 31],
+      2032: [17, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32],
+      2033: [18, 31, 31, 32, 32, 31, 30, 30, 29, 30, 29, 30, 30],
+      2034: [17, 31, 32, 31, 32, 31, 30, 30, 30, 29, 29, 30, 31],
+      2035: [17, 30, 32, 31, 32, 31, 31, 29, 30, 30, 29, 29, 31],
+      2036: [17, 31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30],
+      2037: [18, 31, 31, 32, 32, 31, 30, 30, 29, 30, 29, 30, 30],
+      2038: [17, 31, 32, 31, 32, 31, 30, 30, 30, 29, 29, 30, 31],
+      2039: [17, 31, 31, 31, 32, 31, 31, 29, 30, 30, 29, 30, 30],
+      2040: [17, 31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30],
+      2041: [18, 31, 31, 32, 32, 31, 30, 30, 29, 30, 29, 30, 30],
+      2042: [17, 31, 32, 31, 32, 31, 30, 30, 30, 29, 29, 30, 31],
+      2043: [17, 31, 31, 31, 32, 31, 31, 29, 30, 30, 29, 30, 30],
+      2044: [17, 31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30],
+      2045: [18, 31, 32, 31, 32, 31, 30, 30, 29, 30, 29, 30, 30],
+      2046: [17, 31, 32, 31, 32, 31, 30, 30, 30, 29, 29, 30, 31],
+      2047: [17, 31, 31, 31, 32, 31, 31, 30, 29, 30, 29, 30, 30],
+      2048: [17, 31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30],
+      2049: [17, 31, 32, 31, 32, 31, 30, 30, 30, 29, 29, 30, 30],
+      2050: [17, 31, 32, 31, 32, 31, 30, 30, 30, 29, 30, 29, 31],
+      2051: [17, 31, 31, 31, 32, 31, 31, 30, 29, 30, 29, 30, 30],
+      2052: [17, 31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30],
+      2053: [17, 31, 32, 31, 32, 31, 30, 30, 30, 29, 29, 30, 30],
+      2054: [17, 31, 32, 31, 32, 31, 30, 30, 30, 29, 30, 29, 31],
+      2055: [17, 31, 31, 32, 31, 31, 31, 30, 29, 30, 30, 29, 30],
+      2056: [17, 31, 31, 32, 31, 32, 30, 30, 29, 30, 29, 30, 30],
+      2057: [17, 31, 32, 31, 32, 31, 30, 30, 30, 29, 29, 30, 31],
+      2058: [17, 30, 32, 31, 32, 31, 30, 30, 30, 29, 30, 29, 31],
+      2059: [17, 31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30],
+      2060: [17, 31, 31, 32, 32, 31, 30, 30, 29, 30, 29, 30, 30],
+      2061: [17, 31, 32, 31, 32, 31, 30, 30, 30, 29, 29, 30, 31],
+      2062: [17, 30, 32, 31, 32, 31, 31, 29, 30, 29, 30, 29, 31],
+      2063: [17, 31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30],
+      2064: [17, 31, 31, 32, 32, 31, 30, 30, 29, 30, 29, 30, 30],
+      2065: [17, 31, 32, 31, 32, 31, 30, 30, 30, 29, 29, 30, 31],
+      2066: [17, 31, 31, 31, 32, 31, 31, 29, 30, 30, 29, 29, 31],
+      2067: [17, 31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30],
+      2068: [17, 31, 31, 32, 32, 31, 30, 30, 29, 30, 29, 30, 30],
+      2069: [17, 31, 32, 31, 32, 31, 30, 30, 30, 29, 29, 30, 31],
+      2070: [17, 31, 31, 31, 32, 31, 31, 29, 30, 30, 29, 30, 30],
+      2071: [17, 31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30],
+      2072: [17, 31, 32, 31, 32, 31, 30, 30, 29, 30, 29, 30, 30],
+      2073: [17, 31, 32, 31, 32, 31, 30, 30, 30, 29, 29, 30, 31],
+      2074: [17, 31, 31, 31, 32, 31, 31, 30, 29, 30, 29, 30, 30],
+      2075: [17, 31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30],
+      2076: [16, 31, 32, 31, 32, 31, 30, 30, 30, 29, 29, 30, 30],
+      2077: [17, 31, 32, 31, 32, 31, 30, 30, 30, 29, 30, 29, 31],
+      2078: [17, 31, 31, 31, 32, 31, 31, 30, 29, 30, 29, 30, 30],
+      2079: [17, 31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30],
+      2080: [16, 31, 32, 31, 32, 31, 30, 30, 30, 29, 29, 30, 30],
+      // These data are from http://www.ashesh.com.np/nepali-calendar/
+      2081: [17, 31, 31, 32, 32, 31, 30, 30, 30, 29, 30, 30, 30],
+      2082: [17, 31, 32, 31, 32, 31, 30, 30, 30, 29, 30, 30, 30],
+      2083: [17, 31, 31, 32, 31, 31, 30, 30, 30, 29, 30, 30, 30],
+      2084: [17, 31, 31, 32, 31, 31, 30, 30, 30, 29, 30, 30, 30],
+      2085: [17, 31, 32, 31, 32, 31, 31, 30, 30, 29, 30, 30, 30],
+      2086: [17, 31, 32, 31, 32, 31, 30, 30, 30, 29, 30, 30, 30],
+      2087: [16, 31, 31, 32, 31, 31, 31, 30, 30, 29, 30, 30, 30],
+      2088: [16, 30, 31, 32, 32, 30, 31, 30, 30, 29, 30, 30, 30],
+      2089: [17, 31, 32, 31, 32, 31, 30, 30, 30, 29, 30, 30, 30],
+      2090: [17, 31, 32, 31, 32, 31, 30, 30, 30, 29, 30, 30, 30],
+      2091: [16, 31, 31, 32, 31, 31, 31, 30, 30, 29, 30, 30, 30],
+      2092: [16, 31, 31, 32, 32, 31, 30, 30, 30, 29, 30, 30, 30],
+      2093: [17, 31, 32, 31, 32, 31, 30, 30, 30, 29, 30, 30, 30],
+      2094: [17, 31, 31, 32, 31, 31, 30, 30, 30, 29, 30, 30, 30],
+      2095: [17, 31, 31, 32, 31, 31, 31, 30, 29, 30, 30, 30, 30],
+      2096: [17, 30, 31, 32, 32, 31, 30, 30, 29, 30, 29, 30, 30],
+      2097: [17, 31, 32, 31, 32, 31, 30, 30, 30, 29, 30, 30, 30],
+      2098: [17, 31, 31, 32, 31, 31, 31, 29, 30, 29, 30, 30, 31],
+      2099: [17, 31, 31, 32, 31, 31, 31, 30, 29, 29, 30, 30, 30],
+      2100: [17, 31, 32, 31, 32, 30, 31, 30, 29, 30, 29, 30, 30]
+    }
+  });
+  main11.calendars.nepali = NepaliCalendar;
+
+  // node_modules/.pnpm/world-calendars@1.0.4/node_modules/world-calendars/dist/calendars/persian.js
+  var main12 = require_main();
+  var assign12 = require_object_assign();
+  function PersianCalendar(language) {
+    this.local = this.regionalOptions[language || ""] || this.regionalOptions[""];
+  }
+  function _leapYear(year2) {
+    var x = year2 - 475;
+    if (year2 < 0) x++;
+    var c = 0.242197;
+    var v0 = c * x;
+    var v1 = c * (x + 1);
+    var r0 = v0 - Math.floor(v0);
+    var r1 = v1 - Math.floor(v1);
+    return r0 > r1;
+  }
+  PersianCalendar.prototype = new main12.baseCalendar();
+  assign12(PersianCalendar.prototype, {
+    /** The calendar name.
+        @memberof PersianCalendar */
+    name: "Persian",
+    /** Julian date of start of Persian epoch: 19 March 622 CE.
+        @memberof PersianCalendar */
+    jdEpoch: 19483205e-1,
+    /** Days per month in a common year.
+        @memberof PersianCalendar */
+    daysPerMonth: [31, 31, 31, 31, 31, 31, 30, 30, 30, 30, 30, 29],
+    /** <code>true</code> if has a year zero, <code>false</code> if not.
+        @memberof PersianCalendar */
+    hasYearZero: false,
+    /** The minimum month number.
+        @memberof PersianCalendar */
+    minMonth: 1,
+    /** The first month in the year.
+        @memberof PersianCalendar */
+    firstMonth: 1,
+    /** The minimum day number.
+        @memberof PersianCalendar */
+    minDay: 1,
+    /** Localisations for the plugin.
+        Entries are objects indexed by the language code ('' being the default US/English).
+        Each object has the following attributes.
+        @memberof PersianCalendar
+        @property name {string} The calendar name.
+        @property epochs {string[]} The epoch names.
+        @property monthNames {string[]} The long names of the months of the year.
+        @property monthNamesShort {string[]} The short names of the months of the year.
+        @property dayNames {string[]} The long names of the days of the week.
+        @property dayNamesShort {string[]} The short names of the days of the week.
+        @property dayNamesMin {string[]} The minimal names of the days of the week.
+        @property dateFormat {string} The date format for this calendar.
+                See the options on <a href="BaseCalendar.html#formatDate"><code>formatDate</code></a> for details.
+        @property firstDay {number} The number of the first day of the week, starting at 0.
+        @property isRTL {number} <code>true</code> if this localisation reads right-to-left. */
+    regionalOptions: {
+      // Localisations
+      "": {
+        name: "Persian",
+        epochs: ["BP", "AP"],
+        monthNames: [
+          "Farvardin",
+          "Ordibehesht",
+          "Khordad",
+          "Tir",
+          "Mordad",
+          "Shahrivar",
+          "Mehr",
+          "Aban",
+          "Azar",
+          "Dey",
+          "Bahman",
+          "Esfand"
+        ],
+        monthNamesShort: ["Far", "Ord", "Kho", "Tir", "Mor", "Sha", "Meh", "Aba", "Aza", "Dey", "Bah", "Esf"],
+        dayNames: ["Yekshanbeh", "Doshanbeh", "Seshanbeh", "Chah\u0101rshanbeh", "Panjshanbeh", "Jom'eh", "Shanbeh"],
+        dayNamesShort: ["Yek", "Do", "Se", "Cha", "Panj", "Jom", "Sha"],
+        dayNamesMin: ["Ye", "Do", "Se", "Ch", "Pa", "Jo", "Sh"],
+        digits: null,
+        dateFormat: "yyyy/mm/dd",
+        firstDay: 6,
+        isRTL: false
+      }
+    },
+    /** Determine whether this date is in a leap year.
+        @memberof PersianCalendar
+        @param year {CDate|number} The date to examine or the year to examine.
+        @return {boolean} <code>true</code> if this is a leap year, <code>false</code> if not.
+        @throws Error if an invalid year or a different calendar used. */
+    leapYear: function(year2) {
+      var date = this._validate(year2, this.minMonth, this.minDay, main12.local.invalidYear);
+      return _leapYear(date.year());
+    },
+    /** Determine the week of the year for a date.
+        @memberof PersianCalendar
+        @param year {CDate|number} The date to examine or the year to examine.
+        @param [month] {number} The month to examine.
+        @param [day] {number} The day to examine.
+        @return {number} The week of the year.
+        @throws Error if an invalid date or a different calendar used. */
+    weekOfYear: function(year2, month2, day2) {
+      var checkDate = this.newDate(year2, month2, day2);
+      checkDate.add(-((checkDate.dayOfWeek() + 1) % 7), "d");
+      return Math.floor((checkDate.dayOfYear() - 1) / 7) + 1;
+    },
+    /** Retrieve the number of days in a month.
+        @memberof PersianCalendar
+        @param year {CDate|number} The date to examine or the year of the month.
+        @param [month] {number} The month.
+        @return {number} The number of days in this month.
+        @throws Error if an invalid month/year or a different calendar used. */
+    daysInMonth: function(year2, month2) {
+      var date = this._validate(year2, month2, this.minDay, main12.local.invalidMonth);
+      return this.daysPerMonth[date.month() - 1] + (date.month() === 12 && this.leapYear(date.year()) ? 1 : 0);
+    },
+    /** Determine whether this date is a week day.
+        @memberof PersianCalendar
+        @param year {CDate|number} The date to examine or the year to examine.
+        @param [month] {number} The month to examine.
+        @param [day] {number} The day to examine.
+        @return {boolean} <code>true</code> if a week day, <code>false</code> if not.
+        @throws Error if an invalid date or a different calendar used. */
+    weekDay: function(year2, month2, day2) {
+      return this.dayOfWeek(year2, month2, day2) !== 5;
+    },
+    /** Retrieve the Julian date equivalent for this date,
+        i.e. days since January 1, 4713 BCE Greenwich noon.
+        @memberof PersianCalendar
+        @param year {CDate|number} The date to convert or the year to convert.
+        @param [month] {number} The month to convert.
+        @param [day] {number} The day to convert.
+        @return {number} The equivalent Julian date.
+        @throws Error if an invalid date or a different calendar used. */
+    toJD: function(year2, month2, day2) {
+      var date = this._validate(year2, month2, day2, main12.local.invalidDate);
+      year2 = date.year();
+      month2 = date.month();
+      day2 = date.day();
+      var nLeapYearsSince = 0;
+      if (year2 > 0) {
+        for (var i = 1; i < year2; i++) {
+          if (_leapYear(i)) nLeapYearsSince++;
+        }
+      } else if (year2 < 0) {
+        for (var i = year2; i < 0; i++) {
+          if (_leapYear(i)) nLeapYearsSince--;
+        }
+      }
+      return day2 + (month2 <= 7 ? (month2 - 1) * 31 : (month2 - 1) * 30 + 6) + (year2 > 0 ? year2 - 1 : year2) * 365 + nLeapYearsSince + this.jdEpoch - 1;
+    },
+    /** Create a new date from a Julian date.
+        @memberof PersianCalendar
+        @param jd {number} The Julian date to convert.
+        @return {CDate} The equivalent date. */
+    fromJD: function(jd) {
+      jd = Math.floor(jd) + 0.5;
+      var y = 475 + (jd - this.toJD(475, 1, 1)) / 365.242197;
+      var year2 = Math.floor(y);
+      if (year2 <= 0) year2--;
+      if (jd > this.toJD(year2, 12, _leapYear(year2) ? 30 : 29)) {
+        year2++;
+        if (year2 === 0) year2++;
+      }
+      var yday = jd - this.toJD(year2, 1, 1) + 1;
+      var month2 = yday <= 186 ? Math.ceil(yday / 31) : Math.ceil((yday - 6) / 30);
+      var day2 = jd - this.toJD(year2, month2, 1) + 1;
+      return this.newDate(year2, month2, day2);
+    }
+  });
+  main12.calendars.persian = PersianCalendar;
+  main12.calendars.jalali = PersianCalendar;
+
+  // node_modules/.pnpm/world-calendars@1.0.4/node_modules/world-calendars/dist/calendars/taiwan.js
+  var main13 = require_main();
+  var assign13 = require_object_assign();
+  var gregorianCalendar2 = main13.instance();
+  function TaiwanCalendar(language) {
+    this.local = this.regionalOptions[language || ""] || this.regionalOptions[""];
+  }
+  TaiwanCalendar.prototype = new main13.baseCalendar();
+  assign13(TaiwanCalendar.prototype, {
+    /** The calendar name.
+        @memberof TaiwanCalendar */
+    name: "Taiwan",
+    /** Julian date of start of Taiwan epoch: 1 January 1912 CE (Gregorian).
+        @memberof TaiwanCalendar */
+    jdEpoch: 24194025e-1,
+    /** Difference in years between Taiwan and Gregorian calendars.
+        @memberof TaiwanCalendar */
+    yearsOffset: 1911,
+    /** Days per month in a common year.
+        @memberof TaiwanCalendar */
+    daysPerMonth: [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31],
+    /** <code>true</code> if has a year zero, <code>false</code> if not.
+        @memberof TaiwanCalendar */
+    hasYearZero: false,
+    /** The minimum month number.
+        @memberof TaiwanCalendar */
+    minMonth: 1,
+    /** The first month in the year.
+        @memberof TaiwanCalendar */
+    firstMonth: 1,
+    /** The minimum day number.
+        @memberof TaiwanCalendar */
+    minDay: 1,
+    /** Localisations for the plugin.
+        Entries are objects indexed by the language code ('' being the default US/English).
+        Each object has the following attributes.
+        @memberof TaiwanCalendar
+        @property name {string} The calendar name.
+        @property epochs {string[]} The epoch names.
+        @property monthNames {string[]} The long names of the months of the year.
+        @property monthNamesShort {string[]} The short names of the months of the year.
+        @property dayNames {string[]} The long names of the days of the week.
+        @property dayNamesShort {string[]} The short names of the days of the week.
+        @property dayNamesMin {string[]} The minimal names of the days of the week.
+        @property dateFormat {string} The date format for this calendar.
+                See the options on <a href="BaseCalendar.html#formatDate"><code>formatDate</code></a> for details.
+        @property firstDay {number} The number of the first day of the week, starting at 0.
+        @property isRTL {number} <code>true</code> if this localisation reads right-to-left. */
+    regionalOptions: {
+      // Localisations
+      "": {
+        name: "Taiwan",
+        epochs: ["BROC", "ROC"],
+        monthNames: [
+          "January",
+          "February",
+          "March",
+          "April",
+          "May",
+          "June",
+          "July",
+          "August",
+          "September",
+          "October",
+          "November",
+          "December"
+        ],
+        monthNamesShort: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+        dayNames: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+        dayNamesShort: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+        dayNamesMin: ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"],
+        digits: null,
+        dateFormat: "yyyy/mm/dd",
+        firstDay: 1,
+        isRTL: false
+      }
+    },
+    /** Determine whether this date is in a leap year.
+        @memberof TaiwanCalendar
+        @param year {CDate|number} The date to examine or the year to examine.
+        @return {boolean} <code>true</code> if this is a leap year, <code>false</code> if not.
+        @throws Error if an invalid year or a different calendar used. */
+    leapYear: function(year2) {
+      var date = this._validate(year2, this.minMonth, this.minDay, main13.local.invalidYear);
+      var year2 = this._t2gYear(date.year());
+      return gregorianCalendar2.leapYear(year2);
+    },
+    /** Determine the week of the year for a date - ISO 8601.
+        @memberof TaiwanCalendar
+        @param year {CDate|number} The date to examine or the year to examine.
+        @param [month] {number} The month to examine.
+        @param [day] {number} The day to examine.
+        @return {number} The week of the year.
+        @throws Error if an invalid date or a different calendar used. */
+    weekOfYear: function(year2, month2, day2) {
+      var date = this._validate(year2, this.minMonth, this.minDay, main13.local.invalidYear);
+      var year2 = this._t2gYear(date.year());
+      return gregorianCalendar2.weekOfYear(year2, date.month(), date.day());
+    },
+    /** Retrieve the number of days in a month.
+        @memberof TaiwanCalendar
+        @param year {CDate|number} The date to examine or the year of the month.
+        @param [month] {number} The month.
+        @return {number} The number of days in this month.
+        @throws Error if an invalid month/year or a different calendar used. */
+    daysInMonth: function(year2, month2) {
+      var date = this._validate(year2, month2, this.minDay, main13.local.invalidMonth);
+      return this.daysPerMonth[date.month() - 1] + (date.month() === 2 && this.leapYear(date.year()) ? 1 : 0);
+    },
+    /** Determine whether this date is a week day.
+        @memberof TaiwanCalendar
+        @param year {CDate|number} The date to examine or the year to examine.
+        @param [month] {number} The month to examine.
+        @param [day] {number} The day to examine.
+        @return {boolean} <code>true</code> if a week day, <code>false</code> if not.
+        @throws Error if an invalid date or a different calendar used. */
+    weekDay: function(year2, month2, day2) {
+      return (this.dayOfWeek(year2, month2, day2) || 7) < 6;
+    },
+    /** Retrieve the Julian date equivalent for this date,
+        i.e. days since January 1, 4713 BCE Greenwich noon.
+        @memberof TaiwanCalendar
+        @param year {CDate|number} The date to convert or the year to convert.
+        @param [month] {number} The month to convert.
+        @param [day] {number} The day to convert.
+        @return {number} The equivalent Julian date.
+        @throws Error if an invalid date or a different calendar used. */
+    toJD: function(year2, month2, day2) {
+      var date = this._validate(year2, month2, day2, main13.local.invalidDate);
+      var year2 = this._t2gYear(date.year());
+      return gregorianCalendar2.toJD(year2, date.month(), date.day());
+    },
+    /** Create a new date from a Julian date.
+        @memberof TaiwanCalendar
+        @param jd {number} The Julian date to convert.
+        @return {CDate} The equivalent date. */
+    fromJD: function(jd) {
+      var date = gregorianCalendar2.fromJD(jd);
+      var year2 = this._g2tYear(date.year());
+      return this.newDate(year2, date.month(), date.day());
+    },
+    /** Convert Taiwanese to Gregorian year.
+        @memberof TaiwanCalendar
+        @private
+        @param year {number} The Taiwanese year.
+        @return {number} The corresponding Gregorian year. */
+    _t2gYear: function(year2) {
+      return year2 + this.yearsOffset + (year2 >= -this.yearsOffset && year2 <= -1 ? 1 : 0);
+    },
+    /** Convert Gregorian to Taiwanese year.
+        @memberof TaiwanCalendar
+        @private
+        @param year {number} The Gregorian year.
+        @return {number} The corresponding Taiwanese year. */
+    _g2tYear: function(year2) {
+      return year2 - this.yearsOffset - (year2 >= 1 && year2 <= this.yearsOffset ? 1 : 0);
+    }
+  });
+  main13.calendars.taiwan = TaiwanCalendar;
+
+  // node_modules/.pnpm/world-calendars@1.0.4/node_modules/world-calendars/dist/calendars/thai.js
+  var main14 = require_main();
+  var assign14 = require_object_assign();
+  var gregorianCalendar3 = main14.instance();
+  function ThaiCalendar(language) {
+    this.local = this.regionalOptions[language || ""] || this.regionalOptions[""];
+  }
+  ThaiCalendar.prototype = new main14.baseCalendar();
+  assign14(ThaiCalendar.prototype, {
+    /** The calendar name.
+        @memberof ThaiCalendar */
+    name: "Thai",
+    /** Julian date of start of Thai epoch: 1 January 543 BCE (Gregorian).
+        @memberof ThaiCalendar */
+    jdEpoch: 15230985e-1,
+    /** Difference in years between Thai and Gregorian calendars.
+        @memberof ThaiCalendar */
+    yearsOffset: 543,
+    /** Days per month in a common year.
+        @memberof ThaiCalendar */
+    daysPerMonth: [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31],
+    /** <code>true</code> if has a year zero, <code>false</code> if not.
+        @memberof ThaiCalendar */
+    hasYearZero: false,
+    /** The minimum month number.
+        @memberof ThaiCalendar */
+    minMonth: 1,
+    /** The first month in the year.
+        @memberof ThaiCalendar */
+    firstMonth: 1,
+    /** The minimum day number.
+        @memberof ThaiCalendar */
+    minDay: 1,
+    /** Localisations for the plugin.
+        Entries are objects indexed by the language code ('' being the default US/English).
+        Each object has the following attributes.
+        @memberof ThaiCalendar
+        @property name {string} The calendar name.
+        @property epochs {string[]} The epoch names.
+        @property monthNames {string[]} The long names of the months of the year.
+        @property monthNamesShort {string[]} The short names of the months of the year.
+        @property dayNames {string[]} The long names of the days of the week.
+        @property dayNamesShort {string[]} The short names of the days of the week.
+        @property dayNamesMin {string[]} The minimal names of the days of the week.
+        @property dateFormat {string} The date format for this calendar.
+                See the options on <a href="BaseCalendar.html#formatDate"><code>formatDate</code></a> for details.
+        @property firstDay {number} The number of the first day of the week, starting at 0.
+        @property isRTL {number} <code>true</code> if this localisation reads right-to-left. */
+    regionalOptions: {
+      // Localisations
+      "": {
+        name: "Thai",
+        epochs: ["BBE", "BE"],
+        monthNames: [
+          "January",
+          "February",
+          "March",
+          "April",
+          "May",
+          "June",
+          "July",
+          "August",
+          "September",
+          "October",
+          "November",
+          "December"
+        ],
+        monthNamesShort: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+        dayNames: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+        dayNamesShort: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+        dayNamesMin: ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"],
+        digits: null,
+        dateFormat: "dd/mm/yyyy",
+        firstDay: 0,
+        isRTL: false
+      }
+    },
+    /** Determine whether this date is in a leap year.
+        @memberof ThaiCalendar
+        @param year {CDate|number} The date to examine or the year to examine.
+        @return {boolean} <code>true</code> if this is a leap year, <code>false</code> if not.
+        @throws Error if an invalid year or a different calendar used. */
+    leapYear: function(year2) {
+      var date = this._validate(year2, this.minMonth, this.minDay, main14.local.invalidYear);
+      var year2 = this._t2gYear(date.year());
+      return gregorianCalendar3.leapYear(year2);
+    },
+    /** Determine the week of the year for a date - ISO 8601.
+        @memberof ThaiCalendar
+        @param year {CDate|number} The date to examine or the year to examine.
+        @param [month] {number} The month to examine.
+        @param [day] {number} The day to examine.
+        @return {number} The week of the year.
+        @throws Error if an invalid date or a different calendar used. */
+    weekOfYear: function(year2, month2, day2) {
+      var date = this._validate(year2, this.minMonth, this.minDay, main14.local.invalidYear);
+      var year2 = this._t2gYear(date.year());
+      return gregorianCalendar3.weekOfYear(year2, date.month(), date.day());
+    },
+    /** Retrieve the number of days in a month.
+        @memberof ThaiCalendar
+        @param year {CDate|number} The date to examine or the year of the month.
+        @param [month] {number} The month.
+        @return {number} The number of days in this month.
+        @throws Error if an invalid month/year or a different calendar used. */
+    daysInMonth: function(year2, month2) {
+      var date = this._validate(year2, month2, this.minDay, main14.local.invalidMonth);
+      return this.daysPerMonth[date.month() - 1] + (date.month() === 2 && this.leapYear(date.year()) ? 1 : 0);
+    },
+    /** Determine whether this date is a week day.
+        @memberof ThaiCalendar
+        @param year {CDate|number} The date to examine or the year to examine.
+        @param [month] {number} The month to examine.
+        @param [day] {number} The day to examine.
+        @return {boolean} <code>true</code> if a week day, <code>false</code> if not.
+        @throws Error if an invalid date or a different calendar used. */
+    weekDay: function(year2, month2, day2) {
+      return (this.dayOfWeek(year2, month2, day2) || 7) < 6;
+    },
+    /** Retrieve the Julian date equivalent for this date,
+        i.e. days since January 1, 4713 BCE Greenwich noon.
+        @memberof ThaiCalendar
+        @param year {CDate|number} The date to convert or the year to convert.
+        @param [month] {number} The month to convert.
+        @param [day] {number} The day to convert.
+        @return {number} The equivalent Julian date.
+        @throws Error if an invalid date or a different calendar used. */
+    toJD: function(year2, month2, day2) {
+      var date = this._validate(year2, month2, day2, main14.local.invalidDate);
+      var year2 = this._t2gYear(date.year());
+      return gregorianCalendar3.toJD(year2, date.month(), date.day());
+    },
+    /** Create a new date from a Julian date.
+        @memberof ThaiCalendar
+        @param jd {number} The Julian date to convert.
+        @return {CDate} The equivalent date. */
+    fromJD: function(jd) {
+      var date = gregorianCalendar3.fromJD(jd);
+      var year2 = this._g2tYear(date.year());
+      return this.newDate(year2, date.month(), date.day());
+    },
+    /** Convert Thai to Gregorian year.
+        @memberof ThaiCalendar
+        @private
+        @param year {number} The Thai year.
+        @return {number} The corresponding Gregorian year. */
+    _t2gYear: function(year2) {
+      return year2 - this.yearsOffset - (year2 >= 1 && year2 <= this.yearsOffset ? 1 : 0);
+    },
+    /** Convert Gregorian to Thai year.
+        @memberof ThaiCalendar
+        @private
+        @param year {number} The Gregorian year.
+        @return {number} The corresponding Thai year. */
+    _g2tYear: function(year2) {
+      return year2 + this.yearsOffset + (year2 >= -this.yearsOffset && year2 <= -1 ? 1 : 0);
+    }
+  });
+  main14.calendars.thai = ThaiCalendar;
+
+  // node_modules/.pnpm/world-calendars@1.0.4/node_modules/world-calendars/dist/calendars/ummalqura.js
+  var main15 = require_main();
+  var assign15 = require_object_assign();
+  function UmmAlQuraCalendar(language) {
+    this.local = this.regionalOptions[language || ""] || this.regionalOptions[""];
+  }
+  UmmAlQuraCalendar.prototype = new main15.baseCalendar();
+  assign15(UmmAlQuraCalendar.prototype, {
+    /** The calendar name.
+        @memberof UmmAlQuraCalendar */
+    name: "UmmAlQura",
+    //jdEpoch: 1948440, // Julian date of start of UmmAlQura epoch: 14 March 1937 CE
+    //daysPerMonth: // Days per month in a common year, replaced by a method.
+    /** <code>true</code> if has a year zero, <code>false</code> if not.
+        @memberof UmmAlQuraCalendar */
+    hasYearZero: false,
+    /** The minimum month number.
+        @memberof UmmAlQuraCalendar */
+    minMonth: 1,
+    /** The first month in the year.
+        @memberof UmmAlQuraCalendar */
+    firstMonth: 1,
+    /** The minimum day number.
+        @memberof UmmAlQuraCalendar */
+    minDay: 1,
+    /** Localisations for the plugin.
+        Entries are objects indexed by the language code ('' being the default US/English).
+        Each object has the following attributes.
+        @memberof UmmAlQuraCalendar
+        @property name {string} The calendar name.
+        @property epochs {string[]} The epoch names.
+        @property monthNames {string[]} The long names of the months of the year.
+        @property monthNamesShort {string[]} The short names of the months of the year.
+        @property dayNames {string[]} The long names of the days of the week.
+        @property dayNamesShort {string[]} The short names of the days of the week.
+        @property dayNamesMin {string[]} The minimal names of the days of the week.
+        @property dateFormat {string} The date format for this calendar.
+                See the options on <a href="BaseCalendar.html#formatDate"><code>formatDate</code></a> for details.
+        @property firstDay {number} The number of the first day of the week, starting at 0.
+        @property isRTL {number} <code>true</code> if this localisation reads right-to-left. */
+    regionalOptions: {
+      // Localisations
+      "": {
+        name: "Umm al-Qura",
+        epochs: ["BH", "AH"],
+        monthNames: [
+          "Al-Muharram",
+          "Safar",
+          "Rabi' al-awwal",
+          "Rabi' Al-Thani",
+          "Jumada Al-Awwal",
+          "Jumada Al-Thani",
+          "Rajab",
+          "Sha'aban",
+          "Ramadan",
+          "Shawwal",
+          "Dhu al-Qi'dah",
+          "Dhu al-Hijjah"
+        ],
+        monthNamesShort: ["Muh", "Saf", "Rab1", "Rab2", "Jum1", "Jum2", "Raj", "Sha'", "Ram", "Shaw", "DhuQ", "DhuH"],
+        dayNames: ["Yawm al-Ahad", "Yawm al-Ithnain", "Yawm al-Thal\u0101th\u0101\u2019", "Yawm al-Arba\u2018\u0101\u2019", "Yawm al-Kham\u012Bs", "Yawm al-Jum\u2018a", "Yawm al-Sabt"],
+        dayNamesMin: ["Ah", "Ith", "Th", "Ar", "Kh", "Ju", "Sa"],
+        digits: null,
+        dateFormat: "yyyy/mm/dd",
+        firstDay: 6,
+        isRTL: true
+      }
+    },
+    /** Determine whether this date is in a leap year.
+        @memberof UmmAlQuraCalendar
+        @param year {CDate|number} The date to examine or the year to examine.
+        @return {boolean} <code>true</code> if this is a leap year, <code>false</code> if not.
+        @throws Error if an invalid year or a different calendar used. */
+    leapYear: function(year2) {
+      var date = this._validate(year2, this.minMonth, this.minDay, main15.local.invalidYear);
+      return this.daysInYear(date.year()) === 355;
+    },
+    /** Determine the week of the year for a date.
+        @memberof UmmAlQuraCalendar
+        @param year {CDate|number} The date to examine or the year to examine.
+        @param [month] {number} The month to examine.
+        @param [day] {number} The day to examine.
+        @return {number} The week of the year.
+        @throws Error if an invalid date or a different calendar used. */
+    weekOfYear: function(year2, month2, day2) {
+      var checkDate = this.newDate(year2, month2, day2);
+      checkDate.add(-checkDate.dayOfWeek(), "d");
+      return Math.floor((checkDate.dayOfYear() - 1) / 7) + 1;
+    },
+    /** Retrieve the number of days in a year.
+        @memberof UmmAlQuraCalendar
+        @param year {CDate|number} The date to examine or the year to examine.
+        @return {number} The number of days.
+        @throws Error if an invalid year or a different calendar used. */
+    daysInYear: function(year2) {
+      var daysCount = 0;
+      for (var i = 1; i <= 12; i++) {
+        daysCount += this.daysInMonth(year2, i);
+      }
+      return daysCount;
+    },
+    /** Retrieve the number of days in a month.
+        @memberof UmmAlQuraCalendar
+        @param year {CDate|number} The date to examine or the year of the month.
+        @param [month] {number} The month.
+        @return {number} The number of days in this month.
+        @throws Error if an invalid month/year or a different calendar used. */
+    daysInMonth: function(year2, month2) {
+      var date = this._validate(year2, month2, this.minDay, main15.local.invalidMonth);
+      var mcjdn = date.toJD() - 24e5 + 0.5;
+      var index = 0;
+      for (var i = 0; i < ummalqura_dat.length; i++) {
+        if (ummalqura_dat[i] > mcjdn) {
+          return ummalqura_dat[index] - ummalqura_dat[index - 1];
+        }
+        index++;
+      }
+      return 30;
+    },
+    /** Determine whether this date is a week day.
+        @memberof UmmAlQuraCalendar
+        @param year {CDate|number} The date to examine or the year to examine.
+        @param [month] {number} The month to examine.
+        @param [day] {number} The day to examine.
+        @return {boolean} <code>true</code> if a week day, <code>false</code> if not.
+        @throws Error if an invalid date or a different calendar used. */
+    weekDay: function(year2, month2, day2) {
+      return this.dayOfWeek(year2, month2, day2) !== 5;
+    },
+    /** Retrieve the Julian date equivalent for this date,
+        i.e. days since January 1, 4713 BCE Greenwich noon.
+        @memberof UmmAlQuraCalendar
+        @param year {CDate|number} The date to convert or the year to convert.
+        @param [month] {number} The month to convert.
+        @param [day] {number} The day to convert.
+        @return {number} The equivalent Julian date.
+        @throws Error if an invalid date or a different calendar used. */
+    toJD: function(year2, month2, day2) {
+      var date = this._validate(year2, month2, day2, main15.local.invalidDate);
+      var index = 12 * (date.year() - 1) + date.month() - 15292;
+      var mcjdn = date.day() + ummalqura_dat[index - 1] - 1;
+      return mcjdn + 24e5 - 0.5;
+    },
+    /** Create a new date from a Julian date.
+        @memberof UmmAlQuraCalendar
+        @param jd {number} The Julian date to convert.
+        @return {CDate} The equivalent date. */
+    fromJD: function(jd) {
+      var mcjdn = jd - 24e5 + 0.5;
+      var index = 0;
+      for (var i = 0; i < ummalqura_dat.length; i++) {
+        if (ummalqura_dat[i] > mcjdn) break;
+        index++;
+      }
+      var lunation = index + 15292;
+      var ii = Math.floor((lunation - 1) / 12);
+      var year2 = ii + 1;
+      var month2 = lunation - 12 * ii;
+      var day2 = mcjdn - ummalqura_dat[index - 1] + 1;
+      return this.newDate(year2, month2, day2);
+    },
+    /** Determine whether a date is valid for this calendar.
+        @memberof UmmAlQuraCalendar
+        @param year {number} The year to examine.
+        @param month {number} The month to examine.
+        @param day {number} The day to examine.
+        @return {boolean} <code>true</code> if a valid date, <code>false</code> if not. */
+    isValid: function(year2, month2, day2) {
+      var valid = main15.baseCalendar.prototype.isValid.apply(this, arguments);
+      if (valid) {
+        year2 = year2.year != null ? year2.year : year2;
+        valid = year2 >= 1276 && year2 <= 1500;
+      }
+      return valid;
+    },
+    /** Check that a candidate date is from the same calendar and is valid.
+        @memberof UmmAlQuraCalendar
+        @private
+        @param year {CDate|number} The date to validate or the year to validate.
+        @param month {number} The month to validate.
+        @param day {number} The day to validate.
+        @param error {string} Error message if invalid.
+        @throws Error if different calendars used or invalid date. */
+    _validate: function(year2, month2, day2, error) {
+      var date = main15.baseCalendar.prototype._validate.apply(this, arguments);
+      if (date.year < 1276 || date.year > 1500) {
+        throw error.replace(/\{0\}/, this.local.name);
+      }
+      return date;
+    }
+  });
+  main15.calendars.ummalqura = UmmAlQuraCalendar;
+  var ummalqura_dat = [
+    20,
+    50,
+    79,
+    109,
+    138,
+    168,
+    197,
+    227,
+    256,
+    286,
+    315,
+    345,
+    374,
+    404,
+    433,
+    463,
+    492,
+    522,
+    551,
+    581,
+    611,
+    641,
+    670,
+    700,
+    729,
+    759,
+    788,
+    818,
+    847,
+    877,
+    906,
+    936,
+    965,
+    995,
+    1024,
+    1054,
+    1083,
+    1113,
+    1142,
+    1172,
+    1201,
+    1231,
+    1260,
+    1290,
+    1320,
+    1350,
+    1379,
+    1409,
+    1438,
+    1468,
+    1497,
+    1527,
+    1556,
+    1586,
+    1615,
+    1645,
+    1674,
+    1704,
+    1733,
+    1763,
+    1792,
+    1822,
+    1851,
+    1881,
+    1910,
+    1940,
+    1969,
+    1999,
+    2028,
+    2058,
+    2087,
+    2117,
+    2146,
+    2176,
+    2205,
+    2235,
+    2264,
+    2294,
+    2323,
+    2353,
+    2383,
+    2413,
+    2442,
+    2472,
+    2501,
+    2531,
+    2560,
+    2590,
+    2619,
+    2649,
+    2678,
+    2708,
+    2737,
+    2767,
+    2796,
+    2826,
+    2855,
+    2885,
+    2914,
+    2944,
+    2973,
+    3003,
+    3032,
+    3062,
+    3091,
+    3121,
+    3150,
+    3180,
+    3209,
+    3239,
+    3268,
+    3298,
+    3327,
+    3357,
+    3386,
+    3416,
+    3446,
+    3476,
+    3505,
+    3535,
+    3564,
+    3594,
+    3623,
+    3653,
+    3682,
+    3712,
+    3741,
+    3771,
+    3800,
+    3830,
+    3859,
+    3889,
+    3918,
+    3948,
+    3977,
+    4007,
+    4036,
+    4066,
+    4095,
+    4125,
+    4155,
+    4185,
+    4214,
+    4244,
+    4273,
+    4303,
+    4332,
+    4362,
+    4391,
+    4421,
+    4450,
+    4480,
+    4509,
+    4539,
+    4568,
+    4598,
+    4627,
+    4657,
+    4686,
+    4716,
+    4745,
+    4775,
+    4804,
+    4834,
+    4863,
+    4893,
+    4922,
+    4952,
+    4981,
+    5011,
+    5040,
+    5070,
+    5099,
+    5129,
+    5158,
+    5188,
+    5218,
+    5248,
+    5277,
+    5307,
+    5336,
+    5366,
+    5395,
+    5425,
+    5454,
+    5484,
+    5513,
+    5543,
+    5572,
+    5602,
+    5631,
+    5661,
+    5690,
+    5720,
+    5749,
+    5779,
+    5808,
+    5838,
+    5867,
+    5897,
+    5926,
+    5956,
+    5985,
+    6015,
+    6044,
+    6074,
+    6103,
+    6133,
+    6162,
+    6192,
+    6221,
+    6251,
+    6281,
+    6311,
+    6340,
+    6370,
+    6399,
+    6429,
+    6458,
+    6488,
+    6517,
+    6547,
+    6576,
+    6606,
+    6635,
+    6665,
+    6694,
+    6724,
+    6753,
+    6783,
+    6812,
+    6842,
+    6871,
+    6901,
+    6930,
+    6960,
+    6989,
+    7019,
+    7048,
+    7078,
+    7107,
+    7137,
+    7166,
+    7196,
+    7225,
+    7255,
+    7284,
+    7314,
+    7344,
+    7374,
+    7403,
+    7433,
+    7462,
+    7492,
+    7521,
+    7551,
+    7580,
+    7610,
+    7639,
+    7669,
+    7698,
+    7728,
+    7757,
+    7787,
+    7816,
+    7846,
+    7875,
+    7905,
+    7934,
+    7964,
+    7993,
+    8023,
+    8053,
+    8083,
+    8112,
+    8142,
+    8171,
+    8201,
+    8230,
+    8260,
+    8289,
+    8319,
+    8348,
+    8378,
+    8407,
+    8437,
+    8466,
+    8496,
+    8525,
+    8555,
+    8584,
+    8614,
+    8643,
+    8673,
+    8702,
+    8732,
+    8761,
+    8791,
+    8821,
+    8850,
+    8880,
+    8909,
+    8938,
+    8968,
+    8997,
+    9027,
+    9056,
+    9086,
+    9115,
+    9145,
+    9175,
+    9205,
+    9234,
+    9264,
+    9293,
+    9322,
+    9352,
+    9381,
+    9410,
+    9440,
+    9470,
+    9499,
+    9529,
+    9559,
+    9589,
+    9618,
+    9648,
+    9677,
+    9706,
+    9736,
+    9765,
+    9794,
+    9824,
+    9853,
+    9883,
+    9913,
+    9943,
+    9972,
+    10002,
+    10032,
+    10061,
+    10090,
+    10120,
+    10149,
+    10178,
+    10208,
+    10237,
+    10267,
+    10297,
+    10326,
+    10356,
+    10386,
+    10415,
+    10445,
+    10474,
+    10504,
+    10533,
+    10562,
+    10592,
+    10621,
+    10651,
+    10680,
+    10710,
+    10740,
+    10770,
+    10799,
+    10829,
+    10858,
+    10888,
+    10917,
+    10947,
+    10976,
+    11005,
+    11035,
+    11064,
+    11094,
+    11124,
+    11153,
+    11183,
+    11213,
+    11242,
+    11272,
+    11301,
+    11331,
+    11360,
+    11389,
+    11419,
+    11448,
+    11478,
+    11507,
+    11537,
+    11567,
+    11596,
+    11626,
+    11655,
+    11685,
+    11715,
+    11744,
+    11774,
+    11803,
+    11832,
+    11862,
+    11891,
+    11921,
+    11950,
+    11980,
+    12010,
+    12039,
+    12069,
+    12099,
+    12128,
+    12158,
+    12187,
+    12216,
+    12246,
+    12275,
+    12304,
+    12334,
+    12364,
+    12393,
+    12423,
+    12453,
+    12483,
+    12512,
+    12542,
+    12571,
+    12600,
+    12630,
+    12659,
+    12688,
+    12718,
+    12747,
+    12777,
+    12807,
+    12837,
+    12866,
+    12896,
+    12926,
+    12955,
+    12984,
+    13014,
+    13043,
+    13072,
+    13102,
+    13131,
+    13161,
+    13191,
+    13220,
+    13250,
+    13280,
+    13310,
+    13339,
+    13368,
+    13398,
+    13427,
+    13456,
+    13486,
+    13515,
+    13545,
+    13574,
+    13604,
+    13634,
+    13664,
+    13693,
+    13723,
+    13752,
+    13782,
+    13811,
+    13840,
+    13870,
+    13899,
+    13929,
+    13958,
+    13988,
+    14018,
+    14047,
+    14077,
+    14107,
+    14136,
+    14166,
+    14195,
+    14224,
+    14254,
+    14283,
+    14313,
+    14342,
+    14372,
+    14401,
+    14431,
+    14461,
+    14490,
+    14520,
+    14550,
+    14579,
+    14609,
+    14638,
+    14667,
+    14697,
+    14726,
+    14756,
+    14785,
+    14815,
+    14844,
+    14874,
+    14904,
+    14933,
+    14963,
+    14993,
+    15021,
+    15051,
+    15081,
+    15110,
+    15140,
+    15169,
+    15199,
+    15228,
+    15258,
+    15287,
+    15317,
+    15347,
+    15377,
+    15406,
+    15436,
+    15465,
+    15494,
+    15524,
+    15553,
+    15582,
+    15612,
+    15641,
+    15671,
+    15701,
+    15731,
+    15760,
+    15790,
+    15820,
+    15849,
+    15878,
+    15908,
+    15937,
+    15966,
+    15996,
+    16025,
+    16055,
+    16085,
+    16114,
+    16144,
+    16174,
+    16204,
+    16233,
+    16262,
+    16292,
+    16321,
+    16350,
+    16380,
+    16409,
+    16439,
+    16468,
+    16498,
+    16528,
+    16558,
+    16587,
+    16617,
+    16646,
+    16676,
+    16705,
+    16734,
+    16764,
+    16793,
+    16823,
+    16852,
+    16882,
+    16912,
+    16941,
+    16971,
+    17001,
+    17030,
+    17060,
+    17089,
+    17118,
+    17148,
+    17177,
+    17207,
+    17236,
+    17266,
+    17295,
+    17325,
+    17355,
+    17384,
+    17414,
+    17444,
+    17473,
+    17502,
+    17532,
+    17561,
+    17591,
+    17620,
+    17650,
+    17679,
+    17709,
+    17738,
+    17768,
+    17798,
+    17827,
+    17857,
+    17886,
+    17916,
+    17945,
+    17975,
+    18004,
+    18034,
+    18063,
+    18093,
+    18122,
+    18152,
+    18181,
+    18211,
+    18241,
+    18270,
+    18300,
+    18330,
+    18359,
+    18388,
+    18418,
+    18447,
+    18476,
+    18506,
+    18535,
+    18565,
+    18595,
+    18625,
+    18654,
+    18684,
+    18714,
+    18743,
+    18772,
+    18802,
+    18831,
+    18860,
+    18890,
+    18919,
+    18949,
+    18979,
+    19008,
+    19038,
+    19068,
+    19098,
+    19127,
+    19156,
+    19186,
+    19215,
+    19244,
+    19274,
+    19303,
+    19333,
+    19362,
+    19392,
+    19422,
+    19452,
+    19481,
+    19511,
+    19540,
+    19570,
+    19599,
+    19628,
+    19658,
+    19687,
+    19717,
+    19746,
+    19776,
+    19806,
+    19836,
+    19865,
+    19895,
+    19924,
+    19954,
+    19983,
+    20012,
+    20042,
+    20071,
+    20101,
+    20130,
+    20160,
+    20190,
+    20219,
+    20249,
+    20279,
+    20308,
+    20338,
+    20367,
+    20396,
+    20426,
+    20455,
+    20485,
+    20514,
+    20544,
+    20573,
+    20603,
+    20633,
+    20662,
+    20692,
+    20721,
+    20751,
+    20780,
+    20810,
+    20839,
+    20869,
+    20898,
+    20928,
+    20957,
+    20987,
+    21016,
+    21046,
+    21076,
+    21105,
+    21135,
+    21164,
+    21194,
+    21223,
+    21253,
+    21282,
+    21312,
+    21341,
+    21371,
+    21400,
+    21430,
+    21459,
+    21489,
+    21519,
+    21548,
+    21578,
+    21607,
+    21637,
+    21666,
+    21696,
+    21725,
+    21754,
+    21784,
+    21813,
+    21843,
+    21873,
+    21902,
+    21932,
+    21962,
+    21991,
+    22021,
+    22050,
+    22080,
+    22109,
+    22138,
+    22168,
+    22197,
+    22227,
+    22256,
+    22286,
+    22316,
+    22346,
+    22375,
+    22405,
+    22434,
+    22464,
+    22493,
+    22522,
+    22552,
+    22581,
+    22611,
+    22640,
+    22670,
+    22700,
+    22730,
+    22759,
+    22789,
+    22818,
+    22848,
+    22877,
+    22906,
+    22936,
+    22965,
+    22994,
+    23024,
+    23054,
+    23083,
+    23113,
+    23143,
+    23173,
+    23202,
+    23232,
+    23261,
+    23290,
+    23320,
+    23349,
+    23379,
+    23408,
+    23438,
+    23467,
+    23497,
+    23527,
+    23556,
+    23586,
+    23616,
+    23645,
+    23674,
+    23704,
+    23733,
+    23763,
+    23792,
+    23822,
+    23851,
+    23881,
+    23910,
+    23940,
+    23970,
+    23999,
+    24029,
+    24058,
+    24088,
+    24117,
+    24147,
+    24176,
+    24206,
+    24235,
+    24265,
+    24294,
+    24324,
+    24353,
+    24383,
+    24413,
+    24442,
+    24472,
+    24501,
+    24531,
+    24560,
+    24590,
+    24619,
+    24648,
+    24678,
+    24707,
+    24737,
+    24767,
+    24796,
+    24826,
+    24856,
+    24885,
+    24915,
+    24944,
+    24974,
+    25003,
+    25032,
+    25062,
+    25091,
+    25121,
+    25150,
+    25180,
+    25210,
+    25240,
+    25269,
+    25299,
+    25328,
+    25358,
+    25387,
+    25416,
+    25446,
+    25475,
+    25505,
+    25534,
+    25564,
+    25594,
+    25624,
+    25653,
+    25683,
+    25712,
+    25742,
+    25771,
+    25800,
+    25830,
+    25859,
+    25888,
+    25918,
+    25948,
+    25977,
+    26007,
+    26037,
+    26067,
+    26096,
+    26126,
+    26155,
+    26184,
+    26214,
+    26243,
+    26272,
+    26302,
+    26332,
+    26361,
+    26391,
+    26421,
+    26451,
+    26480,
+    26510,
+    26539,
+    26568,
+    26598,
+    26627,
+    26656,
+    26686,
+    26715,
+    26745,
+    26775,
+    26805,
+    26834,
+    26864,
+    26893,
+    26923,
+    26952,
+    26982,
+    27011,
+    27041,
+    27070,
+    27099,
+    27129,
+    27159,
+    27188,
+    27218,
+    27248,
+    27277,
+    27307,
+    27336,
+    27366,
+    27395,
+    27425,
+    27454,
+    27484,
+    27513,
+    27542,
+    27572,
+    27602,
+    27631,
+    27661,
+    27691,
+    27720,
+    27750,
+    27779,
+    27809,
+    27838,
+    27868,
+    27897,
+    27926,
+    27956,
+    27985,
+    28015,
+    28045,
+    28074,
+    28104,
+    28134,
+    28163,
+    28193,
+    28222,
+    28252,
+    28281,
+    28310,
+    28340,
+    28369,
+    28399,
+    28428,
+    28458,
+    28488,
+    28517,
+    28547,
+    28577,
+    // From 1356
+    28607,
+    28636,
+    28665,
+    28695,
+    28724,
+    28754,
+    28783,
+    28813,
+    28843,
+    28872,
+    28901,
+    28931,
+    28960,
+    28990,
+    29019,
+    29049,
+    29078,
+    29108,
+    29137,
+    29167,
+    29196,
+    29226,
+    29255,
+    29285,
+    29315,
+    29345,
+    29375,
+    29404,
+    29434,
+    29463,
+    29492,
+    29522,
+    29551,
+    29580,
+    29610,
+    29640,
+    29669,
+    29699,
+    29729,
+    29759,
+    29788,
+    29818,
+    29847,
+    29876,
+    29906,
+    29935,
+    29964,
+    29994,
+    30023,
+    30053,
+    30082,
+    30112,
+    30141,
+    30171,
+    30200,
+    30230,
+    30259,
+    30289,
+    30318,
+    30348,
+    30378,
+    30408,
+    30437,
+    30467,
+    30496,
+    30526,
+    30555,
+    30585,
+    30614,
+    30644,
+    30673,
+    30703,
+    30732,
+    30762,
+    30791,
+    30821,
+    30850,
+    30880,
+    30909,
+    30939,
+    30968,
+    30998,
+    31027,
+    31057,
+    31086,
+    31116,
+    31145,
+    31175,
+    31204,
+    31234,
+    31263,
+    31293,
+    31322,
+    31352,
+    31381,
+    31411,
+    31441,
+    31471,
+    31500,
+    31530,
+    31559,
+    31589,
+    31618,
+    31648,
+    31676,
+    31706,
+    31736,
+    31766,
+    31795,
+    31825,
+    31854,
+    31884,
+    31913,
+    31943,
+    31972,
+    32002,
+    32031,
+    32061,
+    32090,
+    32120,
+    32150,
+    32180,
+    32209,
+    32239,
+    32268,
+    32298,
+    32327,
+    32357,
+    32386,
+    32416,
+    32445,
+    32475,
+    32504,
+    32534,
+    32563,
+    32593,
+    32622,
+    32652,
+    32681,
+    32711,
+    32740,
+    32770,
+    32799,
+    32829,
+    32858,
+    32888,
+    32917,
+    32947,
+    32976,
+    33006,
+    33035,
+    33065,
+    33094,
+    33124,
+    33153,
+    33183,
+    33213,
+    33243,
+    33272,
+    33302,
+    33331,
+    33361,
+    33390,
+    33420,
+    33450,
+    33479,
+    33509,
+    33539,
+    33568,
+    33598,
+    33627,
+    33657,
+    33686,
+    33716,
+    33745,
+    33775,
+    33804,
+    33834,
+    33863,
+    33893,
+    33922,
+    33952,
+    33981,
+    34011,
+    34040,
+    34069,
+    34099,
+    34128,
+    34158,
+    34187,
+    34217,
+    34247,
+    34277,
+    34306,
+    34336,
+    34365,
+    34395,
+    34424,
+    34454,
+    34483,
+    34512,
+    34542,
+    34571,
+    34601,
+    34631,
+    34660,
+    34690,
+    34719,
+    34749,
+    34778,
+    34808,
+    34837,
+    34867,
+    34896,
+    34926,
+    34955,
+    34985,
+    35015,
+    35044,
+    35074,
+    35103,
+    35133,
+    35162,
+    35192,
+    35222,
+    35251,
+    35280,
+    35310,
+    35340,
+    35370,
+    35399,
+    35429,
+    35458,
+    35488,
+    35517,
+    35547,
+    35576,
+    35605,
+    35635,
+    35665,
+    35694,
+    35723,
+    35753,
+    35782,
+    35811,
+    35841,
+    35871,
+    35901,
+    35930,
+    35960,
+    35989,
+    36019,
+    36048,
+    36078,
+    36107,
+    36136,
+    36166,
+    36195,
+    36225,
+    36254,
+    36284,
+    36314,
+    36343,
+    36373,
+    36403,
+    36433,
+    36462,
+    36492,
+    36521,
+    36551,
+    36580,
+    36610,
+    36639,
+    36669,
+    36698,
+    36728,
+    36757,
+    36786,
+    36816,
+    36845,
+    36875,
+    36904,
+    36934,
+    36963,
+    36993,
+    37022,
+    37052,
+    37081,
+    37111,
+    37141,
+    37170,
+    37200,
+    37229,
+    37259,
+    37288,
+    37318,
+    37347,
+    37377,
+    37406,
+    37436,
+    37465,
+    37495,
+    37524,
+    37554,
+    37584,
+    37613,
+    37643,
+    37672,
+    37701,
+    37731,
+    37760,
+    37790,
+    37819,
+    37849,
+    37878,
+    37908,
+    37938,
+    37967,
+    37997,
+    38027,
+    38056,
+    38085,
+    38115,
+    38144,
+    38174,
+    38203,
+    38233,
+    38262,
+    38292,
+    38322,
+    38351,
+    38381,
+    38410,
+    38440,
+    38469,
+    38499,
+    38528,
+    38558,
+    38587,
+    38617,
+    38646,
+    38676,
+    38705,
+    38735,
+    38764,
+    38794,
+    38823,
+    38853,
+    38882,
+    38912,
+    38941,
+    38971,
+    39001,
+    39030,
+    39059,
+    39089,
+    39118,
+    39148,
+    39178,
+    39208,
+    39237,
+    39267,
+    39297,
+    39326,
+    39355,
+    39385,
+    39414,
+    39444,
+    39473,
+    39503,
+    39532,
+    39562,
+    39592,
+    39621,
+    39650,
+    39680,
+    39709,
+    39739,
+    39768,
+    39798,
+    39827,
+    39857,
+    39886,
+    39916,
+    39946,
+    39975,
+    40005,
+    40035,
+    40064,
+    40094,
+    40123,
+    40153,
+    40182,
+    40212,
+    40241,
+    40271,
+    40300,
+    40330,
+    40359,
+    40389,
+    40418,
+    40448,
+    40477,
+    40507,
+    40536,
+    40566,
+    40595,
+    40625,
+    40655,
+    40685,
+    40714,
+    40744,
+    40773,
+    40803,
+    40832,
+    40862,
+    40892,
+    40921,
+    40951,
+    40980,
+    41009,
+    41039,
+    41068,
+    41098,
+    41127,
+    41157,
+    41186,
+    41216,
+    41245,
+    41275,
+    41304,
+    41334,
+    41364,
+    41393,
+    41422,
+    41452,
+    41481,
+    41511,
+    41540,
+    41570,
+    41599,
+    41629,
+    41658,
+    41688,
+    41718,
+    41748,
+    41777,
+    41807,
+    41836,
+    41865,
+    41894,
+    41924,
+    41953,
+    41983,
+    42012,
+    42042,
+    42072,
+    42102,
+    42131,
+    42161,
+    42190,
+    42220,
+    42249,
+    42279,
+    42308,
+    42337,
+    42367,
+    42397,
+    42426,
+    42456,
+    42485,
+    42515,
+    42545,
+    42574,
+    42604,
+    42633,
+    42662,
+    42692,
+    42721,
+    42751,
+    42780,
+    42810,
+    42839,
+    42869,
+    42899,
+    42929,
+    42958,
+    42988,
+    43017,
+    43046,
+    43076,
+    43105,
+    43135,
+    43164,
+    43194,
+    43223,
+    43253,
+    43283,
+    43312,
+    43342,
+    43371,
+    43401,
+    43430,
+    43460,
+    43489,
+    43519,
+    43548,
+    43578,
+    43607,
+    43637,
+    43666,
+    43696,
+    43726,
+    43755,
+    43785,
+    43814,
+    43844,
+    43873,
+    43903,
+    43932,
+    43962,
+    43991,
+    44021,
+    44050,
+    44080,
+    44109,
+    44139,
+    44169,
+    44198,
+    44228,
+    44258,
+    44287,
+    44317,
+    44346,
+    44375,
+    44405,
+    44434,
+    44464,
+    44493,
+    44523,
+    44553,
+    44582,
+    44612,
+    44641,
+    44671,
+    44700,
+    44730,
+    44759,
+    44788,
+    44818,
+    44847,
+    44877,
+    44906,
+    44936,
+    44966,
+    44996,
+    45025,
+    45055,
+    45084,
+    45114,
+    45143,
+    45172,
+    45202,
+    45231,
+    45261,
+    45290,
+    45320,
+    45350,
+    45380,
+    45409,
+    45439,
+    45468,
+    45498,
+    45527,
+    45556,
+    45586,
+    45615,
+    45644,
+    45674,
+    45704,
+    45733,
+    45763,
+    45793,
+    45823,
+    45852,
+    45882,
+    45911,
+    45940,
+    45970,
+    45999,
+    46028,
+    46058,
+    46088,
+    46117,
+    46147,
+    46177,
+    46206,
+    46236,
+    46265,
+    46295,
+    46324,
+    46354,
+    46383,
+    46413,
+    46442,
+    46472,
+    46501,
+    46531,
+    46560,
+    46590,
+    46620,
+    46649,
+    46679,
+    46708,
+    46738,
+    46767,
+    46797,
+    46826,
+    46856,
+    46885,
+    46915,
+    46944,
+    46974,
+    47003,
+    47033,
+    47063,
+    47092,
+    47122,
+    47151,
+    47181,
+    47210,
+    47240,
+    47269,
+    47298,
+    47328,
+    47357,
+    47387,
+    47417,
+    47446,
+    47476,
+    47506,
+    47535,
+    47565,
+    47594,
+    47624,
+    47653,
+    47682,
+    47712,
+    47741,
+    47771,
+    47800,
+    47830,
+    47860,
+    47890,
+    47919,
+    47949,
+    47978,
+    48008,
+    48037,
+    48066,
+    48096,
+    48125,
+    48155,
+    48184,
+    48214,
+    48244,
+    48273,
+    48303,
+    48333,
+    48362,
+    48392,
+    48421,
+    48450,
+    48480,
+    48509,
+    48538,
+    48568,
+    48598,
+    48627,
+    48657,
+    48687,
+    48717,
+    48746,
+    48776,
+    48805,
+    48834,
+    48864,
+    48893,
+    48922,
+    48952,
+    48982,
+    49011,
+    49041,
+    49071,
+    49100,
+    49130,
+    49160,
+    49189,
+    49218,
+    49248,
+    49277,
+    49306,
+    49336,
+    49365,
+    49395,
+    49425,
+    49455,
+    49484,
+    49514,
+    49543,
+    49573,
+    49602,
+    49632,
+    49661,
+    49690,
+    49720,
+    49749,
+    49779,
+    49809,
+    49838,
+    49868,
+    49898,
+    49927,
+    49957,
+    49986,
+    50016,
+    50045,
+    50075,
+    50104,
+    50133,
+    50163,
+    50192,
+    50222,
+    50252,
+    50281,
+    50311,
+    50340,
+    50370,
+    50400,
+    50429,
+    50459,
+    50488,
+    50518,
+    50547,
+    50576,
+    50606,
+    50635,
+    50665,
+    50694,
+    50724,
+    50754,
+    50784,
+    50813,
+    50843,
+    50872,
+    50902,
+    50931,
+    50960,
+    50990,
+    51019,
+    51049,
+    51078,
+    51108,
+    51138,
+    51167,
+    51197,
+    51227,
+    51256,
+    51286,
+    51315,
+    51345,
+    51374,
+    51403,
+    51433,
+    51462,
+    51492,
+    51522,
+    51552,
+    51582,
+    51611,
+    51641,
+    51670,
+    51699,
+    51729,
+    51758,
+    51787,
+    51816,
+    51846,
+    51876,
+    51906,
+    51936,
+    51965,
+    51995,
+    52025,
+    52054,
+    52083,
+    52113,
+    52142,
+    52171,
+    52200,
+    52230,
+    52260,
+    52290,
+    52319,
+    52349,
+    52379,
+    52408,
+    52438,
+    52467,
+    52497,
+    52526,
+    52555,
+    52585,
+    52614,
+    52644,
+    52673,
+    52703,
+    52733,
+    52762,
+    52792,
+    52822,
+    52851,
+    52881,
+    52910,
+    52939,
+    52969,
+    52998,
+    53028,
+    53057,
+    53087,
+    53116,
+    53146,
+    53176,
+    53205,
+    53235,
+    53264,
+    53294,
+    53324,
+    53353,
+    53383,
+    53412,
+    53441,
+    53471,
+    53500,
+    53530,
+    53559,
+    53589,
+    53619,
+    53648,
+    53678,
+    53708,
+    53737,
+    53767,
+    53796,
+    53825,
+    53855,
+    53884,
+    53913,
+    53943,
+    53973,
+    54003,
+    54032,
+    54062,
+    54092,
+    54121,
+    54151,
+    54180,
+    54209,
+    54239,
+    54268,
+    54297,
+    54327,
+    54357,
+    54387,
+    54416,
+    54446,
+    54476,
+    54505,
+    54535,
+    54564,
+    54593,
+    54623,
+    54652,
+    54681,
+    54711,
+    54741,
+    54770,
+    54800,
+    54830,
+    54859,
+    54889,
+    54919,
+    54948,
+    54977,
+    55007,
+    55036,
+    55066,
+    55095,
+    55125,
+    55154,
+    55184,
+    55213,
+    55243,
+    55273,
+    55302,
+    55332,
+    55361,
+    55391,
+    55420,
+    55450,
+    55479,
+    55508,
+    55538,
+    55567,
+    55597,
+    55627,
+    55657,
+    55686,
+    55716,
+    55745,
+    55775,
+    55804,
+    55834,
+    55863,
+    55892,
+    55922,
+    55951,
+    55981,
+    56011,
+    56040,
+    56070,
+    56100,
+    56129,
+    56159,
+    56188,
+    56218,
+    56247,
+    56276,
+    56306,
+    56335,
+    56365,
+    56394,
+    56424,
+    56454,
+    56483,
+    56513,
+    56543,
+    56572,
+    56601,
+    56631,
+    56660,
+    56690,
+    56719,
+    56749,
+    56778,
+    56808,
+    56837,
+    56867,
+    56897,
+    56926,
+    56956,
+    56985,
+    57015,
+    57044,
+    57074,
+    57103,
+    57133,
+    57162,
+    57192,
+    57221,
+    57251,
+    57280,
+    57310,
+    57340,
+    57369,
+    57399,
+    57429,
+    57458,
+    57487,
+    57517,
+    57546,
+    57576,
+    57605,
+    57634,
+    57664,
+    57694,
+    57723,
+    57753,
+    57783,
+    57813,
+    57842,
+    57871,
+    57901,
+    57930,
+    57959,
+    57989,
+    58018,
+    58048,
+    58077,
+    58107,
+    58137,
+    58167,
+    58196,
+    58226,
+    58255,
+    58285,
+    58314,
+    58343,
+    58373,
+    58402,
+    58432,
+    58461,
+    58491,
+    58521,
+    58551,
+    58580,
+    58610,
+    58639,
+    58669,
+    58698,
+    58727,
+    58757,
+    58786,
+    58816,
+    58845,
+    58875,
+    58905,
+    58934,
+    58964,
+    58994,
+    59023,
+    59053,
+    59082,
+    59111,
+    59141,
+    59170,
+    59200,
+    59229,
+    59259,
+    59288,
+    59318,
+    59348,
+    59377,
+    59407,
+    59436,
+    59466,
+    59495,
+    59525,
+    59554,
+    59584,
+    59613,
+    59643,
+    59672,
+    59702,
+    59731,
+    59761,
+    59791,
+    59820,
+    59850,
+    59879,
+    59909,
+    59939,
+    59968,
+    59997,
+    60027,
+    60056,
+    60086,
+    60115,
+    60145,
+    60174,
+    60204,
+    60234,
+    60264,
+    60293,
+    60323,
+    60352,
+    60381,
+    60411,
+    60440,
+    60469,
+    60499,
+    60528,
+    60558,
+    60588,
+    60618,
+    60648,
+    60677,
+    60707,
+    60736,
+    60765,
+    60795,
+    60824,
+    60853,
+    60883,
+    60912,
+    60942,
+    60972,
+    61002,
+    61031,
+    61061,
+    61090,
+    61120,
+    61149,
+    61179,
+    61208,
+    61237,
+    61267,
+    61296,
+    61326,
+    61356,
+    61385,
+    61415,
+    61445,
+    61474,
+    61504,
+    61533,
+    61563,
+    61592,
+    61621,
+    61651,
+    61680,
+    61710,
+    61739,
+    61769,
+    61799,
+    61828,
+    61858,
+    61888,
+    61917,
+    61947,
+    61976,
+    62006,
+    62035,
+    62064,
+    62094,
+    62123,
+    62153,
+    62182,
+    62212,
+    62242,
+    62271,
+    62301,
+    62331,
+    62360,
+    62390,
+    62419,
+    62448,
+    62478,
+    62507,
+    62537,
+    62566,
+    62596,
+    62625,
+    62655,
+    62685,
+    62715,
+    62744,
+    62774,
+    62803,
+    62832,
+    62862,
+    62891,
+    62921,
+    62950,
+    62980,
+    63009,
+    63039,
+    63069,
+    63099,
+    63128,
+    63157,
+    63187,
+    63216,
+    63246,
+    63275,
+    63305,
+    63334,
+    63363,
+    63393,
+    63423,
+    63453,
+    63482,
+    63512,
+    63541,
+    63571,
+    63600,
+    63630,
+    63659,
+    63689,
+    63718,
+    63747,
+    63777,
+    63807,
+    63836,
+    63866,
+    63895,
+    63925,
+    63955,
+    63984,
+    64014,
+    64043,
+    64073,
+    64102,
+    64131,
+    64161,
+    64190,
+    64220,
+    64249,
+    64279,
+    64309,
+    64339,
+    64368,
+    64398,
+    64427,
+    64457,
+    64486,
+    64515,
+    64545,
+    64574,
+    64603,
+    64633,
+    64663,
+    64692,
+    64722,
+    64752,
+    64782,
+    64811,
+    64841,
+    64870,
+    64899,
+    64929,
+    64958,
+    64987,
+    65017,
+    65047,
+    65076,
+    65106,
+    65136,
+    65166,
+    65195,
+    65225,
+    65254,
+    65283,
+    65313,
+    65342,
+    65371,
+    65401,
+    65431,
+    65460,
+    65490,
+    65520,
+    65549,
+    65579,
+    65608,
+    65638,
+    65667,
+    65697,
+    65726,
+    65755,
+    65785,
+    65815,
+    65844,
+    65874,
+    65903,
+    65933,
+    65963,
+    65992,
+    66022,
+    66051,
+    66081,
+    66110,
+    66140,
+    66169,
+    66199,
+    66228,
+    66258,
+    66287,
+    66317,
+    66346,
+    66376,
+    66405,
+    66435,
+    66465,
+    66494,
+    66524,
+    66553,
+    66583,
+    66612,
+    66641,
+    66671,
+    66700,
+    66730,
+    66760,
+    66789,
+    66819,
+    66849,
+    66878,
+    66908,
+    66937,
+    66967,
+    66996,
+    67025,
+    67055,
+    67084,
+    67114,
+    67143,
+    67173,
+    67203,
+    67233,
+    67262,
+    67292,
+    67321,
+    67351,
+    67380,
+    67409,
+    67439,
+    67468,
+    67497,
+    67527,
+    67557,
+    67587,
+    67617,
+    67646,
+    67676,
+    67705,
+    67735,
+    67764,
+    67793,
+    67823,
+    67852,
+    67882,
+    67911,
+    67941,
+    67971,
+    68e3,
+    68030,
+    68060,
+    68089,
+    68119,
+    68148,
+    68177,
+    68207,
+    68236,
+    68266,
+    68295,
+    68325,
+    68354,
+    68384,
+    68414,
+    68443,
+    68473,
+    68502,
+    68532,
+    68561,
+    68591,
+    68620,
+    68650,
+    68679,
+    68708,
+    68738,
+    68768,
+    68797,
+    68827,
+    68857,
+    68886,
+    68916,
+    68946,
+    68975,
+    69004,
+    69034,
+    69063,
+    69092,
+    69122,
+    69152,
+    69181,
+    69211,
+    69240,
+    69270,
+    69300,
+    69330,
+    69359,
+    69388,
+    69418,
+    69447,
+    69476,
+    69506,
+    69535,
+    69565,
+    69595,
+    69624,
+    69654,
+    69684,
+    69713,
+    69743,
+    69772,
+    69802,
+    69831,
+    69861,
+    69890,
+    69919,
+    69949,
+    69978,
+    70008,
+    70038,
+    70067,
+    70097,
+    70126,
+    70156,
+    70186,
+    70215,
+    70245,
+    70274,
+    70303,
+    70333,
+    70362,
+    70392,
+    70421,
+    70451,
+    70481,
+    70510,
+    70540,
+    70570,
+    70599,
+    70629,
+    70658,
+    70687,
+    70717,
+    70746,
+    70776,
+    70805,
+    70835,
+    70864,
+    70894,
+    70924,
+    70954,
+    70983,
+    71013,
+    71042,
+    71071,
+    71101,
+    71130,
+    71159,
+    71189,
+    71218,
+    71248,
+    71278,
+    71308,
+    71337,
+    71367,
+    71397,
+    71426,
+    71455,
+    71485,
+    71514,
+    71543,
+    71573,
+    71602,
+    71632,
+    71662,
+    71691,
+    71721,
+    71751,
+    71781,
+    71810,
+    71839,
+    71869,
+    71898,
+    71927,
+    71957,
+    71986,
+    72016,
+    72046,
+    72075,
+    72105,
+    72135,
+    72164,
+    72194,
+    72223,
+    72253,
+    72282,
+    72311,
+    72341,
+    72370,
+    72400,
+    72429,
+    72459,
+    72489,
+    72518,
+    72548,
+    72577,
+    72607,
+    72637,
+    72666,
+    72695,
+    72725,
+    72754,
+    72784,
+    72813,
+    72843,
+    72872,
+    72902,
+    72931,
+    72961,
+    72991,
+    73020,
+    73050,
+    73080,
+    73109,
+    73139,
+    73168,
+    73197,
+    73227,
+    73256,
+    73286,
+    73315,
+    73345,
+    73375,
+    73404,
+    73434,
+    73464,
+    73493,
+    73523,
+    73552,
+    73581,
+    73611,
+    73640,
+    73669,
+    73699,
+    73729,
+    73758,
+    73788,
+    73818,
+    73848,
+    73877,
+    73907,
+    73936,
+    73965,
+    73995,
+    74024,
+    74053,
+    74083,
+    74113,
+    74142,
+    74172,
+    74202,
+    74231,
+    74261,
+    74291,
+    74320,
+    74349,
+    74379,
+    74408,
+    74437,
+    74467,
+    74497,
+    74526,
+    74556,
+    74586,
+    74615,
+    74645,
+    74675,
+    74704,
+    74733,
+    74763,
+    74792,
+    74822,
+    74851,
+    74881,
+    74910,
+    74940,
+    74969,
+    74999,
+    75029,
+    75058,
+    75088,
+    75117,
+    75147,
+    75176,
+    75206,
+    75235,
+    75264,
+    75294,
+    75323,
+    75353,
+    75383,
+    75412,
+    75442,
+    75472,
+    75501,
+    75531,
+    75560,
+    75590,
+    75619,
+    75648,
+    75678,
+    75707,
+    75737,
+    75766,
+    75796,
+    75826,
+    75856,
+    75885,
+    75915,
+    75944,
+    75974,
+    76003,
+    76032,
+    76062,
+    76091,
+    76121,
+    76150,
+    76180,
+    76210,
+    76239,
+    76269,
+    76299,
+    76328,
+    76358,
+    76387,
+    76416,
+    76446,
+    76475,
+    76505,
+    76534,
+    76564,
+    76593,
+    76623,
+    76653,
+    76682,
+    76712,
+    76741,
+    76771,
+    76801,
+    76830,
+    76859,
+    76889,
+    76918,
+    76948,
+    76977,
+    77007,
+    77036,
+    77066,
+    77096,
+    77125,
+    77155,
+    77185,
+    77214,
+    77243,
+    77273,
+    77302,
+    77332,
+    77361,
+    77390,
+    77420,
+    77450,
+    77479,
+    77509,
+    77539,
+    77569,
+    77598,
+    77627,
+    77657,
+    77686,
+    77715,
+    77745,
+    77774,
+    77804,
+    77833,
+    77863,
+    77893,
+    77923,
+    77952,
+    77982,
+    78011,
+    78041,
+    78070,
+    78099,
+    78129,
+    78158,
+    78188,
+    78217,
+    78247,
+    78277,
+    78307,
+    78336,
+    78366,
+    78395,
+    78425,
+    78454,
+    78483,
+    78513,
+    78542,
+    78572,
+    78601,
+    78631,
+    78661,
+    78690,
+    78720,
+    78750,
+    78779,
+    78808,
+    78838,
+    78867,
+    78897,
+    78926,
+    78956,
+    78985,
+    79015,
+    79044,
+    79074,
+    79104,
+    79133,
+    79163,
+    79192,
+    79222,
+    79251,
+    79281,
+    79310,
+    79340,
+    79369,
+    79399,
+    79428,
+    79458,
+    79487,
+    79517,
+    79546,
+    79576,
+    79606,
+    79635,
+    79665,
+    79695,
+    79724,
+    79753,
+    79783,
+    79812,
+    79841,
+    79871,
+    79900,
+    79930,
+    79960,
+    79990
+  ];
+
+  // src/components/calendars/calendars.js
   var calendars_default = import_main.default;
 
   // src/components/calendars/index.js
