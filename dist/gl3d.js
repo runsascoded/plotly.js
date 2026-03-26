@@ -86289,7 +86289,7 @@ var Plotly = (() => {
   // src/core.js
   var import_native_promise_only = __toESM(require_npo_src(), 1);
 
-  // build/plotcss.js
+  // src/plotcss.js
   var rules = {
     "X,X div": 'direction:ltr;font-family:"Open Sans",verdana,arial,sans-serif;margin:0;padding:0;border:0;',
     "X input,X button": 'font-family:"Open Sans",verdana,arial,sans-serif;',
