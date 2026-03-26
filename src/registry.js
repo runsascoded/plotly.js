@@ -156,10 +156,7 @@ function registerTraceModule(_module) {
         }
     }
 
-    // add maplibre-gl CSS here to avoid console warning on instantiation
-    if(bpmName === 'map') {
-        _req0;
-    }
+    // maplibre-gl CSS is loaded via top-level import
 
     // if `plotly-geo-assets.js` is not included,
     // add `PlotlyGeoAssets` global to stash references to all fetched

@@ -1,7 +1,7 @@
-import { gl_mesh3d as createMesh } from '../../../stackgl_modules/index.js';
-import { delaunay_triangulate as triangulate } from '../../../stackgl_modules/index.js';
-import { alpha_shape as alphaShape } from '../../../stackgl_modules/index.js';
-import { convex_hull as convexHull } from '../../../stackgl_modules/index.js';
+import { gl_mesh3d as createMesh } from '../../../stackgl_modules/esm.js';
+import { delaunay_triangulate as triangulate } from '../../../stackgl_modules/esm.js';
+import { alpha_shape as alphaShape } from '../../../stackgl_modules/esm.js';
+import { convex_hull as convexHull } from '../../../stackgl_modules/esm.js';
 import _gl_format_color from '../../lib/gl_format_color.js';
 const { parseColorScale } = _gl_format_color;
 import _index from '../../lib/index.js';

@@ -36,8 +36,8 @@ var Plotly = (() => {
     return a;
   };
   var __spreadProps = (a, b) => __defProps(a, __getOwnPropDescs(b));
-  var __commonJS = (cb, mod7) => function __require() {
-    return mod7 || (0, cb[__getOwnPropNames(cb)[0]])((mod7 = { exports: {} }).exports, mod7), mod7.exports;
+  var __commonJS = (cb, mod8) => function __require() {
+    return mod8 || (0, cb[__getOwnPropNames(cb)[0]])((mod8 = { exports: {} }).exports, mod8), mod8.exports;
   };
   var __export = (target, all) => {
     for (var name7 in all)
@@ -51,15 +51,15 @@ var Plotly = (() => {
     }
     return to;
   };
-  var __toESM = (mod7, isNodeMode, target) => (target = mod7 != null ? __create(__getProtoOf(mod7)) : {}, __copyProps(
+  var __toESM = (mod8, isNodeMode, target) => (target = mod8 != null ? __create(__getProtoOf(mod8)) : {}, __copyProps(
     // If the importer is in node compatibility mode or this is not an ESM
     // file that has been converted to a CommonJS file using a Babel-
     // compatible transform (i.e. "__esModule" has not been set), then set
     // "default" to the CommonJS "module.exports" for node compatibility.
-    isNodeMode || !mod7 || !mod7.__esModule ? __defProp(target, "default", { value: mod7, enumerable: true }) : target,
-    mod7
+    isNodeMode || !mod8 || !mod8.__esModule ? __defProp(target, "default", { value: mod8, enumerable: true }) : target,
+    mod8
   ));
-  var __toCommonJS = (mod7) => __copyProps(__defProp({}, "__esModule", { value: true }), mod7);
+  var __toCommonJS = (mod8) => __copyProps(__defProp({}, "__esModule", { value: true }), mod8);
 
   // node_modules/.pnpm/@plotly+d3@3.8.2/node_modules/@plotly/d3/d3.js
   var require_d3 = __commonJS({
@@ -18204,10 +18204,10 @@ var Plotly = (() => {
           3502: (
             /***/
             (function(module2, __unused_webpack_exports, __webpack_require__2) {
-              module2.exports = alphaShape2;
+              module2.exports = alphaShape;
               var ac = __webpack_require__2(5995);
               var bnd = __webpack_require__2(9127);
-              function alphaShape2(alpha, points) {
+              function alphaShape(alpha, points) {
                 return bnd(ac(alpha, points));
               }
             })
@@ -25990,7 +25990,7 @@ var Plotly = (() => {
             /***/
             (function(module2, __unused_webpack_exports, __webpack_require__2) {
               "use strict";
-              module2.exports = createLinePlot2;
+              module2.exports = createLinePlot;
               var createBuffer = __webpack_require__2(2762);
               var createVAO = __webpack_require__2(8116);
               var createTexture = __webpack_require__2(7766);
@@ -26356,7 +26356,7 @@ var Plotly = (() => {
                   this.points[dataIndex]
                 );
               };
-              function createLinePlot2(options) {
+              function createLinePlot(options) {
                 var gl2 = options.gl || options.scene && options.scene.gl;
                 var shader = createShader(gl2);
                 shader.attributes.position.location = 0;
@@ -29053,8 +29053,8 @@ var Plotly = (() => {
                   limbLen--;
                   limbPow = limbPow / base | 0;
                   var total = number.length - start;
-                  var mod7 = total % limbLen;
-                  var end = Math.min(total, total - mod7) + start;
+                  var mod8 = total % limbLen;
+                  var end = Math.min(total, total - mod8) + start;
                   var word = 0;
                   for (var i = start; i < end; i += limbLen) {
                     word = parseBase(number, i, i + limbLen, base);
@@ -29065,10 +29065,10 @@ var Plotly = (() => {
                       this._iaddn(word);
                     }
                   }
-                  if (mod7 !== 0) {
+                  if (mod8 !== 0) {
                     var pow = 1;
                     word = parseBase(number, i, number.length, base);
-                    for (i = 0; i < mod7; i++) {
+                    for (i = 0; i < mod8; i++) {
                       pow *= base;
                     }
                     this.imuln(pow);
@@ -30779,21 +30779,21 @@ var Plotly = (() => {
                       mod: new BN(0)
                     };
                   }
-                  var div, mod7, res;
+                  var div, mod8, res;
                   if (this.negative !== 0 && num.negative === 0) {
                     res = this.neg().divmod(num, mode);
                     if (mode !== "mod") {
                       div = res.div.neg();
                     }
                     if (mode !== "div") {
-                      mod7 = res.mod.neg();
-                      if (positive && mod7.negative !== 0) {
-                        mod7.iadd(num);
+                      mod8 = res.mod.neg();
+                      if (positive && mod8.negative !== 0) {
+                        mod8.iadd(num);
                       }
                     }
                     return {
                       div,
-                      mod: mod7
+                      mod: mod8
                     };
                   }
                   if (this.negative === 0 && num.negative !== 0) {
@@ -30809,14 +30809,14 @@ var Plotly = (() => {
                   if ((this.negative & num.negative) !== 0) {
                     res = this.neg().divmod(num.neg(), mode);
                     if (mode !== "div") {
-                      mod7 = res.mod.neg();
-                      if (positive && mod7.negative !== 0) {
-                        mod7.isub(num);
+                      mod8 = res.mod.neg();
+                      if (positive && mod8.negative !== 0) {
+                        mod8.isub(num);
                       }
                     }
                     return {
                       div: res.div,
-                      mod: mod7
+                      mod: mod8
                     };
                   }
                   if (num.length > this.length || this.cmp(num) < 0) {
@@ -30848,7 +30848,7 @@ var Plotly = (() => {
                 BN.prototype.div = function div(num) {
                   return this.divmod(num, "div", false).div;
                 };
-                BN.prototype.mod = function mod7(num) {
+                BN.prototype.mod = function mod8(num) {
                   return this.divmod(num, "mod", false).mod;
                 };
                 BN.prototype.umod = function umod(num) {
@@ -30857,10 +30857,10 @@ var Plotly = (() => {
                 BN.prototype.divRound = function divRound(num) {
                   var dm = this.divmod(num);
                   if (dm.mod.isZero()) return dm.div;
-                  var mod7 = dm.div.negative !== 0 ? dm.mod.isub(num) : dm.mod;
+                  var mod8 = dm.div.negative !== 0 ? dm.mod.isub(num) : dm.mod;
                   var half = num.ushrn(1);
                   var r2 = num.andln(1);
-                  var cmp = mod7.cmp(half);
+                  var cmp = mod8.cmp(half);
                   if (cmp < 0 || r2 === 1 && cmp === 0) return dm.div;
                   return dm.div.negative !== 0 ? dm.div.isubn(1) : dm.div.iaddn(1);
                 };
@@ -34106,8 +34106,8 @@ var Plotly = (() => {
               var convexHull1d = __webpack_require__2(5721);
               var convexHull2d = __webpack_require__2(4750);
               var convexHullnd = __webpack_require__2(2690);
-              module2.exports = convexHull2;
-              function convexHull2(points) {
+              module2.exports = convexHull;
+              function convexHull(points) {
                 var n = points.length;
                 if (n === 0) {
                   return [];
@@ -35268,7 +35268,7 @@ var Plotly = (() => {
               "use strict";
               var ch = __webpack_require__2(8954);
               var uniq = __webpack_require__2(1682);
-              module2.exports = triangulate3;
+              module2.exports = triangulate;
               function LiftedPoint(p, i) {
                 this.point = p;
                 this.index = i;
@@ -35313,7 +35313,7 @@ var Plotly = (() => {
                 }
                 return cells;
               }
-              function triangulate3(points, includePointAtInfinity) {
+              function triangulate(points, includePointAtInfinity) {
                 var n = points.length;
                 if (n === 0) {
                   return [];
@@ -36922,9 +36922,9 @@ var Plotly = (() => {
                 return tubes;
               };
               var shaders = __webpack_require__2(6740);
-              var createMesh5 = __webpack_require__2(6405).createMesh;
+              var createMesh = __webpack_require__2(6405).createMesh;
               module2.exports.createTubeMesh = function(gl2, params) {
-                return createMesh5(gl2, params, {
+                return createMesh(gl2, params, {
                   shaders,
                   traceType: "streamtube"
                 });
@@ -40234,7 +40234,7 @@ var Plotly = (() => {
             /***/
             (function(module2, __unused_webpack_exports, __webpack_require__2) {
               "use strict";
-              module2.exports = createErrorBars2;
+              module2.exports = createErrorBars;
               var createBuffer = __webpack_require__2(2762);
               var createVAO = __webpack_require__2(8116);
               var createShader = __webpack_require__2(3436);
@@ -40472,7 +40472,7 @@ var Plotly = (() => {
                 this.buffer.dispose();
                 this.vao.dispose();
               };
-              function createErrorBars2(options) {
+              function createErrorBars(options) {
                 var gl2 = options.gl;
                 var buffer = createBuffer(gl2);
                 var vao = createVAO(gl2, [
@@ -47170,9 +47170,6 @@ var Plotly = (() => {
         addStyleRule2(".js-plotly-plot .plotly .mapboxgl-" + k, styleRules[k]);
       }
     }
-    if (bpmName === "map") {
-      _req0;
-    }
     if ((bpmName === "geo" || bpmName === "mapbox" || bpmName === "map") && window.PlotlyGeoAssets === void 0) {
       window.PlotlyGeoAssets = { topojson: {} };
     }
@@ -49217,7 +49214,7 @@ var Plotly = (() => {
     h = bound01(h, 360) * 6;
     s = bound01(s, 100);
     v = bound01(v, 100);
-    var i = Math.floor(h), f = h - i, p = v * (1 - s), q = v * (1 - f * s), t = v * (1 - (1 - f) * s), mod7 = i % 6, r = [v, q, p, p, t, v][mod7], g = [t, v, v, q, p, p][mod7], b = [p, p, t, v, v, q][mod7];
+    var i = Math.floor(h), f = h - i, p = v * (1 - s), q = v * (1 - f * s), t = v * (1 - (1 - f) * s), mod8 = i % 6, r = [v, q, p, p, t, v][mod8], g = [t, v, v, q, p, p][mod8], b = [p, p, t, v, v, q][mod8];
     return {
       r: r * 255,
       g: g * 255,
@@ -92273,12 +92270,23 @@ var Plotly = (() => {
   Plotly.Fx = { hover: fx_default.hover, unhover: fx_default.unhover, loneHover: fx_default.loneHover, loneUnhover: fx_default.loneUnhover };
   var core_default = Plotly;
 
-  // src/traces/scatter3d/convert.js
-  var import_stackgl_modules = __toESM(require_stackgl_modules(), 1);
-  var import_stackgl_modules2 = __toESM(require_stackgl_modules(), 1);
-  var import_stackgl_modules3 = __toESM(require_stackgl_modules(), 1);
-  var import_stackgl_modules4 = __toESM(require_stackgl_modules(), 1);
-  var import_stackgl_modules5 = __toESM(require_stackgl_modules(), 1);
+  // stackgl_modules/esm.js
+  var mod5 = __toESM(require_stackgl_modules());
+  var {
+    alpha_shape,
+    convex_hull,
+    delaunay_triangulate,
+    gl_cone3d,
+    gl_error3d,
+    gl_line3d,
+    gl_mesh3d,
+    gl_plot3d,
+    gl_scatter3d,
+    gl_streamtube3d,
+    gl_surface3d,
+    ndarray,
+    ndarray_linear_interpolate
+  } = mod5;
 
   // src/lib/str2rgbarray.js
   var import_color_normalize = __toESM(require_color_normalize(), 1);
@@ -92497,7 +92505,7 @@ var Plotly = (() => {
       filteredPoints.push([p[u], p[v]]);
       filteredIds.push(i);
     }
-    var cells = (0, import_stackgl_modules5.delaunay_triangulate)(filteredPoints);
+    var cells = delaunay_triangulate(filteredPoints);
     for (i = 0; i < cells.length; ++i) {
       var c = cells[i];
       for (var j = 0; j < c.length; ++j) {
@@ -92738,7 +92746,7 @@ var Plotly = (() => {
     if (this.mode.indexOf("lines") !== -1) {
       if (this.linePlot) this.linePlot.update(lineOptions);
       else {
-        this.linePlot = (0, import_stackgl_modules.gl_line3d)(lineOptions);
+        this.linePlot = gl_line3d(lineOptions);
         this.linePlot._trace = this;
         this.scene.glplot.add(this.linePlot);
       }
@@ -92766,7 +92774,7 @@ var Plotly = (() => {
     if (this.mode.indexOf("markers") !== -1) {
       if (this.scatterPlot) this.scatterPlot.update(scatterOptions);
       else {
-        this.scatterPlot = (0, import_stackgl_modules2.gl_scatter3d)(scatterOptions);
+        this.scatterPlot = gl_scatter3d(scatterOptions);
         this.scatterPlot._trace = this;
         this.scatterPlot.highlightScale = 1;
         this.scene.glplot.add(this.scatterPlot);
@@ -92797,7 +92805,7 @@ var Plotly = (() => {
     if (this.mode.indexOf("text") !== -1) {
       if (this.textMarkers) this.textMarkers.update(textOptions);
       else {
-        this.textMarkers = (0, import_stackgl_modules2.gl_scatter3d)(textOptions);
+        this.textMarkers = gl_scatter3d(textOptions);
         this.textMarkers._trace = this;
         this.textMarkers.highlightScale = 1;
         this.scene.glplot.add(this.textMarkers);
@@ -92825,7 +92833,7 @@ var Plotly = (() => {
         this.errorBars = null;
       }
     } else if (options.errorBounds) {
-      this.errorBars = (0, import_stackgl_modules3.gl_error3d)(errorOptions);
+      this.errorBars = gl_error3d(errorOptions);
       this.errorBars._trace = this;
       this.scene.glplot.add(this.errorBars);
     }
@@ -92836,7 +92844,7 @@ var Plotly = (() => {
         this.delaunayMesh.update(delaunayOptions);
       } else {
         delaunayOptions.gl = gl2;
-        this.delaunayMesh = (0, import_stackgl_modules4.gl_mesh3d)(delaunayOptions);
+        this.delaunayMesh = gl_mesh3d(delaunayOptions);
         this.delaunayMesh._trace = this;
         this.scene.glplot.add(this.delaunayMesh);
       }
@@ -92886,11 +92894,108 @@ var Plotly = (() => {
     },
     colorScaleAttrs("line")
   );
-  var attrs2 = {};
+  function makeProjectionAttr(axLetter) {
+    return {
+      show: {
+        valType: "boolean",
+        dflt: false
+      },
+      opacity: {
+        valType: "number",
+        min: 0,
+        max: 1,
+        dflt: 1
+      },
+      scale: {
+        valType: "number",
+        min: 0,
+        max: 10,
+        dflt: 2 / 3
+      }
+    };
+  }
+  var attrs2 = overrideAll9(
+    {
+      x: attributes_default9.x,
+      y: attributes_default9.y,
+      z: {
+        valType: "data_array"
+      },
+      text: extendFlat({}, attributes_default9.text, {}),
+      texttemplate: texttemplateAttrs(),
+      texttemplatefallback: templatefallbackAttrs({ editType: "calc" }),
+      hovertext: extendFlat({}, attributes_default9.hovertext, {}),
+      hovertemplate: hovertemplateAttrs(),
+      hovertemplatefallback: templatefallbackAttrs(),
+      xhoverformat: axisHoverFormat3("x"),
+      yhoverformat: axisHoverFormat3("y"),
+      zhoverformat: axisHoverFormat3("z"),
+      mode: extendFlat(
+        {},
+        attributes_default9.mode,
+        // shouldn't this be on-par with 2D?
+        { dflt: "lines+markers" }
+      ),
+      surfaceaxis: {
+        valType: "enumerated",
+        values: [-1, 0, 1, 2],
+        dflt: -1
+      },
+      surfacecolor: {
+        valType: "color"
+      },
+      projection: {
+        x: makeProjectionAttr("x"),
+        y: makeProjectionAttr("y"),
+        z: makeProjectionAttr("z")
+      },
+      connectgaps: attributes_default9.connectgaps,
+      line: lineAttrs,
+      marker: extendFlat(
+        {
+          // Parity with scatter.js?
+          symbol: {
+            valType: "enumerated",
+            values: sortObjectKeys(gl3d_markers_default),
+            dflt: "circle",
+            arrayOk: true
+          },
+          size: extendFlat({}, scatterMarkerAttrs.size, { dflt: 8 }),
+          sizeref: scatterMarkerAttrs.sizeref,
+          sizemin: scatterMarkerAttrs.sizemin,
+          sizemode: scatterMarkerAttrs.sizemode,
+          opacity: extendFlat({}, scatterMarkerAttrs.opacity, {
+            arrayOk: false
+          }),
+          colorbar: scatterMarkerAttrs.colorbar,
+          line: extendFlat(
+            {
+              width: extendFlat({}, scatterMarkerLineAttrs.width, { arrayOk: false })
+            },
+            colorScaleAttrs("marker.line")
+          )
+        },
+        colorScaleAttrs("marker")
+      ),
+      textposition: extendFlat({}, attributes_default9.textposition, { dflt: "top center" }),
+      textfont: font_attributes_default({
+        noFontShadow: true,
+        noFontLineposition: true,
+        noFontTextcase: true,
+        editType: "calc",
+        colorEditType: "style",
+        arrayOk: true,
+        variantValues: ["normal", "small-caps"]
+      }),
+      opacity: attributes_default2.opacity,
+      hoverinfo: extendFlat({}, attributes_default2.hoverinfo)
+    },
+    "calc",
+    "nested"
+  );
   attrs2.x.editType = attrs2.y.editType = attrs2.z.editType = "calc+clearAxisTypes";
 
   // src/plots/gl3d/scene.js
-  var import_stackgl_modules6 = __toESM(require_stackgl_modules(), 1);
   var import_webgl_context = __toESM(require_webgl_context(), 1);
   var import_has_passive_events3 = __toESM(require_has_passive_events(), 1);
 
@@ -93161,8 +93266,8 @@ var Plotly = (() => {
 
   // src/plots/gl3d/scene.js
   var { applyAutorangeOptions: applyAutorangeOptions2 } = autorange_default;
-  var createCamera = import_stackgl_modules6.gl_plot3d.createCamera;
-  var createPlot = import_stackgl_modules6.gl_plot3d.createScene;
+  var createCamera = gl_plot3d.createCamera;
+  var createPlot = gl_plot3d.createScene;
   var preserveDrawingBuffer2 = lib_default.preserveDrawingBuffer();
   var STATIC_CANVAS;
   var STATIC_CONTEXT;
@@ -94242,7 +94347,195 @@ var Plotly = (() => {
   // src/traces/surface/attributes.js
   var { axisHoverFormat: axisHoverFormat4 } = axis_format_attributes_default;
   var { overrideAll: overrideAll12 } = edit_types_default;
-  var attrs3 = {};
+  function makeContourProjAttr(axLetter) {
+    return {
+      valType: "boolean",
+      dflt: false
+    };
+  }
+  function makeContourAttr(axLetter) {
+    return {
+      show: {
+        valType: "boolean",
+        dflt: false
+      },
+      start: {
+        valType: "number",
+        dflt: null,
+        editType: "plot"
+        // impliedEdits: {'^autocontour': false},
+      },
+      end: {
+        valType: "number",
+        dflt: null,
+        editType: "plot"
+        // impliedEdits: {'^autocontour': false},
+      },
+      size: {
+        valType: "number",
+        dflt: null,
+        min: 0,
+        editType: "plot"
+        // impliedEdits: {'^autocontour': false},
+      },
+      project: {
+        x: makeContourProjAttr("x"),
+        y: makeContourProjAttr("y"),
+        z: makeContourProjAttr("z")
+      },
+      color: {
+        valType: "color",
+        dflt: color_default.defaultLine
+      },
+      usecolormap: {
+        valType: "boolean",
+        dflt: false
+      },
+      width: {
+        valType: "number",
+        min: 1,
+        max: 16,
+        dflt: 2
+      },
+      highlight: {
+        valType: "boolean",
+        dflt: true
+      },
+      highlightcolor: {
+        valType: "color",
+        dflt: color_default.defaultLine
+      },
+      highlightwidth: {
+        valType: "number",
+        min: 1,
+        max: 16,
+        dflt: 2
+      }
+    };
+  }
+  var attrs3 = overrideAll12(
+    extendFlat(
+      {
+        z: {
+          valType: "data_array"
+        },
+        x: {
+          valType: "data_array"
+        },
+        y: {
+          valType: "data_array"
+        },
+        text: {
+          valType: "string",
+          dflt: "",
+          arrayOk: true
+        },
+        hovertext: {
+          valType: "string",
+          dflt: "",
+          arrayOk: true
+        },
+        hovertemplate: hovertemplateAttrs(),
+        hovertemplatefallback: templatefallbackAttrs(),
+        xhoverformat: axisHoverFormat4("x"),
+        yhoverformat: axisHoverFormat4("y"),
+        zhoverformat: axisHoverFormat4("z"),
+        connectgaps: {
+          valType: "boolean",
+          dflt: false,
+          editType: "calc"
+        },
+        surfacecolor: {
+          valType: "data_array"
+        }
+      },
+      colorScaleAttrs("", {
+        colorAttr: "z or surfacecolor",
+        showScaleDflt: true,
+        autoColorDflt: false,
+        editTypeOverride: "calc"
+      }),
+      {
+        contours: {
+          x: makeContourAttr("x"),
+          y: makeContourAttr("y"),
+          z: makeContourAttr("z")
+        },
+        hidesurface: {
+          valType: "boolean",
+          dflt: false
+        },
+        lightposition: {
+          x: {
+            valType: "number",
+            min: -1e5,
+            max: 1e5,
+            dflt: 10
+          },
+          y: {
+            valType: "number",
+            min: -1e5,
+            max: 1e5,
+            dflt: 1e4
+          },
+          z: {
+            valType: "number",
+            min: -1e5,
+            max: 1e5,
+            dflt: 0
+          }
+        },
+        lighting: {
+          ambient: {
+            valType: "number",
+            min: 0,
+            max: 1,
+            dflt: 0.8
+          },
+          diffuse: {
+            valType: "number",
+            min: 0,
+            max: 1,
+            dflt: 0.8
+          },
+          specular: {
+            valType: "number",
+            min: 0,
+            max: 2,
+            dflt: 0.05,
+            description: "Represents the level that incident rays are reflected in a single direction, causing shine."
+          },
+          roughness: {
+            valType: "number",
+            min: 0,
+            max: 1,
+            dflt: 0.5,
+            description: "Alters specular reflection; the rougher the surface, the wider and less contrasty the shine."
+          },
+          fresnel: {
+            valType: "number",
+            min: 0,
+            max: 5,
+            dflt: 0.2
+          }
+        },
+        opacity: {
+          valType: "number",
+          min: 0,
+          max: 1,
+          dflt: 1
+        },
+        opacityscale: {
+          valType: "any",
+          editType: "calc"
+        },
+        hoverinfo: extendFlat({}, attributes_default2.hoverinfo),
+        showlegend: extendFlat({}, attributes_default2.showlegend, { dflt: false })
+      }
+    ),
+    "calc",
+    "nested"
+  );
   attrs3.x.editType = attrs3.y.editType = attrs3.z.editType = "calc+clearAxisTypes";
   var attributes_default23 = attrs3;
 
@@ -94360,10 +94653,6 @@ var Plotly = (() => {
     supplyDefaults: supplyDefaults4,
     opacityscaleDefaults
   };
-
-  // src/traces/surface/convert.js
-  var import_stackgl_modules7 = __toESM(require_stackgl_modules(), 1);
-  var import_stackgl_modules8 = __toESM(require_stackgl_modules(), 1);
 
   // src/traces/heatmap/interp2d.js
   var INTERPTHRESHOLD = 0.01;
@@ -94514,11 +94803,10 @@ var Plotly = (() => {
   }
 
   // src/traces/surface/convert.js
-  var import_stackgl_modules9 = __toESM(require_stackgl_modules(), 1);
   var { isArrayOrTypedArray: isArrayOrTypedArray10 } = lib_default;
   var { parseColorScale: parseColorScale2 } = gl_format_color_default;
   var { extractOpts: extractOpts5 } = colorscale_default;
-  var ndarrayInterp2d = import_stackgl_modules9.ndarray_linear_interpolate.d2;
+  var ndarrayInterp2d = ndarray_linear_interpolate.d2;
   function SurfaceTrace(scene, surface, uid) {
     this.scene = scene;
     this.uid = uid;
@@ -95177,7 +95465,7 @@ var Plotly = (() => {
     var newHeight = Math.floor(coords[0].shape[1] * scaleH + 1) | 0;
     var padWidth = 1 + width + 1;
     var padHeight = 1 + height + 1;
-    var padImg = (0, import_stackgl_modules8.ndarray)(new Float32Array(padWidth * padHeight), [padWidth, padHeight]);
+    var padImg = ndarray(new Float32Array(padWidth * padHeight), [padWidth, padHeight]);
     var X = [
       1 / scaleW,
       0,
@@ -95191,7 +95479,7 @@ var Plotly = (() => {
     ];
     for (var i = 0; i < coords.length; ++i) {
       this.surface.padField(padImg, coords[i]);
-      var scaledImg = (0, import_stackgl_modules8.ndarray)(new Float32Array(newWidth * newHeight), [newWidth, newHeight]);
+      var scaledImg = ndarray(new Float32Array(newWidth * newHeight), [newWidth, newHeight]);
       homography(scaledImg, padImg, X);
       coords[i] = scaledImg;
     }
@@ -95310,9 +95598,9 @@ var Plotly = (() => {
       }
     }
     var coords = [
-      (0, import_stackgl_modules8.ndarray)(new Float32Array(xlen * ylen), [xlen, ylen]),
-      (0, import_stackgl_modules8.ndarray)(new Float32Array(xlen * ylen), [xlen, ylen]),
-      (0, import_stackgl_modules8.ndarray)(new Float32Array(xlen * ylen), [xlen, ylen])
+      ndarray(new Float32Array(xlen * ylen), [xlen, ylen]),
+      ndarray(new Float32Array(xlen * ylen), [xlen, ylen]),
+      ndarray(new Float32Array(xlen * ylen), [xlen, ylen])
     ];
     for (i = 0; i < 3; i++) {
       for (j = 0; j < xlen; j++) {
@@ -95344,7 +95632,7 @@ var Plotly = (() => {
     var cOpts = extractOpts5(data);
     params.intensityBounds = [cOpts.min, cOpts.max];
     if (data.surfacecolor) {
-      var intensity = (0, import_stackgl_modules8.ndarray)(new Float32Array(xlen * ylen), [xlen, ylen]);
+      var intensity = ndarray(new Float32Array(xlen * ylen), [xlen, ylen]);
       for (j = 0; j < xlen; j++) {
         for (k = 0; k < ylen; k++) {
           intensity.set(j, k, data.surfacecolor[k][j]);
@@ -95570,7 +95858,139 @@ var Plotly = (() => {
   // src/traces/isosurface/attributes.js
   var { axisHoverFormat: axisHoverFormat6 } = axis_format_attributes_default;
   var { overrideAll: overrideAll13 } = edit_types_default;
-  var attrs4 = {};
+  function makeSliceAttr(axLetter) {
+    return {
+      show: {
+        valType: "boolean",
+        dflt: false
+      },
+      locations: {
+        valType: "data_array",
+        dflt: []
+      },
+      fill: {
+        valType: "number",
+        min: 0,
+        max: 1,
+        dflt: 1
+      }
+    };
+  }
+  function makeCapAttr(axLetter) {
+    return {
+      show: {
+        valType: "boolean",
+        dflt: true
+      },
+      fill: {
+        valType: "number",
+        min: 0,
+        max: 1,
+        dflt: 1
+      }
+    };
+  }
+  var attrs4 = overrideAll13(
+    extendFlat(
+      {
+        x: {
+          valType: "data_array"
+        },
+        y: {
+          valType: "data_array"
+        },
+        z: {
+          valType: "data_array"
+        },
+        value: {
+          valType: "data_array"
+        },
+        isomin: {
+          valType: "number"
+        },
+        isomax: {
+          valType: "number"
+        },
+        surface: {
+          show: {
+            valType: "boolean",
+            dflt: true
+          },
+          count: {
+            valType: "integer",
+            dflt: 2,
+            min: 1
+          },
+          fill: {
+            valType: "number",
+            min: 0,
+            max: 1,
+            dflt: 1
+          },
+          pattern: {
+            valType: "flaglist",
+            flags: ["A", "B", "C", "D", "E"],
+            extras: ["all", "odd", "even"],
+            dflt: "all"
+          }
+        },
+        spaceframe: {
+          show: {
+            valType: "boolean",
+            dflt: false
+          },
+          fill: {
+            valType: "number",
+            min: 0,
+            max: 1,
+            dflt: 0.15
+          }
+        },
+        slices: {
+          x: makeSliceAttr("x"),
+          y: makeSliceAttr("y"),
+          z: makeSliceAttr("z")
+        },
+        caps: {
+          x: makeCapAttr("x"),
+          y: makeCapAttr("y"),
+          z: makeCapAttr("z")
+        },
+        text: {
+          valType: "string",
+          dflt: "",
+          arrayOk: true
+        },
+        hovertext: {
+          valType: "string",
+          dflt: "",
+          arrayOk: true
+        },
+        hovertemplate: hovertemplateAttrs(),
+        hovertemplatefallback: templatefallbackAttrs(),
+        xhoverformat: axisHoverFormat6("x"),
+        yhoverformat: axisHoverFormat6("y"),
+        zhoverformat: axisHoverFormat6("z"),
+        valuehoverformat: axisHoverFormat6("value", 1),
+        showlegend: extendFlat({}, attributes_default2.showlegend, { dflt: false })
+      },
+      colorScaleAttrs("", {
+        colorAttr: "`value`",
+        showScaleDflt: true,
+        editTypeOverride: "calc"
+      }),
+      {
+        opacity: attributes_default24.opacity,
+        lightposition: attributes_default24.lightposition,
+        lighting: attributes_default24.lighting,
+        flatshading: attributes_default24.flatshading,
+        contour: attributes_default24.contour,
+        hoverinfo: extendFlat({}, attributes_default2.hoverinfo)
+      }
+    ),
+    "calc",
+    "nested"
+  );
   attrs4.flatshading.dflt = true;
   attrs4.lighting.facenormalsepsilon.dflt = 0;
   attrs4.x.editType = attrs4.y.editType = attrs4.z.editType = attrs4.value.editType = "calc+clearAxisTypes";
@@ -95864,9 +96284,6 @@ var Plotly = (() => {
 
   // src/traces/isosurface/calc.js
   var { processGrid: processGrid2, filter: filter3 } = calc_default2;
-
-  // src/traces/isosurface/convert.js
-  var import_stackgl_modules10 = __toESM(require_stackgl_modules(), 1);
 
   // src/plots/gl3d/zip3.js
   function zip3(x, y, z, len2) {
@@ -96754,7 +97171,7 @@ var Plotly = (() => {
   }
   function createIsosurfaceTrace(scene, data) {
     var gl2 = scene.glplot.gl;
-    var mesh = (0, import_stackgl_modules10.gl_mesh3d)({ gl: gl2 });
+    var mesh = gl_mesh3d({ gl: gl2 });
     var result = new IsosurfaceTrace(scene, mesh, data.uid);
     mesh._trace = result;
     result.update(data);
@@ -96773,7 +97190,59 @@ var Plotly = (() => {
 
   // src/traces/volume/attributes.js
   var { overrideAll: overrideAll14 } = edit_types_default;
-  var attrs5 = {};
+  var attrs5 = overrideAll14(
+    extendFlat(
+      {
+        x: attributes_default25.x,
+        y: attributes_default25.y,
+        z: attributes_default25.z,
+        value: attributes_default25.value,
+        isomin: attributes_default25.isomin,
+        isomax: attributes_default25.isomax,
+        surface: attributes_default25.surface,
+        spaceframe: {
+          show: {
+            valType: "boolean",
+            dflt: false
+          },
+          fill: {
+            valType: "number",
+            min: 0,
+            max: 1,
+            dflt: 1
+          }
+        },
+        slices: attributes_default25.slices,
+        caps: attributes_default25.caps,
+        text: attributes_default25.text,
+        hovertext: attributes_default25.hovertext,
+        xhoverformat: attributes_default25.xhoverformat,
+        yhoverformat: attributes_default25.yhoverformat,
+        zhoverformat: attributes_default25.zhoverformat,
+        valuehoverformat: attributes_default25.valuehoverformat,
+        hovertemplate: attributes_default25.hovertemplate,
+        hovertemplatefallback: attributes_default25.hovertemplatefallback
+      },
+      colorScaleAttrs("", {
+        colorAttr: "`value`",
+        showScaleDflt: true,
+        editTypeOverride: "calc"
+      }),
+      {
+        colorbar: attributes_default25.colorbar,
+        opacity: attributes_default25.opacity,
+        opacityscale: attributes_default23.opacityscale,
+        lightposition: attributes_default25.lightposition,
+        lighting: attributes_default25.lighting,
+        flatshading: attributes_default25.flatshading,
+        contour: attributes_default25.contour,
+        hoverinfo: extendFlat({}, attributes_default2.hoverinfo),
+        showlegend: extendFlat({}, attributes_default2.showlegend, { dflt: false })
+      }
+    ),
+    "calc",
+    "nested"
+  );
   attrs5.x.editType = attrs5.y.editType = attrs5.z.editType = attrs5.value.editType = "calc+clearAxisTypes";
 
   // src/traces/volume/defaults.js
@@ -96781,7 +97250,6 @@ var Plotly = (() => {
   var { opacityscaleDefaults: opacityscaleDefaults2 } = defaults_default2;
 
   // src/traces/volume/convert.js
-  var import_stackgl_modules11 = __toESM(require_stackgl_modules(), 1);
   var { parseColorScale: parseColorScale4 } = gl_format_color_default;
   var { isArrayOrTypedArray: isArrayOrTypedArray12 } = lib_default;
   var { extractOpts: extractOpts7 } = colorscale_default;
@@ -96867,10 +97335,6 @@ var Plotly = (() => {
   };
 
   // src/traces/mesh3d/convert.js
-  var import_stackgl_modules12 = __toESM(require_stackgl_modules(), 1);
-  var import_stackgl_modules13 = __toESM(require_stackgl_modules(), 1);
-  var import_stackgl_modules14 = __toESM(require_stackgl_modules(), 1);
-  var import_stackgl_modules15 = __toESM(require_stackgl_modules(), 1);
   var { parseColorScale: parseColorScale5 } = gl_format_color_default;
   var { isArrayOrTypedArray: isArrayOrTypedArray13 } = lib_default;
   var { extractOpts: extractOpts8 } = colorscale_default;
@@ -96936,7 +97400,7 @@ var Plotly = (() => {
     for (var i = 0; i < len2; i++) {
       b[i] = [positions[i][(d + 1) % 3], positions[i][(d + 2) % 3]];
     }
-    return (0, import_stackgl_modules13.delaunay_triangulate)(b);
+    return delaunay_triangulate(b);
   }
   function hasValidIndices(list2, numVertices) {
     var len2 = list2.length;
@@ -96968,9 +97432,9 @@ var Plotly = (() => {
         toRoundIndex(data.k)
       );
     } else if (data.alphahull === 0) {
-      cells = (0, import_stackgl_modules15.convex_hull)(positions);
+      cells = convex_hull(positions);
     } else if (data.alphahull > 0) {
-      cells = (0, import_stackgl_modules14.alpha_shape)(data.alphahull, positions);
+      cells = alpha_shape(data.alphahull, positions);
     } else {
       cells = delaunayCells(data.delaunayaxis, positions);
     }
@@ -97140,12 +97604,10 @@ var Plotly = (() => {
   });
 
   // src/traces/cone/convert.js
-  var import_stackgl_modules16 = __toESM(require_stackgl_modules(), 1);
-  var import_stackgl_modules17 = __toESM(require_stackgl_modules(), 1);
   var { simpleMap, isArrayOrTypedArray: isArrayOrTypedArray14 } = lib_default;
   var { parseColorScale: parseColorScale6 } = gl_format_color_default;
   var { extractOpts: extractOpts9 } = colorscale_default;
-  var createConeMesh = import_stackgl_modules17.gl_cone3d.createConeMesh;
+  var createConeMesh = gl_cone3d.createConeMesh;
   function Cone(scene, uid) {
     this.scene = scene;
     this.uid = uid;
@@ -97219,7 +97681,7 @@ var Plotly = (() => {
       coneOpts.coneSize = trace.sizeref;
     }
     coneOpts.coneSizemode = sizemode;
-    var meshData = (0, import_stackgl_modules16.gl_cone3d)(coneOpts);
+    var meshData = gl_cone3d(coneOpts);
     var lp = trace.lightposition;
     meshData.lightPosition = [lp.x, lp.y, lp.z];
     meshData.ambient = trace.lighting.ambient;
@@ -97352,10 +97814,9 @@ var Plotly = (() => {
   });
 
   // src/traces/streamtube/convert.js
-  var import_stackgl_modules18 = __toESM(require_stackgl_modules(), 1);
   var { parseColorScale: parseColorScale7 } = gl_format_color_default;
   var { extractOpts: extractOpts10 } = colorscale_default;
-  var createTubeMesh = import_stackgl_modules18.gl_streamtube3d.createTubeMesh;
+  var createTubeMesh = gl_streamtube3d.createTubeMesh;
   var axisName2scaleIndex2 = { xaxis: 0, yaxis: 1, zaxis: 2 };
   function Streamtube(scene, uid) {
     this.scene = scene;
@@ -97473,7 +97934,7 @@ var Plotly = (() => {
       [xbnds[0] - xpads[0], ybnds[0] - ypads[0], zbnds[0] - zpads[0]],
       [xbnds[1] + xpads[1], ybnds[1] + ypads[1], zbnds[1] + zpads[1]]
     ];
-    var meshData = (0, import_stackgl_modules18.gl_streamtube3d)(tubeOpts, bounds);
+    var meshData = gl_streamtube3d(tubeOpts, bounds);
     var cOpts = extractOpts10(trace);
     meshData.vertexIntensityBounds = [cOpts.min / trace._normMax, cOpts.max / trace._normMax];
     var lp = trace.lightposition;
@@ -99590,7 +100051,7 @@ var Plotly = (() => {
         @throws Error if an invalid year or a different calendar used. */
     _leapYear: function(year2) {
       year2 = year2 < 0 ? year2 + 1 : year2;
-      return mod5(year2 * 7 + 1, 19) < 7;
+      return mod6(year2 * 7 + 1, 19) < 7;
     },
     /** Retrieve the number of months in a year.
         @memberof HebrewCalendar
@@ -99637,9 +100098,9 @@ var Plotly = (() => {
       this._validate(year2, month2, this.minDay, main6.local.invalidMonth);
       return month2 === 12 && this.leapYear(year2) ? 30 : (
         // Adar I
-        month2 === 8 && mod5(this.daysInYear(year2), 10) === 5 ? 30 : (
+        month2 === 8 && mod6(this.daysInYear(year2), 10) === 5 ? 30 : (
           // Cheshvan in shlemah year
-          month2 === 9 && mod5(this.daysInYear(year2), 10) === 3 ? 29 : (
+          month2 === 9 && mod6(this.daysInYear(year2), 10) === 3 ? 29 : (
             // Kislev in chaserah year
             this.daysPerMonth[month2 - 1]
           )
@@ -99706,7 +100167,7 @@ var Plotly = (() => {
       var months2 = Math.floor((235 * year2 - 234) / 19);
       var parts = 12084 + 13753 * months2;
       var day2 = months2 * 29 + Math.floor(parts / 25920);
-      if (mod5(3 * (day2 + 1), 7) < 3) {
+      if (mod6(3 * (day2 + 1), 7) < 3) {
         day2++;
       }
       return day2;
@@ -99740,7 +100201,7 @@ var Plotly = (() => {
       return this.newDate(year2, month2, day2);
     }
   });
-  function mod5(a, b) {
+  function mod6(a, b) {
     return a - b * Math.floor(a / b);
   }
   main6.calendars.hebrew = HebrewCalendar;
@@ -100405,8 +100866,8 @@ var Plotly = (() => {
         @return {number[]} Corresponding Haab month and day. */
     _toHaab: function(jd) {
       jd -= this.jdEpoch;
-      var day2 = mod6(jd + 8 + (18 - 1) * 20, 365);
-      return [Math.floor(day2 / 20) + 1, mod6(day2, 20)];
+      var day2 = mod7(jd + 8 + (18 - 1) * 20, 365);
+      return [Math.floor(day2 / 20) + 1, mod7(day2, 20)];
     },
     /** Retrieve Tzolkin date from a Julian date.
         @memberof MayanCalendar
@@ -100443,11 +100904,11 @@ var Plotly = (() => {
       return this.newDate(year2, month2, day2);
     }
   });
-  function mod6(a, b) {
+  function mod7(a, b) {
     return a - b * Math.floor(a / b);
   }
   function amod(a, b) {
-    return mod6(a - 1, b) + 1;
+    return mod7(a - 1, b) + 1;
   }
   main9.calendars.mayan = MayanCalendar;
 

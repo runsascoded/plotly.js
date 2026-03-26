@@ -13109,9 +13109,6 @@ var Plotly = (() => {
         addStyleRule2(".js-plotly-plot .plotly .mapboxgl-" + k2, styleRules[k2]);
       }
     }
-    if (bpmName === "map") {
-      _req0;
-    }
     if ((bpmName === "geo" || bpmName === "mapbox" || bpmName === "map") && window.PlotlyGeoAssets === void 0) {
       window.PlotlyGeoAssets = { topojson: {} };
     }
@@ -66693,7 +66690,167 @@ var Plotly = (() => {
     },
     griddash: dash
   };
-  var attrs2 = {};
+  var attrs2 = overrideAll10({
+    domain: attributes2({ name: "geo" }, {}),
+    fitbounds: {
+      valType: "enumerated",
+      values: [false, "locations", "geojson"],
+      dflt: false,
+      editType: "plot"
+    },
+    resolution: {
+      valType: "enumerated",
+      values: [110, 50],
+      dflt: 110,
+      coerceNumber: true
+    },
+    scope: {
+      valType: "enumerated",
+      values: sortObjectKeys(constants_default14.scopeDefaults),
+      dflt: "world"
+    },
+    projection: {
+      type: {
+        valType: "enumerated",
+        values: sortObjectKeys(constants_default14.projNames)
+      },
+      rotation: {
+        lon: {
+          valType: "number"
+        },
+        lat: {
+          valType: "number"
+        },
+        roll: {
+          valType: "number"
+        }
+      },
+      tilt: {
+        valType: "number",
+        dflt: 0
+      },
+      distance: {
+        valType: "number",
+        min: 1.001,
+        dflt: 2
+      },
+      parallels: {
+        valType: "info_array",
+        items: [
+          { valType: "number" },
+          { valType: "number" }
+        ]
+      },
+      scale: {
+        valType: "number",
+        min: 0,
+        dflt: 1
+      }
+    },
+    center: {
+      lon: {
+        valType: "number"
+      },
+      lat: {
+        valType: "number"
+      }
+    },
+    visible: {
+      valType: "boolean",
+      dflt: true
+    },
+    showcoastlines: {
+      valType: "boolean"
+    },
+    coastlinecolor: {
+      valType: "color",
+      dflt: attributes_default3.defaultLine
+    },
+    coastlinewidth: {
+      valType: "number",
+      min: 0,
+      dflt: 1
+    },
+    showland: {
+      valType: "boolean",
+      dflt: false
+    },
+    landcolor: {
+      valType: "color",
+      dflt: constants_default14.landColor
+    },
+    showocean: {
+      valType: "boolean",
+      dflt: false
+    },
+    oceancolor: {
+      valType: "color",
+      dflt: constants_default14.waterColor
+    },
+    showlakes: {
+      valType: "boolean",
+      dflt: false
+    },
+    lakecolor: {
+      valType: "color",
+      dflt: constants_default14.waterColor
+    },
+    showrivers: {
+      valType: "boolean",
+      dflt: false
+    },
+    rivercolor: {
+      valType: "color",
+      dflt: constants_default14.waterColor
+    },
+    riverwidth: {
+      valType: "number",
+      min: 0,
+      dflt: 1
+    },
+    showcountries: {
+      valType: "boolean"
+    },
+    countrycolor: {
+      valType: "color",
+      dflt: attributes_default3.defaultLine
+    },
+    countrywidth: {
+      valType: "number",
+      min: 0,
+      dflt: 1
+    },
+    showsubunits: {
+      valType: "boolean"
+    },
+    subunitcolor: {
+      valType: "color",
+      dflt: attributes_default3.defaultLine
+    },
+    subunitwidth: {
+      valType: "number",
+      min: 0,
+      dflt: 1
+    },
+    showframe: {
+      valType: "boolean"
+    },
+    framecolor: {
+      valType: "color",
+      dflt: attributes_default3.defaultLine
+    },
+    framewidth: {
+      valType: "number",
+      min: 0,
+      dflt: 1
+    },
+    bgcolor: {
+      valType: "color",
+      dflt: attributes_default3.background
+    },
+    lonaxis: geoAxesAttrs,
+    lataxis: geoAxesAttrs
+  }, "plot", "from-root");
   attrs2.uirevision = {
     valType: "any",
     editType: "none"

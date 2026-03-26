@@ -62,7 +62,27 @@ var ternaryAxesAttrs = {
     },
 };
 
-var attrs = {};
+var attrs = overrideAll({
+    domain: domainAttrs({name: 'ternary'}),
+
+    bgcolor: {
+        valType: 'color',
+        dflt: colorAttrs.background,
+        description: 'Set the background color of the subplot'
+    },
+    sum: {
+        valType: 'number',
+        dflt: 1,
+        min: 0,
+        description: [
+            'The number each triplet should sum to,',
+            'and the maximum range of each axis'
+        ].join(' ')
+    },
+    aaxis: ternaryAxesAttrs,
+    baxis: ternaryAxesAttrs,
+    caxis: ternaryAxesAttrs
+}, 'plot', 'from-root')
 
 // set uirevisions outside of `overrideAll` so we can get `editType: none`
 attrs.uirevision = {

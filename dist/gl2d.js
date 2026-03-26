@@ -41483,9 +41483,6 @@ void main() {
         addStyleRule2(".js-plotly-plot .plotly .mapboxgl-" + k, styleRules[k]);
       }
     }
-    if (bpmName === "map") {
-      _req0;
-    }
     if ((bpmName === "geo" || bpmName === "mapbox" || bpmName === "map") && window.PlotlyGeoAssets === void 0) {
       window.PlotlyGeoAssets = { topojson: {} };
     }
@@ -86807,7 +86804,85 @@ void main() {
   var scatterLineAttrs3 = attributes_default9.line;
   var scatterMarkerAttrs = attributes_default9.marker;
   var scatterMarkerLineAttrs = scatterMarkerAttrs.line;
-  var attrs2 = {};
+  var attrs2 = overrideAll9(
+    {
+      x: attributes_default9.x,
+      x0: attributes_default9.x0,
+      dx: attributes_default9.dx,
+      y: attributes_default9.y,
+      y0: attributes_default9.y0,
+      dy: attributes_default9.dy,
+      xperiod: attributes_default9.xperiod,
+      yperiod: attributes_default9.yperiod,
+      xperiod0: attributes_default9.xperiod0,
+      yperiod0: attributes_default9.yperiod0,
+      xperiodalignment: attributes_default9.xperiodalignment,
+      yperiodalignment: attributes_default9.yperiodalignment,
+      xhoverformat: axisHoverFormat3("x"),
+      yhoverformat: axisHoverFormat3("y"),
+      text: attributes_default9.text,
+      hovertext: attributes_default9.hovertext,
+      textposition: attributes_default9.textposition,
+      textfont: font_attributes_default({
+        noFontShadow: true,
+        noFontLineposition: true,
+        noFontTextcase: true,
+        editType: "calc",
+        colorEditType: "style",
+        arrayOk: true,
+        noNumericWeightValues: true,
+        variantValues: ["normal", "small-caps"]
+      }),
+      mode: {
+        valType: "flaglist",
+        flags: ["lines", "markers", "text"],
+        extras: ["none"]
+      },
+      line: {
+        color: scatterLineAttrs3.color,
+        width: scatterLineAttrs3.width,
+        shape: {
+          valType: "enumerated",
+          values: ["linear", "hv", "vh", "hvh", "vhv"],
+          dflt: "linear",
+          editType: "plot"
+        },
+        dash: {
+          valType: "enumerated",
+          values: sortObjectKeys(DASHES),
+          dflt: "solid"
+        }
+      },
+      marker: extendFlat({}, colorScaleAttrs("marker"), {
+        symbol: scatterMarkerAttrs.symbol,
+        angle: scatterMarkerAttrs.angle,
+        size: scatterMarkerAttrs.size,
+        sizeref: scatterMarkerAttrs.sizeref,
+        sizemin: scatterMarkerAttrs.sizemin,
+        sizemode: scatterMarkerAttrs.sizemode,
+        opacity: scatterMarkerAttrs.opacity,
+        colorbar: scatterMarkerAttrs.colorbar,
+        line: extendFlat({}, colorScaleAttrs("marker.line"), {
+          width: scatterMarkerLineAttrs.width
+        })
+      }),
+      connectgaps: attributes_default9.connectgaps,
+      fill: extendFlat({}, attributes_default9.fill, { dflt: "none" }),
+      fillcolor: makeFillcolorAttr(),
+      // no hoveron
+      selected: {
+        marker: attributes_default9.selected.marker,
+        textfont: attributes_default9.selected.textfont
+      },
+      unselected: {
+        marker: attributes_default9.unselected.marker,
+        textfont: attributes_default9.unselected.textfont
+      },
+      opacity: attributes_default2.opacity
+    },
+    "calc",
+    "nested"
+  );
   attrs2.x.editType = attrs2.y.editType = attrs2.x0.editType = attrs2.y0.editType = "calc+clearAxisTypes";
   attrs2.hovertemplate = attributes_default9.hovertemplate;
   attrs2.hovertemplatefallback = attributes_default9.hovertemplatefallback;

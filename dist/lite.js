@@ -10712,9 +10712,6 @@ var Plotly = (() => {
         addStyleRule2(".js-plotly-plot .plotly .mapboxgl-" + k, styleRules[k]);
       }
     }
-    if (bpmName === "map") {
-      _req0;
-    }
     if ((bpmName === "geo" || bpmName === "mapbox" || bpmName === "map") && window.PlotlyGeoAssets === void 0) {
       window.PlotlyGeoAssets = { topojson: {} };
     }
@@ -50668,9 +50665,7 @@ var Plotly = (() => {
   };
 
   // lib/index-lite.js
-  core_lite_default.register([
-    bar_default
-  ]);
+  core_lite_default.register([bar_default]);
   var index_lite_default = core_lite_default;
   return __toCommonJS(index_lite_exports);
 })();

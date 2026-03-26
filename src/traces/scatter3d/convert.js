@@ -1,8 +1,8 @@
-import { gl_line3d as createLinePlot } from '../../../stackgl_modules/index.js';
-import { gl_scatter3d as createScatterPlot } from '../../../stackgl_modules/index.js';
-import { gl_error3d as createErrorBars } from '../../../stackgl_modules/index.js';
-import { gl_mesh3d as createMesh } from '../../../stackgl_modules/index.js';
-import { delaunay_triangulate as triangulate } from '../../../stackgl_modules/index.js';
+import { gl_line3d as createLinePlot } from '../../../stackgl_modules/esm.js';
+import { gl_scatter3d as createScatterPlot } from '../../../stackgl_modules/esm.js';
+import { gl_error3d as createErrorBars } from '../../../stackgl_modules/esm.js';
+import { gl_mesh3d as createMesh } from '../../../stackgl_modules/esm.js';
+import { delaunay_triangulate as triangulate } from '../../../stackgl_modules/esm.js';
 import Lib from '../../lib/index.js';
 import str2RgbaArray from '../../lib/str2rgbarray.js';
 import _gl_format_color from '../../lib/gl_format_color.js';

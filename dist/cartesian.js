@@ -23890,9 +23890,6 @@ var Plotly = (() => {
         addStyleRule2(".js-plotly-plot .plotly .mapboxgl-" + k, styleRules[k]);
       }
     }
-    if (bpmName === "map") {
-      _req0;
-    }
     if ((bpmName === "geo" || bpmName === "mapbox" || bpmName === "map") && window.PlotlyGeoAssets === void 0) {
       window.PlotlyGeoAssets = { topojson: {} };
     }
@@ -73764,7 +73761,21 @@ var Plotly = (() => {
       min: 0
     }
   };
-  var attrs2 = {};
+  var attrs2 = overrideAll9({
+    domain: attributes2({ name: "ternary" }),
+    bgcolor: {
+      valType: "color",
+      dflt: attributes_default3.background
+    },
+    sum: {
+      valType: "number",
+      dflt: 1,
+      min: 0
+    },
+    aaxis: ternaryAxesAttrs,
+    baxis: ternaryAxesAttrs,
+    caxis: ternaryAxesAttrs
+  }, "plot", "from-root");
   attrs2.uirevision = {
     valType: "any",
     editType: "none"

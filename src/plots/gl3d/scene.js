@@ -1,4 +1,4 @@
-import { gl_plot3d as glPlot3d } from '../../../stackgl_modules/index.js';
+import { gl_plot3d as glPlot3d } from '../../../stackgl_modules/esm.js';
 import getContext from 'webgl-context';
 import passiveSupported from 'has-passive-events';
 import Registry from '../../registry.js';
