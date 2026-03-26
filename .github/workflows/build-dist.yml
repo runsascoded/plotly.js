@@ -19,6 +19,6 @@ jobs:
           source_ref: ${{ inputs.source_ref || github.ref_name }}
           node_version: '20'
           build_command: pnpm run build
-          preserve_dirs: dist,lib,src,build
+          preserve_dirs: dist,lib,src,stackgl_modules,topojson
           extra_files: pnpm-lock.yaml
           dist_branch: ${{ (inputs.source_ref || github.ref_name) == 'main' && 'dist' || format('{0}-dist', inputs.source_ref || github.ref_name) }}

@@ -195,7 +195,7 @@ module.exports = {
     pathToPlotlyGeoAssetsDist: path.join(pathToDist, 'plotly-geo-assets.js'),
 
     pathToSCSS: path.join(pathToSrc, 'css/style.scss'),
-    pathToCSSBuild: path.join(pathToBuild, 'plotcss.js'),
+    pathToCSSBuild: path.join(pathToSrc, 'plotcss.js'),
     pathToCSSDist: path.join(pathToDist, 'plotly.css'),
 
     pathToTestDashboardBundle: path.join(pathToBuild, 'test_dashboard-bundle.js'),

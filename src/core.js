@@ -4,7 +4,7 @@ import FxModule from './components/fx/index.js';
 import PlotsModule from './plots/plots.js';
 import { version } from './version.js';
 import 'native-promise-only';
-import '../build/plotcss.js';
+import './plotcss.js';
 import scatter from './traces/scatter/index.js';
 import annotations from './components/annotations/index.js';
 import annotations3d from './components/annotations3d/index.js';
