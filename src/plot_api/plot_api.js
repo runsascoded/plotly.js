@@ -1,6 +1,6 @@
 import d3 from '@plotly/d3';
 import isNumeric from 'fast-isnumeric';
-import hasHover from 'has-hover';
+var hasHover = typeof matchMedia === 'function' ? !matchMedia('(hover: none)').matches : typeof window !== 'undefined';
 import Lib from '../lib/index.js';
 import Events from '../lib/events.js';
 import Queue from '../lib/queue.js';
