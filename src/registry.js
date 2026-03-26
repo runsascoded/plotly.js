@@ -7,7 +7,7 @@ const { addStyleRule } = _dom;
 import ExtendModule from './lib/extend.js';
 import basePlotAttributes from './plots/attributes.js';
 import baseLayoutAttributes from './plots/layout_attributes.js';
-import _req0 from 'maplibre-gl/dist/maplibre-gl.css';
+import 'maplibre-gl/dist/maplibre-gl.css';
 
 var extendFlat = ExtendModule.extendFlat;
 var extendDeepAll = ExtendModule.extendDeepAll;
