@@ -1,4 +1,4 @@
-import { gl_streamtube3d as tube2mesh } from '../../../stackgl_modules/index.js';
+import { gl_streamtube3d as tube2mesh } from '../../../stackgl_modules/esm.js';
 import Lib from '../../lib/index.js';
 import _gl_format_color from '../../lib/gl_format_color.js';
 const { parseColorScale } = _gl_format_color;

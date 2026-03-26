@@ -1,4 +1,4 @@
-import { gl_cone3d as conePlot } from '../../../stackgl_modules/index.js';
+import { gl_cone3d as conePlot } from '../../../stackgl_modules/esm.js';
 import _index from '../../lib/index.js';
 const { simpleMap, isArrayOrTypedArray } = _index;
 import _gl_format_color from '../../lib/gl_format_color.js';
@@ -6,7 +6,7 @@ const { parseColorScale } = _gl_format_color;
 import _index2 from '../../components/colorscale/index.js';
 const { extractOpts } = _index2;
 import zip3 from '../../plots/gl3d/zip3.js';
-import { gl_cone3d as _req0 } from '../../../stackgl_modules/index.js';
+import { gl_cone3d as _req0 } from '../../../stackgl_modules/esm.js';
 var createConeMesh = _req0.createConeMesh;
 
 function Cone(scene, uid) {

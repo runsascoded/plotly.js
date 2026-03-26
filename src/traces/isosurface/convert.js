@@ -1,4 +1,4 @@
-import { gl_mesh3d as createMesh } from '../../../stackgl_modules/index.js';
+import { gl_mesh3d as createMesh } from '../../../stackgl_modules/esm.js';
 import _gl_format_color from '../../lib/gl_format_color.js';
 const { parseColorScale } = _gl_format_color;
 import _index from '../../lib/index.js';

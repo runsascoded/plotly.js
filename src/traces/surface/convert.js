@@ -1,5 +1,5 @@
-import { gl_surface3d as createSurface } from '../../../stackgl_modules/index.js';
-import { ndarray } from '../../../stackgl_modules/index.js';
+import { gl_surface3d as createSurface } from '../../../stackgl_modules/esm.js';
+import { ndarray } from '../../../stackgl_modules/esm.js';
 import interp2d from '../heatmap/interp2d.js';
 import findEmpties from '../heatmap/find_empties.js';
 import _index from '../../lib/index.js';
@@ -9,7 +9,7 @@ const { parseColorScale } = _gl_format_color;
 import str2RgbaArray from '../../lib/str2rgbarray.js';
 import _index2 from '../../components/colorscale/index.js';
 const { extractOpts } = _index2;
-import { ndarray_linear_interpolate as _req0 } from '../../../stackgl_modules/index.js';
+import { ndarray_linear_interpolate as _req0 } from '../../../stackgl_modules/esm.js';
 var ndarrayInterp2d = _req0.d2;
 
 function SurfaceTrace(scene, surface, uid) {
