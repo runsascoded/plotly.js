@@ -7909,28 +7909,6 @@ var Plotly = (() => {
     }
   });
 
-  // node_modules/.pnpm/is-browser@2.1.0/node_modules/is-browser/client.js
-  var require_client = __commonJS({
-    "node_modules/.pnpm/is-browser@2.1.0/node_modules/is-browser/client.js"(exports, module) {
-      module.exports = true;
-    }
-  });
-
-  // node_modules/.pnpm/has-hover@1.0.1/node_modules/has-hover/index.js
-  var require_has_hover = __commonJS({
-    "node_modules/.pnpm/has-hover@1.0.1/node_modules/has-hover/index.js"(exports, module) {
-      "use strict";
-      var isBrowser = require_client();
-      var hasHover3;
-      if (typeof window.matchMedia === "function") {
-        hasHover3 = !window.matchMedia("(hover: none)").matches;
-      } else {
-        hasHover3 = isBrowser;
-      }
-      module.exports = hasHover3;
-    }
-  });
-
   // node_modules/.pnpm/is-mobile@4.0.0/node_modules/is-mobile/index.js
   var require_is_mobile = __commonJS({
     "node_modules/.pnpm/is-mobile@4.0.0/node_modules/is-mobile/index.js"(exports, module) {
@@ -8386,6 +8364,13 @@ var Plotly = (() => {
           return element.getBoundingClientRect();
         }
       }
+    }
+  });
+
+  // node_modules/.pnpm/is-browser@2.1.0/node_modules/is-browser/client.js
+  var require_client = __commonJS({
+    "node_modules/.pnpm/is-browser@2.1.0/node_modules/is-browser/client.js"(exports, module) {
+      module.exports = true;
     }
   });
 
@@ -24032,7 +24017,6 @@ var Plotly = (() => {
   // src/plot_api/plot_api.js
   var import_d322 = __toESM(require_d3(), 1);
   var import_fast_isnumeric27 = __toESM(require_fast_isnumeric(), 1);
-  var import_has_hover2 = __toESM(require_has_hover(), 1);
 
   // src/lib/index.js
   var import_d34 = __toESM(require_d3(), 1);
@@ -42218,7 +42202,6 @@ var Plotly = (() => {
 
   // src/components/dragelement/index.js
   var import_mouse_event_offset = __toESM(require_mouse_event_offset(), 1);
-  var import_has_hover = __toESM(require_has_hover(), 1);
   var import_has_passive_events = __toESM(require_has_passive_events(), 1);
 
   // src/components/dragelement/unhover.js
@@ -42283,6 +42266,7 @@ var Plotly = (() => {
   }
 
   // src/components/dragelement/index.js
+  var hasHover = typeof matchMedia === "function" ? !matchMedia("(hover: none)").matches : typeof window !== "undefined";
   var { removeElement: removeElement2 } = lib_default;
   var dragElement = {};
   dragElement.align = align2;
@@ -42314,7 +42298,7 @@ var Plotly = (() => {
     }
     var clampFn = options.clampFn || _clampFn;
     function onStart(e) {
-      if (!import_has_hover.default && e.type === "mousedown") return;
+      if (!hasHover && e.type === "mousedown") return;
       gd._dragged = false;
       gd._dragging = true;
       var offset = pointerOffset(e);
@@ -42335,10 +42319,10 @@ var Plotly = (() => {
         gd._mouseDownTime = newMouseDownTime;
       }
       if (options.prepFn) options.prepFn(e, startX, startY);
-      if (import_has_hover.default && !rightClick) {
+      if (hasHover && !rightClick) {
         dragCover = coverSlip();
         dragCover.style.cursor = window.getComputedStyle(element).cursor;
-      } else if (!import_has_hover.default) {
+      } else if (!hasHover) {
         dragCover = document;
         cursor = window.getComputedStyle(document.documentElement).cursor;
         document.documentElement.style.cursor = window.getComputedStyle(element).cursor;
@@ -42349,7 +42333,7 @@ var Plotly = (() => {
         e.preventDefault();
         document.addEventListener("mousemove", onMove);
         document.addEventListener("touchmove", onMove, { passive: false });
-      } else if (!import_has_hover.default) {
+      } else if (!hasHover) {
         document.addEventListener("touchmove", onScrollTrack, { passive: true });
       }
       return;
@@ -42388,12 +42372,12 @@ var Plotly = (() => {
         e.preventDefault();
         document.removeEventListener("mousemove", onMove);
         document.removeEventListener("touchmove", onMove);
-      } else if (!import_has_hover.default) {
+      } else if (!hasHover) {
         document.removeEventListener("touchmove", onScrollTrack);
       }
       document.removeEventListener("mouseup", onDone);
       document.removeEventListener("touchend", onDone);
-      if (import_has_hover.default) {
+      if (hasHover) {
         removeElement2(dragCover);
       } else if (cursor) {
         dragCover.documentElement.style.cursor = cursor;
@@ -42427,7 +42411,7 @@ var Plotly = (() => {
           });
         }
         if (options.clickFn) options.clickFn(numClicks, clickEvent);
-        if (!rightClick && import_has_hover.default) {
+        if (!rightClick && hasHover) {
           initialTarget.dispatchEvent(new MouseEvent("click", e));
         }
       }
@@ -52651,6 +52635,7 @@ var Plotly = (() => {
   var helpers_default9 = { clearPromiseQueue, cleanLayout, cleanData, swapXYData, coerceTraceIndices, manageArrayContainers, hasParent, clearAxisTypes, collectionsAreEqual };
 
   // src/plot_api/plot_api.js
+  var hasHover2 = typeof matchMedia === "function" ? !matchMedia("(hover: none)").matches : typeof window !== "undefined";
   var { dfltConfig: dfltConfig4 } = plot_config_default;
   var { AX_NAME_PATTERN } = constants_default2;
   var nestedProperty3 = lib_default.nestedProperty;
@@ -52998,7 +52983,7 @@ var Plotly = (() => {
       context.showLink = false;
       context.displayModeBar = false;
     }
-    if (context.displayModeBar === "hover" && !import_has_hover2.default) {
+    if (context.displayModeBar === "hover" && !hasHover2) {
       context.displayModeBar = true;
     }
     if (context.setBackground === "transparent" || typeof context.setBackground !== "function") {
