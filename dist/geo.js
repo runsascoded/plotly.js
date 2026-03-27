@@ -19457,6 +19457,18 @@ var Plotly = (() => {
 
   // src/plots/get_data.js
   var { SUBPLOT_PATTERN } = constants_default2;
+  var getSubplotCalcData = function(calcData, type, subplotId) {
+    var basePlotModule = registry_default.subplotsRegistry[type];
+    if (!basePlotModule) return [];
+    var attr2 = basePlotModule.attr;
+    var subplotCalcData = [];
+    for (var i = 0; i < calcData.length; i++) {
+      var calcTrace = calcData[i];
+      var trace = calcTrace[0].trace;
+      if (trace[attr2] === subplotId) subplotCalcData.push(calcTrace);
+    }
+    return subplotCalcData;
+  };
   var getModuleCalcData = function(calcdata, arg1, arg2) {
     var moduleCalcData = [];
     var remainingCalcData = [];
@@ -19484,6 +19496,17 @@ var Plotly = (() => {
       }
     }
     return [moduleCalcData, remainingCalcData];
+  };
+  var getSubplotData = function getSubplotData2(data, type, subplotId) {
+    if (!registry_default.subplotsRegistry[type]) return [];
+    var attr2 = registry_default.subplotsRegistry[type].attr;
+    var subplotData = [];
+    var trace, subplotX, subplotY;
+    for (var i = 0; i < data.length; i++) {
+      trace = data[i];
+      if (trace[attr2] === subplotId) subplotData.push(trace);
+    }
+    return subplotData;
   };
 
   // src/plots/command.js
@@ -40103,8 +40126,8 @@ var Plotly = (() => {
     var fullLayout = gd._fullLayout;
     modebar_default2.manage(gd);
     for (var i = 0; i < fullLayout._basePlotModules.length; i++) {
-      var updateFx3 = fullLayout._basePlotModules[i].updateFx;
-      if (updateFx3) updateFx3(gd);
+      var updateFx4 = fullLayout._basePlotModules[i].updateFx;
+      if (updateFx4) updateFx4(gd);
     }
     return plots_default.previousPromises(gd);
   };
@@ -50060,8 +50083,8 @@ var Plotly = (() => {
   var cartesian_default = { name, attr, idRoot, idRegex: idRegex2, attrRegex, attributes, layoutAttributes, supplyLayoutDefaults: supplyLayoutDefaults5, transitionAxes: transitionAxes2, finalizeSubplots, plot: plot2, clean: clean3, drawFramework, rangePlot, toSVG: toSVG2, updateFx: updateFx2 };
 
   // src/traces/scatter/index.js
-  var { calc: _req52 } = calc_default;
-  var { style: _req112, styleOnSelect: _req122 } = style_default;
+  var { calc: _req5 } = calc_default;
+  var { style: _req11, styleOnSelect: _req12 } = style_default;
   var scatter_default = {
     hasLines: subtypes_default.hasLines,
     hasMarkers: subtypes_default.hasMarkers,
@@ -50072,14 +50095,14 @@ var Plotly = (() => {
     supplyDefaults: supplyDefaults2,
     crossTraceDefaults: crossTraceDefaults2,
     supplyLayoutDefaults: layout_defaults_default,
-    calc: _req52,
+    calc: _req5,
     crossTraceCalc: crossTraceCalc2,
     arraysToCalcdata,
     plot,
     colorbar: marker_colorbar_default,
     formatLabels,
-    style: _req112,
-    styleOnSelect: _req122,
+    style: _req11,
+    styleOnSelect: _req12,
     hoverPoints,
     selectPoints,
     animatable: true,
@@ -56524,6 +56547,27 @@ var Plotly = (() => {
     }
     return out;
   };
+  var defaults2 = function(containerOut, layout, coerce3, dfltDomains) {
+    var dfltX = dfltDomains && dfltDomains.x || [0, 1];
+    var dfltY = dfltDomains && dfltDomains.y || [0, 1];
+    var grid = layout.grid;
+    if (grid) {
+      var column = coerce3("domain.column");
+      if (column !== void 0) {
+        if (column < grid.columns) dfltX = grid._domains.x[column];
+        else delete containerOut.domain.column;
+      }
+      var row = coerce3("domain.row");
+      if (row !== void 0) {
+        if (row < grid.rows) dfltY = grid._domains.y[row];
+        else delete containerOut.domain.row;
+      }
+    }
+    var x = coerce3("domain.x", dfltX);
+    var y = coerce3("domain.y", dfltY);
+    if (!(x[0] < x[1])) containerOut.domain.x = dfltX.slice();
+    if (!(y[0] < y[1])) containerOut.domain.y = dfltY.slice();
+  };
 
   // src/components/grid/index.js
   var { idRegex: cartesianIdRegex } = constants_default2;
@@ -57934,13 +57978,13 @@ var Plotly = (() => {
   };
 
   // src/components/colorbar/index.js
-  var { draw: _req210 } = draw_default5;
+  var { draw: _req2 } = draw_default5;
   var colorbar_default = {
     moduleType: "component",
     name: "colorbar",
     attributes: attributes_default6,
     supplyDefaults: colorbarDefaults,
-    draw: _req210,
+    draw: _req2,
     hasColorbar
   };
 
@@ -58298,449 +58342,155 @@ var Plotly = (() => {
     "nested"
   );
 
-  // src/traces/scattergeo/defaults.js
+  // src/traces/choropleth/attributes.js
+  var scatterGeoMarkerLineAttrs = attributes_default21.marker.line;
+  var attributes_default22 = extendFlat(
+    {
+      locations: {
+        valType: "data_array",
+        editType: "calc"
+      },
+      locationmode: attributes_default21.locationmode,
+      z: {
+        valType: "data_array",
+        editType: "calc"
+      },
+      geojson: extendFlat({}, attributes_default21.geojson, {}),
+      featureidkey: attributes_default21.featureidkey,
+      text: extendFlat({}, attributes_default21.text, {}),
+      hovertext: extendFlat({}, attributes_default21.hovertext, {}),
+      marker: {
+        line: {
+          color: extendFlat({}, scatterGeoMarkerLineAttrs.color, { dflt: defaultLine }),
+          width: extendFlat({}, scatterGeoMarkerLineAttrs.width, { dflt: 1 }),
+          editType: "calc"
+        },
+        opacity: {
+          valType: "number",
+          arrayOk: true,
+          min: 0,
+          max: 1,
+          dflt: 1,
+          editType: "style"
+        },
+        editType: "calc"
+      },
+      selected: {
+        marker: {
+          opacity: attributes_default21.selected.marker.opacity,
+          editType: "plot"
+        },
+        editType: "plot"
+      },
+      unselected: {
+        marker: {
+          opacity: attributes_default21.unselected.marker.opacity,
+          editType: "plot"
+        },
+        editType: "plot"
+      },
+      hoverinfo: extendFlat({}, attributes_default2.hoverinfo, {
+        editType: "calc",
+        flags: ["location", "z", "text", "name"]
+      }),
+      hovertemplate: hovertemplateAttrs(),
+      hovertemplatefallback: templatefallbackAttrs(),
+      showlegend: extendFlat({}, attributes_default2.showlegend, { dflt: false })
+    },
+    colorScaleAttrs("", {
+      cLetter: "z",
+      editTypeOverride: "calc"
+    })
+  );
+
+  // src/traces/choropleth/defaults.js
   var locationmodeBreakingChangeWarning = [
     "The library used by the *country names* `locationmode` option is changing in the next major version.",
     "Some country names in existing plots may not work in the new version.",
     "To ensure consistent behavior, consider setting `locationmode` to *ISO-3*."
   ].join(" ");
+  function supplyDefaults3(traceIn, traceOut, defaultColor, layout) {
+    function coerce3(attr2, dflt) {
+      return lib_default.coerce(traceIn, traceOut, attributes_default22, attr2, dflt);
+    }
+    var locations = coerce3("locations");
+    var z = coerce3("z");
+    if (!(locations && locations.length && lib_default.isArrayOrTypedArray(z) && z.length)) {
+      traceOut.visible = false;
+      return;
+    }
+    traceOut._length = Math.min(locations.length, z.length);
+    var geojson = coerce3("geojson");
+    var locationmodeDflt;
+    if (typeof geojson === "string" && geojson !== "" || lib_default.isPlainObject(geojson)) {
+      locationmodeDflt = "geojson-id";
+    }
+    var locationMode = coerce3("locationmode", locationmodeDflt);
+    if (locationMode === "country names") {
+      lib_default.warn(locationmodeBreakingChangeWarning);
+    }
+    if (locationMode === "geojson-id") {
+      coerce3("featureidkey");
+    }
+    coerce3("text");
+    coerce3("hovertext");
+    coerce3("hovertemplate");
+    coerce3("hovertemplatefallback");
+    var mlw = coerce3("marker.line.width");
+    if (mlw) coerce3("marker.line.color");
+    coerce3("marker.opacity");
+    colorScaleDefaults(traceIn, traceOut, layout, coerce3, { prefix: "", cLetter: "z" });
+    lib_default.coerceSelectionMarkerOpacity(traceOut, coerce3);
+  }
 
-  // src/traces/scattergeo/calc.js
+  // src/traces/heatmap/colorbar.js
+  var colorbar_default2 = {
+    min: "zmin",
+    max: "zmax"
+  };
+
+  // src/traces/choropleth/calc.js
   var import_fast_isnumeric39 = __toESM(require_fast_isnumeric(), 1);
   var { BADNUM: BADNUM13 } = numerical_default;
-  var { isArrayOrTypedArray: isArrayOrTypedArray10, _: _3 } = lib_default;
+  function isNonBlankString(v) {
+    return v && typeof v === "string";
+  }
+  function calc5(gd, trace) {
+    var len2 = trace._length;
+    var calcTrace = new Array(len2);
+    var isValidLoc;
+    if (trace.geojson) {
+      isValidLoc = function(v) {
+        return isNonBlankString(v) || (0, import_fast_isnumeric39.default)(v);
+      };
+    } else {
+      isValidLoc = isNonBlankString;
+    }
+    for (var i = 0; i < len2; i++) {
+      var calcPt = calcTrace[i] = {};
+      var loc = trace.locations[i];
+      var z = trace.z[i];
+      if (isValidLoc(loc) && (0, import_fast_isnumeric39.default)(z)) {
+        calcPt.loc = loc;
+        calcPt.z = z;
+      } else {
+        calcPt.loc = null;
+        calcPt.z = BADNUM13;
+      }
+      calcPt.index = i;
+    }
+    arraysToCalcdata(calcTrace, trace);
+    calc(gd, trace, {
+      vals: trace.z,
+      containerStr: "",
+      cLetter: "z"
+    });
+    calcSelection(calcTrace, trace);
+    return calcTrace;
+  }
 
-  // src/traces/scattergeo/plot.js
+  // src/traces/choropleth/plot.js
   var import_d341 = __toESM(require_d3(), 1);
-
-  // src/plots/geo/constants.js
-  var projNames = {
-    airy: "airy",
-    aitoff: "aitoff",
-    "albers usa": "albersUsa",
-    albers: "albers",
-    // 'armadillo': 'armadillo',
-    august: "august",
-    "azimuthal equal area": "azimuthalEqualArea",
-    "azimuthal equidistant": "azimuthalEquidistant",
-    baker: "baker",
-    // 'berghaus': 'berghaus',
-    bertin1953: "bertin1953",
-    boggs: "boggs",
-    bonne: "bonne",
-    bottomley: "bottomley",
-    bromley: "bromley",
-    // 'chamberlin africa': 'chamberlinAfrica',
-    // 'chamberlin': 'chamberlin',
-    collignon: "collignon",
-    "conic conformal": "conicConformal",
-    "conic equal area": "conicEqualArea",
-    "conic equidistant": "conicEquidistant",
-    craig: "craig",
-    craster: "craster",
-    "cylindrical equal area": "cylindricalEqualArea",
-    "cylindrical stereographic": "cylindricalStereographic",
-    eckert1: "eckert1",
-    eckert2: "eckert2",
-    eckert3: "eckert3",
-    eckert4: "eckert4",
-    eckert5: "eckert5",
-    eckert6: "eckert6",
-    eisenlohr: "eisenlohr",
-    "equal earth": "equalEarth",
-    equirectangular: "equirectangular",
-    fahey: "fahey",
-    "foucaut sinusoidal": "foucautSinusoidal",
-    foucaut: "foucaut",
-    // 'gilbert': 'gilbert',
-    // 'gingery': 'gingery',
-    ginzburg4: "ginzburg4",
-    ginzburg5: "ginzburg5",
-    ginzburg6: "ginzburg6",
-    ginzburg8: "ginzburg8",
-    ginzburg9: "ginzburg9",
-    gnomonic: "gnomonic",
-    "gringorten quincuncial": "gringortenQuincuncial",
-    gringorten: "gringorten",
-    guyou: "guyou",
-    // 'hammer retroazimuthal': 'hammerRetroazimuthal',
-    hammer: "hammer",
-    // 'healpix': 'healpix',
-    hill: "hill",
-    homolosine: "homolosine",
-    hufnagel: "hufnagel",
-    hyperelliptical: "hyperelliptical",
-    // 'interrupted boggs': 'interruptedBoggs',
-    // 'interrupted homolosine': 'interruptedHomolosine',
-    // 'interrupted mollweide hemispheres': 'interruptedMollweideHemispheres',
-    // 'interrupted mollweide': 'interruptedMollweide',
-    // 'interrupted quartic authalic': 'interruptedQuarticAuthalic',
-    // 'interrupted sinu mollweide': 'interruptedSinuMollweide',
-    // 'interrupted sinusoidal': 'interruptedSinusoidal',
-    kavrayskiy7: "kavrayskiy7",
-    lagrange: "lagrange",
-    larrivee: "larrivee",
-    laskowski: "laskowski",
-    // 'littrow': 'littrow',
-    loximuthal: "loximuthal",
-    mercator: "mercator",
-    miller: "miller",
-    // 'modified stereographic alaska': 'modifiedStereographicAlaska',
-    // 'modified stereographic gs48': 'modifiedStereographicGs48',
-    // 'modified stereographic gs50': 'modifiedStereographicGs50',
-    // 'modified stereographic lee': 'modifiedStereographicLee',
-    // 'modified stereographic miller': 'modifiedStereographicMiller',
-    // 'modified stereographic': 'modifiedStereographic',
-    mollweide: "mollweide",
-    "mt flat polar parabolic": "mtFlatPolarParabolic",
-    "mt flat polar quartic": "mtFlatPolarQuartic",
-    "mt flat polar sinusoidal": "mtFlatPolarSinusoidal",
-    "natural earth": "naturalEarth",
-    "natural earth1": "naturalEarth1",
-    "natural earth2": "naturalEarth2",
-    "nell hammer": "nellHammer",
-    nicolosi: "nicolosi",
-    orthographic: "orthographic",
-    patterson: "patterson",
-    "peirce quincuncial": "peirceQuincuncial",
-    polyconic: "polyconic",
-    // 'polyhedral butterfly': 'polyhedralButterfly',
-    // 'polyhedral collignon': 'polyhedralCollignon',
-    // 'polyhedral waterman': 'polyhedralWaterman',
-    "rectangular polyconic": "rectangularPolyconic",
-    robinson: "robinson",
-    satellite: "satellite",
-    "sinu mollweide": "sinuMollweide",
-    sinusoidal: "sinusoidal",
-    stereographic: "stereographic",
-    times: "times",
-    "transverse mercator": "transverseMercator",
-    // 'two point azimuthalUsa': 'twoPointAzimuthalUsa',
-    // 'two point azimuthal': 'twoPointAzimuthal',
-    // 'two point equidistantUsa': 'twoPointEquidistantUsa',
-    // 'two point equidistant': 'twoPointEquidistant',
-    "van der grinten": "vanDerGrinten",
-    "van der grinten2": "vanDerGrinten2",
-    "van der grinten3": "vanDerGrinten3",
-    "van der grinten4": "vanDerGrinten4",
-    wagner4: "wagner4",
-    wagner6: "wagner6",
-    // 'wagner7': 'wagner7',
-    // 'wagner': 'wagner',
-    wiechel: "wiechel",
-    "winkel tripel": "winkel3",
-    winkel3: "winkel3"
-  };
-  var axesNames = ["lonaxis", "lataxis"];
-  var lonaxisSpan = {
-    orthographic: 180,
-    "azimuthal equal area": 360,
-    "azimuthal equidistant": 360,
-    "conic conformal": 180,
-    gnomonic: 160,
-    stereographic: 180,
-    "transverse mercator": 180,
-    "*": 360
-  };
-  var lataxisSpan = {
-    "conic conformal": 150,
-    stereographic: 179.5,
-    "*": 180
-  };
-  var scopeDefaults = {
-    world: {
-      lonaxisRange: [-180, 180],
-      lataxisRange: [-90, 90],
-      projType: "equirectangular",
-      projRotate: [0, 0, 0]
-    },
-    usa: {
-      lonaxisRange: [-180, -50],
-      lataxisRange: [15, 80],
-      projType: "albers usa"
-    },
-    europe: {
-      lonaxisRange: [-30, 60],
-      lataxisRange: [30, 85],
-      projType: "conic conformal",
-      projRotate: [15, 0, 0],
-      projParallels: [0, 60]
-    },
-    asia: {
-      lonaxisRange: [22, 160],
-      lataxisRange: [-15, 55],
-      projType: "mercator",
-      projRotate: [0, 0, 0]
-    },
-    africa: {
-      lonaxisRange: [-30, 60],
-      lataxisRange: [-40, 40],
-      projType: "mercator",
-      projRotate: [0, 0, 0]
-    },
-    "north america": {
-      lonaxisRange: [-180, -45],
-      lataxisRange: [5, 85],
-      projType: "conic conformal",
-      projRotate: [-100, 0, 0],
-      projParallels: [29.5, 45.5]
-    },
-    "south america": {
-      lonaxisRange: [-100, -30],
-      lataxisRange: [-60, 15],
-      projType: "mercator",
-      projRotate: [0, 0, 0]
-    },
-    antarctica: {
-      lonaxisRange: [-180, 180],
-      lataxisRange: [-90, -60],
-      projType: "equirectangular",
-      projRotate: [0, 0, 0]
-    },
-    oceania: {
-      lonaxisRange: [-180, 180],
-      lataxisRange: [-50, 25],
-      projType: "equirectangular",
-      projRotate: [0, 0, 0]
-    }
-  };
-  var clipPad = 1e-3;
-  var precision = 0.1;
-  var landColor = "#F0DC82";
-  var waterColor = "#3399FF";
-  var locationmodeToLayer = {
-    "ISO-3": "countries",
-    "USA-states": "subunits",
-    "country names": "countries"
-  };
-  var sphereSVG = { type: "Sphere" };
-  var fillLayers = {
-    ocean: 1,
-    land: 1,
-    lakes: 1
-  };
-  var lineLayers = {
-    subunits: 1,
-    countries: 1,
-    coastlines: 1,
-    rivers: 1,
-    frame: 1
-  };
-  var layers = [
-    "bg",
-    "ocean",
-    "land",
-    "lakes",
-    "subunits",
-    "countries",
-    "coastlines",
-    "rivers",
-    "lataxis",
-    "lonaxis",
-    "frame",
-    "backplot",
-    "frontplot"
-  ];
-  var layersForChoropleth = [
-    "bg",
-    "ocean",
-    "land",
-    "subunits",
-    "countries",
-    "coastlines",
-    "lataxis",
-    "lonaxis",
-    "frame",
-    "backplot",
-    "rivers",
-    "lakes",
-    "frontplot"
-  ];
-  var layerNameToAdjective = {
-    ocean: "ocean",
-    land: "land",
-    lakes: "lake",
-    subunits: "subunit",
-    countries: "country",
-    coastlines: "coastline",
-    rivers: "river",
-    frame: "frame"
-  };
-  var constants_default14 = { projNames, axesNames, lonaxisSpan, lataxisSpan, scopeDefaults, clipPad, precision, landColor, waterColor, locationmodeToLayer, sphereSVG, fillLayers, lineLayers, layers, layersForChoropleth, layerNameToAdjective };
-
-  // node_modules/.pnpm/topojson-client@3.1.0/node_modules/topojson-client/src/identity.js
-  function identity_default2(x) {
-    return x;
-  }
-
-  // node_modules/.pnpm/topojson-client@3.1.0/node_modules/topojson-client/src/transform.js
-  function transform_default(transform) {
-    if (transform == null) return identity_default2;
-    var x07, y07, kx2 = transform.scale[0], ky = transform.scale[1], dx = transform.translate[0], dy = transform.translate[1];
-    return function(input, i) {
-      if (!i) x07 = y07 = 0;
-      var j = 2, n = input.length, output = new Array(n);
-      output[0] = (x07 += input[0]) * kx2 + dx;
-      output[1] = (y07 += input[1]) * ky + dy;
-      while (j < n) output[j] = input[j], ++j;
-      return output;
-    };
-  }
-
-  // node_modules/.pnpm/topojson-client@3.1.0/node_modules/topojson-client/src/reverse.js
-  function reverse_default(array2, n) {
-    var t, j = array2.length, i = j - n;
-    while (i < --j) t = array2[i], array2[i++] = array2[j], array2[j] = t;
-  }
-
-  // node_modules/.pnpm/topojson-client@3.1.0/node_modules/topojson-client/src/feature.js
-  function feature_default(topology, o) {
-    if (typeof o === "string") o = topology.objects[o];
-    return o.type === "GeometryCollection" ? { type: "FeatureCollection", features: o.geometries.map(function(o2) {
-      return feature(topology, o2);
-    }) } : feature(topology, o);
-  }
-  function feature(topology, o) {
-    var id = o.id, bbox2 = o.bbox, properties = o.properties == null ? {} : o.properties, geometry = object(topology, o);
-    return id == null && bbox2 == null ? { type: "Feature", properties, geometry } : bbox2 == null ? { type: "Feature", id, properties, geometry } : { type: "Feature", id, bbox: bbox2, properties, geometry };
-  }
-  function object(topology, o) {
-    var transformPoint = transform_default(topology.transform), arcs = topology.arcs;
-    function arc(i, points2) {
-      if (points2.length) points2.pop();
-      for (var a = arcs[i < 0 ? ~i : i], k2 = 0, n = a.length; k2 < n; ++k2) {
-        points2.push(transformPoint(a[k2], k2));
-      }
-      if (i < 0) reverse_default(points2, n);
-    }
-    function point2(p) {
-      return transformPoint(p);
-    }
-    function line(arcs2) {
-      var points2 = [];
-      for (var i = 0, n = arcs2.length; i < n; ++i) arc(arcs2[i], points2);
-      if (points2.length < 2) points2.push(points2[0]);
-      return points2;
-    }
-    function ring(arcs2) {
-      var points2 = line(arcs2);
-      while (points2.length < 4) points2.push(points2[0]);
-      return points2;
-    }
-    function polygon2(arcs2) {
-      return arcs2.map(ring);
-    }
-    function geometry(o2) {
-      var type = o2.type, coordinates2;
-      switch (type) {
-        case "GeometryCollection":
-          return { type, geometries: o2.geometries.map(geometry) };
-        case "Point":
-          coordinates2 = point2(o2.coordinates);
-          break;
-        case "MultiPoint":
-          coordinates2 = o2.coordinates.map(point2);
-          break;
-        case "LineString":
-          coordinates2 = line(o2.arcs);
-          break;
-        case "MultiLineString":
-          coordinates2 = o2.arcs.map(line);
-          break;
-        case "Polygon":
-          coordinates2 = polygon2(o2.arcs);
-          break;
-        case "MultiPolygon":
-          coordinates2 = o2.arcs.map(polygon2);
-          break;
-        default:
-          return null;
-      }
-      return { type, coordinates: coordinates2 };
-    }
-    return geometry(o);
-  }
-
-  // src/lib/topojson_utils.js
-  var topojsonUtils = {};
-  topojsonUtils.getTopojsonName = function(geoLayout) {
-    return [
-      geoLayout.scope.replace(/ /g, "-"),
-      "_",
-      geoLayout.resolution.toString(),
-      "m"
-    ].join("");
-  };
-  topojsonUtils.getTopojsonPath = function(topojsonURL, topojsonName) {
-    topojsonURL += topojsonURL.endsWith("/") ? "" : "/";
-    return `${topojsonURL}${topojsonName}.json`;
-  };
-  topojsonUtils.getTopojsonFeatures = function(trace, topojson) {
-    var layer = locationmodeToLayer[trace.locationmode];
-    var obj = topojson.objects[layer];
-    return feature_default(topojson, obj).features;
-  };
-  var topojson_utils_default = topojsonUtils;
-
-  // src/lib/geojson_utils.js
-  var { BADNUM: BADNUM14 } = numerical_default;
-  var calcTraceToLineCoords = function(calcTrace) {
-    var trace = calcTrace[0].trace;
-    var connectgaps = trace.connectgaps;
-    var coords = [];
-    var lineString = [];
-    for (var i = 0; i < calcTrace.length; i++) {
-      var calcPt = calcTrace[i];
-      var lonlat = calcPt.lonlat;
-      if (lonlat[0] !== BADNUM14) {
-        lineString.push(lonlat);
-      } else if (!connectgaps && lineString.length > 0) {
-        coords.push(lineString);
-        lineString = [];
-      }
-    }
-    if (lineString.length > 0) {
-      coords.push(lineString);
-    }
-    return coords;
-  };
-  var makeLine = function(coords) {
-    if (coords.length === 1) {
-      return {
-        type: "LineString",
-        coordinates: coords[0]
-      };
-    } else {
-      return {
-        type: "MultiLineString",
-        coordinates: coords
-      };
-    }
-  };
-  var makePolygon = function(coords) {
-    if (coords.length === 1) {
-      return {
-        type: "Polygon",
-        coordinates: coords
-      };
-    } else {
-      var _coords = new Array(coords.length);
-      for (var i = 0; i < coords.length; i++) {
-        _coords[i] = [coords[i]];
-      }
-      return {
-        type: "MultiPolygon",
-        coordinates: _coords
-      };
-    }
-  };
-  var makeBlank = function() {
-    return {
-      type: "Point",
-      coordinates: []
-    };
-  };
-  var geojson_utils_default = { calcTraceToLineCoords, makeLine, makePolygon, makeBlank };
 
   // src/lib/geo_location_utils.js
   var import_d339 = __toESM(require_d3(), 1);
@@ -58765,7 +58515,7 @@ var Plotly = (() => {
     radians: 1,
     yards: earthRadius * 1.0936
   };
-  function feature2(geom, properties, options = {}) {
+  function feature(geom, properties, options = {}) {
     const feat = { type: "Feature" };
     if (options.id === 0 || options.id) {
       feat.id = options.id;
@@ -58794,7 +58544,7 @@ var Plotly = (() => {
       type: "Point",
       coordinates: coordinates2
     };
-    return feature2(geom, properties, options);
+    return feature(geom, properties, options);
   }
   function isNumber(num) {
     return !isNaN(num) && num !== null && !Array.isArray(num);
@@ -59408,97 +59158,449 @@ var Plotly = (() => {
     computeBbox
   };
 
-  // src/traces/scattergeo/style.js
+  // src/plots/geo/constants.js
+  var projNames = {
+    airy: "airy",
+    aitoff: "aitoff",
+    "albers usa": "albersUsa",
+    albers: "albers",
+    // 'armadillo': 'armadillo',
+    august: "august",
+    "azimuthal equal area": "azimuthalEqualArea",
+    "azimuthal equidistant": "azimuthalEquidistant",
+    baker: "baker",
+    // 'berghaus': 'berghaus',
+    bertin1953: "bertin1953",
+    boggs: "boggs",
+    bonne: "bonne",
+    bottomley: "bottomley",
+    bromley: "bromley",
+    // 'chamberlin africa': 'chamberlinAfrica',
+    // 'chamberlin': 'chamberlin',
+    collignon: "collignon",
+    "conic conformal": "conicConformal",
+    "conic equal area": "conicEqualArea",
+    "conic equidistant": "conicEquidistant",
+    craig: "craig",
+    craster: "craster",
+    "cylindrical equal area": "cylindricalEqualArea",
+    "cylindrical stereographic": "cylindricalStereographic",
+    eckert1: "eckert1",
+    eckert2: "eckert2",
+    eckert3: "eckert3",
+    eckert4: "eckert4",
+    eckert5: "eckert5",
+    eckert6: "eckert6",
+    eisenlohr: "eisenlohr",
+    "equal earth": "equalEarth",
+    equirectangular: "equirectangular",
+    fahey: "fahey",
+    "foucaut sinusoidal": "foucautSinusoidal",
+    foucaut: "foucaut",
+    // 'gilbert': 'gilbert',
+    // 'gingery': 'gingery',
+    ginzburg4: "ginzburg4",
+    ginzburg5: "ginzburg5",
+    ginzburg6: "ginzburg6",
+    ginzburg8: "ginzburg8",
+    ginzburg9: "ginzburg9",
+    gnomonic: "gnomonic",
+    "gringorten quincuncial": "gringortenQuincuncial",
+    gringorten: "gringorten",
+    guyou: "guyou",
+    // 'hammer retroazimuthal': 'hammerRetroazimuthal',
+    hammer: "hammer",
+    // 'healpix': 'healpix',
+    hill: "hill",
+    homolosine: "homolosine",
+    hufnagel: "hufnagel",
+    hyperelliptical: "hyperelliptical",
+    // 'interrupted boggs': 'interruptedBoggs',
+    // 'interrupted homolosine': 'interruptedHomolosine',
+    // 'interrupted mollweide hemispheres': 'interruptedMollweideHemispheres',
+    // 'interrupted mollweide': 'interruptedMollweide',
+    // 'interrupted quartic authalic': 'interruptedQuarticAuthalic',
+    // 'interrupted sinu mollweide': 'interruptedSinuMollweide',
+    // 'interrupted sinusoidal': 'interruptedSinusoidal',
+    kavrayskiy7: "kavrayskiy7",
+    lagrange: "lagrange",
+    larrivee: "larrivee",
+    laskowski: "laskowski",
+    // 'littrow': 'littrow',
+    loximuthal: "loximuthal",
+    mercator: "mercator",
+    miller: "miller",
+    // 'modified stereographic alaska': 'modifiedStereographicAlaska',
+    // 'modified stereographic gs48': 'modifiedStereographicGs48',
+    // 'modified stereographic gs50': 'modifiedStereographicGs50',
+    // 'modified stereographic lee': 'modifiedStereographicLee',
+    // 'modified stereographic miller': 'modifiedStereographicMiller',
+    // 'modified stereographic': 'modifiedStereographic',
+    mollweide: "mollweide",
+    "mt flat polar parabolic": "mtFlatPolarParabolic",
+    "mt flat polar quartic": "mtFlatPolarQuartic",
+    "mt flat polar sinusoidal": "mtFlatPolarSinusoidal",
+    "natural earth": "naturalEarth",
+    "natural earth1": "naturalEarth1",
+    "natural earth2": "naturalEarth2",
+    "nell hammer": "nellHammer",
+    nicolosi: "nicolosi",
+    orthographic: "orthographic",
+    patterson: "patterson",
+    "peirce quincuncial": "peirceQuincuncial",
+    polyconic: "polyconic",
+    // 'polyhedral butterfly': 'polyhedralButterfly',
+    // 'polyhedral collignon': 'polyhedralCollignon',
+    // 'polyhedral waterman': 'polyhedralWaterman',
+    "rectangular polyconic": "rectangularPolyconic",
+    robinson: "robinson",
+    satellite: "satellite",
+    "sinu mollweide": "sinuMollweide",
+    sinusoidal: "sinusoidal",
+    stereographic: "stereographic",
+    times: "times",
+    "transverse mercator": "transverseMercator",
+    // 'two point azimuthalUsa': 'twoPointAzimuthalUsa',
+    // 'two point azimuthal': 'twoPointAzimuthal',
+    // 'two point equidistantUsa': 'twoPointEquidistantUsa',
+    // 'two point equidistant': 'twoPointEquidistant',
+    "van der grinten": "vanDerGrinten",
+    "van der grinten2": "vanDerGrinten2",
+    "van der grinten3": "vanDerGrinten3",
+    "van der grinten4": "vanDerGrinten4",
+    wagner4: "wagner4",
+    wagner6: "wagner6",
+    // 'wagner7': 'wagner7',
+    // 'wagner': 'wagner',
+    wiechel: "wiechel",
+    "winkel tripel": "winkel3",
+    winkel3: "winkel3"
+  };
+  var axesNames = ["lonaxis", "lataxis"];
+  var lonaxisSpan = {
+    orthographic: 180,
+    "azimuthal equal area": 360,
+    "azimuthal equidistant": 360,
+    "conic conformal": 180,
+    gnomonic: 160,
+    stereographic: 180,
+    "transverse mercator": 180,
+    "*": 360
+  };
+  var lataxisSpan = {
+    "conic conformal": 150,
+    stereographic: 179.5,
+    "*": 180
+  };
+  var scopeDefaults = {
+    world: {
+      lonaxisRange: [-180, 180],
+      lataxisRange: [-90, 90],
+      projType: "equirectangular",
+      projRotate: [0, 0, 0]
+    },
+    usa: {
+      lonaxisRange: [-180, -50],
+      lataxisRange: [15, 80],
+      projType: "albers usa"
+    },
+    europe: {
+      lonaxisRange: [-30, 60],
+      lataxisRange: [30, 85],
+      projType: "conic conformal",
+      projRotate: [15, 0, 0],
+      projParallels: [0, 60]
+    },
+    asia: {
+      lonaxisRange: [22, 160],
+      lataxisRange: [-15, 55],
+      projType: "mercator",
+      projRotate: [0, 0, 0]
+    },
+    africa: {
+      lonaxisRange: [-30, 60],
+      lataxisRange: [-40, 40],
+      projType: "mercator",
+      projRotate: [0, 0, 0]
+    },
+    "north america": {
+      lonaxisRange: [-180, -45],
+      lataxisRange: [5, 85],
+      projType: "conic conformal",
+      projRotate: [-100, 0, 0],
+      projParallels: [29.5, 45.5]
+    },
+    "south america": {
+      lonaxisRange: [-100, -30],
+      lataxisRange: [-60, 15],
+      projType: "mercator",
+      projRotate: [0, 0, 0]
+    },
+    antarctica: {
+      lonaxisRange: [-180, 180],
+      lataxisRange: [-90, -60],
+      projType: "equirectangular",
+      projRotate: [0, 0, 0]
+    },
+    oceania: {
+      lonaxisRange: [-180, 180],
+      lataxisRange: [-50, 25],
+      projType: "equirectangular",
+      projRotate: [0, 0, 0]
+    }
+  };
+  var clipPad = 1e-3;
+  var precision = 0.1;
+  var landColor = "#F0DC82";
+  var waterColor = "#3399FF";
+  var locationmodeToLayer = {
+    "ISO-3": "countries",
+    "USA-states": "subunits",
+    "country names": "countries"
+  };
+  var sphereSVG = { type: "Sphere" };
+  var fillLayers = {
+    ocean: 1,
+    land: 1,
+    lakes: 1
+  };
+  var lineLayers = {
+    subunits: 1,
+    countries: 1,
+    coastlines: 1,
+    rivers: 1,
+    frame: 1
+  };
+  var layers = [
+    "bg",
+    "ocean",
+    "land",
+    "lakes",
+    "subunits",
+    "countries",
+    "coastlines",
+    "rivers",
+    "lataxis",
+    "lonaxis",
+    "frame",
+    "backplot",
+    "frontplot"
+  ];
+  var layersForChoropleth = [
+    "bg",
+    "ocean",
+    "land",
+    "subunits",
+    "countries",
+    "coastlines",
+    "lataxis",
+    "lonaxis",
+    "frame",
+    "backplot",
+    "rivers",
+    "lakes",
+    "frontplot"
+  ];
+  var layerNameToAdjective = {
+    ocean: "ocean",
+    land: "land",
+    lakes: "lake",
+    subunits: "subunit",
+    countries: "country",
+    coastlines: "coastline",
+    rivers: "river",
+    frame: "frame"
+  };
+  var constants_default14 = { projNames, axesNames, lonaxisSpan, lataxisSpan, scopeDefaults, clipPad, precision, landColor, waterColor, locationmodeToLayer, sphereSVG, fillLayers, lineLayers, layers, layersForChoropleth, layerNameToAdjective };
+
+  // node_modules/.pnpm/topojson-client@3.1.0/node_modules/topojson-client/src/identity.js
+  function identity_default2(x) {
+    return x;
+  }
+
+  // node_modules/.pnpm/topojson-client@3.1.0/node_modules/topojson-client/src/transform.js
+  function transform_default(transform) {
+    if (transform == null) return identity_default2;
+    var x07, y07, kx2 = transform.scale[0], ky = transform.scale[1], dx = transform.translate[0], dy = transform.translate[1];
+    return function(input, i) {
+      if (!i) x07 = y07 = 0;
+      var j = 2, n = input.length, output = new Array(n);
+      output[0] = (x07 += input[0]) * kx2 + dx;
+      output[1] = (y07 += input[1]) * ky + dy;
+      while (j < n) output[j] = input[j], ++j;
+      return output;
+    };
+  }
+
+  // node_modules/.pnpm/topojson-client@3.1.0/node_modules/topojson-client/src/reverse.js
+  function reverse_default(array2, n) {
+    var t, j = array2.length, i = j - n;
+    while (i < --j) t = array2[i], array2[i++] = array2[j], array2[j] = t;
+  }
+
+  // node_modules/.pnpm/topojson-client@3.1.0/node_modules/topojson-client/src/feature.js
+  function feature_default(topology, o) {
+    if (typeof o === "string") o = topology.objects[o];
+    return o.type === "GeometryCollection" ? { type: "FeatureCollection", features: o.geometries.map(function(o2) {
+      return feature2(topology, o2);
+    }) } : feature2(topology, o);
+  }
+  function feature2(topology, o) {
+    var id = o.id, bbox2 = o.bbox, properties = o.properties == null ? {} : o.properties, geometry = object(topology, o);
+    return id == null && bbox2 == null ? { type: "Feature", properties, geometry } : bbox2 == null ? { type: "Feature", id, properties, geometry } : { type: "Feature", id, bbox: bbox2, properties, geometry };
+  }
+  function object(topology, o) {
+    var transformPoint = transform_default(topology.transform), arcs = topology.arcs;
+    function arc(i, points2) {
+      if (points2.length) points2.pop();
+      for (var a = arcs[i < 0 ? ~i : i], k2 = 0, n = a.length; k2 < n; ++k2) {
+        points2.push(transformPoint(a[k2], k2));
+      }
+      if (i < 0) reverse_default(points2, n);
+    }
+    function point2(p) {
+      return transformPoint(p);
+    }
+    function line(arcs2) {
+      var points2 = [];
+      for (var i = 0, n = arcs2.length; i < n; ++i) arc(arcs2[i], points2);
+      if (points2.length < 2) points2.push(points2[0]);
+      return points2;
+    }
+    function ring(arcs2) {
+      var points2 = line(arcs2);
+      while (points2.length < 4) points2.push(points2[0]);
+      return points2;
+    }
+    function polygon2(arcs2) {
+      return arcs2.map(ring);
+    }
+    function geometry(o2) {
+      var type = o2.type, coordinates2;
+      switch (type) {
+        case "GeometryCollection":
+          return { type, geometries: o2.geometries.map(geometry) };
+        case "Point":
+          coordinates2 = point2(o2.coordinates);
+          break;
+        case "MultiPoint":
+          coordinates2 = o2.coordinates.map(point2);
+          break;
+        case "LineString":
+          coordinates2 = line(o2.arcs);
+          break;
+        case "MultiLineString":
+          coordinates2 = o2.arcs.map(line);
+          break;
+        case "Polygon":
+          coordinates2 = polygon2(o2.arcs);
+          break;
+        case "MultiPolygon":
+          coordinates2 = o2.arcs.map(polygon2);
+          break;
+        default:
+          return null;
+      }
+      return { type, coordinates: coordinates2 };
+    }
+    return geometry(o);
+  }
+
+  // src/lib/topojson_utils.js
+  var topojsonUtils = {};
+  topojsonUtils.getTopojsonName = function(geoLayout) {
+    return [
+      geoLayout.scope.replace(/ /g, "-"),
+      "_",
+      geoLayout.resolution.toString(),
+      "m"
+    ].join("");
+  };
+  topojsonUtils.getTopojsonPath = function(topojsonURL, topojsonName) {
+    topojsonURL += topojsonURL.endsWith("/") ? "" : "/";
+    return `${topojsonURL}${topojsonName}.json`;
+  };
+  topojsonUtils.getTopojsonFeatures = function(trace, topojson) {
+    var layer = locationmodeToLayer[trace.locationmode];
+    var obj = topojson.objects[layer];
+    return feature_default(topojson, obj).features;
+  };
+  var topojson_utils_default = topojsonUtils;
+
+  // src/traces/choropleth/style.js
   var import_d340 = __toESM(require_d3(), 1);
-  var stylePoints2 = style_default.stylePoints;
-  var styleText2 = style_default.styleText;
   function style4(gd, calcTrace) {
     if (calcTrace) styleTrace(gd, calcTrace);
   }
   function styleTrace(gd, calcTrace) {
     var trace = calcTrace[0].trace;
     var s = calcTrace[0].node3;
-    s.style("opacity", calcTrace[0].trace.opacity);
-    stylePoints2(s, trace, gd);
-    styleText2(s, trace, gd);
-    s.selectAll("path.js-line").style("fill", "none").each(function(d) {
-      var path = import_d340.default.select(this);
-      var trace2 = d.trace;
-      var line = trace2.line || {};
-      path.call(color_default.stroke, line.color).call(drawing_default.dashLine, line.dash || "", line.width || 0);
-      if (trace2.fill !== "none") {
-        path.call(color_default.fill, trace2.fillcolor);
-      }
+    var locs = s.selectAll(".choroplethlocation");
+    var marker = trace.marker || {};
+    var markerLine = marker.line || {};
+    var sclFunc = colorscale_default.makeColorScaleFuncFromTrace(trace);
+    locs.each(function(d) {
+      import_d340.default.select(this).attr("fill", sclFunc(d.z)).call(color_default.stroke, d.mlc || markerLine.color).call(drawing_default.dashLine, "", d.mlw || markerLine.width || 0).style("opacity", marker.opacity);
     });
+    drawing_default.selectedPointStyle(locs, trace);
   }
+  function styleOnSelect2(gd, calcTrace) {
+    var s = calcTrace[0].node3;
+    var trace = calcTrace[0].trace;
+    if (trace.selectedpoints) {
+      drawing_default.selectedPointStyle(s.selectAll(".choroplethlocation"), trace);
+    } else {
+      styleTrace(gd, calcTrace);
+    }
+  }
+  var style_default2 = {
+    style: style4,
+    styleOnSelect: styleOnSelect2
+  };
 
-  // src/traces/scattergeo/plot.js
+  // src/traces/choropleth/plot.js
   var { getTopojsonFeatures } = topojson_utils_default;
   var { findExtremes: findExtremes2 } = autorange_default;
-  var { BADNUM: BADNUM15 } = numerical_default;
-  var { calcMarkerSize: calcMarkerSize2 } = calc_default;
+  var { style: style5 } = style_default2;
   function plot4(gd, geo, calcData) {
-    var scatterLayer = geo.layers.frontplot.select(".scatterlayer");
-    var gTraces = lib_default.makeTraceGroups(scatterLayer, calcData, "trace scattergeo");
-    function removeBADNUM(d, node) {
-      if (d.lonlat[0] === BADNUM15) {
-        import_d341.default.select(node).remove();
-      }
-    }
-    gTraces.selectAll("*").remove();
-    gTraces.each(function(calcTrace) {
-      var s = import_d341.default.select(this);
-      var trace = calcTrace[0].trace;
-      if (subtypes_default.hasLines(trace) || trace.fill !== "none") {
-        var lineCoords = geojson_utils_default.calcTraceToLineCoords(calcTrace);
-        var lineData = trace.fill !== "none" ? geojson_utils_default.makePolygon(lineCoords) : geojson_utils_default.makeLine(lineCoords);
-        s.selectAll("path.js-line").data([{ geojson: lineData, trace }]).enter().append("path").classed("js-line", true).style("stroke-miterlimit", 2);
-      }
-      if (subtypes_default.hasMarkers(trace)) {
-        s.selectAll("path.point").data(lib_default.identity).enter().append("path").classed("point", true).each(function(calcPt) {
-          removeBADNUM(calcPt, this);
-        });
-      }
-      if (subtypes_default.hasText(trace)) {
-        s.selectAll("g").data(lib_default.identity).enter().append("g").append("text").each(function(calcPt) {
-          removeBADNUM(calcPt, this);
-        });
-      }
-      style4(gd, calcTrace);
+    var choroplethLayer = geo.layers.backplot.select(".choroplethlayer");
+    lib_default.makeTraceGroups(choroplethLayer, calcData, "trace choropleth").each(function(calcTrace) {
+      var sel = import_d341.default.select(this);
+      var paths = sel.selectAll("path.choroplethlocation").data(lib_default.identity);
+      paths.enter().append("path").classed("choroplethlocation", true);
+      paths.exit().remove();
+      style5(gd, calcTrace);
     });
   }
   function calcGeoJSON(calcTrace, fullLayout) {
     var trace = calcTrace[0].trace;
     var geoLayout = fullLayout[trace.geo];
     var geo = geoLayout._subplot;
+    var locationmode = trace.locationmode;
     var len2 = trace._length;
-    var i, calcPt;
-    if (lib_default.isArrayOrTypedArray(trace.locations)) {
-      var locationmode = trace.locationmode;
-      var features = locationmode === "geojson-id" ? geo_location_utils_default.extractTraceFeature(calcTrace) : getTopojsonFeatures(trace, geo.topojson);
-      for (i = 0; i < len2; i++) {
-        calcPt = calcTrace[i];
-        var feature3 = locationmode === "geojson-id" ? calcPt.fOut : geo_location_utils_default.locationToFeature(locationmode, calcPt.loc, features);
-        calcPt.lonlat = feature3 ? feature3.properties.ct : [BADNUM15, BADNUM15];
+    var features = locationmode === "geojson-id" ? geo_location_utils_default.extractTraceFeature(calcTrace) : getTopojsonFeatures(trace, geo.topojson);
+    var lonArray = [];
+    var latArray = [];
+    for (var i = 0; i < len2; i++) {
+      var calcPt = calcTrace[i];
+      var feature3 = locationmode === "geojson-id" ? calcPt.fOut : geo_location_utils_default.locationToFeature(locationmode, calcPt.loc, features);
+      if (feature3) {
+        calcPt.geojson = feature3;
+        calcPt.ct = feature3.properties.ct;
+        calcPt._polygons = geo_location_utils_default.feature2polygons(feature3);
+        var bboxFeature = geo_location_utils_default.computeBbox(feature3);
+        lonArray.push(bboxFeature[0], bboxFeature[2]);
+        latArray.push(bboxFeature[1], bboxFeature[3]);
+      } else {
+        calcPt.geojson = null;
       }
     }
-    var opts = { padded: true };
-    var lonArray;
-    var latArray;
-    if (geoLayout.fitbounds === "geojson" && trace.locationmode === "geojson-id") {
+    if (geoLayout.fitbounds === "geojson" && locationmode === "geojson-id") {
       var bboxGeojson = geo_location_utils_default.computeBbox(geo_location_utils_default.getTraceGeojson(trace));
       lonArray = [bboxGeojson[0], bboxGeojson[2]];
       latArray = [bboxGeojson[1], bboxGeojson[3]];
-    } else {
-      lonArray = new Array(len2);
-      latArray = new Array(len2);
-      for (i = 0; i < len2; i++) {
-        calcPt = calcTrace[i];
-        lonArray[i] = calcPt.lonlat[0];
-        latArray[i] = calcPt.lonlat[1];
-      }
-      opts.ppad = calcMarkerSize2(trace, len2);
     }
+    var opts = { padded: true };
     trace._extremes.lon = findExtremes2(geoLayout.lonaxis._ax, lonArray, opts);
     trace._extremes.lat = findExtremes2(geoLayout.lataxis._ax, latArray, opts);
   }
@@ -59507,12 +59609,111 @@ var Plotly = (() => {
     plot: plot4
   };
 
-  // src/traces/scattergeo/hover.js
-  var { BADNUM: BADNUM16 } = numerical_default;
+  // src/traces/choropleth/hover.js
   var { fillText: fillText2 } = lib_default;
+  function hoverPoints2(pointData, xval, yval) {
+    var cd = pointData.cd;
+    var trace = cd[0].trace;
+    var geo = pointData.subplot;
+    var pt, i, j, isInside;
+    var xy = [xval, yval];
+    var altXy = [xval + 360, yval];
+    for (i = 0; i < cd.length; i++) {
+      pt = cd[i];
+      isInside = false;
+      if (pt._polygons) {
+        for (j = 0; j < pt._polygons.length; j++) {
+          if (pt._polygons[j].contains(xy)) {
+            isInside = !isInside;
+          }
+          if (pt._polygons[j].contains(altXy)) {
+            isInside = !isInside;
+          }
+        }
+        if (isInside) break;
+      }
+    }
+    if (!isInside || !pt) return;
+    pointData.x0 = pointData.x1 = pointData.xa.c2p(pt.ct);
+    pointData.y0 = pointData.y1 = pointData.ya.c2p(pt.ct);
+    pointData.index = pt.index;
+    pointData.location = pt.loc;
+    pointData.z = pt.z;
+    pointData.zLabel = axes_default.tickText(geo.mockAxis, geo.mockAxis.c2l(pt.z), "hover").text;
+    pointData.hovertemplate = pt.hovertemplate;
+    makeHoverInfo(pointData, trace, pt);
+    return [pointData];
+  }
+  function makeHoverInfo(pointData, trace, pt) {
+    if (trace.hovertemplate) return;
+    var hoverinfo = pt.hi || trace.hoverinfo;
+    var loc = String(pt.loc);
+    var parts = hoverinfo === "all" ? attributes_default22.hoverinfo.flags : hoverinfo.split("+");
+    var hasName = parts.indexOf("name") !== -1;
+    var hasLocation = parts.indexOf("location") !== -1;
+    var hasZ = parts.indexOf("z") !== -1;
+    var hasText = parts.indexOf("text") !== -1;
+    var hasIdAsNameLabel = !hasName && hasLocation;
+    var text = [];
+    if (hasIdAsNameLabel) {
+      pointData.nameOverride = loc;
+    } else {
+      if (hasName) pointData.nameOverride = trace.name;
+      if (hasLocation) text.push(loc);
+    }
+    if (hasZ) {
+      text.push(pointData.zLabel);
+    }
+    if (hasText) {
+      fillText2(pt, trace, text);
+    }
+    pointData.extraText = text.join("<br>");
+  }
 
-  // src/traces/scattergeo/select.js
-  var { BADNUM: BADNUM17 } = numerical_default;
+  // src/traces/choropleth/event_data.js
+  function eventData(out, pt, trace, cd, pointNumber) {
+    out.location = pt.location;
+    out.z = pt.z;
+    var cdi = cd[pointNumber];
+    if (cdi.fIn && cdi.fIn.properties) {
+      out.properties = cdi.fIn.properties;
+    }
+    out.ct = cdi.ct;
+    return out;
+  }
+
+  // src/traces/choropleth/select.js
+  function selectPoints2(searchInfo, selectionTester) {
+    var cd = searchInfo.cd;
+    var xa = searchInfo.xaxis;
+    var ya = searchInfo.yaxis;
+    var selection = [];
+    var i, di, ct, x, y;
+    if (selectionTester === false) {
+      for (i = 0; i < cd.length; i++) {
+        cd[i].selected = 0;
+      }
+    } else {
+      for (i = 0; i < cd.length; i++) {
+        di = cd[i];
+        ct = di.ct;
+        if (!ct) continue;
+        x = xa.c2p(ct);
+        y = ya.c2p(ct);
+        if (selectionTester.contains([x, y], null, i, searchInfo)) {
+          selection.push({
+            pointNumber: i,
+            lon: ct[0],
+            lat: ct[1]
+          });
+          di.selected = 1;
+        } else {
+          di.selected = 0;
+        }
+      }
+    }
+    return selection;
+  }
 
   // src/plots/geo/geo.js
   var import_d343 = __toESM(require_d3(), 1);
@@ -60434,12 +60635,12 @@ var Plotly = (() => {
       function ringEnd() {
         pointRing(ring[0][0], ring[0][1]);
         ringSink.lineEnd();
-        var clean4 = ringSink.clean(), ringSegments = ringBuffer.result(), i, n = ringSegments.length, m, segment, point3;
+        var clean5 = ringSink.clean(), ringSegments = ringBuffer.result(), i, n = ringSegments.length, m, segment, point3;
         ring.pop();
         polygon2.push(ring);
         ring = null;
         if (!n) return;
-        if (clean4 & 1) {
+        if (clean5 & 1) {
           segment = ringSegments[0];
           if ((m = segment.length - 1) > 0) {
             if (!polygonStarted) sink.polygonStart(), polygonStarted = true;
@@ -60449,7 +60650,7 @@ var Plotly = (() => {
           }
           return;
         }
-        if (n > 1 && clean4 & 2) ringSegments.push(ringSegments.pop().concat(ringSegments.shift()));
+        if (n > 1 && clean5 & 2) ringSegments.push(ringSegments.pop().concat(ringSegments.shift()));
         segments.push(ringSegments.filter(validSegment));
       }
       return clip;
@@ -60472,11 +60673,11 @@ var Plotly = (() => {
     [-pi, -halfPi]
   );
   function clipAntimeridianLine(stream) {
-    var lambda04 = NaN, phi03 = NaN, sign0 = NaN, clean4;
+    var lambda04 = NaN, phi03 = NaN, sign0 = NaN, clean5;
     return {
       lineStart: function() {
         stream.lineStart();
-        clean4 = 1;
+        clean5 = 1;
       },
       point: function(lambda12, phi12) {
         var sign1 = lambda12 > 0 ? pi : -pi, delta = abs(lambda12 - lambda04);
@@ -60487,7 +60688,7 @@ var Plotly = (() => {
           stream.lineStart();
           stream.point(sign1, phi03);
           stream.point(lambda12, phi03);
-          clean4 = 0;
+          clean5 = 0;
         } else if (sign0 !== sign1 && delta >= pi) {
           if (abs(lambda04 - sign0) < epsilon2) lambda04 -= sign0 * epsilon2;
           if (abs(lambda12 - sign1) < epsilon2) lambda12 -= sign1 * epsilon2;
@@ -60496,7 +60697,7 @@ var Plotly = (() => {
           stream.lineEnd();
           stream.lineStart();
           stream.point(sign1, phi03);
-          clean4 = 0;
+          clean5 = 0;
         }
         stream.point(lambda04 = lambda12, phi03 = phi12);
         sign0 = sign1;
@@ -60506,7 +60707,7 @@ var Plotly = (() => {
         lambda04 = phi03 = NaN;
       },
       clean: function() {
-        return 2 - clean4;
+        return 2 - clean5;
       }
     };
   }
@@ -60548,11 +60749,11 @@ var Plotly = (() => {
       return cos3(lambda) * cos3(phi) > cr;
     }
     function clipLine(stream) {
-      var point0, c0, v0, v00, clean4;
+      var point0, c0, v0, v00, clean5;
       return {
         lineStart: function() {
           v00 = v0 = false;
-          clean4 = 1;
+          clean5 = 1;
         },
         point: function(lambda, phi) {
           var point1 = [lambda, phi], point2, v = visible(lambda, phi), c = smallRadius ? v ? 0 : code2(lambda, phi) : v ? code2(lambda + (lambda < 0 ? pi : -pi), phi) : 0;
@@ -60563,7 +60764,7 @@ var Plotly = (() => {
               point1[2] = 1;
           }
           if (v !== v0) {
-            clean4 = 0;
+            clean5 = 0;
             if (v) {
               stream.lineStart();
               point2 = intersect(point1, point0);
@@ -60577,7 +60778,7 @@ var Plotly = (() => {
           } else if (notHemisphere && point0 && smallRadius ^ v) {
             var t;
             if (!(c & c0) && (t = intersect(point1, point0, true))) {
-              clean4 = 0;
+              clean5 = 0;
               if (smallRadius) {
                 stream.lineStart();
                 stream.point(t[0][0], t[0][1]);
@@ -60603,7 +60804,7 @@ var Plotly = (() => {
         // Rejoin first and last segments if there were intersections and the first
         // and last points were visible.
         clean: function() {
-          return clean4 | (v00 && v0) << 1;
+          return clean5 | (v00 && v0) << 1;
         }
       };
     }
@@ -60716,7 +60917,7 @@ var Plotly = (() => {
       return ca !== cb ? ca - cb : ca === 0 ? b[1] - a[1] : ca === 1 ? a[0] - b[0] : ca === 2 ? a[1] - b[1] : b[0] - a[0];
     }
     return function(stream) {
-      var activeStream = stream, bufferStream = buffer_default(), segments, polygon2, ring, x__, y__, v__, x_, y_, v_, first, clean4;
+      var activeStream = stream, bufferStream = buffer_default(), segments, polygon2, ring, x__, y__, v__, x_, y_, v_, first, clean5;
       var clipStream = {
         point: point2,
         lineStart,
@@ -60742,10 +60943,10 @@ var Plotly = (() => {
         return winding;
       }
       function polygonStart() {
-        activeStream = bufferStream, segments = [], polygon2 = [], clean4 = true;
+        activeStream = bufferStream, segments = [], polygon2 = [], clean5 = true;
       }
       function polygonEnd() {
-        var startInside = polygonInside(), cleanInside = clean4 && startInside, visible2 = (segments = merge_default2(segments)).length;
+        var startInside = polygonInside(), cleanInside = clean5 && startInside, visible2 = (segments = merge_default2(segments)).length;
         if (cleanInside || visible2) {
           stream.polygonStart();
           if (cleanInside) {
@@ -60797,11 +60998,11 @@ var Plotly = (() => {
               }
               activeStream.point(b[0], b[1]);
               if (!v) activeStream.lineEnd();
-              clean4 = false;
+              clean5 = false;
             } else if (v) {
               activeStream.lineStart();
               activeStream.point(x, y);
-              clean4 = false;
+              clean5 = false;
             }
           }
         }
@@ -66093,6 +66294,9 @@ var Plotly = (() => {
     this.makeFramework();
   }
   var proto2 = Geo.prototype;
+  function createGeo(opts) {
+    return new Geo(opts);
+  }
   proto2.plot = function(geoCalcData, fullLayout, promises, replot) {
     var _this = this;
     if (replot) return _this.update(geoCalcData, fullLayout, true);
@@ -66855,9 +67059,201 @@ var Plotly = (() => {
     valType: "any",
     editType: "none"
   };
+  var layout_attributes_default6 = attrs2;
+
+  // src/plots/subplot_defaults.js
+  function handleSubplotDefaults(layoutIn, layoutOut, fullData, opts) {
+    var subplotType = opts.type;
+    var subplotAttributes = opts.attributes;
+    var handleDefaults6 = opts.handleDefaults;
+    var partition = opts.partition || "x";
+    var ids = layoutOut._subplots[subplotType];
+    var idsLength = ids.length;
+    var baseId = idsLength && ids[0].replace(/\d+$/, "");
+    var subplotLayoutIn, subplotLayoutOut;
+    function coerce3(attr2, dflt) {
+      return lib_default.coerce(subplotLayoutIn, subplotLayoutOut, subplotAttributes, attr2, dflt);
+    }
+    for (var i = 0; i < idsLength; i++) {
+      var id = ids[i];
+      if (layoutIn[id]) subplotLayoutIn = layoutIn[id];
+      else subplotLayoutIn = layoutIn[id] = {};
+      subplotLayoutOut = plot_template_default.newContainer(layoutOut, id, baseId);
+      if (!opts.noUirevision) coerce3("uirevision", layoutOut.uirevision);
+      var dfltDomains = {};
+      dfltDomains[partition] = [i / idsLength, (i + 1) / idsLength];
+      defaults2(subplotLayoutOut, layoutOut, coerce3, dfltDomains);
+      opts.id = id;
+      handleDefaults6(subplotLayoutIn, subplotLayoutOut, coerce3, opts);
+    }
+  }
 
   // src/plots/geo/layout_defaults.js
   var axesNames2 = constants_default14.axesNames;
+  function supplyLayoutDefaults10(layoutIn, layoutOut, fullData) {
+    handleSubplotDefaults(layoutIn, layoutOut, fullData, {
+      type: "geo",
+      attributes: layout_attributes_default6,
+      handleDefaults: handleGeoDefaults,
+      fullData,
+      partition: "y"
+    });
+  }
+  function handleGeoDefaults(geoLayoutIn, geoLayoutOut, coerce3, opts) {
+    var subplotData = getSubplotData(opts.fullData, "geo", opts.id);
+    var traceIndices = subplotData.map(function(t) {
+      return t.index;
+    });
+    var resolution = coerce3("resolution");
+    var scope = coerce3("scope");
+    var scopeParams = constants_default14.scopeDefaults[scope];
+    var projType = coerce3("projection.type", scopeParams.projType);
+    var isAlbersUsa = geoLayoutOut._isAlbersUsa = projType === "albers usa";
+    if (isAlbersUsa) scope = geoLayoutOut.scope = "usa";
+    var isScoped = geoLayoutOut._isScoped = scope !== "world";
+    var isSatellite = geoLayoutOut._isSatellite = projType === "satellite";
+    var isConic = geoLayoutOut._isConic = projType.indexOf("conic") !== -1 || projType === "albers";
+    var isClipped = geoLayoutOut._isClipped = !!constants_default14.lonaxisSpan[projType];
+    if (geoLayoutIn.visible === false) {
+      var newTemplate = lib_default.extendDeep({}, geoLayoutOut._template);
+      newTemplate.showcoastlines = false;
+      newTemplate.showcountries = false;
+      newTemplate.showframe = false;
+      newTemplate.showlakes = false;
+      newTemplate.showland = false;
+      newTemplate.showocean = false;
+      newTemplate.showrivers = false;
+      newTemplate.showsubunits = false;
+      if (newTemplate.lonaxis) newTemplate.lonaxis.showgrid = false;
+      if (newTemplate.lataxis) newTemplate.lataxis.showgrid = false;
+      geoLayoutOut._template = newTemplate;
+    }
+    var visible = coerce3("visible");
+    var show;
+    for (var i = 0; i < axesNames2.length; i++) {
+      var axisName = axesNames2[i];
+      var dtickDflt = [30, 10][i];
+      var rangeDflt;
+      if (isScoped) {
+        rangeDflt = scopeParams[axisName + "Range"];
+      } else {
+        var dfltSpans = constants_default14[axisName + "Span"];
+        var hSpan = (dfltSpans[projType] || dfltSpans["*"]) / 2;
+        var rot = coerce3(
+          "projection.rotation." + axisName.slice(0, 3),
+          scopeParams.projRotate[i]
+        );
+        rangeDflt = [rot - hSpan, rot + hSpan];
+      }
+      var range2 = coerce3(axisName + ".range", rangeDflt);
+      coerce3(axisName + ".tick0");
+      coerce3(axisName + ".dtick", dtickDflt);
+      show = coerce3(axisName + ".showgrid", !visible ? false : void 0);
+      if (show) {
+        coerce3(axisName + ".gridcolor");
+        coerce3(axisName + ".gridwidth");
+        coerce3(axisName + ".griddash");
+      }
+      geoLayoutOut[axisName]._ax = {
+        type: "linear",
+        _id: axisName.slice(0, 3),
+        _traceIndices: traceIndices,
+        setScale: lib_default.identity,
+        c2l: lib_default.identity,
+        r2l: lib_default.identity,
+        autorange: true,
+        range: range2.slice(),
+        _m: 1,
+        _input: {}
+      };
+    }
+    var lonRange = geoLayoutOut.lonaxis.range;
+    var latRange = geoLayoutOut.lataxis.range;
+    var lon0 = lonRange[0];
+    var lon1 = lonRange[1];
+    if (lon0 > 0 && lon1 < 0) lon1 += 360;
+    var centerLon = (lon0 + lon1) / 2;
+    var projLon;
+    if (!isAlbersUsa) {
+      var dfltProjRotate = isScoped ? scopeParams.projRotate : [centerLon, 0, 0];
+      projLon = coerce3("projection.rotation.lon", dfltProjRotate[0]);
+      coerce3("projection.rotation.lat", dfltProjRotate[1]);
+      coerce3("projection.rotation.roll", dfltProjRotate[2]);
+      show = coerce3("showcoastlines", !isScoped && visible);
+      if (show) {
+        coerce3("coastlinecolor");
+        coerce3("coastlinewidth");
+      }
+      show = coerce3("showocean", !visible ? false : void 0);
+      if (show) coerce3("oceancolor");
+    }
+    var centerLonDflt;
+    var centerLatDflt;
+    if (isAlbersUsa) {
+      centerLonDflt = -96.6;
+      centerLatDflt = 38.7;
+    } else {
+      centerLonDflt = isScoped ? centerLon : projLon;
+      centerLatDflt = (latRange[0] + latRange[1]) / 2;
+    }
+    coerce3("center.lon", centerLonDflt);
+    coerce3("center.lat", centerLatDflt);
+    if (isSatellite) {
+      coerce3("projection.tilt");
+      coerce3("projection.distance");
+    }
+    if (isConic) {
+      var dfltProjParallels = scopeParams.projParallels || [0, 60];
+      coerce3("projection.parallels", dfltProjParallels);
+    }
+    coerce3("projection.scale");
+    show = coerce3("showland", !visible ? false : void 0);
+    if (show) coerce3("landcolor");
+    show = coerce3("showlakes", !visible ? false : void 0);
+    if (show) coerce3("lakecolor");
+    show = coerce3("showrivers", !visible ? false : void 0);
+    if (show) {
+      coerce3("rivercolor");
+      coerce3("riverwidth");
+    }
+    show = coerce3("showcountries", isScoped && scope !== "usa" && visible);
+    if (show) {
+      coerce3("countrycolor");
+      coerce3("countrywidth");
+    }
+    if (scope === "usa" || scope === "north america" && resolution === 50) {
+      coerce3("showsubunits", visible);
+      coerce3("subunitcolor");
+      coerce3("subunitwidth");
+    }
+    if (!isScoped) {
+      show = coerce3("showframe", visible);
+      if (show) {
+        coerce3("framecolor");
+        coerce3("framewidth");
+      }
+    }
+    coerce3("bgcolor");
+    var fitBounds = coerce3("fitbounds");
+    if (fitBounds) {
+      delete geoLayoutOut.projection.scale;
+      if (isScoped) {
+        delete geoLayoutOut.center.lon;
+        delete geoLayoutOut.center.lat;
+      } else if (isClipped) {
+        delete geoLayoutOut.center.lon;
+        delete geoLayoutOut.center.lat;
+        delete geoLayoutOut.projection.rotation.lon;
+        delete geoLayoutOut.projection.rotation.lat;
+        delete geoLayoutOut.lonaxis.range;
+        delete geoLayoutOut.lataxis.range;
+      } else {
+        delete geoLayoutOut.center.lon;
+        delete geoLayoutOut.center.lat;
+        delete geoLayoutOut.projection.rotation.lon;
+      }
+    }
+  }
 
   // src/plots/geo/index.js
   var { counterRegex } = lib_default;
@@ -66869,128 +67265,319 @@ var Plotly = (() => {
     dflt: GEO,
     editType: "calc"
   };
+  function plotGeo(gd) {
+    var fullLayout = gd._fullLayout;
+    var calcData = gd.calcdata;
+    var geoIds = fullLayout._subplots[GEO];
+    for (var i = 0; i < geoIds.length; i++) {
+      var geoId = geoIds[i];
+      var geoCalcData = getSubplotCalcData(calcData, GEO, geoId);
+      var geoLayout = fullLayout[geoId];
+      var geo = geoLayout._subplot;
+      if (!geo) {
+        geo = createGeo({
+          id: geoId,
+          graphDiv: gd,
+          container: fullLayout._geolayer.node(),
+          topojsonURL: gd._context.topojsonURL,
+          staticPlot: gd._context.staticPlot
+        });
+        fullLayout[geoId]._subplot = geo;
+      }
+      geo.plot(geoCalcData, fullLayout, gd._promises);
+    }
+  }
+  function clean4(newFullData, newFullLayout, oldFullData, oldFullLayout) {
+    var oldGeoKeys = oldFullLayout._subplots[GEO] || [];
+    for (var i = 0; i < oldGeoKeys.length; i++) {
+      var oldGeoKey = oldGeoKeys[i];
+      var oldGeo = oldFullLayout[oldGeoKey]._subplot;
+      if (!newFullLayout[oldGeoKey] && !!oldGeo) {
+        oldGeo.framework.remove();
+        oldGeo.clipDef.remove();
+      }
+    }
+  }
+  function updateFx3(gd) {
+    var fullLayout = gd._fullLayout;
+    var subplotIds = fullLayout._subplots[GEO];
+    for (var i = 0; i < subplotIds.length; i++) {
+      var subplotLayout = fullLayout[subplotIds[i]];
+      var subplotObj = subplotLayout._subplot;
+      subplotObj.updateFx(fullLayout, subplotLayout);
+    }
+  }
+  var geo_default = {
+    attr: GEO,
+    name: GEO,
+    idRoot: GEO,
+    idRegex: counter2,
+    attrRegex: counter2,
+    attributes: attributes3,
+    layoutAttributes: layout_attributes_default6,
+    supplyLayoutDefaults: supplyLayoutDefaults10,
+    plot: plotGeo,
+    updateFx: updateFx3,
+    clean: clean4
+  };
 
-  // src/traces/scattergeo/index.js
-  var { calcGeoJSON: _req53, plot: _req62 } = plot_default;
-  var { styleOnSelect: _req82 } = style_default;
+  // src/traces/choropleth/index.js
+  var { calcGeoJSON: _req4, plot: _req52 } = plot_default;
+  var { style: _req6, styleOnSelect: _req7 } = style_default2;
+  var choropleth_default = {
+    attributes: attributes_default22,
+    supplyDefaults: supplyDefaults3,
+    colorbar: colorbar_default2,
+    calc: calc5,
+    calcGeoJSON: _req4,
+    plot: _req52,
+    style: _req6,
+    styleOnSelect: _req7,
+    hoverPoints: hoverPoints2,
+    eventData,
+    selectPoints: selectPoints2,
+    moduleType: "trace",
+    name: "choropleth",
+    basePlotModule: geo_default,
+    categories: ["geo", "noOpacity", "showLegend"],
+    meta: {}
+  };
 
-  // src/traces/choropleth/attributes.js
-  var scatterGeoMarkerLineAttrs = attributes_default21.marker.line;
-  var attributes_default22 = extendFlat(
-    {
-      locations: {
-        valType: "data_array",
-        editType: "calc"
-      },
-      locationmode: attributes_default21.locationmode,
-      z: {
-        valType: "data_array",
-        editType: "calc"
-      },
-      geojson: extendFlat({}, attributes_default21.geojson, {}),
-      featureidkey: attributes_default21.featureidkey,
-      text: extendFlat({}, attributes_default21.text, {}),
-      hovertext: extendFlat({}, attributes_default21.hovertext, {}),
-      marker: {
-        line: {
-          color: extendFlat({}, scatterGeoMarkerLineAttrs.color, { dflt: defaultLine }),
-          width: extendFlat({}, scatterGeoMarkerLineAttrs.width, { dflt: 1 }),
-          editType: "calc"
-        },
-        opacity: {
-          valType: "number",
-          arrayOk: true,
-          min: 0,
-          max: 1,
-          dflt: 1,
-          editType: "style"
-        },
-        editType: "calc"
-      },
-      selected: {
-        marker: {
-          opacity: attributes_default21.selected.marker.opacity,
-          editType: "plot"
-        },
-        editType: "plot"
-      },
-      unselected: {
-        marker: {
-          opacity: attributes_default21.unselected.marker.opacity,
-          editType: "plot"
-        },
-        editType: "plot"
-      },
-      hoverinfo: extendFlat({}, attributes_default2.hoverinfo, {
-        editType: "calc",
-        flags: ["location", "z", "text", "name"]
-      }),
-      hovertemplate: hovertemplateAttrs(),
-      hovertemplatefallback: templatefallbackAttrs(),
-      showlegend: extendFlat({}, attributes_default2.showlegend, { dflt: false })
-    },
-    colorScaleAttrs("", {
-      cLetter: "z",
-      editTypeOverride: "calc"
-    })
-  );
-
-  // src/traces/choropleth/defaults.js
+  // src/traces/scattergeo/defaults.js
   var locationmodeBreakingChangeWarning2 = [
     "The library used by the *country names* `locationmode` option is changing in the next major version.",
     "Some country names in existing plots may not work in the new version.",
     "To ensure consistent behavior, consider setting `locationmode` to *ISO-3*."
   ].join(" ");
+  function supplyDefaults4(traceIn, traceOut, defaultColor, layout) {
+    function coerce3(attr2, dflt) {
+      return lib_default.coerce(traceIn, traceOut, attributes_default21, attr2, dflt);
+    }
+    var locations = coerce3("locations");
+    var len2;
+    if (locations && locations.length) {
+      var geojson = coerce3("geojson");
+      var locationmodeDflt;
+      if (typeof geojson === "string" && geojson !== "" || lib_default.isPlainObject(geojson)) {
+        locationmodeDflt = "geojson-id";
+      }
+      var locationMode = coerce3("locationmode", locationmodeDflt);
+      if (locationMode === "country names") {
+        lib_default.warn(locationmodeBreakingChangeWarning2);
+      }
+      if (locationMode === "geojson-id") {
+        coerce3("featureidkey");
+      }
+      len2 = locations.length;
+    } else {
+      var lon = coerce3("lon") || [];
+      var lat = coerce3("lat") || [];
+      len2 = Math.min(lon.length, lat.length);
+    }
+    if (!len2) {
+      traceOut.visible = false;
+      return;
+    }
+    traceOut._length = len2;
+    coerce3("text");
+    coerce3("hovertext");
+    coerce3("hovertemplate");
+    coerce3("hovertemplatefallback");
+    coerce3("mode");
+    if (subtypes_default.hasMarkers(traceOut)) {
+      markerDefaults(traceIn, traceOut, defaultColor, layout, coerce3, { gradient: true });
+    }
+    if (subtypes_default.hasLines(traceOut)) {
+      lineDefaults(traceIn, traceOut, defaultColor, layout, coerce3);
+      coerce3("connectgaps");
+    }
+    if (subtypes_default.hasText(traceOut)) {
+      coerce3("texttemplate");
+      coerce3("texttemplatefallback");
+      text_defaults_default(traceIn, traceOut, layout, coerce3);
+    }
+    coerce3("fill");
+    if (traceOut.fill !== "none") {
+      fillColorDefaults(traceIn, traceOut, defaultColor, coerce3);
+    }
+    lib_default.coerceSelectionMarkerOpacity(traceOut, coerce3);
+  }
 
-  // src/traces/choropleth/calc.js
+  // src/traces/scattergeo/format_labels.js
+  function formatLabels2(cdi, trace, fullLayout) {
+    var labels = {};
+    var geo = fullLayout[trace.geo]._subplot;
+    var ax = geo.mockAxis;
+    var lonlat = cdi.lonlat;
+    labels.lonLabel = axes_default.tickText(ax, ax.c2l(lonlat[0]), true).text;
+    labels.latLabel = axes_default.tickText(ax, ax.c2l(lonlat[1]), true).text;
+    return labels;
+  }
+
+  // src/traces/scattergeo/calc.js
   var import_fast_isnumeric40 = __toESM(require_fast_isnumeric(), 1);
-  var { BADNUM: BADNUM18 } = numerical_default;
+  var { BADNUM: BADNUM14 } = numerical_default;
+  var { isArrayOrTypedArray: isArrayOrTypedArray10, _: _3 } = lib_default;
+  function isNonBlankString2(v) {
+    return v && typeof v === "string";
+  }
+  function calc6(gd, trace) {
+    var hasLocationData = isArrayOrTypedArray10(trace.locations);
+    var len2 = hasLocationData ? trace.locations.length : trace._length;
+    var calcTrace = new Array(len2);
+    var isValidLoc;
+    if (trace.geojson) {
+      isValidLoc = function(v) {
+        return isNonBlankString2(v) || (0, import_fast_isnumeric40.default)(v);
+      };
+    } else {
+      isValidLoc = isNonBlankString2;
+    }
+    for (var i = 0; i < len2; i++) {
+      var calcPt = calcTrace[i] = {};
+      if (hasLocationData) {
+        var loc = trace.locations[i];
+        calcPt.loc = isValidLoc(loc) ? loc : null;
+      } else {
+        var lon = trace.lon[i];
+        var lat = trace.lat[i];
+        if ((0, import_fast_isnumeric40.default)(lon) && (0, import_fast_isnumeric40.default)(lat)) calcPt.lonlat = [+lon, +lat];
+        else calcPt.lonlat = [BADNUM14, BADNUM14];
+      }
+    }
+    arraysToCalcdata(calcTrace, trace);
+    calcMarkerColorscale(gd, trace);
+    calcSelection(calcTrace, trace);
+    if (len2) {
+      calcTrace[0].t = {
+        labels: {
+          lat: _3(gd, "lat:") + " ",
+          lon: _3(gd, "lon:") + " "
+        }
+      };
+    }
+    return calcTrace;
+  }
 
-  // src/traces/choropleth/plot.js
+  // src/traces/scattergeo/plot.js
   var import_d345 = __toESM(require_d3(), 1);
 
-  // src/traces/choropleth/style.js
+  // src/lib/geojson_utils.js
+  var { BADNUM: BADNUM15 } = numerical_default;
+  var calcTraceToLineCoords = function(calcTrace) {
+    var trace = calcTrace[0].trace;
+    var connectgaps = trace.connectgaps;
+    var coords = [];
+    var lineString = [];
+    for (var i = 0; i < calcTrace.length; i++) {
+      var calcPt = calcTrace[i];
+      var lonlat = calcPt.lonlat;
+      if (lonlat[0] !== BADNUM15) {
+        lineString.push(lonlat);
+      } else if (!connectgaps && lineString.length > 0) {
+        coords.push(lineString);
+        lineString = [];
+      }
+    }
+    if (lineString.length > 0) {
+      coords.push(lineString);
+    }
+    return coords;
+  };
+  var makeLine = function(coords) {
+    if (coords.length === 1) {
+      return {
+        type: "LineString",
+        coordinates: coords[0]
+      };
+    } else {
+      return {
+        type: "MultiLineString",
+        coordinates: coords
+      };
+    }
+  };
+  var makePolygon = function(coords) {
+    if (coords.length === 1) {
+      return {
+        type: "Polygon",
+        coordinates: coords
+      };
+    } else {
+      var _coords = new Array(coords.length);
+      for (var i = 0; i < coords.length; i++) {
+        _coords[i] = [coords[i]];
+      }
+      return {
+        type: "MultiPolygon",
+        coordinates: _coords
+      };
+    }
+  };
+  var makeBlank = function() {
+    return {
+      type: "Point",
+      coordinates: []
+    };
+  };
+  var geojson_utils_default = { calcTraceToLineCoords, makeLine, makePolygon, makeBlank };
+
+  // src/traces/scattergeo/style.js
   var import_d344 = __toESM(require_d3(), 1);
-  function style5(gd, calcTrace) {
+  var stylePoints2 = style_default.stylePoints;
+  var styleText2 = style_default.styleText;
+  function style6(gd, calcTrace) {
     if (calcTrace) styleTrace2(gd, calcTrace);
   }
   function styleTrace2(gd, calcTrace) {
     var trace = calcTrace[0].trace;
     var s = calcTrace[0].node3;
-    var locs = s.selectAll(".choroplethlocation");
-    var marker = trace.marker || {};
-    var markerLine = marker.line || {};
-    var sclFunc = colorscale_default.makeColorScaleFuncFromTrace(trace);
-    locs.each(function(d) {
-      import_d344.default.select(this).attr("fill", sclFunc(d.z)).call(color_default.stroke, d.mlc || markerLine.color).call(drawing_default.dashLine, "", d.mlw || markerLine.width || 0).style("opacity", marker.opacity);
+    s.style("opacity", calcTrace[0].trace.opacity);
+    stylePoints2(s, trace, gd);
+    styleText2(s, trace, gd);
+    s.selectAll("path.js-line").style("fill", "none").each(function(d) {
+      var path = import_d344.default.select(this);
+      var trace2 = d.trace;
+      var line = trace2.line || {};
+      path.call(color_default.stroke, line.color).call(drawing_default.dashLine, line.dash || "", line.width || 0);
+      if (trace2.fill !== "none") {
+        path.call(color_default.fill, trace2.fillcolor);
+      }
     });
-    drawing_default.selectedPointStyle(locs, trace);
   }
-  function styleOnSelect2(gd, calcTrace) {
-    var s = calcTrace[0].node3;
-    var trace = calcTrace[0].trace;
-    if (trace.selectedpoints) {
-      drawing_default.selectedPointStyle(s.selectAll(".choroplethlocation"), trace);
-    } else {
-      styleTrace2(gd, calcTrace);
-    }
-  }
-  var style_default2 = {
-    style: style5,
-    styleOnSelect: styleOnSelect2
-  };
 
-  // src/traces/choropleth/plot.js
+  // src/traces/scattergeo/plot.js
   var { getTopojsonFeatures: getTopojsonFeatures2 } = topojson_utils_default;
   var { findExtremes: findExtremes3 } = autorange_default;
-  var { style: style6 } = style_default2;
+  var { BADNUM: BADNUM16 } = numerical_default;
+  var { calcMarkerSize: calcMarkerSize2 } = calc_default;
   function plot5(gd, geo, calcData) {
-    var choroplethLayer = geo.layers.backplot.select(".choroplethlayer");
-    lib_default.makeTraceGroups(choroplethLayer, calcData, "trace choropleth").each(function(calcTrace) {
-      var sel = import_d345.default.select(this);
-      var paths = sel.selectAll("path.choroplethlocation").data(lib_default.identity);
-      paths.enter().append("path").classed("choroplethlocation", true);
-      paths.exit().remove();
+    var scatterLayer = geo.layers.frontplot.select(".scatterlayer");
+    var gTraces = lib_default.makeTraceGroups(scatterLayer, calcData, "trace scattergeo");
+    function removeBADNUM(d, node) {
+      if (d.lonlat[0] === BADNUM16) {
+        import_d345.default.select(node).remove();
+      }
+    }
+    gTraces.selectAll("*").remove();
+    gTraces.each(function(calcTrace) {
+      var s = import_d345.default.select(this);
+      var trace = calcTrace[0].trace;
+      if (subtypes_default.hasLines(trace) || trace.fill !== "none") {
+        var lineCoords = geojson_utils_default.calcTraceToLineCoords(calcTrace);
+        var lineData = trace.fill !== "none" ? geojson_utils_default.makePolygon(lineCoords) : geojson_utils_default.makeLine(lineCoords);
+        s.selectAll("path.js-line").data([{ geojson: lineData, trace }]).enter().append("path").classed("js-line", true).style("stroke-miterlimit", 2);
+      }
+      if (subtypes_default.hasMarkers(trace)) {
+        s.selectAll("path.point").data(lib_default.identity).enter().append("path").classed("point", true).each(function(calcPt) {
+          removeBADNUM(calcPt, this);
+        });
+      }
+      if (subtypes_default.hasText(trace)) {
+        s.selectAll("g").data(lib_default.identity).enter().append("g").append("text").each(function(calcPt) {
+          removeBADNUM(calcPt, this);
+        });
+      }
       style6(gd, calcTrace);
     });
   }
@@ -66998,31 +67585,34 @@ var Plotly = (() => {
     var trace = calcTrace[0].trace;
     var geoLayout = fullLayout[trace.geo];
     var geo = geoLayout._subplot;
-    var locationmode = trace.locationmode;
     var len2 = trace._length;
-    var features = locationmode === "geojson-id" ? geo_location_utils_default.extractTraceFeature(calcTrace) : getTopojsonFeatures2(trace, geo.topojson);
-    var lonArray = [];
-    var latArray = [];
-    for (var i = 0; i < len2; i++) {
-      var calcPt = calcTrace[i];
-      var feature3 = locationmode === "geojson-id" ? calcPt.fOut : geo_location_utils_default.locationToFeature(locationmode, calcPt.loc, features);
-      if (feature3) {
-        calcPt.geojson = feature3;
-        calcPt.ct = feature3.properties.ct;
-        calcPt._polygons = geo_location_utils_default.feature2polygons(feature3);
-        var bboxFeature = geo_location_utils_default.computeBbox(feature3);
-        lonArray.push(bboxFeature[0], bboxFeature[2]);
-        latArray.push(bboxFeature[1], bboxFeature[3]);
-      } else {
-        calcPt.geojson = null;
+    var i, calcPt;
+    if (lib_default.isArrayOrTypedArray(trace.locations)) {
+      var locationmode = trace.locationmode;
+      var features = locationmode === "geojson-id" ? geo_location_utils_default.extractTraceFeature(calcTrace) : getTopojsonFeatures2(trace, geo.topojson);
+      for (i = 0; i < len2; i++) {
+        calcPt = calcTrace[i];
+        var feature3 = locationmode === "geojson-id" ? calcPt.fOut : geo_location_utils_default.locationToFeature(locationmode, calcPt.loc, features);
+        calcPt.lonlat = feature3 ? feature3.properties.ct : [BADNUM16, BADNUM16];
       }
     }
-    if (geoLayout.fitbounds === "geojson" && locationmode === "geojson-id") {
+    var opts = { padded: true };
+    var lonArray;
+    var latArray;
+    if (geoLayout.fitbounds === "geojson" && trace.locationmode === "geojson-id") {
       var bboxGeojson = geo_location_utils_default.computeBbox(geo_location_utils_default.getTraceGeojson(trace));
       lonArray = [bboxGeojson[0], bboxGeojson[2]];
       latArray = [bboxGeojson[1], bboxGeojson[3]];
+    } else {
+      lonArray = new Array(len2);
+      latArray = new Array(len2);
+      for (i = 0; i < len2; i++) {
+        calcPt = calcTrace[i];
+        lonArray[i] = calcPt.lonlat[0];
+        latArray[i] = calcPt.lonlat[1];
+      }
+      opts.ppad = calcMarkerSize2(trace, len2);
     }
-    var opts = { padded: true };
     trace._extremes.lon = findExtremes3(geoLayout.lonaxis._ax, lonArray, opts);
     trace._extremes.lat = findExtremes3(geoLayout.lataxis._ax, latArray, opts);
   }
@@ -67031,12 +67621,149 @@ var Plotly = (() => {
     plot: plot5
   };
 
-  // src/traces/choropleth/hover.js
+  // src/traces/scattergeo/hover.js
+  var { BADNUM: BADNUM17 } = numerical_default;
   var { fillText: fillText3 } = lib_default;
+  function hoverPoints3(pointData, xval, yval) {
+    var cd = pointData.cd;
+    var trace = cd[0].trace;
+    var xa = pointData.xa;
+    var ya = pointData.ya;
+    var geo = pointData.subplot;
+    var isLonLatOverEdges = geo.projection.isLonLatOverEdges;
+    var project2 = geo.project;
+    function distFn(d) {
+      var lonlat2 = d.lonlat;
+      if (lonlat2[0] === BADNUM17) return Infinity;
+      if (isLonLatOverEdges(lonlat2)) return Infinity;
+      var pt = project2(lonlat2);
+      var px = project2([xval, yval]);
+      var dx = Math.abs(pt[0] - px[0]);
+      var dy = Math.abs(pt[1] - px[1]);
+      var rad2 = Math.max(3, d.mrc || 0);
+      return Math.max(Math.sqrt(dx * dx + dy * dy) - rad2, 1 - 3 / rad2);
+    }
+    fx_default.getClosest(cd, distFn, pointData);
+    if (pointData.index === false) return;
+    var di = cd[pointData.index];
+    var lonlat = di.lonlat;
+    var pos = [xa.c2p(lonlat), ya.c2p(lonlat)];
+    var rad = di.mrc || 1;
+    pointData.x0 = pos[0] - rad;
+    pointData.x1 = pos[0] + rad;
+    pointData.y0 = pos[1] - rad;
+    pointData.y1 = pos[1] + rad;
+    pointData.loc = di.loc;
+    pointData.lon = lonlat[0];
+    pointData.lat = lonlat[1];
+    var fullLayout = {};
+    fullLayout[trace.geo] = { _subplot: geo };
+    var labels = trace._module.formatLabels(di, trace, fullLayout);
+    pointData.lonLabel = labels.lonLabel;
+    pointData.latLabel = labels.latLabel;
+    pointData.color = getTraceColor(trace, di);
+    pointData.extraText = getExtraText(trace, di, pointData, cd[0].t.labels);
+    pointData.hovertemplate = trace.hovertemplate;
+    return [pointData];
+  }
+  function getExtraText(trace, pt, pointData, labels) {
+    if (trace.hovertemplate) return;
+    var hoverinfo = pt.hi || trace.hoverinfo;
+    var parts = hoverinfo === "all" ? attributes_default21.hoverinfo.flags : hoverinfo.split("+");
+    var hasLocation = parts.indexOf("location") !== -1 && Array.isArray(trace.locations);
+    var hasLon = parts.indexOf("lon") !== -1;
+    var hasLat = parts.indexOf("lat") !== -1;
+    var hasText = parts.indexOf("text") !== -1;
+    var text = [];
+    function format4(val) {
+      return val + "\xB0";
+    }
+    if (hasLocation) {
+      text.push(pt.loc);
+    } else if (hasLon && hasLat) {
+      text.push("(" + format4(pointData.latLabel) + ", " + format4(pointData.lonLabel) + ")");
+    } else if (hasLon) {
+      text.push(labels.lon + format4(pointData.lonLabel));
+    } else if (hasLat) {
+      text.push(labels.lat + format4(pointData.latLabel));
+    }
+    if (hasText) {
+      fillText3(pt, trace, text);
+    }
+    return text.join("<br>");
+  }
 
-  // src/traces/choropleth/index.js
-  var { calcGeoJSON: _req49, plot: _req54 } = plot_default2;
-  var { style: _req63, styleOnSelect: _req72 } = style_default2;
+  // src/traces/scattergeo/event_data.js
+  function eventData2(out, pt, trace, cd, pointNumber) {
+    out.lon = pt.lon;
+    out.lat = pt.lat;
+    out.location = pt.loc ? pt.loc : null;
+    var cdi = cd[pointNumber];
+    if (cdi.fIn && cdi.fIn.properties) {
+      out.properties = cdi.fIn.properties;
+    }
+    return out;
+  }
+
+  // src/traces/scattergeo/select.js
+  var { BADNUM: BADNUM18 } = numerical_default;
+  function selectPoints3(searchInfo, selectionTester) {
+    var cd = searchInfo.cd;
+    var xa = searchInfo.xaxis;
+    var ya = searchInfo.yaxis;
+    var selection = [];
+    var trace = cd[0].trace;
+    var di, lonlat, x, y, i;
+    var hasOnlyLines = !subtypes_default.hasMarkers(trace) && !subtypes_default.hasText(trace);
+    if (hasOnlyLines) return [];
+    if (selectionTester === false) {
+      for (i = 0; i < cd.length; i++) {
+        cd[i].selected = 0;
+      }
+    } else {
+      for (i = 0; i < cd.length; i++) {
+        di = cd[i];
+        lonlat = di.lonlat;
+        if (lonlat[0] === BADNUM18) continue;
+        x = xa.c2p(lonlat);
+        y = ya.c2p(lonlat);
+        if (selectionTester.contains([x, y], null, i, searchInfo)) {
+          selection.push({
+            pointNumber: i,
+            lon: lonlat[0],
+            lat: lonlat[1]
+          });
+          di.selected = 1;
+        } else {
+          di.selected = 0;
+        }
+      }
+    }
+    return selection;
+  }
+
+  // src/traces/scattergeo/index.js
+  var { calcGeoJSON: _req53, plot: _req62 } = plot_default2;
+  var { styleOnSelect: _req8 } = style_default;
+  var scattergeo_default = {
+    attributes: attributes_default21,
+    supplyDefaults: supplyDefaults4,
+    colorbar: marker_colorbar_default,
+    formatLabels: formatLabels2,
+    calc: calc6,
+    calcGeoJSON: _req53,
+    plot: _req62,
+    style: style6,
+    styleOnSelect: _req8,
+    hoverPoints: hoverPoints3,
+    eventData: eventData2,
+    selectPoints: selectPoints3,
+    moduleType: "trace",
+    name: "scattergeo",
+    basePlotModule: geo_default,
+    categories: ["geo", "symbols", "showLegend", "scatter-like"],
+    meta: {}
+  };
 
   // src/components/calendars/calendars.js
   var import_main = __toESM(require_main(), 1);
@@ -74119,57 +74846,7 @@ var Plotly = (() => {
   };
 
   // lib/index-geo.js
-  core_default.register([
-    _req0,
-    _req1,
-    _req2,
-    _req3,
-    _req4,
-    _req5,
-    _req6,
-    _req7,
-    _req8,
-    _req9,
-    _req10,
-    _req11,
-    _req12,
-    _req13,
-    _req14,
-    _req15,
-    _req16,
-    _req17,
-    _req18,
-    _req19,
-    _req20,
-    _req21,
-    _req22,
-    _req23,
-    _req24,
-    _req25,
-    _req26,
-    _req27,
-    _req28,
-    _req29,
-    _req30,
-    _req31,
-    _req32,
-    _req33,
-    _req34,
-    _req35,
-    _req36,
-    _req37,
-    _req38,
-    _req39,
-    _req40,
-    _req41,
-    _req42,
-    _req43,
-    _req44,
-    _req45,
-    _req46,
-    _req47,
-    _req48
-  ]);
+  core_default.register([choropleth_default, scatter_default, scattergeo_default, calendars_default2]);
   var index_geo_default = core_default;
   return __toCommonJS(index_geo_exports);
 })();

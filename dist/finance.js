@@ -40,8 +40,8 @@ var Plotly = (() => {
     return mod7 || (0, cb[__getOwnPropNames(cb)[0]])((mod7 = { exports: {} }).exports, mod7), mod7.exports;
   };
   var __export = (target, all) => {
-    for (var name6 in all)
-      __defProp(target, name6, { get: all[name6], enumerable: true });
+    for (var name9 in all)
+      __defProp(target, name9, { get: all[name9], enumerable: true });
   };
   var __copyProps = (to, from, except, desc) => {
     if (from && typeof from === "object" || typeof from === "function") {
@@ -97,14 +97,14 @@ var Plotly = (() => {
             d3_document.createElement("DIV").style.setProperty("opacity", 0, "");
           } catch (error) {
             var d3_element_prototype = this.Element.prototype, d3_element_setAttribute = d3_element_prototype.setAttribute, d3_element_setAttributeNS = d3_element_prototype.setAttributeNS, d3_style_prototype = this.CSSStyleDeclaration.prototype, d3_style_setProperty = d3_style_prototype.setProperty;
-            d3_element_prototype.setAttribute = function(name6, value) {
-              d3_element_setAttribute.call(this, name6, value + "");
+            d3_element_prototype.setAttribute = function(name9, value) {
+              d3_element_setAttribute.call(this, name9, value + "");
             };
             d3_element_prototype.setAttributeNS = function(space, local, value) {
               d3_element_setAttributeNS.call(this, space, local, value + "");
             };
-            d3_style_prototype.setProperty = function(name6, value, priority) {
-              d3_style_setProperty.call(this, name6, value + "", priority);
+            d3_style_prototype.setProperty = function(name9, value, priority) {
+              d3_style_setProperty.call(this, name9, value + "", priority);
             };
           }
         }
@@ -539,11 +539,11 @@ var Plotly = (() => {
             return value === source ? target : value;
           };
         }
-        function d3_vendorSymbol(object, name6) {
-          if (name6 in object) return name6;
-          name6 = name6.charAt(0).toUpperCase() + name6.slice(1);
+        function d3_vendorSymbol(object, name9) {
+          if (name9 in object) return name9;
+          name9 = name9.charAt(0).toUpperCase() + name9.slice(1);
           for (var i = 0, n = d3_vendorPrefixes.length; i < n; ++i) {
-            var prefixName = d3_vendorPrefixes[i] + name6;
+            var prefixName = d3_vendorPrefixes[i] + name9;
             if (prefixName in object) return prefixName;
           }
         }
@@ -558,15 +558,15 @@ var Plotly = (() => {
         function d3_dispatch() {
         }
         d3_dispatch.prototype.on = function(type, listener) {
-          var i = type.indexOf("."), name6 = "";
+          var i = type.indexOf("."), name9 = "";
           if (i >= 0) {
-            name6 = type.slice(i + 1);
+            name9 = type.slice(i + 1);
             type = type.slice(0, i);
           }
-          if (type) return arguments.length < 2 ? this[type].on(name6) : this[type].on(name6, listener);
+          if (type) return arguments.length < 2 ? this[type].on(name9) : this[type].on(name9, listener);
           if (arguments.length === 2) {
             if (listener == null) for (type in this) {
-              if (this.hasOwnProperty(type)) this[type].on(name6, null);
+              if (this.hasOwnProperty(type)) this[type].on(name9, null);
             }
             return this;
           }
@@ -578,15 +578,15 @@ var Plotly = (() => {
             while (++i < n) if (l = z[i].on) l.apply(this, arguments);
             return dispatch;
           }
-          event.on = function(name6, listener) {
-            var l = listenerByName.get(name6), i;
+          event.on = function(name9, listener) {
+            var l = listenerByName.get(name9), i;
             if (arguments.length < 2) return l && l.on;
             if (l) {
               l.on = null;
               listeners = listeners.slice(0, i = listeners.indexOf(l)).concat(listeners.slice(i + 1));
-              listenerByName.remove(name6);
+              listenerByName.remove(name9);
             }
-            if (listener) listeners.push(listenerByName.set(name6, {
+            if (listener) listeners.push(listenerByName.set(name9, {
               on: listener
             }));
             return dispatch;
@@ -704,154 +704,154 @@ var Plotly = (() => {
         };
         d355.ns = {
           prefix: d3_nsPrefix,
-          qualify: function(name6) {
-            var i = name6.indexOf(":"), prefix = name6;
-            if (i >= 0 && (prefix = name6.slice(0, i)) !== "xmlns") name6 = name6.slice(i + 1);
+          qualify: function(name9) {
+            var i = name9.indexOf(":"), prefix = name9;
+            if (i >= 0 && (prefix = name9.slice(0, i)) !== "xmlns") name9 = name9.slice(i + 1);
             return d3_nsPrefix.hasOwnProperty(prefix) ? {
               space: d3_nsPrefix[prefix],
-              local: name6
-            } : name6;
+              local: name9
+            } : name9;
           }
         };
-        d3_selectionPrototype.attr = function(name6, value) {
+        d3_selectionPrototype.attr = function(name9, value) {
           if (arguments.length < 2) {
-            if (typeof name6 === "string") {
+            if (typeof name9 === "string") {
               var node = this.node();
-              name6 = d355.ns.qualify(name6);
-              return name6.local ? node.getAttributeNS(name6.space, name6.local) : node.getAttribute(name6);
+              name9 = d355.ns.qualify(name9);
+              return name9.local ? node.getAttributeNS(name9.space, name9.local) : node.getAttribute(name9);
             }
-            for (value in name6) this.each(d3_selection_attr(value, name6[value]));
+            for (value in name9) this.each(d3_selection_attr(value, name9[value]));
             return this;
           }
-          return this.each(d3_selection_attr(name6, value));
+          return this.each(d3_selection_attr(name9, value));
         };
-        function d3_selection_attr(name6, value) {
-          name6 = d355.ns.qualify(name6);
+        function d3_selection_attr(name9, value) {
+          name9 = d355.ns.qualify(name9);
           function attrNull() {
-            this.removeAttribute(name6);
+            this.removeAttribute(name9);
           }
           function attrNullNS() {
-            this.removeAttributeNS(name6.space, name6.local);
+            this.removeAttributeNS(name9.space, name9.local);
           }
           function attrConstant() {
-            this.setAttribute(name6, value);
+            this.setAttribute(name9, value);
           }
           function attrConstantNS() {
-            this.setAttributeNS(name6.space, name6.local, value);
+            this.setAttributeNS(name9.space, name9.local, value);
           }
           function attrFunction() {
             var x = value.apply(this, arguments);
-            if (x == null) this.removeAttribute(name6);
-            else this.setAttribute(name6, x);
+            if (x == null) this.removeAttribute(name9);
+            else this.setAttribute(name9, x);
           }
           function attrFunctionNS() {
             var x = value.apply(this, arguments);
-            if (x == null) this.removeAttributeNS(name6.space, name6.local);
-            else this.setAttributeNS(name6.space, name6.local, x);
+            if (x == null) this.removeAttributeNS(name9.space, name9.local);
+            else this.setAttributeNS(name9.space, name9.local, x);
           }
-          return value == null ? name6.local ? attrNullNS : attrNull : typeof value === "function" ? name6.local ? attrFunctionNS : attrFunction : name6.local ? attrConstantNS : attrConstant;
+          return value == null ? name9.local ? attrNullNS : attrNull : typeof value === "function" ? name9.local ? attrFunctionNS : attrFunction : name9.local ? attrConstantNS : attrConstant;
         }
         function d3_collapse(s) {
           return s.trim().replace(/\s+/g, " ");
         }
-        d3_selectionPrototype.classed = function(name6, value) {
+        d3_selectionPrototype.classed = function(name9, value) {
           if (arguments.length < 2) {
-            if (typeof name6 === "string") {
-              var node = this.node(), n = (name6 = d3_selection_classes(name6)).length, i = -1;
+            if (typeof name9 === "string") {
+              var node = this.node(), n = (name9 = d3_selection_classes(name9)).length, i = -1;
               if (value = node.classList) {
-                while (++i < n) if (!value.contains(name6[i])) return false;
+                while (++i < n) if (!value.contains(name9[i])) return false;
               } else {
                 value = node.getAttribute("class");
-                while (++i < n) if (!d3_selection_classedRe(name6[i]).test(value)) return false;
+                while (++i < n) if (!d3_selection_classedRe(name9[i]).test(value)) return false;
               }
               return true;
             }
-            for (value in name6) this.each(d3_selection_classed(value, name6[value]));
+            for (value in name9) this.each(d3_selection_classed(value, name9[value]));
             return this;
           }
-          return this.each(d3_selection_classed(name6, value));
+          return this.each(d3_selection_classed(name9, value));
         };
-        function d3_selection_classedRe(name6) {
-          return new RegExp("(?:^|\\s+)" + d355.requote(name6) + "(?:\\s+|$)", "g");
+        function d3_selection_classedRe(name9) {
+          return new RegExp("(?:^|\\s+)" + d355.requote(name9) + "(?:\\s+|$)", "g");
         }
-        function d3_selection_classes(name6) {
-          return (name6 + "").trim().split(/^|\s+/);
+        function d3_selection_classes(name9) {
+          return (name9 + "").trim().split(/^|\s+/);
         }
-        function d3_selection_classed(name6, value) {
-          name6 = d3_selection_classes(name6).map(d3_selection_classedName);
-          var n = name6.length;
+        function d3_selection_classed(name9, value) {
+          name9 = d3_selection_classes(name9).map(d3_selection_classedName);
+          var n = name9.length;
           function classedConstant() {
             var i = -1;
-            while (++i < n) name6[i](this, value);
+            while (++i < n) name9[i](this, value);
           }
           function classedFunction() {
             var i = -1, x = value.apply(this, arguments);
-            while (++i < n) name6[i](this, x);
+            while (++i < n) name9[i](this, x);
           }
           return typeof value === "function" ? classedFunction : classedConstant;
         }
-        function d3_selection_classedName(name6) {
-          var re2 = d3_selection_classedRe(name6);
+        function d3_selection_classedName(name9) {
+          var re2 = d3_selection_classedRe(name9);
           return function(node, value) {
-            if (c = node.classList) return value ? c.add(name6) : c.remove(name6);
+            if (c = node.classList) return value ? c.add(name9) : c.remove(name9);
             var c = node.getAttribute("class") || "";
             if (value) {
               re2.lastIndex = 0;
-              if (!re2.test(c)) node.setAttribute("class", d3_collapse(c + " " + name6));
+              if (!re2.test(c)) node.setAttribute("class", d3_collapse(c + " " + name9));
             } else {
               node.setAttribute("class", d3_collapse(c.replace(re2, " ")));
             }
           };
         }
-        d3_selectionPrototype.style = function(name6, value, priority) {
+        d3_selectionPrototype.style = function(name9, value, priority) {
           var n = arguments.length;
           if (n < 3) {
-            if (typeof name6 !== "string") {
+            if (typeof name9 !== "string") {
               if (n < 2) value = "";
-              for (priority in name6) this.each(d3_selection_style(priority, name6[priority], value));
+              for (priority in name9) this.each(d3_selection_style(priority, name9[priority], value));
               return this;
             }
             if (n < 2) {
               var node = this.node();
-              return d3_window(node).getComputedStyle(node, null).getPropertyValue(name6);
+              return d3_window(node).getComputedStyle(node, null).getPropertyValue(name9);
             }
             priority = "";
           }
-          return this.each(d3_selection_style(name6, value, priority));
+          return this.each(d3_selection_style(name9, value, priority));
         };
-        function d3_selection_style(name6, value, priority) {
+        function d3_selection_style(name9, value, priority) {
           function styleNull() {
-            this.style.removeProperty(name6);
+            this.style.removeProperty(name9);
           }
           function styleConstant() {
-            this.style.setProperty(name6, value, priority);
+            this.style.setProperty(name9, value, priority);
           }
           function styleFunction() {
             var x = value.apply(this, arguments);
-            if (x == null) this.style.removeProperty(name6);
-            else this.style.setProperty(name6, x, priority);
+            if (x == null) this.style.removeProperty(name9);
+            else this.style.setProperty(name9, x, priority);
           }
           return value == null ? styleNull : typeof value === "function" ? styleFunction : styleConstant;
         }
-        d3_selectionPrototype.property = function(name6, value) {
+        d3_selectionPrototype.property = function(name9, value) {
           if (arguments.length < 2) {
-            if (typeof name6 === "string") return this.node()[name6];
-            for (value in name6) this.each(d3_selection_property(value, name6[value]));
+            if (typeof name9 === "string") return this.node()[name9];
+            for (value in name9) this.each(d3_selection_property(value, name9[value]));
             return this;
           }
-          return this.each(d3_selection_property(name6, value));
+          return this.each(d3_selection_property(name9, value));
         };
-        function d3_selection_property(name6, value) {
+        function d3_selection_property(name9, value) {
           function propertyNull() {
-            delete this[name6];
+            delete this[name9];
           }
           function propertyConstant() {
-            this[name6] = value;
+            this[name9] = value;
           }
           function propertyFunction() {
             var x = value.apply(this, arguments);
-            if (x == null) delete this[name6];
-            else this[name6] = x;
+            if (x == null) delete this[name9];
+            else this[name9] = x;
           }
           return value == null ? propertyNull : typeof value === "function" ? propertyFunction : propertyConstant;
         }
@@ -875,27 +875,27 @@ var Plotly = (() => {
             this.innerHTML = value;
           }) : this.node().innerHTML;
         };
-        d3_selectionPrototype.append = function(name6) {
-          name6 = d3_selection_creator(name6);
+        d3_selectionPrototype.append = function(name9) {
+          name9 = d3_selection_creator(name9);
           return this.select(function() {
-            return this.appendChild(name6.apply(this, arguments));
+            return this.appendChild(name9.apply(this, arguments));
           });
         };
-        function d3_selection_creator(name6) {
+        function d3_selection_creator(name9) {
           function create() {
             var document2 = this.ownerDocument, namespace = this.namespaceURI;
-            return namespace === d3_nsXhtml && document2.documentElement.namespaceURI === d3_nsXhtml ? document2.createElement(name6) : document2.createElementNS(namespace, name6);
+            return namespace === d3_nsXhtml && document2.documentElement.namespaceURI === d3_nsXhtml ? document2.createElement(name9) : document2.createElementNS(namespace, name9);
           }
           function createNS() {
-            return this.ownerDocument.createElementNS(name6.space, name6.local);
+            return this.ownerDocument.createElementNS(name9.space, name9.local);
           }
-          return typeof name6 === "function" ? name6 : (name6 = d355.ns.qualify(name6)).local ? createNS : create;
+          return typeof name9 === "function" ? name9 : (name9 = d355.ns.qualify(name9)).local ? createNS : create;
         }
-        d3_selectionPrototype.insert = function(name6, before) {
-          name6 = d3_selection_creator(name6);
+        d3_selectionPrototype.insert = function(name9, before) {
+          name9 = d3_selection_creator(name9);
           before = d3_selection_selector(before);
           return this.select(function() {
-            return this.insertBefore(name6.apply(this, arguments), before.apply(this, arguments) || null);
+            return this.insertBefore(name9.apply(this, arguments), before.apply(this, arguments) || null);
           });
         };
         d3_selectionPrototype.remove = function() {
@@ -1101,9 +1101,9 @@ var Plotly = (() => {
           }
           return d3_selection(subgroups);
         };
-        d3_selection_enterPrototype.insert = function(name6, before) {
+        d3_selection_enterPrototype.insert = function(name9, before) {
           if (arguments.length < 2) before = d3_selection_enterInsertBefore(this);
-          return d3_selectionPrototype.insert.call(this, name6, before);
+          return d3_selectionPrototype.insert.call(this, name9, before);
         };
         function d3_selection_enterInsertBefore(enter) {
           var i0, j0;
@@ -1151,30 +1151,30 @@ var Plotly = (() => {
           return this.each(d3_selection_on(type, listener, capture));
         };
         function d3_selection_on(type, listener, capture) {
-          var name6 = "__on" + type, i = type.indexOf("."), wrap = d3_selection_onListener;
+          var name9 = "__on" + type, i = type.indexOf("."), wrap = d3_selection_onListener;
           if (i > 0) type = type.slice(0, i);
           var filter2 = d3_selection_onFilters.get(type);
           if (filter2) type = filter2, wrap = d3_selection_onFilter;
           function onRemove() {
-            var l = this[name6];
+            var l = this[name9];
             if (l) {
               this.removeEventListener(type, l, l.$);
-              delete this[name6];
+              delete this[name9];
             }
           }
           function onAdd() {
             var l = wrap(listener, d3_array(arguments));
             onRemove.call(this);
-            this.addEventListener(type, this[name6] = l, l.$ = capture);
+            this.addEventListener(type, this[name9] = l, l.$ = capture);
             l._ = listener;
           }
           function removeAll() {
             var re2 = new RegExp("^__on([^.]+)" + d355.requote(type) + "$"), match;
-            for (var name7 in this) {
-              if (match = name7.match(re2)) {
-                var l = this[name7];
+            for (var name10 in this) {
+              if (match = name10.match(re2)) {
+                var l = this[name10];
                 this.removeEventListener(match[1], l, l.$);
-                delete this[name7];
+                delete this[name10];
               }
             }
           }
@@ -1212,7 +1212,7 @@ var Plotly = (() => {
         }
         var d3_event_dragSelect, d3_event_dragId = 0;
         function d3_event_dragSuppress(node) {
-          var name6 = ".dragsuppress-" + ++d3_event_dragId, click2 = "click" + name6, w = d355.select(d3_window(node)).on("touchmove" + name6, d3_eventPreventDefault).on("dragstart" + name6, d3_eventPreventDefault).on("selectstart" + name6, d3_eventPreventDefault);
+          var name9 = ".dragsuppress-" + ++d3_event_dragId, click2 = "click" + name9, w = d355.select(d3_window(node)).on("touchmove" + name9, d3_eventPreventDefault).on("dragstart" + name9, d3_eventPreventDefault).on("selectstart" + name9, d3_eventPreventDefault);
           if (d3_event_dragSelect == null) {
             d3_event_dragSelect = "onselectstart" in node ? false : d3_vendorSymbol(node.style, "userSelect");
           }
@@ -1221,7 +1221,7 @@ var Plotly = (() => {
             style11[d3_event_dragSelect] = "none";
           }
           return function(suppressClick) {
-            w.on(name6, null);
+            w.on(name9, null);
             if (d3_event_dragSelect) style11[d3_event_dragSelect] = select;
             if (suppressClick) {
               var off = function() {
@@ -1281,9 +1281,9 @@ var Plotly = (() => {
           function drag() {
             this.on("mousedown.drag", mousedown).on("touchstart.drag", touchstart);
           }
-          function dragstart(id, position, subject, move, end) {
+          function dragstart(id, position2, subject, move, end) {
             return function() {
-              var that = this, target = d355.event.target.correspondingElement || d355.event.target, parent = that.parentNode, dispatch = event.of(that, arguments), dragged = 0, dragId = id(), dragName = ".drag" + (dragId == null ? "" : "-" + dragId), dragOffset, dragSubject = d355.select(subject(target)).on(move + dragName, moved).on(end + dragName, ended), dragRestore = d3_event_dragSuppress(target), position0 = position(parent, dragId);
+              var that = this, target = d355.event.target.correspondingElement || d355.event.target, parent = that.parentNode, dispatch = event.of(that, arguments), dragged = 0, dragId = id(), dragName = ".drag" + (dragId == null ? "" : "-" + dragId), dragOffset, dragSubject = d355.select(subject(target)).on(move + dragName, moved).on(end + dragName, ended), dragRestore = d3_event_dragSuppress(target), position0 = position2(parent, dragId);
               if (origin) {
                 dragOffset = origin.apply(that, arguments);
                 dragOffset = [dragOffset.x - position0[0], dragOffset.y - position0[1]];
@@ -1294,7 +1294,7 @@ var Plotly = (() => {
                 type: "dragstart"
               });
               function moved() {
-                var position1 = position(parent, dragId), dx, dy;
+                var position1 = position2(parent, dragId), dx, dy;
                 if (!position1) return;
                 dx = position1[0] - position0[0];
                 dy = position1[1] - position0[1];
@@ -1309,7 +1309,7 @@ var Plotly = (() => {
                 });
               }
               function ended() {
-                if (!position(parent, dragId)) return;
+                if (!position2(parent, dragId)) return;
                 dragSubject.on(move + dragName, null).on(end + dragName, null);
                 dragRestore(dragged);
                 dispatch({
@@ -1782,38 +1782,38 @@ var Plotly = (() => {
         function d3_rgb_hex(v) {
           return v < 16 ? "0" + Math.max(0, v).toString(16) : Math.min(255, v).toString(16);
         }
-        function d3_rgb_parse(format5, rgb, hsl) {
-          var r = 0, g = 0, b = 0, m1, m2, color2;
+        function d3_rgb_parse(format5, rgb2, hsl2) {
+          var r = 0, g = 0, b = 0, m1, m2, color3;
           m1 = /([a-z]+)\((.*)\)/.exec(format5 = format5.toLowerCase());
           if (m1) {
             m2 = m1[2].split(",");
             switch (m1[1]) {
               case "hsl": {
-                return hsl(parseFloat(m2[0]), parseFloat(m2[1]) / 100, parseFloat(m2[2]) / 100);
+                return hsl2(parseFloat(m2[0]), parseFloat(m2[1]) / 100, parseFloat(m2[2]) / 100);
               }
               case "rgb": {
-                return rgb(d3_rgb_parseNumber(m2[0]), d3_rgb_parseNumber(m2[1]), d3_rgb_parseNumber(m2[2]));
+                return rgb2(d3_rgb_parseNumber(m2[0]), d3_rgb_parseNumber(m2[1]), d3_rgb_parseNumber(m2[2]));
               }
             }
           }
-          if (color2 = d3_rgb_names.get(format5)) {
-            return rgb(color2.r, color2.g, color2.b);
+          if (color3 = d3_rgb_names.get(format5)) {
+            return rgb2(color3.r, color3.g, color3.b);
           }
-          if (format5 != null && format5.charAt(0) === "#" && !isNaN(color2 = parseInt(format5.slice(1), 16))) {
+          if (format5 != null && format5.charAt(0) === "#" && !isNaN(color3 = parseInt(format5.slice(1), 16))) {
             if (format5.length === 4) {
-              r = (color2 & 3840) >> 4;
+              r = (color3 & 3840) >> 4;
               r = r >> 4 | r;
-              g = color2 & 240;
+              g = color3 & 240;
               g = g >> 4 | g;
-              b = color2 & 15;
+              b = color3 & 15;
               b = b << 4 | b;
             } else if (format5.length === 7) {
-              r = (color2 & 16711680) >> 16;
-              g = (color2 & 65280) >> 8;
-              b = color2 & 255;
+              r = (color3 & 16711680) >> 16;
+              g = (color3 & 65280) >> 8;
+              b = color3 & 255;
             }
           }
-          return rgb(r, g, b);
+          return rgb2(r, g, b);
         }
         function d3_rgb_hsl(r, g, b) {
           var min = Math.min(r /= 255, g /= 255, b /= 255), max = Math.max(r, g, b), d = max - min, h, s, l = (max + min) / 2;
@@ -2038,11 +2038,11 @@ var Plotly = (() => {
               d355.event = o;
             }
           };
-          xhr.header = function(name6, value) {
-            name6 = (name6 + "").toLowerCase();
-            if (arguments.length < 2) return headers[name6];
-            if (value == null) delete headers[name6];
-            else headers[name6] = value + "";
+          xhr.header = function(name9, value) {
+            name9 = (name9 + "").toLowerCase();
+            if (arguments.length < 2) return headers[name9];
+            if (value == null) delete headers[name9];
+            else headers[name9] = value + "";
             return xhr;
           };
           xhr.mimeType = function(value) {
@@ -2068,7 +2068,7 @@ var Plotly = (() => {
             if (arguments.length === 2 && typeof data === "function") callback2 = data, data = null;
             request.open(method, url, true);
             if (mimeType != null && !("accept" in headers)) headers["accept"] = mimeType + ",*/*";
-            if (request.setRequestHeader) for (var name6 in headers) request.setRequestHeader(name6, headers[name6]);
+            if (request.setRequestHeader) for (var name9 in headers) request.setRequestHeader(name9, headers[name9]);
             if (mimeType != null && request.overrideMimeType) request.overrideMimeType(mimeType);
             if (responseType != null) request.responseType = responseType;
             if (callback2 != null) xhr.on("error", callback2).on("load", function(request2) {
@@ -2596,8 +2596,8 @@ var Plotly = (() => {
           }
         }
         function d3_geom_clipLine(x0, y0, x1, y1) {
-          return function(line) {
-            var a = line.a, b = line.b, ax = a.x, ay = a.y, bx = b.x, by = b.y, t02 = 0, t12 = 1, dx = bx - ax, dy = by - ay, r;
+          return function(line2) {
+            var a = line2.a, b = line2.b, ax = a.x, ay = a.y, bx = b.x, by = b.y, t02 = 0, t12 = 1, dx = bx - ax, dy = by - ay, r;
             r = x0 - ax;
             if (!dx && r > 0) return;
             r /= dx;
@@ -2638,15 +2638,15 @@ var Plotly = (() => {
               if (r < t02) return;
               if (r < t12) t12 = r;
             }
-            if (t02 > 0) line.a = {
+            if (t02 > 0) line2.a = {
               x: ax + t02 * dx,
               y: ay + t02 * dy
             };
-            if (t12 < 1) line.b = {
+            if (t12 < 1) line2.b = {
               x: ax + t12 * dx,
               y: ay + t12 * dy
             };
-            return line;
+            return line2;
           };
         }
         function d3_geom_voronoiClipEdges(extent2) {
@@ -3389,8 +3389,8 @@ var Plotly = (() => {
             return d3_ease_reflect(d3_ease_reverse(f));
           }
         });
-        d355.ease = function(name6) {
-          var i = name6.indexOf("-"), t = i >= 0 ? name6.slice(0, i) : name6, m = i >= 0 ? name6.slice(i + 1) : "in";
+        d355.ease = function(name9) {
+          var i = name9.indexOf("-"), t = i >= 0 ? name9.slice(0, i) : name9, m = i >= 0 ? name9.slice(i + 1) : "in";
           t = d3_ease.get(t) || d3_ease_default;
           m = d3_ease_mode.get(m) || d3_identity;
           return d3_ease_clamp(m(t.apply(null, d3_arraySlice.call(arguments, 1))));
@@ -3952,8 +3952,8 @@ var Plotly = (() => {
             }
             for (i = 0; i < n; ++i) {
               o = nodes[i];
-              if (isNaN(o.x)) o.x = position("x", w);
-              if (isNaN(o.y)) o.y = position("y", h);
+              if (isNaN(o.x)) o.x = position2("x", w);
+              if (isNaN(o.y)) o.y = position2("y", h);
               if (isNaN(o.px)) o.px = o.x;
               if (isNaN(o.py)) o.py = o.y;
             }
@@ -3966,7 +3966,7 @@ var Plotly = (() => {
             charges = [];
             if (typeof charge === "function") for (i = 0; i < n; ++i) charges[i] = +charge.call(this, nodes[i], i);
             else for (i = 0; i < n; ++i) charges[i] = charge;
-            function position(dimension, size2) {
+            function position2(dimension, size2) {
               if (!neighbors) {
                 neighbors = new Array(n);
                 for (j = 0; j < n; ++j) {
@@ -4150,7 +4150,7 @@ var Plotly = (() => {
         }
         d355.layout.partition = function() {
           var hierarchy = d355.layout.hierarchy(), size = [1, 1];
-          function position(node, x, dx, dy) {
+          function position2(node, x, dx, dy) {
             var children = node.children;
             node.x = x;
             node.y = node.depth * dy;
@@ -4160,7 +4160,7 @@ var Plotly = (() => {
               var i = -1, n, c, d;
               dx = node.value ? dx / node.value : 0;
               while (++i < n) {
-                position(c = children[i], x, d = c.value * dx, dy);
+                position2(c = children[i], x, d = c.value * dx, dy);
                 x += d;
               }
             }
@@ -4175,7 +4175,7 @@ var Plotly = (() => {
           }
           function partition(d, i) {
             var nodes = hierarchy.call(this, d, i);
-            position(nodes[0], 0, size[0], size[1] / depth(nodes[0]));
+            position2(nodes[0], 0, size[0], size[1] / depth(nodes[0]));
             return nodes;
           }
           partition.size = function(x) {
@@ -4833,14 +4833,14 @@ var Plotly = (() => {
                   best = score;
                 } else {
                   row.area -= row.pop().area;
-                  position(row, u, rect, false);
+                  position2(row, u, rect, false);
                   u = Math.min(rect.dx, rect.dy);
                   row.length = row.area = 0;
                   best = Infinity;
                 }
               }
               if (row.length) {
-                position(row, u, rect, true);
+                position2(row, u, rect, true);
                 row.length = row.area = 0;
               }
               children.forEach(squarify);
@@ -4856,7 +4856,7 @@ var Plotly = (() => {
                 row.push(child);
                 row.area += child.area;
                 if (child.z != null) {
-                  position(row, child.z ? rect.dx : rect.dy, rect, !remaining.length);
+                  position2(row, child.z ? rect.dx : rect.dy, rect, !remaining.length);
                   row.length = row.area = 0;
                 }
               }
@@ -4874,7 +4874,7 @@ var Plotly = (() => {
             u *= u;
             return s ? Math.max(u * rmax * ratio / s, s / (u * rmin * ratio)) : Infinity;
           }
-          function position(row, u, rect, flush) {
+          function position2(row, u, rect, flush) {
             var i = -1, n = row.length, x = rect.x, y = rect.y, v = u ? round3(row.area / u) : 0, o;
             if (u == rect.dx) {
               if (flush || v > rect.dy) v = rect.dy;
@@ -5074,9 +5074,9 @@ var Plotly = (() => {
         function d3_scale_linear(domain, range, interpolate, clamp) {
           var output, input;
           function rescale() {
-            var linear = Math.min(domain.length, range.length) > 2 ? d3_scale_polylinear : d3_scale_bilinear, uninterpolate = clamp ? d3_uninterpolateClamp : d3_uninterpolateNumber;
-            output = linear(domain, range, uninterpolate, interpolate);
-            input = linear(range, domain, uninterpolate, d3_interpolate);
+            var linear2 = Math.min(domain.length, range.length) > 2 ? d3_scale_polylinear : d3_scale_bilinear, uninterpolate = clamp ? d3_uninterpolateClamp : d3_uninterpolateNumber;
+            output = linear2(domain, range, uninterpolate, interpolate);
+            input = linear2(range, domain, uninterpolate, d3_interpolate);
             return scale;
           }
           function scale(x) {
@@ -5123,8 +5123,8 @@ var Plotly = (() => {
           };
           return rescale();
         }
-        function d3_scale_linearRebind(scale, linear) {
-          return d355.rebind(scale, linear, "range", "rangeRound", "interpolate", "clamp");
+        function d3_scale_linearRebind(scale, linear2) {
+          return d355.rebind(scale, linear2, "range", "rangeRound", "interpolate", "clamp");
         }
         function d3_scale_linearNice(domain, m) {
           d3_scale_nice(domain, d3_scale_niceStep(d3_scale_linearTickRange(domain, m)[2]));
@@ -5162,7 +5162,7 @@ var Plotly = (() => {
         d355.scale.log = function() {
           return d3_scale_log(d355.scale.linear().domain([0, 1]), 10, true, [1, 10]);
         };
-        function d3_scale_log(linear, base, positive, domain) {
+        function d3_scale_log(linear2, base, positive, domain) {
           function log(x) {
             return (positive ? Math.log(x < 0 ? 0 : x) : -Math.log(x > 0 ? 0 : -x)) / Math.log(base);
           }
@@ -5170,26 +5170,26 @@ var Plotly = (() => {
             return positive ? Math.pow(base, x) : -Math.pow(base, -x);
           }
           function scale(x) {
-            return linear(log(x));
+            return linear2(log(x));
           }
           scale.invert = function(x) {
-            return pow(linear.invert(x));
+            return pow(linear2.invert(x));
           };
           scale.domain = function(x) {
             if (!arguments.length) return domain;
             positive = x[0] >= 0;
-            linear.domain((domain = x.map(Number)).map(log));
+            linear2.domain((domain = x.map(Number)).map(log));
             return scale;
           };
           scale.base = function(_4) {
             if (!arguments.length) return base;
             base = +_4;
-            linear.domain(domain.map(log));
+            linear2.domain(domain.map(log));
             return scale;
           };
           scale.nice = function() {
             var niced = d3_scale_nice(domain.map(log), positive ? Math : d3_scale_logNiceNegative);
-            linear.domain(niced);
+            linear2.domain(niced);
             domain = niced.map(pow);
             return scale;
           };
@@ -5212,9 +5212,9 @@ var Plotly = (() => {
             return ticks2;
           };
           scale.copy = function() {
-            return d3_scale_log(linear.copy(), base, positive, domain);
+            return d3_scale_log(linear2.copy(), base, positive, domain);
           };
-          return d3_scale_linearRebind(scale, linear);
+          return d3_scale_linearRebind(scale, linear2);
         }
         var d3_scale_logNiceNegative = {
           floor: function(x) {
@@ -5227,17 +5227,17 @@ var Plotly = (() => {
         d355.scale.pow = function() {
           return d3_scale_pow(d355.scale.linear(), 1, [0, 1]);
         };
-        function d3_scale_pow(linear, exponent, domain) {
+        function d3_scale_pow(linear2, exponent, domain) {
           var powp = d3_scale_powPow(exponent), powb = d3_scale_powPow(1 / exponent);
           function scale(x) {
-            return linear(powp(x));
+            return linear2(powp(x));
           }
           scale.invert = function(x) {
-            return powb(linear.invert(x));
+            return powb(linear2.invert(x));
           };
           scale.domain = function(x) {
             if (!arguments.length) return domain;
-            linear.domain((domain = x.map(Number)).map(powp));
+            linear2.domain((domain = x.map(Number)).map(powp));
             return scale;
           };
           scale.ticks = function(m) {
@@ -5253,13 +5253,13 @@ var Plotly = (() => {
             if (!arguments.length) return exponent;
             powp = d3_scale_powPow(exponent = x);
             powb = d3_scale_powPow(1 / exponent);
-            linear.domain(domain.map(powp));
+            linear2.domain(domain.map(powp));
             return scale;
           };
           scale.copy = function() {
-            return d3_scale_pow(linear.copy(), exponent, domain);
+            return d3_scale_pow(linear2.copy(), exponent, domain);
           };
-          return d3_scale_linearRebind(scale, linear);
+          return d3_scale_linearRebind(scale, linear2);
         }
         function d3_scale_powPow(e) {
           return function(x) {
@@ -5655,7 +5655,7 @@ var Plotly = (() => {
         }
         function d3_svg_line(projection) {
           var x = d3_geom_pointX, y = d3_geom_pointY, defined = d3_true, interpolate = d3_svg_lineLinear, interpolateKey = interpolate.key, tension = 0.7;
-          function line(data) {
+          function line2(data) {
             var segments = [], points = [], i = -1, n = data.length, d, fx = d3_functor(x), fy = d3_functor(y);
             function segment() {
               segments.push("M", interpolate(projection(points), tension));
@@ -5671,33 +5671,33 @@ var Plotly = (() => {
             if (points.length) segment();
             return segments.length ? segments.join("") : null;
           }
-          line.x = function(_4) {
+          line2.x = function(_4) {
             if (!arguments.length) return x;
             x = _4;
-            return line;
+            return line2;
           };
-          line.y = function(_4) {
+          line2.y = function(_4) {
             if (!arguments.length) return y;
             y = _4;
-            return line;
+            return line2;
           };
-          line.defined = function(_4) {
+          line2.defined = function(_4) {
             if (!arguments.length) return defined;
             defined = _4;
-            return line;
+            return line2;
           };
-          line.interpolate = function(_4) {
+          line2.interpolate = function(_4) {
             if (!arguments.length) return interpolateKey;
             if (typeof _4 === "function") interpolateKey = interpolate = _4;
             else interpolateKey = (interpolate = d3_svg_lineInterpolators.get(_4) || d3_svg_lineLinear).key;
-            return line;
+            return line2;
           };
-          line.tension = function(_4) {
+          line2.tension = function(_4) {
             if (!arguments.length) return tension;
             tension = _4;
-            return line;
+            return line2;
           };
-          return line;
+          return line2;
         }
         d355.svg.line = function() {
           return d3_svg_line(d3_identity);
@@ -5903,10 +5903,10 @@ var Plotly = (() => {
           return points.length < 3 ? d3_svg_lineLinear(points) : points[0] + d3_svg_lineHermite(points, d3_svg_lineMonotoneTangents(points));
         }
         d355.svg.line.radial = function() {
-          var line = d3_svg_line(d3_svg_lineRadial);
-          line.radius = line.x, delete line.x;
-          line.angle = line.y, delete line.y;
-          return line;
+          var line2 = d3_svg_line(d3_svg_lineRadial);
+          line2.radius = line2.x, delete line2.x;
+          line2.angle = line2.y, delete line2.y;
+          return line2;
         };
         function d3_svg_lineRadial(points) {
           var point, i = -1, n = points.length, r, a;
@@ -6167,8 +6167,8 @@ var Plotly = (() => {
         });
         d355.svg.symbolTypes = d3_svg_symbols.keys();
         var d3_svg_symbolSqrt3 = Math.sqrt(3), d3_svg_symbolTan30 = Math.tan(30 * d3_radians);
-        d3_selectionPrototype.transition = function(name6) {
-          var id = d3_transitionInheritId || ++d3_transitionId, ns = d3_transitionNamespace(name6), subgroups = [], subgroup, node, transition2 = d3_transitionInherit || {
+        d3_selectionPrototype.transition = function(name9) {
+          var id = d3_transitionInheritId || ++d3_transitionId, ns = d3_transitionNamespace(name9), subgroups = [], subgroup, node, transition2 = d3_transitionInherit || {
             time: Date.now(),
             ease: d3_ease_cubicInOut,
             delay: 0,
@@ -6183,8 +6183,8 @@ var Plotly = (() => {
           }
           return d3_transition(subgroups, ns, id);
         };
-        d3_selectionPrototype.interrupt = function(name6) {
-          return this.each(name6 == null ? d3_selection_interrupt : d3_selection_interruptNS(d3_transitionNamespace(name6)));
+        d3_selectionPrototype.interrupt = function(name9) {
+          return this.each(name9 == null ? d3_selection_interrupt : d3_selection_interruptNS(d3_transitionNamespace(name9)));
         };
         var d3_selection_interrupt = d3_selection_interruptNS(d3_transitionNamespace());
         function d3_selection_interruptNS(ns) {
@@ -6211,8 +6211,8 @@ var Plotly = (() => {
         d3_transitionPrototype.empty = d3_selectionPrototype.empty;
         d3_transitionPrototype.node = d3_selectionPrototype.node;
         d3_transitionPrototype.size = d3_selectionPrototype.size;
-        d355.transition = function(selection, name6) {
-          return selection && selection.transition ? d3_transitionInheritId ? selection.transition(name6) : selection : d355.selection().transition(selection);
+        d355.transition = function(selection, name9) {
+          return selection && selection.transition ? d3_transitionInheritId ? selection.transition(name9) : selection : d355.selection().transition(selection);
         };
         d355.transition.prototype = d3_transitionPrototype;
         d3_transitionPrototype.select = function(selector) {
@@ -6263,21 +6263,21 @@ var Plotly = (() => {
           }
           return d3_transition(subgroups, this.namespace, this.id);
         };
-        d3_transitionPrototype.tween = function(name6, tween) {
+        d3_transitionPrototype.tween = function(name9, tween) {
           var id = this.id, ns = this.namespace;
-          if (arguments.length < 2) return this.node()[ns][id].tween.get(name6);
+          if (arguments.length < 2) return this.node()[ns][id].tween.get(name9);
           return d3_selection_each(this, tween == null ? function(node) {
-            node[ns][id].tween.remove(name6);
+            node[ns][id].tween.remove(name9);
           } : function(node) {
-            node[ns][id].tween.set(name6, tween);
+            node[ns][id].tween.set(name9, tween);
           });
         };
-        function d3_transition_tween(groups, name6, value, tween) {
+        function d3_transition_tween(groups, name9, value, tween) {
           var id = groups.id, ns = groups.namespace;
           return d3_selection_each(groups, typeof value === "function" ? function(node, i, j) {
-            node[ns][id].tween.set(name6, tween(value.call(node, node.__data__, i, j)));
+            node[ns][id].tween.set(name9, tween(value.call(node, node.__data__, i, j)));
           } : (value = tween(value), function(node) {
-            node[ns][id].tween.set(name6, value);
+            node[ns][id].tween.set(name9, value);
           }));
         }
         d3_transitionPrototype.attr = function(nameNS, value) {
@@ -6285,79 +6285,79 @@ var Plotly = (() => {
             for (value in nameNS) this.attr(value, nameNS[value]);
             return this;
           }
-          var interpolate = nameNS == "transform" ? d3_interpolateTransform : d3_interpolate, name6 = d355.ns.qualify(nameNS);
+          var interpolate = nameNS == "transform" ? d3_interpolateTransform : d3_interpolate, name9 = d355.ns.qualify(nameNS);
           function attrNull() {
-            this.removeAttribute(name6);
+            this.removeAttribute(name9);
           }
           function attrNullNS() {
-            this.removeAttributeNS(name6.space, name6.local);
+            this.removeAttributeNS(name9.space, name9.local);
           }
           function attrTween(b) {
             return b == null ? attrNull : (b += "", function() {
-              var a = this.getAttribute(name6), i;
+              var a = this.getAttribute(name9), i;
               return a !== b && (i = interpolate(a, b), function(t) {
-                this.setAttribute(name6, i(t));
+                this.setAttribute(name9, i(t));
               });
             });
           }
           function attrTweenNS(b) {
             return b == null ? attrNullNS : (b += "", function() {
-              var a = this.getAttributeNS(name6.space, name6.local), i;
+              var a = this.getAttributeNS(name9.space, name9.local), i;
               return a !== b && (i = interpolate(a, b), function(t) {
-                this.setAttributeNS(name6.space, name6.local, i(t));
+                this.setAttributeNS(name9.space, name9.local, i(t));
               });
             });
           }
-          return d3_transition_tween(this, "attr." + nameNS, value, name6.local ? attrTweenNS : attrTween);
+          return d3_transition_tween(this, "attr." + nameNS, value, name9.local ? attrTweenNS : attrTween);
         };
         d3_transitionPrototype.attrTween = function(nameNS, tween) {
-          var name6 = d355.ns.qualify(nameNS);
+          var name9 = d355.ns.qualify(nameNS);
           function attrTween(d, i) {
-            var f = tween.call(this, d, i, this.getAttribute(name6));
+            var f = tween.call(this, d, i, this.getAttribute(name9));
             return f && function(t) {
-              this.setAttribute(name6, f(t));
+              this.setAttribute(name9, f(t));
             };
           }
           function attrTweenNS(d, i) {
-            var f = tween.call(this, d, i, this.getAttributeNS(name6.space, name6.local));
+            var f = tween.call(this, d, i, this.getAttributeNS(name9.space, name9.local));
             return f && function(t) {
-              this.setAttributeNS(name6.space, name6.local, f(t));
+              this.setAttributeNS(name9.space, name9.local, f(t));
             };
           }
-          return this.tween("attr." + nameNS, name6.local ? attrTweenNS : attrTween);
+          return this.tween("attr." + nameNS, name9.local ? attrTweenNS : attrTween);
         };
-        d3_transitionPrototype.style = function(name6, value, priority) {
+        d3_transitionPrototype.style = function(name9, value, priority) {
           var n = arguments.length;
           if (n < 3) {
-            if (typeof name6 !== "string") {
+            if (typeof name9 !== "string") {
               if (n < 2) value = "";
-              for (priority in name6) this.style(priority, name6[priority], value);
+              for (priority in name9) this.style(priority, name9[priority], value);
               return this;
             }
             priority = "";
           }
           function styleNull() {
-            this.style.removeProperty(name6);
+            this.style.removeProperty(name9);
           }
           function styleString(b) {
             return b == null ? styleNull : (b += "", function() {
-              var a = d3_window(this).getComputedStyle(this, null).getPropertyValue(name6), i;
+              var a = d3_window(this).getComputedStyle(this, null).getPropertyValue(name9), i;
               return a !== b && (i = d3_interpolate(a, b), function(t) {
-                this.style.setProperty(name6, i(t), priority);
+                this.style.setProperty(name9, i(t), priority);
               });
             });
           }
-          return d3_transition_tween(this, "style." + name6, value, styleString);
+          return d3_transition_tween(this, "style." + name9, value, styleString);
         };
-        d3_transitionPrototype.styleTween = function(name6, tween, priority) {
+        d3_transitionPrototype.styleTween = function(name9, tween, priority) {
           if (arguments.length < 3) priority = "";
           function styleTween(d, i) {
-            var f = tween.call(this, d, i, d3_window(this).getComputedStyle(this, null).getPropertyValue(name6));
+            var f = tween.call(this, d, i, d3_window(this).getComputedStyle(this, null).getPropertyValue(name9));
             return f && function(t) {
-              this.style.setProperty(name6, f(t), priority);
+              this.style.setProperty(name9, f(t), priority);
             };
           }
-          return this.tween("style." + name6, styleTween);
+          return this.tween("style." + name9, styleTween);
         };
         d3_transitionPrototype.text = function(value) {
           return d3_transition_tween(this, "text", value, d3_transition_text);
@@ -6442,8 +6442,8 @@ var Plotly = (() => {
           }
           return d3_transition(subgroups, ns, id1);
         };
-        function d3_transitionNamespace(name6) {
-          return name6 == null ? "__transition__" : "__transition_" + name6 + "__";
+        function d3_transitionNamespace(name9) {
+          return name9 == null ? "__transition__" : "__transition_" + name9 + "__";
         }
         function d3_transitionNode(node, i, ns, id, inherit) {
           var lock = node[ns] || (node[ns] = {
@@ -6803,21 +6803,21 @@ var Plotly = (() => {
               }
             }
             function move1(point, scale, i) {
-              var range = d3_scaleRange(scale), r0 = range[0], r1 = range[1], position = origin[i], extent2 = i ? yExtent : xExtent, size = extent2[1] - extent2[0], min, max;
+              var range = d3_scaleRange(scale), r0 = range[0], r1 = range[1], position2 = origin[i], extent2 = i ? yExtent : xExtent, size = extent2[1] - extent2[0], min, max;
               if (dragging) {
-                r0 -= position;
-                r1 -= size + position;
+                r0 -= position2;
+                r1 -= size + position2;
               }
               min = (i ? yClamp : xClamp) ? Math.max(r0, Math.min(r1, point[i])) : point[i];
               if (dragging) {
-                max = (min += position) + size;
+                max = (min += position2) + size;
               } else {
-                if (center) position = Math.max(r0, Math.min(r1, 2 * center[i] - min));
-                if (position < min) {
+                if (center) position2 = Math.max(r0, Math.min(r1, 2 * center[i] - min));
+                if (position2 < min) {
                   max = min;
-                  min = position;
+                  min = position2;
                 } else {
-                  max = position;
+                  max = position2;
                 }
               }
               if (extent2[0] != min || extent2[1] != max) {
@@ -8122,7 +8122,7 @@ var Plotly = (() => {
         return this;
       };
       EventEmitter4.prototype.removeListener = function removeListener(type, listener) {
-        var list2, events, position, i, originalListener;
+        var list2, events, position2, i, originalListener;
         checkListener(listener);
         events = this._events;
         if (events === void 0)
@@ -8139,20 +8139,20 @@ var Plotly = (() => {
               this.emit("removeListener", type, list2.listener || listener);
           }
         } else if (typeof list2 !== "function") {
-          position = -1;
+          position2 = -1;
           for (i = list2.length - 1; i >= 0; i--) {
             if (list2[i] === listener || list2[i].listener === listener) {
               originalListener = list2[i].listener;
-              position = i;
+              position2 = i;
               break;
             }
           }
-          if (position < 0)
+          if (position2 < 0)
             return this;
-          if (position === 0)
+          if (position2 === 0)
             list2.shift();
           else {
-            spliceOne(list2, position);
+            spliceOne(list2, position2);
           }
           if (list2.length === 1)
             events[type] = list2[0];
@@ -8260,10 +8260,10 @@ var Plotly = (() => {
         }
         return ret;
       }
-      function once(emitter, name6) {
+      function once(emitter, name9) {
         return new Promise(function(resolve, reject) {
           function errorListener(err) {
-            emitter.removeListener(name6, resolver);
+            emitter.removeListener(name9, resolver);
             reject(err);
           }
           function resolver() {
@@ -8273,8 +8273,8 @@ var Plotly = (() => {
             resolve([].slice.call(arguments));
           }
           ;
-          eventTargetAgnosticAddListener(emitter, name6, resolver, { once: true });
-          if (name6 !== "error") {
+          eventTargetAgnosticAddListener(emitter, name9, resolver, { once: true });
+          if (name9 !== "error") {
             addErrorHandlerIfEventEmitter(emitter, errorListener, { once: true });
           }
         });
@@ -8284,17 +8284,17 @@ var Plotly = (() => {
           eventTargetAgnosticAddListener(emitter, "error", handler, flags);
         }
       }
-      function eventTargetAgnosticAddListener(emitter, name6, listener, flags) {
+      function eventTargetAgnosticAddListener(emitter, name9, listener, flags) {
         if (typeof emitter.on === "function") {
           if (flags.once) {
-            emitter.once(name6, listener);
+            emitter.once(name9, listener);
           } else {
-            emitter.on(name6, listener);
+            emitter.on(name9, listener);
           }
         } else if (typeof emitter.addEventListener === "function") {
-          emitter.addEventListener(name6, function wrapListener(arg) {
+          emitter.addEventListener(name9, function wrapListener(arg) {
             if (flags.once) {
-              emitter.removeEventListener(name6, wrapListener);
+              emitter.removeEventListener(name9, wrapListener);
             }
             listener(arg);
           });
@@ -8401,13 +8401,13 @@ var Plotly = (() => {
   // node_modules/.pnpm/native-promise-only@0.8.1/node_modules/native-promise-only/lib/npo.src.js
   var require_npo_src = __commonJS({
     "node_modules/.pnpm/native-promise-only@0.8.1/node_modules/native-promise-only/lib/npo.src.js"(exports, module) {
-      (function UMD(name6, context, definition) {
-        context[name6] = context[name6] || definition();
+      (function UMD(name9, context, definition) {
+        context[name9] = context[name9] || definition();
         if (typeof module != "undefined" && module.exports) {
-          module.exports = context[name6];
+          module.exports = context[name9];
         } else if (typeof define == "function" && false) {
           define(function $AMD$() {
-            return context[name6];
+            return context[name9];
           });
         }
       })("Promise", typeof window != "undefined" ? window : exports, function DEF() {
@@ -8417,16 +8417,16 @@ var Plotly = (() => {
         } : setTimeout;
         try {
           Object.defineProperty({}, "x", {});
-          builtInProp = function builtInProp2(obj, name6, val, config) {
-            return Object.defineProperty(obj, name6, {
+          builtInProp = function builtInProp2(obj, name9, val, config) {
+            return Object.defineProperty(obj, name9, {
               value: val,
               writable: true,
               configurable: config !== false
             });
           };
         } catch (err) {
-          builtInProp = function builtInProp2(obj, name6, val) {
-            obj[name6] = val;
+          builtInProp = function builtInProp2(obj, name9, val) {
+            obj[name9] = val;
             return obj;
           };
         }
@@ -10003,16 +10003,16 @@ var Plotly = (() => {
             @param [language=''] {string} The language code to use for localisation (default is English).
             @return {Calendar} The calendar and localisation.
             @throws Error if calendar not found. */
-        instance: function(name6, language) {
-          name6 = (name6 || "gregorian").toLowerCase();
+        instance: function(name9, language) {
+          name9 = (name9 || "gregorian").toLowerCase();
           language = language || "";
-          var cal = this._localCals[name6 + "-" + language];
-          if (!cal && this.calendars[name6]) {
-            cal = new this.calendars[name6](language);
-            this._localCals[name6 + "-" + language] = cal;
+          var cal = this._localCals[name9 + "-" + language];
+          if (!cal && this.calendars[name9]) {
+            cal = new this.calendars[name9](language);
+            this._localCals[name9 + "-" + language] = cal;
           }
           if (!cal) {
-            throw (this.local.invalidCalendar || this.regionalOptions[""].invalidCalendar).replace(/\{0\}/, name6);
+            throw (this.local.invalidCalendar || this.regionalOptions[""].invalidCalendar).replace(/\{0\}/, name9);
           }
           return cal;
         },
@@ -12773,8 +12773,8 @@ var Plotly = (() => {
           registerLocale(newModule);
           break;
         case "apiMethod":
-          var name6 = newModule.name;
-          apiMethodRegistry[name6] = newModule.fn;
+          var name9 = newModule.name;
+          apiMethodRegistry[name9] = newModule.fn;
           break;
         default:
           throw new Error("Invalid module was attempted to be registered!");
@@ -12798,15 +12798,15 @@ var Plotly = (() => {
     }
     return !!_module.categories[category2];
   };
-  var getComponentMethod = function(name6, method) {
-    var _module = componentsRegistry[name6];
+  var getComponentMethod = function(name9, method) {
+    var _module = componentsRegistry[name9];
     if (!_module) return noop;
     return _module[method] || noop;
   };
   var call = function() {
-    var name6 = arguments[0];
+    var name9 = arguments[0];
     var args = [].slice.call(arguments, 1);
-    return apiMethodRegistry[name6].apply(null, args);
+    return apiMethodRegistry[name9].apply(null, args);
   };
   function registerTraceModule(_module) {
     var thisType = _module.name;
@@ -12866,19 +12866,19 @@ var Plotly = (() => {
     if (typeof _module.name !== "string") {
       throw new Error("Component module *name* must be a string.");
     }
-    var name6 = _module.name;
-    componentsRegistry[name6] = _module;
+    var name9 = _module.name;
+    componentsRegistry[name9] = _module;
     if (_module.layoutAttributes) {
       if (_module.layoutAttributes._isLinkedToArray) {
-        pushUnique(layoutArrayContainers, name6);
+        pushUnique(layoutArrayContainers, name9);
       }
       findArrayRegexps(_module);
     }
     for (var traceType in modules) {
-      mergeComponentAttrsToTrace(name6, traceType);
+      mergeComponentAttrsToTrace(name9, traceType);
     }
     for (var subplotName in subplotsRegistry) {
-      mergeComponentAttrsToSubplot(name6, subplotName);
+      mergeComponentAttrsToSubplot(name9, subplotName);
     }
     if (_module.schema && _module.schema.layout) {
       extendDeepAll2(layout_attributes_default2, _module.schema.layout);
@@ -14080,10 +14080,10 @@ var Plotly = (() => {
     var group = locale3.grouping === void 0 || locale3.thousands === void 0 ? identity_default : formatGroup_default(map.call(locale3.grouping, Number), locale3.thousands + ""), currencyPrefix = locale3.currency === void 0 ? "" : locale3.currency[0] + "", currencySuffix = locale3.currency === void 0 ? "" : locale3.currency[1] + "", decimal = locale3.decimal === void 0 ? "." : locale3.decimal + "", numerals = locale3.numerals === void 0 ? identity_default : formatNumerals_default(map.call(locale3.numerals, String)), percent = locale3.percent === void 0 ? "%" : locale3.percent + "", minus = locale3.minus === void 0 ? "-" : locale3.minus + "", nan = locale3.nan === void 0 ? "NaN" : locale3.nan + "";
     function newFormat(specifier) {
       specifier = formatSpecifier(specifier);
-      var fill = specifier.fill, align3 = specifier.align, sign2 = specifier.sign, symbol = specifier.symbol, zero = specifier.zero, width = specifier.width, comma = specifier.comma, precision = specifier.precision, trim = specifier.trim, type = specifier.type;
+      var fill = specifier.fill, align3 = specifier.align, sign2 = specifier.sign, symbol = specifier.symbol, zero2 = specifier.zero, width = specifier.width, comma = specifier.comma, precision = specifier.precision, trim = specifier.trim, type = specifier.type;
       if (type === "n") comma = true, type = "g";
       else if (!formatTypes_default[type]) precision === void 0 && (precision = 12), trim = true, type = "g";
-      if (zero || fill === "0" && align3 === "=") zero = true, fill = "0", align3 = "=";
+      if (zero2 || fill === "0" && align3 === "=") zero2 = true, fill = "0", align3 = "=";
       var prefix = symbol === "$" ? currencyPrefix : symbol === "#" && /[boxX]/.test(type) ? "0" + type.toLowerCase() : "", suffix = symbol === "$" ? currencySuffix : /[%p]/.test(type) ? percent : "";
       var formatType = formatTypes_default[type], maybeSuffix = /[defgprs%]/.test(type);
       precision = precision === void 0 ? 6 : /[gprs]/.test(type) ? Math.max(1, Math.min(21, precision)) : Math.max(0, Math.min(20, precision));
@@ -14111,9 +14111,9 @@ var Plotly = (() => {
             }
           }
         }
-        if (comma && !zero) value = group(value, Infinity);
+        if (comma && !zero2) value = group(value, Infinity);
         var length = valuePrefix.length + value.length + valueSuffix.length, padding = length < width ? new Array(width - length + 1).join(fill) : "";
-        if (comma && zero) value = group(padding + value, padding.length ? width - valueSuffix.length : Infinity), padding = "";
+        if (comma && zero2) value = group(padding + value, padding.length ? width - valueSuffix.length : Infinity), padding = "";
         switch (align3) {
           case "<":
             value = valuePrefix + value + valueSuffix + padding;
@@ -14489,22 +14489,22 @@ var Plotly = (() => {
   }
   var trimLeft = /^\s+/;
   var trimRight = /\s+$/;
-  function tinycolor(color2, opts) {
-    color2 = color2 ? color2 : "";
+  function tinycolor(color3, opts) {
+    color3 = color3 ? color3 : "";
     opts = opts || {};
-    if (color2 instanceof tinycolor) {
-      return color2;
+    if (color3 instanceof tinycolor) {
+      return color3;
     }
     if (!(this instanceof tinycolor)) {
-      return new tinycolor(color2, opts);
+      return new tinycolor(color3, opts);
     }
-    var rgb = inputToRGB(color2);
-    this._originalInput = color2, this._r = rgb.r, this._g = rgb.g, this._b = rgb.b, this._a = rgb.a, this._roundA = Math.round(100 * this._a) / 100, this._format = opts.format || rgb.format;
+    var rgb2 = inputToRGB(color3);
+    this._originalInput = color3, this._r = rgb2.r, this._g = rgb2.g, this._b = rgb2.b, this._a = rgb2.a, this._roundA = Math.round(100 * this._a) / 100, this._format = opts.format || rgb2.format;
     this._gradientType = opts.gradientType;
     if (this._r < 1) this._r = Math.round(this._r);
     if (this._g < 1) this._g = Math.round(this._g);
     if (this._b < 1) this._b = Math.round(this._b);
-    this._ok = rgb.ok;
+    this._ok = rgb2.ok;
   }
   tinycolor.prototype = {
     isDark: function isDark() {
@@ -14526,15 +14526,15 @@ var Plotly = (() => {
       return this._a;
     },
     getBrightness: function getBrightness() {
-      var rgb = this.toRgb();
-      return (rgb.r * 299 + rgb.g * 587 + rgb.b * 114) / 1e3;
+      var rgb2 = this.toRgb();
+      return (rgb2.r * 299 + rgb2.g * 587 + rgb2.b * 114) / 1e3;
     },
     getLuminance: function getLuminance() {
-      var rgb = this.toRgb();
+      var rgb2 = this.toRgb();
       var RsRGB, GsRGB, BsRGB, R, G, B;
-      RsRGB = rgb.r / 255;
-      GsRGB = rgb.g / 255;
-      BsRGB = rgb.b / 255;
+      RsRGB = rgb2.r / 255;
+      GsRGB = rgb2.g / 255;
+      BsRGB = rgb2.b / 255;
       if (RsRGB <= 0.03928) R = RsRGB / 12.92;
       else R = Math.pow((RsRGB + 0.055) / 1.055, 2.4);
       if (GsRGB <= 0.03928) G = GsRGB / 12.92;
@@ -14563,17 +14563,17 @@ var Plotly = (() => {
       return this._a == 1 ? "hsv(" + h + ", " + s + "%, " + v + "%)" : "hsva(" + h + ", " + s + "%, " + v + "%, " + this._roundA + ")";
     },
     toHsl: function toHsl() {
-      var hsl = rgbToHsl(this._r, this._g, this._b);
+      var hsl2 = rgbToHsl(this._r, this._g, this._b);
       return {
-        h: hsl.h * 360,
-        s: hsl.s,
-        l: hsl.l,
+        h: hsl2.h * 360,
+        s: hsl2.s,
+        l: hsl2.l,
         a: this._a
       };
     },
     toHslString: function toHslString() {
-      var hsl = rgbToHsl(this._r, this._g, this._b);
-      var h = Math.round(hsl.h * 360), s = Math.round(hsl.s * 100), l = Math.round(hsl.l * 100);
+      var hsl2 = rgbToHsl(this._r, this._g, this._b);
+      var h = Math.round(hsl2.h * 360), s = Math.round(hsl2.s * 100), l = Math.round(hsl2.l * 100);
       return this._a == 1 ? "hsl(" + h + ", " + s + "%, " + l + "%)" : "hsla(" + h + ", " + s + "%, " + l + "%, " + this._roundA + ")";
     },
     toHex: function toHex(allow3Char) {
@@ -14674,11 +14674,11 @@ var Plotly = (() => {
       return tinycolor(this.toString());
     },
     _applyModification: function _applyModification(fn, args) {
-      var color2 = fn.apply(null, [this].concat([].slice.call(args)));
-      this._r = color2._r;
-      this._g = color2._g;
-      this._b = color2._b;
-      this.setAlpha(color2._a);
+      var color3 = fn.apply(null, [this].concat([].slice.call(args)));
+      this._r = color3._r;
+      this._g = color3._g;
+      this._b = color3._b;
+      this.setAlpha(color3._a);
       return this;
     },
     lighten: function lighten() {
@@ -14728,24 +14728,24 @@ var Plotly = (() => {
       return this._applyCombination(polyad, [4]);
     }
   };
-  tinycolor.fromRatio = function(color2, opts) {
-    if (_typeof(color2) == "object") {
+  tinycolor.fromRatio = function(color3, opts) {
+    if (_typeof(color3) == "object") {
       var newColor = {};
-      for (var i in color2) {
-        if (color2.hasOwnProperty(i)) {
+      for (var i in color3) {
+        if (color3.hasOwnProperty(i)) {
           if (i === "a") {
-            newColor[i] = color2[i];
+            newColor[i] = color3[i];
           } else {
-            newColor[i] = convertToPercentage(color2[i]);
+            newColor[i] = convertToPercentage(color3[i]);
           }
         }
       }
-      color2 = newColor;
+      color3 = newColor;
     }
-    return tinycolor(color2, opts);
+    return tinycolor(color3, opts);
   };
-  function inputToRGB(color2) {
-    var rgb = {
+  function inputToRGB(color3) {
+    var rgb2 = {
       r: 0,
       g: 0,
       b: 0
@@ -14756,38 +14756,38 @@ var Plotly = (() => {
     var l = null;
     var ok = false;
     var format5 = false;
-    if (typeof color2 == "string") {
-      color2 = stringInputToObject(color2);
+    if (typeof color3 == "string") {
+      color3 = stringInputToObject(color3);
     }
-    if (_typeof(color2) == "object") {
-      if (isValidCSSUnit(color2.r) && isValidCSSUnit(color2.g) && isValidCSSUnit(color2.b)) {
-        rgb = rgbToRgb(color2.r, color2.g, color2.b);
+    if (_typeof(color3) == "object") {
+      if (isValidCSSUnit(color3.r) && isValidCSSUnit(color3.g) && isValidCSSUnit(color3.b)) {
+        rgb2 = rgbToRgb(color3.r, color3.g, color3.b);
         ok = true;
-        format5 = String(color2.r).substr(-1) === "%" ? "prgb" : "rgb";
-      } else if (isValidCSSUnit(color2.h) && isValidCSSUnit(color2.s) && isValidCSSUnit(color2.v)) {
-        s = convertToPercentage(color2.s);
-        v = convertToPercentage(color2.v);
-        rgb = hsvToRgb(color2.h, s, v);
+        format5 = String(color3.r).substr(-1) === "%" ? "prgb" : "rgb";
+      } else if (isValidCSSUnit(color3.h) && isValidCSSUnit(color3.s) && isValidCSSUnit(color3.v)) {
+        s = convertToPercentage(color3.s);
+        v = convertToPercentage(color3.v);
+        rgb2 = hsvToRgb(color3.h, s, v);
         ok = true;
         format5 = "hsv";
-      } else if (isValidCSSUnit(color2.h) && isValidCSSUnit(color2.s) && isValidCSSUnit(color2.l)) {
-        s = convertToPercentage(color2.s);
-        l = convertToPercentage(color2.l);
-        rgb = hslToRgb(color2.h, s, l);
+      } else if (isValidCSSUnit(color3.h) && isValidCSSUnit(color3.s) && isValidCSSUnit(color3.l)) {
+        s = convertToPercentage(color3.s);
+        l = convertToPercentage(color3.l);
+        rgb2 = hslToRgb(color3.h, s, l);
         ok = true;
         format5 = "hsl";
       }
-      if (color2.hasOwnProperty("a")) {
-        a = color2.a;
+      if (color3.hasOwnProperty("a")) {
+        a = color3.a;
       }
     }
     a = boundAlpha(a);
     return {
       ok,
-      format: color2.format || format5,
-      r: Math.min(255, Math.max(rgb.r, 0)),
-      g: Math.min(255, Math.max(rgb.g, 0)),
-      b: Math.min(255, Math.max(rgb.b, 0)),
+      format: color3.format || format5,
+      r: Math.min(255, Math.max(rgb2.r, 0)),
+      g: Math.min(255, Math.max(rgb2.g, 0)),
+      b: Math.min(255, Math.max(rgb2.b, 0)),
       a
     };
   }
@@ -14898,26 +14898,26 @@ var Plotly = (() => {
     };
   }
   function rgbToHex(r, g, b, allow3Char) {
-    var hex = [pad2(Math.round(r).toString(16)), pad2(Math.round(g).toString(16)), pad2(Math.round(b).toString(16))];
-    if (allow3Char && hex[0].charAt(0) == hex[0].charAt(1) && hex[1].charAt(0) == hex[1].charAt(1) && hex[2].charAt(0) == hex[2].charAt(1)) {
-      return hex[0].charAt(0) + hex[1].charAt(0) + hex[2].charAt(0);
+    var hex2 = [pad2(Math.round(r).toString(16)), pad2(Math.round(g).toString(16)), pad2(Math.round(b).toString(16))];
+    if (allow3Char && hex2[0].charAt(0) == hex2[0].charAt(1) && hex2[1].charAt(0) == hex2[1].charAt(1) && hex2[2].charAt(0) == hex2[2].charAt(1)) {
+      return hex2[0].charAt(0) + hex2[1].charAt(0) + hex2[2].charAt(0);
     }
-    return hex.join("");
+    return hex2.join("");
   }
   function rgbaToHex(r, g, b, a, allow4Char) {
-    var hex = [pad2(Math.round(r).toString(16)), pad2(Math.round(g).toString(16)), pad2(Math.round(b).toString(16)), pad2(convertDecimalToHex(a))];
-    if (allow4Char && hex[0].charAt(0) == hex[0].charAt(1) && hex[1].charAt(0) == hex[1].charAt(1) && hex[2].charAt(0) == hex[2].charAt(1) && hex[3].charAt(0) == hex[3].charAt(1)) {
-      return hex[0].charAt(0) + hex[1].charAt(0) + hex[2].charAt(0) + hex[3].charAt(0);
+    var hex2 = [pad2(Math.round(r).toString(16)), pad2(Math.round(g).toString(16)), pad2(Math.round(b).toString(16)), pad2(convertDecimalToHex(a))];
+    if (allow4Char && hex2[0].charAt(0) == hex2[0].charAt(1) && hex2[1].charAt(0) == hex2[1].charAt(1) && hex2[2].charAt(0) == hex2[2].charAt(1) && hex2[3].charAt(0) == hex2[3].charAt(1)) {
+      return hex2[0].charAt(0) + hex2[1].charAt(0) + hex2[2].charAt(0) + hex2[3].charAt(0);
     }
-    return hex.join("");
+    return hex2.join("");
   }
   function rgbaToArgbHex(r, g, b, a) {
-    var hex = [pad2(convertDecimalToHex(a)), pad2(Math.round(r).toString(16)), pad2(Math.round(g).toString(16)), pad2(Math.round(b).toString(16))];
-    return hex.join("");
+    var hex2 = [pad2(convertDecimalToHex(a)), pad2(Math.round(r).toString(16)), pad2(Math.round(g).toString(16)), pad2(Math.round(b).toString(16))];
+    return hex2.join("");
   }
-  tinycolor.equals = function(color1, color2) {
-    if (!color1 || !color2) return false;
-    return tinycolor(color1).toRgbString() == tinycolor(color2).toRgbString();
+  tinycolor.equals = function(color1, color22) {
+    if (!color1 || !color22) return false;
+    return tinycolor(color1).toRgbString() == tinycolor(color22).toRgbString();
   };
   tinycolor.random = function() {
     return tinycolor.fromRatio({
@@ -14926,100 +14926,100 @@ var Plotly = (() => {
       b: Math.random()
     });
   };
-  function _desaturate(color2, amount) {
+  function _desaturate(color3, amount) {
     amount = amount === 0 ? 0 : amount || 10;
-    var hsl = tinycolor(color2).toHsl();
-    hsl.s -= amount / 100;
-    hsl.s = clamp01(hsl.s);
-    return tinycolor(hsl);
+    var hsl2 = tinycolor(color3).toHsl();
+    hsl2.s -= amount / 100;
+    hsl2.s = clamp01(hsl2.s);
+    return tinycolor(hsl2);
   }
-  function _saturate(color2, amount) {
+  function _saturate(color3, amount) {
     amount = amount === 0 ? 0 : amount || 10;
-    var hsl = tinycolor(color2).toHsl();
-    hsl.s += amount / 100;
-    hsl.s = clamp01(hsl.s);
-    return tinycolor(hsl);
+    var hsl2 = tinycolor(color3).toHsl();
+    hsl2.s += amount / 100;
+    hsl2.s = clamp01(hsl2.s);
+    return tinycolor(hsl2);
   }
-  function _greyscale(color2) {
-    return tinycolor(color2).desaturate(100);
+  function _greyscale(color3) {
+    return tinycolor(color3).desaturate(100);
   }
-  function _lighten(color2, amount) {
+  function _lighten(color3, amount) {
     amount = amount === 0 ? 0 : amount || 10;
-    var hsl = tinycolor(color2).toHsl();
-    hsl.l += amount / 100;
-    hsl.l = clamp01(hsl.l);
-    return tinycolor(hsl);
+    var hsl2 = tinycolor(color3).toHsl();
+    hsl2.l += amount / 100;
+    hsl2.l = clamp01(hsl2.l);
+    return tinycolor(hsl2);
   }
-  function _brighten(color2, amount) {
+  function _brighten(color3, amount) {
     amount = amount === 0 ? 0 : amount || 10;
-    var rgb = tinycolor(color2).toRgb();
-    rgb.r = Math.max(0, Math.min(255, rgb.r - Math.round(255 * -(amount / 100))));
-    rgb.g = Math.max(0, Math.min(255, rgb.g - Math.round(255 * -(amount / 100))));
-    rgb.b = Math.max(0, Math.min(255, rgb.b - Math.round(255 * -(amount / 100))));
-    return tinycolor(rgb);
+    var rgb2 = tinycolor(color3).toRgb();
+    rgb2.r = Math.max(0, Math.min(255, rgb2.r - Math.round(255 * -(amount / 100))));
+    rgb2.g = Math.max(0, Math.min(255, rgb2.g - Math.round(255 * -(amount / 100))));
+    rgb2.b = Math.max(0, Math.min(255, rgb2.b - Math.round(255 * -(amount / 100))));
+    return tinycolor(rgb2);
   }
-  function _darken(color2, amount) {
+  function _darken(color3, amount) {
     amount = amount === 0 ? 0 : amount || 10;
-    var hsl = tinycolor(color2).toHsl();
-    hsl.l -= amount / 100;
-    hsl.l = clamp01(hsl.l);
-    return tinycolor(hsl);
+    var hsl2 = tinycolor(color3).toHsl();
+    hsl2.l -= amount / 100;
+    hsl2.l = clamp01(hsl2.l);
+    return tinycolor(hsl2);
   }
-  function _spin(color2, amount) {
-    var hsl = tinycolor(color2).toHsl();
-    var hue = (hsl.h + amount) % 360;
-    hsl.h = hue < 0 ? 360 + hue : hue;
-    return tinycolor(hsl);
+  function _spin(color3, amount) {
+    var hsl2 = tinycolor(color3).toHsl();
+    var hue = (hsl2.h + amount) % 360;
+    hsl2.h = hue < 0 ? 360 + hue : hue;
+    return tinycolor(hsl2);
   }
-  function _complement(color2) {
-    var hsl = tinycolor(color2).toHsl();
-    hsl.h = (hsl.h + 180) % 360;
-    return tinycolor(hsl);
+  function _complement(color3) {
+    var hsl2 = tinycolor(color3).toHsl();
+    hsl2.h = (hsl2.h + 180) % 360;
+    return tinycolor(hsl2);
   }
-  function polyad(color2, number) {
+  function polyad(color3, number) {
     if (isNaN(number) || number <= 0) {
       throw new Error("Argument to polyad must be a positive number");
     }
-    var hsl = tinycolor(color2).toHsl();
-    var result = [tinycolor(color2)];
+    var hsl2 = tinycolor(color3).toHsl();
+    var result = [tinycolor(color3)];
     var step = 360 / number;
     for (var i = 1; i < number; i++) {
       result.push(tinycolor({
-        h: (hsl.h + i * step) % 360,
-        s: hsl.s,
-        l: hsl.l
+        h: (hsl2.h + i * step) % 360,
+        s: hsl2.s,
+        l: hsl2.l
       }));
     }
     return result;
   }
-  function _splitcomplement(color2) {
-    var hsl = tinycolor(color2).toHsl();
-    var h = hsl.h;
-    return [tinycolor(color2), tinycolor({
+  function _splitcomplement(color3) {
+    var hsl2 = tinycolor(color3).toHsl();
+    var h = hsl2.h;
+    return [tinycolor(color3), tinycolor({
       h: (h + 72) % 360,
-      s: hsl.s,
-      l: hsl.l
+      s: hsl2.s,
+      l: hsl2.l
     }), tinycolor({
       h: (h + 216) % 360,
-      s: hsl.s,
-      l: hsl.l
+      s: hsl2.s,
+      l: hsl2.l
     })];
   }
-  function _analogous(color2, results, slices) {
+  function _analogous(color3, results, slices) {
     results = results || 6;
     slices = slices || 30;
-    var hsl = tinycolor(color2).toHsl();
+    var hsl2 = tinycolor(color3).toHsl();
     var part = 360 / slices;
-    var ret = [tinycolor(color2)];
-    for (hsl.h = (hsl.h - (part * results >> 1) + 720) % 360; --results; ) {
-      hsl.h = (hsl.h + part) % 360;
-      ret.push(tinycolor(hsl));
+    var ret = [tinycolor(color3)];
+    for (hsl2.h = (hsl2.h - (part * results >> 1) + 720) % 360; --results; ) {
+      hsl2.h = (hsl2.h + part) % 360;
+      ret.push(tinycolor(hsl2));
     }
     return ret;
   }
-  function _monochromatic(color2, results) {
+  function _monochromatic(color3, results) {
     results = results || 6;
-    var hsv = tinycolor(color2).toHsv();
+    var hsv = tinycolor(color3).toHsv();
     var h = hsv.h, s = hsv.s, v = hsv.v;
     var ret = [];
     var modification = 1 / results;
@@ -15033,26 +15033,26 @@ var Plotly = (() => {
     }
     return ret;
   }
-  tinycolor.mix = function(color1, color2, amount) {
+  tinycolor.mix = function(color1, color22, amount) {
     amount = amount === 0 ? 0 : amount || 50;
     var rgb1 = tinycolor(color1).toRgb();
-    var rgb2 = tinycolor(color2).toRgb();
+    var rgb2 = tinycolor(color22).toRgb();
     var p = amount / 100;
-    var rgba = {
+    var rgba2 = {
       r: (rgb2.r - rgb1.r) * p + rgb1.r,
       g: (rgb2.g - rgb1.g) * p + rgb1.g,
       b: (rgb2.b - rgb1.b) * p + rgb1.b,
       a: (rgb2.a - rgb1.a) * p + rgb1.a
     };
-    return tinycolor(rgba);
+    return tinycolor(rgba2);
   };
-  tinycolor.readability = function(color1, color2) {
+  tinycolor.readability = function(color1, color22) {
     var c1 = tinycolor(color1);
-    var c2 = tinycolor(color2);
+    var c2 = tinycolor(color22);
     return (Math.max(c1.getLuminance(), c2.getLuminance()) + 0.05) / (Math.min(c1.getLuminance(), c2.getLuminance()) + 0.05);
   };
-  tinycolor.isReadable = function(color1, color2, wcag2) {
-    var readability = tinycolor.readability(color1, color2);
+  tinycolor.isReadable = function(color1, color22, wcag2) {
+    var readability = tinycolor.readability(color1, color22);
     var wcag2Parms, out;
     out = false;
     wcag2Parms = validateWCAG2Parms(wcag2);
@@ -15323,16 +15323,16 @@ var Plotly = (() => {
       hex8: /^#?([0-9a-fA-F]{2})([0-9a-fA-F]{2})([0-9a-fA-F]{2})([0-9a-fA-F]{2})$/
     };
   })();
-  function isValidCSSUnit(color2) {
-    return !!matchers.CSS_UNIT.exec(color2);
+  function isValidCSSUnit(color3) {
+    return !!matchers.CSS_UNIT.exec(color3);
   }
-  function stringInputToObject(color2) {
-    color2 = color2.replace(trimLeft, "").replace(trimRight, "").toLowerCase();
-    var named = false;
-    if (names[color2]) {
-      color2 = names[color2];
-      named = true;
-    } else if (color2 == "transparent") {
+  function stringInputToObject(color3) {
+    color3 = color3.replace(trimLeft, "").replace(trimRight, "").toLowerCase();
+    var named2 = false;
+    if (names[color3]) {
+      color3 = names[color3];
+      named2 = true;
+    } else if (color3 == "transparent") {
       return {
         r: 0,
         g: 0,
@@ -15342,14 +15342,14 @@ var Plotly = (() => {
       };
     }
     var match;
-    if (match = matchers.rgb.exec(color2)) {
+    if (match = matchers.rgb.exec(color3)) {
       return {
         r: match[1],
         g: match[2],
         b: match[3]
       };
     }
-    if (match = matchers.rgba.exec(color2)) {
+    if (match = matchers.rgba.exec(color3)) {
       return {
         r: match[1],
         g: match[2],
@@ -15357,14 +15357,14 @@ var Plotly = (() => {
         a: match[4]
       };
     }
-    if (match = matchers.hsl.exec(color2)) {
+    if (match = matchers.hsl.exec(color3)) {
       return {
         h: match[1],
         s: match[2],
         l: match[3]
       };
     }
-    if (match = matchers.hsla.exec(color2)) {
+    if (match = matchers.hsla.exec(color3)) {
       return {
         h: match[1],
         s: match[2],
@@ -15372,14 +15372,14 @@ var Plotly = (() => {
         a: match[4]
       };
     }
-    if (match = matchers.hsv.exec(color2)) {
+    if (match = matchers.hsv.exec(color3)) {
       return {
         h: match[1],
         s: match[2],
         v: match[3]
       };
     }
-    if (match = matchers.hsva.exec(color2)) {
+    if (match = matchers.hsva.exec(color3)) {
       return {
         h: match[1],
         s: match[2],
@@ -15387,38 +15387,38 @@ var Plotly = (() => {
         a: match[4]
       };
     }
-    if (match = matchers.hex8.exec(color2)) {
+    if (match = matchers.hex8.exec(color3)) {
       return {
         r: parseIntFromHex(match[1]),
         g: parseIntFromHex(match[2]),
         b: parseIntFromHex(match[3]),
         a: convertHexToDecimal(match[4]),
-        format: named ? "name" : "hex8"
+        format: named2 ? "name" : "hex8"
       };
     }
-    if (match = matchers.hex6.exec(color2)) {
+    if (match = matchers.hex6.exec(color3)) {
       return {
         r: parseIntFromHex(match[1]),
         g: parseIntFromHex(match[2]),
         b: parseIntFromHex(match[3]),
-        format: named ? "name" : "hex"
+        format: named2 ? "name" : "hex"
       };
     }
-    if (match = matchers.hex4.exec(color2)) {
+    if (match = matchers.hex4.exec(color3)) {
       return {
         r: parseIntFromHex(match[1] + "" + match[1]),
         g: parseIntFromHex(match[2] + "" + match[2]),
         b: parseIntFromHex(match[3] + "" + match[3]),
         a: convertHexToDecimal(match[4] + "" + match[4]),
-        format: named ? "name" : "hex8"
+        format: named2 ? "name" : "hex8"
       };
     }
-    if (match = matchers.hex3.exec(color2)) {
+    if (match = matchers.hex3.exec(color3)) {
       return {
         r: parseIntFromHex(match[1] + "" + match[1]),
         g: parseIntFromHex(match[2] + "" + match[2]),
         b: parseIntFromHex(match[3] + "" + match[3]),
-        format: named ? "name" : "hex"
+        format: named2 ? "name" : "hex"
       };
     }
     return false;
@@ -15757,8 +15757,8 @@ var Plotly = (() => {
     var match = valTrim.match(/^rgba?\s*\(([^()]*)\)$/);
     if (!match) return val;
     var parts = match[1].trim().split(/\s*[\s,]\s*/);
-    var rgba = valTrim.charAt(3) === "a" && parts.length === 4;
-    if (!rgba && parts.length !== 3) return val;
+    var rgba2 = valTrim.charAt(3) === "a" && parts.length === 4;
+    if (!rgba2 && parts.length !== 3) return val;
     for (var i = 0; i < parts.length; i++) {
       if (!parts[i].length) return val;
       parts[i] = Number(parts[i]);
@@ -15772,7 +15772,7 @@ var Plotly = (() => {
       }
     }
     var rgbStr = Math.round(parts[0] * 255) + ", " + Math.round(parts[1] * 255) + ", " + Math.round(parts[2] * 255);
-    if (rgba) return "rgba(" + rgbStr + ", " + parts[3] + ")";
+    if (rgba2) return "rgba(" + rgbStr + ", " + parts[3] + ")";
     return "rgb(" + rgbStr + ")";
   }
   var color_default = color;
@@ -16048,8 +16048,8 @@ var Plotly = (() => {
     },
     colorlist: {
       coerceFunction: function(v, propOut, dflt) {
-        function isColor(color2) {
-          return tinycolor(color2).isValid();
+        function isColor(color3) {
+          return tinycolor(color3).isValid();
         }
         if (!Array.isArray(v) || !v.length) propOut.set(dflt);
         else if (v.every(isColor)) propOut.set(v);
@@ -17095,43 +17095,43 @@ var Plotly = (() => {
   // src/lib/throttle.js
   var timerCache = {};
   var throttle = function throttle2(id, minInterval, callback) {
-    var cache = timerCache[id];
+    var cache2 = timerCache[id];
     var now = Date.now();
-    if (!cache) {
+    if (!cache2) {
       for (var idi in timerCache) {
         if (timerCache[idi].ts < now - 6e4) {
           delete timerCache[idi];
         }
       }
-      cache = timerCache[id] = { ts: 0, timer: null };
+      cache2 = timerCache[id] = { ts: 0, timer: null };
     }
-    _clearTimeout(cache);
+    _clearTimeout(cache2);
     function exec() {
       callback();
-      cache.ts = Date.now();
-      if (cache.onDone) {
-        cache.onDone();
-        cache.onDone = null;
+      cache2.ts = Date.now();
+      if (cache2.onDone) {
+        cache2.onDone();
+        cache2.onDone = null;
       }
     }
-    if (now > cache.ts + minInterval) {
+    if (now > cache2.ts + minInterval) {
       exec();
       return;
     }
-    cache.timer = setTimeout(function() {
+    cache2.timer = setTimeout(function() {
       exec();
-      cache.timer = null;
+      cache2.timer = null;
     }, minInterval);
   };
   var done = function(id) {
-    var cache = timerCache[id];
-    if (!cache || !cache.timer) return Promise.resolve();
+    var cache2 = timerCache[id];
+    if (!cache2 || !cache2.timer) return Promise.resolve();
     return new Promise(function(resolve) {
-      var previousOnDone = cache.onDone;
-      cache.onDone = function onDone() {
+      var previousOnDone = cache2.onDone;
+      cache2.onDone = function onDone() {
         if (previousOnDone) previousOnDone();
         resolve();
-        cache.onDone = null;
+        cache2.onDone = null;
       };
     });
   };
@@ -17143,10 +17143,10 @@ var Plotly = (() => {
       for (var idi in timerCache) clear(idi);
     }
   };
-  function _clearTimeout(cache) {
-    if (cache && cache.timer !== null) {
-      clearTimeout(cache.timer);
-      cache.timer = null;
+  function _clearTimeout(cache2) {
+    if (cache2 && cache2.timer !== null) {
+      clearTimeout(cache2.timer);
+      cache2.timer = null;
     }
   }
   var throttle_default = { throttle, done, clear };
@@ -17178,24 +17178,24 @@ var Plotly = (() => {
     }
     var isSimpleValueProp = SIMPLE_PROPERTY_REGEX.test(valueName);
     var obj = {
-      set: function(name6, value) {
+      set: function(name9, value) {
         var changeType = value === null ? UNSET : NONE;
         if (!arr) {
           if (!baseProp || changeType === UNSET) return;
           arr = [];
           baseProp.set(arr);
         }
-        var idx = indexLookup[name6];
+        var idx = indexLookup[name9];
         if (idx === void 0) {
           if (changeType === UNSET) return;
           changeType = changeType | BOTH;
           idx = arr.length;
-          indexLookup[name6] = idx;
+          indexLookup[name9] = idx;
         } else if (value !== (isSimpleValueProp ? arr[idx][valueName] : nestedProperty(arr[idx], valueName).get())) {
           changeType = changeType | VALUE;
         }
         var newValue = arr[idx] = arr[idx] || {};
-        newValue[keyName] = name6;
+        newValue[keyName] = name9;
         if (isSimpleValueProp) {
           newValue[valueName] = value;
         } else {
@@ -17207,9 +17207,9 @@ var Plotly = (() => {
         changeTypes[idx] = changeTypes[idx] | changeType;
         return obj;
       },
-      get: function(name6) {
+      get: function(name9) {
         if (!arr) return;
-        var idx = indexLookup[name6];
+        var idx = indexLookup[name9];
         if (idx === void 0) {
           return void 0;
         } else if (isSimpleValueProp) {
@@ -17218,22 +17218,22 @@ var Plotly = (() => {
           return nestedProperty(arr[idx], valueName).get();
         }
       },
-      rename: function(name6, newName) {
-        var idx = indexLookup[name6];
+      rename: function(name9, newName) {
+        var idx = indexLookup[name9];
         if (idx === void 0) return obj;
         changeTypes[idx] = changeTypes[idx] | NAME;
         indexLookup[newName] = idx;
-        delete indexLookup[name6];
+        delete indexLookup[name9];
         arr[idx][keyName] = newName;
         return obj;
       },
-      remove: function(name6) {
-        var idx = indexLookup[name6];
+      remove: function(name9) {
+        var idx = indexLookup[name9];
         if (idx === void 0) return obj;
         var object = arr[idx];
         if (Object.keys(object).length > 2) {
           changeTypes[idx] = changeTypes[idx] | VALUE;
-          return obj.set(name6, null);
+          return obj.set(name9, null);
         }
         if (isSimpleValueProp) {
           for (i = idx; i < arr.length; i++) {
@@ -17243,7 +17243,7 @@ var Plotly = (() => {
             indexLookup[arr[i][keyName]]--;
           }
           arr.splice(idx, 1);
-          delete indexLookup[name6];
+          delete indexLookup[name9];
         } else {
           nestedProperty(object, valueName).set(null);
           changeTypes[idx] = changeTypes[idx] | VALUE | UNSET;
@@ -18154,18 +18154,18 @@ var Plotly = (() => {
         }
       }
       if (value === void 0) {
-        const { count, max, name: name6 } = opts;
+        const { count, max, name: name9 } = opts;
         const fallbackValue = fallback === false ? match : fallback;
         if (count < max) {
           lib.warn(
             [
-              `Variable '${key}' in ${name6} could not be found!`,
+              `Variable '${key}' in ${name9} could not be found!`,
               "Please verify that the template is correct.",
               `Using value: '${fallbackValue}'.`
             ].join(" ")
           );
         }
-        if (count === max) lib.warn(`Too many '${name6}' warnings - additional warnings will be suppressed.`);
+        if (count === max) lib.warn(`Too many '${name9}' warnings - additional warnings will be suppressed.`);
         opts.count++;
         return fallbackValue;
       }
@@ -18860,8 +18860,8 @@ var Plotly = (() => {
     valType: "string",
     editType: "calc"
   };
-  var templatedArray = function(name6, attrs2) {
-    attrs2._isLinkedToArray = name6;
+  var templatedArray = function(name9, attrs2) {
+    attrs2._isLinkedToArray = name9;
     attrs2.name = templateAttrs.name;
     attrs2[TEMPLATEITEMNAME] = templateAttrs[TEMPLATEITEMNAME];
     return attrs2;
@@ -18892,17 +18892,17 @@ var Plotly = (() => {
       // TODO: function to figure out what's left & what didn't work
     };
   };
-  var newContainer = function(container, name6, baseName) {
+  var newContainer = function(container, name9, baseName) {
     var template = container._template;
-    var part = template && (template[name6] || baseName && template[baseName]);
+    var part = template && (template[name9] || baseName && template[baseName]);
     if (!lib_default.isPlainObject(part)) part = null;
-    var out = container[name6] = { _template: part };
+    var out = container[name9] = { _template: part };
     return out;
   };
-  var arrayTemplater = function(container, name6, inclusionAttr) {
+  var arrayTemplater = function(container, name9, inclusionAttr) {
     var template = container._template;
-    var defaultsTemplate = template && template[arrayDefaultKey(name6)];
-    var templateItems = template && template[name6];
+    var defaultsTemplate = template && template[arrayDefaultKey(name9)];
+    var templateItems = template && template[name9];
     if (!Array.isArray(templateItems) || !templateItems.length) {
       templateItems = [];
     }
@@ -18930,16 +18930,16 @@ var Plotly = (() => {
       var out = [];
       for (var i = 0; i < templateItems.length; i++) {
         var templateItem = templateItems[i];
-        var name7 = templateItem.name;
-        if (validItemName(name7) && !usedNames[name7]) {
+        var name10 = templateItem.name;
+        if (validItemName(name10) && !usedNames[name10]) {
           var outi = {
             _template: templateItem,
-            name: name7,
-            _input: { _templateitemname: name7 }
+            name: name10,
+            _input: { _templateitemname: name10 }
           };
           outi[TEMPLATEITEMNAME] = templateItem[TEMPLATEITEMNAME];
           out.push(outi);
-          usedNames[name7] = 1;
+          usedNames[name10] = 1;
         }
       }
       return out;
@@ -18949,15 +18949,15 @@ var Plotly = (() => {
       defaultItems
     };
   };
-  function validItemName(name6) {
-    return name6 && typeof name6 === "string";
+  function validItemName(name9) {
+    return name9 && typeof name9 === "string";
   }
-  function arrayDefaultKey(name6) {
-    var lastChar = name6.length - 1;
-    if (name6.charAt(lastChar) !== "s") {
-      lib_default.warn("bad argument to arrayDefaultKey: " + name6);
+  function arrayDefaultKey(name9) {
+    var lastChar = name9.length - 1;
+    if (name9.charAt(lastChar) !== "s") {
+      lib_default.warn("bad argument to arrayDefaultKey: " + name9);
     }
-    return name6.slice(0, -1) + "defaults";
+    return name9.slice(0, -1) + "defaults";
   }
   var arrayEditor = function(parentIn, containerStr, itemOut) {
     var lengthIn = (lib_default.nestedProperty(parentIn, containerStr).get() || []).length;
@@ -19073,11 +19073,11 @@ var Plotly = (() => {
     if (axNum === "1") axNum = "";
     return id.charAt(0) + "axis" + axNum;
   };
-  var name2id = function name2id2(name6) {
-    if (!name6.match(constants_default2.AX_NAME_PATTERN)) return;
-    var axNum = name6.slice(5);
+  var name2id = function name2id2(name9) {
+    if (!name9.match(constants_default2.AX_NAME_PATTERN)) return;
+    var axNum = name9.slice(5);
     if (axNum === "1") axNum = "";
-    return name6.charAt(0) + axNum;
+    return name9.charAt(0) + axNum;
   };
   var cleanId = function cleanId2(id, axLetter, domainId) {
     var domainTest = /( domain)$/.test(id);
@@ -19360,7 +19360,7 @@ var Plotly = (() => {
     }
     return refBinding;
   };
-  function bindingValueHasChanged(gd, binding, cache) {
+  function bindingValueHasChanged(gd, binding, cache2) {
     var container, value, obj;
     var changed = false;
     if (binding.type === "data") {
@@ -19371,7 +19371,7 @@ var Plotly = (() => {
       return false;
     }
     value = lib_default.nestedProperty(container, binding.prop).get();
-    obj = cache[binding.type] = cache[binding.type] || {};
+    obj = cache2[binding.type] = cache2[binding.type] || {};
     if (obj.hasOwnProperty(binding.prop)) {
       if (obj[binding.prop] !== value) {
         changed = true;
@@ -19987,9 +19987,9 @@ var Plotly = (() => {
     }
     var modules2 = this._modules || [];
     for (i = 0; i < modules2.length; i++) {
-      var name6 = modules2[i].name;
-      if (name6 === category2) return true;
-      var _module = registry_default.modules[name6];
+      var name9 = modules2[i].name;
+      if (name9 === category2) return true;
+      var _module = registry_default.modules[name9];
       if (_module && _module.categories[category2]) return true;
     }
     return false;
@@ -21913,8 +21913,8 @@ var Plotly = (() => {
             x = 0;
             y = dy;
           } else {
-            var anchor = _context.attr("text-anchor");
-            x = x - w * (anchor === "middle" ? 0.5 : anchor === "end" ? 1 : 0);
+            var anchor2 = _context.attr("text-anchor");
+            x = x - w * (anchor2 === "middle" ? 0.5 : anchor2 === "end" ? 1 : 0);
             y = y + dy - h / 2;
           }
           newSvg.attr({
@@ -22419,11 +22419,11 @@ var Plotly = (() => {
     };
   }
   var onePx = "1px ";
-  var makeTextShadow = function(color2) {
+  var makeTextShadow = function(color3) {
     var x = onePx;
     var y = onePx;
     var b = onePx;
-    return x + y + b + color2 + ", -" + x + "-" + y + b + color2 + ", " + x + "-" + y + b + color2 + ", -" + x + y + b + color2;
+    return x + y + b + color3 + ", -" + x + "-" + y + b + color3 + ", " + x + "-" + y + b + color3 + ", -" + x + y + b + color3;
   };
   var makeEditable = function(context, options) {
     var gd = options.gd;
@@ -22528,12 +22528,12 @@ var Plotly = (() => {
   var { isValid: isValidScale2 } = scales_default;
   function hasColorscale(trace, containerStr, colorKey) {
     var container = containerStr ? lib_default.nestedProperty(trace, containerStr).get() || {} : trace;
-    var color2 = container[colorKey || "color"];
-    if (color2 && color2._inputArray) color2 = color2._inputArray;
+    var color3 = container[colorKey || "color"];
+    if (color3 && color3._inputArray) color3 = color3._inputArray;
     var isArrayWithOneNumber = false;
-    if (lib_default.isArrayOrTypedArray(color2)) {
-      for (var i = 0; i < color2.length; i++) {
-        if ((0, import_fast_isnumeric13.default)(color2[i])) {
+    if (lib_default.isArrayOrTypedArray(color3)) {
+      for (var i = 0; i < color3.length; i++) {
+        if ((0, import_fast_isnumeric13.default)(color3[i])) {
           isArrayWithOneNumber = true;
           break;
         }
@@ -22612,8 +22612,8 @@ var Plotly = (() => {
     var N = range.length;
     var _range = new Array(N);
     for (var i = 0; i < N; i++) {
-      var rgba = tinycolor(range[i]).toRgb();
-      _range[i] = [rgba.r, rgba.g, rgba.b, rgba.a];
+      var rgba2 = tinycolor(range[i]).toRgb();
+      _range[i] = [rgba2.r, rgba2.g, rgba2.b, rgba2.a];
     }
     var _sclFunc = import_d37.default.scale.linear().domain(domain).range(_range).clamp(true);
     var noNumericCheck = opts.noNumericCheck;
@@ -23820,12 +23820,12 @@ var Plotly = (() => {
 
   // src/plots/array_container_defaults.js
   function handleArrayContainerDefaults(parentObjIn, parentObjOut, opts) {
-    var name6 = opts.name;
+    var name9 = opts.name;
     var inclusionAttr = opts.inclusionAttr || "visible";
-    var previousContOut = parentObjOut[name6];
-    var contIn = lib_default.isArrayOrTypedArray(parentObjIn[name6]) ? parentObjIn[name6] : [];
-    var contOut = parentObjOut[name6] = [];
-    var templater = plot_template_default.arrayTemplater(parentObjOut, name6, inclusionAttr);
+    var previousContOut = parentObjOut[name9];
+    var contIn = lib_default.isArrayOrTypedArray(parentObjIn[name9]) ? parentObjIn[name9] : [];
+    var contOut = parentObjOut[name9] = [];
+    var templater = plot_template_default.arrayTemplater(parentObjOut, name9, inclusionAttr);
     var i, itemOut;
     for (i = 0; i < contIn.length; i++) {
       var itemIn = contIn[i];
@@ -23874,8 +23874,8 @@ var Plotly = (() => {
       }
       var font2 = options.font || {};
       var contColor = containerOut.color;
-      var position = containerOut.ticklabelposition || "";
-      var dfltFontColor = position.indexOf("inside") !== -1 ? contrast(options.bgColor) : (
+      var position2 = containerOut.ticklabelposition || "";
+      var dfltFontColor = position2.indexOf("inside") !== -1 ? contrast(options.bgColor) : (
         // as with title.font.color, inherit axis.color only if one was
         // explicitly provided
         contColor && contColor !== layout_attributes_default4.color.dflt ? contColor : font2.color
@@ -25181,7 +25181,7 @@ var Plotly = (() => {
     var variant = font2.variant;
     var style11 = font2.style;
     var weight = font2.weight;
-    var color2 = font2.color;
+    var color3 = font2.color;
     var size = font2.size;
     var family = font2.family;
     var shadow = font2.shadow;
@@ -25189,7 +25189,7 @@ var Plotly = (() => {
     var textcase = font2.textcase;
     if (family) s.style("font-family", family);
     if (size + 1) s.style("font-size", size + "px");
-    if (color2) s.call(color_default.fill, color2);
+    if (color3) s.call(color_default.fill, color3);
     if (weight) s.style("font-weight", weight);
     if (style11) s.style("font-style", style11);
     if (variant) s.style("font-variant", variant);
@@ -25197,7 +25197,7 @@ var Plotly = (() => {
     if (shadow)
       s.style(
         "text-shadow",
-        shadow === "auto" ? svg_text_utils_default.makeTextShadow(color_default.contrast(color2)) : dropNone(shadow)
+        shadow === "auto" ? svg_text_utils_default.makeTextShadow(color_default.contrast(color3)) : dropNone(shadow)
       );
     if (lineposition) s.style("text-decoration-line", dropNone(lineposition2decorationLine(lineposition)));
   };
@@ -25270,18 +25270,18 @@ var Plotly = (() => {
   };
   drawing.singleLineStyle = function(d, s, lw, lc, ld) {
     s.style("fill", "none");
-    var line = (((d || [])[0] || {}).trace || {}).line || {};
-    var lw1 = lw || line.width || 0;
-    var dash2 = ld || line.dash || "";
-    color_default.stroke(s, lc || line.color);
+    var line2 = (((d || [])[0] || {}).trace || {}).line || {};
+    var lw1 = lw || line2.width || 0;
+    var dash2 = ld || line2.dash || "";
+    color_default.stroke(s, lc || line2.color);
     drawing.dashLine(s, dash2, lw1);
   };
   drawing.lineGroupStyle = function(s, lw, lc, ld) {
     s.style("fill", "none").each(function(d) {
-      var line = (((d || [])[0] || {}).trace || {}).line || {};
-      var lw1 = lw || line.width || 0;
-      var dash2 = ld || line.dash || "";
-      import_d38.default.select(this).call(color_default.stroke, lc || line.color).call(drawing.dashLine, dash2, lw1);
+      var line2 = (((d || [])[0] || {}).trace || {}).line || {};
+      var lw1 = lw || line2.width || 0;
+      var dash2 = ld || line2.dash || "";
+      import_d38.default.select(this).call(color_default.stroke, lc || line2.color).call(drawing.dashLine, dash2, lw1);
     });
   };
   drawing.dashLine = function(s, dash2, lineWidth) {
@@ -26983,17 +26983,17 @@ var Plotly = (() => {
       }
       if (axReverse) max = !max;
     }
-    var zero = 0;
+    var zero2 = 0;
     if (!isLinked2(fullLayout, ax._id)) {
-      zero = padInsideLabelsOnAnchorAxis(fullLayout, ax, max);
+      zero2 = padInsideLabelsOnAnchorAxis(fullLayout, ax, max);
     }
-    extrappad = Math.max(zero, extrappad);
+    extrappad = Math.max(zero2, extrappad);
     if (ax.constrain === "domain" && ax._inputDomain) {
       extrappad *= (ax._inputDomain[1] - ax._inputDomain[0]) / (ax.domain[1] - ax.domain[0]);
     }
     return function getPad(pt) {
       if (pt.nopad) return 0;
-      return pt.pad + (pt.extrapad ? extrappad : zero);
+      return pt.pad + (pt.extrapad ? extrappad : zero2);
     };
   }
   var TEXTPAD = 3;
@@ -30408,7 +30408,7 @@ var Plotly = (() => {
       s.each(function(d) {
         var thisLabel = import_d312.default.select(this);
         var mathjaxGroup = thisLabel.select(".text-math-group");
-        var anchor = labelFns.anchorFn(d, angle);
+        var anchor2 = labelFns.anchorFn(d, angle);
         var transform = opts.transFn.call(thisLabel.node(), d) + ((0, import_fast_isnumeric23.default)(angle) && +angle !== 0 ? " rotate(" + angle + "," + labelFns.xFn(d) + "," + (labelFns.yFn(d) - d.fontSize / 2) + ")" : "");
         var nLines = svg_text_utils_default.lineCount(thisLabel);
         var lineHeight = LINE_SPACING3 * d.fontSize;
@@ -30420,7 +30420,7 @@ var Plotly = (() => {
           var thisText = thisLabel.select("text");
           thisText.attr({
             transform,
-            "text-anchor": anchor
+            "text-anchor": anchor2
           });
           thisText.style("display", null);
           if (ax._adjustTickLabelsOverflow) {
@@ -30428,7 +30428,7 @@ var Plotly = (() => {
           }
         } else {
           var mjWidth = drawing_default.bBox(mathjaxGroup.node()).width;
-          var mjShift = mjWidth * { end: -0.5, start: 0.5 }[anchor];
+          var mjShift = mjWidth * { end: -0.5, start: 0.5 }[anchor2];
           mathjaxGroup.attr("transform", transform + strTranslate4(mjShift, 0));
         }
       });
@@ -31188,13 +31188,13 @@ var Plotly = (() => {
   var unhover_default = unhover;
 
   // src/components/dragelement/align.js
-  function align2(v, dv2, v0, v1, anchor) {
+  function align2(v, dv2, v0, v1, anchor2) {
     var vmin = (v - v0) / (v1 - v0);
     var vmax = vmin + dv2 / (v1 - v0);
     var vc = (vmin + vmax) / 2;
-    if (anchor === "left" || anchor === "bottom") return vmin;
-    if (anchor === "center" || anchor === "middle") return vc;
-    if (anchor === "right" || anchor === "top") return vmax;
+    if (anchor2 === "left" || anchor2 === "bottom") return vmin;
+    if (anchor2 === "center" || anchor2 === "middle") return vc;
+    if (anchor2 === "right" || anchor2 === "top") return vmax;
     if (vmin < 2 / 3 - vc) return vmin;
     if (vmax > 4 / 3 - vc) return vmax;
     return vc;
@@ -32231,9 +32231,9 @@ var Plotly = (() => {
 
   // src/traces/pie/style_one.js
   function styleOne(s, pt, trace, gd) {
-    var line = trace.marker.line;
-    var lineColor = castOption(line.color, pt.pts) || color_default.defaultLine;
-    var lineWidth = castOption(line.width, pt.pts) || 0;
+    var line2 = trace.marker.line;
+    var lineColor = castOption(line2.color, pt.pts) || color_default.defaultLine;
+    var lineWidth = castOption(line2.width, pt.pts) || 0;
     s.call(fillOne, pt, trace, gd).style("stroke-width", lineWidth).call(color_default.stroke, lineColor);
   }
 
@@ -32281,8 +32281,8 @@ var Plotly = (() => {
       }
       var fill = layers.selectAll("g.legendfill").data([d]);
       fill.enter().append("g").classed("legendfill", true);
-      var line = layers.selectAll("g.legendlines").data([d]);
-      line.enter().append("g").classed("legendlines", true);
+      var line2 = layers.selectAll("g.legendlines").data([d]);
+      line2.enter().append("g").classed("legendlines", true);
       var symbol = layers.selectAll("g.legendsymbols").data([d]);
       symbol.enter().append("g").classed("legendsymbols", true);
       symbol.selectAll("g.legendpoints").data([d]).enter().append("g").classed("legendpoints", true);
@@ -32363,10 +32363,10 @@ var Plotly = (() => {
         tMod = lib_default.minExtend(trace, { line: { width: lw } });
         dMod = [lib_default.minExtend(d0, { trace: tMod })];
       }
-      var line = this3.select(".legendlines").selectAll("path").data(showLine || showGradientLine ? [dMod] : []);
-      line.enter().append("path").classed("js-line", true);
-      line.exit().remove();
-      line.attr("d", pathStart + (showGradientLine ? "l" + itemWidth + ",0.0001" : "h" + itemWidth)).call(showLine ? drawing_default.lineGroupStyle : lineGradient);
+      var line2 = this3.select(".legendlines").selectAll("path").data(showLine || showGradientLine ? [dMod] : []);
+      line2.enter().append("path").classed("js-line", true);
+      line2.exit().remove();
+      line2.attr("d", pathStart + (showGradientLine ? "l" + itemWidth + ",0.0001" : "h" + itemWidth)).call(showLine ? drawing_default.lineGroupStyle : lineGradient);
     }
     function stylePoints3(d) {
       var styleGuide = getStyleGuide(d);
@@ -32713,8 +32713,8 @@ var Plotly = (() => {
         };
         var fillColor;
         if (!colorscale) {
-          var color2 = trace.vertexcolor || trace.facecolor || trace.color;
-          fillColor = lib_default.isArrayOrTypedArray(color2) ? color2[i] || color2[0] : color2;
+          var color3 = trace.vertexcolor || trace.facecolor || trace.color;
+          fillColor = lib_default.isArrayOrTypedArray(color3) ? color3[i] || color3[0] : color3;
         } else {
           if (!useGradient) {
             var len2 = colorscale.length;
@@ -33174,27 +33174,27 @@ var Plotly = (() => {
     var isPieLike = registry_default.traceIs(trace, "pie-like");
     var isEditable = !legendObj._inHover && gd._context.edits.legendText && !isPieLike;
     var maxNameLength = legendObj._maxNameLength;
-    var name6, font2;
+    var name9, font2;
     if (legendItem.groupTitle) {
-      name6 = legendItem.groupTitle.text;
+      name9 = legendItem.groupTitle.text;
       font2 = legendItem.groupTitle.font;
     } else {
       font2 = legendObj.font;
       if (!legendObj.entries) {
-        name6 = isPieLike ? legendItem.label : trace.name;
+        name9 = isPieLike ? legendItem.label : trace.name;
         if (trace._meta) {
-          name6 = lib_default.templateString(name6, trace._meta);
+          name9 = lib_default.templateString(name9, trace._meta);
         }
       } else {
-        name6 = legendItem.text;
+        name9 = legendItem.text;
       }
     }
     var textEl = lib_default.ensureSingle(g, "text", legendId + "text");
-    textEl.attr("text-anchor", "start").call(drawing_default.font, font2).text(isEditable ? ensureLength(name6, maxNameLength) : name6);
+    textEl.attr("text-anchor", "start").call(drawing_default.font, font2).text(isEditable ? ensureLength(name9, maxNameLength) : name9);
     var textGap = legendObj.indentation + legendObj.itemwidth + constants_default3.itemGap * 2;
     svg_text_utils_default.positionText(textEl, textGap, 0);
     if (isEditable) {
-      textEl.call(svg_text_utils_default.makeEditable, { gd, text: name6 }).call(textLayout, g, gd, legendObj).on("edit", function(newName) {
+      textEl.call(svg_text_utils_default.makeEditable, { gd, text: name9 }).call(textLayout, g, gd, legendObj).on("edit", function(newName) {
         this.text(ensureLength(newName, maxNameLength)).call(textLayout, g, gd, legendObj);
         var fullInput = legendItem.trace._fullInput || {};
         var update3 = {};
@@ -33683,7 +33683,7 @@ var Plotly = (() => {
     var hoverLabel = hoverText.hoverLabels;
     var tooltipSpacing = 5;
     var lastBottomY = 0;
-    var anchor = 0;
+    var anchor2 = 0;
     hoverLabel.sort(function(a, b) {
       return a.y0 - b.y0;
     }).each(function(d, i) {
@@ -33694,9 +33694,9 @@ var Plotly = (() => {
         d.offset = 0;
       }
       lastBottomY = topY + d.by + d.offset;
-      if (i === opts.anchorIndex || 0) anchor = d.offset;
+      if (i === opts.anchorIndex || 0) anchor2 = d.offset;
     }).each(function(d) {
-      d.offset -= anchor;
+      d.offset -= anchor2;
     });
     var scaleX = gd._fullLayout._invScaleX;
     var scaleY = gd._fullLayout._invScaleY;
@@ -34317,22 +34317,22 @@ var Plotly = (() => {
           commonLabelRect.maxY = ly2 + (HOVERTEXTPAD * 2 + tbb2.height);
         }
       } else {
-        var anchor;
+        var anchor2;
         var sgn;
         var leftsign;
         if (ya.side === "right") {
-          anchor = "start";
+          anchor2 = "start";
           sgn = 1;
           leftsign = "";
           lx2 = xa._offset + xa._length;
         } else {
-          anchor = "end";
+          anchor2 = "end";
           sgn = -1;
           leftsign = "-";
           lx2 = xa._offset;
         }
         ly2 = ya._offset + (c0.y0 + c0.y1) / 2;
-        ltext.attr("text-anchor", anchor);
+        ltext.attr("text-anchor", anchor2);
         lpath.attr(
           "d",
           "M0,0L" + leftsign + HOVERARROWSIZE + "," + HOVERARROWSIZE + "V" + (HOVERTEXTPAD + tbb2.height / 2) + "h" + leftsign + (HOVERTEXTPAD * 2 + tbb2.width) + "V-" + (HOVERTEXTPAD + tbb2.height / 2) + "H" + leftsign + HOVERARROWSIZE + "V-" + HOVERARROWSIZE + "Z"
@@ -34354,7 +34354,7 @@ var Plotly = (() => {
           clipPath = "M-" + (HOVERARROWSIZE + HOVERTEXTPAD) + "-" + halfHeight + "h-" + (tbb2.width - HOVERTEXTPAD) + "V" + halfHeight + "h" + (tbb2.width - HOVERTEXTPAD) + "Z";
           var ltx = tbb2.width - lx2 + HOVERTEXTPAD;
           svg_text_utils_default.positionText(ltext, ltx, lty);
-          if (anchor === "end") {
+          if (anchor2 === "end") {
             ltext.selectAll("tspan").each(function() {
               var s = import_d315.default.select(this);
               var dummy = drawing_default.tester.append("text").text(s.text()).call(drawing_default.font, commonLabelFont);
@@ -34415,10 +34415,10 @@ var Plotly = (() => {
         if (pt.hoverinfo === "none") continue;
         var texts = getHoverLabelText(pt, true, hovermode, fullLayout, t02);
         var text = texts[0];
-        var name6 = texts[1];
-        pt.name = name6;
-        if (name6 !== "") {
-          pt.text = name6 + " : " + text;
+        var name9 = texts[1];
+        pt.name = name9;
+        if (name9 !== "") {
+          pt.text = name9 + " : " + text;
         } else {
           pt.text = text;
         }
@@ -34572,7 +34572,7 @@ var Plotly = (() => {
       var contrastColor = d.borderColor || color_default.contrast(numsColor);
       var texts2 = getHoverLabelText(d, showCommonLabel, hovermode, fullLayout, t02, g);
       var text2 = texts2[0];
-      var name7 = texts2[1];
+      var name10 = texts2[1];
       var tx = g.select("text.nums").call(drawing_default.font, {
         family: d.fontFamily || fontFamily,
         size: d.fontSize || fontSize,
@@ -34587,7 +34587,7 @@ var Plotly = (() => {
       var tx2 = g.select("text.name");
       var tx2width = 0;
       var tx2height = 0;
-      if (name7 && name7 !== text2) {
+      if (name10 && name10 !== text2) {
         tx2.call(drawing_default.font, {
           family: d.fontFamily || fontFamily,
           size: d.fontSize || fontSize,
@@ -34598,7 +34598,7 @@ var Plotly = (() => {
           textcase: d.fontTextcase || fontTextcase,
           lineposition: d.fontLineposition || fontLineposition,
           shadow: d.fontShadow || fontShadow
-        }).text(name7).attr("data-notex", 1).call(svg_text_utils_default.positionText, 0, 0).call(svg_text_utils_default.convertToTspans, gd);
+        }).text(name10).attr("data-notex", 1).call(svg_text_utils_default.positionText, 0, 0).call(svg_text_utils_default.convertToTspans, gd);
         var t2bb = getBoundingClientRect(gd, tx2.node());
         tx2width = t2bb.width + 2 * HOVERTEXTPAD;
         tx2height = t2bb.height + 2 * HOVERTEXTPAD;
@@ -34671,12 +34671,12 @@ var Plotly = (() => {
   }
   function getHoverLabelText(d, showCommonLabel, hovermode, fullLayout, t02, g) {
     var _a, _b;
-    var name6 = "";
+    var name9 = "";
     var text = "";
     if (d.nameOverride !== void 0) d.name = d.nameOverride;
     if (d.name) {
       if (d.trace._meta) d.name = lib_default.templateString(d.name, d.trace._meta);
-      name6 = plainText2(d.name, d.nameLength);
+      name9 = plainText2(d.name, d.nameLength);
     }
     var h0 = hovermode.charAt(0);
     var h1 = h0 === "x" ? "y" : "x";
@@ -34699,8 +34699,8 @@ var Plotly = (() => {
     }
     if (d.extraText !== void 0) text += (text ? "<br>" : "") + d.extraText;
     if (g && text === "" && !d.hovertemplate) {
-      if (name6 === "") g.remove();
-      text = name6;
+      if (name9 === "") g.remove();
+      text = name9;
     }
     if ((_b = (_a = d.trace) == null ? void 0 : _a.hoverlabel) == null ? void 0 : _b.split) d.hovertemplate = "";
     const { hovertemplate = false } = d;
@@ -34718,11 +34718,11 @@ var Plotly = (() => {
         template: hovertemplate
       });
       text = text.replace(EXTRA_STRING_REGEX, (_4, extra) => {
-        name6 = plainText2(extra, d.nameLength);
+        name9 = plainText2(extra, d.nameLength);
         return "";
       });
     }
-    return [text, name6];
+    return [text, name9];
   }
   function hoverAvoidOverlaps(hoverLabels, rotateLabels, fullLayout, commonLabelBoundingBox) {
     var axKey = rotateLabels ? "xa" : "ya";
@@ -34754,11 +34754,11 @@ var Plotly = (() => {
       var pmax = axIsX ? fullLayout.width : fullLayout.height;
       if (fullLayout.hovermode === "x" || fullLayout.hovermode === "y") {
         var offsets = getHoverLabelOffsets(d, rotateLabels);
-        var anchor = d.anchor;
-        var horzSign = anchor === "end" ? -1 : 1;
+        var anchor2 = d.anchor;
+        var horzSign = anchor2 === "end" ? -1 : 1;
         var labelMin;
         var labelMax;
-        if (anchor === "middle") {
+        if (anchor2 === "middle") {
           labelMin = d.crossPos + (axIsX ? pY(offsets.y - d.by / 2) : pX(d.bx / 2 + d.tx2width / 2));
           labelMax = labelMin + (axIsX ? pY(d.by) : pX(d.bx));
         } else {
@@ -34931,13 +34931,13 @@ var Plotly = (() => {
       var g = import_d315.default.select(this);
       if (d.del) return g.remove();
       var tx = g.select("text.nums");
-      var anchor = d.anchor;
-      var horzSign = anchor === "end" ? -1 : 1;
+      var anchor2 = d.anchor;
+      var horzSign = anchor2 === "end" ? -1 : 1;
       var shiftX = getTextShiftX(d);
       var offsets = getHoverLabelOffsets(d, rotateLabels);
       var offsetX = offsets.x;
       var offsetY = offsets.y;
-      var isMiddle = anchor === "middle";
+      var isMiddle = anchor2 === "middle";
       var showArrow = "hoverlabel" in d.trace ? d.trace.hoverlabel.showarrow : true;
       var pathStr;
       if (isMiddle) {
@@ -34952,10 +34952,10 @@ var Plotly = (() => {
       var posY = offsetY + d.ty0 - d.by / 2 + HOVERTEXTPAD;
       var textAlign = d.textAlign || "auto";
       if (textAlign !== "auto") {
-        if (textAlign === "left" && anchor !== "start") {
+        if (textAlign === "left" && anchor2 !== "start") {
           tx.attr("text-anchor", "start");
           posX = isMiddle ? -d.bx / 2 - d.tx2width / 2 + HOVERTEXTPAD : -d.bx - HOVERTEXTPAD;
-        } else if (textAlign === "right" && anchor !== "end") {
+        } else if (textAlign === "right" && anchor2 !== "end") {
           tx.attr("text-anchor", "end");
           posX = isMiddle ? d.bx / 2 - d.tx2width / 2 - HOVERTEXTPAD : d.bx + HOVERTEXTPAD;
         }
@@ -38340,9 +38340,9 @@ var Plotly = (() => {
   var foreButtons = [];
   var addToForeButtons = function(b) {
     if (backButtons.indexOf(b._cat || b.name) !== -1) return;
-    var name6 = b.name;
+    var name9 = b.name;
     var _cat = (b._cat || b.name).toLowerCase();
-    if (foreButtons.indexOf(name6) === -1) foreButtons.push(name6);
+    if (foreButtons.indexOf(name9) === -1) foreButtons.push(name9);
     if (foreButtons.indexOf(_cat) === -1) foreButtons.push(_cat);
   };
   buttonList.forEach(function(k) {
@@ -38687,13 +38687,13 @@ var Plotly = (() => {
     var fullLayout = gd._fullLayout;
     var fullData = gd._fullData;
     var context = gd._context;
-    function match(name6, B) {
+    function match(name9, B) {
       if (typeof B === "string") {
-        if (B.toLowerCase() === name6.toLowerCase()) return true;
+        if (B.toLowerCase() === name9.toLowerCase()) return true;
       } else {
         var v0 = B.name;
         var v1 = B._cat || B.name;
-        if (v0 === name6 || v1 === name6.toLowerCase()) return true;
+        if (v0 === name9 || v1 === name9.toLowerCase()) return true;
       }
       return false;
     }
@@ -38735,8 +38735,8 @@ var Plotly = (() => {
       if (!newGroup.length) return;
       var out = [];
       for (var i2 = 0; i2 < newGroup.length; i2++) {
-        var name6 = newGroup[i2];
-        var B = buttons_default[name6];
+        var name9 = newGroup[i2];
+        var B = buttons_default[name9];
         var v0 = B.name.toLowerCase();
         var v1 = (B._cat || B.name).toLowerCase();
         var found = false;
@@ -38748,7 +38748,7 @@ var Plotly = (() => {
           }
         }
         if (found) continue;
-        out.push(buttons_default[name6]);
+        out.push(buttons_default[name9]);
       }
       groups.push(out);
     }
@@ -39671,22 +39671,22 @@ var Plotly = (() => {
       }
     }
   };
-  function isOutsideContainer(gd, title, position, y, titleHeight) {
+  function isOutsideContainer(gd, title, position2, y, titleHeight) {
     var plotHeight = title.yref === "paper" ? gd._fullLayout._size.h : gd._fullLayout.height;
     var yPosTop = lib_default.isTopAnchor(title) ? y : y - titleHeight;
-    var yPosRel = position === "b" ? plotHeight - yPosTop : yPosTop;
-    if (lib_default.isTopAnchor(title) && position === "t" || lib_default.isBottomAnchor(title) && position === "b") {
+    var yPosRel = position2 === "b" ? plotHeight - yPosTop : yPosTop;
+    if (lib_default.isTopAnchor(title) && position2 === "t" || lib_default.isBottomAnchor(title) && position2 === "b") {
       return false;
     } else {
       return yPosRel < titleHeight;
     }
   }
-  function containerPushVal(position, titleY, titleYanchor, height, titleDepth) {
+  function containerPushVal(position2, titleY, titleYanchor, height, titleDepth) {
     var push = 0;
     if (titleYanchor === "middle") {
       push += titleDepth / 2;
     }
-    if (position === "t") {
+    if (position2 === "t") {
       if (titleYanchor === "top") {
         push += titleDepth;
       }
@@ -39702,13 +39702,13 @@ var Plotly = (() => {
   function needsMarginPush(gd, title, titleHeight) {
     var titleY = title.y;
     var titleYanchor = title.yanchor;
-    var position = titleY > 0.5 ? "t" : "b";
-    var curMargin = gd._fullLayout.margin[position];
+    var position2 = titleY > 0.5 ? "t" : "b";
+    var curMargin = gd._fullLayout.margin[position2];
     var pushMargin = 0;
     if (title.yref === "paper") {
       pushMargin = titleHeight + title.pad.t + title.pad.b;
     } else if (title.yref === "container") {
-      pushMargin = containerPushVal(position, titleY, titleYanchor, gd._fullLayout.height, titleHeight) + title.pad.t + title.pad.b;
+      pushMargin = containerPushVal(position2, titleY, titleYanchor, gd._fullLayout.height, titleHeight) + title.pad.t + title.pad.b;
     }
     if (pushMargin > curMargin) {
       return pushMargin;
@@ -39718,7 +39718,7 @@ var Plotly = (() => {
   function applyTitleAutoMargin(gd, y, pushMargin, titleHeight) {
     var titleID = "title.automargin";
     var title = gd._fullLayout.title;
-    var position = title.y > 0.5 ? "t" : "b";
+    var position2 = title.y > 0.5 ? "t" : "b";
     var push = {
       x: title.x,
       y: title.y,
@@ -39726,10 +39726,10 @@ var Plotly = (() => {
       b: 0
     };
     var reservedPush = {};
-    if (title.yref === "paper" && isOutsideContainer(gd, title, position, y, titleHeight)) {
-      push[position] = pushMargin;
+    if (title.yref === "paper" && isOutsideContainer(gd, title, position2, y, titleHeight)) {
+      push[position2] = pushMargin;
     } else if (title.yref === "container") {
-      reservedPush[position] = pushMargin;
+      reservedPush[position2] = pushMargin;
       gd._fullLayout._reservedMargin[titleID] = reservedPush;
     }
     plots_default.allowAutoMargin(gd, titleID);
@@ -43220,10 +43220,10 @@ var Plotly = (() => {
         configChanged = !helpers_default9.collectionsAreEqual(oldConfig, gd._context);
       }
       if (configChanged) {
-        const eventListeners = gd._ev.eventNames().map((name7) => [name7, gd._ev.listeners(name7)]);
+        const eventListeners = gd._ev.eventNames().map((name10) => [name10, gd._ev.listeners(name10)]);
         plotDone = newPlot(gd, data, layout, config).then(() => {
-          for (const [name7, callbacks] of eventListeners) {
-            callbacks.forEach((cb) => gd.on(name7, cb));
+          for (const [name10, callbacks] of eventListeners) {
+            callbacks.forEach((cb) => gd.on(name10, cb));
           }
           return react(gd, data, layout, config);
         });
@@ -43246,10 +43246,10 @@ var Plotly = (() => {
           gd.calcdata = void 0;
           var allNames = Object.getOwnPropertyNames(newFullLayout);
           for (var q = 0; q < allNames.length; q++) {
-            var name6 = allNames[q];
-            var start = name6.substring(0, 5);
+            var name9 = allNames[q];
+            var start = name9.substring(0, 5);
             if (start === "xaxis" || start === "yaxis") {
-              var emptyCategories = newFullLayout[name6]._emptyCategories;
+              var emptyCategories = newFullLayout[name9]._emptyCategories;
               if (emptyCategories) emptyCategories();
             }
           }
@@ -43781,13 +43781,13 @@ var Plotly = (() => {
     for (i = frameList.length - 1; i >= 0; i--) {
       if (!lib_default.isPlainObject(frameList[i])) continue;
       var lookupName = frameList[i].name;
-      var name6 = (_frameHash[lookupName] || _frameHashLocal[lookupName] || {}).name;
+      var name9 = (_frameHash[lookupName] || _frameHashLocal[lookupName] || {}).name;
       var newName = frameList[i].name;
-      var collisionPresent = _frameHash[name6] || _frameHashLocal[name6];
-      if (name6 && newName && typeof newName === "number" && collisionPresent && numericNameWarningCount < numericNameWarningCountLimit) {
+      var collisionPresent = _frameHash[name9] || _frameHashLocal[name9];
+      if (name9 && newName && typeof newName === "number" && collisionPresent && numericNameWarningCount < numericNameWarningCountLimit) {
         numericNameWarningCount++;
         lib_default.warn(
-          'addFrames: overwriting frame "' + (_frameHash[name6] || _frameHashLocal[name6]).name + '" with a frame whose name of type "number" also equates to "' + name6 + '". This is valid but may potentially lead to unexpected behavior since all plotly.js frame names are stored internally as strings.'
+          'addFrames: overwriting frame "' + (_frameHash[name9] || _frameHashLocal[name9]).name + '" with a frame whose name of type "number" also equates to "' + name9 + '". This is valid but may potentially lead to unexpected behavior since all plotly.js frame names are stored internally as strings.'
         );
         if (numericNameWarningCount === numericNameWarningCountLimit) {
           lib_default.warn(
@@ -44076,9 +44076,9 @@ var Plotly = (() => {
         for (var i = 0; i < child.length; i++) {
           var item = child[i];
           if (isPlainObject3(item)) {
-            var name6 = item.name;
-            if (name6) {
-              if (!usedNames[name6]) {
+            var name9 = item.name;
+            if (name9) {
+              if (!usedNames[name9]) {
                 walkStyleKeys(
                   item,
                   templateOut,
@@ -44087,7 +44087,7 @@ var Plotly = (() => {
                   getNextPath(child, namedIndex, nextBasePath)
                 );
                 namedIndex++;
-                usedNames[name6] = 1;
+                usedNames[name9] = 1;
               }
             } else if (!dfltDone) {
               var dfltKey = plot_template_default.arrayDefaultKey(key);
@@ -44941,7 +44941,7 @@ var Plotly = (() => {
   }
 
   // src/snapshot/filesaver.js
-  function fileSaver(url, name6, format5) {
+  function fileSaver(url, name9, format5) {
     var saveLink = document.createElement("a");
     var canUseSaveLink = "download" in saveLink;
     var promise = new Promise(function(resolve, reject) {
@@ -44951,18 +44951,18 @@ var Plotly = (() => {
         blob = helpers_default10.createBlob(url, format5);
         objectUrl = helpers_default10.createObjectURL(blob);
         saveLink.href = objectUrl;
-        saveLink.download = name6;
+        saveLink.download = name9;
         document.body.appendChild(saveLink);
         saveLink.click();
         document.body.removeChild(saveLink);
         helpers_default10.revokeObjectURL(objectUrl);
         blob = null;
-        return resolve(name6);
+        return resolve(name9);
       }
       if (lib_default.isSafari()) {
         var prefix = format5 === "svg" ? "," : ";base64,";
         helpers_default10.octetStream(prefix + encodeURIComponent(url));
-        return resolve(name6);
+        return resolve(name9);
       }
       reject(new Error("download error"));
     });
@@ -44990,8 +44990,8 @@ var Plotly = (() => {
       promise.then(function(result) {
         if (_gd) _gd._snapshotInProgress = false;
         return filesaver_default(result, filename, opts.format);
-      }).then(function(name6) {
-        resolve(name6);
+      }).then(function(name9) {
+        resolve(name9);
       }).catch(function(err) {
         if (_gd) _gd._snapshotInProgress = false;
         reject(err);
@@ -45732,12 +45732,12 @@ var Plotly = (() => {
   // src/traces/scatter/fillcolor_defaults.js
   var { isArrayOrTypedArray: isArrayOrTypedArray8 } = lib_default;
   function averageColors(colorscale) {
-    var color2 = color_default.interpolate(colorscale[0][1], colorscale[1][1], 0.5);
+    var color3 = color_default.interpolate(colorscale[0][1], colorscale[1][1], 0.5);
     for (var i = 2; i < colorscale.length; i++) {
       var averageColorI = color_default.interpolate(colorscale[i - 1][1], colorscale[i][1], 0.5);
-      color2 = color_default.interpolate(color2, averageColorI, colorscale[i - 1][0] / colorscale[i][0]);
+      color3 = color_default.interpolate(color3, averageColorI, colorscale[i - 1][0] / colorscale[i][0]);
     }
-    return color2;
+    return color3;
   }
   function fillColorDefaults(traceIn, traceOut, defaultColor, coerce3, opts) {
     if (!opts) opts = {};
@@ -46298,19 +46298,19 @@ var Plotly = (() => {
     this.binWidth = this.minDiff;
     this.bins = {};
   }
-  Sieve.prototype.put = function put(position, group, value) {
-    var label = this.getLabel(position, group, value);
+  Sieve.prototype.put = function put(position2, group, value) {
+    var label = this.getLabel(position2, group, value);
     var oldValue = this.bins[label] || 0;
     this.bins[label] = oldValue + value;
     return oldValue;
   };
-  Sieve.prototype.get = function get2(position, group, value) {
-    var label = this.getLabel(position, group, value);
+  Sieve.prototype.get = function get2(position2, group, value) {
+    var label = this.getLabel(position2, group, value);
     return this.bins[label] || 0;
   };
-  Sieve.prototype.getLabel = function getLabel(position, group, value) {
+  Sieve.prototype.getLabel = function getLabel(position2, group, value) {
     var prefix = value < 0 && this.sepNegVal ? "v" : "^";
-    var label = this.overlapNoMerge ? position : Math.round(position / this.binWidth);
+    var label = this.overlapNoMerge ? position2 : Math.round(position2 / this.binWidth);
     return prefix + label + "g" + group;
   };
 
@@ -47059,22 +47059,22 @@ var Plotly = (() => {
       }
     }
   }
-  function insertBlank(calcTrace, index, position, traceIndex, hasAnyBlanks, interpolate, posAttr) {
+  function insertBlank(calcTrace, index, position2, traceIndex, hasAnyBlanks, interpolate, posAttr) {
     hasAnyBlanks[traceIndex] = true;
     var newEntry = {
       i: null,
       gap: true,
       s: 0
     };
-    newEntry[posAttr] = position;
+    newEntry[posAttr] = position2;
     calcTrace.splice(index, 0, newEntry);
-    if (index && position === calcTrace[index - 1][posAttr]) {
+    if (index && position2 === calcTrace[index - 1][posAttr]) {
       var prevEntry = calcTrace[index - 1];
       newEntry.s = prevEntry.s;
       newEntry.i = prevEntry.i;
       newEntry.gap = prevEntry.gap;
     } else if (interpolate) {
-      newEntry.s = getInterp(calcTrace, index, position, posAttr);
+      newEntry.s = getInterp(calcTrace, index, position2, posAttr);
     }
     if (!index) {
       calcTrace[0].t = calcTrace[1].t;
@@ -47083,12 +47083,12 @@ var Plotly = (() => {
       delete calcTrace[1].trace;
     }
   }
-  function getInterp(calcTrace, index, position, posAttr) {
+  function getInterp(calcTrace, index, position2, posAttr) {
     var pt0 = calcTrace[index - 1];
     var pt1 = calcTrace[index + 1];
     if (!pt1) return pt0.s;
     if (!pt0) return pt1.s;
-    return pt0.s + (pt1.s - pt0.s) * (position - pt0[posAttr]) / (pt1[posAttr] - pt0[posAttr]);
+    return pt0.s + (pt1.s - pt0.s) * (position2 - pt0[posAttr]) / (pt1[posAttr] - pt0[posAttr]);
   }
 
   // src/traces/scatter/plot.js
@@ -47114,7 +47114,7 @@ var Plotly = (() => {
     var connectGaps = opts.connectGaps;
     var baseTolerance = opts.baseTolerance;
     var shape = opts.shape;
-    var linear = shape === "linear";
+    var linear2 = shape === "linear";
     var fill = trace.fill && trace.fill !== "none";
     var segments = [];
     var minTolerance = constants_default7.minTolerance;
@@ -47357,7 +47357,7 @@ var Plotly = (() => {
           if (connectGaps) continue;
           else break;
         }
-        if (!linear || !opts.simplify) {
+        if (!linear2 || !opts.simplify) {
           addPt(clusterHighPt);
           continue;
         }
@@ -47658,7 +47658,7 @@ var Plotly = (() => {
   function plot(gd, plotinfo, cdscatter, scatterLayer, transitionOpts, makeOnCompleteCallback) {
     var join, onComplete;
     var isFullReplot = !transitionOpts;
-    var hasTransition2 = !!transitionOpts && transitionOpts.duration > 0;
+    var hasTransition3 = !!transitionOpts && transitionOpts.duration > 0;
     var cdscatterSorted = linkTraces(gd, plotinfo, cdscatter);
     join = scatterLayer.selectAll("g.trace").data(cdscatterSorted, function(d) {
       return d[0].trace.uid;
@@ -47668,7 +47668,7 @@ var Plotly = (() => {
     }).style("stroke-miterlimit", 2);
     join.order();
     createFills(gd, join, plotinfo);
-    if (hasTransition2) {
+    if (hasTransition3) {
       if (makeOnCompleteCallback) {
         onComplete = makeOnCompleteCallback();
       }
@@ -47714,14 +47714,14 @@ var Plotly = (() => {
     var isStatic = gd._context.staticPlot;
     var i;
     selectMarkers(gd, idx, plotinfo, cdscatter, cdscatterAll);
-    var hasTransition2 = !!transitionOpts && transitionOpts.duration > 0;
+    var hasTransition3 = !!transitionOpts && transitionOpts.duration > 0;
     function transition2(selection) {
-      return hasTransition2 ? selection.transition() : selection;
+      return hasTransition3 ? selection.transition() : selection;
     }
     var xa = plotinfo.xaxis;
     var ya = plotinfo.yaxis;
     var trace = cdscatter[0].trace;
-    var line = trace.line;
+    var line2 = trace.line;
     var tr = import_d324.default.select(element);
     var errorBarGroup = ensureSingle(tr, "g", "errorbars");
     var lines = ensureSingle(tr, "g", "lines");
@@ -47770,18 +47770,18 @@ var Plotly = (() => {
       if (tonext) {
         tonext.datum(cdscatter);
       }
-      if (["hv", "vh", "hvh", "vhv"].indexOf(line.shape) !== -1) {
-        pathfn = drawing_default.steps(line.shape);
+      if (["hv", "vh", "hvh", "vhv"].indexOf(line2.shape) !== -1) {
+        pathfn = drawing_default.steps(line2.shape);
         revpathbase = drawing_default.steps(
-          line.shape.split("").reverse().join("")
+          line2.shape.split("").reverse().join("")
         );
-      } else if (line.shape === "spline") {
+      } else if (line2.shape === "spline") {
         pathfn = revpathbase = function(pts2) {
           var pLast = pts2[pts2.length - 1];
           if (pts2.length > 1 && pts2[0][0] === pLast[0] && pts2[0][1] === pLast[1]) {
-            return drawing_default.smoothclosed(pts2.slice(1), line.smoothing);
+            return drawing_default.smoothclosed(pts2.slice(1), line2.smoothing);
           } else {
-            return drawing_default.smoothopen(pts2, line.smoothing);
+            return drawing_default.smoothopen(pts2, line2.smoothing);
           }
         };
       } else {
@@ -47797,10 +47797,10 @@ var Plotly = (() => {
         yaxis: ya,
         trace,
         connectGaps: trace.connectgaps,
-        baseTolerance: Math.max(line.width || 1, 3) / 4,
-        shape: line.shape,
-        backoff: line.backoff,
-        simplify: line.simplify,
+        baseTolerance: Math.max(line2.width || 1, 3) / 4,
+        shape: line2.shape,
+        backoff: line2.backoff,
+        simplify: line2.simplify,
         fill: trace.fill
       });
       fillsegments = new Array(segments.length);
@@ -47980,7 +47980,7 @@ var Plotly = (() => {
       selection = points2.selectAll("path.point");
       join = selection.data(markerFilter, keyFunc3);
       var enter = join.enter().append("path").classed("point", true);
-      if (hasTransition2) {
+      if (hasTransition3) {
         enter.call(drawing_default.pointStyle, trace2, gd).call(drawing_default.translatePoints, xa, ya).style("opacity", 0).transition().style("opacity", 1);
       }
       join.order();
@@ -48004,7 +48004,7 @@ var Plotly = (() => {
           sel.remove();
         }
       });
-      if (hasTransition2) {
+      if (hasTransition3) {
         join.exit().transition().style("opacity", 0).remove();
       } else {
         join.exit().remove();
@@ -48306,10 +48306,10 @@ var Plotly = (() => {
             y1: pt[1]
           };
         }
-        var color2 = color_default.defaultLine;
-        if (color_default.opacity(trace.fillcolor)) color2 = trace.fillcolor;
+        var color3 = color_default.defaultLine;
+        if (color_default.opacity(trace.fillcolor)) color3 = trace.fillcolor;
         else if (color_default.opacity((trace.line || {}).color)) {
-          color2 = trace.line.color;
+          color3 = trace.line.color;
         }
         lib_default.extendFlat(pointData, {
           // never let a 2D override 1D type as closest point
@@ -48319,7 +48319,7 @@ var Plotly = (() => {
           x1: hoverLabelCoords.x1,
           y0: hoverLabelCoords.y0,
           y1: hoverLabelCoords.y1,
-          color: color2,
+          color: color3,
           hovertemplate: false
         });
         delete pointData.index;
@@ -48836,7 +48836,7 @@ var Plotly = (() => {
     dfltPosition = dfltPosition || 0;
     dfltShift = 0;
     dfltAutomargin = false;
-    var anchor = lib_default.coerce(containerIn, containerOut, {
+    var anchor2 = lib_default.coerce(containerIn, containerOut, {
       anchor: {
         valType: "enumerated",
         values: ["free"].concat(counterAxes),
@@ -48850,7 +48850,7 @@ var Plotly = (() => {
         dflt: dfltSide
       }
     }, "side");
-    if (anchor === "free") {
+    if (anchor2 === "free") {
       if (letter === "y") {
         var autoshift = coerce3("autoshift");
         if (autoshift) {
@@ -49425,10 +49425,10 @@ var Plotly = (() => {
       var zorder = zindices[z];
       for (var i = 0; i < modules2.length; i++) {
         _module = modules2[i];
-        var name6 = _module.name;
-        var categories = registry_default.modules[name6].categories;
+        var name9 = _module.name;
+        var categories = registry_default.modules[name9].categories;
         if (categories.svg) {
-          var classBaseName = _module.layerName || name6 + "layer";
+          var classBaseName = _module.layerName || name9 + "layer";
           var className = classBaseName + (z ? Number(z) + 1 : "");
           var plotMethod = _module.plot;
           cdModuleAndOthers = getModuleCalcData(cdSubplot, plotMethod, zorder);
@@ -49812,8 +49812,8 @@ var Plotly = (() => {
   var cartesian_default = { name, attr, idRoot, idRegex: idRegex2, attrRegex, attributes, layoutAttributes, supplyLayoutDefaults: supplyLayoutDefaults5, transitionAxes: transitionAxes2, finalizeSubplots, plot: plot2, clean: clean3, drawFramework, rangePlot, toSVG: toSVG2, updateFx: updateFx2 };
 
   // src/traces/scatter/index.js
-  var { calc: _req52 } = calc_default;
-  var { style: _req112, styleOnSelect: _req122 } = style_default;
+  var { calc: _req5 } = calc_default;
+  var { style: _req11, styleOnSelect: _req12 } = style_default;
   var scatter_default = {
     hasLines: subtypes_default.hasLines,
     hasMarkers: subtypes_default.hasMarkers,
@@ -49824,14 +49824,14 @@ var Plotly = (() => {
     supplyDefaults: supplyDefaults2,
     crossTraceDefaults: crossTraceDefaults2,
     supplyLayoutDefaults: layout_defaults_default,
-    calc: _req52,
+    calc: _req5,
     crossTraceCalc: crossTraceCalc2,
     arraysToCalcdata,
     plot,
     colorbar: marker_colorbar_default,
     formatLabels,
-    style: _req112,
-    styleOnSelect: _req122,
+    style: _req11,
+    styleOnSelect: _req12,
     hoverPoints,
     selectPoints,
     animatable: true,
@@ -50149,11 +50149,11 @@ var Plotly = (() => {
       var annHeight = options.height || textHeight;
       var outerWidth = Math.round(annWidth + 2 * borderfull);
       var outerHeight = Math.round(annHeight + 2 * borderfull);
-      function shiftFraction(v, anchor2) {
-        if (anchor2 === "auto") {
-          if (v < 1 / 3) anchor2 = "left";
-          else if (v > 2 / 3) anchor2 = "right";
-          else anchor2 = "center";
+      function shiftFraction(v, anchor4) {
+        if (anchor4 === "auto") {
+          if (v < 1 / 3) anchor4 = "left";
+          else if (v > 2 / 3) anchor4 = "right";
+          else anchor4 = "center";
         }
         return {
           center: 0,
@@ -50162,7 +50162,7 @@ var Plotly = (() => {
           bottom: -0.5,
           right: -0.5,
           top: 0.5
-        }[anchor2];
+        }[anchor4];
       }
       var annotationIsOffscreen = false;
       var letters = ["x", "y"];
@@ -50175,7 +50175,7 @@ var Plotly = (() => {
         var annSizeFromWidth = outerWidth * Math.cos(dimAngle);
         var annSizeFromHeight = outerHeight * Math.sin(dimAngle);
         var annSize = Math.abs(annSizeFromWidth) + Math.abs(annSizeFromHeight);
-        var anchor = options[axLetter + "anchor"];
+        var anchor2 = options[axLetter + "anchor"];
         var overallShift = options[axLetter + "shift"] * (axLetter === "x" ? 1 : -1);
         var posPx = annPosPx[axLetter];
         var basePx;
@@ -50254,7 +50254,7 @@ var Plotly = (() => {
           posPx.tail += overallShift;
           posPx.head += overallShift;
         } else {
-          textShift = annSize * shiftFraction(autoAlignFraction, anchor);
+          textShift = annSize * shiftFraction(autoAlignFraction, anchor2);
           textPadShift = textShift;
           posPx.text = basePx + textShift;
         }
@@ -53800,11 +53800,11 @@ var Plotly = (() => {
   ScrollBox.barRadius = 2;
   ScrollBox.barPad = 1;
   ScrollBox.barColor = "#808BA4";
-  ScrollBox.prototype.enable = function enable(position, translateX, translateY) {
+  ScrollBox.prototype.enable = function enable(position2, translateX, translateY) {
     var fullLayout = this.gd._fullLayout;
     var fullWidth = fullLayout.width;
     var fullHeight = fullLayout.height;
-    this.position = position;
+    this.position = position2;
     var l = this.position.l;
     var w = this.position.w;
     var t = this.position.t;
@@ -54250,7 +54250,7 @@ var Plotly = (() => {
       }
     }
   }
-  function drawScrollBox(gd, gHeader, gButton, scrollBox, menuOpts, position) {
+  function drawScrollBox(gd, gHeader, gButton, scrollBox, menuOpts, position2) {
     var direction = menuOpts.direction;
     var isVertical3 = direction === "up" || direction === "down";
     var dims = menuOpts._dims;
@@ -54268,7 +54268,7 @@ var Plotly = (() => {
         translateX += dims.widths[i] + constants_default9.gapButton;
       }
     }
-    scrollBox.enable(position, translateX, translateY);
+    scrollBox.enable(position2, translateX, translateY);
     if (scrollBox.hbar) {
       scrollBox.hbar.attr("opacity", "0").transition().attr("opacity", "1");
     }
@@ -55146,9 +55146,9 @@ var Plotly = (() => {
     var dims = sliderOpts._dims;
     return dims.inputAreaStart + constants_default10.stepInset + (dims.inputAreaLength - 2 * constants_default10.stepInset) * Math.min(1, Math.max(0, normalizedPosition));
   }
-  function positionToNormalizedValue(sliderOpts, position) {
+  function positionToNormalizedValue(sliderOpts, position2) {
     var dims = sliderOpts._dims;
-    return Math.min(1, Math.max(0, (position - constants_default10.stepInset - dims.inputAreaStart) / (dims.inputAreaLength - 2 * constants_default10.stepInset - 2 * dims.inputAreaStart)));
+    return Math.min(1, Math.max(0, (position2 - constants_default10.stepInset - dims.inputAreaStart) / (dims.inputAreaLength - 2 * constants_default10.stepInset - 2 * dims.inputAreaStart)));
   }
   function drawTouchRect(sliderGroup, gd, sliderOpts) {
     var dims = sliderOpts._dims;
@@ -57121,12 +57121,12 @@ var Plotly = (() => {
     var fullLayout = gd._fullLayout;
     var gs = fullLayout._size;
     var fillColor = opts._fillcolor;
-    var line = opts._line;
+    var line2 = opts._line;
     var title = opts.title;
     var titleSide = title.side;
-    var zrange = opts._zrange || import_d338.default.extent((typeof fillColor === "function" ? fillColor : line.color).domain());
-    var lineColormap = typeof line.color === "function" ? line.color : function() {
-      return line.color;
+    var zrange = opts._zrange || import_d338.default.extent((typeof fillColor === "function" ? fillColor : line2.color).domain());
+    var lineColormap = typeof line2.color === "function" ? line2.color : function() {
+      return line2.color;
     };
     var fillColormap = typeof fillColor === "function" ? fillColor : function() {
       return fillColor;
@@ -57168,7 +57168,7 @@ var Plotly = (() => {
       ax.titley = optsY + ypad / gs.h;
       ax.titlex = vFrac + xpad / gs.w;
     }
-    if (line.color && opts.tickmode === "auto") {
+    if (line2.color && opts.tickmode === "auto") {
       ax.tickmode = "linear";
       ax.tick0 = levelsIn.start;
       var dtick3 = levelsIn.size;
@@ -57345,16 +57345,16 @@ var Plotly = (() => {
           fillEl.attr("fill", tinycolor(colorString).toHexString());
         }
       });
-      var lines = g.select("." + cn.cblines).selectAll("path." + cn.cbline).data(line.color && line.width ? lineLevels : []);
+      var lines = g.select("." + cn.cblines).selectAll("path." + cn.cbline).data(line2.color && line2.width ? lineLevels : []);
       lines.enter().append("path").classed(cn.cbline, true);
       lines.exit().remove();
       lines.each(function(d) {
         var a = uPx;
-        var b = Math.round(ax.c2p(d)) + line.width / 2 % 1;
+        var b = Math.round(ax.c2p(d)) + line2.width / 2 % 1;
         import_d338.default.select(this).attr(
           "d",
           "M" + (isVertical3 ? a + "," + b : b + "," + a) + (isVertical3 ? "h" : "v") + thickPx
-        ).call(drawing_default.lineGroupStyle, line.width, lineColormap(d), line.dash);
+        ).call(drawing_default.lineGroupStyle, line2.width, lineColormap(d), line2.dash);
       });
       axLayer.selectAll("g." + ax._id + "tick,path").remove();
       var shift = uPx + thickPx + (outlinewidth || 0) / 2 - (opts.ticks === "outside" ? 1 : 0);
@@ -57707,13 +57707,13 @@ var Plotly = (() => {
   };
 
   // src/components/colorbar/index.js
-  var { draw: _req210 } = draw_default5;
+  var { draw: _req2 } = draw_default5;
   var colorbar_default = {
     moduleType: "component",
     name: "colorbar",
     attributes: attributes_default6,
     supplyDefaults: colorbarDefaults,
-    draw: _req210,
+    draw: _req2,
     hasColorbar
   };
 
@@ -57965,11 +57965,11 @@ var Plotly = (() => {
   var Plotly = { version, register: register3, Icons: ploticon_default, Snapshot: snapshot_default, PlotSchema: plot_schema_default };
   var methodNames = Object.keys(plot_api_default2);
   for (i = 0; i < methodNames.length; i++) {
-    name6 = methodNames[i];
-    if (name6.charAt(0) !== "_") Plotly[name6] = plot_api_default2[name6];
-    register3({ moduleType: "apiMethod", name: name6, fn: plot_api_default2[name6] });
+    name9 = methodNames[i];
+    if (name9.charAt(0) !== "_") Plotly[name9] = plot_api_default2[name9];
+    register3({ moduleType: "apiMethod", name: name9, fn: plot_api_default2[name9] });
   }
-  var name6;
+  var name9;
   var i;
   register3(scatter_default);
   register3([annotations_default, annotations3d_default, selections_default, shapes_default, images_default, updatemenus_default, sliders_default, rangeslider_default, rangeselector_default, grid_default, errorbars_default, colorscale_default, colorbar_default, legend_default, fx_default, modebar_default2]);
@@ -58129,6 +58129,39 @@ var Plotly = (() => {
     zorder: attributes_default9.zorder
   };
 
+  // src/traces/bar/layout_attributes.js
+  var layout_attributes_default6 = {
+    barmode: {
+      valType: "enumerated",
+      values: ["stack", "group", "overlay", "relative"],
+      dflt: "group",
+      editType: "calc"
+    },
+    barnorm: {
+      valType: "enumerated",
+      values: ["", "fraction", "percent"],
+      dflt: "",
+      editType: "calc"
+    },
+    bargap: {
+      valType: "number",
+      min: 0,
+      max: 1,
+      editType: "calc"
+    },
+    bargroupgap: {
+      valType: "number",
+      min: 0,
+      max: 1,
+      dflt: 0,
+      editType: "calc"
+    },
+    barcornerradius: {
+      valType: "any",
+      editType: "calc"
+    }
+  };
+
   // src/traces/bar/defaults.js
   var import_fast_isnumeric39 = __toESM(require_fast_isnumeric(), 1);
 
@@ -58283,6 +58316,47 @@ var Plotly = (() => {
 
   // src/traces/bar/layout_defaults.js
   var { validateCornerradius: validateCornerradius2 } = defaults_default2;
+  function layout_defaults_default2(layoutIn, layoutOut, fullData) {
+    function coerce3(attr2, dflt) {
+      return lib_default.coerce(layoutIn, layoutOut, layout_attributes_default6, attr2, dflt);
+    }
+    var hasBars = false;
+    var shouldBeGapless = false;
+    var gappedAnyway = false;
+    var usedSubplots = {};
+    var mode = coerce3("barmode");
+    var isGroup = mode === "group";
+    for (var i = 0; i < fullData.length; i++) {
+      var trace = fullData[i];
+      if (registry_default.traceIs(trace, "bar") && trace.visible) hasBars = true;
+      else continue;
+      var subploti = trace.xaxis + trace.yaxis;
+      if (isGroup) {
+        if (usedSubplots[subploti]) gappedAnyway = true;
+        usedSubplots[subploti] = true;
+      } else {
+        subploti += trace._input.offsetgroup;
+        if (usedSubplots.length > 0 && !usedSubplots[subploti]) gappedAnyway = true;
+        usedSubplots[subploti] = true;
+      }
+      if (trace.visible && trace.type === "histogram") {
+        var pa = axes_default.getFromId(
+          { _fullLayout: layoutOut },
+          trace[trace.orientation === "v" ? "xaxis" : "yaxis"]
+        );
+        if (pa.type !== "category") shouldBeGapless = true;
+      }
+    }
+    if (!hasBars) {
+      delete layoutOut.barmode;
+      return;
+    }
+    if (mode !== "overlay") coerce3("barnorm");
+    coerce3("bargap", shouldBeGapless && !gappedAnyway ? 0 : 0.2);
+    coerce3("bargroupgap");
+    var r = coerce3("barcornerradius");
+    layoutOut.barcornerradius = validateCornerradius2(r);
+  }
 
   // src/traces/bar/arrays_to_calcdata.js
   function arraysToCalcdata2(cd, trace) {
@@ -58303,6 +58377,58 @@ var Plotly = (() => {
 
   // src/traces/bar/calc.js
   var { hasColorscale: hasColorscale7 } = helpers_default;
+  function calc5(gd, trace) {
+    var xa = axes_default.getFromId(gd, trace.xaxis || "x");
+    var ya = axes_default.getFromId(gd, trace.yaxis || "y");
+    var size, pos, origPos, pObj, hasPeriod, pLetter;
+    var sizeOpts = {
+      msUTC: !!(trace.base || trace.base === 0)
+    };
+    if (trace.orientation === "h") {
+      size = xa.makeCalcdata(trace, "x", sizeOpts);
+      origPos = ya.makeCalcdata(trace, "y");
+      pObj = alignPeriod(trace, ya, "y", origPos);
+      hasPeriod = !!trace.yperiodalignment;
+      pLetter = "y";
+    } else {
+      size = ya.makeCalcdata(trace, "y", sizeOpts);
+      origPos = xa.makeCalcdata(trace, "x");
+      pObj = alignPeriod(trace, xa, "x", origPos);
+      hasPeriod = !!trace.xperiodalignment;
+      pLetter = "x";
+    }
+    pos = pObj.vals;
+    var serieslen = Math.min(pos.length, size.length);
+    var cd = new Array(serieslen);
+    for (var i = 0; i < serieslen; i++) {
+      cd[i] = { p: pos[i], s: size[i] };
+      if (hasPeriod) {
+        cd[i].orig_p = origPos[i];
+        cd[i][pLetter + "End"] = pObj.ends[i];
+        cd[i][pLetter + "Start"] = pObj.starts[i];
+      }
+      if (trace.ids) {
+        cd[i].id = String(trace.ids[i]);
+      }
+    }
+    if (hasColorscale7(trace, "marker")) {
+      calc(gd, trace, {
+        vals: trace.marker.color,
+        containerStr: "marker",
+        cLetter: "c"
+      });
+    }
+    if (hasColorscale7(trace, "marker.line")) {
+      calc(gd, trace, {
+        vals: trace.marker.line.color,
+        containerStr: "marker.line",
+        cLetter: "c"
+      });
+    }
+    arraysToCalcdata2(cd, trace);
+    calcSelection(cd, trace);
+    return cd;
+  }
 
   // src/traces/bar/plot.js
   var import_d341 = __toESM(require_d3(), 1);
@@ -58999,9 +59125,9 @@ var Plotly = (() => {
     var isHorizontal = !!opts.isHorizontal;
     var constrained = !!opts.constrained;
     var angle = opts.angle || 0;
-    var anchor = opts.anchor;
-    var isEnd = anchor === "end";
-    var isStart = anchor === "start";
+    var anchor2 = opts.anchor;
+    var isEnd = anchor2 === "end";
+    var isStart = anchor2 === "start";
     var leftToRight = opts.leftToRight || 0;
     var toRight = (leftToRight + 1) / 2;
     var toLeft = 1 - toRight;
@@ -59470,803 +59596,1339 @@ var Plotly = (() => {
     getTraceColor: getTraceColor2
   };
 
-  // src/traces/bar/index.js
-  var { supplyDefaults: _req211, crossTraceDefaults: _req310 } = defaults_default2;
-  var { crossTraceCalc: _req62 } = cross_trace_calc_default;
-  var { plot: _req92 } = plot_default;
-  var { style: _req102, styleOnSelect: _req113 } = style_default2;
-  var { hoverPoints: _req123 } = hover_default2;
-
-  // src/traces/histogram/bin_attributes.js
-  function makeBinAttrs(axLetter, match) {
-    return {
-      start: {
-        valType: "any",
-        // for date axes
-        editType: "calc"
-      },
-      end: {
-        valType: "any",
-        // for date axes
-        editType: "calc"
-      },
-      size: {
-        valType: "any",
-        // for date axes
-        editType: "calc"
-      },
-      editType: "calc"
-    };
+  // src/traces/bar/event_data.js
+  function eventData(out, pt, trace) {
+    out.x = "xVal" in pt ? pt.xVal : pt.x;
+    out.y = "yVal" in pt ? pt.yVal : pt.y;
+    if (pt.xa) out.xaxis = pt.xa;
+    if (pt.ya) out.yaxis = pt.ya;
+    if (trace.orientation === "h") {
+      out.label = out.y;
+      out.value = out.x;
+    } else {
+      out.label = out.x;
+      out.value = out.y;
+    }
+    return out;
   }
 
-  // src/traces/histogram/constants.js
-  var constants_default15 = {
-    eventDataKeys: ["binNumber"]
+  // src/traces/bar/select.js
+  function selectPoints2(searchInfo, selectionTester) {
+    var cd = searchInfo.cd;
+    var xa = searchInfo.xaxis;
+    var ya = searchInfo.yaxis;
+    var trace = cd[0].trace;
+    var isFunnel = trace.type === "funnel";
+    var isHorizontal = trace.orientation === "h";
+    var selection = [];
+    var i;
+    if (selectionTester === false) {
+      for (i = 0; i < cd.length; i++) {
+        cd[i].selected = 0;
+      }
+    } else {
+      for (i = 0; i < cd.length; i++) {
+        var di = cd[i];
+        var ct = "ct" in di ? di.ct : getCentroid(di, xa, ya, isHorizontal, isFunnel);
+        if (selectionTester.contains(ct, false, i, searchInfo)) {
+          selection.push({
+            pointNumber: i,
+            x: xa.c2d(di.x),
+            y: ya.c2d(di.y)
+          });
+          di.selected = 1;
+        } else {
+          di.selected = 0;
+        }
+      }
+    }
+    return selection;
+  }
+  function getCentroid(d, xa, ya, isHorizontal, isFunnel) {
+    var x0 = xa.c2p(isHorizontal ? d.s0 : d.p0, true);
+    var x1 = xa.c2p(isHorizontal ? d.s1 : d.p1, true);
+    var y0 = ya.c2p(isHorizontal ? d.p0 : d.s0, true);
+    var y1 = ya.c2p(isHorizontal ? d.p1 : d.s1, true);
+    if (isFunnel) {
+      return [(x0 + x1) / 2, (y0 + y1) / 2];
+    } else {
+      if (isHorizontal) {
+        return [x1, (y0 + y1) / 2];
+      } else {
+        return [(x0 + x1) / 2, y1];
+      }
+    }
+  }
+
+  // src/traces/bar/index.js
+  var { supplyDefaults: _req22, crossTraceDefaults: _req3 } = defaults_default2;
+  var { crossTraceCalc: _req6 } = cross_trace_calc_default;
+  var { plot: _req9 } = plot_default;
+  var { style: _req10, styleOnSelect: _req112 } = style_default2;
+  var { hoverPoints: _req122 } = hover_default2;
+  var bar_default = {
+    attributes: attributes_default21,
+    layoutAttributes: layout_attributes_default6,
+    supplyDefaults: _req22,
+    crossTraceDefaults: _req3,
+    supplyLayoutDefaults: layout_defaults_default2,
+    calc: calc5,
+    crossTraceCalc: _req6,
+    colorbar: marker_colorbar_default,
+    arraysToCalcdata: arraysToCalcdata2,
+    plot: _req9,
+    style: _req10,
+    styleOnSelect: _req112,
+    hoverPoints: _req122,
+    eventData,
+    selectPoints: selectPoints2,
+    moduleType: "trace",
+    name: "bar",
+    basePlotModule: cartesian_default,
+    categories: ["bar-like", "cartesian", "svg", "bar", "oriented", "errorBarsOK", "showLegend", "zoomScale"],
+    animatable: true,
+    meta: {}
   };
 
-  // src/traces/histogram/attributes.js
+  // src/constants/delta.js
+  var delta_default = {
+    INCREASING: {
+      COLOR: "#3D9970",
+      SYMBOL: "\u25B2"
+    },
+    DECREASING: {
+      COLOR: "#FF4136",
+      SYMBOL: "\u25BC"
+    }
+  };
+
+  // src/traces/ohlc/attributes.js
+  var { extendFlat: extendFlat5 } = lib_default;
   var { axisHoverFormat: axisHoverFormat4 } = axis_format_attributes_default;
+  var INCREASING_COLOR = delta_default.INCREASING.COLOR;
+  var DECREASING_COLOR = delta_default.DECREASING.COLOR;
+  var lineAttrs = attributes_default9.line;
+  function directionAttrs(lineColorDefault) {
+    return {
+      line: {
+        color: extendFlat5({}, lineAttrs.color, { dflt: lineColorDefault }),
+        width: lineAttrs.width,
+        dash,
+        editType: "style"
+      },
+      editType: "style"
+    };
+  }
   var attributes_default22 = {
+    xperiod: attributes_default9.xperiod,
+    xperiod0: attributes_default9.xperiod0,
+    xperiodalignment: attributes_default9.xperiodalignment,
+    xhoverformat: axisHoverFormat4("x"),
+    yhoverformat: axisHoverFormat4("y"),
     x: {
       valType: "data_array",
       editType: "calc+clearAxisTypes"
     },
+    open: {
+      valType: "data_array",
+      editType: "calc"
+    },
+    high: {
+      valType: "data_array",
+      editType: "calc"
+    },
+    low: {
+      valType: "data_array",
+      editType: "calc"
+    },
+    close: {
+      valType: "data_array",
+      editType: "calc"
+    },
+    line: {
+      width: extendFlat5({}, lineAttrs.width, {}),
+      dash: extendFlat5({}, dash, {}),
+      editType: "style"
+    },
+    increasing: directionAttrs(INCREASING_COLOR),
+    decreasing: directionAttrs(DECREASING_COLOR),
+    text: {
+      valType: "string",
+      dflt: "",
+      arrayOk: true,
+      editType: "calc"
+    },
+    hovertext: {
+      valType: "string",
+      dflt: "",
+      arrayOk: true,
+      editType: "calc"
+    },
+    hovertemplate: hovertemplateAttrs(
+      {},
+      {
+        keys: ["open", "high", "low", "close"]
+      }
+    ),
+    hovertemplatefallback: templatefallbackAttrs(),
+    tickwidth: {
+      valType: "number",
+      min: 0,
+      max: 0.5,
+      dflt: 0.3,
+      editType: "calc"
+    },
+    hoverlabel: extendFlat5({}, attributes_default.hoverlabel, {
+      split: {
+        valType: "boolean",
+        dflt: false,
+        editType: "style"
+      }
+    }),
+    zorder: attributes_default9.zorder
+  };
+
+  // src/traces/box/attributes.js
+  var { axisHoverFormat: axisHoverFormat5 } = axis_format_attributes_default;
+  var scatterMarkerAttrs2 = attributes_default9.marker;
+  var scatterMarkerLineAttrs2 = scatterMarkerAttrs2.line;
+  var attributes_default23 = {
     y: {
       valType: "data_array",
       editType: "calc+clearAxisTypes"
     },
-    xhoverformat: axisHoverFormat4("x"),
-    yhoverformat: axisHoverFormat4("y"),
-    text: extendFlat({}, attributes_default21.text, {}),
-    hovertext: extendFlat({}, attributes_default21.hovertext, {}),
-    orientation: attributes_default21.orientation,
-    histfunc: {
-      valType: "enumerated",
-      values: ["count", "sum", "avg", "min", "max"],
-      dflt: "count",
+    x: {
+      valType: "data_array",
+      editType: "calc+clearAxisTypes"
+    },
+    x0: {
+      valType: "any",
+      editType: "calc+clearAxisTypes"
+    },
+    y0: {
+      valType: "any",
+      editType: "calc+clearAxisTypes"
+    },
+    dx: {
+      valType: "number",
       editType: "calc"
     },
-    histnorm: {
-      valType: "enumerated",
-      values: ["", "percent", "probability", "density", "probability density"],
-      dflt: "",
+    dy: {
+      valType: "number",
       editType: "calc"
     },
-    cumulative: {
-      enabled: {
-        valType: "boolean",
-        dflt: false,
-        editType: "calc"
-      },
-      direction: {
-        valType: "enumerated",
-        values: ["increasing", "decreasing"],
-        dflt: "increasing",
-        editType: "calc"
-      },
-      currentbin: {
-        valType: "enumerated",
-        values: ["include", "exclude", "half"],
-        dflt: "include",
-        editType: "calc"
-      },
-      editType: "calc"
-    },
-    nbinsx: {
-      valType: "integer",
-      min: 0,
-      dflt: 0,
-      editType: "calc"
-    },
-    xbins: makeBinAttrs("x", true),
-    nbinsy: {
-      valType: "integer",
-      min: 0,
-      dflt: 0,
-      editType: "calc"
-    },
-    ybins: makeBinAttrs("y", true),
-    autobinx: {
-      valType: "boolean",
-      dflt: null,
-      editType: "calc"
-    },
-    autobiny: {
-      valType: "boolean",
-      dflt: null,
-      editType: "calc"
-    },
-    bingroup: {
+    xperiod: attributes_default9.xperiod,
+    yperiod: attributes_default9.yperiod,
+    xperiod0: attributes_default9.xperiod0,
+    yperiod0: attributes_default9.yperiod0,
+    xperiodalignment: attributes_default9.xperiodalignment,
+    yperiodalignment: attributes_default9.yperiodalignment,
+    xhoverformat: axisHoverFormat5("x"),
+    yhoverformat: axisHoverFormat5("y"),
+    name: {
       valType: "string",
-      dflt: "",
+      editType: "calc+clearAxisTypes"
+    },
+    q1: {
+      valType: "data_array",
+      editType: "calc+clearAxisTypes"
+    },
+    median: {
+      valType: "data_array",
+      editType: "calc+clearAxisTypes"
+    },
+    q3: {
+      valType: "data_array",
+      editType: "calc+clearAxisTypes"
+    },
+    lowerfence: {
+      valType: "data_array",
       editType: "calc"
     },
-    hovertemplate: hovertemplateAttrs({}, { keys: constants_default15.eventDataKeys }),
-    hovertemplatefallback: templatefallbackAttrs(),
-    texttemplate: texttemplateAttrs({ arrayOk: false, editType: "plot" }, { keys: ["label", "value"] }),
-    texttemplatefallback: templatefallbackAttrs({ editType: "plot" }),
-    textposition: extendFlat({}, attributes_default21.textposition, {
-      arrayOk: false
-    }),
-    textfont: font_attributes_default({
-      arrayOk: false,
-      editType: "plot",
-      colorEditType: "style"
-    }),
-    outsidetextfont: font_attributes_default({
-      arrayOk: false,
-      editType: "plot",
-      colorEditType: "style"
-    }),
-    insidetextfont: font_attributes_default({
-      arrayOk: false,
-      editType: "plot",
-      colorEditType: "style"
-    }),
-    insidetextanchor: attributes_default21.insidetextanchor,
-    textangle: attributes_default21.textangle,
-    cliponaxis: attributes_default21.cliponaxis,
-    constraintext: attributes_default21.constraintext,
-    marker: attributes_default21.marker,
+    upperfence: {
+      valType: "data_array",
+      editType: "calc"
+    },
+    notched: {
+      valType: "boolean",
+      editType: "calc"
+    },
+    notchwidth: {
+      valType: "number",
+      min: 0,
+      max: 0.5,
+      dflt: 0.25,
+      editType: "calc"
+    },
+    notchspan: {
+      valType: "data_array",
+      editType: "calc"
+    },
+    // TODO
+    // maybe add
+    // - loweroutlierbound / upperoutlierbound
+    // - lowersuspectedoutlierbound / uppersuspectedoutlierbound
+    boxpoints: {
+      valType: "enumerated",
+      values: ["all", "outliers", "suspectedoutliers", false],
+      editType: "calc"
+    },
+    jitter: {
+      valType: "number",
+      min: 0,
+      max: 1,
+      editType: "calc"
+    },
+    pointpos: {
+      valType: "number",
+      min: -2,
+      max: 2,
+      editType: "calc"
+    },
+    sdmultiple: {
+      valType: "number",
+      min: 0,
+      editType: "calc",
+      dflt: 1
+    },
+    sizemode: {
+      valType: "enumerated",
+      values: ["quartiles", "sd"],
+      editType: "calc",
+      dflt: "quartiles"
+    },
+    boxmean: {
+      valType: "enumerated",
+      values: [true, "sd", false],
+      editType: "calc"
+    },
+    mean: {
+      valType: "data_array",
+      editType: "calc"
+    },
+    sd: {
+      valType: "data_array",
+      editType: "calc"
+    },
+    orientation: {
+      valType: "enumerated",
+      values: ["v", "h"],
+      editType: "calc+clearAxisTypes"
+    },
+    quartilemethod: {
+      valType: "enumerated",
+      values: ["linear", "exclusive", "inclusive"],
+      dflt: "linear",
+      editType: "calc"
+    },
+    width: {
+      valType: "number",
+      min: 0,
+      dflt: 0,
+      editType: "calc"
+    },
+    marker: {
+      outliercolor: {
+        valType: "color",
+        dflt: "rgba(0, 0, 0, 0)",
+        editType: "style"
+      },
+      symbol: extendFlat({}, scatterMarkerAttrs2.symbol, { arrayOk: false, editType: "plot" }),
+      opacity: extendFlat({}, scatterMarkerAttrs2.opacity, { arrayOk: false, dflt: 1, editType: "style" }),
+      angle: extendFlat({}, scatterMarkerAttrs2.angle, { arrayOk: false, editType: "calc" }),
+      size: extendFlat({}, scatterMarkerAttrs2.size, { arrayOk: false, editType: "calc" }),
+      color: extendFlat({}, scatterMarkerAttrs2.color, { arrayOk: false, editType: "style" }),
+      line: {
+        color: extendFlat({}, scatterMarkerLineAttrs2.color, {
+          arrayOk: false,
+          dflt: attributes_default3.defaultLine,
+          editType: "style"
+        }),
+        width: extendFlat({}, scatterMarkerLineAttrs2.width, { arrayOk: false, dflt: 0, editType: "style" }),
+        outliercolor: {
+          valType: "color",
+          editType: "style"
+        },
+        outlierwidth: {
+          valType: "number",
+          min: 0,
+          dflt: 1,
+          editType: "style"
+        },
+        editType: "style"
+      },
+      editType: "plot"
+    },
+    line: {
+      color: {
+        valType: "color",
+        editType: "style"
+      },
+      width: {
+        valType: "number",
+        min: 0,
+        dflt: 2,
+        editType: "style"
+      },
+      editType: "plot"
+    },
+    fillcolor: makeFillcolorAttr(),
+    whiskerwidth: {
+      valType: "number",
+      min: 0,
+      max: 1,
+      dflt: 0.5,
+      editType: "calc"
+    },
+    showwhiskers: {
+      valType: "boolean",
+      editType: "calc"
+    },
     offsetgroup: attributes_default21.offsetgroup,
     alignmentgroup: attributes_default21.alignmentgroup,
-    selected: attributes_default21.selected,
-    unselected: attributes_default21.unselected,
-    zorder: attributes_default21.zorder
+    selected: {
+      marker: attributes_default9.selected.marker,
+      editType: "style"
+    },
+    unselected: {
+      marker: attributes_default9.unselected.marker,
+      editType: "style"
+    },
+    text: extendFlat({}, attributes_default9.text, {}),
+    hovertext: extendFlat({}, attributes_default9.hovertext, {}),
+    hovertemplate: hovertemplateAttrs({}),
+    hovertemplatefallback: templatefallbackAttrs(),
+    hoveron: {
+      valType: "flaglist",
+      flags: ["boxes", "points"],
+      dflt: "boxes+points",
+      editType: "style"
+    },
+    zorder: attributes_default9.zorder
   };
 
-  // src/traces/histogram/defaults.js
-  var { handleText: handleText2 } = defaults_default2;
-
-  // src/traces/histogram/cross_trace_defaults.js
-  var { validateCornerradius: validateCornerradius3 } = defaults_default2;
-  var nestedProperty4 = lib_default.nestedProperty;
-
-  // src/traces/histogram/calc.js
-  var import_fast_isnumeric43 = __toESM(require_fast_isnumeric(), 1);
-
-  // src/traces/histogram/bin_functions.js
-  var import_fast_isnumeric42 = __toESM(require_fast_isnumeric(), 1);
-  var bin_functions_default = {
-    count: function(n, i, size) {
-      size[n]++;
-      return 1;
-    },
-    sum: function(n, i, size, counterData) {
-      var v = counterData[i];
-      if ((0, import_fast_isnumeric42.default)(v)) {
-        v = Number(v);
-        size[n] += v;
-        return v;
-      }
-      return 0;
-    },
-    avg: function(n, i, size, counterData, counts) {
-      var v = counterData[i];
-      if ((0, import_fast_isnumeric42.default)(v)) {
-        v = Number(v);
-        size[n] += v;
-        counts[n]++;
-      }
-      return 0;
-    },
-    min: function(n, i, size, counterData) {
-      var v = counterData[i];
-      if ((0, import_fast_isnumeric42.default)(v)) {
-        v = Number(v);
-        if (!(0, import_fast_isnumeric42.default)(size[n])) {
-          size[n] = v;
-          return v;
-        } else if (size[n] > v) {
-          var delta = v - size[n];
-          size[n] = v;
-          return delta;
-        }
-      }
-      return 0;
-    },
-    max: function(n, i, size, counterData) {
-      var v = counterData[i];
-      if ((0, import_fast_isnumeric42.default)(v)) {
-        v = Number(v);
-        if (!(0, import_fast_isnumeric42.default)(size[n])) {
-          size[n] = v;
-          return v;
-        } else if (size[n] < v) {
-          var delta = v - size[n];
-          size[n] = v;
-          return delta;
-        }
-      }
-      return 0;
-    }
-  };
-
-  // src/traces/histogram/norm_functions.js
-  var norm_functions_default = {
-    percent: function(size, total) {
-      var nMax = size.length;
-      var norm = 100 / total;
-      for (var n = 0; n < nMax; n++) size[n] *= norm;
-    },
-    probability: function(size, total) {
-      var nMax = size.length;
-      for (var n = 0; n < nMax; n++) size[n] /= total;
-    },
-    density: function(size, total, inc, yinc) {
-      var nMax = size.length;
-      yinc = yinc || 1;
-      for (var n = 0; n < nMax; n++) size[n] *= inc[n] * yinc;
-    },
-    "probability density": function(size, total, inc, yinc) {
-      var nMax = size.length;
-      if (yinc) total /= yinc;
-      for (var n = 0; n < nMax; n++) size[n] *= inc[n] / total;
-    }
-  };
-
-  // src/traces/histogram/average.js
-  function doAvg(size, counts) {
-    var nMax = size.length;
-    var total = 0;
-    for (var i = 0; i < nMax; i++) {
-      if (counts[i]) {
-        size[i] /= counts[i];
-        total += size[i];
-      } else size[i] = null;
-    }
-    return total;
-  }
-
-  // src/traces/histogram/bin_label_vals.js
-  var { tickIncrement } = axes_default;
-  var oneYear = numerical_default.ONEAVGYEAR;
-  var oneMonth = numerical_default.ONEAVGMONTH;
-  var oneDay = numerical_default.ONEDAY;
-  var oneHour = numerical_default.ONEHOUR;
-  var oneMin = numerical_default.ONEMIN;
-  var oneSec = numerical_default.ONESEC;
-  function getBinSpanLabelRound(leftGap, rightGap, binEdges, pa, calendar) {
-    var dv0 = -1.1 * rightGap;
-    var dv1 = -0.1 * rightGap;
-    var dv2 = leftGap - dv1;
-    var edge0 = binEdges[0];
-    var edge1 = binEdges[1];
-    var leftDigit = Math.min(
-      biggestDigitChanged(edge0 + dv1, edge0 + dv2, pa, calendar),
-      biggestDigitChanged(edge1 + dv1, edge1 + dv2, pa, calendar)
-    );
-    var rightDigit = Math.min(
-      biggestDigitChanged(edge0 + dv0, edge0 + dv1, pa, calendar),
-      biggestDigitChanged(edge1 + dv0, edge1 + dv1, pa, calendar)
-    );
-    var digit, disambiguateEdges;
-    if (leftDigit > rightDigit && rightDigit < Math.abs(edge1 - edge0) / 4e3) {
-      digit = leftDigit;
-      disambiguateEdges = false;
-    } else {
-      digit = Math.min(leftDigit, rightDigit);
-      disambiguateEdges = true;
-    }
-    if (pa.type === "date" && digit > oneDay) {
-      var dashExclude = digit === oneYear ? 1 : 6;
-      var increment = digit === oneYear ? "M12" : "M1";
-      return function(v, isRightEdge) {
-        var dateStr = pa.c2d(v, oneYear, calendar);
-        var dashPos = dateStr.indexOf("-", dashExclude);
-        if (dashPos > 0) dateStr = dateStr.slice(0, dashPos);
-        var roundedV = pa.d2c(dateStr, 0, calendar);
-        if (roundedV < v) {
-          var nextV = tickIncrement(roundedV, increment, false, calendar);
-          if ((roundedV + nextV) / 2 < v + leftGap) roundedV = nextV;
-        }
-        if (isRightEdge && disambiguateEdges) {
-          return tickIncrement(roundedV, increment, true, calendar);
-        }
-        return roundedV;
-      };
-    }
-    return function(v, isRightEdge) {
-      var roundedV = digit * Math.round(v / digit);
-      if (roundedV + digit / 10 < v && roundedV + digit * 0.9 < v + leftGap) {
-        roundedV += digit;
-      }
-      if (isRightEdge && disambiguateEdges) {
-        roundedV -= digit;
-      }
-      return roundedV;
+  // src/traces/candlestick/attributes.js
+  var { extendFlat: extendFlat6 } = lib_default;
+  var { axisHoverFormat: axisHoverFormat6 } = axis_format_attributes_default;
+  function directionAttrs2(lineColorDefault) {
+    return {
+      line: {
+        color: extendFlat6({}, attributes_default23.line.color, { dflt: lineColorDefault }),
+        width: attributes_default23.line.width,
+        editType: "style"
+      },
+      fillcolor: attributes_default23.fillcolor,
+      editType: "style"
     };
   }
-  function biggestDigitChanged(v1, v2, pa, calendar) {
-    if (v1 * v2 <= 0) return Infinity;
-    var dv2 = Math.abs(v2 - v1);
-    var isDate = pa.type === "date";
-    var digit = biggestGuaranteedDigitChanged(dv2, isDate);
-    for (var i = 0; i < 10; i++) {
-      var nextDigit = biggestGuaranteedDigitChanged(digit * 80, isDate);
-      if (digit === nextDigit) break;
-      if (didDigitChange(nextDigit, v1, v2, isDate, pa, calendar)) digit = nextDigit;
-      else break;
-    }
-    return digit;
-  }
-  function biggestGuaranteedDigitChanged(dv2, isDate) {
-    if (isDate && dv2 > oneSec) {
-      if (dv2 > oneDay) {
-        if (dv2 > oneYear * 1.1) return oneYear;
-        if (dv2 > oneMonth * 1.1) return oneMonth;
-        return oneDay;
-      }
-      if (dv2 > oneHour) return oneHour;
-      if (dv2 > oneMin) return oneMin;
-      return oneSec;
-    }
-    return Math.pow(10, Math.floor(Math.log(dv2) / Math.LN10));
-  }
-  function didDigitChange(digit, v1, v2, isDate, pa, calendar) {
-    if (isDate && digit > oneDay) {
-      var dateParts1 = dateParts(v1, pa, calendar);
-      var dateParts2 = dateParts(v2, pa, calendar);
-      var parti = digit === oneYear ? 0 : 1;
-      return dateParts1[parti] !== dateParts2[parti];
-    }
-    return Math.floor(v2 / digit) - Math.floor(v1 / digit) > 0.1;
-  }
-  function dateParts(v, pa, calendar) {
-    var parts = pa.c2d(v, oneYear, calendar).split("-");
-    if (parts[0] === "") {
-      parts.unshift();
-      parts[0] = "-" + parts[0];
-    }
-    return parts;
-  }
+  var attributes_default24 = {
+    xperiod: attributes_default22.xperiod,
+    xperiod0: attributes_default22.xperiod0,
+    xperiodalignment: attributes_default22.xperiodalignment,
+    xhoverformat: axisHoverFormat6("x"),
+    yhoverformat: axisHoverFormat6("y"),
+    x: attributes_default22.x,
+    open: attributes_default22.open,
+    high: attributes_default22.high,
+    low: attributes_default22.low,
+    close: attributes_default22.close,
+    line: {
+      width: extendFlat6({}, attributes_default23.line.width, {}),
+      editType: "style"
+    },
+    increasing: directionAttrs2(attributes_default22.increasing.line.color.dflt),
+    decreasing: directionAttrs2(attributes_default22.decreasing.line.color.dflt),
+    text: attributes_default22.text,
+    hovertext: attributes_default22.hovertext,
+    hovertemplate: attributes_default22.hovertemplate,
+    hovertemplatefallback: attributes_default22.hovertemplatefallback,
+    whiskerwidth: extendFlat6({}, attributes_default23.whiskerwidth, { dflt: 0 }),
+    hoverlabel: attributes_default22.hoverlabel,
+    zorder: attributes_default23.zorder
+  };
 
-  // src/traces/histogram/calc.js
-  var { hasColorscale: hasColorscale8 } = helpers_default;
-  function calc6(gd, trace) {
-    var pos = [];
-    var size = [];
-    var isHorizontal = trace.orientation === "h";
-    var pa = axes_default.getFromId(gd, isHorizontal ? trace.yaxis : trace.xaxis);
-    var mainData = isHorizontal ? "y" : "x";
-    var counterData = { x: "y", y: "x" }[mainData];
-    var calendar = trace[mainData + "calendar"];
-    var cumulativeSpec = trace.cumulative;
-    var i;
-    var binsAndPos = calcAllAutoBins(gd, trace, pa, mainData);
-    var binSpec = binsAndPos[0];
-    var pos0 = binsAndPos[1];
-    var nonuniformBins = typeof binSpec.size === "string";
-    var binEdges = [];
-    var bins = nonuniformBins ? binEdges : binSpec;
-    var inc = [];
-    var counts = [];
-    var inputPoints = [];
-    var total = 0;
-    var norm = trace.histnorm;
-    var func = trace.histfunc;
-    var densityNorm = norm.indexOf("density") !== -1;
-    var i2, binEnd, n;
-    if (cumulativeSpec.enabled && densityNorm) {
-      norm = norm.replace(/ ?density$/, "");
-      densityNorm = false;
+  // src/traces/box/layout_attributes.js
+  var layout_attributes_default7 = {
+    boxmode: {
+      valType: "enumerated",
+      values: ["group", "overlay"],
+      dflt: "overlay",
+      editType: "calc"
+    },
+    boxgap: {
+      valType: "number",
+      min: 0,
+      max: 1,
+      dflt: 0.3,
+      editType: "calc"
+    },
+    boxgroupgap: {
+      valType: "number",
+      min: 0,
+      max: 1,
+      dflt: 0.3,
+      editType: "calc"
     }
-    var extremeFunc = func === "max" || func === "min";
-    var sizeInit = extremeFunc ? null : 0;
-    var binFunc = bin_functions_default.count;
-    var normFunc = norm_functions_default[norm];
-    var isAvg = false;
-    var pr2c = function(v) {
-      return pa.r2c(v, 0, calendar);
-    };
-    var rawCounterData;
-    if (lib_default.isArrayOrTypedArray(trace[counterData]) && func !== "count") {
-      rawCounterData = trace[counterData];
-      isAvg = func === "avg";
-      binFunc = bin_functions_default[func];
-    }
-    i = pr2c(binSpec.start);
-    binEnd = pr2c(binSpec.end) + (i - axes_default.tickIncrement(i, binSpec.size, false, calendar)) / 1e6;
-    while (i < binEnd && pos.length < 1e6) {
-      i2 = axes_default.tickIncrement(i, binSpec.size, false, calendar);
-      pos.push((i + i2) / 2);
-      size.push(sizeInit);
-      inputPoints.push([]);
-      binEdges.push(i);
-      if (densityNorm) inc.push(1 / (i2 - i));
-      if (isAvg) counts.push(0);
-      if (i2 <= i) break;
-      i = i2;
-    }
-    binEdges.push(i);
-    if (!nonuniformBins && pa.type === "date") {
-      bins = {
-        start: pr2c(bins.start),
-        end: pr2c(bins.end),
-        size: bins.size
-      };
-    }
-    if (!gd._fullLayout._roundFnOpts) gd._fullLayout._roundFnOpts = {};
-    var groupName = trace["_" + mainData + "bingroup"];
-    var roundFnOpts = { leftGap: Infinity, rightGap: Infinity };
-    if (groupName) {
-      if (!gd._fullLayout._roundFnOpts[groupName]) gd._fullLayout._roundFnOpts[groupName] = roundFnOpts;
-      roundFnOpts = gd._fullLayout._roundFnOpts[groupName];
-    }
-    var nMax = size.length;
-    var uniqueValsPerBin = true;
-    var leftGap = roundFnOpts.leftGap;
-    var rightGap = roundFnOpts.rightGap;
-    var ptNumber2cdIndex = {};
-    for (i = 0; i < pos0.length; i++) {
-      var posi = pos0[i];
-      n = lib_default.findBin(posi, bins);
-      if (n >= 0 && n < nMax) {
-        total += binFunc(n, i, size, rawCounterData, counts);
-        if (uniqueValsPerBin && inputPoints[n].length && posi !== pos0[inputPoints[n][0]]) {
-          uniqueValsPerBin = false;
-        }
-        inputPoints[n].push(i);
-        ptNumber2cdIndex[i] = n;
-        leftGap = Math.min(leftGap, posi - binEdges[n]);
-        rightGap = Math.min(rightGap, binEdges[n + 1] - posi);
-      }
-    }
-    roundFnOpts.leftGap = leftGap;
-    roundFnOpts.rightGap = rightGap;
-    var roundFn;
-    if (!uniqueValsPerBin) {
-      roundFn = function(v, isRightEdge) {
-        return function() {
-          var roundFnOpts2 = gd._fullLayout._roundFnOpts[groupName];
-          return getBinSpanLabelRound(
-            roundFnOpts2.leftGap,
-            roundFnOpts2.rightGap,
-            binEdges,
-            pa,
-            calendar
-          )(v, isRightEdge);
-        };
-      };
-    }
-    if (isAvg) total = doAvg(size, counts);
-    if (normFunc) normFunc(size, total, inc);
-    if (cumulativeSpec.enabled) cdf(size, cumulativeSpec.direction, cumulativeSpec.currentbin);
-    var seriesLen = Math.min(pos.length, size.length);
-    var cd = [];
-    var firstNonzero = 0;
-    var lastNonzero = seriesLen - 1;
-    for (i = 0; i < seriesLen; i++) {
-      if (size[i]) {
-        firstNonzero = i;
+  };
+
+  // src/traces/box/layout_defaults.js
+  function _supply(layoutIn, layoutOut, fullData, coerce3, traceType) {
+    var category2 = traceType + "Layout";
+    var hasTraceType = false;
+    for (var i = 0; i < fullData.length; i++) {
+      var trace = fullData[i];
+      if (registry_default.traceIs(trace, category2)) {
+        hasTraceType = true;
         break;
       }
     }
-    for (i = seriesLen - 1; i >= firstNonzero; i--) {
-      if (size[i]) {
-        lastNonzero = i;
-        break;
+    if (!hasTraceType) return;
+    coerce3(traceType + "mode");
+    coerce3(traceType + "gap");
+    coerce3(traceType + "groupgap");
+  }
+  function supplyLayoutDefaults10(layoutIn, layoutOut, fullData) {
+    function coerce3(attr2, dflt) {
+      return lib_default.coerce(layoutIn, layoutOut, layout_attributes_default7, attr2, dflt);
+    }
+    _supply(layoutIn, layoutOut, fullData, coerce3, "box");
+  }
+  var layout_defaults_default3 = {
+    supplyLayoutDefaults: supplyLayoutDefaults10,
+    _supply
+  };
+
+  // src/traces/box/cross_trace_calc.js
+  var orientations = ["v", "h"];
+  function crossTraceCalc3(gd, plotinfo) {
+    var calcdata = gd.calcdata;
+    var xa = plotinfo.xaxis;
+    var ya = plotinfo.yaxis;
+    for (var i = 0; i < orientations.length; i++) {
+      var orientation = orientations[i];
+      var posAxis = orientation === "h" ? ya : xa;
+      var boxList = [];
+      for (var j = 0; j < calcdata.length; j++) {
+        var cd = calcdata[j];
+        var t = cd[0].t;
+        var trace = cd[0].trace;
+        if (trace.visible === true && (trace.type === "box" || trace.type === "candlestick") && !t.empty && (trace.orientation || "v") === orientation && trace.xaxis === xa._id && trace.yaxis === ya._id) {
+          boxList.push(j);
+        }
+      }
+      setPositionOffset("box", gd, boxList, posAxis);
+    }
+  }
+  function setPositionOffset(traceType, gd, boxList, posAxis) {
+    var calcdata = gd.calcdata;
+    var fullLayout = gd._fullLayout;
+    var axId = posAxis._id;
+    var axLetter = axId.charAt(0);
+    var i, j, calcTrace;
+    var pointList = [];
+    var shownPts = 0;
+    for (i = 0; i < boxList.length; i++) {
+      calcTrace = calcdata[boxList[i]];
+      for (j = 0; j < calcTrace.length; j++) {
+        pointList.push(posAxis.c2l(calcTrace[j].pos, true));
+        shownPts += (calcTrace[j].pts2 || []).length;
       }
     }
-    for (i = firstNonzero; i <= lastNonzero; i++) {
-      if ((0, import_fast_isnumeric43.default)(pos[i]) && (0, import_fast_isnumeric43.default)(size[i])) {
-        var cdi = {
-          p: pos[i],
-          s: size[i],
-          b: 0
-        };
-        if (!cumulativeSpec.enabled) {
-          cdi.pts = inputPoints[i];
-          if (uniqueValsPerBin) {
-            cdi.ph0 = cdi.ph1 = inputPoints[i].length ? pos0[inputPoints[i][0]] : pos[i];
-          } else {
-            trace._computePh = true;
-            cdi.ph0 = roundFn(binEdges[i]);
-            cdi.ph1 = roundFn(binEdges[i + 1], true);
+    if (!pointList.length) return;
+    var boxdv = lib_default.distinctVals(pointList);
+    if (posAxis.type === "category" || posAxis.type === "multicategory") {
+      boxdv.minDiff = 1;
+    }
+    var dPos0 = boxdv.minDiff / 2;
+    axes_default.minDtick(posAxis, boxdv.minDiff, boxdv.vals[0], true);
+    var numKey = traceType === "violin" ? "_numViolins" : "_numBoxes";
+    var numTotal = fullLayout[numKey];
+    var group = fullLayout[traceType + "mode"] === "group" && numTotal > 1;
+    var groupFraction = 1 - fullLayout[traceType + "gap"];
+    var groupGapFraction = 1 - fullLayout[traceType + "groupgap"];
+    for (i = 0; i < boxList.length; i++) {
+      calcTrace = calcdata[boxList[i]];
+      var trace = calcTrace[0].trace;
+      var t = calcTrace[0].t;
+      var width = trace.width;
+      var side = trace.side;
+      var dPos;
+      var bdPos;
+      var bPos;
+      var wHover;
+      if (width) {
+        dPos = bdPos = wHover = width / 2;
+        bPos = 0;
+      } else {
+        dPos = dPos0;
+        if (group) {
+          var groupId = getAxisGroup(fullLayout, posAxis._id) + trace.orientation;
+          var alignmentGroups = fullLayout._alignmentOpts[groupId] || {};
+          var alignmentGroupOpts = alignmentGroups[trace.alignmentgroup] || {};
+          var nOffsetGroups = Object.keys(alignmentGroupOpts.offsetGroups || {}).length;
+          var num = nOffsetGroups || numTotal;
+          var shift = nOffsetGroups ? trace._offsetIndex : t.num;
+          bdPos = dPos * groupFraction * groupGapFraction / num;
+          bPos = 2 * dPos * (-0.5 + (shift + 0.5) / num) * groupFraction;
+          wHover = dPos * groupFraction / num;
+        } else {
+          bdPos = dPos * groupFraction * groupGapFraction;
+          bPos = 0;
+          wHover = dPos;
+        }
+      }
+      t.dPos = dPos;
+      t.bPos = bPos;
+      t.bdPos = bdPos;
+      t.wHover = wHover;
+      var pushplus;
+      var pushminus;
+      var edge = bPos + bdPos;
+      var edgeplus;
+      var edgeminus;
+      var vpadplus;
+      var vpadminus;
+      var ppadplus;
+      var ppadminus;
+      var padded = Boolean(width);
+      var hasPts = (trace.boxpoints || trace.points) && shownPts > 0;
+      if (side === "positive") {
+        pushplus = dPos * (width ? 1 : 0.5);
+        edgeplus = edge;
+        pushminus = edgeplus = bPos;
+      } else if (side === "negative") {
+        pushplus = edgeplus = bPos;
+        pushminus = dPos * (width ? 1 : 0.5);
+        edgeminus = edge;
+      } else {
+        pushplus = pushminus = dPos;
+        edgeplus = edgeminus = edge;
+      }
+      if (hasPts) {
+        var pointpos = trace.pointpos;
+        var jitter = trace.jitter;
+        var ms = trace.marker.size / 2;
+        var pp = 0;
+        if (pointpos + jitter >= 0) {
+          pp = edge * (pointpos + jitter);
+          if (pp > pushplus) {
+            padded = true;
+            ppadplus = ms;
+            vpadplus = pp;
+          } else if (pp > edgeplus) {
+            ppadplus = ms;
+            vpadplus = pushplus;
           }
         }
-        cd.push(cdi);
+        if (pp <= pushplus) {
+          vpadplus = pushplus;
+        }
+        var pm = 0;
+        if (pointpos - jitter <= 0) {
+          pm = -edge * (pointpos - jitter);
+          if (pm > pushminus) {
+            padded = true;
+            ppadminus = ms;
+            vpadminus = pm;
+          } else if (pm > edgeminus) {
+            ppadminus = ms;
+            vpadminus = pushminus;
+          }
+        }
+        if (pm <= pushminus) {
+          vpadminus = pushminus;
+        }
+      } else {
+        vpadplus = pushplus;
+        vpadminus = pushminus;
+      }
+      var pos = new Array(calcTrace.length);
+      for (j = 0; j < calcTrace.length; j++) {
+        pos[j] = calcTrace[j].pos;
+      }
+      trace._extremes[axId] = axes_default.findExtremes(posAxis, pos, {
+        padded,
+        vpadminus,
+        vpadplus,
+        vpadLinearized: true,
+        // N.B. SVG px-space positive/negative
+        ppadminus: { x: ppadminus, y: ppadplus }[axLetter],
+        ppadplus: { x: ppadplus, y: ppadminus }[axLetter]
+      });
+    }
+  }
+  var cross_trace_calc_default2 = {
+    crossTraceCalc: crossTraceCalc3,
+    setPositionOffset
+  };
+
+  // src/traces/ohlc/ohlc_defaults.js
+  function handleOHLC(traceIn, traceOut, coerce3, layout) {
+    var x = coerce3("x");
+    var open = coerce3("open");
+    var high = coerce3("high");
+    var low = coerce3("low");
+    var close = coerce3("close");
+    coerce3("hoverlabel.split");
+    var handleCalendarDefaults = registry_default.getComponentMethod("calendars", "handleTraceDefaults");
+    handleCalendarDefaults(traceIn, traceOut, ["x"], layout);
+    if (!(open && high && low && close)) return;
+    var len2 = Math.min(open.length, high.length, low.length, close.length);
+    if (x) len2 = Math.min(len2, lib_default.minRowLength(x));
+    traceOut._length = len2;
+    return len2;
+  }
+
+  // src/traces/candlestick/defaults.js
+  function supplyDefaults4(traceIn, traceOut, defaultColor, layout) {
+    function coerce3(attr2, dflt) {
+      return lib_default.coerce(traceIn, traceOut, attributes_default24, attr2, dflt);
+    }
+    var len2 = handleOHLC(traceIn, traceOut, coerce3, layout);
+    if (!len2) {
+      traceOut.visible = false;
+      return;
+    }
+    handlePeriodDefaults(traceIn, traceOut, layout, coerce3, { x: true });
+    coerce3("xhoverformat");
+    coerce3("yhoverformat");
+    coerce3("line.width");
+    handleDirection(traceIn, traceOut, coerce3, "increasing");
+    handleDirection(traceIn, traceOut, coerce3, "decreasing");
+    coerce3("text");
+    coerce3("hovertext");
+    coerce3("hovertemplate");
+    coerce3("hovertemplatefallback");
+    coerce3("whiskerwidth");
+    layout._requestRangeslider[traceOut.xaxis] = true;
+    coerce3("zorder");
+  }
+  function handleDirection(traceIn, traceOut, coerce3, direction) {
+    var lineColor = coerce3(direction + ".line.color");
+    coerce3(direction + ".line.width", traceOut.line.width);
+    coerce3(direction + ".fillcolor", color_default.addOpacity(lineColor, 0.5));
+  }
+
+  // src/traces/ohlc/calc.js
+  var { BADNUM: BADNUM14 } = numerical_default;
+  var _3 = lib_default._;
+  function calc6(gd, trace) {
+    var xa = axes_default.getFromId(gd, trace.xaxis);
+    var ya = axes_default.getFromId(gd, trace.yaxis);
+    var tickLen = convertTickWidth(gd, xa, trace);
+    var minDiff = trace._minDiff;
+    trace._minDiff = null;
+    var origX = trace._origX;
+    trace._origX = null;
+    var x = trace._xcalc;
+    trace._xcalc = null;
+    var cd = calcCommon(gd, trace, origX, x, ya, ptFunc);
+    trace._extremes[xa._id] = axes_default.findExtremes(xa, x, { vpad: minDiff / 2 });
+    if (cd.length) {
+      lib_default.extendFlat(cd[0].t, {
+        wHover: minDiff / 2,
+        tickLen
+      });
+      return cd;
+    } else {
+      return [{ t: { empty: true } }];
+    }
+  }
+  function ptFunc(o, h, l, c) {
+    return {
+      o,
+      h,
+      l,
+      c
+    };
+  }
+  function calcCommon(gd, trace, origX, x, ya, ptFunc3) {
+    var o = ya.makeCalcdata(trace, "open");
+    var h = ya.makeCalcdata(trace, "high");
+    var l = ya.makeCalcdata(trace, "low");
+    var c = ya.makeCalcdata(trace, "close");
+    var hasTextArray = lib_default.isArrayOrTypedArray(trace.text);
+    var hasHovertextArray = lib_default.isArrayOrTypedArray(trace.hovertext);
+    var increasing = true;
+    var cPrev = null;
+    var hasPeriod = !!trace.xperiodalignment;
+    var cd = [];
+    for (var i = 0; i < x.length; i++) {
+      var xi = x[i];
+      var oi = o[i];
+      var hi = h[i];
+      var li = l[i];
+      var ci = c[i];
+      if (xi !== BADNUM14 && oi !== BADNUM14 && hi !== BADNUM14 && li !== BADNUM14 && ci !== BADNUM14) {
+        if (ci === oi) {
+          if (cPrev !== null && ci !== cPrev) increasing = ci > cPrev;
+        } else increasing = ci > oi;
+        cPrev = ci;
+        var pt = ptFunc3(oi, hi, li, ci);
+        pt.pos = xi;
+        pt.yc = (oi + ci) / 2;
+        pt.i = i;
+        pt.dir = increasing ? "increasing" : "decreasing";
+        pt.x = pt.pos;
+        pt.y = [li, hi];
+        if (hasPeriod) pt.orig_p = origX[i];
+        if (hasTextArray) pt.tx = trace.text[i];
+        if (hasHovertextArray) pt.htx = trace.hovertext[i];
+        cd.push(pt);
+      } else {
+        cd.push({ pos: xi, empty: true });
       }
     }
-    if (cd.length === 1) {
-      cd[0].width1 = axes_default.tickIncrement(cd[0].p, binSpec.size, false, calendar) - cd[0].p;
-    }
-    if (hasColorscale8(trace, "marker")) {
-      calc(gd, trace, {
-        vals: trace.marker.color,
-        containerStr: "marker",
-        cLetter: "c"
-      });
-    }
-    if (hasColorscale8(trace, "marker.line")) {
-      calc(gd, trace, {
-        vals: trace.marker.line.color,
-        containerStr: "marker.line",
-        cLetter: "c"
-      });
-    }
-    arraysToCalcdata2(cd, trace);
-    if (lib_default.isArrayOrTypedArray(trace.selectedpoints)) {
-      lib_default.tagSelected(cd, trace, ptNumber2cdIndex);
+    trace._extremes[ya._id] = axes_default.findExtremes(ya, lib_default.concat(l, h), { padded: true });
+    if (cd.length) {
+      cd[0].t = {
+        labels: {
+          open: _3(gd, "open:") + " ",
+          high: _3(gd, "high:") + " ",
+          low: _3(gd, "low:") + " ",
+          close: _3(gd, "close:") + " "
+        }
+      };
     }
     return cd;
   }
-  function calcAllAutoBins(gd, trace, pa, mainData, _overlayEdgeCase) {
-    var binAttr = mainData + "bins";
-    var fullLayout = gd._fullLayout;
-    var groupName = trace["_" + mainData + "bingroup"];
-    var binOpts = fullLayout._histogramBinOpts[groupName];
-    var isOverlay = fullLayout.barmode === "overlay";
-    var i, traces, tracei, calendar, pos0, autoVals, cumulativeSpec;
-    var r2c = function(v) {
-      return pa.r2c(v, 0, calendar);
-    };
-    var c2r = function(v) {
-      return pa.c2r(v, 0, calendar);
-    };
-    var cleanBound = pa.type === "date" ? function(v) {
-      return v || v === 0 ? lib_default.cleanDate(v, null, calendar) : null;
-    } : function(v) {
-      return (0, import_fast_isnumeric43.default)(v) ? Number(v) : null;
-    };
-    function setBound(attr2, bins, newBins) {
-      if (bins[attr2 + "Found"]) {
-        bins[attr2] = cleanBound(bins[attr2]);
-        if (bins[attr2] === null) bins[attr2] = newBins[attr2];
-      } else {
-        autoVals[attr2] = bins[attr2] = newBins[attr2];
-        lib_default.nestedProperty(traces[0], binAttr + "." + attr2).set(newBins[attr2]);
-      }
-    }
-    if (trace["_" + mainData + "autoBinFinished"]) {
-      delete trace["_" + mainData + "autoBinFinished"];
-    } else {
-      traces = binOpts.traces;
-      var allPos = [];
-      var isFirstVisible = true;
-      var has2dMap = false;
-      var hasHist2dContour = false;
-      for (i = 0; i < traces.length; i++) {
-        tracei = traces[i];
-        if (tracei.visible) {
-          var mainDatai = binOpts.dirs[i];
-          pos0 = tracei["_" + mainDatai + "pos0"] = pa.makeCalcdata(tracei, mainDatai);
-          allPos = lib_default.concat(allPos, pos0);
-          delete tracei["_" + mainData + "autoBinFinished"];
-          if (trace.visible === true) {
-            if (isFirstVisible) {
-              isFirstVisible = false;
-            } else {
-              delete tracei._autoBin;
-              tracei["_" + mainData + "autoBinFinished"] = 1;
-            }
-            if (registry_default.traceIs(tracei, "2dMap")) {
-              has2dMap = true;
-            }
-            if (tracei.type === "histogram2dcontour") {
-              hasHist2dContour = true;
-            }
+  function convertTickWidth(gd, xa, trace) {
+    var minDiff = trace._minDiff;
+    if (!minDiff) {
+      var fullData = gd._fullData;
+      var ohlcTracesOnThisXaxis = [];
+      minDiff = Infinity;
+      var i;
+      for (i = 0; i < fullData.length; i++) {
+        var tracei = fullData[i];
+        if (tracei.type === "ohlc" && tracei.visible === true && tracei.xaxis === xa._id) {
+          ohlcTracesOnThisXaxis.push(tracei);
+          var origX = xa.makeCalcdata(tracei, "x");
+          tracei._origX = origX;
+          var xcalc = alignPeriod(trace, xa, "x", origX).vals;
+          tracei._xcalc = xcalc;
+          var _minDiff = lib_default.distinctVals(xcalc).minDiff;
+          if (_minDiff && isFinite(_minDiff)) {
+            minDiff = Math.min(minDiff, _minDiff);
           }
         }
       }
-      calendar = traces[0][mainData + "calendar"];
-      var newBinSpec = axes_default.autoBin(allPos, pa, binOpts.nbins, has2dMap, calendar, binOpts.sizeFound && binOpts.size);
-      var autoBin = traces[0]._autoBin = {};
-      autoVals = autoBin[binOpts.dirs[0]] = {};
-      if (hasHist2dContour) {
-        if (!binOpts.size) {
-          newBinSpec.start = c2r(axes_default.tickIncrement(
-            r2c(newBinSpec.start),
-            newBinSpec.size,
-            true,
-            calendar
-          ));
-        }
-        if (binOpts.end === void 0) {
-          newBinSpec.end = c2r(axes_default.tickIncrement(
-            r2c(newBinSpec.end),
-            newBinSpec.size,
-            false,
-            calendar
-          ));
-        }
-      }
-      if (isOverlay && !registry_default.traceIs(trace, "2dMap") && newBinSpec._dataSpan === 0 && pa.type !== "category" && pa.type !== "multicategory" && trace.bingroup === "" && typeof trace.xbins === "undefined") {
-        if (_overlayEdgeCase) return [newBinSpec, pos0, true];
-        newBinSpec = handleSingleValueOverlays(gd, trace, pa, mainData, binAttr);
-      }
-      cumulativeSpec = tracei.cumulative || {};
-      if (cumulativeSpec.enabled && cumulativeSpec.currentbin !== "include") {
-        if (cumulativeSpec.direction === "decreasing") {
-          newBinSpec.start = c2r(axes_default.tickIncrement(
-            r2c(newBinSpec.start),
-            newBinSpec.size,
-            true,
-            calendar
-          ));
-        } else {
-          newBinSpec.end = c2r(axes_default.tickIncrement(
-            r2c(newBinSpec.end),
-            newBinSpec.size,
-            false,
-            calendar
-          ));
-        }
-      }
-      binOpts.size = newBinSpec.size;
-      if (!binOpts.sizeFound) {
-        autoVals.size = newBinSpec.size;
-        lib_default.nestedProperty(traces[0], binAttr + ".size").set(newBinSpec.size);
-      }
-      setBound("start", binOpts, newBinSpec);
-      setBound("end", binOpts, newBinSpec);
-    }
-    pos0 = trace["_" + mainData + "pos0"];
-    delete trace["_" + mainData + "pos0"];
-    var traceInputBins = trace._input[binAttr] || {};
-    var traceBinOptsCalc = lib_default.extendFlat({}, binOpts);
-    var mainStart = binOpts.start;
-    var startIn = pa.r2l(traceInputBins.start);
-    var hasStart = startIn !== void 0;
-    if ((binOpts.startFound || hasStart) && startIn !== pa.r2l(mainStart)) {
-      var traceStart = hasStart ? startIn : lib_default.aggNums(Math.min, null, pos0);
-      var dummyAx = {
-        type: pa.type === "category" || pa.type === "multicategory" ? "linear" : pa.type,
-        r2l: pa.r2l,
-        dtick: binOpts.size,
-        tick0: mainStart,
-        calendar,
-        range: [traceStart, axes_default.tickIncrement(traceStart, binOpts.size, false, calendar)].map(pa.l2r)
-      };
-      var newStart = axes_default.tickFirst(dummyAx);
-      if (newStart > pa.r2l(traceStart)) {
-        newStart = axes_default.tickIncrement(newStart, binOpts.size, true, calendar);
-      }
-      traceBinOptsCalc.start = pa.l2r(newStart);
-      if (!hasStart) lib_default.nestedProperty(trace, binAttr + ".start").set(traceBinOptsCalc.start);
-    }
-    var mainEnd = binOpts.end;
-    var endIn = pa.r2l(traceInputBins.end);
-    var hasEnd = endIn !== void 0;
-    if ((binOpts.endFound || hasEnd) && endIn !== pa.r2l(mainEnd)) {
-      var traceEnd = hasEnd ? endIn : lib_default.aggNums(Math.max, null, pos0);
-      traceBinOptsCalc.end = pa.l2r(traceEnd);
-      if (!hasEnd) lib_default.nestedProperty(trace, binAttr + ".start").set(traceBinOptsCalc.end);
-    }
-    var autoBinAttr = "autobin" + mainData;
-    if (trace._input[autoBinAttr] === false) {
-      trace._input[binAttr] = lib_default.extendFlat({}, trace[binAttr] || {});
-      delete trace._input[autoBinAttr];
-      delete trace[autoBinAttr];
-    }
-    return [traceBinOptsCalc, pos0];
-  }
-  function handleSingleValueOverlays(gd, trace, pa, mainData, binAttr) {
-    var fullLayout = gd._fullLayout;
-    var overlaidTraceGroup = getConnectedHistograms(gd, trace);
-    var pastThisTrace = false;
-    var minSize = Infinity;
-    var singleValuedTraces = [trace];
-    var i, tracei, binOpts;
-    for (i = 0; i < overlaidTraceGroup.length; i++) {
-      tracei = overlaidTraceGroup[i];
-      if (tracei === trace) {
-        pastThisTrace = true;
-      } else if (!pastThisTrace) {
-        binOpts = fullLayout._histogramBinOpts[tracei["_" + mainData + "bingroup"]];
-        minSize = Math.min(minSize, binOpts.size || tracei[binAttr].size);
-      } else {
-        var resulti = calcAllAutoBins(gd, tracei, pa, mainData, true);
-        var binSpeci = resulti[0];
-        var isSingleValued = resulti[2];
-        tracei["_" + mainData + "autoBinFinished"] = 1;
-        tracei["_" + mainData + "pos0"] = resulti[1];
-        if (isSingleValued) {
-          singleValuedTraces.push(tracei);
-        } else {
-          minSize = Math.min(minSize, binSpeci.size);
-        }
+      if (minDiff === Infinity) minDiff = 1;
+      for (i = 0; i < ohlcTracesOnThisXaxis.length; i++) {
+        ohlcTracesOnThisXaxis[i]._minDiff = minDiff;
       }
     }
-    var dataVals = new Array(singleValuedTraces.length);
-    for (i = 0; i < singleValuedTraces.length; i++) {
-      var pos0 = singleValuedTraces[i]["_" + mainData + "pos0"];
-      for (var j = 0; j < pos0.length; j++) {
-        if (pos0[j] !== void 0) {
-          dataVals[i] = pos0[j];
-          break;
-        }
-      }
-    }
-    if (!isFinite(minSize)) {
-      minSize = lib_default.distinctVals(dataVals).minDiff;
-    }
-    for (i = 0; i < singleValuedTraces.length; i++) {
-      tracei = singleValuedTraces[i];
-      var calendar = tracei[mainData + "calendar"];
-      var newBins = {
-        start: pa.c2r(dataVals[i] - minSize / 2, 0, calendar),
-        end: pa.c2r(dataVals[i] + minSize / 2, 0, calendar),
-        size: minSize
-      };
-      tracei._input[binAttr] = tracei[binAttr] = newBins;
-      binOpts = fullLayout._histogramBinOpts[tracei["_" + mainData + "bingroup"]];
-      if (binOpts) lib_default.extendFlat(binOpts, newBins);
-    }
-    return trace[binAttr];
-  }
-  function getConnectedHistograms(gd, trace) {
-    var xid = trace.xaxis;
-    var yid = trace.yaxis;
-    var orientation = trace.orientation;
-    var out = [];
-    var fullData = gd._fullData;
-    for (var i = 0; i < fullData.length; i++) {
-      var tracei = fullData[i];
-      if (tracei.type === "histogram" && tracei.visible === true && tracei.orientation === orientation && tracei.xaxis === xid && tracei.yaxis === yid) {
-        out.push(tracei);
-      }
-    }
-    return out;
-  }
-  function cdf(size, direction, currentBin) {
-    var i, vi, prevSum;
-    function firstHalfPoint(i2) {
-      prevSum = size[i2];
-      size[i2] /= 2;
-    }
-    function nextHalfPoint(i2) {
-      vi = size[i2];
-      size[i2] = prevSum + vi / 2;
-      prevSum += vi;
-    }
-    if (currentBin === "half") {
-      if (direction === "increasing") {
-        firstHalfPoint(0);
-        for (i = 1; i < size.length; i++) {
-          nextHalfPoint(i);
-        }
-      } else {
-        firstHalfPoint(size.length - 1);
-        for (i = size.length - 2; i >= 0; i--) {
-          nextHalfPoint(i);
-        }
-      }
-    } else if (direction === "increasing") {
-      for (i = 1; i < size.length; i++) {
-        size[i] += size[i - 1];
-      }
-      if (currentBin === "exclude") {
-        size.unshift(0);
-        size.pop();
-      }
-    } else {
-      for (i = size.length - 2; i >= 0; i--) {
-        size[i] += size[i + 1];
-      }
-      if (currentBin === "exclude") {
-        size.push(0);
-        size.shift();
-      }
-    }
+    return minDiff * trace.tickwidth;
   }
   var calc_default2 = {
     calc: calc6,
-    calcAllAutoBins
+    calcCommon
   };
 
-  // src/traces/histogram/hover.js
-  var { hoverPoints: barHover } = hover_default2;
-  var { hoverLabelText: hoverLabelText2 } = axes_default;
+  // src/traces/candlestick/calc.js
+  var { calcCommon: calcCommon2 } = calc_default2;
+  function calc_default3(gd, trace) {
+    var fullLayout = gd._fullLayout;
+    var xa = axes_default.getFromId(gd, trace.xaxis);
+    var ya = axes_default.getFromId(gd, trace.yaxis);
+    var origX = xa.makeCalcdata(trace, "x");
+    var x = alignPeriod(trace, xa, "x", origX).vals;
+    var cd = calcCommon2(gd, trace, origX, x, ya, ptFunc2);
+    if (cd.length) {
+      lib_default.extendFlat(cd[0].t, {
+        num: fullLayout._numBoxes,
+        dPos: lib_default.distinctVals(x).minDiff / 2,
+        posLetter: "x",
+        valLetter: "y"
+      });
+      fullLayout._numBoxes++;
+      return cd;
+    } else {
+      return [{ t: { empty: true } }];
+    }
+  }
+  function ptFunc2(o, h, l, c) {
+    return {
+      min: l,
+      q1: Math.min(o, c),
+      med: c,
+      q3: Math.max(o, c),
+      max: h
+    };
+  }
 
-  // src/traces/histogram/index.js
-  var { calc: _req53 } = calc_default2;
-  var { crossTraceCalc: _req63 } = cross_trace_calc_default;
-  var { plot: _req72 } = plot_default;
-  var { style: _req82, styleOnSelect: _req93 } = style_default2;
+  // src/traces/box/plot.js
+  var import_d342 = __toESM(require_d3(), 1);
+  var JITTERCOUNT = 5;
+  var JITTERSPREAD = 0.01;
+  function plot5(gd, plotinfo, cdbox, boxLayer) {
+    var isStatic = gd._context.staticPlot;
+    var xa = plotinfo.xaxis;
+    var ya = plotinfo.yaxis;
+    lib_default.makeTraceGroups(boxLayer, cdbox, "trace boxes").each(function(cd) {
+      var plotGroup = import_d342.default.select(this);
+      var cd0 = cd[0];
+      var t = cd0.t;
+      var trace = cd0.trace;
+      t.wdPos = t.bdPos * trace.whiskerwidth;
+      if (trace.visible !== true || t.empty) {
+        plotGroup.remove();
+        return;
+      }
+      var posAxis, valAxis;
+      if (trace.orientation === "h") {
+        posAxis = ya;
+        valAxis = xa;
+      } else {
+        posAxis = xa;
+        valAxis = ya;
+      }
+      plotBoxAndWhiskers(plotGroup, { pos: posAxis, val: valAxis }, trace, t, isStatic);
+      plotPoints(plotGroup, { x: xa, y: ya }, trace, t);
+      plotBoxMean(plotGroup, { pos: posAxis, val: valAxis }, trace, t);
+    });
+  }
+  function plotBoxAndWhiskers(sel, axes2, trace, t, isStatic) {
+    var isHorizontal = trace.orientation === "h";
+    var valAxis = axes2.val;
+    var posAxis = axes2.pos;
+    var posHasRangeBreaks = !!posAxis.rangebreaks;
+    var bPos = t.bPos;
+    var wdPos = t.wdPos || 0;
+    var bPosPxOffset = t.bPosPxOffset || 0;
+    var whiskerWidth = trace.whiskerwidth || 0;
+    var showWhiskers = trace.showwhiskers !== false;
+    var notched = trace.notched || false;
+    var nw = notched ? 1 - 2 * trace.notchwidth : 1;
+    var bdPos0;
+    var bdPos1;
+    if (Array.isArray(t.bdPos)) {
+      bdPos0 = t.bdPos[0];
+      bdPos1 = t.bdPos[1];
+    } else {
+      bdPos0 = t.bdPos;
+      bdPos1 = t.bdPos;
+    }
+    var paths = sel.selectAll("path.box").data(trace.type !== "violin" || trace.box.visible ? lib_default.identity : []);
+    paths.enter().append("path").style("vector-effect", isStatic ? "none" : "non-scaling-stroke").attr("class", "box");
+    paths.exit().remove();
+    paths.each(function(d) {
+      if (d.empty) return import_d342.default.select(this).attr("d", "M0,0Z");
+      var lcenter = posAxis.c2l(d.pos + bPos, true);
+      var pos0 = posAxis.l2p(lcenter - bdPos0) + bPosPxOffset;
+      var pos1 = posAxis.l2p(lcenter + bdPos1) + bPosPxOffset;
+      var posc = posHasRangeBreaks ? (pos0 + pos1) / 2 : posAxis.l2p(lcenter) + bPosPxOffset;
+      var r = trace.whiskerwidth;
+      var posw0 = posHasRangeBreaks ? pos0 * r + (1 - r) * posc : posAxis.l2p(lcenter - wdPos) + bPosPxOffset;
+      var posw1 = posHasRangeBreaks ? pos1 * r + (1 - r) * posc : posAxis.l2p(lcenter + wdPos) + bPosPxOffset;
+      var posm0 = posAxis.l2p(lcenter - bdPos0 * nw) + bPosPxOffset;
+      var posm1 = posAxis.l2p(lcenter + bdPos1 * nw) + bPosPxOffset;
+      var sdmode = trace.sizemode === "sd";
+      var q1 = valAxis.c2p(sdmode ? d.mean - d.sd : d.q1, true);
+      var q3 = sdmode ? valAxis.c2p(d.mean + d.sd, true) : valAxis.c2p(d.q3, true);
+      var m = lib_default.constrain(
+        sdmode ? valAxis.c2p(d.mean, true) : valAxis.c2p(d.med, true),
+        Math.min(q1, q3) + 1,
+        Math.max(q1, q3) - 1
+      );
+      var useExtremes = d.lf === void 0 || trace.boxpoints === false || sdmode;
+      var lf = valAxis.c2p(useExtremes ? d.min : d.lf, true);
+      var uf = valAxis.c2p(useExtremes ? d.max : d.uf, true);
+      var ln = valAxis.c2p(d.ln, true);
+      var un = valAxis.c2p(d.un, true);
+      if (isHorizontal) {
+        import_d342.default.select(this).attr(
+          "d",
+          "M" + m + "," + posm0 + "V" + posm1 + // median line
+          "M" + q1 + "," + pos0 + "V" + pos1 + // left edge
+          (notched ? "H" + ln + "L" + m + "," + posm1 + "L" + un + "," + pos1 : "") + // top notched edge
+          "H" + q3 + // end of the top edge
+          "V" + pos0 + // right edge
+          (notched ? "H" + un + "L" + m + "," + posm0 + "L" + ln + "," + pos0 : "") + // bottom notched edge
+          "Z" + // end of the box
+          (showWhiskers ? "M" + q1 + "," + posc + "H" + lf + "M" + q3 + "," + posc + "H" + uf + // whiskers
+          (whiskerWidth === 0 ? "" : (
+            // whisker caps
+            "M" + lf + "," + posw0 + "V" + posw1 + "M" + uf + "," + posw0 + "V" + posw1
+          )) : "")
+        );
+      } else {
+        import_d342.default.select(this).attr(
+          "d",
+          "M" + posm0 + "," + m + "H" + posm1 + // median line
+          "M" + pos0 + "," + q1 + "H" + pos1 + // top of the box
+          (notched ? "V" + ln + "L" + posm1 + "," + m + "L" + pos1 + "," + un : "") + // notched right edge
+          "V" + q3 + // end of the right edge
+          "H" + pos0 + // bottom of the box
+          (notched ? "V" + un + "L" + posm0 + "," + m + "L" + pos0 + "," + ln : "") + // notched left edge
+          "Z" + // end of the box
+          (showWhiskers ? "M" + posc + "," + q1 + "V" + lf + "M" + posc + "," + q3 + "V" + uf + // whiskers
+          (whiskerWidth === 0 ? "" : (
+            // whisker caps
+            "M" + posw0 + "," + lf + "H" + posw1 + "M" + posw0 + "," + uf + "H" + posw1
+          )) : "")
+        );
+      }
+    });
+  }
+  function plotPoints(sel, axes2, trace, t) {
+    var xa = axes2.x;
+    var ya = axes2.y;
+    var bdPos = t.bdPos;
+    var bPos = t.bPos;
+    var mode = trace.boxpoints || trace.points;
+    lib_default.seedPseudoRandom();
+    var fn = function(d) {
+      d.forEach(function(v) {
+        v.t = t;
+        v.trace = trace;
+      });
+      return d;
+    };
+    var gPoints = sel.selectAll("g.points").data(mode ? fn : []);
+    gPoints.enter().append("g").attr("class", "points");
+    gPoints.exit().remove();
+    var paths = gPoints.selectAll("path").data(function(d) {
+      var i;
+      var pts = d.pts2;
+      var typicalSpread = Math.max((d.max - d.min) / 10, d.q3 - d.q1);
+      var minSpread = typicalSpread * 1e-9;
+      var spreadLimit = typicalSpread * JITTERSPREAD;
+      var jitterFactors = [];
+      var maxJitterFactor = 0;
+      var newJitter;
+      if (trace.jitter) {
+        if (typicalSpread === 0) {
+          maxJitterFactor = 1;
+          jitterFactors = new Array(pts.length);
+          for (i = 0; i < pts.length; i++) {
+            jitterFactors[i] = 1;
+          }
+        } else {
+          for (i = 0; i < pts.length; i++) {
+            var i0 = Math.max(0, i - JITTERCOUNT);
+            var pmin = pts[i0].v;
+            var i1 = Math.min(pts.length - 1, i + JITTERCOUNT);
+            var pmax = pts[i1].v;
+            if (mode !== "all") {
+              if (pts[i].v < d.lf) pmax = Math.min(pmax, d.lf);
+              else pmin = Math.max(pmin, d.uf);
+            }
+            var jitterFactor = Math.sqrt(spreadLimit * (i1 - i0) / (pmax - pmin + minSpread)) || 0;
+            jitterFactor = lib_default.constrain(Math.abs(jitterFactor), 0, 1);
+            jitterFactors.push(jitterFactor);
+            maxJitterFactor = Math.max(jitterFactor, maxJitterFactor);
+          }
+        }
+        newJitter = trace.jitter * 2 / (maxJitterFactor || 1);
+      }
+      for (i = 0; i < pts.length; i++) {
+        var pt = pts[i];
+        var v = pt.v;
+        var jitterOffset = trace.jitter ? newJitter * jitterFactors[i] * (lib_default.pseudoRandom() - 0.5) : 0;
+        var posPx = d.pos + bPos + bdPos * (trace.pointpos + jitterOffset);
+        if (trace.orientation === "h") {
+          pt.y = posPx;
+          pt.x = v;
+        } else {
+          pt.x = posPx;
+          pt.y = v;
+        }
+        if (mode === "suspectedoutliers" && v < d.uo && v > d.lo) {
+          pt.so = true;
+        }
+      }
+      return pts;
+    });
+    paths.enter().append("path").classed("point", true);
+    paths.exit().remove();
+    paths.call(drawing_default.translatePoints, xa, ya);
+  }
+  function plotBoxMean(sel, axes2, trace, t) {
+    var valAxis = axes2.val;
+    var posAxis = axes2.pos;
+    var posHasRangeBreaks = !!posAxis.rangebreaks;
+    var bPos = t.bPos;
+    var bPosPxOffset = t.bPosPxOffset || 0;
+    var mode = trace.boxmean || (trace.meanline || {}).visible;
+    var bdPos0;
+    var bdPos1;
+    if (Array.isArray(t.bdPos)) {
+      bdPos0 = t.bdPos[0];
+      bdPos1 = t.bdPos[1];
+    } else {
+      bdPos0 = t.bdPos;
+      bdPos1 = t.bdPos;
+    }
+    var paths = sel.selectAll("path.mean").data(trace.type === "box" && trace.boxmean || trace.type === "violin" && trace.box.visible && trace.meanline.visible ? lib_default.identity : []);
+    paths.enter().append("path").attr("class", "mean").style({
+      fill: "none",
+      "vector-effect": "non-scaling-stroke"
+    });
+    paths.exit().remove();
+    paths.each(function(d) {
+      var lcenter = posAxis.c2l(d.pos + bPos, true);
+      var pos0 = posAxis.l2p(lcenter - bdPos0) + bPosPxOffset;
+      var pos1 = posAxis.l2p(lcenter + bdPos1) + bPosPxOffset;
+      var posc = posHasRangeBreaks ? (pos0 + pos1) / 2 : posAxis.l2p(lcenter) + bPosPxOffset;
+      var m = valAxis.c2p(d.mean, true);
+      var sl = valAxis.c2p(d.mean - d.sd, true);
+      var sh = valAxis.c2p(d.mean + d.sd, true);
+      if (trace.orientation === "h") {
+        import_d342.default.select(this).attr(
+          "d",
+          "M" + m + "," + pos0 + "V" + pos1 + (mode === "sd" ? "m0,0L" + sl + "," + posc + "L" + m + "," + pos0 + "L" + sh + "," + posc + "Z" : "")
+        );
+      } else {
+        import_d342.default.select(this).attr(
+          "d",
+          "M" + pos0 + "," + m + "H" + pos1 + (mode === "sd" ? "m0,0L" + posc + "," + sl + "L" + pos0 + "," + m + "L" + posc + "," + sh + "Z" : "")
+        );
+      }
+    });
+  }
+  var plot_default2 = {
+    plot: plot5,
+    plotBoxAndWhiskers,
+    plotPoints,
+    plotBoxMean
+  };
+
+  // src/traces/box/style.js
+  var import_d343 = __toESM(require_d3(), 1);
+  function style5(gd, cd, sel) {
+    var s = sel ? sel : import_d343.default.select(gd).selectAll("g.trace.boxes");
+    s.style("opacity", function(d) {
+      return d[0].trace.opacity;
+    });
+    s.each(function(d) {
+      var el = import_d343.default.select(this);
+      var trace = d[0].trace;
+      var lineWidth = trace.line.width;
+      function styleBox(boxSel, lineWidth2, lineColor, fillColor) {
+        boxSel.style("stroke-width", lineWidth2 + "px").call(color_default.stroke, lineColor).call(color_default.fill, fillColor);
+      }
+      var allBoxes = el.selectAll("path.box");
+      if (trace.type === "candlestick") {
+        allBoxes.each(function(boxData) {
+          if (boxData.empty) return;
+          var thisBox = import_d343.default.select(this);
+          var container = trace[boxData.dir];
+          styleBox(thisBox, container.line.width, container.line.color, container.fillcolor);
+          thisBox.style("opacity", trace.selectedpoints && !boxData.selected ? 0.3 : 1);
+        });
+      } else {
+        styleBox(allBoxes, lineWidth, trace.line.color, trace.fillcolor);
+        el.selectAll("path.mean").style({
+          "stroke-width": lineWidth,
+          "stroke-dasharray": 2 * lineWidth + "px," + lineWidth + "px"
+        }).call(color_default.stroke, trace.line.color);
+        var pts = el.selectAll("path.point");
+        drawing_default.pointStyle(pts, trace, gd);
+      }
+    });
+  }
+  function styleOnSelect3(gd, cd, sel) {
+    var trace = cd[0].trace;
+    var pts = sel.selectAll("path.point");
+    if (trace.selectedpoints) {
+      drawing_default.selectedPointStyle(pts, trace);
+    } else {
+      drawing_default.pointStyle(pts, trace, gd);
+    }
+  }
+  var style_default3 = {
+    style: style5,
+    styleOnSelect: styleOnSelect3
+  };
+
+  // src/traces/ohlc/hover.js
+  var { fillText: fillText3 } = lib_default;
+  var DIRSYMBOL = {
+    increasing: delta_default.INCREASING.SYMBOL,
+    decreasing: delta_default.DECREASING.SYMBOL
+  };
+  function hoverPoints3(pointData, xval, yval, hovermode) {
+    var cd = pointData.cd;
+    var trace = cd[0].trace;
+    if (trace.hoverlabel.split) {
+      return hoverSplit(pointData, xval, yval, hovermode);
+    }
+    return hoverOnPoints(pointData, xval, yval, hovermode);
+  }
+  function _getClosestPoint(pointData, xval, yval, hovermode) {
+    var cd = pointData.cd;
+    var xa = pointData.xa;
+    var trace = cd[0].trace;
+    var t = cd[0].t;
+    var type = trace.type;
+    var minAttr = type === "ohlc" ? "l" : "min";
+    var maxAttr = type === "ohlc" ? "h" : "max";
+    var hoverPseudoDistance, spikePseudoDistance;
+    var centerShift = t.bPos || 0;
+    var shiftPos = function(di2) {
+      return di2.pos + centerShift - xval;
+    };
+    var displayHalfWidth = t.bdPos || t.tickLen;
+    var hoverHalfWidth = t.wHover;
+    var pseudoDistance = Math.min(1, displayHalfWidth / Math.abs(xa.r2c(xa.range[1]) - xa.r2c(xa.range[0])));
+    hoverPseudoDistance = pointData.maxHoverDistance - pseudoDistance;
+    spikePseudoDistance = pointData.maxSpikeDistance - pseudoDistance;
+    function dx(di2) {
+      var pos = shiftPos(di2);
+      return fx_default.inbox(pos - hoverHalfWidth, pos + hoverHalfWidth, hoverPseudoDistance);
+    }
+    function dy(di2) {
+      var min = di2[minAttr];
+      var max = di2[maxAttr];
+      return min === max || fx_default.inbox(min - yval, max - yval, hoverPseudoDistance);
+    }
+    function dxy(di2) {
+      return (dx(di2) + dy(di2)) / 2;
+    }
+    var distfn = fx_default.getDistanceFunction(hovermode, dx, dy, dxy);
+    fx_default.getClosest(cd, distfn, pointData);
+    if (pointData.index === false) return null;
+    var di = cd[pointData.index];
+    if (di.empty) return null;
+    var dir = di.dir;
+    var container = trace[dir];
+    var lc = container.line.color;
+    if (color_default.opacity(lc) && container.line.width) pointData.color = lc;
+    else pointData.color = container.fillcolor;
+    pointData.x0 = xa.c2p(di.pos + centerShift - displayHalfWidth, true);
+    pointData.x1 = xa.c2p(di.pos + centerShift + displayHalfWidth, true);
+    pointData.xLabelVal = di.orig_p !== void 0 ? di.orig_p : di.pos;
+    pointData.spikeDistance = dxy(di) * spikePseudoDistance / hoverPseudoDistance;
+    pointData.xSpike = xa.c2p(di.pos, true);
+    return pointData;
+  }
+  function hoverSplit(pointData, xval, yval, hovermode) {
+    var cd = pointData.cd;
+    var ya = pointData.ya;
+    var trace = cd[0].trace;
+    var t = cd[0].t;
+    var closeBoxData = [];
+    var closestPoint = _getClosestPoint(pointData, xval, yval, hovermode);
+    if (!closestPoint) return [];
+    var di = cd[closestPoint.index];
+    var hoverinfo = di.hi || trace.hoverinfo || "";
+    if (hoverinfo === "none" || hoverinfo === "skip") return [];
+    var attrs2 = ["high", "open", "close", "low"];
+    var usedVals = {};
+    for (var i = 0; i < attrs2.length; i++) {
+      var attr2 = attrs2[i];
+      var val = trace[attr2][closestPoint.index];
+      var valPx = ya.c2p(val, true);
+      var pointData2;
+      if (val in usedVals) {
+        pointData2 = usedVals[val];
+        pointData2.yLabel += "<br>" + t.labels[attr2] + axes_default.hoverLabelText(ya, val, trace.yhoverformat);
+      } else {
+        pointData2 = lib_default.extendFlat({}, closestPoint);
+        pointData2.y0 = pointData2.y1 = valPx;
+        pointData2.yLabelVal = val;
+        pointData2.yLabel = t.labels[attr2] + axes_default.hoverLabelText(ya, val, trace.yhoverformat);
+        pointData2.name = "";
+        closeBoxData.push(pointData2);
+        usedVals[val] = pointData2;
+      }
+    }
+    return closeBoxData;
+  }
+  function hoverOnPoints(pointData, xval, yval, hovermode) {
+    var cd = pointData.cd;
+    var ya = pointData.ya;
+    var trace = cd[0].trace;
+    var t = cd[0].t;
+    var closestPoint = _getClosestPoint(pointData, xval, yval, hovermode);
+    if (!closestPoint) return [];
+    var cdIndex = closestPoint.index;
+    var di = cd[cdIndex];
+    var i = closestPoint.index = di.i;
+    var dir = di.dir;
+    function getLabelLine(attr2) {
+      return t.labels[attr2] + axes_default.hoverLabelText(ya, trace[attr2][i], trace.yhoverformat);
+    }
+    var hoverinfo = di.hi || trace.hoverinfo || "";
+    var hoverParts = hoverinfo.split("+");
+    var isAll = hoverinfo === "all";
+    var hasY = isAll || hoverParts.indexOf("y") !== -1;
+    var hasText = isAll || hoverParts.indexOf("text") !== -1;
+    var textParts = hasY ? [
+      getLabelLine("open"),
+      getLabelLine("high"),
+      getLabelLine("low"),
+      getLabelLine("close") + "  " + DIRSYMBOL[dir]
+    ] : [];
+    if (hasText) fillText3(di, trace, textParts);
+    closestPoint.extraText = textParts.join("<br>");
+    closestPoint.y0 = closestPoint.y1 = ya.c2p(di.yc, true);
+    return [closestPoint];
+  }
+  var hover_default3 = {
+    hoverPoints: hoverPoints3,
+    hoverSplit,
+    hoverOnPoints
+  };
+
+  // src/traces/ohlc/select.js
+  function selectPoints3(searchInfo, selectionTester) {
+    var cd = searchInfo.cd;
+    var xa = searchInfo.xaxis;
+    var ya = searchInfo.yaxis;
+    var selection = [];
+    var i;
+    var posOffset = cd[0].t.bPos || 0;
+    if (selectionTester === false) {
+      for (i = 0; i < cd.length; i++) {
+        cd[i].selected = 0;
+      }
+    } else {
+      for (i = 0; i < cd.length; i++) {
+        var di = cd[i];
+        if (selectionTester.contains([xa.c2p(di.pos + posOffset), ya.c2p(di.yc)], null, di.i, searchInfo)) {
+          selection.push({
+            pointNumber: di.i,
+            x: xa.c2d(di.pos),
+            y: ya.c2d(di.yc)
+          });
+          di.selected = 1;
+        } else {
+          di.selected = 0;
+        }
+      }
+    }
+    return selection;
+  }
+
+  // src/traces/candlestick/index.js
+  var { supplyLayoutDefaults: _req32 } = layout_defaults_default3;
+  var { crossTraceCalc: _req4 } = cross_trace_calc_default2;
+  var { plot: _req7 } = plot_default2;
+  var { style: _req8 } = style_default3;
+  var { hoverPoints: _req92 } = hover_default3;
+  var candlestick_default = {
+    moduleType: "trace",
+    name: "candlestick",
+    basePlotModule: cartesian_default,
+    categories: ["cartesian", "svg", "showLegend", "candlestick", "boxLayout"],
+    meta: {},
+    attributes: attributes_default24,
+    layoutAttributes: layout_attributes_default7,
+    supplyLayoutDefaults: _req32,
+    crossTraceCalc: _req4,
+    supplyDefaults: supplyDefaults4,
+    calc: calc_default3,
+    plot: _req7,
+    layerName: "boxlayer",
+    style: _req8,
+    hoverPoints: _req92,
+    selectPoints: selectPoints3
+  };
 
   // src/traces/funnel/constants.js
-  var constants_default16 = {
+  var constants_default15 = {
     eventDataKeys: [
       "percentInitial",
       "percentPrevious",
@@ -60275,9 +60937,9 @@ var Plotly = (() => {
   };
 
   // src/traces/funnel/attributes.js
-  var { line: lineAttrs } = attributes_default9;
-  var { axisHoverFormat: axisHoverFormat5 } = axis_format_attributes_default;
-  var attributes_default23 = {
+  var { line: lineAttrs2 } = attributes_default9;
+  var { axisHoverFormat: axisHoverFormat7 } = axis_format_attributes_default;
+  var attributes_default25 = {
     x: attributes_default21.x,
     x0: attributes_default21.x0,
     dx: attributes_default21.dx,
@@ -60290,10 +60952,10 @@ var Plotly = (() => {
     yperiod0: attributes_default21.yperiod0,
     xperiodalignment: attributes_default21.xperiodalignment,
     yperiodalignment: attributes_default21.yperiodalignment,
-    xhoverformat: axisHoverFormat5("x"),
-    yhoverformat: axisHoverFormat5("y"),
+    xhoverformat: axisHoverFormat7("x"),
+    yhoverformat: axisHoverFormat7("y"),
     hovertext: attributes_default21.hovertext,
-    hovertemplate: hovertemplateAttrs({}, { keys: constants_default16.eventDataKeys }),
+    hovertemplate: hovertemplateAttrs({}, { keys: constants_default15.eventDataKeys }),
     hovertemplatefallback: templatefallbackAttrs(),
     hoverinfo: extendFlat({}, attributes_default2.hoverinfo, {
       flags: ["name", "x", "y", "text", "percent initial", "percent previous", "percent total"]
@@ -60306,7 +60968,7 @@ var Plotly = (() => {
       arrayOk: false
     },
     // TODO: incorporate `label` and `value` in the eventData
-    texttemplate: texttemplateAttrs({ editType: "plot" }, { keys: constants_default16.eventDataKeys.concat(["label", "value"]) }),
+    texttemplate: texttemplateAttrs({ editType: "plot" }, { keys: constants_default15.eventDataKeys.concat(["label", "value"]) }),
     texttemplatefallback: templatefallbackAttrs({ editType: "plot" }),
     text: attributes_default21.text,
     textposition: attributes_default21.textposition,
@@ -60327,12 +60989,12 @@ var Plotly = (() => {
         editType: "style"
       },
       line: {
-        color: extendFlat({}, lineAttrs.color, { dflt: color_default.defaultLine }),
-        width: extendFlat({}, lineAttrs.width, {
+        color: extendFlat({}, lineAttrs2.color, { dflt: color_default.defaultLine }),
+        width: extendFlat({}, lineAttrs2.width, {
           dflt: 0,
           editType: "plot"
         }),
-        dash: lineAttrs.dash,
+        dash: lineAttrs2.dash,
         editType: "style"
       },
       visible: {
@@ -60353,11 +61015,34 @@ var Plotly = (() => {
     return marker2;
   }
 
+  // src/traces/funnel/layout_attributes.js
+  var layout_attributes_default8 = {
+    funnelmode: {
+      valType: "enumerated",
+      values: ["stack", "group", "overlay"],
+      dflt: "stack",
+      editType: "calc"
+    },
+    funnelgap: {
+      valType: "number",
+      min: 0,
+      max: 1,
+      editType: "calc"
+    },
+    funnelgroupgap: {
+      valType: "number",
+      min: 0,
+      max: 1,
+      dflt: 0,
+      editType: "calc"
+    }
+  };
+
   // src/traces/funnel/defaults.js
-  var { handleText: handleText3 } = defaults_default2;
+  var { handleText: handleText2 } = defaults_default2;
   function supplyDefaults5(traceIn, traceOut, defaultColor, layout) {
     function coerce3(attr2, dflt) {
-      return lib_default.coerce(traceIn, traceOut, attributes_default23, attr2, dflt);
+      return lib_default.coerce(traceIn, traceOut, attributes_default25, attr2, dflt);
     }
     var len2 = handleXYDefaults(traceIn, traceOut, layout, coerce3);
     if (!len2) {
@@ -60375,7 +61060,7 @@ var Plotly = (() => {
     coerce3("hovertemplate");
     coerce3("hovertemplatefallback");
     var textposition = coerce3("textposition");
-    handleText3(traceIn, traceOut, layout, coerce3, textposition, {
+    handleText2(traceIn, traceOut, layout, coerce3, textposition, {
       moduleHasSelected: false,
       moduleHasUnselected: false,
       moduleHasConstrain: true,
@@ -60404,10 +61089,10 @@ var Plotly = (() => {
     var cBase = lib_default.isArrayOrTypedArray(markerColor) ? "#000" : markerColor;
     return color_default.addOpacity(cBase, 0.5 * color_default.opacity(cBase));
   }
-  function crossTraceDefaults5(fullData, fullLayout) {
+  function crossTraceDefaults4(fullData, fullLayout) {
     var traceIn, traceOut;
     function coerce3(attr2) {
-      return lib_default.coerce(traceOut._input, traceOut, attributes_default23, attr2);
+      return lib_default.coerce(traceOut._input, traceOut, attributes_default25, attr2);
     }
     for (var i = 0; i < fullData.length; i++) {
       traceOut = fullData[i];
@@ -60419,297 +61104,267 @@ var Plotly = (() => {
   }
   var defaults_default3 = {
     supplyDefaults: supplyDefaults5,
-    crossTraceDefaults: crossTraceDefaults5
+    crossTraceDefaults: crossTraceDefaults4
   };
 
+  // src/traces/funnel/layout_defaults.js
+  function layout_defaults_default4(layoutIn, layoutOut, fullData) {
+    var hasTraceType = false;
+    function coerce3(attr2, dflt) {
+      return lib_default.coerce(layoutIn, layoutOut, layout_attributes_default8, attr2, dflt);
+    }
+    for (var i = 0; i < fullData.length; i++) {
+      var trace = fullData[i];
+      if (trace.visible && trace.type === "funnel") {
+        hasTraceType = true;
+        break;
+      }
+    }
+    if (hasTraceType) {
+      coerce3("funnelmode");
+      coerce3("funnelgap", 0.2);
+      coerce3("funnelgroupgap");
+    }
+  }
+
+  // src/traces/funnel/arrays_to_calcdata.js
+  function arraysToCalcdata3(cd, trace) {
+    for (var i = 0; i < cd.length; i++) cd[i].i = i;
+    lib_default.mergeArray(trace.text, cd, "tx");
+    lib_default.mergeArray(trace.hovertext, cd, "htx");
+    var marker2 = trace.marker;
+    if (marker2) {
+      lib_default.mergeArray(marker2.opacity, cd, "mo");
+      lib_default.mergeArray(marker2.color, cd, "mc");
+      var markerLine2 = marker2.line;
+      if (markerLine2) {
+        lib_default.mergeArray(markerLine2.color, cd, "mlc");
+        lib_default.mergeArrayCastPositive(markerLine2.width, cd, "mlw");
+      }
+    }
+  }
+
   // src/traces/funnel/calc.js
-  var { BADNUM: BADNUM14 } = numerical_default;
+  var { BADNUM: BADNUM15 } = numerical_default;
+  function calc7(gd, trace) {
+    var xa = axes_default.getFromId(gd, trace.xaxis || "x");
+    var ya = axes_default.getFromId(gd, trace.yaxis || "y");
+    var size, pos, origPos, pObj, hasPeriod, pLetter, i, cdi;
+    if (trace.orientation === "h") {
+      size = xa.makeCalcdata(trace, "x");
+      origPos = ya.makeCalcdata(trace, "y");
+      pObj = alignPeriod(trace, ya, "y", origPos);
+      hasPeriod = !!trace.yperiodalignment;
+      pLetter = "y";
+    } else {
+      size = ya.makeCalcdata(trace, "y");
+      origPos = xa.makeCalcdata(trace, "x");
+      pObj = alignPeriod(trace, xa, "x", origPos);
+      hasPeriod = !!trace.xperiodalignment;
+      pLetter = "x";
+    }
+    pos = pObj.vals;
+    var serieslen = Math.min(pos.length, size.length);
+    var cd = new Array(serieslen);
+    trace._base = [];
+    for (i = 0; i < serieslen; i++) {
+      if (size[i] < 0) size[i] = BADNUM15;
+      var connectToNext = false;
+      if (size[i] !== BADNUM15) {
+        if (i + 1 < serieslen && size[i + 1] !== BADNUM15) {
+          connectToNext = true;
+        }
+      }
+      cdi = cd[i] = {
+        p: pos[i],
+        s: size[i],
+        cNext: connectToNext
+      };
+      trace._base[i] = -0.5 * cdi.s;
+      if (hasPeriod) {
+        cd[i].orig_p = origPos[i];
+        cd[i][pLetter + "End"] = pObj.ends[i];
+        cd[i][pLetter + "Start"] = pObj.starts[i];
+      }
+      if (trace.ids) {
+        cdi.id = String(trace.ids[i]);
+      }
+      if (i === 0) cd[0].vTotal = 0;
+      cd[0].vTotal += fixNum(cdi.s);
+      cdi.begR = fixNum(cdi.s) / fixNum(cd[0].s);
+    }
+    var prevGoodNum;
+    for (i = 0; i < serieslen; i++) {
+      cdi = cd[i];
+      if (cdi.s === BADNUM15) continue;
+      cdi.sumR = cdi.s / cd[0].vTotal;
+      cdi.difR = prevGoodNum !== void 0 ? cdi.s / prevGoodNum : 1;
+      prevGoodNum = cdi.s;
+    }
+    arraysToCalcdata3(cd, trace);
+    calcSelection(cd, trace);
+    return cd;
+  }
+  function fixNum(a) {
+    return a === BADNUM15 ? 0 : a;
+  }
 
   // src/traces/funnel/cross_trace_calc.js
   var { setGroupPositions: setGroupPositions3 } = cross_trace_calc_default;
+  function crossTraceCalc4(gd, plotinfo) {
+    var fullLayout = gd._fullLayout;
+    var fullData = gd._fullData;
+    var calcdata = gd.calcdata;
+    var xa = plotinfo.xaxis;
+    var ya = plotinfo.yaxis;
+    var funnels = [];
+    var funnelsVert = [];
+    var funnelsHorz = [];
+    var cd, i;
+    for (i = 0; i < fullData.length; i++) {
+      var fullTrace = fullData[i];
+      var isHorizontal = fullTrace.orientation === "h";
+      if (fullTrace.visible === true && fullTrace.xaxis === xa._id && fullTrace.yaxis === ya._id && fullTrace.type === "funnel") {
+        cd = calcdata[i];
+        if (isHorizontal) {
+          funnelsHorz.push(cd);
+        } else {
+          funnelsVert.push(cd);
+        }
+        funnels.push(cd);
+      }
+    }
+    var opts = {
+      mode: fullLayout.funnelmode,
+      norm: fullLayout.funnelnorm,
+      gap: fullLayout.funnelgap,
+      groupgap: fullLayout.funnelgroupgap
+    };
+    setGroupPositions3(gd, xa, ya, funnelsVert, opts);
+    setGroupPositions3(gd, ya, xa, funnelsHorz, opts);
+    for (i = 0; i < funnels.length; i++) {
+      cd = funnels[i];
+      for (var j = 0; j < cd.length; j++) {
+        if (j + 1 < cd.length) {
+          cd[j].nextP0 = cd[j + 1].p0;
+          cd[j].nextS0 = cd[j + 1].s0;
+          cd[j].nextP1 = cd[j + 1].p1;
+          cd[j].nextS1 = cd[j + 1].s1;
+        }
+      }
+    }
+  }
 
   // src/traces/funnel/plot.js
-  var import_d342 = __toESM(require_d3(), 1);
-  var { BADNUM: BADNUM15 } = numerical_default;
+  var import_d344 = __toESM(require_d3(), 1);
+  var { BADNUM: BADNUM16 } = numerical_default;
   var { clearMinTextSize: clearMinTextSize3 } = uniform_text_default;
+  function plot6(gd, plotinfo, cdModule, traceLayer) {
+    var fullLayout = gd._fullLayout;
+    clearMinTextSize3("funnel", fullLayout);
+    plotConnectorRegions(gd, plotinfo, cdModule, traceLayer);
+    plotConnectorLines(gd, plotinfo, cdModule, traceLayer);
+    plot_default.plot(gd, plotinfo, cdModule, traceLayer, {
+      mode: fullLayout.funnelmode,
+      norm: fullLayout.funnelmode,
+      gap: fullLayout.funnelgap,
+      groupgap: fullLayout.funnelgroupgap
+    });
+  }
+  function plotConnectorRegions(gd, plotinfo, cdModule, traceLayer) {
+    var xa = plotinfo.xaxis;
+    var ya = plotinfo.yaxis;
+    lib_default.makeTraceGroups(traceLayer, cdModule, "trace bars").each(function(cd) {
+      var plotGroup = import_d344.default.select(this);
+      var trace = cd[0].trace;
+      var group = lib_default.ensureSingle(plotGroup, "g", "regions");
+      if (!trace.connector || !trace.connector.visible) {
+        group.remove();
+        return;
+      }
+      var isHorizontal = trace.orientation === "h";
+      var connectors = group.selectAll("g.region").data(lib_default.identity);
+      connectors.enter().append("g").classed("region", true);
+      connectors.exit().remove();
+      var len2 = connectors.size();
+      connectors.each(function(di, i) {
+        if (i !== len2 - 1 && !di.cNext) return;
+        var xy = getXY2(di, xa, ya, isHorizontal);
+        var x = xy[0];
+        var y = xy[1];
+        var shape = "";
+        if (x[0] !== BADNUM16 && y[0] !== BADNUM16 && x[1] !== BADNUM16 && y[1] !== BADNUM16 && x[2] !== BADNUM16 && y[2] !== BADNUM16 && x[3] !== BADNUM16 && y[3] !== BADNUM16) {
+          if (isHorizontal) {
+            shape += "M" + x[0] + "," + y[1] + "L" + x[2] + "," + y[2] + "H" + x[3] + "L" + x[1] + "," + y[1] + "Z";
+          } else {
+            shape += "M" + x[1] + "," + y[1] + "L" + x[2] + "," + y[3] + "V" + y[2] + "L" + x[1] + "," + y[0] + "Z";
+          }
+        }
+        if (shape === "") shape = "M0,0Z";
+        lib_default.ensureSingle(import_d344.default.select(this), "path").attr("d", shape).call(drawing_default.setClipUrl, plotinfo.layerClipId, gd);
+      });
+    });
+  }
+  function plotConnectorLines(gd, plotinfo, cdModule, traceLayer) {
+    var xa = plotinfo.xaxis;
+    var ya = plotinfo.yaxis;
+    lib_default.makeTraceGroups(traceLayer, cdModule, "trace bars").each(function(cd) {
+      var plotGroup = import_d344.default.select(this);
+      var trace = cd[0].trace;
+      var group = lib_default.ensureSingle(plotGroup, "g", "lines");
+      if (!trace.connector || !trace.connector.visible || !trace.connector.line.width) {
+        group.remove();
+        return;
+      }
+      var isHorizontal = trace.orientation === "h";
+      var connectors = group.selectAll("g.line").data(lib_default.identity);
+      connectors.enter().append("g").classed("line", true);
+      connectors.exit().remove();
+      var len2 = connectors.size();
+      connectors.each(function(di, i) {
+        if (i !== len2 - 1 && !di.cNext) return;
+        var xy = getXY2(di, xa, ya, isHorizontal);
+        var x = xy[0];
+        var y = xy[1];
+        var shape = "";
+        if (x[3] !== void 0 && y[3] !== void 0) {
+          if (isHorizontal) {
+            shape += "M" + x[0] + "," + y[1] + "L" + x[2] + "," + y[2];
+            shape += "M" + x[1] + "," + y[1] + "L" + x[3] + "," + y[2];
+          } else {
+            shape += "M" + x[1] + "," + y[1] + "L" + x[2] + "," + y[3];
+            shape += "M" + x[1] + "," + y[0] + "L" + x[2] + "," + y[2];
+          }
+        }
+        if (shape === "") shape = "M0,0Z";
+        lib_default.ensureSingle(import_d344.default.select(this), "path").attr("d", shape).call(drawing_default.setClipUrl, plotinfo.layerClipId, gd);
+      });
+    });
+  }
+  function getXY2(di, xa, ya, isHorizontal) {
+    var s = [];
+    var p = [];
+    var sAxis = isHorizontal ? xa : ya;
+    var pAxis = isHorizontal ? ya : xa;
+    s[0] = sAxis.c2p(di.s0, true);
+    p[0] = pAxis.c2p(di.p0, true);
+    s[1] = sAxis.c2p(di.s1, true);
+    p[1] = pAxis.c2p(di.p1, true);
+    s[2] = sAxis.c2p(di.nextS0, true);
+    p[2] = pAxis.c2p(di.nextP0, true);
+    s[3] = sAxis.c2p(di.nextS1, true);
+    p[3] = pAxis.c2p(di.nextP1, true);
+    return isHorizontal ? [s, p] : [p, s];
+  }
 
   // src/traces/funnel/style.js
-  var import_d343 = __toESM(require_d3(), 1);
+  var import_d345 = __toESM(require_d3(), 1);
   var { DESELECTDIM: DESELECTDIM3 } = interactions_default;
   var { resizeText: resizeText3 } = uniform_text_default;
   var styleTextPoints2 = style_default2.styleTextPoints;
-  function style5(gd, cd, sel) {
-    var s = sel ? sel : import_d343.default.select(gd).selectAll('g[class^="funnellayer"]').selectAll("g.trace");
-    resizeText3(gd, s, "funnel");
-    s.style("opacity", function(d) {
-      return d[0].trace.opacity;
-    });
-    s.each(function(d) {
-      var gTrace = import_d343.default.select(this);
-      var trace = d[0].trace;
-      gTrace.selectAll(".point > path").each(function(di) {
-        if (!di.isBlank) {
-          var cont = trace.marker;
-          import_d343.default.select(this).call(color_default.fill, di.mc || cont.color).call(color_default.stroke, di.mlc || cont.line.color).call(drawing_default.dashLine, cont.line.dash, di.mlw || cont.line.width).style("opacity", trace.selectedpoints && !di.selected ? DESELECTDIM3 : 1);
-        }
-      });
-      styleTextPoints2(gTrace, trace, gd);
-      gTrace.selectAll(".regions").each(function() {
-        import_d343.default.select(this).selectAll("path").style("stroke-width", 0).call(color_default.fill, trace.connector.fillcolor);
-      });
-      gTrace.selectAll(".lines").each(function() {
-        var cont = trace.connector.line;
-        drawing_default.lineGroupStyle(
-          import_d343.default.select(this).selectAll("path"),
-          cont.width,
-          cont.color,
-          cont.dash
-        );
-      });
-    });
-  }
-  var style_default3 = {
-    style: style5
-  };
-
-  // src/traces/funnel/hover.js
-  var { opacity } = color_default;
-  var { hoverOnBars: hoverOnBars2 } = hover_default2;
-  var { formatPercent } = lib_default;
-
-  // src/traces/funnel/index.js
-  var { supplyDefaults: _req212, crossTraceDefaults: _req311 } = defaults_default3;
-  var { style: _req83 } = style_default3;
-
-  // src/traces/waterfall/constants.js
-  var constants_default17 = {
-    eventDataKeys: [
-      "initial",
-      "delta",
-      "final"
-    ]
-  };
-
-  // src/traces/waterfall/attributes.js
-  var { line: lineAttrs2 } = attributes_default9;
-  var { axisHoverFormat: axisHoverFormat6 } = axis_format_attributes_default;
-  function directionAttrs(dirTxt) {
-    return {
-      marker: {
-        color: extendFlat({}, attributes_default21.marker.color, {
-          arrayOk: false,
-          editType: "style"
-        }),
-        line: {
-          color: extendFlat({}, attributes_default21.marker.line.color, {
-            arrayOk: false,
-            editType: "style"
-          }),
-          width: extendFlat({}, attributes_default21.marker.line.width, {
-            arrayOk: false,
-            editType: "style"
-          }),
-          editType: "style"
-        },
-        editType: "style"
-      },
-      editType: "style"
-    };
-  }
-  var attributes_default24 = {
-    measure: {
-      valType: "data_array",
-      dflt: [],
-      editType: "calc"
-    },
-    base: {
-      valType: "number",
-      dflt: null,
-      arrayOk: false,
-      editType: "calc"
-    },
-    x: attributes_default21.x,
-    x0: attributes_default21.x0,
-    dx: attributes_default21.dx,
-    y: attributes_default21.y,
-    y0: attributes_default21.y0,
-    dy: attributes_default21.dy,
-    xperiod: attributes_default21.xperiod,
-    yperiod: attributes_default21.yperiod,
-    xperiod0: attributes_default21.xperiod0,
-    yperiod0: attributes_default21.yperiod0,
-    xperiodalignment: attributes_default21.xperiodalignment,
-    yperiodalignment: attributes_default21.yperiodalignment,
-    xhoverformat: axisHoverFormat6("x"),
-    yhoverformat: axisHoverFormat6("y"),
-    hovertext: attributes_default21.hovertext,
-    hovertemplate: hovertemplateAttrs({}, { keys: constants_default17.eventDataKeys }),
-    hovertemplatefallback: templatefallbackAttrs(),
-    hoverinfo: extendFlat({}, attributes_default2.hoverinfo, {
-      flags: ["name", "x", "y", "text", "initial", "delta", "final"]
-    }),
-    textinfo: {
-      valType: "flaglist",
-      flags: ["label", "text", "initial", "delta", "final"],
-      extras: ["none"],
-      editType: "plot",
-      arrayOk: false
-    },
-    // TODO: incorporate `label` and `value` in the eventData
-    texttemplate: texttemplateAttrs({ editType: "plot" }, { keys: constants_default17.eventDataKeys.concat(["label"]) }),
-    texttemplatefallback: templatefallbackAttrs({ editType: "plot" }),
-    text: attributes_default21.text,
-    textposition: attributes_default21.textposition,
-    insidetextanchor: attributes_default21.insidetextanchor,
-    textangle: attributes_default21.textangle,
-    textfont: attributes_default21.textfont,
-    insidetextfont: attributes_default21.insidetextfont,
-    outsidetextfont: attributes_default21.outsidetextfont,
-    constraintext: attributes_default21.constraintext,
-    cliponaxis: attributes_default21.cliponaxis,
-    orientation: attributes_default21.orientation,
-    offset: attributes_default21.offset,
-    width: attributes_default21.width,
-    increasing: directionAttrs("increasing"),
-    decreasing: directionAttrs("decreasing"),
-    totals: directionAttrs("intermediate sums and total"),
-    connector: {
-      line: {
-        color: extendFlat({}, lineAttrs2.color, { dflt: color_default.defaultLine }),
-        width: extendFlat({}, lineAttrs2.width, {
-          editType: "plot"
-          // i.e. to adjust bars is mode: 'between'. See https://github.com/plotly/plotly.js/issues/3787
-        }),
-        dash: lineAttrs2.dash,
-        editType: "plot"
-      },
-      mode: {
-        valType: "enumerated",
-        values: ["spanning", "between"],
-        dflt: "between",
-        editType: "plot"
-      },
-      visible: {
-        valType: "boolean",
-        dflt: true,
-        editType: "plot"
-      },
-      editType: "plot"
-    },
-    offsetgroup: attributes_default21.offsetgroup,
-    alignmentgroup: attributes_default21.alignmentgroup,
-    zorder: attributes_default21.zorder
-  };
-
-  // src/constants/delta.js
-  var delta_default = {
-    INCREASING: {
-      COLOR: "#3D9970",
-      SYMBOL: "\u25B2"
-    },
-    DECREASING: {
-      COLOR: "#FF4136",
-      SYMBOL: "\u25BC"
-    }
-  };
-
-  // src/traces/waterfall/defaults.js
-  var { handleText: handleText4 } = defaults_default2;
-  var INCREASING_COLOR = delta_default.INCREASING.COLOR;
-  var DECREASING_COLOR = delta_default.DECREASING.COLOR;
-  var TOTALS_COLOR = "#4499FF";
-  function handleDirection(coerce3, direction, defaultColor) {
-    coerce3(direction + ".marker.color", defaultColor);
-    coerce3(direction + ".marker.line.color", color_default.defaultLine);
-    coerce3(direction + ".marker.line.width");
-  }
-  function supplyDefaults6(traceIn, traceOut, defaultColor, layout) {
-    function coerce3(attr2, dflt) {
-      return lib_default.coerce(traceIn, traceOut, attributes_default24, attr2, dflt);
-    }
-    var len2 = handleXYDefaults(traceIn, traceOut, layout, coerce3);
-    if (!len2) {
-      traceOut.visible = false;
-      return;
-    }
-    handlePeriodDefaults(traceIn, traceOut, layout, coerce3);
-    coerce3("xhoverformat");
-    coerce3("yhoverformat");
-    coerce3("measure");
-    coerce3("orientation", traceOut.x && !traceOut.y ? "h" : "v");
-    coerce3("base");
-    coerce3("offset");
-    coerce3("width");
-    coerce3("text");
-    coerce3("hovertext");
-    coerce3("hovertemplate");
-    coerce3("hovertemplatefallback");
-    var textposition = coerce3("textposition");
-    handleText4(traceIn, traceOut, layout, coerce3, textposition, {
-      moduleHasSelected: false,
-      moduleHasUnselected: false,
-      moduleHasConstrain: true,
-      moduleHasCliponaxis: true,
-      moduleHasTextangle: true,
-      moduleHasInsideanchor: true
-    });
-    if (traceOut.textposition !== "none") {
-      coerce3("texttemplate");
-      coerce3("texttemplatefallback");
-      if (!traceOut.texttemplate) coerce3("textinfo");
-    }
-    handleDirection(coerce3, "increasing", INCREASING_COLOR);
-    handleDirection(coerce3, "decreasing", DECREASING_COLOR);
-    handleDirection(coerce3, "totals", TOTALS_COLOR);
-    var connectorVisible = coerce3("connector.visible");
-    if (connectorVisible) {
-      coerce3("connector.mode");
-      var connectorLineWidth = coerce3("connector.line.width");
-      if (connectorLineWidth) {
-        coerce3("connector.line.color");
-        coerce3("connector.line.dash");
-      }
-    }
-    coerce3("zorder");
-  }
-  function crossTraceDefaults6(fullData, fullLayout) {
-    var traceIn, traceOut;
-    function coerce3(attr2) {
-      return lib_default.coerce(traceOut._input, traceOut, attributes_default24, attr2);
-    }
-    if (fullLayout.waterfallmode === "group") {
-      for (var i = 0; i < fullData.length; i++) {
-        traceOut = fullData[i];
-        traceIn = traceOut._input;
-        handleGroupingDefaults(traceIn, traceOut, fullLayout, coerce3, fullLayout.waterfallmode);
-      }
-    }
-  }
-  var defaults_default4 = {
-    supplyDefaults: supplyDefaults6,
-    crossTraceDefaults: crossTraceDefaults6
-  };
-
-  // src/traces/waterfall/calc.js
-  var { mergeArray } = lib_default;
-  var { BADNUM: BADNUM16 } = numerical_default;
-
-  // src/traces/waterfall/cross_trace_calc.js
-  var { setGroupPositions: setGroupPositions4 } = cross_trace_calc_default;
-
-  // src/traces/waterfall/plot.js
-  var import_d344 = __toESM(require_d3(), 1);
-  var { BADNUM: BADNUM17 } = numerical_default;
-  var { clearMinTextSize: clearMinTextSize4 } = uniform_text_default;
-
-  // src/traces/waterfall/style.js
-  var import_d345 = __toESM(require_d3(), 1);
-  var { DESELECTDIM: DESELECTDIM4 } = interactions_default;
-  var { resizeText: resizeText4 } = uniform_text_default;
-  var styleTextPoints3 = style_default2.styleTextPoints;
   function style6(gd, cd, sel) {
-    var s = sel ? sel : import_d345.default.select(gd).selectAll('g[class^="waterfalllayer"]').selectAll("g.trace");
-    resizeText4(gd, s, "waterfall");
+    var s = sel ? sel : import_d345.default.select(gd).selectAll('g[class^="funnellayer"]').selectAll("g.trace");
+    resizeText3(gd, s, "funnel");
     s.style("opacity", function(d) {
       return d[0].trace.opacity;
     });
@@ -60718,11 +61373,14 @@ var Plotly = (() => {
       var trace = d[0].trace;
       gTrace.selectAll(".point > path").each(function(di) {
         if (!di.isBlank) {
-          var cont = trace[di.dir].marker;
-          import_d345.default.select(this).call(color_default.fill, cont.color).call(color_default.stroke, cont.line.color).call(drawing_default.dashLine, cont.line.dash, cont.line.width).style("opacity", trace.selectedpoints && !di.selected ? DESELECTDIM4 : 1);
+          var cont = trace.marker;
+          import_d345.default.select(this).call(color_default.fill, di.mc || cont.color).call(color_default.stroke, di.mlc || cont.line.color).call(drawing_default.dashLine, cont.line.dash, di.mlw || cont.line.width).style("opacity", trace.selectedpoints && !di.selected ? DESELECTDIM3 : 1);
         }
       });
-      styleTextPoints3(gTrace, trace, gd);
+      styleTextPoints2(gTrace, trace, gd);
+      gTrace.selectAll(".regions").each(function() {
+        import_d345.default.select(this).selectAll("path").style("stroke-width", 0).call(color_default.fill, trace.connector.fillcolor);
+      });
       gTrace.selectAll(".lines").each(function() {
         var cont = trace.connector.line;
         drawing_default.lineGroupStyle(
@@ -60738,18 +61396,101 @@ var Plotly = (() => {
     style: style6
   };
 
-  // src/traces/waterfall/hover.js
-  var { hoverLabelText: hoverLabelText3 } = axes_default;
-  var { opacity: opacity2 } = color_default;
-  var { hoverOnBars: hoverOnBars3 } = hover_default2;
-  var DIRSYMBOL = {
-    increasing: delta_default.INCREASING.SYMBOL,
-    decreasing: delta_default.DECREASING.SYMBOL
+  // src/traces/funnel/hover.js
+  var { opacity } = color_default;
+  var { hoverOnBars: hoverOnBars2 } = hover_default2;
+  var { formatPercent } = lib_default;
+  function hoverPoints4(pointData, xval, yval, hovermode, opts) {
+    var point = hoverOnBars2(pointData, xval, yval, hovermode, opts);
+    if (!point) return;
+    var cd = point.cd;
+    var trace = cd[0].trace;
+    var isHorizontal = trace.orientation === "h";
+    var index = point.index;
+    var di = cd[index];
+    var sizeLetter = isHorizontal ? "x" : "y";
+    point[sizeLetter + "LabelVal"] = di.s;
+    point.percentInitial = di.begR;
+    point.percentInitialLabel = formatPercent(di.begR, 1);
+    point.percentPrevious = di.difR;
+    point.percentPreviousLabel = formatPercent(di.difR, 1);
+    point.percentTotal = di.sumR;
+    point.percentTotalLabel = formatPercent(di.sumR, 1);
+    var hoverinfo = di.hi || trace.hoverinfo;
+    var text = [];
+    if (hoverinfo && hoverinfo !== "none" && hoverinfo !== "skip") {
+      var isAll = hoverinfo === "all";
+      var parts = hoverinfo.split("+");
+      var hasFlag = function(flag) {
+        return isAll || parts.indexOf(flag) !== -1;
+      };
+      if (hasFlag("percent initial")) {
+        text.push(point.percentInitialLabel + " of initial");
+      }
+      if (hasFlag("percent previous")) {
+        text.push(point.percentPreviousLabel + " of previous");
+      }
+      if (hasFlag("percent total")) {
+        text.push(point.percentTotalLabel + " of total");
+      }
+    }
+    point.extraText = text.join("<br>");
+    point.color = getTraceColor3(trace, di);
+    return [point];
+  }
+  function getTraceColor3(trace, di) {
+    var cont = trace.marker;
+    var mc = di.mc || cont.color;
+    var mlc = di.mlc || cont.line.color;
+    var mlw = di.mlw || cont.line.width;
+    if (opacity(mc)) return mc;
+    else if (opacity(mlc) && mlw) return mlc;
+  }
+
+  // src/traces/funnel/event_data.js
+  function eventData2(out, pt) {
+    out.x = "xVal" in pt ? pt.xVal : pt.x;
+    out.y = "yVal" in pt ? pt.yVal : pt.y;
+    if ("percentInitial" in pt) out.percentInitial = pt.percentInitial;
+    if ("percentPrevious" in pt) out.percentPrevious = pt.percentPrevious;
+    if ("percentTotal" in pt) out.percentTotal = pt.percentTotal;
+    if (pt.xa) out.xaxis = pt.xa;
+    if (pt.ya) out.yaxis = pt.ya;
+    return out;
+  }
+
+  // src/traces/funnel/index.js
+  var { supplyDefaults: _req23, crossTraceDefaults: _req33 } = defaults_default3;
+  var { style: _req82 } = style_default4;
+  var funnel_default = {
+    attributes: attributes_default25,
+    layoutAttributes: layout_attributes_default8,
+    supplyDefaults: _req23,
+    crossTraceDefaults: _req33,
+    supplyLayoutDefaults: layout_defaults_default4,
+    calc: calc7,
+    crossTraceCalc: crossTraceCalc4,
+    plot: plot6,
+    style: _req82,
+    hoverPoints: hoverPoints4,
+    eventData: eventData2,
+    selectPoints: selectPoints2,
+    moduleType: "trace",
+    name: "funnel",
+    basePlotModule: cartesian_default,
+    categories: ["bar-like", "cartesian", "svg", "oriented", "showLegend", "zoomScale"],
+    meta: {}
   };
 
-  // src/traces/waterfall/index.js
-  var { supplyDefaults: _req213, crossTraceDefaults: _req312 } = defaults_default4;
-  var { style: _req84 } = style_default4;
+  // src/traces/funnelarea/base_plot.js
+  var name6 = "funnelarea";
+  var plot7 = function(gd, traces, transitionOpts, makeOnCompleteCallback) {
+    plots_default.plotBasePlot(name6, gd, traces, transitionOpts, makeOnCompleteCallback);
+  };
+  var clean4 = function(newFullData, newFullLayout, oldFullData, oldFullLayout) {
+    plots_default.cleanBasePlot(name6, newFullData, newFullLayout, oldFullData, oldFullLayout);
+  };
+  var base_plot_default = { name: name6, plot: plot7, clean: clean4 };
 
   // src/traces/pie/attributes.js
   var textFontAttrs2 = font_attributes_default({
@@ -60757,7 +61498,7 @@ var Plotly = (() => {
     arrayOk: true,
     colorEditType: "plot"
   });
-  var attributes_default25 = {
+  var attributes_default26 = {
     labels: {
       valType: "data_array",
       editType: "calc"
@@ -60927,9 +61668,104 @@ var Plotly = (() => {
     }
   };
 
+  // src/traces/funnelarea/attributes.js
+  var attributes_default27 = {
+    labels: attributes_default26.labels,
+    // equivalent of x0 and dx, if label is missing
+    label0: attributes_default26.label0,
+    dlabel: attributes_default26.dlabel,
+    values: attributes_default26.values,
+    marker: {
+      colors: attributes_default26.marker.colors,
+      line: {
+        color: extendFlat({}, attributes_default26.marker.line.color, {
+          dflt: null
+        }),
+        width: extendFlat({}, attributes_default26.marker.line.width, { dflt: 1 }),
+        editType: "calc"
+      },
+      pattern: attributes_default26.marker.pattern,
+      editType: "calc"
+    },
+    text: attributes_default26.text,
+    hovertext: attributes_default26.hovertext,
+    scalegroup: extendFlat({}, attributes_default26.scalegroup, {}),
+    textinfo: extendFlat({}, attributes_default26.textinfo, {
+      flags: ["label", "text", "value", "percent"]
+    }),
+    texttemplate: texttemplateAttrs({ editType: "plot" }, { keys: ["label", "color", "value", "text", "percent"] }),
+    texttemplatefallback: templatefallbackAttrs({ editType: "plot" }),
+    hoverinfo: extendFlat({}, attributes_default2.hoverinfo, {
+      flags: ["label", "text", "value", "percent", "name"]
+    }),
+    hovertemplate: hovertemplateAttrs({}, { keys: ["label", "color", "value", "text", "percent"] }),
+    hovertemplatefallback: templatefallbackAttrs(),
+    textposition: extendFlat({}, attributes_default26.textposition, {
+      values: ["inside", "none"],
+      dflt: "inside"
+    }),
+    textfont: attributes_default26.textfont,
+    insidetextfont: attributes_default26.insidetextfont,
+    title: {
+      text: attributes_default26.title.text,
+      font: attributes_default26.title.font,
+      position: extendFlat({}, attributes_default26.title.position, {
+        values: ["top left", "top center", "top right"],
+        dflt: "top center"
+      }),
+      editType: "plot"
+    },
+    domain: attributes2({ name: "funnelarea", trace: true, editType: "calc" }),
+    aspectratio: {
+      valType: "number",
+      min: 0,
+      dflt: 1,
+      editType: "plot"
+    },
+    baseratio: {
+      valType: "number",
+      min: 0,
+      max: 1,
+      dflt: 0.333,
+      editType: "plot"
+    }
+  };
+
+  // src/traces/pie/layout_attributes.js
+  var layout_attributes_default9 = {
+    hiddenlabels: {
+      valType: "data_array",
+      editType: "calc"
+    },
+    piecolorway: {
+      valType: "colorlist",
+      editType: "calc"
+    },
+    extendpiecolors: {
+      valType: "boolean",
+      dflt: true,
+      editType: "calc"
+    }
+  };
+
+  // src/traces/funnelarea/layout_attributes.js
+  var { hiddenlabels } = layout_attributes_default9;
+  var layout_attributes_default10 = {
+    hiddenlabels,
+    funnelareacolorway: {
+      valType: "colorlist",
+      editType: "calc"
+    },
+    extendfunnelareacolors: {
+      valType: "boolean",
+      dflt: true,
+      editType: "calc"
+    }
+  };
+
   // src/traces/pie/defaults.js
-  var import_fast_isnumeric44 = __toESM(require_fast_isnumeric(), 1);
-  var { handleText: handleText5 } = defaults_default2;
+  var import_fast_isnumeric42 = __toESM(require_fast_isnumeric(), 1);
+  var { handleText: handleText3 } = defaults_default2;
   var { coercePattern: coercePattern4 } = lib_default;
   function handleLabelsAndValues(labels, values) {
     var hasLabels = lib_default.isArrayOrTypedArray(labels);
@@ -60940,7 +61776,7 @@ var Plotly = (() => {
       var hasPositive;
       for (var i = 0; i < len2; i++) {
         var v = values[i];
-        if ((0, import_fast_isnumeric44.default)(v) && v > 0) {
+        if ((0, import_fast_isnumeric42.default)(v) && v > 0) {
           hasPositive = true;
           break;
         }
@@ -60967,9 +61803,9 @@ var Plotly = (() => {
     if (traceIn.marker && !traceOut.marker.pattern.fgcolor) traceOut.marker.pattern.fgcolor = traceIn.marker.colors;
     if (!traceOut.marker.pattern.bgcolor) traceOut.marker.pattern.bgcolor = layout.paper_bgcolor;
   }
-  function supplyDefaults7(traceIn, traceOut, defaultColor, layout) {
+  function supplyDefaults6(traceIn, traceOut, defaultColor, layout) {
     function coerce3(attr2, dflt) {
-      return lib_default.coerce(traceIn, traceOut, attributes_default25, attr2, dflt);
+      return lib_default.coerce(traceIn, traceOut, attributes_default26, attr2, dflt);
     }
     var labels = coerce3("labels");
     var values = coerce3("values");
@@ -60998,7 +61834,7 @@ var Plotly = (() => {
     coerce3("hovertemplatefallback");
     if (textTemplate || textInfo && textInfo !== "none") {
       var textposition = coerce3("textposition");
-      handleText5(traceIn, traceOut, layout, coerce3, textposition, {
+      handleText3(traceIn, traceOut, layout, coerce3, textposition, {
         moduleHasSelected: false,
         moduleHasUnselected: false,
         moduleHasConstrain: false,
@@ -61030,33 +61866,81 @@ var Plotly = (() => {
     coerce3("rotation");
     coerce3("pull");
   }
-  var defaults_default5 = {
+  var defaults_default4 = {
     handleLabelsAndValues,
     handleMarkerDefaults,
-    supplyDefaults: supplyDefaults7
+    supplyDefaults: supplyDefaults6
   };
 
-  // src/traces/pie/layout_attributes.js
-  var layout_attributes_default9 = {
-    hiddenlabels: {
-      valType: "data_array",
-      editType: "calc"
-    },
-    piecolorway: {
-      valType: "colorlist",
-      editType: "calc"
-    },
-    extendpiecolors: {
-      valType: "boolean",
-      dflt: true,
-      editType: "calc"
+  // src/traces/funnelarea/defaults.js
+  var { handleText: handleText4 } = defaults_default2;
+  var { handleLabelsAndValues: handleLabelsAndValues2, handleMarkerDefaults: handleMarkerDefaults2 } = defaults_default4;
+  function supplyDefaults7(traceIn, traceOut, defaultColor, layout) {
+    function coerce3(attr2, dflt) {
+      return lib_default.coerce(traceIn, traceOut, attributes_default27, attr2, dflt);
     }
-  };
+    var labels = coerce3("labels");
+    var values = coerce3("values");
+    var res = handleLabelsAndValues2(labels, values);
+    var len2 = res.len;
+    traceOut._hasLabels = res.hasLabels;
+    traceOut._hasValues = res.hasValues;
+    if (!traceOut._hasLabels && traceOut._hasValues) {
+      coerce3("label0");
+      coerce3("dlabel");
+    }
+    if (!len2) {
+      traceOut.visible = false;
+      return;
+    }
+    traceOut._length = len2;
+    handleMarkerDefaults2(traceIn, traceOut, layout, coerce3);
+    coerce3("scalegroup");
+    var textData = coerce3("text");
+    var textTemplate = coerce3("texttemplate");
+    coerce3("texttemplatefallback");
+    var textInfo;
+    if (!textTemplate) textInfo = coerce3("textinfo", Array.isArray(textData) ? "text+percent" : "percent");
+    coerce3("hovertext");
+    coerce3("hovertemplate");
+    coerce3("hovertemplatefallback");
+    if (textTemplate || textInfo && textInfo !== "none") {
+      var textposition = coerce3("textposition");
+      handleText4(traceIn, traceOut, layout, coerce3, textposition, {
+        moduleHasSelected: false,
+        moduleHasUnselected: false,
+        moduleHasConstrain: false,
+        moduleHasCliponaxis: false,
+        moduleHasTextangle: false,
+        moduleHasInsideanchor: false
+      });
+    } else if (textInfo === "none") {
+      coerce3("textposition", "none");
+    }
+    defaults2(traceOut, layout, coerce3);
+    var title = coerce3("title.text");
+    if (title) {
+      coerce3("title.position");
+      lib_default.coerceFont(coerce3, "title.font", layout.font);
+    }
+    coerce3("aspectratio");
+    coerce3("baseratio");
+  }
+
+  // src/traces/funnelarea/layout_defaults.js
+  function supplyLayoutDefaults11(layoutIn, layoutOut) {
+    function coerce3(attr2, dflt) {
+      return lib_default.coerce(layoutIn, layoutOut, layout_attributes_default10, attr2, dflt);
+    }
+    coerce3("hiddenlabels");
+    coerce3("funnelareacolorway", layoutOut.colorway);
+    coerce3("extendfunnelareacolors");
+  }
 
   // src/traces/pie/calc.js
-  var import_fast_isnumeric45 = __toESM(require_fast_isnumeric(), 1);
+  var import_fast_isnumeric43 = __toESM(require_fast_isnumeric(), 1);
   var extendedColorWayList = {};
-  function calc9(gd, trace) {
+  function calc8(gd, trace) {
     var cd = [];
     var fullLayout = gd._fullLayout;
     var hiddenLabels = fullLayout.hiddenlabels || [];
@@ -61080,7 +61964,7 @@ var Plotly = (() => {
       var v, label, hidden;
       if (hasValues) {
         v = vals[i];
-        if (!(0, import_fast_isnumeric45.default)(v)) continue;
+        if (!(0, import_fast_isnumeric43.default)(v)) continue;
         v = +v;
       } else v = 1;
       label = labels[i];
@@ -61121,13 +62005,13 @@ var Plotly = (() => {
     return cd;
   }
   function makePullColorFn(colorMap) {
-    return function pullColor(color2, id) {
-      if (!color2) return false;
-      color2 = tinycolor(color2);
-      if (!color2.isValid()) return false;
-      color2 = color_default.addOpacity(color2, color2.getAlpha());
-      if (!colorMap[id]) colorMap[id] = color2;
-      return color2;
+    return function pullColor(color3, id) {
+      if (!color3) return false;
+      color3 = tinycolor(color3);
+      if (!color3.isValid()) return false;
+      color3 = color_default.addOpacity(color3, color3.getAlpha());
+      if (!colorMap[id]) colorMap[id] = color3;
+      return color3;
     };
   }
   function crossTraceCalc5(gd, plotinfo) {
@@ -61174,18 +62058,33 @@ var Plotly = (() => {
     }
     return colors;
   }
-  var calc_default3 = {
-    calc: calc9,
+  var calc_default4 = {
+    calc: calc8,
     crossTraceCalc: crossTraceCalc5,
     makePullColorFn,
     generateExtendedColors
   };
 
+  // src/traces/funnelarea/calc.js
+  function calc9(gd, trace) {
+    return calc_default4.calc(gd, trace);
+  }
+  function crossTraceCalc6(gd) {
+    calc_default4.crossTraceCalc(gd, { type: "funnelarea" });
+  }
+  var calc_default5 = {
+    calc: calc9,
+    crossTraceCalc: crossTraceCalc6
+  };
+
+  // src/traces/funnelarea/plot.js
+  var import_d347 = __toESM(require_d3(), 1);
+
   // src/traces/pie/plot.js
   var import_d346 = __toESM(require_d3(), 1);
 
   // src/traces/pie/event_data.js
-  function eventData5(pt, trace) {
+  function eventData3(pt, trace) {
     var out = {
       curveNumber: trace.index,
       pointNumbers: pt.pts,
@@ -61215,12 +62114,12 @@ var Plotly = (() => {
   var strScale2 = lib_default.strScale;
   var strTranslate16 = lib_default.strTranslate;
   var recordMinTextSize3 = uniform_text_default.recordMinTextSize;
-  var clearMinTextSize5 = uniform_text_default.clearMinTextSize;
-  function plot7(gd, cdModule) {
+  var clearMinTextSize4 = uniform_text_default.clearMinTextSize;
+  function plot8(gd, cdModule) {
     var isStatic = gd._context.staticPlot;
     var fullLayout = gd._fullLayout;
     var gs = fullLayout._size;
-    clearMinTextSize5("pie", fullLayout);
+    clearMinTextSize4("pie", fullLayout);
     prerenderTitles(cdModule, gd);
     layoutAreas(cdModule, gs);
     var plotGroups = lib_default.makeTraceGroups(fullLayout._pielayer, cdModule, "trace").each(function(cd) {
@@ -61497,7 +62396,7 @@ var Plotly = (() => {
             textAlign: helpers_default4.castOption(hoverLabel.align, pt.pts),
             hovertemplate: helpers_default4.castOption(trace2.hovertemplate, pt.pts),
             hovertemplateLabels: pt,
-            eventData: [eventData5(pt, trace2)]
+            eventData: [eventData3(pt, trace2)]
           },
           {
             container: fullLayout2._hoverlayer.node(),
@@ -61511,7 +62410,7 @@ var Plotly = (() => {
       }
       trace._hasHoverEvent = true;
       gd.emit("plotly_hover", {
-        points: [eventData5(pt, trace2)],
+        points: [eventData3(pt, trace2)],
         event: import_d346.default.event
       });
     });
@@ -61522,7 +62421,7 @@ var Plotly = (() => {
       if (trace._hasHoverEvent) {
         evt.originalEvent = import_d346.default.event;
         gd.emit("plotly_unhover", {
-          points: [eventData5(pt, trace2)],
+          points: [eventData3(pt, trace2)],
           event: import_d346.default.event
         });
         trace._hasHoverEvent = false;
@@ -61536,12 +62435,12 @@ var Plotly = (() => {
       var fullLayout2 = gd._fullLayout;
       var trace2 = gd._fullData[trace.index];
       if (gd._dragging || fullLayout2.hovermode === false) return;
-      gd._hoverdata = [eventData5(pt, trace2)];
+      gd._hoverdata = [eventData3(pt, trace2)];
       fx_default.click(gd, import_d346.default.event);
     });
   }
   function determineOutsideTextFont(trace, pt, layoutFont) {
-    var color2 = helpers_default4.castOption(trace.outsidetextfont.color, pt.pts) || helpers_default4.castOption(trace.textfont.color, pt.pts) || layoutFont.color;
+    var color3 = helpers_default4.castOption(trace.outsidetextfont.color, pt.pts) || helpers_default4.castOption(trace.textfont.color, pt.pts) || layoutFont.color;
     var family = helpers_default4.castOption(trace.outsidetextfont.family, pt.pts) || helpers_default4.castOption(trace.textfont.family, pt.pts) || layoutFont.family;
     var size = helpers_default4.castOption(trace.outsidetextfont.size, pt.pts) || helpers_default4.castOption(trace.textfont.size, pt.pts) || layoutFont.size;
     var weight = helpers_default4.castOption(trace.outsidetextfont.weight, pt.pts) || helpers_default4.castOption(trace.textfont.weight, pt.pts) || layoutFont.weight;
@@ -61551,7 +62450,7 @@ var Plotly = (() => {
     var lineposition = helpers_default4.castOption(trace.outsidetextfont.lineposition, pt.pts) || helpers_default4.castOption(trace.textfont.lineposition, pt.pts) || layoutFont.lineposition;
     var shadow = helpers_default4.castOption(trace.outsidetextfont.shadow, pt.pts) || helpers_default4.castOption(trace.textfont.shadow, pt.pts) || layoutFont.shadow;
     return {
-      color: color2,
+      color: color3,
       family,
       size,
       weight,
@@ -62060,8 +62959,8 @@ var Plotly = (() => {
     transform.textY = midX * sinA + midY * cosA;
     transform.noCenter = true;
   }
-  var plot_default2 = {
-    plot: plot7,
+  var plot_default3 = {
+    plot: plot8,
     formatSliceLabel,
     transformInsideText,
     determineInsideTextFont,
@@ -62072,117 +62971,1337 @@ var Plotly = (() => {
     computeTransform
   };
 
-  // src/traces/pie/style.js
-  var import_d347 = __toESM(require_d3(), 1);
-  var { resizeText: resizeText5 } = uniform_text_default;
-
-  // src/traces/pie/index.js
-  var { supplyDefaults: _req110 } = defaults_default5;
-  var { calc: _req49, crossTraceCalc: _req54 } = calc_default3;
-  var { plot: _req64 } = plot_default2;
-
-  // src/traces/funnelarea/attributes.js
-  var attributes_default26 = {
-    labels: attributes_default25.labels,
-    // equivalent of x0 and dx, if label is missing
-    label0: attributes_default25.label0,
-    dlabel: attributes_default25.dlabel,
-    values: attributes_default25.values,
-    marker: {
-      colors: attributes_default25.marker.colors,
-      line: {
-        color: extendFlat({}, attributes_default25.marker.line.color, {
-          dflt: null
-        }),
-        width: extendFlat({}, attributes_default25.marker.line.width, { dflt: 1 }),
-        editType: "calc"
-      },
-      pattern: attributes_default25.marker.pattern,
-      editType: "calc"
-    },
-    text: attributes_default25.text,
-    hovertext: attributes_default25.hovertext,
-    scalegroup: extendFlat({}, attributes_default25.scalegroup, {}),
-    textinfo: extendFlat({}, attributes_default25.textinfo, {
-      flags: ["label", "text", "value", "percent"]
-    }),
-    texttemplate: texttemplateAttrs({ editType: "plot" }, { keys: ["label", "color", "value", "text", "percent"] }),
-    texttemplatefallback: templatefallbackAttrs({ editType: "plot" }),
-    hoverinfo: extendFlat({}, attributes_default2.hoverinfo, {
-      flags: ["label", "text", "value", "percent", "name"]
-    }),
-    hovertemplate: hovertemplateAttrs({}, { keys: ["label", "color", "value", "text", "percent"] }),
-    hovertemplatefallback: templatefallbackAttrs(),
-    textposition: extendFlat({}, attributes_default25.textposition, {
-      values: ["inside", "none"],
-      dflt: "inside"
-    }),
-    textfont: attributes_default25.textfont,
-    insidetextfont: attributes_default25.insidetextfont,
-    title: {
-      text: attributes_default25.title.text,
-      font: attributes_default25.title.font,
-      position: extendFlat({}, attributes_default25.title.position, {
-        values: ["top left", "top center", "top right"],
-        dflt: "top center"
-      }),
-      editType: "plot"
-    },
-    domain: attributes2({ name: "funnelarea", trace: true, editType: "calc" }),
-    aspectratio: {
-      valType: "number",
-      min: 0,
-      dflt: 1,
-      editType: "plot"
-    },
-    baseratio: {
-      valType: "number",
-      min: 0,
-      max: 1,
-      dflt: 0.333,
-      editType: "plot"
-    }
-  };
-
-  // src/traces/funnelarea/layout_attributes.js
-  var { hiddenlabels } = layout_attributes_default9;
-
-  // src/traces/funnelarea/defaults.js
-  var { handleText: handleText6 } = defaults_default2;
-  var { handleLabelsAndValues: handleLabelsAndValues2, handleMarkerDefaults: handleMarkerDefaults2 } = defaults_default5;
-
-  // src/traces/funnelarea/calc.js
-  function calc10(gd, trace) {
-    return calc_default3.calc(gd, trace);
-  }
-  function crossTraceCalc6(gd) {
-    calc_default3.crossTraceCalc(gd, { type: "funnelarea" });
-  }
-  var calc_default4 = {
-    calc: calc10,
-    crossTraceCalc: crossTraceCalc6
-  };
-
   // src/traces/funnelarea/plot.js
-  var import_d348 = __toESM(require_d3(), 1);
   var strScale3 = lib_default.strScale;
   var strTranslate17 = lib_default.strTranslate;
   var toMoveInsideBar2 = plot_default.toMoveInsideBar;
   var recordMinTextSize4 = uniform_text_default.recordMinTextSize;
-  var clearMinTextSize6 = uniform_text_default.clearMinTextSize;
-  var attachFxHandlers2 = plot_default2.attachFxHandlers;
-  var determineInsideTextFont2 = plot_default2.determineInsideTextFont;
-  var layoutAreas2 = plot_default2.layoutAreas;
-  var prerenderTitles2 = plot_default2.prerenderTitles;
-  var positionTitleOutside2 = plot_default2.positionTitleOutside;
-  var formatSliceLabel2 = plot_default2.formatSliceLabel;
+  var clearMinTextSize5 = uniform_text_default.clearMinTextSize;
+  var attachFxHandlers2 = plot_default3.attachFxHandlers;
+  var determineInsideTextFont2 = plot_default3.determineInsideTextFont;
+  var layoutAreas2 = plot_default3.layoutAreas;
+  var prerenderTitles2 = plot_default3.prerenderTitles;
+  var positionTitleOutside2 = plot_default3.positionTitleOutside;
+  var formatSliceLabel2 = plot_default3.formatSliceLabel;
+  function plot9(gd, cdModule) {
+    var isStatic = gd._context.staticPlot;
+    var fullLayout = gd._fullLayout;
+    clearMinTextSize5("funnelarea", fullLayout);
+    prerenderTitles2(cdModule, gd);
+    layoutAreas2(cdModule, fullLayout._size);
+    lib_default.makeTraceGroups(fullLayout._funnelarealayer, cdModule, "trace").each(function(cd) {
+      var plotGroup = import_d347.default.select(this);
+      var cd0 = cd[0];
+      var trace = cd0.trace;
+      setCoords2(cd);
+      plotGroup.each(function() {
+        var slices = import_d347.default.select(this).selectAll("g.slice").data(cd);
+        slices.enter().append("g").classed("slice", true);
+        slices.exit().remove();
+        slices.each(function(pt, i) {
+          if (pt.hidden) {
+            import_d347.default.select(this).selectAll("path,g").remove();
+            return;
+          }
+          pt.pointNumber = pt.i;
+          pt.curveNumber = trace.index;
+          var cx = cd0.cx;
+          var cy = cd0.cy;
+          var sliceTop = import_d347.default.select(this);
+          var slicePath = sliceTop.selectAll("path.surface").data([pt]);
+          slicePath.enter().append("path").classed("surface", true).style({ "pointer-events": isStatic ? "none" : "all" });
+          sliceTop.call(attachFxHandlers2, gd, cd);
+          var shape = "M" + (cx + pt.TR[0]) + "," + (cy + pt.TR[1]) + line(pt.TR, pt.BR) + line(pt.BR, pt.BL) + line(pt.BL, pt.TL) + "Z";
+          slicePath.attr("d", shape);
+          formatSliceLabel2(gd, pt, cd0);
+          var textPosition = helpers_default4.castOption(trace.textposition, pt.pts);
+          var sliceTextGroup = sliceTop.selectAll("g.slicetext").data(pt.text && textPosition !== "none" ? [0] : []);
+          sliceTextGroup.enter().append("g").classed("slicetext", true);
+          sliceTextGroup.exit().remove();
+          sliceTextGroup.each(function() {
+            var sliceText = lib_default.ensureSingle(import_d347.default.select(this), "text", "", function(s) {
+              s.attr("data-notex", 1);
+            });
+            var font2 = lib_default.ensureUniformFontSize(gd, determineInsideTextFont2(trace, pt, fullLayout.font));
+            sliceText.text(pt.text).attr({
+              class: "slicetext",
+              transform: "",
+              "text-anchor": "middle"
+            }).call(drawing_default.font, font2).call(svg_text_utils_default.convertToTspans, gd);
+            var textBB = drawing_default.bBox(sliceText.node());
+            var transform;
+            var x0, x1;
+            var y0 = Math.min(pt.BL[1], pt.BR[1]) + cy;
+            var y1 = Math.max(pt.TL[1], pt.TR[1]) + cy;
+            x0 = Math.max(pt.TL[0], pt.BL[0]) + cx;
+            x1 = Math.min(pt.TR[0], pt.BR[0]) + cx;
+            transform = toMoveInsideBar2(x0, x1, y0, y1, textBB, {
+              isHorizontal: true,
+              constrained: true,
+              angle: 0,
+              anchor: "middle"
+            });
+            transform.fontSize = font2.size;
+            recordMinTextSize4(trace.type, transform, fullLayout);
+            cd[i].transform = transform;
+            lib_default.setTransormAndDisplay(sliceText, transform);
+          });
+        });
+        var titleTextGroup = import_d347.default.select(this).selectAll("g.titletext").data(trace.title.text ? [0] : []);
+        titleTextGroup.enter().append("g").classed("titletext", true);
+        titleTextGroup.exit().remove();
+        titleTextGroup.each(function() {
+          var titleText = lib_default.ensureSingle(import_d347.default.select(this), "text", "", function(s) {
+            s.attr("data-notex", 1);
+          });
+          var txt = trace.title.text;
+          if (trace._meta) {
+            txt = lib_default.templateString(txt, trace._meta);
+          }
+          titleText.text(txt).attr({
+            class: "titletext",
+            transform: "",
+            "text-anchor": "middle"
+          }).call(drawing_default.font, trace.title.font).call(svg_text_utils_default.convertToTspans, gd);
+          var transform = positionTitleOutside2(cd0, fullLayout._size);
+          titleText.attr(
+            "transform",
+            strTranslate17(transform.x, transform.y) + strScale3(Math.min(1, transform.scale)) + strTranslate17(transform.tx, transform.ty)
+          );
+        });
+      });
+    });
+  }
+  function line(a, b) {
+    var dx = b[0] - a[0];
+    var dy = b[1] - a[1];
+    return "l" + dx + "," + dy;
+  }
+  function getBetween(a, b) {
+    return [
+      0.5 * (a[0] + b[0]),
+      0.5 * (a[1] + b[1])
+    ];
+  }
+  function setCoords2(cd) {
+    if (!cd.length) return;
+    var cd0 = cd[0];
+    var trace = cd0.trace;
+    var aspectratio = trace.aspectratio;
+    var h = trace.baseratio;
+    if (h > 0.999) h = 0.999;
+    var h2 = Math.pow(h, 2);
+    var v1 = cd0.vTotal;
+    var v0 = v1 * h2 / (1 - h2);
+    var totalValues = v1;
+    var sumSteps = v0 / v1;
+    function calcPos() {
+      var q = Math.sqrt(sumSteps);
+      return {
+        x: q,
+        y: -q
+      };
+    }
+    function getPoint() {
+      var pos = calcPos();
+      return [pos.x, pos.y];
+    }
+    var p;
+    var allPoints = [];
+    allPoints.push(getPoint());
+    var i, cdi;
+    for (i = cd.length - 1; i > -1; i--) {
+      cdi = cd[i];
+      if (cdi.hidden) continue;
+      var step = cdi.v / totalValues;
+      sumSteps += step;
+      allPoints.push(getPoint());
+    }
+    var minY = Infinity;
+    var maxY = -Infinity;
+    for (i = 0; i < allPoints.length; i++) {
+      p = allPoints[i];
+      minY = Math.min(minY, p[1]);
+      maxY = Math.max(maxY, p[1]);
+    }
+    for (i = 0; i < allPoints.length; i++) {
+      allPoints[i][1] -= (maxY + minY) / 2;
+    }
+    var lastX = allPoints[allPoints.length - 1][0];
+    var r = cd0.r;
+    var rY = (maxY - minY) / 2;
+    var scaleX = r / lastX;
+    var scaleY = r / rY * aspectratio;
+    cd0.r = scaleY * rY;
+    for (i = 0; i < allPoints.length; i++) {
+      allPoints[i][0] *= scaleX;
+      allPoints[i][1] *= scaleY;
+    }
+    p = allPoints[0];
+    var prevLeft = [-p[0], p[1]];
+    var prevRight = [p[0], p[1]];
+    var n = 0;
+    for (i = cd.length - 1; i > -1; i--) {
+      cdi = cd[i];
+      if (cdi.hidden) continue;
+      n += 1;
+      var x = allPoints[n][0];
+      var y = allPoints[n][1];
+      cdi.TL = [-x, y];
+      cdi.TR = [x, y];
+      cdi.BL = prevLeft;
+      cdi.BR = prevRight;
+      cdi.pxmid = getBetween(cdi.TR, cdi.BR);
+      prevLeft = cdi.TL;
+      prevRight = cdi.TR;
+    }
+  }
 
   // src/traces/funnelarea/style.js
-  var import_d349 = __toESM(require_d3(), 1);
-  var { resizeText: resizeText6 } = uniform_text_default;
+  var import_d348 = __toESM(require_d3(), 1);
+  var { resizeText: resizeText4 } = uniform_text_default;
+  function style7(gd) {
+    var s = gd._fullLayout._funnelarealayer.selectAll(".trace");
+    resizeText4(gd, s, "funnelarea");
+    s.each(function(cd) {
+      var cd0 = cd[0];
+      var trace = cd0.trace;
+      var traceSelection = import_d348.default.select(this);
+      traceSelection.style({ opacity: trace.opacity });
+      traceSelection.selectAll("path.surface").each(function(pt) {
+        import_d348.default.select(this).call(styleOne, pt, trace, gd);
+      });
+    });
+  }
 
   // src/traces/funnelarea/index.js
-  var { calc: _req55, crossTraceCalc: _req65 } = calc_default4;
+  var { calc: _req52, crossTraceCalc: _req62 } = calc_default5;
+  var funnelarea_default = {
+    moduleType: "trace",
+    name: "funnelarea",
+    basePlotModule: base_plot_default,
+    categories: ["pie-like", "funnelarea", "showLegend"],
+    attributes: attributes_default27,
+    layoutAttributes: layout_attributes_default10,
+    supplyDefaults: supplyDefaults7,
+    supplyLayoutDefaults: supplyLayoutDefaults11,
+    calc: _req52,
+    crossTraceCalc: _req62,
+    plot: plot9,
+    style: style7,
+    styleOne,
+    meta: {}
+  };
+
+  // src/traces/histogram/bin_attributes.js
+  function makeBinAttrs(axLetter, match) {
+    return {
+      start: {
+        valType: "any",
+        // for date axes
+        editType: "calc"
+      },
+      end: {
+        valType: "any",
+        // for date axes
+        editType: "calc"
+      },
+      size: {
+        valType: "any",
+        // for date axes
+        editType: "calc"
+      },
+      editType: "calc"
+    };
+  }
+
+  // src/traces/histogram/constants.js
+  var constants_default16 = {
+    eventDataKeys: ["binNumber"]
+  };
+
+  // src/traces/histogram/attributes.js
+  var { axisHoverFormat: axisHoverFormat8 } = axis_format_attributes_default;
+  var attributes_default28 = {
+    x: {
+      valType: "data_array",
+      editType: "calc+clearAxisTypes"
+    },
+    y: {
+      valType: "data_array",
+      editType: "calc+clearAxisTypes"
+    },
+    xhoverformat: axisHoverFormat8("x"),
+    yhoverformat: axisHoverFormat8("y"),
+    text: extendFlat({}, attributes_default21.text, {}),
+    hovertext: extendFlat({}, attributes_default21.hovertext, {}),
+    orientation: attributes_default21.orientation,
+    histfunc: {
+      valType: "enumerated",
+      values: ["count", "sum", "avg", "min", "max"],
+      dflt: "count",
+      editType: "calc"
+    },
+    histnorm: {
+      valType: "enumerated",
+      values: ["", "percent", "probability", "density", "probability density"],
+      dflt: "",
+      editType: "calc"
+    },
+    cumulative: {
+      enabled: {
+        valType: "boolean",
+        dflt: false,
+        editType: "calc"
+      },
+      direction: {
+        valType: "enumerated",
+        values: ["increasing", "decreasing"],
+        dflt: "increasing",
+        editType: "calc"
+      },
+      currentbin: {
+        valType: "enumerated",
+        values: ["include", "exclude", "half"],
+        dflt: "include",
+        editType: "calc"
+      },
+      editType: "calc"
+    },
+    nbinsx: {
+      valType: "integer",
+      min: 0,
+      dflt: 0,
+      editType: "calc"
+    },
+    xbins: makeBinAttrs("x", true),
+    nbinsy: {
+      valType: "integer",
+      min: 0,
+      dflt: 0,
+      editType: "calc"
+    },
+    ybins: makeBinAttrs("y", true),
+    autobinx: {
+      valType: "boolean",
+      dflt: null,
+      editType: "calc"
+    },
+    autobiny: {
+      valType: "boolean",
+      dflt: null,
+      editType: "calc"
+    },
+    bingroup: {
+      valType: "string",
+      dflt: "",
+      editType: "calc"
+    },
+    hovertemplate: hovertemplateAttrs({}, { keys: constants_default16.eventDataKeys }),
+    hovertemplatefallback: templatefallbackAttrs(),
+    texttemplate: texttemplateAttrs({ arrayOk: false, editType: "plot" }, { keys: ["label", "value"] }),
+    texttemplatefallback: templatefallbackAttrs({ editType: "plot" }),
+    textposition: extendFlat({}, attributes_default21.textposition, {
+      arrayOk: false
+    }),
+    textfont: font_attributes_default({
+      arrayOk: false,
+      editType: "plot",
+      colorEditType: "style"
+    }),
+    outsidetextfont: font_attributes_default({
+      arrayOk: false,
+      editType: "plot",
+      colorEditType: "style"
+    }),
+    insidetextfont: font_attributes_default({
+      arrayOk: false,
+      editType: "plot",
+      colorEditType: "style"
+    }),
+    insidetextanchor: attributes_default21.insidetextanchor,
+    textangle: attributes_default21.textangle,
+    cliponaxis: attributes_default21.cliponaxis,
+    constraintext: attributes_default21.constraintext,
+    marker: attributes_default21.marker,
+    offsetgroup: attributes_default21.offsetgroup,
+    alignmentgroup: attributes_default21.alignmentgroup,
+    selected: attributes_default21.selected,
+    unselected: attributes_default21.unselected,
+    zorder: attributes_default21.zorder
+  };
+
+  // src/traces/histogram/defaults.js
+  var { handleText: handleText5 } = defaults_default2;
+  function supplyDefaults8(traceIn, traceOut, defaultColor, layout) {
+    function coerce3(attr2, dflt) {
+      return lib_default.coerce(traceIn, traceOut, attributes_default28, attr2, dflt);
+    }
+    var x = coerce3("x");
+    var y = coerce3("y");
+    var cumulative = coerce3("cumulative.enabled");
+    if (cumulative) {
+      coerce3("cumulative.direction");
+      coerce3("cumulative.currentbin");
+    }
+    coerce3("text");
+    var textposition = coerce3("textposition");
+    handleText5(traceIn, traceOut, layout, coerce3, textposition, {
+      moduleHasSelected: true,
+      moduleHasUnselected: true,
+      moduleHasConstrain: true,
+      moduleHasCliponaxis: true,
+      moduleHasTextangle: true,
+      moduleHasInsideanchor: true
+    });
+    coerce3("hovertext");
+    coerce3("hovertemplate");
+    coerce3("hovertemplatefallback");
+    coerce3("xhoverformat");
+    coerce3("yhoverformat");
+    var orientation = coerce3("orientation", y && !x ? "h" : "v");
+    var sampleLetter = orientation === "v" ? "x" : "y";
+    var aggLetter = orientation === "v" ? "y" : "x";
+    var len2 = x && y ? Math.min(lib_default.minRowLength(x) && lib_default.minRowLength(y)) : lib_default.minRowLength(traceOut[sampleLetter] || []);
+    if (!len2) {
+      traceOut.visible = false;
+      return;
+    }
+    traceOut._length = len2;
+    var handleCalendarDefaults = registry_default.getComponentMethod("calendars", "handleTraceDefaults");
+    handleCalendarDefaults(traceIn, traceOut, ["x", "y"], layout);
+    var hasAggregationData = traceOut[aggLetter];
+    if (hasAggregationData) coerce3("histfunc");
+    coerce3("histnorm");
+    coerce3("autobin" + sampleLetter);
+    handleStyleDefaults(traceIn, traceOut, coerce3, defaultColor, layout);
+    lib_default.coerceSelectionMarkerOpacity(traceOut, coerce3);
+    var lineColor = (traceOut.marker.line || {}).color;
+    var errorBarsSupplyDefaults = registry_default.getComponentMethod("errorbars", "supplyDefaults");
+    errorBarsSupplyDefaults(traceIn, traceOut, lineColor || color_default.defaultLine, { axis: "y" });
+    errorBarsSupplyDefaults(traceIn, traceOut, lineColor || color_default.defaultLine, { axis: "x", inherit: "y" });
+    coerce3("zorder");
+  }
+
+  // src/traces/histogram/cross_trace_defaults.js
+  var { validateCornerradius: validateCornerradius3 } = defaults_default2;
+  var nestedProperty4 = lib_default.nestedProperty;
+  var BINATTRS = [
+    { aStr: { x: "xbins.start", y: "ybins.start" }, name: "start" },
+    { aStr: { x: "xbins.end", y: "ybins.end" }, name: "end" },
+    { aStr: { x: "xbins.size", y: "ybins.size" }, name: "size" },
+    { aStr: { x: "nbinsx", y: "nbinsy" }, name: "nbins" }
+  ];
+  var BINDIRECTIONS = ["x", "y"];
+  function crossTraceDefaults5(fullData, fullLayout) {
+    var allBinOpts = fullLayout._histogramBinOpts = {};
+    var histTraces = [];
+    var mustMatchTracesLookup = {};
+    var otherTracesList = [];
+    var traceOut, traces, groupName, binDir;
+    var i, j, k;
+    function coerce3(attr3, dflt) {
+      return lib_default.coerce(traceOut._input, traceOut, traceOut._module.attributes, attr3, dflt);
+    }
+    function orientation2binDir(traceOut2) {
+      return traceOut2.orientation === "v" ? "x" : "y";
+    }
+    function getAxisType(traceOut2, binDir2) {
+      var ax = axis_ids_default.getFromTrace({ _fullLayout: fullLayout }, traceOut2, binDir2);
+      return ax.type;
+    }
+    function fillBinOpts(traceOut2, groupName2, binDir2) {
+      var fallbackGroupName = traceOut2.uid + "__" + binDir2;
+      if (!groupName2) groupName2 = fallbackGroupName;
+      var axType = getAxisType(traceOut2, binDir2);
+      var calendar = traceOut2[binDir2 + "calendar"] || "";
+      var binOpts2 = allBinOpts[groupName2];
+      var needsNewItem = true;
+      if (binOpts2) {
+        if (axType === binOpts2.axType && calendar === binOpts2.calendar) {
+          needsNewItem = false;
+          binOpts2.traces.push(traceOut2);
+          binOpts2.dirs.push(binDir2);
+        } else {
+          groupName2 = fallbackGroupName;
+          if (axType !== binOpts2.axType) {
+            lib_default.warn([
+              "Attempted to group the bins of trace",
+              traceOut2.index,
+              "set on a",
+              "type:" + axType,
+              "axis",
+              "with bins on",
+              "type:" + binOpts2.axType,
+              "axis."
+            ].join(" "));
+          }
+          if (calendar !== binOpts2.calendar) {
+            lib_default.warn([
+              "Attempted to group the bins of trace",
+              traceOut2.index,
+              "set with a",
+              calendar,
+              "calendar",
+              "with bins",
+              binOpts2.calendar ? "on a " + binOpts2.calendar + " calendar" : "w/o a set calendar"
+            ].join(" "));
+          }
+        }
+      }
+      if (needsNewItem) {
+        allBinOpts[groupName2] = {
+          traces: [traceOut2],
+          dirs: [binDir2],
+          axType,
+          calendar: traceOut2[binDir2 + "calendar"] || ""
+        };
+      }
+      traceOut2["_" + binDir2 + "bingroup"] = groupName2;
+    }
+    for (i = 0; i < fullData.length; i++) {
+      traceOut = fullData[i];
+      if (traceIs(traceOut, "histogram")) {
+        histTraces.push(traceOut);
+        delete traceOut._xautoBinFinished;
+        delete traceOut._yautoBinFinished;
+        if (traceOut.type === "histogram") {
+          var r = coerce3("marker.cornerradius", fullLayout.barcornerradius);
+          if (traceOut.marker) {
+            traceOut.marker.cornerradius = validateCornerradius3(r);
+          }
+        }
+        if (!traceIs(traceOut, "2dMap")) {
+          handleGroupingDefaults(traceOut._input, traceOut, fullLayout, coerce3, fullLayout.barmode);
+        }
+      }
+    }
+    var alignmentOpts = fullLayout._alignmentOpts || {};
+    for (i = 0; i < histTraces.length; i++) {
+      traceOut = histTraces[i];
+      groupName = "";
+      if (!traceIs(traceOut, "2dMap")) {
+        binDir = orientation2binDir(traceOut);
+        if (fullLayout.barmode === "group" && traceOut.alignmentgroup) {
+          var pa = traceOut[binDir + "axis"];
+          var aGroupId = getAxisGroup(fullLayout, pa) + traceOut.orientation;
+          if ((alignmentOpts[aGroupId] || {})[traceOut.alignmentgroup]) {
+            groupName = aGroupId;
+          }
+        }
+        if (!groupName && fullLayout.barmode !== "overlay") {
+          groupName = getAxisGroup(fullLayout, traceOut.xaxis) + getAxisGroup(fullLayout, traceOut.yaxis) + orientation2binDir(traceOut);
+        }
+      }
+      if (groupName) {
+        if (!mustMatchTracesLookup[groupName]) {
+          mustMatchTracesLookup[groupName] = [];
+        }
+        mustMatchTracesLookup[groupName].push(traceOut);
+      } else {
+        otherTracesList.push(traceOut);
+      }
+    }
+    for (groupName in mustMatchTracesLookup) {
+      traces = mustMatchTracesLookup[groupName];
+      if (traces.length === 1) {
+        otherTracesList.push(traces[0]);
+        continue;
+      }
+      var binGroupFound = false;
+      if (traces.length) {
+        traceOut = traces[0];
+        binGroupFound = coerce3("bingroup");
+      }
+      groupName = binGroupFound || groupName;
+      for (i = 0; i < traces.length; i++) {
+        traceOut = traces[i];
+        var bingroupIn = traceOut._input.bingroup;
+        if (bingroupIn && bingroupIn !== groupName) {
+          lib_default.warn([
+            "Trace",
+            traceOut.index,
+            "must match",
+            "within bingroup",
+            groupName + ".",
+            "Ignoring its bingroup:",
+            bingroupIn,
+            "setting."
+          ].join(" "));
+        }
+        traceOut.bingroup = groupName;
+        fillBinOpts(traceOut, groupName, orientation2binDir(traceOut));
+      }
+    }
+    for (i = 0; i < otherTracesList.length; i++) {
+      traceOut = otherTracesList[i];
+      var binGroup = coerce3("bingroup");
+      if (traceIs(traceOut, "2dMap")) {
+        for (k = 0; k < 2; k++) {
+          binDir = BINDIRECTIONS[k];
+          var binGroupInDir = coerce3(
+            binDir + "bingroup",
+            binGroup ? binGroup + "__" + binDir : null
+          );
+          fillBinOpts(traceOut, binGroupInDir, binDir);
+        }
+      } else {
+        fillBinOpts(traceOut, binGroup, orientation2binDir(traceOut));
+      }
+    }
+    for (groupName in allBinOpts) {
+      var binOpts = allBinOpts[groupName];
+      traces = binOpts.traces;
+      for (j = 0; j < BINATTRS.length; j++) {
+        var attrSpec = BINATTRS[j];
+        var attr2 = attrSpec.name;
+        var aStr;
+        var autoVals;
+        if (attr2 === "nbins" && binOpts.sizeFound) continue;
+        for (i = 0; i < traces.length; i++) {
+          traceOut = traces[i];
+          binDir = binOpts.dirs[i];
+          aStr = attrSpec.aStr[binDir];
+          if (nestedProperty4(traceOut._input, aStr).get() !== void 0) {
+            binOpts[attr2] = coerce3(aStr);
+            binOpts[attr2 + "Found"] = true;
+            break;
+          }
+          autoVals = (traceOut._autoBin || {})[binDir] || {};
+          if (autoVals[attr2]) {
+            nestedProperty4(traceOut, aStr).set(autoVals[attr2]);
+          }
+        }
+        if (attr2 === "start" || attr2 === "end") {
+          for (; i < traces.length; i++) {
+            traceOut = traces[i];
+            if (traceOut["_" + binDir + "bingroup"]) {
+              autoVals = (traceOut._autoBin || {})[binDir] || {};
+              coerce3(aStr, autoVals[attr2]);
+            }
+          }
+        }
+        if (attr2 === "nbins" && !binOpts.sizeFound && !binOpts.nbinsFound) {
+          traceOut = traces[0];
+          binOpts[attr2] = coerce3(aStr);
+        }
+      }
+    }
+  }
+
+  // src/traces/histogram/calc.js
+  var import_fast_isnumeric45 = __toESM(require_fast_isnumeric(), 1);
+
+  // src/traces/histogram/bin_functions.js
+  var import_fast_isnumeric44 = __toESM(require_fast_isnumeric(), 1);
+  var bin_functions_default = {
+    count: function(n, i, size) {
+      size[n]++;
+      return 1;
+    },
+    sum: function(n, i, size, counterData) {
+      var v = counterData[i];
+      if ((0, import_fast_isnumeric44.default)(v)) {
+        v = Number(v);
+        size[n] += v;
+        return v;
+      }
+      return 0;
+    },
+    avg: function(n, i, size, counterData, counts) {
+      var v = counterData[i];
+      if ((0, import_fast_isnumeric44.default)(v)) {
+        v = Number(v);
+        size[n] += v;
+        counts[n]++;
+      }
+      return 0;
+    },
+    min: function(n, i, size, counterData) {
+      var v = counterData[i];
+      if ((0, import_fast_isnumeric44.default)(v)) {
+        v = Number(v);
+        if (!(0, import_fast_isnumeric44.default)(size[n])) {
+          size[n] = v;
+          return v;
+        } else if (size[n] > v) {
+          var delta = v - size[n];
+          size[n] = v;
+          return delta;
+        }
+      }
+      return 0;
+    },
+    max: function(n, i, size, counterData) {
+      var v = counterData[i];
+      if ((0, import_fast_isnumeric44.default)(v)) {
+        v = Number(v);
+        if (!(0, import_fast_isnumeric44.default)(size[n])) {
+          size[n] = v;
+          return v;
+        } else if (size[n] < v) {
+          var delta = v - size[n];
+          size[n] = v;
+          return delta;
+        }
+      }
+      return 0;
+    }
+  };
+
+  // src/traces/histogram/norm_functions.js
+  var norm_functions_default = {
+    percent: function(size, total) {
+      var nMax = size.length;
+      var norm = 100 / total;
+      for (var n = 0; n < nMax; n++) size[n] *= norm;
+    },
+    probability: function(size, total) {
+      var nMax = size.length;
+      for (var n = 0; n < nMax; n++) size[n] /= total;
+    },
+    density: function(size, total, inc, yinc) {
+      var nMax = size.length;
+      yinc = yinc || 1;
+      for (var n = 0; n < nMax; n++) size[n] *= inc[n] * yinc;
+    },
+    "probability density": function(size, total, inc, yinc) {
+      var nMax = size.length;
+      if (yinc) total /= yinc;
+      for (var n = 0; n < nMax; n++) size[n] *= inc[n] / total;
+    }
+  };
+
+  // src/traces/histogram/average.js
+  function doAvg(size, counts) {
+    var nMax = size.length;
+    var total = 0;
+    for (var i = 0; i < nMax; i++) {
+      if (counts[i]) {
+        size[i] /= counts[i];
+        total += size[i];
+      } else size[i] = null;
+    }
+    return total;
+  }
+
+  // src/traces/histogram/bin_label_vals.js
+  var { tickIncrement } = axes_default;
+  var oneYear = numerical_default.ONEAVGYEAR;
+  var oneMonth = numerical_default.ONEAVGMONTH;
+  var oneDay = numerical_default.ONEDAY;
+  var oneHour = numerical_default.ONEHOUR;
+  var oneMin = numerical_default.ONEMIN;
+  var oneSec = numerical_default.ONESEC;
+  function getBinSpanLabelRound(leftGap, rightGap, binEdges, pa, calendar) {
+    var dv0 = -1.1 * rightGap;
+    var dv1 = -0.1 * rightGap;
+    var dv2 = leftGap - dv1;
+    var edge0 = binEdges[0];
+    var edge1 = binEdges[1];
+    var leftDigit = Math.min(
+      biggestDigitChanged(edge0 + dv1, edge0 + dv2, pa, calendar),
+      biggestDigitChanged(edge1 + dv1, edge1 + dv2, pa, calendar)
+    );
+    var rightDigit = Math.min(
+      biggestDigitChanged(edge0 + dv0, edge0 + dv1, pa, calendar),
+      biggestDigitChanged(edge1 + dv0, edge1 + dv1, pa, calendar)
+    );
+    var digit, disambiguateEdges;
+    if (leftDigit > rightDigit && rightDigit < Math.abs(edge1 - edge0) / 4e3) {
+      digit = leftDigit;
+      disambiguateEdges = false;
+    } else {
+      digit = Math.min(leftDigit, rightDigit);
+      disambiguateEdges = true;
+    }
+    if (pa.type === "date" && digit > oneDay) {
+      var dashExclude = digit === oneYear ? 1 : 6;
+      var increment = digit === oneYear ? "M12" : "M1";
+      return function(v, isRightEdge) {
+        var dateStr = pa.c2d(v, oneYear, calendar);
+        var dashPos = dateStr.indexOf("-", dashExclude);
+        if (dashPos > 0) dateStr = dateStr.slice(0, dashPos);
+        var roundedV = pa.d2c(dateStr, 0, calendar);
+        if (roundedV < v) {
+          var nextV = tickIncrement(roundedV, increment, false, calendar);
+          if ((roundedV + nextV) / 2 < v + leftGap) roundedV = nextV;
+        }
+        if (isRightEdge && disambiguateEdges) {
+          return tickIncrement(roundedV, increment, true, calendar);
+        }
+        return roundedV;
+      };
+    }
+    return function(v, isRightEdge) {
+      var roundedV = digit * Math.round(v / digit);
+      if (roundedV + digit / 10 < v && roundedV + digit * 0.9 < v + leftGap) {
+        roundedV += digit;
+      }
+      if (isRightEdge && disambiguateEdges) {
+        roundedV -= digit;
+      }
+      return roundedV;
+    };
+  }
+  function biggestDigitChanged(v1, v2, pa, calendar) {
+    if (v1 * v2 <= 0) return Infinity;
+    var dv2 = Math.abs(v2 - v1);
+    var isDate = pa.type === "date";
+    var digit = biggestGuaranteedDigitChanged(dv2, isDate);
+    for (var i = 0; i < 10; i++) {
+      var nextDigit = biggestGuaranteedDigitChanged(digit * 80, isDate);
+      if (digit === nextDigit) break;
+      if (didDigitChange(nextDigit, v1, v2, isDate, pa, calendar)) digit = nextDigit;
+      else break;
+    }
+    return digit;
+  }
+  function biggestGuaranteedDigitChanged(dv2, isDate) {
+    if (isDate && dv2 > oneSec) {
+      if (dv2 > oneDay) {
+        if (dv2 > oneYear * 1.1) return oneYear;
+        if (dv2 > oneMonth * 1.1) return oneMonth;
+        return oneDay;
+      }
+      if (dv2 > oneHour) return oneHour;
+      if (dv2 > oneMin) return oneMin;
+      return oneSec;
+    }
+    return Math.pow(10, Math.floor(Math.log(dv2) / Math.LN10));
+  }
+  function didDigitChange(digit, v1, v2, isDate, pa, calendar) {
+    if (isDate && digit > oneDay) {
+      var dateParts1 = dateParts(v1, pa, calendar);
+      var dateParts2 = dateParts(v2, pa, calendar);
+      var parti = digit === oneYear ? 0 : 1;
+      return dateParts1[parti] !== dateParts2[parti];
+    }
+    return Math.floor(v2 / digit) - Math.floor(v1 / digit) > 0.1;
+  }
+  function dateParts(v, pa, calendar) {
+    var parts = pa.c2d(v, oneYear, calendar).split("-");
+    if (parts[0] === "") {
+      parts.unshift();
+      parts[0] = "-" + parts[0];
+    }
+    return parts;
+  }
+
+  // src/traces/histogram/calc.js
+  var { hasColorscale: hasColorscale8 } = helpers_default;
+  function calc10(gd, trace) {
+    var pos = [];
+    var size = [];
+    var isHorizontal = trace.orientation === "h";
+    var pa = axes_default.getFromId(gd, isHorizontal ? trace.yaxis : trace.xaxis);
+    var mainData = isHorizontal ? "y" : "x";
+    var counterData = { x: "y", y: "x" }[mainData];
+    var calendar = trace[mainData + "calendar"];
+    var cumulativeSpec = trace.cumulative;
+    var i;
+    var binsAndPos = calcAllAutoBins(gd, trace, pa, mainData);
+    var binSpec = binsAndPos[0];
+    var pos0 = binsAndPos[1];
+    var nonuniformBins = typeof binSpec.size === "string";
+    var binEdges = [];
+    var bins = nonuniformBins ? binEdges : binSpec;
+    var inc = [];
+    var counts = [];
+    var inputPoints = [];
+    var total = 0;
+    var norm = trace.histnorm;
+    var func = trace.histfunc;
+    var densityNorm = norm.indexOf("density") !== -1;
+    var i2, binEnd, n;
+    if (cumulativeSpec.enabled && densityNorm) {
+      norm = norm.replace(/ ?density$/, "");
+      densityNorm = false;
+    }
+    var extremeFunc = func === "max" || func === "min";
+    var sizeInit = extremeFunc ? null : 0;
+    var binFunc = bin_functions_default.count;
+    var normFunc = norm_functions_default[norm];
+    var isAvg = false;
+    var pr2c = function(v) {
+      return pa.r2c(v, 0, calendar);
+    };
+    var rawCounterData;
+    if (lib_default.isArrayOrTypedArray(trace[counterData]) && func !== "count") {
+      rawCounterData = trace[counterData];
+      isAvg = func === "avg";
+      binFunc = bin_functions_default[func];
+    }
+    i = pr2c(binSpec.start);
+    binEnd = pr2c(binSpec.end) + (i - axes_default.tickIncrement(i, binSpec.size, false, calendar)) / 1e6;
+    while (i < binEnd && pos.length < 1e6) {
+      i2 = axes_default.tickIncrement(i, binSpec.size, false, calendar);
+      pos.push((i + i2) / 2);
+      size.push(sizeInit);
+      inputPoints.push([]);
+      binEdges.push(i);
+      if (densityNorm) inc.push(1 / (i2 - i));
+      if (isAvg) counts.push(0);
+      if (i2 <= i) break;
+      i = i2;
+    }
+    binEdges.push(i);
+    if (!nonuniformBins && pa.type === "date") {
+      bins = {
+        start: pr2c(bins.start),
+        end: pr2c(bins.end),
+        size: bins.size
+      };
+    }
+    if (!gd._fullLayout._roundFnOpts) gd._fullLayout._roundFnOpts = {};
+    var groupName = trace["_" + mainData + "bingroup"];
+    var roundFnOpts = { leftGap: Infinity, rightGap: Infinity };
+    if (groupName) {
+      if (!gd._fullLayout._roundFnOpts[groupName]) gd._fullLayout._roundFnOpts[groupName] = roundFnOpts;
+      roundFnOpts = gd._fullLayout._roundFnOpts[groupName];
+    }
+    var nMax = size.length;
+    var uniqueValsPerBin = true;
+    var leftGap = roundFnOpts.leftGap;
+    var rightGap = roundFnOpts.rightGap;
+    var ptNumber2cdIndex = {};
+    for (i = 0; i < pos0.length; i++) {
+      var posi = pos0[i];
+      n = lib_default.findBin(posi, bins);
+      if (n >= 0 && n < nMax) {
+        total += binFunc(n, i, size, rawCounterData, counts);
+        if (uniqueValsPerBin && inputPoints[n].length && posi !== pos0[inputPoints[n][0]]) {
+          uniqueValsPerBin = false;
+        }
+        inputPoints[n].push(i);
+        ptNumber2cdIndex[i] = n;
+        leftGap = Math.min(leftGap, posi - binEdges[n]);
+        rightGap = Math.min(rightGap, binEdges[n + 1] - posi);
+      }
+    }
+    roundFnOpts.leftGap = leftGap;
+    roundFnOpts.rightGap = rightGap;
+    var roundFn;
+    if (!uniqueValsPerBin) {
+      roundFn = function(v, isRightEdge) {
+        return function() {
+          var roundFnOpts2 = gd._fullLayout._roundFnOpts[groupName];
+          return getBinSpanLabelRound(
+            roundFnOpts2.leftGap,
+            roundFnOpts2.rightGap,
+            binEdges,
+            pa,
+            calendar
+          )(v, isRightEdge);
+        };
+      };
+    }
+    if (isAvg) total = doAvg(size, counts);
+    if (normFunc) normFunc(size, total, inc);
+    if (cumulativeSpec.enabled) cdf(size, cumulativeSpec.direction, cumulativeSpec.currentbin);
+    var seriesLen = Math.min(pos.length, size.length);
+    var cd = [];
+    var firstNonzero = 0;
+    var lastNonzero = seriesLen - 1;
+    for (i = 0; i < seriesLen; i++) {
+      if (size[i]) {
+        firstNonzero = i;
+        break;
+      }
+    }
+    for (i = seriesLen - 1; i >= firstNonzero; i--) {
+      if (size[i]) {
+        lastNonzero = i;
+        break;
+      }
+    }
+    for (i = firstNonzero; i <= lastNonzero; i++) {
+      if ((0, import_fast_isnumeric45.default)(pos[i]) && (0, import_fast_isnumeric45.default)(size[i])) {
+        var cdi = {
+          p: pos[i],
+          s: size[i],
+          b: 0
+        };
+        if (!cumulativeSpec.enabled) {
+          cdi.pts = inputPoints[i];
+          if (uniqueValsPerBin) {
+            cdi.ph0 = cdi.ph1 = inputPoints[i].length ? pos0[inputPoints[i][0]] : pos[i];
+          } else {
+            trace._computePh = true;
+            cdi.ph0 = roundFn(binEdges[i]);
+            cdi.ph1 = roundFn(binEdges[i + 1], true);
+          }
+        }
+        cd.push(cdi);
+      }
+    }
+    if (cd.length === 1) {
+      cd[0].width1 = axes_default.tickIncrement(cd[0].p, binSpec.size, false, calendar) - cd[0].p;
+    }
+    if (hasColorscale8(trace, "marker")) {
+      calc(gd, trace, {
+        vals: trace.marker.color,
+        containerStr: "marker",
+        cLetter: "c"
+      });
+    }
+    if (hasColorscale8(trace, "marker.line")) {
+      calc(gd, trace, {
+        vals: trace.marker.line.color,
+        containerStr: "marker.line",
+        cLetter: "c"
+      });
+    }
+    arraysToCalcdata2(cd, trace);
+    if (lib_default.isArrayOrTypedArray(trace.selectedpoints)) {
+      lib_default.tagSelected(cd, trace, ptNumber2cdIndex);
+    }
+    return cd;
+  }
+  function calcAllAutoBins(gd, trace, pa, mainData, _overlayEdgeCase) {
+    var binAttr = mainData + "bins";
+    var fullLayout = gd._fullLayout;
+    var groupName = trace["_" + mainData + "bingroup"];
+    var binOpts = fullLayout._histogramBinOpts[groupName];
+    var isOverlay = fullLayout.barmode === "overlay";
+    var i, traces, tracei, calendar, pos0, autoVals, cumulativeSpec;
+    var r2c = function(v) {
+      return pa.r2c(v, 0, calendar);
+    };
+    var c2r = function(v) {
+      return pa.c2r(v, 0, calendar);
+    };
+    var cleanBound = pa.type === "date" ? function(v) {
+      return v || v === 0 ? lib_default.cleanDate(v, null, calendar) : null;
+    } : function(v) {
+      return (0, import_fast_isnumeric45.default)(v) ? Number(v) : null;
+    };
+    function setBound(attr2, bins, newBins) {
+      if (bins[attr2 + "Found"]) {
+        bins[attr2] = cleanBound(bins[attr2]);
+        if (bins[attr2] === null) bins[attr2] = newBins[attr2];
+      } else {
+        autoVals[attr2] = bins[attr2] = newBins[attr2];
+        lib_default.nestedProperty(traces[0], binAttr + "." + attr2).set(newBins[attr2]);
+      }
+    }
+    if (trace["_" + mainData + "autoBinFinished"]) {
+      delete trace["_" + mainData + "autoBinFinished"];
+    } else {
+      traces = binOpts.traces;
+      var allPos = [];
+      var isFirstVisible = true;
+      var has2dMap = false;
+      var hasHist2dContour = false;
+      for (i = 0; i < traces.length; i++) {
+        tracei = traces[i];
+        if (tracei.visible) {
+          var mainDatai = binOpts.dirs[i];
+          pos0 = tracei["_" + mainDatai + "pos0"] = pa.makeCalcdata(tracei, mainDatai);
+          allPos = lib_default.concat(allPos, pos0);
+          delete tracei["_" + mainData + "autoBinFinished"];
+          if (trace.visible === true) {
+            if (isFirstVisible) {
+              isFirstVisible = false;
+            } else {
+              delete tracei._autoBin;
+              tracei["_" + mainData + "autoBinFinished"] = 1;
+            }
+            if (registry_default.traceIs(tracei, "2dMap")) {
+              has2dMap = true;
+            }
+            if (tracei.type === "histogram2dcontour") {
+              hasHist2dContour = true;
+            }
+          }
+        }
+      }
+      calendar = traces[0][mainData + "calendar"];
+      var newBinSpec = axes_default.autoBin(allPos, pa, binOpts.nbins, has2dMap, calendar, binOpts.sizeFound && binOpts.size);
+      var autoBin = traces[0]._autoBin = {};
+      autoVals = autoBin[binOpts.dirs[0]] = {};
+      if (hasHist2dContour) {
+        if (!binOpts.size) {
+          newBinSpec.start = c2r(axes_default.tickIncrement(
+            r2c(newBinSpec.start),
+            newBinSpec.size,
+            true,
+            calendar
+          ));
+        }
+        if (binOpts.end === void 0) {
+          newBinSpec.end = c2r(axes_default.tickIncrement(
+            r2c(newBinSpec.end),
+            newBinSpec.size,
+            false,
+            calendar
+          ));
+        }
+      }
+      if (isOverlay && !registry_default.traceIs(trace, "2dMap") && newBinSpec._dataSpan === 0 && pa.type !== "category" && pa.type !== "multicategory" && trace.bingroup === "" && typeof trace.xbins === "undefined") {
+        if (_overlayEdgeCase) return [newBinSpec, pos0, true];
+        newBinSpec = handleSingleValueOverlays(gd, trace, pa, mainData, binAttr);
+      }
+      cumulativeSpec = tracei.cumulative || {};
+      if (cumulativeSpec.enabled && cumulativeSpec.currentbin !== "include") {
+        if (cumulativeSpec.direction === "decreasing") {
+          newBinSpec.start = c2r(axes_default.tickIncrement(
+            r2c(newBinSpec.start),
+            newBinSpec.size,
+            true,
+            calendar
+          ));
+        } else {
+          newBinSpec.end = c2r(axes_default.tickIncrement(
+            r2c(newBinSpec.end),
+            newBinSpec.size,
+            false,
+            calendar
+          ));
+        }
+      }
+      binOpts.size = newBinSpec.size;
+      if (!binOpts.sizeFound) {
+        autoVals.size = newBinSpec.size;
+        lib_default.nestedProperty(traces[0], binAttr + ".size").set(newBinSpec.size);
+      }
+      setBound("start", binOpts, newBinSpec);
+      setBound("end", binOpts, newBinSpec);
+    }
+    pos0 = trace["_" + mainData + "pos0"];
+    delete trace["_" + mainData + "pos0"];
+    var traceInputBins = trace._input[binAttr] || {};
+    var traceBinOptsCalc = lib_default.extendFlat({}, binOpts);
+    var mainStart = binOpts.start;
+    var startIn = pa.r2l(traceInputBins.start);
+    var hasStart = startIn !== void 0;
+    if ((binOpts.startFound || hasStart) && startIn !== pa.r2l(mainStart)) {
+      var traceStart = hasStart ? startIn : lib_default.aggNums(Math.min, null, pos0);
+      var dummyAx = {
+        type: pa.type === "category" || pa.type === "multicategory" ? "linear" : pa.type,
+        r2l: pa.r2l,
+        dtick: binOpts.size,
+        tick0: mainStart,
+        calendar,
+        range: [traceStart, axes_default.tickIncrement(traceStart, binOpts.size, false, calendar)].map(pa.l2r)
+      };
+      var newStart = axes_default.tickFirst(dummyAx);
+      if (newStart > pa.r2l(traceStart)) {
+        newStart = axes_default.tickIncrement(newStart, binOpts.size, true, calendar);
+      }
+      traceBinOptsCalc.start = pa.l2r(newStart);
+      if (!hasStart) lib_default.nestedProperty(trace, binAttr + ".start").set(traceBinOptsCalc.start);
+    }
+    var mainEnd = binOpts.end;
+    var endIn = pa.r2l(traceInputBins.end);
+    var hasEnd = endIn !== void 0;
+    if ((binOpts.endFound || hasEnd) && endIn !== pa.r2l(mainEnd)) {
+      var traceEnd = hasEnd ? endIn : lib_default.aggNums(Math.max, null, pos0);
+      traceBinOptsCalc.end = pa.l2r(traceEnd);
+      if (!hasEnd) lib_default.nestedProperty(trace, binAttr + ".start").set(traceBinOptsCalc.end);
+    }
+    var autoBinAttr = "autobin" + mainData;
+    if (trace._input[autoBinAttr] === false) {
+      trace._input[binAttr] = lib_default.extendFlat({}, trace[binAttr] || {});
+      delete trace._input[autoBinAttr];
+      delete trace[autoBinAttr];
+    }
+    return [traceBinOptsCalc, pos0];
+  }
+  function handleSingleValueOverlays(gd, trace, pa, mainData, binAttr) {
+    var fullLayout = gd._fullLayout;
+    var overlaidTraceGroup = getConnectedHistograms(gd, trace);
+    var pastThisTrace = false;
+    var minSize = Infinity;
+    var singleValuedTraces = [trace];
+    var i, tracei, binOpts;
+    for (i = 0; i < overlaidTraceGroup.length; i++) {
+      tracei = overlaidTraceGroup[i];
+      if (tracei === trace) {
+        pastThisTrace = true;
+      } else if (!pastThisTrace) {
+        binOpts = fullLayout._histogramBinOpts[tracei["_" + mainData + "bingroup"]];
+        minSize = Math.min(minSize, binOpts.size || tracei[binAttr].size);
+      } else {
+        var resulti = calcAllAutoBins(gd, tracei, pa, mainData, true);
+        var binSpeci = resulti[0];
+        var isSingleValued = resulti[2];
+        tracei["_" + mainData + "autoBinFinished"] = 1;
+        tracei["_" + mainData + "pos0"] = resulti[1];
+        if (isSingleValued) {
+          singleValuedTraces.push(tracei);
+        } else {
+          minSize = Math.min(minSize, binSpeci.size);
+        }
+      }
+    }
+    var dataVals = new Array(singleValuedTraces.length);
+    for (i = 0; i < singleValuedTraces.length; i++) {
+      var pos0 = singleValuedTraces[i]["_" + mainData + "pos0"];
+      for (var j = 0; j < pos0.length; j++) {
+        if (pos0[j] !== void 0) {
+          dataVals[i] = pos0[j];
+          break;
+        }
+      }
+    }
+    if (!isFinite(minSize)) {
+      minSize = lib_default.distinctVals(dataVals).minDiff;
+    }
+    for (i = 0; i < singleValuedTraces.length; i++) {
+      tracei = singleValuedTraces[i];
+      var calendar = tracei[mainData + "calendar"];
+      var newBins = {
+        start: pa.c2r(dataVals[i] - minSize / 2, 0, calendar),
+        end: pa.c2r(dataVals[i] + minSize / 2, 0, calendar),
+        size: minSize
+      };
+      tracei._input[binAttr] = tracei[binAttr] = newBins;
+      binOpts = fullLayout._histogramBinOpts[tracei["_" + mainData + "bingroup"]];
+      if (binOpts) lib_default.extendFlat(binOpts, newBins);
+    }
+    return trace[binAttr];
+  }
+  function getConnectedHistograms(gd, trace) {
+    var xid = trace.xaxis;
+    var yid = trace.yaxis;
+    var orientation = trace.orientation;
+    var out = [];
+    var fullData = gd._fullData;
+    for (var i = 0; i < fullData.length; i++) {
+      var tracei = fullData[i];
+      if (tracei.type === "histogram" && tracei.visible === true && tracei.orientation === orientation && tracei.xaxis === xid && tracei.yaxis === yid) {
+        out.push(tracei);
+      }
+    }
+    return out;
+  }
+  function cdf(size, direction, currentBin) {
+    var i, vi, prevSum;
+    function firstHalfPoint(i2) {
+      prevSum = size[i2];
+      size[i2] /= 2;
+    }
+    function nextHalfPoint(i2) {
+      vi = size[i2];
+      size[i2] = prevSum + vi / 2;
+      prevSum += vi;
+    }
+    if (currentBin === "half") {
+      if (direction === "increasing") {
+        firstHalfPoint(0);
+        for (i = 1; i < size.length; i++) {
+          nextHalfPoint(i);
+        }
+      } else {
+        firstHalfPoint(size.length - 1);
+        for (i = size.length - 2; i >= 0; i--) {
+          nextHalfPoint(i);
+        }
+      }
+    } else if (direction === "increasing") {
+      for (i = 1; i < size.length; i++) {
+        size[i] += size[i - 1];
+      }
+      if (currentBin === "exclude") {
+        size.unshift(0);
+        size.pop();
+      }
+    } else {
+      for (i = size.length - 2; i >= 0; i--) {
+        size[i] += size[i + 1];
+      }
+      if (currentBin === "exclude") {
+        size.push(0);
+        size.shift();
+      }
+    }
+  }
+  var calc_default6 = {
+    calc: calc10,
+    calcAllAutoBins
+  };
+
+  // src/traces/histogram/hover.js
+  var { hoverPoints: barHover } = hover_default2;
+  var { hoverLabelText: hoverLabelText2 } = axes_default;
+  function hoverPoints5(pointData, xval, yval, hovermode, opts) {
+    var pts = barHover(pointData, xval, yval, hovermode, opts);
+    if (!pts) return;
+    pointData = pts[0];
+    var di = pointData.cd[pointData.index];
+    var trace = pointData.cd[0].trace;
+    if (!trace.cumulative.enabled) {
+      var posLetter = trace.orientation === "h" ? "y" : "x";
+      pointData[posLetter + "Label"] = hoverLabelText2(pointData[posLetter + "a"], [di.ph0, di.ph1], trace[posLetter + "hoverformat"]);
+    }
+    return pts;
+  }
+
+  // src/traces/histogram/event_data.js
+  function eventData4(out, pt, trace, cd, pointNumber) {
+    out.x = "xVal" in pt ? pt.xVal : pt.x;
+    out.y = "yVal" in pt ? pt.yVal : pt.y;
+    if ("zLabelVal" in pt) out.z = pt.zLabelVal;
+    if (pt.xa) out.xaxis = pt.xa;
+    if (pt.ya) out.yaxis = pt.ya;
+    if (!(trace.cumulative || {}).enabled) {
+      var pts = Array.isArray(pointNumber) ? cd[0].pts[pointNumber[0]][pointNumber[1]] : cd[pointNumber].pts;
+      out.pointNumbers = pts;
+      out.binNumber = out.pointNumber;
+      delete out.pointNumber;
+      delete out.pointIndex;
+      var pointIndices;
+      if (trace._indexToPoints) {
+        pointIndices = [];
+        for (var i = 0; i < pts.length; i++) {
+          pointIndices = pointIndices.concat(trace._indexToPoints[pts[i]]);
+        }
+      } else {
+        pointIndices = pts;
+      }
+      out.pointIndices = pointIndices;
+    }
+    return out;
+  }
+
+  // src/traces/histogram/index.js
+  var { calc: _req53 } = calc_default6;
+  var { crossTraceCalc: _req63 } = cross_trace_calc_default;
+  var { plot: _req72 } = plot_default;
+  var { style: _req83, styleOnSelect: _req93 } = style_default2;
+  var histogram_default = {
+    attributes: attributes_default28,
+    layoutAttributes: layout_attributes_default6,
+    supplyDefaults: supplyDefaults8,
+    crossTraceDefaults: crossTraceDefaults5,
+    supplyLayoutDefaults: layout_defaults_default2,
+    calc: _req53,
+    crossTraceCalc: _req63,
+    plot: _req72,
+    layerName: "barlayer",
+    style: _req83,
+    styleOnSelect: _req93,
+    colorbar: marker_colorbar_default,
+    hoverPoints: hoverPoints5,
+    selectPoints: selectPoints2,
+    eventData: eventData4,
+    moduleType: "trace",
+    name: "histogram",
+    basePlotModule: cartesian_default,
+    categories: ["bar-like", "cartesian", "svg", "bar", "histogram", "oriented", "errorBarsOK", "showLegend"],
+    meta: {}
+  };
+
+  // src/traces/indicator/base_plot.js
+  var name7 = "indicator";
+  var plot10 = function(gd, traces, transitionOpts, makeOnCompleteCallback) {
+    plots_default.plotBasePlot(name7, gd, traces, transitionOpts, makeOnCompleteCallback);
+  };
+  var clean5 = function(newFullData, newFullLayout, oldFullData, oldFullLayout) {
+    plots_default.cleanBasePlot(name7, newFullData, newFullLayout, oldFullData, oldFullLayout);
+  };
+  var base_plot_default2 = { name: name7, plot: plot10, clean: clean5 };
 
   // src/traces/indicator/attributes.js
   var { overrideAll: overrideAll9 } = edit_types_default;
@@ -62230,7 +64349,7 @@ var Plotly = (() => {
   var stepsAttrs2 = templatedArray("step", extendDeep({}, gaugeBarAttrs, {
     range: rangeAttr
   }));
-  var attributes_default27 = {
+  var attributes_default29 = {
     mode: {
       valType: "flaglist",
       editType: "calc",
@@ -62429,7 +64548,7 @@ var Plotly = (() => {
   };
 
   // src/traces/indicator/constants.js
-  var constants_default18 = {
+  var constants_default17 = {
     // Defaults for delta
     defaultNumberFontSize: 80,
     bulletNumberDomainSize: 0.25,
@@ -62444,7 +64563,7 @@ var Plotly = (() => {
   // src/traces/indicator/defaults.js
   function supplyDefaults9(traceIn, traceOut, defaultColor, layout) {
     function coerce3(attr2, dflt) {
-      return lib_default.coerce(traceIn, traceOut, attributes_default27, attr2, dflt);
+      return lib_default.coerce(traceIn, traceOut, attributes_default29, attr2, dflt);
     }
     defaults2(traceOut, layout, coerce3);
     coerce3("mode");
@@ -62461,7 +64580,7 @@ var Plotly = (() => {
       numberFontDflt.size = void 0;
       lib_default.coerceFont(coerce3, "number.font", numberFontDflt);
       if (traceOut.number.font.size === void 0) {
-        traceOut.number.font.size = constants_default18.defaultNumberFontSize;
+        traceOut.number.font.size = constants_default17.defaultNumberFontSize;
         auto[0] = true;
       }
       coerce3("number.prefix");
@@ -62474,7 +64593,7 @@ var Plotly = (() => {
       deltaFontDflt.size = void 0;
       lib_default.coerceFont(coerce3, "delta.font", deltaFontDflt);
       if (traceOut.delta.font.size === void 0) {
-        traceOut.delta.font.size = (traceOut._hasNumber ? 0.5 : 1) * (bignumberFontSize || constants_default18.defaultNumberFontSize);
+        traceOut.delta.font.size = (traceOut._hasNumber ? 0.5 : 1) * (bignumberFontSize || constants_default17.defaultNumberFontSize);
         auto[1] = true;
       }
       coerce3("delta.reference", traceOut.value);
@@ -62491,15 +64610,15 @@ var Plotly = (() => {
     }
     traceOut._scaleNumbers = (!traceOut._hasNumber || auto[0]) && (!traceOut._hasDelta || auto[1]) || false;
     var titleFontDflt = lib_default.extendFlat({}, layout.font);
-    titleFontDflt.size = 0.25 * (bignumberFontSize || deltaFontSize || constants_default18.defaultNumberFontSize);
+    titleFontDflt.size = 0.25 * (bignumberFontSize || deltaFontSize || constants_default17.defaultNumberFontSize);
     lib_default.coerceFont(coerce3, "title.font", titleFontDflt);
     coerce3("title.text");
     var gaugeIn, gaugeOut, axisIn, axisOut;
     function coerceGauge(attr2, dflt) {
-      return lib_default.coerce(gaugeIn, gaugeOut, attributes_default27.gauge, attr2, dflt);
+      return lib_default.coerce(gaugeIn, gaugeOut, attributes_default29.gauge, attr2, dflt);
     }
     function coerceGaugeAxis(attr2, dflt) {
-      return lib_default.coerce(axisIn, axisOut, attributes_default27.gauge.axis, attr2, dflt);
+      return lib_default.coerce(axisIn, axisOut, attributes_default29.gauge.axis, attr2, dflt);
     }
     if (traceOut._hasGauge) {
       gaugeIn = traceIn.gauge;
@@ -62520,7 +64639,7 @@ var Plotly = (() => {
       coerceGauge("bar.color");
       coerceGauge("bar.line.color");
       coerceGauge("bar.line.width");
-      var defaultBarThickness = constants_default18.valueThickness * (traceOut.gauge.shape === "bullet" ? 0.5 : 1);
+      var defaultBarThickness = constants_default17.valueThickness * (traceOut.gauge.shape === "bullet" ? 0.5 : 1);
       coerceGauge("bar.thickness", defaultBarThickness);
       handleArrayContainerDefaults(gaugeIn, gaugeOut, {
         name: "steps",
@@ -62555,7 +64674,7 @@ var Plotly = (() => {
   }
   function stepDefaults2(stepIn, stepOut) {
     function coerce3(attr2, dflt) {
-      return lib_default.coerce(stepIn, stepOut, attributes_default27.gauge.steps, attr2, dflt);
+      return lib_default.coerce(stepIn, stepOut, attributes_default29.gauge.steps, attr2, dflt);
     }
     coerce3("color");
     coerce3("line.color");
@@ -62563,7 +64682,7 @@ var Plotly = (() => {
     coerce3("range");
     coerce3("thickness");
   }
-  var defaults_default6 = {
+  var defaults_default5 = {
     supplyDefaults: supplyDefaults9
   };
 
@@ -62585,1131 +64704,1991 @@ var Plotly = (() => {
     };
     return cd;
   }
-  var calc_default5 = {
+  var calc_default7 = {
     calc: calc11
   };
 
   // src/traces/indicator/plot.js
-  var import_d350 = __toESM(require_d3(), 1);
+  var import_d349 = __toESM(require_d3(), 1);
+
+  // node_modules/.pnpm/d3-color@3.1.0/node_modules/d3-color/src/define.js
+  function define_default(constructor, factory, prototype) {
+    constructor.prototype = factory.prototype = prototype;
+    prototype.constructor = constructor;
+  }
+  function extend(parent, definition) {
+    var prototype = Object.create(parent.prototype);
+    for (var key in definition) prototype[key] = definition[key];
+    return prototype;
+  }
+
+  // node_modules/.pnpm/d3-color@3.1.0/node_modules/d3-color/src/color.js
+  function Color() {
+  }
+  var darker = 0.7;
+  var brighter = 1 / darker;
+  var reI = "\\s*([+-]?\\d+)\\s*";
+  var reN = "\\s*([+-]?(?:\\d*\\.)?\\d+(?:[eE][+-]?\\d+)?)\\s*";
+  var reP = "\\s*([+-]?(?:\\d*\\.)?\\d+(?:[eE][+-]?\\d+)?)%\\s*";
+  var reHex = /^#([0-9a-f]{3,8})$/;
+  var reRgbInteger = new RegExp(`^rgb\\(${reI},${reI},${reI}\\)$`);
+  var reRgbPercent = new RegExp(`^rgb\\(${reP},${reP},${reP}\\)$`);
+  var reRgbaInteger = new RegExp(`^rgba\\(${reI},${reI},${reI},${reN}\\)$`);
+  var reRgbaPercent = new RegExp(`^rgba\\(${reP},${reP},${reP},${reN}\\)$`);
+  var reHslPercent = new RegExp(`^hsl\\(${reN},${reP},${reP}\\)$`);
+  var reHslaPercent = new RegExp(`^hsla\\(${reN},${reP},${reP},${reN}\\)$`);
+  var named = {
+    aliceblue: 15792383,
+    antiquewhite: 16444375,
+    aqua: 65535,
+    aquamarine: 8388564,
+    azure: 15794175,
+    beige: 16119260,
+    bisque: 16770244,
+    black: 0,
+    blanchedalmond: 16772045,
+    blue: 255,
+    blueviolet: 9055202,
+    brown: 10824234,
+    burlywood: 14596231,
+    cadetblue: 6266528,
+    chartreuse: 8388352,
+    chocolate: 13789470,
+    coral: 16744272,
+    cornflowerblue: 6591981,
+    cornsilk: 16775388,
+    crimson: 14423100,
+    cyan: 65535,
+    darkblue: 139,
+    darkcyan: 35723,
+    darkgoldenrod: 12092939,
+    darkgray: 11119017,
+    darkgreen: 25600,
+    darkgrey: 11119017,
+    darkkhaki: 12433259,
+    darkmagenta: 9109643,
+    darkolivegreen: 5597999,
+    darkorange: 16747520,
+    darkorchid: 10040012,
+    darkred: 9109504,
+    darksalmon: 15308410,
+    darkseagreen: 9419919,
+    darkslateblue: 4734347,
+    darkslategray: 3100495,
+    darkslategrey: 3100495,
+    darkturquoise: 52945,
+    darkviolet: 9699539,
+    deeppink: 16716947,
+    deepskyblue: 49151,
+    dimgray: 6908265,
+    dimgrey: 6908265,
+    dodgerblue: 2003199,
+    firebrick: 11674146,
+    floralwhite: 16775920,
+    forestgreen: 2263842,
+    fuchsia: 16711935,
+    gainsboro: 14474460,
+    ghostwhite: 16316671,
+    gold: 16766720,
+    goldenrod: 14329120,
+    gray: 8421504,
+    green: 32768,
+    greenyellow: 11403055,
+    grey: 8421504,
+    honeydew: 15794160,
+    hotpink: 16738740,
+    indianred: 13458524,
+    indigo: 4915330,
+    ivory: 16777200,
+    khaki: 15787660,
+    lavender: 15132410,
+    lavenderblush: 16773365,
+    lawngreen: 8190976,
+    lemonchiffon: 16775885,
+    lightblue: 11393254,
+    lightcoral: 15761536,
+    lightcyan: 14745599,
+    lightgoldenrodyellow: 16448210,
+    lightgray: 13882323,
+    lightgreen: 9498256,
+    lightgrey: 13882323,
+    lightpink: 16758465,
+    lightsalmon: 16752762,
+    lightseagreen: 2142890,
+    lightskyblue: 8900346,
+    lightslategray: 7833753,
+    lightslategrey: 7833753,
+    lightsteelblue: 11584734,
+    lightyellow: 16777184,
+    lime: 65280,
+    limegreen: 3329330,
+    linen: 16445670,
+    magenta: 16711935,
+    maroon: 8388608,
+    mediumaquamarine: 6737322,
+    mediumblue: 205,
+    mediumorchid: 12211667,
+    mediumpurple: 9662683,
+    mediumseagreen: 3978097,
+    mediumslateblue: 8087790,
+    mediumspringgreen: 64154,
+    mediumturquoise: 4772300,
+    mediumvioletred: 13047173,
+    midnightblue: 1644912,
+    mintcream: 16121850,
+    mistyrose: 16770273,
+    moccasin: 16770229,
+    navajowhite: 16768685,
+    navy: 128,
+    oldlace: 16643558,
+    olive: 8421376,
+    olivedrab: 7048739,
+    orange: 16753920,
+    orangered: 16729344,
+    orchid: 14315734,
+    palegoldenrod: 15657130,
+    palegreen: 10025880,
+    paleturquoise: 11529966,
+    palevioletred: 14381203,
+    papayawhip: 16773077,
+    peachpuff: 16767673,
+    peru: 13468991,
+    pink: 16761035,
+    plum: 14524637,
+    powderblue: 11591910,
+    purple: 8388736,
+    rebeccapurple: 6697881,
+    red: 16711680,
+    rosybrown: 12357519,
+    royalblue: 4286945,
+    saddlebrown: 9127187,
+    salmon: 16416882,
+    sandybrown: 16032864,
+    seagreen: 3050327,
+    seashell: 16774638,
+    sienna: 10506797,
+    silver: 12632256,
+    skyblue: 8900331,
+    slateblue: 6970061,
+    slategray: 7372944,
+    slategrey: 7372944,
+    snow: 16775930,
+    springgreen: 65407,
+    steelblue: 4620980,
+    tan: 13808780,
+    teal: 32896,
+    thistle: 14204888,
+    tomato: 16737095,
+    turquoise: 4251856,
+    violet: 15631086,
+    wheat: 16113331,
+    white: 16777215,
+    whitesmoke: 16119285,
+    yellow: 16776960,
+    yellowgreen: 10145074
+  };
+  define_default(Color, color2, {
+    copy(channels) {
+      return Object.assign(new this.constructor(), this, channels);
+    },
+    displayable() {
+      return this.rgb().displayable();
+    },
+    hex: color_formatHex,
+    // Deprecated! Use color.formatHex.
+    formatHex: color_formatHex,
+    formatHex8: color_formatHex8,
+    formatHsl: color_formatHsl,
+    formatRgb: color_formatRgb,
+    toString: color_formatRgb
+  });
+  function color_formatHex() {
+    return this.rgb().formatHex();
+  }
+  function color_formatHex8() {
+    return this.rgb().formatHex8();
+  }
+  function color_formatHsl() {
+    return hslConvert(this).formatHsl();
+  }
+  function color_formatRgb() {
+    return this.rgb().formatRgb();
+  }
+  function color2(format5) {
+    var m, l;
+    format5 = (format5 + "").trim().toLowerCase();
+    return (m = reHex.exec(format5)) ? (l = m[1].length, m = parseInt(m[1], 16), l === 6 ? rgbn(m) : l === 3 ? new Rgb(m >> 8 & 15 | m >> 4 & 240, m >> 4 & 15 | m & 240, (m & 15) << 4 | m & 15, 1) : l === 8 ? rgba(m >> 24 & 255, m >> 16 & 255, m >> 8 & 255, (m & 255) / 255) : l === 4 ? rgba(m >> 12 & 15 | m >> 8 & 240, m >> 8 & 15 | m >> 4 & 240, m >> 4 & 15 | m & 240, ((m & 15) << 4 | m & 15) / 255) : null) : (m = reRgbInteger.exec(format5)) ? new Rgb(m[1], m[2], m[3], 1) : (m = reRgbPercent.exec(format5)) ? new Rgb(m[1] * 255 / 100, m[2] * 255 / 100, m[3] * 255 / 100, 1) : (m = reRgbaInteger.exec(format5)) ? rgba(m[1], m[2], m[3], m[4]) : (m = reRgbaPercent.exec(format5)) ? rgba(m[1] * 255 / 100, m[2] * 255 / 100, m[3] * 255 / 100, m[4]) : (m = reHslPercent.exec(format5)) ? hsla(m[1], m[2] / 100, m[3] / 100, 1) : (m = reHslaPercent.exec(format5)) ? hsla(m[1], m[2] / 100, m[3] / 100, m[4]) : named.hasOwnProperty(format5) ? rgbn(named[format5]) : format5 === "transparent" ? new Rgb(NaN, NaN, NaN, 0) : null;
+  }
+  function rgbn(n) {
+    return new Rgb(n >> 16 & 255, n >> 8 & 255, n & 255, 1);
+  }
+  function rgba(r, g, b, a) {
+    if (a <= 0) r = g = b = NaN;
+    return new Rgb(r, g, b, a);
+  }
+  function rgbConvert(o) {
+    if (!(o instanceof Color)) o = color2(o);
+    if (!o) return new Rgb();
+    o = o.rgb();
+    return new Rgb(o.r, o.g, o.b, o.opacity);
+  }
+  function rgb(r, g, b, opacity3) {
+    return arguments.length === 1 ? rgbConvert(r) : new Rgb(r, g, b, opacity3 == null ? 1 : opacity3);
+  }
+  function Rgb(r, g, b, opacity3) {
+    this.r = +r;
+    this.g = +g;
+    this.b = +b;
+    this.opacity = +opacity3;
+  }
+  define_default(Rgb, rgb, extend(Color, {
+    brighter(k) {
+      k = k == null ? brighter : Math.pow(brighter, k);
+      return new Rgb(this.r * k, this.g * k, this.b * k, this.opacity);
+    },
+    darker(k) {
+      k = k == null ? darker : Math.pow(darker, k);
+      return new Rgb(this.r * k, this.g * k, this.b * k, this.opacity);
+    },
+    rgb() {
+      return this;
+    },
+    clamp() {
+      return new Rgb(clampi(this.r), clampi(this.g), clampi(this.b), clampa(this.opacity));
+    },
+    displayable() {
+      return -0.5 <= this.r && this.r < 255.5 && (-0.5 <= this.g && this.g < 255.5) && (-0.5 <= this.b && this.b < 255.5) && (0 <= this.opacity && this.opacity <= 1);
+    },
+    hex: rgb_formatHex,
+    // Deprecated! Use color.formatHex.
+    formatHex: rgb_formatHex,
+    formatHex8: rgb_formatHex8,
+    formatRgb: rgb_formatRgb,
+    toString: rgb_formatRgb
+  }));
+  function rgb_formatHex() {
+    return `#${hex(this.r)}${hex(this.g)}${hex(this.b)}`;
+  }
+  function rgb_formatHex8() {
+    return `#${hex(this.r)}${hex(this.g)}${hex(this.b)}${hex((isNaN(this.opacity) ? 1 : this.opacity) * 255)}`;
+  }
+  function rgb_formatRgb() {
+    const a = clampa(this.opacity);
+    return `${a === 1 ? "rgb(" : "rgba("}${clampi(this.r)}, ${clampi(this.g)}, ${clampi(this.b)}${a === 1 ? ")" : `, ${a})`}`;
+  }
+  function clampa(opacity3) {
+    return isNaN(opacity3) ? 1 : Math.max(0, Math.min(1, opacity3));
+  }
+  function clampi(value) {
+    return Math.max(0, Math.min(255, Math.round(value) || 0));
+  }
+  function hex(value) {
+    value = clampi(value);
+    return (value < 16 ? "0" : "") + value.toString(16);
+  }
+  function hsla(h, s, l, a) {
+    if (a <= 0) h = s = l = NaN;
+    else if (l <= 0 || l >= 1) h = s = NaN;
+    else if (s <= 0) h = NaN;
+    return new Hsl(h, s, l, a);
+  }
+  function hslConvert(o) {
+    if (o instanceof Hsl) return new Hsl(o.h, o.s, o.l, o.opacity);
+    if (!(o instanceof Color)) o = color2(o);
+    if (!o) return new Hsl();
+    if (o instanceof Hsl) return o;
+    o = o.rgb();
+    var r = o.r / 255, g = o.g / 255, b = o.b / 255, min = Math.min(r, g, b), max = Math.max(r, g, b), h = NaN, s = max - min, l = (max + min) / 2;
+    if (s) {
+      if (r === max) h = (g - b) / s + (g < b) * 6;
+      else if (g === max) h = (b - r) / s + 2;
+      else h = (r - g) / s + 4;
+      s /= l < 0.5 ? max + min : 2 - max - min;
+      h *= 60;
+    } else {
+      s = l > 0 && l < 1 ? 0 : h;
+    }
+    return new Hsl(h, s, l, o.opacity);
+  }
+  function hsl(h, s, l, opacity3) {
+    return arguments.length === 1 ? hslConvert(h) : new Hsl(h, s, l, opacity3 == null ? 1 : opacity3);
+  }
+  function Hsl(h, s, l, opacity3) {
+    this.h = +h;
+    this.s = +s;
+    this.l = +l;
+    this.opacity = +opacity3;
+  }
+  define_default(Hsl, hsl, extend(Color, {
+    brighter(k) {
+      k = k == null ? brighter : Math.pow(brighter, k);
+      return new Hsl(this.h, this.s, this.l * k, this.opacity);
+    },
+    darker(k) {
+      k = k == null ? darker : Math.pow(darker, k);
+      return new Hsl(this.h, this.s, this.l * k, this.opacity);
+    },
+    rgb() {
+      var h = this.h % 360 + (this.h < 0) * 360, s = isNaN(h) || isNaN(this.s) ? 0 : this.s, l = this.l, m2 = l + (l < 0.5 ? l : 1 - l) * s, m1 = 2 * l - m2;
+      return new Rgb(
+        hsl2rgb(h >= 240 ? h - 240 : h + 120, m1, m2),
+        hsl2rgb(h, m1, m2),
+        hsl2rgb(h < 120 ? h + 240 : h - 120, m1, m2),
+        this.opacity
+      );
+    },
+    clamp() {
+      return new Hsl(clamph(this.h), clampt(this.s), clampt(this.l), clampa(this.opacity));
+    },
+    displayable() {
+      return (0 <= this.s && this.s <= 1 || isNaN(this.s)) && (0 <= this.l && this.l <= 1) && (0 <= this.opacity && this.opacity <= 1);
+    },
+    formatHsl() {
+      const a = clampa(this.opacity);
+      return `${a === 1 ? "hsl(" : "hsla("}${clamph(this.h)}, ${clampt(this.s) * 100}%, ${clampt(this.l) * 100}%${a === 1 ? ")" : `, ${a})`}`;
+    }
+  }));
+  function clamph(value) {
+    value = (value || 0) % 360;
+    return value < 0 ? value + 360 : value;
+  }
+  function clampt(value) {
+    return Math.max(0, Math.min(1, value || 0));
+  }
+  function hsl2rgb(h, m1, m2) {
+    return (h < 60 ? m1 + (m2 - m1) * h / 60 : h < 180 ? m2 : h < 240 ? m1 + (m2 - m1) * (240 - h) / 60 : m1) * 255;
+  }
+
+  // node_modules/.pnpm/d3-interpolate@3.0.1/node_modules/d3-interpolate/src/basis.js
+  function basis(t12, v0, v1, v2, v3) {
+    var t2 = t12 * t12, t3 = t2 * t12;
+    return ((1 - 3 * t12 + 3 * t2 - t3) * v0 + (4 - 6 * t2 + 3 * t3) * v1 + (1 + 3 * t12 + 3 * t2 - 3 * t3) * v2 + t3 * v3) / 6;
+  }
+  function basis_default(values) {
+    var n = values.length - 1;
+    return function(t) {
+      var i = t <= 0 ? t = 0 : t >= 1 ? (t = 1, n - 1) : Math.floor(t * n), v1 = values[i], v2 = values[i + 1], v0 = i > 0 ? values[i - 1] : 2 * v1 - v2, v3 = i < n - 1 ? values[i + 2] : 2 * v2 - v1;
+      return basis((t - i / n) * n, v0, v1, v2, v3);
+    };
+  }
+
+  // node_modules/.pnpm/d3-interpolate@3.0.1/node_modules/d3-interpolate/src/basisClosed.js
+  function basisClosed_default(values) {
+    var n = values.length;
+    return function(t) {
+      var i = Math.floor(((t %= 1) < 0 ? ++t : t) * n), v0 = values[(i + n - 1) % n], v1 = values[i % n], v2 = values[(i + 1) % n], v3 = values[(i + 2) % n];
+      return basis((t - i / n) * n, v0, v1, v2, v3);
+    };
+  }
+
+  // node_modules/.pnpm/d3-interpolate@3.0.1/node_modules/d3-interpolate/src/constant.js
+  var constant_default = (x) => () => x;
+
+  // node_modules/.pnpm/d3-interpolate@3.0.1/node_modules/d3-interpolate/src/color.js
+  function linear(a, d) {
+    return function(t) {
+      return a + t * d;
+    };
+  }
+  function exponential(a, b, y) {
+    return a = Math.pow(a, y), b = Math.pow(b, y) - a, y = 1 / y, function(t) {
+      return Math.pow(a + t * b, y);
+    };
+  }
+  function gamma(y) {
+    return (y = +y) === 1 ? nogamma : function(a, b) {
+      return b - a ? exponential(a, b, y) : constant_default(isNaN(a) ? b : a);
+    };
+  }
+  function nogamma(a, b) {
+    var d = b - a;
+    return d ? linear(a, d) : constant_default(isNaN(a) ? b : a);
+  }
+
+  // node_modules/.pnpm/d3-interpolate@3.0.1/node_modules/d3-interpolate/src/rgb.js
+  var rgb_default = (function rgbGamma(y) {
+    var color3 = gamma(y);
+    function rgb2(start, end) {
+      var r = color3((start = rgb(start)).r, (end = rgb(end)).r), g = color3(start.g, end.g), b = color3(start.b, end.b), opacity3 = nogamma(start.opacity, end.opacity);
+      return function(t) {
+        start.r = r(t);
+        start.g = g(t);
+        start.b = b(t);
+        start.opacity = opacity3(t);
+        return start + "";
+      };
+    }
+    rgb2.gamma = rgbGamma;
+    return rgb2;
+  })(1);
+  function rgbSpline(spline) {
+    return function(colors) {
+      var n = colors.length, r = new Array(n), g = new Array(n), b = new Array(n), i, color3;
+      for (i = 0; i < n; ++i) {
+        color3 = rgb(colors[i]);
+        r[i] = color3.r || 0;
+        g[i] = color3.g || 0;
+        b[i] = color3.b || 0;
+      }
+      r = spline(r);
+      g = spline(g);
+      b = spline(b);
+      color3.opacity = 1;
+      return function(t) {
+        color3.r = r(t);
+        color3.g = g(t);
+        color3.b = b(t);
+        return color3 + "";
+      };
+    };
+  }
+  var rgbBasis = rgbSpline(basis_default);
+  var rgbBasisClosed = rgbSpline(basisClosed_default);
+
+  // node_modules/.pnpm/d3-interpolate@3.0.1/node_modules/d3-interpolate/src/numberArray.js
+  function numberArray_default(a, b) {
+    if (!b) b = [];
+    var n = a ? Math.min(b.length, a.length) : 0, c = b.slice(), i;
+    return function(t) {
+      for (i = 0; i < n; ++i) c[i] = a[i] * (1 - t) + b[i] * t;
+      return c;
+    };
+  }
+  function isNumberArray(x) {
+    return ArrayBuffer.isView(x) && !(x instanceof DataView);
+  }
+
+  // node_modules/.pnpm/d3-interpolate@3.0.1/node_modules/d3-interpolate/src/array.js
+  function genericArray(a, b) {
+    var nb = b ? b.length : 0, na = a ? Math.min(nb, a.length) : 0, x = new Array(na), c = new Array(nb), i;
+    for (i = 0; i < na; ++i) x[i] = value_default(a[i], b[i]);
+    for (; i < nb; ++i) c[i] = b[i];
+    return function(t) {
+      for (i = 0; i < na; ++i) c[i] = x[i](t);
+      return c;
+    };
+  }
+
+  // node_modules/.pnpm/d3-interpolate@3.0.1/node_modules/d3-interpolate/src/date.js
+  function date_default(a, b) {
+    var d = /* @__PURE__ */ new Date();
+    return a = +a, b = +b, function(t) {
+      return d.setTime(a * (1 - t) + b * t), d;
+    };
+  }
+
+  // node_modules/.pnpm/d3-interpolate@3.0.1/node_modules/d3-interpolate/src/number.js
+  function number_default(a, b) {
+    return a = +a, b = +b, function(t) {
+      return a * (1 - t) + b * t;
+    };
+  }
+
+  // node_modules/.pnpm/d3-interpolate@3.0.1/node_modules/d3-interpolate/src/object.js
+  function object_default(a, b) {
+    var i = {}, c = {}, k;
+    if (a === null || typeof a !== "object") a = {};
+    if (b === null || typeof b !== "object") b = {};
+    for (k in b) {
+      if (k in a) {
+        i[k] = value_default(a[k], b[k]);
+      } else {
+        c[k] = b[k];
+      }
+    }
+    return function(t) {
+      for (k in i) c[k] = i[k](t);
+      return c;
+    };
+  }
+
+  // node_modules/.pnpm/d3-interpolate@3.0.1/node_modules/d3-interpolate/src/string.js
+  var reA = /[-+]?(?:\d+\.?\d*|\.?\d+)(?:[eE][-+]?\d+)?/g;
+  var reB = new RegExp(reA.source, "g");
+  function zero(b) {
+    return function() {
+      return b;
+    };
+  }
+  function one(b) {
+    return function(t) {
+      return b(t) + "";
+    };
+  }
+  function string_default(a, b) {
+    var bi = reA.lastIndex = reB.lastIndex = 0, am, bm, bs, i = -1, s = [], q = [];
+    a = a + "", b = b + "";
+    while ((am = reA.exec(a)) && (bm = reB.exec(b))) {
+      if ((bs = bm.index) > bi) {
+        bs = b.slice(bi, bs);
+        if (s[i]) s[i] += bs;
+        else s[++i] = bs;
+      }
+      if ((am = am[0]) === (bm = bm[0])) {
+        if (s[i]) s[i] += bm;
+        else s[++i] = bm;
+      } else {
+        s[++i] = null;
+        q.push({ i, x: number_default(am, bm) });
+      }
+      bi = reB.lastIndex;
+    }
+    if (bi < b.length) {
+      bs = b.slice(bi);
+      if (s[i]) s[i] += bs;
+      else s[++i] = bs;
+    }
+    return s.length < 2 ? q[0] ? one(q[0].x) : zero(b) : (b = q.length, function(t) {
+      for (var i2 = 0, o; i2 < b; ++i2) s[(o = q[i2]).i] = o.x(t);
+      return s.join("");
+    });
+  }
+
+  // node_modules/.pnpm/d3-interpolate@3.0.1/node_modules/d3-interpolate/src/value.js
+  function value_default(a, b) {
+    var t = typeof b, c;
+    return b == null || t === "boolean" ? constant_default(b) : (t === "number" ? number_default : t === "string" ? (c = color2(b)) ? (b = c, rgb_default) : string_default : b instanceof color2 ? rgb_default : b instanceof Date ? date_default : isNumberArray(b) ? numberArray_default : Array.isArray(b) ? genericArray : typeof b.valueOf !== "function" && typeof b.toString !== "function" || isNaN(b) ? object_default : number_default)(a, b);
+  }
+
+  // src/traces/indicator/plot.js
   var { MID_SHIFT: MID_SHIFT2 } = alignment_default;
   var strScale4 = lib_default.strScale;
   var strTranslate18 = lib_default.strTranslate;
   var rad2deg2 = lib_default.rad2deg;
+  var anchor = {
+    left: "start",
+    center: "middle",
+    right: "end"
+  };
+  var position = {
+    left: 0,
+    center: 0.5,
+    right: 1
+  };
+  var SI_PREFIX = /[yzafpnµmkMGTPEZY]/;
+  function hasTransition2(transitionOpts) {
+    return transitionOpts && transitionOpts.duration > 0;
+  }
+  function plot11(gd, cdModule, transitionOpts, makeOnCompleteCallback) {
+    var fullLayout = gd._fullLayout;
+    var onComplete;
+    if (hasTransition2(transitionOpts)) {
+      if (makeOnCompleteCallback) {
+        onComplete = makeOnCompleteCallback();
+      }
+    }
+    lib_default.makeTraceGroups(fullLayout._indicatorlayer, cdModule, "trace").each(function(cd) {
+      var cd0 = cd[0];
+      var trace = cd0.trace;
+      var plotGroup = import_d349.default.select(this);
+      var hasGauge = trace._hasGauge;
+      var isAngular2 = trace._isAngular;
+      var isBullet = trace._isBullet;
+      var domain = trace.domain;
+      var size = {
+        w: fullLayout._size.w * (domain.x[1] - domain.x[0]),
+        h: fullLayout._size.h * (domain.y[1] - domain.y[0]),
+        l: fullLayout._size.l + fullLayout._size.w * domain.x[0],
+        r: fullLayout._size.r + fullLayout._size.w * (1 - domain.x[1]),
+        t: fullLayout._size.t + fullLayout._size.h * (1 - domain.y[1]),
+        b: fullLayout._size.b + fullLayout._size.h * domain.y[0]
+      };
+      var centerX = size.l + size.w / 2;
+      var centerY = size.t + size.h / 2;
+      var radius = Math.min(size.w / 2, size.h);
+      var innerRadius = constants_default17.innerRadius * radius;
+      var numbersX, numbersY, numbersScaler;
+      var numbersAlign = trace.align || "center";
+      numbersY = centerY;
+      if (!hasGauge) {
+        numbersX = size.l + position[numbersAlign] * size.w;
+        numbersScaler = function(el) {
+          return fitTextInsideBox(el, size.w, size.h);
+        };
+      } else {
+        if (isAngular2) {
+          numbersX = centerX;
+          numbersY = centerY + radius / 2;
+          numbersScaler = function(el) {
+            return fitTextInsideCircle(el, 0.9 * innerRadius);
+          };
+        }
+        if (isBullet) {
+          var padding = constants_default17.bulletPadding;
+          var p = 1 - constants_default17.bulletNumberDomainSize + padding;
+          numbersX = size.l + (p + (1 - p) * position[numbersAlign]) * size.w;
+          numbersScaler = function(el) {
+            return fitTextInsideBox(el, (constants_default17.bulletNumberDomainSize - padding) * size.w, size.h);
+          };
+        }
+      }
+      drawNumbers(gd, plotGroup, cd, {
+        numbersX,
+        numbersY,
+        numbersScaler,
+        transitionOpts,
+        onComplete
+      });
+      var gaugeBg, gaugeOutline;
+      if (hasGauge) {
+        gaugeBg = {
+          range: trace.gauge.axis.range,
+          color: trace.gauge.bgcolor,
+          line: {
+            color: trace.gauge.bordercolor,
+            width: 0
+          },
+          thickness: 1
+        };
+        gaugeOutline = {
+          range: trace.gauge.axis.range,
+          color: "rgba(0, 0, 0, 0)",
+          line: {
+            color: trace.gauge.bordercolor,
+            width: trace.gauge.borderwidth
+          },
+          thickness: 1
+        };
+      }
+      var angularGauge = plotGroup.selectAll("g.angular").data(isAngular2 ? cd : []);
+      angularGauge.exit().remove();
+      var angularaxisLayer = plotGroup.selectAll("g.angularaxis").data(isAngular2 ? cd : []);
+      angularaxisLayer.exit().remove();
+      if (isAngular2) {
+        drawAngularGauge(gd, plotGroup, cd, {
+          radius,
+          innerRadius,
+          gauge: angularGauge,
+          layer: angularaxisLayer,
+          size,
+          gaugeBg,
+          gaugeOutline,
+          transitionOpts,
+          onComplete
+        });
+      }
+      var bulletGauge = plotGroup.selectAll("g.bullet").data(isBullet ? cd : []);
+      bulletGauge.exit().remove();
+      var bulletaxisLayer = plotGroup.selectAll("g.bulletaxis").data(isBullet ? cd : []);
+      bulletaxisLayer.exit().remove();
+      if (isBullet) {
+        drawBulletGauge(gd, plotGroup, cd, {
+          gauge: bulletGauge,
+          layer: bulletaxisLayer,
+          size,
+          gaugeBg,
+          gaugeOutline,
+          transitionOpts,
+          onComplete
+        });
+      }
+      var title = plotGroup.selectAll("text.title").data(cd);
+      title.exit().remove();
+      title.enter().append("text").classed("title", true);
+      title.attr("text-anchor", function() {
+        return isBullet ? anchor.right : anchor[trace.title.align];
+      }).text(trace.title.text).call(drawing_default.font, trace.title.font).call(svg_text_utils_default.convertToTspans, gd);
+      title.attr("transform", function() {
+        var titleX = size.l + size.w * position[trace.title.align];
+        var titleY;
+        var titlePadding = constants_default17.titlePadding;
+        var titlebBox = drawing_default.bBox(title.node());
+        if (hasGauge) {
+          if (isAngular2) {
+            if (trace.gauge.axis.visible) {
+              var bBox = drawing_default.bBox(angularaxisLayer.node());
+              titleY = bBox.top - titlePadding - titlebBox.bottom;
+            } else {
+              titleY = size.t + size.h / 2 - radius / 2 - titlebBox.bottom - titlePadding;
+            }
+          }
+          if (isBullet) {
+            titleY = numbersY - (titlebBox.top + titlebBox.bottom) / 2;
+            titleX = size.l - constants_default17.bulletPadding * size.w;
+          }
+        } else {
+          titleY = trace._numbersTop - titlePadding - titlebBox.bottom;
+        }
+        return strTranslate18(titleX, titleY);
+      });
+    });
+  }
+  function drawBulletGauge(gd, plotGroup, cd, opts) {
+    var trace = cd[0].trace;
+    var bullet = opts.gauge;
+    var axisLayer = opts.layer;
+    var gaugeBg = opts.gaugeBg;
+    var gaugeOutline = opts.gaugeOutline;
+    var size = opts.size;
+    var domain = trace.domain;
+    var transitionOpts = opts.transitionOpts;
+    var onComplete = opts.onComplete;
+    var ax, vals, transFn, tickSign, shift;
+    bullet.enter().append("g").classed("bullet", true);
+    bullet.attr("transform", strTranslate18(size.l, size.t));
+    axisLayer.enter().append("g").classed("bulletaxis", true).classed("crisp", true);
+    axisLayer.selectAll("g.xbulletaxistick,path,text").remove();
+    var bulletHeight = size.h;
+    var innerBulletHeight = trace.gauge.bar.thickness * bulletHeight;
+    var bulletLeft = domain.x[0];
+    var bulletRight = domain.x[0] + (domain.x[1] - domain.x[0]) * (trace._hasNumber || trace._hasDelta ? 1 - constants_default17.bulletNumberDomainSize : 1);
+    ax = mockAxis(gd, trace.gauge.axis);
+    ax._id = "xbulletaxis";
+    ax.domain = [bulletLeft, bulletRight];
+    ax.setScale();
+    vals = axes_default.calcTicks(ax);
+    transFn = axes_default.makeTransTickFn(ax);
+    tickSign = axes_default.getTickSigns(ax)[2];
+    shift = size.t + size.h;
+    if (ax.visible) {
+      axes_default.drawTicks(gd, ax, {
+        vals: ax.ticks === "inside" ? axes_default.clipEnds(ax, vals) : vals,
+        layer: axisLayer,
+        path: axes_default.makeTickPath(ax, shift, tickSign),
+        transFn
+      });
+      axes_default.drawLabels(gd, ax, {
+        vals,
+        layer: axisLayer,
+        transFn,
+        labelFns: axes_default.makeLabelFns(ax, shift)
+      });
+    }
+    function drawRect(s) {
+      s.attr("width", function(d) {
+        return Math.max(0, ax.c2p(d.range[1]) - ax.c2p(d.range[0]));
+      }).attr("x", function(d) {
+        return ax.c2p(d.range[0]);
+      }).attr("y", function(d) {
+        return 0.5 * (1 - d.thickness) * bulletHeight;
+      }).attr("height", function(d) {
+        return d.thickness * bulletHeight;
+      });
+    }
+    var boxes = [gaugeBg].concat(trace.gauge.steps);
+    var bgBullet = bullet.selectAll("g.bg-bullet").data(boxes);
+    bgBullet.enter().append("g").classed("bg-bullet", true).append("rect");
+    bgBullet.select("rect").call(drawRect).call(styleShape);
+    bgBullet.exit().remove();
+    var fgBullet = bullet.selectAll("g.value-bullet").data([trace.gauge.bar]);
+    fgBullet.enter().append("g").classed("value-bullet", true).append("rect");
+    fgBullet.select("rect").attr("height", innerBulletHeight).attr("y", (bulletHeight - innerBulletHeight) / 2).call(styleShape);
+    if (hasTransition2(transitionOpts)) {
+      fgBullet.select("rect").transition().duration(transitionOpts.duration).ease(transitionOpts.easing).each("end", function() {
+        onComplete && onComplete();
+      }).each("interrupt", function() {
+        onComplete && onComplete();
+      }).attr("width", Math.max(0, ax.c2p(Math.min(trace.gauge.axis.range[1], cd[0].y))));
+    } else {
+      fgBullet.select("rect").attr("width", typeof cd[0].y === "number" ? Math.max(0, ax.c2p(Math.min(trace.gauge.axis.range[1], cd[0].y))) : 0);
+    }
+    fgBullet.exit().remove();
+    var data = cd.filter(function() {
+      return trace.gauge.threshold.value || trace.gauge.threshold.value === 0;
+    });
+    var threshold = bullet.selectAll("g.threshold-bullet").data(data);
+    threshold.enter().append("g").classed("threshold-bullet", true).append("line");
+    threshold.select("line").attr("x1", ax.c2p(trace.gauge.threshold.value)).attr("x2", ax.c2p(trace.gauge.threshold.value)).attr("y1", (1 - trace.gauge.threshold.thickness) / 2 * bulletHeight).attr("y2", (1 - (1 - trace.gauge.threshold.thickness) / 2) * bulletHeight).call(color_default.stroke, trace.gauge.threshold.line.color).style("stroke-width", trace.gauge.threshold.line.width);
+    threshold.exit().remove();
+    var bulletOutline = bullet.selectAll("g.gauge-outline").data([gaugeOutline]);
+    bulletOutline.enter().append("g").classed("gauge-outline", true).append("rect");
+    bulletOutline.select("rect").call(drawRect).call(styleShape);
+    bulletOutline.exit().remove();
+  }
+  function drawAngularGauge(gd, plotGroup, cd, opts) {
+    var trace = cd[0].trace;
+    var size = opts.size;
+    var radius = opts.radius;
+    var innerRadius = opts.innerRadius;
+    var gaugeBg = opts.gaugeBg;
+    var gaugeOutline = opts.gaugeOutline;
+    var gaugePosition = [size.l + size.w / 2, size.t + size.h / 2 + radius / 2];
+    var gauge = opts.gauge;
+    var axisLayer = opts.layer;
+    var transitionOpts = opts.transitionOpts;
+    var onComplete = opts.onComplete;
+    var theta = Math.PI / 2;
+    function valueToAngle(v2) {
+      var min = trace.gauge.axis.range[0];
+      var max = trace.gauge.axis.range[1];
+      var angle = (v2 - min) / (max - min) * Math.PI - theta;
+      if (angle < -theta) return -theta;
+      if (angle > theta) return theta;
+      return angle;
+    }
+    function arcPathGenerator(size2) {
+      return import_d349.default.svg.arc().innerRadius((innerRadius + radius) / 2 - size2 / 2 * (radius - innerRadius)).outerRadius((innerRadius + radius) / 2 + size2 / 2 * (radius - innerRadius)).startAngle(-theta);
+    }
+    function drawArc(p) {
+      p.attr("d", function(d) {
+        return arcPathGenerator(d.thickness).startAngle(valueToAngle(d.range[0])).endAngle(valueToAngle(d.range[1]))();
+      });
+    }
+    var ax, vals, transFn, tickSign;
+    gauge.enter().append("g").classed("angular", true);
+    gauge.attr("transform", strTranslate18(gaugePosition[0], gaugePosition[1]));
+    axisLayer.enter().append("g").classed("angularaxis", true).classed("crisp", true);
+    axisLayer.selectAll("g.xangularaxistick,path,text").remove();
+    ax = mockAxis(gd, trace.gauge.axis);
+    ax.type = "linear";
+    ax.range = trace.gauge.axis.range;
+    ax._id = "xangularaxis";
+    ax.ticklabeloverflow = "allow";
+    ax.setScale();
+    var t2g = function(d) {
+      return (ax.range[0] - d.x) / (ax.range[1] - ax.range[0]) * Math.PI + Math.PI;
+    };
+    var labelFns = {};
+    var out = axes_default.makeLabelFns(ax, 0);
+    var labelStandoff = out.labelStandoff;
+    labelFns.xFn = function(d) {
+      var rad = t2g(d);
+      return Math.cos(rad) * labelStandoff;
+    };
+    labelFns.yFn = function(d) {
+      var rad = t2g(d);
+      var ff = Math.sin(rad) > 0 ? 0.2 : 1;
+      return -Math.sin(rad) * (labelStandoff + d.fontSize * ff) + Math.abs(Math.cos(rad)) * (d.fontSize * MID_SHIFT2);
+    };
+    labelFns.anchorFn = function(d) {
+      var rad = t2g(d);
+      var cos3 = Math.cos(rad);
+      return Math.abs(cos3) < 0.1 ? "middle" : cos3 > 0 ? "start" : "end";
+    };
+    labelFns.heightFn = function(d, a, h) {
+      var rad = t2g(d);
+      return -0.5 * (1 + Math.sin(rad)) * h;
+    };
+    var _transFn = function(rad) {
+      return strTranslate18(
+        gaugePosition[0] + radius * Math.cos(rad),
+        gaugePosition[1] - radius * Math.sin(rad)
+      );
+    };
+    transFn = function(d) {
+      return _transFn(t2g(d));
+    };
+    var transFn2 = function(d) {
+      var rad = t2g(d);
+      return _transFn(rad) + "rotate(" + -rad2deg2(rad) + ")";
+    };
+    vals = axes_default.calcTicks(ax);
+    tickSign = axes_default.getTickSigns(ax)[2];
+    if (ax.visible) {
+      tickSign = ax.ticks === "inside" ? -1 : 1;
+      var pad3 = (ax.linewidth || 1) / 2;
+      axes_default.drawTicks(gd, ax, {
+        vals,
+        layer: axisLayer,
+        path: "M" + tickSign * pad3 + ",0h" + tickSign * ax.ticklen,
+        transFn: transFn2
+      });
+      axes_default.drawLabels(gd, ax, {
+        vals,
+        layer: axisLayer,
+        transFn,
+        labelFns
+      });
+    }
+    var arcs = [gaugeBg].concat(trace.gauge.steps);
+    var bgArc = gauge.selectAll("g.bg-arc").data(arcs);
+    bgArc.enter().append("g").classed("bg-arc", true).append("path");
+    bgArc.select("path").call(drawArc).call(styleShape);
+    bgArc.exit().remove();
+    var valueArcPathGenerator = arcPathGenerator(trace.gauge.bar.thickness);
+    var valueArc = gauge.selectAll("g.value-arc").data([trace.gauge.bar]);
+    valueArc.enter().append("g").classed("value-arc", true).append("path");
+    var valueArcPath = valueArc.select("path");
+    if (hasTransition2(transitionOpts)) {
+      valueArcPath.transition().duration(transitionOpts.duration).ease(transitionOpts.easing).each("end", function() {
+        onComplete && onComplete();
+      }).each("interrupt", function() {
+        onComplete && onComplete();
+      }).attrTween("d", arcTween(valueArcPathGenerator, valueToAngle(cd[0].lastY), valueToAngle(cd[0].y)));
+      trace._lastValue = cd[0].y;
+    } else {
+      valueArcPath.attr("d", typeof cd[0].y === "number" ? valueArcPathGenerator.endAngle(valueToAngle(cd[0].y)) : "M0,0Z");
+    }
+    valueArcPath.call(styleShape);
+    valueArc.exit().remove();
+    arcs = [];
+    var v = trace.gauge.threshold.value;
+    if (v || v === 0) {
+      arcs.push({
+        range: [v, v],
+        color: trace.gauge.threshold.color,
+        line: {
+          color: trace.gauge.threshold.line.color,
+          width: trace.gauge.threshold.line.width
+        },
+        thickness: trace.gauge.threshold.thickness
+      });
+    }
+    var thresholdArc = gauge.selectAll("g.threshold-arc").data(arcs);
+    thresholdArc.enter().append("g").classed("threshold-arc", true).append("path");
+    thresholdArc.select("path").call(drawArc).call(styleShape);
+    thresholdArc.exit().remove();
+    var gaugeBorder = gauge.selectAll("g.gauge-outline").data([gaugeOutline]);
+    gaugeBorder.enter().append("g").classed("gauge-outline", true).append("path");
+    gaugeBorder.select("path").call(drawArc).call(styleShape);
+    gaugeBorder.exit().remove();
+  }
+  function drawNumbers(gd, plotGroup, cd, opts) {
+    var trace = cd[0].trace;
+    var numbersX = opts.numbersX;
+    var numbersY = opts.numbersY;
+    var numbersAlign = trace.align || "center";
+    var numbersAnchor = anchor[numbersAlign];
+    var transitionOpts = opts.transitionOpts;
+    var onComplete = opts.onComplete;
+    var numbers = lib_default.ensureSingle(plotGroup, "g", "numbers");
+    var bignumberbBox, deltabBox;
+    var numbersbBox;
+    var data = [];
+    if (trace._hasNumber) data.push("number");
+    if (trace._hasDelta) {
+      data.push("delta");
+      if (trace.delta.position === "left") data.reverse();
+    }
+    var sel = numbers.selectAll("text").data(data);
+    sel.enter().append("text");
+    sel.attr("text-anchor", function() {
+      return numbersAnchor;
+    }).attr("class", function(d) {
+      return d;
+    }).attr("x", null).attr("y", null).attr("dx", null).attr("dy", null);
+    sel.exit().remove();
+    function transitionFormat(valueformat, fmt, from, to) {
+      if (valueformat.match("s") && // If using SI prefix
+      from >= 0 !== to >= 0 && // If sign change
+      (!fmt(from).slice(-1).match(SI_PREFIX) && !fmt(to).slice(-1).match(SI_PREFIX))) {
+        var transitionValueFormat = valueformat.slice().replace("s", "f").replace(/\d+/, function(m) {
+          return parseInt(m) - 1;
+        });
+        var transitionAx = mockAxis(gd, { tickformat: transitionValueFormat });
+        return function(v) {
+          if (Math.abs(v) < 1) return axes_default.tickText(transitionAx, v).text;
+          return fmt(v);
+        };
+      } else {
+        return fmt;
+      }
+    }
+    function drawBignumber() {
+      var bignumberAx = mockAxis(gd, { tickformat: trace.number.valueformat }, trace._range);
+      bignumberAx.setScale();
+      axes_default.prepTicks(bignumberAx);
+      var bignumberFmt = function(v) {
+        return axes_default.tickText(bignumberAx, v).text;
+      };
+      var bignumberSuffix = trace.number.suffix;
+      var bignumberPrefix = trace.number.prefix;
+      var number = numbers.select("text.number");
+      function writeNumber() {
+        var txt = typeof cd[0].y === "number" ? bignumberPrefix + bignumberFmt(cd[0].y) + bignumberSuffix : "-";
+        number.text(txt).call(drawing_default.font, trace.number.font).call(svg_text_utils_default.convertToTspans, gd);
+      }
+      if (hasTransition2(transitionOpts)) {
+        number.transition().duration(transitionOpts.duration).ease(transitionOpts.easing).each("end", function() {
+          writeNumber();
+          onComplete && onComplete();
+        }).each("interrupt", function() {
+          writeNumber();
+          onComplete && onComplete();
+        }).attrTween("text", function() {
+          var that = import_d349.default.select(this);
+          var interpolator = number_default(cd[0].lastY, cd[0].y);
+          trace._lastValue = cd[0].y;
+          var transitionFmt = transitionFormat(trace.number.valueformat, bignumberFmt, cd[0].lastY, cd[0].y);
+          return function(t) {
+            that.text(bignumberPrefix + transitionFmt(interpolator(t)) + bignumberSuffix);
+          };
+        });
+      } else {
+        writeNumber();
+      }
+      bignumberbBox = measureText(bignumberPrefix + bignumberFmt(cd[0].y) + bignumberSuffix, trace.number.font, numbersAnchor, gd);
+      return number;
+    }
+    function drawDelta() {
+      var deltaAx = mockAxis(gd, { tickformat: trace.delta.valueformat }, trace._range);
+      deltaAx.setScale();
+      axes_default.prepTicks(deltaAx);
+      var deltaFmt = function(v) {
+        return axes_default.tickText(deltaAx, v).text;
+      };
+      var deltaSuffix = trace.delta.suffix;
+      var deltaPrefix = trace.delta.prefix;
+      var deltaValue = function(d) {
+        var value = trace.delta.relative ? d.relativeDelta : d.delta;
+        return value;
+      };
+      var deltaFormatText = function(value, numberFmt) {
+        if (value === 0 || typeof value !== "number" || isNaN(value)) return "-";
+        return (value > 0 ? trace.delta.increasing.symbol : trace.delta.decreasing.symbol) + deltaPrefix + numberFmt(value) + deltaSuffix;
+      };
+      var deltaFill = function(d) {
+        return d.delta >= 0 ? trace.delta.increasing.color : trace.delta.decreasing.color;
+      };
+      if (trace._deltaLastValue === void 0) {
+        trace._deltaLastValue = deltaValue(cd[0]);
+      }
+      var delta2 = numbers.select("text.delta");
+      delta2.call(drawing_default.font, trace.delta.font).call(color_default.fill, deltaFill({ delta: trace._deltaLastValue }));
+      function writeDelta() {
+        delta2.text(deltaFormatText(deltaValue(cd[0]), deltaFmt)).call(color_default.fill, deltaFill(cd[0])).call(svg_text_utils_default.convertToTspans, gd);
+      }
+      if (hasTransition2(transitionOpts)) {
+        delta2.transition().duration(transitionOpts.duration).ease(transitionOpts.easing).tween("text", function() {
+          var that = import_d349.default.select(this);
+          var to = deltaValue(cd[0]);
+          var from = trace._deltaLastValue;
+          var transitionFmt = transitionFormat(trace.delta.valueformat, deltaFmt, from, to);
+          var interpolator = number_default(from, to);
+          trace._deltaLastValue = to;
+          return function(t) {
+            that.text(deltaFormatText(interpolator(t), transitionFmt));
+            that.call(color_default.fill, deltaFill({ delta: interpolator(t) }));
+          };
+        }).each("end", function() {
+          writeDelta();
+          onComplete && onComplete();
+        }).each("interrupt", function() {
+          writeDelta();
+          onComplete && onComplete();
+        });
+      } else {
+        writeDelta();
+      }
+      deltabBox = measureText(deltaFormatText(deltaValue(cd[0]), deltaFmt), trace.delta.font, numbersAnchor, gd);
+      return delta2;
+    }
+    var key = trace.mode + trace.align;
+    var delta;
+    if (trace._hasDelta) {
+      delta = drawDelta();
+      key += trace.delta.position + trace.delta.font.size + trace.delta.font.family + trace.delta.valueformat;
+      key += trace.delta.increasing.symbol + trace.delta.decreasing.symbol;
+      numbersbBox = deltabBox;
+    }
+    if (trace._hasNumber) {
+      drawBignumber();
+      key += trace.number.font.size + trace.number.font.family + trace.number.valueformat + trace.number.suffix + trace.number.prefix;
+      numbersbBox = bignumberbBox;
+    }
+    if (trace._hasDelta && trace._hasNumber) {
+      var bignumberCenter = [
+        (bignumberbBox.left + bignumberbBox.right) / 2,
+        (bignumberbBox.top + bignumberbBox.bottom) / 2
+      ];
+      var deltaCenter = [
+        (deltabBox.left + deltabBox.right) / 2,
+        (deltabBox.top + deltabBox.bottom) / 2
+      ];
+      var dx, dy;
+      var padding = 0.75 * trace.delta.font.size;
+      if (trace.delta.position === "left") {
+        dx = cache(trace, "deltaPos", 0, -1 * (bignumberbBox.width * position[trace.align] + deltabBox.width * (1 - position[trace.align]) + padding), key, Math.min);
+        dy = bignumberCenter[1] - deltaCenter[1];
+        numbersbBox = {
+          width: bignumberbBox.width + deltabBox.width + padding,
+          height: Math.max(bignumberbBox.height, deltabBox.height),
+          left: deltabBox.left + dx,
+          right: bignumberbBox.right,
+          top: Math.min(bignumberbBox.top, deltabBox.top + dy),
+          bottom: Math.max(bignumberbBox.bottom, deltabBox.bottom + dy)
+        };
+      }
+      if (trace.delta.position === "right") {
+        dx = cache(trace, "deltaPos", 0, bignumberbBox.width * (1 - position[trace.align]) + deltabBox.width * position[trace.align] + padding, key, Math.max);
+        dy = bignumberCenter[1] - deltaCenter[1];
+        numbersbBox = {
+          width: bignumberbBox.width + deltabBox.width + padding,
+          height: Math.max(bignumberbBox.height, deltabBox.height),
+          left: bignumberbBox.left,
+          right: deltabBox.right + dx,
+          top: Math.min(bignumberbBox.top, deltabBox.top + dy),
+          bottom: Math.max(bignumberbBox.bottom, deltabBox.bottom + dy)
+        };
+      }
+      if (trace.delta.position === "bottom") {
+        dx = null;
+        dy = deltabBox.height;
+        numbersbBox = {
+          width: Math.max(bignumberbBox.width, deltabBox.width),
+          height: bignumberbBox.height + deltabBox.height,
+          left: Math.min(bignumberbBox.left, deltabBox.left),
+          right: Math.max(bignumberbBox.right, deltabBox.right),
+          top: bignumberbBox.bottom - bignumberbBox.height,
+          bottom: bignumberbBox.bottom + deltabBox.height
+        };
+      }
+      if (trace.delta.position === "top") {
+        dx = null;
+        dy = bignumberbBox.top;
+        numbersbBox = {
+          width: Math.max(bignumberbBox.width, deltabBox.width),
+          height: bignumberbBox.height + deltabBox.height,
+          left: Math.min(bignumberbBox.left, deltabBox.left),
+          right: Math.max(bignumberbBox.right, deltabBox.right),
+          top: bignumberbBox.bottom - bignumberbBox.height - deltabBox.height,
+          bottom: bignumberbBox.bottom
+        };
+      }
+      delta.attr({ dx, dy });
+    }
+    if (trace._hasNumber || trace._hasDelta) {
+      numbers.attr("transform", function() {
+        var m = opts.numbersScaler(numbersbBox);
+        key += m[2];
+        var scaleRatio = cache(trace, "numbersScale", 1, m[0], key, Math.min);
+        var translateY;
+        if (!trace._scaleNumbers) scaleRatio = 1;
+        if (trace._isAngular) {
+          translateY = numbersY - scaleRatio * numbersbBox.bottom;
+        } else {
+          translateY = numbersY - scaleRatio * (numbersbBox.top + numbersbBox.bottom) / 2;
+        }
+        trace._numbersTop = scaleRatio * numbersbBox.top + translateY;
+        var ref = numbersbBox[numbersAlign];
+        if (numbersAlign === "center") ref = (numbersbBox.left + numbersbBox.right) / 2;
+        var translateX = numbersX - scaleRatio * ref;
+        translateX = cache(trace, "numbersTranslate", 0, translateX, key, Math.max);
+        return strTranslate18(translateX, translateY) + strScale4(scaleRatio);
+      });
+    }
+  }
+  function styleShape(p) {
+    p.each(function(d) {
+      color_default.stroke(import_d349.default.select(this), d.line.color);
+    }).each(function(d) {
+      color_default.fill(import_d349.default.select(this), d.color);
+    }).style("stroke-width", function(d) {
+      return d.line.width;
+    });
+  }
+  function arcTween(arc, endAngle, newAngle) {
+    return function() {
+      var interp2 = value_default(endAngle, newAngle);
+      return function(t) {
+        return arc.endAngle(interp2(t))();
+      };
+    };
+  }
+  function mockAxis(gd, opts, zrange) {
+    var fullLayout = gd._fullLayout;
+    var axisIn = lib_default.extendFlat({
+      type: "linear",
+      ticks: "outside",
+      range: zrange,
+      showline: true
+    }, opts);
+    var axisOut = {
+      type: "linear",
+      _id: "x" + opts._id
+    };
+    var axisOptions = {
+      letter: "x",
+      font: fullLayout.font,
+      noAutotickangles: true,
+      noHover: true,
+      noTickson: true
+    };
+    function coerce3(attr2, dflt) {
+      return lib_default.coerce(axisIn, axisOut, layout_attributes_default4, attr2, dflt);
+    }
+    handleAxisDefaults(axisIn, axisOut, coerce3, axisOptions, fullLayout);
+    handlePositionDefaults(axisIn, axisOut, coerce3, axisOptions);
+    return axisOut;
+  }
+  function fitTextInsideBox(textBB, width, height) {
+    var ratio = Math.min(width / textBB.width, height / textBB.height);
+    return [ratio, textBB, width + "x" + height];
+  }
+  function fitTextInsideCircle(textBB, radius) {
+    var elRadius = Math.sqrt(textBB.width / 2 * (textBB.width / 2) + textBB.height * textBB.height);
+    var ratio = radius / elRadius;
+    return [ratio, textBB, radius];
+  }
+  function measureText(txt, font2, textAnchor, gd) {
+    var element = document.createElementNS("http://www.w3.org/2000/svg", "text");
+    var sel = import_d349.default.select(element);
+    sel.text(txt).attr("x", 0).attr("y", 0).attr("text-anchor", textAnchor).attr("data-unformatted", txt).call(svg_text_utils_default.convertToTspans, gd).call(drawing_default.font, font2);
+    return drawing_default.bBox(sel.node());
+  }
+  function cache(trace, name9, initialValue, value, key, fn) {
+    var objName = "_cache" + name9;
+    if (!(trace[objName] && trace[objName].key === key)) {
+      trace[objName] = { key, value: initialValue };
+    }
+    var v = lib_default.aggNums(fn, null, [trace[objName].value, value], 2);
+    trace[objName].value = v;
+    return v;
+  }
 
   // src/traces/indicator/index.js
-  var { supplyDefaults: _req214 } = defaults_default6;
-  var { calc: _req313 } = calc_default5;
-
-  // src/traces/ohlc/attributes.js
-  var { extendFlat: extendFlat5 } = lib_default;
-  var { axisHoverFormat: axisHoverFormat7 } = axis_format_attributes_default;
-  var INCREASING_COLOR2 = delta_default.INCREASING.COLOR;
-  var DECREASING_COLOR2 = delta_default.DECREASING.COLOR;
-  var lineAttrs3 = attributes_default9.line;
-  function directionAttrs2(lineColorDefault) {
-    return {
-      line: {
-        color: extendFlat5({}, lineAttrs3.color, { dflt: lineColorDefault }),
-        width: lineAttrs3.width,
-        dash,
-        editType: "style"
-      },
-      editType: "style"
-    };
-  }
-  var attributes_default28 = {
-    xperiod: attributes_default9.xperiod,
-    xperiod0: attributes_default9.xperiod0,
-    xperiodalignment: attributes_default9.xperiodalignment,
-    xhoverformat: axisHoverFormat7("x"),
-    yhoverformat: axisHoverFormat7("y"),
-    x: {
-      valType: "data_array",
-      editType: "calc+clearAxisTypes"
-    },
-    open: {
-      valType: "data_array",
-      editType: "calc"
-    },
-    high: {
-      valType: "data_array",
-      editType: "calc"
-    },
-    low: {
-      valType: "data_array",
-      editType: "calc"
-    },
-    close: {
-      valType: "data_array",
-      editType: "calc"
-    },
-    line: {
-      width: extendFlat5({}, lineAttrs3.width, {}),
-      dash: extendFlat5({}, dash, {}),
-      editType: "style"
-    },
-    increasing: directionAttrs2(INCREASING_COLOR2),
-    decreasing: directionAttrs2(DECREASING_COLOR2),
-    text: {
-      valType: "string",
-      dflt: "",
-      arrayOk: true,
-      editType: "calc"
-    },
-    hovertext: {
-      valType: "string",
-      dflt: "",
-      arrayOk: true,
-      editType: "calc"
-    },
-    hovertemplate: hovertemplateAttrs(
-      {},
-      {
-        keys: ["open", "high", "low", "close"]
-      }
-    ),
-    hovertemplatefallback: templatefallbackAttrs(),
-    tickwidth: {
-      valType: "number",
-      min: 0,
-      max: 0.5,
-      dflt: 0.3,
-      editType: "calc"
-    },
-    hoverlabel: extendFlat5({}, attributes_default.hoverlabel, {
-      split: {
-        valType: "boolean",
-        dflt: false,
-        editType: "style"
-      }
-    }),
-    zorder: attributes_default9.zorder
+  var { supplyDefaults: _req24 } = defaults_default5;
+  var { calc: _req34 } = calc_default7;
+  var indicator_default = {
+    moduleType: "trace",
+    name: "indicator",
+    basePlotModule: base_plot_default2,
+    categories: ["svg", "noOpacity", "noHover"],
+    animatable: true,
+    attributes: attributes_default29,
+    supplyDefaults: _req24,
+    calc: _req34,
+    plot: plot11,
+    meta: {}
   };
 
-  // src/traces/ohlc/calc.js
-  var { BADNUM: BADNUM18 } = numerical_default;
-  var _3 = lib_default._;
-  function calc12(gd, trace) {
-    var xa = axes_default.getFromId(gd, trace.xaxis);
-    var ya = axes_default.getFromId(gd, trace.yaxis);
-    var tickLen = convertTickWidth(gd, xa, trace);
-    var minDiff = trace._minDiff;
-    trace._minDiff = null;
-    var origX = trace._origX;
-    trace._origX = null;
-    var x = trace._xcalc;
-    trace._xcalc = null;
-    var cd = calcCommon(gd, trace, origX, x, ya, ptFunc);
-    trace._extremes[xa._id] = axes_default.findExtremes(xa, x, { vpad: minDiff / 2 });
-    if (cd.length) {
-      lib_default.extendFlat(cd[0].t, {
-        wHover: minDiff / 2,
-        tickLen
-      });
-      return cd;
-    } else {
-      return [{ t: { empty: true } }];
+  // src/traces/ohlc/defaults.js
+  function supplyDefaults10(traceIn, traceOut, defaultColor, layout) {
+    function coerce3(attr2, dflt) {
+      return lib_default.coerce(traceIn, traceOut, attributes_default22, attr2, dflt);
     }
-  }
-  function ptFunc(o, h, l, c) {
-    return {
-      o,
-      h,
-      l,
-      c
-    };
-  }
-  function calcCommon(gd, trace, origX, x, ya, ptFunc2) {
-    var o = ya.makeCalcdata(trace, "open");
-    var h = ya.makeCalcdata(trace, "high");
-    var l = ya.makeCalcdata(trace, "low");
-    var c = ya.makeCalcdata(trace, "close");
-    var hasTextArray = lib_default.isArrayOrTypedArray(trace.text);
-    var hasHovertextArray = lib_default.isArrayOrTypedArray(trace.hovertext);
-    var increasing = true;
-    var cPrev = null;
-    var hasPeriod = !!trace.xperiodalignment;
-    var cd = [];
-    for (var i = 0; i < x.length; i++) {
-      var xi = x[i];
-      var oi = o[i];
-      var hi = h[i];
-      var li = l[i];
-      var ci = c[i];
-      if (xi !== BADNUM18 && oi !== BADNUM18 && hi !== BADNUM18 && li !== BADNUM18 && ci !== BADNUM18) {
-        if (ci === oi) {
-          if (cPrev !== null && ci !== cPrev) increasing = ci > cPrev;
-        } else increasing = ci > oi;
-        cPrev = ci;
-        var pt = ptFunc2(oi, hi, li, ci);
-        pt.pos = xi;
-        pt.yc = (oi + ci) / 2;
-        pt.i = i;
-        pt.dir = increasing ? "increasing" : "decreasing";
-        pt.x = pt.pos;
-        pt.y = [li, hi];
-        if (hasPeriod) pt.orig_p = origX[i];
-        if (hasTextArray) pt.tx = trace.text[i];
-        if (hasHovertextArray) pt.htx = trace.hovertext[i];
-        cd.push(pt);
-      } else {
-        cd.push({ pos: xi, empty: true });
-      }
+    var len2 = handleOHLC(traceIn, traceOut, coerce3, layout);
+    if (!len2) {
+      traceOut.visible = false;
+      return;
     }
-    trace._extremes[ya._id] = axes_default.findExtremes(ya, lib_default.concat(l, h), { padded: true });
-    if (cd.length) {
-      cd[0].t = {
-        labels: {
-          open: _3(gd, "open:") + " ",
-          high: _3(gd, "high:") + " ",
-          low: _3(gd, "low:") + " ",
-          close: _3(gd, "close:") + " "
-        }
-      };
-    }
-    return cd;
+    handlePeriodDefaults(traceIn, traceOut, layout, coerce3, { x: true });
+    coerce3("xhoverformat");
+    coerce3("yhoverformat");
+    coerce3("line.width");
+    coerce3("line.dash");
+    handleDirection2(traceIn, traceOut, coerce3, "increasing");
+    handleDirection2(traceIn, traceOut, coerce3, "decreasing");
+    coerce3("text");
+    coerce3("hovertext");
+    coerce3("hovertemplate");
+    coerce3("hovertemplatefallback");
+    coerce3("tickwidth");
+    layout._requestRangeslider[traceOut.xaxis] = true;
+    coerce3("zorder");
   }
-  function convertTickWidth(gd, xa, trace) {
-    var minDiff = trace._minDiff;
-    if (!minDiff) {
-      var fullData = gd._fullData;
-      var ohlcTracesOnThisXaxis = [];
-      minDiff = Infinity;
-      var i;
-      for (i = 0; i < fullData.length; i++) {
-        var tracei = fullData[i];
-        if (tracei.type === "ohlc" && tracei.visible === true && tracei.xaxis === xa._id) {
-          ohlcTracesOnThisXaxis.push(tracei);
-          var origX = xa.makeCalcdata(tracei, "x");
-          tracei._origX = origX;
-          var xcalc = alignPeriod(trace, xa, "x", origX).vals;
-          tracei._xcalc = xcalc;
-          var _minDiff = lib_default.distinctVals(xcalc).minDiff;
-          if (_minDiff && isFinite(_minDiff)) {
-            minDiff = Math.min(minDiff, _minDiff);
-          }
-        }
-      }
-      if (minDiff === Infinity) minDiff = 1;
-      for (i = 0; i < ohlcTracesOnThisXaxis.length; i++) {
-        ohlcTracesOnThisXaxis[i]._minDiff = minDiff;
-      }
-    }
-    return minDiff * trace.tickwidth;
+  function handleDirection2(traceIn, traceOut, coerce3, direction) {
+    coerce3(direction + ".line.color");
+    coerce3(direction + ".line.width", traceOut.line.width);
+    coerce3(direction + ".line.dash", traceOut.line.dash);
   }
-  var calc_default6 = {
-    calc: calc12,
-    calcCommon
-  };
 
   // src/traces/ohlc/plot.js
-  var import_d351 = __toESM(require_d3(), 1);
-
-  // src/traces/ohlc/style.js
-  var import_d352 = __toESM(require_d3(), 1);
-
-  // src/traces/ohlc/hover.js
-  var { fillText: fillText3 } = lib_default;
-  var DIRSYMBOL2 = {
-    increasing: delta_default.INCREASING.SYMBOL,
-    decreasing: delta_default.DECREASING.SYMBOL
-  };
-  function hoverPoints6(pointData, xval, yval, hovermode) {
-    var cd = pointData.cd;
-    var trace = cd[0].trace;
-    if (trace.hoverlabel.split) {
-      return hoverSplit(pointData, xval, yval, hovermode);
-    }
-    return hoverOnPoints(pointData, xval, yval, hovermode);
-  }
-  function _getClosestPoint(pointData, xval, yval, hovermode) {
-    var cd = pointData.cd;
-    var xa = pointData.xa;
-    var trace = cd[0].trace;
-    var t = cd[0].t;
-    var type = trace.type;
-    var minAttr = type === "ohlc" ? "l" : "min";
-    var maxAttr = type === "ohlc" ? "h" : "max";
-    var hoverPseudoDistance, spikePseudoDistance;
-    var centerShift = t.bPos || 0;
-    var shiftPos = function(di2) {
-      return di2.pos + centerShift - xval;
-    };
-    var displayHalfWidth = t.bdPos || t.tickLen;
-    var hoverHalfWidth = t.wHover;
-    var pseudoDistance = Math.min(1, displayHalfWidth / Math.abs(xa.r2c(xa.range[1]) - xa.r2c(xa.range[0])));
-    hoverPseudoDistance = pointData.maxHoverDistance - pseudoDistance;
-    spikePseudoDistance = pointData.maxSpikeDistance - pseudoDistance;
-    function dx(di2) {
-      var pos = shiftPos(di2);
-      return fx_default.inbox(pos - hoverHalfWidth, pos + hoverHalfWidth, hoverPseudoDistance);
-    }
-    function dy(di2) {
-      var min = di2[minAttr];
-      var max = di2[maxAttr];
-      return min === max || fx_default.inbox(min - yval, max - yval, hoverPseudoDistance);
-    }
-    function dxy(di2) {
-      return (dx(di2) + dy(di2)) / 2;
-    }
-    var distfn = fx_default.getDistanceFunction(hovermode, dx, dy, dxy);
-    fx_default.getClosest(cd, distfn, pointData);
-    if (pointData.index === false) return null;
-    var di = cd[pointData.index];
-    if (di.empty) return null;
-    var dir = di.dir;
-    var container = trace[dir];
-    var lc = container.line.color;
-    if (color_default.opacity(lc) && container.line.width) pointData.color = lc;
-    else pointData.color = container.fillcolor;
-    pointData.x0 = xa.c2p(di.pos + centerShift - displayHalfWidth, true);
-    pointData.x1 = xa.c2p(di.pos + centerShift + displayHalfWidth, true);
-    pointData.xLabelVal = di.orig_p !== void 0 ? di.orig_p : di.pos;
-    pointData.spikeDistance = dxy(di) * spikePseudoDistance / hoverPseudoDistance;
-    pointData.xSpike = xa.c2p(di.pos, true);
-    return pointData;
-  }
-  function hoverSplit(pointData, xval, yval, hovermode) {
-    var cd = pointData.cd;
-    var ya = pointData.ya;
-    var trace = cd[0].trace;
-    var t = cd[0].t;
-    var closeBoxData = [];
-    var closestPoint = _getClosestPoint(pointData, xval, yval, hovermode);
-    if (!closestPoint) return [];
-    var di = cd[closestPoint.index];
-    var hoverinfo = di.hi || trace.hoverinfo || "";
-    if (hoverinfo === "none" || hoverinfo === "skip") return [];
-    var attrs2 = ["high", "open", "close", "low"];
-    var usedVals = {};
-    for (var i = 0; i < attrs2.length; i++) {
-      var attr2 = attrs2[i];
-      var val = trace[attr2][closestPoint.index];
-      var valPx = ya.c2p(val, true);
-      var pointData2;
-      if (val in usedVals) {
-        pointData2 = usedVals[val];
-        pointData2.yLabel += "<br>" + t.labels[attr2] + axes_default.hoverLabelText(ya, val, trace.yhoverformat);
-      } else {
-        pointData2 = lib_default.extendFlat({}, closestPoint);
-        pointData2.y0 = pointData2.y1 = valPx;
-        pointData2.yLabelVal = val;
-        pointData2.yLabel = t.labels[attr2] + axes_default.hoverLabelText(ya, val, trace.yhoverformat);
-        pointData2.name = "";
-        closeBoxData.push(pointData2);
-        usedVals[val] = pointData2;
-      }
-    }
-    return closeBoxData;
-  }
-  function hoverOnPoints(pointData, xval, yval, hovermode) {
-    var cd = pointData.cd;
-    var ya = pointData.ya;
-    var trace = cd[0].trace;
-    var t = cd[0].t;
-    var closestPoint = _getClosestPoint(pointData, xval, yval, hovermode);
-    if (!closestPoint) return [];
-    var cdIndex = closestPoint.index;
-    var di = cd[cdIndex];
-    var i = closestPoint.index = di.i;
-    var dir = di.dir;
-    function getLabelLine(attr2) {
-      return t.labels[attr2] + axes_default.hoverLabelText(ya, trace[attr2][i], trace.yhoverformat);
-    }
-    var hoverinfo = di.hi || trace.hoverinfo || "";
-    var hoverParts = hoverinfo.split("+");
-    var isAll = hoverinfo === "all";
-    var hasY = isAll || hoverParts.indexOf("y") !== -1;
-    var hasText = isAll || hoverParts.indexOf("text") !== -1;
-    var textParts = hasY ? [
-      getLabelLine("open"),
-      getLabelLine("high"),
-      getLabelLine("low"),
-      getLabelLine("close") + "  " + DIRSYMBOL2[dir]
-    ] : [];
-    if (hasText) fillText3(di, trace, textParts);
-    closestPoint.extraText = textParts.join("<br>");
-    closestPoint.y0 = closestPoint.y1 = ya.c2p(di.yc, true);
-    return [closestPoint];
-  }
-  var hover_default3 = {
-    hoverPoints: hoverPoints6,
-    hoverSplit,
-    hoverOnPoints
-  };
-
-  // src/traces/ohlc/index.js
-  var { calc: _req314 } = calc_default6;
-  var { hoverPoints: _req66 } = hover_default3;
-
-  // src/traces/box/attributes.js
-  var { axisHoverFormat: axisHoverFormat8 } = axis_format_attributes_default;
-  var scatterMarkerAttrs2 = attributes_default9.marker;
-  var scatterMarkerLineAttrs2 = scatterMarkerAttrs2.line;
-  var attributes_default29 = {
-    y: {
-      valType: "data_array",
-      editType: "calc+clearAxisTypes"
-    },
-    x: {
-      valType: "data_array",
-      editType: "calc+clearAxisTypes"
-    },
-    x0: {
-      valType: "any",
-      editType: "calc+clearAxisTypes"
-    },
-    y0: {
-      valType: "any",
-      editType: "calc+clearAxisTypes"
-    },
-    dx: {
-      valType: "number",
-      editType: "calc"
-    },
-    dy: {
-      valType: "number",
-      editType: "calc"
-    },
-    xperiod: attributes_default9.xperiod,
-    yperiod: attributes_default9.yperiod,
-    xperiod0: attributes_default9.xperiod0,
-    yperiod0: attributes_default9.yperiod0,
-    xperiodalignment: attributes_default9.xperiodalignment,
-    yperiodalignment: attributes_default9.yperiodalignment,
-    xhoverformat: axisHoverFormat8("x"),
-    yhoverformat: axisHoverFormat8("y"),
-    name: {
-      valType: "string",
-      editType: "calc+clearAxisTypes"
-    },
-    q1: {
-      valType: "data_array",
-      editType: "calc+clearAxisTypes"
-    },
-    median: {
-      valType: "data_array",
-      editType: "calc+clearAxisTypes"
-    },
-    q3: {
-      valType: "data_array",
-      editType: "calc+clearAxisTypes"
-    },
-    lowerfence: {
-      valType: "data_array",
-      editType: "calc"
-    },
-    upperfence: {
-      valType: "data_array",
-      editType: "calc"
-    },
-    notched: {
-      valType: "boolean",
-      editType: "calc"
-    },
-    notchwidth: {
-      valType: "number",
-      min: 0,
-      max: 0.5,
-      dflt: 0.25,
-      editType: "calc"
-    },
-    notchspan: {
-      valType: "data_array",
-      editType: "calc"
-    },
-    // TODO
-    // maybe add
-    // - loweroutlierbound / upperoutlierbound
-    // - lowersuspectedoutlierbound / uppersuspectedoutlierbound
-    boxpoints: {
-      valType: "enumerated",
-      values: ["all", "outliers", "suspectedoutliers", false],
-      editType: "calc"
-    },
-    jitter: {
-      valType: "number",
-      min: 0,
-      max: 1,
-      editType: "calc"
-    },
-    pointpos: {
-      valType: "number",
-      min: -2,
-      max: 2,
-      editType: "calc"
-    },
-    sdmultiple: {
-      valType: "number",
-      min: 0,
-      editType: "calc",
-      dflt: 1
-    },
-    sizemode: {
-      valType: "enumerated",
-      values: ["quartiles", "sd"],
-      editType: "calc",
-      dflt: "quartiles"
-    },
-    boxmean: {
-      valType: "enumerated",
-      values: [true, "sd", false],
-      editType: "calc"
-    },
-    mean: {
-      valType: "data_array",
-      editType: "calc"
-    },
-    sd: {
-      valType: "data_array",
-      editType: "calc"
-    },
-    orientation: {
-      valType: "enumerated",
-      values: ["v", "h"],
-      editType: "calc+clearAxisTypes"
-    },
-    quartilemethod: {
-      valType: "enumerated",
-      values: ["linear", "exclusive", "inclusive"],
-      dflt: "linear",
-      editType: "calc"
-    },
-    width: {
-      valType: "number",
-      min: 0,
-      dflt: 0,
-      editType: "calc"
-    },
-    marker: {
-      outliercolor: {
-        valType: "color",
-        dflt: "rgba(0, 0, 0, 0)",
-        editType: "style"
-      },
-      symbol: extendFlat({}, scatterMarkerAttrs2.symbol, { arrayOk: false, editType: "plot" }),
-      opacity: extendFlat({}, scatterMarkerAttrs2.opacity, { arrayOk: false, dflt: 1, editType: "style" }),
-      angle: extendFlat({}, scatterMarkerAttrs2.angle, { arrayOk: false, editType: "calc" }),
-      size: extendFlat({}, scatterMarkerAttrs2.size, { arrayOk: false, editType: "calc" }),
-      color: extendFlat({}, scatterMarkerAttrs2.color, { arrayOk: false, editType: "style" }),
-      line: {
-        color: extendFlat({}, scatterMarkerLineAttrs2.color, {
-          arrayOk: false,
-          dflt: attributes_default3.defaultLine,
-          editType: "style"
-        }),
-        width: extendFlat({}, scatterMarkerLineAttrs2.width, { arrayOk: false, dflt: 0, editType: "style" }),
-        outliercolor: {
-          valType: "color",
-          editType: "style"
-        },
-        outlierwidth: {
-          valType: "number",
-          min: 0,
-          dflt: 1,
-          editType: "style"
-        },
-        editType: "style"
-      },
-      editType: "plot"
-    },
-    line: {
-      color: {
-        valType: "color",
-        editType: "style"
-      },
-      width: {
-        valType: "number",
-        min: 0,
-        dflt: 2,
-        editType: "style"
-      },
-      editType: "plot"
-    },
-    fillcolor: makeFillcolorAttr(),
-    whiskerwidth: {
-      valType: "number",
-      min: 0,
-      max: 1,
-      dflt: 0.5,
-      editType: "calc"
-    },
-    showwhiskers: {
-      valType: "boolean",
-      editType: "calc"
-    },
-    offsetgroup: attributes_default21.offsetgroup,
-    alignmentgroup: attributes_default21.alignmentgroup,
-    selected: {
-      marker: attributes_default9.selected.marker,
-      editType: "style"
-    },
-    unselected: {
-      marker: attributes_default9.unselected.marker,
-      editType: "style"
-    },
-    text: extendFlat({}, attributes_default9.text, {}),
-    hovertext: extendFlat({}, attributes_default9.hovertext, {}),
-    hovertemplate: hovertemplateAttrs({}),
-    hovertemplatefallback: templatefallbackAttrs(),
-    hoveron: {
-      valType: "flaglist",
-      flags: ["boxes", "points"],
-      dflt: "boxes+points",
-      editType: "style"
-    },
-    zorder: attributes_default9.zorder
-  };
-
-  // src/traces/candlestick/attributes.js
-  var { extendFlat: extendFlat6 } = lib_default;
-  var { axisHoverFormat: axisHoverFormat9 } = axis_format_attributes_default;
-  function directionAttrs3(lineColorDefault) {
-    return {
-      line: {
-        color: extendFlat6({}, attributes_default29.line.color, { dflt: lineColorDefault }),
-        width: attributes_default29.line.width,
-        editType: "style"
-      },
-      fillcolor: attributes_default29.fillcolor,
-      editType: "style"
-    };
-  }
-  var attributes_default30 = {
-    xperiod: attributes_default28.xperiod,
-    xperiod0: attributes_default28.xperiod0,
-    xperiodalignment: attributes_default28.xperiodalignment,
-    xhoverformat: axisHoverFormat9("x"),
-    yhoverformat: axisHoverFormat9("y"),
-    x: attributes_default28.x,
-    open: attributes_default28.open,
-    high: attributes_default28.high,
-    low: attributes_default28.low,
-    close: attributes_default28.close,
-    line: {
-      width: extendFlat6({}, attributes_default29.line.width, {}),
-      editType: "style"
-    },
-    increasing: directionAttrs3(attributes_default28.increasing.line.color.dflt),
-    decreasing: directionAttrs3(attributes_default28.decreasing.line.color.dflt),
-    text: attributes_default28.text,
-    hovertext: attributes_default28.hovertext,
-    hovertemplate: attributes_default28.hovertemplate,
-    hovertemplatefallback: attributes_default28.hovertemplatefallback,
-    whiskerwidth: extendFlat6({}, attributes_default29.whiskerwidth, { dflt: 0 }),
-    hoverlabel: attributes_default28.hoverlabel,
-    zorder: attributes_default29.zorder
-  };
-
-  // src/traces/box/layout_attributes.js
-  var layout_attributes_default11 = {
-    boxmode: {
-      valType: "enumerated",
-      values: ["group", "overlay"],
-      dflt: "overlay",
-      editType: "calc"
-    },
-    boxgap: {
-      valType: "number",
-      min: 0,
-      max: 1,
-      dflt: 0.3,
-      editType: "calc"
-    },
-    boxgroupgap: {
-      valType: "number",
-      min: 0,
-      max: 1,
-      dflt: 0.3,
-      editType: "calc"
-    }
-  };
-
-  // src/traces/box/layout_defaults.js
-  function _supply(layoutIn, layoutOut, fullData, coerce3, traceType) {
-    var category2 = traceType + "Layout";
-    var hasTraceType = false;
-    for (var i = 0; i < fullData.length; i++) {
-      var trace = fullData[i];
-      if (registry_default.traceIs(trace, category2)) {
-        hasTraceType = true;
-        break;
-      }
-    }
-    if (!hasTraceType) return;
-    coerce3(traceType + "mode");
-    coerce3(traceType + "gap");
-    coerce3(traceType + "groupgap");
-  }
-  function supplyLayoutDefaults12(layoutIn, layoutOut, fullData) {
-    function coerce3(attr2, dflt) {
-      return lib_default.coerce(layoutIn, layoutOut, layout_attributes_default11, attr2, dflt);
-    }
-    _supply(layoutIn, layoutOut, fullData, coerce3, "box");
-  }
-  var layout_defaults_default5 = {
-    supplyLayoutDefaults: supplyLayoutDefaults12,
-    _supply
-  };
-
-  // src/traces/box/cross_trace_calc.js
-  var orientations = ["v", "h"];
-  function crossTraceCalc7(gd, plotinfo) {
-    var calcdata = gd.calcdata;
-    var xa = plotinfo.xaxis;
+  var import_d350 = __toESM(require_d3(), 1);
+  function plot12(gd, plotinfo, cdOHLC, ohlcLayer) {
     var ya = plotinfo.yaxis;
-    for (var i = 0; i < orientations.length; i++) {
-      var orientation = orientations[i];
-      var posAxis = orientation === "h" ? ya : xa;
-      var boxList = [];
-      for (var j = 0; j < calcdata.length; j++) {
-        var cd = calcdata[j];
-        var t = cd[0].t;
-        var trace = cd[0].trace;
-        if (trace.visible === true && (trace.type === "box" || trace.type === "candlestick") && !t.empty && (trace.orientation || "v") === orientation && trace.xaxis === xa._id && trace.yaxis === ya._id) {
-          boxList.push(j);
-        }
-      }
-      setPositionOffset("box", gd, boxList, posAxis);
-    }
-  }
-  function setPositionOffset(traceType, gd, boxList, posAxis) {
-    var calcdata = gd.calcdata;
-    var fullLayout = gd._fullLayout;
-    var axId = posAxis._id;
-    var axLetter = axId.charAt(0);
-    var i, j, calcTrace;
-    var pointList = [];
-    var shownPts = 0;
-    for (i = 0; i < boxList.length; i++) {
-      calcTrace = calcdata[boxList[i]];
-      for (j = 0; j < calcTrace.length; j++) {
-        pointList.push(posAxis.c2l(calcTrace[j].pos, true));
-        shownPts += (calcTrace[j].pts2 || []).length;
-      }
-    }
-    if (!pointList.length) return;
-    var boxdv = lib_default.distinctVals(pointList);
-    if (posAxis.type === "category" || posAxis.type === "multicategory") {
-      boxdv.minDiff = 1;
-    }
-    var dPos0 = boxdv.minDiff / 2;
-    axes_default.minDtick(posAxis, boxdv.minDiff, boxdv.vals[0], true);
-    var numKey = traceType === "violin" ? "_numViolins" : "_numBoxes";
-    var numTotal = fullLayout[numKey];
-    var group = fullLayout[traceType + "mode"] === "group" && numTotal > 1;
-    var groupFraction = 1 - fullLayout[traceType + "gap"];
-    var groupGapFraction = 1 - fullLayout[traceType + "groupgap"];
-    for (i = 0; i < boxList.length; i++) {
-      calcTrace = calcdata[boxList[i]];
-      var trace = calcTrace[0].trace;
-      var t = calcTrace[0].t;
-      var width = trace.width;
-      var side = trace.side;
-      var dPos;
-      var bdPos;
-      var bPos;
-      var wHover;
-      if (width) {
-        dPos = bdPos = wHover = width / 2;
-        bPos = 0;
-      } else {
-        dPos = dPos0;
-        if (group) {
-          var groupId = getAxisGroup(fullLayout, posAxis._id) + trace.orientation;
-          var alignmentGroups = fullLayout._alignmentOpts[groupId] || {};
-          var alignmentGroupOpts = alignmentGroups[trace.alignmentgroup] || {};
-          var nOffsetGroups = Object.keys(alignmentGroupOpts.offsetGroups || {}).length;
-          var num = nOffsetGroups || numTotal;
-          var shift = nOffsetGroups ? trace._offsetIndex : t.num;
-          bdPos = dPos * groupFraction * groupGapFraction / num;
-          bPos = 2 * dPos * (-0.5 + (shift + 0.5) / num) * groupFraction;
-          wHover = dPos * groupFraction / num;
-        } else {
-          bdPos = dPos * groupFraction * groupGapFraction;
-          bPos = 0;
-          wHover = dPos;
-        }
-      }
-      t.dPos = dPos;
-      t.bPos = bPos;
-      t.bdPos = bdPos;
-      t.wHover = wHover;
-      var pushplus;
-      var pushminus;
-      var edge = bPos + bdPos;
-      var edgeplus;
-      var edgeminus;
-      var vpadplus;
-      var vpadminus;
-      var ppadplus;
-      var ppadminus;
-      var padded = Boolean(width);
-      var hasPts = (trace.boxpoints || trace.points) && shownPts > 0;
-      if (side === "positive") {
-        pushplus = dPos * (width ? 1 : 0.5);
-        edgeplus = edge;
-        pushminus = edgeplus = bPos;
-      } else if (side === "negative") {
-        pushplus = edgeplus = bPos;
-        pushminus = dPos * (width ? 1 : 0.5);
-        edgeminus = edge;
-      } else {
-        pushplus = pushminus = dPos;
-        edgeplus = edgeminus = edge;
-      }
-      if (hasPts) {
-        var pointpos = trace.pointpos;
-        var jitter = trace.jitter;
-        var ms = trace.marker.size / 2;
-        var pp = 0;
-        if (pointpos + jitter >= 0) {
-          pp = edge * (pointpos + jitter);
-          if (pp > pushplus) {
-            padded = true;
-            ppadplus = ms;
-            vpadplus = pp;
-          } else if (pp > edgeplus) {
-            ppadplus = ms;
-            vpadplus = pushplus;
-          }
-        }
-        if (pp <= pushplus) {
-          vpadplus = pushplus;
-        }
-        var pm = 0;
-        if (pointpos - jitter <= 0) {
-          pm = -edge * (pointpos - jitter);
-          if (pm > pushminus) {
-            padded = true;
-            ppadminus = ms;
-            vpadminus = pm;
-          } else if (pm > edgeminus) {
-            ppadminus = ms;
-            vpadminus = pushminus;
-          }
-        }
-        if (pm <= pushminus) {
-          vpadminus = pushminus;
-        }
-      } else {
-        vpadplus = pushplus;
-        vpadminus = pushminus;
-      }
-      var pos = new Array(calcTrace.length);
-      for (j = 0; j < calcTrace.length; j++) {
-        pos[j] = calcTrace[j].pos;
-      }
-      trace._extremes[axId] = axes_default.findExtremes(posAxis, pos, {
-        padded,
-        vpadminus,
-        vpadplus,
-        vpadLinearized: true,
-        // N.B. SVG px-space positive/negative
-        ppadminus: { x: ppadminus, y: ppadplus }[axLetter],
-        ppadplus: { x: ppadplus, y: ppadminus }[axLetter]
-      });
-    }
-  }
-  var cross_trace_calc_default2 = {
-    crossTraceCalc: crossTraceCalc7,
-    setPositionOffset
-  };
-
-  // src/traces/candlestick/calc.js
-  var { calcCommon: calcCommon2 } = calc_default6;
-
-  // src/traces/box/plot.js
-  var import_d353 = __toESM(require_d3(), 1);
-  var JITTERCOUNT = 5;
-  var JITTERSPREAD = 0.01;
-  function plot11(gd, plotinfo, cdbox, boxLayer) {
-    var isStatic = gd._context.staticPlot;
     var xa = plotinfo.xaxis;
-    var ya = plotinfo.yaxis;
-    lib_default.makeTraceGroups(boxLayer, cdbox, "trace boxes").each(function(cd) {
-      var plotGroup = import_d353.default.select(this);
+    var posHasRangeBreaks = !!xa.rangebreaks;
+    lib_default.makeTraceGroups(ohlcLayer, cdOHLC, "trace ohlc").each(function(cd) {
+      var plotGroup = import_d350.default.select(this);
       var cd0 = cd[0];
       var t = cd0.t;
       var trace = cd0.trace;
-      t.wdPos = t.bdPos * trace.whiskerwidth;
       if (trace.visible !== true || t.empty) {
         plotGroup.remove();
         return;
       }
-      var posAxis, valAxis;
-      if (trace.orientation === "h") {
-        posAxis = ya;
-        valAxis = xa;
-      } else {
-        posAxis = xa;
-        valAxis = ya;
-      }
-      plotBoxAndWhiskers(plotGroup, { pos: posAxis, val: valAxis }, trace, t, isStatic);
-      plotPoints(plotGroup, { x: xa, y: ya }, trace, t);
-      plotBoxMean(plotGroup, { pos: posAxis, val: valAxis }, trace, t);
-    });
-  }
-  function plotBoxAndWhiskers(sel, axes2, trace, t, isStatic) {
-    var isHorizontal = trace.orientation === "h";
-    var valAxis = axes2.val;
-    var posAxis = axes2.pos;
-    var posHasRangeBreaks = !!posAxis.rangebreaks;
-    var bPos = t.bPos;
-    var wdPos = t.wdPos || 0;
-    var bPosPxOffset = t.bPosPxOffset || 0;
-    var whiskerWidth = trace.whiskerwidth || 0;
-    var showWhiskers = trace.showwhiskers !== false;
-    var notched = trace.notched || false;
-    var nw = notched ? 1 - 2 * trace.notchwidth : 1;
-    var bdPos0;
-    var bdPos1;
-    if (Array.isArray(t.bdPos)) {
-      bdPos0 = t.bdPos[0];
-      bdPos1 = t.bdPos[1];
-    } else {
-      bdPos0 = t.bdPos;
-      bdPos1 = t.bdPos;
-    }
-    var paths = sel.selectAll("path.box").data(trace.type !== "violin" || trace.box.visible ? lib_default.identity : []);
-    paths.enter().append("path").style("vector-effect", isStatic ? "none" : "non-scaling-stroke").attr("class", "box");
-    paths.exit().remove();
-    paths.each(function(d) {
-      if (d.empty) return import_d353.default.select(this).attr("d", "M0,0Z");
-      var lcenter = posAxis.c2l(d.pos + bPos, true);
-      var pos0 = posAxis.l2p(lcenter - bdPos0) + bPosPxOffset;
-      var pos1 = posAxis.l2p(lcenter + bdPos1) + bPosPxOffset;
-      var posc = posHasRangeBreaks ? (pos0 + pos1) / 2 : posAxis.l2p(lcenter) + bPosPxOffset;
-      var r = trace.whiskerwidth;
-      var posw0 = posHasRangeBreaks ? pos0 * r + (1 - r) * posc : posAxis.l2p(lcenter - wdPos) + bPosPxOffset;
-      var posw1 = posHasRangeBreaks ? pos1 * r + (1 - r) * posc : posAxis.l2p(lcenter + wdPos) + bPosPxOffset;
-      var posm0 = posAxis.l2p(lcenter - bdPos0 * nw) + bPosPxOffset;
-      var posm1 = posAxis.l2p(lcenter + bdPos1 * nw) + bPosPxOffset;
-      var sdmode = trace.sizemode === "sd";
-      var q1 = valAxis.c2p(sdmode ? d.mean - d.sd : d.q1, true);
-      var q3 = sdmode ? valAxis.c2p(d.mean + d.sd, true) : valAxis.c2p(d.q3, true);
-      var m = lib_default.constrain(
-        sdmode ? valAxis.c2p(d.mean, true) : valAxis.c2p(d.med, true),
-        Math.min(q1, q3) + 1,
-        Math.max(q1, q3) - 1
-      );
-      var useExtremes = d.lf === void 0 || trace.boxpoints === false || sdmode;
-      var lf = valAxis.c2p(useExtremes ? d.min : d.lf, true);
-      var uf = valAxis.c2p(useExtremes ? d.max : d.uf, true);
-      var ln = valAxis.c2p(d.ln, true);
-      var un = valAxis.c2p(d.un, true);
-      if (isHorizontal) {
-        import_d353.default.select(this).attr(
-          "d",
-          "M" + m + "," + posm0 + "V" + posm1 + // median line
-          "M" + q1 + "," + pos0 + "V" + pos1 + // left edge
-          (notched ? "H" + ln + "L" + m + "," + posm1 + "L" + un + "," + pos1 : "") + // top notched edge
-          "H" + q3 + // end of the top edge
-          "V" + pos0 + // right edge
-          (notched ? "H" + un + "L" + m + "," + posm0 + "L" + ln + "," + pos0 : "") + // bottom notched edge
-          "Z" + // end of the box
-          (showWhiskers ? "M" + q1 + "," + posc + "H" + lf + "M" + q3 + "," + posc + "H" + uf + // whiskers
-          (whiskerWidth === 0 ? "" : (
-            // whisker caps
-            "M" + lf + "," + posw0 + "V" + posw1 + "M" + uf + "," + posw0 + "V" + posw1
-          )) : "")
-        );
-      } else {
-        import_d353.default.select(this).attr(
-          "d",
-          "M" + posm0 + "," + m + "H" + posm1 + // median line
-          "M" + pos0 + "," + q1 + "H" + pos1 + // top of the box
-          (notched ? "V" + ln + "L" + posm1 + "," + m + "L" + pos1 + "," + un : "") + // notched right edge
-          "V" + q3 + // end of the right edge
-          "H" + pos0 + // bottom of the box
-          (notched ? "V" + un + "L" + posm0 + "," + m + "L" + pos0 + "," + ln : "") + // notched left edge
-          "Z" + // end of the box
-          (showWhiskers ? "M" + posc + "," + q1 + "V" + lf + "M" + posc + "," + q3 + "V" + uf + // whiskers
-          (whiskerWidth === 0 ? "" : (
-            // whisker caps
-            "M" + posw0 + "," + lf + "H" + posw1 + "M" + posw0 + "," + uf + "H" + posw1
-          )) : "")
-        );
-      }
-    });
-  }
-  function plotPoints(sel, axes2, trace, t) {
-    var xa = axes2.x;
-    var ya = axes2.y;
-    var bdPos = t.bdPos;
-    var bPos = t.bPos;
-    var mode = trace.boxpoints || trace.points;
-    lib_default.seedPseudoRandom();
-    var fn = function(d) {
-      d.forEach(function(v) {
-        v.t = t;
-        v.trace = trace;
+      var tickLen = t.tickLen;
+      var paths = plotGroup.selectAll("path").data(lib_default.identity);
+      paths.enter().append("path");
+      paths.exit().remove();
+      paths.attr("d", function(d) {
+        if (d.empty) return "M0,0Z";
+        var xo = xa.c2p(d.pos - tickLen, true);
+        var xc = xa.c2p(d.pos + tickLen, true);
+        var x = posHasRangeBreaks ? (xo + xc) / 2 : xa.c2p(d.pos, true);
+        var yo = ya.c2p(d.o, true);
+        var yh = ya.c2p(d.h, true);
+        var yl = ya.c2p(d.l, true);
+        var yc = ya.c2p(d.c, true);
+        return "M" + xo + "," + yo + "H" + x + "M" + x + "," + yh + "V" + yl + "M" + xc + "," + yc + "H" + x;
       });
-      return d;
-    };
-    var gPoints = sel.selectAll("g.points").data(mode ? fn : []);
-    gPoints.enter().append("g").attr("class", "points");
-    gPoints.exit().remove();
-    var paths = gPoints.selectAll("path").data(function(d) {
-      var i;
-      var pts = d.pts2;
-      var typicalSpread = Math.max((d.max - d.min) / 10, d.q3 - d.q1);
-      var minSpread = typicalSpread * 1e-9;
-      var spreadLimit = typicalSpread * JITTERSPREAD;
-      var jitterFactors = [];
-      var maxJitterFactor = 0;
-      var newJitter;
-      if (trace.jitter) {
-        if (typicalSpread === 0) {
-          maxJitterFactor = 1;
-          jitterFactors = new Array(pts.length);
-          for (i = 0; i < pts.length; i++) {
-            jitterFactors[i] = 1;
-          }
-        } else {
-          for (i = 0; i < pts.length; i++) {
-            var i0 = Math.max(0, i - JITTERCOUNT);
-            var pmin = pts[i0].v;
-            var i1 = Math.min(pts.length - 1, i + JITTERCOUNT);
-            var pmax = pts[i1].v;
-            if (mode !== "all") {
-              if (pts[i].v < d.lf) pmax = Math.min(pmax, d.lf);
-              else pmin = Math.max(pmin, d.uf);
-            }
-            var jitterFactor = Math.sqrt(spreadLimit * (i1 - i0) / (pmax - pmin + minSpread)) || 0;
-            jitterFactor = lib_default.constrain(Math.abs(jitterFactor), 0, 1);
-            jitterFactors.push(jitterFactor);
-            maxJitterFactor = Math.max(jitterFactor, maxJitterFactor);
-          }
-        }
-        newJitter = trace.jitter * 2 / (maxJitterFactor || 1);
-      }
-      for (i = 0; i < pts.length; i++) {
-        var pt = pts[i];
-        var v = pt.v;
-        var jitterOffset = trace.jitter ? newJitter * jitterFactors[i] * (lib_default.pseudoRandom() - 0.5) : 0;
-        var posPx = d.pos + bPos + bdPos * (trace.pointpos + jitterOffset);
-        if (trace.orientation === "h") {
-          pt.y = posPx;
-          pt.x = v;
-        } else {
-          pt.x = posPx;
-          pt.y = v;
-        }
-        if (mode === "suspectedoutliers" && v < d.uo && v > d.lo) {
-          pt.so = true;
-        }
-      }
-      return pts;
-    });
-    paths.enter().append("path").classed("point", true);
-    paths.exit().remove();
-    paths.call(drawing_default.translatePoints, xa, ya);
-  }
-  function plotBoxMean(sel, axes2, trace, t) {
-    var valAxis = axes2.val;
-    var posAxis = axes2.pos;
-    var posHasRangeBreaks = !!posAxis.rangebreaks;
-    var bPos = t.bPos;
-    var bPosPxOffset = t.bPosPxOffset || 0;
-    var mode = trace.boxmean || (trace.meanline || {}).visible;
-    var bdPos0;
-    var bdPos1;
-    if (Array.isArray(t.bdPos)) {
-      bdPos0 = t.bdPos[0];
-      bdPos1 = t.bdPos[1];
-    } else {
-      bdPos0 = t.bdPos;
-      bdPos1 = t.bdPos;
-    }
-    var paths = sel.selectAll("path.mean").data(trace.type === "box" && trace.boxmean || trace.type === "violin" && trace.box.visible && trace.meanline.visible ? lib_default.identity : []);
-    paths.enter().append("path").attr("class", "mean").style({
-      fill: "none",
-      "vector-effect": "non-scaling-stroke"
-    });
-    paths.exit().remove();
-    paths.each(function(d) {
-      var lcenter = posAxis.c2l(d.pos + bPos, true);
-      var pos0 = posAxis.l2p(lcenter - bdPos0) + bPosPxOffset;
-      var pos1 = posAxis.l2p(lcenter + bdPos1) + bPosPxOffset;
-      var posc = posHasRangeBreaks ? (pos0 + pos1) / 2 : posAxis.l2p(lcenter) + bPosPxOffset;
-      var m = valAxis.c2p(d.mean, true);
-      var sl = valAxis.c2p(d.mean - d.sd, true);
-      var sh = valAxis.c2p(d.mean + d.sd, true);
-      if (trace.orientation === "h") {
-        import_d353.default.select(this).attr(
-          "d",
-          "M" + m + "," + pos0 + "V" + pos1 + (mode === "sd" ? "m0,0L" + sl + "," + posc + "L" + m + "," + pos0 + "L" + sh + "," + posc + "Z" : "")
-        );
-      } else {
-        import_d353.default.select(this).attr(
-          "d",
-          "M" + pos0 + "," + m + "H" + pos1 + (mode === "sd" ? "m0,0L" + posc + "," + sl + "L" + pos0 + "," + m + "L" + posc + "," + sh + "Z" : "")
-        );
-      }
     });
   }
-  var plot_default3 = {
-    plot: plot11,
-    plotBoxAndWhiskers,
-    plotPoints,
-    plotBoxMean
-  };
 
-  // src/traces/box/style.js
-  var import_d354 = __toESM(require_d3(), 1);
-  function style10(gd, cd, sel) {
-    var s = sel ? sel : import_d354.default.select(gd).selectAll("g.trace.boxes");
+  // src/traces/ohlc/style.js
+  var import_d351 = __toESM(require_d3(), 1);
+  function style8(gd, cd, sel) {
+    var s = sel ? sel : import_d351.default.select(gd).selectAll("g.ohlclayer").selectAll("g.trace");
     s.style("opacity", function(d) {
       return d[0].trace.opacity;
     });
     s.each(function(d) {
-      var el = import_d354.default.select(this);
       var trace = d[0].trace;
-      var lineWidth = trace.line.width;
-      function styleBox(boxSel, lineWidth2, lineColor, fillColor) {
-        boxSel.style("stroke-width", lineWidth2 + "px").call(color_default.stroke, lineColor).call(color_default.fill, fillColor);
-      }
-      var allBoxes = el.selectAll("path.box");
-      if (trace.type === "candlestick") {
-        allBoxes.each(function(boxData) {
-          if (boxData.empty) return;
-          var thisBox = import_d354.default.select(this);
-          var container = trace[boxData.dir];
-          styleBox(thisBox, container.line.width, container.line.color, container.fillcolor);
-          thisBox.style("opacity", trace.selectedpoints && !boxData.selected ? 0.3 : 1);
-        });
-      } else {
-        styleBox(allBoxes, lineWidth, trace.line.color, trace.fillcolor);
-        el.selectAll("path.mean").style({
-          "stroke-width": lineWidth,
-          "stroke-dasharray": 2 * lineWidth + "px," + lineWidth + "px"
-        }).call(color_default.stroke, trace.line.color);
-        var pts = el.selectAll("path.point");
-        drawing_default.pointStyle(pts, trace, gd);
-      }
+      import_d351.default.select(this).selectAll("path").each(function(di) {
+        if (di.empty) return;
+        var dirLine = trace[di.dir].line;
+        import_d351.default.select(this).style("fill", "none").call(color_default.stroke, dirLine.color).call(drawing_default.dashLine, dirLine.dash, dirLine.width).style("opacity", trace.selectedpoints && !di.selected ? 0.3 : 1);
+      });
     });
   }
-  function styleOnSelect3(gd, cd, sel) {
-    var trace = cd[0].trace;
-    var pts = sel.selectAll("path.point");
-    if (trace.selectedpoints) {
-      drawing_default.selectedPointStyle(pts, trace);
-    } else {
-      drawing_default.pointStyle(pts, trace, gd);
-    }
-  }
-  var style_default5 = {
-    style: style10,
-    styleOnSelect: styleOnSelect3
+
+  // src/traces/ohlc/index.js
+  var { calc: _req35 } = calc_default2;
+  var { hoverPoints: _req64 } = hover_default3;
+  var ohlc_default = {
+    moduleType: "trace",
+    name: "ohlc",
+    basePlotModule: cartesian_default,
+    categories: ["cartesian", "svg", "showLegend"],
+    meta: {},
+    attributes: attributes_default22,
+    supplyDefaults: supplyDefaults10,
+    calc: _req35,
+    plot: plot12,
+    style: style8,
+    hoverPoints: _req64,
+    selectPoints: selectPoints3
   };
 
-  // src/traces/candlestick/index.js
-  var { supplyLayoutDefaults: _req315 } = layout_defaults_default5;
-  var { crossTraceCalc: _req410 } = cross_trace_calc_default2;
-  var { plot: _req73 } = plot_default3;
-  var { style: _req85 } = style_default5;
-  var { hoverPoints: _req94 } = hover_default3;
+  // src/traces/pie/layout_defaults.js
+  function supplyLayoutDefaults12(layoutIn, layoutOut) {
+    function coerce3(attr2, dflt) {
+      return lib_default.coerce(layoutIn, layoutOut, layout_attributes_default9, attr2, dflt);
+    }
+    coerce3("hiddenlabels");
+    coerce3("piecolorway", layoutOut.colorway);
+    coerce3("extendpiecolors");
+  }
+
+  // src/traces/pie/style.js
+  var import_d352 = __toESM(require_d3(), 1);
+  var { resizeText: resizeText5 } = uniform_text_default;
+  function style9(gd) {
+    var s = gd._fullLayout._pielayer.selectAll(".trace");
+    resizeText5(gd, s, "pie");
+    s.each(function(cd) {
+      var cd0 = cd[0];
+      var trace = cd0.trace;
+      var traceSelection = import_d352.default.select(this);
+      traceSelection.style({ opacity: trace.opacity });
+      traceSelection.selectAll("path.surface").each(function(pt) {
+        import_d352.default.select(this).call(styleOne, pt, trace, gd);
+      });
+    });
+  }
+
+  // src/traces/pie/base_plot.js
+  var name8 = "pie";
+  var plot13 = function(gd, traces, transitionOpts, makeOnCompleteCallback) {
+    plots_default.plotBasePlot(name8, gd, traces, transitionOpts, makeOnCompleteCallback);
+  };
+  var clean6 = function(newFullData, newFullLayout, oldFullData, oldFullLayout) {
+    plots_default.cleanBasePlot(name8, newFullData, newFullLayout, oldFullData, oldFullLayout);
+  };
+  var base_plot_default3 = { name: name8, plot: plot13, clean: clean6 };
+
+  // src/traces/pie/index.js
+  var { supplyDefaults: _req1 } = defaults_default4;
+  var { calc: _req42, crossTraceCalc: _req54 } = calc_default4;
+  var { plot: _req65 } = plot_default3;
+  var pie_default = {
+    attributes: attributes_default26,
+    supplyDefaults: _req1,
+    supplyLayoutDefaults: supplyLayoutDefaults12,
+    layoutAttributes: layout_attributes_default9,
+    calc: _req42,
+    crossTraceCalc: _req54,
+    plot: _req65,
+    style: style9,
+    styleOne,
+    moduleType: "trace",
+    name: "pie",
+    basePlotModule: base_plot_default3,
+    categories: ["pie-like", "pie", "showLegend"],
+    meta: {}
+  };
+
+  // src/traces/waterfall/constants.js
+  var constants_default18 = {
+    eventDataKeys: [
+      "initial",
+      "delta",
+      "final"
+    ]
+  };
+
+  // src/traces/waterfall/attributes.js
+  var { line: lineAttrs3 } = attributes_default9;
+  var { axisHoverFormat: axisHoverFormat9 } = axis_format_attributes_default;
+  function directionAttrs3(dirTxt) {
+    return {
+      marker: {
+        color: extendFlat({}, attributes_default21.marker.color, {
+          arrayOk: false,
+          editType: "style"
+        }),
+        line: {
+          color: extendFlat({}, attributes_default21.marker.line.color, {
+            arrayOk: false,
+            editType: "style"
+          }),
+          width: extendFlat({}, attributes_default21.marker.line.width, {
+            arrayOk: false,
+            editType: "style"
+          }),
+          editType: "style"
+        },
+        editType: "style"
+      },
+      editType: "style"
+    };
+  }
+  var attributes_default30 = {
+    measure: {
+      valType: "data_array",
+      dflt: [],
+      editType: "calc"
+    },
+    base: {
+      valType: "number",
+      dflt: null,
+      arrayOk: false,
+      editType: "calc"
+    },
+    x: attributes_default21.x,
+    x0: attributes_default21.x0,
+    dx: attributes_default21.dx,
+    y: attributes_default21.y,
+    y0: attributes_default21.y0,
+    dy: attributes_default21.dy,
+    xperiod: attributes_default21.xperiod,
+    yperiod: attributes_default21.yperiod,
+    xperiod0: attributes_default21.xperiod0,
+    yperiod0: attributes_default21.yperiod0,
+    xperiodalignment: attributes_default21.xperiodalignment,
+    yperiodalignment: attributes_default21.yperiodalignment,
+    xhoverformat: axisHoverFormat9("x"),
+    yhoverformat: axisHoverFormat9("y"),
+    hovertext: attributes_default21.hovertext,
+    hovertemplate: hovertemplateAttrs({}, { keys: constants_default18.eventDataKeys }),
+    hovertemplatefallback: templatefallbackAttrs(),
+    hoverinfo: extendFlat({}, attributes_default2.hoverinfo, {
+      flags: ["name", "x", "y", "text", "initial", "delta", "final"]
+    }),
+    textinfo: {
+      valType: "flaglist",
+      flags: ["label", "text", "initial", "delta", "final"],
+      extras: ["none"],
+      editType: "plot",
+      arrayOk: false
+    },
+    // TODO: incorporate `label` and `value` in the eventData
+    texttemplate: texttemplateAttrs({ editType: "plot" }, { keys: constants_default18.eventDataKeys.concat(["label"]) }),
+    texttemplatefallback: templatefallbackAttrs({ editType: "plot" }),
+    text: attributes_default21.text,
+    textposition: attributes_default21.textposition,
+    insidetextanchor: attributes_default21.insidetextanchor,
+    textangle: attributes_default21.textangle,
+    textfont: attributes_default21.textfont,
+    insidetextfont: attributes_default21.insidetextfont,
+    outsidetextfont: attributes_default21.outsidetextfont,
+    constraintext: attributes_default21.constraintext,
+    cliponaxis: attributes_default21.cliponaxis,
+    orientation: attributes_default21.orientation,
+    offset: attributes_default21.offset,
+    width: attributes_default21.width,
+    increasing: directionAttrs3("increasing"),
+    decreasing: directionAttrs3("decreasing"),
+    totals: directionAttrs3("intermediate sums and total"),
+    connector: {
+      line: {
+        color: extendFlat({}, lineAttrs3.color, { dflt: color_default.defaultLine }),
+        width: extendFlat({}, lineAttrs3.width, {
+          editType: "plot"
+          // i.e. to adjust bars is mode: 'between'. See https://github.com/plotly/plotly.js/issues/3787
+        }),
+        dash: lineAttrs3.dash,
+        editType: "plot"
+      },
+      mode: {
+        valType: "enumerated",
+        values: ["spanning", "between"],
+        dflt: "between",
+        editType: "plot"
+      },
+      visible: {
+        valType: "boolean",
+        dflt: true,
+        editType: "plot"
+      },
+      editType: "plot"
+    },
+    offsetgroup: attributes_default21.offsetgroup,
+    alignmentgroup: attributes_default21.alignmentgroup,
+    zorder: attributes_default21.zorder
+  };
+
+  // src/traces/waterfall/layout_attributes.js
+  var layout_attributes_default11 = {
+    waterfallmode: {
+      valType: "enumerated",
+      values: ["group", "overlay"],
+      dflt: "group",
+      editType: "calc"
+    },
+    waterfallgap: {
+      valType: "number",
+      min: 0,
+      max: 1,
+      editType: "calc"
+    },
+    waterfallgroupgap: {
+      valType: "number",
+      min: 0,
+      max: 1,
+      dflt: 0,
+      editType: "calc"
+    }
+  };
+
+  // src/traces/waterfall/defaults.js
+  var { handleText: handleText6 } = defaults_default2;
+  var INCREASING_COLOR2 = delta_default.INCREASING.COLOR;
+  var DECREASING_COLOR2 = delta_default.DECREASING.COLOR;
+  var TOTALS_COLOR = "#4499FF";
+  function handleDirection3(coerce3, direction, defaultColor) {
+    coerce3(direction + ".marker.color", defaultColor);
+    coerce3(direction + ".marker.line.color", color_default.defaultLine);
+    coerce3(direction + ".marker.line.width");
+  }
+  function supplyDefaults11(traceIn, traceOut, defaultColor, layout) {
+    function coerce3(attr2, dflt) {
+      return lib_default.coerce(traceIn, traceOut, attributes_default30, attr2, dflt);
+    }
+    var len2 = handleXYDefaults(traceIn, traceOut, layout, coerce3);
+    if (!len2) {
+      traceOut.visible = false;
+      return;
+    }
+    handlePeriodDefaults(traceIn, traceOut, layout, coerce3);
+    coerce3("xhoverformat");
+    coerce3("yhoverformat");
+    coerce3("measure");
+    coerce3("orientation", traceOut.x && !traceOut.y ? "h" : "v");
+    coerce3("base");
+    coerce3("offset");
+    coerce3("width");
+    coerce3("text");
+    coerce3("hovertext");
+    coerce3("hovertemplate");
+    coerce3("hovertemplatefallback");
+    var textposition = coerce3("textposition");
+    handleText6(traceIn, traceOut, layout, coerce3, textposition, {
+      moduleHasSelected: false,
+      moduleHasUnselected: false,
+      moduleHasConstrain: true,
+      moduleHasCliponaxis: true,
+      moduleHasTextangle: true,
+      moduleHasInsideanchor: true
+    });
+    if (traceOut.textposition !== "none") {
+      coerce3("texttemplate");
+      coerce3("texttemplatefallback");
+      if (!traceOut.texttemplate) coerce3("textinfo");
+    }
+    handleDirection3(coerce3, "increasing", INCREASING_COLOR2);
+    handleDirection3(coerce3, "decreasing", DECREASING_COLOR2);
+    handleDirection3(coerce3, "totals", TOTALS_COLOR);
+    var connectorVisible = coerce3("connector.visible");
+    if (connectorVisible) {
+      coerce3("connector.mode");
+      var connectorLineWidth = coerce3("connector.line.width");
+      if (connectorLineWidth) {
+        coerce3("connector.line.color");
+        coerce3("connector.line.dash");
+      }
+    }
+    coerce3("zorder");
+  }
+  function crossTraceDefaults6(fullData, fullLayout) {
+    var traceIn, traceOut;
+    function coerce3(attr2) {
+      return lib_default.coerce(traceOut._input, traceOut, attributes_default30, attr2);
+    }
+    if (fullLayout.waterfallmode === "group") {
+      for (var i = 0; i < fullData.length; i++) {
+        traceOut = fullData[i];
+        traceIn = traceOut._input;
+        handleGroupingDefaults(traceIn, traceOut, fullLayout, coerce3, fullLayout.waterfallmode);
+      }
+    }
+  }
+  var defaults_default6 = {
+    supplyDefaults: supplyDefaults11,
+    crossTraceDefaults: crossTraceDefaults6
+  };
+
+  // src/traces/waterfall/layout_defaults.js
+  function layout_defaults_default5(layoutIn, layoutOut, fullData) {
+    var hasTraceType = false;
+    function coerce3(attr2, dflt) {
+      return lib_default.coerce(layoutIn, layoutOut, layout_attributes_default11, attr2, dflt);
+    }
+    for (var i = 0; i < fullData.length; i++) {
+      var trace = fullData[i];
+      if (trace.visible && trace.type === "waterfall") {
+        hasTraceType = true;
+        break;
+      }
+    }
+    if (hasTraceType) {
+      coerce3("waterfallmode");
+      coerce3("waterfallgap", 0.2);
+      coerce3("waterfallgroupgap");
+    }
+  }
+
+  // src/traces/waterfall/calc.js
+  var { mergeArray } = lib_default;
+  var { BADNUM: BADNUM17 } = numerical_default;
+  function isAbsolute(a) {
+    return a === "a" || a === "absolute";
+  }
+  function isTotal(a) {
+    return a === "t" || a === "total";
+  }
+  function calc12(gd, trace) {
+    var xa = axes_default.getFromId(gd, trace.xaxis || "x");
+    var ya = axes_default.getFromId(gd, trace.yaxis || "y");
+    var size, pos, origPos, pObj, hasPeriod, pLetter;
+    if (trace.orientation === "h") {
+      size = xa.makeCalcdata(trace, "x");
+      origPos = ya.makeCalcdata(trace, "y");
+      pObj = alignPeriod(trace, ya, "y", origPos);
+      hasPeriod = !!trace.yperiodalignment;
+      pLetter = "y";
+    } else {
+      size = ya.makeCalcdata(trace, "y");
+      origPos = xa.makeCalcdata(trace, "x");
+      pObj = alignPeriod(trace, xa, "x", origPos);
+      hasPeriod = !!trace.xperiodalignment;
+      pLetter = "x";
+    }
+    pos = pObj.vals;
+    var serieslen = Math.min(pos.length, size.length);
+    var cd = new Array(serieslen);
+    var previousSum = 0;
+    var newSize;
+    var hasTotals = false;
+    for (var i = 0; i < serieslen; i++) {
+      var amount = size[i] || 0;
+      var connectToNext = false;
+      if (size[i] !== BADNUM17 || isTotal(trace.measure[i]) || isAbsolute(trace.measure[i])) {
+        if (i + 1 < serieslen && (size[i + 1] !== BADNUM17 || isTotal(trace.measure[i + 1]) || isAbsolute(trace.measure[i + 1]))) {
+          connectToNext = true;
+        }
+      }
+      var cdi = cd[i] = {
+        i,
+        p: pos[i],
+        s: amount,
+        rawS: amount,
+        cNext: connectToNext
+      };
+      if (isAbsolute(trace.measure[i])) {
+        previousSum = cdi.s;
+        cdi.isSum = true;
+        cdi.dir = "totals";
+        cdi.s = previousSum;
+      } else if (isTotal(trace.measure[i])) {
+        cdi.isSum = true;
+        cdi.dir = "totals";
+        cdi.s = previousSum;
+      } else {
+        cdi.isSum = false;
+        cdi.dir = cdi.rawS < 0 ? "decreasing" : "increasing";
+        newSize = cdi.s;
+        cdi.s = previousSum + newSize;
+        previousSum += newSize;
+      }
+      if (cdi.dir === "totals") {
+        hasTotals = true;
+      }
+      if (hasPeriod) {
+        cd[i].orig_p = origPos[i];
+        cd[i][pLetter + "End"] = pObj.ends[i];
+        cd[i][pLetter + "Start"] = pObj.starts[i];
+      }
+      if (trace.ids) {
+        cdi.id = String(trace.ids[i]);
+      }
+      cdi.v = (trace.base || 0) + previousSum;
+    }
+    if (cd.length) cd[0].hasTotals = hasTotals;
+    mergeArray(trace.text, cd, "tx");
+    mergeArray(trace.hovertext, cd, "htx");
+    calcSelection(cd, trace);
+    return cd;
+  }
+
+  // src/traces/waterfall/cross_trace_calc.js
+  var { setGroupPositions: setGroupPositions4 } = cross_trace_calc_default;
+  function crossTraceCalc7(gd, plotinfo) {
+    var fullLayout = gd._fullLayout;
+    var fullData = gd._fullData;
+    var calcdata = gd.calcdata;
+    var xa = plotinfo.xaxis;
+    var ya = plotinfo.yaxis;
+    var waterfalls = [];
+    var waterfallsVert = [];
+    var waterfallsHorz = [];
+    var cd, i;
+    for (i = 0; i < fullData.length; i++) {
+      var fullTrace = fullData[i];
+      if (fullTrace.visible === true && fullTrace.xaxis === xa._id && fullTrace.yaxis === ya._id && fullTrace.type === "waterfall") {
+        cd = calcdata[i];
+        if (fullTrace.orientation === "h") {
+          waterfallsHorz.push(cd);
+        } else {
+          waterfallsVert.push(cd);
+        }
+        waterfalls.push(cd);
+      }
+    }
+    var opts = {
+      mode: fullLayout.waterfallmode,
+      norm: fullLayout.waterfallnorm,
+      gap: fullLayout.waterfallgap,
+      groupgap: fullLayout.waterfallgroupgap
+    };
+    setGroupPositions4(gd, xa, ya, waterfallsVert, opts);
+    setGroupPositions4(gd, ya, xa, waterfallsHorz, opts);
+    for (i = 0; i < waterfalls.length; i++) {
+      cd = waterfalls[i];
+      for (var j = 0; j < cd.length; j++) {
+        var di = cd[j];
+        if (di.isSum === false) {
+          di.s0 += j === 0 ? 0 : cd[j - 1].s;
+        }
+        if (j + 1 < cd.length) {
+          cd[j].nextP0 = cd[j + 1].p0;
+          cd[j].nextS0 = cd[j + 1].s0;
+        }
+      }
+    }
+  }
+
+  // src/traces/waterfall/plot.js
+  var import_d353 = __toESM(require_d3(), 1);
+  var { BADNUM: BADNUM18 } = numerical_default;
+  var { clearMinTextSize: clearMinTextSize6 } = uniform_text_default;
+  function plot14(gd, plotinfo, cdModule, traceLayer) {
+    var fullLayout = gd._fullLayout;
+    clearMinTextSize6("waterfall", fullLayout);
+    plot_default.plot(gd, plotinfo, cdModule, traceLayer, {
+      mode: fullLayout.waterfallmode,
+      norm: fullLayout.waterfallmode,
+      gap: fullLayout.waterfallgap,
+      groupgap: fullLayout.waterfallgroupgap
+    });
+    plotConnectors(gd, plotinfo, cdModule, traceLayer);
+  }
+  function plotConnectors(gd, plotinfo, cdModule, traceLayer) {
+    var xa = plotinfo.xaxis;
+    var ya = plotinfo.yaxis;
+    lib_default.makeTraceGroups(traceLayer, cdModule, "trace bars").each(function(cd) {
+      var plotGroup = import_d353.default.select(this);
+      var trace = cd[0].trace;
+      var group = lib_default.ensureSingle(plotGroup, "g", "lines");
+      if (!trace.connector || !trace.connector.visible) {
+        group.remove();
+        return;
+      }
+      var isHorizontal = trace.orientation === "h";
+      var mode = trace.connector.mode;
+      var connectors = group.selectAll("g.line").data(lib_default.identity);
+      connectors.enter().append("g").classed("line", true);
+      connectors.exit().remove();
+      var len2 = connectors.size();
+      connectors.each(function(di, i) {
+        if (i !== len2 - 1 && !di.cNext) return;
+        var xy = getXY3(di, xa, ya, isHorizontal);
+        var x = xy[0];
+        var y = xy[1];
+        var shape = "";
+        if (x[0] !== BADNUM18 && y[0] !== BADNUM18 && x[1] !== BADNUM18 && y[1] !== BADNUM18) {
+          if (mode === "spanning") {
+            if (!di.isSum && i > 0) {
+              if (isHorizontal) {
+                shape += "M" + x[0] + "," + y[1] + "V" + y[0];
+              } else {
+                shape += "M" + x[1] + "," + y[0] + "H" + x[0];
+              }
+            }
+          }
+          if (mode !== "between") {
+            if (di.isSum || i < len2 - 1) {
+              if (isHorizontal) {
+                shape += "M" + x[1] + "," + y[0] + "V" + y[1];
+              } else {
+                shape += "M" + x[0] + "," + y[1] + "H" + x[1];
+              }
+            }
+          }
+          if (x[2] !== BADNUM18 && y[2] !== BADNUM18) {
+            if (isHorizontal) {
+              shape += "M" + x[1] + "," + y[1] + "V" + y[2];
+            } else {
+              shape += "M" + x[1] + "," + y[1] + "H" + x[2];
+            }
+          }
+        }
+        if (shape === "") shape = "M0,0Z";
+        lib_default.ensureSingle(import_d353.default.select(this), "path").attr("d", shape).call(drawing_default.setClipUrl, plotinfo.layerClipId, gd);
+      });
+    });
+  }
+  function getXY3(di, xa, ya, isHorizontal) {
+    var s = [];
+    var p = [];
+    var sAxis = isHorizontal ? xa : ya;
+    var pAxis = isHorizontal ? ya : xa;
+    s[0] = sAxis.c2p(di.s0, true);
+    p[0] = pAxis.c2p(di.p0, true);
+    s[1] = sAxis.c2p(di.s1, true);
+    p[1] = pAxis.c2p(di.p1, true);
+    s[2] = sAxis.c2p(di.nextS0, true);
+    p[2] = pAxis.c2p(di.nextP0, true);
+    return isHorizontal ? [s, p] : [p, s];
+  }
+
+  // src/traces/waterfall/style.js
+  var import_d354 = __toESM(require_d3(), 1);
+  var { DESELECTDIM: DESELECTDIM4 } = interactions_default;
+  var { resizeText: resizeText6 } = uniform_text_default;
+  var styleTextPoints3 = style_default2.styleTextPoints;
+  function style10(gd, cd, sel) {
+    var s = sel ? sel : import_d354.default.select(gd).selectAll('g[class^="waterfalllayer"]').selectAll("g.trace");
+    resizeText6(gd, s, "waterfall");
+    s.style("opacity", function(d) {
+      return d[0].trace.opacity;
+    });
+    s.each(function(d) {
+      var gTrace = import_d354.default.select(this);
+      var trace = d[0].trace;
+      gTrace.selectAll(".point > path").each(function(di) {
+        if (!di.isBlank) {
+          var cont = trace[di.dir].marker;
+          import_d354.default.select(this).call(color_default.fill, cont.color).call(color_default.stroke, cont.line.color).call(drawing_default.dashLine, cont.line.dash, cont.line.width).style("opacity", trace.selectedpoints && !di.selected ? DESELECTDIM4 : 1);
+        }
+      });
+      styleTextPoints3(gTrace, trace, gd);
+      gTrace.selectAll(".lines").each(function() {
+        var cont = trace.connector.line;
+        drawing_default.lineGroupStyle(
+          import_d354.default.select(this).selectAll("path"),
+          cont.width,
+          cont.color,
+          cont.dash
+        );
+      });
+    });
+  }
+  var style_default5 = {
+    style: style10
+  };
+
+  // src/traces/waterfall/hover.js
+  var { hoverLabelText: hoverLabelText3 } = axes_default;
+  var { opacity: opacity2 } = color_default;
+  var { hoverOnBars: hoverOnBars3 } = hover_default2;
+  var DIRSYMBOL2 = {
+    increasing: delta_default.INCREASING.SYMBOL,
+    decreasing: delta_default.DECREASING.SYMBOL
+  };
+  function hoverPoints6(pointData, xval, yval, hovermode, opts) {
+    var point = hoverOnBars3(pointData, xval, yval, hovermode, opts);
+    if (!point) return;
+    var cd = point.cd;
+    var trace = cd[0].trace;
+    var isHorizontal = trace.orientation === "h";
+    var vLetter = isHorizontal ? "x" : "y";
+    var vAxis = isHorizontal ? pointData.xa : pointData.ya;
+    function formatNumber(a) {
+      return hoverLabelText3(vAxis, a, trace[vLetter + "hoverformat"]);
+    }
+    var index = point.index;
+    var di = cd[index];
+    var size = di.isSum ? di.b + di.s : di.rawS;
+    point.initial = di.b + di.s - size;
+    point.delta = size;
+    point.final = point.initial + point.delta;
+    var v = formatNumber(Math.abs(point.delta));
+    point.deltaLabel = size < 0 ? "(" + v + ")" : v;
+    point.finalLabel = formatNumber(point.final);
+    point.initialLabel = formatNumber(point.initial);
+    var hoverinfo = di.hi || trace.hoverinfo;
+    var text = [];
+    if (hoverinfo && hoverinfo !== "none" && hoverinfo !== "skip") {
+      var isAll = hoverinfo === "all";
+      var parts = hoverinfo.split("+");
+      var hasFlag = function(flag) {
+        return isAll || parts.indexOf(flag) !== -1;
+      };
+      if (!di.isSum) {
+        if (hasFlag("final") && (isHorizontal ? !hasFlag("x") : !hasFlag("y"))) {
+          text.push(point.finalLabel);
+        }
+        if (hasFlag("delta")) {
+          if (size < 0) {
+            text.push(point.deltaLabel + " " + DIRSYMBOL2.decreasing);
+          } else {
+            text.push(point.deltaLabel + " " + DIRSYMBOL2.increasing);
+          }
+        }
+        if (hasFlag("initial")) {
+          text.push("Initial: " + point.initialLabel);
+        }
+      }
+    }
+    if (text.length) point.extraText = text.join("<br>");
+    point.color = getTraceColor4(trace, di);
+    return [point];
+  }
+  function getTraceColor4(trace, di) {
+    var cont = trace[di.dir].marker;
+    var mc = cont.color;
+    var mlc = cont.line.color;
+    var mlw = cont.line.width;
+    if (opacity2(mc)) return mc;
+    else if (opacity2(mlc) && mlw) return mlc;
+  }
+
+  // src/traces/waterfall/event_data.js
+  function eventData5(out, pt) {
+    out.x = "xVal" in pt ? pt.xVal : pt.x;
+    out.y = "yVal" in pt ? pt.yVal : pt.y;
+    if ("initial" in pt) out.initial = pt.initial;
+    if ("delta" in pt) out.delta = pt.delta;
+    if ("final" in pt) out.final = pt.final;
+    if (pt.xa) out.xaxis = pt.xa;
+    if (pt.ya) out.yaxis = pt.ya;
+    return out;
+  }
+
+  // src/traces/waterfall/index.js
+  var { supplyDefaults: _req25, crossTraceDefaults: _req36 } = defaults_default6;
+  var { style: _req84 } = style_default5;
+  var waterfall_default = {
+    attributes: attributes_default30,
+    layoutAttributes: layout_attributes_default11,
+    supplyDefaults: _req25,
+    crossTraceDefaults: _req36,
+    supplyLayoutDefaults: layout_defaults_default5,
+    calc: calc12,
+    crossTraceCalc: crossTraceCalc7,
+    plot: plot14,
+    style: _req84,
+    hoverPoints: hoverPoints6,
+    eventData: eventData5,
+    selectPoints: selectPoints2,
+    moduleType: "trace",
+    name: "waterfall",
+    basePlotModule: cartesian_default,
+    categories: ["bar-like", "cartesian", "svg", "oriented", "showLegend", "zoomScale"],
+    meta: {}
+  };
 
   // src/components/calendars/calendars.js
   var import_main = __toESM(require_main(), 1);
@@ -70792,57 +73771,7 @@ var Plotly = (() => {
   };
 
   // lib/index-finance.js
-  core_default.register([
-    _req0,
-    _req1,
-    _req2,
-    _req3,
-    _req4,
-    _req5,
-    _req6,
-    _req7,
-    _req8,
-    _req9,
-    _req10,
-    _req11,
-    _req12,
-    _req13,
-    _req14,
-    _req15,
-    _req16,
-    _req17,
-    _req18,
-    _req19,
-    _req20,
-    _req21,
-    _req22,
-    _req23,
-    _req24,
-    _req25,
-    _req26,
-    _req27,
-    _req28,
-    _req29,
-    _req30,
-    _req31,
-    _req32,
-    _req33,
-    _req34,
-    _req35,
-    _req36,
-    _req37,
-    _req38,
-    _req39,
-    _req40,
-    _req41,
-    _req42,
-    _req43,
-    _req44,
-    _req45,
-    _req46,
-    _req47,
-    _req48
-  ]);
+  core_default.register([bar_default, candlestick_default, funnel_default, funnelarea_default, histogram_default, indicator_default, ohlc_default, pie_default, scatter_default, waterfall_default, calendars_default2]);
   var index_finance_default = core_default;
   return __toCommonJS(index_finance_exports);
 })();

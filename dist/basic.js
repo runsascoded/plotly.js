@@ -40,8 +40,8 @@ var Plotly = (() => {
     return mod7 || (0, cb[__getOwnPropNames(cb)[0]])((mod7 = { exports: {} }).exports, mod7), mod7.exports;
   };
   var __export = (target, all) => {
-    for (var name6 in all)
-      __defProp(target, name6, { get: all[name6], enumerable: true });
+    for (var name7 in all)
+      __defProp(target, name7, { get: all[name7], enumerable: true });
   };
   var __copyProps = (to, from, except, desc) => {
     if (from && typeof from === "object" || typeof from === "function") {
@@ -97,14 +97,14 @@ var Plotly = (() => {
             d3_document.createElement("DIV").style.setProperty("opacity", 0, "");
           } catch (error) {
             var d3_element_prototype = this.Element.prototype, d3_element_setAttribute = d3_element_prototype.setAttribute, d3_element_setAttributeNS = d3_element_prototype.setAttributeNS, d3_style_prototype = this.CSSStyleDeclaration.prototype, d3_style_setProperty = d3_style_prototype.setProperty;
-            d3_element_prototype.setAttribute = function(name6, value) {
-              d3_element_setAttribute.call(this, name6, value + "");
+            d3_element_prototype.setAttribute = function(name7, value) {
+              d3_element_setAttribute.call(this, name7, value + "");
             };
             d3_element_prototype.setAttributeNS = function(space, local, value) {
               d3_element_setAttributeNS.call(this, space, local, value + "");
             };
-            d3_style_prototype.setProperty = function(name6, value, priority) {
-              d3_style_setProperty.call(this, name6, value + "", priority);
+            d3_style_prototype.setProperty = function(name7, value, priority) {
+              d3_style_setProperty.call(this, name7, value + "", priority);
             };
           }
         }
@@ -539,11 +539,11 @@ var Plotly = (() => {
             return value === source ? target : value;
           };
         }
-        function d3_vendorSymbol(object, name6) {
-          if (name6 in object) return name6;
-          name6 = name6.charAt(0).toUpperCase() + name6.slice(1);
+        function d3_vendorSymbol(object, name7) {
+          if (name7 in object) return name7;
+          name7 = name7.charAt(0).toUpperCase() + name7.slice(1);
           for (var i = 0, n = d3_vendorPrefixes.length; i < n; ++i) {
-            var prefixName = d3_vendorPrefixes[i] + name6;
+            var prefixName = d3_vendorPrefixes[i] + name7;
             if (prefixName in object) return prefixName;
           }
         }
@@ -558,15 +558,15 @@ var Plotly = (() => {
         function d3_dispatch() {
         }
         d3_dispatch.prototype.on = function(type, listener) {
-          var i = type.indexOf("."), name6 = "";
+          var i = type.indexOf("."), name7 = "";
           if (i >= 0) {
-            name6 = type.slice(i + 1);
+            name7 = type.slice(i + 1);
             type = type.slice(0, i);
           }
-          if (type) return arguments.length < 2 ? this[type].on(name6) : this[type].on(name6, listener);
+          if (type) return arguments.length < 2 ? this[type].on(name7) : this[type].on(name7, listener);
           if (arguments.length === 2) {
             if (listener == null) for (type in this) {
-              if (this.hasOwnProperty(type)) this[type].on(name6, null);
+              if (this.hasOwnProperty(type)) this[type].on(name7, null);
             }
             return this;
           }
@@ -578,15 +578,15 @@ var Plotly = (() => {
             while (++i < n) if (l = z[i].on) l.apply(this, arguments);
             return dispatch;
           }
-          event.on = function(name6, listener) {
-            var l = listenerByName.get(name6), i;
+          event.on = function(name7, listener) {
+            var l = listenerByName.get(name7), i;
             if (arguments.length < 2) return l && l.on;
             if (l) {
               l.on = null;
               listeners = listeners.slice(0, i = listeners.indexOf(l)).concat(listeners.slice(i + 1));
-              listenerByName.remove(name6);
+              listenerByName.remove(name7);
             }
-            if (listener) listeners.push(listenerByName.set(name6, {
+            if (listener) listeners.push(listenerByName.set(name7, {
               on: listener
             }));
             return dispatch;
@@ -704,154 +704,154 @@ var Plotly = (() => {
         };
         d344.ns = {
           prefix: d3_nsPrefix,
-          qualify: function(name6) {
-            var i = name6.indexOf(":"), prefix = name6;
-            if (i >= 0 && (prefix = name6.slice(0, i)) !== "xmlns") name6 = name6.slice(i + 1);
+          qualify: function(name7) {
+            var i = name7.indexOf(":"), prefix = name7;
+            if (i >= 0 && (prefix = name7.slice(0, i)) !== "xmlns") name7 = name7.slice(i + 1);
             return d3_nsPrefix.hasOwnProperty(prefix) ? {
               space: d3_nsPrefix[prefix],
-              local: name6
-            } : name6;
+              local: name7
+            } : name7;
           }
         };
-        d3_selectionPrototype.attr = function(name6, value) {
+        d3_selectionPrototype.attr = function(name7, value) {
           if (arguments.length < 2) {
-            if (typeof name6 === "string") {
+            if (typeof name7 === "string") {
               var node = this.node();
-              name6 = d344.ns.qualify(name6);
-              return name6.local ? node.getAttributeNS(name6.space, name6.local) : node.getAttribute(name6);
+              name7 = d344.ns.qualify(name7);
+              return name7.local ? node.getAttributeNS(name7.space, name7.local) : node.getAttribute(name7);
             }
-            for (value in name6) this.each(d3_selection_attr(value, name6[value]));
+            for (value in name7) this.each(d3_selection_attr(value, name7[value]));
             return this;
           }
-          return this.each(d3_selection_attr(name6, value));
+          return this.each(d3_selection_attr(name7, value));
         };
-        function d3_selection_attr(name6, value) {
-          name6 = d344.ns.qualify(name6);
+        function d3_selection_attr(name7, value) {
+          name7 = d344.ns.qualify(name7);
           function attrNull() {
-            this.removeAttribute(name6);
+            this.removeAttribute(name7);
           }
           function attrNullNS() {
-            this.removeAttributeNS(name6.space, name6.local);
+            this.removeAttributeNS(name7.space, name7.local);
           }
           function attrConstant() {
-            this.setAttribute(name6, value);
+            this.setAttribute(name7, value);
           }
           function attrConstantNS() {
-            this.setAttributeNS(name6.space, name6.local, value);
+            this.setAttributeNS(name7.space, name7.local, value);
           }
           function attrFunction() {
             var x = value.apply(this, arguments);
-            if (x == null) this.removeAttribute(name6);
-            else this.setAttribute(name6, x);
+            if (x == null) this.removeAttribute(name7);
+            else this.setAttribute(name7, x);
           }
           function attrFunctionNS() {
             var x = value.apply(this, arguments);
-            if (x == null) this.removeAttributeNS(name6.space, name6.local);
-            else this.setAttributeNS(name6.space, name6.local, x);
+            if (x == null) this.removeAttributeNS(name7.space, name7.local);
+            else this.setAttributeNS(name7.space, name7.local, x);
           }
-          return value == null ? name6.local ? attrNullNS : attrNull : typeof value === "function" ? name6.local ? attrFunctionNS : attrFunction : name6.local ? attrConstantNS : attrConstant;
+          return value == null ? name7.local ? attrNullNS : attrNull : typeof value === "function" ? name7.local ? attrFunctionNS : attrFunction : name7.local ? attrConstantNS : attrConstant;
         }
         function d3_collapse(s) {
           return s.trim().replace(/\s+/g, " ");
         }
-        d3_selectionPrototype.classed = function(name6, value) {
+        d3_selectionPrototype.classed = function(name7, value) {
           if (arguments.length < 2) {
-            if (typeof name6 === "string") {
-              var node = this.node(), n = (name6 = d3_selection_classes(name6)).length, i = -1;
+            if (typeof name7 === "string") {
+              var node = this.node(), n = (name7 = d3_selection_classes(name7)).length, i = -1;
               if (value = node.classList) {
-                while (++i < n) if (!value.contains(name6[i])) return false;
+                while (++i < n) if (!value.contains(name7[i])) return false;
               } else {
                 value = node.getAttribute("class");
-                while (++i < n) if (!d3_selection_classedRe(name6[i]).test(value)) return false;
+                while (++i < n) if (!d3_selection_classedRe(name7[i]).test(value)) return false;
               }
               return true;
             }
-            for (value in name6) this.each(d3_selection_classed(value, name6[value]));
+            for (value in name7) this.each(d3_selection_classed(value, name7[value]));
             return this;
           }
-          return this.each(d3_selection_classed(name6, value));
+          return this.each(d3_selection_classed(name7, value));
         };
-        function d3_selection_classedRe(name6) {
-          return new RegExp("(?:^|\\s+)" + d344.requote(name6) + "(?:\\s+|$)", "g");
+        function d3_selection_classedRe(name7) {
+          return new RegExp("(?:^|\\s+)" + d344.requote(name7) + "(?:\\s+|$)", "g");
         }
-        function d3_selection_classes(name6) {
-          return (name6 + "").trim().split(/^|\s+/);
+        function d3_selection_classes(name7) {
+          return (name7 + "").trim().split(/^|\s+/);
         }
-        function d3_selection_classed(name6, value) {
-          name6 = d3_selection_classes(name6).map(d3_selection_classedName);
-          var n = name6.length;
+        function d3_selection_classed(name7, value) {
+          name7 = d3_selection_classes(name7).map(d3_selection_classedName);
+          var n = name7.length;
           function classedConstant() {
             var i = -1;
-            while (++i < n) name6[i](this, value);
+            while (++i < n) name7[i](this, value);
           }
           function classedFunction() {
             var i = -1, x = value.apply(this, arguments);
-            while (++i < n) name6[i](this, x);
+            while (++i < n) name7[i](this, x);
           }
           return typeof value === "function" ? classedFunction : classedConstant;
         }
-        function d3_selection_classedName(name6) {
-          var re2 = d3_selection_classedRe(name6);
+        function d3_selection_classedName(name7) {
+          var re2 = d3_selection_classedRe(name7);
           return function(node, value) {
-            if (c = node.classList) return value ? c.add(name6) : c.remove(name6);
+            if (c = node.classList) return value ? c.add(name7) : c.remove(name7);
             var c = node.getAttribute("class") || "";
             if (value) {
               re2.lastIndex = 0;
-              if (!re2.test(c)) node.setAttribute("class", d3_collapse(c + " " + name6));
+              if (!re2.test(c)) node.setAttribute("class", d3_collapse(c + " " + name7));
             } else {
               node.setAttribute("class", d3_collapse(c.replace(re2, " ")));
             }
           };
         }
-        d3_selectionPrototype.style = function(name6, value, priority) {
+        d3_selectionPrototype.style = function(name7, value, priority) {
           var n = arguments.length;
           if (n < 3) {
-            if (typeof name6 !== "string") {
+            if (typeof name7 !== "string") {
               if (n < 2) value = "";
-              for (priority in name6) this.each(d3_selection_style(priority, name6[priority], value));
+              for (priority in name7) this.each(d3_selection_style(priority, name7[priority], value));
               return this;
             }
             if (n < 2) {
               var node = this.node();
-              return d3_window(node).getComputedStyle(node, null).getPropertyValue(name6);
+              return d3_window(node).getComputedStyle(node, null).getPropertyValue(name7);
             }
             priority = "";
           }
-          return this.each(d3_selection_style(name6, value, priority));
+          return this.each(d3_selection_style(name7, value, priority));
         };
-        function d3_selection_style(name6, value, priority) {
+        function d3_selection_style(name7, value, priority) {
           function styleNull() {
-            this.style.removeProperty(name6);
+            this.style.removeProperty(name7);
           }
           function styleConstant() {
-            this.style.setProperty(name6, value, priority);
+            this.style.setProperty(name7, value, priority);
           }
           function styleFunction() {
             var x = value.apply(this, arguments);
-            if (x == null) this.style.removeProperty(name6);
-            else this.style.setProperty(name6, x, priority);
+            if (x == null) this.style.removeProperty(name7);
+            else this.style.setProperty(name7, x, priority);
           }
           return value == null ? styleNull : typeof value === "function" ? styleFunction : styleConstant;
         }
-        d3_selectionPrototype.property = function(name6, value) {
+        d3_selectionPrototype.property = function(name7, value) {
           if (arguments.length < 2) {
-            if (typeof name6 === "string") return this.node()[name6];
-            for (value in name6) this.each(d3_selection_property(value, name6[value]));
+            if (typeof name7 === "string") return this.node()[name7];
+            for (value in name7) this.each(d3_selection_property(value, name7[value]));
             return this;
           }
-          return this.each(d3_selection_property(name6, value));
+          return this.each(d3_selection_property(name7, value));
         };
-        function d3_selection_property(name6, value) {
+        function d3_selection_property(name7, value) {
           function propertyNull() {
-            delete this[name6];
+            delete this[name7];
           }
           function propertyConstant() {
-            this[name6] = value;
+            this[name7] = value;
           }
           function propertyFunction() {
             var x = value.apply(this, arguments);
-            if (x == null) delete this[name6];
-            else this[name6] = x;
+            if (x == null) delete this[name7];
+            else this[name7] = x;
           }
           return value == null ? propertyNull : typeof value === "function" ? propertyFunction : propertyConstant;
         }
@@ -875,27 +875,27 @@ var Plotly = (() => {
             this.innerHTML = value;
           }) : this.node().innerHTML;
         };
-        d3_selectionPrototype.append = function(name6) {
-          name6 = d3_selection_creator(name6);
+        d3_selectionPrototype.append = function(name7) {
+          name7 = d3_selection_creator(name7);
           return this.select(function() {
-            return this.appendChild(name6.apply(this, arguments));
+            return this.appendChild(name7.apply(this, arguments));
           });
         };
-        function d3_selection_creator(name6) {
+        function d3_selection_creator(name7) {
           function create() {
             var document2 = this.ownerDocument, namespace = this.namespaceURI;
-            return namespace === d3_nsXhtml && document2.documentElement.namespaceURI === d3_nsXhtml ? document2.createElement(name6) : document2.createElementNS(namespace, name6);
+            return namespace === d3_nsXhtml && document2.documentElement.namespaceURI === d3_nsXhtml ? document2.createElement(name7) : document2.createElementNS(namespace, name7);
           }
           function createNS() {
-            return this.ownerDocument.createElementNS(name6.space, name6.local);
+            return this.ownerDocument.createElementNS(name7.space, name7.local);
           }
-          return typeof name6 === "function" ? name6 : (name6 = d344.ns.qualify(name6)).local ? createNS : create;
+          return typeof name7 === "function" ? name7 : (name7 = d344.ns.qualify(name7)).local ? createNS : create;
         }
-        d3_selectionPrototype.insert = function(name6, before) {
-          name6 = d3_selection_creator(name6);
+        d3_selectionPrototype.insert = function(name7, before) {
+          name7 = d3_selection_creator(name7);
           before = d3_selection_selector(before);
           return this.select(function() {
-            return this.insertBefore(name6.apply(this, arguments), before.apply(this, arguments) || null);
+            return this.insertBefore(name7.apply(this, arguments), before.apply(this, arguments) || null);
           });
         };
         d3_selectionPrototype.remove = function() {
@@ -1101,9 +1101,9 @@ var Plotly = (() => {
           }
           return d3_selection(subgroups);
         };
-        d3_selection_enterPrototype.insert = function(name6, before) {
+        d3_selection_enterPrototype.insert = function(name7, before) {
           if (arguments.length < 2) before = d3_selection_enterInsertBefore(this);
-          return d3_selectionPrototype.insert.call(this, name6, before);
+          return d3_selectionPrototype.insert.call(this, name7, before);
         };
         function d3_selection_enterInsertBefore(enter) {
           var i0, j0;
@@ -1151,30 +1151,30 @@ var Plotly = (() => {
           return this.each(d3_selection_on(type, listener, capture));
         };
         function d3_selection_on(type, listener, capture) {
-          var name6 = "__on" + type, i = type.indexOf("."), wrap = d3_selection_onListener;
+          var name7 = "__on" + type, i = type.indexOf("."), wrap = d3_selection_onListener;
           if (i > 0) type = type.slice(0, i);
           var filter2 = d3_selection_onFilters.get(type);
           if (filter2) type = filter2, wrap = d3_selection_onFilter;
           function onRemove() {
-            var l = this[name6];
+            var l = this[name7];
             if (l) {
               this.removeEventListener(type, l, l.$);
-              delete this[name6];
+              delete this[name7];
             }
           }
           function onAdd() {
             var l = wrap(listener, d3_array(arguments));
             onRemove.call(this);
-            this.addEventListener(type, this[name6] = l, l.$ = capture);
+            this.addEventListener(type, this[name7] = l, l.$ = capture);
             l._ = listener;
           }
           function removeAll() {
             var re2 = new RegExp("^__on([^.]+)" + d344.requote(type) + "$"), match;
-            for (var name7 in this) {
-              if (match = name7.match(re2)) {
-                var l = this[name7];
+            for (var name8 in this) {
+              if (match = name8.match(re2)) {
+                var l = this[name8];
                 this.removeEventListener(match[1], l, l.$);
-                delete this[name7];
+                delete this[name8];
               }
             }
           }
@@ -1212,7 +1212,7 @@ var Plotly = (() => {
         }
         var d3_event_dragSelect, d3_event_dragId = 0;
         function d3_event_dragSuppress(node) {
-          var name6 = ".dragsuppress-" + ++d3_event_dragId, click2 = "click" + name6, w = d344.select(d3_window(node)).on("touchmove" + name6, d3_eventPreventDefault).on("dragstart" + name6, d3_eventPreventDefault).on("selectstart" + name6, d3_eventPreventDefault);
+          var name7 = ".dragsuppress-" + ++d3_event_dragId, click2 = "click" + name7, w = d344.select(d3_window(node)).on("touchmove" + name7, d3_eventPreventDefault).on("dragstart" + name7, d3_eventPreventDefault).on("selectstart" + name7, d3_eventPreventDefault);
           if (d3_event_dragSelect == null) {
             d3_event_dragSelect = "onselectstart" in node ? false : d3_vendorSymbol(node.style, "userSelect");
           }
@@ -1221,7 +1221,7 @@ var Plotly = (() => {
             style6[d3_event_dragSelect] = "none";
           }
           return function(suppressClick) {
-            w.on(name6, null);
+            w.on(name7, null);
             if (d3_event_dragSelect) style6[d3_event_dragSelect] = select;
             if (suppressClick) {
               var off = function() {
@@ -2038,11 +2038,11 @@ var Plotly = (() => {
               d344.event = o;
             }
           };
-          xhr.header = function(name6, value) {
-            name6 = (name6 + "").toLowerCase();
-            if (arguments.length < 2) return headers[name6];
-            if (value == null) delete headers[name6];
-            else headers[name6] = value + "";
+          xhr.header = function(name7, value) {
+            name7 = (name7 + "").toLowerCase();
+            if (arguments.length < 2) return headers[name7];
+            if (value == null) delete headers[name7];
+            else headers[name7] = value + "";
             return xhr;
           };
           xhr.mimeType = function(value) {
@@ -2068,7 +2068,7 @@ var Plotly = (() => {
             if (arguments.length === 2 && typeof data === "function") callback2 = data, data = null;
             request.open(method, url, true);
             if (mimeType != null && !("accept" in headers)) headers["accept"] = mimeType + ",*/*";
-            if (request.setRequestHeader) for (var name6 in headers) request.setRequestHeader(name6, headers[name6]);
+            if (request.setRequestHeader) for (var name7 in headers) request.setRequestHeader(name7, headers[name7]);
             if (mimeType != null && request.overrideMimeType) request.overrideMimeType(mimeType);
             if (responseType != null) request.responseType = responseType;
             if (callback2 != null) xhr.on("error", callback2).on("load", function(request2) {
@@ -3389,8 +3389,8 @@ var Plotly = (() => {
             return d3_ease_reflect(d3_ease_reverse(f));
           }
         });
-        d344.ease = function(name6) {
-          var i = name6.indexOf("-"), t = i >= 0 ? name6.slice(0, i) : name6, m = i >= 0 ? name6.slice(i + 1) : "in";
+        d344.ease = function(name7) {
+          var i = name7.indexOf("-"), t = i >= 0 ? name7.slice(0, i) : name7, m = i >= 0 ? name7.slice(i + 1) : "in";
           t = d3_ease.get(t) || d3_ease_default;
           m = d3_ease_mode.get(m) || d3_identity;
           return d3_ease_clamp(m(t.apply(null, d3_arraySlice.call(arguments, 1))));
@@ -6167,8 +6167,8 @@ var Plotly = (() => {
         });
         d344.svg.symbolTypes = d3_svg_symbols.keys();
         var d3_svg_symbolSqrt3 = Math.sqrt(3), d3_svg_symbolTan30 = Math.tan(30 * d3_radians);
-        d3_selectionPrototype.transition = function(name6) {
-          var id = d3_transitionInheritId || ++d3_transitionId, ns = d3_transitionNamespace(name6), subgroups = [], subgroup, node, transition2 = d3_transitionInherit || {
+        d3_selectionPrototype.transition = function(name7) {
+          var id = d3_transitionInheritId || ++d3_transitionId, ns = d3_transitionNamespace(name7), subgroups = [], subgroup, node, transition2 = d3_transitionInherit || {
             time: Date.now(),
             ease: d3_ease_cubicInOut,
             delay: 0,
@@ -6183,8 +6183,8 @@ var Plotly = (() => {
           }
           return d3_transition(subgroups, ns, id);
         };
-        d3_selectionPrototype.interrupt = function(name6) {
-          return this.each(name6 == null ? d3_selection_interrupt : d3_selection_interruptNS(d3_transitionNamespace(name6)));
+        d3_selectionPrototype.interrupt = function(name7) {
+          return this.each(name7 == null ? d3_selection_interrupt : d3_selection_interruptNS(d3_transitionNamespace(name7)));
         };
         var d3_selection_interrupt = d3_selection_interruptNS(d3_transitionNamespace());
         function d3_selection_interruptNS(ns) {
@@ -6211,8 +6211,8 @@ var Plotly = (() => {
         d3_transitionPrototype.empty = d3_selectionPrototype.empty;
         d3_transitionPrototype.node = d3_selectionPrototype.node;
         d3_transitionPrototype.size = d3_selectionPrototype.size;
-        d344.transition = function(selection, name6) {
-          return selection && selection.transition ? d3_transitionInheritId ? selection.transition(name6) : selection : d344.selection().transition(selection);
+        d344.transition = function(selection, name7) {
+          return selection && selection.transition ? d3_transitionInheritId ? selection.transition(name7) : selection : d344.selection().transition(selection);
         };
         d344.transition.prototype = d3_transitionPrototype;
         d3_transitionPrototype.select = function(selector) {
@@ -6263,21 +6263,21 @@ var Plotly = (() => {
           }
           return d3_transition(subgroups, this.namespace, this.id);
         };
-        d3_transitionPrototype.tween = function(name6, tween) {
+        d3_transitionPrototype.tween = function(name7, tween) {
           var id = this.id, ns = this.namespace;
-          if (arguments.length < 2) return this.node()[ns][id].tween.get(name6);
+          if (arguments.length < 2) return this.node()[ns][id].tween.get(name7);
           return d3_selection_each(this, tween == null ? function(node) {
-            node[ns][id].tween.remove(name6);
+            node[ns][id].tween.remove(name7);
           } : function(node) {
-            node[ns][id].tween.set(name6, tween);
+            node[ns][id].tween.set(name7, tween);
           });
         };
-        function d3_transition_tween(groups, name6, value, tween) {
+        function d3_transition_tween(groups, name7, value, tween) {
           var id = groups.id, ns = groups.namespace;
           return d3_selection_each(groups, typeof value === "function" ? function(node, i, j) {
-            node[ns][id].tween.set(name6, tween(value.call(node, node.__data__, i, j)));
+            node[ns][id].tween.set(name7, tween(value.call(node, node.__data__, i, j)));
           } : (value = tween(value), function(node) {
-            node[ns][id].tween.set(name6, value);
+            node[ns][id].tween.set(name7, value);
           }));
         }
         d3_transitionPrototype.attr = function(nameNS, value) {
@@ -6285,79 +6285,79 @@ var Plotly = (() => {
             for (value in nameNS) this.attr(value, nameNS[value]);
             return this;
           }
-          var interpolate = nameNS == "transform" ? d3_interpolateTransform : d3_interpolate, name6 = d344.ns.qualify(nameNS);
+          var interpolate = nameNS == "transform" ? d3_interpolateTransform : d3_interpolate, name7 = d344.ns.qualify(nameNS);
           function attrNull() {
-            this.removeAttribute(name6);
+            this.removeAttribute(name7);
           }
           function attrNullNS() {
-            this.removeAttributeNS(name6.space, name6.local);
+            this.removeAttributeNS(name7.space, name7.local);
           }
           function attrTween(b) {
             return b == null ? attrNull : (b += "", function() {
-              var a = this.getAttribute(name6), i;
+              var a = this.getAttribute(name7), i;
               return a !== b && (i = interpolate(a, b), function(t) {
-                this.setAttribute(name6, i(t));
+                this.setAttribute(name7, i(t));
               });
             });
           }
           function attrTweenNS(b) {
             return b == null ? attrNullNS : (b += "", function() {
-              var a = this.getAttributeNS(name6.space, name6.local), i;
+              var a = this.getAttributeNS(name7.space, name7.local), i;
               return a !== b && (i = interpolate(a, b), function(t) {
-                this.setAttributeNS(name6.space, name6.local, i(t));
+                this.setAttributeNS(name7.space, name7.local, i(t));
               });
             });
           }
-          return d3_transition_tween(this, "attr." + nameNS, value, name6.local ? attrTweenNS : attrTween);
+          return d3_transition_tween(this, "attr." + nameNS, value, name7.local ? attrTweenNS : attrTween);
         };
         d3_transitionPrototype.attrTween = function(nameNS, tween) {
-          var name6 = d344.ns.qualify(nameNS);
+          var name7 = d344.ns.qualify(nameNS);
           function attrTween(d, i) {
-            var f = tween.call(this, d, i, this.getAttribute(name6));
+            var f = tween.call(this, d, i, this.getAttribute(name7));
             return f && function(t) {
-              this.setAttribute(name6, f(t));
+              this.setAttribute(name7, f(t));
             };
           }
           function attrTweenNS(d, i) {
-            var f = tween.call(this, d, i, this.getAttributeNS(name6.space, name6.local));
+            var f = tween.call(this, d, i, this.getAttributeNS(name7.space, name7.local));
             return f && function(t) {
-              this.setAttributeNS(name6.space, name6.local, f(t));
+              this.setAttributeNS(name7.space, name7.local, f(t));
             };
           }
-          return this.tween("attr." + nameNS, name6.local ? attrTweenNS : attrTween);
+          return this.tween("attr." + nameNS, name7.local ? attrTweenNS : attrTween);
         };
-        d3_transitionPrototype.style = function(name6, value, priority) {
+        d3_transitionPrototype.style = function(name7, value, priority) {
           var n = arguments.length;
           if (n < 3) {
-            if (typeof name6 !== "string") {
+            if (typeof name7 !== "string") {
               if (n < 2) value = "";
-              for (priority in name6) this.style(priority, name6[priority], value);
+              for (priority in name7) this.style(priority, name7[priority], value);
               return this;
             }
             priority = "";
           }
           function styleNull() {
-            this.style.removeProperty(name6);
+            this.style.removeProperty(name7);
           }
           function styleString(b) {
             return b == null ? styleNull : (b += "", function() {
-              var a = d3_window(this).getComputedStyle(this, null).getPropertyValue(name6), i;
+              var a = d3_window(this).getComputedStyle(this, null).getPropertyValue(name7), i;
               return a !== b && (i = d3_interpolate(a, b), function(t) {
-                this.style.setProperty(name6, i(t), priority);
+                this.style.setProperty(name7, i(t), priority);
               });
             });
           }
-          return d3_transition_tween(this, "style." + name6, value, styleString);
+          return d3_transition_tween(this, "style." + name7, value, styleString);
         };
-        d3_transitionPrototype.styleTween = function(name6, tween, priority) {
+        d3_transitionPrototype.styleTween = function(name7, tween, priority) {
           if (arguments.length < 3) priority = "";
           function styleTween(d, i) {
-            var f = tween.call(this, d, i, d3_window(this).getComputedStyle(this, null).getPropertyValue(name6));
+            var f = tween.call(this, d, i, d3_window(this).getComputedStyle(this, null).getPropertyValue(name7));
             return f && function(t) {
-              this.style.setProperty(name6, f(t), priority);
+              this.style.setProperty(name7, f(t), priority);
             };
           }
-          return this.tween("style." + name6, styleTween);
+          return this.tween("style." + name7, styleTween);
         };
         d3_transitionPrototype.text = function(value) {
           return d3_transition_tween(this, "text", value, d3_transition_text);
@@ -6442,8 +6442,8 @@ var Plotly = (() => {
           }
           return d3_transition(subgroups, ns, id1);
         };
-        function d3_transitionNamespace(name6) {
-          return name6 == null ? "__transition__" : "__transition_" + name6 + "__";
+        function d3_transitionNamespace(name7) {
+          return name7 == null ? "__transition__" : "__transition_" + name7 + "__";
         }
         function d3_transitionNode(node, i, ns, id, inherit) {
           var lock = node[ns] || (node[ns] = {
@@ -8260,10 +8260,10 @@ var Plotly = (() => {
         }
         return ret;
       }
-      function once(emitter, name6) {
+      function once(emitter, name7) {
         return new Promise(function(resolve, reject) {
           function errorListener(err) {
-            emitter.removeListener(name6, resolver);
+            emitter.removeListener(name7, resolver);
             reject(err);
           }
           function resolver() {
@@ -8273,8 +8273,8 @@ var Plotly = (() => {
             resolve([].slice.call(arguments));
           }
           ;
-          eventTargetAgnosticAddListener(emitter, name6, resolver, { once: true });
-          if (name6 !== "error") {
+          eventTargetAgnosticAddListener(emitter, name7, resolver, { once: true });
+          if (name7 !== "error") {
             addErrorHandlerIfEventEmitter(emitter, errorListener, { once: true });
           }
         });
@@ -8284,17 +8284,17 @@ var Plotly = (() => {
           eventTargetAgnosticAddListener(emitter, "error", handler, flags);
         }
       }
-      function eventTargetAgnosticAddListener(emitter, name6, listener, flags) {
+      function eventTargetAgnosticAddListener(emitter, name7, listener, flags) {
         if (typeof emitter.on === "function") {
           if (flags.once) {
-            emitter.once(name6, listener);
+            emitter.once(name7, listener);
           } else {
-            emitter.on(name6, listener);
+            emitter.on(name7, listener);
           }
         } else if (typeof emitter.addEventListener === "function") {
-          emitter.addEventListener(name6, function wrapListener(arg) {
+          emitter.addEventListener(name7, function wrapListener(arg) {
             if (flags.once) {
-              emitter.removeEventListener(name6, wrapListener);
+              emitter.removeEventListener(name7, wrapListener);
             }
             listener(arg);
           });
@@ -8401,13 +8401,13 @@ var Plotly = (() => {
   // node_modules/.pnpm/native-promise-only@0.8.1/node_modules/native-promise-only/lib/npo.src.js
   var require_npo_src = __commonJS({
     "node_modules/.pnpm/native-promise-only@0.8.1/node_modules/native-promise-only/lib/npo.src.js"(exports, module) {
-      (function UMD(name6, context, definition) {
-        context[name6] = context[name6] || definition();
+      (function UMD(name7, context, definition) {
+        context[name7] = context[name7] || definition();
         if (typeof module != "undefined" && module.exports) {
-          module.exports = context[name6];
+          module.exports = context[name7];
         } else if (typeof define == "function" && false) {
           define(function $AMD$() {
-            return context[name6];
+            return context[name7];
           });
         }
       })("Promise", typeof window != "undefined" ? window : exports, function DEF() {
@@ -8417,16 +8417,16 @@ var Plotly = (() => {
         } : setTimeout;
         try {
           Object.defineProperty({}, "x", {});
-          builtInProp = function builtInProp2(obj, name6, val, config) {
-            return Object.defineProperty(obj, name6, {
+          builtInProp = function builtInProp2(obj, name7, val, config) {
+            return Object.defineProperty(obj, name7, {
               value: val,
               writable: true,
               configurable: config !== false
             });
           };
         } catch (err) {
-          builtInProp = function builtInProp2(obj, name6, val) {
-            obj[name6] = val;
+          builtInProp = function builtInProp2(obj, name7, val) {
+            obj[name7] = val;
             return obj;
           };
         }
@@ -10003,16 +10003,16 @@ var Plotly = (() => {
             @param [language=''] {string} The language code to use for localisation (default is English).
             @return {Calendar} The calendar and localisation.
             @throws Error if calendar not found. */
-        instance: function(name6, language) {
-          name6 = (name6 || "gregorian").toLowerCase();
+        instance: function(name7, language) {
+          name7 = (name7 || "gregorian").toLowerCase();
           language = language || "";
-          var cal = this._localCals[name6 + "-" + language];
-          if (!cal && this.calendars[name6]) {
-            cal = new this.calendars[name6](language);
-            this._localCals[name6 + "-" + language] = cal;
+          var cal = this._localCals[name7 + "-" + language];
+          if (!cal && this.calendars[name7]) {
+            cal = new this.calendars[name7](language);
+            this._localCals[name7 + "-" + language] = cal;
           }
           if (!cal) {
-            throw (this.local.invalidCalendar || this.regionalOptions[""].invalidCalendar).replace(/\{0\}/, name6);
+            throw (this.local.invalidCalendar || this.regionalOptions[""].invalidCalendar).replace(/\{0\}/, name7);
           }
           return cal;
         },
@@ -12773,8 +12773,8 @@ var Plotly = (() => {
           registerLocale(newModule);
           break;
         case "apiMethod":
-          var name6 = newModule.name;
-          apiMethodRegistry[name6] = newModule.fn;
+          var name7 = newModule.name;
+          apiMethodRegistry[name7] = newModule.fn;
           break;
         default:
           throw new Error("Invalid module was attempted to be registered!");
@@ -12798,15 +12798,15 @@ var Plotly = (() => {
     }
     return !!_module.categories[category2];
   };
-  var getComponentMethod = function(name6, method) {
-    var _module = componentsRegistry[name6];
+  var getComponentMethod = function(name7, method) {
+    var _module = componentsRegistry[name7];
     if (!_module) return noop;
     return _module[method] || noop;
   };
   var call = function() {
-    var name6 = arguments[0];
+    var name7 = arguments[0];
     var args = [].slice.call(arguments, 1);
-    return apiMethodRegistry[name6].apply(null, args);
+    return apiMethodRegistry[name7].apply(null, args);
   };
   function registerTraceModule(_module) {
     var thisType = _module.name;
@@ -12866,19 +12866,19 @@ var Plotly = (() => {
     if (typeof _module.name !== "string") {
       throw new Error("Component module *name* must be a string.");
     }
-    var name6 = _module.name;
-    componentsRegistry[name6] = _module;
+    var name7 = _module.name;
+    componentsRegistry[name7] = _module;
     if (_module.layoutAttributes) {
       if (_module.layoutAttributes._isLinkedToArray) {
-        pushUnique(layoutArrayContainers, name6);
+        pushUnique(layoutArrayContainers, name7);
       }
       findArrayRegexps(_module);
     }
     for (var traceType in modules) {
-      mergeComponentAttrsToTrace(name6, traceType);
+      mergeComponentAttrsToTrace(name7, traceType);
     }
     for (var subplotName in subplotsRegistry) {
-      mergeComponentAttrsToSubplot(name6, subplotName);
+      mergeComponentAttrsToSubplot(name7, subplotName);
     }
     if (_module.schema && _module.schema.layout) {
       extendDeepAll2(layout_attributes_default2, _module.schema.layout);
@@ -17178,24 +17178,24 @@ var Plotly = (() => {
     }
     var isSimpleValueProp = SIMPLE_PROPERTY_REGEX.test(valueName);
     var obj = {
-      set: function(name6, value) {
+      set: function(name7, value) {
         var changeType = value === null ? UNSET : NONE;
         if (!arr) {
           if (!baseProp || changeType === UNSET) return;
           arr = [];
           baseProp.set(arr);
         }
-        var idx = indexLookup[name6];
+        var idx = indexLookup[name7];
         if (idx === void 0) {
           if (changeType === UNSET) return;
           changeType = changeType | BOTH;
           idx = arr.length;
-          indexLookup[name6] = idx;
+          indexLookup[name7] = idx;
         } else if (value !== (isSimpleValueProp ? arr[idx][valueName] : nestedProperty(arr[idx], valueName).get())) {
           changeType = changeType | VALUE;
         }
         var newValue = arr[idx] = arr[idx] || {};
-        newValue[keyName] = name6;
+        newValue[keyName] = name7;
         if (isSimpleValueProp) {
           newValue[valueName] = value;
         } else {
@@ -17207,9 +17207,9 @@ var Plotly = (() => {
         changeTypes[idx] = changeTypes[idx] | changeType;
         return obj;
       },
-      get: function(name6) {
+      get: function(name7) {
         if (!arr) return;
-        var idx = indexLookup[name6];
+        var idx = indexLookup[name7];
         if (idx === void 0) {
           return void 0;
         } else if (isSimpleValueProp) {
@@ -17218,22 +17218,22 @@ var Plotly = (() => {
           return nestedProperty(arr[idx], valueName).get();
         }
       },
-      rename: function(name6, newName) {
-        var idx = indexLookup[name6];
+      rename: function(name7, newName) {
+        var idx = indexLookup[name7];
         if (idx === void 0) return obj;
         changeTypes[idx] = changeTypes[idx] | NAME;
         indexLookup[newName] = idx;
-        delete indexLookup[name6];
+        delete indexLookup[name7];
         arr[idx][keyName] = newName;
         return obj;
       },
-      remove: function(name6) {
-        var idx = indexLookup[name6];
+      remove: function(name7) {
+        var idx = indexLookup[name7];
         if (idx === void 0) return obj;
         var object = arr[idx];
         if (Object.keys(object).length > 2) {
           changeTypes[idx] = changeTypes[idx] | VALUE;
-          return obj.set(name6, null);
+          return obj.set(name7, null);
         }
         if (isSimpleValueProp) {
           for (i = idx; i < arr.length; i++) {
@@ -17243,7 +17243,7 @@ var Plotly = (() => {
             indexLookup[arr[i][keyName]]--;
           }
           arr.splice(idx, 1);
-          delete indexLookup[name6];
+          delete indexLookup[name7];
         } else {
           nestedProperty(object, valueName).set(null);
           changeTypes[idx] = changeTypes[idx] | VALUE | UNSET;
@@ -18154,18 +18154,18 @@ var Plotly = (() => {
         }
       }
       if (value === void 0) {
-        const { count, max, name: name6 } = opts;
+        const { count, max, name: name7 } = opts;
         const fallbackValue = fallback === false ? match : fallback;
         if (count < max) {
           lib.warn(
             [
-              `Variable '${key}' in ${name6} could not be found!`,
+              `Variable '${key}' in ${name7} could not be found!`,
               "Please verify that the template is correct.",
               `Using value: '${fallbackValue}'.`
             ].join(" ")
           );
         }
-        if (count === max) lib.warn(`Too many '${name6}' warnings - additional warnings will be suppressed.`);
+        if (count === max) lib.warn(`Too many '${name7}' warnings - additional warnings will be suppressed.`);
         opts.count++;
         return fallbackValue;
       }
@@ -18860,8 +18860,8 @@ var Plotly = (() => {
     valType: "string",
     editType: "calc"
   };
-  var templatedArray = function(name6, attrs2) {
-    attrs2._isLinkedToArray = name6;
+  var templatedArray = function(name7, attrs2) {
+    attrs2._isLinkedToArray = name7;
     attrs2.name = templateAttrs.name;
     attrs2[TEMPLATEITEMNAME] = templateAttrs[TEMPLATEITEMNAME];
     return attrs2;
@@ -18892,17 +18892,17 @@ var Plotly = (() => {
       // TODO: function to figure out what's left & what didn't work
     };
   };
-  var newContainer = function(container, name6, baseName) {
+  var newContainer = function(container, name7, baseName) {
     var template = container._template;
-    var part = template && (template[name6] || baseName && template[baseName]);
+    var part = template && (template[name7] || baseName && template[baseName]);
     if (!lib_default.isPlainObject(part)) part = null;
-    var out = container[name6] = { _template: part };
+    var out = container[name7] = { _template: part };
     return out;
   };
-  var arrayTemplater = function(container, name6, inclusionAttr) {
+  var arrayTemplater = function(container, name7, inclusionAttr) {
     var template = container._template;
-    var defaultsTemplate = template && template[arrayDefaultKey(name6)];
-    var templateItems = template && template[name6];
+    var defaultsTemplate = template && template[arrayDefaultKey(name7)];
+    var templateItems = template && template[name7];
     if (!Array.isArray(templateItems) || !templateItems.length) {
       templateItems = [];
     }
@@ -18930,16 +18930,16 @@ var Plotly = (() => {
       var out = [];
       for (var i = 0; i < templateItems.length; i++) {
         var templateItem = templateItems[i];
-        var name7 = templateItem.name;
-        if (validItemName(name7) && !usedNames[name7]) {
+        var name8 = templateItem.name;
+        if (validItemName(name8) && !usedNames[name8]) {
           var outi = {
             _template: templateItem,
-            name: name7,
-            _input: { _templateitemname: name7 }
+            name: name8,
+            _input: { _templateitemname: name8 }
           };
           outi[TEMPLATEITEMNAME] = templateItem[TEMPLATEITEMNAME];
           out.push(outi);
-          usedNames[name7] = 1;
+          usedNames[name8] = 1;
         }
       }
       return out;
@@ -18949,15 +18949,15 @@ var Plotly = (() => {
       defaultItems
     };
   };
-  function validItemName(name6) {
-    return name6 && typeof name6 === "string";
+  function validItemName(name7) {
+    return name7 && typeof name7 === "string";
   }
-  function arrayDefaultKey(name6) {
-    var lastChar = name6.length - 1;
-    if (name6.charAt(lastChar) !== "s") {
-      lib_default.warn("bad argument to arrayDefaultKey: " + name6);
+  function arrayDefaultKey(name7) {
+    var lastChar = name7.length - 1;
+    if (name7.charAt(lastChar) !== "s") {
+      lib_default.warn("bad argument to arrayDefaultKey: " + name7);
     }
-    return name6.slice(0, -1) + "defaults";
+    return name7.slice(0, -1) + "defaults";
   }
   var arrayEditor = function(parentIn, containerStr, itemOut) {
     var lengthIn = (lib_default.nestedProperty(parentIn, containerStr).get() || []).length;
@@ -19073,11 +19073,11 @@ var Plotly = (() => {
     if (axNum === "1") axNum = "";
     return id.charAt(0) + "axis" + axNum;
   };
-  var name2id = function name2id2(name6) {
-    if (!name6.match(constants_default2.AX_NAME_PATTERN)) return;
-    var axNum = name6.slice(5);
+  var name2id = function name2id2(name7) {
+    if (!name7.match(constants_default2.AX_NAME_PATTERN)) return;
+    var axNum = name7.slice(5);
     if (axNum === "1") axNum = "";
-    return name6.charAt(0) + axNum;
+    return name7.charAt(0) + axNum;
   };
   var cleanId = function cleanId2(id, axLetter, domainId) {
     var domainTest = /( domain)$/.test(id);
@@ -19987,9 +19987,9 @@ var Plotly = (() => {
     }
     var modules2 = this._modules || [];
     for (i = 0; i < modules2.length; i++) {
-      var name6 = modules2[i].name;
-      if (name6 === category2) return true;
-      var _module = registry_default.modules[name6];
+      var name7 = modules2[i].name;
+      if (name7 === category2) return true;
+      var _module = registry_default.modules[name7];
       if (_module && _module.categories[category2]) return true;
     }
     return false;
@@ -23820,12 +23820,12 @@ var Plotly = (() => {
 
   // src/plots/array_container_defaults.js
   function handleArrayContainerDefaults(parentObjIn, parentObjOut, opts) {
-    var name6 = opts.name;
+    var name7 = opts.name;
     var inclusionAttr = opts.inclusionAttr || "visible";
-    var previousContOut = parentObjOut[name6];
-    var contIn = lib_default.isArrayOrTypedArray(parentObjIn[name6]) ? parentObjIn[name6] : [];
-    var contOut = parentObjOut[name6] = [];
-    var templater = plot_template_default.arrayTemplater(parentObjOut, name6, inclusionAttr);
+    var previousContOut = parentObjOut[name7];
+    var contIn = lib_default.isArrayOrTypedArray(parentObjIn[name7]) ? parentObjIn[name7] : [];
+    var contOut = parentObjOut[name7] = [];
+    var templater = plot_template_default.arrayTemplater(parentObjOut, name7, inclusionAttr);
     var i, itemOut;
     for (i = 0; i < contIn.length; i++) {
       var itemIn = contIn[i];
@@ -33174,27 +33174,27 @@ var Plotly = (() => {
     var isPieLike = registry_default.traceIs(trace, "pie-like");
     var isEditable = !legendObj._inHover && gd._context.edits.legendText && !isPieLike;
     var maxNameLength = legendObj._maxNameLength;
-    var name6, font2;
+    var name7, font2;
     if (legendItem.groupTitle) {
-      name6 = legendItem.groupTitle.text;
+      name7 = legendItem.groupTitle.text;
       font2 = legendItem.groupTitle.font;
     } else {
       font2 = legendObj.font;
       if (!legendObj.entries) {
-        name6 = isPieLike ? legendItem.label : trace.name;
+        name7 = isPieLike ? legendItem.label : trace.name;
         if (trace._meta) {
-          name6 = lib_default.templateString(name6, trace._meta);
+          name7 = lib_default.templateString(name7, trace._meta);
         }
       } else {
-        name6 = legendItem.text;
+        name7 = legendItem.text;
       }
     }
     var textEl = lib_default.ensureSingle(g, "text", legendId + "text");
-    textEl.attr("text-anchor", "start").call(drawing_default.font, font2).text(isEditable ? ensureLength(name6, maxNameLength) : name6);
+    textEl.attr("text-anchor", "start").call(drawing_default.font, font2).text(isEditable ? ensureLength(name7, maxNameLength) : name7);
     var textGap = legendObj.indentation + legendObj.itemwidth + constants_default3.itemGap * 2;
     svg_text_utils_default.positionText(textEl, textGap, 0);
     if (isEditable) {
-      textEl.call(svg_text_utils_default.makeEditable, { gd, text: name6 }).call(textLayout, g, gd, legendObj).on("edit", function(newName) {
+      textEl.call(svg_text_utils_default.makeEditable, { gd, text: name7 }).call(textLayout, g, gd, legendObj).on("edit", function(newName) {
         this.text(ensureLength(newName, maxNameLength)).call(textLayout, g, gd, legendObj);
         var fullInput = legendItem.trace._fullInput || {};
         var update3 = {};
@@ -34415,10 +34415,10 @@ var Plotly = (() => {
         if (pt.hoverinfo === "none") continue;
         var texts = getHoverLabelText(pt, true, hovermode, fullLayout, t02);
         var text = texts[0];
-        var name6 = texts[1];
-        pt.name = name6;
-        if (name6 !== "") {
-          pt.text = name6 + " : " + text;
+        var name7 = texts[1];
+        pt.name = name7;
+        if (name7 !== "") {
+          pt.text = name7 + " : " + text;
         } else {
           pt.text = text;
         }
@@ -34572,7 +34572,7 @@ var Plotly = (() => {
       var contrastColor = d.borderColor || color_default.contrast(numsColor);
       var texts2 = getHoverLabelText(d, showCommonLabel, hovermode, fullLayout, t02, g);
       var text2 = texts2[0];
-      var name7 = texts2[1];
+      var name8 = texts2[1];
       var tx = g.select("text.nums").call(drawing_default.font, {
         family: d.fontFamily || fontFamily,
         size: d.fontSize || fontSize,
@@ -34587,7 +34587,7 @@ var Plotly = (() => {
       var tx2 = g.select("text.name");
       var tx2width = 0;
       var tx2height = 0;
-      if (name7 && name7 !== text2) {
+      if (name8 && name8 !== text2) {
         tx2.call(drawing_default.font, {
           family: d.fontFamily || fontFamily,
           size: d.fontSize || fontSize,
@@ -34598,7 +34598,7 @@ var Plotly = (() => {
           textcase: d.fontTextcase || fontTextcase,
           lineposition: d.fontLineposition || fontLineposition,
           shadow: d.fontShadow || fontShadow
-        }).text(name7).attr("data-notex", 1).call(svg_text_utils_default.positionText, 0, 0).call(svg_text_utils_default.convertToTspans, gd);
+        }).text(name8).attr("data-notex", 1).call(svg_text_utils_default.positionText, 0, 0).call(svg_text_utils_default.convertToTspans, gd);
         var t2bb = getBoundingClientRect(gd, tx2.node());
         tx2width = t2bb.width + 2 * HOVERTEXTPAD;
         tx2height = t2bb.height + 2 * HOVERTEXTPAD;
@@ -34671,12 +34671,12 @@ var Plotly = (() => {
   }
   function getHoverLabelText(d, showCommonLabel, hovermode, fullLayout, t02, g) {
     var _a, _b;
-    var name6 = "";
+    var name7 = "";
     var text = "";
     if (d.nameOverride !== void 0) d.name = d.nameOverride;
     if (d.name) {
       if (d.trace._meta) d.name = lib_default.templateString(d.name, d.trace._meta);
-      name6 = plainText2(d.name, d.nameLength);
+      name7 = plainText2(d.name, d.nameLength);
     }
     var h0 = hovermode.charAt(0);
     var h1 = h0 === "x" ? "y" : "x";
@@ -34699,8 +34699,8 @@ var Plotly = (() => {
     }
     if (d.extraText !== void 0) text += (text ? "<br>" : "") + d.extraText;
     if (g && text === "" && !d.hovertemplate) {
-      if (name6 === "") g.remove();
-      text = name6;
+      if (name7 === "") g.remove();
+      text = name7;
     }
     if ((_b = (_a = d.trace) == null ? void 0 : _a.hoverlabel) == null ? void 0 : _b.split) d.hovertemplate = "";
     const { hovertemplate = false } = d;
@@ -34718,11 +34718,11 @@ var Plotly = (() => {
         template: hovertemplate
       });
       text = text.replace(EXTRA_STRING_REGEX, (_3, extra) => {
-        name6 = plainText2(extra, d.nameLength);
+        name7 = plainText2(extra, d.nameLength);
         return "";
       });
     }
-    return [text, name6];
+    return [text, name7];
   }
   function hoverAvoidOverlaps(hoverLabels, rotateLabels, fullLayout, commonLabelBoundingBox) {
     var axKey = rotateLabels ? "xa" : "ya";
@@ -38340,9 +38340,9 @@ var Plotly = (() => {
   var foreButtons = [];
   var addToForeButtons = function(b) {
     if (backButtons.indexOf(b._cat || b.name) !== -1) return;
-    var name6 = b.name;
+    var name7 = b.name;
     var _cat = (b._cat || b.name).toLowerCase();
-    if (foreButtons.indexOf(name6) === -1) foreButtons.push(name6);
+    if (foreButtons.indexOf(name7) === -1) foreButtons.push(name7);
     if (foreButtons.indexOf(_cat) === -1) foreButtons.push(_cat);
   };
   buttonList.forEach(function(k) {
@@ -38687,13 +38687,13 @@ var Plotly = (() => {
     var fullLayout = gd._fullLayout;
     var fullData = gd._fullData;
     var context = gd._context;
-    function match(name6, B) {
+    function match(name7, B) {
       if (typeof B === "string") {
-        if (B.toLowerCase() === name6.toLowerCase()) return true;
+        if (B.toLowerCase() === name7.toLowerCase()) return true;
       } else {
         var v0 = B.name;
         var v1 = B._cat || B.name;
-        if (v0 === name6 || v1 === name6.toLowerCase()) return true;
+        if (v0 === name7 || v1 === name7.toLowerCase()) return true;
       }
       return false;
     }
@@ -38735,8 +38735,8 @@ var Plotly = (() => {
       if (!newGroup.length) return;
       var out = [];
       for (var i2 = 0; i2 < newGroup.length; i2++) {
-        var name6 = newGroup[i2];
-        var B = buttons_default[name6];
+        var name7 = newGroup[i2];
+        var B = buttons_default[name7];
         var v0 = B.name.toLowerCase();
         var v1 = (B._cat || B.name).toLowerCase();
         var found = false;
@@ -38748,7 +38748,7 @@ var Plotly = (() => {
           }
         }
         if (found) continue;
-        out.push(buttons_default[name6]);
+        out.push(buttons_default[name7]);
       }
       groups.push(out);
     }
@@ -43220,10 +43220,10 @@ var Plotly = (() => {
         configChanged = !helpers_default9.collectionsAreEqual(oldConfig, gd._context);
       }
       if (configChanged) {
-        const eventListeners = gd._ev.eventNames().map((name7) => [name7, gd._ev.listeners(name7)]);
+        const eventListeners = gd._ev.eventNames().map((name8) => [name8, gd._ev.listeners(name8)]);
         plotDone = newPlot(gd, data, layout, config).then(() => {
-          for (const [name7, callbacks] of eventListeners) {
-            callbacks.forEach((cb) => gd.on(name7, cb));
+          for (const [name8, callbacks] of eventListeners) {
+            callbacks.forEach((cb) => gd.on(name8, cb));
           }
           return react(gd, data, layout, config);
         });
@@ -43246,10 +43246,10 @@ var Plotly = (() => {
           gd.calcdata = void 0;
           var allNames = Object.getOwnPropertyNames(newFullLayout);
           for (var q = 0; q < allNames.length; q++) {
-            var name6 = allNames[q];
-            var start = name6.substring(0, 5);
+            var name7 = allNames[q];
+            var start = name7.substring(0, 5);
             if (start === "xaxis" || start === "yaxis") {
-              var emptyCategories = newFullLayout[name6]._emptyCategories;
+              var emptyCategories = newFullLayout[name7]._emptyCategories;
               if (emptyCategories) emptyCategories();
             }
           }
@@ -43781,13 +43781,13 @@ var Plotly = (() => {
     for (i = frameList.length - 1; i >= 0; i--) {
       if (!lib_default.isPlainObject(frameList[i])) continue;
       var lookupName = frameList[i].name;
-      var name6 = (_frameHash[lookupName] || _frameHashLocal[lookupName] || {}).name;
+      var name7 = (_frameHash[lookupName] || _frameHashLocal[lookupName] || {}).name;
       var newName = frameList[i].name;
-      var collisionPresent = _frameHash[name6] || _frameHashLocal[name6];
-      if (name6 && newName && typeof newName === "number" && collisionPresent && numericNameWarningCount < numericNameWarningCountLimit) {
+      var collisionPresent = _frameHash[name7] || _frameHashLocal[name7];
+      if (name7 && newName && typeof newName === "number" && collisionPresent && numericNameWarningCount < numericNameWarningCountLimit) {
         numericNameWarningCount++;
         lib_default.warn(
-          'addFrames: overwriting frame "' + (_frameHash[name6] || _frameHashLocal[name6]).name + '" with a frame whose name of type "number" also equates to "' + name6 + '". This is valid but may potentially lead to unexpected behavior since all plotly.js frame names are stored internally as strings.'
+          'addFrames: overwriting frame "' + (_frameHash[name7] || _frameHashLocal[name7]).name + '" with a frame whose name of type "number" also equates to "' + name7 + '". This is valid but may potentially lead to unexpected behavior since all plotly.js frame names are stored internally as strings.'
         );
         if (numericNameWarningCount === numericNameWarningCountLimit) {
           lib_default.warn(
@@ -44076,9 +44076,9 @@ var Plotly = (() => {
         for (var i = 0; i < child.length; i++) {
           var item = child[i];
           if (isPlainObject3(item)) {
-            var name6 = item.name;
-            if (name6) {
-              if (!usedNames[name6]) {
+            var name7 = item.name;
+            if (name7) {
+              if (!usedNames[name7]) {
                 walkStyleKeys(
                   item,
                   templateOut,
@@ -44087,7 +44087,7 @@ var Plotly = (() => {
                   getNextPath(child, namedIndex, nextBasePath)
                 );
                 namedIndex++;
-                usedNames[name6] = 1;
+                usedNames[name7] = 1;
               }
             } else if (!dfltDone) {
               var dfltKey = plot_template_default.arrayDefaultKey(key);
@@ -44941,7 +44941,7 @@ var Plotly = (() => {
   }
 
   // src/snapshot/filesaver.js
-  function fileSaver(url, name6, format5) {
+  function fileSaver(url, name7, format5) {
     var saveLink = document.createElement("a");
     var canUseSaveLink = "download" in saveLink;
     var promise = new Promise(function(resolve, reject) {
@@ -44951,18 +44951,18 @@ var Plotly = (() => {
         blob = helpers_default10.createBlob(url, format5);
         objectUrl = helpers_default10.createObjectURL(blob);
         saveLink.href = objectUrl;
-        saveLink.download = name6;
+        saveLink.download = name7;
         document.body.appendChild(saveLink);
         saveLink.click();
         document.body.removeChild(saveLink);
         helpers_default10.revokeObjectURL(objectUrl);
         blob = null;
-        return resolve(name6);
+        return resolve(name7);
       }
       if (lib_default.isSafari()) {
         var prefix = format5 === "svg" ? "," : ";base64,";
         helpers_default10.octetStream(prefix + encodeURIComponent(url));
-        return resolve(name6);
+        return resolve(name7);
       }
       reject(new Error("download error"));
     });
@@ -44990,8 +44990,8 @@ var Plotly = (() => {
       promise.then(function(result) {
         if (_gd) _gd._snapshotInProgress = false;
         return filesaver_default(result, filename, opts.format);
-      }).then(function(name6) {
-        resolve(name6);
+      }).then(function(name7) {
+        resolve(name7);
       }).catch(function(err) {
         if (_gd) _gd._snapshotInProgress = false;
         reject(err);
@@ -49425,10 +49425,10 @@ var Plotly = (() => {
       var zorder = zindices[z];
       for (var i = 0; i < modules2.length; i++) {
         _module = modules2[i];
-        var name6 = _module.name;
-        var categories = registry_default.modules[name6].categories;
+        var name7 = _module.name;
+        var categories = registry_default.modules[name7].categories;
         if (categories.svg) {
-          var classBaseName = _module.layerName || name6 + "layer";
+          var classBaseName = _module.layerName || name7 + "layer";
           var className = classBaseName + (z ? Number(z) + 1 : "");
           var plotMethod = _module.plot;
           cdModuleAndOthers = getModuleCalcData(cdSubplot, plotMethod, zorder);
@@ -49812,8 +49812,8 @@ var Plotly = (() => {
   var cartesian_default = { name, attr, idRoot, idRegex: idRegex2, attrRegex, attributes, layoutAttributes, supplyLayoutDefaults: supplyLayoutDefaults5, transitionAxes: transitionAxes2, finalizeSubplots, plot: plot2, clean: clean3, drawFramework, rangePlot, toSVG: toSVG2, updateFx: updateFx2 };
 
   // src/traces/scatter/index.js
-  var { calc: _req52 } = calc_default;
-  var { style: _req112, styleOnSelect: _req122 } = style_default;
+  var { calc: _req5 } = calc_default;
+  var { style: _req11, styleOnSelect: _req12 } = style_default;
   var scatter_default = {
     hasLines: subtypes_default.hasLines,
     hasMarkers: subtypes_default.hasMarkers,
@@ -49824,14 +49824,14 @@ var Plotly = (() => {
     supplyDefaults: supplyDefaults2,
     crossTraceDefaults: crossTraceDefaults2,
     supplyLayoutDefaults: layout_defaults_default,
-    calc: _req52,
+    calc: _req5,
     crossTraceCalc: crossTraceCalc2,
     arraysToCalcdata,
     plot,
     colorbar: marker_colorbar_default,
     formatLabels,
-    style: _req112,
-    styleOnSelect: _req122,
+    style: _req11,
+    styleOnSelect: _req12,
     hoverPoints,
     selectPoints,
     animatable: true,
@@ -57707,13 +57707,13 @@ var Plotly = (() => {
   };
 
   // src/components/colorbar/index.js
-  var { draw: _req210 } = draw_default5;
+  var { draw: _req2 } = draw_default5;
   var colorbar_default = {
     moduleType: "component",
     name: "colorbar",
     attributes: attributes_default6,
     supplyDefaults: colorbarDefaults,
-    draw: _req210,
+    draw: _req2,
     hasColorbar
   };
 
@@ -57965,11 +57965,11 @@ var Plotly = (() => {
   var Plotly = { version, register: register3, Icons: ploticon_default, Snapshot: snapshot_default, PlotSchema: plot_schema_default };
   var methodNames = Object.keys(plot_api_default2);
   for (i = 0; i < methodNames.length; i++) {
-    name6 = methodNames[i];
-    if (name6.charAt(0) !== "_") Plotly[name6] = plot_api_default2[name6];
-    register3({ moduleType: "apiMethod", name: name6, fn: plot_api_default2[name6] });
+    name7 = methodNames[i];
+    if (name7.charAt(0) !== "_") Plotly[name7] = plot_api_default2[name7];
+    register3({ moduleType: "apiMethod", name: name7, fn: plot_api_default2[name7] });
   }
-  var name6;
+  var name7;
   var i;
   register3(scatter_default);
   register3([annotations_default, annotations3d_default, selections_default, shapes_default, images_default, updatemenus_default, sliders_default, rangeslider_default, rangeselector_default, grid_default, errorbars_default, colorscale_default, colorbar_default, legend_default, fx_default, modebar_default2]);
@@ -58129,6 +58129,39 @@ var Plotly = (() => {
     zorder: attributes_default9.zorder
   };
 
+  // src/traces/bar/layout_attributes.js
+  var layout_attributes_default6 = {
+    barmode: {
+      valType: "enumerated",
+      values: ["stack", "group", "overlay", "relative"],
+      dflt: "group",
+      editType: "calc"
+    },
+    barnorm: {
+      valType: "enumerated",
+      values: ["", "fraction", "percent"],
+      dflt: "",
+      editType: "calc"
+    },
+    bargap: {
+      valType: "number",
+      min: 0,
+      max: 1,
+      editType: "calc"
+    },
+    bargroupgap: {
+      valType: "number",
+      min: 0,
+      max: 1,
+      dflt: 0,
+      editType: "calc"
+    },
+    barcornerradius: {
+      valType: "any",
+      editType: "calc"
+    }
+  };
+
   // src/traces/bar/defaults.js
   var import_fast_isnumeric39 = __toESM(require_fast_isnumeric(), 1);
 
@@ -58283,9 +58316,119 @@ var Plotly = (() => {
 
   // src/traces/bar/layout_defaults.js
   var { validateCornerradius: validateCornerradius2 } = defaults_default2;
+  function layout_defaults_default2(layoutIn, layoutOut, fullData) {
+    function coerce3(attr2, dflt) {
+      return lib_default.coerce(layoutIn, layoutOut, layout_attributes_default6, attr2, dflt);
+    }
+    var hasBars = false;
+    var shouldBeGapless = false;
+    var gappedAnyway = false;
+    var usedSubplots = {};
+    var mode = coerce3("barmode");
+    var isGroup = mode === "group";
+    for (var i = 0; i < fullData.length; i++) {
+      var trace = fullData[i];
+      if (registry_default.traceIs(trace, "bar") && trace.visible) hasBars = true;
+      else continue;
+      var subploti = trace.xaxis + trace.yaxis;
+      if (isGroup) {
+        if (usedSubplots[subploti]) gappedAnyway = true;
+        usedSubplots[subploti] = true;
+      } else {
+        subploti += trace._input.offsetgroup;
+        if (usedSubplots.length > 0 && !usedSubplots[subploti]) gappedAnyway = true;
+        usedSubplots[subploti] = true;
+      }
+      if (trace.visible && trace.type === "histogram") {
+        var pa = axes_default.getFromId(
+          { _fullLayout: layoutOut },
+          trace[trace.orientation === "v" ? "xaxis" : "yaxis"]
+        );
+        if (pa.type !== "category") shouldBeGapless = true;
+      }
+    }
+    if (!hasBars) {
+      delete layoutOut.barmode;
+      return;
+    }
+    if (mode !== "overlay") coerce3("barnorm");
+    coerce3("bargap", shouldBeGapless && !gappedAnyway ? 0 : 0.2);
+    coerce3("bargroupgap");
+    var r = coerce3("barcornerradius");
+    layoutOut.barcornerradius = validateCornerradius2(r);
+  }
+
+  // src/traces/bar/arrays_to_calcdata.js
+  function arraysToCalcdata2(cd, trace) {
+    for (var i = 0; i < cd.length; i++) cd[i].i = i;
+    lib_default.mergeArray(trace.text, cd, "tx");
+    lib_default.mergeArray(trace.hovertext, cd, "htx");
+    var marker2 = trace.marker;
+    if (marker2) {
+      lib_default.mergeArray(marker2.opacity, cd, "mo", true);
+      lib_default.mergeArray(marker2.color, cd, "mc");
+      var markerLine2 = marker2.line;
+      if (markerLine2) {
+        lib_default.mergeArray(markerLine2.color, cd, "mlc");
+        lib_default.mergeArrayCastPositive(markerLine2.width, cd, "mlw");
+      }
+    }
+  }
 
   // src/traces/bar/calc.js
   var { hasColorscale: hasColorscale7 } = helpers_default;
+  function calc5(gd, trace) {
+    var xa = axes_default.getFromId(gd, trace.xaxis || "x");
+    var ya = axes_default.getFromId(gd, trace.yaxis || "y");
+    var size, pos, origPos, pObj, hasPeriod, pLetter;
+    var sizeOpts = {
+      msUTC: !!(trace.base || trace.base === 0)
+    };
+    if (trace.orientation === "h") {
+      size = xa.makeCalcdata(trace, "x", sizeOpts);
+      origPos = ya.makeCalcdata(trace, "y");
+      pObj = alignPeriod(trace, ya, "y", origPos);
+      hasPeriod = !!trace.yperiodalignment;
+      pLetter = "y";
+    } else {
+      size = ya.makeCalcdata(trace, "y", sizeOpts);
+      origPos = xa.makeCalcdata(trace, "x");
+      pObj = alignPeriod(trace, xa, "x", origPos);
+      hasPeriod = !!trace.xperiodalignment;
+      pLetter = "x";
+    }
+    pos = pObj.vals;
+    var serieslen = Math.min(pos.length, size.length);
+    var cd = new Array(serieslen);
+    for (var i = 0; i < serieslen; i++) {
+      cd[i] = { p: pos[i], s: size[i] };
+      if (hasPeriod) {
+        cd[i].orig_p = origPos[i];
+        cd[i][pLetter + "End"] = pObj.ends[i];
+        cd[i][pLetter + "Start"] = pObj.starts[i];
+      }
+      if (trace.ids) {
+        cd[i].id = String(trace.ids[i]);
+      }
+    }
+    if (hasColorscale7(trace, "marker")) {
+      calc(gd, trace, {
+        vals: trace.marker.color,
+        containerStr: "marker",
+        cLetter: "c"
+      });
+    }
+    if (hasColorscale7(trace, "marker.line")) {
+      calc(gd, trace, {
+        vals: trace.marker.line.color,
+        containerStr: "marker.line",
+        cLetter: "c"
+      });
+    }
+    arraysToCalcdata2(cd, trace);
+    calcSelection(cd, trace);
+    return cd;
+  }
 
   // src/traces/bar/plot.js
   var import_d341 = __toESM(require_d3(), 1);
@@ -59453,12 +59596,99 @@ var Plotly = (() => {
     getTraceColor: getTraceColor2
   };
 
+  // src/traces/bar/event_data.js
+  function eventData(out, pt, trace) {
+    out.x = "xVal" in pt ? pt.xVal : pt.x;
+    out.y = "yVal" in pt ? pt.yVal : pt.y;
+    if (pt.xa) out.xaxis = pt.xa;
+    if (pt.ya) out.yaxis = pt.ya;
+    if (trace.orientation === "h") {
+      out.label = out.y;
+      out.value = out.x;
+    } else {
+      out.label = out.x;
+      out.value = out.y;
+    }
+    return out;
+  }
+
+  // src/traces/bar/select.js
+  function selectPoints2(searchInfo, selectionTester) {
+    var cd = searchInfo.cd;
+    var xa = searchInfo.xaxis;
+    var ya = searchInfo.yaxis;
+    var trace = cd[0].trace;
+    var isFunnel = trace.type === "funnel";
+    var isHorizontal = trace.orientation === "h";
+    var selection = [];
+    var i;
+    if (selectionTester === false) {
+      for (i = 0; i < cd.length; i++) {
+        cd[i].selected = 0;
+      }
+    } else {
+      for (i = 0; i < cd.length; i++) {
+        var di = cd[i];
+        var ct = "ct" in di ? di.ct : getCentroid(di, xa, ya, isHorizontal, isFunnel);
+        if (selectionTester.contains(ct, false, i, searchInfo)) {
+          selection.push({
+            pointNumber: i,
+            x: xa.c2d(di.x),
+            y: ya.c2d(di.y)
+          });
+          di.selected = 1;
+        } else {
+          di.selected = 0;
+        }
+      }
+    }
+    return selection;
+  }
+  function getCentroid(d, xa, ya, isHorizontal, isFunnel) {
+    var x0 = xa.c2p(isHorizontal ? d.s0 : d.p0, true);
+    var x1 = xa.c2p(isHorizontal ? d.s1 : d.p1, true);
+    var y0 = ya.c2p(isHorizontal ? d.p0 : d.s0, true);
+    var y1 = ya.c2p(isHorizontal ? d.p1 : d.s1, true);
+    if (isFunnel) {
+      return [(x0 + x1) / 2, (y0 + y1) / 2];
+    } else {
+      if (isHorizontal) {
+        return [x1, (y0 + y1) / 2];
+      } else {
+        return [(x0 + x1) / 2, y1];
+      }
+    }
+  }
+
   // src/traces/bar/index.js
-  var { supplyDefaults: _req211, crossTraceDefaults: _req310 } = defaults_default2;
-  var { crossTraceCalc: _req62 } = cross_trace_calc_default;
-  var { plot: _req92 } = plot_default;
-  var { style: _req102, styleOnSelect: _req113 } = style_default2;
-  var { hoverPoints: _req123 } = hover_default2;
+  var { supplyDefaults: _req22, crossTraceDefaults: _req3 } = defaults_default2;
+  var { crossTraceCalc: _req6 } = cross_trace_calc_default;
+  var { plot: _req9 } = plot_default;
+  var { style: _req10, styleOnSelect: _req112 } = style_default2;
+  var { hoverPoints: _req122 } = hover_default2;
+  var bar_default = {
+    attributes: attributes_default21,
+    layoutAttributes: layout_attributes_default6,
+    supplyDefaults: _req22,
+    crossTraceDefaults: _req3,
+    supplyLayoutDefaults: layout_defaults_default2,
+    calc: calc5,
+    crossTraceCalc: _req6,
+    colorbar: marker_colorbar_default,
+    arraysToCalcdata: arraysToCalcdata2,
+    plot: _req9,
+    style: _req10,
+    styleOnSelect: _req112,
+    hoverPoints: _req122,
+    eventData,
+    selectPoints: selectPoints2,
+    moduleType: "trace",
+    name: "bar",
+    basePlotModule: cartesian_default,
+    categories: ["bar-like", "cartesian", "svg", "bar", "oriented", "errorBarsOK", "showLegend", "zoomScale"],
+    animatable: true,
+    meta: {}
+  };
 
   // src/traces/pie/attributes.js
   var textFontAttrs2 = font_attributes_default({
@@ -59744,6 +59974,33 @@ var Plotly = (() => {
     handleMarkerDefaults,
     supplyDefaults: supplyDefaults4
   };
+
+  // src/traces/pie/layout_attributes.js
+  var layout_attributes_default7 = {
+    hiddenlabels: {
+      valType: "data_array",
+      editType: "calc"
+    },
+    piecolorway: {
+      valType: "colorlist",
+      editType: "calc"
+    },
+    extendpiecolors: {
+      valType: "boolean",
+      dflt: true,
+      editType: "calc"
+    }
+  };
+
+  // src/traces/pie/layout_defaults.js
+  function supplyLayoutDefaults10(layoutIn, layoutOut) {
+    function coerce3(attr2, dflt) {
+      return lib_default.coerce(layoutIn, layoutOut, layout_attributes_default7, attr2, dflt);
+    }
+    coerce3("hiddenlabels");
+    coerce3("piecolorway", layoutOut.colorway);
+    coerce3("extendpiecolors");
+  }
 
   // src/traces/pie/calc.js
   var import_fast_isnumeric43 = __toESM(require_fast_isnumeric(), 1);
@@ -60767,11 +61024,50 @@ var Plotly = (() => {
   // src/traces/pie/style.js
   var import_d343 = __toESM(require_d3(), 1);
   var { resizeText: resizeText3 } = uniform_text_default;
+  function style5(gd) {
+    var s = gd._fullLayout._pielayer.selectAll(".trace");
+    resizeText3(gd, s, "pie");
+    s.each(function(cd) {
+      var cd0 = cd[0];
+      var trace = cd0.trace;
+      var traceSelection = import_d343.default.select(this);
+      traceSelection.style({ opacity: trace.opacity });
+      traceSelection.selectAll("path.surface").each(function(pt) {
+        import_d343.default.select(this).call(styleOne, pt, trace, gd);
+      });
+    });
+  }
+
+  // src/traces/pie/base_plot.js
+  var name6 = "pie";
+  var plot6 = function(gd, traces, transitionOpts, makeOnCompleteCallback) {
+    plots_default.plotBasePlot(name6, gd, traces, transitionOpts, makeOnCompleteCallback);
+  };
+  var clean4 = function(newFullData, newFullLayout, oldFullData, oldFullLayout) {
+    plots_default.cleanBasePlot(name6, newFullData, newFullLayout, oldFullData, oldFullLayout);
+  };
+  var base_plot_default = { name: name6, plot: plot6, clean: clean4 };
 
   // src/traces/pie/index.js
-  var { supplyDefaults: _req110 } = defaults_default3;
-  var { calc: _req49, crossTraceCalc: _req53 } = calc_default2;
-  var { plot: _req63 } = plot_default2;
+  var { supplyDefaults: _req1 } = defaults_default3;
+  var { calc: _req4, crossTraceCalc: _req52 } = calc_default2;
+  var { plot: _req62 } = plot_default2;
+  var pie_default = {
+    attributes: attributes_default22,
+    supplyDefaults: _req1,
+    supplyLayoutDefaults: supplyLayoutDefaults10,
+    layoutAttributes: layout_attributes_default7,
+    calc: _req4,
+    crossTraceCalc: _req52,
+    plot: _req62,
+    style: style5,
+    styleOne,
+    moduleType: "trace",
+    name: "pie",
+    basePlotModule: base_plot_default,
+    categories: ["pie-like", "pie", "showLegend"],
+    meta: {}
+  };
 
   // src/components/calendars/calendars.js
   var import_main = __toESM(require_main(), 1);
@@ -67854,57 +68150,7 @@ var Plotly = (() => {
   };
 
   // lib/index-basic.js
-  core_default.register([
-    _req0,
-    _req1,
-    _req2,
-    _req3,
-    _req4,
-    _req5,
-    _req6,
-    _req7,
-    _req8,
-    _req9,
-    _req10,
-    _req11,
-    _req12,
-    _req13,
-    _req14,
-    _req15,
-    _req16,
-    _req17,
-    _req18,
-    _req19,
-    _req20,
-    _req21,
-    _req22,
-    _req23,
-    _req24,
-    _req25,
-    _req26,
-    _req27,
-    _req28,
-    _req29,
-    _req30,
-    _req31,
-    _req32,
-    _req33,
-    _req34,
-    _req35,
-    _req36,
-    _req37,
-    _req38,
-    _req39,
-    _req40,
-    _req41,
-    _req42,
-    _req43,
-    _req44,
-    _req45,
-    _req46,
-    _req47,
-    _req48
-  ]);
+  core_default.register([bar_default, pie_default, calendars_default2]);
   var index_basic_default = core_default;
   return __toCommonJS(index_basic_exports);
 })();

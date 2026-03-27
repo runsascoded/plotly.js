@@ -40,8 +40,8 @@ var Plotly = (() => {
     return mod7 || (0, cb[__getOwnPropNames(cb)[0]])((mod7 = { exports: {} }).exports, mod7), mod7.exports;
   };
   var __export = (target, all) => {
-    for (var name6 in all)
-      __defProp(target, name6, { get: all[name6], enumerable: true });
+    for (var name8 in all)
+      __defProp(target, name8, { get: all[name8], enumerable: true });
   };
   var __copyProps = (to, from, except, desc) => {
     if (from && typeof from === "object" || typeof from === "function") {
@@ -97,14 +97,14 @@ var Plotly = (() => {
             d3_document.createElement("DIV").style.setProperty("opacity", 0, "");
           } catch (error) {
             var d3_element_prototype = this.Element.prototype, d3_element_setAttribute = d3_element_prototype.setAttribute, d3_element_setAttributeNS = d3_element_prototype.setAttributeNS, d3_style_prototype = this.CSSStyleDeclaration.prototype, d3_style_setProperty = d3_style_prototype.setProperty;
-            d3_element_prototype.setAttribute = function(name6, value) {
-              d3_element_setAttribute.call(this, name6, value + "");
+            d3_element_prototype.setAttribute = function(name8, value) {
+              d3_element_setAttribute.call(this, name8, value + "");
             };
             d3_element_prototype.setAttributeNS = function(space, local, value) {
               d3_element_setAttributeNS.call(this, space, local, value + "");
             };
-            d3_style_prototype.setProperty = function(name6, value, priority) {
-              d3_style_setProperty.call(this, name6, value + "", priority);
+            d3_style_prototype.setProperty = function(name8, value, priority) {
+              d3_style_setProperty.call(this, name8, value + "", priority);
             };
           }
         }
@@ -539,11 +539,11 @@ var Plotly = (() => {
             return value === source ? target : value;
           };
         }
-        function d3_vendorSymbol(object, name6) {
-          if (name6 in object) return name6;
-          name6 = name6.charAt(0).toUpperCase() + name6.slice(1);
+        function d3_vendorSymbol(object, name8) {
+          if (name8 in object) return name8;
+          name8 = name8.charAt(0).toUpperCase() + name8.slice(1);
           for (var i = 0, n = d3_vendorPrefixes.length; i < n; ++i) {
-            var prefixName = d3_vendorPrefixes[i] + name6;
+            var prefixName = d3_vendorPrefixes[i] + name8;
             if (prefixName in object) return prefixName;
           }
         }
@@ -558,15 +558,15 @@ var Plotly = (() => {
         function d3_dispatch() {
         }
         d3_dispatch.prototype.on = function(type, listener) {
-          var i = type.indexOf("."), name6 = "";
+          var i = type.indexOf("."), name8 = "";
           if (i >= 0) {
-            name6 = type.slice(i + 1);
+            name8 = type.slice(i + 1);
             type = type.slice(0, i);
           }
-          if (type) return arguments.length < 2 ? this[type].on(name6) : this[type].on(name6, listener);
+          if (type) return arguments.length < 2 ? this[type].on(name8) : this[type].on(name8, listener);
           if (arguments.length === 2) {
             if (listener == null) for (type in this) {
-              if (this.hasOwnProperty(type)) this[type].on(name6, null);
+              if (this.hasOwnProperty(type)) this[type].on(name8, null);
             }
             return this;
           }
@@ -578,15 +578,15 @@ var Plotly = (() => {
             while (++i < n) if (l = z[i].on) l.apply(this, arguments);
             return dispatch;
           }
-          event.on = function(name6, listener) {
-            var l = listenerByName.get(name6), i;
+          event.on = function(name8, listener) {
+            var l = listenerByName.get(name8), i;
             if (arguments.length < 2) return l && l.on;
             if (l) {
               l.on = null;
               listeners = listeners.slice(0, i = listeners.indexOf(l)).concat(listeners.slice(i + 1));
-              listenerByName.remove(name6);
+              listenerByName.remove(name8);
             }
-            if (listener) listeners.push(listenerByName.set(name6, {
+            if (listener) listeners.push(listenerByName.set(name8, {
               on: listener
             }));
             return dispatch;
@@ -704,154 +704,154 @@ var Plotly = (() => {
         };
         d356.ns = {
           prefix: d3_nsPrefix,
-          qualify: function(name6) {
-            var i = name6.indexOf(":"), prefix = name6;
-            if (i >= 0 && (prefix = name6.slice(0, i)) !== "xmlns") name6 = name6.slice(i + 1);
+          qualify: function(name8) {
+            var i = name8.indexOf(":"), prefix = name8;
+            if (i >= 0 && (prefix = name8.slice(0, i)) !== "xmlns") name8 = name8.slice(i + 1);
             return d3_nsPrefix.hasOwnProperty(prefix) ? {
               space: d3_nsPrefix[prefix],
-              local: name6
-            } : name6;
+              local: name8
+            } : name8;
           }
         };
-        d3_selectionPrototype.attr = function(name6, value) {
+        d3_selectionPrototype.attr = function(name8, value) {
           if (arguments.length < 2) {
-            if (typeof name6 === "string") {
+            if (typeof name8 === "string") {
               var node = this.node();
-              name6 = d356.ns.qualify(name6);
-              return name6.local ? node.getAttributeNS(name6.space, name6.local) : node.getAttribute(name6);
+              name8 = d356.ns.qualify(name8);
+              return name8.local ? node.getAttributeNS(name8.space, name8.local) : node.getAttribute(name8);
             }
-            for (value in name6) this.each(d3_selection_attr(value, name6[value]));
+            for (value in name8) this.each(d3_selection_attr(value, name8[value]));
             return this;
           }
-          return this.each(d3_selection_attr(name6, value));
+          return this.each(d3_selection_attr(name8, value));
         };
-        function d3_selection_attr(name6, value) {
-          name6 = d356.ns.qualify(name6);
+        function d3_selection_attr(name8, value) {
+          name8 = d356.ns.qualify(name8);
           function attrNull() {
-            this.removeAttribute(name6);
+            this.removeAttribute(name8);
           }
           function attrNullNS() {
-            this.removeAttributeNS(name6.space, name6.local);
+            this.removeAttributeNS(name8.space, name8.local);
           }
           function attrConstant() {
-            this.setAttribute(name6, value);
+            this.setAttribute(name8, value);
           }
           function attrConstantNS() {
-            this.setAttributeNS(name6.space, name6.local, value);
+            this.setAttributeNS(name8.space, name8.local, value);
           }
           function attrFunction() {
             var x = value.apply(this, arguments);
-            if (x == null) this.removeAttribute(name6);
-            else this.setAttribute(name6, x);
+            if (x == null) this.removeAttribute(name8);
+            else this.setAttribute(name8, x);
           }
           function attrFunctionNS() {
             var x = value.apply(this, arguments);
-            if (x == null) this.removeAttributeNS(name6.space, name6.local);
-            else this.setAttributeNS(name6.space, name6.local, x);
+            if (x == null) this.removeAttributeNS(name8.space, name8.local);
+            else this.setAttributeNS(name8.space, name8.local, x);
           }
-          return value == null ? name6.local ? attrNullNS : attrNull : typeof value === "function" ? name6.local ? attrFunctionNS : attrFunction : name6.local ? attrConstantNS : attrConstant;
+          return value == null ? name8.local ? attrNullNS : attrNull : typeof value === "function" ? name8.local ? attrFunctionNS : attrFunction : name8.local ? attrConstantNS : attrConstant;
         }
         function d3_collapse(s) {
           return s.trim().replace(/\s+/g, " ");
         }
-        d3_selectionPrototype.classed = function(name6, value) {
+        d3_selectionPrototype.classed = function(name8, value) {
           if (arguments.length < 2) {
-            if (typeof name6 === "string") {
-              var node = this.node(), n = (name6 = d3_selection_classes(name6)).length, i = -1;
+            if (typeof name8 === "string") {
+              var node = this.node(), n = (name8 = d3_selection_classes(name8)).length, i = -1;
               if (value = node.classList) {
-                while (++i < n) if (!value.contains(name6[i])) return false;
+                while (++i < n) if (!value.contains(name8[i])) return false;
               } else {
                 value = node.getAttribute("class");
-                while (++i < n) if (!d3_selection_classedRe(name6[i]).test(value)) return false;
+                while (++i < n) if (!d3_selection_classedRe(name8[i]).test(value)) return false;
               }
               return true;
             }
-            for (value in name6) this.each(d3_selection_classed(value, name6[value]));
+            for (value in name8) this.each(d3_selection_classed(value, name8[value]));
             return this;
           }
-          return this.each(d3_selection_classed(name6, value));
+          return this.each(d3_selection_classed(name8, value));
         };
-        function d3_selection_classedRe(name6) {
-          return new RegExp("(?:^|\\s+)" + d356.requote(name6) + "(?:\\s+|$)", "g");
+        function d3_selection_classedRe(name8) {
+          return new RegExp("(?:^|\\s+)" + d356.requote(name8) + "(?:\\s+|$)", "g");
         }
-        function d3_selection_classes(name6) {
-          return (name6 + "").trim().split(/^|\s+/);
+        function d3_selection_classes(name8) {
+          return (name8 + "").trim().split(/^|\s+/);
         }
-        function d3_selection_classed(name6, value) {
-          name6 = d3_selection_classes(name6).map(d3_selection_classedName);
-          var n = name6.length;
+        function d3_selection_classed(name8, value) {
+          name8 = d3_selection_classes(name8).map(d3_selection_classedName);
+          var n = name8.length;
           function classedConstant() {
             var i = -1;
-            while (++i < n) name6[i](this, value);
+            while (++i < n) name8[i](this, value);
           }
           function classedFunction() {
             var i = -1, x = value.apply(this, arguments);
-            while (++i < n) name6[i](this, x);
+            while (++i < n) name8[i](this, x);
           }
           return typeof value === "function" ? classedFunction : classedConstant;
         }
-        function d3_selection_classedName(name6) {
-          var re2 = d3_selection_classedRe(name6);
+        function d3_selection_classedName(name8) {
+          var re2 = d3_selection_classedRe(name8);
           return function(node, value) {
-            if (c = node.classList) return value ? c.add(name6) : c.remove(name6);
+            if (c = node.classList) return value ? c.add(name8) : c.remove(name8);
             var c = node.getAttribute("class") || "";
             if (value) {
               re2.lastIndex = 0;
-              if (!re2.test(c)) node.setAttribute("class", d3_collapse(c + " " + name6));
+              if (!re2.test(c)) node.setAttribute("class", d3_collapse(c + " " + name8));
             } else {
               node.setAttribute("class", d3_collapse(c.replace(re2, " ")));
             }
           };
         }
-        d3_selectionPrototype.style = function(name6, value, priority) {
+        d3_selectionPrototype.style = function(name8, value, priority) {
           var n = arguments.length;
           if (n < 3) {
-            if (typeof name6 !== "string") {
+            if (typeof name8 !== "string") {
               if (n < 2) value = "";
-              for (priority in name6) this.each(d3_selection_style(priority, name6[priority], value));
+              for (priority in name8) this.each(d3_selection_style(priority, name8[priority], value));
               return this;
             }
             if (n < 2) {
               var node = this.node();
-              return d3_window(node).getComputedStyle(node, null).getPropertyValue(name6);
+              return d3_window(node).getComputedStyle(node, null).getPropertyValue(name8);
             }
             priority = "";
           }
-          return this.each(d3_selection_style(name6, value, priority));
+          return this.each(d3_selection_style(name8, value, priority));
         };
-        function d3_selection_style(name6, value, priority) {
+        function d3_selection_style(name8, value, priority) {
           function styleNull() {
-            this.style.removeProperty(name6);
+            this.style.removeProperty(name8);
           }
           function styleConstant() {
-            this.style.setProperty(name6, value, priority);
+            this.style.setProperty(name8, value, priority);
           }
           function styleFunction() {
             var x = value.apply(this, arguments);
-            if (x == null) this.style.removeProperty(name6);
-            else this.style.setProperty(name6, x, priority);
+            if (x == null) this.style.removeProperty(name8);
+            else this.style.setProperty(name8, x, priority);
           }
           return value == null ? styleNull : typeof value === "function" ? styleFunction : styleConstant;
         }
-        d3_selectionPrototype.property = function(name6, value) {
+        d3_selectionPrototype.property = function(name8, value) {
           if (arguments.length < 2) {
-            if (typeof name6 === "string") return this.node()[name6];
-            for (value in name6) this.each(d3_selection_property(value, name6[value]));
+            if (typeof name8 === "string") return this.node()[name8];
+            for (value in name8) this.each(d3_selection_property(value, name8[value]));
             return this;
           }
-          return this.each(d3_selection_property(name6, value));
+          return this.each(d3_selection_property(name8, value));
         };
-        function d3_selection_property(name6, value) {
+        function d3_selection_property(name8, value) {
           function propertyNull() {
-            delete this[name6];
+            delete this[name8];
           }
           function propertyConstant() {
-            this[name6] = value;
+            this[name8] = value;
           }
           function propertyFunction() {
             var x = value.apply(this, arguments);
-            if (x == null) delete this[name6];
-            else this[name6] = x;
+            if (x == null) delete this[name8];
+            else this[name8] = x;
           }
           return value == null ? propertyNull : typeof value === "function" ? propertyFunction : propertyConstant;
         }
@@ -875,27 +875,27 @@ var Plotly = (() => {
             this.innerHTML = value;
           }) : this.node().innerHTML;
         };
-        d3_selectionPrototype.append = function(name6) {
-          name6 = d3_selection_creator(name6);
+        d3_selectionPrototype.append = function(name8) {
+          name8 = d3_selection_creator(name8);
           return this.select(function() {
-            return this.appendChild(name6.apply(this, arguments));
+            return this.appendChild(name8.apply(this, arguments));
           });
         };
-        function d3_selection_creator(name6) {
+        function d3_selection_creator(name8) {
           function create() {
             var document2 = this.ownerDocument, namespace = this.namespaceURI;
-            return namespace === d3_nsXhtml && document2.documentElement.namespaceURI === d3_nsXhtml ? document2.createElement(name6) : document2.createElementNS(namespace, name6);
+            return namespace === d3_nsXhtml && document2.documentElement.namespaceURI === d3_nsXhtml ? document2.createElement(name8) : document2.createElementNS(namespace, name8);
           }
           function createNS() {
-            return this.ownerDocument.createElementNS(name6.space, name6.local);
+            return this.ownerDocument.createElementNS(name8.space, name8.local);
           }
-          return typeof name6 === "function" ? name6 : (name6 = d356.ns.qualify(name6)).local ? createNS : create;
+          return typeof name8 === "function" ? name8 : (name8 = d356.ns.qualify(name8)).local ? createNS : create;
         }
-        d3_selectionPrototype.insert = function(name6, before) {
-          name6 = d3_selection_creator(name6);
+        d3_selectionPrototype.insert = function(name8, before) {
+          name8 = d3_selection_creator(name8);
           before = d3_selection_selector(before);
           return this.select(function() {
-            return this.insertBefore(name6.apply(this, arguments), before.apply(this, arguments) || null);
+            return this.insertBefore(name8.apply(this, arguments), before.apply(this, arguments) || null);
           });
         };
         d3_selectionPrototype.remove = function() {
@@ -1101,9 +1101,9 @@ var Plotly = (() => {
           }
           return d3_selection(subgroups);
         };
-        d3_selection_enterPrototype.insert = function(name6, before) {
+        d3_selection_enterPrototype.insert = function(name8, before) {
           if (arguments.length < 2) before = d3_selection_enterInsertBefore(this);
-          return d3_selectionPrototype.insert.call(this, name6, before);
+          return d3_selectionPrototype.insert.call(this, name8, before);
         };
         function d3_selection_enterInsertBefore(enter) {
           var i0, j0;
@@ -1151,30 +1151,30 @@ var Plotly = (() => {
           return this.each(d3_selection_on(type, listener, capture));
         };
         function d3_selection_on(type, listener, capture) {
-          var name6 = "__on" + type, i = type.indexOf("."), wrap = d3_selection_onListener;
+          var name8 = "__on" + type, i = type.indexOf("."), wrap = d3_selection_onListener;
           if (i > 0) type = type.slice(0, i);
           var filter2 = d3_selection_onFilters.get(type);
           if (filter2) type = filter2, wrap = d3_selection_onFilter;
           function onRemove() {
-            var l = this[name6];
+            var l = this[name8];
             if (l) {
               this.removeEventListener(type, l, l.$);
-              delete this[name6];
+              delete this[name8];
             }
           }
           function onAdd() {
             var l = wrap(listener, d3_array(arguments));
             onRemove.call(this);
-            this.addEventListener(type, this[name6] = l, l.$ = capture);
+            this.addEventListener(type, this[name8] = l, l.$ = capture);
             l._ = listener;
           }
           function removeAll() {
             var re2 = new RegExp("^__on([^.]+)" + d356.requote(type) + "$"), match;
-            for (var name7 in this) {
-              if (match = name7.match(re2)) {
-                var l = this[name7];
+            for (var name9 in this) {
+              if (match = name9.match(re2)) {
+                var l = this[name9];
                 this.removeEventListener(match[1], l, l.$);
-                delete this[name7];
+                delete this[name9];
               }
             }
           }
@@ -1212,7 +1212,7 @@ var Plotly = (() => {
         }
         var d3_event_dragSelect, d3_event_dragId = 0;
         function d3_event_dragSuppress(node) {
-          var name6 = ".dragsuppress-" + ++d3_event_dragId, click2 = "click" + name6, w = d356.select(d3_window(node)).on("touchmove" + name6, d3_eventPreventDefault).on("dragstart" + name6, d3_eventPreventDefault).on("selectstart" + name6, d3_eventPreventDefault);
+          var name8 = ".dragsuppress-" + ++d3_event_dragId, click2 = "click" + name8, w = d356.select(d3_window(node)).on("touchmove" + name8, d3_eventPreventDefault).on("dragstart" + name8, d3_eventPreventDefault).on("selectstart" + name8, d3_eventPreventDefault);
           if (d3_event_dragSelect == null) {
             d3_event_dragSelect = "onselectstart" in node ? false : d3_vendorSymbol(node.style, "userSelect");
           }
@@ -1221,7 +1221,7 @@ var Plotly = (() => {
             style11[d3_event_dragSelect] = "none";
           }
           return function(suppressClick) {
-            w.on(name6, null);
+            w.on(name8, null);
             if (d3_event_dragSelect) style11[d3_event_dragSelect] = select;
             if (suppressClick) {
               var off = function() {
@@ -2038,11 +2038,11 @@ var Plotly = (() => {
               d356.event = o;
             }
           };
-          xhr.header = function(name6, value) {
-            name6 = (name6 + "").toLowerCase();
-            if (arguments.length < 2) return headers[name6];
-            if (value == null) delete headers[name6];
-            else headers[name6] = value + "";
+          xhr.header = function(name8, value) {
+            name8 = (name8 + "").toLowerCase();
+            if (arguments.length < 2) return headers[name8];
+            if (value == null) delete headers[name8];
+            else headers[name8] = value + "";
             return xhr;
           };
           xhr.mimeType = function(value) {
@@ -2068,7 +2068,7 @@ var Plotly = (() => {
             if (arguments.length === 2 && typeof data === "function") callback2 = data, data = null;
             request.open(method, url, true);
             if (mimeType != null && !("accept" in headers)) headers["accept"] = mimeType + ",*/*";
-            if (request.setRequestHeader) for (var name6 in headers) request.setRequestHeader(name6, headers[name6]);
+            if (request.setRequestHeader) for (var name8 in headers) request.setRequestHeader(name8, headers[name8]);
             if (mimeType != null && request.overrideMimeType) request.overrideMimeType(mimeType);
             if (responseType != null) request.responseType = responseType;
             if (callback2 != null) xhr.on("error", callback2).on("load", function(request2) {
@@ -3389,8 +3389,8 @@ var Plotly = (() => {
             return d3_ease_reflect(d3_ease_reverse(f));
           }
         });
-        d356.ease = function(name6) {
-          var i = name6.indexOf("-"), t = i >= 0 ? name6.slice(0, i) : name6, m = i >= 0 ? name6.slice(i + 1) : "in";
+        d356.ease = function(name8) {
+          var i = name8.indexOf("-"), t = i >= 0 ? name8.slice(0, i) : name8, m = i >= 0 ? name8.slice(i + 1) : "in";
           t = d3_ease.get(t) || d3_ease_default;
           m = d3_ease_mode.get(m) || d3_identity;
           return d3_ease_clamp(m(t.apply(null, d3_arraySlice.call(arguments, 1))));
@@ -4812,7 +4812,7 @@ var Plotly = (() => {
         }
         d356.layout.treemap = function() {
           var hierarchy = d356.layout.hierarchy(), round3 = Math.round, size = [1, 1], padding = null, pad3 = d3_layout_treemapPadNull, sticky = false, stickies, mode = "squarify", ratio = 0.5 * (1 + Math.sqrt(5));
-          function scale(children, k) {
+          function scale2(children, k) {
             var i = -1, n = children.length, child, area;
             while (++i < n) {
               area = (child = children[i]).value * (k < 0 ? 0 : k);
@@ -4823,7 +4823,7 @@ var Plotly = (() => {
             var children = node.children;
             if (children && children.length) {
               var rect = pad3(node), row = [], remaining = children.slice(), child, best = Infinity, score, u = mode === "slice" ? rect.dx : mode === "dice" ? rect.dy : mode === "slice-dice" ? node.depth & 1 ? rect.dy : rect.dx : Math.min(rect.dx, rect.dy), n;
-              scale(remaining, rect.dx * rect.dy / node.value);
+              scale2(remaining, rect.dx * rect.dy / node.value);
               row.area = 0;
               while ((n = remaining.length) > 0) {
                 row.push(child = remaining[n - 1]);
@@ -4850,7 +4850,7 @@ var Plotly = (() => {
             var children = node.children;
             if (children && children.length) {
               var rect = pad3(node), remaining = children.slice(), child, row = [];
-              scale(remaining, rect.dx * rect.dy / node.value);
+              scale2(remaining, rect.dx * rect.dy / node.value);
               row.area = 0;
               while (child = remaining.pop()) {
                 row.push(child);
@@ -4910,7 +4910,7 @@ var Plotly = (() => {
             if (root.value) root.dx = size[0], root.dy = size[1];
             else root.dx = root.dy = 0;
             if (stickies) hierarchy.revalue(root);
-            scale([root], root.dx * root.dy / root.value);
+            scale2([root], root.dx * root.dy / root.value);
             (stickies ? stickify : squarify)(root);
             if (sticky) stickies = nodes;
             return nodes;
@@ -5020,8 +5020,8 @@ var Plotly = (() => {
           var start = domain[0], stop = domain[domain.length - 1];
           return start < stop ? [start, stop] : [stop, start];
         }
-        function d3_scaleRange(scale) {
-          return scale.rangeExtent ? scale.rangeExtent() : d3_scaleExtent(scale.range());
+        function d3_scaleRange(scale2) {
+          return scale2.rangeExtent ? scale2.rangeExtent() : d3_scaleExtent(scale2.range());
         }
         function d3_scale_bilinear(domain, range, uninterpolate, interpolate) {
           var u = uninterpolate(domain[0], domain[1]), i = interpolate(range[0], range[1]);
@@ -5077,54 +5077,54 @@ var Plotly = (() => {
             var linear = Math.min(domain.length, range.length) > 2 ? d3_scale_polylinear : d3_scale_bilinear, uninterpolate = clamp ? d3_uninterpolateClamp : d3_uninterpolateNumber;
             output = linear(domain, range, uninterpolate, interpolate);
             input = linear(range, domain, uninterpolate, d3_interpolate);
-            return scale;
+            return scale2;
           }
-          function scale(x) {
+          function scale2(x) {
             return output(x);
           }
-          scale.invert = function(y) {
+          scale2.invert = function(y) {
             return input(y);
           };
-          scale.domain = function(x) {
+          scale2.domain = function(x) {
             if (!arguments.length) return domain;
             domain = x.map(Number);
             return rescale();
           };
-          scale.range = function(x) {
+          scale2.range = function(x) {
             if (!arguments.length) return range;
             range = x;
             return rescale();
           };
-          scale.rangeRound = function(x) {
-            return scale.range(x).interpolate(d3_interpolateRound);
+          scale2.rangeRound = function(x) {
+            return scale2.range(x).interpolate(d3_interpolateRound);
           };
-          scale.clamp = function(x) {
+          scale2.clamp = function(x) {
             if (!arguments.length) return clamp;
             clamp = x;
             return rescale();
           };
-          scale.interpolate = function(x) {
+          scale2.interpolate = function(x) {
             if (!arguments.length) return interpolate;
             interpolate = x;
             return rescale();
           };
-          scale.ticks = function(m) {
+          scale2.ticks = function(m) {
             return d3_scale_linearTicks(domain, m);
           };
-          scale.tickFormat = function(m, format5) {
+          scale2.tickFormat = function(m, format5) {
             return d3_scale_linearTickFormat(domain, m, format5);
           };
-          scale.nice = function(m) {
+          scale2.nice = function(m) {
             d3_scale_linearNice(domain, m);
             return rescale();
           };
-          scale.copy = function() {
+          scale2.copy = function() {
             return d3_scale_linear(domain, range, interpolate, clamp);
           };
           return rescale();
         }
-        function d3_scale_linearRebind(scale, linear) {
-          return d356.rebind(scale, linear, "range", "rangeRound", "interpolate", "clamp");
+        function d3_scale_linearRebind(scale2, linear) {
+          return d356.rebind(scale2, linear, "range", "rangeRound", "interpolate", "clamp");
         }
         function d3_scale_linearNice(domain, m) {
           d3_scale_nice(domain, d3_scale_niceStep(d3_scale_linearTickRange(domain, m)[2]));
@@ -5169,31 +5169,31 @@ var Plotly = (() => {
           function pow(x) {
             return positive ? Math.pow(base, x) : -Math.pow(base, -x);
           }
-          function scale(x) {
+          function scale2(x) {
             return linear(log(x));
           }
-          scale.invert = function(x) {
+          scale2.invert = function(x) {
             return pow(linear.invert(x));
           };
-          scale.domain = function(x) {
+          scale2.domain = function(x) {
             if (!arguments.length) return domain;
             positive = x[0] >= 0;
             linear.domain((domain = x.map(Number)).map(log));
-            return scale;
+            return scale2;
           };
-          scale.base = function(_5) {
+          scale2.base = function(_5) {
             if (!arguments.length) return base;
             base = +_5;
             linear.domain(domain.map(log));
-            return scale;
+            return scale2;
           };
-          scale.nice = function() {
+          scale2.nice = function() {
             var niced = d3_scale_nice(domain.map(log), positive ? Math : d3_scale_logNiceNegative);
             linear.domain(niced);
             domain = niced.map(pow);
-            return scale;
+            return scale2;
           };
-          scale.ticks = function() {
+          scale2.ticks = function() {
             var extent2 = d3_scaleExtent(domain), ticks2 = [], u = extent2[0], v = extent2[1], i = Math.floor(log(u)), j = Math.ceil(log(v)), n = base % 1 ? 2 : base;
             if (isFinite(j - i)) {
               if (positive) {
@@ -5211,10 +5211,10 @@ var Plotly = (() => {
             }
             return ticks2;
           };
-          scale.copy = function() {
+          scale2.copy = function() {
             return d3_scale_log(linear.copy(), base, positive, domain);
           };
-          return d3_scale_linearRebind(scale, linear);
+          return d3_scale_linearRebind(scale2, linear);
         }
         var d3_scale_logNiceNegative = {
           floor: function(x) {
@@ -5229,37 +5229,37 @@ var Plotly = (() => {
         };
         function d3_scale_pow(linear, exponent, domain) {
           var powp = d3_scale_powPow(exponent), powb = d3_scale_powPow(1 / exponent);
-          function scale(x) {
+          function scale2(x) {
             return linear(powp(x));
           }
-          scale.invert = function(x) {
+          scale2.invert = function(x) {
             return powb(linear.invert(x));
           };
-          scale.domain = function(x) {
+          scale2.domain = function(x) {
             if (!arguments.length) return domain;
             linear.domain((domain = x.map(Number)).map(powp));
-            return scale;
+            return scale2;
           };
-          scale.ticks = function(m) {
+          scale2.ticks = function(m) {
             return d3_scale_linearTicks(domain, m);
           };
-          scale.tickFormat = function(m, format5) {
+          scale2.tickFormat = function(m, format5) {
             return d3_scale_linearTickFormat(domain, m, format5);
           };
-          scale.nice = function(m) {
-            return scale.domain(d3_scale_linearNice(domain, m));
+          scale2.nice = function(m) {
+            return scale2.domain(d3_scale_linearNice(domain, m));
           };
-          scale.exponent = function(x) {
+          scale2.exponent = function(x) {
             if (!arguments.length) return exponent;
             powp = d3_scale_powPow(exponent = x);
             powb = d3_scale_powPow(1 / exponent);
             linear.domain(domain.map(powp));
-            return scale;
+            return scale2;
           };
-          scale.copy = function() {
+          scale2.copy = function() {
             return d3_scale_pow(linear.copy(), exponent, domain);
           };
-          return d3_scale_linearRebind(scale, linear);
+          return d3_scale_linearRebind(scale2, linear);
         }
         function d3_scale_powPow(e) {
           return function(x) {
@@ -5277,7 +5277,7 @@ var Plotly = (() => {
         };
         function d3_scale_ordinal(domain, ranger) {
           var index, range, rangeBand;
-          function scale(x) {
+          function scale2(x) {
             return range[((index.get(x) || (ranger.t === "range" ? index.set(x, domain.push(x)) : NaN)) - 1) % range.length];
           }
           function steps(start, step) {
@@ -5285,15 +5285,15 @@ var Plotly = (() => {
               return start + step * i;
             });
           }
-          scale.domain = function(x) {
+          scale2.domain = function(x) {
             if (!arguments.length) return domain;
             domain = [];
             index = new d3_Map();
             var i = -1, n = x.length, xi;
             while (++i < n) if (!index.has(xi = x[i])) index.set(xi, domain.push(xi));
-            return scale[ranger.t].apply(scale, ranger.a);
+            return scale2[ranger.t].apply(scale2, ranger.a);
           };
-          scale.range = function(x) {
+          scale2.range = function(x) {
             if (!arguments.length) return range;
             range = x;
             rangeBand = 0;
@@ -5301,9 +5301,9 @@ var Plotly = (() => {
               t: "range",
               a: arguments
             };
-            return scale;
+            return scale2;
           };
-          scale.rangePoints = function(x, padding) {
+          scale2.rangePoints = function(x, padding) {
             if (arguments.length < 2) padding = 0;
             var start = x[0], stop = x[1], step = domain.length < 2 ? (start = (start + stop) / 2, 0) : (stop - start) / (domain.length - 1 + padding);
             range = steps(start + step * padding / 2, step);
@@ -5312,9 +5312,9 @@ var Plotly = (() => {
               t: "rangePoints",
               a: arguments
             };
-            return scale;
+            return scale2;
           };
-          scale.rangeRoundPoints = function(x, padding) {
+          scale2.rangeRoundPoints = function(x, padding) {
             if (arguments.length < 2) padding = 0;
             var start = x[0], stop = x[1], step = domain.length < 2 ? (start = stop = Math.round((start + stop) / 2), 0) : (stop - start) / (domain.length - 1 + padding) | 0;
             range = steps(start + Math.round(step * padding / 2 + (stop - start - (domain.length - 1 + padding) * step) / 2), step);
@@ -5323,9 +5323,9 @@ var Plotly = (() => {
               t: "rangeRoundPoints",
               a: arguments
             };
-            return scale;
+            return scale2;
           };
-          scale.rangeBands = function(x, padding, outerPadding) {
+          scale2.rangeBands = function(x, padding, outerPadding) {
             if (arguments.length < 2) padding = 0;
             if (arguments.length < 3) outerPadding = padding;
             var reverse = x[1] < x[0], start = x[reverse - 0], stop = x[1 - reverse], step = (stop - start) / (domain.length - padding + 2 * outerPadding);
@@ -5336,9 +5336,9 @@ var Plotly = (() => {
               t: "rangeBands",
               a: arguments
             };
-            return scale;
+            return scale2;
           };
-          scale.rangeRoundBands = function(x, padding, outerPadding) {
+          scale2.rangeRoundBands = function(x, padding, outerPadding) {
             if (arguments.length < 2) padding = 0;
             if (arguments.length < 3) outerPadding = padding;
             var reverse = x[1] < x[0], start = x[reverse - 0], stop = x[1 - reverse], step = Math.floor((stop - start) / (domain.length - padding + 2 * outerPadding));
@@ -5349,18 +5349,18 @@ var Plotly = (() => {
               t: "rangeRoundBands",
               a: arguments
             };
-            return scale;
+            return scale2;
           };
-          scale.rangeBand = function() {
+          scale2.rangeBand = function() {
             return rangeBand;
           };
-          scale.rangeExtent = function() {
+          scale2.rangeExtent = function() {
             return d3_scaleExtent(ranger.a[0]);
           };
-          scale.copy = function() {
+          scale2.copy = function() {
             return d3_scale_ordinal(domain, ranger);
           };
-          return scale.domain(domain);
+          return scale2.domain(domain);
         }
         d356.scale.category10 = function() {
           return d356.scale.ordinal().range(d3_category10);
@@ -5387,29 +5387,29 @@ var Plotly = (() => {
             var k = 0, q = range.length;
             thresholds = [];
             while (++k < q) thresholds[k - 1] = d356.quantile(domain, k / q);
-            return scale;
+            return scale2;
           }
-          function scale(x) {
+          function scale2(x) {
             if (!isNaN(x = +x)) return range[d356.bisect(thresholds, x)];
           }
-          scale.domain = function(x) {
+          scale2.domain = function(x) {
             if (!arguments.length) return domain;
             domain = x.map(d3_number).filter(d3_numeric).sort(d3_ascending);
             return rescale();
           };
-          scale.range = function(x) {
+          scale2.range = function(x) {
             if (!arguments.length) return range;
             range = x;
             return rescale();
           };
-          scale.quantiles = function() {
+          scale2.quantiles = function() {
             return thresholds;
           };
-          scale.invertExtent = function(y) {
+          scale2.invertExtent = function(y) {
             y = range.indexOf(y);
             return y < 0 ? [NaN, NaN] : [y > 0 ? thresholds[y - 1] : domain[0], y < thresholds.length ? thresholds[y] : domain[domain.length - 1]];
           };
-          scale.copy = function() {
+          scale2.copy = function() {
             return d3_scale_quantile(domain, range);
           };
           return rescale();
@@ -5419,31 +5419,31 @@ var Plotly = (() => {
         };
         function d3_scale_quantize(x0, x1, range) {
           var kx, i;
-          function scale(x) {
+          function scale2(x) {
             return range[Math.max(0, Math.min(i, Math.floor(kx * (x - x0))))];
           }
           function rescale() {
             kx = range.length / (x1 - x0);
             i = range.length - 1;
-            return scale;
+            return scale2;
           }
-          scale.domain = function(x) {
+          scale2.domain = function(x) {
             if (!arguments.length) return [x0, x1];
             x0 = +x[0];
             x1 = +x[x.length - 1];
             return rescale();
           };
-          scale.range = function(x) {
+          scale2.range = function(x) {
             if (!arguments.length) return range;
             range = x;
             return rescale();
           };
-          scale.invertExtent = function(y) {
+          scale2.invertExtent = function(y) {
             y = range.indexOf(y);
             y = y < 0 ? NaN : y / kx + x0;
             return [y, y + 1 / kx];
           };
-          scale.copy = function() {
+          scale2.copy = function() {
             return d3_scale_quantize(x0, x1, range);
           };
           return rescale();
@@ -5452,27 +5452,27 @@ var Plotly = (() => {
           return d3_scale_threshold([0.5], [0, 1]);
         };
         function d3_scale_threshold(domain, range) {
-          function scale(x) {
+          function scale2(x) {
             if (x <= x) return range[d356.bisect(domain, x)];
           }
-          scale.domain = function(_5) {
+          scale2.domain = function(_5) {
             if (!arguments.length) return domain;
             domain = _5;
-            return scale;
+            return scale2;
           };
-          scale.range = function(_5) {
+          scale2.range = function(_5) {
             if (!arguments.length) return range;
             range = _5;
-            return scale;
+            return scale2;
           };
-          scale.invertExtent = function(y) {
+          scale2.invertExtent = function(y) {
             y = range.indexOf(y);
             return [domain[y - 1], domain[y]];
           };
-          scale.copy = function() {
+          scale2.copy = function() {
             return d3_scale_threshold(domain, range);
           };
-          return scale;
+          return scale2;
         }
         d356.scale.identity = function() {
           return d3_scale_identity([0, 1]);
@@ -6167,8 +6167,8 @@ var Plotly = (() => {
         });
         d356.svg.symbolTypes = d3_svg_symbols.keys();
         var d3_svg_symbolSqrt3 = Math.sqrt(3), d3_svg_symbolTan30 = Math.tan(30 * d3_radians);
-        d3_selectionPrototype.transition = function(name6) {
-          var id = d3_transitionInheritId || ++d3_transitionId, ns = d3_transitionNamespace(name6), subgroups = [], subgroup, node, transition2 = d3_transitionInherit || {
+        d3_selectionPrototype.transition = function(name8) {
+          var id = d3_transitionInheritId || ++d3_transitionId, ns = d3_transitionNamespace(name8), subgroups = [], subgroup, node, transition2 = d3_transitionInherit || {
             time: Date.now(),
             ease: d3_ease_cubicInOut,
             delay: 0,
@@ -6183,8 +6183,8 @@ var Plotly = (() => {
           }
           return d3_transition(subgroups, ns, id);
         };
-        d3_selectionPrototype.interrupt = function(name6) {
-          return this.each(name6 == null ? d3_selection_interrupt : d3_selection_interruptNS(d3_transitionNamespace(name6)));
+        d3_selectionPrototype.interrupt = function(name8) {
+          return this.each(name8 == null ? d3_selection_interrupt : d3_selection_interruptNS(d3_transitionNamespace(name8)));
         };
         var d3_selection_interrupt = d3_selection_interruptNS(d3_transitionNamespace());
         function d3_selection_interruptNS(ns) {
@@ -6211,8 +6211,8 @@ var Plotly = (() => {
         d3_transitionPrototype.empty = d3_selectionPrototype.empty;
         d3_transitionPrototype.node = d3_selectionPrototype.node;
         d3_transitionPrototype.size = d3_selectionPrototype.size;
-        d356.transition = function(selection, name6) {
-          return selection && selection.transition ? d3_transitionInheritId ? selection.transition(name6) : selection : d356.selection().transition(selection);
+        d356.transition = function(selection, name8) {
+          return selection && selection.transition ? d3_transitionInheritId ? selection.transition(name8) : selection : d356.selection().transition(selection);
         };
         d356.transition.prototype = d3_transitionPrototype;
         d3_transitionPrototype.select = function(selector) {
@@ -6263,21 +6263,21 @@ var Plotly = (() => {
           }
           return d3_transition(subgroups, this.namespace, this.id);
         };
-        d3_transitionPrototype.tween = function(name6, tween) {
+        d3_transitionPrototype.tween = function(name8, tween) {
           var id = this.id, ns = this.namespace;
-          if (arguments.length < 2) return this.node()[ns][id].tween.get(name6);
+          if (arguments.length < 2) return this.node()[ns][id].tween.get(name8);
           return d3_selection_each(this, tween == null ? function(node) {
-            node[ns][id].tween.remove(name6);
+            node[ns][id].tween.remove(name8);
           } : function(node) {
-            node[ns][id].tween.set(name6, tween);
+            node[ns][id].tween.set(name8, tween);
           });
         };
-        function d3_transition_tween(groups, name6, value, tween) {
+        function d3_transition_tween(groups, name8, value, tween) {
           var id = groups.id, ns = groups.namespace;
           return d3_selection_each(groups, typeof value === "function" ? function(node, i, j) {
-            node[ns][id].tween.set(name6, tween(value.call(node, node.__data__, i, j)));
+            node[ns][id].tween.set(name8, tween(value.call(node, node.__data__, i, j)));
           } : (value = tween(value), function(node) {
-            node[ns][id].tween.set(name6, value);
+            node[ns][id].tween.set(name8, value);
           }));
         }
         d3_transitionPrototype.attr = function(nameNS, value) {
@@ -6285,79 +6285,79 @@ var Plotly = (() => {
             for (value in nameNS) this.attr(value, nameNS[value]);
             return this;
           }
-          var interpolate = nameNS == "transform" ? d3_interpolateTransform : d3_interpolate, name6 = d356.ns.qualify(nameNS);
+          var interpolate = nameNS == "transform" ? d3_interpolateTransform : d3_interpolate, name8 = d356.ns.qualify(nameNS);
           function attrNull() {
-            this.removeAttribute(name6);
+            this.removeAttribute(name8);
           }
           function attrNullNS() {
-            this.removeAttributeNS(name6.space, name6.local);
+            this.removeAttributeNS(name8.space, name8.local);
           }
           function attrTween(b) {
             return b == null ? attrNull : (b += "", function() {
-              var a = this.getAttribute(name6), i;
+              var a = this.getAttribute(name8), i;
               return a !== b && (i = interpolate(a, b), function(t) {
-                this.setAttribute(name6, i(t));
+                this.setAttribute(name8, i(t));
               });
             });
           }
           function attrTweenNS(b) {
             return b == null ? attrNullNS : (b += "", function() {
-              var a = this.getAttributeNS(name6.space, name6.local), i;
+              var a = this.getAttributeNS(name8.space, name8.local), i;
               return a !== b && (i = interpolate(a, b), function(t) {
-                this.setAttributeNS(name6.space, name6.local, i(t));
+                this.setAttributeNS(name8.space, name8.local, i(t));
               });
             });
           }
-          return d3_transition_tween(this, "attr." + nameNS, value, name6.local ? attrTweenNS : attrTween);
+          return d3_transition_tween(this, "attr." + nameNS, value, name8.local ? attrTweenNS : attrTween);
         };
         d3_transitionPrototype.attrTween = function(nameNS, tween) {
-          var name6 = d356.ns.qualify(nameNS);
+          var name8 = d356.ns.qualify(nameNS);
           function attrTween(d, i) {
-            var f = tween.call(this, d, i, this.getAttribute(name6));
+            var f = tween.call(this, d, i, this.getAttribute(name8));
             return f && function(t) {
-              this.setAttribute(name6, f(t));
+              this.setAttribute(name8, f(t));
             };
           }
           function attrTweenNS(d, i) {
-            var f = tween.call(this, d, i, this.getAttributeNS(name6.space, name6.local));
+            var f = tween.call(this, d, i, this.getAttributeNS(name8.space, name8.local));
             return f && function(t) {
-              this.setAttributeNS(name6.space, name6.local, f(t));
+              this.setAttributeNS(name8.space, name8.local, f(t));
             };
           }
-          return this.tween("attr." + nameNS, name6.local ? attrTweenNS : attrTween);
+          return this.tween("attr." + nameNS, name8.local ? attrTweenNS : attrTween);
         };
-        d3_transitionPrototype.style = function(name6, value, priority) {
+        d3_transitionPrototype.style = function(name8, value, priority) {
           var n = arguments.length;
           if (n < 3) {
-            if (typeof name6 !== "string") {
+            if (typeof name8 !== "string") {
               if (n < 2) value = "";
-              for (priority in name6) this.style(priority, name6[priority], value);
+              for (priority in name8) this.style(priority, name8[priority], value);
               return this;
             }
             priority = "";
           }
           function styleNull() {
-            this.style.removeProperty(name6);
+            this.style.removeProperty(name8);
           }
           function styleString(b) {
             return b == null ? styleNull : (b += "", function() {
-              var a = d3_window(this).getComputedStyle(this, null).getPropertyValue(name6), i;
+              var a = d3_window(this).getComputedStyle(this, null).getPropertyValue(name8), i;
               return a !== b && (i = d3_interpolate(a, b), function(t) {
-                this.style.setProperty(name6, i(t), priority);
+                this.style.setProperty(name8, i(t), priority);
               });
             });
           }
-          return d3_transition_tween(this, "style." + name6, value, styleString);
+          return d3_transition_tween(this, "style." + name8, value, styleString);
         };
-        d3_transitionPrototype.styleTween = function(name6, tween, priority) {
+        d3_transitionPrototype.styleTween = function(name8, tween, priority) {
           if (arguments.length < 3) priority = "";
           function styleTween(d, i) {
-            var f = tween.call(this, d, i, d3_window(this).getComputedStyle(this, null).getPropertyValue(name6));
+            var f = tween.call(this, d, i, d3_window(this).getComputedStyle(this, null).getPropertyValue(name8));
             return f && function(t) {
-              this.style.setProperty(name6, f(t), priority);
+              this.style.setProperty(name8, f(t), priority);
             };
           }
-          return this.tween("style." + name6, styleTween);
+          return this.tween("style." + name8, styleTween);
         };
         d3_transitionPrototype.text = function(value) {
           return d3_transition_tween(this, "text", value, d3_transition_text);
@@ -6442,8 +6442,8 @@ var Plotly = (() => {
           }
           return d3_transition(subgroups, ns, id1);
         };
-        function d3_transitionNamespace(name6) {
-          return name6 == null ? "__transition__" : "__transition_" + name6 + "__";
+        function d3_transitionNamespace(name8) {
+          return name8 == null ? "__transition__" : "__transition_" + name8 + "__";
         }
         function d3_transitionNode(node, i, ns, id, inherit) {
           var lock = node[ns] || (node[ns] = {
@@ -6522,11 +6522,11 @@ var Plotly = (() => {
           }
         }
         d356.svg.axis = function() {
-          var scale = d356.scale.linear(), orient = d3_svg_axisDefaultOrient, innerTickSize = 6, outerTickSize = 6, tickPadding = 3, tickArguments_ = [10], tickValues = null, tickFormat_;
+          var scale2 = d356.scale.linear(), orient = d3_svg_axisDefaultOrient, innerTickSize = 6, outerTickSize = 6, tickPadding = 3, tickArguments_ = [10], tickValues = null, tickFormat_;
           function axis(g) {
             g.each(function() {
               var g2 = d356.select(this);
-              var scale0 = this.__chart__ || scale, scale1 = this.__chart__ = scale.copy();
+              var scale0 = this.__chart__ || scale2, scale1 = this.__chart__ = scale2.copy();
               var ticks2 = tickValues == null ? scale1.ticks ? scale1.ticks.apply(scale1, tickArguments_) : scale1.domain() : tickValues, tickFormat = tickFormat_ == null ? scale1.tickFormat ? scale1.tickFormat.apply(scale1, tickArguments_) : d3_identity : tickFormat_, tick = g2.selectAll(".tick").data(ticks2, scale1), tickEnter = tick.enter().insert("g", ".domain").attr("class", "tick").style("opacity", \u03B5), tickExit = d356.transition(tick.exit()).style("opacity", \u03B5).remove(), tickUpdate = d356.transition(tick.order()).style("opacity", 1), tickSpacing = Math.max(innerTickSize, 0) + tickPadding, tickTransform;
               var range = d3_scaleRange(scale1), path = g2.selectAll(".domain").data([0]), pathUpdate = (path.enter().append("path").attr("class", "domain"), d356.transition(path));
               tickEnter.append("line");
@@ -6560,8 +6560,8 @@ var Plotly = (() => {
             });
           }
           axis.scale = function(x) {
-            if (!arguments.length) return scale;
-            scale = x;
+            if (!arguments.length) return scale2;
+            scale2 = x;
             return axis;
           };
           axis.orient = function(x) {
@@ -6802,8 +6802,8 @@ var Plotly = (() => {
                 });
               }
             }
-            function move1(point, scale, i) {
-              var range = d3_scaleRange(scale), r0 = range[0], r1 = range[1], position = origin[i], extent2 = i ? yExtent : xExtent, size = extent2[1] - extent2[0], min, max;
+            function move1(point, scale2, i) {
+              var range = d3_scaleRange(scale2), r0 = range[0], r1 = range[1], position = origin[i], extent2 = i ? yExtent : xExtent, size = extent2[1] - extent2[0], min, max;
               if (dragging) {
                 r0 -= position;
                 r1 -= size + position;
@@ -7289,8 +7289,8 @@ var Plotly = (() => {
   // node_modules/.pnpm/gl-mat4@1.2.0/node_modules/gl-mat4/scale.js
   var require_scale = __commonJS({
     "node_modules/.pnpm/gl-mat4@1.2.0/node_modules/gl-mat4/scale.js"(exports, module) {
-      module.exports = scale;
-      function scale(out, a, v) {
+      module.exports = scale2;
+      function scale2(out, a, v) {
         var x = v[0], y = v[1], z = v[2];
         out[0] = a[0] * x;
         out[1] = a[1] * x;
@@ -8260,10 +8260,10 @@ var Plotly = (() => {
         }
         return ret;
       }
-      function once(emitter, name6) {
+      function once(emitter, name8) {
         return new Promise(function(resolve, reject) {
           function errorListener(err) {
-            emitter.removeListener(name6, resolver);
+            emitter.removeListener(name8, resolver);
             reject(err);
           }
           function resolver() {
@@ -8273,8 +8273,8 @@ var Plotly = (() => {
             resolve([].slice.call(arguments));
           }
           ;
-          eventTargetAgnosticAddListener(emitter, name6, resolver, { once: true });
-          if (name6 !== "error") {
+          eventTargetAgnosticAddListener(emitter, name8, resolver, { once: true });
+          if (name8 !== "error") {
             addErrorHandlerIfEventEmitter(emitter, errorListener, { once: true });
           }
         });
@@ -8284,17 +8284,17 @@ var Plotly = (() => {
           eventTargetAgnosticAddListener(emitter, "error", handler, flags);
         }
       }
-      function eventTargetAgnosticAddListener(emitter, name6, listener, flags) {
+      function eventTargetAgnosticAddListener(emitter, name8, listener, flags) {
         if (typeof emitter.on === "function") {
           if (flags.once) {
-            emitter.once(name6, listener);
+            emitter.once(name8, listener);
           } else {
-            emitter.on(name6, listener);
+            emitter.on(name8, listener);
           }
         } else if (typeof emitter.addEventListener === "function") {
-          emitter.addEventListener(name6, function wrapListener(arg) {
+          emitter.addEventListener(name8, function wrapListener(arg) {
             if (flags.once) {
-              emitter.removeEventListener(name6, wrapListener);
+              emitter.removeEventListener(name8, wrapListener);
             }
             listener(arg);
           });
@@ -8401,13 +8401,13 @@ var Plotly = (() => {
   // node_modules/.pnpm/native-promise-only@0.8.1/node_modules/native-promise-only/lib/npo.src.js
   var require_npo_src = __commonJS({
     "node_modules/.pnpm/native-promise-only@0.8.1/node_modules/native-promise-only/lib/npo.src.js"(exports, module) {
-      (function UMD(name6, context, definition) {
-        context[name6] = context[name6] || definition();
+      (function UMD(name8, context, definition) {
+        context[name8] = context[name8] || definition();
         if (typeof module != "undefined" && module.exports) {
-          module.exports = context[name6];
+          module.exports = context[name8];
         } else if (typeof define == "function" && false) {
           define(function $AMD$() {
-            return context[name6];
+            return context[name8];
           });
         }
       })("Promise", typeof window != "undefined" ? window : exports, function DEF() {
@@ -8417,16 +8417,16 @@ var Plotly = (() => {
         } : setTimeout;
         try {
           Object.defineProperty({}, "x", {});
-          builtInProp = function builtInProp2(obj, name6, val, config) {
-            return Object.defineProperty(obj, name6, {
+          builtInProp = function builtInProp2(obj, name8, val, config) {
+            return Object.defineProperty(obj, name8, {
               value: val,
               writable: true,
               configurable: config !== false
             });
           };
         } catch (err) {
-          builtInProp = function builtInProp2(obj, name6, val) {
-            obj[name6] = val;
+          builtInProp = function builtInProp2(obj, name8, val) {
+            obj[name8] = val;
             return obj;
           };
         }
@@ -11512,9 +11512,9 @@ var Plotly = (() => {
       }
       E(
         "ERR_BUFFER_OUT_OF_BOUNDS",
-        function(name6) {
-          if (name6) {
-            return `${name6} is outside of buffer bounds`;
+        function(name8) {
+          if (name8) {
+            return `${name8} is outside of buffer bounds`;
           }
           return "Attempt to access memory outside buffer bounds";
         },
@@ -11522,8 +11522,8 @@ var Plotly = (() => {
       );
       E(
         "ERR_INVALID_ARG_TYPE",
-        function(name6, actual) {
-          return `The "${name6}" argument must be of type number. Received type ${typeof actual}`;
+        function(name8, actual) {
+          return `The "${name8}" argument must be of type number. Received type ${typeof actual}`;
         },
         TypeError
       );
@@ -11578,9 +11578,9 @@ var Plotly = (() => {
         }
         checkBounds(buf, offset, byteLength2);
       }
-      function validateNumber(value, name6) {
+      function validateNumber(value, name8) {
         if (typeof value !== "number") {
-          throw new errors.ERR_INVALID_ARG_TYPE(name6, "number", value);
+          throw new errors.ERR_INVALID_ARG_TYPE(name8, "number", value);
         }
       }
       function boundsError(value, length, type) {
@@ -12352,26 +12352,26 @@ var Plotly = (() => {
         }
       }
       var errorProto;
-      var doEval = function doEval2(name6) {
+      var doEval = function doEval2(name8) {
         var value;
-        if (name6 === "%AsyncFunction%") {
+        if (name8 === "%AsyncFunction%") {
           value = getEvalledConstructor("async function () {}");
-        } else if (name6 === "%GeneratorFunction%") {
+        } else if (name8 === "%GeneratorFunction%") {
           value = getEvalledConstructor("function* () {}");
-        } else if (name6 === "%AsyncGeneratorFunction%") {
+        } else if (name8 === "%AsyncGeneratorFunction%") {
           value = getEvalledConstructor("async function* () {}");
-        } else if (name6 === "%AsyncGenerator%") {
+        } else if (name8 === "%AsyncGenerator%") {
           var fn = doEval2("%AsyncGeneratorFunction%");
           if (fn) {
             value = fn.prototype;
           }
-        } else if (name6 === "%AsyncIteratorPrototype%") {
+        } else if (name8 === "%AsyncIteratorPrototype%") {
           var gen = doEval2("%AsyncGenerator%");
           if (gen && getProto) {
             value = getProto(gen.prototype);
           }
         }
-        INTRINSICS[name6] = value;
+        INTRINSICS[name8] = value;
         return value;
       };
       var LEGACY_ALIASES = {
@@ -12451,8 +12451,8 @@ var Plotly = (() => {
         });
         return result;
       };
-      var getBaseIntrinsic = function getBaseIntrinsic2(name6, allowMissing) {
-        var intrinsicName = name6;
+      var getBaseIntrinsic = function getBaseIntrinsic2(name8, allowMissing) {
+        var intrinsicName = name8;
         var alias;
         if (hasOwn(LEGACY_ALIASES, intrinsicName)) {
           alias = LEGACY_ALIASES[intrinsicName];
@@ -12464,7 +12464,7 @@ var Plotly = (() => {
             value = doEval(intrinsicName);
           }
           if (typeof value === "undefined" && !allowMissing) {
-            throw new $TypeError("intrinsic " + name6 + " exists, but is not available. Please file an issue!");
+            throw new $TypeError("intrinsic " + name8 + " exists, but is not available. Please file an issue!");
           }
           return {
             alias,
@@ -12472,19 +12472,19 @@ var Plotly = (() => {
             value
           };
         }
-        throw new $SyntaxError("intrinsic " + name6 + " does not exist!");
+        throw new $SyntaxError("intrinsic " + name8 + " does not exist!");
       };
-      module.exports = function GetIntrinsic(name6, allowMissing) {
-        if (typeof name6 !== "string" || name6.length === 0) {
+      module.exports = function GetIntrinsic(name8, allowMissing) {
+        if (typeof name8 !== "string" || name8.length === 0) {
           throw new $TypeError("intrinsic name must be a non-empty string");
         }
         if (arguments.length > 1 && typeof allowMissing !== "boolean") {
           throw new $TypeError('"allowMissing" argument must be a boolean');
         }
-        if ($exec(/^%?[^%]*%?$/, name6) === null) {
+        if ($exec(/^%?[^%]*%?$/, name8) === null) {
           throw new $SyntaxError("`%` may not be present anywhere but at the beginning and end of the intrinsic name");
         }
-        var parts = stringToPath(name6);
+        var parts = stringToPath(name8);
         var intrinsicBaseName = parts.length > 0 ? parts[0] : "";
         var intrinsic = getBaseIntrinsic("%" + intrinsicBaseName + "%", allowMissing);
         var intrinsicRealName = intrinsic.name;
@@ -12512,7 +12512,7 @@ var Plotly = (() => {
           } else if (value != null) {
             if (!(part in value)) {
               if (!allowMissing) {
-                throw new $TypeError("base intrinsic for " + name6 + " exists, but the property is not available.");
+                throw new $TypeError("base intrinsic for " + name8 + " exists, but the property is not available.");
               }
               return void undefined2;
             }
@@ -12545,12 +12545,12 @@ var Plotly = (() => {
       var GetIntrinsic = require_get_intrinsic();
       var callBindBasic = require_call_bind_apply_helpers();
       var $indexOf = callBindBasic([GetIntrinsic("%String.prototype.indexOf%")]);
-      module.exports = function callBoundIntrinsic(name6, allowMissing) {
+      module.exports = function callBoundIntrinsic(name8, allowMissing) {
         var intrinsic = (
           /** @type {(this: unknown, ...args: unknown[]) => unknown} */
-          GetIntrinsic(name6, !!allowMissing)
+          GetIntrinsic(name8, !!allowMissing)
         );
-        if (typeof intrinsic === "function" && $indexOf(name6, ".prototype.") > -1) {
+        if (typeof intrinsic === "function" && $indexOf(name8, ".prototype.") > -1) {
           return callBindBasic(
             /** @type {const} */
             [intrinsic]
@@ -13185,12 +13185,12 @@ var Plotly = (() => {
           /** @type {Record<`\$${import('.').TypedArrayName}`, Getter>} */
           cache,
           /** @type {(getter: Getter, name: `\$${import('.').TypedArrayName}`) => void} */
-          function(getter, name6) {
+          function(getter, name8) {
             if (!found) {
               try {
                 getter(value);
                 found = /** @type {import('.').TypedArrayName} */
-                $slice(name6, 1);
+                $slice(name8, 1);
               } catch (e) {
               }
             }
@@ -13657,8 +13657,8 @@ var Plotly = (() => {
         }
         if (keys.length === 0) {
           if (isFunction(value)) {
-            var name6 = value.name ? ": " + value.name : "";
-            return ctx.stylize("[Function" + name6 + "]", "special");
+            var name8 = value.name ? ": " + value.name : "";
+            return ctx.stylize("[Function" + name8 + "]", "special");
           }
           if (isRegExp(value)) {
             return ctx.stylize(RegExp.prototype.toString.call(value), "regexp");
@@ -13758,7 +13758,7 @@ var Plotly = (() => {
         return output;
       }
       function formatProperty(ctx, value, recurseTimes, visibleKeys, key, array) {
-        var name6, str, desc;
+        var name8, str, desc;
         desc = Object.getOwnPropertyDescriptor(value, key) || { value: value[key] };
         if (desc.get) {
           if (desc.set) {
@@ -13772,7 +13772,7 @@ var Plotly = (() => {
           }
         }
         if (!hasOwnProperty(visibleKeys, key)) {
-          name6 = "[" + key + "]";
+          name8 = "[" + key + "]";
         }
         if (!str) {
           if (ctx.seen.indexOf(desc.value) < 0) {
@@ -13796,20 +13796,20 @@ var Plotly = (() => {
             str = ctx.stylize("[Circular]", "special");
           }
         }
-        if (isUndefined(name6)) {
+        if (isUndefined(name8)) {
           if (array && key.match(/^\d+$/)) {
             return str;
           }
-          name6 = JSON.stringify("" + key);
-          if (name6.match(/^"([a-zA-Z_][a-zA-Z_0-9]*)"$/)) {
-            name6 = name6.slice(1, -1);
-            name6 = ctx.stylize(name6, "name");
+          name8 = JSON.stringify("" + key);
+          if (name8.match(/^"([a-zA-Z_][a-zA-Z_0-9]*)"$/)) {
+            name8 = name8.slice(1, -1);
+            name8 = ctx.stylize(name8, "name");
           } else {
-            name6 = name6.replace(/'/g, "\\'").replace(/\\"/g, '"').replace(/(^"|"$)/g, "'");
-            name6 = ctx.stylize(name6, "string");
+            name8 = name8.replace(/'/g, "\\'").replace(/\\"/g, '"').replace(/(^"|"$)/g, "'");
+            name8 = ctx.stylize(name8, "string");
           }
         }
-        return name6 + ": " + str;
+        return name8 + ": " + str;
       }
       function reduceToSingleString(output, base, braces) {
         var numLinesEst = 0;
@@ -14428,10 +14428,10 @@ var Plotly = (() => {
           return str.indexOf(search, start) !== -1;
         }
       }
-      createErrorType("ERR_INVALID_OPT_VALUE", function(name6, value) {
-        return 'The value "' + value + '" is invalid for option "' + name6 + '"';
+      createErrorType("ERR_INVALID_OPT_VALUE", function(name8, value) {
+        return 'The value "' + value + '" is invalid for option "' + name8 + '"';
       }, TypeError);
-      createErrorType("ERR_INVALID_ARG_TYPE", function(name6, expected, actual) {
+      createErrorType("ERR_INVALID_ARG_TYPE", function(name8, expected, actual) {
         var determiner;
         if (typeof expected === "string" && startsWith(expected, "not ")) {
           determiner = "must not be";
@@ -14440,22 +14440,22 @@ var Plotly = (() => {
           determiner = "must be";
         }
         var msg;
-        if (endsWith(name6, " argument")) {
-          msg = "The ".concat(name6, " ").concat(determiner, " ").concat(oneOf(expected, "type"));
+        if (endsWith(name8, " argument")) {
+          msg = "The ".concat(name8, " ").concat(determiner, " ").concat(oneOf(expected, "type"));
         } else {
-          var type = includes(name6, ".") ? "property" : "argument";
-          msg = 'The "'.concat(name6, '" ').concat(type, " ").concat(determiner, " ").concat(oneOf(expected, "type"));
+          var type = includes(name8, ".") ? "property" : "argument";
+          msg = 'The "'.concat(name8, '" ').concat(type, " ").concat(determiner, " ").concat(oneOf(expected, "type"));
         }
         msg += ". Received type ".concat(typeof actual);
         return msg;
       }, TypeError);
       createErrorType("ERR_STREAM_PUSH_AFTER_EOF", "stream.push() after EOF");
-      createErrorType("ERR_METHOD_NOT_IMPLEMENTED", function(name6) {
-        return "The " + name6 + " method is not implemented";
+      createErrorType("ERR_METHOD_NOT_IMPLEMENTED", function(name8) {
+        return "The " + name8 + " method is not implemented";
       });
       createErrorType("ERR_STREAM_PREMATURE_CLOSE", "Premature close");
-      createErrorType("ERR_STREAM_DESTROYED", function(name6) {
-        return "Cannot call " + name6 + " after a stream was destroyed";
+      createErrorType("ERR_STREAM_DESTROYED", function(name8) {
+        return "Cannot call " + name8 + " after a stream was destroyed";
       });
       createErrorType("ERR_MULTIPLE_CALLBACK", "Callback called multiple times");
       createErrorType("ERR_STREAM_CANNOT_PIPE", "Cannot pipe, not readable");
@@ -14481,8 +14481,8 @@ var Plotly = (() => {
         var hwm = highWaterMarkFrom(options, isDuplex, duplexKey);
         if (hwm != null) {
           if (!(isFinite(hwm) && Math.floor(hwm) === hwm) || hwm < 0) {
-            var name6 = isDuplex ? duplexKey : "highWaterMark";
-            throw new ERR_INVALID_OPT_VALUE(name6, hwm);
+            var name8 = isDuplex ? duplexKey : "highWaterMark";
+            throw new ERR_INVALID_OPT_VALUE(name8, hwm);
           }
           return Math.floor(hwm);
         }
@@ -14518,13 +14518,13 @@ var Plotly = (() => {
         }
         return deprecated;
       }
-      function config(name6) {
+      function config(name8) {
         try {
           if (!window.localStorage) return false;
         } catch (_5) {
           return false;
         }
-        var val = window.localStorage[name6];
+        var val = window.localStorage[name8];
         if (null == val) return false;
         return String(val).toLowerCase() === "true";
       }
@@ -16872,8 +16872,8 @@ var Plotly = (() => {
         }
         if (keys.length === 0) {
           if (isFunction(value)) {
-            var name6 = value.name ? ": " + value.name : "";
-            return ctx.stylize("[Function" + name6 + "]", "special");
+            var name8 = value.name ? ": " + value.name : "";
+            return ctx.stylize("[Function" + name8 + "]", "special");
           }
           if (isRegExp(value)) {
             return ctx.stylize(RegExp.prototype.toString.call(value), "regexp");
@@ -16973,7 +16973,7 @@ var Plotly = (() => {
         return output;
       }
       function formatProperty(ctx, value, recurseTimes, visibleKeys, key, array) {
-        var name6, str, desc;
+        var name8, str, desc;
         desc = Object.getOwnPropertyDescriptor(value, key) || { value: value[key] };
         if (desc.get) {
           if (desc.set) {
@@ -16987,7 +16987,7 @@ var Plotly = (() => {
           }
         }
         if (!hasOwnProperty(visibleKeys, key)) {
-          name6 = "[" + key + "]";
+          name8 = "[" + key + "]";
         }
         if (!str) {
           if (ctx.seen.indexOf(desc.value) < 0) {
@@ -17011,20 +17011,20 @@ var Plotly = (() => {
             str = ctx.stylize("[Circular]", "special");
           }
         }
-        if (isUndefined(name6)) {
+        if (isUndefined(name8)) {
           if (array && key.match(/^\d+$/)) {
             return str;
           }
-          name6 = JSON.stringify("" + key);
-          if (name6.match(/^"([a-zA-Z_][a-zA-Z_0-9]*)"$/)) {
-            name6 = name6.slice(1, -1);
-            name6 = ctx.stylize(name6, "name");
+          name8 = JSON.stringify("" + key);
+          if (name8.match(/^"([a-zA-Z_][a-zA-Z_0-9]*)"$/)) {
+            name8 = name8.slice(1, -1);
+            name8 = ctx.stylize(name8, "name");
           } else {
-            name6 = name6.replace(/'/g, "\\'").replace(/\\"/g, '"').replace(/(^"|"$)/g, "'");
-            name6 = ctx.stylize(name6, "string");
+            name8 = name8.replace(/'/g, "\\'").replace(/\\"/g, '"').replace(/(^"|"$)/g, "'");
+            name8 = ctx.stylize(name8, "string");
           }
         }
-        return name6 + ": " + str;
+        return name8 + ": " + str;
       }
       function reduceToSingleString(output, base, braces) {
         var numLinesEst = 0;
@@ -17415,9 +17415,9 @@ var Plotly = (() => {
         }
       }
       createErrorType("ERR_AMBIGUOUS_ARGUMENT", 'The "%s" argument is ambiguous. %s', TypeError);
-      createErrorType("ERR_INVALID_ARG_TYPE", function(name6, expected, actual) {
+      createErrorType("ERR_INVALID_ARG_TYPE", function(name8, expected, actual) {
         if (assert === void 0) assert = require_assert();
-        assert(typeof name6 === "string", "'name' must be a string");
+        assert(typeof name8 === "string", "'name' must be a string");
         var determiner;
         if (typeof expected === "string" && startsWith(expected, "not ")) {
           determiner = "must not be";
@@ -17426,32 +17426,32 @@ var Plotly = (() => {
           determiner = "must be";
         }
         var msg;
-        if (endsWith(name6, " argument")) {
-          msg = "The ".concat(name6, " ").concat(determiner, " ").concat(oneOf(expected, "type"));
+        if (endsWith(name8, " argument")) {
+          msg = "The ".concat(name8, " ").concat(determiner, " ").concat(oneOf(expected, "type"));
         } else {
-          var type = includes(name6, ".") ? "property" : "argument";
-          msg = 'The "'.concat(name6, '" ').concat(type, " ").concat(determiner, " ").concat(oneOf(expected, "type"));
+          var type = includes(name8, ".") ? "property" : "argument";
+          msg = 'The "'.concat(name8, '" ').concat(type, " ").concat(determiner, " ").concat(oneOf(expected, "type"));
         }
         msg += ". Received type ".concat(_typeof2(actual));
         return msg;
       }, TypeError);
-      createErrorType("ERR_INVALID_ARG_VALUE", function(name6, value) {
+      createErrorType("ERR_INVALID_ARG_VALUE", function(name8, value) {
         var reason = arguments.length > 2 && arguments[2] !== void 0 ? arguments[2] : "is invalid";
         if (util === void 0) util = require_util2();
         var inspected = util.inspect(value);
         if (inspected.length > 128) {
           inspected = "".concat(inspected.slice(0, 128), "...");
         }
-        return "The argument '".concat(name6, "' ").concat(reason, ". Received ").concat(inspected);
+        return "The argument '".concat(name8, "' ").concat(reason, ". Received ").concat(inspected);
       }, TypeError, RangeError);
-      createErrorType("ERR_INVALID_RETURN_VALUE", function(input, name6, value) {
+      createErrorType("ERR_INVALID_RETURN_VALUE", function(input, name8, value) {
         var type;
         if (value && value.constructor && value.constructor.name) {
           type = "instance of ".concat(value.constructor.name);
         } else {
           type = "type ".concat(_typeof2(value));
         }
-        return "Expected ".concat(input, ' to be returned from the "').concat(name6, '"') + " function but got ".concat(type, ".");
+        return "Expected ".concat(input, ' to be returned from the "').concat(name8, '"') + " function but got ".concat(type, ".");
       }, TypeError);
       createErrorType("ERR_MISSING_ARGS", function() {
         for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
@@ -18100,9 +18100,9 @@ var Plotly = (() => {
               theKeys.push(String(j));
             }
           } else {
-            for (var name6 in object) {
-              if (!(skipProto && name6 === "prototype") && has.call(object, name6)) {
-                theKeys.push(String(name6));
+            for (var name8 in object) {
+              if (!(skipProto && name8 === "prototype") && has.call(object, name8)) {
+                theKeys.push(String(name8));
               }
             }
           }
@@ -18300,9 +18300,9 @@ var Plotly = (() => {
       var GetIntrinsic = require_get_intrinsic();
       var callBind = require_call_bind();
       var $indexOf = callBind(GetIntrinsic("String.prototype.indexOf"));
-      module.exports = function callBoundIntrinsic(name6, allowMissing) {
-        var intrinsic = GetIntrinsic(name6, !!allowMissing);
-        if (typeof intrinsic === "function" && $indexOf(name6, ".prototype.") > -1) {
+      module.exports = function callBoundIntrinsic(name8, allowMissing) {
+        var intrinsic = GetIntrinsic(name8, !!allowMissing);
+        if (typeof intrinsic === "function" && $indexOf(name8, ".prototype.") > -1) {
           return callBind(intrinsic);
         }
         return intrinsic;
@@ -18323,10 +18323,10 @@ var Plotly = (() => {
         return typeof fn === "function" && toStr.call(fn) === "[object Function]";
       };
       var supportsDescriptors = require_has_property_descriptors()();
-      var defineProperty = function(object, name6, value, predicate) {
-        if (name6 in object) {
+      var defineProperty = function(object, name8, value, predicate) {
+        if (name8 in object) {
           if (predicate === true) {
-            if (object[name6] === value) {
+            if (object[name8] === value) {
               return;
             }
           } else if (!isFunction(predicate) || !predicate()) {
@@ -18334,9 +18334,9 @@ var Plotly = (() => {
           }
         }
         if (supportsDescriptors) {
-          defineDataProperty(object, name6, value, true);
+          defineDataProperty(object, name8, value, true);
         } else {
-          defineDataProperty(object, name6, value);
+          defineDataProperty(object, name8, value);
         }
       };
       var defineProperties = function(object, map2) {
@@ -19595,14 +19595,14 @@ var Plotly = (() => {
       function fmtLong(ms) {
         return plural(ms, d, "day") || plural(ms, h, "hour") || plural(ms, m, "minute") || plural(ms, s, "second") || ms + " ms";
       }
-      function plural(ms, n, name6) {
+      function plural(ms, n, name8) {
         if (ms < n) {
           return;
         }
         if (ms < n * 1.5) {
-          return Math.floor(ms / n) + " " + name6;
+          return Math.floor(ms / n) + " " + name8;
         }
-        return Math.ceil(ms / n) + " " + name6 + "s";
+        return Math.ceil(ms / n) + " " + name8 + "s";
       }
     }
   });
@@ -19691,15 +19691,15 @@ var Plotly = (() => {
       function disable2() {
         exports.enable("");
       }
-      function enabled(name6) {
+      function enabled(name8) {
         var i, len2;
         for (i = 0, len2 = exports.skips.length; i < len2; i++) {
-          if (exports.skips[i].test(name6)) {
+          if (exports.skips[i].test(name8)) {
             return false;
           }
         }
         for (i = 0, len2 = exports.names.length; i < len2; i++) {
-          if (exports.names[i].test(name6)) {
+          if (exports.names[i].test(name8)) {
             return true;
           }
         }
@@ -21047,16 +21047,16 @@ var Plotly = (() => {
             @param [language=''] {string} The language code to use for localisation (default is English).
             @return {Calendar} The calendar and localisation.
             @throws Error if calendar not found. */
-        instance: function(name6, language) {
-          name6 = (name6 || "gregorian").toLowerCase();
+        instance: function(name8, language) {
+          name8 = (name8 || "gregorian").toLowerCase();
           language = language || "";
-          var cal = this._localCals[name6 + "-" + language];
-          if (!cal && this.calendars[name6]) {
-            cal = new this.calendars[name6](language);
-            this._localCals[name6 + "-" + language] = cal;
+          var cal = this._localCals[name8 + "-" + language];
+          if (!cal && this.calendars[name8]) {
+            cal = new this.calendars[name8](language);
+            this._localCals[name8 + "-" + language] = cal;
           }
           if (!cal) {
-            throw (this.local.invalidCalendar || this.regionalOptions[""].invalidCalendar).replace(/\{0\}/, name6);
+            throw (this.local.invalidCalendar || this.regionalOptions[""].invalidCalendar).replace(/\{0\}/, name8);
           }
           return cal;
         },
@@ -23817,8 +23817,8 @@ var Plotly = (() => {
           registerLocale(newModule);
           break;
         case "apiMethod":
-          var name6 = newModule.name;
-          apiMethodRegistry[name6] = newModule.fn;
+          var name8 = newModule.name;
+          apiMethodRegistry[name8] = newModule.fn;
           break;
         default:
           throw new Error("Invalid module was attempted to be registered!");
@@ -23842,15 +23842,15 @@ var Plotly = (() => {
     }
     return !!_module.categories[category2];
   };
-  var getComponentMethod = function(name6, method) {
-    var _module = componentsRegistry[name6];
+  var getComponentMethod = function(name8, method) {
+    var _module = componentsRegistry[name8];
     if (!_module) return noop;
     return _module[method] || noop;
   };
   var call = function() {
-    var name6 = arguments[0];
+    var name8 = arguments[0];
     var args = [].slice.call(arguments, 1);
-    return apiMethodRegistry[name6].apply(null, args);
+    return apiMethodRegistry[name8].apply(null, args);
   };
   function registerTraceModule(_module) {
     var thisType = _module.name;
@@ -23910,19 +23910,19 @@ var Plotly = (() => {
     if (typeof _module.name !== "string") {
       throw new Error("Component module *name* must be a string.");
     }
-    var name6 = _module.name;
-    componentsRegistry[name6] = _module;
+    var name8 = _module.name;
+    componentsRegistry[name8] = _module;
     if (_module.layoutAttributes) {
       if (_module.layoutAttributes._isLinkedToArray) {
-        pushUnique(layoutArrayContainers, name6);
+        pushUnique(layoutArrayContainers, name8);
       }
       findArrayRegexps(_module);
     }
     for (var traceType in modules) {
-      mergeComponentAttrsToTrace(name6, traceType);
+      mergeComponentAttrsToTrace(name8, traceType);
     }
     for (var subplotName in subplotsRegistry) {
-      mergeComponentAttrsToSubplot(name6, subplotName);
+      mergeComponentAttrsToSubplot(name8, subplotName);
     }
     if (_module.schema && _module.schema.layout) {
       extendDeepAll2(layout_attributes_default2, _module.schema.layout);
@@ -28222,24 +28222,24 @@ var Plotly = (() => {
     }
     var isSimpleValueProp = SIMPLE_PROPERTY_REGEX.test(valueName);
     var obj = {
-      set: function(name6, value) {
+      set: function(name8, value) {
         var changeType = value === null ? UNSET : NONE;
         if (!arr) {
           if (!baseProp || changeType === UNSET) return;
           arr = [];
           baseProp.set(arr);
         }
-        var idx = indexLookup[name6];
+        var idx = indexLookup[name8];
         if (idx === void 0) {
           if (changeType === UNSET) return;
           changeType = changeType | BOTH;
           idx = arr.length;
-          indexLookup[name6] = idx;
+          indexLookup[name8] = idx;
         } else if (value !== (isSimpleValueProp ? arr[idx][valueName] : nestedProperty(arr[idx], valueName).get())) {
           changeType = changeType | VALUE;
         }
         var newValue = arr[idx] = arr[idx] || {};
-        newValue[keyName] = name6;
+        newValue[keyName] = name8;
         if (isSimpleValueProp) {
           newValue[valueName] = value;
         } else {
@@ -28251,9 +28251,9 @@ var Plotly = (() => {
         changeTypes[idx] = changeTypes[idx] | changeType;
         return obj;
       },
-      get: function(name6) {
+      get: function(name8) {
         if (!arr) return;
-        var idx = indexLookup[name6];
+        var idx = indexLookup[name8];
         if (idx === void 0) {
           return void 0;
         } else if (isSimpleValueProp) {
@@ -28262,22 +28262,22 @@ var Plotly = (() => {
           return nestedProperty(arr[idx], valueName).get();
         }
       },
-      rename: function(name6, newName) {
-        var idx = indexLookup[name6];
+      rename: function(name8, newName) {
+        var idx = indexLookup[name8];
         if (idx === void 0) return obj;
         changeTypes[idx] = changeTypes[idx] | NAME;
         indexLookup[newName] = idx;
-        delete indexLookup[name6];
+        delete indexLookup[name8];
         arr[idx][keyName] = newName;
         return obj;
       },
-      remove: function(name6) {
-        var idx = indexLookup[name6];
+      remove: function(name8) {
+        var idx = indexLookup[name8];
         if (idx === void 0) return obj;
         var object = arr[idx];
         if (Object.keys(object).length > 2) {
           changeTypes[idx] = changeTypes[idx] | VALUE;
-          return obj.set(name6, null);
+          return obj.set(name8, null);
         }
         if (isSimpleValueProp) {
           for (i = idx; i < arr.length; i++) {
@@ -28287,7 +28287,7 @@ var Plotly = (() => {
             indexLookup[arr[i][keyName]]--;
           }
           arr.splice(idx, 1);
-          delete indexLookup[name6];
+          delete indexLookup[name8];
         } else {
           nestedProperty(object, valueName).set(null);
           changeTypes[idx] = changeTypes[idx] | VALUE | UNSET;
@@ -28506,8 +28506,8 @@ var Plotly = (() => {
   // src/lib/increment.js
   function incrementNumeric(x, delta) {
     if (!delta) return x;
-    var scale = 1 / Math.abs(delta);
-    var newX = scale > 1 ? (scale * x + scale * delta) / scale : x + delta;
+    var scale2 = 1 / Math.abs(delta);
+    var newX = scale2 > 1 ? (scale2 * x + scale2 * delta) / scale2 : x + delta;
     var lenX1 = String(newX).length;
     if (lenX1 > 16) {
       var lenDt = String(delta).length;
@@ -29198,18 +29198,18 @@ var Plotly = (() => {
         }
       }
       if (value === void 0) {
-        const { count, max, name: name6 } = opts;
+        const { count, max, name: name8 } = opts;
         const fallbackValue = fallback === false ? match : fallback;
         if (count < max) {
           lib.warn(
             [
-              `Variable '${key}' in ${name6} could not be found!`,
+              `Variable '${key}' in ${name8} could not be found!`,
               "Please verify that the template is correct.",
               `Using value: '${fallbackValue}'.`
             ].join(" ")
           );
         }
-        if (count === max) lib.warn(`Too many '${name6}' warnings - additional warnings will be suppressed.`);
+        if (count === max) lib.warn(`Too many '${name8}' warnings - additional warnings will be suppressed.`);
         opts.count++;
         return fallbackValue;
       }
@@ -29317,10 +29317,10 @@ var Plotly = (() => {
     var anchorX = transform.anchorX || 0;
     var anchorY = transform.anchorY || 0;
     var rotate2 = transform.rotate;
-    var scale = transform.scale;
-    if (!scale) scale = 0;
-    else if (scale > 1) scale = 1;
-    return lib.strTranslate(targetX - scale * (textX + anchorX), targetY - scale * (textY + anchorY)) + lib.strScale(scale) + (rotate2 ? "rotate(" + rotate2 + (noCenter ? "" : " " + textX + " " + textY) + ")" : "");
+    var scale2 = transform.scale;
+    if (!scale2) scale2 = 0;
+    else if (scale2 > 1) scale2 = 1;
+    return lib.strTranslate(targetX - scale2 * (textX + anchorX), targetY - scale2 * (textY + anchorY)) + lib.strScale(scale2) + (rotate2 ? "rotate(" + rotate2 + (noCenter ? "" : " " + textX + " " + textY) + ")" : "");
   };
   lib.setTransormAndDisplay = function(s, transform) {
     s.attr("transform", lib.getTextTransform(transform));
@@ -29764,9 +29764,9 @@ var Plotly = (() => {
       attributes: formatAttributes(attributes5)
     };
     if (_module.layoutAttributes) {
-      var layoutAttributes2 = {};
-      extendDeepAll3(layoutAttributes2, _module.layoutAttributes);
-      out.layoutAttributes = formatAttributes(layoutAttributes2);
+      var layoutAttributes3 = {};
+      extendDeepAll3(layoutAttributes3, _module.layoutAttributes);
+      out.layoutAttributes = formatAttributes(layoutAttributes3);
     }
     if (!_module.animatable) {
       crawl2(out, function(attr3) {
@@ -29778,19 +29778,19 @@ var Plotly = (() => {
     return out;
   }
   function getLayoutAttributes() {
-    var layoutAttributes2 = {};
+    var layoutAttributes3 = {};
     var key, _module;
-    extendDeepAll3(layoutAttributes2, layout_attributes_default2);
+    extendDeepAll3(layoutAttributes3, layout_attributes_default2);
     for (key in registry_default.subplotsRegistry) {
       _module = registry_default.subplotsRegistry[key];
       if (!_module.layoutAttributes) continue;
       if (Array.isArray(_module.attr)) {
         for (var i = 0; i < _module.attr.length; i++) {
-          handleBasePlotModule(layoutAttributes2, _module, _module.attr[i]);
+          handleBasePlotModule(layoutAttributes3, _module, _module.attr[i]);
         }
       } else {
         var astr = _module.attr === "subplot" ? _module.name : _module.attr;
-        handleBasePlotModule(layoutAttributes2, _module, astr);
+        handleBasePlotModule(layoutAttributes3, _module, astr);
       }
     }
     for (key in registry_default.componentsRegistry) {
@@ -29800,19 +29800,19 @@ var Plotly = (() => {
         var subplots = schema.subplots;
         if (subplots && subplots.xaxis && !subplots.yaxis) {
           for (var xkey in subplots.xaxis) {
-            delete layoutAttributes2.yaxis[xkey];
+            delete layoutAttributes3.yaxis[xkey];
           }
         }
-        delete layoutAttributes2.xaxis.shift;
-        delete layoutAttributes2.xaxis.autoshift;
+        delete layoutAttributes3.xaxis.shift;
+        delete layoutAttributes3.xaxis.autoshift;
       } else if (_module.name === "colorscale") {
-        extendDeepAll3(layoutAttributes2, _module.layoutAttributes);
+        extendDeepAll3(layoutAttributes3, _module.layoutAttributes);
       } else if (_module.layoutAttributes) {
-        insertAttrs(layoutAttributes2, _module.layoutAttributes, _module.name);
+        insertAttrs(layoutAttributes3, _module.layoutAttributes, _module.name);
       }
     }
     return {
-      layoutAttributes: formatAttributes(layoutAttributes2)
+      layoutAttributes: formatAttributes(layoutAttributes3)
     };
   }
   function getFramesAttributes() {
@@ -29876,8 +29876,8 @@ var Plotly = (() => {
     }
     walk(attrs3);
   }
-  function handleBasePlotModule(layoutAttributes2, _module, astr) {
-    var np = nestedProperty2(layoutAttributes2, astr);
+  function handleBasePlotModule(layoutAttributes3, _module, astr) {
+    var np = nestedProperty2(layoutAttributes3, astr);
     var attrs3 = extendDeepAll3({}, _module.layoutAttributes);
     attrs3[IS_SUBPLOT_OBJ] = true;
     np.set(attrs3);
@@ -29904,8 +29904,8 @@ var Plotly = (() => {
     valType: "string",
     editType: "calc"
   };
-  var templatedArray = function(name6, attrs3) {
-    attrs3._isLinkedToArray = name6;
+  var templatedArray = function(name8, attrs3) {
+    attrs3._isLinkedToArray = name8;
     attrs3.name = templateAttrs.name;
     attrs3[TEMPLATEITEMNAME] = templateAttrs[TEMPLATEITEMNAME];
     return attrs3;
@@ -29936,17 +29936,17 @@ var Plotly = (() => {
       // TODO: function to figure out what's left & what didn't work
     };
   };
-  var newContainer = function(container, name6, baseName) {
+  var newContainer = function(container, name8, baseName) {
     var template = container._template;
-    var part = template && (template[name6] || baseName && template[baseName]);
+    var part = template && (template[name8] || baseName && template[baseName]);
     if (!lib_default.isPlainObject(part)) part = null;
-    var out = container[name6] = { _template: part };
+    var out = container[name8] = { _template: part };
     return out;
   };
-  var arrayTemplater = function(container, name6, inclusionAttr) {
+  var arrayTemplater = function(container, name8, inclusionAttr) {
     var template = container._template;
-    var defaultsTemplate = template && template[arrayDefaultKey(name6)];
-    var templateItems = template && template[name6];
+    var defaultsTemplate = template && template[arrayDefaultKey(name8)];
+    var templateItems = template && template[name8];
     if (!Array.isArray(templateItems) || !templateItems.length) {
       templateItems = [];
     }
@@ -29974,16 +29974,16 @@ var Plotly = (() => {
       var out = [];
       for (var i = 0; i < templateItems.length; i++) {
         var templateItem = templateItems[i];
-        var name7 = templateItem.name;
-        if (validItemName(name7) && !usedNames[name7]) {
+        var name9 = templateItem.name;
+        if (validItemName(name9) && !usedNames[name9]) {
           var outi = {
             _template: templateItem,
-            name: name7,
-            _input: { _templateitemname: name7 }
+            name: name9,
+            _input: { _templateitemname: name9 }
           };
           outi[TEMPLATEITEMNAME] = templateItem[TEMPLATEITEMNAME];
           out.push(outi);
-          usedNames[name7] = 1;
+          usedNames[name9] = 1;
         }
       }
       return out;
@@ -29993,15 +29993,15 @@ var Plotly = (() => {
       defaultItems
     };
   };
-  function validItemName(name6) {
-    return name6 && typeof name6 === "string";
+  function validItemName(name8) {
+    return name8 && typeof name8 === "string";
   }
-  function arrayDefaultKey(name6) {
-    var lastChar = name6.length - 1;
-    if (name6.charAt(lastChar) !== "s") {
-      lib_default.warn("bad argument to arrayDefaultKey: " + name6);
+  function arrayDefaultKey(name8) {
+    var lastChar = name8.length - 1;
+    if (name8.charAt(lastChar) !== "s") {
+      lib_default.warn("bad argument to arrayDefaultKey: " + name8);
     }
-    return name6.slice(0, -1) + "defaults";
+    return name8.slice(0, -1) + "defaults";
   }
   var arrayEditor = function(parentIn, containerStr, itemOut) {
     var lengthIn = (lib_default.nestedProperty(parentIn, containerStr).get() || []).length;
@@ -30117,11 +30117,11 @@ var Plotly = (() => {
     if (axNum === "1") axNum = "";
     return id.charAt(0) + "axis" + axNum;
   };
-  var name2id = function name2id2(name6) {
-    if (!name6.match(constants_default2.AX_NAME_PATTERN)) return;
-    var axNum = name6.slice(5);
+  var name2id = function name2id2(name8) {
+    if (!name8.match(constants_default2.AX_NAME_PATTERN)) return;
+    var axNum = name8.slice(5);
     if (axNum === "1") axNum = "";
-    return name6.charAt(0) + axNum;
+    return name8.charAt(0) + axNum;
   };
   var cleanId = function cleanId2(id, axLetter, domainId) {
     var domainTest = /( domain)$/.test(id);
@@ -30238,6 +30238,18 @@ var Plotly = (() => {
 
   // src/plots/get_data.js
   var { SUBPLOT_PATTERN } = constants_default2;
+  var getSubplotCalcData = function(calcData, type, subplotId) {
+    var basePlotModule = registry_default.subplotsRegistry[type];
+    if (!basePlotModule) return [];
+    var attr3 = basePlotModule.attr;
+    var subplotCalcData = [];
+    for (var i = 0; i < calcData.length; i++) {
+      var calcTrace = calcData[i];
+      var trace = calcTrace[0].trace;
+      if (trace[attr3] === subplotId) subplotCalcData.push(calcTrace);
+    }
+    return subplotCalcData;
+  };
   var getModuleCalcData = function(calcdata, arg1, arg2) {
     var moduleCalcData = [];
     var remainingCalcData = [];
@@ -31031,9 +31043,9 @@ var Plotly = (() => {
     }
     var modules2 = this._modules || [];
     for (i = 0; i < modules2.length; i++) {
-      var name6 = modules2[i].name;
-      if (name6 === category2) return true;
-      var _module = registry_default.modules[name6];
+      var name8 = modules2[i].name;
+      if (name8 === category2) return true;
+      var _module = registry_default.modules[name8];
       if (_module && _module.categories[category2]) return true;
     }
     return false;
@@ -34864,12 +34876,12 @@ var Plotly = (() => {
 
   // src/plots/array_container_defaults.js
   function handleArrayContainerDefaults(parentObjIn, parentObjOut, opts) {
-    var name6 = opts.name;
+    var name8 = opts.name;
     var inclusionAttr = opts.inclusionAttr || "visible";
-    var previousContOut = parentObjOut[name6];
-    var contIn = lib_default.isArrayOrTypedArray(parentObjIn[name6]) ? parentObjIn[name6] : [];
-    var contOut = parentObjOut[name6] = [];
-    var templater = plot_template_default.arrayTemplater(parentObjOut, name6, inclusionAttr);
+    var previousContOut = parentObjOut[name8];
+    var contIn = lib_default.isArrayOrTypedArray(parentObjIn[name8]) ? parentObjIn[name8] : [];
+    var contOut = parentObjOut[name8] = [];
+    var templater = plot_template_default.arrayTemplater(parentObjOut, name8, inclusionAttr);
     var i, itemOut;
     for (i = 0; i < contIn.length; i++) {
       var itemIn = contIn[i];
@@ -37394,10 +37406,10 @@ var Plotly = (() => {
     xScale = xScale || 1;
     yScale = yScale || 1;
     if (!selection) return;
-    var scale = xScale === 1 && yScale === 1 ? "" : "scale(" + xScale + "," + yScale + ")";
+    var scale2 = xScale === 1 && yScale === 1 ? "" : "scale(" + xScale + "," + yScale + ")";
     selection.each(function() {
       var t = (this.getAttribute("transform") || "").replace(SCALE_RE, "");
-      t += scale;
+      t += scale2;
       t = t.trim();
       this.setAttribute("transform", t);
     });
@@ -44218,27 +44230,27 @@ var Plotly = (() => {
     var isPieLike = registry_default.traceIs(trace, "pie-like");
     var isEditable = !legendObj._inHover && gd._context.edits.legendText && !isPieLike;
     var maxNameLength = legendObj._maxNameLength;
-    var name6, font2;
+    var name8, font2;
     if (legendItem.groupTitle) {
-      name6 = legendItem.groupTitle.text;
+      name8 = legendItem.groupTitle.text;
       font2 = legendItem.groupTitle.font;
     } else {
       font2 = legendObj.font;
       if (!legendObj.entries) {
-        name6 = isPieLike ? legendItem.label : trace.name;
+        name8 = isPieLike ? legendItem.label : trace.name;
         if (trace._meta) {
-          name6 = lib_default.templateString(name6, trace._meta);
+          name8 = lib_default.templateString(name8, trace._meta);
         }
       } else {
-        name6 = legendItem.text;
+        name8 = legendItem.text;
       }
     }
     var textEl = lib_default.ensureSingle(g, "text", legendId + "text");
-    textEl.attr("text-anchor", "start").call(drawing_default.font, font2).text(isEditable ? ensureLength(name6, maxNameLength) : name6);
+    textEl.attr("text-anchor", "start").call(drawing_default.font, font2).text(isEditable ? ensureLength(name8, maxNameLength) : name8);
     var textGap = legendObj.indentation + legendObj.itemwidth + constants_default3.itemGap * 2;
     svg_text_utils_default.positionText(textEl, textGap, 0);
     if (isEditable) {
-      textEl.call(svg_text_utils_default.makeEditable, { gd, text: name6 }).call(textLayout, g, gd, legendObj).on("edit", function(newName) {
+      textEl.call(svg_text_utils_default.makeEditable, { gd, text: name8 }).call(textLayout, g, gd, legendObj).on("edit", function(newName) {
         this.text(ensureLength(newName, maxNameLength)).call(textLayout, g, gd, legendObj);
         var fullInput = legendItem.trace._fullInput || {};
         var update3 = {};
@@ -45459,10 +45471,10 @@ var Plotly = (() => {
         if (pt.hoverinfo === "none") continue;
         var texts = getHoverLabelText(pt, true, hovermode, fullLayout, t02);
         var text = texts[0];
-        var name6 = texts[1];
-        pt.name = name6;
-        if (name6 !== "") {
-          pt.text = name6 + " : " + text;
+        var name8 = texts[1];
+        pt.name = name8;
+        if (name8 !== "") {
+          pt.text = name8 + " : " + text;
         } else {
           pt.text = text;
         }
@@ -45616,7 +45628,7 @@ var Plotly = (() => {
       var contrastColor = d.borderColor || color_default.contrast(numsColor);
       var texts2 = getHoverLabelText(d, showCommonLabel, hovermode, fullLayout, t02, g);
       var text2 = texts2[0];
-      var name7 = texts2[1];
+      var name9 = texts2[1];
       var tx = g.select("text.nums").call(drawing_default.font, {
         family: d.fontFamily || fontFamily,
         size: d.fontSize || fontSize,
@@ -45631,7 +45643,7 @@ var Plotly = (() => {
       var tx2 = g.select("text.name");
       var tx2width = 0;
       var tx2height = 0;
-      if (name7 && name7 !== text2) {
+      if (name9 && name9 !== text2) {
         tx2.call(drawing_default.font, {
           family: d.fontFamily || fontFamily,
           size: d.fontSize || fontSize,
@@ -45642,7 +45654,7 @@ var Plotly = (() => {
           textcase: d.fontTextcase || fontTextcase,
           lineposition: d.fontLineposition || fontLineposition,
           shadow: d.fontShadow || fontShadow
-        }).text(name7).attr("data-notex", 1).call(svg_text_utils_default.positionText, 0, 0).call(svg_text_utils_default.convertToTspans, gd);
+        }).text(name9).attr("data-notex", 1).call(svg_text_utils_default.positionText, 0, 0).call(svg_text_utils_default.convertToTspans, gd);
         var t2bb = getBoundingClientRect(gd, tx2.node());
         tx2width = t2bb.width + 2 * HOVERTEXTPAD;
         tx2height = t2bb.height + 2 * HOVERTEXTPAD;
@@ -45715,12 +45727,12 @@ var Plotly = (() => {
   }
   function getHoverLabelText(d, showCommonLabel, hovermode, fullLayout, t02, g) {
     var _a, _b;
-    var name6 = "";
+    var name8 = "";
     var text = "";
     if (d.nameOverride !== void 0) d.name = d.nameOverride;
     if (d.name) {
       if (d.trace._meta) d.name = lib_default.templateString(d.name, d.trace._meta);
-      name6 = plainText2(d.name, d.nameLength);
+      name8 = plainText2(d.name, d.nameLength);
     }
     var h0 = hovermode.charAt(0);
     var h1 = h0 === "x" ? "y" : "x";
@@ -45743,8 +45755,8 @@ var Plotly = (() => {
     }
     if (d.extraText !== void 0) text += (text ? "<br>" : "") + d.extraText;
     if (g && text === "" && !d.hovertemplate) {
-      if (name6 === "") g.remove();
-      text = name6;
+      if (name8 === "") g.remove();
+      text = name8;
     }
     if ((_b = (_a = d.trace) == null ? void 0 : _a.hoverlabel) == null ? void 0 : _b.split) d.hovertemplate = "";
     const { hovertemplate = false } = d;
@@ -45762,11 +45774,11 @@ var Plotly = (() => {
         template: hovertemplate
       });
       text = text.replace(EXTRA_STRING_REGEX, (_5, extra) => {
-        name6 = plainText2(extra, d.nameLength);
+        name8 = plainText2(extra, d.nameLength);
         return "";
       });
     }
-    return [text, name6];
+    return [text, name8];
   }
   function hoverAvoidOverlaps(hoverLabels, rotateLabels, fullLayout, commonLabelBoundingBox) {
     var axKey = rotateLabels ? "xa" : "ya";
@@ -47036,9 +47048,9 @@ var Plotly = (() => {
     y0 -= dy;
     var cx = (x0 + x1) / 2;
     var cy = (y0 + y1) / 2;
-    var scale = SQRT2;
-    dx *= scale;
-    dy *= scale;
+    var scale2 = SQRT2;
+    dx *= scale2;
+    dy *= scale2;
     return {
       x0: cx - dx,
       y0: cy - dy,
@@ -49143,8 +49155,8 @@ var Plotly = (() => {
       var id = geoIds[i];
       var geoLayout = fullLayout[id];
       if (attr3 === "zoom") {
-        var scale = geoLayout.projection.scale;
-        var newScale = val === "in" ? 2 * scale : 0.5 * scale;
+        var scale2 = geoLayout.projection.scale;
+        var newScale = val === "in" ? 2 * scale2 : 0.5 * scale2;
         registry_default.call("_guiRelayout", gd, id + ".projection.scale", newScale);
       }
     }
@@ -49384,9 +49396,9 @@ var Plotly = (() => {
   var foreButtons = [];
   var addToForeButtons = function(b) {
     if (backButtons.indexOf(b._cat || b.name) !== -1) return;
-    var name6 = b.name;
+    var name8 = b.name;
     var _cat = (b._cat || b.name).toLowerCase();
-    if (foreButtons.indexOf(name6) === -1) foreButtons.push(name6);
+    if (foreButtons.indexOf(name8) === -1) foreButtons.push(name8);
     if (foreButtons.indexOf(_cat) === -1) foreButtons.push(_cat);
   };
   buttonList.forEach(function(k) {
@@ -49731,13 +49743,13 @@ var Plotly = (() => {
     var fullLayout = gd._fullLayout;
     var fullData = gd._fullData;
     var context = gd._context;
-    function match(name6, B) {
+    function match(name8, B) {
       if (typeof B === "string") {
-        if (B.toLowerCase() === name6.toLowerCase()) return true;
+        if (B.toLowerCase() === name8.toLowerCase()) return true;
       } else {
         var v0 = B.name;
         var v1 = B._cat || B.name;
-        if (v0 === name6 || v1 === name6.toLowerCase()) return true;
+        if (v0 === name8 || v1 === name8.toLowerCase()) return true;
       }
       return false;
     }
@@ -49779,8 +49791,8 @@ var Plotly = (() => {
       if (!newGroup.length) return;
       var out = [];
       for (var i2 = 0; i2 < newGroup.length; i2++) {
-        var name6 = newGroup[i2];
-        var B = buttons_default[name6];
+        var name8 = newGroup[i2];
+        var B = buttons_default[name8];
         var v0 = B.name.toLowerCase();
         var v1 = (B._cat || B.name).toLowerCase();
         var found = false;
@@ -49792,7 +49804,7 @@ var Plotly = (() => {
           }
         }
         if (found) continue;
-        out.push(buttons_default[name6]);
+        out.push(buttons_default[name8]);
       }
       groups.push(out);
     }
@@ -50855,8 +50867,8 @@ var Plotly = (() => {
       var cd0 = cd[0] || {};
       var trace = cd0.trace || {};
       var _module = trace._module || {};
-      var arraysToCalcdata3 = _module.arraysToCalcdata;
-      if (arraysToCalcdata3) arraysToCalcdata3(cd, trace);
+      var arraysToCalcdata4 = _module.arraysToCalcdata;
+      if (arraysToCalcdata4) arraysToCalcdata4(cd, trace);
       var editStyle = _module.editStyle;
       if (editStyle) editStyleCalls.push({ fn: editStyle, cd0 });
     }
@@ -50899,8 +50911,8 @@ var Plotly = (() => {
     var fullLayout = gd._fullLayout;
     modebar_default2.manage(gd);
     for (var i = 0; i < fullLayout._basePlotModules.length; i++) {
-      var updateFx3 = fullLayout._basePlotModules[i].updateFx;
-      if (updateFx3) updateFx3(gd);
+      var updateFx4 = fullLayout._basePlotModules[i].updateFx;
+      if (updateFx4) updateFx4(gd);
     }
     return plots_default.previousPromises(gd);
   };
@@ -54264,10 +54276,10 @@ var Plotly = (() => {
         configChanged = !helpers_default9.collectionsAreEqual(oldConfig, gd._context);
       }
       if (configChanged) {
-        const eventListeners = gd._ev.eventNames().map((name7) => [name7, gd._ev.listeners(name7)]);
+        const eventListeners = gd._ev.eventNames().map((name9) => [name9, gd._ev.listeners(name9)]);
         plotDone = newPlot(gd, data, layout, config).then(() => {
-          for (const [name7, callbacks] of eventListeners) {
-            callbacks.forEach((cb) => gd.on(name7, cb));
+          for (const [name9, callbacks] of eventListeners) {
+            callbacks.forEach((cb) => gd.on(name9, cb));
           }
           return react(gd, data, layout, config);
         });
@@ -54290,10 +54302,10 @@ var Plotly = (() => {
           gd.calcdata = void 0;
           var allNames = Object.getOwnPropertyNames(newFullLayout);
           for (var q = 0; q < allNames.length; q++) {
-            var name6 = allNames[q];
-            var start = name6.substring(0, 5);
+            var name8 = allNames[q];
+            var start = name8.substring(0, 5);
             if (start === "xaxis" || start === "yaxis") {
-              var emptyCategories = newFullLayout[name6]._emptyCategories;
+              var emptyCategories = newFullLayout[name8]._emptyCategories;
               if (emptyCategories) emptyCategories();
             }
           }
@@ -54825,13 +54837,13 @@ var Plotly = (() => {
     for (i = frameList.length - 1; i >= 0; i--) {
       if (!lib_default.isPlainObject(frameList[i])) continue;
       var lookupName = frameList[i].name;
-      var name6 = (_frameHash[lookupName] || _frameHashLocal[lookupName] || {}).name;
+      var name8 = (_frameHash[lookupName] || _frameHashLocal[lookupName] || {}).name;
       var newName = frameList[i].name;
-      var collisionPresent = _frameHash[name6] || _frameHashLocal[name6];
-      if (name6 && newName && typeof newName === "number" && collisionPresent && numericNameWarningCount < numericNameWarningCountLimit) {
+      var collisionPresent = _frameHash[name8] || _frameHashLocal[name8];
+      if (name8 && newName && typeof newName === "number" && collisionPresent && numericNameWarningCount < numericNameWarningCountLimit) {
         numericNameWarningCount++;
         lib_default.warn(
-          'addFrames: overwriting frame "' + (_frameHash[name6] || _frameHashLocal[name6]).name + '" with a frame whose name of type "number" also equates to "' + name6 + '". This is valid but may potentially lead to unexpected behavior since all plotly.js frame names are stored internally as strings.'
+          'addFrames: overwriting frame "' + (_frameHash[name8] || _frameHashLocal[name8]).name + '" with a frame whose name of type "number" also equates to "' + name8 + '". This is valid but may potentially lead to unexpected behavior since all plotly.js frame names are stored internally as strings.'
         );
         if (numericNameWarningCount === numericNameWarningCountLimit) {
           lib_default.warn(
@@ -55120,9 +55132,9 @@ var Plotly = (() => {
         for (var i = 0; i < child.length; i++) {
           var item = child[i];
           if (isPlainObject3(item)) {
-            var name6 = item.name;
-            if (name6) {
-              if (!usedNames[name6]) {
+            var name8 = item.name;
+            if (name8) {
+              if (!usedNames[name8]) {
                 walkStyleKeys(
                   item,
                   templateOut,
@@ -55131,7 +55143,7 @@ var Plotly = (() => {
                   getNextPath(child, namedIndex, nextBasePath)
                 );
                 namedIndex++;
-                usedNames[name6] = 1;
+                usedNames[name8] = 1;
               }
             } else if (!dfltDone) {
               var dfltKey = plot_template_default.arrayDefaultKey(key);
@@ -55403,7 +55415,7 @@ var Plotly = (() => {
   function xmlEntityEncode(str) {
     return str.replace(/&(?!\w+;|\#[0-9]+;| \#x[0-9A-F]+;)/g, "&amp;");
   }
-  function toSVG(gd, format5, scale) {
+  function toSVG(gd, format5, scale2) {
     var fullLayout = gd._fullLayout;
     var svg2 = fullLayout._paper;
     var toppaper = fullLayout._toppaper;
@@ -55467,9 +55479,9 @@ var Plotly = (() => {
     if (format5 === "pdf" || format5 === "eps") {
       svg2.selectAll("#MathJax_SVG_glyphs path").attr("stroke-width", 0);
     }
-    if (format5 === "svg" && scale) {
-      svg2.attr("width", scale * width);
-      svg2.attr("height", scale * height);
+    if (format5 === "svg" && scale2) {
+      svg2.attr("width", scale2 * width);
+      svg2.attr("height", scale2 * height);
       svg2.attr("viewBox", "0 0 " + width + " " + height);
     }
     var s = new window.XMLSerializer().serializeToString(svg2.node());
@@ -55488,11 +55500,11 @@ var Plotly = (() => {
       var svg2 = opts.svg;
       var format5 = opts.format || "png";
       var canvas = opts.canvas;
-      var scale = opts.scale || 1;
+      var scale2 = opts.scale || 1;
       var w0 = opts.width || 300;
       var h0 = opts.height || 150;
-      var w1 = scale * w0;
-      var h1 = scale * h0;
+      var w1 = scale2 * w0;
+      var h1 = scale2 * h0;
       var ctx = canvas.getContext("2d", { willReadFrequently: true });
       var img = new Image2();
       var svgBlob, url;
@@ -55616,7 +55628,7 @@ var Plotly = (() => {
     var format5 = coerce3("format");
     var width = coerce3("width");
     var height = coerce3("height");
-    var scale = coerce3("scale");
+    var scale2 = coerce3("scale");
     var setBackground2 = coerce3("setBackground");
     var imageDataOnly = coerce3("imageDataOnly");
     var clonedGd = document.createElement("div");
@@ -55647,7 +55659,7 @@ var Plotly = (() => {
     }
     function convert3() {
       return new Promise(function(resolve, reject) {
-        var svg2 = toSVG(clonedGd, format5, scale);
+        var svg2 = toSVG(clonedGd, format5, scale2);
         var width2 = clonedGd._fullLayout.width;
         var height2 = clonedGd._fullLayout.height;
         function cleanup() {
@@ -55679,7 +55691,7 @@ var Plotly = (() => {
           format: format5,
           width: width2,
           height: height2,
-          scale,
+          scale: scale2,
           canvas,
           svg: svg2,
           // ask svgToImg to return a Promise
@@ -55985,7 +55997,7 @@ var Plotly = (() => {
   }
 
   // src/snapshot/filesaver.js
-  function fileSaver(url, name6, format5) {
+  function fileSaver(url, name8, format5) {
     var saveLink = document.createElement("a");
     var canUseSaveLink = "download" in saveLink;
     var promise = new Promise(function(resolve, reject) {
@@ -55995,18 +56007,18 @@ var Plotly = (() => {
         blob = helpers_default10.createBlob(url, format5);
         objectUrl = helpers_default10.createObjectURL(blob);
         saveLink.href = objectUrl;
-        saveLink.download = name6;
+        saveLink.download = name8;
         document.body.appendChild(saveLink);
         saveLink.click();
         document.body.removeChild(saveLink);
         helpers_default10.revokeObjectURL(objectUrl);
         blob = null;
-        return resolve(name6);
+        return resolve(name8);
       }
       if (lib_default.isSafari()) {
         var prefix = format5 === "svg" ? "," : ";base64,";
         helpers_default10.octetStream(prefix + encodeURIComponent(url));
-        return resolve(name6);
+        return resolve(name8);
       }
       reject(new Error("download error"));
     });
@@ -56034,8 +56046,8 @@ var Plotly = (() => {
       promise.then(function(result) {
         if (_gd) _gd._snapshotInProgress = false;
         return filesaver_default(result, filename, opts.format);
-      }).then(function(name6) {
-        resolve(name6);
+      }).then(function(name8) {
+        resolve(name8);
       }).catch(function(err) {
         if (_gd) _gd._snapshotInProgress = false;
         reject(err);
@@ -57875,9 +57887,9 @@ var Plotly = (() => {
       for (var j = 0; j < calcTrace.length; j++) {
         var bar = calcTrace[j];
         if (bar.s !== BADNUM10) {
-          var scale = Math.abs(sTop / sieve.get(bar.p, offsetIndex, bar.s));
-          bar.b *= scale;
-          bar.s *= scale;
+          var scale2 = Math.abs(sTop / sieve.get(bar.p, offsetIndex, bar.s));
+          bar.b *= scale2;
+          bar.s *= scale2;
           var base = bar.b;
           var top = base + bar.s;
           bar[sLetter] = top;
@@ -58218,7 +58230,7 @@ var Plotly = (() => {
       }
       return (1 + constants_default7.toleranceGrowth * offScreenFraction) * baseTolerance;
     }
-    function ptDist(pt1, pt2) {
+    function ptDist2(pt1, pt2) {
       var dx = pt1[0] - pt2[0];
       var dy = pt1[1] - pt2[1];
       return Math.sqrt(dx * dx + dy * dy);
@@ -58252,7 +58264,7 @@ var Plotly = (() => {
         );
         if (ptInt && (!ptCount || Math.abs(ptInt.x - out[0][0]) > 1 || Math.abs(ptInt.y - out[0][1]) > 1)) {
           ptInt = [ptInt.x, ptInt.y];
-          if (ptCount && ptDist(ptInt, pt1) < ptDist(out[0], pt1)) out.unshift(ptInt);
+          if (ptCount && ptDist2(ptInt, pt1) < ptDist2(out[0], pt1)) out.unshift(ptInt);
           else out.push(ptInt);
           ptCount++;
         }
@@ -58406,7 +58418,7 @@ var Plotly = (() => {
           continue;
         }
         var nextPt = getPt(i + 1);
-        clusterRefDist = ptDist(clusterHighPt, clusterStartPt);
+        clusterRefDist = ptDist2(clusterHighPt, clusterStartPt);
         if (!(fill && (pti === 0 || pti === len2 - 1)) && clusterRefDist < getTolerance(clusterHighPt, nextPt) * minTolerance) continue;
         clusterUnitVector = [
           (clusterHighPt[0] - clusterStartPt[0]) / clusterRefDist,
@@ -60469,10 +60481,10 @@ var Plotly = (() => {
       var zorder2 = zindices[z];
       for (var i = 0; i < modules2.length; i++) {
         _module = modules2[i];
-        var name6 = _module.name;
-        var categories = registry_default.modules[name6].categories;
+        var name8 = _module.name;
+        var categories = registry_default.modules[name8].categories;
         if (categories.svg) {
-          var classBaseName = _module.layerName || name6 + "layer";
+          var classBaseName = _module.layerName || name8 + "layer";
           var className = classBaseName + (z ? Number(z) + 1 : "");
           var plotMethod = _module.plot;
           cdModuleAndOthers = getModuleCalcData(cdSubplot, plotMethod, zorder2);
@@ -60856,8 +60868,8 @@ var Plotly = (() => {
   var cartesian_default = { name, attr, idRoot, idRegex: idRegex2, attrRegex, attributes, layoutAttributes, supplyLayoutDefaults: supplyLayoutDefaults5, transitionAxes: transitionAxes2, finalizeSubplots, plot: plot2, clean: clean3, drawFramework, rangePlot, toSVG: toSVG2, updateFx: updateFx2 };
 
   // src/traces/scatter/index.js
-  var { calc: _req52 } = calc_default;
-  var { style: _req112, styleOnSelect: _req122 } = style_default;
+  var { calc: _req5 } = calc_default;
+  var { style: _req11, styleOnSelect: _req12 } = style_default;
   var scatter_default = {
     hasLines: subtypes_default.hasLines,
     hasMarkers: subtypes_default.hasMarkers,
@@ -60868,14 +60880,14 @@ var Plotly = (() => {
     supplyDefaults: supplyDefaults2,
     crossTraceDefaults: crossTraceDefaults2,
     supplyLayoutDefaults: layout_defaults_default,
-    calc: _req52,
+    calc: _req5,
     crossTraceCalc: crossTraceCalc2,
     arraysToCalcdata,
     plot,
     colorbar: marker_colorbar_default,
     formatLabels,
-    style: _req112,
-    styleOnSelect: _req122,
+    style: _req11,
+    styleOnSelect: _req12,
     hoverPoints,
     selectPoints,
     animatable: true,
@@ -60954,11 +60966,11 @@ var Plotly = (() => {
     var el = el3.node();
     var headStyle = arrow_paths_default[options.arrowhead || 0];
     var startHeadStyle = arrow_paths_default[options.startarrowhead || 0];
-    var scale = (options.arrowwidth || 1) * (options.arrowsize || 1);
+    var scale2 = (options.arrowwidth || 1) * (options.arrowsize || 1);
     var startScale = (options.arrowwidth || 1) * (options.startarrowsize || 1);
     var doStart = ends.indexOf("start") >= 0;
     var doEnd = ends.indexOf("end") >= 0;
-    var backOff = headStyle.backoff * scale + options.standoff;
+    var backOff = headStyle.backoff * scale2 + options.standoff;
     var startBackOff = startHeadStyle.backoff * startScale + options.startstandoff;
     var start, end, startRot, endRot;
     if (el.nodeName === "line") {
@@ -61032,7 +61044,7 @@ var Plotly = (() => {
       });
     }
     if (doStart) drawhead(startHeadStyle, start, startRot, startScale);
-    if (doEnd) drawhead(headStyle, end, endRot, scale);
+    if (doEnd) drawhead(headStyle, end, endRot, scale2);
   }
 
   // src/components/annotations/draw.js
@@ -68751,13 +68763,13 @@ var Plotly = (() => {
   };
 
   // src/components/colorbar/index.js
-  var { draw: _req210 } = draw_default5;
+  var { draw: _req2 } = draw_default5;
   var colorbar_default = {
     moduleType: "component",
     name: "colorbar",
     attributes: attributes_default6,
     supplyDefaults: colorbarDefaults,
-    draw: _req210,
+    draw: _req2,
     hasColorbar
   };
 
@@ -69009,11 +69021,11 @@ var Plotly = (() => {
   var Plotly = { version, register: register3, Icons: ploticon_default, Snapshot: snapshot_default, PlotSchema: plot_schema_default };
   var methodNames = Object.keys(plot_api_default2);
   for (i = 0; i < methodNames.length; i++) {
-    name6 = methodNames[i];
-    if (name6.charAt(0) !== "_") Plotly[name6] = plot_api_default2[name6];
-    register3({ moduleType: "apiMethod", name: name6, fn: plot_api_default2[name6] });
+    name8 = methodNames[i];
+    if (name8.charAt(0) !== "_") Plotly[name8] = plot_api_default2[name8];
+    register3({ moduleType: "apiMethod", name: name8, fn: plot_api_default2[name8] });
   }
-  var name6;
+  var name8;
   var i;
   register3(scatter_default);
   register3([annotations_default, annotations3d_default, selections_default, shapes_default, images_default, updatemenus_default, sliders_default, rangeslider_default, rangeselector_default, grid_default, errorbars_default, colorscale_default, colorbar_default, legend_default, fx_default, modebar_default2]);
@@ -69173,6 +69185,39 @@ var Plotly = (() => {
     zorder: attributes_default9.zorder
   };
 
+  // src/traces/bar/layout_attributes.js
+  var layout_attributes_default6 = {
+    barmode: {
+      valType: "enumerated",
+      values: ["stack", "group", "overlay", "relative"],
+      dflt: "group",
+      editType: "calc"
+    },
+    barnorm: {
+      valType: "enumerated",
+      values: ["", "fraction", "percent"],
+      dflt: "",
+      editType: "calc"
+    },
+    bargap: {
+      valType: "number",
+      min: 0,
+      max: 1,
+      editType: "calc"
+    },
+    bargroupgap: {
+      valType: "number",
+      min: 0,
+      max: 1,
+      dflt: 0,
+      editType: "calc"
+    },
+    barcornerradius: {
+      valType: "any",
+      editType: "calc"
+    }
+  };
+
   // src/traces/bar/defaults.js
   var import_fast_isnumeric39 = __toESM(require_fast_isnumeric(), 1);
 
@@ -69327,6 +69372,47 @@ var Plotly = (() => {
 
   // src/traces/bar/layout_defaults.js
   var { validateCornerradius: validateCornerradius2 } = defaults_default2;
+  function layout_defaults_default2(layoutIn, layoutOut, fullData) {
+    function coerce3(attr3, dflt) {
+      return lib_default.coerce(layoutIn, layoutOut, layout_attributes_default6, attr3, dflt);
+    }
+    var hasBars = false;
+    var shouldBeGapless = false;
+    var gappedAnyway = false;
+    var usedSubplots = {};
+    var mode = coerce3("barmode");
+    var isGroup = mode === "group";
+    for (var i = 0; i < fullData.length; i++) {
+      var trace = fullData[i];
+      if (registry_default.traceIs(trace, "bar") && trace.visible) hasBars = true;
+      else continue;
+      var subploti = trace.xaxis + trace.yaxis;
+      if (isGroup) {
+        if (usedSubplots[subploti]) gappedAnyway = true;
+        usedSubplots[subploti] = true;
+      } else {
+        subploti += trace._input.offsetgroup;
+        if (usedSubplots.length > 0 && !usedSubplots[subploti]) gappedAnyway = true;
+        usedSubplots[subploti] = true;
+      }
+      if (trace.visible && trace.type === "histogram") {
+        var pa = axes_default.getFromId(
+          { _fullLayout: layoutOut },
+          trace[trace.orientation === "v" ? "xaxis" : "yaxis"]
+        );
+        if (pa.type !== "category") shouldBeGapless = true;
+      }
+    }
+    if (!hasBars) {
+      delete layoutOut.barmode;
+      return;
+    }
+    if (mode !== "overlay") coerce3("barnorm");
+    coerce3("bargap", shouldBeGapless && !gappedAnyway ? 0 : 0.2);
+    coerce3("bargroupgap");
+    var r = coerce3("barcornerradius");
+    layoutOut.barcornerradius = validateCornerradius2(r);
+  }
 
   // src/traces/bar/arrays_to_calcdata.js
   function arraysToCalcdata2(cd, trace) {
@@ -69347,6 +69433,58 @@ var Plotly = (() => {
 
   // src/traces/bar/calc.js
   var { hasColorscale: hasColorscale7 } = helpers_default;
+  function calc5(gd, trace) {
+    var xa = axes_default.getFromId(gd, trace.xaxis || "x");
+    var ya = axes_default.getFromId(gd, trace.yaxis || "y");
+    var size, pos, origPos, pObj, hasPeriod, pLetter;
+    var sizeOpts = {
+      msUTC: !!(trace.base || trace.base === 0)
+    };
+    if (trace.orientation === "h") {
+      size = xa.makeCalcdata(trace, "x", sizeOpts);
+      origPos = ya.makeCalcdata(trace, "y");
+      pObj = alignPeriod(trace, ya, "y", origPos);
+      hasPeriod = !!trace.yperiodalignment;
+      pLetter = "y";
+    } else {
+      size = ya.makeCalcdata(trace, "y", sizeOpts);
+      origPos = xa.makeCalcdata(trace, "x");
+      pObj = alignPeriod(trace, xa, "x", origPos);
+      hasPeriod = !!trace.xperiodalignment;
+      pLetter = "x";
+    }
+    pos = pObj.vals;
+    var serieslen = Math.min(pos.length, size.length);
+    var cd = new Array(serieslen);
+    for (var i = 0; i < serieslen; i++) {
+      cd[i] = { p: pos[i], s: size[i] };
+      if (hasPeriod) {
+        cd[i].orig_p = origPos[i];
+        cd[i][pLetter + "End"] = pObj.ends[i];
+        cd[i][pLetter + "Start"] = pObj.starts[i];
+      }
+      if (trace.ids) {
+        cd[i].id = String(trace.ids[i]);
+      }
+    }
+    if (hasColorscale7(trace, "marker")) {
+      calc(gd, trace, {
+        vals: trace.marker.color,
+        containerStr: "marker",
+        cLetter: "c"
+      });
+    }
+    if (hasColorscale7(trace, "marker.line")) {
+      calc(gd, trace, {
+        vals: trace.marker.line.color,
+        containerStr: "marker.line",
+        cLetter: "c"
+      });
+    }
+    arraysToCalcdata2(cd, trace);
+    calcSelection(cd, trace);
+    return cd;
+  }
 
   // src/traces/bar/plot.js
   var import_d341 = __toESM(require_d3(), 1);
@@ -70064,15 +70202,15 @@ var Plotly = (() => {
       rotate2 += 90;
     }
     var t = getRotatedTextSize(textBB, rotate2);
-    var scale, padForRounding;
+    var scale2, padForRounding;
     if (r && r - overhead > TEXTPAD3) {
       var scaleAndPad = scaleTextForRoundedBar(x0, x1, y0, y1, t, r, overhead, isHorizontal, hasB);
-      scale = scaleAndPad.scale;
+      scale2 = scaleAndPad.scale;
       padForRounding = scaleAndPad.pad;
     } else {
-      scale = 1;
+      scale2 = 1;
       if (constrained) {
-        scale = Math.min(1, lx / t.x, ly / t.y);
+        scale2 = Math.min(1, lx / t.x, ly / t.y);
       }
       padForRounding = 0;
     }
@@ -70113,7 +70251,7 @@ var Plotly = (() => {
       targetY,
       anchorX,
       anchorY,
-      scale,
+      scale: scale2,
       rotate: rotate2
     };
   }
@@ -70125,44 +70263,44 @@ var Plotly = (() => {
     var rX = hasB ? R * 2 : isHorizontal ? R - overhead : 2 * clippedR;
     var rY = hasB ? R * 2 : isHorizontal ? 2 * clippedR : R - overhead;
     var a, b, c;
-    var scale, pad3;
+    var scale2, pad3;
     if (t.y / t.x >= barHeight / (barWidth - rX)) {
-      scale = barHeight / t.y;
+      scale2 = barHeight / t.y;
     } else if (t.y / t.x <= (barHeight - rY) / barWidth) {
-      scale = barWidth / t.x;
+      scale2 = barWidth / t.x;
     } else if (!hasB && isHorizontal) {
       a = t.x * t.x + t.y * t.y / 4;
       b = -2 * t.x * (barWidth - R) - t.y * (barHeight / 2 - R);
       c = (barWidth - R) * (barWidth - R) + (barHeight / 2 - R) * (barHeight / 2 - R) - R * R;
-      scale = (-b + Math.sqrt(b * b - 4 * a * c)) / (2 * a);
+      scale2 = (-b + Math.sqrt(b * b - 4 * a * c)) / (2 * a);
     } else if (!hasB) {
       a = t.x * t.x / 4 + t.y * t.y;
       b = -t.x * (barWidth / 2 - R) - 2 * t.y * (barHeight - R);
       c = (barWidth / 2 - R) * (barWidth / 2 - R) + (barHeight - R) * (barHeight - R) - R * R;
-      scale = (-b + Math.sqrt(b * b - 4 * a * c)) / (2 * a);
+      scale2 = (-b + Math.sqrt(b * b - 4 * a * c)) / (2 * a);
     } else {
       a = (t.x * t.x + t.y * t.y) / 4;
       b = -t.x * (barWidth / 2 - R) - t.y * (barHeight / 2 - R);
       c = (barWidth / 2 - R) * (barWidth / 2 - R) + (barHeight / 2 - R) * (barHeight / 2 - R) - R * R;
-      scale = (-b + Math.sqrt(b * b - 4 * a * c)) / (2 * a);
+      scale2 = (-b + Math.sqrt(b * b - 4 * a * c)) / (2 * a);
     }
-    scale = Math.min(1, scale);
+    scale2 = Math.min(1, scale2);
     if (isHorizontal) {
       pad3 = Math.max(
         0,
         R - Math.sqrt(
-          Math.max(0, R * R - (R - (barHeight - t.y * scale) / 2) * (R - (barHeight - t.y * scale) / 2))
+          Math.max(0, R * R - (R - (barHeight - t.y * scale2) / 2) * (R - (barHeight - t.y * scale2) / 2))
         ) - overhead
       );
     } else {
       pad3 = Math.max(
         0,
         R - Math.sqrt(
-          Math.max(0, R * R - (R - (barWidth - t.x * scale) / 2) * (R - (barWidth - t.x * scale) / 2))
+          Math.max(0, R * R - (R - (barWidth - t.x * scale2) / 2) * (R - (barWidth - t.x * scale2) / 2))
         ) - overhead
       );
     }
-    return { scale, pad: pad3 };
+    return { scale: scale2, pad: pad3 };
   }
   function toMoveOutsideBar(x0, x1, y0, y1, textBB, opts) {
     var isHorizontal = !!opts.isHorizontal;
@@ -70178,9 +70316,9 @@ var Plotly = (() => {
     } else {
       textpad = lx > 2 * TEXTPAD3 ? TEXTPAD3 : 0;
     }
-    var scale = 1;
+    var scale2 = 1;
     if (constrained) {
-      scale = isHorizontal ? Math.min(1, ly / textHeight) : Math.min(1, lx / textWidth);
+      scale2 = isHorizontal ? Math.min(1, ly / textHeight) : Math.min(1, lx / textWidth);
     }
     var rotate2 = getRotateFromAngle(angle);
     var t = getRotatedTextSize(textBB, rotate2);
@@ -70206,7 +70344,7 @@ var Plotly = (() => {
       targetY,
       anchorX,
       anchorY,
-      scale,
+      scale: scale2,
       rotate: rotate2
     };
   }
@@ -70514,12 +70652,99 @@ var Plotly = (() => {
     getTraceColor: getTraceColor2
   };
 
+  // src/traces/bar/event_data.js
+  function eventData(out, pt, trace) {
+    out.x = "xVal" in pt ? pt.xVal : pt.x;
+    out.y = "yVal" in pt ? pt.yVal : pt.y;
+    if (pt.xa) out.xaxis = pt.xa;
+    if (pt.ya) out.yaxis = pt.ya;
+    if (trace.orientation === "h") {
+      out.label = out.y;
+      out.value = out.x;
+    } else {
+      out.label = out.x;
+      out.value = out.y;
+    }
+    return out;
+  }
+
+  // src/traces/bar/select.js
+  function selectPoints2(searchInfo, selectionTester) {
+    var cd = searchInfo.cd;
+    var xa = searchInfo.xaxis;
+    var ya = searchInfo.yaxis;
+    var trace = cd[0].trace;
+    var isFunnel = trace.type === "funnel";
+    var isHorizontal = trace.orientation === "h";
+    var selection = [];
+    var i;
+    if (selectionTester === false) {
+      for (i = 0; i < cd.length; i++) {
+        cd[i].selected = 0;
+      }
+    } else {
+      for (i = 0; i < cd.length; i++) {
+        var di = cd[i];
+        var ct = "ct" in di ? di.ct : getCentroid(di, xa, ya, isHorizontal, isFunnel);
+        if (selectionTester.contains(ct, false, i, searchInfo)) {
+          selection.push({
+            pointNumber: i,
+            x: xa.c2d(di.x),
+            y: ya.c2d(di.y)
+          });
+          di.selected = 1;
+        } else {
+          di.selected = 0;
+        }
+      }
+    }
+    return selection;
+  }
+  function getCentroid(d, xa, ya, isHorizontal, isFunnel) {
+    var x0 = xa.c2p(isHorizontal ? d.s0 : d.p0, true);
+    var x1 = xa.c2p(isHorizontal ? d.s1 : d.p1, true);
+    var y0 = ya.c2p(isHorizontal ? d.p0 : d.s0, true);
+    var y1 = ya.c2p(isHorizontal ? d.p1 : d.s1, true);
+    if (isFunnel) {
+      return [(x0 + x1) / 2, (y0 + y1) / 2];
+    } else {
+      if (isHorizontal) {
+        return [x1, (y0 + y1) / 2];
+      } else {
+        return [(x0 + x1) / 2, y1];
+      }
+    }
+  }
+
   // src/traces/bar/index.js
-  var { supplyDefaults: _req211, crossTraceDefaults: _req310 } = defaults_default2;
-  var { crossTraceCalc: _req62 } = cross_trace_calc_default;
-  var { plot: _req92 } = plot_default;
-  var { style: _req102, styleOnSelect: _req113 } = style_default2;
-  var { hoverPoints: _req123 } = hover_default2;
+  var { supplyDefaults: _req22, crossTraceDefaults: _req3 } = defaults_default2;
+  var { crossTraceCalc: _req6 } = cross_trace_calc_default;
+  var { plot: _req9 } = plot_default;
+  var { style: _req10, styleOnSelect: _req112 } = style_default2;
+  var { hoverPoints: _req122 } = hover_default2;
+  var bar_default = {
+    attributes: attributes_default21,
+    layoutAttributes: layout_attributes_default6,
+    supplyDefaults: _req22,
+    crossTraceDefaults: _req3,
+    supplyLayoutDefaults: layout_defaults_default2,
+    calc: calc5,
+    crossTraceCalc: _req6,
+    colorbar: marker_colorbar_default,
+    arraysToCalcdata: arraysToCalcdata2,
+    plot: _req9,
+    style: _req10,
+    styleOnSelect: _req112,
+    hoverPoints: _req122,
+    eventData,
+    selectPoints: selectPoints2,
+    moduleType: "trace",
+    name: "bar",
+    basePlotModule: cartesian_default,
+    categories: ["bar-like", "cartesian", "svg", "bar", "oriented", "errorBarsOK", "showLegend", "zoomScale"],
+    animatable: true,
+    meta: {}
+  };
 
   // src/traces/box/attributes.js
   var { axisHoverFormat: axisHoverFormat4 } = axis_format_attributes_default;
@@ -71055,6 +71280,337 @@ var Plotly = (() => {
   var import_fast_isnumeric42 = __toESM(require_fast_isnumeric(), 1);
   var { BADNUM: BADNUM14 } = numerical_default;
   var _3 = lib_default._;
+  function calc6(gd, trace) {
+    var fullLayout = gd._fullLayout;
+    var xa = axes_default.getFromId(gd, trace.xaxis || "x");
+    var ya = axes_default.getFromId(gd, trace.yaxis || "y");
+    var cd = [];
+    var numKey = trace.type === "violin" ? "_numViolins" : "_numBoxes";
+    var i, j;
+    var valAxis, valLetter;
+    var posAxis, posLetter;
+    var hasPeriod;
+    if (trace.orientation === "h") {
+      valAxis = xa;
+      valLetter = "x";
+      posAxis = ya;
+      posLetter = "y";
+      hasPeriod = !!trace.yperiodalignment;
+    } else {
+      valAxis = ya;
+      valLetter = "y";
+      posAxis = xa;
+      posLetter = "x";
+      hasPeriod = !!trace.xperiodalignment;
+    }
+    var allPosArrays = getPosArrays(trace, posLetter, posAxis, fullLayout[numKey]);
+    var posArray = allPosArrays[0];
+    var origPos = allPosArrays[1];
+    var dv2 = lib_default.distinctVals(posArray, posAxis);
+    var posDistinct = dv2.vals;
+    var dPos = dv2.minDiff / 2;
+    var cdi;
+    var pts;
+    var boxVals;
+    var N;
+    var pt;
+    var v;
+    var ptFilterFn = (trace.boxpoints || trace.points) === "all" ? lib_default.identity : function(pt2) {
+      return pt2.v < cdi.lf || pt2.v > cdi.uf;
+    };
+    if (trace._hasPreCompStats) {
+      var valArrayRaw = trace[valLetter];
+      var d2c = function(k) {
+        return valAxis.d2c((trace[k] || [])[i]);
+      };
+      var minVal = Infinity;
+      var maxVal = -Infinity;
+      for (i = 0; i < trace._length; i++) {
+        var posi = posArray[i];
+        if (!(0, import_fast_isnumeric42.default)(posi)) continue;
+        cdi = {};
+        cdi.pos = cdi[posLetter] = posi;
+        if (hasPeriod && origPos) {
+          cdi.orig_p = origPos[i];
+        }
+        cdi.q1 = d2c("q1");
+        cdi.med = d2c("median");
+        cdi.q3 = d2c("q3");
+        pts = [];
+        if (valArrayRaw && lib_default.isArrayOrTypedArray(valArrayRaw[i])) {
+          for (j = 0; j < valArrayRaw[i].length; j++) {
+            v = valAxis.d2c(valArrayRaw[i][j]);
+            if (v !== BADNUM14) {
+              pt = { v, i: [i, j] };
+              arraysToCalcdata3(pt, trace, [i, j]);
+              pts.push(pt);
+            }
+          }
+        }
+        cdi.pts = pts.sort(sortByVal);
+        boxVals = cdi[valLetter] = pts.map(extractVal);
+        N = boxVals.length;
+        if (cdi.med !== BADNUM14 && cdi.q1 !== BADNUM14 && cdi.q3 !== BADNUM14 && cdi.med >= cdi.q1 && cdi.q3 >= cdi.med) {
+          var lf = d2c("lowerfence");
+          cdi.lf = lf !== BADNUM14 && lf <= cdi.q1 ? lf : computeLowerFence(cdi, boxVals, N);
+          var uf = d2c("upperfence");
+          cdi.uf = uf !== BADNUM14 && uf >= cdi.q3 ? uf : computeUpperFence(cdi, boxVals, N);
+          var mean2 = d2c("mean");
+          cdi.mean = mean2 !== BADNUM14 ? mean2 : N ? lib_default.mean(boxVals, N) : (cdi.q1 + cdi.q3) / 2;
+          var sd = d2c("sd");
+          cdi.sd = mean2 !== BADNUM14 && sd >= 0 ? sd : N ? lib_default.stdev(boxVals, N, cdi.mean) : cdi.q3 - cdi.q1;
+          cdi.lo = computeLowerOutlierBound(cdi);
+          cdi.uo = computeUpperOutlierBound(cdi);
+          var ns = d2c("notchspan");
+          ns = ns !== BADNUM14 && ns > 0 ? ns : computeNotchSpan(cdi, N);
+          cdi.ln = cdi.med - ns;
+          cdi.un = cdi.med + ns;
+          var imin = cdi.lf;
+          var imax = cdi.uf;
+          if (trace.boxpoints && boxVals.length) {
+            imin = Math.min(imin, boxVals[0]);
+            imax = Math.max(imax, boxVals[N - 1]);
+          }
+          if (trace.notched) {
+            imin = Math.min(imin, cdi.ln);
+            imax = Math.max(imax, cdi.un);
+          }
+          cdi.min = imin;
+          cdi.max = imax;
+        } else {
+          lib_default.warn([
+            "Invalid input - make sure that q1 <= median <= q3",
+            "q1 = " + cdi.q1,
+            "median = " + cdi.med,
+            "q3 = " + cdi.q3
+          ].join("\n"));
+          var v0;
+          if (cdi.med !== BADNUM14) {
+            v0 = cdi.med;
+          } else if (cdi.q1 !== BADNUM14) {
+            if (cdi.q3 !== BADNUM14) v0 = (cdi.q1 + cdi.q3) / 2;
+            else v0 = cdi.q1;
+          } else if (cdi.q3 !== BADNUM14) {
+            v0 = cdi.q3;
+          } else {
+            v0 = 0;
+          }
+          cdi.med = v0;
+          cdi.q1 = cdi.q3 = v0;
+          cdi.lf = cdi.uf = v0;
+          cdi.mean = cdi.sd = v0;
+          cdi.ln = cdi.un = v0;
+          cdi.min = cdi.max = v0;
+        }
+        minVal = Math.min(minVal, cdi.min);
+        maxVal = Math.max(maxVal, cdi.max);
+        cdi.pts2 = pts.filter(ptFilterFn);
+        cd.push(cdi);
+      }
+      trace._extremes[valAxis._id] = axes_default.findExtremes(
+        valAxis,
+        [minVal, maxVal],
+        { padded: true }
+      );
+    } else {
+      var valArray = valAxis.makeCalcdata(trace, valLetter);
+      var posBins = makeBins(posDistinct, dPos);
+      var pLen = posDistinct.length;
+      var ptsPerBin = initNestedArray(pLen);
+      for (i = 0; i < trace._length; i++) {
+        v = valArray[i];
+        if (!(0, import_fast_isnumeric42.default)(v)) continue;
+        var n = lib_default.findBin(posArray[i], posBins);
+        if (n >= 0 && n < pLen) {
+          pt = { v, i };
+          arraysToCalcdata3(pt, trace, i);
+          ptsPerBin[n].push(pt);
+        }
+      }
+      var minLowerNotch = Infinity;
+      var maxUpperNotch = -Infinity;
+      var quartilemethod = trace.quartilemethod;
+      var usesExclusive = quartilemethod === "exclusive";
+      var usesInclusive = quartilemethod === "inclusive";
+      for (i = 0; i < pLen; i++) {
+        if (ptsPerBin[i].length > 0) {
+          cdi = {};
+          cdi.pos = cdi[posLetter] = posDistinct[i];
+          pts = cdi.pts = ptsPerBin[i].sort(sortByVal);
+          boxVals = cdi[valLetter] = pts.map(extractVal);
+          N = boxVals.length;
+          cdi.min = boxVals[0];
+          cdi.max = boxVals[N - 1];
+          cdi.mean = lib_default.mean(boxVals, N);
+          cdi.sd = lib_default.stdev(boxVals, N, cdi.mean) * trace.sdmultiple;
+          cdi.med = lib_default.interp(boxVals, 0.5);
+          if (N % 2 && (usesExclusive || usesInclusive)) {
+            var lower;
+            var upper;
+            if (usesExclusive) {
+              lower = boxVals.slice(0, N / 2);
+              upper = boxVals.slice(N / 2 + 1);
+            } else if (usesInclusive) {
+              lower = boxVals.slice(0, N / 2 + 1);
+              upper = boxVals.slice(N / 2);
+            }
+            cdi.q1 = lib_default.interp(lower, 0.5);
+            cdi.q3 = lib_default.interp(upper, 0.5);
+          } else {
+            cdi.q1 = lib_default.interp(boxVals, 0.25);
+            cdi.q3 = lib_default.interp(boxVals, 0.75);
+          }
+          cdi.lf = computeLowerFence(cdi, boxVals, N);
+          cdi.uf = computeUpperFence(cdi, boxVals, N);
+          cdi.lo = computeLowerOutlierBound(cdi);
+          cdi.uo = computeUpperOutlierBound(cdi);
+          var mci = computeNotchSpan(cdi, N);
+          cdi.ln = cdi.med - mci;
+          cdi.un = cdi.med + mci;
+          minLowerNotch = Math.min(minLowerNotch, cdi.ln);
+          maxUpperNotch = Math.max(maxUpperNotch, cdi.un);
+          cdi.pts2 = pts.filter(ptFilterFn);
+          cd.push(cdi);
+        }
+      }
+      if (trace.notched && lib_default.isTypedArray(valArray)) valArray = Array.from(valArray);
+      trace._extremes[valAxis._id] = axes_default.findExtremes(
+        valAxis,
+        trace.notched ? valArray.concat([minLowerNotch, maxUpperNotch]) : valArray,
+        { padded: true }
+      );
+    }
+    calcSelection2(cd, trace);
+    if (cd.length > 0) {
+      cd[0].t = {
+        num: fullLayout[numKey],
+        dPos,
+        posLetter,
+        valLetter,
+        labels: {
+          med: _3(gd, "median:"),
+          min: _3(gd, "min:"),
+          q1: _3(gd, "q1:"),
+          q3: _3(gd, "q3:"),
+          max: _3(gd, "max:"),
+          mean: trace.boxmean === "sd" || trace.sizemode === "sd" ? _3(gd, "mean \xB1 \u03C3:").replace("\u03C3", trace.sdmultiple === 1 ? "\u03C3" : trace.sdmultiple + "\u03C3") : (
+            // displaying mean +- Nσ whilst supporting translations
+            _3(gd, "mean:")
+          ),
+          lf: _3(gd, "lower fence:"),
+          uf: _3(gd, "upper fence:")
+        }
+      };
+      fullLayout[numKey]++;
+      return cd;
+    } else {
+      return [{ t: { empty: true } }];
+    }
+  }
+  function getPosArrays(trace, posLetter, posAxis, num) {
+    var hasPosArray = posLetter in trace;
+    var hasPos0 = posLetter + "0" in trace;
+    var hasPosStep = "d" + posLetter in trace;
+    if (hasPosArray || hasPos0 && hasPosStep) {
+      var origPos = posAxis.makeCalcdata(trace, posLetter);
+      var pos = alignPeriod(trace, posAxis, posLetter, origPos).vals;
+      return [pos, origPos];
+    }
+    var pos0;
+    if (hasPos0) {
+      pos0 = trace[posLetter + "0"];
+    } else if ("name" in trace && (posAxis.type === "category" || (0, import_fast_isnumeric42.default)(trace.name) && ["linear", "log"].indexOf(posAxis.type) !== -1 || lib_default.isDateTime(trace.name) && posAxis.type === "date")) {
+      pos0 = trace.name;
+    } else {
+      pos0 = num;
+    }
+    var pos0c = posAxis.type === "multicategory" ? posAxis.r2c_just_indices(pos0) : posAxis.d2c(pos0, 0, trace[posLetter + "calendar"]);
+    var len2 = trace._length;
+    var out = new Array(len2);
+    for (var i = 0; i < len2; i++) out[i] = pos0c;
+    return [out];
+  }
+  function makeBins(x, dx) {
+    var len2 = x.length;
+    var bins = new Array(len2 + 1);
+    for (var i = 0; i < len2; i++) {
+      bins[i] = x[i] - dx;
+    }
+    bins[len2] = x[len2 - 1] + dx;
+    return bins;
+  }
+  function initNestedArray(len2) {
+    var arr = new Array(len2);
+    for (var i = 0; i < len2; i++) {
+      arr[i] = [];
+    }
+    return arr;
+  }
+  var TRACE_TO_CALC = {
+    text: "tx",
+    hovertext: "htx"
+  };
+  function arraysToCalcdata3(pt, trace, ptNumber) {
+    for (var k in TRACE_TO_CALC) {
+      if (lib_default.isArrayOrTypedArray(trace[k])) {
+        if (Array.isArray(ptNumber)) {
+          if (lib_default.isArrayOrTypedArray(trace[k][ptNumber[0]])) {
+            pt[TRACE_TO_CALC[k]] = trace[k][ptNumber[0]][ptNumber[1]];
+          }
+        } else {
+          pt[TRACE_TO_CALC[k]] = trace[k][ptNumber];
+        }
+      }
+    }
+  }
+  function calcSelection2(cd, trace) {
+    if (lib_default.isArrayOrTypedArray(trace.selectedpoints)) {
+      for (var i = 0; i < cd.length; i++) {
+        var pts = cd[i].pts || [];
+        var ptNumber2cdIndex = {};
+        for (var j = 0; j < pts.length; j++) {
+          ptNumber2cdIndex[pts[j].i] = j;
+        }
+        lib_default.tagSelected(pts, trace, ptNumber2cdIndex);
+      }
+    }
+  }
+  function sortByVal(a, b) {
+    return a.v - b.v;
+  }
+  function extractVal(o) {
+    return o.v;
+  }
+  function computeLowerFence(cdi, boxVals, N) {
+    if (N === 0) return cdi.q1;
+    return Math.min(
+      cdi.q1,
+      boxVals[Math.min(
+        lib_default.findBin(2.5 * cdi.q1 - 1.5 * cdi.q3, boxVals, true) + 1,
+        N - 1
+      )]
+    );
+  }
+  function computeUpperFence(cdi, boxVals, N) {
+    if (N === 0) return cdi.q3;
+    return Math.max(
+      cdi.q3,
+      boxVals[Math.max(
+        lib_default.findBin(2.5 * cdi.q3 - 1.5 * cdi.q1, boxVals),
+        0
+      )]
+    );
+  }
+  function computeLowerOutlierBound(cdi) {
+    return 4 * cdi.q1 - 3 * cdi.q3;
+  }
+  function computeUpperOutlierBound(cdi) {
+    return 4 * cdi.q3 - 3 * cdi.q1;
+  }
+  function computeNotchSpan(cdi, N) {
+    if (N === 0) return 0;
+    return 1.57 * (cdi.q3 - cdi.q1) / Math.sqrt(N);
+  }
 
   // src/traces/box/cross_trace_calc.js
   var orientations = ["v", "h"];
@@ -71730,13 +72286,78 @@ var Plotly = (() => {
     hoverOnPoints
   };
 
+  // src/traces/box/event_data.js
+  function eventData2(out, pt) {
+    if (pt.hoverOnBox) out.hoverOnBox = pt.hoverOnBox;
+    if ("xVal" in pt) out.x = pt.xVal;
+    if ("yVal" in pt) out.y = pt.yVal;
+    if (pt.xa) out.xaxis = pt.xa;
+    if (pt.ya) out.yaxis = pt.ya;
+    return out;
+  }
+
+  // src/traces/box/select.js
+  function selectPoints3(searchInfo, selectionTester) {
+    var cd = searchInfo.cd;
+    var xa = searchInfo.xaxis;
+    var ya = searchInfo.yaxis;
+    var selection = [];
+    var i, j;
+    if (selectionTester === false) {
+      for (i = 0; i < cd.length; i++) {
+        for (j = 0; j < (cd[i].pts || []).length; j++) {
+          cd[i].pts[j].selected = 0;
+        }
+      }
+    } else {
+      for (i = 0; i < cd.length; i++) {
+        for (j = 0; j < (cd[i].pts || []).length; j++) {
+          var pt = cd[i].pts[j];
+          var x = xa.c2p(pt.x);
+          var y = ya.c2p(pt.y);
+          if (selectionTester.contains([x, y], null, pt.i, searchInfo)) {
+            selection.push({
+              pointNumber: pt.i,
+              x: xa.c2d(pt.x),
+              y: ya.c2d(pt.y)
+            });
+            pt.selected = 1;
+          } else {
+            pt.selected = 0;
+          }
+        }
+      }
+    }
+    return selection;
+  }
+
   // src/traces/box/index.js
-  var { supplyDefaults: _req212, crossTraceDefaults: _req311 } = defaults_default3;
-  var { supplyLayoutDefaults: _req49 } = layout_defaults_default3;
-  var { crossTraceCalc: _req63 } = cross_trace_calc_default2;
-  var { plot: _req72 } = plot_default2;
-  var { style: _req82, styleOnSelect: _req93 } = style_default3;
-  var { hoverPoints: _req103 } = hover_default3;
+  var { supplyDefaults: _req23, crossTraceDefaults: _req32 } = defaults_default3;
+  var { supplyLayoutDefaults: _req4 } = layout_defaults_default3;
+  var { crossTraceCalc: _req62 } = cross_trace_calc_default2;
+  var { plot: _req7 } = plot_default2;
+  var { style: _req8, styleOnSelect: _req92 } = style_default3;
+  var { hoverPoints: _req102 } = hover_default3;
+  var box_default = {
+    attributes: attributes_default22,
+    layoutAttributes: layout_attributes_default7,
+    supplyDefaults: _req23,
+    crossTraceDefaults: _req32,
+    supplyLayoutDefaults: _req4,
+    calc: calc6,
+    crossTraceCalc: _req62,
+    plot: _req7,
+    style: _req8,
+    styleOnSelect: _req92,
+    hoverPoints: _req102,
+    eventData: eventData2,
+    selectPoints: selectPoints3,
+    moduleType: "trace",
+    name: "box",
+    basePlotModule: cartesian_default,
+    categories: ["cartesian", "svg", "symbols", "oriented", "box-violin", "showLegend", "boxLayout", "zoomScale"],
+    meta: {}
+  };
 
   // src/traces/heatmap/attributes.js
   var { axisHoverFormat: axisHoverFormat5 } = axis_format_attributes_default;
@@ -71827,11 +72448,398 @@ var Plotly = (() => {
     colorScaleAttrs("", { cLetter: "z", autoColorDflt: false })
   );
 
+  // src/constants/filter_ops.js
+  var filter_ops_default = {
+    COMPARISON_OPS: ["=", "!=", "<", ">=", ">", "<="],
+    COMPARISON_OPS2: ["=", "<", ">=", ">", "<="],
+    INTERVAL_OPS: ["[]", "()", "[)", "(]", "][", ")(", "](", ")["],
+    SET_OPS: ["{}", "}{"],
+    CONSTRAINT_REDUCTION: {
+      // for contour constraints, open/closed endpoints are equivalent
+      "=": "=",
+      "<": "<",
+      "<=": "<",
+      ">": ">",
+      ">=": ">",
+      "[]": "[]",
+      "()": "[]",
+      "[)": "[]",
+      "(]": "[]",
+      "][": "][",
+      ")(": "][",
+      "](": "][",
+      ")[": "]["
+    }
+  };
+
+  // src/traces/contour/attributes.js
+  var axisHoverFormat6 = axis_format_attributes_default.axisHoverFormat;
+  var descriptionOnlyNumbers2 = axis_format_attributes_default.descriptionOnlyNumbers;
+  var COMPARISON_OPS2 = filter_ops_default.COMPARISON_OPS2;
+  var INTERVAL_OPS = filter_ops_default.INTERVAL_OPS;
+  var scatterLineAttrs3 = attributes_default9.line;
+  var attributes_default24 = extendFlat(
+    {
+      z: attributes_default23.z,
+      x: attributes_default23.x,
+      x0: attributes_default23.x0,
+      dx: attributes_default23.dx,
+      y: attributes_default23.y,
+      y0: attributes_default23.y0,
+      dy: attributes_default23.dy,
+      xperiod: attributes_default23.xperiod,
+      yperiod: attributes_default23.yperiod,
+      xperiod0: attributes_default9.xperiod0,
+      yperiod0: attributes_default9.yperiod0,
+      xperiodalignment: attributes_default23.xperiodalignment,
+      yperiodalignment: attributes_default23.yperiodalignment,
+      text: attributes_default23.text,
+      hovertext: attributes_default23.hovertext,
+      transpose: attributes_default23.transpose,
+      xtype: attributes_default23.xtype,
+      ytype: attributes_default23.ytype,
+      xhoverformat: axisHoverFormat6("x"),
+      yhoverformat: axisHoverFormat6("y"),
+      zhoverformat: axisHoverFormat6("z", 1),
+      hovertemplate: attributes_default23.hovertemplate,
+      hovertemplatefallback: attributes_default23.hovertemplatefallback,
+      texttemplate: extendFlat({}, attributes_default23.texttemplate, {}),
+      texttemplatefallback: attributes_default23.texttemplatefallback,
+      textfont: extendFlat({}, attributes_default23.textfont, {}),
+      hoverongaps: attributes_default23.hoverongaps,
+      connectgaps: extendFlat({}, attributes_default23.connectgaps, {}),
+      fillcolor: {
+        valType: "color",
+        editType: "calc"
+      },
+      autocontour: {
+        valType: "boolean",
+        dflt: true,
+        editType: "calc",
+        impliedEdits: {
+          "contours.start": void 0,
+          "contours.end": void 0,
+          "contours.size": void 0
+        }
+      },
+      ncontours: {
+        valType: "integer",
+        dflt: 15,
+        min: 1,
+        editType: "calc"
+      },
+      contours: {
+        type: {
+          valType: "enumerated",
+          values: ["levels", "constraint"],
+          dflt: "levels",
+          editType: "calc"
+        },
+        start: {
+          valType: "number",
+          dflt: null,
+          editType: "plot",
+          impliedEdits: { "^autocontour": false }
+        },
+        end: {
+          valType: "number",
+          dflt: null,
+          editType: "plot",
+          impliedEdits: { "^autocontour": false }
+        },
+        size: {
+          valType: "number",
+          dflt: null,
+          min: 0,
+          editType: "plot",
+          impliedEdits: { "^autocontour": false }
+        },
+        coloring: {
+          valType: "enumerated",
+          values: ["fill", "heatmap", "lines", "none"],
+          dflt: "fill",
+          editType: "calc"
+        },
+        showlines: {
+          valType: "boolean",
+          dflt: true,
+          editType: "plot"
+        },
+        showlabels: {
+          valType: "boolean",
+          dflt: false,
+          editType: "plot"
+        },
+        labelfont: font_attributes_default({
+          editType: "plot",
+          colorEditType: "style"
+        }),
+        labelformat: {
+          valType: "string",
+          dflt: "",
+          editType: "plot",
+          description: descriptionOnlyNumbers2("contour label")
+        },
+        operation: {
+          valType: "enumerated",
+          values: [].concat(COMPARISON_OPS2).concat(INTERVAL_OPS),
+          dflt: "=",
+          editType: "calc"
+        },
+        value: {
+          valType: "any",
+          dflt: 0,
+          editType: "calc"
+        },
+        editType: "calc",
+        impliedEdits: { autocontour: false }
+      },
+      line: {
+        color: extendFlat({}, scatterLineAttrs3.color, {
+          editType: "style+colorbars"
+        }),
+        width: {
+          valType: "number",
+          min: 0,
+          editType: "style+colorbars"
+        },
+        dash,
+        smoothing: extendFlat({}, scatterLineAttrs3.smoothing, {}),
+        editType: "plot"
+      },
+      zorder: attributes_default9.zorder
+    },
+    colorScaleAttrs("", {
+      cLetter: "z",
+      autoColorDflt: false,
+      editTypeOverride: "calc"
+    })
+  );
+
   // src/traces/heatmap/xyz_defaults.js
   var import_fast_isnumeric43 = __toESM(require_fast_isnumeric(), 1);
+  function handleXYZDefaults(traceIn, traceOut, coerce3, layout, xName, yName) {
+    var z = coerce3("z");
+    xName = xName || "x";
+    yName = yName || "y";
+    var x, y;
+    if (z === void 0 || !z.length) return 0;
+    if (lib_default.isArray1D(z)) {
+      x = coerce3(xName);
+      y = coerce3(yName);
+      var xlen = lib_default.minRowLength(x);
+      var ylen = lib_default.minRowLength(y);
+      if (xlen === 0 || ylen === 0) return 0;
+      traceOut._length = Math.min(xlen, ylen, z.length);
+    } else {
+      x = coordDefaults(xName, coerce3);
+      y = coordDefaults(yName, coerce3);
+      if (!isValidZ(z)) return 0;
+      coerce3("transpose");
+      traceOut._length = null;
+    }
+    var handleCalendarDefaults = registry_default.getComponentMethod("calendars", "handleTraceDefaults");
+    handleCalendarDefaults(traceIn, traceOut, [xName, yName], layout);
+    return true;
+  }
+  function coordDefaults(coordStr, coerce3) {
+    var coord = coerce3(coordStr);
+    var coordType = coord ? coerce3(coordStr + "type", "array") : "scaled";
+    if (coordType === "scaled") {
+      coerce3(coordStr + "0");
+      coerce3("d" + coordStr);
+    }
+    return coord;
+  }
+  function isValidZ(z) {
+    var allRowsAreArrays = true;
+    var oneRowIsFilled = false;
+    var hasOneNumber = false;
+    var zi;
+    for (var i = 0; i < z.length; i++) {
+      zi = z[i];
+      if (!lib_default.isArrayOrTypedArray(zi)) {
+        allRowsAreArrays = false;
+        break;
+      }
+      if (zi.length > 0) oneRowIsFilled = true;
+      for (var j = 0; j < zi.length; j++) {
+        if ((0, import_fast_isnumeric43.default)(zi[j])) {
+          hasOneNumber = true;
+          break;
+        }
+      }
+    }
+    return allRowsAreArrays && oneRowIsFilled && hasOneNumber;
+  }
+
+  // src/traces/contour/constraint_defaults.js
+  var import_fast_isnumeric44 = __toESM(require_fast_isnumeric(), 1);
+
+  // src/traces/contour/label_defaults.js
+  function handleLabelDefaults(coerce3, layout, lineColor, opts) {
+    if (!opts) opts = {};
+    var showLabels = coerce3("contours.showlabels");
+    if (showLabels) {
+      var globalFont2 = layout.font;
+      lib_default.coerceFont(coerce3, "contours.labelfont", globalFont2, { overrideDflt: {
+        color: lineColor
+      } });
+      coerce3("contours.labelformat");
+    }
+    if (opts.hasHover !== false) coerce3("zhoverformat");
+  }
+
+  // src/traces/contour/constraint_defaults.js
+  var { isArrayOrTypedArray: isArrayOrTypedArray11 } = lib_default;
+  var addOpacity = color_default.addOpacity;
+  var opacity = color_default.opacity;
+  var CONSTRAINT_REDUCTION = filter_ops_default.CONSTRAINT_REDUCTION;
+  var COMPARISON_OPS22 = filter_ops_default.COMPARISON_OPS2;
+  function handleConstraintDefaults(traceIn, traceOut, coerce3, layout, defaultColor, opts) {
+    var contours = traceOut.contours;
+    var showLines, lineColor, fillColor;
+    var operation = coerce3("contours.operation");
+    contours._operation = CONSTRAINT_REDUCTION[operation];
+    handleConstraintValueDefaults(coerce3, contours);
+    if (operation === "=") {
+      showLines = contours.showlines = true;
+    } else {
+      showLines = coerce3("contours.showlines");
+      fillColor = coerce3("fillcolor", addOpacity(
+        (traceIn.line || {}).color || defaultColor,
+        0.5
+      ));
+    }
+    if (showLines) {
+      var lineDfltColor = fillColor && opacity(fillColor) ? addOpacity(traceOut.fillcolor, 1) : defaultColor;
+      lineColor = coerce3("line.color", lineDfltColor);
+      coerce3("line.width", 2);
+      coerce3("line.dash");
+    }
+    coerce3("line.smoothing");
+    handleLabelDefaults(coerce3, layout, lineColor, opts);
+  }
+  function handleConstraintValueDefaults(coerce3, contours) {
+    var zvalue;
+    if (COMPARISON_OPS22.indexOf(contours.operation) === -1) {
+      coerce3("contours.value", [0, 1]);
+      if (!isArrayOrTypedArray11(contours.value)) {
+        if ((0, import_fast_isnumeric44.default)(contours.value)) {
+          zvalue = parseFloat(contours.value);
+          contours.value = [zvalue, zvalue + 1];
+        }
+      } else if (contours.value.length > 2) {
+        contours.value = contours.value.slice(2);
+      } else if (contours.length === 0) {
+        contours.value = [0, 1];
+      } else if (contours.length < 2) {
+        zvalue = parseFloat(contours.value[0]);
+        contours.value = [zvalue, zvalue + 1];
+      } else {
+        contours.value = [
+          parseFloat(contours.value[0]),
+          parseFloat(contours.value[1])
+        ];
+      }
+    } else {
+      coerce3("contours.value", 0);
+      if (!(0, import_fast_isnumeric44.default)(contours.value)) {
+        if (isArrayOrTypedArray11(contours.value)) {
+          contours.value = parseFloat(contours.value[0]);
+        } else {
+          contours.value = 0;
+        }
+      }
+    }
+  }
+
+  // src/traces/contour/contours_defaults.js
+  function handleContourDefaults(traceIn, traceOut, coerce3, coerce22) {
+    var contourStart = coerce22("contours.start");
+    var contourEnd = coerce22("contours.end");
+    var missingEnd = contourStart === false || contourEnd === false;
+    var contourSize = coerce3("contours.size");
+    var autoContour;
+    if (missingEnd) autoContour = traceOut.autocontour = true;
+    else autoContour = coerce3("autocontour", false);
+    if (autoContour || !contourSize) coerce3("ncontours");
+  }
+
+  // src/traces/contour/style_defaults.js
+  function handleStyleDefaults2(traceIn, traceOut, coerce3, layout, opts) {
+    var coloring = coerce3("contours.coloring");
+    var showLines;
+    var lineColor = "";
+    if (coloring === "fill") showLines = coerce3("contours.showlines");
+    if (showLines !== false) {
+      if (coloring !== "lines") lineColor = coerce3("line.color", "#000");
+      coerce3("line.width", 0.5);
+      coerce3("line.dash");
+    }
+    if (coloring !== "none") {
+      if (traceIn.showlegend !== true) traceOut.showlegend = false;
+      traceOut._dfltShowLegend = false;
+      colorScaleDefaults(
+        traceIn,
+        traceOut,
+        layout,
+        coerce3,
+        { prefix: "", cLetter: "z" }
+      );
+    }
+    coerce3("line.smoothing");
+    handleLabelDefaults(coerce3, layout, lineColor, opts);
+  }
+
+  // src/traces/heatmap/label_defaults.js
+  function handleHeatmapLabelDefaults(coerce3, layout) {
+    coerce3("texttemplate");
+    coerce3("texttemplatefallback");
+    var fontDflt = lib_default.extendFlat({}, layout.font, {
+      color: "auto",
+      size: "auto"
+    });
+    lib_default.coerceFont(coerce3, "textfont", fontDflt);
+  }
+
+  // src/traces/contour/defaults.js
+  function supplyDefaults5(traceIn, traceOut, defaultColor, layout) {
+    function coerce3(attr3, dflt) {
+      return lib_default.coerce(traceIn, traceOut, attributes_default24, attr3, dflt);
+    }
+    function coerce22(attr3) {
+      return lib_default.coerce2(traceIn, traceOut, attributes_default24, attr3);
+    }
+    var len2 = handleXYZDefaults(traceIn, traceOut, coerce3, layout);
+    if (!len2) {
+      traceOut.visible = false;
+      return;
+    }
+    handlePeriodDefaults(traceIn, traceOut, layout, coerce3);
+    coerce3("xhoverformat");
+    coerce3("yhoverformat");
+    coerce3("text");
+    coerce3("hovertext");
+    coerce3("hoverongaps");
+    coerce3("hovertemplate");
+    coerce3("hovertemplatefallback");
+    var isConstraint = coerce3("contours.type") === "constraint";
+    coerce3("connectgaps", lib_default.isArray1D(traceOut.z));
+    if (isConstraint) {
+      handleConstraintDefaults(traceIn, traceOut, coerce3, layout, defaultColor);
+    } else {
+      handleContourDefaults(traceIn, traceOut, coerce3, coerce22);
+      handleStyleDefaults2(traceIn, traceOut, coerce3, layout);
+    }
+    if (traceOut.contours && traceOut.contours.coloring === "heatmap") {
+      handleHeatmapLabelDefaults(coerce3, layout);
+    }
+    coerce3("zorder");
+  }
 
   // src/traces/histogram/bin_functions.js
-  var import_fast_isnumeric44 = __toESM(require_fast_isnumeric(), 1);
+  var import_fast_isnumeric45 = __toESM(require_fast_isnumeric(), 1);
   var bin_functions_default = {
     count: function(n, i, size) {
       size[n]++;
@@ -71839,7 +72847,7 @@ var Plotly = (() => {
     },
     sum: function(n, i, size, counterData) {
       var v = counterData[i];
-      if ((0, import_fast_isnumeric44.default)(v)) {
+      if ((0, import_fast_isnumeric45.default)(v)) {
         v = Number(v);
         size[n] += v;
         return v;
@@ -71848,7 +72856,7 @@ var Plotly = (() => {
     },
     avg: function(n, i, size, counterData, counts) {
       var v = counterData[i];
-      if ((0, import_fast_isnumeric44.default)(v)) {
+      if ((0, import_fast_isnumeric45.default)(v)) {
         v = Number(v);
         size[n] += v;
         counts[n]++;
@@ -71857,9 +72865,9 @@ var Plotly = (() => {
     },
     min: function(n, i, size, counterData) {
       var v = counterData[i];
-      if ((0, import_fast_isnumeric44.default)(v)) {
+      if ((0, import_fast_isnumeric45.default)(v)) {
         v = Number(v);
-        if (!(0, import_fast_isnumeric44.default)(size[n])) {
+        if (!(0, import_fast_isnumeric45.default)(size[n])) {
           size[n] = v;
           return v;
         } else if (size[n] > v) {
@@ -71872,9 +72880,9 @@ var Plotly = (() => {
     },
     max: function(n, i, size, counterData) {
       var v = counterData[i];
-      if ((0, import_fast_isnumeric44.default)(v)) {
+      if ((0, import_fast_isnumeric45.default)(v)) {
         v = Number(v);
-        if (!(0, import_fast_isnumeric44.default)(size[n])) {
+        if (!(0, import_fast_isnumeric45.default)(size[n])) {
           size[n] = v;
           return v;
         } else if (size[n] < v) {
@@ -72027,7 +73035,7 @@ var Plotly = (() => {
   }
 
   // src/traces/histogram/calc.js
-  var import_fast_isnumeric45 = __toESM(require_fast_isnumeric(), 1);
+  var import_fast_isnumeric46 = __toESM(require_fast_isnumeric(), 1);
   var { hasColorscale: hasColorscale8 } = helpers_default;
   function calc7(gd, trace) {
     var pos = [];
@@ -72155,7 +73163,7 @@ var Plotly = (() => {
       }
     }
     for (i = firstNonzero; i <= lastNonzero; i++) {
-      if ((0, import_fast_isnumeric45.default)(pos[i]) && (0, import_fast_isnumeric45.default)(size[i])) {
+      if ((0, import_fast_isnumeric46.default)(pos[i]) && (0, import_fast_isnumeric46.default)(size[i])) {
         var cdi = {
           p: pos[i],
           s: size[i],
@@ -72213,7 +73221,7 @@ var Plotly = (() => {
     var cleanBound = pa.type === "date" ? function(v) {
       return v || v === 0 ? lib_default.cleanDate(v, null, calendar) : null;
     } : function(v) {
-      return (0, import_fast_isnumeric45.default)(v) ? Number(v) : null;
+      return (0, import_fast_isnumeric46.default)(v) ? Number(v) : null;
     };
     function setBound(attr3, bins, newBins) {
       if (bins[attr3 + "Found"]) {
@@ -72463,22 +73471,772 @@ var Plotly = (() => {
 
   // src/traces/histogram2d/calc.js
   var { calcAllAutoBins: calcAllAutoBins2 } = calc_default2;
+  function calc8(gd, trace) {
+    var xa = axes_default.getFromId(gd, trace.xaxis);
+    var ya = axes_default.getFromId(gd, trace.yaxis);
+    var xcalendar = trace.xcalendar;
+    var ycalendar = trace.ycalendar;
+    var xr2c = function(v) {
+      return xa.r2c(v, 0, xcalendar);
+    };
+    var yr2c = function(v) {
+      return ya.r2c(v, 0, ycalendar);
+    };
+    var xc2r = function(v) {
+      return xa.c2r(v, 0, xcalendar);
+    };
+    var yc2r = function(v) {
+      return ya.c2r(v, 0, ycalendar);
+    };
+    var i, j, n, m;
+    var xBinsAndPos = calcAllAutoBins2(gd, trace, xa, "x");
+    var xBinSpec = xBinsAndPos[0];
+    var xPos0 = xBinsAndPos[1];
+    var yBinsAndPos = calcAllAutoBins2(gd, trace, ya, "y");
+    var yBinSpec = yBinsAndPos[0];
+    var yPos0 = yBinsAndPos[1];
+    var serieslen = trace._length;
+    if (xPos0.length > serieslen) xPos0.splice(serieslen, xPos0.length - serieslen);
+    if (yPos0.length > serieslen) yPos0.splice(serieslen, yPos0.length - serieslen);
+    var z = [];
+    var onecol = [];
+    var zerocol = [];
+    var nonuniformBinsX = typeof xBinSpec.size === "string";
+    var nonuniformBinsY = typeof yBinSpec.size === "string";
+    var xEdges = [];
+    var yEdges = [];
+    var xbins = nonuniformBinsX ? xEdges : xBinSpec;
+    var ybins = nonuniformBinsY ? yEdges : yBinSpec;
+    var total = 0;
+    var counts = [];
+    var inputPoints = [];
+    var norm = trace.histnorm;
+    var func = trace.histfunc;
+    var densitynorm = norm.indexOf("density") !== -1;
+    var extremefunc = func === "max" || func === "min";
+    var sizeinit = extremefunc ? null : 0;
+    var binfunc = bin_functions_default.count;
+    var normfunc = norm_functions_default[norm];
+    var doavg = false;
+    var xinc = [];
+    var yinc = [];
+    var rawCounterData = "z" in trace ? trace.z : "marker" in trace && Array.isArray(trace.marker.color) ? trace.marker.color : "";
+    if (rawCounterData && func !== "count") {
+      doavg = func === "avg";
+      binfunc = bin_functions_default[func];
+    }
+    var xBinSize = xBinSpec.size;
+    var xBinStart = xr2c(xBinSpec.start);
+    var xBinEnd = xr2c(xBinSpec.end) + (xBinStart - axes_default.tickIncrement(xBinStart, xBinSize, false, xcalendar)) / 1e6;
+    for (i = xBinStart; i < xBinEnd; i = axes_default.tickIncrement(i, xBinSize, false, xcalendar)) {
+      onecol.push(sizeinit);
+      xEdges.push(i);
+      if (doavg) zerocol.push(0);
+    }
+    xEdges.push(i);
+    var nx = onecol.length;
+    var dx = (i - xBinStart) / nx;
+    var x0 = xc2r(xBinStart + dx / 2);
+    var yBinSize = yBinSpec.size;
+    var yBinStart = yr2c(yBinSpec.start);
+    var yBinEnd = yr2c(yBinSpec.end) + (yBinStart - axes_default.tickIncrement(yBinStart, yBinSize, false, ycalendar)) / 1e6;
+    for (i = yBinStart; i < yBinEnd; i = axes_default.tickIncrement(i, yBinSize, false, ycalendar)) {
+      z.push(onecol.slice());
+      yEdges.push(i);
+      var ipCol = new Array(nx);
+      for (j = 0; j < nx; j++) ipCol[j] = [];
+      inputPoints.push(ipCol);
+      if (doavg) counts.push(zerocol.slice());
+    }
+    yEdges.push(i);
+    var ny = z.length;
+    var dy = (i - yBinStart) / ny;
+    var y0 = yc2r(yBinStart + dy / 2);
+    if (densitynorm) {
+      xinc = makeIncrements(onecol.length, xbins, dx, nonuniformBinsX);
+      yinc = makeIncrements(z.length, ybins, dy, nonuniformBinsY);
+    }
+    if (!nonuniformBinsX && xa.type === "date") xbins = binsToCalc(xr2c, xbins);
+    if (!nonuniformBinsY && ya.type === "date") ybins = binsToCalc(yr2c, ybins);
+    var uniqueValsPerX = true;
+    var uniqueValsPerY = true;
+    var xVals = new Array(nx);
+    var yVals = new Array(ny);
+    var xGapLow = Infinity;
+    var xGapHigh = Infinity;
+    var yGapLow = Infinity;
+    var yGapHigh = Infinity;
+    for (i = 0; i < serieslen; i++) {
+      var xi = xPos0[i];
+      var yi = yPos0[i];
+      n = lib_default.findBin(xi, xbins);
+      m = lib_default.findBin(yi, ybins);
+      if (n >= 0 && n < nx && m >= 0 && m < ny) {
+        total += binfunc(n, i, z[m], rawCounterData, counts[m]);
+        inputPoints[m][n].push(i);
+        if (uniqueValsPerX) {
+          if (xVals[n] === void 0) xVals[n] = xi;
+          else if (xVals[n] !== xi) uniqueValsPerX = false;
+        }
+        if (uniqueValsPerY) {
+          if (yVals[m] === void 0) yVals[m] = yi;
+          else if (yVals[m] !== yi) uniqueValsPerY = false;
+        }
+        xGapLow = Math.min(xGapLow, xi - xEdges[n]);
+        xGapHigh = Math.min(xGapHigh, xEdges[n + 1] - xi);
+        yGapLow = Math.min(yGapLow, yi - yEdges[m]);
+        yGapHigh = Math.min(yGapHigh, yEdges[m + 1] - yi);
+      }
+    }
+    if (doavg) {
+      for (m = 0; m < ny; m++) total += doAvg(z[m], counts[m]);
+    }
+    if (normfunc) {
+      for (m = 0; m < ny; m++) normfunc(z[m], total, xinc, yinc[m]);
+    }
+    return {
+      x: xPos0,
+      xRanges: getRanges(xEdges, uniqueValsPerX && xVals, xGapLow, xGapHigh, xa, xcalendar),
+      x0,
+      dx,
+      y: yPos0,
+      yRanges: getRanges(yEdges, uniqueValsPerY && yVals, yGapLow, yGapHigh, ya, ycalendar),
+      y0,
+      dy,
+      z,
+      pts: inputPoints
+    };
+  }
+  function makeIncrements(len2, bins, dv2, nonuniform) {
+    var out = new Array(len2);
+    var i;
+    if (nonuniform) {
+      for (i = 0; i < len2; i++) out[i] = 1 / (bins[i + 1] - bins[i]);
+    } else {
+      var inc = 1 / dv2;
+      for (i = 0; i < len2; i++) out[i] = inc;
+    }
+    return out;
+  }
+  function binsToCalc(r2c, bins) {
+    return {
+      start: r2c(bins.start),
+      end: r2c(bins.end),
+      size: bins.size
+    };
+  }
+  function getRanges(edges, uniqueVals, gapLow, gapHigh, ax, calendar) {
+    var i;
+    var len2 = edges.length - 1;
+    var out = new Array(len2);
+    var roundFn = getBinSpanLabelRound(gapLow, gapHigh, edges, ax, calendar);
+    for (i = 0; i < len2; i++) {
+      var v = (uniqueVals || [])[i];
+      out[i] = v === void 0 ? [roundFn(edges[i]), roundFn(edges[i + 1], true)] : [v, v];
+    }
+    return out;
+  }
 
   // src/traces/heatmap/convert_column_xyz.js
   var { BADNUM: BADNUM15 } = numerical_default;
+  function convertColumnData(trace, ax1, ax2, var1Name, var2Name, arrayVarNames) {
+    var colLen = trace._length;
+    var col1 = ax1.makeCalcdata(trace, var1Name);
+    var col2 = ax2.makeCalcdata(trace, var2Name);
+    col1 = alignPeriod(trace, ax1, var1Name, col1).vals;
+    col2 = alignPeriod(trace, ax2, var2Name, col2).vals;
+    var textCol = trace.text;
+    var hasColumnText = textCol !== void 0 && lib_default.isArray1D(textCol);
+    var hoverTextCol = trace.hovertext;
+    var hasColumnHoverText = hoverTextCol !== void 0 && lib_default.isArray1D(hoverTextCol);
+    var i, j;
+    var col1dv = lib_default.distinctVals(col1);
+    var col1vals = col1dv.vals;
+    var col2dv = lib_default.distinctVals(col2);
+    var col2vals = col2dv.vals;
+    var newArrays = [];
+    var text;
+    var hovertext;
+    var nI = col2vals.length;
+    var nJ = col1vals.length;
+    for (i = 0; i < arrayVarNames.length; i++) {
+      newArrays[i] = lib_default.init2dArray(nI, nJ);
+    }
+    if (hasColumnText) {
+      text = lib_default.init2dArray(nI, nJ);
+    }
+    if (hasColumnHoverText) {
+      hovertext = lib_default.init2dArray(nI, nJ);
+    }
+    var after2before = lib_default.init2dArray(nI, nJ);
+    for (i = 0; i < colLen; i++) {
+      if (col1[i] !== BADNUM15 && col2[i] !== BADNUM15) {
+        var i1 = lib_default.findBin(col1[i] + col1dv.minDiff / 2, col1vals);
+        var i2 = lib_default.findBin(col2[i] + col2dv.minDiff / 2, col2vals);
+        for (j = 0; j < arrayVarNames.length; j++) {
+          var arrayVarName = arrayVarNames[j];
+          var arrayVar = trace[arrayVarName];
+          var newArray = newArrays[j];
+          newArray[i2][i1] = arrayVar[i];
+          after2before[i2][i1] = i;
+        }
+        if (hasColumnText) text[i2][i1] = textCol[i];
+        if (hasColumnHoverText) hovertext[i2][i1] = hoverTextCol[i];
+      }
+    }
+    trace["_" + var1Name] = col1vals;
+    trace["_" + var2Name] = col2vals;
+    for (j = 0; j < arrayVarNames.length; j++) {
+      trace["_" + arrayVarNames[j]] = newArrays[j];
+    }
+    if (hasColumnText) trace._text = text;
+    if (hasColumnHoverText) trace._hovertext = hovertext;
+    if (ax1 && ax1.type === "category") {
+      trace["_" + var1Name + "CategoryMap"] = col1vals.map(function(v) {
+        return ax1._categories[v];
+      });
+    }
+    if (ax2 && ax2.type === "category") {
+      trace["_" + var2Name + "CategoryMap"] = col2vals.map(function(v) {
+        return ax2._categories[v];
+      });
+    }
+    trace._after2before = after2before;
+  }
 
   // src/traces/heatmap/clean_2d_array.js
-  var import_fast_isnumeric46 = __toESM(require_fast_isnumeric(), 1);
+  var import_fast_isnumeric47 = __toESM(require_fast_isnumeric(), 1);
   var { BADNUM: BADNUM16 } = numerical_default;
+  function clean2dArray(zOld, trace, xa, ya) {
+    var rowlen, collen, getCollen, old2new, i, j;
+    function cleanZvalue(v) {
+      if (!(0, import_fast_isnumeric47.default)(v)) return void 0;
+      return +v;
+    }
+    if (trace && trace.transpose) {
+      rowlen = 0;
+      for (i = 0; i < zOld.length; i++) rowlen = Math.max(rowlen, zOld[i].length);
+      if (rowlen === 0) return false;
+      getCollen = function(zOld2) {
+        return zOld2.length;
+      };
+      old2new = function(zOld2, i2, j2) {
+        return (zOld2[j2] || [])[i2];
+      };
+    } else {
+      rowlen = zOld.length;
+      getCollen = function(zOld2, i2) {
+        return zOld2[i2].length;
+      };
+      old2new = function(zOld2, i2, j2) {
+        return (zOld2[i2] || [])[j2];
+      };
+    }
+    var padOld2new = function(zOld2, i2, j2) {
+      if (i2 === BADNUM16 || j2 === BADNUM16) return BADNUM16;
+      return old2new(zOld2, i2, j2);
+    };
+    function axisMapping(ax) {
+      if (trace && trace.type !== "carpet" && trace.type !== "contourcarpet" && ax && ax.type === "category" && trace["_" + ax._id.charAt(0)].length) {
+        var axLetter = ax._id.charAt(0);
+        var axMapping = {};
+        var traceCategories = trace["_" + axLetter + "CategoryMap"] || trace[axLetter];
+        for (i = 0; i < traceCategories.length; i++) {
+          axMapping[traceCategories[i]] = i;
+        }
+        return function(i2) {
+          var ind = axMapping[ax._categories[i2]];
+          return ind + 1 ? ind : BADNUM16;
+        };
+      } else {
+        return lib_default.identity;
+      }
+    }
+    var xMap = axisMapping(xa);
+    var yMap = axisMapping(ya);
+    if (ya && ya.type === "category") rowlen = ya._categories.length;
+    var zNew = new Array(rowlen);
+    for (i = 0; i < rowlen; i++) {
+      if (xa && xa.type === "category") {
+        collen = xa._categories.length;
+      } else {
+        collen = getCollen(zOld, i);
+      }
+      zNew[i] = new Array(collen);
+      for (j = 0; j < collen; j++) zNew[i][j] = cleanZvalue(padOld2new(zOld, yMap(i), xMap(j)));
+    }
+    return zNew;
+  }
+
+  // src/traces/heatmap/interp2d.js
+  var INTERPTHRESHOLD = 0.01;
+  var NEIGHBORSHIFTS = [[-1, 0], [1, 0], [0, -1], [0, 1]];
+  function correctionOvershoot(maxFractionalChange) {
+    return 0.5 - 0.25 * Math.min(1, maxFractionalChange * 0.5);
+  }
+  function interp2d(z, emptyPoints) {
+    var maxFractionalChange = 1;
+    var i;
+    iterateInterp2d(z, emptyPoints);
+    for (i = 0; i < emptyPoints.length; i++) {
+      if (emptyPoints[i][2] < 4) break;
+    }
+    emptyPoints = emptyPoints.slice(i);
+    for (i = 0; i < 100 && maxFractionalChange > INTERPTHRESHOLD; i++) {
+      maxFractionalChange = iterateInterp2d(
+        z,
+        emptyPoints,
+        correctionOvershoot(maxFractionalChange)
+      );
+    }
+    if (maxFractionalChange > INTERPTHRESHOLD) {
+      lib_default.log("interp2d didn't converge quickly", maxFractionalChange);
+    }
+    return z;
+  }
+  function iterateInterp2d(z, emptyPoints, overshoot) {
+    var maxFractionalChange = 0;
+    var thisPt;
+    var i;
+    var j;
+    var p;
+    var q;
+    var neighborShift;
+    var neighborRow;
+    var neighborVal;
+    var neighborCount;
+    var neighborSum;
+    var initialVal;
+    var minNeighbor;
+    var maxNeighbor;
+    for (p = 0; p < emptyPoints.length; p++) {
+      thisPt = emptyPoints[p];
+      i = thisPt[0];
+      j = thisPt[1];
+      initialVal = z[i][j];
+      neighborSum = 0;
+      neighborCount = 0;
+      for (q = 0; q < 4; q++) {
+        neighborShift = NEIGHBORSHIFTS[q];
+        neighborRow = z[i + neighborShift[0]];
+        if (!neighborRow) continue;
+        neighborVal = neighborRow[j + neighborShift[1]];
+        if (neighborVal !== void 0) {
+          if (neighborSum === 0) {
+            minNeighbor = maxNeighbor = neighborVal;
+          } else {
+            minNeighbor = Math.min(minNeighbor, neighborVal);
+            maxNeighbor = Math.max(maxNeighbor, neighborVal);
+          }
+          neighborCount++;
+          neighborSum += neighborVal;
+        }
+      }
+      if (neighborCount === 0) {
+        throw "iterateInterp2d order is wrong: no defined neighbors";
+      }
+      z[i][j] = neighborSum / neighborCount;
+      if (initialVal === void 0) {
+        if (neighborCount < 4) maxFractionalChange = 1;
+      } else {
+        z[i][j] = (1 + overshoot) * z[i][j] - overshoot * initialVal;
+        if (maxNeighbor > minNeighbor) {
+          maxFractionalChange = Math.max(
+            maxFractionalChange,
+            Math.abs(z[i][j] - initialVal) / (maxNeighbor - minNeighbor)
+          );
+        }
+      }
+    }
+    return maxFractionalChange;
+  }
 
   // src/traces/heatmap/find_empties.js
   var { maxRowLength: maxRowLength2 } = lib_default;
+  function findEmpties(z) {
+    var empties = [];
+    var neighborHash = {};
+    var noNeighborList = [];
+    var nextRow = z[0];
+    var row = [];
+    var blank = [0, 0, 0];
+    var rowLength = maxRowLength2(z);
+    var prevRow;
+    var i;
+    var j;
+    var thisPt;
+    var p;
+    var neighborCount;
+    var newNeighborHash;
+    var foundNewNeighbors;
+    for (i = 0; i < z.length; i++) {
+      prevRow = row;
+      row = nextRow;
+      nextRow = z[i + 1] || [];
+      for (j = 0; j < rowLength; j++) {
+        if (row[j] === void 0) {
+          neighborCount = (row[j - 1] !== void 0 ? 1 : 0) + (row[j + 1] !== void 0 ? 1 : 0) + (prevRow[j] !== void 0 ? 1 : 0) + (nextRow[j] !== void 0 ? 1 : 0);
+          if (neighborCount) {
+            if (i === 0) neighborCount++;
+            if (j === 0) neighborCount++;
+            if (i === z.length - 1) neighborCount++;
+            if (j === row.length - 1) neighborCount++;
+            if (neighborCount < 4) {
+              neighborHash[[i, j]] = [i, j, neighborCount];
+            }
+            empties.push([i, j, neighborCount]);
+          } else noNeighborList.push([i, j]);
+        }
+      }
+    }
+    while (noNeighborList.length) {
+      newNeighborHash = {};
+      foundNewNeighbors = false;
+      for (p = noNeighborList.length - 1; p >= 0; p--) {
+        thisPt = noNeighborList[p];
+        i = thisPt[0];
+        j = thisPt[1];
+        neighborCount = ((neighborHash[[i - 1, j]] || blank)[2] + (neighborHash[[i + 1, j]] || blank)[2] + (neighborHash[[i, j - 1]] || blank)[2] + (neighborHash[[i, j + 1]] || blank)[2]) / 20;
+        if (neighborCount) {
+          newNeighborHash[thisPt] = [i, j, neighborCount];
+          noNeighborList.splice(p, 1);
+          foundNewNeighbors = true;
+        }
+      }
+      if (!foundNewNeighbors) {
+        throw "findEmpties iterated with no new neighbors";
+      }
+      for (thisPt in newNeighborHash) {
+        neighborHash[thisPt] = newNeighborHash[thisPt];
+        empties.push(newNeighborHash[thisPt]);
+      }
+    }
+    return empties.sort(function(a, b) {
+      return b[2] - a[2];
+    });
+  }
 
   // src/traces/heatmap/make_bound_array.js
-  var { isArrayOrTypedArray: isArrayOrTypedArray11 } = lib_default;
+  var { isArrayOrTypedArray: isArrayOrTypedArray12 } = lib_default;
+  function makeBoundArray(trace, arrayIn, v0In, dvIn, numbricks, ax) {
+    var arrayOut = [];
+    var isContour = registry_default.traceIs(trace, "contour");
+    var isHist = registry_default.traceIs(trace, "histogram");
+    var v0;
+    var dv2;
+    var i;
+    var isArrayOfTwoItemsOrMore = isArrayOrTypedArray12(arrayIn) && arrayIn.length > 1;
+    if (isArrayOfTwoItemsOrMore && !isHist && ax.type !== "category") {
+      var len2 = arrayIn.length;
+      if (len2 <= numbricks) {
+        if (isContour) arrayOut = Array.from(arrayIn).slice(0, numbricks);
+        else if (numbricks === 1) {
+          if (ax.type === "log") {
+            arrayOut = [0.5 * arrayIn[0], 2 * arrayIn[0]];
+          } else {
+            arrayOut = [arrayIn[0] - 0.5, arrayIn[0] + 0.5];
+          }
+        } else if (ax.type === "log") {
+          arrayOut = [Math.pow(arrayIn[0], 1.5) / Math.pow(arrayIn[1], 0.5)];
+          for (i = 1; i < len2; i++) {
+            arrayOut.push(Math.sqrt(arrayIn[i - 1] * arrayIn[i]));
+          }
+          arrayOut.push(Math.pow(arrayIn[len2 - 1], 1.5) / Math.pow(arrayIn[len2 - 2], 0.5));
+        } else {
+          arrayOut = [1.5 * arrayIn[0] - 0.5 * arrayIn[1]];
+          for (i = 1; i < len2; i++) {
+            arrayOut.push((arrayIn[i - 1] + arrayIn[i]) * 0.5);
+          }
+          arrayOut.push(1.5 * arrayIn[len2 - 1] - 0.5 * arrayIn[len2 - 2]);
+        }
+        if (len2 < numbricks) {
+          var lastPt = arrayOut[arrayOut.length - 1];
+          var delta;
+          if (ax.type === "log") {
+            delta = lastPt / arrayOut[arrayOut.length - 2];
+            for (i = len2; i < numbricks; i++) {
+              lastPt *= delta;
+              arrayOut.push(lastPt);
+            }
+          } else {
+            delta = lastPt - arrayOut[arrayOut.length - 2];
+            for (i = len2; i < numbricks; i++) {
+              lastPt += delta;
+              arrayOut.push(lastPt);
+            }
+          }
+        }
+      } else {
+        return isContour ? arrayIn.slice(0, numbricks) : (
+          // we must be strict for contours
+          arrayIn.slice(0, numbricks + 1)
+        );
+      }
+    } else {
+      var calendar = trace[ax._id.charAt(0) + "calendar"];
+      if (isHist) {
+        v0 = ax.r2c(v0In, 0, calendar);
+      } else {
+        if (isArrayOrTypedArray12(arrayIn) && arrayIn.length === 1) {
+          v0 = arrayIn[0];
+        } else if (v0In === void 0) {
+          v0 = 0;
+        } else {
+          var fn = ax.type === "log" ? ax.d2c : ax.r2c;
+          v0 = fn(v0In, 0, calendar);
+        }
+      }
+      dv2 = dvIn || 1;
+      for (i = isContour ? 0 : -0.5; i < numbricks; i++) {
+        arrayOut.push(v0 + dv2 * i);
+      }
+    }
+    return arrayOut;
+  }
 
   // src/traces/heatmap/calc.js
   var { BADNUM: BADNUM17 } = numerical_default;
+  function calc9(gd, trace) {
+    var xa = axes_default.getFromId(gd, trace.xaxis || "x");
+    var ya = axes_default.getFromId(gd, trace.yaxis || "y");
+    var isContour = registry_default.traceIs(trace, "contour");
+    var isHist = registry_default.traceIs(trace, "histogram");
+    var zsmooth = isContour ? "best" : trace.zsmooth;
+    var x, x0, dx, origX;
+    var y, y0, dy, origY;
+    var z, i, binned;
+    xa._minDtick = 0;
+    ya._minDtick = 0;
+    if (isHist) {
+      binned = calc8(gd, trace);
+      origX = binned.orig_x;
+      x = binned.x;
+      x0 = binned.x0;
+      dx = binned.dx;
+      origY = binned.orig_y;
+      y = binned.y;
+      y0 = binned.y0;
+      dy = binned.dy;
+      z = binned.z;
+    } else {
+      var zIn = trace.z;
+      if (lib_default.isArray1D(zIn)) {
+        convertColumnData(trace, xa, ya, "x", "y", ["z"]);
+        x = trace._x;
+        y = trace._y;
+        zIn = trace._z;
+      } else {
+        origX = trace.x ? xa.makeCalcdata(trace, "x") : [];
+        origY = trace.y ? ya.makeCalcdata(trace, "y") : [];
+        x = alignPeriod(trace, xa, "x", origX).vals;
+        y = alignPeriod(trace, ya, "y", origY).vals;
+        trace._x = x;
+        trace._y = y;
+      }
+      x0 = trace.x0;
+      dx = trace.dx;
+      y0 = trace.y0;
+      dy = trace.dy;
+      z = clean2dArray(zIn, trace, xa, ya);
+    }
+    if (xa.rangebreaks || ya.rangebreaks) {
+      z = dropZonBreaks(x, y, z);
+      if (!isHist) {
+        x = skipBreaks(x);
+        y = skipBreaks(y);
+        trace._x = x;
+        trace._y = y;
+      }
+    }
+    if (!isHist && (isContour || trace.connectgaps)) {
+      trace._emptypoints = findEmpties(z);
+      interp2d(z, trace._emptypoints);
+    }
+    function noZsmooth(msg) {
+      zsmooth = trace._input.zsmooth = trace.zsmooth = false;
+      lib_default.warn('cannot use zsmooth: "fast": ' + msg);
+    }
+    function scaleIsLinear(s) {
+      if (s.length > 1) {
+        var avgdx = (s[s.length - 1] - s[0]) / (s.length - 1);
+        var maxErrX = Math.abs(avgdx / 100);
+        for (i = 0; i < s.length - 1; i++) {
+          if (Math.abs(s[i + 1] - s[i] - avgdx) > maxErrX) {
+            return false;
+          }
+        }
+      }
+      return true;
+    }
+    trace._islinear = false;
+    if (xa.type === "log" || ya.type === "log") {
+      if (zsmooth === "fast") {
+        noZsmooth("log axis found");
+      }
+    } else if (!scaleIsLinear(x)) {
+      if (zsmooth === "fast") noZsmooth("x scale is not linear");
+    } else if (!scaleIsLinear(y)) {
+      if (zsmooth === "fast") noZsmooth("y scale is not linear");
+    } else {
+      trace._islinear = true;
+    }
+    var xlen = lib_default.maxRowLength(z);
+    var xIn = trace.xtype === "scaled" ? "" : x;
+    var xArray = makeBoundArray(trace, xIn, x0, dx, xlen, xa);
+    var yIn = trace.ytype === "scaled" ? "" : y;
+    var yArray = makeBoundArray(trace, yIn, y0, dy, z.length, ya);
+    trace._extremes[xa._id] = axes_default.findExtremes(xa, xArray);
+    trace._extremes[ya._id] = axes_default.findExtremes(ya, yArray);
+    var cd0 = {
+      x: xArray,
+      y: yArray,
+      z,
+      text: trace._text || trace.text,
+      hovertext: trace._hovertext || trace.hovertext
+    };
+    if (trace.xperiodalignment && origX) {
+      cd0.orig_x = origX;
+    }
+    if (trace.yperiodalignment && origY) {
+      cd0.orig_y = origY;
+    }
+    if (xIn && xIn.length === xArray.length - 1) cd0.xCenter = xIn;
+    if (yIn && yIn.length === yArray.length - 1) cd0.yCenter = yIn;
+    if (isHist) {
+      cd0.xRanges = binned.xRanges;
+      cd0.yRanges = binned.yRanges;
+      cd0.pts = binned.pts;
+    }
+    if (!isContour) {
+      calc(gd, trace, { vals: z, cLetter: "z" });
+    }
+    if (isContour && trace.contours && trace.contours.coloring === "heatmap") {
+      var dummyTrace = {
+        type: trace.type === "contour" ? "heatmap" : "histogram2d",
+        xcalendar: trace.xcalendar,
+        ycalendar: trace.ycalendar
+      };
+      cd0.xfill = makeBoundArray(dummyTrace, xIn, x0, dx, xlen, xa);
+      cd0.yfill = makeBoundArray(dummyTrace, yIn, y0, dy, z.length, ya);
+    }
+    return [cd0];
+  }
+  function skipBreaks(a) {
+    var b = [];
+    var len2 = a.length;
+    for (var i = 0; i < len2; i++) {
+      var v = a[i];
+      if (v !== BADNUM17) b.push(v);
+    }
+    return b;
+  }
+  function dropZonBreaks(x, y, z) {
+    var newZ = [];
+    var k = -1;
+    for (var i = 0; i < z.length; i++) {
+      if (y[i] === BADNUM17) continue;
+      k++;
+      newZ[k] = [];
+      for (var j = 0; j < z[i].length; j++) {
+        if (x[j] === BADNUM17) continue;
+        newZ[k].push(z[i][j]);
+      }
+    }
+    return newZ;
+  }
+
+  // src/traces/contour/set_contours.js
+  function setContours(trace, vals) {
+    var contours = trace.contours;
+    if (trace.autocontour) {
+      var zmin = trace.zmin;
+      var zmax = trace.zmax;
+      if (trace.zauto || zmin === void 0) {
+        zmin = lib_default.aggNums(Math.min, null, vals);
+      }
+      if (trace.zauto || zmax === void 0) {
+        zmax = lib_default.aggNums(Math.max, null, vals);
+      }
+      var dummyAx = autoContours(zmin, zmax, trace.ncontours);
+      contours.size = dummyAx.dtick;
+      contours.start = axes_default.tickFirst(dummyAx);
+      dummyAx.range.reverse();
+      contours.end = axes_default.tickFirst(dummyAx);
+      if (contours.start === zmin) contours.start += contours.size;
+      if (contours.end === zmax) contours.end -= contours.size;
+      if (contours.start > contours.end) {
+        contours.start = contours.end = (contours.start + contours.end) / 2;
+      }
+      if (!trace._input.contours) trace._input.contours = {};
+      lib_default.extendFlat(trace._input.contours, {
+        start: contours.start,
+        end: contours.end,
+        size: contours.size
+      });
+      trace._input.autocontour = true;
+    } else if (contours.type !== "constraint") {
+      var start = contours.start;
+      var end = contours.end;
+      var inputContours = trace._input.contours;
+      if (start > end) {
+        contours.start = inputContours.start = end;
+        end = contours.end = inputContours.end = start;
+        start = contours.start;
+      }
+      if (!(contours.size > 0)) {
+        var sizeOut;
+        if (start === end) sizeOut = 1;
+        else sizeOut = autoContours(start, end, trace.ncontours).dtick;
+        inputContours.size = contours.size = sizeOut;
+      }
+    }
+  }
+  function autoContours(start, end, ncontours) {
+    var dummyAx = {
+      type: "linear",
+      range: [start, end]
+    };
+    axes_default.autoTicks(
+      dummyAx,
+      (end - start) / (ncontours || 15)
+    );
+    return dummyAx;
+  }
+
+  // src/traces/contour/end_plus.js
+  function endPlus(contours) {
+    return contours.end + contours.size / 1e6;
+  }
+
+  // src/traces/contour/calc.js
+  function calc10(gd, trace) {
+    var cd = calc9(gd, trace);
+    var zOut = cd[0].z;
+    setContours(trace, zOut);
+    var contours = trace.contours;
+    var cOpts = colorscale_default.extractOpts(trace);
+    var cVals;
+    if (contours.coloring === "heatmap" && cOpts.auto && trace.autocontour === false) {
+      var start = contours.start;
+      var end = endPlus(contours);
+      var cs = contours.size || 1;
+      var nc = Math.floor((end - start) / cs) + 1;
+      if (!isFinite(cs)) {
+        cs = 1;
+        nc = 1;
+      }
+      var min0 = start - cs / 2;
+      var max0 = min0 + nc * cs;
+      cVals = [min0, max0];
+    } else {
+      cVals = zOut;
+    }
+    colorscale_default.calc(gd, trace, { vals: cVals, cLetter: "z" });
+    return cd;
+  }
+
+  // src/traces/contour/plot.js
+  var import_d345 = __toESM(require_d3(), 1);
 
   // src/traces/heatmap/plot.js
   var import_d344 = __toESM(require_d3(), 1);
@@ -72496,439 +74254,512 @@ var Plotly = (() => {
   var STYLE = CSS_DECLARATIONS.map(function(d) {
     return d.join(": ") + "; ";
   }).join("");
+  var pixelated_image_default = { CSS_DECLARATIONS, STYLE };
+
+  // src/lib/supports_pixelated_image.js
+  var _supportsPixelated = null;
+  function supportsPixelatedImage() {
+    if (_supportsPixelated !== null) {
+      return _supportsPixelated;
+    }
+    _supportsPixelated = false;
+    var unsupportedBrowser = lib_default.isSafari() || lib_default.isMacWKWebView() || lib_default.isIOS();
+    if (window.navigator.userAgent && !unsupportedBrowser) {
+      var declarations = Array.from(pixelated_image_default.CSS_DECLARATIONS).reverse();
+      var supports = window.CSS && window.CSS.supports || window.supportsCSS;
+      if (typeof supports === "function") {
+        _supportsPixelated = declarations.some(function(d) {
+          return supports.apply(null, d);
+        });
+      } else {
+        var image3 = drawing_default.tester.append("image").attr("style", pixelated_image_default.STYLE);
+        var cStyles = window.getComputedStyle(image3.node());
+        var imageRendering = cStyles.imageRendering;
+        _supportsPixelated = declarations.some(function(d) {
+          var value = d[1];
+          return imageRendering === value || imageRendering === value.toLowerCase();
+        });
+        image3.remove();
+      }
+    }
+    return _supportsPixelated;
+  }
+  var supports_pixelated_image_default = supportsPixelatedImage;
 
   // src/traces/heatmap/plot.js
   var { extractOpts: extractOpts5, makeColorScaleFuncFromTrace: makeColorScaleFuncFromTrace2 } = colorscale_default;
   var LINE_SPACING10 = alignment_default.LINE_SPACING;
-
-  // src/traces/heatmap/style.js
-  var import_d345 = __toESM(require_d3(), 1);
-
-  // src/traces/heatmap/hover.js
-  var { extractOpts: extractOpts6 } = colorscale_default;
-  var isArrayOrTypedArray12 = lib_default.isArrayOrTypedArray;
-
-  // src/traces/histogram/bin_attributes.js
-  function makeBinAttrs(axLetter, match) {
+  var labelClass = "heatmap-label";
+  function selectLabels(plotGroup) {
+    return plotGroup.selectAll("g." + labelClass);
+  }
+  function removeLabels(plotGroup) {
+    selectLabels(plotGroup).remove();
+  }
+  function plot_default3(gd, plotinfo, cdheatmaps, heatmapLayer) {
+    var xa = plotinfo.xaxis;
+    var ya = plotinfo.yaxis;
+    lib_default.makeTraceGroups(heatmapLayer, cdheatmaps, "hm").each(function(cd) {
+      var plotGroup = import_d344.default.select(this);
+      var cd0 = cd[0];
+      var trace = cd0.trace;
+      var xGap = trace.xgap || 0;
+      var yGap = trace.ygap || 0;
+      var z = cd0.z;
+      var x = cd0.x;
+      var y = cd0.y;
+      var xc = cd0.xCenter;
+      var yc = cd0.yCenter;
+      var isContour = registry_default.traceIs(trace, "contour");
+      var zsmooth = isContour ? "best" : trace.zsmooth;
+      var m = z.length;
+      var n = lib_default.maxRowLength(z);
+      var xrev = false;
+      var yrev = false;
+      var left, right, temp, top, bottom, i, j, k;
+      i = 0;
+      while (left === void 0 && i < x.length - 1) {
+        left = xa.c2p(x[i]);
+        i++;
+      }
+      i = x.length - 1;
+      while (right === void 0 && i > 0) {
+        right = xa.c2p(x[i]);
+        i--;
+      }
+      if (right < left) {
+        temp = right;
+        right = left;
+        left = temp;
+        xrev = true;
+      }
+      i = 0;
+      while (top === void 0 && i < y.length - 1) {
+        top = ya.c2p(y[i]);
+        i++;
+      }
+      i = y.length - 1;
+      while (bottom === void 0 && i > 0) {
+        bottom = ya.c2p(y[i]);
+        i--;
+      }
+      if (bottom < top) {
+        temp = top;
+        top = bottom;
+        bottom = temp;
+        yrev = true;
+      }
+      if (isContour) {
+        xc = x;
+        yc = y;
+        x = cd0.xfill;
+        y = cd0.yfill;
+      }
+      var drawingMethod = "default";
+      if (zsmooth) {
+        drawingMethod = zsmooth === "best" ? "smooth" : "fast";
+      } else if (trace._islinear && xGap === 0 && yGap === 0 && supports_pixelated_image_default()) {
+        drawingMethod = "fast";
+      }
+      if (drawingMethod !== "fast") {
+        var extra = zsmooth === "best" ? 0 : 0.5;
+        left = Math.max(-extra * xa._length, left);
+        right = Math.min((1 + extra) * xa._length, right);
+        top = Math.max(-extra * ya._length, top);
+        bottom = Math.min((1 + extra) * ya._length, bottom);
+      }
+      var imageWidth = Math.round(right - left);
+      var imageHeight = Math.round(bottom - top);
+      var isOffScreen = left >= xa._length || right <= 0 || top >= ya._length || bottom <= 0;
+      if (isOffScreen) {
+        var noImage = plotGroup.selectAll("image").data([]);
+        noImage.exit().remove();
+        removeLabels(plotGroup);
+        return;
+      }
+      var canvasW, canvasH;
+      if (drawingMethod === "fast") {
+        canvasW = n;
+        canvasH = m;
+      } else {
+        canvasW = imageWidth;
+        canvasH = imageHeight;
+      }
+      var canvas = document.createElement("canvas");
+      canvas.width = canvasW;
+      canvas.height = canvasH;
+      var context = canvas.getContext("2d", { willReadFrequently: true });
+      var sclFunc = makeColorScaleFuncFromTrace2(trace, { noNumericCheck: true, returnArray: true });
+      var xpx, ypx;
+      if (drawingMethod === "fast") {
+        xpx = xrev ? function(index) {
+          return n - 1 - index;
+        } : lib_default.identity;
+        ypx = yrev ? function(index) {
+          return m - 1 - index;
+        } : lib_default.identity;
+      } else {
+        xpx = function(index) {
+          return lib_default.constrain(Math.round(xa.c2p(x[index]) - left), 0, imageWidth);
+        };
+        ypx = function(index) {
+          return lib_default.constrain(Math.round(ya.c2p(y[index]) - top), 0, imageHeight);
+        };
+      }
+      var yi = ypx(0);
+      var yb = [yi, yi];
+      var xbi = xrev ? 0 : 1;
+      var ybi = yrev ? 0 : 1;
+      var pixcount = 0;
+      var rcount = 0;
+      var gcount = 0;
+      var bcount = 0;
+      var xb, xi, v, row, c;
+      function setColor(v2, pixsize) {
+        if (v2 !== void 0) {
+          var c2 = sclFunc(v2);
+          c2[0] = Math.round(c2[0]);
+          c2[1] = Math.round(c2[1]);
+          c2[2] = Math.round(c2[2]);
+          pixcount += pixsize;
+          rcount += c2[0] * pixsize;
+          gcount += c2[1] * pixsize;
+          bcount += c2[2] * pixsize;
+          return c2;
+        }
+        return [0, 0, 0, 0];
+      }
+      function interpColor(r02, r12, xinterp, yinterp2) {
+        var z00 = r02[xinterp.bin0];
+        if (z00 === void 0) return setColor(void 0, 1);
+        var z01 = r02[xinterp.bin1];
+        var z10 = r12[xinterp.bin0];
+        var z11 = r12[xinterp.bin1];
+        var dx2 = z01 - z00 || 0;
+        var dy2 = z10 - z00 || 0;
+        var dxy;
+        if (z01 === void 0) {
+          if (z11 === void 0) dxy = 0;
+          else if (z10 === void 0) dxy = 2 * (z11 - z00);
+          else dxy = (2 * z11 - z10 - z00) * 2 / 3;
+        } else if (z11 === void 0) {
+          if (z10 === void 0) dxy = 0;
+          else dxy = (2 * z00 - z01 - z10) * 2 / 3;
+        } else if (z10 === void 0) dxy = (2 * z11 - z01 - z00) * 2 / 3;
+        else dxy = z11 + z00 - z01 - z10;
+        return setColor(z00 + xinterp.frac * dx2 + yinterp2.frac * (dy2 + xinterp.frac * dxy));
+      }
+      if (drawingMethod !== "default") {
+        var pxIndex = 0;
+        var pixels;
+        try {
+          pixels = new Uint8Array(canvasW * canvasH * 4);
+        } catch (e) {
+          pixels = new Array(canvasW * canvasH * 4);
+        }
+        if (drawingMethod === "smooth") {
+          var xForPx = xc || x;
+          var yForPx = yc || y;
+          var xPixArray = new Array(xForPx.length);
+          var yPixArray = new Array(yForPx.length);
+          var xinterpArray = new Array(imageWidth);
+          var findInterpX = xc ? findInterpFromCenters : findInterp;
+          var findInterpY = yc ? findInterpFromCenters : findInterp;
+          var yinterp, r0, r1;
+          for (i = 0; i < xForPx.length; i++) xPixArray[i] = Math.round(xa.c2p(xForPx[i]) - left);
+          for (i = 0; i < yForPx.length; i++) yPixArray[i] = Math.round(ya.c2p(yForPx[i]) - top);
+          for (i = 0; i < imageWidth; i++) xinterpArray[i] = findInterpX(i, xPixArray);
+          for (j = 0; j < imageHeight; j++) {
+            yinterp = findInterpY(j, yPixArray);
+            r0 = z[yinterp.bin0];
+            r1 = z[yinterp.bin1];
+            for (i = 0; i < imageWidth; i++, pxIndex += 4) {
+              c = interpColor(r0, r1, xinterpArray[i], yinterp);
+              putColor(pixels, pxIndex, c);
+            }
+          }
+        } else {
+          for (j = 0; j < m; j++) {
+            row = z[j];
+            yb = ypx(j);
+            for (i = 0; i < n; i++) {
+              c = setColor(row[i], 1);
+              pxIndex = (yb * n + xpx(i)) * 4;
+              putColor(pixels, pxIndex, c);
+            }
+          }
+        }
+        var imageData = context.createImageData(canvasW, canvasH);
+        try {
+          imageData.data.set(pixels);
+        } catch (e) {
+          var pxArray = imageData.data;
+          var dlen = pxArray.length;
+          for (j = 0; j < dlen; j++) {
+            pxArray[j] = pixels[j];
+          }
+        }
+        context.putImageData(imageData, 0, 0);
+      } else {
+        var xGapLeft = Math.floor(xGap / 2);
+        var yGapTop = Math.floor(yGap / 2);
+        for (j = 0; j < m; j++) {
+          row = z[j];
+          yb.reverse();
+          yb[ybi] = ypx(j + 1);
+          if (yb[0] === yb[1] || yb[0] === void 0 || yb[1] === void 0) {
+            continue;
+          }
+          xi = xpx(0);
+          xb = [xi, xi];
+          for (i = 0; i < n; i++) {
+            xb.reverse();
+            xb[xbi] = xpx(i + 1);
+            if (xb[0] === xb[1] || xb[0] === void 0 || xb[1] === void 0) {
+              continue;
+            }
+            v = row[i];
+            c = setColor(v, (xb[1] - xb[0]) * (yb[1] - yb[0]));
+            context.fillStyle = "rgba(" + c.join(",") + ")";
+            context.fillRect(xb[0] + xGapLeft, yb[0] + yGapTop, xb[1] - xb[0] - xGap, yb[1] - yb[0] - yGap);
+          }
+        }
+      }
+      rcount = Math.round(rcount / pixcount);
+      gcount = Math.round(gcount / pixcount);
+      bcount = Math.round(bcount / pixcount);
+      var avgColor = tinycolor("rgb(" + rcount + "," + gcount + "," + bcount + ")");
+      gd._hmpixcount = (gd._hmpixcount || 0) + pixcount;
+      gd._hmlumcount = (gd._hmlumcount || 0) + pixcount * avgColor.getLuminance();
+      var image3 = plotGroup.selectAll("image").data(cd);
+      image3.enter().append("svg:image").attr({
+        xmlns: xmlns_namespaces_default.svg,
+        preserveAspectRatio: "none"
+      });
+      image3.attr({
+        height: imageHeight,
+        width: imageWidth,
+        x: left,
+        y: top,
+        "xlink:href": canvas.toDataURL("image/png")
+      });
+      if (drawingMethod === "fast" && !zsmooth) {
+        image3.attr("style", STYLE);
+      }
+      removeLabels(plotGroup);
+      var texttemplate = trace.texttemplate;
+      if (texttemplate) {
+        var cOpts = extractOpts5(trace);
+        var dummyAx = {
+          type: "linear",
+          range: [cOpts.min, cOpts.max],
+          _separators: xa._separators,
+          _numFormat: xa._numFormat
+        };
+        var aHistogram2dContour = trace.type === "histogram2dcontour";
+        var aContour = trace.type === "contour";
+        var iStart = aContour ? 1 : 0;
+        var iStop = aContour ? m - 1 : m;
+        var jStart = aContour ? 1 : 0;
+        var jStop = aContour ? n - 1 : n;
+        var textData = [];
+        for (i = iStart; i < iStop; i++) {
+          var yVal;
+          if (aContour) {
+            yVal = cd0.y[i];
+          } else if (aHistogram2dContour) {
+            if (i === 0 || i === m - 1) continue;
+            yVal = cd0.y[i];
+          } else if (cd0.yCenter) {
+            yVal = cd0.yCenter[i];
+          } else {
+            if (i + 1 === m && cd0.y[i + 1] === void 0) continue;
+            yVal = (cd0.y[i] + cd0.y[i + 1]) / 2;
+          }
+          var _y = Math.round(ya.c2p(yVal));
+          if (0 > _y || _y > ya._length) continue;
+          for (j = jStart; j < jStop; j++) {
+            var xVal;
+            if (aContour) {
+              xVal = cd0.x[j];
+            } else if (aHistogram2dContour) {
+              if (j === 0 || j === n - 1) continue;
+              xVal = cd0.x[j];
+            } else if (cd0.xCenter) {
+              xVal = cd0.xCenter[j];
+            } else {
+              if (j + 1 === n && cd0.x[j + 1] === void 0) continue;
+              xVal = (cd0.x[j] + cd0.x[j + 1]) / 2;
+            }
+            var _x = Math.round(xa.c2p(xVal));
+            if (0 > _x || _x > xa._length) continue;
+            var obj = formatLabels(
+              {
+                x: xVal,
+                y: yVal
+              },
+              trace,
+              gd._fullLayout
+            );
+            obj.x = xVal;
+            obj.y = yVal;
+            var zVal = cd0.z[i][j];
+            if (zVal === void 0) {
+              obj.z = "";
+              obj.zLabel = "";
+            } else {
+              obj.z = zVal;
+              obj.zLabel = axes_default.tickText(dummyAx, zVal, "hover").text;
+            }
+            var theText = cd0.text && cd0.text[i] && cd0.text[i][j];
+            if (theText === void 0 || theText === false) theText = "";
+            obj.text = theText;
+            var _t = lib_default.texttemplateString({
+              data: [obj, trace._meta],
+              fallback: trace.texttemplatefallback,
+              labels: obj,
+              locale: gd._fullLayout._d3locale,
+              template: texttemplate
+            });
+            if (!_t) continue;
+            var lines = _t.split("<br>");
+            var nL = lines.length;
+            var nC = 0;
+            for (k = 0; k < nL; k++) {
+              nC = Math.max(nC, lines[k].length);
+            }
+            textData.push({
+              l: nL,
+              // number of lines
+              c: nC,
+              // maximum number of chars in a line
+              t: _t,
+              // text
+              x: _x,
+              y: _y,
+              z: zVal
+            });
+          }
+        }
+        var font2 = trace.textfont;
+        var fontSize = font2.size;
+        var globalFontSize = gd._fullLayout.font.size;
+        if (!fontSize || fontSize === "auto") {
+          var minW = Infinity;
+          var minH = Infinity;
+          var maxL = 0;
+          var maxC = 0;
+          for (k = 0; k < textData.length; k++) {
+            var d = textData[k];
+            maxL = Math.max(maxL, d.l);
+            maxC = Math.max(maxC, d.c);
+            if (k < textData.length - 1) {
+              var nextD = textData[k + 1];
+              var dx = Math.abs(nextD.x - d.x);
+              var dy = Math.abs(nextD.y - d.y);
+              if (dx) minW = Math.min(minW, dx);
+              if (dy) minH = Math.min(minH, dy);
+            }
+          }
+          if (!isFinite(minW) || !isFinite(minH)) {
+            fontSize = globalFontSize;
+          } else {
+            minW -= xGap;
+            minH -= yGap;
+            minW /= maxC;
+            minH /= maxL;
+            minW /= LINE_SPACING10 / 2;
+            minH /= LINE_SPACING10;
+            fontSize = Math.min(Math.floor(minW), Math.floor(minH), globalFontSize);
+          }
+        }
+        if (fontSize <= 0 || !isFinite(fontSize)) return;
+        var xFn = function(d2) {
+          return d2.x;
+        };
+        var yFn = function(d2) {
+          return d2.y - fontSize * (d2.l * LINE_SPACING10 / 2 - 1);
+        };
+        var labels = selectLabels(plotGroup).data(textData);
+        labels.enter().append("g").classed(labelClass, 1).append("text").attr("text-anchor", "middle").each(function(d2) {
+          var thisLabel = import_d344.default.select(this);
+          var fontColor = font2.color;
+          if (!fontColor || fontColor === "auto") {
+            fontColor = color_default.contrast(
+              d2.z === void 0 ? gd._fullLayout.plot_bgcolor : "rgba(" + sclFunc(d2.z).join() + ")"
+            );
+          }
+          thisLabel.attr("data-notex", 1).call(svg_text_utils_default.positionText, xFn(d2), yFn(d2)).call(drawing_default.font, {
+            family: font2.family,
+            size: fontSize,
+            color: fontColor,
+            weight: font2.weight,
+            style: font2.style,
+            variant: font2.variant,
+            textcase: font2.textcase,
+            lineposition: font2.lineposition,
+            shadow: font2.shadow
+          }).text(d2.t).call(svg_text_utils_default.convertToTspans, gd);
+        });
+      }
+    });
+  }
+  function findInterp(pixel, pixArray) {
+    var maxBin = pixArray.length - 2;
+    var bin = lib_default.constrain(lib_default.findBin(pixel, pixArray), 0, maxBin);
+    var pix0 = pixArray[bin];
+    var pix1 = pixArray[bin + 1];
+    var interp2 = lib_default.constrain(bin + (pixel - pix0) / (pix1 - pix0) - 0.5, 0, maxBin);
+    var bin0 = Math.round(interp2);
+    var frac = Math.abs(interp2 - bin0);
+    if (!interp2 || interp2 === maxBin || !frac) {
+      return {
+        bin0,
+        bin1: bin0,
+        frac: 0
+      };
+    }
     return {
-      start: {
-        valType: "any",
-        // for date axes
-        editType: "calc"
-      },
-      end: {
-        valType: "any",
-        // for date axes
-        editType: "calc"
-      },
-      size: {
-        valType: "any",
-        // for date axes
-        editType: "calc"
-      },
-      editType: "calc"
+      bin0,
+      frac,
+      bin1: Math.round(bin0 + frac / (interp2 - bin0))
     };
   }
-
-  // src/traces/histogram/constants.js
-  var constants_default15 = {
-    eventDataKeys: ["binNumber"]
-  };
-
-  // src/traces/histogram/attributes.js
-  var { axisHoverFormat: axisHoverFormat6 } = axis_format_attributes_default;
-  var attributes_default24 = {
-    x: {
-      valType: "data_array",
-      editType: "calc+clearAxisTypes"
-    },
-    y: {
-      valType: "data_array",
-      editType: "calc+clearAxisTypes"
-    },
-    xhoverformat: axisHoverFormat6("x"),
-    yhoverformat: axisHoverFormat6("y"),
-    text: extendFlat({}, attributes_default21.text, {}),
-    hovertext: extendFlat({}, attributes_default21.hovertext, {}),
-    orientation: attributes_default21.orientation,
-    histfunc: {
-      valType: "enumerated",
-      values: ["count", "sum", "avg", "min", "max"],
-      dflt: "count",
-      editType: "calc"
-    },
-    histnorm: {
-      valType: "enumerated",
-      values: ["", "percent", "probability", "density", "probability density"],
-      dflt: "",
-      editType: "calc"
-    },
-    cumulative: {
-      enabled: {
-        valType: "boolean",
-        dflt: false,
-        editType: "calc"
-      },
-      direction: {
-        valType: "enumerated",
-        values: ["increasing", "decreasing"],
-        dflt: "increasing",
-        editType: "calc"
-      },
-      currentbin: {
-        valType: "enumerated",
-        values: ["include", "exclude", "half"],
-        dflt: "include",
-        editType: "calc"
-      },
-      editType: "calc"
-    },
-    nbinsx: {
-      valType: "integer",
-      min: 0,
-      dflt: 0,
-      editType: "calc"
-    },
-    xbins: makeBinAttrs("x", true),
-    nbinsy: {
-      valType: "integer",
-      min: 0,
-      dflt: 0,
-      editType: "calc"
-    },
-    ybins: makeBinAttrs("y", true),
-    autobinx: {
-      valType: "boolean",
-      dflt: null,
-      editType: "calc"
-    },
-    autobiny: {
-      valType: "boolean",
-      dflt: null,
-      editType: "calc"
-    },
-    bingroup: {
-      valType: "string",
-      dflt: "",
-      editType: "calc"
-    },
-    hovertemplate: hovertemplateAttrs({}, { keys: constants_default15.eventDataKeys }),
-    hovertemplatefallback: templatefallbackAttrs(),
-    texttemplate: texttemplateAttrs({ arrayOk: false, editType: "plot" }, { keys: ["label", "value"] }),
-    texttemplatefallback: templatefallbackAttrs({ editType: "plot" }),
-    textposition: extendFlat({}, attributes_default21.textposition, {
-      arrayOk: false
-    }),
-    textfont: font_attributes_default({
-      arrayOk: false,
-      editType: "plot",
-      colorEditType: "style"
-    }),
-    outsidetextfont: font_attributes_default({
-      arrayOk: false,
-      editType: "plot",
-      colorEditType: "style"
-    }),
-    insidetextfont: font_attributes_default({
-      arrayOk: false,
-      editType: "plot",
-      colorEditType: "style"
-    }),
-    insidetextanchor: attributes_default21.insidetextanchor,
-    textangle: attributes_default21.textangle,
-    cliponaxis: attributes_default21.cliponaxis,
-    constraintext: attributes_default21.constraintext,
-    marker: attributes_default21.marker,
-    offsetgroup: attributes_default21.offsetgroup,
-    alignmentgroup: attributes_default21.alignmentgroup,
-    selected: attributes_default21.selected,
-    unselected: attributes_default21.unselected,
-    zorder: attributes_default21.zorder
-  };
-
-  // src/traces/histogram/defaults.js
-  var { handleText: handleText2 } = defaults_default2;
-
-  // src/traces/histogram/cross_trace_defaults.js
-  var { validateCornerradius: validateCornerradius3 } = defaults_default2;
-  var nestedProperty4 = lib_default.nestedProperty;
-
-  // src/traces/histogram/hover.js
-  var { hoverPoints: barHover } = hover_default2;
-  var { hoverLabelText: hoverLabelText2 } = axes_default;
-
-  // src/traces/histogram/index.js
-  var { calc: _req53 } = calc_default2;
-  var { crossTraceCalc: _req64 } = cross_trace_calc_default;
-  var { plot: _req73 } = plot_default;
-  var { style: _req83, styleOnSelect: _req94 } = style_default2;
-
-  // src/traces/histogram2d/attributes.js
-  var { axisHoverFormat: axisHoverFormat7 } = axis_format_attributes_default;
-  var attributes_default25 = extendFlat(
-    {
-      x: attributes_default24.x,
-      y: attributes_default24.y,
-      z: {
-        valType: "data_array",
-        editType: "calc"
-      },
-      marker: {
-        color: {
-          valType: "data_array",
-          editType: "calc"
-        },
-        editType: "calc"
-      },
-      histnorm: attributes_default24.histnorm,
-      histfunc: attributes_default24.histfunc,
-      nbinsx: attributes_default24.nbinsx,
-      xbins: makeBinAttrs("x"),
-      nbinsy: attributes_default24.nbinsy,
-      ybins: makeBinAttrs("y"),
-      autobinx: attributes_default24.autobinx,
-      autobiny: attributes_default24.autobiny,
-      bingroup: extendFlat({}, attributes_default24.bingroup, {}),
-      xbingroup: extendFlat({}, attributes_default24.bingroup, {}),
-      ybingroup: extendFlat({}, attributes_default24.bingroup, {}),
-      xgap: attributes_default23.xgap,
-      ygap: attributes_default23.ygap,
-      zsmooth: attributes_default23.zsmooth,
-      xhoverformat: axisHoverFormat7("x"),
-      yhoverformat: axisHoverFormat7("y"),
-      zhoverformat: axisHoverFormat7("z", 1),
-      hovertemplate: hovertemplateAttrs({}, { keys: ["z"] }),
-      hovertemplatefallback: templatefallbackAttrs(),
-      texttemplate: texttemplateAttrs({ arrayOk: false, editType: "plot" }, { keys: ["z"] }),
-      texttemplatefallback: templatefallbackAttrs({ editType: "plot" }),
-      textfont: attributes_default23.textfont,
-      showlegend: extendFlat({}, attributes_default2.showlegend, { dflt: false })
-    },
-    colorScaleAttrs("", { cLetter: "z", autoColorDflt: false })
-  );
-
-  // src/traces/histogram2d/hover.js
-  var { hoverLabelText: hoverLabelText3 } = axes_default;
-
-  // src/constants/filter_ops.js
-  var filter_ops_default = {
-    COMPARISON_OPS: ["=", "!=", "<", ">=", ">", "<="],
-    COMPARISON_OPS2: ["=", "<", ">=", ">", "<="],
-    INTERVAL_OPS: ["[]", "()", "[)", "(]", "][", ")(", "](", ")["],
-    SET_OPS: ["{}", "}{"],
-    CONSTRAINT_REDUCTION: {
-      // for contour constraints, open/closed endpoints are equivalent
-      "=": "=",
-      "<": "<",
-      "<=": "<",
-      ">": ">",
-      ">=": ">",
-      "[]": "[]",
-      "()": "[]",
-      "[)": "[]",
-      "(]": "[]",
-      "][": "][",
-      ")(": "][",
-      "](": "][",
-      ")[": "]["
+  function findInterpFromCenters(pixel, centerPixArray) {
+    var maxBin = centerPixArray.length - 1;
+    var bin = lib_default.constrain(lib_default.findBin(pixel, centerPixArray), 0, maxBin);
+    var pix0 = centerPixArray[bin];
+    var pix1 = centerPixArray[bin + 1];
+    var frac = (pixel - pix0) / (pix1 - pix0) || 0;
+    if (frac <= 0) {
+      return {
+        bin0: bin,
+        bin1: bin,
+        frac: 0
+      };
     }
-  };
-
-  // src/traces/contour/attributes.js
-  var axisHoverFormat8 = axis_format_attributes_default.axisHoverFormat;
-  var descriptionOnlyNumbers2 = axis_format_attributes_default.descriptionOnlyNumbers;
-  var COMPARISON_OPS2 = filter_ops_default.COMPARISON_OPS2;
-  var INTERVAL_OPS = filter_ops_default.INTERVAL_OPS;
-  var scatterLineAttrs3 = attributes_default9.line;
-  var attributes_default26 = extendFlat(
-    {
-      z: attributes_default23.z,
-      x: attributes_default23.x,
-      x0: attributes_default23.x0,
-      dx: attributes_default23.dx,
-      y: attributes_default23.y,
-      y0: attributes_default23.y0,
-      dy: attributes_default23.dy,
-      xperiod: attributes_default23.xperiod,
-      yperiod: attributes_default23.yperiod,
-      xperiod0: attributes_default9.xperiod0,
-      yperiod0: attributes_default9.yperiod0,
-      xperiodalignment: attributes_default23.xperiodalignment,
-      yperiodalignment: attributes_default23.yperiodalignment,
-      text: attributes_default23.text,
-      hovertext: attributes_default23.hovertext,
-      transpose: attributes_default23.transpose,
-      xtype: attributes_default23.xtype,
-      ytype: attributes_default23.ytype,
-      xhoverformat: axisHoverFormat8("x"),
-      yhoverformat: axisHoverFormat8("y"),
-      zhoverformat: axisHoverFormat8("z", 1),
-      hovertemplate: attributes_default23.hovertemplate,
-      hovertemplatefallback: attributes_default23.hovertemplatefallback,
-      texttemplate: extendFlat({}, attributes_default23.texttemplate, {}),
-      texttemplatefallback: attributes_default23.texttemplatefallback,
-      textfont: extendFlat({}, attributes_default23.textfont, {}),
-      hoverongaps: attributes_default23.hoverongaps,
-      connectgaps: extendFlat({}, attributes_default23.connectgaps, {}),
-      fillcolor: {
-        valType: "color",
-        editType: "calc"
-      },
-      autocontour: {
-        valType: "boolean",
-        dflt: true,
-        editType: "calc",
-        impliedEdits: {
-          "contours.start": void 0,
-          "contours.end": void 0,
-          "contours.size": void 0
-        }
-      },
-      ncontours: {
-        valType: "integer",
-        dflt: 15,
-        min: 1,
-        editType: "calc"
-      },
-      contours: {
-        type: {
-          valType: "enumerated",
-          values: ["levels", "constraint"],
-          dflt: "levels",
-          editType: "calc"
-        },
-        start: {
-          valType: "number",
-          dflt: null,
-          editType: "plot",
-          impliedEdits: { "^autocontour": false }
-        },
-        end: {
-          valType: "number",
-          dflt: null,
-          editType: "plot",
-          impliedEdits: { "^autocontour": false }
-        },
-        size: {
-          valType: "number",
-          dflt: null,
-          min: 0,
-          editType: "plot",
-          impliedEdits: { "^autocontour": false }
-        },
-        coloring: {
-          valType: "enumerated",
-          values: ["fill", "heatmap", "lines", "none"],
-          dflt: "fill",
-          editType: "calc"
-        },
-        showlines: {
-          valType: "boolean",
-          dflt: true,
-          editType: "plot"
-        },
-        showlabels: {
-          valType: "boolean",
-          dflt: false,
-          editType: "plot"
-        },
-        labelfont: font_attributes_default({
-          editType: "plot",
-          colorEditType: "style"
-        }),
-        labelformat: {
-          valType: "string",
-          dflt: "",
-          editType: "plot",
-          description: descriptionOnlyNumbers2("contour label")
-        },
-        operation: {
-          valType: "enumerated",
-          values: [].concat(COMPARISON_OPS2).concat(INTERVAL_OPS),
-          dflt: "=",
-          editType: "calc"
-        },
-        value: {
-          valType: "any",
-          dflt: 0,
-          editType: "calc"
-        },
-        editType: "calc",
-        impliedEdits: { autocontour: false }
-      },
-      line: {
-        color: extendFlat({}, scatterLineAttrs3.color, {
-          editType: "style+colorbars"
-        }),
-        width: {
-          valType: "number",
-          min: 0,
-          editType: "style+colorbars"
-        },
-        dash,
-        smoothing: extendFlat({}, scatterLineAttrs3.smoothing, {}),
-        editType: "plot"
-      },
-      zorder: attributes_default9.zorder
-    },
-    colorScaleAttrs("", {
-      cLetter: "z",
-      autoColorDflt: false,
-      editTypeOverride: "calc"
-    })
-  );
-
-  // src/traces/histogram2dcontour/attributes.js
-  var { axisHoverFormat: axisHoverFormat9 } = axis_format_attributes_default;
-  var attributes_default27 = extendFlat(
-    {
-      x: attributes_default25.x,
-      y: attributes_default25.y,
-      z: attributes_default25.z,
-      marker: attributes_default25.marker,
-      histnorm: attributes_default25.histnorm,
-      histfunc: attributes_default25.histfunc,
-      nbinsx: attributes_default25.nbinsx,
-      xbins: attributes_default25.xbins,
-      nbinsy: attributes_default25.nbinsy,
-      ybins: attributes_default25.ybins,
-      autobinx: attributes_default25.autobinx,
-      autobiny: attributes_default25.autobiny,
-      bingroup: attributes_default25.bingroup,
-      xbingroup: attributes_default25.xbingroup,
-      ybingroup: attributes_default25.ybingroup,
-      autocontour: attributes_default26.autocontour,
-      ncontours: attributes_default26.ncontours,
-      contours: attributes_default26.contours,
-      line: {
-        color: attributes_default26.line.color,
-        width: extendFlat({}, attributes_default26.line.width, {
-          dflt: 0.5
-        }),
-        dash: attributes_default26.line.dash,
-        smoothing: attributes_default26.line.smoothing,
-        editType: "plot"
-      },
-      xhoverformat: axisHoverFormat9("x"),
-      yhoverformat: axisHoverFormat9("y"),
-      zhoverformat: axisHoverFormat9("z", 1),
-      hovertemplate: attributes_default25.hovertemplate,
-      hovertemplatefallback: attributes_default25.hovertemplatefallback,
-      texttemplate: attributes_default26.texttemplate,
-      texttemplatefallback: attributes_default26.texttemplatefallback,
-      textfont: attributes_default26.textfont
-    },
-    colorScaleAttrs("", {
-      cLetter: "z",
-      editTypeOverride: "calc"
-    })
-  );
-
-  // src/traces/contour/plot.js
-  var import_d346 = __toESM(require_d3(), 1);
+    if (frac < 0.5) {
+      return {
+        bin0: bin,
+        bin1: bin + 1,
+        frac
+      };
+    }
+    return {
+      bin0: bin + 1,
+      bin1: bin,
+      frac: 1 - frac
+    };
+  }
+  function putColor(pixels, pxIndex, c) {
+    pixels[pxIndex] = c[0];
+    pixels[pxIndex + 1] = c[1];
+    pixels[pxIndex + 2] = c[2];
+    pixels[pxIndex + 3] = Math.round(c[3] * 255);
+  }
 
   // src/traces/contour/constants.js
-  var constants_default16 = {
+  var constants_default15 = {
     // some constants to help with marching squares algorithm
     // where does the path start for each index?
     BOTTOMSTART: [1, 9, 13, 104, 713],
@@ -72999,8 +74830,274 @@ var Plotly = (() => {
     }
   };
 
+  // src/traces/contour/make_crossings.js
+  function makeCrossings(pathinfo) {
+    var z = pathinfo[0].z;
+    var m = z.length;
+    var n = z[0].length;
+    var twoWide = m === 2 || n === 2;
+    var xi;
+    var yi;
+    var startIndices;
+    var ystartIndices;
+    var label;
+    var corners;
+    var mi;
+    var pi;
+    var i;
+    for (yi = 0; yi < m - 1; yi++) {
+      ystartIndices = [];
+      if (yi === 0) ystartIndices = ystartIndices.concat(constants_default15.BOTTOMSTART);
+      if (yi === m - 2) ystartIndices = ystartIndices.concat(constants_default15.TOPSTART);
+      for (xi = 0; xi < n - 1; xi++) {
+        startIndices = ystartIndices.slice();
+        if (xi === 0) startIndices = startIndices.concat(constants_default15.LEFTSTART);
+        if (xi === n - 2) startIndices = startIndices.concat(constants_default15.RIGHTSTART);
+        label = xi + "," + yi;
+        corners = [
+          [z[yi][xi], z[yi][xi + 1]],
+          [z[yi + 1][xi], z[yi + 1][xi + 1]]
+        ];
+        for (i = 0; i < pathinfo.length; i++) {
+          pi = pathinfo[i];
+          mi = getMarchingIndex(pi.level, corners);
+          if (!mi) continue;
+          pi.crossings[label] = mi;
+          if (startIndices.indexOf(mi) !== -1) {
+            pi.starts.push([xi, yi]);
+            if (twoWide && startIndices.indexOf(
+              mi,
+              startIndices.indexOf(mi) + 1
+            ) !== -1) {
+              pi.starts.push([xi, yi]);
+            }
+          }
+        }
+      }
+    }
+  }
+  function getMarchingIndex(val, corners) {
+    var mi = (corners[0][0] > val ? 0 : 1) + (corners[0][1] > val ? 0 : 2) + (corners[1][1] > val ? 0 : 4) + (corners[1][0] > val ? 0 : 8);
+    if (mi === 5 || mi === 10) {
+      var avg = (corners[0][0] + corners[0][1] + corners[1][0] + corners[1][1]) / 4;
+      if (val > avg) return mi === 5 ? 713 : 1114;
+      return mi === 5 ? 104 : 208;
+    }
+    return mi === 15 ? 0 : mi;
+  }
+
+  // src/traces/contour/find_all_paths.js
+  function findAllPaths(pathinfo, xtol, ytol) {
+    var cnt, startLoc, i, pi, j;
+    xtol = xtol || 0.01;
+    ytol = ytol || 0.01;
+    for (i = 0; i < pathinfo.length; i++) {
+      pi = pathinfo[i];
+      for (j = 0; j < pi.starts.length; j++) {
+        startLoc = pi.starts[j];
+        makePath(pi, startLoc, "edge", xtol, ytol);
+      }
+      cnt = 0;
+      while (Object.keys(pi.crossings).length && cnt < 1e4) {
+        cnt++;
+        startLoc = Object.keys(pi.crossings)[0].split(",").map(Number);
+        makePath(pi, startLoc, void 0, xtol, ytol);
+      }
+      if (cnt === 1e4) lib_default.log("Infinite loop in contour?");
+    }
+  }
+  function equalPts(pt1, pt2, xtol, ytol) {
+    return Math.abs(pt1[0] - pt2[0]) < xtol && Math.abs(pt1[1] - pt2[1]) < ytol;
+  }
+  function ptDist(pt1, pt2) {
+    var dx = pt1[2] - pt2[2];
+    var dy = pt1[3] - pt2[3];
+    return Math.sqrt(dx * dx + dy * dy);
+  }
+  function makePath(pi, loc, edgeflag, xtol, ytol) {
+    var locStr = loc.join(",");
+    var mi = pi.crossings[locStr];
+    var marchStep = getStartStep(mi, edgeflag, loc);
+    var pts = [getInterpPx(pi, loc, [-marchStep[0], -marchStep[1]])];
+    var m = pi.z.length;
+    var n = pi.z[0].length;
+    var startLoc = loc.slice();
+    var startStep = marchStep.slice();
+    var cnt;
+    for (cnt = 0; cnt < 1e4; cnt++) {
+      if (mi > 20) {
+        mi = constants_default15.CHOOSESADDLE[mi][(marchStep[0] || marchStep[1]) < 0 ? 0 : 1];
+        pi.crossings[locStr] = constants_default15.SADDLEREMAINDER[mi];
+      } else {
+        delete pi.crossings[locStr];
+      }
+      marchStep = constants_default15.NEWDELTA[mi];
+      if (!marchStep) {
+        lib_default.log("Found bad marching index:", mi, loc, pi.level);
+        break;
+      }
+      pts.push(getInterpPx(pi, loc, marchStep));
+      loc[0] += marchStep[0];
+      loc[1] += marchStep[1];
+      locStr = loc.join(",");
+      if (equalPts(pts[pts.length - 1], pts[pts.length - 2], xtol, ytol)) pts.pop();
+      var atEdge = marchStep[0] && (loc[0] < 0 || loc[0] > n - 2) || marchStep[1] && (loc[1] < 0 || loc[1] > m - 2);
+      var closedLoop = loc[0] === startLoc[0] && loc[1] === startLoc[1] && marchStep[0] === startStep[0] && marchStep[1] === startStep[1];
+      if (closedLoop || edgeflag && atEdge) break;
+      mi = pi.crossings[locStr];
+    }
+    if (cnt === 1e4) {
+      lib_default.log("Infinite loop in contour?");
+    }
+    var closedpath = equalPts(pts[0], pts[pts.length - 1], xtol, ytol);
+    var totaldist = 0;
+    var distThresholdFactor = 0.2 * pi.smoothing;
+    var alldists = [];
+    var cropstart = 0;
+    var distgroup, cnt2, cnt3, newpt, ptcnt, ptavg, thisdist, i, j, edgepathi, edgepathj;
+    for (cnt = 1; cnt < pts.length; cnt++) {
+      thisdist = ptDist(pts[cnt], pts[cnt - 1]);
+      totaldist += thisdist;
+      alldists.push(thisdist);
+    }
+    var distThreshold = totaldist / alldists.length * distThresholdFactor;
+    function getpt(i2) {
+      return pts[i2 % pts.length];
+    }
+    for (cnt = pts.length - 2; cnt >= cropstart; cnt--) {
+      distgroup = alldists[cnt];
+      if (distgroup < distThreshold) {
+        cnt3 = 0;
+        for (cnt2 = cnt - 1; cnt2 >= cropstart; cnt2--) {
+          if (distgroup + alldists[cnt2] < distThreshold) {
+            distgroup += alldists[cnt2];
+          } else break;
+        }
+        if (closedpath && cnt === pts.length - 2) {
+          for (cnt3 = 0; cnt3 < cnt2; cnt3++) {
+            if (distgroup + alldists[cnt3] < distThreshold) {
+              distgroup += alldists[cnt3];
+            } else break;
+          }
+        }
+        ptcnt = cnt - cnt2 + cnt3 + 1;
+        ptavg = Math.floor((cnt + cnt2 + cnt3 + 2) / 2);
+        if (!closedpath && cnt === pts.length - 2) newpt = pts[pts.length - 1];
+        else if (!closedpath && cnt2 === -1) newpt = pts[0];
+        else if (ptcnt % 2) newpt = getpt(ptavg);
+        else {
+          newpt = [
+            (getpt(ptavg)[0] + getpt(ptavg + 1)[0]) / 2,
+            (getpt(ptavg)[1] + getpt(ptavg + 1)[1]) / 2
+          ];
+        }
+        pts.splice(cnt2 + 1, cnt - cnt2 + 1, newpt);
+        cnt = cnt2 + 1;
+        if (cnt3) cropstart = cnt3;
+        if (closedpath) {
+          if (cnt === pts.length - 2) pts[cnt3] = pts[pts.length - 1];
+          else if (cnt === 0) pts[pts.length - 1] = pts[0];
+        }
+      }
+    }
+    pts.splice(0, cropstart);
+    for (cnt = 0; cnt < pts.length; cnt++) pts[cnt].length = 2;
+    if (pts.length < 2) return;
+    else if (closedpath) {
+      pts.pop();
+      pi.paths.push(pts);
+    } else {
+      if (!edgeflag) {
+        lib_default.log(
+          "Unclosed interior contour?",
+          pi.level,
+          startLoc.join(","),
+          pts.join("L")
+        );
+      }
+      var merged = false;
+      for (i = 0; i < pi.edgepaths.length; i++) {
+        edgepathi = pi.edgepaths[i];
+        if (!merged && equalPts(edgepathi[0], pts[pts.length - 1], xtol, ytol)) {
+          pts.pop();
+          merged = true;
+          var doublemerged = false;
+          for (j = 0; j < pi.edgepaths.length; j++) {
+            edgepathj = pi.edgepaths[j];
+            if (equalPts(edgepathj[edgepathj.length - 1], pts[0], xtol, ytol)) {
+              doublemerged = true;
+              pts.shift();
+              pi.edgepaths.splice(i, 1);
+              if (j === i) {
+                pi.paths.push(pts.concat(edgepathj));
+              } else {
+                if (j > i) j--;
+                pi.edgepaths[j] = edgepathj.concat(pts, edgepathi);
+              }
+              break;
+            }
+          }
+          if (!doublemerged) {
+            pi.edgepaths[i] = pts.concat(edgepathi);
+          }
+        }
+      }
+      for (i = 0; i < pi.edgepaths.length; i++) {
+        if (merged) break;
+        edgepathi = pi.edgepaths[i];
+        if (equalPts(edgepathi[edgepathi.length - 1], pts[0], xtol, ytol)) {
+          pts.shift();
+          pi.edgepaths[i] = edgepathi.concat(pts);
+          merged = true;
+        }
+      }
+      if (!merged) pi.edgepaths.push(pts);
+    }
+  }
+  function getStartStep(mi, edgeflag, loc) {
+    var dx = 0;
+    var dy = 0;
+    if (mi > 20 && edgeflag) {
+      if (mi === 208 || mi === 1114) {
+        dx = loc[0] === 0 ? 1 : -1;
+      } else {
+        dy = loc[1] === 0 ? 1 : -1;
+      }
+    } else if (constants_default15.BOTTOMSTART.indexOf(mi) !== -1) dy = 1;
+    else if (constants_default15.LEFTSTART.indexOf(mi) !== -1) dx = 1;
+    else if (constants_default15.TOPSTART.indexOf(mi) !== -1) dy = -1;
+    else dx = -1;
+    return [dx, dy];
+  }
+  function getInterpPx(pi, loc, step) {
+    var locx = loc[0] + Math.max(step[0], 0);
+    var locy = loc[1] + Math.max(step[1], 0);
+    var zxy = pi.z[locy][locx];
+    var xa = pi.xaxis;
+    var ya = pi.yaxis;
+    if (step[1]) {
+      var dx = (pi.level - zxy) / (pi.z[locy][locx + 1] - zxy);
+      var dxl = (dx !== 1 ? (1 - dx) * xa.c2l(pi.x[locx]) : 0) + (dx !== 0 ? dx * xa.c2l(pi.x[locx + 1]) : 0);
+      return [
+        xa.c2p(xa.l2c(dxl), true),
+        ya.c2p(pi.y[locy], true),
+        locx + dx,
+        locy
+      ];
+    } else {
+      var dy = (pi.level - zxy) / (pi.z[locy + 1][locx] - zxy);
+      var dyl = (dy !== 1 ? (1 - dy) * ya.c2l(pi.y[locy]) : 0) + (dy !== 0 ? dy * ya.c2l(pi.y[locy + 1]) : 0);
+      return [
+        xa.c2p(pi.x[locx], true),
+        ya.c2p(ya.l2c(dyl), true),
+        locx,
+        locy + dy
+      ];
+    }
+  }
+
   // src/traces/contour/constraint_mapping.js
-  var import_fast_isnumeric47 = __toESM(require_fast_isnumeric(), 1);
+  var import_fast_isnumeric48 = __toESM(require_fast_isnumeric(), 1);
   var constraint_mapping_default = {
     "[]": makeRangeSettings("[]"),
     "][": makeRangeSettings("]["),
@@ -73012,7 +75109,7 @@ var Plotly = (() => {
     var hasArrayValue = Array.isArray(value);
     var coercedValue;
     function coerce3(value2) {
-      return (0, import_fast_isnumeric47.default)(value2) ? +value2 : null;
+      return (0, import_fast_isnumeric48.default)(value2) ? +value2 : null;
     }
     if (filter_ops_default.COMPARISON_OPS2.indexOf(operation) !== -1) {
       coercedValue = hasArrayValue ? coerce3(value[0]) : coerce3(value);
@@ -73046,917 +75143,1732 @@ var Plotly = (() => {
     };
   }
 
+  // src/traces/contour/empty_pathinfo.js
+  function emptyPathinfo(contours, plotinfo, cd0) {
+    var contoursFinal = contours.type === "constraint" ? constraint_mapping_default[contours._operation](contours.value) : contours;
+    var cs = contoursFinal.size;
+    var pathinfo = [];
+    var end = endPlus(contoursFinal);
+    var carpet = cd0.trace._carpetTrace;
+    var basePathinfo = carpet ? {
+      // store axes so we can convert to px
+      xaxis: carpet.aaxis,
+      yaxis: carpet.baxis,
+      // full data arrays to use for interpolation
+      x: cd0.a,
+      y: cd0.b
+    } : {
+      xaxis: plotinfo.xaxis,
+      yaxis: plotinfo.yaxis,
+      x: cd0.x,
+      y: cd0.y
+    };
+    for (var ci = contoursFinal.start; ci < end; ci += cs) {
+      pathinfo.push(lib_default.extendFlat({
+        level: ci,
+        // all the cells with nontrivial marching index
+        crossings: {},
+        // starting points on the edges of the lattice for each contour
+        starts: [],
+        // all unclosed paths (may have less items than starts,
+        // if a path is closed by rounding)
+        edgepaths: [],
+        // all closed paths
+        paths: [],
+        z: cd0.z,
+        smoothing: cd0.trace.line.smoothing
+      }, basePathinfo));
+      if (pathinfo.length > 1e3) {
+        lib_default.warn("Too many contours, clipping at 1000", contours);
+        break;
+      }
+    }
+    return pathinfo;
+  }
+
+  // src/traces/contour/convert_to_constraints.js
+  function convert_to_constraints_default(pathinfo, operation) {
+    var i, pi0, pi1;
+    var op0 = function(arr) {
+      return arr.reverse();
+    };
+    var op1 = function(arr) {
+      return arr;
+    };
+    switch (operation) {
+      case "=":
+      case "<":
+        return pathinfo;
+      case ">":
+        if (pathinfo.length !== 1) {
+          lib_default.warn("Contour data invalid for the specified inequality operation.");
+        }
+        pi0 = pathinfo[0];
+        for (i = 0; i < pi0.edgepaths.length; i++) {
+          pi0.edgepaths[i] = op0(pi0.edgepaths[i]);
+        }
+        for (i = 0; i < pi0.paths.length; i++) {
+          pi0.paths[i] = op0(pi0.paths[i]);
+        }
+        for (i = 0; i < pi0.starts.length; i++) {
+          pi0.starts[i] = op0(pi0.starts[i]);
+        }
+        return pathinfo;
+      case "][":
+        var tmp = op0;
+        op0 = op1;
+        op1 = tmp;
+      // It's a nice rule, except this definitely *is* what's intended here.
+      /* eslint-disable: no-fallthrough */
+      case "[]":
+        if (pathinfo.length !== 2) {
+          lib_default.warn("Contour data invalid for the specified inequality range operation.");
+        }
+        pi0 = copyPathinfo(pathinfo[0]);
+        pi1 = copyPathinfo(pathinfo[1]);
+        for (i = 0; i < pi0.edgepaths.length; i++) {
+          pi0.edgepaths[i] = op0(pi0.edgepaths[i]);
+        }
+        for (i = 0; i < pi0.paths.length; i++) {
+          pi0.paths[i] = op0(pi0.paths[i]);
+        }
+        for (i = 0; i < pi0.starts.length; i++) {
+          pi0.starts[i] = op0(pi0.starts[i]);
+        }
+        while (pi1.edgepaths.length) {
+          pi0.edgepaths.push(op1(pi1.edgepaths.shift()));
+        }
+        while (pi1.paths.length) {
+          pi0.paths.push(op1(pi1.paths.shift()));
+        }
+        while (pi1.starts.length) {
+          pi0.starts.push(op1(pi1.starts.shift()));
+        }
+        return [pi0];
+    }
+  }
+  function copyPathinfo(pi) {
+    return lib_default.extendFlat({}, pi, {
+      edgepaths: lib_default.extendDeep([], pi.edgepaths),
+      paths: lib_default.extendDeep([], pi.paths),
+      starts: lib_default.extendDeep([], pi.starts)
+    });
+  }
+
+  // src/traces/contour/close_boundaries.js
+  function close_boundaries_default(pathinfo, contours) {
+    var pi0 = pathinfo[0];
+    var z = pi0.z;
+    var i;
+    switch (contours.type) {
+      case "levels":
+        var edgeVal2 = Math.min(z[0][0], z[0][1]);
+        for (i = 0; i < pathinfo.length; i++) {
+          var pi = pathinfo[i];
+          pi.prefixBoundary = !pi.edgepaths.length && (edgeVal2 > pi.level || pi.starts.length && edgeVal2 === pi.level);
+        }
+        break;
+      case "constraint":
+        pi0.prefixBoundary = false;
+        if (pi0.edgepaths.length) return;
+        var na = pi0.x.length;
+        var nb = pi0.y.length;
+        var boundaryMax = -Infinity;
+        var boundaryMin = Infinity;
+        for (i = 0; i < nb; i++) {
+          boundaryMin = Math.min(boundaryMin, z[i][0]);
+          boundaryMin = Math.min(boundaryMin, z[i][na - 1]);
+          boundaryMax = Math.max(boundaryMax, z[i][0]);
+          boundaryMax = Math.max(boundaryMax, z[i][na - 1]);
+        }
+        for (i = 1; i < na - 1; i++) {
+          boundaryMin = Math.min(boundaryMin, z[0][i]);
+          boundaryMin = Math.min(boundaryMin, z[nb - 1][i]);
+          boundaryMax = Math.max(boundaryMax, z[0][i]);
+          boundaryMax = Math.max(boundaryMax, z[nb - 1][i]);
+        }
+        var contoursValue = contours.value;
+        var v1, v2;
+        switch (contours._operation) {
+          case ">":
+            if (contoursValue > boundaryMax) {
+              pi0.prefixBoundary = true;
+            }
+            break;
+          case "<":
+            if (contoursValue < boundaryMin || pi0.starts.length && contoursValue === boundaryMin) {
+              pi0.prefixBoundary = true;
+            }
+            break;
+          case "[]":
+            v1 = Math.min(contoursValue[0], contoursValue[1]);
+            v2 = Math.max(contoursValue[0], contoursValue[1]);
+            if (v2 < boundaryMin || v1 > boundaryMax || pi0.starts.length && v2 === boundaryMin) {
+              pi0.prefixBoundary = true;
+            }
+            break;
+          case "][":
+            v1 = Math.min(contoursValue[0], contoursValue[1]);
+            v2 = Math.max(contoursValue[0], contoursValue[1]);
+            if (v1 < boundaryMin && v2 > boundaryMax) {
+              pi0.prefixBoundary = true;
+            }
+            break;
+        }
+        break;
+    }
+  }
+
   // src/traces/contour/plot.js
-  var costConstants = constants_default16.LABELOPTIMIZER;
+  var costConstants = constants_default15.LABELOPTIMIZER;
+  var plot6 = function plot7(gd, plotinfo, cdcontours, contourLayer) {
+    var xa = plotinfo.xaxis;
+    var ya = plotinfo.yaxis;
+    lib_default.makeTraceGroups(contourLayer, cdcontours, "contour").each(function(cd) {
+      var plotGroup = import_d345.default.select(this);
+      var cd0 = cd[0];
+      var trace = cd0.trace;
+      var x = cd0.x;
+      var y = cd0.y;
+      var contours = trace.contours;
+      var pathinfo = emptyPathinfo(contours, plotinfo, cd0);
+      var heatmapColoringLayer = lib_default.ensureSingle(plotGroup, "g", "heatmapcoloring");
+      var cdheatmaps = [];
+      if (contours.coloring === "heatmap") {
+        cdheatmaps = [cd];
+      }
+      plot_default3(gd, plotinfo, cdheatmaps, heatmapColoringLayer);
+      makeCrossings(pathinfo);
+      findAllPaths(pathinfo);
+      var leftedge = xa.c2p(x[0], true);
+      var rightedge = xa.c2p(x[x.length - 1], true);
+      var bottomedge = ya.c2p(y[0], true);
+      var topedge = ya.c2p(y[y.length - 1], true);
+      var perimeter = [
+        [leftedge, topedge],
+        [rightedge, topedge],
+        [rightedge, bottomedge],
+        [leftedge, bottomedge]
+      ];
+      var fillPathinfo = pathinfo;
+      if (contours.type === "constraint") {
+        fillPathinfo = convert_to_constraints_default(pathinfo, contours._operation);
+      }
+      makeBackground(plotGroup, perimeter, contours);
+      makeFills(plotGroup, fillPathinfo, perimeter, contours);
+      makeLinesAndLabels(plotGroup, pathinfo, gd, cd0, contours);
+      clipGaps(plotGroup, plotinfo, gd, cd0, perimeter);
+    });
+  };
+  function makeBackground(plotgroup, perimeter, contours) {
+    var bggroup = lib_default.ensureSingle(plotgroup, "g", "contourbg");
+    var bgfill = bggroup.selectAll("path").data(contours.coloring === "fill" ? [0] : []);
+    bgfill.enter().append("path");
+    bgfill.exit().remove();
+    bgfill.attr("d", "M" + perimeter.join("L") + "Z").style("stroke", "none");
+  }
+  function makeFills(plotgroup, pathinfo, perimeter, contours) {
+    var hasFills = contours.coloring === "fill" || contours.type === "constraint" && contours._operation !== "=";
+    var boundaryPath = "M" + perimeter.join("L") + "Z";
+    if (hasFills) {
+      close_boundaries_default(pathinfo, contours);
+    }
+    var fillgroup = lib_default.ensureSingle(plotgroup, "g", "contourfill");
+    var fillitems = fillgroup.selectAll("path").data(hasFills ? pathinfo : []);
+    fillitems.enter().append("path");
+    fillitems.exit().remove();
+    fillitems.each(function(pi) {
+      var fullpath = (pi.prefixBoundary ? boundaryPath : "") + joinAllPaths(pi, perimeter);
+      if (!fullpath) {
+        import_d345.default.select(this).remove();
+      } else {
+        import_d345.default.select(this).attr("d", fullpath).style("stroke", "none");
+      }
+    });
+  }
+  function joinAllPaths(pi, perimeter) {
+    var fullpath = "";
+    var i = 0;
+    var startsleft = pi.edgepaths.map(function(v, i2) {
+      return i2;
+    });
+    var newloop = true;
+    var endpt;
+    var newendpt;
+    var cnt;
+    var nexti;
+    var possiblei;
+    var addpath;
+    function istop(pt) {
+      return Math.abs(pt[1] - perimeter[0][1]) < 0.01;
+    }
+    function isbottom(pt) {
+      return Math.abs(pt[1] - perimeter[2][1]) < 0.01;
+    }
+    function isleft(pt) {
+      return Math.abs(pt[0] - perimeter[0][0]) < 0.01;
+    }
+    function isright(pt) {
+      return Math.abs(pt[0] - perimeter[2][0]) < 0.01;
+    }
+    while (startsleft.length) {
+      addpath = drawing_default.smoothopen(pi.edgepaths[i], pi.smoothing);
+      fullpath += newloop ? addpath : addpath.replace(/^M/, "L");
+      startsleft.splice(startsleft.indexOf(i), 1);
+      endpt = pi.edgepaths[i][pi.edgepaths[i].length - 1];
+      nexti = -1;
+      for (cnt = 0; cnt < 4; cnt++) {
+        if (!endpt) {
+          lib_default.log("Missing end?", i, pi);
+          break;
+        }
+        if (istop(endpt) && !isright(endpt)) newendpt = perimeter[1];
+        else if (isleft(endpt)) newendpt = perimeter[0];
+        else if (isbottom(endpt)) newendpt = perimeter[3];
+        else if (isright(endpt)) newendpt = perimeter[2];
+        for (possiblei = 0; possiblei < pi.edgepaths.length; possiblei++) {
+          var ptNew = pi.edgepaths[possiblei][0];
+          if (Math.abs(endpt[0] - newendpt[0]) < 0.01) {
+            if (Math.abs(endpt[0] - ptNew[0]) < 0.01 && (ptNew[1] - endpt[1]) * (newendpt[1] - ptNew[1]) >= 0) {
+              newendpt = ptNew;
+              nexti = possiblei;
+            }
+          } else if (Math.abs(endpt[1] - newendpt[1]) < 0.01) {
+            if (Math.abs(endpt[1] - ptNew[1]) < 0.01 && (ptNew[0] - endpt[0]) * (newendpt[0] - ptNew[0]) >= 0) {
+              newendpt = ptNew;
+              nexti = possiblei;
+            }
+          } else {
+            lib_default.log(
+              "endpt to newendpt is not vert. or horz.",
+              endpt,
+              newendpt,
+              ptNew
+            );
+          }
+        }
+        endpt = newendpt;
+        if (nexti >= 0) break;
+        fullpath += "L" + newendpt;
+      }
+      if (nexti === pi.edgepaths.length) {
+        lib_default.log("unclosed perimeter path");
+        break;
+      }
+      i = nexti;
+      newloop = startsleft.indexOf(i) === -1;
+      if (newloop) {
+        i = startsleft[0];
+        fullpath += "Z";
+      }
+    }
+    for (i = 0; i < pi.paths.length; i++) {
+      fullpath += drawing_default.smoothclosed(pi.paths[i], pi.smoothing);
+    }
+    return fullpath;
+  }
+  function makeLinesAndLabels(plotgroup, pathinfo, gd, cd0, contours) {
+    var isStatic = gd._context.staticPlot;
+    var lineContainer = lib_default.ensureSingle(plotgroup, "g", "contourlines");
+    var showLines = contours.showlines !== false;
+    var showLabels = contours.showlabels;
+    var clipLinesForLabels = showLines && showLabels;
+    var linegroup = createLines(lineContainer, showLines || showLabels, pathinfo, isStatic);
+    var lineClip = createLineClip(lineContainer, clipLinesForLabels, gd, cd0.trace.uid);
+    var labelGroup = plotgroup.selectAll("g.contourlabels").data(showLabels ? [0] : []);
+    labelGroup.exit().remove();
+    labelGroup.enter().append("g").classed("contourlabels", true);
+    if (showLabels) {
+      var labelClipPathData = [];
+      var labelData = [];
+      lib_default.clearLocationCache();
+      var contourFormat = labelFormatter(gd, cd0);
+      var dummyText = drawing_default.tester.append("text").attr("data-notex", 1).call(drawing_default.font, contours.labelfont);
+      var xa = pathinfo[0].xaxis;
+      var ya = pathinfo[0].yaxis;
+      var xLen = xa._length;
+      var yLen = ya._length;
+      var xRng = xa.range;
+      var yRng = ya.range;
+      var xMin = lib_default.aggNums(Math.min, null, cd0.x);
+      var xMax = lib_default.aggNums(Math.max, null, cd0.x);
+      var yMin = lib_default.aggNums(Math.min, null, cd0.y);
+      var yMax = lib_default.aggNums(Math.max, null, cd0.y);
+      var x0 = Math.max(xa.c2p(xMin, true), 0);
+      var x1 = Math.min(xa.c2p(xMax, true), xLen);
+      var y0 = Math.max(ya.c2p(yMax, true), 0);
+      var y1 = Math.min(ya.c2p(yMin, true), yLen);
+      var bounds = {};
+      if (xRng[0] < xRng[1]) {
+        bounds.left = x0;
+        bounds.right = x1;
+      } else {
+        bounds.left = x1;
+        bounds.right = x0;
+      }
+      if (yRng[0] < yRng[1]) {
+        bounds.top = y0;
+        bounds.bottom = y1;
+      } else {
+        bounds.top = y1;
+        bounds.bottom = y0;
+      }
+      bounds.middle = (bounds.top + bounds.bottom) / 2;
+      bounds.center = (bounds.left + bounds.right) / 2;
+      labelClipPathData.push([
+        [bounds.left, bounds.top],
+        [bounds.right, bounds.top],
+        [bounds.right, bounds.bottom],
+        [bounds.left, bounds.bottom]
+      ]);
+      var plotDiagonal = Math.sqrt(xLen * xLen + yLen * yLen);
+      var normLength = constants_default15.LABELDISTANCE * plotDiagonal / Math.max(1, pathinfo.length / constants_default15.LABELINCREASE);
+      linegroup.each(function(d) {
+        var textOpts = calcTextOpts(d.level, contourFormat, dummyText, gd);
+        import_d345.default.select(this).selectAll("path").each(function() {
+          var path = this;
+          var pathBounds = lib_default.getVisibleSegment(path, bounds, textOpts.height / 2);
+          if (!pathBounds) return;
+          if (pathBounds.len < (textOpts.width + textOpts.height) * constants_default15.LABELMIN) return;
+          var maxLabels = Math.min(
+            Math.ceil(pathBounds.len / normLength),
+            constants_default15.LABELMAX
+          );
+          for (var i = 0; i < maxLabels; i++) {
+            var loc = findBestTextLocation(
+              path,
+              pathBounds,
+              textOpts,
+              labelData,
+              bounds
+            );
+            if (!loc) break;
+            addLabelData(loc, textOpts, labelData, labelClipPathData);
+          }
+        });
+      });
+      dummyText.remove();
+      drawLabels(
+        labelGroup,
+        labelData,
+        gd,
+        lineClip,
+        clipLinesForLabels ? labelClipPathData : null
+      );
+    }
+    if (showLabels && !showLines) linegroup.remove();
+  }
+  var createLines = function(lineContainer, makeLines, pathinfo, isStatic) {
+    var smoothing = pathinfo[0].smoothing;
+    var linegroup = lineContainer.selectAll("g.contourlevel").data(makeLines ? pathinfo : []);
+    linegroup.exit().remove();
+    linegroup.enter().append("g").classed("contourlevel", true);
+    if (makeLines) {
+      var opencontourlines = linegroup.selectAll("path.openline").data(function(d) {
+        return d.pedgepaths || d.edgepaths;
+      });
+      opencontourlines.exit().remove();
+      opencontourlines.enter().append("path").classed("openline", true);
+      opencontourlines.attr("d", function(d) {
+        return drawing_default.smoothopen(d, smoothing);
+      }).style("stroke-miterlimit", 1).style("vector-effect", isStatic ? "none" : "non-scaling-stroke");
+      var closedcontourlines = linegroup.selectAll("path.closedline").data(function(d) {
+        return d.ppaths || d.paths;
+      });
+      closedcontourlines.exit().remove();
+      closedcontourlines.enter().append("path").classed("closedline", true);
+      closedcontourlines.attr("d", function(d) {
+        return drawing_default.smoothclosed(d, smoothing);
+      }).style("stroke-miterlimit", 1).style("vector-effect", isStatic ? "none" : "non-scaling-stroke");
+    }
+    return linegroup;
+  };
+  var createLineClip = function(lineContainer, clipLinesForLabels, gd, uid) {
+    var clips = gd._fullLayout._clips;
+    var clipId = clipLinesForLabels ? "clipline" + uid : null;
+    var lineClip = clips.selectAll("#" + clipId).data(clipLinesForLabels ? [0] : []);
+    lineClip.exit().remove();
+    lineClip.enter().append("clipPath").classed("contourlineclip", true).attr("id", clipId);
+    drawing_default.setClipUrl(lineContainer, clipId, gd);
+    return lineClip;
+  };
+  var labelFormatter = function(gd, cd0) {
+    var fullLayout = gd._fullLayout;
+    var trace = cd0.trace;
+    var contours = trace.contours;
+    var formatAxis = {
+      type: "linear",
+      _id: "ycontour",
+      showexponent: "all",
+      exponentformat: "B"
+    };
+    if (contours.labelformat) {
+      formatAxis.tickformat = contours.labelformat;
+      setConvert(formatAxis, fullLayout);
+    } else {
+      var cOpts = colorscale_default.extractOpts(trace);
+      if (cOpts && cOpts.colorbar && cOpts.colorbar._axis) {
+        formatAxis = cOpts.colorbar._axis;
+      } else {
+        if (contours.type === "constraint") {
+          var value = contours.value;
+          if (lib_default.isArrayOrTypedArray(value)) {
+            formatAxis.range = [value[0], value[value.length - 1]];
+          } else formatAxis.range = [value, value];
+        } else {
+          formatAxis.range = [contours.start, contours.end];
+          formatAxis.nticks = (contours.end - contours.start) / contours.size;
+        }
+        if (formatAxis.range[0] === formatAxis.range[1]) {
+          formatAxis.range[1] += formatAxis.range[0] || 1;
+        }
+        if (!formatAxis.nticks) formatAxis.nticks = 1e3;
+        setConvert(formatAxis, fullLayout);
+        axes_default.prepTicks(formatAxis);
+        formatAxis._tmin = null;
+        formatAxis._tmax = null;
+      }
+    }
+    return function(v) {
+      return axes_default.tickText(formatAxis, v).text;
+    };
+  };
+  var calcTextOpts = function(level, contourFormat, dummyText, gd) {
+    var text = contourFormat(level);
+    dummyText.text(text).call(svg_text_utils_default.convertToTspans, gd);
+    var el = dummyText.node();
+    var bBox = drawing_default.bBox(el, true);
+    return {
+      text,
+      width: bBox.width,
+      height: bBox.height,
+      fontSize: +el.style["font-size"].replace("px", ""),
+      level,
+      dy: (bBox.top + bBox.bottom) / 2
+    };
+  };
+  var findBestTextLocation = function(path, pathBounds, textOpts, labelData, plotBounds) {
+    var textWidth = textOpts.width;
+    var p0, dp, pMax, pMin, loc;
+    if (pathBounds.isClosed) {
+      dp = pathBounds.len / costConstants.INITIALSEARCHPOINTS;
+      p0 = pathBounds.min + dp / 2;
+      pMax = pathBounds.max;
+    } else {
+      dp = (pathBounds.len - textWidth) / (costConstants.INITIALSEARCHPOINTS + 1);
+      p0 = pathBounds.min + dp + textWidth / 2;
+      pMax = pathBounds.max - (dp + textWidth) / 2;
+    }
+    var cost = Infinity;
+    for (var j = 0; j < costConstants.ITERATIONS; j++) {
+      for (var p = p0; p < pMax; p += dp) {
+        var newLocation = lib_default.getTextLocation(path, pathBounds.total, p, textWidth);
+        var newCost = locationCost(newLocation, textOpts, labelData, plotBounds);
+        if (newCost < cost) {
+          cost = newCost;
+          loc = newLocation;
+          pMin = p;
+        }
+      }
+      if (cost > costConstants.MAXCOST * 2) break;
+      if (j) dp /= 2;
+      p0 = pMin - dp / 2;
+      pMax = p0 + dp * 1.5;
+    }
+    if (cost <= costConstants.MAXCOST) return loc;
+  };
+  function locationCost(loc, textOpts, labelData, bounds) {
+    var halfWidth = textOpts.width / 2;
+    var halfHeight = textOpts.height / 2;
+    var x = loc.x;
+    var y = loc.y;
+    var theta = loc.theta;
+    var dx = Math.cos(theta) * halfWidth;
+    var dy = Math.sin(theta) * halfWidth;
+    var normX = (x > bounds.center ? bounds.right - x : x - bounds.left) / (dx + Math.abs(Math.sin(theta) * halfHeight));
+    var normY = (y > bounds.middle ? bounds.bottom - y : y - bounds.top) / (Math.abs(dy) + Math.cos(theta) * halfHeight);
+    if (normX < 1 || normY < 1) return Infinity;
+    var cost = costConstants.EDGECOST * (1 / (normX - 1) + 1 / (normY - 1));
+    cost += costConstants.ANGLECOST * theta * theta;
+    var x1 = x - dx;
+    var y1 = y - dy;
+    var x2 = x + dx;
+    var y2 = y + dy;
+    for (var i = 0; i < labelData.length; i++) {
+      var labeli = labelData[i];
+      var dxd = Math.cos(labeli.theta) * labeli.width / 2;
+      var dyd = Math.sin(labeli.theta) * labeli.width / 2;
+      var dist2 = lib_default.segmentDistance(
+        x1,
+        y1,
+        x2,
+        y2,
+        labeli.x - dxd,
+        labeli.y - dyd,
+        labeli.x + dxd,
+        labeli.y + dyd
+      ) * 2 / (textOpts.height + labeli.height);
+      var sameLevel = labeli.level === textOpts.level;
+      var distOffset = sameLevel ? costConstants.SAMELEVELDISTANCE : 1;
+      if (dist2 <= distOffset) return Infinity;
+      var distFactor = costConstants.NEIGHBORCOST * (sameLevel ? costConstants.SAMELEVELFACTOR : 1);
+      cost += distFactor / (dist2 - distOffset);
+    }
+    return cost;
+  }
+  var addLabelData = function(loc, textOpts, labelData, labelClipPathData) {
+    var fontSize = textOpts.fontSize;
+    var w = textOpts.width + fontSize / 3;
+    var h = Math.max(0, textOpts.height - fontSize / 3);
+    var x = loc.x;
+    var y = loc.y;
+    var theta = loc.theta;
+    var sin3 = Math.sin(theta);
+    var cos3 = Math.cos(theta);
+    var rotateXY = function(dx, dy) {
+      return [
+        x + dx * cos3 - dy * sin3,
+        y + dx * sin3 + dy * cos3
+      ];
+    };
+    var bBoxPts = [
+      rotateXY(-w / 2, -h / 2),
+      rotateXY(-w / 2, h / 2),
+      rotateXY(w / 2, h / 2),
+      rotateXY(w / 2, -h / 2)
+    ];
+    labelData.push({
+      text: textOpts.text,
+      x,
+      y,
+      dy: textOpts.dy,
+      theta,
+      level: textOpts.level,
+      width: w,
+      height: h
+    });
+    labelClipPathData.push(bBoxPts);
+  };
+  var drawLabels = function(labelGroup, labelData, gd, lineClip, labelClipPathData) {
+    var labels = labelGroup.selectAll("text").data(labelData, function(d) {
+      return d.text + "," + d.x + "," + d.y + "," + d.theta;
+    });
+    labels.exit().remove();
+    labels.enter().append("text").attr({
+      "data-notex": 1,
+      "text-anchor": "middle"
+    }).each(function(d) {
+      var x = d.x + Math.sin(d.theta) * d.dy;
+      var y = d.y - Math.cos(d.theta) * d.dy;
+      import_d345.default.select(this).text(d.text).attr({
+        x,
+        y,
+        transform: "rotate(" + 180 * d.theta / Math.PI + " " + x + " " + y + ")"
+      }).call(svg_text_utils_default.convertToTspans, gd);
+    });
+    if (labelClipPathData) {
+      var clipPath = "";
+      for (var i = 0; i < labelClipPathData.length; i++) {
+        clipPath += "M" + labelClipPathData[i].join("L") + "Z";
+      }
+      var lineClipPath = lib_default.ensureSingle(lineClip, "path", "");
+      lineClipPath.attr("d", clipPath);
+    }
+  };
+  function clipGaps(plotGroup, plotinfo, gd, cd0, perimeter) {
+    var trace = cd0.trace;
+    var clips = gd._fullLayout._clips;
+    var clipId = "clip" + trace.uid;
+    var clipPath = clips.selectAll("#" + clipId).data(trace.connectgaps ? [] : [0]);
+    clipPath.enter().append("clipPath").classed("contourclip", true).attr("id", clipId);
+    clipPath.exit().remove();
+    if (trace.connectgaps === false) {
+      var clipPathInfo = {
+        // fraction of the way from missing to present point
+        // to draw the boundary.
+        // if you make this 1 (or 1-epsilon) then a point in
+        // a sea of missing data will disappear entirely.
+        level: 0.9,
+        crossings: {},
+        starts: [],
+        edgepaths: [],
+        paths: [],
+        xaxis: plotinfo.xaxis,
+        yaxis: plotinfo.yaxis,
+        x: cd0.x,
+        y: cd0.y,
+        // 0 = no data, 1 = data
+        z: makeClipMask(cd0),
+        smoothing: 0
+      };
+      makeCrossings([clipPathInfo]);
+      findAllPaths([clipPathInfo]);
+      close_boundaries_default([clipPathInfo], { type: "levels" });
+      var path = lib_default.ensureSingle(clipPath, "path", "");
+      path.attr(
+        "d",
+        (clipPathInfo.prefixBoundary ? "M" + perimeter.join("L") + "Z" : "") + joinAllPaths(clipPathInfo, perimeter)
+      );
+    } else clipId = null;
+    drawing_default.setClipUrl(plotGroup, clipId, gd);
+  }
+  function makeClipMask(cd0) {
+    var empties = cd0.trace._emptypoints;
+    var z = [];
+    var m = cd0.z.length;
+    var n = cd0.z[0].length;
+    var i;
+    var row = [];
+    var emptyPoint;
+    for (i = 0; i < n; i++) row.push(1);
+    for (i = 0; i < m; i++) z.push(row.slice());
+    for (i = 0; i < empties.length; i++) {
+      emptyPoint = empties[i];
+      z[emptyPoint[0]][emptyPoint[1]] = 0;
+    }
+    cd0.zmask = z;
+    return z;
+  }
 
   // src/traces/contour/style.js
   var import_d348 = __toESM(require_d3(), 1);
 
+  // src/traces/heatmap/style.js
+  var import_d346 = __toESM(require_d3(), 1);
+  function style6(gd) {
+    import_d346.default.select(gd).selectAll(".hm image").style("opacity", function(d) {
+      return d.trace.opacity;
+    });
+  }
+
   // src/traces/contour/make_color_map.js
   var import_d347 = __toESM(require_d3(), 1);
+  function makeColorMap(trace) {
+    var contours = trace.contours;
+    var start = contours.start;
+    var end = endPlus(contours);
+    var cs = contours.size || 1;
+    var nc = Math.floor((end - start) / cs) + 1;
+    var extra = contours.coloring === "lines" ? 0 : 1;
+    var cOpts = colorscale_default.extractOpts(trace);
+    if (!isFinite(cs)) {
+      cs = 1;
+      nc = 1;
+    }
+    var scl = cOpts.reversescale ? colorscale_default.flipScale(cOpts.colorscale) : cOpts.colorscale;
+    var len2 = scl.length;
+    var domain = new Array(len2);
+    var range = new Array(len2);
+    var si, i;
+    var zmin0 = cOpts.min;
+    var zmax0 = cOpts.max;
+    if (contours.coloring === "heatmap") {
+      for (i = 0; i < len2; i++) {
+        si = scl[i];
+        domain[i] = si[0] * (zmax0 - zmin0) + zmin0;
+        range[i] = si[1];
+      }
+      var zRange = import_d347.default.extent([
+        zmin0,
+        zmax0,
+        contours.start,
+        contours.start + cs * (nc - 1)
+      ]);
+      var zmin = zRange[zmin0 < zmax0 ? 0 : 1];
+      var zmax = zRange[zmin0 < zmax0 ? 1 : 0];
+      if (zmin !== zmin0) {
+        domain.splice(0, 0, zmin);
+        range.splice(0, 0, range[0]);
+      }
+      if (zmax !== zmax0) {
+        domain.push(zmax);
+        range.push(range[range.length - 1]);
+      }
+    } else {
+      var zRangeInput = trace._input && (typeof trace._input.zmin === "number" && typeof trace._input.zmax === "number");
+      if (zRangeInput && (start <= zmin0 || end >= zmax0)) {
+        if (start <= zmin0) start = zmin0;
+        if (end >= zmax0) end = zmax0;
+        nc = Math.floor((end - start) / cs) + 1;
+        extra = 0;
+      }
+      for (i = 0; i < len2; i++) {
+        si = scl[i];
+        domain[i] = (si[0] * (nc + extra - 1) - extra / 2) * cs + start;
+        range[i] = si[1];
+      }
+      if (zRangeInput || trace.autocontour) {
+        if (domain[0] > zmin0) {
+          domain.unshift(zmin0);
+          range.unshift(range[0]);
+        }
+        if (domain[domain.length - 1] < zmax0) {
+          domain.push(zmax0);
+          range.push(range[range.length - 1]);
+        }
+      }
+    }
+    return colorscale_default.makeColorScaleFunc(
+      { domain, range },
+      { noNumericCheck: true }
+    );
+  }
 
-  // src/traces/contour/constraint_defaults.js
-  var import_fast_isnumeric48 = __toESM(require_fast_isnumeric(), 1);
-  var { isArrayOrTypedArray: isArrayOrTypedArray13 } = lib_default;
-  var addOpacity = color_default.addOpacity;
-  var opacity = color_default.opacity;
-  var CONSTRAINT_REDUCTION = filter_ops_default.CONSTRAINT_REDUCTION;
-  var COMPARISON_OPS22 = filter_ops_default.COMPARISON_OPS2;
+  // src/traces/contour/style.js
+  function style7(gd) {
+    var contours = import_d348.default.select(gd).selectAll("g.contour");
+    contours.style("opacity", function(d) {
+      return d[0].trace.opacity;
+    });
+    contours.each(function(d) {
+      var c = import_d348.default.select(this);
+      var trace = d[0].trace;
+      var contours2 = trace.contours;
+      var line = trace.line;
+      var cs = contours2.size || 1;
+      var start = contours2.start;
+      var isConstraintType = contours2.type === "constraint";
+      var colorLines = !isConstraintType && contours2.coloring === "lines";
+      var colorFills = !isConstraintType && contours2.coloring === "fill";
+      var colorMap = colorLines || colorFills ? makeColorMap(trace) : null;
+      c.selectAll("g.contourlevel").each(function(d2) {
+        import_d348.default.select(this).selectAll("path").call(
+          drawing_default.lineGroupStyle,
+          line.width,
+          colorLines ? colorMap(d2.level) : line.color,
+          line.dash
+        );
+      });
+      var labelFont = contours2.labelfont;
+      c.selectAll("g.contourlabels text").each(function(d2) {
+        drawing_default.font(import_d348.default.select(this), {
+          weight: labelFont.weight,
+          style: labelFont.style,
+          variant: labelFont.variant,
+          textcase: labelFont.textcase,
+          lineposition: labelFont.lineposition,
+          shadow: labelFont.shadow,
+          family: labelFont.family,
+          size: labelFont.size,
+          color: labelFont.color || (colorLines ? colorMap(d2.level) : line.color)
+        });
+      });
+      if (isConstraintType) {
+        c.selectAll("g.contourfill path").style("fill", trace.fillcolor);
+      } else if (colorFills) {
+        var firstFill;
+        c.selectAll("g.contourfill path").style("fill", function(d2) {
+          if (firstFill === void 0) firstFill = d2.level;
+          return colorMap(d2.level + 0.5 * cs);
+        });
+        if (firstFill === void 0) firstFill = start;
+        c.selectAll("g.contourbg path").style("fill", colorMap(firstFill - 0.5 * cs));
+      }
+    });
+    style6(gd);
+  }
 
-  // src/traces/scatterternary/attributes.js
-  var scatterMarkerAttrs3 = attributes_default9.marker;
-  var scatterLineAttrs4 = attributes_default9.line;
-  var scatterMarkerLineAttrs3 = scatterMarkerAttrs3.line;
-  var attributes_default28 = {
-    a: {
-      valType: "data_array",
-      editType: "calc"
-    },
-    b: {
-      valType: "data_array",
-      editType: "calc"
-    },
-    c: {
-      valType: "data_array",
-      editType: "calc"
-    },
-    sum: {
-      valType: "number",
-      dflt: 0,
-      min: 0,
-      editType: "calc"
-    },
-    mode: extendFlat({}, attributes_default9.mode, { dflt: "markers" }),
-    text: extendFlat({}, attributes_default9.text, {}),
-    texttemplate: texttemplateAttrs({ editType: "plot" }, { keys: ["a", "b", "c", "text"] }),
-    texttemplatefallback: templatefallbackAttrs({ editType: "plot" }),
-    hovertext: extendFlat({}, attributes_default9.hovertext, {}),
-    line: {
-      color: scatterLineAttrs4.color,
-      width: scatterLineAttrs4.width,
-      dash,
-      backoff: scatterLineAttrs4.backoff,
-      shape: extendFlat({}, scatterLineAttrs4.shape, { values: ["linear", "spline"] }),
-      smoothing: scatterLineAttrs4.smoothing,
-      editType: "calc"
-    },
-    connectgaps: attributes_default9.connectgaps,
-    cliponaxis: attributes_default9.cliponaxis,
-    fill: extendFlat({}, attributes_default9.fill, {
-      values: ["none", "toself", "tonext"],
-      dflt: "none"
-    }),
-    fillcolor: makeFillcolorAttr(),
-    marker: extendFlat(
-      {
-        symbol: scatterMarkerAttrs3.symbol,
-        opacity: scatterMarkerAttrs3.opacity,
-        angle: scatterMarkerAttrs3.angle,
-        angleref: scatterMarkerAttrs3.angleref,
-        standoff: scatterMarkerAttrs3.standoff,
-        maxdisplayed: scatterMarkerAttrs3.maxdisplayed,
-        size: scatterMarkerAttrs3.size,
-        sizeref: scatterMarkerAttrs3.sizeref,
-        sizemin: scatterMarkerAttrs3.sizemin,
-        sizemode: scatterMarkerAttrs3.sizemode,
-        line: extendFlat(
-          {
-            width: scatterMarkerLineAttrs3.width,
-            editType: "calc"
-          },
-          colorScaleAttrs("marker.line")
-        ),
-        gradient: scatterMarkerAttrs3.gradient,
+  // src/traces/contour/colorbar.js
+  function calc11(gd, trace, opts) {
+    var contours = trace.contours;
+    var line = trace.line;
+    var cs = contours.size || 1;
+    var coloring = contours.coloring;
+    var colorMap = makeColorMap(trace, { isColorbar: true });
+    if (coloring === "heatmap") {
+      var cOpts = colorscale_default.extractOpts(trace);
+      opts._fillgradient = cOpts.reversescale ? colorscale_default.flipScale(cOpts.colorscale) : cOpts.colorscale;
+      opts._zrange = [cOpts.min, cOpts.max];
+    } else if (coloring === "fill") {
+      opts._fillcolor = colorMap;
+    }
+    opts._line = {
+      color: coloring === "lines" ? colorMap : line.color,
+      width: contours.showlines !== false ? line.width : 0,
+      dash: line.dash
+    };
+    opts._levels = {
+      start: contours.start,
+      end: endPlus(contours),
+      size: cs
+    };
+  }
+  var colorbar_default2 = {
+    min: "zmin",
+    max: "zmax",
+    calc: calc11
+  };
+
+  // src/traces/heatmap/hover.js
+  var { extractOpts: extractOpts6 } = colorscale_default;
+  var isArrayOrTypedArray13 = lib_default.isArrayOrTypedArray;
+  function hoverPoints4(pointData, xval, yval, hovermode, opts) {
+    if (!opts) opts = {};
+    var isContour = opts.isContour;
+    var cd0 = pointData.cd[0];
+    var trace = cd0.trace;
+    var xa = pointData.xa;
+    var ya = pointData.ya;
+    var x = cd0.x;
+    var y = cd0.y;
+    var z = cd0.z;
+    var xc = cd0.xCenter;
+    var yc = cd0.yCenter;
+    var zmask = cd0.zmask;
+    var zhoverformat = trace.zhoverformat;
+    var x2 = x;
+    var y2 = y;
+    var xl, yl, nx, ny;
+    if (pointData.index !== false) {
+      try {
+        nx = Math.round(pointData.index[1]);
+        ny = Math.round(pointData.index[0]);
+      } catch (e) {
+        lib_default.error("Error hovering on heatmap, pointNumber must be [row,col], found:", pointData.index);
+        return;
+      }
+      if (nx < 0 || nx >= z[0].length || ny < 0 || ny > z.length) {
+        return;
+      }
+    } else if (fx_default.inbox(xval - x[0], xval - x[x.length - 1], 0) > 0 || fx_default.inbox(yval - y[0], yval - y[y.length - 1], 0) > 0) {
+      return;
+    } else {
+      if (isContour) {
+        var i2;
+        x2 = [2 * x[0] - x[1]];
+        for (i2 = 1; i2 < x.length; i2++) {
+          x2.push((x[i2] + x[i2 - 1]) / 2);
+        }
+        x2.push([2 * x[x.length - 1] - x[x.length - 2]]);
+        y2 = [2 * y[0] - y[1]];
+        for (i2 = 1; i2 < y.length; i2++) {
+          y2.push((y[i2] + y[i2 - 1]) / 2);
+        }
+        y2.push([2 * y[y.length - 1] - y[y.length - 2]]);
+      }
+      nx = Math.max(0, Math.min(x2.length - 2, lib_default.findBin(xval, x2)));
+      ny = Math.max(0, Math.min(y2.length - 2, lib_default.findBin(yval, y2)));
+    }
+    var x0 = xa.c2p(x[nx]);
+    var x1 = xa.c2p(x[nx + 1]);
+    var y0 = ya.c2p(y[ny]);
+    var y1 = ya.c2p(y[ny + 1]);
+    var _x, _y;
+    if (isContour) {
+      _x = cd0.orig_x || x;
+      _y = cd0.orig_y || y;
+      x1 = x0;
+      xl = _x[nx];
+      y1 = y0;
+      yl = _y[ny];
+    } else {
+      _x = cd0.orig_x || xc || x;
+      _y = cd0.orig_y || yc || y;
+      xl = xc ? _x[nx] : (_x[nx] + _x[nx + 1]) / 2;
+      yl = yc ? _y[ny] : (_y[ny] + _y[ny + 1]) / 2;
+      if (xa && xa.type === "category") xl = x[nx];
+      if (ya && ya.type === "category") yl = y[ny];
+      if (trace.zsmooth) {
+        x0 = x1 = xa.c2p(xl);
+        y0 = y1 = ya.c2p(yl);
+      }
+    }
+    var zVal = z[ny][nx];
+    if (zmask && !zmask[ny][nx]) zVal = void 0;
+    if (zVal === void 0 && !trace.hoverongaps) return;
+    var text;
+    if (isArrayOrTypedArray13(cd0.hovertext) && isArrayOrTypedArray13(cd0.hovertext[ny])) {
+      text = cd0.hovertext[ny][nx];
+    } else if (isArrayOrTypedArray13(cd0.text) && isArrayOrTypedArray13(cd0.text[ny])) {
+      text = cd0.text[ny][nx];
+    }
+    var cOpts = extractOpts6(trace);
+    var dummyAx = {
+      type: "linear",
+      range: [cOpts.min, cOpts.max],
+      hoverformat: zhoverformat,
+      _separators: xa._separators,
+      _numFormat: xa._numFormat
+    };
+    var zLabel = axes_default.tickText(dummyAx, zVal, "hover").text;
+    return [lib_default.extendFlat(pointData, {
+      index: trace._after2before ? trace._after2before[ny][nx] : [ny, nx],
+      // never let a 2D override 1D type as closest point
+      distance: pointData.maxHoverDistance,
+      spikeDistance: pointData.maxSpikeDistance,
+      x0,
+      x1,
+      y0,
+      y1,
+      xLabelVal: xl,
+      yLabelVal: yl,
+      zLabelVal: zVal,
+      zLabel,
+      text
+    })];
+  }
+
+  // src/traces/contour/hover.js
+  function hoverPoints5(pointData, xval, yval, hovermode, opts) {
+    if (!opts) opts = {};
+    opts.isContour = true;
+    var hoverData = hoverPoints4(pointData, xval, yval, hovermode, opts);
+    if (hoverData) {
+      hoverData.forEach(function(hoverPt) {
+        var trace = hoverPt.trace;
+        if (trace.contours.type === "constraint") {
+          if (trace.fillcolor && color_default.opacity(trace.fillcolor)) {
+            hoverPt.color = color_default.addOpacity(trace.fillcolor, 1);
+          } else if (trace.contours.showlines && color_default.opacity(trace.line.color)) {
+            hoverPt.color = color_default.addOpacity(trace.line.color, 1);
+          }
+        }
+      });
+    }
+    return hoverData;
+  }
+
+  // src/traces/contour/index.js
+  var contour_default = {
+    attributes: attributes_default24,
+    supplyDefaults: supplyDefaults5,
+    calc: calc10,
+    plot: plot6,
+    style: style7,
+    colorbar: colorbar_default2,
+    hoverPoints: hoverPoints5,
+    moduleType: "trace",
+    name: "contour",
+    basePlotModule: cartesian_default,
+    categories: ["cartesian", "svg", "2dMap", "contour", "showLegend"],
+    meta: {}
+  };
+
+  // src/traces/heatmap/style_defaults.js
+  function handleStyleDefaults3(traceIn, traceOut, coerce3) {
+    var zsmooth = coerce3("zsmooth");
+    if (zsmooth === false) {
+      coerce3("xgap");
+      coerce3("ygap");
+    }
+    coerce3("zhoverformat");
+  }
+
+  // src/traces/heatmap/defaults.js
+  function supplyDefaults6(traceIn, traceOut, defaultColor, layout) {
+    function coerce3(attr3, dflt) {
+      return lib_default.coerce(traceIn, traceOut, attributes_default23, attr3, dflt);
+    }
+    var validData = handleXYZDefaults(traceIn, traceOut, coerce3, layout);
+    if (!validData) {
+      traceOut.visible = false;
+      return;
+    }
+    handlePeriodDefaults(traceIn, traceOut, layout, coerce3);
+    coerce3("xhoverformat");
+    coerce3("yhoverformat");
+    coerce3("text");
+    coerce3("hovertext");
+    coerce3("hovertemplate");
+    coerce3("hovertemplatefallback");
+    handleHeatmapLabelDefaults(coerce3, layout);
+    handleStyleDefaults3(traceIn, traceOut, coerce3, layout);
+    coerce3("hoverongaps");
+    coerce3("connectgaps", lib_default.isArray1D(traceOut.z) && traceOut.zsmooth !== false);
+    colorScaleDefaults(traceIn, traceOut, layout, coerce3, { prefix: "", cLetter: "z" });
+    coerce3("zorder");
+  }
+
+  // src/traces/heatmap/colorbar.js
+  var colorbar_default3 = {
+    min: "zmin",
+    max: "zmax"
+  };
+
+  // src/traces/heatmap/index.js
+  var heatmap_default = {
+    attributes: attributes_default23,
+    supplyDefaults: supplyDefaults6,
+    calc: calc9,
+    plot: plot_default3,
+    colorbar: colorbar_default3,
+    style: style6,
+    hoverPoints: hoverPoints4,
+    moduleType: "trace",
+    name: "heatmap",
+    basePlotModule: cartesian_default,
+    categories: ["cartesian", "svg", "2dMap", "showLegend"],
+    meta: {}
+  };
+
+  // src/traces/histogram/bin_attributes.js
+  function makeBinAttrs(axLetter, match) {
+    return {
+      start: {
+        valType: "any",
+        // for date axes
         editType: "calc"
       },
-      colorScaleAttrs("marker")
-    ),
-    textfont: attributes_default9.textfont,
-    textposition: attributes_default9.textposition,
-    selected: attributes_default9.selected,
-    unselected: attributes_default9.unselected,
-    hoverinfo: extendFlat({}, attributes_default2.hoverinfo, {
-      flags: ["a", "b", "c", "text", "name"]
-    }),
-    hoveron: attributes_default9.hoveron,
-    hovertemplate: hovertemplateAttrs(),
-    hovertemplatefallback: templatefallbackAttrs()
-  };
-
-  // src/traces/scatterternary/calc.js
-  var import_fast_isnumeric49 = __toESM(require_fast_isnumeric(), 1);
-  var { calcMarkerSize: calcMarkerSize2 } = calc_default;
-
-  // src/plots/ternary/ternary.js
-  var import_d349 = __toESM(require_d3(), 1);
-  var { prepSelect: prepSelect3, selectOnClick: selectOnClick3, clearOutline: clearOutline8, clearSelectionsCache: clearSelectionsCache2 } = selections_default;
-  var strTranslate16 = lib_default.strTranslate;
-  var _4 = lib_default._;
-  var freeMode4 = helpers_default5.freeMode;
-  var rectMode3 = helpers_default5.rectMode;
-  function Ternary(options, fullLayout) {
-    this.id = options.id;
-    this.graphDiv = options.graphDiv;
-    this.init(fullLayout);
-    this.makeFramework(fullLayout);
-    this.updateFx(fullLayout);
-    this.aTickLayout = null;
-    this.bTickLayout = null;
-    this.cTickLayout = null;
-  }
-  var proto2 = Ternary.prototype;
-  proto2.init = function(fullLayout) {
-    this.container = fullLayout._ternarylayer;
-    this.defs = fullLayout._defs;
-    this.layoutId = fullLayout._uid;
-    this.traceHash = {};
-    this.layers = {};
-  };
-  proto2.plot = function(ternaryCalcData, fullLayout) {
-    var _this = this;
-    var ternaryLayout = fullLayout[_this.id];
-    var graphSize = fullLayout._size;
-    _this._hasClipOnAxisFalse = false;
-    for (var i = 0; i < ternaryCalcData.length; i++) {
-      var trace = ternaryCalcData[i][0].trace;
-      if (trace.cliponaxis === false) {
-        _this._hasClipOnAxisFalse = true;
-        break;
-      }
-    }
-    _this.updateLayers(ternaryLayout);
-    _this.adjustLayout(ternaryLayout, graphSize);
-    plots_default.generalUpdatePerTraceModule(_this.graphDiv, _this, ternaryCalcData, ternaryLayout);
-    _this.layers.plotbg.select("path").call(color_default.fill, ternaryLayout.bgcolor);
-  };
-  proto2.makeFramework = function(fullLayout) {
-    var _this = this;
-    var gd = _this.graphDiv;
-    var ternaryLayout = fullLayout[_this.id];
-    var clipId = _this.clipId = "clip" + _this.layoutId + _this.id;
-    var clipIdRelative = _this.clipIdRelative = "clip-relative" + _this.layoutId + _this.id;
-    _this.clipDef = lib_default.ensureSingleById(fullLayout._clips, "clipPath", clipId, function(s) {
-      s.append("path").attr("d", "M0,0Z");
-    });
-    _this.clipDefRelative = lib_default.ensureSingleById(fullLayout._clips, "clipPath", clipIdRelative, function(s) {
-      s.append("path").attr("d", "M0,0Z");
-    });
-    _this.plotContainer = lib_default.ensureSingle(_this.container, "g", _this.id);
-    _this.updateLayers(ternaryLayout);
-    drawing_default.setClipUrl(_this.layers.backplot, clipId, gd);
-    drawing_default.setClipUrl(_this.layers.grids, clipId, gd);
-  };
-  proto2.updateFx = function(fullLayout) {
-    fullLayout._ternarylayer.selectAll("g.toplevel").style("cursor", fullLayout.dragmode === "pan" ? "move" : "crosshair");
-  };
-  proto2.updateLayers = function(ternaryLayout) {
-    var _this = this;
-    var layers = _this.layers;
-    var plotLayers = ["draglayer", "plotbg", "backplot", "grids"];
-    if (ternaryLayout.aaxis.layer === "below traces") {
-      plotLayers.push("aaxis", "aline");
-    }
-    if (ternaryLayout.baxis.layer === "below traces") {
-      plotLayers.push("baxis", "bline");
-    }
-    if (ternaryLayout.caxis.layer === "below traces") {
-      plotLayers.push("caxis", "cline");
-    }
-    plotLayers.push("frontplot");
-    if (ternaryLayout.aaxis.layer === "above traces") {
-      plotLayers.push("aaxis", "aline");
-    }
-    if (ternaryLayout.baxis.layer === "above traces") {
-      plotLayers.push("baxis", "bline");
-    }
-    if (ternaryLayout.caxis.layer === "above traces") {
-      plotLayers.push("caxis", "cline");
-    }
-    var toplevel = _this.plotContainer.selectAll("g.toplevel").data(plotLayers, String);
-    var grids = ["agrid", "bgrid", "cgrid"];
-    toplevel.enter().append("g").attr("class", function(d) {
-      return "toplevel " + d;
-    }).each(function(d) {
-      var s = import_d349.default.select(this);
-      layers[d] = s;
-      if (d === "frontplot") {
-        s.append("g").classed("scatterlayer", true);
-      } else if (d === "backplot") {
-        s.append("g").classed("maplayer", true);
-      } else if (d === "plotbg") {
-        s.append("path").attr("d", "M0,0Z");
-      } else if (d === "aline" || d === "bline" || d === "cline") {
-        s.append("path");
-      } else if (d === "grids") {
-        grids.forEach(function(d2) {
-          layers[d2] = s.append("g").classed("grid " + d2, true);
-        });
-      }
-    });
-    toplevel.order();
-  };
-  var whRatio = Math.sqrt(4 / 3);
-  proto2.adjustLayout = function(ternaryLayout, graphSize) {
-    var _this = this;
-    var domain = ternaryLayout.domain;
-    var xDomainCenter = (domain.x[0] + domain.x[1]) / 2;
-    var yDomainCenter = (domain.y[0] + domain.y[1]) / 2;
-    var xDomain = domain.x[1] - domain.x[0];
-    var yDomain = domain.y[1] - domain.y[0];
-    var wmax = xDomain * graphSize.w;
-    var hmax = yDomain * graphSize.h;
-    var sum = ternaryLayout.sum;
-    var amin = ternaryLayout.aaxis.min;
-    var bmin = ternaryLayout.baxis.min;
-    var cmin = ternaryLayout.caxis.min;
-    var x0, y0, w, h, xDomainFinal, yDomainFinal;
-    if (wmax > whRatio * hmax) {
-      h = hmax;
-      w = h * whRatio;
-    } else {
-      w = wmax;
-      h = w / whRatio;
-    }
-    xDomainFinal = xDomain * w / wmax;
-    yDomainFinal = yDomain * h / hmax;
-    x0 = graphSize.l + graphSize.w * xDomainCenter - w / 2;
-    y0 = graphSize.t + graphSize.h * (1 - yDomainCenter) - h / 2;
-    _this.x0 = x0;
-    _this.y0 = y0;
-    _this.w = w;
-    _this.h = h;
-    _this.sum = sum;
-    _this.xaxis = {
-      type: "linear",
-      range: [amin + 2 * cmin - sum, sum - amin - 2 * bmin],
-      domain: [
-        xDomainCenter - xDomainFinal / 2,
-        xDomainCenter + xDomainFinal / 2
-      ],
-      _id: "x"
-    };
-    setConvert(_this.xaxis, _this.graphDiv._fullLayout);
-    _this.xaxis.setScale();
-    _this.xaxis.isPtWithinRange = function(d) {
-      return d.a >= _this.aaxis.range[0] && d.a <= _this.aaxis.range[1] && d.b >= _this.baxis.range[1] && d.b <= _this.baxis.range[0] && d.c >= _this.caxis.range[1] && d.c <= _this.caxis.range[0];
-    };
-    _this.yaxis = {
-      type: "linear",
-      range: [amin, sum - bmin - cmin],
-      domain: [
-        yDomainCenter - yDomainFinal / 2,
-        yDomainCenter + yDomainFinal / 2
-      ],
-      _id: "y"
-    };
-    setConvert(_this.yaxis, _this.graphDiv._fullLayout);
-    _this.yaxis.setScale();
-    _this.yaxis.isPtWithinRange = function() {
-      return true;
-    };
-    var yDomain0 = _this.yaxis.domain[0];
-    var aaxis = _this.aaxis = extendFlat({}, ternaryLayout.aaxis, {
-      range: [amin, sum - bmin - cmin],
-      side: "left",
-      // tickangle = 'auto' means 0 anyway for a y axis, need to coerce to 0 here
-      // so we can shift by 30.
-      tickangle: (+ternaryLayout.aaxis.tickangle || 0) - 30,
-      domain: [yDomain0, yDomain0 + yDomainFinal * whRatio],
-      anchor: "free",
-      position: 0,
-      _id: "y",
-      _length: w
-    });
-    setConvert(aaxis, _this.graphDiv._fullLayout);
-    aaxis.setScale();
-    var baxis = _this.baxis = extendFlat({}, ternaryLayout.baxis, {
-      range: [sum - amin - cmin, bmin],
-      side: "bottom",
-      domain: _this.xaxis.domain,
-      anchor: "free",
-      position: 0,
-      _id: "x",
-      _length: w
-    });
-    setConvert(baxis, _this.graphDiv._fullLayout);
-    baxis.setScale();
-    var caxis = _this.caxis = extendFlat({}, ternaryLayout.caxis, {
-      range: [sum - amin - bmin, cmin],
-      side: "right",
-      tickangle: (+ternaryLayout.caxis.tickangle || 0) + 30,
-      domain: [yDomain0, yDomain0 + yDomainFinal * whRatio],
-      anchor: "free",
-      position: 0,
-      _id: "y",
-      _length: w
-    });
-    setConvert(caxis, _this.graphDiv._fullLayout);
-    caxis.setScale();
-    var triangleClip = "M" + x0 + "," + (y0 + h) + "h" + w + "l-" + w / 2 + ",-" + h + "Z";
-    _this.clipDef.select("path").attr("d", triangleClip);
-    _this.layers.plotbg.select("path").attr("d", triangleClip);
-    var triangleClipRelative = "M0," + h + "h" + w + "l-" + w / 2 + ",-" + h + "Z";
-    _this.clipDefRelative.select("path").attr("d", triangleClipRelative);
-    var plotTransform = strTranslate16(x0, y0);
-    _this.plotContainer.selectAll(".scatterlayer,.maplayer").attr("transform", plotTransform);
-    _this.clipDefRelative.select("path").attr("transform", null);
-    var bTransform = strTranslate16(x0 - baxis._offset, y0 + h);
-    _this.layers.baxis.attr("transform", bTransform);
-    _this.layers.bgrid.attr("transform", bTransform);
-    var aTransform = strTranslate16(x0 + w / 2, y0) + "rotate(30)" + strTranslate16(0, -aaxis._offset);
-    _this.layers.aaxis.attr("transform", aTransform);
-    _this.layers.agrid.attr("transform", aTransform);
-    var cTransform = strTranslate16(x0 + w / 2, y0) + "rotate(-30)" + strTranslate16(0, -caxis._offset);
-    _this.layers.caxis.attr("transform", cTransform);
-    _this.layers.cgrid.attr("transform", cTransform);
-    _this.drawAxes(true);
-    _this.layers.aline.select("path").attr("d", aaxis.showline ? "M" + x0 + "," + (y0 + h) + "l" + w / 2 + ",-" + h : "M0,0").call(color_default.stroke, aaxis.linecolor || "#000").style("stroke-width", (aaxis.linewidth || 0) + "px");
-    _this.layers.bline.select("path").attr("d", baxis.showline ? "M" + x0 + "," + (y0 + h) + "h" + w : "M0,0").call(color_default.stroke, baxis.linecolor || "#000").style("stroke-width", (baxis.linewidth || 0) + "px");
-    _this.layers.cline.select("path").attr("d", caxis.showline ? "M" + (x0 + w / 2) + "," + y0 + "l" + w / 2 + "," + h : "M0,0").call(color_default.stroke, caxis.linecolor || "#000").style("stroke-width", (caxis.linewidth || 0) + "px");
-    if (!_this.graphDiv._context.staticPlot) {
-      _this.initInteractions();
-    }
-    drawing_default.setClipUrl(
-      _this.layers.frontplot,
-      _this._hasClipOnAxisFalse ? null : _this.clipId,
-      _this.graphDiv
-    );
-  };
-  proto2.drawAxes = function(doTitles) {
-    var _this = this;
-    var gd = _this.graphDiv;
-    var titlesuffix = _this.id.slice(7) + "title";
-    var layers = _this.layers;
-    var aaxis = _this.aaxis;
-    var baxis = _this.baxis;
-    var caxis = _this.caxis;
-    _this.drawAx(aaxis);
-    _this.drawAx(baxis);
-    _this.drawAx(caxis);
-    if (doTitles) {
-      var apad = Math.max(
-        aaxis.showticklabels ? aaxis.tickfont.size / 2 : 0,
-        (caxis.showticklabels ? caxis.tickfont.size * 0.75 : 0) + (caxis.ticks === "outside" ? caxis.ticklen * 0.87 : 0)
-      );
-      var bpad = (baxis.showticklabels ? baxis.tickfont.size : 0) + (baxis.ticks === "outside" ? baxis.ticklen : 0) + 3;
-      layers["a-title"] = titles_default.draw(gd, "a" + titlesuffix, {
-        propContainer: aaxis,
-        propName: _this.id + ".aaxis.title.text",
-        placeholder: _4(gd, "Click to enter Component A title"),
-        attributes: {
-          x: _this.x0 + _this.w / 2,
-          y: _this.y0 - aaxis.title.font.size / 3 - apad,
-          "text-anchor": "middle"
-        }
-      });
-      layers["b-title"] = titles_default.draw(gd, "b" + titlesuffix, {
-        propContainer: baxis,
-        propName: _this.id + ".baxis.title.text",
-        placeholder: _4(gd, "Click to enter Component B title"),
-        attributes: {
-          x: _this.x0 - bpad,
-          y: _this.y0 + _this.h + baxis.title.font.size * 0.83 + bpad,
-          "text-anchor": "middle"
-        }
-      });
-      layers["c-title"] = titles_default.draw(gd, "c" + titlesuffix, {
-        propContainer: caxis,
-        propName: _this.id + ".caxis.title.text",
-        placeholder: _4(gd, "Click to enter Component C title"),
-        attributes: {
-          x: _this.x0 + _this.w + bpad,
-          y: _this.y0 + _this.h + caxis.title.font.size * 0.83 + bpad,
-          "text-anchor": "middle"
-        }
-      });
-    }
-  };
-  proto2.drawAx = function(ax) {
-    var _this = this;
-    var gd = _this.graphDiv;
-    var axName = ax._name;
-    var axLetter = axName.charAt(0);
-    var axId = ax._id;
-    var axLayer = _this.layers[axName];
-    var counterAngle = 30;
-    var stashKey = axLetter + "tickLayout";
-    var newTickLayout = strTickLayout(ax);
-    if (_this[stashKey] !== newTickLayout) {
-      axLayer.selectAll("." + axId + "tick").remove();
-      _this[stashKey] = newTickLayout;
-    }
-    ax.setScale();
-    var vals = axes_default.calcTicks(ax);
-    var valsClipped = axes_default.clipEnds(ax, vals);
-    var transFn = axes_default.makeTransTickFn(ax);
-    var tickSign = axes_default.getTickSigns(ax)[2];
-    var caRad = lib_default.deg2rad(counterAngle);
-    var pad3 = tickSign * (ax.linewidth || 1) / 2;
-    var len2 = tickSign * ax.ticklen;
-    var w = _this.w;
-    var h = _this.h;
-    var tickPath = axLetter === "b" ? "M0," + pad3 + "l" + Math.sin(caRad) * len2 + "," + Math.cos(caRad) * len2 : "M" + pad3 + ",0l" + Math.cos(caRad) * len2 + "," + -Math.sin(caRad) * len2;
-    var gridPath = {
-      a: "M0,0l" + h + ",-" + w / 2,
-      b: "M0,0l-" + w / 2 + ",-" + h,
-      c: "M0,0l-" + h + "," + w / 2
-    }[axLetter];
-    axes_default.drawTicks(gd, ax, {
-      vals: ax.ticks === "inside" ? valsClipped : vals,
-      layer: axLayer,
-      path: tickPath,
-      transFn,
-      crisp: false
-    });
-    axes_default.drawGrid(gd, ax, {
-      vals: valsClipped,
-      layer: _this.layers[axLetter + "grid"],
-      path: gridPath,
-      transFn,
-      crisp: false
-    });
-    axes_default.drawLabels(gd, ax, {
-      vals,
-      layer: axLayer,
-      transFn,
-      labelFns: axes_default.makeLabelFns(ax, 0, counterAngle)
-    });
-  };
-  function strTickLayout(axLayout) {
-    return axLayout.ticks + String(axLayout.ticklen) + String(axLayout.showticklabels);
-  }
-  var CLEN = constants_default2.MINZOOM / 2 + 0.87;
-  var BLPATH = "m-0.87,.5h" + CLEN + "v3h-" + (CLEN + 5.2) + "l" + (CLEN / 2 + 2.6) + ",-" + (CLEN * 0.87 + 4.5) + "l2.6,1.5l-" + CLEN / 2 + "," + CLEN * 0.87 + "Z";
-  var BRPATH = "m0.87,.5h-" + CLEN + "v3h" + (CLEN + 5.2) + "l-" + (CLEN / 2 + 2.6) + ",-" + (CLEN * 0.87 + 4.5) + "l-2.6,1.5l" + CLEN / 2 + "," + CLEN * 0.87 + "Z";
-  var TOPPATH = "m0,1l" + CLEN / 2 + "," + CLEN * 0.87 + "l2.6,-1.5l-" + (CLEN / 2 + 2.6) + ",-" + (CLEN * 0.87 + 4.5) + "l-" + (CLEN / 2 + 2.6) + "," + (CLEN * 0.87 + 4.5) + "l2.6,1.5l" + CLEN / 2 + ",-" + CLEN * 0.87 + "Z";
-  var STARTMARKER = "m0.5,0.5h5v-2h-5v-5h-2v5h-5v2h5v5h2Z";
-  var SHOWZOOMOUTTIP2 = true;
-  proto2.clearOutline = function() {
-    clearSelectionsCache2(this.dragOptions);
-    clearOutline8(this.dragOptions.gd);
-  };
-  proto2.initInteractions = function() {
-    var _this = this;
-    var dragger = _this.layers.plotbg.select("path").node();
-    var gd = _this.graphDiv;
-    var zoomLayer = gd._fullLayout._zoomlayer;
-    var scaleX;
-    var scaleY;
-    this.dragOptions = {
-      element: dragger,
-      gd,
-      plotinfo: {
-        id: _this.id,
-        domain: gd._fullLayout[_this.id].domain,
-        xaxis: _this.xaxis,
-        yaxis: _this.yaxis
+      end: {
+        valType: "any",
+        // for date axes
+        editType: "calc"
       },
-      subplot: _this.id,
-      prepFn: function(e, startX, startY) {
-        _this.dragOptions.xaxes = [_this.xaxis];
-        _this.dragOptions.yaxes = [_this.yaxis];
-        scaleX = gd._fullLayout._invScaleX;
-        scaleY = gd._fullLayout._invScaleY;
-        var dragModeNow = _this.dragOptions.dragmode = gd._fullLayout.dragmode;
-        if (freeMode4(dragModeNow)) _this.dragOptions.minDrag = 1;
-        else _this.dragOptions.minDrag = void 0;
-        if (dragModeNow === "zoom") {
-          _this.dragOptions.moveFn = zoomMove;
-          _this.dragOptions.clickFn = clickZoomPan;
-          _this.dragOptions.doneFn = zoomDone;
-          zoomPrep(e, startX, startY);
-        } else if (dragModeNow === "pan") {
-          _this.dragOptions.moveFn = plotDrag;
-          _this.dragOptions.clickFn = clickZoomPan;
-          _this.dragOptions.doneFn = dragDone;
-          panPrep();
-          _this.clearOutline(gd);
-        } else if (rectMode3(dragModeNow) || freeMode4(dragModeNow)) {
-          prepSelect3(e, startX, startY, _this.dragOptions, dragModeNow);
-        }
-      }
+      size: {
+        valType: "any",
+        // for date axes
+        editType: "calc"
+      },
+      editType: "calc"
     };
-    var x0, y0, mins0, span0, mins, lum, path0, dimmed, zb, corners;
-    function makeUpdate(_mins) {
-      var attrs3 = {};
-      attrs3[_this.id + ".aaxis.min"] = _mins.a;
-      attrs3[_this.id + ".baxis.min"] = _mins.b;
-      attrs3[_this.id + ".caxis.min"] = _mins.c;
-      return attrs3;
-    }
-    function clickZoomPan(numClicks, evt) {
-      var clickMode = gd._fullLayout.clickmode;
-      removeZoombox2(gd);
-      if (numClicks === 2) {
-        gd.emit("plotly_doubleclick", null);
-        registry_default.call("_guiRelayout", gd, makeUpdate({ a: 0, b: 0, c: 0 }));
-      }
-      if (clickMode.indexOf("select") > -1 && numClicks === 1) {
-        selectOnClick3(evt, gd, [_this.xaxis], [_this.yaxis], _this.id, _this.dragOptions);
-      }
-      if (clickMode.indexOf("event") > -1) {
-        fx_default.click(gd, evt, _this.id);
-      }
-    }
-    function zoomPrep(e, startX, startY) {
-      var dragBBox = dragger.getBoundingClientRect();
-      x0 = startX - dragBBox.left;
-      y0 = startY - dragBBox.top;
-      gd._fullLayout._calcInverseTransform(gd);
-      var inverse = gd._fullLayout._invTransform;
-      var transformedCoords = lib_default.apply3DTransform(inverse)(x0, y0);
-      x0 = transformedCoords[0];
-      y0 = transformedCoords[1];
-      mins0 = {
-        a: _this.aaxis.range[0],
-        b: _this.baxis.range[1],
-        c: _this.caxis.range[1]
-      };
-      mins = mins0;
-      span0 = _this.aaxis.range[1] - mins0.a;
-      lum = tinycolor(_this.graphDiv._fullLayout[_this.id].bgcolor).getLuminance();
-      path0 = "M0," + _this.h + "L" + _this.w / 2 + ", 0L" + _this.w + "," + _this.h + "Z";
-      dimmed = false;
-      zb = zoomLayer.append("path").attr("class", "zoombox").attr("transform", strTranslate16(_this.x0, _this.y0)).style({
-        fill: lum > 0.2 ? "rgba(0,0,0,0)" : "rgba(255,255,255,0)",
-        "stroke-width": 0
-      }).attr("d", path0);
-      corners = zoomLayer.append("path").attr("class", "zoombox-corners").attr("transform", strTranslate16(_this.x0, _this.y0)).style({
-        fill: color_default.background,
-        stroke: color_default.defaultLine,
-        "stroke-width": 1,
-        opacity: 0
-      }).attr("d", "M0,0Z");
-      _this.clearOutline(gd);
-    }
-    function getAFrac(x, y) {
-      return 1 - y / _this.h;
-    }
-    function getBFrac(x, y) {
-      return 1 - (x + (_this.h - y) / Math.sqrt(3)) / _this.w;
-    }
-    function getCFrac(x, y) {
-      return (x - (_this.h - y) / Math.sqrt(3)) / _this.w;
-    }
-    function zoomMove(dx0, dy0) {
-      var x1 = x0 + dx0 * scaleX;
-      var y1 = y0 + dy0 * scaleY;
-      var afrac = Math.max(0, Math.min(1, getAFrac(x0, y0), getAFrac(x1, y1)));
-      var bfrac = Math.max(0, Math.min(1, getBFrac(x0, y0), getBFrac(x1, y1)));
-      var cfrac = Math.max(0, Math.min(1, getCFrac(x0, y0), getCFrac(x1, y1)));
-      var xLeft = (afrac / 2 + cfrac) * _this.w;
-      var xRight = (1 - afrac / 2 - bfrac) * _this.w;
-      var xCenter = (xLeft + xRight) / 2;
-      var xSpan = xRight - xLeft;
-      var yBottom = (1 - afrac) * _this.h;
-      var yTop = yBottom - xSpan / whRatio;
-      if (xSpan < constants_default2.MINZOOM) {
-        mins = mins0;
-        zb.attr("d", path0);
-        corners.attr("d", "M0,0Z");
-      } else {
-        mins = {
-          a: mins0.a + afrac * span0,
-          b: mins0.b + bfrac * span0,
-          c: mins0.c + cfrac * span0
-        };
-        zb.attr("d", path0 + "M" + xLeft + "," + yBottom + "H" + xRight + "L" + xCenter + "," + yTop + "L" + xLeft + "," + yBottom + "Z");
-        corners.attr("d", "M" + x0 + "," + y0 + STARTMARKER + "M" + xLeft + "," + yBottom + BLPATH + "M" + xRight + "," + yBottom + BRPATH + "M" + xCenter + "," + yTop + TOPPATH);
-      }
-      if (!dimmed) {
-        zb.transition().style("fill", lum > 0.2 ? "rgba(0,0,0,0.4)" : "rgba(255,255,255,0.3)").duration(200);
-        corners.transition().style("opacity", 1).duration(200);
-        dimmed = true;
-      }
-      gd.emit("plotly_relayouting", makeUpdate(mins));
-    }
-    function zoomDone() {
-      removeZoombox2(gd);
-      if (mins === mins0) return;
-      registry_default.call("_guiRelayout", gd, makeUpdate(mins));
-      if (SHOWZOOMOUTTIP2 && gd.data && gd._context.showTips) {
-        lib_default.notifier(_4(gd, "Double-click to zoom back out"), "long");
-        SHOWZOOMOUTTIP2 = false;
-      }
-    }
-    function panPrep() {
-      mins0 = {
-        a: _this.aaxis.range[0],
-        b: _this.baxis.range[1],
-        c: _this.caxis.range[1]
-      };
-      mins = mins0;
-    }
-    function plotDrag(dx, dy) {
-      var dxScaled = dx / _this.xaxis._m;
-      var dyScaled = dy / _this.yaxis._m;
-      mins = {
-        a: mins0.a - dyScaled,
-        b: mins0.b + (dxScaled + dyScaled) / 2,
-        c: mins0.c - (dxScaled - dyScaled) / 2
-      };
-      var minsorted = [mins.a, mins.b, mins.c].sort(lib_default.sorterAsc);
-      var minindices = {
-        a: minsorted.indexOf(mins.a),
-        b: minsorted.indexOf(mins.b),
-        c: minsorted.indexOf(mins.c)
-      };
-      if (minsorted[0] < 0) {
-        if (minsorted[1] + minsorted[0] / 2 < 0) {
-          minsorted[2] += minsorted[0] + minsorted[1];
-          minsorted[0] = minsorted[1] = 0;
-        } else {
-          minsorted[2] += minsorted[0] / 2;
-          minsorted[1] += minsorted[0] / 2;
-          minsorted[0] = 0;
-        }
-        mins = {
-          a: minsorted[minindices.a],
-          b: minsorted[minindices.b],
-          c: minsorted[minindices.c]
-        };
-        dy = (mins0.a - mins.a) * _this.yaxis._m;
-        dx = (mins0.c - mins.c - mins0.b + mins.b) * _this.xaxis._m;
-      }
-      var plotTransform = strTranslate16(_this.x0 + dx, _this.y0 + dy);
-      _this.plotContainer.selectAll(".scatterlayer,.maplayer").attr("transform", plotTransform);
-      var plotTransform2 = strTranslate16(-dx, -dy);
-      _this.clipDefRelative.select("path").attr("transform", plotTransform2);
-      _this.aaxis.range = [mins.a, _this.sum - mins.b - mins.c];
-      _this.baxis.range = [_this.sum - mins.a - mins.c, mins.b];
-      _this.caxis.range = [_this.sum - mins.a - mins.b, mins.c];
-      _this.drawAxes(false);
-      if (_this._hasClipOnAxisFalse) {
-        _this.plotContainer.select(".scatterlayer").selectAll(".trace").call(drawing_default.hideOutsideRangePoints, _this);
-      }
-      gd.emit("plotly_relayouting", makeUpdate(mins));
-    }
-    function dragDone() {
-      registry_default.call("_guiRelayout", gd, makeUpdate(mins));
-    }
-    dragger.onmousemove = function(evt) {
-      fx_default.hover(gd, evt, _this.id);
-      gd._fullLayout._lasthover = dragger;
-      gd._fullLayout._hoversubplot = _this.id;
-    };
-    dragger.onmouseout = function(evt) {
-      if (gd._dragging) return;
-      dragelement_default.unhover(gd, evt);
-    };
-    dragelement_default.init(this.dragOptions);
-  };
-  function removeZoombox2(gd) {
-    import_d349.default.select(gd).selectAll(".zoombox,.js-zoombox-backdrop,.js-zoombox-menu,.zoombox-corners").remove();
   }
 
-  // src/plots/ternary/layout_attributes.js
-  var { overrideAll: overrideAll9 } = edit_types_default;
-  var ternaryAxesAttrs = {
-    title: {
-      text: layout_attributes_default4.title.text,
-      font: layout_attributes_default4.title.font
-      // TODO does standoff here make sense?
-    },
-    color: layout_attributes_default4.color,
-    // ticks
-    tickmode: layout_attributes_default4.minor.tickmode,
-    nticks: extendFlat({}, layout_attributes_default4.nticks, { dflt: 6, min: 1 }),
-    tick0: layout_attributes_default4.tick0,
-    dtick: layout_attributes_default4.dtick,
-    tickvals: layout_attributes_default4.tickvals,
-    ticktext: layout_attributes_default4.ticktext,
-    ticks: layout_attributes_default4.ticks,
-    ticklen: layout_attributes_default4.ticklen,
-    tickwidth: layout_attributes_default4.tickwidth,
-    tickcolor: layout_attributes_default4.tickcolor,
-    ticklabelstep: layout_attributes_default4.ticklabelstep,
-    showticklabels: layout_attributes_default4.showticklabels,
-    labelalias: layout_attributes_default4.labelalias,
-    showtickprefix: layout_attributes_default4.showtickprefix,
-    tickprefix: layout_attributes_default4.tickprefix,
-    showticksuffix: layout_attributes_default4.showticksuffix,
-    ticksuffix: layout_attributes_default4.ticksuffix,
-    showexponent: layout_attributes_default4.showexponent,
-    exponentformat: layout_attributes_default4.exponentformat,
-    minexponent: layout_attributes_default4.minexponent,
-    separatethousands: layout_attributes_default4.separatethousands,
-    tickfont: layout_attributes_default4.tickfont,
-    tickangle: layout_attributes_default4.tickangle,
-    tickformat: layout_attributes_default4.tickformat,
-    tickformatstops: layout_attributes_default4.tickformatstops,
-    hoverformat: layout_attributes_default4.hoverformat,
-    // lines and grids
-    showline: extendFlat({}, layout_attributes_default4.showline, { dflt: true }),
-    linecolor: layout_attributes_default4.linecolor,
-    linewidth: layout_attributes_default4.linewidth,
-    showgrid: extendFlat({}, layout_attributes_default4.showgrid, { dflt: true }),
-    gridcolor: layout_attributes_default4.gridcolor,
-    gridwidth: layout_attributes_default4.gridwidth,
-    griddash: layout_attributes_default4.griddash,
-    layer: layout_attributes_default4.layer,
-    // range
-    min: {
-      valType: "number",
-      dflt: 0,
-      min: 0
-    }
-  };
-  var attrs2 = overrideAll9({
-    domain: attributes2({ name: "ternary" }),
-    bgcolor: {
-      valType: "color",
-      dflt: attributes_default3.background
-    },
-    sum: {
-      valType: "number",
-      dflt: 1,
-      min: 0
-    },
-    aaxis: ternaryAxesAttrs,
-    baxis: ternaryAxesAttrs,
-    caxis: ternaryAxesAttrs
-  }, "plot", "from-root");
-  attrs2.uirevision = {
-    valType: "any",
-    editType: "none"
-  };
-  attrs2.aaxis.uirevision = attrs2.baxis.uirevision = attrs2.caxis.uirevision = {
-    valType: "any",
-    editType: "none"
+  // src/traces/histogram/constants.js
+  var constants_default16 = {
+    eventDataKeys: ["binNumber"]
   };
 
-  // src/plots/ternary/index.js
-  var { counterRegex } = lib_default;
-  var TERNARY = "ternary";
-  var attr2 = "subplot";
-  var idRegex3 = counterRegex(TERNARY);
-  var attributes3 = {};
-  attributes3[attr2] = {
-    valType: "subplotid",
-    dflt: "ternary",
-    editType: "calc"
-  };
-
-  // src/traces/scatterternary/index.js
-  var { style: _req65, styleOnSelect: _req74 } = style_default;
-
-  // src/traces/violin/attributes.js
-  var { axisHoverFormat: axisHoverFormat10 } = axis_format_attributes_default;
-  var attributes_default29 = {
-    y: attributes_default22.y,
-    x: attributes_default22.x,
-    x0: attributes_default22.x0,
-    y0: attributes_default22.y0,
-    xhoverformat: axisHoverFormat10("x"),
-    yhoverformat: axisHoverFormat10("y"),
-    name: extendFlat({}, attributes_default22.name, {}),
-    orientation: extendFlat({}, attributes_default22.orientation, {}),
-    bandwidth: {
-      valType: "number",
-      min: 0,
+  // src/traces/histogram/attributes.js
+  var { axisHoverFormat: axisHoverFormat7 } = axis_format_attributes_default;
+  var attributes_default25 = {
+    x: {
+      valType: "data_array",
+      editType: "calc+clearAxisTypes"
+    },
+    y: {
+      valType: "data_array",
+      editType: "calc+clearAxisTypes"
+    },
+    xhoverformat: axisHoverFormat7("x"),
+    yhoverformat: axisHoverFormat7("y"),
+    text: extendFlat({}, attributes_default21.text, {}),
+    hovertext: extendFlat({}, attributes_default21.hovertext, {}),
+    orientation: attributes_default21.orientation,
+    histfunc: {
+      valType: "enumerated",
+      values: ["count", "sum", "avg", "min", "max"],
+      dflt: "count",
       editType: "calc"
     },
-    scalegroup: {
+    histnorm: {
+      valType: "enumerated",
+      values: ["", "percent", "probability", "density", "probability density"],
+      dflt: "",
+      editType: "calc"
+    },
+    cumulative: {
+      enabled: {
+        valType: "boolean",
+        dflt: false,
+        editType: "calc"
+      },
+      direction: {
+        valType: "enumerated",
+        values: ["increasing", "decreasing"],
+        dflt: "increasing",
+        editType: "calc"
+      },
+      currentbin: {
+        valType: "enumerated",
+        values: ["include", "exclude", "half"],
+        dflt: "include",
+        editType: "calc"
+      },
+      editType: "calc"
+    },
+    nbinsx: {
+      valType: "integer",
+      min: 0,
+      dflt: 0,
+      editType: "calc"
+    },
+    xbins: makeBinAttrs("x", true),
+    nbinsy: {
+      valType: "integer",
+      min: 0,
+      dflt: 0,
+      editType: "calc"
+    },
+    ybins: makeBinAttrs("y", true),
+    autobinx: {
+      valType: "boolean",
+      dflt: null,
+      editType: "calc"
+    },
+    autobiny: {
+      valType: "boolean",
+      dflt: null,
+      editType: "calc"
+    },
+    bingroup: {
       valType: "string",
       dflt: "",
       editType: "calc"
     },
-    scalemode: {
-      valType: "enumerated",
-      values: ["width", "count"],
-      dflt: "width",
-      editType: "calc"
-    },
-    spanmode: {
-      valType: "enumerated",
-      values: ["soft", "hard", "manual"],
-      dflt: "soft",
-      editType: "calc"
-    },
-    span: {
-      valType: "info_array",
-      items: [
-        { valType: "any", editType: "calc" },
-        { valType: "any", editType: "calc" }
-      ],
-      editType: "calc"
-    },
-    line: {
-      color: {
-        valType: "color",
-        editType: "style"
+    hovertemplate: hovertemplateAttrs({}, { keys: constants_default16.eventDataKeys }),
+    hovertemplatefallback: templatefallbackAttrs(),
+    texttemplate: texttemplateAttrs({ arrayOk: false, editType: "plot" }, { keys: ["label", "value"] }),
+    texttemplatefallback: templatefallbackAttrs({ editType: "plot" }),
+    textposition: extendFlat({}, attributes_default21.textposition, {
+      arrayOk: false
+    }),
+    textfont: font_attributes_default({
+      arrayOk: false,
+      editType: "plot",
+      colorEditType: "style"
+    }),
+    outsidetextfont: font_attributes_default({
+      arrayOk: false,
+      editType: "plot",
+      colorEditType: "style"
+    }),
+    insidetextfont: font_attributes_default({
+      arrayOk: false,
+      editType: "plot",
+      colorEditType: "style"
+    }),
+    insidetextanchor: attributes_default21.insidetextanchor,
+    textangle: attributes_default21.textangle,
+    cliponaxis: attributes_default21.cliponaxis,
+    constraintext: attributes_default21.constraintext,
+    marker: attributes_default21.marker,
+    offsetgroup: attributes_default21.offsetgroup,
+    alignmentgroup: attributes_default21.alignmentgroup,
+    selected: attributes_default21.selected,
+    unselected: attributes_default21.unselected,
+    zorder: attributes_default21.zorder
+  };
+
+  // src/traces/histogram/defaults.js
+  var { handleText: handleText2 } = defaults_default2;
+  function supplyDefaults7(traceIn, traceOut, defaultColor, layout) {
+    function coerce3(attr3, dflt) {
+      return lib_default.coerce(traceIn, traceOut, attributes_default25, attr3, dflt);
+    }
+    var x = coerce3("x");
+    var y = coerce3("y");
+    var cumulative = coerce3("cumulative.enabled");
+    if (cumulative) {
+      coerce3("cumulative.direction");
+      coerce3("cumulative.currentbin");
+    }
+    coerce3("text");
+    var textposition = coerce3("textposition");
+    handleText2(traceIn, traceOut, layout, coerce3, textposition, {
+      moduleHasSelected: true,
+      moduleHasUnselected: true,
+      moduleHasConstrain: true,
+      moduleHasCliponaxis: true,
+      moduleHasTextangle: true,
+      moduleHasInsideanchor: true
+    });
+    coerce3("hovertext");
+    coerce3("hovertemplate");
+    coerce3("hovertemplatefallback");
+    coerce3("xhoverformat");
+    coerce3("yhoverformat");
+    var orientation = coerce3("orientation", y && !x ? "h" : "v");
+    var sampleLetter = orientation === "v" ? "x" : "y";
+    var aggLetter = orientation === "v" ? "y" : "x";
+    var len2 = x && y ? Math.min(lib_default.minRowLength(x) && lib_default.minRowLength(y)) : lib_default.minRowLength(traceOut[sampleLetter] || []);
+    if (!len2) {
+      traceOut.visible = false;
+      return;
+    }
+    traceOut._length = len2;
+    var handleCalendarDefaults = registry_default.getComponentMethod("calendars", "handleTraceDefaults");
+    handleCalendarDefaults(traceIn, traceOut, ["x", "y"], layout);
+    var hasAggregationData = traceOut[aggLetter];
+    if (hasAggregationData) coerce3("histfunc");
+    coerce3("histnorm");
+    coerce3("autobin" + sampleLetter);
+    handleStyleDefaults(traceIn, traceOut, coerce3, defaultColor, layout);
+    lib_default.coerceSelectionMarkerOpacity(traceOut, coerce3);
+    var lineColor = (traceOut.marker.line || {}).color;
+    var errorBarsSupplyDefaults = registry_default.getComponentMethod("errorbars", "supplyDefaults");
+    errorBarsSupplyDefaults(traceIn, traceOut, lineColor || color_default.defaultLine, { axis: "y" });
+    errorBarsSupplyDefaults(traceIn, traceOut, lineColor || color_default.defaultLine, { axis: "x", inherit: "y" });
+    coerce3("zorder");
+  }
+
+  // src/traces/histogram/cross_trace_defaults.js
+  var { validateCornerradius: validateCornerradius3 } = defaults_default2;
+  var nestedProperty4 = lib_default.nestedProperty;
+  var BINATTRS = [
+    { aStr: { x: "xbins.start", y: "ybins.start" }, name: "start" },
+    { aStr: { x: "xbins.end", y: "ybins.end" }, name: "end" },
+    { aStr: { x: "xbins.size", y: "ybins.size" }, name: "size" },
+    { aStr: { x: "nbinsx", y: "nbinsy" }, name: "nbins" }
+  ];
+  var BINDIRECTIONS = ["x", "y"];
+  function crossTraceDefaults5(fullData, fullLayout) {
+    var allBinOpts = fullLayout._histogramBinOpts = {};
+    var histTraces = [];
+    var mustMatchTracesLookup = {};
+    var otherTracesList = [];
+    var traceOut, traces, groupName, binDir;
+    var i, j, k;
+    function coerce3(attr4, dflt) {
+      return lib_default.coerce(traceOut._input, traceOut, traceOut._module.attributes, attr4, dflt);
+    }
+    function orientation2binDir(traceOut2) {
+      return traceOut2.orientation === "v" ? "x" : "y";
+    }
+    function getAxisType(traceOut2, binDir2) {
+      var ax = axis_ids_default.getFromTrace({ _fullLayout: fullLayout }, traceOut2, binDir2);
+      return ax.type;
+    }
+    function fillBinOpts(traceOut2, groupName2, binDir2) {
+      var fallbackGroupName = traceOut2.uid + "__" + binDir2;
+      if (!groupName2) groupName2 = fallbackGroupName;
+      var axType = getAxisType(traceOut2, binDir2);
+      var calendar = traceOut2[binDir2 + "calendar"] || "";
+      var binOpts2 = allBinOpts[groupName2];
+      var needsNewItem = true;
+      if (binOpts2) {
+        if (axType === binOpts2.axType && calendar === binOpts2.calendar) {
+          needsNewItem = false;
+          binOpts2.traces.push(traceOut2);
+          binOpts2.dirs.push(binDir2);
+        } else {
+          groupName2 = fallbackGroupName;
+          if (axType !== binOpts2.axType) {
+            lib_default.warn([
+              "Attempted to group the bins of trace",
+              traceOut2.index,
+              "set on a",
+              "type:" + axType,
+              "axis",
+              "with bins on",
+              "type:" + binOpts2.axType,
+              "axis."
+            ].join(" "));
+          }
+          if (calendar !== binOpts2.calendar) {
+            lib_default.warn([
+              "Attempted to group the bins of trace",
+              traceOut2.index,
+              "set with a",
+              calendar,
+              "calendar",
+              "with bins",
+              binOpts2.calendar ? "on a " + binOpts2.calendar + " calendar" : "w/o a set calendar"
+            ].join(" "));
+          }
+        }
+      }
+      if (needsNewItem) {
+        allBinOpts[groupName2] = {
+          traces: [traceOut2],
+          dirs: [binDir2],
+          axType,
+          calendar: traceOut2[binDir2 + "calendar"] || ""
+        };
+      }
+      traceOut2["_" + binDir2 + "bingroup"] = groupName2;
+    }
+    for (i = 0; i < fullData.length; i++) {
+      traceOut = fullData[i];
+      if (traceIs(traceOut, "histogram")) {
+        histTraces.push(traceOut);
+        delete traceOut._xautoBinFinished;
+        delete traceOut._yautoBinFinished;
+        if (traceOut.type === "histogram") {
+          var r = coerce3("marker.cornerradius", fullLayout.barcornerradius);
+          if (traceOut.marker) {
+            traceOut.marker.cornerradius = validateCornerradius3(r);
+          }
+        }
+        if (!traceIs(traceOut, "2dMap")) {
+          handleGroupingDefaults(traceOut._input, traceOut, fullLayout, coerce3, fullLayout.barmode);
+        }
+      }
+    }
+    var alignmentOpts = fullLayout._alignmentOpts || {};
+    for (i = 0; i < histTraces.length; i++) {
+      traceOut = histTraces[i];
+      groupName = "";
+      if (!traceIs(traceOut, "2dMap")) {
+        binDir = orientation2binDir(traceOut);
+        if (fullLayout.barmode === "group" && traceOut.alignmentgroup) {
+          var pa = traceOut[binDir + "axis"];
+          var aGroupId = getAxisGroup(fullLayout, pa) + traceOut.orientation;
+          if ((alignmentOpts[aGroupId] || {})[traceOut.alignmentgroup]) {
+            groupName = aGroupId;
+          }
+        }
+        if (!groupName && fullLayout.barmode !== "overlay") {
+          groupName = getAxisGroup(fullLayout, traceOut.xaxis) + getAxisGroup(fullLayout, traceOut.yaxis) + orientation2binDir(traceOut);
+        }
+      }
+      if (groupName) {
+        if (!mustMatchTracesLookup[groupName]) {
+          mustMatchTracesLookup[groupName] = [];
+        }
+        mustMatchTracesLookup[groupName].push(traceOut);
+      } else {
+        otherTracesList.push(traceOut);
+      }
+    }
+    for (groupName in mustMatchTracesLookup) {
+      traces = mustMatchTracesLookup[groupName];
+      if (traces.length === 1) {
+        otherTracesList.push(traces[0]);
+        continue;
+      }
+      var binGroupFound = false;
+      if (traces.length) {
+        traceOut = traces[0];
+        binGroupFound = coerce3("bingroup");
+      }
+      groupName = binGroupFound || groupName;
+      for (i = 0; i < traces.length; i++) {
+        traceOut = traces[i];
+        var bingroupIn = traceOut._input.bingroup;
+        if (bingroupIn && bingroupIn !== groupName) {
+          lib_default.warn([
+            "Trace",
+            traceOut.index,
+            "must match",
+            "within bingroup",
+            groupName + ".",
+            "Ignoring its bingroup:",
+            bingroupIn,
+            "setting."
+          ].join(" "));
+        }
+        traceOut.bingroup = groupName;
+        fillBinOpts(traceOut, groupName, orientation2binDir(traceOut));
+      }
+    }
+    for (i = 0; i < otherTracesList.length; i++) {
+      traceOut = otherTracesList[i];
+      var binGroup = coerce3("bingroup");
+      if (traceIs(traceOut, "2dMap")) {
+        for (k = 0; k < 2; k++) {
+          binDir = BINDIRECTIONS[k];
+          var binGroupInDir = coerce3(
+            binDir + "bingroup",
+            binGroup ? binGroup + "__" + binDir : null
+          );
+          fillBinOpts(traceOut, binGroupInDir, binDir);
+        }
+      } else {
+        fillBinOpts(traceOut, binGroup, orientation2binDir(traceOut));
+      }
+    }
+    for (groupName in allBinOpts) {
+      var binOpts = allBinOpts[groupName];
+      traces = binOpts.traces;
+      for (j = 0; j < BINATTRS.length; j++) {
+        var attrSpec = BINATTRS[j];
+        var attr3 = attrSpec.name;
+        var aStr;
+        var autoVals;
+        if (attr3 === "nbins" && binOpts.sizeFound) continue;
+        for (i = 0; i < traces.length; i++) {
+          traceOut = traces[i];
+          binDir = binOpts.dirs[i];
+          aStr = attrSpec.aStr[binDir];
+          if (nestedProperty4(traceOut._input, aStr).get() !== void 0) {
+            binOpts[attr3] = coerce3(aStr);
+            binOpts[attr3 + "Found"] = true;
+            break;
+          }
+          autoVals = (traceOut._autoBin || {})[binDir] || {};
+          if (autoVals[attr3]) {
+            nestedProperty4(traceOut, aStr).set(autoVals[attr3]);
+          }
+        }
+        if (attr3 === "start" || attr3 === "end") {
+          for (; i < traces.length; i++) {
+            traceOut = traces[i];
+            if (traceOut["_" + binDir + "bingroup"]) {
+              autoVals = (traceOut._autoBin || {})[binDir] || {};
+              coerce3(aStr, autoVals[attr3]);
+            }
+          }
+        }
+        if (attr3 === "nbins" && !binOpts.sizeFound && !binOpts.nbinsFound) {
+          traceOut = traces[0];
+          binOpts[attr3] = coerce3(aStr);
+        }
+      }
+    }
+  }
+
+  // src/traces/histogram/hover.js
+  var { hoverPoints: barHover } = hover_default2;
+  var { hoverLabelText: hoverLabelText2 } = axes_default;
+  function hoverPoints6(pointData, xval, yval, hovermode, opts) {
+    var pts = barHover(pointData, xval, yval, hovermode, opts);
+    if (!pts) return;
+    pointData = pts[0];
+    var di = pointData.cd[pointData.index];
+    var trace = pointData.cd[0].trace;
+    if (!trace.cumulative.enabled) {
+      var posLetter = trace.orientation === "h" ? "y" : "x";
+      pointData[posLetter + "Label"] = hoverLabelText2(pointData[posLetter + "a"], [di.ph0, di.ph1], trace[posLetter + "hoverformat"]);
+    }
+    return pts;
+  }
+
+  // src/traces/histogram/event_data.js
+  function eventData3(out, pt, trace, cd, pointNumber) {
+    out.x = "xVal" in pt ? pt.xVal : pt.x;
+    out.y = "yVal" in pt ? pt.yVal : pt.y;
+    if ("zLabelVal" in pt) out.z = pt.zLabelVal;
+    if (pt.xa) out.xaxis = pt.xa;
+    if (pt.ya) out.yaxis = pt.ya;
+    if (!(trace.cumulative || {}).enabled) {
+      var pts = Array.isArray(pointNumber) ? cd[0].pts[pointNumber[0]][pointNumber[1]] : cd[pointNumber].pts;
+      out.pointNumbers = pts;
+      out.binNumber = out.pointNumber;
+      delete out.pointNumber;
+      delete out.pointIndex;
+      var pointIndices;
+      if (trace._indexToPoints) {
+        pointIndices = [];
+        for (var i = 0; i < pts.length; i++) {
+          pointIndices = pointIndices.concat(trace._indexToPoints[pts[i]]);
+        }
+      } else {
+        pointIndices = pts;
+      }
+      out.pointIndices = pointIndices;
+    }
+    return out;
+  }
+
+  // src/traces/histogram/index.js
+  var { calc: _req52 } = calc_default2;
+  var { crossTraceCalc: _req63 } = cross_trace_calc_default;
+  var { plot: _req72 } = plot_default;
+  var { style: _req82, styleOnSelect: _req93 } = style_default2;
+  var histogram_default = {
+    attributes: attributes_default25,
+    layoutAttributes: layout_attributes_default6,
+    supplyDefaults: supplyDefaults7,
+    crossTraceDefaults: crossTraceDefaults5,
+    supplyLayoutDefaults: layout_defaults_default2,
+    calc: _req52,
+    crossTraceCalc: _req63,
+    plot: _req72,
+    layerName: "barlayer",
+    style: _req82,
+    styleOnSelect: _req93,
+    colorbar: marker_colorbar_default,
+    hoverPoints: hoverPoints6,
+    selectPoints: selectPoints2,
+    eventData: eventData3,
+    moduleType: "trace",
+    name: "histogram",
+    basePlotModule: cartesian_default,
+    categories: ["bar-like", "cartesian", "svg", "bar", "histogram", "oriented", "errorBarsOK", "showLegend"],
+    meta: {}
+  };
+
+  // src/traces/histogram2d/attributes.js
+  var { axisHoverFormat: axisHoverFormat8 } = axis_format_attributes_default;
+  var attributes_default26 = extendFlat(
+    {
+      x: attributes_default25.x,
+      y: attributes_default25.y,
+      z: {
+        valType: "data_array",
+        editType: "calc"
       },
-      width: {
-        valType: "number",
-        min: 0,
-        dflt: 2,
-        editType: "style"
-      },
-      editType: "plot"
-    },
-    fillcolor: attributes_default22.fillcolor,
-    points: extendFlat({}, attributes_default22.boxpoints, {}),
-    jitter: extendFlat({}, attributes_default22.jitter, {}),
-    pointpos: extendFlat({}, attributes_default22.pointpos, {}),
-    width: extendFlat({}, attributes_default22.width, {}),
-    marker: attributes_default22.marker,
-    text: attributes_default22.text,
-    hovertext: attributes_default22.hovertext,
-    hovertemplate: attributes_default22.hovertemplate,
-    hovertemplatefallback: attributes_default22.hovertemplatefallback,
-    quartilemethod: attributes_default22.quartilemethod,
-    box: {
-      visible: {
-        valType: "boolean",
-        dflt: false,
-        editType: "plot"
-      },
-      width: {
-        valType: "number",
-        min: 0,
-        max: 1,
-        dflt: 0.25,
-        editType: "plot"
-      },
-      fillcolor: {
-        valType: "color",
-        editType: "style"
-      },
-      line: {
+      marker: {
         color: {
-          valType: "color",
-          editType: "style"
+          valType: "data_array",
+          editType: "calc"
         },
-        width: {
-          valType: "number",
-          min: 0,
-          editType: "style"
-        },
-        editType: "style"
+        editType: "calc"
       },
-      editType: "plot"
+      histnorm: attributes_default25.histnorm,
+      histfunc: attributes_default25.histfunc,
+      nbinsx: attributes_default25.nbinsx,
+      xbins: makeBinAttrs("x"),
+      nbinsy: attributes_default25.nbinsy,
+      ybins: makeBinAttrs("y"),
+      autobinx: attributes_default25.autobinx,
+      autobiny: attributes_default25.autobiny,
+      bingroup: extendFlat({}, attributes_default25.bingroup, {}),
+      xbingroup: extendFlat({}, attributes_default25.bingroup, {}),
+      ybingroup: extendFlat({}, attributes_default25.bingroup, {}),
+      xgap: attributes_default23.xgap,
+      ygap: attributes_default23.ygap,
+      zsmooth: attributes_default23.zsmooth,
+      xhoverformat: axisHoverFormat8("x"),
+      yhoverformat: axisHoverFormat8("y"),
+      zhoverformat: axisHoverFormat8("z", 1),
+      hovertemplate: hovertemplateAttrs({}, { keys: ["z"] }),
+      hovertemplatefallback: templatefallbackAttrs(),
+      texttemplate: texttemplateAttrs({ arrayOk: false, editType: "plot" }, { keys: ["z"] }),
+      texttemplatefallback: templatefallbackAttrs({ editType: "plot" }),
+      textfont: attributes_default23.textfont,
+      showlegend: extendFlat({}, attributes_default2.showlegend, { dflt: false })
     },
-    meanline: {
-      visible: {
-        valType: "boolean",
-        dflt: false,
+    colorScaleAttrs("", { cLetter: "z", autoColorDflt: false })
+  );
+
+  // src/traces/histogram2d/sample_defaults.js
+  function handleSampleDefaults2(traceIn, traceOut, coerce3, layout) {
+    var x = coerce3("x");
+    var y = coerce3("y");
+    var xlen = lib_default.minRowLength(x);
+    var ylen = lib_default.minRowLength(y);
+    if (!xlen || !ylen) {
+      traceOut.visible = false;
+      return;
+    }
+    traceOut._length = Math.min(xlen, ylen);
+    var handleCalendarDefaults = registry_default.getComponentMethod("calendars", "handleTraceDefaults");
+    handleCalendarDefaults(traceIn, traceOut, ["x", "y"], layout);
+    var hasAggregationData = coerce3("z") || coerce3("marker.color");
+    if (hasAggregationData) coerce3("histfunc");
+    coerce3("histnorm");
+    coerce3("autobinx");
+    coerce3("autobiny");
+  }
+
+  // src/traces/histogram2d/defaults.js
+  function supplyDefaults8(traceIn, traceOut, defaultColor, layout) {
+    function coerce3(attr3, dflt) {
+      return lib_default.coerce(traceIn, traceOut, attributes_default26, attr3, dflt);
+    }
+    handleSampleDefaults2(traceIn, traceOut, coerce3, layout);
+    if (traceOut.visible === false) return;
+    handleStyleDefaults3(traceIn, traceOut, coerce3, layout);
+    colorScaleDefaults(traceIn, traceOut, layout, coerce3, { prefix: "", cLetter: "z" });
+    coerce3("hovertemplate");
+    coerce3("hovertemplatefallback");
+    handleHeatmapLabelDefaults(coerce3, layout);
+    coerce3("xhoverformat");
+    coerce3("yhoverformat");
+  }
+
+  // src/traces/histogram2d/hover.js
+  var { hoverLabelText: hoverLabelText3 } = axes_default;
+  function hoverPoints7(pointData, xval, yval, hovermode, opts) {
+    var pts = hoverPoints4(pointData, xval, yval, hovermode, opts);
+    if (!pts) return;
+    pointData = pts[0];
+    var indices = pointData.index;
+    var ny = indices[0];
+    var nx = indices[1];
+    var cd0 = pointData.cd[0];
+    var trace = cd0.trace;
+    var xRange = cd0.xRanges[nx];
+    var yRange = cd0.yRanges[ny];
+    pointData.xLabel = hoverLabelText3(pointData.xa, [xRange[0], xRange[1]], trace.xhoverformat);
+    pointData.yLabel = hoverLabelText3(pointData.ya, [yRange[0], yRange[1]], trace.yhoverformat);
+    return pts;
+  }
+
+  // src/traces/histogram2d/index.js
+  var histogram2d_default = {
+    attributes: attributes_default26,
+    supplyDefaults: supplyDefaults8,
+    crossTraceDefaults: crossTraceDefaults5,
+    calc: calc9,
+    plot: plot_default3,
+    layerName: "heatmaplayer",
+    colorbar: colorbar_default3,
+    style: style6,
+    hoverPoints: hoverPoints7,
+    eventData: eventData3,
+    moduleType: "trace",
+    name: "histogram2d",
+    basePlotModule: cartesian_default,
+    categories: ["cartesian", "svg", "2dMap", "histogram", "showLegend"],
+    meta: {}
+  };
+
+  // src/traces/histogram2dcontour/attributes.js
+  var { axisHoverFormat: axisHoverFormat9 } = axis_format_attributes_default;
+  var attributes_default27 = extendFlat(
+    {
+      x: attributes_default26.x,
+      y: attributes_default26.y,
+      z: attributes_default26.z,
+      marker: attributes_default26.marker,
+      histnorm: attributes_default26.histnorm,
+      histfunc: attributes_default26.histfunc,
+      nbinsx: attributes_default26.nbinsx,
+      xbins: attributes_default26.xbins,
+      nbinsy: attributes_default26.nbinsy,
+      ybins: attributes_default26.ybins,
+      autobinx: attributes_default26.autobinx,
+      autobiny: attributes_default26.autobiny,
+      bingroup: attributes_default26.bingroup,
+      xbingroup: attributes_default26.xbingroup,
+      ybingroup: attributes_default26.ybingroup,
+      autocontour: attributes_default24.autocontour,
+      ncontours: attributes_default24.ncontours,
+      contours: attributes_default24.contours,
+      line: {
+        color: attributes_default24.line.color,
+        width: extendFlat({}, attributes_default24.line.width, {
+          dflt: 0.5
+        }),
+        dash: attributes_default24.line.dash,
+        smoothing: attributes_default24.line.smoothing,
         editType: "plot"
       },
-      color: {
-        valType: "color",
-        editType: "style"
-      },
-      width: {
-        valType: "number",
-        min: 0,
-        editType: "style"
-      },
-      editType: "plot"
+      xhoverformat: axisHoverFormat9("x"),
+      yhoverformat: axisHoverFormat9("y"),
+      zhoverformat: axisHoverFormat9("z", 1),
+      hovertemplate: attributes_default26.hovertemplate,
+      hovertemplatefallback: attributes_default26.hovertemplatefallback,
+      texttemplate: attributes_default24.texttemplate,
+      texttemplatefallback: attributes_default24.texttemplatefallback,
+      textfont: attributes_default24.textfont
     },
-    side: {
-      valType: "enumerated",
-      values: ["both", "positive", "negative"],
-      dflt: "both",
-      editType: "calc"
-    },
-    offsetgroup: attributes_default22.offsetgroup,
-    alignmentgroup: attributes_default22.alignmentgroup,
-    selected: attributes_default22.selected,
-    unselected: attributes_default22.unselected,
-    hoveron: {
-      valType: "flaglist",
-      flags: ["violins", "points", "kde"],
-      dflt: "violins+points+kde",
-      extras: ["all"],
-      editType: "style"
-    },
-    zorder: attributes_default22.zorder
+    colorScaleAttrs("", {
+      cLetter: "z",
+      editTypeOverride: "calc"
+    })
+  );
+
+  // src/traces/histogram2dcontour/defaults.js
+  function supplyDefaults9(traceIn, traceOut, defaultColor, layout) {
+    function coerce3(attr3, dflt) {
+      return lib_default.coerce(traceIn, traceOut, attributes_default27, attr3, dflt);
+    }
+    function coerce22(attr3) {
+      return lib_default.coerce2(traceIn, traceOut, attributes_default27, attr3);
+    }
+    handleSampleDefaults2(traceIn, traceOut, coerce3, layout);
+    if (traceOut.visible === false) return;
+    handleContourDefaults(traceIn, traceOut, coerce3, coerce22);
+    handleStyleDefaults2(traceIn, traceOut, coerce3, layout);
+    coerce3("xhoverformat");
+    coerce3("yhoverformat");
+    coerce3("hovertemplate");
+    coerce3("hovertemplatefallback");
+    if (traceOut.contours && traceOut.contours.coloring === "heatmap") {
+      handleHeatmapLabelDefaults(coerce3, layout);
+    }
+  }
+
+  // src/traces/histogram2dcontour/index.js
+  var histogram2dcontour_default = {
+    attributes: attributes_default27,
+    supplyDefaults: supplyDefaults9,
+    crossTraceDefaults: crossTraceDefaults5,
+    calc: calc10,
+    plot: plot6,
+    layerName: "contourlayer",
+    style: style7,
+    colorbar: colorbar_default2,
+    hoverPoints: hoverPoints5,
+    moduleType: "trace",
+    name: "histogram2dcontour",
+    basePlotModule: cartesian_default,
+    categories: ["cartesian", "svg", "2dMap", "contour", "histogram", "showLegend"],
+    meta: {}
   };
-
-  // src/traces/violin/layout_attributes.js
-  var { extendFlat: extendFlat5 } = lib_default;
-  var layout_attributes_default9 = {
-    violinmode: extendFlat5({}, layout_attributes_default7.boxmode, {}),
-    violingap: extendFlat5({}, layout_attributes_default7.boxgap, {}),
-    violingroupgap: extendFlat5({}, layout_attributes_default7.boxgroupgap, {})
-  };
-
-  // src/traces/violin/calc.js
-  var { BADNUM: BADNUM18 } = numerical_default;
-
-  // src/traces/violin/cross_trace_calc.js
-  var { setPositionOffset: setPositionOffset2 } = cross_trace_calc_default2;
-
-  // src/traces/violin/plot.js
-  var import_d350 = __toESM(require_d3(), 1);
-
-  // src/traces/violin/style.js
-  var import_d351 = __toESM(require_d3(), 1);
-  var { stylePoints: stylePoints3 } = style_default;
-
-  // src/traces/violin/index.js
-  var { crossTraceDefaults: _req312 } = defaults_default3;
-  var { styleOnSelect: _req95 } = style_default;
 
   // src/traces/image/constants.js
   var constants_default17 = {
@@ -74029,7 +76941,7 @@ var Plotly = (() => {
   }
   var cr;
   var i;
-  var attributes_default30 = extendFlat({
+  var attributes_default28 = extendFlat({
     source: {
       valType: "string",
       editType: "calc"
@@ -74108,25 +77020,420 @@ var Plotly = (() => {
     zorder
   });
 
+  // src/traces/image/defaults.js
+  function supplyDefaults10(traceIn, traceOut) {
+    function coerce3(attr3, dflt) {
+      return lib_default.coerce(traceIn, traceOut, attributes_default28, attr3, dflt);
+    }
+    coerce3("source");
+    if (traceOut.source && !traceOut.source.match(IMAGE_URL_PREFIX)) delete traceOut.source;
+    traceOut._hasSource = !!traceOut.source;
+    var z = coerce3("z");
+    traceOut._hasZ = !(z === void 0 || !z.length || !z[0] || !z[0].length);
+    if (!traceOut._hasZ && !traceOut._hasSource) {
+      traceOut.visible = false;
+      return;
+    }
+    coerce3("x0");
+    coerce3("y0");
+    coerce3("dx");
+    coerce3("dy");
+    var cm2;
+    if (traceOut._hasZ) {
+      coerce3("colormodel", "rgb");
+      cm2 = constants_default17.colormodel[traceOut.colormodel];
+      coerce3("zmin", cm2.zminDflt || cm2.min);
+      coerce3("zmax", cm2.zmaxDflt || cm2.max);
+    } else if (traceOut._hasSource) {
+      traceOut.colormodel = "rgba256";
+      cm2 = constants_default17.colormodel[traceOut.colormodel];
+      traceOut.zmin = cm2.zminDflt;
+      traceOut.zmax = cm2.zmaxDflt;
+    }
+    coerce3("zsmooth");
+    coerce3("text");
+    coerce3("hovertext");
+    coerce3("hovertemplate");
+    coerce3("hovertemplatefallback");
+    traceOut._length = null;
+    coerce3("zorder");
+  }
+
   // src/traces/image/calc.js
-  var import_fast_isnumeric50 = __toESM(require_fast_isnumeric(), 1);
+  var import_fast_isnumeric49 = __toESM(require_fast_isnumeric(), 1);
 
   // src/traces/image/helpers.js
   var import_sync = __toESM(require_sync(), 1);
   var import_buffer = __toESM(require_buffer(), 1);
+  var getImageSize = function(src) {
+    var data = src.replace(IMAGE_URL_PREFIX, "");
+    var buff = new import_buffer.Buffer(data, "base64");
+    return (0, import_sync.default)(buff);
+  };
 
   // src/traces/image/calc.js
   var { maxRowLength: maxRowLength3 } = lib_default;
+  function calc12(gd, trace) {
+    var h;
+    var w;
+    if (trace._hasZ) {
+      h = trace.z.length;
+      w = maxRowLength3(trace.z);
+    } else if (trace._hasSource) {
+      var size = getImageSize(trace.source);
+      h = size.height;
+      w = size.width;
+    }
+    var xa = axes_default.getFromId(gd, trace.xaxis || "x");
+    var ya = axes_default.getFromId(gd, trace.yaxis || "y");
+    var x0 = xa.d2c(trace.x0) - trace.dx / 2;
+    var y0 = ya.d2c(trace.y0) - trace.dy / 2;
+    var i;
+    var xrange = [x0, x0 + w * trace.dx];
+    var yrange = [y0, y0 + h * trace.dy];
+    if (xa && xa.type === "log") for (i = 0; i < w; i++) xrange.push(x0 + i * trace.dx);
+    if (ya && ya.type === "log") for (i = 0; i < h; i++) yrange.push(y0 + i * trace.dy);
+    trace._extremes[xa._id] = axes_default.findExtremes(xa, xrange);
+    trace._extremes[ya._id] = axes_default.findExtremes(ya, yrange);
+    trace._scaler = makeScaler(trace);
+    var cd0 = {
+      x0,
+      y0,
+      z: trace.z,
+      w,
+      h
+    };
+    return [cd0];
+  }
+  function scale(zero, ratio, min, max) {
+    return function(c) {
+      return lib_default.constrain((c - zero) * ratio, min, max);
+    };
+  }
+  function constrain2(min, max) {
+    return function(c) {
+      return lib_default.constrain(c, min, max);
+    };
+  }
+  function makeScaler(trace) {
+    var cr = constants_default17.colormodel[trace.colormodel];
+    var colormodel2 = cr.colormodel || trace.colormodel;
+    var n = colormodel2.length;
+    trace._sArray = [];
+    for (var k = 0; k < n; k++) {
+      if (cr.min[k] !== trace.zmin[k] || cr.max[k] !== trace.zmax[k]) {
+        trace._sArray.push(scale(
+          trace.zmin[k],
+          (cr.max[k] - cr.min[k]) / (trace.zmax[k] - trace.zmin[k]),
+          cr.min[k],
+          cr.max[k]
+        ));
+      } else {
+        trace._sArray.push(constrain2(cr.min[k], cr.max[k]));
+      }
+    }
+    return function(pixel) {
+      var c = pixel.slice(0, n);
+      for (var k2 = 0; k2 < n; k2++) {
+        var ck = c[k2];
+        if (!(0, import_fast_isnumeric49.default)(ck)) return false;
+        c[k2] = trace._sArray[k2](ck);
+      }
+      return c;
+    };
+  }
 
   // src/traces/image/plot.js
-  var import_d352 = __toESM(require_d3(), 1);
-  var strTranslate17 = lib_default.strTranslate;
+  var import_d349 = __toESM(require_d3(), 1);
+  var strTranslate16 = lib_default.strTranslate;
+  function plot8(gd, plotinfo, cdimage, imageLayer) {
+    var xa = plotinfo.xaxis;
+    var ya = plotinfo.yaxis;
+    var supportsPixelated = !gd._context._exportedPlot && supports_pixelated_image_default();
+    lib_default.makeTraceGroups(imageLayer, cdimage, "im").each(function(cd) {
+      var plotGroup = import_d349.default.select(this);
+      var cd0 = cd[0];
+      var trace = cd0.trace;
+      var realImage = (trace.zsmooth === "fast" || trace.zsmooth === false && supportsPixelated) && !trace._hasZ && trace._hasSource && xa.type === "linear" && ya.type === "linear";
+      trace._realImage = realImage;
+      var z = cd0.z;
+      var x0 = cd0.x0;
+      var y0 = cd0.y0;
+      var w = cd0.w;
+      var h = cd0.h;
+      var dx = trace.dx;
+      var dy = trace.dy;
+      var left, right, temp, top, bottom, i;
+      i = 0;
+      while (left === void 0 && i < w) {
+        left = xa.c2p(x0 + i * dx);
+        i++;
+      }
+      i = w;
+      while (right === void 0 && i > 0) {
+        right = xa.c2p(x0 + i * dx);
+        i--;
+      }
+      i = 0;
+      while (top === void 0 && i < h) {
+        top = ya.c2p(y0 + i * dy);
+        i++;
+      }
+      i = h;
+      while (bottom === void 0 && i > 0) {
+        bottom = ya.c2p(y0 + i * dy);
+        i--;
+      }
+      if (right < left) {
+        temp = right;
+        right = left;
+        left = temp;
+      }
+      if (bottom < top) {
+        temp = top;
+        top = bottom;
+        bottom = temp;
+      }
+      if (!realImage) {
+        var extra = 0.5;
+        left = Math.max(-extra * xa._length, left);
+        right = Math.min((1 + extra) * xa._length, right);
+        top = Math.max(-extra * ya._length, top);
+        bottom = Math.min((1 + extra) * ya._length, bottom);
+      }
+      var imageWidth = Math.round(right - left);
+      var imageHeight = Math.round(bottom - top);
+      var isOffScreen = imageWidth <= 0 || imageHeight <= 0;
+      if (isOffScreen) {
+        var noImage = plotGroup.selectAll("image").data([]);
+        noImage.exit().remove();
+        return;
+      }
+      function drawMagnifiedPixelsOnCanvas(readPixel) {
+        var canvas = document.createElement("canvas");
+        canvas.width = imageWidth;
+        canvas.height = imageHeight;
+        var context = canvas.getContext("2d", { willReadFrequently: true });
+        var ipx = function(i2) {
+          return lib_default.constrain(Math.round(xa.c2p(x0 + i2 * dx) - left), 0, imageWidth);
+        };
+        var jpx = function(j2) {
+          return lib_default.constrain(Math.round(ya.c2p(y0 + j2 * dy) - top), 0, imageHeight);
+        };
+        var cr = constants_default17.colormodel[trace.colormodel];
+        var colormodel2 = cr.colormodel || trace.colormodel;
+        var fmt = cr.fmt;
+        var c;
+        for (i = 0; i < cd0.w; i++) {
+          var ipx0 = ipx(i);
+          var ipx1 = ipx(i + 1);
+          if (ipx1 === ipx0 || isNaN(ipx1) || isNaN(ipx0)) continue;
+          for (var j = 0; j < cd0.h; j++) {
+            var jpx0 = jpx(j);
+            var jpx1 = jpx(j + 1);
+            if (jpx1 === jpx0 || isNaN(jpx1) || isNaN(jpx0) || !readPixel(i, j)) continue;
+            c = trace._scaler(readPixel(i, j));
+            if (c) {
+              context.fillStyle = colormodel2 + "(" + fmt(c).join(",") + ")";
+            } else {
+              context.fillStyle = "rgba(0,0,0,0)";
+            }
+            context.fillRect(ipx0, jpx0, ipx1 - ipx0, jpx1 - jpx0);
+          }
+        }
+        return canvas;
+      }
+      var image3 = plotGroup.selectAll("image").data([cd]);
+      image3.enter().append("svg:image").attr({
+        xmlns: xmlns_namespaces_default.svg,
+        preserveAspectRatio: "none"
+      });
+      image3.exit().remove();
+      var style11 = trace.zsmooth === false ? STYLE : "";
+      if (realImage) {
+        var xRange = lib_default.simpleMap(xa.range, xa.r2l);
+        var yRange = lib_default.simpleMap(ya.range, ya.r2l);
+        var flipX = xRange[1] < xRange[0];
+        var flipY = yRange[1] > yRange[0];
+        if (flipX || flipY) {
+          var tx = left + imageWidth / 2;
+          var ty = top + imageHeight / 2;
+          style11 += "transform:" + strTranslate16(tx + "px", ty + "px") + "scale(" + (flipX ? -1 : 1) + "," + (flipY ? -1 : 1) + ")" + strTranslate16(-tx + "px", -ty + "px") + ";";
+        }
+      }
+      image3.attr("style", style11);
+      var p = new Promise(function(resolve) {
+        if (trace._hasZ) {
+          resolve();
+        } else if (trace._hasSource) {
+          if (trace._canvas && trace._canvas.el.width === w && trace._canvas.el.height === h && trace._canvas.source === trace.source) {
+            resolve();
+          } else {
+            var canvas = document.createElement("canvas");
+            canvas.width = w;
+            canvas.height = h;
+            var context = canvas.getContext("2d", { willReadFrequently: true });
+            trace._image = trace._image || new Image();
+            var image = trace._image;
+            image.onload = function() {
+              context.drawImage(image, 0, 0);
+              trace._canvas = {
+                el: canvas,
+                source: trace.source
+              };
+              resolve();
+            };
+            image.setAttribute("src", trace.source);
+          }
+        }
+      }).then(function() {
+        var href, canvas;
+        if (trace._hasZ) {
+          canvas = drawMagnifiedPixelsOnCanvas(function(i2, j) {
+            var _z = z[j][i2];
+            if (lib_default.isTypedArray(_z)) _z = Array.from(_z);
+            return _z;
+          });
+          href = canvas.toDataURL("image/png");
+        } else if (trace._hasSource) {
+          if (realImage) {
+            href = trace.source;
+          } else {
+            var context = trace._canvas.el.getContext("2d", { willReadFrequently: true });
+            var data = context.getImageData(0, 0, w, h).data;
+            canvas = drawMagnifiedPixelsOnCanvas(function(i2, j) {
+              var index = 4 * (j * w + i2);
+              return [
+                data[index],
+                data[index + 1],
+                data[index + 2],
+                data[index + 3]
+              ];
+            });
+            href = canvas.toDataURL("image/png");
+          }
+        }
+        image3.attr({
+          "xlink:href": href,
+          height: imageHeight,
+          width: imageWidth,
+          x: left,
+          y: top
+        });
+      });
+      gd._promises.push(p);
+    });
+  }
 
   // src/traces/image/style.js
-  var import_d353 = __toESM(require_d3(), 1);
+  var import_d350 = __toESM(require_d3(), 1);
+  function style8(gd) {
+    import_d350.default.select(gd).selectAll(".im image").style("opacity", function(d) {
+      return d[0].trace.opacity;
+    });
+  }
 
   // src/traces/image/hover.js
   var isArrayOrTypedArray14 = lib_default.isArrayOrTypedArray;
+  function hoverPoints8(pointData, xval, yval) {
+    var cd0 = pointData.cd[0];
+    var trace = cd0.trace;
+    var xa = pointData.xa;
+    var ya = pointData.ya;
+    if (fx_default.inbox(xval - cd0.x0, xval - (cd0.x0 + cd0.w * trace.dx), 0) > 0 || fx_default.inbox(yval - cd0.y0, yval - (cd0.y0 + cd0.h * trace.dy), 0) > 0) {
+      return;
+    }
+    var nx = Math.floor((xval - cd0.x0) / trace.dx);
+    var ny = Math.floor(Math.abs(yval - cd0.y0) / trace.dy);
+    var pixel;
+    if (trace._hasZ) {
+      pixel = cd0.z[ny][nx];
+    } else if (trace._hasSource) {
+      pixel = trace._canvas.el.getContext("2d", { willReadFrequently: true }).getImageData(nx, ny, 1, 1).data;
+    }
+    if (!pixel) return;
+    var hoverinfo = cd0.hi || trace.hoverinfo;
+    var fmtColor;
+    if (hoverinfo) {
+      var parts = hoverinfo.split("+");
+      if (parts.indexOf("all") !== -1) parts = ["color"];
+      if (parts.indexOf("color") !== -1) fmtColor = true;
+    }
+    var cr = constants_default17.colormodel[trace.colormodel];
+    var colormodel2 = cr.colormodel || trace.colormodel;
+    var dims = colormodel2.length;
+    var c = trace._scaler(pixel);
+    var s = cr.suffix;
+    var colorstring = [];
+    if (trace.hovertemplate || fmtColor) {
+      colorstring.push("[" + [c[0] + s[0], c[1] + s[1], c[2] + s[2]].join(", "));
+      if (dims === 4) colorstring.push(", " + c[3] + s[3]);
+      colorstring.push("]");
+      colorstring = colorstring.join("");
+      pointData.extraText = colormodel2.toUpperCase() + ": " + colorstring;
+    }
+    var text;
+    if (isArrayOrTypedArray14(trace.hovertext) && isArrayOrTypedArray14(trace.hovertext[ny])) {
+      text = trace.hovertext[ny][nx];
+    } else if (isArrayOrTypedArray14(trace.text) && isArrayOrTypedArray14(trace.text[ny])) {
+      text = trace.text[ny][nx];
+    }
+    var py = ya.c2p(cd0.y0 + (ny + 0.5) * trace.dy);
+    var xVal = cd0.x0 + (nx + 0.5) * trace.dx;
+    var yVal = cd0.y0 + (ny + 0.5) * trace.dy;
+    var zLabel = "[" + pixel.slice(0, trace.colormodel.length).join(", ") + "]";
+    return [lib_default.extendFlat(pointData, {
+      index: [ny, nx],
+      x0: xa.c2p(cd0.x0 + nx * trace.dx),
+      x1: xa.c2p(cd0.x0 + (nx + 1) * trace.dx),
+      y0: py,
+      y1: py,
+      color: c,
+      xVal,
+      xLabelVal: xVal,
+      yVal,
+      yLabelVal: yVal,
+      zLabelVal: zLabel,
+      text,
+      hovertemplateLabels: {
+        zLabel,
+        colorLabel: colorstring,
+        "color[0]Label": c[0] + s[0],
+        "color[1]Label": c[1] + s[1],
+        "color[2]Label": c[2] + s[2],
+        "color[3]Label": c[3] + s[3]
+      }
+    })];
+  }
+
+  // src/traces/image/event_data.js
+  function eventData4(out, pt) {
+    if ("xVal" in pt) out.x = pt.xVal;
+    if ("yVal" in pt) out.y = pt.yVal;
+    if (pt.xa) out.xaxis = pt.xa;
+    if (pt.ya) out.yaxis = pt.ya;
+    out.color = pt.color;
+    out.colormodel = pt.trace.colormodel;
+    if (!out.z) out.z = pt.color;
+    return out;
+  }
+
+  // src/traces/image/index.js
+  var image_default = {
+    attributes: attributes_default28,
+    supplyDefaults: supplyDefaults10,
+    calc: calc12,
+    plot: plot8,
+    style: style8,
+    hoverPoints: hoverPoints8,
+    eventData: eventData4,
+    moduleType: "trace",
+    name: "image",
+    basePlotModule: cartesian_default,
+    categories: ["cartesian", "svg", "2dMap", "noSortingByValue"],
+    animatable: false,
+    meta: {}
+  };
 
   // src/traces/pie/attributes.js
   var textFontAttrs2 = font_attributes_default({
@@ -74134,7 +77441,7 @@ var Plotly = (() => {
     arrayOk: true,
     colorEditType: "plot"
   });
-  var attributes_default31 = {
+  var attributes_default29 = {
     labels: {
       valType: "data_array",
       editType: "calc"
@@ -74305,7 +77612,7 @@ var Plotly = (() => {
   };
 
   // src/traces/pie/defaults.js
-  var import_fast_isnumeric51 = __toESM(require_fast_isnumeric(), 1);
+  var import_fast_isnumeric50 = __toESM(require_fast_isnumeric(), 1);
   var { handleText: handleText3 } = defaults_default2;
   var { coercePattern: coercePattern4 } = lib_default;
   function handleLabelsAndValues(labels, values) {
@@ -74317,7 +77624,7 @@ var Plotly = (() => {
       var hasPositive;
       for (var i = 0; i < len2; i++) {
         var v = values[i];
-        if ((0, import_fast_isnumeric51.default)(v) && v > 0) {
+        if ((0, import_fast_isnumeric50.default)(v) && v > 0) {
           hasPositive = true;
           break;
         }
@@ -74344,9 +77651,9 @@ var Plotly = (() => {
     if (traceIn.marker && !traceOut.marker.pattern.fgcolor) traceOut.marker.pattern.fgcolor = traceIn.marker.colors;
     if (!traceOut.marker.pattern.bgcolor) traceOut.marker.pattern.bgcolor = layout.paper_bgcolor;
   }
-  function supplyDefaults13(traceIn, traceOut, defaultColor, layout) {
+  function supplyDefaults11(traceIn, traceOut, defaultColor, layout) {
     function coerce3(attr3, dflt) {
-      return lib_default.coerce(traceIn, traceOut, attributes_default31, attr3, dflt);
+      return lib_default.coerce(traceIn, traceOut, attributes_default29, attr3, dflt);
     }
     var labels = coerce3("labels");
     var values = coerce3("values");
@@ -74410,13 +77717,40 @@ var Plotly = (() => {
   var defaults_default4 = {
     handleLabelsAndValues,
     handleMarkerDefaults,
-    supplyDefaults: supplyDefaults13
+    supplyDefaults: supplyDefaults11
   };
 
+  // src/traces/pie/layout_attributes.js
+  var layout_attributes_default8 = {
+    hiddenlabels: {
+      valType: "data_array",
+      editType: "calc"
+    },
+    piecolorway: {
+      valType: "colorlist",
+      editType: "calc"
+    },
+    extendpiecolors: {
+      valType: "boolean",
+      dflt: true,
+      editType: "calc"
+    }
+  };
+
+  // src/traces/pie/layout_defaults.js
+  function supplyLayoutDefaults11(layoutIn, layoutOut) {
+    function coerce3(attr3, dflt) {
+      return lib_default.coerce(layoutIn, layoutOut, layout_attributes_default8, attr3, dflt);
+    }
+    coerce3("hiddenlabels");
+    coerce3("piecolorway", layoutOut.colorway);
+    coerce3("extendpiecolors");
+  }
+
   // src/traces/pie/calc.js
-  var import_fast_isnumeric52 = __toESM(require_fast_isnumeric(), 1);
+  var import_fast_isnumeric51 = __toESM(require_fast_isnumeric(), 1);
   var extendedColorWayList = {};
-  function calc14(gd, trace) {
+  function calc13(gd, trace) {
     var cd = [];
     var fullLayout = gd._fullLayout;
     var hiddenLabels = fullLayout.hiddenlabels || [];
@@ -74440,7 +77774,7 @@ var Plotly = (() => {
       var v, label, hidden;
       if (hasValues) {
         v = vals[i];
-        if (!(0, import_fast_isnumeric52.default)(v)) continue;
+        if (!(0, import_fast_isnumeric51.default)(v)) continue;
         v = +v;
       } else v = 1;
       label = labels[i];
@@ -74490,7 +77824,7 @@ var Plotly = (() => {
       return color2;
     };
   }
-  function crossTraceCalc5(gd, plotinfo) {
+  function crossTraceCalc4(gd, plotinfo) {
     var desiredType = (plotinfo || {}).type;
     if (!desiredType) desiredType = "pie";
     var fullLayout = gd._fullLayout;
@@ -74535,17 +77869,17 @@ var Plotly = (() => {
     return colors;
   }
   var calc_default3 = {
-    calc: calc14,
-    crossTraceCalc: crossTraceCalc5,
+    calc: calc13,
+    crossTraceCalc: crossTraceCalc4,
     makePullColorFn,
     generateExtendedColors
   };
 
   // src/traces/pie/plot.js
-  var import_d354 = __toESM(require_d3(), 1);
+  var import_d351 = __toESM(require_d3(), 1);
 
   // src/traces/pie/event_data.js
-  function eventData6(pt, trace) {
+  function eventData5(pt, trace) {
     var out = {
       curveNumber: trace.index,
       pointNumbers: pt.pts,
@@ -74573,10 +77907,10 @@ var Plotly = (() => {
   var { TEXTPAD: TEXTPAD4 } = constants_default14;
   var { isValidTextValue } = lib_default;
   var strScale2 = lib_default.strScale;
-  var strTranslate18 = lib_default.strTranslate;
+  var strTranslate17 = lib_default.strTranslate;
   var recordMinTextSize3 = uniform_text_default.recordMinTextSize;
   var clearMinTextSize3 = uniform_text_default.clearMinTextSize;
-  function plot10(gd, cdModule) {
+  function plot9(gd, cdModule) {
     var isStatic = gd._context.staticPlot;
     var fullLayout = gd._fullLayout;
     var gs = fullLayout._size;
@@ -74584,13 +77918,13 @@ var Plotly = (() => {
     prerenderTitles(cdModule, gd);
     layoutAreas(cdModule, gs);
     var plotGroups = lib_default.makeTraceGroups(fullLayout._pielayer, cdModule, "trace").each(function(cd) {
-      var plotGroup = import_d354.default.select(this);
+      var plotGroup = import_d351.default.select(this);
       var cd0 = cd[0];
       var trace = cd0.trace;
       setCoords(cd);
       plotGroup.attr("stroke-linejoin", "round");
       plotGroup.each(function() {
-        var slices = import_d354.default.select(this).selectAll("g.slice").data(cd);
+        var slices = import_d351.default.select(this).selectAll("g.slice").data(cd);
         slices.enter().append("g").classed("slice", true);
         slices.exit().remove();
         var quadrants = [
@@ -74602,7 +77936,7 @@ var Plotly = (() => {
         var hasOutsideText = false;
         slices.each(function(pt, i) {
           if (pt.hidden) {
-            import_d354.default.select(this).selectAll("path,g").remove();
+            import_d351.default.select(this).selectAll("path,g").remove();
             return;
           }
           pt.pointNumber = pt.i;
@@ -74610,7 +77944,7 @@ var Plotly = (() => {
           quadrants[pt.pxmid[1] < 0 ? 0 : 1][pt.pxmid[0] < 0 ? 0 : 1].push(pt);
           var cx = cd0.cx;
           var cy = cd0.cy;
-          var sliceTop = import_d354.default.select(this);
+          var sliceTop = import_d351.default.select(this);
           var slicePath = sliceTop.selectAll("path.surface").data([pt]);
           slicePath.enter().append("path").classed("surface", true).style({ "pointer-events": isStatic ? "none" : "all" });
           sliceTop.call(attachFxHandlers, gd, cd);
@@ -74623,10 +77957,10 @@ var Plotly = (() => {
           }
           pt.cxFinal = cx;
           pt.cyFinal = cy;
-          function arc(start, finish, cw, scale) {
-            var dx = scale * (finish[0] - start[0]);
-            var dy = scale * (finish[1] - start[1]);
-            return "a" + scale * cd0.r + "," + scale * cd0.r + " 0 " + pt.largeArc + (cw ? " 1 " : " 0 ") + dx + "," + dy;
+          function arc(start, finish, cw, scale2) {
+            var dx = scale2 * (finish[0] - start[0]);
+            var dy = scale2 * (finish[1] - start[1]);
+            return "a" + scale2 * cd0.r + "," + scale2 * cd0.r + " 0 " + pt.largeArc + (cw ? " 1 " : " 0 ") + dx + "," + dy;
           }
           var hole = trace.hole;
           if (pt.v === cd0.vTotal) {
@@ -74655,7 +77989,7 @@ var Plotly = (() => {
           sliceTextGroup.enter().append("g").classed("slicetext", true);
           sliceTextGroup.exit().remove();
           sliceTextGroup.each(function() {
-            var sliceText = lib_default.ensureSingle(import_d354.default.select(this), "text", "", function(s) {
+            var sliceText = lib_default.ensureSingle(import_d351.default.select(this), "text", "", function(s) {
               s.attr("data-notex", 1);
             });
             var font2 = lib_default.ensureUniformFontSize(
@@ -74700,11 +78034,11 @@ var Plotly = (() => {
             lib_default.setTransormAndDisplay(sliceText, transform);
           });
         });
-        var titleTextGroup = import_d354.default.select(this).selectAll("g.titletext").data(trace.title.text ? [0] : []);
+        var titleTextGroup = import_d351.default.select(this).selectAll("g.titletext").data(trace.title.text ? [0] : []);
         titleTextGroup.enter().append("g").classed("titletext", true);
         titleTextGroup.exit().remove();
         titleTextGroup.each(function() {
-          var titleText = lib_default.ensureSingle(import_d354.default.select(this), "text", "", function(s) {
+          var titleText = lib_default.ensureSingle(import_d351.default.select(this), "text", "", function(s) {
             s.attr("data-notex", 1);
           });
           var txt = trace.title.text;
@@ -74724,7 +78058,7 @@ var Plotly = (() => {
           }
           titleText.attr(
             "transform",
-            strTranslate18(transform.x, transform.y) + strScale2(Math.min(1, transform.scale)) + strTranslate18(transform.tx, transform.ty)
+            strTranslate17(transform.x, transform.y) + strScale2(Math.min(1, transform.scale)) + strTranslate17(transform.tx, transform.ty)
           );
         });
         if (hasOutsideText) scootLabels(quadrants, trace);
@@ -74752,14 +78086,14 @@ var Plotly = (() => {
     });
     setTimeout(function() {
       plotGroups.selectAll("tspan").each(function() {
-        var s = import_d354.default.select(this);
+        var s = import_d351.default.select(this);
         if (s.attr("dy")) s.attr("dy", s.attr("dy"));
       });
     }, 0);
   }
   function plotTextLines(slices, trace) {
     slices.each(function(pt) {
-      var sliceTop = import_d354.default.select(this);
+      var sliceTop = import_d351.default.select(this);
       if (!pt.labelExtraX && !pt.labelExtraY) {
         sliceTop.select("path.textline").remove();
         return;
@@ -74857,7 +78191,7 @@ var Plotly = (() => {
             textAlign: helpers_default4.castOption(hoverLabel.align, pt.pts),
             hovertemplate: helpers_default4.castOption(trace2.hovertemplate, pt.pts),
             hovertemplateLabels: pt,
-            eventData: [eventData6(pt, trace2)]
+            eventData: [eventData5(pt, trace2)]
           },
           {
             container: fullLayout2._hoverlayer.node(),
@@ -74871,19 +78205,19 @@ var Plotly = (() => {
       }
       trace._hasHoverEvent = true;
       gd.emit("plotly_hover", {
-        points: [eventData6(pt, trace2)],
-        event: import_d354.default.event
+        points: [eventData5(pt, trace2)],
+        event: import_d351.default.event
       });
     });
     sliceTop.on("mouseout", function(evt) {
       var fullLayout2 = gd._fullLayout;
       var trace2 = gd._fullData[trace.index];
-      var pt = import_d354.default.select(this).datum();
+      var pt = import_d351.default.select(this).datum();
       if (trace._hasHoverEvent) {
-        evt.originalEvent = import_d354.default.event;
+        evt.originalEvent = import_d351.default.event;
         gd.emit("plotly_unhover", {
-          points: [eventData6(pt, trace2)],
-          event: import_d354.default.event
+          points: [eventData5(pt, trace2)],
+          event: import_d351.default.event
         });
         trace._hasHoverEvent = false;
       }
@@ -74896,8 +78230,8 @@ var Plotly = (() => {
       var fullLayout2 = gd._fullLayout;
       var trace2 = gd._fullData[trace.index];
       if (gd._dragging || fullLayout2.hovermode === false) return;
-      gd._hoverdata = [eventData6(pt, trace2)];
-      fx_default.click(gd, import_d354.default.event);
+      gd._hoverdata = [eventData5(pt, trace2)];
+      fx_default.click(gd, import_d351.default.event);
     });
   }
   function determineOutsideTextFont(trace, pt, layoutFont) {
@@ -75421,7 +78755,7 @@ var Plotly = (() => {
     transform.noCenter = true;
   }
   var plot_default4 = {
-    plot: plot10,
+    plot: plot9,
     formatSliceLabel,
     transformInsideText,
     determineInsideTextFont,
@@ -75433,13 +78767,1832 @@ var Plotly = (() => {
   };
 
   // src/traces/pie/style.js
-  var import_d355 = __toESM(require_d3(), 1);
+  var import_d352 = __toESM(require_d3(), 1);
   var { resizeText: resizeText3 } = uniform_text_default;
+  function style9(gd) {
+    var s = gd._fullLayout._pielayer.selectAll(".trace");
+    resizeText3(gd, s, "pie");
+    s.each(function(cd) {
+      var cd0 = cd[0];
+      var trace = cd0.trace;
+      var traceSelection = import_d352.default.select(this);
+      traceSelection.style({ opacity: trace.opacity });
+      traceSelection.selectAll("path.surface").each(function(pt) {
+        import_d352.default.select(this).call(styleOne, pt, trace, gd);
+      });
+    });
+  }
+
+  // src/traces/pie/base_plot.js
+  var name6 = "pie";
+  var plot10 = function(gd, traces, transitionOpts, makeOnCompleteCallback) {
+    plots_default.plotBasePlot(name6, gd, traces, transitionOpts, makeOnCompleteCallback);
+  };
+  var clean4 = function(newFullData, newFullLayout, oldFullData, oldFullLayout) {
+    plots_default.cleanBasePlot(name6, newFullData, newFullLayout, oldFullData, oldFullLayout);
+  };
+  var base_plot_default = { name: name6, plot: plot10, clean: clean4 };
 
   // src/traces/pie/index.js
-  var { supplyDefaults: _req110 } = defaults_default4;
-  var { calc: _req410, crossTraceCalc: _req54 } = calc_default3;
-  var { plot: _req66 } = plot_default4;
+  var { supplyDefaults: _req1 } = defaults_default4;
+  var { calc: _req42, crossTraceCalc: _req53 } = calc_default3;
+  var { plot: _req64 } = plot_default4;
+  var pie_default = {
+    attributes: attributes_default29,
+    supplyDefaults: _req1,
+    supplyLayoutDefaults: supplyLayoutDefaults11,
+    layoutAttributes: layout_attributes_default8,
+    calc: _req42,
+    crossTraceCalc: _req53,
+    plot: _req64,
+    style: style9,
+    styleOne,
+    moduleType: "trace",
+    name: "pie",
+    basePlotModule: base_plot_default,
+    categories: ["pie-like", "pie", "showLegend"],
+    meta: {}
+  };
+
+  // src/traces/scatterternary/attributes.js
+  var scatterMarkerAttrs3 = attributes_default9.marker;
+  var scatterLineAttrs4 = attributes_default9.line;
+  var scatterMarkerLineAttrs3 = scatterMarkerAttrs3.line;
+  var attributes_default30 = {
+    a: {
+      valType: "data_array",
+      editType: "calc"
+    },
+    b: {
+      valType: "data_array",
+      editType: "calc"
+    },
+    c: {
+      valType: "data_array",
+      editType: "calc"
+    },
+    sum: {
+      valType: "number",
+      dflt: 0,
+      min: 0,
+      editType: "calc"
+    },
+    mode: extendFlat({}, attributes_default9.mode, { dflt: "markers" }),
+    text: extendFlat({}, attributes_default9.text, {}),
+    texttemplate: texttemplateAttrs({ editType: "plot" }, { keys: ["a", "b", "c", "text"] }),
+    texttemplatefallback: templatefallbackAttrs({ editType: "plot" }),
+    hovertext: extendFlat({}, attributes_default9.hovertext, {}),
+    line: {
+      color: scatterLineAttrs4.color,
+      width: scatterLineAttrs4.width,
+      dash,
+      backoff: scatterLineAttrs4.backoff,
+      shape: extendFlat({}, scatterLineAttrs4.shape, { values: ["linear", "spline"] }),
+      smoothing: scatterLineAttrs4.smoothing,
+      editType: "calc"
+    },
+    connectgaps: attributes_default9.connectgaps,
+    cliponaxis: attributes_default9.cliponaxis,
+    fill: extendFlat({}, attributes_default9.fill, {
+      values: ["none", "toself", "tonext"],
+      dflt: "none"
+    }),
+    fillcolor: makeFillcolorAttr(),
+    marker: extendFlat(
+      {
+        symbol: scatterMarkerAttrs3.symbol,
+        opacity: scatterMarkerAttrs3.opacity,
+        angle: scatterMarkerAttrs3.angle,
+        angleref: scatterMarkerAttrs3.angleref,
+        standoff: scatterMarkerAttrs3.standoff,
+        maxdisplayed: scatterMarkerAttrs3.maxdisplayed,
+        size: scatterMarkerAttrs3.size,
+        sizeref: scatterMarkerAttrs3.sizeref,
+        sizemin: scatterMarkerAttrs3.sizemin,
+        sizemode: scatterMarkerAttrs3.sizemode,
+        line: extendFlat(
+          {
+            width: scatterMarkerLineAttrs3.width,
+            editType: "calc"
+          },
+          colorScaleAttrs("marker.line")
+        ),
+        gradient: scatterMarkerAttrs3.gradient,
+        editType: "calc"
+      },
+      colorScaleAttrs("marker")
+    ),
+    textfont: attributes_default9.textfont,
+    textposition: attributes_default9.textposition,
+    selected: attributes_default9.selected,
+    unselected: attributes_default9.unselected,
+    hoverinfo: extendFlat({}, attributes_default2.hoverinfo, {
+      flags: ["a", "b", "c", "text", "name"]
+    }),
+    hoveron: attributes_default9.hoveron,
+    hovertemplate: hovertemplateAttrs(),
+    hovertemplatefallback: templatefallbackAttrs()
+  };
+
+  // src/traces/scatterternary/defaults.js
+  function supplyDefaults12(traceIn, traceOut, defaultColor, layout) {
+    function coerce3(attr3, dflt) {
+      return lib_default.coerce(traceIn, traceOut, attributes_default30, attr3, dflt);
+    }
+    var a = coerce3("a");
+    var b = coerce3("b");
+    var c = coerce3("c");
+    var len2;
+    if (a) {
+      len2 = a.length;
+      if (b) {
+        len2 = Math.min(len2, b.length);
+        if (c) len2 = Math.min(len2, c.length);
+      } else if (c) len2 = Math.min(len2, c.length);
+      else len2 = 0;
+    } else if (b && c) {
+      len2 = Math.min(b.length, c.length);
+    }
+    if (!len2) {
+      traceOut.visible = false;
+      return;
+    }
+    traceOut._length = len2;
+    coerce3("sum");
+    coerce3("text");
+    coerce3("hovertext");
+    if (traceOut.hoveron !== "fills") {
+      coerce3("hovertemplate");
+      coerce3("hovertemplatefallback");
+    }
+    var defaultMode = len2 < constants_default7.PTS_LINESONLY ? "lines+markers" : "lines";
+    coerce3("mode", defaultMode);
+    if (subtypes_default.hasMarkers(traceOut)) {
+      markerDefaults(traceIn, traceOut, defaultColor, layout, coerce3, { gradient: true });
+    }
+    if (subtypes_default.hasLines(traceOut)) {
+      lineDefaults(traceIn, traceOut, defaultColor, layout, coerce3, { backoff: true });
+      handleLineShapeDefaults(traceIn, traceOut, coerce3);
+      coerce3("connectgaps");
+    }
+    if (subtypes_default.hasText(traceOut)) {
+      coerce3("texttemplate");
+      coerce3("texttemplatefallback");
+      text_defaults_default(traceIn, traceOut, layout, coerce3);
+    }
+    var dfltHoverOn = [];
+    if (subtypes_default.hasMarkers(traceOut) || subtypes_default.hasText(traceOut)) {
+      coerce3("cliponaxis");
+      coerce3("marker.maxdisplayed");
+      dfltHoverOn.push("points");
+    }
+    coerce3("fill");
+    if (traceOut.fill !== "none") {
+      fillColorDefaults(traceIn, traceOut, defaultColor, coerce3);
+      if (!subtypes_default.hasLines(traceOut)) handleLineShapeDefaults(traceIn, traceOut, coerce3);
+    }
+    if (traceOut.fill === "tonext" || traceOut.fill === "toself") {
+      dfltHoverOn.push("fills");
+    }
+    coerce3("hoveron", dfltHoverOn.join("+") || "points");
+    lib_default.coerceSelectionMarkerOpacity(traceOut, coerce3);
+  }
+
+  // src/traces/scatterternary/format_labels.js
+  function formatLabels2(cdi, trace, fullLayout) {
+    var labels = {};
+    var subplot = fullLayout[trace.subplot]._subplot;
+    labels.aLabel = axes_default.tickText(subplot.aaxis, cdi.a, true).text;
+    labels.bLabel = axes_default.tickText(subplot.baxis, cdi.b, true).text;
+    labels.cLabel = axes_default.tickText(subplot.caxis, cdi.c, true).text;
+    return labels;
+  }
+
+  // src/traces/scatterternary/calc.js
+  var import_fast_isnumeric52 = __toESM(require_fast_isnumeric(), 1);
+  var { calcMarkerSize: calcMarkerSize2 } = calc_default;
+  var dataArrays = ["a", "b", "c"];
+  var arraysToFill = { a: ["b", "c"], b: ["a", "c"], c: ["a", "b"] };
+  function calc14(gd, trace) {
+    var ternary = gd._fullLayout[trace.subplot];
+    var displaySum = ternary.sum;
+    var normSum = trace.sum || displaySum;
+    var arrays = { a: trace.a, b: trace.b, c: trace.c };
+    var ids = trace.ids;
+    var i, j, dataArray, newArray, fillArray1, fillArray2;
+    for (i = 0; i < dataArrays.length; i++) {
+      dataArray = dataArrays[i];
+      if (arrays[dataArray]) continue;
+      fillArray1 = arrays[arraysToFill[dataArray][0]];
+      fillArray2 = arrays[arraysToFill[dataArray][1]];
+      newArray = new Array(fillArray1.length);
+      for (j = 0; j < fillArray1.length; j++) {
+        newArray[j] = normSum - fillArray1[j] - fillArray2[j];
+      }
+      arrays[dataArray] = newArray;
+    }
+    var serieslen = trace._length;
+    var cd = new Array(serieslen);
+    var a, b, c, norm, x, y;
+    for (i = 0; i < serieslen; i++) {
+      a = arrays.a[i];
+      b = arrays.b[i];
+      c = arrays.c[i];
+      if ((0, import_fast_isnumeric52.default)(a) && (0, import_fast_isnumeric52.default)(b) && (0, import_fast_isnumeric52.default)(c)) {
+        a = +a;
+        b = +b;
+        c = +c;
+        norm = displaySum / (a + b + c);
+        if (norm !== 1) {
+          a *= norm;
+          b *= norm;
+          c *= norm;
+        }
+        y = a;
+        x = c - b;
+        cd[i] = { x, y, a, b, c };
+        if (ids) {
+          cd[i].id = ids[i];
+        }
+      } else cd[i] = { x: false, y: false };
+    }
+    calcMarkerSize2(trace, serieslen);
+    calcMarkerColorscale(gd, trace);
+    arraysToCalcdata(cd, trace);
+    calcSelection(cd, trace);
+    return cd;
+  }
+
+  // src/traces/scatterternary/plot.js
+  function plot11(gd, ternary, moduleCalcData) {
+    var plotContainer = ternary.plotContainer;
+    plotContainer.select(".scatterlayer").selectAll("*").remove();
+    var xa = ternary.xaxis;
+    var ya = ternary.yaxis;
+    var plotinfo = {
+      xaxis: xa,
+      yaxis: ya,
+      plot: plotContainer,
+      layerClipId: ternary._hasClipOnAxisFalse ? ternary.clipIdRelative : null
+    };
+    var scatterLayer = ternary.layers.frontplot.select("g.scatterlayer");
+    for (var i = 0; i < moduleCalcData.length; i++) {
+      var cdi = moduleCalcData[i];
+      if (cdi.length) {
+        cdi[0].trace._xA = xa;
+        cdi[0].trace._yA = ya;
+      }
+    }
+    plot(gd, plotinfo, moduleCalcData, scatterLayer);
+  }
+
+  // src/traces/scatterternary/hover.js
+  function hoverPoints9(pointData, xval, yval, hovermode) {
+    var scatterPointData = hoverPoints(pointData, xval, yval, hovermode);
+    if (!scatterPointData || scatterPointData[0].index === false) return;
+    var newPointData = scatterPointData[0];
+    if (newPointData.index === void 0) {
+      var yFracUp = 1 - newPointData.y0 / pointData.ya._length;
+      var xLen = pointData.xa._length;
+      var xMin = xLen * yFracUp / 2;
+      var xMax = xLen - xMin;
+      newPointData.x0 = Math.max(Math.min(newPointData.x0, xMax), xMin);
+      newPointData.x1 = Math.max(Math.min(newPointData.x1, xMax), xMin);
+      return scatterPointData;
+    }
+    var cdi = newPointData.cd[newPointData.index];
+    var trace = newPointData.trace;
+    var subplot = newPointData.subplot;
+    newPointData.a = cdi.a;
+    newPointData.b = cdi.b;
+    newPointData.c = cdi.c;
+    newPointData.xLabelVal = void 0;
+    newPointData.yLabelVal = void 0;
+    var fullLayout = {};
+    fullLayout[trace.subplot] = { _subplot: subplot };
+    var labels = trace._module.formatLabels(cdi, trace, fullLayout);
+    newPointData.aLabel = labels.aLabel;
+    newPointData.bLabel = labels.bLabel;
+    newPointData.cLabel = labels.cLabel;
+    var hoverinfo = cdi.hi || trace.hoverinfo;
+    var text = [];
+    function textPart(ax, val) {
+      text.push(ax._hovertitle + ": " + val);
+    }
+    if (!trace.hovertemplate) {
+      var parts = hoverinfo.split("+");
+      if (parts.indexOf("all") !== -1) parts = ["a", "b", "c"];
+      if (parts.indexOf("a") !== -1) textPart(subplot.aaxis, newPointData.aLabel);
+      if (parts.indexOf("b") !== -1) textPart(subplot.baxis, newPointData.bLabel);
+      if (parts.indexOf("c") !== -1) textPart(subplot.caxis, newPointData.cLabel);
+    }
+    newPointData.extraText = text.join("<br>");
+    newPointData.hovertemplate = trace.hovertemplate;
+    return scatterPointData;
+  }
+
+  // src/traces/scatterternary/event_data.js
+  function eventData6(out, pt, trace, cd, pointNumber) {
+    if (pt.xa) out.xaxis = pt.xa;
+    if (pt.ya) out.yaxis = pt.ya;
+    if (cd[pointNumber]) {
+      var cdi = cd[pointNumber];
+      out.a = cdi.a;
+      out.b = cdi.b;
+      out.c = cdi.c;
+    } else {
+      out.a = pt.a;
+      out.b = pt.b;
+      out.c = pt.c;
+    }
+    return out;
+  }
+
+  // src/plots/ternary/ternary.js
+  var import_d353 = __toESM(require_d3(), 1);
+  var { prepSelect: prepSelect3, selectOnClick: selectOnClick3, clearOutline: clearOutline8, clearSelectionsCache: clearSelectionsCache2 } = selections_default;
+  var strTranslate18 = lib_default.strTranslate;
+  var _4 = lib_default._;
+  var freeMode4 = helpers_default5.freeMode;
+  var rectMode3 = helpers_default5.rectMode;
+  function Ternary(options, fullLayout) {
+    this.id = options.id;
+    this.graphDiv = options.graphDiv;
+    this.init(fullLayout);
+    this.makeFramework(fullLayout);
+    this.updateFx(fullLayout);
+    this.aTickLayout = null;
+    this.bTickLayout = null;
+    this.cTickLayout = null;
+  }
+  var ternary_default = Ternary;
+  var proto2 = Ternary.prototype;
+  proto2.init = function(fullLayout) {
+    this.container = fullLayout._ternarylayer;
+    this.defs = fullLayout._defs;
+    this.layoutId = fullLayout._uid;
+    this.traceHash = {};
+    this.layers = {};
+  };
+  proto2.plot = function(ternaryCalcData, fullLayout) {
+    var _this = this;
+    var ternaryLayout = fullLayout[_this.id];
+    var graphSize = fullLayout._size;
+    _this._hasClipOnAxisFalse = false;
+    for (var i = 0; i < ternaryCalcData.length; i++) {
+      var trace = ternaryCalcData[i][0].trace;
+      if (trace.cliponaxis === false) {
+        _this._hasClipOnAxisFalse = true;
+        break;
+      }
+    }
+    _this.updateLayers(ternaryLayout);
+    _this.adjustLayout(ternaryLayout, graphSize);
+    plots_default.generalUpdatePerTraceModule(_this.graphDiv, _this, ternaryCalcData, ternaryLayout);
+    _this.layers.plotbg.select("path").call(color_default.fill, ternaryLayout.bgcolor);
+  };
+  proto2.makeFramework = function(fullLayout) {
+    var _this = this;
+    var gd = _this.graphDiv;
+    var ternaryLayout = fullLayout[_this.id];
+    var clipId = _this.clipId = "clip" + _this.layoutId + _this.id;
+    var clipIdRelative = _this.clipIdRelative = "clip-relative" + _this.layoutId + _this.id;
+    _this.clipDef = lib_default.ensureSingleById(fullLayout._clips, "clipPath", clipId, function(s) {
+      s.append("path").attr("d", "M0,0Z");
+    });
+    _this.clipDefRelative = lib_default.ensureSingleById(fullLayout._clips, "clipPath", clipIdRelative, function(s) {
+      s.append("path").attr("d", "M0,0Z");
+    });
+    _this.plotContainer = lib_default.ensureSingle(_this.container, "g", _this.id);
+    _this.updateLayers(ternaryLayout);
+    drawing_default.setClipUrl(_this.layers.backplot, clipId, gd);
+    drawing_default.setClipUrl(_this.layers.grids, clipId, gd);
+  };
+  proto2.updateFx = function(fullLayout) {
+    fullLayout._ternarylayer.selectAll("g.toplevel").style("cursor", fullLayout.dragmode === "pan" ? "move" : "crosshair");
+  };
+  proto2.updateLayers = function(ternaryLayout) {
+    var _this = this;
+    var layers = _this.layers;
+    var plotLayers = ["draglayer", "plotbg", "backplot", "grids"];
+    if (ternaryLayout.aaxis.layer === "below traces") {
+      plotLayers.push("aaxis", "aline");
+    }
+    if (ternaryLayout.baxis.layer === "below traces") {
+      plotLayers.push("baxis", "bline");
+    }
+    if (ternaryLayout.caxis.layer === "below traces") {
+      plotLayers.push("caxis", "cline");
+    }
+    plotLayers.push("frontplot");
+    if (ternaryLayout.aaxis.layer === "above traces") {
+      plotLayers.push("aaxis", "aline");
+    }
+    if (ternaryLayout.baxis.layer === "above traces") {
+      plotLayers.push("baxis", "bline");
+    }
+    if (ternaryLayout.caxis.layer === "above traces") {
+      plotLayers.push("caxis", "cline");
+    }
+    var toplevel = _this.plotContainer.selectAll("g.toplevel").data(plotLayers, String);
+    var grids = ["agrid", "bgrid", "cgrid"];
+    toplevel.enter().append("g").attr("class", function(d) {
+      return "toplevel " + d;
+    }).each(function(d) {
+      var s = import_d353.default.select(this);
+      layers[d] = s;
+      if (d === "frontplot") {
+        s.append("g").classed("scatterlayer", true);
+      } else if (d === "backplot") {
+        s.append("g").classed("maplayer", true);
+      } else if (d === "plotbg") {
+        s.append("path").attr("d", "M0,0Z");
+      } else if (d === "aline" || d === "bline" || d === "cline") {
+        s.append("path");
+      } else if (d === "grids") {
+        grids.forEach(function(d2) {
+          layers[d2] = s.append("g").classed("grid " + d2, true);
+        });
+      }
+    });
+    toplevel.order();
+  };
+  var whRatio = Math.sqrt(4 / 3);
+  proto2.adjustLayout = function(ternaryLayout, graphSize) {
+    var _this = this;
+    var domain = ternaryLayout.domain;
+    var xDomainCenter = (domain.x[0] + domain.x[1]) / 2;
+    var yDomainCenter = (domain.y[0] + domain.y[1]) / 2;
+    var xDomain = domain.x[1] - domain.x[0];
+    var yDomain = domain.y[1] - domain.y[0];
+    var wmax = xDomain * graphSize.w;
+    var hmax = yDomain * graphSize.h;
+    var sum = ternaryLayout.sum;
+    var amin = ternaryLayout.aaxis.min;
+    var bmin = ternaryLayout.baxis.min;
+    var cmin = ternaryLayout.caxis.min;
+    var x0, y0, w, h, xDomainFinal, yDomainFinal;
+    if (wmax > whRatio * hmax) {
+      h = hmax;
+      w = h * whRatio;
+    } else {
+      w = wmax;
+      h = w / whRatio;
+    }
+    xDomainFinal = xDomain * w / wmax;
+    yDomainFinal = yDomain * h / hmax;
+    x0 = graphSize.l + graphSize.w * xDomainCenter - w / 2;
+    y0 = graphSize.t + graphSize.h * (1 - yDomainCenter) - h / 2;
+    _this.x0 = x0;
+    _this.y0 = y0;
+    _this.w = w;
+    _this.h = h;
+    _this.sum = sum;
+    _this.xaxis = {
+      type: "linear",
+      range: [amin + 2 * cmin - sum, sum - amin - 2 * bmin],
+      domain: [
+        xDomainCenter - xDomainFinal / 2,
+        xDomainCenter + xDomainFinal / 2
+      ],
+      _id: "x"
+    };
+    setConvert(_this.xaxis, _this.graphDiv._fullLayout);
+    _this.xaxis.setScale();
+    _this.xaxis.isPtWithinRange = function(d) {
+      return d.a >= _this.aaxis.range[0] && d.a <= _this.aaxis.range[1] && d.b >= _this.baxis.range[1] && d.b <= _this.baxis.range[0] && d.c >= _this.caxis.range[1] && d.c <= _this.caxis.range[0];
+    };
+    _this.yaxis = {
+      type: "linear",
+      range: [amin, sum - bmin - cmin],
+      domain: [
+        yDomainCenter - yDomainFinal / 2,
+        yDomainCenter + yDomainFinal / 2
+      ],
+      _id: "y"
+    };
+    setConvert(_this.yaxis, _this.graphDiv._fullLayout);
+    _this.yaxis.setScale();
+    _this.yaxis.isPtWithinRange = function() {
+      return true;
+    };
+    var yDomain0 = _this.yaxis.domain[0];
+    var aaxis = _this.aaxis = extendFlat({}, ternaryLayout.aaxis, {
+      range: [amin, sum - bmin - cmin],
+      side: "left",
+      // tickangle = 'auto' means 0 anyway for a y axis, need to coerce to 0 here
+      // so we can shift by 30.
+      tickangle: (+ternaryLayout.aaxis.tickangle || 0) - 30,
+      domain: [yDomain0, yDomain0 + yDomainFinal * whRatio],
+      anchor: "free",
+      position: 0,
+      _id: "y",
+      _length: w
+    });
+    setConvert(aaxis, _this.graphDiv._fullLayout);
+    aaxis.setScale();
+    var baxis = _this.baxis = extendFlat({}, ternaryLayout.baxis, {
+      range: [sum - amin - cmin, bmin],
+      side: "bottom",
+      domain: _this.xaxis.domain,
+      anchor: "free",
+      position: 0,
+      _id: "x",
+      _length: w
+    });
+    setConvert(baxis, _this.graphDiv._fullLayout);
+    baxis.setScale();
+    var caxis = _this.caxis = extendFlat({}, ternaryLayout.caxis, {
+      range: [sum - amin - bmin, cmin],
+      side: "right",
+      tickangle: (+ternaryLayout.caxis.tickangle || 0) + 30,
+      domain: [yDomain0, yDomain0 + yDomainFinal * whRatio],
+      anchor: "free",
+      position: 0,
+      _id: "y",
+      _length: w
+    });
+    setConvert(caxis, _this.graphDiv._fullLayout);
+    caxis.setScale();
+    var triangleClip = "M" + x0 + "," + (y0 + h) + "h" + w + "l-" + w / 2 + ",-" + h + "Z";
+    _this.clipDef.select("path").attr("d", triangleClip);
+    _this.layers.plotbg.select("path").attr("d", triangleClip);
+    var triangleClipRelative = "M0," + h + "h" + w + "l-" + w / 2 + ",-" + h + "Z";
+    _this.clipDefRelative.select("path").attr("d", triangleClipRelative);
+    var plotTransform = strTranslate18(x0, y0);
+    _this.plotContainer.selectAll(".scatterlayer,.maplayer").attr("transform", plotTransform);
+    _this.clipDefRelative.select("path").attr("transform", null);
+    var bTransform = strTranslate18(x0 - baxis._offset, y0 + h);
+    _this.layers.baxis.attr("transform", bTransform);
+    _this.layers.bgrid.attr("transform", bTransform);
+    var aTransform = strTranslate18(x0 + w / 2, y0) + "rotate(30)" + strTranslate18(0, -aaxis._offset);
+    _this.layers.aaxis.attr("transform", aTransform);
+    _this.layers.agrid.attr("transform", aTransform);
+    var cTransform = strTranslate18(x0 + w / 2, y0) + "rotate(-30)" + strTranslate18(0, -caxis._offset);
+    _this.layers.caxis.attr("transform", cTransform);
+    _this.layers.cgrid.attr("transform", cTransform);
+    _this.drawAxes(true);
+    _this.layers.aline.select("path").attr("d", aaxis.showline ? "M" + x0 + "," + (y0 + h) + "l" + w / 2 + ",-" + h : "M0,0").call(color_default.stroke, aaxis.linecolor || "#000").style("stroke-width", (aaxis.linewidth || 0) + "px");
+    _this.layers.bline.select("path").attr("d", baxis.showline ? "M" + x0 + "," + (y0 + h) + "h" + w : "M0,0").call(color_default.stroke, baxis.linecolor || "#000").style("stroke-width", (baxis.linewidth || 0) + "px");
+    _this.layers.cline.select("path").attr("d", caxis.showline ? "M" + (x0 + w / 2) + "," + y0 + "l" + w / 2 + "," + h : "M0,0").call(color_default.stroke, caxis.linecolor || "#000").style("stroke-width", (caxis.linewidth || 0) + "px");
+    if (!_this.graphDiv._context.staticPlot) {
+      _this.initInteractions();
+    }
+    drawing_default.setClipUrl(
+      _this.layers.frontplot,
+      _this._hasClipOnAxisFalse ? null : _this.clipId,
+      _this.graphDiv
+    );
+  };
+  proto2.drawAxes = function(doTitles) {
+    var _this = this;
+    var gd = _this.graphDiv;
+    var titlesuffix = _this.id.slice(7) + "title";
+    var layers = _this.layers;
+    var aaxis = _this.aaxis;
+    var baxis = _this.baxis;
+    var caxis = _this.caxis;
+    _this.drawAx(aaxis);
+    _this.drawAx(baxis);
+    _this.drawAx(caxis);
+    if (doTitles) {
+      var apad = Math.max(
+        aaxis.showticklabels ? aaxis.tickfont.size / 2 : 0,
+        (caxis.showticklabels ? caxis.tickfont.size * 0.75 : 0) + (caxis.ticks === "outside" ? caxis.ticklen * 0.87 : 0)
+      );
+      var bpad = (baxis.showticklabels ? baxis.tickfont.size : 0) + (baxis.ticks === "outside" ? baxis.ticklen : 0) + 3;
+      layers["a-title"] = titles_default.draw(gd, "a" + titlesuffix, {
+        propContainer: aaxis,
+        propName: _this.id + ".aaxis.title.text",
+        placeholder: _4(gd, "Click to enter Component A title"),
+        attributes: {
+          x: _this.x0 + _this.w / 2,
+          y: _this.y0 - aaxis.title.font.size / 3 - apad,
+          "text-anchor": "middle"
+        }
+      });
+      layers["b-title"] = titles_default.draw(gd, "b" + titlesuffix, {
+        propContainer: baxis,
+        propName: _this.id + ".baxis.title.text",
+        placeholder: _4(gd, "Click to enter Component B title"),
+        attributes: {
+          x: _this.x0 - bpad,
+          y: _this.y0 + _this.h + baxis.title.font.size * 0.83 + bpad,
+          "text-anchor": "middle"
+        }
+      });
+      layers["c-title"] = titles_default.draw(gd, "c" + titlesuffix, {
+        propContainer: caxis,
+        propName: _this.id + ".caxis.title.text",
+        placeholder: _4(gd, "Click to enter Component C title"),
+        attributes: {
+          x: _this.x0 + _this.w + bpad,
+          y: _this.y0 + _this.h + caxis.title.font.size * 0.83 + bpad,
+          "text-anchor": "middle"
+        }
+      });
+    }
+  };
+  proto2.drawAx = function(ax) {
+    var _this = this;
+    var gd = _this.graphDiv;
+    var axName = ax._name;
+    var axLetter = axName.charAt(0);
+    var axId = ax._id;
+    var axLayer = _this.layers[axName];
+    var counterAngle = 30;
+    var stashKey = axLetter + "tickLayout";
+    var newTickLayout = strTickLayout(ax);
+    if (_this[stashKey] !== newTickLayout) {
+      axLayer.selectAll("." + axId + "tick").remove();
+      _this[stashKey] = newTickLayout;
+    }
+    ax.setScale();
+    var vals = axes_default.calcTicks(ax);
+    var valsClipped = axes_default.clipEnds(ax, vals);
+    var transFn = axes_default.makeTransTickFn(ax);
+    var tickSign = axes_default.getTickSigns(ax)[2];
+    var caRad = lib_default.deg2rad(counterAngle);
+    var pad3 = tickSign * (ax.linewidth || 1) / 2;
+    var len2 = tickSign * ax.ticklen;
+    var w = _this.w;
+    var h = _this.h;
+    var tickPath = axLetter === "b" ? "M0," + pad3 + "l" + Math.sin(caRad) * len2 + "," + Math.cos(caRad) * len2 : "M" + pad3 + ",0l" + Math.cos(caRad) * len2 + "," + -Math.sin(caRad) * len2;
+    var gridPath = {
+      a: "M0,0l" + h + ",-" + w / 2,
+      b: "M0,0l-" + w / 2 + ",-" + h,
+      c: "M0,0l-" + h + "," + w / 2
+    }[axLetter];
+    axes_default.drawTicks(gd, ax, {
+      vals: ax.ticks === "inside" ? valsClipped : vals,
+      layer: axLayer,
+      path: tickPath,
+      transFn,
+      crisp: false
+    });
+    axes_default.drawGrid(gd, ax, {
+      vals: valsClipped,
+      layer: _this.layers[axLetter + "grid"],
+      path: gridPath,
+      transFn,
+      crisp: false
+    });
+    axes_default.drawLabels(gd, ax, {
+      vals,
+      layer: axLayer,
+      transFn,
+      labelFns: axes_default.makeLabelFns(ax, 0, counterAngle)
+    });
+  };
+  function strTickLayout(axLayout) {
+    return axLayout.ticks + String(axLayout.ticklen) + String(axLayout.showticklabels);
+  }
+  var CLEN = constants_default2.MINZOOM / 2 + 0.87;
+  var BLPATH = "m-0.87,.5h" + CLEN + "v3h-" + (CLEN + 5.2) + "l" + (CLEN / 2 + 2.6) + ",-" + (CLEN * 0.87 + 4.5) + "l2.6,1.5l-" + CLEN / 2 + "," + CLEN * 0.87 + "Z";
+  var BRPATH = "m0.87,.5h-" + CLEN + "v3h" + (CLEN + 5.2) + "l-" + (CLEN / 2 + 2.6) + ",-" + (CLEN * 0.87 + 4.5) + "l-2.6,1.5l" + CLEN / 2 + "," + CLEN * 0.87 + "Z";
+  var TOPPATH = "m0,1l" + CLEN / 2 + "," + CLEN * 0.87 + "l2.6,-1.5l-" + (CLEN / 2 + 2.6) + ",-" + (CLEN * 0.87 + 4.5) + "l-" + (CLEN / 2 + 2.6) + "," + (CLEN * 0.87 + 4.5) + "l2.6,1.5l" + CLEN / 2 + ",-" + CLEN * 0.87 + "Z";
+  var STARTMARKER = "m0.5,0.5h5v-2h-5v-5h-2v5h-5v2h5v5h2Z";
+  var SHOWZOOMOUTTIP2 = true;
+  proto2.clearOutline = function() {
+    clearSelectionsCache2(this.dragOptions);
+    clearOutline8(this.dragOptions.gd);
+  };
+  proto2.initInteractions = function() {
+    var _this = this;
+    var dragger = _this.layers.plotbg.select("path").node();
+    var gd = _this.graphDiv;
+    var zoomLayer = gd._fullLayout._zoomlayer;
+    var scaleX;
+    var scaleY;
+    this.dragOptions = {
+      element: dragger,
+      gd,
+      plotinfo: {
+        id: _this.id,
+        domain: gd._fullLayout[_this.id].domain,
+        xaxis: _this.xaxis,
+        yaxis: _this.yaxis
+      },
+      subplot: _this.id,
+      prepFn: function(e, startX, startY) {
+        _this.dragOptions.xaxes = [_this.xaxis];
+        _this.dragOptions.yaxes = [_this.yaxis];
+        scaleX = gd._fullLayout._invScaleX;
+        scaleY = gd._fullLayout._invScaleY;
+        var dragModeNow = _this.dragOptions.dragmode = gd._fullLayout.dragmode;
+        if (freeMode4(dragModeNow)) _this.dragOptions.minDrag = 1;
+        else _this.dragOptions.minDrag = void 0;
+        if (dragModeNow === "zoom") {
+          _this.dragOptions.moveFn = zoomMove;
+          _this.dragOptions.clickFn = clickZoomPan;
+          _this.dragOptions.doneFn = zoomDone;
+          zoomPrep(e, startX, startY);
+        } else if (dragModeNow === "pan") {
+          _this.dragOptions.moveFn = plotDrag;
+          _this.dragOptions.clickFn = clickZoomPan;
+          _this.dragOptions.doneFn = dragDone;
+          panPrep();
+          _this.clearOutline(gd);
+        } else if (rectMode3(dragModeNow) || freeMode4(dragModeNow)) {
+          prepSelect3(e, startX, startY, _this.dragOptions, dragModeNow);
+        }
+      }
+    };
+    var x0, y0, mins0, span0, mins, lum, path0, dimmed, zb, corners;
+    function makeUpdate(_mins) {
+      var attrs3 = {};
+      attrs3[_this.id + ".aaxis.min"] = _mins.a;
+      attrs3[_this.id + ".baxis.min"] = _mins.b;
+      attrs3[_this.id + ".caxis.min"] = _mins.c;
+      return attrs3;
+    }
+    function clickZoomPan(numClicks, evt) {
+      var clickMode = gd._fullLayout.clickmode;
+      removeZoombox2(gd);
+      if (numClicks === 2) {
+        gd.emit("plotly_doubleclick", null);
+        registry_default.call("_guiRelayout", gd, makeUpdate({ a: 0, b: 0, c: 0 }));
+      }
+      if (clickMode.indexOf("select") > -1 && numClicks === 1) {
+        selectOnClick3(evt, gd, [_this.xaxis], [_this.yaxis], _this.id, _this.dragOptions);
+      }
+      if (clickMode.indexOf("event") > -1) {
+        fx_default.click(gd, evt, _this.id);
+      }
+    }
+    function zoomPrep(e, startX, startY) {
+      var dragBBox = dragger.getBoundingClientRect();
+      x0 = startX - dragBBox.left;
+      y0 = startY - dragBBox.top;
+      gd._fullLayout._calcInverseTransform(gd);
+      var inverse = gd._fullLayout._invTransform;
+      var transformedCoords = lib_default.apply3DTransform(inverse)(x0, y0);
+      x0 = transformedCoords[0];
+      y0 = transformedCoords[1];
+      mins0 = {
+        a: _this.aaxis.range[0],
+        b: _this.baxis.range[1],
+        c: _this.caxis.range[1]
+      };
+      mins = mins0;
+      span0 = _this.aaxis.range[1] - mins0.a;
+      lum = tinycolor(_this.graphDiv._fullLayout[_this.id].bgcolor).getLuminance();
+      path0 = "M0," + _this.h + "L" + _this.w / 2 + ", 0L" + _this.w + "," + _this.h + "Z";
+      dimmed = false;
+      zb = zoomLayer.append("path").attr("class", "zoombox").attr("transform", strTranslate18(_this.x0, _this.y0)).style({
+        fill: lum > 0.2 ? "rgba(0,0,0,0)" : "rgba(255,255,255,0)",
+        "stroke-width": 0
+      }).attr("d", path0);
+      corners = zoomLayer.append("path").attr("class", "zoombox-corners").attr("transform", strTranslate18(_this.x0, _this.y0)).style({
+        fill: color_default.background,
+        stroke: color_default.defaultLine,
+        "stroke-width": 1,
+        opacity: 0
+      }).attr("d", "M0,0Z");
+      _this.clearOutline(gd);
+    }
+    function getAFrac(x, y) {
+      return 1 - y / _this.h;
+    }
+    function getBFrac(x, y) {
+      return 1 - (x + (_this.h - y) / Math.sqrt(3)) / _this.w;
+    }
+    function getCFrac(x, y) {
+      return (x - (_this.h - y) / Math.sqrt(3)) / _this.w;
+    }
+    function zoomMove(dx0, dy0) {
+      var x1 = x0 + dx0 * scaleX;
+      var y1 = y0 + dy0 * scaleY;
+      var afrac = Math.max(0, Math.min(1, getAFrac(x0, y0), getAFrac(x1, y1)));
+      var bfrac = Math.max(0, Math.min(1, getBFrac(x0, y0), getBFrac(x1, y1)));
+      var cfrac = Math.max(0, Math.min(1, getCFrac(x0, y0), getCFrac(x1, y1)));
+      var xLeft = (afrac / 2 + cfrac) * _this.w;
+      var xRight = (1 - afrac / 2 - bfrac) * _this.w;
+      var xCenter = (xLeft + xRight) / 2;
+      var xSpan = xRight - xLeft;
+      var yBottom = (1 - afrac) * _this.h;
+      var yTop = yBottom - xSpan / whRatio;
+      if (xSpan < constants_default2.MINZOOM) {
+        mins = mins0;
+        zb.attr("d", path0);
+        corners.attr("d", "M0,0Z");
+      } else {
+        mins = {
+          a: mins0.a + afrac * span0,
+          b: mins0.b + bfrac * span0,
+          c: mins0.c + cfrac * span0
+        };
+        zb.attr("d", path0 + "M" + xLeft + "," + yBottom + "H" + xRight + "L" + xCenter + "," + yTop + "L" + xLeft + "," + yBottom + "Z");
+        corners.attr("d", "M" + x0 + "," + y0 + STARTMARKER + "M" + xLeft + "," + yBottom + BLPATH + "M" + xRight + "," + yBottom + BRPATH + "M" + xCenter + "," + yTop + TOPPATH);
+      }
+      if (!dimmed) {
+        zb.transition().style("fill", lum > 0.2 ? "rgba(0,0,0,0.4)" : "rgba(255,255,255,0.3)").duration(200);
+        corners.transition().style("opacity", 1).duration(200);
+        dimmed = true;
+      }
+      gd.emit("plotly_relayouting", makeUpdate(mins));
+    }
+    function zoomDone() {
+      removeZoombox2(gd);
+      if (mins === mins0) return;
+      registry_default.call("_guiRelayout", gd, makeUpdate(mins));
+      if (SHOWZOOMOUTTIP2 && gd.data && gd._context.showTips) {
+        lib_default.notifier(_4(gd, "Double-click to zoom back out"), "long");
+        SHOWZOOMOUTTIP2 = false;
+      }
+    }
+    function panPrep() {
+      mins0 = {
+        a: _this.aaxis.range[0],
+        b: _this.baxis.range[1],
+        c: _this.caxis.range[1]
+      };
+      mins = mins0;
+    }
+    function plotDrag(dx, dy) {
+      var dxScaled = dx / _this.xaxis._m;
+      var dyScaled = dy / _this.yaxis._m;
+      mins = {
+        a: mins0.a - dyScaled,
+        b: mins0.b + (dxScaled + dyScaled) / 2,
+        c: mins0.c - (dxScaled - dyScaled) / 2
+      };
+      var minsorted = [mins.a, mins.b, mins.c].sort(lib_default.sorterAsc);
+      var minindices = {
+        a: minsorted.indexOf(mins.a),
+        b: minsorted.indexOf(mins.b),
+        c: minsorted.indexOf(mins.c)
+      };
+      if (minsorted[0] < 0) {
+        if (minsorted[1] + minsorted[0] / 2 < 0) {
+          minsorted[2] += minsorted[0] + minsorted[1];
+          minsorted[0] = minsorted[1] = 0;
+        } else {
+          minsorted[2] += minsorted[0] / 2;
+          minsorted[1] += minsorted[0] / 2;
+          minsorted[0] = 0;
+        }
+        mins = {
+          a: minsorted[minindices.a],
+          b: minsorted[minindices.b],
+          c: minsorted[minindices.c]
+        };
+        dy = (mins0.a - mins.a) * _this.yaxis._m;
+        dx = (mins0.c - mins.c - mins0.b + mins.b) * _this.xaxis._m;
+      }
+      var plotTransform = strTranslate18(_this.x0 + dx, _this.y0 + dy);
+      _this.plotContainer.selectAll(".scatterlayer,.maplayer").attr("transform", plotTransform);
+      var plotTransform2 = strTranslate18(-dx, -dy);
+      _this.clipDefRelative.select("path").attr("transform", plotTransform2);
+      _this.aaxis.range = [mins.a, _this.sum - mins.b - mins.c];
+      _this.baxis.range = [_this.sum - mins.a - mins.c, mins.b];
+      _this.caxis.range = [_this.sum - mins.a - mins.b, mins.c];
+      _this.drawAxes(false);
+      if (_this._hasClipOnAxisFalse) {
+        _this.plotContainer.select(".scatterlayer").selectAll(".trace").call(drawing_default.hideOutsideRangePoints, _this);
+      }
+      gd.emit("plotly_relayouting", makeUpdate(mins));
+    }
+    function dragDone() {
+      registry_default.call("_guiRelayout", gd, makeUpdate(mins));
+    }
+    dragger.onmousemove = function(evt) {
+      fx_default.hover(gd, evt, _this.id);
+      gd._fullLayout._lasthover = dragger;
+      gd._fullLayout._hoversubplot = _this.id;
+    };
+    dragger.onmouseout = function(evt) {
+      if (gd._dragging) return;
+      dragelement_default.unhover(gd, evt);
+    };
+    dragelement_default.init(this.dragOptions);
+  };
+  function removeZoombox2(gd) {
+    import_d353.default.select(gd).selectAll(".zoombox,.js-zoombox-backdrop,.js-zoombox-menu,.zoombox-corners").remove();
+  }
+
+  // src/plots/ternary/layout_attributes.js
+  var { overrideAll: overrideAll9 } = edit_types_default;
+  var ternaryAxesAttrs = {
+    title: {
+      text: layout_attributes_default4.title.text,
+      font: layout_attributes_default4.title.font
+      // TODO does standoff here make sense?
+    },
+    color: layout_attributes_default4.color,
+    // ticks
+    tickmode: layout_attributes_default4.minor.tickmode,
+    nticks: extendFlat({}, layout_attributes_default4.nticks, { dflt: 6, min: 1 }),
+    tick0: layout_attributes_default4.tick0,
+    dtick: layout_attributes_default4.dtick,
+    tickvals: layout_attributes_default4.tickvals,
+    ticktext: layout_attributes_default4.ticktext,
+    ticks: layout_attributes_default4.ticks,
+    ticklen: layout_attributes_default4.ticklen,
+    tickwidth: layout_attributes_default4.tickwidth,
+    tickcolor: layout_attributes_default4.tickcolor,
+    ticklabelstep: layout_attributes_default4.ticklabelstep,
+    showticklabels: layout_attributes_default4.showticklabels,
+    labelalias: layout_attributes_default4.labelalias,
+    showtickprefix: layout_attributes_default4.showtickprefix,
+    tickprefix: layout_attributes_default4.tickprefix,
+    showticksuffix: layout_attributes_default4.showticksuffix,
+    ticksuffix: layout_attributes_default4.ticksuffix,
+    showexponent: layout_attributes_default4.showexponent,
+    exponentformat: layout_attributes_default4.exponentformat,
+    minexponent: layout_attributes_default4.minexponent,
+    separatethousands: layout_attributes_default4.separatethousands,
+    tickfont: layout_attributes_default4.tickfont,
+    tickangle: layout_attributes_default4.tickangle,
+    tickformat: layout_attributes_default4.tickformat,
+    tickformatstops: layout_attributes_default4.tickformatstops,
+    hoverformat: layout_attributes_default4.hoverformat,
+    // lines and grids
+    showline: extendFlat({}, layout_attributes_default4.showline, { dflt: true }),
+    linecolor: layout_attributes_default4.linecolor,
+    linewidth: layout_attributes_default4.linewidth,
+    showgrid: extendFlat({}, layout_attributes_default4.showgrid, { dflt: true }),
+    gridcolor: layout_attributes_default4.gridcolor,
+    gridwidth: layout_attributes_default4.gridwidth,
+    griddash: layout_attributes_default4.griddash,
+    layer: layout_attributes_default4.layer,
+    // range
+    min: {
+      valType: "number",
+      dflt: 0,
+      min: 0
+    }
+  };
+  var attrs2 = overrideAll9({
+    domain: attributes2({ name: "ternary" }),
+    bgcolor: {
+      valType: "color",
+      dflt: attributes_default3.background
+    },
+    sum: {
+      valType: "number",
+      dflt: 1,
+      min: 0
+    },
+    aaxis: ternaryAxesAttrs,
+    baxis: ternaryAxesAttrs,
+    caxis: ternaryAxesAttrs
+  }, "plot", "from-root");
+  attrs2.uirevision = {
+    valType: "any",
+    editType: "none"
+  };
+  attrs2.aaxis.uirevision = attrs2.baxis.uirevision = attrs2.caxis.uirevision = {
+    valType: "any",
+    editType: "none"
+  };
+  var layout_attributes_default9 = attrs2;
+
+  // src/plots/subplot_defaults.js
+  function handleSubplotDefaults(layoutIn, layoutOut, fullData, opts) {
+    var subplotType = opts.type;
+    var subplotAttributes = opts.attributes;
+    var handleDefaults6 = opts.handleDefaults;
+    var partition = opts.partition || "x";
+    var ids = layoutOut._subplots[subplotType];
+    var idsLength = ids.length;
+    var baseId = idsLength && ids[0].replace(/\d+$/, "");
+    var subplotLayoutIn, subplotLayoutOut;
+    function coerce3(attr3, dflt) {
+      return lib_default.coerce(subplotLayoutIn, subplotLayoutOut, subplotAttributes, attr3, dflt);
+    }
+    for (var i = 0; i < idsLength; i++) {
+      var id = ids[i];
+      if (layoutIn[id]) subplotLayoutIn = layoutIn[id];
+      else subplotLayoutIn = layoutIn[id] = {};
+      subplotLayoutOut = plot_template_default.newContainer(layoutOut, id, baseId);
+      if (!opts.noUirevision) coerce3("uirevision", layoutOut.uirevision);
+      var dfltDomains = {};
+      dfltDomains[partition] = [i / idsLength, (i + 1) / idsLength];
+      defaults2(subplotLayoutOut, layoutOut, coerce3, dfltDomains);
+      opts.id = id;
+      handleDefaults6(subplotLayoutIn, subplotLayoutOut, coerce3, opts);
+    }
+  }
+
+  // src/plots/ternary/layout_defaults.js
+  var axesNames = ["aaxis", "baxis", "caxis"];
+  function supplyLayoutDefaults12(layoutIn, layoutOut, fullData) {
+    handleSubplotDefaults(layoutIn, layoutOut, fullData, {
+      type: "ternary",
+      attributes: layout_attributes_default9,
+      handleDefaults: handleTernaryDefaults,
+      font: layoutOut.font,
+      paper_bgcolor: layoutOut.paper_bgcolor
+    });
+  }
+  function handleTernaryDefaults(ternaryLayoutIn, ternaryLayoutOut, coerce3, options) {
+    var bgColor = coerce3("bgcolor");
+    var sum = coerce3("sum");
+    options.bgColor = color_default.combine(bgColor, options.paper_bgcolor);
+    var axName, containerIn, containerOut;
+    for (var j = 0; j < axesNames.length; j++) {
+      axName = axesNames[j];
+      containerIn = ternaryLayoutIn[axName] || {};
+      containerOut = plot_template_default.newContainer(ternaryLayoutOut, axName);
+      containerOut._name = axName;
+      handleAxisDefaults2(containerIn, containerOut, options, ternaryLayoutOut);
+    }
+    var aaxis = ternaryLayoutOut.aaxis;
+    var baxis = ternaryLayoutOut.baxis;
+    var caxis = ternaryLayoutOut.caxis;
+    if (aaxis.min + baxis.min + caxis.min >= sum) {
+      aaxis.min = 0;
+      baxis.min = 0;
+      caxis.min = 0;
+      if (ternaryLayoutIn.aaxis) delete ternaryLayoutIn.aaxis.min;
+      if (ternaryLayoutIn.baxis) delete ternaryLayoutIn.baxis.min;
+      if (ternaryLayoutIn.caxis) delete ternaryLayoutIn.caxis.min;
+    }
+  }
+  function handleAxisDefaults2(containerIn, containerOut, options, ternaryLayoutOut) {
+    var axAttrs = layout_attributes_default9[containerOut._name];
+    function coerce3(attr3, dflt) {
+      return lib_default.coerce(containerIn, containerOut, axAttrs, attr3, dflt);
+    }
+    coerce3("uirevision", ternaryLayoutOut.uirevision);
+    containerOut.type = "linear";
+    var dfltColor = coerce3("color");
+    var dfltFontColor = dfltColor !== axAttrs.color.dflt ? dfltColor : options.font.color;
+    var axName = containerOut._name;
+    var letterUpper = axName.charAt(0).toUpperCase();
+    var dfltTitle = "Component " + letterUpper;
+    var title = coerce3("title.text", dfltTitle);
+    containerOut._hovertitle = title === dfltTitle ? title : letterUpper;
+    lib_default.coerceFont(coerce3, "title.font", options.font, { overrideDflt: {
+      size: lib_default.bigFont(options.font.size),
+      color: dfltFontColor
+    } });
+    coerce3("min");
+    handleTickValueDefaults(containerIn, containerOut, coerce3, "linear");
+    handlePrefixSuffixDefaults(containerIn, containerOut, coerce3, "linear");
+    handleTickLabelDefaults(containerIn, containerOut, coerce3, "linear", {
+      noAutotickangles: true,
+      noTicklabelshift: true,
+      noTicklabelstandoff: true
+    });
+    handleTickMarkDefaults(
+      containerIn,
+      containerOut,
+      coerce3,
+      { outerTicks: true }
+    );
+    var showTickLabels = coerce3("showticklabels");
+    if (showTickLabels) {
+      lib_default.coerceFont(coerce3, "tickfont", options.font, { overrideDflt: {
+        color: dfltFontColor
+      } });
+      coerce3("tickangle");
+      coerce3("tickformat");
+    }
+    handleLineGridDefaults(containerIn, containerOut, coerce3, {
+      dfltColor,
+      bgColor: options.bgColor,
+      // default grid color is darker here (60%, vs cartesian default ~91%)
+      // because the grid is not square so the eye needs heavier cues to follow
+      blend: 60,
+      showLine: true,
+      showGrid: true,
+      noZeroLine: true,
+      attributes: axAttrs
+    });
+    coerce3("hoverformat");
+    coerce3("layer");
+  }
+
+  // src/plots/ternary/index.js
+  var { counterRegex } = lib_default;
+  var TERNARY = "ternary";
+  var name7 = TERNARY;
+  var attr2 = "subplot";
+  var idRoot2 = TERNARY;
+  var idRegex3 = counterRegex(TERNARY);
+  var attributes3 = {};
+  attributes3[attr2] = {
+    valType: "subplotid",
+    dflt: "ternary",
+    editType: "calc"
+  };
+  var layoutAttributes2 = layout_attributes_default9;
+  var supplyLayoutDefaults13 = supplyLayoutDefaults12;
+  var plot12 = function plot13(gd) {
+    var fullLayout = gd._fullLayout;
+    var calcData = gd.calcdata;
+    var ternaryIds = fullLayout._subplots[TERNARY];
+    for (var i = 0; i < ternaryIds.length; i++) {
+      var ternaryId = ternaryIds[i];
+      var ternaryCalcData = getSubplotCalcData(calcData, TERNARY, ternaryId);
+      var ternary = fullLayout[ternaryId]._subplot;
+      if (!ternary) {
+        ternary = new ternary_default(
+          {
+            id: ternaryId,
+            graphDiv: gd,
+            container: fullLayout._ternarylayer.node()
+          },
+          fullLayout
+        );
+        fullLayout[ternaryId]._subplot = ternary;
+      }
+      ternary.plot(ternaryCalcData, fullLayout, gd._promises);
+    }
+  };
+  var clean5 = function(newFullData, newFullLayout, oldFullData, oldFullLayout) {
+    var oldTernaryKeys = oldFullLayout._subplots[TERNARY] || [];
+    for (var i = 0; i < oldTernaryKeys.length; i++) {
+      var oldTernaryKey = oldTernaryKeys[i];
+      var oldTernary = oldFullLayout[oldTernaryKey]._subplot;
+      if (!newFullLayout[oldTernaryKey] && !!oldTernary) {
+        oldTernary.plotContainer.remove();
+        oldTernary.clipDef.remove();
+        oldTernary.clipDefRelative.remove();
+        oldTernary.layers["a-title"].remove();
+        oldTernary.layers["b-title"].remove();
+        oldTernary.layers["c-title"].remove();
+      }
+    }
+  };
+  var updateFx3 = function(gd) {
+    var fullLayout = gd._fullLayout;
+    fullLayout._ternarylayer.selectAll("g.toplevel").style("cursor", fullLayout.dragmode === "pan" ? "move" : "crosshair");
+  };
+  var ternary_default2 = { name: name7, attr: attr2, idRoot: idRoot2, idRegex: idRegex3, attributes: attributes3, layoutAttributes: layoutAttributes2, supplyLayoutDefaults: supplyLayoutDefaults13, plot: plot12, clean: clean5, updateFx: updateFx3 };
+
+  // src/traces/scatterternary/index.js
+  var { style: _req65, styleOnSelect: _req73 } = style_default;
+  var scatterternary_default = {
+    attributes: attributes_default30,
+    supplyDefaults: supplyDefaults12,
+    colorbar: marker_colorbar_default,
+    formatLabels: formatLabels2,
+    calc: calc14,
+    plot: plot11,
+    style: _req65,
+    styleOnSelect: _req73,
+    hoverPoints: hoverPoints9,
+    selectPoints,
+    eventData: eventData6,
+    moduleType: "trace",
+    name: "scatterternary",
+    basePlotModule: ternary_default2,
+    categories: ["ternary", "symbols", "showLegend", "scatter-like"],
+    meta: {}
+  };
+
+  // src/traces/violin/attributes.js
+  var { axisHoverFormat: axisHoverFormat10 } = axis_format_attributes_default;
+  var attributes_default31 = {
+    y: attributes_default22.y,
+    x: attributes_default22.x,
+    x0: attributes_default22.x0,
+    y0: attributes_default22.y0,
+    xhoverformat: axisHoverFormat10("x"),
+    yhoverformat: axisHoverFormat10("y"),
+    name: extendFlat({}, attributes_default22.name, {}),
+    orientation: extendFlat({}, attributes_default22.orientation, {}),
+    bandwidth: {
+      valType: "number",
+      min: 0,
+      editType: "calc"
+    },
+    scalegroup: {
+      valType: "string",
+      dflt: "",
+      editType: "calc"
+    },
+    scalemode: {
+      valType: "enumerated",
+      values: ["width", "count"],
+      dflt: "width",
+      editType: "calc"
+    },
+    spanmode: {
+      valType: "enumerated",
+      values: ["soft", "hard", "manual"],
+      dflt: "soft",
+      editType: "calc"
+    },
+    span: {
+      valType: "info_array",
+      items: [
+        { valType: "any", editType: "calc" },
+        { valType: "any", editType: "calc" }
+      ],
+      editType: "calc"
+    },
+    line: {
+      color: {
+        valType: "color",
+        editType: "style"
+      },
+      width: {
+        valType: "number",
+        min: 0,
+        dflt: 2,
+        editType: "style"
+      },
+      editType: "plot"
+    },
+    fillcolor: attributes_default22.fillcolor,
+    points: extendFlat({}, attributes_default22.boxpoints, {}),
+    jitter: extendFlat({}, attributes_default22.jitter, {}),
+    pointpos: extendFlat({}, attributes_default22.pointpos, {}),
+    width: extendFlat({}, attributes_default22.width, {}),
+    marker: attributes_default22.marker,
+    text: attributes_default22.text,
+    hovertext: attributes_default22.hovertext,
+    hovertemplate: attributes_default22.hovertemplate,
+    hovertemplatefallback: attributes_default22.hovertemplatefallback,
+    quartilemethod: attributes_default22.quartilemethod,
+    box: {
+      visible: {
+        valType: "boolean",
+        dflt: false,
+        editType: "plot"
+      },
+      width: {
+        valType: "number",
+        min: 0,
+        max: 1,
+        dflt: 0.25,
+        editType: "plot"
+      },
+      fillcolor: {
+        valType: "color",
+        editType: "style"
+      },
+      line: {
+        color: {
+          valType: "color",
+          editType: "style"
+        },
+        width: {
+          valType: "number",
+          min: 0,
+          editType: "style"
+        },
+        editType: "style"
+      },
+      editType: "plot"
+    },
+    meanline: {
+      visible: {
+        valType: "boolean",
+        dflt: false,
+        editType: "plot"
+      },
+      color: {
+        valType: "color",
+        editType: "style"
+      },
+      width: {
+        valType: "number",
+        min: 0,
+        editType: "style"
+      },
+      editType: "plot"
+    },
+    side: {
+      valType: "enumerated",
+      values: ["both", "positive", "negative"],
+      dflt: "both",
+      editType: "calc"
+    },
+    offsetgroup: attributes_default22.offsetgroup,
+    alignmentgroup: attributes_default22.alignmentgroup,
+    selected: attributes_default22.selected,
+    unselected: attributes_default22.unselected,
+    hoveron: {
+      valType: "flaglist",
+      flags: ["violins", "points", "kde"],
+      dflt: "violins+points+kde",
+      extras: ["all"],
+      editType: "style"
+    },
+    zorder: attributes_default22.zorder
+  };
+
+  // src/traces/violin/layout_attributes.js
+  var { extendFlat: extendFlat5 } = lib_default;
+  var layout_attributes_default10 = {
+    violinmode: extendFlat5({}, layout_attributes_default7.boxmode, {}),
+    violingap: extendFlat5({}, layout_attributes_default7.boxgap, {}),
+    violingroupgap: extendFlat5({}, layout_attributes_default7.boxgroupgap, {})
+  };
+
+  // src/traces/violin/defaults.js
+  function supplyDefaults13(traceIn, traceOut, defaultColor, layout) {
+    function coerce3(attr3, dflt) {
+      return lib_default.coerce(traceIn, traceOut, attributes_default31, attr3, dflt);
+    }
+    function coerce22(attr3, dflt) {
+      return lib_default.coerce2(traceIn, traceOut, attributes_default31, attr3, dflt);
+    }
+    defaults_default3.handleSampleDefaults(traceIn, traceOut, coerce3, layout);
+    if (traceOut.visible === false) return;
+    coerce3("bandwidth");
+    coerce3("side");
+    var width = coerce3("width");
+    if (!width) {
+      coerce3("scalegroup", traceOut.name);
+      coerce3("scalemode");
+    }
+    var span = coerce3("span");
+    var spanmodeDflt;
+    if (Array.isArray(span)) spanmodeDflt = "manual";
+    coerce3("spanmode", spanmodeDflt);
+    var lineColor = coerce3("line.color", (traceIn.marker || {}).color || defaultColor);
+    var lineWidth = coerce3("line.width");
+    var fillColor = coerce3("fillcolor", color_default.addOpacity(traceOut.line.color, 0.5));
+    defaults_default3.handlePointsDefaults(traceIn, traceOut, coerce3, { prefix: "" });
+    var boxWidth = coerce22("box.width");
+    var boxFillColor = coerce22("box.fillcolor", fillColor);
+    var boxLineColor = coerce22("box.line.color", lineColor);
+    var boxLineWidth = coerce22("box.line.width", lineWidth);
+    var boxVisible = coerce3("box.visible", Boolean(boxWidth || boxFillColor || boxLineColor || boxLineWidth));
+    if (!boxVisible) traceOut.box = { visible: false };
+    var meanLineColor = coerce22("meanline.color", lineColor);
+    var meanLineWidth = coerce22("meanline.width", lineWidth);
+    var meanLineVisible = coerce3("meanline.visible", Boolean(meanLineColor || meanLineWidth));
+    if (!meanLineVisible) traceOut.meanline = { visible: false };
+    coerce3("quartilemethod");
+    coerce3("zorder");
+  }
+
+  // src/traces/violin/layout_defaults.js
+  function supplyLayoutDefaults14(layoutIn, layoutOut, fullData) {
+    function coerce3(attr3, dflt) {
+      return lib_default.coerce(layoutIn, layoutOut, layout_attributes_default10, attr3, dflt);
+    }
+    layout_defaults_default3._supply(layoutIn, layoutOut, fullData, coerce3, "violin");
+  }
+
+  // src/traces/violin/helpers.js
+  var kernels = {
+    gaussian: function(v) {
+      return 1 / Math.sqrt(2 * Math.PI) * Math.exp(-0.5 * v * v);
+    }
+  };
+  var makeKDE = function(calcItem, trace, vals) {
+    var len2 = vals.length;
+    var kernel = kernels.gaussian;
+    var bandwidth = calcItem.bandwidth;
+    var factor = 1 / (len2 * bandwidth);
+    return function(x) {
+      var sum = 0;
+      for (var i = 0; i < len2; i++) {
+        sum += kernel((x - vals[i]) / bandwidth);
+      }
+      return factor * sum;
+    };
+  };
+  var getPositionOnKdePath = function(calcItem, trace, valuePx) {
+    var posLetter, valLetter;
+    if (trace.orientation === "h") {
+      posLetter = "y";
+      valLetter = "x";
+    } else {
+      posLetter = "x";
+      valLetter = "y";
+    }
+    var pointOnPath = lib_default.findPointOnPath(
+      calcItem.path,
+      valuePx,
+      valLetter,
+      { pathLength: calcItem.pathLength }
+    );
+    var posCenterPx = calcItem.posCenterPx;
+    var posOnPath0 = pointOnPath[posLetter];
+    var posOnPath1 = trace.side === "both" ? 2 * posCenterPx - posOnPath0 : posCenterPx;
+    return [posOnPath0, posOnPath1];
+  };
+  var getKdeValue = function(calcItem, trace, valueDist) {
+    var vals = calcItem.pts.map(extractVal2);
+    var kde = makeKDE(calcItem, trace, vals);
+    return kde(valueDist) / calcItem.posDensityScale;
+  };
+  var extractVal2 = function(o) {
+    return o.v;
+  };
+  var helpers_default13 = { makeKDE, getPositionOnKdePath, getKdeValue, extractVal: extractVal2 };
+
+  // src/traces/violin/calc.js
+  var { BADNUM: BADNUM18 } = numerical_default;
+  function calc15(gd, trace) {
+    var cd = calc6(gd, trace);
+    if (cd[0].t.empty) return cd;
+    var fullLayout = gd._fullLayout;
+    var valAxis = axes_default.getFromId(
+      gd,
+      trace[trace.orientation === "h" ? "xaxis" : "yaxis"]
+    );
+    var spanMin = Infinity;
+    var spanMax = -Infinity;
+    var maxKDE = 0;
+    var maxCount = 0;
+    for (var i = 0; i < cd.length; i++) {
+      var cdi = cd[i];
+      var vals = cdi.pts.map(helpers_default13.extractVal);
+      var bandwidth = cdi.bandwidth = calcBandwidth(trace, cdi, vals);
+      var span = cdi.span = calcSpan(trace, cdi, valAxis, bandwidth);
+      if (cdi.min === cdi.max && bandwidth === 0) {
+        span = cdi.span = [cdi.min, cdi.max];
+        cdi.density = [{ v: 1, t: span[0] }];
+        cdi.bandwidth = bandwidth;
+        maxKDE = Math.max(maxKDE, 1);
+      } else {
+        var dist2 = span[1] - span[0];
+        var n = Math.ceil(dist2 / (bandwidth / 3));
+        var step = dist2 / n;
+        if (!isFinite(step) || !isFinite(n)) {
+          lib_default.error("Something went wrong with computing the violin span");
+          cd[0].t.empty = true;
+          return cd;
+        }
+        var kde = helpers_default13.makeKDE(cdi, trace, vals);
+        cdi.density = new Array(n + 1);
+        for (var k = 0; k < cdi.density.length; k++) {
+          var t = span[0] + k * step;
+          var v = kde(t);
+          cdi.density[k] = { v, t };
+          maxKDE = Math.max(maxKDE, v);
+        }
+      }
+      maxCount = Math.max(maxCount, vals.length);
+      spanMin = Math.min(spanMin, span[0]);
+      spanMax = Math.max(spanMax, span[1]);
+    }
+    var extremes = axes_default.findExtremes(valAxis, [spanMin, spanMax], { padded: true });
+    trace._extremes[valAxis._id] = extremes;
+    if (trace.width) {
+      cd[0].t.maxKDE = maxKDE;
+    } else {
+      var violinScaleGroupStats = fullLayout._violinScaleGroupStats;
+      var scaleGroup = trace.scalegroup;
+      var groupStats = violinScaleGroupStats[scaleGroup];
+      if (groupStats) {
+        groupStats.maxKDE = Math.max(groupStats.maxKDE, maxKDE);
+        groupStats.maxCount = Math.max(groupStats.maxCount, maxCount);
+      } else {
+        violinScaleGroupStats[scaleGroup] = {
+          maxKDE,
+          maxCount
+        };
+      }
+    }
+    cd[0].t.labels.kde = lib_default._(gd, "kde:");
+    return cd;
+  }
+  function silvermanRule(len2, ssd, iqr) {
+    var a = Math.min(ssd, iqr / 1.349);
+    return 1.059 * a * Math.pow(len2, -0.2);
+  }
+  function calcBandwidth(trace, cdi, vals) {
+    var span = cdi.max - cdi.min;
+    if (!span) {
+      if (trace.bandwidth) {
+        return trace.bandwidth;
+      } else {
+        return 0;
+      }
+    }
+    if (trace.bandwidth) {
+      return Math.max(trace.bandwidth, span / 1e4);
+    } else {
+      var len2 = vals.length;
+      var ssd = lib_default.stdev(vals, len2 - 1, cdi.mean);
+      return Math.max(
+        silvermanRule(len2, ssd, cdi.q3 - cdi.q1),
+        span / 100
+      );
+    }
+  }
+  function calcSpan(trace, cdi, valAxis, bandwidth) {
+    var spanmode = trace.spanmode;
+    var spanIn = trace.span || [];
+    var spanTight = [cdi.min, cdi.max];
+    var spanLoose = [cdi.min - 2 * bandwidth, cdi.max + 2 * bandwidth];
+    var spanOut;
+    function calcSpanItem(index) {
+      var s = spanIn[index];
+      var sc = valAxis.type === "multicategory" ? valAxis.r2c(s) : valAxis.d2c(s, 0, trace[cdi.valLetter + "calendar"]);
+      return sc === BADNUM18 ? spanLoose[index] : sc;
+    }
+    if (spanmode === "soft") {
+      spanOut = spanLoose;
+    } else if (spanmode === "hard") {
+      spanOut = spanTight;
+    } else {
+      spanOut = [calcSpanItem(0), calcSpanItem(1)];
+    }
+    var dummyAx = {
+      type: "linear",
+      range: spanOut
+    };
+    axes_default.setConvert(dummyAx);
+    dummyAx.cleanRange();
+    return spanOut;
+  }
+
+  // src/traces/violin/cross_trace_calc.js
+  var { setPositionOffset: setPositionOffset2 } = cross_trace_calc_default2;
+  var orientations2 = ["v", "h"];
+  function crossTraceCalc5(gd, plotinfo) {
+    var calcdata = gd.calcdata;
+    var xa = plotinfo.xaxis;
+    var ya = plotinfo.yaxis;
+    for (var i = 0; i < orientations2.length; i++) {
+      var orientation = orientations2[i];
+      var posAxis = orientation === "h" ? ya : xa;
+      var violinList = [];
+      for (var j = 0; j < calcdata.length; j++) {
+        var cd = calcdata[j];
+        var t = cd[0].t;
+        var trace = cd[0].trace;
+        if (trace.visible === true && trace.type === "violin" && !t.empty && trace.orientation === orientation && trace.xaxis === xa._id && trace.yaxis === ya._id) {
+          violinList.push(j);
+        }
+      }
+      setPositionOffset2("violin", gd, violinList, posAxis);
+    }
+  }
+
+  // src/traces/violin/plot.js
+  var import_d354 = __toESM(require_d3(), 1);
+  function plot14(gd, plotinfo, cdViolins, violinLayer) {
+    var isStatic = gd._context.staticPlot;
+    var fullLayout = gd._fullLayout;
+    var xa = plotinfo.xaxis;
+    var ya = plotinfo.yaxis;
+    function makePath2(pts, trace) {
+      var segments = linePoints(pts, {
+        xaxis: xa,
+        yaxis: ya,
+        trace,
+        connectGaps: true,
+        baseTolerance: 0.75,
+        shape: "spline",
+        simplify: true,
+        linearized: true
+      });
+      return drawing_default.smoothopen(segments[0], 1);
+    }
+    lib_default.makeTraceGroups(violinLayer, cdViolins, "trace violins").each(function(cd) {
+      var plotGroup = import_d354.default.select(this);
+      var cd0 = cd[0];
+      var t = cd0.t;
+      var trace = cd0.trace;
+      if (trace.visible !== true || t.empty) {
+        plotGroup.remove();
+        return;
+      }
+      var bPos = t.bPos;
+      var bdPos = t.bdPos;
+      var valAxis = plotinfo[t.valLetter + "axis"];
+      var posAxis = plotinfo[t.posLetter + "axis"];
+      var hasBothSides = trace.side === "both";
+      var hasPositiveSide = hasBothSides || trace.side === "positive";
+      var hasNegativeSide = hasBothSides || trace.side === "negative";
+      var violins = plotGroup.selectAll("path.violin").data(lib_default.identity);
+      violins.enter().append("path").style("vector-effect", isStatic ? "none" : "non-scaling-stroke").attr("class", "violin");
+      violins.exit().remove();
+      violins.each(function(d) {
+        var pathSel = import_d354.default.select(this);
+        var density = d.density;
+        var len2 = density.length;
+        var posCenter = posAxis.c2l(d.pos + bPos, true);
+        var posCenterPx = posAxis.l2p(posCenter);
+        var scale2;
+        if (trace.width) {
+          scale2 = t.maxKDE / bdPos;
+        } else {
+          var groupStats = fullLayout._violinScaleGroupStats[trace.scalegroup];
+          scale2 = trace.scalemode === "count" ? groupStats.maxKDE / bdPos * (groupStats.maxCount / d.pts.length) : groupStats.maxKDE / bdPos;
+        }
+        var pathPos, pathNeg, path;
+        var i, k, pts, pt;
+        if (hasPositiveSide) {
+          pts = new Array(len2);
+          for (i = 0; i < len2; i++) {
+            pt = pts[i] = {};
+            pt[t.posLetter] = posCenter + density[i].v / scale2;
+            pt[t.valLetter] = valAxis.c2l(density[i].t, true);
+          }
+          pathPos = makePath2(pts, trace);
+        }
+        if (hasNegativeSide) {
+          pts = new Array(len2);
+          for (k = 0, i = len2 - 1; k < len2; k++, i--) {
+            pt = pts[k] = {};
+            pt[t.posLetter] = posCenter - density[i].v / scale2;
+            pt[t.valLetter] = valAxis.c2l(density[i].t, true);
+          }
+          pathNeg = makePath2(pts, trace);
+        }
+        if (hasBothSides) {
+          path = pathPos + "L" + pathNeg.slice(1) + "Z";
+        } else {
+          var startPt = [posCenterPx, valAxis.c2p(density[0].t)];
+          var endPt = [posCenterPx, valAxis.c2p(density[len2 - 1].t)];
+          if (trace.orientation === "h") {
+            startPt.reverse();
+            endPt.reverse();
+          }
+          if (hasPositiveSide) {
+            path = "M" + startPt + "L" + pathPos.slice(1) + "L" + endPt;
+          } else {
+            path = "M" + endPt + "L" + pathNeg.slice(1) + "L" + startPt;
+          }
+        }
+        pathSel.attr("d", path);
+        d.posCenterPx = posCenterPx;
+        d.posDensityScale = scale2 * bdPos;
+        d.path = pathSel.node();
+        d.pathLength = d.path.getTotalLength() / (hasBothSides ? 2 : 1);
+      });
+      var boxAttrs = trace.box;
+      var boxWidth = boxAttrs.width;
+      var boxLineWidth = (boxAttrs.line || {}).width;
+      var bdPosScaled;
+      var bPosPxOffset;
+      if (hasBothSides) {
+        bdPosScaled = bdPos * boxWidth;
+        bPosPxOffset = 0;
+      } else if (hasPositiveSide) {
+        bdPosScaled = [0, bdPos * boxWidth / 2];
+        bPosPxOffset = boxLineWidth * { x: 1, y: -1 }[t.posLetter];
+      } else {
+        bdPosScaled = [bdPos * boxWidth / 2, 0];
+        bPosPxOffset = boxLineWidth * { x: -1, y: 1 }[t.posLetter];
+      }
+      plot_default2.plotBoxAndWhiskers(plotGroup, { pos: posAxis, val: valAxis }, trace, {
+        bPos,
+        bdPos: bdPosScaled,
+        bPosPxOffset
+      });
+      plot_default2.plotBoxMean(plotGroup, { pos: posAxis, val: valAxis }, trace, {
+        bPos,
+        bdPos: bdPosScaled,
+        bPosPxOffset
+      });
+      var fn;
+      if (!trace.box.visible && trace.meanline.visible) {
+        fn = lib_default.identity;
+      }
+      var meanPaths = plotGroup.selectAll("path.meanline").data(fn || []);
+      meanPaths.enter().append("path").attr("class", "meanline").style("fill", "none").style("vector-effect", isStatic ? "none" : "non-scaling-stroke");
+      meanPaths.exit().remove();
+      meanPaths.each(function(d) {
+        var v = valAxis.c2p(d.mean, true);
+        var p = helpers_default13.getPositionOnKdePath(d, trace, v);
+        import_d354.default.select(this).attr(
+          "d",
+          trace.orientation === "h" ? "M" + v + "," + p[0] + "V" + p[1] : "M" + p[0] + "," + v + "H" + p[1]
+        );
+      });
+      plot_default2.plotPoints(plotGroup, { x: xa, y: ya }, trace, t);
+    });
+  }
+
+  // src/traces/violin/style.js
+  var import_d355 = __toESM(require_d3(), 1);
+  var { stylePoints: stylePoints3 } = style_default;
+  function style10(gd) {
+    var s = import_d355.default.select(gd).selectAll("g.trace.violins");
+    s.style("opacity", function(d) {
+      return d[0].trace.opacity;
+    });
+    s.each(function(d) {
+      var trace = d[0].trace;
+      var sel = import_d355.default.select(this);
+      var box = trace.box || {};
+      var boxLine = box.line || {};
+      var meanline = trace.meanline || {};
+      var meanLineWidth = meanline.width;
+      sel.selectAll("path.violin").style("stroke-width", trace.line.width + "px").call(color_default.stroke, trace.line.color).call(color_default.fill, trace.fillcolor);
+      sel.selectAll("path.box").style("stroke-width", boxLine.width + "px").call(color_default.stroke, boxLine.color).call(color_default.fill, box.fillcolor);
+      var meanLineStyle = {
+        "stroke-width": meanLineWidth + "px",
+        "stroke-dasharray": 2 * meanLineWidth + "px," + meanLineWidth + "px"
+      };
+      sel.selectAll("path.mean").style(meanLineStyle).call(color_default.stroke, meanline.color);
+      sel.selectAll("path.meanline").style(meanLineStyle).call(color_default.stroke, meanline.color);
+      stylePoints3(sel, trace, gd);
+    });
+  }
+
+  // src/traces/violin/hover.js
+  function hoverPoints10(pointData, xval, yval, hovermode, opts) {
+    if (!opts) opts = {};
+    var hoverLayer = opts.hoverLayer;
+    var cd = pointData.cd;
+    var trace = cd[0].trace;
+    var hoveron = trace.hoveron;
+    var hasHoveronViolins = hoveron.indexOf("violins") !== -1;
+    var hasHoveronKDE = hoveron.indexOf("kde") !== -1;
+    var closeData = [];
+    var closePtData;
+    var violinLineAttrs;
+    if (hasHoveronViolins || hasHoveronKDE) {
+      var closeBoxData = hover_default3.hoverOnBoxes(pointData, xval, yval, hovermode);
+      if (hasHoveronKDE && closeBoxData.length > 0) {
+        var xa = pointData.xa;
+        var ya = pointData.ya;
+        var pLetter, vLetter, pAxis, vAxis, vVal;
+        if (trace.orientation === "h") {
+          vVal = xval;
+          pLetter = "y";
+          pAxis = ya;
+          vLetter = "x";
+          vAxis = xa;
+        } else {
+          vVal = yval;
+          pLetter = "x";
+          pAxis = xa;
+          vLetter = "y";
+          vAxis = ya;
+        }
+        var di = cd[pointData.index];
+        if (vVal >= di.span[0] && vVal <= di.span[1]) {
+          var kdePointData = lib_default.extendFlat({}, pointData);
+          var vValPx = vAxis.c2p(vVal, true);
+          var kdeVal = helpers_default13.getKdeValue(di, trace, vVal);
+          var pOnPath = helpers_default13.getPositionOnKdePath(di, trace, vValPx);
+          var paOffset = pAxis._offset;
+          var paLength = pAxis._length;
+          kdePointData[pLetter + "0"] = pOnPath[0];
+          kdePointData[pLetter + "1"] = pOnPath[1];
+          kdePointData[vLetter + "0"] = kdePointData[vLetter + "1"] = vValPx;
+          kdePointData[vLetter + "Label"] = vLetter + ": " + axes_default.hoverLabelText(vAxis, vVal, trace[vLetter + "hoverformat"]) + ", " + cd[0].t.labels.kde + " " + kdeVal.toFixed(3);
+          var medId = 0;
+          for (var k = 0; k < closeBoxData.length; k++) {
+            if (closeBoxData[k].attr === "med") {
+              medId = k;
+              break;
+            }
+          }
+          kdePointData.spikeDistance = closeBoxData[medId].spikeDistance;
+          var spikePosAttr = pLetter + "Spike";
+          kdePointData[spikePosAttr] = closeBoxData[medId][spikePosAttr];
+          closeBoxData[medId].spikeDistance = void 0;
+          closeBoxData[medId][spikePosAttr] = void 0;
+          kdePointData.hovertemplate = false;
+          closeData.push(kdePointData);
+          violinLineAttrs = {};
+          violinLineAttrs[pLetter + "1"] = lib_default.constrain(paOffset + pOnPath[0], paOffset, paOffset + paLength);
+          violinLineAttrs[pLetter + "2"] = lib_default.constrain(paOffset + pOnPath[1], paOffset, paOffset + paLength);
+          violinLineAttrs[vLetter + "1"] = violinLineAttrs[vLetter + "2"] = vAxis._offset + vValPx;
+        }
+      }
+      if (hasHoveronViolins) {
+        closeData = closeData.concat(closeBoxData);
+      }
+    }
+    if (hoveron.indexOf("points") !== -1) {
+      closePtData = hover_default3.hoverOnPoints(pointData, xval, yval);
+    }
+    var violinLine = hoverLayer.selectAll(".violinline-" + trace.uid).data(violinLineAttrs ? [0] : []);
+    violinLine.enter().append("line").classed("violinline-" + trace.uid, true).attr("stroke-width", 1.5);
+    violinLine.exit().remove();
+    violinLine.attr(violinLineAttrs).call(color_default.stroke, pointData.color);
+    if (hovermode === "closest") {
+      if (closePtData) return [closePtData];
+      return closeData;
+    }
+    if (closePtData) {
+      closeData.push(closePtData);
+      return closeData;
+    }
+    return closeData;
+  }
+
+  // src/traces/violin/index.js
+  var { crossTraceDefaults: _req33 } = defaults_default3;
+  var { styleOnSelect: _req94 } = style_default;
+  var violin_default = {
+    attributes: attributes_default31,
+    layoutAttributes: layout_attributes_default10,
+    supplyDefaults: supplyDefaults13,
+    crossTraceDefaults: _req33,
+    supplyLayoutDefaults: supplyLayoutDefaults14,
+    calc: calc15,
+    crossTraceCalc: crossTraceCalc5,
+    plot: plot14,
+    style: style10,
+    styleOnSelect: _req94,
+    hoverPoints: hoverPoints10,
+    selectPoints: selectPoints3,
+    moduleType: "trace",
+    name: "violin",
+    basePlotModule: cartesian_default,
+    categories: ["cartesian", "svg", "symbols", "oriented", "box-violin", "showLegend", "violinLayout", "zoomScale"],
+    meta: {}
+  };
 
   // src/components/calendars/calendars.js
   var import_main = __toESM(require_main(), 1);
@@ -82522,57 +87675,7 @@ var Plotly = (() => {
   };
 
   // lib/index-cartesian.js
-  core_default.register([
-    _req0,
-    _req1,
-    _req2,
-    _req3,
-    _req4,
-    _req5,
-    _req6,
-    _req7,
-    _req8,
-    _req9,
-    _req10,
-    _req11,
-    _req12,
-    _req13,
-    _req14,
-    _req15,
-    _req16,
-    _req17,
-    _req18,
-    _req19,
-    _req20,
-    _req21,
-    _req22,
-    _req23,
-    _req24,
-    _req25,
-    _req26,
-    _req27,
-    _req28,
-    _req29,
-    _req30,
-    _req31,
-    _req32,
-    _req33,
-    _req34,
-    _req35,
-    _req36,
-    _req37,
-    _req38,
-    _req39,
-    _req40,
-    _req41,
-    _req42,
-    _req43,
-    _req44,
-    _req45,
-    _req46,
-    _req47,
-    _req48
-  ]);
+  core_default.register([bar_default, box_default, contour_default, heatmap_default, histogram_default, histogram2d_default, histogram2dcontour_default, image_default, pie_default, scatter_default, scatterternary_default, violin_default, calendars_default2]);
   var index_cartesian_default = core_default;
   return __toCommonJS(index_cartesian_exports);
 })();
