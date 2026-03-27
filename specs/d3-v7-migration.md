@@ -52,13 +52,18 @@ Files that only use `d3.select()` / `d3.selectAll()` — the API is identical in
 Replace `import d3 from '@plotly/d3'` with `import { select, selectAll } from 'd3-selection'`,
 then change `d3.select(...)` to `select(...)`.
 
-~60 files use only select/selectAll. However, d3 v3's `Selection` has array methods
-(`.map()`, `.forEach()`) that d3 v7's `Selection` does NOT. Code that does
-`d3.selectAll(...).map(...)` or iterates selections as arrays will break.
-Each file needs inspection — NOT a safe find-and-replace.
+**CRITICAL: d3 v3 and v7 cannot coexist in the same bundle.** They have different
+`Selection` prototypes. Mixing causes methods from one version to be applied to
+objects from the other, producing runtime errors (`selectAll(...).map is not a function`).
 
-A drop-in shim was also attempted (re-exporting d3 v7 with v3 API names).
-Failed due to behavioral differences beyond just naming.
+This means the migration must be **all-or-nothing** — all 94 files converted in one commit.
+
+Known v3-specific patterns requiring conversion:
+- `selectAll('g').map(function(d) { return d[0]; })` — v3 selection-as-array (2 instances in `cartesian/index.js`)
+- `selectAll().filter()` — v3 array filter on selection groups (3 instances)
+- `selectAll().sort()` — exists in v7 too but semantics differ
+- `.filter()` on selections exists in v7 as `selection.filter()` but is a selection method, not Array.filter
+- 87 `d3.event` usages need callback parameter refactoring
 
 ### Phase 2: Scale, shape, format changes (renamed APIs)
 
