@@ -1,4 +1,5 @@
-import d3 from '@plotly/d3';
+import { select } from 'd3-selection';
+import { extent, min, max } from 'd3-array';
 import tinycolor from 'tinycolor2';
 import Plots from '../../plots/plots.js';
 import Registry from '../../registry.js';
@@ -36,7 +37,7 @@ function draw(gd) {
         .classed(cn.colorbar, true);
 
     colorBars.each(function(opts) {
-        var g = d3.select(this);
+        var g = select(this);
 
         Lib.ensureSingle(g, 'rect', cn.cbbg);
         Lib.ensureSingle(g, 'g', cn.cbfills);
@@ -191,7 +192,7 @@ function drawColorBar(g, opts, gd) {
     var titleSide = title.side;
 
     var zrange = opts._zrange ||
-        d3.extent((typeof fillColor === 'function' ? fillColor : line.color).domain());
+        extent((typeof fillColor === 'function' ? fillColor : line.color).domain());
 
     var lineColormap = typeof line.color === 'function' ?
         line.color :
@@ -417,7 +418,7 @@ function drawColorBar(g, opts, gd) {
                 'v'
             ) + ax._id + 'title', {
                 avoid: {
-                    selection: d3.select(gd).selectAll('g.' + ax._id + 'tick'),
+                    selection: select(gd).selectAll('g.' + ax._id + 'tick'),
                     side: titleSide,
                     offsetTop: isVertical ? 0 : gs.t,
                     offsetLeft: isVertical ? gs.l : 0,
@@ -535,11 +536,11 @@ function drawColorBar(g, opts, gd) {
 
             // Colorbar cannot currently support opacities so we
             // use an opaque fill even when alpha channels present
-            var fillEl = d3.select(this)
+            var fillEl = select(this)
             .attr(isVertical ? 'x' : 'y', uPx)
-            .attr(isVertical ? 'y' : 'x', d3.min(z))
+            .attr(isVertical ? 'y' : 'x', min(z))
             .attr(isVertical ? 'width' : 'height', Math.max(thickPx, 2))
-            .attr(isVertical ? 'height' : 'width', Math.max(d3.max(z) - d3.min(z), 2));
+            .attr(isVertical ? 'height' : 'width', Math.max(max(z) - min(z), 2));
 
             if(opts._fillgradient) {
                 Drawing.gradient(fillEl, gd, opts._id, isVertical ? 'vertical' : 'horizontalreversed', opts._fillgradient, 'fill');
@@ -561,7 +562,7 @@ function drawColorBar(g, opts, gd) {
             var a = uPx;
             var b = (Math.round(ax.c2p(d)) + (line.width / 2) % 1);
 
-            d3.select(this)
+            select(this)
                 .attr('d', 'M' +
                     (isVertical ? a + ',' + b : b + ',' + a) +
                     (isVertical ? 'h' : 'v') +

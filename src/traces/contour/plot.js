@@ -1,4 +1,4 @@
-import d3 from '@plotly/d3';
+import { select } from 'd3-selection';
 import Lib from '../../lib/index.js';
 import Drawing from '../../components/drawing/index.js';
 import Colorscale from '../../components/colorscale/index.js';
@@ -19,7 +19,7 @@ export var plot = function plot(gd, plotinfo, cdcontours, contourLayer) {
     var ya = plotinfo.yaxis;
 
     Lib.makeTraceGroups(contourLayer, cdcontours, 'contour').each(function(cd) {
-        var plotGroup = d3.select(this);
+        var plotGroup = select(this);
         var cd0 = cd[0];
         var trace = cd0.trace;
         var x = cd0.x;
@@ -99,9 +99,9 @@ function makeFills(plotgroup, pathinfo, perimeter, contours) {
             joinAllPaths(pi, perimeter);
 
         if(!fullpath) {
-            d3.select(this).remove();
+            select(this).remove();
         } else {
-            d3.select(this)
+            select(this)
                 .attr('d', fullpath)
                 .style('stroke', 'none');
         }
@@ -285,7 +285,7 @@ function makeLinesAndLabels(plotgroup, pathinfo, gd, cd0, contours) {
         linegroup.each(function(d) {
             var textOpts = calcTextOpts(d.level, contourFormat, dummyText, gd);
 
-            d3.select(this).selectAll('path').each(function() {
+            select(this).selectAll('path').each(function() {
                 var path = this;
                 var pathBounds = Lib.getVisibleSegment(path, bounds, textOpts.height / 2);
                 if(!pathBounds) return;
@@ -589,7 +589,7 @@ export var drawLabels = function(labelGroup, labelData, gd, lineClip, labelClipP
         .each(function(d) {
             var x = d.x + Math.sin(d.theta) * d.dy;
             var y = d.y - Math.cos(d.theta) * d.dy;
-            d3.select(this)
+            select(this)
                 .text(d.text)
                 .attr({
                     x: x,

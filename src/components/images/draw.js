@@ -1,4 +1,4 @@
-import d3 from '@plotly/d3';
+import { select } from 'd3-selection';
 import Drawing from '../drawing/index.js';
 import Axes from '../../plots/cartesian/axes.js';
 import axisIds from '../../plots/cartesian/axis_ids.js';
@@ -61,7 +61,7 @@ export default function draw(gd) {
 
     // Images must be converted to dataURL's for exporting.
     function setImage(d) {
-        var thisImage = d3.select(this);
+        var thisImage = select(this);
 
         if(this._imgSrc === d.source) {
             return;
@@ -114,7 +114,7 @@ export default function draw(gd) {
     }
 
     function applyAttributes(d) {
-        var thisImage = d3.select(this);
+        var thisImage = select(this);
 
         // Axes if specified
         var xa = Axes.getFromId(gd, d.xref);

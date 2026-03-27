@@ -1,4 +1,4 @@
-import d3 from '@plotly/d3';
+import { select } from 'd3-selection';
 import tinycolor from 'tinycolor2';
 import Registry from '../../registry.js';
 import Drawing from '../../components/drawing/index.js';
@@ -30,7 +30,7 @@ export default function(gd, plotinfo, cdheatmaps, heatmapLayer) {
     var ya = plotinfo.yaxis;
 
     Lib.makeTraceGroups(heatmapLayer, cdheatmaps, 'hm').each(function (cd) {
-        var plotGroup = d3.select(this);
+        var plotGroup = select(this);
         var cd0 = cd[0];
         var trace = cd0.trace;
         var xGap = trace.xgap || 0;
@@ -532,7 +532,7 @@ export default function(gd, plotinfo, cdheatmaps, heatmapLayer) {
                 .append('text')
                 .attr('text-anchor', 'middle')
                 .each(function (d) {
-                    var thisLabel = d3.select(this);
+                    var thisLabel = select(this);
 
                     var fontColor = font.color;
                     if (!fontColor || fontColor === 'auto') {

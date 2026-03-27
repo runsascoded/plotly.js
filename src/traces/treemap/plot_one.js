@@ -1,4 +1,4 @@
-import d3 from '@plotly/d3';
+import { select } from 'd3-selection';
 import { interpolate } from 'd3-interpolate';
 import helpers from '../sunburst/helpers.js';
 import Lib from '../../lib/index.js';
@@ -27,7 +27,7 @@ export default function plotOne(gd, cd, element, transitionOpts, drawDescendants
     var hierarchy = cd0.hierarchy;
     var entry = helpers.findEntryWithLevel(hierarchy, trace.level);
 
-    var gTrace = d3.select(element);
+    var gTrace = select(element);
     var selAncestors = gTrace.selectAll('g.pathbar');
     var selDescendants = gTrace.selectAll('g.slice');
 
@@ -467,7 +467,7 @@ export default function plotOne(gd, cd, element, transitionOpts, drawDescendants
         if(hasTransition) {
             slices.exit().transition()
                 .each(function() {
-                    var sliceTop = d3.select(this);
+                    var sliceTop = select(this);
 
                     var slicePath = sliceTop.select('path.surface');
                     slicePath.transition().attrTween('d', function(pt2) {

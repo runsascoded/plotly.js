@@ -1,4 +1,5 @@
-import d3 from '@plotly/d3';
+import { select } from 'd3-selection';
+// TODO: event removed in v4+; refactor event handlers to receive event as callback parameter
 import Registry from '../../registry.js';
 import Plots from '../../plots/plots.js';
 import Lib from '../../lib/index.js';
@@ -61,7 +62,7 @@ export default function(gd) {
 
     // for all present range sliders
     rangeSliders.each(function(axisOpts) {
-        var rangeSlider = d3.select(this);
+        var rangeSlider = select(this);
         var opts = axisOpts[constants.name];
         var oppAxisOpts = fullLayout[axisIDs.id2name(axisOpts.anchor)];
         var oppAxisRangeOpts = opts[axisIDs.id2name(axisOpts.anchor)];
@@ -235,7 +236,7 @@ function setupDragElement(rangeSlider, gd, axisOpts, opts) {
     var grabAreaMax = rangeSlider.select('rect.' + constants.grabAreaMaxClassName).node();
 
     function mouseDownHandler() {
-        var event = d3.event;
+        var event = event;
         var target = event.target;
         var startX = eventX(event);
         var offsetX = startX - rangeSlider.node().getBoundingClientRect().left;
@@ -298,7 +299,7 @@ function setupDragElement(rangeSlider, gd, axisOpts, opts) {
             opts._pixelMin = pixelMin;
             opts._pixelMax = pixelMax;
 
-            setCursor(d3.select(dragCover), cursor);
+            setCursor(select(dragCover), cursor);
             setDataRange(rangeSlider, gd, axisOpts, opts);
         }
 
@@ -447,7 +448,7 @@ function drawRangePlot(rangeSlider, gd, axisOpts, opts) {
     var mainplotinfo;
 
     rangePlots.each(function(id, i) {
-        var plotgroup = d3.select(this);
+        var plotgroup = select(this);
         var isMainPlot = (i === 0);
 
         var oppAxisOpts = axisIDs.getFromId(gd, id, 'y');

@@ -1,3 +1,5 @@
+import "./lib/d3-compat.js";
+import "d3-transition";
 import Registry from './registry.js';
 import plotApi from './plot_api/index.js';
 import FxModule from './components/fx/index.js';

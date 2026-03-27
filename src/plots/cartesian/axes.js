@@ -1,4 +1,5 @@
-import d3 from '@plotly/d3';
+import { select } from 'd3-selection';
+function d3Round(x, n) { return n ? Math.round(x * (n = Math.pow(10, n))) / n : Math.round(x); }
 import isNumeric from 'fast-isnumeric';
 import Plots from '../../plots/plots.js';
 import Registry from '../../registry.js';
@@ -1590,7 +1591,7 @@ axes.tickIncrement = function(x, dtick, axrev, calendar) {
         var frac = Lib.roundUp(Lib.mod(x2, 1), tickset, axrev);
 
         return Math.floor(x2) +
-            Math.log(d3.round(Math.pow(10, frac), 1)) / Math.LN10;
+            Math.log(d3Round(Math.pow(10, frac), 1)) / Math.LN10;
     }
 
     throw 'unrecognized dtick ' + String(dtick);
@@ -1653,7 +1654,7 @@ axes.tickFirst = function(ax, opts) {
         var frac = Lib.roundUp(Lib.mod(r0, 1), tickset, axrev);
 
         return Math.floor(r0) +
-            Math.log(d3.round(Math.pow(10, frac), 1)) / Math.LN10;
+            Math.log(d3Round(Math.pow(10, frac), 1)) / Math.LN10;
     } else throw 'unrecognized dtick ' + String(dtick);
 };
 
@@ -2343,7 +2344,7 @@ axes.makeClipPaths = function(gd) {
     axClips.exit().remove();
 
     axClips.each(function(d) {
-        d3.select(this).select('rect').attr({
+        select(this).select('rect').attr({
             x: d.x._offset || 0,
             y: d.y._offset || 0,
             width: d.x._length || 1,
@@ -3399,7 +3400,7 @@ axes.drawTicks = function(gd, ax, opts) {
         .classed('ticks', 1)
         .classed('crisp', opts.crisp !== false)
         .each(function(d) {
-            return Color.stroke(d3.select(this), d.minor ? ax.minor.tickcolor : ax.tickcolor);
+            return Color.stroke(select(this), d.minor ? ax.minor.tickcolor : ax.tickcolor);
         })
         .style('stroke-width', function(d) {
             return Drawing.crispRound(
@@ -3492,7 +3493,7 @@ axes.drawGrid = function(gd, ax, opts) {
         grid.attr('transform', opts.transFn)
             .attr('d', opts.path)
             .each(function(d) {
-                return Color.stroke(d3.select(this), d.minor ?
+                return Color.stroke(select(this), d.minor ?
                     ax.minor.gridcolor :
                     (ax.gridcolor || '#ddd')
                 );
@@ -3615,7 +3616,7 @@ axes.drawLabels = function(gd, ax, opts) {
             // alter later
             .attr('text-anchor', 'middle')
             .each(function(d) {
-                var thisLabel = d3.select(this);
+                var thisLabel = select(this);
                 var newPromise = gd._promises.length;
 
                 thisLabel
@@ -3654,14 +3655,14 @@ axes.drawLabels = function(gd, ax, opts) {
 
     if(opts.repositionOnUpdate) {
         tickLabels.each(function(d) {
-            d3.select(this).select('text')
+            select(this).select('text')
                 .call(svgTextUtils.positionText, labelFns.xFn(d), labelFns.yFn(d));
         });
     }
 
     function positionLabels(s, angle) {
         s.each(function(d) {
-            var thisLabel = d3.select(this);
+            var thisLabel = select(this);
             var mathjaxGroup = thisLabel.select('.text-math-group');
             var anchor = labelFns.anchorFn(d, angle);
 
@@ -3729,7 +3730,7 @@ axes.drawLabels = function(gd, ax, opts) {
         var visibleLabelMax = -Infinity;
 
         tickLabels.each(function(d) {
-            var thisLabel = d3.select(this);
+            var thisLabel = select(this);
             var mathjaxGroup = thisLabel.select('.text-math-group');
 
             if(mathjaxGroup.empty()) {
@@ -3810,7 +3811,7 @@ axes.drawLabels = function(gd, ax, opts) {
                     else sel = mainPlotinfo[ax._id.charAt(0) + 'axislayer'];
 
                     sel.each(function() {
-                        var w = d3.select(this);
+                        var w = select(this);
                         if(e.L) w = w.selectAll(e.L);
 
                         w.each(function(d) {
@@ -3818,7 +3819,7 @@ axes.drawLabels = function(gd, ax, opts) {
                                 isPeriodLabel ? getPosX(d) : d.x
                             ) + ax._offset;
 
-                            var t = d3.select(this);
+                            var t = select(this);
                             if(
                                 q < ax['_visibleLabelMax_' + anchorAx._id] &&
                                 q > ax['_visibleLabelMin_' + anchorAx._id]
@@ -4417,7 +4418,7 @@ function hasBarsOrFill(gd, ax) {
 }
 
 function selectTickLabel(gTick) {
-    var s = d3.select(gTick);
+    var s = select(gTick);
     var mj = s.select('.text-math-group');
     return mj.empty() ? s.select('text') : mj;
 }

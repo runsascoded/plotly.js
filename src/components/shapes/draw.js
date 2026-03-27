@@ -1,4 +1,4 @@
-import d3 from '@plotly/d3';
+import { select } from 'd3-selection';
 import Registry from '../../registry.js';
 import Lib from '../../lib/index.js';
 import Axes from '../../plots/cartesian/axes.js';
@@ -203,7 +203,7 @@ function setupDragElement(gd, shapePath, shapeOptions, index, shapeLayer, editHe
     var n0, s0, w0, e0, optN, optS, optW, optE;
     var pathIn;
 
-    var shapeGroup = d3.select(shapePath.node().parentNode);
+    var shapeGroup = select(shapePath.node().parentNode);
 
     // setup conversion functions
     var xa = Axes.getFromId(gd, shapeOptions.xref);

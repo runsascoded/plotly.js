@@ -1,4 +1,4 @@
-import d3 from '@plotly/d3';
+import { select } from 'd3-selection';
 import Lib from '../../lib/index.js';
 import xmlnsNamespaces from '../../constants/xmlns_namespaces.js';
 import constants from './constants.js';
@@ -13,7 +13,7 @@ export default function plot(gd, plotinfo, cdimage, imageLayer) {
     var supportsPixelated = !gd._context._exportedPlot && supportsPixelatedImage();
 
     Lib.makeTraceGroups(imageLayer, cdimage, 'im').each(function(cd) {
-        var plotGroup = d3.select(this);
+        var plotGroup = select(this);
         var cd0 = cd[0];
         var trace = cd0.trace;
         var realImage = (

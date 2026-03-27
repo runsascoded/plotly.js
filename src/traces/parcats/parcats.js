@@ -1,4 +1,10 @@
-import d3 from '@plotly/d3';
+import { transition } from 'd3-transition';
+import { select } from 'd3-selection';
+import 'd3-transition';
+// TODO: event removed in v4+; refactor event handlers to receive event as callback parameter
+import { pointer } from 'd3-selection';
+import { zoom as d3Zoom } from 'd3-zoom';
+import { drag as d3Drag } from 'd3-drag';
 import { interpolateNumber } from 'd3-interpolate';
 import Plotly from '../../plot_api/plot_api.js';
 import Fx from '../../components/fx/index.js';
@@ -254,8 +260,8 @@ function performPlot(parcatsModels, graphDiv, layout, svg) {
         .each(
             /** @param {CategoryViewModel} catModel*/
             function(catModel) {
-                Drawing.font(d3.select(this), catModel.parcatsViewModel.categorylabelfont);
-                svgTextUtils.convertToTspans(d3.select(this), graphDiv);
+                Drawing.font(select(this), catModel.parcatsViewModel.categorylabelfont);
+                svgTextUtils.convertToTspans(select(this), graphDiv);
             });
 
     // Initialize dimension label
@@ -291,7 +297,7 @@ function performPlot(parcatsModels, graphDiv, layout, svg) {
         .each(
             /** @param {CategoryViewModel} catModel*/
             function(catModel) {
-                Drawing.font(d3.select(this), catModel.parcatsViewModel.labelfont);
+                Drawing.font(select(this), catModel.parcatsViewModel.labelfont);
             });
 
     // Category hover
@@ -304,7 +310,7 @@ function performPlot(parcatsModels, graphDiv, layout, svg) {
     categorySelection.exit().remove();
 
     // Setup drag
-    dimensionSelection.call(d3.behavior.drag()
+    dimensionSelection.call(d3Drag()
         .origin(function(d) {
             return {x: d.x, y: 0};
         })
@@ -314,9 +320,9 @@ function performPlot(parcatsModels, graphDiv, layout, svg) {
 
     // Save off selections to view models
     traceSelection.each(function(d) {
-        d.traceSelection = d3.select(this);
-        d.pathSelection = d3.select(this).selectAll('g.paths').selectAll('path.path');
-        d.dimensionSelection = d3.select(this).selectAll('g.dimensions').selectAll('g.dimension');
+        d.traceSelection = select(this);
+        d.pathSelection = select(this).selectAll('g.paths').selectAll('path.path');
+        d.dimensionSelection = select(this).selectAll('g.dimensions').selectAll('g.dimension');
     });
 
     // Remove any orphan traces
@@ -371,13 +377,13 @@ function mouseoverPath(d) {
             // Raise path to top
             Lib.raiseToTop(this);
 
-            stylePathsHover(d3.select(this));
+            stylePathsHover(select(this));
 
             // Emit hover event
             var points = buildPointsArrayForPath(d);
             var constraints = buildConstraintsForPath(d);
             d.parcatsViewModel.graphDiv.emit('plotly_hover', {
-                points: points, event: d3.event, constraints: constraints
+                points: points, event: event, constraints: constraints
             });
 
             // Handle hover label
@@ -385,7 +391,7 @@ function mouseoverPath(d) {
                 // hoverinfo is a combination of 'count' and 'probability'
 
                 // Mouse
-                var hoverX = d3.mouse(this)[0];
+                var hoverX = pointer(event, this)[0];
 
                 // Label
                 var gd = d.parcatsViewModel.graphDiv;
@@ -432,7 +438,7 @@ function mouseoverPath(d) {
                 }
 
                 var hovertext = hovertextParts.join('<br>');
-                var mouseX = d3.mouse(gd)[0];
+                var mouseX = pointer(event, gd)[0];
 
                 Fx.loneHover({
                     trace: trace,
@@ -470,7 +476,7 @@ function mouseoverPath(d) {
 function mouseoutPath(d) {
     if(!d.parcatsViewModel.dragDimension) {
         // We're not currently dragging
-        stylePathsNoHover(d3.select(this));
+        stylePathsNoHover(select(this));
 
         // Remove and hover label
         Fx.loneUnhover(d.parcatsViewModel.graphDiv._fullLayout._hoverlayer.node());
@@ -483,7 +489,7 @@ function mouseoutPath(d) {
             var points = buildPointsArrayForPath(d);
             var constraints = buildConstraintsForPath(d);
             d.parcatsViewModel.graphDiv.emit('plotly_unhover', {
-                points: points, event: d3.event, constraints: constraints
+                points: points, event: event, constraints: constraints
             });
         }
     }
@@ -543,7 +549,7 @@ function clickPath(d) {
         var points = buildPointsArrayForPath(d);
         var constraints = buildConstraintsForPath(d);
         d.parcatsViewModel.graphDiv.emit('plotly_click', {
-            points: points, event: d3.event, constraints: constraints
+            points: points, event: event, constraints: constraints
         });
     }
 }
@@ -624,7 +630,7 @@ function selectPathsThroughCategoryBandColor(catBandViewModel) {
  */
 function styleForCategoryHovermode(bandElement) {
     // Get all bands in the current category
-    var bandSel = d3.select(bandElement.parentNode).selectAll('rect.bandrect');
+    var bandSel = select(bandElement.parentNode).selectAll('rect.bandrect');
 
     // Raise and style paths
     bandSel.each(function(bvm) {
@@ -637,7 +643,7 @@ function styleForCategoryHovermode(bandElement) {
     });
 
     // Style category
-    styleCategoryHover(d3.select(bandElement.parentNode));
+    styleCategoryHover(select(bandElement.parentNode));
 }
 
 /**
@@ -649,7 +655,7 @@ function styleForCategoryHovermode(bandElement) {
  *
  */
 function styleForColorHovermode(bandElement) {
-    var bandViewModel = d3.select(bandElement).datum();
+    var bandViewModel = select(bandElement).datum();
     var catPaths = selectPathsThroughCategoryBandColor(bandViewModel);
     stylePathsHover(catPaths);
     catPaths.each(function() {
@@ -658,12 +664,12 @@ function styleForColorHovermode(bandElement) {
     });
 
     // Style category for drag
-    d3.select(bandElement.parentNode)
+    select(bandElement.parentNode)
         .selectAll('rect.bandrect')
         .filter(function(b) {return b.color === bandViewModel.color;})
         .each(function() {
             Lib.raiseToTop(this);
-            styleBandsHover(d3.select(this));
+            styleBandsHover(select(this));
         });
 }
 
@@ -677,10 +683,10 @@ function styleForColorHovermode(bandElement) {
  */
 function emitPointsEventCategoryHovermode(bandElement, eventName, event) {
     // Get all bands in the current category
-    var bandViewModel = d3.select(bandElement).datum();
+    var bandViewModel = select(bandElement).datum();
     var categoryModel = bandViewModel.categoryViewModel.model;
     var gd = bandViewModel.parcatsViewModel.graphDiv;
-    var bandSel = d3.select(bandElement.parentNode).selectAll('rect.bandrect');
+    var bandSel = select(bandElement.parentNode).selectAll('rect.bandrect');
 
     var points = [];
     bandSel.each(function(bvm) {
@@ -707,7 +713,7 @@ function emitPointsEventCategoryHovermode(bandElement, eventName, event) {
  *  Mouse Event
  */
 function emitPointsEventColorHovermode(bandElement, eventName, event) {
-    var bandViewModel = d3.select(bandElement).datum();
+    var bandViewModel = select(bandElement).datum();
     var categoryModel = bandViewModel.categoryViewModel.model;
     var gd = bandViewModel.parcatsViewModel.graphDiv;
     var paths = selectPathsThroughCategoryBandColor(bandViewModel);
@@ -744,7 +750,7 @@ function createHoverLabelForCategoryHovermode(gd, rootBBox, bandElement) {
     var scaleY = gd._fullLayout._invScaleY;
 
     // Selections
-    var rectSelection = d3.select(bandElement.parentNode).select('rect.catrect');
+    var rectSelection = select(bandElement.parentNode).select('rect.catrect');
     var rectBoundingBox = rectSelection.node().getBoundingClientRect();
 
     // Models
@@ -823,7 +829,7 @@ function createHoverLabelForCategoryHovermode(gd, rootBBox, bandElement) {
 function createHoverLabelForDimensionHovermode(gd, rootBBox, bandElement) {
     var allHoverlabels = [];
 
-    d3.select(bandElement.parentNode.parentNode)
+    select(bandElement.parentNode.parentNode)
         .selectAll('g.category')
         .select('rect.catrect')
         .each(function() {
@@ -852,7 +858,7 @@ function createHoverLabelForColorHovermode(gd, rootBBox, bandElement) {
 
     // Models
     /** @type {CategoryBandViewModel} */
-    var bandViewModel = d3.select(bandElement).datum();
+    var bandViewModel = select(bandElement).datum();
     var catViewModel = bandViewModel.categoryViewModel;
     var parcatsViewModel = catViewModel.parcatsViewModel;
     var dimensionModel = parcatsViewModel.model.dimensions[catViewModel.model.dimensionInd];
@@ -962,7 +968,7 @@ function mouseoverCategoryBand(bandViewModel) {
             // hoverinfo is not skip, so we at least style the bands and emit interaction events
 
             // Mouse
-            var mouseY = d3.mouse(this)[1];
+            var mouseY = pointer(event, this)[1];
             if(mouseY < -1) {
                 // Hover is above above the category rectangle (probably the dimension title text)
                 return;
@@ -979,10 +985,10 @@ function mouseoverCategoryBand(bandViewModel) {
             // Handle style and events
             if(hoveron === 'color') {
                 styleForColorHovermode(bandElement);
-                emitPointsEventColorHovermode(bandElement, 'plotly_hover', d3.event);
+                emitPointsEventColorHovermode(bandElement, 'plotly_hover', event);
             } else {
                 styleForCategoryHovermode(bandElement);
-                emitPointsEventCategoryHovermode(bandElement, 'plotly_hover', d3.event);
+                emitPointsEventCategoryHovermode(bandElement, 'plotly_hover', event);
             }
 
             // Handle hover label
@@ -1036,9 +1042,9 @@ function mouseoutCategory(bandViewModel) {
 
             // Handle style and events
             if(hoveron === 'color') {
-                emitPointsEventColorHovermode(bandElement, 'plotly_unhover', d3.event);
+                emitPointsEventColorHovermode(bandElement, 'plotly_unhover', event);
             } else {
-                emitPointsEventCategoryHovermode(bandElement, 'plotly_unhover', d3.event);
+                emitPointsEventCategoryHovermode(bandElement, 'plotly_unhover', event);
             }
         }
     }
@@ -1061,14 +1067,14 @@ function dragDimensionStart(d) {
 
     // Check for category hit
     d.dragCategoryDisplayInd = null;
-    d3.select(this)
+    select(this)
         .selectAll('g.category')
         .select('rect.catrect')
         .each(
             /** @param {CategoryViewModel} catViewModel */
             function(catViewModel) {
-                var catMouseX = d3.mouse(this)[0];
-                var catMouseY = d3.mouse(this)[1];
+                var catMouseX = pointer(event, this)[0];
+                var catMouseY = pointer(event, this)[1];
 
                 if(-2 <= catMouseX && catMouseX <= catViewModel.width + 2 &&
                     -2 <= catMouseY && catMouseY <= catViewModel.height + 2) {
@@ -1085,7 +1091,7 @@ function dragDimensionStart(d) {
                     Lib.raiseToTop(this.parentNode);
 
                     // Get band element
-                    d3.select(this.parentNode)
+                    select(this.parentNode)
                         .selectAll('rect.bandrect')
                         /** @param {CategoryBandViewModel} bandViewModel */
                         .each(function(bandViewModel) {
@@ -1131,7 +1137,7 @@ function dragDimension(d) {
         var dragCategory = dragDimension.categories[d.dragCategoryDisplayInd];
 
         // Update dragY by dy
-        dragCategory.model.dragY += d3.event.dy;
+        dragCategory.model.dragY += event.dy;
         var categoryY = dragCategory.model.dragY;
 
         // Check for category drag swaps
@@ -1164,7 +1170,7 @@ function dragDimension(d) {
 
     // Update dimension position
     if(d.dragCategoryDisplayInd === null || d.parcatsViewModel.arrangement === 'freeform') {
-        dragDimension.model.dragX = d3.event.x;
+        dragDimension.model.dragX = event.x;
 
         // Check for dimension swaps
         var prevDimension = d.parcatsViewModel.dimensions[prevDimInd];
@@ -1213,7 +1219,7 @@ function dragDimensionEnd(d) {
         return;
     }
 
-    d3.select(this).selectAll('text').attr('font-weight', 'normal');
+    select(this).selectAll('text').attr('font-weight', 'normal');
 
     // Compute restyle command
     // -----------------------
@@ -1264,9 +1270,9 @@ function dragDimensionEnd(d) {
     if(d.parcatsViewModel.hoverinfoItems.indexOf('skip') === -1) {
         if(!d.dragHasMoved && d.potentialClickBand) {
             if(d.parcatsViewModel.hoveron === 'color') {
-                emitPointsEventColorHovermode(d.potentialClickBand, 'plotly_click', d3.event.sourceEvent);
+                emitPointsEventColorHovermode(d.potentialClickBand, 'plotly_click', event.sourceEvent);
             } else {
-                emitPointsEventCategoryHovermode(d.potentialClickBand, 'plotly_click', d3.event.sourceEvent);
+                emitPointsEventCategoryHovermode(d.potentialClickBand, 'plotly_click', event.sourceEvent);
             }
         }
     }
@@ -1295,7 +1301,7 @@ function dragDimensionEnd(d) {
 
     // Perform transition
     // ------------------
-    var transition = d3.transition()
+    var transition = transition()
         .duration(300)
         .ease('cubic-in-out');
 
@@ -1439,7 +1445,7 @@ function updateSvgCategories(parcatsViewModel, hasTransition) {
                 newX = -5;
                 newAnchor = 'end';
             }
-            d3.select(this)
+            select(this)
                 .selectAll('tspan')
                 .attr('x', newX)
                 .attr('text-anchor', newAnchor);

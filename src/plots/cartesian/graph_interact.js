@@ -1,4 +1,4 @@
-import d3 from '@plotly/d3';
+import { select } from 'd3-selection';
 import Fx from '../../components/fx/index.js';
 import dragElement from '../../components/dragelement/index.js';
 import setCursor from '../../lib/setcursor.js';
@@ -12,7 +12,7 @@ export var initInteractions = function initInteractions(gd) {
 
     if(gd._context.staticPlot) {
         // this sweeps up more than just cartesian drag elements...
-        d3.select(gd).selectAll('.drag').remove();
+        select(gd).selectAll('.drag').remove();
         return;
     }
 

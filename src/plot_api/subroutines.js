@@ -1,4 +1,4 @@
-import d3 from '@plotly/d3';
+import { select } from 'd3-selection';
 import Registry from '../registry.js';
 import Plots from '../plots/plots.js';
 import Lib from '../lib/index.js';
@@ -166,7 +166,7 @@ function lsInner(gd) {
     lowerBackgrounds.exit().remove();
 
     lowerBackgrounds.each(function(subplot) {
-        fullLayout._plots[subplot].bg = d3.select(this);
+        fullLayout._plots[subplot].bg = select(this);
     });
 
     // style all backgrounds
@@ -424,8 +424,8 @@ export var drawMainTitle = function(gd) {
     });
 
     if(title.text && title.automargin) {
-        var titleObj = d3.select(gd).selectAll('.gtitle');
-        var titleHeight = Drawing.bBox(d3.select(gd).selectAll('.g-gtitle').node()).height;
+        var titleObj = select(gd).selectAll('.gtitle');
+        var titleHeight = Drawing.bBox(select(gd).selectAll('.g-gtitle').node()).height;
         var pushMargin = needsMarginPush(gd, title, titleHeight);
         if(pushMargin > 0) {
             applyTitleAutoMargin(gd, y, pushMargin, titleHeight);
@@ -451,7 +451,7 @@ export var drawMainTitle = function(gd) {
             }
 
             // If there is a subtitle
-            var subtitleObj = d3.select(gd).selectAll('.gtitle-subtitle');
+            var subtitleObj = select(gd).selectAll('.gtitle-subtitle');
             if(subtitleObj.node()) {
                 // Get bottom edge of title bounding box
                 var titleBB = titleObj.node().getBBox();

@@ -1,4 +1,4 @@
-import d3 from '@plotly/d3';
+import { select } from 'd3-selection';
 import Lib from '../../lib/index.js';
 import Drawing from '../../components/drawing/index.js';
 import _numerical from '../../constants/numerical.js';
@@ -27,7 +27,7 @@ function plotConnectors(gd, plotinfo, cdModule, traceLayer) {
     var ya = plotinfo.yaxis;
 
     Lib.makeTraceGroups(traceLayer, cdModule, 'trace bars').each(function(cd) {
-        var plotGroup = d3.select(this);
+        var plotGroup = select(this);
         var trace = cd[0].trace;
 
         var group = Lib.ensureSingle(plotGroup, 'g', 'lines');
@@ -94,7 +94,7 @@ function plotConnectors(gd, plotinfo, cdModule, traceLayer) {
 
             if(shape === '') shape = 'M0,0Z';
 
-            Lib.ensureSingle(d3.select(this), 'path')
+            Lib.ensureSingle(select(this), 'path')
                 .attr('d', shape)
                 .call(Drawing.setClipUrl, plotinfo.layerClipId, gd);
         });

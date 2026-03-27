@@ -1,4 +1,4 @@
-import d3 from '@plotly/d3';
+import { select } from 'd3-selection';
 import isNumeric from 'fast-isnumeric';
 import Lib from '../../lib/index.js';
 import _numerical from '../../constants/numerical.js';
@@ -279,7 +279,7 @@ function padInsideLabelsOnAnchorAxis(fullLayout, ax, max) {
                         var cls = anchorAxis._id + 'tick';
                         var tickLabels = anchorAxis._selections[cls];
                         tickLabels.each(function(d) {
-                            var thisLabel = d3.select(this);
+                            var thisLabel = select(this);
                             var mathjaxGroup = thisLabel.select('.text-math-group');
                             if(mathjaxGroup.empty()) {
                                 d.bb = Drawing.bBox(thisLabel.node());

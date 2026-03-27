@@ -1,14 +1,14 @@
-import d3 from '@plotly/d3';
+import { select } from 'd3-selection';
 import Color from '../../components/color/index.js';
 import Drawing from '../../components/drawing/index.js';
 
 function style(gd, cd, sel) {
-    var s = sel ? sel : d3.select(gd).selectAll('g.trace.boxes');
+    var s = sel ? sel : select(gd).selectAll('g.trace.boxes');
 
     s.style('opacity', function(d) { return d[0].trace.opacity; });
 
     s.each(function(d) {
-        var el = d3.select(this);
+        var el = select(this);
         var trace = d[0].trace;
         var lineWidth = trace.line.width;
 
@@ -24,7 +24,7 @@ function style(gd, cd, sel) {
             allBoxes.each(function(boxData) {
                 if(boxData.empty) return;
 
-                var thisBox = d3.select(this);
+                var thisBox = select(this);
                 var container = trace[boxData.dir]; // dir = 'increasing' or 'decreasing'
                 styleBox(thisBox, container.line.width, container.line.color, container.fillcolor);
                 // TODO: custom selection style for candlesticks

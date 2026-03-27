@@ -1,4 +1,4 @@
-import d3 from '@plotly/d3';
+import { select } from 'd3-selection';
 import Drawing from '../../components/drawing/index.js';
 import Lib from '../../lib/index.js';
 import svgTextUtils from '../../lib/svg_text_utils.js';
@@ -31,14 +31,14 @@ export default function plot(gd, cdModule) {
     layoutAreas(cdModule, fullLayout._size);
 
     Lib.makeTraceGroups(fullLayout._funnelarealayer, cdModule, 'trace').each(function(cd) {
-        var plotGroup = d3.select(this);
+        var plotGroup = select(this);
         var cd0 = cd[0];
         var trace = cd0.trace;
 
         setCoords(cd);
 
         plotGroup.each(function() {
-            var slices = d3.select(this).selectAll('g.slice').data(cd);
+            var slices = select(this).selectAll('g.slice').data(cd);
 
             slices.enter().append('g')
                 .classed('slice', true);
@@ -46,7 +46,7 @@ export default function plot(gd, cdModule) {
 
             slices.each(function(pt, i) {
                 if(pt.hidden) {
-                    d3.select(this).selectAll('path,g').remove();
+                    select(this).selectAll('path,g').remove();
                     return;
                 }
 
@@ -56,7 +56,7 @@ export default function plot(gd, cdModule) {
 
                 var cx = cd0.cx;
                 var cy = cd0.cy;
-                var sliceTop = d3.select(this);
+                var sliceTop = select(this);
                 var slicePath = sliceTop.selectAll('path.surface').data([pt]);
 
                 slicePath.enter().append('path')
@@ -85,7 +85,7 @@ export default function plot(gd, cdModule) {
                 sliceTextGroup.exit().remove();
 
                 sliceTextGroup.each(function() {
-                    var sliceText = Lib.ensureSingle(d3.select(this), 'text', '', function(s) {
+                    var sliceText = Lib.ensureSingle(select(this), 'text', '', function(s) {
                         // prohibit tex interpretation until we can handle
                         // tex and regular text together
                         s.attr('data-notex', 1);
@@ -129,7 +129,7 @@ export default function plot(gd, cdModule) {
             });
 
             // add the title
-            var titleTextGroup = d3.select(this).selectAll('g.titletext')
+            var titleTextGroup = select(this).selectAll('g.titletext')
                 .data(trace.title.text ? [0] : []);
 
             titleTextGroup.enter().append('g')
@@ -137,7 +137,7 @@ export default function plot(gd, cdModule) {
             titleTextGroup.exit().remove();
 
             titleTextGroup.each(function() {
-                var titleText = Lib.ensureSingle(d3.select(this), 'text', '', function(s) {
+                var titleText = Lib.ensureSingle(select(this), 'text', '', function(s) {
                     // prohibit tex interpretation as above
                     s.attr('data-notex', 1);
                 });

@@ -1,4 +1,4 @@
-import d3 from '@plotly/d3';
+import { select } from 'd3-selection';
 import Registry from '../../registry.js';
 import Lib from '../../lib/index.js';
 import Plots from '../plots.js';
@@ -259,7 +259,7 @@ function plotOne(gd, plotinfo, cdSubplot, transitionOpts, makeOnCompleteCallback
     layers.order();
 
     layers.each(function(d) {
-        var sel = d3.select(this);
+        var sel = select(this);
         var className = d.className;
 
         d.plotMethod(
@@ -439,7 +439,7 @@ export var drawFramework = function(gd) {
         }
 
         if(plotinfo) {
-            plotinfo.plotgroup = d3.select(this);
+            plotinfo.plotgroup = select(this);
             makeSubplotLayer(gd, plotinfo);
 
             if(!hasZ) {
@@ -684,7 +684,7 @@ function purgeSubplotLayers(layers, fullLayout) {
 
     layers.each(function(d) {
         var id = d[0];
-        var plotgroup = d3.select(this);
+        var plotgroup = select(this);
 
         plotgroup.remove();
         removeSubplotExtras(id, fullLayout);
@@ -717,7 +717,7 @@ function removeSubplotExtras(subplotId, fullLayout) {
 
 export var toSVG = function(gd) {
     var imageRoot = gd._fullLayout._glimages;
-    var root = d3.select(gd).selectAll('.svg-container');
+    var root = select(gd).selectAll('.svg-container');
     var canvases = root.filter(function(d, i) {return i === root.size() - 1;})
         .selectAll('.gl-canvas-context, .gl-canvas-focus');
 

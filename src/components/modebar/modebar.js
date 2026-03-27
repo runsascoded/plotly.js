@@ -1,4 +1,4 @@
-import d3 from '@plotly/d3';
+import { select } from 'd3-selection';
 import isNumeric from 'fast-isnumeric';
 import Lib from '../../lib/index.js';
 import Icons from '../../fonts/ploticon.js';
@@ -180,7 +180,7 @@ proto.createButton = function(config) {
     }
 
     button.setAttribute('data-toggle', config.toggle || false);
-    if(config.toggle) d3.select(button).classed('active', true);
+    if(config.toggle) select(button).classed('active', true);
 
     var icon = config.icon;
     if(typeof icon === 'function') {
@@ -252,7 +252,7 @@ proto.updateActiveButton = function(buttonClicked) {
         var thisval = button.getAttribute('data-val') || true;
         var dataAttr = button.getAttribute('data-attr');
         var isToggleButton = (button.getAttribute('data-toggle') === 'true');
-        var button3 = d3.select(button);
+        var button3 = select(button);
 
         // set style on button based on its state at the moment this is called
         // (e.g. during the handling when a modebar button is clicked)
@@ -354,7 +354,7 @@ function createModeBar(gd, buttons) {
     });
 
     if(fullLayout._privateplot) {
-        d3.select(modeBar.element).append('span')
+        select(modeBar.element).append('span')
             .classed('badge-private float--left', true)
             .text('PRIVATE');
     }

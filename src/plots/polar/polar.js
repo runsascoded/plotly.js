@@ -1,4 +1,4 @@
-import d3 from '@plotly/d3';
+import { select } from 'd3-selection';
 import tinycolor from 'tinycolor2';
 import Registry from '../../registry.js';
 import Lib from '../../lib/index.js';
@@ -149,7 +149,7 @@ proto.updateLayers = function(fullLayout, polarLayout) {
     join.enter().append('g')
         .attr('class', function(d) { return subLayer + ' ' + d;})
         .each(function(d) {
-            var sel = layers[d] = d3.select(this);
+            var sel = layers[d] = select(this);
 
             switch(d) {
                 case 'frontplot':
@@ -816,7 +816,7 @@ proto.updateHoverAndMainDrag = function(fullLayout) {
 
     var mainDrag = dragBox.makeDragger(layers, 'path', 'maindrag', fullLayout.dragmode === false ? 'none' : 'crosshair');
 
-    d3.select(mainDrag)
+    select(mainDrag)
         .attr('d', _this.pathSubplot())
         .attr('transform', strTranslate(cx, cy));
 
@@ -1168,7 +1168,7 @@ proto.updateRadialDrag = function(fullLayout, polarLayout, rngIndex) {
         dragOpts.dragmode = false;
     }
 
-    updateElement(d3.select(radialDrag), radialAxis.visible && innerRadius < radius, {
+    updateElement(select(radialDrag), radialAxis.visible && innerRadius < radius, {
         transform: strTranslate(tx, ty)
     });
 
@@ -1315,7 +1315,7 @@ proto.updateAngularDrag = function(fullLayout) {
     if(fullLayout.dragmode === false) {
         dragOpts.dragmode = false;
     } else {
-        d3.select(angularDrag)
+        select(angularDrag)
             .attr('d', _this.pathAnnulus(radius, radius + dbs))
             .attr('transform', strTranslate(cx, cy))
             .call(setCursor, 'move');
@@ -1372,12 +1372,12 @@ proto.updateAngularDrag = function(fullLayout) {
 
         // 'un-rotate' marker and text points
         scatterPoints.each(function() {
-            var sel = d3.select(this);
+            var sel = select(this);
             var xy = Drawing.getTranslate(sel);
             sel.attr('transform', strTranslate(xy.x, xy.y) + strRotate([da]));
         });
         scatterTextPoints.each(function() {
-            var sel = d3.select(this);
+            var sel = select(this);
             var tx = sel.select('text');
             var xy = Drawing.getTranslate(sel);
             // N.B rotate -> translate ordering matters
@@ -1454,7 +1454,7 @@ proto.updateAngularDrag = function(fullLayout) {
     // I don't what we should do in this case, skip we now
     if(_this.vangles && !Lib.isFullCircle(_this.sectorInRad)) {
         dragOpts.prepFn = Lib.noop;
-        setCursor(d3.select(angularDrag), null);
+        setCursor(select(angularDrag), null);
     }
 
     dragElement.init(dragOpts);

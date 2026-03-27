@@ -1,4 +1,12 @@
-import d3 from '@plotly/d3';
+import { axisLeft } from 'd3-axis';
+import { select } from 'd3-selection';
+import { scaleLinear, scaleLog, scaleOrdinal } from 'd3-scale';
+import { line as d3Line, area as d3Area, arc as d3Arc, symbol as d3Symbol } from 'd3-shape';
+import { rgb } from 'd3-color';
+// TODO: event removed in v4+; refactor event handlers to receive event as callback parameter
+import { pointer } from 'd3-selection';
+import { zoom as d3Zoom } from 'd3-zoom';
+import { drag as d3Drag } from 'd3-drag';
 import Lib from '../../lib/index.js';
 import { default as rgba } from 'color-rgba';
 import Axes from '../../plots/cartesian/axes.js';
@@ -75,7 +83,7 @@ function toText(formatter, texts) {
 function domainScale(height, padding, dimension, tickvals, ticktext) {
     var extent = dimensionExtent(dimension);
     if(tickvals) {
-        return d3.scale.ordinal()
+        return scaleOrdinal()
             .domain(tickvals.map(toText(numberFormat(dimension.tickformat), ticktext)))
             .range(tickvals
                 .map(function(d) {
@@ -84,17 +92,17 @@ function domainScale(height, padding, dimension, tickvals, ticktext) {
                 })
             );
     }
-    return d3.scale.linear()
+    return scaleLinear()
         .domain(extent)
         .range([height - padding, padding]);
 }
 
 function unitToPaddedPx(height, padding) {
-    return d3.scale.linear().range([padding, height - padding]);
+    return scaleLinear().range([padding, height - padding]);
 }
 
 function domainToPaddedUnitScale(dimension, padFraction) {
-    return d3.scale.linear()
+    return scaleLinear()
         .domain(dimensionExtent(dimension))
         .range([padFraction, 1 - padFraction]);
 }
@@ -103,7 +111,7 @@ function ordinalScale(dimension) {
     if(!dimension.tickvals) return;
 
     var extent = dimensionExtent(dimension);
-    return d3.scale.ordinal()
+    return scaleOrdinal()
         .domain(dimension.tickvals)
         .range(dimension.tickvals.map(function(d) {
             return (d - extent[0]) / (extent[1] - extent[0]);
@@ -114,14 +122,14 @@ function unitToColorScale(cscale) {
     var colorStops = cscale.map(function(d) { return d[0]; });
     var colorTuples = cscale.map(function(d) {
         var RGBA = rgba(d[1]);
-        return d3.rgb('rgb(' + RGBA[0] + ',' + RGBA[1] + ',' + RGBA[2] + ')');
+        return rgb('rgb(' + RGBA[0] + ',' + RGBA[1] + ',' + RGBA[2] + ')');
     });
     var prop = function(n) { return function(o) { return o[n]; }; };
 
     // We can't use d3 color interpolation as we may have non-uniform color palette raster
     // (various color stop distances).
     var polylinearUnitScales = 'rgb'.split('').map(function(key) {
-        return d3.scale.linear()
+        return scaleLinear()
             .clamp(true)
             .domain(colorStops)
             .range(colorTuples.map(prop(key)));
@@ -161,7 +169,7 @@ function model(layout, d, i) {
     var rangeFont = trace.rangefont;
 
     var lines = Lib.extendDeepNoArrays({}, line, {
-        color: lineColor.map(d3.scale.linear().domain(
+        color: lineColor.map(scaleLinear().domain(
             dimensionExtent({
                 values: lineColor,
                 range: [cOpts.min, cOpts.max],
@@ -469,12 +477,12 @@ export default function parcoords(gd, cdModule, layout, callbacks) {
     // emit hover / unhover event
     pickLayer
         .style('pointer-events', isStatic ? 'none' : 'auto')
-        .on('mousemove', function(d) {
+        .on('mousemove', function(event) {
             if(state.linePickActive() && d.lineLayer && callbacks && callbacks.hover) {
-                var event = d3.event;
+                var event = event;
                 var cw = this.width;
                 var ch = this.height;
-                var pointer = d3.mouse(this);
+                var pointer = pointer(event, this);
                 var x = pointer[0];
                 var y = pointer[1];
 
@@ -566,12 +574,12 @@ export default function parcoords(gd, cdModule, layout, callbacks) {
     });
 
     // drag column for reordering columns
-    yAxis.call(d3.behavior.drag()
+    yAxis.call(d3Drag()
         .origin(function(d) { return d; })
-        .on('drag', function(d) {
+        .on('drag', function(event) {
             var p = d.parent;
             state.linePickActive(false);
-            d.x = Math.max(-c.overdrag, Math.min(d.model.width + c.overdrag, d3.event.x));
+            d.x = Math.max(-c.overdrag, Math.min(d.model.width + c.overdrag, event.x));
             d.canvasX = d.x * d.model.canvasPixelRatio;
             yAxis
                 .sort(function(a, b) { return a.x - b.x; })
@@ -585,17 +593,17 @@ export default function parcoords(gd, cdModule, layout, callbacks) {
 
             yAxis.filter(function(e) { return Math.abs(d.xIndex - e.xIndex) !== 0; })
                 .attr('transform', function(d) { return strTranslate(d.xScale(d.xIndex), 0); });
-            d3.select(this).attr('transform', strTranslate(d.x, 0));
+            select(this).attr('transform', strTranslate(d.x, 0));
             yAxis.each(function(e, i0, i1) { if(i1 === d.parent.key) p.dimensions[i0] = e; });
             p.contextLayer && p.contextLayer.render(p.panels, false, !someFiltersActive(p));
             p.focusLayer.render && p.focusLayer.render(p.panels);
         })
-        .on('dragend', function(d) {
+        .on('dragend', function(event) {
             var p = d.parent;
             d.x = d.xScale(d.xIndex);
             d.canvasX = d.x * d.model.canvasPixelRatio;
             updatePanelLayout(yAxis, p, plotGlPixelRatio);
-            d3.select(this)
+            select(this)
                 .attr('transform', function(d) { return strTranslate(d.x, 0); });
             p.contextLayer && p.contextLayer.render(p.panels, false, !someFiltersActive(p));
             p.focusLayer && p.focusLayer.render(p.panels);
@@ -632,9 +640,9 @@ export default function parcoords(gd, cdModule, layout, callbacks) {
             var wantedTickCount = d.model.height / d.model.tickDistance;
             var scale = d.domainScale;
             var sdom = scale.domain();
-            d3.select(this)
-                .call(d3.svg.axis()
-                    .orient('left')
+            select(this)
+                .call(axisLeft()
+                    
                     .tickSize(4)
                     .outerTickSize(2)
                     .ticks(wantedTickCount, d.tickFormat) // works for continuous scales only...
@@ -677,7 +685,7 @@ export default function parcoords(gd, cdModule, layout, callbacks) {
     axisTitle
         .text(function(d) { return d.label; })
         .each(function(d) {
-            var e = d3.select(this);
+            var e = select(this);
             Drawing.font(e, d.model.labelFont);
             svgTextUtils.convertToTspans(e, gd);
         })
@@ -729,7 +737,7 @@ export default function parcoords(gd, cdModule, layout, callbacks) {
 
     axisExtentTopText
         .text(function(d) { return extremeText(d, true); })
-        .each(function(d) { Drawing.font(d3.select(this), d.model.rangeFont); });
+        .each(function(d) { Drawing.font(select(this), d.model.rangeFont); });
 
     var axisExtentBottom = axisExtent.selectAll('.' + c.cn.axisExtentBottom)
         .data(repeat, keyFun);
@@ -754,7 +762,7 @@ export default function parcoords(gd, cdModule, layout, callbacks) {
 
     axisExtentBottomText
         .text(function(d) { return extremeText(d, false); })
-        .each(function(d) { Drawing.font(d3.select(this), d.model.rangeFont); });
+        .each(function(d) { Drawing.font(select(this), d.model.rangeFont); });
 
     brush.ensureAxisBrush(axisOverlays, paperColor, gd);
 }

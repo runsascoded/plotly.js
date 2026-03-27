@@ -1,16 +1,16 @@
-import d3 from '@plotly/d3';
+import { select } from 'd3-selection';
 import Color from '../../components/color/index.js';
 import _style from '../scatter/style.js';
 const { stylePoints } = _style;
 
 export default function style(gd) {
-    var s = d3.select(gd).selectAll('g.trace.violins');
+    var s = select(gd).selectAll('g.trace.violins');
 
     s.style('opacity', function(d) { return d[0].trace.opacity; });
 
     s.each(function(d) {
         var trace = d[0].trace;
-        var sel = d3.select(this);
+        var sel = select(this);
         var box = trace.box || {};
         var boxLine = box.line || {};
         var meanline = trace.meanline || {};

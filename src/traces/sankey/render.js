@@ -1,6 +1,9 @@
 import * as d3Force from 'd3-force';
 import { interpolateNumber } from 'd3-interpolate';
-import d3 from '@plotly/d3';
+import { select } from 'd3-selection';
+// TODO: event removed in v4+; refactor event handlers to receive event as callback parameter
+import { zoom as d3Zoom } from 'd3-zoom';
+import { drag as d3Drag } from 'd3-drag';
 import * as d3Sankey from '@plotly/d3-sankey';
 import * as d3SankeyCircular from '@plotly/d3-sankey-circular';
 import c from './constants.js';
@@ -621,25 +624,25 @@ function sankeyTransform(d) {
 function attachPointerEvents(selection, sankey, eventSet) {
     selection
         .on('.basic', null) // remove any preexisting handlers
-        .on('mouseover.basic', function(d) {
+        .on('mouseover.basic', function(event) {
             if(!d.interactionState.dragInProgress && !d.partOfGroup) {
                 eventSet.hover(this, d, sankey);
                 d.interactionState.hovered = [this, d];
             }
         })
-        .on('mousemove.basic', function(d) {
+        .on('mousemove.basic', function(event) {
             if(!d.interactionState.dragInProgress && !d.partOfGroup) {
                 eventSet.follow(this, d);
                 d.interactionState.hovered = [this, d];
             }
         })
-        .on('mouseout.basic', function(d) {
+        .on('mouseout.basic', function(event) {
             if(!d.interactionState.dragInProgress && !d.partOfGroup) {
                 eventSet.unhover(this, d, sankey);
                 d.interactionState.hovered = false;
             }
         })
-        .on('click.basic', function(d) {
+        .on('click.basic', function(event) {
             if(d.interactionState.hovered) {
                 eventSet.unhover(this, d, sankey);
                 d.interactionState.hovered = false;
@@ -651,7 +654,7 @@ function attachPointerEvents(selection, sankey, eventSet) {
 }
 
 function attachDragHandler(sankeyNode, sankeyLink, callbacks, gd) {
-    var dragBehavior = d3.behavior.drag()
+    var dragBehavior = d3Drag()
         .origin(function(d) {
             return {
                 x: d.node.x0 + d.visibleWidth / 2,
@@ -659,7 +662,7 @@ function attachDragHandler(sankeyNode, sankeyLink, callbacks, gd) {
             };
         })
 
-        .on('dragstart', function(d) {
+        .on('dragstart', function(event) {
             if(d.arrangement === 'fixed') return;
             Lib.ensureSingle(gd._fullLayout._infolayer, 'g', 'dragcover', function(s) {
                 gd._fullLayout._dragCover = s;
@@ -683,10 +686,10 @@ function attachDragHandler(sankeyNode, sankeyLink, callbacks, gd) {
             }
         })
 
-        .on('drag', function(d) {
+        .on('drag', function(event) {
             if(d.arrangement === 'fixed') return;
-            var x = d3.event.x;
-            var y = d3.event.y;
+            var x = event.x;
+            var y = event.y;
             if(d.arrangement === 'snap') {
                 d.node.x0 = x - d.visibleWidth / 2;
                 d.node.x1 = x + d.visibleWidth / 2;
@@ -709,7 +712,7 @@ function attachDragHandler(sankeyNode, sankeyLink, callbacks, gd) {
             }
         })
 
-        .on('dragend', function(d) {
+        .on('dragend', function(event) {
             if(d.arrangement === 'fixed') return;
             d.interactionState.dragInProgress = false;
             for(var i = 0; i < d.node.childrenNodes.length; i++) {
@@ -891,7 +894,7 @@ export default function(gd, svg, calcData, layout, callbacks) {
         var dragboxClassName = 'bgsankey-' + d.trace.uid + '-' + i;
         Lib.ensureSingle(gd._fullLayout._draggers, 'rect', dragboxClassName);
 
-        gd._fullData[i]._bgRect = d3.select('.' + dragboxClassName);
+        gd._fullData[i]._bgRect = select('.' + dragboxClassName);
 
         // Style dragbox
         gd._fullData[i]._bgRect
@@ -1036,7 +1039,7 @@ export default function(gd, svg, calcData, layout, callbacks) {
         .attr('data-notex', 1) // prohibit tex interpretation until we can handle tex and regular text together
         .text(function(d) { return d.node.label; })
         .each(function(d) {
-            var e = d3.select(this);
+            var e = select(this);
             Drawing.font(e, d.textFont);
             svgTextUtils.convertToTspans(e, gd);
         })
@@ -1044,7 +1047,7 @@ export default function(gd, svg, calcData, layout, callbacks) {
             return (d.horizontal && d.left) ? 'end' : 'start';
         })
         .attr('transform', function(d) {
-            var e = d3.select(this);
+            var e = select(this);
             // how much to shift a multi-line label to center it vertically.
             var nLines = svgTextUtils.lineCount(e);
             var blockHeight = d.textFont.size * (

@@ -1,4 +1,4 @@
-import d3 from '@plotly/d3';
+import { extent } from 'd3-array';
 import Colorscale from '../../components/colorscale/index.js';
 import endPlus from './end_plus.js';
 
@@ -38,7 +38,7 @@ export default function makeColorMap(trace) {
 
         // do the contours extend beyond the colorscale?
         // if so, extend the colorscale with constants
-        var zRange = d3.extent([
+        var zRange = extent([
             zmin0,
             zmax0,
             contours.start,

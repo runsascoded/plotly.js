@@ -1,4 +1,4 @@
-import d3 from '@plotly/d3';
+import { select } from 'd3-selection';
 import Color from '../../components/color/index.js';
 import Drawing from '../../components/drawing/index.js';
 import Colorscale from '../../components/colorscale/index.js';
@@ -17,7 +17,7 @@ function styleTrace(gd, calcTrace) {
     var sclFunc = Colorscale.makeColorScaleFuncFromTrace(trace);
 
     locs.each(function(d) {
-        d3.select(this)
+        select(this)
             .attr('fill', sclFunc(d.z))
             .call(Color.stroke, d.mlc || markerLine.color)
             .call(Drawing.dashLine, '', d.mlw || markerLine.width || 0)

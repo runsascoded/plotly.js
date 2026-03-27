@@ -1,4 +1,4 @@
-import d3 from '@plotly/d3';
+function d3Round(x, n) { return n ? Math.round(x * (n = Math.pow(10, n))) / n : Math.round(x); }
 import { utcFormat } from 'd3-time-format';
 import Lib from '../../lib/index.js';
 import isNumeric from 'fast-isnumeric';
@@ -156,7 +156,7 @@ export default function setConvert(ax, fullLayout) {
     }
 
     // include 2 fractional digits on pixel, for PDF zooming etc
-    function _l2p(v, m, b) { return d3.round(b + m * v, 2); }
+    function _l2p(v, m, b) { return d3Round(b + m * v, 2); }
 
     function _p2l(px, m, b) { return (px - b) / m; }
 

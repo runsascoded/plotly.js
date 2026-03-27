@@ -2,7 +2,7 @@ import mapboxgl from '@plotly/mapbox-gl/dist/mapbox-gl-unminified';
 import Lib from '../../lib/index.js';
 import { getSubplotCalcData } from '../../plots/get_data.js';
 import xmlnsNamespaces from '../../constants/xmlns_namespaces.js';
-import d3 from '@plotly/d3';
+import { select } from 'd3-selection';
 import Drawing from '../../components/drawing/index.js';
 import svgTextUtils from '../../lib/svg_text_utils.js';
 import Mapbox from './mapbox.js';
@@ -123,7 +123,7 @@ export var toSVG = function(gd) {
             preserveAspectRatio: 'none'
         });
 
-        var subplotDiv = d3.select(opts._subplot.div);
+        var subplotDiv = select(opts._subplot.div);
 
         // Append logo if visible
         var hidden = subplotDiv.select('.mapboxgl-ctrl-logo').node().offsetParent === null;

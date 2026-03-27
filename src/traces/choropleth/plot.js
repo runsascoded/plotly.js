@@ -1,4 +1,4 @@
-import d3 from '@plotly/d3';
+import { select } from 'd3-selection';
 import Lib from '../../lib/index.js';
 import geoUtils from '../../lib/geo_location_utils.js';
 import _topojson_utils from '../../lib/topojson_utils.js';
@@ -12,7 +12,7 @@ function plot(gd, geo, calcData) {
     var choroplethLayer = geo.layers.backplot.select('.choroplethlayer');
 
     Lib.makeTraceGroups(choroplethLayer, calcData, 'trace choropleth').each(function(calcTrace) {
-        var sel = d3.select(this);
+        var sel = select(this);
 
         var paths = sel.selectAll('path.choroplethlocation')
             .data(Lib.identity);

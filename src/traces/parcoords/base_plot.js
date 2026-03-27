@@ -1,4 +1,4 @@
-import d3 from '@plotly/d3';
+import { select, selectAll } from 'd3-selection';
 import { getModuleCalcData } from '../../plots/get_data.js';
 import parcoordsPlot from './plot.js';
 import xmlnsNamespaces from '../../constants/xmlns_namespaces.js';
@@ -21,7 +21,7 @@ export var clean = function(newFullData, newFullLayout, oldFullData, oldFullLayo
 
 export var toSVG = function(gd) {
     var imageRoot = gd._fullLayout._glimages;
-    var root = d3.select(gd).selectAll('.svg-container');
+    var root = select(gd).selectAll('.svg-container');
     var canvases = root.filter(function(d, i) {return i === root.size() - 1;})
         .selectAll('.gl-canvas-context, .gl-canvas-focus');
 
@@ -48,7 +48,7 @@ export var toSVG = function(gd) {
     // on a subsequent interaction.
     // Firefox works fine without this workaround
     window.setTimeout(function() {
-        d3.selectAll('#filterBarPattern')
+        selectAll('#filterBarPattern')
             .attr('id', 'filterBarPattern');
     }, 60);
 };

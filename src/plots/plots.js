@@ -1,4 +1,4 @@
-import d3 from '@plotly/d3';
+import { select } from 'd3-selection';
 import { timeFormatLocale } from 'd3-time-format';
 import { formatLocale } from 'd3-format';
 import isNumeric from 'fast-isnumeric';
@@ -132,7 +132,7 @@ plots.addLinks = function(gd) {
             'pointer-events': 'all'
         })
         .each(function() {
-            var links = d3.select(this);
+            var links = select(this);
             links.append('tspan').classed('js-link-to-tool', true);
             links.append('tspan').classed('js-link-spacer', true);
             links.append('tspan').classed('js-sourcelinks', true);
@@ -205,7 +205,7 @@ plots.sendDataToCloud = function(gd) {
 
     gd.emit('plotly_beforeexport');
 
-    var hiddenformDiv = d3.select(gd)
+    var hiddenformDiv = select(gd)
         .append('div')
         .attr('id', 'hiddenform')
         .style('display', 'none');

@@ -1,5 +1,9 @@
 import c from './constants.js';
-import d3 from '@plotly/d3';
+import { select } from 'd3-selection';
+import { scaleLinear, scaleLog, scaleOrdinal } from 'd3-scale';
+// TODO: event removed in v4+; refactor event handlers to receive event as callback parameter
+import { zoom as d3Zoom } from 'd3-zoom';
+import { drag as d3Drag } from 'd3-drag';
 import Lib from '../../lib/index.js';
 import gup from '../../lib/gup.js';
 import Drawing from '../../components/drawing/index.js';
@@ -51,7 +55,7 @@ export default function plot(gd, wrappedTraceHolders) {
     if(dynamic) {
         var wheelEvent = 'onwheel' in document ? 'wheel' : 'mousewheel';
         cvEnter
-            .on('mousemove', function(d) {
+            .on('mousemove', function(event) {
                 tableControlView
                     .filter(function(dd) {return d === dd;})
                     .call(renderScrollbarKit, gd);
@@ -59,11 +63,11 @@ export default function plot(gd, wrappedTraceHolders) {
             .on(wheelEvent, function(d) {
                 if(d.scrollbarState.wheeling) return;
                 d.scrollbarState.wheeling = true;
-                var newY = d.scrollY + d3.event.deltaY;
+                var newY = d.scrollY + event.deltaY;
                 var noChange = makeDragRow(gd, tableControlView, null, newY)(d);
                 if(!noChange) {
-                    d3.event.stopPropagation();
-                    d3.event.preventDefault();
+                    event.stopPropagation();
+                    event.preventDefault();
                 }
                 d.scrollbarState.wheeling = false;
             })
@@ -88,7 +92,7 @@ export default function plot(gd, wrappedTraceHolders) {
         .attr('height', function(d) {return d.height;});
 
     tableControlView.each(function(d) {
-        Drawing.setClipUrl(d3.select(this), scrollAreaBottomClipKey(gd, d), gd);
+        Drawing.setClipUrl(select(this), scrollAreaBottomClipKey(gd, d), gd);
     });
 
     var yColumn = tableControlView.selectAll('.' + c.cn.yColumn)
@@ -103,19 +107,19 @@ export default function plot(gd, wrappedTraceHolders) {
     yColumn.attr('transform', function(d) {return strTranslate(d.x, 0);});
 
     if(dynamic) {
-        yColumn.call(d3.behavior.drag()
+        yColumn.call(d3Drag()
             .origin(function(d) {
-                var movedColumn = d3.select(this);
+                var movedColumn = select(this);
                 easeColumn(movedColumn, d, -c.uplift);
                 raiseToTop(this);
                 d.calcdata.columnDragInProgress = true;
                 renderScrollbarKit(tableControlView.filter(function(dd) {return d.calcdata.key === dd.key;}), gd);
                 return d;
             })
-            .on('drag', function(d) {
-                var movedColumn = d3.select(this);
-                var getter = function(dd) {return (d === dd ? d3.event.x : dd.x) + dd.columnWidth / 2;};
-                d.x = Math.max(-c.overdrag, Math.min(d.calcdata.width + c.overdrag - d.columnWidth, d3.event.x));
+            .on('drag', function(event) {
+                var movedColumn = select(this);
+                var getter = function(dd) {return (d === dd ? event.x : dd.x) + dd.columnWidth / 2;};
+                d.x = Math.max(-c.overdrag, Math.min(d.calcdata.width + c.overdrag - d.columnWidth, event.x));
 
                 var sortableColumns = flatData(yColumn).filter(function(dd) {return dd.calcdata.key === d.calcdata.key;});
                 var newOrder = sortableColumns.sort(function(a, b) {return getter(a) - getter(b);});
@@ -133,8 +137,8 @@ export default function plot(gd, wrappedTraceHolders) {
                     .call(cancelEeaseColumn)
                     .attr('transform', strTranslate(d.x, -c.uplift));
             })
-            .on('dragend', function(d) {
-                var movedColumn = d3.select(this);
+            .on('dragend', function(event) {
+                var movedColumn = select(this);
                 var p = d.calcdata;
                 d.x = d.xScale(d);
                 d.calcdata.columnDragInProgress = false;
@@ -145,7 +149,7 @@ export default function plot(gd, wrappedTraceHolders) {
     }
 
     yColumn.each(function(d) {
-        Drawing.setClipUrl(d3.select(this), columnBoundaryClipKey(gd, d), gd);
+        Drawing.setClipUrl(select(this), columnBoundaryClipKey(gd, d), gd);
     });
 
     var columnBlock = yColumn.selectAll('.' + c.cn.columnBlock)
@@ -165,13 +169,13 @@ export default function plot(gd, wrappedTraceHolders) {
     var cellsColumnBlock = columnBlock.filter(cellsBlock);
 
     if(dynamic) {
-        cellsColumnBlock.call(d3.behavior.drag()
+        cellsColumnBlock.call(d3Drag()
             .origin(function(d) {
-                d3.event.stopPropagation();
+                event.stopPropagation();
                 return d;
             })
             .on('drag', makeDragRow(gd, tableControlView, -1))
-            .on('dragend', function() {
+            .on('dragend', function(event) {
                 // fixme emit plotly notification
             })
         );
@@ -346,24 +350,24 @@ function renderScrollbarKit(tableControlView, gd, bypassVisibleBar) {
         .attr('stroke-width', c.scrollbarCaptureWidth)
         .attr('stroke-linecap', 'butt')
         .attr('y1', 0)
-        .on('mousedown', function(d) {
-            var y = d3.event.y;
+        .on('mousedown', function(event) {
+            var y = event.y;
             var bbox = this.getBoundingClientRect();
             var s = d.scrollbarState;
             var pixelVal = y - bbox.top;
-            var inverseScale = d3.scale.linear().domain([0, s.scrollableAreaHeight]).range([0, s.totalHeight]).clamp(true);
+            var inverseScale = scaleLinear().domain([0, s.scrollableAreaHeight]).range([0, s.totalHeight]).clamp(true);
             if(!(s.topY <= pixelVal && pixelVal <= s.bottomY)) {
                 makeDragRow(gd, tableControlView, null, inverseScale(pixelVal - s.barLength / 2))(d);
             }
         })
-        .call(d3.behavior.drag()
+        .call(d3Drag()
             .origin(function(d) {
-                d3.event.stopPropagation();
+                event.stopPropagation();
                 d.scrollbarState.scrollbarScrollInProgress = true;
                 return d;
             })
             .on('drag', makeDragRow(gd, tableControlView))
-            .on('dragend', function() {
+            .on('dragend', function(event) {
                 // fixme emit Plotly event
             })
         );
@@ -456,7 +460,7 @@ function renderCellText(cellTextHolder) {
         .append('text')
         .classed(c.cn.cellText, true)
         .style('cursor', function() {return 'auto';})
-        .on('mousedown', function() {d3.event.stopPropagation();});
+        .on('mousedown', function(event) {event.stopPropagation();});
 
     return cellText;
 }
@@ -499,7 +503,7 @@ function supplyStylingValues(columnCell) {
 function setFont(cellText) {
     cellText
         .each(function(d) {
-            Drawing.font(d3.select(this), d.font);
+            Drawing.font(select(this), d.font);
         });
 }
 
@@ -508,7 +512,7 @@ function sizeAndStyleRect(cellRect) {
         .attr('width', function(d) {return d.column.columnWidth;})
         .attr('stroke-width', function(d) {return d.cellBorderWidth;})
         .each(function(d) {
-            var atomicSelection = d3.select(this);
+            var atomicSelection = select(this);
             Color.stroke(atomicSelection, gridPick(d.calcdata.cells.line.color, d.column.specIndex, d.rowNumber));
             Color.fill(atomicSelection, gridPick(d.calcdata.cells.fill.color, d.column.specIndex, d.rowNumber));
         });
@@ -560,7 +564,7 @@ function populateCellText(cellText, tableControlView, allColumnBlock, gd) {
         })
         .each(function(d) {
             var element = this;
-            var selection = d3.select(element);
+            var selection = select(element);
 
             // finalize what's in the DOM
 
@@ -568,7 +572,7 @@ function populateCellText(cellText, tableControlView, allColumnBlock, gd) {
             if(d.needsConvertToTspans) {
                 svgUtil.convertToTspans(selection, gd, renderCallback(allColumnBlock, element, tableControlView, gd, d));
             } else {
-                d3.select(element.parentNode)
+                select(element.parentNode)
                     // basic cell adjustment - compliance with `cellPad`
                     .attr('transform', function(d) {return strTranslate(xPosition(d), c.cellPad);})
                     .attr('text-anchor', function(d) {
@@ -721,7 +725,7 @@ function makeDragRow(gd, allTableControlView, optionalMultiplier, optionalPositi
 
         var initialScrollY = d.scrollY;
 
-        d.scrollY = optionalPosition === void(0) ? d.scrollY + multiplier * d3.event.dy : optionalPosition;
+        d.scrollY = optionalPosition === void(0) ? d.scrollY + multiplier * event.dy : optionalPosition;
         var cellsColumnBlock = tableControlView.selectAll('.' + c.cn.yColumn).selectAll('.' + c.cn.columnBlock).filter(cellsBlock);
         updateBlockYPosition(gd, cellsColumnBlock, tableControlView);
 
@@ -747,7 +751,7 @@ function conditionalPanelRerender(gd, tableControlView, cellsColumnBlock, pages,
 
 function wrapTextMaker(columnBlock, element, tableControlView, gd) {
     return function wrapText() {
-        var cellTextHolder = d3.select(element.parentNode);
+        var cellTextHolder = select(element.parentNode);
         cellTextHolder
             .each(function(d) {
                 var fragments = d.fragments;
@@ -784,14 +788,14 @@ function wrapTextMaker(columnBlock, element, tableControlView, gd) {
 
         // resupply text, now wrapped
         populateCellText(cellTextHolder.select('.' + c.cn.cellText), tableControlView, columnBlock, gd);
-        d3.select(element.parentNode.parentNode).call(setCellHeightAndPositionY);
+        select(element.parentNode.parentNode).call(setCellHeightAndPositionY);
     };
 }
 
 function updateYPositionMaker(columnBlock, element, tableControlView, gd, d) {
     return function updateYPosition() {
         if(d.settledY) return;
-        var cellTextHolder = d3.select(element.parentNode);
+        var cellTextHolder = select(element.parentNode);
         var l = getBlock(d);
         var rowIndex = d.key - l.firstRowIndex;
 
@@ -824,10 +828,10 @@ function updateYPositionMaker(columnBlock, element, tableControlView, gd, d) {
                 var element = this;
                 var columnCellElement = element.parentNode;
                 var box = columnCellElement.getBoundingClientRect();
-                var rectBox = d3.select(element.parentNode).select('.' + c.cn.cellRect).node().getBoundingClientRect();
+                var rectBox = select(element.parentNode).select('.' + c.cn.cellRect).node().getBoundingClientRect();
                 var currentTransform = element.transform.baseVal.consolidate();
                 var yPosition = rectBox.top - box.top + (currentTransform ? currentTransform.matrix.f : c.cellPad);
-                return strTranslate(xPosition(d, d3.select(element.parentNode).select('.' + c.cn.cellTextHolder).node().getBoundingClientRect().width), yPosition);
+                return strTranslate(xPosition(d, select(element.parentNode).select('.' + c.cn.cellTextHolder).node().getBoundingClientRect().width), yPosition);
             });
 
         d.settledY = true;

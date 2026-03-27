@@ -1,4 +1,5 @@
-import d3 from '@plotly/d3';
+import { select } from 'd3-selection';
+// TODO: event removed in v4+; refactor event handlers to receive event as callback parameter
 import * as geo from 'd3-geo';
 import * as geoProjection from 'd3-geo-projection';
 import Registry from '../../registry.js';
@@ -124,26 +125,27 @@ proto.fetchTopojson = function() {
     var topojsonPath = topojsonUtils.getTopojsonPath(_this.topojsonURL, _this.topojsonName);
 
     return new Promise(function(resolve, reject) {
-        d3.json(topojsonPath, function(err, topojson) {
-            if(err) {
-                if(err.status === 404) {
-                    return reject(new Error([
-                        'plotly.js could not find topojson file at',
-                        topojsonPath + '.',
-                        'Make sure the *topojsonURL* plot config option',
-                        'is set properly.'
-                    ].join(' ')));
-                } else {
-                    return reject(new Error([
-                        'unexpected error while fetching topojson file at',
-                        topojsonPath
-                    ].join(' ')));
+        window.fetch(topojsonPath).then(function(r) {
+                if(!r.ok) {
+                    if(r.status === 404) {
+                        throw new Error([
+                            'plotly.js could not find topojson file at',
+                            topojsonPath + '.',
+                            'Make sure the *topojsonURL* plot config option',
+                            'is set properly.'
+                        ].join(' '));
+                    } else {
+                        throw new Error([
+                            'unexpected error while fetching topojson file at',
+                            topojsonPath
+                        ].join(' '));
+                    }
                 }
-            }
-
-            PlotlyGeoAssets.topojson[_this.topojsonName] = topojson;
-            resolve();
-        });
+                return r.json();
+            }).then(function(topojson) {
+                PlotlyGeoAssets.topojson[_this.topojsonName] = topojson;
+                resolve();
+            }).catch(reject);
     });
 };
 
@@ -336,13 +338,13 @@ proto.updateBaseLayers = function(fullLayout, geoLayout) {
     join.exit().each(function(d) {
         delete layers[d];
         delete basePaths[d];
-        d3.select(this).remove();
+        select(this).remove();
     });
 
     join.enter().append('g')
         .attr('class', function(d) { return 'layer ' + d; })
         .each(function(d) {
-            var layer = layers[d] = d3.select(this);
+            var layer = layers[d] = select(this);
 
             if(d === 'bg') {
                 _this.bgRect = layer.append('rect')
@@ -492,29 +494,29 @@ proto.updateFx = function(fullLayout, geoLayout) {
         dragElement.init(dragOptions);
     }
 
-    bgRect.on('mousemove', function() {
-        var lonlat = _this.projection.invert(Lib.getPositionFromD3Event());
+    bgRect.on('mousemove', function(event) {
+        var lonlat = _this.projection.invert(Lib.getPositionFromD3Event(event));
 
         if(!lonlat) {
-            return dragElement.unhover(gd, d3.event);
+            return dragElement.unhover(gd, event);
         }
 
         _this.xaxis.p2c = function() { return lonlat[0]; };
         _this.yaxis.p2c = function() { return lonlat[1]; };
 
-        Fx.hover(gd, d3.event, _this.id);
+        Fx.hover(gd, event, _this.id);
     });
 
-    bgRect.on('mouseout', function() {
+    bgRect.on('mouseout', function(event) {
         if(gd._dragging) return;
-        dragElement.unhover(gd, d3.event);
+        dragElement.unhover(gd, event);
     });
 
-    bgRect.on('click', function() {
+    bgRect.on('click', function(event) {
         // For select and lasso the dragElement is handling clicks
         if(dragMode !== 'select' && dragMode !== 'lasso') {
             if(clickMode.indexOf('select') > -1) {
-                selectOnClick(d3.event, gd, [_this.xaxis], [_this.yaxis],
+                selectOnClick(event, gd, [_this.xaxis], [_this.yaxis],
                   _this.id, dragOptions);
             }
 
@@ -523,7 +525,7 @@ proto.updateFx = function(fullLayout, geoLayout) {
                 // actually this one is worse, as right-click starts a pan, or leaves
                 // select in a weird state.
                 // Also, only tangentially related, we should cancel hover during pan
-                Fx.click(gd, d3.event);
+                Fx.click(gd, event);
             }
         }
     });
@@ -540,7 +542,7 @@ proto.makeFramework = function() {
 
     _this.clipRect = _this.clipDef.append('rect');
 
-    _this.framework = d3.select(_this.container).append('g')
+    _this.framework = select(_this.container).append('g')
         .attr('class', 'geo ' + _this.id)
         .call(Drawing.setClipUrl, clipId, gd);
 

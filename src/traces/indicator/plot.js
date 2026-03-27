@@ -1,4 +1,5 @@
-import d3 from '@plotly/d3';
+import { select } from 'd3-selection';
+import { line as d3Line, area as d3Area, arc as d3Arc, symbol as d3Symbol } from 'd3-shape';
 import { interpolate } from 'd3-interpolate';
 import { interpolateNumber } from 'd3-interpolate';
 import Lib from '../../lib/index.js';
@@ -51,7 +52,7 @@ export default function plot(gd, cdModule, transitionOpts, makeOnCompleteCallbac
         var cd0 = cd[0];
         var trace = cd0.trace;
 
-        var plotGroup = d3.select(this);
+        var plotGroup = select(this);
 
         // Elements in trace
         var hasGauge = trace._hasGauge;
@@ -361,7 +362,7 @@ function drawAngularGauge(gd, plotGroup, cd, opts) {
     }
 
     function arcPathGenerator(size) {
-        return d3.svg.arc()
+        return d3Arc()
                   .innerRadius((innerRadius + radius) / 2 - size / 2 * (radius - innerRadius))
                   .outerRadius((innerRadius + radius) / 2 + size / 2 * (radius - innerRadius))
                   .startAngle(-theta);
@@ -590,7 +591,7 @@ function drawNumbers(gd, plotGroup, cd, opts) {
                 .each('end', function() { writeNumber(); onComplete && onComplete(); })
                 .each('interrupt', function() { writeNumber(); onComplete && onComplete(); })
                 .attrTween('text', function() {
-                    var that = d3.select(this);
+                    var that = select(this);
                     var interpolator = interpolateNumber(cd[0].lastY, cd[0].y);
                     trace._lastValue = cd[0].y;
 
@@ -647,7 +648,7 @@ function drawNumbers(gd, plotGroup, cd, opts) {
                 .duration(transitionOpts.duration)
                 .ease(transitionOpts.easing)
                 .tween('text', function() {
-                    var that = d3.select(this);
+                    var that = select(this);
                     var to = deltaValue(cd[0]);
                     var from = trace._deltaLastValue;
                     var transitionFmt = transitionFormat(trace.delta.valueformat, deltaFmt, from, to);
@@ -784,8 +785,8 @@ function drawNumbers(gd, plotGroup, cd, opts) {
 // Apply fill, stroke, stroke-width to SVG shape
 function styleShape(p) {
     p
-        .each(function(d) { Color.stroke(d3.select(this), d.line.color);})
-        .each(function(d) { Color.fill(d3.select(this), d.color);})
+        .each(function(d) { Color.stroke(select(this), d.line.color);})
+        .each(function(d) { Color.fill(select(this), d.color);})
         .style('stroke-width', function(d) { return d.line.width;});
 }
 
@@ -849,7 +850,7 @@ function fitTextInsideCircle(textBB, radius) {
 
 function measureText(txt, font, textAnchor, gd) {
     var element = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-    var sel = d3.select(element);
+    var sel = select(element);
     sel.text(txt)
       .attr('x', 0)
       .attr('y', 0)

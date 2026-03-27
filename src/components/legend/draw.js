@@ -1,4 +1,7 @@
-import d3 from '@plotly/d3';
+import { select } from 'd3-selection';
+// TODO: event removed in v4+; refactor event handlers to receive event as callback parameter
+import { zoom as d3Zoom } from 'd3-zoom';
+import { drag as d3Drag } from 'd3-drag';
 import Lib from '../../lib/index.js';
 import Plots from '../../plots/plots.js';
 import Registry from '../../registry.js';
@@ -32,7 +35,7 @@ export default function draw(gd, opts) {
         var oldLegends = fullLayout._infolayer.selectAll('[class^="legend"]');
 
         oldLegends.each(function() {
-            var el = d3.select(this);
+            var el = select(this);
             var classes = el.attr('class');
             var cls = classes.split(' ')[0];
             if(cls.match(LEGEND_PATTERN) && newLegends.indexOf(cls) === -1) {
@@ -199,9 +202,9 @@ function drawOne(gd, opts) {
             return trace.visible === 'legendonly' ? 0.5 : 1;
         }
     })
-    .each(function() { d3.select(this).call(drawTexts, gd, legendObj); })
+    .each(function() { select(this).call(drawTexts, gd, legendObj); })
     .call(style, gd, legendObj)
-    .each(function() { if(!inHover) d3.select(this).call(setupTraceToggle, gd, legendId); });
+    .each(function() { if(!inHover) select(this).call(setupTraceToggle, gd, legendId); });
 
     Lib.syncOrAsync([
         Plots.previousPromises,
@@ -328,14 +331,14 @@ function drawOne(gd, opts) {
                 scrollHandler(scrollBoxY, scrollBarHeight, scrollRatio);
 
                 // scroll legend by mousewheel or touchpad swipe up/down
-                legend.on('wheel', function() {
+                legend.on('wheel', function(event) {
                     scrollBoxY = Lib.constrain(
                         legendObj._scrollY +
-                            ((d3.event.deltaY / scrollBoxYMax) * scrollBarYMax),
+                            ((event.deltaY / scrollBoxYMax) * scrollBarYMax),
                         0, scrollBoxYMax);
                     scrollHandler(scrollBoxY, scrollBarHeight, scrollRatio);
                     if(scrollBoxY !== 0 && scrollBoxY !== scrollBoxYMax) {
-                        d3.event.preventDefault();
+                        event.preventDefault();
                     }
                 });
 
@@ -352,9 +355,9 @@ function drawOne(gd, opts) {
                 };
 
                 // scroll legend by dragging scrollBAR
-                var scrollBarDrag = d3.behavior.drag()
-                .on('dragstart', function() {
-                    var e = d3.event.sourceEvent;
+                var scrollBarDrag = d3Drag()
+                .on('dragstart', function(event) {
+                    var e = event.sourceEvent;
                     if(e.type === 'touchstart') {
                         eventY0 = e.changedTouches[0].clientY;
                     } else {
@@ -362,8 +365,8 @@ function drawOne(gd, opts) {
                     }
                     scrollBoxY0 = scrollBoxY;
                 })
-                .on('drag', function() {
-                    var e = d3.event.sourceEvent;
+                .on('drag', function(event) {
+                    var e = event.sourceEvent;
                     if(e.buttons === 2 || e.ctrlKey) return;
                     if(e.type === 'touchmove') {
                         eventY1 = e.changedTouches[0].clientY;
@@ -376,16 +379,16 @@ function drawOne(gd, opts) {
                 scrollBar.call(scrollBarDrag);
 
                 // scroll legend by touch-dragging scrollBOX
-                var scrollBoxTouchDrag = d3.behavior.drag()
-                .on('dragstart', function() {
-                    var e = d3.event.sourceEvent;
+                var scrollBoxTouchDrag = d3Drag()
+                .on('dragstart', function(event) {
+                    var e = event.sourceEvent;
                     if(e.type === 'touchstart') {
                         eventY0 = e.changedTouches[0].clientY;
                         scrollBoxY0 = scrollBoxY;
                     }
                 })
-                .on('drag', function() {
-                    var e = d3.event.sourceEvent;
+                .on('drag', function(event) {
+                    var e = event.sourceEvent;
                     if(e.type === 'touchmove') {
                         eventY1 = e.changedTouches[0].clientY;
                         scrollBoxY = getNaturalDragY(scrollBoxY0, eventY0, eventY1);
@@ -546,7 +549,7 @@ function drawTexts(g, gd, legendObj) {
     if(isEditable) {
         textEl.call(svgTextUtils.makeEditable, {gd: gd, text: name})
             .call(textLayout, g, gd, legendObj)
-            .on('edit', function(newName) {
+            .on('edit', function(event) {
                 this.text(ensureLength(newName, maxNameLength))
                     .call(textLayout, g, gd, legendObj);
 
@@ -595,7 +598,7 @@ function setupTraceToggle(g, gd, legendId) {
 
     if(gd._context.staticPlot) return;
 
-    traceToggle.on('mousedown', function() {
+    traceToggle.on('mousedown', function(event) {
         newMouseDownTime = (new Date()).getTime();
         if(newMouseDownTime - gd._legendMouseDownTime < doubleClickDelay) {
             // in a click train
@@ -606,7 +609,7 @@ function setupTraceToggle(g, gd, legendId) {
             gd._legendMouseDownTime = newMouseDownTime;
         }
     });
-    traceToggle.on('mouseup', function() {
+    traceToggle.on('mouseup', function(event) {
         if(gd._dragged || gd._editing) return;
         var legend = gd._fullLayout[legendId];
 
@@ -614,7 +617,7 @@ function setupTraceToggle(g, gd, legendId) {
             numClicks = Math.max(numClicks - 1, 1);
         }
 
-        clickOrDoubleClick(gd, legend, g, numClicks, d3.event);
+        clickOrDoubleClick(gd, legend, g, numClicks, event);
     });
 }
 
@@ -834,7 +837,7 @@ function computeLegendDimensions(gd, groups, traces, legendObj) {
             groups.each(function() {
                 var maxWidthInGroup = 0;
                 var offsetY = 0;
-                d3.select(this).selectAll('g.traces').each(function(d) {
+                select(this).selectAll('g.traces').each(function(d) {
                     var w = getTraceWidth(d, legendObj, textGap);
                     var h = d[0].height;
 
@@ -936,7 +939,7 @@ function computeLegendDimensions(gd, groups, traces, legendObj) {
     var edits = gd._context.edits;
     var isEditable = edits.legendText || edits.legendPosition;
     traces.each(function(d) {
-        var traceToggle = d3.select(this).select('.' + legendId + 'toggle');
+        var traceToggle = select(this).select('.' + legendId + 'toggle');
         var h = d[0].height;
         var legendgroup = d[0].trace.legendgroup;
         var traceWidth = getTraceWidth(d, legendObj, textGap);

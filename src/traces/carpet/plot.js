@@ -1,4 +1,4 @@
-import d3 from '@plotly/d3';
+import { select } from 'd3-selection';
 import Drawing from '../../components/drawing/index.js';
 import map1dArray from './map_1d_array.js';
 import makepath from './makepath.js';
@@ -17,7 +17,7 @@ export default function plot(gd, plotinfo, cdcarpet, carpetLayer) {
     var clipLayer = fullLayout._clips;
 
     Lib.makeTraceGroups(carpetLayer, cdcarpet, 'trace').each(function(cd) {
-        var axisLayer = d3.select(this);
+        var axisLayer = select(this);
         var cd0 = cd[0];
         var trace = cd0.trace;
         var aax = trace.aaxis;
@@ -96,7 +96,7 @@ function drawGridLines(xaxis, yaxis, layer, axis, axisLetter, gridlines, isStati
 
         var path = 'M' + makepath(xp, yp, gridline.smoothing);
 
-        var el = d3.select(this);
+        var el = select(this);
 
         el.attr('d', path)
             .style('stroke-width', gridline.width)
@@ -134,7 +134,7 @@ function drawAxisLabels(gd, xaxis, yaxis, trace, t, layer, labels, labelClass) {
         }
         var direction = (label.endAnchor ? -1 : 1) * orientation.flip;
 
-        var labelEl = d3.select(this)
+        var labelEl = select(this)
             .attr({
                 'text-anchor': direction > 0 ? 'start' : 'end',
                 'data-notex': 1
@@ -218,7 +218,7 @@ function drawAxisTitle(gd, layer, trace, t, xy, dxy, axis, xa, ya, labelOrientat
         var angleDiff = (labelNorm - orientation.angle + 450) % 360;
         var reverseTitle = angleDiff > 90 && angleDiff < 270;
 
-        var el = d3.select(this);
+        var el = select(this);
 
         el.text(axis.title.text)
             .call(svgTextUtils.convertToTspans, gd);

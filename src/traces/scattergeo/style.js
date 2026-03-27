@@ -1,4 +1,4 @@
-import d3 from '@plotly/d3';
+import { select } from 'd3-selection';
 import Drawing from '../../components/drawing/index.js';
 import Color from '../../components/color/index.js';
 import scatterStyle from '../scatter/style.js';
@@ -22,7 +22,7 @@ function styleTrace(gd, calcTrace) {
     s.selectAll('path.js-line')
         .style('fill', 'none')
         .each(function(d) {
-            var path = d3.select(this);
+            var path = select(this);
             var trace = d.trace;
             var line = trace.line || {};
 

@@ -1,4 +1,4 @@
-import d3 from '@plotly/d3';
+import { scaleLinear, scaleLog, scaleOrdinal } from 'd3-scale';
 import tinycolor from 'tinycolor2';
 import isNumeric from 'fast-isnumeric';
 import Lib from '../../lib/index.js';
@@ -168,7 +168,7 @@ function makeColorScaleFunc(specs, opts) {
         _range[i] = [rgba.r, rgba.g, rgba.b, rgba.a];
     }
 
-    var _sclFunc = d3.scale.linear()
+    var _sclFunc = scaleLinear()
         .domain(domain)
         .range(_range)
         .clamp(true);

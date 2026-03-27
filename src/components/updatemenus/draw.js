@@ -1,4 +1,5 @@
-import d3 from '@plotly/d3';
+import { select } from 'd3-selection';
+// TODO: event removed in v4+; refactor event handlers to receive event as callback parameter
 import Plots from '../../plots/plots.js';
 import Color from '../color/index.js';
 import Drawing from '../drawing/index.js';
@@ -60,7 +61,7 @@ export default function draw(gd) {
         // a full replot so we need to explicitly remove it.
         // This is for removing *all* updatemenus, removing individuals is
         // handled below, in headerGroups.exit
-        d3.select(this).selectAll('g.' + constants.headerGroupClassName)
+        select(this).selectAll('g.' + constants.headerGroupClassName)
             .each(clearAutoMargin);
     }).remove();
 
@@ -103,7 +104,7 @@ export default function draw(gd) {
 
     // draw headers!
     headerGroups.each(function(menuOpts) {
-        var gHeader = d3.select(this);
+        var gHeader = select(this);
 
         var _gButton = menuOpts.type === 'dropdown' ? gButton : null;
 
@@ -192,7 +193,7 @@ function drawHeader(gd, gHeader, gButton, scrollBox, menuOpts) {
         y: dims.headerHeight / 2 + constants.textOffsetY + menuOpts.pad.t
     });
 
-    header.on('click', function() {
+    header.on('click', function(event) {
         gButton.call(removeAllButtons,
             String(isActive(gButton, menuOpts) ? -1 : menuOpts._index)
         );
@@ -200,11 +201,11 @@ function drawHeader(gd, gHeader, gButton, scrollBox, menuOpts) {
         drawButtons(gd, gHeader, gButton, scrollBox, menuOpts);
     });
 
-    header.on('mouseover', function() {
+    header.on('mouseover', function(event) {
         header.call(styleOnMouseOver);
     });
 
-    header.on('mouseout', function() {
+    header.on('mouseout', function(event) {
         header.call(styleOnMouseOut, menuOpts);
     });
 
@@ -283,15 +284,15 @@ function drawButtons(gd, gHeader, gButton, scrollBox, menuOpts) {
     };
 
     buttons.each(function(buttonOpts, buttonIndex) {
-        var button = d3.select(this);
+        var button = select(this);
 
         button
             .call(drawItem, menuOpts, buttonOpts, gd)
             .call(setItemPosition, menuOpts, posOpts);
 
-        button.on('click', function() {
+        button.on('click', function(event) {
             // skip `dragend` events
-            if(d3.event.defaultPrevented) return;
+            if(event.defaultPrevented) return;
 
             if(buttonOpts.execute) {
                 if(buttonOpts.args2 && menuOpts.active === buttonIndex) {
@@ -306,11 +307,11 @@ function drawButtons(gd, gHeader, gButton, scrollBox, menuOpts) {
             gd.emit('plotly_buttonclicked', {menu: menuOpts, button: buttonOpts, active: menuOpts.active});
         });
 
-        button.on('mouseover', function() {
+        button.on('mouseover', function(event) {
             button.call(styleOnMouseOver);
         });
 
-        button.on('mouseout', function() {
+        button.on('mouseout', function(event) {
             button.call(styleOnMouseOut, menuOpts);
             buttons.call(styleButtons, menuOpts);
         });
@@ -440,7 +441,7 @@ function styleButtons(buttons, menuOpts) {
     var active = menuOpts.active;
 
     buttons.each(function(buttonOpts, i) {
-        var button = d3.select(this);
+        var button = select(this);
 
         if(i === active && menuOpts.showactive) {
             button.select('rect.' + constants.itemRectClassName)
@@ -484,7 +485,7 @@ function findDimensions(gd, menuOpts) {
 
     // loop over fake buttons to find width / height
     fakeButtons.each(function(buttonOpts, i) {
-        var button = d3.select(this);
+        var button = select(this);
 
         button.call(drawItem, menuOpts, buttonOpts, gd);
 

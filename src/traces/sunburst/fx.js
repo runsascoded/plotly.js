@@ -1,4 +1,5 @@
-import d3 from '@plotly/d3';
+import { select } from 'd3-selection';
+// TODO: event removed in v4+; refactor event handlers to receive event as callback parameter
 import Registry from '../../registry.js';
 import { appendArrayPointValue } from '../../components/fx/helpers.js';
 import Fx from '../../components/fx/index.js';
@@ -182,20 +183,20 @@ export default function attachFxHandlers(sliceTop, entry, gd, cd, opts) {
         trace._hasHoverEvent = true;
         gd.emit('plotly_hover', {
             points: eventData || [makeEventData(pt, traceNow, opts.eventDataKeys)],
-            event: d3.event
+            event: event
         });
     };
 
     var onMouseOut = function(evt) {
         var fullLayoutNow = gd._fullLayout;
         var traceNow = gd._fullData[trace.index];
-        var pt = d3.select(this).datum();
+        var pt = select(this).datum();
 
         if(trace._hasHoverEvent) {
-            evt.originalEvent = d3.event;
+            evt.originalEvent = event;
             gd.emit('plotly_unhover', {
                 points: [makeEventData(pt, traceNow, opts.eventDataKeys)],
-                event: d3.event
+                event: event
             });
             trace._hasHoverEvent = false;
         }
@@ -232,7 +233,7 @@ export default function attachFxHandlers(sliceTop, entry, gd, cd, opts) {
 
         var typeClickEvtData = {
             points: [makeEventData(pt, traceNow, opts.eventDataKeys)],
-            event: d3.event
+            event: event
         };
         if(!noTransition) typeClickEvtData.nextLevel = nextLevel;
 
@@ -240,7 +241,7 @@ export default function attachFxHandlers(sliceTop, entry, gd, cd, opts) {
 
         if(clickVal !== false && fullLayoutNow.hovermode) {
             gd._hoverdata = [makeEventData(pt, traceNow, opts.eventDataKeys)];
-            Fx.click(gd, d3.event);
+            Fx.click(gd, event);
         }
 
         // if click does not trigger a transition, we're done!

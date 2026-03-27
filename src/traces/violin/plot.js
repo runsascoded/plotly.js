@@ -1,4 +1,4 @@
-import d3 from '@plotly/d3';
+import { select } from 'd3-selection';
 import Lib from '../../lib/index.js';
 import Drawing from '../../components/drawing/index.js';
 import boxPlot from '../box/plot.js';
@@ -26,7 +26,7 @@ export default function plot(gd, plotinfo, cdViolins, violinLayer) {
     }
 
     Lib.makeTraceGroups(violinLayer, cdViolins, 'trace violins').each(function(cd) {
-        var plotGroup = d3.select(this);
+        var plotGroup = select(this);
         var cd0 = cd[0];
         var t = cd0.t;
         var trace = cd0.trace;
@@ -53,7 +53,7 @@ export default function plot(gd, plotinfo, cdViolins, violinLayer) {
         violins.exit().remove();
 
         violins.each(function(d) {
-            var pathSel = d3.select(this);
+            var pathSel = select(this);
             var density = d.density;
             var len = density.length;
             var posCenter = posAxis.c2l(d.pos + bPos, true);
@@ -167,7 +167,7 @@ export default function plot(gd, plotinfo, cdViolins, violinLayer) {
             var v = valAxis.c2p(d.mean, true);
             var p = helpers.getPositionOnKdePath(d, trace, v);
 
-            d3.select(this).attr('d',
+            select(this).attr('d',
                 trace.orientation === 'h' ?
                     'M' + v + ',' + p[0] + 'V' + p[1] :
                     'M' + p[0] + ',' + v + 'H' + p[1]

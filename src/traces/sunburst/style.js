@@ -1,4 +1,4 @@
-import d3 from '@plotly/d3';
+import { select } from 'd3-selection';
 import Color from '../../components/color/index.js';
 import Lib from '../../lib/index.js';
 import _uniform_text from '../bar/uniform_text.js';
@@ -10,14 +10,14 @@ function style(gd) {
     resizeText(gd, s, 'sunburst');
 
     s.each(function(cd) {
-        var gTrace = d3.select(this);
+        var gTrace = select(this);
         var cd0 = cd[0];
         var trace = cd0.trace;
 
         gTrace.style('opacity', trace.opacity);
 
         gTrace.selectAll('path.surface').each(function(pt) {
-            d3.select(this).call(styleOne, pt, trace, gd);
+            select(this).call(styleOne, pt, trace, gd);
         });
     });
 }

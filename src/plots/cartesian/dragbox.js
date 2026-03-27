@@ -1,4 +1,4 @@
-import d3 from '@plotly/d3';
+import { select } from 'd3-selection';
 import Lib from '../../lib/index.js';
 import tinycolor from 'tinycolor2';
 import supportsPassive from 'has-passive-events';
@@ -280,7 +280,7 @@ function makeDragBox(gd, plotinfo, x, y, w, h, ns, ew) {
             } else if(ew === 'e') hAlign = 'right';
 
             if(gd._context.showAxisRangeEntryBoxes) {
-                d3.select(dragger)
+                select(dragger)
                     .call(svgTextUtils.makeEditable, {
                         gd: gd,
                         immediate: true,
@@ -1059,7 +1059,7 @@ function makeDragger(plotinfo, nodeName, dragClass, cursor) {
 
 function makeRectDragger(plotinfo, dragClass, cursor, x, y, w, h) {
     var dragger = makeDragger(plotinfo, 'rect', dragClass, cursor);
-    d3.select(dragger).call(Drawing.setRect, x, y, w, h);
+    select(dragger).call(Drawing.setRect, x, y, w, h);
     return dragger;
 }
 
@@ -1209,7 +1209,7 @@ function transitionZoombox(zb, corners, dimmed, lum) {
 }
 
 function removeZoombox(gd) {
-    d3.select(gd)
+    select(gd)
         .selectAll('.zoombox,.js-zoombox-backdrop,.js-zoombox-menu,.zoombox-corners')
         .remove();
 }
