@@ -37,15 +37,15 @@ pnpm run fork-bundles    # lite, minimal
 pnpm run schema dist     # generate plot-schema.json
 ```
 
-Build scripts in `tasks/` are `.cjs` (CJS) or `.mjs` (ESM). The `preprocess` step generates `build/plotcss.js` and `lib/*.js` entry points — run it before bundling.
+Build scripts in `tasks/` are `.cjs` (CJS) or `.mjs` (ESM). The `preprocess` step generates `src/plotcss.js` and `lib/*.js` entry points — run it before bundling.
 
 ## Bundle variants
 
 | Bundle | Entry point | Unminified | Contents |
 |---|---|---|---|
-| **lite** | `plotly.js/lite` | 1,942 KB | scatter + bar, 6 components |
-| minimal | `plotly.js/minimal` | 2,249 KB | scatter + bar, all 15 components |
-| basic | `plotly.js/basic` | 2,577 KB | scatter + bar + pie + calendars, all components |
+| **lite** | `plotly.js/lite` | 1,944 KB | scatter + bar, 6 components |
+| minimal | `plotly.js/minimal` | 2,251 KB | scatter + bar, all 15 components |
+| basic | `plotly.js/basic` | 2,550 KB | scatter + bar + pie + calendars, all components |
 
 ## Performance testing
 
@@ -105,16 +105,13 @@ Consumer apps should NOT need to build their own legend UIs, implement trace fad
 
 Active specs in `specs/`:
 - `remove-registration-system.md` — eliminate global registry, enable full tree-shaking, remove sub-path entry points
+- `d3-v7-migration.md` — replace `@plotly/d3` (CJS, d3 v3) with modern d3 v7 ESM packages
 
-Completed specs in `specs/done/`:
-- `esm-conversion.md` — CJS to ESM migration (971 files)
-- `dist-branch-esm.md` — ESM source on dist branch
-- `flush-legend-toggle-rects.md` — expand legend item hit areas
-- `legend-icon-symbols.md` — custom SVG legend symbols
-- `dist-extra-bundles.md` — build all bundles for dist branch
-- `custom-minimal-bundle.md` — lite/minimal bundle analysis
-- `perf-harness.md` — automated Playwright perf benchmark
-- `fast-initial-render.md` — deferred margin calculation, perf instrumentation
+Completed specs in `specs/done/` (14 total):
+`esm-conversion`, `esm-cjs-interop`, `esm-ternary-attrs`, `esm-css-imports`,
+`stackgl-esm-shim`, `dist-branch-esm`, `dist-extra-bundles`, `dist-branch-missing-dirs`,
+`dist-lib-stale`, `flush-legend-toggle-rects`, `legend-icon-symbols`,
+`custom-minimal-bundle`, `perf-harness`, `fast-initial-render`
 
 [plotly/plotly.js]: https://github.com/plotly/plotly.js
 [runsascoded/plotly.js]: https://github.com/runsascoded/plotly.js
