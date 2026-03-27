@@ -52,7 +52,13 @@ Files that only use `d3.select()` / `d3.selectAll()` — the API is identical in
 Replace `import d3 from '@plotly/d3'` with `import { select, selectAll } from 'd3-selection'`,
 then change `d3.select(...)` to `select(...)`.
 
-~60 files use only select/selectAll. This is mechanical and low-risk.
+~60 files use only select/selectAll. However, d3 v3's `Selection` has array methods
+(`.map()`, `.forEach()`) that d3 v7's `Selection` does NOT. Code that does
+`d3.selectAll(...).map(...)` or iterates selections as arrays will break.
+Each file needs inspection — NOT a safe find-and-replace.
+
+A drop-in shim was also attempted (re-exporting d3 v7 with v3 API names).
+Failed due to behavioral differences beyond just naming.
 
 ### Phase 2: Scale, shape, format changes (renamed APIs)
 
