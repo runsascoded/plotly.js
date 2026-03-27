@@ -68,15 +68,20 @@ Replace `Registry.getModule(trace)` with direct module references passed through
 
 Once all internal code uses explicit module passing, remove `Registry.*`, `Plotly.register()`, and the separate entry points. Each consumer just imports what they need.
 
+## Learnings from Phase 1 attempt
+
+A `createPlotly()` factory was implemented and tested. It lets consumers choose modules explicitly, and the bundler drops unimported modules. However, the savings were **negative** — the factory itself imports `plot_api/index.js` and `registry.js`, which transitively pull in more code than they save.
+
+The root cause: `registry.js`, `plots.js`, `plot_api.js` are monolithic files that import broadly. Until these dependency chains are broken, no top-level module selection helps — the overhead is in the shared infrastructure.
+
+**This is intertwined with the "split core files" effort.** The registration system can't be removed until the core files are modular, and the core files don't benefit from being modular until the registration system is removed. Both need to happen together.
+
 ## Effort estimate
 
-Phase 1 is small — a new factory function. Phase 2 is the bulk of the work — threading module references through the entire rendering pipeline. Phase 3 is cleanup.
+226 `Registry.xxx` call sites across ~91 files. Core files (`plots.js`, `plot_api.js`, `subroutines.js`, `axes.js`, `drawing/index.js`) need to be split into individual named exports. This is a large refactor — likely needs to follow the d3 v7 migration.
 
-The registration system is deeply woven in — `Registry.traceIs()` alone has 100+ call sites. This is a multi-session project.
+## Relationship to other modernization efforts
 
-## Interim wins
-
-Even without removing the registry, the ESM conversion gives us:
-- **Intra-module tree-shaking**: unused functions within registered modules are eliminated
-- **Better bundler integration**: no CJS pre-bundling, no `resolve.alias` hacks
-- **Consistent `pds l`/`pds g` behavior**: ESM works the same whether symlinked or installed
+1. **d3 v7 migration** — self-contained, 70-150 KB savings, do first
+2. **Registration system removal + core file splitting** — intertwined, do together, bigger payoff but bigger effort
+3. **Both require file-by-file work** — no shortcuts (shims break, top-level wrappers don't help)
