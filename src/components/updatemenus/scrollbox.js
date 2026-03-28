@@ -1,4 +1,3 @@
-// TODO: event removed in v4+; refactor event handlers to receive event as callback parameter
 import { zoom as d3Zoom } from 'd3-zoom';
 import { drag as d3Drag } from 'd3-drag';
 import Color from '../color/index.js';
@@ -261,7 +260,7 @@ ScrollBox.prototype.enable = function enable(position, translateX, translateY) {
     // set up drag listeners (if scroll bars are needed)
     if(needsHorizontalScrollBar || needsVerticalScrollBar) {
         var onBoxDrag = d3Drag()
-            .on('dragstart', function(event) {
+            .on('start', function(event) {
                 event.sourceEvent.preventDefault();
             })
             .on('drag', this._onBoxDrag.bind(this));
@@ -273,7 +272,7 @@ ScrollBox.prototype.enable = function enable(position, translateX, translateY) {
             .call(onBoxDrag);
 
         var onBarDrag = d3Drag()
-            .on('dragstart', function(event) {
+            .on('start', function(event) {
                 event.sourceEvent.preventDefault();
                 event.sourceEvent.stopPropagation();
             })

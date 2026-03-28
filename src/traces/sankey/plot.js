@@ -1,5 +1,4 @@
 import { select } from 'd3-selection';
-// TODO: event removed in v4+; refactor event handlers to receive event as callback parameter
 import Lib from '../../lib/index.js';
 import render from './render.js';
 import Fx from '../../components/fx/index.js';

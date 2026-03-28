@@ -1,5 +1,4 @@
 import { select } from 'd3-selection';
-// TODO: event removed in v4+; refactor event handlers to receive event as callback parameter
 import { pointer } from 'd3-selection';
 import Plots from '../../plots/plots.js';
 import Color from '../color/index.js';

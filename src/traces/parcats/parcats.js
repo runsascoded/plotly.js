@@ -1,7 +1,6 @@
 import { transition } from 'd3-transition';
 import { select } from 'd3-selection';
 import 'd3-transition';
-// TODO: event removed in v4+; refactor event handlers to receive event as callback parameter
 import { pointer } from 'd3-selection';
 import { zoom as d3Zoom } from 'd3-zoom';
 import { drag as d3Drag } from 'd3-drag';
@@ -314,9 +313,9 @@ function performPlot(parcatsModels, graphDiv, layout, svg) {
         .origin(function(d) {
             return {x: d.x, y: 0};
         })
-        .on('dragstart', dragDimensionStart)
+        .on('start', dragDimensionStart)
         .on('drag', dragDimension)
-        .on('dragend', dragDimensionEnd));
+        .on('end', dragDimensionEnd));
 
     // Save off selections to view models
     traceSelection.each(function(d) {
@@ -1310,7 +1309,7 @@ function dragDimensionEnd(d) {
             updateSvgCategories(d.parcatsViewModel, true);
             updateSvgPaths(d.parcatsViewModel, true);
         })
-        .each('end', function() {
+        .on('end', function() {
             if(anyDimsReordered || anyCatsReordered) {
                 // Perform restyle if the order of categories or dimensions changed
                 Plotly.restyle(d.parcatsViewModel.graphDiv, restyleData, [traceInd]);

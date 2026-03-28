@@ -1,7 +1,6 @@
 import * as d3Force from 'd3-force';
 import { interpolateNumber } from 'd3-interpolate';
 import { select } from 'd3-selection';
-// TODO: event removed in v4+; refactor event handlers to receive event as callback parameter
 import { zoom as d3Zoom } from 'd3-zoom';
 import { drag as d3Drag } from 'd3-drag';
 import * as d3Sankey from '@plotly/d3-sankey';
@@ -662,7 +661,7 @@ function attachDragHandler(sankeyNode, sankeyLink, callbacks, gd) {
             };
         })
 
-        .on('dragstart', function(event) {
+        .on('start', function(event) {
             if(d.arrangement === 'fixed') return;
             Lib.ensureSingle(gd._fullLayout._infolayer, 'g', 'dragcover', function(s) {
                 gd._fullLayout._dragCover = s;
@@ -712,7 +711,7 @@ function attachDragHandler(sankeyNode, sankeyLink, callbacks, gd) {
             }
         })
 
-        .on('dragend', function(event) {
+        .on('end', function(event) {
             if(d.arrangement === 'fixed') return;
             d.interactionState.dragInProgress = false;
             for(var i = 0; i < d.node.childrenNodes.length; i++) {

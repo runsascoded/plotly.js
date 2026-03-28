@@ -1,5 +1,4 @@
 import { selection } from 'd3-selection';
-// TODO: event removed in v4+; refactor event handlers to receive event as callback parameter
 import { utcFormat } from 'd3-time-format';
 import { format as d3Format } from 'd3-format';
 import isNumeric from 'fast-isnumeric';

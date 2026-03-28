@@ -1,7 +1,6 @@
 import { select } from 'd3-selection';
 import { dispatch } from 'd3-dispatch';
 import * as d3Geo from 'd3-geo';
-// TODO: event removed in v4+; refactor event handlers to receive event as callback parameter
 import { pointer } from 'd3-selection';
 import { zoom as d3Zoom } from 'd3-zoom';
 import { drag as d3Drag } from 'd3-drag';

@@ -656,15 +656,19 @@ function makeSubplotLayer(gd, plotinfo) {
         if(!hasOnlyLargeSploms) {
             ensureSingleAndAddDatum(plotinfo.minorGridlayer, 'g', plotinfo.xaxis._id);
             ensureSingleAndAddDatum(plotinfo.minorGridlayer, 'g', plotinfo.yaxis._id);
-            plotinfo.minorGridlayer.selectAll('g')
-                .map(function(d) { return d[0]; })
-                .sort(axisIds.idSort);
+            var minorGridNode = plotinfo.minorGridlayer.node();
+            if(minorGridNode) {
+                select(minorGridNode).selectChildren('g')
+                    .sort(axisIds.idSort);
+            }
 
             ensureSingleAndAddDatum(plotinfo.gridlayer, 'g', plotinfo.xaxis._id);
             ensureSingleAndAddDatum(plotinfo.gridlayer, 'g', plotinfo.yaxis._id);
-            plotinfo.gridlayer.selectAll('g')
-                .map(function(d) { return d[0]; })
-                .sort(axisIds.idSort);
+            var gridNode = plotinfo.gridlayer.node();
+            if(gridNode) {
+                select(gridNode).selectChildren('g')
+                    .sort(axisIds.idSort);
+            }
         }
 
         plotinfo.xlines

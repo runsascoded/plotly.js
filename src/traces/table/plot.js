@@ -1,7 +1,6 @@
 import c from './constants.js';
 import { select } from 'd3-selection';
 import { scaleLinear, scaleLog, scaleOrdinal } from 'd3-scale';
-// TODO: event removed in v4+; refactor event handlers to receive event as callback parameter
 import { zoom as d3Zoom } from 'd3-zoom';
 import { drag as d3Drag } from 'd3-drag';
 import Lib from '../../lib/index.js';
@@ -137,7 +136,7 @@ export default function plot(gd, wrappedTraceHolders) {
                     .call(cancelEeaseColumn)
                     .attr('transform', strTranslate(d.x, -c.uplift));
             })
-            .on('dragend', function(event) {
+            .on('end', function(event) {
                 var movedColumn = select(this);
                 var p = d.calcdata;
                 d.x = d.xScale(d);
@@ -175,7 +174,7 @@ export default function plot(gd, wrappedTraceHolders) {
                 return d;
             })
             .on('drag', makeDragRow(gd, tableControlView, -1))
-            .on('dragend', function(event) {
+            .on('end', function(event) {
                 // fixme emit plotly notification
             })
         );
@@ -367,7 +366,7 @@ function renderScrollbarKit(tableControlView, gd, bypassVisibleBar) {
                 return d;
             })
             .on('drag', makeDragRow(gd, tableControlView))
-            .on('dragend', function(event) {
+            .on('end', function(event) {
                 // fixme emit Plotly event
             })
         );

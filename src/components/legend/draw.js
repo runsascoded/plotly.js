@@ -1,5 +1,4 @@
 import { select } from 'd3-selection';
-// TODO: event removed in v4+; refactor event handlers to receive event as callback parameter
 import { zoom as d3Zoom } from 'd3-zoom';
 import { drag as d3Drag } from 'd3-drag';
 import Lib from '../../lib/index.js';
@@ -356,7 +355,7 @@ function drawOne(gd, opts) {
 
                 // scroll legend by dragging scrollBAR
                 var scrollBarDrag = d3Drag()
-                .on('dragstart', function(event) {
+                .on('start', function(event) {
                     var e = event.sourceEvent;
                     if(e.type === 'touchstart') {
                         eventY0 = e.changedTouches[0].clientY;
@@ -380,7 +379,7 @@ function drawOne(gd, opts) {
 
                 // scroll legend by touch-dragging scrollBOX
                 var scrollBoxTouchDrag = d3Drag()
-                .on('dragstart', function(event) {
+                .on('start', function(event) {
                     var e = event.sourceEvent;
                     if(e.type === 'touchstart') {
                         eventY0 = e.changedTouches[0].clientY;

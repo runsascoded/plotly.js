@@ -1,5 +1,4 @@
 import { select } from 'd3-selection';
-// TODO: event removed in v4+; refactor event handlers to receive event as callback parameter
 import Plots from '../../plots/plots.js';
 import Color from '../color/index.js';
 import Drawing from '../drawing/index.js';
@@ -384,7 +383,7 @@ function hideScrollBox(scrollBox) {
         scrollBox.hbar
             .transition()
             .attr('opacity', '0')
-            .each('end', function() {
+            .on('end', function() {
                 hasHBar = false;
                 if(!hasVBar) scrollBox.disable();
             });
@@ -394,7 +393,7 @@ function hideScrollBox(scrollBox) {
         scrollBox.vbar
             .transition()
             .attr('opacity', '0')
-            .each('end', function() {
+            .on('end', function() {
                 hasVBar = false;
                 if(!hasHBar) scrollBox.disable();
             });

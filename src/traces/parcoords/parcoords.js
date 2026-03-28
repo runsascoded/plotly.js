@@ -3,7 +3,6 @@ import { select } from 'd3-selection';
 import { scaleLinear, scaleLog, scaleOrdinal } from 'd3-scale';
 import { line as d3Line, area as d3Area, arc as d3Arc, symbol as d3Symbol } from 'd3-shape';
 import { rgb } from 'd3-color';
-// TODO: event removed in v4+; refactor event handlers to receive event as callback parameter
 import { pointer } from 'd3-selection';
 import { zoom as d3Zoom } from 'd3-zoom';
 import { drag as d3Drag } from 'd3-drag';
@@ -598,7 +597,7 @@ export default function parcoords(gd, cdModule, layout, callbacks) {
             p.contextLayer && p.contextLayer.render(p.panels, false, !someFiltersActive(p));
             p.focusLayer.render && p.focusLayer.render(p.panels);
         })
-        .on('dragend', function(event) {
+        .on('end', function(event) {
             var p = d.parent;
             d.x = d.xScale(d.xIndex);
             d.canvasX = d.x * d.model.canvasPixelRatio;

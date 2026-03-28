@@ -25,7 +25,7 @@ export default function(text, displayLength) {
         transition
             .duration(700)
             .style('opacity', 0)
-            .each('end', function(thisText) {
+            .on('end', function(thisText) {
                 var thisIndex = NOTEDATA.indexOf(thisText);
                 if(thisIndex !== -1) NOTEDATA.splice(thisIndex, 1);
                 select(this).remove();

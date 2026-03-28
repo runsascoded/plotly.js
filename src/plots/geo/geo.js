@@ -1,5 +1,4 @@
 import { select } from 'd3-selection';
-// TODO: event removed in v4+; refactor event handlers to receive event as callback parameter
 import * as geo from 'd3-geo';
 import * as geoProjection from 'd3-geo-projection';
 import Registry from '../../registry.js';

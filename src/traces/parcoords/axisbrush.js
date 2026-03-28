@@ -1,6 +1,5 @@
 import c from './constants.js';
 import { select } from 'd3-selection';
-// TODO: event removed in v4+; refactor event handlers to receive event as callback parameter
 import { pointer } from 'd3-selection';
 import { zoom as d3Zoom } from 'd3-zoom';
 import { drag as d3Drag } from 'd3-drag';
@@ -127,7 +126,7 @@ function styleHighlight(selection) {
 
 function renderHighlight(root, tweenCallback) {
     var bar = select(root).selectAll('.highlight, .highlight-shadow');
-    var barToStyle = tweenCallback ? bar.transition().duration(c.bar.snapDuration).each('end', tweenCallback) : bar;
+    var barToStyle = tweenCallback ? bar.transition().duration(c.bar.snapDuration).on('end', tweenCallback) : bar;
     styleHighlight(barToStyle);
 }
 
@@ -348,9 +347,9 @@ function attachDragBehavior(selection) {
             if(!d.parent.inBrushDrag) clearCursor();
         })
         .call(d3Drag()
-            .on('dragstart', function(event) { dragstart(this, d); })
+            .on('start', function(event) { dragstart(this, d); })
             .on('drag', function(event) { drag(this, d); })
-            .on('dragend', function(event) { dragend(this, d); })
+            .on('end', function(event) { dragend(this, d); })
         );
 }
 

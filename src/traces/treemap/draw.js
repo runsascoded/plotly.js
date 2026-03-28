@@ -41,8 +41,8 @@ export default function _plot(gd, cdmodule, transitionOpts, makeOnCompleteCallba
         var transition = transition()
             .duration(transitionOpts.duration)
             .ease(transitionOpts.easing)
-            .each('end', function() { onComplete && onComplete(); })
-            .each('interrupt', function() { onComplete && onComplete(); });
+            .on('end', function() { onComplete && onComplete(); })
+            .on('interrupt', function() { onComplete && onComplete(); });
 
         transition.each(function() {
             // Must run the selection again since otherwise enters/updates get grouped together

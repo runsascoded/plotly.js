@@ -41,6 +41,7 @@ body { margin: 0; font-family: system-ui, sans-serif; }
     var plotConfig = { displayModeBar: false };
     if(deferMargin) plotConfig.deferAutoMargin = true;
 
+    window.onerror = function(msg, url, line) { console.error('ONERROR:', msg, 'line:', line); };
     PlotlyMod.newPlot(el, config.data, layout, plotConfig).then(function() {
         var wallTime = performance.now() - t0;
         var measures = performance.getEntriesByType('measure')

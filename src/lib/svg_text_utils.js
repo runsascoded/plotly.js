@@ -1,6 +1,5 @@
 import { select } from 'd3-selection';
 import { dispatch } from 'd3-dispatch';
-// TODO: event removed in v4+; refactor event handlers to receive event as callback parameter
 import Lib from '../lib/index.js';
 import xmlnsNamespaces from '../constants/xmlns_namespaces.js';
 import _alignment from '../constants/alignment.js';

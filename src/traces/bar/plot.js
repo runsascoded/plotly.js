@@ -68,10 +68,10 @@ function transition(selection, fullLayout, opts, makeOnCompleteCallback) {
             .transition()
             .duration(opts.duration)
             .ease(opts.easing)
-            .each('end', function () {
+            .on('end', function () {
                 onComplete && onComplete();
             })
-            .each('interrupt', function () {
+            .on('interrupt', function () {
                 onComplete && onComplete();
             });
     } else {

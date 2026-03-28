@@ -9,6 +9,7 @@ Provide a customized plotly.js for use across several projects (NJ crashes, PATH
 ## Current fork changes (vs upstream v3.3.1)
 
 - **ESM conversion**: All 971 source files converted from CJS to ES modules. `"type": "module"` in package.json. Enables tree-shaking by bundlers.
+- **d3 v7 migration**: Replaced `@plotly/d3` (vendored d3 v3, 229 KB CJS blob) with modern d3 v7 ESM packages. 160 KB / 8% bundle size reduction. `src/lib/d3-compat.js` polyfills v3 patterns (enter/merge, `.style({})`, `.select()` data propagation).
 - **z-order fix**: Preserve z-indexed subplots during `relayout` for correct pan/zoom
 - **Touch fix**: Prevent duplicate `plotly_click` and scroll-triggered clicks
 - **Flush legend toggle rects**: Expand legend item hit areas so they tile flush (no hover gaps)
@@ -105,13 +106,12 @@ Consumer apps should NOT need to build their own legend UIs, implement trace fad
 
 Active specs in `specs/`:
 - `remove-registration-system.md` — eliminate global registry, enable full tree-shaking, remove sub-path entry points
-- `d3-v7-migration.md` — replace `@plotly/d3` (CJS, d3 v3) with modern d3 v7 ESM packages
 
-Completed specs in `specs/done/` (14 total):
+Completed specs in `specs/done/` (15 total):
 `esm-conversion`, `esm-cjs-interop`, `esm-ternary-attrs`, `esm-css-imports`,
 `stackgl-esm-shim`, `dist-branch-esm`, `dist-extra-bundles`, `dist-branch-missing-dirs`,
 `dist-lib-stale`, `flush-legend-toggle-rects`, `legend-icon-symbols`,
-`custom-minimal-bundle`, `perf-harness`, `fast-initial-render`
+`custom-minimal-bundle`, `perf-harness`, `fast-initial-render`, `d3-v7-migration`
 
 [plotly/plotly.js]: https://github.com/plotly/plotly.js
 [runsascoded/plotly.js]: https://github.com/runsascoded/plotly.js

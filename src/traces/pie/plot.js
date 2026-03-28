@@ -1,5 +1,4 @@
 import { select } from 'd3-selection';
-// TODO: event removed in v4+; refactor event handlers to receive event as callback parameter
 import Plots from '../../plots/plots.js';
 import Fx from '../../components/fx/index.js';
 import Color from '../../components/color/index.js';
@@ -232,8 +231,7 @@ function plot(gd, cdModule) {
             });
 
             // add the title
-            var titleTextGroup = d3
-                .select(this)
+            var titleTextGroup = select(this)
                 .selectAll('g.titletext')
                 .data(trace.title.text ? [0] : []);
 

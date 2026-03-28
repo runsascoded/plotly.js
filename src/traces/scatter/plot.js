@@ -55,10 +55,10 @@ export default function plot(
         var transition = transition()
             .duration(transitionOpts.duration)
             .ease(transitionOpts.easing)
-            .each('end', function() {
+            .on('end', function() {
                 onComplete && onComplete();
             })
-            .each('interrupt', function() {
+            .on('interrupt', function() {
                 onComplete && onComplete();
             });
 

@@ -304,8 +304,8 @@ function drawBulletGauge(gd, plotGroup, cd, opts) {
             .transition()
             .duration(transitionOpts.duration)
             .ease(transitionOpts.easing)
-            .each('end', function() { onComplete && onComplete(); })
-            .each('interrupt', function() { onComplete && onComplete(); })
+            .on('end', function() { onComplete && onComplete(); })
+            .on('interrupt', function() { onComplete && onComplete(); })
             .attr('width', Math.max(0, ax.c2p(Math.min(trace.gauge.axis.range[1], cd[0].y))));
     } else {
         fgBullet.select('rect')
@@ -474,8 +474,8 @@ function drawAngularGauge(gd, plotGroup, cd, opts) {
             .transition()
             .duration(transitionOpts.duration)
             .ease(transitionOpts.easing)
-            .each('end', function() { onComplete && onComplete(); })
-            .each('interrupt', function() { onComplete && onComplete(); })
+            .on('end', function() { onComplete && onComplete(); })
+            .on('interrupt', function() { onComplete && onComplete(); })
             .attrTween('d', arcTween(valueArcPathGenerator, valueToAngle(cd[0].lastY), valueToAngle(cd[0].y)));
         trace._lastValue = cd[0].y;
     } else {
@@ -588,8 +588,8 @@ function drawNumbers(gd, plotGroup, cd, opts) {
                 .transition()
                 .duration(transitionOpts.duration)
                 .ease(transitionOpts.easing)
-                .each('end', function() { writeNumber(); onComplete && onComplete(); })
-                .each('interrupt', function() { writeNumber(); onComplete && onComplete(); })
+                .on('end', function() { writeNumber(); onComplete && onComplete(); })
+                .on('interrupt', function() { writeNumber(); onComplete && onComplete(); })
                 .attrTween('text', function() {
                     var that = select(this);
                     var interpolator = interpolateNumber(cd[0].lastY, cd[0].y);
@@ -659,8 +659,8 @@ function drawNumbers(gd, plotGroup, cd, opts) {
                         that.call(Color.fill, deltaFill({delta: interpolator(t)}));
                     };
                 })
-                .each('end', function() { writeDelta(); onComplete && onComplete(); })
-                .each('interrupt', function() { writeDelta(); onComplete && onComplete(); });
+                .on('end', function() { writeDelta(); onComplete && onComplete(); })
+                .on('interrupt', function() { writeDelta(); onComplete && onComplete(); });
         } else {
             writeDelta();
         }

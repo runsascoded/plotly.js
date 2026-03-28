@@ -1,5 +1,4 @@
 import { select } from 'd3-selection';
-// TODO: event removed in v4+; refactor event handlers to receive event as callback parameter
 import Registry from '../../registry.js';
 import { appendArrayPointValue } from '../../components/fx/helpers.js';
 import Fx from '../../components/fx/index.js';

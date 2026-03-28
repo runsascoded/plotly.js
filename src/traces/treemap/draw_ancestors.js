@@ -76,7 +76,7 @@ export default function drawAncestors(gd, cd, entry, slices, opts) {
 
     var updateSlices = slices;
     if(hasTransition) {
-        updateSlices = updateSlices.transition().each('end', function() {
+        updateSlices = updateSlices.transition().on('end', function() {
             // N.B. gd._transitioning is (still) *true* by the time
             // transition updates get here
             var sliceTop = select(this);
