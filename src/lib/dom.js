@@ -1,4 +1,4 @@
-import d3 from '@plotly/d3';
+import { select } from 'd3-selection';
 import loggers from './loggers.js';
 import matrix from './matrix.js';
 import mat4X4 from 'gl-mat4';
@@ -31,7 +31,7 @@ function getGraphDiv(gd) {
 }
 
 function isPlotDiv(el) {
-    var el3 = d3.select(el);
+    var el3 = select(el);
     return el3.node() instanceof HTMLElement &&
         el3.size() &&
         el3.classed('js-plotly-plot');

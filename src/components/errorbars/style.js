@@ -1,4 +1,4 @@
-import d3 from '@plotly/d3';
+import { select } from 'd3-selection';
 import Color from '../color/index.js';
 
 export default function style(traces) {
@@ -7,7 +7,7 @@ export default function style(traces) {
         var yObj = trace.error_y || {};
         var xObj = trace.error_x || {};
 
-        var s = d3.select(this);
+        var s = select(this);
 
         s.selectAll('path.yerror')
             .style('stroke-width', yObj.thickness + 'px')

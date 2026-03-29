@@ -1,4 +1,4 @@
-import d3 from '@plotly/d3';
+import { select } from 'd3-selection';
 import Color from '../../components/color/index.js';
 import Drawing from '../../components/drawing/index.js';
 import Lib from '../../lib/index.js';
@@ -12,7 +12,7 @@ var attributeInsideTextFont = attributes.insidetextfont;
 var attributeOutsideTextFont = attributes.outsidetextfont;
 
 function style(gd) {
-    var s = d3.select(gd).selectAll('g[class^="barlayer"]').selectAll('g.trace');
+    var s = select(gd).selectAll('g[class^="barlayer"]').selectAll('g.trace');
     resizeText(gd, s, 'bar');
 
     var barcount = s.size();
@@ -29,12 +29,12 @@ function style(gd) {
                 (fullLayout.bargap === 0 &&
                  fullLayout.bargroupgap === 0 &&
                  !d[0].trace.marker.line.width)) {
-            d3.select(this).attr('shape-rendering', 'crispEdges');
+            select(this).attr('shape-rendering', 'crispEdges');
         }
     });
 
     s.selectAll('g.points').each(function(d) {
-        var sel = d3.select(this);
+        var sel = select(this);
         var trace = d[0].trace;
         stylePoints(sel, trace, gd);
     });
@@ -49,7 +49,7 @@ function stylePoints(sel, trace, gd) {
 
 function styleTextPoints(sel, trace, gd) {
     sel.selectAll('text').each(function(d) {
-        var tx = d3.select(this);
+        var tx = select(this);
         var font = Lib.ensureUniformFontSize(gd, determineFont(tx, d, trace, gd));
 
         Drawing.font(tx, font);
@@ -74,7 +74,7 @@ function stylePointsInSelectionMode(s, trace, gd) {
 
 function styleTextInSelectionMode(txs, trace, gd) {
     txs.each(function(d) {
-        var tx = d3.select(this);
+        var tx = select(this);
         var font;
 
         if(d.selected) {

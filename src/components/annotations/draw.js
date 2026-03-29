@@ -1,4 +1,4 @@
-import d3 from '@plotly/d3';
+import { selectAll } from 'd3-selection';
 import Registry from '../../registry.js';
 import Plots from '../../plots/plots.js';
 import Lib from '../../lib/index.js';
@@ -119,7 +119,7 @@ function drawRaw(gd, options, index, subplotId, xa, ya) {
     // this annotation is gone - quit now after deleting it
     // TODO: use d3 idioms instead of deleting and redrawing every time
     if(!options._input || options.visible === false) {
-        d3.selectAll('#' + annClipID).remove();
+        selectAll('#' + annClipID).remove();
         return;
     }
 
@@ -160,9 +160,9 @@ function drawRaw(gd, options, index, subplotId, xa, ya) {
     var annTextGroupInner = annTextGroup.append('g')
         .style('pointer-events', textEvents ? 'all' : null)
         .call(setCursor, 'pointer')
-        .on('click', function() {
+        .on('click', function(event) {
             gd._dragging = false;
-            gd.emit('plotly_clickannotation', makeEventData(d3.event));
+            gd.emit('plotly_clickannotation', makeEventData(event));
         });
 
     if(options.hovertext) {

@@ -1,4 +1,4 @@
-import d3 from '@plotly/d3';
+import { select } from 'd3-selection';
 import isNumeric from 'fast-isnumeric';
 
 var NOTEDATA = [];
@@ -12,7 +12,7 @@ export default function(text, displayLength) {
     if(isNumeric(displayLength)) ts = displayLength;
     else if(displayLength === 'long') ts = 3000;
 
-    var notifierContainer = d3.select('body')
+    var notifierContainer = select('body')
         .selectAll('.plotly-notifier')
         .data([0]);
     notifierContainer.enter()
@@ -25,10 +25,10 @@ export default function(text, displayLength) {
         transition
             .duration(700)
             .style('opacity', 0)
-            .each('end', function(thisText) {
+            .on('end', function(thisText) {
                 var thisIndex = NOTEDATA.indexOf(thisText);
                 if(thisIndex !== -1) NOTEDATA.splice(thisIndex, 1);
-                d3.select(this).remove();
+                select(this).remove();
             });
     }
 
@@ -36,7 +36,7 @@ export default function(text, displayLength) {
         .classed('notifier-note', true)
         .style('opacity', 0)
         .each(function(thisText) {
-            var note = d3.select(this);
+            var note = select(this);
 
             note.append('button')
                 .classed('notifier-close', true)

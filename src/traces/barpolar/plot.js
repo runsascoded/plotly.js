@@ -1,4 +1,4 @@
-import d3 from '@plotly/d3';
+import { select } from 'd3-selection';
 import isNumeric from 'fast-isnumeric';
 import Lib from '../../lib/index.js';
 import Drawing from '../../components/drawing/index.js';
@@ -14,7 +14,7 @@ export default function plot(gd, subplot, cdbar) {
     var barLayer = subplot.layers.frontplot.select('g.barlayer');
 
     Lib.makeTraceGroups(barLayer, cdbar, 'trace bars').each(function() {
-        var plotGroup = d3.select(this);
+        var plotGroup = select(this);
         var pointGroup = Lib.ensureSingle(plotGroup, 'g', 'points');
         var bars = pointGroup.selectAll('g.point').data(Lib.identity);
 
@@ -26,7 +26,7 @@ export default function plot(gd, subplot, cdbar) {
         bars.exit().remove();
 
         bars.each(function(di) {
-            var bar = d3.select(this);
+            var bar = select(this);
 
             var rp0 = di.rp0 = radialAxis.c2p(di.s0);
             var rp1 = di.rp1 = radialAxis.c2p(di.s1);

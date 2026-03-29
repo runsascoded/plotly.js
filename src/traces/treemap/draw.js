@@ -1,4 +1,5 @@
-import d3 from '@plotly/d3';
+import { transition } from 'd3-transition';
+import 'd3-transition';
 import helpers from '../sunburst/helpers.js';
 import uniformText from '../bar/uniform_text.js';
 import _style from '../bar/style.js';
@@ -37,11 +38,11 @@ export default function _plot(gd, cdmodule, transitionOpts, makeOnCompleteCallba
             onComplete = makeOnCompleteCallback();
         }
 
-        var transition = d3.transition()
+        var transition = transition()
             .duration(transitionOpts.duration)
             .ease(transitionOpts.easing)
-            .each('end', function() { onComplete && onComplete(); })
-            .each('interrupt', function() { onComplete && onComplete(); });
+            .on('end', function() { onComplete && onComplete(); })
+            .on('interrupt', function() { onComplete && onComplete(); });
 
         transition.each(function() {
             // Must run the selection again since otherwise enters/updates get grouped together

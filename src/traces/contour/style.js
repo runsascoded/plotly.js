@@ -1,17 +1,17 @@
-import d3 from '@plotly/d3';
+import { select } from 'd3-selection';
 import Drawing from '../../components/drawing/index.js';
 import heatmapStyle from '../heatmap/style.js';
 import makeColorMap from './make_color_map.js';
 
 export default function style(gd) {
-    var contours = d3.select(gd).selectAll('g.contour');
+    var contours = select(gd).selectAll('g.contour');
 
     contours.style('opacity', function(d) {
         return d[0].trace.opacity;
     });
 
     contours.each(function(d) {
-        var c = d3.select(this);
+        var c = select(this);
         var trace = d[0].trace;
         var contours = trace.contours;
         var line = trace.line;
@@ -26,7 +26,7 @@ export default function style(gd) {
         var colorMap = (colorLines || colorFills) ? makeColorMap(trace) : null;
 
         c.selectAll('g.contourlevel').each(function(d) {
-            d3.select(this).selectAll('path')
+            select(this).selectAll('path')
                 .call(Drawing.lineGroupStyle,
                     line.width,
                     colorLines ? colorMap(d.level) : line.color,
@@ -35,7 +35,7 @@ export default function style(gd) {
 
         var labelFont = contours.labelfont;
         c.selectAll('g.contourlabels text').each(function(d) {
-            Drawing.font(d3.select(this), {
+            Drawing.font(select(this), {
                 weight: labelFont.weight,
                 style: labelFont.style,
                 variant: labelFont.variant,

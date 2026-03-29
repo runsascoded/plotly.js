@@ -1,4 +1,4 @@
-import d3 from '@plotly/d3';
+import { select } from 'd3-selection';
 import Lib from '../lib/index.js';
 import Drawing from '../components/drawing/index.js';
 import Color from '../components/color/index.js';
@@ -8,7 +8,7 @@ var DUMMY_SUB = 'TOBESTRIPPED';
 var DUMMY_REGEX = new RegExp('("' + DUMMY_SUB + ')|(' + DUMMY_SUB + '")', 'g');
 
 function htmlEntityDecode(s) {
-    var hiddenDiv = d3.select('body').append('div').style({display: 'none'}).html('');
+    var hiddenDiv = select('body').append('div').style({display: 'none'}).html('');
     var replaced = s.replace(/(&[^;]*;)/gi, function(d) {
         if(d === '&lt;') { return '&#60;'; } // special handling for brackets
         if(d === '&rt;') { return '&#62;'; }
@@ -78,7 +78,7 @@ export default function toSVG(gd, format, scale) {
     svg.selectAll('text')
         .attr({'data-unformatted': null, 'data-math': null})
         .each(function() {
-            var txt = d3.select(this);
+            var txt = select(this);
 
             // hidden text is pre-formatting mathjax, the browser ignores it
             // but in a static plot it's useless and it can confuse batik
@@ -117,7 +117,7 @@ export default function toSVG(gd, format, scale) {
         });
 
     svg.selectAll('.gradient_filled,.pattern_filled').each(function() {
-        var pt = d3.select(this);
+        var pt = select(this);
 
         // similar to font family styles above,
         // we must remove " after the SVG DOM has been serialized

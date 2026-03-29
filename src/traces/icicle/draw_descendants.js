@@ -1,4 +1,4 @@
-import d3 from '@plotly/d3';
+import { select } from 'd3-selection';
 import Lib from '../../lib/index.js';
 import Drawing from '../../components/drawing/index.js';
 import svgTextUtils from '../../lib/svg_text_utils.js';
@@ -103,10 +103,10 @@ export default function drawDescendants(gd, cd, entry, slices, opts) {
 
     var updateSlices = slices;
     if(hasTransition) {
-        updateSlices = updateSlices.transition().each('end', function() {
+        updateSlices = updateSlices.transition().on('end', function() {
             // N.B. gd._transitioning is (still) *true* by the time
             // transition updates get here
-            var sliceTop = d3.select(this);
+            var sliceTop = select(this);
             helpers.setSliceCursor(sliceTop, gd, {
                 hideOnRoot: true,
                 hideOnLeaves: false,
@@ -127,7 +127,7 @@ export default function drawDescendants(gd, cd, entry, slices, opts) {
                 viewY(pt.y1 - trace.tiling.pad / 2) :
                 viewY(pt.y0 + trace.tiling.pad / 2);
 
-        var sliceTop = d3.select(this);
+        var sliceTop = select(this);
 
         var slicePath = Lib.ensureSingle(sliceTop, 'path', 'surface', function(s) {
             s.style('pointer-events', isStatic ? 'none' : 'all');

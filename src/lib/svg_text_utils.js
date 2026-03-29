@@ -1,4 +1,5 @@
-import d3 from '@plotly/d3';
+import { select } from 'd3-selection';
+import { dispatch } from 'd3-dispatch';
 import Lib from '../lib/index.js';
 import xmlnsNamespaces from '../constants/xmlns_namespaces.js';
 import _alignment from '../constants/alignment.js';
@@ -19,7 +20,7 @@ export var convertToTspans = function(_context, gd, _callback) {
         (typeof MathJax !== 'undefined') &&
         str.match(FIND_TEX);
 
-    var parent = d3.select(_context.node().parentNode);
+    var parent = select(_context.node().parentNode);
     if(parent.empty()) return;
     var svgClass = (_context.attr('class')) ? _context.attr('class').split(' ')[0] : 'text';
     svgClass += '-math';
@@ -233,7 +234,7 @@ function texToSVG(_texString, _config, _callback) {
 
     var initiateMathJax = function() {
         var randomID = 'math-output-' + Lib.randstr({}, 64);
-        tmpDiv = d3.select('body').append('div')
+        tmpDiv = select('body').append('div')
             .attr({id: randomID})
             .style({
                 visibility: 'hidden',
@@ -262,7 +263,7 @@ function texToSVG(_texString, _config, _callback) {
             var nodeBBox = node.getBoundingClientRect();
             var glyphDefs;
             if(MathJaxVersion === 2) {
-                glyphDefs = d3.select('body').select('#MathJax_SVG_glyphs');
+                glyphDefs = select('body').select('#MathJax_SVG_glyphs');
             } else {
                 glyphDefs = sel.select('defs');
             }
@@ -556,7 +557,7 @@ function buildSVGText(containerNode, str) {
         currentLine++;
 
         var lineNode = document.createElementNS(xmlnsNamespaces.svg, 'tspan');
-        d3.select(lineNode).attr({
+        select(lineNode).attr({
             class: 'line',
             dy: (currentLine * LINE_SPACING) + 'em'
         });
@@ -609,7 +610,7 @@ function buildSVGText(containerNode, str) {
 
             var resetter = document.createElementNS(xmlnsNamespaces.svg, 'tspan');
             addTextNode(resetter, ZERO_WIDTH_SPACE);
-            d3.select(resetter).attr('dy', RESET_DY[type]);
+            select(resetter).attr('dy', RESET_DY[type]);
             nodeAttrs.dy = SHIFT_DY[type];
 
             currentNode.appendChild(newNode);
@@ -618,7 +619,7 @@ function buildSVGText(containerNode, str) {
             currentNode.appendChild(newNode);
         }
 
-        d3.select(newNode).attr(nodeAttrs);
+        select(newNode).attr(nodeAttrs);
 
         currentNode = nodeSpec.node = newNode;
         nodeStack.push(nodeSpec);
@@ -769,7 +770,7 @@ export var sanitizeHTML = function sanitizeHTML(str) {
 
                 var newNode = document.createElement(tagType);
                 currentNode.appendChild(newNode);
-                d3.select(newNode).attr(nodeAttrs);
+                select(newNode).attr(nodeAttrs);
 
                 currentNode = newNode;
                 nodeStack.push(newNode);
@@ -790,7 +791,7 @@ export var lineCount = function lineCount(s) {
 
 export var positionText = function positionText(s, x, y) {
     return s.each(function() {
-        var text = d3.select(this);
+        var text = select(this);
 
         function setOrGet(attr, val) {
             if(val === undefined) {
@@ -874,7 +875,7 @@ export var makeTextShadow = function(color) {
 export var makeEditable = function(context, options) {
     var gd = options.gd;
     var _delegate = options.delegate;
-    var dispatch = d3.dispatch('edit', 'input', 'cancel');
+    var dispatch = dispatch('edit', 'input', 'cancel');
     var handlerElement = _delegate || context;
 
     context.style({'pointer-events': _delegate ? 'none' : 'all'});
@@ -890,7 +891,7 @@ export var makeEditable = function(context, options) {
         if(svgClass) mathjaxClass = '.' + svgClass.split(' ')[0] + '-math-group';
         else mathjaxClass = '[class*=-math-group]';
         if(mathjaxClass) {
-            d3.select(context.node().parentNode).select(mathjaxClass).style({opacity: 0});
+            select(context.node().parentNode).select(mathjaxClass).style({opacity: 0});
         }
     }
 
@@ -905,7 +906,7 @@ export var makeEditable = function(context, options) {
     }
 
     function appendEditable() {
-        var plotDiv = d3.select(gd);
+        var plotDiv = select(gd);
         var container = plotDiv.select('.svg-container');
         var div = container.append('div');
         var cStyle = context.node().style;
@@ -930,46 +931,46 @@ export var makeEditable = function(context, options) {
             .attr({contenteditable: true})
             .text(initialText)
             .call(alignHTMLWith(context, container, options))
-            .on('blur', function() {
+            .on('blur', function(event) {
                 gd._editing = false;
                 context.text(this.textContent)
                     .style({opacity: 1});
-                var svgClass = d3.select(this).attr('class');
+                var svgClass = select(this).attr('class');
                 var mathjaxClass;
                 if(svgClass) mathjaxClass = '.' + svgClass.split(' ')[0] + '-math-group';
                 else mathjaxClass = '[class*=-math-group]';
                 if(mathjaxClass) {
-                    d3.select(context.node().parentNode).select(mathjaxClass).style({opacity: 0});
+                    select(context.node().parentNode).select(mathjaxClass).style({opacity: 0});
                 }
                 var text = this.textContent;
-                d3.select(this).transition().duration(0).remove();
-                d3.select(document).on('mouseup', null);
+                select(this).transition().duration(0).remove();
+                select(document).on('mouseup', null);
                 dispatch.edit.call(context, text);
             })
-            .on('focus', function() {
+            .on('focus', function(event) {
                 var editDiv = this;
                 gd._editing = true;
-                d3.select(document).on('mouseup', function() {
-                    if(d3.event.target === editDiv) return false;
+                select(document).on('mouseup', function(event) {
+                    if(event.target === editDiv) return false;
                     if(document.activeElement === div.node()) div.node().blur();
                 });
             })
-            .on('keyup', function() {
-                if(d3.event.which === 27) {
+            .on('keyup', function(event) {
+                if(event.which === 27) {
                     gd._editing = false;
                     context.style({opacity: 1});
-                    d3.select(this)
+                    select(this)
                         .style({opacity: 0})
-                        .on('blur', function() { return false; })
+                        .on('blur', function(event) { return false; })
                         .transition().remove();
                     dispatch.cancel.call(context, this.textContent);
                 } else {
                     dispatch.input.call(context, this.textContent);
-                    d3.select(this).call(alignHTMLWith(context, container, options));
+                    select(this).call(alignHTMLWith(context, container, options));
                 }
             })
-            .on('keydown', function() {
-                if(d3.event.which === 13) this.blur();
+            .on('keydown', function(event) {
+                if(event.which === 13) this.blur();
             })
             .call(selectElementContents);
     }
@@ -977,7 +978,7 @@ export var makeEditable = function(context, options) {
     if(options.immediate) handleClick();
     else handlerElement.on('click', handleClick);
 
-    return d3.rebind(context, dispatch, 'on');
+    return Object.assign(context, { on: dispatch.on.bind(dispatch) });
 };
 
 export default { convertToTspans, NEWLINES, BR_TAG_ALL, plainText, sanitizeHTML, lineCount, positionText, makeTextShadow, makeEditable, convertEntities };

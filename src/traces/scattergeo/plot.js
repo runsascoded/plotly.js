@@ -1,4 +1,4 @@
-import d3 from '@plotly/d3';
+import { select } from 'd3-selection';
 import Lib from '../../lib/index.js';
 import _topojson_utils from '../../lib/topojson_utils.js';
 const { getTopojsonFeatures } = _topojson_utils;
@@ -19,7 +19,7 @@ function plot(gd, geo, calcData) {
 
     function removeBADNUM(d, node) {
         if(d.lonlat[0] === BADNUM) {
-            d3.select(node).remove();
+            select(node).remove();
         }
     }
 
@@ -27,7 +27,7 @@ function plot(gd, geo, calcData) {
     gTraces.selectAll('*').remove();
 
     gTraces.each(function(calcTrace) {
-        var s = d3.select(this);
+        var s = select(this);
         var trace = calcTrace[0].trace;
 
         if(subTypes.hasLines(trace) || trace.fill !== 'none') {

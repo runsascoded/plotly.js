@@ -1,4 +1,5 @@
-import d3 from '@plotly/d3';
+import { select } from 'd3-selection';
+import { pointer } from 'd3-selection';
 import Plots from '../../plots/plots.js';
 import Color from '../color/index.js';
 import Drawing from '../drawing/index.js';
@@ -39,7 +40,7 @@ export default function draw(gd) {
     }
 
     sliders.exit().each(function() {
-        d3.select(this).selectAll('g.' + constants.groupClassName)
+        select(this).selectAll('g.' + constants.groupClassName)
             .each(clearSlider);
     })
     .remove();
@@ -64,7 +65,7 @@ export default function draw(gd) {
     }
 
     sliderGroups.each(function(sliderOpts) {
-        var gSlider = d3.select(this);
+        var gSlider = select(this);
 
         computeLabelSteps(sliderOpts);
 
@@ -83,7 +84,7 @@ export default function draw(gd) {
             setActive(gd, gSlider, opts, data.index, false, true);
         });
 
-        drawSlider(gd, d3.select(this), sliderOpts);
+        drawSlider(gd, select(this), sliderOpts);
     });
 }
 
@@ -123,7 +124,7 @@ function findDimensions(gd, sliderOpts) {
     var maxLabelWidth = 0;
     var labelHeight = 0;
     sliderLabels.each(function(stepOpts) {
-        var labelGroup = d3.select(this);
+        var labelGroup = select(this);
 
         var text = drawLabel(labelGroup, {step: stepOpts}, sliderOpts);
 
@@ -376,7 +377,7 @@ function drawLabelGroup(sliderGroup, sliderOpts) {
     labelItems.exit().remove();
 
     labelItems.each(function(d) {
-        var item = d3.select(this);
+        var item = select(this);
 
         item.call(drawLabel, d, sliderOpts);
 
@@ -449,7 +450,7 @@ function attachGripEvents(item, gd, sliderGroup) {
     if(gd._context.staticPlot) return;
 
     var node = sliderGroup.node();
-    var $gd = d3.select(gd);
+    var $gd = select(gd);
 
     // NB: This is *not* the same as sliderOpts itself! These callbacks
     // are in a closure so this array won't actually be correct if the
@@ -466,17 +467,17 @@ function attachGripEvents(item, gd, sliderGroup) {
 
         var grip = sliderGroup.select('.' + constants.gripRectClass);
 
-        d3.event.stopPropagation();
-        d3.event.preventDefault();
+        event.stopPropagation();
+        event.preventDefault();
         grip.call(Color.fill, sliderOpts.activebgcolor);
 
-        var normalizedPosition = positionToNormalizedValue(sliderOpts, d3.mouse(node)[0]);
+        var normalizedPosition = positionToNormalizedValue(sliderOpts, pointer(event, node)[0]);
         handleInput(gd, sliderGroup, sliderOpts, normalizedPosition, true);
         sliderOpts._dragging = true;
 
         function mouseMoveHandler() {
             var sliderOpts = getSliderOpts();
-            var normalizedPosition = positionToNormalizedValue(sliderOpts, d3.mouse(node)[0]);
+            var normalizedPosition = positionToNormalizedValue(sliderOpts, pointer(event, node)[0]);
             handleInput(gd, sliderGroup, sliderOpts, normalizedPosition, false);
         }
 
@@ -523,7 +524,7 @@ function drawTicks(sliderGroup, sliderOpts) {
 
     tick.each(function(d, i) {
         var isMajor = i % dims.labelStride === 0;
-        var item = d3.select(this);
+        var item = select(this);
 
         item
             .attr({height: isMajor ? sliderOpts.ticklen : sliderOpts.minorticklen})

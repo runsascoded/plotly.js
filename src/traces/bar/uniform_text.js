@@ -1,4 +1,4 @@
-import d3 from '@plotly/d3';
+import { select } from 'd3-selection';
 import Lib from '../../lib/index.js';
 
 function resizeText(gd, gTrace, traceType) {
@@ -27,7 +27,7 @@ function resizeText(gd, gTrace, traceType) {
             if(transform) {
                 transform.scale = (shouldHide && transform.hide) ? 0 : minSize / transform.fontSize;
 
-                var el = d3.select(this).select('text');
+                var el = select(this).select('text');
                 Lib.setTransormAndDisplay(el, transform);
             }
         });

@@ -1,4 +1,4 @@
-import d3 from '@plotly/d3';
+import { select, selectAll } from 'd3-selection';
 import isNumeric from 'fast-isnumeric';
 var hasHover = typeof matchMedia === 'function' ? !matchMedia('(hover: none)').matches : typeof window !== 'undefined';
 import Lib from '../lib/index.js';
@@ -92,7 +92,7 @@ function _doPlot(gd, data, layout, config) {
 
     // hook class for plots main container (in case of plotly.js
     // this won't be #embedded-graph or .js-tab-contents)
-    d3.select(gd).classed('js-plotly-plot', true);
+    select(gd).classed('js-plotly-plot', true);
 
     // off-screen getBoundingClientRect testing space,
     // in #js-plotly-tester (and stored as Drawing.tester)
@@ -488,7 +488,7 @@ function setPlotContext(gd, config) {
         gd._context = Lib.extendDeep({}, dfltConfig);
 
         // stash <base> href, used to make robust clipPath URLs
-        var base = d3.select('base');
+        var base = select('base');
         gd._context._baseUrl = base.size() && base.attr('href') ? window.location.href.split('#')[0] : '';
     }
 
@@ -3709,7 +3709,7 @@ function calcInverseTransform(gd) {
 // makePlotFramework: Create the plot container and axes
 // -------------------------------------------------------
 function makePlotFramework(gd) {
-    var gd3 = d3.select(gd);
+    var gd3 = select(gd);
     var fullLayout = gd._fullLayout;
 
     fullLayout._calcInverseTransform = calcInverseTransform;
@@ -3774,7 +3774,7 @@ function makePlotFramework(gd) {
 
     if (!fullLayout._uid) {
         var otherUids = {};
-        d3.selectAll('defs').each(function () {
+        selectAll('defs').each(function () {
             if (this.id) otherUids[this.id.split('-')[1]] = 1;
         });
         fullLayout._uid = Lib.randstr(otherUids);

@@ -1,4 +1,4 @@
-import d3 from '@plotly/d3';
+import { select } from 'd3-selection';
 import Lib from '../../lib/index.js';
 import Drawing from '../../components/drawing/index.js';
 
@@ -12,7 +12,7 @@ function plot(gd, plotinfo, cdbox, boxLayer) {
     var ya = plotinfo.yaxis;
 
     Lib.makeTraceGroups(boxLayer, cdbox, 'trace boxes').each(function(cd) {
-        var plotGroup = d3.select(this);
+        var plotGroup = select(this);
         var cd0 = cd[0];
         var t = cd0.t;
         var trace = cd0.trace;
@@ -78,7 +78,7 @@ function plotBoxAndWhiskers(sel, axes, trace, t, isStatic) {
     paths.exit().remove();
 
     paths.each(function(d) {
-        if(d.empty) return d3.select(this).attr('d', 'M0,0Z');
+        if(d.empty) return select(this).attr('d', 'M0,0Z');
 
         var lcenter = posAxis.c2l(d.pos + bPos, true);
 
@@ -117,7 +117,7 @@ function plotBoxAndWhiskers(sel, axes, trace, t, isStatic) {
         var un = valAxis.c2p(d.un, true);
 
         if(isHorizontal) {
-            d3.select(this).attr('d',
+            select(this).attr('d',
                 'M' + m + ',' + posm0 + 'V' + posm1 + // median line
                 'M' + q1 + ',' + pos0 + 'V' + pos1 + // left edge
                 (notched ?
@@ -138,7 +138,7 @@ function plotBoxAndWhiskers(sel, axes, trace, t, isStatic) {
                 )
             );
         } else {
-            d3.select(this).attr('d',
+            select(this).attr('d',
                 'M' + posm0 + ',' + m + 'H' + posm1 + // median line
                 'M' + pos0 + ',' + q1 + 'H' + pos1 + // top of the box
                 (notched ?
@@ -323,14 +323,14 @@ function plotBoxMean(sel, axes, trace, t) {
         var sh = valAxis.c2p(d.mean + d.sd, true);
 
         if(trace.orientation === 'h') {
-            d3.select(this).attr('d',
+            select(this).attr('d',
                 'M' + m + ',' + pos0 + 'V' + pos1 +
                 (mode === 'sd' ?
                     'm0,0L' + sl + ',' + posc + 'L' + m + ',' + pos0 + 'L' + sh + ',' + posc + 'Z' :
                     '')
             );
         } else {
-            d3.select(this).attr('d',
+            select(this).attr('d',
                 'M' + pos0 + ',' + m + 'H' + pos1 +
                 (mode === 'sd' ?
                     'm0,0L' + posc + ',' + sl + 'L' + pos0 + ',' + m + 'L' + posc + ',' + sh + 'Z' :

@@ -1,4 +1,4 @@
-import d3 from '@plotly/d3';
+import { select } from 'd3-selection';
 import map1dArray from '../carpet/map_1d_array.js';
 import makepath from '../carpet/makepath.js';
 import Drawing from '../../components/drawing/index.js';
@@ -18,7 +18,7 @@ export default function plot(gd, plotinfo, cdcontours, contourcarpetLayer) {
     var ya = plotinfo.yaxis;
 
     Lib.makeTraceGroups(contourcarpetLayer, cdcontours, 'contour').each(function(cd) {
-        var plotGroup = d3.select(this);
+        var plotGroup = select(this);
         var cd0 = cd[0];
         var trace = cd0.trace;
 
@@ -198,7 +198,7 @@ function makeLinesAndLabels(plotgroup, pathinfo, gd, cd0, contours, plotinfo, ca
         linegroup.each(function(d) {
             var textOpts = contourPlot.calcTextOpts(d.level, contourFormat, dummyText, gd);
 
-            d3.select(this).selectAll('path').each(function(pathData) {
+            select(this).selectAll('path').each(function(pathData) {
                 var path = this;
                 var pathBounds = Lib.getVisibleSegment(path, bounds, textOpts.height / 2);
                 if(!pathBounds) return;
@@ -337,9 +337,9 @@ function makeFills(trace, plotgroup, xa, ya, pathinfo, perimeter, ab2p, carpet, 
             joinAllPaths(trace, pi, perimeter, ab2p, carpet, carpetcd, xa, ya);
 
         if(!fullpath) {
-            d3.select(this).remove();
+            select(this).remove();
         } else {
-            d3.select(this)
+            select(this)
                 .attr('d', fullpath)
                 .style('stroke', 'none');
         }

@@ -1,4 +1,4 @@
-import d3 from '@plotly/d3';
+import { select } from 'd3-selection';
 import isNumeric from 'fast-isnumeric';
 import Drawing from '../drawing/index.js';
 import subTypes from '../../traces/scatter/subtypes.js';
@@ -34,7 +34,7 @@ export default function plot(gd, traces, plotinfo, transitionOpts) {
 
         if(!yObj.visible && !xObj.visible) d = [];
 
-        var errorbars = d3.select(this).selectAll('g.errorbar')
+        var errorbars = select(this).selectAll('g.errorbar')
             .data(d, keyFunc);
 
         errorbars.exit().remove();
@@ -58,7 +58,7 @@ export default function plot(gd, traces, plotinfo, transitionOpts) {
         Drawing.setClipUrl(errorbars, plotinfo.layerClipId, gd);
 
         errorbars.each(function(d) {
-            var errorbar = d3.select(this);
+            var errorbar = select(this);
             var coords = errorCoords(d, xa, ya);
 
             if(sparse && !d.vis) return;

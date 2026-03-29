@@ -1,4 +1,4 @@
-import d3 from '@plotly/d3';
+import { select } from 'd3-selection';
 import tinycolor from 'tinycolor2';
 import Registry from '../../registry.js';
 import Lib from '../../lib/index.js';
@@ -138,7 +138,7 @@ proto.updateLayers = function(ternaryLayout) {
     toplevel.enter().append('g')
         .attr('class', function(d) { return 'toplevel ' + d; })
         .each(function(d) {
-            var s = d3.select(this);
+            var s = select(this);
             layers[d] = s;
 
             // containers for different trace types.
@@ -766,7 +766,7 @@ proto.initInteractions = function() {
 };
 
 function removeZoombox(gd) {
-    d3.select(gd)
+    select(gd)
         .selectAll('.zoombox,.js-zoombox-backdrop,.js-zoombox-menu,.zoombox-corners')
         .remove();
 }

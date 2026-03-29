@@ -1,4 +1,4 @@
-import d3 from '@plotly/d3';
+
 import countryRegex from 'country-regex';
 import { area as turfArea } from '@turf/area';
 import { centroid as turfCentroid } from '@turf/centroid';
@@ -311,15 +311,16 @@ function fetchTraceGeoData(calcData) {
 
     function fetch(url) {
         return new Promise(function(resolve, reject) {
-            d3.json(url, function(err, d) {
-                if(err) {
+            window.fetch(url).then(function(r) {
+                if(!r.ok) {
                     delete PlotlyGeoAssets[url];
-                    var msg = err.status === 404 ?
+                    var msg = r.status === 404 ?
                         ('GeoJSON at URL "' + url + '" does not exist.') :
                         ('Unexpected error while fetching from ' + url);
-                    return reject(new Error(msg));
+                    throw new Error(msg);
                 }
-
+                return r.json();
+            }).then(function(d) {
                 PlotlyGeoAssets[url] = d;
                 return resolve(d);
             });

@@ -1,4 +1,4 @@
-import d3 from '@plotly/d3';
+import { select } from 'd3-selection';
 import Registry from '../../registry.js';
 import Plots from '../../plots/plots.js';
 import Color from '../color/index.js';
@@ -31,7 +31,7 @@ export default function draw(gd) {
     });
 
     selectors.each(function(d) {
-        var selector = d3.select(this);
+        var selector = select(this);
         var axisLayout = d;
         var selectorLayout = axisLayout.rangeselector;
 
@@ -44,7 +44,7 @@ export default function draw(gd) {
         buttons.exit().remove();
 
         buttons.each(function(d) {
-            var button = d3.select(this);
+            var button = select(this);
             var update = getUpdateObject(axisLayout, d);
 
             d._isActive = isActive(axisLayout, d, update);
@@ -159,7 +159,7 @@ function reposition(gd, buttons, opts, axName, selector) {
     var borderWidth = opts.borderwidth;
 
     buttons.each(function() {
-        var button = d3.select(this);
+        var button = select(this);
         var text = button.select('.selector-text');
 
         var tHeight = opts.font.size * LINE_SPACING;
@@ -169,7 +169,7 @@ function reposition(gd, buttons, opts, axName, selector) {
     });
 
     buttons.each(function() {
-        var button = d3.select(this);
+        var button = select(this);
         var rect = button.select('.selector-rect');
         var text = button.select('.selector-text');
 

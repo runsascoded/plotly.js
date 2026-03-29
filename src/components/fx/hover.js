@@ -1,4 +1,4 @@
-import d3 from '@plotly/d3';
+import { select } from 'd3-selection';
 import isNumeric from 'fast-isnumeric';
 import tinycolor from 'tinycolor2';
 import Lib from '../../lib/index.js';
@@ -160,7 +160,7 @@ export var loneHover = function loneHover(hoverItems, opts) {
         hovermode: 'closest',
         rotateLabels: rotateLabels,
         bgColor: opts.bgColor || Color.background,
-        container: d3.select(opts.container),
+        container: select(opts.container),
         outerContainer: opts.outerContainer || opts.container
     });
     var hoverLabel = hoverText.hoverLabels;
@@ -849,7 +849,7 @@ function _hover(gd, evt, subplot, noHoverEvent, eventTarget) {
     // we should improve the "fx" API so other plots can use it without these hack.
     if (eventTarget && eventTarget.tagName) {
         var hasClickToShow = Registry.getComponentMethod('annotations', 'hasClickToShow')(gd, newhoverdata);
-        overrideCursor(d3.select(eventTarget), hasClickToShow ? 'pointer' : '');
+        overrideCursor(select(eventTarget), hasClickToShow ? 'pointer' : '');
     }
 
     // don't emit events if called manually
@@ -962,7 +962,7 @@ function createHoverText(hoverData, opts) {
         maxY: 0
     };
     commonLabel.each(function () {
-        var label = d3.select(this);
+        var label = select(this);
         var lpath = Lib.ensureSingle(label, 'path', '', function (s) {
             s.style({ 'stroke-width': '1px' });
         });
@@ -1145,7 +1145,7 @@ function createHoverText(hoverData, opts) {
                 // is always visible
                 if (anchor === 'end') {
                     ltext.selectAll('tspan').each(function () {
-                        var s = d3.select(this);
+                        var s = select(this);
                         var dummy = Drawing.tester.append('text').text(s.text()).call(Drawing.font, commonLabelFont);
                         var dummyBB = getBoundingClientRect(gd, dummy.node());
                         if (Math.round(dummyBB.width) < Math.round(tbb.width)) {
@@ -1388,7 +1388,7 @@ function createHoverText(hoverData, opts) {
         .append('g')
         .classed('hovertext', true)
         .each(function () {
-            var g = d3.select(this);
+            var g = select(this);
             // trace name label (rect and text.name)
             g.append('rect').call(Color.fill, Color.addOpacity(bgColor, 0.8));
             g.append('text').classed('name', true);
@@ -1410,7 +1410,7 @@ function createHoverText(hoverData, opts) {
     // then put the text in, position the pointer to the data,
     // and figure out sizes
     hoverLabels.each(function (d) {
-        var g = d3.select(this).attr('transform', '');
+        var g = select(this).attr('transform', '');
 
         var dColor = d.color;
         if (Array.isArray(dColor)) {
@@ -1938,7 +1938,7 @@ function alignHoverText(hoverLabels, rotateLabels, scaleX, scaleY) {
     // finally set the text positioning relative to the data and draw the
     // box around it
     hoverLabels.each(function (d) {
-        var g = d3.select(this);
+        var g = select(this);
         if (d.del) return g.remove();
 
         var tx = g.select('text.nums');

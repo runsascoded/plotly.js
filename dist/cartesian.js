@@ -61,6894 +61,6 @@ var Plotly = (() => {
   ));
   var __toCommonJS = (mod7) => __copyProps(__defProp({}, "__esModule", { value: true }), mod7);
 
-  // node_modules/.pnpm/@plotly+d3@3.8.2/node_modules/@plotly/d3/d3.js
-  var require_d3 = __commonJS({
-    "node_modules/.pnpm/@plotly+d3@3.8.2/node_modules/@plotly/d3/d3.js"(exports, module) {
-      !function() {
-        var d356 = {
-          version: "3.8.2"
-        };
-        var d3_arraySlice = [].slice, d3_array = function(list2) {
-          return d3_arraySlice.call(list2);
-        };
-        var d3_document = self.document;
-        function d3_documentElement(node) {
-          return node && (node.ownerDocument || node.document || node).documentElement;
-        }
-        function d3_window(node) {
-          return node && (node.ownerDocument && node.ownerDocument.defaultView || node.document && node || node.defaultView);
-        }
-        if (d3_document) {
-          try {
-            d3_array(d3_document.documentElement.childNodes)[0].nodeType;
-          } catch (e) {
-            d3_array = function(list2) {
-              var i = list2.length, array = new Array(i);
-              while (i--) array[i] = list2[i];
-              return array;
-            };
-          }
-        }
-        if (!Date.now) Date.now = function() {
-          return +/* @__PURE__ */ new Date();
-        };
-        if (d3_document) {
-          try {
-            d3_document.createElement("DIV").style.setProperty("opacity", 0, "");
-          } catch (error) {
-            var d3_element_prototype = this.Element.prototype, d3_element_setAttribute = d3_element_prototype.setAttribute, d3_element_setAttributeNS = d3_element_prototype.setAttributeNS, d3_style_prototype = this.CSSStyleDeclaration.prototype, d3_style_setProperty = d3_style_prototype.setProperty;
-            d3_element_prototype.setAttribute = function(name8, value) {
-              d3_element_setAttribute.call(this, name8, value + "");
-            };
-            d3_element_prototype.setAttributeNS = function(space, local, value) {
-              d3_element_setAttributeNS.call(this, space, local, value + "");
-            };
-            d3_style_prototype.setProperty = function(name8, value, priority) {
-              d3_style_setProperty.call(this, name8, value + "", priority);
-            };
-          }
-        }
-        d356.ascending = d3_ascending;
-        function d3_ascending(a, b) {
-          return a < b ? -1 : a > b ? 1 : a >= b ? 0 : NaN;
-        }
-        d356.descending = function(a, b) {
-          return b < a ? -1 : b > a ? 1 : b >= a ? 0 : NaN;
-        };
-        d356.min = function(array, f) {
-          var i = -1, n = array.length, a, b;
-          if (arguments.length === 1) {
-            while (++i < n) if ((b = array[i]) != null && b >= b) {
-              a = b;
-              break;
-            }
-            while (++i < n) if ((b = array[i]) != null && a > b) a = b;
-          } else {
-            while (++i < n) if ((b = f.call(array, array[i], i)) != null && b >= b) {
-              a = b;
-              break;
-            }
-            while (++i < n) if ((b = f.call(array, array[i], i)) != null && a > b) a = b;
-          }
-          return a;
-        };
-        d356.max = function(array, f) {
-          var i = -1, n = array.length, a, b;
-          if (arguments.length === 1) {
-            while (++i < n) if ((b = array[i]) != null && b >= b) {
-              a = b;
-              break;
-            }
-            while (++i < n) if ((b = array[i]) != null && b > a) a = b;
-          } else {
-            while (++i < n) if ((b = f.call(array, array[i], i)) != null && b >= b) {
-              a = b;
-              break;
-            }
-            while (++i < n) if ((b = f.call(array, array[i], i)) != null && b > a) a = b;
-          }
-          return a;
-        };
-        d356.extent = function(array, f) {
-          var i = -1, n = array.length, a, b, c;
-          if (arguments.length === 1) {
-            while (++i < n) if ((b = array[i]) != null && b >= b) {
-              a = c = b;
-              break;
-            }
-            while (++i < n) if ((b = array[i]) != null) {
-              if (a > b) a = b;
-              if (c < b) c = b;
-            }
-          } else {
-            while (++i < n) if ((b = f.call(array, array[i], i)) != null && b >= b) {
-              a = c = b;
-              break;
-            }
-            while (++i < n) if ((b = f.call(array, array[i], i)) != null) {
-              if (a > b) a = b;
-              if (c < b) c = b;
-            }
-          }
-          return [a, c];
-        };
-        function d3_number(x) {
-          return x === null ? NaN : +x;
-        }
-        function d3_numeric(x) {
-          return !isNaN(x);
-        }
-        d356.sum = function(array, f) {
-          var s = 0, n = array.length, a, i = -1;
-          if (arguments.length === 1) {
-            while (++i < n) if (d3_numeric(a = +array[i])) s += a;
-          } else {
-            while (++i < n) if (d3_numeric(a = +f.call(array, array[i], i))) s += a;
-          }
-          return s;
-        };
-        d356.mean = function(array, f) {
-          var s = 0, n = array.length, a, i = -1, j = n;
-          if (arguments.length === 1) {
-            while (++i < n) if (d3_numeric(a = d3_number(array[i]))) s += a;
-            else --j;
-          } else {
-            while (++i < n) if (d3_numeric(a = d3_number(f.call(array, array[i], i)))) s += a;
-            else --j;
-          }
-          if (j) return s / j;
-        };
-        d356.quantile = function(values, p) {
-          var H = (values.length - 1) * p + 1, h = Math.floor(H), v = +values[h - 1], e = H - h;
-          return e ? v + e * (values[h] - v) : v;
-        };
-        d356.median = function(array, f) {
-          var numbers = [], n = array.length, a, i = -1;
-          if (arguments.length === 1) {
-            while (++i < n) if (d3_numeric(a = d3_number(array[i]))) numbers.push(a);
-          } else {
-            while (++i < n) if (d3_numeric(a = d3_number(f.call(array, array[i], i)))) numbers.push(a);
-          }
-          if (numbers.length) return d356.quantile(numbers.sort(d3_ascending), 0.5);
-        };
-        d356.variance = function(array, f) {
-          var n = array.length, m = 0, a, d, s = 0, i = -1, j = 0;
-          if (arguments.length === 1) {
-            while (++i < n) {
-              if (d3_numeric(a = d3_number(array[i]))) {
-                d = a - m;
-                m += d / ++j;
-                s += d * (a - m);
-              }
-            }
-          } else {
-            while (++i < n) {
-              if (d3_numeric(a = d3_number(f.call(array, array[i], i)))) {
-                d = a - m;
-                m += d / ++j;
-                s += d * (a - m);
-              }
-            }
-          }
-          if (j > 1) return s / (j - 1);
-        };
-        d356.deviation = function() {
-          var v = d356.variance.apply(this, arguments);
-          return v ? Math.sqrt(v) : v;
-        };
-        function d3_bisector(compare) {
-          return {
-            left: function(a, x, lo, hi) {
-              if (arguments.length < 3) lo = 0;
-              if (arguments.length < 4) hi = a.length;
-              while (lo < hi) {
-                var mid = lo + hi >>> 1;
-                if (compare(a[mid], x) < 0) lo = mid + 1;
-                else hi = mid;
-              }
-              return lo;
-            },
-            right: function(a, x, lo, hi) {
-              if (arguments.length < 3) lo = 0;
-              if (arguments.length < 4) hi = a.length;
-              while (lo < hi) {
-                var mid = lo + hi >>> 1;
-                if (compare(a[mid], x) > 0) hi = mid;
-                else lo = mid + 1;
-              }
-              return lo;
-            }
-          };
-        }
-        var d3_bisect = d3_bisector(d3_ascending);
-        d356.bisectLeft = d3_bisect.left;
-        d356.bisect = d356.bisectRight = d3_bisect.right;
-        d356.bisector = function(f) {
-          return d3_bisector(f.length === 1 ? function(d, x) {
-            return d3_ascending(f(d), x);
-          } : f);
-        };
-        d356.shuffle = function(array, i0, i1) {
-          if ((m = arguments.length) < 3) {
-            i1 = array.length;
-            if (m < 2) i0 = 0;
-          }
-          var m = i1 - i0, t, i;
-          while (m) {
-            i = Math.random() * m-- | 0;
-            t = array[m + i0], array[m + i0] = array[i + i0], array[i + i0] = t;
-          }
-          return array;
-        };
-        d356.permute = function(array, indexes) {
-          var i = indexes.length, permutes = new Array(i);
-          while (i--) permutes[i] = array[indexes[i]];
-          return permutes;
-        };
-        d356.pairs = function(array) {
-          var i = 0, n = array.length - 1, p0, p1 = array[0], pairs = new Array(n < 0 ? 0 : n);
-          while (i < n) pairs[i] = [p0 = p1, p1 = array[++i]];
-          return pairs;
-        };
-        d356.transpose = function(matrix) {
-          if (!(n = matrix.length)) return [];
-          for (var i = -1, m = d356.min(matrix, d3_transposeLength), transpose = new Array(m); ++i < m; ) {
-            for (var j = -1, n, row = transpose[i] = new Array(n); ++j < n; ) {
-              row[j] = matrix[j][i];
-            }
-          }
-          return transpose;
-        };
-        function d3_transposeLength(d) {
-          return d.length;
-        }
-        d356.zip = function() {
-          return d356.transpose(arguments);
-        };
-        d356.keys = function(map2) {
-          var keys = [];
-          for (var key in map2) keys.push(key);
-          return keys;
-        };
-        d356.values = function(map2) {
-          var values = [];
-          for (var key in map2) values.push(map2[key]);
-          return values;
-        };
-        d356.entries = function(map2) {
-          var entries = [];
-          for (var key in map2) entries.push({
-            key,
-            value: map2[key]
-          });
-          return entries;
-        };
-        d356.merge = function(arrays) {
-          var n = arrays.length, m, i = -1, j = 0, merged, array;
-          while (++i < n) j += arrays[i].length;
-          merged = new Array(j);
-          while (--n >= 0) {
-            array = arrays[n];
-            m = array.length;
-            while (--m >= 0) {
-              merged[--j] = array[m];
-            }
-          }
-          return merged;
-        };
-        var abs = Math.abs;
-        d356.range = function(start, stop, step) {
-          if (arguments.length < 3) {
-            step = 1;
-            if (arguments.length < 2) {
-              stop = start;
-              start = 0;
-            }
-          }
-          if ((stop - start) / step === Infinity) throw new Error("infinite range");
-          var range = [], k = d3_range_integerScale(abs(step)), i = -1, j;
-          start *= k, stop *= k, step *= k;
-          if (step < 0) while ((j = start + step * ++i) > stop) range.push(j / k);
-          else while ((j = start + step * ++i) < stop) range.push(j / k);
-          return range;
-        };
-        function d3_range_integerScale(x) {
-          var k = 1;
-          while (x * k % 1) k *= 10;
-          return k;
-        }
-        function d3_class(ctor, properties) {
-          for (var key in properties) {
-            Object.defineProperty(ctor.prototype, key, {
-              value: properties[key],
-              enumerable: false
-            });
-          }
-        }
-        d356.map = function(object, f) {
-          var map2 = new d3_Map();
-          if (object instanceof d3_Map) {
-            object.forEach(function(key2, value) {
-              map2.set(key2, value);
-            });
-          } else if (Array.isArray(object)) {
-            var i = -1, n = object.length, o;
-            if (arguments.length === 1) while (++i < n) map2.set(i, object[i]);
-            else while (++i < n) map2.set(f.call(object, o = object[i], i), o);
-          } else {
-            for (var key in object) map2.set(key, object[key]);
-          }
-          return map2;
-        };
-        function d3_Map() {
-          this._ = /* @__PURE__ */ Object.create(null);
-        }
-        var d3_map_proto = "__proto__", d3_map_zero = "\0";
-        d3_class(d3_Map, {
-          has: d3_map_has,
-          get: function(key) {
-            return this._[d3_map_escape(key)];
-          },
-          set: function(key, value) {
-            return this._[d3_map_escape(key)] = value;
-          },
-          remove: d3_map_remove,
-          keys: d3_map_keys,
-          values: function() {
-            var values = [];
-            for (var key in this._) values.push(this._[key]);
-            return values;
-          },
-          entries: function() {
-            var entries = [];
-            for (var key in this._) entries.push({
-              key: d3_map_unescape(key),
-              value: this._[key]
-            });
-            return entries;
-          },
-          size: d3_map_size,
-          empty: d3_map_empty,
-          forEach: function(f) {
-            for (var key in this._) f.call(this, d3_map_unescape(key), this._[key]);
-          }
-        });
-        function d3_map_escape(key) {
-          return (key += "") === d3_map_proto || key[0] === d3_map_zero ? d3_map_zero + key : key;
-        }
-        function d3_map_unescape(key) {
-          return (key += "")[0] === d3_map_zero ? key.slice(1) : key;
-        }
-        function d3_map_has(key) {
-          return d3_map_escape(key) in this._;
-        }
-        function d3_map_remove(key) {
-          return (key = d3_map_escape(key)) in this._ && delete this._[key];
-        }
-        function d3_map_keys() {
-          var keys = [];
-          for (var key in this._) keys.push(d3_map_unescape(key));
-          return keys;
-        }
-        function d3_map_size() {
-          var size = 0;
-          for (var key in this._) ++size;
-          return size;
-        }
-        function d3_map_empty() {
-          for (var key in this._) return false;
-          return true;
-        }
-        d356.nest = function() {
-          var nest = {}, keys = [], sortKeys = [], sortValues, rollup;
-          function map2(mapType, array, depth) {
-            if (depth >= keys.length) return rollup ? rollup.call(nest, array) : sortValues ? array.sort(sortValues) : array;
-            var i = -1, n = array.length, key = keys[depth++], keyValue, object, setter, valuesByKey = new d3_Map(), values;
-            while (++i < n) {
-              if (values = valuesByKey.get(keyValue = key(object = array[i]))) {
-                values.push(object);
-              } else {
-                valuesByKey.set(keyValue, [object]);
-              }
-            }
-            if (mapType) {
-              object = mapType();
-              setter = function(keyValue2, values2) {
-                object.set(keyValue2, map2(mapType, values2, depth));
-              };
-            } else {
-              object = {};
-              setter = function(keyValue2, values2) {
-                object[keyValue2] = map2(mapType, values2, depth);
-              };
-            }
-            valuesByKey.forEach(setter);
-            return object;
-          }
-          function entries(map3, depth) {
-            if (depth >= keys.length) return map3;
-            var array = [], sortKey = sortKeys[depth++];
-            map3.forEach(function(key, keyMap) {
-              array.push({
-                key,
-                values: entries(keyMap, depth)
-              });
-            });
-            return sortKey ? array.sort(function(a, b) {
-              return sortKey(a.key, b.key);
-            }) : array;
-          }
-          nest.map = function(array, mapType) {
-            return map2(mapType, array, 0);
-          };
-          nest.entries = function(array) {
-            return entries(map2(d356.map, array, 0), 0);
-          };
-          nest.key = function(d) {
-            keys.push(d);
-            return nest;
-          };
-          nest.sortKeys = function(order) {
-            sortKeys[keys.length - 1] = order;
-            return nest;
-          };
-          nest.sortValues = function(order) {
-            sortValues = order;
-            return nest;
-          };
-          nest.rollup = function(f) {
-            rollup = f;
-            return nest;
-          };
-          return nest;
-        };
-        d356.set = function(array) {
-          var set = new d3_Set();
-          if (array) for (var i = 0, n = array.length; i < n; ++i) set.add(array[i]);
-          return set;
-        };
-        function d3_Set() {
-          this._ = /* @__PURE__ */ Object.create(null);
-        }
-        d3_class(d3_Set, {
-          has: d3_map_has,
-          add: function(key) {
-            this._[d3_map_escape(key += "")] = true;
-            return key;
-          },
-          remove: d3_map_remove,
-          values: d3_map_keys,
-          size: d3_map_size,
-          empty: d3_map_empty,
-          forEach: function(f) {
-            for (var key in this._) f.call(this, d3_map_unescape(key));
-          }
-        });
-        d356.behavior = {};
-        function d3_identity(d) {
-          return d;
-        }
-        d356.rebind = function(target, source) {
-          var i = 1, n = arguments.length, method;
-          while (++i < n) target[method = arguments[i]] = d3_rebind(target, source, source[method]);
-          return target;
-        };
-        function d3_rebind(target, source, method) {
-          return function() {
-            var value = method.apply(source, arguments);
-            return value === source ? target : value;
-          };
-        }
-        function d3_vendorSymbol(object, name8) {
-          if (name8 in object) return name8;
-          name8 = name8.charAt(0).toUpperCase() + name8.slice(1);
-          for (var i = 0, n = d3_vendorPrefixes.length; i < n; ++i) {
-            var prefixName = d3_vendorPrefixes[i] + name8;
-            if (prefixName in object) return prefixName;
-          }
-        }
-        var d3_vendorPrefixes = ["webkit", "ms", "moz", "Moz", "o", "O"];
-        function d3_noop() {
-        }
-        d356.dispatch = function() {
-          var dispatch = new d3_dispatch(), i = -1, n = arguments.length;
-          while (++i < n) dispatch[arguments[i]] = d3_dispatch_event(dispatch);
-          return dispatch;
-        };
-        function d3_dispatch() {
-        }
-        d3_dispatch.prototype.on = function(type, listener) {
-          var i = type.indexOf("."), name8 = "";
-          if (i >= 0) {
-            name8 = type.slice(i + 1);
-            type = type.slice(0, i);
-          }
-          if (type) return arguments.length < 2 ? this[type].on(name8) : this[type].on(name8, listener);
-          if (arguments.length === 2) {
-            if (listener == null) for (type in this) {
-              if (this.hasOwnProperty(type)) this[type].on(name8, null);
-            }
-            return this;
-          }
-        };
-        function d3_dispatch_event(dispatch) {
-          var listeners = [], listenerByName = new d3_Map();
-          function event() {
-            var z = listeners, i = -1, n = z.length, l;
-            while (++i < n) if (l = z[i].on) l.apply(this, arguments);
-            return dispatch;
-          }
-          event.on = function(name8, listener) {
-            var l = listenerByName.get(name8), i;
-            if (arguments.length < 2) return l && l.on;
-            if (l) {
-              l.on = null;
-              listeners = listeners.slice(0, i = listeners.indexOf(l)).concat(listeners.slice(i + 1));
-              listenerByName.remove(name8);
-            }
-            if (listener) listeners.push(listenerByName.set(name8, {
-              on: listener
-            }));
-            return dispatch;
-          };
-          return event;
-        }
-        d356.event = null;
-        function d3_eventPreventDefault() {
-          d356.event.preventDefault();
-        }
-        function d3_eventSource() {
-          var e = d356.event, s;
-          while (s = e.sourceEvent) e = s;
-          return e;
-        }
-        function d3_eventDispatch(target) {
-          var dispatch = new d3_dispatch(), i = 0, n = arguments.length;
-          while (++i < n) dispatch[arguments[i]] = d3_dispatch_event(dispatch);
-          dispatch.of = function(thiz, argumentz) {
-            return function(e1) {
-              try {
-                var e0 = e1.sourceEvent = d356.event;
-                e1.target = target;
-                d356.event = e1;
-                dispatch[e1.type].apply(thiz, argumentz);
-              } finally {
-                d356.event = e0;
-              }
-            };
-          };
-          return dispatch;
-        }
-        d356.requote = function(s) {
-          return s.replace(d3_requote_re, "\\$&");
-        };
-        var d3_requote_re = /[\\\^\$\*\+\?\|\[\]\(\)\.\{\}]/g;
-        var d3_subclass = {}.__proto__ ? function(object, prototype) {
-          object.__proto__ = prototype;
-        } : function(object, prototype) {
-          for (var property in prototype) object[property] = prototype[property];
-        };
-        function d3_selection(groups) {
-          d3_subclass(groups, d3_selectionPrototype);
-          return groups;
-        }
-        var d3_select = function(s, n) {
-          return n.querySelector(s);
-        }, d3_selectAll = function(s, n) {
-          return n.querySelectorAll(s);
-        }, d3_selectMatches = function(n, s) {
-          var d3_selectMatcher = n.matches || n[d3_vendorSymbol(n, "matchesSelector")];
-          d3_selectMatches = function(n2, s2) {
-            return d3_selectMatcher.call(n2, s2);
-          };
-          return d3_selectMatches(n, s);
-        };
-        if (typeof Sizzle === "function") {
-          d3_select = function(s, n) {
-            return Sizzle(s, n)[0] || null;
-          };
-          d3_selectAll = Sizzle;
-          d3_selectMatches = Sizzle.matchesSelector;
-        }
-        d356.selection = function() {
-          return d356.select(d3_document.documentElement);
-        };
-        var d3_selectionPrototype = d356.selection.prototype = [];
-        d3_selectionPrototype.select = function(selector) {
-          var subgroups = [], subgroup, subnode, group, node;
-          selector = d3_selection_selector(selector);
-          for (var j = -1, m = this.length; ++j < m; ) {
-            subgroups.push(subgroup = []);
-            subgroup.parentNode = (group = this[j]).parentNode;
-            for (var i = -1, n = group.length; ++i < n; ) {
-              if (node = group[i]) {
-                subgroup.push(subnode = selector.call(node, node.__data__, i, j));
-                if (subnode && "__data__" in node) subnode.__data__ = node.__data__;
-              } else {
-                subgroup.push(null);
-              }
-            }
-          }
-          return d3_selection(subgroups);
-        };
-        function d3_selection_selector(selector) {
-          return typeof selector === "function" ? selector : function() {
-            return d3_select(selector, this);
-          };
-        }
-        d3_selectionPrototype.selectAll = function(selector) {
-          var subgroups = [], subgroup, node;
-          selector = d3_selection_selectorAll(selector);
-          for (var j = -1, m = this.length; ++j < m; ) {
-            for (var group = this[j], i = -1, n = group.length; ++i < n; ) {
-              if (node = group[i]) {
-                subgroups.push(subgroup = d3_array(selector.call(node, node.__data__, i, j)));
-                subgroup.parentNode = node;
-              }
-            }
-          }
-          return d3_selection(subgroups);
-        };
-        function d3_selection_selectorAll(selector) {
-          return typeof selector === "function" ? selector : function() {
-            return d3_selectAll(selector, this);
-          };
-        }
-        var d3_nsXhtml = "http://www.w3.org/1999/xhtml";
-        var d3_nsPrefix = {
-          svg: "http://www.w3.org/2000/svg",
-          xhtml: d3_nsXhtml,
-          xlink: "http://www.w3.org/1999/xlink",
-          xml: "http://www.w3.org/XML/1998/namespace",
-          xmlns: "http://www.w3.org/2000/xmlns/"
-        };
-        d356.ns = {
-          prefix: d3_nsPrefix,
-          qualify: function(name8) {
-            var i = name8.indexOf(":"), prefix = name8;
-            if (i >= 0 && (prefix = name8.slice(0, i)) !== "xmlns") name8 = name8.slice(i + 1);
-            return d3_nsPrefix.hasOwnProperty(prefix) ? {
-              space: d3_nsPrefix[prefix],
-              local: name8
-            } : name8;
-          }
-        };
-        d3_selectionPrototype.attr = function(name8, value) {
-          if (arguments.length < 2) {
-            if (typeof name8 === "string") {
-              var node = this.node();
-              name8 = d356.ns.qualify(name8);
-              return name8.local ? node.getAttributeNS(name8.space, name8.local) : node.getAttribute(name8);
-            }
-            for (value in name8) this.each(d3_selection_attr(value, name8[value]));
-            return this;
-          }
-          return this.each(d3_selection_attr(name8, value));
-        };
-        function d3_selection_attr(name8, value) {
-          name8 = d356.ns.qualify(name8);
-          function attrNull() {
-            this.removeAttribute(name8);
-          }
-          function attrNullNS() {
-            this.removeAttributeNS(name8.space, name8.local);
-          }
-          function attrConstant() {
-            this.setAttribute(name8, value);
-          }
-          function attrConstantNS() {
-            this.setAttributeNS(name8.space, name8.local, value);
-          }
-          function attrFunction() {
-            var x = value.apply(this, arguments);
-            if (x == null) this.removeAttribute(name8);
-            else this.setAttribute(name8, x);
-          }
-          function attrFunctionNS() {
-            var x = value.apply(this, arguments);
-            if (x == null) this.removeAttributeNS(name8.space, name8.local);
-            else this.setAttributeNS(name8.space, name8.local, x);
-          }
-          return value == null ? name8.local ? attrNullNS : attrNull : typeof value === "function" ? name8.local ? attrFunctionNS : attrFunction : name8.local ? attrConstantNS : attrConstant;
-        }
-        function d3_collapse(s) {
-          return s.trim().replace(/\s+/g, " ");
-        }
-        d3_selectionPrototype.classed = function(name8, value) {
-          if (arguments.length < 2) {
-            if (typeof name8 === "string") {
-              var node = this.node(), n = (name8 = d3_selection_classes(name8)).length, i = -1;
-              if (value = node.classList) {
-                while (++i < n) if (!value.contains(name8[i])) return false;
-              } else {
-                value = node.getAttribute("class");
-                while (++i < n) if (!d3_selection_classedRe(name8[i]).test(value)) return false;
-              }
-              return true;
-            }
-            for (value in name8) this.each(d3_selection_classed(value, name8[value]));
-            return this;
-          }
-          return this.each(d3_selection_classed(name8, value));
-        };
-        function d3_selection_classedRe(name8) {
-          return new RegExp("(?:^|\\s+)" + d356.requote(name8) + "(?:\\s+|$)", "g");
-        }
-        function d3_selection_classes(name8) {
-          return (name8 + "").trim().split(/^|\s+/);
-        }
-        function d3_selection_classed(name8, value) {
-          name8 = d3_selection_classes(name8).map(d3_selection_classedName);
-          var n = name8.length;
-          function classedConstant() {
-            var i = -1;
-            while (++i < n) name8[i](this, value);
-          }
-          function classedFunction() {
-            var i = -1, x = value.apply(this, arguments);
-            while (++i < n) name8[i](this, x);
-          }
-          return typeof value === "function" ? classedFunction : classedConstant;
-        }
-        function d3_selection_classedName(name8) {
-          var re2 = d3_selection_classedRe(name8);
-          return function(node, value) {
-            if (c = node.classList) return value ? c.add(name8) : c.remove(name8);
-            var c = node.getAttribute("class") || "";
-            if (value) {
-              re2.lastIndex = 0;
-              if (!re2.test(c)) node.setAttribute("class", d3_collapse(c + " " + name8));
-            } else {
-              node.setAttribute("class", d3_collapse(c.replace(re2, " ")));
-            }
-          };
-        }
-        d3_selectionPrototype.style = function(name8, value, priority) {
-          var n = arguments.length;
-          if (n < 3) {
-            if (typeof name8 !== "string") {
-              if (n < 2) value = "";
-              for (priority in name8) this.each(d3_selection_style(priority, name8[priority], value));
-              return this;
-            }
-            if (n < 2) {
-              var node = this.node();
-              return d3_window(node).getComputedStyle(node, null).getPropertyValue(name8);
-            }
-            priority = "";
-          }
-          return this.each(d3_selection_style(name8, value, priority));
-        };
-        function d3_selection_style(name8, value, priority) {
-          function styleNull() {
-            this.style.removeProperty(name8);
-          }
-          function styleConstant() {
-            this.style.setProperty(name8, value, priority);
-          }
-          function styleFunction() {
-            var x = value.apply(this, arguments);
-            if (x == null) this.style.removeProperty(name8);
-            else this.style.setProperty(name8, x, priority);
-          }
-          return value == null ? styleNull : typeof value === "function" ? styleFunction : styleConstant;
-        }
-        d3_selectionPrototype.property = function(name8, value) {
-          if (arguments.length < 2) {
-            if (typeof name8 === "string") return this.node()[name8];
-            for (value in name8) this.each(d3_selection_property(value, name8[value]));
-            return this;
-          }
-          return this.each(d3_selection_property(name8, value));
-        };
-        function d3_selection_property(name8, value) {
-          function propertyNull() {
-            delete this[name8];
-          }
-          function propertyConstant() {
-            this[name8] = value;
-          }
-          function propertyFunction() {
-            var x = value.apply(this, arguments);
-            if (x == null) delete this[name8];
-            else this[name8] = x;
-          }
-          return value == null ? propertyNull : typeof value === "function" ? propertyFunction : propertyConstant;
-        }
-        d3_selectionPrototype.text = function(value) {
-          return arguments.length ? this.each(typeof value === "function" ? function() {
-            var v = value.apply(this, arguments);
-            this.textContent = v == null ? "" : v;
-          } : value == null ? function() {
-            this.textContent = "";
-          } : function() {
-            this.textContent = value;
-          }) : this.node().textContent;
-        };
-        d3_selectionPrototype.html = function(value) {
-          return arguments.length ? this.each(typeof value === "function" ? function() {
-            var v = value.apply(this, arguments);
-            this.innerHTML = v == null ? "" : v;
-          } : value == null ? function() {
-            this.innerHTML = "";
-          } : function() {
-            this.innerHTML = value;
-          }) : this.node().innerHTML;
-        };
-        d3_selectionPrototype.append = function(name8) {
-          name8 = d3_selection_creator(name8);
-          return this.select(function() {
-            return this.appendChild(name8.apply(this, arguments));
-          });
-        };
-        function d3_selection_creator(name8) {
-          function create() {
-            var document2 = this.ownerDocument, namespace = this.namespaceURI;
-            return namespace === d3_nsXhtml && document2.documentElement.namespaceURI === d3_nsXhtml ? document2.createElement(name8) : document2.createElementNS(namespace, name8);
-          }
-          function createNS() {
-            return this.ownerDocument.createElementNS(name8.space, name8.local);
-          }
-          return typeof name8 === "function" ? name8 : (name8 = d356.ns.qualify(name8)).local ? createNS : create;
-        }
-        d3_selectionPrototype.insert = function(name8, before) {
-          name8 = d3_selection_creator(name8);
-          before = d3_selection_selector(before);
-          return this.select(function() {
-            return this.insertBefore(name8.apply(this, arguments), before.apply(this, arguments) || null);
-          });
-        };
-        d3_selectionPrototype.remove = function() {
-          return this.each(d3_selectionRemove);
-        };
-        function d3_selectionRemove() {
-          var parent = this.parentNode;
-          if (parent) parent.removeChild(this);
-        }
-        d3_selectionPrototype.data = function(value, key) {
-          var i = -1, n = this.length, group, node;
-          if (!arguments.length) {
-            value = new Array(n = (group = this[0]).length);
-            while (++i < n) {
-              if (node = group[i]) {
-                value[i] = node.__data__;
-              }
-            }
-            return value;
-          }
-          function bind(group2, groupData) {
-            var i2, n2 = group2.length, m = groupData.length, n0 = Math.min(n2, m), updateNodes = new Array(m), enterNodes = new Array(m), exitNodes = new Array(n2), node2, nodeData;
-            if (key) {
-              var nodeByKeyValue = new d3_Map(), keyValues = new Array(n2), keyValue;
-              for (i2 = -1; ++i2 < n2; ) {
-                if (node2 = group2[i2]) {
-                  if (nodeByKeyValue.has(keyValue = key.call(node2, node2.__data__, i2))) {
-                    exitNodes[i2] = node2;
-                  } else {
-                    nodeByKeyValue.set(keyValue, node2);
-                  }
-                  keyValues[i2] = keyValue;
-                }
-              }
-              for (i2 = -1; ++i2 < m; ) {
-                if (!(node2 = nodeByKeyValue.get(keyValue = key.call(groupData, nodeData = groupData[i2], i2)))) {
-                  enterNodes[i2] = d3_selection_dataNode(nodeData);
-                } else if (node2 !== true) {
-                  updateNodes[i2] = node2;
-                  node2.__data__ = nodeData;
-                }
-                nodeByKeyValue.set(keyValue, true);
-              }
-              for (i2 = -1; ++i2 < n2; ) {
-                if (i2 in keyValues && nodeByKeyValue.get(keyValues[i2]) !== true) {
-                  exitNodes[i2] = group2[i2];
-                }
-              }
-            } else {
-              for (i2 = -1; ++i2 < n0; ) {
-                node2 = group2[i2];
-                nodeData = groupData[i2];
-                if (node2) {
-                  node2.__data__ = nodeData;
-                  updateNodes[i2] = node2;
-                } else {
-                  enterNodes[i2] = d3_selection_dataNode(nodeData);
-                }
-              }
-              for (; i2 < m; ++i2) {
-                enterNodes[i2] = d3_selection_dataNode(groupData[i2]);
-              }
-              for (; i2 < n2; ++i2) {
-                exitNodes[i2] = group2[i2];
-              }
-            }
-            enterNodes.update = updateNodes;
-            enterNodes.parentNode = updateNodes.parentNode = exitNodes.parentNode = group2.parentNode;
-            enter.push(enterNodes);
-            update3.push(updateNodes);
-            exit.push(exitNodes);
-          }
-          var enter = d3_selection_enter([]), update3 = d3_selection([]), exit = d3_selection([]);
-          if (typeof value === "function") {
-            while (++i < n) {
-              bind(group = this[i], value.call(group, group.parentNode.__data__, i));
-            }
-          } else {
-            while (++i < n) {
-              bind(group = this[i], value);
-            }
-          }
-          update3.enter = function() {
-            return enter;
-          };
-          update3.exit = function() {
-            return exit;
-          };
-          return update3;
-        };
-        function d3_selection_dataNode(data) {
-          return {
-            __data__: data
-          };
-        }
-        d3_selectionPrototype.datum = function(value) {
-          return arguments.length ? this.property("__data__", value) : this.property("__data__");
-        };
-        d3_selectionPrototype.filter = function(filter2) {
-          var subgroups = [], subgroup, group, node;
-          if (typeof filter2 !== "function") filter2 = d3_selection_filter(filter2);
-          for (var j = 0, m = this.length; j < m; j++) {
-            subgroups.push(subgroup = []);
-            subgroup.parentNode = (group = this[j]).parentNode;
-            for (var i = 0, n = group.length; i < n; i++) {
-              if ((node = group[i]) && filter2.call(node, node.__data__, i, j)) {
-                subgroup.push(node);
-              }
-            }
-          }
-          return d3_selection(subgroups);
-        };
-        function d3_selection_filter(selector) {
-          return function() {
-            return d3_selectMatches(this, selector);
-          };
-        }
-        d3_selectionPrototype.order = function() {
-          for (var j = -1, m = this.length; ++j < m; ) {
-            for (var group = this[j], i = group.length - 1, next = group[i], node; --i >= 0; ) {
-              if (node = group[i]) {
-                if (next && next !== node.nextSibling) next.parentNode.insertBefore(node, next);
-                next = node;
-              }
-            }
-          }
-          return this;
-        };
-        d3_selectionPrototype.sort = function(comparator) {
-          comparator = d3_selection_sortComparator.apply(this, arguments);
-          for (var j = -1, m = this.length; ++j < m; ) this[j].sort(comparator);
-          return this.order();
-        };
-        function d3_selection_sortComparator(comparator) {
-          if (!arguments.length) comparator = d3_ascending;
-          return function(a, b) {
-            return a && b ? comparator(a.__data__, b.__data__) : !a - !b;
-          };
-        }
-        d3_selectionPrototype.each = function(callback) {
-          return d3_selection_each(this, function(node, i, j) {
-            callback.call(node, node.__data__, i, j);
-          });
-        };
-        function d3_selection_each(groups, callback) {
-          for (var j = 0, m = groups.length; j < m; j++) {
-            for (var group = groups[j], i = 0, n = group.length, node; i < n; i++) {
-              if (node = group[i]) callback(node, i, j);
-            }
-          }
-          return groups;
-        }
-        d3_selectionPrototype.call = function(callback) {
-          var args = d3_array(arguments);
-          callback.apply(args[0] = this, args);
-          return this;
-        };
-        d3_selectionPrototype.empty = function() {
-          return !this.node();
-        };
-        d3_selectionPrototype.node = function() {
-          for (var j = 0, m = this.length; j < m; j++) {
-            for (var group = this[j], i = 0, n = group.length; i < n; i++) {
-              var node = group[i];
-              if (node) return node;
-            }
-          }
-          return null;
-        };
-        d3_selectionPrototype.size = function() {
-          var n = 0;
-          d3_selection_each(this, function() {
-            ++n;
-          });
-          return n;
-        };
-        function d3_selection_enter(selection) {
-          d3_subclass(selection, d3_selection_enterPrototype);
-          return selection;
-        }
-        var d3_selection_enterPrototype = [];
-        d356.selection.enter = d3_selection_enter;
-        d356.selection.enter.prototype = d3_selection_enterPrototype;
-        d3_selection_enterPrototype.append = d3_selectionPrototype.append;
-        d3_selection_enterPrototype.empty = d3_selectionPrototype.empty;
-        d3_selection_enterPrototype.node = d3_selectionPrototype.node;
-        d3_selection_enterPrototype.call = d3_selectionPrototype.call;
-        d3_selection_enterPrototype.size = d3_selectionPrototype.size;
-        d3_selection_enterPrototype.select = function(selector) {
-          var subgroups = [], subgroup, subnode, upgroup, group, node;
-          for (var j = -1, m = this.length; ++j < m; ) {
-            upgroup = (group = this[j]).update;
-            subgroups.push(subgroup = []);
-            subgroup.parentNode = group.parentNode;
-            for (var i = -1, n = group.length; ++i < n; ) {
-              if (node = group[i]) {
-                subgroup.push(upgroup[i] = subnode = selector.call(group.parentNode, node.__data__, i, j));
-                subnode.__data__ = node.__data__;
-              } else {
-                subgroup.push(null);
-              }
-            }
-          }
-          return d3_selection(subgroups);
-        };
-        d3_selection_enterPrototype.insert = function(name8, before) {
-          if (arguments.length < 2) before = d3_selection_enterInsertBefore(this);
-          return d3_selectionPrototype.insert.call(this, name8, before);
-        };
-        function d3_selection_enterInsertBefore(enter) {
-          var i0, j0;
-          return function(d, i, j) {
-            var group = enter[j].update, n = group.length, node;
-            if (j != j0) j0 = j, i0 = 0;
-            if (i >= i0) i0 = i + 1;
-            while (!(node = group[i0]) && ++i0 < n) ;
-            return node;
-          };
-        }
-        d356.select = function(node) {
-          var group;
-          if (typeof node === "string") {
-            group = [d3_select(node, d3_document)];
-            group.parentNode = d3_document.documentElement;
-          } else {
-            group = [node];
-            group.parentNode = d3_documentElement(node);
-          }
-          return d3_selection([group]);
-        };
-        d356.selectAll = function(nodes) {
-          var group;
-          if (typeof nodes === "string") {
-            group = d3_array(d3_selectAll(nodes, d3_document));
-            group.parentNode = d3_document.documentElement;
-          } else {
-            group = d3_array(nodes);
-            group.parentNode = null;
-          }
-          return d3_selection([group]);
-        };
-        d3_selectionPrototype.on = function(type, listener, capture) {
-          var n = arguments.length;
-          if (n < 3) {
-            if (typeof type !== "string") {
-              if (n < 2) listener = false;
-              for (capture in type) this.each(d3_selection_on(capture, type[capture], listener));
-              return this;
-            }
-            if (n < 2) return (n = this.node()["__on" + type]) && n._;
-            capture = false;
-          }
-          return this.each(d3_selection_on(type, listener, capture));
-        };
-        function d3_selection_on(type, listener, capture) {
-          var name8 = "__on" + type, i = type.indexOf("."), wrap = d3_selection_onListener;
-          if (i > 0) type = type.slice(0, i);
-          var filter2 = d3_selection_onFilters.get(type);
-          if (filter2) type = filter2, wrap = d3_selection_onFilter;
-          function onRemove() {
-            var l = this[name8];
-            if (l) {
-              this.removeEventListener(type, l, l.$);
-              delete this[name8];
-            }
-          }
-          function onAdd() {
-            var l = wrap(listener, d3_array(arguments));
-            onRemove.call(this);
-            this.addEventListener(type, this[name8] = l, l.$ = capture);
-            l._ = listener;
-          }
-          function removeAll() {
-            var re2 = new RegExp("^__on([^.]+)" + d356.requote(type) + "$"), match;
-            for (var name9 in this) {
-              if (match = name9.match(re2)) {
-                var l = this[name9];
-                this.removeEventListener(match[1], l, l.$);
-                delete this[name9];
-              }
-            }
-          }
-          return i ? listener ? onAdd : onRemove : listener ? d3_noop : removeAll;
-        }
-        var d3_selection_onFilters = d356.map({
-          mouseenter: "mouseover",
-          mouseleave: "mouseout"
-        });
-        if (d3_document) {
-          d3_selection_onFilters.forEach(function(k) {
-            if ("on" + k in d3_document) d3_selection_onFilters.remove(k);
-          });
-        }
-        function d3_selection_onListener(listener, argumentz) {
-          return function(e) {
-            var o = d356.event;
-            d356.event = e;
-            argumentz[0] = this.__data__;
-            try {
-              listener.apply(this, argumentz);
-            } finally {
-              d356.event = o;
-            }
-          };
-        }
-        function d3_selection_onFilter(listener, argumentz) {
-          var l = d3_selection_onListener(listener, argumentz);
-          return function(e) {
-            var target = this, related = e.relatedTarget;
-            if (!related || related !== target && !(related.compareDocumentPosition(target) & 8)) {
-              l.call(target, e);
-            }
-          };
-        }
-        var d3_event_dragSelect, d3_event_dragId = 0;
-        function d3_event_dragSuppress(node) {
-          var name8 = ".dragsuppress-" + ++d3_event_dragId, click2 = "click" + name8, w = d356.select(d3_window(node)).on("touchmove" + name8, d3_eventPreventDefault).on("dragstart" + name8, d3_eventPreventDefault).on("selectstart" + name8, d3_eventPreventDefault);
-          if (d3_event_dragSelect == null) {
-            d3_event_dragSelect = "onselectstart" in node ? false : d3_vendorSymbol(node.style, "userSelect");
-          }
-          if (d3_event_dragSelect) {
-            var style11 = d3_documentElement(node).style, select = style11[d3_event_dragSelect];
-            style11[d3_event_dragSelect] = "none";
-          }
-          return function(suppressClick) {
-            w.on(name8, null);
-            if (d3_event_dragSelect) style11[d3_event_dragSelect] = select;
-            if (suppressClick) {
-              var off = function() {
-                w.on(click2, null);
-              };
-              w.on(click2, function() {
-                d3_eventPreventDefault();
-                off();
-              }, true);
-              setTimeout(off, 0);
-            }
-          };
-        }
-        d356.mouse = function(container) {
-          return d3_mousePoint(container, d3_eventSource());
-        };
-        var d3_mouse_bug44083 = this.navigator && /WebKit/.test(this.navigator.userAgent) ? -1 : 0;
-        function d3_mousePoint(container, e) {
-          if (e.changedTouches) e = e.changedTouches[0];
-          var svg2 = container.ownerSVGElement || container;
-          if (svg2.createSVGPoint) {
-            var point = svg2.createSVGPoint();
-            if (d3_mouse_bug44083 < 0) {
-              var window2 = d3_window(container);
-              if (window2.scrollX || window2.scrollY) {
-                svg2 = d356.select("body").append("svg").style({
-                  position: "absolute",
-                  top: 0,
-                  left: 0,
-                  margin: 0,
-                  padding: 0,
-                  border: "none"
-                }, "important");
-                var ctm = svg2[0][0].getScreenCTM();
-                d3_mouse_bug44083 = !(ctm.f || ctm.e);
-                svg2.remove();
-              }
-            }
-            if (d3_mouse_bug44083) point.x = e.pageX, point.y = e.pageY;
-            else point.x = e.clientX, point.y = e.clientY;
-            point = point.matrixTransform(container.getScreenCTM().inverse());
-            return [point.x, point.y];
-          }
-          var rect = container.getBoundingClientRect();
-          return [e.clientX - rect.left - container.clientLeft, e.clientY - rect.top - container.clientTop];
-        }
-        d356.touch = function(container, touches, identifier) {
-          if (arguments.length < 3) identifier = touches, touches = d3_eventSource().changedTouches;
-          if (touches) for (var i = 0, n = touches.length, touch; i < n; ++i) {
-            if ((touch = touches[i]).identifier === identifier) {
-              return d3_mousePoint(container, touch);
-            }
-          }
-        };
-        d356.behavior.drag = function() {
-          var event = d3_eventDispatch(drag, "drag", "dragstart", "dragend"), origin = null, mousedown = dragstart(d3_noop, d356.mouse, d3_window, "mousemove", "mouseup"), touchstart = dragstart(d3_behavior_dragTouchId, d356.touch, d3_identity, "touchmove", "touchend");
-          function drag() {
-            this.on("mousedown.drag", mousedown).on("touchstart.drag", touchstart);
-          }
-          function dragstart(id, position, subject, move, end) {
-            return function() {
-              var that = this, target = d356.event.target.correspondingElement || d356.event.target, parent = that.parentNode, dispatch = event.of(that, arguments), dragged = 0, dragId = id(), dragName = ".drag" + (dragId == null ? "" : "-" + dragId), dragOffset, dragSubject = d356.select(subject(target)).on(move + dragName, moved).on(end + dragName, ended), dragRestore = d3_event_dragSuppress(target), position0 = position(parent, dragId);
-              if (origin) {
-                dragOffset = origin.apply(that, arguments);
-                dragOffset = [dragOffset.x - position0[0], dragOffset.y - position0[1]];
-              } else {
-                dragOffset = [0, 0];
-              }
-              dispatch({
-                type: "dragstart"
-              });
-              function moved() {
-                var position1 = position(parent, dragId), dx, dy;
-                if (!position1) return;
-                dx = position1[0] - position0[0];
-                dy = position1[1] - position0[1];
-                dragged |= dx | dy;
-                position0 = position1;
-                dispatch({
-                  type: "drag",
-                  x: position1[0] + dragOffset[0],
-                  y: position1[1] + dragOffset[1],
-                  dx,
-                  dy
-                });
-              }
-              function ended() {
-                if (!position(parent, dragId)) return;
-                dragSubject.on(move + dragName, null).on(end + dragName, null);
-                dragRestore(dragged);
-                dispatch({
-                  type: "dragend"
-                });
-              }
-            };
-          }
-          drag.origin = function(x) {
-            if (!arguments.length) return origin;
-            origin = x;
-            return drag;
-          };
-          return d356.rebind(drag, event, "on");
-        };
-        function d3_behavior_dragTouchId() {
-          return d356.event.changedTouches[0].identifier;
-        }
-        d356.touches = function(container, touches) {
-          if (arguments.length < 2) touches = d3_eventSource().touches;
-          return touches ? d3_array(touches).map(function(touch) {
-            var point = d3_mousePoint(container, touch);
-            point.identifier = touch.identifier;
-            return point;
-          }) : [];
-        };
-        var \u03B5 = 1e-6, \u03B52 = \u03B5 * \u03B5, \u03C0 = Math.PI, \u03C4 = 2 * \u03C0, \u03C4\u03B5 = \u03C4 - \u03B5, half\u03C0 = \u03C0 / 2, d3_radians = \u03C0 / 180, d3_degrees = 180 / \u03C0;
-        function d3_sgn(x) {
-          return x > 0 ? 1 : x < 0 ? -1 : 0;
-        }
-        function d3_cross2d(a, b, c) {
-          return (b[0] - a[0]) * (c[1] - a[1]) - (b[1] - a[1]) * (c[0] - a[0]);
-        }
-        function d3_acos(x) {
-          return x > 1 ? 0 : x < -1 ? \u03C0 : Math.acos(x);
-        }
-        function d3_asin(x) {
-          return x > 1 ? half\u03C0 : x < -1 ? -half\u03C0 : Math.asin(x);
-        }
-        function d3_sinh(x) {
-          return ((x = Math.exp(x)) - 1 / x) / 2;
-        }
-        function d3_cosh(x) {
-          return ((x = Math.exp(x)) + 1 / x) / 2;
-        }
-        function d3_tanh(x) {
-          return ((x = Math.exp(2 * x)) - 1) / (x + 1);
-        }
-        function d3_haversin(x) {
-          return (x = Math.sin(x / 2)) * x;
-        }
-        var \u03C1 = Math.SQRT2, \u03C12 = 2, \u03C14 = 4;
-        d356.interpolateZoom = function(p0, p1) {
-          var ux0 = p0[0], uy0 = p0[1], w0 = p0[2], ux1 = p1[0], uy1 = p1[1], w1 = p1[2], dx = ux1 - ux0, dy = uy1 - uy0, d2 = dx * dx + dy * dy, i, S;
-          if (d2 < \u03B52) {
-            S = Math.log(w1 / w0) / \u03C1;
-            i = function(t) {
-              return [ux0 + t * dx, uy0 + t * dy, w0 * Math.exp(\u03C1 * t * S)];
-            };
-          } else {
-            var d1 = Math.sqrt(d2), b0 = (w1 * w1 - w0 * w0 + \u03C14 * d2) / (2 * w0 * \u03C12 * d1), b1 = (w1 * w1 - w0 * w0 - \u03C14 * d2) / (2 * w1 * \u03C12 * d1), r0 = Math.log(Math.sqrt(b0 * b0 + 1) - b0), r1 = Math.log(Math.sqrt(b1 * b1 + 1) - b1);
-            S = (r1 - r0) / \u03C1;
-            i = function(t) {
-              var s = t * S, coshr0 = d3_cosh(r0), u = w0 / (\u03C12 * d1) * (coshr0 * d3_tanh(\u03C1 * s + r0) - d3_sinh(r0));
-              return [ux0 + u * dx, uy0 + u * dy, w0 * coshr0 / d3_cosh(\u03C1 * s + r0)];
-            };
-          }
-          i.duration = S * 1e3;
-          return i;
-        };
-        d356.behavior.zoom = function() {
-          var view = {
-            x: 0,
-            y: 0,
-            k: 1
-          }, translate0, center0, center, size = [960, 500], scaleExtent = d3_behavior_zoomInfinity, duration = 250, zooming = 0, mousedown = "mousedown.zoom", mousemove = "mousemove.zoom", mouseup = "mouseup.zoom", mousewheelTimer, touchstart = "touchstart.zoom", touchtime, event = d3_eventDispatch(zoom, "zoomstart", "zoom", "zoomend"), x0, x1, y0, y1;
-          if (!d3_behavior_zoomWheel) {
-            d3_behavior_zoomWheel = "onwheel" in d3_document ? (d3_behavior_zoomDelta = function() {
-              return -d356.event.deltaY * (d356.event.deltaMode ? 120 : 1);
-            }, "wheel") : "onmousewheel" in d3_document ? (d3_behavior_zoomDelta = function() {
-              return d356.event.wheelDelta;
-            }, "mousewheel") : (d3_behavior_zoomDelta = function() {
-              return -d356.event.detail;
-            }, "MozMousePixelScroll");
-          }
-          function zoom(g) {
-            g.on(mousedown, mousedowned).on(d3_behavior_zoomWheel + ".zoom", mousewheeled).on("dblclick.zoom", dblclicked).on(touchstart, touchstarted);
-          }
-          zoom.event = function(g) {
-            g.each(function() {
-              var dispatch = event.of(this, arguments), view1 = view;
-              if (d3_transitionInheritId) {
-                d356.select(this).transition().each("start.zoom", function() {
-                  view = this.__chart__ || {
-                    x: 0,
-                    y: 0,
-                    k: 1
-                  };
-                  zoomstarted(dispatch);
-                }).tween("zoom:zoom", function() {
-                  var dx = size[0], dy = size[1], cx = center0 ? center0[0] : dx / 2, cy = center0 ? center0[1] : dy / 2, i = d356.interpolateZoom([(cx - view.x) / view.k, (cy - view.y) / view.k, dx / view.k], [(cx - view1.x) / view1.k, (cy - view1.y) / view1.k, dx / view1.k]);
-                  return function(t) {
-                    var l = i(t), k = dx / l[2];
-                    this.__chart__ = view = {
-                      x: cx - l[0] * k,
-                      y: cy - l[1] * k,
-                      k
-                    };
-                    zoomed(dispatch);
-                  };
-                }).each("interrupt.zoom", function() {
-                  zoomended(dispatch);
-                }).each("end.zoom", function() {
-                  zoomended(dispatch);
-                });
-              } else {
-                this.__chart__ = view;
-                zoomstarted(dispatch);
-                zoomed(dispatch);
-                zoomended(dispatch);
-              }
-            });
-          };
-          zoom.translate = function(_5) {
-            if (!arguments.length) return [view.x, view.y];
-            view = {
-              x: +_5[0],
-              y: +_5[1],
-              k: view.k
-            };
-            rescale();
-            return zoom;
-          };
-          zoom.scale = function(_5) {
-            if (!arguments.length) return view.k;
-            view = {
-              x: view.x,
-              y: view.y,
-              k: null
-            };
-            scaleTo(+_5);
-            rescale();
-            return zoom;
-          };
-          zoom.scaleExtent = function(_5) {
-            if (!arguments.length) return scaleExtent;
-            scaleExtent = _5 == null ? d3_behavior_zoomInfinity : [+_5[0], +_5[1]];
-            return zoom;
-          };
-          zoom.center = function(_5) {
-            if (!arguments.length) return center;
-            center = _5 && [+_5[0], +_5[1]];
-            return zoom;
-          };
-          zoom.size = function(_5) {
-            if (!arguments.length) return size;
-            size = _5 && [+_5[0], +_5[1]];
-            return zoom;
-          };
-          zoom.duration = function(_5) {
-            if (!arguments.length) return duration;
-            duration = +_5;
-            return zoom;
-          };
-          zoom.x = function(z) {
-            if (!arguments.length) return x1;
-            x1 = z;
-            x0 = z.copy();
-            view = {
-              x: 0,
-              y: 0,
-              k: 1
-            };
-            return zoom;
-          };
-          zoom.y = function(z) {
-            if (!arguments.length) return y1;
-            y1 = z;
-            y0 = z.copy();
-            view = {
-              x: 0,
-              y: 0,
-              k: 1
-            };
-            return zoom;
-          };
-          function location(p) {
-            return [(p[0] - view.x) / view.k, (p[1] - view.y) / view.k];
-          }
-          function point(l) {
-            return [l[0] * view.k + view.x, l[1] * view.k + view.y];
-          }
-          function scaleTo(s) {
-            view.k = Math.max(scaleExtent[0], Math.min(scaleExtent[1], s));
-          }
-          function translateTo(p, l) {
-            l = point(l);
-            view.x += p[0] - l[0];
-            view.y += p[1] - l[1];
-          }
-          function zoomTo(that, p, l, k) {
-            that.__chart__ = {
-              x: view.x,
-              y: view.y,
-              k: view.k
-            };
-            scaleTo(Math.pow(2, k));
-            translateTo(center0 = p, l);
-            that = d356.select(that);
-            if (duration > 0) that = that.transition().duration(duration);
-            that.call(zoom.event);
-          }
-          function rescale() {
-            if (x1) x1.domain(x0.range().map(function(x) {
-              return (x - view.x) / view.k;
-            }).map(x0.invert));
-            if (y1) y1.domain(y0.range().map(function(y) {
-              return (y - view.y) / view.k;
-            }).map(y0.invert));
-          }
-          function zoomstarted(dispatch) {
-            if (!zooming++) dispatch({
-              type: "zoomstart"
-            });
-          }
-          function zoomed(dispatch) {
-            rescale();
-            dispatch({
-              type: "zoom",
-              scale: view.k,
-              translate: [view.x, view.y]
-            });
-          }
-          function zoomended(dispatch) {
-            if (!--zooming) dispatch({
-              type: "zoomend"
-            }), center0 = null;
-          }
-          function mousedowned() {
-            var that = this, dispatch = event.of(that, arguments), dragged = 0, subject = d356.select(d3_window(that)).on(mousemove, moved).on(mouseup, ended), location0 = location(d356.mouse(that)), dragRestore = d3_event_dragSuppress(that);
-            d3_selection_interrupt.call(that);
-            zoomstarted(dispatch);
-            function moved() {
-              dragged = 1;
-              translateTo(d356.mouse(that), location0);
-              zoomed(dispatch);
-            }
-            function ended() {
-              subject.on(mousemove, null).on(mouseup, null);
-              dragRestore(dragged);
-              zoomended(dispatch);
-            }
-          }
-          function touchstarted() {
-            var that = this, dispatch = event.of(that, arguments), locations0 = {}, distance0 = 0, scale0, zoomName = ".zoom-" + d356.event.changedTouches[0].identifier, touchmove = "touchmove" + zoomName, touchend = "touchend" + zoomName, targets = [], subject = d356.select(that), dragRestore = d3_event_dragSuppress(that);
-            started();
-            zoomstarted(dispatch);
-            subject.on(mousedown, null).on(touchstart, started);
-            function relocate() {
-              var touches = d356.touches(that);
-              scale0 = view.k;
-              touches.forEach(function(t) {
-                if (t.identifier in locations0) locations0[t.identifier] = location(t);
-              });
-              return touches;
-            }
-            function started() {
-              var target = d356.event.target;
-              d356.select(target).on(touchmove, moved).on(touchend, ended);
-              targets.push(target);
-              var changed = d356.event.changedTouches;
-              for (var i = 0, n = changed.length; i < n; ++i) {
-                locations0[changed[i].identifier] = null;
-              }
-              var touches = relocate(), now = Date.now();
-              if (touches.length === 1) {
-                if (now - touchtime < 500) {
-                  var p = touches[0];
-                  zoomTo(that, p, locations0[p.identifier], Math.floor(Math.log(view.k) / Math.LN2) + 1);
-                  d3_eventPreventDefault();
-                }
-                touchtime = now;
-              } else if (touches.length > 1) {
-                var p = touches[0], q = touches[1], dx = p[0] - q[0], dy = p[1] - q[1];
-                distance0 = dx * dx + dy * dy;
-              }
-            }
-            function moved() {
-              var touches = d356.touches(that), p0, l0, p1, l1;
-              d3_selection_interrupt.call(that);
-              for (var i = 0, n = touches.length; i < n; ++i, l1 = null) {
-                p1 = touches[i];
-                if (l1 = locations0[p1.identifier]) {
-                  if (l0) break;
-                  p0 = p1, l0 = l1;
-                }
-              }
-              if (l1) {
-                var distance1 = (distance1 = p1[0] - p0[0]) * distance1 + (distance1 = p1[1] - p0[1]) * distance1, scale1 = distance0 && Math.sqrt(distance1 / distance0);
-                p0 = [(p0[0] + p1[0]) / 2, (p0[1] + p1[1]) / 2];
-                l0 = [(l0[0] + l1[0]) / 2, (l0[1] + l1[1]) / 2];
-                scaleTo(scale1 * scale0);
-              }
-              touchtime = null;
-              translateTo(p0, l0);
-              zoomed(dispatch);
-            }
-            function ended() {
-              if (d356.event.touches.length) {
-                var changed = d356.event.changedTouches;
-                for (var i = 0, n = changed.length; i < n; ++i) {
-                  delete locations0[changed[i].identifier];
-                }
-                for (var identifier in locations0) {
-                  return void relocate();
-                }
-              }
-              d356.selectAll(targets).on(zoomName, null);
-              subject.on(mousedown, mousedowned).on(touchstart, touchstarted);
-              dragRestore();
-              zoomended(dispatch);
-            }
-          }
-          function mousewheeled() {
-            var dispatch = event.of(this, arguments);
-            if (mousewheelTimer) clearTimeout(mousewheelTimer);
-            else d3_selection_interrupt.call(this), translate0 = location(center0 = center || d356.mouse(this)), zoomstarted(dispatch);
-            mousewheelTimer = setTimeout(function() {
-              mousewheelTimer = null;
-              zoomended(dispatch);
-            }, 50);
-            d3_eventPreventDefault();
-            scaleTo(Math.pow(2, d3_behavior_zoomDelta() * 2e-3) * view.k);
-            translateTo(center0, translate0);
-            zoomed(dispatch);
-          }
-          function dblclicked() {
-            var p = d356.mouse(this), k = Math.log(view.k) / Math.LN2;
-            zoomTo(this, p, location(p), d356.event.shiftKey ? Math.ceil(k) - 1 : Math.floor(k) + 1);
-          }
-          return d356.rebind(zoom, event, "on");
-        };
-        var d3_behavior_zoomInfinity = [0, Infinity], d3_behavior_zoomDelta, d3_behavior_zoomWheel;
-        d356.color = d3_color;
-        function d3_color() {
-        }
-        d3_color.prototype.toString = function() {
-          return this.rgb() + "";
-        };
-        d356.hsl = d3_hsl;
-        function d3_hsl(h, s, l) {
-          return this instanceof d3_hsl ? void (this.h = +h, this.s = +s, this.l = +l) : arguments.length < 2 ? h instanceof d3_hsl ? new d3_hsl(h.h, h.s, h.l) : d3_rgb_parse("" + h, d3_rgb_hsl, d3_hsl) : new d3_hsl(h, s, l);
-        }
-        var d3_hslPrototype = d3_hsl.prototype = new d3_color();
-        d3_hslPrototype.brighter = function(k) {
-          k = Math.pow(0.7, arguments.length ? k : 1);
-          return new d3_hsl(this.h, this.s, this.l / k);
-        };
-        d3_hslPrototype.darker = function(k) {
-          k = Math.pow(0.7, arguments.length ? k : 1);
-          return new d3_hsl(this.h, this.s, k * this.l);
-        };
-        d3_hslPrototype.rgb = function() {
-          return d3_hsl_rgb(this.h, this.s, this.l);
-        };
-        function d3_hsl_rgb(h, s, l) {
-          var m1, m2;
-          h = isNaN(h) ? 0 : (h %= 360) < 0 ? h + 360 : h;
-          s = isNaN(s) ? 0 : s < 0 ? 0 : s > 1 ? 1 : s;
-          l = l < 0 ? 0 : l > 1 ? 1 : l;
-          m2 = l <= 0.5 ? l * (1 + s) : l + s - l * s;
-          m1 = 2 * l - m2;
-          function v(h2) {
-            if (h2 > 360) h2 -= 360;
-            else if (h2 < 0) h2 += 360;
-            if (h2 < 60) return m1 + (m2 - m1) * h2 / 60;
-            if (h2 < 180) return m2;
-            if (h2 < 240) return m1 + (m2 - m1) * (240 - h2) / 60;
-            return m1;
-          }
-          function vv(h2) {
-            return Math.round(v(h2) * 255);
-          }
-          return new d3_rgb(vv(h + 120), vv(h), vv(h - 120));
-        }
-        d356.hcl = d3_hcl;
-        function d3_hcl(h, c, l) {
-          return this instanceof d3_hcl ? void (this.h = +h, this.c = +c, this.l = +l) : arguments.length < 2 ? h instanceof d3_hcl ? new d3_hcl(h.h, h.c, h.l) : h instanceof d3_lab ? d3_lab_hcl(h.l, h.a, h.b) : d3_lab_hcl((h = d3_rgb_lab((h = d356.rgb(h)).r, h.g, h.b)).l, h.a, h.b) : new d3_hcl(h, c, l);
-        }
-        var d3_hclPrototype = d3_hcl.prototype = new d3_color();
-        d3_hclPrototype.brighter = function(k) {
-          return new d3_hcl(this.h, this.c, Math.min(100, this.l + d3_lab_K * (arguments.length ? k : 1)));
-        };
-        d3_hclPrototype.darker = function(k) {
-          return new d3_hcl(this.h, this.c, Math.max(0, this.l - d3_lab_K * (arguments.length ? k : 1)));
-        };
-        d3_hclPrototype.rgb = function() {
-          return d3_hcl_lab(this.h, this.c, this.l).rgb();
-        };
-        function d3_hcl_lab(h, c, l) {
-          if (isNaN(h)) h = 0;
-          if (isNaN(c)) c = 0;
-          return new d3_lab(l, Math.cos(h *= d3_radians) * c, Math.sin(h) * c);
-        }
-        d356.lab = d3_lab;
-        function d3_lab(l, a, b) {
-          return this instanceof d3_lab ? void (this.l = +l, this.a = +a, this.b = +b) : arguments.length < 2 ? l instanceof d3_lab ? new d3_lab(l.l, l.a, l.b) : l instanceof d3_hcl ? d3_hcl_lab(l.h, l.c, l.l) : d3_rgb_lab((l = d3_rgb(l)).r, l.g, l.b) : new d3_lab(l, a, b);
-        }
-        var d3_lab_K = 18;
-        var d3_lab_X = 0.95047, d3_lab_Y = 1, d3_lab_Z = 1.08883;
-        var d3_labPrototype = d3_lab.prototype = new d3_color();
-        d3_labPrototype.brighter = function(k) {
-          return new d3_lab(Math.min(100, this.l + d3_lab_K * (arguments.length ? k : 1)), this.a, this.b);
-        };
-        d3_labPrototype.darker = function(k) {
-          return new d3_lab(Math.max(0, this.l - d3_lab_K * (arguments.length ? k : 1)), this.a, this.b);
-        };
-        d3_labPrototype.rgb = function() {
-          return d3_lab_rgb(this.l, this.a, this.b);
-        };
-        function d3_lab_rgb(l, a, b) {
-          var y = (l + 16) / 116, x = y + a / 500, z = y - b / 200;
-          x = d3_lab_xyz(x) * d3_lab_X;
-          y = d3_lab_xyz(y) * d3_lab_Y;
-          z = d3_lab_xyz(z) * d3_lab_Z;
-          return new d3_rgb(d3_xyz_rgb(3.2404542 * x - 1.5371385 * y - 0.4985314 * z), d3_xyz_rgb(-0.969266 * x + 1.8760108 * y + 0.041556 * z), d3_xyz_rgb(0.0556434 * x - 0.2040259 * y + 1.0572252 * z));
-        }
-        function d3_lab_hcl(l, a, b) {
-          return l > 0 ? new d3_hcl(Math.atan2(b, a) * d3_degrees, Math.sqrt(a * a + b * b), l) : new d3_hcl(NaN, NaN, l);
-        }
-        function d3_lab_xyz(x) {
-          return x > 0.206893034 ? x * x * x : (x - 4 / 29) / 7.787037;
-        }
-        function d3_xyz_lab(x) {
-          return x > 8856e-6 ? Math.pow(x, 1 / 3) : 7.787037 * x + 4 / 29;
-        }
-        function d3_xyz_rgb(r) {
-          return Math.round(255 * (r <= 304e-5 ? 12.92 * r : 1.055 * Math.pow(r, 1 / 2.4) - 0.055));
-        }
-        d356.rgb = d3_rgb;
-        function d3_rgb(r, g, b) {
-          return this instanceof d3_rgb ? void (this.r = ~~r, this.g = ~~g, this.b = ~~b) : arguments.length < 2 ? r instanceof d3_rgb ? new d3_rgb(r.r, r.g, r.b) : d3_rgb_parse("" + r, d3_rgb, d3_hsl_rgb) : new d3_rgb(r, g, b);
-        }
-        function d3_rgbNumber(value) {
-          return new d3_rgb(value >> 16, value >> 8 & 255, value & 255);
-        }
-        function d3_rgbString(value) {
-          return d3_rgbNumber(value) + "";
-        }
-        var d3_rgbPrototype = d3_rgb.prototype = new d3_color();
-        d3_rgbPrototype.brighter = function(k) {
-          k = Math.pow(0.7, arguments.length ? k : 1);
-          var r = this.r, g = this.g, b = this.b, i = 30;
-          if (!r && !g && !b) return new d3_rgb(i, i, i);
-          if (r && r < i) r = i;
-          if (g && g < i) g = i;
-          if (b && b < i) b = i;
-          return new d3_rgb(Math.min(255, r / k), Math.min(255, g / k), Math.min(255, b / k));
-        };
-        d3_rgbPrototype.darker = function(k) {
-          k = Math.pow(0.7, arguments.length ? k : 1);
-          return new d3_rgb(k * this.r, k * this.g, k * this.b);
-        };
-        d3_rgbPrototype.hsl = function() {
-          return d3_rgb_hsl(this.r, this.g, this.b);
-        };
-        d3_rgbPrototype.toString = function() {
-          return "#" + d3_rgb_hex(this.r) + d3_rgb_hex(this.g) + d3_rgb_hex(this.b);
-        };
-        function d3_rgb_hex(v) {
-          return v < 16 ? "0" + Math.max(0, v).toString(16) : Math.min(255, v).toString(16);
-        }
-        function d3_rgb_parse(format5, rgb, hsl) {
-          var r = 0, g = 0, b = 0, m1, m2, color2;
-          m1 = /([a-z]+)\((.*)\)/.exec(format5 = format5.toLowerCase());
-          if (m1) {
-            m2 = m1[2].split(",");
-            switch (m1[1]) {
-              case "hsl": {
-                return hsl(parseFloat(m2[0]), parseFloat(m2[1]) / 100, parseFloat(m2[2]) / 100);
-              }
-              case "rgb": {
-                return rgb(d3_rgb_parseNumber(m2[0]), d3_rgb_parseNumber(m2[1]), d3_rgb_parseNumber(m2[2]));
-              }
-            }
-          }
-          if (color2 = d3_rgb_names.get(format5)) {
-            return rgb(color2.r, color2.g, color2.b);
-          }
-          if (format5 != null && format5.charAt(0) === "#" && !isNaN(color2 = parseInt(format5.slice(1), 16))) {
-            if (format5.length === 4) {
-              r = (color2 & 3840) >> 4;
-              r = r >> 4 | r;
-              g = color2 & 240;
-              g = g >> 4 | g;
-              b = color2 & 15;
-              b = b << 4 | b;
-            } else if (format5.length === 7) {
-              r = (color2 & 16711680) >> 16;
-              g = (color2 & 65280) >> 8;
-              b = color2 & 255;
-            }
-          }
-          return rgb(r, g, b);
-        }
-        function d3_rgb_hsl(r, g, b) {
-          var min = Math.min(r /= 255, g /= 255, b /= 255), max = Math.max(r, g, b), d = max - min, h, s, l = (max + min) / 2;
-          if (d) {
-            s = l < 0.5 ? d / (max + min) : d / (2 - max - min);
-            if (r == max) h = (g - b) / d + (g < b ? 6 : 0);
-            else if (g == max) h = (b - r) / d + 2;
-            else h = (r - g) / d + 4;
-            h *= 60;
-          } else {
-            h = NaN;
-            s = l > 0 && l < 1 ? 0 : h;
-          }
-          return new d3_hsl(h, s, l);
-        }
-        function d3_rgb_lab(r, g, b) {
-          r = d3_rgb_xyz(r);
-          g = d3_rgb_xyz(g);
-          b = d3_rgb_xyz(b);
-          var x = d3_xyz_lab((0.4124564 * r + 0.3575761 * g + 0.1804375 * b) / d3_lab_X), y = d3_xyz_lab((0.2126729 * r + 0.7151522 * g + 0.072175 * b) / d3_lab_Y), z = d3_xyz_lab((0.0193339 * r + 0.119192 * g + 0.9503041 * b) / d3_lab_Z);
-          return d3_lab(116 * y - 16, 500 * (x - y), 200 * (y - z));
-        }
-        function d3_rgb_xyz(r) {
-          return (r /= 255) <= 0.04045 ? r / 12.92 : Math.pow((r + 0.055) / 1.055, 2.4);
-        }
-        function d3_rgb_parseNumber(c) {
-          var f = parseFloat(c);
-          return c.charAt(c.length - 1) === "%" ? Math.round(f * 2.55) : f;
-        }
-        var d3_rgb_names = d356.map({
-          aliceblue: 15792383,
-          antiquewhite: 16444375,
-          aqua: 65535,
-          aquamarine: 8388564,
-          azure: 15794175,
-          beige: 16119260,
-          bisque: 16770244,
-          black: 0,
-          blanchedalmond: 16772045,
-          blue: 255,
-          blueviolet: 9055202,
-          brown: 10824234,
-          burlywood: 14596231,
-          cadetblue: 6266528,
-          chartreuse: 8388352,
-          chocolate: 13789470,
-          coral: 16744272,
-          cornflowerblue: 6591981,
-          cornsilk: 16775388,
-          crimson: 14423100,
-          cyan: 65535,
-          darkblue: 139,
-          darkcyan: 35723,
-          darkgoldenrod: 12092939,
-          darkgray: 11119017,
-          darkgreen: 25600,
-          darkgrey: 11119017,
-          darkkhaki: 12433259,
-          darkmagenta: 9109643,
-          darkolivegreen: 5597999,
-          darkorange: 16747520,
-          darkorchid: 10040012,
-          darkred: 9109504,
-          darksalmon: 15308410,
-          darkseagreen: 9419919,
-          darkslateblue: 4734347,
-          darkslategray: 3100495,
-          darkslategrey: 3100495,
-          darkturquoise: 52945,
-          darkviolet: 9699539,
-          deeppink: 16716947,
-          deepskyblue: 49151,
-          dimgray: 6908265,
-          dimgrey: 6908265,
-          dodgerblue: 2003199,
-          firebrick: 11674146,
-          floralwhite: 16775920,
-          forestgreen: 2263842,
-          fuchsia: 16711935,
-          gainsboro: 14474460,
-          ghostwhite: 16316671,
-          gold: 16766720,
-          goldenrod: 14329120,
-          gray: 8421504,
-          green: 32768,
-          greenyellow: 11403055,
-          grey: 8421504,
-          honeydew: 15794160,
-          hotpink: 16738740,
-          indianred: 13458524,
-          indigo: 4915330,
-          ivory: 16777200,
-          khaki: 15787660,
-          lavender: 15132410,
-          lavenderblush: 16773365,
-          lawngreen: 8190976,
-          lemonchiffon: 16775885,
-          lightblue: 11393254,
-          lightcoral: 15761536,
-          lightcyan: 14745599,
-          lightgoldenrodyellow: 16448210,
-          lightgray: 13882323,
-          lightgreen: 9498256,
-          lightgrey: 13882323,
-          lightpink: 16758465,
-          lightsalmon: 16752762,
-          lightseagreen: 2142890,
-          lightskyblue: 8900346,
-          lightslategray: 7833753,
-          lightslategrey: 7833753,
-          lightsteelblue: 11584734,
-          lightyellow: 16777184,
-          lime: 65280,
-          limegreen: 3329330,
-          linen: 16445670,
-          magenta: 16711935,
-          maroon: 8388608,
-          mediumaquamarine: 6737322,
-          mediumblue: 205,
-          mediumorchid: 12211667,
-          mediumpurple: 9662683,
-          mediumseagreen: 3978097,
-          mediumslateblue: 8087790,
-          mediumspringgreen: 64154,
-          mediumturquoise: 4772300,
-          mediumvioletred: 13047173,
-          midnightblue: 1644912,
-          mintcream: 16121850,
-          mistyrose: 16770273,
-          moccasin: 16770229,
-          navajowhite: 16768685,
-          navy: 128,
-          oldlace: 16643558,
-          olive: 8421376,
-          olivedrab: 7048739,
-          orange: 16753920,
-          orangered: 16729344,
-          orchid: 14315734,
-          palegoldenrod: 15657130,
-          palegreen: 10025880,
-          paleturquoise: 11529966,
-          palevioletred: 14381203,
-          papayawhip: 16773077,
-          peachpuff: 16767673,
-          peru: 13468991,
-          pink: 16761035,
-          plum: 14524637,
-          powderblue: 11591910,
-          purple: 8388736,
-          rebeccapurple: 6697881,
-          red: 16711680,
-          rosybrown: 12357519,
-          royalblue: 4286945,
-          saddlebrown: 9127187,
-          salmon: 16416882,
-          sandybrown: 16032864,
-          seagreen: 3050327,
-          seashell: 16774638,
-          sienna: 10506797,
-          silver: 12632256,
-          skyblue: 8900331,
-          slateblue: 6970061,
-          slategray: 7372944,
-          slategrey: 7372944,
-          snow: 16775930,
-          springgreen: 65407,
-          steelblue: 4620980,
-          tan: 13808780,
-          teal: 32896,
-          thistle: 14204888,
-          tomato: 16737095,
-          turquoise: 4251856,
-          violet: 15631086,
-          wheat: 16113331,
-          white: 16777215,
-          whitesmoke: 16119285,
-          yellow: 16776960,
-          yellowgreen: 10145074
-        });
-        d3_rgb_names.forEach(function(key, value) {
-          d3_rgb_names.set(key, d3_rgbNumber(value));
-        });
-        function d3_functor(v) {
-          return typeof v === "function" ? v : function() {
-            return v;
-          };
-        }
-        d356.functor = d3_functor;
-        d356.xhr = d3_xhrType(d3_identity);
-        function d3_xhrType(response) {
-          return function(url, mimeType, callback) {
-            if (arguments.length === 2 && typeof mimeType === "function") callback = mimeType, mimeType = null;
-            return d3_xhr(url, mimeType, response, callback);
-          };
-        }
-        function d3_xhr(url, mimeType, response, callback) {
-          var xhr = {}, dispatch = d356.dispatch("beforesend", "progress", "load", "error"), headers = {}, request = new XMLHttpRequest(), responseType = null;
-          if (self.XDomainRequest && !("withCredentials" in request) && /^(http(s)?:)?\/\//.test(url)) request = new XDomainRequest();
-          "onload" in request ? request.onload = request.onerror = respond : request.onreadystatechange = function() {
-            request.readyState > 3 && respond();
-          };
-          function respond() {
-            var status = request.status, result;
-            if (!status && d3_xhrHasResponse(request) || status >= 200 && status < 300 || status === 304) {
-              try {
-                result = response.call(xhr, request);
-              } catch (e) {
-                dispatch.error.call(xhr, e);
-                return;
-              }
-              dispatch.load.call(xhr, result);
-            } else {
-              dispatch.error.call(xhr, request);
-            }
-          }
-          request.onprogress = function(event) {
-            var o = d356.event;
-            d356.event = event;
-            try {
-              dispatch.progress.call(xhr, request);
-            } finally {
-              d356.event = o;
-            }
-          };
-          xhr.header = function(name8, value) {
-            name8 = (name8 + "").toLowerCase();
-            if (arguments.length < 2) return headers[name8];
-            if (value == null) delete headers[name8];
-            else headers[name8] = value + "";
-            return xhr;
-          };
-          xhr.mimeType = function(value) {
-            if (!arguments.length) return mimeType;
-            mimeType = value == null ? null : value + "";
-            return xhr;
-          };
-          xhr.responseType = function(value) {
-            if (!arguments.length) return responseType;
-            responseType = value;
-            return xhr;
-          };
-          xhr.response = function(value) {
-            response = value;
-            return xhr;
-          };
-          ["get", "post"].forEach(function(method) {
-            xhr[method] = function() {
-              return xhr.send.apply(xhr, [method].concat(d3_array(arguments)));
-            };
-          });
-          xhr.send = function(method, data, callback2) {
-            if (arguments.length === 2 && typeof data === "function") callback2 = data, data = null;
-            request.open(method, url, true);
-            if (mimeType != null && !("accept" in headers)) headers["accept"] = mimeType + ",*/*";
-            if (request.setRequestHeader) for (var name8 in headers) request.setRequestHeader(name8, headers[name8]);
-            if (mimeType != null && request.overrideMimeType) request.overrideMimeType(mimeType);
-            if (responseType != null) request.responseType = responseType;
-            if (callback2 != null) xhr.on("error", callback2).on("load", function(request2) {
-              callback2(null, request2);
-            });
-            dispatch.beforesend.call(xhr, request);
-            request.send(data == null ? null : data);
-            return xhr;
-          };
-          xhr.abort = function() {
-            request.abort();
-            return xhr;
-          };
-          d356.rebind(xhr, dispatch, "on");
-          return callback == null ? xhr : xhr.get(d3_xhr_fixCallback(callback));
-        }
-        function d3_xhr_fixCallback(callback) {
-          return callback.length === 1 ? function(error, request) {
-            callback(error == null ? request : null);
-          } : callback;
-        }
-        function d3_xhrHasResponse(request) {
-          var type = request.responseType;
-          return type && type !== "text" ? request.response : request.responseText;
-        }
-        d356.dsv = function(delimiter, mimeType) {
-          var reFormat = new RegExp('["' + delimiter + "\n]"), delimiterCode = delimiter.charCodeAt(0);
-          function dsv(url, row, callback) {
-            if (arguments.length < 3) callback = row, row = null;
-            var xhr = d3_xhr(url, mimeType, row == null ? response : typedResponse(row), callback);
-            xhr.row = function(_5) {
-              return arguments.length ? xhr.response((row = _5) == null ? response : typedResponse(_5)) : row;
-            };
-            return xhr;
-          }
-          function response(request) {
-            return dsv.parse(request.responseText);
-          }
-          function typedResponse(f) {
-            return function(request) {
-              return dsv.parse(request.responseText, f);
-            };
-          }
-          dsv.parse = function(text, f) {
-            var o;
-            return dsv.parseRows(text, function(row, i) {
-              if (o) return o(row, i - 1);
-              var a = function(d) {
-                var obj = {};
-                var len2 = row.length;
-                for (var k = 0; k < len2; ++k) {
-                  obj[row[k]] = d[k];
-                }
-                return obj;
-              };
-              o = f ? function(row2, i2) {
-                return f(a(row2), i2);
-              } : a;
-            });
-          };
-          dsv.parseRows = function(text, f) {
-            var EOL = {}, EOF = {}, rows = [], N = text.length, I = 0, n = 0, t, eol;
-            function token() {
-              if (I >= N) return EOF;
-              if (eol) return eol = false, EOL;
-              var j = I;
-              if (text.charCodeAt(j) === 34) {
-                var i = j;
-                while (i++ < N) {
-                  if (text.charCodeAt(i) === 34) {
-                    if (text.charCodeAt(i + 1) !== 34) break;
-                    ++i;
-                  }
-                }
-                I = i + 2;
-                var c = text.charCodeAt(i + 1);
-                if (c === 13) {
-                  eol = true;
-                  if (text.charCodeAt(i + 2) === 10) ++I;
-                } else if (c === 10) {
-                  eol = true;
-                }
-                return text.slice(j + 1, i).replace(/""/g, '"');
-              }
-              while (I < N) {
-                var c = text.charCodeAt(I++), k = 1;
-                if (c === 10) eol = true;
-                else if (c === 13) {
-                  eol = true;
-                  if (text.charCodeAt(I) === 10) ++I, ++k;
-                } else if (c !== delimiterCode) continue;
-                return text.slice(j, I - k);
-              }
-              return text.slice(j);
-            }
-            while ((t = token()) !== EOF) {
-              var a = [];
-              while (t !== EOL && t !== EOF) {
-                a.push(t);
-                t = token();
-              }
-              if (f && (a = f(a, n++)) == null) continue;
-              rows.push(a);
-            }
-            return rows;
-          };
-          dsv.format = function(rows) {
-            if (Array.isArray(rows[0])) return dsv.formatRows(rows);
-            var fieldSet = new d3_Set(), fields = [];
-            rows.forEach(function(row) {
-              for (var field in row) {
-                if (!fieldSet.has(field)) {
-                  fields.push(fieldSet.add(field));
-                }
-              }
-            });
-            return [fields.map(formatValue).join(delimiter)].concat(rows.map(function(row) {
-              return fields.map(function(field) {
-                return formatValue(row[field]);
-              }).join(delimiter);
-            })).join("\n");
-          };
-          dsv.formatRows = function(rows) {
-            return rows.map(formatRow).join("\n");
-          };
-          function formatRow(row) {
-            return row.map(formatValue).join(delimiter);
-          }
-          function formatValue(text) {
-            return reFormat.test(text) ? '"' + text.replace(/\"/g, '""') + '"' : text;
-          }
-          return dsv;
-        };
-        d356.csv = d356.dsv(",", "text/csv");
-        d356.tsv = d356.dsv("	", "text/tab-separated-values");
-        var d3_timer_queueHead, d3_timer_queueTail, d3_timer_interval, d3_timer_timeout, d3_timer_frame = this[d3_vendorSymbol(this, "requestAnimationFrame")] || function(callback) {
-          setTimeout(callback, 17);
-        };
-        d356.timer = function() {
-          d3_timer.apply(this, arguments);
-        };
-        function d3_timer(callback, delay, then) {
-          var n = arguments.length;
-          if (n < 2) delay = 0;
-          if (n < 3) then = Date.now();
-          var time = then + delay, timer = {
-            c: callback,
-            t: time,
-            n: null
-          };
-          if (d3_timer_queueTail) d3_timer_queueTail.n = timer;
-          else d3_timer_queueHead = timer;
-          d3_timer_queueTail = timer;
-          if (!d3_timer_interval) {
-            d3_timer_timeout = clearTimeout(d3_timer_timeout);
-            d3_timer_interval = 1;
-            d3_timer_frame(d3_timer_step);
-          }
-          return timer;
-        }
-        function d3_timer_step() {
-          var now = d3_timer_mark(), delay = d3_timer_sweep() - now;
-          if (delay > 24) {
-            if (isFinite(delay)) {
-              clearTimeout(d3_timer_timeout);
-              d3_timer_timeout = setTimeout(d3_timer_step, delay);
-            }
-            d3_timer_interval = 0;
-          } else {
-            d3_timer_interval = 1;
-            d3_timer_frame(d3_timer_step);
-          }
-        }
-        d356.timer.flush = function() {
-          d3_timer_mark();
-          d3_timer_sweep();
-        };
-        function d3_timer_mark() {
-          var now = Date.now(), timer = d3_timer_queueHead;
-          while (timer) {
-            if (now >= timer.t && timer.c(now - timer.t)) timer.c = null;
-            timer = timer.n;
-          }
-          return now;
-        }
-        function d3_timer_sweep() {
-          var t02, t12 = d3_timer_queueHead, time = Infinity;
-          while (t12) {
-            if (t12.c) {
-              if (t12.t < time) time = t12.t;
-              t12 = (t02 = t12).n;
-            } else {
-              t12 = t02 ? t02.n = t12.n : d3_timer_queueHead = t12.n;
-            }
-          }
-          d3_timer_queueTail = t02;
-          return time;
-        }
-        d356.round = function(x, n) {
-          return n ? Math.round(x * (n = Math.pow(10, n))) / n : Math.round(x);
-        };
-        d356.geom = {};
-        function d3_geom_pointX(d) {
-          return d[0];
-        }
-        function d3_geom_pointY(d) {
-          return d[1];
-        }
-        d356.geom.hull = function(vertices) {
-          var x = d3_geom_pointX, y = d3_geom_pointY;
-          if (arguments.length) return hull(vertices);
-          function hull(data) {
-            if (data.length < 3) return [];
-            var fx = d3_functor(x), fy = d3_functor(y), i, n = data.length, points = [], flippedPoints = [];
-            for (i = 0; i < n; i++) {
-              points.push([+fx.call(this, data[i], i), +fy.call(this, data[i], i), i]);
-            }
-            points.sort(d3_geom_hullOrder);
-            for (i = 0; i < n; i++) flippedPoints.push([points[i][0], -points[i][1]]);
-            var upper = d3_geom_hullUpper(points), lower = d3_geom_hullUpper(flippedPoints);
-            var skipLeft = lower[0] === upper[0], skipRight = lower[lower.length - 1] === upper[upper.length - 1], polygon2 = [];
-            for (i = upper.length - 1; i >= 0; --i) polygon2.push(data[points[upper[i]][2]]);
-            for (i = +skipLeft; i < lower.length - skipRight; ++i) polygon2.push(data[points[lower[i]][2]]);
-            return polygon2;
-          }
-          hull.x = function(_5) {
-            return arguments.length ? (x = _5, hull) : x;
-          };
-          hull.y = function(_5) {
-            return arguments.length ? (y = _5, hull) : y;
-          };
-          return hull;
-        };
-        function d3_geom_hullUpper(points) {
-          var n = points.length, hull = [0, 1], hs = 2;
-          for (var i = 2; i < n; i++) {
-            while (hs > 1 && d3_cross2d(points[hull[hs - 2]], points[hull[hs - 1]], points[i]) <= 0) --hs;
-            hull[hs++] = i;
-          }
-          return hull.slice(0, hs);
-        }
-        function d3_geom_hullOrder(a, b) {
-          return a[0] - b[0] || a[1] - b[1];
-        }
-        d356.geom.polygon = function(coordinates) {
-          d3_subclass(coordinates, d3_geom_polygonPrototype);
-          return coordinates;
-        };
-        var d3_geom_polygonPrototype = d356.geom.polygon.prototype = [];
-        d3_geom_polygonPrototype.area = function() {
-          var i = -1, n = this.length, a, b = this[n - 1], area = 0;
-          while (++i < n) {
-            a = b;
-            b = this[i];
-            area += a[1] * b[0] - a[0] * b[1];
-          }
-          return area * 0.5;
-        };
-        d3_geom_polygonPrototype.centroid = function(k) {
-          var i = -1, n = this.length, x = 0, y = 0, a, b = this[n - 1], c;
-          if (!arguments.length) k = -1 / (6 * this.area());
-          while (++i < n) {
-            a = b;
-            b = this[i];
-            c = a[0] * b[1] - b[0] * a[1];
-            x += (a[0] + b[0]) * c;
-            y += (a[1] + b[1]) * c;
-          }
-          return [x * k, y * k];
-        };
-        d3_geom_polygonPrototype.clip = function(subject) {
-          var input, closed = d3_geom_polygonClosed(subject), i = -1, n = this.length - d3_geom_polygonClosed(this), j, m, a = this[n - 1], b, c, d;
-          while (++i < n) {
-            input = subject.slice();
-            subject.length = 0;
-            b = this[i];
-            c = input[(m = input.length - closed) - 1];
-            j = -1;
-            while (++j < m) {
-              d = input[j];
-              if (d3_geom_polygonInside(d, a, b)) {
-                if (!d3_geom_polygonInside(c, a, b)) {
-                  subject.push(d3_geom_polygonIntersect(c, d, a, b));
-                }
-                subject.push(d);
-              } else if (d3_geom_polygonInside(c, a, b)) {
-                subject.push(d3_geom_polygonIntersect(c, d, a, b));
-              }
-              c = d;
-            }
-            if (closed) subject.push(subject[0]);
-            a = b;
-          }
-          return subject;
-        };
-        function d3_geom_polygonInside(p, a, b) {
-          return (b[0] - a[0]) * (p[1] - a[1]) < (b[1] - a[1]) * (p[0] - a[0]);
-        }
-        function d3_geom_polygonIntersect(c, d, a, b) {
-          var x1 = c[0], x3 = a[0], x21 = d[0] - x1, x43 = b[0] - x3, y1 = c[1], y3 = a[1], y21 = d[1] - y1, y43 = b[1] - y3, ua = (x43 * (y1 - y3) - y43 * (x1 - x3)) / (y43 * x21 - x43 * y21);
-          return [x1 + ua * x21, y1 + ua * y21];
-        }
-        function d3_geom_polygonClosed(coordinates) {
-          var a = coordinates[0], b = coordinates[coordinates.length - 1];
-          return !(a[0] - b[0] || a[1] - b[1]);
-        }
-        var d3_geom_voronoiEdges, d3_geom_voronoiCells, d3_geom_voronoiBeaches, d3_geom_voronoiBeachPool = [], d3_geom_voronoiFirstCircle, d3_geom_voronoiCircles, d3_geom_voronoiCirclePool = [];
-        function d3_geom_voronoiBeach() {
-          d3_geom_voronoiRedBlackNode(this);
-          this.edge = this.site = this.circle = null;
-        }
-        function d3_geom_voronoiCreateBeach(site) {
-          var beach = d3_geom_voronoiBeachPool.pop() || new d3_geom_voronoiBeach();
-          beach.site = site;
-          return beach;
-        }
-        function d3_geom_voronoiDetachBeach(beach) {
-          d3_geom_voronoiDetachCircle(beach);
-          d3_geom_voronoiBeaches.remove(beach);
-          d3_geom_voronoiBeachPool.push(beach);
-          d3_geom_voronoiRedBlackNode(beach);
-        }
-        function d3_geom_voronoiRemoveBeach(beach) {
-          var circle = beach.circle, x = circle.x, y = circle.cy, vertex = {
-            x,
-            y
-          }, previous = beach.P, next = beach.N, disappearing = [beach];
-          d3_geom_voronoiDetachBeach(beach);
-          var lArc = previous;
-          while (lArc.circle && abs(x - lArc.circle.x) < \u03B5 && abs(y - lArc.circle.cy) < \u03B5) {
-            previous = lArc.P;
-            disappearing.unshift(lArc);
-            d3_geom_voronoiDetachBeach(lArc);
-            lArc = previous;
-          }
-          disappearing.unshift(lArc);
-          d3_geom_voronoiDetachCircle(lArc);
-          var rArc = next;
-          while (rArc.circle && abs(x - rArc.circle.x) < \u03B5 && abs(y - rArc.circle.cy) < \u03B5) {
-            next = rArc.N;
-            disappearing.push(rArc);
-            d3_geom_voronoiDetachBeach(rArc);
-            rArc = next;
-          }
-          disappearing.push(rArc);
-          d3_geom_voronoiDetachCircle(rArc);
-          var nArcs = disappearing.length, iArc;
-          for (iArc = 1; iArc < nArcs; ++iArc) {
-            rArc = disappearing[iArc];
-            lArc = disappearing[iArc - 1];
-            d3_geom_voronoiSetEdgeEnd(rArc.edge, lArc.site, rArc.site, vertex);
-          }
-          lArc = disappearing[0];
-          rArc = disappearing[nArcs - 1];
-          rArc.edge = d3_geom_voronoiCreateEdge(lArc.site, rArc.site, null, vertex);
-          d3_geom_voronoiAttachCircle(lArc);
-          d3_geom_voronoiAttachCircle(rArc);
-        }
-        function d3_geom_voronoiAddBeach(site) {
-          var x = site.x, directrix = site.y, lArc, rArc, dxl, dxr, node = d3_geom_voronoiBeaches._;
-          while (node) {
-            dxl = d3_geom_voronoiLeftBreakPoint(node, directrix) - x;
-            if (dxl > \u03B5) node = node.L;
-            else {
-              dxr = x - d3_geom_voronoiRightBreakPoint(node, directrix);
-              if (dxr > \u03B5) {
-                if (!node.R) {
-                  lArc = node;
-                  break;
-                }
-                node = node.R;
-              } else {
-                if (dxl > -\u03B5) {
-                  lArc = node.P;
-                  rArc = node;
-                } else if (dxr > -\u03B5) {
-                  lArc = node;
-                  rArc = node.N;
-                } else {
-                  lArc = rArc = node;
-                }
-                break;
-              }
-            }
-          }
-          var newArc = d3_geom_voronoiCreateBeach(site);
-          d3_geom_voronoiBeaches.insert(lArc, newArc);
-          if (!lArc && !rArc) return;
-          if (lArc === rArc) {
-            d3_geom_voronoiDetachCircle(lArc);
-            rArc = d3_geom_voronoiCreateBeach(lArc.site);
-            d3_geom_voronoiBeaches.insert(newArc, rArc);
-            newArc.edge = rArc.edge = d3_geom_voronoiCreateEdge(lArc.site, newArc.site);
-            d3_geom_voronoiAttachCircle(lArc);
-            d3_geom_voronoiAttachCircle(rArc);
-            return;
-          }
-          if (!rArc) {
-            newArc.edge = d3_geom_voronoiCreateEdge(lArc.site, newArc.site);
-            return;
-          }
-          d3_geom_voronoiDetachCircle(lArc);
-          d3_geom_voronoiDetachCircle(rArc);
-          var lSite = lArc.site, ax = lSite.x, ay = lSite.y, bx = site.x - ax, by = site.y - ay, rSite = rArc.site, cx = rSite.x - ax, cy = rSite.y - ay, d = 2 * (bx * cy - by * cx), hb = bx * bx + by * by, hc = cx * cx + cy * cy, vertex = {
-            x: (cy * hb - by * hc) / d + ax,
-            y: (bx * hc - cx * hb) / d + ay
-          };
-          d3_geom_voronoiSetEdgeEnd(rArc.edge, lSite, rSite, vertex);
-          newArc.edge = d3_geom_voronoiCreateEdge(lSite, site, null, vertex);
-          rArc.edge = d3_geom_voronoiCreateEdge(site, rSite, null, vertex);
-          d3_geom_voronoiAttachCircle(lArc);
-          d3_geom_voronoiAttachCircle(rArc);
-        }
-        function d3_geom_voronoiLeftBreakPoint(arc, directrix) {
-          var site = arc.site, rfocx = site.x, rfocy = site.y, pby2 = rfocy - directrix;
-          if (!pby2) return rfocx;
-          var lArc = arc.P;
-          if (!lArc) return -Infinity;
-          site = lArc.site;
-          var lfocx = site.x, lfocy = site.y, plby2 = lfocy - directrix;
-          if (!plby2) return lfocx;
-          var hl = lfocx - rfocx, aby2 = 1 / pby2 - 1 / plby2, b = hl / plby2;
-          if (aby2) return (-b + Math.sqrt(b * b - 2 * aby2 * (hl * hl / (-2 * plby2) - lfocy + plby2 / 2 + rfocy - pby2 / 2))) / aby2 + rfocx;
-          return (rfocx + lfocx) / 2;
-        }
-        function d3_geom_voronoiRightBreakPoint(arc, directrix) {
-          var rArc = arc.N;
-          if (rArc) return d3_geom_voronoiLeftBreakPoint(rArc, directrix);
-          var site = arc.site;
-          return site.y === directrix ? site.x : Infinity;
-        }
-        function d3_geom_voronoiCell(site) {
-          this.site = site;
-          this.edges = [];
-        }
-        d3_geom_voronoiCell.prototype.prepare = function() {
-          var halfEdges = this.edges, iHalfEdge = halfEdges.length, edge;
-          while (iHalfEdge--) {
-            edge = halfEdges[iHalfEdge].edge;
-            if (!edge.b || !edge.a) halfEdges.splice(iHalfEdge, 1);
-          }
-          halfEdges.sort(d3_geom_voronoiHalfEdgeOrder);
-          return halfEdges.length;
-        };
-        function d3_geom_voronoiCloseCells(extent2) {
-          var x0 = extent2[0][0], x1 = extent2[1][0], y0 = extent2[0][1], y1 = extent2[1][1], x2, y2, x3, y3, cells = d3_geom_voronoiCells, iCell = cells.length, cell, iHalfEdge, halfEdges, nHalfEdges, start, end;
-          while (iCell--) {
-            cell = cells[iCell];
-            if (!cell || !cell.prepare()) continue;
-            halfEdges = cell.edges;
-            nHalfEdges = halfEdges.length;
-            iHalfEdge = 0;
-            while (iHalfEdge < nHalfEdges) {
-              end = halfEdges[iHalfEdge].end(), x3 = end.x, y3 = end.y;
-              start = halfEdges[++iHalfEdge % nHalfEdges].start(), x2 = start.x, y2 = start.y;
-              if (abs(x3 - x2) > \u03B5 || abs(y3 - y2) > \u03B5) {
-                halfEdges.splice(iHalfEdge, 0, new d3_geom_voronoiHalfEdge(d3_geom_voronoiCreateBorderEdge(cell.site, end, abs(x3 - x0) < \u03B5 && y1 - y3 > \u03B5 ? {
-                  x: x0,
-                  y: abs(x2 - x0) < \u03B5 ? y2 : y1
-                } : abs(y3 - y1) < \u03B5 && x1 - x3 > \u03B5 ? {
-                  x: abs(y2 - y1) < \u03B5 ? x2 : x1,
-                  y: y1
-                } : abs(x3 - x1) < \u03B5 && y3 - y0 > \u03B5 ? {
-                  x: x1,
-                  y: abs(x2 - x1) < \u03B5 ? y2 : y0
-                } : abs(y3 - y0) < \u03B5 && x3 - x0 > \u03B5 ? {
-                  x: abs(y2 - y0) < \u03B5 ? x2 : x0,
-                  y: y0
-                } : null), cell.site, null));
-                ++nHalfEdges;
-              }
-            }
-          }
-        }
-        function d3_geom_voronoiHalfEdgeOrder(a, b) {
-          return b.angle - a.angle;
-        }
-        function d3_geom_voronoiCircle() {
-          d3_geom_voronoiRedBlackNode(this);
-          this.x = this.y = this.arc = this.site = this.cy = null;
-        }
-        function d3_geom_voronoiAttachCircle(arc) {
-          var lArc = arc.P, rArc = arc.N;
-          if (!lArc || !rArc) return;
-          var lSite = lArc.site, cSite = arc.site, rSite = rArc.site;
-          if (lSite === rSite) return;
-          var bx = cSite.x, by = cSite.y, ax = lSite.x - bx, ay = lSite.y - by, cx = rSite.x - bx, cy = rSite.y - by;
-          var d = 2 * (ax * cy - ay * cx);
-          if (d >= -\u03B52) return;
-          var ha = ax * ax + ay * ay, hc = cx * cx + cy * cy, x = (cy * ha - ay * hc) / d, y = (ax * hc - cx * ha) / d, cy = y + by;
-          var circle = d3_geom_voronoiCirclePool.pop() || new d3_geom_voronoiCircle();
-          circle.arc = arc;
-          circle.site = cSite;
-          circle.x = x + bx;
-          circle.y = cy + Math.sqrt(x * x + y * y);
-          circle.cy = cy;
-          arc.circle = circle;
-          var before = null, node = d3_geom_voronoiCircles._;
-          while (node) {
-            if (circle.y < node.y || circle.y === node.y && circle.x <= node.x) {
-              if (node.L) node = node.L;
-              else {
-                before = node.P;
-                break;
-              }
-            } else {
-              if (node.R) node = node.R;
-              else {
-                before = node;
-                break;
-              }
-            }
-          }
-          d3_geom_voronoiCircles.insert(before, circle);
-          if (!before) d3_geom_voronoiFirstCircle = circle;
-        }
-        function d3_geom_voronoiDetachCircle(arc) {
-          var circle = arc.circle;
-          if (circle) {
-            if (!circle.P) d3_geom_voronoiFirstCircle = circle.N;
-            d3_geom_voronoiCircles.remove(circle);
-            d3_geom_voronoiCirclePool.push(circle);
-            d3_geom_voronoiRedBlackNode(circle);
-            arc.circle = null;
-          }
-        }
-        function d3_geom_clipLine(x0, y0, x1, y1) {
-          return function(line) {
-            var a = line.a, b = line.b, ax = a.x, ay = a.y, bx = b.x, by = b.y, t02 = 0, t12 = 1, dx = bx - ax, dy = by - ay, r;
-            r = x0 - ax;
-            if (!dx && r > 0) return;
-            r /= dx;
-            if (dx < 0) {
-              if (r < t02) return;
-              if (r < t12) t12 = r;
-            } else if (dx > 0) {
-              if (r > t12) return;
-              if (r > t02) t02 = r;
-            }
-            r = x1 - ax;
-            if (!dx && r < 0) return;
-            r /= dx;
-            if (dx < 0) {
-              if (r > t12) return;
-              if (r > t02) t02 = r;
-            } else if (dx > 0) {
-              if (r < t02) return;
-              if (r < t12) t12 = r;
-            }
-            r = y0 - ay;
-            if (!dy && r > 0) return;
-            r /= dy;
-            if (dy < 0) {
-              if (r < t02) return;
-              if (r < t12) t12 = r;
-            } else if (dy > 0) {
-              if (r > t12) return;
-              if (r > t02) t02 = r;
-            }
-            r = y1 - ay;
-            if (!dy && r < 0) return;
-            r /= dy;
-            if (dy < 0) {
-              if (r > t12) return;
-              if (r > t02) t02 = r;
-            } else if (dy > 0) {
-              if (r < t02) return;
-              if (r < t12) t12 = r;
-            }
-            if (t02 > 0) line.a = {
-              x: ax + t02 * dx,
-              y: ay + t02 * dy
-            };
-            if (t12 < 1) line.b = {
-              x: ax + t12 * dx,
-              y: ay + t12 * dy
-            };
-            return line;
-          };
-        }
-        function d3_geom_voronoiClipEdges(extent2) {
-          var edges = d3_geom_voronoiEdges, clip = d3_geom_clipLine(extent2[0][0], extent2[0][1], extent2[1][0], extent2[1][1]), i = edges.length, e;
-          while (i--) {
-            e = edges[i];
-            if (!d3_geom_voronoiConnectEdge(e, extent2) || !clip(e) || abs(e.a.x - e.b.x) < \u03B5 && abs(e.a.y - e.b.y) < \u03B5) {
-              e.a = e.b = null;
-              edges.splice(i, 1);
-            }
-          }
-        }
-        function d3_geom_voronoiConnectEdge(edge, extent2) {
-          var vb = edge.b;
-          if (vb) return true;
-          var va = edge.a, x0 = extent2[0][0], x1 = extent2[1][0], y0 = extent2[0][1], y1 = extent2[1][1], lSite = edge.l, rSite = edge.r, lx = lSite.x, ly = lSite.y, rx = rSite.x, ry = rSite.y, fx = (lx + rx) / 2, fy = (ly + ry) / 2, fm, fb;
-          if (ry === ly) {
-            if (fx < x0 || fx >= x1) return;
-            if (lx > rx) {
-              if (!va) va = {
-                x: fx,
-                y: y0
-              };
-              else if (va.y >= y1) return;
-              vb = {
-                x: fx,
-                y: y1
-              };
-            } else {
-              if (!va) va = {
-                x: fx,
-                y: y1
-              };
-              else if (va.y < y0) return;
-              vb = {
-                x: fx,
-                y: y0
-              };
-            }
-          } else {
-            fm = (lx - rx) / (ry - ly);
-            fb = fy - fm * fx;
-            if (fm < -1 || fm > 1) {
-              if (lx > rx) {
-                if (!va) va = {
-                  x: (y0 - fb) / fm,
-                  y: y0
-                };
-                else if (va.y >= y1) return;
-                vb = {
-                  x: (y1 - fb) / fm,
-                  y: y1
-                };
-              } else {
-                if (!va) va = {
-                  x: (y1 - fb) / fm,
-                  y: y1
-                };
-                else if (va.y < y0) return;
-                vb = {
-                  x: (y0 - fb) / fm,
-                  y: y0
-                };
-              }
-            } else {
-              if (ly < ry) {
-                if (!va) va = {
-                  x: x0,
-                  y: fm * x0 + fb
-                };
-                else if (va.x >= x1) return;
-                vb = {
-                  x: x1,
-                  y: fm * x1 + fb
-                };
-              } else {
-                if (!va) va = {
-                  x: x1,
-                  y: fm * x1 + fb
-                };
-                else if (va.x < x0) return;
-                vb = {
-                  x: x0,
-                  y: fm * x0 + fb
-                };
-              }
-            }
-          }
-          edge.a = va;
-          edge.b = vb;
-          return true;
-        }
-        function d3_geom_voronoiEdge(lSite, rSite) {
-          this.l = lSite;
-          this.r = rSite;
-          this.a = this.b = null;
-        }
-        function d3_geom_voronoiCreateEdge(lSite, rSite, va, vb) {
-          var edge = new d3_geom_voronoiEdge(lSite, rSite);
-          d3_geom_voronoiEdges.push(edge);
-          if (va) d3_geom_voronoiSetEdgeEnd(edge, lSite, rSite, va);
-          if (vb) d3_geom_voronoiSetEdgeEnd(edge, rSite, lSite, vb);
-          d3_geom_voronoiCells[lSite.i].edges.push(new d3_geom_voronoiHalfEdge(edge, lSite, rSite));
-          d3_geom_voronoiCells[rSite.i].edges.push(new d3_geom_voronoiHalfEdge(edge, rSite, lSite));
-          return edge;
-        }
-        function d3_geom_voronoiCreateBorderEdge(lSite, va, vb) {
-          var edge = new d3_geom_voronoiEdge(lSite, null);
-          edge.a = va;
-          edge.b = vb;
-          d3_geom_voronoiEdges.push(edge);
-          return edge;
-        }
-        function d3_geom_voronoiSetEdgeEnd(edge, lSite, rSite, vertex) {
-          if (!edge.a && !edge.b) {
-            edge.a = vertex;
-            edge.l = lSite;
-            edge.r = rSite;
-          } else if (edge.l === rSite) {
-            edge.b = vertex;
-          } else {
-            edge.a = vertex;
-          }
-        }
-        function d3_geom_voronoiHalfEdge(edge, lSite, rSite) {
-          var va = edge.a, vb = edge.b;
-          this.edge = edge;
-          this.site = lSite;
-          this.angle = rSite ? Math.atan2(rSite.y - lSite.y, rSite.x - lSite.x) : edge.l === lSite ? Math.atan2(vb.x - va.x, va.y - vb.y) : Math.atan2(va.x - vb.x, vb.y - va.y);
-        }
-        d3_geom_voronoiHalfEdge.prototype = {
-          start: function() {
-            return this.edge.l === this.site ? this.edge.a : this.edge.b;
-          },
-          end: function() {
-            return this.edge.l === this.site ? this.edge.b : this.edge.a;
-          }
-        };
-        function d3_geom_voronoiRedBlackTree() {
-          this._ = null;
-        }
-        function d3_geom_voronoiRedBlackNode(node) {
-          node.U = node.C = node.L = node.R = node.P = node.N = null;
-        }
-        d3_geom_voronoiRedBlackTree.prototype = {
-          insert: function(after, node) {
-            var parent, grandpa, uncle;
-            if (after) {
-              node.P = after;
-              node.N = after.N;
-              if (after.N) after.N.P = node;
-              after.N = node;
-              if (after.R) {
-                after = after.R;
-                while (after.L) after = after.L;
-                after.L = node;
-              } else {
-                after.R = node;
-              }
-              parent = after;
-            } else if (this._) {
-              after = d3_geom_voronoiRedBlackFirst(this._);
-              node.P = null;
-              node.N = after;
-              after.P = after.L = node;
-              parent = after;
-            } else {
-              node.P = node.N = null;
-              this._ = node;
-              parent = null;
-            }
-            node.L = node.R = null;
-            node.U = parent;
-            node.C = true;
-            after = node;
-            while (parent && parent.C) {
-              grandpa = parent.U;
-              if (parent === grandpa.L) {
-                uncle = grandpa.R;
-                if (uncle && uncle.C) {
-                  parent.C = uncle.C = false;
-                  grandpa.C = true;
-                  after = grandpa;
-                } else {
-                  if (after === parent.R) {
-                    d3_geom_voronoiRedBlackRotateLeft(this, parent);
-                    after = parent;
-                    parent = after.U;
-                  }
-                  parent.C = false;
-                  grandpa.C = true;
-                  d3_geom_voronoiRedBlackRotateRight(this, grandpa);
-                }
-              } else {
-                uncle = grandpa.L;
-                if (uncle && uncle.C) {
-                  parent.C = uncle.C = false;
-                  grandpa.C = true;
-                  after = grandpa;
-                } else {
-                  if (after === parent.L) {
-                    d3_geom_voronoiRedBlackRotateRight(this, parent);
-                    after = parent;
-                    parent = after.U;
-                  }
-                  parent.C = false;
-                  grandpa.C = true;
-                  d3_geom_voronoiRedBlackRotateLeft(this, grandpa);
-                }
-              }
-              parent = after.U;
-            }
-            this._.C = false;
-          },
-          remove: function(node) {
-            if (node.N) node.N.P = node.P;
-            if (node.P) node.P.N = node.N;
-            node.N = node.P = null;
-            var parent = node.U, sibling, left = node.L, right = node.R, next, red;
-            if (!left) next = right;
-            else if (!right) next = left;
-            else next = d3_geom_voronoiRedBlackFirst(right);
-            if (parent) {
-              if (parent.L === node) parent.L = next;
-              else parent.R = next;
-            } else {
-              this._ = next;
-            }
-            if (left && right) {
-              red = next.C;
-              next.C = node.C;
-              next.L = left;
-              left.U = next;
-              if (next !== right) {
-                parent = next.U;
-                next.U = node.U;
-                node = next.R;
-                parent.L = node;
-                next.R = right;
-                right.U = next;
-              } else {
-                next.U = parent;
-                parent = next;
-                node = next.R;
-              }
-            } else {
-              red = node.C;
-              node = next;
-            }
-            if (node) node.U = parent;
-            if (red) return;
-            if (node && node.C) {
-              node.C = false;
-              return;
-            }
-            do {
-              if (node === this._) break;
-              if (node === parent.L) {
-                sibling = parent.R;
-                if (sibling.C) {
-                  sibling.C = false;
-                  parent.C = true;
-                  d3_geom_voronoiRedBlackRotateLeft(this, parent);
-                  sibling = parent.R;
-                }
-                if (sibling.L && sibling.L.C || sibling.R && sibling.R.C) {
-                  if (!sibling.R || !sibling.R.C) {
-                    sibling.L.C = false;
-                    sibling.C = true;
-                    d3_geom_voronoiRedBlackRotateRight(this, sibling);
-                    sibling = parent.R;
-                  }
-                  sibling.C = parent.C;
-                  parent.C = sibling.R.C = false;
-                  d3_geom_voronoiRedBlackRotateLeft(this, parent);
-                  node = this._;
-                  break;
-                }
-              } else {
-                sibling = parent.L;
-                if (sibling.C) {
-                  sibling.C = false;
-                  parent.C = true;
-                  d3_geom_voronoiRedBlackRotateRight(this, parent);
-                  sibling = parent.L;
-                }
-                if (sibling.L && sibling.L.C || sibling.R && sibling.R.C) {
-                  if (!sibling.L || !sibling.L.C) {
-                    sibling.R.C = false;
-                    sibling.C = true;
-                    d3_geom_voronoiRedBlackRotateLeft(this, sibling);
-                    sibling = parent.L;
-                  }
-                  sibling.C = parent.C;
-                  parent.C = sibling.L.C = false;
-                  d3_geom_voronoiRedBlackRotateRight(this, parent);
-                  node = this._;
-                  break;
-                }
-              }
-              sibling.C = true;
-              node = parent;
-              parent = parent.U;
-            } while (!node.C);
-            if (node) node.C = false;
-          }
-        };
-        function d3_geom_voronoiRedBlackRotateLeft(tree, node) {
-          var p = node, q = node.R, parent = p.U;
-          if (parent) {
-            if (parent.L === p) parent.L = q;
-            else parent.R = q;
-          } else {
-            tree._ = q;
-          }
-          q.U = parent;
-          p.U = q;
-          p.R = q.L;
-          if (p.R) p.R.U = p;
-          q.L = p;
-        }
-        function d3_geom_voronoiRedBlackRotateRight(tree, node) {
-          var p = node, q = node.L, parent = p.U;
-          if (parent) {
-            if (parent.L === p) parent.L = q;
-            else parent.R = q;
-          } else {
-            tree._ = q;
-          }
-          q.U = parent;
-          p.U = q;
-          p.L = q.R;
-          if (p.L) p.L.U = p;
-          q.R = p;
-        }
-        function d3_geom_voronoiRedBlackFirst(node) {
-          while (node.L) node = node.L;
-          return node;
-        }
-        function d3_geom_voronoi(sites, bbox) {
-          var site = sites.sort(d3_geom_voronoiVertexOrder).pop(), x0, y0, circle;
-          d3_geom_voronoiEdges = [];
-          d3_geom_voronoiCells = new Array(sites.length);
-          d3_geom_voronoiBeaches = new d3_geom_voronoiRedBlackTree();
-          d3_geom_voronoiCircles = new d3_geom_voronoiRedBlackTree();
-          while (true) {
-            circle = d3_geom_voronoiFirstCircle;
-            if (site && (!circle || site.y < circle.y || site.y === circle.y && site.x < circle.x)) {
-              if (site.x !== x0 || site.y !== y0) {
-                d3_geom_voronoiCells[site.i] = new d3_geom_voronoiCell(site);
-                d3_geom_voronoiAddBeach(site);
-                x0 = site.x, y0 = site.y;
-              }
-              site = sites.pop();
-            } else if (circle) {
-              d3_geom_voronoiRemoveBeach(circle.arc);
-            } else {
-              break;
-            }
-          }
-          if (bbox) d3_geom_voronoiClipEdges(bbox), d3_geom_voronoiCloseCells(bbox);
-          var diagram = {
-            cells: d3_geom_voronoiCells,
-            edges: d3_geom_voronoiEdges
-          };
-          d3_geom_voronoiBeaches = d3_geom_voronoiCircles = d3_geom_voronoiEdges = d3_geom_voronoiCells = null;
-          return diagram;
-        }
-        function d3_geom_voronoiVertexOrder(a, b) {
-          return b.y - a.y || b.x - a.x;
-        }
-        d356.geom.voronoi = function(points) {
-          var x = d3_geom_pointX, y = d3_geom_pointY, fx = x, fy = y, clipExtent = d3_geom_voronoiClipExtent;
-          if (points) return voronoi(points);
-          function voronoi(data) {
-            var polygons = new Array(data.length), x0 = clipExtent[0][0], y0 = clipExtent[0][1], x1 = clipExtent[1][0], y1 = clipExtent[1][1];
-            d3_geom_voronoi(sites(data), clipExtent).cells.forEach(function(cell, i) {
-              var edges = cell.edges, site = cell.site, polygon2 = polygons[i] = edges.length ? edges.map(function(e) {
-                var s = e.start();
-                return [s.x, s.y];
-              }) : site.x >= x0 && site.x <= x1 && site.y >= y0 && site.y <= y1 ? [[x0, y1], [x1, y1], [x1, y0], [x0, y0]] : [];
-              polygon2.point = data[i];
-            });
-            return polygons;
-          }
-          function sites(data) {
-            return data.map(function(d, i) {
-              return {
-                x: Math.round(fx(d, i) / \u03B5) * \u03B5,
-                y: Math.round(fy(d, i) / \u03B5) * \u03B5,
-                i
-              };
-            });
-          }
-          voronoi.links = function(data) {
-            return d3_geom_voronoi(sites(data)).edges.filter(function(edge) {
-              return edge.l && edge.r;
-            }).map(function(edge) {
-              return {
-                source: data[edge.l.i],
-                target: data[edge.r.i]
-              };
-            });
-          };
-          voronoi.triangles = function(data) {
-            var triangles = [];
-            d3_geom_voronoi(sites(data)).cells.forEach(function(cell, i) {
-              var site = cell.site, edges = cell.edges.sort(d3_geom_voronoiHalfEdgeOrder), j = -1, m = edges.length, e0, s0, e1 = edges[m - 1].edge, s1 = e1.l === site ? e1.r : e1.l;
-              while (++j < m) {
-                e0 = e1;
-                s0 = s1;
-                e1 = edges[j].edge;
-                s1 = e1.l === site ? e1.r : e1.l;
-                if (i < s0.i && i < s1.i && d3_geom_voronoiTriangleArea(site, s0, s1) < 0) {
-                  triangles.push([data[i], data[s0.i], data[s1.i]]);
-                }
-              }
-            });
-            return triangles;
-          };
-          voronoi.x = function(_5) {
-            return arguments.length ? (fx = d3_functor(x = _5), voronoi) : x;
-          };
-          voronoi.y = function(_5) {
-            return arguments.length ? (fy = d3_functor(y = _5), voronoi) : y;
-          };
-          voronoi.clipExtent = function(_5) {
-            if (!arguments.length) return clipExtent === d3_geom_voronoiClipExtent ? null : clipExtent;
-            clipExtent = _5 == null ? d3_geom_voronoiClipExtent : _5;
-            return voronoi;
-          };
-          voronoi.size = function(_5) {
-            if (!arguments.length) return clipExtent === d3_geom_voronoiClipExtent ? null : clipExtent && clipExtent[1];
-            return voronoi.clipExtent(_5 && [[0, 0], _5]);
-          };
-          return voronoi;
-        };
-        var d3_geom_voronoiClipExtent = [[-1e6, -1e6], [1e6, 1e6]];
-        function d3_geom_voronoiTriangleArea(a, b, c) {
-          return (a.x - c.x) * (b.y - a.y) - (a.x - b.x) * (c.y - a.y);
-        }
-        d356.geom.delaunay = function(vertices) {
-          return d356.geom.voronoi().triangles(vertices);
-        };
-        d356.geom.quadtree = function(points, x1, y1, x2, y2) {
-          var x = d3_geom_pointX, y = d3_geom_pointY, compat;
-          if (compat = arguments.length) {
-            x = d3_geom_quadtreeCompatX;
-            y = d3_geom_quadtreeCompatY;
-            if (compat === 3) {
-              y2 = y1;
-              x2 = x1;
-              y1 = x1 = 0;
-            }
-            return quadtree(points);
-          }
-          function quadtree(data) {
-            var d, fx = d3_functor(x), fy = d3_functor(y), xs, ys, i, n, x1_, y1_, x2_, y2_;
-            if (x1 != null) {
-              x1_ = x1, y1_ = y1, x2_ = x2, y2_ = y2;
-            } else {
-              x2_ = y2_ = -(x1_ = y1_ = Infinity);
-              xs = [], ys = [];
-              n = data.length;
-              if (compat) for (i = 0; i < n; ++i) {
-                d = data[i];
-                if (d.x < x1_) x1_ = d.x;
-                if (d.y < y1_) y1_ = d.y;
-                if (d.x > x2_) x2_ = d.x;
-                if (d.y > y2_) y2_ = d.y;
-                xs.push(d.x);
-                ys.push(d.y);
-              }
-              else for (i = 0; i < n; ++i) {
-                var x_ = +fx(d = data[i], i), y_ = +fy(d, i);
-                if (x_ < x1_) x1_ = x_;
-                if (y_ < y1_) y1_ = y_;
-                if (x_ > x2_) x2_ = x_;
-                if (y_ > y2_) y2_ = y_;
-                xs.push(x_);
-                ys.push(y_);
-              }
-            }
-            var dx = x2_ - x1_, dy = y2_ - y1_;
-            if (dx > dy) y2_ = y1_ + dx;
-            else x2_ = x1_ + dy;
-            function insert(n2, d2, x3, y3, x12, y12, x22, y22) {
-              if (isNaN(x3) || isNaN(y3)) return;
-              if (n2.leaf) {
-                var nx = n2.x, ny = n2.y;
-                if (nx != null) {
-                  if (abs(nx - x3) + abs(ny - y3) < 0.01) {
-                    insertChild(n2, d2, x3, y3, x12, y12, x22, y22);
-                  } else {
-                    var nPoint = n2.point;
-                    n2.x = n2.y = n2.point = null;
-                    insertChild(n2, nPoint, nx, ny, x12, y12, x22, y22);
-                    insertChild(n2, d2, x3, y3, x12, y12, x22, y22);
-                  }
-                } else {
-                  n2.x = x3, n2.y = y3, n2.point = d2;
-                }
-              } else {
-                insertChild(n2, d2, x3, y3, x12, y12, x22, y22);
-              }
-            }
-            function insertChild(n2, d2, x3, y3, x12, y12, x22, y22) {
-              var xm = (x12 + x22) * 0.5, ym = (y12 + y22) * 0.5, right = x3 >= xm, below = y3 >= ym, i2 = below << 1 | right;
-              n2.leaf = false;
-              n2 = n2.nodes[i2] || (n2.nodes[i2] = d3_geom_quadtreeNode());
-              if (right) x12 = xm;
-              else x22 = xm;
-              if (below) y12 = ym;
-              else y22 = ym;
-              insert(n2, d2, x3, y3, x12, y12, x22, y22);
-            }
-            var root = d3_geom_quadtreeNode();
-            root.add = function(d2) {
-              insert(root, d2, +fx(d2, ++i), +fy(d2, i), x1_, y1_, x2_, y2_);
-            };
-            root.visit = function(f) {
-              d3_geom_quadtreeVisit(f, root, x1_, y1_, x2_, y2_);
-            };
-            root.find = function(point) {
-              return d3_geom_quadtreeFind(root, point[0], point[1], x1_, y1_, x2_, y2_);
-            };
-            i = -1;
-            if (x1 == null) {
-              while (++i < n) {
-                insert(root, data[i], xs[i], ys[i], x1_, y1_, x2_, y2_);
-              }
-              --i;
-            } else data.forEach(root.add);
-            xs = ys = data = d = null;
-            return root;
-          }
-          quadtree.x = function(_5) {
-            return arguments.length ? (x = _5, quadtree) : x;
-          };
-          quadtree.y = function(_5) {
-            return arguments.length ? (y = _5, quadtree) : y;
-          };
-          quadtree.extent = function(_5) {
-            if (!arguments.length) return x1 == null ? null : [[x1, y1], [x2, y2]];
-            if (_5 == null) x1 = y1 = x2 = y2 = null;
-            else x1 = +_5[0][0], y1 = +_5[0][1], x2 = +_5[1][0], y2 = +_5[1][1];
-            return quadtree;
-          };
-          quadtree.size = function(_5) {
-            if (!arguments.length) return x1 == null ? null : [x2 - x1, y2 - y1];
-            if (_5 == null) x1 = y1 = x2 = y2 = null;
-            else x1 = y1 = 0, x2 = +_5[0], y2 = +_5[1];
-            return quadtree;
-          };
-          return quadtree;
-        };
-        function d3_geom_quadtreeCompatX(d) {
-          return d.x;
-        }
-        function d3_geom_quadtreeCompatY(d) {
-          return d.y;
-        }
-        function d3_geom_quadtreeNode() {
-          return {
-            leaf: true,
-            nodes: [],
-            point: null,
-            x: null,
-            y: null
-          };
-        }
-        function d3_geom_quadtreeVisit(f, node, x1, y1, x2, y2) {
-          if (!f(node, x1, y1, x2, y2)) {
-            var sx = (x1 + x2) * 0.5, sy = (y1 + y2) * 0.5, children = node.nodes;
-            if (children[0]) d3_geom_quadtreeVisit(f, children[0], x1, y1, sx, sy);
-            if (children[1]) d3_geom_quadtreeVisit(f, children[1], sx, y1, x2, sy);
-            if (children[2]) d3_geom_quadtreeVisit(f, children[2], x1, sy, sx, y2);
-            if (children[3]) d3_geom_quadtreeVisit(f, children[3], sx, sy, x2, y2);
-          }
-        }
-        function d3_geom_quadtreeFind(root, x, y, x0, y0, x3, y3) {
-          var minDistance2 = Infinity, closestPoint;
-          (function find(node, x1, y1, x2, y2) {
-            if (x1 > x3 || y1 > y3 || x2 < x0 || y2 < y0) return;
-            if (point = node.point) {
-              var point, dx = x - node.x, dy = y - node.y, distance2 = dx * dx + dy * dy;
-              if (distance2 < minDistance2) {
-                var distance = Math.sqrt(minDistance2 = distance2);
-                x0 = x - distance, y0 = y - distance;
-                x3 = x + distance, y3 = y + distance;
-                closestPoint = point;
-              }
-            }
-            var children = node.nodes, xm = (x1 + x2) * 0.5, ym = (y1 + y2) * 0.5, right = x >= xm, below = y >= ym;
-            for (var i = below << 1 | right, j = i + 4; i < j; ++i) {
-              if (node = children[i & 3]) switch (i & 3) {
-                case 0:
-                  find(node, x1, y1, xm, ym);
-                  break;
-                case 1:
-                  find(node, xm, y1, x2, ym);
-                  break;
-                case 2:
-                  find(node, x1, ym, xm, y2);
-                  break;
-                case 3:
-                  find(node, xm, ym, x2, y2);
-                  break;
-              }
-            }
-          })(root, x0, y0, x3, y3);
-          return closestPoint;
-        }
-        d356.interpolateRgb = d3_interpolateRgb;
-        function d3_interpolateRgb(a, b) {
-          a = d356.rgb(a);
-          b = d356.rgb(b);
-          var ar = a.r, ag = a.g, ab2 = a.b, br = b.r - ar, bg = b.g - ag, bb = b.b - ab2;
-          return function(t) {
-            return "#" + d3_rgb_hex(Math.round(ar + br * t)) + d3_rgb_hex(Math.round(ag + bg * t)) + d3_rgb_hex(Math.round(ab2 + bb * t));
-          };
-        }
-        d356.interpolateObject = d3_interpolateObject;
-        function d3_interpolateObject(a, b) {
-          var i = {}, c = {}, k;
-          for (k in a) {
-            if (k in b) {
-              i[k] = d3_interpolate(a[k], b[k]);
-            } else {
-              c[k] = a[k];
-            }
-          }
-          for (k in b) {
-            if (!(k in a)) {
-              c[k] = b[k];
-            }
-          }
-          return function(t) {
-            for (k in i) c[k] = i[k](t);
-            return c;
-          };
-        }
-        d356.interpolateNumber = d3_interpolateNumber;
-        function d3_interpolateNumber(a, b) {
-          a = +a, b = +b;
-          return function(t) {
-            return a * (1 - t) + b * t;
-          };
-        }
-        d356.interpolateString = d3_interpolateString;
-        function d3_interpolateString(a, b) {
-          var bi = d3_interpolate_numberA.lastIndex = d3_interpolate_numberB.lastIndex = 0, am, bm, bs, i = -1, s = [], q = [];
-          a = a + "", b = b + "";
-          while ((am = d3_interpolate_numberA.exec(a)) && (bm = d3_interpolate_numberB.exec(b))) {
-            if ((bs = bm.index) > bi) {
-              bs = b.slice(bi, bs);
-              if (s[i]) s[i] += bs;
-              else s[++i] = bs;
-            }
-            if ((am = am[0]) === (bm = bm[0])) {
-              if (s[i]) s[i] += bm;
-              else s[++i] = bm;
-            } else {
-              s[++i] = null;
-              q.push({
-                i,
-                x: d3_interpolateNumber(am, bm)
-              });
-            }
-            bi = d3_interpolate_numberB.lastIndex;
-          }
-          if (bi < b.length) {
-            bs = b.slice(bi);
-            if (s[i]) s[i] += bs;
-            else s[++i] = bs;
-          }
-          return s.length < 2 ? q[0] ? (b = q[0].x, function(t) {
-            return b(t) + "";
-          }) : function() {
-            return b;
-          } : (b = q.length, function(t) {
-            for (var i2 = 0, o; i2 < b; ++i2) s[(o = q[i2]).i] = o.x(t);
-            return s.join("");
-          });
-        }
-        var d3_interpolate_numberA = /[-+]?(?:\d+\.?\d*|\.?\d+)(?:[eE][-+]?\d+)?/g, d3_interpolate_numberB = new RegExp(d3_interpolate_numberA.source, "g");
-        d356.interpolate = d3_interpolate;
-        function d3_interpolate(a, b) {
-          var i = d356.interpolators.length, f;
-          while (--i >= 0 && !(f = d356.interpolators[i](a, b))) ;
-          return f;
-        }
-        d356.interpolators = [function(a, b) {
-          var t = typeof b;
-          return (t === "string" ? d3_rgb_names.has(b.toLowerCase()) || /^(#|rgb\(|hsl\()/i.test(b) ? d3_interpolateRgb : d3_interpolateString : b instanceof d3_color ? d3_interpolateRgb : Array.isArray(b) ? d3_interpolateArray : t === "object" && isNaN(b) ? d3_interpolateObject : d3_interpolateNumber)(a, b);
-        }];
-        d356.interpolateArray = d3_interpolateArray;
-        function d3_interpolateArray(a, b) {
-          var x = [], c = [], na = a.length, nb = b.length, n0 = Math.min(a.length, b.length), i;
-          for (i = 0; i < n0; ++i) x.push(d3_interpolate(a[i], b[i]));
-          for (; i < na; ++i) c[i] = a[i];
-          for (; i < nb; ++i) c[i] = b[i];
-          return function(t) {
-            for (i = 0; i < n0; ++i) c[i] = x[i](t);
-            return c;
-          };
-        }
-        var d3_ease_default = function() {
-          return d3_identity;
-        };
-        var d3_ease = d356.map({
-          linear: d3_ease_default,
-          poly: d3_ease_poly,
-          quad: function() {
-            return d3_ease_quad;
-          },
-          cubic: function() {
-            return d3_ease_cubic;
-          },
-          sin: function() {
-            return d3_ease_sin;
-          },
-          exp: function() {
-            return d3_ease_exp;
-          },
-          circle: function() {
-            return d3_ease_circle;
-          },
-          elastic: d3_ease_elastic,
-          back: d3_ease_back,
-          bounce: function() {
-            return d3_ease_bounce;
-          }
-        });
-        var d3_ease_mode = d356.map({
-          "in": d3_identity,
-          out: d3_ease_reverse,
-          "in-out": d3_ease_reflect,
-          "out-in": function(f) {
-            return d3_ease_reflect(d3_ease_reverse(f));
-          }
-        });
-        d356.ease = function(name8) {
-          var i = name8.indexOf("-"), t = i >= 0 ? name8.slice(0, i) : name8, m = i >= 0 ? name8.slice(i + 1) : "in";
-          t = d3_ease.get(t) || d3_ease_default;
-          m = d3_ease_mode.get(m) || d3_identity;
-          return d3_ease_clamp(m(t.apply(null, d3_arraySlice.call(arguments, 1))));
-        };
-        function d3_ease_clamp(f) {
-          return function(t) {
-            return t <= 0 ? 0 : t >= 1 ? 1 : f(t);
-          };
-        }
-        function d3_ease_reverse(f) {
-          return function(t) {
-            return 1 - f(1 - t);
-          };
-        }
-        function d3_ease_reflect(f) {
-          return function(t) {
-            return 0.5 * (t < 0.5 ? f(2 * t) : 2 - f(2 - 2 * t));
-          };
-        }
-        function d3_ease_quad(t) {
-          return t * t;
-        }
-        function d3_ease_cubic(t) {
-          return t * t * t;
-        }
-        function d3_ease_cubicInOut(t) {
-          if (t <= 0) return 0;
-          if (t >= 1) return 1;
-          var t2 = t * t, t3 = t2 * t;
-          return 4 * (t < 0.5 ? t3 : 3 * (t - t2) + t3 - 0.75);
-        }
-        function d3_ease_poly(e) {
-          return function(t) {
-            return Math.pow(t, e);
-          };
-        }
-        function d3_ease_sin(t) {
-          return 1 - Math.cos(t * half\u03C0);
-        }
-        function d3_ease_exp(t) {
-          return Math.pow(2, 10 * (t - 1));
-        }
-        function d3_ease_circle(t) {
-          return 1 - Math.sqrt(1 - t * t);
-        }
-        function d3_ease_elastic(a, p) {
-          var s;
-          if (arguments.length < 2) p = 0.45;
-          if (arguments.length) s = p / \u03C4 * Math.asin(1 / a);
-          else a = 1, s = p / 4;
-          return function(t) {
-            return 1 + a * Math.pow(2, -10 * t) * Math.sin((t - s) * \u03C4 / p);
-          };
-        }
-        function d3_ease_back(s) {
-          if (!s) s = 1.70158;
-          return function(t) {
-            return t * t * ((s + 1) * t - s);
-          };
-        }
-        function d3_ease_bounce(t) {
-          return t < 1 / 2.75 ? 7.5625 * t * t : t < 2 / 2.75 ? 7.5625 * (t -= 1.5 / 2.75) * t + 0.75 : t < 2.5 / 2.75 ? 7.5625 * (t -= 2.25 / 2.75) * t + 0.9375 : 7.5625 * (t -= 2.625 / 2.75) * t + 0.984375;
-        }
-        d356.interpolateHcl = d3_interpolateHcl;
-        function d3_interpolateHcl(a, b) {
-          a = d356.hcl(a);
-          b = d356.hcl(b);
-          var ah = a.h, ac = a.c, al = a.l, bh = b.h - ah, bc = b.c - ac, bl = b.l - al;
-          if (isNaN(bc)) bc = 0, ac = isNaN(ac) ? b.c : ac;
-          if (isNaN(bh)) bh = 0, ah = isNaN(ah) ? b.h : ah;
-          else if (bh > 180) bh -= 360;
-          else if (bh < -180) bh += 360;
-          return function(t) {
-            return d3_hcl_lab(ah + bh * t, ac + bc * t, al + bl * t) + "";
-          };
-        }
-        d356.interpolateHsl = d3_interpolateHsl;
-        function d3_interpolateHsl(a, b) {
-          a = d356.hsl(a);
-          b = d356.hsl(b);
-          var ah = a.h, as = a.s, al = a.l, bh = b.h - ah, bs = b.s - as, bl = b.l - al;
-          if (isNaN(bs)) bs = 0, as = isNaN(as) ? b.s : as;
-          if (isNaN(bh)) bh = 0, ah = isNaN(ah) ? b.h : ah;
-          else if (bh > 180) bh -= 360;
-          else if (bh < -180) bh += 360;
-          return function(t) {
-            return d3_hsl_rgb(ah + bh * t, as + bs * t, al + bl * t) + "";
-          };
-        }
-        d356.interpolateLab = d3_interpolateLab;
-        function d3_interpolateLab(a, b) {
-          a = d356.lab(a);
-          b = d356.lab(b);
-          var al = a.l, aa = a.a, ab2 = a.b, bl = b.l - al, ba = b.a - aa, bb = b.b - ab2;
-          return function(t) {
-            return d3_lab_rgb(al + bl * t, aa + ba * t, ab2 + bb * t) + "";
-          };
-        }
-        d356.interpolateRound = d3_interpolateRound;
-        function d3_interpolateRound(a, b) {
-          b -= a;
-          return function(t) {
-            return Math.round(a + b * t);
-          };
-        }
-        d356.transform = function(string) {
-          var g = d3_document.createElementNS(d356.ns.prefix.svg, "g");
-          return (d356.transform = function(string2) {
-            if (string2 != null) {
-              g.setAttribute("transform", string2);
-              var t = g.transform.baseVal.consolidate();
-            }
-            return new d3_transform(t ? t.matrix : d3_transformIdentity);
-          })(string);
-        };
-        function d3_transform(m) {
-          var r0 = [m.a, m.b], r1 = [m.c, m.d], kx = d3_transformNormalize(r0), kz = d3_transformDot(r0, r1), ky = d3_transformNormalize(d3_transformCombine(r1, r0, -kz)) || 0;
-          if (r0[0] * r1[1] < r1[0] * r0[1]) {
-            r0[0] *= -1;
-            r0[1] *= -1;
-            kx *= -1;
-            kz *= -1;
-          }
-          this.rotate = (kx ? Math.atan2(r0[1], r0[0]) : Math.atan2(-r1[0], r1[1])) * d3_degrees;
-          this.translate = [m.e, m.f];
-          this.scale = [kx, ky];
-          this.skew = ky ? Math.atan2(kz, ky) * d3_degrees : 0;
-        }
-        d3_transform.prototype.toString = function() {
-          return "translate(" + this.translate + ")rotate(" + this.rotate + ")skewX(" + this.skew + ")scale(" + this.scale + ")";
-        };
-        function d3_transformDot(a, b) {
-          return a[0] * b[0] + a[1] * b[1];
-        }
-        function d3_transformNormalize(a) {
-          var k = Math.sqrt(d3_transformDot(a, a));
-          if (k) {
-            a[0] /= k;
-            a[1] /= k;
-          }
-          return k;
-        }
-        function d3_transformCombine(a, b, k) {
-          a[0] += k * b[0];
-          a[1] += k * b[1];
-          return a;
-        }
-        var d3_transformIdentity = {
-          a: 1,
-          b: 0,
-          c: 0,
-          d: 1,
-          e: 0,
-          f: 0
-        };
-        d356.interpolateTransform = d3_interpolateTransform;
-        function d3_interpolateTransformPop(s) {
-          return s.length ? s.pop() + "," : "";
-        }
-        function d3_interpolateTranslate(ta, tb, s, q) {
-          if (ta[0] !== tb[0] || ta[1] !== tb[1]) {
-            var i = s.push("translate(", null, ",", null, ")");
-            q.push({
-              i: i - 4,
-              x: d3_interpolateNumber(ta[0], tb[0])
-            }, {
-              i: i - 2,
-              x: d3_interpolateNumber(ta[1], tb[1])
-            });
-          } else if (tb[0] || tb[1]) {
-            s.push("translate(" + tb + ")");
-          }
-        }
-        function d3_interpolateRotate(ra, rb, s, q) {
-          if (ra !== rb) {
-            if (ra - rb > 180) rb += 360;
-            else if (rb - ra > 180) ra += 360;
-            q.push({
-              i: s.push(d3_interpolateTransformPop(s) + "rotate(", null, ")") - 2,
-              x: d3_interpolateNumber(ra, rb)
-            });
-          } else if (rb) {
-            s.push(d3_interpolateTransformPop(s) + "rotate(" + rb + ")");
-          }
-        }
-        function d3_interpolateSkew(wa, wb, s, q) {
-          if (wa !== wb) {
-            q.push({
-              i: s.push(d3_interpolateTransformPop(s) + "skewX(", null, ")") - 2,
-              x: d3_interpolateNumber(wa, wb)
-            });
-          } else if (wb) {
-            s.push(d3_interpolateTransformPop(s) + "skewX(" + wb + ")");
-          }
-        }
-        function d3_interpolateScale(ka, kb, s, q) {
-          if (ka[0] !== kb[0] || ka[1] !== kb[1]) {
-            var i = s.push(d3_interpolateTransformPop(s) + "scale(", null, ",", null, ")");
-            q.push({
-              i: i - 4,
-              x: d3_interpolateNumber(ka[0], kb[0])
-            }, {
-              i: i - 2,
-              x: d3_interpolateNumber(ka[1], kb[1])
-            });
-          } else if (kb[0] !== 1 || kb[1] !== 1) {
-            s.push(d3_interpolateTransformPop(s) + "scale(" + kb + ")");
-          }
-        }
-        function d3_interpolateTransform(a, b) {
-          var s = [], q = [];
-          a = d356.transform(a), b = d356.transform(b);
-          d3_interpolateTranslate(a.translate, b.translate, s, q);
-          d3_interpolateRotate(a.rotate, b.rotate, s, q);
-          d3_interpolateSkew(a.skew, b.skew, s, q);
-          d3_interpolateScale(a.scale, b.scale, s, q);
-          a = b = null;
-          return function(t) {
-            var i = -1, n = q.length, o;
-            while (++i < n) s[(o = q[i]).i] = o.x(t);
-            return s.join("");
-          };
-        }
-        function d3_uninterpolateNumber(a, b) {
-          b = (b -= a = +a) || 1 / b;
-          return function(x) {
-            return (x - a) / b;
-          };
-        }
-        function d3_uninterpolateClamp(a, b) {
-          b = (b -= a = +a) || 1 / b;
-          return function(x) {
-            return Math.max(0, Math.min(1, (x - a) / b));
-          };
-        }
-        d356.layout = {};
-        d356.layout.bundle = function() {
-          return function(links) {
-            var paths = [], i = -1, n = links.length;
-            while (++i < n) paths.push(d3_layout_bundlePath(links[i]));
-            return paths;
-          };
-        };
-        function d3_layout_bundlePath(link) {
-          var start = link.source, end = link.target, lca = d3_layout_bundleLeastCommonAncestor(start, end), points = [start];
-          while (start !== lca) {
-            start = start.parent;
-            points.push(start);
-          }
-          var k = points.length;
-          while (end !== lca) {
-            points.splice(k, 0, end);
-            end = end.parent;
-          }
-          return points;
-        }
-        function d3_layout_bundleAncestors(node) {
-          var ancestors = [], parent = node.parent;
-          while (parent != null) {
-            ancestors.push(node);
-            node = parent;
-            parent = parent.parent;
-          }
-          ancestors.push(node);
-          return ancestors;
-        }
-        function d3_layout_bundleLeastCommonAncestor(a, b) {
-          if (a === b) return a;
-          var aNodes = d3_layout_bundleAncestors(a), bNodes = d3_layout_bundleAncestors(b), aNode = aNodes.pop(), bNode = bNodes.pop(), sharedNode = null;
-          while (aNode === bNode) {
-            sharedNode = aNode;
-            aNode = aNodes.pop();
-            bNode = bNodes.pop();
-          }
-          return sharedNode;
-        }
-        d356.layout.chord = function() {
-          var chord = {}, chords, groups, matrix, n, padding = 0, sortGroups, sortSubgroups, sortChords;
-          function relayout3() {
-            var subgroups = {}, groupSums = [], groupIndex = d356.range(n), subgroupIndex = [], k, x, x0, i, j;
-            chords = [];
-            groups = [];
-            k = 0, i = -1;
-            while (++i < n) {
-              x = 0, j = -1;
-              while (++j < n) {
-                x += matrix[i][j];
-              }
-              groupSums.push(x);
-              subgroupIndex.push(d356.range(n));
-              k += x;
-            }
-            if (sortGroups) {
-              groupIndex.sort(function(a, b) {
-                return sortGroups(groupSums[a], groupSums[b]);
-              });
-            }
-            if (sortSubgroups) {
-              subgroupIndex.forEach(function(d, i2) {
-                d.sort(function(a, b) {
-                  return sortSubgroups(matrix[i2][a], matrix[i2][b]);
-                });
-              });
-            }
-            k = (\u03C4 - padding * n) / k;
-            x = 0, i = -1;
-            while (++i < n) {
-              x0 = x, j = -1;
-              while (++j < n) {
-                var di = groupIndex[i], dj = subgroupIndex[di][j], v = matrix[di][dj], a0 = x, a1 = x += v * k;
-                subgroups[di + "-" + dj] = {
-                  index: di,
-                  subindex: dj,
-                  startAngle: a0,
-                  endAngle: a1,
-                  value: v
-                };
-              }
-              groups[di] = {
-                index: di,
-                startAngle: x0,
-                endAngle: x,
-                value: groupSums[di]
-              };
-              x += padding;
-            }
-            i = -1;
-            while (++i < n) {
-              j = i - 1;
-              while (++j < n) {
-                var source = subgroups[i + "-" + j], target = subgroups[j + "-" + i];
-                if (source.value || target.value) {
-                  chords.push(source.value < target.value ? {
-                    source: target,
-                    target: source
-                  } : {
-                    source,
-                    target
-                  });
-                }
-              }
-            }
-            if (sortChords) resort();
-          }
-          function resort() {
-            chords.sort(function(a, b) {
-              return sortChords((a.source.value + a.target.value) / 2, (b.source.value + b.target.value) / 2);
-            });
-          }
-          chord.matrix = function(x) {
-            if (!arguments.length) return matrix;
-            n = (matrix = x) && matrix.length;
-            chords = groups = null;
-            return chord;
-          };
-          chord.padding = function(x) {
-            if (!arguments.length) return padding;
-            padding = x;
-            chords = groups = null;
-            return chord;
-          };
-          chord.sortGroups = function(x) {
-            if (!arguments.length) return sortGroups;
-            sortGroups = x;
-            chords = groups = null;
-            return chord;
-          };
-          chord.sortSubgroups = function(x) {
-            if (!arguments.length) return sortSubgroups;
-            sortSubgroups = x;
-            chords = null;
-            return chord;
-          };
-          chord.sortChords = function(x) {
-            if (!arguments.length) return sortChords;
-            sortChords = x;
-            if (chords) resort();
-            return chord;
-          };
-          chord.chords = function() {
-            if (!chords) relayout3();
-            return chords;
-          };
-          chord.groups = function() {
-            if (!groups) relayout3();
-            return groups;
-          };
-          return chord;
-        };
-        d356.layout.force = function() {
-          var force = {}, event = d356.dispatch("start", "tick", "end"), timer, size = [1, 1], drag, alpha, friction = 0.9, linkDistance = d3_layout_forceLinkDistance, linkStrength = d3_layout_forceLinkStrength, charge = -30, chargeDistance2 = d3_layout_forceChargeDistance2, gravity = 0.1, theta2 = 0.64, nodes = [], links = [], distances, strengths, charges;
-          function repulse(node) {
-            return function(quad, x1, _5, x2) {
-              if (quad.point !== node) {
-                var dx = quad.cx - node.x, dy = quad.cy - node.y, dw = x2 - x1, dn = dx * dx + dy * dy;
-                if (dw * dw / theta2 < dn) {
-                  if (dn < chargeDistance2) {
-                    var k = quad.charge / dn;
-                    node.px -= dx * k;
-                    node.py -= dy * k;
-                  }
-                  return true;
-                }
-                if (quad.point && dn && dn < chargeDistance2) {
-                  var k = quad.pointCharge / dn;
-                  node.px -= dx * k;
-                  node.py -= dy * k;
-                }
-              }
-              return !quad.charge;
-            };
-          }
-          force.tick = function() {
-            if ((alpha *= 0.99) < 5e-3) {
-              timer = null;
-              event.end({
-                type: "end",
-                alpha: alpha = 0
-              });
-              return true;
-            }
-            var n = nodes.length, m = links.length, q, i, o, s, t, l, k, x, y;
-            for (i = 0; i < m; ++i) {
-              o = links[i];
-              s = o.source;
-              t = o.target;
-              x = t.x - s.x;
-              y = t.y - s.y;
-              if (l = x * x + y * y) {
-                l = alpha * strengths[i] * ((l = Math.sqrt(l)) - distances[i]) / l;
-                x *= l;
-                y *= l;
-                t.x -= x * (k = s.weight + t.weight ? s.weight / (s.weight + t.weight) : 0.5);
-                t.y -= y * k;
-                s.x += x * (k = 1 - k);
-                s.y += y * k;
-              }
-            }
-            if (k = alpha * gravity) {
-              x = size[0] / 2;
-              y = size[1] / 2;
-              i = -1;
-              if (k) while (++i < n) {
-                o = nodes[i];
-                o.x += (x - o.x) * k;
-                o.y += (y - o.y) * k;
-              }
-            }
-            if (charge) {
-              d3_layout_forceAccumulate(q = d356.geom.quadtree(nodes), alpha, charges);
-              i = -1;
-              while (++i < n) {
-                if (!(o = nodes[i]).fixed) {
-                  q.visit(repulse(o));
-                }
-              }
-            }
-            i = -1;
-            while (++i < n) {
-              o = nodes[i];
-              if (o.fixed) {
-                o.x = o.px;
-                o.y = o.py;
-              } else {
-                o.x -= (o.px - (o.px = o.x)) * friction;
-                o.y -= (o.py - (o.py = o.y)) * friction;
-              }
-            }
-            event.tick({
-              type: "tick",
-              alpha
-            });
-          };
-          force.nodes = function(x) {
-            if (!arguments.length) return nodes;
-            nodes = x;
-            return force;
-          };
-          force.links = function(x) {
-            if (!arguments.length) return links;
-            links = x;
-            return force;
-          };
-          force.size = function(x) {
-            if (!arguments.length) return size;
-            size = x;
-            return force;
-          };
-          force.linkDistance = function(x) {
-            if (!arguments.length) return linkDistance;
-            linkDistance = typeof x === "function" ? x : +x;
-            return force;
-          };
-          force.distance = force.linkDistance;
-          force.linkStrength = function(x) {
-            if (!arguments.length) return linkStrength;
-            linkStrength = typeof x === "function" ? x : +x;
-            return force;
-          };
-          force.friction = function(x) {
-            if (!arguments.length) return friction;
-            friction = +x;
-            return force;
-          };
-          force.charge = function(x) {
-            if (!arguments.length) return charge;
-            charge = typeof x === "function" ? x : +x;
-            return force;
-          };
-          force.chargeDistance = function(x) {
-            if (!arguments.length) return Math.sqrt(chargeDistance2);
-            chargeDistance2 = x * x;
-            return force;
-          };
-          force.gravity = function(x) {
-            if (!arguments.length) return gravity;
-            gravity = +x;
-            return force;
-          };
-          force.theta = function(x) {
-            if (!arguments.length) return Math.sqrt(theta2);
-            theta2 = x * x;
-            return force;
-          };
-          force.alpha = function(x) {
-            if (!arguments.length) return alpha;
-            x = +x;
-            if (alpha) {
-              if (x > 0) {
-                alpha = x;
-              } else {
-                timer.c = null, timer.t = NaN, timer = null;
-                event.end({
-                  type: "end",
-                  alpha: alpha = 0
-                });
-              }
-            } else if (x > 0) {
-              event.start({
-                type: "start",
-                alpha: alpha = x
-              });
-              timer = d3_timer(force.tick);
-            }
-            return force;
-          };
-          force.start = function() {
-            var i, n = nodes.length, m = links.length, w = size[0], h = size[1], neighbors, o;
-            for (i = 0; i < n; ++i) {
-              (o = nodes[i]).index = i;
-              o.weight = 0;
-            }
-            for (i = 0; i < m; ++i) {
-              o = links[i];
-              if (typeof o.source == "number") o.source = nodes[o.source];
-              if (typeof o.target == "number") o.target = nodes[o.target];
-              ++o.source.weight;
-              ++o.target.weight;
-            }
-            for (i = 0; i < n; ++i) {
-              o = nodes[i];
-              if (isNaN(o.x)) o.x = position("x", w);
-              if (isNaN(o.y)) o.y = position("y", h);
-              if (isNaN(o.px)) o.px = o.x;
-              if (isNaN(o.py)) o.py = o.y;
-            }
-            distances = [];
-            if (typeof linkDistance === "function") for (i = 0; i < m; ++i) distances[i] = +linkDistance.call(this, links[i], i);
-            else for (i = 0; i < m; ++i) distances[i] = linkDistance;
-            strengths = [];
-            if (typeof linkStrength === "function") for (i = 0; i < m; ++i) strengths[i] = +linkStrength.call(this, links[i], i);
-            else for (i = 0; i < m; ++i) strengths[i] = linkStrength;
-            charges = [];
-            if (typeof charge === "function") for (i = 0; i < n; ++i) charges[i] = +charge.call(this, nodes[i], i);
-            else for (i = 0; i < n; ++i) charges[i] = charge;
-            function position(dimension, size2) {
-              if (!neighbors) {
-                neighbors = new Array(n);
-                for (j = 0; j < n; ++j) {
-                  neighbors[j] = [];
-                }
-                for (j = 0; j < m; ++j) {
-                  var o2 = links[j];
-                  neighbors[o2.source.index].push(o2.target);
-                  neighbors[o2.target.index].push(o2.source);
-                }
-              }
-              var candidates = neighbors[i], j = -1, l = candidates.length, x;
-              while (++j < l) if (!isNaN(x = candidates[j][dimension])) return x;
-              return Math.random() * size2;
-            }
-            return force.resume();
-          };
-          force.resume = function() {
-            return force.alpha(0.1);
-          };
-          force.stop = function() {
-            return force.alpha(0);
-          };
-          force.drag = function() {
-            if (!drag) drag = d356.behavior.drag().origin(d3_identity).on("dragstart.force", d3_layout_forceDragstart).on("drag.force", dragmove).on("dragend.force", d3_layout_forceDragend);
-            if (!arguments.length) return drag;
-            this.on("mouseover.force", d3_layout_forceMouseover).on("mouseout.force", d3_layout_forceMouseout).call(drag);
-          };
-          function dragmove(d) {
-            d.px = d356.event.x, d.py = d356.event.y;
-            force.resume();
-          }
-          return d356.rebind(force, event, "on");
-        };
-        function d3_layout_forceDragstart(d) {
-          d.fixed |= 2;
-        }
-        function d3_layout_forceDragend(d) {
-          d.fixed &= ~6;
-        }
-        function d3_layout_forceMouseover(d) {
-          d.fixed |= 4;
-          d.px = d.x, d.py = d.y;
-        }
-        function d3_layout_forceMouseout(d) {
-          d.fixed &= ~4;
-        }
-        function d3_layout_forceAccumulate(quad, alpha, charges) {
-          var cx = 0, cy = 0;
-          quad.charge = 0;
-          if (!quad.leaf) {
-            var nodes = quad.nodes, n = nodes.length, i = -1, c;
-            while (++i < n) {
-              c = nodes[i];
-              if (c == null) continue;
-              d3_layout_forceAccumulate(c, alpha, charges);
-              quad.charge += c.charge;
-              cx += c.charge * c.cx;
-              cy += c.charge * c.cy;
-            }
-          }
-          if (quad.point) {
-            if (!quad.leaf) {
-              quad.point.x += Math.random() - 0.5;
-              quad.point.y += Math.random() - 0.5;
-            }
-            var k = alpha * charges[quad.point.index];
-            quad.charge += quad.pointCharge = k;
-            cx += k * quad.point.x;
-            cy += k * quad.point.y;
-          }
-          quad.cx = cx / quad.charge;
-          quad.cy = cy / quad.charge;
-        }
-        var d3_layout_forceLinkDistance = 20, d3_layout_forceLinkStrength = 1, d3_layout_forceChargeDistance2 = Infinity;
-        d356.layout.hierarchy = function() {
-          var sort2 = d3_layout_hierarchySort, children = d3_layout_hierarchyChildren, value = d3_layout_hierarchyValue;
-          function hierarchy(root) {
-            var stack = [root], nodes = [], node;
-            root.depth = 0;
-            while ((node = stack.pop()) != null) {
-              nodes.push(node);
-              if ((childs = children.call(hierarchy, node, node.depth)) && (n = childs.length)) {
-                var n, childs, child;
-                while (--n >= 0) {
-                  stack.push(child = childs[n]);
-                  child.parent = node;
-                  child.depth = node.depth + 1;
-                }
-                if (value) node.value = 0;
-                node.children = childs;
-              } else {
-                if (value) node.value = +value.call(hierarchy, node, node.depth) || 0;
-                delete node.children;
-              }
-            }
-            d3_layout_hierarchyVisitAfter(root, function(node2) {
-              var childs2, parent;
-              if (sort2 && (childs2 = node2.children)) childs2.sort(sort2);
-              if (value && (parent = node2.parent)) parent.value += node2.value;
-            });
-            return nodes;
-          }
-          hierarchy.sort = function(x) {
-            if (!arguments.length) return sort2;
-            sort2 = x;
-            return hierarchy;
-          };
-          hierarchy.children = function(x) {
-            if (!arguments.length) return children;
-            children = x;
-            return hierarchy;
-          };
-          hierarchy.value = function(x) {
-            if (!arguments.length) return value;
-            value = x;
-            return hierarchy;
-          };
-          hierarchy.revalue = function(root) {
-            if (value) {
-              d3_layout_hierarchyVisitBefore(root, function(node) {
-                if (node.children) node.value = 0;
-              });
-              d3_layout_hierarchyVisitAfter(root, function(node) {
-                var parent;
-                if (!node.children) node.value = +value.call(hierarchy, node, node.depth) || 0;
-                if (parent = node.parent) parent.value += node.value;
-              });
-            }
-            return root;
-          };
-          return hierarchy;
-        };
-        function d3_layout_hierarchyRebind(object, hierarchy) {
-          d356.rebind(object, hierarchy, "sort", "children", "value");
-          object.nodes = object;
-          object.links = d3_layout_hierarchyLinks;
-          return object;
-        }
-        function d3_layout_hierarchyVisitBefore(node, callback) {
-          var nodes = [node];
-          while ((node = nodes.pop()) != null) {
-            callback(node);
-            if ((children = node.children) && (n = children.length)) {
-              var n, children;
-              while (--n >= 0) nodes.push(children[n]);
-            }
-          }
-        }
-        function d3_layout_hierarchyVisitAfter(node, callback) {
-          var nodes = [node], nodes2 = [];
-          while ((node = nodes.pop()) != null) {
-            nodes2.push(node);
-            if ((children = node.children) && (n = children.length)) {
-              var i = -1, n, children;
-              while (++i < n) nodes.push(children[i]);
-            }
-          }
-          while ((node = nodes2.pop()) != null) {
-            callback(node);
-          }
-        }
-        function d3_layout_hierarchyChildren(d) {
-          return d.children;
-        }
-        function d3_layout_hierarchyValue(d) {
-          return d.value;
-        }
-        function d3_layout_hierarchySort(a, b) {
-          return b.value - a.value;
-        }
-        function d3_layout_hierarchyLinks(nodes) {
-          return d356.merge(nodes.map(function(parent) {
-            return (parent.children || []).map(function(child) {
-              return {
-                source: parent,
-                target: child
-              };
-            });
-          }));
-        }
-        d356.layout.partition = function() {
-          var hierarchy = d356.layout.hierarchy(), size = [1, 1];
-          function position(node, x, dx, dy) {
-            var children = node.children;
-            node.x = x;
-            node.y = node.depth * dy;
-            node.dx = dx;
-            node.dy = dy;
-            if (children && (n = children.length)) {
-              var i = -1, n, c, d;
-              dx = node.value ? dx / node.value : 0;
-              while (++i < n) {
-                position(c = children[i], x, d = c.value * dx, dy);
-                x += d;
-              }
-            }
-          }
-          function depth(node) {
-            var children = node.children, d = 0;
-            if (children && (n = children.length)) {
-              var i = -1, n;
-              while (++i < n) d = Math.max(d, depth(children[i]));
-            }
-            return 1 + d;
-          }
-          function partition(d, i) {
-            var nodes = hierarchy.call(this, d, i);
-            position(nodes[0], 0, size[0], size[1] / depth(nodes[0]));
-            return nodes;
-          }
-          partition.size = function(x) {
-            if (!arguments.length) return size;
-            size = x;
-            return partition;
-          };
-          return d3_layout_hierarchyRebind(partition, hierarchy);
-        };
-        d356.layout.pie = function() {
-          var value = Number, sort2 = d3_layout_pieSortByValue, startAngle = 0, endAngle = \u03C4, padAngle = 0;
-          function pie(data) {
-            var n = data.length, values = data.map(function(d, i) {
-              return +value.call(pie, d, i);
-            }), a = +(typeof startAngle === "function" ? startAngle.apply(this, arguments) : startAngle), da = (typeof endAngle === "function" ? endAngle.apply(this, arguments) : endAngle) - a, p = Math.min(Math.abs(da) / n, +(typeof padAngle === "function" ? padAngle.apply(this, arguments) : padAngle)), pa = p * (da < 0 ? -1 : 1), sum = d356.sum(values), k = sum ? (da - n * pa) / sum : 0, index = d356.range(n), arcs = [], v;
-            if (sort2 != null) index.sort(sort2 === d3_layout_pieSortByValue ? function(i, j) {
-              return values[j] - values[i];
-            } : function(i, j) {
-              return sort2(data[i], data[j]);
-            });
-            index.forEach(function(i) {
-              arcs[i] = {
-                data: data[i],
-                value: v = values[i],
-                startAngle: a,
-                endAngle: a += v * k + pa,
-                padAngle: p
-              };
-            });
-            return arcs;
-          }
-          pie.value = function(_5) {
-            if (!arguments.length) return value;
-            value = _5;
-            return pie;
-          };
-          pie.sort = function(_5) {
-            if (!arguments.length) return sort2;
-            sort2 = _5;
-            return pie;
-          };
-          pie.startAngle = function(_5) {
-            if (!arguments.length) return startAngle;
-            startAngle = _5;
-            return pie;
-          };
-          pie.endAngle = function(_5) {
-            if (!arguments.length) return endAngle;
-            endAngle = _5;
-            return pie;
-          };
-          pie.padAngle = function(_5) {
-            if (!arguments.length) return padAngle;
-            padAngle = _5;
-            return pie;
-          };
-          return pie;
-        };
-        var d3_layout_pieSortByValue = {};
-        d356.layout.stack = function() {
-          var values = d3_identity, order = d3_layout_stackOrderDefault, offset = d3_layout_stackOffsetZero, out = d3_layout_stackOut, x = d3_layout_stackX, y = d3_layout_stackY;
-          function stack(data, index) {
-            if (!(n = data.length)) return data;
-            var series = data.map(function(d, i2) {
-              return values.call(stack, d, i2);
-            });
-            var points = series.map(function(d) {
-              return d.map(function(v, i2) {
-                return [x.call(stack, v, i2), y.call(stack, v, i2)];
-              });
-            });
-            var orders = order.call(stack, points, index);
-            series = d356.permute(series, orders);
-            points = d356.permute(points, orders);
-            var offsets = offset.call(stack, points, index);
-            var m = series[0].length, n, i, j, o;
-            for (j = 0; j < m; ++j) {
-              out.call(stack, series[0][j], o = offsets[j], points[0][j][1]);
-              for (i = 1; i < n; ++i) {
-                out.call(stack, series[i][j], o += points[i - 1][j][1], points[i][j][1]);
-              }
-            }
-            return data;
-          }
-          stack.values = function(x2) {
-            if (!arguments.length) return values;
-            values = x2;
-            return stack;
-          };
-          stack.order = function(x2) {
-            if (!arguments.length) return order;
-            order = typeof x2 === "function" ? x2 : d3_layout_stackOrders.get(x2) || d3_layout_stackOrderDefault;
-            return stack;
-          };
-          stack.offset = function(x2) {
-            if (!arguments.length) return offset;
-            offset = typeof x2 === "function" ? x2 : d3_layout_stackOffsets.get(x2) || d3_layout_stackOffsetZero;
-            return stack;
-          };
-          stack.x = function(z) {
-            if (!arguments.length) return x;
-            x = z;
-            return stack;
-          };
-          stack.y = function(z) {
-            if (!arguments.length) return y;
-            y = z;
-            return stack;
-          };
-          stack.out = function(z) {
-            if (!arguments.length) return out;
-            out = z;
-            return stack;
-          };
-          return stack;
-        };
-        function d3_layout_stackX(d) {
-          return d.x;
-        }
-        function d3_layout_stackY(d) {
-          return d.y;
-        }
-        function d3_layout_stackOut(d, y0, y) {
-          d.y0 = y0;
-          d.y = y;
-        }
-        var d3_layout_stackOrders = d356.map({
-          "inside-out": function(data) {
-            var n = data.length, i, j, max = data.map(d3_layout_stackMaxIndex), sums = data.map(d3_layout_stackReduceSum), index = d356.range(n).sort(function(a, b) {
-              return max[a] - max[b];
-            }), top = 0, bottom = 0, tops = [], bottoms = [];
-            for (i = 0; i < n; ++i) {
-              j = index[i];
-              if (top < bottom) {
-                top += sums[j];
-                tops.push(j);
-              } else {
-                bottom += sums[j];
-                bottoms.push(j);
-              }
-            }
-            return bottoms.reverse().concat(tops);
-          },
-          reverse: function(data) {
-            return d356.range(data.length).reverse();
-          },
-          "default": d3_layout_stackOrderDefault
-        });
-        var d3_layout_stackOffsets = d356.map({
-          silhouette: function(data) {
-            var n = data.length, m = data[0].length, sums = [], max = 0, i, j, o, y0 = [];
-            for (j = 0; j < m; ++j) {
-              for (i = 0, o = 0; i < n; i++) o += data[i][j][1];
-              if (o > max) max = o;
-              sums.push(o);
-            }
-            for (j = 0; j < m; ++j) {
-              y0[j] = (max - sums[j]) / 2;
-            }
-            return y0;
-          },
-          wiggle: function(data) {
-            var n = data.length, x = data[0], m = x.length, i, j, k, s1, s2, s3, dx, o, o0, y0 = [];
-            y0[0] = o = o0 = 0;
-            for (j = 1; j < m; ++j) {
-              for (i = 0, s1 = 0; i < n; ++i) s1 += data[i][j][1];
-              for (i = 0, s2 = 0, dx = x[j][0] - x[j - 1][0]; i < n; ++i) {
-                for (k = 0, s3 = (data[i][j][1] - data[i][j - 1][1]) / (2 * dx); k < i; ++k) {
-                  s3 += (data[k][j][1] - data[k][j - 1][1]) / dx;
-                }
-                s2 += s3 * data[i][j][1];
-              }
-              y0[j] = o -= s1 ? s2 / s1 * dx : 0;
-              if (o < o0) o0 = o;
-            }
-            for (j = 0; j < m; ++j) y0[j] -= o0;
-            return y0;
-          },
-          expand: function(data) {
-            var n = data.length, m = data[0].length, k = 1 / n, i, j, o, y0 = [];
-            for (j = 0; j < m; ++j) {
-              for (i = 0, o = 0; i < n; i++) o += data[i][j][1];
-              if (o) for (i = 0; i < n; i++) data[i][j][1] /= o;
-              else for (i = 0; i < n; i++) data[i][j][1] = k;
-            }
-            for (j = 0; j < m; ++j) y0[j] = 0;
-            return y0;
-          },
-          zero: d3_layout_stackOffsetZero
-        });
-        function d3_layout_stackOrderDefault(data) {
-          return d356.range(data.length);
-        }
-        function d3_layout_stackOffsetZero(data) {
-          var j = -1, m = data[0].length, y0 = [];
-          while (++j < m) y0[j] = 0;
-          return y0;
-        }
-        function d3_layout_stackMaxIndex(array) {
-          var i = 1, j = 0, v = array[0][1], k, n = array.length;
-          for (; i < n; ++i) {
-            if ((k = array[i][1]) > v) {
-              j = i;
-              v = k;
-            }
-          }
-          return j;
-        }
-        function d3_layout_stackReduceSum(d) {
-          return d.reduce(d3_layout_stackSum, 0);
-        }
-        function d3_layout_stackSum(p, d) {
-          return p + d[1];
-        }
-        d356.layout.histogram = function() {
-          var frequency = true, valuer = Number, ranger = d3_layout_histogramRange, binner = d3_layout_histogramBinSturges;
-          function histogram(data, i) {
-            var bins = [], values = data.map(valuer, this), range = ranger.call(this, values, i), thresholds = binner.call(this, range, values, i), bin, i = -1, n = values.length, m = thresholds.length - 1, k = frequency ? 1 : 1 / n, x;
-            while (++i < m) {
-              bin = bins[i] = [];
-              bin.dx = thresholds[i + 1] - (bin.x = thresholds[i]);
-              bin.y = 0;
-            }
-            if (m > 0) {
-              i = -1;
-              while (++i < n) {
-                x = values[i];
-                if (x >= range[0] && x <= range[1]) {
-                  bin = bins[d356.bisect(thresholds, x, 1, m) - 1];
-                  bin.y += k;
-                  bin.push(data[i]);
-                }
-              }
-            }
-            return bins;
-          }
-          histogram.value = function(x) {
-            if (!arguments.length) return valuer;
-            valuer = x;
-            return histogram;
-          };
-          histogram.range = function(x) {
-            if (!arguments.length) return ranger;
-            ranger = d3_functor(x);
-            return histogram;
-          };
-          histogram.bins = function(x) {
-            if (!arguments.length) return binner;
-            binner = typeof x === "number" ? function(range) {
-              return d3_layout_histogramBinFixed(range, x);
-            } : d3_functor(x);
-            return histogram;
-          };
-          histogram.frequency = function(x) {
-            if (!arguments.length) return frequency;
-            frequency = !!x;
-            return histogram;
-          };
-          return histogram;
-        };
-        function d3_layout_histogramBinSturges(range, values) {
-          return d3_layout_histogramBinFixed(range, Math.ceil(Math.log(values.length) / Math.LN2 + 1));
-        }
-        function d3_layout_histogramBinFixed(range, n) {
-          var x = -1, b = +range[0], m = (range[1] - b) / n, f = [];
-          while (++x <= n) f[x] = m * x + b;
-          return f;
-        }
-        function d3_layout_histogramRange(values) {
-          return [d356.min(values), d356.max(values)];
-        }
-        d356.layout.pack = function() {
-          var hierarchy = d356.layout.hierarchy().sort(d3_layout_packSort), padding = 0, size = [1, 1], radius;
-          function pack(d, i) {
-            var nodes = hierarchy.call(this, d, i), root = nodes[0], w = size[0], h = size[1], r = radius == null ? Math.sqrt : typeof radius === "function" ? radius : function() {
-              return radius;
-            };
-            root.x = root.y = 0;
-            d3_layout_hierarchyVisitAfter(root, function(d2) {
-              d2.r = +r(d2.value);
-            });
-            d3_layout_hierarchyVisitAfter(root, d3_layout_packSiblings);
-            if (padding) {
-              var dr = padding * (radius ? 1 : Math.max(2 * root.r / w, 2 * root.r / h)) / 2;
-              d3_layout_hierarchyVisitAfter(root, function(d2) {
-                d2.r += dr;
-              });
-              d3_layout_hierarchyVisitAfter(root, d3_layout_packSiblings);
-              d3_layout_hierarchyVisitAfter(root, function(d2) {
-                d2.r -= dr;
-              });
-            }
-            d3_layout_packTransform(root, w / 2, h / 2, radius ? 1 : 1 / Math.max(2 * root.r / w, 2 * root.r / h));
-            return nodes;
-          }
-          pack.size = function(_5) {
-            if (!arguments.length) return size;
-            size = _5;
-            return pack;
-          };
-          pack.radius = function(_5) {
-            if (!arguments.length) return radius;
-            radius = _5 == null || typeof _5 === "function" ? _5 : +_5;
-            return pack;
-          };
-          pack.padding = function(_5) {
-            if (!arguments.length) return padding;
-            padding = +_5;
-            return pack;
-          };
-          return d3_layout_hierarchyRebind(pack, hierarchy);
-        };
-        function d3_layout_packSort(a, b) {
-          return a.value - b.value;
-        }
-        function d3_layout_packInsert(a, b) {
-          var c = a._pack_next;
-          a._pack_next = b;
-          b._pack_prev = a;
-          b._pack_next = c;
-          c._pack_prev = b;
-        }
-        function d3_layout_packSplice(a, b) {
-          a._pack_next = b;
-          b._pack_prev = a;
-        }
-        function d3_layout_packIntersects(a, b) {
-          var dx = b.x - a.x, dy = b.y - a.y, dr = a.r + b.r;
-          return 0.999 * dr * dr > dx * dx + dy * dy;
-        }
-        function d3_layout_packSiblings(node) {
-          if (!(nodes = node.children) || !(n = nodes.length)) return;
-          var nodes, xMin = Infinity, xMax = -Infinity, yMin = Infinity, yMax = -Infinity, a, b, c, i, j, k, n;
-          function bound(node2) {
-            xMin = Math.min(node2.x - node2.r, xMin);
-            xMax = Math.max(node2.x + node2.r, xMax);
-            yMin = Math.min(node2.y - node2.r, yMin);
-            yMax = Math.max(node2.y + node2.r, yMax);
-          }
-          nodes.forEach(d3_layout_packLink);
-          a = nodes[0];
-          a.x = -a.r;
-          a.y = 0;
-          bound(a);
-          if (n > 1) {
-            b = nodes[1];
-            b.x = b.r;
-            b.y = 0;
-            bound(b);
-            if (n > 2) {
-              c = nodes[2];
-              d3_layout_packPlace(a, b, c);
-              bound(c);
-              d3_layout_packInsert(a, c);
-              a._pack_prev = c;
-              d3_layout_packInsert(c, b);
-              b = a._pack_next;
-              for (i = 3; i < n; i++) {
-                d3_layout_packPlace(a, b, c = nodes[i]);
-                var isect = 0, s1 = 1, s2 = 1;
-                for (j = b._pack_next; j !== b; j = j._pack_next, s1++) {
-                  if (d3_layout_packIntersects(j, c)) {
-                    isect = 1;
-                    break;
-                  }
-                }
-                if (isect == 1) {
-                  for (k = a._pack_prev; k !== j._pack_prev; k = k._pack_prev, s2++) {
-                    if (d3_layout_packIntersects(k, c)) {
-                      break;
-                    }
-                  }
-                }
-                if (isect) {
-                  if (s1 < s2 || s1 == s2 && b.r < a.r) d3_layout_packSplice(a, b = j);
-                  else d3_layout_packSplice(a = k, b);
-                  i--;
-                } else {
-                  d3_layout_packInsert(a, c);
-                  b = c;
-                  bound(c);
-                }
-              }
-            }
-          }
-          var cx = (xMin + xMax) / 2, cy = (yMin + yMax) / 2, cr = 0;
-          for (i = 0; i < n; i++) {
-            c = nodes[i];
-            c.x -= cx;
-            c.y -= cy;
-            cr = Math.max(cr, c.r + Math.sqrt(c.x * c.x + c.y * c.y));
-          }
-          node.r = cr;
-          nodes.forEach(d3_layout_packUnlink);
-        }
-        function d3_layout_packLink(node) {
-          node._pack_next = node._pack_prev = node;
-        }
-        function d3_layout_packUnlink(node) {
-          delete node._pack_next;
-          delete node._pack_prev;
-        }
-        function d3_layout_packTransform(node, x, y, k) {
-          var children = node.children;
-          node.x = x += k * node.x;
-          node.y = y += k * node.y;
-          node.r *= k;
-          if (children) {
-            var i = -1, n = children.length;
-            while (++i < n) d3_layout_packTransform(children[i], x, y, k);
-          }
-        }
-        function d3_layout_packPlace(a, b, c) {
-          var db = a.r + c.r, dx = b.x - a.x, dy = b.y - a.y;
-          if (db && (dx || dy)) {
-            var da = b.r + c.r, dc = dx * dx + dy * dy;
-            da *= da;
-            db *= db;
-            var x = 0.5 + (db - da) / (2 * dc), y = Math.sqrt(Math.max(0, 2 * da * (db + dc) - (db -= dc) * db - da * da)) / (2 * dc);
-            c.x = a.x + x * dx + y * dy;
-            c.y = a.y + x * dy - y * dx;
-          } else {
-            c.x = a.x + db;
-            c.y = a.y;
-          }
-        }
-        d356.layout.tree = function() {
-          var hierarchy = d356.layout.hierarchy().sort(null).value(null), separation = d3_layout_treeSeparation, size = [1, 1], nodeSize = null;
-          function tree(d, i) {
-            var nodes = hierarchy.call(this, d, i), root0 = nodes[0], root1 = wrapTree(root0);
-            d3_layout_hierarchyVisitAfter(root1, firstWalk), root1.parent.m = -root1.z;
-            d3_layout_hierarchyVisitBefore(root1, secondWalk);
-            if (nodeSize) d3_layout_hierarchyVisitBefore(root0, sizeNode);
-            else {
-              var left = root0, right = root0, bottom = root0;
-              d3_layout_hierarchyVisitBefore(root0, function(node) {
-                if (node.x < left.x) left = node;
-                if (node.x > right.x) right = node;
-                if (node.depth > bottom.depth) bottom = node;
-              });
-              var tx = separation(left, right) / 2 - left.x, kx = size[0] / (right.x + separation(right, left) / 2 + tx), ky = size[1] / (bottom.depth || 1);
-              d3_layout_hierarchyVisitBefore(root0, function(node) {
-                node.x = (node.x + tx) * kx;
-                node.y = node.depth * ky;
-              });
-            }
-            return nodes;
-          }
-          function wrapTree(root0) {
-            var root1 = {
-              A: null,
-              children: [root0]
-            }, queue2 = [root1], node1;
-            while ((node1 = queue2.pop()) != null) {
-              for (var children = node1.children, child, i = 0, n = children.length; i < n; ++i) {
-                queue2.push((children[i] = child = {
-                  _: children[i],
-                  parent: node1,
-                  children: (child = children[i].children) && child.slice() || [],
-                  A: null,
-                  a: null,
-                  z: 0,
-                  m: 0,
-                  c: 0,
-                  s: 0,
-                  t: null,
-                  i
-                }).a = child);
-              }
-            }
-            return root1.children[0];
-          }
-          function firstWalk(v) {
-            var children = v.children, siblings = v.parent.children, w = v.i ? siblings[v.i - 1] : null;
-            if (children.length) {
-              d3_layout_treeShift(v);
-              var midpoint = (children[0].z + children[children.length - 1].z) / 2;
-              if (w) {
-                v.z = w.z + separation(v._, w._);
-                v.m = v.z - midpoint;
-              } else {
-                v.z = midpoint;
-              }
-            } else if (w) {
-              v.z = w.z + separation(v._, w._);
-            }
-            v.parent.A = apportion(v, w, v.parent.A || siblings[0]);
-          }
-          function secondWalk(v) {
-            v._.x = v.z + v.parent.m;
-            v.m += v.parent.m;
-          }
-          function apportion(v, w, ancestor) {
-            if (w) {
-              var vip = v, vop = v, vim = w, vom = vip.parent.children[0], sip = vip.m, sop = vop.m, sim = vim.m, som = vom.m, shift;
-              while (vim = d3_layout_treeRight(vim), vip = d3_layout_treeLeft(vip), vim && vip) {
-                vom = d3_layout_treeLeft(vom);
-                vop = d3_layout_treeRight(vop);
-                vop.a = v;
-                shift = vim.z + sim - vip.z - sip + separation(vim._, vip._);
-                if (shift > 0) {
-                  d3_layout_treeMove(d3_layout_treeAncestor(vim, v, ancestor), v, shift);
-                  sip += shift;
-                  sop += shift;
-                }
-                sim += vim.m;
-                sip += vip.m;
-                som += vom.m;
-                sop += vop.m;
-              }
-              if (vim && !d3_layout_treeRight(vop)) {
-                vop.t = vim;
-                vop.m += sim - sop;
-              }
-              if (vip && !d3_layout_treeLeft(vom)) {
-                vom.t = vip;
-                vom.m += sip - som;
-                ancestor = v;
-              }
-            }
-            return ancestor;
-          }
-          function sizeNode(node) {
-            node.x *= size[0];
-            node.y = node.depth * size[1];
-          }
-          tree.separation = function(x) {
-            if (!arguments.length) return separation;
-            separation = x;
-            return tree;
-          };
-          tree.size = function(x) {
-            if (!arguments.length) return nodeSize ? null : size;
-            nodeSize = (size = x) == null ? sizeNode : null;
-            return tree;
-          };
-          tree.nodeSize = function(x) {
-            if (!arguments.length) return nodeSize ? size : null;
-            nodeSize = (size = x) == null ? null : sizeNode;
-            return tree;
-          };
-          return d3_layout_hierarchyRebind(tree, hierarchy);
-        };
-        function d3_layout_treeSeparation(a, b) {
-          return a.parent == b.parent ? 1 : 2;
-        }
-        function d3_layout_treeLeft(v) {
-          var children = v.children;
-          return children.length ? children[0] : v.t;
-        }
-        function d3_layout_treeRight(v) {
-          var children = v.children, n;
-          return (n = children.length) ? children[n - 1] : v.t;
-        }
-        function d3_layout_treeMove(wm, wp, shift) {
-          var change = shift / (wp.i - wm.i);
-          wp.c -= change;
-          wp.s += shift;
-          wm.c += change;
-          wp.z += shift;
-          wp.m += shift;
-        }
-        function d3_layout_treeShift(v) {
-          var shift = 0, change = 0, children = v.children, i = children.length, w;
-          while (--i >= 0) {
-            w = children[i];
-            w.z += shift;
-            w.m += shift;
-            shift += w.s + (change += w.c);
-          }
-        }
-        function d3_layout_treeAncestor(vim, v, ancestor) {
-          return vim.a.parent === v.parent ? vim.a : ancestor;
-        }
-        d356.layout.cluster = function() {
-          var hierarchy = d356.layout.hierarchy().sort(null).value(null), separation = d3_layout_treeSeparation, size = [1, 1], nodeSize = false;
-          function cluster(d, i) {
-            var nodes = hierarchy.call(this, d, i), root = nodes[0], previousNode, x = 0;
-            d3_layout_hierarchyVisitAfter(root, function(node) {
-              var children = node.children;
-              if (children && children.length) {
-                node.x = d3_layout_clusterX(children);
-                node.y = d3_layout_clusterY(children);
-              } else {
-                node.x = previousNode ? x += separation(node, previousNode) : 0;
-                node.y = 0;
-                previousNode = node;
-              }
-            });
-            var left = d3_layout_clusterLeft(root), right = d3_layout_clusterRight(root), x0 = left.x - separation(left, right) / 2, x1 = right.x + separation(right, left) / 2;
-            d3_layout_hierarchyVisitAfter(root, nodeSize ? function(node) {
-              node.x = (node.x - root.x) * size[0];
-              node.y = (root.y - node.y) * size[1];
-            } : function(node) {
-              node.x = (node.x - x0) / (x1 - x0) * size[0];
-              node.y = (1 - (root.y ? node.y / root.y : 1)) * size[1];
-            });
-            return nodes;
-          }
-          cluster.separation = function(x) {
-            if (!arguments.length) return separation;
-            separation = x;
-            return cluster;
-          };
-          cluster.size = function(x) {
-            if (!arguments.length) return nodeSize ? null : size;
-            nodeSize = (size = x) == null;
-            return cluster;
-          };
-          cluster.nodeSize = function(x) {
-            if (!arguments.length) return nodeSize ? size : null;
-            nodeSize = (size = x) != null;
-            return cluster;
-          };
-          return d3_layout_hierarchyRebind(cluster, hierarchy);
-        };
-        function d3_layout_clusterY(children) {
-          return 1 + d356.max(children, function(child) {
-            return child.y;
-          });
-        }
-        function d3_layout_clusterX(children) {
-          return children.reduce(function(x, child) {
-            return x + child.x;
-          }, 0) / children.length;
-        }
-        function d3_layout_clusterLeft(node) {
-          var children = node.children;
-          return children && children.length ? d3_layout_clusterLeft(children[0]) : node;
-        }
-        function d3_layout_clusterRight(node) {
-          var children = node.children, n;
-          return children && (n = children.length) ? d3_layout_clusterRight(children[n - 1]) : node;
-        }
-        d356.layout.treemap = function() {
-          var hierarchy = d356.layout.hierarchy(), round3 = Math.round, size = [1, 1], padding = null, pad3 = d3_layout_treemapPadNull, sticky = false, stickies, mode = "squarify", ratio = 0.5 * (1 + Math.sqrt(5));
-          function scale2(children, k) {
-            var i = -1, n = children.length, child, area;
-            while (++i < n) {
-              area = (child = children[i]).value * (k < 0 ? 0 : k);
-              child.area = isNaN(area) || area <= 0 ? 0 : area;
-            }
-          }
-          function squarify(node) {
-            var children = node.children;
-            if (children && children.length) {
-              var rect = pad3(node), row = [], remaining = children.slice(), child, best = Infinity, score, u = mode === "slice" ? rect.dx : mode === "dice" ? rect.dy : mode === "slice-dice" ? node.depth & 1 ? rect.dy : rect.dx : Math.min(rect.dx, rect.dy), n;
-              scale2(remaining, rect.dx * rect.dy / node.value);
-              row.area = 0;
-              while ((n = remaining.length) > 0) {
-                row.push(child = remaining[n - 1]);
-                row.area += child.area;
-                if (mode !== "squarify" || (score = worst(row, u)) <= best) {
-                  remaining.pop();
-                  best = score;
-                } else {
-                  row.area -= row.pop().area;
-                  position(row, u, rect, false);
-                  u = Math.min(rect.dx, rect.dy);
-                  row.length = row.area = 0;
-                  best = Infinity;
-                }
-              }
-              if (row.length) {
-                position(row, u, rect, true);
-                row.length = row.area = 0;
-              }
-              children.forEach(squarify);
-            }
-          }
-          function stickify(node) {
-            var children = node.children;
-            if (children && children.length) {
-              var rect = pad3(node), remaining = children.slice(), child, row = [];
-              scale2(remaining, rect.dx * rect.dy / node.value);
-              row.area = 0;
-              while (child = remaining.pop()) {
-                row.push(child);
-                row.area += child.area;
-                if (child.z != null) {
-                  position(row, child.z ? rect.dx : rect.dy, rect, !remaining.length);
-                  row.length = row.area = 0;
-                }
-              }
-              children.forEach(stickify);
-            }
-          }
-          function worst(row, u) {
-            var s = row.area, r, rmax = 0, rmin = Infinity, i = -1, n = row.length;
-            while (++i < n) {
-              if (!(r = row[i].area)) continue;
-              if (r < rmin) rmin = r;
-              if (r > rmax) rmax = r;
-            }
-            s *= s;
-            u *= u;
-            return s ? Math.max(u * rmax * ratio / s, s / (u * rmin * ratio)) : Infinity;
-          }
-          function position(row, u, rect, flush) {
-            var i = -1, n = row.length, x = rect.x, y = rect.y, v = u ? round3(row.area / u) : 0, o;
-            if (u == rect.dx) {
-              if (flush || v > rect.dy) v = rect.dy;
-              while (++i < n) {
-                o = row[i];
-                o.x = x;
-                o.y = y;
-                o.dy = v;
-                x += o.dx = Math.min(rect.x + rect.dx - x, v ? round3(o.area / v) : 0);
-              }
-              o.z = true;
-              o.dx += rect.x + rect.dx - x;
-              rect.y += v;
-              rect.dy -= v;
-            } else {
-              if (flush || v > rect.dx) v = rect.dx;
-              while (++i < n) {
-                o = row[i];
-                o.x = x;
-                o.y = y;
-                o.dx = v;
-                y += o.dy = Math.min(rect.y + rect.dy - y, v ? round3(o.area / v) : 0);
-              }
-              o.z = false;
-              o.dy += rect.y + rect.dy - y;
-              rect.x += v;
-              rect.dx -= v;
-            }
-          }
-          function treemap(d) {
-            var nodes = stickies || hierarchy(d), root = nodes[0];
-            root.x = root.y = 0;
-            if (root.value) root.dx = size[0], root.dy = size[1];
-            else root.dx = root.dy = 0;
-            if (stickies) hierarchy.revalue(root);
-            scale2([root], root.dx * root.dy / root.value);
-            (stickies ? stickify : squarify)(root);
-            if (sticky) stickies = nodes;
-            return nodes;
-          }
-          treemap.size = function(x) {
-            if (!arguments.length) return size;
-            size = x;
-            return treemap;
-          };
-          treemap.padding = function(x) {
-            if (!arguments.length) return padding;
-            function padFunction(node) {
-              var p = x.call(treemap, node, node.depth);
-              return p == null ? d3_layout_treemapPadNull(node) : d3_layout_treemapPad(node, typeof p === "number" ? [p, p, p, p] : p);
-            }
-            function padConstant(node) {
-              return d3_layout_treemapPad(node, x);
-            }
-            var type;
-            pad3 = (padding = x) == null ? d3_layout_treemapPadNull : (type = typeof x) === "function" ? padFunction : type === "number" ? (x = [x, x, x, x], padConstant) : padConstant;
-            return treemap;
-          };
-          treemap.round = function(x) {
-            if (!arguments.length) return round3 != Number;
-            round3 = x ? Math.round : Number;
-            return treemap;
-          };
-          treemap.sticky = function(x) {
-            if (!arguments.length) return sticky;
-            sticky = x;
-            stickies = null;
-            return treemap;
-          };
-          treemap.ratio = function(x) {
-            if (!arguments.length) return ratio;
-            ratio = x;
-            return treemap;
-          };
-          treemap.mode = function(x) {
-            if (!arguments.length) return mode;
-            mode = x + "";
-            return treemap;
-          };
-          return d3_layout_hierarchyRebind(treemap, hierarchy);
-        };
-        function d3_layout_treemapPadNull(node) {
-          return {
-            x: node.x,
-            y: node.y,
-            dx: node.dx,
-            dy: node.dy
-          };
-        }
-        function d3_layout_treemapPad(node, padding) {
-          var x = node.x + padding[3], y = node.y + padding[0], dx = node.dx - padding[1] - padding[3], dy = node.dy - padding[0] - padding[2];
-          if (dx < 0) {
-            x += dx / 2;
-            dx = 0;
-          }
-          if (dy < 0) {
-            y += dy / 2;
-            dy = 0;
-          }
-          return {
-            x,
-            y,
-            dx,
-            dy
-          };
-        }
-        d356.random = {
-          normal: function(mu, sigma) {
-            var n = arguments.length;
-            if (n < 2) sigma = 1;
-            if (n < 1) mu = 0;
-            return function() {
-              var x, y, r;
-              do {
-                x = Math.random() * 2 - 1;
-                y = Math.random() * 2 - 1;
-                r = x * x + y * y;
-              } while (!r || r > 1);
-              return mu + sigma * x * Math.sqrt(-2 * Math.log(r) / r);
-            };
-          },
-          logNormal: function() {
-            var random = d356.random.normal.apply(d356, arguments);
-            return function() {
-              return Math.exp(random());
-            };
-          },
-          bates: function(m) {
-            var random = d356.random.irwinHall(m);
-            return function() {
-              return random() / m;
-            };
-          },
-          irwinHall: function(m) {
-            return function() {
-              for (var s = 0, j = 0; j < m; j++) s += Math.random();
-              return s;
-            };
-          }
-        };
-        d356.scale = {};
-        function d3_scaleExtent(domain) {
-          var start = domain[0], stop = domain[domain.length - 1];
-          return start < stop ? [start, stop] : [stop, start];
-        }
-        function d3_scaleRange(scale2) {
-          return scale2.rangeExtent ? scale2.rangeExtent() : d3_scaleExtent(scale2.range());
-        }
-        function d3_scale_bilinear(domain, range, uninterpolate, interpolate) {
-          var u = uninterpolate(domain[0], domain[1]), i = interpolate(range[0], range[1]);
-          return function(x) {
-            return i(u(x));
-          };
-        }
-        function d3_scale_nice(domain, nice) {
-          var i0 = 0, i1 = domain.length - 1, x0 = domain[i0], x1 = domain[i1], dx;
-          if (x1 < x0) {
-            dx = i0, i0 = i1, i1 = dx;
-            dx = x0, x0 = x1, x1 = dx;
-          }
-          domain[i0] = nice.floor(x0);
-          domain[i1] = nice.ceil(x1);
-          return domain;
-        }
-        function d3_scale_niceStep(step) {
-          return step ? {
-            floor: function(x) {
-              return Math.floor(x / step) * step;
-            },
-            ceil: function(x) {
-              return Math.ceil(x / step) * step;
-            }
-          } : d3_scale_niceIdentity;
-        }
-        var d3_scale_niceIdentity = {
-          floor: d3_identity,
-          ceil: d3_identity
-        };
-        function d3_scale_polylinear(domain, range, uninterpolate, interpolate) {
-          var u = [], i = [], j = 0, k = Math.min(domain.length, range.length) - 1;
-          if (domain[k] < domain[0]) {
-            domain = domain.slice().reverse();
-            range = range.slice().reverse();
-          }
-          while (++j <= k) {
-            u.push(uninterpolate(domain[j - 1], domain[j]));
-            i.push(interpolate(range[j - 1], range[j]));
-          }
-          return function(x) {
-            var j2 = d356.bisect(domain, x, 1, k) - 1;
-            return i[j2](u[j2](x));
-          };
-        }
-        d356.scale.linear = function() {
-          return d3_scale_linear([0, 1], [0, 1], d3_interpolate, false);
-        };
-        function d3_scale_linear(domain, range, interpolate, clamp) {
-          var output, input;
-          function rescale() {
-            var linear = Math.min(domain.length, range.length) > 2 ? d3_scale_polylinear : d3_scale_bilinear, uninterpolate = clamp ? d3_uninterpolateClamp : d3_uninterpolateNumber;
-            output = linear(domain, range, uninterpolate, interpolate);
-            input = linear(range, domain, uninterpolate, d3_interpolate);
-            return scale2;
-          }
-          function scale2(x) {
-            return output(x);
-          }
-          scale2.invert = function(y) {
-            return input(y);
-          };
-          scale2.domain = function(x) {
-            if (!arguments.length) return domain;
-            domain = x.map(Number);
-            return rescale();
-          };
-          scale2.range = function(x) {
-            if (!arguments.length) return range;
-            range = x;
-            return rescale();
-          };
-          scale2.rangeRound = function(x) {
-            return scale2.range(x).interpolate(d3_interpolateRound);
-          };
-          scale2.clamp = function(x) {
-            if (!arguments.length) return clamp;
-            clamp = x;
-            return rescale();
-          };
-          scale2.interpolate = function(x) {
-            if (!arguments.length) return interpolate;
-            interpolate = x;
-            return rescale();
-          };
-          scale2.ticks = function(m) {
-            return d3_scale_linearTicks(domain, m);
-          };
-          scale2.tickFormat = function(m, format5) {
-            return d3_scale_linearTickFormat(domain, m, format5);
-          };
-          scale2.nice = function(m) {
-            d3_scale_linearNice(domain, m);
-            return rescale();
-          };
-          scale2.copy = function() {
-            return d3_scale_linear(domain, range, interpolate, clamp);
-          };
-          return rescale();
-        }
-        function d3_scale_linearRebind(scale2, linear) {
-          return d356.rebind(scale2, linear, "range", "rangeRound", "interpolate", "clamp");
-        }
-        function d3_scale_linearNice(domain, m) {
-          d3_scale_nice(domain, d3_scale_niceStep(d3_scale_linearTickRange(domain, m)[2]));
-          d3_scale_nice(domain, d3_scale_niceStep(d3_scale_linearTickRange(domain, m)[2]));
-          return domain;
-        }
-        function d3_scale_linearTickRange(domain, m) {
-          if (m == null) m = 10;
-          var extent2 = d3_scaleExtent(domain), span = extent2[1] - extent2[0], step = Math.pow(10, Math.floor(Math.log(span / m) / Math.LN10)), err = m / span * step;
-          if (err <= 0.15) step *= 10;
-          else if (err <= 0.35) step *= 5;
-          else if (err <= 0.75) step *= 2;
-          extent2[0] = Math.ceil(extent2[0] / step) * step;
-          extent2[1] = Math.floor(extent2[1] / step) * step + step * 0.5;
-          extent2[2] = step;
-          return extent2;
-        }
-        function d3_scale_linearTicks(domain, m) {
-          return d356.range.apply(d356, d3_scale_linearTickRange(domain, m));
-        }
-        var d3_scale_linearFormatSignificant = {
-          s: 1,
-          g: 1,
-          p: 1,
-          r: 1,
-          e: 1
-        };
-        function d3_scale_linearPrecision(value) {
-          return -Math.floor(Math.log(value) / Math.LN10 + 0.01);
-        }
-        function d3_scale_linearFormatPrecision(type, range) {
-          var p = d3_scale_linearPrecision(range[2]);
-          return type in d3_scale_linearFormatSignificant ? Math.abs(p - d3_scale_linearPrecision(Math.max(abs(range[0]), abs(range[1])))) + +(type !== "e") : p - (type === "%") * 2;
-        }
-        d356.scale.log = function() {
-          return d3_scale_log(d356.scale.linear().domain([0, 1]), 10, true, [1, 10]);
-        };
-        function d3_scale_log(linear, base, positive, domain) {
-          function log(x) {
-            return (positive ? Math.log(x < 0 ? 0 : x) : -Math.log(x > 0 ? 0 : -x)) / Math.log(base);
-          }
-          function pow(x) {
-            return positive ? Math.pow(base, x) : -Math.pow(base, -x);
-          }
-          function scale2(x) {
-            return linear(log(x));
-          }
-          scale2.invert = function(x) {
-            return pow(linear.invert(x));
-          };
-          scale2.domain = function(x) {
-            if (!arguments.length) return domain;
-            positive = x[0] >= 0;
-            linear.domain((domain = x.map(Number)).map(log));
-            return scale2;
-          };
-          scale2.base = function(_5) {
-            if (!arguments.length) return base;
-            base = +_5;
-            linear.domain(domain.map(log));
-            return scale2;
-          };
-          scale2.nice = function() {
-            var niced = d3_scale_nice(domain.map(log), positive ? Math : d3_scale_logNiceNegative);
-            linear.domain(niced);
-            domain = niced.map(pow);
-            return scale2;
-          };
-          scale2.ticks = function() {
-            var extent2 = d3_scaleExtent(domain), ticks2 = [], u = extent2[0], v = extent2[1], i = Math.floor(log(u)), j = Math.ceil(log(v)), n = base % 1 ? 2 : base;
-            if (isFinite(j - i)) {
-              if (positive) {
-                for (; i < j; i++) for (var k = 1; k < n; k++) ticks2.push(pow(i) * k);
-                ticks2.push(pow(i));
-              } else {
-                ticks2.push(pow(i));
-                for (; i++ < j; ) for (var k = n - 1; k > 0; k--) ticks2.push(pow(i) * k);
-              }
-              for (i = 0; ticks2[i] < u; i++) {
-              }
-              for (j = ticks2.length; ticks2[j - 1] > v; j--) {
-              }
-              ticks2 = ticks2.slice(i, j);
-            }
-            return ticks2;
-          };
-          scale2.copy = function() {
-            return d3_scale_log(linear.copy(), base, positive, domain);
-          };
-          return d3_scale_linearRebind(scale2, linear);
-        }
-        var d3_scale_logNiceNegative = {
-          floor: function(x) {
-            return -Math.ceil(-x);
-          },
-          ceil: function(x) {
-            return -Math.floor(-x);
-          }
-        };
-        d356.scale.pow = function() {
-          return d3_scale_pow(d356.scale.linear(), 1, [0, 1]);
-        };
-        function d3_scale_pow(linear, exponent, domain) {
-          var powp = d3_scale_powPow(exponent), powb = d3_scale_powPow(1 / exponent);
-          function scale2(x) {
-            return linear(powp(x));
-          }
-          scale2.invert = function(x) {
-            return powb(linear.invert(x));
-          };
-          scale2.domain = function(x) {
-            if (!arguments.length) return domain;
-            linear.domain((domain = x.map(Number)).map(powp));
-            return scale2;
-          };
-          scale2.ticks = function(m) {
-            return d3_scale_linearTicks(domain, m);
-          };
-          scale2.tickFormat = function(m, format5) {
-            return d3_scale_linearTickFormat(domain, m, format5);
-          };
-          scale2.nice = function(m) {
-            return scale2.domain(d3_scale_linearNice(domain, m));
-          };
-          scale2.exponent = function(x) {
-            if (!arguments.length) return exponent;
-            powp = d3_scale_powPow(exponent = x);
-            powb = d3_scale_powPow(1 / exponent);
-            linear.domain(domain.map(powp));
-            return scale2;
-          };
-          scale2.copy = function() {
-            return d3_scale_pow(linear.copy(), exponent, domain);
-          };
-          return d3_scale_linearRebind(scale2, linear);
-        }
-        function d3_scale_powPow(e) {
-          return function(x) {
-            return x < 0 ? -Math.pow(-x, e) : Math.pow(x, e);
-          };
-        }
-        d356.scale.sqrt = function() {
-          return d356.scale.pow().exponent(0.5);
-        };
-        d356.scale.ordinal = function() {
-          return d3_scale_ordinal([], {
-            t: "range",
-            a: [[]]
-          });
-        };
-        function d3_scale_ordinal(domain, ranger) {
-          var index, range, rangeBand;
-          function scale2(x) {
-            return range[((index.get(x) || (ranger.t === "range" ? index.set(x, domain.push(x)) : NaN)) - 1) % range.length];
-          }
-          function steps(start, step) {
-            return d356.range(domain.length).map(function(i) {
-              return start + step * i;
-            });
-          }
-          scale2.domain = function(x) {
-            if (!arguments.length) return domain;
-            domain = [];
-            index = new d3_Map();
-            var i = -1, n = x.length, xi;
-            while (++i < n) if (!index.has(xi = x[i])) index.set(xi, domain.push(xi));
-            return scale2[ranger.t].apply(scale2, ranger.a);
-          };
-          scale2.range = function(x) {
-            if (!arguments.length) return range;
-            range = x;
-            rangeBand = 0;
-            ranger = {
-              t: "range",
-              a: arguments
-            };
-            return scale2;
-          };
-          scale2.rangePoints = function(x, padding) {
-            if (arguments.length < 2) padding = 0;
-            var start = x[0], stop = x[1], step = domain.length < 2 ? (start = (start + stop) / 2, 0) : (stop - start) / (domain.length - 1 + padding);
-            range = steps(start + step * padding / 2, step);
-            rangeBand = 0;
-            ranger = {
-              t: "rangePoints",
-              a: arguments
-            };
-            return scale2;
-          };
-          scale2.rangeRoundPoints = function(x, padding) {
-            if (arguments.length < 2) padding = 0;
-            var start = x[0], stop = x[1], step = domain.length < 2 ? (start = stop = Math.round((start + stop) / 2), 0) : (stop - start) / (domain.length - 1 + padding) | 0;
-            range = steps(start + Math.round(step * padding / 2 + (stop - start - (domain.length - 1 + padding) * step) / 2), step);
-            rangeBand = 0;
-            ranger = {
-              t: "rangeRoundPoints",
-              a: arguments
-            };
-            return scale2;
-          };
-          scale2.rangeBands = function(x, padding, outerPadding) {
-            if (arguments.length < 2) padding = 0;
-            if (arguments.length < 3) outerPadding = padding;
-            var reverse = x[1] < x[0], start = x[reverse - 0], stop = x[1 - reverse], step = (stop - start) / (domain.length - padding + 2 * outerPadding);
-            range = steps(start + step * outerPadding, step);
-            if (reverse) range.reverse();
-            rangeBand = step * (1 - padding);
-            ranger = {
-              t: "rangeBands",
-              a: arguments
-            };
-            return scale2;
-          };
-          scale2.rangeRoundBands = function(x, padding, outerPadding) {
-            if (arguments.length < 2) padding = 0;
-            if (arguments.length < 3) outerPadding = padding;
-            var reverse = x[1] < x[0], start = x[reverse - 0], stop = x[1 - reverse], step = Math.floor((stop - start) / (domain.length - padding + 2 * outerPadding));
-            range = steps(start + Math.round((stop - start - (domain.length - padding) * step) / 2), step);
-            if (reverse) range.reverse();
-            rangeBand = Math.round(step * (1 - padding));
-            ranger = {
-              t: "rangeRoundBands",
-              a: arguments
-            };
-            return scale2;
-          };
-          scale2.rangeBand = function() {
-            return rangeBand;
-          };
-          scale2.rangeExtent = function() {
-            return d3_scaleExtent(ranger.a[0]);
-          };
-          scale2.copy = function() {
-            return d3_scale_ordinal(domain, ranger);
-          };
-          return scale2.domain(domain);
-        }
-        d356.scale.category10 = function() {
-          return d356.scale.ordinal().range(d3_category10);
-        };
-        d356.scale.category20 = function() {
-          return d356.scale.ordinal().range(d3_category20);
-        };
-        d356.scale.category20b = function() {
-          return d356.scale.ordinal().range(d3_category20b);
-        };
-        d356.scale.category20c = function() {
-          return d356.scale.ordinal().range(d3_category20c);
-        };
-        var d3_category10 = [2062260, 16744206, 2924588, 14034728, 9725885, 9197131, 14907330, 8355711, 12369186, 1556175].map(d3_rgbString);
-        var d3_category20 = [2062260, 11454440, 16744206, 16759672, 2924588, 10018698, 14034728, 16750742, 9725885, 12955861, 9197131, 12885140, 14907330, 16234194, 8355711, 13092807, 12369186, 14408589, 1556175, 10410725].map(d3_rgbString);
-        var d3_category20b = [3750777, 5395619, 7040719, 10264286, 6519097, 9216594, 11915115, 13556636, 9202993, 12426809, 15186514, 15190932, 8666169, 11356490, 14049643, 15177372, 8077683, 10834324, 13528509, 14589654].map(d3_rgbString);
-        var d3_category20c = [3244733, 7057110, 10406625, 13032431, 15095053, 16616764, 16625259, 16634018, 3253076, 7652470, 10607003, 13101504, 7695281, 10394312, 12369372, 14342891, 6513507, 9868950, 12434877, 14277081].map(d3_rgbString);
-        d356.scale.quantile = function() {
-          return d3_scale_quantile([], []);
-        };
-        function d3_scale_quantile(domain, range) {
-          var thresholds;
-          function rescale() {
-            var k = 0, q = range.length;
-            thresholds = [];
-            while (++k < q) thresholds[k - 1] = d356.quantile(domain, k / q);
-            return scale2;
-          }
-          function scale2(x) {
-            if (!isNaN(x = +x)) return range[d356.bisect(thresholds, x)];
-          }
-          scale2.domain = function(x) {
-            if (!arguments.length) return domain;
-            domain = x.map(d3_number).filter(d3_numeric).sort(d3_ascending);
-            return rescale();
-          };
-          scale2.range = function(x) {
-            if (!arguments.length) return range;
-            range = x;
-            return rescale();
-          };
-          scale2.quantiles = function() {
-            return thresholds;
-          };
-          scale2.invertExtent = function(y) {
-            y = range.indexOf(y);
-            return y < 0 ? [NaN, NaN] : [y > 0 ? thresholds[y - 1] : domain[0], y < thresholds.length ? thresholds[y] : domain[domain.length - 1]];
-          };
-          scale2.copy = function() {
-            return d3_scale_quantile(domain, range);
-          };
-          return rescale();
-        }
-        d356.scale.quantize = function() {
-          return d3_scale_quantize(0, 1, [0, 1]);
-        };
-        function d3_scale_quantize(x0, x1, range) {
-          var kx, i;
-          function scale2(x) {
-            return range[Math.max(0, Math.min(i, Math.floor(kx * (x - x0))))];
-          }
-          function rescale() {
-            kx = range.length / (x1 - x0);
-            i = range.length - 1;
-            return scale2;
-          }
-          scale2.domain = function(x) {
-            if (!arguments.length) return [x0, x1];
-            x0 = +x[0];
-            x1 = +x[x.length - 1];
-            return rescale();
-          };
-          scale2.range = function(x) {
-            if (!arguments.length) return range;
-            range = x;
-            return rescale();
-          };
-          scale2.invertExtent = function(y) {
-            y = range.indexOf(y);
-            y = y < 0 ? NaN : y / kx + x0;
-            return [y, y + 1 / kx];
-          };
-          scale2.copy = function() {
-            return d3_scale_quantize(x0, x1, range);
-          };
-          return rescale();
-        }
-        d356.scale.threshold = function() {
-          return d3_scale_threshold([0.5], [0, 1]);
-        };
-        function d3_scale_threshold(domain, range) {
-          function scale2(x) {
-            if (x <= x) return range[d356.bisect(domain, x)];
-          }
-          scale2.domain = function(_5) {
-            if (!arguments.length) return domain;
-            domain = _5;
-            return scale2;
-          };
-          scale2.range = function(_5) {
-            if (!arguments.length) return range;
-            range = _5;
-            return scale2;
-          };
-          scale2.invertExtent = function(y) {
-            y = range.indexOf(y);
-            return [domain[y - 1], domain[y]];
-          };
-          scale2.copy = function() {
-            return d3_scale_threshold(domain, range);
-          };
-          return scale2;
-        }
-        d356.scale.identity = function() {
-          return d3_scale_identity([0, 1]);
-        };
-        function d3_scale_identity(domain) {
-          function identity3(x) {
-            return +x;
-          }
-          identity3.invert = identity3;
-          identity3.domain = identity3.range = function(x) {
-            if (!arguments.length) return domain;
-            domain = x.map(identity3);
-            return identity3;
-          };
-          identity3.ticks = function(m) {
-            return d3_scale_linearTicks(domain, m);
-          };
-          identity3.tickFormat = function(m, format5) {
-            return d3_scale_linearTickFormat(domain, m, format5);
-          };
-          identity3.copy = function() {
-            return d3_scale_identity(domain);
-          };
-          return identity3;
-        }
-        d356.svg = {};
-        function d3_zero() {
-          return 0;
-        }
-        d356.svg.arc = function() {
-          var innerRadius = d3_svg_arcInnerRadius, outerRadius = d3_svg_arcOuterRadius, cornerRadius = d3_zero, padRadius = d3_svg_arcAuto, startAngle = d3_svg_arcStartAngle, endAngle = d3_svg_arcEndAngle, padAngle = d3_svg_arcPadAngle;
-          function arc() {
-            var r0 = Math.max(0, +innerRadius.apply(this, arguments)), r1 = Math.max(0, +outerRadius.apply(this, arguments)), a0 = startAngle.apply(this, arguments) - half\u03C0, a1 = endAngle.apply(this, arguments) - half\u03C0, da = Math.abs(a1 - a0), cw = a0 > a1 ? 0 : 1;
-            if (r1 < r0) rc = r1, r1 = r0, r0 = rc;
-            if (da >= \u03C4\u03B5) return circleSegment(r1, cw) + (r0 ? circleSegment(r0, 1 - cw) : "") + "Z";
-            var rc, cr, rp, ap, p0 = 0, p1 = 0, x0, y0, x1, y1, x2, y2, x3, y3, path = [];
-            if (ap = (+padAngle.apply(this, arguments) || 0) / 2) {
-              rp = padRadius === d3_svg_arcAuto ? Math.sqrt(r0 * r0 + r1 * r1) : +padRadius.apply(this, arguments);
-              if (!cw) p1 *= -1;
-              if (r1) p1 = d3_asin(rp / r1 * Math.sin(ap));
-              if (r0) p0 = d3_asin(rp / r0 * Math.sin(ap));
-            }
-            if (r1) {
-              x0 = r1 * Math.cos(a0 + p1);
-              y0 = r1 * Math.sin(a0 + p1);
-              x1 = r1 * Math.cos(a1 - p1);
-              y1 = r1 * Math.sin(a1 - p1);
-              var l1 = Math.abs(a1 - a0 - 2 * p1) <= \u03C0 ? 0 : 1;
-              if (p1 && d3_svg_arcSweep(x0, y0, x1, y1) === cw ^ l1) {
-                var h1 = (a0 + a1) / 2;
-                x0 = r1 * Math.cos(h1);
-                y0 = r1 * Math.sin(h1);
-                x1 = y1 = null;
-              }
-            } else {
-              x0 = y0 = 0;
-            }
-            if (r0) {
-              x2 = r0 * Math.cos(a1 - p0);
-              y2 = r0 * Math.sin(a1 - p0);
-              x3 = r0 * Math.cos(a0 + p0);
-              y3 = r0 * Math.sin(a0 + p0);
-              var l0 = Math.abs(a0 - a1 + 2 * p0) <= \u03C0 ? 0 : 1;
-              if (p0 && d3_svg_arcSweep(x2, y2, x3, y3) === 1 - cw ^ l0) {
-                var h0 = (a0 + a1) / 2;
-                x2 = r0 * Math.cos(h0);
-                y2 = r0 * Math.sin(h0);
-                x3 = y3 = null;
-              }
-            } else {
-              x2 = y2 = 0;
-            }
-            if (da > \u03B5 && (rc = Math.min(Math.abs(r1 - r0) / 2, +cornerRadius.apply(this, arguments))) > 1e-3) {
-              cr = r0 < r1 ^ cw ? 0 : 1;
-              var rc1 = rc, rc0 = rc;
-              if (da < \u03C0) {
-                var oc = x3 == null ? [x2, y2] : x1 == null ? [x0, y0] : d3_geom_polygonIntersect([x0, y0], [x3, y3], [x1, y1], [x2, y2]), ax = x0 - oc[0], ay = y0 - oc[1], bx = x1 - oc[0], by = y1 - oc[1], kc = 1 / Math.sin(Math.acos((ax * bx + ay * by) / (Math.sqrt(ax * ax + ay * ay) * Math.sqrt(bx * bx + by * by))) / 2), lc = Math.sqrt(oc[0] * oc[0] + oc[1] * oc[1]);
-                rc0 = Math.min(rc, (r0 - lc) / (kc - 1));
-                rc1 = Math.min(rc, (r1 - lc) / (kc + 1));
-              }
-              if (x1 != null) {
-                var t30 = d3_svg_arcCornerTangents(x3 == null ? [x2, y2] : [x3, y3], [x0, y0], r1, rc1, cw), t12 = d3_svg_arcCornerTangents([x1, y1], [x2, y2], r1, rc1, cw);
-                if (rc === rc1) {
-                  path.push("M", t30[0], "A", rc1, ",", rc1, " 0 0,", cr, " ", t30[1], "A", r1, ",", r1, " 0 ", 1 - cw ^ d3_svg_arcSweep(t30[1][0], t30[1][1], t12[1][0], t12[1][1]), ",", cw, " ", t12[1], "A", rc1, ",", rc1, " 0 0,", cr, " ", t12[0]);
-                } else {
-                  path.push("M", t30[0], "A", rc1, ",", rc1, " 0 1,", cr, " ", t12[0]);
-                }
-              } else {
-                path.push("M", x0, ",", y0);
-              }
-              if (x3 != null) {
-                var t03 = d3_svg_arcCornerTangents([x0, y0], [x3, y3], r0, -rc0, cw), t21 = d3_svg_arcCornerTangents([x2, y2], x1 == null ? [x0, y0] : [x1, y1], r0, -rc0, cw);
-                if (rc === rc0) {
-                  path.push("L", t21[0], "A", rc0, ",", rc0, " 0 0,", cr, " ", t21[1], "A", r0, ",", r0, " 0 ", cw ^ d3_svg_arcSweep(t21[1][0], t21[1][1], t03[1][0], t03[1][1]), ",", 1 - cw, " ", t03[1], "A", rc0, ",", rc0, " 0 0,", cr, " ", t03[0]);
-                } else {
-                  path.push("L", t21[0], "A", rc0, ",", rc0, " 0 0,", cr, " ", t03[0]);
-                }
-              } else {
-                path.push("L", x2, ",", y2);
-              }
-            } else {
-              path.push("M", x0, ",", y0);
-              if (x1 != null) path.push("A", r1, ",", r1, " 0 ", l1, ",", cw, " ", x1, ",", y1);
-              path.push("L", x2, ",", y2);
-              if (x3 != null) path.push("A", r0, ",", r0, " 0 ", l0, ",", 1 - cw, " ", x3, ",", y3);
-            }
-            path.push("Z");
-            return path.join("");
-          }
-          function circleSegment(r1, cw) {
-            return "M0," + r1 + "A" + r1 + "," + r1 + " 0 1," + cw + " 0," + -r1 + "A" + r1 + "," + r1 + " 0 1," + cw + " 0," + r1;
-          }
-          arc.innerRadius = function(v) {
-            if (!arguments.length) return innerRadius;
-            innerRadius = d3_functor(v);
-            return arc;
-          };
-          arc.outerRadius = function(v) {
-            if (!arguments.length) return outerRadius;
-            outerRadius = d3_functor(v);
-            return arc;
-          };
-          arc.cornerRadius = function(v) {
-            if (!arguments.length) return cornerRadius;
-            cornerRadius = d3_functor(v);
-            return arc;
-          };
-          arc.padRadius = function(v) {
-            if (!arguments.length) return padRadius;
-            padRadius = v == d3_svg_arcAuto ? d3_svg_arcAuto : d3_functor(v);
-            return arc;
-          };
-          arc.startAngle = function(v) {
-            if (!arguments.length) return startAngle;
-            startAngle = d3_functor(v);
-            return arc;
-          };
-          arc.endAngle = function(v) {
-            if (!arguments.length) return endAngle;
-            endAngle = d3_functor(v);
-            return arc;
-          };
-          arc.padAngle = function(v) {
-            if (!arguments.length) return padAngle;
-            padAngle = d3_functor(v);
-            return arc;
-          };
-          arc.centroid = function() {
-            var r = (+innerRadius.apply(this, arguments) + +outerRadius.apply(this, arguments)) / 2, a = (+startAngle.apply(this, arguments) + +endAngle.apply(this, arguments)) / 2 - half\u03C0;
-            return [Math.cos(a) * r, Math.sin(a) * r];
-          };
-          return arc;
-        };
-        var d3_svg_arcAuto = "auto";
-        function d3_svg_arcInnerRadius(d) {
-          return d.innerRadius;
-        }
-        function d3_svg_arcOuterRadius(d) {
-          return d.outerRadius;
-        }
-        function d3_svg_arcStartAngle(d) {
-          return d.startAngle;
-        }
-        function d3_svg_arcEndAngle(d) {
-          return d.endAngle;
-        }
-        function d3_svg_arcPadAngle(d) {
-          return d && d.padAngle;
-        }
-        function d3_svg_arcSweep(x0, y0, x1, y1) {
-          return (x0 - x1) * y0 - (y0 - y1) * x0 > 0 ? 0 : 1;
-        }
-        function d3_svg_arcCornerTangents(p0, p1, r1, rc, cw) {
-          var x01 = p0[0] - p1[0], y01 = p0[1] - p1[1], lo = (cw ? rc : -rc) / Math.sqrt(x01 * x01 + y01 * y01), ox = lo * y01, oy = -lo * x01, x1 = p0[0] + ox, y1 = p0[1] + oy, x2 = p1[0] + ox, y2 = p1[1] + oy, x3 = (x1 + x2) / 2, y3 = (y1 + y2) / 2, dx = x2 - x1, dy = y2 - y1, d2 = dx * dx + dy * dy, r = r1 - rc, D = x1 * y2 - x2 * y1, d = (dy < 0 ? -1 : 1) * Math.sqrt(Math.max(0, r * r * d2 - D * D)), cx0 = (D * dy - dx * d) / d2, cy0 = (-D * dx - dy * d) / d2, cx1 = (D * dy + dx * d) / d2, cy1 = (-D * dx + dy * d) / d2, dx0 = cx0 - x3, dy0 = cy0 - y3, dx1 = cx1 - x3, dy1 = cy1 - y3;
-          if (dx0 * dx0 + dy0 * dy0 > dx1 * dx1 + dy1 * dy1) cx0 = cx1, cy0 = cy1;
-          return [[cx0 - ox, cy0 - oy], [cx0 * r1 / r, cy0 * r1 / r]];
-        }
-        function d3_true() {
-          return true;
-        }
-        function d3_svg_line(projection) {
-          var x = d3_geom_pointX, y = d3_geom_pointY, defined = d3_true, interpolate = d3_svg_lineLinear, interpolateKey = interpolate.key, tension = 0.7;
-          function line(data) {
-            var segments = [], points = [], i = -1, n = data.length, d, fx = d3_functor(x), fy = d3_functor(y);
-            function segment() {
-              segments.push("M", interpolate(projection(points), tension));
-            }
-            while (++i < n) {
-              if (defined.call(this, d = data[i], i)) {
-                points.push([+fx.call(this, d, i), +fy.call(this, d, i)]);
-              } else if (points.length) {
-                segment();
-                points = [];
-              }
-            }
-            if (points.length) segment();
-            return segments.length ? segments.join("") : null;
-          }
-          line.x = function(_5) {
-            if (!arguments.length) return x;
-            x = _5;
-            return line;
-          };
-          line.y = function(_5) {
-            if (!arguments.length) return y;
-            y = _5;
-            return line;
-          };
-          line.defined = function(_5) {
-            if (!arguments.length) return defined;
-            defined = _5;
-            return line;
-          };
-          line.interpolate = function(_5) {
-            if (!arguments.length) return interpolateKey;
-            if (typeof _5 === "function") interpolateKey = interpolate = _5;
-            else interpolateKey = (interpolate = d3_svg_lineInterpolators.get(_5) || d3_svg_lineLinear).key;
-            return line;
-          };
-          line.tension = function(_5) {
-            if (!arguments.length) return tension;
-            tension = _5;
-            return line;
-          };
-          return line;
-        }
-        d356.svg.line = function() {
-          return d3_svg_line(d3_identity);
-        };
-        var d3_svg_lineInterpolators = d356.map({
-          linear: d3_svg_lineLinear,
-          "linear-closed": d3_svg_lineLinearClosed,
-          step: d3_svg_lineStep,
-          "step-before": d3_svg_lineStepBefore,
-          "step-after": d3_svg_lineStepAfter,
-          basis: d3_svg_lineBasis,
-          "basis-open": d3_svg_lineBasisOpen,
-          "basis-closed": d3_svg_lineBasisClosed,
-          bundle: d3_svg_lineBundle,
-          cardinal: d3_svg_lineCardinal,
-          "cardinal-open": d3_svg_lineCardinalOpen,
-          "cardinal-closed": d3_svg_lineCardinalClosed,
-          monotone: d3_svg_lineMonotone
-        });
-        d3_svg_lineInterpolators.forEach(function(key, value) {
-          value.key = key;
-          value.closed = /-closed$/.test(key);
-        });
-        function d3_svg_lineLinear(points) {
-          return points.length > 1 ? points.join("L") : points + "Z";
-        }
-        function d3_svg_lineLinearClosed(points) {
-          return points.join("L") + "Z";
-        }
-        function d3_svg_lineStep(points) {
-          var i = 0, n = points.length, p = points[0], path = [p[0], ",", p[1]];
-          while (++i < n) path.push("H", (p[0] + (p = points[i])[0]) / 2, "V", p[1]);
-          if (n > 1) path.push("H", p[0]);
-          return path.join("");
-        }
-        function d3_svg_lineStepBefore(points) {
-          var i = 0, n = points.length, p = points[0], path = [p[0], ",", p[1]];
-          while (++i < n) path.push("V", (p = points[i])[1], "H", p[0]);
-          return path.join("");
-        }
-        function d3_svg_lineStepAfter(points) {
-          var i = 0, n = points.length, p = points[0], path = [p[0], ",", p[1]];
-          while (++i < n) path.push("H", (p = points[i])[0], "V", p[1]);
-          return path.join("");
-        }
-        function d3_svg_lineCardinalOpen(points, tension) {
-          return points.length < 4 ? d3_svg_lineLinear(points) : points[1] + d3_svg_lineHermite(points.slice(1, -1), d3_svg_lineCardinalTangents(points, tension));
-        }
-        function d3_svg_lineCardinalClosed(points, tension) {
-          return points.length < 3 ? d3_svg_lineLinearClosed(points) : points[0] + d3_svg_lineHermite((points.push(points[0]), points), d3_svg_lineCardinalTangents([points[points.length - 2]].concat(points, [points[1]]), tension));
-        }
-        function d3_svg_lineCardinal(points, tension) {
-          return points.length < 3 ? d3_svg_lineLinear(points) : points[0] + d3_svg_lineHermite(points, d3_svg_lineCardinalTangents(points, tension));
-        }
-        function d3_svg_lineHermite(points, tangents) {
-          if (tangents.length < 1 || points.length != tangents.length && points.length != tangents.length + 2) {
-            return d3_svg_lineLinear(points);
-          }
-          var quad = points.length != tangents.length, path = "", p0 = points[0], p = points[1], t02 = tangents[0], t = t02, pi = 1;
-          if (quad) {
-            path += "Q" + (p[0] - t02[0] * 2 / 3) + "," + (p[1] - t02[1] * 2 / 3) + "," + p[0] + "," + p[1];
-            p0 = points[1];
-            pi = 2;
-          }
-          if (tangents.length > 1) {
-            t = tangents[1];
-            p = points[pi];
-            pi++;
-            path += "C" + (p0[0] + t02[0]) + "," + (p0[1] + t02[1]) + "," + (p[0] - t[0]) + "," + (p[1] - t[1]) + "," + p[0] + "," + p[1];
-            for (var i = 2; i < tangents.length; i++, pi++) {
-              p = points[pi];
-              t = tangents[i];
-              path += "S" + (p[0] - t[0]) + "," + (p[1] - t[1]) + "," + p[0] + "," + p[1];
-            }
-          }
-          if (quad) {
-            var lp = points[pi];
-            path += "Q" + (p[0] + t[0] * 2 / 3) + "," + (p[1] + t[1] * 2 / 3) + "," + lp[0] + "," + lp[1];
-          }
-          return path;
-        }
-        function d3_svg_lineCardinalTangents(points, tension) {
-          var tangents = [], a = (1 - tension) / 2, p0, p1 = points[0], p2 = points[1], i = 1, n = points.length;
-          while (++i < n) {
-            p0 = p1;
-            p1 = p2;
-            p2 = points[i];
-            tangents.push([a * (p2[0] - p0[0]), a * (p2[1] - p0[1])]);
-          }
-          return tangents;
-        }
-        function d3_svg_lineBasis(points) {
-          if (points.length < 3) return d3_svg_lineLinear(points);
-          var i = 1, n = points.length, pi = points[0], x0 = pi[0], y0 = pi[1], px = [x0, x0, x0, (pi = points[1])[0]], py = [y0, y0, y0, pi[1]], path = [x0, ",", y0, "L", d3_svg_lineDot4(d3_svg_lineBasisBezier3, px), ",", d3_svg_lineDot4(d3_svg_lineBasisBezier3, py)];
-          points.push(points[n - 1]);
-          while (++i <= n) {
-            pi = points[i];
-            px.shift();
-            px.push(pi[0]);
-            py.shift();
-            py.push(pi[1]);
-            d3_svg_lineBasisBezier(path, px, py);
-          }
-          points.pop();
-          path.push("L", pi);
-          return path.join("");
-        }
-        function d3_svg_lineBasisOpen(points) {
-          if (points.length < 4) return d3_svg_lineLinear(points);
-          var path = [], i = -1, n = points.length, pi, px = [0], py = [0];
-          while (++i < 3) {
-            pi = points[i];
-            px.push(pi[0]);
-            py.push(pi[1]);
-          }
-          path.push(d3_svg_lineDot4(d3_svg_lineBasisBezier3, px) + "," + d3_svg_lineDot4(d3_svg_lineBasisBezier3, py));
-          --i;
-          while (++i < n) {
-            pi = points[i];
-            px.shift();
-            px.push(pi[0]);
-            py.shift();
-            py.push(pi[1]);
-            d3_svg_lineBasisBezier(path, px, py);
-          }
-          return path.join("");
-        }
-        function d3_svg_lineBasisClosed(points) {
-          var path, i = -1, n = points.length, m = n + 4, pi, px = [], py = [];
-          while (++i < 4) {
-            pi = points[i % n];
-            px.push(pi[0]);
-            py.push(pi[1]);
-          }
-          path = [d3_svg_lineDot4(d3_svg_lineBasisBezier3, px), ",", d3_svg_lineDot4(d3_svg_lineBasisBezier3, py)];
-          --i;
-          while (++i < m) {
-            pi = points[i % n];
-            px.shift();
-            px.push(pi[0]);
-            py.shift();
-            py.push(pi[1]);
-            d3_svg_lineBasisBezier(path, px, py);
-          }
-          return path.join("");
-        }
-        function d3_svg_lineBundle(points, tension) {
-          var n = points.length - 1;
-          if (n) {
-            var x0 = points[0][0], y0 = points[0][1], dx = points[n][0] - x0, dy = points[n][1] - y0, i = -1, p, t;
-            while (++i <= n) {
-              p = points[i];
-              t = i / n;
-              p[0] = tension * p[0] + (1 - tension) * (x0 + t * dx);
-              p[1] = tension * p[1] + (1 - tension) * (y0 + t * dy);
-            }
-          }
-          return d3_svg_lineBasis(points);
-        }
-        function d3_svg_lineDot4(a, b) {
-          return a[0] * b[0] + a[1] * b[1] + a[2] * b[2] + a[3] * b[3];
-        }
-        var d3_svg_lineBasisBezier1 = [0, 2 / 3, 1 / 3, 0], d3_svg_lineBasisBezier2 = [0, 1 / 3, 2 / 3, 0], d3_svg_lineBasisBezier3 = [0, 1 / 6, 2 / 3, 1 / 6];
-        function d3_svg_lineBasisBezier(path, x, y) {
-          path.push("C", d3_svg_lineDot4(d3_svg_lineBasisBezier1, x), ",", d3_svg_lineDot4(d3_svg_lineBasisBezier1, y), ",", d3_svg_lineDot4(d3_svg_lineBasisBezier2, x), ",", d3_svg_lineDot4(d3_svg_lineBasisBezier2, y), ",", d3_svg_lineDot4(d3_svg_lineBasisBezier3, x), ",", d3_svg_lineDot4(d3_svg_lineBasisBezier3, y));
-        }
-        function d3_svg_lineSlope(p0, p1) {
-          return (p1[1] - p0[1]) / (p1[0] - p0[0]);
-        }
-        function d3_svg_lineFiniteDifferences(points) {
-          var i = 0, j = points.length - 1, m = [], p0 = points[0], p1 = points[1], d = m[0] = d3_svg_lineSlope(p0, p1);
-          while (++i < j) {
-            m[i] = (d + (d = d3_svg_lineSlope(p0 = p1, p1 = points[i + 1]))) / 2;
-          }
-          m[i] = d;
-          return m;
-        }
-        function d3_svg_lineMonotoneTangents(points) {
-          var tangents = [], d, a, b, s, m = d3_svg_lineFiniteDifferences(points), i = -1, j = points.length - 1;
-          while (++i < j) {
-            d = d3_svg_lineSlope(points[i], points[i + 1]);
-            if (abs(d) < \u03B5) {
-              m[i] = m[i + 1] = 0;
-            } else {
-              a = m[i] / d;
-              b = m[i + 1] / d;
-              s = a * a + b * b;
-              if (s > 9) {
-                s = d * 3 / Math.sqrt(s);
-                m[i] = s * a;
-                m[i + 1] = s * b;
-              }
-            }
-          }
-          i = -1;
-          while (++i <= j) {
-            s = (points[Math.min(j, i + 1)][0] - points[Math.max(0, i - 1)][0]) / (6 * (1 + m[i] * m[i]));
-            tangents.push([s || 0, m[i] * s || 0]);
-          }
-          return tangents;
-        }
-        function d3_svg_lineMonotone(points) {
-          return points.length < 3 ? d3_svg_lineLinear(points) : points[0] + d3_svg_lineHermite(points, d3_svg_lineMonotoneTangents(points));
-        }
-        d356.svg.line.radial = function() {
-          var line = d3_svg_line(d3_svg_lineRadial);
-          line.radius = line.x, delete line.x;
-          line.angle = line.y, delete line.y;
-          return line;
-        };
-        function d3_svg_lineRadial(points) {
-          var point, i = -1, n = points.length, r, a;
-          while (++i < n) {
-            point = points[i];
-            r = point[0];
-            a = point[1] - half\u03C0;
-            point[0] = r * Math.cos(a);
-            point[1] = r * Math.sin(a);
-          }
-          return points;
-        }
-        function d3_svg_area(projection) {
-          var x0 = d3_geom_pointX, x1 = d3_geom_pointX, y0 = 0, y1 = d3_geom_pointY, defined = d3_true, interpolate = d3_svg_lineLinear, interpolateKey = interpolate.key, interpolateReverse = interpolate, L = "L", tension = 0.7;
-          function area(data) {
-            var segments = [], points0 = [], points1 = [], i = -1, n = data.length, d, fx0 = d3_functor(x0), fy0 = d3_functor(y0), fx1 = x0 === x1 ? function() {
-              return x;
-            } : d3_functor(x1), fy1 = y0 === y1 ? function() {
-              return y;
-            } : d3_functor(y1), x, y;
-            function segment() {
-              segments.push("M", interpolate(projection(points1), tension), L, interpolateReverse(projection(points0.reverse()), tension), "Z");
-            }
-            while (++i < n) {
-              if (defined.call(this, d = data[i], i)) {
-                points0.push([x = +fx0.call(this, d, i), y = +fy0.call(this, d, i)]);
-                points1.push([+fx1.call(this, d, i), +fy1.call(this, d, i)]);
-              } else if (points0.length) {
-                segment();
-                points0 = [];
-                points1 = [];
-              }
-            }
-            if (points0.length) segment();
-            return segments.length ? segments.join("") : null;
-          }
-          area.x = function(_5) {
-            if (!arguments.length) return x1;
-            x0 = x1 = _5;
-            return area;
-          };
-          area.x0 = function(_5) {
-            if (!arguments.length) return x0;
-            x0 = _5;
-            return area;
-          };
-          area.x1 = function(_5) {
-            if (!arguments.length) return x1;
-            x1 = _5;
-            return area;
-          };
-          area.y = function(_5) {
-            if (!arguments.length) return y1;
-            y0 = y1 = _5;
-            return area;
-          };
-          area.y0 = function(_5) {
-            if (!arguments.length) return y0;
-            y0 = _5;
-            return area;
-          };
-          area.y1 = function(_5) {
-            if (!arguments.length) return y1;
-            y1 = _5;
-            return area;
-          };
-          area.defined = function(_5) {
-            if (!arguments.length) return defined;
-            defined = _5;
-            return area;
-          };
-          area.interpolate = function(_5) {
-            if (!arguments.length) return interpolateKey;
-            if (typeof _5 === "function") interpolateKey = interpolate = _5;
-            else interpolateKey = (interpolate = d3_svg_lineInterpolators.get(_5) || d3_svg_lineLinear).key;
-            interpolateReverse = interpolate.reverse || interpolate;
-            L = interpolate.closed ? "M" : "L";
-            return area;
-          };
-          area.tension = function(_5) {
-            if (!arguments.length) return tension;
-            tension = _5;
-            return area;
-          };
-          return area;
-        }
-        d3_svg_lineStepBefore.reverse = d3_svg_lineStepAfter;
-        d3_svg_lineStepAfter.reverse = d3_svg_lineStepBefore;
-        d356.svg.area = function() {
-          return d3_svg_area(d3_identity);
-        };
-        d356.svg.area.radial = function() {
-          var area = d3_svg_area(d3_svg_lineRadial);
-          area.radius = area.x, delete area.x;
-          area.innerRadius = area.x0, delete area.x0;
-          area.outerRadius = area.x1, delete area.x1;
-          area.angle = area.y, delete area.y;
-          area.startAngle = area.y0, delete area.y0;
-          area.endAngle = area.y1, delete area.y1;
-          return area;
-        };
-        function d3_source(d) {
-          return d.source;
-        }
-        function d3_target(d) {
-          return d.target;
-        }
-        d356.svg.chord = function() {
-          var source = d3_source, target = d3_target, radius = d3_svg_chordRadius, startAngle = d3_svg_arcStartAngle, endAngle = d3_svg_arcEndAngle;
-          function chord(d, i) {
-            var s = subgroup(this, source, d, i), t = subgroup(this, target, d, i);
-            return "M" + s.p0 + arc(s.r, s.p1, s.a1 - s.a0) + (equals(s, t) ? curve(s.r, s.p1, s.r, s.p0) : curve(s.r, s.p1, t.r, t.p0) + arc(t.r, t.p1, t.a1 - t.a0) + curve(t.r, t.p1, s.r, s.p0)) + "Z";
-          }
-          function subgroup(self2, f, d, i) {
-            var subgroup2 = f.call(self2, d, i), r = radius.call(self2, subgroup2, i), a0 = startAngle.call(self2, subgroup2, i) - half\u03C0, a1 = endAngle.call(self2, subgroup2, i) - half\u03C0;
-            return {
-              r,
-              a0,
-              a1,
-              p0: [r * Math.cos(a0), r * Math.sin(a0)],
-              p1: [r * Math.cos(a1), r * Math.sin(a1)]
-            };
-          }
-          function equals(a, b) {
-            return a.a0 == b.a0 && a.a1 == b.a1;
-          }
-          function arc(r, p, a) {
-            return "A" + r + "," + r + " 0 " + +(a > \u03C0) + ",1 " + p;
-          }
-          function curve(r0, p0, r1, p1) {
-            return "Q 0,0 " + p1;
-          }
-          chord.radius = function(v) {
-            if (!arguments.length) return radius;
-            radius = d3_functor(v);
-            return chord;
-          };
-          chord.source = function(v) {
-            if (!arguments.length) return source;
-            source = d3_functor(v);
-            return chord;
-          };
-          chord.target = function(v) {
-            if (!arguments.length) return target;
-            target = d3_functor(v);
-            return chord;
-          };
-          chord.startAngle = function(v) {
-            if (!arguments.length) return startAngle;
-            startAngle = d3_functor(v);
-            return chord;
-          };
-          chord.endAngle = function(v) {
-            if (!arguments.length) return endAngle;
-            endAngle = d3_functor(v);
-            return chord;
-          };
-          return chord;
-        };
-        function d3_svg_chordRadius(d) {
-          return d.radius;
-        }
-        d356.svg.diagonal = function() {
-          var source = d3_source, target = d3_target, projection = d3_svg_diagonalProjection;
-          function diagonal(d, i) {
-            var p0 = source.call(this, d, i), p3 = target.call(this, d, i), m = (p0.y + p3.y) / 2, p = [p0, {
-              x: p0.x,
-              y: m
-            }, {
-              x: p3.x,
-              y: m
-            }, p3];
-            p = p.map(projection);
-            return "M" + p[0] + "C" + p[1] + " " + p[2] + " " + p[3];
-          }
-          diagonal.source = function(x) {
-            if (!arguments.length) return source;
-            source = d3_functor(x);
-            return diagonal;
-          };
-          diagonal.target = function(x) {
-            if (!arguments.length) return target;
-            target = d3_functor(x);
-            return diagonal;
-          };
-          diagonal.projection = function(x) {
-            if (!arguments.length) return projection;
-            projection = x;
-            return diagonal;
-          };
-          return diagonal;
-        };
-        function d3_svg_diagonalProjection(d) {
-          return [d.x, d.y];
-        }
-        d356.svg.diagonal.radial = function() {
-          var diagonal = d356.svg.diagonal(), projection = d3_svg_diagonalProjection, projection_ = diagonal.projection;
-          diagonal.projection = function(x) {
-            return arguments.length ? projection_(d3_svg_diagonalRadialProjection(projection = x)) : projection;
-          };
-          return diagonal;
-        };
-        function d3_svg_diagonalRadialProjection(projection) {
-          return function() {
-            var d = projection.apply(this, arguments), r = d[0], a = d[1] - half\u03C0;
-            return [r * Math.cos(a), r * Math.sin(a)];
-          };
-        }
-        d356.svg.symbol = function() {
-          var type = d3_svg_symbolType, size = d3_svg_symbolSize;
-          function symbol(d, i) {
-            return (d3_svg_symbols.get(type.call(this, d, i)) || d3_svg_symbolCircle)(size.call(this, d, i));
-          }
-          symbol.type = function(x) {
-            if (!arguments.length) return type;
-            type = d3_functor(x);
-            return symbol;
-          };
-          symbol.size = function(x) {
-            if (!arguments.length) return size;
-            size = d3_functor(x);
-            return symbol;
-          };
-          return symbol;
-        };
-        function d3_svg_symbolSize() {
-          return 64;
-        }
-        function d3_svg_symbolType() {
-          return "circle";
-        }
-        function d3_svg_symbolCircle(size) {
-          var r = Math.sqrt(size / \u03C0);
-          return "M0," + r + "A" + r + "," + r + " 0 1,1 0," + -r + "A" + r + "," + r + " 0 1,1 0," + r + "Z";
-        }
-        var d3_svg_symbols = d356.map({
-          circle: d3_svg_symbolCircle,
-          cross: function(size) {
-            var r = Math.sqrt(size / 5) / 2;
-            return "M" + -3 * r + "," + -r + "H" + -r + "V" + -3 * r + "H" + r + "V" + -r + "H" + 3 * r + "V" + r + "H" + r + "V" + 3 * r + "H" + -r + "V" + r + "H" + -3 * r + "Z";
-          },
-          diamond: function(size) {
-            var ry = Math.sqrt(size / (2 * d3_svg_symbolTan30)), rx = ry * d3_svg_symbolTan30;
-            return "M0," + -ry + "L" + rx + ",0 0," + ry + " " + -rx + ",0Z";
-          },
-          square: function(size) {
-            var r = Math.sqrt(size) / 2;
-            return "M" + -r + "," + -r + "L" + r + "," + -r + " " + r + "," + r + " " + -r + "," + r + "Z";
-          },
-          "triangle-down": function(size) {
-            var rx = Math.sqrt(size / d3_svg_symbolSqrt3), ry = rx * d3_svg_symbolSqrt3 / 2;
-            return "M0," + ry + "L" + rx + "," + -ry + " " + -rx + "," + -ry + "Z";
-          },
-          "triangle-up": function(size) {
-            var rx = Math.sqrt(size / d3_svg_symbolSqrt3), ry = rx * d3_svg_symbolSqrt3 / 2;
-            return "M0," + -ry + "L" + rx + "," + ry + " " + -rx + "," + ry + "Z";
-          }
-        });
-        d356.svg.symbolTypes = d3_svg_symbols.keys();
-        var d3_svg_symbolSqrt3 = Math.sqrt(3), d3_svg_symbolTan30 = Math.tan(30 * d3_radians);
-        d3_selectionPrototype.transition = function(name8) {
-          var id = d3_transitionInheritId || ++d3_transitionId, ns = d3_transitionNamespace(name8), subgroups = [], subgroup, node, transition2 = d3_transitionInherit || {
-            time: Date.now(),
-            ease: d3_ease_cubicInOut,
-            delay: 0,
-            duration: 250
-          };
-          for (var j = -1, m = this.length; ++j < m; ) {
-            subgroups.push(subgroup = []);
-            for (var group = this[j], i = -1, n = group.length; ++i < n; ) {
-              if (node = group[i]) d3_transitionNode(node, i, ns, id, transition2);
-              subgroup.push(node);
-            }
-          }
-          return d3_transition(subgroups, ns, id);
-        };
-        d3_selectionPrototype.interrupt = function(name8) {
-          return this.each(name8 == null ? d3_selection_interrupt : d3_selection_interruptNS(d3_transitionNamespace(name8)));
-        };
-        var d3_selection_interrupt = d3_selection_interruptNS(d3_transitionNamespace());
-        function d3_selection_interruptNS(ns) {
-          return function() {
-            var lock, activeId, active;
-            if ((lock = this[ns]) && (active = lock[activeId = lock.active])) {
-              active.timer.c = null;
-              active.timer.t = NaN;
-              if (--lock.count) delete lock[activeId];
-              else delete this[ns];
-              lock.active += 0.5;
-              active.event && active.event.interrupt.call(this, this.__data__, active.index);
-            }
-          };
-        }
-        function d3_transition(groups, ns, id) {
-          d3_subclass(groups, d3_transitionPrototype);
-          groups.namespace = ns;
-          groups.id = id;
-          return groups;
-        }
-        var d3_transitionPrototype = [], d3_transitionId = 0, d3_transitionInheritId, d3_transitionInherit;
-        d3_transitionPrototype.call = d3_selectionPrototype.call;
-        d3_transitionPrototype.empty = d3_selectionPrototype.empty;
-        d3_transitionPrototype.node = d3_selectionPrototype.node;
-        d3_transitionPrototype.size = d3_selectionPrototype.size;
-        d356.transition = function(selection, name8) {
-          return selection && selection.transition ? d3_transitionInheritId ? selection.transition(name8) : selection : d356.selection().transition(selection);
-        };
-        d356.transition.prototype = d3_transitionPrototype;
-        d3_transitionPrototype.select = function(selector) {
-          var id = this.id, ns = this.namespace, subgroups = [], subgroup, subnode, node;
-          selector = d3_selection_selector(selector);
-          for (var j = -1, m = this.length; ++j < m; ) {
-            subgroups.push(subgroup = []);
-            for (var group = this[j], i = -1, n = group.length; ++i < n; ) {
-              if ((node = group[i]) && (subnode = selector.call(node, node.__data__, i, j))) {
-                if ("__data__" in node) subnode.__data__ = node.__data__;
-                d3_transitionNode(subnode, i, ns, id, node[ns][id]);
-                subgroup.push(subnode);
-              } else {
-                subgroup.push(null);
-              }
-            }
-          }
-          return d3_transition(subgroups, ns, id);
-        };
-        d3_transitionPrototype.selectAll = function(selector) {
-          var id = this.id, ns = this.namespace, subgroups = [], subgroup, subnodes, node, subnode, transition2;
-          selector = d3_selection_selectorAll(selector);
-          for (var j = -1, m = this.length; ++j < m; ) {
-            for (var group = this[j], i = -1, n = group.length; ++i < n; ) {
-              if (node = group[i]) {
-                transition2 = node[ns][id];
-                subnodes = selector.call(node, node.__data__, i, j);
-                subgroups.push(subgroup = []);
-                for (var k = -1, o = subnodes.length; ++k < o; ) {
-                  if (subnode = subnodes[k]) d3_transitionNode(subnode, k, ns, id, transition2);
-                  subgroup.push(subnode);
-                }
-              }
-            }
-          }
-          return d3_transition(subgroups, ns, id);
-        };
-        d3_transitionPrototype.filter = function(filter2) {
-          var subgroups = [], subgroup, group, node;
-          if (typeof filter2 !== "function") filter2 = d3_selection_filter(filter2);
-          for (var j = 0, m = this.length; j < m; j++) {
-            subgroups.push(subgroup = []);
-            for (var group = this[j], i = 0, n = group.length; i < n; i++) {
-              if ((node = group[i]) && filter2.call(node, node.__data__, i, j)) {
-                subgroup.push(node);
-              }
-            }
-          }
-          return d3_transition(subgroups, this.namespace, this.id);
-        };
-        d3_transitionPrototype.tween = function(name8, tween) {
-          var id = this.id, ns = this.namespace;
-          if (arguments.length < 2) return this.node()[ns][id].tween.get(name8);
-          return d3_selection_each(this, tween == null ? function(node) {
-            node[ns][id].tween.remove(name8);
-          } : function(node) {
-            node[ns][id].tween.set(name8, tween);
-          });
-        };
-        function d3_transition_tween(groups, name8, value, tween) {
-          var id = groups.id, ns = groups.namespace;
-          return d3_selection_each(groups, typeof value === "function" ? function(node, i, j) {
-            node[ns][id].tween.set(name8, tween(value.call(node, node.__data__, i, j)));
-          } : (value = tween(value), function(node) {
-            node[ns][id].tween.set(name8, value);
-          }));
-        }
-        d3_transitionPrototype.attr = function(nameNS, value) {
-          if (arguments.length < 2) {
-            for (value in nameNS) this.attr(value, nameNS[value]);
-            return this;
-          }
-          var interpolate = nameNS == "transform" ? d3_interpolateTransform : d3_interpolate, name8 = d356.ns.qualify(nameNS);
-          function attrNull() {
-            this.removeAttribute(name8);
-          }
-          function attrNullNS() {
-            this.removeAttributeNS(name8.space, name8.local);
-          }
-          function attrTween(b) {
-            return b == null ? attrNull : (b += "", function() {
-              var a = this.getAttribute(name8), i;
-              return a !== b && (i = interpolate(a, b), function(t) {
-                this.setAttribute(name8, i(t));
-              });
-            });
-          }
-          function attrTweenNS(b) {
-            return b == null ? attrNullNS : (b += "", function() {
-              var a = this.getAttributeNS(name8.space, name8.local), i;
-              return a !== b && (i = interpolate(a, b), function(t) {
-                this.setAttributeNS(name8.space, name8.local, i(t));
-              });
-            });
-          }
-          return d3_transition_tween(this, "attr." + nameNS, value, name8.local ? attrTweenNS : attrTween);
-        };
-        d3_transitionPrototype.attrTween = function(nameNS, tween) {
-          var name8 = d356.ns.qualify(nameNS);
-          function attrTween(d, i) {
-            var f = tween.call(this, d, i, this.getAttribute(name8));
-            return f && function(t) {
-              this.setAttribute(name8, f(t));
-            };
-          }
-          function attrTweenNS(d, i) {
-            var f = tween.call(this, d, i, this.getAttributeNS(name8.space, name8.local));
-            return f && function(t) {
-              this.setAttributeNS(name8.space, name8.local, f(t));
-            };
-          }
-          return this.tween("attr." + nameNS, name8.local ? attrTweenNS : attrTween);
-        };
-        d3_transitionPrototype.style = function(name8, value, priority) {
-          var n = arguments.length;
-          if (n < 3) {
-            if (typeof name8 !== "string") {
-              if (n < 2) value = "";
-              for (priority in name8) this.style(priority, name8[priority], value);
-              return this;
-            }
-            priority = "";
-          }
-          function styleNull() {
-            this.style.removeProperty(name8);
-          }
-          function styleString(b) {
-            return b == null ? styleNull : (b += "", function() {
-              var a = d3_window(this).getComputedStyle(this, null).getPropertyValue(name8), i;
-              return a !== b && (i = d3_interpolate(a, b), function(t) {
-                this.style.setProperty(name8, i(t), priority);
-              });
-            });
-          }
-          return d3_transition_tween(this, "style." + name8, value, styleString);
-        };
-        d3_transitionPrototype.styleTween = function(name8, tween, priority) {
-          if (arguments.length < 3) priority = "";
-          function styleTween(d, i) {
-            var f = tween.call(this, d, i, d3_window(this).getComputedStyle(this, null).getPropertyValue(name8));
-            return f && function(t) {
-              this.style.setProperty(name8, f(t), priority);
-            };
-          }
-          return this.tween("style." + name8, styleTween);
-        };
-        d3_transitionPrototype.text = function(value) {
-          return d3_transition_tween(this, "text", value, d3_transition_text);
-        };
-        function d3_transition_text(b) {
-          if (b == null) b = "";
-          return function() {
-            this.textContent = b;
-          };
-        }
-        d3_transitionPrototype.remove = function() {
-          var ns = this.namespace;
-          return this.each("end.transition", function() {
-            var p;
-            if (this[ns].count < 2 && (p = this.parentNode)) p.removeChild(this);
-          });
-        };
-        d3_transitionPrototype.ease = function(value) {
-          var id = this.id, ns = this.namespace;
-          if (arguments.length < 1) return this.node()[ns][id].ease;
-          if (typeof value !== "function") value = d356.ease.apply(d356, arguments);
-          return d3_selection_each(this, function(node) {
-            node[ns][id].ease = value;
-          });
-        };
-        d3_transitionPrototype.delay = function(value) {
-          var id = this.id, ns = this.namespace;
-          if (arguments.length < 1) return this.node()[ns][id].delay;
-          return d3_selection_each(this, typeof value === "function" ? function(node, i, j) {
-            node[ns][id].delay = +value.call(node, node.__data__, i, j);
-          } : (value = +value, function(node) {
-            node[ns][id].delay = value;
-          }));
-        };
-        d3_transitionPrototype.duration = function(value) {
-          var id = this.id, ns = this.namespace;
-          if (arguments.length < 1) return this.node()[ns][id].duration;
-          return d3_selection_each(this, typeof value === "function" ? function(node, i, j) {
-            node[ns][id].duration = Math.max(1, value.call(node, node.__data__, i, j));
-          } : (value = Math.max(1, value), function(node) {
-            node[ns][id].duration = value;
-          }));
-        };
-        d3_transitionPrototype.each = function(type, listener) {
-          var id = this.id, ns = this.namespace;
-          if (arguments.length < 2) {
-            var inherit = d3_transitionInherit, inheritId = d3_transitionInheritId;
-            try {
-              d3_transitionInheritId = id;
-              d3_selection_each(this, function(node, i, j) {
-                d3_transitionInherit = node[ns][id];
-                type.call(node, node.__data__, i, j);
-              });
-            } finally {
-              d3_transitionInherit = inherit;
-              d3_transitionInheritId = inheritId;
-            }
-          } else {
-            d3_selection_each(this, function(node) {
-              var transition2 = node[ns][id];
-              (transition2.event || (transition2.event = d356.dispatch("start", "end", "interrupt"))).on(type, listener);
-            });
-          }
-          return this;
-        };
-        d3_transitionPrototype.transition = function() {
-          var id0 = this.id, id1 = ++d3_transitionId, ns = this.namespace, subgroups = [], subgroup, group, node, transition2;
-          for (var j = 0, m = this.length; j < m; j++) {
-            subgroups.push(subgroup = []);
-            for (var group = this[j], i = 0, n = group.length; i < n; i++) {
-              if (node = group[i]) {
-                transition2 = node[ns][id0];
-                d3_transitionNode(node, i, ns, id1, {
-                  time: transition2.time,
-                  ease: transition2.ease,
-                  delay: transition2.delay + transition2.duration,
-                  duration: transition2.duration
-                });
-              }
-              subgroup.push(node);
-            }
-          }
-          return d3_transition(subgroups, ns, id1);
-        };
-        function d3_transitionNamespace(name8) {
-          return name8 == null ? "__transition__" : "__transition_" + name8 + "__";
-        }
-        function d3_transitionNode(node, i, ns, id, inherit) {
-          var lock = node[ns] || (node[ns] = {
-            active: 0,
-            count: 0
-          }), transition2 = lock[id], time, timer, duration, ease, tweens;
-          function schedule(elapsed) {
-            var delay = transition2.delay;
-            timer.t = delay + time;
-            if (delay <= elapsed) return start(elapsed - delay);
-            timer.c = start;
-          }
-          function start(elapsed) {
-            var activeId = lock.active, active = lock[activeId];
-            if (active) {
-              active.timer.c = null;
-              active.timer.t = NaN;
-              --lock.count;
-              delete lock[activeId];
-              active.event && active.event.interrupt.call(node, node.__data__, active.index);
-            }
-            for (var cancelId in lock) {
-              if (+cancelId < id) {
-                var cancel = lock[cancelId];
-                cancel.timer.c = null;
-                cancel.timer.t = NaN;
-                --lock.count;
-                delete lock[cancelId];
-              }
-            }
-            timer.c = tick;
-            d3_timer(function() {
-              if (timer.c && tick(elapsed || 1)) {
-                timer.c = null;
-                timer.t = NaN;
-              }
-              return 1;
-            }, 0, time);
-            lock.active = id;
-            transition2.event && transition2.event.start.call(node, node.__data__, i);
-            tweens = [];
-            transition2.tween.forEach(function(key, value) {
-              if (value = value.call(node, node.__data__, i)) {
-                tweens.push(value);
-              }
-            });
-            ease = transition2.ease;
-            duration = transition2.duration;
-          }
-          function tick(elapsed) {
-            var t = elapsed / duration, e = ease(t), n = tweens.length;
-            while (n > 0) {
-              tweens[--n].call(node, e);
-            }
-            if (t >= 1) {
-              transition2.event && transition2.event.end.call(node, node.__data__, i);
-              if (--lock.count) delete lock[id];
-              else delete node[ns];
-              return 1;
-            }
-          }
-          if (!transition2) {
-            time = inherit.time;
-            timer = d3_timer(schedule, 0, time);
-            transition2 = lock[id] = {
-              tween: new d3_Map(),
-              time,
-              timer,
-              delay: inherit.delay,
-              duration: inherit.duration,
-              ease: inherit.ease,
-              index: i
-            };
-            inherit = null;
-            ++lock.count;
-          }
-        }
-        d356.svg.axis = function() {
-          var scale2 = d356.scale.linear(), orient = d3_svg_axisDefaultOrient, innerTickSize = 6, outerTickSize = 6, tickPadding = 3, tickArguments_ = [10], tickValues = null, tickFormat_;
-          function axis(g) {
-            g.each(function() {
-              var g2 = d356.select(this);
-              var scale0 = this.__chart__ || scale2, scale1 = this.__chart__ = scale2.copy();
-              var ticks2 = tickValues == null ? scale1.ticks ? scale1.ticks.apply(scale1, tickArguments_) : scale1.domain() : tickValues, tickFormat = tickFormat_ == null ? scale1.tickFormat ? scale1.tickFormat.apply(scale1, tickArguments_) : d3_identity : tickFormat_, tick = g2.selectAll(".tick").data(ticks2, scale1), tickEnter = tick.enter().insert("g", ".domain").attr("class", "tick").style("opacity", \u03B5), tickExit = d356.transition(tick.exit()).style("opacity", \u03B5).remove(), tickUpdate = d356.transition(tick.order()).style("opacity", 1), tickSpacing = Math.max(innerTickSize, 0) + tickPadding, tickTransform;
-              var range = d3_scaleRange(scale1), path = g2.selectAll(".domain").data([0]), pathUpdate = (path.enter().append("path").attr("class", "domain"), d356.transition(path));
-              tickEnter.append("line");
-              tickEnter.append("text");
-              var lineEnter = tickEnter.select("line"), lineUpdate = tickUpdate.select("line"), text = tick.select("text").text(tickFormat), textEnter = tickEnter.select("text"), textUpdate = tickUpdate.select("text"), sign2 = orient === "top" || orient === "left" ? -1 : 1, x1, x2, y1, y2;
-              if (orient === "bottom" || orient === "top") {
-                tickTransform = d3_svg_axisX, x1 = "x", y1 = "y", x2 = "x2", y2 = "y2";
-                text.attr("dy", sign2 < 0 ? "0em" : ".71em").style("text-anchor", "middle");
-                pathUpdate.attr("d", "M" + range[0] + "," + sign2 * outerTickSize + "V0H" + range[1] + "V" + sign2 * outerTickSize);
-              } else {
-                tickTransform = d3_svg_axisY, x1 = "y", y1 = "x", x2 = "y2", y2 = "x2";
-                text.attr("dy", ".32em").style("text-anchor", sign2 < 0 ? "end" : "start");
-                pathUpdate.attr("d", "M" + sign2 * outerTickSize + "," + range[0] + "H0V" + range[1] + "H" + sign2 * outerTickSize);
-              }
-              lineEnter.attr(y2, sign2 * innerTickSize);
-              textEnter.attr(y1, sign2 * tickSpacing);
-              lineUpdate.attr(x2, 0).attr(y2, sign2 * innerTickSize);
-              textUpdate.attr(x1, 0).attr(y1, sign2 * tickSpacing);
-              if (scale1.rangeBand) {
-                var x = scale1, dx = x.rangeBand() / 2;
-                scale0 = scale1 = function(d) {
-                  return x(d) + dx;
-                };
-              } else if (scale0.rangeBand) {
-                scale0 = scale1;
-              } else {
-                tickExit.call(tickTransform, scale1, scale0);
-              }
-              tickEnter.call(tickTransform, scale0, scale1);
-              tickUpdate.call(tickTransform, scale1, scale1);
-            });
-          }
-          axis.scale = function(x) {
-            if (!arguments.length) return scale2;
-            scale2 = x;
-            return axis;
-          };
-          axis.orient = function(x) {
-            if (!arguments.length) return orient;
-            orient = x in d3_svg_axisOrients ? x + "" : d3_svg_axisDefaultOrient;
-            return axis;
-          };
-          axis.ticks = function() {
-            if (!arguments.length) return tickArguments_;
-            tickArguments_ = d3_array(arguments);
-            return axis;
-          };
-          axis.tickValues = function(x) {
-            if (!arguments.length) return tickValues;
-            tickValues = x;
-            return axis;
-          };
-          axis.tickFormat = function(x) {
-            if (!arguments.length) return tickFormat_;
-            tickFormat_ = x;
-            return axis;
-          };
-          axis.tickSize = function(x) {
-            var n = arguments.length;
-            if (!n) return innerTickSize;
-            innerTickSize = +x;
-            outerTickSize = +arguments[n - 1];
-            return axis;
-          };
-          axis.innerTickSize = function(x) {
-            if (!arguments.length) return innerTickSize;
-            innerTickSize = +x;
-            return axis;
-          };
-          axis.outerTickSize = function(x) {
-            if (!arguments.length) return outerTickSize;
-            outerTickSize = +x;
-            return axis;
-          };
-          axis.tickPadding = function(x) {
-            if (!arguments.length) return tickPadding;
-            tickPadding = +x;
-            return axis;
-          };
-          axis.tickSubdivide = function() {
-            return arguments.length && axis;
-          };
-          return axis;
-        };
-        var d3_svg_axisDefaultOrient = "bottom", d3_svg_axisOrients = {
-          top: 1,
-          right: 1,
-          bottom: 1,
-          left: 1
-        };
-        function d3_svg_axisX(selection, x0, x1) {
-          selection.attr("transform", function(d) {
-            var v0 = x0(d);
-            return "translate(" + (isFinite(v0) ? v0 : x1(d)) + ",0)";
-          });
-        }
-        function d3_svg_axisY(selection, y0, y1) {
-          selection.attr("transform", function(d) {
-            var v0 = y0(d);
-            return "translate(0," + (isFinite(v0) ? v0 : y1(d)) + ")";
-          });
-        }
-        d356.svg.brush = function() {
-          var event = d3_eventDispatch(brush, "brushstart", "brush", "brushend"), x = null, y = null, xExtent = [0, 0], yExtent = [0, 0], xExtentDomain, yExtentDomain, xClamp = true, yClamp = true, resizes = d3_svg_brushResizes[0];
-          function brush(g) {
-            g.each(function() {
-              var g2 = d356.select(this).style("pointer-events", "all").style("-webkit-tap-highlight-color", "rgba(0,0,0,0)").on("mousedown.brush", brushstart).on("touchstart.brush", brushstart);
-              var background3 = g2.selectAll(".background").data([0]);
-              background3.enter().append("rect").attr("class", "background").style("visibility", "hidden").style("cursor", "crosshair");
-              g2.selectAll(".extent").data([0]).enter().append("rect").attr("class", "extent").style("cursor", "move");
-              var resize = g2.selectAll(".resize").data(resizes, d3_identity);
-              resize.exit().remove();
-              resize.enter().append("g").attr("class", function(d) {
-                return "resize " + d;
-              }).style("cursor", function(d) {
-                return d3_svg_brushCursor[d];
-              }).append("rect").attr("x", function(d) {
-                return /[ew]$/.test(d) ? -3 : null;
-              }).attr("y", function(d) {
-                return /^[ns]/.test(d) ? -3 : null;
-              }).attr("width", 6).attr("height", 6).style("visibility", "hidden");
-              resize.style("display", brush.empty() ? "none" : null);
-              var gUpdate = d356.transition(g2), backgroundUpdate = d356.transition(background3), range;
-              if (x) {
-                range = d3_scaleRange(x);
-                backgroundUpdate.attr("x", range[0]).attr("width", range[1] - range[0]);
-                redrawX(gUpdate);
-              }
-              if (y) {
-                range = d3_scaleRange(y);
-                backgroundUpdate.attr("y", range[0]).attr("height", range[1] - range[0]);
-                redrawY(gUpdate);
-              }
-              redraw3(gUpdate);
-            });
-          }
-          brush.event = function(g) {
-            g.each(function() {
-              var event_ = event.of(this, arguments), extent1 = {
-                x: xExtent,
-                y: yExtent,
-                i: xExtentDomain,
-                j: yExtentDomain
-              }, extent0 = this.__chart__ || extent1;
-              this.__chart__ = extent1;
-              if (d3_transitionInheritId) {
-                d356.select(this).transition().each("start.brush", function() {
-                  xExtentDomain = extent0.i;
-                  yExtentDomain = extent0.j;
-                  xExtent = extent0.x;
-                  yExtent = extent0.y;
-                  event_({
-                    type: "brushstart"
-                  });
-                }).tween("brush:brush", function() {
-                  var xi = d3_interpolateArray(xExtent, extent1.x), yi = d3_interpolateArray(yExtent, extent1.y);
-                  xExtentDomain = yExtentDomain = null;
-                  return function(t) {
-                    xExtent = extent1.x = xi(t);
-                    yExtent = extent1.y = yi(t);
-                    event_({
-                      type: "brush",
-                      mode: "resize"
-                    });
-                  };
-                }).each("end.brush", function() {
-                  xExtentDomain = extent1.i;
-                  yExtentDomain = extent1.j;
-                  event_({
-                    type: "brush",
-                    mode: "resize"
-                  });
-                  event_({
-                    type: "brushend"
-                  });
-                });
-              } else {
-                event_({
-                  type: "brushstart"
-                });
-                event_({
-                  type: "brush",
-                  mode: "resize"
-                });
-                event_({
-                  type: "brushend"
-                });
-              }
-            });
-          };
-          function redraw3(g) {
-            g.selectAll(".resize").attr("transform", function(d) {
-              return "translate(" + xExtent[+/e$/.test(d)] + "," + yExtent[+/^s/.test(d)] + ")";
-            });
-          }
-          function redrawX(g) {
-            g.select(".extent").attr("x", xExtent[0]);
-            g.selectAll(".extent,.n>rect,.s>rect").attr("width", xExtent[1] - xExtent[0]);
-          }
-          function redrawY(g) {
-            g.select(".extent").attr("y", yExtent[0]);
-            g.selectAll(".extent,.e>rect,.w>rect").attr("height", yExtent[1] - yExtent[0]);
-          }
-          function brushstart() {
-            var target = this, eventTarget = d356.select(d356.event.target), event_ = event.of(target, arguments), g = d356.select(target), resizing = eventTarget.datum(), resizingX = !/^(n|s)$/.test(resizing) && x, resizingY = !/^(e|w)$/.test(resizing) && y, dragging = eventTarget.classed("extent"), dragRestore = d3_event_dragSuppress(target), center, origin = d356.mouse(target), offset;
-            var w = d356.select(d3_window(target)).on("keydown.brush", keydown).on("keyup.brush", keyup);
-            if (d356.event.changedTouches) {
-              w.on("touchmove.brush", brushmove).on("touchend.brush", brushend);
-            } else {
-              w.on("mousemove.brush", brushmove).on("mouseup.brush", brushend);
-            }
-            g.interrupt().selectAll("*").interrupt();
-            if (dragging) {
-              origin[0] = xExtent[0] - origin[0];
-              origin[1] = yExtent[0] - origin[1];
-            } else if (resizing) {
-              var ex = +/w$/.test(resizing), ey = +/^n/.test(resizing);
-              offset = [xExtent[1 - ex] - origin[0], yExtent[1 - ey] - origin[1]];
-              origin[0] = xExtent[ex];
-              origin[1] = yExtent[ey];
-            } else if (d356.event.altKey) center = origin.slice();
-            g.style("pointer-events", "none").selectAll(".resize").style("display", null);
-            d356.select("body").style("cursor", eventTarget.style("cursor"));
-            event_({
-              type: "brushstart"
-            });
-            brushmove();
-            function keydown() {
-              if (d356.event.keyCode == 32) {
-                if (!dragging) {
-                  center = null;
-                  origin[0] -= xExtent[1];
-                  origin[1] -= yExtent[1];
-                  dragging = 2;
-                }
-                d3_eventPreventDefault();
-              }
-            }
-            function keyup() {
-              if (d356.event.keyCode == 32 && dragging == 2) {
-                origin[0] += xExtent[1];
-                origin[1] += yExtent[1];
-                dragging = 0;
-                d3_eventPreventDefault();
-              }
-            }
-            function brushmove() {
-              var point = d356.mouse(target), moved = false;
-              if (offset) {
-                point[0] += offset[0];
-                point[1] += offset[1];
-              }
-              if (!dragging) {
-                if (d356.event.altKey) {
-                  if (!center) center = [(xExtent[0] + xExtent[1]) / 2, (yExtent[0] + yExtent[1]) / 2];
-                  origin[0] = xExtent[+(point[0] < center[0])];
-                  origin[1] = yExtent[+(point[1] < center[1])];
-                } else center = null;
-              }
-              if (resizingX && move1(point, x, 0)) {
-                redrawX(g);
-                moved = true;
-              }
-              if (resizingY && move1(point, y, 1)) {
-                redrawY(g);
-                moved = true;
-              }
-              if (moved) {
-                redraw3(g);
-                event_({
-                  type: "brush",
-                  mode: dragging ? "move" : "resize"
-                });
-              }
-            }
-            function move1(point, scale2, i) {
-              var range = d3_scaleRange(scale2), r0 = range[0], r1 = range[1], position = origin[i], extent2 = i ? yExtent : xExtent, size = extent2[1] - extent2[0], min, max;
-              if (dragging) {
-                r0 -= position;
-                r1 -= size + position;
-              }
-              min = (i ? yClamp : xClamp) ? Math.max(r0, Math.min(r1, point[i])) : point[i];
-              if (dragging) {
-                max = (min += position) + size;
-              } else {
-                if (center) position = Math.max(r0, Math.min(r1, 2 * center[i] - min));
-                if (position < min) {
-                  max = min;
-                  min = position;
-                } else {
-                  max = position;
-                }
-              }
-              if (extent2[0] != min || extent2[1] != max) {
-                if (i) yExtentDomain = null;
-                else xExtentDomain = null;
-                extent2[0] = min;
-                extent2[1] = max;
-                return true;
-              }
-            }
-            function brushend() {
-              brushmove();
-              g.style("pointer-events", "all").selectAll(".resize").style("display", brush.empty() ? "none" : null);
-              d356.select("body").style("cursor", null);
-              w.on("mousemove.brush", null).on("mouseup.brush", null).on("touchmove.brush", null).on("touchend.brush", null).on("keydown.brush", null).on("keyup.brush", null);
-              dragRestore();
-              event_({
-                type: "brushend"
-              });
-            }
-          }
-          brush.x = function(z) {
-            if (!arguments.length) return x;
-            x = z;
-            resizes = d3_svg_brushResizes[!x << 1 | !y];
-            return brush;
-          };
-          brush.y = function(z) {
-            if (!arguments.length) return y;
-            y = z;
-            resizes = d3_svg_brushResizes[!x << 1 | !y];
-            return brush;
-          };
-          brush.clamp = function(z) {
-            if (!arguments.length) return x && y ? [xClamp, yClamp] : x ? xClamp : y ? yClamp : null;
-            if (x && y) xClamp = !!z[0], yClamp = !!z[1];
-            else if (x) xClamp = !!z;
-            else if (y) yClamp = !!z;
-            return brush;
-          };
-          brush.extent = function(z) {
-            var x0, x1, y0, y1, t;
-            if (!arguments.length) {
-              if (x) {
-                if (xExtentDomain) {
-                  x0 = xExtentDomain[0], x1 = xExtentDomain[1];
-                } else {
-                  x0 = xExtent[0], x1 = xExtent[1];
-                  if (x.invert) x0 = x.invert(x0), x1 = x.invert(x1);
-                  if (x1 < x0) t = x0, x0 = x1, x1 = t;
-                }
-              }
-              if (y) {
-                if (yExtentDomain) {
-                  y0 = yExtentDomain[0], y1 = yExtentDomain[1];
-                } else {
-                  y0 = yExtent[0], y1 = yExtent[1];
-                  if (y.invert) y0 = y.invert(y0), y1 = y.invert(y1);
-                  if (y1 < y0) t = y0, y0 = y1, y1 = t;
-                }
-              }
-              return x && y ? [[x0, y0], [x1, y1]] : x ? [x0, x1] : y && [y0, y1];
-            }
-            if (x) {
-              x0 = z[0], x1 = z[1];
-              if (y) x0 = x0[0], x1 = x1[0];
-              xExtentDomain = [x0, x1];
-              if (x.invert) x0 = x(x0), x1 = x(x1);
-              if (x1 < x0) t = x0, x0 = x1, x1 = t;
-              if (x0 != xExtent[0] || x1 != xExtent[1]) xExtent = [x0, x1];
-            }
-            if (y) {
-              y0 = z[0], y1 = z[1];
-              if (x) y0 = y0[1], y1 = y1[1];
-              yExtentDomain = [y0, y1];
-              if (y.invert) y0 = y(y0), y1 = y(y1);
-              if (y1 < y0) t = y0, y0 = y1, y1 = t;
-              if (y0 != yExtent[0] || y1 != yExtent[1]) yExtent = [y0, y1];
-            }
-            return brush;
-          };
-          brush.clear = function() {
-            if (!brush.empty()) {
-              xExtent = [0, 0], yExtent = [0, 0];
-              xExtentDomain = yExtentDomain = null;
-            }
-            return brush;
-          };
-          brush.empty = function() {
-            return !!x && xExtent[0] == xExtent[1] || !!y && yExtent[0] == yExtent[1];
-          };
-          return d356.rebind(brush, event, "on");
-        };
-        var d3_svg_brushCursor = {
-          n: "ns-resize",
-          e: "ew-resize",
-          s: "ns-resize",
-          w: "ew-resize",
-          nw: "nwse-resize",
-          ne: "nesw-resize",
-          se: "nwse-resize",
-          sw: "nesw-resize"
-        };
-        var d3_svg_brushResizes = [["n", "e", "s", "w", "nw", "ne", "se", "sw"], ["e", "w"], ["n", "s"], []];
-        d356.text = d3_xhrType(function(request) {
-          return request.responseText;
-        });
-        d356.json = function(url, callback) {
-          return d3_xhr(url, "application/json", d3_json, callback);
-        };
-        function d3_json(request) {
-          return JSON.parse(request.responseText);
-        }
-        d356.html = function(url, callback) {
-          return d3_xhr(url, "text/html", d3_html, callback);
-        };
-        function d3_html(request) {
-          var range = d3_document.createRange();
-          range.selectNode(d3_document.body);
-          return range.createContextualFragment(request.responseText);
-        }
-        d356.xml = d3_xhrType(function(request) {
-          return request.responseXML;
-        });
-        if (typeof define === "function" && false) define(d356);
-        else if (typeof module === "object" && module.exports) module.exports = d356;
-        else this.d3 = d356;
-      }.apply(self);
-    }
-  });
-
   // node_modules/.pnpm/is-string-blank@1.0.1/node_modules/is-string-blank/index.js
   var require_is_string_blank = __commonJS({
     "node_modules/.pnpm/is-string-blank@1.0.1/node_modules/is-string-blank/index.js"(exports, module) {
@@ -6986,8 +98,8 @@ var Plotly = (() => {
   // node_modules/.pnpm/gl-mat4@1.2.0/node_modules/gl-mat4/create.js
   var require_create = __commonJS({
     "node_modules/.pnpm/gl-mat4@1.2.0/node_modules/gl-mat4/create.js"(exports, module) {
-      module.exports = create;
-      function create() {
+      module.exports = create2;
+      function create2() {
         var out = new Float32Array(16);
         out[0] = 1;
         out[1] = 0;
@@ -7040,8 +152,8 @@ var Plotly = (() => {
   // node_modules/.pnpm/gl-mat4@1.2.0/node_modules/gl-mat4/copy.js
   var require_copy = __commonJS({
     "node_modules/.pnpm/gl-mat4@1.2.0/node_modules/gl-mat4/copy.js"(exports, module) {
-      module.exports = copy;
-      function copy(out, a) {
+      module.exports = copy2;
+      function copy2(out, a) {
         out[0] = a[0];
         out[1] = a[1];
         out[2] = a[2];
@@ -7066,8 +178,8 @@ var Plotly = (() => {
   // node_modules/.pnpm/gl-mat4@1.2.0/node_modules/gl-mat4/identity.js
   var require_identity = __commonJS({
     "node_modules/.pnpm/gl-mat4@1.2.0/node_modules/gl-mat4/identity.js"(exports, module) {
-      module.exports = identity3;
-      function identity3(out) {
+      module.exports = identity6;
+      function identity6(out) {
         out[0] = 1;
         out[1] = 0;
         out[2] = 0;
@@ -7206,35 +318,35 @@ var Plotly = (() => {
       module.exports = multiply;
       function multiply(out, a, b) {
         var a00 = a[0], a01 = a[1], a02 = a[2], a03 = a[3], a10 = a[4], a11 = a[5], a12 = a[6], a13 = a[7], a20 = a[8], a21 = a[9], a22 = a[10], a23 = a[11], a30 = a[12], a31 = a[13], a32 = a[14], a33 = a[15];
-        var b0 = b[0], b1 = b[1], b2 = b[2], b3 = b[3];
-        out[0] = b0 * a00 + b1 * a10 + b2 * a20 + b3 * a30;
-        out[1] = b0 * a01 + b1 * a11 + b2 * a21 + b3 * a31;
-        out[2] = b0 * a02 + b1 * a12 + b2 * a22 + b3 * a32;
-        out[3] = b0 * a03 + b1 * a13 + b2 * a23 + b3 * a33;
-        b0 = b[4];
-        b1 = b[5];
-        b2 = b[6];
-        b3 = b[7];
-        out[4] = b0 * a00 + b1 * a10 + b2 * a20 + b3 * a30;
-        out[5] = b0 * a01 + b1 * a11 + b2 * a21 + b3 * a31;
-        out[6] = b0 * a02 + b1 * a12 + b2 * a22 + b3 * a32;
-        out[7] = b0 * a03 + b1 * a13 + b2 * a23 + b3 * a33;
-        b0 = b[8];
-        b1 = b[9];
-        b2 = b[10];
-        b3 = b[11];
-        out[8] = b0 * a00 + b1 * a10 + b2 * a20 + b3 * a30;
-        out[9] = b0 * a01 + b1 * a11 + b2 * a21 + b3 * a31;
-        out[10] = b0 * a02 + b1 * a12 + b2 * a22 + b3 * a32;
-        out[11] = b0 * a03 + b1 * a13 + b2 * a23 + b3 * a33;
-        b0 = b[12];
-        b1 = b[13];
-        b2 = b[14];
-        b3 = b[15];
-        out[12] = b0 * a00 + b1 * a10 + b2 * a20 + b3 * a30;
-        out[13] = b0 * a01 + b1 * a11 + b2 * a21 + b3 * a31;
-        out[14] = b0 * a02 + b1 * a12 + b2 * a22 + b3 * a32;
-        out[15] = b0 * a03 + b1 * a13 + b2 * a23 + b3 * a33;
+        var b02 = b[0], b12 = b[1], b22 = b[2], b32 = b[3];
+        out[0] = b02 * a00 + b12 * a10 + b22 * a20 + b32 * a30;
+        out[1] = b02 * a01 + b12 * a11 + b22 * a21 + b32 * a31;
+        out[2] = b02 * a02 + b12 * a12 + b22 * a22 + b32 * a32;
+        out[3] = b02 * a03 + b12 * a13 + b22 * a23 + b32 * a33;
+        b02 = b[4];
+        b12 = b[5];
+        b22 = b[6];
+        b32 = b[7];
+        out[4] = b02 * a00 + b12 * a10 + b22 * a20 + b32 * a30;
+        out[5] = b02 * a01 + b12 * a11 + b22 * a21 + b32 * a31;
+        out[6] = b02 * a02 + b12 * a12 + b22 * a22 + b32 * a32;
+        out[7] = b02 * a03 + b12 * a13 + b22 * a23 + b32 * a33;
+        b02 = b[8];
+        b12 = b[9];
+        b22 = b[10];
+        b32 = b[11];
+        out[8] = b02 * a00 + b12 * a10 + b22 * a20 + b32 * a30;
+        out[9] = b02 * a01 + b12 * a11 + b22 * a21 + b32 * a31;
+        out[10] = b02 * a02 + b12 * a12 + b22 * a22 + b32 * a32;
+        out[11] = b02 * a03 + b12 * a13 + b22 * a23 + b32 * a33;
+        b02 = b[12];
+        b12 = b[13];
+        b22 = b[14];
+        b32 = b[15];
+        out[12] = b02 * a00 + b12 * a10 + b22 * a20 + b32 * a30;
+        out[13] = b02 * a01 + b12 * a11 + b22 * a21 + b32 * a31;
+        out[14] = b02 * a02 + b12 * a12 + b22 * a22 + b32 * a32;
+        out[15] = b02 * a03 + b12 * a13 + b22 * a23 + b32 * a33;
         return out;
       }
     }
@@ -7799,12 +911,12 @@ var Plotly = (() => {
   // node_modules/.pnpm/gl-mat4@1.2.0/node_modules/gl-mat4/lookAt.js
   var require_lookAt = __commonJS({
     "node_modules/.pnpm/gl-mat4@1.2.0/node_modules/gl-mat4/lookAt.js"(exports, module) {
-      var identity3 = require_identity();
+      var identity6 = require_identity();
       module.exports = lookAt;
       function lookAt(out, eye, center, up) {
         var x0, x1, x2, y0, y1, y2, z0, z1, z2, len2, eyex = eye[0], eyey = eye[1], eyez = eye[2], upx = up[0], upy = up[1], upz = up[2], centerx = center[0], centery = center[1], centerz = center[2];
         if (Math.abs(eyex - centerx) < 1e-6 && Math.abs(eyey - centery) < 1e-6 && Math.abs(eyez - centerz) < 1e-6) {
-          return identity3(out);
+          return identity6(out);
         }
         z0 = eyex - centerx;
         z1 = eyey - centery;
@@ -8243,10 +1355,10 @@ var Plotly = (() => {
         return this._eventsCount > 0 ? ReflectOwnKeys(this._events) : [];
       };
       function arrayClone(arr, n) {
-        var copy = new Array(n);
+        var copy2 = new Array(n);
         for (var i = 0; i < n; ++i)
-          copy[i] = arr[i];
-        return copy;
+          copy2[i] = arr[i];
+        return copy2;
       }
       function spliceOne(list2, index) {
         for (; index + 1 < list2.length; index++)
@@ -8332,9 +1444,9 @@ var Plotly = (() => {
         });
         return data;
       }
-      var number = /-?[0-9]*\.?[0-9]+(?:e[-+]?\d+)?/ig;
+      var number3 = /-?[0-9]*\.?[0-9]+(?:e[-+]?\d+)?/ig;
       function parseValues(args) {
-        var numbers = args.match(number);
+        var numbers = args.match(number3);
         return numbers ? numbers.map(Number) : [];
       }
     }
@@ -8412,7 +1524,7 @@ var Plotly = (() => {
         }
       })("Promise", typeof window != "undefined" ? window : exports, function DEF() {
         "use strict";
-        var builtInProp, cycle, scheduling_queue, ToString = Object.prototype.toString, timer = typeof setImmediate != "undefined" ? function timer2(fn) {
+        var builtInProp, cycle, scheduling_queue, ToString = Object.prototype.toString, timer2 = typeof setImmediate != "undefined" ? function timer3(fn) {
           return setImmediate(fn);
         } : setTimeout;
         try {
@@ -8461,7 +1573,7 @@ var Plotly = (() => {
         function schedule(fn, self2) {
           scheduling_queue.add(fn, self2);
           if (!cycle) {
-            cycle = timer(scheduling_queue.drain);
+            cycle = timer2(scheduling_queue.drain);
           }
         }
         function isThenable(o) {
@@ -8861,16 +1973,16 @@ var Plotly = (() => {
             var dy2 = pt2[1] - pt3[1];
             return Math.abs(dx1 * dy2 - dx2 * dy1) < eps;
           },
-          linesIntersect: function(a0, a1, b0, b1) {
+          linesIntersect: function(a0, a1, b02, b12) {
             var adx = a1[0] - a0[0];
             var ady = a1[1] - a0[1];
-            var bdx = b1[0] - b0[0];
-            var bdy = b1[1] - b0[1];
+            var bdx = b12[0] - b02[0];
+            var bdy = b12[1] - b02[1];
             var axb = adx * bdy - ady * bdx;
             if (Math.abs(axb) < eps)
               return false;
-            var dx = a0[0] - b0[0];
-            var dy = a0[1] - b0[1];
+            var dx = a0[0] - b02[0];
+            var dy = a0[1] - b02[1];
             var A = (bdx * dy - bdy * dx) / axb;
             var B = (adx * dy - ady * dx) / axb;
             var ret = {
@@ -9009,10 +2121,10 @@ var Plotly = (() => {
     "node_modules/.pnpm/polybooljs@1.2.2/node_modules/polybooljs/lib/intersecter.js"(exports, module) {
       var LinkedList = require_linked_list();
       function Intersecter(selfIntersection, eps, buildLog) {
-        function segmentNew(start, end) {
+        function segmentNew(start2, end) {
           return {
             id: buildLog ? buildLog.segmentId() : -1,
-            start,
+            start: start2,
             end,
             myFill: {
               above: null,
@@ -9023,10 +2135,10 @@ var Plotly = (() => {
             otherFill: null
           };
         }
-        function segmentCopy(start, end, seg) {
+        function segmentCopy(start2, end, seg) {
           return {
             id: buildLog ? buildLog.segmentId() : -1,
-            start,
+            start: start2,
             end,
             myFill: {
               above: seg.myFill.above,
@@ -9111,14 +2223,14 @@ var Plotly = (() => {
           function statusCompare(ev1, ev2) {
             var a1 = ev1.seg.start;
             var a2 = ev1.seg.end;
-            var b1 = ev2.seg.start;
-            var b2 = ev2.seg.end;
-            if (eps.pointsCollinear(a1, b1, b2)) {
-              if (eps.pointsCollinear(a2, b1, b2))
+            var b12 = ev2.seg.start;
+            var b22 = ev2.seg.end;
+            if (eps.pointsCollinear(a1, b12, b22)) {
+              if (eps.pointsCollinear(a2, b12, b22))
                 return 1;
-              return eps.pointAboveOrOnLine(a2, b1, b2) ? 1 : -1;
+              return eps.pointAboveOrOnLine(a2, b12, b22) ? 1 : -1;
             }
-            return eps.pointAboveOrOnLine(a1, b1, b2) ? 1 : -1;
+            return eps.pointAboveOrOnLine(a1, b12, b22) ? 1 : -1;
           }
           function statusFindSurrounding(ev2) {
             return status_root.findTransition(function(here) {
@@ -9131,27 +2243,27 @@ var Plotly = (() => {
             var seg2 = ev2.seg;
             var a1 = seg1.start;
             var a2 = seg1.end;
-            var b1 = seg2.start;
-            var b2 = seg2.end;
+            var b12 = seg2.start;
+            var b22 = seg2.end;
             if (buildLog)
               buildLog.checkIntersection(seg1, seg2);
-            var i = eps.linesIntersect(a1, a2, b1, b2);
+            var i = eps.linesIntersect(a1, a2, b12, b22);
             if (i === false) {
-              if (!eps.pointsCollinear(a1, a2, b1))
+              if (!eps.pointsCollinear(a1, a2, b12))
                 return false;
-              if (eps.pointsSame(a1, b2) || eps.pointsSame(a2, b1))
+              if (eps.pointsSame(a1, b22) || eps.pointsSame(a2, b12))
                 return false;
-              var a1_equ_b1 = eps.pointsSame(a1, b1);
-              var a2_equ_b2 = eps.pointsSame(a2, b2);
+              var a1_equ_b1 = eps.pointsSame(a1, b12);
+              var a2_equ_b2 = eps.pointsSame(a2, b22);
               if (a1_equ_b1 && a2_equ_b2)
                 return ev2;
-              var a1_between = !a1_equ_b1 && eps.pointBetween(a1, b1, b2);
-              var a2_between = !a2_equ_b2 && eps.pointBetween(a2, b1, b2);
+              var a1_between = !a1_equ_b1 && eps.pointBetween(a1, b12, b22);
+              var a2_between = !a2_equ_b2 && eps.pointBetween(a2, b12, b22);
               if (a1_equ_b1) {
                 if (a2_between) {
                   eventDivide(ev2, a2);
                 } else {
-                  eventDivide(ev1, b2);
+                  eventDivide(ev1, b22);
                 }
                 return ev2;
               } else if (a1_between) {
@@ -9159,7 +2271,7 @@ var Plotly = (() => {
                   if (a2_between) {
                     eventDivide(ev2, a2);
                   } else {
-                    eventDivide(ev1, b2);
+                    eventDivide(ev1, b22);
                   }
                 }
                 eventDivide(ev2, a1);
@@ -9167,11 +2279,11 @@ var Plotly = (() => {
             } else {
               if (i.alongA === 0) {
                 if (i.alongB === -1)
-                  eventDivide(ev1, b1);
+                  eventDivide(ev1, b12);
                 else if (i.alongB === 0)
                   eventDivide(ev1, i.pt);
                 else if (i.alongB === 1)
-                  eventDivide(ev1, b2);
+                  eventDivide(ev1, b22);
               }
               if (i.alongB === 0) {
                 if (i.alongA === -1)
@@ -9523,19 +2635,19 @@ var Plotly = (() => {
   // node_modules/.pnpm/polybooljs@1.2.2/node_modules/polybooljs/lib/segment-selector.js
   var require_segment_selector = __commonJS({
     "node_modules/.pnpm/polybooljs@1.2.2/node_modules/polybooljs/lib/segment-selector.js"(exports, module) {
-      function select(segments, selection, buildLog) {
+      function select(segments, selection2, buildLog) {
         var result = [];
         segments.forEach(function(seg) {
           var index = (seg.myFill.above ? 8 : 0) + (seg.myFill.below ? 4 : 0) + (seg.otherFill && seg.otherFill.above ? 2 : 0) + (seg.otherFill && seg.otherFill.below ? 1 : 0);
-          if (selection[index] !== 0) {
+          if (selection2[index] !== 0) {
             result.push({
               id: buildLog ? buildLog.segmentId() : -1,
               start: seg.start,
               end: seg.end,
               myFill: {
-                above: selection[index] === 1,
+                above: selection2[index] === 1,
                 // 1 if filled above
-                below: selection[index] === 2
+                below: selection2[index] === 2
                 // 2 if filled below
               },
               otherFill: null
@@ -9696,24 +2808,24 @@ var Plotly = (() => {
             };
           }
           var roots = newNode(null);
-          function addChild(root, region2) {
-            for (var i2 = 0; i2 < root.children.length; i2++) {
-              var child = root.children[i2];
+          function addChild(root2, region2) {
+            for (var i2 = 0; i2 < root2.children.length; i2++) {
+              var child = root2.children[i2];
               if (regionInsideRegion(region2, child.region)) {
                 addChild(child, region2);
                 return;
               }
             }
             var node = newNode(region2);
-            for (var i2 = 0; i2 < root.children.length; i2++) {
-              var child = root.children[i2];
+            for (var i2 = 0; i2 < root2.children.length; i2++) {
+              var child = root2.children[i2];
               if (regionInsideRegion(child.region, region2)) {
                 node.children.push(child);
-                root.children.splice(i2, 1);
+                root2.children.splice(i2, 1);
                 i2--;
               }
             }
-            root.children.push(node);
+            root2.children.push(node);
           }
           for (var i = 0; i < poly.regions.length; i++) {
             var region = poly.regions[i];
@@ -9725,20 +2837,20 @@ var Plotly = (() => {
             var winding = 0;
             var last_x = region2[region2.length - 1][0];
             var last_y = region2[region2.length - 1][1];
-            var copy = [];
+            var copy2 = [];
             for (var i2 = 0; i2 < region2.length; i2++) {
               var curr_x = region2[i2][0];
               var curr_y = region2[i2][1];
-              copy.push([curr_x, curr_y]);
+              copy2.push([curr_x, curr_y]);
               winding += curr_y * last_x - curr_x * last_y;
               last_x = curr_x;
               last_y = curr_y;
             }
             var isclockwise = winding < 0;
             if (isclockwise !== clockwise)
-              copy.reverse();
-            copy.push([copy[0][0], copy[0][1]]);
-            return copy;
+              copy2.reverse();
+            copy2.push([copy2[0][0], copy2[0][1]]);
+            return copy2;
           }
           var geopolys = [];
           function addExterior(node) {
@@ -9892,15 +3004,15 @@ var Plotly = (() => {
   // node_modules/.pnpm/point-in-polygon@1.1.0/node_modules/point-in-polygon/nested.js
   var require_nested = __commonJS({
     "node_modules/.pnpm/point-in-polygon@1.1.0/node_modules/point-in-polygon/nested.js"(exports, module) {
-      module.exports = function pointInPolygonNested(point, vs, start, end) {
+      module.exports = function pointInPolygonNested(point, vs, start2, end) {
         var x = point[0], y = point[1];
         var inside = false;
-        if (start === void 0) start = 0;
+        if (start2 === void 0) start2 = 0;
         if (end === void 0) end = vs.length;
-        var len2 = end - start;
+        var len2 = end - start2;
         for (var i = 0, j = len2 - 1; i < len2; j = i++) {
-          var xi = vs[i + start][0], yi = vs[i + start][1];
-          var xj = vs[j + start][0], yj = vs[j + start][1];
+          var xi = vs[i + start2][0], yi = vs[i + start2][1];
+          var xj = vs[j + start2][0], yj = vs[j + start2][1];
           var intersect = yi > y !== yj > y && x < (xj - xi) * (y - yi) / (yj - yi) + xi;
           if (intersect) inside = !inside;
         }
@@ -10015,10 +3127,10 @@ var Plotly = (() => {
       function tripletToBase64(num) {
         return lookup2[num >> 18 & 63] + lookup2[num >> 12 & 63] + lookup2[num >> 6 & 63] + lookup2[num & 63];
       }
-      function encodeChunk(uint8, start, end) {
+      function encodeChunk(uint8, start2, end) {
         var tmp;
         var output = [];
-        for (var i2 = start; i2 < end; i2 += 3) {
+        for (var i2 = start2; i2 < end; i2 += 3) {
           tmp = (uint8[i2] << 16 & 16711680) + (uint8[i2 + 1] << 8 & 65280) + (uint8[i2 + 2] & 255);
           output.push(tripletToBase64(tmp));
         }
@@ -10283,35 +3395,35 @@ var Plotly = (() => {
         }
         return buf;
       }
-      function fromArrayLike(array) {
-        const length = array.length < 0 ? 0 : checked(array.length) | 0;
+      function fromArrayLike(array2) {
+        const length = array2.length < 0 ? 0 : checked(array2.length) | 0;
         const buf = createBuffer(length);
         for (let i = 0; i < length; i += 1) {
-          buf[i] = array[i] & 255;
+          buf[i] = array2[i] & 255;
         }
         return buf;
       }
       function fromArrayView(arrayView) {
         if (isInstance(arrayView, Uint8Array)) {
-          const copy = new Uint8Array(arrayView);
-          return fromArrayBuffer(copy.buffer, copy.byteOffset, copy.byteLength);
+          const copy2 = new Uint8Array(arrayView);
+          return fromArrayBuffer(copy2.buffer, copy2.byteOffset, copy2.byteLength);
         }
         return fromArrayLike(arrayView);
       }
-      function fromArrayBuffer(array, byteOffset, length) {
-        if (byteOffset < 0 || array.byteLength < byteOffset) {
+      function fromArrayBuffer(array2, byteOffset, length) {
+        if (byteOffset < 0 || array2.byteLength < byteOffset) {
           throw new RangeError('"offset" is outside of buffer bounds');
         }
-        if (array.byteLength < byteOffset + (length || 0)) {
+        if (array2.byteLength < byteOffset + (length || 0)) {
           throw new RangeError('"length" is outside of buffer bounds');
         }
         let buf;
         if (byteOffset === void 0 && length === void 0) {
-          buf = new Uint8Array(array);
+          buf = new Uint8Array(array2);
         } else if (length === void 0) {
-          buf = new Uint8Array(array, byteOffset);
+          buf = new Uint8Array(array2, byteOffset);
         } else {
-          buf = new Uint8Array(array, byteOffset, length);
+          buf = new Uint8Array(array2, byteOffset, length);
         }
         Object.setPrototypeOf(buf, Buffer3.prototype);
         return buf;
@@ -10473,12 +3585,12 @@ var Plotly = (() => {
         }
       }
       Buffer3.byteLength = byteLength;
-      function slowToString(encoding, start, end) {
+      function slowToString(encoding, start2, end) {
         let loweredCase = false;
-        if (start === void 0 || start < 0) {
-          start = 0;
+        if (start2 === void 0 || start2 < 0) {
+          start2 = 0;
         }
-        if (start > this.length) {
+        if (start2 > this.length) {
           return "";
         }
         if (end === void 0 || end > this.length) {
@@ -10488,30 +3600,30 @@ var Plotly = (() => {
           return "";
         }
         end >>>= 0;
-        start >>>= 0;
-        if (end <= start) {
+        start2 >>>= 0;
+        if (end <= start2) {
           return "";
         }
         if (!encoding) encoding = "utf8";
         while (true) {
           switch (encoding) {
             case "hex":
-              return hexSlice(this, start, end);
+              return hexSlice(this, start2, end);
             case "utf8":
             case "utf-8":
-              return utf8Slice(this, start, end);
+              return utf8Slice(this, start2, end);
             case "ascii":
-              return asciiSlice(this, start, end);
+              return asciiSlice(this, start2, end);
             case "latin1":
             case "binary":
-              return latin1Slice(this, start, end);
+              return latin1Slice(this, start2, end);
             case "base64":
-              return base64Slice(this, start, end);
+              return base64Slice(this, start2, end);
             case "ucs2":
             case "ucs-2":
             case "utf16le":
             case "utf-16le":
-              return utf16leSlice(this, start, end);
+              return utf16leSlice(this, start2, end);
             default:
               if (loweredCase) throw new TypeError("Unknown encoding: " + encoding);
               encoding = (encoding + "").toLowerCase();
@@ -10573,15 +3685,15 @@ var Plotly = (() => {
       };
       Buffer3.prototype.inspect = function inspect() {
         let str = "";
-        const max = exports.INSPECT_MAX_BYTES;
-        str = this.toString("hex", 0, max).replace(/(.{2})/g, "$1 ").trim();
-        if (this.length > max) str += " ... ";
+        const max2 = exports.INSPECT_MAX_BYTES;
+        str = this.toString("hex", 0, max2).replace(/(.{2})/g, "$1 ").trim();
+        if (this.length > max2) str += " ... ";
         return "<Buffer " + str + ">";
       };
       if (customInspectSymbol) {
         Buffer3.prototype[customInspectSymbol] = Buffer3.prototype.inspect;
       }
-      Buffer3.prototype.compare = function compare(target, start, end, thisStart, thisEnd) {
+      Buffer3.prototype.compare = function compare(target, start2, end, thisStart, thisEnd) {
         if (isInstance(target, Uint8Array)) {
           target = Buffer3.from(target, target.offset, target.byteLength);
         }
@@ -10590,8 +3702,8 @@ var Plotly = (() => {
             'The "target" argument must be one of type Buffer or Uint8Array. Received type ' + typeof target
           );
         }
-        if (start === void 0) {
-          start = 0;
+        if (start2 === void 0) {
+          start2 = 0;
         }
         if (end === void 0) {
           end = target ? target.length : 0;
@@ -10602,28 +3714,28 @@ var Plotly = (() => {
         if (thisEnd === void 0) {
           thisEnd = this.length;
         }
-        if (start < 0 || end > target.length || thisStart < 0 || thisEnd > this.length) {
+        if (start2 < 0 || end > target.length || thisStart < 0 || thisEnd > this.length) {
           throw new RangeError("out of range index");
         }
-        if (thisStart >= thisEnd && start >= end) {
+        if (thisStart >= thisEnd && start2 >= end) {
           return 0;
         }
         if (thisStart >= thisEnd) {
           return -1;
         }
-        if (start >= end) {
+        if (start2 >= end) {
           return 1;
         }
-        start >>>= 0;
+        start2 >>>= 0;
         end >>>= 0;
         thisStart >>>= 0;
         thisEnd >>>= 0;
         if (this === target) return 0;
         let x = thisEnd - thisStart;
-        let y = end - start;
+        let y = end - start2;
         const len2 = Math.min(x, y);
         const thisCopy = this.slice(thisStart, thisEnd);
-        const targetCopy = target.slice(start, end);
+        const targetCopy = target.slice(start2, end);
         for (let i = 0; i < len2; ++i) {
           if (thisCopy[i] !== targetCopy[i]) {
             x = thisCopy[i];
@@ -10833,17 +3945,17 @@ var Plotly = (() => {
           data: Array.prototype.slice.call(this._arr || this, 0)
         };
       };
-      function base64Slice(buf, start, end) {
-        if (start === 0 && end === buf.length) {
+      function base64Slice(buf, start2, end) {
+        if (start2 === 0 && end === buf.length) {
           return base64.fromByteArray(buf);
         } else {
-          return base64.fromByteArray(buf.slice(start, end));
+          return base64.fromByteArray(buf.slice(start2, end));
         }
       }
-      function utf8Slice(buf, start, end) {
+      function utf8Slice(buf, start2, end) {
         end = Math.min(buf.length, end);
         const res = [];
-        let i = start;
+        let i = start2;
         while (i < end) {
           const firstByte = buf[i];
           let codePoint = null;
@@ -10916,49 +4028,49 @@ var Plotly = (() => {
         }
         return res;
       }
-      function asciiSlice(buf, start, end) {
+      function asciiSlice(buf, start2, end) {
         let ret = "";
         end = Math.min(buf.length, end);
-        for (let i = start; i < end; ++i) {
+        for (let i = start2; i < end; ++i) {
           ret += String.fromCharCode(buf[i] & 127);
         }
         return ret;
       }
-      function latin1Slice(buf, start, end) {
+      function latin1Slice(buf, start2, end) {
         let ret = "";
         end = Math.min(buf.length, end);
-        for (let i = start; i < end; ++i) {
+        for (let i = start2; i < end; ++i) {
           ret += String.fromCharCode(buf[i]);
         }
         return ret;
       }
-      function hexSlice(buf, start, end) {
+      function hexSlice(buf, start2, end) {
         const len2 = buf.length;
-        if (!start || start < 0) start = 0;
+        if (!start2 || start2 < 0) start2 = 0;
         if (!end || end < 0 || end > len2) end = len2;
         let out = "";
-        for (let i = start; i < end; ++i) {
+        for (let i = start2; i < end; ++i) {
           out += hexSliceLookupTable[buf[i]];
         }
         return out;
       }
-      function utf16leSlice(buf, start, end) {
-        const bytes = buf.slice(start, end);
+      function utf16leSlice(buf, start2, end) {
+        const bytes = buf.slice(start2, end);
         let res = "";
         for (let i = 0; i < bytes.length - 1; i += 2) {
           res += String.fromCharCode(bytes[i] + bytes[i + 1] * 256);
         }
         return res;
       }
-      Buffer3.prototype.slice = function slice(start, end) {
+      Buffer3.prototype.slice = function slice(start2, end) {
         const len2 = this.length;
-        start = ~~start;
+        start2 = ~~start2;
         end = end === void 0 ? len2 : ~~end;
-        if (start < 0) {
-          start += len2;
-          if (start < 0) start = 0;
-        } else if (start > len2) {
-          start = len2;
+        if (start2 < 0) {
+          start2 += len2;
+          if (start2 < 0) start2 = 0;
+        } else if (start2 > len2) {
+          start2 = len2;
         }
         if (end < 0) {
           end += len2;
@@ -10966,8 +4078,8 @@ var Plotly = (() => {
         } else if (end > len2) {
           end = len2;
         }
-        if (end < start) end = start;
-        const newBuf = this.subarray(start, end);
+        if (end < start2) end = start2;
+        const newBuf = this.subarray(start2, end);
         Object.setPrototypeOf(newBuf, Buffer3.prototype);
         return newBuf;
       };
@@ -11148,9 +4260,9 @@ var Plotly = (() => {
         if (!noAssert) checkOffset(offset, 8, this.length);
         return ieee754.read(this, offset, false, 52, 8);
       };
-      function checkInt(buf, value, offset, ext, max, min) {
+      function checkInt(buf, value, offset, ext, max2, min2) {
         if (!Buffer3.isBuffer(buf)) throw new TypeError('"buffer" argument must be a Buffer instance');
-        if (value > max || value < min) throw new RangeError('"value" argument is out of bounds');
+        if (value > max2 || value < min2) throw new RangeError('"value" argument is out of bounds');
         if (offset + ext > buf.length) throw new RangeError("Index out of range");
       }
       Buffer3.prototype.writeUintLE = Buffer3.prototype.writeUIntLE = function writeUIntLE(value, offset, byteLength2, noAssert) {
@@ -11228,8 +4340,8 @@ var Plotly = (() => {
         this[offset + 3] = value & 255;
         return offset + 4;
       };
-      function wrtBigUInt64LE(buf, value, offset, min, max) {
-        checkIntBI(value, min, max, buf, offset, 7);
+      function wrtBigUInt64LE(buf, value, offset, min2, max2) {
+        checkIntBI(value, min2, max2, buf, offset, 7);
         let lo = Number(value & BigInt(4294967295));
         buf[offset++] = lo;
         lo = lo >> 8;
@@ -11248,8 +4360,8 @@ var Plotly = (() => {
         buf[offset++] = hi;
         return offset;
       }
-      function wrtBigUInt64BE(buf, value, offset, min, max) {
-        checkIntBI(value, min, max, buf, offset, 7);
+      function wrtBigUInt64BE(buf, value, offset, min2, max2) {
+        checkIntBI(value, min2, max2, buf, offset, 7);
         let lo = Number(value & BigInt(4294967295));
         buf[offset + 7] = lo;
         lo = lo >> 8;
@@ -11363,7 +4475,7 @@ var Plotly = (() => {
       Buffer3.prototype.writeBigInt64BE = defineBigIntMethod(function writeBigInt64BE(value, offset = 0) {
         return wrtBigUInt64BE(this, value, offset, -BigInt("0x8000000000000000"), BigInt("0x7fffffffffffffff"));
       });
-      function checkIEEE754(buf, value, offset, ext, max, min) {
+      function checkIEEE754(buf, value, offset, ext, max2, min2) {
         if (offset + ext > buf.length) throw new RangeError("Index out of range");
         if (offset < 0) throw new RangeError("Index out of range");
       }
@@ -11397,41 +4509,41 @@ var Plotly = (() => {
       Buffer3.prototype.writeDoubleBE = function writeDoubleBE(value, offset, noAssert) {
         return writeDouble(this, value, offset, false, noAssert);
       };
-      Buffer3.prototype.copy = function copy(target, targetStart, start, end) {
+      Buffer3.prototype.copy = function copy2(target, targetStart, start2, end) {
         if (!Buffer3.isBuffer(target)) throw new TypeError("argument should be a Buffer");
-        if (!start) start = 0;
+        if (!start2) start2 = 0;
         if (!end && end !== 0) end = this.length;
         if (targetStart >= target.length) targetStart = target.length;
         if (!targetStart) targetStart = 0;
-        if (end > 0 && end < start) end = start;
-        if (end === start) return 0;
+        if (end > 0 && end < start2) end = start2;
+        if (end === start2) return 0;
         if (target.length === 0 || this.length === 0) return 0;
         if (targetStart < 0) {
           throw new RangeError("targetStart out of bounds");
         }
-        if (start < 0 || start >= this.length) throw new RangeError("Index out of range");
+        if (start2 < 0 || start2 >= this.length) throw new RangeError("Index out of range");
         if (end < 0) throw new RangeError("sourceEnd out of bounds");
         if (end > this.length) end = this.length;
-        if (target.length - targetStart < end - start) {
-          end = target.length - targetStart + start;
+        if (target.length - targetStart < end - start2) {
+          end = target.length - targetStart + start2;
         }
-        const len2 = end - start;
+        const len2 = end - start2;
         if (this === target && typeof Uint8Array.prototype.copyWithin === "function") {
-          this.copyWithin(targetStart, start, end);
+          this.copyWithin(targetStart, start2, end);
         } else {
           Uint8Array.prototype.set.call(
             target,
-            this.subarray(start, end),
+            this.subarray(start2, end),
             targetStart
           );
         }
         return len2;
       };
-      Buffer3.prototype.fill = function fill(val, start, end, encoding) {
+      Buffer3.prototype.fill = function fill(val, start2, end, encoding) {
         if (typeof val === "string") {
-          if (typeof start === "string") {
-            encoding = start;
-            start = 0;
+          if (typeof start2 === "string") {
+            encoding = start2;
+            start2 = 0;
             end = this.length;
           } else if (typeof end === "string") {
             encoding = end;
@@ -11454,18 +4566,18 @@ var Plotly = (() => {
         } else if (typeof val === "boolean") {
           val = Number(val);
         }
-        if (start < 0 || this.length < start || this.length < end) {
+        if (start2 < 0 || this.length < start2 || this.length < end) {
           throw new RangeError("Out of range index");
         }
-        if (end <= start) {
+        if (end <= start2) {
           return this;
         }
-        start = start >>> 0;
+        start2 = start2 >>> 0;
         end = end === void 0 ? this.length : end >>> 0;
         if (!val) val = 0;
         let i;
         if (typeof val === "number") {
-          for (i = start; i < end; ++i) {
+          for (i = start2; i < end; ++i) {
             this[i] = val;
           }
         } else {
@@ -11474,8 +4586,8 @@ var Plotly = (() => {
           if (len2 === 0) {
             throw new TypeError('The value "' + val + '" is invalid for argument "value"');
           }
-          for (i = 0; i < end - start; ++i) {
-            this[i + start] = bytes[i % len2];
+          for (i = 0; i < end - start2; ++i) {
+            this[i + start2] = bytes[i % len2];
           }
         }
         return this;
@@ -11549,8 +4661,8 @@ var Plotly = (() => {
       function addNumericalSeparator(val) {
         let res = "";
         let i = val.length;
-        const start = val[0] === "-" ? 1 : 0;
-        for (; i >= start + 4; i -= 3) {
+        const start2 = val[0] === "-" ? 1 : 0;
+        for (; i >= start2 + 4; i -= 3) {
           res = `_${val.slice(i - 3, i)}${res}`;
         }
         return `${val.slice(0, i)}${res}`;
@@ -11561,18 +4673,18 @@ var Plotly = (() => {
           boundsError(offset, buf.length - (byteLength2 + 1));
         }
       }
-      function checkIntBI(value, min, max, buf, offset, byteLength2) {
-        if (value > max || value < min) {
-          const n = typeof min === "bigint" ? "n" : "";
+      function checkIntBI(value, min2, max2, buf, offset, byteLength2) {
+        if (value > max2 || value < min2) {
+          const n = typeof min2 === "bigint" ? "n" : "";
           let range;
           if (byteLength2 > 3) {
-            if (min === 0 || min === BigInt(0)) {
+            if (min2 === 0 || min2 === BigInt(0)) {
               range = `>= 0${n} and < 2${n} ** ${(byteLength2 + 1) * 8}${n}`;
             } else {
               range = `>= -(2${n} ** ${(byteLength2 + 1) * 8 - 1}${n}) and < 2 ** ${(byteLength2 + 1) * 8 - 1}${n}`;
             }
           } else {
-            range = `>= ${min}${n} and <= ${max}${n}`;
+            range = `>= ${min2}${n} and <= ${max2}${n}`;
           }
           throw new errors.ERR_OUT_OF_RANGE("value", range, value);
         }
@@ -11917,11 +5029,11 @@ var Plotly = (() => {
     "node_modules/.pnpm/math-intrinsics@1.1.0/node_modules/math-intrinsics/sign.js"(exports, module) {
       "use strict";
       var $isNaN = require_isNaN();
-      module.exports = function sign2(number) {
-        if ($isNaN(number) || number === 0) {
-          return number;
+      module.exports = function sign2(number3) {
+        if ($isNaN(number3) || number3 === 0) {
+          return number3;
         }
-        return number < 0 ? -1 : 1;
+        return number3 < 0 ? -1 : 1;
       };
     }
   });
@@ -12013,7 +5125,7 @@ var Plotly = (() => {
       "use strict";
       var ERROR_MESSAGE = "Function.prototype.bind called on incompatible ";
       var toStr = Object.prototype.toString;
-      var max = Math.max;
+      var max2 = Math.max;
       var funcType = "[object Function]";
       var concatty = function concatty2(a, b) {
         var arr = [];
@@ -12065,7 +5177,7 @@ var Plotly = (() => {
             concatty(args, arguments)
           );
         };
-        var boundLength = max(0, target.length - args.length);
+        var boundLength = max2(0, target.length - args.length);
         var boundArgs = [];
         for (var i = 0; i < boundLength; i++) {
           boundArgs[i] = "$" + i;
@@ -12222,8 +5334,8 @@ var Plotly = (() => {
       var $URIError = require_uri();
       var abs = require_abs();
       var floor = require_floor();
-      var max = require_max();
-      var min = require_min();
+      var max2 = require_max();
+      var min2 = require_min();
       var pow = require_pow();
       var round3 = require_round();
       var sign2 = require_sign();
@@ -12336,8 +5448,8 @@ var Plotly = (() => {
         "%Object.getPrototypeOf%": $ObjectGPO,
         "%Math.abs%": abs,
         "%Math.floor%": floor,
-        "%Math.max%": max,
-        "%Math.min%": min,
+        "%Math.max%": max2,
+        "%Math.min%": min2,
         "%Math.pow%": pow,
         "%Math.round%": round3,
         "%Math.sign%": sign2,
@@ -12446,8 +5558,8 @@ var Plotly = (() => {
           throw new $SyntaxError("invalid intrinsic syntax, expected opening `%`");
         }
         var result = [];
-        $replace(string, rePropName, function(match, number, quote, subString) {
-          result[result.length] = quote ? $replace(subString, reEscapeChar, "$1") : number || match;
+        $replace(string, rePropName, function(match, number3, quote, subString) {
+          result[result.length] = quote ? $replace(subString, reEscapeChar, "$1") : number3 || match;
         });
         return result;
       };
@@ -12846,13 +5958,13 @@ var Plotly = (() => {
       var isCallable = require_is_callable();
       var toStr = Object.prototype.toString;
       var hasOwnProperty = Object.prototype.hasOwnProperty;
-      var forEachArray = function forEachArray2(array, iterator, receiver) {
-        for (var i = 0, len2 = array.length; i < len2; i++) {
-          if (hasOwnProperty.call(array, i)) {
+      var forEachArray = function forEachArray2(array2, iterator, receiver) {
+        for (var i = 0, len2 = array2.length; i < len2; i++) {
+          if (hasOwnProperty.call(array2, i)) {
             if (receiver == null) {
-              iterator(array[i], i, array);
+              iterator(array2[i], i, array2);
             } else {
-              iterator.call(receiver, array[i], i, array);
+              iterator.call(receiver, array2[i], i, array2);
             }
           }
         }
@@ -13114,9 +6226,9 @@ var Plotly = (() => {
       var g = typeof globalThis === "undefined" ? window : globalThis;
       var typedArrays2 = availableTypedArrays();
       var $slice = callBound("String.prototype.slice");
-      var $indexOf = callBound("Array.prototype.indexOf", true) || function indexOf(array, value) {
-        for (var i = 0; i < array.length; i += 1) {
-          if (array[i] === value) {
+      var $indexOf = callBound("Array.prototype.indexOf", true) || function indexOf(array2, value) {
+        for (var i = 0; i < array2.length; i += 1) {
+          if (array2[i] === value) {
             return i;
           }
         }
@@ -13553,21 +6665,21 @@ var Plotly = (() => {
         debugEnvRegex = new RegExp("^" + debugEnv + "$", "i");
       }
       var debugEnv;
-      exports.debuglog = function(set) {
-        set = set.toUpperCase();
-        if (!debugs[set]) {
-          if (debugEnvRegex.test(set)) {
+      exports.debuglog = function(set3) {
+        set3 = set3.toUpperCase();
+        if (!debugs[set3]) {
+          if (debugEnvRegex.test(set3)) {
             var pid = process.pid;
-            debugs[set] = function() {
+            debugs[set3] = function() {
               var msg = exports.format.apply(exports, arguments);
-              console.error("%s %d: %s", set, pid, msg);
+              console.error("%s %d: %s", set3, pid, msg);
             };
           } else {
-            debugs[set] = function() {
+            debugs[set3] = function() {
             };
           }
         }
-        return debugs[set];
+        return debugs[set3];
       };
       function inspect(obj, opts) {
         var ctx = {
@@ -13626,9 +6738,9 @@ var Plotly = (() => {
       function stylizeNoColor(str, styleType) {
         return str;
       }
-      function arrayToHash(array) {
+      function arrayToHash(array2) {
         var hash = {};
-        array.forEach(function(val, idx) {
+        array2.forEach(function(val, idx) {
           hash[val] = true;
         });
         return hash;
@@ -13670,9 +6782,9 @@ var Plotly = (() => {
             return formatError(value);
           }
         }
-        var base = "", array = false, braces = ["{", "}"];
+        var base = "", array2 = false, braces = ["{", "}"];
         if (isArray4(value)) {
-          array = true;
+          array2 = true;
           braces = ["[", "]"];
         }
         if (isFunction(value)) {
@@ -13688,7 +6800,7 @@ var Plotly = (() => {
         if (isError(value)) {
           base = " " + formatError(value);
         }
-        if (keys.length === 0 && (!array || value.length == 0)) {
+        if (keys.length === 0 && (!array2 || value.length == 0)) {
           return braces[0] + base + braces[1];
         }
         if (recurseTimes < 0) {
@@ -13700,11 +6812,11 @@ var Plotly = (() => {
         }
         ctx.seen.push(value);
         var output;
-        if (array) {
+        if (array2) {
           output = formatArray(ctx, value, recurseTimes, visibleKeys, keys);
         } else {
           output = keys.map(function(key) {
-            return formatProperty(ctx, value, recurseTimes, visibleKeys, key, array);
+            return formatProperty(ctx, value, recurseTimes, visibleKeys, key, array2);
           });
         }
         ctx.seen.pop();
@@ -13757,7 +6869,7 @@ var Plotly = (() => {
         });
         return output;
       }
-      function formatProperty(ctx, value, recurseTimes, visibleKeys, key, array) {
+      function formatProperty(ctx, value, recurseTimes, visibleKeys, key, array2) {
         var name8, str, desc;
         desc = Object.getOwnPropertyDescriptor(value, key) || { value: value[key] };
         if (desc.get) {
@@ -13782,7 +6894,7 @@ var Plotly = (() => {
               str = formatValue(ctx, desc.value, recurseTimes - 1);
             }
             if (str.indexOf("\n") > -1) {
-              if (array) {
+              if (array2) {
                 str = str.split("\n").map(function(line) {
                   return "  " + line;
                 }).join("\n").slice(2);
@@ -13797,7 +6909,7 @@ var Plotly = (() => {
           }
         }
         if (isUndefined(name8)) {
-          if (array && key.match(/^\d+$/)) {
+          if (array2 && key.match(/^\d+$/)) {
             return str;
           }
           name8 = JSON.stringify("" + key);
@@ -13856,8 +6968,8 @@ var Plotly = (() => {
         return arg === void 0;
       }
       exports.isUndefined = isUndefined;
-      function isRegExp(re2) {
-        return isObject(re2) && objectToString(re2) === "[object RegExp]";
+      function isRegExp(re3) {
+        return isObject(re3) && objectToString(re3) === "[object RegExp]";
       }
       exports.isRegExp = isRegExp;
       exports.types.isRegExp = isRegExp;
@@ -13891,7 +7003,7 @@ var Plotly = (() => {
       function pad3(n) {
         return n < 10 ? "0" + n.toString(10) : n.toString(10);
       }
-      var months2 = [
+      var months = [
         "Jan",
         "Feb",
         "Mar",
@@ -13912,7 +7024,7 @@ var Plotly = (() => {
           pad3(d.getMinutes()),
           pad3(d.getSeconds())
         ].join(":");
-        return [d.getDate(), months2[d.getMonth()], time].join(" ");
+        return [d.getDate(), months[d.getMonth()], time].join(" ");
       }
       exports.log = function() {
         console.log("%s - %s", timestamp(), exports.format.apply(exports, arguments));
@@ -14101,7 +7213,7 @@ var Plotly = (() => {
       var Buffer3 = _require.Buffer;
       var _require2 = require_util();
       var inspect = _require2.inspect;
-      var custom = inspect && inspect.custom || "inspect";
+      var custom7 = inspect && inspect.custom || "inspect";
       function copyBuffer(src, target, offset) {
         Buffer3.prototype.copy.call(src, target, offset);
       }
@@ -14256,7 +7368,7 @@ var Plotly = (() => {
           }
           // Make sure the linked list only shows the minimal necessary information.
         }, {
-          key: custom,
+          key: custom7,
           value: function value(_5, options) {
             return inspect(this, _objectSpread(_objectSpread({}, options), {}, {
               // Only inspect one level.
@@ -14418,14 +7530,14 @@ var Plotly = (() => {
         }
         return str.substring(this_len - search.length, this_len) === search;
       }
-      function includes(str, search, start) {
-        if (typeof start !== "number") {
-          start = 0;
+      function includes(str, search, start2) {
+        if (typeof start2 !== "number") {
+          start2 = 0;
         }
-        if (start + search.length > str.length) {
+        if (start2 + search.length > str.length) {
           return false;
         } else {
-          return str.indexOf(search, start) !== -1;
+          return str.indexOf(search, start2) !== -1;
         }
       }
       createErrorType("ERR_INVALID_OPT_VALUE", function(name8, value) {
@@ -14723,7 +7835,7 @@ var Plotly = (() => {
         // because otherwise some prototype manipulation in
         // userland will fail
         enumerable: false,
-        get: function get3() {
+        get: function get5() {
           return this._writableState && this._writableState.getBuffer();
         }
       });
@@ -14738,7 +7850,7 @@ var Plotly = (() => {
         // because otherwise some prototype manipulation in
         // userland will fail
         enumerable: false,
-        get: function get3() {
+        get: function get5() {
           return this._writableState.highWaterMark;
         }
       });
@@ -14908,7 +8020,7 @@ var Plotly = (() => {
         // because otherwise some prototype manipulation in
         // userland will fail
         enumerable: false,
-        get: function get3() {
+        get: function get5() {
           return this._writableState.length;
         }
       });
@@ -14981,13 +8093,13 @@ var Plotly = (() => {
         // because otherwise some prototype manipulation in
         // userland will fail
         enumerable: false,
-        get: function get3() {
+        get: function get5() {
           if (this._writableState === void 0) {
             return false;
           }
           return this._writableState.destroyed;
         },
-        set: function set(value) {
+        set: function set3(value) {
           if (!this._writableState) {
             return;
           }
@@ -15044,7 +8156,7 @@ var Plotly = (() => {
         // because otherwise some prototype manipulation in
         // userland will fail
         enumerable: false,
-        get: function get3() {
+        get: function get5() {
           return this._writableState.highWaterMark;
         }
       });
@@ -15053,7 +8165,7 @@ var Plotly = (() => {
         // because otherwise some prototype manipulation in
         // userland will fail
         enumerable: false,
-        get: function get3() {
+        get: function get5() {
           return this._writableState && this._writableState.getBuffer();
         }
       });
@@ -15062,7 +8174,7 @@ var Plotly = (() => {
         // because otherwise some prototype manipulation in
         // userland will fail
         enumerable: false,
-        get: function get3() {
+        get: function get5() {
           return this._writableState.length;
         }
       });
@@ -15078,13 +8190,13 @@ var Plotly = (() => {
         // because otherwise some prototype manipulation in
         // userland will fail
         enumerable: false,
-        get: function get3() {
+        get: function get5() {
           if (this._readableState === void 0 || this._writableState === void 0) {
             return false;
           }
           return this._readableState.destroyed && this._writableState.destroyed;
         },
-        set: function set(value) {
+        set: function set3(value) {
           if (this._readableState === void 0 || this._writableState === void 0) {
             return;
           }
@@ -15407,7 +8519,7 @@ var Plotly = (() => {
           callback.apply(this, args);
         };
       }
-      function noop2() {
+      function noop3() {
       }
       function isRequest(stream) {
         return stream.setHeader && typeof stream.abort === "function";
@@ -15415,7 +8527,7 @@ var Plotly = (() => {
       function eos(stream, opts, callback) {
         if (typeof opts === "function") return eos(stream, null, opts);
         if (!opts) opts = {};
-        callback = once(callback || noop2);
+        callback = once(callback || noop3);
         var readable = opts.readable || opts.readable !== false && stream.readable;
         var writable = opts.writable || opts.writable !== false && stream.writable;
         var onlegacyfinish = function onlegacyfinish2() {
@@ -15716,11 +8828,11 @@ var Plotly = (() => {
       require_inherits_browser()(Readable, Stream);
       var errorOrDestroy = destroyImpl.errorOrDestroy;
       var kProxyEvents = ["error", "close", "destroy", "pause", "resume"];
-      function prependListener(emitter, event, fn) {
-        if (typeof emitter.prependListener === "function") return emitter.prependListener(event, fn);
-        if (!emitter._events || !emitter._events[event]) emitter.on(event, fn);
-        else if (Array.isArray(emitter._events[event])) emitter._events[event].unshift(fn);
-        else emitter._events[event] = [fn, emitter._events[event]];
+      function prependListener(emitter, event2, fn) {
+        if (typeof emitter.prependListener === "function") return emitter.prependListener(event2, fn);
+        if (!emitter._events || !emitter._events[event2]) emitter.on(event2, fn);
+        else if (Array.isArray(emitter._events[event2])) emitter._events[event2].unshift(fn);
+        else emitter._events[event2] = [fn, emitter._events[event2]];
       }
       function ReadableState(options, stream, isDuplex) {
         Duplex = Duplex || require_stream_duplex();
@@ -15774,13 +8886,13 @@ var Plotly = (() => {
         // because otherwise some prototype manipulation in
         // userland will fail
         enumerable: false,
-        get: function get3() {
+        get: function get5() {
           if (this._readableState === void 0) {
             return false;
           }
           return this._readableState.destroyed;
         },
-        set: function set(value) {
+        set: function set3(value) {
           if (!this._readableState) {
             return;
           }
@@ -16315,7 +9427,7 @@ var Plotly = (() => {
         // because otherwise some prototype manipulation in
         // userland will fail
         enumerable: false,
-        get: function get3() {
+        get: function get5() {
           return this._readableState.highWaterMark;
         }
       });
@@ -16324,7 +9436,7 @@ var Plotly = (() => {
         // because otherwise some prototype manipulation in
         // userland will fail
         enumerable: false,
-        get: function get3() {
+        get: function get5() {
           return this._readableState && this._readableState.buffer;
         }
       });
@@ -16333,10 +9445,10 @@ var Plotly = (() => {
         // because otherwise some prototype manipulation in
         // userland will fail
         enumerable: false,
-        get: function get3() {
+        get: function get5() {
           return this._readableState.flowing;
         },
-        set: function set(state) {
+        set: function set3(state) {
           if (this._readableState) {
             this._readableState.flowing = state;
           }
@@ -16348,7 +9460,7 @@ var Plotly = (() => {
         // because otherwise some prototype manipulation in
         // userland will fail
         enumerable: false,
-        get: function get3() {
+        get: function get5() {
           return this._readableState.length;
         }
       });
@@ -16409,14 +9521,14 @@ var Plotly = (() => {
   var require_stream_transform = __commonJS({
     "node_modules/.pnpm/readable-stream@3.6.2/node_modules/readable-stream/lib/_stream_transform.js"(exports, module) {
       "use strict";
-      module.exports = Transform;
+      module.exports = Transform2;
       var _require$codes = require_errors_browser().codes;
       var ERR_METHOD_NOT_IMPLEMENTED = _require$codes.ERR_METHOD_NOT_IMPLEMENTED;
       var ERR_MULTIPLE_CALLBACK = _require$codes.ERR_MULTIPLE_CALLBACK;
       var ERR_TRANSFORM_ALREADY_TRANSFORMING = _require$codes.ERR_TRANSFORM_ALREADY_TRANSFORMING;
       var ERR_TRANSFORM_WITH_LENGTH_0 = _require$codes.ERR_TRANSFORM_WITH_LENGTH_0;
       var Duplex = require_stream_duplex();
-      require_inherits_browser()(Transform, Duplex);
+      require_inherits_browser()(Transform2, Duplex);
       function afterTransform(er, data) {
         var ts = this._transformState;
         ts.transforming = false;
@@ -16435,8 +9547,8 @@ var Plotly = (() => {
           this._read(rs.highWaterMark);
         }
       }
-      function Transform(options) {
-        if (!(this instanceof Transform)) return new Transform(options);
+      function Transform2(options) {
+        if (!(this instanceof Transform2)) return new Transform2(options);
         Duplex.call(this, options);
         this._transformState = {
           afterTransform: afterTransform.bind(this),
@@ -16464,14 +9576,14 @@ var Plotly = (() => {
           done2(this, null, null);
         }
       }
-      Transform.prototype.push = function(chunk, encoding) {
+      Transform2.prototype.push = function(chunk, encoding) {
         this._transformState.needTransform = false;
         return Duplex.prototype.push.call(this, chunk, encoding);
       };
-      Transform.prototype._transform = function(chunk, encoding, cb) {
+      Transform2.prototype._transform = function(chunk, encoding, cb) {
         cb(new ERR_METHOD_NOT_IMPLEMENTED("_transform()"));
       };
-      Transform.prototype._write = function(chunk, encoding, cb) {
+      Transform2.prototype._write = function(chunk, encoding, cb) {
         var ts = this._transformState;
         ts.writecb = cb;
         ts.writechunk = chunk;
@@ -16481,7 +9593,7 @@ var Plotly = (() => {
           if (ts.needTransform || rs.needReadable || rs.length < rs.highWaterMark) this._read(rs.highWaterMark);
         }
       };
-      Transform.prototype._read = function(n) {
+      Transform2.prototype._read = function(n) {
         var ts = this._transformState;
         if (ts.writechunk !== null && !ts.transforming) {
           ts.transforming = true;
@@ -16490,7 +9602,7 @@ var Plotly = (() => {
           ts.needTransform = true;
         }
       };
-      Transform.prototype._destroy = function(err, cb) {
+      Transform2.prototype._destroy = function(err, cb) {
         Duplex.prototype._destroy.call(this, err, function(err2) {
           cb(err2);
         });
@@ -16511,11 +9623,11 @@ var Plotly = (() => {
     "node_modules/.pnpm/readable-stream@3.6.2/node_modules/readable-stream/lib/_stream_passthrough.js"(exports, module) {
       "use strict";
       module.exports = PassThrough;
-      var Transform = require_stream_transform();
-      require_inherits_browser()(PassThrough, Transform);
+      var Transform2 = require_stream_transform();
+      require_inherits_browser()(PassThrough, Transform2);
       function PassThrough(options) {
         if (!(this instanceof PassThrough)) return new PassThrough(options);
-        Transform.call(this, options);
+        Transform2.call(this, options);
       }
       PassThrough.prototype._transform = function(chunk, encoding, cb) {
         cb(null, chunk);
@@ -16539,7 +9651,7 @@ var Plotly = (() => {
       var _require$codes = require_errors_browser().codes;
       var ERR_MISSING_ARGS = _require$codes.ERR_MISSING_ARGS;
       var ERR_STREAM_DESTROYED = _require$codes.ERR_STREAM_DESTROYED;
-      function noop2(err) {
+      function noop3(err) {
         if (err) throw err;
       }
       function isRequest(stream) {
@@ -16577,8 +9689,8 @@ var Plotly = (() => {
         return from.pipe(to);
       }
       function popCallback(streams) {
-        if (!streams.length) return noop2;
-        if (typeof streams[streams.length - 1] !== "function") return noop2;
+        if (!streams.length) return noop3;
+        if (typeof streams[streams.length - 1] !== "function") return noop3;
         return streams.pop();
       }
       function pipeline() {
@@ -16768,21 +9880,21 @@ var Plotly = (() => {
         debugEnvRegex = new RegExp("^" + debugEnv + "$", "i");
       }
       var debugEnv;
-      exports.debuglog = function(set) {
-        set = set.toUpperCase();
-        if (!debugs[set]) {
-          if (debugEnvRegex.test(set)) {
+      exports.debuglog = function(set3) {
+        set3 = set3.toUpperCase();
+        if (!debugs[set3]) {
+          if (debugEnvRegex.test(set3)) {
             var pid = process.pid;
-            debugs[set] = function() {
+            debugs[set3] = function() {
               var msg = exports.format.apply(exports, arguments);
-              console.error("%s %d: %s", set, pid, msg);
+              console.error("%s %d: %s", set3, pid, msg);
             };
           } else {
-            debugs[set] = function() {
+            debugs[set3] = function() {
             };
           }
         }
-        return debugs[set];
+        return debugs[set3];
       };
       function inspect(obj, opts) {
         var ctx = {
@@ -16841,9 +9953,9 @@ var Plotly = (() => {
       function stylizeNoColor(str, styleType) {
         return str;
       }
-      function arrayToHash(array) {
+      function arrayToHash(array2) {
         var hash = {};
-        array.forEach(function(val, idx) {
+        array2.forEach(function(val, idx) {
           hash[val] = true;
         });
         return hash;
@@ -16885,9 +9997,9 @@ var Plotly = (() => {
             return formatError(value);
           }
         }
-        var base = "", array = false, braces = ["{", "}"];
+        var base = "", array2 = false, braces = ["{", "}"];
         if (isArray4(value)) {
-          array = true;
+          array2 = true;
           braces = ["[", "]"];
         }
         if (isFunction(value)) {
@@ -16903,7 +10015,7 @@ var Plotly = (() => {
         if (isError(value)) {
           base = " " + formatError(value);
         }
-        if (keys.length === 0 && (!array || value.length == 0)) {
+        if (keys.length === 0 && (!array2 || value.length == 0)) {
           return braces[0] + base + braces[1];
         }
         if (recurseTimes < 0) {
@@ -16915,11 +10027,11 @@ var Plotly = (() => {
         }
         ctx.seen.push(value);
         var output;
-        if (array) {
+        if (array2) {
           output = formatArray(ctx, value, recurseTimes, visibleKeys, keys);
         } else {
           output = keys.map(function(key) {
-            return formatProperty(ctx, value, recurseTimes, visibleKeys, key, array);
+            return formatProperty(ctx, value, recurseTimes, visibleKeys, key, array2);
           });
         }
         ctx.seen.pop();
@@ -16972,7 +10084,7 @@ var Plotly = (() => {
         });
         return output;
       }
-      function formatProperty(ctx, value, recurseTimes, visibleKeys, key, array) {
+      function formatProperty(ctx, value, recurseTimes, visibleKeys, key, array2) {
         var name8, str, desc;
         desc = Object.getOwnPropertyDescriptor(value, key) || { value: value[key] };
         if (desc.get) {
@@ -16997,7 +10109,7 @@ var Plotly = (() => {
               str = formatValue(ctx, desc.value, recurseTimes - 1);
             }
             if (str.indexOf("\n") > -1) {
-              if (array) {
+              if (array2) {
                 str = str.split("\n").map(function(line) {
                   return "  " + line;
                 }).join("\n").slice(2);
@@ -17012,7 +10124,7 @@ var Plotly = (() => {
           }
         }
         if (isUndefined(name8)) {
-          if (array && key.match(/^\d+$/)) {
+          if (array2 && key.match(/^\d+$/)) {
             return str;
           }
           name8 = JSON.stringify("" + key);
@@ -17071,8 +10183,8 @@ var Plotly = (() => {
         return arg === void 0;
       }
       exports.isUndefined = isUndefined;
-      function isRegExp(re2) {
-        return isObject(re2) && objectToString(re2) === "[object RegExp]";
+      function isRegExp(re3) {
+        return isObject(re3) && objectToString(re3) === "[object RegExp]";
       }
       exports.isRegExp = isRegExp;
       exports.types.isRegExp = isRegExp;
@@ -17106,7 +10218,7 @@ var Plotly = (() => {
       function pad3(n) {
         return n < 10 ? "0" + n.toString(10) : n.toString(10);
       }
-      var months2 = [
+      var months = [
         "Jan",
         "Feb",
         "Mar",
@@ -17127,7 +10239,7 @@ var Plotly = (() => {
           pad3(d.getMinutes()),
           pad3(d.getSeconds())
         ].join(":");
-        return [d.getDate(), months2[d.getMonth()], time].join(" ");
+        return [d.getDate(), months[d.getMonth()], time].join(" ");
       }
       exports.log = function() {
         console.log("%s - %s", timestamp(), exports.format.apply(exports, arguments));
@@ -17404,14 +10516,14 @@ var Plotly = (() => {
         }
         return str.substring(this_len - search.length, this_len) === search;
       }
-      function includes(str, search, start) {
-        if (typeof start !== "number") {
-          start = 0;
+      function includes(str, search, start2) {
+        if (typeof start2 !== "number") {
+          start2 = 0;
         }
-        if (start + search.length > str.length) {
+        if (start2 + search.length > str.length) {
           return false;
         } else {
-          return str.indexOf(search, start) !== -1;
+          return str.indexOf(search, start2) !== -1;
         }
       }
       createErrorType("ERR_AMBIGUOUS_ARGUMENT", 'The "%s" argument is ambiguous. %s', TypeError);
@@ -18222,11 +11334,11 @@ var Plotly = (() => {
         }
         var str = "abcdefghijklmnopqrst";
         var letters = str.split("");
-        var map2 = {};
+        var map3 = {};
         for (var i = 0; i < letters.length; ++i) {
-          map2[letters[i]] = letters[i];
+          map3[letters[i]] = letters[i];
         }
-        var obj = Object.assign({}, map2);
+        var obj = Object.assign({}, map3);
         var actual = "";
         for (var k in obj) {
           actual += k;
@@ -18339,14 +11451,14 @@ var Plotly = (() => {
           defineDataProperty(object, name8, value);
         }
       };
-      var defineProperties = function(object, map2) {
+      var defineProperties = function(object, map3) {
         var predicates = arguments.length > 2 ? arguments[2] : {};
-        var props = keys(map2);
+        var props = keys(map3);
         if (hasSymbols) {
-          props = concat2.call(props, Object.getOwnPropertySymbols(map2));
+          props = concat2.call(props, Object.getOwnPropertySymbols(map3));
         }
         for (var i = 0; i < props.length; i += 1) {
-          defineProperty(object, props[i], map2[props[i]], predicates[props[i]]);
+          defineProperty(object, props[i], map3[props[i]], predicates[props[i]]);
         }
       };
       defineProperties.supportsDescriptors = !!supportsDescriptors;
@@ -18508,19 +11620,19 @@ var Plotly = (() => {
         }, _typeof2(o);
       }
       var regexFlagsSupported = /a/g.flags !== void 0;
-      var arrayFromSet = function arrayFromSet2(set) {
-        var array = [];
-        set.forEach(function(value) {
-          return array.push(value);
+      var arrayFromSet = function arrayFromSet2(set3) {
+        var array2 = [];
+        set3.forEach(function(value) {
+          return array2.push(value);
         });
-        return array;
+        return array2;
       };
-      var arrayFromMap = function arrayFromMap2(map2) {
-        var array = [];
-        map2.forEach(function(value, key) {
-          return array.push([key, value]);
+      var arrayFromMap = function arrayFromMap2(map3) {
+        var array2 = [];
+        map3.forEach(function(value, key) {
+          return array2.push([key, value]);
         });
-        return array;
+        return array2;
       };
       var objectIs = Object.is ? Object.is : require_object_is();
       var objectGetOwnPropertySymbols = Object.getOwnPropertySymbols ? Object.getOwnPropertySymbols : function() {
@@ -18790,12 +11902,12 @@ var Plotly = (() => {
         memos.val2.delete(val2);
         return areEq;
       }
-      function setHasEqualElement(set, val1, strict, memo) {
-        var setValues = arrayFromSet(set);
+      function setHasEqualElement(set3, val1, strict, memo) {
+        var setValues = arrayFromSet(set3);
         for (var i = 0; i < setValues.length; i++) {
           var val2 = setValues[i];
           if (innerDeepEqual(val1, val2, strict, memo)) {
-            set.delete(val2);
+            set3.delete(val2);
             return true;
           }
         }
@@ -18838,84 +11950,84 @@ var Plotly = (() => {
         return !a.has(altValue) && innerDeepEqual(item, curB, false, memo);
       }
       function setEquiv(a, b, strict, memo) {
-        var set = null;
+        var set3 = null;
         var aValues = arrayFromSet(a);
         for (var i = 0; i < aValues.length; i++) {
           var val = aValues[i];
           if (_typeof2(val) === "object" && val !== null) {
-            if (set === null) {
-              set = /* @__PURE__ */ new Set();
+            if (set3 === null) {
+              set3 = /* @__PURE__ */ new Set();
             }
-            set.add(val);
+            set3.add(val);
           } else if (!b.has(val)) {
             if (strict) return false;
             if (!setMightHaveLoosePrim(a, b, val)) {
               return false;
             }
-            if (set === null) {
-              set = /* @__PURE__ */ new Set();
+            if (set3 === null) {
+              set3 = /* @__PURE__ */ new Set();
             }
-            set.add(val);
+            set3.add(val);
           }
         }
-        if (set !== null) {
+        if (set3 !== null) {
           var bValues = arrayFromSet(b);
           for (var _i = 0; _i < bValues.length; _i++) {
             var _val = bValues[_i];
             if (_typeof2(_val) === "object" && _val !== null) {
-              if (!setHasEqualElement(set, _val, strict, memo)) return false;
-            } else if (!strict && !a.has(_val) && !setHasEqualElement(set, _val, strict, memo)) {
+              if (!setHasEqualElement(set3, _val, strict, memo)) return false;
+            } else if (!strict && !a.has(_val) && !setHasEqualElement(set3, _val, strict, memo)) {
               return false;
             }
           }
-          return set.size === 0;
+          return set3.size === 0;
         }
         return true;
       }
-      function mapHasEqualEntry(set, map2, key1, item1, strict, memo) {
-        var setValues = arrayFromSet(set);
+      function mapHasEqualEntry(set3, map3, key1, item1, strict, memo) {
+        var setValues = arrayFromSet(set3);
         for (var i = 0; i < setValues.length; i++) {
           var key2 = setValues[i];
-          if (innerDeepEqual(key1, key2, strict, memo) && innerDeepEqual(item1, map2.get(key2), strict, memo)) {
-            set.delete(key2);
+          if (innerDeepEqual(key1, key2, strict, memo) && innerDeepEqual(item1, map3.get(key2), strict, memo)) {
+            set3.delete(key2);
             return true;
           }
         }
         return false;
       }
       function mapEquiv(a, b, strict, memo) {
-        var set = null;
+        var set3 = null;
         var aEntries = arrayFromMap(a);
         for (var i = 0; i < aEntries.length; i++) {
           var _aEntries$i = _slicedToArray(aEntries[i], 2), key = _aEntries$i[0], item1 = _aEntries$i[1];
           if (_typeof2(key) === "object" && key !== null) {
-            if (set === null) {
-              set = /* @__PURE__ */ new Set();
+            if (set3 === null) {
+              set3 = /* @__PURE__ */ new Set();
             }
-            set.add(key);
+            set3.add(key);
           } else {
             var item2 = b.get(key);
             if (item2 === void 0 && !b.has(key) || !innerDeepEqual(item1, item2, strict, memo)) {
               if (strict) return false;
               if (!mapMightHaveLoosePrim(a, b, key, item1, memo)) return false;
-              if (set === null) {
-                set = /* @__PURE__ */ new Set();
+              if (set3 === null) {
+                set3 = /* @__PURE__ */ new Set();
               }
-              set.add(key);
+              set3.add(key);
             }
           }
         }
-        if (set !== null) {
+        if (set3 !== null) {
           var bEntries = arrayFromMap(b);
           for (var _i2 = 0; _i2 < bEntries.length; _i2++) {
             var _bEntries$_i = _slicedToArray(bEntries[_i2], 2), _key = _bEntries$_i[0], item = _bEntries$_i[1];
             if (_typeof2(_key) === "object" && _key !== null) {
-              if (!mapHasEqualEntry(set, a, _key, item, strict, memo)) return false;
-            } else if (!strict && (!a.has(_key) || !innerDeepEqual(a.get(_key), item, false, memo)) && !mapHasEqualEntry(set, a, _key, item, false, memo)) {
+              if (!mapHasEqualEntry(set3, a, _key, item, strict, memo)) return false;
+            } else if (!strict && (!a.has(_key) || !innerDeepEqual(a.get(_key), item, false, memo)) && !mapHasEqualEntry(set3, a, _key, item, false, memo)) {
               return false;
             }
           }
-          return set.size === 0;
+          return set3.size === 0;
         }
         return true;
       }
@@ -19647,10 +12759,10 @@ var Plotly = (() => {
             args.unshift("%O");
           }
           var index = 0;
-          args[0] = args[0].replace(/%([a-zA-Z%])/g, function(match, format5) {
+          args[0] = args[0].replace(/%([a-zA-Z%])/g, function(match, format6) {
             if (match === "%%") return match;
             index++;
-            var formatter = exports.formatters[format5];
+            var formatter = exports.formatters[format6];
             if ("function" === typeof formatter) {
               var val = args[index];
               match = formatter.call(self2, val);
@@ -19716,7 +12828,7 @@ var Plotly = (() => {
   var require_browser2 = __commonJS({
     "node_modules/.pnpm/debug@2.6.9/node_modules/debug/src/browser.js"(exports, module) {
       exports = module.exports = require_debug();
-      exports.log = log;
+      exports.log = log2;
       exports.formatArgs = formatArgs;
       exports.save = save;
       exports.load = load;
@@ -19764,7 +12876,7 @@ var Plotly = (() => {
         });
         args.splice(lastC, 0, c);
       }
-      function log() {
+      function log2() {
         return "object" === typeof console && console.log && Function.prototype.apply.call(console.log, console, arguments);
       }
       function save(namespaces) {
@@ -19817,12 +12929,12 @@ var Plotly = (() => {
         stream._skipBytes = _skipBytes;
         if (isTransform) stream._passthrough = _passthrough;
         if (isTransform) {
-          stream._transform = transform;
+          stream._transform = transform2;
         } else {
           stream._write = write;
         }
       }
-      function init2(stream) {
+      function init3(stream) {
         debug("initializing parser stream");
         stream._parserBytesLeft = 0;
         stream._parserBuffers = [];
@@ -19837,7 +12949,7 @@ var Plotly = (() => {
       function _bytes(n, fn) {
         assert(!this._parserCallback, 'there is already a "callback" set!');
         assert(isFinite(n) && n > 0, 'can only buffer a finite number of bytes > 0, got "' + n + '"');
-        if (!this._parserInit) init2(this);
+        if (!this._parserInit) init3(this);
         debug("buffering %o bytes", n);
         this._parserBytesLeft = n;
         this._parserCallback = fn;
@@ -19846,7 +12958,7 @@ var Plotly = (() => {
       function _skipBytes(n, fn) {
         assert(!this._parserCallback, 'there is already a "callback" set!');
         assert(n > 0, 'can only skip > 0 bytes, got "' + n + '"');
-        if (!this._parserInit) init2(this);
+        if (!this._parserInit) init3(this);
         debug("skipping %o bytes", n);
         this._parserBytesLeft = n;
         this._parserCallback = fn;
@@ -19855,20 +12967,20 @@ var Plotly = (() => {
       function _passthrough(n, fn) {
         assert(!this._parserCallback, 'There is already a "callback" set!');
         assert(n > 0, 'can only pass through > 0 bytes, got "' + n + '"');
-        if (!this._parserInit) init2(this);
+        if (!this._parserInit) init3(this);
         debug("passing through %o bytes", n);
         this._parserBytesLeft = n;
         this._parserCallback = fn;
         this._parserState = PASSTHROUGH;
       }
       function write(chunk, encoding, fn) {
-        if (!this._parserInit) init2(this);
+        if (!this._parserInit) init3(this);
         debug("write(%o bytes)", chunk.length);
         if ("function" == typeof encoding) fn = encoding;
         data(this, chunk, null, fn);
       }
-      function transform(chunk, output, fn) {
-        if (!this._parserInit) init2(this);
+      function transform2(chunk, output, fn) {
+        if (!this._parserInit) init3(this);
         debug("transform(%o bytes)", chunk.length);
         if ("function" != typeof output) {
           output = this._parserOutput;
@@ -19955,24 +13067,24 @@ var Plotly = (() => {
   var require_common = __commonJS({
     "node_modules/.pnpm/probe-image-size@7.2.3/node_modules/probe-image-size/lib/common.js"(exports) {
       "use strict";
-      var Transform = require_stream_browserify().Transform;
+      var Transform2 = require_stream_browserify().Transform;
       var streamParser = require_stream_parser();
       function ParserStream() {
-        Transform.call(this, { readableObjectMode: true });
+        Transform2.call(this, { readableObjectMode: true });
       }
-      ParserStream.prototype = Object.create(Transform.prototype);
+      ParserStream.prototype = Object.create(Transform2.prototype);
       ParserStream.prototype.constructor = ParserStream;
       streamParser(ParserStream.prototype);
       exports.ParserStream = ParserStream;
-      exports.sliceEq = function(src, start, dest) {
-        for (var i = start, j = 0; j < dest.length; ) {
+      exports.sliceEq = function(src, start2, dest) {
+        for (var i = start2, j = 0; j < dest.length; ) {
           if (src[i++] !== dest[j++]) return false;
         }
         return true;
       };
-      exports.str2arr = function(str, format5) {
+      exports.str2arr = function(str, format6) {
         var arr = [], i = 0;
-        if (format5 && format5 === "hex") {
+        if (format6 && format6 === "hex") {
           while (i < str.length) {
             arr.push(parseInt(str.slice(i, i + 2), 16));
             i += 2;
@@ -20152,11 +13264,11 @@ var Plotly = (() => {
         if (!sandbox.sizes.length) return;
         var maxSize = getMaxSize(sandbox.sizes);
         var orientation = 1;
-        sandbox.transforms.forEach(function(transform) {
+        sandbox.transforms.forEach(function(transform2) {
           var rotate_ccw = { 1: 6, 2: 5, 3: 8, 4: 7, 5: 4, 6: 3, 7: 2, 8: 1 };
           var mirror_vert = { 1: 4, 2: 3, 3: 2, 4: 1, 5: 6, 6: 5, 7: 8, 8: 7 };
-          if (transform.type === "imir") {
-            if (transform.value === 0) {
+          if (transform2.type === "imir") {
+            if (transform2.value === 0) {
               orientation = mirror_vert[orientation];
             } else {
               orientation = mirror_vert[orientation];
@@ -20164,8 +13276,8 @@ var Plotly = (() => {
               orientation = rotate_ccw[orientation];
             }
           }
-          if (transform.type === "irot") {
-            for (var i = 0; i < transform.value; i++) {
+          if (transform2.type === "irot") {
+            for (var i = 0; i < transform2.value; i++) {
               orientation = rotate_ccw[orientation];
             }
           }
@@ -20266,8 +13378,8 @@ var Plotly = (() => {
         ifd === 0 && tag === 34853 || // GPS Info
         ifd === 34665 && tag === 40965;
       };
-      ExifParser.prototype.exif_format_length = function(format5) {
-        switch (format5) {
+      ExifParser.prototype.exif_format_length = function(format6) {
+        switch (format6) {
           case 1:
           // byte
           case 2:
@@ -20296,9 +13408,9 @@ var Plotly = (() => {
             return 0;
         }
       };
-      ExifParser.prototype.exif_format_read = function(format5, offset) {
+      ExifParser.prototype.exif_format_read = function(format6, offset) {
         var v;
-        switch (format5) {
+        switch (format6) {
           case 1:
           // byte
           case 2:
@@ -20340,9 +13452,9 @@ var Plotly = (() => {
         offset += 2;
         for (var i = 0; i < entry_count; i++) {
           var tag = this.read_uint16(offset);
-          var format5 = this.read_uint16(offset + 2);
+          var format6 = this.read_uint16(offset + 2);
           var count = this.read_uint32(offset + 4);
-          var comp_length = this.exif_format_length(format5);
+          var comp_length = this.exif_format_length(format6);
           var data_length = count * comp_length;
           var data_offset = data_length <= 4 ? offset + 8 : this.read_uint32(offset + 8);
           var is_subifd_link = false;
@@ -20352,14 +13464,14 @@ var Plotly = (() => {
           var value = [];
           var comp_offset = data_offset;
           for (var j = 0; j < count; j++, comp_offset += comp_length) {
-            var item = this.exif_format_read(format5, comp_offset);
+            var item = this.exif_format_read(format6, comp_offset);
             if (item === null) {
               value = null;
               break;
             }
             value.push(item);
           }
-          if (Array.isArray(value) && format5 === 2) {
+          if (Array.isArray(value) && format6 === 2) {
             value = utf8_decode(String.fromCharCode.apply(null, value));
             if (value && value[value.length - 1] === "\0") value = value.slice(0, -1);
           }
@@ -20376,7 +13488,7 @@ var Plotly = (() => {
             is_big_endian: this.big_endian,
             ifd: ifd_no,
             tag,
-            format: format5,
+            format: format6,
             count,
             entry_offset: offset + this.start,
             data_length,
@@ -20676,10 +13788,10 @@ var Plotly = (() => {
         return typeof val === "number" && isFinite(val) && val > 0;
       }
       function canBeSvg(buf) {
-        var i = 0, max = buf.length;
+        var i = 0, max2 = buf.length;
         if (buf[0] === 239 && buf[1] === 187 && buf[2] === 191) i = 3;
-        while (i < max && isWhiteSpace(buf[i])) i++;
-        if (i === max) return false;
+        while (i < max2 && isWhiteSpace(buf[i])) i++;
+        if (i === max2) return false;
         return buf[i] === 60;
       }
       var SVG_HEADER_RE = /<[-_.:a-zA-Z0-9][^>]*>/;
@@ -21069,9 +14181,9 @@ var Plotly = (() => {
             @param [language=''] {string} The language to use for localisation (default English).
             @return {CDate} The new date.
             @throws Error if an invalid date. */
-        newDate: function(year2, month2, day2, calendar, language) {
+        newDate: function(year2, month, day2, calendar, language) {
           calendar = (year2 != null && year2.year ? year2.calendar() : typeof calendar === "string" ? this.instance(calendar, language) : calendar) || this.instance();
-          return calendar.newDate(year2, month2, day2);
+          return calendar.newDate(year2, month, day2);
         },
         /** A simple digit substitution function for localising numbers via the Calendar digits option.
             @member Calendars
@@ -21106,10 +14218,10 @@ var Plotly = (() => {
           };
         }
       });
-      function CDate(calendar, year2, month2, day2) {
+      function CDate(calendar, year2, month, day2) {
         this._calendar = calendar;
         this._year = year2;
-        this._month = month2;
+        this._month = month;
         this._day = day2;
         if (this._calendar._validateLevel === 0 && !this._calendar.isValid(this._year, this._month, this._day)) {
           throw (_exports.local.invalidDate || _exports.regionalOptions[""].invalidDate).replace(/\{0\}/, this._calendar.local.name);
@@ -21127,8 +14239,8 @@ var Plotly = (() => {
             @param [day] {number} The day for the date.
             @return {CDate} The new date.
             @throws Error if an invalid date. */
-        newDate: function(year2, month2, day2) {
-          return this._calendar.newDate(year2 == null ? this : year2, month2, day2);
+        newDate: function(year2, month, day2) {
+          return this._calendar.newDate(year2 == null ? this : year2, month, day2);
         },
         /** Set or retrieve the year for this date.
             @memberof CDate
@@ -21143,8 +14255,8 @@ var Plotly = (() => {
             @param [month] {number} The month for the date.
             @return {number|CDate} The date's month (if no parameter) or the updated date.
             @throws Error if an invalid date. */
-        month: function(month2) {
-          return arguments.length === 0 ? this._month : this.set(month2, "m");
+        month: function(month) {
+          return arguments.length === 0 ? this._month : this.set(month, "m");
         },
         /** Set or retrieve the day for this date.
             @memberof CDate
@@ -21161,12 +14273,12 @@ var Plotly = (() => {
             @param day {number} The day for the date.
             @return {CDate} The updated date.
             @throws Error if an invalid date. */
-        date: function(year2, month2, day2) {
-          if (!this._calendar.isValid(year2, month2, day2)) {
+        date: function(year2, month, day2) {
+          if (!this._calendar.isValid(year2, month, day2)) {
             throw (_exports.local.invalidDate || _exports.regionalOptions[""].invalidDate).replace(/\{0\}/, this._calendar.local.name);
           }
           this._year = year2;
-          this._month = month2;
+          this._month = month;
           this._day = day2;
           return this;
         },
@@ -21242,8 +14354,8 @@ var Plotly = (() => {
             @param offset {number} The number of periods to adjust by.
             @param period {string} One of 'y' for year, 'm' for month, 'w' for week, 'd' for day.
             @return {CDate} The updated date. */
-        add: function(offset, period) {
-          return this._calendar.add(this, offset, period);
+        add: function(offset, period2) {
+          return this._calendar.add(this, offset, period2);
         },
         /** Set a portion of the date.
             @memberof CDate
@@ -21251,8 +14363,8 @@ var Plotly = (() => {
             @param period {string} One of 'y' for year, 'm' for month, 'd' for day.
             @return {CDate} The updated date.
             @throws Error if not a valid date. */
-        set: function(value, period) {
-          return this._calendar.set(this, value, period);
+        set: function(value, period2) {
+          return this._calendar.set(this, value, period2);
         },
         /** Compare this date to another date.
             @memberof CDate
@@ -21319,22 +14431,22 @@ var Plotly = (() => {
             @param [day] {number} The day for the date.
             @return {CDate} The new date.
             @throws Error if not a valid date or a different calendar used. */
-        newDate: function(year2, month2, day2) {
+        newDate: function(year2, month, day2) {
           if (year2 == null) {
             return this.today();
           }
           if (year2.year) {
             this._validate(
               year2,
-              month2,
+              month,
               day2,
               _exports.local.invalidDate || _exports.regionalOptions[""].invalidDate
             );
             day2 = year2.day();
-            month2 = year2.month();
+            month = year2.month();
             year2 = year2.year();
           }
-          return new CDate(this, year2, month2, day2);
+          return new CDate(this, year2, month, day2);
         },
         /** Create a new date for today.
             @memberof BaseCalendar
@@ -21391,10 +14503,10 @@ var Plotly = (() => {
             @param month {number} The month to examine.
             @return {number} The ordinal position, starting from <code>minMonth</code>.
             @throws Error if an invalid year/month or a different calendar used. */
-        monthOfYear: function(year2, month2) {
+        monthOfYear: function(year2, month) {
           var date = this._validate(
             year2,
-            month2,
+            month,
             this.minDay,
             _exports.local.invalidMonth || _exports.regionalOptions[""].invalidMonth
           );
@@ -21437,10 +14549,10 @@ var Plotly = (() => {
             @param [day] {number} The day to convert.
             @return {number} The day of the year.
             @throws Error if an invalid date or a different calendar used. */
-        dayOfYear: function(year2, month2, day2) {
+        dayOfYear: function(year2, month, day2) {
           var date = this._validate(
             year2,
-            month2,
+            month,
             day2,
             _exports.local.invalidDate || _exports.regionalOptions[""].invalidDate
           );
@@ -21463,10 +14575,10 @@ var Plotly = (() => {
             @param [day] {number} The day to examine.
             @return {number} The day of the week: 0 to number of days - 1.
             @throws Error if an invalid date or a different calendar used. */
-        dayOfWeek: function(year2, month2, day2) {
+        dayOfWeek: function(year2, month, day2) {
           var date = this._validate(
             year2,
-            month2,
+            month,
             day2,
             _exports.local.invalidDate || _exports.regionalOptions[""].invalidDate
           );
@@ -21479,10 +14591,10 @@ var Plotly = (() => {
             @param [day] {number} The day to examine.
             @return {object} Additional information - contents depends on calendar.
             @throws Error if an invalid date or a different calendar used. */
-        extraInfo: function(year2, month2, day2) {
+        extraInfo: function(year2, month, day2) {
           this._validate(
             year2,
-            month2,
+            month,
             day2,
             _exports.local.invalidDate || _exports.regionalOptions[""].invalidDate
           );
@@ -21496,14 +14608,14 @@ var Plotly = (() => {
             @param period {string} One of 'y' for year, 'm' for month, 'w' for week, 'd' for day.
             @return {CDate} The updated date.
             @throws Error if a different calendar used. */
-        add: function(date, offset, period) {
+        add: function(date, offset, period2) {
           this._validate(
             date,
             this.minMonth,
             this.minDay,
             _exports.local.invalidDate || _exports.regionalOptions[""].invalidDate
           );
-          return this._correctAdd(date, this._add(date, offset, period), offset, period);
+          return this._correctAdd(date, this._add(date, offset, period2), offset, period2);
         },
         /** Add period(s) to a date.
             @memberof BaseCalendar
@@ -21512,17 +14624,17 @@ var Plotly = (() => {
             @param offset {number} The number of periods to adjust by.
             @param period {string} One of 'y' for year, 'm' for month, 'w' for week, 'd' for day.
             @return {CDate} The updated date. */
-        _add: function(date, offset, period) {
+        _add: function(date, offset, period2) {
           this._validateLevel++;
-          if (period === "d" || period === "w") {
-            var jd = date.toJD() + offset * (period === "w" ? this.daysInWeek() : 1);
+          if (period2 === "d" || period2 === "w") {
+            var jd = date.toJD() + offset * (period2 === "w" ? this.daysInWeek() : 1);
             var d = date.calendar().fromJD(jd);
             this._validateLevel--;
             return [d.year(), d.month(), d.day()];
           }
           try {
-            var y = date.year() + (period === "y" ? offset : 0);
-            var m = date.monthOfYear() + (period === "m" ? offset : 0);
+            var y = date.year() + (period2 === "y" ? offset : 0);
+            var m = date.monthOfYear() + (period2 === "m" ? offset : 0);
             var d = date.day();
             var resyncYearMonth = function(calendar) {
               while (m < calendar.minMonth) {
@@ -21536,13 +14648,13 @@ var Plotly = (() => {
                 yearMonths = calendar.monthsInYear(y);
               }
             };
-            if (period === "y") {
+            if (period2 === "y") {
               if (date.month() !== this.fromMonthOfYear(y, m)) {
                 m = this.newDate(y, date.month(), this.minDay).monthOfYear();
               }
               m = Math.min(m, this.monthsInYear(y));
               d = Math.min(d, this.daysInMonth(y, this.fromMonthOfYear(y, m)));
-            } else if (period === "m") {
+            } else if (period2 === "m") {
               resyncYearMonth(this);
               d = Math.min(d, this.daysInMonth(y, this.fromMonthOfYear(y, m)));
             }
@@ -21563,8 +14675,8 @@ var Plotly = (() => {
             @param offset {number} The number of periods to adjust by.
             @param period {string} One of 'y' for year, 'm' for month, 'w' for week, 'd' for day.
             @return {CDate} The updated date. */
-        _correctAdd: function(date, ymd, offset, period) {
-          if (!this.hasYearZero && (period === "y" || period === "m")) {
+        _correctAdd: function(date, ymd, offset, period2) {
+          if (!this.hasYearZero && (period2 === "y" || period2 === "m")) {
             if (ymd[0] === 0 || // In year zero
             date.year() > 0 !== ymd[0] > 0) {
               var adj = {
@@ -21572,7 +14684,7 @@ var Plotly = (() => {
                 m: [1, this.monthsInYear(-1), "m"],
                 w: [this.daysInWeek(), this.daysInYear(-1), "d"],
                 d: [1, this.daysInYear(-1), "d"]
-              }[period];
+              }[period2];
               var dir = offset < 0 ? -1 : 1;
               ymd = this._add(date, offset * adj[0] + dir * adj[1], adj[2]);
             }
@@ -21586,17 +14698,17 @@ var Plotly = (() => {
             @param period {string} One of 'y' for year, 'm' for month, 'd' for day.
             @return {CDate} The updated date.
             @throws Error if an invalid date or a different calendar used. */
-        set: function(date, value, period) {
+        set: function(date, value, period2) {
           this._validate(
             date,
             this.minMonth,
             this.minDay,
             _exports.local.invalidDate || _exports.regionalOptions[""].invalidDate
           );
-          var y = period === "y" ? value : date.year();
-          var m = period === "m" ? value : date.month();
-          var d = period === "d" ? value : date.day();
-          if (period === "y" || period === "m") {
+          var y = period2 === "y" ? value : date.year();
+          var m = period2 === "m" ? value : date.month();
+          var d = period2 === "d" ? value : date.day();
+          if (period2 === "y" || period2 === "m") {
             d = Math.min(d, this.daysInMonth(y, m));
           }
           return date.date(y, m, d);
@@ -21607,12 +14719,12 @@ var Plotly = (() => {
             @param month {number} The month to examine.
             @param day {number} The day to examine.
             @return {boolean} <code>true</code> if a valid date, <code>false</code> if not. */
-        isValid: function(year2, month2, day2) {
+        isValid: function(year2, month, day2) {
           this._validateLevel++;
           var valid = this.hasYearZero || year2 !== 0;
           if (valid) {
-            var date = this.newDate(year2, month2, this.minDay);
-            valid = month2 >= this.minMonth && month2 - this.minMonth < this.monthsInYear(date) && (day2 >= this.minDay && day2 - this.minDay < this.daysInMonth(date));
+            var date = this.newDate(year2, month, this.minDay);
+            valid = month >= this.minMonth && month - this.minMonth < this.monthsInYear(date) && (day2 >= this.minDay && day2 - this.minDay < this.daysInMonth(date));
           }
           this._validateLevel--;
           return valid;
@@ -21624,10 +14736,10 @@ var Plotly = (() => {
             @param [day] {number} The day to convert.
             @return {Date} The equivalent JavaScript date.
             @throws Error if an invalid date or a different calendar used. */
-        toJSDate: function(year2, month2, day2) {
+        toJSDate: function(year2, month, day2) {
           var date = this._validate(
             year2,
-            month2,
+            month,
             day2,
             _exports.local.invalidDate || _exports.regionalOptions[""].invalidDate
           );
@@ -21648,7 +14760,7 @@ var Plotly = (() => {
             @param [day] {number} The day to validate.
             @param error {string} Rrror message if invalid.
             @throws Error if different calendars used or invalid date. */
-        _validate: function(year2, month2, day2, error) {
+        _validate: function(year2, month, day2, error) {
           if (year2.year) {
             if (this._validateLevel === 0 && this.name !== year2.calendar().name) {
               throw (_exports.local.differentCalendars || _exports.regionalOptions[""].differentCalendars).replace(/\{0\}/, this.local.name).replace(/\{1\}/, year2.calendar().local.name);
@@ -21657,10 +14769,10 @@ var Plotly = (() => {
           }
           try {
             this._validateLevel++;
-            if (this._validateLevel === 1 && !this.isValid(year2, month2, day2)) {
+            if (this._validateLevel === 1 && !this.isValid(year2, month, day2)) {
               throw error.replace(/\{0\}/, this.local.name);
             }
-            var date = this.newDate(year2, month2, day2);
+            var date = this.newDate(year2, month, day2);
             this._validateLevel--;
             return date;
           } catch (e) {
@@ -21761,8 +14873,8 @@ var Plotly = (() => {
             @param [day] {number} The day to examine.
             @return {number} The week of the year, starting from 1.
             @throws Error if an invalid date or a different calendar used. */
-        weekOfYear: function(year2, month2, day2) {
-          var checkDate = this.newDate(year2, month2, day2);
+        weekOfYear: function(year2, month, day2) {
+          var checkDate = this.newDate(year2, month, day2);
           checkDate.add(4 - (checkDate.dayOfWeek() || 7), "d");
           return Math.floor((checkDate.dayOfYear() - 1) / 7) + 1;
         },
@@ -21772,10 +14884,10 @@ var Plotly = (() => {
             @param [month] {number} The month.
             @return {number} The number of days in this month.
             @throws Error if an invalid month/year or a different calendar used. */
-        daysInMonth: function(year2, month2) {
+        daysInMonth: function(year2, month) {
           var date = this._validate(
             year2,
-            month2,
+            month,
             this.minDay,
             _exports.local.invalidMonth || _exports.regionalOptions[""].invalidMonth
           );
@@ -21788,8 +14900,8 @@ var Plotly = (() => {
             @param [day] {number} The day to examine.
             @return {boolean} <code>true</code> if a week day, <code>false</code> if not.
             @throws Error if an invalid date or a different calendar used. */
-        weekDay: function(year2, month2, day2) {
-          return (this.dayOfWeek(year2, month2, day2) || 7) < 6;
+        weekDay: function(year2, month, day2) {
+          return (this.dayOfWeek(year2, month, day2) || 7) < 6;
         },
         /** Retrieve the Julian date equivalent for this date,
             i.e. days since January 1, 4713 BCE Greenwich noon.
@@ -21799,26 +14911,26 @@ var Plotly = (() => {
             @param [day] {number} The day to convert.
             @return {number} The equivalent Julian date.
             @throws Error if an invalid date or a different calendar used. */
-        toJD: function(year2, month2, day2) {
+        toJD: function(year2, month, day2) {
           var date = this._validate(
             year2,
-            month2,
+            month,
             day2,
             _exports.local.invalidDate || _exports.regionalOptions[""].invalidDate
           );
           year2 = date.year();
-          month2 = date.month();
+          month = date.month();
           day2 = date.day();
           if (year2 < 0) {
             year2++;
           }
-          if (month2 < 3) {
-            month2 += 12;
+          if (month < 3) {
+            month += 12;
             year2--;
           }
           var a = Math.floor(year2 / 100);
           var b = 2 - a + Math.floor(a / 4);
-          return Math.floor(365.25 * (year2 + 4716)) + Math.floor(30.6001 * (month2 + 1)) + day2 + b - 1524.5;
+          return Math.floor(365.25 * (year2 + 4716)) + Math.floor(30.6001 * (month + 1)) + day2 + b - 1524.5;
         },
         /** Create a new date from a Julian date.
             @memberof GregorianCalendar
@@ -21833,12 +14945,12 @@ var Plotly = (() => {
           var d = Math.floor(365.25 * c);
           var e = Math.floor((b - d) / 30.6001);
           var day2 = b - d - Math.floor(e * 30.6001);
-          var month2 = e - (e > 13.5 ? 13 : 1);
-          var year2 = c - (month2 > 2.5 ? 4716 : 4715);
+          var month = e - (e > 13.5 ? 13 : 1);
+          var year2 = c - (month > 2.5 ? 4716 : 4715);
           if (year2 <= 0) {
             year2--;
           }
-          return this.newDate(year2, month2, day2);
+          return this.newDate(year2, month, day2);
         },
         /** Convert this date to a standard (Gregorian) JavaScript Date.
             @memberof GregorianCalendar
@@ -21847,10 +14959,10 @@ var Plotly = (() => {
             @param [day] {number} The day to convert.
             @return {Date} The equivalent JavaScript date.
             @throws Error if an invalid date or a different calendar used. */
-        toJSDate: function(year2, month2, day2) {
+        toJSDate: function(year2, month, day2) {
           var date = this._validate(
             year2,
-            month2,
+            month,
             day2,
             _exports.local.invalidDate || _exports.regionalOptions[""].invalidDate
           );
@@ -21882,6 +14994,2536 @@ var Plotly = (() => {
   __export(index_cartesian_exports, {
     default: () => index_cartesian_default
   });
+
+  // node_modules/.pnpm/d3-selection@3.0.0/node_modules/d3-selection/src/namespaces.js
+  var xhtml = "http://www.w3.org/1999/xhtml";
+  var namespaces_default = {
+    svg: "http://www.w3.org/2000/svg",
+    xhtml,
+    xlink: "http://www.w3.org/1999/xlink",
+    xml: "http://www.w3.org/XML/1998/namespace",
+    xmlns: "http://www.w3.org/2000/xmlns/"
+  };
+
+  // node_modules/.pnpm/d3-selection@3.0.0/node_modules/d3-selection/src/namespace.js
+  function namespace_default(name8) {
+    var prefix = name8 += "", i = prefix.indexOf(":");
+    if (i >= 0 && (prefix = name8.slice(0, i)) !== "xmlns") name8 = name8.slice(i + 1);
+    return namespaces_default.hasOwnProperty(prefix) ? { space: namespaces_default[prefix], local: name8 } : name8;
+  }
+
+  // node_modules/.pnpm/d3-selection@3.0.0/node_modules/d3-selection/src/creator.js
+  function creatorInherit(name8) {
+    return function() {
+      var document2 = this.ownerDocument, uri = this.namespaceURI;
+      return uri === xhtml && document2.documentElement.namespaceURI === xhtml ? document2.createElement(name8) : document2.createElementNS(uri, name8);
+    };
+  }
+  function creatorFixed(fullname) {
+    return function() {
+      return this.ownerDocument.createElementNS(fullname.space, fullname.local);
+    };
+  }
+  function creator_default(name8) {
+    var fullname = namespace_default(name8);
+    return (fullname.local ? creatorFixed : creatorInherit)(fullname);
+  }
+
+  // node_modules/.pnpm/d3-selection@3.0.0/node_modules/d3-selection/src/selector.js
+  function none() {
+  }
+  function selector_default(selector) {
+    return selector == null ? none : function() {
+      return this.querySelector(selector);
+    };
+  }
+
+  // node_modules/.pnpm/d3-selection@3.0.0/node_modules/d3-selection/src/selection/select.js
+  function select_default(select) {
+    if (typeof select !== "function") select = selector_default(select);
+    for (var groups = this._groups, m = groups.length, subgroups = new Array(m), j = 0; j < m; ++j) {
+      for (var group = groups[j], n = group.length, subgroup = subgroups[j] = new Array(n), node, subnode, i = 0; i < n; ++i) {
+        if ((node = group[i]) && (subnode = select.call(node, node.__data__, i, group))) {
+          if ("__data__" in node) subnode.__data__ = node.__data__;
+          subgroup[i] = subnode;
+        }
+      }
+    }
+    return new Selection(subgroups, this._parents);
+  }
+
+  // node_modules/.pnpm/d3-selection@3.0.0/node_modules/d3-selection/src/array.js
+  function array(x) {
+    return x == null ? [] : Array.isArray(x) ? x : Array.from(x);
+  }
+
+  // node_modules/.pnpm/d3-selection@3.0.0/node_modules/d3-selection/src/selectorAll.js
+  function empty() {
+    return [];
+  }
+  function selectorAll_default(selector) {
+    return selector == null ? empty : function() {
+      return this.querySelectorAll(selector);
+    };
+  }
+
+  // node_modules/.pnpm/d3-selection@3.0.0/node_modules/d3-selection/src/selection/selectAll.js
+  function arrayAll(select) {
+    return function() {
+      return array(select.apply(this, arguments));
+    };
+  }
+  function selectAll_default(select) {
+    if (typeof select === "function") select = arrayAll(select);
+    else select = selectorAll_default(select);
+    for (var groups = this._groups, m = groups.length, subgroups = [], parents = [], j = 0; j < m; ++j) {
+      for (var group = groups[j], n = group.length, node, i = 0; i < n; ++i) {
+        if (node = group[i]) {
+          subgroups.push(select.call(node, node.__data__, i, group));
+          parents.push(node);
+        }
+      }
+    }
+    return new Selection(subgroups, parents);
+  }
+
+  // node_modules/.pnpm/d3-selection@3.0.0/node_modules/d3-selection/src/matcher.js
+  function matcher_default(selector) {
+    return function() {
+      return this.matches(selector);
+    };
+  }
+  function childMatcher(selector) {
+    return function(node) {
+      return node.matches(selector);
+    };
+  }
+
+  // node_modules/.pnpm/d3-selection@3.0.0/node_modules/d3-selection/src/selection/selectChild.js
+  var find = Array.prototype.find;
+  function childFind(match) {
+    return function() {
+      return find.call(this.children, match);
+    };
+  }
+  function childFirst() {
+    return this.firstElementChild;
+  }
+  function selectChild_default(match) {
+    return this.select(match == null ? childFirst : childFind(typeof match === "function" ? match : childMatcher(match)));
+  }
+
+  // node_modules/.pnpm/d3-selection@3.0.0/node_modules/d3-selection/src/selection/selectChildren.js
+  var filter = Array.prototype.filter;
+  function children() {
+    return Array.from(this.children);
+  }
+  function childrenFilter(match) {
+    return function() {
+      return filter.call(this.children, match);
+    };
+  }
+  function selectChildren_default(match) {
+    return this.selectAll(match == null ? children : childrenFilter(typeof match === "function" ? match : childMatcher(match)));
+  }
+
+  // node_modules/.pnpm/d3-selection@3.0.0/node_modules/d3-selection/src/selection/filter.js
+  function filter_default(match) {
+    if (typeof match !== "function") match = matcher_default(match);
+    for (var groups = this._groups, m = groups.length, subgroups = new Array(m), j = 0; j < m; ++j) {
+      for (var group = groups[j], n = group.length, subgroup = subgroups[j] = [], node, i = 0; i < n; ++i) {
+        if ((node = group[i]) && match.call(node, node.__data__, i, group)) {
+          subgroup.push(node);
+        }
+      }
+    }
+    return new Selection(subgroups, this._parents);
+  }
+
+  // node_modules/.pnpm/d3-selection@3.0.0/node_modules/d3-selection/src/selection/sparse.js
+  function sparse_default(update3) {
+    return new Array(update3.length);
+  }
+
+  // node_modules/.pnpm/d3-selection@3.0.0/node_modules/d3-selection/src/selection/enter.js
+  function enter_default() {
+    return new Selection(this._enter || this._groups.map(sparse_default), this._parents);
+  }
+  function EnterNode(parent, datum2) {
+    this.ownerDocument = parent.ownerDocument;
+    this.namespaceURI = parent.namespaceURI;
+    this._next = null;
+    this._parent = parent;
+    this.__data__ = datum2;
+  }
+  EnterNode.prototype = {
+    constructor: EnterNode,
+    appendChild: function(child) {
+      return this._parent.insertBefore(child, this._next);
+    },
+    insertBefore: function(child, next) {
+      return this._parent.insertBefore(child, next);
+    },
+    querySelector: function(selector) {
+      return this._parent.querySelector(selector);
+    },
+    querySelectorAll: function(selector) {
+      return this._parent.querySelectorAll(selector);
+    }
+  };
+
+  // node_modules/.pnpm/d3-selection@3.0.0/node_modules/d3-selection/src/constant.js
+  function constant_default(x) {
+    return function() {
+      return x;
+    };
+  }
+
+  // node_modules/.pnpm/d3-selection@3.0.0/node_modules/d3-selection/src/selection/data.js
+  function bindIndex(parent, group, enter, update3, exit, data) {
+    var i = 0, node, groupLength = group.length, dataLength = data.length;
+    for (; i < dataLength; ++i) {
+      if (node = group[i]) {
+        node.__data__ = data[i];
+        update3[i] = node;
+      } else {
+        enter[i] = new EnterNode(parent, data[i]);
+      }
+    }
+    for (; i < groupLength; ++i) {
+      if (node = group[i]) {
+        exit[i] = node;
+      }
+    }
+  }
+  function bindKey(parent, group, enter, update3, exit, data, key) {
+    var i, node, nodeByKeyValue = /* @__PURE__ */ new Map(), groupLength = group.length, dataLength = data.length, keyValues = new Array(groupLength), keyValue;
+    for (i = 0; i < groupLength; ++i) {
+      if (node = group[i]) {
+        keyValues[i] = keyValue = key.call(node, node.__data__, i, group) + "";
+        if (nodeByKeyValue.has(keyValue)) {
+          exit[i] = node;
+        } else {
+          nodeByKeyValue.set(keyValue, node);
+        }
+      }
+    }
+    for (i = 0; i < dataLength; ++i) {
+      keyValue = key.call(parent, data[i], i, data) + "";
+      if (node = nodeByKeyValue.get(keyValue)) {
+        update3[i] = node;
+        node.__data__ = data[i];
+        nodeByKeyValue.delete(keyValue);
+      } else {
+        enter[i] = new EnterNode(parent, data[i]);
+      }
+    }
+    for (i = 0; i < groupLength; ++i) {
+      if ((node = group[i]) && nodeByKeyValue.get(keyValues[i]) === node) {
+        exit[i] = node;
+      }
+    }
+  }
+  function datum(node) {
+    return node.__data__;
+  }
+  function data_default(value, key) {
+    if (!arguments.length) return Array.from(this, datum);
+    var bind = key ? bindKey : bindIndex, parents = this._parents, groups = this._groups;
+    if (typeof value !== "function") value = constant_default(value);
+    for (var m = groups.length, update3 = new Array(m), enter = new Array(m), exit = new Array(m), j = 0; j < m; ++j) {
+      var parent = parents[j], group = groups[j], groupLength = group.length, data = arraylike(value.call(parent, parent && parent.__data__, j, parents)), dataLength = data.length, enterGroup = enter[j] = new Array(dataLength), updateGroup = update3[j] = new Array(dataLength), exitGroup = exit[j] = new Array(groupLength);
+      bind(parent, group, enterGroup, updateGroup, exitGroup, data, key);
+      for (var i0 = 0, i1 = 0, previous, next; i0 < dataLength; ++i0) {
+        if (previous = enterGroup[i0]) {
+          if (i0 >= i1) i1 = i0 + 1;
+          while (!(next = updateGroup[i1]) && ++i1 < dataLength) ;
+          previous._next = next || null;
+        }
+      }
+    }
+    update3 = new Selection(update3, parents);
+    update3._enter = enter;
+    update3._exit = exit;
+    return update3;
+  }
+  function arraylike(data) {
+    return typeof data === "object" && "length" in data ? data : Array.from(data);
+  }
+
+  // node_modules/.pnpm/d3-selection@3.0.0/node_modules/d3-selection/src/selection/exit.js
+  function exit_default() {
+    return new Selection(this._exit || this._groups.map(sparse_default), this._parents);
+  }
+
+  // node_modules/.pnpm/d3-selection@3.0.0/node_modules/d3-selection/src/selection/join.js
+  function join_default(onenter, onupdate, onexit) {
+    var enter = this.enter(), update3 = this, exit = this.exit();
+    if (typeof onenter === "function") {
+      enter = onenter(enter);
+      if (enter) enter = enter.selection();
+    } else {
+      enter = enter.append(onenter + "");
+    }
+    if (onupdate != null) {
+      update3 = onupdate(update3);
+      if (update3) update3 = update3.selection();
+    }
+    if (onexit == null) exit.remove();
+    else onexit(exit);
+    return enter && update3 ? enter.merge(update3).order() : update3;
+  }
+
+  // node_modules/.pnpm/d3-selection@3.0.0/node_modules/d3-selection/src/selection/merge.js
+  function merge_default(context) {
+    var selection2 = context.selection ? context.selection() : context;
+    for (var groups0 = this._groups, groups1 = selection2._groups, m0 = groups0.length, m1 = groups1.length, m = Math.min(m0, m1), merges = new Array(m0), j = 0; j < m; ++j) {
+      for (var group0 = groups0[j], group1 = groups1[j], n = group0.length, merge = merges[j] = new Array(n), node, i = 0; i < n; ++i) {
+        if (node = group0[i] || group1[i]) {
+          merge[i] = node;
+        }
+      }
+    }
+    for (; j < m0; ++j) {
+      merges[j] = groups0[j];
+    }
+    return new Selection(merges, this._parents);
+  }
+
+  // node_modules/.pnpm/d3-selection@3.0.0/node_modules/d3-selection/src/selection/order.js
+  function order_default() {
+    for (var groups = this._groups, j = -1, m = groups.length; ++j < m; ) {
+      for (var group = groups[j], i = group.length - 1, next = group[i], node; --i >= 0; ) {
+        if (node = group[i]) {
+          if (next && node.compareDocumentPosition(next) ^ 4) next.parentNode.insertBefore(node, next);
+          next = node;
+        }
+      }
+    }
+    return this;
+  }
+
+  // node_modules/.pnpm/d3-selection@3.0.0/node_modules/d3-selection/src/selection/sort.js
+  function sort_default(compare) {
+    if (!compare) compare = ascending;
+    function compareNode(a, b) {
+      return a && b ? compare(a.__data__, b.__data__) : !a - !b;
+    }
+    for (var groups = this._groups, m = groups.length, sortgroups = new Array(m), j = 0; j < m; ++j) {
+      for (var group = groups[j], n = group.length, sortgroup = sortgroups[j] = new Array(n), node, i = 0; i < n; ++i) {
+        if (node = group[i]) {
+          sortgroup[i] = node;
+        }
+      }
+      sortgroup.sort(compareNode);
+    }
+    return new Selection(sortgroups, this._parents).order();
+  }
+  function ascending(a, b) {
+    return a < b ? -1 : a > b ? 1 : a >= b ? 0 : NaN;
+  }
+
+  // node_modules/.pnpm/d3-selection@3.0.0/node_modules/d3-selection/src/selection/call.js
+  function call_default() {
+    var callback = arguments[0];
+    arguments[0] = this;
+    callback.apply(null, arguments);
+    return this;
+  }
+
+  // node_modules/.pnpm/d3-selection@3.0.0/node_modules/d3-selection/src/selection/nodes.js
+  function nodes_default() {
+    return Array.from(this);
+  }
+
+  // node_modules/.pnpm/d3-selection@3.0.0/node_modules/d3-selection/src/selection/node.js
+  function node_default() {
+    for (var groups = this._groups, j = 0, m = groups.length; j < m; ++j) {
+      for (var group = groups[j], i = 0, n = group.length; i < n; ++i) {
+        var node = group[i];
+        if (node) return node;
+      }
+    }
+    return null;
+  }
+
+  // node_modules/.pnpm/d3-selection@3.0.0/node_modules/d3-selection/src/selection/size.js
+  function size_default() {
+    let size = 0;
+    for (const node of this) ++size;
+    return size;
+  }
+
+  // node_modules/.pnpm/d3-selection@3.0.0/node_modules/d3-selection/src/selection/empty.js
+  function empty_default() {
+    return !this.node();
+  }
+
+  // node_modules/.pnpm/d3-selection@3.0.0/node_modules/d3-selection/src/selection/each.js
+  function each_default(callback) {
+    for (var groups = this._groups, j = 0, m = groups.length; j < m; ++j) {
+      for (var group = groups[j], i = 0, n = group.length, node; i < n; ++i) {
+        if (node = group[i]) callback.call(node, node.__data__, i, group);
+      }
+    }
+    return this;
+  }
+
+  // node_modules/.pnpm/d3-selection@3.0.0/node_modules/d3-selection/src/selection/attr.js
+  function attrRemove(name8) {
+    return function() {
+      this.removeAttribute(name8);
+    };
+  }
+  function attrRemoveNS(fullname) {
+    return function() {
+      this.removeAttributeNS(fullname.space, fullname.local);
+    };
+  }
+  function attrConstant(name8, value) {
+    return function() {
+      this.setAttribute(name8, value);
+    };
+  }
+  function attrConstantNS(fullname, value) {
+    return function() {
+      this.setAttributeNS(fullname.space, fullname.local, value);
+    };
+  }
+  function attrFunction(name8, value) {
+    return function() {
+      var v = value.apply(this, arguments);
+      if (v == null) this.removeAttribute(name8);
+      else this.setAttribute(name8, v);
+    };
+  }
+  function attrFunctionNS(fullname, value) {
+    return function() {
+      var v = value.apply(this, arguments);
+      if (v == null) this.removeAttributeNS(fullname.space, fullname.local);
+      else this.setAttributeNS(fullname.space, fullname.local, v);
+    };
+  }
+  function attr_default(name8, value) {
+    var fullname = namespace_default(name8);
+    if (arguments.length < 2) {
+      var node = this.node();
+      return fullname.local ? node.getAttributeNS(fullname.space, fullname.local) : node.getAttribute(fullname);
+    }
+    return this.each((value == null ? fullname.local ? attrRemoveNS : attrRemove : typeof value === "function" ? fullname.local ? attrFunctionNS : attrFunction : fullname.local ? attrConstantNS : attrConstant)(fullname, value));
+  }
+
+  // node_modules/.pnpm/d3-selection@3.0.0/node_modules/d3-selection/src/window.js
+  function window_default(node) {
+    return node.ownerDocument && node.ownerDocument.defaultView || node.document && node || node.defaultView;
+  }
+
+  // node_modules/.pnpm/d3-selection@3.0.0/node_modules/d3-selection/src/selection/style.js
+  function styleRemove(name8) {
+    return function() {
+      this.style.removeProperty(name8);
+    };
+  }
+  function styleConstant(name8, value, priority) {
+    return function() {
+      this.style.setProperty(name8, value, priority);
+    };
+  }
+  function styleFunction(name8, value, priority) {
+    return function() {
+      var v = value.apply(this, arguments);
+      if (v == null) this.style.removeProperty(name8);
+      else this.style.setProperty(name8, v, priority);
+    };
+  }
+  function style_default(name8, value, priority) {
+    return arguments.length > 1 ? this.each((value == null ? styleRemove : typeof value === "function" ? styleFunction : styleConstant)(name8, value, priority == null ? "" : priority)) : styleValue(this.node(), name8);
+  }
+  function styleValue(node, name8) {
+    return node.style.getPropertyValue(name8) || window_default(node).getComputedStyle(node, null).getPropertyValue(name8);
+  }
+
+  // node_modules/.pnpm/d3-selection@3.0.0/node_modules/d3-selection/src/selection/property.js
+  function propertyRemove(name8) {
+    return function() {
+      delete this[name8];
+    };
+  }
+  function propertyConstant(name8, value) {
+    return function() {
+      this[name8] = value;
+    };
+  }
+  function propertyFunction(name8, value) {
+    return function() {
+      var v = value.apply(this, arguments);
+      if (v == null) delete this[name8];
+      else this[name8] = v;
+    };
+  }
+  function property_default(name8, value) {
+    return arguments.length > 1 ? this.each((value == null ? propertyRemove : typeof value === "function" ? propertyFunction : propertyConstant)(name8, value)) : this.node()[name8];
+  }
+
+  // node_modules/.pnpm/d3-selection@3.0.0/node_modules/d3-selection/src/selection/classed.js
+  function classArray(string) {
+    return string.trim().split(/^|\s+/);
+  }
+  function classList(node) {
+    return node.classList || new ClassList(node);
+  }
+  function ClassList(node) {
+    this._node = node;
+    this._names = classArray(node.getAttribute("class") || "");
+  }
+  ClassList.prototype = {
+    add: function(name8) {
+      var i = this._names.indexOf(name8);
+      if (i < 0) {
+        this._names.push(name8);
+        this._node.setAttribute("class", this._names.join(" "));
+      }
+    },
+    remove: function(name8) {
+      var i = this._names.indexOf(name8);
+      if (i >= 0) {
+        this._names.splice(i, 1);
+        this._node.setAttribute("class", this._names.join(" "));
+      }
+    },
+    contains: function(name8) {
+      return this._names.indexOf(name8) >= 0;
+    }
+  };
+  function classedAdd(node, names2) {
+    var list2 = classList(node), i = -1, n = names2.length;
+    while (++i < n) list2.add(names2[i]);
+  }
+  function classedRemove(node, names2) {
+    var list2 = classList(node), i = -1, n = names2.length;
+    while (++i < n) list2.remove(names2[i]);
+  }
+  function classedTrue(names2) {
+    return function() {
+      classedAdd(this, names2);
+    };
+  }
+  function classedFalse(names2) {
+    return function() {
+      classedRemove(this, names2);
+    };
+  }
+  function classedFunction(names2, value) {
+    return function() {
+      (value.apply(this, arguments) ? classedAdd : classedRemove)(this, names2);
+    };
+  }
+  function classed_default(name8, value) {
+    var names2 = classArray(name8 + "");
+    if (arguments.length < 2) {
+      var list2 = classList(this.node()), i = -1, n = names2.length;
+      while (++i < n) if (!list2.contains(names2[i])) return false;
+      return true;
+    }
+    return this.each((typeof value === "function" ? classedFunction : value ? classedTrue : classedFalse)(names2, value));
+  }
+
+  // node_modules/.pnpm/d3-selection@3.0.0/node_modules/d3-selection/src/selection/text.js
+  function textRemove() {
+    this.textContent = "";
+  }
+  function textConstant(value) {
+    return function() {
+      this.textContent = value;
+    };
+  }
+  function textFunction(value) {
+    return function() {
+      var v = value.apply(this, arguments);
+      this.textContent = v == null ? "" : v;
+    };
+  }
+  function text_default(value) {
+    return arguments.length ? this.each(value == null ? textRemove : (typeof value === "function" ? textFunction : textConstant)(value)) : this.node().textContent;
+  }
+
+  // node_modules/.pnpm/d3-selection@3.0.0/node_modules/d3-selection/src/selection/html.js
+  function htmlRemove() {
+    this.innerHTML = "";
+  }
+  function htmlConstant(value) {
+    return function() {
+      this.innerHTML = value;
+    };
+  }
+  function htmlFunction(value) {
+    return function() {
+      var v = value.apply(this, arguments);
+      this.innerHTML = v == null ? "" : v;
+    };
+  }
+  function html_default(value) {
+    return arguments.length ? this.each(value == null ? htmlRemove : (typeof value === "function" ? htmlFunction : htmlConstant)(value)) : this.node().innerHTML;
+  }
+
+  // node_modules/.pnpm/d3-selection@3.0.0/node_modules/d3-selection/src/selection/raise.js
+  function raise() {
+    if (this.nextSibling) this.parentNode.appendChild(this);
+  }
+  function raise_default() {
+    return this.each(raise);
+  }
+
+  // node_modules/.pnpm/d3-selection@3.0.0/node_modules/d3-selection/src/selection/lower.js
+  function lower() {
+    if (this.previousSibling) this.parentNode.insertBefore(this, this.parentNode.firstChild);
+  }
+  function lower_default() {
+    return this.each(lower);
+  }
+
+  // node_modules/.pnpm/d3-selection@3.0.0/node_modules/d3-selection/src/selection/append.js
+  function append_default(name8) {
+    var create2 = typeof name8 === "function" ? name8 : creator_default(name8);
+    return this.select(function() {
+      return this.appendChild(create2.apply(this, arguments));
+    });
+  }
+
+  // node_modules/.pnpm/d3-selection@3.0.0/node_modules/d3-selection/src/selection/insert.js
+  function constantNull() {
+    return null;
+  }
+  function insert_default(name8, before) {
+    var create2 = typeof name8 === "function" ? name8 : creator_default(name8), select = before == null ? constantNull : typeof before === "function" ? before : selector_default(before);
+    return this.select(function() {
+      return this.insertBefore(create2.apply(this, arguments), select.apply(this, arguments) || null);
+    });
+  }
+
+  // node_modules/.pnpm/d3-selection@3.0.0/node_modules/d3-selection/src/selection/remove.js
+  function remove() {
+    var parent = this.parentNode;
+    if (parent) parent.removeChild(this);
+  }
+  function remove_default() {
+    return this.each(remove);
+  }
+
+  // node_modules/.pnpm/d3-selection@3.0.0/node_modules/d3-selection/src/selection/clone.js
+  function selection_cloneShallow() {
+    var clone2 = this.cloneNode(false), parent = this.parentNode;
+    return parent ? parent.insertBefore(clone2, this.nextSibling) : clone2;
+  }
+  function selection_cloneDeep() {
+    var clone2 = this.cloneNode(true), parent = this.parentNode;
+    return parent ? parent.insertBefore(clone2, this.nextSibling) : clone2;
+  }
+  function clone_default(deep) {
+    return this.select(deep ? selection_cloneDeep : selection_cloneShallow);
+  }
+
+  // node_modules/.pnpm/d3-selection@3.0.0/node_modules/d3-selection/src/selection/datum.js
+  function datum_default(value) {
+    return arguments.length ? this.property("__data__", value) : this.node().__data__;
+  }
+
+  // node_modules/.pnpm/d3-selection@3.0.0/node_modules/d3-selection/src/selection/on.js
+  function contextListener(listener) {
+    return function(event2) {
+      listener.call(this, event2, this.__data__);
+    };
+  }
+  function parseTypenames(typenames) {
+    return typenames.trim().split(/^|\s+/).map(function(t) {
+      var name8 = "", i = t.indexOf(".");
+      if (i >= 0) name8 = t.slice(i + 1), t = t.slice(0, i);
+      return { type: t, name: name8 };
+    });
+  }
+  function onRemove(typename) {
+    return function() {
+      var on = this.__on;
+      if (!on) return;
+      for (var j = 0, i = -1, m = on.length, o; j < m; ++j) {
+        if (o = on[j], (!typename.type || o.type === typename.type) && o.name === typename.name) {
+          this.removeEventListener(o.type, o.listener, o.options);
+        } else {
+          on[++i] = o;
+        }
+      }
+      if (++i) on.length = i;
+      else delete this.__on;
+    };
+  }
+  function onAdd(typename, value, options) {
+    return function() {
+      var on = this.__on, o, listener = contextListener(value);
+      if (on) for (var j = 0, m = on.length; j < m; ++j) {
+        if ((o = on[j]).type === typename.type && o.name === typename.name) {
+          this.removeEventListener(o.type, o.listener, o.options);
+          this.addEventListener(o.type, o.listener = listener, o.options = options);
+          o.value = value;
+          return;
+        }
+      }
+      this.addEventListener(typename.type, listener, options);
+      o = { type: typename.type, name: typename.name, value, listener, options };
+      if (!on) this.__on = [o];
+      else on.push(o);
+    };
+  }
+  function on_default(typename, value, options) {
+    var typenames = parseTypenames(typename + ""), i, n = typenames.length, t;
+    if (arguments.length < 2) {
+      var on = this.node().__on;
+      if (on) for (var j = 0, m = on.length, o; j < m; ++j) {
+        for (i = 0, o = on[j]; i < n; ++i) {
+          if ((t = typenames[i]).type === o.type && t.name === o.name) {
+            return o.value;
+          }
+        }
+      }
+      return;
+    }
+    on = value ? onAdd : onRemove;
+    for (i = 0; i < n; ++i) this.each(on(typenames[i], value, options));
+    return this;
+  }
+
+  // node_modules/.pnpm/d3-selection@3.0.0/node_modules/d3-selection/src/selection/dispatch.js
+  function dispatchEvent(node, type, params) {
+    var window2 = window_default(node), event2 = window2.CustomEvent;
+    if (typeof event2 === "function") {
+      event2 = new event2(type, params);
+    } else {
+      event2 = window2.document.createEvent("Event");
+      if (params) event2.initEvent(type, params.bubbles, params.cancelable), event2.detail = params.detail;
+      else event2.initEvent(type, false, false);
+    }
+    node.dispatchEvent(event2);
+  }
+  function dispatchConstant(type, params) {
+    return function() {
+      return dispatchEvent(this, type, params);
+    };
+  }
+  function dispatchFunction(type, params) {
+    return function() {
+      return dispatchEvent(this, type, params.apply(this, arguments));
+    };
+  }
+  function dispatch_default(type, params) {
+    return this.each((typeof params === "function" ? dispatchFunction : dispatchConstant)(type, params));
+  }
+
+  // node_modules/.pnpm/d3-selection@3.0.0/node_modules/d3-selection/src/selection/iterator.js
+  function* iterator_default() {
+    for (var groups = this._groups, j = 0, m = groups.length; j < m; ++j) {
+      for (var group = groups[j], i = 0, n = group.length, node; i < n; ++i) {
+        if (node = group[i]) yield node;
+      }
+    }
+  }
+
+  // node_modules/.pnpm/d3-selection@3.0.0/node_modules/d3-selection/src/selection/index.js
+  var root = [null];
+  function Selection(groups, parents) {
+    this._groups = groups;
+    this._parents = parents;
+  }
+  function selection() {
+    return new Selection([[document.documentElement]], root);
+  }
+  function selection_selection() {
+    return this;
+  }
+  Selection.prototype = selection.prototype = {
+    constructor: Selection,
+    select: select_default,
+    selectAll: selectAll_default,
+    selectChild: selectChild_default,
+    selectChildren: selectChildren_default,
+    filter: filter_default,
+    data: data_default,
+    enter: enter_default,
+    exit: exit_default,
+    join: join_default,
+    merge: merge_default,
+    selection: selection_selection,
+    order: order_default,
+    sort: sort_default,
+    call: call_default,
+    nodes: nodes_default,
+    node: node_default,
+    size: size_default,
+    empty: empty_default,
+    each: each_default,
+    attr: attr_default,
+    style: style_default,
+    property: property_default,
+    classed: classed_default,
+    text: text_default,
+    html: html_default,
+    raise: raise_default,
+    lower: lower_default,
+    append: append_default,
+    insert: insert_default,
+    remove: remove_default,
+    clone: clone_default,
+    datum: datum_default,
+    on: on_default,
+    dispatch: dispatch_default,
+    [Symbol.iterator]: iterator_default
+  };
+  var selection_default = selection;
+
+  // node_modules/.pnpm/d3-selection@3.0.0/node_modules/d3-selection/src/select.js
+  function select_default2(selector) {
+    return typeof selector === "string" ? new Selection([[document.querySelector(selector)]], [document.documentElement]) : new Selection([[selector]], root);
+  }
+
+  // node_modules/.pnpm/d3-selection@3.0.0/node_modules/d3-selection/src/sourceEvent.js
+  function sourceEvent_default(event2) {
+    let sourceEvent;
+    while (sourceEvent = event2.sourceEvent) event2 = sourceEvent;
+    return event2;
+  }
+
+  // node_modules/.pnpm/d3-selection@3.0.0/node_modules/d3-selection/src/pointer.js
+  function pointer_default(event2, node) {
+    event2 = sourceEvent_default(event2);
+    if (node === void 0) node = event2.currentTarget;
+    if (node) {
+      var svg2 = node.ownerSVGElement || node;
+      if (svg2.createSVGPoint) {
+        var point = svg2.createSVGPoint();
+        point.x = event2.clientX, point.y = event2.clientY;
+        point = point.matrixTransform(node.getScreenCTM().inverse());
+        return [point.x, point.y];
+      }
+      if (node.getBoundingClientRect) {
+        var rect = node.getBoundingClientRect();
+        return [event2.clientX - rect.left - node.clientLeft, event2.clientY - rect.top - node.clientTop];
+      }
+    }
+    return [event2.pageX, event2.pageY];
+  }
+
+  // node_modules/.pnpm/d3-selection@3.0.0/node_modules/d3-selection/src/selectAll.js
+  function selectAll_default2(selector) {
+    return typeof selector === "string" ? new Selection([document.querySelectorAll(selector)], [document.documentElement]) : new Selection([array(selector)], root);
+  }
+
+  // node_modules/.pnpm/d3-dispatch@3.0.1/node_modules/d3-dispatch/src/dispatch.js
+  var noop = { value: () => {
+  } };
+  function dispatch() {
+    for (var i = 0, n = arguments.length, _5 = {}, t; i < n; ++i) {
+      if (!(t = arguments[i] + "") || t in _5 || /[\s.]/.test(t)) throw new Error("illegal type: " + t);
+      _5[t] = [];
+    }
+    return new Dispatch(_5);
+  }
+  function Dispatch(_5) {
+    this._ = _5;
+  }
+  function parseTypenames2(typenames, types) {
+    return typenames.trim().split(/^|\s+/).map(function(t) {
+      var name8 = "", i = t.indexOf(".");
+      if (i >= 0) name8 = t.slice(i + 1), t = t.slice(0, i);
+      if (t && !types.hasOwnProperty(t)) throw new Error("unknown type: " + t);
+      return { type: t, name: name8 };
+    });
+  }
+  Dispatch.prototype = dispatch.prototype = {
+    constructor: Dispatch,
+    on: function(typename, callback) {
+      var _5 = this._, T = parseTypenames2(typename + "", _5), t, i = -1, n = T.length;
+      if (arguments.length < 2) {
+        while (++i < n) if ((t = (typename = T[i]).type) && (t = get(_5[t], typename.name))) return t;
+        return;
+      }
+      if (callback != null && typeof callback !== "function") throw new Error("invalid callback: " + callback);
+      while (++i < n) {
+        if (t = (typename = T[i]).type) _5[t] = set(_5[t], typename.name, callback);
+        else if (callback == null) for (t in _5) _5[t] = set(_5[t], typename.name, null);
+      }
+      return this;
+    },
+    copy: function() {
+      var copy2 = {}, _5 = this._;
+      for (var t in _5) copy2[t] = _5[t].slice();
+      return new Dispatch(copy2);
+    },
+    call: function(type, that) {
+      if ((n = arguments.length - 2) > 0) for (var args = new Array(n), i = 0, n, t; i < n; ++i) args[i] = arguments[i + 2];
+      if (!this._.hasOwnProperty(type)) throw new Error("unknown type: " + type);
+      for (t = this._[type], i = 0, n = t.length; i < n; ++i) t[i].value.apply(that, args);
+    },
+    apply: function(type, that, args) {
+      if (!this._.hasOwnProperty(type)) throw new Error("unknown type: " + type);
+      for (var t = this._[type], i = 0, n = t.length; i < n; ++i) t[i].value.apply(that, args);
+    }
+  };
+  function get(type, name8) {
+    for (var i = 0, n = type.length, c; i < n; ++i) {
+      if ((c = type[i]).name === name8) {
+        return c.value;
+      }
+    }
+  }
+  function set(type, name8, callback) {
+    for (var i = 0, n = type.length; i < n; ++i) {
+      if (type[i].name === name8) {
+        type[i] = noop, type = type.slice(0, i).concat(type.slice(i + 1));
+        break;
+      }
+    }
+    if (callback != null) type.push({ name: name8, value: callback });
+    return type;
+  }
+  var dispatch_default2 = dispatch;
+
+  // node_modules/.pnpm/d3-timer@1.0.10/node_modules/d3-timer/src/timer.js
+  var frame = 0;
+  var timeout = 0;
+  var interval = 0;
+  var pokeDelay = 1e3;
+  var taskHead;
+  var taskTail;
+  var clockLast = 0;
+  var clockNow = 0;
+  var clockSkew = 0;
+  var clock = typeof performance === "object" && performance.now ? performance : Date;
+  var setFrame = typeof window === "object" && window.requestAnimationFrame ? window.requestAnimationFrame.bind(window) : function(f) {
+    setTimeout(f, 17);
+  };
+  function now() {
+    return clockNow || (setFrame(clearNow), clockNow = clock.now() + clockSkew);
+  }
+  function clearNow() {
+    clockNow = 0;
+  }
+  function Timer() {
+    this._call = this._time = this._next = null;
+  }
+  Timer.prototype = timer.prototype = {
+    constructor: Timer,
+    restart: function(callback, delay, time) {
+      if (typeof callback !== "function") throw new TypeError("callback is not a function");
+      time = (time == null ? now() : +time) + (delay == null ? 0 : +delay);
+      if (!this._next && taskTail !== this) {
+        if (taskTail) taskTail._next = this;
+        else taskHead = this;
+        taskTail = this;
+      }
+      this._call = callback;
+      this._time = time;
+      sleep();
+    },
+    stop: function() {
+      if (this._call) {
+        this._call = null;
+        this._time = Infinity;
+        sleep();
+      }
+    }
+  };
+  function timer(callback, delay, time) {
+    var t = new Timer();
+    t.restart(callback, delay, time);
+    return t;
+  }
+  function timerFlush() {
+    now();
+    ++frame;
+    var t = taskHead, e;
+    while (t) {
+      if ((e = clockNow - t._time) >= 0) t._call.call(null, e);
+      t = t._next;
+    }
+    --frame;
+  }
+  function wake() {
+    clockNow = (clockLast = clock.now()) + clockSkew;
+    frame = timeout = 0;
+    try {
+      timerFlush();
+    } finally {
+      frame = 0;
+      nap();
+      clockNow = 0;
+    }
+  }
+  function poke() {
+    var now2 = clock.now(), delay = now2 - clockLast;
+    if (delay > pokeDelay) clockSkew -= delay, clockLast = now2;
+  }
+  function nap() {
+    var t03, t13 = taskHead, t2, time = Infinity;
+    while (t13) {
+      if (t13._call) {
+        if (time > t13._time) time = t13._time;
+        t03 = t13, t13 = t13._next;
+      } else {
+        t2 = t13._next, t13._next = null;
+        t13 = t03 ? t03._next = t2 : taskHead = t2;
+      }
+    }
+    taskTail = t03;
+    sleep(time);
+  }
+  function sleep(time) {
+    if (frame) return;
+    if (timeout) timeout = clearTimeout(timeout);
+    var delay = time - clockNow;
+    if (delay > 24) {
+      if (time < Infinity) timeout = setTimeout(wake, time - clock.now() - clockSkew);
+      if (interval) interval = clearInterval(interval);
+    } else {
+      if (!interval) clockLast = clock.now(), interval = setInterval(poke, pokeDelay);
+      frame = 1, setFrame(wake);
+    }
+  }
+
+  // node_modules/.pnpm/d3-timer@1.0.10/node_modules/d3-timer/src/timeout.js
+  function timeout_default(callback, delay, time) {
+    var t = new Timer();
+    delay = delay == null ? 0 : +delay;
+    t.restart(function(elapsed) {
+      t.stop();
+      callback(elapsed + delay);
+    }, delay, time);
+    return t;
+  }
+
+  // node_modules/.pnpm/d3-transition@3.0.1_d3-selection@3.0.0/node_modules/d3-transition/src/transition/schedule.js
+  var emptyOn = dispatch_default2("start", "end", "cancel", "interrupt");
+  var emptyTween = [];
+  var CREATED = 0;
+  var SCHEDULED = 1;
+  var STARTING = 2;
+  var STARTED = 3;
+  var RUNNING = 4;
+  var ENDING = 5;
+  var ENDED = 6;
+  function schedule_default(node, name8, id2, index, group, timing) {
+    var schedules = node.__transition;
+    if (!schedules) node.__transition = {};
+    else if (id2 in schedules) return;
+    create(node, id2, {
+      name: name8,
+      index,
+      // For context during callback.
+      group,
+      // For context during callback.
+      on: emptyOn,
+      tween: emptyTween,
+      time: timing.time,
+      delay: timing.delay,
+      duration: timing.duration,
+      ease: timing.ease,
+      timer: null,
+      state: CREATED
+    });
+  }
+  function init(node, id2) {
+    var schedule = get2(node, id2);
+    if (schedule.state > CREATED) throw new Error("too late; already scheduled");
+    return schedule;
+  }
+  function set2(node, id2) {
+    var schedule = get2(node, id2);
+    if (schedule.state > STARTED) throw new Error("too late; already running");
+    return schedule;
+  }
+  function get2(node, id2) {
+    var schedule = node.__transition;
+    if (!schedule || !(schedule = schedule[id2])) throw new Error("transition not found");
+    return schedule;
+  }
+  function create(node, id2, self2) {
+    var schedules = node.__transition, tween;
+    schedules[id2] = self2;
+    self2.timer = timer(schedule, 0, self2.time);
+    function schedule(elapsed) {
+      self2.state = SCHEDULED;
+      self2.timer.restart(start2, self2.delay, self2.time);
+      if (self2.delay <= elapsed) start2(elapsed - self2.delay);
+    }
+    function start2(elapsed) {
+      var i, j, n, o;
+      if (self2.state !== SCHEDULED) return stop();
+      for (i in schedules) {
+        o = schedules[i];
+        if (o.name !== self2.name) continue;
+        if (o.state === STARTED) return timeout_default(start2);
+        if (o.state === RUNNING) {
+          o.state = ENDED;
+          o.timer.stop();
+          o.on.call("interrupt", node, node.__data__, o.index, o.group);
+          delete schedules[i];
+        } else if (+i < id2) {
+          o.state = ENDED;
+          o.timer.stop();
+          o.on.call("cancel", node, node.__data__, o.index, o.group);
+          delete schedules[i];
+        }
+      }
+      timeout_default(function() {
+        if (self2.state === STARTED) {
+          self2.state = RUNNING;
+          self2.timer.restart(tick, self2.delay, self2.time);
+          tick(elapsed);
+        }
+      });
+      self2.state = STARTING;
+      self2.on.call("start", node, node.__data__, self2.index, self2.group);
+      if (self2.state !== STARTING) return;
+      self2.state = STARTED;
+      tween = new Array(n = self2.tween.length);
+      for (i = 0, j = -1; i < n; ++i) {
+        if (o = self2.tween[i].value.call(node, node.__data__, self2.index, self2.group)) {
+          tween[++j] = o;
+        }
+      }
+      tween.length = j + 1;
+    }
+    function tick(elapsed) {
+      var t = elapsed < self2.duration ? self2.ease.call(null, elapsed / self2.duration) : (self2.timer.restart(stop), self2.state = ENDING, 1), i = -1, n = tween.length;
+      while (++i < n) {
+        tween[i].call(node, t);
+      }
+      if (self2.state === ENDING) {
+        self2.on.call("end", node, node.__data__, self2.index, self2.group);
+        stop();
+      }
+    }
+    function stop() {
+      self2.state = ENDED;
+      self2.timer.stop();
+      delete schedules[id2];
+      for (var i in schedules) return;
+      delete node.__transition;
+    }
+  }
+
+  // node_modules/.pnpm/d3-transition@3.0.1_d3-selection@3.0.0/node_modules/d3-transition/src/interrupt.js
+  function interrupt_default(node, name8) {
+    var schedules = node.__transition, schedule, active, empty2 = true, i;
+    if (!schedules) return;
+    name8 = name8 == null ? null : name8 + "";
+    for (i in schedules) {
+      if ((schedule = schedules[i]).name !== name8) {
+        empty2 = false;
+        continue;
+      }
+      active = schedule.state > STARTING && schedule.state < ENDING;
+      schedule.state = ENDED;
+      schedule.timer.stop();
+      schedule.on.call(active ? "interrupt" : "cancel", node, node.__data__, schedule.index, schedule.group);
+      delete schedules[i];
+    }
+    if (empty2) delete node.__transition;
+  }
+
+  // node_modules/.pnpm/d3-transition@3.0.1_d3-selection@3.0.0/node_modules/d3-transition/src/selection/interrupt.js
+  function interrupt_default2(name8) {
+    return this.each(function() {
+      interrupt_default(this, name8);
+    });
+  }
+
+  // node_modules/.pnpm/d3-color@3.1.0/node_modules/d3-color/src/define.js
+  function define_default(constructor, factory, prototype) {
+    constructor.prototype = factory.prototype = prototype;
+    prototype.constructor = constructor;
+  }
+  function extend(parent, definition) {
+    var prototype = Object.create(parent.prototype);
+    for (var key in definition) prototype[key] = definition[key];
+    return prototype;
+  }
+
+  // node_modules/.pnpm/d3-color@3.1.0/node_modules/d3-color/src/color.js
+  function Color() {
+  }
+  var darker = 0.7;
+  var brighter = 1 / darker;
+  var reI = "\\s*([+-]?\\d+)\\s*";
+  var reN = "\\s*([+-]?(?:\\d*\\.)?\\d+(?:[eE][+-]?\\d+)?)\\s*";
+  var reP = "\\s*([+-]?(?:\\d*\\.)?\\d+(?:[eE][+-]?\\d+)?)%\\s*";
+  var reHex = /^#([0-9a-f]{3,8})$/;
+  var reRgbInteger = new RegExp(`^rgb\\(${reI},${reI},${reI}\\)$`);
+  var reRgbPercent = new RegExp(`^rgb\\(${reP},${reP},${reP}\\)$`);
+  var reRgbaInteger = new RegExp(`^rgba\\(${reI},${reI},${reI},${reN}\\)$`);
+  var reRgbaPercent = new RegExp(`^rgba\\(${reP},${reP},${reP},${reN}\\)$`);
+  var reHslPercent = new RegExp(`^hsl\\(${reN},${reP},${reP}\\)$`);
+  var reHslaPercent = new RegExp(`^hsla\\(${reN},${reP},${reP},${reN}\\)$`);
+  var named = {
+    aliceblue: 15792383,
+    antiquewhite: 16444375,
+    aqua: 65535,
+    aquamarine: 8388564,
+    azure: 15794175,
+    beige: 16119260,
+    bisque: 16770244,
+    black: 0,
+    blanchedalmond: 16772045,
+    blue: 255,
+    blueviolet: 9055202,
+    brown: 10824234,
+    burlywood: 14596231,
+    cadetblue: 6266528,
+    chartreuse: 8388352,
+    chocolate: 13789470,
+    coral: 16744272,
+    cornflowerblue: 6591981,
+    cornsilk: 16775388,
+    crimson: 14423100,
+    cyan: 65535,
+    darkblue: 139,
+    darkcyan: 35723,
+    darkgoldenrod: 12092939,
+    darkgray: 11119017,
+    darkgreen: 25600,
+    darkgrey: 11119017,
+    darkkhaki: 12433259,
+    darkmagenta: 9109643,
+    darkolivegreen: 5597999,
+    darkorange: 16747520,
+    darkorchid: 10040012,
+    darkred: 9109504,
+    darksalmon: 15308410,
+    darkseagreen: 9419919,
+    darkslateblue: 4734347,
+    darkslategray: 3100495,
+    darkslategrey: 3100495,
+    darkturquoise: 52945,
+    darkviolet: 9699539,
+    deeppink: 16716947,
+    deepskyblue: 49151,
+    dimgray: 6908265,
+    dimgrey: 6908265,
+    dodgerblue: 2003199,
+    firebrick: 11674146,
+    floralwhite: 16775920,
+    forestgreen: 2263842,
+    fuchsia: 16711935,
+    gainsboro: 14474460,
+    ghostwhite: 16316671,
+    gold: 16766720,
+    goldenrod: 14329120,
+    gray: 8421504,
+    green: 32768,
+    greenyellow: 11403055,
+    grey: 8421504,
+    honeydew: 15794160,
+    hotpink: 16738740,
+    indianred: 13458524,
+    indigo: 4915330,
+    ivory: 16777200,
+    khaki: 15787660,
+    lavender: 15132410,
+    lavenderblush: 16773365,
+    lawngreen: 8190976,
+    lemonchiffon: 16775885,
+    lightblue: 11393254,
+    lightcoral: 15761536,
+    lightcyan: 14745599,
+    lightgoldenrodyellow: 16448210,
+    lightgray: 13882323,
+    lightgreen: 9498256,
+    lightgrey: 13882323,
+    lightpink: 16758465,
+    lightsalmon: 16752762,
+    lightseagreen: 2142890,
+    lightskyblue: 8900346,
+    lightslategray: 7833753,
+    lightslategrey: 7833753,
+    lightsteelblue: 11584734,
+    lightyellow: 16777184,
+    lime: 65280,
+    limegreen: 3329330,
+    linen: 16445670,
+    magenta: 16711935,
+    maroon: 8388608,
+    mediumaquamarine: 6737322,
+    mediumblue: 205,
+    mediumorchid: 12211667,
+    mediumpurple: 9662683,
+    mediumseagreen: 3978097,
+    mediumslateblue: 8087790,
+    mediumspringgreen: 64154,
+    mediumturquoise: 4772300,
+    mediumvioletred: 13047173,
+    midnightblue: 1644912,
+    mintcream: 16121850,
+    mistyrose: 16770273,
+    moccasin: 16770229,
+    navajowhite: 16768685,
+    navy: 128,
+    oldlace: 16643558,
+    olive: 8421376,
+    olivedrab: 7048739,
+    orange: 16753920,
+    orangered: 16729344,
+    orchid: 14315734,
+    palegoldenrod: 15657130,
+    palegreen: 10025880,
+    paleturquoise: 11529966,
+    palevioletred: 14381203,
+    papayawhip: 16773077,
+    peachpuff: 16767673,
+    peru: 13468991,
+    pink: 16761035,
+    plum: 14524637,
+    powderblue: 11591910,
+    purple: 8388736,
+    rebeccapurple: 6697881,
+    red: 16711680,
+    rosybrown: 12357519,
+    royalblue: 4286945,
+    saddlebrown: 9127187,
+    salmon: 16416882,
+    sandybrown: 16032864,
+    seagreen: 3050327,
+    seashell: 16774638,
+    sienna: 10506797,
+    silver: 12632256,
+    skyblue: 8900331,
+    slateblue: 6970061,
+    slategray: 7372944,
+    slategrey: 7372944,
+    snow: 16775930,
+    springgreen: 65407,
+    steelblue: 4620980,
+    tan: 13808780,
+    teal: 32896,
+    thistle: 14204888,
+    tomato: 16737095,
+    turquoise: 4251856,
+    violet: 15631086,
+    wheat: 16113331,
+    white: 16777215,
+    whitesmoke: 16119285,
+    yellow: 16776960,
+    yellowgreen: 10145074
+  };
+  define_default(Color, color, {
+    copy(channels) {
+      return Object.assign(new this.constructor(), this, channels);
+    },
+    displayable() {
+      return this.rgb().displayable();
+    },
+    hex: color_formatHex,
+    // Deprecated! Use color.formatHex.
+    formatHex: color_formatHex,
+    formatHex8: color_formatHex8,
+    formatHsl: color_formatHsl,
+    formatRgb: color_formatRgb,
+    toString: color_formatRgb
+  });
+  function color_formatHex() {
+    return this.rgb().formatHex();
+  }
+  function color_formatHex8() {
+    return this.rgb().formatHex8();
+  }
+  function color_formatHsl() {
+    return hslConvert(this).formatHsl();
+  }
+  function color_formatRgb() {
+    return this.rgb().formatRgb();
+  }
+  function color(format6) {
+    var m, l;
+    format6 = (format6 + "").trim().toLowerCase();
+    return (m = reHex.exec(format6)) ? (l = m[1].length, m = parseInt(m[1], 16), l === 6 ? rgbn(m) : l === 3 ? new Rgb(m >> 8 & 15 | m >> 4 & 240, m >> 4 & 15 | m & 240, (m & 15) << 4 | m & 15, 1) : l === 8 ? rgba(m >> 24 & 255, m >> 16 & 255, m >> 8 & 255, (m & 255) / 255) : l === 4 ? rgba(m >> 12 & 15 | m >> 8 & 240, m >> 8 & 15 | m >> 4 & 240, m >> 4 & 15 | m & 240, ((m & 15) << 4 | m & 15) / 255) : null) : (m = reRgbInteger.exec(format6)) ? new Rgb(m[1], m[2], m[3], 1) : (m = reRgbPercent.exec(format6)) ? new Rgb(m[1] * 255 / 100, m[2] * 255 / 100, m[3] * 255 / 100, 1) : (m = reRgbaInteger.exec(format6)) ? rgba(m[1], m[2], m[3], m[4]) : (m = reRgbaPercent.exec(format6)) ? rgba(m[1] * 255 / 100, m[2] * 255 / 100, m[3] * 255 / 100, m[4]) : (m = reHslPercent.exec(format6)) ? hsla(m[1], m[2] / 100, m[3] / 100, 1) : (m = reHslaPercent.exec(format6)) ? hsla(m[1], m[2] / 100, m[3] / 100, m[4]) : named.hasOwnProperty(format6) ? rgbn(named[format6]) : format6 === "transparent" ? new Rgb(NaN, NaN, NaN, 0) : null;
+  }
+  function rgbn(n) {
+    return new Rgb(n >> 16 & 255, n >> 8 & 255, n & 255, 1);
+  }
+  function rgba(r, g, b, a) {
+    if (a <= 0) r = g = b = NaN;
+    return new Rgb(r, g, b, a);
+  }
+  function rgbConvert(o) {
+    if (!(o instanceof Color)) o = color(o);
+    if (!o) return new Rgb();
+    o = o.rgb();
+    return new Rgb(o.r, o.g, o.b, o.opacity);
+  }
+  function rgb(r, g, b, opacity2) {
+    return arguments.length === 1 ? rgbConvert(r) : new Rgb(r, g, b, opacity2 == null ? 1 : opacity2);
+  }
+  function Rgb(r, g, b, opacity2) {
+    this.r = +r;
+    this.g = +g;
+    this.b = +b;
+    this.opacity = +opacity2;
+  }
+  define_default(Rgb, rgb, extend(Color, {
+    brighter(k) {
+      k = k == null ? brighter : Math.pow(brighter, k);
+      return new Rgb(this.r * k, this.g * k, this.b * k, this.opacity);
+    },
+    darker(k) {
+      k = k == null ? darker : Math.pow(darker, k);
+      return new Rgb(this.r * k, this.g * k, this.b * k, this.opacity);
+    },
+    rgb() {
+      return this;
+    },
+    clamp() {
+      return new Rgb(clampi(this.r), clampi(this.g), clampi(this.b), clampa(this.opacity));
+    },
+    displayable() {
+      return -0.5 <= this.r && this.r < 255.5 && (-0.5 <= this.g && this.g < 255.5) && (-0.5 <= this.b && this.b < 255.5) && (0 <= this.opacity && this.opacity <= 1);
+    },
+    hex: rgb_formatHex,
+    // Deprecated! Use color.formatHex.
+    formatHex: rgb_formatHex,
+    formatHex8: rgb_formatHex8,
+    formatRgb: rgb_formatRgb,
+    toString: rgb_formatRgb
+  }));
+  function rgb_formatHex() {
+    return `#${hex(this.r)}${hex(this.g)}${hex(this.b)}`;
+  }
+  function rgb_formatHex8() {
+    return `#${hex(this.r)}${hex(this.g)}${hex(this.b)}${hex((isNaN(this.opacity) ? 1 : this.opacity) * 255)}`;
+  }
+  function rgb_formatRgb() {
+    const a = clampa(this.opacity);
+    return `${a === 1 ? "rgb(" : "rgba("}${clampi(this.r)}, ${clampi(this.g)}, ${clampi(this.b)}${a === 1 ? ")" : `, ${a})`}`;
+  }
+  function clampa(opacity2) {
+    return isNaN(opacity2) ? 1 : Math.max(0, Math.min(1, opacity2));
+  }
+  function clampi(value) {
+    return Math.max(0, Math.min(255, Math.round(value) || 0));
+  }
+  function hex(value) {
+    value = clampi(value);
+    return (value < 16 ? "0" : "") + value.toString(16);
+  }
+  function hsla(h, s, l, a) {
+    if (a <= 0) h = s = l = NaN;
+    else if (l <= 0 || l >= 1) h = s = NaN;
+    else if (s <= 0) h = NaN;
+    return new Hsl(h, s, l, a);
+  }
+  function hslConvert(o) {
+    if (o instanceof Hsl) return new Hsl(o.h, o.s, o.l, o.opacity);
+    if (!(o instanceof Color)) o = color(o);
+    if (!o) return new Hsl();
+    if (o instanceof Hsl) return o;
+    o = o.rgb();
+    var r = o.r / 255, g = o.g / 255, b = o.b / 255, min2 = Math.min(r, g, b), max2 = Math.max(r, g, b), h = NaN, s = max2 - min2, l = (max2 + min2) / 2;
+    if (s) {
+      if (r === max2) h = (g - b) / s + (g < b) * 6;
+      else if (g === max2) h = (b - r) / s + 2;
+      else h = (r - g) / s + 4;
+      s /= l < 0.5 ? max2 + min2 : 2 - max2 - min2;
+      h *= 60;
+    } else {
+      s = l > 0 && l < 1 ? 0 : h;
+    }
+    return new Hsl(h, s, l, o.opacity);
+  }
+  function hsl(h, s, l, opacity2) {
+    return arguments.length === 1 ? hslConvert(h) : new Hsl(h, s, l, opacity2 == null ? 1 : opacity2);
+  }
+  function Hsl(h, s, l, opacity2) {
+    this.h = +h;
+    this.s = +s;
+    this.l = +l;
+    this.opacity = +opacity2;
+  }
+  define_default(Hsl, hsl, extend(Color, {
+    brighter(k) {
+      k = k == null ? brighter : Math.pow(brighter, k);
+      return new Hsl(this.h, this.s, this.l * k, this.opacity);
+    },
+    darker(k) {
+      k = k == null ? darker : Math.pow(darker, k);
+      return new Hsl(this.h, this.s, this.l * k, this.opacity);
+    },
+    rgb() {
+      var h = this.h % 360 + (this.h < 0) * 360, s = isNaN(h) || isNaN(this.s) ? 0 : this.s, l = this.l, m2 = l + (l < 0.5 ? l : 1 - l) * s, m1 = 2 * l - m2;
+      return new Rgb(
+        hsl2rgb(h >= 240 ? h - 240 : h + 120, m1, m2),
+        hsl2rgb(h, m1, m2),
+        hsl2rgb(h < 120 ? h + 240 : h - 120, m1, m2),
+        this.opacity
+      );
+    },
+    clamp() {
+      return new Hsl(clamph(this.h), clampt(this.s), clampt(this.l), clampa(this.opacity));
+    },
+    displayable() {
+      return (0 <= this.s && this.s <= 1 || isNaN(this.s)) && (0 <= this.l && this.l <= 1) && (0 <= this.opacity && this.opacity <= 1);
+    },
+    formatHsl() {
+      const a = clampa(this.opacity);
+      return `${a === 1 ? "hsl(" : "hsla("}${clamph(this.h)}, ${clampt(this.s) * 100}%, ${clampt(this.l) * 100}%${a === 1 ? ")" : `, ${a})`}`;
+    }
+  }));
+  function clamph(value) {
+    value = (value || 0) % 360;
+    return value < 0 ? value + 360 : value;
+  }
+  function clampt(value) {
+    return Math.max(0, Math.min(1, value || 0));
+  }
+  function hsl2rgb(h, m1, m2) {
+    return (h < 60 ? m1 + (m2 - m1) * h / 60 : h < 180 ? m2 : h < 240 ? m1 + (m2 - m1) * (240 - h) / 60 : m1) * 255;
+  }
+
+  // node_modules/.pnpm/d3-interpolate@3.0.1/node_modules/d3-interpolate/src/basis.js
+  function basis(t13, v0, v1, v2, v3) {
+    var t2 = t13 * t13, t3 = t2 * t13;
+    return ((1 - 3 * t13 + 3 * t2 - t3) * v0 + (4 - 6 * t2 + 3 * t3) * v1 + (1 + 3 * t13 + 3 * t2 - 3 * t3) * v2 + t3 * v3) / 6;
+  }
+  function basis_default(values) {
+    var n = values.length - 1;
+    return function(t) {
+      var i = t <= 0 ? t = 0 : t >= 1 ? (t = 1, n - 1) : Math.floor(t * n), v1 = values[i], v2 = values[i + 1], v0 = i > 0 ? values[i - 1] : 2 * v1 - v2, v3 = i < n - 1 ? values[i + 2] : 2 * v2 - v1;
+      return basis((t - i / n) * n, v0, v1, v2, v3);
+    };
+  }
+
+  // node_modules/.pnpm/d3-interpolate@3.0.1/node_modules/d3-interpolate/src/basisClosed.js
+  function basisClosed_default(values) {
+    var n = values.length;
+    return function(t) {
+      var i = Math.floor(((t %= 1) < 0 ? ++t : t) * n), v0 = values[(i + n - 1) % n], v1 = values[i % n], v2 = values[(i + 1) % n], v3 = values[(i + 2) % n];
+      return basis((t - i / n) * n, v0, v1, v2, v3);
+    };
+  }
+
+  // node_modules/.pnpm/d3-interpolate@3.0.1/node_modules/d3-interpolate/src/constant.js
+  var constant_default2 = (x) => () => x;
+
+  // node_modules/.pnpm/d3-interpolate@3.0.1/node_modules/d3-interpolate/src/color.js
+  function linear(a, d) {
+    return function(t) {
+      return a + t * d;
+    };
+  }
+  function exponential(a, b, y) {
+    return a = Math.pow(a, y), b = Math.pow(b, y) - a, y = 1 / y, function(t) {
+      return Math.pow(a + t * b, y);
+    };
+  }
+  function gamma(y) {
+    return (y = +y) === 1 ? nogamma : function(a, b) {
+      return b - a ? exponential(a, b, y) : constant_default2(isNaN(a) ? b : a);
+    };
+  }
+  function nogamma(a, b) {
+    var d = b - a;
+    return d ? linear(a, d) : constant_default2(isNaN(a) ? b : a);
+  }
+
+  // node_modules/.pnpm/d3-interpolate@3.0.1/node_modules/d3-interpolate/src/rgb.js
+  var rgb_default = (function rgbGamma(y) {
+    var color3 = gamma(y);
+    function rgb2(start2, end) {
+      var r = color3((start2 = rgb(start2)).r, (end = rgb(end)).r), g = color3(start2.g, end.g), b = color3(start2.b, end.b), opacity2 = nogamma(start2.opacity, end.opacity);
+      return function(t) {
+        start2.r = r(t);
+        start2.g = g(t);
+        start2.b = b(t);
+        start2.opacity = opacity2(t);
+        return start2 + "";
+      };
+    }
+    rgb2.gamma = rgbGamma;
+    return rgb2;
+  })(1);
+  function rgbSpline(spline) {
+    return function(colors) {
+      var n = colors.length, r = new Array(n), g = new Array(n), b = new Array(n), i, color3;
+      for (i = 0; i < n; ++i) {
+        color3 = rgb(colors[i]);
+        r[i] = color3.r || 0;
+        g[i] = color3.g || 0;
+        b[i] = color3.b || 0;
+      }
+      r = spline(r);
+      g = spline(g);
+      b = spline(b);
+      color3.opacity = 1;
+      return function(t) {
+        color3.r = r(t);
+        color3.g = g(t);
+        color3.b = b(t);
+        return color3 + "";
+      };
+    };
+  }
+  var rgbBasis = rgbSpline(basis_default);
+  var rgbBasisClosed = rgbSpline(basisClosed_default);
+
+  // node_modules/.pnpm/d3-interpolate@3.0.1/node_modules/d3-interpolate/src/numberArray.js
+  function numberArray_default(a, b) {
+    if (!b) b = [];
+    var n = a ? Math.min(b.length, a.length) : 0, c = b.slice(), i;
+    return function(t) {
+      for (i = 0; i < n; ++i) c[i] = a[i] * (1 - t) + b[i] * t;
+      return c;
+    };
+  }
+  function isNumberArray(x) {
+    return ArrayBuffer.isView(x) && !(x instanceof DataView);
+  }
+
+  // node_modules/.pnpm/d3-interpolate@3.0.1/node_modules/d3-interpolate/src/array.js
+  function genericArray(a, b) {
+    var nb = b ? b.length : 0, na = a ? Math.min(nb, a.length) : 0, x = new Array(na), c = new Array(nb), i;
+    for (i = 0; i < na; ++i) x[i] = value_default(a[i], b[i]);
+    for (; i < nb; ++i) c[i] = b[i];
+    return function(t) {
+      for (i = 0; i < na; ++i) c[i] = x[i](t);
+      return c;
+    };
+  }
+
+  // node_modules/.pnpm/d3-interpolate@3.0.1/node_modules/d3-interpolate/src/date.js
+  function date_default(a, b) {
+    var d = /* @__PURE__ */ new Date();
+    return a = +a, b = +b, function(t) {
+      return d.setTime(a * (1 - t) + b * t), d;
+    };
+  }
+
+  // node_modules/.pnpm/d3-interpolate@3.0.1/node_modules/d3-interpolate/src/number.js
+  function number_default(a, b) {
+    return a = +a, b = +b, function(t) {
+      return a * (1 - t) + b * t;
+    };
+  }
+
+  // node_modules/.pnpm/d3-interpolate@3.0.1/node_modules/d3-interpolate/src/object.js
+  function object_default(a, b) {
+    var i = {}, c = {}, k;
+    if (a === null || typeof a !== "object") a = {};
+    if (b === null || typeof b !== "object") b = {};
+    for (k in b) {
+      if (k in a) {
+        i[k] = value_default(a[k], b[k]);
+      } else {
+        c[k] = b[k];
+      }
+    }
+    return function(t) {
+      for (k in i) c[k] = i[k](t);
+      return c;
+    };
+  }
+
+  // node_modules/.pnpm/d3-interpolate@3.0.1/node_modules/d3-interpolate/src/string.js
+  var reA = /[-+]?(?:\d+\.?\d*|\.?\d+)(?:[eE][-+]?\d+)?/g;
+  var reB = new RegExp(reA.source, "g");
+  function zero(b) {
+    return function() {
+      return b;
+    };
+  }
+  function one(b) {
+    return function(t) {
+      return b(t) + "";
+    };
+  }
+  function string_default(a, b) {
+    var bi = reA.lastIndex = reB.lastIndex = 0, am, bm, bs, i = -1, s = [], q = [];
+    a = a + "", b = b + "";
+    while ((am = reA.exec(a)) && (bm = reB.exec(b))) {
+      if ((bs = bm.index) > bi) {
+        bs = b.slice(bi, bs);
+        if (s[i]) s[i] += bs;
+        else s[++i] = bs;
+      }
+      if ((am = am[0]) === (bm = bm[0])) {
+        if (s[i]) s[i] += bm;
+        else s[++i] = bm;
+      } else {
+        s[++i] = null;
+        q.push({ i, x: number_default(am, bm) });
+      }
+      bi = reB.lastIndex;
+    }
+    if (bi < b.length) {
+      bs = b.slice(bi);
+      if (s[i]) s[i] += bs;
+      else s[++i] = bs;
+    }
+    return s.length < 2 ? q[0] ? one(q[0].x) : zero(b) : (b = q.length, function(t) {
+      for (var i2 = 0, o; i2 < b; ++i2) s[(o = q[i2]).i] = o.x(t);
+      return s.join("");
+    });
+  }
+
+  // node_modules/.pnpm/d3-interpolate@3.0.1/node_modules/d3-interpolate/src/value.js
+  function value_default(a, b) {
+    var t = typeof b, c;
+    return b == null || t === "boolean" ? constant_default2(b) : (t === "number" ? number_default : t === "string" ? (c = color(b)) ? (b = c, rgb_default) : string_default : b instanceof color ? rgb_default : b instanceof Date ? date_default : isNumberArray(b) ? numberArray_default : Array.isArray(b) ? genericArray : typeof b.valueOf !== "function" && typeof b.toString !== "function" || isNaN(b) ? object_default : number_default)(a, b);
+  }
+
+  // node_modules/.pnpm/d3-interpolate@3.0.1/node_modules/d3-interpolate/src/round.js
+  function round_default(a, b) {
+    return a = +a, b = +b, function(t) {
+      return Math.round(a * (1 - t) + b * t);
+    };
+  }
+
+  // node_modules/.pnpm/d3-interpolate@3.0.1/node_modules/d3-interpolate/src/transform/decompose.js
+  var degrees = 180 / Math.PI;
+  var identity = {
+    translateX: 0,
+    translateY: 0,
+    rotate: 0,
+    skewX: 0,
+    scaleX: 1,
+    scaleY: 1
+  };
+  function decompose_default(a, b, c, d, e, f) {
+    var scaleX, scaleY, skewX;
+    if (scaleX = Math.sqrt(a * a + b * b)) a /= scaleX, b /= scaleX;
+    if (skewX = a * c + b * d) c -= a * skewX, d -= b * skewX;
+    if (scaleY = Math.sqrt(c * c + d * d)) c /= scaleY, d /= scaleY, skewX /= scaleY;
+    if (a * d < b * c) a = -a, b = -b, skewX = -skewX, scaleX = -scaleX;
+    return {
+      translateX: e,
+      translateY: f,
+      rotate: Math.atan2(b, a) * degrees,
+      skewX: Math.atan(skewX) * degrees,
+      scaleX,
+      scaleY
+    };
+  }
+
+  // node_modules/.pnpm/d3-interpolate@3.0.1/node_modules/d3-interpolate/src/transform/parse.js
+  var svgNode;
+  function parseCss(value) {
+    const m = new (typeof DOMMatrix === "function" ? DOMMatrix : WebKitCSSMatrix)(value + "");
+    return m.isIdentity ? identity : decompose_default(m.a, m.b, m.c, m.d, m.e, m.f);
+  }
+  function parseSvg(value) {
+    if (value == null) return identity;
+    if (!svgNode) svgNode = document.createElementNS("http://www.w3.org/2000/svg", "g");
+    svgNode.setAttribute("transform", value);
+    if (!(value = svgNode.transform.baseVal.consolidate())) return identity;
+    value = value.matrix;
+    return decompose_default(value.a, value.b, value.c, value.d, value.e, value.f);
+  }
+
+  // node_modules/.pnpm/d3-interpolate@3.0.1/node_modules/d3-interpolate/src/transform/index.js
+  function interpolateTransform(parse, pxComma, pxParen, degParen) {
+    function pop(s) {
+      return s.length ? s.pop() + " " : "";
+    }
+    function translate(xa, ya, xb, yb, s, q) {
+      if (xa !== xb || ya !== yb) {
+        var i = s.push("translate(", null, pxComma, null, pxParen);
+        q.push({ i: i - 4, x: number_default(xa, xb) }, { i: i - 2, x: number_default(ya, yb) });
+      } else if (xb || yb) {
+        s.push("translate(" + xb + pxComma + yb + pxParen);
+      }
+    }
+    function rotate2(a, b, s, q) {
+      if (a !== b) {
+        if (a - b > 180) b += 360;
+        else if (b - a > 180) a += 360;
+        q.push({ i: s.push(pop(s) + "rotate(", null, degParen) - 2, x: number_default(a, b) });
+      } else if (b) {
+        s.push(pop(s) + "rotate(" + b + degParen);
+      }
+    }
+    function skewX(a, b, s, q) {
+      if (a !== b) {
+        q.push({ i: s.push(pop(s) + "skewX(", null, degParen) - 2, x: number_default(a, b) });
+      } else if (b) {
+        s.push(pop(s) + "skewX(" + b + degParen);
+      }
+    }
+    function scale2(xa, ya, xb, yb, s, q) {
+      if (xa !== xb || ya !== yb) {
+        var i = s.push(pop(s) + "scale(", null, ",", null, ")");
+        q.push({ i: i - 4, x: number_default(xa, xb) }, { i: i - 2, x: number_default(ya, yb) });
+      } else if (xb !== 1 || yb !== 1) {
+        s.push(pop(s) + "scale(" + xb + "," + yb + ")");
+      }
+    }
+    return function(a, b) {
+      var s = [], q = [];
+      a = parse(a), b = parse(b);
+      translate(a.translateX, a.translateY, b.translateX, b.translateY, s, q);
+      rotate2(a.rotate, b.rotate, s, q);
+      skewX(a.skewX, b.skewX, s, q);
+      scale2(a.scaleX, a.scaleY, b.scaleX, b.scaleY, s, q);
+      a = b = null;
+      return function(t) {
+        var i = -1, n = q.length, o;
+        while (++i < n) s[(o = q[i]).i] = o.x(t);
+        return s.join("");
+      };
+    };
+  }
+  var interpolateTransformCss = interpolateTransform(parseCss, "px, ", "px)", "deg)");
+  var interpolateTransformSvg = interpolateTransform(parseSvg, ", ", ")", ")");
+
+  // node_modules/.pnpm/d3-transition@3.0.1_d3-selection@3.0.0/node_modules/d3-transition/src/transition/tween.js
+  function tweenRemove(id2, name8) {
+    var tween0, tween1;
+    return function() {
+      var schedule = set2(this, id2), tween = schedule.tween;
+      if (tween !== tween0) {
+        tween1 = tween0 = tween;
+        for (var i = 0, n = tween1.length; i < n; ++i) {
+          if (tween1[i].name === name8) {
+            tween1 = tween1.slice();
+            tween1.splice(i, 1);
+            break;
+          }
+        }
+      }
+      schedule.tween = tween1;
+    };
+  }
+  function tweenFunction(id2, name8, value) {
+    var tween0, tween1;
+    if (typeof value !== "function") throw new Error();
+    return function() {
+      var schedule = set2(this, id2), tween = schedule.tween;
+      if (tween !== tween0) {
+        tween1 = (tween0 = tween).slice();
+        for (var t = { name: name8, value }, i = 0, n = tween1.length; i < n; ++i) {
+          if (tween1[i].name === name8) {
+            tween1[i] = t;
+            break;
+          }
+        }
+        if (i === n) tween1.push(t);
+      }
+      schedule.tween = tween1;
+    };
+  }
+  function tween_default(name8, value) {
+    var id2 = this._id;
+    name8 += "";
+    if (arguments.length < 2) {
+      var tween = get2(this.node(), id2).tween;
+      for (var i = 0, n = tween.length, t; i < n; ++i) {
+        if ((t = tween[i]).name === name8) {
+          return t.value;
+        }
+      }
+      return null;
+    }
+    return this.each((value == null ? tweenRemove : tweenFunction)(id2, name8, value));
+  }
+  function tweenValue(transition3, name8, value) {
+    var id2 = transition3._id;
+    transition3.each(function() {
+      var schedule = set2(this, id2);
+      (schedule.value || (schedule.value = {}))[name8] = value.apply(this, arguments);
+    });
+    return function(node) {
+      return get2(node, id2).value[name8];
+    };
+  }
+
+  // node_modules/.pnpm/d3-transition@3.0.1_d3-selection@3.0.0/node_modules/d3-transition/src/transition/interpolate.js
+  function interpolate_default(a, b) {
+    var c;
+    return (typeof b === "number" ? number_default : b instanceof color ? rgb_default : (c = color(b)) ? (b = c, rgb_default) : string_default)(a, b);
+  }
+
+  // node_modules/.pnpm/d3-transition@3.0.1_d3-selection@3.0.0/node_modules/d3-transition/src/transition/attr.js
+  function attrRemove2(name8) {
+    return function() {
+      this.removeAttribute(name8);
+    };
+  }
+  function attrRemoveNS2(fullname) {
+    return function() {
+      this.removeAttributeNS(fullname.space, fullname.local);
+    };
+  }
+  function attrConstant2(name8, interpolate, value1) {
+    var string00, string1 = value1 + "", interpolate0;
+    return function() {
+      var string0 = this.getAttribute(name8);
+      return string0 === string1 ? null : string0 === string00 ? interpolate0 : interpolate0 = interpolate(string00 = string0, value1);
+    };
+  }
+  function attrConstantNS2(fullname, interpolate, value1) {
+    var string00, string1 = value1 + "", interpolate0;
+    return function() {
+      var string0 = this.getAttributeNS(fullname.space, fullname.local);
+      return string0 === string1 ? null : string0 === string00 ? interpolate0 : interpolate0 = interpolate(string00 = string0, value1);
+    };
+  }
+  function attrFunction2(name8, interpolate, value) {
+    var string00, string10, interpolate0;
+    return function() {
+      var string0, value1 = value(this), string1;
+      if (value1 == null) return void this.removeAttribute(name8);
+      string0 = this.getAttribute(name8);
+      string1 = value1 + "";
+      return string0 === string1 ? null : string0 === string00 && string1 === string10 ? interpolate0 : (string10 = string1, interpolate0 = interpolate(string00 = string0, value1));
+    };
+  }
+  function attrFunctionNS2(fullname, interpolate, value) {
+    var string00, string10, interpolate0;
+    return function() {
+      var string0, value1 = value(this), string1;
+      if (value1 == null) return void this.removeAttributeNS(fullname.space, fullname.local);
+      string0 = this.getAttributeNS(fullname.space, fullname.local);
+      string1 = value1 + "";
+      return string0 === string1 ? null : string0 === string00 && string1 === string10 ? interpolate0 : (string10 = string1, interpolate0 = interpolate(string00 = string0, value1));
+    };
+  }
+  function attr_default2(name8, value) {
+    var fullname = namespace_default(name8), i = fullname === "transform" ? interpolateTransformSvg : interpolate_default;
+    return this.attrTween(name8, typeof value === "function" ? (fullname.local ? attrFunctionNS2 : attrFunction2)(fullname, i, tweenValue(this, "attr." + name8, value)) : value == null ? (fullname.local ? attrRemoveNS2 : attrRemove2)(fullname) : (fullname.local ? attrConstantNS2 : attrConstant2)(fullname, i, value));
+  }
+
+  // node_modules/.pnpm/d3-transition@3.0.1_d3-selection@3.0.0/node_modules/d3-transition/src/transition/attrTween.js
+  function attrInterpolate(name8, i) {
+    return function(t) {
+      this.setAttribute(name8, i.call(this, t));
+    };
+  }
+  function attrInterpolateNS(fullname, i) {
+    return function(t) {
+      this.setAttributeNS(fullname.space, fullname.local, i.call(this, t));
+    };
+  }
+  function attrTweenNS(fullname, value) {
+    var t03, i0;
+    function tween() {
+      var i = value.apply(this, arguments);
+      if (i !== i0) t03 = (i0 = i) && attrInterpolateNS(fullname, i);
+      return t03;
+    }
+    tween._value = value;
+    return tween;
+  }
+  function attrTween(name8, value) {
+    var t03, i0;
+    function tween() {
+      var i = value.apply(this, arguments);
+      if (i !== i0) t03 = (i0 = i) && attrInterpolate(name8, i);
+      return t03;
+    }
+    tween._value = value;
+    return tween;
+  }
+  function attrTween_default(name8, value) {
+    var key = "attr." + name8;
+    if (arguments.length < 2) return (key = this.tween(key)) && key._value;
+    if (value == null) return this.tween(key, null);
+    if (typeof value !== "function") throw new Error();
+    var fullname = namespace_default(name8);
+    return this.tween(key, (fullname.local ? attrTweenNS : attrTween)(fullname, value));
+  }
+
+  // node_modules/.pnpm/d3-transition@3.0.1_d3-selection@3.0.0/node_modules/d3-transition/src/transition/delay.js
+  function delayFunction(id2, value) {
+    return function() {
+      init(this, id2).delay = +value.apply(this, arguments);
+    };
+  }
+  function delayConstant(id2, value) {
+    return value = +value, function() {
+      init(this, id2).delay = value;
+    };
+  }
+  function delay_default(value) {
+    var id2 = this._id;
+    return arguments.length ? this.each((typeof value === "function" ? delayFunction : delayConstant)(id2, value)) : get2(this.node(), id2).delay;
+  }
+
+  // node_modules/.pnpm/d3-transition@3.0.1_d3-selection@3.0.0/node_modules/d3-transition/src/transition/duration.js
+  function durationFunction(id2, value) {
+    return function() {
+      set2(this, id2).duration = +value.apply(this, arguments);
+    };
+  }
+  function durationConstant(id2, value) {
+    return value = +value, function() {
+      set2(this, id2).duration = value;
+    };
+  }
+  function duration_default(value) {
+    var id2 = this._id;
+    return arguments.length ? this.each((typeof value === "function" ? durationFunction : durationConstant)(id2, value)) : get2(this.node(), id2).duration;
+  }
+
+  // node_modules/.pnpm/d3-transition@3.0.1_d3-selection@3.0.0/node_modules/d3-transition/src/transition/ease.js
+  function easeConstant(id2, value) {
+    if (typeof value !== "function") throw new Error();
+    return function() {
+      set2(this, id2).ease = value;
+    };
+  }
+  function ease_default(value) {
+    var id2 = this._id;
+    return arguments.length ? this.each(easeConstant(id2, value)) : get2(this.node(), id2).ease;
+  }
+
+  // node_modules/.pnpm/d3-transition@3.0.1_d3-selection@3.0.0/node_modules/d3-transition/src/transition/easeVarying.js
+  function easeVarying(id2, value) {
+    return function() {
+      var v = value.apply(this, arguments);
+      if (typeof v !== "function") throw new Error();
+      set2(this, id2).ease = v;
+    };
+  }
+  function easeVarying_default(value) {
+    if (typeof value !== "function") throw new Error();
+    return this.each(easeVarying(this._id, value));
+  }
+
+  // node_modules/.pnpm/d3-transition@3.0.1_d3-selection@3.0.0/node_modules/d3-transition/src/transition/filter.js
+  function filter_default2(match) {
+    if (typeof match !== "function") match = matcher_default(match);
+    for (var groups = this._groups, m = groups.length, subgroups = new Array(m), j = 0; j < m; ++j) {
+      for (var group = groups[j], n = group.length, subgroup = subgroups[j] = [], node, i = 0; i < n; ++i) {
+        if ((node = group[i]) && match.call(node, node.__data__, i, group)) {
+          subgroup.push(node);
+        }
+      }
+    }
+    return new Transition(subgroups, this._parents, this._name, this._id);
+  }
+
+  // node_modules/.pnpm/d3-transition@3.0.1_d3-selection@3.0.0/node_modules/d3-transition/src/transition/merge.js
+  function merge_default2(transition3) {
+    if (transition3._id !== this._id) throw new Error();
+    for (var groups0 = this._groups, groups1 = transition3._groups, m0 = groups0.length, m1 = groups1.length, m = Math.min(m0, m1), merges = new Array(m0), j = 0; j < m; ++j) {
+      for (var group0 = groups0[j], group1 = groups1[j], n = group0.length, merge = merges[j] = new Array(n), node, i = 0; i < n; ++i) {
+        if (node = group0[i] || group1[i]) {
+          merge[i] = node;
+        }
+      }
+    }
+    for (; j < m0; ++j) {
+      merges[j] = groups0[j];
+    }
+    return new Transition(merges, this._parents, this._name, this._id);
+  }
+
+  // node_modules/.pnpm/d3-transition@3.0.1_d3-selection@3.0.0/node_modules/d3-transition/src/transition/on.js
+  function start(name8) {
+    return (name8 + "").trim().split(/^|\s+/).every(function(t) {
+      var i = t.indexOf(".");
+      if (i >= 0) t = t.slice(0, i);
+      return !t || t === "start";
+    });
+  }
+  function onFunction(id2, name8, listener) {
+    var on0, on1, sit = start(name8) ? init : set2;
+    return function() {
+      var schedule = sit(this, id2), on = schedule.on;
+      if (on !== on0) (on1 = (on0 = on).copy()).on(name8, listener);
+      schedule.on = on1;
+    };
+  }
+  function on_default2(name8, listener) {
+    var id2 = this._id;
+    return arguments.length < 2 ? get2(this.node(), id2).on.on(name8) : this.each(onFunction(id2, name8, listener));
+  }
+
+  // node_modules/.pnpm/d3-transition@3.0.1_d3-selection@3.0.0/node_modules/d3-transition/src/transition/remove.js
+  function removeFunction(id2) {
+    return function() {
+      var parent = this.parentNode;
+      for (var i in this.__transition) if (+i !== id2) return;
+      if (parent) parent.removeChild(this);
+    };
+  }
+  function remove_default2() {
+    return this.on("end.remove", removeFunction(this._id));
+  }
+
+  // node_modules/.pnpm/d3-transition@3.0.1_d3-selection@3.0.0/node_modules/d3-transition/src/transition/select.js
+  function select_default3(select) {
+    var name8 = this._name, id2 = this._id;
+    if (typeof select !== "function") select = selector_default(select);
+    for (var groups = this._groups, m = groups.length, subgroups = new Array(m), j = 0; j < m; ++j) {
+      for (var group = groups[j], n = group.length, subgroup = subgroups[j] = new Array(n), node, subnode, i = 0; i < n; ++i) {
+        if ((node = group[i]) && (subnode = select.call(node, node.__data__, i, group))) {
+          if ("__data__" in node) subnode.__data__ = node.__data__;
+          subgroup[i] = subnode;
+          schedule_default(subgroup[i], name8, id2, i, subgroup, get2(node, id2));
+        }
+      }
+    }
+    return new Transition(subgroups, this._parents, name8, id2);
+  }
+
+  // node_modules/.pnpm/d3-transition@3.0.1_d3-selection@3.0.0/node_modules/d3-transition/src/transition/selectAll.js
+  function selectAll_default3(select) {
+    var name8 = this._name, id2 = this._id;
+    if (typeof select !== "function") select = selectorAll_default(select);
+    for (var groups = this._groups, m = groups.length, subgroups = [], parents = [], j = 0; j < m; ++j) {
+      for (var group = groups[j], n = group.length, node, i = 0; i < n; ++i) {
+        if (node = group[i]) {
+          for (var children2 = select.call(node, node.__data__, i, group), child, inherit2 = get2(node, id2), k = 0, l = children2.length; k < l; ++k) {
+            if (child = children2[k]) {
+              schedule_default(child, name8, id2, k, children2, inherit2);
+            }
+          }
+          subgroups.push(children2);
+          parents.push(node);
+        }
+      }
+    }
+    return new Transition(subgroups, parents, name8, id2);
+  }
+
+  // node_modules/.pnpm/d3-transition@3.0.1_d3-selection@3.0.0/node_modules/d3-transition/src/transition/selection.js
+  var Selection2 = selection_default.prototype.constructor;
+  function selection_default2() {
+    return new Selection2(this._groups, this._parents);
+  }
+
+  // node_modules/.pnpm/d3-transition@3.0.1_d3-selection@3.0.0/node_modules/d3-transition/src/transition/style.js
+  function styleNull(name8, interpolate) {
+    var string00, string10, interpolate0;
+    return function() {
+      var string0 = styleValue(this, name8), string1 = (this.style.removeProperty(name8), styleValue(this, name8));
+      return string0 === string1 ? null : string0 === string00 && string1 === string10 ? interpolate0 : interpolate0 = interpolate(string00 = string0, string10 = string1);
+    };
+  }
+  function styleRemove2(name8) {
+    return function() {
+      this.style.removeProperty(name8);
+    };
+  }
+  function styleConstant2(name8, interpolate, value1) {
+    var string00, string1 = value1 + "", interpolate0;
+    return function() {
+      var string0 = styleValue(this, name8);
+      return string0 === string1 ? null : string0 === string00 ? interpolate0 : interpolate0 = interpolate(string00 = string0, value1);
+    };
+  }
+  function styleFunction2(name8, interpolate, value) {
+    var string00, string10, interpolate0;
+    return function() {
+      var string0 = styleValue(this, name8), value1 = value(this), string1 = value1 + "";
+      if (value1 == null) string1 = value1 = (this.style.removeProperty(name8), styleValue(this, name8));
+      return string0 === string1 ? null : string0 === string00 && string1 === string10 ? interpolate0 : (string10 = string1, interpolate0 = interpolate(string00 = string0, value1));
+    };
+  }
+  function styleMaybeRemove(id2, name8) {
+    var on0, on1, listener0, key = "style." + name8, event2 = "end." + key, remove2;
+    return function() {
+      var schedule = set2(this, id2), on = schedule.on, listener = schedule.value[key] == null ? remove2 || (remove2 = styleRemove2(name8)) : void 0;
+      if (on !== on0 || listener0 !== listener) (on1 = (on0 = on).copy()).on(event2, listener0 = listener);
+      schedule.on = on1;
+    };
+  }
+  function style_default2(name8, value, priority) {
+    var i = (name8 += "") === "transform" ? interpolateTransformCss : interpolate_default;
+    return value == null ? this.styleTween(name8, styleNull(name8, i)).on("end.style." + name8, styleRemove2(name8)) : typeof value === "function" ? this.styleTween(name8, styleFunction2(name8, i, tweenValue(this, "style." + name8, value))).each(styleMaybeRemove(this._id, name8)) : this.styleTween(name8, styleConstant2(name8, i, value), priority).on("end.style." + name8, null);
+  }
+
+  // node_modules/.pnpm/d3-transition@3.0.1_d3-selection@3.0.0/node_modules/d3-transition/src/transition/styleTween.js
+  function styleInterpolate(name8, i, priority) {
+    return function(t) {
+      this.style.setProperty(name8, i.call(this, t), priority);
+    };
+  }
+  function styleTween(name8, value, priority) {
+    var t, i0;
+    function tween() {
+      var i = value.apply(this, arguments);
+      if (i !== i0) t = (i0 = i) && styleInterpolate(name8, i, priority);
+      return t;
+    }
+    tween._value = value;
+    return tween;
+  }
+  function styleTween_default(name8, value, priority) {
+    var key = "style." + (name8 += "");
+    if (arguments.length < 2) return (key = this.tween(key)) && key._value;
+    if (value == null) return this.tween(key, null);
+    if (typeof value !== "function") throw new Error();
+    return this.tween(key, styleTween(name8, value, priority == null ? "" : priority));
+  }
+
+  // node_modules/.pnpm/d3-transition@3.0.1_d3-selection@3.0.0/node_modules/d3-transition/src/transition/text.js
+  function textConstant2(value) {
+    return function() {
+      this.textContent = value;
+    };
+  }
+  function textFunction2(value) {
+    return function() {
+      var value1 = value(this);
+      this.textContent = value1 == null ? "" : value1;
+    };
+  }
+  function text_default2(value) {
+    return this.tween("text", typeof value === "function" ? textFunction2(tweenValue(this, "text", value)) : textConstant2(value == null ? "" : value + ""));
+  }
+
+  // node_modules/.pnpm/d3-transition@3.0.1_d3-selection@3.0.0/node_modules/d3-transition/src/transition/textTween.js
+  function textInterpolate(i) {
+    return function(t) {
+      this.textContent = i.call(this, t);
+    };
+  }
+  function textTween(value) {
+    var t03, i0;
+    function tween() {
+      var i = value.apply(this, arguments);
+      if (i !== i0) t03 = (i0 = i) && textInterpolate(i);
+      return t03;
+    }
+    tween._value = value;
+    return tween;
+  }
+  function textTween_default(value) {
+    var key = "text";
+    if (arguments.length < 1) return (key = this.tween(key)) && key._value;
+    if (value == null) return this.tween(key, null);
+    if (typeof value !== "function") throw new Error();
+    return this.tween(key, textTween(value));
+  }
+
+  // node_modules/.pnpm/d3-transition@3.0.1_d3-selection@3.0.0/node_modules/d3-transition/src/transition/transition.js
+  function transition_default() {
+    var name8 = this._name, id0 = this._id, id1 = newId();
+    for (var groups = this._groups, m = groups.length, j = 0; j < m; ++j) {
+      for (var group = groups[j], n = group.length, node, i = 0; i < n; ++i) {
+        if (node = group[i]) {
+          var inherit2 = get2(node, id0);
+          schedule_default(node, name8, id1, i, group, {
+            time: inherit2.time + inherit2.delay + inherit2.duration,
+            delay: 0,
+            duration: inherit2.duration,
+            ease: inherit2.ease
+          });
+        }
+      }
+    }
+    return new Transition(groups, this._parents, name8, id1);
+  }
+
+  // node_modules/.pnpm/d3-transition@3.0.1_d3-selection@3.0.0/node_modules/d3-transition/src/transition/end.js
+  function end_default() {
+    var on0, on1, that = this, id2 = that._id, size = that.size();
+    return new Promise(function(resolve, reject) {
+      var cancel = { value: reject }, end = { value: function() {
+        if (--size === 0) resolve();
+      } };
+      that.each(function() {
+        var schedule = set2(this, id2), on = schedule.on;
+        if (on !== on0) {
+          on1 = (on0 = on).copy();
+          on1._.cancel.push(cancel);
+          on1._.interrupt.push(cancel);
+          on1._.end.push(end);
+        }
+        schedule.on = on1;
+      });
+      if (size === 0) resolve();
+    });
+  }
+
+  // node_modules/.pnpm/d3-transition@3.0.1_d3-selection@3.0.0/node_modules/d3-transition/src/transition/index.js
+  var id = 0;
+  function Transition(groups, parents, name8, id2) {
+    this._groups = groups;
+    this._parents = parents;
+    this._name = name8;
+    this._id = id2;
+  }
+  function transition(name8) {
+    return selection_default().transition(name8);
+  }
+  function newId() {
+    return ++id;
+  }
+  var selection_prototype = selection_default.prototype;
+  Transition.prototype = transition.prototype = {
+    constructor: Transition,
+    select: select_default3,
+    selectAll: selectAll_default3,
+    selectChild: selection_prototype.selectChild,
+    selectChildren: selection_prototype.selectChildren,
+    filter: filter_default2,
+    merge: merge_default2,
+    selection: selection_default2,
+    transition: transition_default,
+    call: selection_prototype.call,
+    nodes: selection_prototype.nodes,
+    node: selection_prototype.node,
+    size: selection_prototype.size,
+    empty: selection_prototype.empty,
+    each: selection_prototype.each,
+    on: on_default2,
+    attr: attr_default2,
+    attrTween: attrTween_default,
+    style: style_default2,
+    styleTween: styleTween_default,
+    text: text_default2,
+    textTween: textTween_default,
+    remove: remove_default2,
+    tween: tween_default,
+    delay: delay_default,
+    duration: duration_default,
+    ease: ease_default,
+    easeVarying: easeVarying_default,
+    end: end_default,
+    [Symbol.iterator]: selection_prototype[Symbol.iterator]
+  };
+
+  // node_modules/.pnpm/d3-ease@3.0.1/node_modules/d3-ease/src/linear.js
+  var linear2 = (t) => +t;
+
+  // node_modules/.pnpm/d3-ease@3.0.1/node_modules/d3-ease/src/cubic.js
+  function cubicInOut(t) {
+    return ((t *= 2) <= 1 ? t * t * t : (t -= 2) * t * t + 2) / 2;
+  }
+
+  // node_modules/.pnpm/d3-ease@3.0.1/node_modules/d3-ease/src/sin.js
+  var pi = Math.PI;
+  var halfPi = pi / 2;
+  function sinInOut(t) {
+    return (1 - Math.cos(pi * t)) / 2;
+  }
+
+  // node_modules/.pnpm/d3-ease@3.0.1/node_modules/d3-ease/src/math.js
+  function tpmt(x) {
+    return (Math.pow(2, -10 * x) - 9765625e-10) * 1.0009775171065494;
+  }
+
+  // node_modules/.pnpm/d3-ease@3.0.1/node_modules/d3-ease/src/exp.js
+  function expInOut(t) {
+    return ((t *= 2) <= 1 ? tpmt(1 - t) : 2 - tpmt(t - 1)) / 2;
+  }
+
+  // node_modules/.pnpm/d3-ease@3.0.1/node_modules/d3-ease/src/circle.js
+  function circleInOut(t) {
+    return ((t *= 2) <= 1 ? 1 - Math.sqrt(1 - t * t) : Math.sqrt(1 - (t -= 2) * t) + 1) / 2;
+  }
+
+  // node_modules/.pnpm/d3-ease@3.0.1/node_modules/d3-ease/src/bounce.js
+  var b1 = 4 / 11;
+  var b2 = 6 / 11;
+  var b3 = 8 / 11;
+  var b4 = 3 / 4;
+  var b5 = 9 / 11;
+  var b6 = 10 / 11;
+  var b7 = 15 / 16;
+  var b8 = 21 / 22;
+  var b9 = 63 / 64;
+  var b0 = 1 / b1 / b1;
+  function bounceOut(t) {
+    return (t = +t) < b1 ? b0 * t * t : t < b3 ? b0 * (t -= b2) * t + b4 : t < b6 ? b0 * (t -= b5) * t + b7 : b0 * (t -= b8) * t + b9;
+  }
+
+  // node_modules/.pnpm/d3-ease@3.0.1/node_modules/d3-ease/src/back.js
+  var overshoot = 1.70158;
+  var backIn = (function custom(s) {
+    s = +s;
+    function backIn2(t) {
+      return (t = +t) * t * (s * (t - 1) + t);
+    }
+    backIn2.overshoot = custom;
+    return backIn2;
+  })(overshoot);
+  var backOut = (function custom2(s) {
+    s = +s;
+    function backOut2(t) {
+      return --t * t * ((t + 1) * s + t) + 1;
+    }
+    backOut2.overshoot = custom2;
+    return backOut2;
+  })(overshoot);
+  var backInOut = (function custom3(s) {
+    s = +s;
+    function backInOut2(t) {
+      return ((t *= 2) < 1 ? t * t * ((s + 1) * t - s) : (t -= 2) * t * ((s + 1) * t + s) + 2) / 2;
+    }
+    backInOut2.overshoot = custom3;
+    return backInOut2;
+  })(overshoot);
+
+  // node_modules/.pnpm/d3-ease@3.0.1/node_modules/d3-ease/src/elastic.js
+  var tau = 2 * Math.PI;
+  var amplitude = 1;
+  var period = 0.3;
+  var elasticIn = (function custom4(a, p) {
+    var s = Math.asin(1 / (a = Math.max(1, a))) * (p /= tau);
+    function elasticIn2(t) {
+      return a * tpmt(- --t) * Math.sin((s - t) / p);
+    }
+    elasticIn2.amplitude = function(a2) {
+      return custom4(a2, p * tau);
+    };
+    elasticIn2.period = function(p2) {
+      return custom4(a, p2);
+    };
+    return elasticIn2;
+  })(amplitude, period);
+  var elasticOut = (function custom5(a, p) {
+    var s = Math.asin(1 / (a = Math.max(1, a))) * (p /= tau);
+    function elasticOut2(t) {
+      return 1 - a * tpmt(t = +t) * Math.sin((t + s) / p);
+    }
+    elasticOut2.amplitude = function(a2) {
+      return custom5(a2, p * tau);
+    };
+    elasticOut2.period = function(p2) {
+      return custom5(a, p2);
+    };
+    return elasticOut2;
+  })(amplitude, period);
+  var elasticInOut = (function custom6(a, p) {
+    var s = Math.asin(1 / (a = Math.max(1, a))) * (p /= tau);
+    function elasticInOut2(t) {
+      return ((t = t * 2 - 1) < 0 ? a * tpmt(-t) * Math.sin((s - t) / p) : 2 - a * tpmt(t) * Math.sin((s + t) / p)) / 2;
+    }
+    elasticInOut2.amplitude = function(a2) {
+      return custom6(a2, p * tau);
+    };
+    elasticInOut2.period = function(p2) {
+      return custom6(a, p2);
+    };
+    return elasticInOut2;
+  })(amplitude, period);
+
+  // node_modules/.pnpm/d3-transition@3.0.1_d3-selection@3.0.0/node_modules/d3-transition/src/selection/transition.js
+  var defaultTiming = {
+    time: null,
+    // Set on use.
+    delay: 0,
+    duration: 250,
+    ease: cubicInOut
+  };
+  function inherit(node, id2) {
+    var timing;
+    while (!(timing = node.__transition) || !(timing = timing[id2])) {
+      if (!(node = node.parentNode)) {
+        throw new Error(`transition ${id2} not found`);
+      }
+    }
+    return timing;
+  }
+  function transition_default2(name8) {
+    var id2, timing;
+    if (name8 instanceof Transition) {
+      id2 = name8._id, name8 = name8._name;
+    } else {
+      id2 = newId(), (timing = defaultTiming).time = now(), name8 = name8 == null ? null : name8 + "";
+    }
+    for (var groups = this._groups, m = groups.length, j = 0; j < m; ++j) {
+      for (var group = groups[j], n = group.length, node, i = 0; i < n; ++i) {
+        if (node = group[i]) {
+          schedule_default(node, name8, id2, i, group, timing || inherit(node, id2));
+        }
+      }
+    }
+    return new Transition(groups, this._parents, name8, id2);
+  }
+
+  // node_modules/.pnpm/d3-transition@3.0.1_d3-selection@3.0.0/node_modules/d3-transition/src/selection/index.js
+  selection_default.prototype.interrupt = interrupt_default2;
+  selection_default.prototype.transition = transition_default2;
+
+  // src/lib/d3-compat.js
+  var _origStyle = selection_default.prototype.style;
+  var _origAttr = selection_default.prototype.attr;
+  var _origEnter = selection_default.prototype.enter;
+  var _origSelect = selection_default.prototype.select;
+  selection_default.prototype.select = function(selector) {
+    if (typeof selector === "string") {
+      var savedData = [];
+      var groups = this._groups;
+      for (var j = 0; j < groups.length; ++j) {
+        for (var i = 0; i < groups[j].length; ++i) {
+          var node = groups[j][i];
+          if (node) {
+            var child = node.querySelector(selector);
+            if (child && "__data__" in child) {
+              savedData.push({ node: child, data: child.__data__ });
+            }
+          }
+        }
+      }
+      var result = _origSelect.call(this, selector);
+      for (var k = 0; k < savedData.length; k++) {
+        savedData[k].node.__data__ = savedData[k].data;
+      }
+      return result;
+    }
+    return _origSelect.apply(this, arguments);
+  };
+  selection_default.prototype.style = function(nameOrObj, value, priority) {
+    if (typeof nameOrObj === "object" && nameOrObj !== null) {
+      for (var key in nameOrObj) {
+        _origStyle.call(this, key, nameOrObj[key]);
+      }
+      return this;
+    }
+    return _origStyle.apply(this, arguments);
+  };
+  selection_default.prototype.attr = function(nameOrObj, value) {
+    if (typeof nameOrObj === "object" && nameOrObj !== null && !(nameOrObj instanceof String)) {
+      for (var key in nameOrObj) {
+        _origAttr.call(this, key, nameOrObj[key]);
+      }
+      return this;
+    }
+    if (arguments.length === 1 && !this.node()) {
+      return void 0;
+    }
+    return _origAttr.apply(this, arguments);
+  };
+  selection_default.prototype.enter = function() {
+    var enterSel = _origEnter.call(this);
+    var updateSel = this;
+    var _origAppend = enterSel.append;
+    var _origInsert = enterSel.insert;
+    enterSel.append = function() {
+      var result = _origAppend.apply(this, arguments);
+      var enterGroups = result._groups;
+      var updateGroups = updateSel._groups;
+      for (var i = 0; i < updateGroups.length; i++) {
+        for (var j = 0; j < updateGroups[i].length; j++) {
+          if (!updateGroups[i][j] && enterGroups[i] && enterGroups[i][j]) {
+            updateGroups[i][j] = enterGroups[i][j];
+          }
+        }
+      }
+      return result;
+    };
+    enterSel.insert = function() {
+      var result = _origInsert.apply(this, arguments);
+      var enterGroups = result._groups;
+      var updateGroups = updateSel._groups;
+      for (var i = 0; i < updateGroups.length; i++) {
+        for (var j = 0; j < updateGroups[i].length; j++) {
+          if (!updateGroups[i][j] && enterGroups[i] && enterGroups[i][j]) {
+            updateGroups[i][j] = enterGroups[i][j];
+          }
+        }
+      }
+      return result;
+    };
+    return enterSel;
+  };
 
   // src/plot_api/plot_config.js
   var configAttributes = {
@@ -22118,7 +17760,6 @@ var Plotly = (() => {
   };
 
   // src/lib/notifier.js
-  var import_d3 = __toESM(require_d3(), 1);
   var import_fast_isnumeric = __toESM(require_fast_isnumeric(), 1);
   var NOTEDATA = [];
   function notifier_default(text, displayLength) {
@@ -22127,18 +17768,18 @@ var Plotly = (() => {
     var ts = 1e3;
     if ((0, import_fast_isnumeric.default)(displayLength)) ts = displayLength;
     else if (displayLength === "long") ts = 3e3;
-    var notifierContainer = import_d3.default.select("body").selectAll(".plotly-notifier").data([0]);
+    var notifierContainer = select_default2("body").selectAll(".plotly-notifier").data([0]);
     notifierContainer.enter().append("div").classed("plotly-notifier", true);
     var notes = notifierContainer.selectAll(".notifier-note").data(NOTEDATA);
-    function killNote(transition2) {
-      transition2.duration(700).style("opacity", 0).each("end", function(thisText) {
+    function killNote(transition3) {
+      transition3.duration(700).style("opacity", 0).on("end", function(thisText) {
         var thisIndex = NOTEDATA.indexOf(thisText);
         if (thisIndex !== -1) NOTEDATA.splice(thisIndex, 1);
-        import_d3.default.select(this).remove();
+        select_default2(this).remove();
       });
     }
     notes.enter().append("div").classed("notifier-note", true).style("opacity", 0).each(function(thisText) {
-      var note = import_d3.default.select(this);
+      var note = select_default2(this);
       note.append("button").classed("notifier-close", true).html("&times;").on("click", function() {
         note.transition().call(killNote);
       });
@@ -22213,21 +17854,21 @@ var Plotly = (() => {
   var loggers_default = loggers;
 
   // src/lib/noop.js
-  function noop() {
+  function noop2() {
   }
 
   // src/lib/push_unique.js
-  function pushUnique(array, item) {
+  function pushUnique(array2, item) {
     if (item instanceof RegExp) {
       var itemStr = item.toString();
-      for (var i = 0; i < array.length; i++) {
-        if (array[i] instanceof RegExp && array[i].toString() === itemStr) {
-          return array;
+      for (var i = 0; i < array2.length; i++) {
+        if (array2[i] instanceof RegExp && array2[i].toString() === itemStr) {
+          return array2;
         }
       }
-      array.push(item);
-    } else if ((item || item === 0) && array.indexOf(item) === -1) array.push(item);
-    return array;
+      array2.push(item);
+    } else if ((item || item === 0) && array2.indexOf(item) === -1) array2.push(item);
+    return array2;
   }
 
   // src/lib/is_plain_object.js
@@ -22238,15 +17879,12 @@ var Plotly = (() => {
     return Object.prototype.toString.call(obj) === "[object Object]" && Object.getPrototypeOf(obj).hasOwnProperty("hasOwnProperty");
   }
 
-  // src/lib/dom.js
-  var import_d32 = __toESM(require_d3(), 1);
-
   // src/lib/matrix.js
   var import_gl_mat4 = __toESM(require_gl_mat4(), 1);
   var init2dArray = function(rowLength, colLength) {
-    var array = new Array(rowLength);
-    for (var i = 0; i < rowLength; i++) array[i] = new Array(colLength);
-    return array;
+    var array2 = new Array(rowLength);
+    for (var i = 0; i < rowLength; i++) array2[i] = new Array(colLength);
+    return array2;
   };
   var transposeRagged = function(z) {
     var maxlen = 0;
@@ -22298,25 +17936,25 @@ var Plotly = (() => {
       translationMatrix(-x, -y)
     );
   };
-  var apply3DTransform = function(transform) {
+  var apply3DTransform = function(transform2) {
     return function() {
       var args = arguments;
       var xyz = arguments.length === 1 ? args[0] : [args[0], args[1], args[2] || 0];
-      return dot(transform, [xyz[0], xyz[1], xyz[2], 1]).slice(0, 3);
+      return dot(transform2, [xyz[0], xyz[1], xyz[2], 1]).slice(0, 3);
     };
   };
-  var apply2DTransform = function(transform) {
+  var apply2DTransform = function(transform2) {
     return function() {
       var args = arguments;
       if (args.length === 3) {
         args = args[0];
       }
       var xy = arguments.length === 1 ? args[0] : [args[0], args[1]];
-      return dot(transform, [xy[0], xy[1], 1]).slice(0, 2);
+      return dot(transform2, [xy[0], xy[1], 1]).slice(0, 2);
     };
   };
-  var apply2DTransform2 = function(transform) {
-    var at = apply2DTransform(transform);
+  var apply2DTransform2 = function(transform2) {
+    var at = apply2DTransform(transform2);
     return function(xys) {
       return at(xys.slice(0, 2)).concat(at(xys.slice(2, 4)));
     };
@@ -22393,7 +18031,7 @@ var Plotly = (() => {
     return gd;
   }
   function isPlotDiv(el) {
-    var el3 = import_d32.default.select(el);
+    var el3 = select_default2(el);
     return el3.node() instanceof HTMLElement && el3.size() && el3.classed("js-plotly-plot");
   }
   function removeElement(el) {
@@ -22404,14 +18042,14 @@ var Plotly = (() => {
     addRelatedStyleRule("global", selector, styleString);
   }
   function addRelatedStyleRule(uid, selector, styleString) {
-    var id = "plotly.js-style-" + uid;
-    var style11 = document.getElementById(id);
+    var id2 = "plotly.js-style-" + uid;
+    var style11 = document.getElementById(id2);
     if (style11 && style11.matches(".no-inline-styles")) {
       return;
     }
     if (!style11) {
       style11 = document.createElement("style");
-      style11.setAttribute("id", id);
+      style11.setAttribute("id", id2);
       style11.appendChild(document.createTextNode(""));
       document.head.appendChild(style11);
     }
@@ -22425,8 +18063,8 @@ var Plotly = (() => {
     } else loggers_default.warn("addStyleRule failed");
   }
   function deleteRelatedStyleRule(uid) {
-    var id = "plotly.js-style-" + uid;
-    var style11 = document.getElementById(id);
+    var id2 = "plotly.js-style-" + uid;
+    var style11 = document.getElementById(id2);
     if (style11) removeElement(style11);
   }
   function setStyleOnHover(selector, activeSelector, childSelector, activeStyle, inactiveStyle, element) {
@@ -22489,9 +18127,9 @@ var Plotly = (() => {
   }
   function getElementTransformMatrix(element) {
     var style11 = window.getComputedStyle(element, null);
-    var transform = style11.getPropertyValue("-webkit-transform") || style11.getPropertyValue("-moz-transform") || style11.getPropertyValue("-ms-transform") || style11.getPropertyValue("-o-transform") || style11.getPropertyValue("transform");
-    if (transform === "none") return null;
-    return transform.replace("matrix", "").replace("3d", "").slice(1, -1).split(",").map(function(n) {
+    var transform2 = style11.getPropertyValue("-webkit-transform") || style11.getPropertyValue("-moz-transform") || style11.getPropertyValue("-ms-transform") || style11.getPropertyValue("-o-transform") || style11.getPropertyValue("transform");
+    if (transform2 === "none") return null;
+    return transform2.replace("matrix", "").replace("3d", "").slice(1, -1).split(",").map(function(n) {
       return +n;
     });
   }
@@ -22556,7 +18194,7 @@ var Plotly = (() => {
   function _extend(inputs, isDeep, keepAllKeys, noArrayCopies) {
     var target = inputs[0];
     var length = inputs.length;
-    var input, key, src, copy, copyIsArray, clone2, allPrimitives;
+    var input, key, src, copy2, copyIsArray, clone2, allPrimitives;
     if (length === 2 && isArray(target) && isArray(inputs[1]) && target.length === 0) {
       allPrimitives = primitivesLoopSplice(inputs[1], target);
       if (allPrimitives) {
@@ -22569,19 +18207,19 @@ var Plotly = (() => {
       input = inputs[i];
       for (key in input) {
         src = target[key];
-        copy = input[key];
-        if (noArrayCopies && isArray(copy)) {
-          target[key] = copy;
-        } else if (isDeep && copy && (isPlainObject(copy) || (copyIsArray = isArray(copy)))) {
+        copy2 = input[key];
+        if (noArrayCopies && isArray(copy2)) {
+          target[key] = copy2;
+        } else if (isDeep && copy2 && (isPlainObject(copy2) || (copyIsArray = isArray(copy2)))) {
           if (copyIsArray) {
             copyIsArray = false;
             clone2 = src && isArray(src) ? src : [];
           } else {
             clone2 = src && isPlainObject(src) ? src : {};
           }
-          target[key] = _extend([clone2, copy], isDeep, keepAllKeys, noArrayCopies);
-        } else if (typeof copy !== "undefined" || keepAllKeys) {
-          target[key] = copy;
+          target[key] = _extend([clone2, copy2], isDeep, keepAllKeys, noArrayCopies);
+        } else if (typeof copy2 !== "undefined" || keepAllKeys) {
+          target[key] = copy2;
         }
       }
     }
@@ -23844,8 +19482,8 @@ var Plotly = (() => {
   };
   var getComponentMethod = function(name8, method) {
     var _module = componentsRegistry[name8];
-    if (!_module) return noop;
-    return _module[method] || noop;
+    if (!_module) return noop2;
+    return _module[method] || noop2;
   };
   var call = function() {
     var name8 = arguments[0];
@@ -23953,16 +19591,16 @@ var Plotly = (() => {
     }
   }
   function registerLocale(_module) {
-    var locale3 = _module.name;
-    var baseLocale = locale3.split("-")[0];
+    var locale4 = _module.name;
+    var baseLocale = locale4.split("-")[0];
     var newDict = _module.dictionary;
     var newFormat = _module.format;
     var hasDict = newDict && Object.keys(newDict).length;
     var hasFormat = newFormat && Object.keys(newFormat).length;
     var locales = localeRegistry;
-    var localeObj = locales[locale3];
-    if (!localeObj) locales[locale3] = localeObj = {};
-    if (baseLocale !== locale3) {
+    var localeObj = locales[locale4];
+    if (!localeObj) locales[locale4] = localeObj = {};
+    if (baseLocale !== locale4) {
       var baseLocaleObj = locales[baseLocale];
       if (!baseLocaleObj) locales[baseLocale] = baseLocaleObj = {};
       if (hasDict && baseLocaleObj.dictionary === localeObj.dictionary) {
@@ -24012,109 +19650,39 @@ var Plotly = (() => {
   var registry_default = { modules, allCategories, allTypes, subplotsRegistry, componentsRegistry, layoutArrayContainers, layoutArrayRegexes, traceLayoutAttributes, localeRegistry, apiMethodRegistry, collectableSubplotTypes, register, getModule, traceIs, getComponentMethod, call };
 
   // src/plot_api/plot_api.js
-  var import_d322 = __toESM(require_d3(), 1);
   var import_fast_isnumeric27 = __toESM(require_fast_isnumeric(), 1);
-
-  // src/lib/index.js
-  var import_d34 = __toESM(require_d3(), 1);
-
-  // node_modules/.pnpm/d3-time@1.1.0/node_modules/d3-time/src/index.js
-  var src_exports = {};
-  __export(src_exports, {
-    timeDay: () => day_default,
-    timeDays: () => days,
-    timeFriday: () => friday,
-    timeFridays: () => fridays,
-    timeHour: () => hour_default,
-    timeHours: () => hours,
-    timeInterval: () => newInterval,
-    timeMillisecond: () => millisecond_default,
-    timeMilliseconds: () => milliseconds,
-    timeMinute: () => minute_default,
-    timeMinutes: () => minutes,
-    timeMonday: () => monday,
-    timeMondays: () => mondays,
-    timeMonth: () => month_default,
-    timeMonths: () => months,
-    timeSaturday: () => saturday,
-    timeSaturdays: () => saturdays,
-    timeSecond: () => second_default,
-    timeSeconds: () => seconds,
-    timeSunday: () => sunday,
-    timeSundays: () => sundays,
-    timeThursday: () => thursday,
-    timeThursdays: () => thursdays,
-    timeTuesday: () => tuesday,
-    timeTuesdays: () => tuesdays,
-    timeWednesday: () => wednesday,
-    timeWednesdays: () => wednesdays,
-    timeWeek: () => sunday,
-    timeWeeks: () => sundays,
-    timeYear: () => year_default,
-    timeYears: () => years,
-    utcDay: () => utcDay_default,
-    utcDays: () => utcDays,
-    utcFriday: () => utcFriday,
-    utcFridays: () => utcFridays,
-    utcHour: () => utcHour_default,
-    utcHours: () => utcHours,
-    utcMillisecond: () => millisecond_default,
-    utcMilliseconds: () => milliseconds,
-    utcMinute: () => utcMinute_default,
-    utcMinutes: () => utcMinutes,
-    utcMonday: () => utcMonday,
-    utcMondays: () => utcMondays,
-    utcMonth: () => utcMonth_default,
-    utcMonths: () => utcMonths,
-    utcSaturday: () => utcSaturday,
-    utcSaturdays: () => utcSaturdays,
-    utcSecond: () => second_default,
-    utcSeconds: () => seconds,
-    utcSunday: () => utcSunday,
-    utcSundays: () => utcSundays,
-    utcThursday: () => utcThursday,
-    utcThursdays: () => utcThursdays,
-    utcTuesday: () => utcTuesday,
-    utcTuesdays: () => utcTuesdays,
-    utcWednesday: () => utcWednesday,
-    utcWednesdays: () => utcWednesdays,
-    utcWeek: () => utcSunday,
-    utcWeeks: () => utcSundays,
-    utcYear: () => utcYear_default,
-    utcYears: () => utcYears
-  });
 
   // node_modules/.pnpm/d3-time@1.1.0/node_modules/d3-time/src/interval.js
   var t0 = /* @__PURE__ */ new Date();
   var t1 = /* @__PURE__ */ new Date();
   function newInterval(floori, offseti, count, field) {
-    function interval(date) {
+    function interval2(date) {
       return floori(date = arguments.length === 0 ? /* @__PURE__ */ new Date() : /* @__PURE__ */ new Date(+date)), date;
     }
-    interval.floor = function(date) {
+    interval2.floor = function(date) {
       return floori(date = /* @__PURE__ */ new Date(+date)), date;
     };
-    interval.ceil = function(date) {
+    interval2.ceil = function(date) {
       return floori(date = new Date(date - 1)), offseti(date, 1), floori(date), date;
     };
-    interval.round = function(date) {
-      var d0 = interval(date), d1 = interval.ceil(date);
+    interval2.round = function(date) {
+      var d0 = interval2(date), d1 = interval2.ceil(date);
       return date - d0 < d1 - date ? d0 : d1;
     };
-    interval.offset = function(date, step) {
+    interval2.offset = function(date, step) {
       return offseti(date = /* @__PURE__ */ new Date(+date), step == null ? 1 : Math.floor(step)), date;
     };
-    interval.range = function(start, stop, step) {
+    interval2.range = function(start2, stop, step) {
       var range = [], previous;
-      start = interval.ceil(start);
+      start2 = interval2.ceil(start2);
       step = step == null ? 1 : Math.floor(step);
-      if (!(start < stop) || !(step > 0)) return range;
+      if (!(start2 < stop) || !(step > 0)) return range;
       do
-        range.push(previous = /* @__PURE__ */ new Date(+start)), offseti(start, step), floori(start);
-      while (previous < start && start < stop);
+        range.push(previous = /* @__PURE__ */ new Date(+start2)), offseti(start2, step), floori(start2);
+      while (previous < start2 && start2 < stop);
       return range;
     };
-    interval.filter = function(test) {
+    interval2.filter = function(test) {
       return newInterval(function(date) {
         if (date >= date) while (floori(date), !test(date)) date.setTime(date - 1);
       }, function(date, step) {
@@ -24131,98 +19699,35 @@ var Plotly = (() => {
       });
     };
     if (count) {
-      interval.count = function(start, end) {
-        t0.setTime(+start), t1.setTime(+end);
+      interval2.count = function(start2, end) {
+        t0.setTime(+start2), t1.setTime(+end);
         floori(t0), floori(t1);
         return Math.floor(count(t0, t1));
       };
-      interval.every = function(step) {
+      interval2.every = function(step) {
         step = Math.floor(step);
-        return !isFinite(step) || !(step > 0) ? null : !(step > 1) ? interval : interval.filter(field ? function(d) {
+        return !isFinite(step) || !(step > 0) ? null : !(step > 1) ? interval2 : interval2.filter(field ? function(d) {
           return field(d) % step === 0;
         } : function(d) {
-          return interval.count(0, d) % step === 0;
+          return interval2.count(0, d) % step === 0;
         });
       };
     }
-    return interval;
+    return interval2;
   }
 
-  // node_modules/.pnpm/d3-time@1.1.0/node_modules/d3-time/src/millisecond.js
-  var millisecond = newInterval(function() {
-  }, function(date, step) {
-    date.setTime(+date + step);
-  }, function(start, end) {
-    return end - start;
-  });
-  millisecond.every = function(k) {
-    k = Math.floor(k);
-    if (!isFinite(k) || !(k > 0)) return null;
-    if (!(k > 1)) return millisecond;
-    return newInterval(function(date) {
-      date.setTime(Math.floor(date / k) * k);
-    }, function(date, step) {
-      date.setTime(+date + step * k);
-    }, function(start, end) {
-      return (end - start) / k;
-    });
-  };
-  var millisecond_default = millisecond;
-  var milliseconds = millisecond.range;
-
   // node_modules/.pnpm/d3-time@1.1.0/node_modules/d3-time/src/duration.js
-  var durationSecond = 1e3;
   var durationMinute = 6e4;
-  var durationHour = 36e5;
   var durationDay = 864e5;
   var durationWeek = 6048e5;
-
-  // node_modules/.pnpm/d3-time@1.1.0/node_modules/d3-time/src/second.js
-  var second = newInterval(function(date) {
-    date.setTime(date - date.getMilliseconds());
-  }, function(date, step) {
-    date.setTime(+date + step * durationSecond);
-  }, function(start, end) {
-    return (end - start) / durationSecond;
-  }, function(date) {
-    return date.getUTCSeconds();
-  });
-  var second_default = second;
-  var seconds = second.range;
-
-  // node_modules/.pnpm/d3-time@1.1.0/node_modules/d3-time/src/minute.js
-  var minute = newInterval(function(date) {
-    date.setTime(date - date.getMilliseconds() - date.getSeconds() * durationSecond);
-  }, function(date, step) {
-    date.setTime(+date + step * durationMinute);
-  }, function(start, end) {
-    return (end - start) / durationMinute;
-  }, function(date) {
-    return date.getMinutes();
-  });
-  var minute_default = minute;
-  var minutes = minute.range;
-
-  // node_modules/.pnpm/d3-time@1.1.0/node_modules/d3-time/src/hour.js
-  var hour = newInterval(function(date) {
-    date.setTime(date - date.getMilliseconds() - date.getSeconds() * durationSecond - date.getMinutes() * durationMinute);
-  }, function(date, step) {
-    date.setTime(+date + step * durationHour);
-  }, function(start, end) {
-    return (end - start) / durationHour;
-  }, function(date) {
-    return date.getHours();
-  });
-  var hour_default = hour;
-  var hours = hour.range;
 
   // node_modules/.pnpm/d3-time@1.1.0/node_modules/d3-time/src/day.js
   var day = newInterval(function(date) {
     date.setHours(0, 0, 0, 0);
   }, function(date, step) {
     date.setDate(date.getDate() + step);
-  }, function(start, end) {
-    return (end - start - (end.getTimezoneOffset() - start.getTimezoneOffset()) * durationMinute) / durationDay;
+  }, function(start2, end) {
+    return (end - start2 - (end.getTimezoneOffset() - start2.getTimezoneOffset()) * durationMinute) / durationDay;
   }, function(date) {
     return date.getDate() - 1;
   });
@@ -24236,8 +19741,8 @@ var Plotly = (() => {
       date.setHours(0, 0, 0, 0);
     }, function(date, step) {
       date.setDate(date.getDate() + step * 7);
-    }, function(start, end) {
-      return (end - start - (end.getTimezoneOffset() - start.getTimezoneOffset()) * durationMinute) / durationWeek;
+    }, function(start2, end) {
+      return (end - start2 - (end.getTimezoneOffset() - start2.getTimezoneOffset()) * durationMinute) / durationWeek;
     });
   }
   var sunday = weekday(0);
@@ -24255,28 +19760,14 @@ var Plotly = (() => {
   var fridays = friday.range;
   var saturdays = saturday.range;
 
-  // node_modules/.pnpm/d3-time@1.1.0/node_modules/d3-time/src/month.js
-  var month = newInterval(function(date) {
-    date.setDate(1);
-    date.setHours(0, 0, 0, 0);
-  }, function(date, step) {
-    date.setMonth(date.getMonth() + step);
-  }, function(start, end) {
-    return end.getMonth() - start.getMonth() + (end.getFullYear() - start.getFullYear()) * 12;
-  }, function(date) {
-    return date.getMonth();
-  });
-  var month_default = month;
-  var months = month.range;
-
   // node_modules/.pnpm/d3-time@1.1.0/node_modules/d3-time/src/year.js
   var year = newInterval(function(date) {
     date.setMonth(0, 1);
     date.setHours(0, 0, 0, 0);
   }, function(date, step) {
     date.setFullYear(date.getFullYear() + step);
-  }, function(start, end) {
-    return end.getFullYear() - start.getFullYear();
+  }, function(start2, end) {
+    return end.getFullYear() - start2.getFullYear();
   }, function(date) {
     return date.getFullYear();
   });
@@ -24292,39 +19783,13 @@ var Plotly = (() => {
   var year_default = year;
   var years = year.range;
 
-  // node_modules/.pnpm/d3-time@1.1.0/node_modules/d3-time/src/utcMinute.js
-  var utcMinute = newInterval(function(date) {
-    date.setUTCSeconds(0, 0);
-  }, function(date, step) {
-    date.setTime(+date + step * durationMinute);
-  }, function(start, end) {
-    return (end - start) / durationMinute;
-  }, function(date) {
-    return date.getUTCMinutes();
-  });
-  var utcMinute_default = utcMinute;
-  var utcMinutes = utcMinute.range;
-
-  // node_modules/.pnpm/d3-time@1.1.0/node_modules/d3-time/src/utcHour.js
-  var utcHour = newInterval(function(date) {
-    date.setUTCMinutes(0, 0, 0);
-  }, function(date, step) {
-    date.setTime(+date + step * durationHour);
-  }, function(start, end) {
-    return (end - start) / durationHour;
-  }, function(date) {
-    return date.getUTCHours();
-  });
-  var utcHour_default = utcHour;
-  var utcHours = utcHour.range;
-
   // node_modules/.pnpm/d3-time@1.1.0/node_modules/d3-time/src/utcDay.js
   var utcDay = newInterval(function(date) {
     date.setUTCHours(0, 0, 0, 0);
   }, function(date, step) {
     date.setUTCDate(date.getUTCDate() + step);
-  }, function(start, end) {
-    return (end - start) / durationDay;
+  }, function(start2, end) {
+    return (end - start2) / durationDay;
   }, function(date) {
     return date.getUTCDate() - 1;
   });
@@ -24338,8 +19803,8 @@ var Plotly = (() => {
       date.setUTCHours(0, 0, 0, 0);
     }, function(date, step) {
       date.setUTCDate(date.getUTCDate() + step * 7);
-    }, function(start, end) {
-      return (end - start) / durationWeek;
+    }, function(start2, end) {
+      return (end - start2) / durationWeek;
     });
   }
   var utcSunday = utcWeekday(0);
@@ -24357,28 +19822,14 @@ var Plotly = (() => {
   var utcFridays = utcFriday.range;
   var utcSaturdays = utcSaturday.range;
 
-  // node_modules/.pnpm/d3-time@1.1.0/node_modules/d3-time/src/utcMonth.js
-  var utcMonth = newInterval(function(date) {
-    date.setUTCDate(1);
-    date.setUTCHours(0, 0, 0, 0);
-  }, function(date, step) {
-    date.setUTCMonth(date.getUTCMonth() + step);
-  }, function(start, end) {
-    return end.getUTCMonth() - start.getUTCMonth() + (end.getUTCFullYear() - start.getUTCFullYear()) * 12;
-  }, function(date) {
-    return date.getUTCMonth();
-  });
-  var utcMonth_default = utcMonth;
-  var utcMonths = utcMonth.range;
-
   // node_modules/.pnpm/d3-time@1.1.0/node_modules/d3-time/src/utcYear.js
   var utcYear = newInterval(function(date) {
     date.setUTCMonth(0, 1);
     date.setUTCHours(0, 0, 0, 0);
   }, function(date, step) {
     date.setUTCFullYear(date.getUTCFullYear() + step);
-  }, function(start, end) {
-    return end.getUTCFullYear() - start.getUTCFullYear();
+  }, function(start2, end) {
+    return end.getUTCFullYear() - start2.getUTCFullYear();
   }, function(date) {
     return date.getUTCFullYear();
   });
@@ -24394,7 +19845,7 @@ var Plotly = (() => {
   var utcYear_default = utcYear;
   var utcYears = utcYear.range;
 
-  // node_modules/.pnpm/d3-time-format@2.3.0/node_modules/d3-time-format/src/locale.js
+  // node_modules/.pnpm/d3-time-format@4.1.0/node_modules/d3-time-format/src/locale.js
   function localDate(d) {
     if (0 <= d.y && d.y < 100) {
       var date = new Date(-1, d.m, d.d, d.H, d.M, d.S, d.L);
@@ -24414,8 +19865,8 @@ var Plotly = (() => {
   function newDate(y, m, d) {
     return { y, m, d, H: 0, M: 0, S: 0, L: 0 };
   }
-  function formatLocale(locale3) {
-    var locale_dateTime = locale3.dateTime, locale_date = locale3.date, locale_time = locale3.time, locale_periods = locale3.periods, locale_weekdays = locale3.days, locale_shortWeekdays = locale3.shortDays, locale_months = locale3.months, locale_shortMonths = locale3.shortMonths;
+  function formatLocale(locale4) {
+    var locale_dateTime = locale4.dateTime, locale_date = locale4.date, locale_time = locale4.time, locale_periods = locale4.periods, locale_weekdays = locale4.days, locale_shortWeekdays = locale4.shortDays, locale_months = locale4.months, locale_shortMonths = locale4.shortMonths;
     var periodRe = formatRe(locale_periods), periodLookup = formatLookup(locale_periods), weekdayRe = formatRe(locale_weekdays), weekdayLookup = formatLookup(locale_weekdays), shortWeekdayRe = formatRe(locale_shortWeekdays), shortWeekdayLookup = formatLookup(locale_shortWeekdays), monthRe = formatRe(locale_months), monthLookup = formatLookup(locale_months), shortMonthRe = formatRe(locale_shortMonths), shortMonthLookup = formatLookup(locale_shortMonths);
     var formats = {
       "a": formatShortWeekday,
@@ -24527,14 +19978,14 @@ var Plotly = (() => {
     utcFormats.c = newFormat(locale_dateTime, utcFormats);
     function newFormat(specifier, formats2) {
       return function(date) {
-        var string = [], i = -1, j = 0, n = specifier.length, c, pad3, format5;
+        var string = [], i = -1, j = 0, n = specifier.length, c, pad3, format6;
         if (!(date instanceof Date)) date = /* @__PURE__ */ new Date(+date);
         while (++i < n) {
           if (specifier.charCodeAt(i) === 37) {
             string.push(specifier.slice(j, i));
             if ((pad3 = pads[c = specifier.charAt(++i)]) != null) c = specifier.charAt(++i);
             else pad3 = c === "e" ? " " : "0";
-            if (format5 = formats2[c]) c = format5(date, pad3);
+            if (format6 = formats2[c]) c = format6(date, pad3);
             string.push(c);
             j = i + 1;
           }
@@ -24601,23 +20052,23 @@ var Plotly = (() => {
     }
     function parsePeriod(d, string, i) {
       var n = periodRe.exec(string.slice(i));
-      return n ? (d.p = periodLookup[n[0].toLowerCase()], i + n[0].length) : -1;
+      return n ? (d.p = periodLookup.get(n[0].toLowerCase()), i + n[0].length) : -1;
     }
     function parseShortWeekday(d, string, i) {
       var n = shortWeekdayRe.exec(string.slice(i));
-      return n ? (d.w = shortWeekdayLookup[n[0].toLowerCase()], i + n[0].length) : -1;
+      return n ? (d.w = shortWeekdayLookup.get(n[0].toLowerCase()), i + n[0].length) : -1;
     }
     function parseWeekday(d, string, i) {
       var n = weekdayRe.exec(string.slice(i));
-      return n ? (d.w = weekdayLookup[n[0].toLowerCase()], i + n[0].length) : -1;
+      return n ? (d.w = weekdayLookup.get(n[0].toLowerCase()), i + n[0].length) : -1;
     }
     function parseShortMonth(d, string, i) {
       var n = shortMonthRe.exec(string.slice(i));
-      return n ? (d.m = shortMonthLookup[n[0].toLowerCase()], i + n[0].length) : -1;
+      return n ? (d.m = shortMonthLookup.get(n[0].toLowerCase()), i + n[0].length) : -1;
     }
     function parseMonth(d, string, i) {
       var n = monthRe.exec(string.slice(i));
-      return n ? (d.m = monthLookup[n[0].toLowerCase()], i + n[0].length) : -1;
+      return n ? (d.m = monthLookup.get(n[0].toLowerCase()), i + n[0].length) : -1;
     }
     function parseLocaleDateTime(d, string, i) {
       return parseSpecifier(d, locale_dateTime, string, i);
@@ -24710,9 +20161,7 @@ var Plotly = (() => {
     return new RegExp("^(?:" + names2.map(requote).join("|") + ")", "i");
   }
   function formatLookup(names2) {
-    var map2 = {}, i = -1, n = names2.length;
-    while (++i < n) map2[names2[i].toLowerCase()] = i;
-    return map2;
+    return new Map(names2.map((name8, i) => [name8.toLowerCase(), i]));
   }
   function parseWeekdayNumberSunday(d, string, i) {
     var n = numberRe.exec(string.slice(i, i + 1));
@@ -24937,7 +20386,7 @@ var Plotly = (() => {
     return Math.floor(+d / 1e3);
   }
 
-  // node_modules/.pnpm/d3-time-format@2.3.0/node_modules/d3-time-format/src/defaultLocale.js
+  // node_modules/.pnpm/d3-time-format@4.1.0/node_modules/d3-time-format/src/defaultLocale.js
   var locale;
   var timeFormat;
   var timeParse;
@@ -24962,25 +20411,25 @@ var Plotly = (() => {
     return locale;
   }
 
-  // node_modules/.pnpm/d3-format@1.4.5/node_modules/d3-format/src/formatDecimal.js
+  // node_modules/.pnpm/d3-format@3.1.2/node_modules/d3-format/src/formatDecimal.js
   function formatDecimal_default(x) {
     return Math.abs(x = Math.round(x)) >= 1e21 ? x.toLocaleString("en").replace(/,/g, "") : x.toString(10);
   }
   function formatDecimalParts(x, p) {
-    if ((i = (x = p ? x.toExponential(p - 1) : x.toExponential()).indexOf("e")) < 0) return null;
-    var i, coefficient = x.slice(0, i);
+    if (!isFinite(x) || x === 0) return null;
+    var i = (x = p ? x.toExponential(p - 1) : x.toExponential()).indexOf("e"), coefficient = x.slice(0, i);
     return [
       coefficient.length > 1 ? coefficient[0] + coefficient.slice(2) : coefficient,
       +x.slice(i + 1)
     ];
   }
 
-  // node_modules/.pnpm/d3-format@1.4.5/node_modules/d3-format/src/exponent.js
+  // node_modules/.pnpm/d3-format@3.1.2/node_modules/d3-format/src/exponent.js
   function exponent_default(x) {
     return x = formatDecimalParts(Math.abs(x)), x ? x[1] : NaN;
   }
 
-  // node_modules/.pnpm/d3-format@1.4.5/node_modules/d3-format/src/formatGroup.js
+  // node_modules/.pnpm/d3-format@3.1.2/node_modules/d3-format/src/formatGroup.js
   function formatGroup_default(grouping, thousands) {
     return function(value, width) {
       var i = value.length, t = [], j = 0, g = grouping[0], length = 0;
@@ -24994,7 +20443,7 @@ var Plotly = (() => {
     };
   }
 
-  // node_modules/.pnpm/d3-format@1.4.5/node_modules/d3-format/src/formatNumerals.js
+  // node_modules/.pnpm/d3-format@3.1.2/node_modules/d3-format/src/formatNumerals.js
   function formatNumerals_default(numerals) {
     return function(value) {
       return value.replace(/[0-9]/g, function(i) {
@@ -25003,7 +20452,7 @@ var Plotly = (() => {
     };
   }
 
-  // node_modules/.pnpm/d3-format@1.4.5/node_modules/d3-format/src/formatSpecifier.js
+  // node_modules/.pnpm/d3-format@3.1.2/node_modules/d3-format/src/formatSpecifier.js
   var re = /^(?:(.)?([<>=^]))?([+\-( ])?([$#])?(0)?(\d+)?(,)?(\.\d+)?(~)?([a-z%])?$/i;
   function formatSpecifier(specifier) {
     if (!(match = re.exec(specifier))) throw new Error("invalid format: " + specifier);
@@ -25038,7 +20487,7 @@ var Plotly = (() => {
     return this.fill + this.align + this.sign + this.symbol + (this.zero ? "0" : "") + (this.width === void 0 ? "" : Math.max(1, this.width | 0)) + (this.comma ? "," : "") + (this.precision === void 0 ? "" : "." + Math.max(0, this.precision | 0)) + (this.trim ? "~" : "") + this.type;
   };
 
-  // node_modules/.pnpm/d3-format@1.4.5/node_modules/d3-format/src/formatTrim.js
+  // node_modules/.pnpm/d3-format@3.1.2/node_modules/d3-format/src/formatTrim.js
   function formatTrim_default(s) {
     out: for (var n = s.length, i = 1, i0 = -1, i1; i < n; ++i) {
       switch (s[i]) {
@@ -25058,16 +20507,16 @@ var Plotly = (() => {
     return i0 > 0 ? s.slice(0, i0) + s.slice(i1 + 1) : s;
   }
 
-  // node_modules/.pnpm/d3-format@1.4.5/node_modules/d3-format/src/formatPrefixAuto.js
+  // node_modules/.pnpm/d3-format@3.1.2/node_modules/d3-format/src/formatPrefixAuto.js
   var prefixExponent;
   function formatPrefixAuto_default(x, p) {
     var d = formatDecimalParts(x, p);
-    if (!d) return x + "";
+    if (!d) return prefixExponent = void 0, x.toPrecision(p);
     var coefficient = d[0], exponent = d[1], i = exponent - (prefixExponent = Math.max(-8, Math.min(8, Math.floor(exponent / 3))) * 3) + 1, n = coefficient.length;
     return i === n ? coefficient : i > n ? coefficient + new Array(i - n + 1).join("0") : i > 0 ? coefficient.slice(0, i) + "." + coefficient.slice(i) : "0." + new Array(1 - i).join("0") + formatDecimalParts(x, Math.max(0, p + i - 1))[0];
   }
 
-  // node_modules/.pnpm/d3-format@1.4.5/node_modules/d3-format/src/formatRounded.js
+  // node_modules/.pnpm/d3-format@3.1.2/node_modules/d3-format/src/formatRounded.js
   function formatRounded_default(x, p) {
     var d = formatDecimalParts(x, p);
     if (!d) return x + "";
@@ -25075,63 +20524,43 @@ var Plotly = (() => {
     return exponent < 0 ? "0." + new Array(-exponent).join("0") + coefficient : coefficient.length > exponent + 1 ? coefficient.slice(0, exponent + 1) + "." + coefficient.slice(exponent + 1) : coefficient + new Array(exponent - coefficient.length + 2).join("0");
   }
 
-  // node_modules/.pnpm/d3-format@1.4.5/node_modules/d3-format/src/formatTypes.js
+  // node_modules/.pnpm/d3-format@3.1.2/node_modules/d3-format/src/formatTypes.js
   var formatTypes_default = {
-    "%": function(x, p) {
-      return (x * 100).toFixed(p);
-    },
-    "b": function(x) {
-      return Math.round(x).toString(2);
-    },
-    "c": function(x) {
-      return x + "";
-    },
+    "%": (x, p) => (x * 100).toFixed(p),
+    "b": (x) => Math.round(x).toString(2),
+    "c": (x) => x + "",
     "d": formatDecimal_default,
-    "e": function(x, p) {
-      return x.toExponential(p);
-    },
-    "f": function(x, p) {
-      return x.toFixed(p);
-    },
-    "g": function(x, p) {
-      return x.toPrecision(p);
-    },
-    "o": function(x) {
-      return Math.round(x).toString(8);
-    },
-    "p": function(x, p) {
-      return formatRounded_default(x * 100, p);
-    },
+    "e": (x, p) => x.toExponential(p),
+    "f": (x, p) => x.toFixed(p),
+    "g": (x, p) => x.toPrecision(p),
+    "o": (x) => Math.round(x).toString(8),
+    "p": (x, p) => formatRounded_default(x * 100, p),
     "r": formatRounded_default,
     "s": formatPrefixAuto_default,
-    "X": function(x) {
-      return Math.round(x).toString(16).toUpperCase();
-    },
-    "x": function(x) {
-      return Math.round(x).toString(16);
-    }
+    "X": (x) => Math.round(x).toString(16).toUpperCase(),
+    "x": (x) => Math.round(x).toString(16)
   };
 
-  // node_modules/.pnpm/d3-format@1.4.5/node_modules/d3-format/src/identity.js
+  // node_modules/.pnpm/d3-format@3.1.2/node_modules/d3-format/src/identity.js
   function identity_default(x) {
     return x;
   }
 
-  // node_modules/.pnpm/d3-format@1.4.5/node_modules/d3-format/src/locale.js
+  // node_modules/.pnpm/d3-format@3.1.2/node_modules/d3-format/src/locale.js
   var map = Array.prototype.map;
   var prefixes = ["y", "z", "a", "f", "p", "n", "\xB5", "m", "", "k", "M", "G", "T", "P", "E", "Z", "Y"];
-  function locale_default(locale3) {
-    var group = locale3.grouping === void 0 || locale3.thousands === void 0 ? identity_default : formatGroup_default(map.call(locale3.grouping, Number), locale3.thousands + ""), currencyPrefix = locale3.currency === void 0 ? "" : locale3.currency[0] + "", currencySuffix = locale3.currency === void 0 ? "" : locale3.currency[1] + "", decimal = locale3.decimal === void 0 ? "." : locale3.decimal + "", numerals = locale3.numerals === void 0 ? identity_default : formatNumerals_default(map.call(locale3.numerals, String)), percent = locale3.percent === void 0 ? "%" : locale3.percent + "", minus = locale3.minus === void 0 ? "-" : locale3.minus + "", nan = locale3.nan === void 0 ? "NaN" : locale3.nan + "";
-    function newFormat(specifier) {
+  function locale_default(locale4) {
+    var group = locale4.grouping === void 0 || locale4.thousands === void 0 ? identity_default : formatGroup_default(map.call(locale4.grouping, Number), locale4.thousands + ""), currencyPrefix = locale4.currency === void 0 ? "" : locale4.currency[0] + "", currencySuffix = locale4.currency === void 0 ? "" : locale4.currency[1] + "", decimal = locale4.decimal === void 0 ? "." : locale4.decimal + "", numerals = locale4.numerals === void 0 ? identity_default : formatNumerals_default(map.call(locale4.numerals, String)), percent = locale4.percent === void 0 ? "%" : locale4.percent + "", minus = locale4.minus === void 0 ? "\u2212" : locale4.minus + "", nan = locale4.nan === void 0 ? "NaN" : locale4.nan + "";
+    function newFormat(specifier, options) {
       specifier = formatSpecifier(specifier);
-      var fill = specifier.fill, align3 = specifier.align, sign2 = specifier.sign, symbol = specifier.symbol, zero = specifier.zero, width = specifier.width, comma = specifier.comma, precision = specifier.precision, trim = specifier.trim, type = specifier.type;
+      var fill = specifier.fill, align3 = specifier.align, sign2 = specifier.sign, symbol = specifier.symbol, zero3 = specifier.zero, width = specifier.width, comma = specifier.comma, precision = specifier.precision, trim = specifier.trim, type = specifier.type;
       if (type === "n") comma = true, type = "g";
       else if (!formatTypes_default[type]) precision === void 0 && (precision = 12), trim = true, type = "g";
-      if (zero || fill === "0" && align3 === "=") zero = true, fill = "0", align3 = "=";
-      var prefix = symbol === "$" ? currencyPrefix : symbol === "#" && /[boxX]/.test(type) ? "0" + type.toLowerCase() : "", suffix = symbol === "$" ? currencySuffix : /[%p]/.test(type) ? percent : "";
+      if (zero3 || fill === "0" && align3 === "=") zero3 = true, fill = "0", align3 = "=";
+      var prefix = (options && options.prefix !== void 0 ? options.prefix : "") + (symbol === "$" ? currencyPrefix : symbol === "#" && /[boxX]/.test(type) ? "0" + type.toLowerCase() : ""), suffix = (symbol === "$" ? currencySuffix : /[%p]/.test(type) ? percent : "") + (options && options.suffix !== void 0 ? options.suffix : "");
       var formatType = formatTypes_default[type], maybeSuffix = /[defgprs%]/.test(type);
       precision = precision === void 0 ? 6 : /[gprs]/.test(type) ? Math.max(1, Math.min(21, precision)) : Math.max(0, Math.min(20, precision));
-      function format5(value) {
+      function format6(value) {
         var valuePrefix = prefix, valueSuffix = suffix, i, n, c;
         if (type === "c") {
           valueSuffix = formatType(value) + valueSuffix;
@@ -25143,7 +20572,7 @@ var Plotly = (() => {
           if (trim) value = formatTrim_default(value);
           if (valueNegative && +value === 0 && sign2 !== "+") valueNegative = false;
           valuePrefix = (valueNegative ? sign2 === "(" ? sign2 : minus : sign2 === "-" || sign2 === "(" ? "" : sign2) + valuePrefix;
-          valueSuffix = (type === "s" ? prefixes[8 + prefixExponent / 3] : "") + valueSuffix + (valueNegative && sign2 === "(" ? ")" : "");
+          valueSuffix = (type === "s" && !isNaN(value) && prefixExponent !== void 0 ? prefixes[8 + prefixExponent / 3] : "") + valueSuffix + (valueNegative && sign2 === "(" ? ")" : "");
           if (maybeSuffix) {
             i = -1, n = value.length;
             while (++i < n) {
@@ -25155,9 +20584,9 @@ var Plotly = (() => {
             }
           }
         }
-        if (comma && !zero) value = group(value, Infinity);
+        if (comma && !zero3) value = group(value, Infinity);
         var length = valuePrefix.length + value.length + valueSuffix.length, padding = length < width ? new Array(width - length + 1).join(fill) : "";
-        if (comma && zero) value = group(padding + value, padding.length ? width - valueSuffix.length : Infinity), padding = "";
+        if (comma && zero3) value = group(padding + value, padding.length ? width - valueSuffix.length : Infinity), padding = "";
         switch (align3) {
           case "<":
             value = valuePrefix + value + valueSuffix + padding;
@@ -25174,33 +20603,31 @@ var Plotly = (() => {
         }
         return numerals(value);
       }
-      format5.toString = function() {
+      format6.toString = function() {
         return specifier + "";
       };
-      return format5;
+      return format6;
     }
-    function formatPrefix2(specifier, value) {
-      var f = newFormat((specifier = formatSpecifier(specifier), specifier.type = "f", specifier)), e = Math.max(-8, Math.min(8, Math.floor(exponent_default(value) / 3))) * 3, k = Math.pow(10, -e), prefix = prefixes[8 + e / 3];
+    function formatPrefix3(specifier, value) {
+      var e = Math.max(-8, Math.min(8, Math.floor(exponent_default(value) / 3))) * 3, k = Math.pow(10, -e), f = newFormat((specifier = formatSpecifier(specifier), specifier.type = "f", specifier), { suffix: prefixes[8 + e / 3] });
       return function(value2) {
-        return f(k * value2) + prefix;
+        return f(k * value2);
       };
     }
     return {
       format: newFormat,
-      formatPrefix: formatPrefix2
+      formatPrefix: formatPrefix3
     };
   }
 
-  // node_modules/.pnpm/d3-format@1.4.5/node_modules/d3-format/src/defaultLocale.js
+  // node_modules/.pnpm/d3-format@3.1.2/node_modules/d3-format/src/defaultLocale.js
   var locale2;
   var format;
   var formatPrefix;
   defaultLocale2({
-    decimal: ".",
     thousands: ",",
     grouping: [3],
-    currency: ["$", ""],
-    minus: "-"
+    currency: ["$", ""]
   });
   function defaultLocale2(definition) {
     locale2 = locale_default(definition);
@@ -25533,22 +20960,22 @@ var Plotly = (() => {
   }
   var trimLeft = /^\s+/;
   var trimRight = /\s+$/;
-  function tinycolor(color2, opts) {
-    color2 = color2 ? color2 : "";
+  function tinycolor(color3, opts) {
+    color3 = color3 ? color3 : "";
     opts = opts || {};
-    if (color2 instanceof tinycolor) {
-      return color2;
+    if (color3 instanceof tinycolor) {
+      return color3;
     }
     if (!(this instanceof tinycolor)) {
-      return new tinycolor(color2, opts);
+      return new tinycolor(color3, opts);
     }
-    var rgb = inputToRGB(color2);
-    this._originalInput = color2, this._r = rgb.r, this._g = rgb.g, this._b = rgb.b, this._a = rgb.a, this._roundA = Math.round(100 * this._a) / 100, this._format = opts.format || rgb.format;
+    var rgb2 = inputToRGB(color3);
+    this._originalInput = color3, this._r = rgb2.r, this._g = rgb2.g, this._b = rgb2.b, this._a = rgb2.a, this._roundA = Math.round(100 * this._a) / 100, this._format = opts.format || rgb2.format;
     this._gradientType = opts.gradientType;
     if (this._r < 1) this._r = Math.round(this._r);
     if (this._g < 1) this._g = Math.round(this._g);
     if (this._b < 1) this._b = Math.round(this._b);
-    this._ok = rgb.ok;
+    this._ok = rgb2.ok;
   }
   tinycolor.prototype = {
     isDark: function isDark() {
@@ -25570,15 +20997,15 @@ var Plotly = (() => {
       return this._a;
     },
     getBrightness: function getBrightness() {
-      var rgb = this.toRgb();
-      return (rgb.r * 299 + rgb.g * 587 + rgb.b * 114) / 1e3;
+      var rgb2 = this.toRgb();
+      return (rgb2.r * 299 + rgb2.g * 587 + rgb2.b * 114) / 1e3;
     },
     getLuminance: function getLuminance() {
-      var rgb = this.toRgb();
+      var rgb2 = this.toRgb();
       var RsRGB, GsRGB, BsRGB, R, G, B;
-      RsRGB = rgb.r / 255;
-      GsRGB = rgb.g / 255;
-      BsRGB = rgb.b / 255;
+      RsRGB = rgb2.r / 255;
+      GsRGB = rgb2.g / 255;
+      BsRGB = rgb2.b / 255;
       if (RsRGB <= 0.03928) R = RsRGB / 12.92;
       else R = Math.pow((RsRGB + 0.055) / 1.055, 2.4);
       if (GsRGB <= 0.03928) G = GsRGB / 12.92;
@@ -25607,17 +21034,17 @@ var Plotly = (() => {
       return this._a == 1 ? "hsv(" + h + ", " + s + "%, " + v + "%)" : "hsva(" + h + ", " + s + "%, " + v + "%, " + this._roundA + ")";
     },
     toHsl: function toHsl() {
-      var hsl = rgbToHsl(this._r, this._g, this._b);
+      var hsl2 = rgbToHsl(this._r, this._g, this._b);
       return {
-        h: hsl.h * 360,
-        s: hsl.s,
-        l: hsl.l,
+        h: hsl2.h * 360,
+        s: hsl2.s,
+        l: hsl2.l,
         a: this._a
       };
     },
     toHslString: function toHslString() {
-      var hsl = rgbToHsl(this._r, this._g, this._b);
-      var h = Math.round(hsl.h * 360), s = Math.round(hsl.s * 100), l = Math.round(hsl.l * 100);
+      var hsl2 = rgbToHsl(this._r, this._g, this._b);
+      var h = Math.round(hsl2.h * 360), s = Math.round(hsl2.s * 100), l = Math.round(hsl2.l * 100);
       return this._a == 1 ? "hsl(" + h + ", " + s + "%, " + l + "%)" : "hsla(" + h + ", " + s + "%, " + l + "%, " + this._roundA + ")";
     },
     toHex: function toHex(allow3Char) {
@@ -25673,43 +21100,43 @@ var Plotly = (() => {
       }
       return "progid:DXImageTransform.Microsoft.gradient(" + gradientType + "startColorstr=" + hex8String + ",endColorstr=" + secondHex8String + ")";
     },
-    toString: function toString(format5) {
-      var formatSet = !!format5;
-      format5 = format5 || this._format;
+    toString: function toString(format6) {
+      var formatSet = !!format6;
+      format6 = format6 || this._format;
       var formattedString = false;
       var hasAlpha = this._a < 1 && this._a >= 0;
-      var needsAlphaFormat = !formatSet && hasAlpha && (format5 === "hex" || format5 === "hex6" || format5 === "hex3" || format5 === "hex4" || format5 === "hex8" || format5 === "name");
+      var needsAlphaFormat = !formatSet && hasAlpha && (format6 === "hex" || format6 === "hex6" || format6 === "hex3" || format6 === "hex4" || format6 === "hex8" || format6 === "name");
       if (needsAlphaFormat) {
-        if (format5 === "name" && this._a === 0) {
+        if (format6 === "name" && this._a === 0) {
           return this.toName();
         }
         return this.toRgbString();
       }
-      if (format5 === "rgb") {
+      if (format6 === "rgb") {
         formattedString = this.toRgbString();
       }
-      if (format5 === "prgb") {
+      if (format6 === "prgb") {
         formattedString = this.toPercentageRgbString();
       }
-      if (format5 === "hex" || format5 === "hex6") {
+      if (format6 === "hex" || format6 === "hex6") {
         formattedString = this.toHexString();
       }
-      if (format5 === "hex3") {
+      if (format6 === "hex3") {
         formattedString = this.toHexString(true);
       }
-      if (format5 === "hex4") {
+      if (format6 === "hex4") {
         formattedString = this.toHex8String(true);
       }
-      if (format5 === "hex8") {
+      if (format6 === "hex8") {
         formattedString = this.toHex8String();
       }
-      if (format5 === "name") {
+      if (format6 === "name") {
         formattedString = this.toName();
       }
-      if (format5 === "hsl") {
+      if (format6 === "hsl") {
         formattedString = this.toHslString();
       }
-      if (format5 === "hsv") {
+      if (format6 === "hsv") {
         formattedString = this.toHsvString();
       }
       return formattedString || this.toHexString();
@@ -25718,11 +21145,11 @@ var Plotly = (() => {
       return tinycolor(this.toString());
     },
     _applyModification: function _applyModification(fn, args) {
-      var color2 = fn.apply(null, [this].concat([].slice.call(args)));
-      this._r = color2._r;
-      this._g = color2._g;
-      this._b = color2._b;
-      this.setAlpha(color2._a);
+      var color3 = fn.apply(null, [this].concat([].slice.call(args)));
+      this._r = color3._r;
+      this._g = color3._g;
+      this._b = color3._b;
+      this.setAlpha(color3._a);
       return this;
     },
     lighten: function lighten() {
@@ -25772,24 +21199,24 @@ var Plotly = (() => {
       return this._applyCombination(polyad, [4]);
     }
   };
-  tinycolor.fromRatio = function(color2, opts) {
-    if (_typeof(color2) == "object") {
+  tinycolor.fromRatio = function(color3, opts) {
+    if (_typeof(color3) == "object") {
       var newColor = {};
-      for (var i in color2) {
-        if (color2.hasOwnProperty(i)) {
+      for (var i in color3) {
+        if (color3.hasOwnProperty(i)) {
           if (i === "a") {
-            newColor[i] = color2[i];
+            newColor[i] = color3[i];
           } else {
-            newColor[i] = convertToPercentage(color2[i]);
+            newColor[i] = convertToPercentage(color3[i]);
           }
         }
       }
-      color2 = newColor;
+      color3 = newColor;
     }
-    return tinycolor(color2, opts);
+    return tinycolor(color3, opts);
   };
-  function inputToRGB(color2) {
-    var rgb = {
+  function inputToRGB(color3) {
+    var rgb2 = {
       r: 0,
       g: 0,
       b: 0
@@ -25799,39 +21226,39 @@ var Plotly = (() => {
     var v = null;
     var l = null;
     var ok = false;
-    var format5 = false;
-    if (typeof color2 == "string") {
-      color2 = stringInputToObject(color2);
+    var format6 = false;
+    if (typeof color3 == "string") {
+      color3 = stringInputToObject(color3);
     }
-    if (_typeof(color2) == "object") {
-      if (isValidCSSUnit(color2.r) && isValidCSSUnit(color2.g) && isValidCSSUnit(color2.b)) {
-        rgb = rgbToRgb(color2.r, color2.g, color2.b);
+    if (_typeof(color3) == "object") {
+      if (isValidCSSUnit(color3.r) && isValidCSSUnit(color3.g) && isValidCSSUnit(color3.b)) {
+        rgb2 = rgbToRgb(color3.r, color3.g, color3.b);
         ok = true;
-        format5 = String(color2.r).substr(-1) === "%" ? "prgb" : "rgb";
-      } else if (isValidCSSUnit(color2.h) && isValidCSSUnit(color2.s) && isValidCSSUnit(color2.v)) {
-        s = convertToPercentage(color2.s);
-        v = convertToPercentage(color2.v);
-        rgb = hsvToRgb(color2.h, s, v);
+        format6 = String(color3.r).substr(-1) === "%" ? "prgb" : "rgb";
+      } else if (isValidCSSUnit(color3.h) && isValidCSSUnit(color3.s) && isValidCSSUnit(color3.v)) {
+        s = convertToPercentage(color3.s);
+        v = convertToPercentage(color3.v);
+        rgb2 = hsvToRgb(color3.h, s, v);
         ok = true;
-        format5 = "hsv";
-      } else if (isValidCSSUnit(color2.h) && isValidCSSUnit(color2.s) && isValidCSSUnit(color2.l)) {
-        s = convertToPercentage(color2.s);
-        l = convertToPercentage(color2.l);
-        rgb = hslToRgb(color2.h, s, l);
+        format6 = "hsv";
+      } else if (isValidCSSUnit(color3.h) && isValidCSSUnit(color3.s) && isValidCSSUnit(color3.l)) {
+        s = convertToPercentage(color3.s);
+        l = convertToPercentage(color3.l);
+        rgb2 = hslToRgb(color3.h, s, l);
         ok = true;
-        format5 = "hsl";
+        format6 = "hsl";
       }
-      if (color2.hasOwnProperty("a")) {
-        a = color2.a;
+      if (color3.hasOwnProperty("a")) {
+        a = color3.a;
       }
     }
     a = boundAlpha(a);
     return {
       ok,
-      format: color2.format || format5,
-      r: Math.min(255, Math.max(rgb.r, 0)),
-      g: Math.min(255, Math.max(rgb.g, 0)),
-      b: Math.min(255, Math.max(rgb.b, 0)),
+      format: color3.format || format6,
+      r: Math.min(255, Math.max(rgb2.r, 0)),
+      g: Math.min(255, Math.max(rgb2.g, 0)),
+      b: Math.min(255, Math.max(rgb2.b, 0)),
       a
     };
   }
@@ -25846,14 +21273,14 @@ var Plotly = (() => {
     r = bound01(r, 255);
     g = bound01(g, 255);
     b = bound01(b, 255);
-    var max = Math.max(r, g, b), min = Math.min(r, g, b);
-    var h, s, l = (max + min) / 2;
-    if (max == min) {
+    var max2 = Math.max(r, g, b), min2 = Math.min(r, g, b);
+    var h, s, l = (max2 + min2) / 2;
+    if (max2 == min2) {
       h = s = 0;
     } else {
-      var d = max - min;
-      s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
-      switch (max) {
+      var d = max2 - min2;
+      s = l > 0.5 ? d / (2 - max2 - min2) : d / (max2 + min2);
+      switch (max2) {
         case r:
           h = (g - b) / d + (g < b ? 6 : 0);
           break;
@@ -25904,14 +21331,14 @@ var Plotly = (() => {
     r = bound01(r, 255);
     g = bound01(g, 255);
     b = bound01(b, 255);
-    var max = Math.max(r, g, b), min = Math.min(r, g, b);
-    var h, s, v = max;
-    var d = max - min;
-    s = max === 0 ? 0 : d / max;
-    if (max == min) {
+    var max2 = Math.max(r, g, b), min2 = Math.min(r, g, b);
+    var h, s, v = max2;
+    var d = max2 - min2;
+    s = max2 === 0 ? 0 : d / max2;
+    if (max2 == min2) {
       h = 0;
     } else {
-      switch (max) {
+      switch (max2) {
         case r:
           h = (g - b) / d + (g < b ? 6 : 0);
           break;
@@ -25942,26 +21369,26 @@ var Plotly = (() => {
     };
   }
   function rgbToHex(r, g, b, allow3Char) {
-    var hex = [pad2(Math.round(r).toString(16)), pad2(Math.round(g).toString(16)), pad2(Math.round(b).toString(16))];
-    if (allow3Char && hex[0].charAt(0) == hex[0].charAt(1) && hex[1].charAt(0) == hex[1].charAt(1) && hex[2].charAt(0) == hex[2].charAt(1)) {
-      return hex[0].charAt(0) + hex[1].charAt(0) + hex[2].charAt(0);
+    var hex2 = [pad2(Math.round(r).toString(16)), pad2(Math.round(g).toString(16)), pad2(Math.round(b).toString(16))];
+    if (allow3Char && hex2[0].charAt(0) == hex2[0].charAt(1) && hex2[1].charAt(0) == hex2[1].charAt(1) && hex2[2].charAt(0) == hex2[2].charAt(1)) {
+      return hex2[0].charAt(0) + hex2[1].charAt(0) + hex2[2].charAt(0);
     }
-    return hex.join("");
+    return hex2.join("");
   }
   function rgbaToHex(r, g, b, a, allow4Char) {
-    var hex = [pad2(Math.round(r).toString(16)), pad2(Math.round(g).toString(16)), pad2(Math.round(b).toString(16)), pad2(convertDecimalToHex(a))];
-    if (allow4Char && hex[0].charAt(0) == hex[0].charAt(1) && hex[1].charAt(0) == hex[1].charAt(1) && hex[2].charAt(0) == hex[2].charAt(1) && hex[3].charAt(0) == hex[3].charAt(1)) {
-      return hex[0].charAt(0) + hex[1].charAt(0) + hex[2].charAt(0) + hex[3].charAt(0);
+    var hex2 = [pad2(Math.round(r).toString(16)), pad2(Math.round(g).toString(16)), pad2(Math.round(b).toString(16)), pad2(convertDecimalToHex(a))];
+    if (allow4Char && hex2[0].charAt(0) == hex2[0].charAt(1) && hex2[1].charAt(0) == hex2[1].charAt(1) && hex2[2].charAt(0) == hex2[2].charAt(1) && hex2[3].charAt(0) == hex2[3].charAt(1)) {
+      return hex2[0].charAt(0) + hex2[1].charAt(0) + hex2[2].charAt(0) + hex2[3].charAt(0);
     }
-    return hex.join("");
+    return hex2.join("");
   }
   function rgbaToArgbHex(r, g, b, a) {
-    var hex = [pad2(convertDecimalToHex(a)), pad2(Math.round(r).toString(16)), pad2(Math.round(g).toString(16)), pad2(Math.round(b).toString(16))];
-    return hex.join("");
+    var hex2 = [pad2(convertDecimalToHex(a)), pad2(Math.round(r).toString(16)), pad2(Math.round(g).toString(16)), pad2(Math.round(b).toString(16))];
+    return hex2.join("");
   }
-  tinycolor.equals = function(color1, color2) {
-    if (!color1 || !color2) return false;
-    return tinycolor(color1).toRgbString() == tinycolor(color2).toRgbString();
+  tinycolor.equals = function(color1, color22) {
+    if (!color1 || !color22) return false;
+    return tinycolor(color1).toRgbString() == tinycolor(color22).toRgbString();
   };
   tinycolor.random = function() {
     return tinycolor.fromRatio({
@@ -25970,100 +21397,100 @@ var Plotly = (() => {
       b: Math.random()
     });
   };
-  function _desaturate(color2, amount) {
+  function _desaturate(color3, amount) {
     amount = amount === 0 ? 0 : amount || 10;
-    var hsl = tinycolor(color2).toHsl();
-    hsl.s -= amount / 100;
-    hsl.s = clamp01(hsl.s);
-    return tinycolor(hsl);
+    var hsl2 = tinycolor(color3).toHsl();
+    hsl2.s -= amount / 100;
+    hsl2.s = clamp01(hsl2.s);
+    return tinycolor(hsl2);
   }
-  function _saturate(color2, amount) {
+  function _saturate(color3, amount) {
     amount = amount === 0 ? 0 : amount || 10;
-    var hsl = tinycolor(color2).toHsl();
-    hsl.s += amount / 100;
-    hsl.s = clamp01(hsl.s);
-    return tinycolor(hsl);
+    var hsl2 = tinycolor(color3).toHsl();
+    hsl2.s += amount / 100;
+    hsl2.s = clamp01(hsl2.s);
+    return tinycolor(hsl2);
   }
-  function _greyscale(color2) {
-    return tinycolor(color2).desaturate(100);
+  function _greyscale(color3) {
+    return tinycolor(color3).desaturate(100);
   }
-  function _lighten(color2, amount) {
+  function _lighten(color3, amount) {
     amount = amount === 0 ? 0 : amount || 10;
-    var hsl = tinycolor(color2).toHsl();
-    hsl.l += amount / 100;
-    hsl.l = clamp01(hsl.l);
-    return tinycolor(hsl);
+    var hsl2 = tinycolor(color3).toHsl();
+    hsl2.l += amount / 100;
+    hsl2.l = clamp01(hsl2.l);
+    return tinycolor(hsl2);
   }
-  function _brighten(color2, amount) {
+  function _brighten(color3, amount) {
     amount = amount === 0 ? 0 : amount || 10;
-    var rgb = tinycolor(color2).toRgb();
-    rgb.r = Math.max(0, Math.min(255, rgb.r - Math.round(255 * -(amount / 100))));
-    rgb.g = Math.max(0, Math.min(255, rgb.g - Math.round(255 * -(amount / 100))));
-    rgb.b = Math.max(0, Math.min(255, rgb.b - Math.round(255 * -(amount / 100))));
-    return tinycolor(rgb);
+    var rgb2 = tinycolor(color3).toRgb();
+    rgb2.r = Math.max(0, Math.min(255, rgb2.r - Math.round(255 * -(amount / 100))));
+    rgb2.g = Math.max(0, Math.min(255, rgb2.g - Math.round(255 * -(amount / 100))));
+    rgb2.b = Math.max(0, Math.min(255, rgb2.b - Math.round(255 * -(amount / 100))));
+    return tinycolor(rgb2);
   }
-  function _darken(color2, amount) {
+  function _darken(color3, amount) {
     amount = amount === 0 ? 0 : amount || 10;
-    var hsl = tinycolor(color2).toHsl();
-    hsl.l -= amount / 100;
-    hsl.l = clamp01(hsl.l);
-    return tinycolor(hsl);
+    var hsl2 = tinycolor(color3).toHsl();
+    hsl2.l -= amount / 100;
+    hsl2.l = clamp01(hsl2.l);
+    return tinycolor(hsl2);
   }
-  function _spin(color2, amount) {
-    var hsl = tinycolor(color2).toHsl();
-    var hue = (hsl.h + amount) % 360;
-    hsl.h = hue < 0 ? 360 + hue : hue;
-    return tinycolor(hsl);
+  function _spin(color3, amount) {
+    var hsl2 = tinycolor(color3).toHsl();
+    var hue = (hsl2.h + amount) % 360;
+    hsl2.h = hue < 0 ? 360 + hue : hue;
+    return tinycolor(hsl2);
   }
-  function _complement(color2) {
-    var hsl = tinycolor(color2).toHsl();
-    hsl.h = (hsl.h + 180) % 360;
-    return tinycolor(hsl);
+  function _complement(color3) {
+    var hsl2 = tinycolor(color3).toHsl();
+    hsl2.h = (hsl2.h + 180) % 360;
+    return tinycolor(hsl2);
   }
-  function polyad(color2, number) {
-    if (isNaN(number) || number <= 0) {
+  function polyad(color3, number3) {
+    if (isNaN(number3) || number3 <= 0) {
       throw new Error("Argument to polyad must be a positive number");
     }
-    var hsl = tinycolor(color2).toHsl();
-    var result = [tinycolor(color2)];
-    var step = 360 / number;
-    for (var i = 1; i < number; i++) {
+    var hsl2 = tinycolor(color3).toHsl();
+    var result = [tinycolor(color3)];
+    var step = 360 / number3;
+    for (var i = 1; i < number3; i++) {
       result.push(tinycolor({
-        h: (hsl.h + i * step) % 360,
-        s: hsl.s,
-        l: hsl.l
+        h: (hsl2.h + i * step) % 360,
+        s: hsl2.s,
+        l: hsl2.l
       }));
     }
     return result;
   }
-  function _splitcomplement(color2) {
-    var hsl = tinycolor(color2).toHsl();
-    var h = hsl.h;
-    return [tinycolor(color2), tinycolor({
+  function _splitcomplement(color3) {
+    var hsl2 = tinycolor(color3).toHsl();
+    var h = hsl2.h;
+    return [tinycolor(color3), tinycolor({
       h: (h + 72) % 360,
-      s: hsl.s,
-      l: hsl.l
+      s: hsl2.s,
+      l: hsl2.l
     }), tinycolor({
       h: (h + 216) % 360,
-      s: hsl.s,
-      l: hsl.l
+      s: hsl2.s,
+      l: hsl2.l
     })];
   }
-  function _analogous(color2, results, slices) {
+  function _analogous(color3, results, slices) {
     results = results || 6;
     slices = slices || 30;
-    var hsl = tinycolor(color2).toHsl();
+    var hsl2 = tinycolor(color3).toHsl();
     var part = 360 / slices;
-    var ret = [tinycolor(color2)];
-    for (hsl.h = (hsl.h - (part * results >> 1) + 720) % 360; --results; ) {
-      hsl.h = (hsl.h + part) % 360;
-      ret.push(tinycolor(hsl));
+    var ret = [tinycolor(color3)];
+    for (hsl2.h = (hsl2.h - (part * results >> 1) + 720) % 360; --results; ) {
+      hsl2.h = (hsl2.h + part) % 360;
+      ret.push(tinycolor(hsl2));
     }
     return ret;
   }
-  function _monochromatic(color2, results) {
+  function _monochromatic(color3, results) {
     results = results || 6;
-    var hsv = tinycolor(color2).toHsv();
+    var hsv = tinycolor(color3).toHsv();
     var h = hsv.h, s = hsv.s, v = hsv.v;
     var ret = [];
     var modification = 1 / results;
@@ -26077,26 +21504,26 @@ var Plotly = (() => {
     }
     return ret;
   }
-  tinycolor.mix = function(color1, color2, amount) {
+  tinycolor.mix = function(color1, color22, amount) {
     amount = amount === 0 ? 0 : amount || 50;
     var rgb1 = tinycolor(color1).toRgb();
-    var rgb2 = tinycolor(color2).toRgb();
+    var rgb2 = tinycolor(color22).toRgb();
     var p = amount / 100;
-    var rgba = {
+    var rgba2 = {
       r: (rgb2.r - rgb1.r) * p + rgb1.r,
       g: (rgb2.g - rgb1.g) * p + rgb1.g,
       b: (rgb2.b - rgb1.b) * p + rgb1.b,
       a: (rgb2.a - rgb1.a) * p + rgb1.a
     };
-    return tinycolor(rgba);
+    return tinycolor(rgba2);
   };
-  tinycolor.readability = function(color1, color2) {
+  tinycolor.readability = function(color1, color22) {
     var c1 = tinycolor(color1);
-    var c2 = tinycolor(color2);
+    var c2 = tinycolor(color22);
     return (Math.max(c1.getLuminance(), c2.getLuminance()) + 0.05) / (Math.min(c1.getLuminance(), c2.getLuminance()) + 0.05);
   };
-  tinycolor.isReadable = function(color1, color2, wcag2) {
-    var readability = tinycolor.readability(color1, color2);
+  tinycolor.isReadable = function(color1, color22, wcag2) {
+    var readability = tinycolor.readability(color1, color22);
     var wcag2Parms, out;
     out = false;
     wcag2Parms = validateWCAG2Parms(wcag2);
@@ -26308,17 +21735,17 @@ var Plotly = (() => {
     }
     return a;
   }
-  function bound01(n, max) {
+  function bound01(n, max2) {
     if (isOnePointZero(n)) n = "100%";
     var processPercent = isPercentage(n);
-    n = Math.min(max, Math.max(0, parseFloat(n)));
+    n = Math.min(max2, Math.max(0, parseFloat(n)));
     if (processPercent) {
-      n = parseInt(n * max, 10) / 100;
+      n = parseInt(n * max2, 10) / 100;
     }
-    if (Math.abs(n - max) < 1e-6) {
+    if (Math.abs(n - max2) < 1e-6) {
       return 1;
     }
-    return n % max / parseFloat(max);
+    return n % max2 / parseFloat(max2);
   }
   function clamp01(val) {
     return Math.min(1, Math.max(0, val));
@@ -26367,16 +21794,16 @@ var Plotly = (() => {
       hex8: /^#?([0-9a-fA-F]{2})([0-9a-fA-F]{2})([0-9a-fA-F]{2})([0-9a-fA-F]{2})$/
     };
   })();
-  function isValidCSSUnit(color2) {
-    return !!matchers.CSS_UNIT.exec(color2);
+  function isValidCSSUnit(color3) {
+    return !!matchers.CSS_UNIT.exec(color3);
   }
-  function stringInputToObject(color2) {
-    color2 = color2.replace(trimLeft, "").replace(trimRight, "").toLowerCase();
-    var named = false;
-    if (names[color2]) {
-      color2 = names[color2];
-      named = true;
-    } else if (color2 == "transparent") {
+  function stringInputToObject(color3) {
+    color3 = color3.replace(trimLeft, "").replace(trimRight, "").toLowerCase();
+    var named2 = false;
+    if (names[color3]) {
+      color3 = names[color3];
+      named2 = true;
+    } else if (color3 == "transparent") {
       return {
         r: 0,
         g: 0,
@@ -26386,14 +21813,14 @@ var Plotly = (() => {
       };
     }
     var match;
-    if (match = matchers.rgb.exec(color2)) {
+    if (match = matchers.rgb.exec(color3)) {
       return {
         r: match[1],
         g: match[2],
         b: match[3]
       };
     }
-    if (match = matchers.rgba.exec(color2)) {
+    if (match = matchers.rgba.exec(color3)) {
       return {
         r: match[1],
         g: match[2],
@@ -26401,14 +21828,14 @@ var Plotly = (() => {
         a: match[4]
       };
     }
-    if (match = matchers.hsl.exec(color2)) {
+    if (match = matchers.hsl.exec(color3)) {
       return {
         h: match[1],
         s: match[2],
         l: match[3]
       };
     }
-    if (match = matchers.hsla.exec(color2)) {
+    if (match = matchers.hsla.exec(color3)) {
       return {
         h: match[1],
         s: match[2],
@@ -26416,14 +21843,14 @@ var Plotly = (() => {
         a: match[4]
       };
     }
-    if (match = matchers.hsv.exec(color2)) {
+    if (match = matchers.hsv.exec(color3)) {
       return {
         h: match[1],
         s: match[2],
         v: match[3]
       };
     }
-    if (match = matchers.hsva.exec(color2)) {
+    if (match = matchers.hsva.exec(color3)) {
       return {
         h: match[1],
         s: match[2],
@@ -26431,38 +21858,38 @@ var Plotly = (() => {
         a: match[4]
       };
     }
-    if (match = matchers.hex8.exec(color2)) {
+    if (match = matchers.hex8.exec(color3)) {
       return {
         r: parseIntFromHex(match[1]),
         g: parseIntFromHex(match[2]),
         b: parseIntFromHex(match[3]),
         a: convertHexToDecimal(match[4]),
-        format: named ? "name" : "hex8"
+        format: named2 ? "name" : "hex8"
       };
     }
-    if (match = matchers.hex6.exec(color2)) {
+    if (match = matchers.hex6.exec(color3)) {
       return {
         r: parseIntFromHex(match[1]),
         g: parseIntFromHex(match[2]),
         b: parseIntFromHex(match[3]),
-        format: named ? "name" : "hex"
+        format: named2 ? "name" : "hex"
       };
     }
-    if (match = matchers.hex4.exec(color2)) {
+    if (match = matchers.hex4.exec(color3)) {
       return {
         r: parseIntFromHex(match[1] + "" + match[1]),
         g: parseIntFromHex(match[2] + "" + match[2]),
         b: parseIntFromHex(match[3] + "" + match[3]),
         a: convertHexToDecimal(match[4] + "" + match[4]),
-        format: named ? "name" : "hex8"
+        format: named2 ? "name" : "hex8"
       };
     }
-    if (match = matchers.hex3.exec(color2)) {
+    if (match = matchers.hex3.exec(color3)) {
       return {
         r: parseIntFromHex(match[1] + "" + match[1]),
         g: parseIntFromHex(match[2] + "" + match[2]),
         b: parseIntFromHex(match[3] + "" + match[3]),
-        format: named ? "name" : "hex"
+        format: named2 ? "name" : "hex"
       };
     }
     return false;
@@ -26709,26 +22136,26 @@ var Plotly = (() => {
 
   // src/components/color/index.js
   var import_fast_isnumeric2 = __toESM(require_fast_isnumeric(), 1);
-  var color = {};
-  color.defaults = attributes_default3.defaults;
-  var defaultLine2 = color.defaultLine = attributes_default3.defaultLine;
-  color.lightLine = attributes_default3.lightLine;
-  var background2 = color.background = attributes_default3.background;
-  color.tinyRGB = function(tc) {
+  var color2 = {};
+  color2.defaults = attributes_default3.defaults;
+  var defaultLine2 = color2.defaultLine = attributes_default3.defaultLine;
+  color2.lightLine = attributes_default3.lightLine;
+  var background2 = color2.background = attributes_default3.background;
+  color2.tinyRGB = function(tc) {
     var c = tc.toRgb();
     return "rgb(" + Math.round(c.r) + ", " + Math.round(c.g) + ", " + Math.round(c.b) + ")";
   };
-  color.rgb = function(cstr) {
-    return color.tinyRGB(tinycolor(cstr));
+  color2.rgb = function(cstr) {
+    return color2.tinyRGB(tinycolor(cstr));
   };
-  color.opacity = function(cstr) {
+  color2.opacity = function(cstr) {
     return cstr ? tinycolor(cstr).getAlpha() : 0;
   };
-  color.addOpacity = function(cstr, op) {
+  color2.addOpacity = function(cstr, op) {
     var c = tinycolor(cstr).toRgb();
     return "rgba(" + Math.round(c.r) + ", " + Math.round(c.g) + ", " + Math.round(c.b) + ", " + op + ")";
   };
-  color.combine = function(front, back) {
+  color2.combine = function(front, back) {
     var fc = tinycolor(front).toRgb();
     if (fc.a === 1) return tinycolor(front).toRgbString();
     var bc = tinycolor(back || background2).toRgb();
@@ -26744,7 +22171,7 @@ var Plotly = (() => {
     };
     return tinycolor(fcflat).toRgbString();
   };
-  color.interpolate = function(first, second2, factor) {
+  color2.interpolate = function(first, second2, factor) {
     var fc = tinycolor(first).toRgb();
     var sc = tinycolor(second2).toRgb();
     var ic = {
@@ -26754,24 +22181,24 @@ var Plotly = (() => {
     };
     return tinycolor(ic).toRgbString();
   };
-  color.contrast = function(cstr, lightAmount, darkAmount) {
+  color2.contrast = function(cstr, lightAmount, darkAmount) {
     var tc = tinycolor(cstr);
-    if (tc.getAlpha() !== 1) tc = tinycolor(color.combine(cstr, background2));
+    if (tc.getAlpha() !== 1) tc = tinycolor(color2.combine(cstr, background2));
     var newColor = tc.isDark() ? lightAmount ? tc.lighten(lightAmount) : background2 : darkAmount ? tc.darken(darkAmount) : defaultLine2;
     return newColor.toString();
   };
-  color.stroke = function(s, c) {
+  color2.stroke = function(s, c) {
     var tc = tinycolor(c);
-    s.style({ stroke: color.tinyRGB(tc), "stroke-opacity": tc.getAlpha() });
+    s.style({ stroke: color2.tinyRGB(tc), "stroke-opacity": tc.getAlpha() });
   };
-  color.fill = function(s, c) {
+  color2.fill = function(s, c) {
     var tc = tinycolor(c);
     s.style({
-      fill: color.tinyRGB(tc),
+      fill: color2.tinyRGB(tc),
       "fill-opacity": tc.getAlpha()
     });
   };
-  color.clean = function(container) {
+  color2.clean = function(container) {
     if (!container || typeof container !== "object") return;
     var keys = Object.keys(container);
     var i, j, key, val;
@@ -26789,9 +22216,9 @@ var Plotly = (() => {
       } else if (Array.isArray(val)) {
         var el0 = val[0];
         if (!Array.isArray(el0) && el0 && typeof el0 === "object") {
-          for (j = 0; j < val.length; j++) color.clean(val[j]);
+          for (j = 0; j < val.length; j++) color2.clean(val[j]);
         }
-      } else if (val && typeof val === "object" && !isTypedArray(val)) color.clean(val);
+      } else if (val && typeof val === "object" && !isTypedArray(val)) color2.clean(val);
     }
   };
   function cleanOne(val) {
@@ -26801,8 +22228,8 @@ var Plotly = (() => {
     var match = valTrim.match(/^rgba?\s*\(([^()]*)\)$/);
     if (!match) return val;
     var parts = match[1].trim().split(/\s*[\s,]\s*/);
-    var rgba = valTrim.charAt(3) === "a" && parts.length === 4;
-    if (!rgba && parts.length !== 3) return val;
+    var rgba2 = valTrim.charAt(3) === "a" && parts.length === 4;
+    if (!rgba2 && parts.length !== 3) return val;
     for (var i = 0; i < parts.length; i++) {
       if (!parts[i].length) return val;
       parts[i] = Number(parts[i]);
@@ -26816,10 +22243,10 @@ var Plotly = (() => {
       }
     }
     var rgbStr = Math.round(parts[0] * 255) + ", " + Math.round(parts[1] * 255) + ", " + Math.round(parts[2] * 255);
-    if (rgba) return "rgba(" + rgbStr + ", " + parts[3] + ")";
+    if (rgba2) return "rgba(" + rgbStr + ", " + parts[3] + ")";
     return "rgb(" + rgbStr + ")";
   }
-  var color_default = color;
+  var color_default = color2;
 
   // src/constants/interactions.js
   var interactions_default = {
@@ -27092,8 +22519,8 @@ var Plotly = (() => {
     },
     colorlist: {
       coerceFunction: function(v, propOut, dflt) {
-        function isColor(color2) {
-          return tinycolor(color2).isValid();
+        function isColor(color3) {
+          return tinycolor(color3).isValid();
         }
         if (!Array.isArray(v) || !v.length) propOut.set(dflt);
         else if (v.every(isColor)) propOut.set(v);
@@ -27679,7 +23106,7 @@ var Plotly = (() => {
   var import_fast_isnumeric6 = __toESM(require_fast_isnumeric(), 1);
 
   // src/lib/identity.js
-  function identity(d) {
+  function identity2(d) {
     return d;
   }
 
@@ -27768,25 +23195,25 @@ var Plotly = (() => {
     }
     return arrayIn[low];
   };
-  var sort = function(array, sortFn) {
+  var sort = function(array2, sortFn) {
     var notOrdered = 0;
     var notReversed = 0;
-    for (var i = 1; i < array.length; i++) {
-      var pairOrder = sortFn(array[i], array[i - 1]);
+    for (var i = 1; i < array2.length; i++) {
+      var pairOrder = sortFn(array2[i], array2[i - 1]);
       if (pairOrder < 0) notOrdered = 1;
       else if (pairOrder > 0) notReversed = 1;
-      if (notOrdered && notReversed) return array.sort(sortFn);
+      if (notOrdered && notReversed) return array2.sort(sortFn);
     }
-    return notReversed ? array : array.reverse();
+    return notReversed ? array2 : array2.reverse();
   };
   var findIndexOfMin = function(arr, fn) {
-    fn = fn || identity;
-    var min = Infinity;
+    fn = fn || identity2;
+    var min2 = Infinity;
     var ind;
     for (var i = 0; i < arr.length; i++) {
       var v = fn(arr[i]);
-      if (v < min) {
-        min = v;
+      if (v < min2) {
+        min2 = v;
         ind = i;
       }
     }
@@ -28112,22 +23539,22 @@ var Plotly = (() => {
     var iterationLimit = opts.iterationLimit || 30;
     var mul = path.getPointAtLength(0)[coord] > path.getPointAtLength(pathLength)[coord] ? -1 : 1;
     var i = 0;
-    var b0 = 0;
-    var b1 = pathLength;
+    var b02 = 0;
+    var b12 = pathLength;
     var mid;
     var pt;
     var diff;
     while (i < iterationLimit) {
-      mid = (b0 + b1) / 2;
+      mid = (b02 + b12) / 2;
       pt = path.getPointAtLength(mid);
       diff = pt[coord] - val;
       if (Math.abs(diff) < tolerance) {
         return pt;
       } else {
         if (mul * diff > 0) {
-          b1 = mid;
+          b12 = mid;
         } else {
-          b0 = mid;
+          b02 = mid;
         }
         i++;
       }
@@ -28138,16 +23565,16 @@ var Plotly = (() => {
 
   // src/lib/throttle.js
   var timerCache = {};
-  var throttle = function throttle2(id, minInterval, callback) {
-    var cache = timerCache[id];
-    var now = Date.now();
+  var throttle = function throttle2(id2, minInterval, callback) {
+    var cache = timerCache[id2];
+    var now2 = Date.now();
     if (!cache) {
       for (var idi in timerCache) {
-        if (timerCache[idi].ts < now - 6e4) {
+        if (timerCache[idi].ts < now2 - 6e4) {
           delete timerCache[idi];
         }
       }
-      cache = timerCache[id] = { ts: 0, timer: null };
+      cache = timerCache[id2] = { ts: 0, timer: null };
     }
     _clearTimeout(cache);
     function exec() {
@@ -28158,7 +23585,7 @@ var Plotly = (() => {
         cache.onDone = null;
       }
     }
-    if (now > cache.ts + minInterval) {
+    if (now2 > cache.ts + minInterval) {
       exec();
       return;
     }
@@ -28167,8 +23594,8 @@ var Plotly = (() => {
       cache.timer = null;
     }, minInterval);
   };
-  var done = function(id) {
-    var cache = timerCache[id];
+  var done = function(id2) {
+    var cache = timerCache[id2];
     if (!cache || !cache.timer) return Promise.resolve();
     return new Promise(function(resolve) {
       var previousOnDone = cache.onDone;
@@ -28179,10 +23606,10 @@ var Plotly = (() => {
       };
     });
   };
-  var clear = function(id) {
-    if (id) {
-      _clearTimeout(timerCache[id]);
-      delete timerCache[id];
+  var clear = function(id2) {
+    if (id2) {
+      _clearTimeout(timerCache[id2]);
+      delete timerCache[id2];
     } else {
       for (var idi in timerCache) clear(idi);
     }
@@ -28262,13 +23689,13 @@ var Plotly = (() => {
           return nestedProperty(arr[idx], valueName).get();
         }
       },
-      rename: function(name8, newName) {
+      rename: function(name8, newName2) {
         var idx = indexLookup[name8];
         if (idx === void 0) return obj;
         changeTypes[idx] = changeTypes[idx] | NAME;
-        indexLookup[newName] = idx;
+        indexLookup[newName2] = idx;
         delete indexLookup[name8];
-        arr[idx][keyName] = newName;
+        arr[idx][keyName] = newName2;
         return obj;
       },
       remove: function(name8) {
@@ -28432,7 +23859,6 @@ var Plotly = (() => {
   }
 
   // src/lib/make_trace_groups.js
-  var import_d33 = __toESM(require_d3(), 1);
   function makeTraceGroups(traceLayer, cdModule, cls) {
     var traces = traceLayer.selectAll("g." + cls.replace(/\s/g, ".")).data(cdModule, function(cd) {
       return cd[0].trace.uid;
@@ -28442,38 +23868,38 @@ var Plotly = (() => {
     traces.order();
     var k = traceLayer.classed("rangeplot") ? "nodeRangePlot3" : "node3";
     traces.each(function(cd) {
-      cd[0][k] = import_d33.default.select(this);
+      cd[0][k] = select_default2(this);
     });
     return traces;
   }
 
   // src/lib/localize.js
   function localize(gd, s) {
-    var locale3 = gd._context.locale;
+    var locale4 = gd._context.locale;
     for (var i = 0; i < 2; i++) {
       var locales = gd._context.locales;
       for (var j = 0; j < 2; j++) {
-        var dict = (locales[locale3] || {}).dictionary;
+        var dict = (locales[locale4] || {}).dictionary;
         if (dict) {
           var out = dict[s];
           if (out) return out;
         }
         locales = registry_default.localeRegistry;
       }
-      var baseLocale = locale3.split("-")[0];
-      if (baseLocale === locale3) break;
-      locale3 = baseLocale;
+      var baseLocale = locale4.split("-")[0];
+      if (baseLocale === locale4) break;
+      locale4 = baseLocale;
     }
     return s;
   }
 
   // src/lib/filter_unique.js
-  function filterUnique(array) {
+  function filterUnique(array2) {
     var seen = {};
     var out = [];
     var j = 0;
-    for (var i = 0; i < array.length; i++) {
-      var item = array[i];
+    for (var i = 0; i < array2.length; i++) {
+      var item = array2[i];
       if (seen[item] !== 1) {
         seen[item] = 1;
         out[j++] = item;
@@ -28694,8 +24120,8 @@ var Plotly = (() => {
     if (len2 !== void 0 && v >= len2) return false;
     return (0, import_fast_isnumeric11.default)(v) && v >= 0 && v % 1 === 0;
   };
-  lib.noop = noop;
-  lib.identity = identity;
+  lib.noop = noop2;
+  lib.identity = identity2;
   lib.repeat = function(v, cnt) {
     var out = new Array(cnt);
     for (var i = 0; i < cnt; i++) {
@@ -28718,8 +24144,8 @@ var Plotly = (() => {
   lib.raiseToTop = function raiseToTop(elem) {
     elem.parentNode.appendChild(elem);
   };
-  lib.cancelTransition = function(selection) {
-    return selection.transition().duration(0);
+  lib.cancelTransition = function(selection2) {
+    return selection2.transition().duration(0);
   };
   lib.constrain = function(v, v0, v1) {
     if (v0 > v1) return Math.max(v1, Math.min(v0, v));
@@ -28729,10 +24155,10 @@ var Plotly = (() => {
     pad3 = pad3 || 0;
     return a.left <= b.right + pad3 && b.left <= a.right + pad3 && a.top <= b.bottom + pad3 && b.top <= a.bottom + pad3;
   };
-  lib.simpleMap = function(array, func, x1, x2, opts) {
-    var len2 = array.length;
+  lib.simpleMap = function(array2, func, x1, x2, opts) {
+    var len2 = array2.length;
     var out = new Array(len2);
-    for (var i = 0; i < len2; i++) out[i] = func(array[i], x1, x2, opts);
+    for (var i = 0; i < len2; i++) out[i] = func(array2[i], x1, x2, opts);
     return out;
   };
   lib.randstr = function randstr(existing, bits, base, _recursion) {
@@ -28937,8 +24363,8 @@ var Plotly = (() => {
   lib.getTargetArray = function(trace, transformOpts) {
     var target = transformOpts.target;
     if (typeof target === "string" && target) {
-      var array = lib.nestedProperty(trace, target).get();
-      return lib.isArrayOrTypedArray(array) ? array : false;
+      var array2 = lib.nestedProperty(trace, target).get();
+      return lib.isArrayOrTypedArray(array2) ? array2 : false;
     } else if (lib.isArrayOrTypedArray(target)) {
       return target;
     }
@@ -29012,7 +24438,7 @@ var Plotly = (() => {
     return null;
   };
   lib.isD3Selection = function(obj) {
-    return obj instanceof import_d34.default.selection;
+    return obj instanceof selection_default;
   };
   lib.ensureSingle = function(parent, nodeType, className, enterFn) {
     var sel = parent.select(nodeType + (className ? "." + className : ""));
@@ -29022,10 +24448,10 @@ var Plotly = (() => {
     if (enterFn) layer.call(enterFn);
     return layer;
   };
-  lib.ensureSingleById = function(parent, nodeType, id, enterFn) {
-    var sel = parent.select(nodeType + "#" + id);
+  lib.ensureSingleById = function(parent, nodeType, id2, enterFn) {
+    var sel = parent.select(nodeType + "#" + id2);
     if (sel.size()) return sel;
-    var layer = parent.append(nodeType).attr("id", id);
+    var layer = parent.append(nodeType).attr("id", id2);
     if (enterFn) layer.call(enterFn);
     return layer;
   };
@@ -29064,21 +24490,21 @@ var Plotly = (() => {
     return prop.slice(0, 2) === "__";
   }
   lib.expandObjectPaths = function(data) {
-    var match, key, prop, datum, idx, dest, trailingPath;
+    var match, key, prop, datum2, idx, dest, trailingPath;
     if (typeof data === "object" && !Array.isArray(data)) {
       for (key in data) {
         if (data.hasOwnProperty(key)) {
           if (match = key.match(dottedPropertyRegex)) {
-            datum = data[key];
+            datum2 = data[key];
             prop = match[1];
             if (notValid(prop)) continue;
             delete data[key];
             data[prop] = lib.extendDeepNoArrays(
               data[prop] || {},
-              lib.objectFromPath(key, lib.expandObjectPaths(datum))[prop]
+              lib.objectFromPath(key, lib.expandObjectPaths(datum2))[prop]
             );
           } else if (match = key.match(indexedPropertyRegex)) {
-            datum = data[key];
+            datum2 = data[key];
             prop = match[1];
             if (notValid(prop)) continue;
             idx = parseInt(match[2]);
@@ -29087,10 +24513,10 @@ var Plotly = (() => {
             if (match[3] === ".") {
               trailingPath = match[4];
               dest = data[prop][idx] = data[prop][idx] || {};
-              lib.extendDeepNoArrays(dest, lib.objectFromPath(trailingPath, lib.expandObjectPaths(datum)));
+              lib.extendDeepNoArrays(dest, lib.objectFromPath(trailingPath, lib.expandObjectPaths(datum2)));
             } else {
               if (notValid(prop)) continue;
-              data[prop][idx] = lib.expandObjectPaths(datum);
+              data[prop][idx] = lib.expandObjectPaths(datum2);
             }
           } else {
             if (notValid(key)) continue;
@@ -29163,8 +24589,8 @@ var Plotly = (() => {
   };
   lib.texttemplateStringForShapes = (params) => templateFormatString(__spreadProps(__spreadValues({}, params), { opts: texttemplateWarningsForShapes }));
   var TEMPLATE_STRING_FORMAT_SEPARATOR = /^[:|\|]/;
-  function templateFormatString({ data = [], locale: locale3, fallback, labels = {}, opts, template }) {
-    return template.replace(lib.TEMPLATE_STRING_REGEX, (match, key, format5) => {
+  function templateFormatString({ data = [], locale: locale4, fallback, labels = {}, opts, template }) {
+    return template.replace(lib.TEMPLATE_STRING_REGEX, (match, key, format6) => {
       const isOther = ["xother", "yother"].includes(key);
       const isSpaceOther = ["_xother", "_yother"].includes(key);
       const isSpaceOtherSpace = ["_xother_", "_yother_"].includes(key);
@@ -29198,9 +24624,9 @@ var Plotly = (() => {
         }
       }
       if (value === void 0) {
-        const { count, max, name: name8 } = opts;
+        const { count, max: max2, name: name8 } = opts;
         const fallbackValue = fallback === false ? match : fallback;
-        if (count < max) {
+        if (count < max2) {
           lib.warn(
             [
               `Variable '${key}' in ${name8} could not be found!`,
@@ -29209,24 +24635,24 @@ var Plotly = (() => {
             ].join(" ")
           );
         }
-        if (count === max) lib.warn(`Too many '${name8}' warnings - additional warnings will be suppressed.`);
+        if (count === max2) lib.warn(`Too many '${name8}' warnings - additional warnings will be suppressed.`);
         opts.count++;
         return fallbackValue;
       }
       if (parsedOp === "*") value *= parsedNumber;
       if (parsedOp === "/") value /= parsedNumber;
-      if (format5) {
+      if (format6) {
         var fmt;
-        if (format5[0] === ":") {
-          fmt = locale3 ? locale3.numberFormat : lib.numberFormat;
+        if (format6[0] === ":") {
+          fmt = locale4 ? locale4.numberFormat : lib.numberFormat;
           if (value !== "") {
-            value = fmt(format5.replace(TEMPLATE_STRING_FORMAT_SEPARATOR, ""))(value);
+            value = fmt(format6.replace(TEMPLATE_STRING_FORMAT_SEPARATOR, ""))(value);
           }
         }
-        if (format5[0] === "|") {
-          fmt = locale3 ? locale3.timeFormat : utcFormat;
+        if (format6[0] === "|") {
+          fmt = locale4 ? locale4.timeFormat : utcFormat;
           var ms = lib.dateTime2ms(value);
-          value = lib.formatDate(ms, format5.replace(TEMPLATE_STRING_FORMAT_SEPARATOR, ""), false, fmt);
+          value = lib.formatDate(ms, format6.replace(TEMPLATE_STRING_FORMAT_SEPARATOR, ""), false, fmt);
         }
       } else {
         var keyLabel = key + "Label";
@@ -29308,23 +24734,23 @@ var Plotly = (() => {
   lib.strScale = function(s) {
     return s !== 1 ? "scale(" + s + ")" : "";
   };
-  lib.getTextTransform = function(transform) {
-    var noCenter = transform.noCenter;
-    var textX = transform.textX;
-    var textY = transform.textY;
-    var targetX = transform.targetX;
-    var targetY = transform.targetY;
-    var anchorX = transform.anchorX || 0;
-    var anchorY = transform.anchorY || 0;
-    var rotate2 = transform.rotate;
-    var scale2 = transform.scale;
+  lib.getTextTransform = function(transform2) {
+    var noCenter = transform2.noCenter;
+    var textX = transform2.textX;
+    var textY = transform2.textY;
+    var targetX = transform2.targetX;
+    var targetY = transform2.targetY;
+    var anchorX = transform2.anchorX || 0;
+    var anchorY = transform2.anchorY || 0;
+    var rotate2 = transform2.rotate;
+    var scale2 = transform2.scale;
     if (!scale2) scale2 = 0;
     else if (scale2 > 1) scale2 = 1;
     return lib.strTranslate(targetX - scale2 * (textX + anchorX), targetY - scale2 * (textY + anchorY)) + lib.strScale(scale2) + (rotate2 ? "rotate(" + rotate2 + (noCenter ? "" : " " + textX + " " + textY) + ")" : "");
   };
-  lib.setTransormAndDisplay = function(s, transform) {
-    s.attr("transform", lib.getTextTransform(transform));
-    s.style("display", transform.scale ? null : "none");
+  lib.setTransormAndDisplay = function(s, transform2) {
+    s.attr("transform", lib.getTextTransform(transform2));
+    s.style("display", transform2.scale ? null : "none");
   };
   lib.ensureUniformFontSize = function(gd, baseFont) {
     var out = lib.extendFlat({}, baseFont);
@@ -29343,11 +24769,11 @@ var Plotly = (() => {
   };
   var firefoxVersion = lib.getFirefoxVersion();
   var isProblematicFirefox = firefoxVersion !== null && firefoxVersion < 86;
-  lib.getPositionFromD3Event = function() {
+  lib.getPositionFromD3Event = function(event2) {
     if (isProblematicFirefox) {
-      return [import_d34.default.event.layerX, import_d34.default.event.layerY];
+      return [event2.layerX, event2.layerY];
     } else {
-      return [import_d34.default.event.offsetX, import_d34.default.event.offsetY];
+      return [event2.offsetX, event2.offsetY];
     }
   };
   var lib_default = lib;
@@ -29369,9 +24795,9 @@ var Plotly = (() => {
       plotObj._internalOnce = internalEv.once.bind(internalEv);
       plotObj._removeInternalListener = internalEv.removeListener.bind(internalEv);
       plotObj._removeAllInternalListeners = internalEv.removeAllListeners.bind(internalEv);
-      plotObj.emit = function(event, data) {
-        ev.emit(event, data);
-        internalEv.emit(event, data);
+      plotObj.emit = function(event2, data) {
+        ev.emit(event2, data);
+        internalEv.emit(event2, data);
       };
       if (typeof plotObj.addEventListener === "function") {
         plotObj.addEventListener("wheel", () => {
@@ -29384,15 +24810,15 @@ var Plotly = (() => {
      * all handlers for a particular event and returns the return value
      * of the LAST handler.
      */
-    triggerHandler: function(plotObj, event, data) {
+    triggerHandler: function(plotObj, event2, data) {
       var nodeEventHandlerValue;
       var ev = plotObj._ev;
       if (!ev) return;
-      var handlers = ev._events[event];
+      var handlers = ev._events[event2];
       if (!handlers) return;
       function apply(handler) {
         if (handler.listener) {
-          ev.removeListener(event, handler.listener);
+          ev.removeListener(event2, handler.listener);
           if (!handler.fired) {
             handler.fired = true;
             return handler.listener.apply(ev, [data]);
@@ -29430,16 +24856,16 @@ var Plotly = (() => {
   // src/lib/queue.js
   var { dfltConfig: dfltConfig3 } = plot_config_default;
   function copyArgArray(gd, args) {
-    var copy = [];
+    var copy2 = [];
     var arg;
     for (var i = 0; i < args.length; i++) {
       arg = args[i];
-      if (arg === gd) copy[i] = arg;
+      if (arg === gd) copy2[i] = arg;
       else if (typeof arg === "object") {
-        copy[i] = Array.isArray(arg) ? lib_default.extendDeep([], arg) : lib_default.extendDeepAll({}, arg);
-      } else copy[i] = arg;
+        copy2[i] = Array.isArray(arg) ? lib_default.extendDeep([], arg) : lib_default.extendDeepAll({}, arg);
+      } else copy2[i] = arg;
     }
-    return copy;
+    return copy2;
   }
   var queue = {};
   queue.add = function(gd, undoFunc, undoArgs, redoFunc, redoArgs) {
@@ -29549,7 +24975,7 @@ var Plotly = (() => {
   var ARRAY_ATTR_REGEXPS = "_arrayAttrRegexps";
   var DEPRECATED = "_deprecated";
   var UNDERSCORE_ATTRS = [IS_SUBPLOT_OBJ, IS_LINKED_TO_ARRAY, ARRAY_ATTR_REGEXPS, DEPRECATED];
-  var get = function() {
+  var get3 = function() {
     var traces = {};
     registry_default.allTypes.forEach(function(type) {
       traces[type] = getTraceAttributes(type);
@@ -29886,10 +25312,9 @@ var Plotly = (() => {
     var np = nestedProperty2(baseAttrs, astr);
     np.set(extendDeepAll3(np.get() || {}, newAttrs));
   }
-  var plot_schema_default = { get, crawl: crawl2, isValObject, findArrayAttributes, getTraceValObject, getLayoutValObject, IS_SUBPLOT_OBJ, IS_LINKED_TO_ARRAY, DEPRECATED, UNDERSCORE_ATTRS };
+  var plot_schema_default = { get: get3, crawl: crawl2, isValObject, findArrayAttributes, getTraceValObject, getLayoutValObject, IS_SUBPLOT_OBJ, IS_LINKED_TO_ARRAY, DEPRECATED, UNDERSCORE_ATTRS };
 
   // src/plots/plots.js
-  var import_d35 = __toESM(require_d3(), 1);
   var import_fast_isnumeric12 = __toESM(require_fast_isnumeric(), 1);
 
   // src/plot_api/plot_template.js
@@ -30111,11 +25536,11 @@ var Plotly = (() => {
   };
 
   // src/plots/cartesian/axis_ids.js
-  var id2name = function id2name2(id) {
-    if (typeof id !== "string" || !id.match(constants_default2.AX_ID_PATTERN)) return;
-    var axNum = id.split(" ")[0].slice(1);
+  var id2name = function id2name2(id2) {
+    if (typeof id2 !== "string" || !id2.match(constants_default2.AX_ID_PATTERN)) return;
+    var axNum = id2.split(" ")[0].slice(1);
     if (axNum === "1") axNum = "";
-    return id.charAt(0) + "axis" + axNum;
+    return id2.charAt(0) + "axis" + axNum;
   };
   var name2id = function name2id2(name8) {
     if (!name8.match(constants_default2.AX_NAME_PATTERN)) return;
@@ -30123,14 +25548,14 @@ var Plotly = (() => {
     if (axNum === "1") axNum = "";
     return name8.charAt(0) + axNum;
   };
-  var cleanId = function cleanId2(id, axLetter, domainId) {
-    var domainTest = /( domain)$/.test(id);
-    if (typeof id !== "string" || !id.match(constants_default2.AX_ID_PATTERN)) return;
-    if (axLetter && id.charAt(0) !== axLetter) return;
+  var cleanId = function cleanId2(id2, axLetter, domainId) {
+    var domainTest = /( domain)$/.test(id2);
+    if (typeof id2 !== "string" || !id2.match(constants_default2.AX_ID_PATTERN)) return;
+    if (axLetter && id2.charAt(0) !== axLetter) return;
     if (domainTest && !domainId) return;
-    var axNum = id.split(" ")[0].slice(1).replace(/^0+/, "");
+    var axNum = id2.split(" ")[0].slice(1).replace(/^0+/, "");
     if (axNum === "1") axNum = "";
-    return id.charAt(0) + axNum + (domainTest && domainId ? " domain" : "");
+    return id2.charAt(0) + axNum + (domainTest && domainId ? " domain" : "");
   };
   var list = function(gd, axLetter, only2d) {
     var fullLayout = gd._fullLayout;
@@ -30159,12 +25584,12 @@ var Plotly = (() => {
     if (axLetter) return subplotLists[axLetter + "axis"];
     return subplotLists.xaxis.concat(subplotLists.yaxis);
   };
-  var getFromId = function(gd, id, type) {
+  var getFromId = function(gd, id2, type) {
     var fullLayout = gd._fullLayout;
-    id = id === void 0 || typeof id !== "string" ? id : id.replace(" domain", "");
-    if (type === "x") id = id.replace(/y[0-9]*/, "");
-    else if (type === "y") id = id.replace(/x[0-9]*/, "");
-    return fullLayout[id2name(id)];
+    id2 = id2 === void 0 || typeof id2 !== "string" ? id2 : id2.replace(" domain", "");
+    if (type === "x") id2 = id2.replace(/y[0-9]*/, "");
+    else if (type === "y") id2 = id2.replace(/x[0-9]*/, "");
+    return fullLayout[id2name(id2)];
   };
   var getFromTrace = function(gd, fullTrace, type) {
     var fullLayout = gd._fullLayout;
@@ -30645,7 +26070,7 @@ var Plotly = (() => {
         fill: color_default.defaultLine,
         "pointer-events": "all"
       }).each(function() {
-        var links = import_d35.default.select(this);
+        var links = select_default2(this);
         links.append("tspan").classed("js-link-to-tool", true);
         links.append("tspan").classed("js-link-spacer", true);
         links.append("tspan").classed("js-sourcelinks", true);
@@ -30692,7 +26117,7 @@ var Plotly = (() => {
     var baseUrl = (window.PLOTLYENV || {}).BASE_URL || gd._context.plotlyServerURL;
     if (!baseUrl) return;
     gd.emit("plotly_beforeexport");
-    var hiddenformDiv = import_d35.default.select(gd).append("div").attr("id", "hiddenform").style("display", "none");
+    var hiddenformDiv = select_default2(gd).append("div").attr("id", "hiddenform").style("display", "none");
     var hiddenform = hiddenformDiv.append("form").attr({
       action: baseUrl + "/external",
       method: "post",
@@ -30940,8 +26365,8 @@ var Plotly = (() => {
     return out;
   }
   function getFormatObj(gd, formatKeys) {
-    var locale3 = gd._context.locale;
-    if (!locale3) locale3 = "en-US";
+    var locale4 = gd._context.locale;
+    if (!locale4) locale4 = "en-US";
     var formatDone = false;
     var formatObj = {};
     function includeFormat(newFormat) {
@@ -30959,16 +26384,16 @@ var Plotly = (() => {
     for (var i = 0; i < 2; i++) {
       var locales = gd._context.locales;
       for (var j = 0; j < 2; j++) {
-        var formatj = (locales[locale3] || {}).format;
+        var formatj = (locales[locale4] || {}).format;
         if (formatj) {
           includeFormat(formatj);
           if (formatDone) break;
         }
         locales = registry_default.localeRegistry;
       }
-      var baseLocale = locale3.split("-")[0];
-      if (formatDone || baseLocale === locale3) break;
-      locale3 = baseLocale;
+      var baseLocale = locale4.split("-")[0];
+      if (formatDone || baseLocale === locale4) break;
+      locale4 = baseLocale;
     }
     if (!formatDone) includeFormat(registry_default.localeRegistry.en.format);
     return formatObj;
@@ -31093,21 +26518,21 @@ var Plotly = (() => {
     };
     var ids = newSubplotList.cartesian || [];
     for (i = 0; i < ids.length; i++) {
-      var id = ids[i];
-      var oldSubplot = oldSubplots[id];
-      var xaxis = axis_ids_default.getFromId(mockGd, id, "x");
-      var yaxis = axis_ids_default.getFromId(mockGd, id, "y");
+      var id2 = ids[i];
+      var oldSubplot = oldSubplots[id2];
+      var xaxis = axis_ids_default.getFromId(mockGd, id2, "x");
+      var yaxis = axis_ids_default.getFromId(mockGd, id2, "y");
       var plotinfo;
       if (oldSubplot) {
-        plotinfo = newSubplots[id] = oldSubplot;
+        plotinfo = newSubplots[id2] = oldSubplot;
       } else {
-        plotinfo = newSubplots[id] = {};
-        plotinfo.id = id;
+        plotinfo = newSubplots[id2] = {};
+        plotinfo.id = id2;
       }
       xaxis._counterAxes.push(yaxis._id);
       yaxis._counterAxes.push(xaxis._id);
-      xaxis._subplotsWith.push(id);
-      yaxis._subplotsWith.push(id);
+      xaxis._subplotsWith.push(id2);
+      yaxis._subplotsWith.push(id2);
       plotinfo.xaxis = xaxis;
       plotinfo.yaxis = yaxis;
       plotinfo._hasClipOnAxisFalse = false;
@@ -31147,16 +26572,16 @@ var Plotly = (() => {
       ax._subplotsWith.sort(lib_default.subplotSort);
       ax._mainSubplot = findMainSubplot(ax, newFullLayout);
       if (ax._counterAxes.length && (ax.spikemode && ax.spikemode.indexOf("across") !== -1 || ax.automargin && ax.mirror && ax.anchor !== "free" || registry_default.getComponentMethod("rangeslider", "isVisible")(ax))) {
-        var min = 1;
-        var max = 0;
+        var min2 = 1;
+        var max2 = 0;
         for (j = 0; j < ax._counterAxes.length; j++) {
           var ax2 = axis_ids_default.getFromId(mockGd, ax._counterAxes[j]);
-          min = Math.min(min, ax2.domain[0]);
-          max = Math.max(max, ax2.domain[1]);
+          min2 = Math.min(min2, ax2.domain[0]);
+          max2 = Math.max(max2, ax2.domain[1]);
         }
-        if (min < max) {
-          ax._counterDomainMin = min;
-          ax._counterDomainMax = max;
+        if (min2 < max2) {
+          ax._counterDomainMin = min2;
+          ax._counterDomainMax = max2;
         }
       }
     }
@@ -31177,11 +26602,11 @@ var Plotly = (() => {
       var counterIDs = ax._counterAxes;
       for (var j = 0; j < counterIDs.length; j++) {
         var counterPart = counterIDs[j];
-        var id = isX ? ax._id + counterPart : counterPart + ax._id;
-        if (!nextBestMainSubplotID) nextBestMainSubplotID = id;
+        var id2 = isX ? ax._id + counterPart : counterPart + ax._id;
+        if (!nextBestMainSubplotID) nextBestMainSubplotID = id2;
         var counterAx = axis_ids_default.getFromId(mockGd, counterPart);
         if (anchorID && counterAx.overlaying === anchorID) {
-          mainSubplotID = id;
+          mainSubplotID = id2;
           break;
         }
       }
@@ -31678,8 +27103,8 @@ var Plotly = (() => {
   plots.clearAutoMarginIds = function(gd) {
     gd._fullLayout._pushmarginIds = {};
   };
-  plots.allowAutoMargin = function(gd, id) {
-    gd._fullLayout._pushmarginIds[id] = 1;
+  plots.allowAutoMargin = function(gd, id2) {
+    gd._fullLayout._pushmarginIds[id2] = 1;
   };
   function initMargins(fullLayout) {
     var margin = fullLayout.margin;
@@ -31700,7 +27125,7 @@ var Plotly = (() => {
   }
   var MIN_SPECIFIED_WIDTH = 2;
   var MIN_SPECIFIED_HEIGHT = 2;
-  plots.autoMargin = function(gd, id, o) {
+  plots.autoMargin = function(gd, id2, o) {
     var fullLayout = gd._fullLayout;
     var width = fullLayout.width;
     var height = fullLayout.height;
@@ -31723,8 +27148,8 @@ var Plotly = (() => {
     var pushMarginIds = fullLayout._pushmarginIds;
     if (margin.autoexpand !== false) {
       if (!o) {
-        delete pushMargin[id];
-        delete pushMarginIds[id];
+        delete pushMargin[id2];
+        delete pushMarginIds[id2];
       } else {
         var pad3 = o.pad;
         if (pad3 === void 0) {
@@ -31748,13 +27173,13 @@ var Plotly = (() => {
         var xr = o.xr !== void 0 ? o.xr : o.x;
         var yt = o.yt !== void 0 ? o.yt : o.y;
         var yb = o.yb !== void 0 ? o.yb : o.y;
-        pushMargin[id] = {
+        pushMargin[id2] = {
           l: { val: xl, size: o.l + pad3 },
           r: { val: xr, size: o.r + pad3 },
           b: { val: yb, size: o.b + pad3 },
           t: { val: yt, size: o.t + pad3 }
         };
-        pushMarginIds[id] = 1;
+        pushMarginIds[id2] = 1;
       }
       if (!fullLayout._replotting) {
         return plots.doAutoMargin(gd);
@@ -32024,7 +27449,7 @@ var Plotly = (() => {
     return output === "object" ? obj : JSON.stringify(obj);
   };
   plots.modifyFrames = function(gd, operations) {
-    var i, op, frame;
+    var i, op, frame2;
     var _frames = gd._transitionData._frames;
     var _frameHash = gd._transitionData._frameHash;
     for (i = 0; i < operations.length; i++) {
@@ -32038,23 +27463,23 @@ var Plotly = (() => {
             frame.name = op.name;
             break;*/
         case "replace":
-          frame = op.value;
+          frame2 = op.value;
           var oldName = (_frames[op.index] || {}).name;
-          var newName = frame.name;
-          _frames[op.index] = _frameHash[newName] = frame;
-          if (newName !== oldName) {
+          var newName2 = frame2.name;
+          _frames[op.index] = _frameHash[newName2] = frame2;
+          if (newName2 !== oldName) {
             delete _frameHash[oldName];
-            _frameHash[newName] = frame;
+            _frameHash[newName2] = frame2;
           }
           break;
         case "insert":
-          frame = op.value;
-          _frameHash[frame.name] = frame;
-          _frames.splice(op.index, 0, frame);
+          frame2 = op.value;
+          _frameHash[frame2.name] = frame2;
+          _frames.splice(op.index, 0, frame2);
           break;
         case "delete":
-          frame = _frames[op.index];
-          delete _frameHash[frame.name];
+          frame2 = _frames[op.index];
+          delete _frameHash[frame2.name];
           _frames.splice(op.index, 1);
           break;
       }
@@ -32117,16 +27542,16 @@ var Plotly = (() => {
     var hash = gd._transitionData._frameHash = {};
     var frames = gd._transitionData._frames;
     for (var i = 0; i < frames.length; i++) {
-      var frame = frames[i];
-      if (frame && frame.name) {
-        hash[frame.name] = frame;
+      var frame2 = frames[i];
+      if (frame2 && frame2.name) {
+        hash[frame2.name] = frame2;
       }
     }
   };
   plots.extendObjectWithContainers = function(dest, src, containerPaths) {
     var containerProp, containerVal, i, j, srcProp, destProp, srcContainer, destContainer;
-    var copy = lib_default.extendDeepNoArrays({}, src || {});
-    var expandedObj = lib_default.expandObjectPaths(copy);
+    var copy2 = lib_default.extendDeepNoArrays({}, src || {});
+    var expandedObj = lib_default.expandObjectPaths(copy2);
     var containerObj = {};
     if (containerPaths && containerPaths.length) {
       for (i = 0; i < containerPaths.length; i++) {
@@ -32486,12 +27911,12 @@ var Plotly = (() => {
           }
         }
         for (j = 0; j < trace.transforms.length; j++) {
-          var transform = trace.transforms[j];
-          _module = transformsRegistry[transform.type];
+          var transform2 = trace.transforms[j];
+          _module = transformsRegistry[transform2.type];
           if (_module && _module.calcTransform) {
             trace._hasCalcTransform = true;
             hasCalcTransform = true;
-            _module.calcTransform(gd, trace, transform);
+            _module.calcTransform(gd, trace, transform2);
           }
         }
       }
@@ -32809,11 +28234,7 @@ var Plotly = (() => {
   var plots_default = plots;
 
   // src/plots/cartesian/axes.js
-  var import_d312 = __toESM(require_d3(), 1);
   var import_fast_isnumeric23 = __toESM(require_fast_isnumeric(), 1);
-
-  // src/lib/svg_text_utils.js
-  var import_d36 = __toESM(require_d3(), 1);
 
   // src/constants/xmlns_namespaces.js
   var xmlns = "http://www.w3.org/2000/xmlns/";
@@ -32883,7 +28304,7 @@ var Plotly = (() => {
   var convertToTspans = function(_context, gd, _callback) {
     var str = _context.text();
     var tex = !_context.attr("data-notex") && gd && gd._context.typesetMath && typeof MathJax !== "undefined" && str.match(FIND_TEX);
-    var parent = import_d36.default.select(_context.node().parentNode);
+    var parent = select_default2(_context.node().parentNode);
     if (parent.empty()) return;
     var svgClass = _context.attr("class") ? _context.attr("class").split(" ")[0] : "text";
     svgClass += "-math";
@@ -33034,7 +28455,7 @@ var Plotly = (() => {
     };
     var initiateMathJax = function() {
       var randomID = "math-output-" + lib_default.randstr({}, 64);
-      tmpDiv = import_d36.default.select("body").append("div").attr({ id: randomID }).style({
+      tmpDiv = select_default2("body").append("div").attr({ id: randomID }).style({
         visibility: "hidden",
         position: "absolute",
         "font-size": _config.fontSize + "px"
@@ -33054,7 +28475,7 @@ var Plotly = (() => {
         var nodeBBox = node.getBoundingClientRect();
         var glyphDefs;
         if (MathJaxVersion === 2) {
-          glyphDefs = import_d36.default.select("body").select("#MathJax_SVG_glyphs");
+          glyphDefs = select_default2("body").select("#MathJax_SVG_glyphs");
         } else {
           glyphDefs = sel.select("defs");
         }
@@ -33135,9 +28556,9 @@ var Plotly = (() => {
   var HREFMATCH = /(^|[\s"'])href\s*=\s*("([^"]*)"|'([^']*)')/i;
   var TARGETMATCH = /(^|[\s"'])target\s*=\s*("([^"\s]*)"|'([^'\s]*)')/i;
   var POPUPMATCH = /(^|[\s"'])popup\s*=\s*("([\w=,]*)"|'([\w=,]*)')/i;
-  function getQuotedMatch(_str, re2) {
+  function getQuotedMatch(_str, re3) {
     if (!_str) return null;
-    var match = _str.match(re2);
+    var match = _str.match(re3);
     var result = match && (match[3] || match[4]);
     return result && convertEntities(result);
   }
@@ -33225,7 +28646,7 @@ var Plotly = (() => {
     function newLine() {
       currentLine++;
       var lineNode = document.createElementNS(xmlns_namespaces_default.svg, "tspan");
-      import_d36.default.select(lineNode).attr({
+      select_default2(lineNode).attr({
         class: "line",
         dy: currentLine * LINE_SPACING + "em"
       });
@@ -33266,14 +28687,14 @@ var Plotly = (() => {
         currentNode.appendChild(newNode);
         var resetter = document.createElementNS(xmlns_namespaces_default.svg, "tspan");
         addTextNode(resetter, ZERO_WIDTH_SPACE);
-        import_d36.default.select(resetter).attr("dy", RESET_DY[type]);
+        select_default2(resetter).attr("dy", RESET_DY[type]);
         nodeAttrs.dy = SHIFT_DY[type];
         currentNode.appendChild(newNode);
         currentNode.appendChild(resetter);
       } else {
         currentNode.appendChild(newNode);
       }
-      import_d36.default.select(newNode).attr(nodeAttrs);
+      select_default2(newNode).attr(nodeAttrs);
       currentNode = nodeSpec2.node = newNode;
       nodeStack.push(nodeSpec2);
     }
@@ -33385,7 +28806,7 @@ var Plotly = (() => {
           }
           var newNode = document.createElement(tagType);
           currentNode.appendChild(newNode);
-          import_d36.default.select(newNode).attr(nodeAttrs);
+          select_default2(newNode).attr(nodeAttrs);
           currentNode = newNode;
           nodeStack.push(newNode);
         }
@@ -33403,7 +28824,7 @@ var Plotly = (() => {
   };
   var positionText = function positionText2(s, x, y) {
     return s.each(function() {
-      var text = import_d36.default.select(this);
+      var text = select_default2(this);
       function setOrGet(attr3, val) {
         if (val === void 0) {
           val = text.attr(attr3);
@@ -33475,16 +28896,16 @@ var Plotly = (() => {
     };
   }
   var onePx = "1px ";
-  var makeTextShadow = function(color2) {
+  var makeTextShadow = function(color3) {
     var x = onePx;
     var y = onePx;
     var b = onePx;
-    return x + y + b + color2 + ", -" + x + "-" + y + b + color2 + ", " + x + "-" + y + b + color2 + ", -" + x + y + b + color2;
+    return x + y + b + color3 + ", -" + x + "-" + y + b + color3 + ", " + x + "-" + y + b + color3 + ", -" + x + y + b + color3;
   };
   var makeEditable = function(context, options) {
     var gd = options.gd;
     var _delegate = options.delegate;
-    var dispatch = import_d36.default.dispatch("edit", "input", "cancel");
+    var dispatch2 = dispatch2("edit", "input", "cancel");
     var handlerElement = _delegate || context;
     context.style({ "pointer-events": _delegate ? "none" : "all" });
     if (context.size() !== 1) throw new Error("boo");
@@ -33496,7 +28917,7 @@ var Plotly = (() => {
       if (svgClass) mathjaxClass = "." + svgClass.split(" ")[0] + "-math-group";
       else mathjaxClass = "[class*=-math-group]";
       if (mathjaxClass) {
-        import_d36.default.select(context.node().parentNode).select(mathjaxClass).style({ opacity: 0 });
+        select_default2(context.node().parentNode).select(mathjaxClass).style({ opacity: 0 });
       }
     }
     function selectElementContents(_el) {
@@ -33509,7 +28930,7 @@ var Plotly = (() => {
       el.focus();
     }
     function appendEditable() {
-      var plotDiv = import_d36.default.select(gd);
+      var plotDiv = select_default2(gd);
       var container = plotDiv.select(".svg-container");
       var div = container.append("div");
       var cStyle = context.node().style;
@@ -33527,69 +28948,1116 @@ var Plotly = (() => {
         margin: [-fontSize / 8 + 1, 0, 0, -1].join("px ") + "px",
         padding: "0",
         "box-sizing": "border-box"
-      }).attr({ contenteditable: true }).text(initialText).call(alignHTMLWith(context, container, options)).on("blur", function() {
+      }).attr({ contenteditable: true }).text(initialText).call(alignHTMLWith(context, container, options)).on("blur", function(event2) {
         gd._editing = false;
         context.text(this.textContent).style({ opacity: 1 });
-        var svgClass = import_d36.default.select(this).attr("class");
+        var svgClass = select_default2(this).attr("class");
         var mathjaxClass;
         if (svgClass) mathjaxClass = "." + svgClass.split(" ")[0] + "-math-group";
         else mathjaxClass = "[class*=-math-group]";
         if (mathjaxClass) {
-          import_d36.default.select(context.node().parentNode).select(mathjaxClass).style({ opacity: 0 });
+          select_default2(context.node().parentNode).select(mathjaxClass).style({ opacity: 0 });
         }
         var text = this.textContent;
-        import_d36.default.select(this).transition().duration(0).remove();
-        import_d36.default.select(document).on("mouseup", null);
-        dispatch.edit.call(context, text);
-      }).on("focus", function() {
+        select_default2(this).transition().duration(0).remove();
+        select_default2(document).on("mouseup", null);
+        dispatch2.edit.call(context, text);
+      }).on("focus", function(event2) {
         var editDiv = this;
         gd._editing = true;
-        import_d36.default.select(document).on("mouseup", function() {
-          if (import_d36.default.event.target === editDiv) return false;
+        select_default2(document).on("mouseup", function(event3) {
+          if (event3.target === editDiv) return false;
           if (document.activeElement === div.node()) div.node().blur();
         });
-      }).on("keyup", function() {
-        if (import_d36.default.event.which === 27) {
+      }).on("keyup", function(event2) {
+        if (event2.which === 27) {
           gd._editing = false;
           context.style({ opacity: 1 });
-          import_d36.default.select(this).style({ opacity: 0 }).on("blur", function() {
+          select_default2(this).style({ opacity: 0 }).on("blur", function(event3) {
             return false;
           }).transition().remove();
-          dispatch.cancel.call(context, this.textContent);
+          dispatch2.cancel.call(context, this.textContent);
         } else {
-          dispatch.input.call(context, this.textContent);
-          import_d36.default.select(this).call(alignHTMLWith(context, container, options));
+          dispatch2.input.call(context, this.textContent);
+          select_default2(this).call(alignHTMLWith(context, container, options));
         }
-      }).on("keydown", function() {
-        if (import_d36.default.event.which === 13) this.blur();
+      }).on("keydown", function(event2) {
+        if (event2.which === 13) this.blur();
       }).call(selectElementContents);
     }
     if (options.immediate) handleClick2();
     else handlerElement.on("click", handleClick2);
-    return import_d36.default.rebind(context, dispatch, "on");
+    return Object.assign(context, { on: dispatch2.on.bind(dispatch2) });
   };
   var svg_text_utils_default = { convertToTspans, NEWLINES, BR_TAG_ALL, plainText, sanitizeHTML, lineCount, positionText, makeTextShadow, makeEditable, convertEntities };
 
   // src/components/titles/index.js
-  var import_d39 = __toESM(require_d3(), 1);
   var import_fast_isnumeric19 = __toESM(require_fast_isnumeric(), 1);
 
   // src/components/drawing/index.js
-  var import_d38 = __toESM(require_d3(), 1);
   var import_fast_isnumeric18 = __toESM(require_fast_isnumeric(), 1);
 
+  // node_modules/.pnpm/d3-array@3.2.4/node_modules/d3-array/src/ascending.js
+  function ascending2(a, b) {
+    return a == null || b == null ? NaN : a < b ? -1 : a > b ? 1 : a >= b ? 0 : NaN;
+  }
+
+  // node_modules/.pnpm/d3-array@3.2.4/node_modules/d3-array/src/descending.js
+  function descending(a, b) {
+    return a == null || b == null ? NaN : b < a ? -1 : b > a ? 1 : b >= a ? 0 : NaN;
+  }
+
+  // node_modules/.pnpm/d3-array@3.2.4/node_modules/d3-array/src/bisector.js
+  function bisector(f) {
+    let compare1, compare2, delta;
+    if (f.length !== 2) {
+      compare1 = ascending2;
+      compare2 = (d, x) => ascending2(f(d), x);
+      delta = (d, x) => f(d) - x;
+    } else {
+      compare1 = f === ascending2 || f === descending ? f : zero2;
+      compare2 = f;
+      delta = f;
+    }
+    function left(a, x, lo = 0, hi = a.length) {
+      if (lo < hi) {
+        if (compare1(x, x) !== 0) return hi;
+        do {
+          const mid = lo + hi >>> 1;
+          if (compare2(a[mid], x) < 0) lo = mid + 1;
+          else hi = mid;
+        } while (lo < hi);
+      }
+      return lo;
+    }
+    function right(a, x, lo = 0, hi = a.length) {
+      if (lo < hi) {
+        if (compare1(x, x) !== 0) return hi;
+        do {
+          const mid = lo + hi >>> 1;
+          if (compare2(a[mid], x) <= 0) lo = mid + 1;
+          else hi = mid;
+        } while (lo < hi);
+      }
+      return lo;
+    }
+    function center(a, x, lo = 0, hi = a.length) {
+      const i = left(a, x, lo, hi - 1);
+      return i > lo && delta(a[i - 1], x) > -delta(a[i], x) ? i - 1 : i;
+    }
+    return { left, center, right };
+  }
+  function zero2() {
+    return 0;
+  }
+
+  // node_modules/.pnpm/d3-array@3.2.4/node_modules/d3-array/src/number.js
+  function number(x) {
+    return x === null ? NaN : +x;
+  }
+
+  // node_modules/.pnpm/d3-array@3.2.4/node_modules/d3-array/src/bisect.js
+  var ascendingBisect = bisector(ascending2);
+  var bisectRight = ascendingBisect.right;
+  var bisectLeft = ascendingBisect.left;
+  var bisectCenter = bisector(number).center;
+  var bisect_default = bisectRight;
+
+  // node_modules/.pnpm/d3-array@3.2.4/node_modules/d3-array/src/extent.js
+  function extent(values, valueof) {
+    let min2;
+    let max2;
+    if (valueof === void 0) {
+      for (const value of values) {
+        if (value != null) {
+          if (min2 === void 0) {
+            if (value >= value) min2 = max2 = value;
+          } else {
+            if (min2 > value) min2 = value;
+            if (max2 < value) max2 = value;
+          }
+        }
+      }
+    } else {
+      let index = -1;
+      for (let value of values) {
+        if ((value = valueof(value, ++index, values)) != null) {
+          if (min2 === void 0) {
+            if (value >= value) min2 = max2 = value;
+          } else {
+            if (min2 > value) min2 = value;
+            if (max2 < value) max2 = value;
+          }
+        }
+      }
+    }
+    return [min2, max2];
+  }
+
+  // node_modules/.pnpm/d3-array@3.2.4/node_modules/d3-array/src/ticks.js
+  var e10 = Math.sqrt(50);
+  var e5 = Math.sqrt(10);
+  var e2 = Math.sqrt(2);
+  function tickSpec(start2, stop, count) {
+    const step = (stop - start2) / Math.max(0, count), power = Math.floor(Math.log10(step)), error = step / Math.pow(10, power), factor = error >= e10 ? 10 : error >= e5 ? 5 : error >= e2 ? 2 : 1;
+    let i1, i2, inc;
+    if (power < 0) {
+      inc = Math.pow(10, -power) / factor;
+      i1 = Math.round(start2 * inc);
+      i2 = Math.round(stop * inc);
+      if (i1 / inc < start2) ++i1;
+      if (i2 / inc > stop) --i2;
+      inc = -inc;
+    } else {
+      inc = Math.pow(10, power) * factor;
+      i1 = Math.round(start2 / inc);
+      i2 = Math.round(stop / inc);
+      if (i1 * inc < start2) ++i1;
+      if (i2 * inc > stop) --i2;
+    }
+    if (i2 < i1 && 0.5 <= count && count < 2) return tickSpec(start2, stop, count * 2);
+    return [i1, i2, inc];
+  }
+  function ticks(start2, stop, count) {
+    stop = +stop, start2 = +start2, count = +count;
+    if (!(count > 0)) return [];
+    if (start2 === stop) return [start2];
+    const reverse = stop < start2, [i1, i2, inc] = reverse ? tickSpec(stop, start2, count) : tickSpec(start2, stop, count);
+    if (!(i2 >= i1)) return [];
+    const n = i2 - i1 + 1, ticks3 = new Array(n);
+    if (reverse) {
+      if (inc < 0) for (let i = 0; i < n; ++i) ticks3[i] = (i2 - i) / -inc;
+      else for (let i = 0; i < n; ++i) ticks3[i] = (i2 - i) * inc;
+    } else {
+      if (inc < 0) for (let i = 0; i < n; ++i) ticks3[i] = (i1 + i) / -inc;
+      else for (let i = 0; i < n; ++i) ticks3[i] = (i1 + i) * inc;
+    }
+    return ticks3;
+  }
+  function tickIncrement(start2, stop, count) {
+    stop = +stop, start2 = +start2, count = +count;
+    return tickSpec(start2, stop, count)[2];
+  }
+  function tickStep(start2, stop, count) {
+    stop = +stop, start2 = +start2, count = +count;
+    const reverse = stop < start2, inc = reverse ? tickIncrement(stop, start2, count) : tickIncrement(start2, stop, count);
+    return (reverse ? -1 : 1) * (inc < 0 ? 1 / -inc : inc);
+  }
+
+  // node_modules/.pnpm/d3-array@3.2.4/node_modules/d3-array/src/max.js
+  function max(values, valueof) {
+    let max2;
+    if (valueof === void 0) {
+      for (const value of values) {
+        if (value != null && (max2 < value || max2 === void 0 && value >= value)) {
+          max2 = value;
+        }
+      }
+    } else {
+      let index = -1;
+      for (let value of values) {
+        if ((value = valueof(value, ++index, values)) != null && (max2 < value || max2 === void 0 && value >= value)) {
+          max2 = value;
+        }
+      }
+    }
+    return max2;
+  }
+
+  // node_modules/.pnpm/d3-array@3.2.4/node_modules/d3-array/src/min.js
+  function min(values, valueof) {
+    let min2;
+    if (valueof === void 0) {
+      for (const value of values) {
+        if (value != null && (min2 > value || min2 === void 0 && value >= value)) {
+          min2 = value;
+        }
+      }
+    } else {
+      let index = -1;
+      for (let value of values) {
+        if ((value = valueof(value, ++index, values)) != null && (min2 > value || min2 === void 0 && value >= value)) {
+          min2 = value;
+        }
+      }
+    }
+    return min2;
+  }
+
+  // node_modules/.pnpm/d3-scale@4.0.2/node_modules/d3-scale/src/init.js
+  function initRange(domain, range) {
+    switch (arguments.length) {
+      case 0:
+        break;
+      case 1:
+        this.range(domain);
+        break;
+      default:
+        this.range(range).domain(domain);
+        break;
+    }
+    return this;
+  }
+
+  // node_modules/.pnpm/d3-scale@4.0.2/node_modules/d3-scale/src/constant.js
+  function constants(x) {
+    return function() {
+      return x;
+    };
+  }
+
+  // node_modules/.pnpm/d3-scale@4.0.2/node_modules/d3-scale/src/number.js
+  function number2(x) {
+    return +x;
+  }
+
+  // node_modules/.pnpm/d3-scale@4.0.2/node_modules/d3-scale/src/continuous.js
+  var unit = [0, 1];
+  function identity3(x) {
+    return x;
+  }
+  function normalize(a, b) {
+    return (b -= a = +a) ? function(x) {
+      return (x - a) / b;
+    } : constants(isNaN(b) ? NaN : 0.5);
+  }
+  function clamper(a, b) {
+    var t;
+    if (a > b) t = a, a = b, b = t;
+    return function(x) {
+      return Math.max(a, Math.min(b, x));
+    };
+  }
+  function bimap(domain, range, interpolate) {
+    var d0 = domain[0], d1 = domain[1], r0 = range[0], r1 = range[1];
+    if (d1 < d0) d0 = normalize(d1, d0), r0 = interpolate(r1, r0);
+    else d0 = normalize(d0, d1), r0 = interpolate(r0, r1);
+    return function(x) {
+      return r0(d0(x));
+    };
+  }
+  function polymap(domain, range, interpolate) {
+    var j = Math.min(domain.length, range.length) - 1, d = new Array(j), r = new Array(j), i = -1;
+    if (domain[j] < domain[0]) {
+      domain = domain.slice().reverse();
+      range = range.slice().reverse();
+    }
+    while (++i < j) {
+      d[i] = normalize(domain[i], domain[i + 1]);
+      r[i] = interpolate(range[i], range[i + 1]);
+    }
+    return function(x) {
+      var i2 = bisect_default(domain, x, 1, j) - 1;
+      return r[i2](d[i2](x));
+    };
+  }
+  function copy(source, target) {
+    return target.domain(source.domain()).range(source.range()).interpolate(source.interpolate()).clamp(source.clamp()).unknown(source.unknown());
+  }
+  function transformer() {
+    var domain = unit, range = unit, interpolate = value_default, transform2, untransform, unknown, clamp = identity3, piecewise, output, input;
+    function rescale() {
+      var n = Math.min(domain.length, range.length);
+      if (clamp !== identity3) clamp = clamper(domain[0], domain[n - 1]);
+      piecewise = n > 2 ? polymap : bimap;
+      output = input = null;
+      return scale2;
+    }
+    function scale2(x) {
+      return x == null || isNaN(x = +x) ? unknown : (output || (output = piecewise(domain.map(transform2), range, interpolate)))(transform2(clamp(x)));
+    }
+    scale2.invert = function(y) {
+      return clamp(untransform((input || (input = piecewise(range, domain.map(transform2), number_default)))(y)));
+    };
+    scale2.domain = function(_5) {
+      return arguments.length ? (domain = Array.from(_5, number2), rescale()) : domain.slice();
+    };
+    scale2.range = function(_5) {
+      return arguments.length ? (range = Array.from(_5), rescale()) : range.slice();
+    };
+    scale2.rangeRound = function(_5) {
+      return range = Array.from(_5), interpolate = round_default, rescale();
+    };
+    scale2.clamp = function(_5) {
+      return arguments.length ? (clamp = _5 ? true : identity3, rescale()) : clamp !== identity3;
+    };
+    scale2.interpolate = function(_5) {
+      return arguments.length ? (interpolate = _5, rescale()) : interpolate;
+    };
+    scale2.unknown = function(_5) {
+      return arguments.length ? (unknown = _5, scale2) : unknown;
+    };
+    return function(t, u) {
+      transform2 = t, untransform = u;
+      return rescale();
+    };
+  }
+  function continuous() {
+    return transformer()(identity3, identity3);
+  }
+
+  // node_modules/.pnpm/d3-format@1.4.5/node_modules/d3-format/src/formatDecimal.js
+  function formatDecimal_default2(x) {
+    return Math.abs(x = Math.round(x)) >= 1e21 ? x.toLocaleString("en").replace(/,/g, "") : x.toString(10);
+  }
+  function formatDecimalParts2(x, p) {
+    if ((i = (x = p ? x.toExponential(p - 1) : x.toExponential()).indexOf("e")) < 0) return null;
+    var i, coefficient = x.slice(0, i);
+    return [
+      coefficient.length > 1 ? coefficient[0] + coefficient.slice(2) : coefficient,
+      +x.slice(i + 1)
+    ];
+  }
+
+  // node_modules/.pnpm/d3-format@1.4.5/node_modules/d3-format/src/exponent.js
+  function exponent_default2(x) {
+    return x = formatDecimalParts2(Math.abs(x)), x ? x[1] : NaN;
+  }
+
+  // node_modules/.pnpm/d3-format@1.4.5/node_modules/d3-format/src/formatGroup.js
+  function formatGroup_default2(grouping, thousands) {
+    return function(value, width) {
+      var i = value.length, t = [], j = 0, g = grouping[0], length = 0;
+      while (i > 0 && g > 0) {
+        if (length + g + 1 > width) g = Math.max(1, width - length);
+        t.push(value.substring(i -= g, i + g));
+        if ((length += g + 1) > width) break;
+        g = grouping[j = (j + 1) % grouping.length];
+      }
+      return t.reverse().join(thousands);
+    };
+  }
+
+  // node_modules/.pnpm/d3-format@1.4.5/node_modules/d3-format/src/formatNumerals.js
+  function formatNumerals_default2(numerals) {
+    return function(value) {
+      return value.replace(/[0-9]/g, function(i) {
+        return numerals[+i];
+      });
+    };
+  }
+
+  // node_modules/.pnpm/d3-format@1.4.5/node_modules/d3-format/src/formatSpecifier.js
+  var re2 = /^(?:(.)?([<>=^]))?([+\-( ])?([$#])?(0)?(\d+)?(,)?(\.\d+)?(~)?([a-z%])?$/i;
+  function formatSpecifier2(specifier) {
+    if (!(match = re2.exec(specifier))) throw new Error("invalid format: " + specifier);
+    var match;
+    return new FormatSpecifier2({
+      fill: match[1],
+      align: match[2],
+      sign: match[3],
+      symbol: match[4],
+      zero: match[5],
+      width: match[6],
+      comma: match[7],
+      precision: match[8] && match[8].slice(1),
+      trim: match[9],
+      type: match[10]
+    });
+  }
+  formatSpecifier2.prototype = FormatSpecifier2.prototype;
+  function FormatSpecifier2(specifier) {
+    this.fill = specifier.fill === void 0 ? " " : specifier.fill + "";
+    this.align = specifier.align === void 0 ? ">" : specifier.align + "";
+    this.sign = specifier.sign === void 0 ? "-" : specifier.sign + "";
+    this.symbol = specifier.symbol === void 0 ? "" : specifier.symbol + "";
+    this.zero = !!specifier.zero;
+    this.width = specifier.width === void 0 ? void 0 : +specifier.width;
+    this.comma = !!specifier.comma;
+    this.precision = specifier.precision === void 0 ? void 0 : +specifier.precision;
+    this.trim = !!specifier.trim;
+    this.type = specifier.type === void 0 ? "" : specifier.type + "";
+  }
+  FormatSpecifier2.prototype.toString = function() {
+    return this.fill + this.align + this.sign + this.symbol + (this.zero ? "0" : "") + (this.width === void 0 ? "" : Math.max(1, this.width | 0)) + (this.comma ? "," : "") + (this.precision === void 0 ? "" : "." + Math.max(0, this.precision | 0)) + (this.trim ? "~" : "") + this.type;
+  };
+
+  // node_modules/.pnpm/d3-format@1.4.5/node_modules/d3-format/src/formatTrim.js
+  function formatTrim_default2(s) {
+    out: for (var n = s.length, i = 1, i0 = -1, i1; i < n; ++i) {
+      switch (s[i]) {
+        case ".":
+          i0 = i1 = i;
+          break;
+        case "0":
+          if (i0 === 0) i0 = i;
+          i1 = i;
+          break;
+        default:
+          if (!+s[i]) break out;
+          if (i0 > 0) i0 = 0;
+          break;
+      }
+    }
+    return i0 > 0 ? s.slice(0, i0) + s.slice(i1 + 1) : s;
+  }
+
+  // node_modules/.pnpm/d3-format@1.4.5/node_modules/d3-format/src/formatPrefixAuto.js
+  var prefixExponent2;
+  function formatPrefixAuto_default2(x, p) {
+    var d = formatDecimalParts2(x, p);
+    if (!d) return x + "";
+    var coefficient = d[0], exponent = d[1], i = exponent - (prefixExponent2 = Math.max(-8, Math.min(8, Math.floor(exponent / 3))) * 3) + 1, n = coefficient.length;
+    return i === n ? coefficient : i > n ? coefficient + new Array(i - n + 1).join("0") : i > 0 ? coefficient.slice(0, i) + "." + coefficient.slice(i) : "0." + new Array(1 - i).join("0") + formatDecimalParts2(x, Math.max(0, p + i - 1))[0];
+  }
+
+  // node_modules/.pnpm/d3-format@1.4.5/node_modules/d3-format/src/formatRounded.js
+  function formatRounded_default2(x, p) {
+    var d = formatDecimalParts2(x, p);
+    if (!d) return x + "";
+    var coefficient = d[0], exponent = d[1];
+    return exponent < 0 ? "0." + new Array(-exponent).join("0") + coefficient : coefficient.length > exponent + 1 ? coefficient.slice(0, exponent + 1) + "." + coefficient.slice(exponent + 1) : coefficient + new Array(exponent - coefficient.length + 2).join("0");
+  }
+
+  // node_modules/.pnpm/d3-format@1.4.5/node_modules/d3-format/src/formatTypes.js
+  var formatTypes_default2 = {
+    "%": function(x, p) {
+      return (x * 100).toFixed(p);
+    },
+    "b": function(x) {
+      return Math.round(x).toString(2);
+    },
+    "c": function(x) {
+      return x + "";
+    },
+    "d": formatDecimal_default2,
+    "e": function(x, p) {
+      return x.toExponential(p);
+    },
+    "f": function(x, p) {
+      return x.toFixed(p);
+    },
+    "g": function(x, p) {
+      return x.toPrecision(p);
+    },
+    "o": function(x) {
+      return Math.round(x).toString(8);
+    },
+    "p": function(x, p) {
+      return formatRounded_default2(x * 100, p);
+    },
+    "r": formatRounded_default2,
+    "s": formatPrefixAuto_default2,
+    "X": function(x) {
+      return Math.round(x).toString(16).toUpperCase();
+    },
+    "x": function(x) {
+      return Math.round(x).toString(16);
+    }
+  };
+
+  // node_modules/.pnpm/d3-format@1.4.5/node_modules/d3-format/src/identity.js
+  function identity_default2(x) {
+    return x;
+  }
+
+  // node_modules/.pnpm/d3-format@1.4.5/node_modules/d3-format/src/locale.js
+  var map2 = Array.prototype.map;
+  var prefixes2 = ["y", "z", "a", "f", "p", "n", "\xB5", "m", "", "k", "M", "G", "T", "P", "E", "Z", "Y"];
+  function locale_default2(locale4) {
+    var group = locale4.grouping === void 0 || locale4.thousands === void 0 ? identity_default2 : formatGroup_default2(map2.call(locale4.grouping, Number), locale4.thousands + ""), currencyPrefix = locale4.currency === void 0 ? "" : locale4.currency[0] + "", currencySuffix = locale4.currency === void 0 ? "" : locale4.currency[1] + "", decimal = locale4.decimal === void 0 ? "." : locale4.decimal + "", numerals = locale4.numerals === void 0 ? identity_default2 : formatNumerals_default2(map2.call(locale4.numerals, String)), percent = locale4.percent === void 0 ? "%" : locale4.percent + "", minus = locale4.minus === void 0 ? "-" : locale4.minus + "", nan = locale4.nan === void 0 ? "NaN" : locale4.nan + "";
+    function newFormat(specifier) {
+      specifier = formatSpecifier2(specifier);
+      var fill = specifier.fill, align3 = specifier.align, sign2 = specifier.sign, symbol = specifier.symbol, zero3 = specifier.zero, width = specifier.width, comma = specifier.comma, precision = specifier.precision, trim = specifier.trim, type = specifier.type;
+      if (type === "n") comma = true, type = "g";
+      else if (!formatTypes_default2[type]) precision === void 0 && (precision = 12), trim = true, type = "g";
+      if (zero3 || fill === "0" && align3 === "=") zero3 = true, fill = "0", align3 = "=";
+      var prefix = symbol === "$" ? currencyPrefix : symbol === "#" && /[boxX]/.test(type) ? "0" + type.toLowerCase() : "", suffix = symbol === "$" ? currencySuffix : /[%p]/.test(type) ? percent : "";
+      var formatType = formatTypes_default2[type], maybeSuffix = /[defgprs%]/.test(type);
+      precision = precision === void 0 ? 6 : /[gprs]/.test(type) ? Math.max(1, Math.min(21, precision)) : Math.max(0, Math.min(20, precision));
+      function format6(value) {
+        var valuePrefix = prefix, valueSuffix = suffix, i, n, c;
+        if (type === "c") {
+          valueSuffix = formatType(value) + valueSuffix;
+          value = "";
+        } else {
+          value = +value;
+          var valueNegative = value < 0 || 1 / value < 0;
+          value = isNaN(value) ? nan : formatType(Math.abs(value), precision);
+          if (trim) value = formatTrim_default2(value);
+          if (valueNegative && +value === 0 && sign2 !== "+") valueNegative = false;
+          valuePrefix = (valueNegative ? sign2 === "(" ? sign2 : minus : sign2 === "-" || sign2 === "(" ? "" : sign2) + valuePrefix;
+          valueSuffix = (type === "s" ? prefixes2[8 + prefixExponent2 / 3] : "") + valueSuffix + (valueNegative && sign2 === "(" ? ")" : "");
+          if (maybeSuffix) {
+            i = -1, n = value.length;
+            while (++i < n) {
+              if (c = value.charCodeAt(i), 48 > c || c > 57) {
+                valueSuffix = (c === 46 ? decimal + value.slice(i + 1) : value.slice(i)) + valueSuffix;
+                value = value.slice(0, i);
+                break;
+              }
+            }
+          }
+        }
+        if (comma && !zero3) value = group(value, Infinity);
+        var length = valuePrefix.length + value.length + valueSuffix.length, padding = length < width ? new Array(width - length + 1).join(fill) : "";
+        if (comma && zero3) value = group(padding + value, padding.length ? width - valueSuffix.length : Infinity), padding = "";
+        switch (align3) {
+          case "<":
+            value = valuePrefix + value + valueSuffix + padding;
+            break;
+          case "=":
+            value = valuePrefix + padding + value + valueSuffix;
+            break;
+          case "^":
+            value = padding.slice(0, length = padding.length >> 1) + valuePrefix + value + valueSuffix + padding.slice(length);
+            break;
+          default:
+            value = padding + valuePrefix + value + valueSuffix;
+            break;
+        }
+        return numerals(value);
+      }
+      format6.toString = function() {
+        return specifier + "";
+      };
+      return format6;
+    }
+    function formatPrefix3(specifier, value) {
+      var f = newFormat((specifier = formatSpecifier2(specifier), specifier.type = "f", specifier)), e = Math.max(-8, Math.min(8, Math.floor(exponent_default2(value) / 3))) * 3, k = Math.pow(10, -e), prefix = prefixes2[8 + e / 3];
+      return function(value2) {
+        return f(k * value2) + prefix;
+      };
+    }
+    return {
+      format: newFormat,
+      formatPrefix: formatPrefix3
+    };
+  }
+
+  // node_modules/.pnpm/d3-format@1.4.5/node_modules/d3-format/src/defaultLocale.js
+  var locale3;
+  var format2;
+  var formatPrefix2;
+  defaultLocale3({
+    decimal: ".",
+    thousands: ",",
+    grouping: [3],
+    currency: ["$", ""],
+    minus: "-"
+  });
+  function defaultLocale3(definition) {
+    locale3 = locale_default2(definition);
+    format2 = locale3.format;
+    formatPrefix2 = locale3.formatPrefix;
+    return locale3;
+  }
+
+  // node_modules/.pnpm/d3-format@1.4.5/node_modules/d3-format/src/precisionFixed.js
+  function precisionFixed_default(step) {
+    return Math.max(0, -exponent_default2(Math.abs(step)));
+  }
+
+  // node_modules/.pnpm/d3-format@1.4.5/node_modules/d3-format/src/precisionPrefix.js
+  function precisionPrefix_default(step, value) {
+    return Math.max(0, Math.max(-8, Math.min(8, Math.floor(exponent_default2(value) / 3))) * 3 - exponent_default2(Math.abs(step)));
+  }
+
+  // node_modules/.pnpm/d3-format@1.4.5/node_modules/d3-format/src/precisionRound.js
+  function precisionRound_default(step, max2) {
+    step = Math.abs(step), max2 = Math.abs(max2) - step;
+    return Math.max(0, exponent_default2(max2) - exponent_default2(step)) + 1;
+  }
+
+  // node_modules/.pnpm/d3-scale@4.0.2/node_modules/d3-scale/src/tickFormat.js
+  function tickFormat(start2, stop, count, specifier) {
+    var step = tickStep(start2, stop, count), precision;
+    specifier = formatSpecifier2(specifier == null ? ",f" : specifier);
+    switch (specifier.type) {
+      case "s": {
+        var value = Math.max(Math.abs(start2), Math.abs(stop));
+        if (specifier.precision == null && !isNaN(precision = precisionPrefix_default(step, value))) specifier.precision = precision;
+        return formatPrefix2(specifier, value);
+      }
+      case "":
+      case "e":
+      case "g":
+      case "p":
+      case "r": {
+        if (specifier.precision == null && !isNaN(precision = precisionRound_default(step, Math.max(Math.abs(start2), Math.abs(stop))))) specifier.precision = precision - (specifier.type === "e");
+        break;
+      }
+      case "f":
+      case "%": {
+        if (specifier.precision == null && !isNaN(precision = precisionFixed_default(step))) specifier.precision = precision - (specifier.type === "%") * 2;
+        break;
+      }
+    }
+    return format2(specifier);
+  }
+
+  // node_modules/.pnpm/d3-scale@4.0.2/node_modules/d3-scale/src/linear.js
+  function linearish(scale2) {
+    var domain = scale2.domain;
+    scale2.ticks = function(count) {
+      var d = domain();
+      return ticks(d[0], d[d.length - 1], count == null ? 10 : count);
+    };
+    scale2.tickFormat = function(count, specifier) {
+      var d = domain();
+      return tickFormat(d[0], d[d.length - 1], count == null ? 10 : count, specifier);
+    };
+    scale2.nice = function(count) {
+      if (count == null) count = 10;
+      var d = domain();
+      var i0 = 0;
+      var i1 = d.length - 1;
+      var start2 = d[i0];
+      var stop = d[i1];
+      var prestep;
+      var step;
+      var maxIter = 10;
+      if (stop < start2) {
+        step = start2, start2 = stop, stop = step;
+        step = i0, i0 = i1, i1 = step;
+      }
+      while (maxIter-- > 0) {
+        step = tickIncrement(start2, stop, count);
+        if (step === prestep) {
+          d[i0] = start2;
+          d[i1] = stop;
+          return domain(d);
+        } else if (step > 0) {
+          start2 = Math.floor(start2 / step) * step;
+          stop = Math.ceil(stop / step) * step;
+        } else if (step < 0) {
+          start2 = Math.ceil(start2 * step) / step;
+          stop = Math.floor(stop * step) / step;
+        } else {
+          break;
+        }
+        prestep = step;
+      }
+      return scale2;
+    };
+    return scale2;
+  }
+  function linear3() {
+    var scale2 = continuous();
+    scale2.copy = function() {
+      return copy(scale2, linear3());
+    };
+    initRange.apply(scale2, arguments);
+    return linearish(scale2);
+  }
+
+  // node_modules/.pnpm/d3-time@3.1.0/node_modules/d3-time/src/index.js
+  var src_exports = {};
+  __export(src_exports, {
+    timeDay: () => timeDay,
+    timeDays: () => timeDays,
+    timeFriday: () => timeFriday,
+    timeFridays: () => timeFridays,
+    timeHour: () => timeHour,
+    timeHours: () => timeHours,
+    timeInterval: () => timeInterval,
+    timeMillisecond: () => millisecond,
+    timeMilliseconds: () => milliseconds,
+    timeMinute: () => timeMinute,
+    timeMinutes: () => timeMinutes,
+    timeMonday: () => timeMonday,
+    timeMondays: () => timeMondays,
+    timeMonth: () => timeMonth,
+    timeMonths: () => timeMonths,
+    timeSaturday: () => timeSaturday,
+    timeSaturdays: () => timeSaturdays,
+    timeSecond: () => second,
+    timeSeconds: () => seconds,
+    timeSunday: () => timeSunday,
+    timeSundays: () => timeSundays,
+    timeThursday: () => timeThursday,
+    timeThursdays: () => timeThursdays,
+    timeTickInterval: () => timeTickInterval,
+    timeTicks: () => timeTicks,
+    timeTuesday: () => timeTuesday,
+    timeTuesdays: () => timeTuesdays,
+    timeWednesday: () => timeWednesday,
+    timeWednesdays: () => timeWednesdays,
+    timeWeek: () => timeSunday,
+    timeWeeks: () => timeSundays,
+    timeYear: () => timeYear,
+    timeYears: () => timeYears,
+    unixDay: () => unixDay,
+    unixDays: () => unixDays,
+    utcDay: () => utcDay2,
+    utcDays: () => utcDays2,
+    utcFriday: () => utcFriday2,
+    utcFridays: () => utcFridays2,
+    utcHour: () => utcHour,
+    utcHours: () => utcHours,
+    utcMillisecond: () => millisecond,
+    utcMilliseconds: () => milliseconds,
+    utcMinute: () => utcMinute,
+    utcMinutes: () => utcMinutes,
+    utcMonday: () => utcMonday2,
+    utcMondays: () => utcMondays2,
+    utcMonth: () => utcMonth,
+    utcMonths: () => utcMonths,
+    utcSaturday: () => utcSaturday2,
+    utcSaturdays: () => utcSaturdays2,
+    utcSecond: () => second,
+    utcSeconds: () => seconds,
+    utcSunday: () => utcSunday2,
+    utcSundays: () => utcSundays2,
+    utcThursday: () => utcThursday2,
+    utcThursdays: () => utcThursdays2,
+    utcTickInterval: () => utcTickInterval,
+    utcTicks: () => utcTicks,
+    utcTuesday: () => utcTuesday2,
+    utcTuesdays: () => utcTuesdays2,
+    utcWednesday: () => utcWednesday2,
+    utcWednesdays: () => utcWednesdays2,
+    utcWeek: () => utcSunday2,
+    utcWeeks: () => utcSundays2,
+    utcYear: () => utcYear2,
+    utcYears: () => utcYears2
+  });
+
+  // node_modules/.pnpm/d3-time@3.1.0/node_modules/d3-time/src/interval.js
+  var t02 = /* @__PURE__ */ new Date();
+  var t12 = /* @__PURE__ */ new Date();
+  function timeInterval(floori, offseti, count, field) {
+    function interval2(date) {
+      return floori(date = arguments.length === 0 ? /* @__PURE__ */ new Date() : /* @__PURE__ */ new Date(+date)), date;
+    }
+    interval2.floor = (date) => {
+      return floori(date = /* @__PURE__ */ new Date(+date)), date;
+    };
+    interval2.ceil = (date) => {
+      return floori(date = new Date(date - 1)), offseti(date, 1), floori(date), date;
+    };
+    interval2.round = (date) => {
+      const d0 = interval2(date), d1 = interval2.ceil(date);
+      return date - d0 < d1 - date ? d0 : d1;
+    };
+    interval2.offset = (date, step) => {
+      return offseti(date = /* @__PURE__ */ new Date(+date), step == null ? 1 : Math.floor(step)), date;
+    };
+    interval2.range = (start2, stop, step) => {
+      const range = [];
+      start2 = interval2.ceil(start2);
+      step = step == null ? 1 : Math.floor(step);
+      if (!(start2 < stop) || !(step > 0)) return range;
+      let previous;
+      do
+        range.push(previous = /* @__PURE__ */ new Date(+start2)), offseti(start2, step), floori(start2);
+      while (previous < start2 && start2 < stop);
+      return range;
+    };
+    interval2.filter = (test) => {
+      return timeInterval((date) => {
+        if (date >= date) while (floori(date), !test(date)) date.setTime(date - 1);
+      }, (date, step) => {
+        if (date >= date) {
+          if (step < 0) while (++step <= 0) {
+            while (offseti(date, -1), !test(date)) {
+            }
+          }
+          else while (--step >= 0) {
+            while (offseti(date, 1), !test(date)) {
+            }
+          }
+        }
+      });
+    };
+    if (count) {
+      interval2.count = (start2, end) => {
+        t02.setTime(+start2), t12.setTime(+end);
+        floori(t02), floori(t12);
+        return Math.floor(count(t02, t12));
+      };
+      interval2.every = (step) => {
+        step = Math.floor(step);
+        return !isFinite(step) || !(step > 0) ? null : !(step > 1) ? interval2 : interval2.filter(field ? (d) => field(d) % step === 0 : (d) => interval2.count(0, d) % step === 0);
+      };
+    }
+    return interval2;
+  }
+
+  // node_modules/.pnpm/d3-time@3.1.0/node_modules/d3-time/src/millisecond.js
+  var millisecond = timeInterval(() => {
+  }, (date, step) => {
+    date.setTime(+date + step);
+  }, (start2, end) => {
+    return end - start2;
+  });
+  millisecond.every = (k) => {
+    k = Math.floor(k);
+    if (!isFinite(k) || !(k > 0)) return null;
+    if (!(k > 1)) return millisecond;
+    return timeInterval((date) => {
+      date.setTime(Math.floor(date / k) * k);
+    }, (date, step) => {
+      date.setTime(+date + step * k);
+    }, (start2, end) => {
+      return (end - start2) / k;
+    });
+  };
+  var milliseconds = millisecond.range;
+
+  // node_modules/.pnpm/d3-time@3.1.0/node_modules/d3-time/src/duration.js
+  var durationSecond = 1e3;
+  var durationMinute2 = durationSecond * 60;
+  var durationHour = durationMinute2 * 60;
+  var durationDay2 = durationHour * 24;
+  var durationWeek2 = durationDay2 * 7;
+  var durationMonth = durationDay2 * 30;
+  var durationYear = durationDay2 * 365;
+
+  // node_modules/.pnpm/d3-time@3.1.0/node_modules/d3-time/src/second.js
+  var second = timeInterval((date) => {
+    date.setTime(date - date.getMilliseconds());
+  }, (date, step) => {
+    date.setTime(+date + step * durationSecond);
+  }, (start2, end) => {
+    return (end - start2) / durationSecond;
+  }, (date) => {
+    return date.getUTCSeconds();
+  });
+  var seconds = second.range;
+
+  // node_modules/.pnpm/d3-time@3.1.0/node_modules/d3-time/src/minute.js
+  var timeMinute = timeInterval((date) => {
+    date.setTime(date - date.getMilliseconds() - date.getSeconds() * durationSecond);
+  }, (date, step) => {
+    date.setTime(+date + step * durationMinute2);
+  }, (start2, end) => {
+    return (end - start2) / durationMinute2;
+  }, (date) => {
+    return date.getMinutes();
+  });
+  var timeMinutes = timeMinute.range;
+  var utcMinute = timeInterval((date) => {
+    date.setUTCSeconds(0, 0);
+  }, (date, step) => {
+    date.setTime(+date + step * durationMinute2);
+  }, (start2, end) => {
+    return (end - start2) / durationMinute2;
+  }, (date) => {
+    return date.getUTCMinutes();
+  });
+  var utcMinutes = utcMinute.range;
+
+  // node_modules/.pnpm/d3-time@3.1.0/node_modules/d3-time/src/hour.js
+  var timeHour = timeInterval((date) => {
+    date.setTime(date - date.getMilliseconds() - date.getSeconds() * durationSecond - date.getMinutes() * durationMinute2);
+  }, (date, step) => {
+    date.setTime(+date + step * durationHour);
+  }, (start2, end) => {
+    return (end - start2) / durationHour;
+  }, (date) => {
+    return date.getHours();
+  });
+  var timeHours = timeHour.range;
+  var utcHour = timeInterval((date) => {
+    date.setUTCMinutes(0, 0, 0);
+  }, (date, step) => {
+    date.setTime(+date + step * durationHour);
+  }, (start2, end) => {
+    return (end - start2) / durationHour;
+  }, (date) => {
+    return date.getUTCHours();
+  });
+  var utcHours = utcHour.range;
+
+  // node_modules/.pnpm/d3-time@3.1.0/node_modules/d3-time/src/day.js
+  var timeDay = timeInterval(
+    (date) => date.setHours(0, 0, 0, 0),
+    (date, step) => date.setDate(date.getDate() + step),
+    (start2, end) => (end - start2 - (end.getTimezoneOffset() - start2.getTimezoneOffset()) * durationMinute2) / durationDay2,
+    (date) => date.getDate() - 1
+  );
+  var timeDays = timeDay.range;
+  var utcDay2 = timeInterval((date) => {
+    date.setUTCHours(0, 0, 0, 0);
+  }, (date, step) => {
+    date.setUTCDate(date.getUTCDate() + step);
+  }, (start2, end) => {
+    return (end - start2) / durationDay2;
+  }, (date) => {
+    return date.getUTCDate() - 1;
+  });
+  var utcDays2 = utcDay2.range;
+  var unixDay = timeInterval((date) => {
+    date.setUTCHours(0, 0, 0, 0);
+  }, (date, step) => {
+    date.setUTCDate(date.getUTCDate() + step);
+  }, (start2, end) => {
+    return (end - start2) / durationDay2;
+  }, (date) => {
+    return Math.floor(date / durationDay2);
+  });
+  var unixDays = unixDay.range;
+
+  // node_modules/.pnpm/d3-time@3.1.0/node_modules/d3-time/src/week.js
+  function timeWeekday(i) {
+    return timeInterval((date) => {
+      date.setDate(date.getDate() - (date.getDay() + 7 - i) % 7);
+      date.setHours(0, 0, 0, 0);
+    }, (date, step) => {
+      date.setDate(date.getDate() + step * 7);
+    }, (start2, end) => {
+      return (end - start2 - (end.getTimezoneOffset() - start2.getTimezoneOffset()) * durationMinute2) / durationWeek2;
+    });
+  }
+  var timeSunday = timeWeekday(0);
+  var timeMonday = timeWeekday(1);
+  var timeTuesday = timeWeekday(2);
+  var timeWednesday = timeWeekday(3);
+  var timeThursday = timeWeekday(4);
+  var timeFriday = timeWeekday(5);
+  var timeSaturday = timeWeekday(6);
+  var timeSundays = timeSunday.range;
+  var timeMondays = timeMonday.range;
+  var timeTuesdays = timeTuesday.range;
+  var timeWednesdays = timeWednesday.range;
+  var timeThursdays = timeThursday.range;
+  var timeFridays = timeFriday.range;
+  var timeSaturdays = timeSaturday.range;
+  function utcWeekday2(i) {
+    return timeInterval((date) => {
+      date.setUTCDate(date.getUTCDate() - (date.getUTCDay() + 7 - i) % 7);
+      date.setUTCHours(0, 0, 0, 0);
+    }, (date, step) => {
+      date.setUTCDate(date.getUTCDate() + step * 7);
+    }, (start2, end) => {
+      return (end - start2) / durationWeek2;
+    });
+  }
+  var utcSunday2 = utcWeekday2(0);
+  var utcMonday2 = utcWeekday2(1);
+  var utcTuesday2 = utcWeekday2(2);
+  var utcWednesday2 = utcWeekday2(3);
+  var utcThursday2 = utcWeekday2(4);
+  var utcFriday2 = utcWeekday2(5);
+  var utcSaturday2 = utcWeekday2(6);
+  var utcSundays2 = utcSunday2.range;
+  var utcMondays2 = utcMonday2.range;
+  var utcTuesdays2 = utcTuesday2.range;
+  var utcWednesdays2 = utcWednesday2.range;
+  var utcThursdays2 = utcThursday2.range;
+  var utcFridays2 = utcFriday2.range;
+  var utcSaturdays2 = utcSaturday2.range;
+
+  // node_modules/.pnpm/d3-time@3.1.0/node_modules/d3-time/src/month.js
+  var timeMonth = timeInterval((date) => {
+    date.setDate(1);
+    date.setHours(0, 0, 0, 0);
+  }, (date, step) => {
+    date.setMonth(date.getMonth() + step);
+  }, (start2, end) => {
+    return end.getMonth() - start2.getMonth() + (end.getFullYear() - start2.getFullYear()) * 12;
+  }, (date) => {
+    return date.getMonth();
+  });
+  var timeMonths = timeMonth.range;
+  var utcMonth = timeInterval((date) => {
+    date.setUTCDate(1);
+    date.setUTCHours(0, 0, 0, 0);
+  }, (date, step) => {
+    date.setUTCMonth(date.getUTCMonth() + step);
+  }, (start2, end) => {
+    return end.getUTCMonth() - start2.getUTCMonth() + (end.getUTCFullYear() - start2.getUTCFullYear()) * 12;
+  }, (date) => {
+    return date.getUTCMonth();
+  });
+  var utcMonths = utcMonth.range;
+
+  // node_modules/.pnpm/d3-time@3.1.0/node_modules/d3-time/src/year.js
+  var timeYear = timeInterval((date) => {
+    date.setMonth(0, 1);
+    date.setHours(0, 0, 0, 0);
+  }, (date, step) => {
+    date.setFullYear(date.getFullYear() + step);
+  }, (start2, end) => {
+    return end.getFullYear() - start2.getFullYear();
+  }, (date) => {
+    return date.getFullYear();
+  });
+  timeYear.every = (k) => {
+    return !isFinite(k = Math.floor(k)) || !(k > 0) ? null : timeInterval((date) => {
+      date.setFullYear(Math.floor(date.getFullYear() / k) * k);
+      date.setMonth(0, 1);
+      date.setHours(0, 0, 0, 0);
+    }, (date, step) => {
+      date.setFullYear(date.getFullYear() + step * k);
+    });
+  };
+  var timeYears = timeYear.range;
+  var utcYear2 = timeInterval((date) => {
+    date.setUTCMonth(0, 1);
+    date.setUTCHours(0, 0, 0, 0);
+  }, (date, step) => {
+    date.setUTCFullYear(date.getUTCFullYear() + step);
+  }, (start2, end) => {
+    return end.getUTCFullYear() - start2.getUTCFullYear();
+  }, (date) => {
+    return date.getUTCFullYear();
+  });
+  utcYear2.every = (k) => {
+    return !isFinite(k = Math.floor(k)) || !(k > 0) ? null : timeInterval((date) => {
+      date.setUTCFullYear(Math.floor(date.getUTCFullYear() / k) * k);
+      date.setUTCMonth(0, 1);
+      date.setUTCHours(0, 0, 0, 0);
+    }, (date, step) => {
+      date.setUTCFullYear(date.getUTCFullYear() + step * k);
+    });
+  };
+  var utcYears2 = utcYear2.range;
+
+  // node_modules/.pnpm/d3-time@3.1.0/node_modules/d3-time/src/ticks.js
+  function ticker(year2, month, week, day2, hour, minute) {
+    const tickIntervals = [
+      [second, 1, durationSecond],
+      [second, 5, 5 * durationSecond],
+      [second, 15, 15 * durationSecond],
+      [second, 30, 30 * durationSecond],
+      [minute, 1, durationMinute2],
+      [minute, 5, 5 * durationMinute2],
+      [minute, 15, 15 * durationMinute2],
+      [minute, 30, 30 * durationMinute2],
+      [hour, 1, durationHour],
+      [hour, 3, 3 * durationHour],
+      [hour, 6, 6 * durationHour],
+      [hour, 12, 12 * durationHour],
+      [day2, 1, durationDay2],
+      [day2, 2, 2 * durationDay2],
+      [week, 1, durationWeek2],
+      [month, 1, durationMonth],
+      [month, 3, 3 * durationMonth],
+      [year2, 1, durationYear]
+    ];
+    function ticks3(start2, stop, count) {
+      const reverse = stop < start2;
+      if (reverse) [start2, stop] = [stop, start2];
+      const interval2 = count && typeof count.range === "function" ? count : tickInterval(start2, stop, count);
+      const ticks4 = interval2 ? interval2.range(start2, +stop + 1) : [];
+      return reverse ? ticks4.reverse() : ticks4;
+    }
+    function tickInterval(start2, stop, count) {
+      const target = Math.abs(stop - start2) / count;
+      const i = bisector(([, , step2]) => step2).right(tickIntervals, target);
+      if (i === tickIntervals.length) return year2.every(tickStep(start2 / durationYear, stop / durationYear, count));
+      if (i === 0) return millisecond.every(Math.max(tickStep(start2, stop, count), 1));
+      const [t, step] = tickIntervals[target / tickIntervals[i - 1][2] < tickIntervals[i][2] / target ? i - 1 : i];
+      return t.every(step);
+    }
+    return [ticks3, tickInterval];
+  }
+  var [utcTicks, utcTickInterval] = ticker(utcYear2, utcMonth, utcSunday2, unixDay, utcHour, utcMinute);
+  var [timeTicks, timeTickInterval] = ticker(timeYear, timeMonth, timeSunday, timeDay, timeHour, timeMinute);
+
   // src/components/colorscale/helpers.js
-  var import_d37 = __toESM(require_d3(), 1);
   var import_fast_isnumeric13 = __toESM(require_fast_isnumeric(), 1);
   var { isValid: isValidScale2 } = scales_default;
   function hasColorscale(trace, containerStr, colorKey) {
     var container = containerStr ? lib_default.nestedProperty(trace, containerStr).get() || {} : trace;
-    var color2 = container[colorKey || "color"];
-    if (color2 && color2._inputArray) color2 = color2._inputArray;
+    var color3 = container[colorKey || "color"];
+    if (color3 && color3._inputArray) color3 = color3._inputArray;
     var isArrayWithOneNumber = false;
-    if (lib_default.isArrayOrTypedArray(color2)) {
-      for (var i = 0; i < color2.length; i++) {
-        if ((0, import_fast_isnumeric13.default)(color2[i])) {
+    if (lib_default.isArrayOrTypedArray(color3)) {
+      for (var i = 0; i < color3.length; i++) {
+        if ((0, import_fast_isnumeric13.default)(color3[i])) {
           isArrayWithOneNumber = true;
           break;
         }
@@ -33668,10 +30136,10 @@ var Plotly = (() => {
     var N = range.length;
     var _range = new Array(N);
     for (var i = 0; i < N; i++) {
-      var rgba = tinycolor(range[i]).toRgb();
-      _range[i] = [rgba.r, rgba.g, rgba.b, rgba.a];
+      var rgba2 = tinycolor(range[i]).toRgb();
+      _range[i] = [rgba2.r, rgba2.g, rgba2.b, rgba2.a];
     }
-    var _sclFunc = import_d37.default.scale.linear().domain(domain).range(_range).clamp(true);
+    var _sclFunc = linear3().domain(domain).range(_range).clamp(true);
     var noNumericCheck = opts.noNumericCheck;
     var returnArray = opts.returnArray;
     var sclFunc;
@@ -33793,7 +30261,7 @@ var Plotly = (() => {
     valType: "data_array",
     editType: "ticks"
   };
-  var ticks = {
+  var ticks2 = {
     valType: "enumerated",
     values: ["outside", "inside", ""],
     editType: "ticks"
@@ -34075,7 +30543,7 @@ var Plotly = (() => {
       valType: "data_array",
       editType: "ticks"
     },
-    ticks,
+    ticks: ticks2,
     tickson: {
       valType: "enumerated",
       values: ["labels", "boundaries"],
@@ -34384,7 +30852,7 @@ var Plotly = (() => {
       tick0,
       dtick,
       tickvals,
-      ticks,
+      ticks: ticks2,
       ticklen: makeTicklen("minor"),
       tickwidth: makeTickwidth("minor"),
       tickcolor,
@@ -34629,15 +31097,15 @@ var Plotly = (() => {
     }
     var effectDesc = onlyIfNumerical ? " Has an effect only if " + colorAttrFull + " is set to a numerical array." : "";
     var auto = cLetter + "auto";
-    var min = cLetter + "min";
-    var max = cLetter + "max";
+    var min2 = cLetter + "min";
+    var max2 = cLetter + "max";
     var mid = cLetter + "mid";
     var autoFull = code(contextHead + auto);
-    var minFull = code(contextHead + min);
-    var maxFull = code(contextHead + max);
+    var minFull = code(contextHead + min2);
+    var maxFull = code(contextHead + max2);
     var minmaxFull = minFull + " and " + maxFull;
     var autoImpliedEdits = {};
-    autoImpliedEdits[min] = autoImpliedEdits[max] = void 0;
+    autoImpliedEdits[min2] = autoImpliedEdits[max2] = void 0;
     var minmaxImpliedEdits = {};
     minmaxImpliedEdits[auto] = false;
     var attrs3 = {};
@@ -34657,13 +31125,13 @@ var Plotly = (() => {
       editType: "calc",
       impliedEdits: autoImpliedEdits
     };
-    attrs3[min] = {
+    attrs3[min2] = {
       valType: "number",
       dflt: null,
       editType: editTypeOverride || "plot",
       impliedEdits: minmaxImpliedEdits
     };
-    attrs3[max] = {
+    attrs3[max2] = {
       valType: "number",
       dflt: null,
       editType: editTypeOverride || "plot",
@@ -34949,7 +31417,7 @@ var Plotly = (() => {
         }
       }
       if (axType !== "category") {
-        var tickFormat = coerce3("tickformat");
+        var tickFormat2 = coerce3("tickformat");
         handleArrayContainerDefaults(containerIn, containerOut, {
           name: "tickformatstops",
           inclusionAttr: "enabled",
@@ -34958,7 +31426,7 @@ var Plotly = (() => {
         if (!containerOut.tickformatstops.length) {
           delete containerOut.tickformatstops;
         }
-        if (!options.noExp && !tickFormat && axType !== "date") {
+        if (!options.noExp && !tickFormat2 && axType !== "date") {
           coerce3("showexponent", showAttrDflt);
           coerce3("exponentformat");
           coerce3("minexponent");
@@ -35267,8 +31735,8 @@ var Plotly = (() => {
     var container = containerStr ? lib_default.nestedProperty(trace, containerStr).get() : trace;
     var cOpts = extractOpts3(container);
     var auto = cOpts.auto !== false;
-    var min = cOpts.min;
-    var max = cOpts.max;
+    var min2 = cOpts.min;
+    var max2 = cOpts.max;
     var mid = cOpts.mid;
     var minVal = function() {
       return lib_default.aggNums(Math.min, null, vals);
@@ -35276,41 +31744,41 @@ var Plotly = (() => {
     var maxVal = function() {
       return lib_default.aggNums(Math.max, null, vals);
     };
-    if (min === void 0) {
-      min = minVal();
+    if (min2 === void 0) {
+      min2 = minVal();
     } else if (auto) {
-      if (container._colorAx && (0, import_fast_isnumeric16.default)(min)) {
-        min = Math.min(min, minVal());
+      if (container._colorAx && (0, import_fast_isnumeric16.default)(min2)) {
+        min2 = Math.min(min2, minVal());
       } else {
-        min = minVal();
+        min2 = minVal();
       }
     }
-    if (max === void 0) {
-      max = maxVal();
+    if (max2 === void 0) {
+      max2 = maxVal();
     } else if (auto) {
-      if (container._colorAx && (0, import_fast_isnumeric16.default)(max)) {
-        max = Math.max(max, maxVal());
+      if (container._colorAx && (0, import_fast_isnumeric16.default)(max2)) {
+        max2 = Math.max(max2, maxVal());
       } else {
-        max = maxVal();
+        max2 = maxVal();
       }
     }
     if (auto && mid !== void 0) {
-      if (max - mid > mid - min) {
-        min = mid - (max - mid);
-      } else if (max - mid < mid - min) {
-        max = mid + (mid - min);
+      if (max2 - mid > mid - min2) {
+        min2 = mid - (max2 - mid);
+      } else if (max2 - mid < mid - min2) {
+        max2 = mid + (mid - min2);
       }
     }
-    if (min === max) {
-      min -= 0.5;
-      max += 0.5;
+    if (min2 === max2) {
+      min2 -= 0.5;
+      max2 += 0.5;
     }
-    cOpts._sync("min", min);
-    cOpts._sync("max", max);
+    cOpts._sync("min", min2);
+    cOpts._sync("max", max2);
     if (cOpts.autocolorscale) {
       var scl;
-      if (min * max < 0) scl = fullLayout.colorscale.diverging;
-      else if (min >= 0) scl = fullLayout.colorscale.sequential;
+      if (min2 * max2 < 0) scl = fullLayout.colorscale.diverging;
+      else if (min2 >= 0) scl = fullLayout.colorscale.sequential;
       else scl = fullLayout.colorscale.sequentialminus;
       cOpts._sync("colorscale", scl);
     }
@@ -35548,12 +32016,9 @@ var Plotly = (() => {
 
   // src/components/drawing/symbol_defs.js
   var import_parse_svg_path = __toESM(require_parse_svg_path(), 1);
-  var round = (
-    // require('@plotly/d3').round;
-    function(x, n) {
-      return n ? Math.round(x * (n = Math.pow(10, n))) / n : Math.round(x);
-    }
-  );
+  function round(x, n) {
+    return n ? Math.round(x * (n = Math.pow(10, n))) / n : Math.round(x);
+  }
   var emptyPath = "M0,0Z";
   var sqrt2 = Math.sqrt(2);
   var sqrt3 = Math.sqrt(3);
@@ -36228,6 +32693,9 @@ var Plotly = (() => {
   }
 
   // src/components/drawing/index.js
+  function d3Round(x, n) {
+    return n ? Math.round(x * (n = Math.pow(10, n))) / n : Math.round(x);
+  }
   var { DESELECTDIM: DESELECTDIM2 } = interactions_default;
   var numberFormat = lib_default.numberFormat;
   var strTranslate2 = lib_default.strTranslate;
@@ -36237,7 +32705,7 @@ var Plotly = (() => {
     var variant = font2.variant;
     var style11 = font2.style;
     var weight = font2.weight;
-    var color2 = font2.color;
+    var color3 = font2.color;
     var size = font2.size;
     var family = font2.family;
     var shadow = font2.shadow;
@@ -36245,7 +32713,7 @@ var Plotly = (() => {
     var textcase = font2.textcase;
     if (family) s.style("font-family", family);
     if (size + 1) s.style("font-size", size + "px");
-    if (color2) s.call(color_default.fill, color2);
+    if (color3) s.call(color_default.fill, color3);
     if (weight) s.style("font-weight", weight);
     if (style11) s.style("font-style", style11);
     if (variant) s.style("font-variant", variant);
@@ -36253,7 +32721,7 @@ var Plotly = (() => {
     if (shadow)
       s.style(
         "text-shadow",
-        shadow === "auto" ? svg_text_utils_default.makeTextShadow(color_default.contrast(color2)) : dropNone(shadow)
+        shadow === "auto" ? svg_text_utils_default.makeTextShadow(color_default.contrast(color3)) : dropNone(shadow)
       );
     if (lineposition) s.style("text-decoration-line", dropNone(lineposition2decorationLine(lineposition)));
   };
@@ -36297,7 +32765,7 @@ var Plotly = (() => {
   };
   drawing.translatePoints = function(s, xa, ya) {
     s.each(function(d) {
-      var sel = import_d38.default.select(this);
+      var sel = select_default2(this);
       drawing.translatePoint(d, sel, xa, ya);
     });
   };
@@ -36314,7 +32782,7 @@ var Plotly = (() => {
       var ycalendar = trace.ycalendar;
       var selector = registry_default.traceIs(trace, "bar-like") ? ".bartext" : ".point,.textpoint";
       traceGroups.selectAll(selector).each(function(d2) {
-        drawing.hideOutsideRangePoint(d2, import_d38.default.select(this), xa, ya, xcalendar, ycalendar);
+        drawing.hideOutsideRangePoint(d2, select_default2(this), xa, ya, xcalendar, ycalendar);
       });
     });
   };
@@ -36337,7 +32805,7 @@ var Plotly = (() => {
       var line = (((d || [])[0] || {}).trace || {}).line || {};
       var lw1 = lw || line.width || 0;
       var dash2 = ld || line.dash || "";
-      import_d38.default.select(this).call(color_default.stroke, lc || line.color).call(drawing.dashLine, dash2, lw1);
+      select_default2(this).call(color_default.stroke, lc || line.color).call(drawing.dashLine, dash2, lw1);
     });
   };
   drawing.dashLine = function(s, dash2, lineWidth) {
@@ -36395,9 +32863,9 @@ var Plotly = (() => {
         gradientID = "legendfill-" + trace.uid;
       }
       if (!forLegend && (fillgradient.start !== void 0 || fillgradient.stop !== void 0)) {
-        var start, stop;
+        var start2, stop;
         if (direction === "horizontal") {
-          start = {
+          start2 = {
             x: fillgradient.start,
             y: 0
           };
@@ -36406,7 +32874,7 @@ var Plotly = (() => {
             y: 0
           };
         } else if (direction === "vertical") {
-          start = {
+          start2 = {
             x: 0,
             y: fillgradient.start
           };
@@ -36415,8 +32883,8 @@ var Plotly = (() => {
             y: fillgradient.stop
           };
         }
-        start.x = trace._xA.c2p(start.x === void 0 ? trace._extremes.x.min[0].val : start.x, true);
-        start.y = trace._yA.c2p(start.y === void 0 ? trace._extremes.y.min[0].val : start.y, true);
+        start2.x = trace._xA.c2p(start2.x === void 0 ? trace._extremes.x.min[0].val : start2.x, true);
+        start2.y = trace._yA.c2p(start2.y === void 0 ? trace._extremes.y.min[0].val : start2.y, true);
         stop.x = trace._xA.c2p(stop.x === void 0 ? trace._extremes.x.max[0].val : stop.x, true);
         stop.y = trace._yA.c2p(stop.y === void 0 ? trace._extremes.y.max[0].val : stop.y, true);
         sel.call(
@@ -36426,7 +32894,7 @@ var Plotly = (() => {
           "linear",
           fillgradient.colorscale,
           "fill",
-          start,
+          start2,
           stop,
           true,
           false
@@ -36442,14 +32910,14 @@ var Plotly = (() => {
     }
   }
   drawing.singleFillStyle = function(sel, gd) {
-    var node = import_d38.default.select(sel.node());
+    var node = select_default2(sel.node());
     var data = node.data();
     var trace = ((data[0] || [])[0] || {}).trace || {};
     setFillStyle(sel, trace, gd, false);
   };
   drawing.fillGroupStyle = function(s, gd, forLegend) {
     s.style("stroke-width", 0).each(function(d) {
-      var shape = import_d38.default.select(this);
+      var shape = select_default2(this);
       if (d[0].trace) {
         setFillStyle(shape, d[0].trace, gd, forLegend);
       }
@@ -36545,15 +33013,15 @@ var Plotly = (() => {
       info.reversed
     );
   };
-  function gradientWithBounds(sel, gd, gradientID, type, colorscale, prop, start, stop, inUserSpace, reversed) {
+  function gradientWithBounds(sel, gd, gradientID, type, colorscale, prop, start2, stop, inUserSpace, reversed) {
     var len2 = colorscale.length;
     var info;
     if (type === "linear") {
       info = {
         node: "linearGradient",
         attrs: {
-          x1: start.x,
-          y1: start.y,
+          x1: start2.x,
+          y1: start2.y,
           x2: stop.x,
           y2: stop.y,
           gradientUnits: inUserSpace ? "userSpaceOnUse" : "objectBoundingBox"
@@ -36579,7 +33047,7 @@ var Plotly = (() => {
     var gradient = fullLayout._defs.select(".gradients").selectAll("#" + fullID).data([type + colorStops.join(";")], lib_default.identity);
     gradient.exit().remove();
     gradient.enter().append(info.node).each(function() {
-      var el = import_d38.default.select(this);
+      var el = select_default2(this);
       if (info.attrs) el.attr(info.attrs);
       el.attr("id", fullID);
       var stops = el.selectAll("stop").data(colorStops);
@@ -36587,7 +33055,7 @@ var Plotly = (() => {
       stops.enter().append("stop");
       stops.each(function(d) {
         var tc = tinycolor(d[1]);
-        import_d38.default.select(this).attr({
+        select_default2(this).attr({
           offset: d[0] + "%",
           "stop-color": color_default.tinyRGB(tc),
           "stop-opacity": tc.getAlpha()
@@ -36735,7 +33203,7 @@ var Plotly = (() => {
     var pattern2 = fullLayout._defs.select(".patterns").selectAll("#" + fullID).data([str], lib_default.identity);
     pattern2.exit().remove();
     pattern2.enter().append("pattern").each(function() {
-      var el = import_d38.default.select(this);
+      var el = select_default2(this);
       el.attr({
         id: fullID,
         width: width + "px",
@@ -36768,13 +33236,13 @@ var Plotly = (() => {
     var fullLayout = gd._fullLayout;
     var gradientsGroup = lib_default.ensureSingle(fullLayout._defs, "g", "gradients");
     gradientsGroup.selectAll("linearGradient,radialGradient").remove();
-    import_d38.default.select(gd).selectAll(".gradient_filled").classed("gradient_filled", false);
+    select_default2(gd).selectAll(".gradient_filled").classed("gradient_filled", false);
   };
   drawing.initPatterns = function(gd) {
     var fullLayout = gd._fullLayout;
     var patternsGroup = lib_default.ensureSingle(fullLayout._defs, "g", "patterns");
     patternsGroup.selectAll("pattern").remove();
-    import_d38.default.select(gd).selectAll(".pattern_filled").classed("pattern_filled", false);
+    select_default2(gd).selectAll(".pattern_filled").classed("pattern_filled", false);
   };
   drawing.getPatternAttr = function(mp, i, dflt) {
     if (mp && lib_default.isArrayOrTypedArray(mp)) {
@@ -36786,7 +33254,7 @@ var Plotly = (() => {
     if (!s.size()) return;
     var fns = drawing.makePointStyleFns(trace);
     s.each(function(d) {
-      drawing.singlePointStyle(d, import_d38.default.select(this), trace, fns, gd, pt);
+      drawing.singlePointStyle(d, select_default2(this), trace, fns, gd, pt);
     });
   };
   drawing.singlePointStyle = function(d, sel, trace, fns, gd, pt) {
@@ -37025,7 +33493,7 @@ var Plotly = (() => {
     }
     if (seq.length) {
       s.each(function(d) {
-        var pt = import_d38.default.select(this);
+        var pt = select_default2(this);
         for (var i = 0; i < seq.length; i++) {
           seq[i](pt, d);
         }
@@ -37050,7 +33518,7 @@ var Plotly = (() => {
     top: -1
   };
   function textPointPosition(s, textPosition, fontSize, markerRadius, dontTouchParent) {
-    var group = import_d38.default.select(s.node().parentNode);
+    var group = select_default2(s.node().parentNode);
     var v = textPosition.indexOf("top") !== -1 ? "top" : textPosition.indexOf("bottom") !== -1 ? "bottom" : "middle";
     var h = textPosition.indexOf("left") !== -1 ? "end" : textPosition.indexOf("right") !== -1 ? "start" : "middle";
     var r = markerRadius ? markerRadius / 0.8 + 1 : 0;
@@ -37076,7 +33544,7 @@ var Plotly = (() => {
     var texttemplate = trace.texttemplate;
     var fullLayout = gd._fullLayout;
     s.each(function(d) {
-      var p = import_d38.default.select(this);
+      var p = select_default2(this);
       var text = texttemplate ? lib_default.extractOption(d, trace, "txt", "texttemplate") : lib_default.extractOption(d, trace, "tx", "text");
       if (!text && text !== 0) {
         p.remove();
@@ -37115,7 +33583,7 @@ var Plotly = (() => {
     if (!s.size() || !trace.selectedpoints) return;
     var fns = drawing.makeSelectedTextStyleFns(trace);
     s.each(function(d) {
-      var tx = import_d38.default.select(this);
+      var tx = select_default2(this);
       var tc = fns.selectedTextColorFn(d);
       var tp = d.tp || trace.textposition;
       var fontSize = extracTextFontSize(d, trace);
@@ -37167,12 +33635,12 @@ var Plotly = (() => {
     return isY ? roundY(pt[1]) : roundX(pt[0]);
   }
   function roundX(p) {
-    var v = import_d38.default.round(p, 2);
+    var v = d3Round(p, 2);
     lastDrawnX = v;
     return v;
   }
   function roundY(p) {
-    var v = import_d38.default.round(p, 2);
+    var v = d3Round(p, 2);
     lastDrawnY = v;
     return v;
   }
@@ -37220,7 +33688,7 @@ var Plotly = (() => {
       return path;
     };
   };
-  function applyBackoff(pt, start) {
+  function applyBackoff(pt, start2) {
     var backoff = pt.backoff;
     var trace = pt.trace;
     var d = pt.d;
@@ -37228,8 +33696,8 @@ var Plotly = (() => {
     if (backoff && trace && trace.marker && trace.marker.angle % 360 === 0 && trace.line && trace.line.shape !== "spline") {
       var arrayBackoff = lib_default.isArrayOrTypedArray(backoff);
       var end = pt;
-      var x1 = start ? start[0] : lastDrawnX || 0;
-      var y1 = start ? start[1] : lastDrawnY || 0;
+      var x1 = start2 ? start2[0] : lastDrawnX || 0;
+      var y1 = start2 ? start2[1] : lastDrawnY || 0;
       var x2 = end[0];
       var y2 = end[1];
       var dx = x2 - x1;
@@ -37257,7 +33725,7 @@ var Plotly = (() => {
   }
   drawing.applyBackoff = applyBackoff;
   drawing.makeTester = function() {
-    var tester2 = lib_default.ensureSingleById(import_d38.default.select("body"), "svg", "js-plotly-tester", function(s) {
+    var tester2 = lib_default.ensureSingleById(select_default2("body"), "svg", "js-plotly-tester", function(s) {
       s.attr(xmlns_namespaces_default.svgAttrs).style({
         position: "absolute",
         left: "-10000px",
@@ -37291,8 +33759,8 @@ var Plotly = (() => {
       if (hash) {
         var x = +innerNode.getAttribute("x") || 0;
         var y = +innerNode.getAttribute("y") || 0;
-        var transform = innerNode.getAttribute("transform");
-        if (!transform) {
+        var transform2 = innerNode.getAttribute("transform");
+        if (!transform2) {
           var innerBB = drawing.bBox(innerNode, false, hash);
           if (x) {
             innerBB.left += x;
@@ -37304,7 +33772,7 @@ var Plotly = (() => {
           }
           return innerBB;
         }
-        hash += "~" + x + "~" + y + "~" + transform;
+        hash += "~" + x + "~" + y + "~" + transform2;
         out = drawing.savedBBoxes[hash];
         if (out) return lib_default.extendFlat({}, out);
       }
@@ -37317,7 +33785,7 @@ var Plotly = (() => {
       testNode = node.cloneNode(true);
       tester2.appendChild(testNode);
     }
-    import_d38.default.select(testNode).attr("transform", null).call(svg_text_utils_default.positionText, 0, 0);
+    select_default2(testNode).attr("transform", null).call(svg_text_utils_default.positionText, 0, 0);
     var testRect = testNode.getBoundingClientRect();
     var refRect = drawing.testref.node().getBoundingClientRect();
     if (!inTester) tester2.removeChild(testNode);
@@ -37352,10 +33820,10 @@ var Plotly = (() => {
     return baseUrl ? "url('" + baseUrl + "#" + localId + "')" : "url(#" + localId + ")";
   }
   drawing.getTranslate = function(element) {
-    var re2 = /.*\btranslate\((-?\d*\.?\d*)[^-\d]*(-?\d*\.?\d*)[^\d].*/;
+    var re3 = /.*\btranslate\((-?\d*\.?\d*)[^-\d]*(-?\d*\.?\d*)[^\d].*/;
     var getter = element.attr ? "attr" : "getAttribute";
-    var transform = element[getter]("transform") || "";
-    var translate = transform.replace(re2, function(match, p1, p2) {
+    var transform2 = element[getter]("transform") || "";
+    var translate = transform2.replace(re3, function(match, p1, p2) {
       return [p1, p2].join(" ");
     }).split(" ");
     return {
@@ -37364,23 +33832,23 @@ var Plotly = (() => {
     };
   };
   drawing.setTranslate = function(element, x, y) {
-    var re2 = /(\btranslate\(.*?\);?)/;
+    var re3 = /(\btranslate\(.*?\);?)/;
     var getter = element.attr ? "attr" : "getAttribute";
     var setter = element.attr ? "attr" : "setAttribute";
-    var transform = element[getter]("transform") || "";
+    var transform2 = element[getter]("transform") || "";
     x = x || 0;
     y = y || 0;
-    transform = transform.replace(re2, "").trim();
-    transform += strTranslate2(x, y);
-    transform = transform.trim();
-    element[setter]("transform", transform);
-    return transform;
+    transform2 = transform2.replace(re3, "").trim();
+    transform2 += strTranslate2(x, y);
+    transform2 = transform2.trim();
+    element[setter]("transform", transform2);
+    return transform2;
   };
   drawing.getScale = function(element) {
-    var re2 = /.*\bscale\((\d*\.?\d*)[^\d]*(\d*\.?\d*)[^\d].*/;
+    var re3 = /.*\bscale\((\d*\.?\d*)[^\d]*(\d*\.?\d*)[^\d].*/;
     var getter = element.attr ? "attr" : "getAttribute";
-    var transform = element[getter]("transform") || "";
-    var translate = transform.replace(re2, function(match, p1, p2) {
+    var transform2 = element[getter]("transform") || "";
+    var translate = transform2.replace(re3, function(match, p1, p2) {
       return [p1, p2].join(" ");
     }).split(" ");
     return {
@@ -37389,25 +33857,25 @@ var Plotly = (() => {
     };
   };
   drawing.setScale = function(element, x, y) {
-    var re2 = /(\bscale\(.*?\);?)/;
+    var re3 = /(\bscale\(.*?\);?)/;
     var getter = element.attr ? "attr" : "getAttribute";
     var setter = element.attr ? "attr" : "setAttribute";
-    var transform = element[getter]("transform") || "";
+    var transform2 = element[getter]("transform") || "";
     x = x || 1;
     y = y || 1;
-    transform = transform.replace(re2, "").trim();
-    transform += "scale(" + x + "," + y + ")";
-    transform = transform.trim();
-    element[setter]("transform", transform);
-    return transform;
+    transform2 = transform2.replace(re3, "").trim();
+    transform2 += "scale(" + x + "," + y + ")";
+    transform2 = transform2.trim();
+    element[setter]("transform", transform2);
+    return transform2;
   };
   var SCALE_RE = /\s*sc.*/;
-  drawing.setPointGroupScale = function(selection, xScale, yScale) {
+  drawing.setPointGroupScale = function(selection2, xScale, yScale) {
     xScale = xScale || 1;
     yScale = yScale || 1;
-    if (!selection) return;
+    if (!selection2) return;
     var scale2 = xScale === 1 && yScale === 1 ? "" : "scale(" + xScale + "," + yScale + ")";
-    selection.each(function() {
+    selection2.each(function() {
       var t = (this.getAttribute("transform") || "").replace(SCALE_RE, "");
       t += scale2;
       t = t.trim();
@@ -37415,11 +33883,11 @@ var Plotly = (() => {
     });
   };
   var TEXT_POINT_LAST_TRANSLATION_RE = /translate\([^)]*\)\s*$/;
-  drawing.setTextPointsScale = function(selection, xScale, yScale) {
-    if (!selection) return;
-    selection.each(function() {
+  drawing.setTextPointsScale = function(selection2, xScale, yScale) {
+    if (!selection2) return;
+    selection2.each(function() {
       var transforms;
-      var el = import_d38.default.select(this);
+      var el = select_default2(this);
       var text = el.select("text");
       if (!text.node()) return;
       var x = parseFloat(text.attr("x") || 0);
@@ -37548,6 +34016,9 @@ var Plotly = (() => {
   var drawing_default = drawing;
 
   // src/components/titles/index.js
+  function d3Round2(x, n) {
+    return n ? Math.round(x * (n = Math.pow(10, n))) / n : Math.round(x);
+  }
   var { OPPOSITE_SIDE } = alignment_default;
   var strTranslate3 = lib_default.strTranslate;
   var numStripRE = / [XY][0-9]* /;
@@ -37561,7 +34032,7 @@ var Plotly = (() => {
     var traceIndex = options.traceIndex;
     var avoid = options.avoid || {};
     var attributes5 = options.attributes;
-    var transform = options.transform;
+    var transform2 = options.transform;
     var group = options.containerGroup;
     var opacity2 = 1;
     var title = cont.title;
@@ -37649,16 +34120,16 @@ var Plotly = (() => {
       var titleEl = titleAndSubtitleEls.title;
       var subtitleEl2 = titleAndSubtitleEls.subtitle;
       var transformVal;
-      if (!transform && hColorbarMoveTitle) {
-        transform = {};
+      if (!transform2 && hColorbarMoveTitle) {
+        transform2 = {};
       }
-      if (transform) {
+      if (transform2) {
         transformVal = "";
-        if (transform.rotate) {
-          transformVal += "rotate(" + [transform.rotate, attributes5.x, attributes5.y] + ")";
+        if (transform2.rotate) {
+          transformVal += "rotate(" + [transform2.rotate, attributes5.x, attributes5.y] + ")";
         }
-        if (transform.offset || hColorbarMoveTitle) {
-          transformVal += strTranslate3(0, (transform.offset || 0) - (hColorbarMoveTitle || 0));
+        if (transform2.offset || hColorbarMoveTitle) {
+          transformVal += strTranslate3(0, (transform2.offset || 0) - (hColorbarMoveTitle || 0));
         }
       } else {
         transformVal = null;
@@ -37666,7 +34137,7 @@ var Plotly = (() => {
       titleEl.attr("transform", transformVal);
       function adjustSubtitlePosition(titleElMathGroup2) {
         if (!titleElMathGroup2) return;
-        var subtitleElement = import_d39.default.select(titleElMathGroup2.node().parentNode).select("." + subtitleClass);
+        var subtitleElement = select_default2(titleElMathGroup2.node().parentNode).select("." + subtitleClass);
         if (!subtitleElement.empty()) {
           var titleElMathBbox2 = titleElMathGroup2.node().getBBox();
           if (titleElMathBbox2.height) {
@@ -37677,7 +34148,7 @@ var Plotly = (() => {
       }
       titleEl.style("opacity", opacity2 * color_default.opacity(fontColor)).call(drawing_default.font, {
         color: color_default.rgb(fontColor),
-        size: import_d39.default.round(fontSize, 2),
+        size: d3Round2(fontSize, 2),
         family: fontFamily,
         weight: fontWeight,
         style: fontStyle,
@@ -37697,7 +34168,7 @@ var Plotly = (() => {
         subtitleEl2.attr("transform", transformVal);
         subtitleEl2.style("opacity", subtitleOpacity * color_default.opacity(subFontColor)).call(drawing_default.font, {
           color: color_default.rgb(subFontColor),
-          size: import_d39.default.round(subFontSize, 2),
+          size: d3Round2(subFontSize, 2),
           family: subFontFamily,
           weight: subFontWeight,
           style: subFontStyle,
@@ -37711,7 +34182,7 @@ var Plotly = (() => {
     }
     function scootTitle(titleAndSubtitleEls) {
       var titleElIn = titleAndSubtitleEls.title;
-      var titleGroup = import_d39.default.select(titleElIn.node().parentNode);
+      var titleGroup = select_default2(titleElIn.node().parentNode);
       if (avoid && avoid.selection && avoid.side && txt) {
         titleGroup.attr("transform", null);
         var backside = OPPOSITE_SIDE[avoid.side];
@@ -37766,9 +34237,9 @@ var Plotly = (() => {
     el.call(titleLayout, subtitleEl);
     function setPlaceholder(element, placeholderText) {
       element.text(placeholderText).on("mouseover.opacity", function() {
-        import_d39.default.select(this).transition().duration(interactions_default.SHOW_PLACEHOLDER).style("opacity", 1);
+        select_default2(this).transition().duration(interactions_default.SHOW_PLACEHOLDER).style("opacity", 1);
       }).on("mouseout.opacity", function() {
-        import_d39.default.select(this).transition().duration(interactions_default.HIDE_PLACEHOLDER).style("opacity", 0);
+        select_default2(this).transition().duration(interactions_default.HIDE_PLACEHOLDER).style("opacity", 0);
       });
     }
     if (editable) {
@@ -37823,8 +34294,8 @@ var Plotly = (() => {
   var isDateTime2 = lib_default.isDateTime;
   var cleanNumber2 = lib_default.cleanNumber;
   var round2 = Math.round;
-  function autoType(array, calendar, opts) {
-    var a = array;
+  function autoType(array2, calendar, opts) {
+    var a = array2;
     var noMultiCategory = opts.noMultiCategory;
     if (isArrayOrTypedArray4(a) && !a.length) return "-";
     if (!noMultiCategory && multiCategory(a)) return "multicategory";
@@ -37899,7 +34370,6 @@ var Plotly = (() => {
   }
 
   // src/plots/cartesian/autorange.js
-  var import_d310 = __toESM(require_d3(), 1);
   var import_fast_isnumeric21 = __toESM(require_fast_isnumeric(), 1);
   var { FP_SAFE } = numerical_default;
   var getFromId2 = axis_ids_default.getFromId;
@@ -37975,7 +34445,7 @@ var Plotly = (() => {
       return Math.max(prev, getPadMax(pt));
     }
     if (minmin === maxmax) {
-      var lower = minmin - 1;
+      var lower2 = minmin - 1;
       var upper = minmin + 1;
       if (toZero) {
         if (minmin === 0) {
@@ -37986,9 +34456,9 @@ var Plotly = (() => {
           newRange = minmin > 0 ? [0, rangeEnd] : [rangeEnd, 0];
         }
       } else if (nonNegative) {
-        newRange = [Math.max(0, lower), Math.max(1, upper)];
+        newRange = [Math.max(0, lower2), Math.max(1, upper)];
       } else {
-        newRange = [lower, upper];
+        newRange = [lower2, upper];
       }
     } else {
       if (toZero) {
@@ -38028,7 +34498,7 @@ var Plotly = (() => {
     }
     return lBreaks;
   }
-  function makePadFn(fullLayout, ax, max) {
+  function makePadFn(fullLayout, ax, max2) {
     var extrappad = 0.05 * ax._length;
     var anchorAxis = ax._anchorAxis || {};
     if ((ax.ticklabelposition || "").indexOf("inside") !== -1 || (anchorAxis.ticklabelposition || "").indexOf("inside") !== -1) {
@@ -38037,23 +34507,23 @@ var Plotly = (() => {
         var rng = lib_default.simpleMap(ax.range, ax.r2l);
         axReverse = rng[1] < rng[0];
       }
-      if (axReverse) max = !max;
+      if (axReverse) max2 = !max2;
     }
-    var zero = 0;
+    var zero3 = 0;
     if (!isLinked2(fullLayout, ax._id)) {
-      zero = padInsideLabelsOnAnchorAxis(fullLayout, ax, max);
+      zero3 = padInsideLabelsOnAnchorAxis(fullLayout, ax, max2);
     }
-    extrappad = Math.max(zero, extrappad);
+    extrappad = Math.max(zero3, extrappad);
     if (ax.constrain === "domain" && ax._inputDomain) {
       extrappad *= (ax._inputDomain[1] - ax._inputDomain[0]) / (ax.domain[1] - ax.domain[0]);
     }
     return function getPad(pt) {
       if (pt.nopad) return 0;
-      return pt.pad + (pt.extrapad ? extrappad : zero);
+      return pt.pad + (pt.extrapad ? extrappad : zero3);
     };
   }
   var TEXTPAD = 3;
-  function padInsideLabelsOnAnchorAxis(fullLayout, ax, max) {
+  function padInsideLabelsOnAnchorAxis(fullLayout, ax, max2) {
     var pad3 = 0;
     var isX = ax._id.charAt(0) === "x";
     for (var subplot in fullLayout._plots) {
@@ -38061,7 +34531,7 @@ var Plotly = (() => {
       if (ax._id !== plotinfo.xaxis._id && ax._id !== plotinfo.yaxis._id) continue;
       var anchorAxis = (isX ? plotinfo.yaxis : plotinfo.xaxis) || {};
       if ((anchorAxis.ticklabelposition || "").indexOf("inside") !== -1) {
-        if (!max && (anchorAxis.side === "left" || anchorAxis.side === "bottom") || max && (anchorAxis.side === "top" || anchorAxis.side === "right")) {
+        if (!max2 && (anchorAxis.side === "left" || anchorAxis.side === "bottom") || max2 && (anchorAxis.side === "top" || anchorAxis.side === "right")) {
           if (anchorAxis._vals) {
             var rad = lib_default.deg2rad(anchorAxis._tickAngles[anchorAxis._id + "tick"] || 0);
             var cosA = Math.abs(Math.cos(rad));
@@ -38070,7 +34540,7 @@ var Plotly = (() => {
               var cls = anchorAxis._id + "tick";
               var tickLabels = anchorAxis._selections[cls];
               tickLabels.each(function(d) {
-                var thisLabel = import_d310.default.select(this);
+                var thisLabel = select_default2(this);
                 var mathjaxGroup = thisLabel.select(".text-math-group");
                 if (mathjaxGroup.empty()) {
                   d.bb = drawing_default.bBox(thisLabel.node());
@@ -38252,29 +34722,29 @@ var Plotly = (() => {
       opts
     };
   }
-  function collapseMinArray(array, newVal, newPad, opts) {
-    collapseArray(array, newVal, newPad, opts, lessOrEqual2);
+  function collapseMinArray(array2, newVal, newPad, opts) {
+    collapseArray(array2, newVal, newPad, opts, lessOrEqual2);
   }
-  function collapseMaxArray(array, newVal, newPad, opts) {
-    collapseArray(array, newVal, newPad, opts, greaterOrEqual2);
+  function collapseMaxArray(array2, newVal, newPad, opts) {
+    collapseArray(array2, newVal, newPad, opts, greaterOrEqual2);
   }
-  function collapseArray(array, newVal, newPad, opts, atLeastAsExtreme) {
+  function collapseArray(array2, newVal, newPad, opts, atLeastAsExtreme) {
     var tozero = opts.tozero;
     var extrapad = opts.extrapad;
     var includeThis = true;
-    for (var j = 0; j < array.length && includeThis; j++) {
-      var v = array[j];
+    for (var j = 0; j < array2.length && includeThis; j++) {
+      var v = array2[j];
       if (atLeastAsExtreme(v.val, newVal) && v.pad >= newPad && (v.extrapad || !extrapad)) {
         includeThis = false;
         break;
       } else if (atLeastAsExtreme(newVal, v.val) && v.pad <= newPad && (extrapad || !v.extrapad)) {
-        array.splice(j, 1);
+        array2.splice(j, 1);
         j--;
       }
     }
     if (includeThis) {
       var clipAtZero = tozero && newVal === 0;
-      array.push({
+      array2.push({
         val: newVal,
         pad: clipAtZero ? 0 : newPad,
         extrapad: clipAtZero ? false : extrapad
@@ -38310,43 +34780,45 @@ var Plotly = (() => {
     }
     return v;
   }
-  function hasValidMinAndMax(ax, min, max) {
-    if (min !== void 0 && max !== void 0) {
-      min = ax.d2l(min);
-      max = ax.d2l(max);
-      return min < max;
+  function hasValidMinAndMax(ax, min2, max2) {
+    if (min2 !== void 0 && max2 !== void 0) {
+      min2 = ax.d2l(min2);
+      max2 = ax.d2l(max2);
+      return min2 < max2;
     }
     return true;
   }
   function applyAutorangeOptions(range, ax) {
     if (!ax || !ax.autorangeoptions) return range;
-    var min = range[0];
-    var max = range[1];
+    var min2 = range[0];
+    var max2 = range[1];
     var include = ax.autorangeoptions.include;
     if (include !== void 0) {
-      var lMin = ax.d2l(min);
-      var lMax = ax.d2l(max);
+      var lMin = ax.d2l(min2);
+      var lMax = ax.d2l(max2);
       if (!lib_default.isArrayOrTypedArray(include)) include = [include];
       for (var i = 0; i < include.length; i++) {
         var v = ax.d2l(include[i]);
         if (lMin >= v) {
           lMin = v;
-          min = v;
+          min2 = v;
         }
         if (lMax <= v) {
           lMax = v;
-          max = v;
+          max2 = v;
         }
       }
     }
-    min = applyAutorangeMinOptions(min, ax);
-    max = applyAutorangeMaxOptions(max, ax);
-    return [min, max];
+    min2 = applyAutorangeMinOptions(min2, ax);
+    max2 = applyAutorangeMaxOptions(max2, ax);
+    return [min2, max2];
   }
 
   // src/plots/cartesian/set_convert.js
-  var import_d311 = __toESM(require_d3(), 1);
   var import_fast_isnumeric22 = __toESM(require_fast_isnumeric(), 1);
+  function d3Round3(x, n) {
+    return n ? Math.round(x * (n = Math.pow(10, n))) / n : Math.round(x);
+  }
   var numberFormat2 = lib_default.numberFormat;
   var cleanNumber3 = lib_default.cleanNumber;
   var ms2DateTime2 = lib_default.ms2DateTime;
@@ -38441,7 +34913,7 @@ var Plotly = (() => {
       return (0, import_fast_isnumeric22.default)(v) ? +v : getCategoryIndex(v);
     }
     function _l2p(v, m, b) {
-      return import_d311.default.round(b + m * v, 2);
+      return d3Round3(b + m * v, 2);
     }
     function _p2l(px, m, b) {
       return (px - b) / m;
@@ -38465,18 +34937,18 @@ var Plotly = (() => {
         var pos = signAx * v;
         var q = 0;
         for (var i = 0; i < len2; i++) {
-          var min = signAx * ax._rangebreaks[i].min;
-          var max = signAx * ax._rangebreaks[i].max;
-          if (pos < min) break;
-          if (pos > max) q = i + 1;
+          var min2 = signAx * ax._rangebreaks[i].min;
+          var max2 = signAx * ax._rangebreaks[i].max;
+          if (pos < min2) break;
+          if (pos > max2) q = i + 1;
           else {
-            q = pos < (min + max) / 2 ? i : i + 1;
+            q = pos < (min2 + max2) / 2 ? i : i + 1;
             break;
           }
         }
-        var b2 = ax._B[q] || 0;
-        if (!isFinite(b2)) return 0;
-        return _l2p(v, ax._m2, b2);
+        var b22 = ax._B[q] || 0;
+        if (!isFinite(b22)) return 0;
+        return _l2p(v, ax._m2, b22);
       };
       p2l = function(px) {
         var len2 = ax._rangebreaks.length;
@@ -38797,7 +35269,7 @@ var Plotly = (() => {
     };
     ax.maskBreaks = function(v) {
       var rangebreaksIn = ax.rangebreaks || [];
-      var bnds, b0, b1, vb, vDate;
+      var bnds, b02, b12, vb, vDate;
       if (!rangebreaksIn._cachedPatterns) {
         rangebreaksIn._cachedPatterns = rangebreaksIn.map(function(brk2) {
           return brk2.enabled && brk2.bounds ? lib_default.simpleMap(
@@ -38818,40 +35290,40 @@ var Plotly = (() => {
           if (brk.bounds) {
             var pattern2 = brk.pattern;
             bnds = rangebreaksIn._cachedPatterns[i];
-            b0 = bnds[0];
-            b1 = bnds[1];
+            b02 = bnds[0];
+            b12 = bnds[1];
             switch (pattern2) {
               case WEEKDAY_PATTERN:
                 vDate = new Date(v);
                 vb = vDate.getUTCDay();
-                if (b0 > b1) {
-                  b1 += 7;
-                  if (vb < b0) vb += 7;
+                if (b02 > b12) {
+                  b12 += 7;
+                  if (vb < b02) vb += 7;
                 }
                 break;
               case HOUR_PATTERN:
                 vDate = new Date(v);
-                var hours2 = vDate.getUTCHours();
-                var minutes2 = vDate.getUTCMinutes();
+                var hours = vDate.getUTCHours();
+                var minutes = vDate.getUTCMinutes();
                 var seconds2 = vDate.getUTCSeconds();
                 var milliseconds2 = vDate.getUTCMilliseconds();
-                vb = hours2 + (minutes2 / 60 + seconds2 / 3600 + milliseconds2 / 36e5);
-                if (b0 > b1) {
-                  b1 += 24;
-                  if (vb < b0) vb += 24;
+                vb = hours + (minutes / 60 + seconds2 / 3600 + milliseconds2 / 36e5);
+                if (b02 > b12) {
+                  b12 += 24;
+                  if (vb < b02) vb += 24;
                 }
                 break;
               case "":
                 vb = v;
                 break;
             }
-            if (vb >= b0 && vb < b1) return BADNUM7;
+            if (vb >= b02 && vb < b12) return BADNUM7;
           } else {
             var vals = rangebreaksIn._cachedValues[i];
             for (var j = 0; j < vals.length; j++) {
-              b0 = vals[j];
-              b1 = b0 + brk.dvalue;
-              if (v >= b0 && v < b1) return BADNUM7;
+              b02 = vals[j];
+              b12 = b02 + brk.dvalue;
+              if (v >= b02 && v < b12) return BADNUM7;
             }
           }
         }
@@ -38859,7 +35331,7 @@ var Plotly = (() => {
       return v;
     };
     ax.locateBreaks = function(r0, r1) {
-      var i, bnds, b0, b1;
+      var i, bnds, b02, b12;
       var rangebreaksOut = [];
       if (!ax.rangebreaks) return rangebreaksOut;
       var rangebreaksIn = ax.rangebreaks.slice().sort(function(a, b) {
@@ -38867,68 +35339,68 @@ var Plotly = (() => {
         if (b.pattern === WEEKDAY_PATTERN && a.pattern === HOUR_PATTERN) return 1;
         return 0;
       });
-      var addBreak = function(min, max) {
-        min = lib_default.constrain(min, r0, r1);
-        max = lib_default.constrain(max, r0, r1);
-        if (min === max) return;
+      var addBreak = function(min2, max2) {
+        min2 = lib_default.constrain(min2, r0, r1);
+        max2 = lib_default.constrain(max2, r0, r1);
+        if (min2 === max2) return;
         var isNewBreak = true;
         for (var j2 = 0; j2 < rangebreaksOut.length; j2++) {
           var brkj = rangebreaksOut[j2];
-          if (min < brkj.max && max >= brkj.min) {
-            if (min < brkj.min) {
-              brkj.min = min;
+          if (min2 < brkj.max && max2 >= brkj.min) {
+            if (min2 < brkj.min) {
+              brkj.min = min2;
             }
-            if (max > brkj.max) {
-              brkj.max = max;
+            if (max2 > brkj.max) {
+              brkj.max = max2;
             }
             isNewBreak = false;
           }
         }
         if (isNewBreak) {
-          rangebreaksOut.push({ min, max });
+          rangebreaksOut.push({ min: min2, max: max2 });
         }
       };
       for (i = 0; i < rangebreaksIn.length; i++) {
         var brk = rangebreaksIn[i];
         if (brk.enabled) {
           if (brk.bounds) {
-            var t02 = r0;
-            var t12 = r1;
+            var t03 = r0;
+            var t13 = r1;
             if (brk.pattern) {
-              t02 = Math.floor(t02);
+              t03 = Math.floor(t03);
             }
             bnds = lib_default.simpleMap(brk.bounds, brk.pattern ? cleanNumber3 : ax.r2l);
-            b0 = bnds[0];
-            b1 = bnds[1];
-            var t0Date = new Date(t02);
+            b02 = bnds[0];
+            b12 = bnds[1];
+            var t0Date = new Date(t03);
             var bndDelta;
             var step;
             switch (brk.pattern) {
               case WEEKDAY_PATTERN:
                 step = ONEWEEK2;
-                bndDelta = ((b1 < b0 ? 7 : 0) + (b1 - b0)) * ONEDAY4;
-                t02 += b0 * ONEDAY4 - (t0Date.getUTCDay() * ONEDAY4 + t0Date.getUTCHours() * ONEHOUR2 + t0Date.getUTCMinutes() * ONEMIN2 + t0Date.getUTCSeconds() * ONESEC2 + t0Date.getUTCMilliseconds());
+                bndDelta = ((b12 < b02 ? 7 : 0) + (b12 - b02)) * ONEDAY4;
+                t03 += b02 * ONEDAY4 - (t0Date.getUTCDay() * ONEDAY4 + t0Date.getUTCHours() * ONEHOUR2 + t0Date.getUTCMinutes() * ONEMIN2 + t0Date.getUTCSeconds() * ONESEC2 + t0Date.getUTCMilliseconds());
                 break;
               case HOUR_PATTERN:
                 step = ONEDAY4;
-                bndDelta = ((b1 < b0 ? 24 : 0) + (b1 - b0)) * ONEHOUR2;
-                t02 += b0 * ONEHOUR2 - (t0Date.getUTCHours() * ONEHOUR2 + t0Date.getUTCMinutes() * ONEMIN2 + t0Date.getUTCSeconds() * ONESEC2 + t0Date.getUTCMilliseconds());
+                bndDelta = ((b12 < b02 ? 24 : 0) + (b12 - b02)) * ONEHOUR2;
+                t03 += b02 * ONEHOUR2 - (t0Date.getUTCHours() * ONEHOUR2 + t0Date.getUTCMinutes() * ONEMIN2 + t0Date.getUTCSeconds() * ONESEC2 + t0Date.getUTCMilliseconds());
                 break;
               default:
-                t02 = Math.min(bnds[0], bnds[1]);
-                t12 = Math.max(bnds[0], bnds[1]);
-                step = t12 - t02;
+                t03 = Math.min(bnds[0], bnds[1]);
+                t13 = Math.max(bnds[0], bnds[1]);
+                step = t13 - t03;
                 bndDelta = step;
             }
-            for (var t = t02; t < t12; t += step) {
+            for (var t = t03; t < t13; t += step) {
               addBreak(t, t + bndDelta);
             }
           } else {
             var vals = lib_default.simpleMap(brk.values, ax.d2c);
             for (var j = 0; j < vals.length; j++) {
-              b0 = vals[j];
-              b1 = b0 + brk.dvalue;
-              addBreak(b0, b1);
+              b02 = vals[j];
+              b12 = b02 + brk.dvalue;
+              addBreak(b02, b12);
             }
           }
         }
@@ -39058,18 +35530,21 @@ var Plotly = (() => {
       }
       return affectedTraces;
     };
-    var locale3 = fullLayout._d3locale;
+    var locale4 = fullLayout._d3locale;
     if (ax.type === "date") {
-      ax._dateFormat = locale3 ? locale3.timeFormat : utcFormat;
+      ax._dateFormat = locale4 ? locale4.timeFormat : utcFormat;
       ax._extraFormat = fullLayout._extraFormat;
     }
     ax._separators = fullLayout.separators;
-    ax._numFormat = locale3 ? locale3.numberFormat : numberFormat2;
+    ax._numFormat = locale4 ? locale4.numberFormat : numberFormat2;
     delete ax._minDtick;
     delete ax._forceTick0;
   }
 
   // src/plots/cartesian/axes.js
+  function d3Round4(x, n) {
+    return n ? Math.round(x * (n = Math.pow(10, n))) / n : Math.round(x);
+  }
   var strTranslate4 = lib_default.strTranslate;
   var ONEMAXYEAR = numerical_default.ONEMAXYEAR;
   var ONEAVGYEAR = numerical_default.ONEAVGYEAR;
@@ -39236,8 +35711,8 @@ var Plotly = (() => {
   axes.getDataToCoordFunc = function(gd, trace, target, targetArray) {
     return getDataConversions(gd, trace, target, targetArray).d2c;
   };
-  axes.counterLetter = function(id) {
-    var axLetter = id.charAt(0);
+  axes.counterLetter = function(id2) {
+    var axLetter = id2.charAt(0);
     if (axLetter === "x") return "y";
     if (axLetter === "y") return "x";
   };
@@ -40099,7 +36574,7 @@ var Plotly = (() => {
       var tickset = dtick3 === "D2" ? roundLog2 : roundLog1;
       var x2 = x + axSign * 0.01;
       var frac = lib_default.roundUp(lib_default.mod(x2, 1), tickset, axrev);
-      return Math.floor(x2) + Math.log(import_d312.default.round(Math.pow(10, frac), 1)) / Math.LN10;
+      return Math.floor(x2) + Math.log(d3Round4(Math.pow(10, frac), 1)) / Math.LN10;
     }
     throw "unrecognized dtick " + String(dtick3);
   };
@@ -40122,21 +36597,21 @@ var Plotly = (() => {
     var dtNum = Number(dtick3.slice(1));
     if (tType === "M") {
       var cnt = 0;
-      var t02 = tick03;
-      var t12, mult, newDTick;
+      var t03 = tick03;
+      var t13, mult, newDTick;
       while (cnt < 10) {
-        t12 = axes.tickIncrement(t02, dtick3, axrev, ax.calendar);
-        if ((t12 - r0) * (t02 - r0) <= 0) {
-          if (axrev) return Math.min(t02, t12);
-          return Math.max(t02, t12);
+        t13 = axes.tickIncrement(t03, dtick3, axrev, ax.calendar);
+        if ((t13 - r0) * (t03 - r0) <= 0) {
+          if (axrev) return Math.min(t03, t13);
+          return Math.max(t03, t13);
         }
-        mult = (r0 - (t02 + t12) / 2) / (t12 - t02);
+        mult = (r0 - (t03 + t13) / 2) / (t13 - t03);
         newDTick = tType + (Math.abs(Math.round(mult)) || 1) * dtNum;
-        t02 = axes.tickIncrement(t02, newDTick, mult < 0 ? !axrev : axrev, ax.calendar);
+        t03 = axes.tickIncrement(t03, newDTick, mult < 0 ? !axrev : axrev, ax.calendar);
         cnt++;
       }
       lib_default.error("tickFirst did not converge", ax);
-      return t02;
+      return t03;
     } else if (tType === "L") {
       return Math.log(sRound(
         (Math.pow(10, r0) - tick03) / dtNum
@@ -40144,7 +36619,7 @@ var Plotly = (() => {
     } else if (tType === "D") {
       var tickset = dtick3 === "D2" ? roundLog2 : roundLog1;
       var frac = lib_default.roundUp(lib_default.mod(r0, 1), tickset, axrev);
-      return Math.floor(r0) + Math.log(import_d312.default.round(Math.pow(10, frac), 1)) / Math.LN10;
+      return Math.floor(r0) + Math.log(d3Round4(Math.pow(10, frac), 1)) / Math.LN10;
     } else throw "unrecognized dtick " + String(dtick3);
   };
   axes.tickText = function(ax, x, hover3, noSuffixPrefix) {
@@ -40410,11 +36885,11 @@ var Plotly = (() => {
       return e;
     }
     var precision = findPrecision(num);
-    var number = num * precision;
-    var gcd = Math.abs(findGCD(number, precision));
+    var number3 = num * precision;
+    var gcd = Math.abs(findGCD(number3, precision));
     return [
       // numerator
-      Math.round(number / gcd),
+      Math.round(number3 / gcd),
       // denominator
       Math.round(precision / gcd)
     ];
@@ -40613,7 +37088,7 @@ var Plotly = (() => {
     }).append("rect");
     axClips.exit().remove();
     axClips.each(function(d) {
-      import_d312.default.select(this).select("rect").attr({
+      select_default2(this).select("rect").attr({
         x: d.x._offset || 0,
         y: d.y._offset || 0,
         width: d.x._length || 1,
@@ -40625,8 +37100,8 @@ var Plotly = (() => {
     var fullLayout = gd._fullLayout;
     if (arg === "redraw") {
       fullLayout._paper.selectAll("g.subplot").each(function(d) {
-        var id = d[0];
-        var plotinfo = fullLayout._plots[id];
+        var id2 = d[0];
+        var plotinfo = fullLayout._plots[id2];
         if (plotinfo) {
           var xa = plotinfo.xaxis;
           var ya = plotinfo.yaxis;
@@ -41097,8 +37572,8 @@ var Plotly = (() => {
     var sideOpposite = { x: "top", y: "right" }[axLetter];
     var main16 = ax.side === sideOpposite ? 1 : -1;
     var out = [-1, 1, main16, -main16];
-    var ticks2 = minor ? (ax.minor || {}).ticks : ax.ticks;
-    if (ticks2 !== "inside" === (axLetter === "x")) {
+    var ticks3 = minor ? (ax.minor || {}).ticks : ax.ticks;
+    if (ticks3 !== "inside" === (axLetter === "x")) {
       out = out.map(function(v) {
         return -v;
       });
@@ -41337,10 +37812,10 @@ var Plotly = (() => {
         })
       ) : []
     );
-    var ticks2 = opts.layer.selectAll("path." + cls).data(vals, tickDataFn);
-    ticks2.exit().remove();
-    ticks2.enter().append("path").classed(cls, 1).classed("ticks", 1).classed("crisp", opts.crisp !== false).each(function(d) {
-      return color_default.stroke(import_d312.default.select(this), d.minor ? ax.minor.tickcolor : ax.tickcolor);
+    var ticks3 = opts.layer.selectAll("path." + cls).data(vals, tickDataFn);
+    ticks3.exit().remove();
+    ticks3.enter().append("path").classed(cls, 1).classed("ticks", 1).classed("crisp", opts.crisp !== false).each(function(d) {
+      return color_default.stroke(select_default2(this), d.minor ? ax.minor.tickcolor : ax.tickcolor);
     }).style("stroke-width", function(d) {
       return drawing_default.crispRound(
         gd,
@@ -41349,7 +37824,7 @@ var Plotly = (() => {
       ) + "px";
     }).attr("d", opts.path).style("display", null);
     hideCounterAxisInsideTickLabels(ax, [TICK_PATH]);
-    ticks2.attr("transform", opts.transFn);
+    ticks3.attr("transform", opts.transFn);
   };
   axes.drawGrid = function(gd, ax, opts) {
     opts = opts || {};
@@ -41388,7 +37863,7 @@ var Plotly = (() => {
       grid.enter().append("path").classed(cls, 1).classed("crisp", opts.crisp !== false);
       grid.attr("transform", opts.transFn).attr("d", opts.path).each(function(d) {
         return color_default.stroke(
-          import_d312.default.select(this),
+          select_default2(this),
           d.minor ? ax.minor.gridcolor : ax.gridcolor || "#ddd"
         );
       }).style("stroke-dasharray", function(d) {
@@ -41432,7 +37907,7 @@ var Plotly = (() => {
     var tickLabels = opts.layer.selectAll("g." + cls).data(ax.showticklabels ? vals : [], tickDataFn);
     var labelsReady = [];
     tickLabels.enter().append("g").classed(cls, 1).append("text").attr("text-anchor", "middle").each(function(d) {
-      var thisLabel = import_d312.default.select(this);
+      var thisLabel = select_default2(this);
       var newPromise = gd._promises.length;
       thisLabel.call(svg_text_utils_default.positionText, labelFns.xFn(d), labelFns.yFn(d)).call(drawing_default.font, {
         family: d.font,
@@ -41457,25 +37932,25 @@ var Plotly = (() => {
     tickLabels.exit().remove();
     if (opts.repositionOnUpdate) {
       tickLabels.each(function(d) {
-        import_d312.default.select(this).select("text").call(svg_text_utils_default.positionText, labelFns.xFn(d), labelFns.yFn(d));
+        select_default2(this).select("text").call(svg_text_utils_default.positionText, labelFns.xFn(d), labelFns.yFn(d));
       });
     }
     function positionLabels(s, angle) {
       s.each(function(d) {
-        var thisLabel = import_d312.default.select(this);
+        var thisLabel = select_default2(this);
         var mathjaxGroup = thisLabel.select(".text-math-group");
         var anchor = labelFns.anchorFn(d, angle);
-        var transform = opts.transFn.call(thisLabel.node(), d) + ((0, import_fast_isnumeric23.default)(angle) && +angle !== 0 ? " rotate(" + angle + "," + labelFns.xFn(d) + "," + (labelFns.yFn(d) - d.fontSize / 2) + ")" : "");
+        var transform2 = opts.transFn.call(thisLabel.node(), d) + ((0, import_fast_isnumeric23.default)(angle) && +angle !== 0 ? " rotate(" + angle + "," + labelFns.xFn(d) + "," + (labelFns.yFn(d) - d.fontSize / 2) + ")" : "");
         var nLines = svg_text_utils_default.lineCount(thisLabel);
         var lineHeight = LINE_SPACING3 * d.fontSize;
         var anchorHeight = labelFns.heightFn(d, (0, import_fast_isnumeric23.default)(angle) ? +angle : 0, (nLines - 1) * lineHeight);
         if (anchorHeight) {
-          transform += strTranslate4(0, anchorHeight);
+          transform2 += strTranslate4(0, anchorHeight);
         }
         if (mathjaxGroup.empty()) {
           var thisText = thisLabel.select("text");
           thisText.attr({
-            transform,
+            transform: transform2,
             "text-anchor": anchor
           });
           thisText.style("display", null);
@@ -41485,7 +37960,7 @@ var Plotly = (() => {
         } else {
           var mjWidth = drawing_default.bBox(mathjaxGroup.node()).width;
           var mjShift = mjWidth * { end: -0.5, start: 0.5 }[anchor];
-          mathjaxGroup.attr("transform", transform + strTranslate4(mjShift, 0));
+          mathjaxGroup.attr("transform", transform2 + strTranslate4(mjShift, 0));
         }
       });
     }
@@ -41501,23 +37976,23 @@ var Plotly = (() => {
         p02 = ax.l2p(rl[0]) + ax._offset;
         p12 = ax.l2p(rl[1]) + ax._offset;
       }
-      var min = Math.min(p02, p12);
-      var max = Math.max(p02, p12);
+      var min2 = Math.min(p02, p12);
+      var max2 = Math.max(p02, p12);
       var side = ax.side;
       var visibleLabelMin = Infinity;
       var visibleLabelMax = -Infinity;
       tickLabels.each(function(d) {
-        var thisLabel = import_d312.default.select(this);
+        var thisLabel = select_default2(this);
         var mathjaxGroup = thisLabel.select(".text-math-group");
         if (mathjaxGroup.empty()) {
           var bb = drawing_default.bBox(thisLabel.node());
           var adjust = 0;
           if (isX) {
-            if (bb.right > max) adjust = 1;
-            else if (bb.left < min) adjust = 1;
+            if (bb.right > max2) adjust = 1;
+            else if (bb.left < min2) adjust = 1;
           } else {
-            if (bb.bottom > max) adjust = 1;
-            else if (bb.top + (ax.tickangle ? 0 : d.fontSize / 4) < min) adjust = 1;
+            if (bb.bottom > max2) adjust = 1;
+            else if (bb.top + (ax.tickangle ? 0 : d.fontSize / 4) < min2) adjust = 1;
           }
           var t = thisLabel.select("text");
           if (adjust) {
@@ -41574,13 +38049,13 @@ var Plotly = (() => {
             else if (e.K === GRID_PATH.K) sel = mainPlotinfo.gridlayer.selectAll("." + ax._id);
             else sel = mainPlotinfo[ax._id.charAt(0) + "axislayer"];
             sel.each(function() {
-              var w = import_d312.default.select(this);
+              var w = select_default2(this);
               if (e.L) w = w.selectAll(e.L);
               w.each(function(d) {
                 var q = ax.l2p(
                   isPeriodLabel ? getPosX(d) : d.x
                 ) + ax._offset;
-                var t = import_d312.default.select(this);
+                var t = select_default2(this);
                 if (q < ax["_visibleLabelMax_" + anchorAx2._id] && q > ax["_visibleLabelMin_" + anchorAx2._id]) {
                   t.style("display", "none");
                 } else if (e.K === "tick" && !idx && t.node().style.display !== "none") {
@@ -41630,8 +38105,8 @@ var Plotly = (() => {
         var hypotenuse = Math.sqrt(Math.pow(adjacent, 2) + Math.pow(opposite, 2));
         var maxCos = adjacent / hypotenuse;
         var autoTickAnglesRadians = ax.autotickangles.map(
-          function(degrees) {
-            return degrees * Math.PI / 180;
+          function(degrees2) {
+            return degrees2 * Math.PI / 180;
           }
         );
         var angleRadians = autoTickAnglesRadians.find(
@@ -41863,14 +38338,14 @@ var Plotly = (() => {
       }
     }
     var pos = axes.getPxPosition(gd, ax);
-    var transform, x, y;
+    var transform2, x, y;
     if (axLetter === "x") {
       x = ax._offset + ax._length / 2;
       y = ax.side === "top" ? pos - titleStandoff : pos + titleStandoff;
     } else {
       y = ax._offset + ax._length / 2;
       x = ax.side === "right" ? pos + titleStandoff : pos - titleStandoff;
-      transform = { rotate: "-90", offset: 0 };
+      transform2 = { rotate: "-90", offset: 0 };
     }
     var avoid;
     if (ax.type !== "multicategory") {
@@ -41894,7 +38369,7 @@ var Plotly = (() => {
       propName: ax._name + ".title.text",
       placeholder: fullLayout._dfltTitle[axLetter],
       avoid,
-      transform,
+      transform: transform2,
       attributes: { x, y, "text-anchor": "middle" }
     });
   }
@@ -41960,7 +38435,7 @@ var Plotly = (() => {
     return false;
   }
   function selectTickLabel(gTick) {
-    var s = import_d312.default.select(gTick);
+    var s = select_default2(gTick);
     var mj = s.select(".text-math-group");
     return mj.empty() ? s.select("text") : mj;
   }
@@ -42126,10 +38601,10 @@ var Plotly = (() => {
       }
     }
   }
-  function incrementShift(ax, shiftVal, axShifts, normalize) {
+  function incrementShift(ax, shiftVal, axShifts, normalize2) {
     var overlay = ax.anchor !== "free" && (ax.overlaying === void 0 || ax.overlaying === false) ? ax._id : ax.overlaying;
     var shiftValAdj;
-    if (normalize) {
+    if (normalize2) {
       shiftValAdj = ax.side === "right" ? shiftVal : -shiftVal;
     } else {
       shiftValAdj = shiftVal;
@@ -42145,8 +38620,8 @@ var Plotly = (() => {
   function setShiftVal(ax, axShifts) {
     return ax.autoshift ? axShifts[ax.overlaying][ax.side] : ax.shift || 0;
   }
-  function periodCompatibleWithTickformat(period, tickformat) {
-    return /%f/.test(tickformat) ? period >= ONEMICROSEC : /%L/.test(tickformat) ? period >= ONEMILLI : /%[SX]/.test(tickformat) ? period >= ONESEC3 : /%M/.test(tickformat) ? period >= ONEMIN3 : /%[HI]/.test(tickformat) ? period >= ONEHOUR3 : /%p/.test(tickformat) ? period >= HALFDAY : /%[Aadejuwx]/.test(tickformat) ? period >= ONEDAY5 : /%[UVW]/.test(tickformat) ? period >= ONEWEEK3 : /%[Bbm]/.test(tickformat) ? period >= ONEMINMONTH : /%[q]/.test(tickformat) ? period >= ONEMINQUARTER : /%[Yy]/.test(tickformat) ? period >= ONEMINYEAR : true;
+  function periodCompatibleWithTickformat(period2, tickformat) {
+    return /%f/.test(tickformat) ? period2 >= ONEMICROSEC : /%L/.test(tickformat) ? period2 >= ONEMILLI : /%[SX]/.test(tickformat) ? period2 >= ONESEC3 : /%M/.test(tickformat) ? period2 >= ONEMIN3 : /%[HI]/.test(tickformat) ? period2 >= ONEHOUR3 : /%p/.test(tickformat) ? period2 >= HALFDAY : /%[Aadejuwx]/.test(tickformat) ? period2 >= ONEDAY5 : /%[UVW]/.test(tickformat) ? period2 >= ONEWEEK3 : /%[Bbm]/.test(tickformat) ? period2 >= ONEMINMONTH : /%[q]/.test(tickformat) ? period2 >= ONEMINQUARTER : /%[Yy]/.test(tickformat) ? period2 >= ONEMINYEAR : true;
   }
   var axes_default = axes;
 
@@ -42202,12 +38677,6 @@ var Plotly = (() => {
     }
     containerOut.cleanRange();
   }
-
-  // src/plots/cartesian/graph_interact.js
-  var import_d321 = __toESM(require_d3(), 1);
-
-  // src/components/fx/index.js
-  var import_d316 = __toESM(require_d3(), 1);
 
   // src/components/dragelement/index.js
   var import_mouse_event_offset = __toESM(require_mouse_event_offset(), 1);
@@ -42282,7 +38751,7 @@ var Plotly = (() => {
   dragElement.getCursor = getCursor;
   dragElement.unhover = unhover_default.wrapped;
   dragElement.unhoverRaw = unhover_default.raw;
-  dragElement.init = function init(options) {
+  dragElement.init = function init2(options) {
     var gd = options.gd;
     var numClicks = 1;
     var doubleClickDelay = gd._context.doubleClickDelay;
@@ -42453,7 +38922,6 @@ var Plotly = (() => {
   var dragelement_default = dragElement;
 
   // src/components/fx/hover.js
-  var import_d315 = __toESM(require_d3(), 1);
   var import_fast_isnumeric24 = __toESM(require_fast_isnumeric(), 1);
 
   // src/lib/setcursor.js
@@ -42871,8 +39339,271 @@ var Plotly = (() => {
     }
   }
 
-  // src/components/legend/draw.js
-  var import_d314 = __toESM(require_d3(), 1);
+  // node_modules/.pnpm/d3-drag@3.0.0/node_modules/d3-drag/src/noevent.js
+  var nonpassive = { passive: false };
+  var nonpassivecapture = { capture: true, passive: false };
+  function nopropagation(event2) {
+    event2.stopImmediatePropagation();
+  }
+  function noevent_default(event2) {
+    event2.preventDefault();
+    event2.stopImmediatePropagation();
+  }
+
+  // node_modules/.pnpm/d3-drag@3.0.0/node_modules/d3-drag/src/nodrag.js
+  function nodrag_default(view) {
+    var root2 = view.document.documentElement, selection2 = select_default2(view).on("dragstart.drag", noevent_default, nonpassivecapture);
+    if ("onselectstart" in root2) {
+      selection2.on("selectstart.drag", noevent_default, nonpassivecapture);
+    } else {
+      root2.__noselect = root2.style.MozUserSelect;
+      root2.style.MozUserSelect = "none";
+    }
+  }
+  function yesdrag(view, noclick) {
+    var root2 = view.document.documentElement, selection2 = select_default2(view).on("dragstart.drag", null);
+    if (noclick) {
+      selection2.on("click.drag", noevent_default, nonpassivecapture);
+      setTimeout(function() {
+        selection2.on("click.drag", null);
+      }, 0);
+    }
+    if ("onselectstart" in root2) {
+      selection2.on("selectstart.drag", null);
+    } else {
+      root2.style.MozUserSelect = root2.__noselect;
+      delete root2.__noselect;
+    }
+  }
+
+  // node_modules/.pnpm/d3-drag@3.0.0/node_modules/d3-drag/src/constant.js
+  var constant_default3 = (x) => () => x;
+
+  // node_modules/.pnpm/d3-drag@3.0.0/node_modules/d3-drag/src/event.js
+  function DragEvent(type, {
+    sourceEvent,
+    subject,
+    target,
+    identifier,
+    active,
+    x,
+    y,
+    dx,
+    dy,
+    dispatch: dispatch2
+  }) {
+    Object.defineProperties(this, {
+      type: { value: type, enumerable: true, configurable: true },
+      sourceEvent: { value: sourceEvent, enumerable: true, configurable: true },
+      subject: { value: subject, enumerable: true, configurable: true },
+      target: { value: target, enumerable: true, configurable: true },
+      identifier: { value: identifier, enumerable: true, configurable: true },
+      active: { value: active, enumerable: true, configurable: true },
+      x: { value: x, enumerable: true, configurable: true },
+      y: { value: y, enumerable: true, configurable: true },
+      dx: { value: dx, enumerable: true, configurable: true },
+      dy: { value: dy, enumerable: true, configurable: true },
+      _: { value: dispatch2 }
+    });
+  }
+  DragEvent.prototype.on = function() {
+    var value = this._.on.apply(this._, arguments);
+    return value === this._ ? this : value;
+  };
+
+  // node_modules/.pnpm/d3-drag@3.0.0/node_modules/d3-drag/src/drag.js
+  function defaultFilter(event2) {
+    return !event2.ctrlKey && !event2.button;
+  }
+  function defaultContainer() {
+    return this.parentNode;
+  }
+  function defaultSubject(event2, d) {
+    return d == null ? { x: event2.x, y: event2.y } : d;
+  }
+  function defaultTouchable() {
+    return navigator.maxTouchPoints || "ontouchstart" in this;
+  }
+  function drag_default() {
+    var filter3 = defaultFilter, container = defaultContainer, subject = defaultSubject, touchable = defaultTouchable, gestures = {}, listeners = dispatch_default2("start", "drag", "end"), active = 0, mousedownx, mousedowny, mousemoving, touchending, clickDistance2 = 0;
+    function drag(selection2) {
+      selection2.on("mousedown.drag", mousedowned).filter(touchable).on("touchstart.drag", touchstarted).on("touchmove.drag", touchmoved, nonpassive).on("touchend.drag touchcancel.drag", touchended).style("touch-action", "none").style("-webkit-tap-highlight-color", "rgba(0,0,0,0)");
+    }
+    function mousedowned(event2, d) {
+      if (touchending || !filter3.call(this, event2, d)) return;
+      var gesture = beforestart(this, container.call(this, event2, d), event2, d, "mouse");
+      if (!gesture) return;
+      select_default2(event2.view).on("mousemove.drag", mousemoved, nonpassivecapture).on("mouseup.drag", mouseupped, nonpassivecapture);
+      nodrag_default(event2.view);
+      nopropagation(event2);
+      mousemoving = false;
+      mousedownx = event2.clientX;
+      mousedowny = event2.clientY;
+      gesture("start", event2);
+    }
+    function mousemoved(event2) {
+      noevent_default(event2);
+      if (!mousemoving) {
+        var dx = event2.clientX - mousedownx, dy = event2.clientY - mousedowny;
+        mousemoving = dx * dx + dy * dy > clickDistance2;
+      }
+      gestures.mouse("drag", event2);
+    }
+    function mouseupped(event2) {
+      select_default2(event2.view).on("mousemove.drag mouseup.drag", null);
+      yesdrag(event2.view, mousemoving);
+      noevent_default(event2);
+      gestures.mouse("end", event2);
+    }
+    function touchstarted(event2, d) {
+      if (!filter3.call(this, event2, d)) return;
+      var touches = event2.changedTouches, c = container.call(this, event2, d), n = touches.length, i, gesture;
+      for (i = 0; i < n; ++i) {
+        if (gesture = beforestart(this, c, event2, d, touches[i].identifier, touches[i])) {
+          nopropagation(event2);
+          gesture("start", event2, touches[i]);
+        }
+      }
+    }
+    function touchmoved(event2) {
+      var touches = event2.changedTouches, n = touches.length, i, gesture;
+      for (i = 0; i < n; ++i) {
+        if (gesture = gestures[touches[i].identifier]) {
+          noevent_default(event2);
+          gesture("drag", event2, touches[i]);
+        }
+      }
+    }
+    function touchended(event2) {
+      var touches = event2.changedTouches, n = touches.length, i, gesture;
+      if (touchending) clearTimeout(touchending);
+      touchending = setTimeout(function() {
+        touchending = null;
+      }, 500);
+      for (i = 0; i < n; ++i) {
+        if (gesture = gestures[touches[i].identifier]) {
+          nopropagation(event2);
+          gesture("end", event2, touches[i]);
+        }
+      }
+    }
+    function beforestart(that, container2, event2, d, identifier, touch) {
+      var dispatch2 = listeners.copy(), p = pointer_default(touch || event2, container2), dx, dy, s;
+      if ((s = subject.call(that, new DragEvent("beforestart", {
+        sourceEvent: event2,
+        target: drag,
+        identifier,
+        active,
+        x: p[0],
+        y: p[1],
+        dx: 0,
+        dy: 0,
+        dispatch: dispatch2
+      }), d)) == null) return;
+      dx = s.x - p[0] || 0;
+      dy = s.y - p[1] || 0;
+      return function gesture(type, event3, touch2) {
+        var p0 = p, n;
+        switch (type) {
+          case "start":
+            gestures[identifier] = gesture, n = active++;
+            break;
+          case "end":
+            delete gestures[identifier], --active;
+          // falls through
+          case "drag":
+            p = pointer_default(touch2 || event3, container2), n = active;
+            break;
+        }
+        dispatch2.call(
+          type,
+          that,
+          new DragEvent(type, {
+            sourceEvent: event3,
+            subject: s,
+            target: drag,
+            identifier,
+            active: n,
+            x: p[0] + dx,
+            y: p[1] + dy,
+            dx: p[0] - p0[0],
+            dy: p[1] - p0[1],
+            dispatch: dispatch2
+          }),
+          d
+        );
+      };
+    }
+    drag.filter = function(_5) {
+      return arguments.length ? (filter3 = typeof _5 === "function" ? _5 : constant_default3(!!_5), drag) : filter3;
+    };
+    drag.container = function(_5) {
+      return arguments.length ? (container = typeof _5 === "function" ? _5 : constant_default3(_5), drag) : container;
+    };
+    drag.subject = function(_5) {
+      return arguments.length ? (subject = typeof _5 === "function" ? _5 : constant_default3(_5), drag) : subject;
+    };
+    drag.touchable = function(_5) {
+      return arguments.length ? (touchable = typeof _5 === "function" ? _5 : constant_default3(!!_5), drag) : touchable;
+    };
+    drag.on = function() {
+      var value = listeners.on.apply(listeners, arguments);
+      return value === listeners ? drag : value;
+    };
+    drag.clickDistance = function(_5) {
+      return arguments.length ? (clickDistance2 = (_5 = +_5) * _5, drag) : Math.sqrt(clickDistance2);
+    };
+    return drag;
+  }
+
+  // node_modules/.pnpm/d3-zoom@3.0.0/node_modules/d3-zoom/src/transform.js
+  function Transform(k, x, y) {
+    this.k = k;
+    this.x = x;
+    this.y = y;
+  }
+  Transform.prototype = {
+    constructor: Transform,
+    scale: function(k) {
+      return k === 1 ? this : new Transform(this.k * k, this.x, this.y);
+    },
+    translate: function(x, y) {
+      return x === 0 & y === 0 ? this : new Transform(this.k, this.x + this.k * x, this.y + this.k * y);
+    },
+    apply: function(point) {
+      return [point[0] * this.k + this.x, point[1] * this.k + this.y];
+    },
+    applyX: function(x) {
+      return x * this.k + this.x;
+    },
+    applyY: function(y) {
+      return y * this.k + this.y;
+    },
+    invert: function(location) {
+      return [(location[0] - this.x) / this.k, (location[1] - this.y) / this.k];
+    },
+    invertX: function(x) {
+      return (x - this.x) / this.k;
+    },
+    invertY: function(y) {
+      return (y - this.y) / this.k;
+    },
+    rescaleX: function(x) {
+      return x.copy().domain(x.range().map(this.invertX, this).map(x.invert, x));
+    },
+    rescaleY: function(y) {
+      return y.copy().domain(y.range().map(this.invertY, this).map(y.invert, y));
+    },
+    toString: function() {
+      return "translate(" + this.x + "," + this.y + ") scale(" + this.k + ")";
+    }
+  };
+  var identity4 = new Transform(1, 0, 0);
+  transform.prototype = Transform.prototype;
+  function transform(node) {
+    while (!node.__zoom) if (!(node = node.parentNode)) return identity4;
+    return node.__zoom;
+  }
 
   // src/components/legend/handle_click.js
   var pushUnique2 = lib_default.pushUnique;
@@ -43244,25 +39975,22 @@ var Plotly = (() => {
     return legendData;
   }
 
-  // src/components/legend/style.js
-  var import_d313 = __toESM(require_d3(), 1);
-
   // src/traces/pie/helpers.js
-  function format2(vRounded) {
+  function format3(vRounded) {
     return vRounded.indexOf("e") !== -1 ? vRounded.replace(/[.]?0+e/, "e") : vRounded.indexOf(".") !== -1 ? vRounded.replace(/[.]?0+$/, "") : vRounded;
   }
   var formatPiePercent = function formatPiePercent2(v, separators) {
-    var vRounded = format2((v * 100).toPrecision(3));
+    var vRounded = format3((v * 100).toPrecision(3));
     return lib_default.numSeparate(vRounded, separators) + "%";
   };
   var formatPieValue = function formatPieValue2(v, separators) {
-    var vRounded = format2(v.toPrecision(10));
+    var vRounded = format3(v.toPrecision(10));
     return lib_default.numSeparate(vRounded, separators);
   };
-  var getFirstFilled = function getFirstFilled2(array, indices) {
-    if (!lib_default.isArrayOrTypedArray(array)) return;
+  var getFirstFilled = function getFirstFilled2(array2, indices) {
+    if (!lib_default.isArrayOrTypedArray(array2)) return;
     for (var i = 0; i < indices.length; i++) {
-      var v = array[indices[i]];
+      var v = array2[indices[i]];
       if (v || v === 0 || v === "") return v;
     }
   };
@@ -43308,7 +40036,7 @@ var Plotly = (() => {
     var itemWidth = legend.itemwidth;
     var centerPos = (itemWidth + constants_default3.itemGap * 2) / 2;
     var centerTransform = strTranslate5(centerPos, 0);
-    var boundLineWidth = function(mlw, cont, max, cst) {
+    var boundLineWidth = function(mlw, cont, max2, cst) {
       var v;
       if (mlw + 1) {
         v = mlw;
@@ -43317,10 +40045,10 @@ var Plotly = (() => {
       } else {
         return 0;
       }
-      return constantItemSizing ? cst : Math.min(v, max);
+      return constantItemSizing ? cst : Math.min(v, max2);
     };
     s.each(function(d) {
-      var traceGroup = import_d313.default.select(this);
+      var traceGroup = select_default2(this);
       var layers = lib_default.ensureSingle(traceGroup, "g", "layers");
       layers.style("opacity", d[0].trace.opacity);
       var indentation = legend.indentation;
@@ -43348,7 +40076,7 @@ var Plotly = (() => {
       var legendsymbol = trace.legendsymbol;
       var customPath = legendsymbol && legendsymbol.path;
       if (!customPath) return;
-      var thisGroup = import_d313.default.select(this);
+      var thisGroup = select_default2(this);
       thisGroup.select(".legendfill").selectAll("*").remove();
       thisGroup.select(".legendlines").selectAll("*").remove();
       var ptgroup = thisGroup.select("g.legendpoints");
@@ -43409,7 +40137,7 @@ var Plotly = (() => {
         // line thickness and because the line is usually more prominent
         anyLine ? "M5,-2" : "M5,-3"
       );
-      var this3 = import_d313.default.select(this);
+      var this3 = select_default2(this);
       var fill = this3.select(".legendfill").selectAll("path").data(showFill || showGradientFill ? [d] : []);
       fill.enter().append("path").classed("js-fill", true);
       fill.exit().remove();
@@ -43446,9 +40174,9 @@ var Plotly = (() => {
         }
         return valToBound;
       }
-      function pickFirst(array) {
-        if (d0._distinct && d0.index && array[d0.index]) return array[d0.index];
-        return array[0];
+      function pickFirst(array2) {
+        if (d0._distinct && d0.index && array2[d0.index]) return array2[d0.index];
+        return array2[0];
       }
       if (showMarker || showText || showLine) {
         var dEdit = {};
@@ -43491,7 +40219,7 @@ var Plotly = (() => {
         tMod.selectedpoints = null;
         tMod.texttemplate = null;
       }
-      var ptgroup = import_d313.default.select(this).select("g.legendpoints");
+      var ptgroup = select_default2(this).select("g.legendpoints");
       var pts = ptgroup.selectAll("path.scatterpts").data(showMarker ? dMod : []);
       pts.enter().insert("path", ":first-child").classed("scatterpts", true).attr("transform", centerTransform);
       pts.exit().remove();
@@ -43516,11 +40244,11 @@ var Plotly = (() => {
       if (trace.visible && isWaterfall) {
         ptsData = d[0].hasTotals ? [["increasing", "M-6,-6V6H0Z"], ["totals", "M6,6H0L-6,-6H-0Z"], ["decreasing", "M6,6V-6H0Z"]] : [["increasing", "M-6,-6V6H6Z"], ["decreasing", "M6,6V-6H-6Z"]];
       }
-      var pts = import_d313.default.select(this).select("g.legendpoints").selectAll("path.legendwaterfall").data(ptsData);
+      var pts = select_default2(this).select("g.legendpoints").selectAll("path.legendwaterfall").data(ptsData);
       pts.enter().append("path").classed("legendwaterfall", true).attr("transform", centerTransform).style("stroke-miterlimit", 1);
       pts.exit().remove();
       pts.each(function(dd) {
-        var pt = import_d313.default.select(this);
+        var pt = select_default2(this);
         var cont2 = trace[dd[0]].marker;
         var lw = boundLineWidth(void 0, cont2.line, MAX_MARKER_LINE_WIDTH, CST_MARKER_LINE_WIDTH);
         pt.attr("d", dd[1]).style("stroke-width", lw + "px").call(color_default.fill, cont2.color);
@@ -43544,11 +40272,11 @@ var Plotly = (() => {
         "M6,6H-6V-6H6Z"
       );
       var isVisible2 = !desiredType ? registry_default.traceIs(trace, "bar") : trace.visible && trace.type === desiredType;
-      var barpath = import_d313.default.select(lThis).select("g.legendpoints").selectAll("path.legend" + desiredType).data(isVisible2 ? [d] : []);
+      var barpath = select_default2(lThis).select("g.legendpoints").selectAll("path.legend" + desiredType).data(isVisible2 ? [d] : []);
       barpath.enter().append("path").classed("legend" + desiredType, true).attr("d", pathStr).attr("transform", centerTransform);
       barpath.exit().remove();
       barpath.each(function(d2) {
-        var p = import_d313.default.select(this);
+        var p = select_default2(this);
         var d0 = d2[0];
         var w = boundLineWidth(d0.mlw, marker2.line, MAX_MARKER_LINE_WIDTH, CST_MARKER_LINE_WIDTH);
         p.style("stroke-width", w + "px");
@@ -43592,11 +40320,11 @@ var Plotly = (() => {
     }
     function styleBoxes(d) {
       var trace = d[0].trace;
-      var pts = import_d313.default.select(this).select("g.legendpoints").selectAll("path.legendbox").data(trace.visible && registry_default.traceIs(trace, "box-violin") ? [d] : []);
+      var pts = select_default2(this).select("g.legendpoints").selectAll("path.legendbox").data(trace.visible && registry_default.traceIs(trace, "box-violin") ? [d] : []);
       pts.enter().append("path").classed("legendbox", true).attr("d", "M6,6H-6V-6H6Z").attr("transform", centerTransform);
       pts.exit().remove();
       pts.each(function() {
-        var p = import_d313.default.select(this);
+        var p = select_default2(this);
         if ((trace.boxpoints === "all" || trace.points === "all") && color_default.opacity(trace.fillcolor) === 0 && color_default.opacity((trace.line || {}).color) === 0) {
           var tMod = lib_default.minExtend(trace, {
             marker: {
@@ -43616,14 +40344,14 @@ var Plotly = (() => {
     }
     function styleCandles(d) {
       var trace = d[0].trace;
-      var pts = import_d313.default.select(this).select("g.legendpoints").selectAll("path.legendcandle").data(trace.visible && trace.type === "candlestick" ? [d, d] : []);
+      var pts = select_default2(this).select("g.legendpoints").selectAll("path.legendcandle").data(trace.visible && trace.type === "candlestick" ? [d, d] : []);
       pts.enter().append("path").classed("legendcandle", true).attr("d", function(_5, i) {
         if (i) return "M-15,0H-8M-8,6V-6H8Z";
         return "M15,0H8M8,-6V6H-8Z";
       }).attr("transform", centerTransform).style("stroke-miterlimit", 1);
       pts.exit().remove();
       pts.each(function(_5, i) {
-        var p = import_d313.default.select(this);
+        var p = select_default2(this);
         var cont = trace[i ? "increasing" : "decreasing"];
         var w = boundLineWidth(void 0, cont.line, MAX_MARKER_LINE_WIDTH, CST_MARKER_LINE_WIDTH);
         p.style("stroke-width", w + "px").call(color_default.fill, cont.fillcolor);
@@ -43632,14 +40360,14 @@ var Plotly = (() => {
     }
     function styleOHLC(d) {
       var trace = d[0].trace;
-      var pts = import_d313.default.select(this).select("g.legendpoints").selectAll("path.legendohlc").data(trace.visible && trace.type === "ohlc" ? [d, d] : []);
+      var pts = select_default2(this).select("g.legendpoints").selectAll("path.legendohlc").data(trace.visible && trace.type === "ohlc" ? [d, d] : []);
       pts.enter().append("path").classed("legendohlc", true).attr("d", function(_5, i) {
         if (i) return "M-15,0H0M-8,-6V0";
         return "M15,0H0M8,6V0";
       }).attr("transform", centerTransform).style("stroke-miterlimit", 1);
       pts.exit().remove();
       pts.each(function(_5, i) {
-        var p = import_d313.default.select(this);
+        var p = select_default2(this);
         var cont = trace[i ? "increasing" : "decreasing"];
         var w = boundLineWidth(void 0, cont.line, MAX_MARKER_LINE_WIDTH, CST_MARKER_LINE_WIDTH);
         p.style("fill", "none").call(drawing_default.dashLine, cont.line.dash, w);
@@ -43656,7 +40384,7 @@ var Plotly = (() => {
       var d0 = d[0];
       var trace = d0.trace;
       var isVisible2 = !desiredType ? registry_default.traceIs(trace, desiredType) : trace.visible && trace.type === desiredType;
-      var pts = import_d313.default.select(lThis).select("g.legendpoints").selectAll("path.legend" + desiredType).data(isVisible2 ? [d] : []);
+      var pts = select_default2(lThis).select("g.legendpoints").selectAll("path.legend" + desiredType).data(isVisible2 ? [d] : []);
       pts.enter().append("path").classed("legend" + desiredType, true).attr("d", "M6,6H-6V-6H6Z").attr("transform", centerTransform);
       pts.exit().remove();
       if (pts.size()) {
@@ -43746,11 +40474,11 @@ var Plotly = (() => {
             break;
         }
       }
-      var pts = import_d313.default.select(this).select("g.legendpoints").selectAll("path.legend3dandfriends").data(ptsData);
+      var pts = select_default2(this).select("g.legendpoints").selectAll("path.legend3dandfriends").data(ptsData);
       pts.enter().append("path").classed("legend3dandfriends", true).attr("transform", centerTransform).style("stroke-miterlimit", 1);
       pts.exit().remove();
       pts.each(function(dd, i) {
-        var pt = import_d313.default.select(this);
+        var pt = select_default2(this);
         var cOpts = extractOpts4(trace);
         var colorscale = cOpts.colorscale;
         var reversescale = cOpts.reversescale;
@@ -43769,8 +40497,8 @@ var Plotly = (() => {
         };
         var fillColor;
         if (!colorscale) {
-          var color2 = trace.vertexcolor || trace.facecolor || trace.color;
-          fillColor = lib_default.isArrayOrTypedArray(color2) ? color2[i] || color2[0] : color2;
+          var color3 = trace.vertexcolor || trace.facecolor || trace.color;
+          fillColor = lib_default.isArrayOrTypedArray(color3) ? color3[i] || color3[0] : color3;
         } else {
           if (!useGradient) {
             var len2 = colorscale.length;
@@ -43827,9 +40555,9 @@ var Plotly = (() => {
       anyFill: showFill || showGradientFill
     };
   }
-  function dimAttr(v, dflt, max) {
+  function dimAttr(v, dflt, max2) {
     if (v && lib_default.isArrayOrTypedArray(v)) return dflt;
-    if (v > max) return max;
+    if (v > max2) return max2;
     return v;
   }
 
@@ -43847,7 +40575,7 @@ var Plotly = (() => {
       var newLegends = fullLayout._legends;
       var oldLegends = fullLayout._infolayer.selectAll('[class^="legend"]');
       oldLegends.each(function() {
-        var el = import_d314.default.select(this);
+        var el = select_default2(this);
         var classes = el.attr("class");
         var cls = classes.split(" ")[0];
         if (cls.match(LEGEND_PATTERN) && newLegends.indexOf(cls) === -1) {
@@ -43979,9 +40707,9 @@ var Plotly = (() => {
         return trace.visible === "legendonly" ? 0.5 : 1;
       }
     }).each(function() {
-      import_d314.default.select(this).call(drawTexts, gd, legendObj);
+      select_default2(this).call(drawTexts, gd, legendObj);
     }).call(style, gd, legendObj).each(function() {
-      if (!inHover) import_d314.default.select(this).call(setupTraceToggle, gd, legendId);
+      if (!inHover) select_default2(this).call(setupTraceToggle, gd, legendId);
     });
     lib_default.syncOrAsync([
       plots_default.previousPromises,
@@ -44068,15 +40796,15 @@ var Plotly = (() => {
           });
           drawing_default.setClipUrl(scrollBox, clipId, gd);
           scrollHandler(scrollBoxY, scrollBarHeight, scrollRatio);
-          legend.on("wheel", function() {
+          legend.on("wheel", function(event2) {
             scrollBoxY = lib_default.constrain(
-              legendObj._scrollY + import_d314.default.event.deltaY / scrollBoxYMax * scrollBarYMax,
+              legendObj._scrollY + event2.deltaY / scrollBoxYMax * scrollBarYMax,
               0,
               scrollBoxYMax
             );
             scrollHandler(scrollBoxY, scrollBarHeight, scrollRatio);
             if (scrollBoxY !== 0 && scrollBoxY !== scrollBoxYMax) {
-              import_d314.default.event.preventDefault();
+              event2.preventDefault();
             }
           });
           var eventY0, eventY1, scrollBoxY0;
@@ -44088,16 +40816,16 @@ var Plotly = (() => {
             var y = (eventY02 - eventY12) / scrollRatio + scrollBoxY02;
             return lib_default.constrain(y, 0, scrollBoxYMax);
           };
-          var scrollBarDrag = import_d314.default.behavior.drag().on("dragstart", function() {
-            var e = import_d314.default.event.sourceEvent;
+          var scrollBarDrag = drag_default().on("start", function(event2) {
+            var e = event2.sourceEvent;
             if (e.type === "touchstart") {
               eventY0 = e.changedTouches[0].clientY;
             } else {
               eventY0 = e.clientY;
             }
             scrollBoxY0 = scrollBoxY;
-          }).on("drag", function() {
-            var e = import_d314.default.event.sourceEvent;
+          }).on("drag", function(event2) {
+            var e = event2.sourceEvent;
             if (e.buttons === 2 || e.ctrlKey) return;
             if (e.type === "touchmove") {
               eventY1 = e.changedTouches[0].clientY;
@@ -44108,14 +40836,14 @@ var Plotly = (() => {
             scrollHandler(scrollBoxY, scrollBarHeight, scrollRatio);
           });
           scrollBar.call(scrollBarDrag);
-          var scrollBoxTouchDrag = import_d314.default.behavior.drag().on("dragstart", function() {
-            var e = import_d314.default.event.sourceEvent;
+          var scrollBoxTouchDrag = drag_default().on("start", function(event2) {
+            var e = event2.sourceEvent;
             if (e.type === "touchstart") {
               eventY0 = e.changedTouches[0].clientY;
               scrollBoxY0 = scrollBoxY;
             }
-          }).on("drag", function() {
-            var e = import_d314.default.event.sourceEvent;
+          }).on("drag", function(event2) {
+            var e = event2.sourceEvent;
             if (e.type === "touchmove") {
               eventY1 = e.changedTouches[0].clientY;
               scrollBoxY = getNaturalDragY(scrollBoxY0, eventY0, eventY1);
@@ -44146,9 +40874,9 @@ var Plotly = (() => {
               if (e.target === scrollBar.node()) {
                 return;
               }
-              var transform = drawing_default.getTranslate(legend);
-              x0 = transform.x;
-              y0 = transform.y;
+              var transform2 = drawing_default.getTranslate(legend);
+              x0 = transform2.x;
+              y0 = transform2.y;
             },
             moveFn: function(dx, dy) {
               if (x0 !== void 0 && y0 !== void 0) {
@@ -44250,7 +40978,7 @@ var Plotly = (() => {
     var textGap = legendObj.indentation + legendObj.itemwidth + constants_default3.itemGap * 2;
     svg_text_utils_default.positionText(textEl, textGap, 0);
     if (isEditable) {
-      textEl.call(svg_text_utils_default.makeEditable, { gd, text: name8 }).call(textLayout, g, gd, legendObj).on("edit", function(newName) {
+      textEl.call(svg_text_utils_default.makeEditable, { gd, text: name8 }).call(textLayout, g, gd, legendObj).on("edit", function(event2) {
         this.text(ensureLength(newName, maxNameLength)).call(textLayout, g, gd, legendObj);
         var fullInput = legendItem.trace._fullInput || {};
         var update3 = {};
@@ -44283,7 +41011,7 @@ var Plotly = (() => {
       s.call(color_default.fill, "rgba(0,0,0,0)");
     });
     if (gd._context.staticPlot) return;
-    traceToggle.on("mousedown", function() {
+    traceToggle.on("mousedown", function(event2) {
       newMouseDownTime = (/* @__PURE__ */ new Date()).getTime();
       if (newMouseDownTime - gd._legendMouseDownTime < doubleClickDelay) {
         numClicks += 1;
@@ -44292,13 +41020,13 @@ var Plotly = (() => {
         gd._legendMouseDownTime = newMouseDownTime;
       }
     });
-    traceToggle.on("mouseup", function() {
+    traceToggle.on("mouseup", function(event2) {
       if (gd._dragged || gd._editing) return;
       var legend = gd._fullLayout[legendId];
       if ((/* @__PURE__ */ new Date()).getTime() - gd._legendMouseDownTime > doubleClickDelay) {
         numClicks = Math.max(numClicks - 1, 1);
       }
-      clickOrDoubleClick(gd, legend, g, numClicks, import_d314.default.event);
+      clickOrDoubleClick(gd, legend, g, numClicks, event2);
     });
   }
   function textLayout(s, g, gd, legendObj, aTitle) {
@@ -44471,7 +41199,7 @@ var Plotly = (() => {
         groups.each(function() {
           var maxWidthInGroup = 0;
           var offsetY2 = 0;
-          import_d314.default.select(this).selectAll("g.traces").each(function(d) {
+          select_default2(this).selectAll("g.traces").each(function(d) {
             var w = getTraceWidth(d, legendObj, textGap);
             var h = d[0].height;
             drawing_default.setTranslate(
@@ -44556,7 +41284,7 @@ var Plotly = (() => {
     var edits = gd._context.edits;
     var isEditable = edits.legendText || edits.legendPosition;
     traces.each(function(d) {
-      var traceToggle = import_d314.default.select(this).select("." + legendId + "toggle");
+      var traceToggle = select_default2(this).select("." + legendId + "toggle");
       var h = d[0].height;
       var legendgroup = d[0].trace.legendgroup;
       var traceWidth = getTraceWidth(d, legendObj, textGap);
@@ -44733,7 +41461,7 @@ var Plotly = (() => {
       hovermode: "closest",
       rotateLabels,
       bgColor: opts.bgColor || color_default.background,
-      container: import_d315.default.select(opts.container),
+      container: select_default2(opts.container),
       outerContainer: opts.outerContainer || opts.container
     });
     var hoverLabel = hoverText.hoverLabels;
@@ -44793,8 +41521,8 @@ var Plotly = (() => {
       }
     }
     if (plotinfo && hoversubplots !== "single") {
-      var overlayedSubplots = plotinfo.overlays.map(function(pi) {
-        return pi.id;
+      var overlayedSubplots = plotinfo.overlays.map(function(pi2) {
+        return pi2.id;
       });
       subplots = subplots.concat(overlayedSubplots);
     }
@@ -44962,18 +41690,18 @@ var Plotly = (() => {
           pointData.scene = fullLayout._splomScenes[trace.uid];
         }
         if (_mode === "array") {
-          var selection = evt[curvenum];
-          if ("pointNumber" in selection) {
-            pointData.index = selection.pointNumber;
+          var selection2 = evt[curvenum];
+          if ("pointNumber" in selection2) {
+            pointData.index = selection2.pointNumber;
             _mode = "closest";
           } else {
             _mode = "";
-            if ("xval" in selection) {
-              xval = selection.xval;
+            if ("xval" in selection2) {
+              xval = selection2.xval;
               _mode = "x";
             }
-            if ("yval" in selection) {
-              yval = selection.yval;
+            if ("yval" in selection2) {
+              yval = selection2.yval;
               _mode = _mode ? "closest" : "y";
             }
           }
@@ -45152,12 +41880,12 @@ var Plotly = (() => {
       findHoverPoints(winX, winY);
       var finalPoints = [];
       var seen = {};
-      var id = 0;
+      var id2 = 0;
       var insert = function(newHd) {
         var key = multipleHoverPoints[newHd.trace.type] ? hoverDataKey(newHd) : newHd.trace.index;
         if (!seen[key]) {
-          id++;
-          seen[key] = id;
+          id2++;
+          seen[key] = id2;
           finalPoints.push(newHd);
         } else {
           var oldId = seen[key] - 1;
@@ -45229,7 +41957,7 @@ var Plotly = (() => {
     }
     if (eventTarget && eventTarget.tagName) {
       var hasClickToShow2 = registry_default.getComponentMethod("annotations", "hasClickToShow")(gd, newhoverdata);
-      overrideCursor(import_d315.default.select(eventTarget), hasClickToShow2 ? "pointer" : "");
+      overrideCursor(select_default2(eventTarget), hasClickToShow2 ? "pointer" : "");
     }
     if (!eventTarget || noHoverEvent || !hoverChanged(gd, evt, oldhoverdata)) return;
     if (oldhoverdata) {
@@ -45274,18 +42002,18 @@ var Plotly = (() => {
     var ya = c0.ya;
     var axLetter = hovermode.charAt(0);
     var axLabel = axLetter + "Label";
-    var t02 = c0[axLabel];
-    if (t02 === void 0 && xa.type === "multicategory") {
+    var t03 = c0[axLabel];
+    if (t03 === void 0 && xa.type === "multicategory") {
       for (var q = 0; q < hoverData.length; q++) {
-        t02 = hoverData[q][axLabel];
-        if (t02 !== void 0) break;
+        t03 = hoverData[q][axLabel];
+        if (t03 !== void 0) break;
       }
     }
     var outerContainerBB = getBoundingClientRect(gd, outerContainer);
     var outerTop = outerContainerBB.top;
     var outerWidth = outerContainerBB.width;
     var outerHeight = outerContainerBB.height;
-    var showCommonLabel = t02 !== void 0 && c0.distance <= opts.hoverdistance && (hovermode === "x" || hovermode === "y");
+    var showCommonLabel = t03 !== void 0 && c0.distance <= opts.hoverdistance && (hovermode === "x" || hovermode === "y");
     if (showCommonLabel) {
       var allHaveZ = true;
       var i, traceHoverinfo;
@@ -45312,7 +42040,7 @@ var Plotly = (() => {
       maxY: 0
     };
     commonLabel.each(function() {
-      var label = import_d315.default.select(this);
+      var label = select_default2(this);
       var lpath = lib_default.ensureSingle(label, "path", "", function(s) {
         s.style({ "stroke-width": "1px" });
       });
@@ -45338,7 +42066,7 @@ var Plotly = (() => {
         fill: commonBgColor,
         stroke: commonStroke
       });
-      ltext.text(t02).call(drawing_default.font, commonLabelFont).call(svg_text_utils_default.positionText, 0, 0).call(svg_text_utils_default.convertToTspans, gd);
+      ltext.text(t03).call(drawing_default.font, commonLabelFont).call(svg_text_utils_default.positionText, 0, 0).call(svg_text_utils_default.convertToTspans, gd);
       label.attr("transform", "");
       var tbb2 = getBoundingClientRect(gd, ltext.node());
       var lx2, ly2;
@@ -45412,7 +42140,7 @@ var Plotly = (() => {
           svg_text_utils_default.positionText(ltext, ltx, lty);
           if (anchor === "end") {
             ltext.selectAll("tspan").each(function() {
-              var s = import_d315.default.select(this);
+              var s = select_default2(this);
               var dummy = drawing_default.tester.append("text").text(s.text()).call(drawing_default.font, commonLabelFont);
               var dummyBB = getBoundingClientRect(gd, dummy.node());
               if (Math.round(dummyBB.width) < Math.round(tbb2.width)) {
@@ -45441,7 +42169,7 @@ var Plotly = (() => {
       var font2 = hoverlabel.font;
       var item0 = groupedHoverData[0];
       var unifiedhovertitleText = ((hovermode === "x unified" ? item0.xa : item0.ya).unifiedhovertitle || {}).text;
-      var mainText = !unifiedhovertitleText ? t02 : lib_default.hovertemplateString({
+      var mainText = !unifiedhovertitleText ? t03 : lib_default.hovertemplateString({
         data: hovermode === "x unified" ? [{ xa: item0.xa, x: item0.xVal }] : [{ ya: item0.ya, y: item0.yVal }],
         fallback: item0.trace.hovertemplatefallback,
         locale: fullLayout._d3locale,
@@ -45469,7 +42197,7 @@ var Plotly = (() => {
       for (var j = 0; j < groupedHoverData.length; j++) {
         var pt = groupedHoverData[j];
         if (pt.hoverinfo === "none") continue;
-        var texts = getHoverLabelText(pt, true, hovermode, fullLayout, t02);
+        var texts = getHoverLabelText(pt, true, hovermode, fullLayout, t03);
         var text = texts[0];
         var name8 = texts[1];
         pt.name = name8;
@@ -45600,7 +42328,7 @@ var Plotly = (() => {
       return hoverDataKey(d);
     });
     hoverLabels.enter().append("g").classed("hovertext", true).each(function() {
-      var g = import_d315.default.select(this);
+      var g = select_default2(this);
       g.append("rect").call(color_default.fill, color_default.addOpacity(bgColor, 0.8));
       g.append("text").classed("name", true);
       g.append("path").style("stroke-width", "1px");
@@ -45617,7 +42345,7 @@ var Plotly = (() => {
     });
     hoverLabels.exit().remove();
     hoverLabels.each(function(d) {
-      var g = import_d315.default.select(this).attr("transform", "");
+      var g = select_default2(this).attr("transform", "");
       var dColor = d.color;
       if (Array.isArray(dColor)) {
         dColor = dColor[d.eventData[0].pointNumber];
@@ -45626,7 +42354,7 @@ var Plotly = (() => {
       var numsColor = color_default.combine(color_default.opacity(color0) ? color0 : color_default.defaultLine, bgColor);
       var nameColor = color_default.combine(color_default.opacity(dColor) ? dColor : color_default.defaultLine, bgColor);
       var contrastColor = d.borderColor || color_default.contrast(numsColor);
-      var texts2 = getHoverLabelText(d, showCommonLabel, hovermode, fullLayout, t02, g);
+      var texts2 = getHoverLabelText(d, showCommonLabel, hovermode, fullLayout, t03, g);
       var text2 = texts2[0];
       var name9 = texts2[1];
       var tx = g.select("text.nums").call(drawing_default.font, {
@@ -45725,7 +42453,7 @@ var Plotly = (() => {
       commonLabelBoundingBox: commonLabelRect
     };
   }
-  function getHoverLabelText(d, showCommonLabel, hovermode, fullLayout, t02, g) {
+  function getHoverLabelText(d, showCommonLabel, hovermode, fullLayout, t03, g) {
     var _a, _b;
     var name8 = "";
     var text = "";
@@ -45742,7 +42470,7 @@ var Plotly = (() => {
       if (d.trace.type !== "choropleth" && d.trace.type !== "choroplethmapbox" && d.trace.type !== "choroplethmap") {
         text += (text ? "z: " : "") + d.zLabel;
       }
-    } else if (showCommonLabel && d[h0 + "Label"] === t02) {
+    } else if (showCommonLabel && d[h0 + "Label"] === t03) {
       text = d[h1 + "Label"] || "";
     } else if (d.xLabel === void 0) {
       if (d.yLabel !== void 0 && d.trace.type !== "scattercarpet") {
@@ -45762,7 +42490,7 @@ var Plotly = (() => {
     const { hovertemplate = false } = d;
     if (hovertemplate) {
       const labels = d.hovertemplateLabels || d;
-      if (d[h0 + "Label"] !== t02) {
+      if (d[h0 + "Label"] !== t03) {
         labels[h0 + "other"] = labels[h0 + "Val"];
         labels[h0 + "otherLabel"] = labels[h0 + "Label"];
       }
@@ -45984,7 +42712,7 @@ var Plotly = (() => {
       return y * scaleY;
     };
     hoverLabels.each(function(d) {
-      var g = import_d315.default.select(this);
+      var g = select_default2(this);
       if (d.del) return g.remove();
       var tx = g.select("text.nums");
       var anchor = d.anchor;
@@ -46286,11 +43014,11 @@ var Plotly = (() => {
       var periodalignment = winningPoint.trace[axLetter + "periodalignment"];
       if (periodalignment) {
         var d = winningPoint.cd[winningPoint.index];
-        var start = d[axLetter + "Start"];
-        if (start === void 0) start = d[axLetter];
+        var start2 = d[axLetter + "Start"];
+        if (start2 === void 0) start2 = d[axLetter];
         var end = d[axLetter + "End"];
         if (end === void 0) end = d[axLetter];
-        var diff = end - start;
+        var diff = end - start2;
         if (periodalignment === "end") {
           val += diff;
         } else if (periodalignment === "middle") {
@@ -46500,9 +43228,9 @@ var Plotly = (() => {
     click
   };
   function loneUnhover(containerOrSelection) {
-    var selection = lib_default.isD3Selection(containerOrSelection) ? containerOrSelection : import_d316.default.select(containerOrSelection);
-    selection.selectAll("g.hovertext").remove();
-    selection.selectAll(".spikeline").remove();
+    var selection2 = lib_default.isD3Selection(containerOrSelection) ? containerOrSelection : select_default2(containerOrSelection);
+    selection2.selectAll("g.hovertext").remove();
+    selection2.selectAll(".spikeline").remove();
   }
   function castHoverOption(trace, ptNumber, attr3) {
     return lib_default.castOption(trace, ptNumber, "hoverlabel." + attr3);
@@ -46515,7 +43243,6 @@ var Plotly = (() => {
   }
 
   // src/plots/cartesian/dragbox.js
-  var import_d320 = __toESM(require_d3(), 1);
   var import_has_passive_events2 = __toESM(require_has_passive_events(), 1);
 
   // src/components/dragelement/helpers.js
@@ -46548,9 +43275,6 @@ var Plotly = (() => {
       });
     }
   }
-
-  // src/plot_api/subroutines.js
-  var import_d319 = __toESM(require_d3(), 1);
 
   // src/fonts/ploticon.js
   var ploticon_default = {
@@ -46738,9 +43462,6 @@ var Plotly = (() => {
       ].join("")
     }
   };
-
-  // src/components/shapes/draw.js
-  var import_d317 = __toESM(require_d3(), 1);
 
   // src/components/shapes/draw_newshape/helpers.js
   var import_parse_svg_path2 = __toESM(require_parse_svg_path(), 1);
@@ -47013,11 +43734,11 @@ var Plotly = (() => {
     }
     return true;
   };
-  var handleEllipse = function(isEllipse, start, end) {
-    if (!isEllipse) return [start, end];
+  var handleEllipse = function(isEllipse, start2, end) {
+    if (!isEllipse) return [start2, end];
     var pos = ellipseOver({
-      x0: start[0],
-      y0: start[1],
+      x0: start2[0],
+      y0: start2[1],
       x1: end[0],
       y1: end[1]
     });
@@ -47099,9 +43820,9 @@ var Plotly = (() => {
     var dragmode = dragOptions.dragmode;
     var shapes = (gd.layout || {}).shapes || [];
     if (!drawMode2(dragmode) && isActiveShape !== void 0) {
-      var id = gd._fullLayout._activeShapeIndex;
-      if (id < shapes.length) {
-        switch (gd._fullLayout.shapes[id].type) {
+      var id2 = gd._fullLayout._activeShapeIndex;
+      if (id2 < shapes.length) {
+        switch (gd._fullLayout.shapes[id2].type) {
           case "rect":
             dragmode = "drawrect";
             break;
@@ -47112,7 +43833,7 @@ var Plotly = (() => {
             dragmode = "drawline";
             break;
           case "path":
-            var path = shapes[id].path || "";
+            var path = shapes[id2].path || "";
             if (path[path.length - 1] === "Z") {
               dragmode = "drawclosedpath";
             } else {
@@ -47300,9 +44021,9 @@ var Plotly = (() => {
     var dragmode = dragOptions.dragmode;
     var selections = (gd.layout || {}).selections || [];
     if (!selectMode2(dragmode) && isActiveSelection !== void 0) {
-      var id = gd._fullLayout._activeSelectionIndex;
-      if (id < selections.length) {
-        switch (gd._fullLayout.selections[id].type) {
+      var id2 = gd._fullLayout._activeSelectionIndex;
+      if (id2 < selections.length) {
+        switch (gd._fullLayout.selections[id2].type) {
           case "rect":
             dragmode = "select";
             break;
@@ -48141,17 +44862,17 @@ var Plotly = (() => {
   function eraseActiveSelection(gd) {
     if (!selectMode3(gd._fullLayout.dragmode)) return;
     clearOutlineControllers2(gd);
-    var id = gd._fullLayout._activeSelectionIndex;
+    var id2 = gd._fullLayout._activeSelectionIndex;
     var selections = (gd.layout || {}).selections || [];
-    if (id < selections.length) {
+    if (id2 < selections.length) {
       var list2 = [];
       for (var q = 0; q < selections.length; q++) {
-        if (q !== id) {
+        if (q !== id2) {
           list2.push(selections[q]);
         }
       }
       delete gd._fullLayout._activeSelectionIndex;
-      var erasedSelection = gd._fullLayout.selections[id];
+      var erasedSelection = gd._fullLayout.selections[id2];
       gd._fullLayout._deselect = {
         xref: erasedSelection.xref,
         yref: erasedSelection.yref
@@ -48293,7 +45014,7 @@ var Plotly = (() => {
     var x0, y0, x1, y1, xAnchor, yAnchor;
     var n0, s0, w0, e0, optN, optS, optW, optE;
     var pathIn;
-    var shapeGroup = import_d317.default.select(shapePath.node().parentNode);
+    var shapeGroup = select_default2(shapePath.node().parentNode);
     var xa = axes_default.getFromId(gd, shapeOptions.xref);
     var xRefType = axes_default.getRefType(shapeOptions.xref);
     var ya = axes_default.getFromId(gd, shapeOptions.yref);
@@ -48615,21 +45336,21 @@ var Plotly = (() => {
   function activateShape(gd, path) {
     if (!couldHaveActiveShape(gd)) return;
     var element = path.node();
-    var id = +element.getAttribute("data-index");
-    if (id >= 0) {
-      if (id === gd._fullLayout._activeShapeIndex) {
+    var id2 = +element.getAttribute("data-index");
+    if (id2 >= 0) {
+      if (id2 === gd._fullLayout._activeShapeIndex) {
         deactivateShape(gd);
         return;
       }
-      gd._fullLayout._activeShapeIndex = id;
+      gd._fullLayout._activeShapeIndex = id2;
       gd._fullLayout._deactivateShape = deactivateShape;
       draw3(gd);
     }
   }
   function deactivateShape(gd) {
     if (!couldHaveActiveShape(gd)) return;
-    var id = gd._fullLayout._activeShapeIndex;
-    if (id >= 0) {
+    var id2 = gd._fullLayout._activeShapeIndex;
+    if (id2 >= 0) {
       clearOutlineControllers3(gd);
       delete gd._fullLayout._activeShapeIndex;
       draw3(gd);
@@ -48638,12 +45359,12 @@ var Plotly = (() => {
   function eraseActiveShape(gd) {
     if (!couldHaveActiveShape(gd)) return;
     clearOutlineControllers3(gd);
-    var id = gd._fullLayout._activeShapeIndex;
+    var id2 = gd._fullLayout._activeShapeIndex;
     var shapes = (gd.layout || {}).shapes || [];
-    if (id < shapes.length) {
+    if (id2 < shapes.length) {
       var list2 = [];
       for (var q = 0; q < shapes.length; q++) {
-        if (q !== id) {
+        if (q !== id2) {
           list2.push(shapes[q]);
         }
       }
@@ -48662,8 +45383,8 @@ var Plotly = (() => {
     name: "toImage",
     title: function(gd) {
       var opts = gd._context.toImageButtonOptions || {};
-      var format5 = opts.format || "png";
-      return format5 === "png" ? _2(gd, "Download plot as a PNG") : (
+      var format6 = opts.format || "png";
+      return format6 === "png" ? _2(gd, "Download plot as a PNG") : (
         // legacy text
         _2(gd, "Download plot")
       );
@@ -49152,12 +45873,12 @@ var Plotly = (() => {
     var fullLayout = gd._fullLayout;
     var geoIds = fullLayout._subplots.geo || [];
     for (var i = 0; i < geoIds.length; i++) {
-      var id = geoIds[i];
-      var geoLayout = fullLayout[id];
+      var id2 = geoIds[i];
+      var geoLayout = fullLayout[id2];
       if (attr3 === "zoom") {
         var scale2 = geoLayout.projection.scale;
         var newScale = val === "in" ? 2 * scale2 : 0.5 * scale2;
-        registry_default.call("_guiRelayout", gd, id + ".projection.scale", newScale);
+        registry_default.call("_guiRelayout", gd, id2 + ".projection.scale", newScale);
       }
     }
     if (attr3 === "reset") {
@@ -49351,10 +46072,10 @@ var Plotly = (() => {
     var scalar = 1.05;
     var aObj = {};
     for (var i = 0; i < subplotIds.length; i++) {
-      var id = subplotIds[i];
-      var current = fullLayout[id].zoom;
+      var id2 = subplotIds[i];
+      var current = fullLayout[id2].zoom;
       var next = val === "in" ? scalar * current : current / scalar;
-      aObj[id + ".zoom"] = next;
+      aObj[id2 + ".zoom"] = next;
     }
     registry_default.call("_guiRelayout", gd, aObj);
   }
@@ -49363,13 +46084,13 @@ var Plotly = (() => {
     var subplotIds = fullLayout._subplots[subplotType] || [];
     var aObj = {};
     for (var i = 0; i < subplotIds.length; i++) {
-      var id = subplotIds[i];
-      var subplotObj = fullLayout[id]._subplot;
+      var id2 = subplotIds[i];
+      var subplotObj = fullLayout[id2]._subplot;
       var viewInitial = subplotObj.viewInitial;
       var viewKeys = Object.keys(viewInitial);
       for (var j = 0; j < viewKeys.length; j++) {
         var key = viewKeys[j];
-        aObj[id + "." + key] = viewInitial[key];
+        aObj[id2 + "." + key] = viewInitial[key];
       }
     }
     registry_default.call("_guiRelayout", gd, aObj);
@@ -49468,7 +46189,6 @@ var Plotly = (() => {
   }
 
   // src/components/modebar/modebar.js
-  var import_d318 = __toESM(require_d3(), 1);
   var import_fast_isnumeric25 = __toESM(require_fast_isnumeric(), 1);
 
   // src/version.js
@@ -49585,7 +46305,7 @@ var Plotly = (() => {
       });
     }
     button.setAttribute("data-toggle", config.toggle || false);
-    if (config.toggle) import_d318.default.select(button).classed("active", true);
+    if (config.toggle) select_default2(button).classed("active", true);
     var icon = config.icon;
     if (typeof icon === "function") {
       button.appendChild(icon());
@@ -49627,7 +46347,7 @@ var Plotly = (() => {
       var thisval = button.getAttribute("data-val") || true;
       var dataAttr = button.getAttribute("data-attr");
       var isToggleButton = button.getAttribute("data-toggle") === "true";
-      var button3 = import_d318.default.select(button);
+      var button3 = select_default2(button);
       var updateButtonStyle = function(button2, isActive4) {
         var style11 = fullLayout.modebar;
         var childEl = button2.querySelector(".icon path");
@@ -49695,7 +46415,7 @@ var Plotly = (() => {
       buttons
     });
     if (fullLayout._privateplot) {
-      import_d318.default.select(modeBar.element).append("span").classed("badge-private float--left", true).text("PRIVATE");
+      select_default2(modeBar.element).append("span").classed("badge-private float--left", true).text("PRIVATE");
     }
     return modeBar;
   }
@@ -50190,7 +46910,7 @@ var Plotly = (() => {
     if (matches) {
       axOut._matchGroup = updateConstraintGroups(matchGroups, thisID, matches, 1);
       var matchedAx = layoutOut[id2name(matches)];
-      var matchRatio = extent(layoutOut, axOut) / extent(layoutOut, matchedAx);
+      var matchRatio = extent2(layoutOut, axOut) / extent2(layoutOut, matchedAx);
       if (isX !== (matches.charAt(0) === "x")) {
         matchRatio = (isX ? "x" : "y") + matchRatio;
       }
@@ -50206,7 +46926,7 @@ var Plotly = (() => {
       lib_default.warn("ignored " + axOut._name + '.scaleanchor: "' + axIn.scaleanchor + '" to avoid either an infinite loop and possibly inconsistent scaleratios, or because this axis declares a *matches* constraint.');
     }
   }
-  function extent(layoutOut, ax) {
+  function extent2(layoutOut, ax) {
     var domain = ax.domain;
     if (!domain) {
       domain = layoutOut[id2name(ax.overlaying)].domain;
@@ -50529,7 +47249,7 @@ var Plotly = (() => {
     lowerBackgrounds.enter().append("rect").classed("bg", true);
     lowerBackgrounds.exit().remove();
     lowerBackgrounds.each(function(subplot2) {
-      fullLayout._plots[subplot2].bg = import_d319.default.select(this);
+      fullLayout._plots[subplot2].bg = select_default2(this);
     });
     for (i = 0; i < backgroundIds.length; i++) {
       plotinfo = fullLayout._plots[backgroundIds[i]];
@@ -50690,8 +47410,8 @@ var Plotly = (() => {
       }
     });
     if (title.text && title.automargin) {
-      var titleObj = import_d319.default.select(gd).selectAll(".gtitle");
-      var titleHeight = drawing_default.bBox(import_d319.default.select(gd).selectAll(".g-gtitle").node()).height;
+      var titleObj = select_default2(gd).selectAll(".gtitle");
+      var titleHeight = drawing_default.bBox(select_default2(gd).selectAll(".g-gtitle").node()).height;
       var pushMargin = needsMarginPush(gd, title, titleHeight);
       if (pushMargin > 0) {
         applyTitleAutoMargin(gd, y, pushMargin, titleHeight);
@@ -50712,7 +47432,7 @@ var Plotly = (() => {
             this.setAttribute("dy", newDy);
           });
         }
-        var subtitleObj = import_d319.default.select(gd).selectAll(".gtitle-subtitle");
+        var subtitleObj = select_default2(gd).selectAll(".gtitle-subtitle");
         if (subtitleObj.node()) {
           var titleBB = titleObj.node().getBBox();
           var titleBottom = titleBB.y + titleBB.height;
@@ -51182,7 +47902,7 @@ var Plotly = (() => {
           if (ax.side === "right") hAlign = "right";
         } else if (ew === "e") hAlign = "right";
         if (gd2._context.showAxisRangeEntryBoxes) {
-          import_d320.default.select(dragger).call(svg_text_utils_default.makeEditable, {
+          select_default2(dragger).call(svg_text_utils_default.makeEditable, {
             gd: gd2,
             immediate: true,
             background: gd2._fullLayout.paper_bgcolor,
@@ -51742,7 +48462,7 @@ var Plotly = (() => {
   }
   function makeRectDragger(plotinfo, dragClass, cursor, x, y, w, h) {
     var dragger = makeDragger(plotinfo, "rect", dragClass, cursor);
-    import_d320.default.select(dragger).call(drawing_default.setRect, x, y, w, h);
+    select_default2(dragger).call(drawing_default.setRect, x, y, w, h);
     return dragger;
   }
   function isDirectionActive(axList, activeVal) {
@@ -51851,7 +48571,7 @@ var Plotly = (() => {
     }
   }
   function removeZoombox(gd) {
-    import_d320.default.select(gd).selectAll(".zoombox,.js-zoombox-backdrop,.js-zoombox-menu,.zoombox-corners").remove();
+    select_default2(gd).selectAll(".zoombox,.js-zoombox-backdrop,.js-zoombox-menu,.zoombox-corners").remove();
   }
   function showDoubleClickNotifier(gd) {
     if (SHOWZOOMOUTTIP && gd.data && gd._context.showTips) {
@@ -51972,7 +48692,7 @@ var Plotly = (() => {
   var initInteractions = function initInteractions2(gd) {
     var fullLayout = gd._fullLayout;
     if (gd._context.staticPlot) {
-      import_d321.default.select(gd).selectAll(".drag").remove();
+      select_default2(gd).selectAll(".drag").remove();
       return;
     }
     if (!fullLayout._has("cartesian") && !fullLayout._has("splom")) return;
@@ -52184,7 +48904,7 @@ var Plotly = (() => {
     var supplyComponentDefaults = registry_default.getComponentMethod(componentType, "supplyLayoutDefaults");
     var draw13 = registry_default.getComponentMethod(componentType, "draw");
     var drawOne5 = registry_default.getComponentMethod(componentType, "drawOne");
-    var replotLater = flags.replot || flags.recalc || supplyComponentDefaults === noop || draw13 === noop;
+    var replotLater = flags.replot || flags.recalc || supplyComponentDefaults === noop2 || draw13 === noop2;
     var layout = gd.layout;
     var fullLayout = gd._fullLayout;
     if (edits[""]) {
@@ -52267,7 +48987,7 @@ var Plotly = (() => {
     else if (!componentArrayIn) np.set(componentArray);
     if (replotLater) return false;
     supplyComponentDefaults(layout, fullLayout);
-    if (drawOne5 !== noop) {
+    if (drawOne5 !== noop2) {
       var indicesToDraw;
       if (firstIndexChange === -1) {
         indicesToDraw = componentNums;
@@ -52463,8 +49183,8 @@ var Plotly = (() => {
         var increasingName = cleanFinanceDir(trace.increasing);
         var decreasingName = cleanFinanceDir(trace.decreasing);
         if (increasingName !== false && decreasingName !== false) {
-          var newName = commonPrefix(increasingName, decreasingName, increasingShowlegend, decreasingShowlegend);
-          if (newName) trace.name = newName;
+          var newName2 = commonPrefix(increasingName, decreasingName, increasingShowlegend, decreasingShowlegend);
+          if (newName2) trace.name = newName2;
         } else if ((increasingName || decreasingName) && !trace.name) {
           trace.name = increasingName || decreasingName;
         }
@@ -52677,7 +49397,7 @@ var Plotly = (() => {
     }
     setPlotContext(gd, config);
     if (!layout) layout = {};
-    import_d322.default.select(gd).classed("js-plotly-plot", true);
+    select_default2(gd).classed("js-plotly-plot", true);
     drawing_default.makeTester();
     if (!Array.isArray(gd._promises)) gd._promises = [];
     var graphWasEmpty = (gd.data || []).length === 0 && Array.isArray(data);
@@ -52945,7 +49665,7 @@ var Plotly = (() => {
   function setPlotContext(gd, config) {
     if (!gd._context) {
       gd._context = lib_default.extendDeep({}, dfltConfig4);
-      var base = import_d322.default.select("base");
+      var base = select_default2("base");
       gd._context._baseUrl = base.size() && base.attr("href") ? window.location.href.split("#")[0] : "";
     }
     var context = gd._context;
@@ -53198,13 +49918,13 @@ var Plotly = (() => {
       var newArray, remainder;
       if (lib_default.isTypedArray(target)) {
         if (maxp < 0) {
-          var none = new target.constructor(0);
+          var none2 = new target.constructor(0);
           var both = concatTypedArray(target, insert);
           if (maxp < 0) {
             newArray = both;
-            remainder = none;
+            remainder = none2;
           } else {
-            newArray = none;
+            newArray = none2;
             remainder = both;
           }
         } else {
@@ -53244,13 +49964,13 @@ var Plotly = (() => {
       var newArray, remainder;
       if (lib_default.isTypedArray(target)) {
         if (maxp <= 0) {
-          var none = new target.constructor(0);
+          var none2 = new target.constructor(0);
           var both = concatTypedArray(insert, target);
           if (maxp < 0) {
             newArray = both;
-            remainder = none;
+            remainder = none2;
           } else {
-            newArray = none;
+            newArray = none2;
             remainder = both;
           }
         } else {
@@ -53756,18 +50476,18 @@ var Plotly = (() => {
     var drawAxes = rangesAltered ? function(gd) {
       var axIds = [];
       var skipTitle = true;
-      for (var id in rangesAltered) {
-        var ax = axes_default.getFromId(gd, id);
-        axIds.push(id);
+      for (var id2 in rangesAltered) {
+        var ax = axes_default.getFromId(gd, id2);
+        axIds.push(id2);
         if ((ax.ticklabelposition || "").indexOf("inside") !== -1) {
           if (ax._anchorAxis) {
             axIds.push(ax._anchorAxis._id);
           }
         }
         if (ax._matchGroup) {
-          for (var id2 in ax._matchGroup) {
-            if (!rangesAltered[id2]) {
-              axIds.push(id2);
+          for (var id22 in ax._matchGroup) {
+            if (!rangesAltered[id22]) {
+              axIds.push(id22);
             }
           }
         }
@@ -54293,18 +51013,18 @@ var Plotly = (() => {
         var newFullData = gd._fullData;
         var newFullLayout = gd._fullLayout;
         var immutable = newFullLayout.datarevision === void 0;
-        var transition2 = newFullLayout.transition;
-        var relayoutFlags = diffLayout(gd, oldFullLayout, newFullLayout, immutable, transition2);
+        var transition3 = newFullLayout.transition;
+        var relayoutFlags = diffLayout(gd, oldFullLayout, newFullLayout, immutable, transition3);
         var newDataRevision = relayoutFlags.newDataRevision;
-        var restyleFlags = diffData(gd, oldFullData, newFullData, immutable, transition2, newDataRevision);
+        var restyleFlags = diffData(gd, oldFullData, newFullData, immutable, transition3, newDataRevision);
         if (updateAutosize(gd)) relayoutFlags.layoutReplot = true;
         if (restyleFlags.calc || relayoutFlags.calc) {
           gd.calcdata = void 0;
           var allNames = Object.getOwnPropertyNames(newFullLayout);
           for (var q = 0; q < allNames.length; q++) {
             var name8 = allNames[q];
-            var start = name8.substring(0, 5);
-            if (start === "xaxis" || start === "yaxis") {
+            var start2 = name8.substring(0, 5);
+            if (start2 === "xaxis" || start2 === "yaxis") {
               var emptyCategories = newFullLayout[name8]._emptyCategories;
               if (emptyCategories) emptyCategories();
             }
@@ -54367,9 +51087,9 @@ var Plotly = (() => {
       return gd;
     });
   }
-  function diffData(gd, oldFullData, newFullData, immutable, transition2, newDataRevision) {
+  function diffData(gd, oldFullData, newFullData, immutable, transition3, newDataRevision) {
     var sameTraceLength = oldFullData.length === newFullData.length;
-    if (!transition2 && !sameTraceLength) {
+    if (!transition3 && !sameTraceLength) {
       return {
         fullReplot: true,
         calc: true
@@ -54391,7 +51111,7 @@ var Plotly = (() => {
       getValObject: getTraceValObject2,
       flags,
       immutable,
-      transition: transition2,
+      transition: transition3,
       newDataRevision,
       gd
     };
@@ -54407,12 +51127,12 @@ var Plotly = (() => {
     if (flags.calc || flags.plot) {
       flags.fullReplot = true;
     }
-    if (transition2 && flags.nChanges && flags.nChangesAnim) {
+    if (transition3 && flags.nChanges && flags.nChangesAnim) {
       flags.anim = flags.nChanges === flags.nChangesAnim && sameTraceLength ? "all" : "some";
     }
     return flags;
   }
-  function diffLayout(gd, oldFullLayout, newFullLayout, immutable, transition2) {
+  function diffLayout(gd, oldFullLayout, newFullLayout, immutable, transition3) {
     var flags = edit_types_default.layoutFlags();
     flags.arrays = {};
     flags.rangesAltered = {};
@@ -54443,14 +51163,14 @@ var Plotly = (() => {
       getValObject: getLayoutValObject2,
       flags,
       immutable,
-      transition: transition2,
+      transition: transition3,
       gd
     };
     getDiffFlags(oldFullLayout, newFullLayout, [], diffOpts);
     if (flags.plot || flags.calc) {
       flags.layoutReplot = true;
     }
-    if (transition2 && flags.nChanges && flags.nChangesAnim) {
+    if (transition3 && flags.nChanges && flags.nChangesAnim) {
       flags.anim = flags.nChanges === flags.nChangesAnim ? "all" : "some";
     }
     return flags;
@@ -54719,20 +51439,20 @@ var Plotly = (() => {
         doFrame();
       }
       var configCounter = 0;
-      function setTransitionConfig(frame2) {
+      function setTransitionConfig(frame3) {
         if (Array.isArray(transitionOpts)) {
           if (configCounter >= transitionOpts.length) {
-            frame2.transitionOpts = transitionOpts[configCounter];
+            frame3.transitionOpts = transitionOpts[configCounter];
           } else {
-            frame2.transitionOpts = transitionOpts[0];
+            frame3.transitionOpts = transitionOpts[0];
           }
         } else {
-          frame2.transitionOpts = transitionOpts;
+          frame3.transitionOpts = transitionOpts;
         }
         configCounter++;
-        return frame2;
+        return frame3;
       }
-      var i, frame;
+      var i, frame2;
       var frameList = [];
       var allFrames = frameOrGroupNameOrFrameList === void 0 || frameOrGroupNameOrFrameList === null;
       var isFrameArray = Array.isArray(frameOrGroupNameOrFrameList);
@@ -54744,13 +51464,13 @@ var Plotly = (() => {
         });
       } else if (allFrames || ["string", "number"].indexOf(typeof frameOrGroupNameOrFrameList) !== -1) {
         for (i = 0; i < trans._frames.length; i++) {
-          frame = trans._frames[i];
-          if (!frame) continue;
-          if (allFrames || String(frame.group) === String(frameOrGroupNameOrFrameList)) {
+          frame2 = trans._frames[i];
+          if (!frame2) continue;
+          if (allFrames || String(frame2.group) === String(frameOrGroupNameOrFrameList)) {
             frameList.push({
               type: "byname",
-              name: String(frame.name),
-              data: setTransitionConfig({ name: frame.name })
+              name: String(frame2.name),
+              data: setTransitionConfig({ name: frame2.name })
             });
           }
         }
@@ -54773,9 +51493,9 @@ var Plotly = (() => {
         }
       }
       for (i = 0; i < frameList.length; i++) {
-        frame = frameList[i];
-        if (frame.type === "byname" && !trans._frameHash[frame.data.name]) {
-          lib_default.warn('animate failure: frame not found: "' + frame.data.name + '"');
+        frame2 = frameList[i];
+        if (frame2.type === "byname" && !trans._frameHash[frame2.data.name]) {
+          lib_default.warn('animate failure: frame not found: "' + frame2.data.name + '"');
           reject();
           return;
         }
@@ -54790,8 +51510,8 @@ var Plotly = (() => {
       if (currentFrame && animationOpts.fromcurrent) {
         var idx = -1;
         for (i = 0; i < frameList.length; i++) {
-          frame = frameList[i];
-          if (frame.type === "byname" && frame.name === currentFrame) {
+          frame2 = frameList[i];
+          if (frame2.type === "byname" && frame2.name === currentFrame) {
             idx = i;
             break;
           }
@@ -54799,9 +51519,9 @@ var Plotly = (() => {
         if (idx > 0 && idx < frameList.length - 1) {
           var filteredFrameList = [];
           for (i = 0; i < frameList.length; i++) {
-            frame = frameList[i];
+            frame2 = frameList[i];
             if (frameList[i].type !== "byname" || i > idx) {
-              filteredFrameList.push(frame);
+              filteredFrameList.push(frame2);
             }
           }
           frameList = filteredFrameList;
@@ -54825,7 +51545,7 @@ var Plotly = (() => {
         "This element is not a Plotly plot: " + gd + ". It's likely that you've failed to create a plot before adding frames. For more details, see https://plotly.com/javascript/animations/"
       );
     }
-    var i, frame, j, idx;
+    var i, frame2, j, idx;
     var _frames = gd._transitionData._frames;
     var _frameHash = gd._transitionData._frameHash;
     if (!Array.isArray(frameList)) {
@@ -54838,9 +51558,9 @@ var Plotly = (() => {
       if (!lib_default.isPlainObject(frameList[i])) continue;
       var lookupName = frameList[i].name;
       var name8 = (_frameHash[lookupName] || _frameHashLocal[lookupName] || {}).name;
-      var newName = frameList[i].name;
+      var newName2 = frameList[i].name;
       var collisionPresent = _frameHash[name8] || _frameHashLocal[name8];
-      if (name8 && newName && typeof newName === "number" && collisionPresent && numericNameWarningCount < numericNameWarningCountLimit) {
+      if (name8 && newName2 && typeof newName2 === "number" && collisionPresent && numericNameWarningCount < numericNameWarningCountLimit) {
         numericNameWarningCount++;
         lib_default.warn(
           'addFrames: overwriting frame "' + (_frameHash[name8] || _frameHashLocal[name8]).name + '" with a frame whose name of type "number" also equates to "' + name8 + '". This is valid but may potentially lead to unexpected behavior since all plotly.js frame names are stored internally as strings.'
@@ -54866,24 +51586,24 @@ var Plotly = (() => {
     var revops = [];
     var frameCount = _frames.length;
     for (i = insertions.length - 1; i >= 0; i--) {
-      frame = insertions[i].frame;
-      if (typeof frame.name === "number") {
+      frame2 = insertions[i].frame;
+      if (typeof frame2.name === "number") {
         lib_default.warn(
           "Warning: addFrames accepts frames with numeric names, but the numbers areimplicitly cast to strings"
         );
       }
-      if (!frame.name) {
-        while (_frameHash[frame.name = "frame " + gd._transitionData._counter++]) ;
+      if (!frame2.name) {
+        while (_frameHash[frame2.name = "frame " + gd._transitionData._counter++]) ;
       }
-      if (_frameHash[frame.name]) {
+      if (_frameHash[frame2.name]) {
         for (j = 0; j < _frames.length; j++) {
-          if ((_frames[j] || {}).name === frame.name) break;
+          if ((_frames[j] || {}).name === frame2.name) break;
         }
-        ops.push({ type: "replace", index: j, value: frame });
+        ops.push({ type: "replace", index: j, value: frame2 });
         revops.unshift({ type: "replace", index: j, value: _frames[j] });
       } else {
         idx = Math.max(0, Math.min(insertions[i].index, frameCount));
-        ops.push({ type: "insert", index: idx, value: frame });
+        ops.push({ type: "insert", index: idx, value: frame2 });
         revops.unshift({ type: "delete", index: idx });
         frameCount++;
       }
@@ -54945,7 +51665,7 @@ var Plotly = (() => {
     fullLayout._lastBBox = newBBox;
   }
   function makePlotFramework(gd) {
-    var gd3 = import_d322.default.select(gd);
+    var gd3 = select_default2(gd);
     var fullLayout = gd._fullLayout;
     fullLayout._calcInverseTransform = calcInverseTransform;
     fullLayout._calcInverseTransform(gd);
@@ -54967,7 +51687,7 @@ var Plotly = (() => {
     fullLayout._hoverpaper = fullLayout._paperdiv.append("svg").classed("main-svg", true);
     if (!fullLayout._uid) {
       var otherUids = {};
-      import_d322.default.selectAll("defs").each(function() {
+      selectAll_default2("defs").each(function() {
         if (this.id) otherUids[this.id.split("-")[1]] = 1;
       });
       fullLayout._uid = lib_default.randstr(otherUids);
@@ -55298,14 +52018,14 @@ var Plotly = (() => {
       }
     }
     crawlForMissingTemplates({ data: fullData, layout: fullLayout }, "");
-    if (errorList.length) return errorList.map(format3);
+    if (errorList.length) return errorList.map(format4);
   };
   function hasPlainObject(arr) {
     for (var i = 0; i < arr.length; i++) {
       if (isPlainObject3(arr[i])) return true;
     }
   }
-  function format3(opts) {
+  function format4(opts) {
     var msg;
     switch (opts.code) {
       case "data":
@@ -55365,14 +52085,14 @@ var Plotly = (() => {
   var revokeObjectURL = function(url) {
     return DOM_URL.revokeObjectURL(url);
   };
-  var createBlob = function(url, format5) {
-    if (format5 === "svg") {
+  var createBlob = function(url, format6) {
+    if (format6 === "svg") {
       return new window.Blob([url], { type: "image/svg+xml;charset=utf-8" });
-    } else if (format5 === "full-json") {
+    } else if (format6 === "full-json") {
       return new window.Blob([url], { type: "application/json;charset=utf-8" });
     } else {
       var binary = fixBinary(window.atob(url));
-      return new window.Blob([binary], { type: "image/" + format5 });
+      return new window.Blob([binary], { type: "image/" + format6 });
     }
   };
   var octetStream = function(s) {
@@ -55391,12 +52111,11 @@ var Plotly = (() => {
   var helpers_default10 = { getDelay, getRedrawFunc, encodeSVG, encodeJSON, createObjectURL, revokeObjectURL, createBlob, octetStream, IMAGE_URL_PREFIX };
 
   // src/snapshot/tosvg.js
-  var import_d323 = __toESM(require_d3(), 1);
   var DOUBLEQUOTE_REGEX = /"/g;
   var DUMMY_SUB = "TOBESTRIPPED";
   var DUMMY_REGEX = new RegExp('("' + DUMMY_SUB + ")|(" + DUMMY_SUB + '")', "g");
   function htmlEntityDecode(s) {
-    var hiddenDiv = import_d323.default.select("body").append("div").style({ display: "none" }).html("");
+    var hiddenDiv = select_default2("body").append("div").style({ display: "none" }).html("");
     var replaced = s.replace(/(&[^;]*;)/gi, function(d) {
       if (d === "&lt;") {
         return "&#60;";
@@ -55415,7 +52134,7 @@ var Plotly = (() => {
   function xmlEntityEncode(str) {
     return str.replace(/&(?!\w+;|\#[0-9]+;| \#x[0-9A-F]+;)/g, "&amp;");
   }
-  function toSVG(gd, format5, scale2) {
+  function toSVG(gd, format6, scale2) {
     var fullLayout = gd._fullLayout;
     var svg2 = fullLayout._paper;
     var toppaper = fullLayout._toppaper;
@@ -55441,7 +52160,7 @@ var Plotly = (() => {
     }
     svg2.node().style.background = "";
     svg2.selectAll("text").attr({ "data-unformatted": null, "data-math": null }).each(function() {
-      var txt = import_d323.default.select(this);
+      var txt = select_default2(this);
       if (this.style.visibility === "hidden" || this.style.display === "none") {
         txt.remove();
         return;
@@ -55466,7 +52185,7 @@ var Plotly = (() => {
       }
     });
     svg2.selectAll(".gradient_filled,.pattern_filled").each(function() {
-      var pt = import_d323.default.select(this);
+      var pt = select_default2(this);
       var fill = this.style.fill;
       if (fill && fill.indexOf("url(") !== -1) {
         pt.style("fill", fill.replace(DOUBLEQUOTE_REGEX, DUMMY_SUB));
@@ -55476,10 +52195,10 @@ var Plotly = (() => {
         pt.style("stroke", stroke.replace(DOUBLEQUOTE_REGEX, DUMMY_SUB));
       }
     });
-    if (format5 === "pdf" || format5 === "eps") {
+    if (format6 === "pdf" || format6 === "eps") {
       svg2.selectAll("#MathJax_SVG_glyphs path").attr("stroke-width", 0);
     }
-    if (format5 === "svg" && scale2) {
+    if (format6 === "svg" && scale2) {
       svg2.attr("width", scale2 * width);
       svg2.attr("height", scale2 * height);
       svg2.attr("viewBox", "0 0 " + width + " " + height);
@@ -55498,7 +52217,7 @@ var Plotly = (() => {
     var promise = new Promise(function(resolve, reject) {
       var Image2 = window.Image;
       var svg2 = opts.svg;
-      var format5 = opts.format || "png";
+      var format6 = opts.format || "png";
       var canvas = opts.canvas;
       var scale2 = opts.scale || 1;
       var w0 = opts.width || 300;
@@ -55508,7 +52227,7 @@ var Plotly = (() => {
       var ctx = canvas.getContext("2d", { willReadFrequently: true });
       var img = new Image2();
       var svgBlob, url;
-      if (format5 === "svg" || lib_default.isSafari()) {
+      if (format6 === "svg" || lib_default.isSafari()) {
         url = helpers_default10.encodeSVG(svg2);
       } else {
         svgBlob = helpers_default10.createBlob(svg2, "svg");
@@ -55520,10 +52239,10 @@ var Plotly = (() => {
         var imgData;
         svgBlob = null;
         helpers_default10.revokeObjectURL(url);
-        if (format5 !== "svg") {
+        if (format6 !== "svg") {
           ctx.drawImage(img, 0, 0, w1, h1);
         }
-        switch (format5) {
+        switch (format6) {
           case "jpeg":
             imgData = canvas.toDataURL("image/jpeg");
             break;
@@ -55625,7 +52344,7 @@ var Plotly = (() => {
     function coerce3(attr3, dflt) {
       return lib_default.coerce(opts, fullOpts, attrs, attr3, dflt);
     }
-    var format5 = coerce3("format");
+    var format6 = coerce3("format");
     var width = coerce3("width");
     var height = coerce3("height");
     var scale2 = coerce3("scale");
@@ -55659,14 +52378,14 @@ var Plotly = (() => {
     }
     function convert3() {
       return new Promise(function(resolve, reject) {
-        var svg2 = toSVG(clonedGd, format5, scale2);
+        var svg2 = toSVG(clonedGd, format6, scale2);
         var width2 = clonedGd._fullLayout.width;
         var height2 = clonedGd._fullLayout.height;
         function cleanup() {
           plot_api_default.purge(clonedGd);
           document.body.removeChild(clonedGd);
         }
-        if (format5 === "full-json") {
+        if (format6 === "full-json") {
           var json = plots_default.graphJson(clonedGd, false, "keepdata", "object", true, true);
           json.version = version;
           json = JSON.stringify(json);
@@ -55678,7 +52397,7 @@ var Plotly = (() => {
           }
         }
         cleanup();
-        if (format5 === "svg") {
+        if (format6 === "svg") {
           if (imageDataOnly) {
             return resolve(svg2);
           } else {
@@ -55688,7 +52407,7 @@ var Plotly = (() => {
         var canvas = document.createElement("canvas");
         canvas.id = lib_default.randstr();
         svgtoimg_default({
-          format: format5,
+          format: format6,
           width: width2,
           height: height2,
           scale: scale2,
@@ -55737,7 +52456,7 @@ var Plotly = (() => {
     } else {
       gd.data = [];
       dataIn = [];
-      errorList.push(format4("array", "data"));
+      errorList.push(format5("array", "data"));
     }
     if (isPlainObject4(layout)) {
       gd.layout = lib_default.extendDeep({}, layout);
@@ -55746,7 +52465,7 @@ var Plotly = (() => {
       gd.layout = {};
       layoutIn = {};
       if (arguments.length > 1) {
-        errorList.push(format4("object", "layout"));
+        errorList.push(format5("object", "layout"));
       }
     }
     plots_default.supplyDefaults(gd);
@@ -55756,7 +52475,7 @@ var Plotly = (() => {
       var traceIn = dataIn[i];
       var base = ["data", i];
       if (!isPlainObject4(traceIn)) {
-        errorList.push(format4("object", base));
+        errorList.push(format5("object", base));
         continue;
       }
       var traceOut = dataOut[i];
@@ -55767,7 +52486,7 @@ var Plotly = (() => {
         values: [traceType]
       };
       if (traceOut.visible === false && traceIn.visible !== false) {
-        errorList.push(format4("invisible", base));
+        errorList.push(format5("invisible", base));
       }
       crawl4(traceIn, traceOut, traceSchema, errorList, base);
     }
@@ -55791,12 +52510,12 @@ var Plotly = (() => {
       var isColorscale = nestedValType === "colorscale";
       var items = (nestedSchema || {}).items;
       if (!isInSchema(schema, k)) {
-        list2.push(format4("schema", base, p));
+        list2.push(format5("schema", base, p));
       } else if (isPlainObject4(valIn) && isPlainObject4(valOut) && nestedValType !== "any") {
         crawl4(valIn, valOut, nestedSchema, list2, base, p);
       } else if (isInfoArray && isArray3(valIn)) {
         if (valIn.length > valOut.length) {
-          list2.push(format4("unused", base, p.concat(valOut.length)));
+          list2.push(format5("unused", base, p.concat(valOut.length)));
         }
         var len2 = valOut.length;
         var arrayItems = Array.isArray(items);
@@ -55806,7 +52525,7 @@ var Plotly = (() => {
           for (n = 0; n < len2; n++) {
             if (isArray3(valIn[n])) {
               if (valIn[n].length > valOut[n].length) {
-                list2.push(format4("unused", base, p.concat(n, valOut[n].length)));
+                list2.push(format5("unused", base, p.concat(n, valOut[n].length)));
               }
               var len22 = valOut[n].length;
               for (m = 0; m < (arrayItems ? Math.min(len22, items[n].length) : len22); m++) {
@@ -55814,13 +52533,13 @@ var Plotly = (() => {
                 valInPart = valIn[n][m];
                 valOutPart = valOut[n][m];
                 if (!lib_default.validate(valInPart, item)) {
-                  list2.push(format4("value", base, p.concat(n, m), valInPart));
+                  list2.push(format5("value", base, p.concat(n, m), valInPart));
                 } else if (valOutPart !== valInPart && valOutPart !== +valInPart) {
-                  list2.push(format4("dynamic", base, p.concat(n, m), valInPart, valOutPart));
+                  list2.push(format5("dynamic", base, p.concat(n, m), valInPart, valOutPart));
                 }
               }
             } else {
-              list2.push(format4("array", base, p.concat(n), valIn[n]));
+              list2.push(format5("array", base, p.concat(n), valIn[n]));
             }
           }
         } else {
@@ -55829,9 +52548,9 @@ var Plotly = (() => {
             valInPart = valIn[n];
             valOutPart = valOut[n];
             if (!lib_default.validate(valInPart, item)) {
-              list2.push(format4("value", base, p.concat(n), valInPart));
+              list2.push(format5("value", base, p.concat(n), valInPart));
             } else if (valOutPart !== valInPart && valOutPart !== +valInPart) {
-              list2.push(format4("dynamic", base, p.concat(n), valInPart, valOutPart));
+              list2.push(format5("dynamic", base, p.concat(n), valInPart, valOutPart));
             }
           }
         }
@@ -55848,7 +52567,7 @@ var Plotly = (() => {
             var valInj = valIn[_index];
             var valOutj = valOut[j];
             if (isPlainObject4(valInj) && valInj.visible !== false && valOutj.visible === false) {
-              list2.push(format4("invisible", base, _p));
+              list2.push(format5("invisible", base, _p));
             } else crawl4(valInj, valOutj, _nestedSchema, list2, base, _p);
           }
         }
@@ -55856,21 +52575,21 @@ var Plotly = (() => {
           _p = p.slice();
           _p.push(j);
           if (!isPlainObject4(valIn[j])) {
-            list2.push(format4("object", base, _p, valIn[j]));
+            list2.push(format5("object", base, _p, valIn[j]));
           } else if (indexList.indexOf(j) === -1) {
-            list2.push(format4("unused", base, _p));
+            list2.push(format5("unused", base, _p));
           }
         }
       } else if (!isPlainObject4(valIn) && isPlainObject4(valOut)) {
-        list2.push(format4("object", base, p, valIn));
+        list2.push(format5("object", base, p, valIn));
       } else if (!isArrayOrTypedArray6(valIn) && isArrayOrTypedArray6(valOut) && !isInfoArray && !isColorscale) {
-        list2.push(format4("array", base, p, valIn));
+        list2.push(format5("array", base, p, valIn));
       } else if (!(k in objOut)) {
-        list2.push(format4("unused", base, p, valIn));
+        list2.push(format5("unused", base, p, valIn));
       } else if (!lib_default.validate(valIn, nestedSchema)) {
-        list2.push(format4("value", base, p, valIn));
+        list2.push(format5("value", base, p, valIn));
       } else if (nestedSchema.valType === "enumerated" && (nestedSchema.coerceNumber && valIn !== +valOut || !isArrayOrTypedArray6(valIn) && valIn !== valOut || String(valIn) !== String(valOut))) {
-        list2.push(format4("dynamic", base, p, valIn, valOut));
+        list2.push(format5("dynamic", base, p, valIn, valOut));
       }
     }
     return list2;
@@ -55937,7 +52656,7 @@ var Plotly = (() => {
     if (isArray3(base)) return "In data trace " + base[1] + ", ";
     return "In " + base + ", ";
   }
-  function format4(code2, base, path, valIn, valOut) {
+  function format5(code2, base, path, valIn, valOut) {
     path = path || "";
     var container, trace;
     if (isArray3(base)) {
@@ -55962,8 +52681,8 @@ var Plotly = (() => {
   function isInSchema(schema, key) {
     var parts = splitKey(key);
     var keyMinusId = parts.keyMinusId;
-    var id = parts.id;
-    if (keyMinusId in schema && schema[keyMinusId]._isSubplotObj && id) {
+    var id2 = parts.id;
+    if (keyMinusId in schema && schema[keyMinusId]._isSubplotObj && id2) {
       return true;
     }
     return key in schema;
@@ -55997,14 +52716,14 @@ var Plotly = (() => {
   }
 
   // src/snapshot/filesaver.js
-  function fileSaver(url, name8, format5) {
+  function fileSaver(url, name8, format6) {
     var saveLink = document.createElement("a");
     var canUseSaveLink = "download" in saveLink;
     var promise = new Promise(function(resolve, reject) {
       var blob;
       var objectUrl;
       if (canUseSaveLink) {
-        blob = helpers_default10.createBlob(url, format5);
+        blob = helpers_default10.createBlob(url, format6);
         objectUrl = helpers_default10.createObjectURL(blob);
         saveLink.href = objectUrl;
         saveLink.download = name8;
@@ -56016,7 +52735,7 @@ var Plotly = (() => {
         return resolve(name8);
       }
       if (lib_default.isSafari()) {
-        var prefix = format5 === "svg" ? "," : ";base64,";
+        var prefix = format6 === "svg" ? "," : ";base64,";
         helpers_default10.octetStream(prefix + encodeURIComponent(url));
         return resolve(name8);
       }
@@ -56601,8 +53320,8 @@ var Plotly = (() => {
   // src/traces/scatter/period_defaults.js
   var { dateTick0: dateTick02 } = lib_default;
   var ONEWEEK4 = numerical_default.ONEWEEK;
-  function getPeriod0Dflt(period, calendar) {
-    if (period % ONEWEEK4 === 0) {
+  function getPeriod0Dflt(period2, calendar) {
+    if (period2 % ONEWEEK4 === 0) {
       return dateTick02(calendar, 1);
     }
     return dateTick02(calendar, 0);
@@ -56788,12 +53507,12 @@ var Plotly = (() => {
   // src/traces/scatter/fillcolor_defaults.js
   var { isArrayOrTypedArray: isArrayOrTypedArray8 } = lib_default;
   function averageColors(colorscale) {
-    var color2 = color_default.interpolate(colorscale[0][1], colorscale[1][1], 0.5);
+    var color3 = color_default.interpolate(colorscale[0][1], colorscale[1][1], 0.5);
     for (var i = 2; i < colorscale.length; i++) {
       var averageColorI = color_default.interpolate(colorscale[i - 1][1], colorscale[i][1], 0.5);
-      color2 = color_default.interpolate(color2, averageColorI, colorscale[i - 1][0] / colorscale[i][0]);
+      color3 = color_default.interpolate(color3, averageColorI, colorscale[i - 1][0] / colorscale[i][0]);
     }
-    return color2;
+    return color3;
   }
   function fillColorDefaults(traceIn, traceOut, defaultColor, coerce3, opts) {
     if (!opts) opts = {};
@@ -56980,13 +53699,13 @@ var Plotly = (() => {
     if (ax.type !== "date") return { vals };
     var alignment = trace[axLetter + "periodalignment"];
     if (!alignment) return { vals };
-    var period = trace[axLetter + "period"];
+    var period2 = trace[axLetter + "period"];
     var mPeriod;
-    if ((0, import_fast_isnumeric29.default)(period)) {
-      period = +period;
-      if (period <= 0) return { vals };
-    } else if (typeof period === "string" && period.charAt(0) === "M") {
-      var n = +period.substring(1);
+    if ((0, import_fast_isnumeric29.default)(period2)) {
+      period2 = +period2;
+      if (period2 <= 0) return { vals };
+    } else if (typeof period2 === "string" && period2.charAt(0) === "M") {
+      var n = +period2.substring(1);
       if (n > 0 && Math.round(n) === n) {
         mPeriod = n;
       } else return { vals };
@@ -57014,15 +53733,15 @@ var Plotly = (() => {
         }
         startTime = incrementMonth2(endTime, -mPeriod, calendar);
       } else {
-        nEstimated = Math.round((v - base) / period);
-        endTime = base + nEstimated * period;
+        nEstimated = Math.round((v - base) / period2);
+        endTime = base + nEstimated * period2;
         while (endTime > v) {
-          endTime -= period;
+          endTime -= period2;
         }
         while (endTime <= v) {
-          endTime += period;
+          endTime += period2;
         }
-        startTime = endTime - period;
+        startTime = endTime - period2;
       }
       newVals[i] = isStart ? startTime : isEnd ? endTime : (startTime + endTime) / 2;
       starts[i] = startTime;
@@ -57360,7 +54079,7 @@ var Plotly = (() => {
     this.bins[label] = oldValue + value;
     return oldValue;
   };
-  Sieve.prototype.get = function get2(position, group, value) {
+  Sieve.prototype.get = function get4(position, group, value) {
     var label = this.getLabel(position, group, value);
     return this.bins[label] || 0;
   };
@@ -58147,9 +54866,6 @@ var Plotly = (() => {
     return pt0.s + (pt1.s - pt0.s) * (position - pt0[posAttr]) / (pt1[posAttr] - pt0[posAttr]);
   }
 
-  // src/traces/scatter/plot.js
-  var import_d324 = __toESM(require_d3(), 1);
-
   // src/traces/scatter/line_points.js
   var BADNUM11 = numerical_default.BADNUM;
   var LOG_CLIP2 = numerical_default.LOG_CLIP;
@@ -58170,7 +54886,7 @@ var Plotly = (() => {
     var connectGaps = opts.connectGaps;
     var baseTolerance = opts.baseTolerance;
     var shape = opts.shape;
-    var linear = shape === "linear";
+    var linear4 = shape === "linear";
     var fill = trace.fill && trace.fill !== "none";
     var segments = [];
     var minTolerance = constants_default7.minTolerance;
@@ -58413,7 +55129,7 @@ var Plotly = (() => {
           if (connectGaps) continue;
           else break;
         }
-        if (!linear || !opts.simplify) {
+        if (!linear4 || !opts.simplify) {
           addPt(clusterHighPt);
           continue;
         }
@@ -58478,16 +55194,16 @@ var Plotly = (() => {
       var newSegments = [];
       for (var j = 0; j < segments.length; j++) {
         for (var k = 0; k < segments[j].length - 1; k++) {
-          var start = segments[j][k];
+          var start2 = segments[j][k];
           var end = segments[j][k + 1];
-          var xy = drawing_default.applyBackoff(end, start);
+          var xy = drawing_default.applyBackoff(end, start2);
           if (xy[0] !== end[0] || xy[1] !== end[1]) {
             trimmed = true;
           }
           if (!newSegments[n + 1]) {
             n++;
             newSegments[n] = [
-              start,
+              start2,
               [xy[0], xy[1]]
             ];
           }
@@ -58659,8 +55375,8 @@ var Plotly = (() => {
       degenerate
     };
   };
-  polygon.isSegmentBent = function isSegmentBent(pts, start, end, tolerance) {
-    var startPt = pts[start];
+  polygon.isSegmentBent = function isSegmentBent(pts, start2, end, tolerance) {
+    var startPt = pts[start2];
     var segment = [pts[end][0] - startPt[0], pts[end][1] - startPt[1]];
     var segmentSquared = dot(segment, segment);
     var segmentLen = Math.sqrt(segmentSquared);
@@ -58668,14 +55384,14 @@ var Plotly = (() => {
     var i;
     var part;
     var partParallel;
-    for (i = start + 1; i < end; i++) {
+    for (i = start2 + 1; i < end; i++) {
       part = [pts[i][0] - startPt[0], pts[i][1] - startPt[1]];
       partParallel = dot(part, segment);
       if (partParallel < 0 || partParallel > segmentSquared || Math.abs(dot(part, unitPerp)) > tolerance) return true;
     }
     return false;
   };
-  polygon.filter = function filter(pts, tolerance) {
+  polygon.filter = function filter2(pts, tolerance) {
     var ptsFiltered = [pts[0]];
     var doneRawIndex = 0;
     var doneFilteredIndex = 0;
@@ -58710,7 +55426,7 @@ var Plotly = (() => {
   // src/traces/scatter/plot.js
   var { tester: polygonTester } = polygon_default;
   var ensureSingle = lib_default.ensureSingle;
-  var identity2 = lib_default.identity;
+  var identity5 = lib_default.identity;
   function plot(gd, plotinfo, cdscatter, scatterLayer, transitionOpts, makeOnCompleteCallback) {
     var join, onComplete;
     var isFullReplot = !transitionOpts;
@@ -58728,12 +55444,12 @@ var Plotly = (() => {
       if (makeOnCompleteCallback) {
         onComplete = makeOnCompleteCallback();
       }
-      var transition2 = import_d324.default.transition().duration(transitionOpts.duration).ease(transitionOpts.easing).each("end", function() {
+      var transition3 = transition3().duration(transitionOpts.duration).ease(transitionOpts.easing).on("end", function() {
         onComplete && onComplete();
-      }).each("interrupt", function() {
+      }).on("interrupt", function() {
         onComplete && onComplete();
       });
-      transition2.each(function() {
+      transition3.each(function() {
         scatterLayer.selectAll("g.trace").each(function(d, i) {
           plotOne(gd, i, plotinfo, d, cdscatterSorted, this, transitionOpts);
         });
@@ -58750,19 +55466,19 @@ var Plotly = (() => {
   }
   function createFills(gd, traceJoin, plotinfo) {
     traceJoin.each(function(d) {
-      var fills = ensureSingle(import_d324.default.select(this), "g", "fills");
+      var fills = ensureSingle(select_default2(this), "g", "fills");
       drawing_default.setClipUrl(fills, plotinfo.layerClipId, gd);
       var trace = d[0].trace;
       var fillData = [];
       if (trace._ownfill) fillData.push("_ownFill");
       if (trace._nexttrace) fillData.push("_nextFill");
-      var fillJoin = fills.selectAll("g").data(fillData, identity2);
+      var fillJoin = fills.selectAll("g").data(fillData, identity5);
       fillJoin.enter().append("g");
       fillJoin.exit().each(function(d2) {
         trace[d2] = null;
       }).remove();
       fillJoin.order().each(function(d2) {
-        trace[d2] = ensureSingle(import_d324.default.select(this), "path", "js-fill");
+        trace[d2] = ensureSingle(select_default2(this), "path", "js-fill");
       });
     });
   }
@@ -58771,21 +55487,21 @@ var Plotly = (() => {
     var i;
     selectMarkers(gd, idx, plotinfo, cdscatter, cdscatterAll);
     var hasTransition2 = !!transitionOpts && transitionOpts.duration > 0;
-    function transition2(selection) {
-      return hasTransition2 ? selection.transition() : selection;
+    function transition3(selection2) {
+      return hasTransition2 ? selection2.transition() : selection2;
     }
     var xa = plotinfo.xaxis;
     var ya = plotinfo.yaxis;
     var trace = cdscatter[0].trace;
     var line = trace.line;
-    var tr = import_d324.default.select(element);
+    var tr = select_default2(element);
     var errorBarGroup = ensureSingle(tr, "g", "errorbars");
     var lines = ensureSingle(tr, "g", "lines");
     var points = ensureSingle(tr, "g", "points");
     var text = ensureSingle(tr, "g", "text");
     registry_default.getComponentMethod("errorbars", "plot")(gd, errorBarGroup, plotinfo, transitionOpts);
     if (trace.visible !== true) return;
-    transition2(tr).style("opacity", trace.opacity);
+    transition3(tr).style("opacity", trace.opacity);
     var ownFillEl3, tonext;
     var ownFillDir = trace.fill.charAt(trace.fill.length - 1);
     if (ownFillDir !== "x" && ownFillDir !== "y") ownFillDir = "";
@@ -58896,12 +55612,12 @@ var Plotly = (() => {
             revpath = thisrevpath + "Z" + revpath;
           }
           if (subtypes_default.hasLines(trace)) {
-            var el = import_d324.default.select(this);
+            var el = select_default2(this);
             el.datum(cdscatter);
             if (isEnter) {
-              transition2(el.style("opacity", 0).attr("d", thispath).call(drawing_default.lineGroupStyle)).style("opacity", 1);
+              transition3(el.style("opacity", 0).attr("d", thispath).call(drawing_default.lineGroupStyle)).style("opacity", 1);
             } else {
-              var sel = transition2(el);
+              var sel = transition3(el);
               sel.attr("d", thispath);
               drawing_default.singleLineStyle(cdscatter, sel);
             }
@@ -58910,12 +55626,12 @@ var Plotly = (() => {
       };
     }
     var lineJoin = lines.selectAll(".js-line").data(segments);
-    transition2(lineJoin.exit()).style("opacity", 0).remove();
+    transition3(lineJoin.exit()).style("opacity", 0).remove();
     lineJoin.each(makeUpdate(false));
     lineJoin.enter().append("path").classed("js-line", true).style("vector-effect", isStatic ? "none" : "non-scaling-stroke").call(drawing_default.lineGroupStyle).each(makeUpdate(true));
     drawing_default.setClipUrl(lineJoin, plotinfo.layerClipId, gd);
-    function clearFill(selection) {
-      transition2(selection).attr("d", "M0,0Z");
+    function clearFill(selection2) {
+      transition3(selection2).attr("d", "M0,0Z");
     }
     var makeSelfPolygons = function() {
       var polygons = new Array(fillsegments.length);
@@ -58955,10 +55671,10 @@ var Plotly = (() => {
         if (pt0 && pt1) {
           if (ownFillDir) {
             pt0[fillAxisIndex] = pt1[fillAxisIndex] = fillAxisZero;
-            transition2(ownFillEl3).attr("d", "M" + pt1 + "L" + pt0 + "L" + fullpath.slice(1)).call(drawing_default.singleFillStyle, gd);
+            transition3(ownFillEl3).attr("d", "M" + pt1 + "L" + pt0 + "L" + fullpath.slice(1)).call(drawing_default.singleFillStyle, gd);
             thisPolygons = makePolygonsToPrevious(null);
           } else {
-            transition2(ownFillEl3).attr("d", fullpath + "Z").call(drawing_default.singleFillStyle, gd);
+            transition3(ownFillEl3).attr("d", fullpath + "Z").call(drawing_default.singleFillStyle, gd);
             thisPolygons = makeSelfPolygons();
           }
         }
@@ -58967,11 +55683,11 @@ var Plotly = (() => {
       } else if (tonext) {
         if (trace.fill.slice(0, 6) === "tonext" && fullpath && prevRevpath) {
           if (trace.fill === "tonext") {
-            transition2(tonext).attr("d", fullpath + "Z" + prevRevpath + "Z").call(drawing_default.singleFillStyle, gd);
+            transition3(tonext).attr("d", fullpath + "Z" + prevRevpath + "Z").call(drawing_default.singleFillStyle, gd);
             thisPolygons = makeSelfPolygons();
             trace._polygons = thisPolygons.concat(prevPolygons);
           } else {
-            transition2(tonext).attr("d", fullpath + "L" + prevRevpath.slice(1) + "Z").call(drawing_default.singleFillStyle, gd);
+            transition3(tonext).attr("d", fullpath + "L" + prevRevpath.slice(1) + "Z").call(drawing_default.singleFillStyle, gd);
             thisPolygons = makePolygonsToPrevious(prevFillsegments);
             trace._polygons = thisPolygons;
           }
@@ -59014,7 +55730,7 @@ var Plotly = (() => {
       return false;
     }
     function makePoints(points2, text2, cdscatter2) {
-      var join, selection, hasNode;
+      var join, selection2, hasNode;
       var trace2 = cdscatter2[0].trace;
       var showMarkers = subtypes_default.hasMarkers(trace2);
       var showText = subtypes_default.hasText(trace2);
@@ -59022,7 +55738,7 @@ var Plotly = (() => {
       var markerFilter = hideFilter;
       var textFilter = hideFilter;
       if (showMarkers || showText) {
-        var showFilter = identity2;
+        var showFilter = identity5;
         var stackGroup = trace2.stackgroup;
         var isInferZero = stackGroup && gd._fullLayout._scatterStackOpts[xa._id + ya._id][stackGroup].stackgaps === "infer zero";
         if (trace2.marker.maxdisplayed || trace2._needsCull) {
@@ -59033,8 +55749,8 @@ var Plotly = (() => {
         if (showMarkers) markerFilter = showFilter;
         if (showText) textFilter = showFilter;
       }
-      selection = points2.selectAll("path.point");
-      join = selection.data(markerFilter, keyFunc3);
+      selection2 = points2.selectAll("path.point");
+      join = selection2.data(markerFilter, keyFunc3);
       var enter = join.enter().append("path").classed("point", true);
       if (hasTransition2) {
         enter.call(drawing_default.pointStyle, trace2, gd).call(drawing_default.translatePoints, xa, ya).style("opacity", 0).transition().style("opacity", 1);
@@ -59045,8 +55761,8 @@ var Plotly = (() => {
         styleFns = drawing_default.makePointStyleFns(trace2);
       }
       join.each(function(d) {
-        var el = import_d324.default.select(this);
-        var sel = transition2(el);
+        var el = select_default2(this);
+        var sel = transition3(el);
         hasNode = drawing_default.translatePoint(d, sel, xa, ya);
         if (hasNode) {
           drawing_default.singlePointStyle(d, sel, trace2, styleFns, gd);
@@ -59065,13 +55781,13 @@ var Plotly = (() => {
       } else {
         join.exit().remove();
       }
-      selection = text2.selectAll("g");
-      join = selection.data(textFilter, keyFunc3);
+      selection2 = text2.selectAll("g");
+      join = selection2.data(textFilter, keyFunc3);
       join.enter().append("g").classed("textpoint", true).append("text");
       join.order();
       join.each(function(d) {
-        var g = import_d324.default.select(this);
-        var sel = transition2(g.select("text"));
+        var g = select_default2(this);
+        var sel = transition3(g.select("text"));
         hasNode = drawing_default.translatePoint(d, sel, xa, ya);
         if (hasNode) {
           if (plotinfo.layerClipId) {
@@ -59084,8 +55800,8 @@ var Plotly = (() => {
       join.selectAll("text").call(drawing_default.textPointStyle, trace2, gd).each(function(d) {
         var x = xa.c2p(d.x);
         var y = ya.c2p(d.y);
-        import_d324.default.select(this).selectAll("tspan.line").each(function() {
-          transition2(import_d324.default.select(this)).attr({ x, y });
+        select_default2(this).selectAll("tspan.line").each(function() {
+          transition3(select_default2(this)).attr({ x, y });
         });
       });
       join.exit().remove();
@@ -59101,8 +55817,8 @@ var Plotly = (() => {
   function selectMarkers(gd, idx, plotinfo, cdscatter, cdscatterAll) {
     var xa = plotinfo.xaxis;
     var ya = plotinfo.yaxis;
-    var xr = import_d324.default.extent(lib_default.simpleMap(xa.range, xa.r2c));
-    var yr = import_d324.default.extent(lib_default.simpleMap(ya.range, ya.r2c));
+    var xr = extent(lib_default.simpleMap(xa.range, xa.r2c));
+    var yr = extent(lib_default.simpleMap(ya.range, ya.r2c));
     var trace = cdscatter[0].trace;
     if (!subtypes_default.hasMarkers(trace)) return;
     var mnum = trace.marker.maxdisplayed;
@@ -59150,19 +55866,18 @@ var Plotly = (() => {
   }
 
   // src/traces/scatter/style.js
-  var import_d325 = __toESM(require_d3(), 1);
   function style2(gd) {
-    var s = import_d325.default.select(gd).selectAll("g.trace.scatter");
+    var s = select_default2(gd).selectAll("g.trace.scatter");
     s.style("opacity", function(d) {
       return d[0].trace.opacity;
     });
     s.selectAll("g.points").each(function(d) {
-      var sel = import_d325.default.select(this);
+      var sel = select_default2(this);
       var trace = d.trace || d[0].trace;
       stylePoints(sel, trace, gd);
     });
     s.selectAll("g.text").each(function(d) {
-      var sel = import_d325.default.select(this);
+      var sel = select_default2(this);
       var trace = d.trace || d[0].trace;
       styleText(sel, trace, gd);
     });
@@ -59186,7 +55901,7 @@ var Plotly = (() => {
       styleText(sel, trace, gd);
     }
   }
-  var style_default = {
+  var style_default3 = {
     style: style2,
     stylePoints,
     styleText,
@@ -59362,10 +56077,10 @@ var Plotly = (() => {
             y1: pt[1]
           };
         }
-        var color2 = color_default.defaultLine;
-        if (color_default.opacity(trace.fillcolor)) color2 = trace.fillcolor;
+        var color3 = color_default.defaultLine;
+        if (color_default.opacity(trace.fillcolor)) color3 = trace.fillcolor;
         else if (color_default.opacity((trace.line || {}).color)) {
-          color2 = trace.line.color;
+          color3 = trace.line.color;
         }
         lib_default.extendFlat(pointData, {
           // never let a 2D override 1D type as closest point
@@ -59375,7 +56090,7 @@ var Plotly = (() => {
           x1: hoverLabelCoords.x1,
           y0: hoverLabelCoords.y0,
           y1: hoverLabelCoords.y1,
-          color: color2,
+          color: color3,
           hovertemplate: false
         });
         delete pointData.index;
@@ -59392,7 +56107,7 @@ var Plotly = (() => {
     var cd = searchInfo.cd;
     var xa = searchInfo.xaxis;
     var ya = searchInfo.yaxis;
-    var selection = [];
+    var selection2 = [];
     var trace = cd[0].trace;
     var i;
     var di;
@@ -59410,7 +56125,7 @@ var Plotly = (() => {
         x = xa.c2p(di.x);
         y = ya.c2p(di.y);
         if (di.i !== null && selectionTester.contains([x, y], false, i, searchInfo)) {
-          selection.push({
+          selection2.push({
             pointNumber: di.i,
             x: xa.c2d(di.x),
             y: ya.c2d(di.y)
@@ -59421,11 +56136,8 @@ var Plotly = (() => {
         }
       }
     }
-    return selection;
+    return selection2;
   }
-
-  // src/plots/cartesian/index.js
-  var import_d327 = __toESM(require_d3(), 1);
 
   // src/plots/cartesian/attributes.js
   var attributes_default10 = {
@@ -59456,11 +56168,11 @@ var Plotly = (() => {
   }
   function setAutoType(ax, data) {
     if (ax.type !== "-") return;
-    var id = ax._id;
-    var axLetter = id.charAt(0);
+    var id2 = ax._id;
+    var axLetter = id2.charAt(0);
     var i;
-    if (id.indexOf("scene") !== -1) id = axLetter;
-    var d0 = getFirstNonEmptyTrace(data, id, axLetter);
+    if (id2.indexOf("scene") !== -1) id2 = axLetter;
+    var d0 = getFirstNonEmptyTrace(data, id2, axLetter);
     if (!d0) return;
     if (d0.type === "histogram" && axLetter === { v: "y", h: "x" }[d0.orientation || "v"]) {
       ax.type = "linear";
@@ -59478,7 +56190,7 @@ var Plotly = (() => {
       var boxPositions = [];
       for (i = 0; i < data.length; i++) {
         var trace = data[i];
-        if (!traceIs(trace, "box-violin") || (trace[axLetter + "axis"] || axLetter) !== id) continue;
+        if (!traceIs(trace, "box-violin") || (trace[axLetter + "axis"] || axLetter) !== id2) continue;
         if (trace[posLetter] !== void 0) boxPositions.push(trace[posLetter][0]);
         else if (trace.name !== void 0) boxPositions.push(trace.name);
         else boxPositions.push("text");
@@ -59487,19 +56199,19 @@ var Plotly = (() => {
       ax.type = autoType(boxPositions, calendar, opts);
     } else if (d0.type === "splom") {
       var dimensions = d0.dimensions;
-      var dim = dimensions[d0._axesDim[id]];
+      var dim = dimensions[d0._axesDim[id2]];
       if (dim.visible) ax.type = autoType(dim.values, calendar, opts);
     } else {
       ax.type = autoType(d0[axLetter] || [d0[axLetter + "0"]], calendar, opts);
     }
   }
-  function getFirstNonEmptyTrace(data, id, axLetter) {
+  function getFirstNonEmptyTrace(data, id2, axLetter) {
     for (var i = 0; i < data.length; i++) {
       var trace = data[i];
-      if (trace.type === "splom" && trace._length > 0 && (trace["_" + axLetter + "axes"] || {})[id]) {
+      if (trace.type === "splom" && trace._length > 0 && (trace["_" + axLetter + "axes"] || {})[id2]) {
         return trace;
       }
-      if ((trace[axLetter + "axis"] || axLetter) === id) {
+      if ((trace[axLetter + "axis"] || axLetter) === id2) {
         if (isBoxWithoutPositionCoords(trace, axLetter)) {
           return trace;
         } else if ((trace[axLetter] || []).length || trace[axLetter + "0"]) {
@@ -59556,9 +56268,9 @@ var Plotly = (() => {
     var orderDefault;
     if (isValidArray) orderDefault = "array";
     var order = coerce3("categoryorder", orderDefault);
-    var array;
+    var array2;
     if (order === "array") {
-      array = coerce3("categoryarray");
+      array2 = coerce3("categoryarray");
     }
     if (!isValidArray && order === "array") {
       order = containerOut.categoryorder = "trace";
@@ -59566,13 +56278,13 @@ var Plotly = (() => {
     if (order === "trace") {
       containerOut._initialCategories = [];
     } else if (order === "array") {
-      containerOut._initialCategories = array.slice();
+      containerOut._initialCategories = array2.slice();
     } else {
-      array = findCategories(containerOut, opts).sort();
+      array2 = findCategories(containerOut, opts).sort();
       if (order === "category ascending") {
-        containerOut._initialCategories = array;
+        containerOut._initialCategories = array2;
       } else if (order === "category descending") {
-        containerOut._initialCategories = array.reverse();
+        containerOut._initialCategories = array2.reverse();
       }
     }
   }
@@ -60217,7 +56929,6 @@ var Plotly = (() => {
   }
 
   // src/plots/cartesian/transition_axes.js
-  var import_d326 = __toESM(require_d3(), 1);
   function transitionAxes(gd, edits, transitionOpts, makeOnCompleteCallback) {
     var fullLayout = gd._fullLayout;
     if (edits.length === 0) {
@@ -60320,8 +57031,9 @@ var Plotly = (() => {
         }
       });
     }
-    var t12, t2, raf;
-    var easeFn = import_d326.default.ease(transitionOpts.easing);
+    var t13, t2, raf;
+    var easeMap = { linear: linear2, cubic: cubicInOut, "cubic-in-out": cubicInOut, sin: sinInOut, exp: expInOut, circle: circleInOut, elastic: elasticOut, back: backInOut, bounce: bounceOut };
+    var easeFn = easeMap[transitionOpts.easing] || cubicInOut;
     gd._transitionData._interruptCallbacks.push(function() {
       window.cancelAnimationFrame(raf);
       raf = null;
@@ -60329,19 +57041,19 @@ var Plotly = (() => {
     });
     function doFrame() {
       t2 = Date.now();
-      var tInterp = Math.min(1, (t2 - t12) / transitionOpts.duration);
+      var tInterp = Math.min(1, (t2 - t13) / transitionOpts.duration);
       var progress = easeFn(tInterp);
       for (var i = 0; i < edits.length; i++) {
         updateSubplot(edits[i], progress);
       }
-      if (t2 - t12 > transitionOpts.duration) {
+      if (t2 - t13 > transitionOpts.duration) {
         transitionComplete();
         raf = window.cancelAnimationFrame(doFrame);
       } else {
         raf = window.requestAnimationFrame(doFrame);
       }
     }
-    t12 = Date.now();
+    t13 = Date.now();
     raf = window.requestAnimationFrame(doFrame);
     return Promise.resolve();
   }
@@ -60517,7 +57229,7 @@ var Plotly = (() => {
     layers.exit().remove();
     layers.order();
     layers.each(function(d) {
-      var sel = import_d327.default.select(this);
+      var sel = select_default2(this);
       var className2 = d.className;
       d.plotMethod(
         gd,
@@ -60631,24 +57343,24 @@ var Plotly = (() => {
     subplotLayers.order();
     subplotLayers.exit().call(purgeSubplotLayers, fullLayout);
     subplotLayers.each(function(d) {
-      var id = d[0];
-      var posZ = id.indexOf(zindexSeparator3);
+      var id2 = d[0];
+      var posZ = id2.indexOf(zindexSeparator3);
       var hasZ = posZ !== -1;
-      var idWithoutZ = hasZ ? id.slice(0, posZ) : id;
-      var plotinfo = fullLayout._plots[id];
+      var idWithoutZ = hasZ ? id2.slice(0, posZ) : id2;
+      var plotinfo = fullLayout._plots[id2];
       if (!plotinfo) {
         plotinfo = lib_default.extendFlat({}, fullLayout._plots[idWithoutZ]);
         if (plotinfo) {
-          plotinfo.id = id;
-          fullLayout._plots[id] = plotinfo;
-          fullLayout._subplots.cartesian.push(id);
+          plotinfo.id = id2;
+          fullLayout._plots[id2] = plotinfo;
+          fullLayout._subplots.cartesian.push(id2);
         }
       }
       if (plotinfo) {
-        plotinfo.plotgroup = import_d327.default.select(this);
+        plotinfo.plotgroup = select_default2(this);
         makeSubplotLayer(gd, plotinfo);
         if (!hasZ) {
-          plotinfo.draglayer = ensureSingle2(fullLayout._draggers, "g", id);
+          plotinfo.draglayer = ensureSingle2(fullLayout._draggers, "g", id2);
         }
       }
     });
@@ -60663,12 +57375,12 @@ var Plotly = (() => {
     var numZ = fullLayout._zindices.length;
     var ids = fullLayout._subplots.cartesian;
     var len2 = ids.length;
-    var i, j, id, plotinfo, xa, ya;
+    var i, j, id2, plotinfo, xa, ya;
     var regulars = [];
     var overlays = [];
     for (i = 0; i < len2; i++) {
-      id = ids[i];
-      plotinfo = fullLayout._plots[id];
+      id2 = ids[i];
+      plotinfo = fullLayout._plots[id2];
       xa = plotinfo.xaxis;
       ya = plotinfo.yaxis;
       var xa2 = xa._mainAxis;
@@ -60676,33 +57388,33 @@ var Plotly = (() => {
       var mainplot = xa2._id + ya2._id;
       var mainplotinfo = fullLayout._plots[mainplot];
       plotinfo.overlays = [];
-      if (mainplot !== id && mainplotinfo) {
+      if (mainplot !== id2 && mainplotinfo) {
         plotinfo.mainplot = mainplot;
         plotinfo.mainplotinfo = mainplotinfo;
-        overlays.push(id);
+        overlays.push(id2);
       } else {
         plotinfo.mainplot = void 0;
         plotinfo.mainplotinfo = void 0;
-        regulars.push(id);
+        regulars.push(id2);
       }
     }
     for (i = 0; i < overlays.length; i++) {
-      id = overlays[i];
-      plotinfo = fullLayout._plots[id];
+      id2 = overlays[i];
+      plotinfo = fullLayout._plots[id2];
       plotinfo.mainplotinfo.overlays.push(plotinfo);
     }
     var subplotIds = regulars.concat(overlays);
     var subplotData = [];
     for (i = 0; i < len2; i++) {
-      id = subplotIds[i];
-      plotinfo = fullLayout._plots[id];
+      id2 = subplotIds[i];
+      plotinfo = fullLayout._plots[id2];
       xa = plotinfo.xaxis;
       ya = plotinfo.yaxis;
       var d = [];
       for (var z = 1; z <= numZ; z++) {
         var zStr = "";
         if (z > 1) zStr += zindexSeparator3 + z;
-        d.push(id + zStr);
+        d.push(id2 + zStr);
         for (j = 0; j < plotinfo.overlays.length; j++) {
           d.push(plotinfo.overlays[j].id + zStr);
         }
@@ -60720,8 +57432,8 @@ var Plotly = (() => {
   function makeSubplotLayer(gd, plotinfo) {
     var fullLayout = gd._fullLayout;
     var plotgroup = plotinfo.plotgroup;
-    var id = plotinfo.id;
-    var posZ = id.indexOf(zindexSeparator3);
+    var id2 = plotinfo.id;
+    var posZ = id2.indexOf(zindexSeparator3);
     var hasZ = posZ !== -1;
     var xLayer = constants_default2.layerValue2layerClass[plotinfo.xaxis.layer];
     var yLayer = constants_default2.layerValue2layerClass[plotinfo.yaxis.layer];
@@ -60759,7 +57471,7 @@ var Plotly = (() => {
           plotinfo.overaxesBelow = ensureSingle2(plotgroup, "g", "overaxes-below");
         }
         plotinfo.overplot = ensureSingle2(plotgroup, "g", "overplot");
-        plotinfo.plot = ensureSingle2(plotinfo.overplot, "g", id);
+        plotinfo.plot = ensureSingle2(plotinfo.overplot, "g", id2);
         if (mainplotinfo && hasMultipleZ) {
           plotinfo.zerolinelayerAbove = mainplotinfo.zerolinelayerAbove;
         } else {
@@ -60780,8 +57492,8 @@ var Plotly = (() => {
       }
     } else {
       var mainplotgroup = mainplotinfo.plotgroup;
-      var xId = id + "-x";
-      var yId = id + "-y";
+      var xId = id2 + "-x";
+      var yId = id2 + "-y";
       plotinfo.minorGridlayer = mainplotinfo.minorGridlayer;
       plotinfo.gridlayer = mainplotinfo.gridlayer;
       plotinfo.zerolinelayer = mainplotinfo.zerolinelayer;
@@ -60790,7 +57502,7 @@ var Plotly = (() => {
       ensureSingle2(mainplotinfo.overlinesBelow, "path", yId);
       ensureSingle2(mainplotinfo.overaxesBelow, "g", xId);
       ensureSingle2(mainplotinfo.overaxesBelow, "g", yId);
-      plotinfo.plot = ensureSingle2(mainplotinfo.overplot, "g", id);
+      plotinfo.plot = ensureSingle2(mainplotinfo.overplot, "g", id2);
       ensureSingle2(mainplotinfo.overlinesAbove, "path", xId);
       ensureSingle2(mainplotinfo.overlinesAbove, "path", yId);
       ensureSingle2(mainplotinfo.overaxesAbove, "g", xId);
@@ -60804,14 +57516,16 @@ var Plotly = (() => {
       if (!hasOnlyLargeSploms) {
         ensureSingleAndAddDatum(plotinfo.minorGridlayer, "g", plotinfo.xaxis._id);
         ensureSingleAndAddDatum(plotinfo.minorGridlayer, "g", plotinfo.yaxis._id);
-        plotinfo.minorGridlayer.selectAll("g").map(function(d) {
-          return d[0];
-        }).sort(axis_ids_default.idSort);
+        var minorGridNode = plotinfo.minorGridlayer.node();
+        if (minorGridNode) {
+          select_default2(minorGridNode).selectChildren("g").sort(axis_ids_default.idSort);
+        }
         ensureSingleAndAddDatum(plotinfo.gridlayer, "g", plotinfo.xaxis._id);
         ensureSingleAndAddDatum(plotinfo.gridlayer, "g", plotinfo.yaxis._id);
-        plotinfo.gridlayer.selectAll("g").map(function(d) {
-          return d[0];
-        }).sort(axis_ids_default.idSort);
+        var gridNode = plotinfo.gridlayer.node();
+        if (gridNode) {
+          select_default2(gridNode).selectChildren("g").sort(axis_ids_default.idSort);
+        }
       }
       plotinfo.xlines.style("fill", "none").classed("crisp", true);
       plotinfo.ylines.style("fill", "none").classed("crisp", true);
@@ -60821,11 +57535,11 @@ var Plotly = (() => {
     if (!layers) return;
     var overlayIdsToRemove = {};
     layers.each(function(d) {
-      var id = d[0];
-      var plotgroup = import_d327.default.select(this);
+      var id2 = d[0];
+      var plotgroup = select_default2(this);
       plotgroup.remove();
-      removeSubplotExtras(id, fullLayout);
-      overlayIdsToRemove[id] = true;
+      removeSubplotExtras(id2, fullLayout);
+      overlayIdsToRemove[id2] = true;
     });
     for (var k in fullLayout._plots) {
       var subplotInfo = fullLayout._plots[k];
@@ -60844,9 +57558,9 @@ var Plotly = (() => {
   }
   var toSVG2 = function(gd) {
     var imageRoot = gd._fullLayout._glimages;
-    var root = import_d327.default.select(gd).selectAll(".svg-container");
-    var canvases = root.filter(function(d, i) {
-      return i === root.size() - 1;
+    var root2 = select_default2(gd).selectAll(".svg-container");
+    var canvases = root2.filter(function(d, i) {
+      return i === root2.size() - 1;
     }).selectAll(".gl-canvas-context, .gl-canvas-focus");
     function canvasToImage() {
       var canvas = this;
@@ -60869,7 +57583,7 @@ var Plotly = (() => {
 
   // src/traces/scatter/index.js
   var { calc: _req5 } = calc_default;
-  var { style: _req11, styleOnSelect: _req12 } = style_default;
+  var { style: _req11, styleOnSelect: _req12 } = style_default3;
   var scatter_default = {
     hasLines: subtypes_default.hasLines,
     hasMarkers: subtypes_default.hasMarkers,
@@ -60905,12 +57619,6 @@ var Plotly = (() => {
     ],
     meta: {}
   };
-
-  // src/components/annotations/draw.js
-  var import_d329 = __toESM(require_d3(), 1);
-
-  // src/components/annotations/draw_arrow_head.js
-  var import_d328 = __toESM(require_d3(), 1);
 
   // src/components/annotations/arrow_paths.js
   var arrow_paths_default = [
@@ -60972,12 +57680,12 @@ var Plotly = (() => {
     var doEnd = ends.indexOf("end") >= 0;
     var backOff = headStyle.backoff * scale2 + options.standoff;
     var startBackOff = startHeadStyle.backoff * startScale + options.startstandoff;
-    var start, end, startRot, endRot;
+    var start2, end, startRot, endRot;
     if (el.nodeName === "line") {
-      start = { x: +el3.attr("x1"), y: +el3.attr("y1") };
+      start2 = { x: +el3.attr("x1"), y: +el3.attr("y1") };
       end = { x: +el3.attr("x2"), y: +el3.attr("y2") };
-      var dx = start.x - end.x;
-      var dy = start.y - end.y;
+      var dx = start2.x - end.x;
+      var dy = start2.y - end.y;
       startRot = Math.atan2(dy, dx);
       endRot = startRot + Math.PI;
       if (backOff && startBackOff) {
@@ -61004,9 +57712,9 @@ var Plotly = (() => {
         }
         var startBackOffX = startBackOff * Math.cos(startRot);
         var startbackOffY = startBackOff * Math.sin(startRot);
-        start.x -= startBackOffX;
-        start.y -= startbackOffY;
-        el3.attr({ x1: start.x, y1: start.y });
+        start2.x -= startBackOffX;
+        start2.y -= startbackOffY;
+        el3.attr({ x1: start2.x, y1: start2.y });
       }
     } else if (el.nodeName === "path") {
       var pathlen = el.getTotalLength();
@@ -61018,7 +57726,7 @@ var Plotly = (() => {
       var start0 = el.getPointAtLength(0);
       var dstart = el.getPointAtLength(0.1);
       startRot = Math.atan2(start0.y - dstart.y, start0.x - dstart.x);
-      start = el.getPointAtLength(Math.min(startBackOff, pathlen));
+      start2 = el.getPointAtLength(Math.min(startBackOff, pathlen));
       dashArray = "0px," + startBackOff + "px,";
       var end0 = el.getPointAtLength(pathlen);
       var dend = el.getPointAtLength(pathlen - 0.1);
@@ -61034,7 +57742,7 @@ var Plotly = (() => {
     function drawhead(arrowHeadStyle, p, rot, arrowScale) {
       if (!arrowHeadStyle.path) return;
       if (arrowHeadStyle.noRotate) rot = 0;
-      import_d328.default.select(el.parentNode).append("path").attr({
+      select_default2(el.parentNode).append("path").attr({
         class: el3.attr("class"),
         d: arrowHeadStyle.path,
         transform: strTranslate10(p.x, p.y) + strRotate2(rot * 180 / Math.PI) + strScale(arrowScale)
@@ -61043,7 +57751,7 @@ var Plotly = (() => {
         "stroke-width": 0
       });
     }
-    if (doStart) drawhead(startHeadStyle, start, startRot, startScale);
+    if (doStart) drawhead(startHeadStyle, start2, startRot, startScale);
     if (doEnd) drawhead(headStyle, end, endRot, scale2);
   }
 
@@ -61108,7 +57816,7 @@ var Plotly = (() => {
     fullLayout._infolayer.selectAll("." + className + '[data-index="' + index + '"]').remove();
     var annClipID = "clip" + fullLayout._uid + "_ann" + index;
     if (!options._input || options.visible === false) {
-      import_d329.default.selectAll("#" + annClipID).remove();
+      selectAll_default2("#" + annClipID).remove();
       return;
     }
     var annPosPx = { x: {}, y: {} };
@@ -61129,9 +57837,9 @@ var Plotly = (() => {
       }
       return eventData7;
     }
-    var annTextGroupInner = annTextGroup.append("g").style("pointer-events", textEvents ? "all" : null).call(setCursor, "pointer").on("click", function() {
+    var annTextGroupInner = annTextGroup.append("g").style("pointer-events", textEvents ? "all" : null).call(setCursor, "pointer").on("click", function(event2) {
       gd._dragging = false;
-      gd.emit("plotly_clickannotation", makeEventData2(import_d329.default.event));
+      gd.emit("plotly_clickannotation", makeEventData2(event2));
     });
     if (options.hovertext) {
       annTextGroupInner.on("mouseover", function() {
@@ -61372,9 +58080,9 @@ var Plotly = (() => {
         var tailY = annPosPx.y.tail + dy;
         var textX = annPosPx.x.text + dx;
         var textY = annPosPx.y.text + dy;
-        var transform = lib_default.rotationXYMatrix(textangle, textX, textY);
-        var applyTransform = lib_default.apply2DTransform(transform);
-        var applyTransform2 = lib_default.apply2DTransform2(transform);
+        var transform2 = lib_default.rotationXYMatrix(textangle, textX, textY);
+        var applyTransform = lib_default.apply2DTransform(transform2);
+        var applyTransform2 = lib_default.apply2DTransform2(transform2);
         var width = +annTextBG.attr("width");
         var height = +annTextBG.attr("height");
         var xLeft = textX - 0.5 * width;
@@ -62004,8 +58712,8 @@ var Plotly = (() => {
   // src/plots/cartesian/include_components.js
   function makeIncludeComponents(containerArrayName) {
     return function includeComponents(layoutIn, layoutOut) {
-      var array = layoutIn[containerArrayName];
-      if (!Array.isArray(array)) return;
+      var array2 = layoutIn[containerArrayName];
+      if (!Array.isArray(array2)) return;
       var Cartesian = registry_default.subplotsRegistry.cartesian;
       var idRegex4 = Cartesian.idRegex;
       var subplots = layoutOut._subplots;
@@ -62013,8 +58721,8 @@ var Plotly = (() => {
       var yaList = subplots.yaxis;
       var cartesianList = subplots.cartesian;
       var hasCartesian = layoutOut._has("cartesian");
-      for (var i = 0; i < array.length; i++) {
-        var itemi = array[i];
+      for (var i = 0; i < array2.length; i++) {
+        var itemi = array2[i];
         if (!lib_default.isPlainObject(itemi)) continue;
         var xref = axis_ids_default.cleanId(itemi.xref, "x", false);
         var yref = axis_ids_default.cleanId(itemi.yref, "y", false);
@@ -62468,28 +59176,28 @@ var Plotly = (() => {
   function activateSelection(gd, path) {
     if (!couldHaveActiveSelection(gd)) return;
     var element = path.node();
-    var id = +element.getAttribute("data-index");
-    if (id >= 0) {
-      if (id === gd._fullLayout._activeSelectionIndex) {
+    var id2 = +element.getAttribute("data-index");
+    if (id2 >= 0) {
+      if (id2 === gd._fullLayout._activeSelectionIndex) {
         deactivateSelection(gd);
         return;
       }
-      gd._fullLayout._activeSelectionIndex = id;
+      gd._fullLayout._activeSelectionIndex = id2;
       gd._fullLayout._deactivateSelection = deactivateSelection;
       draw7(gd);
     }
   }
   function activateLastSelection(gd) {
     if (!couldHaveActiveSelection(gd)) return;
-    var id = gd._fullLayout.selections.length - 1;
-    gd._fullLayout._activeSelectionIndex = id;
+    var id2 = gd._fullLayout.selections.length - 1;
+    gd._fullLayout._activeSelectionIndex = id2;
     gd._fullLayout._deactivateSelection = deactivateSelection;
     draw7(gd);
   }
   function deactivateSelection(gd) {
     if (!couldHaveActiveSelection(gd)) return;
-    var id = gd._fullLayout._activeSelectionIndex;
-    if (id >= 0) {
+    var id2 = gd._fullLayout._activeSelectionIndex;
+    if (id2 >= 0) {
       clearOutlineControllers4(gd);
       delete gd._fullLayout._activeSelectionIndex;
       draw7(gd);
@@ -62524,7 +59232,7 @@ var Plotly = (() => {
   var selectMode4 = helpers_default5.selectMode;
   var handleEllipse2 = helpers_default7.handleEllipse;
   var readPaths4 = helpers_default7.readPaths;
-  var ascending = lib_default.sorterAsc;
+  var ascending3 = lib_default.sorterAsc;
   var MINSELECT = constants_default8.MINSELECT;
   var filteredPolygon = polygon_default.filter;
   var polygonTester2 = polygon_default.tester;
@@ -62550,7 +59258,7 @@ var Plotly = (() => {
     var zoomLayer = fullLayout._zoomlayer;
     var dragBBox = dragOptions.element.getBoundingClientRect();
     var plotinfo = dragOptions.plotinfo;
-    var transform = getTransform2(plotinfo);
+    var transform2 = getTransform2(plotinfo);
     var x0 = startX - dragBBox.left;
     var y0 = startY - dragBBox.top;
     fullLayout._calcInverseTransform(gd);
@@ -62585,12 +59293,12 @@ var Plotly = (() => {
       "stroke-dasharray": dashStyle(newStyle.line.dash, newStyle.line.width),
       "stroke-width": newStyle.line.width + "px",
       "shape-rendering": "crispEdges"
-    }).call(color_default.stroke, strokeC).call(color_default.fill, fillC).attr("fill-rule", "evenodd").classed("cursor-move", isDrawMode ? true : false).attr("transform", transform).attr("d", path0 + "Z");
+    }).call(color_default.stroke, strokeC).call(color_default.fill, fillC).attr("fill-rule", "evenodd").classed("cursor-move", isDrawMode ? true : false).attr("transform", transform2).attr("d", path0 + "Z");
     var corners = zoomLayer.append("path").attr("class", "zoombox-corners").style({
       fill: color_default.background,
       stroke: color_default.defaultLine,
       "stroke-width": 1
-    }).attr("transform", transform).attr("d", "M0,0Z");
+    }).attr("transform", transform2).attr("d", "M0,0Z");
     if (isDrawMode && dragOptions.hasText) {
       var shapeGroup = zoomLayer.select(".label-temp");
       if (shapeGroup.empty()) {
@@ -62598,7 +59306,7 @@ var Plotly = (() => {
       }
     }
     var throttleID = fullLayout._uid + constants_default8.SELECTID;
-    var selection = [];
+    var selection2 = [];
     var searchTraces = determineSearchTraces(
       gd,
       dragOptions.xaxes,
@@ -62642,7 +59350,7 @@ var Plotly = (() => {
       var dy = Math.abs(y1 - y0);
       if (isRectMode) {
         var direction;
-        var start, end;
+        var start2, end;
         if (isSelectMode) {
           var q = fullLayout.selectdirection;
           if (q === "any") {
@@ -62658,11 +59366,11 @@ var Plotly = (() => {
           }
           switch (direction) {
             case "h":
-              start = isEllipse ? ph / 2 : 0;
+              start2 = isEllipse ? ph / 2 : 0;
               end = ph;
               break;
             case "v":
-              start = isEllipse ? pw / 2 : 0;
+              start2 = isEllipse ? pw / 2 : 0;
               end = pw;
               break;
           }
@@ -62671,22 +59379,22 @@ var Plotly = (() => {
           switch (fullLayout.newshape.drawdirection) {
             case "vertical":
               direction = "h";
-              start = isEllipse ? ph / 2 : 0;
+              start2 = isEllipse ? ph / 2 : 0;
               end = ph;
               break;
             case "horizontal":
               direction = "v";
-              start = isEllipse ? pw / 2 : 0;
+              start2 = isEllipse ? pw / 2 : 0;
               end = pw;
               break;
             case "ortho":
               if (dx < dy) {
                 direction = "h";
-                start = y0;
+                start2 = y0;
                 end = y1;
               } else {
                 direction = "v";
-                start = x0;
+                start2 = x0;
                 end = x1;
               }
               break;
@@ -62695,22 +59403,22 @@ var Plotly = (() => {
           }
         }
         if (direction === "h") {
-          currentPolygon = isLineOrEllipse ? handleEllipse2(isEllipse, [x1, start], [x1, end]) : (
+          currentPolygon = isLineOrEllipse ? handleEllipse2(isEllipse, [x1, start2], [x1, end]) : (
             // using x1 instead of x0 allows adjusting the line while drawing
-            [[x0, start], [x0, end], [x1, end], [x1, start]]
+            [[x0, start2], [x0, end], [x1, end], [x1, start2]]
           );
           currentPolygon.xmin = isLineOrEllipse ? x1 : Math.min(x0, x1);
           currentPolygon.xmax = isLineOrEllipse ? x1 : Math.max(x0, x1);
-          currentPolygon.ymin = Math.min(start, end);
-          currentPolygon.ymax = Math.max(start, end);
+          currentPolygon.ymin = Math.min(start2, end);
+          currentPolygon.ymax = Math.max(start2, end);
           corners.attr("d", "M" + currentPolygon.xmin + "," + (y0 - MINSELECT) + "h-4v" + 2 * MINSELECT + "h4ZM" + (currentPolygon.xmax - 1) + "," + (y0 - MINSELECT) + "h4v" + 2 * MINSELECT + "h-4Z");
         } else if (direction === "v") {
-          currentPolygon = isLineOrEllipse ? handleEllipse2(isEllipse, [start, y1], [end, y1]) : (
+          currentPolygon = isLineOrEllipse ? handleEllipse2(isEllipse, [start2, y1], [end, y1]) : (
             // using y1 instead of y0 allows adjusting the line while drawing
-            [[start, y0], [start, y1], [end, y1], [end, y0]]
+            [[start2, y0], [start2, y1], [end, y1], [end, y0]]
           );
-          currentPolygon.xmin = Math.min(start, end);
-          currentPolygon.xmax = Math.max(start, end);
+          currentPolygon.xmin = Math.min(start2, end);
+          currentPolygon.xmax = Math.max(start2, end);
           currentPolygon.ymin = isLineOrEllipse ? y1 : Math.min(y0, y1);
           currentPolygon.ymax = isLineOrEllipse ? y1 : Math.max(y0, y1);
           corners.attr("d", "M" + (x0 - MINSELECT) + "," + currentPolygon.ymin + "v-4h" + 2 * MINSELECT + "v4ZM" + (x0 - MINSELECT) + "," + (currentPolygon.ymax - 1) + "v4h" + 2 * MINSELECT + "v-4Z");
@@ -62751,8 +59459,8 @@ var Plotly = (() => {
           throttleID,
           constants_default8.SELECTDELAY,
           function() {
-            selection = _doSelect(selectionTesters, searchTraces);
-            var newPoints = selection.slice();
+            selection2 = _doSelect(selectionTesters, searchTraces);
+            var newPoints = selection2.slice();
             for (var w = 0; w < extraPoints.length; w++) {
               var p = extraPoints[w];
               var found = false;
@@ -62847,7 +59555,7 @@ var Plotly = (() => {
           clearSelectionsCache(dragOptions, immediateSelect);
         }
         if (dragOptions.doneFnCompleted) {
-          dragOptions.doneFnCompleted(selection);
+          dragOptions.doneFnCompleted(selection2);
         }
         if (isSelectMode) {
           emitSelected(gd, eventData7);
@@ -62860,7 +59568,7 @@ var Plotly = (() => {
     var fullLayout = gd._fullLayout;
     var clickmode = fullLayout.clickmode;
     var sendEvents = clickmode.indexOf("event") > -1;
-    var selection = [];
+    var selection2 = [];
     var searchTraces, searchInfo, currentSelectionDef, selectionTesters, traceSelection;
     var thisTracesSelection, pointOrBinSelected, subtract, eventData7, i;
     if (isHoverDataSet(hoverData)) {
@@ -62887,13 +59595,13 @@ var Plotly = (() => {
         for (i = 0; i < searchTraces.length; i++) {
           traceSelection = searchTraces[i]._module.selectPoints(searchTraces[i], selectionTesters);
           thisTracesSelection = fillSelectionItem(traceSelection, searchTraces[i]);
-          if (selection.length) {
+          if (selection2.length) {
             for (var j = 0; j < thisTracesSelection.length; j++) {
-              selection.push(thisTracesSelection[j]);
+              selection2.push(thisTracesSelection[j]);
             }
-          } else selection = thisTracesSelection;
+          } else selection2 = thisTracesSelection;
         }
-        eventData7 = { points: selection };
+        eventData7 = { points: selection2 };
         updateSelectedState(gd, searchTraces, eventData7);
         if (currentSelectionDef && dragOptions) {
           dragOptions.selectionDefs.push(currentSelectionDef);
@@ -63248,15 +59956,15 @@ var Plotly = (() => {
     }
     return allPolygons;
   }
-  function fillSelectionItem(selection, searchInfo) {
-    if (Array.isArray(selection)) {
+  function fillSelectionItem(selection2, searchInfo) {
+    if (Array.isArray(selection2)) {
       var cd = searchInfo.cd;
       var trace = searchInfo.cd[0].trace;
-      for (var i = 0; i < selection.length; i++) {
-        selection[i] = makeEventData(selection[i], trace, cd);
+      for (var i = 0; i < selection2.length; i++) {
+        selection2[i] = makeEventData(selection2[i], trace, cd);
       }
     }
-    return selection;
+    return selection2;
   }
   function convertPoly(polygonsIn, isOpenMode) {
     var polygonsOut = [];
@@ -63388,8 +60096,8 @@ var Plotly = (() => {
             }
           }
         }
-        var selection = _doSelect(_selectionTesters, _searchTraces);
-        allSelections = allSelections.concat(selection);
+        var selection2 = _doSelect(_selectionTesters, _searchTraces);
+        allSelections = allSelections.concat(selection2);
         allSearchTraces = allSearchTraces.concat(_searchTraces);
       }
     }
@@ -63501,20 +60209,20 @@ var Plotly = (() => {
     var len2 = allSelections.length;
     for (var i = 0; i < len2; i++) {
       if (onlyActiveOnes && i !== fullLayout._activeSelectionIndex) continue;
-      var selection = allSelections[i];
-      if (!selection) continue;
-      var xref = selection.xref;
-      var yref = selection.yref;
+      var selection2 = allSelections[i];
+      if (!selection2) continue;
+      var xref = selection2.xref;
+      var yref = selection2.yref;
       var xaxis = getFromId(gd, xref, "x");
       var yaxis = getFromId(gd, yref, "y");
       var xmin, xmax, ymin, ymax;
       var polygon2;
-      if (selection.type === "rect") {
+      if (selection2.type === "rect") {
         polygon2 = [];
-        var x0 = convert2(xaxis, selection.x0);
-        var x1 = convert2(xaxis, selection.x1);
-        var y0 = convert2(yaxis, selection.y0);
-        var y1 = convert2(yaxis, selection.y1);
+        var x0 = convert2(xaxis, selection2.x0);
+        var x1 = convert2(xaxis, selection2.x1);
+        var y0 = convert2(yaxis, selection2.y0);
+        var y1 = convert2(yaxis, selection2.y1);
         polygon2 = [[x0, y0], [x0, y1], [x1, y1], [x1, y0]];
         xmin = Math.min(x0, x1);
         xmax = Math.max(x0, x1);
@@ -63529,8 +60237,8 @@ var Plotly = (() => {
         polygon2.subtract = false;
         polygon2.isRect = true;
         allPolygons.push(polygon2);
-      } else if (selection.type === "path") {
-        var segments = selection.path.split("Z");
+      } else if (selection2.type === "path") {
+        var segments = selection2.path.split("Z");
         var multiPolygons = [];
         for (var j = 0; j < segments.length; j++) {
           var path = segments[j];
@@ -63609,21 +60317,21 @@ var Plotly = (() => {
       var lassoPoints;
       for (var i = 0; i < allAxes.length; i++) {
         var ax = allAxes[i];
-        var id = ax._id;
-        var axLetter = id.charAt(0);
+        var id2 = ax._id;
+        var axLetter = id2.charAt(0);
         if (poly.isRect) {
           if (!range) range = {};
-          var min = poly[axLetter + "min"];
-          var max = poly[axLetter + "max"];
-          if (min !== void 0 && max !== void 0) {
-            range[id] = [
-              p2r4(ax, min),
-              p2r4(ax, max)
-            ].sort(ascending);
+          var min2 = poly[axLetter + "min"];
+          var max2 = poly[axLetter + "max"];
+          if (min2 !== void 0 && max2 !== void 0) {
+            range[id2] = [
+              p2r4(ax, min2),
+              p2r4(ax, max2)
+            ].sort(ascending3);
           }
         } else {
           if (!lassoPoints) lassoPoints = {};
-          lassoPoints[id] = poly.map(axValue2(ax));
+          lassoPoints[id2] = poly.map(axValue2(ax));
         }
       }
       if (range) {
@@ -63651,7 +60359,7 @@ var Plotly = (() => {
   function emitDeselect(gd) {
     gd.emit("plotly_deselect", null);
   }
-  var select_default = {
+  var select_default4 = {
     reselect,
     prepSelect: prepSelect2,
     clearOutline: clearOutline7,
@@ -63713,10 +60421,10 @@ var Plotly = (() => {
     });
     var selections = layoutOut.selections;
     for (var i = 0; i < selections.length; i++) {
-      var selection = selections[i];
-      if (!selection) continue;
-      if (selection.path === void 0) {
-        if (selection.x0 === void 0 || selection.x1 === void 0 || selection.y0 === void 0 || selection.y1 === void 0) {
+      var selection2 = selections[i];
+      if (!selection2) continue;
+      if (selection2.path === void 0) {
+        if (selection2.x0 === void 0 || selection2.x1 === void 0 || selection2.y0 === void 0 || selection2.y1 === void 0) {
           layoutOut.selections[i] = null;
         }
       }
@@ -63793,11 +60501,11 @@ var Plotly = (() => {
     includeBasePlot: makeIncludeComponents("selections"),
     draw: draw_default3.draw,
     drawOne: draw_default3.drawOne,
-    reselect: select_default.reselect,
-    prepSelect: select_default.prepSelect,
-    clearOutline: select_default.clearOutline,
-    clearSelectionsCache: select_default.clearSelectionsCache,
-    selectOnClick: select_default.selectOnClick
+    reselect: select_default4.reselect,
+    prepSelect: select_default4.prepSelect,
+    clearOutline: select_default4.clearOutline,
+    clearSelectionsCache: select_default4.clearSelectionsCache,
+    selectOnClick: select_default4.selectOnClick
   };
 
   // src/components/shapes/attributes.js
@@ -64231,8 +60939,8 @@ var Plotly = (() => {
     }
     if (v0 !== void 0) return [convertVal(v0) + shiftStart, convertVal(v1) + shiftEnd];
     if (!shape.path) return;
-    var min = Infinity;
-    var max = -Infinity;
+    var min2 = Infinity;
+    var max2 = -Infinity;
     var segments = shape.path.match(constants_default5.segmentRE);
     var i;
     var segment;
@@ -64247,10 +60955,10 @@ var Plotly = (() => {
       params = segments[i].slice(1).match(constants_default5.paramRE);
       if (!params || params.length < drawnParam) continue;
       val = convertVal(params[drawnParam]);
-      if (val < min) min = val;
-      if (val > max) max = val;
+      if (val < min2) min2 = val;
+      if (val > max2) max2 = val;
     }
-    if (max >= min) return [min, max];
+    if (max2 >= min2) return [min2, max2];
   }
 
   // src/components/shapes/index.js
@@ -64387,7 +61095,6 @@ var Plotly = (() => {
   }
 
   // src/components/images/draw.js
-  var import_d330 = __toESM(require_d3(), 1);
   function draw8(gd) {
     var fullLayout = gd._fullLayout;
     var imageDataAbove = [];
@@ -64432,7 +61139,7 @@ var Plotly = (() => {
       }
     };
     function setImage(d) {
-      var thisImage = import_d330.default.select(this);
+      var thisImage = select_default2(this);
       if (this._imgSrc === d.source) {
         return;
       }
@@ -64468,7 +61175,7 @@ var Plotly = (() => {
       }
     }
     function applyAttributes2(d) {
-      var thisImage = import_d330.default.select(this);
+      var thisImage = select_default2(this);
       var xa = axes_default.getFromId(gd, d.xref);
       var ya = axes_default.getFromId(gd, d.yref);
       var xIsDomain = axes_default.getRefType(d.xref) === "domain";
@@ -64826,16 +61533,12 @@ var Plotly = (() => {
     }
   }
 
-  // src/components/updatemenus/draw.js
-  var import_d332 = __toESM(require_d3(), 1);
-
   // src/components/updatemenus/scrollbox.js
-  var import_d331 = __toESM(require_d3(), 1);
   var scrollbox_default = ScrollBox;
-  function ScrollBox(gd, container, id) {
+  function ScrollBox(gd, container, id2) {
     this.gd = gd;
     this.container = container;
-    this.id = id;
+    this.id = id2;
     this.position = null;
     this.translateX = null;
     this.translateY = null;
@@ -64995,13 +61698,13 @@ var Plotly = (() => {
       delete this._clipRect;
     }
     if (needsHorizontalScrollBar || needsVerticalScrollBar) {
-      var onBoxDrag = import_d331.default.behavior.drag().on("dragstart", function() {
-        import_d331.default.event.sourceEvent.preventDefault();
+      var onBoxDrag = drag_default().on("start", function(event2) {
+        event2.sourceEvent.preventDefault();
       }).on("drag", this._onBoxDrag.bind(this));
       this.container.on("wheel", null).on("wheel", this._onBoxWheel.bind(this)).on(".drag", null).call(onBoxDrag);
-      var onBarDrag = import_d331.default.behavior.drag().on("dragstart", function() {
-        import_d331.default.event.sourceEvent.preventDefault();
-        import_d331.default.event.sourceEvent.stopPropagation();
+      var onBarDrag = drag_default().on("start", function(event2) {
+        event2.sourceEvent.preventDefault();
+        event2.sourceEvent.stopPropagation();
       }).on("drag", this._onBarDrag.bind(this));
       if (needsHorizontalScrollBar) {
         this.hbar.on(".drag", null).call(onBarDrag);
@@ -65040,10 +61743,10 @@ var Plotly = (() => {
     var translateX = this.translateX;
     var translateY = this.translateY;
     if (this.hbar) {
-      translateX -= import_d331.default.event.dx;
+      translateX -= event.dx;
     }
     if (this.vbar) {
-      translateY -= import_d331.default.event.dy;
+      translateY -= event.dy;
     }
     this.setTranslate(translateX, translateY);
   };
@@ -65051,10 +61754,10 @@ var Plotly = (() => {
     var translateX = this.translateX;
     var translateY = this.translateY;
     if (this.hbar) {
-      translateX += import_d331.default.event.deltaY;
+      translateX += event.deltaY;
     }
     if (this.vbar) {
-      translateY += import_d331.default.event.deltaY;
+      translateY += event.deltaY;
     }
     this.setTranslate(translateX, translateY);
   };
@@ -65064,7 +61767,7 @@ var Plotly = (() => {
     if (this.hbar) {
       var xMin = translateX + this._hbarXMin;
       var xMax = xMin + this._hbarTranslateMax;
-      var x = lib_default.constrain(import_d331.default.event.x, xMin, xMax);
+      var x = lib_default.constrain(event.x, xMin, xMax);
       var xf = (x - xMin) / (xMax - xMin);
       var translateXMax = this.position.w - this._box.w;
       translateX = xf * translateXMax;
@@ -65072,7 +61775,7 @@ var Plotly = (() => {
     if (this.vbar) {
       var yMin = translateY + this._vbarYMin;
       var yMax = yMin + this._vbarTranslateMax;
-      var y = lib_default.constrain(import_d331.default.event.y, yMin, yMax);
+      var y = lib_default.constrain(event.y, yMin, yMax);
       var yf = (y - yMin) / (yMax - yMin);
       var translateYMax = this.position.h - this._box.h;
       translateY = yf * translateYMax;
@@ -65126,7 +61829,7 @@ var Plotly = (() => {
     var menus = fullLayout._menulayer.selectAll("g." + constants_default9.containerClassName).data(menuData.length > 0 ? [0] : []);
     menus.enter().append("g").classed(constants_default9.containerClassName, true).style("cursor", "pointer");
     menus.exit().each(function() {
-      import_d332.default.select(this).selectAll("g." + constants_default9.headerGroupClassName).each(clearAutoMargin);
+      select_default2(this).selectAll("g." + constants_default9.headerGroupClassName).each(clearAutoMargin);
     }).remove();
     if (menuData.length === 0) return;
     var headerGroups = menus.selectAll("g." + constants_default9.headerGroupClassName).data(menuData, keyFunction);
@@ -65149,7 +61852,7 @@ var Plotly = (() => {
       clearAutoMargin(menuOpts2);
     }).remove();
     headerGroups.each(function(menuOpts2) {
-      var gHeader = import_d332.default.select(this);
+      var gHeader = select_default2(this);
       var _gButton = menuOpts2.type === "dropdown" ? gButton : null;
       plots_default.manageCommandObserver(gd, menuOpts2, menuOpts2.buttons, function(data) {
         setActive(gd, menuOpts2, menuOpts2.buttons[data.index], gHeader, _gButton, scrollBox, data.index, true);
@@ -65206,17 +61909,17 @@ var Plotly = (() => {
       x: dims.headerWidth - constants_default9.arrowOffsetX + menuOpts.pad.l,
       y: dims.headerHeight / 2 + constants_default9.textOffsetY + menuOpts.pad.t
     });
-    header.on("click", function() {
+    header.on("click", function(event2) {
       gButton.call(
         removeAllButtons,
         String(isActive(gButton, menuOpts) ? -1 : menuOpts._index)
       );
       drawButtons(gd, gHeader, gButton, scrollBox, menuOpts);
     });
-    header.on("mouseover", function() {
+    header.on("mouseover", function(event2) {
       header.call(styleOnMouseOver);
     });
-    header.on("mouseout", function() {
+    header.on("mouseout", function(event2) {
       header.call(styleOnMouseOut, menuOpts);
     });
     drawing_default.setTranslate(gHeader, dims.lx, dims.ly);
@@ -65266,10 +61969,10 @@ var Plotly = (() => {
       t: posOpts.y + menuOpts.borderwidth
     };
     buttons.each(function(buttonOpts, buttonIndex) {
-      var button = import_d332.default.select(this);
+      var button = select_default2(this);
       button.call(drawItem, menuOpts, buttonOpts, gd).call(setItemPosition, menuOpts, posOpts);
-      button.on("click", function() {
-        if (import_d332.default.event.defaultPrevented) return;
+      button.on("click", function(event2) {
+        if (event2.defaultPrevented) return;
         if (buttonOpts.execute) {
           if (buttonOpts.args2 && menuOpts.active === buttonIndex) {
             setActive(gd, menuOpts, buttonOpts, gHeader, gButton, scrollBox, -1);
@@ -65281,10 +61984,10 @@ var Plotly = (() => {
         }
         gd.emit("plotly_buttonclicked", { menu: menuOpts, button: buttonOpts, active: menuOpts.active });
       });
-      button.on("mouseover", function() {
+      button.on("mouseover", function(event2) {
         button.call(styleOnMouseOver);
       });
-      button.on("mouseout", function() {
+      button.on("mouseout", function(event2) {
         button.call(styleOnMouseOut, menuOpts);
         buttons.call(styleButtons, menuOpts);
       });
@@ -65336,13 +62039,13 @@ var Plotly = (() => {
     var hasHBar = !!scrollBox.hbar;
     var hasVBar = !!scrollBox.vbar;
     if (hasHBar) {
-      scrollBox.hbar.transition().attr("opacity", "0").each("end", function() {
+      scrollBox.hbar.transition().attr("opacity", "0").on("end", function() {
         hasHBar = false;
         if (!hasVBar) scrollBox.disable();
       });
     }
     if (hasVBar) {
-      scrollBox.vbar.transition().attr("opacity", "0").each("end", function() {
+      scrollBox.vbar.transition().attr("opacity", "0").on("end", function() {
         hasVBar = false;
         if (!hasHBar) scrollBox.disable();
       });
@@ -65376,7 +62079,7 @@ var Plotly = (() => {
   function styleButtons(buttons, menuOpts) {
     var active = menuOpts.active;
     buttons.each(function(buttonOpts, i) {
-      var button = import_d332.default.select(this);
+      var button = select_default2(this);
       if (i === active && menuOpts.showactive) {
         button.select("rect." + constants_default9.itemRectClassName).call(color_default.fill, constants_default9.activeColor);
       }
@@ -65405,7 +62108,7 @@ var Plotly = (() => {
     fakeButtons.enter().append("g").classed(constants_default9.dropdownButtonClassName, true);
     var isVertical3 = ["up", "down"].indexOf(menuOpts.direction) !== -1;
     fakeButtons.each(function(buttonOpts, i) {
-      var button = import_d332.default.select(this);
+      var button = select_default2(this);
       button.call(drawItem, menuOpts, buttonOpts, gd);
       var text = button.select("." + constants_default9.itemTextClassName);
       var tWidth = text.node() && drawing_default.bBox(text.node()).width;
@@ -65824,7 +62527,6 @@ var Plotly = (() => {
   }
 
   // src/components/sliders/draw.js
-  var import_d333 = __toESM(require_d3(), 1);
   var strTranslate12 = lib_default.strTranslate;
   var LINE_SPACING6 = alignment_default.LINE_SPACING;
   var FROM_TL4 = alignment_default.FROM_TL;
@@ -65843,7 +62545,7 @@ var Plotly = (() => {
       plots_default.autoMargin(gd, autoMarginId2(sliderOpts2));
     }
     sliders.exit().each(function() {
-      import_d333.default.select(this).selectAll("g." + constants_default10.groupClassName).each(clearSlider);
+      select_default2(this).selectAll("g." + constants_default10.groupClassName).each(clearSlider);
     }).remove();
     if (sliderData.length === 0) return;
     var sliderGroups = sliders.selectAll("g." + constants_default10.groupClassName).data(sliderData, keyFunction2);
@@ -65854,7 +62556,7 @@ var Plotly = (() => {
       findDimensions2(gd, sliderOpts);
     }
     sliderGroups.each(function(sliderOpts2) {
-      var gSlider = import_d333.default.select(this);
+      var gSlider = select_default2(this);
       computeLabelSteps(sliderOpts2);
       plots_default.manageCommandObserver(gd, sliderOpts2, sliderOpts2._visibleSteps, function(data) {
         var opts = gSlider.data()[0];
@@ -65862,7 +62564,7 @@ var Plotly = (() => {
         if (opts._dragging) return;
         setActive2(gd, gSlider, opts, data.index, false, true);
       });
-      drawSlider(gd, import_d333.default.select(this), sliderOpts2);
+      drawSlider(gd, select_default2(this), sliderOpts2);
     });
   }
   function autoMarginId2(sliderOpts) {
@@ -65888,7 +62590,7 @@ var Plotly = (() => {
     var maxLabelWidth = 0;
     var labelHeight = 0;
     sliderLabels.each(function(stepOpts) {
-      var labelGroup = import_d333.default.select(this);
+      var labelGroup = select_default2(this);
       var text = drawLabel2(labelGroup, { step: stepOpts }, sliderOpts);
       var textNode = text.node();
       if (textNode) {
@@ -66057,7 +62759,7 @@ var Plotly = (() => {
     labelItems.enter().append("g").classed(constants_default10.labelGroupClass, true);
     labelItems.exit().remove();
     labelItems.each(function(d) {
-      var item = import_d333.default.select(this);
+      var item = select_default2(this);
       item.call(drawLabel2, d, sliderOpts);
       drawing_default.setTranslate(
         item,
@@ -66110,7 +62812,7 @@ var Plotly = (() => {
   function attachGripEvents(item, gd, sliderGroup) {
     if (gd._context.staticPlot) return;
     var node = sliderGroup.node();
-    var $gd = import_d333.default.select(gd);
+    var $gd = select_default2(gd);
     function getSliderOpts() {
       return sliderGroup.data()[0];
     }
@@ -66118,15 +62820,15 @@ var Plotly = (() => {
       var sliderOpts = getSliderOpts();
       gd.emit("plotly_sliderstart", { slider: sliderOpts });
       var grip = sliderGroup.select("." + constants_default10.gripRectClass);
-      import_d333.default.event.stopPropagation();
-      import_d333.default.event.preventDefault();
+      event.stopPropagation();
+      event.preventDefault();
       grip.call(color_default.fill, sliderOpts.activebgcolor);
-      var normalizedPosition = positionToNormalizedValue(sliderOpts, import_d333.default.mouse(node)[0]);
+      var normalizedPosition = positionToNormalizedValue(sliderOpts, pointer_default(event, node)[0]);
       handleInput(gd, sliderGroup, sliderOpts, normalizedPosition, true);
       sliderOpts._dragging = true;
       function mouseMoveHandler() {
         var sliderOpts2 = getSliderOpts();
-        var normalizedPosition2 = positionToNormalizedValue(sliderOpts2, import_d333.default.mouse(node)[0]);
+        var normalizedPosition2 = positionToNormalizedValue(sliderOpts2, pointer_default(event, node)[0]);
         handleInput(gd, sliderGroup, sliderOpts2, normalizedPosition2, false);
       }
       $gd.on("mousemove", mouseMoveHandler);
@@ -66161,7 +62863,7 @@ var Plotly = (() => {
     });
     tick.each(function(d, i) {
       var isMajor = i % dims.labelStride === 0;
-      var item = import_d333.default.select(this);
+      var item = select_default2(this);
       item.attr({ height: isMajor ? sliderOpts.ticklen : sliderOpts.minorticklen }).call(color_default.fill, isMajor ? sliderOpts.tickcolor : sliderOpts.tickcolor);
       drawing_default.setTranslate(
         item,
@@ -66463,7 +63165,6 @@ var Plotly = (() => {
   }
 
   // src/components/rangeslider/draw.js
-  var import_d334 = __toESM(require_d3(), 1);
   var strTranslate13 = lib_default.strTranslate;
   function draw_default4(gd) {
     var fullLayout = gd._fullLayout;
@@ -66483,7 +63184,7 @@ var Plotly = (() => {
     if (rangeSliderData.length === 0) return;
     rangeSliders.enter().append("g").classed(constants_default11.containerClassName, true).attr("pointer-events", "all");
     rangeSliders.each(function(axisOpts) {
-      var rangeSlider = import_d334.default.select(this);
+      var rangeSlider = select_default2(this);
       var opts2 = axisOpts[constants_default11.name];
       var oppAxisOpts = fullLayout[axis_ids_default.id2name(axisOpts.anchor)];
       var oppAxisRangeOpts = opts2[axis_ids_default.id2name(axisOpts.anchor)];
@@ -66588,12 +63289,12 @@ var Plotly = (() => {
       }
     });
   }
-  function eventX(event) {
-    if (typeof event.clientX === "number") {
-      return event.clientX;
+  function eventX(event2) {
+    if (typeof event2.clientX === "number") {
+      return event2.clientX;
     }
-    if (event.touches && event.touches.length > 0) {
-      return event.touches[0].clientX;
+    if (event2.touches && event2.touches.length > 0) {
+      return event2.touches[0].clientX;
     }
     return 0;
   }
@@ -66603,9 +63304,9 @@ var Plotly = (() => {
     var grabAreaMin = rangeSlider.select("rect." + constants_default11.grabAreaMinClassName).node();
     var grabAreaMax = rangeSlider.select("rect." + constants_default11.grabAreaMaxClassName).node();
     function mouseDownHandler() {
-      var event = import_d334.default.event;
-      var target = event.target;
-      var startX = eventX(event);
+      var event2 = event2;
+      var target = event2.target;
+      var startX = eventX(event2);
       var offsetX = startX - rangeSlider.node().getBoundingClientRect().left;
       var minVal = opts.d2p(axisOpts._rl[0]);
       var maxVal = opts.d2p(axisOpts._rl[1]);
@@ -66656,7 +63357,7 @@ var Plotly = (() => {
         }
         opts._pixelMin = pixelMin;
         opts._pixelMax = pixelMax;
-        setCursor(import_d334.default.select(dragCover), cursor);
+        setCursor(select_default2(dragCover), cursor);
         setDataRange(rangeSlider, gd, axisOpts, opts);
       }
       function mouseUp() {
@@ -66740,16 +63441,16 @@ var Plotly = (() => {
   function drawRangePlot(rangeSlider, gd, axisOpts, opts) {
     var calcData = gd.calcdata;
     var rangePlots = rangeSlider.selectAll("g." + constants_default11.rangePlotClassName).data(axisOpts._subplotsWith, lib_default.identity);
-    rangePlots.enter().append("g").attr("class", function(id) {
-      return constants_default11.rangePlotClassName + " " + id;
+    rangePlots.enter().append("g").attr("class", function(id2) {
+      return constants_default11.rangePlotClassName + " " + id2;
     }).call(drawing_default.setClipUrl, opts._clipId, gd);
     rangePlots.order();
     rangePlots.exit().remove();
     var mainplotinfo;
-    rangePlots.each(function(id, i) {
-      var plotgroup = import_d334.default.select(this);
+    rangePlots.each(function(id2, i) {
+      var plotgroup = select_default2(this);
       var isMainPlot = i === 0;
-      var oppAxisOpts = axis_ids_default.getFromId(gd, id, "y");
+      var oppAxisOpts = axis_ids_default.getFromId(gd, id2, "y");
       var oppAxisName = oppAxisOpts._name;
       var oppAxisRangeOpts = opts[oppAxisName];
       var mockFigure = {
@@ -66787,7 +63488,7 @@ var Plotly = (() => {
       ya.clearCalc();
       ya.setScale();
       var plotinfo = {
-        id,
+        id: id2,
         plotgroup,
         xaxis: xa,
         yaxis: ya,
@@ -66798,7 +63499,7 @@ var Plotly = (() => {
         plotinfo.mainplot = "xy";
         plotinfo.mainplotinfo = mainplotinfo;
       }
-      cartesian_default.rangePlot(gd, plotinfo, filterRangePlotCalcData(calcData, id));
+      cartesian_default.rangePlot(gd, plotinfo, filterRangePlotCalcData(calcData, id2));
     });
   }
   function filterRangePlotCalcData(calcData, subplotId) {
@@ -67081,9 +63782,6 @@ var Plotly = (() => {
     return [containerOut.domain[0], posY + constants_default12.yPad];
   }
 
-  // src/components/rangeselector/draw.js
-  var import_d335 = __toESM(require_d3(), 1);
-
   // src/components/rangeselector/get_update_object.js
   var { titleCase } = lib_default;
   function getUpdateObject(axisLayout, buttonLayout) {
@@ -67133,14 +63831,14 @@ var Plotly = (() => {
       "pointer-events": "all"
     });
     selectors.each(function(d) {
-      var selector = import_d335.default.select(this);
+      var selector = select_default2(this);
       var axisLayout = d;
       var selectorLayout = axisLayout.rangeselector;
       var buttons = selector.selectAll("g.button").data(lib_default.filterVisible(selectorLayout.buttons));
       buttons.enter().append("g").classed("button", true);
       buttons.exit().remove();
       buttons.each(function(d2) {
-        var button = import_d335.default.select(this);
+        var button = select_default2(this);
         var update3 = getUpdateObject(axisLayout, d2);
         d2._isActive = isActive2(axisLayout, d2, update3);
         button.call(drawButtonRect, selectorLayout, d2);
@@ -67217,14 +63915,14 @@ var Plotly = (() => {
     var height = 0;
     var borderWidth = opts.borderwidth;
     buttons.each(function() {
-      var button = import_d335.default.select(this);
+      var button = select_default2(this);
       var text = button.select(".selector-text");
       var tHeight = opts.font.size * LINE_SPACING8;
       var hEff = Math.max(tHeight * svg_text_utils_default.lineCount(text), 16) + 3;
       height = Math.max(height, hEff);
     });
     buttons.each(function() {
-      var button = import_d335.default.select(this);
+      var button = select_default2(this);
       var rect = button.select(".selector-rect");
       var text = button.select(".selector-text");
       var tWidth = text.node() && drawing_default.bBox(text.node()).width;
@@ -67482,11 +64180,11 @@ var Plotly = (() => {
     var domain = coerce3("domain." + axLetter);
     coerce3(axLetter + "side", dfltSide);
     var out = new Array(len2);
-    var start = domain[0];
-    var step = (domain[1] - start) / (len2 - dirGap);
+    var start2 = domain[0];
+    var step = (domain[1] - start2) / (len2 - dirGap);
     var cellDomain = step * (1 - dirGap);
     for (var i = 0; i < len2; i++) {
-      var cellStart = start + step * i;
+      var cellStart = start2 + step * i;
       out[reversed ? len2 - 1 - i : i] = [cellStart, cellStart + cellDomain];
     }
     return out;
@@ -67763,16 +64461,16 @@ var Plotly = (() => {
     var type = opts.type;
     var symmetric = opts.symmetric;
     if (type === "data") {
-      var array = opts.array || [];
+      var array2 = opts.array || [];
       if (symmetric) {
         return function computeError(dataPt, index) {
-          var val = +array[index];
+          var val = +array2[index];
           return [val, val];
         };
       } else {
         var arrayminus = opts.arrayminus || [];
         return function computeError(dataPt, index) {
-          var val = +array[index];
+          var val = +array2[index];
           var valMinus = +arrayminus[index];
           if (!isNaN(val) || !isNaN(valMinus)) {
             return [valMinus || 0, val || 0];
@@ -67862,7 +64560,6 @@ var Plotly = (() => {
   }
 
   // src/components/errorbars/plot.js
-  var import_d336 = __toESM(require_d3(), 1);
   var import_fast_isnumeric38 = __toESM(require_fast_isnumeric(), 1);
   function plot3(gd, traces, plotinfo, transitionOpts) {
     var isNew;
@@ -67882,7 +64579,7 @@ var Plotly = (() => {
       }
       var sparse = subtypes_default.hasMarkers(trace) && trace.marker.maxdisplayed > 0;
       if (!yObj.visible && !xObj.visible) d = [];
-      var errorbars = import_d336.default.select(this).selectAll("g.errorbar").data(d, keyFunc2);
+      var errorbars = select_default2(this).selectAll("g.errorbar").data(d, keyFunc2);
       errorbars.exit().remove();
       if (!d.length) return;
       if (!xObj.visible) errorbars.selectAll("path.xerror").remove();
@@ -67894,7 +64591,7 @@ var Plotly = (() => {
       }
       drawing_default.setClipUrl(errorbars, plotinfo.layerClipId, gd);
       errorbars.each(function(d2) {
-        var errorbar = import_d336.default.select(this);
+        var errorbar = select_default2(this);
         var coords = errorCoords(d2, xa, ya);
         if (sparse && !d2.vis) return;
         var path;
@@ -67954,13 +64651,12 @@ var Plotly = (() => {
   }
 
   // src/components/errorbars/style.js
-  var import_d337 = __toESM(require_d3(), 1);
   function style3(traces) {
     traces.each(function(d) {
       var trace = d[0].trace;
       var yObj = trace.error_y || {};
       var xObj = trace.error_x || {};
-      var s = import_d337.default.select(this);
+      var s = select_default2(this);
       s.selectAll("path.yerror").style("stroke-width", yObj.thickness + "px").call(color_default.stroke, yObj.color);
       if (xObj.copy_ystyle) xObj = yObj;
       s.selectAll("path.xerror").style("stroke-width", xObj.thickness + "px").call(color_default.stroke, xObj.color);
@@ -68015,9 +64711,6 @@ var Plotly = (() => {
     }
   }
 
-  // src/components/colorbar/draw.js
-  var import_d338 = __toESM(require_d3(), 1);
-
   // src/components/colorbar/constants.js
   var constants_default13 = {
     cn: {
@@ -68052,7 +64745,7 @@ var Plotly = (() => {
       return opts._id;
     }).classed(cn.colorbar, true);
     colorBars.each(function(opts) {
-      var g = import_d338.default.select(this);
+      var g = select_default2(this);
       lib_default.ensureSingle(g, "rect", cn.cbbg);
       lib_default.ensureSingle(g, "g", cn.cbfills);
       lib_default.ensureSingle(g, "g", cn.cblines);
@@ -68180,7 +64873,7 @@ var Plotly = (() => {
     var line = opts._line;
     var title = opts.title;
     var titleSide = title.side;
-    var zrange = opts._zrange || import_d338.default.extent((typeof fillColor === "function" ? fillColor : line.color).domain());
+    var zrange = opts._zrange || extent((typeof fillColor === "function" ? fillColor : line.color).domain());
     var lineColormap = typeof line.color === "function" ? line.color : function() {
       return line.color;
     };
@@ -68313,7 +65006,7 @@ var Plotly = (() => {
           "h"
         ) : "v") + ax._id + "title", {
           avoid: {
-            selection: import_d338.default.select(gd).selectAll("g." + ax._id + "tick"),
+            selection: select_default2(gd).selectAll("g." + ax._id + "tick"),
             side: titleSide,
             offsetTop: isVertical3 ? 0 : gs.t,
             offsetLeft: isVertical3 ? gs.l : 0,
@@ -68393,7 +65086,7 @@ var Plotly = (() => {
         if (isVertical3) {
           z[1] = lib_default.constrain(z[1] + (z[1] > z[0]) ? 1 : -1, zBounds[0], zBounds[1]);
         }
-        var fillEl = import_d338.default.select(this).attr(isVertical3 ? "x" : "y", uPx).attr(isVertical3 ? "y" : "x", import_d338.default.min(z)).attr(isVertical3 ? "width" : "height", Math.max(thickPx, 2)).attr(isVertical3 ? "height" : "width", Math.max(import_d338.default.max(z) - import_d338.default.min(z), 2));
+        var fillEl = select_default2(this).attr(isVertical3 ? "x" : "y", uPx).attr(isVertical3 ? "y" : "x", min(z)).attr(isVertical3 ? "width" : "height", Math.max(thickPx, 2)).attr(isVertical3 ? "height" : "width", Math.max(max(z) - min(z), 2));
         if (opts._fillgradient) {
           drawing_default.gradient(fillEl, gd, opts._id, isVertical3 ? "vertical" : "horizontalreversed", opts._fillgradient, "fill");
         } else {
@@ -68407,7 +65100,7 @@ var Plotly = (() => {
       lines.each(function(d) {
         var a = uPx;
         var b = Math.round(ax.c2p(d)) + line.width / 2 % 1;
-        import_d338.default.select(this).attr(
+        select_default2(this).attr(
           "d",
           "M" + (isVertical3 ? a + "," + b : b + "," + a) + (isVertical3 ? "h" : "v") + thickPx
         ).call(drawing_default.lineGroupStyle, line.width, lineColormap(d), line.dash);
@@ -68613,16 +65306,16 @@ var Plotly = (() => {
     var isVertical3 = opts.orientation === "v";
     var fullLayout = gd._fullLayout;
     var gs = fullLayout._size;
-    var t02, xf, yf;
+    var t03, xf, yf;
     dragelement_default.init({
       element: g.node(),
       gd,
       prepFn: function() {
-        t02 = g.attr("transform");
+        t03 = g.attr("transform");
         setCursor(g);
       },
       moveFn: function(dx, dy) {
-        g.attr("transform", t02 + strTranslate15(dx, dy));
+        g.attr("transform", t03 + strTranslate15(dx, dy));
         xf = dragelement_default.align(
           (isVertical3 ? opts._uFrac : opts._vFrac) + dx / gs.w,
           isVertical3 ? opts._thickFrac : opts._lenFrac,
@@ -69487,11 +66180,9 @@ var Plotly = (() => {
   }
 
   // src/traces/bar/plot.js
-  var import_d341 = __toESM(require_d3(), 1);
   var import_fast_isnumeric41 = __toESM(require_fast_isnumeric(), 1);
 
   // src/traces/bar/uniform_text.js
-  var import_d339 = __toESM(require_d3(), 1);
   function resizeText(gd, gTrace, traceType) {
     var fullLayout = gd._fullLayout;
     var minSize = fullLayout["_" + traceType + "Text_minsize"];
@@ -69512,23 +66203,23 @@ var Plotly = (() => {
           selector = "g.points > g.point";
       }
       gTrace.selectAll(selector).each(function(d) {
-        var transform = d.transform;
-        if (transform) {
-          transform.scale = shouldHide && transform.hide ? 0 : minSize / transform.fontSize;
-          var el = import_d339.default.select(this).select("text");
-          lib_default.setTransormAndDisplay(el, transform);
+        var transform2 = d.transform;
+        if (transform2) {
+          transform2.scale = shouldHide && transform2.hide ? 0 : minSize / transform2.fontSize;
+          var el = select_default2(this).select("text");
+          lib_default.setTransormAndDisplay(el, transform2);
         }
       });
     }
   }
-  function recordMinTextSize(traceType, transform, fullLayout) {
+  function recordMinTextSize(traceType, transform2, fullLayout) {
     if (fullLayout.uniformtext.mode) {
       var minKey = getMinKey(traceType);
       var minSize = fullLayout.uniformtext.minsize;
-      var size = transform.scale * transform.fontSize;
-      transform.hide = size < minSize;
+      var size = transform2.scale * transform2.fontSize;
+      transform2.hide = size < minSize;
       fullLayout[minKey] = fullLayout[minKey] || Infinity;
-      if (!transform.hide) {
+      if (!transform2.hide) {
         fullLayout[minKey] = Math.min(
           fullLayout[minKey],
           Math.max(size, minSize)
@@ -69549,9 +66240,6 @@ var Plotly = (() => {
     resizeText
   };
 
-  // src/traces/bar/style.js
-  var import_d340 = __toESM(require_d3(), 1);
-
   // src/traces/bar/helpers.js
   var import_fast_isnumeric40 = __toESM(require_fast_isnumeric(), 1);
   var { isArrayOrTypedArray: isArrayOrTypedArray10 } = lib_default;
@@ -69566,9 +66254,9 @@ var Plotly = (() => {
   var coerceNumber = function(attributeDefinition, value, defaultValue) {
     if ((0, import_fast_isnumeric40.default)(value)) {
       value = +value;
-      var min = attributeDefinition.min;
-      var max = attributeDefinition.max;
-      var isOutOfBounds = min !== void 0 && value < min || max !== void 0 && value > max;
+      var min2 = attributeDefinition.min;
+      var max2 = attributeDefinition.max;
+      var isOutOfBounds = min2 !== void 0 && value < min2 || max2 !== void 0 && value > max2;
       if (!isOutOfBounds) return value;
     }
     return defaultValue !== void 0 ? defaultValue : attributeDefinition.dflt;
@@ -69600,7 +66288,7 @@ var Plotly = (() => {
   var attributeInsideTextFont = attributes_default21.insidetextfont;
   var attributeOutsideTextFont = attributes_default21.outsidetextfont;
   function style4(gd) {
-    var s = import_d340.default.select(gd).selectAll('g[class^="barlayer"]').selectAll("g.trace");
+    var s = select_default2(gd).selectAll('g[class^="barlayer"]').selectAll("g.trace");
     resizeText2(gd, s, "bar");
     var barcount = s.size();
     var fullLayout = gd._fullLayout;
@@ -69608,11 +66296,11 @@ var Plotly = (() => {
       return d[0].trace.opacity;
     }).each(function(d) {
       if (fullLayout.barmode === "stack" && barcount > 1 || fullLayout.bargap === 0 && fullLayout.bargroupgap === 0 && !d[0].trace.marker.line.width) {
-        import_d340.default.select(this).attr("shape-rendering", "crispEdges");
+        select_default2(this).attr("shape-rendering", "crispEdges");
       }
     });
     s.selectAll("g.points").each(function(d) {
-      var sel = import_d340.default.select(this);
+      var sel = select_default2(this);
       var trace = d[0].trace;
       stylePoints2(sel, trace, gd);
     });
@@ -69624,7 +66312,7 @@ var Plotly = (() => {
   }
   function styleTextPoints(sel, trace, gd) {
     sel.selectAll("text").each(function(d) {
-      var tx = import_d340.default.select(this);
+      var tx = select_default2(this);
       var font2 = lib_default.ensureUniformFontSize(gd, determineFont(tx, d, trace, gd));
       drawing_default.font(tx, font2);
     });
@@ -69644,7 +66332,7 @@ var Plotly = (() => {
   }
   function styleTextInSelectionMode(txs, trace, gd) {
     txs.each(function(d) {
-      var tx = import_d340.default.select(this);
+      var tx = select_default2(this);
       var font2;
       if (d.selected) {
         font2 = lib_default.ensureUniformFontSize(gd, determineFont(tx, d, trace, gd));
@@ -69715,7 +66403,7 @@ var Plotly = (() => {
     var sizeValue = helpers_default12.getValue(attributeValue.size, index);
     var colorValue = helpers_default12.getValue(attributeValue.color, index);
     var weightValue = helpers_default12.getValue(attributeValue.weight, index);
-    var styleValue = helpers_default12.getValue(attributeValue.style, index);
+    var styleValue2 = helpers_default12.getValue(attributeValue.style, index);
     var variantValue = helpers_default12.getValue(attributeValue.variant, index);
     var textcaseValue = helpers_default12.getValue(attributeValue.textcase, index);
     var linepositionValue = helpers_default12.getValue(attributeValue.lineposition, index);
@@ -69743,7 +66431,7 @@ var Plotly = (() => {
       ),
       style: helpers_default12.coerceString(
         attributeDefinition.style,
-        styleValue,
+        styleValue2,
         defaultValue.style
       ),
       variant: helpers_default12.coerceString(
@@ -69774,7 +66462,7 @@ var Plotly = (() => {
     }
     return cd.mcc || cd.mc || trace.marker.color;
   }
-  var style_default2 = {
+  var style_default4 = {
     style: style4,
     styleTextPoints,
     styleOnSelect: styleOnSelect2,
@@ -69785,6 +66473,9 @@ var Plotly = (() => {
   };
 
   // src/traces/bar/plot.js
+  function d3Round5(x, n) {
+    return n ? Math.round(x * (n = Math.pow(10, n))) / n : Math.round(x);
+  }
   var { tickText } = axes_default;
   var recordMinTextSize2 = uniform_text_default.recordMinTextSize;
   var clearMinTextSize2 = uniform_text_default.clearMinTextSize;
@@ -69816,19 +66507,19 @@ var Plotly = (() => {
     p[1] = pAxis.c2p(di.p1, true);
     return isHorizontal ? [s, p] : [p, s];
   }
-  function transition(selection, fullLayout, opts, makeOnCompleteCallback) {
+  function transition2(selection2, fullLayout, opts, makeOnCompleteCallback) {
     if (!fullLayout.uniformtext.mode && hasTransition(opts)) {
       var onComplete;
       if (makeOnCompleteCallback) {
         onComplete = makeOnCompleteCallback();
       }
-      return selection.transition().duration(opts.duration).ease(opts.easing).each("end", function() {
+      return selection2.transition().duration(opts.duration).ease(opts.easing).on("end", function() {
         onComplete && onComplete();
-      }).each("interrupt", function() {
+      }).on("interrupt", function() {
         onComplete && onComplete();
       });
     } else {
-      return selection;
+      return selection2;
     }
   }
   function hasTransition(transitionOpts) {
@@ -69849,7 +66540,7 @@ var Plotly = (() => {
       clearMinTextSize2("bar", fullLayout);
     }
     var bartraces = lib_default.makeTraceGroups(traceLayer, cdModule, "trace bars").each(function(cd) {
-      var plotGroup = import_d341.default.select(this);
+      var plotGroup = select_default2(this);
       var trace = cd[0].trace;
       var t = cd[0].t;
       var isWaterfall = trace.type === "waterfall";
@@ -69869,7 +66560,7 @@ var Plotly = (() => {
       bars.enter().append("g").classed("point", true);
       bars.exit().remove();
       bars.each(function(di, i) {
-        var bar = import_d341.default.select(this);
+        var bar = select_default2(this);
         var xy = getXY(di, xa, ya, isHorizontal);
         var x0 = xy[0][0];
         var x1 = xy[0][1];
@@ -69912,8 +66603,8 @@ var Plotly = (() => {
           mc = di.mc || trace.marker.color;
         }
         function roundWithLine(v) {
-          var offset = import_d341.default.round(lw / 2 % 1, 2);
-          return opts.gap === 0 && opts.groupgap === 0 ? import_d341.default.round(Math.round(v) - offset, 2) : v;
+          var offset = d3Round5(lw / 2 % 1, 2);
+          return opts.gap === 0 && opts.groupgap === 0 ? d3Round5(Math.round(v) - offset, 2) : v;
         }
         function expandToVisible(v, vc, hideZeroSpan) {
           if (hideZeroSpan && v === vc) {
@@ -69996,7 +66687,7 @@ var Plotly = (() => {
         } else {
           path = rectanglePath;
         }
-        var sel = transition(lib_default.ensureSingle(bar, "path"), fullLayout, opts, makeOnCompleteCallback);
+        var sel = transition2(lib_default.ensureSingle(bar, "path"), fullLayout, opts, makeOnCompleteCallback);
         sel.style("vector-effect", isStatic ? "none" : "non-scaling-stroke").attr("d", isNaN((x1 - x0) * (y1 - y0)) || isBlank && gd._context.staticPlot ? "M0,0Z" : path).call(drawing_default.setClipUrl, plotinfo.layerClipId, gd);
         if (!fullLayout.uniformtext.mode && withTransition) {
           var styleFns = drawing_default.makePointStyleFns(trace);
@@ -70041,9 +66732,9 @@ var Plotly = (() => {
       return;
     }
     var layoutFont = fullLayout.font;
-    var barColor = style_default2.getBarColor(cd[i], trace);
-    var insideTextFont = style_default2.getInsideTextFont(trace, i, layoutFont, barColor);
-    var outsideTextFont = style_default2.getOutsideTextFont(trace, i, layoutFont);
+    var barColor = style_default4.getBarColor(cd[i], trace);
+    var insideTextFont = style_default4.getInsideTextFont(trace, i, layoutFont, barColor);
+    var outsideTextFont = style_default4.getOutsideTextFont(trace, i, layoutFont);
     var insidetextanchor = trace.insidetextanchor || "end";
     var di = bar.datum();
     if (isHorizontal) {
@@ -70132,17 +66823,17 @@ var Plotly = (() => {
       }
     }
     var angle = trace.textangle;
-    var transform, constrained;
+    var transform2, constrained;
     if (textPosition === "outside") {
       constrained = trace.constraintext === "both" || trace.constraintext === "outside";
-      transform = toMoveOutsideBar(x0, x1, y0, y1, textBB, {
+      transform2 = toMoveOutsideBar(x0, x1, y0, y1, textBB, {
         isHorizontal,
         constrained,
         angle
       });
     } else {
       constrained = trace.constraintext === "both" || trace.constraintext === "inside";
-      transform = toMoveInsideBar(x0, x1, y0, y1, textBB, {
+      transform2 = toMoveInsideBar(x0, x1, y0, y1, textBB, {
         isHorizontal,
         constrained,
         angle,
@@ -70152,11 +66843,11 @@ var Plotly = (() => {
         overhead
       });
     }
-    transform.fontSize = font2.size;
-    recordMinTextSize2(trace.type === "histogram" ? "bar" : trace.type, transform, fullLayout);
-    calcBar.transform = transform;
-    var s = transition(textSelection, fullLayout, opts, makeOnCompleteCallback);
-    lib_default.setTransormAndDisplay(s, transform);
+    transform2.fontSize = font2.size;
+    recordMinTextSize2(trace.type === "histogram" ? "bar" : trace.type, transform2, fullLayout);
+    calcBar.transform = transform2;
+    var s = transition2(textSelection, fullLayout, opts, makeOnCompleteCallback);
+    lib_default.setTransormAndDisplay(s, transform2);
   }
   function textfitsInsideBar(barWidth, barHeight, textWidth, textHeight, isHorizontal) {
     if (barWidth < 0 || barHeight < 0) return false;
@@ -70539,8 +67230,8 @@ var Plotly = (() => {
       dy = sizeFn;
       dx = positionFn;
     }
-    var period = trace[posLetter + "period"];
-    var isClosestOrPeriod = isClosest || period;
+    var period2 = trace[posLetter + "period"];
+    var isClosestOrPeriod = isClosest || period2;
     function thisBarMinPos(di2) {
       return thisBarExtPos(di2, -1);
     }
@@ -70554,12 +67245,12 @@ var Plotly = (() => {
     function periodLength(di2) {
       return di2[posLetter + "End"] - di2[posLetter + "Start"];
     }
-    var minPos = isClosest ? thisBarMinPos : period ? function(di2) {
+    var minPos = isClosest ? thisBarMinPos : period2 ? function(di2) {
       return di2.p - periodLength(di2) / 2;
     } : function(di2) {
       return Math.min(thisBarMinPos(di2), di2.p - t.bardelta / 2);
     };
-    var maxPos = isClosest ? thisBarMaxPos : period ? function(di2) {
+    var maxPos = isClosest ? thisBarMaxPos : period2 ? function(di2) {
       return di2.p + periodLength(di2) / 2;
     } : function(di2) {
       return Math.max(thisBarMaxPos(di2), di2.p + t.bardelta / 2);
@@ -70625,9 +67316,9 @@ var Plotly = (() => {
     var size = trace.base ? di.b + di.s : di.s;
     pointData[sizeLetter + "0"] = pointData[sizeLetter + "1"] = sa.c2p(di[sizeLetter], true);
     pointData[sizeLetter + "LabelVal"] = size;
-    var extent2 = t.extents[t.extents.round(di.p)];
-    pointData[posLetter + "0"] = pa.c2p(isClosest ? minPos(di) : extent2[0], true);
-    pointData[posLetter + "1"] = pa.c2p(isClosest ? maxPos(di) : extent2[1], true);
+    var extent3 = t.extents[t.extents.round(di.p)];
+    pointData[posLetter + "0"] = pa.c2p(isClosest ? minPos(di) : extent3[0], true);
+    pointData[posLetter + "1"] = pa.c2p(isClosest ? maxPos(di) : extent3[1], true);
     var hasPeriod = di.orig_p !== void 0;
     pointData[posLetter + "LabelVal"] = hasPeriod ? di.orig_p : di.p;
     pointData.labelLabel = hoverLabelText(pa, pointData[posLetter + "LabelVal"], trace[posLetter + "hoverformat"]);
@@ -70676,7 +67367,7 @@ var Plotly = (() => {
     var trace = cd[0].trace;
     var isFunnel = trace.type === "funnel";
     var isHorizontal = trace.orientation === "h";
-    var selection = [];
+    var selection2 = [];
     var i;
     if (selectionTester === false) {
       for (i = 0; i < cd.length; i++) {
@@ -70687,7 +67378,7 @@ var Plotly = (() => {
         var di = cd[i];
         var ct = "ct" in di ? di.ct : getCentroid(di, xa, ya, isHorizontal, isFunnel);
         if (selectionTester.contains(ct, false, i, searchInfo)) {
-          selection.push({
+          selection2.push({
             pointNumber: i,
             x: xa.c2d(di.x),
             y: ya.c2d(di.y)
@@ -70698,7 +67389,7 @@ var Plotly = (() => {
         }
       }
     }
-    return selection;
+    return selection2;
   }
   function getCentroid(d, xa, ya, isHorizontal, isFunnel) {
     var x0 = xa.c2p(isHorizontal ? d.s0 : d.p0, true);
@@ -70720,7 +67411,7 @@ var Plotly = (() => {
   var { supplyDefaults: _req22, crossTraceDefaults: _req3 } = defaults_default2;
   var { crossTraceCalc: _req6 } = cross_trace_calc_default;
   var { plot: _req9 } = plot_default;
-  var { style: _req10, styleOnSelect: _req112 } = style_default2;
+  var { style: _req10, styleOnSelect: _req112 } = style_default4;
   var { hoverPoints: _req122 } = hover_default2;
   var bar_default = {
     attributes: attributes_default21,
@@ -71445,16 +68136,16 @@ var Plotly = (() => {
           cdi.sd = lib_default.stdev(boxVals, N, cdi.mean) * trace.sdmultiple;
           cdi.med = lib_default.interp(boxVals, 0.5);
           if (N % 2 && (usesExclusive || usesInclusive)) {
-            var lower;
+            var lower2;
             var upper;
             if (usesExclusive) {
-              lower = boxVals.slice(0, N / 2);
+              lower2 = boxVals.slice(0, N / 2);
               upper = boxVals.slice(N / 2 + 1);
             } else if (usesInclusive) {
-              lower = boxVals.slice(0, N / 2 + 1);
+              lower2 = boxVals.slice(0, N / 2 + 1);
               upper = boxVals.slice(N / 2);
             }
-            cdi.q1 = lib_default.interp(lower, 0.5);
+            cdi.q1 = lib_default.interp(lower2, 0.5);
             cdi.q3 = lib_default.interp(upper, 0.5);
           } else {
             cdi.q1 = lib_default.interp(boxVals, 0.25);
@@ -71777,7 +68468,6 @@ var Plotly = (() => {
   };
 
   // src/traces/box/plot.js
-  var import_d342 = __toESM(require_d3(), 1);
   var JITTERCOUNT = 5;
   var JITTERSPREAD = 0.01;
   function plot5(gd, plotinfo, cdbox, boxLayer) {
@@ -71785,7 +68475,7 @@ var Plotly = (() => {
     var xa = plotinfo.xaxis;
     var ya = plotinfo.yaxis;
     lib_default.makeTraceGroups(boxLayer, cdbox, "trace boxes").each(function(cd) {
-      var plotGroup = import_d342.default.select(this);
+      var plotGroup = select_default2(this);
       var cd0 = cd[0];
       var t = cd0.t;
       var trace = cd0.trace;
@@ -71832,7 +68522,7 @@ var Plotly = (() => {
     paths.enter().append("path").style("vector-effect", isStatic ? "none" : "non-scaling-stroke").attr("class", "box");
     paths.exit().remove();
     paths.each(function(d) {
-      if (d.empty) return import_d342.default.select(this).attr("d", "M0,0Z");
+      if (d.empty) return select_default2(this).attr("d", "M0,0Z");
       var lcenter = posAxis.c2l(d.pos + bPos, true);
       var pos0 = posAxis.l2p(lcenter - bdPos0) + bPosPxOffset;
       var pos1 = posAxis.l2p(lcenter + bdPos1) + bPosPxOffset;
@@ -71856,7 +68546,7 @@ var Plotly = (() => {
       var ln = valAxis.c2p(d.ln, true);
       var un = valAxis.c2p(d.un, true);
       if (isHorizontal) {
-        import_d342.default.select(this).attr(
+        select_default2(this).attr(
           "d",
           "M" + m + "," + posm0 + "V" + posm1 + // median line
           "M" + q1 + "," + pos0 + "V" + pos1 + // left edge
@@ -71872,7 +68562,7 @@ var Plotly = (() => {
           )) : "")
         );
       } else {
-        import_d342.default.select(this).attr(
+        select_default2(this).attr(
           "d",
           "M" + posm0 + "," + m + "H" + posm1 + // median line
           "M" + pos0 + "," + q1 + "H" + pos1 + // top of the box
@@ -71994,12 +68684,12 @@ var Plotly = (() => {
       var sl = valAxis.c2p(d.mean - d.sd, true);
       var sh = valAxis.c2p(d.mean + d.sd, true);
       if (trace.orientation === "h") {
-        import_d342.default.select(this).attr(
+        select_default2(this).attr(
           "d",
           "M" + m + "," + pos0 + "V" + pos1 + (mode === "sd" ? "m0,0L" + sl + "," + posc + "L" + m + "," + pos0 + "L" + sh + "," + posc + "Z" : "")
         );
       } else {
-        import_d342.default.select(this).attr(
+        select_default2(this).attr(
           "d",
           "M" + pos0 + "," + m + "H" + pos1 + (mode === "sd" ? "m0,0L" + posc + "," + sl + "L" + pos0 + "," + m + "L" + posc + "," + sh + "Z" : "")
         );
@@ -72014,14 +68704,13 @@ var Plotly = (() => {
   };
 
   // src/traces/box/style.js
-  var import_d343 = __toESM(require_d3(), 1);
   function style5(gd, cd, sel) {
-    var s = sel ? sel : import_d343.default.select(gd).selectAll("g.trace.boxes");
+    var s = sel ? sel : select_default2(gd).selectAll("g.trace.boxes");
     s.style("opacity", function(d) {
       return d[0].trace.opacity;
     });
     s.each(function(d) {
-      var el = import_d343.default.select(this);
+      var el = select_default2(this);
       var trace = d[0].trace;
       var lineWidth = trace.line.width;
       function styleBox(boxSel, lineWidth2, lineColor, fillColor) {
@@ -72031,7 +68720,7 @@ var Plotly = (() => {
       if (trace.type === "candlestick") {
         allBoxes.each(function(boxData) {
           if (boxData.empty) return;
-          var thisBox = import_d343.default.select(this);
+          var thisBox = select_default2(this);
           var container = trace[boxData.dir];
           styleBox(thisBox, container.line.width, container.line.color, container.fillcolor);
           thisBox.style("opacity", trace.selectedpoints && !boxData.selected ? 0.3 : 1);
@@ -72056,7 +68745,7 @@ var Plotly = (() => {
       drawing_default.pointStyle(pts, trace, gd);
     }
   }
-  var style_default3 = {
+  var style_default5 = {
     style: style5,
     styleOnSelect: styleOnSelect3
   };
@@ -72301,7 +68990,7 @@ var Plotly = (() => {
     var cd = searchInfo.cd;
     var xa = searchInfo.xaxis;
     var ya = searchInfo.yaxis;
-    var selection = [];
+    var selection2 = [];
     var i, j;
     if (selectionTester === false) {
       for (i = 0; i < cd.length; i++) {
@@ -72316,7 +69005,7 @@ var Plotly = (() => {
           var x = xa.c2p(pt.x);
           var y = ya.c2p(pt.y);
           if (selectionTester.contains([x, y], null, pt.i, searchInfo)) {
-            selection.push({
+            selection2.push({
               pointNumber: pt.i,
               x: xa.c2d(pt.x),
               y: ya.c2d(pt.y)
@@ -72328,7 +69017,7 @@ var Plotly = (() => {
         }
       }
     }
-    return selection;
+    return selection2;
   }
 
   // src/traces/box/index.js
@@ -72336,7 +69025,7 @@ var Plotly = (() => {
   var { supplyLayoutDefaults: _req4 } = layout_defaults_default3;
   var { crossTraceCalc: _req62 } = cross_trace_calc_default2;
   var { plot: _req7 } = plot_default2;
-  var { style: _req8, styleOnSelect: _req92 } = style_default3;
+  var { style: _req8, styleOnSelect: _req92 } = style_default5;
   var { hoverPoints: _req102 } = hover_default3;
   var box_default = {
     attributes: attributes_default22,
@@ -72932,7 +69621,7 @@ var Plotly = (() => {
   }
 
   // src/traces/histogram/bin_label_vals.js
-  var { tickIncrement } = axes_default;
+  var { tickIncrement: tickIncrement2 } = axes_default;
   var oneYear = numerical_default.ONEAVGYEAR;
   var oneMonth = numerical_default.ONEAVGMONTH;
   var oneDay = numerical_default.ONEDAY;
@@ -72970,11 +69659,11 @@ var Plotly = (() => {
         if (dashPos > 0) dateStr = dateStr.slice(0, dashPos);
         var roundedV = pa.d2c(dateStr, 0, calendar);
         if (roundedV < v) {
-          var nextV = tickIncrement(roundedV, increment, false, calendar);
+          var nextV = tickIncrement2(roundedV, increment, false, calendar);
           if ((roundedV + nextV) / 2 < v + leftGap) roundedV = nextV;
         }
         if (isRightEdge && disambiguateEdges) {
-          return tickIncrement(roundedV, increment, true, calendar);
+          return tickIncrement2(roundedV, increment, true, calendar);
         }
         return roundedV;
       };
@@ -73794,7 +70483,7 @@ var Plotly = (() => {
     }
     return z;
   }
-  function iterateInterp2d(z, emptyPoints, overshoot) {
+  function iterateInterp2d(z, emptyPoints, overshoot2) {
     var maxFractionalChange = 0;
     var thisPt;
     var i;
@@ -73839,7 +70528,7 @@ var Plotly = (() => {
       if (initialVal === void 0) {
         if (neighborCount < 4) maxFractionalChange = 1;
       } else {
-        z[i][j] = (1 + overshoot) * z[i][j] - overshoot * initialVal;
+        z[i][j] = (1 + overshoot2) * z[i][j] - overshoot2 * initialVal;
         if (maxNeighbor > minNeighbor) {
           maxFractionalChange = Math.max(
             maxFractionalChange,
@@ -74175,30 +70864,30 @@ var Plotly = (() => {
       });
       trace._input.autocontour = true;
     } else if (contours.type !== "constraint") {
-      var start = contours.start;
+      var start2 = contours.start;
       var end = contours.end;
       var inputContours = trace._input.contours;
-      if (start > end) {
+      if (start2 > end) {
         contours.start = inputContours.start = end;
-        end = contours.end = inputContours.end = start;
-        start = contours.start;
+        end = contours.end = inputContours.end = start2;
+        start2 = contours.start;
       }
       if (!(contours.size > 0)) {
         var sizeOut;
-        if (start === end) sizeOut = 1;
-        else sizeOut = autoContours(start, end, trace.ncontours).dtick;
+        if (start2 === end) sizeOut = 1;
+        else sizeOut = autoContours(start2, end, trace.ncontours).dtick;
         inputContours.size = contours.size = sizeOut;
       }
     }
   }
-  function autoContours(start, end, ncontours) {
+  function autoContours(start2, end, ncontours) {
     var dummyAx = {
       type: "linear",
-      range: [start, end]
+      range: [start2, end]
     };
     axes_default.autoTicks(
       dummyAx,
-      (end - start) / (ncontours || 15)
+      (end - start2) / (ncontours || 15)
     );
     return dummyAx;
   }
@@ -74217,15 +70906,15 @@ var Plotly = (() => {
     var cOpts = colorscale_default.extractOpts(trace);
     var cVals;
     if (contours.coloring === "heatmap" && cOpts.auto && trace.autocontour === false) {
-      var start = contours.start;
+      var start2 = contours.start;
       var end = endPlus(contours);
       var cs = contours.size || 1;
-      var nc = Math.floor((end - start) / cs) + 1;
+      var nc = Math.floor((end - start2) / cs) + 1;
       if (!isFinite(cs)) {
         cs = 1;
         nc = 1;
       }
-      var min0 = start - cs / 2;
+      var min0 = start2 - cs / 2;
       var max0 = min0 + nc * cs;
       cVals = [min0, max0];
     } else {
@@ -74234,12 +70923,6 @@ var Plotly = (() => {
     colorscale_default.calc(gd, trace, { vals: cVals, cLetter: "z" });
     return cd;
   }
-
-  // src/traces/contour/plot.js
-  var import_d345 = __toESM(require_d3(), 1);
-
-  // src/traces/heatmap/plot.js
-  var import_d344 = __toESM(require_d3(), 1);
 
   // src/constants/pixelated_image.js
   var CSS_DECLARATIONS = [
@@ -74300,7 +70983,7 @@ var Plotly = (() => {
     var xa = plotinfo.xaxis;
     var ya = plotinfo.yaxis;
     lib_default.makeTraceGroups(heatmapLayer, cdheatmaps, "hm").each(function(cd) {
-      var plotGroup = import_d344.default.select(this);
+      var plotGroup = select_default2(this);
       var cd0 = cd[0];
       var trace = cd0.trace;
       var xGap = trace.xgap || 0;
@@ -74682,7 +71365,7 @@ var Plotly = (() => {
         };
         var labels = selectLabels(plotGroup).data(textData);
         labels.enter().append("g").classed(labelClass, 1).append("text").attr("text-anchor", "middle").each(function(d2) {
-          var thisLabel = import_d344.default.select(this);
+          var thisLabel = select_default2(this);
           var fontColor = font2.color;
           if (!fontColor || fontColor === "auto") {
             fontColor = color_default.contrast(
@@ -74843,7 +71526,7 @@ var Plotly = (() => {
     var label;
     var corners;
     var mi;
-    var pi;
+    var pi2;
     var i;
     for (yi = 0; yi < m - 1; yi++) {
       ystartIndices = [];
@@ -74859,17 +71542,17 @@ var Plotly = (() => {
           [z[yi + 1][xi], z[yi + 1][xi + 1]]
         ];
         for (i = 0; i < pathinfo.length; i++) {
-          pi = pathinfo[i];
-          mi = getMarchingIndex(pi.level, corners);
+          pi2 = pathinfo[i];
+          mi = getMarchingIndex(pi2.level, corners);
           if (!mi) continue;
-          pi.crossings[label] = mi;
+          pi2.crossings[label] = mi;
           if (startIndices.indexOf(mi) !== -1) {
-            pi.starts.push([xi, yi]);
+            pi2.starts.push([xi, yi]);
             if (twoWide && startIndices.indexOf(
               mi,
               startIndices.indexOf(mi) + 1
             ) !== -1) {
-              pi.starts.push([xi, yi]);
+              pi2.starts.push([xi, yi]);
             }
           }
         }
@@ -74888,20 +71571,20 @@ var Plotly = (() => {
 
   // src/traces/contour/find_all_paths.js
   function findAllPaths(pathinfo, xtol, ytol) {
-    var cnt, startLoc, i, pi, j;
+    var cnt, startLoc, i, pi2, j;
     xtol = xtol || 0.01;
     ytol = ytol || 0.01;
     for (i = 0; i < pathinfo.length; i++) {
-      pi = pathinfo[i];
-      for (j = 0; j < pi.starts.length; j++) {
-        startLoc = pi.starts[j];
-        makePath(pi, startLoc, "edge", xtol, ytol);
+      pi2 = pathinfo[i];
+      for (j = 0; j < pi2.starts.length; j++) {
+        startLoc = pi2.starts[j];
+        makePath(pi2, startLoc, "edge", xtol, ytol);
       }
       cnt = 0;
-      while (Object.keys(pi.crossings).length && cnt < 1e4) {
+      while (Object.keys(pi2.crossings).length && cnt < 1e4) {
         cnt++;
-        startLoc = Object.keys(pi.crossings)[0].split(",").map(Number);
-        makePath(pi, startLoc, void 0, xtol, ytol);
+        startLoc = Object.keys(pi2.crossings)[0].split(",").map(Number);
+        makePath(pi2, startLoc, void 0, xtol, ytol);
       }
       if (cnt === 1e4) lib_default.log("Infinite loop in contour?");
     }
@@ -74914,29 +71597,29 @@ var Plotly = (() => {
     var dy = pt1[3] - pt2[3];
     return Math.sqrt(dx * dx + dy * dy);
   }
-  function makePath(pi, loc, edgeflag, xtol, ytol) {
+  function makePath(pi2, loc, edgeflag, xtol, ytol) {
     var locStr = loc.join(",");
-    var mi = pi.crossings[locStr];
+    var mi = pi2.crossings[locStr];
     var marchStep = getStartStep(mi, edgeflag, loc);
-    var pts = [getInterpPx(pi, loc, [-marchStep[0], -marchStep[1]])];
-    var m = pi.z.length;
-    var n = pi.z[0].length;
+    var pts = [getInterpPx(pi2, loc, [-marchStep[0], -marchStep[1]])];
+    var m = pi2.z.length;
+    var n = pi2.z[0].length;
     var startLoc = loc.slice();
     var startStep = marchStep.slice();
     var cnt;
     for (cnt = 0; cnt < 1e4; cnt++) {
       if (mi > 20) {
         mi = constants_default15.CHOOSESADDLE[mi][(marchStep[0] || marchStep[1]) < 0 ? 0 : 1];
-        pi.crossings[locStr] = constants_default15.SADDLEREMAINDER[mi];
+        pi2.crossings[locStr] = constants_default15.SADDLEREMAINDER[mi];
       } else {
-        delete pi.crossings[locStr];
+        delete pi2.crossings[locStr];
       }
       marchStep = constants_default15.NEWDELTA[mi];
       if (!marchStep) {
-        lib_default.log("Found bad marching index:", mi, loc, pi.level);
+        lib_default.log("Found bad marching index:", mi, loc, pi2.level);
         break;
       }
-      pts.push(getInterpPx(pi, loc, marchStep));
+      pts.push(getInterpPx(pi2, loc, marchStep));
       loc[0] += marchStep[0];
       loc[1] += marchStep[1];
       locStr = loc.join(",");
@@ -74944,14 +71627,14 @@ var Plotly = (() => {
       var atEdge = marchStep[0] && (loc[0] < 0 || loc[0] > n - 2) || marchStep[1] && (loc[1] < 0 || loc[1] > m - 2);
       var closedLoop = loc[0] === startLoc[0] && loc[1] === startLoc[1] && marchStep[0] === startStep[0] && marchStep[1] === startStep[1];
       if (closedLoop || edgeflag && atEdge) break;
-      mi = pi.crossings[locStr];
+      mi = pi2.crossings[locStr];
     }
     if (cnt === 1e4) {
       lib_default.log("Infinite loop in contour?");
     }
     var closedpath = equalPts(pts[0], pts[pts.length - 1], xtol, ytol);
     var totaldist = 0;
-    var distThresholdFactor = 0.2 * pi.smoothing;
+    var distThresholdFactor = 0.2 * pi2.smoothing;
     var alldists = [];
     var cropstart = 0;
     var distgroup, cnt2, cnt3, newpt, ptcnt, ptavg, thisdist, i, j, edgepathi, edgepathj;
@@ -75005,53 +71688,53 @@ var Plotly = (() => {
     if (pts.length < 2) return;
     else if (closedpath) {
       pts.pop();
-      pi.paths.push(pts);
+      pi2.paths.push(pts);
     } else {
       if (!edgeflag) {
         lib_default.log(
           "Unclosed interior contour?",
-          pi.level,
+          pi2.level,
           startLoc.join(","),
           pts.join("L")
         );
       }
       var merged = false;
-      for (i = 0; i < pi.edgepaths.length; i++) {
-        edgepathi = pi.edgepaths[i];
+      for (i = 0; i < pi2.edgepaths.length; i++) {
+        edgepathi = pi2.edgepaths[i];
         if (!merged && equalPts(edgepathi[0], pts[pts.length - 1], xtol, ytol)) {
           pts.pop();
           merged = true;
           var doublemerged = false;
-          for (j = 0; j < pi.edgepaths.length; j++) {
-            edgepathj = pi.edgepaths[j];
+          for (j = 0; j < pi2.edgepaths.length; j++) {
+            edgepathj = pi2.edgepaths[j];
             if (equalPts(edgepathj[edgepathj.length - 1], pts[0], xtol, ytol)) {
               doublemerged = true;
               pts.shift();
-              pi.edgepaths.splice(i, 1);
+              pi2.edgepaths.splice(i, 1);
               if (j === i) {
-                pi.paths.push(pts.concat(edgepathj));
+                pi2.paths.push(pts.concat(edgepathj));
               } else {
                 if (j > i) j--;
-                pi.edgepaths[j] = edgepathj.concat(pts, edgepathi);
+                pi2.edgepaths[j] = edgepathj.concat(pts, edgepathi);
               }
               break;
             }
           }
           if (!doublemerged) {
-            pi.edgepaths[i] = pts.concat(edgepathi);
+            pi2.edgepaths[i] = pts.concat(edgepathi);
           }
         }
       }
-      for (i = 0; i < pi.edgepaths.length; i++) {
+      for (i = 0; i < pi2.edgepaths.length; i++) {
         if (merged) break;
-        edgepathi = pi.edgepaths[i];
+        edgepathi = pi2.edgepaths[i];
         if (equalPts(edgepathi[edgepathi.length - 1], pts[0], xtol, ytol)) {
           pts.shift();
-          pi.edgepaths[i] = edgepathi.concat(pts);
+          pi2.edgepaths[i] = edgepathi.concat(pts);
           merged = true;
         }
       }
-      if (!merged) pi.edgepaths.push(pts);
+      if (!merged) pi2.edgepaths.push(pts);
     }
   }
   function getStartStep(mi, edgeflag, loc) {
@@ -75069,26 +71752,26 @@ var Plotly = (() => {
     else dx = -1;
     return [dx, dy];
   }
-  function getInterpPx(pi, loc, step) {
+  function getInterpPx(pi2, loc, step) {
     var locx = loc[0] + Math.max(step[0], 0);
     var locy = loc[1] + Math.max(step[1], 0);
-    var zxy = pi.z[locy][locx];
-    var xa = pi.xaxis;
-    var ya = pi.yaxis;
+    var zxy = pi2.z[locy][locx];
+    var xa = pi2.xaxis;
+    var ya = pi2.yaxis;
     if (step[1]) {
-      var dx = (pi.level - zxy) / (pi.z[locy][locx + 1] - zxy);
-      var dxl = (dx !== 1 ? (1 - dx) * xa.c2l(pi.x[locx]) : 0) + (dx !== 0 ? dx * xa.c2l(pi.x[locx + 1]) : 0);
+      var dx = (pi2.level - zxy) / (pi2.z[locy][locx + 1] - zxy);
+      var dxl = (dx !== 1 ? (1 - dx) * xa.c2l(pi2.x[locx]) : 0) + (dx !== 0 ? dx * xa.c2l(pi2.x[locx + 1]) : 0);
       return [
         xa.c2p(xa.l2c(dxl), true),
-        ya.c2p(pi.y[locy], true),
+        ya.c2p(pi2.y[locy], true),
         locx + dx,
         locy
       ];
     } else {
-      var dy = (pi.level - zxy) / (pi.z[locy + 1][locx] - zxy);
-      var dyl = (dy !== 1 ? (1 - dy) * ya.c2l(pi.y[locy]) : 0) + (dy !== 0 ? dy * ya.c2l(pi.y[locy + 1]) : 0);
+      var dy = (pi2.level - zxy) / (pi2.z[locy + 1][locx] - zxy);
+      var dyl = (dy !== 1 ? (1 - dy) * ya.c2l(pi2.y[locy]) : 0) + (dy !== 0 ? dy * ya.c2l(pi2.y[locy + 1]) : 0);
       return [
-        xa.c2p(pi.x[locx], true),
+        xa.c2p(pi2.x[locx], true),
         ya.c2p(ya.l2c(dyl), true),
         locx,
         locy + dy
@@ -75123,12 +71806,12 @@ var Plotly = (() => {
   function makeRangeSettings(operation) {
     return function(value) {
       value = coerceValue(operation, value);
-      var min = Math.min(value[0], value[1]);
-      var max = Math.max(value[0], value[1]);
+      var min2 = Math.min(value[0], value[1]);
+      var max2 = Math.max(value[0], value[1]);
       return {
-        start: min,
-        end: max,
-        size: max - min
+        start: min2,
+        end: max2,
+        size: max2 - min2
       };
     };
   }
@@ -75247,11 +71930,11 @@ var Plotly = (() => {
         return [pi0];
     }
   }
-  function copyPathinfo(pi) {
-    return lib_default.extendFlat({}, pi, {
-      edgepaths: lib_default.extendDeep([], pi.edgepaths),
-      paths: lib_default.extendDeep([], pi.paths),
-      starts: lib_default.extendDeep([], pi.starts)
+  function copyPathinfo(pi2) {
+    return lib_default.extendFlat({}, pi2, {
+      edgepaths: lib_default.extendDeep([], pi2.edgepaths),
+      paths: lib_default.extendDeep([], pi2.paths),
+      starts: lib_default.extendDeep([], pi2.starts)
     });
   }
 
@@ -75264,8 +71947,8 @@ var Plotly = (() => {
       case "levels":
         var edgeVal2 = Math.min(z[0][0], z[0][1]);
         for (i = 0; i < pathinfo.length; i++) {
-          var pi = pathinfo[i];
-          pi.prefixBoundary = !pi.edgepaths.length && (edgeVal2 > pi.level || pi.starts.length && edgeVal2 === pi.level);
+          var pi2 = pathinfo[i];
+          pi2.prefixBoundary = !pi2.edgepaths.length && (edgeVal2 > pi2.level || pi2.starts.length && edgeVal2 === pi2.level);
         }
         break;
       case "constraint":
@@ -75325,7 +72008,7 @@ var Plotly = (() => {
     var xa = plotinfo.xaxis;
     var ya = plotinfo.yaxis;
     lib_default.makeTraceGroups(contourLayer, cdcontours, "contour").each(function(cd) {
-      var plotGroup = import_d345.default.select(this);
+      var plotGroup = select_default2(this);
       var cd0 = cd[0];
       var trace = cd0.trace;
       var x = cd0.x;
@@ -75377,19 +72060,19 @@ var Plotly = (() => {
     var fillitems = fillgroup.selectAll("path").data(hasFills ? pathinfo : []);
     fillitems.enter().append("path");
     fillitems.exit().remove();
-    fillitems.each(function(pi) {
-      var fullpath = (pi.prefixBoundary ? boundaryPath : "") + joinAllPaths(pi, perimeter);
+    fillitems.each(function(pi2) {
+      var fullpath = (pi2.prefixBoundary ? boundaryPath : "") + joinAllPaths(pi2, perimeter);
       if (!fullpath) {
-        import_d345.default.select(this).remove();
+        select_default2(this).remove();
       } else {
-        import_d345.default.select(this).attr("d", fullpath).style("stroke", "none");
+        select_default2(this).attr("d", fullpath).style("stroke", "none");
       }
     });
   }
-  function joinAllPaths(pi, perimeter) {
+  function joinAllPaths(pi2, perimeter) {
     var fullpath = "";
     var i = 0;
-    var startsleft = pi.edgepaths.map(function(v, i2) {
+    var startsleft = pi2.edgepaths.map(function(v, i2) {
       return i2;
     });
     var newloop = true;
@@ -75412,22 +72095,22 @@ var Plotly = (() => {
       return Math.abs(pt[0] - perimeter[2][0]) < 0.01;
     }
     while (startsleft.length) {
-      addpath = drawing_default.smoothopen(pi.edgepaths[i], pi.smoothing);
+      addpath = drawing_default.smoothopen(pi2.edgepaths[i], pi2.smoothing);
       fullpath += newloop ? addpath : addpath.replace(/^M/, "L");
       startsleft.splice(startsleft.indexOf(i), 1);
-      endpt = pi.edgepaths[i][pi.edgepaths[i].length - 1];
+      endpt = pi2.edgepaths[i][pi2.edgepaths[i].length - 1];
       nexti = -1;
       for (cnt = 0; cnt < 4; cnt++) {
         if (!endpt) {
-          lib_default.log("Missing end?", i, pi);
+          lib_default.log("Missing end?", i, pi2);
           break;
         }
         if (istop(endpt) && !isright(endpt)) newendpt = perimeter[1];
         else if (isleft(endpt)) newendpt = perimeter[0];
         else if (isbottom(endpt)) newendpt = perimeter[3];
         else if (isright(endpt)) newendpt = perimeter[2];
-        for (possiblei = 0; possiblei < pi.edgepaths.length; possiblei++) {
-          var ptNew = pi.edgepaths[possiblei][0];
+        for (possiblei = 0; possiblei < pi2.edgepaths.length; possiblei++) {
+          var ptNew = pi2.edgepaths[possiblei][0];
           if (Math.abs(endpt[0] - newendpt[0]) < 0.01) {
             if (Math.abs(endpt[0] - ptNew[0]) < 0.01 && (ptNew[1] - endpt[1]) * (newendpt[1] - ptNew[1]) >= 0) {
               newendpt = ptNew;
@@ -75451,7 +72134,7 @@ var Plotly = (() => {
         if (nexti >= 0) break;
         fullpath += "L" + newendpt;
       }
-      if (nexti === pi.edgepaths.length) {
+      if (nexti === pi2.edgepaths.length) {
         lib_default.log("unclosed perimeter path");
         break;
       }
@@ -75462,8 +72145,8 @@ var Plotly = (() => {
         fullpath += "Z";
       }
     }
-    for (i = 0; i < pi.paths.length; i++) {
-      fullpath += drawing_default.smoothclosed(pi.paths[i], pi.smoothing);
+    for (i = 0; i < pi2.paths.length; i++) {
+      fullpath += drawing_default.smoothclosed(pi2.paths[i], pi2.smoothing);
     }
     return fullpath;
   }
@@ -75525,7 +72208,7 @@ var Plotly = (() => {
       var normLength = constants_default15.LABELDISTANCE * plotDiagonal / Math.max(1, pathinfo.length / constants_default15.LABELINCREASE);
       linegroup.each(function(d) {
         var textOpts = calcTextOpts(d.level, contourFormat, dummyText, gd);
-        import_d345.default.select(this).selectAll("path").each(function() {
+        select_default2(this).selectAll("path").each(function() {
           var path = this;
           var pathBounds = lib_default.getVisibleSegment(path, bounds, textOpts.height / 2);
           if (!pathBounds) return;
@@ -75760,7 +72443,7 @@ var Plotly = (() => {
     }).each(function(d) {
       var x = d.x + Math.sin(d.theta) * d.dy;
       var y = d.y - Math.cos(d.theta) * d.dy;
-      import_d345.default.select(this).text(d.text).attr({
+      select_default2(this).text(d.text).attr({
         x,
         y,
         transform: "rotate(" + 180 * d.theta / Math.PI + " " + x + " " + y + ")"
@@ -75830,25 +72513,20 @@ var Plotly = (() => {
     return z;
   }
 
-  // src/traces/contour/style.js
-  var import_d348 = __toESM(require_d3(), 1);
-
   // src/traces/heatmap/style.js
-  var import_d346 = __toESM(require_d3(), 1);
   function style6(gd) {
-    import_d346.default.select(gd).selectAll(".hm image").style("opacity", function(d) {
+    select_default2(gd).selectAll(".hm image").style("opacity", function(d) {
       return d.trace.opacity;
     });
   }
 
   // src/traces/contour/make_color_map.js
-  var import_d347 = __toESM(require_d3(), 1);
   function makeColorMap(trace) {
     var contours = trace.contours;
-    var start = contours.start;
+    var start2 = contours.start;
     var end = endPlus(contours);
     var cs = contours.size || 1;
-    var nc = Math.floor((end - start) / cs) + 1;
+    var nc = Math.floor((end - start2) / cs) + 1;
     var extra = contours.coloring === "lines" ? 0 : 1;
     var cOpts = colorscale_default.extractOpts(trace);
     if (!isFinite(cs)) {
@@ -75868,7 +72546,7 @@ var Plotly = (() => {
         domain[i] = si[0] * (zmax0 - zmin0) + zmin0;
         range[i] = si[1];
       }
-      var zRange = import_d347.default.extent([
+      var zRange = extent([
         zmin0,
         zmax0,
         contours.start,
@@ -75886,15 +72564,15 @@ var Plotly = (() => {
       }
     } else {
       var zRangeInput = trace._input && (typeof trace._input.zmin === "number" && typeof trace._input.zmax === "number");
-      if (zRangeInput && (start <= zmin0 || end >= zmax0)) {
-        if (start <= zmin0) start = zmin0;
+      if (zRangeInput && (start2 <= zmin0 || end >= zmax0)) {
+        if (start2 <= zmin0) start2 = zmin0;
         if (end >= zmax0) end = zmax0;
-        nc = Math.floor((end - start) / cs) + 1;
+        nc = Math.floor((end - start2) / cs) + 1;
         extra = 0;
       }
       for (i = 0; i < len2; i++) {
         si = scl[i];
-        domain[i] = (si[0] * (nc + extra - 1) - extra / 2) * cs + start;
+        domain[i] = (si[0] * (nc + extra - 1) - extra / 2) * cs + start2;
         range[i] = si[1];
       }
       if (zRangeInput || trace.autocontour) {
@@ -75916,23 +72594,23 @@ var Plotly = (() => {
 
   // src/traces/contour/style.js
   function style7(gd) {
-    var contours = import_d348.default.select(gd).selectAll("g.contour");
+    var contours = select_default2(gd).selectAll("g.contour");
     contours.style("opacity", function(d) {
       return d[0].trace.opacity;
     });
     contours.each(function(d) {
-      var c = import_d348.default.select(this);
+      var c = select_default2(this);
       var trace = d[0].trace;
       var contours2 = trace.contours;
       var line = trace.line;
       var cs = contours2.size || 1;
-      var start = contours2.start;
+      var start2 = contours2.start;
       var isConstraintType = contours2.type === "constraint";
       var colorLines = !isConstraintType && contours2.coloring === "lines";
       var colorFills = !isConstraintType && contours2.coloring === "fill";
       var colorMap = colorLines || colorFills ? makeColorMap(trace) : null;
       c.selectAll("g.contourlevel").each(function(d2) {
-        import_d348.default.select(this).selectAll("path").call(
+        select_default2(this).selectAll("path").call(
           drawing_default.lineGroupStyle,
           line.width,
           colorLines ? colorMap(d2.level) : line.color,
@@ -75941,7 +72619,7 @@ var Plotly = (() => {
       });
       var labelFont = contours2.labelfont;
       c.selectAll("g.contourlabels text").each(function(d2) {
-        drawing_default.font(import_d348.default.select(this), {
+        drawing_default.font(select_default2(this), {
           weight: labelFont.weight,
           style: labelFont.style,
           variant: labelFont.variant,
@@ -75961,7 +72639,7 @@ var Plotly = (() => {
           if (firstFill === void 0) firstFill = d2.level;
           return colorMap(d2.level + 0.5 * cs);
         });
-        if (firstFill === void 0) firstFill = start;
+        if (firstFill === void 0) firstFill = start2;
         c.selectAll("g.contourbg path").style("fill", colorMap(firstFill - 0.5 * cs));
       }
     });
@@ -76644,7 +73322,7 @@ var Plotly = (() => {
   var { calc: _req52 } = calc_default2;
   var { crossTraceCalc: _req63 } = cross_trace_calc_default;
   var { plot: _req72 } = plot_default;
-  var { style: _req82, styleOnSelect: _req93 } = style_default2;
+  var { style: _req82, styleOnSelect: _req93 } = style_default4;
   var histogram_default = {
     attributes: attributes_default25,
     layoutAttributes: layout_attributes_default6,
@@ -77105,14 +73783,14 @@ var Plotly = (() => {
     };
     return [cd0];
   }
-  function scale(zero, ratio, min, max) {
+  function scale(zero3, ratio, min2, max2) {
     return function(c) {
-      return lib_default.constrain((c - zero) * ratio, min, max);
+      return lib_default.constrain((c - zero3) * ratio, min2, max2);
     };
   }
-  function constrain2(min, max) {
+  function constrain2(min2, max2) {
     return function(c) {
-      return lib_default.constrain(c, min, max);
+      return lib_default.constrain(c, min2, max2);
     };
   }
   function makeScaler(trace) {
@@ -77144,14 +73822,13 @@ var Plotly = (() => {
   }
 
   // src/traces/image/plot.js
-  var import_d349 = __toESM(require_d3(), 1);
   var strTranslate16 = lib_default.strTranslate;
   function plot8(gd, plotinfo, cdimage, imageLayer) {
     var xa = plotinfo.xaxis;
     var ya = plotinfo.yaxis;
     var supportsPixelated = !gd._context._exportedPlot && supports_pixelated_image_default();
     lib_default.makeTraceGroups(imageLayer, cdimage, "im").each(function(cd) {
-      var plotGroup = import_d349.default.select(this);
+      var plotGroup = select_default2(this);
       var cd0 = cd[0];
       var trace = cd0.trace;
       var realImage = (trace.zsmooth === "fast" || trace.zsmooth === false && supportsPixelated) && !trace._hasZ && trace._hasSource && xa.type === "linear" && ya.type === "linear";
@@ -77326,9 +74003,8 @@ var Plotly = (() => {
   }
 
   // src/traces/image/style.js
-  var import_d350 = __toESM(require_d3(), 1);
   function style8(gd) {
-    import_d350.default.select(gd).selectAll(".im image").style("opacity", function(d) {
+    select_default2(gd).selectAll(".im image").style("opacity", function(d) {
       return d[0].trace.opacity;
     });
   }
@@ -77815,13 +74491,13 @@ var Plotly = (() => {
     return cd;
   }
   function makePullColorFn(colorMap) {
-    return function pullColor(color2, id) {
-      if (!color2) return false;
-      color2 = tinycolor(color2);
-      if (!color2.isValid()) return false;
-      color2 = color_default.addOpacity(color2, color2.getAlpha());
-      if (!colorMap[id]) colorMap[id] = color2;
-      return color2;
+    return function pullColor(color3, id2) {
+      if (!color3) return false;
+      color3 = tinycolor(color3);
+      if (!color3.isValid()) return false;
+      color3 = color_default.addOpacity(color3, color3.getAlpha());
+      if (!colorMap[id2]) colorMap[id2] = color3;
+      return color3;
     };
   }
   function crossTraceCalc4(gd, plotinfo) {
@@ -77875,9 +74551,6 @@ var Plotly = (() => {
     generateExtendedColors
   };
 
-  // src/traces/pie/plot.js
-  var import_d351 = __toESM(require_d3(), 1);
-
   // src/traces/pie/event_data.js
   function eventData5(pt, trace) {
     var out = {
@@ -77918,13 +74591,13 @@ var Plotly = (() => {
     prerenderTitles(cdModule, gd);
     layoutAreas(cdModule, gs);
     var plotGroups = lib_default.makeTraceGroups(fullLayout._pielayer, cdModule, "trace").each(function(cd) {
-      var plotGroup = import_d351.default.select(this);
+      var plotGroup = select_default2(this);
       var cd0 = cd[0];
       var trace = cd0.trace;
       setCoords(cd);
       plotGroup.attr("stroke-linejoin", "round");
       plotGroup.each(function() {
-        var slices = import_d351.default.select(this).selectAll("g.slice").data(cd);
+        var slices = select_default2(this).selectAll("g.slice").data(cd);
         slices.enter().append("g").classed("slice", true);
         slices.exit().remove();
         var quadrants = [
@@ -77936,7 +74609,7 @@ var Plotly = (() => {
         var hasOutsideText = false;
         slices.each(function(pt, i) {
           if (pt.hidden) {
-            import_d351.default.select(this).selectAll("path,g").remove();
+            select_default2(this).selectAll("path,g").remove();
             return;
           }
           pt.pointNumber = pt.i;
@@ -77944,7 +74617,7 @@ var Plotly = (() => {
           quadrants[pt.pxmid[1] < 0 ? 0 : 1][pt.pxmid[0] < 0 ? 0 : 1].push(pt);
           var cx = cd0.cx;
           var cy = cd0.cy;
-          var sliceTop = import_d351.default.select(this);
+          var sliceTop = select_default2(this);
           var slicePath = sliceTop.selectAll("path.surface").data([pt]);
           slicePath.enter().append("path").classed("surface", true).style({ "pointer-events": isStatic ? "none" : "all" });
           sliceTop.call(attachFxHandlers, gd, cd);
@@ -77957,9 +74630,9 @@ var Plotly = (() => {
           }
           pt.cxFinal = cx;
           pt.cyFinal = cy;
-          function arc(start, finish, cw, scale2) {
-            var dx = scale2 * (finish[0] - start[0]);
-            var dy = scale2 * (finish[1] - start[1]);
+          function arc(start2, finish, cw, scale2) {
+            var dx = scale2 * (finish[0] - start2[0]);
+            var dy = scale2 * (finish[1] - start2[1]);
             return "a" + scale2 * cd0.r + "," + scale2 * cd0.r + " 0 " + pt.largeArc + (cw ? " 1 " : " 0 ") + dx + "," + dy;
           }
           var hole = trace.hole;
@@ -77989,7 +74662,7 @@ var Plotly = (() => {
           sliceTextGroup.enter().append("g").classed("slicetext", true);
           sliceTextGroup.exit().remove();
           sliceTextGroup.each(function() {
-            var sliceText = lib_default.ensureSingle(import_d351.default.select(this), "text", "", function(s) {
+            var sliceText = lib_default.ensureSingle(select_default2(this), "text", "", function(s) {
               s.attr("data-notex", 1);
             });
             var font2 = lib_default.ensureUniformFontSize(
@@ -78002,25 +74675,25 @@ var Plotly = (() => {
               "text-anchor": "middle"
             }).call(drawing_default.font, font2).call(svg_text_utils_default.convertToTspans, gd);
             var textBB = drawing_default.bBox(sliceText.node());
-            var transform;
+            var transform2;
             if (textPosition === "outside") {
-              transform = transformOutsideText(textBB, pt);
+              transform2 = transformOutsideText(textBB, pt);
             } else {
-              transform = transformInsideText(textBB, pt, cd0);
-              if (textPosition === "auto" && transform.scale < 1) {
+              transform2 = transformInsideText(textBB, pt, cd0);
+              if (textPosition === "auto" && transform2.scale < 1) {
                 var newFont = lib_default.ensureUniformFontSize(gd, trace.outsidetextfont);
                 sliceText.call(drawing_default.font, newFont);
                 textBB = drawing_default.bBox(sliceText.node());
-                transform = transformOutsideText(textBB, pt);
+                transform2 = transformOutsideText(textBB, pt);
               }
             }
-            var textPosAngle = transform.textPosAngle;
+            var textPosAngle = transform2.textPosAngle;
             var textXY = textPosAngle === void 0 ? pt.pxmid : getCoords(cd0.r, textPosAngle);
-            transform.targetX = cx + textXY[0] * transform.rCenter + (transform.x || 0);
-            transform.targetY = cy + textXY[1] * transform.rCenter + (transform.y || 0);
-            computeTransform(transform, textBB);
-            if (transform.outside) {
-              var targetY = transform.targetY;
+            transform2.targetX = cx + textXY[0] * transform2.rCenter + (transform2.x || 0);
+            transform2.targetY = cy + textXY[1] * transform2.rCenter + (transform2.y || 0);
+            computeTransform(transform2, textBB);
+            if (transform2.outside) {
+              var targetY = transform2.targetY;
               pt.yLabelMin = targetY - textBB.height / 2;
               pt.yLabelMid = targetY;
               pt.yLabelMax = targetY + textBB.height / 2;
@@ -78028,17 +74701,17 @@ var Plotly = (() => {
               pt.labelExtraY = 0;
               hasOutsideText = true;
             }
-            transform.fontSize = font2.size;
-            recordMinTextSize3(trace.type, transform, fullLayout);
-            cd[i].transform = transform;
-            lib_default.setTransormAndDisplay(sliceText, transform);
+            transform2.fontSize = font2.size;
+            recordMinTextSize3(trace.type, transform2, fullLayout);
+            cd[i].transform = transform2;
+            lib_default.setTransormAndDisplay(sliceText, transform2);
           });
         });
-        var titleTextGroup = import_d351.default.select(this).selectAll("g.titletext").data(trace.title.text ? [0] : []);
+        var titleTextGroup = select_default2(this).selectAll("g.titletext").data(trace.title.text ? [0] : []);
         titleTextGroup.enter().append("g").classed("titletext", true);
         titleTextGroup.exit().remove();
         titleTextGroup.each(function() {
-          var titleText = lib_default.ensureSingle(import_d351.default.select(this), "text", "", function(s) {
+          var titleText = lib_default.ensureSingle(select_default2(this), "text", "", function(s) {
             s.attr("data-notex", 1);
           });
           var txt = trace.title.text;
@@ -78050,15 +74723,15 @@ var Plotly = (() => {
             transform: "",
             "text-anchor": "middle"
           }).call(drawing_default.font, trace.title.font).call(svg_text_utils_default.convertToTspans, gd);
-          var transform;
+          var transform2;
           if (trace.title.position === "middle center") {
-            transform = positionTitleInside(cd0);
+            transform2 = positionTitleInside(cd0);
           } else {
-            transform = positionTitleOutside(cd0, gs);
+            transform2 = positionTitleOutside(cd0, gs);
           }
           titleText.attr(
             "transform",
-            strTranslate17(transform.x, transform.y) + strScale2(Math.min(1, transform.scale)) + strTranslate17(transform.tx, transform.ty)
+            strTranslate17(transform2.x, transform2.y) + strScale2(Math.min(1, transform2.scale)) + strTranslate17(transform2.tx, transform2.ty)
           );
         });
         if (hasOutsideText) scootLabels(quadrants, trace);
@@ -78086,14 +74759,14 @@ var Plotly = (() => {
     });
     setTimeout(function() {
       plotGroups.selectAll("tspan").each(function() {
-        var s = import_d351.default.select(this);
+        var s = select_default2(this);
         if (s.attr("dy")) s.attr("dy", s.attr("dy"));
       });
     }, 0);
   }
   function plotTextLines(slices, trace) {
     slices.each(function(pt) {
-      var sliceTop = import_d351.default.select(this);
+      var sliceTop = select_default2(this);
       if (!pt.labelExtraX && !pt.labelExtraY) {
         sliceTop.select("path.textline").remove();
         return;
@@ -78206,18 +74879,18 @@ var Plotly = (() => {
       trace._hasHoverEvent = true;
       gd.emit("plotly_hover", {
         points: [eventData5(pt, trace2)],
-        event: import_d351.default.event
+        event
       });
     });
     sliceTop.on("mouseout", function(evt) {
       var fullLayout2 = gd._fullLayout;
       var trace2 = gd._fullData[trace.index];
-      var pt = import_d351.default.select(this).datum();
+      var pt = select_default2(this).datum();
       if (trace._hasHoverEvent) {
-        evt.originalEvent = import_d351.default.event;
+        evt.originalEvent = event;
         gd.emit("plotly_unhover", {
           points: [eventData5(pt, trace2)],
-          event: import_d351.default.event
+          event
         });
         trace._hasHoverEvent = false;
       }
@@ -78231,11 +74904,11 @@ var Plotly = (() => {
       var trace2 = gd._fullData[trace.index];
       if (gd._dragging || fullLayout2.hovermode === false) return;
       gd._hoverdata = [eventData5(pt, trace2)];
-      fx_default.click(gd, import_d351.default.event);
+      fx_default.click(gd, event);
     });
   }
   function determineOutsideTextFont(trace, pt, layoutFont) {
-    var color2 = helpers_default4.castOption(trace.outsidetextfont.color, pt.pts) || helpers_default4.castOption(trace.textfont.color, pt.pts) || layoutFont.color;
+    var color3 = helpers_default4.castOption(trace.outsidetextfont.color, pt.pts) || helpers_default4.castOption(trace.textfont.color, pt.pts) || layoutFont.color;
     var family = helpers_default4.castOption(trace.outsidetextfont.family, pt.pts) || helpers_default4.castOption(trace.textfont.family, pt.pts) || layoutFont.family;
     var size = helpers_default4.castOption(trace.outsidetextfont.size, pt.pts) || helpers_default4.castOption(trace.textfont.size, pt.pts) || layoutFont.size;
     var weight = helpers_default4.castOption(trace.outsidetextfont.weight, pt.pts) || helpers_default4.castOption(trace.textfont.weight, pt.pts) || layoutFont.weight;
@@ -78245,7 +74918,7 @@ var Plotly = (() => {
     var lineposition = helpers_default4.castOption(trace.outsidetextfont.lineposition, pt.pts) || helpers_default4.castOption(trace.textfont.lineposition, pt.pts) || layoutFont.lineposition;
     var shadow = helpers_default4.castOption(trace.outsidetextfont.shadow, pt.pts) || helpers_default4.castOption(trace.textfont.shadow, pt.pts) || layoutFont.shadow;
     return {
-      color: color2,
+      color: color3,
       family,
       size,
       weight,
@@ -78371,24 +75044,24 @@ var Plotly = (() => {
       newT.textPosAngle = (pt.startangle + pt.stopangle) / 2;
       allTransforms.push(newT);
     }
-    var id = 0;
+    var id2 = 0;
     var maxScale = 0;
     for (var k = 0; k < allTransforms.length; k++) {
       var s = allTransforms[k].scale;
       if (maxScale < s) {
         maxScale = s;
-        id = k;
+        id2 = k;
       }
       if (!isAuto && maxScale >= 1) {
         break;
       }
     }
-    return allTransforms[id];
+    return allTransforms[id2];
   }
   function isCrossing(pt, angle) {
-    var start = pt.startangle;
+    var start2 = pt.startangle;
     var stop = pt.stopangle;
-    return start > angle && angle > stop || start < angle && angle < stop;
+    return start2 > angle && angle > stop || start2 < angle && angle < stop;
   }
   function calcRadTransform(textBB, r, ring, halfAngle, midAngle) {
     r = Math.max(0, r - 2 * TEXTPAD4);
@@ -78610,7 +75283,7 @@ var Plotly = (() => {
   function groupScale(cdModule, scaleGroups) {
     var cd0, i, trace;
     for (var k = 0; k < scaleGroups.length; k++) {
-      var min = Infinity;
+      var min2 = Infinity;
       var g = scaleGroups[k];
       for (i = 0; i < cdModule.length; i++) {
         cd0 = cdModule[i][0];
@@ -78631,14 +75304,14 @@ var Plotly = (() => {
             rx *= (1 + trace.baseratio) / 2;
             area = rx * ry;
           }
-          min = Math.min(min, area / cd0.vTotal);
+          min2 = Math.min(min2, area / cd0.vTotal);
         }
       }
       for (i = 0; i < cdModule.length; i++) {
         cd0 = cdModule[i][0];
         trace = cd0.trace;
         if (trace.scalegroup === g) {
-          var v = min * cd0.vTotal;
+          var v = min2 * cd0.vTotal;
           if (trace.type === "funnelarea") {
             v /= (1 + trace.baseratio) / 2;
             v /= trace.aspectratio;
@@ -78744,15 +75417,15 @@ var Plotly = (() => {
       }
     }
   }
-  function computeTransform(transform, textBB) {
-    var a = transform.rotate * Math.PI / 180;
+  function computeTransform(transform2, textBB) {
+    var a = transform2.rotate * Math.PI / 180;
     var cosA = Math.cos(a);
     var sinA = Math.sin(a);
     var midX = (textBB.left + textBB.right) / 2;
     var midY = (textBB.top + textBB.bottom) / 2;
-    transform.textX = midX * cosA - midY * sinA;
-    transform.textY = midX * sinA + midY * cosA;
-    transform.noCenter = true;
+    transform2.textX = midX * cosA - midY * sinA;
+    transform2.textY = midX * sinA + midY * cosA;
+    transform2.noCenter = true;
   }
   var plot_default4 = {
     plot: plot9,
@@ -78767,7 +75440,6 @@ var Plotly = (() => {
   };
 
   // src/traces/pie/style.js
-  var import_d352 = __toESM(require_d3(), 1);
   var { resizeText: resizeText3 } = uniform_text_default;
   function style9(gd) {
     var s = gd._fullLayout._pielayer.selectAll(".trace");
@@ -78775,10 +75447,10 @@ var Plotly = (() => {
     s.each(function(cd) {
       var cd0 = cd[0];
       var trace = cd0.trace;
-      var traceSelection = import_d352.default.select(this);
+      var traceSelection = select_default2(this);
       traceSelection.style({ opacity: trace.opacity });
       traceSelection.selectAll("path.surface").each(function(pt) {
-        import_d352.default.select(this).call(styleOne, pt, trace, gd);
+        select_default2(this).call(styleOne, pt, trace, gd);
       });
     });
   }
@@ -79109,7 +75781,6 @@ var Plotly = (() => {
   }
 
   // src/plots/ternary/ternary.js
-  var import_d353 = __toESM(require_d3(), 1);
   var { prepSelect: prepSelect3, selectOnClick: selectOnClick3, clearOutline: clearOutline8, clearSelectionsCache: clearSelectionsCache2 } = selections_default;
   var strTranslate18 = lib_default.strTranslate;
   var _4 = lib_default._;
@@ -79199,7 +75870,7 @@ var Plotly = (() => {
     toplevel.enter().append("g").attr("class", function(d) {
       return "toplevel " + d;
     }).each(function(d) {
-      var s = import_d353.default.select(this);
+      var s = select_default2(this);
       layers[d] = s;
       if (d === "frontplot") {
         s.append("g").classed("scatterlayer", true);
@@ -79668,7 +76339,7 @@ var Plotly = (() => {
     dragelement_default.init(this.dragOptions);
   };
   function removeZoombox2(gd) {
-    import_d353.default.select(gd).selectAll(".zoombox,.js-zoombox-backdrop,.js-zoombox-menu,.zoombox-corners").remove();
+    select_default2(gd).selectAll(".zoombox,.js-zoombox-backdrop,.js-zoombox-menu,.zoombox-corners").remove();
   }
 
   // src/plots/ternary/layout_attributes.js
@@ -79762,15 +76433,15 @@ var Plotly = (() => {
       return lib_default.coerce(subplotLayoutIn, subplotLayoutOut, subplotAttributes, attr3, dflt);
     }
     for (var i = 0; i < idsLength; i++) {
-      var id = ids[i];
-      if (layoutIn[id]) subplotLayoutIn = layoutIn[id];
-      else subplotLayoutIn = layoutIn[id] = {};
-      subplotLayoutOut = plot_template_default.newContainer(layoutOut, id, baseId);
+      var id2 = ids[i];
+      if (layoutIn[id2]) subplotLayoutIn = layoutIn[id2];
+      else subplotLayoutIn = layoutIn[id2] = {};
+      subplotLayoutOut = plot_template_default.newContainer(layoutOut, id2, baseId);
       if (!opts.noUirevision) coerce3("uirevision", layoutOut.uirevision);
       var dfltDomains = {};
       dfltDomains[partition] = [i / idsLength, (i + 1) / idsLength];
       defaults2(subplotLayoutOut, layoutOut, coerce3, dfltDomains);
-      opts.id = id;
+      opts.id = id2;
       handleDefaults6(subplotLayoutIn, subplotLayoutOut, coerce3, opts);
     }
   }
@@ -79924,7 +76595,7 @@ var Plotly = (() => {
   var ternary_default2 = { name: name7, attr: attr2, idRoot: idRoot2, idRegex: idRegex3, attributes: attributes3, layoutAttributes: layoutAttributes2, supplyLayoutDefaults: supplyLayoutDefaults13, plot: plot12, clean: clean5, updateFx: updateFx3 };
 
   // src/traces/scatterternary/index.js
-  var { style: _req65, styleOnSelect: _req73 } = style_default;
+  var { style: _req65, styleOnSelect: _req73 } = style_default3;
   var scatterternary_default = {
     attributes: attributes_default30,
     supplyDefaults: supplyDefaults12,
@@ -80323,7 +76994,6 @@ var Plotly = (() => {
   }
 
   // src/traces/violin/plot.js
-  var import_d354 = __toESM(require_d3(), 1);
   function plot14(gd, plotinfo, cdViolins, violinLayer) {
     var isStatic = gd._context.staticPlot;
     var fullLayout = gd._fullLayout;
@@ -80343,7 +77013,7 @@ var Plotly = (() => {
       return drawing_default.smoothopen(segments[0], 1);
     }
     lib_default.makeTraceGroups(violinLayer, cdViolins, "trace violins").each(function(cd) {
-      var plotGroup = import_d354.default.select(this);
+      var plotGroup = select_default2(this);
       var cd0 = cd[0];
       var t = cd0.t;
       var trace = cd0.trace;
@@ -80362,7 +77032,7 @@ var Plotly = (() => {
       violins.enter().append("path").style("vector-effect", isStatic ? "none" : "non-scaling-stroke").attr("class", "violin");
       violins.exit().remove();
       violins.each(function(d) {
-        var pathSel = import_d354.default.select(this);
+        var pathSel = select_default2(this);
         var density = d.density;
         var len2 = density.length;
         var posCenter = posAxis.c2l(d.pos + bPos, true);
@@ -80450,7 +77120,7 @@ var Plotly = (() => {
       meanPaths.each(function(d) {
         var v = valAxis.c2p(d.mean, true);
         var p = helpers_default13.getPositionOnKdePath(d, trace, v);
-        import_d354.default.select(this).attr(
+        select_default2(this).attr(
           "d",
           trace.orientation === "h" ? "M" + v + "," + p[0] + "V" + p[1] : "M" + p[0] + "," + v + "H" + p[1]
         );
@@ -80460,16 +77130,15 @@ var Plotly = (() => {
   }
 
   // src/traces/violin/style.js
-  var import_d355 = __toESM(require_d3(), 1);
-  var { stylePoints: stylePoints3 } = style_default;
+  var { stylePoints: stylePoints3 } = style_default3;
   function style10(gd) {
-    var s = import_d355.default.select(gd).selectAll("g.trace.violins");
+    var s = select_default2(gd).selectAll("g.trace.violins");
     s.style("opacity", function(d) {
       return d[0].trace.opacity;
     });
     s.each(function(d) {
       var trace = d[0].trace;
-      var sel = import_d355.default.select(this);
+      var sel = select_default2(this);
       var box = trace.box || {};
       var boxLine = box.line || {};
       var meanline = trace.meanline || {};
@@ -80573,7 +77242,7 @@ var Plotly = (() => {
 
   // src/traces/violin/index.js
   var { crossTraceDefaults: _req33 } = defaults_default3;
-  var { styleOnSelect: _req94 } = style_default;
+  var { styleOnSelect: _req94 } = style_default3;
   var violin_default = {
     attributes: attributes_default31,
     layoutAttributes: layout_attributes_default10,
@@ -80616,12 +77285,12 @@ var Plotly = (() => {
         @param [format] {string} The date format to use (see <a href="BaseCalendar.html#formatDate"><code>formatDate</code></a>).
         @param [settings] {object} Options for the <code>formatDate</code> function.
         @return {string} The formatted date. */
-    formatDate: function(format5, settings) {
-      if (typeof format5 !== "string") {
-        settings = format5;
-        format5 = "";
+    formatDate: function(format6, settings) {
+      if (typeof format6 !== "string") {
+        settings = format6;
+        format6 = "";
       }
-      return this._calendar.formatDate(format5 || "", this, settings);
+      return this._calendar.formatDate(format6 || "", this, settings);
     }
   });
   assign(main.baseCalendar.prototype, {
@@ -80724,11 +77393,11 @@ var Plotly = (() => {
                   <code>false</code> to use normal Arabic numerals.
         @return {string} The date in the above format.
         @throws Errors if the date is from a different calendar. */
-    formatDate: function(format5, date, settings) {
-      if (typeof format5 !== "string") {
+    formatDate: function(format6, date, settings) {
+      if (typeof format6 !== "string") {
         settings = date;
-        date = format5;
-        format5 = "";
+        date = format6;
+        format6 = "";
       }
       if (!date) {
         return "";
@@ -80736,7 +77405,7 @@ var Plotly = (() => {
       if (date.calendar() !== this) {
         throw main.local.invalidFormat || main.regionalOptions[""].invalidFormat;
       }
-      format5 = format5 || this.local.dateFormat;
+      format6 = format6 || this.local.dateFormat;
       settings = settings || {};
       var dayNamesShort = settings.dayNamesShort || this.local.dayNamesShort;
       var dayNames = settings.dayNames || this.local.dayNames;
@@ -80746,7 +77415,7 @@ var Plotly = (() => {
       var calculateWeek = settings.calculateWeek || this.local.calculateWeek;
       var doubled = function(match, step) {
         var matches = 1;
-        while (iFormat + matches < format5.length && format5.charAt(iFormat + matches) === match) {
+        while (iFormat + matches < format6.length && format6.charAt(iFormat + matches) === match) {
           matches++;
         }
         iFormat += matches - 1;
@@ -80781,15 +77450,15 @@ var Plotly = (() => {
       };
       var output = "";
       var literal = false;
-      for (var iFormat = 0; iFormat < format5.length; iFormat++) {
+      for (var iFormat = 0; iFormat < format6.length; iFormat++) {
         if (literal) {
-          if (format5.charAt(iFormat) === "'" && !doubled("'")) {
+          if (format6.charAt(iFormat) === "'" && !doubled("'")) {
             literal = false;
           } else {
-            output += format5.charAt(iFormat);
+            output += format6.charAt(iFormat);
           }
         } else {
-          switch (format5.charAt(iFormat)) {
+          switch (format6.charAt(iFormat)) {
             case "d":
               output += localiseNumbers(formatNumber("d", date.day(), 2));
               break;
@@ -80837,7 +77506,7 @@ var Plotly = (() => {
               }
               break;
             default:
-              output += format5.charAt(iFormat);
+              output += format6.charAt(iFormat);
           }
         }
       }
@@ -80861,7 +77530,7 @@ var Plotly = (() => {
         @return {CDate} The extracted date value or <code>null</code> if value is blank.
         @throws Errors if the format and/or value are missing,
                 if the value doesn't match the format, or if the date is invalid. */
-    parseDate: function(format5, value, settings) {
+    parseDate: function(format6, value, settings) {
       if (value == null) {
         throw main.local.invalidArguments || main.regionalOptions[""].invalidArguments;
       }
@@ -80869,7 +77538,7 @@ var Plotly = (() => {
       if (value === "") {
         return null;
       }
-      format5 = format5 || this.local.dateFormat;
+      format6 = format6 || this.local.dateFormat;
       settings = settings || {};
       var shortYearCutoff = settings.shortYearCutoff || this.shortYearCutoff;
       shortYearCutoff = typeof shortYearCutoff !== "string" ? shortYearCutoff : this.today().year() % 100 + parseInt(shortYearCutoff, 10);
@@ -80881,14 +77550,14 @@ var Plotly = (() => {
       var monthNames = settings.monthNames || this.local.monthNames;
       var jd = -1;
       var year2 = -1;
-      var month2 = -1;
+      var month = -1;
       var day2 = -1;
       var doy = -1;
       var shortYear = false;
       var literal = false;
       var doubled = function(match, step) {
         var matches = 1;
-        while (iFormat + matches < format5.length && format5.charAt(iFormat + matches) === match) {
+        while (iFormat + matches < format6.length && format6.charAt(iFormat + matches) === match) {
           matches++;
         }
         iFormat += matches - 1;
@@ -80909,9 +77578,9 @@ var Plotly = (() => {
       var getMonthNumber = function() {
         if (typeof monthNumbers === "function") {
           doubled("m");
-          var month3 = monthNumbers.call(calendar, value.substring(iValue));
-          iValue += month3.length;
-          return month3;
+          var month2 = monthNumbers.call(calendar, value.substring(iValue));
+          iValue += month2.length;
+          return month2;
         }
         return getNumber("m");
       };
@@ -80927,28 +77596,28 @@ var Plotly = (() => {
       };
       var getMonthName = function() {
         if (typeof monthNames === "function") {
-          var month3 = doubled("M") ? monthNames.call(calendar, value.substring(iValue)) : monthNamesShort.call(calendar, value.substring(iValue));
-          iValue += month3.length;
-          return month3;
+          var month2 = doubled("M") ? monthNames.call(calendar, value.substring(iValue)) : monthNamesShort.call(calendar, value.substring(iValue));
+          iValue += month2.length;
+          return month2;
         }
         return getName("M", monthNamesShort, monthNames);
       };
       var checkLiteral = function() {
-        if (value.charAt(iValue) !== format5.charAt(iFormat)) {
+        if (value.charAt(iValue) !== format6.charAt(iFormat)) {
           throw (main.local.unexpectedLiteralAt || main.regionalOptions[""].unexpectedLiteralAt).replace(/\{0\}/, iValue);
         }
         iValue++;
       };
       var iValue = 0;
-      for (var iFormat = 0; iFormat < format5.length; iFormat++) {
+      for (var iFormat = 0; iFormat < format6.length; iFormat++) {
         if (literal) {
-          if (format5.charAt(iFormat) === "'" && !doubled("'")) {
+          if (format6.charAt(iFormat) === "'" && !doubled("'")) {
             literal = false;
           } else {
             checkLiteral();
           }
         } else {
-          switch (format5.charAt(iFormat)) {
+          switch (format6.charAt(iFormat)) {
             case "d":
               day2 = getNumber("d");
               break;
@@ -80962,10 +77631,10 @@ var Plotly = (() => {
               getNumber("w");
               break;
             case "m":
-              month2 = getMonthNumber();
+              month = getMonthNumber();
               break;
             case "M":
-              month2 = getMonthName();
+              month = getMonthName();
               break;
             case "y":
               var iSave = iFormat;
@@ -81012,18 +77681,18 @@ var Plotly = (() => {
       } else if (year2 < 100 && shortYear) {
         year2 += shortYearCutoff === -1 ? 1900 : this.today().year() - this.today().year() % 100 - (year2 <= shortYearCutoff ? 0 : 100);
       }
-      if (typeof month2 === "string") {
-        month2 = parseMonth.call(this, year2, month2);
+      if (typeof month === "string") {
+        month = parseMonth.call(this, year2, month);
       }
       if (doy > -1) {
-        month2 = 1;
+        month = 1;
         day2 = doy;
-        for (var dim = this.daysInMonth(year2, month2); day2 > dim; dim = this.daysInMonth(year2, month2)) {
-          month2++;
+        for (var dim = this.daysInMonth(year2, month); day2 > dim; dim = this.daysInMonth(year2, month)) {
+          month++;
           day2 -= dim;
         }
       }
-      return jd > -1 ? this.fromJD(jd) : this.newDate(year2, month2, day2);
+      return jd > -1 ? this.fromJD(jd) : this.newDate(year2, month, day2);
     },
     /** A date may be specified as an exact value or a relative one.
         Found in the <code>jquery.calendars.plus.js</code> module.
@@ -81129,14 +77798,14 @@ var Plotly = (() => {
           }
           var year2 = this._validateYear(date);
           var monthIndex = date.month();
-          var month2 = "" + this.toChineseMonth(year2, monthIndex);
-          if (padded && month2.length < 2) {
-            month2 = "0" + month2;
+          var month = "" + this.toChineseMonth(year2, monthIndex);
+          if (padded && month.length < 2) {
+            month = "0" + month;
           }
           if (this.isIntercalaryMonth(year2, monthIndex)) {
-            month2 += "i";
+            month += "i";
           }
-          return month2;
+          return month;
         },
         monthNames: function(date) {
           if (typeof date === "string") {
@@ -81145,7 +77814,7 @@ var Plotly = (() => {
           }
           var year2 = this._validateYear(date);
           var monthIndex = date.month();
-          var month2 = this.toChineseMonth(year2, monthIndex);
+          var month = this.toChineseMonth(year2, monthIndex);
           var monthName = [
             "\u4E00\u6708",
             "\u4E8C\u6708",
@@ -81159,7 +77828,7 @@ var Plotly = (() => {
             "\u5341\u6708",
             "\u5341\u4E00\u6708",
             "\u5341\u4E8C\u6708"
-          ][month2 - 1];
+          ][month - 1];
           if (this.isIntercalaryMonth(year2, monthIndex)) {
             monthName = "\u95F0" + monthName;
           }
@@ -81172,7 +77841,7 @@ var Plotly = (() => {
           }
           var year2 = this._validateYear(date);
           var monthIndex = date.month();
-          var month2 = this.toChineseMonth(year2, monthIndex);
+          var month = this.toChineseMonth(year2, monthIndex);
           var monthName = [
             "\u4E00",
             "\u4E8C",
@@ -81186,7 +77855,7 @@ var Plotly = (() => {
             "\u5341",
             "\u5341\u4E00",
             "\u5341\u4E8C"
-          ][month2 - 1];
+          ][month - 1];
           if (this.isIntercalaryMonth(year2, monthIndex)) {
             monthName = "\u95F0" + monthName;
           }
@@ -81194,9 +77863,9 @@ var Plotly = (() => {
         },
         parseMonth: function(year2, monthString) {
           year2 = this._validateYear(year2);
-          var month2 = parseInt(monthString);
+          var month = parseInt(monthString);
           var isIntercalary;
-          if (!isNaN(month2)) {
+          if (!isNaN(month)) {
             var i = monthString[monthString.length - 1];
             isIntercalary = i === "i" || i === "I";
           } else {
@@ -81207,7 +77876,7 @@ var Plotly = (() => {
             if (monthString[monthString.length - 1] === "\u6708") {
               monthString = monthString.substring(0, monthString.length - 1);
             }
-            month2 = 1 + [
+            month = 1 + [
               "\u4E00",
               "\u4E8C",
               "\u4E09",
@@ -81222,7 +77891,7 @@ var Plotly = (() => {
               "\u5341\u4E8C"
             ].indexOf(monthString);
           }
-          var monthIndex = this.toMonthIndex(year2, month2, isIntercalary);
+          var monthIndex = this.toMonthIndex(year2, month, isIntercalary);
           return monthIndex;
         },
         dayNames: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
@@ -81257,19 +77926,19 @@ var Plotly = (() => {
         @param [isIntercalary=false] {boolean} If month is intercalary.
         @return {number} The month index (0 for first month).
         @throws Error if an invalid month/year or a different calendar used. */
-    toMonthIndex: function(year2, month2, isIntercalary) {
+    toMonthIndex: function(year2, month, isIntercalary) {
       var intercalaryMonth = this.intercalaryMonth(year2);
-      var invalidIntercalaryMonth = isIntercalary && month2 !== intercalaryMonth;
-      if (invalidIntercalaryMonth || month2 < 1 || month2 > 12) {
+      var invalidIntercalaryMonth = isIntercalary && month !== intercalaryMonth;
+      if (invalidIntercalaryMonth || month < 1 || month > 12) {
         throw main2.local.invalidMonth.replace(/\{0\}/, this.local.name);
       }
       var monthIndex;
       if (!intercalaryMonth) {
-        monthIndex = month2 - 1;
-      } else if (!isIntercalary && month2 <= intercalaryMonth) {
-        monthIndex = month2 - 1;
+        monthIndex = month - 1;
+      } else if (!isIntercalary && month <= intercalaryMonth) {
+        monthIndex = month - 1;
       } else {
-        monthIndex = month2;
+        monthIndex = month;
       }
       return monthIndex;
     },
@@ -81289,15 +77958,15 @@ var Plotly = (() => {
       if (monthIndex < 0 || monthIndex > maxMonthIndex) {
         throw main2.local.invalidMonth.replace(/\{0\}/, this.local.name);
       }
-      var month2;
+      var month;
       if (!intercalaryMonth) {
-        month2 = monthIndex + 1;
+        month = monthIndex + 1;
       } else if (monthIndex < intercalaryMonth) {
-        month2 = monthIndex + 1;
+        month = monthIndex + 1;
       } else {
-        month2 = monthIndex;
+        month = monthIndex;
       }
-      return month2;
+      return month;
     },
     /** Determine the intercalary month of a year (if any).
         @memberof ChineseCalendar
@@ -81399,13 +78068,13 @@ var Plotly = (() => {
         @return {number} The equivalent Julian date.
         @throws Error if an invalid date or a different calendar used. */
     toJD: function(year2, monthIndex, day2) {
-      var date = this._validate(year2, month2, day2, main2.local.invalidDate);
+      var date = this._validate(year2, month, day2, main2.local.invalidDate);
       year2 = this._validateYear(date.year());
       monthIndex = date.month();
       day2 = date.day();
       var isIntercalary = this.isIntercalaryMonth(year2, monthIndex);
-      var month2 = this.toChineseMonth(year2, monthIndex);
-      var solar = toSolar(year2, month2, day2, isIntercalary);
+      var month = this.toChineseMonth(year2, monthIndex);
+      var solar = toSolar(year2, month, day2, isIntercalary);
       return gregorianCalendar.toJD(solar.year, solar.month, solar.day);
     },
     /** Create a new date from a Julian date.
@@ -81430,9 +78099,9 @@ var Plotly = (() => {
     fromString: function(dateString) {
       var match = dateString.match(DATE_REGEXP);
       var year2 = this._validateYear(+match[1]);
-      var month2 = +match[2];
+      var month = +match[2];
       var isIntercalary = !!match[3];
-      var monthIndex = this.toMonthIndex(year2, month2, isIntercalary);
+      var monthIndex = this.toMonthIndex(year2, month, isIntercalary);
       var day2 = +match[4];
       return this.newDate(year2, monthIndex, day2);
     },
@@ -81444,17 +78113,17 @@ var Plotly = (() => {
         @param period {string} One of 'y' for year, 'm' for month, 'w' for week, 'd' for day.
         @return {CDate} The updated date.
         @throws Error if a different calendar used. */
-    add: function(date, offset, period) {
+    add: function(date, offset, period2) {
       var year2 = date.year();
       var monthIndex = date.month();
       var isIntercalary = this.isIntercalaryMonth(year2, monthIndex);
-      var month2 = this.toChineseMonth(year2, monthIndex);
-      var cdate = Object.getPrototypeOf(ChineseCalendar.prototype).add.call(this, date, offset, period);
-      if (period === "y") {
+      var month = this.toChineseMonth(year2, monthIndex);
+      var cdate = Object.getPrototypeOf(ChineseCalendar.prototype).add.call(this, date, offset, period2);
+      if (period2 === "y") {
         var resultYear = cdate.year();
         var resultMonthIndex = cdate.month();
-        var resultCanBeIntercalaryMonth = this.isIntercalaryMonth(resultYear, month2);
-        var correctedMonthIndex = isIntercalary && resultCanBeIntercalaryMonth ? this.toMonthIndex(resultYear, month2, true) : this.toMonthIndex(resultYear, month2, false);
+        var resultCanBeIntercalaryMonth = this.isIntercalaryMonth(resultYear, month);
+        var correctedMonthIndex = isIntercalary && resultCanBeIntercalaryMonth ? this.toMonthIndex(resultYear, month, true) : this.toMonthIndex(resultYear, month, false);
         if (correctedMonthIndex !== resultMonthIndex) {
           cdate.month(correctedMonthIndex);
         }
@@ -82159,8 +78828,8 @@ var Plotly = (() => {
         @param [day] {number} The day to examine.
         @return {number} The week of the year.
         @throws Error if an invalid date or a different calendar used. */
-    weekOfYear: function(year2, month2, day2) {
-      var checkDate = this.newDate(year2, month2, day2);
+    weekOfYear: function(year2, month, day2) {
+      var checkDate = this.newDate(year2, month, day2);
       checkDate.add(-checkDate.dayOfWeek(), "d");
       return Math.floor((checkDate.dayOfYear() - 1) / 7) + 1;
     },
@@ -82170,8 +78839,8 @@ var Plotly = (() => {
         @param [month] {number} The month.
         @return {number} The number of days in this month.
         @throws Error if an invalid month/year or a different calendar used. */
-    daysInMonth: function(year2, month2) {
-      var date = this._validate(year2, month2, this.minDay, main3.local.invalidMonth);
+    daysInMonth: function(year2, month) {
+      var date = this._validate(year2, month, this.minDay, main3.local.invalidMonth);
       return this.daysPerMonth[date.month() - 1] + (date.month() === 13 && this.leapYear(date.year()) ? 1 : 0);
     },
     /** Determine whether this date is a week day.
@@ -82181,8 +78850,8 @@ var Plotly = (() => {
         @param day {number} The day to examine.
         @return {boolean} <code>true</code> if a week day, <code>false</code> if not.
         @throws Error if an invalid date or a different calendar used. */
-    weekDay: function(year2, month2, day2) {
-      return (this.dayOfWeek(year2, month2, day2) || 7) < 6;
+    weekDay: function(year2, month, day2) {
+      return (this.dayOfWeek(year2, month, day2) || 7) < 6;
     },
     /** Retrieve the Julian date equivalent for this date,
         i.e. days since January 1, 4713 BCE Greenwich noon.
@@ -82192,8 +78861,8 @@ var Plotly = (() => {
         @param [day] {number} The day to convert.
         @return {number} The equivalent Julian date.
         @throws Error if an invalid date or a different calendar used. */
-    toJD: function(year2, month2, day2) {
-      var date = this._validate(year2, month2, day2, main3.local.invalidDate);
+    toJD: function(year2, month, day2) {
+      var date = this._validate(year2, month, day2, main3.local.invalidDate);
       year2 = date.year();
       if (year2 < 0) {
         year2++;
@@ -82211,9 +78880,9 @@ var Plotly = (() => {
         year2--;
       }
       c = Math.floor(jd) + 0.5 - this.newDate(year2, 1, 1).toJD();
-      var month2 = Math.floor(c / 30) + 1;
-      var day2 = c - (month2 - 1) * 30 + 1;
-      return this.newDate(year2, month2, day2);
+      var month = Math.floor(c / 30) + 1;
+      var day2 = c - (month - 1) * 30 + 1;
+      return this.newDate(year2, month, day2);
     }
   });
   main3.calendars.coptic = CopticCalendar;
@@ -82326,8 +78995,8 @@ var Plotly = (() => {
         @param [day] {number} The day to examine.
         @return {number} The week of the year.
         @throws Error if an invalid date or a different calendar used. */
-    weekOfYear: function(year2, month2, day2) {
-      var checkDate = this.newDate(year2, month2, day2);
+    weekOfYear: function(year2, month, day2) {
+      var checkDate = this.newDate(year2, month, day2);
       checkDate.add(-checkDate.dayOfWeek(), "d");
       return Math.floor((checkDate.dayOfYear() - 1) / 8) + 1;
     },
@@ -82337,8 +79006,8 @@ var Plotly = (() => {
         @param [month] {number} The month.
         @return {number} The number of days in this month.
         @throws Error if an invalid month/year or a different calendar used. */
-    daysInMonth: function(year2, month2) {
-      var date = this._validate(year2, month2, this.minDay, main4.local.invalidMonth);
+    daysInMonth: function(year2, month) {
+      var date = this._validate(year2, month, this.minDay, main4.local.invalidMonth);
       return this.daysPerMonth[date.month() - 1];
     },
     /** Retrieve the number of days in a week.
@@ -82354,8 +79023,8 @@ var Plotly = (() => {
         @param [day] {number} The day to examine.
         @return {number} The day of the week: 0 to number of days - 1.
         @throws Error if an invalid date or a different calendar used. */
-    dayOfWeek: function(year2, month2, day2) {
-      var date = this._validate(year2, month2, day2, main4.local.invalidDate);
+    dayOfWeek: function(year2, month, day2) {
+      var date = this._validate(year2, month, day2, main4.local.invalidDate);
       return (date.day() + 1) % 8;
     },
     /** Determine whether this date is a week day.
@@ -82365,8 +79034,8 @@ var Plotly = (() => {
         @param [day] {number} The day to examine.
         @return {boolean} <code>true</code> if a week day, <code>false</code> if not.
         @throws Error if an invalid date or a different calendar used. */
-    weekDay: function(year2, month2, day2) {
-      var dow = this.dayOfWeek(year2, month2, day2);
+    weekDay: function(year2, month, day2) {
+      var dow = this.dayOfWeek(year2, month, day2);
       return dow >= 2 && dow <= 6;
     },
     /** Retrieve additional information about a date.
@@ -82376,8 +79045,8 @@ var Plotly = (() => {
         @param [day] {number} The day to examine.
         @return {object} Additional information - contents depends on calendar.
         @throws Error if an invalid date or a different calendar used. */
-    extraInfo: function(year2, month2, day2) {
-      var date = this._validate(year2, month2, day2, main4.local.invalidDate);
+    extraInfo: function(year2, month, day2) {
+      var date = this._validate(year2, month, day2, main4.local.invalidDate);
       return { century: centuries[Math.floor((date.year() - 1) / 100) + 1] || "" };
     },
     /** Retrieve the Julian date equivalent for this date,
@@ -82388,12 +79057,12 @@ var Plotly = (() => {
         @param [day] {number} The day to convert.
         @return {number} The equivalent Julian date.
         @throws Error if an invalid date or a different calendar used. */
-    toJD: function(year2, month2, day2) {
-      var date = this._validate(year2, month2, day2, main4.local.invalidDate);
+    toJD: function(year2, month, day2) {
+      var date = this._validate(year2, month, day2, main4.local.invalidDate);
       year2 = date.year() + (date.year() < 0 ? 1 : 0);
-      month2 = date.month();
+      month = date.month();
       day2 = date.day();
-      return day2 + (month2 > 1 ? 16 : 0) + (month2 > 2 ? (month2 - 2) * 32 : 0) + (year2 - 1) * 400 + this.jdEpoch - 1;
+      return day2 + (month > 1 ? 16 : 0) + (month > 2 ? (month - 2) * 32 : 0) + (year2 - 1) * 400 + this.jdEpoch - 1;
     },
     /** Create a new date from a Julian date.
         @memberof DiscworldCalendar
@@ -82404,9 +79073,9 @@ var Plotly = (() => {
       var year2 = Math.floor(jd / 400) + 1;
       jd -= (year2 - 1) * 400;
       jd += jd > 15 ? 16 : 0;
-      var month2 = Math.floor(jd / 32) + 1;
-      var day2 = jd - (month2 - 1) * 32 + 1;
-      return this.newDate(year2 <= 0 ? year2 - 1 : year2, month2, day2);
+      var month = Math.floor(jd / 32) + 1;
+      var day2 = jd - (month - 1) * 32 + 1;
+      return this.newDate(year2 <= 0 ? year2 - 1 : year2, month, day2);
     }
   });
   var centuries = {
@@ -82534,8 +79203,8 @@ var Plotly = (() => {
         @param [day] {number} The day to examine.
         @return {number} The week of the year.
         @throws Error if an invalid date or a different calendar used. */
-    weekOfYear: function(year2, month2, day2) {
-      var checkDate = this.newDate(year2, month2, day2);
+    weekOfYear: function(year2, month, day2) {
+      var checkDate = this.newDate(year2, month, day2);
       checkDate.add(-checkDate.dayOfWeek(), "d");
       return Math.floor((checkDate.dayOfYear() - 1) / 7) + 1;
     },
@@ -82545,8 +79214,8 @@ var Plotly = (() => {
         @param [month] {number} The month.
         @return {number} The number of days in this month.
         @throws Error if an invalid month/year or a different calendar used. */
-    daysInMonth: function(year2, month2) {
-      var date = this._validate(year2, month2, this.minDay, main5.local.invalidMonth);
+    daysInMonth: function(year2, month) {
+      var date = this._validate(year2, month, this.minDay, main5.local.invalidMonth);
       return this.daysPerMonth[date.month() - 1] + (date.month() === 13 && this.leapYear(date.year()) ? 1 : 0);
     },
     /** Determine whether this date is a week day.
@@ -82556,8 +79225,8 @@ var Plotly = (() => {
         @param [day] {number} The day to examine.
         @return {boolean} <code>true</code> if a week day, <code>false</code> if not.
         @throws Error if an invalid date or a different calendar used. */
-    weekDay: function(year2, month2, day2) {
-      return (this.dayOfWeek(year2, month2, day2) || 7) < 6;
+    weekDay: function(year2, month, day2) {
+      return (this.dayOfWeek(year2, month, day2) || 7) < 6;
     },
     /** Retrieve the Julian date equivalent for this date,
         i.e. days since January 1, 4713 BCE Greenwich noon.
@@ -82567,8 +79236,8 @@ var Plotly = (() => {
         @param [day] {number} The day to convert.
         @return {number} The equivalent Julian date.
         @throws Error if an invalid date or a different calendar used. */
-    toJD: function(year2, month2, day2) {
-      var date = this._validate(year2, month2, day2, main5.local.invalidDate);
+    toJD: function(year2, month, day2) {
+      var date = this._validate(year2, month, day2, main5.local.invalidDate);
       year2 = date.year();
       if (year2 < 0) {
         year2++;
@@ -82586,9 +79255,9 @@ var Plotly = (() => {
         year2--;
       }
       c = Math.floor(jd) + 0.5 - this.newDate(year2, 1, 1).toJD();
-      var month2 = Math.floor(c / 30) + 1;
-      var day2 = c - (month2 - 1) * 30 + 1;
-      return this.newDate(year2, month2, day2);
+      var month = Math.floor(c / 30) + 1;
+      var day2 = c - (month - 1) * 30 + 1;
+      return this.newDate(year2, month, day2);
     }
   });
   main5.calendars.ethiopian = EthiopianCalendar;
@@ -82702,8 +79371,8 @@ var Plotly = (() => {
         @param [day] {number} The day to examine.
         @return {number} The week of the year.
         @throws Error if an invalid date or a different calendar used. */
-    weekOfYear: function(year2, month2, day2) {
-      var checkDate = this.newDate(year2, month2, day2);
+    weekOfYear: function(year2, month, day2) {
+      var checkDate = this.newDate(year2, month, day2);
       checkDate.add(-checkDate.dayOfWeek(), "d");
       return Math.floor((checkDate.dayOfYear() - 1) / 7) + 1;
     },
@@ -82723,19 +79392,19 @@ var Plotly = (() => {
         @param [month] {number} The month.
         @return {number} The number of days in this month.
         @throws Error if an invalid month/year or a different calendar used. */
-    daysInMonth: function(year2, month2) {
+    daysInMonth: function(year2, month) {
       if (year2.year) {
-        month2 = year2.month();
+        month = year2.month();
         year2 = year2.year();
       }
-      this._validate(year2, month2, this.minDay, main6.local.invalidMonth);
-      return month2 === 12 && this.leapYear(year2) ? 30 : (
+      this._validate(year2, month, this.minDay, main6.local.invalidMonth);
+      return month === 12 && this.leapYear(year2) ? 30 : (
         // Adar I
-        month2 === 8 && mod5(this.daysInYear(year2), 10) === 5 ? 30 : (
+        month === 8 && mod5(this.daysInYear(year2), 10) === 5 ? 30 : (
           // Cheshvan in shlemah year
-          month2 === 9 && mod5(this.daysInYear(year2), 10) === 3 ? 29 : (
+          month === 9 && mod5(this.daysInYear(year2), 10) === 3 ? 29 : (
             // Kislev in chaserah year
-            this.daysPerMonth[month2 - 1]
+            this.daysPerMonth[month - 1]
           )
         )
       );
@@ -82747,8 +79416,8 @@ var Plotly = (() => {
         @param [day] {number} The day to examine.
         @return {boolean} <code>true</code> if a week day, <code>false</code> if not.
         @throws Error if an invalid date or a different calendar used. */
-    weekDay: function(year2, month2, day2) {
-      return this.dayOfWeek(year2, month2, day2) !== 6;
+    weekDay: function(year2, month, day2) {
+      return this.dayOfWeek(year2, month, day2) !== 6;
     },
     /** Retrieve additional information about a date - year type.
         @memberof HebrewCalendar
@@ -82757,8 +79426,8 @@ var Plotly = (() => {
         @param [day] {number} The day to examine.
         @return {object} Additional information - contents depends on calendar.
         @throws Error if an invalid date or a different calendar used. */
-    extraInfo: function(year2, month2, day2) {
-      var date = this._validate(year2, month2, day2, main6.local.invalidDate);
+    extraInfo: function(year2, month, day2) {
+      var date = this._validate(year2, month, day2, main6.local.invalidDate);
       return { yearType: (this.leapYear(date) ? "embolismic" : "common") + " " + ["deficient", "regular", "complete"][this.daysInYear(date) % 10 - 3] };
     },
     /** Retrieve the Julian date equivalent for this date,
@@ -82769,22 +79438,22 @@ var Plotly = (() => {
         @param [day] {number} The day to convert.
         @return {number} The equivalent Julian date.
         @throws Error if an invalid date or a different calendar used. */
-    toJD: function(year2, month2, day2) {
-      var date = this._validate(year2, month2, day2, main6.local.invalidDate);
+    toJD: function(year2, month, day2) {
+      var date = this._validate(year2, month, day2, main6.local.invalidDate);
       year2 = date.year();
-      month2 = date.month();
+      month = date.month();
       day2 = date.day();
       var adjYear = year2 <= 0 ? year2 + 1 : year2;
       var jd = this.jdEpoch + this._delay1(adjYear) + this._delay2(adjYear) + day2 + 1;
-      if (month2 < 7) {
+      if (month < 7) {
         for (var m = 7; m <= this.monthsInYear(year2); m++) {
           jd += this.daysInMonth(year2, m);
         }
-        for (var m = 1; m < month2; m++) {
+        for (var m = 1; m < month; m++) {
           jd += this.daysInMonth(year2, m);
         }
       } else {
-        for (var m = 7; m < month2; m++) {
+        for (var m = 7; m < month; m++) {
           jd += this.daysInMonth(year2, m);
         }
       }
@@ -82797,9 +79466,9 @@ var Plotly = (() => {
         @param year {number} The year to examine.
         @return {number} The days to offset by. */
     _delay1: function(year2) {
-      var months2 = Math.floor((235 * year2 - 234) / 19);
-      var parts = 12084 + 13753 * months2;
-      var day2 = months2 * 29 + Math.floor(parts / 25920);
+      var months = Math.floor((235 * year2 - 234) / 19);
+      var parts = 12084 + 13753 * months;
+      var day2 = months * 29 + Math.floor(parts / 25920);
       if (mod5(3 * (day2 + 1), 7) < 3) {
         day2++;
       }
@@ -82826,12 +79495,12 @@ var Plotly = (() => {
       while (jd >= this.toJD(year2 === -1 ? 1 : year2 + 1, 7, 1)) {
         year2++;
       }
-      var month2 = jd < this.toJD(year2, 1, 1) ? 7 : 1;
-      while (jd > this.toJD(year2, month2, this.daysInMonth(year2, month2))) {
-        month2++;
+      var month = jd < this.toJD(year2, 1, 1) ? 7 : 1;
+      while (jd > this.toJD(year2, month, this.daysInMonth(year2, month))) {
+        month++;
       }
-      var day2 = jd - this.toJD(year2, month2, 1) + 1;
-      return this.newDate(year2, month2, day2);
+      var day2 = jd - this.toJD(year2, month, 1) + 1;
+      return this.newDate(year2, month, day2);
     }
   });
   function mod5(a, b) {
@@ -82936,8 +79605,8 @@ var Plotly = (() => {
         @param [day] {number} The day to examine.
         @return {number} The week of the year.
         @throws Error if an invalid date or a different calendar used. */
-    weekOfYear: function(year2, month2, day2) {
-      var checkDate = this.newDate(year2, month2, day2);
+    weekOfYear: function(year2, month, day2) {
+      var checkDate = this.newDate(year2, month, day2);
       checkDate.add(-checkDate.dayOfWeek(), "d");
       return Math.floor((checkDate.dayOfYear() - 1) / 7) + 1;
     },
@@ -82955,8 +79624,8 @@ var Plotly = (() => {
         @param [month] {number} The month.
         @return {number} The number of days in this month.
         @throws Error if an invalid month/year or a different calendar used. */
-    daysInMonth: function(year2, month2) {
-      var date = this._validate(year2, month2, this.minDay, main7.local.invalidMonth);
+    daysInMonth: function(year2, month) {
+      var date = this._validate(year2, month, this.minDay, main7.local.invalidMonth);
       return this.daysPerMonth[date.month() - 1] + (date.month() === 12 && this.leapYear(date.year()) ? 1 : 0);
     },
     /** Determine whether this date is a week day.
@@ -82966,8 +79635,8 @@ var Plotly = (() => {
         @param [day] {number} The day to examine.
         @return {boolean} <code>true</code> if a week day, <code>false</code> if not.
         @throws Error if an invalid date or a different calendar used. */
-    weekDay: function(year2, month2, day2) {
-      return this.dayOfWeek(year2, month2, day2) !== 5;
+    weekDay: function(year2, month, day2) {
+      return this.dayOfWeek(year2, month, day2) !== 5;
     },
     /** Retrieve the Julian date equivalent for this date,
         i.e. days since January 1, 4713 BCE Greenwich noon.
@@ -82977,13 +79646,13 @@ var Plotly = (() => {
         @param [day] {number} The day to convert.
         @return {number} The equivalent Julian date.
         @throws Error if an invalid date or a different calendar used. */
-    toJD: function(year2, month2, day2) {
-      var date = this._validate(year2, month2, day2, main7.local.invalidDate);
+    toJD: function(year2, month, day2) {
+      var date = this._validate(year2, month, day2, main7.local.invalidDate);
       year2 = date.year();
-      month2 = date.month();
+      month = date.month();
       day2 = date.day();
       year2 = year2 <= 0 ? year2 + 1 : year2;
-      return day2 + Math.ceil(29.5 * (month2 - 1)) + (year2 - 1) * 354 + Math.floor((3 + 11 * year2) / 30) + this.jdEpoch - 1;
+      return day2 + Math.ceil(29.5 * (month - 1)) + (year2 - 1) * 354 + Math.floor((3 + 11 * year2) / 30) + this.jdEpoch - 1;
     },
     /** Create a new date from a Julian date.
         @memberof IslamicCalendar
@@ -82993,9 +79662,9 @@ var Plotly = (() => {
       jd = Math.floor(jd) + 0.5;
       var year2 = Math.floor((30 * (jd - this.jdEpoch) + 10646) / 10631);
       year2 = year2 <= 0 ? year2 - 1 : year2;
-      var month2 = Math.min(12, Math.ceil((jd - 29 - this.toJD(year2, 1, 1)) / 29.5) + 1);
-      var day2 = jd - this.toJD(year2, month2, 1) + 1;
-      return this.newDate(year2, month2, day2);
+      var month = Math.min(12, Math.ceil((jd - 29 - this.toJD(year2, 1, 1)) / 29.5) + 1);
+      var day2 = jd - this.toJD(year2, month, 1) + 1;
+      return this.newDate(year2, month, day2);
     }
   });
   main7.calendars.islamic = IslamicCalendar;
@@ -83090,8 +79759,8 @@ var Plotly = (() => {
         @param [day] {number} The day to examine.
         @return {number} The week of the year.
         @throws Error if an invalid date or a different calendar used. */
-    weekOfYear: function(year2, month2, day2) {
-      var checkDate = this.newDate(year2, month2, day2);
+    weekOfYear: function(year2, month, day2) {
+      var checkDate = this.newDate(year2, month, day2);
       checkDate.add(4 - (checkDate.dayOfWeek() || 7), "d");
       return Math.floor((checkDate.dayOfYear() - 1) / 7) + 1;
     },
@@ -83101,8 +79770,8 @@ var Plotly = (() => {
         @param [month] {number} The month.
         @return {number} The number of days in this month.
         @throws Error if an invalid month/year or a different calendar used. */
-    daysInMonth: function(year2, month2) {
-      var date = this._validate(year2, month2, this.minDay, main8.local.invalidMonth);
+    daysInMonth: function(year2, month) {
+      var date = this._validate(year2, month, this.minDay, main8.local.invalidMonth);
       return this.daysPerMonth[date.month() - 1] + (date.month() === 2 && this.leapYear(date.year()) ? 1 : 0);
     },
     /** Determine whether this date is a week day.
@@ -83112,8 +79781,8 @@ var Plotly = (() => {
         @param [day] {number} The day to examine.
         @return {boolean} True if a week day, false if not.
         @throws Error if an invalid date or a different calendar used. */
-    weekDay: function(year2, month2, day2) {
-      return (this.dayOfWeek(year2, month2, day2) || 7) < 6;
+    weekDay: function(year2, month, day2) {
+      return (this.dayOfWeek(year2, month, day2) || 7) < 6;
     },
     /** Retrieve the Julian date equivalent for this date,
         i.e. days since January 1, 4713 BCE Greenwich noon.
@@ -83123,19 +79792,19 @@ var Plotly = (() => {
         @param [day] {number} The day to convert.
         @return {number} The equivalent Julian date.
         @throws Error if an invalid date or a different calendar used. */
-    toJD: function(year2, month2, day2) {
-      var date = this._validate(year2, month2, day2, main8.local.invalidDate);
+    toJD: function(year2, month, day2) {
+      var date = this._validate(year2, month, day2, main8.local.invalidDate);
       year2 = date.year();
-      month2 = date.month();
+      month = date.month();
       day2 = date.day();
       if (year2 < 0) {
         year2++;
       }
-      if (month2 <= 2) {
+      if (month <= 2) {
         year2--;
-        month2 += 12;
+        month += 12;
       }
-      return Math.floor(365.25 * (year2 + 4716)) + Math.floor(30.6001 * (month2 + 1)) + day2 - 1524.5;
+      return Math.floor(365.25 * (year2 + 4716)) + Math.floor(30.6001 * (month + 1)) + day2 - 1524.5;
     },
     /** Create a new date from a Julian date.
         @memberof JulianCalendar
@@ -83147,13 +79816,13 @@ var Plotly = (() => {
       var c = Math.floor((b - 122.1) / 365.25);
       var d = Math.floor(365.25 * c);
       var e = Math.floor((b - d) / 30.6001);
-      var month2 = e - Math.floor(e < 14 ? 1 : 13);
-      var year2 = c - Math.floor(month2 > 2 ? 4716 : 4715);
+      var month = e - Math.floor(e < 14 ? 1 : 13);
+      var year2 = c - Math.floor(month > 2 ? 4716 : 4715);
       var day2 = b - d - Math.floor(30.6001 * e);
       if (year2 <= 0) {
         year2--;
       }
-      return this.newDate(year2, month2, day2);
+      return this.newDate(year2, month, day2);
     }
   });
   main8.calendars.julian = JulianCalendar;
@@ -83420,8 +80089,8 @@ var Plotly = (() => {
         @param [day] {number} The day to examine.
         @return {number} The week of the year.
         @throws Error if an invalid date or a different calendar used. */
-    weekOfYear: function(year2, month2, day2) {
-      this._validate(year2, month2, day2, main9.local.invalidDate);
+    weekOfYear: function(year2, month, day2) {
+      this._validate(year2, month, day2, main9.local.invalidDate);
       return 0;
     },
     /** Retrieve the number of days in a year.
@@ -83439,8 +80108,8 @@ var Plotly = (() => {
         @param [month] {number} The month.
         @return {number} The number of days in this month.
         @throws Error if an invalid month/year or a different calendar used. */
-    daysInMonth: function(year2, month2) {
-      this._validate(year2, month2, this.minDay, main9.local.invalidMonth);
+    daysInMonth: function(year2, month) {
+      this._validate(year2, month, this.minDay, main9.local.invalidMonth);
       return 20;
     },
     /** Retrieve the number of days in a week.
@@ -83456,8 +80125,8 @@ var Plotly = (() => {
         @param [day] {number} The day to examine.
         @return {number} The day of the week: 0 to number of days - 1.
         @throws Error if an invalid date or a different calendar used. */
-    dayOfWeek: function(year2, month2, day2) {
-      var date = this._validate(year2, month2, day2, main9.local.invalidDate);
+    dayOfWeek: function(year2, month, day2) {
+      var date = this._validate(year2, month, day2, main9.local.invalidDate);
       return date.day();
     },
     /** Determine whether this date is a week day.
@@ -83467,8 +80136,8 @@ var Plotly = (() => {
         @param [day] {number} The day to examine.
         @return {boolean} <code>true</code> if a week day, <code>false</code> if not.
         @throws Error if an invalid date or a different calendar used. */
-    weekDay: function(year2, month2, day2) {
-      this._validate(year2, month2, day2, main9.local.invalidDate);
+    weekDay: function(year2, month, day2) {
+      this._validate(year2, month, day2, main9.local.invalidDate);
       return true;
     },
     /** Retrieve additional information about a date - Haab and Tzolkin equivalents.
@@ -83478,8 +80147,8 @@ var Plotly = (() => {
         @param [day] {number} The day to examine.
         @return {object} Additional information - contents depends on calendar.
         @throws Error if an invalid date or a different calendar used. */
-    extraInfo: function(year2, month2, day2) {
-      var date = this._validate(year2, month2, day2, main9.local.invalidDate);
+    extraInfo: function(year2, month, day2) {
+      var date = this._validate(year2, month, day2, main9.local.invalidDate);
       var jd = date.toJD();
       var haab = this._toHaab(jd);
       var tzolkin = this._toTzolkin(jd);
@@ -83519,8 +80188,8 @@ var Plotly = (() => {
         @param [day] {number} The day to convert.
         @return {number} The equivalent Julian date.
         @throws Error if an invalid date or a different calendar used. */
-    toJD: function(year2, month2, day2) {
-      var date = this._validate(year2, month2, day2, main9.local.invalidDate);
+    toJD: function(year2, month, day2) {
+      var date = this._validate(year2, month, day2, main9.local.invalidDate);
       return date.day() + date.month() * 20 + date.year() * 360 + this.jdEpoch;
     },
     /** Create a new date from a Julian date.
@@ -83532,9 +80201,9 @@ var Plotly = (() => {
       var year2 = Math.floor(jd / 360);
       jd = jd % 360;
       jd += jd < 0 ? 360 : 0;
-      var month2 = Math.floor(jd / 20);
+      var month = Math.floor(jd / 20);
       var day2 = jd % 20;
-      return this.newDate(year2, month2, day2);
+      return this.newDate(year2, month, day2);
     }
   });
   function mod6(a, b) {
@@ -83640,8 +80309,8 @@ var Plotly = (() => {
         @param [day] {number} The day to examine.
         @return {number} The week of the year.
         @throws Error if an invalid date or a different calendar used. */
-    weekOfYear: function(year2, month2, day2) {
-      var checkDate = this.newDate(year2, month2, day2);
+    weekOfYear: function(year2, month, day2) {
+      var checkDate = this.newDate(year2, month, day2);
       checkDate.add(1 - (checkDate.dayOfWeek() || 7), "d");
       return Math.floor((checkDate.dayOfYear() - 1) / 7) + 1;
     },
@@ -83651,8 +80320,8 @@ var Plotly = (() => {
         @param [month] {number} The month.
         @return {number} The number of days in this month.
         @throws Error if an invalid month/year or a different calendar used. */
-    daysInMonth: function(year2, month2) {
-      var date = this._validate(year2, month2, this.minDay, main10.local.invalidMonth);
+    daysInMonth: function(year2, month) {
+      var date = this._validate(year2, month, this.minDay, main10.local.invalidMonth);
       return this.daysPerMonth[date.month() - 1] + (date.month() === 12 && this.leapYear(date.year()) ? 1 : 0);
     },
     /** Determine whether this date is a week day.
@@ -83662,8 +80331,8 @@ var Plotly = (() => {
         @param [day] {number} The day to examine.
         @return {boolean} <code>true</code> if a week day, <code>false</code> if not.
         @throws Error if an invalid date or a different calendar used. */
-    weekDay: function(year2, month2, day2) {
-      return (this.dayOfWeek(year2, month2, day2) || 7) < 6;
+    weekDay: function(year2, month, day2) {
+      return (this.dayOfWeek(year2, month, day2) || 7) < 6;
     },
     /** Retrieve the Julian date equivalent for this date,
         i.e. days since January 1, 4713 BCE Greenwich noon.
@@ -83673,8 +80342,8 @@ var Plotly = (() => {
         @param [day] {number} The day to convert.
         @return {number} The equivalent Julian date.
         @throws Error if an invalid date or a different calendar used. */
-    toJD: function(year2, month2, day2) {
-      var date = this._validate(year2, month2, day2, main10.local.invalidMonth);
+    toJD: function(year2, month, day2) {
+      var date = this._validate(year2, month, day2, main10.local.invalidMonth);
       var year2 = date.year();
       if (year2 < 0) {
         year2++;
@@ -83696,12 +80365,12 @@ var Plotly = (() => {
         year2++;
       }
       var day2 = jd - Math.floor(this.toJD(year2, 1, 1) + 0.5) + 1;
-      var month2 = 1;
-      while (day2 > this.daysInMonth(year2, month2)) {
-        day2 -= this.daysInMonth(year2, month2);
-        month2++;
+      var month = 1;
+      while (day2 > this.daysInMonth(year2, month)) {
+        day2 -= this.daysInMonth(year2, month);
+        month++;
       }
-      return this.newDate(year2, month2, day2);
+      return this.newDate(year2, month, day2);
     }
   });
   main10.calendars.nanakshahi = NanakshahiCalendar;
@@ -83797,8 +80466,8 @@ var Plotly = (() => {
         @param [day] {number} The day to examine.
         @return {number} The week of the year.
         @throws Error if an invalid date or a different calendar used. */
-    weekOfYear: function(year2, month2, day2) {
-      var checkDate = this.newDate(year2, month2, day2);
+    weekOfYear: function(year2, month, day2) {
+      var checkDate = this.newDate(year2, month, day2);
       checkDate.add(-checkDate.dayOfWeek(), "d");
       return Math.floor((checkDate.dayOfYear() - 1) / 7) + 1;
     },
@@ -83825,13 +80494,13 @@ var Plotly = (() => {
         @param [month] {number} The month.
         @return {number} The number of days in this month.
         @throws Error if an invalid month/year or a different calendar used. */
-    daysInMonth: function(year2, month2) {
+    daysInMonth: function(year2, month) {
       if (year2.year) {
-        month2 = year2.month();
+        month = year2.month();
         year2 = year2.year();
       }
-      this._validate(year2, month2, this.minDay, main11.local.invalidMonth);
-      return typeof this.NEPALI_CALENDAR_DATA[year2] === "undefined" ? this.daysPerMonth[month2 - 1] : this.NEPALI_CALENDAR_DATA[year2][month2];
+      this._validate(year2, month, this.minDay, main11.local.invalidMonth);
+      return typeof this.NEPALI_CALENDAR_DATA[year2] === "undefined" ? this.daysPerMonth[month - 1] : this.NEPALI_CALENDAR_DATA[year2][month];
     },
     /** Determine whether this date is a week day.
         @memberof NepaliCalendar
@@ -83840,8 +80509,8 @@ var Plotly = (() => {
         @param [day] {number} The day to examine.
         @return {boolean} <code>true</code> if a week day, <code>false</code> if not.
         @throws Error if an invalid date or a different calendar used. */
-    weekDay: function(year2, month2, day2) {
-      return this.dayOfWeek(year2, month2, day2) !== 6;
+    weekDay: function(year2, month, day2) {
+      return this.dayOfWeek(year2, month, day2) !== 6;
     },
     /** Retrieve the Julian date equivalent for this date,
         i.e. days since January 1, 4713 BCE Greenwich noon.
@@ -84160,8 +80829,8 @@ var Plotly = (() => {
         @param [day] {number} The day to examine.
         @return {number} The week of the year.
         @throws Error if an invalid date or a different calendar used. */
-    weekOfYear: function(year2, month2, day2) {
-      var checkDate = this.newDate(year2, month2, day2);
+    weekOfYear: function(year2, month, day2) {
+      var checkDate = this.newDate(year2, month, day2);
       checkDate.add(-((checkDate.dayOfWeek() + 1) % 7), "d");
       return Math.floor((checkDate.dayOfYear() - 1) / 7) + 1;
     },
@@ -84171,8 +80840,8 @@ var Plotly = (() => {
         @param [month] {number} The month.
         @return {number} The number of days in this month.
         @throws Error if an invalid month/year or a different calendar used. */
-    daysInMonth: function(year2, month2) {
-      var date = this._validate(year2, month2, this.minDay, main12.local.invalidMonth);
+    daysInMonth: function(year2, month) {
+      var date = this._validate(year2, month, this.minDay, main12.local.invalidMonth);
       return this.daysPerMonth[date.month() - 1] + (date.month() === 12 && this.leapYear(date.year()) ? 1 : 0);
     },
     /** Determine whether this date is a week day.
@@ -84182,8 +80851,8 @@ var Plotly = (() => {
         @param [day] {number} The day to examine.
         @return {boolean} <code>true</code> if a week day, <code>false</code> if not.
         @throws Error if an invalid date or a different calendar used. */
-    weekDay: function(year2, month2, day2) {
-      return this.dayOfWeek(year2, month2, day2) !== 5;
+    weekDay: function(year2, month, day2) {
+      return this.dayOfWeek(year2, month, day2) !== 5;
     },
     /** Retrieve the Julian date equivalent for this date,
         i.e. days since January 1, 4713 BCE Greenwich noon.
@@ -84193,10 +80862,10 @@ var Plotly = (() => {
         @param [day] {number} The day to convert.
         @return {number} The equivalent Julian date.
         @throws Error if an invalid date or a different calendar used. */
-    toJD: function(year2, month2, day2) {
-      var date = this._validate(year2, month2, day2, main12.local.invalidDate);
+    toJD: function(year2, month, day2) {
+      var date = this._validate(year2, month, day2, main12.local.invalidDate);
       year2 = date.year();
-      month2 = date.month();
+      month = date.month();
       day2 = date.day();
       var nLeapYearsSince = 0;
       if (year2 > 0) {
@@ -84208,7 +80877,7 @@ var Plotly = (() => {
           if (_leapYear(i)) nLeapYearsSince--;
         }
       }
-      return day2 + (month2 <= 7 ? (month2 - 1) * 31 : (month2 - 1) * 30 + 6) + (year2 > 0 ? year2 - 1 : year2) * 365 + nLeapYearsSince + this.jdEpoch - 1;
+      return day2 + (month <= 7 ? (month - 1) * 31 : (month - 1) * 30 + 6) + (year2 > 0 ? year2 - 1 : year2) * 365 + nLeapYearsSince + this.jdEpoch - 1;
     },
     /** Create a new date from a Julian date.
         @memberof PersianCalendar
@@ -84224,9 +80893,9 @@ var Plotly = (() => {
         if (year2 === 0) year2++;
       }
       var yday = jd - this.toJD(year2, 1, 1) + 1;
-      var month2 = yday <= 186 ? Math.ceil(yday / 31) : Math.ceil((yday - 6) / 30);
-      var day2 = jd - this.toJD(year2, month2, 1) + 1;
-      return this.newDate(year2, month2, day2);
+      var month = yday <= 186 ? Math.ceil(yday / 31) : Math.ceil((yday - 6) / 30);
+      var day2 = jd - this.toJD(year2, month, 1) + 1;
+      return this.newDate(year2, month, day2);
     }
   });
   main12.calendars.persian = PersianCalendar;
@@ -84326,7 +80995,7 @@ var Plotly = (() => {
         @param [day] {number} The day to examine.
         @return {number} The week of the year.
         @throws Error if an invalid date or a different calendar used. */
-    weekOfYear: function(year2, month2, day2) {
+    weekOfYear: function(year2, month, day2) {
       var date = this._validate(year2, this.minMonth, this.minDay, main13.local.invalidYear);
       var year2 = this._t2gYear(date.year());
       return gregorianCalendar2.weekOfYear(year2, date.month(), date.day());
@@ -84337,8 +81006,8 @@ var Plotly = (() => {
         @param [month] {number} The month.
         @return {number} The number of days in this month.
         @throws Error if an invalid month/year or a different calendar used. */
-    daysInMonth: function(year2, month2) {
-      var date = this._validate(year2, month2, this.minDay, main13.local.invalidMonth);
+    daysInMonth: function(year2, month) {
+      var date = this._validate(year2, month, this.minDay, main13.local.invalidMonth);
       return this.daysPerMonth[date.month() - 1] + (date.month() === 2 && this.leapYear(date.year()) ? 1 : 0);
     },
     /** Determine whether this date is a week day.
@@ -84348,8 +81017,8 @@ var Plotly = (() => {
         @param [day] {number} The day to examine.
         @return {boolean} <code>true</code> if a week day, <code>false</code> if not.
         @throws Error if an invalid date or a different calendar used. */
-    weekDay: function(year2, month2, day2) {
-      return (this.dayOfWeek(year2, month2, day2) || 7) < 6;
+    weekDay: function(year2, month, day2) {
+      return (this.dayOfWeek(year2, month, day2) || 7) < 6;
     },
     /** Retrieve the Julian date equivalent for this date,
         i.e. days since January 1, 4713 BCE Greenwich noon.
@@ -84359,8 +81028,8 @@ var Plotly = (() => {
         @param [day] {number} The day to convert.
         @return {number} The equivalent Julian date.
         @throws Error if an invalid date or a different calendar used. */
-    toJD: function(year2, month2, day2) {
-      var date = this._validate(year2, month2, day2, main13.local.invalidDate);
+    toJD: function(year2, month, day2) {
+      var date = this._validate(year2, month, day2, main13.local.invalidDate);
       var year2 = this._t2gYear(date.year());
       return gregorianCalendar2.toJD(year2, date.month(), date.day());
     },
@@ -84486,7 +81155,7 @@ var Plotly = (() => {
         @param [day] {number} The day to examine.
         @return {number} The week of the year.
         @throws Error if an invalid date or a different calendar used. */
-    weekOfYear: function(year2, month2, day2) {
+    weekOfYear: function(year2, month, day2) {
       var date = this._validate(year2, this.minMonth, this.minDay, main14.local.invalidYear);
       var year2 = this._t2gYear(date.year());
       return gregorianCalendar3.weekOfYear(year2, date.month(), date.day());
@@ -84497,8 +81166,8 @@ var Plotly = (() => {
         @param [month] {number} The month.
         @return {number} The number of days in this month.
         @throws Error if an invalid month/year or a different calendar used. */
-    daysInMonth: function(year2, month2) {
-      var date = this._validate(year2, month2, this.minDay, main14.local.invalidMonth);
+    daysInMonth: function(year2, month) {
+      var date = this._validate(year2, month, this.minDay, main14.local.invalidMonth);
       return this.daysPerMonth[date.month() - 1] + (date.month() === 2 && this.leapYear(date.year()) ? 1 : 0);
     },
     /** Determine whether this date is a week day.
@@ -84508,8 +81177,8 @@ var Plotly = (() => {
         @param [day] {number} The day to examine.
         @return {boolean} <code>true</code> if a week day, <code>false</code> if not.
         @throws Error if an invalid date or a different calendar used. */
-    weekDay: function(year2, month2, day2) {
-      return (this.dayOfWeek(year2, month2, day2) || 7) < 6;
+    weekDay: function(year2, month, day2) {
+      return (this.dayOfWeek(year2, month, day2) || 7) < 6;
     },
     /** Retrieve the Julian date equivalent for this date,
         i.e. days since January 1, 4713 BCE Greenwich noon.
@@ -84519,8 +81188,8 @@ var Plotly = (() => {
         @param [day] {number} The day to convert.
         @return {number} The equivalent Julian date.
         @throws Error if an invalid date or a different calendar used. */
-    toJD: function(year2, month2, day2) {
-      var date = this._validate(year2, month2, day2, main14.local.invalidDate);
+    toJD: function(year2, month, day2) {
+      var date = this._validate(year2, month, day2, main14.local.invalidDate);
       var year2 = this._t2gYear(date.year());
       return gregorianCalendar3.toJD(year2, date.month(), date.day());
     },
@@ -84636,8 +81305,8 @@ var Plotly = (() => {
         @param [day] {number} The day to examine.
         @return {number} The week of the year.
         @throws Error if an invalid date or a different calendar used. */
-    weekOfYear: function(year2, month2, day2) {
-      var checkDate = this.newDate(year2, month2, day2);
+    weekOfYear: function(year2, month, day2) {
+      var checkDate = this.newDate(year2, month, day2);
       checkDate.add(-checkDate.dayOfWeek(), "d");
       return Math.floor((checkDate.dayOfYear() - 1) / 7) + 1;
     },
@@ -84659,8 +81328,8 @@ var Plotly = (() => {
         @param [month] {number} The month.
         @return {number} The number of days in this month.
         @throws Error if an invalid month/year or a different calendar used. */
-    daysInMonth: function(year2, month2) {
-      var date = this._validate(year2, month2, this.minDay, main15.local.invalidMonth);
+    daysInMonth: function(year2, month) {
+      var date = this._validate(year2, month, this.minDay, main15.local.invalidMonth);
       var mcjdn = date.toJD() - 24e5 + 0.5;
       var index = 0;
       for (var i = 0; i < ummalqura_dat.length; i++) {
@@ -84678,8 +81347,8 @@ var Plotly = (() => {
         @param [day] {number} The day to examine.
         @return {boolean} <code>true</code> if a week day, <code>false</code> if not.
         @throws Error if an invalid date or a different calendar used. */
-    weekDay: function(year2, month2, day2) {
-      return this.dayOfWeek(year2, month2, day2) !== 5;
+    weekDay: function(year2, month, day2) {
+      return this.dayOfWeek(year2, month, day2) !== 5;
     },
     /** Retrieve the Julian date equivalent for this date,
         i.e. days since January 1, 4713 BCE Greenwich noon.
@@ -84689,8 +81358,8 @@ var Plotly = (() => {
         @param [day] {number} The day to convert.
         @return {number} The equivalent Julian date.
         @throws Error if an invalid date or a different calendar used. */
-    toJD: function(year2, month2, day2) {
-      var date = this._validate(year2, month2, day2, main15.local.invalidDate);
+    toJD: function(year2, month, day2) {
+      var date = this._validate(year2, month, day2, main15.local.invalidDate);
       var index = 12 * (date.year() - 1) + date.month() - 15292;
       var mcjdn = date.day() + ummalqura_dat[index - 1] - 1;
       return mcjdn + 24e5 - 0.5;
@@ -84709,9 +81378,9 @@ var Plotly = (() => {
       var lunation = index + 15292;
       var ii = Math.floor((lunation - 1) / 12);
       var year2 = ii + 1;
-      var month2 = lunation - 12 * ii;
+      var month = lunation - 12 * ii;
       var day2 = mcjdn - ummalqura_dat[index - 1] + 1;
-      return this.newDate(year2, month2, day2);
+      return this.newDate(year2, month, day2);
     },
     /** Determine whether a date is valid for this calendar.
         @memberof UmmAlQuraCalendar
@@ -84719,7 +81388,7 @@ var Plotly = (() => {
         @param month {number} The month to examine.
         @param day {number} The day to examine.
         @return {boolean} <code>true</code> if a valid date, <code>false</code> if not. */
-    isValid: function(year2, month2, day2) {
+    isValid: function(year2, month, day2) {
       var valid = main15.baseCalendar.prototype.isValid.apply(this, arguments);
       if (valid) {
         year2 = year2.year != null ? year2.year : year2;
@@ -84735,7 +81404,7 @@ var Plotly = (() => {
         @param day {number} The day to validate.
         @param error {string} Error message if invalid.
         @throws Error if different calendars used or invalid date. */
-    _validate: function(year2, month2, day2, error) {
+    _validate: function(year2, month, day2, error) {
       var date = main15.baseCalendar.prototype._validate.apply(this, arguments);
       if (date.year < 1276 || date.year > 1500) {
         throw error.replace(/\{0\}/, this.local.name);

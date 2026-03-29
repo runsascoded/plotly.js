@@ -1,4 +1,4 @@
-import d3 from '@plotly/d3';
+import { select } from 'd3-selection';
 import Color from '../color/index.js';
 import ARROWPATHS from './arrow_paths.js';
 import Lib from '../../lib/index.js';
@@ -99,7 +99,7 @@ export default function drawArrowHead(el3, ends, options) {
         if(!arrowHeadStyle.path) return;
         if(arrowHeadStyle.noRotate) rot = 0;
 
-        d3.select(el.parentNode).append('path')
+        select(el.parentNode).append('path')
             .attr({
                 class: el3.attr('class'),
                 d: arrowHeadStyle.path,

@@ -1,4 +1,5 @@
-import d3 from '@plotly/d3';
+import { select } from 'd3-selection';
+function d3Round(x, n) { return n ? Math.round(x * (n = Math.pow(10, n))) / n : Math.round(x); }
 import isNumeric from 'fast-isnumeric';
 import Plots from '../../plots/plots.js';
 import Registry from '../../registry.js';
@@ -201,7 +202,7 @@ function draw(gd, titleClass, options) {
         function adjustSubtitlePosition(titleElMathGroup) {
             if(!titleElMathGroup) return;
 
-            var subtitleElement = d3.select(titleElMathGroup.node().parentNode).select('.' + subtitleClass);
+            var subtitleElement = select(titleElMathGroup.node().parentNode).select('.' + subtitleClass);
             if(!subtitleElement.empty()) {
                 var titleElMathBbox = titleElMathGroup.node().getBBox();
                 if(titleElMathBbox.height) {
@@ -215,7 +216,7 @@ function draw(gd, titleClass, options) {
         titleEl.style('opacity', opacity * Color.opacity(fontColor))
         .call(Drawing.font, {
             color: Color.rgb(fontColor),
-            size: d3.round(fontSize, 2),
+            size: d3Round(fontSize, 2),
             family: fontFamily,
             weight: fontWeight,
             style: fontStyle,
@@ -244,7 +245,7 @@ function draw(gd, titleClass, options) {
             subtitleEl.style('opacity', subtitleOpacity * Color.opacity(subFontColor))
             .call(Drawing.font, {
                 color: Color.rgb(subFontColor),
-                size: d3.round(subFontSize, 2),
+                size: d3Round(subFontSize, 2),
                 family: subFontFamily,
                 weight: subFontWeight,
                 style: subFontStyle,
@@ -262,7 +263,7 @@ function draw(gd, titleClass, options) {
 
     function scootTitle(titleAndSubtitleEls) {
         var titleElIn = titleAndSubtitleEls.title;
-        var titleGroup = d3.select(titleElIn.node().parentNode);
+        var titleGroup = select(titleElIn.node().parentNode);
 
         if(avoid && avoid.selection && avoid.side && txt) {
             titleGroup.attr('transform', null);
@@ -340,11 +341,11 @@ function draw(gd, titleClass, options) {
     function setPlaceholder(element, placeholderText) {
         element.text(placeholderText)
             .on('mouseover.opacity', function() {
-                d3.select(this).transition()
+                select(this).transition()
                     .duration(interactConstants.SHOW_PLACEHOLDER).style('opacity', 1);
             })
             .on('mouseout.opacity', function() {
-                d3.select(this).transition()
+                select(this).transition()
                     .duration(interactConstants.HIDE_PLACEHOLDER).style('opacity', 0);
             });
     }

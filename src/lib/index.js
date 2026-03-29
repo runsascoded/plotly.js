@@ -1,4 +1,4 @@
-import d3 from '@plotly/d3';
+import { selection } from 'd3-selection';
 import { utcFormat } from 'd3-time-format';
 import { format as d3Format } from 'd3-format';
 import isNumeric from 'fast-isnumeric';
@@ -792,7 +792,7 @@ lib.getFirefoxVersion = function () {
 };
 
 lib.isD3Selection = function (obj) {
-    return obj instanceof d3.selection;
+    return obj instanceof selection;
 };
 
 /**
@@ -1421,12 +1421,12 @@ var isProblematicFirefox = firefoxVersion !== null && firefoxVersion < 86;
  * @returns An array with two numbers, representing the x and y coordinates of the mouse pointer
  *   at the event relative to the targeted node.
  */
-lib.getPositionFromD3Event = function () {
+lib.getPositionFromD3Event = function (event) {
     if (isProblematicFirefox) {
         // layerX and layerY are non-standard, so we only fallback to them when we have to:
-        return [d3.event.layerX, d3.event.layerY];
+        return [event.layerX, event.layerY];
     } else {
-        return [d3.event.offsetX, d3.event.offsetY];
+        return [event.offsetX, event.offsetY];
     }
 };
 

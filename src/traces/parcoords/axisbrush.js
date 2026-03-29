@@ -1,5 +1,8 @@
 import c from './constants.js';
-import d3 from '@plotly/d3';
+import { select } from 'd3-selection';
+import { pointer } from 'd3-selection';
+import { zoom as d3Zoom } from 'd3-zoom';
+import { drag as d3Drag } from 'd3-drag';
 import _gup from '../../lib/gup.js';
 const { keyFun, repeat } = _gup;
 import _index from '../../lib/index.js';
@@ -109,7 +112,7 @@ function getRegion(fPix, y) {
 }
 
 function clearCursor() {
-    d3.select(document.body)
+    select(document.body)
         .style('cursor', null);
 }
 
@@ -122,8 +125,8 @@ function styleHighlight(selection) {
 }
 
 function renderHighlight(root, tweenCallback) {
-    var bar = d3.select(root).selectAll('.highlight, .highlight-shadow');
-    var barToStyle = tweenCallback ? bar.transition().duration(c.bar.snapDuration).each('end', tweenCallback) : bar;
+    var bar = select(root).selectAll('.highlight, .highlight-shadow');
+    var barToStyle = tweenCallback ? bar.transition().duration(c.bar.snapDuration).on('end', tweenCallback) : bar;
     styleHighlight(barToStyle);
 }
 
@@ -198,8 +201,8 @@ function getInterval(d, y) {
 }
 
 function dragstart(lThis, d) {
-    d3.event.sourceEvent.stopPropagation();
-    var y = d.height - d3.mouse(lThis)[1] - 2 * c.verticalPadding;
+    event.sourceEvent.stopPropagation();
+    var y = d.height - pointer(event, lThis)[1] - 2 * c.verticalPadding;
     var unitLocation = d.unitToPaddedPx.invert(y);
     var b = d.brush;
     var interval = getInterval(d, y);
@@ -225,8 +228,8 @@ function dragstart(lThis, d) {
 }
 
 function drag(lThis, d) {
-    d3.event.sourceEvent.stopPropagation();
-    var y = d.height - d3.mouse(lThis)[1] - 2 * c.verticalPadding;
+    event.sourceEvent.stopPropagation();
+    var y = d.height - pointer(event, lThis)[1] - 2 * c.verticalPadding;
     var s = d.brush.svgBrush;
     s.wasDragged = true;
     s._dragging = true;
@@ -257,7 +260,7 @@ function dragend(lThis, d) {
     }
     s._dragging = false;
 
-    var e = d3.event;
+    var e = event;
     e.sourceEvent.stopPropagation();
     var grabbingBar = s.grabbingBar;
     s.grabbingBar = false;
@@ -321,13 +324,13 @@ function dragend(lThis, d) {
 }
 
 function mousemove(lThis, d) {
-    var y = d.height - d3.mouse(lThis)[1] - 2 * c.verticalPadding;
+    var y = d.height - pointer(event, lThis)[1] - 2 * c.verticalPadding;
     var interval = getInterval(d, y);
 
     var cursor = 'crosshair';
     if(interval.clickableOrdinalRange) cursor = 'pointer';
     else if(interval.region) cursor = interval.region + '-resize';
-    d3.select(document.body)
+    select(document.body)
         .style('cursor', cursor);
 }
 
@@ -336,17 +339,17 @@ function attachDragBehavior(selection) {
     // even if the cursor strays from the interacting bar, which is bound to happen as bars are thin and the user
     // will inevitably leave the hotspot strip. In this regard, it does something similar to what the D3 brush would do.
     selection
-        .on('mousemove', function(d) {
-            d3.event.preventDefault();
+        .on('mousemove', function(event) {
+            event.preventDefault();
             if(!d.parent.inBrushDrag) mousemove(this, d);
         })
-        .on('mouseleave', function(d) {
+        .on('mouseleave', function(event) {
             if(!d.parent.inBrushDrag) clearCursor();
         })
-        .call(d3.behavior.drag()
-            .on('dragstart', function(d) { dragstart(this, d); })
-            .on('drag', function(d) { drag(this, d); })
-            .on('dragend', function(d) { dragend(this, d); })
+        .call(d3Drag()
+            .on('start', function(event) { dragstart(this, d); })
+            .on('drag', function(event) { drag(this, d); })
+            .on('end', function(event) { dragend(this, d); })
         );
 }
 

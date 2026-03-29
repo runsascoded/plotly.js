@@ -1,4 +1,4 @@
-import d3 from '@plotly/d3';
+import { select } from 'd3-selection';
 import Plots from '../../plots/plots.js';
 import Fx from '../../components/fx/index.js';
 import Color from '../../components/color/index.js';
@@ -29,7 +29,7 @@ function plot(gd, cdModule) {
     layoutAreas(cdModule, gs);
 
     var plotGroups = Lib.makeTraceGroups(fullLayout._pielayer, cdModule, 'trace').each(function (cd) {
-        var plotGroup = d3.select(this);
+        var plotGroup = select(this);
         var cd0 = cd[0];
         var trace = cd0.trace;
 
@@ -40,7 +40,7 @@ function plot(gd, cdModule) {
         plotGroup.attr('stroke-linejoin', 'round');
 
         plotGroup.each(function () {
-            var slices = d3.select(this).selectAll('g.slice').data(cd);
+            var slices = select(this).selectAll('g.slice').data(cd);
 
             slices.enter().append('g').classed('slice', true);
             slices.exit().remove();
@@ -53,7 +53,7 @@ function plot(gd, cdModule) {
 
             slices.each(function (pt, i) {
                 if (pt.hidden) {
-                    d3.select(this).selectAll('path,g').remove();
+                    select(this).selectAll('path,g').remove();
                     return;
                 }
 
@@ -65,7 +65,7 @@ function plot(gd, cdModule) {
 
                 var cx = cd0.cx;
                 var cy = cd0.cy;
-                var sliceTop = d3.select(this);
+                var sliceTop = select(this);
                 var slicePath = sliceTop.selectAll('path.surface').data([pt]);
 
                 slicePath
@@ -164,7 +164,7 @@ function plot(gd, cdModule) {
                 sliceTextGroup.exit().remove();
 
                 sliceTextGroup.each(function () {
-                    var sliceText = Lib.ensureSingle(d3.select(this), 'text', '', function (s) {
+                    var sliceText = Lib.ensureSingle(select(this), 'text', '', function (s) {
                         // prohibit tex interpretation until we can handle
                         // tex and regular text together
                         s.attr('data-notex', 1);
@@ -231,8 +231,7 @@ function plot(gd, cdModule) {
             });
 
             // add the title
-            var titleTextGroup = d3
-                .select(this)
+            var titleTextGroup = select(this)
                 .selectAll('g.titletext')
                 .data(trace.title.text ? [0] : []);
 
@@ -240,7 +239,7 @@ function plot(gd, cdModule) {
             titleTextGroup.exit().remove();
 
             titleTextGroup.each(function () {
-                var titleText = Lib.ensureSingle(d3.select(this), 'text', '', function (s) {
+                var titleText = Lib.ensureSingle(select(this), 'text', '', function (s) {
                     // prohibit tex interpretation as above
                     s.attr('data-notex', 1);
                 });
@@ -316,7 +315,7 @@ function plot(gd, cdModule) {
     // it gets the initial draw correct but on redraw it gets confused.
     setTimeout(function () {
         plotGroups.selectAll('tspan').each(function () {
-            var s = d3.select(this);
+            var s = select(this);
             if (s.attr('dy')) s.attr('dy', s.attr('dy'));
         });
     }, 0);
@@ -325,7 +324,7 @@ function plot(gd, cdModule) {
 // TODO add support for transition
 function plotTextLines(slices, trace) {
     slices.each(function (pt) {
-        var sliceTop = d3.select(this);
+        var sliceTop = select(this);
 
         if (!pt.labelExtraX && !pt.labelExtraY) {
             sliceTop.select('path.textline').remove();
@@ -482,20 +481,20 @@ function attachFxHandlers(sliceTop, gd, cd) {
         trace._hasHoverEvent = true;
         gd.emit('plotly_hover', {
             points: [eventData(pt, trace2)],
-            event: d3.event
+            event: event
         });
     });
 
     sliceTop.on('mouseout', function (evt) {
         var fullLayout2 = gd._fullLayout;
         var trace2 = gd._fullData[trace.index];
-        var pt = d3.select(this).datum();
+        var pt = select(this).datum();
 
         if (trace._hasHoverEvent) {
-            evt.originalEvent = d3.event;
+            evt.originalEvent = event;
             gd.emit('plotly_unhover', {
                 points: [eventData(pt, trace2)],
-                event: d3.event
+                event: event
             });
             trace._hasHoverEvent = false;
         }
@@ -518,7 +517,7 @@ function attachFxHandlers(sliceTop, gd, cd) {
         if (gd._dragging || fullLayout2.hovermode === false) return;
 
         gd._hoverdata = [eventData(pt, trace2)];
-        Fx.click(gd, d3.event);
+        Fx.click(gd, event);
     });
 }
 

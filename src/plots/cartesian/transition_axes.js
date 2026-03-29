@@ -1,4 +1,4 @@
-import d3 from '@plotly/d3';
+import * as d3Ease from 'd3-ease';
 import Registry from '../../registry.js';
 import Lib from '../../lib/index.js';
 import Drawing from '../../components/drawing/index.js';
@@ -151,7 +151,8 @@ export default function transitionAxes(gd, edits, transitionOpts, makeOnComplete
     }
 
     var t1, t2, raf;
-    var easeFn = d3.ease(transitionOpts.easing);
+    var easeMap = { linear: d3Ease.easeLinear, cubic: d3Ease.easeCubic, 'cubic-in-out': d3Ease.easeCubicInOut, sin: d3Ease.easeSin, exp: d3Ease.easeExp, circle: d3Ease.easeCircle, elastic: d3Ease.easeElastic, back: d3Ease.easeBack, bounce: d3Ease.easeBounce };
+    var easeFn = easeMap[transitionOpts.easing] || d3Ease.easeCubic;
 
     gd._transitionData._interruptCallbacks.push(function() {
         window.cancelAnimationFrame(raf);

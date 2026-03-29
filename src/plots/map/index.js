@@ -1,7 +1,7 @@
 import Lib from '../../lib/index.js';
 import { getSubplotCalcData } from '../get_data.js';
 import xmlnsNamespaces from '../../constants/xmlns_namespaces.js';
-import d3 from '@plotly/d3';
+import { select } from 'd3-selection';
 import Drawing from '../../components/drawing/index.js';
 import svgTextUtils from '../../lib/svg_text_utils.js';
 import Map from './map.js';
@@ -98,7 +98,7 @@ export var toSVG = function(gd) {
             preserveAspectRatio: 'none'
         });
 
-        var subplotDiv = d3.select(opts._subplot.div);
+        var subplotDiv = select(opts._subplot.div);
 
         // Add attributions
         var attributions = subplotDiv

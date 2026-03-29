@@ -1,4 +1,4 @@
-import d3 from '@plotly/d3';
+import { select } from 'd3-selection';
 import Lib from '../../lib/index.js';
 import render from './render.js';
 import Fx from '../../components/fx/index.js';
@@ -16,16 +16,16 @@ function ownTrace(selection, d) {
 }
 
 function makeTranslucent(element, alpha) {
-    d3.select(element)
+    select(element)
         .select('path')
         .style('fill-opacity', alpha);
-    d3.select(element)
+    select(element)
         .select('rect')
         .style('fill-opacity', alpha);
 }
 
 function makeTextContrasty(element) {
-    d3.select(element)
+    select(element)
         .select('text.name')
         .style('fill', 'black');
 }
@@ -153,18 +153,18 @@ export default function plot(gd, calcData) {
 
     var linkSelect = function(element, d) {
         var evt = d.link;
-        evt.originalEvent = d3.event;
+        evt.originalEvent = event;
         gd._hoverdata = [evt];
         Fx.click(gd, { target: true });
     };
 
     var linkHover = function(element, d, sankey) {
         if(gd._fullLayout.hovermode === false) return;
-        d3.select(element).call(linkHoveredStyle.bind(0, d, sankey, true));
+        select(element).call(linkHoveredStyle.bind(0, d, sankey, true));
         if(d.link.trace.link.hoverinfo !== 'skip') {
             d.link.fullData = d.link.trace;
             gd.emit('plotly_hover', {
-                event: d3.event,
+                event: event,
                 points: [d.link]
             });
         }
@@ -233,7 +233,7 @@ export default function plot(gd, calcData) {
                 fontShadow: castHoverOption(obj, 'font.shadow'),
                 nameLength: castHoverOption(obj, 'namelength'),
                 textAlign: castHoverOption(obj, 'align'),
-                idealAlign: d3.event.x < hoverCenter[0] ? 'right' : 'left',
+                idealAlign: event.x < hoverCenter[0] ? 'right' : 'left',
 
                 hovertemplate: obj.hovertemplate,
                 hovertemplateLabels: hovertemplateLabels,
@@ -259,11 +259,11 @@ export default function plot(gd, calcData) {
 
     var linkUnhover = function(element, d, sankey) {
         if(gd._fullLayout.hovermode === false) return;
-        d3.select(element).call(linkNonHoveredStyle.bind(0, d, sankey, true));
+        select(element).call(linkNonHoveredStyle.bind(0, d, sankey, true));
         if(d.link.trace.link.hoverinfo !== 'skip') {
             d.link.fullData = d.link.trace;
             gd.emit('plotly_unhover', {
-                event: d3.event,
+                event: event,
                 points: [d.link]
             });
         }
@@ -273,19 +273,19 @@ export default function plot(gd, calcData) {
 
     var nodeSelect = function(element, d, sankey) {
         var evt = d.node;
-        evt.originalEvent = d3.event;
+        evt.originalEvent = event;
         gd._hoverdata = [evt];
-        d3.select(element).call(nodeNonHoveredStyle, d, sankey);
+        select(element).call(nodeNonHoveredStyle, d, sankey);
         Fx.click(gd, { target: true });
     };
 
     var nodeHover = function(element, d, sankey) {
         if(gd._fullLayout.hovermode === false) return;
-        d3.select(element).call(nodeHoveredStyle, d, sankey);
+        select(element).call(nodeHoveredStyle, d, sankey);
         if(d.node.trace.node.hoverinfo !== 'skip') {
             d.node.fullData = d.node.trace;
             gd.emit('plotly_hover', {
-                event: d3.event,
+                event: event,
                 points: [d.node]
             });
         }
@@ -296,7 +296,7 @@ export default function plot(gd, calcData) {
 
         var obj = d.node.trace.node;
         if(obj.hoverinfo === 'none' || obj.hoverinfo === 'skip') return;
-        var nodeRect = d3.select(element).select('.' + cn.nodeRect);
+        var nodeRect = select(element).select('.' + cn.nodeRect);
         var rootBBox = gd._fullLayout._paperdiv.node().getBoundingClientRect();
         var boundingBox = nodeRect.node().getBoundingClientRect();
         var hoverCenterX0 = boundingBox.left - 2 - rootBBox.left;
@@ -350,11 +350,11 @@ export default function plot(gd, calcData) {
 
     var nodeUnhover = function(element, d, sankey) {
         if(gd._fullLayout.hovermode === false) return;
-        d3.select(element).call(nodeNonHoveredStyle, d, sankey);
+        select(element).call(nodeNonHoveredStyle, d, sankey);
         if(d.node.trace.node.hoverinfo !== 'skip') {
             d.node.fullData = d.node.trace;
             gd.emit('plotly_unhover', {
-                event: d3.event,
+                event: event,
                 points: [d.node]
             });
         }

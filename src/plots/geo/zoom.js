@@ -1,4 +1,9 @@
-import d3 from '@plotly/d3';
+import { select } from 'd3-selection';
+import { dispatch } from 'd3-dispatch';
+import * as d3Geo from 'd3-geo';
+import { pointer } from 'd3-selection';
+import { zoom as d3Zoom } from 'd3-zoom';
+import { drag as d3Drag } from 'd3-drag';
 import Lib from '../../lib/index.js';
 import Registry from '../../registry.js';
 
@@ -28,7 +33,7 @@ export default createGeoZoom;
 
 // common to all zoom types
 function initZoom(geo, projection) {
-    return d3.behavior.zoom()
+    return d3Zoom()
         .translate(projection.translate())
         .scale(projection.scale());
 }
@@ -68,13 +73,13 @@ function zoomScoped(geo, projection) {
     var zoom = initZoom(geo, projection);
 
     function handleZoomstart() {
-        d3.select(this).style(zoomstartStyle);
+        select(this).style(zoomstartStyle);
     }
 
     function handleZoom() {
         projection
-            .scale(d3.event.scale)
-            .translate(d3.event.translate);
+            .scale(event.scale)
+            .translate(event.translate);
         geo.render(true);
 
         var center = projection.invert(geo.midPt);
@@ -93,7 +98,7 @@ function zoomScoped(geo, projection) {
     }
 
     function handleZoomend() {
-        d3.select(this).style(zoomendStyle);
+        select(this).style(zoomendStyle);
         sync(geo, projection, syncCb);
     }
 
@@ -128,9 +133,9 @@ function zoomNonClipped(geo, projection) {
     }
 
     function handleZoomstart() {
-        d3.select(this).style(zoomstartStyle);
+        select(this).style(zoomstartStyle);
 
-        mouse0 = d3.mouse(this);
+        mouse0 = pointer(event, this);
         rotate0 = projection.rotate();
         translate0 = projection.translate();
         lastRotate = rotate0;
@@ -138,7 +143,7 @@ function zoomNonClipped(geo, projection) {
     }
 
     function handleZoom() {
-        mouse1 = d3.mouse(this);
+        mouse1 = pointer(event, this);
 
         if(outside(mouse0)) {
             zoom.scale(projection.scale());
@@ -146,8 +151,8 @@ function zoomNonClipped(geo, projection) {
             return;
         }
 
-        projection.scale(d3.event.scale);
-        projection.translate([translate0[0], d3.event.translate[1]]);
+        projection.scale(event.scale);
+        projection.translate([translate0[0], event.translate[1]]);
 
         if(!zoomPoint) {
             mouse0 = mouse1;
@@ -173,7 +178,7 @@ function zoomNonClipped(geo, projection) {
     }
 
     function handleZoomend() {
-        d3.select(this).style(zoomendStyle);
+        select(this).style(zoomendStyle);
         if(didZoom) sync(geo, projection, syncCb);
     }
 
@@ -195,7 +200,7 @@ function zoomNonClipped(geo, projection) {
 }
 
 // zoom for clipped projections
-// inspired by https://www.jasondavies.com/maps/d3.geo.zoom.js
+// inspired by https://www.jasondavies.com/maps/d3Geo.zoom.js
 function zoomClipped(geo, projection) {
     var view = {r: projection.rotate(), k: projection.scale()};
     var zoom = initZoom(geo, projection);
@@ -205,10 +210,10 @@ function zoomClipped(geo, projection) {
 
     var zoomPoint;
 
-    zoom.on('zoomstart', function() {
-        d3.select(this).style(zoomstartStyle);
+    zoom.on('zoomstart', function(event) {
+        select(this).style(zoomstartStyle);
 
-        var mouse0 = d3.mouse(this);
+        var mouse0 = pointer(event, this);
         var rotate0 = projection.rotate();
         var lastRotate = rotate0;
         var translate0 = projection.translate();
@@ -216,10 +221,10 @@ function zoomClipped(geo, projection) {
 
         zoomPoint = position(projection, mouse0);
 
-        zoomOn.call(zoom, 'zoom', function() {
-            var mouse1 = d3.mouse(this);
+        zoomOn.call(zoom, 'zoom', function(event) {
+            var mouse1 = pointer(event, this);
 
-            projection.scale(view.k = d3.event.scale);
+            projection.scale(view.k = event.scale);
 
             if(!zoomPoint) {
                 // if no zoomPoint, the mouse wasn't over the actual geography yet
@@ -259,13 +264,13 @@ function zoomClipped(geo, projection) {
 
         zoomstarted(event.of(this, arguments));
     })
-    .on('zoomend', function() {
-        d3.select(this).style(zoomendStyle);
+    .on('zoomend', function(event) {
+        select(this).style(zoomendStyle);
         zoomOn.call(zoom, 'zoom', null);
         zoomended(event.of(this, arguments));
         sync(geo, projection, syncCb);
     })
-    .on('zoom.redraw', function() {
+    .on('zoom.redraw', function(event) {
         geo.render(true);
 
         var _rotate = projection.rotate();
@@ -294,7 +299,7 @@ function zoomClipped(geo, projection) {
         set('projection.rotation.lat', -_rotate[1]);
     }
 
-    return d3.rebind(zoom, event, 'on');
+    return Object.assign(zoom, { on: event.on.bind(event) });
 }
 
 // -- helper functions for zoomClipped
@@ -470,7 +475,7 @@ function d3eventDispatch(target) {
 
     while(++i < n) argumentz.push(arguments[i]);
 
-    var dispatch = d3.dispatch.apply(null, argumentz);
+    var dispatch = dispatch.apply(null, argumentz);
 
     // Creates a dispatch context for the specified `thiz` (typically, the target
     // DOM element that received the source event) and `argumentz` (typically, the
@@ -479,18 +484,18 @@ function d3eventDispatch(target) {
     // single argument as input, being the event to dispatch. The event must have
     // a "type" attribute which corresponds to a type registered in the
     // constructor. This context will automatically populate the "sourceEvent" and
-    // "target" attributes of the event, as well as setting the `d3.event` global
+    // "target" attributes of the event, as well as setting the `event` global
     // for the duration of the notification.
     dispatch.of = function(thiz, argumentz) {
         return function(e1) {
             var e0;
             try {
-                e0 = e1.sourceEvent = d3.event;
+                e0 = e1.sourceEvent = event;
                 e1.target = target;
-                d3.event = e1;
+                event = e1;
                 dispatch[e1.type].apply(thiz, argumentz);
             } finally {
-                d3.event = e0;
+                event = e0;
             }
         };
     };

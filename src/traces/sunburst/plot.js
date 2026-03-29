@@ -1,6 +1,7 @@
-import d3 from '@plotly/d3';
+import { select } from 'd3-selection';
 import * as d3Hierarchy from 'd3-hierarchy';
 import { interpolate } from 'd3-interpolate';
+import { transition as d3Transition } from 'd3-transition';
 import Drawing from '../../components/drawing/index.js';
 import Lib from '../../lib/index.js';
 import svgTextUtils from '../../lib/svg_text_utils.js';
@@ -48,14 +49,13 @@ export var plot = function (gd, cdmodule, transitionOpts, makeOnCompleteCallback
             onComplete = makeOnCompleteCallback();
         }
 
-        var transition = d3
-            .transition()
+        var transition = d3Transition()
             .duration(transitionOpts.duration)
             .ease(transitionOpts.easing)
-            .each('end', function () {
+            .on('end', function () {
                 onComplete && onComplete();
             })
-            .each('interrupt', function () {
+            .on('interrupt', function () {
                 onComplete && onComplete();
             });
 
@@ -87,7 +87,7 @@ function plotOne(gd, cd, element, transitionOpts) {
     var fullLayout = gd._fullLayout;
     var hasTransition = !fullLayout.uniformtext.mode && helpers.hasTransition(transitionOpts);
 
-    var gTrace = d3.select(element);
+    var gTrace = select(element);
     var slices = gTrace.selectAll('g.slice');
 
     var cd0 = cd[0];
@@ -189,7 +189,7 @@ function plotOne(gd, cd, element, transitionOpts) {
             .exit()
             .transition()
             .each(function () {
-                var sliceTop = d3.select(this);
+                var sliceTop = select(this);
 
                 var slicePath = sliceTop.select('path.surface');
                 slicePath.transition().attrTween('d', function (pt2) {
@@ -222,10 +222,10 @@ function plotOne(gd, cd, element, transitionOpts) {
 
     var updateSlices = slices;
     if (hasTransition) {
-        updateSlices = updateSlices.transition().each('end', function () {
+        updateSlices = updateSlices.transition().on('end', function () {
             // N.B. gd._transitioning is (still) *true* by the time
             // transition updates get here
-            var sliceTop = d3.select(this);
+            var sliceTop = select(this);
             helpers.setSliceCursor(sliceTop, gd, {
                 hideOnRoot: true,
                 hideOnLeaves: true,
@@ -235,7 +235,7 @@ function plotOne(gd, cd, element, transitionOpts) {
     }
 
     updateSlices.each(function (pt) {
-        var sliceTop = d3.select(this);
+        var sliceTop = select(this);
 
         var slicePath = Lib.ensureSingle(sliceTop, 'path', 'surface', function (s) {
             s.style('pointer-events', isStatic ? 'none' : 'all');

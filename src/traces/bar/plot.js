@@ -1,4 +1,5 @@
-import d3 from '@plotly/d3';
+import { select } from 'd3-selection';
+function d3Round(x, n) { return n ? Math.round(x * (n = Math.pow(10, n))) / n : Math.round(x); }
 import isNumeric from 'fast-isnumeric';
 import Lib from '../../lib/index.js';
 import svgTextUtils from '../../lib/svg_text_utils.js';
@@ -67,10 +68,10 @@ function transition(selection, fullLayout, opts, makeOnCompleteCallback) {
             .transition()
             .duration(opts.duration)
             .ease(opts.easing)
-            .each('end', function () {
+            .on('end', function () {
                 onComplete && onComplete();
             })
-            .each('interrupt', function () {
+            .on('interrupt', function () {
                 onComplete && onComplete();
             });
     } else {
@@ -101,7 +102,7 @@ function plot(gd, plotinfo, cdModule, traceLayer, opts, makeOnCompleteCallback) 
     }
 
     var bartraces = Lib.makeTraceGroups(traceLayer, cdModule, 'trace bars').each(function (cd) {
-        var plotGroup = d3.select(this);
+        var plotGroup = select(this);
         var trace = cd[0].trace;
         var t = cd[0].t;
         var isWaterfall = trace.type === 'waterfall';
@@ -127,7 +128,7 @@ function plot(gd, plotinfo, cdModule, traceLayer, opts, makeOnCompleteCallback) 
         bars.exit().remove();
 
         bars.each(function (di, i) {
-            var bar = d3.select(this);
+            var bar = select(this);
 
             // now display the bar
             // clipped xf/yf (2nd arg true): non-positive
@@ -191,11 +192,11 @@ function plot(gd, plotinfo, cdModule, traceLayer, opts, makeOnCompleteCallback) 
             }
 
             function roundWithLine(v) {
-                var offset = d3.round((lw / 2) % 1, 2);
+                var offset = d3Round((lw / 2) % 1, 2);
 
                 // if there are explicit gaps, don't round,
                 // it can make the gaps look crappy
-                return opts.gap === 0 && opts.groupgap === 0 ? d3.round(Math.round(v) - offset, 2) : v;
+                return opts.gap === 0 && opts.groupgap === 0 ? d3Round(Math.round(v) - offset, 2) : v;
             }
 
             function expandToVisible(v, vc, hideZeroSpan) {

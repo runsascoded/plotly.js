@@ -1,4 +1,4 @@
-import d3 from '@plotly/d3';
+import { select } from 'd3-selection';
 
 export default function makeTraceGroups(traceLayer, cdModule, cls) {
     var traces = traceLayer.selectAll('g.' + cls.replace(/\s/g, '.'))
@@ -14,7 +14,7 @@ export default function makeTraceGroups(traceLayer, cdModule, cls) {
     // stash ref node to trace group in calcdata,
     // useful for (fast) styleOnSelect
     var k = traceLayer.classed('rangeplot') ? 'nodeRangePlot3' : 'node3';
-    traces.each(function(cd) { cd[0][k] = d3.select(this); });
+    traces.each(function(cd) { cd[0][k] = select(this); });
 
     return traces;
 }

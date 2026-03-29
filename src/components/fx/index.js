@@ -1,4 +1,4 @@
-import d3 from '@plotly/d3';
+import { select } from 'd3-selection';
 import Lib from '../../lib/index.js';
 import dragElement from '../dragelement/index.js';
 import helpers from './helpers.js';
@@ -53,7 +53,7 @@ function loneUnhover(containerOrSelection) {
     // handle instanceof like modern browsers do.
     var selection = Lib.isD3Selection(containerOrSelection) ?
             containerOrSelection :
-            d3.select(containerOrSelection);
+            select(containerOrSelection);
 
     selection.selectAll('g.hovertext').remove();
     selection.selectAll('.spikeline').remove();

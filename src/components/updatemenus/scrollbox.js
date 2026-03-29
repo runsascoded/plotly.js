@@ -1,4 +1,5 @@
-import d3 from '@plotly/d3';
+import { zoom as d3Zoom } from 'd3-zoom';
+import { drag as d3Drag } from 'd3-drag';
 import Color from '../color/index.js';
 import Drawing from '../drawing/index.js';
 import Lib from '../../lib/index.js';
@@ -258,9 +259,9 @@ ScrollBox.prototype.enable = function enable(position, translateX, translateY) {
 
     // set up drag listeners (if scroll bars are needed)
     if(needsHorizontalScrollBar || needsVerticalScrollBar) {
-        var onBoxDrag = d3.behavior.drag()
-            .on('dragstart', function() {
-                d3.event.sourceEvent.preventDefault();
+        var onBoxDrag = d3Drag()
+            .on('start', function(event) {
+                event.sourceEvent.preventDefault();
             })
             .on('drag', this._onBoxDrag.bind(this));
 
@@ -270,10 +271,10 @@ ScrollBox.prototype.enable = function enable(position, translateX, translateY) {
             .on('.drag', null)
             .call(onBoxDrag);
 
-        var onBarDrag = d3.behavior.drag()
-            .on('dragstart', function() {
-                d3.event.sourceEvent.preventDefault();
-                d3.event.sourceEvent.stopPropagation();
+        var onBarDrag = d3Drag()
+            .on('start', function(event) {
+                event.sourceEvent.preventDefault();
+                event.sourceEvent.stopPropagation();
             })
             .on('drag', this._onBarDrag.bind(this));
 
@@ -339,11 +340,11 @@ ScrollBox.prototype._onBoxDrag = function _onBoxDrag() {
     var translateY = this.translateY;
 
     if(this.hbar) {
-        translateX -= d3.event.dx;
+        translateX -= event.dx;
     }
 
     if(this.vbar) {
-        translateY -= d3.event.dy;
+        translateY -= event.dy;
     }
 
     this.setTranslate(translateX, translateY);
@@ -359,11 +360,11 @@ ScrollBox.prototype._onBoxWheel = function _onBoxWheel() {
     var translateY = this.translateY;
 
     if(this.hbar) {
-        translateX += d3.event.deltaY;
+        translateX += event.deltaY;
     }
 
     if(this.vbar) {
-        translateY += d3.event.deltaY;
+        translateY += event.deltaY;
     }
 
     this.setTranslate(translateX, translateY);
@@ -381,7 +382,7 @@ ScrollBox.prototype._onBarDrag = function _onBarDrag() {
     if(this.hbar) {
         var xMin = translateX + this._hbarXMin;
         var xMax = xMin + this._hbarTranslateMax;
-        var x = Lib.constrain(d3.event.x, xMin, xMax);
+        var x = Lib.constrain(event.x, xMin, xMax);
         var xf = (x - xMin) / (xMax - xMin);
 
         var translateXMax = this.position.w - this._box.w;
@@ -392,7 +393,7 @@ ScrollBox.prototype._onBarDrag = function _onBarDrag() {
     if(this.vbar) {
         var yMin = translateY + this._vbarYMin;
         var yMax = yMin + this._vbarTranslateMax;
-        var y = Lib.constrain(d3.event.y, yMin, yMax);
+        var y = Lib.constrain(event.y, yMin, yMax);
         var yf = (y - yMin) / (yMax - yMin);
 
         var translateYMax = this.position.h - this._box.h;

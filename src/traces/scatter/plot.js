@@ -1,4 +1,7 @@
-import d3 from '@plotly/d3';
+import { transition } from 'd3-transition';
+import { select } from 'd3-selection';
+import 'd3-transition';
+import { extent } from 'd3-array';
 import Registry from '../../registry.js';
 import Lib from '../../lib/index.js';
 import Drawing from '../../components/drawing/index.js';
@@ -49,13 +52,13 @@ export default function plot(
             onComplete = makeOnCompleteCallback();
         }
 
-        var transition = d3.transition()
+        var transition = transition()
             .duration(transitionOpts.duration)
             .ease(transitionOpts.easing)
-            .each('end', function() {
+            .on('end', function() {
                 onComplete && onComplete();
             })
-            .each('interrupt', function() {
+            .on('interrupt', function() {
                 onComplete && onComplete();
             });
 
@@ -82,7 +85,7 @@ export default function plot(
 
 function createFills(gd, traceJoin, plotinfo) {
     traceJoin.each(function(d) {
-        var fills = ensureSingle(d3.select(this), 'g', 'fills');
+        var fills = ensureSingle(select(this), 'g', 'fills');
         Drawing.setClipUrl(fills, plotinfo.layerClipId, gd);
 
         var trace = d[0].trace;
@@ -103,7 +106,7 @@ function createFills(gd, traceJoin, plotinfo) {
             // make a path element inside the fill group, just so
             // we can give it its own data later on and the group can
             // keep its simple '_*Fill' data
-            trace[d] = ensureSingle(d3.select(this), 'path', 'js-fill');
+            trace[d] = ensureSingle(select(this), 'path', 'js-fill');
         });
     });
 }
@@ -128,7 +131,7 @@ function plotOne(gd, idx, plotinfo, cdscatter, cdscatterAll, element, transition
 
     var trace = cdscatter[0].trace;
     var line = trace.line;
-    var tr = d3.select(element);
+    var tr = select(element);
 
     var errorBarGroup = ensureSingle(tr, 'g', 'errorbars');
     var lines = ensureSingle(tr, 'g', 'lines');
@@ -295,7 +298,7 @@ function plotOne(gd, idx, plotinfo, cdscatter, cdscatterAll, element, transition
 
                 // actual lines get drawn here, with gaps between segments if requested
                 if(subTypes.hasLines(trace)) {
-                    var el = d3.select(this);
+                    var el = select(this);
 
                     // This makes the coloring work correctly:
                     el.datum(cdscatter);
@@ -538,7 +541,7 @@ function plotOne(gd, idx, plotinfo, cdscatter, cdscatterAll, element, transition
         }
 
         join.each(function(d) {
-            var el = d3.select(this);
+            var el = select(this);
             var sel = transition(el);
             hasNode = Drawing.translatePoint(d, sel, xa, ya);
 
@@ -576,7 +579,7 @@ function plotOne(gd, idx, plotinfo, cdscatter, cdscatterAll, element, transition
         join.order();
 
         join.each(function(d) {
-            var g = d3.select(this);
+            var g = select(this);
             var sel = transition(g.select('text'));
             hasNode = Drawing.translatePoint(d, sel, xa, ya);
 
@@ -597,8 +600,8 @@ function plotOne(gd, idx, plotinfo, cdscatter, cdscatterAll, element, transition
                 var x = xa.c2p(d.x);
                 var y = ya.c2p(d.y);
 
-                d3.select(this).selectAll('tspan.line').each(function() {
-                    transition(d3.select(this)).attr({x: x, y: y});
+                select(this).selectAll('tspan.line').each(function() {
+                    transition(select(this)).attr({x: x, y: y});
                 });
             });
 
@@ -620,8 +623,8 @@ function plotOne(gd, idx, plotinfo, cdscatter, cdscatterAll, element, transition
 function selectMarkers(gd, idx, plotinfo, cdscatter, cdscatterAll) {
     var xa = plotinfo.xaxis;
     var ya = plotinfo.yaxis;
-    var xr = d3.extent(Lib.simpleMap(xa.range, xa.r2c));
-    var yr = d3.extent(Lib.simpleMap(ya.range, ya.r2c));
+    var xr = extent(Lib.simpleMap(xa.range, xa.r2c));
+    var yr = extent(Lib.simpleMap(ya.range, ya.r2c));
 
     var trace = cdscatter[0].trace;
     if(!subTypes.hasMarkers(trace)) return;

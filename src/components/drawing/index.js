@@ -1,4 +1,5 @@
-import d3 from '@plotly/d3';
+import { select } from 'd3-selection';
+function d3Round(x, n) { return n ? Math.round(x * (n = Math.pow(10, n))) / n : Math.round(x); }
 import Lib from '../../lib/index.js';
 import isNumeric from 'fast-isnumeric';
 import tinycolor from 'tinycolor2';
@@ -123,7 +124,7 @@ drawing.translatePoint = function (d, sel, xa, ya) {
 
 drawing.translatePoints = function (s, xa, ya) {
     s.each(function (d) {
-        var sel = d3.select(this);
+        var sel = select(this);
         drawing.translatePoint(d, sel, xa, ya);
     });
 };
@@ -145,7 +146,7 @@ drawing.hideOutsideRangePoints = function (traceGroups, subplot) {
         var selector = Registry.traceIs(trace, 'bar-like') ? '.bartext' : '.point,.textpoint';
 
         traceGroups.selectAll(selector).each(function (d) {
-            drawing.hideOutsideRangePoint(d, d3.select(this), xa, ya, xcalendar, ycalendar);
+            drawing.hideOutsideRangePoint(d, select(this), xa, ya, xcalendar, ycalendar);
         });
     });
 };
@@ -179,7 +180,7 @@ drawing.lineGroupStyle = function (s, lw, lc, ld) {
         var lw1 = lw || line.width || 0;
         var dash = ld || line.dash || '';
 
-        d3.select(this)
+        select(this)
             .call(Color.stroke, lc || line.color)
             .call(drawing.dashLine, dash, lw1);
     });
@@ -299,7 +300,7 @@ function setFillStyle(sel, trace, gd, forLegend) {
 
 // Same as fillGroupStyle, except in this case the selection may be a transition
 drawing.singleFillStyle = function (sel, gd) {
-    var node = d3.select(sel.node());
+    var node = select(sel.node());
     var data = node.data();
     var trace = ((data[0] || [])[0] || {}).trace || {};
     setFillStyle(sel, trace, gd, false);
@@ -307,7 +308,7 @@ drawing.singleFillStyle = function (sel, gd) {
 
 drawing.fillGroupStyle = function (s, gd, forLegend) {
     s.style('stroke-width', 0).each(function (d) {
-        var shape = d3.select(this);
+        var shape = select(this);
         // N.B. 'd' won't be a calcdata item when
         // fill !== 'none' on a segment-less and marker-less trace
         if (d[0].trace) {
@@ -500,7 +501,7 @@ function gradientWithBounds(sel, gd, gradientID, type, colorscale, prop, start, 
         .enter()
         .append(info.node)
         .each(function () {
-            var el = d3.select(this);
+            var el = select(this);
             if (info.attrs) el.attr(info.attrs);
 
             el.attr('id', fullID);
@@ -511,7 +512,7 @@ function gradientWithBounds(sel, gd, gradientID, type, colorscale, prop, start, 
 
             stops.each(function (d) {
                 var tc = tinycolor(d[1]);
-                d3.select(this).attr({
+                select(this).attr({
                     offset: d[0] + '%',
                     'stop-color': Color.tinyRGB(tc),
                     'stop-opacity': tc.getAlpha()
@@ -803,7 +804,7 @@ drawing.pattern = function (
         .enter()
         .append('pattern')
         .each(function () {
-            var el = d3.select(this);
+            var el = select(this);
 
             el.attr({
                 id: fullID,
@@ -855,7 +856,7 @@ drawing.initGradients = function (gd) {
     var gradientsGroup = Lib.ensureSingle(fullLayout._defs, 'g', 'gradients');
     gradientsGroup.selectAll('linearGradient,radialGradient').remove();
 
-    d3.select(gd).selectAll('.gradient_filled').classed('gradient_filled', false);
+    select(gd).selectAll('.gradient_filled').classed('gradient_filled', false);
 };
 
 drawing.initPatterns = function (gd) {
@@ -864,7 +865,7 @@ drawing.initPatterns = function (gd) {
     var patternsGroup = Lib.ensureSingle(fullLayout._defs, 'g', 'patterns');
     patternsGroup.selectAll('pattern').remove();
 
-    d3.select(gd).selectAll('.pattern_filled').classed('pattern_filled', false);
+    select(gd).selectAll('.pattern_filled').classed('pattern_filled', false);
 };
 
 drawing.getPatternAttr = function (mp, i, dflt) {
@@ -880,7 +881,7 @@ drawing.pointStyle = function (s, trace, gd, pt) {
     var fns = drawing.makePointStyleFns(trace);
 
     s.each(function (d) {
-        drawing.singlePointStyle(d, d3.select(this), trace, fns, gd, pt);
+        drawing.singlePointStyle(d, select(this), trace, fns, gd, pt);
     });
 };
 
@@ -1209,7 +1210,7 @@ drawing.selectedPointStyle = function (s, trace) {
 
     if (seq.length) {
         s.each(function (d) {
-            var pt = d3.select(this);
+            var pt = select(this);
             for (var i = 0; i < seq.length; i++) {
                 seq[i](pt, d);
             }
@@ -1238,7 +1239,7 @@ var TEXTOFFSETSIGN = {
 };
 
 function textPointPosition(s, textPosition, fontSize, markerRadius, dontTouchParent) {
-    var group = d3.select(s.node().parentNode);
+    var group = select(s.node().parentNode);
 
     var v = textPosition.indexOf('top') !== -1 ? 'top' : textPosition.indexOf('bottom') !== -1 ? 'bottom' : 'middle';
     var h = textPosition.indexOf('left') !== -1 ? 'end' : textPosition.indexOf('right') !== -1 ? 'start' : 'middle';
@@ -1278,7 +1279,7 @@ drawing.textPointStyle = function (s, trace, gd) {
     var fullLayout = gd._fullLayout;
 
     s.each(function (d) {
-        var p = d3.select(this);
+        var p = select(this);
 
         var text = texttemplate
             ? Lib.extractOption(d, trace, 'txt', 'texttemplate')
@@ -1330,7 +1331,7 @@ drawing.selectedTextStyle = function (s, trace) {
     var fns = drawing.makeSelectedTextStyleFns(trace);
 
     s.each(function (d) {
-        var tx = d3.select(this);
+        var tx = select(this);
         var tc = fns.selectedTextColorFn(d);
         var tp = d.tp || trace.textposition;
         var fontSize = extracTextFontSize(d, trace);
@@ -1391,13 +1392,13 @@ function roundEnd(pt, isY, isLastPoint) {
 }
 
 function roundX(p) {
-    var v = d3.round(p, 2);
+    var v = d3Round(p, 2);
     lastDrawnX = v;
     return v;
 }
 
 function roundY(p) {
-    var v = d3.round(p, 2);
+    var v = d3Round(p, 2);
     lastDrawnY = v;
     return v;
 }
@@ -1511,7 +1512,7 @@ drawing.applyBackoff = applyBackoff;
 // off-screen svg render testing element, shared by the whole page
 // uses the id 'js-plotly-tester' and stores it in drawing.tester
 drawing.makeTester = function () {
-    var tester = Lib.ensureSingleById(d3.select('body'), 'svg', 'js-plotly-tester', function (s) {
+    var tester = Lib.ensureSingleById(select('body'), 'svg', 'js-plotly-tester', function (s) {
         s.attr(xmlnsNamespaces.svgAttrs).style({
             position: 'absolute',
             left: '-10000px',
@@ -1633,7 +1634,7 @@ drawing.bBox = function (node, inTester, hash) {
     }
 
     // standardize its position (and newline tspans if any)
-    d3.select(testNode).attr('transform', null).call(svgTextUtils.positionText, 0, 0);
+    select(testNode).attr('transform', null).call(svgTextUtils.positionText, 0, 0);
 
     var testRect = testNode.getBoundingClientRect();
     var refRect = drawing.testref.node().getBoundingClientRect();
@@ -1794,7 +1795,7 @@ drawing.setTextPointsScale = function (selection, xScale, yScale) {
 
     selection.each(function () {
         var transforms;
-        var el = d3.select(this);
+        var el = select(this);
         var text = el.select('text');
 
         if (!text.node()) return;
