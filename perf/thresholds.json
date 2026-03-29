@@ -7,13 +7,13 @@
             "expected_bytes": 916326
         },
         "minimal": {
-            "expected_bytes": 2305033
+            "expected_bytes": 2153474
         },
         "minimal-min": {
             "expected_bytes": 1076875
         },
         "basic": {
-            "expected_bytes": 2611162
+            "expected_bytes": 2458549
         },
         "basic-min": {
             "expected_bytes": 1185641

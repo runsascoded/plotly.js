@@ -164,7 +164,6 @@ async function runBench() {
             const msg = `${bundleName} bundle size changed: expected ${expectedBytes.toLocaleString()} bytes, got ${bundleTransferSize.toLocaleString()} (${sign}${delta.toLocaleString()})`;
 
             if(update) {
-                // Update the threshold file with new value
                 thresholds.bundleSize[bundleName].expected_bytes = bundleTransferSize;
                 await writeFile(thresholdsPath, JSON.stringify(thresholds, null, 4) + '\n');
                 console.log(`  UPDATED: ${msg}`);
