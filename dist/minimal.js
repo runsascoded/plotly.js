@@ -6832,7 +6832,7 @@ var Plotly = (() => {
   var registry_default = { modules, allCategories, allTypes, subplotsRegistry, componentsRegistry, layoutArrayContainers, layoutArrayRegexes, traceLayoutAttributes, localeRegistry, apiMethodRegistry, collectableSubplotTypes, register, getModule, traceIs, getComponentMethod, call };
 
   // src/plot_api/plot_api.js
-  var import_fast_isnumeric27 = __toESM(require_fast_isnumeric(), 1);
+  var import_fast_isnumeric26 = __toESM(require_fast_isnumeric(), 1);
 
   // node_modules/.pnpm/d3-time@1.1.0/node_modules/d3-time/src/interval.js
   var t0 = /* @__PURE__ */ new Date();
@@ -30459,1524 +30459,6 @@ var Plotly = (() => {
     }
   }
 
-  // src/fonts/ploticon.js
-  var ploticon_default = {
-    undo: {
-      width: 857.1,
-      height: 1e3,
-      path: "m857 350q0-87-34-166t-91-137-137-92-166-34q-96 0-183 41t-147 114q-4 6-4 13t5 11l76 77q6 5 14 5 9-1 13-7 41-53 100-82t126-29q58 0 110 23t92 61 61 91 22 111-22 111-61 91-92 61-110 23q-55 0-105-20t-90-57l77-77q17-16 8-38-10-23-33-23h-250q-15 0-25 11t-11 25v250q0 24 22 33 22 10 39-8l72-72q60 57 137 88t159 31q87 0 166-34t137-92 91-137 34-166z",
-      transform: "matrix(1 0 0 -1 0 850)"
-    },
-    home: {
-      width: 928.6,
-      height: 1e3,
-      path: "m786 296v-267q0-15-11-26t-25-10h-214v214h-143v-214h-214q-15 0-25 10t-11 26v267q0 1 0 2t0 2l321 264 321-264q1-1 1-4z m124 39l-34-41q-5-5-12-6h-2q-7 0-12 3l-386 322-386-322q-7-4-13-4-7 2-12 7l-35 41q-4 5-3 13t6 12l401 334q18 15 42 15t43-15l136-114v109q0 8 5 13t13 5h107q8 0 13-5t5-13v-227l122-102q5-5 6-12t-4-13z",
-      transform: "matrix(1 0 0 -1 0 850)"
-    },
-    "camera-retro": {
-      width: 1e3,
-      height: 1e3,
-      path: "m518 386q0 8-5 13t-13 5q-37 0-63-27t-26-63q0-8 5-13t13-5 12 5 5 13q0 23 16 38t38 16q8 0 13 5t5 13z m125-73q0-59-42-101t-101-42-101 42-42 101 42 101 101 42 101-42 42-101z m-572-320h858v71h-858v-71z m643 320q0 89-62 152t-152 62-151-62-63-152 63-151 151-63 152 63 62 151z m-571 358h214v72h-214v-72z m-72-107h858v143h-462l-36-71h-360v-72z m929 143v-714q0-30-21-51t-50-21h-858q-29 0-50 21t-21 51v714q0 30 21 51t50 21h858q29 0 50-21t21-51z",
-      transform: "matrix(1 0 0 -1 0 850)"
-    },
-    zoombox: {
-      width: 1e3,
-      height: 1e3,
-      path: "m1000-25l-250 251c40 63 63 138 63 218 0 224-182 406-407 406-224 0-406-182-406-406s183-406 407-406c80 0 155 22 218 62l250-250 125 125z m-812 250l0 438 437 0 0-438-437 0z m62 375l313 0 0-312-313 0 0 312z",
-      transform: "matrix(1 0 0 -1 0 850)"
-    },
-    pan: {
-      width: 1e3,
-      height: 1e3,
-      path: "m1000 350l-187 188 0-125-250 0 0 250 125 0-188 187-187-187 125 0 0-250-250 0 0 125-188-188 186-187 0 125 252 0 0-250-125 0 187-188 188 188-125 0 0 250 250 0 0-126 187 188z",
-      transform: "matrix(1 0 0 -1 0 850)"
-    },
-    zoom_plus: {
-      width: 875,
-      height: 1e3,
-      path: "m1 787l0-875 875 0 0 875-875 0z m687-500l-187 0 0-187-125 0 0 187-188 0 0 125 188 0 0 187 125 0 0-187 187 0 0-125z",
-      transform: "matrix(1 0 0 -1 0 850)"
-    },
-    zoom_minus: {
-      width: 875,
-      height: 1e3,
-      path: "m0 788l0-876 875 0 0 876-875 0z m688-500l-500 0 0 125 500 0 0-125z",
-      transform: "matrix(1 0 0 -1 0 850)"
-    },
-    autoscale: {
-      width: 1e3,
-      height: 1e3,
-      path: "m250 850l-187 0-63 0 0-62 0-188 63 0 0 188 187 0 0 62z m688 0l-188 0 0-62 188 0 0-188 62 0 0 188 0 62-62 0z m-875-938l0 188-63 0 0-188 0-62 63 0 187 0 0 62-187 0z m875 188l0-188-188 0 0-62 188 0 62 0 0 62 0 188-62 0z m-125 188l-1 0-93-94-156 156 156 156 92-93 2 0 0 250-250 0 0-2 93-92-156-156-156 156 94 92 0 2-250 0 0-250 0 0 93 93 157-156-157-156-93 94 0 0 0-250 250 0 0 0-94 93 156 157 156-157-93-93 0 0 250 0 0 250z",
-      transform: "matrix(1 0 0 -1 0 850)"
-    },
-    tooltip_basic: {
-      width: 1500,
-      height: 1e3,
-      path: "m375 725l0 0-375-375 375-374 0-1 1125 0 0 750-1125 0z",
-      transform: "matrix(1 0 0 -1 0 850)"
-    },
-    tooltip_compare: {
-      width: 1125,
-      height: 1e3,
-      path: "m187 786l0 2-187-188 188-187 0 0 937 0 0 373-938 0z m0-499l0 1-187-188 188-188 0 0 937 0 0 376-938-1z",
-      transform: "matrix(1 0 0 -1 0 850)"
-    },
-    plotlylogo: {
-      width: 1542,
-      height: 1e3,
-      path: "m0-10h182v-140h-182v140z m228 146h183v-286h-183v286z m225 714h182v-1000h-182v1000z m225-285h182v-715h-182v715z m225 142h183v-857h-183v857z m231-428h182v-429h-182v429z m225-291h183v-138h-183v138z",
-      transform: "matrix(1 0 0 -1 0 850)"
-    },
-    "z-axis": {
-      width: 1e3,
-      height: 1e3,
-      path: "m833 5l-17 108v41l-130-65 130-66c0 0 0 38 0 39 0-1 36-14 39-25 4-15-6-22-16-30-15-12-39-16-56-20-90-22-187-23-279-23-261 0-341 34-353 59 3 60 228 110 228 110-140-8-351-35-351-116 0-120 293-142 474-142 155 0 477 22 477 142 0 50-74 79-163 96z m-374 94c-58-5-99-21-99-40 0-24 65-43 144-43 79 0 143 19 143 43 0 19-42 34-98 40v216h87l-132 135-133-135h88v-216z m167 515h-136v1c16 16 31 34 46 52l84 109v54h-230v-71h124v-1c-16-17-28-32-44-51l-89-114v-51h245v72z",
-      transform: "matrix(1 0 0 -1 0 850)"
-    },
-    "3d_rotate": {
-      width: 1e3,
-      height: 1e3,
-      path: "m922 660c-5 4-9 7-14 11-359 263-580-31-580-31l-102 28 58-400c0 1 1 1 2 2 118 108 351 249 351 249s-62 27-100 42c88 83 222 183 347 122 16-8 30-17 44-27-2 1-4 2-6 4z m36-329c0 0 64 229-88 296-62 27-124 14-175-11 157-78 225-208 249-266 8-19 11-31 11-31 2 5 6 15 11 32-5-13-8-20-8-20z m-775-239c70-31 117-50 198-32-121 80-199 346-199 346l-96-15-58-12c0 0 55-226 155-287z m603 133l-317-139c0 0 4-4 19-14 7-5 24-15 24-15s-177-147-389 4c235-287 536-112 536-112l31-22 100 299-4-1z m-298-153c6-4 14-9 24-15 0 0-17 10-24 15z",
-      transform: "matrix(1 0 0 -1 0 850)"
-    },
-    camera: {
-      width: 1e3,
-      height: 1e3,
-      path: "m500 450c-83 0-150-67-150-150 0-83 67-150 150-150 83 0 150 67 150 150 0 83-67 150-150 150z m400 150h-120c-16 0-34 13-39 29l-31 93c-6 15-23 28-40 28h-340c-16 0-34-13-39-28l-31-94c-6-15-23-28-40-28h-120c-55 0-100-45-100-100v-450c0-55 45-100 100-100h800c55 0 100 45 100 100v450c0 55-45 100-100 100z m-400-550c-138 0-250 112-250 250 0 138 112 250 250 250 138 0 250-112 250-250 0-138-112-250-250-250z m365 380c-19 0-35 16-35 35 0 19 16 35 35 35 19 0 35-16 35-35 0-19-16-35-35-35z",
-      transform: "matrix(1 0 0 -1 0 850)"
-    },
-    movie: {
-      width: 1e3,
-      height: 1e3,
-      path: "m938 413l-188-125c0 37-17 71-44 94 64 38 107 107 107 187 0 121-98 219-219 219-121 0-219-98-219-219 0-61 25-117 66-156h-115c30 33 49 76 49 125 0 103-84 187-187 187s-188-84-188-187c0-57 26-107 65-141-38-22-65-62-65-109v-250c0-70 56-126 125-126h500c69 0 125 56 125 126l188-126c34 0 62 28 62 63v375c0 35-28 63-62 63z m-750 0c-69 0-125 56-125 125s56 125 125 125 125-56 125-125-56-125-125-125z m406-1c-87 0-157 70-157 157 0 86 70 156 157 156s156-70 156-156-70-157-156-157z",
-      transform: "matrix(1 0 0 -1 0 850)"
-    },
-    question: {
-      width: 857.1,
-      height: 1e3,
-      path: "m500 82v107q0 8-5 13t-13 5h-107q-8 0-13-5t-5-13v-107q0-8 5-13t13-5h107q8 0 13 5t5 13z m143 375q0 49-31 91t-77 65-95 23q-136 0-207-119-9-14 4-24l74-55q4-4 10-4 9 0 14 7 30 38 48 51 19 14 48 14 27 0 48-15t21-33q0-21-11-34t-38-25q-35-16-65-48t-29-70v-20q0-8 5-13t13-5h107q8 0 13 5t5 13q0 10 12 27t30 28q18 10 28 16t25 19 25 27 16 34 7 45z m214-107q0-117-57-215t-156-156-215-58-216 58-155 156-58 215 58 215 155 156 216 58 215-58 156-156 57-215z",
-      transform: "matrix(1 0 0 -1 0 850)"
-    },
-    disk: {
-      width: 857.1,
-      height: 1e3,
-      path: "m214-7h429v214h-429v-214z m500 0h72v500q0 8-6 21t-11 20l-157 156q-5 6-19 12t-22 5v-232q0-22-15-38t-38-16h-322q-22 0-37 16t-16 38v232h-72v-714h72v232q0 22 16 38t37 16h465q22 0 38-16t15-38v-232z m-214 518v178q0 8-5 13t-13 5h-107q-7 0-13-5t-5-13v-178q0-8 5-13t13-5h107q7 0 13 5t5 13z m357-18v-518q0-22-15-38t-38-16h-750q-23 0-38 16t-16 38v750q0 22 16 38t38 16h517q23 0 50-12t42-26l156-157q16-15 27-42t11-49z",
-      transform: "matrix(1 0 0 -1 0 850)"
-    },
-    drawopenpath: {
-      width: 70,
-      height: 70,
-      path: "M33.21,85.65a7.31,7.31,0,0,1-2.59-.48c-8.16-3.11-9.27-19.8-9.88-41.3-.1-3.58-.19-6.68-.35-9-.15-2.1-.67-3.48-1.43-3.79-2.13-.88-7.91,2.32-12,5.86L3,32.38c1.87-1.64,11.55-9.66,18.27-6.9,2.13.87,4.75,3.14,5.17,9,.17,2.43.26,5.59.36,9.25a224.17,224.17,0,0,0,1.5,23.4c1.54,10.76,4,12.22,4.48,12.4.84.32,2.79-.46,5.76-3.59L43,80.07C41.53,81.57,37.68,85.64,33.21,85.65ZM74.81,69a11.34,11.34,0,0,0,6.09-6.72L87.26,44.5,74.72,32,56.9,38.35c-2.37.86-5.57,3.42-6.61,6L38.65,72.14l8.42,8.43ZM55,46.27a7.91,7.91,0,0,1,3.64-3.17l14.8-5.3,8,8L76.11,60.6l-.06.19a6.37,6.37,0,0,1-3,3.43L48.25,74.59,44.62,71Zm16.57,7.82A6.9,6.9,0,1,0,64.64,61,6.91,6.91,0,0,0,71.54,54.09Zm-4.05,0a2.85,2.85,0,1,1-2.85-2.85A2.86,2.86,0,0,1,67.49,54.09Zm-4.13,5.22L60.5,56.45,44.26,72.7l2.86,2.86ZM97.83,35.67,84.14,22l-8.57,8.57L89.26,44.24Zm-13.69-8,8,8-2.85,2.85-8-8Z",
-      transform: "matrix(1 0 0 1 -15 -15)"
-    },
-    drawclosedpath: {
-      width: 90,
-      height: 90,
-      path: "M88.41,21.12a26.56,26.56,0,0,0-36.18,0l-2.07,2-2.07-2a26.57,26.57,0,0,0-36.18,0,23.74,23.74,0,0,0,0,34.8L48,90.12a3.22,3.22,0,0,0,4.42,0l36-34.21a23.73,23.73,0,0,0,0-34.79ZM84,51.24,50.16,83.35,16.35,51.25a17.28,17.28,0,0,1,0-25.47,20,20,0,0,1,27.3,0l4.29,4.07a3.23,3.23,0,0,0,4.44,0l4.29-4.07a20,20,0,0,1,27.3,0,17.27,17.27,0,0,1,0,25.46ZM66.76,47.68h-33v6.91h33ZM53.35,35H46.44V68h6.91Z",
-      transform: "matrix(1 0 0 1 -5 -5)"
-    },
-    lasso: {
-      width: 1031,
-      height: 1e3,
-      path: "m1018 538c-36 207-290 336-568 286-277-48-473-256-436-463 10-57 36-108 76-151-13-66 11-137 68-183 34-28 75-41 114-42l-55-70 0 0c-2-1-3-2-4-3-10-14-8-34 5-45 14-11 34-8 45 4 1 1 2 3 2 5l0 0 113 140c16 11 31 24 45 40 4 3 6 7 8 11 48-3 100 0 151 9 278 48 473 255 436 462z m-624-379c-80 14-149 48-197 96 42 42 109 47 156 9 33-26 47-66 41-105z m-187-74c-19 16-33 37-39 60 50-32 109-55 174-68-42-25-95-24-135 8z m360 75c-34-7-69-9-102-8 8 62-16 128-68 170-73 59-175 54-244-5-9 20-16 40-20 61-28 159 121 317 333 354s407-60 434-217c28-159-121-318-333-355z",
-      transform: "matrix(1 0 0 -1 0 850)"
-    },
-    selectbox: {
-      width: 1e3,
-      height: 1e3,
-      path: "m0 850l0-143 143 0 0 143-143 0z m286 0l0-143 143 0 0 143-143 0z m285 0l0-143 143 0 0 143-143 0z m286 0l0-143 143 0 0 143-143 0z m-857-286l0-143 143 0 0 143-143 0z m857 0l0-143 143 0 0 143-143 0z m-857-285l0-143 143 0 0 143-143 0z m857 0l0-143 143 0 0 143-143 0z m-857-286l0-143 143 0 0 143-143 0z m286 0l0-143 143 0 0 143-143 0z m285 0l0-143 143 0 0 143-143 0z m286 0l0-143 143 0 0 143-143 0z",
-      transform: "matrix(1 0 0 -1 0 850)"
-    },
-    drawline: {
-      width: 70,
-      height: 70,
-      path: "M60.64,62.3a11.29,11.29,0,0,0,6.09-6.72l6.35-17.72L60.54,25.31l-17.82,6.4c-2.36.86-5.57,3.41-6.6,6L24.48,65.5l8.42,8.42ZM40.79,39.63a7.89,7.89,0,0,1,3.65-3.17l14.79-5.31,8,8L61.94,54l-.06.19a6.44,6.44,0,0,1-3,3.43L34.07,68l-3.62-3.63Zm16.57,7.81a6.9,6.9,0,1,0-6.89,6.9A6.9,6.9,0,0,0,57.36,47.44Zm-4,0a2.86,2.86,0,1,1-2.85-2.85A2.86,2.86,0,0,1,53.32,47.44Zm-4.13,5.22L46.33,49.8,30.08,66.05l2.86,2.86ZM83.65,29,70,15.34,61.4,23.9,75.09,37.59ZM70,21.06l8,8-2.84,2.85-8-8ZM87,80.49H10.67V87H87Z",
-      transform: "matrix(1 0 0 1 -15 -15)"
-    },
-    drawrect: {
-      width: 80,
-      height: 80,
-      path: "M78,22V79H21V22H78m9-9H12V88H87V13ZM68,46.22H31V54H68ZM53,32H45.22V69H53Z",
-      transform: "matrix(1 0 0 1 -10 -10)"
-    },
-    drawcircle: {
-      width: 80,
-      height: 80,
-      path: "M50,84.72C26.84,84.72,8,69.28,8,50.3S26.84,15.87,50,15.87,92,31.31,92,50.3,73.16,84.72,50,84.72Zm0-60.59c-18.6,0-33.74,11.74-33.74,26.17S31.4,76.46,50,76.46,83.74,64.72,83.74,50.3,68.6,24.13,50,24.13Zm17.15,22h-34v7.11h34Zm-13.8-13H46.24v34h7.11Z",
-      transform: "matrix(1 0 0 1 -10 -10)"
-    },
-    eraseshape: {
-      width: 80,
-      height: 80,
-      path: "M82.77,78H31.85L6,49.57,31.85,21.14H82.77a8.72,8.72,0,0,1,8.65,8.77V69.24A8.72,8.72,0,0,1,82.77,78ZM35.46,69.84H82.77a.57.57,0,0,0,.49-.6V29.91a.57.57,0,0,0-.49-.61H35.46L17,49.57Zm32.68-34.7-24,24,5,5,24-24Zm-19,.53-5,5,24,24,5-5Z",
-      transform: "matrix(1 0 0 1 -10 -10)"
-    },
-    spikeline: {
-      width: 1e3,
-      height: 1e3,
-      path: "M512 409c0-57-46-104-103-104-57 0-104 47-104 104 0 57 47 103 104 103 57 0 103-46 103-103z m-327-39l92 0 0 92-92 0z m-185 0l92 0 0 92-92 0z m370-186l92 0 0 93-92 0z m0-184l92 0 0 92-92 0z",
-      transform: "matrix(1.5 0 0 -1.5 0 850)"
-    },
-    pencil: {
-      width: 1792,
-      height: 1792,
-      path: "M491 1536l91-91-235-235-91 91v107h128v128h107zm523-928q0-22-22-22-10 0-17 7l-542 542q-7 7-7 17 0 22 22 22 10 0 17-7l542-542q7-7 7-17zm-54-192l416 416-832 832h-416v-416zm683 96q0 53-37 90l-166 166-416-416 166-165q36-38 90-38 53 0 91 38l235 234q37 39 37 91z",
-      transform: "matrix(1 0 0 1 0 1)"
-    },
-    newplotlylogo: {
-      name: "newplotlylogo",
-      svg: [
-        "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 132 132'>",
-        " <title>plotly-logomark</title>",
-        " <g id='symbol'>",
-        "  <rect fill='#000' x='0' y='0' width='132' height='132' rx='18' ry='18'/>",
-        "  <circle fill='#9EF' cx='102' cy='30' r='6'/>",
-        "  <circle fill='#BAC' cx='78' cy='30' r='6'/>",
-        "  <circle fill='#BAC' cx='78' cy='54' r='6'/>",
-        "  <circle fill='#D69' cx='54' cy='30' r='6'/>",
-        "  <circle fill='#F26' cx='30' cy='30' r='6'/>",
-        "  <circle fill='#F26' cx='30' cy='54' r='6'/>",
-        "  <path fill='#FFF' d='M30,72a6,6,0,0,0-6,6v24a6,6,0,0,0,12,0V78A6,6,0,0,0,30,72Z'/>",
-        "  <path fill='#FFF' d='M78,72a6,6,0,0,0-6,6v24a6,6,0,0,0,12,0V78A6,6,0,0,0,78,72Z'/>",
-        "  <path fill='#FFF' d='M54,48a6,6,0,0,0-6,6v48a6,6,0,0,0,12,0V54A6,6,0,0,0,54,48Z'/>",
-        "  <path fill='#FFF' d='M102,48a6,6,0,0,0-6,6v48a6,6,0,0,0,12,0V54A6,6,0,0,0,102,48Z'/>",
-        " </g>",
-        "</svg>"
-      ].join("")
-    }
-  };
-
-  // src/components/modebar/buttons.js
-  var _2 = lib_default._;
-  var modeBarButtons = {};
-  modeBarButtons.toImage = {
-    name: "toImage",
-    title: function(gd) {
-      var opts = gd._context.toImageButtonOptions || {};
-      var format5 = opts.format || "png";
-      return format5 === "png" ? _2(gd, "Download plot as a PNG") : (
-        // legacy text
-        _2(gd, "Download plot")
-      );
-    },
-    icon: ploticon_default.camera,
-    click: function(gd) {
-      var toImageButtonOptions = gd._context.toImageButtonOptions;
-      var opts = { format: toImageButtonOptions.format || "png" };
-      lib_default.notifier(_2(gd, "Taking snapshot - this may take a few seconds"), "long");
-      ["filename", "width", "height", "scale"].forEach(function(key) {
-        if (key in toImageButtonOptions) {
-          opts[key] = toImageButtonOptions[key];
-        }
-      });
-      registry_default.call("downloadImage", gd, opts).then(function(filename) {
-        lib_default.notifier(_2(gd, "Snapshot succeeded") + " - " + filename, "long");
-      }).catch(function() {
-        lib_default.notifier(_2(gd, "Sorry, there was a problem downloading your snapshot!"), "long");
-      });
-    }
-  };
-  modeBarButtons.sendDataToCloud = {
-    name: "sendDataToCloud",
-    title: function(gd) {
-      return _2(gd, "Edit in Chart Studio");
-    },
-    icon: ploticon_default.disk,
-    click: function(gd) {
-      plots_default.sendDataToCloud(gd);
-    }
-  };
-  modeBarButtons.editInChartStudio = {
-    name: "editInChartStudio",
-    title: function(gd) {
-      return _2(gd, "Edit in Chart Studio");
-    },
-    icon: ploticon_default.pencil,
-    click: function(gd) {
-      plots_default.sendDataToCloud(gd);
-    }
-  };
-  modeBarButtons.zoom2d = {
-    name: "zoom2d",
-    _cat: "zoom",
-    title: function(gd) {
-      return _2(gd, "Zoom");
-    },
-    attr: "dragmode",
-    val: "zoom",
-    icon: ploticon_default.zoombox,
-    click: handleCartesian
-  };
-  modeBarButtons.pan2d = {
-    name: "pan2d",
-    _cat: "pan",
-    title: function(gd) {
-      return _2(gd, "Pan");
-    },
-    attr: "dragmode",
-    val: "pan",
-    icon: ploticon_default.pan,
-    click: handleCartesian
-  };
-  modeBarButtons.select2d = {
-    name: "select2d",
-    _cat: "select",
-    title: function(gd) {
-      return _2(gd, "Box Select");
-    },
-    attr: "dragmode",
-    val: "select",
-    icon: ploticon_default.selectbox,
-    click: handleCartesian
-  };
-  modeBarButtons.lasso2d = {
-    name: "lasso2d",
-    _cat: "lasso",
-    title: function(gd) {
-      return _2(gd, "Lasso Select");
-    },
-    attr: "dragmode",
-    val: "lasso",
-    icon: ploticon_default.lasso,
-    click: handleCartesian
-  };
-  modeBarButtons.drawclosedpath = {
-    name: "drawclosedpath",
-    title: function(gd) {
-      return _2(gd, "Draw closed freeform");
-    },
-    attr: "dragmode",
-    val: "drawclosedpath",
-    icon: ploticon_default.drawclosedpath,
-    click: handleCartesian
-  };
-  modeBarButtons.drawopenpath = {
-    name: "drawopenpath",
-    title: function(gd) {
-      return _2(gd, "Draw open freeform");
-    },
-    attr: "dragmode",
-    val: "drawopenpath",
-    icon: ploticon_default.drawopenpath,
-    click: handleCartesian
-  };
-  modeBarButtons.drawline = {
-    name: "drawline",
-    title: function(gd) {
-      return _2(gd, "Draw line");
-    },
-    attr: "dragmode",
-    val: "drawline",
-    icon: ploticon_default.drawline,
-    click: handleCartesian
-  };
-  modeBarButtons.drawrect = {
-    name: "drawrect",
-    title: function(gd) {
-      return _2(gd, "Draw rectangle");
-    },
-    attr: "dragmode",
-    val: "drawrect",
-    icon: ploticon_default.drawrect,
-    click: handleCartesian
-  };
-  modeBarButtons.drawcircle = {
-    name: "drawcircle",
-    title: function(gd) {
-      return _2(gd, "Draw circle");
-    },
-    attr: "dragmode",
-    val: "drawcircle",
-    icon: ploticon_default.drawcircle,
-    click: handleCartesian
-  };
-  modeBarButtons.eraseshape = {
-    name: "eraseshape",
-    title: function(gd) {
-      return _2(gd, "Erase active shape");
-    },
-    icon: ploticon_default.eraseshape,
-    click: function(gd) {
-      return registry_default.getComponentMethod("shapes", "eraseActiveShape")(gd);
-    }
-  };
-  modeBarButtons.zoomIn2d = {
-    name: "zoomIn2d",
-    _cat: "zoomin",
-    title: function(gd) {
-      return _2(gd, "Zoom in");
-    },
-    attr: "zoom",
-    val: "in",
-    icon: ploticon_default.zoom_plus,
-    click: handleCartesian
-  };
-  modeBarButtons.zoomOut2d = {
-    name: "zoomOut2d",
-    _cat: "zoomout",
-    title: function(gd) {
-      return _2(gd, "Zoom out");
-    },
-    attr: "zoom",
-    val: "out",
-    icon: ploticon_default.zoom_minus,
-    click: handleCartesian
-  };
-  modeBarButtons.autoScale2d = {
-    name: "autoScale2d",
-    _cat: "autoscale",
-    title: function(gd) {
-      return _2(gd, "Autoscale");
-    },
-    attr: "zoom",
-    val: "auto",
-    icon: ploticon_default.autoscale,
-    click: handleCartesian
-  };
-  modeBarButtons.resetScale2d = {
-    name: "resetScale2d",
-    _cat: "resetscale",
-    title: function(gd) {
-      return _2(gd, "Reset axes");
-    },
-    attr: "zoom",
-    val: "reset",
-    icon: ploticon_default.home,
-    click: handleCartesian
-  };
-  modeBarButtons.hoverClosestCartesian = {
-    name: "hoverClosestCartesian",
-    _cat: "hoverclosest",
-    title: function(gd) {
-      return _2(gd, "Show closest data on hover");
-    },
-    attr: "hovermode",
-    val: "closest",
-    icon: ploticon_default.tooltip_basic,
-    gravity: "ne",
-    click: handleCartesian
-  };
-  modeBarButtons.hoverCompareCartesian = {
-    name: "hoverCompareCartesian",
-    _cat: "hoverCompare",
-    title: function(gd) {
-      return _2(gd, "Compare data on hover");
-    },
-    attr: "hovermode",
-    val: function(gd) {
-      return gd._fullLayout._isHoriz ? "y" : "x";
-    },
-    icon: ploticon_default.tooltip_compare,
-    gravity: "ne",
-    click: handleCartesian
-  };
-  function handleCartesian(gd, ev) {
-    var button = ev.currentTarget;
-    var astr = button.getAttribute("data-attr");
-    var val = button.getAttribute("data-val") || true;
-    var fullLayout = gd._fullLayout;
-    var aobj = {};
-    var axList = axis_ids_default.list(gd, null, true);
-    var allSpikesEnabled = fullLayout._cartesianSpikesEnabled;
-    var ax, i;
-    if (astr === "zoom") {
-      var mag = val === "in" ? 0.5 : 2;
-      var r0 = (1 + mag) / 2;
-      var r1 = (1 - mag) / 2;
-      var axName, allowed;
-      for (i = 0; i < axList.length; i++) {
-        ax = axList[i];
-        allowed = ax.modebardisable === "none" || ax.modebardisable.indexOf(
-          val === "auto" || val === "reset" ? "autoscale" : "zoominout"
-        ) === -1;
-        if (allowed && !ax.fixedrange) {
-          axName = ax._name;
-          if (val === "auto") {
-            aobj[axName + ".autorange"] = true;
-          } else if (val === "reset") {
-            if (ax._rangeInitial0 === void 0 && ax._rangeInitial1 === void 0) {
-              aobj[axName + ".autorange"] = true;
-            } else if (ax._rangeInitial0 === void 0) {
-              aobj[axName + ".autorange"] = ax._autorangeInitial;
-              aobj[axName + ".range"] = [null, ax._rangeInitial1];
-            } else if (ax._rangeInitial1 === void 0) {
-              aobj[axName + ".range"] = [ax._rangeInitial0, null];
-              aobj[axName + ".autorange"] = ax._autorangeInitial;
-            } else {
-              aobj[axName + ".range"] = [ax._rangeInitial0, ax._rangeInitial1];
-            }
-            if (ax._showSpikeInitial !== void 0) {
-              aobj[axName + ".showspikes"] = ax._showSpikeInitial;
-              if (allSpikesEnabled === "on" && !ax._showSpikeInitial) {
-                allSpikesEnabled = "off";
-              }
-            }
-          } else {
-            var rangeNow = [
-              ax.r2l(ax.range[0]),
-              ax.r2l(ax.range[1])
-            ];
-            var rangeNew = [
-              r0 * rangeNow[0] + r1 * rangeNow[1],
-              r0 * rangeNow[1] + r1 * rangeNow[0]
-            ];
-            aobj[axName + ".range[0]"] = ax.l2r(rangeNew[0]);
-            aobj[axName + ".range[1]"] = ax.l2r(rangeNew[1]);
-          }
-        }
-      }
-    } else {
-      if (astr === "hovermode" && (val === "x" || val === "y")) {
-        val = fullLayout._isHoriz ? "y" : "x";
-        button.setAttribute("data-val", val);
-      }
-      aobj[astr] = val;
-    }
-    fullLayout._cartesianSpikesEnabled = allSpikesEnabled;
-    registry_default.call("_guiRelayout", gd, aobj);
-  }
-  modeBarButtons.zoom3d = {
-    name: "zoom3d",
-    _cat: "zoom",
-    title: function(gd) {
-      return _2(gd, "Zoom");
-    },
-    attr: "scene.dragmode",
-    val: "zoom",
-    icon: ploticon_default.zoombox,
-    click: handleDrag3d
-  };
-  modeBarButtons.pan3d = {
-    name: "pan3d",
-    _cat: "pan",
-    title: function(gd) {
-      return _2(gd, "Pan");
-    },
-    attr: "scene.dragmode",
-    val: "pan",
-    icon: ploticon_default.pan,
-    click: handleDrag3d
-  };
-  modeBarButtons.orbitRotation = {
-    name: "orbitRotation",
-    title: function(gd) {
-      return _2(gd, "Orbital rotation");
-    },
-    attr: "scene.dragmode",
-    val: "orbit",
-    icon: ploticon_default["3d_rotate"],
-    click: handleDrag3d
-  };
-  modeBarButtons.tableRotation = {
-    name: "tableRotation",
-    title: function(gd) {
-      return _2(gd, "Turntable rotation");
-    },
-    attr: "scene.dragmode",
-    val: "turntable",
-    icon: ploticon_default["z-axis"],
-    click: handleDrag3d
-  };
-  function handleDrag3d(gd, ev) {
-    var button = ev.currentTarget;
-    var attr2 = button.getAttribute("data-attr");
-    var val = button.getAttribute("data-val") || true;
-    var sceneIds = gd._fullLayout._subplots.gl3d || [];
-    var layoutUpdate = {};
-    var parts = attr2.split(".");
-    for (var i = 0; i < sceneIds.length; i++) {
-      layoutUpdate[sceneIds[i] + "." + parts[1]] = val;
-    }
-    var val2d = val === "pan" ? val : "zoom";
-    layoutUpdate.dragmode = val2d;
-    registry_default.call("_guiRelayout", gd, layoutUpdate);
-  }
-  modeBarButtons.resetCameraDefault3d = {
-    name: "resetCameraDefault3d",
-    _cat: "resetCameraDefault",
-    title: function(gd) {
-      return _2(gd, "Reset camera to default");
-    },
-    attr: "resetDefault",
-    icon: ploticon_default.home,
-    click: handleCamera3d
-  };
-  modeBarButtons.resetCameraLastSave3d = {
-    name: "resetCameraLastSave3d",
-    _cat: "resetCameraLastSave",
-    title: function(gd) {
-      return _2(gd, "Reset camera to last save");
-    },
-    attr: "resetLastSave",
-    icon: ploticon_default.movie,
-    click: handleCamera3d
-  };
-  function handleCamera3d(gd, ev) {
-    var button = ev.currentTarget;
-    var attr2 = button.getAttribute("data-attr");
-    var resetLastSave = attr2 === "resetLastSave";
-    var resetDefault = attr2 === "resetDefault";
-    var fullLayout = gd._fullLayout;
-    var sceneIds = fullLayout._subplots.gl3d || [];
-    var aobj = {};
-    for (var i = 0; i < sceneIds.length; i++) {
-      var sceneId = sceneIds[i];
-      var camera = sceneId + ".camera";
-      var aspectratio = sceneId + ".aspectratio";
-      var aspectmode = sceneId + ".aspectmode";
-      var scene = fullLayout[sceneId]._scene;
-      var didUpdate;
-      if (resetLastSave) {
-        aobj[camera + ".up"] = scene.viewInitial.up;
-        aobj[camera + ".eye"] = scene.viewInitial.eye;
-        aobj[camera + ".center"] = scene.viewInitial.center;
-        didUpdate = true;
-      } else if (resetDefault) {
-        aobj[camera + ".up"] = null;
-        aobj[camera + ".eye"] = null;
-        aobj[camera + ".center"] = null;
-        didUpdate = true;
-      }
-      if (didUpdate) {
-        aobj[aspectratio + ".x"] = scene.viewInitial.aspectratio.x;
-        aobj[aspectratio + ".y"] = scene.viewInitial.aspectratio.y;
-        aobj[aspectratio + ".z"] = scene.viewInitial.aspectratio.z;
-        aobj[aspectmode] = scene.viewInitial.aspectmode;
-      }
-    }
-    registry_default.call("_guiRelayout", gd, aobj);
-  }
-  modeBarButtons.hoverClosest3d = {
-    name: "hoverClosest3d",
-    _cat: "hoverclosest",
-    title: function(gd) {
-      return _2(gd, "Toggle show closest data on hover");
-    },
-    attr: "hovermode",
-    val: null,
-    toggle: true,
-    icon: ploticon_default.tooltip_basic,
-    gravity: "ne",
-    click: handleHover3d
-  };
-  function getNextHover3d(gd, ev) {
-    var button = ev.currentTarget;
-    var val = button._previousVal;
-    var fullLayout = gd._fullLayout;
-    var sceneIds = fullLayout._subplots.gl3d || [];
-    var axes2 = ["xaxis", "yaxis", "zaxis"];
-    var currentSpikes = {};
-    var layoutUpdate = {};
-    if (val) {
-      layoutUpdate = val;
-      button._previousVal = null;
-    } else {
-      for (var i = 0; i < sceneIds.length; i++) {
-        var sceneId = sceneIds[i];
-        var sceneLayout = fullLayout[sceneId];
-        var hovermodeAStr = sceneId + ".hovermode";
-        currentSpikes[hovermodeAStr] = sceneLayout.hovermode;
-        layoutUpdate[hovermodeAStr] = false;
-        for (var j = 0; j < 3; j++) {
-          var axis = axes2[j];
-          var spikeAStr = sceneId + "." + axis + ".showspikes";
-          layoutUpdate[spikeAStr] = false;
-          currentSpikes[spikeAStr] = sceneLayout[axis].showspikes;
-        }
-      }
-      button._previousVal = currentSpikes;
-    }
-    return layoutUpdate;
-  }
-  function handleHover3d(gd, ev) {
-    var layoutUpdate = getNextHover3d(gd, ev);
-    registry_default.call("_guiRelayout", gd, layoutUpdate);
-  }
-  modeBarButtons.zoomInGeo = {
-    name: "zoomInGeo",
-    _cat: "zoomin",
-    title: function(gd) {
-      return _2(gd, "Zoom in");
-    },
-    attr: "zoom",
-    val: "in",
-    icon: ploticon_default.zoom_plus,
-    click: handleGeo
-  };
-  modeBarButtons.zoomOutGeo = {
-    name: "zoomOutGeo",
-    _cat: "zoomout",
-    title: function(gd) {
-      return _2(gd, "Zoom out");
-    },
-    attr: "zoom",
-    val: "out",
-    icon: ploticon_default.zoom_minus,
-    click: handleGeo
-  };
-  modeBarButtons.resetGeo = {
-    name: "resetGeo",
-    _cat: "reset",
-    title: function(gd) {
-      return _2(gd, "Reset");
-    },
-    attr: "reset",
-    val: null,
-    icon: ploticon_default.autoscale,
-    click: handleGeo
-  };
-  modeBarButtons.hoverClosestGeo = {
-    name: "hoverClosestGeo",
-    _cat: "hoverclosest",
-    title: function(gd) {
-      return _2(gd, "Toggle show closest data on hover");
-    },
-    attr: "hovermode",
-    val: null,
-    toggle: true,
-    icon: ploticon_default.tooltip_basic,
-    gravity: "ne",
-    click: toggleHover
-  };
-  function handleGeo(gd, ev) {
-    var button = ev.currentTarget;
-    var attr2 = button.getAttribute("data-attr");
-    var val = button.getAttribute("data-val") || true;
-    var fullLayout = gd._fullLayout;
-    var geoIds = fullLayout._subplots.geo || [];
-    for (var i = 0; i < geoIds.length; i++) {
-      var id2 = geoIds[i];
-      var geoLayout = fullLayout[id2];
-      if (attr2 === "zoom") {
-        var scale = geoLayout.projection.scale;
-        var newScale = val === "in" ? 2 * scale : 0.5 * scale;
-        registry_default.call("_guiRelayout", gd, id2 + ".projection.scale", newScale);
-      }
-    }
-    if (attr2 === "reset") {
-      resetView(gd, "geo");
-    }
-  }
-  modeBarButtons.hoverClosestPie = {
-    name: "hoverClosestPie",
-    _cat: "hoverclosest",
-    title: function(gd) {
-      return _2(gd, "Toggle show closest data on hover");
-    },
-    attr: "hovermode",
-    val: "closest",
-    icon: ploticon_default.tooltip_basic,
-    gravity: "ne",
-    click: toggleHover
-  };
-  function getNextHover(gd) {
-    var fullLayout = gd._fullLayout;
-    if (fullLayout.hovermode) return false;
-    if (fullLayout._has("cartesian")) {
-      return fullLayout._isHoriz ? "y" : "x";
-    }
-    return "closest";
-  }
-  function toggleHover(gd) {
-    var newHover = getNextHover(gd);
-    registry_default.call("_guiRelayout", gd, "hovermode", newHover);
-  }
-  modeBarButtons.resetViewSankey = {
-    name: "resetSankeyGroup",
-    title: function(gd) {
-      return _2(gd, "Reset view");
-    },
-    icon: ploticon_default.home,
-    click: function(gd) {
-      var aObj = {
-        "node.groups": [],
-        "node.x": [],
-        "node.y": []
-      };
-      for (var i = 0; i < gd._fullData.length; i++) {
-        var viewInitial = gd._fullData[i]._viewInitial;
-        aObj["node.groups"].push(viewInitial.node.groups.slice());
-        aObj["node.x"].push(viewInitial.node.x.slice());
-        aObj["node.y"].push(viewInitial.node.y.slice());
-      }
-      registry_default.call("restyle", gd, aObj);
-    }
-  };
-  modeBarButtons.toggleHover = {
-    name: "toggleHover",
-    title: function(gd) {
-      return _2(gd, "Toggle show closest data on hover");
-    },
-    attr: "hovermode",
-    val: null,
-    toggle: true,
-    icon: ploticon_default.tooltip_basic,
-    gravity: "ne",
-    click: function(gd, ev) {
-      var layoutUpdate = getNextHover3d(gd, ev);
-      layoutUpdate.hovermode = getNextHover(gd);
-      registry_default.call("_guiRelayout", gd, layoutUpdate);
-    }
-  };
-  modeBarButtons.resetViews = {
-    name: "resetViews",
-    title: function(gd) {
-      return _2(gd, "Reset views");
-    },
-    icon: ploticon_default.home,
-    click: function(gd, ev) {
-      var button = ev.currentTarget;
-      button.setAttribute("data-attr", "zoom");
-      button.setAttribute("data-val", "reset");
-      handleCartesian(gd, ev);
-      button.setAttribute("data-attr", "resetLastSave");
-      handleCamera3d(gd, ev);
-      resetView(gd, "geo");
-      resetView(gd, "mapbox");
-      resetView(gd, "map");
-    }
-  };
-  modeBarButtons.toggleSpikelines = {
-    name: "toggleSpikelines",
-    title: function(gd) {
-      return _2(gd, "Toggle Spike Lines");
-    },
-    icon: ploticon_default.spikeline,
-    attr: "_cartesianSpikesEnabled",
-    val: "on",
-    click: function(gd) {
-      var fullLayout = gd._fullLayout;
-      var allSpikesEnabled = fullLayout._cartesianSpikesEnabled;
-      fullLayout._cartesianSpikesEnabled = allSpikesEnabled === "on" ? "off" : "on";
-      registry_default.call("_guiRelayout", gd, setSpikelineVisibility(gd));
-    }
-  };
-  function setSpikelineVisibility(gd) {
-    var fullLayout = gd._fullLayout;
-    var areSpikesOn = fullLayout._cartesianSpikesEnabled === "on";
-    var axList = axis_ids_default.list(gd, null, true);
-    var aobj = {};
-    for (var i = 0; i < axList.length; i++) {
-      var ax = axList[i];
-      aobj[ax._name + ".showspikes"] = areSpikesOn ? true : ax._showSpikeInitial;
-    }
-    return aobj;
-  }
-  modeBarButtons.resetViewMapbox = {
-    name: "resetViewMapbox",
-    _cat: "resetView",
-    title: function(gd) {
-      return _2(gd, "Reset view");
-    },
-    attr: "reset",
-    icon: ploticon_default.home,
-    click: function(gd) {
-      resetView(gd, "mapbox");
-    }
-  };
-  modeBarButtons.resetViewMap = {
-    name: "resetViewMap",
-    _cat: "resetView",
-    title: function(gd) {
-      return _2(gd, "Reset view");
-    },
-    attr: "reset",
-    icon: ploticon_default.home,
-    click: function(gd) {
-      resetView(gd, "map");
-    }
-  };
-  modeBarButtons.zoomInMapbox = {
-    name: "zoomInMapbox",
-    _cat: "zoomin",
-    title: function(gd) {
-      return _2(gd, "Zoom in");
-    },
-    attr: "zoom",
-    val: "in",
-    icon: ploticon_default.zoom_plus,
-    click: handleMapboxZoom
-  };
-  modeBarButtons.zoomInMap = {
-    name: "zoomInMap",
-    _cat: "zoomin",
-    title: function(gd) {
-      return _2(gd, "Zoom in");
-    },
-    attr: "zoom",
-    val: "in",
-    icon: ploticon_default.zoom_plus,
-    click: handleMapZoom
-  };
-  modeBarButtons.zoomOutMapbox = {
-    name: "zoomOutMapbox",
-    _cat: "zoomout",
-    title: function(gd) {
-      return _2(gd, "Zoom out");
-    },
-    attr: "zoom",
-    val: "out",
-    icon: ploticon_default.zoom_minus,
-    click: handleMapboxZoom
-  };
-  modeBarButtons.zoomOutMap = {
-    name: "zoomOutMap",
-    _cat: "zoomout",
-    title: function(gd) {
-      return _2(gd, "Zoom out");
-    },
-    attr: "zoom",
-    val: "out",
-    icon: ploticon_default.zoom_minus,
-    click: handleMapZoom
-  };
-  function handleMapboxZoom(gd, ev) {
-    _handleMapZoom(gd, ev, "mapbox");
-  }
-  function handleMapZoom(gd, ev) {
-    _handleMapZoom(gd, ev, "map");
-  }
-  function _handleMapZoom(gd, ev, mapType) {
-    var button = ev.currentTarget;
-    var val = button.getAttribute("data-val");
-    var fullLayout = gd._fullLayout;
-    var subplotIds = fullLayout._subplots[mapType] || [];
-    var scalar = 1.05;
-    var aObj = {};
-    for (var i = 0; i < subplotIds.length; i++) {
-      var id2 = subplotIds[i];
-      var current = fullLayout[id2].zoom;
-      var next = val === "in" ? scalar * current : current / scalar;
-      aObj[id2 + ".zoom"] = next;
-    }
-    registry_default.call("_guiRelayout", gd, aObj);
-  }
-  function resetView(gd, subplotType) {
-    var fullLayout = gd._fullLayout;
-    var subplotIds = fullLayout._subplots[subplotType] || [];
-    var aObj = {};
-    for (var i = 0; i < subplotIds.length; i++) {
-      var id2 = subplotIds[i];
-      var subplotObj = fullLayout[id2]._subplot;
-      var viewInitial = subplotObj.viewInitial;
-      var viewKeys = Object.keys(viewInitial);
-      for (var j = 0; j < viewKeys.length; j++) {
-        var key = viewKeys[j];
-        aObj[id2 + "." + key] = viewInitial[key];
-      }
-    }
-    registry_default.call("_guiRelayout", gd, aObj);
-  }
-  var buttons_default = modeBarButtons;
-
-  // src/components/modebar/constants.js
-  var buttonList = Object.keys(buttons_default);
-  var DRAW_MODES = [
-    "drawline",
-    "drawopenpath",
-    "drawclosedpath",
-    "drawcircle",
-    "drawrect",
-    "eraseshape"
-  ];
-  var backButtons = [
-    "v1hovermode",
-    "hoverclosest",
-    "hovercompare",
-    "togglehover",
-    "togglespikelines"
-  ].concat(DRAW_MODES);
-  var foreButtons = [];
-  var addToForeButtons = function(b) {
-    if (backButtons.indexOf(b._cat || b.name) !== -1) return;
-    var name6 = b.name;
-    var _cat = (b._cat || b.name).toLowerCase();
-    if (foreButtons.indexOf(name6) === -1) foreButtons.push(name6);
-    if (foreButtons.indexOf(_cat) === -1) foreButtons.push(_cat);
-  };
-  buttonList.forEach(function(k) {
-    addToForeButtons(buttons_default[k]);
-  });
-  foreButtons.sort();
-  var constants_default4 = {
-    DRAW_MODES,
-    backButtons,
-    foreButtons
-  };
-
-  // src/components/modebar/attributes.js
-  var attributes_default8 = {
-    editType: "modebar",
-    orientation: {
-      valType: "enumerated",
-      values: ["v", "h"],
-      dflt: "h",
-      editType: "modebar"
-    },
-    bgcolor: {
-      valType: "color",
-      editType: "modebar"
-    },
-    color: {
-      valType: "color",
-      editType: "modebar"
-    },
-    activecolor: {
-      valType: "color",
-      editType: "modebar"
-    },
-    uirevision: {
-      valType: "any",
-      editType: "none"
-    },
-    add: {
-      valType: "string",
-      arrayOk: true,
-      dflt: "",
-      editType: "modebar"
-    },
-    remove: {
-      valType: "string",
-      arrayOk: true,
-      dflt: "",
-      editType: "modebar"
-    }
-  };
-
-  // src/components/modebar/defaults.js
-  function supplyLayoutDefaults3(layoutIn, layoutOut) {
-    var containerIn = layoutIn.modebar || {};
-    var containerOut = plot_template_default.newContainer(layoutOut, "modebar");
-    function coerce3(attr2, dflt) {
-      return lib_default.coerce(containerIn, containerOut, attributes_default8, attr2, dflt);
-    }
-    coerce3("orientation");
-    coerce3("bgcolor", color_default.addOpacity(layoutOut.paper_bgcolor, 0.5));
-    var defaultColor = color_default.contrast(color_default.rgb(layoutOut.modebar.bgcolor));
-    coerce3("color", color_default.addOpacity(defaultColor, 0.3));
-    coerce3("activecolor", color_default.addOpacity(defaultColor, 0.7));
-    coerce3("uirevision", layoutOut.uirevision);
-    coerce3("add");
-    coerce3("remove");
-  }
-
-  // src/components/modebar/modebar.js
-  var import_fast_isnumeric25 = __toESM(require_fast_isnumeric(), 1);
-
-  // src/version.js
-  var version = "3.3.1";
-
-  // src/components/modebar/modebar.js
-  var Parser = new DOMParser();
-  function ModeBar(opts) {
-    this.container = opts.container;
-    this.element = document.createElement("div");
-    this.update(opts.graphInfo, opts.buttons);
-    this.container.appendChild(this.element);
-  }
-  var proto = ModeBar.prototype;
-  proto.update = function(graphInfo, buttons) {
-    this.graphInfo = graphInfo;
-    var context = this.graphInfo._context;
-    var fullLayout = this.graphInfo._fullLayout;
-    var modeBarId = "modebar-" + fullLayout._uid;
-    this.element.setAttribute("id", modeBarId);
-    this.element.setAttribute("role", "toolbar");
-    this._uid = modeBarId;
-    this.element.className = "modebar modebar--custom";
-    if (context.displayModeBar === "hover") this.element.className += " modebar--hover ease-bg";
-    if (fullLayout.modebar.orientation === "v") {
-      this.element.className += " vertical";
-      buttons = buttons.reverse();
-    }
-    var style5 = fullLayout.modebar;
-    var groupSelector = "#" + modeBarId + " .modebar-group";
-    document.querySelectorAll(groupSelector).forEach(function(group) {
-      group.style.backgroundColor = style5.bgcolor;
-    });
-    var needsNewButtons = !this.hasButtons(buttons);
-    var needsNewLogo = this.hasLogo !== context.displaylogo;
-    var needsNewLocale = this.locale !== context.locale;
-    this.locale = context.locale;
-    if (needsNewButtons || needsNewLogo || needsNewLocale) {
-      this.removeAllButtons();
-      this.updateButtons(buttons);
-      if (context.watermark || context.displaylogo) {
-        var logoGroup = this.getLogo();
-        if (context.watermark) {
-          logoGroup.className = logoGroup.className + " watermark";
-        }
-        if (fullLayout.modebar.orientation === "v") {
-          this.element.insertBefore(logoGroup, this.element.childNodes[0]);
-        } else {
-          this.element.appendChild(logoGroup);
-        }
-        this.hasLogo = true;
-      }
-    }
-    this.updateActiveButton();
-    lib_default.setStyleOnHover("#" + modeBarId + " .modebar-btn", ".active", ".icon path", "fill: " + style5.activecolor, "fill: " + style5.color, this.element);
-  };
-  proto.updateButtons = function(buttons) {
-    var _this = this;
-    this.buttons = buttons;
-    this.buttonElements = [];
-    this.buttonsNames = [];
-    this.buttons.forEach(function(buttonGroup) {
-      var group = _this.createGroup();
-      buttonGroup.forEach(function(buttonConfig) {
-        var buttonName = buttonConfig.name;
-        if (!buttonName) {
-          throw new Error("must provide button 'name' in button config");
-        }
-        if (_this.buttonsNames.indexOf(buttonName) !== -1) {
-          throw new Error("button name '" + buttonName + "' is taken");
-        }
-        _this.buttonsNames.push(buttonName);
-        var button = _this.createButton(buttonConfig);
-        _this.buttonElements.push(button);
-        group.appendChild(button);
-      });
-      _this.element.appendChild(group);
-    });
-  };
-  proto.createGroup = function() {
-    var group = document.createElement("div");
-    group.className = "modebar-group";
-    var style5 = this.graphInfo._fullLayout.modebar;
-    group.style.backgroundColor = style5.bgcolor;
-    return group;
-  };
-  proto.createButton = function(config) {
-    var _this = this;
-    var button = document.createElement("button");
-    button.setAttribute("type", "button");
-    button.setAttribute("rel", "tooltip");
-    button.className = "modebar-btn";
-    var title = config.title;
-    if (title === void 0) title = config.name;
-    else if (typeof title === "function") title = title(this.graphInfo);
-    if (title || title === 0) {
-      button.setAttribute("data-title", title);
-      button.setAttribute("aria-label", title);
-    }
-    ;
-    if (config.attr !== void 0) button.setAttribute("data-attr", config.attr);
-    var val = config.val;
-    if (val !== void 0) {
-      if (typeof val === "function") val = val(this.graphInfo);
-      button.setAttribute("data-val", val);
-    }
-    var click2 = config.click;
-    if (typeof click2 !== "function") {
-      throw new Error("must provide button 'click' function in button config");
-    } else {
-      button.addEventListener("click", function(ev) {
-        config.click(_this.graphInfo, ev);
-        _this.updateActiveButton(ev.currentTarget);
-      });
-    }
-    button.setAttribute("data-toggle", config.toggle || false);
-    if (config.toggle) select_default2(button).classed("active", true);
-    var icon = config.icon;
-    if (typeof icon === "function") {
-      button.appendChild(icon());
-    } else {
-      button.appendChild(this.createIcon(icon || ploticon_default.question));
-    }
-    button.setAttribute("data-gravity", config.gravity || "n");
-    return button;
-  };
-  proto.createIcon = function(thisIcon) {
-    var iconHeight = (0, import_fast_isnumeric25.default)(thisIcon.height) ? Number(thisIcon.height) : thisIcon.ascent - thisIcon.descent;
-    var svgNS = "http://www.w3.org/2000/svg";
-    var icon;
-    if (thisIcon.path) {
-      icon = document.createElementNS(svgNS, "svg");
-      icon.setAttribute("viewBox", [0, 0, thisIcon.width, iconHeight].join(" "));
-      icon.setAttribute("class", "icon");
-      var path = document.createElementNS(svgNS, "path");
-      path.setAttribute("d", thisIcon.path);
-      if (thisIcon.transform) {
-        path.setAttribute("transform", thisIcon.transform);
-      } else if (thisIcon.ascent !== void 0) {
-        path.setAttribute("transform", "matrix(1 0 0 -1 0 " + thisIcon.ascent + ")");
-      }
-      icon.appendChild(path);
-    }
-    if (thisIcon.svg) {
-      var svgDoc = Parser.parseFromString(thisIcon.svg, "application/xml");
-      icon = svgDoc.childNodes[0];
-    }
-    icon.setAttribute("height", "1em");
-    icon.setAttribute("width", "1em");
-    return icon;
-  };
-  proto.updateActiveButton = function(buttonClicked) {
-    var fullLayout = this.graphInfo._fullLayout;
-    var dataAttrClicked = buttonClicked !== void 0 ? buttonClicked.getAttribute("data-attr") : null;
-    this.buttonElements.forEach(function(button) {
-      var thisval = button.getAttribute("data-val") || true;
-      var dataAttr = button.getAttribute("data-attr");
-      var isToggleButton = button.getAttribute("data-toggle") === "true";
-      var button3 = select_default2(button);
-      var updateButtonStyle = function(button2, isActive4) {
-        var style5 = fullLayout.modebar;
-        var childEl = button2.querySelector(".icon path");
-        if (childEl) {
-          if (isActive4 || button2.matches(":hover")) {
-            childEl.style.fill = style5.activecolor;
-          } else {
-            childEl.style.fill = style5.color;
-          }
-        }
-      };
-      if (isToggleButton) {
-        if (dataAttr === dataAttrClicked) {
-          var isActive3 = !button3.classed("active");
-          button3.classed("active", isActive3);
-          updateButtonStyle(button, isActive3);
-        }
-      } else {
-        var val = dataAttr === null ? dataAttr : lib_default.nestedProperty(fullLayout, dataAttr).get();
-        button3.classed("active", val === thisval);
-        updateButtonStyle(button, val === thisval);
-      }
-    });
-  };
-  proto.hasButtons = function(buttons) {
-    var currentButtons = this.buttons;
-    if (!currentButtons) return false;
-    if (buttons.length !== currentButtons.length) return false;
-    for (var i = 0; i < buttons.length; ++i) {
-      if (buttons[i].length !== currentButtons[i].length) return false;
-      for (var j = 0; j < buttons[i].length; j++) {
-        if (buttons[i][j].name !== currentButtons[i][j].name) return false;
-      }
-    }
-    return true;
-  };
-  function jsVersion(str) {
-    return str + " (v" + version + ")";
-  }
-  proto.getLogo = function() {
-    var group = this.createGroup();
-    var a = document.createElement("a");
-    a.href = "https://plotly.com/";
-    a.target = "_blank";
-    a.setAttribute("data-title", jsVersion(lib_default._(this.graphInfo, "Produced with Plotly.js")));
-    a.className = "modebar-btn plotlyjsicon modebar-btn--logo";
-    a.appendChild(this.createIcon(ploticon_default.newplotlylogo));
-    group.appendChild(a);
-    return group;
-  };
-  proto.removeAllButtons = function() {
-    while (this.element.firstChild) {
-      this.element.removeChild(this.element.firstChild);
-    }
-    this.hasLogo = false;
-  };
-  proto.destroy = function() {
-    lib_default.removeElement(this.container.querySelector(".modebar"));
-  };
-  function createModeBar(gd, buttons) {
-    var fullLayout = gd._fullLayout;
-    var modeBar = new ModeBar({
-      graphInfo: gd,
-      container: fullLayout._modebardiv.node(),
-      buttons
-    });
-    if (fullLayout._privateplot) {
-      select_default2(modeBar.element).append("span").classed("badge-private float--left", true).text("PRIVATE");
-    }
-    return modeBar;
-  }
-  var modebar_default = createModeBar;
-
-  // src/components/modebar/manage.js
-  var { DRAW_MODES: DRAW_MODES2 } = constants_default4;
-  var { extendDeep: extendDeep2 } = lib_default;
-  function manageModeBar(gd) {
-    var fullLayout = gd._fullLayout;
-    var context = gd._context;
-    var modeBar = fullLayout._modeBar;
-    if (!context.displayModeBar && !context.watermark) {
-      if (modeBar) {
-        modeBar.destroy();
-        delete fullLayout._modeBar;
-      }
-      return;
-    }
-    if (!Array.isArray(context.modeBarButtonsToRemove)) {
-      throw new Error([
-        "*modeBarButtonsToRemove* configuration options",
-        "must be an array."
-      ].join(" "));
-    }
-    if (!Array.isArray(context.modeBarButtonsToAdd)) {
-      throw new Error([
-        "*modeBarButtonsToAdd* configuration options",
-        "must be an array."
-      ].join(" "));
-    }
-    var customButtons = context.modeBarButtons;
-    var buttonGroups;
-    if (Array.isArray(customButtons) && customButtons.length) {
-      buttonGroups = fillCustomButton(customButtons);
-    } else if (!context.displayModeBar && context.watermark) {
-      buttonGroups = [];
-    } else {
-      buttonGroups = getButtonGroups(gd);
-    }
-    if (modeBar) modeBar.update(gd, buttonGroups);
-    else fullLayout._modeBar = modebar_default(gd, buttonGroups);
-  }
-  function getButtonGroups(gd) {
-    var fullLayout = gd._fullLayout;
-    var fullData = gd._fullData;
-    var context = gd._context;
-    function match(name6, B) {
-      if (typeof B === "string") {
-        if (B.toLowerCase() === name6.toLowerCase()) return true;
-      } else {
-        var v0 = B.name;
-        var v1 = B._cat || B.name;
-        if (v0 === name6 || v1 === name6.toLowerCase()) return true;
-      }
-      return false;
-    }
-    var layoutAdd = fullLayout.modebar.add;
-    if (typeof layoutAdd === "string") layoutAdd = [layoutAdd];
-    var layoutRemove = fullLayout.modebar.remove;
-    if (typeof layoutRemove === "string") layoutRemove = [layoutRemove];
-    var buttonsToAdd = context.modeBarButtonsToAdd.concat(
-      layoutAdd.filter(function(e) {
-        for (var i2 = 0; i2 < context.modeBarButtonsToRemove.length; i2++) {
-          if (match(e, context.modeBarButtonsToRemove[i2])) return false;
-        }
-        return true;
-      })
-    );
-    var buttonsToRemove = context.modeBarButtonsToRemove.concat(
-      layoutRemove.filter(function(e) {
-        for (var i2 = 0; i2 < context.modeBarButtonsToAdd.length; i2++) {
-          if (match(e, context.modeBarButtonsToAdd[i2])) return false;
-        }
-        return true;
-      })
-    );
-    var hasCartesian = fullLayout._has("cartesian");
-    var hasGL3D = fullLayout._has("gl3d");
-    var hasGeo = fullLayout._has("geo");
-    var hasPie = fullLayout._has("pie");
-    var hasFunnelarea = fullLayout._has("funnelarea");
-    var hasTernary = fullLayout._has("ternary");
-    var hasMapbox = fullLayout._has("mapbox");
-    var hasMap = fullLayout._has("map");
-    var hasPolar = fullLayout._has("polar");
-    var hasSmith = fullLayout._has("smith");
-    var hasSankey = fullLayout._has("sankey");
-    var allAxesFixed = areAllAxesFixed(fullLayout);
-    var hasUnifiedHoverLabel = isUnifiedHover(fullLayout.hovermode);
-    var groups = [];
-    function addGroup(newGroup) {
-      if (!newGroup.length) return;
-      var out = [];
-      for (var i2 = 0; i2 < newGroup.length; i2++) {
-        var name6 = newGroup[i2];
-        var B = buttons_default[name6];
-        var v0 = B.name.toLowerCase();
-        var v1 = (B._cat || B.name).toLowerCase();
-        var found = false;
-        for (var q = 0; q < buttonsToRemove.length; q++) {
-          var t = buttonsToRemove[q].toLowerCase();
-          if (t === v0 || t === v1) {
-            found = true;
-            break;
-          }
-        }
-        if (found) continue;
-        out.push(buttons_default[name6]);
-      }
-      groups.push(out);
-    }
-    var commonGroup = ["toImage"];
-    if (context.showEditInChartStudio) commonGroup.push("editInChartStudio");
-    else if (context.showSendToCloud) commonGroup.push("sendDataToCloud");
-    addGroup(commonGroup);
-    var zoomGroup = [];
-    var hoverGroup = [];
-    var resetGroup = [];
-    var dragModeGroup = [];
-    if ((hasCartesian || hasPie || hasFunnelarea || hasTernary) + hasGeo + hasGL3D + hasMapbox + hasMap + hasPolar + hasSmith > 1) {
-      hoverGroup = ["toggleHover"];
-      resetGroup = ["resetViews"];
-    } else if (hasGeo) {
-      zoomGroup = ["zoomInGeo", "zoomOutGeo"];
-      hoverGroup = ["hoverClosestGeo"];
-      resetGroup = ["resetGeo"];
-    } else if (hasGL3D) {
-      hoverGroup = ["hoverClosest3d"];
-      resetGroup = ["resetCameraDefault3d", "resetCameraLastSave3d"];
-    } else if (hasMapbox) {
-      zoomGroup = ["zoomInMapbox", "zoomOutMapbox"];
-      hoverGroup = ["toggleHover"];
-      resetGroup = ["resetViewMapbox"];
-    } else if (hasMap) {
-      zoomGroup = ["zoomInMap", "zoomOutMap"];
-      hoverGroup = ["toggleHover"];
-      resetGroup = ["resetViewMap"];
-    } else if (hasPie) {
-      hoverGroup = ["hoverClosestPie"];
-    } else if (hasSankey) {
-      hoverGroup = ["hoverClosestCartesian", "hoverCompareCartesian"];
-      resetGroup = ["resetViewSankey"];
-    } else {
-      hoverGroup = ["toggleHover"];
-    }
-    if (hasCartesian) {
-      hoverGroup.push("toggleSpikelines", "hoverClosestCartesian", "hoverCompareCartesian");
-    }
-    if (hasNoHover(fullData) || hasUnifiedHoverLabel) {
-      hoverGroup = [];
-    }
-    if (hasCartesian && !allAxesFixed) {
-      zoomGroup = ["zoomIn2d", "zoomOut2d", "autoScale2d"];
-      if (resetGroup[0] !== "resetViews") resetGroup = ["resetScale2d"];
-    }
-    if (hasGL3D) {
-      dragModeGroup = ["zoom3d", "pan3d", "orbitRotation", "tableRotation"];
-    } else if (hasCartesian && !allAxesFixed || hasTernary) {
-      dragModeGroup = ["zoom2d", "pan2d"];
-    } else if (hasMapbox || hasMap || hasGeo) {
-      dragModeGroup = ["pan2d"];
-    } else if (hasPolar) {
-      dragModeGroup = ["zoom2d"];
-    }
-    if (isSelectable(fullData)) {
-      dragModeGroup.push("select2d", "lasso2d");
-    }
-    var enabledHoverGroup = [];
-    var enableHover = function(a) {
-      if (enabledHoverGroup.indexOf(a) !== -1) return;
-      if (hoverGroup.indexOf(a) !== -1) {
-        enabledHoverGroup.push(a);
-      }
-    };
-    if (Array.isArray(buttonsToAdd)) {
-      var newList = [];
-      for (var i = 0; i < buttonsToAdd.length; i++) {
-        var b = buttonsToAdd[i];
-        if (typeof b === "string") {
-          b = b.toLowerCase();
-          if (DRAW_MODES2.indexOf(b) !== -1) {
-            if (fullLayout._has("mapbox") || fullLayout._has("map") || // draw shapes in paper coordinate (could be improved in future to support data coordinate, when there is no pitch)
-            fullLayout._has("cartesian")) {
-              dragModeGroup.push(b);
-            }
-          } else if (b === "togglespikelines") {
-            enableHover("toggleSpikelines");
-          } else if (b === "togglehover") {
-            enableHover("toggleHover");
-          } else if (b === "hovercompare") {
-            enableHover("hoverCompareCartesian");
-          } else if (b === "hoverclosest") {
-            enableHover("hoverClosestCartesian");
-            enableHover("hoverClosestGeo");
-            enableHover("hoverClosest3d");
-            enableHover("hoverClosestPie");
-          } else if (b === "v1hovermode") {
-            enableHover("hoverClosestCartesian");
-            enableHover("hoverCompareCartesian");
-            enableHover("hoverClosestGeo");
-            enableHover("hoverClosest3d");
-            enableHover("hoverClosestPie");
-          }
-        } else newList.push(b);
-      }
-      buttonsToAdd = newList;
-    }
-    addGroup(dragModeGroup);
-    addGroup(zoomGroup.concat(resetGroup));
-    addGroup(enabledHoverGroup);
-    return appendButtonsToGroups(groups, buttonsToAdd);
-  }
-  function areAllAxesFixed(fullLayout) {
-    var axList = axis_ids_default.list({ _fullLayout: fullLayout }, null, true);
-    for (var i = 0; i < axList.length; i++) {
-      var disabled = axList[i].modebardisable;
-      if (!axList[i].fixedrange && disabled !== "autoscale+zoominout" && disabled !== "zoominout+autoscale") {
-        return false;
-      }
-    }
-    return true;
-  }
-  function isSelectable(fullData) {
-    var selectable = false;
-    for (var i = 0; i < fullData.length; i++) {
-      if (selectable) break;
-      var trace = fullData[i];
-      if (!trace._module || !trace._module.selectPoints) continue;
-      if (registry_default.traceIs(trace, "scatter-like")) {
-        if (subtypes_default.hasMarkers(trace) || subtypes_default.hasText(trace)) {
-          selectable = true;
-        }
-      } else if (registry_default.traceIs(trace, "box-violin")) {
-        if (trace.boxpoints === "all" || trace.points === "all") {
-          selectable = true;
-        }
-      } else {
-        selectable = true;
-      }
-    }
-    return selectable;
-  }
-  function hasNoHover(fullData) {
-    for (var i = 0; i < fullData.length; i++) {
-      if (!registry_default.traceIs(fullData[i], "noHover")) return false;
-    }
-    return true;
-  }
-  function appendButtonsToGroups(groups, buttons) {
-    if (buttons.length) {
-      if (Array.isArray(buttons[0])) {
-        for (var i = 0; i < buttons.length; i++) {
-          groups.push(buttons[i]);
-        }
-      } else groups.push(buttons);
-    }
-    return groups;
-  }
-  function fillCustomButton(originalModeBarButtons) {
-    var customButtons = extendDeep2([], originalModeBarButtons);
-    for (var i = 0; i < customButtons.length; i++) {
-      var buttonGroup = customButtons[i];
-      for (var j = 0; j < buttonGroup.length; j++) {
-        var button = buttonGroup[j];
-        if (typeof button === "string") {
-          if (buttons_default[button] !== void 0) {
-            customButtons[i][j] = buttons_default[button];
-          } else {
-            throw new Error([
-              "*modeBarButtons* configuration options",
-              "invalid button name"
-            ].join(" "));
-          }
-        }
-      }
-    }
-    return customButtons;
-  }
-
-  // src/components/modebar/index.js
-  var modebar_default2 = {
-    moduleType: "component",
-    name: "modebar",
-    layoutAttributes: attributes_default8,
-    supplyLayoutDefaults: supplyLayoutDefaults3,
-    manage: manageModeBar
-  };
-
   // src/plots/cartesian/scale_zoom.js
   var { FROM_BL } = alignment_default;
   function scaleZoom(ax, factor, centerFraction) {
@@ -32460,7 +30942,7 @@ var Plotly = (() => {
     }).selectAll(".main-svg").call(drawing_default.setSize, fullLayout.width, fullLayout.height);
     gd._context.setBackground(gd, fullLayout.paper_bgcolor);
     drawMainTitle(gd);
-    modebar_default2.manage(gd);
+    registry_default.getComponentMethod("modebar", "manage")(gd);
     if (!fullLayout._has("cartesian")) {
       return plots_default.previousPromises(gd);
     }
@@ -32901,7 +31383,7 @@ var Plotly = (() => {
   };
   var doModeBar = function(gd) {
     var fullLayout = gd._fullLayout;
-    modebar_default2.manage(gd);
+    registry_default.getComponentMethod("modebar", "manage")(gd);
     for (var i = 0; i < fullLayout._basePlotModules.length; i++) {
       var updateFx3 = fullLayout._basePlotModules[i].updateFx;
       if (updateFx3) updateFx3(gd);
@@ -34284,7 +32766,7 @@ var Plotly = (() => {
   var manage_arrays_default = { containerArrayMatch: containerArrayMatch2, isAddVal, isRemoveVal, applyContainerArrayChanges };
 
   // src/plot_api/helpers.js
-  var import_fast_isnumeric26 = __toESM(require_fast_isnumeric(), 1);
+  var import_fast_isnumeric25 = __toESM(require_fast_isnumeric(), 1);
   var cleanId3 = axis_ids_default.cleanId;
   var getFromTrace2 = axis_ids_default.getFromTrace;
   var traceIs2 = registry_default.traceIs;
@@ -34536,7 +33018,7 @@ var Plotly = (() => {
     }
   };
   var coerceTraceIndices = function(gd, traceIndices) {
-    if ((0, import_fast_isnumeric26.default)(traceIndices)) {
+    if ((0, import_fast_isnumeric25.default)(traceIndices)) {
       return [traceIndices];
     } else if (!Array.isArray(traceIndices) || !traceIndices.length) {
       return gd.data.map(function(_3, i2) {
@@ -34560,7 +33042,7 @@ var Plotly = (() => {
     var parts = np.parts;
     var pLength = parts.length;
     var pLast = parts[pLength - 1];
-    var pLastIsNumber = (0, import_fast_isnumeric26.default)(pLast);
+    var pLastIsNumber = (0, import_fast_isnumeric25.default)(pLast);
     if (pLastIsNumber && newVal === null) {
       var contPath = parts.slice(0, pLength - 1).join(".");
       var cont = lib_default.nestedProperty(obj, contPath).get();
@@ -34781,10 +33263,12 @@ var Plotly = (() => {
           }
         }
       }
-      if (fullLayout.modebar.orientation === "h") {
-        fullLayout._modebardiv.style("height", null).style("width", "100%");
-      } else {
-        fullLayout._modebardiv.style("width", null).style("height", fullLayout.height + "px");
+      if (fullLayout.modebar) {
+        if (fullLayout.modebar.orientation === "h") {
+          fullLayout._modebardiv.style("height", null).style("width", "100%");
+        } else {
+          fullLayout._modebardiv.style("width", null).style("height", fullLayout.height + "px");
+        }
       }
       return plots_default.previousPromises(gd);
     }
@@ -35150,7 +33634,7 @@ var Plotly = (() => {
           throw new Error("cannot extend array with an array of a different type: " + key);
         }
         maxp = maxPointsIsObject ? maxPoints[key][j] : maxPoints;
-        if (!(0, import_fast_isnumeric27.default)(maxp)) maxp = -1;
+        if (!(0, import_fast_isnumeric26.default)(maxp)) maxp = -1;
         updateProps.push({
           prop,
           target,
@@ -37332,7 +35816,7 @@ var Plotly = (() => {
   var template_api_default = { makeTemplate, validateTemplate };
 
   // src/plot_api/to_image.js
-  var import_fast_isnumeric28 = __toESM(require_fast_isnumeric(), 1);
+  var import_fast_isnumeric27 = __toESM(require_fast_isnumeric(), 1);
 
   // src/snapshot/helpers.js
   var getDelay = function(fullLayout) {
@@ -37556,6 +36040,9 @@ var Plotly = (() => {
   }
   var svgtoimg_default = svgToImg;
 
+  // src/version.js
+  var version = "3.3.1";
+
   // src/plot_api/to_image.js
   var attrs = {
     format: {
@@ -37629,12 +36116,12 @@ var Plotly = (() => {
     var layoutImage = lib_default.extendFlat({}, layout);
     if (width) {
       layoutImage.width = width;
-    } else if (opts.width === null && (0, import_fast_isnumeric28.default)(fullLayout.width)) {
+    } else if (opts.width === null && (0, import_fast_isnumeric27.default)(fullLayout.width)) {
       layoutImage.width = fullLayout.width;
     }
     if (height) {
       layoutImage.height = height;
-    } else if (opts.height === null && (0, import_fast_isnumeric28.default)(fullLayout.height)) {
+    } else if (opts.height === null && (0, import_fast_isnumeric27.default)(fullLayout.height)) {
       layoutImage.height = fullLayout.height;
     }
     var configImage = lib_default.extendFlat({}, config, {
@@ -38147,7 +36634,7 @@ var Plotly = (() => {
   var selector;
 
   // src/traces/scatter/constants.js
-  var constants_default5 = {
+  var constants_default4 = {
     PTS_LINESONLY: 20,
     // fixed parameters of clustering and clipping algorithms
     // fraction of clustering tolerance "so close we don't even consider it a new point"
@@ -38192,7 +36679,7 @@ var Plotly = (() => {
       editType: "calc"
     };
   }
-  var attributes_default9 = {
+  var attributes_default8 = {
     x: {
       valType: "data_array",
       editType: "calc+clearAxisTypes",
@@ -38292,7 +36779,7 @@ var Plotly = (() => {
       flags: ["points", "fills"],
       editType: "style"
     },
-    hovertemplate: hovertemplateAttrs({}, { keys: constants_default5.eventDataKeys }),
+    hovertemplate: hovertemplateAttrs({}, { keys: constants_default4.eventDataKeys }),
     hovertemplatefallback: templatefallbackAttrs(),
     line: {
       color: {
@@ -38819,7 +37306,7 @@ var Plotly = (() => {
   var { coercePattern: coercePattern2 } = lib_default;
   function supplyDefaults2(traceIn, traceOut, defaultColor, layout) {
     function coerce3(attr2, dflt) {
-      return lib_default.coerce(traceIn, traceOut, attributes_default9, attr2, dflt);
+      return lib_default.coerce(traceIn, traceOut, attributes_default8, attr2, dflt);
     }
     var len2 = handleXYDefaults(traceIn, traceOut, layout, coerce3);
     if (!len2) traceOut.visible = false;
@@ -38832,7 +37319,7 @@ var Plotly = (() => {
     if (layout.scattermode === "group" && traceOut.orientation === void 0) {
       coerce3("orientation", "v");
     }
-    var defaultMode = !stackGroupOpts && len2 < constants_default5.PTS_LINESONLY ? "lines+markers" : "lines";
+    var defaultMode = !stackGroupOpts && len2 < constants_default4.PTS_LINESONLY ? "lines+markers" : "lines";
     coerce3("text");
     coerce3("hovertext");
     coerce3("mode", defaultMode);
@@ -38918,7 +37405,7 @@ var Plotly = (() => {
     var traceIn, traceOut, i;
     var scattermode = fullLayout.scattermode;
     function coerce3(attr2) {
-      return lib_default.coerce(traceOut._input, traceOut, attributes_default9, attr2);
+      return lib_default.coerce(traceOut._input, traceOut, attributes_default8, attr2);
     }
     if (fullLayout.scattermode === "group") {
       for (i = 0; i < fullData.length; i++) {
@@ -38959,10 +37446,10 @@ var Plotly = (() => {
   }
 
   // src/traces/scatter/calc.js
-  var import_fast_isnumeric30 = __toESM(require_fast_isnumeric(), 1);
+  var import_fast_isnumeric29 = __toESM(require_fast_isnumeric(), 1);
 
   // src/plots/cartesian/align_period.js
-  var import_fast_isnumeric29 = __toESM(require_fast_isnumeric(), 1);
+  var import_fast_isnumeric28 = __toESM(require_fast_isnumeric(), 1);
   var dateTime2ms3 = lib_default.dateTime2ms;
   var incrementMonth2 = lib_default.incrementMonth;
   var ONEAVGMONTH2 = numerical_default.ONEAVGMONTH;
@@ -38972,7 +37459,7 @@ var Plotly = (() => {
     if (!alignment) return { vals };
     var period2 = trace[axLetter + "period"];
     var mPeriod;
-    if ((0, import_fast_isnumeric29.default)(period2)) {
+    if ((0, import_fast_isnumeric28.default)(period2)) {
       period2 = +period2;
       if (period2 <= 0) return { vals };
     } else if (typeof period2 === "string" && period2.charAt(0) === "M") {
@@ -39141,8 +37628,8 @@ var Plotly = (() => {
     var hasPeriodY = !!trace.yperiodalignment;
     for (i = 0; i < serieslen; i++) {
       var cdi = cd[i] = {};
-      var xValid = (0, import_fast_isnumeric30.default)(x[i]);
-      var yValid = (0, import_fast_isnumeric30.default)(y[i]);
+      var xValid = (0, import_fast_isnumeric29.default)(x[i]);
+      var yValid = (0, import_fast_isnumeric29.default)(y[i]);
       if (xValid && yValid) {
         cdi[xAttr] = x[i];
         cdi[yAttr] = y[i];
@@ -39306,7 +37793,7 @@ var Plotly = (() => {
   };
 
   // src/traces/bar/cross_trace_calc.js
-  var import_fast_isnumeric31 = __toESM(require_fast_isnumeric(), 1);
+  var import_fast_isnumeric30 = __toESM(require_fast_isnumeric(), 1);
 
   // src/traces/bar/sieve.js
   var { distinctVals: distinctVals2 } = lib_default;
@@ -39456,8 +37943,8 @@ var Plotly = (() => {
       if (t.cornerradiusvalue === void 0) {
         cr = fullTrace.marker ? fullTrace.marker.cornerradius : void 0;
         if (cr !== void 0) {
-          crValue = (0, import_fast_isnumeric31.default)(cr) ? +cr : +cr.slice(0, -1);
-          crForm = (0, import_fast_isnumeric31.default)(cr) ? "px" : "%";
+          crValue = (0, import_fast_isnumeric30.default)(cr) ? +cr : +cr.slice(0, -1);
+          crForm = (0, import_fast_isnumeric30.default)(cr) ? "px" : "%";
           t.cornerradiusvalue = crValue;
           t.cornerradiusform = crForm;
         }
@@ -39475,8 +37962,8 @@ var Plotly = (() => {
       if (cr !== void 0) break;
     }
     if (cr !== void 0) {
-      crValue = (0, import_fast_isnumeric31.default)(cr) ? +cr : +cr.slice(0, -1);
-      crForm = (0, import_fast_isnumeric31.default)(cr) ? "px" : "%";
+      crValue = (0, import_fast_isnumeric30.default)(cr) ? +cr : +cr.slice(0, -1);
+      crForm = (0, import_fast_isnumeric30.default)(cr) ? "px" : "%";
       for (i = 0; i < calcTraces.length; i++) {
         calcTrace = calcTraces[i];
         t = calcTrace[0].t;
@@ -39499,7 +37986,7 @@ var Plotly = (() => {
       if (isArrayOrTypedArray9(base)) {
         for (j = 0; j < Math.min(base.length, cd.length); j++) {
           b = d2c(base[j], 0, scalendar);
-          if ((0, import_fast_isnumeric31.default)(b)) {
+          if ((0, import_fast_isnumeric30.default)(b)) {
             cd[j].b = +b;
             cd[j].hasB = 1;
           } else cd[j].b = 0;
@@ -39509,7 +37996,7 @@ var Plotly = (() => {
         }
       } else {
         b = d2c(base, 0, scalendar);
-        var hasBase = (0, import_fast_isnumeric31.default)(b);
+        var hasBase = (0, import_fast_isnumeric30.default)(b);
         b = hasBase ? b : 0;
         for (j = 0; j < cd.length; j++) {
           cd[j].b = b;
@@ -39640,7 +38127,7 @@ var Plotly = (() => {
       if (isArrayOrTypedArray9(offset)) {
         newPoffset = Array.prototype.slice.call(offset, 0, calcTrace.length);
         for (j = 0; j < newPoffset.length; j++) {
-          if (!(0, import_fast_isnumeric31.default)(newPoffset[j])) {
+          if (!(0, import_fast_isnumeric30.default)(newPoffset[j])) {
             newPoffset[j] = initialPoffset;
           }
         }
@@ -39656,7 +38143,7 @@ var Plotly = (() => {
       if (isArrayOrTypedArray9(width)) {
         var newBarwidth = Array.prototype.slice.call(width, 0, calcTrace.length);
         for (j = 0; j < newBarwidth.length; j++) {
-          if (!(0, import_fast_isnumeric31.default)(newBarwidth[j])) newBarwidth[j] = initialBarwidth;
+          if (!(0, import_fast_isnumeric30.default)(newBarwidth[j])) newBarwidth[j] = initialBarwidth;
         }
         for (j = newBarwidth.length; j < calcTrace.length; j++) {
           newBarwidth.push(initialBarwidth);
@@ -39865,7 +38352,7 @@ var Plotly = (() => {
     var sMin = sa.l2c(sa.c2l(0));
     var sMax = opts.mode === "stack" ? sTop : sMin;
     function needsPadding(v) {
-      return (0, import_fast_isnumeric31.default)(sa.c2l(v)) && (v < sMin - sTiny || v > sMax + sTiny || !(0, import_fast_isnumeric31.default)(sMin));
+      return (0, import_fast_isnumeric30.default)(sa.c2l(v)) && (v < sMin - sTiny || v > sMax + sTiny || !(0, import_fast_isnumeric30.default)(sMin));
     }
     for (var i = 0; i < calcTraces.length; i++) {
       var calcTrace = calcTraces[i];
@@ -39922,7 +38409,7 @@ var Plotly = (() => {
       cd = calcTraces[i];
       for (j = 0; j < cd.length; j++) {
         var p = cd[j].p;
-        if ((0, import_fast_isnumeric31.default)(p)) {
+        if ((0, import_fast_isnumeric30.default)(p)) {
           pMin = Math.min(pMin, p);
           pMax = Math.max(pMax, p);
         }
@@ -39946,7 +38433,7 @@ var Plotly = (() => {
       for (j = 0; j < cd.length; j++) {
         var di = cd[j];
         var p0 = di[pLetter] - di.w / 2;
-        if ((0, import_fast_isnumeric31.default)(p0)) {
+        if ((0, import_fast_isnumeric30.default)(p0)) {
           var p1 = di[pLetter] + di.w / 2;
           var pVal = round3(di.p);
           if (extents[pVal]) {
@@ -40160,7 +38647,7 @@ var Plotly = (() => {
     var linear4 = shape === "linear";
     var fill = trace.fill && trace.fill !== "none";
     var segments = [];
-    var minTolerance = constants_default5.minTolerance;
+    var minTolerance = constants_default4.minTolerance;
     var len2 = d.length;
     var pts = new Array(len2);
     var pti = 0;
@@ -40215,14 +38702,14 @@ var Plotly = (() => {
       if (offScreenFraction && nextPt2 && crossesViewport(xFrac, yFrac, nextPt2[0] / xLen, nextPt2[1] / yLen)) {
         offScreenFraction = 0;
       }
-      return (1 + constants_default5.toleranceGrowth * offScreenFraction) * baseTolerance;
+      return (1 + constants_default4.toleranceGrowth * offScreenFraction) * baseTolerance;
     }
     function ptDist(pt1, pt2) {
       var dx = pt1[0] - pt2[0];
       var dy = pt1[1] - pt2[1];
       return Math.sqrt(dx * dx + dy * dy);
     }
-    var maxScreensAway = constants_default5.maxScreensAway;
+    var maxScreensAway = constants_default4.maxScreensAway;
     var xEdge0 = -xLen * maxScreensAway;
     var xEdge1 = xLen * (1 + maxScreensAway);
     var yEdge0 = -yLen * maxScreensAway;
@@ -41411,7 +39898,7 @@ var Plotly = (() => {
   }
 
   // src/plots/cartesian/attributes.js
-  var attributes_default10 = {
+  var attributes_default9 = {
     xaxis: {
       valType: "subplotid",
       dflt: "x",
@@ -41502,7 +39989,7 @@ var Plotly = (() => {
   }
 
   // src/plots/cartesian/axis_defaults.js
-  var import_fast_isnumeric32 = __toESM(require_fast_isnumeric(), 1);
+  var import_fast_isnumeric31 = __toESM(require_fast_isnumeric(), 1);
 
   // src/plots/cartesian/category_order_defaults.js
   function findCategories(ax, opts) {
@@ -41788,7 +40275,7 @@ var Plotly = (() => {
             q = bnds[i];
             switch (pattern2) {
               case DAY_OF_WEEK2:
-                if (!(0, import_fast_isnumeric32.default)(q)) {
+                if (!(0, import_fast_isnumeric31.default)(q)) {
                   itemOut.enabled = false;
                   return;
                 }
@@ -41801,7 +40288,7 @@ var Plotly = (() => {
                 itemOut.bounds[i] = bnds[i] = q;
                 break;
               case HOUR2:
-                if (!(0, import_fast_isnumeric32.default)(q)) {
+                if (!(0, import_fast_isnumeric31.default)(q)) {
                   itemOut.enabled = false;
                   return;
                 }
@@ -41853,7 +40340,7 @@ var Plotly = (() => {
   }
 
   // src/plots/cartesian/position_defaults.js
-  var import_fast_isnumeric33 = __toESM(require_fast_isnumeric(), 1);
+  var import_fast_isnumeric32 = __toESM(require_fast_isnumeric(), 1);
   function handlePositionDefaults(containerIn, containerOut, coerce3, options) {
     var counterAxes = options.counterAxes || [];
     var overlayableAxes = options.overlayableAxes || [];
@@ -41870,7 +40357,7 @@ var Plotly = (() => {
       }
     }
     dfltDomain = dfltDomain || [0, 1];
-    dfltAnchor = dfltAnchor || ((0, import_fast_isnumeric33.default)(containerIn.position) ? "free" : counterAxes[0] || "free");
+    dfltAnchor = dfltAnchor || ((0, import_fast_isnumeric32.default)(containerIn.position) ? "free" : counterAxes[0] || "free");
     dfltSide = dfltSide || (letter === "x" ? "bottom" : "left");
     dfltPosition = dfltPosition || 0;
     dfltShift = 0;
@@ -41934,7 +40421,7 @@ var Plotly = (() => {
     if (Array.isArray(cont[k])) cont[k].push(item);
     else cont[k] = [item];
   }
-  function supplyLayoutDefaults4(layoutIn, layoutOut, fullData) {
+  function supplyLayoutDefaults3(layoutIn, layoutOut, fullData) {
     var autotypenumbersDflt = layoutOut.autotypenumbers;
     var ax2traces = {};
     var xaMayHide = {};
@@ -42342,9 +40829,9 @@ var Plotly = (() => {
   var idRoot = ["x", "y"];
   var idRegex2 = constants_default2.idRegex;
   var attrRegex = constants_default2.attrRegex;
-  var attributes = attributes_default10;
+  var attributes = attributes_default9;
   var layoutAttributes = layout_attributes_default4;
-  var supplyLayoutDefaults5 = supplyLayoutDefaults4;
+  var supplyLayoutDefaults4 = supplyLayoutDefaults3;
   var transitionAxes2 = transitionAxes;
   var finalizeSubplots = function(layoutIn, layoutOut) {
     var subplots = layoutOut._subplots;
@@ -42850,7 +41337,7 @@ var Plotly = (() => {
     canvases.each(canvasToImage);
   };
   var updateFx2 = updateFx;
-  var cartesian_default = { name, attr, idRoot, idRegex: idRegex2, attrRegex, attributes, layoutAttributes, supplyLayoutDefaults: supplyLayoutDefaults5, transitionAxes: transitionAxes2, finalizeSubplots, plot: plot2, clean: clean3, drawFramework, rangePlot, toSVG: toSVG2, updateFx: updateFx2 };
+  var cartesian_default = { name, attr, idRoot, idRegex: idRegex2, attrRegex, attributes, layoutAttributes, supplyLayoutDefaults: supplyLayoutDefaults4, transitionAxes: transitionAxes2, finalizeSubplots, plot: plot2, clean: clean3, drawFramework, rangePlot, toSVG: toSVG2, updateFx: updateFx2 };
 
   // src/traces/scatter/index.js
   var { calc: _req5 } = calc_default;
@@ -42860,7 +41347,7 @@ var Plotly = (() => {
     hasMarkers: subtypes_default.hasMarkers,
     hasText: subtypes_default.hasText,
     isBubble: subtypes_default.isBubble,
-    attributes: attributes_default9,
+    attributes: attributes_default8,
     layoutAttributes: layout_attributes_default3,
     supplyDefaults: supplyDefaults2,
     crossTraceDefaults: crossTraceDefaults2,
@@ -43625,7 +42112,7 @@ var Plotly = (() => {
   }
 
   // src/components/annotations/attributes.js
-  var attributes_default11 = templatedArray("annotation", {
+  var attributes_default10 = templatedArray("annotation", {
     visible: {
       valType: "boolean",
       dflt: true,
@@ -43923,7 +42410,7 @@ var Plotly = (() => {
   }
 
   // src/components/annotations/defaults.js
-  function supplyLayoutDefaults6(layoutIn, layoutOut) {
+  function supplyLayoutDefaults5(layoutIn, layoutOut) {
     handleArrayContainerDefaults(layoutIn, layoutOut, {
       name: "annotations",
       handleItemDefaults: handleAnnotationDefaults
@@ -43931,7 +42418,7 @@ var Plotly = (() => {
   }
   function handleAnnotationDefaults(annIn, annOut, fullLayout) {
     function coerce3(attr2, dflt) {
-      return lib_default.coerce(annIn, annOut, attributes_default11, attr2, dflt);
+      return lib_default.coerce(annIn, annOut, attributes_default10, attr2, dflt);
     }
     var visible = coerce3("visible");
     var clickToShow = coerce3("clicktoshow");
@@ -44081,7 +42568,7 @@ var Plotly = (() => {
   }
 
   // src/components/annotations/convert_coords.js
-  var import_fast_isnumeric34 = __toESM(require_fast_isnumeric(), 1);
+  var import_fast_isnumeric33 = __toESM(require_fast_isnumeric(), 1);
   function convertCoords(gd, ax, newType, doExtra) {
     ax = ax || {};
     var toLog = newType === "log" && ax.type === "linear";
@@ -44096,7 +42583,7 @@ var Plotly = (() => {
       var newVal = null;
       if (toLog) newVal = toLogRange(currentVal, ax.range);
       else newVal = Math.pow(10, currentVal);
-      if (!(0, import_fast_isnumeric34.default)(newVal)) newVal = null;
+      if (!(0, import_fast_isnumeric33.default)(newVal)) newVal = null;
       doExtra(attrPrefix + attr2, newVal);
     }
     for (var i = 0; i < annotations.length; i++) {
@@ -44111,8 +42598,8 @@ var Plotly = (() => {
   var annotations_default = {
     moduleType: "component",
     name: "annotations",
-    layoutAttributes: attributes_default11,
-    supplyLayoutDefaults: supplyLayoutDefaults6,
+    layoutAttributes: attributes_default10,
+    supplyLayoutDefaults: supplyLayoutDefaults5,
     includeBasePlot: makeIncludeComponents("annotations"),
     calcAutorange,
     draw: draw_default.draw,
@@ -44125,8 +42612,8 @@ var Plotly = (() => {
 
   // src/components/annotations3d/attributes.js
   var { overrideAll: overrideAll4 } = edit_types_default;
-  var attributes_default12 = overrideAll4(templatedArray("annotation", {
-    visible: attributes_default11.visible,
+  var attributes_default11 = overrideAll4(templatedArray("annotation", {
+    visible: attributes_default10.visible,
     x: {
       valType: "any"
     },
@@ -44142,35 +42629,35 @@ var Plotly = (() => {
     ay: {
       valType: "number"
     },
-    xanchor: attributes_default11.xanchor,
-    xshift: attributes_default11.xshift,
-    yanchor: attributes_default11.yanchor,
-    yshift: attributes_default11.yshift,
-    text: attributes_default11.text,
-    textangle: attributes_default11.textangle,
-    font: attributes_default11.font,
-    width: attributes_default11.width,
-    height: attributes_default11.height,
-    opacity: attributes_default11.opacity,
-    align: attributes_default11.align,
-    valign: attributes_default11.valign,
-    bgcolor: attributes_default11.bgcolor,
-    bordercolor: attributes_default11.bordercolor,
-    borderpad: attributes_default11.borderpad,
-    borderwidth: attributes_default11.borderwidth,
-    showarrow: attributes_default11.showarrow,
-    arrowcolor: attributes_default11.arrowcolor,
-    arrowhead: attributes_default11.arrowhead,
-    startarrowhead: attributes_default11.startarrowhead,
-    arrowside: attributes_default11.arrowside,
-    arrowsize: attributes_default11.arrowsize,
-    startarrowsize: attributes_default11.startarrowsize,
-    arrowwidth: attributes_default11.arrowwidth,
-    standoff: attributes_default11.standoff,
-    startstandoff: attributes_default11.startstandoff,
-    hovertext: attributes_default11.hovertext,
-    hoverlabel: attributes_default11.hoverlabel,
-    captureevents: attributes_default11.captureevents
+    xanchor: attributes_default10.xanchor,
+    xshift: attributes_default10.xshift,
+    yanchor: attributes_default10.yanchor,
+    yshift: attributes_default10.yshift,
+    text: attributes_default10.text,
+    textangle: attributes_default10.textangle,
+    font: attributes_default10.font,
+    width: attributes_default10.width,
+    height: attributes_default10.height,
+    opacity: attributes_default10.opacity,
+    align: attributes_default10.align,
+    valign: attributes_default10.valign,
+    bgcolor: attributes_default10.bgcolor,
+    bordercolor: attributes_default10.bordercolor,
+    borderpad: attributes_default10.borderpad,
+    borderwidth: attributes_default10.borderwidth,
+    showarrow: attributes_default10.showarrow,
+    arrowcolor: attributes_default10.arrowcolor,
+    arrowhead: attributes_default10.arrowhead,
+    startarrowhead: attributes_default10.startarrowhead,
+    arrowside: attributes_default10.arrowside,
+    arrowsize: attributes_default10.arrowsize,
+    startarrowsize: attributes_default10.startarrowsize,
+    arrowwidth: attributes_default10.arrowwidth,
+    standoff: attributes_default10.standoff,
+    startstandoff: attributes_default10.startstandoff,
+    hovertext: attributes_default10.hovertext,
+    hoverlabel: attributes_default10.hoverlabel,
+    captureevents: attributes_default10.captureevents
     // maybes later?
     // clicktoshow: annAttrs.clicktoshow,
     // xclick: annAttrs.xclick,
@@ -44193,7 +42680,7 @@ var Plotly = (() => {
   }
   function handleAnnotationDefaults2(annIn, annOut, sceneLayout, opts) {
     function coerce3(attr2, dflt) {
-      return lib_default.coerce(annIn, annOut, attributes_default12, attr2, dflt);
+      return lib_default.coerce(annIn, annOut, attributes_default11, attr2, dflt);
     }
     function coercePosition(axLetter) {
       var axName = axLetter + "axis";
@@ -44327,10 +42814,10 @@ var Plotly = (() => {
     name: "annotations3d",
     schema: {
       subplots: {
-        scene: { annotations: attributes_default12 }
+        scene: { annotations: attributes_default11 }
       }
     },
-    layoutAttributes: attributes_default12,
+    layoutAttributes: attributes_default11,
     handleDefaults: handleDefaults2,
     includeBasePlot: includeGL3D,
     convert,
@@ -44355,7 +42842,7 @@ var Plotly = (() => {
 
   // src/components/shapes/draw_newshape/constants.js
   var CIRCLE_SIDES = 32;
-  var constants_default6 = {
+  var constants_default5 = {
     CIRCLE_SIDES,
     i000: 0,
     i090: CIRCLE_SIDES / 4,
@@ -44408,8 +42895,8 @@ var Plotly = (() => {
   };
 
   // src/components/shapes/draw_newshape/helpers.js
-  var CIRCLE_SIDES2 = constants_default6.CIRCLE_SIDES;
-  var SQRT2 = constants_default6.SQRT2;
+  var CIRCLE_SIDES2 = constants_default5.CIRCLE_SIDES;
+  var SQRT2 = constants_default5.SQRT2;
   var p2r2 = helpers_default7.p2r;
   var r2p2 = helpers_default7.r2p;
   var iC = [0, 3, 4, 5, 6, 1, 2];
@@ -44704,12 +43191,12 @@ var Plotly = (() => {
   // src/components/shapes/draw_newshape/newshapes.js
   var drawMode2 = helpers_default4.drawMode;
   var openMode2 = helpers_default4.openMode;
-  var i000 = constants_default6.i000;
-  var i090 = constants_default6.i090;
-  var i180 = constants_default6.i180;
-  var i270 = constants_default6.i270;
-  var cos45 = constants_default6.cos45;
-  var sin45 = constants_default6.sin45;
+  var i000 = constants_default5.i000;
+  var i090 = constants_default5.i090;
+  var i180 = constants_default5.i180;
+  var i270 = constants_default5.i270;
+  var cos45 = constants_default5.cos45;
+  var sin45 = constants_default5.sin45;
   var p2r3 = helpers_default7.p2r;
   var r2p3 = helpers_default7.r2p;
   var clearOutline4 = handle_outline_default.clearOutline;
@@ -44999,7 +43486,7 @@ var Plotly = (() => {
   }
 
   // src/components/shapes/constants.js
-  var constants_default7 = {
+  var constants_default6 = {
     segmentRE: /[MLHVQCTSZ][^MLHVQCTSZ]*/g,
     paramRE: /[^\s,]+/g,
     // which numbers in each path segment are x (or y) values
@@ -45071,11 +43558,11 @@ var Plotly = (() => {
   };
   var extractPathCoords = function(path, paramsToUse, isRaw) {
     var extractedCoordinates = [];
-    var segments = path.match(constants_default7.segmentRE);
+    var segments = path.match(constants_default6.segmentRE);
     segments.forEach(function(segment) {
       var relevantParamIdx = paramsToUse[segment.charAt(0)].drawn;
       if (relevantParamIdx === void 0) return;
-      var params = segment.slice(1).match(constants_default7.paramRE);
+      var params = segment.slice(1).match(constants_default6.paramRE);
       if (!params || params.length < relevantParamIdx) return;
       var str = params[relevantParamIdx];
       var pos = isRaw ? str : lib_default.cleanNumber(str);
@@ -45260,13 +43747,13 @@ var Plotly = (() => {
     var ySizemode = options.ysizemode;
     var xAnchor = options.xanchor;
     var yAnchor = options.yanchor;
-    return pathIn.replace(constants_default7.segmentRE, function(segment) {
+    return pathIn.replace(constants_default6.segmentRE, function(segment) {
       var paramNumber = 0;
       var segmentType = segment.charAt(0);
-      var xParams = constants_default7.paramIsX[segmentType];
-      var yParams = constants_default7.paramIsY[segmentType];
-      var nParams = constants_default7.numParams[segmentType];
-      var paramString = segment.slice(1).replace(constants_default7.paramRE, function(param) {
+      var xParams = constants_default6.paramIsX[segmentType];
+      var yParams = constants_default6.paramIsY[segmentType];
+      var nParams = constants_default6.numParams[segmentType];
+      var paramString = segment.slice(1).replace(constants_default6.paramRE, function(param) {
         if (xParams[paramNumber]) {
           if (xSizemode === "pixel") param = x2p(xAnchor) + Number(param);
           else param = x2p(param);
@@ -45512,10 +43999,10 @@ var Plotly = (() => {
   var strTranslate11 = lib_default.strTranslate;
   var drawMode3 = helpers_default4.drawMode;
   var selectMode3 = helpers_default4.selectMode;
-  var i0002 = constants_default6.i000;
-  var i0902 = constants_default6.i090;
-  var i1802 = constants_default6.i180;
-  var i2702 = constants_default6.i270;
+  var i0002 = constants_default5.i000;
+  var i0902 = constants_default5.i090;
+  var i1802 = constants_default5.i180;
+  var i2702 = constants_default5.i270;
   var clearOutlineControllers2 = handle_outline_default.clearOutlineControllers;
   var pointsOnRectangle2 = helpers_default8.pointsOnRectangle;
   var pointsOnEllipse2 = helpers_default8.pointsOnEllipse;
@@ -45919,7 +44406,7 @@ var Plotly = (() => {
   var import_nested = __toESM(require_nested(), 1);
 
   // src/components/selections/constants.js
-  var constants_default8 = {
+  var constants_default7 = {
     // max pixels off straight before a lasso select line counts as bent
     BENDPX: 1.5,
     // smallest dimension allowed for a select box
@@ -45943,7 +44430,7 @@ var Plotly = (() => {
   var handleEllipse2 = helpers_default8.handleEllipse;
   var readPaths4 = helpers_default8.readPaths;
   var ascending3 = lib_default.sorterAsc;
-  var MINSELECT = constants_default8.MINSELECT;
+  var MINSELECT = constants_default7.MINSELECT;
   var filteredPolygon = polygon_default.filter;
   var polygonTester2 = polygon_default.tester;
   var p2r4 = helpers_default7.p2r;
@@ -45989,7 +44476,7 @@ var Plotly = (() => {
     var i, searchInfo, eventData2;
     coerceSelectionsCache(evt, gd, dragOptions);
     if (isFreeMode) {
-      filterPoly = filteredPolygon([[x0, y0]], constants_default8.BENDPX);
+      filterPoly = filteredPolygon([[x0, y0]], constants_default7.BENDPX);
     }
     var outlines = zoomLayer.selectAll("path.select-outline-" + plotinfo.id).data([1]);
     var newStyle = isDrawMode ? fullLayout.newshape : fullLayout.newselection;
@@ -46015,7 +44502,7 @@ var Plotly = (() => {
         shapeGroup = zoomLayer.append("g").classed("label-temp", true).classed("select-outline", true).style({ opacity: 0.8 });
       }
     }
-    var throttleID = fullLayout._uid + constants_default8.SELECTID;
+    var throttleID = fullLayout._uid + constants_default7.SELECTID;
     var selection2 = [];
     var searchTraces = determineSearchTraces(
       gd,
@@ -46167,7 +44654,7 @@ var Plotly = (() => {
         }
         throttle_default.throttle(
           throttleID,
-          constants_default8.SELECTDELAY,
+          constants_default7.SELECTDELAY,
           function() {
             selection2 = _doSelect(selectionTesters, searchTraces);
             var newPoints = selection2.slice();
@@ -46954,8 +45441,8 @@ var Plotly = (() => {
           var path = segments[j];
           if (!path) continue;
           path += "Z";
-          var allX = helpers_default9.extractPathCoords(path, constants_default7.paramIsX, "raw");
-          var allY = helpers_default9.extractPathCoords(path, constants_default7.paramIsY, "raw");
+          var allX = helpers_default9.extractPathCoords(path, constants_default6.paramIsX, "raw");
+          var allY = helpers_default9.extractPathCoords(path, constants_default6.paramIsY, "raw");
           xmin = Infinity;
           xmax = -Infinity;
           ymin = Infinity;
@@ -47078,16 +45565,16 @@ var Plotly = (() => {
   };
 
   // src/components/selections/attributes.js
-  var { line: scatterLineAttrs } = attributes_default9;
+  var { line: scatterLineAttrs } = attributes_default8;
   var { extendFlat: extendFlat3 } = extend_default;
   var { overrideAll: overrideAll5 } = edit_types_default;
-  var attributes_default13 = overrideAll5(templatedArray("selection", {
+  var attributes_default12 = overrideAll5(templatedArray("selection", {
     type: {
       valType: "enumerated",
       values: ["rect", "path"]
     },
-    xref: extendFlat3({}, attributes_default11.xref, {}),
-    yref: extendFlat3({}, attributes_default11.yref, {}),
+    xref: extendFlat3({}, attributes_default10.xref, {}),
+    yref: extendFlat3({}, attributes_default10.yref, {}),
     x0: {
       valType: "any"
     },
@@ -47124,7 +45611,7 @@ var Plotly = (() => {
   }), "arraydraw", "from-root");
 
   // src/components/selections/defaults.js
-  function supplyLayoutDefaults7(layoutIn, layoutOut) {
+  function supplyLayoutDefaults6(layoutIn, layoutOut) {
     handleArrayContainerDefaults(layoutIn, layoutOut, {
       name: "selections",
       handleItemDefaults: handleSelectionDefaults
@@ -47142,7 +45629,7 @@ var Plotly = (() => {
   }
   function handleSelectionDefaults(selectionIn, selectionOut, fullLayout) {
     function coerce3(attr2, dflt) {
-      return lib_default.coerce(selectionIn, selectionOut, attributes_default13, attr2, dflt);
+      return lib_default.coerce(selectionIn, selectionOut, attributes_default12, attr2, dflt);
     }
     var path = coerce3("path");
     var dfltType = path ? "path" : "rect";
@@ -47205,8 +45692,8 @@ var Plotly = (() => {
   var selections_default = {
     moduleType: "component",
     name: "selections",
-    layoutAttributes: attributes_default13,
-    supplyLayoutDefaults: supplyLayoutDefaults7,
+    layoutAttributes: attributes_default12,
+    supplyLayoutDefaults: supplyLayoutDefaults6,
     supplyDrawNewSelectionDefaults,
     includeBasePlot: makeIncludeComponents("selections"),
     draw: draw_default2.draw,
@@ -47611,12 +46098,12 @@ var Plotly = (() => {
         }).classed("visual-cue", true);
         var posX = x2p(
           xPixelSized ? shapeOptions2.xanchor : lib_default.midRange(
-            isNotPath ? [shapeOptions2.x0, shapeOptions2.x1] : helpers_default9.extractPathCoords(shapeOptions2.path, constants_default7.paramIsX)
+            isNotPath ? [shapeOptions2.x0, shapeOptions2.x1] : helpers_default9.extractPathCoords(shapeOptions2.path, constants_default6.paramIsX)
           )
         );
         var posY = y2p(
           yPixelSized ? shapeOptions2.yanchor : lib_default.midRange(
-            isNotPath ? [shapeOptions2.y0, shapeOptions2.y1] : helpers_default9.extractPathCoords(shapeOptions2.path, constants_default7.paramIsY)
+            isNotPath ? [shapeOptions2.y0, shapeOptions2.y1] : helpers_default9.extractPathCoords(shapeOptions2.path, constants_default6.paramIsY)
           )
         );
         posX = helpers_default9.roundPositionForSharpStrokeRendering(posX, strokeWidth);
@@ -47652,13 +46139,13 @@ var Plotly = (() => {
     }
   }
   function movePath(pathIn, moveX, moveY) {
-    return pathIn.replace(constants_default7.segmentRE, function(segment) {
+    return pathIn.replace(constants_default6.segmentRE, function(segment) {
       var paramNumber = 0;
       var segmentType = segment.charAt(0);
-      var xParams = constants_default7.paramIsX[segmentType];
-      var yParams = constants_default7.paramIsY[segmentType];
-      var nParams = constants_default7.numParams[segmentType];
-      var paramString = segment.slice(1).replace(constants_default7.paramRE, function(param) {
+      var xParams = constants_default6.paramIsX[segmentType];
+      var yParams = constants_default6.paramIsY[segmentType];
+      var nParams = constants_default6.numParams[segmentType];
+      var paramString = segment.slice(1).replace(constants_default6.paramRE, function(param) {
         if (paramNumber >= nParams) return param;
         if (xParams[paramNumber]) param = moveX(param);
         else if (yParams[paramNumber]) param = moveY(param);
@@ -47711,8 +46198,8 @@ var Plotly = (() => {
   }
 
   // src/components/shapes/attributes.js
-  var { line: scatterLineAttrs2 } = attributes_default9;
-  var attributes_default14 = templatedArray("shape", {
+  var { line: scatterLineAttrs2 } = attributes_default8;
+  var attributes_default13 = templatedArray("shape", {
     visible: extendFlat({}, attributes_default2.visible, {
       editType: "calc+arraydraw"
     }),
@@ -47753,7 +46240,7 @@ var Plotly = (() => {
       dflt: "above",
       editType: "arraydraw"
     },
-    xref: extendFlat({}, attributes_default11.xref, {}),
+    xref: extendFlat({}, attributes_default10.xref, {}),
     xsizemode: {
       valType: "enumerated",
       values: ["scaled", "pixel"],
@@ -47786,7 +46273,7 @@ var Plotly = (() => {
       max: 1,
       editType: "calc"
     },
-    yref: extendFlat({}, attributes_default11.yref, {}),
+    yref: extendFlat({}, attributes_default10.yref, {}),
     ysizemode: {
       valType: "enumerated",
       values: ["scaled", "pixel"],
@@ -47910,7 +46397,7 @@ var Plotly = (() => {
   });
 
   // src/components/shapes/defaults.js
-  function supplyLayoutDefaults8(layoutIn, layoutOut) {
+  function supplyLayoutDefaults7(layoutIn, layoutOut) {
     handleArrayContainerDefaults(layoutIn, layoutOut, {
       name: "shapes",
       handleItemDefaults: handleShapeDefaults
@@ -47921,7 +46408,7 @@ var Plotly = (() => {
   }
   function handleShapeDefaults(shapeIn, shapeOut, fullLayout) {
     function coerce3(attr2, dflt) {
-      return lib_default.coerce(shapeIn, shapeOut, attributes_default14, attr2, dflt);
+      return lib_default.coerce(shapeIn, shapeOut, attributes_default13, attr2, dflt);
     }
     shapeOut._isShape = true;
     var visible = coerce3("visible");
@@ -48081,14 +46568,14 @@ var Plotly = (() => {
       var yRefType = axes_default.getRefType(shape.yref);
       if (shape.xref !== "paper" && xRefType !== "domain") {
         ax = axes_default.getFromId(gd, shape.xref);
-        bounds = shapeBounds(ax, shape, constants_default7.paramIsX);
+        bounds = shapeBounds(ax, shape, constants_default6.paramIsX);
         if (bounds) {
           shape._extremes[ax._id] = axes_default.findExtremes(ax, bounds, calcXPaddingOptions(shape));
         }
       }
       if (shape.yref !== "paper" && yRefType !== "domain") {
         ax = axes_default.getFromId(gd, shape.yref);
-        bounds = shapeBounds(ax, shape, constants_default7.paramIsY);
+        bounds = shapeBounds(ax, shape, constants_default6.paramIsY);
         if (bounds) {
           shape._extremes[ax._id] = axes_default.findExtremes(ax, bounds, calcYPaddingOptions(shape));
         }
@@ -48105,7 +46592,7 @@ var Plotly = (() => {
     var ppad = lineWidth / 2;
     var axisDirectionReverted = isYAxis;
     if (sizeMode === "pixel") {
-      var coords = path ? helpers_default9.extractPathCoords(path, isYAxis ? constants_default7.paramIsY : constants_default7.paramIsX) : [v0, v1];
+      var coords = path ? helpers_default9.extractPathCoords(path, isYAxis ? constants_default6.paramIsY : constants_default6.paramIsX) : [v0, v1];
       var maxValue = lib_default.aggNums(Math.max, null, coords);
       var minValue = lib_default.aggNums(Math.min, null, coords);
       var beforePad = minValue < 0 ? Math.abs(minValue) + ppad : ppad;
@@ -48143,7 +46630,7 @@ var Plotly = (() => {
     if (!shape.path) return;
     var min2 = Infinity;
     var max2 = -Infinity;
-    var segments = shape.path.match(constants_default7.segmentRE);
+    var segments = shape.path.match(constants_default6.segmentRE);
     var i;
     var segment;
     var drawnParam;
@@ -48154,7 +46641,7 @@ var Plotly = (() => {
       segment = segments[i];
       drawnParam = paramsToUse[segment.charAt(0)].drawn;
       if (drawnParam === void 0) continue;
-      params = segments[i].slice(1).match(constants_default7.paramRE);
+      params = segments[i].slice(1).match(constants_default6.paramRE);
       if (!params || params.length < drawnParam) continue;
       val = convertVal(params[drawnParam]);
       if (val < min2) min2 = val;
@@ -48167,8 +46654,8 @@ var Plotly = (() => {
   var shapes_default = {
     moduleType: "component",
     name: "shapes",
-    layoutAttributes: attributes_default14,
-    supplyLayoutDefaults: supplyLayoutDefaults8,
+    layoutAttributes: attributes_default13,
+    supplyLayoutDefaults: supplyLayoutDefaults7,
     supplyDrawNewShapeDefaults,
     includeBasePlot: makeIncludeComponents("shapes"),
     calcAutorange: calcAutorange2,
@@ -48178,7 +46665,7 @@ var Plotly = (() => {
   };
 
   // src/components/images/attributes.js
-  var attributes_default15 = templatedArray("image", {
+  var attributes_default14 = templatedArray("image", {
     visible: {
       valType: "boolean",
       dflt: true,
@@ -48262,7 +46749,7 @@ var Plotly = (() => {
 
   // src/components/images/defaults.js
   var name2 = "images";
-  function supplyLayoutDefaults9(layoutIn, layoutOut) {
+  function supplyLayoutDefaults8(layoutIn, layoutOut) {
     var opts = {
       name: name2,
       handleItemDefaults: imageDefaults
@@ -48271,7 +46758,7 @@ var Plotly = (() => {
   }
   function imageDefaults(imageIn, imageOut, fullLayout) {
     function coerce3(attr2, dflt) {
-      return lib_default.coerce(imageIn, imageOut, attributes_default15, attr2, dflt);
+      return lib_default.coerce(imageIn, imageOut, attributes_default14, attr2, dflt);
     }
     var source = coerce3("source");
     var visible = coerce3("visible", !!source);
@@ -48479,7 +46966,7 @@ var Plotly = (() => {
   }
 
   // src/components/images/convert_coords.js
-  var import_fast_isnumeric35 = __toESM(require_fast_isnumeric(), 1);
+  var import_fast_isnumeric34 = __toESM(require_fast_isnumeric(), 1);
   function convertCoords2(gd, ax, newType, doExtra) {
     ax = ax || {};
     var toLog = newType === "log" && ax.type === "linear";
@@ -48505,10 +46992,10 @@ var Plotly = (() => {
           newPos = Math.pow(10, currentPos);
           newSize = newPos * (Math.pow(10, currentSize / 2) - Math.pow(10, -currentSize / 2));
         }
-        if (!(0, import_fast_isnumeric35.default)(newPos)) {
+        if (!(0, import_fast_isnumeric34.default)(newPos)) {
           newPos = null;
           newSize = null;
-        } else if (!(0, import_fast_isnumeric35.default)(newSize)) newSize = null;
+        } else if (!(0, import_fast_isnumeric34.default)(newSize)) newSize = null;
         doExtra(attrPrefix + axLetter, newPos);
         doExtra(attrPrefix + "size" + axLetter, newSize);
       }
@@ -48519,15 +47006,15 @@ var Plotly = (() => {
   var images_default = {
     moduleType: "component",
     name: "images",
-    layoutAttributes: attributes_default15,
-    supplyLayoutDefaults: supplyLayoutDefaults9,
+    layoutAttributes: attributes_default14,
+    supplyLayoutDefaults: supplyLayoutDefaults8,
     includeBasePlot: makeIncludeComponents("images"),
     draw: draw8,
     convertCoords: convertCoords2
   };
 
   // src/components/updatemenus/constants.js
-  var constants_default9 = {
+  var constants_default8 = {
     // layout attribute name
     name: "updatemenus",
     // class names
@@ -48617,7 +47104,7 @@ var Plotly = (() => {
       dflt: true
     }
   });
-  var attributes_default16 = overrideAll6(templatedArray("updatemenu", {
+  var attributes_default15 = overrideAll6(templatedArray("updatemenu", {
     _arrayAttrRegexps: [/^updatemenus\[(0|[1-9][0-9]+)\]\.buttons/],
     visible: {
       valType: "boolean"
@@ -48682,8 +47169,8 @@ var Plotly = (() => {
   }), "arraydraw", "from-root");
 
   // src/components/updatemenus/defaults.js
-  var name3 = constants_default9.name;
-  var buttonAttrs = attributes_default16.buttons;
+  var name3 = constants_default8.name;
+  var buttonAttrs = attributes_default15.buttons;
   function updateMenusDefaults(layoutIn, layoutOut) {
     var opts = {
       name: name3,
@@ -48693,7 +47180,7 @@ var Plotly = (() => {
   }
   function menuDefaults(menuIn, menuOut, layoutOut) {
     function coerce3(attr2, dflt) {
-      return lib_default.coerce(menuIn, menuOut, attributes_default16, attr2, dflt);
+      return lib_default.coerce(menuIn, menuOut, attributes_default15, attr2, dflt);
     }
     var buttons = handleArrayContainerDefaults(menuIn, menuOut, {
       name: "buttons",
@@ -49025,19 +47512,19 @@ var Plotly = (() => {
   var { LINE_SPACING: LINE_SPACING5 } = alignment_default;
   function draw9(gd) {
     var fullLayout = gd._fullLayout;
-    var menuData = lib_default.filterVisible(fullLayout[constants_default9.name]);
+    var menuData = lib_default.filterVisible(fullLayout[constants_default8.name]);
     function clearAutoMargin(menuOpts2) {
       plots_default.autoMargin(gd, autoMarginId(menuOpts2));
     }
-    var menus = fullLayout._menulayer.selectAll("g." + constants_default9.containerClassName).data(menuData.length > 0 ? [0] : []);
-    menus.enter().append("g").classed(constants_default9.containerClassName, true).style("cursor", "pointer");
+    var menus = fullLayout._menulayer.selectAll("g." + constants_default8.containerClassName).data(menuData.length > 0 ? [0] : []);
+    menus.enter().append("g").classed(constants_default8.containerClassName, true).style("cursor", "pointer");
     menus.exit().each(function() {
-      select_default2(this).selectAll("g." + constants_default9.headerGroupClassName).each(clearAutoMargin);
+      select_default2(this).selectAll("g." + constants_default8.headerGroupClassName).each(clearAutoMargin);
     }).remove();
     if (menuData.length === 0) return;
-    var headerGroups = menus.selectAll("g." + constants_default9.headerGroupClassName).data(menuData, keyFunction);
-    headerGroups.enter().append("g").classed(constants_default9.headerGroupClassName, true);
-    var gButton = lib_default.ensureSingle(menus, "g", constants_default9.dropdownButtonGroupClassName, function(s) {
+    var headerGroups = menus.selectAll("g." + constants_default8.headerGroupClassName).data(menuData, keyFunction);
+    headerGroups.enter().append("g").classed(constants_default8.headerGroupClassName, true);
+    var gButton = lib_default.ensureSingle(menus, "g", constants_default8.dropdownButtonGroupClassName, function(s) {
       s.style("pointer-events", "all");
     });
     for (var i = 0; i < menuData.length; i++) {
@@ -49074,18 +47561,18 @@ var Plotly = (() => {
     return menuOpts._index;
   }
   function isFolded(gButton) {
-    return +gButton.attr(constants_default9.menuIndexAttrName) === -1;
+    return +gButton.attr(constants_default8.menuIndexAttrName) === -1;
   }
   function isActive(gButton, menuOpts) {
-    return +gButton.attr(constants_default9.menuIndexAttrName) === menuOpts._index;
+    return +gButton.attr(constants_default8.menuIndexAttrName) === menuOpts._index;
   }
   function setActive(gd, menuOpts, buttonOpts, gHeader, gButton, scrollBox, buttonIndex, isSilentUpdate) {
     menuOpts.active = buttonIndex;
-    arrayEditor(gd.layout, constants_default9.name, menuOpts).applyUpdate("active", buttonIndex);
+    arrayEditor(gd.layout, constants_default8.name, menuOpts).applyUpdate("active", buttonIndex);
     if (menuOpts.type === "buttons") {
       drawButtons(gd, gHeader, null, null, menuOpts);
     } else if (menuOpts.type === "dropdown") {
-      gButton.attr(constants_default9.menuIndexAttrName, "-1");
+      gButton.attr(constants_default8.menuIndexAttrName, "-1");
       drawHeader(gd, gHeader, gButton, scrollBox, menuOpts);
       if (!isSilentUpdate) {
         drawButtons(gd, gHeader, gButton, scrollBox, menuOpts);
@@ -49093,24 +47580,24 @@ var Plotly = (() => {
     }
   }
   function drawHeader(gd, gHeader, gButton, scrollBox, menuOpts) {
-    var header = lib_default.ensureSingle(gHeader, "g", constants_default9.headerClassName, function(s) {
+    var header = lib_default.ensureSingle(gHeader, "g", constants_default8.headerClassName, function(s) {
       s.style("pointer-events", "all");
     });
     var dims = menuOpts._dims;
     var active = menuOpts.active;
-    var headerOpts = menuOpts.buttons[active] || constants_default9.blankHeaderOpts;
+    var headerOpts = menuOpts.buttons[active] || constants_default8.blankHeaderOpts;
     var posOpts = { y: menuOpts.pad.t, yPad: 0, x: menuOpts.pad.l, xPad: 0, index: 0 };
     var positionOverrides = {
       width: dims.headerWidth,
       height: dims.headerHeight
     };
     header.call(drawItem, menuOpts, headerOpts, gd).call(setItemPosition, menuOpts, posOpts, positionOverrides);
-    var arrow = lib_default.ensureSingle(gHeader, "text", constants_default9.headerArrowClassName, function(s) {
-      s.attr("text-anchor", "end").call(drawing_default.font, menuOpts.font).text(constants_default9.arrowSymbol[menuOpts.direction]);
+    var arrow = lib_default.ensureSingle(gHeader, "text", constants_default8.headerArrowClassName, function(s) {
+      s.attr("text-anchor", "end").call(drawing_default.font, menuOpts.font).text(constants_default8.arrowSymbol[menuOpts.direction]);
     });
     arrow.attr({
-      x: dims.headerWidth - constants_default9.arrowOffsetX + menuOpts.pad.l,
-      y: dims.headerHeight / 2 + constants_default9.textOffsetY + menuOpts.pad.t
+      x: dims.headerWidth - constants_default8.arrowOffsetX + menuOpts.pad.l,
+      y: dims.headerHeight / 2 + constants_default8.textOffsetY + menuOpts.pad.t
     });
     header.on("click", function(event2) {
       gButton.call(
@@ -49133,7 +47620,7 @@ var Plotly = (() => {
       gButton.attr("pointer-events", "all");
     }
     var buttonData = !isFolded(gButton) || menuOpts.type === "buttons" ? menuOpts.buttons : [];
-    var klass = menuOpts.type === "dropdown" ? constants_default9.dropdownButtonClassName : constants_default9.buttonClassName;
+    var klass = menuOpts.type === "dropdown" ? constants_default8.dropdownButtonClassName : constants_default8.buttonClassName;
     var buttons = gButton.selectAll("g." + klass).data(lib_default.filterVisible(buttonData));
     var enter = buttons.enter().append("g").classed(klass, true);
     var exit = buttons.exit();
@@ -49149,22 +47636,22 @@ var Plotly = (() => {
     var isVertical3 = ["up", "down"].indexOf(menuOpts.direction) !== -1;
     if (menuOpts.type === "dropdown") {
       if (isVertical3) {
-        y0 = dims.headerHeight + constants_default9.gapButtonHeader;
+        y0 = dims.headerHeight + constants_default8.gapButtonHeader;
       } else {
-        x0 = dims.headerWidth + constants_default9.gapButtonHeader;
+        x0 = dims.headerWidth + constants_default8.gapButtonHeader;
       }
     }
     if (menuOpts.type === "dropdown" && menuOpts.direction === "up") {
-      y0 = -constants_default9.gapButtonHeader + constants_default9.gapButton - dims.openHeight;
+      y0 = -constants_default8.gapButtonHeader + constants_default8.gapButton - dims.openHeight;
     }
     if (menuOpts.type === "dropdown" && menuOpts.direction === "left") {
-      x0 = -constants_default9.gapButtonHeader + constants_default9.gapButton - dims.openWidth;
+      x0 = -constants_default8.gapButtonHeader + constants_default8.gapButton - dims.openWidth;
     }
     var posOpts = {
       x: dims.lx + x0 + menuOpts.pad.l,
       y: dims.ly + y0 + menuOpts.pad.t,
-      yPad: constants_default9.gapButton,
-      xPad: constants_default9.gapButton,
+      yPad: constants_default8.gapButton,
+      xPad: constants_default8.gapButton,
       index: 0
     };
     var scrollBoxPosition = {
@@ -49222,12 +47709,12 @@ var Plotly = (() => {
     if (isVertical3) {
       translateY = 0;
       for (i = 0; i < active; i++) {
-        translateY += dims.heights[i] + constants_default9.gapButton;
+        translateY += dims.heights[i] + constants_default8.gapButton;
       }
     } else {
       translateX = 0;
       for (i = 0; i < active; i++) {
-        translateX += dims.widths[i] + constants_default9.gapButton;
+        translateX += dims.widths[i] + constants_default8.gapButton;
       }
     }
     scrollBox.enable(position, translateX, translateY);
@@ -49258,17 +47745,17 @@ var Plotly = (() => {
     item.call(drawItemRect, menuOpts).call(drawItemText, menuOpts, itemOpts, gd);
   }
   function drawItemRect(item, menuOpts) {
-    var rect = lib_default.ensureSingle(item, "rect", constants_default9.itemRectClassName, function(s) {
+    var rect = lib_default.ensureSingle(item, "rect", constants_default8.itemRectClassName, function(s) {
       s.attr({
-        rx: constants_default9.rx,
-        ry: constants_default9.ry,
+        rx: constants_default8.rx,
+        ry: constants_default8.ry,
         "shape-rendering": "crispEdges"
       });
     });
     rect.call(color_default.stroke, menuOpts.bordercolor).call(color_default.fill, menuOpts.bgcolor).style("stroke-width", menuOpts.borderwidth + "px");
   }
   function drawItemText(item, menuOpts, itemOpts, gd) {
-    var text = lib_default.ensureSingle(item, "text", constants_default9.itemTextClassName, function(s) {
+    var text = lib_default.ensureSingle(item, "text", constants_default8.itemTextClassName, function(s) {
       s.attr({
         "text-anchor": "start",
         "data-notex": 1
@@ -49284,15 +47771,15 @@ var Plotly = (() => {
     buttons.each(function(buttonOpts, i) {
       var button = select_default2(this);
       if (i === active && menuOpts.showactive) {
-        button.select("rect." + constants_default9.itemRectClassName).call(color_default.fill, constants_default9.activeColor);
+        button.select("rect." + constants_default8.itemRectClassName).call(color_default.fill, constants_default8.activeColor);
       }
     });
   }
   function styleOnMouseOver(item) {
-    item.select("rect." + constants_default9.itemRectClassName).call(color_default.fill, constants_default9.hoverColor);
+    item.select("rect." + constants_default8.itemRectClassName).call(color_default.fill, constants_default8.hoverColor);
   }
   function styleOnMouseOut(item, menuOpts) {
-    item.select("rect." + constants_default9.itemRectClassName).call(color_default.fill, menuOpts.bgcolor);
+    item.select("rect." + constants_default8.itemRectClassName).call(color_default.fill, menuOpts.bgcolor);
   }
   function findDimensions(gd, menuOpts) {
     var dims = menuOpts._dims = {
@@ -49307,18 +47794,18 @@ var Plotly = (() => {
       lx: 0,
       ly: 0
     };
-    var fakeButtons = drawing_default.tester.selectAll("g." + constants_default9.dropdownButtonClassName).data(lib_default.filterVisible(menuOpts.buttons));
-    fakeButtons.enter().append("g").classed(constants_default9.dropdownButtonClassName, true);
+    var fakeButtons = drawing_default.tester.selectAll("g." + constants_default8.dropdownButtonClassName).data(lib_default.filterVisible(menuOpts.buttons));
+    fakeButtons.enter().append("g").classed(constants_default8.dropdownButtonClassName, true);
     var isVertical3 = ["up", "down"].indexOf(menuOpts.direction) !== -1;
     fakeButtons.each(function(buttonOpts, i) {
       var button = select_default2(this);
       button.call(drawItem, menuOpts, buttonOpts, gd);
-      var text = button.select("." + constants_default9.itemTextClassName);
+      var text = button.select("." + constants_default8.itemTextClassName);
       var tWidth = text.node() && drawing_default.bBox(text.node()).width;
-      var wEff = Math.max(tWidth + constants_default9.textPadX, constants_default9.minWidth);
+      var wEff = Math.max(tWidth + constants_default8.textPadX, constants_default8.minWidth);
       var tHeight = menuOpts.font.size * LINE_SPACING5;
       var tLines = svg_text_utils_default.lineCount(text);
-      var hEff = Math.max(tHeight * tLines, constants_default9.minHeight) + constants_default9.textOffsetY;
+      var hEff = Math.max(tHeight * tLines, constants_default8.minHeight) + constants_default8.textOffsetY;
       hEff = Math.ceil(hEff);
       wEff = Math.ceil(wEff);
       dims.widths[i] = wEff;
@@ -49328,30 +47815,30 @@ var Plotly = (() => {
       if (isVertical3) {
         dims.totalWidth = Math.max(dims.totalWidth, wEff);
         dims.openWidth = dims.totalWidth;
-        dims.totalHeight += hEff + constants_default9.gapButton;
-        dims.openHeight += hEff + constants_default9.gapButton;
+        dims.totalHeight += hEff + constants_default8.gapButton;
+        dims.openHeight += hEff + constants_default8.gapButton;
       } else {
-        dims.totalWidth += wEff + constants_default9.gapButton;
-        dims.openWidth += wEff + constants_default9.gapButton;
+        dims.totalWidth += wEff + constants_default8.gapButton;
+        dims.openWidth += wEff + constants_default8.gapButton;
         dims.totalHeight = Math.max(dims.totalHeight, hEff);
         dims.openHeight = dims.totalHeight;
       }
     });
     if (isVertical3) {
-      dims.totalHeight -= constants_default9.gapButton;
+      dims.totalHeight -= constants_default8.gapButton;
     } else {
-      dims.totalWidth -= constants_default9.gapButton;
+      dims.totalWidth -= constants_default8.gapButton;
     }
-    dims.headerWidth = dims.width1 + constants_default9.arrowPadX;
+    dims.headerWidth = dims.width1 + constants_default8.arrowPadX;
     dims.headerHeight = dims.height1;
     if (menuOpts.type === "dropdown") {
       if (isVertical3) {
-        dims.width1 += constants_default9.arrowPadX;
+        dims.width1 += constants_default8.arrowPadX;
         dims.totalHeight = dims.height1;
       } else {
         dims.totalWidth = dims.width1;
       }
-      dims.totalWidth += constants_default9.arrowPadX;
+      dims.totalWidth += constants_default8.arrowPadX;
     }
     fakeButtons.remove();
     var paddedWidth = dims.totalWidth + menuOpts.pad.l + menuOpts.pad.r;
@@ -49391,12 +47878,12 @@ var Plotly = (() => {
     });
   }
   function autoMarginId(menuOpts) {
-    return constants_default9.autoMarginIdRoot + menuOpts._index;
+    return constants_default8.autoMarginIdRoot + menuOpts._index;
   }
   function setItemPosition(item, menuOpts, posOpts, overrideOpts) {
     overrideOpts = overrideOpts || {};
-    var rect = item.select("." + constants_default9.itemRectClassName);
-    var text = item.select("." + constants_default9.itemTextClassName);
+    var rect = item.select("." + constants_default8.itemRectClassName);
+    var text = item.select("." + constants_default8.itemTextClassName);
     var borderWidth = menuOpts.borderwidth;
     var index = posOpts.index;
     var dims = menuOpts._dims;
@@ -49414,8 +47901,8 @@ var Plotly = (() => {
     var spanOffset = (tLines - 1) * tHeight / 2;
     svg_text_utils_default.positionText(
       text,
-      constants_default9.textOffsetX,
-      finalHeight / 2 - spanOffset + constants_default9.textOffsetY
+      constants_default8.textOffsetX,
+      finalHeight / 2 - spanOffset + constants_default8.textOffsetY
     );
     if (isVertical3) {
       posOpts.y += dims.heights[index] + posOpts.yPad;
@@ -49425,20 +47912,20 @@ var Plotly = (() => {
     posOpts.index++;
   }
   function removeAllButtons(gButton, newMenuIndexAttr) {
-    gButton.attr(constants_default9.menuIndexAttrName, newMenuIndexAttr || "-1").selectAll("g." + constants_default9.dropdownButtonClassName).remove();
+    gButton.attr(constants_default8.menuIndexAttrName, newMenuIndexAttr || "-1").selectAll("g." + constants_default8.dropdownButtonClassName).remove();
   }
 
   // src/components/updatemenus/index.js
   var updatemenus_default = {
     moduleType: "component",
-    name: constants_default9.name,
-    layoutAttributes: attributes_default16,
+    name: constants_default8.name,
+    layoutAttributes: attributes_default15,
     supplyLayoutDefaults: updateMenusDefaults,
     draw: draw9
   };
 
   // src/components/sliders/constants.js
-  var constants_default10 = {
+  var constants_default9 = {
     // layout attribute name
     name: "sliders",
     // class names
@@ -49535,7 +48022,7 @@ var Plotly = (() => {
       dflt: true
     }
   });
-  var attributes_default17 = overrideAll7(templatedArray("slider", {
+  var attributes_default16 = overrideAll7(templatedArray("slider", {
     visible: {
       valType: "boolean",
       dflt: true
@@ -49616,29 +48103,29 @@ var Plotly = (() => {
     font: font_attributes_default({}),
     activebgcolor: {
       valType: "color",
-      dflt: constants_default10.gripBgActiveColor
+      dflt: constants_default9.gripBgActiveColor
     },
     bgcolor: {
       valType: "color",
-      dflt: constants_default10.railBgColor
+      dflt: constants_default9.railBgColor
     },
     bordercolor: {
       valType: "color",
-      dflt: constants_default10.railBorderColor
+      dflt: constants_default9.railBorderColor
     },
     borderwidth: {
       valType: "number",
       min: 0,
-      dflt: constants_default10.railBorderWidth
+      dflt: constants_default9.railBorderWidth
     },
     ticklen: {
       valType: "number",
       min: 0,
-      dflt: constants_default10.tickLength
+      dflt: constants_default9.tickLength
     },
     tickcolor: {
       valType: "color",
-      dflt: constants_default10.tickColor
+      dflt: constants_default9.tickColor
     },
     tickwidth: {
       valType: "number",
@@ -49648,13 +48135,13 @@ var Plotly = (() => {
     minorticklen: {
       valType: "number",
       min: 0,
-      dflt: constants_default10.minorTickLength
+      dflt: constants_default9.minorTickLength
     }
   }), "arraydraw", "from-root");
 
   // src/components/sliders/defaults.js
-  var name4 = constants_default10.name;
-  var stepAttrs = attributes_default17.steps;
+  var name4 = constants_default9.name;
+  var stepAttrs = attributes_default16.steps;
   function slidersDefaults(layoutIn, layoutOut) {
     handleArrayContainerDefaults(layoutIn, layoutOut, {
       name: name4,
@@ -49663,7 +48150,7 @@ var Plotly = (() => {
   }
   function sliderDefaults(sliderIn, sliderOut, layoutOut) {
     function coerce3(attr2, dflt) {
-      return lib_default.coerce(sliderIn, sliderOut, attributes_default17, attr2, dflt);
+      return lib_default.coerce(sliderIn, sliderOut, attributes_default16, attr2, dflt);
     }
     var steps = handleArrayContainerDefaults(sliderIn, sliderOut, {
       name: "steps",
@@ -49738,8 +48225,8 @@ var Plotly = (() => {
     var staticPlot = gd._context.staticPlot;
     var fullLayout = gd._fullLayout;
     var sliderData = makeSliderData(fullLayout, gd);
-    var sliders = fullLayout._infolayer.selectAll("g." + constants_default10.containerClassName).data(sliderData.length > 0 ? [0] : []);
-    sliders.enter().append("g").classed(constants_default10.containerClassName, true).style("cursor", staticPlot ? null : "ew-resize");
+    var sliders = fullLayout._infolayer.selectAll("g." + constants_default9.containerClassName).data(sliderData.length > 0 ? [0] : []);
+    sliders.enter().append("g").classed(constants_default9.containerClassName, true).style("cursor", staticPlot ? null : "ew-resize");
     function clearSlider(sliderOpts2) {
       if (sliderOpts2._commandObserver) {
         sliderOpts2._commandObserver.remove();
@@ -49748,11 +48235,11 @@ var Plotly = (() => {
       plots_default.autoMargin(gd, autoMarginId2(sliderOpts2));
     }
     sliders.exit().each(function() {
-      select_default2(this).selectAll("g." + constants_default10.groupClassName).each(clearSlider);
+      select_default2(this).selectAll("g." + constants_default9.groupClassName).each(clearSlider);
     }).remove();
     if (sliderData.length === 0) return;
-    var sliderGroups = sliders.selectAll("g." + constants_default10.groupClassName).data(sliderData, keyFunction2);
-    sliderGroups.enter().append("g").classed(constants_default10.groupClassName, true);
+    var sliderGroups = sliders.selectAll("g." + constants_default9.groupClassName).data(sliderData, keyFunction2);
+    sliderGroups.enter().append("g").classed(constants_default9.groupClassName, true);
     sliderGroups.exit().each(clearSlider).remove();
     for (var i = 0; i < sliderData.length; i++) {
       var sliderOpts = sliderData[i];
@@ -49771,10 +48258,10 @@ var Plotly = (() => {
     });
   }
   function autoMarginId2(sliderOpts) {
-    return constants_default10.autoMarginIdRoot + sliderOpts._index;
+    return constants_default9.autoMarginIdRoot + sliderOpts._index;
   }
   function makeSliderData(fullLayout, gd) {
-    var contOpts = fullLayout[constants_default10.name];
+    var contOpts = fullLayout[constants_default9.name];
     var sliderData = [];
     for (var i = 0; i < contOpts.length; i++) {
       var item = contOpts[i];
@@ -49788,8 +48275,8 @@ var Plotly = (() => {
     return opts._index;
   }
   function findDimensions2(gd, sliderOpts) {
-    var sliderLabels = drawing_default.tester.selectAll("g." + constants_default10.labelGroupClass).data(sliderOpts._visibleSteps);
-    sliderLabels.enter().append("g").classed(constants_default10.labelGroupClass, true);
+    var sliderLabels = drawing_default.tester.selectAll("g." + constants_default9.labelGroupClass).data(sliderOpts._visibleSteps);
+    sliderLabels.enter().append("g").classed(constants_default9.labelGroupClass, true);
     var maxLabelWidth = 0;
     var labelHeight = 0;
     sliderLabels.each(function(stepOpts) {
@@ -49805,8 +48292,8 @@ var Plotly = (() => {
     sliderLabels.remove();
     var dims = sliderOpts._dims = {};
     dims.inputAreaWidth = Math.max(
-      constants_default10.railWidth,
-      constants_default10.gripHeight
+      constants_default9.railWidth,
+      constants_default9.gripHeight
     );
     var graphSize = gd._fullLayout._size;
     dims.lx = graphSize.l + graphSize.w * sliderOpts.x;
@@ -49818,9 +48305,9 @@ var Plotly = (() => {
     }
     dims.inputAreaStart = 0;
     dims.inputAreaLength = Math.round(dims.outerLength - sliderOpts.pad.l - sliderOpts.pad.r);
-    var textableInputLength = dims.inputAreaLength - 2 * constants_default10.stepInset;
+    var textableInputLength = dims.inputAreaLength - 2 * constants_default9.stepInset;
     var availableSpacePerLabel = textableInputLength / (sliderOpts._stepCount - 1);
-    var computedSpacePerLabel = maxLabelWidth + constants_default10.labelPadding;
+    var computedSpacePerLabel = maxLabelWidth + constants_default9.labelPadding;
     dims.labelStride = Math.max(1, Math.ceil(computedSpacePerLabel / availableSpacePerLabel));
     dims.labelHeight = labelHeight;
     dims.currentValueMaxWidth = 0;
@@ -49840,7 +48327,7 @@ var Plotly = (() => {
       dims.currentValueTotalHeight = dims.currentValueHeight + sliderOpts.currentvalue.offset;
       dummyGroup.remove();
     }
-    dims.height = dims.currentValueTotalHeight + constants_default10.tickOffset + sliderOpts.ticklen + constants_default10.labelOffset + dims.labelHeight + sliderOpts.pad.t + sliderOpts.pad.b;
+    dims.height = dims.currentValueTotalHeight + constants_default9.tickOffset + sliderOpts.ticklen + constants_default9.labelOffset + dims.labelHeight + sliderOpts.pad.t + sliderOpts.pad.b;
     var xanchor = "left";
     if (lib_default.isRightAnchor(sliderOpts)) {
       dims.lx -= dims.outerLength;
@@ -49896,7 +48383,7 @@ var Plotly = (() => {
     var x0, textAnchor;
     switch (sliderOpts.currentvalue.xanchor) {
       case "right":
-        x0 = dims.inputAreaLength - constants_default10.currentValueInset - dims.currentValueMaxWidth;
+        x0 = dims.inputAreaLength - constants_default9.currentValueInset - dims.currentValueMaxWidth;
         textAnchor = "left";
         break;
       case "center":
@@ -49904,10 +48391,10 @@ var Plotly = (() => {
         textAnchor = "middle";
         break;
       default:
-        x0 = constants_default10.currentValueInset;
+        x0 = constants_default9.currentValueInset;
         textAnchor = "left";
     }
-    var text = lib_default.ensureSingle(sliderGroup, "text", constants_default10.labelClass, function(s) {
+    var text = lib_default.ensureSingle(sliderGroup, "text", constants_default9.labelClass, function(s) {
       s.attr({
         "text-anchor": textAnchor,
         "data-notex": 1
@@ -49932,18 +48419,18 @@ var Plotly = (() => {
     return text;
   }
   function drawGrip(sliderGroup, gd, sliderOpts) {
-    var grip = lib_default.ensureSingle(sliderGroup, "rect", constants_default10.gripRectClass, function(s) {
+    var grip = lib_default.ensureSingle(sliderGroup, "rect", constants_default9.gripRectClass, function(s) {
       s.call(attachGripEvents, gd, sliderGroup, sliderOpts).style("pointer-events", "all");
     });
     grip.attr({
-      width: constants_default10.gripWidth,
-      height: constants_default10.gripHeight,
-      rx: constants_default10.gripRadius,
-      ry: constants_default10.gripRadius
+      width: constants_default9.gripWidth,
+      height: constants_default9.gripHeight,
+      rx: constants_default9.gripRadius,
+      ry: constants_default9.gripRadius
     }).call(color_default.stroke, sliderOpts.bordercolor).call(color_default.fill, sliderOpts.bgcolor).style("stroke-width", sliderOpts.borderwidth + "px");
   }
   function drawLabel2(item, data, sliderOpts) {
-    var text = lib_default.ensureSingle(item, "text", constants_default10.labelClass, function(s) {
+    var text = lib_default.ensureSingle(item, "text", constants_default9.labelClass, function(s) {
       s.attr({
         "text-anchor": "middle",
         "data-notex": 1
@@ -49956,10 +48443,10 @@ var Plotly = (() => {
     return text;
   }
   function drawLabelGroup(sliderGroup, sliderOpts) {
-    var labels = lib_default.ensureSingle(sliderGroup, "g", constants_default10.labelsClass);
+    var labels = lib_default.ensureSingle(sliderGroup, "g", constants_default9.labelsClass);
     var dims = sliderOpts._dims;
-    var labelItems = labels.selectAll("g." + constants_default10.labelGroupClass).data(dims.labelSteps);
-    labelItems.enter().append("g").classed(constants_default10.labelGroupClass, true);
+    var labelItems = labels.selectAll("g." + constants_default9.labelGroupClass).data(dims.labelSteps);
+    labelItems.enter().append("g").classed(constants_default9.labelGroupClass, true);
     labelItems.exit().remove();
     labelItems.each(function(d) {
       var item = select_default2(this);
@@ -49967,9 +48454,9 @@ var Plotly = (() => {
       drawing_default.setTranslate(
         item,
         normalizedValueToPosition(sliderOpts, d.fraction),
-        constants_default10.tickOffset + sliderOpts.ticklen + // position is the baseline of the top line of text only, even
+        constants_default9.tickOffset + sliderOpts.ticklen + // position is the baseline of the top line of text only, even
         // if the label spans multiple lines
-        sliderOpts.font.size * LINE_SPACING6 + constants_default10.labelOffset + dims.currentValueTotalHeight
+        sliderOpts.font.size * LINE_SPACING6 + constants_default9.labelOffset + dims.currentValueTotalHeight
       );
     });
   }
@@ -49983,7 +48470,7 @@ var Plotly = (() => {
   function setActive2(gd, sliderGroup, sliderOpts, index, doCallback, doTransition) {
     var previousActive = sliderOpts.active;
     sliderOpts.active = index;
-    arrayEditor(gd.layout, constants_default10.name, sliderOpts).applyUpdate("active", index);
+    arrayEditor(gd.layout, constants_default9.name, sliderOpts).applyUpdate("active", index);
     var step = sliderOpts.steps[sliderOpts.active];
     sliderGroup.call(setGripPosition, sliderOpts, doTransition);
     sliderGroup.call(drawCurrentValue, sliderOpts);
@@ -50022,7 +48509,7 @@ var Plotly = (() => {
     function mouseDownHandler() {
       var sliderOpts = getSliderOpts();
       gd.emit("plotly_sliderstart", { slider: sliderOpts });
-      var grip = sliderGroup.select("." + constants_default10.gripRectClass);
+      var grip = sliderGroup.select("." + constants_default9.gripRectClass);
       event.stopPropagation();
       event.preventDefault();
       grip.call(color_default.fill, sliderOpts.activebgcolor);
@@ -50056,9 +48543,9 @@ var Plotly = (() => {
     item.on("touchstart", mouseDownHandler);
   }
   function drawTicks(sliderGroup, sliderOpts) {
-    var tick = sliderGroup.selectAll("rect." + constants_default10.tickRectClass).data(sliderOpts._visibleSteps);
+    var tick = sliderGroup.selectAll("rect." + constants_default9.tickRectClass).data(sliderOpts._visibleSteps);
     var dims = sliderOpts._dims;
-    tick.enter().append("rect").classed(constants_default10.tickRectClass, true);
+    tick.enter().append("rect").classed(constants_default9.tickRectClass, true);
     tick.exit().remove();
     tick.attr({
       width: sliderOpts.tickwidth + "px",
@@ -50071,7 +48558,7 @@ var Plotly = (() => {
       drawing_default.setTranslate(
         item,
         normalizedValueToPosition(sliderOpts, i / (sliderOpts._stepCount - 1)) - 0.5 * sliderOpts.tickwidth,
-        (isMajor ? constants_default10.tickOffset : constants_default10.minorTickOffset) + dims.currentValueTotalHeight
+        (isMajor ? constants_default9.tickOffset : constants_default9.minorTickOffset) + dims.currentValueTotalHeight
       );
     });
   }
@@ -50087,7 +48574,7 @@ var Plotly = (() => {
     }
   }
   function setGripPosition(sliderGroup, sliderOpts, doTransition) {
-    var grip = sliderGroup.select("rect." + constants_default10.gripRectClass);
+    var grip = sliderGroup.select("rect." + constants_default9.gripRectClass);
     var quantizedIndex = 0;
     for (var i = 0; i < sliderOpts._stepCount; i++) {
       if (sliderOpts._visibleSteps[i]._index === sliderOpts.active) {
@@ -50101,56 +48588,56 @@ var Plotly = (() => {
     if (doTransition && sliderOpts.transition.duration > 0) {
       el = el.transition().duration(sliderOpts.transition.duration).ease(sliderOpts.transition.easing);
     }
-    el.attr("transform", strTranslate12(x - constants_default10.gripWidth * 0.5, sliderOpts._dims.currentValueTotalHeight));
+    el.attr("transform", strTranslate12(x - constants_default9.gripWidth * 0.5, sliderOpts._dims.currentValueTotalHeight));
   }
   function normalizedValueToPosition(sliderOpts, normalizedPosition) {
     var dims = sliderOpts._dims;
-    return dims.inputAreaStart + constants_default10.stepInset + (dims.inputAreaLength - 2 * constants_default10.stepInset) * Math.min(1, Math.max(0, normalizedPosition));
+    return dims.inputAreaStart + constants_default9.stepInset + (dims.inputAreaLength - 2 * constants_default9.stepInset) * Math.min(1, Math.max(0, normalizedPosition));
   }
   function positionToNormalizedValue(sliderOpts, position) {
     var dims = sliderOpts._dims;
-    return Math.min(1, Math.max(0, (position - constants_default10.stepInset - dims.inputAreaStart) / (dims.inputAreaLength - 2 * constants_default10.stepInset - 2 * dims.inputAreaStart)));
+    return Math.min(1, Math.max(0, (position - constants_default9.stepInset - dims.inputAreaStart) / (dims.inputAreaLength - 2 * constants_default9.stepInset - 2 * dims.inputAreaStart)));
   }
   function drawTouchRect(sliderGroup, gd, sliderOpts) {
     var dims = sliderOpts._dims;
-    var rect = lib_default.ensureSingle(sliderGroup, "rect", constants_default10.railTouchRectClass, function(s) {
+    var rect = lib_default.ensureSingle(sliderGroup, "rect", constants_default9.railTouchRectClass, function(s) {
       s.call(attachGripEvents, gd, sliderGroup, sliderOpts).style("pointer-events", "all");
     });
     rect.attr({
       width: dims.inputAreaLength,
-      height: Math.max(dims.inputAreaWidth, constants_default10.tickOffset + sliderOpts.ticklen + dims.labelHeight)
+      height: Math.max(dims.inputAreaWidth, constants_default9.tickOffset + sliderOpts.ticklen + dims.labelHeight)
     }).call(color_default.fill, sliderOpts.bgcolor).attr("opacity", 0);
     drawing_default.setTranslate(rect, 0, dims.currentValueTotalHeight);
   }
   function drawRail(sliderGroup, sliderOpts) {
     var dims = sliderOpts._dims;
-    var computedLength = dims.inputAreaLength - constants_default10.railInset * 2;
-    var rect = lib_default.ensureSingle(sliderGroup, "rect", constants_default10.railRectClass);
+    var computedLength = dims.inputAreaLength - constants_default9.railInset * 2;
+    var rect = lib_default.ensureSingle(sliderGroup, "rect", constants_default9.railRectClass);
     rect.attr({
       width: computedLength,
-      height: constants_default10.railWidth,
-      rx: constants_default10.railRadius,
-      ry: constants_default10.railRadius,
+      height: constants_default9.railWidth,
+      rx: constants_default9.railRadius,
+      ry: constants_default9.railRadius,
       "shape-rendering": "crispEdges"
     }).call(color_default.stroke, sliderOpts.bordercolor).call(color_default.fill, sliderOpts.bgcolor).style("stroke-width", sliderOpts.borderwidth + "px");
     drawing_default.setTranslate(
       rect,
-      constants_default10.railInset,
-      (dims.inputAreaWidth - constants_default10.railWidth) * 0.5 + dims.currentValueTotalHeight
+      constants_default9.railInset,
+      (dims.inputAreaWidth - constants_default9.railWidth) * 0.5 + dims.currentValueTotalHeight
     );
   }
 
   // src/components/sliders/index.js
   var sliders_default = {
     moduleType: "component",
-    name: constants_default10.name,
-    layoutAttributes: attributes_default17,
+    name: constants_default9.name,
+    layoutAttributes: attributes_default16,
     supplyLayoutDefaults: slidersDefaults,
     draw: draw10
   };
 
   // src/components/rangeslider/attributes.js
-  var attributes_default18 = {
+  var attributes_default17 = {
     bgcolor: {
       valType: "color",
       dflt: attributes_default3.background,
@@ -50221,7 +48708,7 @@ var Plotly = (() => {
   };
 
   // src/components/rangeslider/constants.js
-  var constants_default11 = {
+  var constants_default10 = {
     // attribute container name
     name: "rangeslider",
     // class names
@@ -50255,7 +48742,7 @@ var Plotly = (() => {
 
   // src/components/rangeslider/helpers.js
   var { LINE_SPACING: LINE_SPACING7 } = alignment_default;
-  var name5 = constants_default11.name;
+  var name5 = constants_default10.name;
   function isVisible(ax) {
     var rangeSlider = ax && ax[name5];
     return rangeSlider && rangeSlider.visible;
@@ -50297,7 +48784,7 @@ var Plotly = (() => {
       r: 0,
       t: 0,
       b: opts._height + bottomDepth + Math.max(fullLayout.margin.b, titleHeight),
-      pad: constants_default11.extraPad + opts._offsetShift * 2
+      pad: constants_default10.extraPad + opts._offsetShift * 2
     };
   };
   var helpers_default10 = { makeData, autoMarginOpts, isVisible };
@@ -50313,7 +48800,7 @@ var Plotly = (() => {
     var containerIn = axIn.rangeslider;
     var containerOut = plot_template_default.newContainer(axOut, "rangeslider");
     function coerce3(attr2, dflt) {
-      return lib_default.coerce(containerIn, containerOut, attributes_default18, attr2, dflt);
+      return lib_default.coerce(containerIn, containerOut, attributes_default17, attr2, dflt);
     }
     var rangeContainerIn, rangeContainerOut;
     function coerceRange(attr2, dflt) {
@@ -50359,7 +48846,7 @@ var Plotly = (() => {
     var axes2 = list(gd, "x", true);
     for (var i = 0; i < axes2.length; i++) {
       var ax = axes2[i];
-      var opts = ax[constants_default11.name];
+      var opts = ax[constants_default10.name];
       if (opts && opts.visible && opts.autorange) {
         opts._input.autorange = true;
         opts._input.range = opts.range = getAutoRange2(gd, ax);
@@ -50373,22 +48860,22 @@ var Plotly = (() => {
     var fullLayout = gd._fullLayout;
     var rangeSliderData = fullLayout._rangeSliderData;
     for (var i = 0; i < rangeSliderData.length; i++) {
-      var opts = rangeSliderData[i][constants_default11.name];
+      var opts = rangeSliderData[i][constants_default10.name];
       opts._clipId = opts._id + "-" + fullLayout._uid;
     }
     function keyFunction3(axisOpts) {
       return axisOpts._name;
     }
-    var rangeSliders = fullLayout._infolayer.selectAll("g." + constants_default11.containerClassName).data(rangeSliderData, keyFunction3);
+    var rangeSliders = fullLayout._infolayer.selectAll("g." + constants_default10.containerClassName).data(rangeSliderData, keyFunction3);
     rangeSliders.exit().each(function(axisOpts) {
-      var opts2 = axisOpts[constants_default11.name];
+      var opts2 = axisOpts[constants_default10.name];
       fullLayout._topdefs.select("#" + opts2._clipId).remove();
     }).remove();
     if (rangeSliderData.length === 0) return;
-    rangeSliders.enter().append("g").classed(constants_default11.containerClassName, true).attr("pointer-events", "all");
+    rangeSliders.enter().append("g").classed(constants_default10.containerClassName, true).attr("pointer-events", "all");
     rangeSliders.each(function(axisOpts) {
       var rangeSlider = select_default2(this);
-      var opts2 = axisOpts[constants_default11.name];
+      var opts2 = axisOpts[constants_default10.name];
       var oppAxisOpts = fullLayout[axis_ids_default.id2name(axisOpts.anchor)];
       var oppAxisRangeOpts = opts2[axis_ids_default.id2name(axisOpts.anchor)];
       if (opts2.range) {
@@ -50414,7 +48901,7 @@ var Plotly = (() => {
       opts2._width = gs.w * (domain[1] - domain[0]);
       var x = Math.round(gs.l + gs.w * domain[0]);
       var y = Math.round(
-        gs.t + gs.h * (1 - axisOpts._counterDomainMin) + (axisOpts.side === "bottom" ? axisOpts._depth : 0) + opts2._offsetShift + constants_default11.extraPad
+        gs.t + gs.h * (1 - axisOpts._counterDomainMin) + (axisOpts.side === "bottom" ? axisOpts._depth : 0) + opts2._offsetShift + constants_default10.extraPad
       );
       rangeSlider.attr("transform", strTranslate13(x, y));
       opts2._rl = lib_default.simpleMap(opts2.range, axisOpts.r2l);
@@ -50503,9 +48990,9 @@ var Plotly = (() => {
   }
   function setupDragElement2(rangeSlider, gd, axisOpts, opts) {
     if (gd._context.staticPlot) return;
-    var slideBox = rangeSlider.select("rect." + constants_default11.slideBoxClassName).node();
-    var grabAreaMin = rangeSlider.select("rect." + constants_default11.grabAreaMinClassName).node();
-    var grabAreaMax = rangeSlider.select("rect." + constants_default11.grabAreaMaxClassName).node();
+    var slideBox = rangeSlider.select("rect." + constants_default10.slideBoxClassName).node();
+    var grabAreaMin = rangeSlider.select("rect." + constants_default10.grabAreaMinClassName).node();
+    var grabAreaMax = rangeSlider.select("rect." + constants_default10.grabAreaMaxClassName).node();
     function mouseDownHandler() {
       var event2 = event2;
       var target = event2.target;
@@ -50585,7 +49072,7 @@ var Plotly = (() => {
     });
   }
   function setPixelRange(rangeSlider, gd, axisOpts, opts, oppAxisOpts, oppAxisRangeOpts) {
-    var hw2 = constants_default11.handleWidth / 2;
+    var hw2 = constants_default10.handleWidth / 2;
     function clamp(v) {
       return lib_default.constrain(v, 0, opts._width);
     }
@@ -50597,24 +49084,24 @@ var Plotly = (() => {
     }
     var pixelMin = clamp(opts.d2p(axisOpts._rl[0]));
     var pixelMax = clamp(opts.d2p(axisOpts._rl[1]));
-    rangeSlider.select("rect." + constants_default11.slideBoxClassName).attr("x", pixelMin).attr("width", pixelMax - pixelMin);
-    rangeSlider.select("rect." + constants_default11.maskMinClassName).attr("width", pixelMin);
-    rangeSlider.select("rect." + constants_default11.maskMaxClassName).attr("x", pixelMax).attr("width", opts._width - pixelMax);
+    rangeSlider.select("rect." + constants_default10.slideBoxClassName).attr("x", pixelMin).attr("width", pixelMax - pixelMin);
+    rangeSlider.select("rect." + constants_default10.maskMinClassName).attr("width", pixelMin);
+    rangeSlider.select("rect." + constants_default10.maskMaxClassName).attr("x", pixelMax).attr("width", opts._width - pixelMax);
     if (oppAxisRangeOpts.rangemode !== "match") {
       var pixelMinOppAxis = opts._height - clampOppAxis(opts.d2pOppAxis(oppAxisOpts._rl[1]));
       var pixelMaxOppAxis = opts._height - clampOppAxis(opts.d2pOppAxis(oppAxisOpts._rl[0]));
-      rangeSlider.select("rect." + constants_default11.maskMinOppAxisClassName).attr("x", pixelMin).attr("height", pixelMinOppAxis).attr("width", pixelMax - pixelMin);
-      rangeSlider.select("rect." + constants_default11.maskMaxOppAxisClassName).attr("x", pixelMin).attr("y", pixelMaxOppAxis).attr("height", opts._height - pixelMaxOppAxis).attr("width", pixelMax - pixelMin);
-      rangeSlider.select("rect." + constants_default11.slideBoxClassName).attr("y", pixelMinOppAxis).attr("height", pixelMaxOppAxis - pixelMinOppAxis);
+      rangeSlider.select("rect." + constants_default10.maskMinOppAxisClassName).attr("x", pixelMin).attr("height", pixelMinOppAxis).attr("width", pixelMax - pixelMin);
+      rangeSlider.select("rect." + constants_default10.maskMaxOppAxisClassName).attr("x", pixelMin).attr("y", pixelMaxOppAxis).attr("height", opts._height - pixelMaxOppAxis).attr("width", pixelMax - pixelMin);
+      rangeSlider.select("rect." + constants_default10.slideBoxClassName).attr("y", pixelMinOppAxis).attr("height", pixelMaxOppAxis - pixelMinOppAxis);
     }
     var offset = 0.5;
     var xMin = Math.round(clampHandle(pixelMin - hw2)) - offset;
     var xMax = Math.round(clampHandle(pixelMax - hw2)) + offset;
-    rangeSlider.select("g." + constants_default11.grabberMinClassName).attr("transform", strTranslate13(xMin, offset));
-    rangeSlider.select("g." + constants_default11.grabberMaxClassName).attr("transform", strTranslate13(xMax, offset));
+    rangeSlider.select("g." + constants_default10.grabberMinClassName).attr("transform", strTranslate13(xMin, offset));
+    rangeSlider.select("g." + constants_default10.grabberMaxClassName).attr("transform", strTranslate13(xMax, offset));
   }
   function drawBg(rangeSlider, gd, axisOpts, opts) {
-    var bg = lib_default.ensureSingle(rangeSlider, "rect", constants_default11.bgClassName, function(s) {
+    var bg = lib_default.ensureSingle(rangeSlider, "rect", constants_default10.bgClassName, function(s) {
       s.attr({
         x: 0,
         y: 0,
@@ -50643,9 +49130,9 @@ var Plotly = (() => {
   }
   function drawRangePlot(rangeSlider, gd, axisOpts, opts) {
     var calcData = gd.calcdata;
-    var rangePlots = rangeSlider.selectAll("g." + constants_default11.rangePlotClassName).data(axisOpts._subplotsWith, lib_default.identity);
+    var rangePlots = rangeSlider.selectAll("g." + constants_default10.rangePlotClassName).data(axisOpts._subplotsWith, lib_default.identity);
     rangePlots.enter().append("g").attr("class", function(id2) {
-      return constants_default11.rangePlotClassName + " " + id2;
+      return constants_default10.rangePlotClassName + " " + id2;
     }).call(drawing_default.setClipUrl, opts._clipId, gd);
     rangePlots.order();
     rangePlots.exit().remove();
@@ -50717,88 +49204,88 @@ var Plotly = (() => {
     return out;
   }
   function drawMasks(rangeSlider, gd, axisOpts, opts, oppAxisRangeOpts) {
-    var maskMin = lib_default.ensureSingle(rangeSlider, "rect", constants_default11.maskMinClassName, function(s) {
+    var maskMin = lib_default.ensureSingle(rangeSlider, "rect", constants_default10.maskMinClassName, function(s) {
       s.attr({
         x: 0,
         y: 0,
         "shape-rendering": "crispEdges"
       });
     });
-    maskMin.attr("height", opts._height).call(color_default.fill, constants_default11.maskColor);
-    var maskMax = lib_default.ensureSingle(rangeSlider, "rect", constants_default11.maskMaxClassName, function(s) {
+    maskMin.attr("height", opts._height).call(color_default.fill, constants_default10.maskColor);
+    var maskMax = lib_default.ensureSingle(rangeSlider, "rect", constants_default10.maskMaxClassName, function(s) {
       s.attr({
         y: 0,
         "shape-rendering": "crispEdges"
       });
     });
-    maskMax.attr("height", opts._height).call(color_default.fill, constants_default11.maskColor);
+    maskMax.attr("height", opts._height).call(color_default.fill, constants_default10.maskColor);
     if (oppAxisRangeOpts.rangemode !== "match") {
-      var maskMinOppAxis = lib_default.ensureSingle(rangeSlider, "rect", constants_default11.maskMinOppAxisClassName, function(s) {
+      var maskMinOppAxis = lib_default.ensureSingle(rangeSlider, "rect", constants_default10.maskMinOppAxisClassName, function(s) {
         s.attr({
           y: 0,
           "shape-rendering": "crispEdges"
         });
       });
-      maskMinOppAxis.attr("width", opts._width).call(color_default.fill, constants_default11.maskOppAxisColor);
-      var maskMaxOppAxis = lib_default.ensureSingle(rangeSlider, "rect", constants_default11.maskMaxOppAxisClassName, function(s) {
+      maskMinOppAxis.attr("width", opts._width).call(color_default.fill, constants_default10.maskOppAxisColor);
+      var maskMaxOppAxis = lib_default.ensureSingle(rangeSlider, "rect", constants_default10.maskMaxOppAxisClassName, function(s) {
         s.attr({
           y: 0,
           "shape-rendering": "crispEdges"
         });
       });
-      maskMaxOppAxis.attr("width", opts._width).style("border-top", constants_default11.maskOppBorder).call(color_default.fill, constants_default11.maskOppAxisColor);
+      maskMaxOppAxis.attr("width", opts._width).style("border-top", constants_default10.maskOppBorder).call(color_default.fill, constants_default10.maskOppAxisColor);
     }
   }
   function drawSlideBox(rangeSlider, gd, axisOpts, opts) {
     if (gd._context.staticPlot) return;
-    var slideBox = lib_default.ensureSingle(rangeSlider, "rect", constants_default11.slideBoxClassName, function(s) {
+    var slideBox = lib_default.ensureSingle(rangeSlider, "rect", constants_default10.slideBoxClassName, function(s) {
       s.attr({
         y: 0,
-        cursor: constants_default11.slideBoxCursor,
+        cursor: constants_default10.slideBoxCursor,
         "shape-rendering": "crispEdges"
       });
     });
     slideBox.attr({
       height: opts._height,
-      fill: constants_default11.slideBoxFill
+      fill: constants_default10.slideBoxFill
     });
   }
   function drawGrabbers(rangeSlider, gd, axisOpts, opts) {
-    var grabberMin = lib_default.ensureSingle(rangeSlider, "g", constants_default11.grabberMinClassName);
-    var grabberMax = lib_default.ensureSingle(rangeSlider, "g", constants_default11.grabberMaxClassName);
+    var grabberMin = lib_default.ensureSingle(rangeSlider, "g", constants_default10.grabberMinClassName);
+    var grabberMax = lib_default.ensureSingle(rangeSlider, "g", constants_default10.grabberMaxClassName);
     var handleFixAttrs = {
       x: 0,
-      width: constants_default11.handleWidth,
-      rx: constants_default11.handleRadius,
+      width: constants_default10.handleWidth,
+      rx: constants_default10.handleRadius,
       fill: color_default.background,
       stroke: color_default.defaultLine,
-      "stroke-width": constants_default11.handleStrokeWidth,
+      "stroke-width": constants_default10.handleStrokeWidth,
       "shape-rendering": "crispEdges"
     };
     var handleDynamicAttrs = {
       y: Math.round(opts._height / 4),
       height: Math.round(opts._height / 2)
     };
-    var handleMin = lib_default.ensureSingle(grabberMin, "rect", constants_default11.handleMinClassName, function(s) {
+    var handleMin = lib_default.ensureSingle(grabberMin, "rect", constants_default10.handleMinClassName, function(s) {
       s.attr(handleFixAttrs);
     });
     handleMin.attr(handleDynamicAttrs);
-    var handleMax = lib_default.ensureSingle(grabberMax, "rect", constants_default11.handleMaxClassName, function(s) {
+    var handleMax = lib_default.ensureSingle(grabberMax, "rect", constants_default10.handleMaxClassName, function(s) {
       s.attr(handleFixAttrs);
     });
     handleMax.attr(handleDynamicAttrs);
     var grabAreaFixAttrs = {
-      width: constants_default11.grabAreaWidth,
+      width: constants_default10.grabAreaWidth,
       x: 0,
       y: 0,
-      fill: constants_default11.grabAreaFill,
-      cursor: !gd._context.staticPlot ? constants_default11.grabAreaCursor : void 0
+      fill: constants_default10.grabAreaFill,
+      cursor: !gd._context.staticPlot ? constants_default10.grabAreaCursor : void 0
     };
-    var grabAreaMin = lib_default.ensureSingle(grabberMin, "rect", constants_default11.grabAreaMinClassName, function(s) {
+    var grabAreaMin = lib_default.ensureSingle(grabberMin, "rect", constants_default10.grabAreaMinClassName, function(s) {
       s.attr(grabAreaFixAttrs);
     });
     grabAreaMin.attr("height", opts._height);
-    var grabAreaMax = lib_default.ensureSingle(grabberMax, "rect", constants_default11.grabAreaMaxClassName, function(s) {
+    var grabAreaMax = lib_default.ensureSingle(grabberMax, "rect", constants_default10.grabAreaMaxClassName, function(s) {
       s.attr(grabAreaFixAttrs);
     });
     grabAreaMax.attr("height", opts._height);
@@ -50811,13 +49298,13 @@ var Plotly = (() => {
     schema: {
       subplots: {
         xaxis: {
-          rangeslider: lib_default.extendFlat({}, attributes_default18, {
+          rangeslider: lib_default.extendFlat({}, attributes_default17, {
             yaxis: oppaxis_attributes_default
           })
         }
       }
     },
-    layoutAttributes: attributes_default18,
+    layoutAttributes: attributes_default17,
     handleDefaults: handleDefaults3,
     calcAutorange: calcAutorange3,
     draw: draw_default4,
@@ -50857,7 +49344,7 @@ var Plotly = (() => {
     },
     editType: "plot"
   });
-  var attributes_default19 = {
+  var attributes_default18 = {
     visible: {
       valType: "boolean",
       editType: "plot"
@@ -50914,7 +49401,7 @@ var Plotly = (() => {
   };
 
   // src/components/rangeselector/constants.js
-  var constants_default12 = {
+  var constants_default11 = {
     // 'y' position pad above counter axis domain
     yPad: 0.02,
     // minimum button width (regardless of text size)
@@ -50932,7 +49419,7 @@ var Plotly = (() => {
     var selectorIn = containerIn.rangeselector || {};
     var selectorOut = plot_template_default.newContainer(containerOut, "rangeselector");
     function coerce3(attr2, dflt) {
-      return lib_default.coerce(selectorIn, selectorOut, attributes_default19, attr2, dflt);
+      return lib_default.coerce(selectorIn, selectorOut, attributes_default18, attr2, dflt);
     }
     var buttons = handleArrayContainerDefaults(selectorIn, selectorOut, {
       name: "buttons",
@@ -50949,7 +49436,7 @@ var Plotly = (() => {
       coerce3("yanchor");
       lib_default.coerceFont(coerce3, "font", layout.font);
       var bgColor = coerce3("bgcolor");
-      coerce3("activecolor", color_default.contrast(bgColor, constants_default12.lightAmount, constants_default12.darkAmount));
+      coerce3("activecolor", color_default.contrast(bgColor, constants_default11.lightAmount, constants_default11.darkAmount));
       coerce3("bordercolor");
       coerce3("borderwidth");
     }
@@ -50957,7 +49444,7 @@ var Plotly = (() => {
   function buttonDefaults2(buttonIn, buttonOut, selectorOut, opts) {
     var calendar = opts.calendar;
     function coerce3(attr2, dflt) {
-      return lib_default.coerce(buttonIn, buttonOut, attributes_default19.buttons, attr2, dflt);
+      return lib_default.coerce(buttonIn, buttonOut, attributes_default18.buttons, attr2, dflt);
     }
     var visible = coerce3("visible");
     if (visible) {
@@ -50982,7 +49469,7 @@ var Plotly = (() => {
       var domain = layout[anchoredList[i]].domain;
       if (domain) posY = Math.max(domain[1], posY);
     }
-    return [containerOut.domain[0], posY + constants_default12.yPad];
+    return [containerOut.domain[0], posY + constants_default11.yPad];
   }
 
   // src/components/rangeselector/get_update_object.js
@@ -51089,8 +49576,8 @@ var Plotly = (() => {
       s.attr("shape-rendering", "crispEdges");
     });
     rect.attr({
-      rx: constants_default12.rx,
-      ry: constants_default12.ry
+      rx: constants_default11.rx,
+      ry: constants_default11.ry
     });
     rect.call(color_default.stroke, selectorLayout.bordercolor).call(color_default.fill, getFillColor(selectorLayout, d)).style("stroke-width", selectorLayout.borderwidth + "px");
   }
@@ -51131,7 +49618,7 @@ var Plotly = (() => {
       var tWidth = text.node() && drawing_default.bBox(text.node()).width;
       var tHeight = opts.font.size * LINE_SPACING8;
       var tLines = svg_text_utils_default.lineCount(text);
-      var wEff = Math.max(tWidth + 10, constants_default12.minButtonWidth);
+      var wEff = Math.max(tWidth + 10, constants_default11.minButtonWidth);
       button.attr("transform", strTranslate14(borderWidth + width, borderWidth));
       rect.attr({
         x: 0,
@@ -51188,10 +49675,10 @@ var Plotly = (() => {
     name: "rangeselector",
     schema: {
       subplots: {
-        xaxis: { rangeselector: attributes_default19 }
+        xaxis: { rangeselector: attributes_default18 }
       }
     },
-    layoutAttributes: attributes_default19,
+    layoutAttributes: attributes_default18,
     handleDefaults: handleDefaults4,
     draw: draw11
   };
@@ -51518,7 +50005,7 @@ var Plotly = (() => {
   };
 
   // src/components/errorbars/attributes.js
-  var attributes_default20 = {
+  var attributes_default19 = {
     visible: {
       valType: "boolean",
       editType: "calc"
@@ -51591,13 +50078,13 @@ var Plotly = (() => {
   };
 
   // src/components/errorbars/defaults.js
-  var import_fast_isnumeric36 = __toESM(require_fast_isnumeric(), 1);
+  var import_fast_isnumeric35 = __toESM(require_fast_isnumeric(), 1);
   function defaults_default(traceIn, traceOut, defaultColor, opts) {
     var objName = "error_" + opts.axis;
     var containerOut = plot_template_default.newContainer(traceOut, objName);
     var containerIn = traceIn[objName] || {};
     function coerce3(attr2, dflt) {
-      return lib_default.coerce(containerIn, containerOut, attributes_default20, attr2, dflt);
+      return lib_default.coerce(containerIn, containerOut, attributes_default19, attr2, dflt);
     }
     var hasErrorBars = containerIn.array !== void 0 || containerIn.value !== void 0 || containerIn.type === "sqrt";
     var visible = coerce3("visible", hasErrorBars);
@@ -51625,7 +50112,7 @@ var Plotly = (() => {
     if (opts.inherit) {
       var inheritObj = traceOut["error_" + opts.inherit];
       if ((inheritObj || {}).visible) {
-        coerce3(copyAttr, !(containerIn.color || (0, import_fast_isnumeric36.default)(containerIn.thickness) || (0, import_fast_isnumeric36.default)(containerIn.width)));
+        coerce3(copyAttr, !(containerIn.color || (0, import_fast_isnumeric35.default)(containerIn.thickness) || (0, import_fast_isnumeric35.default)(containerIn.width)));
       }
     }
     if (!opts.inherit || !containerOut[copyAttr]) {
@@ -51636,7 +50123,7 @@ var Plotly = (() => {
   }
 
   // src/components/errorbars/calc.js
-  var import_fast_isnumeric37 = __toESM(require_fast_isnumeric(), 1);
+  var import_fast_isnumeric36 = __toESM(require_fast_isnumeric(), 1);
 
   // src/components/errorbars/compute_error.js
   function makeComputeError(opts) {
@@ -51722,9 +50209,9 @@ var Plotly = (() => {
       if (iIn === void 0) iIn = i;
       else if (iIn === null) continue;
       var calcCoord = calcPt[coord];
-      if (!(0, import_fast_isnumeric37.default)(axis.c2l(calcCoord))) continue;
+      if (!(0, import_fast_isnumeric36.default)(axis.c2l(calcCoord))) continue;
       var errors = computeError(calcCoord, iIn);
-      if ((0, import_fast_isnumeric37.default)(errors[0]) && (0, import_fast_isnumeric37.default)(errors[1])) {
+      if ((0, import_fast_isnumeric36.default)(errors[0]) && (0, import_fast_isnumeric36.default)(errors[1])) {
         var shoe = calcPt[coord + "s"] = calcCoord - errors[0];
         var hat = calcPt[coord + "h"] = calcCoord + errors[1];
         vals.push(shoe, hat);
@@ -51742,7 +50229,7 @@ var Plotly = (() => {
   }
 
   // src/components/errorbars/plot.js
-  var import_fast_isnumeric38 = __toESM(require_fast_isnumeric(), 1);
+  var import_fast_isnumeric37 = __toESM(require_fast_isnumeric(), 1);
   function plot3(gd, traces, plotinfo, transitionOpts) {
     var isNew;
     var xa = plotinfo.xaxis;
@@ -51778,7 +50265,7 @@ var Plotly = (() => {
         if (sparse && !d2.vis) return;
         var path;
         var yerror = errorbar.select("path.yerror");
-        if (yObj.visible && (0, import_fast_isnumeric38.default)(coords.x) && (0, import_fast_isnumeric38.default)(coords.yh) && (0, import_fast_isnumeric38.default)(coords.ys)) {
+        if (yObj.visible && (0, import_fast_isnumeric37.default)(coords.x) && (0, import_fast_isnumeric37.default)(coords.yh) && (0, import_fast_isnumeric37.default)(coords.ys)) {
           var yw = yObj.width;
           path = "M" + (coords.x - yw) + "," + coords.yh + "h" + 2 * yw + // hat
           "m-" + yw + ",0V" + coords.ys;
@@ -51792,7 +50279,7 @@ var Plotly = (() => {
           yerror.attr("d", path);
         } else yerror.remove();
         var xerror = errorbar.select("path.xerror");
-        if (xObj.visible && (0, import_fast_isnumeric38.default)(coords.y) && (0, import_fast_isnumeric38.default)(coords.xh) && (0, import_fast_isnumeric38.default)(coords.xs)) {
+        if (xObj.visible && (0, import_fast_isnumeric37.default)(coords.y) && (0, import_fast_isnumeric37.default)(coords.xh) && (0, import_fast_isnumeric37.default)(coords.xs)) {
           var xw = (xObj.copy_ystyle ? yObj : xObj).width;
           path = "M" + coords.xh + "," + (coords.y - xw) + "v" + 2 * xw + // hat
           "m0,-" + xw + "H" + coords.xs;
@@ -51816,7 +50303,7 @@ var Plotly = (() => {
     if (d.yh !== void 0) {
       out.yh = ya.c2p(d.yh);
       out.ys = ya.c2p(d.ys);
-      if (!(0, import_fast_isnumeric38.default)(out.ys)) {
+      if (!(0, import_fast_isnumeric37.default)(out.ys)) {
         out.noYS = true;
         out.ys = ya.c2p(d.ys, true);
       }
@@ -51824,7 +50311,7 @@ var Plotly = (() => {
     if (d.xh !== void 0) {
       out.xh = xa.c2p(d.xh);
       out.xs = xa.c2p(d.xs);
-      if (!(0, import_fast_isnumeric38.default)(out.xs)) {
+      if (!(0, import_fast_isnumeric37.default)(out.xs)) {
         out.noXS = true;
         out.xs = xa.c2p(d.xs, true);
       }
@@ -51848,16 +50335,16 @@ var Plotly = (() => {
   // src/components/errorbars/index.js
   var { overrideAll: overrideAll8 } = edit_types_default;
   var xyAttrs = {
-    error_x: lib_default.extendFlat({}, attributes_default20),
-    error_y: lib_default.extendFlat({}, attributes_default20)
+    error_x: lib_default.extendFlat({}, attributes_default19),
+    error_y: lib_default.extendFlat({}, attributes_default19)
   };
   delete xyAttrs.error_x.copy_zstyle;
   delete xyAttrs.error_y.copy_zstyle;
   delete xyAttrs.error_y.copy_ystyle;
   var xyzAttrs = {
-    error_x: lib_default.extendFlat({}, attributes_default20),
-    error_y: lib_default.extendFlat({}, attributes_default20),
-    error_z: lib_default.extendFlat({}, attributes_default20)
+    error_x: lib_default.extendFlat({}, attributes_default19),
+    error_y: lib_default.extendFlat({}, attributes_default19),
+    error_z: lib_default.extendFlat({}, attributes_default19)
   };
   delete xyzAttrs.error_x.copy_ystyle;
   delete xyzAttrs.error_y.copy_ystyle;
@@ -51894,7 +50381,7 @@ var Plotly = (() => {
   }
 
   // src/components/colorbar/constants.js
-  var constants_default13 = {
+  var constants_default12 = {
     cn: {
       colorbar: "colorbar",
       cbbg: "cbbg",
@@ -51913,7 +50400,7 @@ var Plotly = (() => {
 
   // src/components/colorbar/draw.js
   var { flipScale: flipScale2 } = helpers_default;
-  var { cn } = constants_default13;
+  var { cn } = constants_default12;
   var strTranslate15 = lib_default.strTranslate;
   var LINE_SPACING9 = alignment_default.LINE_SPACING;
   var FROM_TL6 = alignment_default.FROM_TL;
@@ -52658,6 +51145,1519 @@ var Plotly = (() => {
     style
   };
 
+  // src/fonts/ploticon.js
+  var ploticon_default = {
+    undo: {
+      width: 857.1,
+      height: 1e3,
+      path: "m857 350q0-87-34-166t-91-137-137-92-166-34q-96 0-183 41t-147 114q-4 6-4 13t5 11l76 77q6 5 14 5 9-1 13-7 41-53 100-82t126-29q58 0 110 23t92 61 61 91 22 111-22 111-61 91-92 61-110 23q-55 0-105-20t-90-57l77-77q17-16 8-38-10-23-33-23h-250q-15 0-25 11t-11 25v250q0 24 22 33 22 10 39-8l72-72q60 57 137 88t159 31q87 0 166-34t137-92 91-137 34-166z",
+      transform: "matrix(1 0 0 -1 0 850)"
+    },
+    home: {
+      width: 928.6,
+      height: 1e3,
+      path: "m786 296v-267q0-15-11-26t-25-10h-214v214h-143v-214h-214q-15 0-25 10t-11 26v267q0 1 0 2t0 2l321 264 321-264q1-1 1-4z m124 39l-34-41q-5-5-12-6h-2q-7 0-12 3l-386 322-386-322q-7-4-13-4-7 2-12 7l-35 41q-4 5-3 13t6 12l401 334q18 15 42 15t43-15l136-114v109q0 8 5 13t13 5h107q8 0 13-5t5-13v-227l122-102q5-5 6-12t-4-13z",
+      transform: "matrix(1 0 0 -1 0 850)"
+    },
+    "camera-retro": {
+      width: 1e3,
+      height: 1e3,
+      path: "m518 386q0 8-5 13t-13 5q-37 0-63-27t-26-63q0-8 5-13t13-5 12 5 5 13q0 23 16 38t38 16q8 0 13 5t5 13z m125-73q0-59-42-101t-101-42-101 42-42 101 42 101 101 42 101-42 42-101z m-572-320h858v71h-858v-71z m643 320q0 89-62 152t-152 62-151-62-63-152 63-151 151-63 152 63 62 151z m-571 358h214v72h-214v-72z m-72-107h858v143h-462l-36-71h-360v-72z m929 143v-714q0-30-21-51t-50-21h-858q-29 0-50 21t-21 51v714q0 30 21 51t50 21h858q29 0 50-21t21-51z",
+      transform: "matrix(1 0 0 -1 0 850)"
+    },
+    zoombox: {
+      width: 1e3,
+      height: 1e3,
+      path: "m1000-25l-250 251c40 63 63 138 63 218 0 224-182 406-407 406-224 0-406-182-406-406s183-406 407-406c80 0 155 22 218 62l250-250 125 125z m-812 250l0 438 437 0 0-438-437 0z m62 375l313 0 0-312-313 0 0 312z",
+      transform: "matrix(1 0 0 -1 0 850)"
+    },
+    pan: {
+      width: 1e3,
+      height: 1e3,
+      path: "m1000 350l-187 188 0-125-250 0 0 250 125 0-188 187-187-187 125 0 0-250-250 0 0 125-188-188 186-187 0 125 252 0 0-250-125 0 187-188 188 188-125 0 0 250 250 0 0-126 187 188z",
+      transform: "matrix(1 0 0 -1 0 850)"
+    },
+    zoom_plus: {
+      width: 875,
+      height: 1e3,
+      path: "m1 787l0-875 875 0 0 875-875 0z m687-500l-187 0 0-187-125 0 0 187-188 0 0 125 188 0 0 187 125 0 0-187 187 0 0-125z",
+      transform: "matrix(1 0 0 -1 0 850)"
+    },
+    zoom_minus: {
+      width: 875,
+      height: 1e3,
+      path: "m0 788l0-876 875 0 0 876-875 0z m688-500l-500 0 0 125 500 0 0-125z",
+      transform: "matrix(1 0 0 -1 0 850)"
+    },
+    autoscale: {
+      width: 1e3,
+      height: 1e3,
+      path: "m250 850l-187 0-63 0 0-62 0-188 63 0 0 188 187 0 0 62z m688 0l-188 0 0-62 188 0 0-188 62 0 0 188 0 62-62 0z m-875-938l0 188-63 0 0-188 0-62 63 0 187 0 0 62-187 0z m875 188l0-188-188 0 0-62 188 0 62 0 0 62 0 188-62 0z m-125 188l-1 0-93-94-156 156 156 156 92-93 2 0 0 250-250 0 0-2 93-92-156-156-156 156 94 92 0 2-250 0 0-250 0 0 93 93 157-156-157-156-93 94 0 0 0-250 250 0 0 0-94 93 156 157 156-157-93-93 0 0 250 0 0 250z",
+      transform: "matrix(1 0 0 -1 0 850)"
+    },
+    tooltip_basic: {
+      width: 1500,
+      height: 1e3,
+      path: "m375 725l0 0-375-375 375-374 0-1 1125 0 0 750-1125 0z",
+      transform: "matrix(1 0 0 -1 0 850)"
+    },
+    tooltip_compare: {
+      width: 1125,
+      height: 1e3,
+      path: "m187 786l0 2-187-188 188-187 0 0 937 0 0 373-938 0z m0-499l0 1-187-188 188-188 0 0 937 0 0 376-938-1z",
+      transform: "matrix(1 0 0 -1 0 850)"
+    },
+    plotlylogo: {
+      width: 1542,
+      height: 1e3,
+      path: "m0-10h182v-140h-182v140z m228 146h183v-286h-183v286z m225 714h182v-1000h-182v1000z m225-285h182v-715h-182v715z m225 142h183v-857h-183v857z m231-428h182v-429h-182v429z m225-291h183v-138h-183v138z",
+      transform: "matrix(1 0 0 -1 0 850)"
+    },
+    "z-axis": {
+      width: 1e3,
+      height: 1e3,
+      path: "m833 5l-17 108v41l-130-65 130-66c0 0 0 38 0 39 0-1 36-14 39-25 4-15-6-22-16-30-15-12-39-16-56-20-90-22-187-23-279-23-261 0-341 34-353 59 3 60 228 110 228 110-140-8-351-35-351-116 0-120 293-142 474-142 155 0 477 22 477 142 0 50-74 79-163 96z m-374 94c-58-5-99-21-99-40 0-24 65-43 144-43 79 0 143 19 143 43 0 19-42 34-98 40v216h87l-132 135-133-135h88v-216z m167 515h-136v1c16 16 31 34 46 52l84 109v54h-230v-71h124v-1c-16-17-28-32-44-51l-89-114v-51h245v72z",
+      transform: "matrix(1 0 0 -1 0 850)"
+    },
+    "3d_rotate": {
+      width: 1e3,
+      height: 1e3,
+      path: "m922 660c-5 4-9 7-14 11-359 263-580-31-580-31l-102 28 58-400c0 1 1 1 2 2 118 108 351 249 351 249s-62 27-100 42c88 83 222 183 347 122 16-8 30-17 44-27-2 1-4 2-6 4z m36-329c0 0 64 229-88 296-62 27-124 14-175-11 157-78 225-208 249-266 8-19 11-31 11-31 2 5 6 15 11 32-5-13-8-20-8-20z m-775-239c70-31 117-50 198-32-121 80-199 346-199 346l-96-15-58-12c0 0 55-226 155-287z m603 133l-317-139c0 0 4-4 19-14 7-5 24-15 24-15s-177-147-389 4c235-287 536-112 536-112l31-22 100 299-4-1z m-298-153c6-4 14-9 24-15 0 0-17 10-24 15z",
+      transform: "matrix(1 0 0 -1 0 850)"
+    },
+    camera: {
+      width: 1e3,
+      height: 1e3,
+      path: "m500 450c-83 0-150-67-150-150 0-83 67-150 150-150 83 0 150 67 150 150 0 83-67 150-150 150z m400 150h-120c-16 0-34 13-39 29l-31 93c-6 15-23 28-40 28h-340c-16 0-34-13-39-28l-31-94c-6-15-23-28-40-28h-120c-55 0-100-45-100-100v-450c0-55 45-100 100-100h800c55 0 100 45 100 100v450c0 55-45 100-100 100z m-400-550c-138 0-250 112-250 250 0 138 112 250 250 250 138 0 250-112 250-250 0-138-112-250-250-250z m365 380c-19 0-35 16-35 35 0 19 16 35 35 35 19 0 35-16 35-35 0-19-16-35-35-35z",
+      transform: "matrix(1 0 0 -1 0 850)"
+    },
+    movie: {
+      width: 1e3,
+      height: 1e3,
+      path: "m938 413l-188-125c0 37-17 71-44 94 64 38 107 107 107 187 0 121-98 219-219 219-121 0-219-98-219-219 0-61 25-117 66-156h-115c30 33 49 76 49 125 0 103-84 187-187 187s-188-84-188-187c0-57 26-107 65-141-38-22-65-62-65-109v-250c0-70 56-126 125-126h500c69 0 125 56 125 126l188-126c34 0 62 28 62 63v375c0 35-28 63-62 63z m-750 0c-69 0-125 56-125 125s56 125 125 125 125-56 125-125-56-125-125-125z m406-1c-87 0-157 70-157 157 0 86 70 156 157 156s156-70 156-156-70-157-156-157z",
+      transform: "matrix(1 0 0 -1 0 850)"
+    },
+    question: {
+      width: 857.1,
+      height: 1e3,
+      path: "m500 82v107q0 8-5 13t-13 5h-107q-8 0-13-5t-5-13v-107q0-8 5-13t13-5h107q8 0 13 5t5 13z m143 375q0 49-31 91t-77 65-95 23q-136 0-207-119-9-14 4-24l74-55q4-4 10-4 9 0 14 7 30 38 48 51 19 14 48 14 27 0 48-15t21-33q0-21-11-34t-38-25q-35-16-65-48t-29-70v-20q0-8 5-13t13-5h107q8 0 13 5t5 13q0 10 12 27t30 28q18 10 28 16t25 19 25 27 16 34 7 45z m214-107q0-117-57-215t-156-156-215-58-216 58-155 156-58 215 58 215 155 156 216 58 215-58 156-156 57-215z",
+      transform: "matrix(1 0 0 -1 0 850)"
+    },
+    disk: {
+      width: 857.1,
+      height: 1e3,
+      path: "m214-7h429v214h-429v-214z m500 0h72v500q0 8-6 21t-11 20l-157 156q-5 6-19 12t-22 5v-232q0-22-15-38t-38-16h-322q-22 0-37 16t-16 38v232h-72v-714h72v232q0 22 16 38t37 16h465q22 0 38-16t15-38v-232z m-214 518v178q0 8-5 13t-13 5h-107q-7 0-13-5t-5-13v-178q0-8 5-13t13-5h107q7 0 13 5t5 13z m357-18v-518q0-22-15-38t-38-16h-750q-23 0-38 16t-16 38v750q0 22 16 38t38 16h517q23 0 50-12t42-26l156-157q16-15 27-42t11-49z",
+      transform: "matrix(1 0 0 -1 0 850)"
+    },
+    drawopenpath: {
+      width: 70,
+      height: 70,
+      path: "M33.21,85.65a7.31,7.31,0,0,1-2.59-.48c-8.16-3.11-9.27-19.8-9.88-41.3-.1-3.58-.19-6.68-.35-9-.15-2.1-.67-3.48-1.43-3.79-2.13-.88-7.91,2.32-12,5.86L3,32.38c1.87-1.64,11.55-9.66,18.27-6.9,2.13.87,4.75,3.14,5.17,9,.17,2.43.26,5.59.36,9.25a224.17,224.17,0,0,0,1.5,23.4c1.54,10.76,4,12.22,4.48,12.4.84.32,2.79-.46,5.76-3.59L43,80.07C41.53,81.57,37.68,85.64,33.21,85.65ZM74.81,69a11.34,11.34,0,0,0,6.09-6.72L87.26,44.5,74.72,32,56.9,38.35c-2.37.86-5.57,3.42-6.61,6L38.65,72.14l8.42,8.43ZM55,46.27a7.91,7.91,0,0,1,3.64-3.17l14.8-5.3,8,8L76.11,60.6l-.06.19a6.37,6.37,0,0,1-3,3.43L48.25,74.59,44.62,71Zm16.57,7.82A6.9,6.9,0,1,0,64.64,61,6.91,6.91,0,0,0,71.54,54.09Zm-4.05,0a2.85,2.85,0,1,1-2.85-2.85A2.86,2.86,0,0,1,67.49,54.09Zm-4.13,5.22L60.5,56.45,44.26,72.7l2.86,2.86ZM97.83,35.67,84.14,22l-8.57,8.57L89.26,44.24Zm-13.69-8,8,8-2.85,2.85-8-8Z",
+      transform: "matrix(1 0 0 1 -15 -15)"
+    },
+    drawclosedpath: {
+      width: 90,
+      height: 90,
+      path: "M88.41,21.12a26.56,26.56,0,0,0-36.18,0l-2.07,2-2.07-2a26.57,26.57,0,0,0-36.18,0,23.74,23.74,0,0,0,0,34.8L48,90.12a3.22,3.22,0,0,0,4.42,0l36-34.21a23.73,23.73,0,0,0,0-34.79ZM84,51.24,50.16,83.35,16.35,51.25a17.28,17.28,0,0,1,0-25.47,20,20,0,0,1,27.3,0l4.29,4.07a3.23,3.23,0,0,0,4.44,0l4.29-4.07a20,20,0,0,1,27.3,0,17.27,17.27,0,0,1,0,25.46ZM66.76,47.68h-33v6.91h33ZM53.35,35H46.44V68h6.91Z",
+      transform: "matrix(1 0 0 1 -5 -5)"
+    },
+    lasso: {
+      width: 1031,
+      height: 1e3,
+      path: "m1018 538c-36 207-290 336-568 286-277-48-473-256-436-463 10-57 36-108 76-151-13-66 11-137 68-183 34-28 75-41 114-42l-55-70 0 0c-2-1-3-2-4-3-10-14-8-34 5-45 14-11 34-8 45 4 1 1 2 3 2 5l0 0 113 140c16 11 31 24 45 40 4 3 6 7 8 11 48-3 100 0 151 9 278 48 473 255 436 462z m-624-379c-80 14-149 48-197 96 42 42 109 47 156 9 33-26 47-66 41-105z m-187-74c-19 16-33 37-39 60 50-32 109-55 174-68-42-25-95-24-135 8z m360 75c-34-7-69-9-102-8 8 62-16 128-68 170-73 59-175 54-244-5-9 20-16 40-20 61-28 159 121 317 333 354s407-60 434-217c28-159-121-318-333-355z",
+      transform: "matrix(1 0 0 -1 0 850)"
+    },
+    selectbox: {
+      width: 1e3,
+      height: 1e3,
+      path: "m0 850l0-143 143 0 0 143-143 0z m286 0l0-143 143 0 0 143-143 0z m285 0l0-143 143 0 0 143-143 0z m286 0l0-143 143 0 0 143-143 0z m-857-286l0-143 143 0 0 143-143 0z m857 0l0-143 143 0 0 143-143 0z m-857-285l0-143 143 0 0 143-143 0z m857 0l0-143 143 0 0 143-143 0z m-857-286l0-143 143 0 0 143-143 0z m286 0l0-143 143 0 0 143-143 0z m285 0l0-143 143 0 0 143-143 0z m286 0l0-143 143 0 0 143-143 0z",
+      transform: "matrix(1 0 0 -1 0 850)"
+    },
+    drawline: {
+      width: 70,
+      height: 70,
+      path: "M60.64,62.3a11.29,11.29,0,0,0,6.09-6.72l6.35-17.72L60.54,25.31l-17.82,6.4c-2.36.86-5.57,3.41-6.6,6L24.48,65.5l8.42,8.42ZM40.79,39.63a7.89,7.89,0,0,1,3.65-3.17l14.79-5.31,8,8L61.94,54l-.06.19a6.44,6.44,0,0,1-3,3.43L34.07,68l-3.62-3.63Zm16.57,7.81a6.9,6.9,0,1,0-6.89,6.9A6.9,6.9,0,0,0,57.36,47.44Zm-4,0a2.86,2.86,0,1,1-2.85-2.85A2.86,2.86,0,0,1,53.32,47.44Zm-4.13,5.22L46.33,49.8,30.08,66.05l2.86,2.86ZM83.65,29,70,15.34,61.4,23.9,75.09,37.59ZM70,21.06l8,8-2.84,2.85-8-8ZM87,80.49H10.67V87H87Z",
+      transform: "matrix(1 0 0 1 -15 -15)"
+    },
+    drawrect: {
+      width: 80,
+      height: 80,
+      path: "M78,22V79H21V22H78m9-9H12V88H87V13ZM68,46.22H31V54H68ZM53,32H45.22V69H53Z",
+      transform: "matrix(1 0 0 1 -10 -10)"
+    },
+    drawcircle: {
+      width: 80,
+      height: 80,
+      path: "M50,84.72C26.84,84.72,8,69.28,8,50.3S26.84,15.87,50,15.87,92,31.31,92,50.3,73.16,84.72,50,84.72Zm0-60.59c-18.6,0-33.74,11.74-33.74,26.17S31.4,76.46,50,76.46,83.74,64.72,83.74,50.3,68.6,24.13,50,24.13Zm17.15,22h-34v7.11h34Zm-13.8-13H46.24v34h7.11Z",
+      transform: "matrix(1 0 0 1 -10 -10)"
+    },
+    eraseshape: {
+      width: 80,
+      height: 80,
+      path: "M82.77,78H31.85L6,49.57,31.85,21.14H82.77a8.72,8.72,0,0,1,8.65,8.77V69.24A8.72,8.72,0,0,1,82.77,78ZM35.46,69.84H82.77a.57.57,0,0,0,.49-.6V29.91a.57.57,0,0,0-.49-.61H35.46L17,49.57Zm32.68-34.7-24,24,5,5,24-24Zm-19,.53-5,5,24,24,5-5Z",
+      transform: "matrix(1 0 0 1 -10 -10)"
+    },
+    spikeline: {
+      width: 1e3,
+      height: 1e3,
+      path: "M512 409c0-57-46-104-103-104-57 0-104 47-104 104 0 57 47 103 104 103 57 0 103-46 103-103z m-327-39l92 0 0 92-92 0z m-185 0l92 0 0 92-92 0z m370-186l92 0 0 93-92 0z m0-184l92 0 0 92-92 0z",
+      transform: "matrix(1.5 0 0 -1.5 0 850)"
+    },
+    pencil: {
+      width: 1792,
+      height: 1792,
+      path: "M491 1536l91-91-235-235-91 91v107h128v128h107zm523-928q0-22-22-22-10 0-17 7l-542 542q-7 7-7 17 0 22 22 22 10 0 17-7l542-542q7-7 7-17zm-54-192l416 416-832 832h-416v-416zm683 96q0 53-37 90l-166 166-416-416 166-165q36-38 90-38 53 0 91 38l235 234q37 39 37 91z",
+      transform: "matrix(1 0 0 1 0 1)"
+    },
+    newplotlylogo: {
+      name: "newplotlylogo",
+      svg: [
+        "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 132 132'>",
+        " <title>plotly-logomark</title>",
+        " <g id='symbol'>",
+        "  <rect fill='#000' x='0' y='0' width='132' height='132' rx='18' ry='18'/>",
+        "  <circle fill='#9EF' cx='102' cy='30' r='6'/>",
+        "  <circle fill='#BAC' cx='78' cy='30' r='6'/>",
+        "  <circle fill='#BAC' cx='78' cy='54' r='6'/>",
+        "  <circle fill='#D69' cx='54' cy='30' r='6'/>",
+        "  <circle fill='#F26' cx='30' cy='30' r='6'/>",
+        "  <circle fill='#F26' cx='30' cy='54' r='6'/>",
+        "  <path fill='#FFF' d='M30,72a6,6,0,0,0-6,6v24a6,6,0,0,0,12,0V78A6,6,0,0,0,30,72Z'/>",
+        "  <path fill='#FFF' d='M78,72a6,6,0,0,0-6,6v24a6,6,0,0,0,12,0V78A6,6,0,0,0,78,72Z'/>",
+        "  <path fill='#FFF' d='M54,48a6,6,0,0,0-6,6v48a6,6,0,0,0,12,0V54A6,6,0,0,0,54,48Z'/>",
+        "  <path fill='#FFF' d='M102,48a6,6,0,0,0-6,6v48a6,6,0,0,0,12,0V54A6,6,0,0,0,102,48Z'/>",
+        " </g>",
+        "</svg>"
+      ].join("")
+    }
+  };
+
+  // src/components/modebar/buttons.js
+  var _2 = lib_default._;
+  var modeBarButtons = {};
+  modeBarButtons.toImage = {
+    name: "toImage",
+    title: function(gd) {
+      var opts = gd._context.toImageButtonOptions || {};
+      var format5 = opts.format || "png";
+      return format5 === "png" ? _2(gd, "Download plot as a PNG") : (
+        // legacy text
+        _2(gd, "Download plot")
+      );
+    },
+    icon: ploticon_default.camera,
+    click: function(gd) {
+      var toImageButtonOptions = gd._context.toImageButtonOptions;
+      var opts = { format: toImageButtonOptions.format || "png" };
+      lib_default.notifier(_2(gd, "Taking snapshot - this may take a few seconds"), "long");
+      ["filename", "width", "height", "scale"].forEach(function(key) {
+        if (key in toImageButtonOptions) {
+          opts[key] = toImageButtonOptions[key];
+        }
+      });
+      registry_default.call("downloadImage", gd, opts).then(function(filename) {
+        lib_default.notifier(_2(gd, "Snapshot succeeded") + " - " + filename, "long");
+      }).catch(function() {
+        lib_default.notifier(_2(gd, "Sorry, there was a problem downloading your snapshot!"), "long");
+      });
+    }
+  };
+  modeBarButtons.sendDataToCloud = {
+    name: "sendDataToCloud",
+    title: function(gd) {
+      return _2(gd, "Edit in Chart Studio");
+    },
+    icon: ploticon_default.disk,
+    click: function(gd) {
+      plots_default.sendDataToCloud(gd);
+    }
+  };
+  modeBarButtons.editInChartStudio = {
+    name: "editInChartStudio",
+    title: function(gd) {
+      return _2(gd, "Edit in Chart Studio");
+    },
+    icon: ploticon_default.pencil,
+    click: function(gd) {
+      plots_default.sendDataToCloud(gd);
+    }
+  };
+  modeBarButtons.zoom2d = {
+    name: "zoom2d",
+    _cat: "zoom",
+    title: function(gd) {
+      return _2(gd, "Zoom");
+    },
+    attr: "dragmode",
+    val: "zoom",
+    icon: ploticon_default.zoombox,
+    click: handleCartesian
+  };
+  modeBarButtons.pan2d = {
+    name: "pan2d",
+    _cat: "pan",
+    title: function(gd) {
+      return _2(gd, "Pan");
+    },
+    attr: "dragmode",
+    val: "pan",
+    icon: ploticon_default.pan,
+    click: handleCartesian
+  };
+  modeBarButtons.select2d = {
+    name: "select2d",
+    _cat: "select",
+    title: function(gd) {
+      return _2(gd, "Box Select");
+    },
+    attr: "dragmode",
+    val: "select",
+    icon: ploticon_default.selectbox,
+    click: handleCartesian
+  };
+  modeBarButtons.lasso2d = {
+    name: "lasso2d",
+    _cat: "lasso",
+    title: function(gd) {
+      return _2(gd, "Lasso Select");
+    },
+    attr: "dragmode",
+    val: "lasso",
+    icon: ploticon_default.lasso,
+    click: handleCartesian
+  };
+  modeBarButtons.drawclosedpath = {
+    name: "drawclosedpath",
+    title: function(gd) {
+      return _2(gd, "Draw closed freeform");
+    },
+    attr: "dragmode",
+    val: "drawclosedpath",
+    icon: ploticon_default.drawclosedpath,
+    click: handleCartesian
+  };
+  modeBarButtons.drawopenpath = {
+    name: "drawopenpath",
+    title: function(gd) {
+      return _2(gd, "Draw open freeform");
+    },
+    attr: "dragmode",
+    val: "drawopenpath",
+    icon: ploticon_default.drawopenpath,
+    click: handleCartesian
+  };
+  modeBarButtons.drawline = {
+    name: "drawline",
+    title: function(gd) {
+      return _2(gd, "Draw line");
+    },
+    attr: "dragmode",
+    val: "drawline",
+    icon: ploticon_default.drawline,
+    click: handleCartesian
+  };
+  modeBarButtons.drawrect = {
+    name: "drawrect",
+    title: function(gd) {
+      return _2(gd, "Draw rectangle");
+    },
+    attr: "dragmode",
+    val: "drawrect",
+    icon: ploticon_default.drawrect,
+    click: handleCartesian
+  };
+  modeBarButtons.drawcircle = {
+    name: "drawcircle",
+    title: function(gd) {
+      return _2(gd, "Draw circle");
+    },
+    attr: "dragmode",
+    val: "drawcircle",
+    icon: ploticon_default.drawcircle,
+    click: handleCartesian
+  };
+  modeBarButtons.eraseshape = {
+    name: "eraseshape",
+    title: function(gd) {
+      return _2(gd, "Erase active shape");
+    },
+    icon: ploticon_default.eraseshape,
+    click: function(gd) {
+      return registry_default.getComponentMethod("shapes", "eraseActiveShape")(gd);
+    }
+  };
+  modeBarButtons.zoomIn2d = {
+    name: "zoomIn2d",
+    _cat: "zoomin",
+    title: function(gd) {
+      return _2(gd, "Zoom in");
+    },
+    attr: "zoom",
+    val: "in",
+    icon: ploticon_default.zoom_plus,
+    click: handleCartesian
+  };
+  modeBarButtons.zoomOut2d = {
+    name: "zoomOut2d",
+    _cat: "zoomout",
+    title: function(gd) {
+      return _2(gd, "Zoom out");
+    },
+    attr: "zoom",
+    val: "out",
+    icon: ploticon_default.zoom_minus,
+    click: handleCartesian
+  };
+  modeBarButtons.autoScale2d = {
+    name: "autoScale2d",
+    _cat: "autoscale",
+    title: function(gd) {
+      return _2(gd, "Autoscale");
+    },
+    attr: "zoom",
+    val: "auto",
+    icon: ploticon_default.autoscale,
+    click: handleCartesian
+  };
+  modeBarButtons.resetScale2d = {
+    name: "resetScale2d",
+    _cat: "resetscale",
+    title: function(gd) {
+      return _2(gd, "Reset axes");
+    },
+    attr: "zoom",
+    val: "reset",
+    icon: ploticon_default.home,
+    click: handleCartesian
+  };
+  modeBarButtons.hoverClosestCartesian = {
+    name: "hoverClosestCartesian",
+    _cat: "hoverclosest",
+    title: function(gd) {
+      return _2(gd, "Show closest data on hover");
+    },
+    attr: "hovermode",
+    val: "closest",
+    icon: ploticon_default.tooltip_basic,
+    gravity: "ne",
+    click: handleCartesian
+  };
+  modeBarButtons.hoverCompareCartesian = {
+    name: "hoverCompareCartesian",
+    _cat: "hoverCompare",
+    title: function(gd) {
+      return _2(gd, "Compare data on hover");
+    },
+    attr: "hovermode",
+    val: function(gd) {
+      return gd._fullLayout._isHoriz ? "y" : "x";
+    },
+    icon: ploticon_default.tooltip_compare,
+    gravity: "ne",
+    click: handleCartesian
+  };
+  function handleCartesian(gd, ev) {
+    var button = ev.currentTarget;
+    var astr = button.getAttribute("data-attr");
+    var val = button.getAttribute("data-val") || true;
+    var fullLayout = gd._fullLayout;
+    var aobj = {};
+    var axList = axis_ids_default.list(gd, null, true);
+    var allSpikesEnabled = fullLayout._cartesianSpikesEnabled;
+    var ax, i;
+    if (astr === "zoom") {
+      var mag = val === "in" ? 0.5 : 2;
+      var r0 = (1 + mag) / 2;
+      var r1 = (1 - mag) / 2;
+      var axName, allowed;
+      for (i = 0; i < axList.length; i++) {
+        ax = axList[i];
+        allowed = ax.modebardisable === "none" || ax.modebardisable.indexOf(
+          val === "auto" || val === "reset" ? "autoscale" : "zoominout"
+        ) === -1;
+        if (allowed && !ax.fixedrange) {
+          axName = ax._name;
+          if (val === "auto") {
+            aobj[axName + ".autorange"] = true;
+          } else if (val === "reset") {
+            if (ax._rangeInitial0 === void 0 && ax._rangeInitial1 === void 0) {
+              aobj[axName + ".autorange"] = true;
+            } else if (ax._rangeInitial0 === void 0) {
+              aobj[axName + ".autorange"] = ax._autorangeInitial;
+              aobj[axName + ".range"] = [null, ax._rangeInitial1];
+            } else if (ax._rangeInitial1 === void 0) {
+              aobj[axName + ".range"] = [ax._rangeInitial0, null];
+              aobj[axName + ".autorange"] = ax._autorangeInitial;
+            } else {
+              aobj[axName + ".range"] = [ax._rangeInitial0, ax._rangeInitial1];
+            }
+            if (ax._showSpikeInitial !== void 0) {
+              aobj[axName + ".showspikes"] = ax._showSpikeInitial;
+              if (allSpikesEnabled === "on" && !ax._showSpikeInitial) {
+                allSpikesEnabled = "off";
+              }
+            }
+          } else {
+            var rangeNow = [
+              ax.r2l(ax.range[0]),
+              ax.r2l(ax.range[1])
+            ];
+            var rangeNew = [
+              r0 * rangeNow[0] + r1 * rangeNow[1],
+              r0 * rangeNow[1] + r1 * rangeNow[0]
+            ];
+            aobj[axName + ".range[0]"] = ax.l2r(rangeNew[0]);
+            aobj[axName + ".range[1]"] = ax.l2r(rangeNew[1]);
+          }
+        }
+      }
+    } else {
+      if (astr === "hovermode" && (val === "x" || val === "y")) {
+        val = fullLayout._isHoriz ? "y" : "x";
+        button.setAttribute("data-val", val);
+      }
+      aobj[astr] = val;
+    }
+    fullLayout._cartesianSpikesEnabled = allSpikesEnabled;
+    registry_default.call("_guiRelayout", gd, aobj);
+  }
+  modeBarButtons.zoom3d = {
+    name: "zoom3d",
+    _cat: "zoom",
+    title: function(gd) {
+      return _2(gd, "Zoom");
+    },
+    attr: "scene.dragmode",
+    val: "zoom",
+    icon: ploticon_default.zoombox,
+    click: handleDrag3d
+  };
+  modeBarButtons.pan3d = {
+    name: "pan3d",
+    _cat: "pan",
+    title: function(gd) {
+      return _2(gd, "Pan");
+    },
+    attr: "scene.dragmode",
+    val: "pan",
+    icon: ploticon_default.pan,
+    click: handleDrag3d
+  };
+  modeBarButtons.orbitRotation = {
+    name: "orbitRotation",
+    title: function(gd) {
+      return _2(gd, "Orbital rotation");
+    },
+    attr: "scene.dragmode",
+    val: "orbit",
+    icon: ploticon_default["3d_rotate"],
+    click: handleDrag3d
+  };
+  modeBarButtons.tableRotation = {
+    name: "tableRotation",
+    title: function(gd) {
+      return _2(gd, "Turntable rotation");
+    },
+    attr: "scene.dragmode",
+    val: "turntable",
+    icon: ploticon_default["z-axis"],
+    click: handleDrag3d
+  };
+  function handleDrag3d(gd, ev) {
+    var button = ev.currentTarget;
+    var attr2 = button.getAttribute("data-attr");
+    var val = button.getAttribute("data-val") || true;
+    var sceneIds = gd._fullLayout._subplots.gl3d || [];
+    var layoutUpdate = {};
+    var parts = attr2.split(".");
+    for (var i = 0; i < sceneIds.length; i++) {
+      layoutUpdate[sceneIds[i] + "." + parts[1]] = val;
+    }
+    var val2d = val === "pan" ? val : "zoom";
+    layoutUpdate.dragmode = val2d;
+    registry_default.call("_guiRelayout", gd, layoutUpdate);
+  }
+  modeBarButtons.resetCameraDefault3d = {
+    name: "resetCameraDefault3d",
+    _cat: "resetCameraDefault",
+    title: function(gd) {
+      return _2(gd, "Reset camera to default");
+    },
+    attr: "resetDefault",
+    icon: ploticon_default.home,
+    click: handleCamera3d
+  };
+  modeBarButtons.resetCameraLastSave3d = {
+    name: "resetCameraLastSave3d",
+    _cat: "resetCameraLastSave",
+    title: function(gd) {
+      return _2(gd, "Reset camera to last save");
+    },
+    attr: "resetLastSave",
+    icon: ploticon_default.movie,
+    click: handleCamera3d
+  };
+  function handleCamera3d(gd, ev) {
+    var button = ev.currentTarget;
+    var attr2 = button.getAttribute("data-attr");
+    var resetLastSave = attr2 === "resetLastSave";
+    var resetDefault = attr2 === "resetDefault";
+    var fullLayout = gd._fullLayout;
+    var sceneIds = fullLayout._subplots.gl3d || [];
+    var aobj = {};
+    for (var i = 0; i < sceneIds.length; i++) {
+      var sceneId = sceneIds[i];
+      var camera = sceneId + ".camera";
+      var aspectratio = sceneId + ".aspectratio";
+      var aspectmode = sceneId + ".aspectmode";
+      var scene = fullLayout[sceneId]._scene;
+      var didUpdate;
+      if (resetLastSave) {
+        aobj[camera + ".up"] = scene.viewInitial.up;
+        aobj[camera + ".eye"] = scene.viewInitial.eye;
+        aobj[camera + ".center"] = scene.viewInitial.center;
+        didUpdate = true;
+      } else if (resetDefault) {
+        aobj[camera + ".up"] = null;
+        aobj[camera + ".eye"] = null;
+        aobj[camera + ".center"] = null;
+        didUpdate = true;
+      }
+      if (didUpdate) {
+        aobj[aspectratio + ".x"] = scene.viewInitial.aspectratio.x;
+        aobj[aspectratio + ".y"] = scene.viewInitial.aspectratio.y;
+        aobj[aspectratio + ".z"] = scene.viewInitial.aspectratio.z;
+        aobj[aspectmode] = scene.viewInitial.aspectmode;
+      }
+    }
+    registry_default.call("_guiRelayout", gd, aobj);
+  }
+  modeBarButtons.hoverClosest3d = {
+    name: "hoverClosest3d",
+    _cat: "hoverclosest",
+    title: function(gd) {
+      return _2(gd, "Toggle show closest data on hover");
+    },
+    attr: "hovermode",
+    val: null,
+    toggle: true,
+    icon: ploticon_default.tooltip_basic,
+    gravity: "ne",
+    click: handleHover3d
+  };
+  function getNextHover3d(gd, ev) {
+    var button = ev.currentTarget;
+    var val = button._previousVal;
+    var fullLayout = gd._fullLayout;
+    var sceneIds = fullLayout._subplots.gl3d || [];
+    var axes2 = ["xaxis", "yaxis", "zaxis"];
+    var currentSpikes = {};
+    var layoutUpdate = {};
+    if (val) {
+      layoutUpdate = val;
+      button._previousVal = null;
+    } else {
+      for (var i = 0; i < sceneIds.length; i++) {
+        var sceneId = sceneIds[i];
+        var sceneLayout = fullLayout[sceneId];
+        var hovermodeAStr = sceneId + ".hovermode";
+        currentSpikes[hovermodeAStr] = sceneLayout.hovermode;
+        layoutUpdate[hovermodeAStr] = false;
+        for (var j = 0; j < 3; j++) {
+          var axis = axes2[j];
+          var spikeAStr = sceneId + "." + axis + ".showspikes";
+          layoutUpdate[spikeAStr] = false;
+          currentSpikes[spikeAStr] = sceneLayout[axis].showspikes;
+        }
+      }
+      button._previousVal = currentSpikes;
+    }
+    return layoutUpdate;
+  }
+  function handleHover3d(gd, ev) {
+    var layoutUpdate = getNextHover3d(gd, ev);
+    registry_default.call("_guiRelayout", gd, layoutUpdate);
+  }
+  modeBarButtons.zoomInGeo = {
+    name: "zoomInGeo",
+    _cat: "zoomin",
+    title: function(gd) {
+      return _2(gd, "Zoom in");
+    },
+    attr: "zoom",
+    val: "in",
+    icon: ploticon_default.zoom_plus,
+    click: handleGeo
+  };
+  modeBarButtons.zoomOutGeo = {
+    name: "zoomOutGeo",
+    _cat: "zoomout",
+    title: function(gd) {
+      return _2(gd, "Zoom out");
+    },
+    attr: "zoom",
+    val: "out",
+    icon: ploticon_default.zoom_minus,
+    click: handleGeo
+  };
+  modeBarButtons.resetGeo = {
+    name: "resetGeo",
+    _cat: "reset",
+    title: function(gd) {
+      return _2(gd, "Reset");
+    },
+    attr: "reset",
+    val: null,
+    icon: ploticon_default.autoscale,
+    click: handleGeo
+  };
+  modeBarButtons.hoverClosestGeo = {
+    name: "hoverClosestGeo",
+    _cat: "hoverclosest",
+    title: function(gd) {
+      return _2(gd, "Toggle show closest data on hover");
+    },
+    attr: "hovermode",
+    val: null,
+    toggle: true,
+    icon: ploticon_default.tooltip_basic,
+    gravity: "ne",
+    click: toggleHover
+  };
+  function handleGeo(gd, ev) {
+    var button = ev.currentTarget;
+    var attr2 = button.getAttribute("data-attr");
+    var val = button.getAttribute("data-val") || true;
+    var fullLayout = gd._fullLayout;
+    var geoIds = fullLayout._subplots.geo || [];
+    for (var i = 0; i < geoIds.length; i++) {
+      var id2 = geoIds[i];
+      var geoLayout = fullLayout[id2];
+      if (attr2 === "zoom") {
+        var scale = geoLayout.projection.scale;
+        var newScale = val === "in" ? 2 * scale : 0.5 * scale;
+        registry_default.call("_guiRelayout", gd, id2 + ".projection.scale", newScale);
+      }
+    }
+    if (attr2 === "reset") {
+      resetView(gd, "geo");
+    }
+  }
+  modeBarButtons.hoverClosestPie = {
+    name: "hoverClosestPie",
+    _cat: "hoverclosest",
+    title: function(gd) {
+      return _2(gd, "Toggle show closest data on hover");
+    },
+    attr: "hovermode",
+    val: "closest",
+    icon: ploticon_default.tooltip_basic,
+    gravity: "ne",
+    click: toggleHover
+  };
+  function getNextHover(gd) {
+    var fullLayout = gd._fullLayout;
+    if (fullLayout.hovermode) return false;
+    if (fullLayout._has("cartesian")) {
+      return fullLayout._isHoriz ? "y" : "x";
+    }
+    return "closest";
+  }
+  function toggleHover(gd) {
+    var newHover = getNextHover(gd);
+    registry_default.call("_guiRelayout", gd, "hovermode", newHover);
+  }
+  modeBarButtons.resetViewSankey = {
+    name: "resetSankeyGroup",
+    title: function(gd) {
+      return _2(gd, "Reset view");
+    },
+    icon: ploticon_default.home,
+    click: function(gd) {
+      var aObj = {
+        "node.groups": [],
+        "node.x": [],
+        "node.y": []
+      };
+      for (var i = 0; i < gd._fullData.length; i++) {
+        var viewInitial = gd._fullData[i]._viewInitial;
+        aObj["node.groups"].push(viewInitial.node.groups.slice());
+        aObj["node.x"].push(viewInitial.node.x.slice());
+        aObj["node.y"].push(viewInitial.node.y.slice());
+      }
+      registry_default.call("restyle", gd, aObj);
+    }
+  };
+  modeBarButtons.toggleHover = {
+    name: "toggleHover",
+    title: function(gd) {
+      return _2(gd, "Toggle show closest data on hover");
+    },
+    attr: "hovermode",
+    val: null,
+    toggle: true,
+    icon: ploticon_default.tooltip_basic,
+    gravity: "ne",
+    click: function(gd, ev) {
+      var layoutUpdate = getNextHover3d(gd, ev);
+      layoutUpdate.hovermode = getNextHover(gd);
+      registry_default.call("_guiRelayout", gd, layoutUpdate);
+    }
+  };
+  modeBarButtons.resetViews = {
+    name: "resetViews",
+    title: function(gd) {
+      return _2(gd, "Reset views");
+    },
+    icon: ploticon_default.home,
+    click: function(gd, ev) {
+      var button = ev.currentTarget;
+      button.setAttribute("data-attr", "zoom");
+      button.setAttribute("data-val", "reset");
+      handleCartesian(gd, ev);
+      button.setAttribute("data-attr", "resetLastSave");
+      handleCamera3d(gd, ev);
+      resetView(gd, "geo");
+      resetView(gd, "mapbox");
+      resetView(gd, "map");
+    }
+  };
+  modeBarButtons.toggleSpikelines = {
+    name: "toggleSpikelines",
+    title: function(gd) {
+      return _2(gd, "Toggle Spike Lines");
+    },
+    icon: ploticon_default.spikeline,
+    attr: "_cartesianSpikesEnabled",
+    val: "on",
+    click: function(gd) {
+      var fullLayout = gd._fullLayout;
+      var allSpikesEnabled = fullLayout._cartesianSpikesEnabled;
+      fullLayout._cartesianSpikesEnabled = allSpikesEnabled === "on" ? "off" : "on";
+      registry_default.call("_guiRelayout", gd, setSpikelineVisibility(gd));
+    }
+  };
+  function setSpikelineVisibility(gd) {
+    var fullLayout = gd._fullLayout;
+    var areSpikesOn = fullLayout._cartesianSpikesEnabled === "on";
+    var axList = axis_ids_default.list(gd, null, true);
+    var aobj = {};
+    for (var i = 0; i < axList.length; i++) {
+      var ax = axList[i];
+      aobj[ax._name + ".showspikes"] = areSpikesOn ? true : ax._showSpikeInitial;
+    }
+    return aobj;
+  }
+  modeBarButtons.resetViewMapbox = {
+    name: "resetViewMapbox",
+    _cat: "resetView",
+    title: function(gd) {
+      return _2(gd, "Reset view");
+    },
+    attr: "reset",
+    icon: ploticon_default.home,
+    click: function(gd) {
+      resetView(gd, "mapbox");
+    }
+  };
+  modeBarButtons.resetViewMap = {
+    name: "resetViewMap",
+    _cat: "resetView",
+    title: function(gd) {
+      return _2(gd, "Reset view");
+    },
+    attr: "reset",
+    icon: ploticon_default.home,
+    click: function(gd) {
+      resetView(gd, "map");
+    }
+  };
+  modeBarButtons.zoomInMapbox = {
+    name: "zoomInMapbox",
+    _cat: "zoomin",
+    title: function(gd) {
+      return _2(gd, "Zoom in");
+    },
+    attr: "zoom",
+    val: "in",
+    icon: ploticon_default.zoom_plus,
+    click: handleMapboxZoom
+  };
+  modeBarButtons.zoomInMap = {
+    name: "zoomInMap",
+    _cat: "zoomin",
+    title: function(gd) {
+      return _2(gd, "Zoom in");
+    },
+    attr: "zoom",
+    val: "in",
+    icon: ploticon_default.zoom_plus,
+    click: handleMapZoom
+  };
+  modeBarButtons.zoomOutMapbox = {
+    name: "zoomOutMapbox",
+    _cat: "zoomout",
+    title: function(gd) {
+      return _2(gd, "Zoom out");
+    },
+    attr: "zoom",
+    val: "out",
+    icon: ploticon_default.zoom_minus,
+    click: handleMapboxZoom
+  };
+  modeBarButtons.zoomOutMap = {
+    name: "zoomOutMap",
+    _cat: "zoomout",
+    title: function(gd) {
+      return _2(gd, "Zoom out");
+    },
+    attr: "zoom",
+    val: "out",
+    icon: ploticon_default.zoom_minus,
+    click: handleMapZoom
+  };
+  function handleMapboxZoom(gd, ev) {
+    _handleMapZoom(gd, ev, "mapbox");
+  }
+  function handleMapZoom(gd, ev) {
+    _handleMapZoom(gd, ev, "map");
+  }
+  function _handleMapZoom(gd, ev, mapType) {
+    var button = ev.currentTarget;
+    var val = button.getAttribute("data-val");
+    var fullLayout = gd._fullLayout;
+    var subplotIds = fullLayout._subplots[mapType] || [];
+    var scalar = 1.05;
+    var aObj = {};
+    for (var i = 0; i < subplotIds.length; i++) {
+      var id2 = subplotIds[i];
+      var current = fullLayout[id2].zoom;
+      var next = val === "in" ? scalar * current : current / scalar;
+      aObj[id2 + ".zoom"] = next;
+    }
+    registry_default.call("_guiRelayout", gd, aObj);
+  }
+  function resetView(gd, subplotType) {
+    var fullLayout = gd._fullLayout;
+    var subplotIds = fullLayout._subplots[subplotType] || [];
+    var aObj = {};
+    for (var i = 0; i < subplotIds.length; i++) {
+      var id2 = subplotIds[i];
+      var subplotObj = fullLayout[id2]._subplot;
+      var viewInitial = subplotObj.viewInitial;
+      var viewKeys = Object.keys(viewInitial);
+      for (var j = 0; j < viewKeys.length; j++) {
+        var key = viewKeys[j];
+        aObj[id2 + "." + key] = viewInitial[key];
+      }
+    }
+    registry_default.call("_guiRelayout", gd, aObj);
+  }
+  var buttons_default = modeBarButtons;
+
+  // src/components/modebar/constants.js
+  var buttonList = Object.keys(buttons_default);
+  var DRAW_MODES = [
+    "drawline",
+    "drawopenpath",
+    "drawclosedpath",
+    "drawcircle",
+    "drawrect",
+    "eraseshape"
+  ];
+  var backButtons = [
+    "v1hovermode",
+    "hoverclosest",
+    "hovercompare",
+    "togglehover",
+    "togglespikelines"
+  ].concat(DRAW_MODES);
+  var foreButtons = [];
+  var addToForeButtons = function(b) {
+    if (backButtons.indexOf(b._cat || b.name) !== -1) return;
+    var name6 = b.name;
+    var _cat = (b._cat || b.name).toLowerCase();
+    if (foreButtons.indexOf(name6) === -1) foreButtons.push(name6);
+    if (foreButtons.indexOf(_cat) === -1) foreButtons.push(_cat);
+  };
+  buttonList.forEach(function(k) {
+    addToForeButtons(buttons_default[k]);
+  });
+  foreButtons.sort();
+  var constants_default13 = {
+    DRAW_MODES,
+    backButtons,
+    foreButtons
+  };
+
+  // src/components/modebar/attributes.js
+  var attributes_default20 = {
+    editType: "modebar",
+    orientation: {
+      valType: "enumerated",
+      values: ["v", "h"],
+      dflt: "h",
+      editType: "modebar"
+    },
+    bgcolor: {
+      valType: "color",
+      editType: "modebar"
+    },
+    color: {
+      valType: "color",
+      editType: "modebar"
+    },
+    activecolor: {
+      valType: "color",
+      editType: "modebar"
+    },
+    uirevision: {
+      valType: "any",
+      editType: "none"
+    },
+    add: {
+      valType: "string",
+      arrayOk: true,
+      dflt: "",
+      editType: "modebar"
+    },
+    remove: {
+      valType: "string",
+      arrayOk: true,
+      dflt: "",
+      editType: "modebar"
+    }
+  };
+
+  // src/components/modebar/defaults.js
+  function supplyLayoutDefaults9(layoutIn, layoutOut) {
+    var containerIn = layoutIn.modebar || {};
+    var containerOut = plot_template_default.newContainer(layoutOut, "modebar");
+    function coerce3(attr2, dflt) {
+      return lib_default.coerce(containerIn, containerOut, attributes_default20, attr2, dflt);
+    }
+    coerce3("orientation");
+    coerce3("bgcolor", color_default.addOpacity(layoutOut.paper_bgcolor, 0.5));
+    var defaultColor = color_default.contrast(color_default.rgb(layoutOut.modebar.bgcolor));
+    coerce3("color", color_default.addOpacity(defaultColor, 0.3));
+    coerce3("activecolor", color_default.addOpacity(defaultColor, 0.7));
+    coerce3("uirevision", layoutOut.uirevision);
+    coerce3("add");
+    coerce3("remove");
+  }
+
+  // src/components/modebar/modebar.js
+  var import_fast_isnumeric38 = __toESM(require_fast_isnumeric(), 1);
+  var Parser = new DOMParser();
+  function ModeBar(opts) {
+    this.container = opts.container;
+    this.element = document.createElement("div");
+    this.update(opts.graphInfo, opts.buttons);
+    this.container.appendChild(this.element);
+  }
+  var proto = ModeBar.prototype;
+  proto.update = function(graphInfo, buttons) {
+    this.graphInfo = graphInfo;
+    var context = this.graphInfo._context;
+    var fullLayout = this.graphInfo._fullLayout;
+    var modeBarId = "modebar-" + fullLayout._uid;
+    this.element.setAttribute("id", modeBarId);
+    this.element.setAttribute("role", "toolbar");
+    this._uid = modeBarId;
+    this.element.className = "modebar modebar--custom";
+    if (context.displayModeBar === "hover") this.element.className += " modebar--hover ease-bg";
+    if (fullLayout.modebar.orientation === "v") {
+      this.element.className += " vertical";
+      buttons = buttons.reverse();
+    }
+    var style5 = fullLayout.modebar;
+    var groupSelector = "#" + modeBarId + " .modebar-group";
+    document.querySelectorAll(groupSelector).forEach(function(group) {
+      group.style.backgroundColor = style5.bgcolor;
+    });
+    var needsNewButtons = !this.hasButtons(buttons);
+    var needsNewLogo = this.hasLogo !== context.displaylogo;
+    var needsNewLocale = this.locale !== context.locale;
+    this.locale = context.locale;
+    if (needsNewButtons || needsNewLogo || needsNewLocale) {
+      this.removeAllButtons();
+      this.updateButtons(buttons);
+      if (context.watermark || context.displaylogo) {
+        var logoGroup = this.getLogo();
+        if (context.watermark) {
+          logoGroup.className = logoGroup.className + " watermark";
+        }
+        if (fullLayout.modebar.orientation === "v") {
+          this.element.insertBefore(logoGroup, this.element.childNodes[0]);
+        } else {
+          this.element.appendChild(logoGroup);
+        }
+        this.hasLogo = true;
+      }
+    }
+    this.updateActiveButton();
+    lib_default.setStyleOnHover("#" + modeBarId + " .modebar-btn", ".active", ".icon path", "fill: " + style5.activecolor, "fill: " + style5.color, this.element);
+  };
+  proto.updateButtons = function(buttons) {
+    var _this = this;
+    this.buttons = buttons;
+    this.buttonElements = [];
+    this.buttonsNames = [];
+    this.buttons.forEach(function(buttonGroup) {
+      var group = _this.createGroup();
+      buttonGroup.forEach(function(buttonConfig) {
+        var buttonName = buttonConfig.name;
+        if (!buttonName) {
+          throw new Error("must provide button 'name' in button config");
+        }
+        if (_this.buttonsNames.indexOf(buttonName) !== -1) {
+          throw new Error("button name '" + buttonName + "' is taken");
+        }
+        _this.buttonsNames.push(buttonName);
+        var button = _this.createButton(buttonConfig);
+        _this.buttonElements.push(button);
+        group.appendChild(button);
+      });
+      _this.element.appendChild(group);
+    });
+  };
+  proto.createGroup = function() {
+    var group = document.createElement("div");
+    group.className = "modebar-group";
+    var style5 = this.graphInfo._fullLayout.modebar;
+    group.style.backgroundColor = style5.bgcolor;
+    return group;
+  };
+  proto.createButton = function(config) {
+    var _this = this;
+    var button = document.createElement("button");
+    button.setAttribute("type", "button");
+    button.setAttribute("rel", "tooltip");
+    button.className = "modebar-btn";
+    var title = config.title;
+    if (title === void 0) title = config.name;
+    else if (typeof title === "function") title = title(this.graphInfo);
+    if (title || title === 0) {
+      button.setAttribute("data-title", title);
+      button.setAttribute("aria-label", title);
+    }
+    ;
+    if (config.attr !== void 0) button.setAttribute("data-attr", config.attr);
+    var val = config.val;
+    if (val !== void 0) {
+      if (typeof val === "function") val = val(this.graphInfo);
+      button.setAttribute("data-val", val);
+    }
+    var click2 = config.click;
+    if (typeof click2 !== "function") {
+      throw new Error("must provide button 'click' function in button config");
+    } else {
+      button.addEventListener("click", function(ev) {
+        config.click(_this.graphInfo, ev);
+        _this.updateActiveButton(ev.currentTarget);
+      });
+    }
+    button.setAttribute("data-toggle", config.toggle || false);
+    if (config.toggle) select_default2(button).classed("active", true);
+    var icon = config.icon;
+    if (typeof icon === "function") {
+      button.appendChild(icon());
+    } else {
+      button.appendChild(this.createIcon(icon || ploticon_default.question));
+    }
+    button.setAttribute("data-gravity", config.gravity || "n");
+    return button;
+  };
+  proto.createIcon = function(thisIcon) {
+    var iconHeight = (0, import_fast_isnumeric38.default)(thisIcon.height) ? Number(thisIcon.height) : thisIcon.ascent - thisIcon.descent;
+    var svgNS = "http://www.w3.org/2000/svg";
+    var icon;
+    if (thisIcon.path) {
+      icon = document.createElementNS(svgNS, "svg");
+      icon.setAttribute("viewBox", [0, 0, thisIcon.width, iconHeight].join(" "));
+      icon.setAttribute("class", "icon");
+      var path = document.createElementNS(svgNS, "path");
+      path.setAttribute("d", thisIcon.path);
+      if (thisIcon.transform) {
+        path.setAttribute("transform", thisIcon.transform);
+      } else if (thisIcon.ascent !== void 0) {
+        path.setAttribute("transform", "matrix(1 0 0 -1 0 " + thisIcon.ascent + ")");
+      }
+      icon.appendChild(path);
+    }
+    if (thisIcon.svg) {
+      var svgDoc = Parser.parseFromString(thisIcon.svg, "application/xml");
+      icon = svgDoc.childNodes[0];
+    }
+    icon.setAttribute("height", "1em");
+    icon.setAttribute("width", "1em");
+    return icon;
+  };
+  proto.updateActiveButton = function(buttonClicked) {
+    var fullLayout = this.graphInfo._fullLayout;
+    var dataAttrClicked = buttonClicked !== void 0 ? buttonClicked.getAttribute("data-attr") : null;
+    this.buttonElements.forEach(function(button) {
+      var thisval = button.getAttribute("data-val") || true;
+      var dataAttr = button.getAttribute("data-attr");
+      var isToggleButton = button.getAttribute("data-toggle") === "true";
+      var button3 = select_default2(button);
+      var updateButtonStyle = function(button2, isActive4) {
+        var style5 = fullLayout.modebar;
+        var childEl = button2.querySelector(".icon path");
+        if (childEl) {
+          if (isActive4 || button2.matches(":hover")) {
+            childEl.style.fill = style5.activecolor;
+          } else {
+            childEl.style.fill = style5.color;
+          }
+        }
+      };
+      if (isToggleButton) {
+        if (dataAttr === dataAttrClicked) {
+          var isActive3 = !button3.classed("active");
+          button3.classed("active", isActive3);
+          updateButtonStyle(button, isActive3);
+        }
+      } else {
+        var val = dataAttr === null ? dataAttr : lib_default.nestedProperty(fullLayout, dataAttr).get();
+        button3.classed("active", val === thisval);
+        updateButtonStyle(button, val === thisval);
+      }
+    });
+  };
+  proto.hasButtons = function(buttons) {
+    var currentButtons = this.buttons;
+    if (!currentButtons) return false;
+    if (buttons.length !== currentButtons.length) return false;
+    for (var i = 0; i < buttons.length; ++i) {
+      if (buttons[i].length !== currentButtons[i].length) return false;
+      for (var j = 0; j < buttons[i].length; j++) {
+        if (buttons[i][j].name !== currentButtons[i][j].name) return false;
+      }
+    }
+    return true;
+  };
+  function jsVersion(str) {
+    return str + " (v" + version + ")";
+  }
+  proto.getLogo = function() {
+    var group = this.createGroup();
+    var a = document.createElement("a");
+    a.href = "https://plotly.com/";
+    a.target = "_blank";
+    a.setAttribute("data-title", jsVersion(lib_default._(this.graphInfo, "Produced with Plotly.js")));
+    a.className = "modebar-btn plotlyjsicon modebar-btn--logo";
+    a.appendChild(this.createIcon(ploticon_default.newplotlylogo));
+    group.appendChild(a);
+    return group;
+  };
+  proto.removeAllButtons = function() {
+    while (this.element.firstChild) {
+      this.element.removeChild(this.element.firstChild);
+    }
+    this.hasLogo = false;
+  };
+  proto.destroy = function() {
+    lib_default.removeElement(this.container.querySelector(".modebar"));
+  };
+  function createModeBar(gd, buttons) {
+    var fullLayout = gd._fullLayout;
+    var modeBar = new ModeBar({
+      graphInfo: gd,
+      container: fullLayout._modebardiv.node(),
+      buttons
+    });
+    if (fullLayout._privateplot) {
+      select_default2(modeBar.element).append("span").classed("badge-private float--left", true).text("PRIVATE");
+    }
+    return modeBar;
+  }
+  var modebar_default = createModeBar;
+
+  // src/components/modebar/manage.js
+  var { DRAW_MODES: DRAW_MODES2 } = constants_default13;
+  var { extendDeep: extendDeep2 } = lib_default;
+  function manageModeBar(gd) {
+    var fullLayout = gd._fullLayout;
+    var context = gd._context;
+    var modeBar = fullLayout._modeBar;
+    if (!context.displayModeBar && !context.watermark) {
+      if (modeBar) {
+        modeBar.destroy();
+        delete fullLayout._modeBar;
+      }
+      return;
+    }
+    if (!Array.isArray(context.modeBarButtonsToRemove)) {
+      throw new Error([
+        "*modeBarButtonsToRemove* configuration options",
+        "must be an array."
+      ].join(" "));
+    }
+    if (!Array.isArray(context.modeBarButtonsToAdd)) {
+      throw new Error([
+        "*modeBarButtonsToAdd* configuration options",
+        "must be an array."
+      ].join(" "));
+    }
+    var customButtons = context.modeBarButtons;
+    var buttonGroups;
+    if (Array.isArray(customButtons) && customButtons.length) {
+      buttonGroups = fillCustomButton(customButtons);
+    } else if (!context.displayModeBar && context.watermark) {
+      buttonGroups = [];
+    } else {
+      buttonGroups = getButtonGroups(gd);
+    }
+    if (modeBar) modeBar.update(gd, buttonGroups);
+    else fullLayout._modeBar = modebar_default(gd, buttonGroups);
+  }
+  function getButtonGroups(gd) {
+    var fullLayout = gd._fullLayout;
+    var fullData = gd._fullData;
+    var context = gd._context;
+    function match(name6, B) {
+      if (typeof B === "string") {
+        if (B.toLowerCase() === name6.toLowerCase()) return true;
+      } else {
+        var v0 = B.name;
+        var v1 = B._cat || B.name;
+        if (v0 === name6 || v1 === name6.toLowerCase()) return true;
+      }
+      return false;
+    }
+    var layoutAdd = fullLayout.modebar.add;
+    if (typeof layoutAdd === "string") layoutAdd = [layoutAdd];
+    var layoutRemove = fullLayout.modebar.remove;
+    if (typeof layoutRemove === "string") layoutRemove = [layoutRemove];
+    var buttonsToAdd = context.modeBarButtonsToAdd.concat(
+      layoutAdd.filter(function(e) {
+        for (var i2 = 0; i2 < context.modeBarButtonsToRemove.length; i2++) {
+          if (match(e, context.modeBarButtonsToRemove[i2])) return false;
+        }
+        return true;
+      })
+    );
+    var buttonsToRemove = context.modeBarButtonsToRemove.concat(
+      layoutRemove.filter(function(e) {
+        for (var i2 = 0; i2 < context.modeBarButtonsToAdd.length; i2++) {
+          if (match(e, context.modeBarButtonsToAdd[i2])) return false;
+        }
+        return true;
+      })
+    );
+    var hasCartesian = fullLayout._has("cartesian");
+    var hasGL3D = fullLayout._has("gl3d");
+    var hasGeo = fullLayout._has("geo");
+    var hasPie = fullLayout._has("pie");
+    var hasFunnelarea = fullLayout._has("funnelarea");
+    var hasTernary = fullLayout._has("ternary");
+    var hasMapbox = fullLayout._has("mapbox");
+    var hasMap = fullLayout._has("map");
+    var hasPolar = fullLayout._has("polar");
+    var hasSmith = fullLayout._has("smith");
+    var hasSankey = fullLayout._has("sankey");
+    var allAxesFixed = areAllAxesFixed(fullLayout);
+    var hasUnifiedHoverLabel = isUnifiedHover(fullLayout.hovermode);
+    var groups = [];
+    function addGroup(newGroup) {
+      if (!newGroup.length) return;
+      var out = [];
+      for (var i2 = 0; i2 < newGroup.length; i2++) {
+        var name6 = newGroup[i2];
+        var B = buttons_default[name6];
+        var v0 = B.name.toLowerCase();
+        var v1 = (B._cat || B.name).toLowerCase();
+        var found = false;
+        for (var q = 0; q < buttonsToRemove.length; q++) {
+          var t = buttonsToRemove[q].toLowerCase();
+          if (t === v0 || t === v1) {
+            found = true;
+            break;
+          }
+        }
+        if (found) continue;
+        out.push(buttons_default[name6]);
+      }
+      groups.push(out);
+    }
+    var commonGroup = ["toImage"];
+    if (context.showEditInChartStudio) commonGroup.push("editInChartStudio");
+    else if (context.showSendToCloud) commonGroup.push("sendDataToCloud");
+    addGroup(commonGroup);
+    var zoomGroup = [];
+    var hoverGroup = [];
+    var resetGroup = [];
+    var dragModeGroup = [];
+    if ((hasCartesian || hasPie || hasFunnelarea || hasTernary) + hasGeo + hasGL3D + hasMapbox + hasMap + hasPolar + hasSmith > 1) {
+      hoverGroup = ["toggleHover"];
+      resetGroup = ["resetViews"];
+    } else if (hasGeo) {
+      zoomGroup = ["zoomInGeo", "zoomOutGeo"];
+      hoverGroup = ["hoverClosestGeo"];
+      resetGroup = ["resetGeo"];
+    } else if (hasGL3D) {
+      hoverGroup = ["hoverClosest3d"];
+      resetGroup = ["resetCameraDefault3d", "resetCameraLastSave3d"];
+    } else if (hasMapbox) {
+      zoomGroup = ["zoomInMapbox", "zoomOutMapbox"];
+      hoverGroup = ["toggleHover"];
+      resetGroup = ["resetViewMapbox"];
+    } else if (hasMap) {
+      zoomGroup = ["zoomInMap", "zoomOutMap"];
+      hoverGroup = ["toggleHover"];
+      resetGroup = ["resetViewMap"];
+    } else if (hasPie) {
+      hoverGroup = ["hoverClosestPie"];
+    } else if (hasSankey) {
+      hoverGroup = ["hoverClosestCartesian", "hoverCompareCartesian"];
+      resetGroup = ["resetViewSankey"];
+    } else {
+      hoverGroup = ["toggleHover"];
+    }
+    if (hasCartesian) {
+      hoverGroup.push("toggleSpikelines", "hoverClosestCartesian", "hoverCompareCartesian");
+    }
+    if (hasNoHover(fullData) || hasUnifiedHoverLabel) {
+      hoverGroup = [];
+    }
+    if (hasCartesian && !allAxesFixed) {
+      zoomGroup = ["zoomIn2d", "zoomOut2d", "autoScale2d"];
+      if (resetGroup[0] !== "resetViews") resetGroup = ["resetScale2d"];
+    }
+    if (hasGL3D) {
+      dragModeGroup = ["zoom3d", "pan3d", "orbitRotation", "tableRotation"];
+    } else if (hasCartesian && !allAxesFixed || hasTernary) {
+      dragModeGroup = ["zoom2d", "pan2d"];
+    } else if (hasMapbox || hasMap || hasGeo) {
+      dragModeGroup = ["pan2d"];
+    } else if (hasPolar) {
+      dragModeGroup = ["zoom2d"];
+    }
+    if (isSelectable(fullData)) {
+      dragModeGroup.push("select2d", "lasso2d");
+    }
+    var enabledHoverGroup = [];
+    var enableHover = function(a) {
+      if (enabledHoverGroup.indexOf(a) !== -1) return;
+      if (hoverGroup.indexOf(a) !== -1) {
+        enabledHoverGroup.push(a);
+      }
+    };
+    if (Array.isArray(buttonsToAdd)) {
+      var newList = [];
+      for (var i = 0; i < buttonsToAdd.length; i++) {
+        var b = buttonsToAdd[i];
+        if (typeof b === "string") {
+          b = b.toLowerCase();
+          if (DRAW_MODES2.indexOf(b) !== -1) {
+            if (fullLayout._has("mapbox") || fullLayout._has("map") || // draw shapes in paper coordinate (could be improved in future to support data coordinate, when there is no pitch)
+            fullLayout._has("cartesian")) {
+              dragModeGroup.push(b);
+            }
+          } else if (b === "togglespikelines") {
+            enableHover("toggleSpikelines");
+          } else if (b === "togglehover") {
+            enableHover("toggleHover");
+          } else if (b === "hovercompare") {
+            enableHover("hoverCompareCartesian");
+          } else if (b === "hoverclosest") {
+            enableHover("hoverClosestCartesian");
+            enableHover("hoverClosestGeo");
+            enableHover("hoverClosest3d");
+            enableHover("hoverClosestPie");
+          } else if (b === "v1hovermode") {
+            enableHover("hoverClosestCartesian");
+            enableHover("hoverCompareCartesian");
+            enableHover("hoverClosestGeo");
+            enableHover("hoverClosest3d");
+            enableHover("hoverClosestPie");
+          }
+        } else newList.push(b);
+      }
+      buttonsToAdd = newList;
+    }
+    addGroup(dragModeGroup);
+    addGroup(zoomGroup.concat(resetGroup));
+    addGroup(enabledHoverGroup);
+    return appendButtonsToGroups(groups, buttonsToAdd);
+  }
+  function areAllAxesFixed(fullLayout) {
+    var axList = axis_ids_default.list({ _fullLayout: fullLayout }, null, true);
+    for (var i = 0; i < axList.length; i++) {
+      var disabled = axList[i].modebardisable;
+      if (!axList[i].fixedrange && disabled !== "autoscale+zoominout" && disabled !== "zoominout+autoscale") {
+        return false;
+      }
+    }
+    return true;
+  }
+  function isSelectable(fullData) {
+    var selectable = false;
+    for (var i = 0; i < fullData.length; i++) {
+      if (selectable) break;
+      var trace = fullData[i];
+      if (!trace._module || !trace._module.selectPoints) continue;
+      if (registry_default.traceIs(trace, "scatter-like")) {
+        if (subtypes_default.hasMarkers(trace) || subtypes_default.hasText(trace)) {
+          selectable = true;
+        }
+      } else if (registry_default.traceIs(trace, "box-violin")) {
+        if (trace.boxpoints === "all" || trace.points === "all") {
+          selectable = true;
+        }
+      } else {
+        selectable = true;
+      }
+    }
+    return selectable;
+  }
+  function hasNoHover(fullData) {
+    for (var i = 0; i < fullData.length; i++) {
+      if (!registry_default.traceIs(fullData[i], "noHover")) return false;
+    }
+    return true;
+  }
+  function appendButtonsToGroups(groups, buttons) {
+    if (buttons.length) {
+      if (Array.isArray(buttons[0])) {
+        for (var i = 0; i < buttons.length; i++) {
+          groups.push(buttons[i]);
+        }
+      } else groups.push(buttons);
+    }
+    return groups;
+  }
+  function fillCustomButton(originalModeBarButtons) {
+    var customButtons = extendDeep2([], originalModeBarButtons);
+    for (var i = 0; i < customButtons.length; i++) {
+      var buttonGroup = customButtons[i];
+      for (var j = 0; j < buttonGroup.length; j++) {
+        var button = buttonGroup[j];
+        if (typeof button === "string") {
+          if (buttons_default[button] !== void 0) {
+            customButtons[i][j] = buttons_default[button];
+          } else {
+            throw new Error([
+              "*modeBarButtons* configuration options",
+              "invalid button name"
+            ].join(" "));
+          }
+        }
+      }
+    }
+    return customButtons;
+  }
+
+  // src/components/modebar/index.js
+  var modebar_default2 = {
+    moduleType: "component",
+    name: "modebar",
+    layoutAttributes: attributes_default20,
+    supplyLayoutDefaults: supplyLayoutDefaults9,
+    manage: manageModeBar
+  };
+
   // src/locale-en.js
   var locale_en_default = {
     moduleType: "locale",
@@ -52931,7 +52931,7 @@ var Plotly = (() => {
     arrayOk: true,
     colorEditType: "style"
   });
-  var scatterMarkerAttrs = attributes_default9.marker;
+  var scatterMarkerAttrs = attributes_default8.marker;
   var scatterMarkerLineAttrs = scatterMarkerAttrs.line;
   var markerLineWidth = extendFlat({}, scatterMarkerLineAttrs.width, { dflt: 0 });
   var markerLine = extendFlat(
@@ -52964,24 +52964,24 @@ var Plotly = (() => {
     }
   );
   var attributes_default21 = {
-    x: attributes_default9.x,
-    x0: attributes_default9.x0,
-    dx: attributes_default9.dx,
-    y: attributes_default9.y,
-    y0: attributes_default9.y0,
-    dy: attributes_default9.dy,
-    xperiod: attributes_default9.xperiod,
-    yperiod: attributes_default9.yperiod,
-    xperiod0: attributes_default9.xperiod0,
-    yperiod0: attributes_default9.yperiod0,
-    xperiodalignment: attributes_default9.xperiodalignment,
-    yperiodalignment: attributes_default9.yperiodalignment,
+    x: attributes_default8.x,
+    x0: attributes_default8.x0,
+    dx: attributes_default8.dx,
+    y: attributes_default8.y,
+    y0: attributes_default8.y0,
+    dy: attributes_default8.dy,
+    xperiod: attributes_default8.xperiod,
+    yperiod: attributes_default8.yperiod,
+    xperiod0: attributes_default8.xperiod0,
+    yperiod0: attributes_default8.yperiod0,
+    xperiodalignment: attributes_default8.xperiodalignment,
+    yperiodalignment: attributes_default8.yperiodalignment,
     xhoverformat: axisHoverFormat3("x"),
     yhoverformat: axisHoverFormat3("y"),
-    text: attributes_default9.text,
+    text: attributes_default8.text,
     texttemplate: texttemplateAttrs({ editType: "plot" }, { keys: constants_default14.eventDataKeys }),
     texttemplatefallback: templatefallbackAttrs({ editType: "plot" }),
-    hovertext: attributes_default9.hovertext,
+    hovertext: attributes_default8.hovertext,
     hovertemplate: hovertemplateAttrs({}, { keys: constants_default14.eventDataKeys }),
     hovertemplatefallback: templatefallbackAttrs(),
     textposition: {
@@ -53011,7 +53011,7 @@ var Plotly = (() => {
       dflt: "both",
       editType: "calc"
     },
-    cliponaxis: extendFlat({}, attributes_default9.cliponaxis, {}),
+    cliponaxis: extendFlat({}, attributes_default8.cliponaxis, {}),
     orientation: {
       valType: "enumerated",
       values: ["v", "h"],
@@ -53037,27 +53037,27 @@ var Plotly = (() => {
       editType: "calc"
     },
     marker,
-    offsetgroup: attributes_default9.offsetgroup,
-    alignmentgroup: attributes_default9.alignmentgroup,
+    offsetgroup: attributes_default8.offsetgroup,
+    alignmentgroup: attributes_default8.alignmentgroup,
     selected: {
       marker: {
-        opacity: attributes_default9.selected.marker.opacity,
-        color: attributes_default9.selected.marker.color,
+        opacity: attributes_default8.selected.marker.opacity,
+        color: attributes_default8.selected.marker.color,
         editType: "style"
       },
-      textfont: attributes_default9.selected.textfont,
+      textfont: attributes_default8.selected.textfont,
       editType: "style"
     },
     unselected: {
       marker: {
-        opacity: attributes_default9.unselected.marker.opacity,
-        color: attributes_default9.unselected.marker.color,
+        opacity: attributes_default8.unselected.marker.opacity,
+        color: attributes_default8.unselected.marker.color,
         editType: "style"
       },
-      textfont: attributes_default9.unselected.textfont,
+      textfont: attributes_default8.unselected.textfont,
       editType: "style"
     },
-    zorder: attributes_default9.zorder
+    zorder: attributes_default8.zorder
   };
 
   // src/traces/bar/layout_attributes.js

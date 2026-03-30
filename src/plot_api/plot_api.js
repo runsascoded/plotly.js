@@ -274,10 +274,12 @@ function _doPlot(gd, data, layout, config) {
             }
         }
 
-        if (fullLayout.modebar.orientation === 'h') {
-            fullLayout._modebardiv.style('height', null).style('width', '100%');
-        } else {
-            fullLayout._modebardiv.style('width', null).style('height', fullLayout.height + 'px');
+        if (fullLayout.modebar) {
+            if (fullLayout.modebar.orientation === 'h') {
+                fullLayout._modebardiv.style('height', null).style('width', '100%');
+            } else {
+                fullLayout._modebardiv.style('width', null).style('height', fullLayout.height + 'px');
+            }
         }
 
         return Plots.previousPromises(gd);
