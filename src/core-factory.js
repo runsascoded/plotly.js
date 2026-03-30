@@ -18,7 +18,6 @@
  */
 import './lib/d3-compat.js';
 import 'd3-transition';
-import 'native-promise-only';
 import Registry from './registry.js';
 // Import plot_api.js directly (not index.js) to avoid pulling in
 // to_image, validate, template_api, snapshot/download
