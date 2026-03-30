@@ -1,4 +1,4 @@
-import Drawing from '../../components/drawing/index.js';
+import { pointStyle } from '../../components/drawing/index.js';
 import Color from '../../components/color/index.js';
 
 export default function fillOne(s, pt, trace, gd, fadedColor) {
@@ -21,7 +21,7 @@ export default function fillOne(s, pt, trace, gd, fadedColor) {
             pt.color = color;
         }
 
-        Drawing.pointStyle(s, trace, gd, pt);
+        pointStyle(s, trace, gd, pt);
     } else {
         Color.fill(s, color);
     }

@@ -2,7 +2,7 @@ import { select } from 'd3-selection';
 import Plots from '../../plots/plots.js';
 import Fx from '../../components/fx/index.js';
 import Color from '../../components/color/index.js';
-import Drawing from '../../components/drawing/index.js';
+import { bBox, tester } from '../../components/drawing/index.js';
 import Lib from '../../lib/index.js';
 import svgTextUtils from '../../lib/svg_text_utils.js';
 import uniformText from '../bar/uniform_text.js';
@@ -184,11 +184,11 @@ function plot(gd, cdModule) {
                             transform: '',
                             'text-anchor': 'middle'
                         })
-                        .call(Drawing.font, font)
+                        .call(font, font)
                         .call(svgTextUtils.convertToTspans, gd);
 
                     // position the text relative to the slice
-                    var textBB = Drawing.bBox(sliceText.node());
+                    var textBB = bBox(sliceText.node());
                     var transform;
 
                     if (textPosition === 'outside') {
@@ -198,8 +198,8 @@ function plot(gd, cdModule) {
                         if (textPosition === 'auto' && transform.scale < 1) {
                             var newFont = Lib.ensureUniformFontSize(gd, trace.outsidetextfont);
 
-                            sliceText.call(Drawing.font, newFont);
-                            textBB = Drawing.bBox(sliceText.node());
+                            sliceText.call(font, newFont);
+                            textBB = bBox(sliceText.node());
 
                             transform = transformOutsideText(textBB, pt);
                         }
@@ -256,7 +256,7 @@ function plot(gd, cdModule) {
                         transform: '',
                         'text-anchor': 'middle'
                     })
-                    .call(Drawing.font, trace.title.font)
+                    .call(font, trace.title.font)
                     .call(svgTextUtils.convertToTspans, gd);
 
                 var transform;
@@ -284,7 +284,7 @@ function plot(gd, cdModule) {
                 // TODO if we ever want to improve perf,
                 // we could reuse the textBB computed above together
                 // with the sliceText transform info
-                var traceBbox = Drawing.bBox(plotGroup.node());
+                var traceBbox = bBox(plotGroup.node());
 
                 var domain = trace.domain;
                 var vpw = gs.w * (domain.x[1] - domain.x[0]);
@@ -657,13 +657,13 @@ function prerenderTitles(cdModule, gd) {
                 txt = Lib.templateString(txt, trace._meta);
             }
 
-            var dummyTitle = Drawing.tester
+            var dummyTitle = tester
                 .append('text')
                 .attr('data-notex', 1)
                 .text(txt)
-                .call(Drawing.font, trace.title.font)
+                .call(font, trace.title.font)
                 .call(svgTextUtils.convertToTspans, gd);
-            var bBox = Drawing.bBox(dummyTitle.node(), true);
+            var bBox = bBox(dummyTitle.node(), true);
             cd0.titleBox = {
                 width: bBox.width,
                 height: bBox.height

@@ -2,7 +2,7 @@ import { select } from 'd3-selection';
 import { pointer } from 'd3-selection';
 import Plots from '../../plots/plots.js';
 import Color from '../color/index.js';
-import Drawing from '../drawing/index.js';
+import { bBox, font, setTranslate, tester } from '../drawing/index.js';
 import Lib from '../../lib/index.js';
 import svgTextUtils from '../../lib/svg_text_utils.js';
 import { arrayEditor } from '../../plot_api/plot_template.js';
@@ -114,7 +114,7 @@ function keyFunction(opts) {
 
 // Compute the dimensions (mutates sliderOpts):
 function findDimensions(gd, sliderOpts) {
-    var sliderLabels = Drawing.tester.selectAll('g.' + constants.labelGroupClass)
+    var sliderLabels = tester.selectAll('g.' + constants.labelGroupClass)
         .data(sliderOpts._visibleSteps);
 
     sliderLabels.enter().append('g')
@@ -130,7 +130,7 @@ function findDimensions(gd, sliderOpts) {
 
         var textNode = text.node();
         if(textNode) {
-            var bBox = Drawing.bBox(textNode);
+            var bBox = bBox(textNode);
             labelHeight = Math.max(labelHeight, bBox.height);
             maxLabelWidth = Math.max(maxLabelWidth, bBox.width);
         }
@@ -178,11 +178,11 @@ function findDimensions(gd, sliderOpts) {
 
     if(sliderOpts.currentvalue.visible) {
         // Get the dimensions of the current value label:
-        var dummyGroup = Drawing.tester.append('g');
+        var dummyGroup = tester.append('g');
 
         sliderLabels.each(function(stepOpts) {
             var curValPrefix = drawCurrentValue(dummyGroup, sliderOpts, stepOpts.label);
-            var curValSize = (curValPrefix.node() && Drawing.bBox(curValPrefix.node())) || {width: 0, height: 0};
+            var curValSize = (curValPrefix.node() && bBox(curValPrefix.node())) || {width: 0, height: 0};
             var lines = svgTextUtils.lineCount(curValPrefix);
             dims.currentValueMaxWidth = Math.max(dims.currentValueMaxWidth, Math.ceil(curValSize.width));
             dims.currentValueHeight = Math.max(dims.currentValueHeight, Math.ceil(curValSize.height));
@@ -263,7 +263,7 @@ function drawSlider(gd, sliderGroup, sliderOpts) {
     var dims = sliderOpts._dims;
 
     // Position the rectangle:
-    Drawing.setTranslate(sliderGroup, dims.lx + sliderOpts.pad.l, dims.ly + sliderOpts.pad.t);
+    setTranslate(sliderGroup, dims.lx + sliderOpts.pad.l, dims.ly + sliderOpts.pad.t);
 
     sliderGroup.call(setGripPosition, sliderOpts, false);
     sliderGroup.call(drawCurrentValue, sliderOpts);
@@ -314,7 +314,7 @@ function drawCurrentValue(sliderGroup, sliderOpts, valueOverride) {
         str += sliderOpts.currentvalue.suffix;
     }
 
-    text.call(Drawing.font, sliderOpts.currentvalue.font)
+    text.call(font, sliderOpts.currentvalue.font)
         .text(str)
         .call(svgTextUtils.convertToTspans, sliderOpts._gd);
 
@@ -357,7 +357,7 @@ function drawLabel(item, data, sliderOpts) {
     var _meta = sliderOpts._gd._fullLayout._meta;
     if(_meta) tx = Lib.templateString(tx, _meta);
 
-    text.call(Drawing.font, sliderOpts.font)
+    text.call(font, sliderOpts.font)
         .text(tx)
         .call(svgTextUtils.convertToTspans, sliderOpts._gd);
 
@@ -381,7 +381,7 @@ function drawLabelGroup(sliderGroup, sliderOpts) {
 
         item.call(drawLabel, d, sliderOpts);
 
-        Drawing.setTranslate(item,
+        setTranslate(item,
             normalizedValueToPosition(sliderOpts, d.fraction),
             constants.tickOffset +
                 sliderOpts.ticklen +
@@ -530,7 +530,7 @@ function drawTicks(sliderGroup, sliderOpts) {
             .attr({height: isMajor ? sliderOpts.ticklen : sliderOpts.minorticklen})
             .call(Color.fill, isMajor ? sliderOpts.tickcolor : sliderOpts.tickcolor);
 
-        Drawing.setTranslate(item,
+        setTranslate(item,
             normalizedValueToPosition(sliderOpts, i / (sliderOpts._stepCount - 1)) - 0.5 * sliderOpts.tickwidth,
             (isMajor ? constants.tickOffset : constants.minorTickOffset) + dims.currentValueTotalHeight
         );
@@ -574,7 +574,7 @@ function setGripPosition(sliderGroup, sliderOpts, doTransition) {
             .ease(sliderOpts.transition.easing);
     }
 
-    // Drawing.setTranslate doesn't work here because of the transition duck-typing.
+    // setTranslate doesn't work here because of the transition duck-typing.
     // It's also not necessary because there are no other transitions to preserve.
     el.attr('transform', strTranslate(x - constants.gripWidth * 0.5, sliderOpts._dims.currentValueTotalHeight));
 }
@@ -606,7 +606,7 @@ function drawTouchRect(sliderGroup, gd, sliderOpts) {
         .call(Color.fill, sliderOpts.bgcolor)
         .attr('opacity', 0);
 
-    Drawing.setTranslate(rect, 0, dims.currentValueTotalHeight);
+    setTranslate(rect, 0, dims.currentValueTotalHeight);
 }
 
 function drawRail(sliderGroup, sliderOpts) {
@@ -625,7 +625,7 @@ function drawRail(sliderGroup, sliderOpts) {
     .call(Color.fill, sliderOpts.bgcolor)
     .style('stroke-width', sliderOpts.borderwidth + 'px');
 
-    Drawing.setTranslate(rect,
+    setTranslate(rect,
         constants.railInset,
         (dims.inputAreaWidth - constants.railWidth) * 0.5 + dims.currentValueTotalHeight
     );

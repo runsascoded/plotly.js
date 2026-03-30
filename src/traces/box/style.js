@@ -1,6 +1,6 @@
 import { select } from 'd3-selection';
 import Color from '../../components/color/index.js';
-import Drawing from '../../components/drawing/index.js';
+import { pointStyle, selectedPointStyle } from '../../components/drawing/index.js';
 
 function style(gd, cd, sel) {
     var s = sel ? sel : select(gd).selectAll('g.trace.boxes');
@@ -40,7 +40,7 @@ function style(gd, cd, sel) {
                 .call(Color.stroke, trace.line.color);
 
             var pts = el.selectAll('path.point');
-            Drawing.pointStyle(pts, trace, gd);
+            pointStyle(pts, trace, gd);
         }
     });
 }
@@ -50,9 +50,9 @@ function styleOnSelect(gd, cd, sel) {
     var pts = sel.selectAll('path.point');
 
     if(trace.selectedpoints) {
-        Drawing.selectedPointStyle(pts, trace);
+        selectedPointStyle(pts, trace);
     } else {
-        Drawing.pointStyle(pts, trace, gd);
+        pointStyle(pts, trace, gd);
     }
 }
 

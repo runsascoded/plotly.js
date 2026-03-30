@@ -1,7 +1,7 @@
 import isNumeric from 'fast-isnumeric';
 import Lib from '../../lib/index.js';
 import Colorscale from '../../components/colorscale/index.js';
-import Drawing from '../../components/drawing/index.js';
+import { makeSelectedPointStyleFns } from '../../components/drawing/index.js';
 import { makeBlank } from '../../lib/geojson_utils.js';
 import geoUtils from '../../lib/geo_location_utils.js';
 
@@ -114,7 +114,7 @@ function convertOnSelect(calcTrace) {
     var opacitySetting;
 
     if(trace.selectedpoints) {
-        var fns = Drawing.makeSelectedPointStyleFns(trace);
+        var fns = makeSelectedPointStyleFns(trace);
 
         for(var i = 0; i < calcTrace.length; i++) {
             var cdi = calcTrace[i];

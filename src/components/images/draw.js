@@ -1,5 +1,5 @@
 import { select } from 'd3-selection';
-import Drawing from '../drawing/index.js';
+import { setClipUrl } from '../drawing/index.js';
 import Axes from '../../plots/cartesian/axes.js';
 import axisIds from '../../plots/cartesian/axis_ids.js';
 import xmlnsNamespaces from '../../constants/xmlns_namespaces.js';
@@ -191,7 +191,7 @@ export default function draw(gd) {
         var yId = ya && (Axes.getRefType(d.yref) !== 'domain') ? ya._id : '';
         var clipAxes = xId + yId;
 
-        Drawing.setClipUrl(
+        setClipUrl(
             thisImage,
             clipAxes ? ('clip' + fullLayout._uid + clipAxes) : null,
             gd

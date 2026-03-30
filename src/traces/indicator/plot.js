@@ -5,7 +5,7 @@ import { interpolateNumber } from 'd3-interpolate';
 import Lib from '../../lib/index.js';
 import _alignment from '../../constants/alignment.js';
 const { MID_SHIFT } = _alignment;
-import Drawing from '../../components/drawing/index.js';
+import { font, bBox as drawingBBox } from '../../components/drawing/index.js';
 import cn from './constants.js';
 import svgTextUtils from '../../lib/svg_text_utils.js';
 import Axes from '../../plots/cartesian/axes.js';
@@ -185,7 +185,7 @@ export default function plot(gd, cdModule, transitionOpts, makeOnCompleteCallbac
                 return isBullet ? anchor.right : anchor[trace.title.align];
             })
             .text(trace.title.text)
-            .call(Drawing.font, trace.title.font)
+            .call(font, trace.title.font)
             .call(svgTextUtils.convertToTspans, gd);
 
         // Position title
@@ -193,12 +193,12 @@ export default function plot(gd, cdModule, transitionOpts, makeOnCompleteCallbac
             var titleX = size.l + size.w * position[trace.title.align];
             var titleY;
             var titlePadding = cn.titlePadding;
-            var titlebBox = Drawing.bBox(title.node());
+            var titlebBox = drawingBBox(title.node());
             if(hasGauge) {
                 if(isAngular) {
                     // position above axis ticks/labels
                     if(trace.gauge.axis.visible) {
-                        var bBox = Drawing.bBox(angularaxisLayer.node());
+                        var bBox = drawingBBox(angularaxisLayer.node());
                         titleY = (bBox.top - titlePadding) - titlebBox.bottom;
                     } else {
                         titleY = size.t + size.h / 2 - radius / 2 - titlebBox.bottom - titlePadding;
@@ -579,7 +579,7 @@ function drawNumbers(gd, plotGroup, cd, opts) {
                 bignumberPrefix + bignumberFmt(cd[0].y) + bignumberSuffix :
                 '-';
             number.text(txt)
-                .call(Drawing.font, trace.number.font)
+                .call(font, trace.number.font)
                 .call(svgTextUtils.convertToTspans, gd);
         }
 
@@ -633,7 +633,7 @@ function drawNumbers(gd, plotGroup, cd, opts) {
         }
         var delta = numbers.select('text.delta');
         delta
-            .call(Drawing.font, trace.delta.font)
+            .call(font, trace.delta.font)
             .call(Color.fill, deltaFill({delta: trace._deltaLastValue}));
 
         function writeDelta() {
@@ -857,8 +857,8 @@ function measureText(txt, font, textAnchor, gd) {
       .attr('text-anchor', textAnchor)
       .attr('data-unformatted', txt)
       .call(svgTextUtils.convertToTspans, gd)
-      .call(Drawing.font, font);
-    return Drawing.bBox(sel.node());
+      .call(font, font);
+    return drawingBBox(sel.node());
 }
 
 function cache(trace, name, initialValue, value, key, fn) {

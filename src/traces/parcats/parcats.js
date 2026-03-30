@@ -8,7 +8,7 @@ import { interpolateNumber } from 'd3-interpolate';
 import Plotly from '../../plot_api/plot_api.js';
 import Fx from '../../components/fx/index.js';
 import Lib from '../../lib/index.js';
-import Drawing from '../../components/drawing/index.js';
+import { font } from '../../components/drawing/index.js';
 import tinycolor from 'tinycolor2';
 import svgTextUtils from '../../lib/svg_text_utils.js';
 var strTranslate = Lib.strTranslate;
@@ -259,7 +259,7 @@ function performPlot(parcatsModels, graphDiv, layout, svg) {
         .each(
             /** @param {CategoryViewModel} catModel*/
             function(catModel) {
-                Drawing.font(select(this), catModel.parcatsViewModel.categorylabelfont);
+                font(select(this), catModel.parcatsViewModel.categorylabelfont);
                 svgTextUtils.convertToTspans(select(this), graphDiv);
             });
 
@@ -296,7 +296,7 @@ function performPlot(parcatsModels, graphDiv, layout, svg) {
         .each(
             /** @param {CategoryViewModel} catModel*/
             function(catModel) {
-                Drawing.font(select(this), catModel.parcatsViewModel.labelfont);
+                font(select(this), catModel.parcatsViewModel.labelfont);
             });
 
     // Category hover

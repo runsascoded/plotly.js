@@ -5,7 +5,7 @@ import { zoom as d3Zoom } from 'd3-zoom';
 import { drag as d3Drag } from 'd3-drag';
 import Lib from '../../lib/index.js';
 import gup from '../../lib/gup.js';
-import Drawing from '../../components/drawing/index.js';
+import { font, setClipUrl } from '../../components/drawing/index.js';
 import svgUtil from '../../lib/svg_text_utils.js';
 import _index from '../../lib/index.js';
 const { raiseToTop, strTranslate, cancelTransition: cancelEeaseColumn } = _index;
@@ -91,7 +91,7 @@ export default function plot(gd, wrappedTraceHolders) {
         .attr('height', function(d) {return d.height;});
 
     tableControlView.each(function(d) {
-        Drawing.setClipUrl(select(this), scrollAreaBottomClipKey(gd, d), gd);
+        setClipUrl(select(this), scrollAreaBottomClipKey(gd, d), gd);
     });
 
     var yColumn = tableControlView.selectAll('.' + c.cn.yColumn)
@@ -148,7 +148,7 @@ export default function plot(gd, wrappedTraceHolders) {
     }
 
     yColumn.each(function(d) {
-        Drawing.setClipUrl(select(this), columnBoundaryClipKey(gd, d), gd);
+        setClipUrl(select(this), columnBoundaryClipKey(gd, d), gd);
     });
 
     var columnBlock = yColumn.selectAll('.' + c.cn.columnBlock)
@@ -502,7 +502,7 @@ function supplyStylingValues(columnCell) {
 function setFont(cellText) {
     cellText
         .each(function(d) {
-            Drawing.font(select(this), d.font);
+            font(select(this), d.font);
         });
 }
 

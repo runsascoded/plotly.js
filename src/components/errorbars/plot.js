@@ -1,6 +1,6 @@
 import { select } from 'd3-selection';
 import isNumeric from 'fast-isnumeric';
-import Drawing from '../drawing/index.js';
+import { setClipUrl } from '../drawing/index.js';
 import subTypes from '../../traces/scatter/subtypes.js';
 
 export default function plot(gd, traces, plotinfo, transitionOpts) {
@@ -55,7 +55,7 @@ export default function plot(gd, traces, plotinfo, transitionOpts) {
                 .style('opacity', 1);
         }
 
-        Drawing.setClipUrl(errorbars, plotinfo.layerClipId, gd);
+        setClipUrl(errorbars, plotinfo.layerClipId, gd);
 
         errorbars.each(function(d) {
             var errorbar = select(this);

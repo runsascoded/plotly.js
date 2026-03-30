@@ -1,6 +1,6 @@
 import { select } from 'd3-selection';
 import Lib from '../../lib/index.js';
-import Drawing from '../../components/drawing/index.js';
+import { translatePoints } from '../../components/drawing/index.js';
 
 // constants for dynamic jitter (ie less jitter for sparser points)
 var JITTERCOUNT = 5; // points either side of this to include
@@ -272,7 +272,7 @@ function plotPoints(sel, axes, trace, t) {
 
     paths.exit().remove();
 
-    paths.call(Drawing.translatePoints, xa, ya);
+    paths.call(translatePoints, xa, ya);
 }
 
 function plotBoxMean(sel, axes, trace, t) {

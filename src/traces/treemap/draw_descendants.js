@@ -1,6 +1,6 @@
 import { select } from 'd3-selection';
 import Lib from '../../lib/index.js';
-import Drawing from '../../components/drawing/index.js';
+import { font, bBox } from '../../components/drawing/index.js';
 import svgTextUtils from '../../lib/svg_text_utils.js';
 import partition from './partition.js';
 import _style from './style.js';
@@ -189,10 +189,10 @@ export default function drawDescendants(gd, cd, entry, slices, opts) {
         sliceText.text(text)
             .classed('slicetext', true)
             .attr('text-anchor', hasRight ? 'end' : (hasLeft || singleLineHeader) ? 'start' : 'middle')
-            .call(Drawing.font, font)
+            .call(font, font)
             .call(svgTextUtils.convertToTspans, gd);
 
-        pt.textBB = Drawing.bBox(sliceText.node());
+        pt.textBB = bBox(sliceText.node());
         pt.transform = toMoveInsideSlice(pt, {
             fontSize: font.size,
             isHeader: isHeader

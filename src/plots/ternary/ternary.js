@@ -3,7 +3,7 @@ import tinycolor from 'tinycolor2';
 import Registry from '../../registry.js';
 import Lib from '../../lib/index.js';
 import Color from '../../components/color/index.js';
-import Drawing from '../../components/drawing/index.js';
+import { hideOutsideRangePoints, setClipUrl } from '../../components/drawing/index.js';
 import setConvert from '../cartesian/set_convert.js';
 import { extendFlat } from '../../lib/extend.js';
 import Plots from '../plots.js';
@@ -89,8 +89,8 @@ proto.makeFramework = function(fullLayout) {
     _this.plotContainer = Lib.ensureSingle(_this.container, 'g', _this.id);
     _this.updateLayers(ternaryLayout);
 
-    Drawing.setClipUrl(_this.layers.backplot, clipId, gd);
-    Drawing.setClipUrl(_this.layers.grids, clipId, gd);
+    setClipUrl(_this.layers.backplot, clipId, gd);
+    setClipUrl(_this.layers.grids, clipId, gd);
 };
 
 proto.updateFx = function(fullLayout) {
@@ -341,7 +341,7 @@ proto.adjustLayout = function(ternaryLayout, graphSize) {
         _this.initInteractions();
     }
 
-    Drawing.setClipUrl(
+    setClipUrl(
         _this.layers.frontplot,
         _this._hasClipOnAxisFalse ? null : _this.clipId,
         _this.graphDiv
@@ -737,7 +737,7 @@ proto.initInteractions = function() {
         if(_this._hasClipOnAxisFalse) {
             _this.plotContainer
                 .select('.scatterlayer').selectAll('.trace')
-                .call(Drawing.hideOutsideRangePoints, _this);
+                .call(hideOutsideRangePoints, _this);
         }
 
         gd.emit('plotly_relayouting', makeUpdate(mins));

@@ -1,8 +1,7 @@
 import polybool from 'polybooljs';
 import pointInPolygon from 'point-in-polygon/nested';
 import Registry from '../../registry.js';
-import _index from '../drawing/index.js';
-const { dashStyle } = _index;
+import { dashStyle } from '../drawing/index.js';
 import Color from '../color/index.js';
 import Fx from '../fx/index.js';
 import { makeEventData } from '../fx/helpers.js';

@@ -1,6 +1,6 @@
 import scatterPlot from '../scatter/plot.js';
 import Axes from '../../plots/cartesian/axes.js';
-import Drawing from '../../components/drawing/index.js';
+import { setClipUrl } from '../../components/drawing/index.js';
 
 export default function plot(gd, plotinfoproxy, data, layer) {
     var i, trace, node;
@@ -37,6 +37,6 @@ export default function plot(gd, plotinfoproxy, data, layer) {
         // separately to all scattercarpet traces, but that would require
         // lots of reorganization of scatter traces that is otherwise not
         // necessary. That makes this a potential optimization.
-        Drawing.setClipUrl(node, data[i][0].carpet._clipPathId, gd);
+        setClipUrl(node, data[i][0].carpet._clipPathId, gd);
     }
 }

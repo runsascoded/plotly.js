@@ -1,6 +1,6 @@
 import { select } from 'd3-selection';
 import Color from '../../components/color/index.js';
-import Drawing from '../../components/drawing/index.js';
+import { dashLine, selectedPointStyle } from '../../components/drawing/index.js';
 import Colorscale from '../../components/colorscale/index.js';
 
 function style(gd, calcTrace) {
@@ -20,11 +20,11 @@ function styleTrace(gd, calcTrace) {
         select(this)
             .attr('fill', sclFunc(d.z))
             .call(Color.stroke, d.mlc || markerLine.color)
-            .call(Drawing.dashLine, '', d.mlw || markerLine.width || 0)
+            .call(dashLine, '', d.mlw || markerLine.width || 0)
             .style('opacity', marker.opacity);
     });
 
-    Drawing.selectedPointStyle(locs, trace);
+    selectedPointStyle(locs, trace);
 }
 
 function styleOnSelect(gd, calcTrace) {
@@ -32,7 +32,7 @@ function styleOnSelect(gd, calcTrace) {
     var trace = calcTrace[0].trace;
 
     if(trace.selectedpoints) {
-        Drawing.selectedPointStyle(s.selectAll('.choroplethlocation'), trace);
+        selectedPointStyle(s.selectAll('.choroplethlocation'), trace);
     } else {
         styleTrace(gd, calcTrace);
     }

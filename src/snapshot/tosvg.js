@@ -1,6 +1,6 @@
 import { select } from 'd3-selection';
 import Lib from '../lib/index.js';
-import Drawing from '../components/drawing/index.js';
+import { setRect } from '../components/drawing/index.js';
 import Color from '../components/color/index.js';
 import xmlnsNamespaces from '../constants/xmlns_namespaces.js';
 var DOUBLEQUOTE_REGEX = /"/g;
@@ -37,7 +37,7 @@ export default function toSVG(gd, format, scale) {
     // have to remove them, and providing the right namespaces in the svg to
     // begin with
     svg.insert('rect', ':first-child')
-        .call(Drawing.setRect, 0, 0, width, height)
+        .call(setRect, 0, 0, width, height)
         .call(Color.fill, fullLayout.paper_bgcolor);
 
     // subplot-specific to-SVG methods

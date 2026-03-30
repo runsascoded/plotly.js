@@ -1,7 +1,7 @@
 import Lib from '../../lib/index.js';
 import Axes from '../../plots/cartesian/axes.js';
 import svgTextUtils from '../../lib/svg_text_utils.js';
-import Drawing from '../drawing/index.js';
+import { font, bBox } from '../drawing/index.js';
 import { readPaths } from './draw_newshape/helpers.js';
 import helpers from './helpers.js';
 import shapeLabelTexttemplateVars from './label_texttemplate.js';
@@ -115,11 +115,11 @@ export default function drawLabel(gd, index, options, shapeGroup) {
 
     // Do an initial render so we can get the text bounding box height
     labelText.call(function (s) {
-        s.call(Drawing.font, font).attr({});
+        s.call(font, font).attr({});
         svgTextUtils.convertToTspans(s, gd);
         return s;
     });
-    var textBB = Drawing.bBox(labelText.node());
+    var textBB = bBox(labelText.node());
 
     // Calculate correct (x,y) for text
     // We also determine true xanchor since xanchor depends on position when set to 'auto'

@@ -1,7 +1,7 @@
 import { select } from 'd3-selection';
 import isNumeric from 'fast-isnumeric';
 import Lib from '../../lib/index.js';
-import Drawing from '../../components/drawing/index.js';
+import { setClipUrl } from '../../components/drawing/index.js';
 import helpers from '../../plots/polar/helpers.js';
 
 export default function plot(gd, subplot, cdbar) {
@@ -59,7 +59,7 @@ export default function plot(gd, subplot, cdbar) {
         });
 
         // clip plotGroup, when trace layer isn't clipped
-        Drawing.setClipUrl(
+        setClipUrl(
             plotGroup,
             subplot._hasClipOnAxisFalse ? subplot.clipIds.forTraces : null,
             gd

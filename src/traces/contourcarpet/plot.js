@@ -1,7 +1,7 @@
 import { select } from 'd3-selection';
 import map1dArray from '../carpet/map_1d_array.js';
 import makepath from '../carpet/makepath.js';
-import Drawing from '../../components/drawing/index.js';
+import { font, setClipUrl, smoothclosed, smoothopen, tester } from '../../components/drawing/index.js';
 import Lib from '../../lib/index.js';
 import makeCrossings from '../contour/make_crossings.js';
 import findAllPaths from '../contour/find_all_paths.js';
@@ -100,7 +100,7 @@ export default function plot(gd, plotinfo, cdcontours, contourcarpetLayer) {
         makeLinesAndLabels(plotGroup, pathinfo, gd, cd0, contours, plotinfo, carpet);
 
         // Clip the boundary of the plot
-        Drawing.setClipUrl(plotGroup, carpet._clipPathId, gd);
+        setClipUrl(plotGroup, carpet._clipPathId, gd);
     });
 }
 
@@ -173,9 +173,9 @@ function makeLinesAndLabels(plotgroup, pathinfo, gd, cd0, contours, plotinfo, ca
 
         var contourFormat = contourPlot.labelFormatter(gd, cd0);
 
-        var dummyText = Drawing.tester.append('text')
+        var dummyText = tester.append('text')
             .attr('data-notex', 1)
-            .call(Drawing.font, contours.labelfont);
+            .call(font, contours.labelfont);
 
         // use `bounds` only to keep labels away from the x/y boundaries
         // `constrainToCarpet` below ensures labels don't go off the
@@ -394,7 +394,7 @@ function joinAllPaths(trace, pi, perimeter, ab2p, carpet, carpetcd, xa, ya) {
             fullpath += pathto(endpt, startpt);
         }
 
-        addpath = Drawing.smoothopen(pi.edgepaths[i].map(ab2p), pi.smoothing);
+        addpath = smoothopen(pi.edgepaths[i].map(ab2p), pi.smoothing);
         fullpath += newloop ? addpath : addpath.replace(/^M/, 'L');
         startsleft.splice(startsleft.indexOf(i), 1);
         endpt = pi.edgepaths[i][pi.edgepaths[i].length - 1];
@@ -461,7 +461,7 @@ function joinAllPaths(trace, pi, perimeter, ab2p, carpet, carpetcd, xa, ya) {
 
     // finally add the interior paths
     for(i = 0; i < pi.paths.length; i++) {
-        fullpath += Drawing.smoothclosed(pi.paths[i].map(ab2p), pi.smoothing);
+        fullpath += smoothclosed(pi.paths[i].map(ab2p), pi.smoothing);
     }
 
     return fullpath;

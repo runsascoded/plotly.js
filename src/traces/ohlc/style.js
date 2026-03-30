@@ -1,5 +1,5 @@
 import { select } from 'd3-selection';
-import Drawing from '../../components/drawing/index.js';
+import { dashLine } from '../../components/drawing/index.js';
 import Color from '../../components/color/index.js';
 
 export default function style(gd, cd, sel) {
@@ -19,7 +19,7 @@ export default function style(gd, cd, sel) {
             select(this)
                 .style('fill', 'none')
                 .call(Color.stroke, dirLine.color)
-                .call(Drawing.dashLine, dirLine.dash, dirLine.width)
+                .call(dashLine, dirLine.dash, dirLine.width)
                 // TODO: custom selection style for OHLC
                 .style('opacity', trace.selectedpoints && !di.selected ? 0.3 : 1);
         });

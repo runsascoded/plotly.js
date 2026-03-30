@@ -1,5 +1,5 @@
 import constants from '../constants/pixelated_image.js';
-import Drawing from '../components/drawing/index.js';
+import { tester } from '../components/drawing/index.js';
 import Lib from '../lib/index.js';
 
 var _supportsPixelated = null;
@@ -28,7 +28,7 @@ function supportsPixelatedImage() {
                 return supports.apply(null, d);
             });
         } else {
-            var image3 = Drawing.tester.append('image')
+            var image3 = tester.append('image')
                 .attr('style', constants.STYLE);
 
             var cStyles = window.getComputedStyle(image3.node());

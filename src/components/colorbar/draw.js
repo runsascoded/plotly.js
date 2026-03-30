@@ -8,7 +8,7 @@ import dragElement from '../dragelement/index.js';
 import Lib from '../../lib/index.js';
 import { extendFlat } from '../../lib/extend.js';
 import setCursor from '../../lib/setcursor.js';
-import Drawing from '../drawing/index.js';
+import { bBox, getTranslate, gradient, lineGroupStyle } from '../drawing/index.js';
 import Color from '../color/index.js';
 import Titles from '../titles/index.js';
 import svgTextUtils from '../../lib/svg_text_utils.js';
@@ -449,7 +449,7 @@ function drawColorBar(g, opts, gd) {
 
             var bb;
             if(mathJaxNode) {
-                bb = Drawing.bBox(mathJaxNode);
+                bb = bBox(mathJaxNode);
                 titleWidth = bb.width;
                 titleHeight = bb.height;
                 if(titleHeight > lineSize) {
@@ -458,7 +458,7 @@ function drawColorBar(g, opts, gd) {
                     titleTrans[1] -= (titleHeight - lineSize) / 2;
                 }
             } else if(titleText.node() && !titleText.classed(cn.jsPlaceholder)) {
-                bb = Drawing.bBox(titleText.node());
+                bb = bBox(titleText.node());
                 titleWidth = bb.width;
                 titleHeight = bb.height;
             }
@@ -543,7 +543,7 @@ function drawColorBar(g, opts, gd) {
             .attr(isVertical ? 'height' : 'width', Math.max(max(z) - min(z), 2));
 
             if(opts._fillgradient) {
-                Drawing.gradient(fillEl, gd, opts._id, isVertical ? 'vertical' : 'horizontalreversed', opts._fillgradient, 'fill');
+                gradient(fillEl, gd, opts._id, isVertical ? 'vertical' : 'horizontalreversed', opts._fillgradient, 'fill');
             } else {
                 // tinycolor can't handle exponents and
                 // at this scale, removing it makes no difference.
@@ -568,7 +568,7 @@ function drawColorBar(g, opts, gd) {
                     (isVertical ? 'h' : 'v') +
                     thickPx
                 )
-                .call(Drawing.lineGroupStyle, line.width, lineColormap(d), line.dash);
+                .call(lineGroupStyle, line.width, lineColormap(d), line.dash);
         });
 
         // force full redraw of labels and ticks
@@ -603,7 +603,7 @@ function drawColorBar(g, opts, gd) {
         var bb;
         var innerThickness = thickPx + outlinewidth / 2;
         if(ticklabelposition.indexOf('inside') === -1) {
-            bb = Drawing.bBox(axLayer.node());
+            bb = bBox(axLayer.node());
             innerThickness += isVertical ? bb.width : bb.height;
         }
 
@@ -624,15 +624,15 @@ function drawColorBar(g, opts, gd) {
                 (isVertical && topOrBottom) ||
                 (!isVertical && !topOrBottom)
             )) {
-                bb = Drawing.bBox(mathJaxNode);
+                bb = bBox(mathJaxNode);
                 titleWidth = bb.width;
                 _titleHeight = bb.height;
             } else {
                 // note: the formula below works for all title sides,
                 // (except for top/bottom mathjax, above)
                 // but the weird gs.l is because the titleunshift
-                // transform gets removed by Drawing.bBox
-                bb = Drawing.bBox(titleCont.node());
+                // transform gets removed by bBox
+                bb = bBox(titleCont.node());
                 titleWidth = bb.right - gs.l - (isVertical ? uPx : vPx);
                 _titleHeight = bb.bottom - gs.t - (isVertical ? vPx : uPx);
 
@@ -723,8 +723,8 @@ function drawColorBar(g, opts, gd) {
             var numTicks = tickLabels[0].length;
 
             var border = g.select('.' + cn.cbbg).node();
-            var oBb = Drawing.bBox(border);
-            var oTr = Drawing.getTranslate(g);
+            var oBb = bBox(border);
+            var oTr = getTranslate(g);
 
             var TEXTPAD = 2;
 
@@ -732,8 +732,8 @@ function drawColorBar(g, opts, gd) {
                 var first = 0;
                 var last = numTicks - 1;
                 if(i === first || i === last) {
-                    var iBb = Drawing.bBox(this);
-                    var iTr = Drawing.getTranslate(this);
+                    var iBb = bBox(this);
+                    var iTr = getTranslate(this);
                     var deltaX;
 
                     if(i === last) {
