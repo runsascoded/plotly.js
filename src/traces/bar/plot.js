@@ -4,7 +4,7 @@ import isNumeric from 'fast-isnumeric';
 import Lib from '../../lib/index.js';
 import svgTextUtils from '../../lib/svg_text_utils.js';
 import Color from '../../components/color/index.js';
-import Drawing from '../../components/drawing/index.js';
+import { bBox, font, hideOutsideRangePoint, makePointStyleFns, setClipUrl, singlePointStyle } from '../../components/drawing/index.js';
 import Registry from '../../registry.js';
 import _axes from '../../plots/cartesian/axes.js';
 const { tickText } = _axes;
@@ -499,24 +499,24 @@ function plot(gd, plotinfo, cdModule, traceLayer, opts, makeOnCompleteCallback) 
             var sel = transition(Lib.ensureSingle(bar, 'path'), fullLayout, opts, makeOnCompleteCallback);
             sel.style('vector-effect', isStatic ? 'none' : 'non-scaling-stroke')
                 .attr('d', isNaN((x1 - x0) * (y1 - y0)) || (isBlank && gd._context.staticPlot) ? 'M0,0Z' : path)
-                .call(Drawing.setClipUrl, plotinfo.layerClipId, gd);
+                .call(setClipUrl, plotinfo.layerClipId, gd);
 
             if (!fullLayout.uniformtext.mode && withTransition) {
-                var styleFns = Drawing.makePointStyleFns(trace);
-                Drawing.singlePointStyle(di, sel, trace, styleFns, gd);
+                var styleFns = makePointStyleFns(trace);
+                singlePointStyle(di, sel, trace, styleFns, gd);
             }
 
             appendBarText(gd, plotinfo, bar, cd, i, x0, x1, y0, y1, r, overhead, opts, makeOnCompleteCallback);
 
             if (plotinfo.layerClipId) {
-                Drawing.hideOutsideRangePoint(di, bar.select('text'), xa, ya, trace.xcalendar, trace.ycalendar);
+                hideOutsideRangePoint(di, bar.select('text'), xa, ya, trace.xcalendar, trace.ycalendar);
             }
         });
 
         // lastly, clip points groups of `cliponaxis !== false` traces
         // on `plotinfo._hasClipOnAxisFalse === true` subplots
         var hasClipOnAxisFalse = trace.cliponaxis === false;
-        Drawing.setClipUrl(plotGroup, hasClipOnAxisFalse ? null : plotinfo.layerClipId, gd);
+        setClipUrl(plotGroup, hasClipOnAxisFalse ? null : plotinfo.layerClipId, gd);
     });
 
     // error bars are on the top
@@ -530,7 +530,7 @@ function appendBarText(gd, plotinfo, bar, cd, i, x0, x1, y0, y1, r, overhead, op
     var fullLayout = gd._fullLayout;
     var textPosition;
 
-    function appendTextNode(bar, text, font) {
+    function appendTextNode(bar, text, textFont) {
         var textSelection = Lib.ensureSingle(bar, 'text')
             .text(text)
             .attr({
@@ -540,7 +540,7 @@ function appendBarText(gd, plotinfo, bar, cd, i, x0, x1, y0, y1, r, overhead, op
                 // tex and regular text together
                 'data-notex': 1
             })
-            .call(Drawing.font, font)
+            .call(font, textFont)
             .call(svgTextUtils.convertToTspans, gd);
 
         return textSelection;
@@ -611,7 +611,7 @@ function appendBarText(gd, plotinfo, bar, cd, i, x0, x1, y0, y1, r, overhead, op
     var textBB;
     var textWidth;
     var textHeight;
-    var font;
+    var textFont;
 
     if (textPosition === 'outside') {
         if (!isOutmostBar && !calcBar.hasB) textPosition = 'inside';
@@ -622,11 +622,11 @@ function appendBarText(gd, plotinfo, bar, cd, i, x0, x1, y0, y1, r, overhead, op
             // draw text using insideTextFont and check if it fits inside bar
             textPosition = 'inside';
 
-            font = Lib.ensureUniformFontSize(gd, insideTextFont);
+            textFont = Lib.ensureUniformFontSize(gd, insideTextFont);
 
-            textSelection = appendTextNode(bar, text, font);
+            textSelection = appendTextNode(bar, text, textFont);
 
-            textBB = Drawing.bBox(textSelection.node());
+            textBB = bBox(textSelection.node());
             textWidth = textBB.width;
             textHeight = textBB.height;
 
@@ -677,13 +677,13 @@ function appendBarText(gd, plotinfo, bar, cd, i, x0, x1, y0, y1, r, overhead, op
     }
 
     if (!textSelection) {
-        font = Lib.ensureUniformFontSize(gd, textPosition === 'outside' ? outsideTextFont : insideTextFont);
+        textFont = Lib.ensureUniformFontSize(gd, textPosition === 'outside' ? outsideTextFont : insideTextFont);
 
-        textSelection = appendTextNode(bar, text, font);
+        textSelection = appendTextNode(bar, text, textFont);
 
         var currentTransform = textSelection.attr('transform');
         textSelection.attr('transform', '');
-        (textBB = Drawing.bBox(textSelection.node())), (textWidth = textBB.width), (textHeight = textBB.height);
+        (textBB = bBox(textSelection.node())), (textWidth = textBB.width), (textHeight = textBB.height);
         textSelection.attr('transform', currentTransform);
 
         if (textWidth <= 0 || textHeight <= 0) {

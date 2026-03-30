@@ -7,7 +7,7 @@ import Lib from '../../lib/index.js';
 import svgTextUtils from '../../lib/svg_text_utils.js';
 import Titles from '../../components/titles/index.js';
 import Color from '../../components/color/index.js';
-import Drawing from '../../components/drawing/index.js';
+import { bBox, crispRound, dashStyle, font, getTranslate } from '../../components/drawing/index.js';
 import axAttrs from './layout_attributes.js';
 import cleanTicks from './clean_ticks.js';
 import constants from '../../constants/numerical.js';
@@ -2982,7 +2982,7 @@ function calcLabelLevelBbox(ax, cls, mainLinePositionShift) {
         right = -Infinity;
         ax._selections[cls].each(function() {
             var thisLabel = selectTickLabel(this);
-            // Use parent node <g.(x|y)tick>, to make Drawing.bBox
+            // Use parent node <g.(x|y)tick>, to make bBox
             // retrieve a bbox computed with transform info
             //
             // To improve perf, it would be nice to use `thisLabel.node()`
@@ -2990,7 +2990,7 @@ function calcLabelLevelBbox(ax, cls, mainLinePositionShift) {
             // together with the makeLabelFns outputs and `tickangle`
             // to compute one bbox per (tick value x tick style)
             if (thisLabel.node().style.display !== 'none') {
-                var bb = Drawing.bBox(thisLabel.node().parentNode);
+                var bb = bBox(thisLabel.node().parentNode);
                 top = Math.min(top, bb.top);
                 bottom = Math.max(bottom, bb.bottom);
                 left = Math.min(left, bb.left);
@@ -3403,7 +3403,7 @@ axes.drawTicks = function(gd, ax, opts) {
             return Color.stroke(select(this), d.minor ? ax.minor.tickcolor : ax.tickcolor);
         })
         .style('stroke-width', function(d) {
-            return Drawing.crispRound(
+            return crispRound(
                 gd,
                 d.minor ? ax.minor.tickwidth : ax.tickwidth,
                 1
@@ -3470,10 +3470,10 @@ axes.drawGrid = function(gd, ax, opts) {
     }
 
     ax._gw =
-        Drawing.crispRound(gd, ax.gridwidth, 1);
+        crispRound(gd, ax.gridwidth, 1);
 
     var wMinor = !hasMinor ? 0 :
-        Drawing.crispRound(gd, ax.minor.gridwidth, 1);
+        crispRound(gd, ax.minor.gridwidth, 1);
 
     var majorLayer = opts.layer;
     var minorLayer = opts.minorLayer;
@@ -3499,7 +3499,7 @@ axes.drawGrid = function(gd, ax, opts) {
                 );
             })
             .style('stroke-dasharray', function(d) {
-                return Drawing.dashStyle(
+                return dashStyle(
                     d.minor ? ax.minor.griddash : ax.griddash,
                     d.minor ? ax.minor.gridwidth : ax.gridwidth
                 );
@@ -3559,7 +3559,7 @@ axes.drawZeroLine = function(gd, ax, opts) {
     zl.attr('transform', opts.transFn)
         .attr('d', opts.path)
         .call(Color.stroke, ax.zerolinecolor || Color.defaultLine)
-        .style('stroke-width', Drawing.crispRound(gd, ax.zerolinewidth, ax._gw || 1) + 'px')
+        .style('stroke-width', crispRound(gd, ax.zerolinewidth, ax._gw || 1) + 'px')
         .style('display', null); // visible
 
     hideCounterAxisInsideTickLabels(ax, [ZERO_PATH]);
@@ -3621,7 +3621,7 @@ axes.drawLabels = function(gd, ax, opts) {
 
                 thisLabel
                     .call(svgTextUtils.positionText, labelFns.xFn(d), labelFns.yFn(d))
-                    .call(Drawing.font, {
+                    .call(font, {
                         family: d.font,
                         size: d.fontSize,
                         color: d.fontColor,
@@ -3694,7 +3694,7 @@ axes.drawLabels = function(gd, ax, opts) {
                     ax._adjustTickLabelsOverflow();
                 }
             } else {
-                var mjWidth = Drawing.bBox(mathjaxGroup.node()).width;
+                var mjWidth = bBox(mathjaxGroup.node()).width;
                 var mjShift = mjWidth * {end: -0.5, start: 0.5}[anchor];
                 mathjaxGroup.attr('transform', transform + strTranslate(mjShift, 0));
             }
@@ -3734,7 +3734,7 @@ axes.drawLabels = function(gd, ax, opts) {
             var mathjaxGroup = thisLabel.select('.text-math-group');
 
             if(mathjaxGroup.empty()) {
-                var bb = Drawing.bBox(thisLabel.node());
+                var bb = bBox(thisLabel.node());
                 var adjust = 0;
                 if(isX) {
                     if(bb.right > max) adjust = 1;
@@ -3868,7 +3868,7 @@ axes.drawLabels = function(gd, ax, opts) {
 
                 var x = ax.l2p(d.x);
                 var thisLabel = selectTickLabel(this);
-                var bb = Drawing.bBox(thisLabel.node());
+                var bb = bBox(thisLabel.node());
                 maxLines = Math.max(maxLines, svgTextUtils.lineCount(thisLabel));
 
                 lbbArray.push({
@@ -3997,7 +3997,7 @@ axes.drawLabels = function(gd, ax, opts) {
                 var bb;
 
                 if(ax._vals[i]) {
-                    bb = ax._vals[i].bb || Drawing.bBox(thisLabel.node());
+                    bb = ax._vals[i].bb || bBox(thisLabel.node());
                     ax._vals[i].bb = bb;
                 }
 
@@ -4141,7 +4141,7 @@ function drawDividers(gd, ax, opts) {
         .classed(cls, 1)
         .classed('crisp', 1)
         .call(Color.stroke, ax.dividercolor)
-        .style('stroke-width', Drawing.crispRound(gd, ax.dividerwidth, 1) + 'px');
+        .style('stroke-width', crispRound(gd, ax.dividerwidth, 1) + 'px');
 
     dividers
         .attr('transform', opts.transFn)
@@ -4299,7 +4299,7 @@ function drawTitle(gd, ax) {
         };
 
         if(tickLabels && tickLabels.node() && tickLabels.node().parentNode) {
-            var translation = Drawing.getTranslate(tickLabels.node().parentNode);
+            var translation = getTranslate(tickLabels.node().parentNode);
             avoid.offsetLeft = translation.x;
             avoid.offsetTop = translation.y;
         }

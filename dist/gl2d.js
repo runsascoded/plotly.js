@@ -17235,7 +17235,7 @@ void main() {
         if (systemFontKeywords.indexOf(value) !== -1) {
           return cache[value] = { system: value };
         }
-        var font2 = {
+        var font3 = {
           style: "normal",
           variant: "normal",
           weight: "normal",
@@ -17249,40 +17249,40 @@ void main() {
         while (token = tokens.shift()) {
           if (globalKeywords.indexOf(token) !== -1) {
             ["style", "variant", "weight", "stretch"].forEach(function(prop) {
-              font2[prop] = token;
+              font3[prop] = token;
             });
-            return cache[value] = font2;
+            return cache[value] = font3;
           }
           if (fontStyleKeywords.indexOf(token) !== -1) {
-            font2.style = token;
+            font3.style = token;
             continue;
           }
           if (token === "normal" || token === "small-caps") {
-            font2.variant = token;
+            font3.variant = token;
             continue;
           }
           if (fontStretchKeywords.indexOf(token) !== -1) {
-            font2.stretch = token;
+            font3.stretch = token;
             continue;
           }
           if (fontWeightKeywords.indexOf(token) !== -1) {
-            font2.weight = token;
+            font3.weight = token;
             continue;
           }
           if (isSize(token)) {
             var parts = splitBy(token, "/");
-            font2.size = parts[0];
+            font3.size = parts[0];
             if (parts[1] != null) {
-              font2.lineHeight = parseLineHeight(parts[1]);
+              font3.lineHeight = parseLineHeight(parts[1]);
             } else if (tokens[0] === "/") {
               tokens.shift();
-              font2.lineHeight = parseLineHeight(tokens.shift());
+              font3.lineHeight = parseLineHeight(tokens.shift());
             }
             if (!tokens.length) {
               throw new Error("Missing required font-family.");
             }
-            font2.family = splitBy(tokens.join(" "), /\s*,\s*/).map(unquote);
-            return cache[value] = font2;
+            font3.family = splitBy(tokens.join(" "), /\s*,\s*/).map(unquote);
+            return cache[value] = font3;
           }
           throw new Error("Unknown or unsupported font token: " + token);
         }
@@ -27251,10 +27251,10 @@ void main() {
         options = options || {};
         var shape = options.shape ? options.shape : options.canvas ? [options.canvas.width, options.canvas.height] : [512, 512];
         var canvas = options.canvas || document.createElement("canvas");
-        var font2 = options.font;
+        var font3 = options.font;
         var step = typeof options.step === "number" ? [options.step, options.step] : options.step || [32, 32];
         var chars2 = options.chars || defaultChars;
-        if (font2 && typeof font2 !== "string") font2 = stringifyFont(font2);
+        if (font3 && typeof font3 !== "string") font3 = stringifyFont(font3);
         if (!Array.isArray(chars2)) {
           chars2 = String(chars2).split("");
         } else if (chars2.length === 2 && typeof chars2[0] === "number" && typeof chars2[1] === "number") {
@@ -27270,7 +27270,7 @@ void main() {
         var ctx = canvas.getContext("2d");
         ctx.fillStyle = "#000";
         ctx.fillRect(0, 0, canvas.width, canvas.height);
-        ctx.font = font2;
+        ctx.font = font3;
         ctx.textAlign = "center";
         ctx.textBaseline = "middle";
         ctx.fillStyle = "#fff";
@@ -29626,17 +29626,17 @@ void main() {
       module.exports = measure;
       measure.canvas = document.createElement("canvas");
       measure.cache = {};
-      function measure(font2, o) {
+      function measure(font3, o) {
         if (!o) o = {};
-        if (typeof font2 === "string" || Array.isArray(font2)) {
-          o.family = font2;
+        if (typeof font3 === "string" || Array.isArray(font3)) {
+          o.family = font3;
         }
         var family = Array.isArray(o.family) ? o.family.join(", ") : o.family;
         if (!family) throw Error("`family` must be defined");
         var fs = o.size || o.fontSize || o.em || 48;
         var weight = o.weight || o.fontWeight || "";
         var style4 = o.style || o.fontStyle || "";
-        var font2 = [style4, weight, fs].join(" ") + "px " + family;
+        var font3 = [style4, weight, fs].join(" ") + "px " + family;
         var origin = o.origin || "top";
         if (measure.cache[family]) {
           if (fs <= measure.cache[family].em) {
@@ -29656,7 +29656,7 @@ void main() {
         var l = Math.ceil(fs * 1.5);
         canvas.height = l;
         canvas.width = l * 0.5;
-        ctx.font = font2;
+        ctx.font = font3;
         var char = "H";
         var result = {
           top: 0
@@ -29974,33 +29974,33 @@ void main() {
         }
         var newFont = false, newFontSize = false;
         if (o.font) {
-          (Array.isArray(o.font) ? o.font : [o.font]).forEach(function(font3, i2) {
-            if (typeof font3 === "string") {
+          (Array.isArray(o.font) ? o.font : [o.font]).forEach(function(font4, i2) {
+            if (typeof font4 === "string") {
               try {
-                font3 = Font.parse(font3);
+                font4 = Font.parse(font4);
               } catch (e) {
-                font3 = Font.parse(GlText.baseFontSize + "px " + font3);
+                font4 = Font.parse(GlText.baseFontSize + "px " + font4);
               }
             } else {
-              var fontStyle = font3.style;
-              var fontWeight = font3.weight;
-              var fontStretch = font3.stretch;
-              var fontVariant = font3.variant;
-              font3 = Font.parse(Font.stringify(font3));
-              if (fontStyle) font3.style = fontStyle;
-              if (fontWeight) font3.weight = fontWeight;
-              if (fontStretch) font3.stretch = fontStretch;
-              if (fontVariant) font3.variant = fontVariant;
+              var fontStyle = font4.style;
+              var fontWeight = font4.weight;
+              var fontStretch = font4.stretch;
+              var fontVariant = font4.variant;
+              font4 = Font.parse(Font.stringify(font4));
+              if (fontStyle) font4.style = fontStyle;
+              if (fontWeight) font4.weight = fontWeight;
+              if (fontStretch) font4.stretch = fontStretch;
+              if (fontVariant) font4.variant = fontVariant;
             }
             var baseString = Font.stringify({
               size: GlText.baseFontSize,
-              family: font3.family,
-              stretch: isStretchSupported ? font3.stretch : void 0,
-              variant: font3.variant,
-              weight: font3.weight,
-              style: font3.style
+              family: font4.family,
+              stretch: isStretchSupported ? font4.stretch : void 0,
+              variant: font4.variant,
+              weight: font4.weight,
+              style: font4.style
             });
-            var unit2 = parseUnit(font3.size);
+            var unit2 = parseUnit(font4.size);
             var fs = Math.round(unit2[0] * px(unit2[1]));
             if (fs !== this$1.fontSize[i2]) {
               newFontSize = true;
@@ -30010,25 +30010,25 @@ void main() {
               newFont = true;
               this$1.font[i2] = GlText.fonts[baseString];
               if (!this$1.font[i2]) {
-                var family = font3.family.join(", ");
-                var style4 = [font3.style];
-                if (font3.style != font3.variant) {
-                  style4.push(font3.variant);
+                var family = font4.family.join(", ");
+                var style4 = [font4.style];
+                if (font4.style != font4.variant) {
+                  style4.push(font4.variant);
                 }
-                if (font3.variant != font3.weight) {
-                  style4.push(font3.weight);
+                if (font4.variant != font4.weight) {
+                  style4.push(font4.weight);
                 }
-                if (isStretchSupported && font3.weight != font3.stretch) {
-                  style4.push(font3.stretch);
+                if (isStretchSupported && font4.weight != font4.stretch) {
+                  style4.push(font4.stretch);
                 }
                 this$1.font[i2] = {
                   baseString,
                   // typeface
                   family,
-                  weight: font3.weight,
-                  stretch: font3.stretch,
-                  style: font3.style,
-                  variant: font3.variant,
+                  weight: font4.weight,
+                  stretch: font4.stretch,
+                  style: font4.style,
+                  variant: font4.variant,
                   // widths of characters
                   width: {},
                   // kernin pairs offsets
@@ -30045,18 +30045,18 @@ void main() {
           });
         }
         if (newFont || newFontSize) {
-          this.font.forEach(function(font3, i2) {
+          this.font.forEach(function(font4, i2) {
             var fontString = Font.stringify({
               size: this$1.fontSize[i2],
-              family: font3.family,
-              stretch: isStretchSupported ? font3.stretch : void 0,
-              variant: font3.variant,
-              weight: font3.weight,
-              style: font3.style
+              family: font4.family,
+              stretch: isStretchSupported ? font4.stretch : void 0,
+              variant: font4.variant,
+              weight: font4.weight,
+              style: font4.style
             });
             this$1.fontAtlas[i2] = this$1.shader.atlas[fontString];
             if (!this$1.fontAtlas[i2]) {
-              var metrics2 = font3.metrics;
+              var metrics2 = font4.metrics;
               this$1.shader.atlas[fontString] = this$1.fontAtlas[i2] = {
                 fontString,
                 // even step is better for rendered characters
@@ -30101,8 +30101,8 @@ void main() {
             this.counts = [this.count];
           }
           newAtlasChars = [];
-          this.font.forEach(function(font3, idx) {
-            GlText.atlasContext.font = font3.baseString;
+          this.font.forEach(function(font4, idx) {
+            GlText.atlasContext.font = font4.baseString;
             var atlas2 = this$1.fontAtlas[idx];
             for (var i2 = 0; i2 < this$1.text.length; i2++) {
               var char2 = this$1.text.charAt(i2);
@@ -30111,14 +30111,14 @@ void main() {
                 atlas2.chars.push(char2);
                 newAtlasChars.push(char2);
               }
-              if (font3.width[char2] == null) {
-                font3.width[char2] = GlText.atlasContext.measureText(char2).width / GlText.baseFontSize;
+              if (font4.width[char2] == null) {
+                font4.width[char2] = GlText.atlasContext.measureText(char2).width / GlText.baseFontSize;
                 if (this$1.kerning) {
                   var pairs = [];
-                  for (var baseChar in font3.width) {
+                  for (var baseChar in font4.width) {
                     pairs.push(baseChar + char2, char2 + baseChar);
                   }
-                  extend2(font3.kerning, kerning(font3.family, {
+                  extend2(font4.kerning, kerning(font4.family, {
                     pairs
                   }));
                 }
@@ -30171,20 +30171,20 @@ void main() {
           this.textWidth = [];
           for (var i$3 = 0, ptr$1 = 0; i$3 < this.counts.length; i$3++) {
             var count$1 = this.counts[i$3];
-            var font2 = this.font[i$3] || this.font[0];
+            var font3 = this.font[i$3] || this.font[0];
             var atlas = this.fontAtlas[i$3] || this.fontAtlas[0];
             for (var j$2 = 0; j$2 < count$1; j$2++) {
               var char = this.text.charAt(ptr$1);
               var prevChar = this.text.charAt(ptr$1 - 1);
               charIds[ptr$1] = atlas.ids[char];
-              sizeData[ptr$1 * 2] = font2.width[char];
+              sizeData[ptr$1 * 2] = font3.width[char];
               if (j$2) {
                 var prevWidth = sizeData[ptr$1 * 2 - 2];
                 var currWidth = sizeData[ptr$1 * 2];
                 var prevOffset = sizeData[ptr$1 * 2 - 1];
                 var offset = prevOffset + prevWidth * 0.5 + currWidth * 0.5;
                 if (this.kerning) {
-                  var kerning$1 = font2.kerning[prevChar + char];
+                  var kerning$1 = font3.kerning[prevChar + char];
                   if (kerning$1) {
                     offset += kerning$1 * 1e-3;
                   }
@@ -30210,7 +30210,7 @@ void main() {
           pool.freeUint8(charIds);
           pool.freeFloat(sizeData);
           if (newAtlasChars.length) {
-            this.font.forEach(function(font3, i2) {
+            this.font.forEach(function(font4, i2) {
               var atlas2 = this$1.fontAtlas[i2];
               var step = atlas2.step;
               var maxCols = Math.floor(GlText.maxAtlasSize / step);
@@ -43602,9 +43602,9 @@ void main() {
       layoutOut._dataTemplate = template.data;
     }
     coerce3("autotypenumbers");
-    var font2 = lib_default.coerceFont(coerce3, "font");
-    var fontSize = font2.size;
-    lib_default.coerceFont(coerce3, "title.font", font2, { overrideDflt: {
+    var font3 = lib_default.coerceFont(coerce3, "font");
+    var fontSize = font3.size;
+    lib_default.coerceFont(coerce3, "title.font", font3, { overrideDflt: {
       size: Math.round(fontSize * 1.4)
     } });
     coerce3("title.text", layoutOut._dfltTitle.plot);
@@ -43620,7 +43620,7 @@ void main() {
     coerce3("title.y");
     coerce3("title.yanchor");
     coerce3("title.subtitle.text", layoutOut._dfltTitle.subtitle);
-    lib_default.coerceFont(coerce3, "title.subtitle.font", font2, {
+    lib_default.coerceFont(coerce3, "title.subtitle.font", font3, {
       overrideDflt: {
         size: Math.round(layoutOut.title.font.size * 0.7)
       }
@@ -48155,15 +48155,15 @@ void main() {
       if (!options.noTicklabelstandoff) {
         coerce3("ticklabelstandoff");
       }
-      var font2 = options.font || {};
+      var font3 = options.font || {};
       var contColor = containerOut.color;
       var position = containerOut.ticklabelposition || "";
       var dfltFontColor = position.indexOf("inside") !== -1 ? contrast(options.bgColor) : (
         // as with title.font.color, inherit axis.color only if one was
         // explicitly provided
-        contColor && contColor !== layout_attributes_default4.color.dflt ? contColor : font2.color
+        contColor && contColor !== layout_attributes_default4.color.dflt ? contColor : font3.color
       );
-      lib_default.coerceFont(coerce3, "tickfont", font2, { overrideDflt: {
+      lib_default.coerceFont(coerce3, "tickfont", font3, { overrideDflt: {
         color: dfltFontColor
       } });
       if (!options.noTicklabelstep && axType !== "multicategory" && axType !== "log") {
@@ -48307,13 +48307,13 @@ void main() {
     }, "ticklabelposition");
     coerce3("ticklabeloverflow", ticklabelposition.indexOf("inside") !== -1 ? "hide past domain" : "hide past div");
     handleTickValueDefaults(colorbarIn, colorbarOut, coerce3, "linear");
-    var font2 = layout.font;
+    var font3 = layout.font;
     var opts = {
       noAutotickangles: true,
       noTicklabelshift: true,
       noTicklabelstandoff: true,
       outerTicks: false,
-      font: font2
+      font: font3
     };
     if (ticklabelposition.indexOf("inside") !== -1) {
       opts.bgColor = "black";
@@ -48322,8 +48322,8 @@ void main() {
     handleTickLabelDefaults(colorbarIn, colorbarOut, coerce3, "linear", opts);
     handleTickMarkDefaults(colorbarIn, colorbarOut, coerce3, "linear", opts);
     coerce3("title.text", layout._dfltTitle.colorbar);
-    var tickFont = colorbarOut.showticklabels ? colorbarOut.tickfont : font2;
-    var dfltTitleFont = lib_default.extendFlat({}, font2, {
+    var tickFont = colorbarOut.showticklabels ? colorbarOut.tickfont : font3;
+    var dfltTitleFont = lib_default.extendFlat({}, font3, {
       family: tickFont.family,
       size: lib_default.bigFont(tickFont.size)
     });
@@ -49457,19 +49457,20 @@ void main() {
   }
   var { DESELECTDIM: DESELECTDIM2 } = interactions_default;
   var numberFormat = lib_default.numberFormat;
+  var tester;
+  var testref;
   var strTranslate2 = lib_default.strTranslate;
   var LINE_SPACING2 = alignment_default.LINE_SPACING;
-  var drawing = {};
-  drawing.font = function(s, font2) {
-    var variant = font2.variant;
-    var style4 = font2.style;
-    var weight = font2.weight;
-    var color3 = font2.color;
-    var size = font2.size;
-    var family = font2.family;
-    var shadow = font2.shadow;
-    var lineposition = font2.lineposition;
-    var textcase = font2.textcase;
+  function font2(s, font3) {
+    var variant = font3.variant;
+    var style4 = font3.style;
+    var weight = font3.weight;
+    var color3 = font3.color;
+    var size = font3.size;
+    var family = font3.family;
+    var shadow = font3.shadow;
+    var lineposition = font3.lineposition;
+    var textcase = font3.textcase;
     if (family) s.style("font-family", family);
     if (size + 1) s.style("font-size", size + "px");
     if (color3) s.call(color_default.fill, color3);
@@ -49483,7 +49484,7 @@ void main() {
         shadow === "auto" ? svg_text_utils_default.makeTextShadow(color_default.contrast(color3)) : dropNone(shadow)
       );
     if (lineposition) s.style("text-decoration-line", dropNone(lineposition2decorationLine(lineposition)));
-  };
+  }
   function dropNone(a) {
     return a === "none" ? void 0 : a;
   }
@@ -49499,16 +49500,16 @@ void main() {
   function lineposition2decorationLine(lineposition) {
     return lineposition.replace("under", "underline").replace("over", "overline").replace("through", "line-through").split("+").join(" ");
   }
-  drawing.setPosition = function(s, x, y) {
+  function setPosition(s, x, y) {
     s.attr("x", x).attr("y", y);
-  };
-  drawing.setSize = function(s, w, h) {
+  }
+  function setSize(s, w, h) {
     s.attr("width", w).attr("height", h);
-  };
-  drawing.setRect = function(s, x, y, w, h) {
-    s.call(drawing.setPosition, x, y).call(drawing.setSize, w, h);
-  };
-  drawing.translatePoint = function(d2, sel, xa, ya) {
+  }
+  function setRect(s, x, y, w, h) {
+    s.call(setPosition, x, y).call(setSize, w, h);
+  }
+  function translatePoint(d2, sel, xa, ya) {
     var x = xa.c2p(d2.x);
     var y = ya.c2p(d2.y);
     if ((0, import_fast_isnumeric18.default)(x) && (0, import_fast_isnumeric18.default)(y) && sel.node()) {
@@ -49521,17 +49522,17 @@ void main() {
       return false;
     }
     return true;
-  };
-  drawing.translatePoints = function(s, xa, ya) {
+  }
+  function translatePoints(s, xa, ya) {
     s.each(function(d2) {
       var sel = select_default2(this);
-      drawing.translatePoint(d2, sel, xa, ya);
+      translatePoint(d2, sel, xa, ya);
     });
-  };
-  drawing.hideOutsideRangePoint = function(d2, sel, xa, ya, xcalendar, ycalendar) {
+  }
+  function hideOutsideRangePoint(d2, sel, xa, ya, xcalendar, ycalendar) {
     sel.attr("display", xa.isPtWithinRange(d2, xcalendar) && ya.isPtWithinRange(d2, ycalendar) ? null : "none");
-  };
-  drawing.hideOutsideRangePoints = function(traceGroups, subplot) {
+  }
+  function hideOutsideRangePoints(traceGroups, subplot) {
     if (!subplot._hasClipOnAxisFalse) return;
     var xa = subplot.xaxis;
     var ya = subplot.yaxis;
@@ -49541,41 +49542,41 @@ void main() {
       var ycalendar = trace.ycalendar;
       var selector = registry_default.traceIs(trace, "bar-like") ? ".bartext" : ".point,.textpoint";
       traceGroups.selectAll(selector).each(function(d3) {
-        drawing.hideOutsideRangePoint(d3, select_default2(this), xa, ya, xcalendar, ycalendar);
+        hideOutsideRangePoint(d3, select_default2(this), xa, ya, xcalendar, ycalendar);
       });
     });
-  };
-  drawing.crispRound = function(gd, lineWidth, dflt) {
+  }
+  function crispRound(gd, lineWidth, dflt) {
     if (!lineWidth || !(0, import_fast_isnumeric18.default)(lineWidth)) return dflt || 0;
     if (gd._context.staticPlot) return lineWidth;
     if (lineWidth < 1) return 1;
     return Math.round(lineWidth);
-  };
-  drawing.singleLineStyle = function(d2, s, lw, lc, ld) {
+  }
+  function singleLineStyle(d2, s, lw, lc, ld) {
     s.style("fill", "none");
     var line = (((d2 || [])[0] || {}).trace || {}).line || {};
     var lw1 = lw || line.width || 0;
     var dash2 = ld || line.dash || "";
     color_default.stroke(s, lc || line.color);
-    drawing.dashLine(s, dash2, lw1);
-  };
-  drawing.lineGroupStyle = function(s, lw, lc, ld) {
+    dashLine(s, dash2, lw1);
+  }
+  function lineGroupStyle(s, lw, lc, ld) {
     s.style("fill", "none").each(function(d2) {
       var line = (((d2 || [])[0] || {}).trace || {}).line || {};
       var lw1 = lw || line.width || 0;
       var dash2 = ld || line.dash || "";
-      select_default2(this).call(color_default.stroke, lc || line.color).call(drawing.dashLine, dash2, lw1);
+      select_default2(this).call(color_default.stroke, lc || line.color).call(dashLine, dash2, lw1);
     });
-  };
-  drawing.dashLine = function(s, dash2, lineWidth) {
+  }
+  function dashLine(s, dash2, lineWidth) {
     lineWidth = +lineWidth || 0;
-    dash2 = drawing.dashStyle(dash2, lineWidth);
+    dash2 = dashStyle(dash2, lineWidth);
     s.style({
       "stroke-dasharray": dash2,
       "stroke-width": lineWidth + "px"
     });
-  };
-  drawing.dashStyle = function(dash2, lineWidth) {
+  }
+  function dashStyle(dash2, lineWidth) {
     lineWidth = +lineWidth || 1;
     var dlw = Math.max(lineWidth, 3);
     if (dash2 === "solid") dash2 = "";
@@ -49588,11 +49589,11 @@ void main() {
       dash2 = 5 * dlw + "px," + 2 * dlw + "px," + dlw + "px," + 2 * dlw + "px";
     }
     return dash2;
-  };
+  }
   function setFillStyle(sel, trace, gd, forLegend) {
     var markerPattern = trace.fillpattern;
     var fillgradient = trace.fillgradient;
-    var pAttr = drawing.getPatternAttr;
+    var pAttr = getPatternAttr;
     var patternShape = markerPattern && (pAttr(markerPattern.shape, 0, "") || pAttr(markerPattern.path, 0, ""));
     if (patternShape) {
       var patternBGColor = pAttr(markerPattern.bgcolor, 0, null);
@@ -49601,7 +49602,7 @@ void main() {
       var patternSize = pAttr(markerPattern.size, 0, 8);
       var patternSolidity = pAttr(markerPattern.solidity, 0, 0.3);
       var patternID = trace.uid;
-      drawing.pattern(
+      pattern2(
         sel,
         "point",
         gd,
@@ -49662,37 +49663,37 @@ void main() {
         if (direction === "horizontal") {
           direction = direction + "reversed";
         }
-        sel.call(drawing.gradient, gd, gradientID, direction, fillgradient.colorscale, "fill");
+        sel.call(gradient, gd, gradientID, direction, fillgradient.colorscale, "fill");
       }
     } else if (trace.fillcolor) {
       sel.call(color_default.fill, trace.fillcolor);
     }
   }
-  drawing.singleFillStyle = function(sel, gd) {
+  function singleFillStyle(sel, gd) {
     var node = select_default2(sel.node());
     var data = node.data();
     var trace = ((data[0] || [])[0] || {}).trace || {};
     setFillStyle(sel, trace, gd, false);
-  };
-  drawing.fillGroupStyle = function(s, gd, forLegend) {
+  }
+  function fillGroupStyle(s, gd, forLegend) {
     s.style("stroke-width", 0).each(function(d2) {
       var shape = select_default2(this);
       if (d2[0].trace) {
         setFillStyle(shape, d2[0].trace, gd, forLegend);
       }
     });
-  };
-  drawing.symbolNames = [];
-  drawing.symbolFuncs = [];
-  drawing.symbolBackOffs = [];
-  drawing.symbolNeedLines = {};
-  drawing.symbolNoDot = {};
-  drawing.symbolNoFill = {};
-  drawing.symbolList = [];
+  }
+  var symbolNames = [];
+  var symbolFuncs = [];
+  var symbolBackOffs = [];
+  var symbolNeedLines = {};
+  var symbolNoDot = {};
+  var symbolNoFill = {};
+  var symbolList = [];
   Object.keys(symbol_defs_default).forEach(function(k) {
     var symDef = symbol_defs_default[k];
     var n = symDef.n;
-    drawing.symbolList.push(
+    symbolList.push(
       n,
       String(n),
       k,
@@ -49700,16 +49701,16 @@ void main() {
       String(n + 100),
       k + "-open"
     );
-    drawing.symbolNames[n] = k;
-    drawing.symbolFuncs[n] = symDef.f;
-    drawing.symbolBackOffs[n] = symDef.backoff || 0;
+    symbolNames[n] = k;
+    symbolFuncs[n] = symDef.f;
+    symbolBackOffs[n] = symDef.backoff || 0;
     if (symDef.needLine) {
-      drawing.symbolNeedLines[n] = true;
+      symbolNeedLines[n] = true;
     }
     if (symDef.noDot) {
-      drawing.symbolNoDot[n] = true;
+      symbolNoDot[n] = true;
     } else {
-      drawing.symbolList.push(
+      symbolList.push(
         n + 200,
         String(n + 200),
         k + "-dot",
@@ -49719,12 +49720,12 @@ void main() {
       );
     }
     if (symDef.noFill) {
-      drawing.symbolNoFill[n] = true;
+      symbolNoFill[n] = true;
     }
   });
-  var MAXSYMBOL = drawing.symbolNames.length;
+  var MAXSYMBOL = symbolNames.length;
   var DOTPATH = "M0,0.5L0.5,0L0,-0.5L-0.5,0Z";
-  drawing.symbolNumber = function(v) {
+  function symbolNumber(v) {
     if ((0, import_fast_isnumeric18.default)(v)) {
       v = +v;
     } else if (typeof v === "string") {
@@ -49737,16 +49738,16 @@ void main() {
         vbase += 200;
         v = v.replace("-dot", "");
       }
-      v = drawing.symbolNames.indexOf(v);
+      v = symbolNames.indexOf(v);
       if (v >= 0) {
         v += vbase;
       }
     }
     return v % 100 >= MAXSYMBOL || v >= 400 ? 0 : Math.floor(Math.max(v, 0));
-  };
-  function makePointPath(symbolNumber, r, t, s) {
-    var base = symbolNumber % 100;
-    return drawing.symbolFuncs[base](r, t, s) + (symbolNumber >= 200 ? DOTPATH : "");
+  }
+  function makePointPath(symbolNumber2, r, t, s) {
+    var base = symbolNumber2 % 100;
+    return symbolFuncs[base](r, t, s) + (symbolNumber2 >= 200 ? DOTPATH : "");
   }
   var stopFormatter = numberFormat("~f");
   var gradientInfo = {
@@ -49757,7 +49758,7 @@ void main() {
     vertical: { type: "linear", start: { x: 0, y: 1 }, stop: { x: 0, y: 0 } },
     verticalreversed: { type: "linear", start: { x: 0, y: 1 }, stop: { x: 0, y: 0 }, reversed: true }
   };
-  drawing.gradient = function(sel, gd, gradientID, type, colorscale, prop) {
+  function gradient(sel, gd, gradientID, type, colorscale, prop) {
     var info = gradientInfo[type];
     return gradientWithBounds(
       sel,
@@ -49771,7 +49772,7 @@ void main() {
       false,
       info.reversed
     );
-  };
+  }
   function gradientWithBounds(sel, gd, gradientID, type, colorscale, prop, start2, stop, inUserSpace, reversed) {
     var len2 = colorscale.length;
     var info;
@@ -49803,9 +49804,9 @@ void main() {
     }
     var fullLayout = gd._fullLayout;
     var fullID = "g" + fullLayout._uid + "-" + gradientID;
-    var gradient = fullLayout._defs.select(".gradients").selectAll("#" + fullID).data([type + colorStops.join(";")], lib_default.identity);
-    gradient.exit().remove();
-    gradient.enter().append(info.node).each(function() {
+    var gradient2 = fullLayout._defs.select(".gradients").selectAll("#" + fullID).data([type + colorStops.join(";")], lib_default.identity);
+    gradient2.exit().remove();
+    gradient2.enter().append(info.node).each(function() {
       var el = select_default2(this);
       if (info.attrs) el.attr(info.attrs);
       el.attr("id", fullID);
@@ -49824,7 +49825,7 @@ void main() {
     sel.style(prop, getFullUrl(fullID, gd)).style(prop + "-opacity", null);
     sel.classed("gradient_filled", true);
   }
-  drawing.pattern = function(sel, calledBy, gd, patternID, shape, size, solidity, mcc, fillmode, bgcolor, fgcolor, fgopacity) {
+  function pattern2(sel, calledBy, gd, patternID, shape, size, solidity, mcc, fillmode, bgcolor, fgcolor, fgopacity) {
     var isLegend = calledBy === "legend";
     if (mcc) {
       if (fillmode === "overlay") {
@@ -49959,9 +49960,9 @@ void main() {
         break;
     }
     var str = [shape || "noSh", bgcolor || "noBg", fgcolor || "noFg", size, solidity].join(";");
-    var pattern2 = fullLayout._defs.select(".patterns").selectAll("#" + fullID).data([str], lib_default.identity);
-    pattern2.exit().remove();
-    pattern2.enter().append("pattern").each(function() {
+    var pattern3 = fullLayout._defs.select(".patterns").selectAll("#" + fullID).data([str], lib_default.identity);
+    pattern3.exit().remove();
+    pattern3.enter().append("pattern").each(function() {
       var el = select_default2(this);
       el.attr({
         id: fullID,
@@ -49990,33 +49991,33 @@ void main() {
     });
     sel.style("fill", getFullUrl(fullID, gd)).style("fill-opacity", null);
     sel.classed("pattern_filled", true);
-  };
-  drawing.initGradients = function(gd) {
+  }
+  function initGradients(gd) {
     var fullLayout = gd._fullLayout;
     var gradientsGroup = lib_default.ensureSingle(fullLayout._defs, "g", "gradients");
     gradientsGroup.selectAll("linearGradient,radialGradient").remove();
     select_default2(gd).selectAll(".gradient_filled").classed("gradient_filled", false);
-  };
-  drawing.initPatterns = function(gd) {
+  }
+  function initPatterns(gd) {
     var fullLayout = gd._fullLayout;
     var patternsGroup = lib_default.ensureSingle(fullLayout._defs, "g", "patterns");
     patternsGroup.selectAll("pattern").remove();
     select_default2(gd).selectAll(".pattern_filled").classed("pattern_filled", false);
-  };
-  drawing.getPatternAttr = function(mp, i, dflt) {
+  }
+  function getPatternAttr(mp, i, dflt) {
     if (mp && lib_default.isArrayOrTypedArray(mp)) {
       return i < mp.length ? mp[i] : dflt;
     }
     return mp;
-  };
-  drawing.pointStyle = function(s, trace, gd, pt) {
+  }
+  function pointStyle(s, trace, gd, pt) {
     if (!s.size()) return;
-    var fns = drawing.makePointStyleFns(trace);
+    var fns = makePointStyleFns(trace);
     s.each(function(d2) {
-      drawing.singlePointStyle(d2, select_default2(this), trace, fns, gd, pt);
+      singlePointStyle(d2, select_default2(this), trace, fns, gd, pt);
     });
-  };
-  drawing.singlePointStyle = function(d2, sel, trace, fns, gd, pt) {
+  }
+  function singlePointStyle(d2, sel, trace, fns, gd, pt) {
     var marker = trace.marker;
     var markerLine = marker.line;
     if (pt && pt.i >= 0 && d2.i === void 0) d2.i = pt.i;
@@ -50032,7 +50033,7 @@ void main() {
       if (fns.selectedSizeFn) {
         r = d2.mrc = fns.selectedSizeFn(d2);
       }
-      var x = drawing.symbolNumber(d2.mx || marker.symbol) || 0;
+      var x = symbolNumber(d2.mx || marker.symbol) || 0;
       d2.om = x % 200 >= 100;
       var angle = getMarkerAngle(d2, trace);
       var standoff = getMarkerStandoff(d2, trace);
@@ -50080,7 +50081,7 @@ void main() {
         if (!gradientInfo[gradientType]) gradientType = 0;
       }
       var markerPattern = marker.pattern;
-      var pAttr = drawing.getPatternAttr;
+      var pAttr = getPatternAttr;
       var patternShape = markerPattern && (pAttr(markerPattern.shape, d2.i, "") || pAttr(markerPattern.path, d2.i, ""));
       if (gradientType && gradientType !== "none") {
         var gradientColor = d2.mgc;
@@ -50088,7 +50089,7 @@ void main() {
         else gradientColor = markerGradient.color;
         var gradientID = trace.uid;
         if (perPointGradient) gradientID += "-" + d2.i;
-        drawing.gradient(
+        gradient(
           sel,
           gd,
           gradientID,
@@ -50114,7 +50115,7 @@ void main() {
         perPointPattern = perPointPattern || d2.mcc || lib_default.isArrayOrTypedArray(markerPattern.shape) || lib_default.isArrayOrTypedArray(markerPattern.path) || lib_default.isArrayOrTypedArray(markerPattern.bgcolor) || lib_default.isArrayOrTypedArray(markerPattern.fgcolor) || lib_default.isArrayOrTypedArray(markerPattern.size) || lib_default.isArrayOrTypedArray(markerPattern.solidity);
         var patternID = trace.uid;
         if (perPointPattern) patternID += "-" + d2.i;
-        drawing.pattern(
+        pattern2(
           sel,
           "point",
           gd,
@@ -50135,23 +50136,23 @@ void main() {
         color_default.stroke(sel, lineColor);
       }
     }
-  };
-  drawing.makePointStyleFns = function(trace) {
+  }
+  function makePointStyleFns(trace) {
     var out = {};
     var marker = trace.marker;
-    out.markerScale = drawing.tryColorscale(marker, "");
-    out.lineScale = drawing.tryColorscale(marker, "line");
+    out.markerScale = tryColorscale(marker, "");
+    out.lineScale = tryColorscale(marker, "line");
     if (registry_default.traceIs(trace, "symbols")) {
       out.ms2mrc = subtypes_default.isBubble(trace) ? makeBubbleSizeFn(trace) : function() {
         return (marker.size || 6) / 2;
       };
     }
     if (trace.selectedpoints) {
-      lib_default.extendFlat(out, drawing.makeSelectedPointStyleFns(trace));
+      lib_default.extendFlat(out, makeSelectedPointStyleFns(trace));
     }
     return out;
-  };
-  drawing.makeSelectedPointStyleFns = function(trace) {
+  }
+  function makeSelectedPointStyleFns(trace) {
     var out = {};
     var selectedAttrs = trace.selected || {};
     var unselectedAttrs = trace.unselected || {};
@@ -50202,8 +50203,8 @@ void main() {
       };
     }
     return out;
-  };
-  drawing.makeSelectedTextStyleFns = function(trace) {
+  }
+  function makeSelectedTextStyleFns(trace) {
     var out = {};
     var selectedAttrs = trace.selected || {};
     var unselectedAttrs = trace.unselected || {};
@@ -50223,10 +50224,10 @@ void main() {
       }
     };
     return out;
-  };
-  drawing.selectedPointStyle = function(s, trace) {
+  }
+  function selectedPointStyle(s, trace) {
     if (!s.size() || !trace.selectedpoints) return;
-    var fns = drawing.makeSelectedPointStyleFns(trace);
+    var fns = makeSelectedPointStyleFns(trace);
     var marker = trace.marker || {};
     var seq = [];
     if (fns.selectedOpacityFn) {
@@ -50245,7 +50246,7 @@ void main() {
         var mrc2 = fns.selectedSizeFn(d2);
         pt.attr(
           "d",
-          makePointPath(drawing.symbolNumber(mx), mrc2, getMarkerAngle(d2, trace), getMarkerStandoff(d2, trace))
+          makePointPath(symbolNumber(mx), mrc2, getMarkerAngle(d2, trace), getMarkerStandoff(d2, trace))
         );
         d2.mrc2 = mrc2;
       });
@@ -50258,8 +50259,8 @@ void main() {
         }
       });
     }
-  };
-  drawing.tryColorscale = function(marker, prefix) {
+  }
+  function tryColorscale(marker, prefix) {
     var cont = prefix ? lib_default.nestedProperty(marker, prefix).get() : marker;
     if (cont) {
       var colorArray = cont.color;
@@ -50268,7 +50269,7 @@ void main() {
       }
     }
     return lib_default.identity;
-  };
+  }
   var TEXTOFFSETSIGN = {
     start: 1,
     end: -1,
@@ -50293,11 +50294,11 @@ void main() {
     var fontSize = d2.ts || trace.textfont.size;
     return (0, import_fast_isnumeric18.default)(fontSize) && fontSize > 0 ? fontSize : 0;
   }
-  drawing.textPointStyle = function(s, trace, gd) {
+  function textPointStyle(s, trace, gd) {
     if (!s.size()) return;
     var selectedTextColorFn;
     if (trace.selectedpoints) {
-      var fns = drawing.makeSelectedTextStyleFns(trace);
+      var fns = makeSelectedTextStyleFns(trace);
       selectedTextColorFn = fns.selectedTextColorFn;
     }
     var texttemplate = trace.texttemplate;
@@ -50325,7 +50326,7 @@ void main() {
       var pos = d2.tp || trace.textposition;
       var fontSize = extracTextFontSize(d2, trace);
       var fontColor = selectedTextColorFn ? selectedTextColorFn(d2) : d2.tc || trace.textfont.color;
-      p.call(drawing.font, {
+      p.call(font2, {
         family: d2.tf || trace.textfont.family,
         weight: d2.tw || trace.textfont.weight,
         style: d2.ty || trace.textfont.style,
@@ -50337,10 +50338,10 @@ void main() {
         color: fontColor
       }).text(text).call(svg_text_utils_default.convertToTspans, gd).call(textPointPosition, pos, fontSize, d2.mrc);
     });
-  };
-  drawing.selectedTextStyle = function(s, trace) {
+  }
+  function selectedTextStyle(s, trace) {
     if (!s.size() || !trace.selectedpoints) return;
-    var fns = drawing.makeSelectedTextStyleFns(trace);
+    var fns = makeSelectedTextStyleFns(trace);
     s.each(function(d2) {
       var tx = select_default2(this);
       var tc = fns.selectedTextColorFn(d2);
@@ -50350,9 +50351,9 @@ void main() {
       var dontTouchParent = registry_default.traceIs(trace, "bar-like");
       textPointPosition(tx, tp, fontSize, d2.mrc2 || d2.mrc, dontTouchParent);
     });
-  };
+  }
   var CatmullRomExp = 0.5;
-  drawing.smoothopen = function(pts, smoothness) {
+  function smoothopen(pts, smoothness) {
     if (pts.length < 3) {
       return "M" + pts.join("L");
     }
@@ -50368,8 +50369,8 @@ void main() {
     }
     path += "Q" + tangents[pts.length - 3][1] + " " + pts[pts.length - 1];
     return path;
-  };
-  drawing.smoothclosed = function(pts, smoothness) {
+  }
+  function smoothclosed(pts, smoothness) {
     if (pts.length < 3) {
       return "M" + pts.join("L") + "Z";
     }
@@ -50386,7 +50387,7 @@ void main() {
     }
     path += "C" + tangents[pLast][1] + " " + tangents[0][0] + " " + pts[0] + "Z";
     return path;
-  };
+  }
   var lastDrawnX;
   var lastDrawnY;
   function roundEnd(pt, isY, isLastPoint) {
@@ -50436,7 +50437,7 @@ void main() {
   var STEPLINEAR = function(p0, p1, isLastPoint) {
     return "L" + roundEnd(p1, 0, isLastPoint) + "," + roundEnd(p1, 1, isLastPoint);
   };
-  drawing.steps = function(shape) {
+  function steps(shape) {
     var onestep = STEPPATH[shape] || STEPLINEAR;
     return function(pts) {
       var path = "M" + roundX(pts[0][0]) + "," + roundY(pts[0][1]);
@@ -50446,7 +50447,7 @@ void main() {
       }
       return path;
     };
-  };
+  }
   function applyBackoff(pt, start2) {
     var backoff = pt.backoff;
     var trace = pt.trace;
@@ -50471,8 +50472,8 @@ void main() {
         if (lib_default.isArrayOrTypedArray(endMarkerSymbol)) endMarkerSymbol = endMarkerSymbol[endI];
         var endMarkerSize = endMarker.size;
         if (lib_default.isArrayOrTypedArray(endMarkerSize)) endMarkerSize = endMarkerSize[endI];
-        b = endMarker ? drawing.symbolBackOffs[drawing.symbolNumber(endMarkerSymbol)] * endMarkerSize : 0;
-        b += drawing.getMarkerStandoff(d2[endI], trace) || 0;
+        b = endMarker ? symbolBackOffs[symbolNumber(endMarkerSymbol)] * endMarkerSize : 0;
+        b += getMarkerStandoff(d2[endI], trace) || 0;
       }
       var x = x2 - b * Math.cos(t);
       var y = y2 - b * Math.sin(t);
@@ -50482,9 +50483,8 @@ void main() {
     }
     return pt;
   }
-  drawing.applyBackoff = applyBackoff;
-  drawing.makeTester = function() {
-    var tester2 = lib_default.ensureSingleById(select_default2("body"), "svg", "js-plotly-tester", function(s) {
+  function makeTester() {
+    var _tester = lib_default.ensureSingleById(select_default2("body"), "svg", "js-plotly-tester", function(s) {
       s.attr(xmlns_namespaces_default.svgAttrs).style({
         position: "absolute",
         left: "-10000px",
@@ -50494,23 +50494,23 @@ void main() {
         "z-index": "1"
       });
     });
-    var testref = lib_default.ensureSingle(tester2, "path", "js-reference-point", function(s) {
+    var _testref = lib_default.ensureSingle(_tester, "path", "js-reference-point", function(s) {
       s.attr("d", "M0,0H1V1H0Z").style({
         "stroke-width": 0,
         fill: "black"
       });
     });
-    drawing.tester = tester2;
-    drawing.testref = testref;
-  };
-  drawing.savedBBoxes = {};
+    tester = _tester;
+    testref = _testref;
+  }
+  var savedBBoxes = {};
   var savedBBoxesCount = 0;
   var maxSavedBBoxes = 1e4;
-  drawing.bBox = function(node, inTester, hash) {
+  function bBox(node, inTester, hash) {
     if (!hash) hash = nodeHash(node);
     var out;
     if (hash) {
-      out = drawing.savedBBoxes[hash];
+      out = savedBBoxes[hash];
       if (out) return lib_default.extendFlat({}, out);
     } else if (node.childNodes.length === 1) {
       var innerNode = node.childNodes[0];
@@ -50520,7 +50520,7 @@ void main() {
         var y = +innerNode.getAttribute("y") || 0;
         var transform2 = innerNode.getAttribute("transform");
         if (!transform2) {
-          var innerBB = drawing.bBox(innerNode, false, hash);
+          var innerBB = bBox(innerNode, false, hash);
           if (x) {
             innerBB.left += x;
             innerBB.right += x;
@@ -50532,22 +50532,22 @@ void main() {
           return innerBB;
         }
         hash += "~" + x + "~" + y + "~" + transform2;
-        out = drawing.savedBBoxes[hash];
+        out = savedBBoxes[hash];
         if (out) return lib_default.extendFlat({}, out);
       }
     }
-    var testNode, tester2;
+    var testNode, testerNode;
     if (inTester) {
       testNode = node;
     } else {
-      tester2 = drawing.tester.node();
+      testerNode = tester.node();
       testNode = node.cloneNode(true);
-      tester2.appendChild(testNode);
+      testerNode.appendChild(testNode);
     }
     select_default2(testNode).attr("transform", null).call(svg_text_utils_default.positionText, 0, 0);
     var testRect = testNode.getBoundingClientRect();
-    var refRect = drawing.testref.node().getBoundingClientRect();
-    if (!inTester) tester2.removeChild(testNode);
+    var refRect = testref.node().getBoundingClientRect();
+    if (!inTester) testerNode.removeChild(testNode);
     var bb = {
       height: testRect.height,
       width: testRect.width,
@@ -50557,28 +50557,28 @@ void main() {
       bottom: testRect.bottom - refRect.top
     };
     if (savedBBoxesCount >= maxSavedBBoxes) {
-      drawing.savedBBoxes = {};
+      savedBBoxes = {};
       savedBBoxesCount = 0;
     }
-    if (hash) drawing.savedBBoxes[hash] = bb;
+    if (hash) savedBBoxes[hash] = bb;
     savedBBoxesCount++;
     return lib_default.extendFlat({}, bb);
-  };
+  }
   function nodeHash(node) {
     var inputText = node.getAttribute("data-unformatted");
     if (inputText === null) return;
     return inputText + node.getAttribute("data-math") + node.getAttribute("text-anchor") + node.getAttribute("style");
   }
-  drawing.setClipUrl = function(s, localId, gd) {
+  function setClipUrl(s, localId, gd) {
     s.attr("clip-path", getFullUrl(localId, gd));
-  };
+  }
   function getFullUrl(localId, gd) {
     if (!localId) return null;
     var context = gd._context;
     var baseUrl = context._exportedPlot ? "" : context._baseUrl || "";
     return baseUrl ? "url('" + baseUrl + "#" + localId + "')" : "url(#" + localId + ")";
   }
-  drawing.getTranslate = function(element) {
+  function getTranslate(element) {
     var re3 = /.*\btranslate\((-?\d*\.?\d*)[^-\d]*(-?\d*\.?\d*)[^\d].*/;
     var getter = element.attr ? "attr" : "getAttribute";
     var transform2 = element[getter]("transform") || "";
@@ -50589,8 +50589,8 @@ void main() {
       x: +translate[0] || 0,
       y: +translate[1] || 0
     };
-  };
-  drawing.setTranslate = function(element, x, y) {
+  }
+  function setTranslate(element, x, y) {
     var re3 = /(\btranslate\(.*?\);?)/;
     var getter = element.attr ? "attr" : "getAttribute";
     var setter = element.attr ? "attr" : "setAttribute";
@@ -50602,8 +50602,8 @@ void main() {
     transform2 = transform2.trim();
     element[setter]("transform", transform2);
     return transform2;
-  };
-  drawing.getScale = function(element) {
+  }
+  function getScale2(element) {
     var re3 = /.*\bscale\((\d*\.?\d*)[^\d]*(\d*\.?\d*)[^\d].*/;
     var getter = element.attr ? "attr" : "getAttribute";
     var transform2 = element[getter]("transform") || "";
@@ -50614,8 +50614,8 @@ void main() {
       x: +translate[0] || 1,
       y: +translate[1] || 1
     };
-  };
-  drawing.setScale = function(element, x, y) {
+  }
+  function setScale(element, x, y) {
     var re3 = /(\bscale\(.*?\);?)/;
     var getter = element.attr ? "attr" : "getAttribute";
     var setter = element.attr ? "attr" : "setAttribute";
@@ -50627,9 +50627,9 @@ void main() {
     transform2 = transform2.trim();
     element[setter]("transform", transform2);
     return transform2;
-  };
+  }
   var SCALE_RE = /\s*sc.*/;
-  drawing.setPointGroupScale = function(selection2, xScale, yScale) {
+  function setPointGroupScale(selection2, xScale, yScale) {
     xScale = xScale || 1;
     yScale = yScale || 1;
     if (!selection2) return;
@@ -50640,9 +50640,9 @@ void main() {
       t = t.trim();
       this.setAttribute("transform", t);
     });
-  };
+  }
   var TEXT_POINT_LAST_TRANSLATION_RE = /translate\([^)]*\)\s*$/;
-  drawing.setTextPointsScale = function(selection2, xScale, yScale) {
+  function setTextPointsScale(selection2, xScale, yScale) {
     if (!selection2) return;
     selection2.each(function() {
       var transforms;
@@ -50662,7 +50662,7 @@ void main() {
       }
       el.attr("transform", transforms.join(""));
     });
-  };
+  }
   function getMarkerStandoff(d2, trace) {
     var standoff;
     if (d2) standoff = d2.mf;
@@ -50674,7 +50674,6 @@ void main() {
     }
     return standoff;
   }
-  drawing.getMarkerStandoff = getMarkerStandoff;
   var atan2 = Math.atan2;
   var cos2 = Math.cos;
   var sin2 = Math.sin;
@@ -50771,8 +50770,63 @@ void main() {
     previousTraceUid = trace.uid;
     return angle;
   }
-  drawing.getMarkerAngle = getMarkerAngle;
-  var drawing_default = drawing;
+  var drawing_default = {
+    font: font2,
+    setPosition,
+    setSize,
+    setRect,
+    translatePoint,
+    translatePoints,
+    hideOutsideRangePoint,
+    hideOutsideRangePoints,
+    crispRound,
+    singleLineStyle,
+    lineGroupStyle,
+    dashLine,
+    dashStyle,
+    singleFillStyle,
+    fillGroupStyle,
+    symbolNames,
+    symbolFuncs,
+    symbolBackOffs,
+    symbolNeedLines,
+    symbolNoDot,
+    symbolNoFill,
+    symbolList,
+    symbolNumber,
+    gradient,
+    pattern: pattern2,
+    initGradients,
+    initPatterns,
+    getPatternAttr,
+    pointStyle,
+    singlePointStyle,
+    makePointStyleFns,
+    makeSelectedPointStyleFns,
+    makeSelectedTextStyleFns,
+    selectedPointStyle,
+    tryColorscale,
+    textPointStyle,
+    selectedTextStyle,
+    smoothopen,
+    smoothclosed,
+    steps,
+    applyBackoff,
+    makeTester,
+    savedBBoxes,
+    bBox,
+    setClipUrl,
+    getTranslate,
+    setTranslate,
+    getScale: getScale2,
+    setScale,
+    setPointGroupScale,
+    setTextPointsScale,
+    getMarkerStandoff,
+    getMarkerAngle,
+    tester,
+    testref
+  };
 
   // src/components/titles/index.js
   function d3Round2(x, n) {
@@ -50797,16 +50851,16 @@ void main() {
     var title = cont.title;
     var txt = (title && title.text ? title.text : "").trim();
     var titleIsPlaceholder = false;
-    var font2 = title && title.font ? title.font : {};
-    var fontFamily = font2.family;
-    var fontSize = font2.size;
-    var fontColor = font2.color;
-    var fontWeight = font2.weight;
-    var fontStyle = font2.style;
-    var fontVariant = font2.variant;
-    var fontTextcase = font2.textcase;
-    var fontLineposition = font2.lineposition;
-    var fontShadow = font2.shadow;
+    var titleFont = title && title.font ? title.font : {};
+    var fontFamily = titleFont.family;
+    var fontSize = titleFont.size;
+    var fontColor = titleFont.color;
+    var fontWeight = titleFont.weight;
+    var fontStyle = titleFont.style;
+    var fontVariant = titleFont.variant;
+    var fontTextcase = titleFont.textcase;
+    var fontLineposition = titleFont.lineposition;
+    var fontShadow = titleFont.shadow;
     var subtitleProp = options.subtitlePropName;
     var subtitleEnabled = !!subtitleProp;
     var subtitlePlaceholder = options.subtitlePlaceholder;
@@ -50905,7 +50959,7 @@ void main() {
           }
         }
       }
-      titleEl.style("opacity", opacity * color_default.opacity(fontColor)).call(drawing_default.font, {
+      titleEl.style("opacity", opacity * color_default.opacity(fontColor)).call(font2, {
         color: color_default.rgb(fontColor),
         size: d3Round2(fontSize, 2),
         family: fontFamily,
@@ -50925,7 +50979,7 @@ void main() {
           y: subtitleY2
         });
         subtitleEl2.attr("transform", transformVal);
-        subtitleEl2.style("opacity", subtitleOpacity * color_default.opacity(subFontColor)).call(drawing_default.font, {
+        subtitleEl2.style("opacity", subtitleOpacity * color_default.opacity(subFontColor)).call(font2, {
           color: color_default.rgb(subFontColor),
           size: d3Round2(subFontSize, 2),
           family: subFontFamily,
@@ -50947,7 +51001,7 @@ void main() {
         var backside = OPPOSITE_SIDE[avoid.side];
         var shiftSign = avoid.side === "left" || avoid.side === "top" ? -1 : 1;
         var pad3 = (0, import_fast_isnumeric19.default)(avoid.pad) ? avoid.pad : 2;
-        var titlebb = drawing_default.bBox(titleGroup.node());
+        var titlebb = bBox(titleGroup.node());
         var reservedMargins = { t: 0, b: 0, l: 0, r: 0 };
         var margins = gd._fullLayout._reservedMargin;
         for (var key in margins) {
@@ -50974,7 +51028,7 @@ void main() {
           titlebb.top -= offsetTop;
           titlebb.bottom -= offsetTop;
           avoid.selection.each(function() {
-            var avoidbb = drawing_default.bBox(this);
+            var avoidbb = bBox(this);
             if (lib_default.bBoxIntersect(titlebb, avoidbb, pad3)) {
               shift = Math.max(shift, shiftSign * (avoidbb[avoid.side] - titlebb[backside]) + pad3);
             }
@@ -51302,7 +51356,7 @@ void main() {
                 var thisLabel = select_default2(this);
                 var mathjaxGroup = thisLabel.select(".text-math-group");
                 if (mathjaxGroup.empty()) {
-                  d2.bb = drawing_default.bBox(thisLabel.node());
+                  d2.bb = bBox(thisLabel.node());
                 }
               });
             }
@@ -52047,11 +52101,11 @@ void main() {
         var brk = rangebreaksIn[i];
         if (brk.enabled) {
           if (brk.bounds) {
-            var pattern2 = brk.pattern;
+            var pattern3 = brk.pattern;
             bnds = rangebreaksIn._cachedPatterns[i];
             b02 = bnds[0];
             b12 = bnds[1];
-            switch (pattern2) {
+            switch (pattern3) {
               case WEEKDAY_PATTERN:
                 vDate = new Date(v);
                 vb = vDate.getUTCDay();
@@ -54305,7 +54359,7 @@ void main() {
       ax._selections[cls].each(function() {
         var thisLabel = selectTickLabel(this);
         if (thisLabel.node().style.display !== "none") {
-          var bb = drawing_default.bBox(thisLabel.node().parentNode);
+          var bb = bBox(thisLabel.node().parentNode);
           top = Math.min(top, bb.top);
           bottom = Math.max(bottom, bb.bottom);
           left = Math.min(left, bb.left);
@@ -54576,7 +54630,7 @@ void main() {
     ticks3.enter().append("path").classed(cls, 1).classed("ticks", 1).classed("crisp", opts.crisp !== false).each(function(d2) {
       return color_default.stroke(select_default2(this), d2.minor ? ax.minor.tickcolor : ax.tickcolor);
     }).style("stroke-width", function(d2) {
-      return drawing_default.crispRound(
+      return crispRound(
         gd,
         d2.minor ? ax.minor.tickwidth : ax.tickwidth,
         1
@@ -54610,8 +54664,8 @@ void main() {
         }
       }
     }
-    ax._gw = drawing_default.crispRound(gd, ax.gridwidth, 1);
-    var wMinor = !hasMinor ? 0 : drawing_default.crispRound(gd, ax.minor.gridwidth, 1);
+    ax._gw = crispRound(gd, ax.gridwidth, 1);
+    var wMinor = !hasMinor ? 0 : crispRound(gd, ax.minor.gridwidth, 1);
     var majorLayer = opts.layer;
     var minorLayer = opts.minorLayer;
     for (var major = 1; major >= 0; major--) {
@@ -54626,7 +54680,7 @@ void main() {
           d2.minor ? ax.minor.gridcolor : ax.gridcolor || "#ddd"
         );
       }).style("stroke-dasharray", function(d2) {
-        return drawing_default.dashStyle(
+        return dashStyle(
           d2.minor ? ax.minor.griddash : ax.griddash,
           d2.minor ? ax.minor.gridwidth : ax.gridwidth
         );
@@ -54648,7 +54702,7 @@ void main() {
         return idSort2(da.id, db.id);
       });
     });
-    zl.attr("transform", opts.transFn).attr("d", opts.path).call(color_default.stroke, ax.zerolinecolor || color_default.defaultLine).style("stroke-width", drawing_default.crispRound(gd, ax.zerolinewidth, ax._gw || 1) + "px").style("display", null);
+    zl.attr("transform", opts.transFn).attr("d", opts.path).call(color_default.stroke, ax.zerolinecolor || color_default.defaultLine).style("stroke-width", crispRound(gd, ax.zerolinewidth, ax._gw || 1) + "px").style("display", null);
     hideCounterAxisInsideTickLabels(ax, [ZERO_PATH]);
   };
   axes.drawLabels = function(gd, ax, opts) {
@@ -54668,7 +54722,7 @@ void main() {
     tickLabels.enter().append("g").classed(cls, 1).append("text").attr("text-anchor", "middle").each(function(d2) {
       var thisLabel = select_default2(this);
       var newPromise = gd._promises.length;
-      thisLabel.call(svg_text_utils_default.positionText, labelFns.xFn(d2), labelFns.yFn(d2)).call(drawing_default.font, {
+      thisLabel.call(svg_text_utils_default.positionText, labelFns.xFn(d2), labelFns.yFn(d2)).call(font2, {
         family: d2.font,
         size: d2.fontSize,
         color: d2.fontColor,
@@ -54717,7 +54771,7 @@ void main() {
             ax._adjustTickLabelsOverflow();
           }
         } else {
-          var mjWidth = drawing_default.bBox(mathjaxGroup.node()).width;
+          var mjWidth = bBox(mathjaxGroup.node()).width;
           var mjShift = mjWidth * { end: -0.5, start: 0.5 }[anchor];
           mathjaxGroup.attr("transform", transform2 + strTranslate4(mjShift, 0));
         }
@@ -54744,7 +54798,7 @@ void main() {
         var thisLabel = select_default2(this);
         var mathjaxGroup = thisLabel.select(".text-math-group");
         if (mathjaxGroup.empty()) {
-          var bb = drawing_default.bBox(thisLabel.node());
+          var bb = bBox(thisLabel.node());
           var adjust = 0;
           if (isX) {
             if (bb.right > max2) adjust = 1;
@@ -54843,7 +54897,7 @@ void main() {
           maxFontSize = Math.max(maxFontSize, d2.fontSize);
           var x = ax.l2p(d2.x);
           var thisLabel = selectTickLabel(this);
-          var bb = drawing_default.bBox(thisLabel.node());
+          var bb = bBox(thisLabel.node());
           maxLines = Math.max(maxLines, svg_text_utils_default.lineCount(thisLabel));
           lbbArray.push({
             // ignore about y, just deal with x overlaps
@@ -54943,7 +54997,7 @@ void main() {
         if (mathjaxGroup.empty()) {
           var bb;
           if (ax._vals[i]) {
-            bb = ax._vals[i].bb || drawing_default.bBox(thisLabel.node());
+            bb = ax._vals[i].bb || bBox(thisLabel.node());
             ax._vals[i].bb = bb;
           }
           labelsMaxW = Math.max(labelsMaxW, bb.width);
@@ -55025,7 +55079,7 @@ void main() {
     var vals = opts.vals;
     var dividers = opts.layer.selectAll("path." + cls).data(vals, tickDataFn);
     dividers.exit().remove();
-    dividers.enter().insert("path", ":first-child").classed(cls, 1).classed("crisp", 1).call(color_default.stroke, ax.dividercolor).style("stroke-width", drawing_default.crispRound(gd, ax.dividerwidth, 1) + "px");
+    dividers.enter().insert("path", ":first-child").classed(cls, 1).classed("crisp", 1).call(color_default.stroke, ax.dividercolor).style("stroke-width", crispRound(gd, ax.dividerwidth, 1) + "px");
     dividers.attr("transform", opts.transFn).attr("d", opts.path);
   }
   axes.getPxPosition = function(gd, ax) {
@@ -55114,7 +55168,7 @@ void main() {
         side: ax.side
       };
       if (tickLabels && tickLabels.node() && tickLabels.node().parentNode) {
-        var translation = drawing_default.getTranslate(tickLabels.node().parentNode);
+        var translation = getTranslate(tickLabels.node().parentNode);
         avoid.offsetLeft = translation.x;
         avoid.offsetTop = translation.y;
       }
@@ -56749,9 +56803,9 @@ void main() {
 
   // src/traces/pie/fill_one.js
   function fillOne(s, pt, trace, gd) {
-    var pattern2 = trace.marker.pattern;
-    if (pattern2 && pattern2.shape) {
-      drawing_default.pointStyle(s, trace, gd, pt);
+    var pattern3 = trace.marker.pattern;
+    if (pattern3 && pattern3.shape) {
+      pointStyle(s, trace, gd, pt);
     } else {
       color_default.fill(s, pt.color);
     }
@@ -56848,10 +56902,10 @@ void main() {
       var fillStyle = function(s2) {
         if (s2.size()) {
           if (showFill) {
-            drawing_default.fillGroupStyle(s2, gd, true);
+            fillGroupStyle(s2, gd, true);
           } else {
             var gradientID = "legendfill-" + trace.uid;
-            drawing_default.gradient(
+            gradient(
               s2,
               gd,
               gradientID,
@@ -56865,8 +56919,8 @@ void main() {
       var lineGradient = function(s2) {
         if (s2.size()) {
           var gradientID = "legendline-" + trace.uid;
-          drawing_default.lineGroupStyle(s2);
-          drawing_default.gradient(
+          lineGroupStyle(s2);
+          gradient(
             s2,
             gd,
             gradientID,
@@ -56894,7 +56948,7 @@ void main() {
       var line = this3.select(".legendlines").selectAll("path").data(showLine || showGradientLine ? [dMod] : []);
       line.enter().append("path").classed("js-line", true);
       line.exit().remove();
-      line.attr("d", pathStart + (showGradientLine ? "l" + itemWidth + ",0.0001" : "h" + itemWidth)).call(showLine ? drawing_default.lineGroupStyle : lineGradient);
+      line.attr("d", pathStart + (showGradientLine ? "l" + itemWidth + ",0.0001" : "h" + itemWidth)).call(showLine ? lineGroupStyle : lineGradient);
     }
     function stylePoints2(d2) {
       var styleGuide = getStyleGuide(d2);
@@ -56967,12 +57021,12 @@ void main() {
       var pts = ptgroup.selectAll("path.scatterpts").data(showMarker ? dMod : []);
       pts.enter().insert("path", ":first-child").classed("scatterpts", true).attr("transform", centerTransform);
       pts.exit().remove();
-      pts.call(drawing_default.pointStyle, tMod, gd);
+      pts.call(pointStyle, tMod, gd);
       if (showMarker) dMod[0].mrc = 3;
       var txt = ptgroup.selectAll("g.pointtext").data(showText ? dMod : []);
       txt.enter().append("g").classed("pointtext", true).append("text").attr("transform", centerTransform);
       txt.exit().remove();
-      txt.selectAll("text").call(drawing_default.textPointStyle, tMod, gd);
+      txt.selectAll("text").call(textPointStyle, tMod, gd);
     }
     function styleWaterfalls(d2) {
       var trace = d2[0].trace;
@@ -57029,11 +57083,11 @@ void main() {
           var cOpts = extractOpts4(marker);
           var mid = cOpts.mid;
           if (mid === void 0) mid = (cOpts.max + cOpts.min) / 2;
-          mcc = drawing_default.tryColorscale(marker, "")(mid);
+          mcc = tryColorscale(marker, "")(mid);
         }
         var fillColor = mcc || d0.mc || marker.color;
         var markerPattern = marker.pattern;
-        var pAttr = drawing_default.getPatternAttr;
+        var pAttr = getPatternAttr;
         var patternShape = markerPattern && (pAttr(markerPattern.shape, 0, "") || pAttr(markerPattern.path, 0, ""));
         if (patternShape) {
           var patternBGColor = pAttr(markerPattern.bgcolor, 0, null);
@@ -57043,7 +57097,7 @@ void main() {
           var patternSolidity = dimAttr(markerPattern.solidity, 0.5, 1);
           var patternID = "legend-" + trace.uid;
           p.call(
-            drawing_default.pattern,
+            pattern2,
             "legend",
             gd,
             patternID,
@@ -57078,7 +57132,7 @@ void main() {
               sizemode: "diameter"
             }
           });
-          pts.call(drawing_default.pointStyle, tMod, gd);
+          pts.call(pointStyle, tMod, gd);
         } else {
           var w = boundLineWidth(void 0, trace.line, MAX_MARKER_LINE_WIDTH, CST_MARKER_LINE_WIDTH);
           p.style("stroke-width", w + "px").call(color_default.fill, trace.fillcolor);
@@ -57114,7 +57168,7 @@ void main() {
         var p = select_default2(this);
         var cont = trace[i ? "increasing" : "decreasing"];
         var w = boundLineWidth(void 0, cont.line, MAX_MARKER_LINE_WIDTH, CST_MARKER_LINE_WIDTH);
-        p.style("fill", "none").call(drawing_default.dashLine, cont.line.dash, w);
+        p.style("fill", "none").call(dashLine, cont.line.dash, w);
         if (w) color_default.stroke(p, cont.line.color);
       });
     }
@@ -57229,7 +57283,7 @@ void main() {
         var fillGradient = function(s2) {
           if (s2.size()) {
             var gradientID = "legendfill-" + trace.uid;
-            drawing_default.gradient(
+            gradient(
               s2,
               gd,
               gradientID,
@@ -57335,11 +57389,11 @@ void main() {
   }
   function horizontalAlignTitle(titleEl, legendObj, bw) {
     if (legendObj.title.side !== "top center" && legendObj.title.side !== "top right") return;
-    var font2 = legendObj.title.font;
-    var lineHeight = font2.size * LINE_SPACING4;
+    var titleFont = legendObj.title.font;
+    var lineHeight = titleFont.size * LINE_SPACING4;
     var titleOffset = 0;
     var textNode = titleEl.node();
-    var width = drawing_default.bBox(textNode).width;
+    var width = bBox(textNode).width;
     if (legendObj.title.side === "top center") {
       titleOffset = 0.5 * (legendObj._width - 2 * bw - 2 * constants_default3.titlePad - width);
     } else if (legendObj.title.side === "top right") {
@@ -57429,7 +57483,7 @@ void main() {
     var titleEl;
     if (title.text) {
       titleEl = lib_default.ensureSingle(scrollBox, "text", legendId + "titletext");
-      titleEl.attr("text-anchor", "start").call(drawing_default.font, title.font).text(title.text);
+      titleEl.attr("text-anchor", "start").call(font2, title.font).text(title.text);
       textLayout(titleEl, scrollBox, gd, legendObj, MAIN_TITLE);
     } else {
       scrollBox.selectAll("." + legendId + "titletext").remove();
@@ -57494,7 +57548,7 @@ void main() {
               lib_default.log("Constrain " + legendId + ".y to make legend fit inside graph");
             }
           }
-          drawing_default.setTranslate(legend, lx, ly);
+          setTranslate(legend, lx, ly);
         }
         scrollBar.on(".drag", null);
         legend.on("wheel", null);
@@ -57507,15 +57561,15 @@ void main() {
             x: bw / 2,
             y: bw / 2
           });
-          drawing_default.setTranslate(scrollBox, 0, 0);
+          setTranslate(scrollBox, 0, 0);
           clipPath.select("rect").attr({
             width: legendObj._width - 2 * bw,
             height: height - 2 * bw,
             x: bw,
             y: bw
           });
-          drawing_default.setClipUrl(scrollBox, clipId, gd);
-          drawing_default.setRect(scrollBar, 0, 0, 0, 0);
+          setClipUrl(scrollBox, clipId, gd);
+          setRect(scrollBar, 0, 0, 0, 0);
           delete legendObj._scrollY;
         } else {
           var scrollBarHeight = Math.max(
@@ -57538,7 +57592,7 @@ void main() {
             x: bw,
             y: bw + scrollBoxY
           });
-          drawing_default.setClipUrl(scrollBox, clipId, gd);
+          setClipUrl(scrollBox, clipId, gd);
           scrollHandler(scrollBoxY, scrollBarHeight, scrollRatio);
           legend.on("wheel", function(event2) {
             scrollBoxY = lib_default.constrain(
@@ -57598,8 +57652,8 @@ void main() {
         }
         function scrollHandler(scrollBoxY2, scrollBarHeight2, scrollRatio2) {
           legendObj._scrollY = gd._fullLayout[legendId]._scrollY = scrollBoxY2;
-          drawing_default.setTranslate(scrollBox, 0, -scrollBoxY2);
-          drawing_default.setRect(
+          setTranslate(scrollBox, 0, -scrollBoxY2);
+          setRect(
             scrollBar,
             legendObj._width,
             constants_default3.scrollBarMargin + scrollBoxY2 * scrollRatio2,
@@ -57618,7 +57672,7 @@ void main() {
               if (e.target === scrollBar.node()) {
                 return;
               }
-              var transform2 = drawing_default.getTranslate(legend);
+              var transform2 = getTranslate(legend);
               x0 = transform2.x;
               y0 = transform2.y;
             },
@@ -57626,7 +57680,7 @@ void main() {
               if (x0 !== void 0 && y0 !== void 0) {
                 var newX = x0 + dx;
                 var newY = y0 + dy;
-                drawing_default.setTranslate(legend, newX, newY);
+                setTranslate(legend, newX, newY);
                 xf = dragelement_default.align(newX, legendObj._width, gs.l, gs.l + gs.w, legendObj.xanchor);
                 yf = dragelement_default.align(newY + legendObj._height, -legendObj._height, gs.t + gs.h, gs.t, legendObj.yanchor);
               }
@@ -57702,12 +57756,12 @@ void main() {
     var isPieLike = registry_default.traceIs(trace, "pie-like");
     var isEditable = !legendObj._inHover && gd._context.edits.legendText && !isPieLike;
     var maxNameLength = legendObj._maxNameLength;
-    var name7, font2;
+    var name7, textFont;
     if (legendItem.groupTitle) {
       name7 = legendItem.groupTitle.text;
-      font2 = legendItem.groupTitle.font;
+      textFont = legendItem.groupTitle.font;
     } else {
-      font2 = legendObj.font;
+      textFont = legendObj.font;
       if (!legendObj.entries) {
         name7 = isPieLike ? legendItem.label : trace.name;
         if (trace._meta) {
@@ -57718,7 +57772,7 @@ void main() {
       }
     }
     var textEl = lib_default.ensureSingle(g, "text", legendId + "text");
-    textEl.attr("text-anchor", "start").call(drawing_default.font, font2).text(isEditable ? ensureLength(name7, maxNameLength) : name7);
+    textEl.attr("text-anchor", "start").call(font2, textFont).text(isEditable ? ensureLength(name7, maxNameLength) : name7);
     var textGap = legendObj.indentation + legendObj.itemwidth + constants_default3.itemGap * 2;
     svg_text_utils_default.positionText(textEl, textGap, 0);
     if (isEditable) {
@@ -57796,24 +57850,24 @@ void main() {
       legendObj = gd._fullLayout[legendId];
     }
     var bw = legendObj.borderwidth;
-    var font2;
+    var itemFont;
     if (aTitle === MAIN_TITLE) {
-      font2 = legendObj.title.font;
+      itemFont = legendObj.title.font;
     } else if (legendItem.groupTitle) {
-      font2 = legendItem.groupTitle.font;
+      itemFont = legendItem.groupTitle.font;
     } else {
-      font2 = legendObj.font;
+      itemFont = legendObj.font;
     }
-    var lineHeight = font2.size * LINE_SPACING4;
+    var lineHeight = itemFont.size * LINE_SPACING4;
     var height, width;
     if (mathjaxNode) {
-      var mathjaxBB = drawing_default.bBox(mathjaxNode);
+      var mathjaxBB = bBox(mathjaxNode);
       height = mathjaxBB.height;
       width = mathjaxBB.width;
       if (aTitle === MAIN_TITLE) {
-        drawing_default.setTranslate(mathjaxGroup, bw, bw + height * 0.75);
+        setTranslate(mathjaxGroup, bw, bw + height * 0.75);
       } else {
-        drawing_default.setTranslate(mathjaxGroup, 0, height * 0.25);
+        setTranslate(mathjaxGroup, 0, height * 0.25);
       }
     } else {
       var cls = "." + legendId + (aTitle === MAIN_TITLE ? "title" : "") + "text";
@@ -57821,7 +57875,7 @@ void main() {
       var textLines = svg_text_utils_default.lineCount(textEl);
       var textNode = textEl.node();
       height = lineHeight * textLines;
-      width = textNode ? drawing_default.bBox(textNode).width : 0;
+      width = textNode ? bBox(textNode).width : 0;
       if (aTitle === MAIN_TITLE) {
         if (legendObj.title.side === "left") {
           width += constants_default3.itemGap * 2;
@@ -57900,7 +57954,7 @@ void main() {
     if (isVertical3) {
       traces.each(function(d2) {
         var h = d2[0].height;
-        drawing_default.setTranslate(
+        setTranslate(
           this,
           bw + titleSize[0],
           bw + titleSize[1] + legendObj._height + h / 2 + itemGap
@@ -57913,7 +57967,7 @@ void main() {
       legendObj._height += endPad;
       if (isGrouped3) {
         groups.each(function(d2, i) {
-          drawing_default.setTranslate(this, 0, i * legendObj.tracegroupgap);
+          setTranslate(this, 0, i * legendObj.tracegroupgap);
         });
         legendObj._height += (legendObj._lgroupsLength - 1) * legendObj.tracegroupgap;
       }
@@ -57946,7 +58000,7 @@ void main() {
           select_default2(this).selectAll("g.traces").each(function(d2) {
             var w = getTraceWidth(d2, legendObj, textGap);
             var h = d2[0].height;
-            drawing_default.setTranslate(
+            setTranslate(
               this,
               titleSize[0],
               titleSize[1] + bw + itemGap + h / 2 + offsetY2
@@ -57968,7 +58022,7 @@ void main() {
           } else {
             maxGroupHeightInRow = Math.max(maxGroupHeightInRow, offsetY2);
           }
-          drawing_default.setTranslate(this, groupOffsetX, groupOffsetY);
+          setTranslate(this, groupOffsetX, groupOffsetY);
           groupOffsetX += next;
         });
         legendObj._width = Math.max(maxRowWidth, groupOffsetX) + bw;
@@ -57994,7 +58048,7 @@ void main() {
             legendObj._height += maxItemHeightInRow;
             maxItemHeightInRow = 0;
           }
-          drawing_default.setTranslate(
+          setTranslate(
             this,
             titleSize[0] + bw + offsetX,
             titleSize[1] + bw + offsetY + h / 2 + itemGap
@@ -58039,7 +58093,7 @@ void main() {
       if (!isVertical3 && !isFraction) {
         w += itemGap;
       }
-      drawing_default.setRect(traceToggle, 0, -h / 2, w, h);
+      setRect(traceToggle, 0, -h / 2, w, h);
     });
   }
   function expandMargin(gd, legendId, lx, ly) {
@@ -58810,7 +58864,7 @@ void main() {
         fill: commonBgColor,
         stroke: commonStroke
       });
-      ltext.text(t03).call(drawing_default.font, commonLabelFont).call(svg_text_utils_default.positionText, 0, 0).call(svg_text_utils_default.convertToTspans, gd);
+      ltext.text(t03).call(font3, commonLabelFont).call(svg_text_utils_default.positionText, 0, 0).call(svg_text_utils_default.convertToTspans, gd);
       label.attr("transform", "");
       var tbb2 = getBoundingClientRect(gd, ltext.node());
       var lx2, ly2;
@@ -58885,7 +58939,7 @@ void main() {
           if (anchor === "end") {
             ltext.selectAll("tspan").each(function() {
               var s = select_default2(this);
-              var dummy = drawing_default.tester.append("text").text(s.text()).call(drawing_default.font, commonLabelFont);
+              var dummy = tester.append("text").text(s.text()).call(font3, commonLabelFont);
               var dummyBB = getBoundingClientRect(gd, dummy.node());
               if (Math.round(dummyBB.width) < Math.round(tbb2.width)) {
                 s.attr("x", ltx - dummyBB.width);
@@ -58901,7 +58955,7 @@ void main() {
         textClip.enter().append("clipPath").attr("id", clipId).append("path");
         textClip.exit().remove();
         textClip.select("path").attr("d", clipPath);
-        drawing_default.setClipUrl(ltext, clipPath ? clipId : null, gd);
+        setClipUrl(ltext, clipPath ? clipId : null, gd);
       }
       label.attr("transform", strTranslate6(lx2, ly2));
     });
@@ -58910,7 +58964,7 @@ void main() {
       const groupedHoverData = hoverData.filter((data) => data.hoverinfo !== "none");
       if (groupedHoverData.length === 0) return [];
       var hoverlabel = fullLayout.hoverlabel;
-      var font2 = hoverlabel.font;
+      var font3 = hoverlabel.font;
       var item0 = groupedHoverData[0];
       var unifiedhovertitleText = ((hovermode === "x unified" ? item0.xa : item0.ya).unifiedhovertitle || {}).text;
       var mainText = !unifiedhovertitleText ? t03 : lib_default.hovertemplateString({
@@ -58922,8 +58976,8 @@ void main() {
       var mockLayoutIn = {
         showlegend: true,
         legend: {
-          title: { text: mainText, font: font2 },
-          font: font2,
+          title: { text: mainText, font: font3 },
+          font: font3,
           bgcolor: hoverlabel.bgcolor,
           bordercolor: hoverlabel.bordercolor,
           borderwidth: 1,
@@ -58933,7 +58987,7 @@ void main() {
         }
       };
       var mockLayoutOut = {
-        font: font2
+        font: font3
       };
       legendDefaults(mockLayoutIn, mockLayoutOut, gd._fullData);
       var mockLegend = mockLayoutOut.legend;
@@ -59076,7 +59130,7 @@ void main() {
       g.append("rect").call(color_default.fill, color_default.addOpacity(bgColor, 0.8));
       g.append("text").classed("name", true);
       g.append("path").style("stroke-width", "1px");
-      g.append("text").classed("nums", true).call(drawing_default.font, {
+      g.append("text").classed("nums", true).call(font3, {
         weight: fontWeight,
         style: fontStyle,
         variant: fontVariant,
@@ -59101,7 +59155,7 @@ void main() {
       var texts2 = getHoverLabelText(d2, showCommonLabel, hovermode, fullLayout, t03, g);
       var text2 = texts2[0];
       var name8 = texts2[1];
-      var tx = g.select("text.nums").call(drawing_default.font, {
+      var tx = g.select("text.nums").call(font3, {
         family: d2.fontFamily || fontFamily,
         size: d2.fontSize || fontSize,
         color: d2.fontColor || contrastColor,
@@ -59116,7 +59170,7 @@ void main() {
       var tx2width = 0;
       var tx2height = 0;
       if (name8 && name8 !== text2) {
-        tx2.call(drawing_default.font, {
+        tx2.call(font3, {
           family: d2.fontFamily || fontFamily,
           size: d2.fontSize || fontSize,
           color: nameColor,
@@ -59496,7 +59550,7 @@ void main() {
           pY(offsetY + d2.ty0 - d2.by / 2 + HOVERTEXTPAD)
         );
         g.select("rect").call(
-          drawing_default.setRect,
+          setRect,
           pX(shiftX.text2ShiftX + (shiftX.alignShift - 1) * d2.tx2width / 2 + offsetX),
           pY(offsetY - d2.by / 2 - 1),
           pX(d2.tx2width),
@@ -59627,7 +59681,7 @@ void main() {
           y2: hLinePointY,
           "stroke-width": yThickness,
           stroke: yColor,
-          "stroke-dasharray": drawing_default.dashStyle(ya.spikedash, yThickness)
+          "stroke-dasharray": dashStyle(ya.spikedash, yThickness)
         }).classed("spikeline", true).classed("crisp", true);
         container.insert("line", ":first-child").attr({
           x1: xBase,
@@ -59688,7 +59742,7 @@ void main() {
           y2: yEndSpike,
           "stroke-width": xThickness,
           stroke: xColor,
-          "stroke-dasharray": drawing_default.dashStyle(xa.spikedash, xThickness)
+          "stroke-dasharray": dashStyle(xa.spikedash, xThickness)
         }).classed("spikeline", true).classed("crisp", true);
         container.insert("line", ":first-child").attr({
           x1: vLinePointX,
@@ -60500,7 +60554,7 @@ void main() {
     fullLayout._paperdiv.style({
       width: gd._context.responsive && fullLayout.autosize && !gd._context._hasZeroWidth && !gd.layout.width ? "100%" : fullLayout.width + "px",
       height: gd._context.responsive && fullLayout.autosize && !gd._context._hasZeroHeight && !gd.layout.height ? "100%" : fullLayout.height + "px"
-    }).selectAll(".main-svg").call(drawing_default.setSize, fullLayout.width, fullLayout.height);
+    }).selectAll(".main-svg").call(setSize, fullLayout.width, fullLayout.height);
     gd._context.setBackground(gd, fullLayout.paper_bgcolor);
     drawMainTitle(gd);
     registry_default.getComponentMethod("modebar", "manage")(gd);
@@ -60522,7 +60576,7 @@ void main() {
       ax = axList[i];
       var counterAx = ax._anchorAxis;
       ax._linepositions = {};
-      ax._lw = drawing_default.crispRound(gd, ax.linewidth, 1);
+      ax._lw = crispRound(gd, ax.linewidth, 1);
       ax._mainLinePosition = getLinePosition(ax, counterAx, ax.side);
       ax._mainMirrorPosition = ax.mirror && counterAx ? getLinePosition(
         ax,
@@ -60572,7 +60626,7 @@ void main() {
       ya = plotinfo.yaxis;
       if (plotinfo.bg && xa._offset !== void 0 && ya._offset !== void 0) {
         plotinfo.bg.call(
-          drawing_default.setRect,
+          setRect,
           xa._offset - pad3,
           ya._offset - pad3,
           xa._length + 2 * pad3,
@@ -60593,7 +60647,7 @@ void main() {
           width: xa._length,
           height: ya._length
         });
-        drawing_default.setTranslate(plotinfo.plot, xa._offset, ya._offset);
+        setTranslate(plotinfo.plot, xa._offset, ya._offset);
         var plotClipId;
         var layerClipId;
         if (plotinfo._hasClipOnAxisFalse) {
@@ -60603,7 +60657,7 @@ void main() {
           plotClipId = clipId;
           layerClipId = null;
         }
-        drawing_default.setClipUrl(plotinfo.plot, plotClipId, gd);
+        setClipUrl(plotinfo.plot, plotClipId, gd);
         plotinfo.layerClipId = layerClipId;
       }
     }
@@ -60726,7 +60780,7 @@ void main() {
     });
     if (title.text && title.automargin) {
       var titleObj = select_default2(gd).selectAll(".gtitle");
-      var titleHeight = drawing_default.bBox(select_default2(gd).selectAll(".g-gtitle").node()).height;
+      var titleHeight = bBox(select_default2(gd).selectAll(".g-gtitle").node()).height;
       var pushMargin = needsMarginPush(gd, title, titleHeight);
       if (pushMargin > 0) {
         applyTitleAutoMargin(gd, y, pushMargin, titleHeight);
@@ -61733,13 +61787,13 @@ void main() {
           if (!yScaleFactor2) yScaleFactor2 = 1;
           var plotDx = xa._offset - clipDx / xScaleFactor2;
           var plotDy = ya._offset - clipDy / yScaleFactor2;
-          sp.clipRect.call(drawing_default.setTranslate, clipDx, clipDy).call(drawing_default.setScale, xScaleFactor2, yScaleFactor2);
-          sp.plot.call(drawing_default.setTranslate, plotDx, plotDy).call(drawing_default.setScale, 1 / xScaleFactor2, 1 / yScaleFactor2);
+          sp.clipRect.call(setTranslate, clipDx, clipDy).call(setScale, xScaleFactor2, yScaleFactor2);
+          sp.plot.call(setTranslate, plotDx, plotDy).call(setScale, 1 / xScaleFactor2, 1 / yScaleFactor2);
           if (xScaleFactor2 !== sp.xScaleFactor || yScaleFactor2 !== sp.yScaleFactor) {
-            drawing_default.setPointGroupScale(sp.zoomScalePts, xScaleFactor2, yScaleFactor2);
-            drawing_default.setTextPointsScale(sp.zoomScaleTxt, xScaleFactor2, yScaleFactor2);
+            setPointGroupScale(sp.zoomScalePts, xScaleFactor2, yScaleFactor2);
+            setTextPointsScale(sp.zoomScaleTxt, xScaleFactor2, yScaleFactor2);
           }
-          drawing_default.hideOutsideRangePoints(sp.clipOnAxisFalseTraces, sp);
+          hideOutsideRangePoints(sp.clipOnAxisFalseTraces, sp);
           sp.xScaleFactor = xScaleFactor2;
           sp.yScaleFactor = yScaleFactor2;
         }
@@ -61777,7 +61831,7 @@ void main() {
   }
   function makeRectDragger(plotinfo, dragClass, cursor, x, y, w, h) {
     var dragger = makeDragger(plotinfo, "rect", dragClass, cursor);
-    select_default2(dragger).call(drawing_default.setRect, x, y, w, h);
+    select_default2(dragger).call(setRect, x, y, w, h);
     return dragger;
   }
   function isDirectionActive(axList, activeVal) {
@@ -62713,7 +62767,7 @@ void main() {
     setPlotContext(gd, config);
     if (!layout) layout = {};
     select_default2(gd).classed("js-plotly-plot", true);
-    drawing_default.makeTester();
+    makeTester();
     if (!Array.isArray(gd._promises)) gd._promises = [];
     var graphWasEmpty = (gd.data || []).length === 0 && Array.isArray(data);
     if (Array.isArray(data)) {
@@ -62738,8 +62792,8 @@ void main() {
         delete fullLayout._shouldCreateBgLayer;
       }
     }
-    drawing_default.initGradients(gd);
-    drawing_default.initPatterns(gd);
+    initGradients(gd);
+    initPatterns(gd);
     if (graphWasEmpty) axes_default.saveShowSpikeInitial(gd);
     var recalc = !gd.calcdata || gd.calcdata.length !== (gd._fullData || []).length;
     if (recalc) {
@@ -66426,7 +66480,7 @@ void main() {
       {
         symbol: {
           valType: "enumerated",
-          values: drawing_default.symbolList,
+          values: symbolList,
           dflt: "circle",
           arrayOk: true,
           editType: "style"
@@ -68515,7 +68569,7 @@ void main() {
         for (var k = 0; k < segments[j].length - 1; k++) {
           var start2 = segments[j][k];
           var end = segments[j][k + 1];
-          var xy = drawing_default.applyBackoff(end, start2);
+          var xy = applyBackoff(end, start2);
           if (xy[0] !== end[0] || xy[1] !== end[1]) {
             trimmed = true;
           }
@@ -68594,7 +68648,7 @@ void main() {
   // src/lib/polygon.js
   var { BADNUM: BADNUM12 } = numerical_default;
   var polygon = {};
-  polygon.tester = function tester(ptsIn) {
+  polygon.tester = function tester2(ptsIn) {
     var pts = ptsIn.slice();
     var xmin = pts[0][0];
     var xmax = xmin;
@@ -68786,7 +68840,7 @@ void main() {
   function createFills(gd, traceJoin, plotinfo) {
     traceJoin.each(function(d2) {
       var fills = ensureSingle(select_default2(this), "g", "fills");
-      drawing_default.setClipUrl(fills, plotinfo.layerClipId, gd);
+      setClipUrl(fills, plotinfo.layerClipId, gd);
       var trace = d2[0].trace;
       var fillData = [];
       if (trace._ownfill) fillData.push("_ownFill");
@@ -68862,17 +68916,17 @@ void main() {
         tonext.datum(cdscatter);
       }
       if (["hv", "vh", "hvh", "vhv"].indexOf(line.shape) !== -1) {
-        pathfn = drawing_default.steps(line.shape);
-        revpathbase = drawing_default.steps(
+        pathfn = steps(line.shape);
+        revpathbase = steps(
           line.shape.split("").reverse().join("")
         );
       } else if (line.shape === "spline") {
         pathfn = revpathbase = function(pts2) {
           var pLast = pts2[pts2.length - 1];
           if (pts2.length > 1 && pts2[0][0] === pLast[0] && pts2[0][1] === pLast[1]) {
-            return drawing_default.smoothclosed(pts2.slice(1), line.smoothing);
+            return smoothclosed(pts2.slice(1), line.smoothing);
           } else {
-            return drawing_default.smoothopen(pts2, line.smoothing);
+            return smoothopen(pts2, line.smoothing);
           }
         };
       } else {
@@ -68934,11 +68988,11 @@ void main() {
             var el = select_default2(this);
             el.datum(cdscatter);
             if (isEnter) {
-              transition2(el.style("opacity", 0).attr("d", thispath).call(drawing_default.lineGroupStyle)).style("opacity", 1);
+              transition2(el.style("opacity", 0).attr("d", thispath).call(lineGroupStyle)).style("opacity", 1);
             } else {
               var sel = transition2(el);
               sel.attr("d", thispath);
-              drawing_default.singleLineStyle(cdscatter, sel);
+              singleLineStyle(cdscatter, sel);
             }
           }
         };
@@ -68947,8 +69001,8 @@ void main() {
     var lineJoin = lines.selectAll(".js-line").data(segments);
     transition2(lineJoin.exit()).style("opacity", 0).remove();
     lineJoin.each(makeUpdate(false));
-    lineJoin.enter().append("path").classed("js-line", true).style("vector-effect", isStatic ? "none" : "non-scaling-stroke").call(drawing_default.lineGroupStyle).each(makeUpdate(true));
-    drawing_default.setClipUrl(lineJoin, plotinfo.layerClipId, gd);
+    lineJoin.enter().append("path").classed("js-line", true).style("vector-effect", isStatic ? "none" : "non-scaling-stroke").call(lineGroupStyle).each(makeUpdate(true));
+    setClipUrl(lineJoin, plotinfo.layerClipId, gd);
     function clearFill(selection2) {
       transition2(selection2).attr("d", "M0,0Z");
     }
@@ -68990,10 +69044,10 @@ void main() {
         if (pt0 && pt1) {
           if (ownFillDir) {
             pt0[fillAxisIndex] = pt1[fillAxisIndex] = fillAxisZero;
-            transition2(ownFillEl3).attr("d", "M" + pt1 + "L" + pt0 + "L" + fullpath.slice(1)).call(drawing_default.singleFillStyle, gd);
+            transition2(ownFillEl3).attr("d", "M" + pt1 + "L" + pt0 + "L" + fullpath.slice(1)).call(singleFillStyle, gd);
             thisPolygons = makePolygonsToPrevious(null);
           } else {
-            transition2(ownFillEl3).attr("d", fullpath + "Z").call(drawing_default.singleFillStyle, gd);
+            transition2(ownFillEl3).attr("d", fullpath + "Z").call(singleFillStyle, gd);
             thisPolygons = makeSelfPolygons();
           }
         }
@@ -69002,11 +69056,11 @@ void main() {
       } else if (tonext) {
         if (trace.fill.slice(0, 6) === "tonext" && fullpath && prevRevpath) {
           if (trace.fill === "tonext") {
-            transition2(tonext).attr("d", fullpath + "Z" + prevRevpath + "Z").call(drawing_default.singleFillStyle, gd);
+            transition2(tonext).attr("d", fullpath + "Z" + prevRevpath + "Z").call(singleFillStyle, gd);
             thisPolygons = makeSelfPolygons();
             trace._polygons = thisPolygons.concat(prevPolygons);
           } else {
-            transition2(tonext).attr("d", fullpath + "L" + prevRevpath.slice(1) + "Z").call(drawing_default.singleFillStyle, gd);
+            transition2(tonext).attr("d", fullpath + "L" + prevRevpath.slice(1) + "Z").call(singleFillStyle, gd);
             thisPolygons = makePolygonsToPrevious(prevFillsegments);
             trace._polygons = thisPolygons;
           }
@@ -69072,21 +69126,21 @@ void main() {
       join = selection2.data(markerFilter, keyFunc2);
       var enter = join.enter().append("path").classed("point", true);
       if (hasTransition) {
-        enter.call(drawing_default.pointStyle, trace2, gd).call(drawing_default.translatePoints, xa, ya).style("opacity", 0).transition().style("opacity", 1);
+        enter.call(pointStyle, trace2, gd).call(translatePoints, xa, ya).style("opacity", 0).transition().style("opacity", 1);
       }
       join.order();
       var styleFns;
       if (showMarkers) {
-        styleFns = drawing_default.makePointStyleFns(trace2);
+        styleFns = makePointStyleFns(trace2);
       }
       join.each(function(d2) {
         var el = select_default2(this);
         var sel = transition2(el);
-        hasNode = drawing_default.translatePoint(d2, sel, xa, ya);
+        hasNode = translatePoint(d2, sel, xa, ya);
         if (hasNode) {
-          drawing_default.singlePointStyle(d2, sel, trace2, styleFns, gd);
+          singlePointStyle(d2, sel, trace2, styleFns, gd);
           if (plotinfo.layerClipId) {
-            drawing_default.hideOutsideRangePoint(d2, sel, xa, ya, trace2.xcalendar, trace2.ycalendar);
+            hideOutsideRangePoint(d2, sel, xa, ya, trace2.xcalendar, trace2.ycalendar);
           }
           if (trace2.customdata) {
             el.classed("plotly-customdata", d2.data !== null && d2.data !== void 0);
@@ -69107,16 +69161,16 @@ void main() {
       join.each(function(d2) {
         var g = select_default2(this);
         var sel = transition2(g.select("text"));
-        hasNode = drawing_default.translatePoint(d2, sel, xa, ya);
+        hasNode = translatePoint(d2, sel, xa, ya);
         if (hasNode) {
           if (plotinfo.layerClipId) {
-            drawing_default.hideOutsideRangePoint(d2, g, xa, ya, trace2.xcalendar, trace2.ycalendar);
+            hideOutsideRangePoint(d2, g, xa, ya, trace2.xcalendar, trace2.ycalendar);
           }
         } else {
           g.remove();
         }
       });
-      join.selectAll("text").call(drawing_default.textPointStyle, trace2, gd).each(function(d2) {
+      join.selectAll("text").call(textPointStyle, trace2, gd).each(function(d2) {
         var x = xa.c2p(d2.x);
         var y = ya.c2p(d2.y);
         select_default2(this).selectAll("tspan.line").each(function() {
@@ -69130,8 +69184,8 @@ void main() {
     makePoints(points, text, cdscatter);
     var hasClipOnAxisFalse = trace.cliponaxis === false;
     var clipUrl = hasClipOnAxisFalse ? null : plotinfo.layerClipId;
-    drawing_default.setClipUrl(points, clipUrl, gd);
-    drawing_default.setClipUrl(text, clipUrl, gd);
+    setClipUrl(points, clipUrl, gd);
+    setClipUrl(text, clipUrl, gd);
   }
   function selectMarkers(gd, idx, plotinfo, cdscatter, cdscatterAll) {
     var xa = plotinfo.xaxis;
@@ -69200,21 +69254,21 @@ void main() {
       var trace = d2.trace || d2[0].trace;
       styleText(sel, trace, gd);
     });
-    s.selectAll("g.trace path.js-line").call(drawing_default.lineGroupStyle);
-    s.selectAll("g.trace path.js-fill").call(drawing_default.fillGroupStyle, gd, false);
+    s.selectAll("g.trace path.js-line").call(lineGroupStyle);
+    s.selectAll("g.trace path.js-fill").call(fillGroupStyle, gd, false);
     registry_default.getComponentMethod("errorbars", "style")(s);
   }
   function stylePoints(sel, trace, gd) {
-    drawing_default.pointStyle(sel.selectAll("path.point"), trace, gd);
+    pointStyle(sel.selectAll("path.point"), trace, gd);
   }
   function styleText(sel, trace, gd) {
-    drawing_default.textPointStyle(sel.selectAll("text"), trace, gd);
+    textPointStyle(sel.selectAll("text"), trace, gd);
   }
   function styleOnSelect(gd, cd, sel) {
     var trace = cd[0].trace;
     if (trace.selectedpoints) {
-      drawing_default.selectedPointStyle(sel.selectAll("path.point"), trace);
-      drawing_default.selectedTextStyle(sel.selectAll("text"), trace);
+      selectedPointStyle(sel.selectAll("path.point"), trace);
+      selectedTextStyle(sel.selectAll("text"), trace);
     } else {
       stylePoints(sel, trace, gd);
       styleText(sel, trace, gd);
@@ -69668,7 +69722,7 @@ void main() {
   var { WEEKDAY_PATTERN: DAY_OF_WEEK2, HOUR_PATTERN: HOUR2 } = constants_default2;
   function handleAxisDefaults(containerIn, containerOut, coerce3, options, layoutOut) {
     var letter = options.letter;
-    var font2 = options.font || {};
+    var font3 = options.font || {};
     var splomStash = options.splomStash || {};
     var visible = coerce3("visible", !options.visibleDflt);
     var axTemplate = containerOut._template || {};
@@ -69724,13 +69778,13 @@ void main() {
       }
     }
     var dfltColor = coerce3("color");
-    var dfltFontColor = dfltColor !== layout_attributes_default4.color.dflt ? dfltColor : font2.color;
+    var dfltFontColor = dfltColor !== layout_attributes_default4.color.dflt ? dfltColor : font3.color;
     var dfltTitle = splomStash.label || layoutOut._dfltTitle[letter];
     handlePrefixSuffixDefaults(containerIn, containerOut, coerce3, axType, options);
     if (!visible) return containerOut;
     coerce3("title.text", dfltTitle);
-    lib_default.coerceFont(coerce3, "title.font", font2, { overrideDflt: {
-      size: lib_default.bigFont(font2.size),
+    lib_default.coerceFont(coerce3, "title.font", font3, { overrideDflt: {
+      size: lib_default.bigFont(font3.size),
       color: dfltFontColor
     } });
     handleTickValueDefaults(containerIn, containerOut, coerce3, axType);
@@ -69822,8 +69876,8 @@ void main() {
             }
           }
         }
-        var pattern2 = coerce3("pattern", dfltPattern);
-        if (pattern2 === DAY_OF_WEEK2) {
+        var pattern3 = coerce3("pattern", dfltPattern);
+        if (pattern3 === DAY_OF_WEEK2) {
           for (i = 0; i < 2; i++) {
             q = indexOfDay(bnds[i]);
             if (q) {
@@ -69831,10 +69885,10 @@ void main() {
             }
           }
         }
-        if (pattern2) {
+        if (pattern3) {
           for (i = 0; i < 2; i++) {
             q = bnds[i];
-            switch (pattern2) {
+            switch (pattern3) {
               case DAY_OF_WEEK2:
                 if (!(0, import_fast_isnumeric31.default)(q)) {
                   itemOut.enabled = false;
@@ -70257,12 +70311,12 @@ void main() {
     function unsetSubplotTransform(subplot) {
       var xa = subplot.xaxis;
       var ya = subplot.yaxis;
-      fullLayout._defs.select("#" + subplot.clipId + "> rect").call(drawing_default.setTranslate, 0, 0).call(drawing_default.setScale, 1, 1);
-      subplot.plot.call(drawing_default.setTranslate, xa._offset, ya._offset).call(drawing_default.setScale, 1, 1);
+      fullLayout._defs.select("#" + subplot.clipId + "> rect").call(setTranslate, 0, 0).call(setScale, 1, 1);
+      subplot.plot.call(setTranslate, xa._offset, ya._offset).call(setScale, 1, 1);
       var traceGroups = subplot.plot.selectAll(".scatterlayer .trace");
-      traceGroups.selectAll(".point").call(drawing_default.setPointGroupScale, 1, 1);
-      traceGroups.selectAll(".textpoint").call(drawing_default.setTextPointsScale, 1, 1);
-      traceGroups.call(drawing_default.hideOutsideRangePoints, subplot);
+      traceGroups.selectAll(".point").call(setPointGroupScale, 1, 1);
+      traceGroups.selectAll(".textpoint").call(setTextPointsScale, 1, 1);
+      traceGroups.call(hideOutsideRangePoints, subplot);
     }
     function updateSubplot(edit, progress) {
       var plotinfo = edit.plotinfo;
@@ -70310,10 +70364,10 @@ void main() {
       var fracDy = editY ? viewBox[1] / viewBox[3] * ylen : 0;
       var plotDx = xa._offset - fracDx;
       var plotDy = ya._offset - fracDy;
-      plotinfo.clipRect.call(drawing_default.setTranslate, clipDx, clipDy).call(drawing_default.setScale, 1 / xScaleFactor, 1 / yScaleFactor);
-      plotinfo.plot.call(drawing_default.setTranslate, plotDx, plotDy).call(drawing_default.setScale, xScaleFactor, yScaleFactor);
-      drawing_default.setPointGroupScale(plotinfo.zoomScalePts, 1 / xScaleFactor, 1 / yScaleFactor);
-      drawing_default.setTextPointsScale(plotinfo.zoomScaleTxt, 1 / xScaleFactor, 1 / yScaleFactor);
+      plotinfo.clipRect.call(setTranslate, clipDx, clipDy).call(setScale, 1 / xScaleFactor, 1 / yScaleFactor);
+      plotinfo.plot.call(setTranslate, plotDx, plotDy).call(setScale, xScaleFactor, yScaleFactor);
+      setPointGroupScale(plotinfo.zoomScalePts, 1 / xScaleFactor, 1 / yScaleFactor);
+      setTextPointsScale(plotinfo.zoomScaleTxt, 1 / xScaleFactor, 1 / yScaleFactor);
     }
     var onComplete;
     if (makeOnCompleteCallback) {
@@ -70559,7 +70613,7 @@ void main() {
         makeOnCompleteCallback
       );
       if (constants_default2.clipOnAxisFalseQuery.indexOf("." + className2) === -1) {
-        drawing_default.setClipUrl(sel, plotinfo.layerClipId, gd);
+        setClipUrl(sel, plotinfo.layerClipId, gd);
       }
     });
     if (fullLayout._has("scattergl")) {
@@ -71164,12 +71218,12 @@ void main() {
       annTextGroupInner.on("mouseover", function() {
         var hoverOptions = options.hoverlabel;
         var hoverFont = hoverOptions.font;
-        var bBox = this.getBoundingClientRect();
+        var bBox2 = this.getBoundingClientRect();
         var bBoxRef = gd.getBoundingClientRect();
         fx_default.loneHover({
-          x0: bBox.left - bBoxRef.left,
-          x1: bBox.right - bBoxRef.left,
-          y: (bBox.top + bBox.bottom) / 2 - bBoxRef.top,
+          x0: bBox2.left - bBoxRef.left,
+          x1: bBox2.right - bBoxRef.left,
+          y: (bBox2.top + bBox2.bottom) / 2 - bBoxRef.top,
           text: options.hovertext,
           color: hoverOptions.bgcolor,
           borderColor: hoverOptions.bordercolor,
@@ -71199,11 +71253,11 @@ void main() {
     var annTextClip = fullLayout._topclips.selectAll("#" + annClipID).data(isSizeConstrained ? [0] : []);
     annTextClip.enter().append("clipPath").classed("annclip", true).attr("id", annClipID).append("rect");
     annTextClip.exit().remove();
-    var font2 = options.font;
+    var font3 = options.font;
     var text = fullLayout._meta ? lib_default.templateString(options.text, fullLayout._meta) : options.text;
     var annText = annTextGroupInner.append("text").classed("annotation-text", true).text(text);
     function textLayout2(s) {
-      s.call(drawing_default.font, font2).attr({
+      s.call(drawing_default.font, font3).attr({
         "text-anchor": {
           left: "start",
           right: "end"
@@ -73372,7 +73426,7 @@ void main() {
     var labelGroupAttrs = {
       "data-index": index
     };
-    var font2 = options.label.font;
+    var font3 = options.label.font;
     var labelTextAttrs = {
       "data-notex": 1
     };
@@ -73430,7 +73484,7 @@ void main() {
       }
     }
     labelText.call(function(s) {
-      s.call(drawing_default.font, font2).attr({});
+      s.call(drawing_default.font, font3).attr({});
       svg_text_utils_default.convertToTspans(s, gd);
       return s;
     });
@@ -73979,7 +74033,7 @@ void main() {
   };
 
   // src/components/selections/select.js
-  var { dashStyle } = drawing_default;
+  var { dashStyle: dashStyle2 } = drawing_default;
   var { clearOutline: clearOutline6 } = handle_outline_default;
   var { newShapes: newShapes3 } = newshapes_default;
   var { activateLastSelection: activateLastSelection2 } = draw_default2;
@@ -74048,7 +74102,7 @@ void main() {
     var strokeC = newStyle.line.color || (isCartesian ? color_default.contrast(gd._fullLayout.plot_bgcolor) : "#7f7f7f");
     outlines.enter().append("path").attr("class", "select-outline select-outline-" + plotinfo.id).style({
       opacity: isDrawMode ? newStyle.opacity / 2 : 1,
-      "stroke-dasharray": dashStyle(newStyle.line.dash, newStyle.line.width),
+      "stroke-dasharray": dashStyle2(newStyle.line.dash, newStyle.line.width),
       "stroke-width": newStyle.line.width + "px",
       "shape-rendering": "crispEdges"
     }).call(color_default.stroke, strokeC).call(color_default.fill, fillC).attr("fill-rule", "evenodd").classed("cursor-move", isDrawMode ? true : false).attr("transform", transform2).attr("d", path0 + "Z");
@@ -74413,13 +74467,13 @@ void main() {
       if (isPointSelectionDef(list2[i])) {
         testers.push(newPointNumTester(list2[i]));
       } else {
-        var tester2 = polygonTester2(list2[i]);
-        tester2.subtract = !!list2[i].subtract;
-        testers.push(tester2);
-        xmin = Math.min(xmin, tester2.xmin);
-        xmax = Math.max(xmax, tester2.xmax);
-        ymin = Math.min(ymin, tester2.ymin);
-        ymax = Math.max(ymax, tester2.ymax);
+        var tester3 = polygonTester2(list2[i]);
+        tester3.subtract = !!list2[i].subtract;
+        testers.push(tester3);
+        xmin = Math.min(xmin, tester3.xmin);
+        xmax = Math.max(xmax, tester3.xmax);
+        ymin = Math.min(ymin, tester3.ymin);
+        ymax = Math.max(ymax, tester3.ymax);
       }
     }
     function contains(pt, arg, pointNumber, searchInfo) {
@@ -77033,7 +77087,7 @@ void main() {
     }
     this.setTranslate(translateX, translateY);
   };
-  ScrollBox.prototype.setTranslate = function setTranslate(translateX, translateY) {
+  ScrollBox.prototype.setTranslate = function setTranslate2(translateX, translateY) {
     var translateXMax = this.position.w - this._box.w;
     var translateYMax = this.position.h - this._box.h;
     translateX = lib_default.constrain(translateX || 0, 0, translateXMax);
@@ -77713,22 +77767,22 @@ void main() {
     function coerce3(attr2, dflt) {
       return lib_default.coerce(sliderIn, sliderOut, attributes_default16, attr2, dflt);
     }
-    var steps = handleArrayContainerDefaults(sliderIn, sliderOut, {
+    var steps2 = handleArrayContainerDefaults(sliderIn, sliderOut, {
       name: "steps",
       handleItemDefaults: stepDefaults
     });
     var stepCount = 0;
-    for (var i = 0; i < steps.length; i++) {
-      if (steps[i].visible) stepCount++;
+    for (var i = 0; i < steps2.length; i++) {
+      if (steps2[i].visible) stepCount++;
     }
     var visible;
     if (stepCount < 2) visible = sliderOut.visible = false;
     else visible = coerce3("visible");
     if (!visible) return;
     sliderOut._stepCount = stepCount;
-    var visSteps = sliderOut._visibleSteps = lib_default.filterVisible(steps);
+    var visSteps = sliderOut._visibleSteps = lib_default.filterVisible(steps2);
     var active = coerce3("active");
-    if (!(steps[active] || {}).visible) sliderOut.active = visSteps[0]._index;
+    if (!(steps2[active] || {}).visible) sliderOut.active = visSteps[0]._index;
     coerce3("x");
     coerce3("y");
     lib_default.noneOrAll(sliderIn, sliderOut, ["x", "y"]);
@@ -77845,9 +77899,9 @@ void main() {
       var text = drawLabel2(labelGroup, { step: stepOpts }, sliderOpts);
       var textNode = text.node();
       if (textNode) {
-        var bBox = drawing_default.bBox(textNode);
-        labelHeight = Math.max(labelHeight, bBox.height);
-        maxLabelWidth = Math.max(maxLabelWidth, bBox.width);
+        var bBox2 = drawing_default.bBox(textNode);
+        labelHeight = Math.max(labelHeight, bBox2.height);
+        maxLabelWidth = Math.max(maxLabelWidth, bBox2.width);
       }
     });
     sliderLabels.remove();
@@ -83663,14 +83717,14 @@ void main() {
     di.htx = Array.isArray(trace.hovertext) ? trace.hovertext[id2] : trace.hovertext;
     di.data = Array.isArray(trace.customdata) ? trace.customdata[id2] : trace.customdata;
     di.tp = Array.isArray(trace.textposition) ? trace.textposition[id2] : trace.textposition;
-    var font2 = trace.textfont;
-    if (font2) {
-      di.ts = lib_default.isArrayOrTypedArray(font2.size) ? font2.size[id2] : font2.size;
-      di.tc = lib_default.isArrayOrTypedArray(font2.color) ? font2.color[id2] : font2.color;
-      di.tf = Array.isArray(font2.family) ? font2.family[id2] : font2.family;
-      di.tw = Array.isArray(font2.weight) ? font2.weight[id2] : font2.weight;
-      di.ty = Array.isArray(font2.style) ? font2.style[id2] : font2.style;
-      di.tv = Array.isArray(font2.variant) ? font2.variant[id2] : font2.variant;
+    var font3 = trace.textfont;
+    if (font3) {
+      di.ts = lib_default.isArrayOrTypedArray(font3.size) ? font3.size[id2] : font3.size;
+      di.tc = lib_default.isArrayOrTypedArray(font3.color) ? font3.color[id2] : font3.color;
+      di.tf = Array.isArray(font3.family) ? font3.family[id2] : font3.family;
+      di.tw = Array.isArray(font3.weight) ? font3.weight[id2] : font3.weight;
+      di.ty = Array.isArray(font3.style) ? font3.style[id2] : font3.style;
+      di.tv = Array.isArray(font3.variant) ? font3.variant[id2] : font3.variant;
     }
     var marker = trace.marker;
     if (marker) {
@@ -84368,15 +84422,15 @@ void main() {
     var symbol = d2.mx;
     if (symbol === "circle") return null;
     var symbolPath, symbolSdf;
-    var symbolNumber = drawing_default.symbolNumber(symbol);
-    var symbolFunc = drawing_default.symbolFuncs[symbolNumber % 100];
-    var symbolNoDot = !!drawing_default.symbolNoDot[symbolNumber % 100];
-    var symbolNoFill = !!drawing_default.symbolNoFill[symbolNumber % 100];
+    var symbolNumber2 = drawing_default.symbolNumber(symbol);
+    var symbolFunc = drawing_default.symbolFuncs[symbolNumber2 % 100];
+    var symbolNoDot2 = !!drawing_default.symbolNoDot[symbolNumber2 % 100];
+    var symbolNoFill2 = !!drawing_default.symbolNoFill[symbolNumber2 % 100];
     var isDot = helpers_default12.isDotSymbol(symbol);
     if (d2.ma) symbol += "_" + d2.ma;
     if (SYMBOL_SDF[symbol]) return SYMBOL_SDF[symbol];
     var angle = drawing_default.getMarkerAngle(d2, trace);
-    if (isDot && !symbolNoDot) {
+    if (isDot && !symbolNoDot2) {
       symbolPath = symbolFunc(SYMBOL_SIZE2 * 1.1, angle) + SYMBOL_SVG_CIRCLE;
     } else {
       symbolPath = symbolFunc(SYMBOL_SIZE2, angle);
@@ -84385,7 +84439,7 @@ void main() {
       w: SYMBOL_SDF_SIZE,
       h: SYMBOL_SDF_SIZE,
       viewBox: [-SYMBOL_SIZE2, -SYMBOL_SIZE2, SYMBOL_SIZE2, SYMBOL_SIZE2],
-      stroke: symbolNoFill ? SYMBOL_STROKE : -SYMBOL_STROKE
+      stroke: symbolNoFill2 ? SYMBOL_STROKE : -SYMBOL_STROKE
     });
     SYMBOL_SDF[symbol] = symbolSdf;
     return symbolSdf || null;
@@ -86228,11 +86282,11 @@ void main() {
         }
         offset = offset.toLowerCase();
         var date = (offset.match(/^c/) && currentDate ? currentDate.newDate() : null) || calendar.today();
-        var pattern2 = /([+-]?[0-9]+)\s*(d|w|m|y)?/g;
-        var matches = pattern2.exec(offset);
+        var pattern3 = /([+-]?[0-9]+)\s*(d|w|m|y)?/g;
+        var matches = pattern3.exec(offset);
         while (matches) {
           date.add(parseInt(matches[1], 10), matches[2] || "d");
-          matches = pattern2.exec(offset);
+          matches = pattern3.exec(offset);
         }
         return date;
       };

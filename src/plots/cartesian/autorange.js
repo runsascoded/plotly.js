@@ -4,7 +4,7 @@ import Lib from '../../lib/index.js';
 import _numerical from '../../constants/numerical.js';
 const { FP_SAFE } = _numerical;
 import Registry from '../../registry.js';
-import Drawing from '../../components/drawing/index.js';
+import { bBox } from '../../components/drawing/index.js';
 import axIds from './axis_ids.js';
 var getFromId = axIds.getFromId;
 var isLinked = axIds.isLinked;
@@ -282,7 +282,7 @@ function padInsideLabelsOnAnchorAxis(fullLayout, ax, max) {
                             var thisLabel = select(this);
                             var mathjaxGroup = thisLabel.select('.text-math-group');
                             if(mathjaxGroup.empty()) {
-                                d.bb = Drawing.bBox(thisLabel.node());
+                                d.bb = bBox(thisLabel.node());
                             }
                         });
                     }

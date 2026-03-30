@@ -5,7 +5,7 @@ import supportsPassive from 'has-passive-events';
 import Registry from '../../registry.js';
 import svgTextUtils from '../../lib/svg_text_utils.js';
 import Color from '../../components/color/index.js';
-import Drawing from '../../components/drawing/index.js';
+import { hideOutsideRangePoints, setPointGroupScale, setRect, setScale, setTextPointsScale, setTranslate } from '../../components/drawing/index.js';
 import Fx from '../../components/fx/index.js';
 import Axes from './axes.js';
 import setCursor from '../../lib/setcursor.js';
@@ -989,23 +989,23 @@ function makeDragBox(gd, plotinfo, x, y, w, h, ns, ew) {
                 // when working independently, should perhaps combine
                 // them into a single routine.
                 sp.clipRect
-                    .call(Drawing.setTranslate, clipDx, clipDy)
-                    .call(Drawing.setScale, xScaleFactor2, yScaleFactor2);
+                    .call(setTranslate, clipDx, clipDy)
+                    .call(setScale, xScaleFactor2, yScaleFactor2);
 
                 sp.plot
-                    .call(Drawing.setTranslate, plotDx, plotDy)
-                    .call(Drawing.setScale, 1 / xScaleFactor2, 1 / yScaleFactor2);
+                    .call(setTranslate, plotDx, plotDy)
+                    .call(setScale, 1 / xScaleFactor2, 1 / yScaleFactor2);
 
                 // apply an inverse scale to individual points to counteract
                 // the scale of the trace group.
                 // apply only when scale changes, as adjusting the scale of
                 // all the points can be expansive.
                 if(xScaleFactor2 !== sp.xScaleFactor || yScaleFactor2 !== sp.yScaleFactor) {
-                    Drawing.setPointGroupScale(sp.zoomScalePts, xScaleFactor2, yScaleFactor2);
-                    Drawing.setTextPointsScale(sp.zoomScaleTxt, xScaleFactor2, yScaleFactor2);
+                    setPointGroupScale(sp.zoomScalePts, xScaleFactor2, yScaleFactor2);
+                    setTextPointsScale(sp.zoomScaleTxt, xScaleFactor2, yScaleFactor2);
                 }
 
-                Drawing.hideOutsideRangePoints(sp.clipOnAxisFalseTraces, sp);
+                hideOutsideRangePoints(sp.clipOnAxisFalseTraces, sp);
 
                 // update x/y scaleFactor stash
                 sp.xScaleFactor = xScaleFactor2;
@@ -1059,7 +1059,7 @@ function makeDragger(plotinfo, nodeName, dragClass, cursor) {
 
 function makeRectDragger(plotinfo, dragClass, cursor, x, y, w, h) {
     var dragger = makeDragger(plotinfo, 'rect', dragClass, cursor);
-    select(dragger).call(Drawing.setRect, x, y, w, h);
+    select(dragger).call(setRect, x, y, w, h);
     return dragger;
 }
 

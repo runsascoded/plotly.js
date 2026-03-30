@@ -5,7 +5,7 @@ import colorScaleAttrs from '../../components/colorscale/attributes.js';
 import fontAttrs from '../../plots/font_attributes.js';
 import { dash } from '../../components/drawing/attributes.js';
 import { pattern } from '../../components/drawing/attributes.js';
-import Drawing from '../../components/drawing/index.js';
+import { symbolList } from '../../components/drawing/index.js';
 import constants from './constants.js';
 import { extendFlat } from '../../lib/extend.js';
 import makeFillcolorAttr from './fillcolor_attribute.js';
@@ -436,7 +436,7 @@ export default {
         {
             symbol: {
                 valType: 'enumerated',
-                values: Drawing.symbolList,
+                values: symbolList,
                 dflt: 'circle',
                 arrayOk: true,
                 editType: 'style',

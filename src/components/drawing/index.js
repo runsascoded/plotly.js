@@ -16,16 +16,17 @@ import makeBubbleSizeFn from '../../traces/scatter/make_bubble_size_func.js';
 import { appendArrayPointValue } from '../../components/fx/helpers.js';
 import SYMBOLDEFS from './symbol_defs.js';
 var numberFormat = Lib.numberFormat;
+export var tester;
+export var testref;
 var strTranslate = Lib.strTranslate;
 var LINE_SPACING = alignment.LINE_SPACING;
 
-var drawing = ({});
 
 // -----------------------------------------------------
 // styling functions for plot elements
 // -----------------------------------------------------
 
-drawing.font = function (s, font) {
+export function font(s, font) {
     var variant = font.variant;
     var style = font.style;
     var weight = font.weight;
@@ -83,14 +84,14 @@ function lineposition2decorationLine(lineposition) {
  * `svgTextUtils.convertToTspans`. Use `svgTextUtils.positionText`
  * instead, so that <tspan.line> elements get updated to match.
  */
-drawing.setPosition = function (s, x, y) {
+export function setPosition(s, x, y) {
     s.attr('x', x).attr('y', y);
 };
-drawing.setSize = function (s, w, h) {
+export function setSize(s, w, h) {
     s.attr('width', w).attr('height', h);
 };
-drawing.setRect = function (s, x, y, w, h) {
-    s.call(drawing.setPosition, x, y).call(drawing.setSize, w, h);
+export function setRect(s, x, y, w, h) {
+    s.call(setPosition, x, y).call(setSize, w, h);
 };
 
 /** Translate node
@@ -104,7 +105,7 @@ drawing.setRect = function (s, x, y, w, h) {
  *  true if selection got translated
  *  false if selection could not get translated
  */
-drawing.translatePoint = function (d, sel, xa, ya) {
+export function translatePoint(d, sel, xa, ya) {
     var x = xa.c2p(d.x);
     var y = ya.c2p(d.y);
 
@@ -122,18 +123,18 @@ drawing.translatePoint = function (d, sel, xa, ya) {
     return true;
 };
 
-drawing.translatePoints = function (s, xa, ya) {
+export function translatePoints(s, xa, ya) {
     s.each(function (d) {
         var sel = select(this);
-        drawing.translatePoint(d, sel, xa, ya);
+        translatePoint(d, sel, xa, ya);
     });
 };
 
-drawing.hideOutsideRangePoint = function (d, sel, xa, ya, xcalendar, ycalendar) {
+export function hideOutsideRangePoint(d, sel, xa, ya, xcalendar, ycalendar) {
     sel.attr('display', xa.isPtWithinRange(d, xcalendar) && ya.isPtWithinRange(d, ycalendar) ? null : 'none');
 };
 
-drawing.hideOutsideRangePoints = function (traceGroups, subplot) {
+export function hideOutsideRangePoints(traceGroups, subplot) {
     if (!subplot._hasClipOnAxisFalse) return;
 
     var xa = subplot.xaxis;
@@ -146,12 +147,12 @@ drawing.hideOutsideRangePoints = function (traceGroups, subplot) {
         var selector = Registry.traceIs(trace, 'bar-like') ? '.bartext' : '.point,.textpoint';
 
         traceGroups.selectAll(selector).each(function (d) {
-            drawing.hideOutsideRangePoint(d, select(this), xa, ya, xcalendar, ycalendar);
+            hideOutsideRangePoint(d, select(this), xa, ya, xcalendar, ycalendar);
         });
     });
 };
 
-drawing.crispRound = function (gd, lineWidth, dflt) {
+export function crispRound(gd, lineWidth, dflt) {
     // for lines that disable antialiasing we want to
     // make sure the width is an integer, and at least 1 if it's nonzero
 
@@ -164,17 +165,17 @@ drawing.crispRound = function (gd, lineWidth, dflt) {
     return Math.round(lineWidth);
 };
 
-drawing.singleLineStyle = function (d, s, lw, lc, ld) {
+export function singleLineStyle(d, s, lw, lc, ld) {
     s.style('fill', 'none');
     var line = (((d || [])[0] || {}).trace || {}).line || {};
     var lw1 = lw || line.width || 0;
     var dash = ld || line.dash || '';
 
     Color.stroke(s, lc || line.color);
-    drawing.dashLine(s, dash, lw1);
+    dashLine(s, dash, lw1);
 };
 
-drawing.lineGroupStyle = function (s, lw, lc, ld) {
+export function lineGroupStyle(s, lw, lc, ld) {
     s.style('fill', 'none').each(function (d) {
         var line = (((d || [])[0] || {}).trace || {}).line || {};
         var lw1 = lw || line.width || 0;
@@ -182,14 +183,14 @@ drawing.lineGroupStyle = function (s, lw, lc, ld) {
 
         select(this)
             .call(Color.stroke, lc || line.color)
-            .call(drawing.dashLine, dash, lw1);
+            .call(dashLine, dash, lw1);
     });
 };
 
-drawing.dashLine = function (s, dash, lineWidth) {
+export function dashLine(s, dash, lineWidth) {
     lineWidth = +lineWidth || 0;
 
-    dash = drawing.dashStyle(dash, lineWidth);
+    dash = dashStyle(dash, lineWidth);
 
     s.style({
         'stroke-dasharray': dash,
@@ -197,7 +198,7 @@ drawing.dashLine = function (s, dash, lineWidth) {
     });
 };
 
-drawing.dashStyle = function (dash, lineWidth) {
+export function dashStyle(dash, lineWidth) {
     lineWidth = +lineWidth || 1;
     var dlw = Math.max(lineWidth, 3);
 
@@ -218,7 +219,7 @@ drawing.dashStyle = function (dash, lineWidth) {
 function setFillStyle(sel, trace, gd, forLegend) {
     var markerPattern = trace.fillpattern;
     var fillgradient = trace.fillgradient;
-    var pAttr = drawing.getPatternAttr;
+    var pAttr = getPatternAttr;
     var patternShape = markerPattern && (pAttr(markerPattern.shape, 0, '') || pAttr(markerPattern.path, 0, ''));
     if (patternShape) {
         var patternBGColor = pAttr(markerPattern.bgcolor, 0, null);
@@ -227,7 +228,7 @@ function setFillStyle(sel, trace, gd, forLegend) {
         var patternSize = pAttr(markerPattern.size, 0, 8);
         var patternSolidity = pAttr(markerPattern.solidity, 0, 0.3);
         var patternID = trace.uid;
-        drawing.pattern(
+        pattern(
             sel,
             'point',
             gd,
@@ -291,7 +292,7 @@ function setFillStyle(sel, trace, gd, forLegend) {
             if (direction === 'horizontal') {
                 direction = direction + 'reversed';
             }
-            sel.call(drawing.gradient, gd, gradientID, direction, fillgradient.colorscale, 'fill');
+            sel.call(gradient, gd, gradientID, direction, fillgradient.colorscale, 'fill');
         }
     } else if (trace.fillcolor) {
         sel.call(Color.fill, trace.fillcolor);
@@ -299,14 +300,14 @@ function setFillStyle(sel, trace, gd, forLegend) {
 }
 
 // Same as fillGroupStyle, except in this case the selection may be a transition
-drawing.singleFillStyle = function (sel, gd) {
+export function singleFillStyle(sel, gd) {
     var node = select(sel.node());
     var data = node.data();
     var trace = ((data[0] || [])[0] || {}).trace || {};
     setFillStyle(sel, trace, gd, false);
 };
 
-drawing.fillGroupStyle = function (s, gd, forLegend) {
+export function fillGroupStyle(s, gd, forLegend) {
     s.style('stroke-width', 0).each(function (d) {
         var shape = select(this);
         // N.B. 'd' won't be a calcdata item when
@@ -317,18 +318,18 @@ drawing.fillGroupStyle = function (s, gd, forLegend) {
     });
 };
 
-drawing.symbolNames = [];
-drawing.symbolFuncs = [];
-drawing.symbolBackOffs = [];
-drawing.symbolNeedLines = {};
-drawing.symbolNoDot = {};
-drawing.symbolNoFill = {};
-drawing.symbolList = [];
+export var symbolNames = [];
+export var symbolFuncs = [];
+export var symbolBackOffs = [];
+export var symbolNeedLines = {};
+export var symbolNoDot = {};
+export var symbolNoFill = {};
+export var symbolList = [];
 
 Object.keys(SYMBOLDEFS).forEach(function (k) {
     var symDef = SYMBOLDEFS[k];
     var n = symDef.n;
-    drawing.symbolList.push(
+    symbolList.push(
         n,
         String(n),
         k,
@@ -337,17 +338,17 @@ Object.keys(SYMBOLDEFS).forEach(function (k) {
         String(n + 100),
         k + '-open'
     );
-    drawing.symbolNames[n] = k;
-    drawing.symbolFuncs[n] = symDef.f;
-    drawing.symbolBackOffs[n] = symDef.backoff || 0;
+    symbolNames[n] = k;
+    symbolFuncs[n] = symDef.f;
+    symbolBackOffs[n] = symDef.backoff || 0;
 
     if (symDef.needLine) {
-        drawing.symbolNeedLines[n] = true;
+        symbolNeedLines[n] = true;
     }
     if (symDef.noDot) {
-        drawing.symbolNoDot[n] = true;
+        symbolNoDot[n] = true;
     } else {
-        drawing.symbolList.push(
+        symbolList.push(
             n + 200,
             String(n + 200),
             k + '-dot',
@@ -358,15 +359,15 @@ Object.keys(SYMBOLDEFS).forEach(function (k) {
         );
     }
     if (symDef.noFill) {
-        drawing.symbolNoFill[n] = true;
+        symbolNoFill[n] = true;
     }
 });
 
-var MAXSYMBOL = drawing.symbolNames.length;
+var MAXSYMBOL = symbolNames.length;
 // add a dot in the middle of the symbol
 var DOTPATH = 'M0,0.5L0.5,0L0,-0.5L-0.5,0Z';
 
-drawing.symbolNumber = function (v) {
+export function symbolNumber(v) {
     if (isNumeric(v)) {
         v = +v;
     } else if (typeof v === 'string') {
@@ -379,7 +380,7 @@ drawing.symbolNumber = function (v) {
             vbase += 200;
             v = v.replace('-dot', '');
         }
-        v = drawing.symbolNames.indexOf(v);
+        v = symbolNames.indexOf(v);
         if (v >= 0) {
             v += vbase;
         }
@@ -390,7 +391,7 @@ drawing.symbolNumber = function (v) {
 
 function makePointPath(symbolNumber, r, t, s) {
     var base = symbolNumber % 100;
-    return drawing.symbolFuncs[base](r, t, s) + (symbolNumber >= 200 ? DOTPATH : '');
+    return symbolFuncs[base](r, t, s) + (symbolNumber >= 200 ? DOTPATH : '');
 }
 
 var stopFormatter = numberFormat('~f');
@@ -417,7 +418,7 @@ var gradientInfo = {
  * @param {array} colorscale: as in attribute values, [[fraction, color], ...]
  * @param {string} prop: the property to apply to, 'fill' or 'stroke'
  */
-drawing.gradient = function (sel, gd, gradientID, type, colorscale, prop) {
+export function gradient(sel, gd, gradientID, type, colorscale, prop) {
     var info = gradientInfo[type];
     return gradientWithBounds(
         sel,
@@ -542,7 +543,7 @@ function gradientWithBounds(sel, gd, gradientID, type, colorscale, prop, start, 
  * @param {string} fgcolor: foreground color for this pattern
  * @param {number} fgopacity: foreground opacity for this pattern
  */
-drawing.pattern = function (
+export function pattern(
     sel,
     calledBy,
     gd,
@@ -850,7 +851,7 @@ drawing.pattern = function (
  * except all at once before a full redraw.
  * The upside of this is arbitrary points can share gradient defs
  */
-drawing.initGradients = function (gd) {
+export function initGradients(gd) {
     var fullLayout = gd._fullLayout;
 
     var gradientsGroup = Lib.ensureSingle(fullLayout._defs, 'g', 'gradients');
@@ -859,7 +860,7 @@ drawing.initGradients = function (gd) {
     select(gd).selectAll('.gradient_filled').classed('gradient_filled', false);
 };
 
-drawing.initPatterns = function (gd) {
+export function initPatterns(gd) {
     var fullLayout = gd._fullLayout;
 
     var patternsGroup = Lib.ensureSingle(fullLayout._defs, 'g', 'patterns');
@@ -868,24 +869,24 @@ drawing.initPatterns = function (gd) {
     select(gd).selectAll('.pattern_filled').classed('pattern_filled', false);
 };
 
-drawing.getPatternAttr = function (mp, i, dflt) {
+export function getPatternAttr(mp, i, dflt) {
     if (mp && Lib.isArrayOrTypedArray(mp)) {
         return i < mp.length ? mp[i] : dflt;
     }
     return mp;
 };
 
-drawing.pointStyle = function (s, trace, gd, pt) {
+export function pointStyle(s, trace, gd, pt) {
     if (!s.size()) return;
 
-    var fns = drawing.makePointStyleFns(trace);
+    var fns = makePointStyleFns(trace);
 
     s.each(function (d) {
-        drawing.singlePointStyle(d, select(this), trace, fns, gd, pt);
+        singlePointStyle(d, select(this), trace, fns, gd, pt);
     });
 };
 
-drawing.singlePointStyle = function (d, sel, trace, fns, gd, pt) {
+export function singlePointStyle(d, sel, trace, fns, gd, pt) {
     var marker = trace.marker;
     var markerLine = marker.line;
 
@@ -911,7 +912,7 @@ drawing.singlePointStyle = function (d, sel, trace, fns, gd, pt) {
         }
 
         // turn the symbol into a sanitized number
-        var x = drawing.symbolNumber(d.mx || marker.symbol) || 0;
+        var x = symbolNumber(d.mx || marker.symbol) || 0;
 
         // save if this marker is open
         // because that impacts how to handle colors
@@ -985,7 +986,7 @@ drawing.singlePointStyle = function (d, sel, trace, fns, gd, pt) {
         }
 
         var markerPattern = marker.pattern;
-        var pAttr = drawing.getPatternAttr;
+        var pAttr = getPatternAttr;
         var patternShape = markerPattern && (pAttr(markerPattern.shape, d.i, '') || pAttr(markerPattern.path, d.i, ''));
 
         if (gradientType && gradientType !== 'none') {
@@ -996,7 +997,7 @@ drawing.singlePointStyle = function (d, sel, trace, fns, gd, pt) {
             var gradientID = trace.uid;
             if (perPointGradient) gradientID += '-' + d.i;
 
-            drawing.gradient(
+            gradient(
                 sel,
                 gd,
                 gradientID,
@@ -1033,7 +1034,7 @@ drawing.singlePointStyle = function (d, sel, trace, fns, gd, pt) {
             var patternID = trace.uid;
             if (perPointPattern) patternID += '-' + d.i;
 
-            drawing.pattern(
+            pattern(
                 sel,
                 'point',
                 gd,
@@ -1057,14 +1058,14 @@ drawing.singlePointStyle = function (d, sel, trace, fns, gd, pt) {
     }
 };
 
-drawing.makePointStyleFns = function (trace) {
+export function makePointStyleFns(trace) {
     var out = {};
     var marker = trace.marker;
 
     // allow array marker and marker line colors to be
     // scaled by given max and min to colorscales
-    out.markerScale = drawing.tryColorscale(marker, '');
-    out.lineScale = drawing.tryColorscale(marker, 'line');
+    out.markerScale = tryColorscale(marker, '');
+    out.lineScale = tryColorscale(marker, 'line');
 
     if (Registry.traceIs(trace, 'symbols')) {
         out.ms2mrc = subTypes.isBubble(trace)
@@ -1075,13 +1076,13 @@ drawing.makePointStyleFns = function (trace) {
     }
 
     if (trace.selectedpoints) {
-        Lib.extendFlat(out, drawing.makeSelectedPointStyleFns(trace));
+        Lib.extendFlat(out, makeSelectedPointStyleFns(trace));
     }
 
     return out;
 };
 
-drawing.makeSelectedPointStyleFns = function (trace) {
+export function makeSelectedPointStyleFns(trace) {
     var out = {};
 
     var selectedAttrs = trace.selected || {};
@@ -1146,7 +1147,7 @@ drawing.makeSelectedPointStyleFns = function (trace) {
     return out;
 };
 
-drawing.makeSelectedTextStyleFns = function (trace) {
+export function makeSelectedTextStyleFns(trace) {
     var out = {};
 
     var selectedAttrs = trace.selected || {};
@@ -1174,10 +1175,10 @@ drawing.makeSelectedTextStyleFns = function (trace) {
     return out;
 };
 
-drawing.selectedPointStyle = function (s, trace) {
+export function selectedPointStyle(s, trace) {
     if (!s.size() || !trace.selectedpoints) return;
 
-    var fns = drawing.makeSelectedPointStyleFns(trace);
+    var fns = makeSelectedPointStyleFns(trace);
     var marker = trace.marker || {};
     var seq = [];
 
@@ -1200,7 +1201,7 @@ drawing.selectedPointStyle = function (s, trace) {
 
             pt.attr(
                 'd',
-                makePointPath(drawing.symbolNumber(mx), mrc2, getMarkerAngle(d, trace), getMarkerStandoff(d, trace))
+                makePointPath(symbolNumber(mx), mrc2, getMarkerAngle(d, trace), getMarkerStandoff(d, trace))
             );
 
             // save for Drawing.selectedTextStyle
@@ -1218,7 +1219,7 @@ drawing.selectedPointStyle = function (s, trace) {
     }
 };
 
-drawing.tryColorscale = function (marker, prefix) {
+export function tryColorscale(marker, prefix) {
     var cont = prefix ? Lib.nestedProperty(marker, prefix).get() : marker;
 
     if (cont) {
@@ -1266,12 +1267,12 @@ function extracTextFontSize(d, trace) {
 }
 
 // draw text at points
-drawing.textPointStyle = function (s, trace, gd) {
+export function textPointStyle(s, trace, gd) {
     if (!s.size()) return;
 
     var selectedTextColorFn;
     if (trace.selectedpoints) {
-        var fns = drawing.makeSelectedTextStyleFns(trace);
+        var fns = makeSelectedTextStyleFns(trace);
         selectedTextColorFn = fns.selectedTextColorFn;
     }
 
@@ -1308,7 +1309,7 @@ drawing.textPointStyle = function (s, trace, gd) {
         var fontSize = extracTextFontSize(d, trace);
         var fontColor = selectedTextColorFn ? selectedTextColorFn(d) : d.tc || trace.textfont.color;
 
-        p.call(drawing.font, {
+        p.call(font, {
             family: d.tf || trace.textfont.family,
             weight: d.tw || trace.textfont.weight,
             style: d.ty || trace.textfont.style,
@@ -1325,10 +1326,10 @@ drawing.textPointStyle = function (s, trace, gd) {
     });
 };
 
-drawing.selectedTextStyle = function (s, trace) {
+export function selectedTextStyle(s, trace) {
     if (!s.size() || !trace.selectedpoints) return;
 
-    var fns = drawing.makeSelectedTextStyleFns(trace);
+    var fns = makeSelectedTextStyleFns(trace);
 
     s.each(function (d) {
         var tx = select(this);
@@ -1345,7 +1346,7 @@ drawing.selectedTextStyle = function (s, trace) {
 // generalized Catmull-Rom splines, per
 // http://www.cemyuksel.com/research/catmullrom_param/catmullrom.pdf
 var CatmullRomExp = 0.5;
-drawing.smoothopen = function (pts, smoothness) {
+export function smoothopen(pts, smoothness) {
     if (pts.length < 3) {
         return 'M' + pts.join('L');
     }
@@ -1363,7 +1364,7 @@ drawing.smoothopen = function (pts, smoothness) {
     return path;
 };
 
-drawing.smoothclosed = function (pts, smoothness) {
+export function smoothclosed(pts, smoothness) {
     if (pts.length < 3) {
         return 'M' + pts.join('L') + 'Z';
     }
@@ -1439,7 +1440,7 @@ var STEPPATH = {
 var STEPLINEAR = function (p0, p1, isLastPoint) {
     return 'L' + roundEnd(p1, 0, isLastPoint) + ',' + roundEnd(p1, 1, isLastPoint);
 };
-drawing.steps = function (shape) {
+export function steps(shape) {
     var onestep = STEPPATH[shape] || STEPLINEAR;
     return function (pts) {
         var path = 'M' + roundX(pts[0][0]) + ',' + roundY(pts[0][1]);
@@ -1492,8 +1493,8 @@ function applyBackoff(pt, start) {
             var endMarkerSize = endMarker.size;
             if (Lib.isArrayOrTypedArray(endMarkerSize)) endMarkerSize = endMarkerSize[endI];
 
-            b = endMarker ? drawing.symbolBackOffs[drawing.symbolNumber(endMarkerSymbol)] * endMarkerSize : 0;
-            b += drawing.getMarkerStandoff(d[endI], trace) || 0;
+            b = endMarker ? symbolBackOffs[symbolNumber(endMarkerSymbol)] * endMarkerSize : 0;
+            b += getMarkerStandoff(d[endI], trace) || 0;
         }
 
         var x = x2 - b * Math.cos(t);
@@ -1507,12 +1508,12 @@ function applyBackoff(pt, start) {
     return pt;
 }
 
-drawing.applyBackoff = applyBackoff;
+export { applyBackoff };
 
 // off-screen svg render testing element, shared by the whole page
-// uses the id 'js-plotly-tester' and stores it in drawing.tester
-drawing.makeTester = function () {
-    var tester = Lib.ensureSingleById(select('body'), 'svg', 'js-plotly-tester', function (s) {
+// uses the id 'js-plotly-tester' and stores it in tester
+export function makeTester() {
+    var _tester = Lib.ensureSingleById(select('body'), 'svg', 'js-plotly-tester', function (s) {
         s.attr(xmlnsNamespaces.svgAttrs).style({
             position: 'absolute',
             left: '-10000px',
@@ -1526,15 +1527,15 @@ drawing.makeTester = function () {
     // browsers differ on how they describe the bounding rect of
     // the svg if its contents spill over... so make a 1x1px
     // reference point we can measure off of.
-    var testref = Lib.ensureSingle(tester, 'path', 'js-reference-point', function (s) {
+    var _testref = Lib.ensureSingle(_tester, 'path', 'js-reference-point', function (s) {
         s.attr('d', 'M0,0H1V1H0Z').style({
             'stroke-width': 0,
             fill: 'black'
         });
     });
 
-    drawing.tester = tester;
-    drawing.testref = testref;
+    tester = _tester;
+    testref = _testref;
 };
 
 /*
@@ -1548,9 +1549,9 @@ drawing.makeTester = function () {
  *   `convertToTspans` because in that case we can cache the results, but it's
  *   possible to pass in any svg element.
  *
- * @param {boolean} inTester: is this element already in `drawing.tester`?
+ * @param {boolean} inTester: is this element already in `tester`?
  *   If you are measuring a dummy element, rather than one you really intend
- *   to use on the plot, making it in `drawing.tester` in the first place
+ *   to use on the plot, making it in `tester` in the first place
  *   allows us to test faster because it cuts out cloning and appending it.
  *
  * @param {string} hash: for internal use only, if we already know the cache key
@@ -1559,11 +1560,11 @@ drawing.makeTester = function () {
  * @return {object}: a plain object containing the width, height, left, right,
  *   top, and bottom of `node`
  */
-drawing.savedBBoxes = {};
+export var savedBBoxes = {};
 var savedBBoxesCount = 0;
 var maxSavedBBoxes = 10000;
 
-drawing.bBox = function (node, inTester, hash) {
+export function bBox(node, inTester, hash) {
     /*
      * Cache elements we've already measured so we don't have to
      * remeasure the same thing many times
@@ -1575,7 +1576,7 @@ drawing.bBox = function (node, inTester, hash) {
     if (!hash) hash = nodeHash(node);
     var out;
     if (hash) {
-        out = drawing.savedBBoxes[hash];
+        out = savedBBoxes[hash];
         if (out) return Lib.extendFlat({}, out);
     } else if (node.childNodes.length === 1) {
         /*
@@ -1595,7 +1596,7 @@ drawing.bBox = function (node, inTester, hash) {
             if (!transform) {
                 // in this case, just varying x and y, don't bother caching
                 // the final bBox because the alteration is quick.
-                var innerBB = drawing.bBox(innerNode, false, hash);
+                var innerBB = bBox(innerNode, false, hash);
                 if (x) {
                     innerBB.left += x;
                     innerBB.right += x;
@@ -1618,28 +1619,28 @@ drawing.bBox = function (node, inTester, hash) {
              */
             hash += '~' + x + '~' + y + '~' + transform;
 
-            out = drawing.savedBBoxes[hash];
+            out = savedBBoxes[hash];
             if (out) return Lib.extendFlat({}, out);
         }
     }
-    var testNode, tester;
+    var testNode, testerNode;
     if (inTester) {
         testNode = node;
     } else {
-        tester = drawing.tester.node();
+        testerNode = tester.node();
 
         // copy the node to test into the tester
         testNode = node.cloneNode(true);
-        tester.appendChild(testNode);
+        testerNode.appendChild(testNode);
     }
 
     // standardize its position (and newline tspans if any)
     select(testNode).attr('transform', null).call(svgTextUtils.positionText, 0, 0);
 
     var testRect = testNode.getBoundingClientRect();
-    var refRect = drawing.testref.node().getBoundingClientRect();
+    var refRect = testref.node().getBoundingClientRect();
 
-    if (!inTester) tester.removeChild(testNode);
+    if (!inTester) testerNode.removeChild(testNode);
 
     var bb = {
         height: testRect.height,
@@ -1654,12 +1655,12 @@ drawing.bBox = function (node, inTester, hash) {
     // or a long session could overload on memory
     // by saving boxes for long-gone elements
     if (savedBBoxesCount >= maxSavedBBoxes) {
-        drawing.savedBBoxes = {};
+        savedBBoxes = {};
         savedBBoxesCount = 0;
     }
 
     // cache this bbox
-    if (hash) drawing.savedBBoxes[hash] = bb;
+    if (hash) savedBBoxes[hash] = bb;
     savedBBoxesCount++;
 
     return Lib.extendFlat({}, bb);
@@ -1685,7 +1686,7 @@ function nodeHash(node) {
  * - context._baseUrl {string}
  * - context._exportedPlot {boolean}
  */
-drawing.setClipUrl = function (s, localId, gd) {
+export function setClipUrl(s, localId, gd) {
     s.attr('clip-path', getFullUrl(localId, gd));
 };
 
@@ -1697,7 +1698,7 @@ function getFullUrl(localId, gd) {
     return baseUrl ? "url('" + baseUrl + '#' + localId + "')" : 'url(#' + localId + ')';
 }
 
-drawing.getTranslate = function (element) {
+export function getTranslate(element) {
     // Note the separator [^\d] between x and y in this regex
     // We generally use ',' but IE will convert it to ' '
     var re = /.*\btranslate\((-?\d*\.?\d*)[^-\d]*(-?\d*\.?\d*)[^\d].*/;
@@ -1716,7 +1717,7 @@ drawing.getTranslate = function (element) {
     };
 };
 
-drawing.setTranslate = function (element, x, y) {
+export function setTranslate(element, x, y) {
     var re = /(\btranslate\(.*?\);?)/;
     var getter = element.attr ? 'attr' : 'getAttribute';
     var setter = element.attr ? 'attr' : 'setAttribute';
@@ -1734,7 +1735,7 @@ drawing.setTranslate = function (element, x, y) {
     return transform;
 };
 
-drawing.getScale = function (element) {
+export function getScale(element) {
     var re = /.*\bscale\((\d*\.?\d*)[^\d]*(\d*\.?\d*)[^\d].*/;
     var getter = element.attr ? 'attr' : 'getAttribute';
     var transform = element[getter]('transform') || '';
@@ -1751,7 +1752,7 @@ drawing.getScale = function (element) {
     };
 };
 
-drawing.setScale = function (element, x, y) {
+export function setScale(element, x, y) {
     var re = /(\bscale\(.*?\);?)/;
     var getter = element.attr ? 'attr' : 'getAttribute';
     var setter = element.attr ? 'attr' : 'setAttribute';
@@ -1771,7 +1772,7 @@ drawing.setScale = function (element, x, y) {
 
 var SCALE_RE = /\s*sc.*/;
 
-drawing.setPointGroupScale = function (selection, xScale, yScale) {
+export function setPointGroupScale(selection, xScale, yScale) {
     xScale = xScale || 1;
     yScale = yScale || 1;
 
@@ -1790,7 +1791,7 @@ drawing.setPointGroupScale = function (selection, xScale, yScale) {
 
 var TEXT_POINT_LAST_TRANSLATION_RE = /translate\([^)]*\)\s*$/;
 
-drawing.setTextPointsScale = function (selection, xScale, yScale) {
+export function setTextPointsScale(selection, xScale, yScale) {
     if (!selection) return;
 
     selection.each(function () {
@@ -1836,7 +1837,7 @@ function getMarkerStandoff(d, trace) {
     return standoff;
 }
 
-drawing.getMarkerStandoff = getMarkerStandoff;
+export { getMarkerStandoff };
 
 var atan2 = Math.atan2;
 var cos = Math.cos;
@@ -1962,6 +1963,63 @@ function getMarkerAngle(d, trace) {
     return angle;
 }
 
-drawing.getMarkerAngle = getMarkerAngle;
+export { getMarkerAngle };
 
-export default drawing;
+
+export default {
+    font,
+    setPosition,
+    setSize,
+    setRect,
+    translatePoint,
+    translatePoints,
+    hideOutsideRangePoint,
+    hideOutsideRangePoints,
+    crispRound,
+    singleLineStyle,
+    lineGroupStyle,
+    dashLine,
+    dashStyle,
+    singleFillStyle,
+    fillGroupStyle,
+    symbolNames,
+    symbolFuncs,
+    symbolBackOffs,
+    symbolNeedLines,
+    symbolNoDot,
+    symbolNoFill,
+    symbolList,
+    symbolNumber,
+    gradient,
+    pattern,
+    initGradients,
+    initPatterns,
+    getPatternAttr,
+    pointStyle,
+    singlePointStyle,
+    makePointStyleFns,
+    makeSelectedPointStyleFns,
+    makeSelectedTextStyleFns,
+    selectedPointStyle,
+    tryColorscale,
+    textPointStyle,
+    selectedTextStyle,
+    smoothopen,
+    smoothclosed,
+    steps,
+    applyBackoff,
+    makeTester,
+    savedBBoxes,
+    bBox,
+    setClipUrl,
+    getTranslate,
+    setTranslate,
+    getScale,
+    setScale,
+    setPointGroupScale,
+    setTextPointsScale,
+    getMarkerStandoff,
+    getMarkerAngle,
+    tester,
+    testref,
+};

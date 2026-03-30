@@ -5,7 +5,7 @@ import Lib from '../../lib/index.js';
 import Events from '../../lib/events.js';
 import svgTextUtils from '../../lib/svg_text_utils.js';
 import overrideCursor from '../../lib/override_cursor.js';
-import Drawing from '../drawing/index.js';
+import { dashStyle, font, setClipUrl, setRect, tester } from '../drawing/index.js';
 import Color from '../color/index.js';
 import dragElement from '../dragelement/index.js';
 import Axes from '../../plots/cartesian/axes.js';
@@ -995,7 +995,7 @@ function createHoverText(hoverData, opts) {
 
         ltext
             .text(t0)
-            .call(Drawing.font, commonLabelFont)
+            .call(font, commonLabelFont)
             .call(svgTextUtils.positionText, 0, 0)
             .call(svgTextUtils.convertToTspans, gd);
 
@@ -1146,7 +1146,7 @@ function createHoverText(hoverData, opts) {
                 if (anchor === 'end') {
                     ltext.selectAll('tspan').each(function () {
                         var s = select(this);
-                        var dummy = Drawing.tester.append('text').text(s.text()).call(Drawing.font, commonLabelFont);
+                        var dummy = tester.append('text').text(s.text()).call(font, commonLabelFont);
                         var dummyBB = getBoundingClientRect(gd, dummy.node());
                         if (Math.round(dummyBB.width) < Math.round(tbb.width)) {
                             s.attr('x', ltx - dummyBB.width);
@@ -1163,7 +1163,7 @@ function createHoverText(hoverData, opts) {
             textClip.enter().append('clipPath').attr('id', clipId).append('path');
             textClip.exit().remove();
             textClip.select('path').attr('d', clipPath);
-            Drawing.setClipUrl(ltext, clipPath ? clipId : null, gd);
+            setClipUrl(ltext, clipPath ? clipId : null, gd);
         }
 
         label.attr('transform', strTranslate(lx, ly));
@@ -1394,7 +1394,7 @@ function createHoverText(hoverData, opts) {
             g.append('text').classed('name', true);
             // trace data label (path and text.nums)
             g.append('path').style('stroke-width', '1px');
-            g.append('text').classed('nums', true).call(Drawing.font, {
+            g.append('text').classed('nums', true).call(font, {
                 weight: fontWeight,
                 style: fontStyle,
                 variant: fontVariant,
@@ -1433,7 +1433,7 @@ function createHoverText(hoverData, opts) {
         // main label
         var tx = g
             .select('text.nums')
-            .call(Drawing.font, {
+            .call(font, {
                 family: d.fontFamily || fontFamily,
                 size: d.fontSize || fontSize,
                 color: d.fontColor || contrastColor,
@@ -1455,7 +1455,7 @@ function createHoverText(hoverData, opts) {
 
         // secondary label for non-empty 'name'
         if (name && name !== text) {
-            tx2.call(Drawing.font, {
+            tx2.call(font, {
                 family: d.fontFamily || fontFamily,
                 size: d.fontSize || fontSize,
                 color: nameColor,
@@ -2027,7 +2027,7 @@ function alignHoverText(hoverLabels, rotateLabels, scaleX, scaleY) {
                 pY(offsetY + d.ty0 - d.by / 2 + HOVERTEXTPAD)
             );
             g.select('rect').call(
-                Drawing.setRect,
+                setRect,
                 pX(shiftX.text2ShiftX + ((shiftX.alignShift - 1) * d.tx2width) / 2 + offsetX),
                 pY(offsetY - d.by / 2 - 1),
                 pX(d.tx2width),
@@ -2203,7 +2203,7 @@ function createSpikelines(gd, closestPoints, opts) {
                     y2: hLinePointY,
                     'stroke-width': yThickness,
                     stroke: yColor,
-                    'stroke-dasharray': Drawing.dashStyle(ya.spikedash, yThickness)
+                    'stroke-dasharray': dashStyle(ya.spikedash, yThickness)
                 })
                 .classed('spikeline', true)
                 .classed('crisp', true);
@@ -2287,7 +2287,7 @@ function createSpikelines(gd, closestPoints, opts) {
                     y2: yEndSpike,
                     'stroke-width': xThickness,
                     stroke: xColor,
-                    'stroke-dasharray': Drawing.dashStyle(xa.spikedash, xThickness)
+                    'stroke-dasharray': dashStyle(xa.spikedash, xThickness)
                 })
                 .classed('spikeline', true)
                 .classed('crisp', true);

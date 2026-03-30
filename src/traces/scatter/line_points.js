@@ -1,4 +1,4 @@
-import Drawing from '../../components/drawing/index.js';
+import { applyBackoff } from '../../components/drawing/index.js';
 import numConstants from '../../constants/numerical.js';
 import Lib from '../../lib/index.js';
 import constants from './constants.js';
@@ -468,7 +468,7 @@ export default function linePoints(d, opts) {
                 var start = segments[j][k];
                 var end = segments[j][k + 1];
 
-                var xy = Drawing.applyBackoff(end, start);
+                var xy = applyBackoff(end, start);
                 if(
                     xy[0] !== end[0] ||
                     xy[1] !== end[1]

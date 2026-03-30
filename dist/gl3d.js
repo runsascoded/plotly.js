@@ -16444,12 +16444,12 @@ var Plotly = (() => {
               };
               proto12.update = function(bounds, labels, labelFont, ticks3, tickFont) {
                 var data = [];
-                function addItem(t, text, font3, size, lineSpacing2, styletags2) {
+                function addItem(t, text, font4, size, lineSpacing2, styletags2) {
                   var fontKey = [
-                    font3.style,
-                    font3.weight,
-                    font3.variant,
-                    font3.family
+                    font4.style,
+                    font4.weight,
+                    font4.variant,
+                    font4.family
                   ].join("_");
                   var fontcache = __TEXT_CACHE[fontKey];
                   if (!fontcache) {
@@ -16459,10 +16459,10 @@ var Plotly = (() => {
                   if (!mesh) {
                     mesh = fontcache[text] = tryVectorizeText(text, {
                       triangles: true,
-                      font: font3.family,
-                      fontStyle: font3.style,
-                      fontWeight: font3.weight,
-                      fontVariant: font3.variant,
+                      font: font4.family,
+                      fontStyle: font4.style,
+                      fontWeight: font4.weight,
+                      fontVariant: font4.variant,
                       textAlign: "center",
                       textBaseline: "middle",
                       lineSpacing: lineSpacing2,
@@ -16509,7 +16509,7 @@ var Plotly = (() => {
                     if (!ticks3[d][i].text) {
                       continue;
                     }
-                    var font2 = {
+                    var font3 = {
                       family: ticks3[d][i].font || tickFont[d].family,
                       style: tickFont[d].fontStyle || tickFont[d].style,
                       weight: tickFont[d].fontWeight || tickFont[d].weight,
@@ -16518,7 +16518,7 @@ var Plotly = (() => {
                     addItem(
                       ticks3[d][i].x,
                       ticks3[d][i].text,
-                      font2,
+                      font3,
                       ticks3[d][i].fontSize || 12,
                       lineSpacing,
                       styletags
@@ -17804,7 +17804,7 @@ var Plotly = (() => {
               }
               var SCRATCH_P = [0, 0, 0, 1];
               var SCRATCH_Q = [0, 0, 0, 1];
-              function gradient(result, M, v, width, height) {
+              function gradient2(result, M, v, width, height) {
                 for (var i = 0; i < 3; ++i) {
                   var p = SCRATCH_P;
                   var q = SCRATCH_Q;
@@ -17879,7 +17879,7 @@ var Plotly = (() => {
                       }
                       for (var j = 0; j < poly.length; ++j) {
                         var v = poly[j];
-                        var grad = gradient(SCRATCH_X, mvp, v, width, height);
+                        var grad = gradient2(SCRATCH_X, mvp, v, width, height);
                         for (var k = 0; k < 3; ++k) {
                           ranges[k].lo = Math.min(ranges[k].lo, v[k]);
                           ranges[k].hi = Math.max(ranges[k].hi, v[k]);
@@ -19572,7 +19572,7 @@ var Plotly = (() => {
                 GRADIENT_CACHE[token] = proc;
                 return proc;
               }
-              module2.exports = function gradient(out, inp, bc) {
+              module2.exports = function gradient2(out, inp, bc) {
                 if (!Array.isArray(bc)) {
                   if (typeof bc === "string") {
                     bc = dup(inp.dimension, bc);
@@ -20361,7 +20361,7 @@ var Plotly = (() => {
                 });
                 alpha[0] = Math.min(Math.max(alpha[0], 0), 1);
                 alpha[1] = Math.min(Math.max(alpha[1], 0), 1);
-                var steps = cmap.map(function(c, i2) {
+                var steps2 = cmap.map(function(c, i2) {
                   var index = cmap[i2].index;
                   var rgba4 = cmap[i2].rgb.slice();
                   if (rgba4.length === 4 && rgba4[3] >= 0 && rgba4[3] <= 1) {
@@ -20373,8 +20373,8 @@ var Plotly = (() => {
                 var colors = [];
                 for (i = 0; i < indicies.length - 1; ++i) {
                   nsteps = indicies[i + 1] - indicies[i];
-                  fromrgba = steps[i];
-                  torgba = steps[i + 1];
+                  fromrgba = steps2[i];
+                  torgba = steps2[i + 1];
                   for (var j = 0; j < nsteps; j++) {
                     var amt = j / nsteps;
                     colors.push([
@@ -30232,7 +30232,7 @@ var Plotly = (() => {
                   this.highlightId = [a0 / 255, a1 / 255, a2 / 255, 0];
                 }
               };
-              function get_glyphData(glyphs, index, font2, pixelRatio) {
+              function get_glyphData(glyphs, index, font3, pixelRatio) {
                 var str;
                 if (isArrayOrTypedArray15(glyphs)) {
                   if (index < glyphs.length) {
@@ -30249,17 +30249,17 @@ var Plotly = (() => {
                   str = "\u25BC";
                   visible = false;
                 }
-                if (!font2) font2 = {};
-                var family = font2.family;
+                if (!font3) font3 = {};
+                var family = font3.family;
                 if (isArrayOrTypedArray15(family)) family = family[index];
                 if (!family) family = "normal";
-                var weight = font2.weight;
+                var weight = font3.weight;
                 if (isArrayOrTypedArray15(weight)) weight = weight[index];
                 if (!weight) weight = "normal";
-                var style4 = font2.style;
+                var style4 = font3.style;
                 if (isArrayOrTypedArray15(style4)) style4 = style4[index];
                 if (!style4) style4 = "normal";
-                var variant = font2.variant;
+                var variant = font3.variant;
                 if (isArrayOrTypedArray15(variant)) variant = variant[index];
                 if (!variant) variant = "normal";
                 var glyph = getGlyph(str, {
@@ -30268,7 +30268,7 @@ var Plotly = (() => {
                   style: style4,
                   variant
                 }, pixelRatio);
-                var glyph = getGlyph(str, font2, pixelRatio);
+                var glyph = getGlyph(str, font3, pixelRatio);
                 return {
                   mesh: glyph[0],
                   lines: glyph[1],
@@ -30327,7 +30327,7 @@ var Plotly = (() => {
                 }
                 this.dirty = true;
                 var points = options.position;
-                var font2 = {
+                var font3 = {
                   family: options.font || "normal",
                   style: options.fontStyle || "normal",
                   weight: options.fontWeight || "normal",
@@ -30368,7 +30368,7 @@ var Plotly = (() => {
                           continue count_loop;
                         }
                       }
-                      var glyphData = get_glyphData(glyphs, i, font2, this.pixelRatio);
+                      var glyphData = get_glyphData(glyphs, i, font3, this.pixelRatio);
                       var glyphMesh = glyphData.mesh;
                       var glyphLines = glyphData.lines;
                       var glyphBounds = glyphData.bounds;
@@ -30399,7 +30399,7 @@ var Plotly = (() => {
                         upperBound[j] = Math.max(upperBound[j], x[j]);
                         lowerBound[j] = Math.min(lowerBound[j], x[j]);
                       }
-                      var glyphData = get_glyphData(glyphs, i, font2, this.pixelRatio);
+                      var glyphData = get_glyphData(glyphs, i, font3, this.pixelRatio);
                       var glyphMesh = glyphData.mesh;
                       var glyphLines = glyphData.lines;
                       var glyphBounds = glyphData.bounds;
@@ -33246,12 +33246,12 @@ var Plotly = (() => {
               var vectorizeText = __webpack_require__2(4359);
               module2.exports = getGlyph;
               var GLYPH_CACHE = {};
-              function getGlyph(symbol, font2, pixelRatio) {
+              function getGlyph(symbol, font3, pixelRatio) {
                 var fontKey = [
-                  font2.style,
-                  font2.weight,
-                  font2.variant,
-                  font2.family
+                  font3.style,
+                  font3.weight,
+                  font3.variant,
+                  font3.family
                 ].join("_");
                 var fontCache = GLYPH_CACHE[fontKey];
                 if (!fontCache) {
@@ -33264,10 +33264,10 @@ var Plotly = (() => {
                   textAlign: "center",
                   textBaseline: "middle",
                   lineHeight: 1,
-                  font: font2.family,
-                  fontStyle: font2.style,
-                  fontWeight: font2.weight,
-                  fontVariant: font2.variant,
+                  font: font3.family,
+                  fontStyle: font3.style,
+                  fontWeight: font3.weight,
+                  fontVariant: font3.variant,
                   lineSpacing: 1.25,
                   styletags: {
                     breaklines: true,
@@ -33515,7 +33515,7 @@ var Plotly = (() => {
               var multiply = __webpack_require__2(6760);
               var invert = __webpack_require__2(7608);
               var bsearch = __webpack_require__2(2478);
-              var gradient = __webpack_require__2(6199);
+              var gradient2 = __webpack_require__2(6199);
               var shaders = __webpack_require__2(990);
               var createShader = shaders.createShader;
               var createContourShader = shaders.createContourShader;
@@ -34230,7 +34230,7 @@ var Plotly = (() => {
                   var fields = this._field;
                   var dfields = ndarray2(pool.mallocFloat(fields[2].size * 3 * 2), [3, shape[0] + 2, shape[1] + 2, 2]);
                   for (i = 0; i < 3; ++i) {
-                    gradient(dfields.pick(i), fields[i], "mirror");
+                    gradient2(dfields.pick(i), fields[i], "mirror");
                   }
                   var normals = ndarray2(pool.mallocFloat(fields[2].size * 3), [shape[0] + 2, shape[1] + 2, 3]);
                   for (i = 0; i < shape[0] + 2; ++i) {
@@ -49300,9 +49300,9 @@ var Plotly = (() => {
       layoutOut._dataTemplate = template.data;
     }
     coerce3("autotypenumbers");
-    var font2 = lib_default.coerceFont(coerce3, "font");
-    var fontSize = font2.size;
-    lib_default.coerceFont(coerce3, "title.font", font2, { overrideDflt: {
+    var font3 = lib_default.coerceFont(coerce3, "font");
+    var fontSize = font3.size;
+    lib_default.coerceFont(coerce3, "title.font", font3, { overrideDflt: {
       size: Math.round(fontSize * 1.4)
     } });
     coerce3("title.text", layoutOut._dfltTitle.plot);
@@ -49318,7 +49318,7 @@ var Plotly = (() => {
     coerce3("title.y");
     coerce3("title.yanchor");
     coerce3("title.subtitle.text", layoutOut._dfltTitle.subtitle);
-    lib_default.coerceFont(coerce3, "title.subtitle.font", font2, {
+    lib_default.coerceFont(coerce3, "title.subtitle.font", font3, {
       overrideDflt: {
         size: Math.round(layoutOut.title.font.size * 0.7)
       }
@@ -53853,15 +53853,15 @@ var Plotly = (() => {
       if (!options.noTicklabelstandoff) {
         coerce3("ticklabelstandoff");
       }
-      var font2 = options.font || {};
+      var font3 = options.font || {};
       var contColor = containerOut.color;
       var position = containerOut.ticklabelposition || "";
       var dfltFontColor = position.indexOf("inside") !== -1 ? contrast(options.bgColor) : (
         // as with title.font.color, inherit axis.color only if one was
         // explicitly provided
-        contColor && contColor !== layout_attributes_default4.color.dflt ? contColor : font2.color
+        contColor && contColor !== layout_attributes_default4.color.dflt ? contColor : font3.color
       );
-      lib_default.coerceFont(coerce3, "tickfont", font2, { overrideDflt: {
+      lib_default.coerceFont(coerce3, "tickfont", font3, { overrideDflt: {
         color: dfltFontColor
       } });
       if (!options.noTicklabelstep && axType !== "multicategory" && axType !== "log") {
@@ -54005,13 +54005,13 @@ var Plotly = (() => {
     }, "ticklabelposition");
     coerce3("ticklabeloverflow", ticklabelposition.indexOf("inside") !== -1 ? "hide past domain" : "hide past div");
     handleTickValueDefaults(colorbarIn, colorbarOut, coerce3, "linear");
-    var font2 = layout.font;
+    var font3 = layout.font;
     var opts = {
       noAutotickangles: true,
       noTicklabelshift: true,
       noTicklabelstandoff: true,
       outerTicks: false,
-      font: font2
+      font: font3
     };
     if (ticklabelposition.indexOf("inside") !== -1) {
       opts.bgColor = "black";
@@ -54020,8 +54020,8 @@ var Plotly = (() => {
     handleTickLabelDefaults(colorbarIn, colorbarOut, coerce3, "linear", opts);
     handleTickMarkDefaults(colorbarIn, colorbarOut, coerce3, "linear", opts);
     coerce3("title.text", layout._dfltTitle.colorbar);
-    var tickFont = colorbarOut.showticklabels ? colorbarOut.tickfont : font2;
-    var dfltTitleFont = lib_default.extendFlat({}, font2, {
+    var tickFont = colorbarOut.showticklabels ? colorbarOut.tickfont : font3;
+    var dfltTitleFont = lib_default.extendFlat({}, font3, {
       family: tickFont.family,
       size: lib_default.bigFont(tickFont.size)
     });
@@ -55155,19 +55155,20 @@ var Plotly = (() => {
   }
   var { DESELECTDIM: DESELECTDIM2 } = interactions_default;
   var numberFormat = lib_default.numberFormat;
+  var tester;
+  var testref;
   var strTranslate2 = lib_default.strTranslate;
   var LINE_SPACING2 = alignment_default.LINE_SPACING;
-  var drawing = {};
-  drawing.font = function(s, font2) {
-    var variant = font2.variant;
-    var style4 = font2.style;
-    var weight = font2.weight;
-    var color3 = font2.color;
-    var size = font2.size;
-    var family = font2.family;
-    var shadow = font2.shadow;
-    var lineposition = font2.lineposition;
-    var textcase = font2.textcase;
+  function font2(s, font3) {
+    var variant = font3.variant;
+    var style4 = font3.style;
+    var weight = font3.weight;
+    var color3 = font3.color;
+    var size = font3.size;
+    var family = font3.family;
+    var shadow = font3.shadow;
+    var lineposition = font3.lineposition;
+    var textcase = font3.textcase;
     if (family) s.style("font-family", family);
     if (size + 1) s.style("font-size", size + "px");
     if (color3) s.call(color_default.fill, color3);
@@ -55181,7 +55182,7 @@ var Plotly = (() => {
         shadow === "auto" ? svg_text_utils_default.makeTextShadow(color_default.contrast(color3)) : dropNone(shadow)
       );
     if (lineposition) s.style("text-decoration-line", dropNone(lineposition2decorationLine(lineposition)));
-  };
+  }
   function dropNone(a) {
     return a === "none" ? void 0 : a;
   }
@@ -55197,16 +55198,16 @@ var Plotly = (() => {
   function lineposition2decorationLine(lineposition) {
     return lineposition.replace("under", "underline").replace("over", "overline").replace("through", "line-through").split("+").join(" ");
   }
-  drawing.setPosition = function(s, x, y) {
+  function setPosition(s, x, y) {
     s.attr("x", x).attr("y", y);
-  };
-  drawing.setSize = function(s, w, h) {
+  }
+  function setSize(s, w, h) {
     s.attr("width", w).attr("height", h);
-  };
-  drawing.setRect = function(s, x, y, w, h) {
-    s.call(drawing.setPosition, x, y).call(drawing.setSize, w, h);
-  };
-  drawing.translatePoint = function(d, sel, xa, ya) {
+  }
+  function setRect(s, x, y, w, h) {
+    s.call(setPosition, x, y).call(setSize, w, h);
+  }
+  function translatePoint(d, sel, xa, ya) {
     var x = xa.c2p(d.x);
     var y = ya.c2p(d.y);
     if ((0, import_fast_isnumeric18.default)(x) && (0, import_fast_isnumeric18.default)(y) && sel.node()) {
@@ -55219,17 +55220,17 @@ var Plotly = (() => {
       return false;
     }
     return true;
-  };
-  drawing.translatePoints = function(s, xa, ya) {
+  }
+  function translatePoints(s, xa, ya) {
     s.each(function(d) {
       var sel = select_default2(this);
-      drawing.translatePoint(d, sel, xa, ya);
+      translatePoint(d, sel, xa, ya);
     });
-  };
-  drawing.hideOutsideRangePoint = function(d, sel, xa, ya, xcalendar, ycalendar) {
+  }
+  function hideOutsideRangePoint(d, sel, xa, ya, xcalendar, ycalendar) {
     sel.attr("display", xa.isPtWithinRange(d, xcalendar) && ya.isPtWithinRange(d, ycalendar) ? null : "none");
-  };
-  drawing.hideOutsideRangePoints = function(traceGroups, subplot) {
+  }
+  function hideOutsideRangePoints(traceGroups, subplot) {
     if (!subplot._hasClipOnAxisFalse) return;
     var xa = subplot.xaxis;
     var ya = subplot.yaxis;
@@ -55239,41 +55240,41 @@ var Plotly = (() => {
       var ycalendar = trace.ycalendar;
       var selector = registry_default.traceIs(trace, "bar-like") ? ".bartext" : ".point,.textpoint";
       traceGroups.selectAll(selector).each(function(d2) {
-        drawing.hideOutsideRangePoint(d2, select_default2(this), xa, ya, xcalendar, ycalendar);
+        hideOutsideRangePoint(d2, select_default2(this), xa, ya, xcalendar, ycalendar);
       });
     });
-  };
-  drawing.crispRound = function(gd, lineWidth, dflt) {
+  }
+  function crispRound(gd, lineWidth, dflt) {
     if (!lineWidth || !(0, import_fast_isnumeric18.default)(lineWidth)) return dflt || 0;
     if (gd._context.staticPlot) return lineWidth;
     if (lineWidth < 1) return 1;
     return Math.round(lineWidth);
-  };
-  drawing.singleLineStyle = function(d, s, lw, lc, ld) {
+  }
+  function singleLineStyle(d, s, lw, lc, ld) {
     s.style("fill", "none");
     var line = (((d || [])[0] || {}).trace || {}).line || {};
     var lw1 = lw || line.width || 0;
     var dash2 = ld || line.dash || "";
     color_default.stroke(s, lc || line.color);
-    drawing.dashLine(s, dash2, lw1);
-  };
-  drawing.lineGroupStyle = function(s, lw, lc, ld) {
+    dashLine(s, dash2, lw1);
+  }
+  function lineGroupStyle(s, lw, lc, ld) {
     s.style("fill", "none").each(function(d) {
       var line = (((d || [])[0] || {}).trace || {}).line || {};
       var lw1 = lw || line.width || 0;
       var dash2 = ld || line.dash || "";
-      select_default2(this).call(color_default.stroke, lc || line.color).call(drawing.dashLine, dash2, lw1);
+      select_default2(this).call(color_default.stroke, lc || line.color).call(dashLine, dash2, lw1);
     });
-  };
-  drawing.dashLine = function(s, dash2, lineWidth) {
+  }
+  function dashLine(s, dash2, lineWidth) {
     lineWidth = +lineWidth || 0;
-    dash2 = drawing.dashStyle(dash2, lineWidth);
+    dash2 = dashStyle(dash2, lineWidth);
     s.style({
       "stroke-dasharray": dash2,
       "stroke-width": lineWidth + "px"
     });
-  };
-  drawing.dashStyle = function(dash2, lineWidth) {
+  }
+  function dashStyle(dash2, lineWidth) {
     lineWidth = +lineWidth || 1;
     var dlw = Math.max(lineWidth, 3);
     if (dash2 === "solid") dash2 = "";
@@ -55286,11 +55287,11 @@ var Plotly = (() => {
       dash2 = 5 * dlw + "px," + 2 * dlw + "px," + dlw + "px," + 2 * dlw + "px";
     }
     return dash2;
-  };
+  }
   function setFillStyle(sel, trace, gd, forLegend) {
     var markerPattern = trace.fillpattern;
     var fillgradient = trace.fillgradient;
-    var pAttr = drawing.getPatternAttr;
+    var pAttr = getPatternAttr;
     var patternShape = markerPattern && (pAttr(markerPattern.shape, 0, "") || pAttr(markerPattern.path, 0, ""));
     if (patternShape) {
       var patternBGColor = pAttr(markerPattern.bgcolor, 0, null);
@@ -55299,7 +55300,7 @@ var Plotly = (() => {
       var patternSize = pAttr(markerPattern.size, 0, 8);
       var patternSolidity = pAttr(markerPattern.solidity, 0, 0.3);
       var patternID = trace.uid;
-      drawing.pattern(
+      pattern2(
         sel,
         "point",
         gd,
@@ -55360,37 +55361,37 @@ var Plotly = (() => {
         if (direction === "horizontal") {
           direction = direction + "reversed";
         }
-        sel.call(drawing.gradient, gd, gradientID, direction, fillgradient.colorscale, "fill");
+        sel.call(gradient, gd, gradientID, direction, fillgradient.colorscale, "fill");
       }
     } else if (trace.fillcolor) {
       sel.call(color_default.fill, trace.fillcolor);
     }
   }
-  drawing.singleFillStyle = function(sel, gd) {
+  function singleFillStyle(sel, gd) {
     var node = select_default2(sel.node());
     var data = node.data();
     var trace = ((data[0] || [])[0] || {}).trace || {};
     setFillStyle(sel, trace, gd, false);
-  };
-  drawing.fillGroupStyle = function(s, gd, forLegend) {
+  }
+  function fillGroupStyle(s, gd, forLegend) {
     s.style("stroke-width", 0).each(function(d) {
       var shape = select_default2(this);
       if (d[0].trace) {
         setFillStyle(shape, d[0].trace, gd, forLegend);
       }
     });
-  };
-  drawing.symbolNames = [];
-  drawing.symbolFuncs = [];
-  drawing.symbolBackOffs = [];
-  drawing.symbolNeedLines = {};
-  drawing.symbolNoDot = {};
-  drawing.symbolNoFill = {};
-  drawing.symbolList = [];
+  }
+  var symbolNames = [];
+  var symbolFuncs = [];
+  var symbolBackOffs = [];
+  var symbolNeedLines = {};
+  var symbolNoDot = {};
+  var symbolNoFill = {};
+  var symbolList = [];
   Object.keys(symbol_defs_default).forEach(function(k) {
     var symDef = symbol_defs_default[k];
     var n = symDef.n;
-    drawing.symbolList.push(
+    symbolList.push(
       n,
       String(n),
       k,
@@ -55398,16 +55399,16 @@ var Plotly = (() => {
       String(n + 100),
       k + "-open"
     );
-    drawing.symbolNames[n] = k;
-    drawing.symbolFuncs[n] = symDef.f;
-    drawing.symbolBackOffs[n] = symDef.backoff || 0;
+    symbolNames[n] = k;
+    symbolFuncs[n] = symDef.f;
+    symbolBackOffs[n] = symDef.backoff || 0;
     if (symDef.needLine) {
-      drawing.symbolNeedLines[n] = true;
+      symbolNeedLines[n] = true;
     }
     if (symDef.noDot) {
-      drawing.symbolNoDot[n] = true;
+      symbolNoDot[n] = true;
     } else {
-      drawing.symbolList.push(
+      symbolList.push(
         n + 200,
         String(n + 200),
         k + "-dot",
@@ -55417,12 +55418,12 @@ var Plotly = (() => {
       );
     }
     if (symDef.noFill) {
-      drawing.symbolNoFill[n] = true;
+      symbolNoFill[n] = true;
     }
   });
-  var MAXSYMBOL = drawing.symbolNames.length;
+  var MAXSYMBOL = symbolNames.length;
   var DOTPATH = "M0,0.5L0.5,0L0,-0.5L-0.5,0Z";
-  drawing.symbolNumber = function(v) {
+  function symbolNumber(v) {
     if ((0, import_fast_isnumeric18.default)(v)) {
       v = +v;
     } else if (typeof v === "string") {
@@ -55435,16 +55436,16 @@ var Plotly = (() => {
         vbase += 200;
         v = v.replace("-dot", "");
       }
-      v = drawing.symbolNames.indexOf(v);
+      v = symbolNames.indexOf(v);
       if (v >= 0) {
         v += vbase;
       }
     }
     return v % 100 >= MAXSYMBOL || v >= 400 ? 0 : Math.floor(Math.max(v, 0));
-  };
-  function makePointPath(symbolNumber, r, t, s) {
-    var base = symbolNumber % 100;
-    return drawing.symbolFuncs[base](r, t, s) + (symbolNumber >= 200 ? DOTPATH : "");
+  }
+  function makePointPath(symbolNumber2, r, t, s) {
+    var base = symbolNumber2 % 100;
+    return symbolFuncs[base](r, t, s) + (symbolNumber2 >= 200 ? DOTPATH : "");
   }
   var stopFormatter = numberFormat("~f");
   var gradientInfo = {
@@ -55455,7 +55456,7 @@ var Plotly = (() => {
     vertical: { type: "linear", start: { x: 0, y: 1 }, stop: { x: 0, y: 0 } },
     verticalreversed: { type: "linear", start: { x: 0, y: 1 }, stop: { x: 0, y: 0 }, reversed: true }
   };
-  drawing.gradient = function(sel, gd, gradientID, type, colorscale, prop) {
+  function gradient(sel, gd, gradientID, type, colorscale, prop) {
     var info = gradientInfo[type];
     return gradientWithBounds(
       sel,
@@ -55469,7 +55470,7 @@ var Plotly = (() => {
       false,
       info.reversed
     );
-  };
+  }
   function gradientWithBounds(sel, gd, gradientID, type, colorscale, prop, start2, stop, inUserSpace, reversed) {
     var len2 = colorscale.length;
     var info;
@@ -55501,9 +55502,9 @@ var Plotly = (() => {
     }
     var fullLayout = gd._fullLayout;
     var fullID = "g" + fullLayout._uid + "-" + gradientID;
-    var gradient = fullLayout._defs.select(".gradients").selectAll("#" + fullID).data([type + colorStops.join(";")], lib_default.identity);
-    gradient.exit().remove();
-    gradient.enter().append(info.node).each(function() {
+    var gradient2 = fullLayout._defs.select(".gradients").selectAll("#" + fullID).data([type + colorStops.join(";")], lib_default.identity);
+    gradient2.exit().remove();
+    gradient2.enter().append(info.node).each(function() {
       var el = select_default2(this);
       if (info.attrs) el.attr(info.attrs);
       el.attr("id", fullID);
@@ -55522,7 +55523,7 @@ var Plotly = (() => {
     sel.style(prop, getFullUrl(fullID, gd)).style(prop + "-opacity", null);
     sel.classed("gradient_filled", true);
   }
-  drawing.pattern = function(sel, calledBy, gd, patternID, shape, size, solidity, mcc, fillmode, bgcolor, fgcolor, fgopacity) {
+  function pattern2(sel, calledBy, gd, patternID, shape, size, solidity, mcc, fillmode, bgcolor, fgcolor, fgopacity) {
     var isLegend = calledBy === "legend";
     if (mcc) {
       if (fillmode === "overlay") {
@@ -55657,9 +55658,9 @@ var Plotly = (() => {
         break;
     }
     var str = [shape || "noSh", bgcolor || "noBg", fgcolor || "noFg", size, solidity].join(";");
-    var pattern2 = fullLayout._defs.select(".patterns").selectAll("#" + fullID).data([str], lib_default.identity);
-    pattern2.exit().remove();
-    pattern2.enter().append("pattern").each(function() {
+    var pattern3 = fullLayout._defs.select(".patterns").selectAll("#" + fullID).data([str], lib_default.identity);
+    pattern3.exit().remove();
+    pattern3.enter().append("pattern").each(function() {
       var el = select_default2(this);
       el.attr({
         id: fullID,
@@ -55688,33 +55689,33 @@ var Plotly = (() => {
     });
     sel.style("fill", getFullUrl(fullID, gd)).style("fill-opacity", null);
     sel.classed("pattern_filled", true);
-  };
-  drawing.initGradients = function(gd) {
+  }
+  function initGradients(gd) {
     var fullLayout = gd._fullLayout;
     var gradientsGroup = lib_default.ensureSingle(fullLayout._defs, "g", "gradients");
     gradientsGroup.selectAll("linearGradient,radialGradient").remove();
     select_default2(gd).selectAll(".gradient_filled").classed("gradient_filled", false);
-  };
-  drawing.initPatterns = function(gd) {
+  }
+  function initPatterns(gd) {
     var fullLayout = gd._fullLayout;
     var patternsGroup = lib_default.ensureSingle(fullLayout._defs, "g", "patterns");
     patternsGroup.selectAll("pattern").remove();
     select_default2(gd).selectAll(".pattern_filled").classed("pattern_filled", false);
-  };
-  drawing.getPatternAttr = function(mp, i, dflt) {
+  }
+  function getPatternAttr(mp, i, dflt) {
     if (mp && lib_default.isArrayOrTypedArray(mp)) {
       return i < mp.length ? mp[i] : dflt;
     }
     return mp;
-  };
-  drawing.pointStyle = function(s, trace, gd, pt) {
+  }
+  function pointStyle(s, trace, gd, pt) {
     if (!s.size()) return;
-    var fns = drawing.makePointStyleFns(trace);
+    var fns = makePointStyleFns(trace);
     s.each(function(d) {
-      drawing.singlePointStyle(d, select_default2(this), trace, fns, gd, pt);
+      singlePointStyle(d, select_default2(this), trace, fns, gd, pt);
     });
-  };
-  drawing.singlePointStyle = function(d, sel, trace, fns, gd, pt) {
+  }
+  function singlePointStyle(d, sel, trace, fns, gd, pt) {
     var marker = trace.marker;
     var markerLine = marker.line;
     if (pt && pt.i >= 0 && d.i === void 0) d.i = pt.i;
@@ -55730,7 +55731,7 @@ var Plotly = (() => {
       if (fns.selectedSizeFn) {
         r = d.mrc = fns.selectedSizeFn(d);
       }
-      var x = drawing.symbolNumber(d.mx || marker.symbol) || 0;
+      var x = symbolNumber(d.mx || marker.symbol) || 0;
       d.om = x % 200 >= 100;
       var angle = getMarkerAngle(d, trace);
       var standoff = getMarkerStandoff(d, trace);
@@ -55778,7 +55779,7 @@ var Plotly = (() => {
         if (!gradientInfo[gradientType]) gradientType = 0;
       }
       var markerPattern = marker.pattern;
-      var pAttr = drawing.getPatternAttr;
+      var pAttr = getPatternAttr;
       var patternShape = markerPattern && (pAttr(markerPattern.shape, d.i, "") || pAttr(markerPattern.path, d.i, ""));
       if (gradientType && gradientType !== "none") {
         var gradientColor = d.mgc;
@@ -55786,7 +55787,7 @@ var Plotly = (() => {
         else gradientColor = markerGradient.color;
         var gradientID = trace.uid;
         if (perPointGradient) gradientID += "-" + d.i;
-        drawing.gradient(
+        gradient(
           sel,
           gd,
           gradientID,
@@ -55812,7 +55813,7 @@ var Plotly = (() => {
         perPointPattern = perPointPattern || d.mcc || lib_default.isArrayOrTypedArray(markerPattern.shape) || lib_default.isArrayOrTypedArray(markerPattern.path) || lib_default.isArrayOrTypedArray(markerPattern.bgcolor) || lib_default.isArrayOrTypedArray(markerPattern.fgcolor) || lib_default.isArrayOrTypedArray(markerPattern.size) || lib_default.isArrayOrTypedArray(markerPattern.solidity);
         var patternID = trace.uid;
         if (perPointPattern) patternID += "-" + d.i;
-        drawing.pattern(
+        pattern2(
           sel,
           "point",
           gd,
@@ -55833,23 +55834,23 @@ var Plotly = (() => {
         color_default.stroke(sel, lineColor);
       }
     }
-  };
-  drawing.makePointStyleFns = function(trace) {
+  }
+  function makePointStyleFns(trace) {
     var out = {};
     var marker = trace.marker;
-    out.markerScale = drawing.tryColorscale(marker, "");
-    out.lineScale = drawing.tryColorscale(marker, "line");
+    out.markerScale = tryColorscale(marker, "");
+    out.lineScale = tryColorscale(marker, "line");
     if (registry_default.traceIs(trace, "symbols")) {
       out.ms2mrc = subtypes_default.isBubble(trace) ? makeBubbleSizeFn(trace) : function() {
         return (marker.size || 6) / 2;
       };
     }
     if (trace.selectedpoints) {
-      lib_default.extendFlat(out, drawing.makeSelectedPointStyleFns(trace));
+      lib_default.extendFlat(out, makeSelectedPointStyleFns(trace));
     }
     return out;
-  };
-  drawing.makeSelectedPointStyleFns = function(trace) {
+  }
+  function makeSelectedPointStyleFns(trace) {
     var out = {};
     var selectedAttrs = trace.selected || {};
     var unselectedAttrs = trace.unselected || {};
@@ -55900,8 +55901,8 @@ var Plotly = (() => {
       };
     }
     return out;
-  };
-  drawing.makeSelectedTextStyleFns = function(trace) {
+  }
+  function makeSelectedTextStyleFns(trace) {
     var out = {};
     var selectedAttrs = trace.selected || {};
     var unselectedAttrs = trace.unselected || {};
@@ -55921,10 +55922,10 @@ var Plotly = (() => {
       }
     };
     return out;
-  };
-  drawing.selectedPointStyle = function(s, trace) {
+  }
+  function selectedPointStyle(s, trace) {
     if (!s.size() || !trace.selectedpoints) return;
-    var fns = drawing.makeSelectedPointStyleFns(trace);
+    var fns = makeSelectedPointStyleFns(trace);
     var marker = trace.marker || {};
     var seq = [];
     if (fns.selectedOpacityFn) {
@@ -55943,7 +55944,7 @@ var Plotly = (() => {
         var mrc2 = fns.selectedSizeFn(d);
         pt.attr(
           "d",
-          makePointPath(drawing.symbolNumber(mx), mrc2, getMarkerAngle(d, trace), getMarkerStandoff(d, trace))
+          makePointPath(symbolNumber(mx), mrc2, getMarkerAngle(d, trace), getMarkerStandoff(d, trace))
         );
         d.mrc2 = mrc2;
       });
@@ -55956,8 +55957,8 @@ var Plotly = (() => {
         }
       });
     }
-  };
-  drawing.tryColorscale = function(marker, prefix) {
+  }
+  function tryColorscale(marker, prefix) {
     var cont = prefix ? lib_default.nestedProperty(marker, prefix).get() : marker;
     if (cont) {
       var colorArray = cont.color;
@@ -55966,7 +55967,7 @@ var Plotly = (() => {
       }
     }
     return lib_default.identity;
-  };
+  }
   var TEXTOFFSETSIGN = {
     start: 1,
     end: -1,
@@ -55991,11 +55992,11 @@ var Plotly = (() => {
     var fontSize = d.ts || trace.textfont.size;
     return (0, import_fast_isnumeric18.default)(fontSize) && fontSize > 0 ? fontSize : 0;
   }
-  drawing.textPointStyle = function(s, trace, gd) {
+  function textPointStyle(s, trace, gd) {
     if (!s.size()) return;
     var selectedTextColorFn;
     if (trace.selectedpoints) {
-      var fns = drawing.makeSelectedTextStyleFns(trace);
+      var fns = makeSelectedTextStyleFns(trace);
       selectedTextColorFn = fns.selectedTextColorFn;
     }
     var texttemplate = trace.texttemplate;
@@ -56023,7 +56024,7 @@ var Plotly = (() => {
       var pos = d.tp || trace.textposition;
       var fontSize = extracTextFontSize(d, trace);
       var fontColor = selectedTextColorFn ? selectedTextColorFn(d) : d.tc || trace.textfont.color;
-      p.call(drawing.font, {
+      p.call(font2, {
         family: d.tf || trace.textfont.family,
         weight: d.tw || trace.textfont.weight,
         style: d.ty || trace.textfont.style,
@@ -56035,10 +56036,10 @@ var Plotly = (() => {
         color: fontColor
       }).text(text).call(svg_text_utils_default.convertToTspans, gd).call(textPointPosition, pos, fontSize, d.mrc);
     });
-  };
-  drawing.selectedTextStyle = function(s, trace) {
+  }
+  function selectedTextStyle(s, trace) {
     if (!s.size() || !trace.selectedpoints) return;
-    var fns = drawing.makeSelectedTextStyleFns(trace);
+    var fns = makeSelectedTextStyleFns(trace);
     s.each(function(d) {
       var tx = select_default2(this);
       var tc = fns.selectedTextColorFn(d);
@@ -56048,9 +56049,9 @@ var Plotly = (() => {
       var dontTouchParent = registry_default.traceIs(trace, "bar-like");
       textPointPosition(tx, tp, fontSize, d.mrc2 || d.mrc, dontTouchParent);
     });
-  };
+  }
   var CatmullRomExp = 0.5;
-  drawing.smoothopen = function(pts, smoothness) {
+  function smoothopen(pts, smoothness) {
     if (pts.length < 3) {
       return "M" + pts.join("L");
     }
@@ -56066,8 +56067,8 @@ var Plotly = (() => {
     }
     path += "Q" + tangents[pts.length - 3][1] + " " + pts[pts.length - 1];
     return path;
-  };
-  drawing.smoothclosed = function(pts, smoothness) {
+  }
+  function smoothclosed(pts, smoothness) {
     if (pts.length < 3) {
       return "M" + pts.join("L") + "Z";
     }
@@ -56084,7 +56085,7 @@ var Plotly = (() => {
     }
     path += "C" + tangents[pLast][1] + " " + tangents[0][0] + " " + pts[0] + "Z";
     return path;
-  };
+  }
   var lastDrawnX;
   var lastDrawnY;
   function roundEnd(pt, isY, isLastPoint) {
@@ -56134,7 +56135,7 @@ var Plotly = (() => {
   var STEPLINEAR = function(p0, p1, isLastPoint) {
     return "L" + roundEnd(p1, 0, isLastPoint) + "," + roundEnd(p1, 1, isLastPoint);
   };
-  drawing.steps = function(shape) {
+  function steps(shape) {
     var onestep = STEPPATH[shape] || STEPLINEAR;
     return function(pts) {
       var path = "M" + roundX(pts[0][0]) + "," + roundY(pts[0][1]);
@@ -56144,7 +56145,7 @@ var Plotly = (() => {
       }
       return path;
     };
-  };
+  }
   function applyBackoff(pt, start2) {
     var backoff = pt.backoff;
     var trace = pt.trace;
@@ -56169,8 +56170,8 @@ var Plotly = (() => {
         if (lib_default.isArrayOrTypedArray(endMarkerSymbol)) endMarkerSymbol = endMarkerSymbol[endI];
         var endMarkerSize = endMarker.size;
         if (lib_default.isArrayOrTypedArray(endMarkerSize)) endMarkerSize = endMarkerSize[endI];
-        b = endMarker ? drawing.symbolBackOffs[drawing.symbolNumber(endMarkerSymbol)] * endMarkerSize : 0;
-        b += drawing.getMarkerStandoff(d[endI], trace) || 0;
+        b = endMarker ? symbolBackOffs[symbolNumber(endMarkerSymbol)] * endMarkerSize : 0;
+        b += getMarkerStandoff(d[endI], trace) || 0;
       }
       var x = x2 - b * Math.cos(t);
       var y = y2 - b * Math.sin(t);
@@ -56180,9 +56181,8 @@ var Plotly = (() => {
     }
     return pt;
   }
-  drawing.applyBackoff = applyBackoff;
-  drawing.makeTester = function() {
-    var tester2 = lib_default.ensureSingleById(select_default2("body"), "svg", "js-plotly-tester", function(s) {
+  function makeTester() {
+    var _tester = lib_default.ensureSingleById(select_default2("body"), "svg", "js-plotly-tester", function(s) {
       s.attr(xmlns_namespaces_default.svgAttrs).style({
         position: "absolute",
         left: "-10000px",
@@ -56192,23 +56192,23 @@ var Plotly = (() => {
         "z-index": "1"
       });
     });
-    var testref = lib_default.ensureSingle(tester2, "path", "js-reference-point", function(s) {
+    var _testref = lib_default.ensureSingle(_tester, "path", "js-reference-point", function(s) {
       s.attr("d", "M0,0H1V1H0Z").style({
         "stroke-width": 0,
         fill: "black"
       });
     });
-    drawing.tester = tester2;
-    drawing.testref = testref;
-  };
-  drawing.savedBBoxes = {};
+    tester = _tester;
+    testref = _testref;
+  }
+  var savedBBoxes = {};
   var savedBBoxesCount = 0;
   var maxSavedBBoxes = 1e4;
-  drawing.bBox = function(node, inTester, hash) {
+  function bBox(node, inTester, hash) {
     if (!hash) hash = nodeHash(node);
     var out;
     if (hash) {
-      out = drawing.savedBBoxes[hash];
+      out = savedBBoxes[hash];
       if (out) return lib_default.extendFlat({}, out);
     } else if (node.childNodes.length === 1) {
       var innerNode = node.childNodes[0];
@@ -56218,7 +56218,7 @@ var Plotly = (() => {
         var y = +innerNode.getAttribute("y") || 0;
         var transform2 = innerNode.getAttribute("transform");
         if (!transform2) {
-          var innerBB = drawing.bBox(innerNode, false, hash);
+          var innerBB = bBox(innerNode, false, hash);
           if (x) {
             innerBB.left += x;
             innerBB.right += x;
@@ -56230,22 +56230,22 @@ var Plotly = (() => {
           return innerBB;
         }
         hash += "~" + x + "~" + y + "~" + transform2;
-        out = drawing.savedBBoxes[hash];
+        out = savedBBoxes[hash];
         if (out) return lib_default.extendFlat({}, out);
       }
     }
-    var testNode, tester2;
+    var testNode, testerNode;
     if (inTester) {
       testNode = node;
     } else {
-      tester2 = drawing.tester.node();
+      testerNode = tester.node();
       testNode = node.cloneNode(true);
-      tester2.appendChild(testNode);
+      testerNode.appendChild(testNode);
     }
     select_default2(testNode).attr("transform", null).call(svg_text_utils_default.positionText, 0, 0);
     var testRect = testNode.getBoundingClientRect();
-    var refRect = drawing.testref.node().getBoundingClientRect();
-    if (!inTester) tester2.removeChild(testNode);
+    var refRect = testref.node().getBoundingClientRect();
+    if (!inTester) testerNode.removeChild(testNode);
     var bb = {
       height: testRect.height,
       width: testRect.width,
@@ -56255,28 +56255,28 @@ var Plotly = (() => {
       bottom: testRect.bottom - refRect.top
     };
     if (savedBBoxesCount >= maxSavedBBoxes) {
-      drawing.savedBBoxes = {};
+      savedBBoxes = {};
       savedBBoxesCount = 0;
     }
-    if (hash) drawing.savedBBoxes[hash] = bb;
+    if (hash) savedBBoxes[hash] = bb;
     savedBBoxesCount++;
     return lib_default.extendFlat({}, bb);
-  };
+  }
   function nodeHash(node) {
     var inputText = node.getAttribute("data-unformatted");
     if (inputText === null) return;
     return inputText + node.getAttribute("data-math") + node.getAttribute("text-anchor") + node.getAttribute("style");
   }
-  drawing.setClipUrl = function(s, localId, gd) {
+  function setClipUrl(s, localId, gd) {
     s.attr("clip-path", getFullUrl(localId, gd));
-  };
+  }
   function getFullUrl(localId, gd) {
     if (!localId) return null;
     var context = gd._context;
     var baseUrl = context._exportedPlot ? "" : context._baseUrl || "";
     return baseUrl ? "url('" + baseUrl + "#" + localId + "')" : "url(#" + localId + ")";
   }
-  drawing.getTranslate = function(element) {
+  function getTranslate(element) {
     var re3 = /.*\btranslate\((-?\d*\.?\d*)[^-\d]*(-?\d*\.?\d*)[^\d].*/;
     var getter = element.attr ? "attr" : "getAttribute";
     var transform2 = element[getter]("transform") || "";
@@ -56287,8 +56287,8 @@ var Plotly = (() => {
       x: +translate[0] || 0,
       y: +translate[1] || 0
     };
-  };
-  drawing.setTranslate = function(element, x, y) {
+  }
+  function setTranslate(element, x, y) {
     var re3 = /(\btranslate\(.*?\);?)/;
     var getter = element.attr ? "attr" : "getAttribute";
     var setter = element.attr ? "attr" : "setAttribute";
@@ -56300,8 +56300,8 @@ var Plotly = (() => {
     transform2 = transform2.trim();
     element[setter]("transform", transform2);
     return transform2;
-  };
-  drawing.getScale = function(element) {
+  }
+  function getScale2(element) {
     var re3 = /.*\bscale\((\d*\.?\d*)[^\d]*(\d*\.?\d*)[^\d].*/;
     var getter = element.attr ? "attr" : "getAttribute";
     var transform2 = element[getter]("transform") || "";
@@ -56312,8 +56312,8 @@ var Plotly = (() => {
       x: +translate[0] || 1,
       y: +translate[1] || 1
     };
-  };
-  drawing.setScale = function(element, x, y) {
+  }
+  function setScale(element, x, y) {
     var re3 = /(\bscale\(.*?\);?)/;
     var getter = element.attr ? "attr" : "getAttribute";
     var setter = element.attr ? "attr" : "setAttribute";
@@ -56325,9 +56325,9 @@ var Plotly = (() => {
     transform2 = transform2.trim();
     element[setter]("transform", transform2);
     return transform2;
-  };
+  }
   var SCALE_RE = /\s*sc.*/;
-  drawing.setPointGroupScale = function(selection2, xScale, yScale) {
+  function setPointGroupScale(selection2, xScale, yScale) {
     xScale = xScale || 1;
     yScale = yScale || 1;
     if (!selection2) return;
@@ -56338,9 +56338,9 @@ var Plotly = (() => {
       t = t.trim();
       this.setAttribute("transform", t);
     });
-  };
+  }
   var TEXT_POINT_LAST_TRANSLATION_RE = /translate\([^)]*\)\s*$/;
-  drawing.setTextPointsScale = function(selection2, xScale, yScale) {
+  function setTextPointsScale(selection2, xScale, yScale) {
     if (!selection2) return;
     selection2.each(function() {
       var transforms;
@@ -56360,7 +56360,7 @@ var Plotly = (() => {
       }
       el.attr("transform", transforms.join(""));
     });
-  };
+  }
   function getMarkerStandoff(d, trace) {
     var standoff;
     if (d) standoff = d.mf;
@@ -56372,7 +56372,6 @@ var Plotly = (() => {
     }
     return standoff;
   }
-  drawing.getMarkerStandoff = getMarkerStandoff;
   var atan2 = Math.atan2;
   var cos2 = Math.cos;
   var sin2 = Math.sin;
@@ -56469,8 +56468,63 @@ var Plotly = (() => {
     previousTraceUid = trace.uid;
     return angle;
   }
-  drawing.getMarkerAngle = getMarkerAngle;
-  var drawing_default = drawing;
+  var drawing_default = {
+    font: font2,
+    setPosition,
+    setSize,
+    setRect,
+    translatePoint,
+    translatePoints,
+    hideOutsideRangePoint,
+    hideOutsideRangePoints,
+    crispRound,
+    singleLineStyle,
+    lineGroupStyle,
+    dashLine,
+    dashStyle,
+    singleFillStyle,
+    fillGroupStyle,
+    symbolNames,
+    symbolFuncs,
+    symbolBackOffs,
+    symbolNeedLines,
+    symbolNoDot,
+    symbolNoFill,
+    symbolList,
+    symbolNumber,
+    gradient,
+    pattern: pattern2,
+    initGradients,
+    initPatterns,
+    getPatternAttr,
+    pointStyle,
+    singlePointStyle,
+    makePointStyleFns,
+    makeSelectedPointStyleFns,
+    makeSelectedTextStyleFns,
+    selectedPointStyle,
+    tryColorscale,
+    textPointStyle,
+    selectedTextStyle,
+    smoothopen,
+    smoothclosed,
+    steps,
+    applyBackoff,
+    makeTester,
+    savedBBoxes,
+    bBox,
+    setClipUrl,
+    getTranslate,
+    setTranslate,
+    getScale: getScale2,
+    setScale,
+    setPointGroupScale,
+    setTextPointsScale,
+    getMarkerStandoff,
+    getMarkerAngle,
+    tester,
+    testref
+  };
 
   // src/components/titles/index.js
   function d3Round2(x, n) {
@@ -56495,16 +56549,16 @@ var Plotly = (() => {
     var title = cont.title;
     var txt = (title && title.text ? title.text : "").trim();
     var titleIsPlaceholder = false;
-    var font2 = title && title.font ? title.font : {};
-    var fontFamily = font2.family;
-    var fontSize = font2.size;
-    var fontColor = font2.color;
-    var fontWeight = font2.weight;
-    var fontStyle = font2.style;
-    var fontVariant = font2.variant;
-    var fontTextcase = font2.textcase;
-    var fontLineposition = font2.lineposition;
-    var fontShadow = font2.shadow;
+    var titleFont = title && title.font ? title.font : {};
+    var fontFamily = titleFont.family;
+    var fontSize = titleFont.size;
+    var fontColor = titleFont.color;
+    var fontWeight = titleFont.weight;
+    var fontStyle = titleFont.style;
+    var fontVariant = titleFont.variant;
+    var fontTextcase = titleFont.textcase;
+    var fontLineposition = titleFont.lineposition;
+    var fontShadow = titleFont.shadow;
     var subtitleProp = options.subtitlePropName;
     var subtitleEnabled = !!subtitleProp;
     var subtitlePlaceholder = options.subtitlePlaceholder;
@@ -56603,7 +56657,7 @@ var Plotly = (() => {
           }
         }
       }
-      titleEl.style("opacity", opacity * color_default.opacity(fontColor)).call(drawing_default.font, {
+      titleEl.style("opacity", opacity * color_default.opacity(fontColor)).call(font2, {
         color: color_default.rgb(fontColor),
         size: d3Round2(fontSize, 2),
         family: fontFamily,
@@ -56623,7 +56677,7 @@ var Plotly = (() => {
           y: subtitleY2
         });
         subtitleEl2.attr("transform", transformVal);
-        subtitleEl2.style("opacity", subtitleOpacity * color_default.opacity(subFontColor)).call(drawing_default.font, {
+        subtitleEl2.style("opacity", subtitleOpacity * color_default.opacity(subFontColor)).call(font2, {
           color: color_default.rgb(subFontColor),
           size: d3Round2(subFontSize, 2),
           family: subFontFamily,
@@ -56645,7 +56699,7 @@ var Plotly = (() => {
         var backside = OPPOSITE_SIDE[avoid.side];
         var shiftSign = avoid.side === "left" || avoid.side === "top" ? -1 : 1;
         var pad3 = (0, import_fast_isnumeric19.default)(avoid.pad) ? avoid.pad : 2;
-        var titlebb = drawing_default.bBox(titleGroup.node());
+        var titlebb = bBox(titleGroup.node());
         var reservedMargins = { t: 0, b: 0, l: 0, r: 0 };
         var margins = gd._fullLayout._reservedMargin;
         for (var key in margins) {
@@ -56672,7 +56726,7 @@ var Plotly = (() => {
           titlebb.top -= offsetTop;
           titlebb.bottom -= offsetTop;
           avoid.selection.each(function() {
-            var avoidbb = drawing_default.bBox(this);
+            var avoidbb = bBox(this);
             if (lib_default.bBoxIntersect(titlebb, avoidbb, pad3)) {
               shift = Math.max(shift, shiftSign * (avoidbb[avoid.side] - titlebb[backside]) + pad3);
             }
@@ -57000,7 +57054,7 @@ var Plotly = (() => {
                 var thisLabel = select_default2(this);
                 var mathjaxGroup = thisLabel.select(".text-math-group");
                 if (mathjaxGroup.empty()) {
-                  d.bb = drawing_default.bBox(thisLabel.node());
+                  d.bb = bBox(thisLabel.node());
                 }
               });
             }
@@ -57745,11 +57799,11 @@ var Plotly = (() => {
         var brk = rangebreaksIn[i];
         if (brk.enabled) {
           if (brk.bounds) {
-            var pattern2 = brk.pattern;
+            var pattern3 = brk.pattern;
             bnds = rangebreaksIn._cachedPatterns[i];
             b02 = bnds[0];
             b12 = bnds[1];
-            switch (pattern2) {
+            switch (pattern3) {
               case WEEKDAY_PATTERN:
                 vDate = new Date(v);
                 vb = vDate.getUTCDay();
@@ -60003,7 +60057,7 @@ var Plotly = (() => {
       ax._selections[cls].each(function() {
         var thisLabel = selectTickLabel(this);
         if (thisLabel.node().style.display !== "none") {
-          var bb = drawing_default.bBox(thisLabel.node().parentNode);
+          var bb = bBox(thisLabel.node().parentNode);
           top = Math.min(top, bb.top);
           bottom = Math.max(bottom, bb.bottom);
           left = Math.min(left, bb.left);
@@ -60274,7 +60328,7 @@ var Plotly = (() => {
     ticks3.enter().append("path").classed(cls, 1).classed("ticks", 1).classed("crisp", opts.crisp !== false).each(function(d) {
       return color_default.stroke(select_default2(this), d.minor ? ax.minor.tickcolor : ax.tickcolor);
     }).style("stroke-width", function(d) {
-      return drawing_default.crispRound(
+      return crispRound(
         gd,
         d.minor ? ax.minor.tickwidth : ax.tickwidth,
         1
@@ -60308,8 +60362,8 @@ var Plotly = (() => {
         }
       }
     }
-    ax._gw = drawing_default.crispRound(gd, ax.gridwidth, 1);
-    var wMinor = !hasMinor ? 0 : drawing_default.crispRound(gd, ax.minor.gridwidth, 1);
+    ax._gw = crispRound(gd, ax.gridwidth, 1);
+    var wMinor = !hasMinor ? 0 : crispRound(gd, ax.minor.gridwidth, 1);
     var majorLayer = opts.layer;
     var minorLayer = opts.minorLayer;
     for (var major = 1; major >= 0; major--) {
@@ -60324,7 +60378,7 @@ var Plotly = (() => {
           d.minor ? ax.minor.gridcolor : ax.gridcolor || "#ddd"
         );
       }).style("stroke-dasharray", function(d) {
-        return drawing_default.dashStyle(
+        return dashStyle(
           d.minor ? ax.minor.griddash : ax.griddash,
           d.minor ? ax.minor.gridwidth : ax.gridwidth
         );
@@ -60346,7 +60400,7 @@ var Plotly = (() => {
         return idSort2(da.id, db.id);
       });
     });
-    zl.attr("transform", opts.transFn).attr("d", opts.path).call(color_default.stroke, ax.zerolinecolor || color_default.defaultLine).style("stroke-width", drawing_default.crispRound(gd, ax.zerolinewidth, ax._gw || 1) + "px").style("display", null);
+    zl.attr("transform", opts.transFn).attr("d", opts.path).call(color_default.stroke, ax.zerolinecolor || color_default.defaultLine).style("stroke-width", crispRound(gd, ax.zerolinewidth, ax._gw || 1) + "px").style("display", null);
     hideCounterAxisInsideTickLabels(ax, [ZERO_PATH]);
   };
   axes.drawLabels = function(gd, ax, opts) {
@@ -60366,7 +60420,7 @@ var Plotly = (() => {
     tickLabels.enter().append("g").classed(cls, 1).append("text").attr("text-anchor", "middle").each(function(d) {
       var thisLabel = select_default2(this);
       var newPromise = gd._promises.length;
-      thisLabel.call(svg_text_utils_default.positionText, labelFns.xFn(d), labelFns.yFn(d)).call(drawing_default.font, {
+      thisLabel.call(svg_text_utils_default.positionText, labelFns.xFn(d), labelFns.yFn(d)).call(font2, {
         family: d.font,
         size: d.fontSize,
         color: d.fontColor,
@@ -60415,7 +60469,7 @@ var Plotly = (() => {
             ax._adjustTickLabelsOverflow();
           }
         } else {
-          var mjWidth = drawing_default.bBox(mathjaxGroup.node()).width;
+          var mjWidth = bBox(mathjaxGroup.node()).width;
           var mjShift = mjWidth * { end: -0.5, start: 0.5 }[anchor];
           mathjaxGroup.attr("transform", transform2 + strTranslate4(mjShift, 0));
         }
@@ -60442,7 +60496,7 @@ var Plotly = (() => {
         var thisLabel = select_default2(this);
         var mathjaxGroup = thisLabel.select(".text-math-group");
         if (mathjaxGroup.empty()) {
-          var bb = drawing_default.bBox(thisLabel.node());
+          var bb = bBox(thisLabel.node());
           var adjust = 0;
           if (isX) {
             if (bb.right > max2) adjust = 1;
@@ -60541,7 +60595,7 @@ var Plotly = (() => {
           maxFontSize = Math.max(maxFontSize, d.fontSize);
           var x = ax.l2p(d.x);
           var thisLabel = selectTickLabel(this);
-          var bb = drawing_default.bBox(thisLabel.node());
+          var bb = bBox(thisLabel.node());
           maxLines = Math.max(maxLines, svg_text_utils_default.lineCount(thisLabel));
           lbbArray.push({
             // ignore about y, just deal with x overlaps
@@ -60641,7 +60695,7 @@ var Plotly = (() => {
         if (mathjaxGroup.empty()) {
           var bb;
           if (ax._vals[i]) {
-            bb = ax._vals[i].bb || drawing_default.bBox(thisLabel.node());
+            bb = ax._vals[i].bb || bBox(thisLabel.node());
             ax._vals[i].bb = bb;
           }
           labelsMaxW = Math.max(labelsMaxW, bb.width);
@@ -60723,7 +60777,7 @@ var Plotly = (() => {
     var vals = opts.vals;
     var dividers = opts.layer.selectAll("path." + cls).data(vals, tickDataFn);
     dividers.exit().remove();
-    dividers.enter().insert("path", ":first-child").classed(cls, 1).classed("crisp", 1).call(color_default.stroke, ax.dividercolor).style("stroke-width", drawing_default.crispRound(gd, ax.dividerwidth, 1) + "px");
+    dividers.enter().insert("path", ":first-child").classed(cls, 1).classed("crisp", 1).call(color_default.stroke, ax.dividercolor).style("stroke-width", crispRound(gd, ax.dividerwidth, 1) + "px");
     dividers.attr("transform", opts.transFn).attr("d", opts.path);
   }
   axes.getPxPosition = function(gd, ax) {
@@ -60812,7 +60866,7 @@ var Plotly = (() => {
         side: ax.side
       };
       if (tickLabels && tickLabels.node() && tickLabels.node().parentNode) {
-        var translation = drawing_default.getTranslate(tickLabels.node().parentNode);
+        var translation = getTranslate(tickLabels.node().parentNode);
         avoid.offsetLeft = translation.x;
         avoid.offsetTop = translation.y;
       }
@@ -62447,9 +62501,9 @@ var Plotly = (() => {
 
   // src/traces/pie/fill_one.js
   function fillOne(s, pt, trace, gd) {
-    var pattern2 = trace.marker.pattern;
-    if (pattern2 && pattern2.shape) {
-      drawing_default.pointStyle(s, trace, gd, pt);
+    var pattern3 = trace.marker.pattern;
+    if (pattern3 && pattern3.shape) {
+      pointStyle(s, trace, gd, pt);
     } else {
       color_default.fill(s, pt.color);
     }
@@ -62546,10 +62600,10 @@ var Plotly = (() => {
       var fillStyle = function(s2) {
         if (s2.size()) {
           if (showFill) {
-            drawing_default.fillGroupStyle(s2, gd, true);
+            fillGroupStyle(s2, gd, true);
           } else {
             var gradientID = "legendfill-" + trace.uid;
-            drawing_default.gradient(
+            gradient(
               s2,
               gd,
               gradientID,
@@ -62563,8 +62617,8 @@ var Plotly = (() => {
       var lineGradient = function(s2) {
         if (s2.size()) {
           var gradientID = "legendline-" + trace.uid;
-          drawing_default.lineGroupStyle(s2);
-          drawing_default.gradient(
+          lineGroupStyle(s2);
+          gradient(
             s2,
             gd,
             gradientID,
@@ -62592,7 +62646,7 @@ var Plotly = (() => {
       var line = this3.select(".legendlines").selectAll("path").data(showLine || showGradientLine ? [dMod] : []);
       line.enter().append("path").classed("js-line", true);
       line.exit().remove();
-      line.attr("d", pathStart + (showGradientLine ? "l" + itemWidth + ",0.0001" : "h" + itemWidth)).call(showLine ? drawing_default.lineGroupStyle : lineGradient);
+      line.attr("d", pathStart + (showGradientLine ? "l" + itemWidth + ",0.0001" : "h" + itemWidth)).call(showLine ? lineGroupStyle : lineGradient);
     }
     function stylePoints2(d) {
       var styleGuide = getStyleGuide(d);
@@ -62665,12 +62719,12 @@ var Plotly = (() => {
       var pts = ptgroup.selectAll("path.scatterpts").data(showMarker ? dMod : []);
       pts.enter().insert("path", ":first-child").classed("scatterpts", true).attr("transform", centerTransform);
       pts.exit().remove();
-      pts.call(drawing_default.pointStyle, tMod, gd);
+      pts.call(pointStyle, tMod, gd);
       if (showMarker) dMod[0].mrc = 3;
       var txt = ptgroup.selectAll("g.pointtext").data(showText ? dMod : []);
       txt.enter().append("g").classed("pointtext", true).append("text").attr("transform", centerTransform);
       txt.exit().remove();
-      txt.selectAll("text").call(drawing_default.textPointStyle, tMod, gd);
+      txt.selectAll("text").call(textPointStyle, tMod, gd);
     }
     function styleWaterfalls(d) {
       var trace = d[0].trace;
@@ -62727,11 +62781,11 @@ var Plotly = (() => {
           var cOpts = extractOpts4(marker);
           var mid = cOpts.mid;
           if (mid === void 0) mid = (cOpts.max + cOpts.min) / 2;
-          mcc = drawing_default.tryColorscale(marker, "")(mid);
+          mcc = tryColorscale(marker, "")(mid);
         }
         var fillColor = mcc || d0.mc || marker.color;
         var markerPattern = marker.pattern;
-        var pAttr = drawing_default.getPatternAttr;
+        var pAttr = getPatternAttr;
         var patternShape = markerPattern && (pAttr(markerPattern.shape, 0, "") || pAttr(markerPattern.path, 0, ""));
         if (patternShape) {
           var patternBGColor = pAttr(markerPattern.bgcolor, 0, null);
@@ -62741,7 +62795,7 @@ var Plotly = (() => {
           var patternSolidity = dimAttr(markerPattern.solidity, 0.5, 1);
           var patternID = "legend-" + trace.uid;
           p.call(
-            drawing_default.pattern,
+            pattern2,
             "legend",
             gd,
             patternID,
@@ -62776,7 +62830,7 @@ var Plotly = (() => {
               sizemode: "diameter"
             }
           });
-          pts.call(drawing_default.pointStyle, tMod, gd);
+          pts.call(pointStyle, tMod, gd);
         } else {
           var w = boundLineWidth(void 0, trace.line, MAX_MARKER_LINE_WIDTH, CST_MARKER_LINE_WIDTH);
           p.style("stroke-width", w + "px").call(color_default.fill, trace.fillcolor);
@@ -62812,7 +62866,7 @@ var Plotly = (() => {
         var p = select_default2(this);
         var cont = trace[i ? "increasing" : "decreasing"];
         var w = boundLineWidth(void 0, cont.line, MAX_MARKER_LINE_WIDTH, CST_MARKER_LINE_WIDTH);
-        p.style("fill", "none").call(drawing_default.dashLine, cont.line.dash, w);
+        p.style("fill", "none").call(dashLine, cont.line.dash, w);
         if (w) color_default.stroke(p, cont.line.color);
       });
     }
@@ -62927,7 +62981,7 @@ var Plotly = (() => {
         var fillGradient = function(s2) {
           if (s2.size()) {
             var gradientID = "legendfill-" + trace.uid;
-            drawing_default.gradient(
+            gradient(
               s2,
               gd,
               gradientID,
@@ -63033,11 +63087,11 @@ var Plotly = (() => {
   }
   function horizontalAlignTitle(titleEl, legendObj, bw) {
     if (legendObj.title.side !== "top center" && legendObj.title.side !== "top right") return;
-    var font2 = legendObj.title.font;
-    var lineHeight = font2.size * LINE_SPACING4;
+    var titleFont = legendObj.title.font;
+    var lineHeight = titleFont.size * LINE_SPACING4;
     var titleOffset = 0;
     var textNode = titleEl.node();
-    var width = drawing_default.bBox(textNode).width;
+    var width = bBox(textNode).width;
     if (legendObj.title.side === "top center") {
       titleOffset = 0.5 * (legendObj._width - 2 * bw - 2 * constants_default3.titlePad - width);
     } else if (legendObj.title.side === "top right") {
@@ -63127,7 +63181,7 @@ var Plotly = (() => {
     var titleEl;
     if (title.text) {
       titleEl = lib_default.ensureSingle(scrollBox, "text", legendId + "titletext");
-      titleEl.attr("text-anchor", "start").call(drawing_default.font, title.font).text(title.text);
+      titleEl.attr("text-anchor", "start").call(font2, title.font).text(title.text);
       textLayout(titleEl, scrollBox, gd, legendObj, MAIN_TITLE);
     } else {
       scrollBox.selectAll("." + legendId + "titletext").remove();
@@ -63192,7 +63246,7 @@ var Plotly = (() => {
               lib_default.log("Constrain " + legendId + ".y to make legend fit inside graph");
             }
           }
-          drawing_default.setTranslate(legend, lx, ly);
+          setTranslate(legend, lx, ly);
         }
         scrollBar.on(".drag", null);
         legend.on("wheel", null);
@@ -63205,15 +63259,15 @@ var Plotly = (() => {
             x: bw / 2,
             y: bw / 2
           });
-          drawing_default.setTranslate(scrollBox, 0, 0);
+          setTranslate(scrollBox, 0, 0);
           clipPath.select("rect").attr({
             width: legendObj._width - 2 * bw,
             height: height - 2 * bw,
             x: bw,
             y: bw
           });
-          drawing_default.setClipUrl(scrollBox, clipId, gd);
-          drawing_default.setRect(scrollBar, 0, 0, 0, 0);
+          setClipUrl(scrollBox, clipId, gd);
+          setRect(scrollBar, 0, 0, 0, 0);
           delete legendObj._scrollY;
         } else {
           var scrollBarHeight = Math.max(
@@ -63236,7 +63290,7 @@ var Plotly = (() => {
             x: bw,
             y: bw + scrollBoxY
           });
-          drawing_default.setClipUrl(scrollBox, clipId, gd);
+          setClipUrl(scrollBox, clipId, gd);
           scrollHandler(scrollBoxY, scrollBarHeight, scrollRatio);
           legend.on("wheel", function(event2) {
             scrollBoxY = lib_default.constrain(
@@ -63296,8 +63350,8 @@ var Plotly = (() => {
         }
         function scrollHandler(scrollBoxY2, scrollBarHeight2, scrollRatio2) {
           legendObj._scrollY = gd._fullLayout[legendId]._scrollY = scrollBoxY2;
-          drawing_default.setTranslate(scrollBox, 0, -scrollBoxY2);
-          drawing_default.setRect(
+          setTranslate(scrollBox, 0, -scrollBoxY2);
+          setRect(
             scrollBar,
             legendObj._width,
             constants_default3.scrollBarMargin + scrollBoxY2 * scrollRatio2,
@@ -63316,7 +63370,7 @@ var Plotly = (() => {
               if (e.target === scrollBar.node()) {
                 return;
               }
-              var transform2 = drawing_default.getTranslate(legend);
+              var transform2 = getTranslate(legend);
               x0 = transform2.x;
               y0 = transform2.y;
             },
@@ -63324,7 +63378,7 @@ var Plotly = (() => {
               if (x0 !== void 0 && y0 !== void 0) {
                 var newX = x0 + dx;
                 var newY = y0 + dy;
-                drawing_default.setTranslate(legend, newX, newY);
+                setTranslate(legend, newX, newY);
                 xf = dragelement_default.align(newX, legendObj._width, gs.l, gs.l + gs.w, legendObj.xanchor);
                 yf = dragelement_default.align(newY + legendObj._height, -legendObj._height, gs.t + gs.h, gs.t, legendObj.yanchor);
               }
@@ -63400,12 +63454,12 @@ var Plotly = (() => {
     var isPieLike = registry_default.traceIs(trace, "pie-like");
     var isEditable = !legendObj._inHover && gd._context.edits.legendText && !isPieLike;
     var maxNameLength = legendObj._maxNameLength;
-    var name8, font2;
+    var name8, textFont;
     if (legendItem.groupTitle) {
       name8 = legendItem.groupTitle.text;
-      font2 = legendItem.groupTitle.font;
+      textFont = legendItem.groupTitle.font;
     } else {
-      font2 = legendObj.font;
+      textFont = legendObj.font;
       if (!legendObj.entries) {
         name8 = isPieLike ? legendItem.label : trace.name;
         if (trace._meta) {
@@ -63416,7 +63470,7 @@ var Plotly = (() => {
       }
     }
     var textEl = lib_default.ensureSingle(g, "text", legendId + "text");
-    textEl.attr("text-anchor", "start").call(drawing_default.font, font2).text(isEditable ? ensureLength(name8, maxNameLength) : name8);
+    textEl.attr("text-anchor", "start").call(font2, textFont).text(isEditable ? ensureLength(name8, maxNameLength) : name8);
     var textGap = legendObj.indentation + legendObj.itemwidth + constants_default3.itemGap * 2;
     svg_text_utils_default.positionText(textEl, textGap, 0);
     if (isEditable) {
@@ -63494,24 +63548,24 @@ var Plotly = (() => {
       legendObj = gd._fullLayout[legendId];
     }
     var bw = legendObj.borderwidth;
-    var font2;
+    var itemFont;
     if (aTitle === MAIN_TITLE) {
-      font2 = legendObj.title.font;
+      itemFont = legendObj.title.font;
     } else if (legendItem.groupTitle) {
-      font2 = legendItem.groupTitle.font;
+      itemFont = legendItem.groupTitle.font;
     } else {
-      font2 = legendObj.font;
+      itemFont = legendObj.font;
     }
-    var lineHeight = font2.size * LINE_SPACING4;
+    var lineHeight = itemFont.size * LINE_SPACING4;
     var height, width;
     if (mathjaxNode) {
-      var mathjaxBB = drawing_default.bBox(mathjaxNode);
+      var mathjaxBB = bBox(mathjaxNode);
       height = mathjaxBB.height;
       width = mathjaxBB.width;
       if (aTitle === MAIN_TITLE) {
-        drawing_default.setTranslate(mathjaxGroup, bw, bw + height * 0.75);
+        setTranslate(mathjaxGroup, bw, bw + height * 0.75);
       } else {
-        drawing_default.setTranslate(mathjaxGroup, 0, height * 0.25);
+        setTranslate(mathjaxGroup, 0, height * 0.25);
       }
     } else {
       var cls = "." + legendId + (aTitle === MAIN_TITLE ? "title" : "") + "text";
@@ -63519,7 +63573,7 @@ var Plotly = (() => {
       var textLines = svg_text_utils_default.lineCount(textEl);
       var textNode = textEl.node();
       height = lineHeight * textLines;
-      width = textNode ? drawing_default.bBox(textNode).width : 0;
+      width = textNode ? bBox(textNode).width : 0;
       if (aTitle === MAIN_TITLE) {
         if (legendObj.title.side === "left") {
           width += constants_default3.itemGap * 2;
@@ -63598,7 +63652,7 @@ var Plotly = (() => {
     if (isVertical3) {
       traces.each(function(d) {
         var h = d[0].height;
-        drawing_default.setTranslate(
+        setTranslate(
           this,
           bw + titleSize[0],
           bw + titleSize[1] + legendObj._height + h / 2 + itemGap
@@ -63611,7 +63665,7 @@ var Plotly = (() => {
       legendObj._height += endPad;
       if (isGrouped3) {
         groups.each(function(d, i) {
-          drawing_default.setTranslate(this, 0, i * legendObj.tracegroupgap);
+          setTranslate(this, 0, i * legendObj.tracegroupgap);
         });
         legendObj._height += (legendObj._lgroupsLength - 1) * legendObj.tracegroupgap;
       }
@@ -63644,7 +63698,7 @@ var Plotly = (() => {
           select_default2(this).selectAll("g.traces").each(function(d) {
             var w = getTraceWidth(d, legendObj, textGap);
             var h = d[0].height;
-            drawing_default.setTranslate(
+            setTranslate(
               this,
               titleSize[0],
               titleSize[1] + bw + itemGap + h / 2 + offsetY2
@@ -63666,7 +63720,7 @@ var Plotly = (() => {
           } else {
             maxGroupHeightInRow = Math.max(maxGroupHeightInRow, offsetY2);
           }
-          drawing_default.setTranslate(this, groupOffsetX, groupOffsetY);
+          setTranslate(this, groupOffsetX, groupOffsetY);
           groupOffsetX += next;
         });
         legendObj._width = Math.max(maxRowWidth, groupOffsetX) + bw;
@@ -63692,7 +63746,7 @@ var Plotly = (() => {
             legendObj._height += maxItemHeightInRow;
             maxItemHeightInRow = 0;
           }
-          drawing_default.setTranslate(
+          setTranslate(
             this,
             titleSize[0] + bw + offsetX,
             titleSize[1] + bw + offsetY + h / 2 + itemGap
@@ -63737,7 +63791,7 @@ var Plotly = (() => {
       if (!isVertical3 && !isFraction) {
         w += itemGap;
       }
-      drawing_default.setRect(traceToggle, 0, -h / 2, w, h);
+      setRect(traceToggle, 0, -h / 2, w, h);
     });
   }
   function expandMargin(gd, legendId, lx, ly) {
@@ -64508,7 +64562,7 @@ var Plotly = (() => {
         fill: commonBgColor,
         stroke: commonStroke
       });
-      ltext.text(t03).call(drawing_default.font, commonLabelFont).call(svg_text_utils_default.positionText, 0, 0).call(svg_text_utils_default.convertToTspans, gd);
+      ltext.text(t03).call(font3, commonLabelFont).call(svg_text_utils_default.positionText, 0, 0).call(svg_text_utils_default.convertToTspans, gd);
       label.attr("transform", "");
       var tbb2 = getBoundingClientRect(gd, ltext.node());
       var lx2, ly2;
@@ -64583,7 +64637,7 @@ var Plotly = (() => {
           if (anchor === "end") {
             ltext.selectAll("tspan").each(function() {
               var s = select_default2(this);
-              var dummy = drawing_default.tester.append("text").text(s.text()).call(drawing_default.font, commonLabelFont);
+              var dummy = tester.append("text").text(s.text()).call(font3, commonLabelFont);
               var dummyBB = getBoundingClientRect(gd, dummy.node());
               if (Math.round(dummyBB.width) < Math.round(tbb2.width)) {
                 s.attr("x", ltx - dummyBB.width);
@@ -64599,7 +64653,7 @@ var Plotly = (() => {
         textClip.enter().append("clipPath").attr("id", clipId).append("path");
         textClip.exit().remove();
         textClip.select("path").attr("d", clipPath);
-        drawing_default.setClipUrl(ltext, clipPath ? clipId : null, gd);
+        setClipUrl(ltext, clipPath ? clipId : null, gd);
       }
       label.attr("transform", strTranslate6(lx2, ly2));
     });
@@ -64608,7 +64662,7 @@ var Plotly = (() => {
       const groupedHoverData = hoverData.filter((data) => data.hoverinfo !== "none");
       if (groupedHoverData.length === 0) return [];
       var hoverlabel = fullLayout.hoverlabel;
-      var font2 = hoverlabel.font;
+      var font3 = hoverlabel.font;
       var item0 = groupedHoverData[0];
       var unifiedhovertitleText = ((hovermode === "x unified" ? item0.xa : item0.ya).unifiedhovertitle || {}).text;
       var mainText = !unifiedhovertitleText ? t03 : lib_default.hovertemplateString({
@@ -64620,8 +64674,8 @@ var Plotly = (() => {
       var mockLayoutIn = {
         showlegend: true,
         legend: {
-          title: { text: mainText, font: font2 },
-          font: font2,
+          title: { text: mainText, font: font3 },
+          font: font3,
           bgcolor: hoverlabel.bgcolor,
           bordercolor: hoverlabel.bordercolor,
           borderwidth: 1,
@@ -64631,7 +64685,7 @@ var Plotly = (() => {
         }
       };
       var mockLayoutOut = {
-        font: font2
+        font: font3
       };
       legendDefaults(mockLayoutIn, mockLayoutOut, gd._fullData);
       var mockLegend = mockLayoutOut.legend;
@@ -64774,7 +64828,7 @@ var Plotly = (() => {
       g.append("rect").call(color_default.fill, color_default.addOpacity(bgColor, 0.8));
       g.append("text").classed("name", true);
       g.append("path").style("stroke-width", "1px");
-      g.append("text").classed("nums", true).call(drawing_default.font, {
+      g.append("text").classed("nums", true).call(font3, {
         weight: fontWeight,
         style: fontStyle,
         variant: fontVariant,
@@ -64799,7 +64853,7 @@ var Plotly = (() => {
       var texts2 = getHoverLabelText(d, showCommonLabel, hovermode, fullLayout, t03, g);
       var text2 = texts2[0];
       var name9 = texts2[1];
-      var tx = g.select("text.nums").call(drawing_default.font, {
+      var tx = g.select("text.nums").call(font3, {
         family: d.fontFamily || fontFamily,
         size: d.fontSize || fontSize,
         color: d.fontColor || contrastColor,
@@ -64814,7 +64868,7 @@ var Plotly = (() => {
       var tx2width = 0;
       var tx2height = 0;
       if (name9 && name9 !== text2) {
-        tx2.call(drawing_default.font, {
+        tx2.call(font3, {
           family: d.fontFamily || fontFamily,
           size: d.fontSize || fontSize,
           color: nameColor,
@@ -65194,7 +65248,7 @@ var Plotly = (() => {
           pY(offsetY + d.ty0 - d.by / 2 + HOVERTEXTPAD)
         );
         g.select("rect").call(
-          drawing_default.setRect,
+          setRect,
           pX(shiftX.text2ShiftX + (shiftX.alignShift - 1) * d.tx2width / 2 + offsetX),
           pY(offsetY - d.by / 2 - 1),
           pX(d.tx2width),
@@ -65325,7 +65379,7 @@ var Plotly = (() => {
           y2: hLinePointY,
           "stroke-width": yThickness,
           stroke: yColor,
-          "stroke-dasharray": drawing_default.dashStyle(ya.spikedash, yThickness)
+          "stroke-dasharray": dashStyle(ya.spikedash, yThickness)
         }).classed("spikeline", true).classed("crisp", true);
         container.insert("line", ":first-child").attr({
           x1: xBase,
@@ -65386,7 +65440,7 @@ var Plotly = (() => {
           y2: yEndSpike,
           "stroke-width": xThickness,
           stroke: xColor,
-          "stroke-dasharray": drawing_default.dashStyle(xa.spikedash, xThickness)
+          "stroke-dasharray": dashStyle(xa.spikedash, xThickness)
         }).classed("spikeline", true).classed("crisp", true);
         container.insert("line", ":first-child").attr({
           x1: vLinePointX,
@@ -66198,7 +66252,7 @@ var Plotly = (() => {
     fullLayout._paperdiv.style({
       width: gd._context.responsive && fullLayout.autosize && !gd._context._hasZeroWidth && !gd.layout.width ? "100%" : fullLayout.width + "px",
       height: gd._context.responsive && fullLayout.autosize && !gd._context._hasZeroHeight && !gd.layout.height ? "100%" : fullLayout.height + "px"
-    }).selectAll(".main-svg").call(drawing_default.setSize, fullLayout.width, fullLayout.height);
+    }).selectAll(".main-svg").call(setSize, fullLayout.width, fullLayout.height);
     gd._context.setBackground(gd, fullLayout.paper_bgcolor);
     drawMainTitle(gd);
     registry_default.getComponentMethod("modebar", "manage")(gd);
@@ -66220,7 +66274,7 @@ var Plotly = (() => {
       ax = axList[i];
       var counterAx = ax._anchorAxis;
       ax._linepositions = {};
-      ax._lw = drawing_default.crispRound(gd, ax.linewidth, 1);
+      ax._lw = crispRound(gd, ax.linewidth, 1);
       ax._mainLinePosition = getLinePosition(ax, counterAx, ax.side);
       ax._mainMirrorPosition = ax.mirror && counterAx ? getLinePosition(
         ax,
@@ -66270,7 +66324,7 @@ var Plotly = (() => {
       ya = plotinfo.yaxis;
       if (plotinfo.bg && xa._offset !== void 0 && ya._offset !== void 0) {
         plotinfo.bg.call(
-          drawing_default.setRect,
+          setRect,
           xa._offset - pad3,
           ya._offset - pad3,
           xa._length + 2 * pad3,
@@ -66291,7 +66345,7 @@ var Plotly = (() => {
           width: xa._length,
           height: ya._length
         });
-        drawing_default.setTranslate(plotinfo.plot, xa._offset, ya._offset);
+        setTranslate(plotinfo.plot, xa._offset, ya._offset);
         var plotClipId;
         var layerClipId;
         if (plotinfo._hasClipOnAxisFalse) {
@@ -66301,7 +66355,7 @@ var Plotly = (() => {
           plotClipId = clipId;
           layerClipId = null;
         }
-        drawing_default.setClipUrl(plotinfo.plot, plotClipId, gd);
+        setClipUrl(plotinfo.plot, plotClipId, gd);
         plotinfo.layerClipId = layerClipId;
       }
     }
@@ -66424,7 +66478,7 @@ var Plotly = (() => {
     });
     if (title.text && title.automargin) {
       var titleObj = select_default2(gd).selectAll(".gtitle");
-      var titleHeight = drawing_default.bBox(select_default2(gd).selectAll(".g-gtitle").node()).height;
+      var titleHeight = bBox(select_default2(gd).selectAll(".g-gtitle").node()).height;
       var pushMargin = needsMarginPush(gd, title, titleHeight);
       if (pushMargin > 0) {
         applyTitleAutoMargin(gd, y, pushMargin, titleHeight);
@@ -67431,13 +67485,13 @@ var Plotly = (() => {
           if (!yScaleFactor2) yScaleFactor2 = 1;
           var plotDx = xa._offset - clipDx / xScaleFactor2;
           var plotDy = ya._offset - clipDy / yScaleFactor2;
-          sp.clipRect.call(drawing_default.setTranslate, clipDx, clipDy).call(drawing_default.setScale, xScaleFactor2, yScaleFactor2);
-          sp.plot.call(drawing_default.setTranslate, plotDx, plotDy).call(drawing_default.setScale, 1 / xScaleFactor2, 1 / yScaleFactor2);
+          sp.clipRect.call(setTranslate, clipDx, clipDy).call(setScale, xScaleFactor2, yScaleFactor2);
+          sp.plot.call(setTranslate, plotDx, plotDy).call(setScale, 1 / xScaleFactor2, 1 / yScaleFactor2);
           if (xScaleFactor2 !== sp.xScaleFactor || yScaleFactor2 !== sp.yScaleFactor) {
-            drawing_default.setPointGroupScale(sp.zoomScalePts, xScaleFactor2, yScaleFactor2);
-            drawing_default.setTextPointsScale(sp.zoomScaleTxt, xScaleFactor2, yScaleFactor2);
+            setPointGroupScale(sp.zoomScalePts, xScaleFactor2, yScaleFactor2);
+            setTextPointsScale(sp.zoomScaleTxt, xScaleFactor2, yScaleFactor2);
           }
-          drawing_default.hideOutsideRangePoints(sp.clipOnAxisFalseTraces, sp);
+          hideOutsideRangePoints(sp.clipOnAxisFalseTraces, sp);
           sp.xScaleFactor = xScaleFactor2;
           sp.yScaleFactor = yScaleFactor2;
         }
@@ -67475,7 +67529,7 @@ var Plotly = (() => {
   }
   function makeRectDragger(plotinfo, dragClass, cursor, x, y, w, h) {
     var dragger = makeDragger(plotinfo, "rect", dragClass, cursor);
-    select_default2(dragger).call(drawing_default.setRect, x, y, w, h);
+    select_default2(dragger).call(setRect, x, y, w, h);
     return dragger;
   }
   function isDirectionActive(axList, activeVal) {
@@ -68411,7 +68465,7 @@ var Plotly = (() => {
     setPlotContext(gd, config);
     if (!layout) layout = {};
     select_default2(gd).classed("js-plotly-plot", true);
-    drawing_default.makeTester();
+    makeTester();
     if (!Array.isArray(gd._promises)) gd._promises = [];
     var graphWasEmpty = (gd.data || []).length === 0 && Array.isArray(data);
     if (Array.isArray(data)) {
@@ -68436,8 +68490,8 @@ var Plotly = (() => {
         delete fullLayout._shouldCreateBgLayer;
       }
     }
-    drawing_default.initGradients(gd);
-    drawing_default.initPatterns(gd);
+    initGradients(gd);
+    initPatterns(gd);
     if (graphWasEmpty) axes_default.saveShowSpikeInitial(gd);
     var recalc = !gd.calcdata || gd.calcdata.length !== (gd._fullData || []).length;
     if (recalc) {
@@ -72124,7 +72178,7 @@ var Plotly = (() => {
       {
         symbol: {
           valType: "enumerated",
-          values: drawing_default.symbolList,
+          values: symbolList,
           dflt: "circle",
           arrayOk: true,
           editType: "style"
@@ -74213,7 +74267,7 @@ var Plotly = (() => {
         for (var k = 0; k < segments[j].length - 1; k++) {
           var start2 = segments[j][k];
           var end = segments[j][k + 1];
-          var xy = drawing_default.applyBackoff(end, start2);
+          var xy = applyBackoff(end, start2);
           if (xy[0] !== end[0] || xy[1] !== end[1]) {
             trimmed = true;
           }
@@ -74292,7 +74346,7 @@ var Plotly = (() => {
   // src/lib/polygon.js
   var { BADNUM: BADNUM12 } = numerical_default;
   var polygon = {};
-  polygon.tester = function tester(ptsIn) {
+  polygon.tester = function tester2(ptsIn) {
     var pts = ptsIn.slice();
     var xmin = pts[0][0];
     var xmax = xmin;
@@ -74484,7 +74538,7 @@ var Plotly = (() => {
   function createFills(gd, traceJoin, plotinfo) {
     traceJoin.each(function(d) {
       var fills = ensureSingle(select_default2(this), "g", "fills");
-      drawing_default.setClipUrl(fills, plotinfo.layerClipId, gd);
+      setClipUrl(fills, plotinfo.layerClipId, gd);
       var trace = d[0].trace;
       var fillData = [];
       if (trace._ownfill) fillData.push("_ownFill");
@@ -74560,17 +74614,17 @@ var Plotly = (() => {
         tonext.datum(cdscatter);
       }
       if (["hv", "vh", "hvh", "vhv"].indexOf(line.shape) !== -1) {
-        pathfn = drawing_default.steps(line.shape);
-        revpathbase = drawing_default.steps(
+        pathfn = steps(line.shape);
+        revpathbase = steps(
           line.shape.split("").reverse().join("")
         );
       } else if (line.shape === "spline") {
         pathfn = revpathbase = function(pts2) {
           var pLast = pts2[pts2.length - 1];
           if (pts2.length > 1 && pts2[0][0] === pLast[0] && pts2[0][1] === pLast[1]) {
-            return drawing_default.smoothclosed(pts2.slice(1), line.smoothing);
+            return smoothclosed(pts2.slice(1), line.smoothing);
           } else {
-            return drawing_default.smoothopen(pts2, line.smoothing);
+            return smoothopen(pts2, line.smoothing);
           }
         };
       } else {
@@ -74632,11 +74686,11 @@ var Plotly = (() => {
             var el = select_default2(this);
             el.datum(cdscatter);
             if (isEnter) {
-              transition2(el.style("opacity", 0).attr("d", thispath).call(drawing_default.lineGroupStyle)).style("opacity", 1);
+              transition2(el.style("opacity", 0).attr("d", thispath).call(lineGroupStyle)).style("opacity", 1);
             } else {
               var sel = transition2(el);
               sel.attr("d", thispath);
-              drawing_default.singleLineStyle(cdscatter, sel);
+              singleLineStyle(cdscatter, sel);
             }
           }
         };
@@ -74645,8 +74699,8 @@ var Plotly = (() => {
     var lineJoin = lines.selectAll(".js-line").data(segments);
     transition2(lineJoin.exit()).style("opacity", 0).remove();
     lineJoin.each(makeUpdate(false));
-    lineJoin.enter().append("path").classed("js-line", true).style("vector-effect", isStatic ? "none" : "non-scaling-stroke").call(drawing_default.lineGroupStyle).each(makeUpdate(true));
-    drawing_default.setClipUrl(lineJoin, plotinfo.layerClipId, gd);
+    lineJoin.enter().append("path").classed("js-line", true).style("vector-effect", isStatic ? "none" : "non-scaling-stroke").call(lineGroupStyle).each(makeUpdate(true));
+    setClipUrl(lineJoin, plotinfo.layerClipId, gd);
     function clearFill(selection2) {
       transition2(selection2).attr("d", "M0,0Z");
     }
@@ -74688,10 +74742,10 @@ var Plotly = (() => {
         if (pt0 && pt1) {
           if (ownFillDir) {
             pt0[fillAxisIndex] = pt1[fillAxisIndex] = fillAxisZero;
-            transition2(ownFillEl3).attr("d", "M" + pt1 + "L" + pt0 + "L" + fullpath.slice(1)).call(drawing_default.singleFillStyle, gd);
+            transition2(ownFillEl3).attr("d", "M" + pt1 + "L" + pt0 + "L" + fullpath.slice(1)).call(singleFillStyle, gd);
             thisPolygons = makePolygonsToPrevious(null);
           } else {
-            transition2(ownFillEl3).attr("d", fullpath + "Z").call(drawing_default.singleFillStyle, gd);
+            transition2(ownFillEl3).attr("d", fullpath + "Z").call(singleFillStyle, gd);
             thisPolygons = makeSelfPolygons();
           }
         }
@@ -74700,11 +74754,11 @@ var Plotly = (() => {
       } else if (tonext) {
         if (trace.fill.slice(0, 6) === "tonext" && fullpath && prevRevpath) {
           if (trace.fill === "tonext") {
-            transition2(tonext).attr("d", fullpath + "Z" + prevRevpath + "Z").call(drawing_default.singleFillStyle, gd);
+            transition2(tonext).attr("d", fullpath + "Z" + prevRevpath + "Z").call(singleFillStyle, gd);
             thisPolygons = makeSelfPolygons();
             trace._polygons = thisPolygons.concat(prevPolygons);
           } else {
-            transition2(tonext).attr("d", fullpath + "L" + prevRevpath.slice(1) + "Z").call(drawing_default.singleFillStyle, gd);
+            transition2(tonext).attr("d", fullpath + "L" + prevRevpath.slice(1) + "Z").call(singleFillStyle, gd);
             thisPolygons = makePolygonsToPrevious(prevFillsegments);
             trace._polygons = thisPolygons;
           }
@@ -74770,21 +74824,21 @@ var Plotly = (() => {
       join = selection2.data(markerFilter, keyFunc2);
       var enter = join.enter().append("path").classed("point", true);
       if (hasTransition) {
-        enter.call(drawing_default.pointStyle, trace2, gd).call(drawing_default.translatePoints, xa, ya).style("opacity", 0).transition().style("opacity", 1);
+        enter.call(pointStyle, trace2, gd).call(translatePoints, xa, ya).style("opacity", 0).transition().style("opacity", 1);
       }
       join.order();
       var styleFns;
       if (showMarkers) {
-        styleFns = drawing_default.makePointStyleFns(trace2);
+        styleFns = makePointStyleFns(trace2);
       }
       join.each(function(d) {
         var el = select_default2(this);
         var sel = transition2(el);
-        hasNode = drawing_default.translatePoint(d, sel, xa, ya);
+        hasNode = translatePoint(d, sel, xa, ya);
         if (hasNode) {
-          drawing_default.singlePointStyle(d, sel, trace2, styleFns, gd);
+          singlePointStyle(d, sel, trace2, styleFns, gd);
           if (plotinfo.layerClipId) {
-            drawing_default.hideOutsideRangePoint(d, sel, xa, ya, trace2.xcalendar, trace2.ycalendar);
+            hideOutsideRangePoint(d, sel, xa, ya, trace2.xcalendar, trace2.ycalendar);
           }
           if (trace2.customdata) {
             el.classed("plotly-customdata", d.data !== null && d.data !== void 0);
@@ -74805,16 +74859,16 @@ var Plotly = (() => {
       join.each(function(d) {
         var g = select_default2(this);
         var sel = transition2(g.select("text"));
-        hasNode = drawing_default.translatePoint(d, sel, xa, ya);
+        hasNode = translatePoint(d, sel, xa, ya);
         if (hasNode) {
           if (plotinfo.layerClipId) {
-            drawing_default.hideOutsideRangePoint(d, g, xa, ya, trace2.xcalendar, trace2.ycalendar);
+            hideOutsideRangePoint(d, g, xa, ya, trace2.xcalendar, trace2.ycalendar);
           }
         } else {
           g.remove();
         }
       });
-      join.selectAll("text").call(drawing_default.textPointStyle, trace2, gd).each(function(d) {
+      join.selectAll("text").call(textPointStyle, trace2, gd).each(function(d) {
         var x = xa.c2p(d.x);
         var y = ya.c2p(d.y);
         select_default2(this).selectAll("tspan.line").each(function() {
@@ -74828,8 +74882,8 @@ var Plotly = (() => {
     makePoints(points, text, cdscatter);
     var hasClipOnAxisFalse = trace.cliponaxis === false;
     var clipUrl = hasClipOnAxisFalse ? null : plotinfo.layerClipId;
-    drawing_default.setClipUrl(points, clipUrl, gd);
-    drawing_default.setClipUrl(text, clipUrl, gd);
+    setClipUrl(points, clipUrl, gd);
+    setClipUrl(text, clipUrl, gd);
   }
   function selectMarkers(gd, idx, plotinfo, cdscatter, cdscatterAll) {
     var xa = plotinfo.xaxis;
@@ -74898,21 +74952,21 @@ var Plotly = (() => {
       var trace = d.trace || d[0].trace;
       styleText(sel, trace, gd);
     });
-    s.selectAll("g.trace path.js-line").call(drawing_default.lineGroupStyle);
-    s.selectAll("g.trace path.js-fill").call(drawing_default.fillGroupStyle, gd, false);
+    s.selectAll("g.trace path.js-line").call(lineGroupStyle);
+    s.selectAll("g.trace path.js-fill").call(fillGroupStyle, gd, false);
     registry_default.getComponentMethod("errorbars", "style")(s);
   }
   function stylePoints(sel, trace, gd) {
-    drawing_default.pointStyle(sel.selectAll("path.point"), trace, gd);
+    pointStyle(sel.selectAll("path.point"), trace, gd);
   }
   function styleText(sel, trace, gd) {
-    drawing_default.textPointStyle(sel.selectAll("text"), trace, gd);
+    textPointStyle(sel.selectAll("text"), trace, gd);
   }
   function styleOnSelect(gd, cd, sel) {
     var trace = cd[0].trace;
     if (trace.selectedpoints) {
-      drawing_default.selectedPointStyle(sel.selectAll("path.point"), trace);
-      drawing_default.selectedTextStyle(sel.selectAll("text"), trace);
+      selectedPointStyle(sel.selectAll("path.point"), trace);
+      selectedTextStyle(sel.selectAll("text"), trace);
     } else {
       stylePoints(sel, trace, gd);
       styleText(sel, trace, gd);
@@ -75366,7 +75420,7 @@ var Plotly = (() => {
   var { WEEKDAY_PATTERN: DAY_OF_WEEK2, HOUR_PATTERN: HOUR2 } = constants_default2;
   function handleAxisDefaults(containerIn, containerOut, coerce3, options, layoutOut) {
     var letter = options.letter;
-    var font2 = options.font || {};
+    var font3 = options.font || {};
     var splomStash = options.splomStash || {};
     var visible = coerce3("visible", !options.visibleDflt);
     var axTemplate = containerOut._template || {};
@@ -75422,13 +75476,13 @@ var Plotly = (() => {
       }
     }
     var dfltColor = coerce3("color");
-    var dfltFontColor = dfltColor !== layout_attributes_default4.color.dflt ? dfltColor : font2.color;
+    var dfltFontColor = dfltColor !== layout_attributes_default4.color.dflt ? dfltColor : font3.color;
     var dfltTitle = splomStash.label || layoutOut._dfltTitle[letter];
     handlePrefixSuffixDefaults(containerIn, containerOut, coerce3, axType, options);
     if (!visible) return containerOut;
     coerce3("title.text", dfltTitle);
-    lib_default.coerceFont(coerce3, "title.font", font2, { overrideDflt: {
-      size: lib_default.bigFont(font2.size),
+    lib_default.coerceFont(coerce3, "title.font", font3, { overrideDflt: {
+      size: lib_default.bigFont(font3.size),
       color: dfltFontColor
     } });
     handleTickValueDefaults(containerIn, containerOut, coerce3, axType);
@@ -75520,8 +75574,8 @@ var Plotly = (() => {
             }
           }
         }
-        var pattern2 = coerce3("pattern", dfltPattern);
-        if (pattern2 === DAY_OF_WEEK2) {
+        var pattern3 = coerce3("pattern", dfltPattern);
+        if (pattern3 === DAY_OF_WEEK2) {
           for (i = 0; i < 2; i++) {
             q = indexOfDay(bnds[i]);
             if (q) {
@@ -75529,10 +75583,10 @@ var Plotly = (() => {
             }
           }
         }
-        if (pattern2) {
+        if (pattern3) {
           for (i = 0; i < 2; i++) {
             q = bnds[i];
-            switch (pattern2) {
+            switch (pattern3) {
               case DAY_OF_WEEK2:
                 if (!(0, import_fast_isnumeric31.default)(q)) {
                   itemOut.enabled = false;
@@ -75955,12 +76009,12 @@ var Plotly = (() => {
     function unsetSubplotTransform(subplot) {
       var xa = subplot.xaxis;
       var ya = subplot.yaxis;
-      fullLayout._defs.select("#" + subplot.clipId + "> rect").call(drawing_default.setTranslate, 0, 0).call(drawing_default.setScale, 1, 1);
-      subplot.plot.call(drawing_default.setTranslate, xa._offset, ya._offset).call(drawing_default.setScale, 1, 1);
+      fullLayout._defs.select("#" + subplot.clipId + "> rect").call(setTranslate, 0, 0).call(setScale, 1, 1);
+      subplot.plot.call(setTranslate, xa._offset, ya._offset).call(setScale, 1, 1);
       var traceGroups = subplot.plot.selectAll(".scatterlayer .trace");
-      traceGroups.selectAll(".point").call(drawing_default.setPointGroupScale, 1, 1);
-      traceGroups.selectAll(".textpoint").call(drawing_default.setTextPointsScale, 1, 1);
-      traceGroups.call(drawing_default.hideOutsideRangePoints, subplot);
+      traceGroups.selectAll(".point").call(setPointGroupScale, 1, 1);
+      traceGroups.selectAll(".textpoint").call(setTextPointsScale, 1, 1);
+      traceGroups.call(hideOutsideRangePoints, subplot);
     }
     function updateSubplot(edit, progress) {
       var plotinfo = edit.plotinfo;
@@ -76008,10 +76062,10 @@ var Plotly = (() => {
       var fracDy = editY ? viewBox[1] / viewBox[3] * ylen : 0;
       var plotDx = xa._offset - fracDx;
       var plotDy = ya._offset - fracDy;
-      plotinfo.clipRect.call(drawing_default.setTranslate, clipDx, clipDy).call(drawing_default.setScale, 1 / xScaleFactor, 1 / yScaleFactor);
-      plotinfo.plot.call(drawing_default.setTranslate, plotDx, plotDy).call(drawing_default.setScale, xScaleFactor, yScaleFactor);
-      drawing_default.setPointGroupScale(plotinfo.zoomScalePts, 1 / xScaleFactor, 1 / yScaleFactor);
-      drawing_default.setTextPointsScale(plotinfo.zoomScaleTxt, 1 / xScaleFactor, 1 / yScaleFactor);
+      plotinfo.clipRect.call(setTranslate, clipDx, clipDy).call(setScale, 1 / xScaleFactor, 1 / yScaleFactor);
+      plotinfo.plot.call(setTranslate, plotDx, plotDy).call(setScale, xScaleFactor, yScaleFactor);
+      setPointGroupScale(plotinfo.zoomScalePts, 1 / xScaleFactor, 1 / yScaleFactor);
+      setTextPointsScale(plotinfo.zoomScaleTxt, 1 / xScaleFactor, 1 / yScaleFactor);
     }
     var onComplete;
     if (makeOnCompleteCallback) {
@@ -76257,7 +76311,7 @@ var Plotly = (() => {
         makeOnCompleteCallback
       );
       if (constants_default2.clipOnAxisFalseQuery.indexOf("." + className2) === -1) {
-        drawing_default.setClipUrl(sel, plotinfo.layerClipId, gd);
+        setClipUrl(sel, plotinfo.layerClipId, gd);
       }
     });
     if (fullLayout._has("scattergl")) {
@@ -76862,12 +76916,12 @@ var Plotly = (() => {
       annTextGroupInner.on("mouseover", function() {
         var hoverOptions = options.hoverlabel;
         var hoverFont = hoverOptions.font;
-        var bBox = this.getBoundingClientRect();
+        var bBox2 = this.getBoundingClientRect();
         var bBoxRef = gd.getBoundingClientRect();
         fx_default.loneHover({
-          x0: bBox.left - bBoxRef.left,
-          x1: bBox.right - bBoxRef.left,
-          y: (bBox.top + bBox.bottom) / 2 - bBoxRef.top,
+          x0: bBox2.left - bBoxRef.left,
+          x1: bBox2.right - bBoxRef.left,
+          y: (bBox2.top + bBox2.bottom) / 2 - bBoxRef.top,
           text: options.hovertext,
           color: hoverOptions.bgcolor,
           borderColor: hoverOptions.bordercolor,
@@ -76897,11 +76951,11 @@ var Plotly = (() => {
     var annTextClip = fullLayout._topclips.selectAll("#" + annClipID).data(isSizeConstrained ? [0] : []);
     annTextClip.enter().append("clipPath").classed("annclip", true).attr("id", annClipID).append("rect");
     annTextClip.exit().remove();
-    var font2 = options.font;
+    var font3 = options.font;
     var text = fullLayout._meta ? lib_default.templateString(options.text, fullLayout._meta) : options.text;
     var annText = annTextGroupInner.append("text").classed("annotation-text", true).text(text);
     function textLayout2(s) {
-      s.call(drawing_default.font, font2).attr({
+      s.call(drawing_default.font, font3).attr({
         "text-anchor": {
           left: "start",
           right: "end"
@@ -79070,7 +79124,7 @@ var Plotly = (() => {
     var labelGroupAttrs = {
       "data-index": index
     };
-    var font2 = options.label.font;
+    var font3 = options.label.font;
     var labelTextAttrs = {
       "data-notex": 1
     };
@@ -79128,7 +79182,7 @@ var Plotly = (() => {
       }
     }
     labelText.call(function(s) {
-      s.call(drawing_default.font, font2).attr({});
+      s.call(drawing_default.font, font3).attr({});
       svg_text_utils_default.convertToTspans(s, gd);
       return s;
     });
@@ -79677,7 +79731,7 @@ var Plotly = (() => {
   };
 
   // src/components/selections/select.js
-  var { dashStyle } = drawing_default;
+  var { dashStyle: dashStyle2 } = drawing_default;
   var { clearOutline: clearOutline6 } = handle_outline_default;
   var { newShapes: newShapes3 } = newshapes_default;
   var { activateLastSelection: activateLastSelection2 } = draw_default2;
@@ -79746,7 +79800,7 @@ var Plotly = (() => {
     var strokeC = newStyle.line.color || (isCartesian ? color_default.contrast(gd._fullLayout.plot_bgcolor) : "#7f7f7f");
     outlines.enter().append("path").attr("class", "select-outline select-outline-" + plotinfo.id).style({
       opacity: isDrawMode ? newStyle.opacity / 2 : 1,
-      "stroke-dasharray": dashStyle(newStyle.line.dash, newStyle.line.width),
+      "stroke-dasharray": dashStyle2(newStyle.line.dash, newStyle.line.width),
       "stroke-width": newStyle.line.width + "px",
       "shape-rendering": "crispEdges"
     }).call(color_default.stroke, strokeC).call(color_default.fill, fillC).attr("fill-rule", "evenodd").classed("cursor-move", isDrawMode ? true : false).attr("transform", transform2).attr("d", path0 + "Z");
@@ -80111,13 +80165,13 @@ var Plotly = (() => {
       if (isPointSelectionDef(list2[i])) {
         testers.push(newPointNumTester(list2[i]));
       } else {
-        var tester2 = polygonTester2(list2[i]);
-        tester2.subtract = !!list2[i].subtract;
-        testers.push(tester2);
-        xmin = Math.min(xmin, tester2.xmin);
-        xmax = Math.max(xmax, tester2.xmax);
-        ymin = Math.min(ymin, tester2.ymin);
-        ymax = Math.max(ymax, tester2.ymax);
+        var tester3 = polygonTester2(list2[i]);
+        tester3.subtract = !!list2[i].subtract;
+        testers.push(tester3);
+        xmin = Math.min(xmin, tester3.xmin);
+        xmax = Math.max(xmax, tester3.xmax);
+        ymin = Math.min(ymin, tester3.ymin);
+        ymax = Math.max(ymax, tester3.ymax);
       }
     }
     function contains(pt, arg, pointNumber, searchInfo) {
@@ -82731,7 +82785,7 @@ var Plotly = (() => {
     }
     this.setTranslate(translateX, translateY);
   };
-  ScrollBox.prototype.setTranslate = function setTranslate(translateX, translateY) {
+  ScrollBox.prototype.setTranslate = function setTranslate2(translateX, translateY) {
     var translateXMax = this.position.w - this._box.w;
     var translateYMax = this.position.h - this._box.h;
     translateX = lib_default.constrain(translateX || 0, 0, translateXMax);
@@ -83411,22 +83465,22 @@ var Plotly = (() => {
     function coerce3(attr3, dflt) {
       return lib_default.coerce(sliderIn, sliderOut, attributes_default16, attr3, dflt);
     }
-    var steps = handleArrayContainerDefaults(sliderIn, sliderOut, {
+    var steps2 = handleArrayContainerDefaults(sliderIn, sliderOut, {
       name: "steps",
       handleItemDefaults: stepDefaults
     });
     var stepCount = 0;
-    for (var i = 0; i < steps.length; i++) {
-      if (steps[i].visible) stepCount++;
+    for (var i = 0; i < steps2.length; i++) {
+      if (steps2[i].visible) stepCount++;
     }
     var visible;
     if (stepCount < 2) visible = sliderOut.visible = false;
     else visible = coerce3("visible");
     if (!visible) return;
     sliderOut._stepCount = stepCount;
-    var visSteps = sliderOut._visibleSteps = lib_default.filterVisible(steps);
+    var visSteps = sliderOut._visibleSteps = lib_default.filterVisible(steps2);
     var active = coerce3("active");
-    if (!(steps[active] || {}).visible) sliderOut.active = visSteps[0]._index;
+    if (!(steps2[active] || {}).visible) sliderOut.active = visSteps[0]._index;
     coerce3("x");
     coerce3("y");
     lib_default.noneOrAll(sliderIn, sliderOut, ["x", "y"]);
@@ -83543,9 +83597,9 @@ var Plotly = (() => {
       var text = drawLabel2(labelGroup, { step: stepOpts }, sliderOpts);
       var textNode = text.node();
       if (textNode) {
-        var bBox = drawing_default.bBox(textNode);
-        labelHeight = Math.max(labelHeight, bBox.height);
-        maxLabelWidth = Math.max(maxLabelWidth, bBox.width);
+        var bBox2 = drawing_default.bBox(textNode);
+        labelHeight = Math.max(labelHeight, bBox2.height);
+        maxLabelWidth = Math.max(maxLabelWidth, bBox2.width);
       }
     });
     sliderLabels.remove();
@@ -93283,9 +93337,9 @@ var Plotly = (() => {
   var MIN = 0.1;
   function createWave(n, minOpacity) {
     var arr = [];
-    var steps = 32;
-    for (var i = 0; i < steps; i++) {
-      var u = i / (steps - 1);
+    var steps2 = 32;
+    for (var i = 0; i < steps2; i++) {
+      var u = i / (steps2 - 1);
       var v = minOpacity + (1 - minOpacity) * (1 - Math.pow(Math.sin(n * u * Math.PI), 2));
       arr.push([u, Math.max(0, Math.min(1, v))]);
     }
@@ -95149,11 +95203,11 @@ var Plotly = (() => {
         }
         offset = offset.toLowerCase();
         var date = (offset.match(/^c/) && currentDate ? currentDate.newDate() : null) || calendar.today();
-        var pattern2 = /([+-]?[0-9]+)\s*(d|w|m|y)?/g;
-        var matches = pattern2.exec(offset);
+        var pattern3 = /([+-]?[0-9]+)\s*(d|w|m|y)?/g;
+        var matches = pattern3.exec(offset);
         while (matches) {
           date.add(parseInt(matches[1], 10), matches[2] || "d");
-          matches = pattern2.exec(offset);
+          matches = pattern3.exec(offset);
         }
         return date;
       };
