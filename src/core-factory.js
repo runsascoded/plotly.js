@@ -33,13 +33,13 @@ import modebar from './components/modebar/index.js';
 
 import localeEn from './locale-en.js';
 import localeEnUs from './locale-en-us.js';
-import Icons from './fonts/ploticon.js';
-import Snapshot from './snapshot/index.js';
-import PlotSchema from './plot_api/plot_schema.js';
 
-export function createPlotly({ traces = [], components = [] } = {}) {
+export function createPlotly({ traces = [], components = [], Icons, Snapshot, PlotSchema } = {}) {
     var register = Registry.register;
-    var Plotly = { version, register, Icons, Snapshot, PlotSchema };
+    var Plotly = { version, register };
+    if(Icons) Plotly.Icons = Icons;
+    if(Snapshot) Plotly.Snapshot = Snapshot;
+    if(PlotSchema) Plotly.PlotSchema = PlotSchema;
 
     // Register API methods
     var methodNames = Object.keys(plotApi);

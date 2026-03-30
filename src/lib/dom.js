@@ -1,7 +1,6 @@
 import { select } from 'd3-selection';
 import loggers from './loggers.js';
-import matrix from './matrix.js';
-import mat4X4 from 'gl-mat4';
+import matrix, { mat4Multiply } from './matrix.js';
 
 /**
  * Allow referencing a graph DOM element either directly
@@ -144,7 +143,7 @@ function getFullTransformMatrix(element) {
         var t = getElementTransformMatrix(e);
         if(t) {
             var m = matrix.convertCssMatrix(t);
-            out = mat4X4.multiply(out, out, m);
+            out = mat4Multiply(out, out, m);
         }
     });
     return out;
