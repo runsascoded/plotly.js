@@ -24,7 +24,7 @@ import Registry from './registry.js';
 // to_image, validate, template_api, snapshot/download
 import main from './plot_api/plot_api.js';
 import FxModule from './components/fx/index.js';
-import PlotsModule from './plots/plots.js';
+import { resize, graphJson, sendDataToCloud } from './plots/plots.js';
 import { version } from './version.js';
 import './plotcss.js';
 
@@ -72,11 +72,7 @@ export function createPlotly({ traces = [], components = [], Icons, Snapshot, Pl
         delete window.PlotlyLocales;
     }
 
-    Plotly.Plots = {
-        resize: PlotsModule.resize,
-        graphJson: PlotsModule.graphJson,
-        sendDataToCloud: PlotsModule.sendDataToCloud,
-    };
+    Plotly.Plots = { resize, graphJson, sendDataToCloud };
     Plotly.Fx = {
         hover: FxModule.hover,
         unhover: FxModule.unhover,

@@ -1,7 +1,8 @@
 import isNumeric from 'fast-isnumeric';
 import Registry from '../registry.js';
 import { isIndex, isPlainObject, log, nestedProperty, swapAttrs, warn } from '../lib/index.js';
-import Plots from '../plots/plots.js';
+// Note: subplotsRegistry access goes through Registry directly
+// (no longer mixed into Plots via extendFlat)
 import AxisIds from '../plots/cartesian/axis_ids.js';
 import Color from '../components/color/index.js';
 
@@ -38,10 +39,10 @@ export var cleanLayout = function (layout) {
         delete layout.scene1;
     }
 
-    var axisAttrRegex = (Plots.subplotsRegistry.cartesian || {}).attrRegex;
-    var polarAttrRegex = (Plots.subplotsRegistry.polar || {}).attrRegex;
-    var ternaryAttrRegex = (Plots.subplotsRegistry.ternary || {}).attrRegex;
-    var sceneAttrRegex = (Plots.subplotsRegistry.gl3d || {}).attrRegex;
+    var axisAttrRegex = (Registry.subplotsRegistry.cartesian || {}).attrRegex;
+    var polarAttrRegex = (Registry.subplotsRegistry.polar || {}).attrRegex;
+    var ternaryAttrRegex = (Registry.subplotsRegistry.ternary || {}).attrRegex;
+    var sceneAttrRegex = (Registry.subplotsRegistry.gl3d || {}).attrRegex;
 
     var keys = Object.keys(layout);
     for (i = 0; i < keys.length; i++) {
@@ -187,7 +188,7 @@ export var cleanData = function (data) {
 
         // scene ids scene1 -> scene
         if (traceIs(trace, 'gl3d') && trace.scene) {
-            trace.scene = Plots.subplotsRegistry.gl3d.cleanId(trace.scene);
+            trace.scene = Registry.subplotsRegistry.gl3d.cleanId(trace.scene);
         }
 
         if (!traceIs(trace, 'pie-like') && !traceIs(trace, 'bar-like')) {

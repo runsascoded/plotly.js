@@ -22,25 +22,20 @@ import _req1 from './font_attributes.js';
 import _req2 from './layout_attributes.js';
 
 
-var plots = {};
+export var attributes = _req0;
+attributes.type.values = Registry.allTypes;
+export var fontAttrs = _req1;
+export var layoutAttributes = _req2;
 
-// Expose registry methods on Plots for backward-compatibility
-extendFlat(plots, Registry);
-
-plots.attributes = _req0;
-plots.attributes.type.values = plots.allTypes;
-plots.fontAttrs = _req1;
-plots.layoutAttributes = _req2;
-
-plots.executeAPICommand = commandModule.executeAPICommand;
-plots.computeAPICommandBindings = commandModule.computeAPICommandBindings;
-plots.manageCommandObserver = commandModule.manageCommandObserver;
-plots.hasSimpleAPICommandBindings = commandModule.hasSimpleAPICommandBindings;
+export var executeAPICommand = commandModule.executeAPICommand;
+export var computeAPICommandBindings = commandModule.computeAPICommandBindings;
+export var manageCommandObserver = commandModule.manageCommandObserver;
+export var hasSimpleAPICommandBindings = commandModule.hasSimpleAPICommandBindings;
 
 // in some cases the browser doesn't seem to know how big
 // the text is at first, so it needs to draw it,
 // then wait a little, then draw it again
-plots.redrawText = function(gd) {
+export function redrawText(gd) {
     gd = getGraphDiv(gd);
 
     return new Promise(function(resolve) {
@@ -49,13 +44,13 @@ plots.redrawText = function(gd) {
             Registry.getComponentMethod('annotations', 'draw')(gd);
             Registry.getComponentMethod('legend', 'draw')(gd);
             Registry.getComponentMethod('colorbar', 'draw')(gd);
-            resolve(plots.previousPromises(gd));
+            resolve(previousPromises(gd));
         }, 300);
     });
-};
+}
 
 // resize plot about the container size
-plots.resize = function(gd) {
+export function resize(gd) {
     gd = getGraphDiv(gd);
 
     var resolveLastResize;
@@ -101,7 +96,7 @@ plots.resize = function(gd) {
 
 // for use in syncOrAsync, check if there are any
 // pending promises in this plot and wait for them
-plots.previousPromises = function(gd) {
+export function previousPromises(gd) {
     if((gd._promises || []).length) {
         return Promise.all(gd._promises)
             .then(function() { gd._promises = []; });
@@ -114,7 +109,7 @@ plots.previousPromises = function(gd) {
  *
  * Add source links to your graph inside the 'showSources' config argument.
  */
-plots.addLinks = function(gd) {
+export function addLinks(gd) {
     // Do not do anything if showLink and showSources are not set to true in config
     if(!gd._context.showLink && !gd._context.showSources) return;
 
@@ -183,7 +178,7 @@ function positionPlayWithData(gd, container) {
 
     if(gd._context.sendData) {
         link.on('click', function() {
-            plots.sendDataToCloud(gd);
+            sendDataToCloud(gd);
         });
     } else {
         var path = window.location.pathname.split('/');
@@ -195,7 +190,7 @@ function positionPlayWithData(gd, container) {
     }
 }
 
-plots.sendDataToCloud = function(gd) {
+export function sendDataToCloud(gd) {
     var baseUrl = (window.PLOTLYENV || {}).BASE_URL || gd._context.plotlyServerURL;
     if(!baseUrl) return;
 
@@ -221,7 +216,7 @@ plots.sendDataToCloud = function(gd) {
             name: 'data'
         });
 
-    hiddenformInput.node().value = plots.graphJson(gd, false, 'keepdata');
+    hiddenformInput.node().value = graphJson(gd, false, 'keepdata');
     hiddenform.node().submit();
     hiddenformDiv.remove();
 
@@ -269,7 +264,7 @@ var extraFormatKeys = [
  *   is a list of all the transform modules invoked.
  *
  */
-plots.supplyDefaults = function(gd, opts) {
+export function supplyDefaults(gd, opts) {
     var skipUpdateCalc = opts && opts.skipUpdateCalc;
     var oldFullLayout = gd._fullLayout || {};
 
@@ -292,7 +287,7 @@ plots.supplyDefaults = function(gd, opts) {
     var i;
 
     // Create all the storage space for frames, but only if doesn't already exist
-    if(!gd._transitionData) plots.createTransitionData(gd);
+    if(!gd._transitionData) createTransitionData(gd);
 
     // So we only need to do this once (and since we have gd here)
     // get the translated placeholder titles.
@@ -327,22 +322,22 @@ plots.supplyDefaults = function(gd, opts) {
         var oldWidth = oldFullLayout.width;
         var oldHeight = oldFullLayout.height;
 
-        plots.supplyLayoutGlobalDefaults(newLayout, newFullLayout, formatObj);
+        supplyLayoutGlobalDefaults(newLayout, newFullLayout, formatObj);
 
         if(!newLayout.width) newFullLayout.width = oldWidth;
         if(!newLayout.height) newFullLayout.height = oldHeight;
-        plots.sanitizeMargins(newFullLayout);
+        sanitizeMargins(newFullLayout);
     } else {
         // coerce the updated layout and autosize if needed
-        plots.supplyLayoutGlobalDefaults(newLayout, newFullLayout, formatObj);
+        supplyLayoutGlobalDefaults(newLayout, newFullLayout, formatObj);
 
         var missingWidthOrHeight = (!newLayout.width || !newLayout.height);
         var autosize = newFullLayout.autosize;
         var autosizable = context.autosizable;
         var initialAutoSize = missingWidthOrHeight && (autosize || autosizable);
 
-        if(initialAutoSize) plots.plotAutoSize(gd, newLayout, newFullLayout);
-        else if(missingWidthOrHeight) plots.sanitizeMargins(newFullLayout);
+        if(initialAutoSize) plotAutoSize(gd, newLayout, newFullLayout);
+        else if(missingWidthOrHeight) sanitizeMargins(newFullLayout);
 
         // for backwards-compatibility with Plotly v1.x.x
         if(!autosize && missingWidthOrHeight) {
@@ -388,7 +383,7 @@ plots.supplyDefaults = function(gd, opts) {
     newFullLayout._traceUids = getTraceUids(oldFullData, newData);
 
     // then do the data
-    plots.supplyDataDefaults(newData, newFullData, newLayout, newFullLayout);
+    supplyDataDefaults(newData, newFullData, newLayout, newFullLayout);
 
     // redo grid size defaults with info about splom x/y axes,
     // and fill in generated cartesian axes and subplots
@@ -409,7 +404,7 @@ plots.supplyDefaults = function(gd, opts) {
     }
 
     // attach helper method to check whether a plot type is present on graph
-    newFullLayout._has = plots._hasPlotType.bind(newFullLayout);
+    newFullLayout._has = _hasPlotType.bind(newFullLayout);
 
     if(oldFullData.length === newFullData.length) {
         for(i = 0; i < newFullData.length; i++) {
@@ -418,7 +413,7 @@ plots.supplyDefaults = function(gd, opts) {
     }
 
     // finally, fill in the pieces of layout that may need to look at data
-    plots.supplyLayoutModuleDefaults(newLayout, newFullLayout, newFullData, gd._transitionData);
+    supplyLayoutModuleDefaults(newLayout, newFullLayout, newFullData, gd._transitionData);
 
     // Special cases that introduce interactions between traces.
     // This is after relinkPrivateKeys so we can use those in crossTraceDefaults
@@ -446,10 +441,10 @@ plots.supplyDefaults = function(gd, opts) {
     );
 
     // relink / initialize subplot axis objects
-    plots.linkSubplots(newFullData, newFullLayout, oldFullData, oldFullLayout);
+    linkSubplots(newFullData, newFullLayout, oldFullData, oldFullLayout);
 
     // clean subplots and other artifacts from previous plot calls
-    plots.cleanPlot(newFullData, newFullLayout, oldFullData, oldFullLayout);
+    cleanPlot(newFullData, newFullLayout, oldFullData, oldFullLayout);
 
     var hadCartesian = !!(oldFullLayout._has && oldFullLayout._has('cartesian'));
     var hasCartesian = !!(newFullLayout._has && newFullLayout._has('cartesian'));
@@ -508,11 +503,11 @@ plots.supplyDefaults = function(gd, opts) {
 
     // update object references in calcdata
     if(!skipUpdateCalc && oldCalcdata.length === newFullData.length) {
-        plots.supplyDefaultsUpdateCalc(oldCalcdata, newFullData);
+        supplyDefaultsUpdateCalc(oldCalcdata, newFullData);
     }
 };
 
-plots.supplyDefaultsUpdateCalc = function(oldCalcdata, newFullData) {
+export function supplyDefaultsUpdateCalc(oldCalcdata, newFullData) {
     for(var i = 0; i < newFullData.length; i++) {
         var newTrace = newFullData[i];
         var cd0 = (oldCalcdata[i] || [])[0];
@@ -738,7 +733,7 @@ function fillMetaTextHelpers(newFullData, newFullLayout) {
 }
 
 // Create storage for all of the data related to frames and transitions:
-plots.createTransitionData = function(gd) {
+export function createTransitionData(gd) {
     // Set up the default keyframe if it doesn't exist:
     if(!gd._transitionData) {
         gd._transitionData = {};
@@ -764,7 +759,7 @@ plots.createTransitionData = function(gd) {
 // helper function to be bound to fullLayout to check
 // whether a certain plot type is present on plot
 // or trace has a category
-plots._hasPlotType = function(category) {
+export function _hasPlotType(category) {
     var i;
 
     // check base plot modules
@@ -786,7 +781,7 @@ plots._hasPlotType = function(category) {
     return false;
 };
 
-plots.cleanPlot = function(newFullData, newFullLayout, oldFullData, oldFullLayout) {
+export function cleanPlot(newFullData, newFullLayout, oldFullData, oldFullLayout) {
     var i, j;
 
     var basePlotModules = oldFullLayout._basePlotModules || [];
@@ -829,7 +824,7 @@ plots.cleanPlot = function(newFullData, newFullLayout, oldFullData, oldFullLayou
     }
 };
 
-plots.linkSubplots = function(newFullData, newFullLayout, oldFullData, oldFullLayout) {
+export function linkSubplots(newFullData, newFullLayout, oldFullData, oldFullLayout) {
     var i, j;
 
     var oldSubplots = oldFullLayout._plots || {};
@@ -1009,7 +1004,7 @@ function findMainSubplot(ax, fullLayout) {
 // The result is that expanded trace default colors have no effect, with
 // the final result that groups are indistinguishable. This function clears
 // those colors so that individual groupby groups get unique colors.
-plots.clearExpandedTraceDefaultColors = function(trace) {
+export function clearExpandedTraceDefaultColors(trace) {
     var colorAttrs, path, i;
 
     // This uses weird closure state in order to satisfy the linter rule
@@ -1045,7 +1040,7 @@ plots.clearExpandedTraceDefaultColors = function(trace) {
     }
 };
 
-plots.supplyDataDefaults = function(dataIn, dataOut, layout, fullLayout) {
+export function supplyDataDefaults(dataIn, dataOut, layout, fullLayout) {
     var modules = fullLayout._modules;
     var visibleModules = fullLayout._visibleModules;
     var basePlotModules = fullLayout._basePlotModules;
@@ -1089,7 +1084,7 @@ plots.supplyDataDefaults = function(dataIn, dataOut, layout, fullLayout) {
         // Note: templater supplies trace type
         fullTrace = templater.newTrace(trace);
         fullTrace.uid = fullLayout._traceUids[i];
-        plots.supplyTraceDefaults(trace, fullTrace, colorCnt, fullLayout, i);
+        supplyTraceDefaults(trace, fullTrace, colorCnt, fullLayout, i);
 
         fullTrace.index = i;
         fullTrace._input = trace;
@@ -1124,7 +1119,7 @@ plots.supplyDataDefaults = function(dataIn, dataOut, layout, fullLayout) {
     }
 };
 
-plots.supplyAnimationDefaults = function(opts) {
+export function supplyAnimationDefaults(opts) {
     opts = opts || {};
     var i;
     var optsOut = {};
@@ -1140,25 +1135,25 @@ plots.supplyAnimationDefaults = function(opts) {
     if(Array.isArray(opts.frame)) {
         optsOut.frame = [];
         for(i = 0; i < opts.frame.length; i++) {
-            optsOut.frame[i] = plots.supplyAnimationFrameDefaults(opts.frame[i] || {});
+            optsOut.frame[i] = supplyAnimationFrameDefaults(opts.frame[i] || {});
         }
     } else {
-        optsOut.frame = plots.supplyAnimationFrameDefaults(opts.frame || {});
+        optsOut.frame = supplyAnimationFrameDefaults(opts.frame || {});
     }
 
     if(Array.isArray(opts.transition)) {
         optsOut.transition = [];
         for(i = 0; i < opts.transition.length; i++) {
-            optsOut.transition[i] = plots.supplyAnimationTransitionDefaults(opts.transition[i] || {});
+            optsOut.transition[i] = supplyAnimationTransitionDefaults(opts.transition[i] || {});
         }
     } else {
-        optsOut.transition = plots.supplyAnimationTransitionDefaults(opts.transition || {});
+        optsOut.transition = supplyAnimationTransitionDefaults(opts.transition || {});
     }
 
     return optsOut;
 };
 
-plots.supplyAnimationFrameDefaults = function(opts) {
+export function supplyAnimationFrameDefaults(opts) {
     var optsOut = {};
 
     function coerce(attr, dflt) {
@@ -1171,7 +1166,7 @@ plots.supplyAnimationFrameDefaults = function(opts) {
     return optsOut;
 };
 
-plots.supplyAnimationTransitionDefaults = function(opts) {
+export function supplyAnimationTransitionDefaults(opts) {
     var optsOut = {};
 
     function coerce(attr, dflt) {
@@ -1184,7 +1179,7 @@ plots.supplyAnimationTransitionDefaults = function(opts) {
     return optsOut;
 };
 
-plots.supplyFrameDefaults = function(frameIn) {
+export function supplyFrameDefaults(frameIn) {
     var frameOut = {};
 
     function coerce(attr, dflt) {
@@ -1201,14 +1196,14 @@ plots.supplyFrameDefaults = function(frameIn) {
     return frameOut;
 };
 
-plots.supplyTraceDefaults = function(traceIn, traceOut, colorIndex, layout, traceInIndex) {
+export function supplyTraceDefaults(traceIn, traceOut, colorIndex, layout, traceInIndex) {
     var colorway = layout.colorway || Color.defaults;
     var defaultColor = colorway[colorIndex % colorway.length];
 
     var i;
 
     function coerce(attr, dflt) {
-        return Lib.coerce(traceIn, traceOut, plots.attributes, attr, dflt);
+        return Lib.coerce(traceIn, traceOut, attributes, attr, dflt);
     }
 
     var visible = coerce('visible');
@@ -1220,7 +1215,7 @@ plots.supplyTraceDefaults = function(traceIn, traceOut, colorIndex, layout, trac
 
     // we want even invisible traces to make their would-be subplots visible
     // so coerce the subplot id(s) now no matter what
-    var _module = plots.getModule(traceOut);
+    var _module = Registry.getModule(traceOut);
 
     traceOut._module = _module;
     if(_module) {
@@ -1256,11 +1251,11 @@ plots.supplyTraceDefaults = function(traceIn, traceOut, colorIndex, layout, trac
 
         if(Registry.traceIs(traceOut, 'showLegend')) {
             Lib.coerce(traceIn, traceOut,
-                _module.attributes.showlegend ? _module.attributes : plots.attributes,
+                _module.attributes.showlegend ? _module.attributes : attributes,
                 'showlegend'
             );
             Lib.coerce(traceIn, traceOut,
-                _module.attributes.legend ? _module.attributes : plots.attributes,
+                _module.attributes.legend ? _module.attributes : attributes,
                 'legend'
             );
             coerce('legendwidth');
@@ -1307,9 +1302,9 @@ plots.supplyTraceDefaults = function(traceIn, traceOut, colorIndex, layout, trac
     return traceOut;
 };
 
-plots.supplyLayoutGlobalDefaults = function(layoutIn, layoutOut, formatObj) {
+export function supplyLayoutGlobalDefaults(layoutIn, layoutOut, formatObj) {
     function coerce(attr, dflt) {
-        return Lib.coerce(layoutIn, layoutOut, plots.layoutAttributes, attr, dflt);
+        return Lib.coerce(layoutIn, layoutOut, layoutAttributes, attr, dflt);
     }
 
     var template = layoutIn.template;
@@ -1401,7 +1396,7 @@ plots.supplyLayoutGlobalDefaults = function(layoutIn, layoutOut, formatObj) {
     coerce('margin.pad');
     coerce('margin.autoexpand');
 
-    if(layoutIn.width && layoutIn.height) plots.sanitizeMargins(layoutOut);
+    if(layoutIn.width && layoutIn.height) sanitizeMargins(layoutOut);
 
     Registry.getComponentMethod('grid', 'sizeDefaults')(layoutIn, layoutOut);
 
@@ -1462,15 +1457,15 @@ function getComputedSize(attr) {
     );
 }
 
-plots.plotAutoSize = function plotAutoSize(gd, layout, fullLayout) {
+export function plotAutoSize(gd, layout, fullLayout) {
     var context = gd._context || {};
     var frameMargins = context.frameMargins;
     var newWidth;
     var newHeight;
 
-    var isPlotDiv = isPlotDiv(gd);
+    var isPlot = isPlotDiv(gd);
 
-    if(isPlotDiv) gd.emit('plotly_autosize');
+    if(isPlot) gd.emit('plotly_autosize');
 
     // embedded in an iframe - just take the full iframe size
     // if we get to this point, with no aspect ratio restrictions
@@ -1486,7 +1481,7 @@ plots.plotAutoSize = function plotAutoSize(gd, layout, fullLayout) {
         // provide height and width for the container div,
         // specify size in layout, or take the defaults,
         // but don't enforce any ratio restrictions
-        var computedStyle = isPlotDiv ? window.getComputedStyle(gd) : {};
+        var computedStyle = isPlot ? window.getComputedStyle(gd) : {};
 
         newWidth = getComputedSize(computedStyle.width) || getComputedSize(computedStyle.maxWidth) || fullLayout.width;
         newHeight = getComputedSize(computedStyle.height) || getComputedSize(computedStyle.maxHeight) || fullLayout.height;
@@ -1498,8 +1493,8 @@ plots.plotAutoSize = function plotAutoSize(gd, layout, fullLayout) {
         }
     }
 
-    var minWidth = plots.layoutAttributes.width.min;
-    var minHeight = plots.layoutAttributes.height.min;
+    var minWidth = layoutAttributes.width.min;
+    var minHeight = layoutAttributes.height.min;
     if(newWidth < minWidth) newWidth = minWidth;
     if(newHeight < minHeight) newHeight = minHeight;
 
@@ -1519,10 +1514,10 @@ plots.plotAutoSize = function plotAutoSize(gd, layout, fullLayout) {
         gd._initialAutoSize = { width: newWidth, height: newHeight };
     }
 
-    plots.sanitizeMargins(fullLayout);
+    sanitizeMargins(fullLayout);
 };
 
-plots.supplyLayoutModuleDefaults = function(layoutIn, layoutOut, fullData, transitionData) {
+export function supplyLayoutModuleDefaults(layoutIn, layoutOut, fullData, transitionData) {
     var componentsRegistry = Registry.componentsRegistry;
     var basePlotModules = layoutOut._basePlotModules;
     var component, i, _module;
@@ -1599,7 +1594,7 @@ plots.supplyLayoutModuleDefaults = function(layoutIn, layoutOut, fullData, trans
 
 // Remove all plotly attributes from a div so it can be replotted fresh
 // TODO: these really need to be encapsulated into a much smaller set...
-plots.purge = function(gd) {
+export function purge(gd) {
     // note: we DO NOT remove _context because it doesn't change when we insert
     // a new plot, and may have been set outside of our scope.
 
@@ -1672,7 +1667,7 @@ plots.purge = function(gd) {
     if(gd.removeAllListeners) gd.removeAllListeners();
 };
 
-plots.style = function(gd) {
+export function style(gd) {
     var _modules = gd._fullLayout._visibleModules;
     var styleModules = [];
     var i;
@@ -1692,7 +1687,7 @@ plots.style = function(gd) {
     }
 };
 
-plots.sanitizeMargins = function(fullLayout) {
+export function sanitizeMargins(fullLayout) {
     // polar doesn't do margins...
     if(!fullLayout || !fullLayout.margin) return;
 
@@ -1720,11 +1715,11 @@ plots.sanitizeMargins = function(fullLayout) {
     }
 };
 
-plots.clearAutoMarginIds = function(gd) {
+export function clearAutoMarginIds(gd) {
     gd._fullLayout._pushmarginIds = {};
 };
 
-plots.allowAutoMargin = function(gd, id) {
+export function allowAutoMargin(gd, id) {
     gd._fullLayout._pushmarginIds[id] = 1;
 };
 
@@ -1766,7 +1761,7 @@ var MIN_SPECIFIED_HEIGHT = 2;
  *     l, r, t, b: the pixels to pad past the plot fraction x[l|r] and y[t|b]
  *     pad: extra pixels to add in all directions, default 12 (why?)
  */
-plots.autoMargin = function(gd, id, o) {
+export function autoMargin(gd, id, o) {
     var fullLayout = gd._fullLayout;
     var width = fullLayout.width;
     var height = fullLayout.height;
@@ -1836,7 +1831,7 @@ plots.autoMargin = function(gd, id, o) {
         }
 
         if(!fullLayout._replotting) {
-            return plots.doAutoMargin(gd);
+            return doAutoMargin(gd);
         }
     }
 };
@@ -1852,7 +1847,7 @@ function needsRedrawForShift(gd) {
     return false;
 }
 
-plots.doAutoMargin = function(gd) {
+export function doAutoMargin(gd) {
     var fullLayout = gd._fullLayout;
     var width = fullLayout.width;
     var height = fullLayout.height;
@@ -1993,7 +1988,7 @@ plots.doAutoMargin = function(gd) {
     gs.h = Math.round(height) - gs.t - gs.b;
 
     // if things changed and we're not already redrawing, trigger a redraw
-    if(!fullLayout._replotting && (plots.didMarginChange(oldMargins, gs) || needsRedrawForShift(gd))) {
+    if(!fullLayout._replotting && (didMarginChange(oldMargins, gs) || needsRedrawForShift(gd))) {
         if('_redrawFromAutoMarginCount' in fullLayout) {
             fullLayout._redrawFromAutoMarginCount++;
         } else {
@@ -2034,7 +2029,7 @@ function refineTicks(gd) {
 
 var marginKeys = ['l', 'r', 't', 'b', 'p', 'w', 'h'];
 
-plots.didMarginChange = function(margin0, margin1) {
+export function didMarginChange(margin0, margin1) {
     for(var i = 0; i < marginKeys.length; i++) {
         var k = marginKeys[i];
         var m0 = margin0[k];
@@ -2071,11 +2066,11 @@ plots.didMarginChange = function(margin0, margin1) {
  * @param {Boolean} includeConfig If truthy, include _context
  * @returns {Object|String}
  */
-plots.graphJson = function(gd, dataonly, mode, output, useDefaults, includeConfig) {
+export function graphJson(gd, dataonly, mode, output, useDefaults, includeConfig) {
     // if the defaults aren't supplied yet, we need to do that...
     if((useDefaults && dataonly && !gd._fullData) ||
             (useDefaults && !dataonly && !gd._fullLayout)) {
-        plots.supplyDefaults(gd);
+        supplyDefaults(gd);
     }
 
     var data = (useDefaults) ? gd._fullData : gd.data;
@@ -2201,7 +2196,7 @@ plots.graphJson = function(gd, dataonly, mode, output, useDefaults, includeConfi
  * @param {array of objects} operations
  *      Sequence of operations to be performed on the keyframes
  */
-plots.modifyFrames = function(gd, operations) {
+export function modifyFrames(gd, operations) {
     var i, op, frame;
     var _frames = gd._transitionData._frames;
     var _frameHash = gd._transitionData._frameHash;
@@ -2258,7 +2253,7 @@ plots.modifyFrames = function(gd, operations) {
  *
  * Returns: a new object with the merged content
  */
-plots.computeFrame = function(gd, frameName) {
+export function computeFrame(gd, frameName) {
     var frameLookup = gd._transitionData._frameHash;
     var i, traceIndices, traceIndex, destIndex;
 
@@ -2297,7 +2292,7 @@ plots.computeFrame = function(gd, frameName) {
     // Merge, starting with the last and ending with the desired frame:
     while((framePtr = frameStack.pop())) {
         if(framePtr.layout) {
-            result.layout = plots.extendLayout(result.layout, framePtr.layout);
+            result.layout = extendLayout(result.layout, framePtr.layout);
         }
 
         if(framePtr.data) {
@@ -2332,7 +2327,7 @@ plots.computeFrame = function(gd, frameName) {
                     result.traces[destIndex] = traceIndex;
                 }
 
-                result.data[destIndex] = plots.extendTrace(result.data[destIndex], framePtr.data[i]);
+                result.data[destIndex] = extendTrace(result.data[destIndex], framePtr.data[i]);
             }
         }
     }
@@ -2346,7 +2341,7 @@ plots.computeFrame = function(gd, frameName) {
  * is necessary is if you poke around manually in `gd._transitionData._frames`
  * and create and haven't updated the lookup table.
  */
-plots.recomputeFrameHash = function(gd) {
+export function recomputeFrameHash(gd) {
     var hash = gd._transitionData._frameHash = {};
     var frames = gd._transitionData._frames;
     for(var i = 0; i < frames.length; i++) {
@@ -2367,7 +2362,7 @@ plots.recomputeFrameHash = function(gd) {
  *
  * See extendTrace and extendLayout below for usage.
  */
-plots.extendObjectWithContainers = function(dest, src, containerPaths) {
+export function extendObjectWithContainers(dest, src, containerPaths) {
     var containerProp, containerVal, i, j, srcProp, destProp, srcContainer, destContainer;
     var copy = extendDeepNoArrays({}, src || {});
     var expandedObj = expandObjectPaths(copy);
@@ -2412,7 +2407,7 @@ plots.extendObjectWithContainers = function(dest, src, containerPaths) {
 
                 if(srcObj === null) destContainer[j] = null;
                 else {
-                    destContainer[j] = plots.extendObjectWithContainers(destContainer[j], srcObj);
+                    destContainer[j] = extendObjectWithContainers(destContainer[j], srcObj);
                 }
             }
 
@@ -2423,8 +2418,8 @@ plots.extendObjectWithContainers = function(dest, src, containerPaths) {
     return dest;
 };
 
-plots.dataArrayContainers = ['transforms', 'dimensions'];
-plots.layoutArrayContainers = Registry.layoutArrayContainers;
+export var dataArrayContainers = ['transforms', 'dimensions'];
+export var layoutArrayContainers = Registry.layoutArrayContainers;
 
 /*
  * Extend a trace definition. This method:
@@ -2434,8 +2429,8 @@ plots.layoutArrayContainers = Registry.layoutArrayContainers;
  *
  * The result is the original object reference with the new contents merged in.
  */
-plots.extendTrace = function(destTrace, srcTrace) {
-    return plots.extendObjectWithContainers(destTrace, srcTrace, plots.dataArrayContainers);
+export function extendTrace(destTrace, srcTrace) {
+    return extendObjectWithContainers(destTrace, srcTrace, dataArrayContainers);
 };
 
 /*
@@ -2447,8 +2442,8 @@ plots.extendTrace = function(destTrace, srcTrace) {
  *
  * The result is the original object reference with the new contents merged in.
  */
-plots.extendLayout = function(destLayout, srcLayout) {
-    return plots.extendObjectWithContainers(destLayout, srcLayout, plots.layoutArrayContainers);
+export function extendLayout(destLayout, srcLayout) {
+    return extendObjectWithContainers(destLayout, srcLayout, layoutArrayContainers);
 };
 
 /**
@@ -2466,7 +2461,7 @@ plots.extendLayout = function(destLayout, srcLayout) {
  * @param {Object} transitionOpts
  *      options for the transition
  */
-plots.transition = function(gd, data, layout, traces, frameOpts, transitionOpts) {
+export function transition(gd, data, layout, traces, frameOpts, transitionOpts) {
     var opts = {redraw: frameOpts.redraw};
     var transitionedTraces = {};
     var axEdits = [];
@@ -2492,7 +2487,7 @@ plots.transition = function(gd, data, layout, traces, frameOpts, transitionOpts)
                 transitionedTraces[n].push(traceIdx);
             }
 
-            gd.data[traceIndices[i]] = plots.extendTrace(gd.data[traceIndices[i]], data[i]);
+            gd.data[traceIndices[i]] = extendTrace(gd.data[traceIndices[i]], data[i]);
         }
 
         // Follow the same procedure. Clone it so we don't mangle the input, then
@@ -2509,7 +2504,7 @@ plots.transition = function(gd, data, layout, traces, frameOpts, transitionOpts)
             delete layoutUpdate[attr].range;
         }
 
-        plots.extendLayout(gd.layout, layoutUpdate);
+        extendLayout(gd.layout, layoutUpdate);
 
         // Supply defaults after applying the incoming properties. Note that any attempt
         // to simplify this step and reduce the amount of work resulted in the reconstruction
@@ -2520,8 +2515,8 @@ plots.transition = function(gd, data, layout, traces, frameOpts, transitionOpts)
         // first delete calcdata so supplyDefaults knows a calc step is coming
         delete gd.calcdata;
 
-        plots.supplyDefaults(gd);
-        plots.doCalcdata(gd);
+        supplyDefaults(gd);
+        doCalcdata(gd);
 
         var newLayout = expandObjectPaths(layout);
 
@@ -2622,7 +2617,7 @@ plots.transition = function(gd, data, layout, traces, frameOpts, transitionOpts)
  * - anim {'all'|'some'}
  * @param {object} oldFullLayout : old (pre Plotly.react) fullLayout
  */
-plots.transitionFromReact = function(gd, restyleFlags, relayoutFlags, oldFullLayout) {
+export function transitionFromReact(gd, restyleFlags, relayoutFlags, oldFullLayout) {
     var fullLayout = gd._fullLayout;
     var transitionOpts = fullLayout.transition;
     var opts = {};
@@ -2844,11 +2839,11 @@ function _transition(gd, transitionOpts, opts) {
     }
 
     var seq = [
-        plots.previousPromises,
+        previousPromises,
         interruptPreviousTransitions,
         opts.prepareFn,
-        plots.rehover,
-        plots.reselect,
+        rehover,
+        reselect,
         executeTransitions
     ];
 
@@ -2861,7 +2856,7 @@ function _transition(gd, transitionOpts, opts) {
     return transitionStarting.then(function() { return gd; });
 }
 
-plots.doCalcdata = function(gd, traces) {
+export function doCalcdata(gd, traces) {
     var axList = axisIDs.list(gd);
     var fullData = gd._fullData;
     var fullLayout = gd._fullLayout;
@@ -3295,19 +3290,19 @@ function doCrossTraceCalc(gd) {
     }
 }
 
-plots.rehover = function(gd) {
+export function rehover(gd) {
     if(gd._fullLayout._rehover) {
         gd._fullLayout._rehover();
     }
 };
 
-plots.redrag = function(gd) {
+export function redrag(gd) {
     if(gd._fullLayout._redrag) {
         gd._fullLayout._redrag();
     }
 };
 
-plots.reselect = function(gd) {
+export function reselect(gd) {
     var fullLayout = gd._fullLayout;
 
     var A = (gd.layout || {}).selections;
@@ -3320,7 +3315,7 @@ plots.reselect = function(gd) {
     Registry.getComponentMethod('selections', 'reselect')(gd, mayEmitSelected);
 };
 
-plots.generalUpdatePerTraceModule = function(gd, subplot, subplotCalcData, subplotLayout) {
+export function generalUpdatePerTraceModule(gd, subplot, subplotCalcData, subplotLayout) {
     var traceHashOld = subplot.traceHash;
     var traceHash = {};
     var i;
@@ -3363,13 +3358,13 @@ plots.generalUpdatePerTraceModule = function(gd, subplot, subplotCalcData, subpl
     subplot.traceHash = traceHash;
 };
 
-plots.plotBasePlot = function(desiredType, gd, traces, transitionOpts, makeOnCompleteCallback) {
+export function plotBasePlot(desiredType, gd, traces, transitionOpts, makeOnCompleteCallback) {
     var _module = Registry.getModule(desiredType);
     var cdmodule = getModuleCalcData(gd.calcdata, _module)[0];
     _module.plot(gd, cdmodule, transitionOpts, makeOnCompleteCallback);
 };
 
-plots.cleanBasePlot = function(desiredType, newFullData, newFullLayout, oldFullData, oldFullLayout) {
+export function cleanBasePlot(desiredType, newFullData, newFullLayout, oldFullData, oldFullLayout) {
     var had = (oldFullLayout._has && oldFullLayout._has(desiredType));
     var has = (newFullLayout._has && newFullLayout._has(desiredType));
 
@@ -3378,4 +3373,61 @@ plots.cleanBasePlot = function(desiredType, newFullData, newFullLayout, oldFullD
     }
 };
 
+// Backward-compatible default export aggregating all named exports
+var plots = {
+    attributes,
+    fontAttrs,
+    layoutAttributes,
+    executeAPICommand,
+    computeAPICommandBindings,
+    manageCommandObserver,
+    hasSimpleAPICommandBindings,
+    redrawText,
+    resize,
+    previousPromises,
+    addLinks,
+    sendDataToCloud,
+    supplyDefaults,
+    supplyDefaultsUpdateCalc,
+    createTransitionData,
+    _hasPlotType,
+    cleanPlot,
+    linkSubplots,
+    clearExpandedTraceDefaultColors,
+    supplyDataDefaults,
+    supplyAnimationDefaults,
+    supplyAnimationFrameDefaults,
+    supplyAnimationTransitionDefaults,
+    supplyFrameDefaults,
+    supplyTraceDefaults,
+    supplyLayoutGlobalDefaults,
+    plotAutoSize,
+    supplyLayoutModuleDefaults,
+    purge,
+    style,
+    sanitizeMargins,
+    clearAutoMarginIds,
+    allowAutoMargin,
+    autoMargin,
+    doAutoMargin,
+    didMarginChange,
+    graphJson,
+    modifyFrames,
+    computeFrame,
+    recomputeFrameHash,
+    extendObjectWithContainers,
+    dataArrayContainers,
+    layoutArrayContainers,
+    extendTrace,
+    extendLayout,
+    transition,
+    transitionFromReact,
+    doCalcdata,
+    rehover,
+    redrag,
+    reselect,
+    generalUpdatePerTraceModule,
+    plotBasePlot,
+    cleanBasePlot,
+};
 export default plots;
