@@ -95,932 +95,6 @@ var Plotly = (() => {
     }
   });
 
-  // node_modules/.pnpm/gl-mat4@1.2.0/node_modules/gl-mat4/create.js
-  var require_create = __commonJS({
-    "node_modules/.pnpm/gl-mat4@1.2.0/node_modules/gl-mat4/create.js"(exports, module) {
-      module.exports = create2;
-      function create2() {
-        var out = new Float32Array(16);
-        out[0] = 1;
-        out[1] = 0;
-        out[2] = 0;
-        out[3] = 0;
-        out[4] = 0;
-        out[5] = 1;
-        out[6] = 0;
-        out[7] = 0;
-        out[8] = 0;
-        out[9] = 0;
-        out[10] = 1;
-        out[11] = 0;
-        out[12] = 0;
-        out[13] = 0;
-        out[14] = 0;
-        out[15] = 1;
-        return out;
-      }
-    }
-  });
-
-  // node_modules/.pnpm/gl-mat4@1.2.0/node_modules/gl-mat4/clone.js
-  var require_clone = __commonJS({
-    "node_modules/.pnpm/gl-mat4@1.2.0/node_modules/gl-mat4/clone.js"(exports, module) {
-      module.exports = clone2;
-      function clone2(a) {
-        var out = new Float32Array(16);
-        out[0] = a[0];
-        out[1] = a[1];
-        out[2] = a[2];
-        out[3] = a[3];
-        out[4] = a[4];
-        out[5] = a[5];
-        out[6] = a[6];
-        out[7] = a[7];
-        out[8] = a[8];
-        out[9] = a[9];
-        out[10] = a[10];
-        out[11] = a[11];
-        out[12] = a[12];
-        out[13] = a[13];
-        out[14] = a[14];
-        out[15] = a[15];
-        return out;
-      }
-    }
-  });
-
-  // node_modules/.pnpm/gl-mat4@1.2.0/node_modules/gl-mat4/copy.js
-  var require_copy = __commonJS({
-    "node_modules/.pnpm/gl-mat4@1.2.0/node_modules/gl-mat4/copy.js"(exports, module) {
-      module.exports = copy2;
-      function copy2(out, a) {
-        out[0] = a[0];
-        out[1] = a[1];
-        out[2] = a[2];
-        out[3] = a[3];
-        out[4] = a[4];
-        out[5] = a[5];
-        out[6] = a[6];
-        out[7] = a[7];
-        out[8] = a[8];
-        out[9] = a[9];
-        out[10] = a[10];
-        out[11] = a[11];
-        out[12] = a[12];
-        out[13] = a[13];
-        out[14] = a[14];
-        out[15] = a[15];
-        return out;
-      }
-    }
-  });
-
-  // node_modules/.pnpm/gl-mat4@1.2.0/node_modules/gl-mat4/identity.js
-  var require_identity = __commonJS({
-    "node_modules/.pnpm/gl-mat4@1.2.0/node_modules/gl-mat4/identity.js"(exports, module) {
-      module.exports = identity6;
-      function identity6(out) {
-        out[0] = 1;
-        out[1] = 0;
-        out[2] = 0;
-        out[3] = 0;
-        out[4] = 0;
-        out[5] = 1;
-        out[6] = 0;
-        out[7] = 0;
-        out[8] = 0;
-        out[9] = 0;
-        out[10] = 1;
-        out[11] = 0;
-        out[12] = 0;
-        out[13] = 0;
-        out[14] = 0;
-        out[15] = 1;
-        return out;
-      }
-    }
-  });
-
-  // node_modules/.pnpm/gl-mat4@1.2.0/node_modules/gl-mat4/transpose.js
-  var require_transpose = __commonJS({
-    "node_modules/.pnpm/gl-mat4@1.2.0/node_modules/gl-mat4/transpose.js"(exports, module) {
-      module.exports = transpose;
-      function transpose(out, a) {
-        if (out === a) {
-          var a01 = a[1], a02 = a[2], a03 = a[3], a12 = a[6], a13 = a[7], a23 = a[11];
-          out[1] = a[4];
-          out[2] = a[8];
-          out[3] = a[12];
-          out[4] = a01;
-          out[6] = a[9];
-          out[7] = a[13];
-          out[8] = a02;
-          out[9] = a12;
-          out[11] = a[14];
-          out[12] = a03;
-          out[13] = a13;
-          out[14] = a23;
-        } else {
-          out[0] = a[0];
-          out[1] = a[4];
-          out[2] = a[8];
-          out[3] = a[12];
-          out[4] = a[1];
-          out[5] = a[5];
-          out[6] = a[9];
-          out[7] = a[13];
-          out[8] = a[2];
-          out[9] = a[6];
-          out[10] = a[10];
-          out[11] = a[14];
-          out[12] = a[3];
-          out[13] = a[7];
-          out[14] = a[11];
-          out[15] = a[15];
-        }
-        return out;
-      }
-    }
-  });
-
-  // node_modules/.pnpm/gl-mat4@1.2.0/node_modules/gl-mat4/invert.js
-  var require_invert = __commonJS({
-    "node_modules/.pnpm/gl-mat4@1.2.0/node_modules/gl-mat4/invert.js"(exports, module) {
-      module.exports = invert;
-      function invert(out, a) {
-        var a00 = a[0], a01 = a[1], a02 = a[2], a03 = a[3], a10 = a[4], a11 = a[5], a12 = a[6], a13 = a[7], a20 = a[8], a21 = a[9], a22 = a[10], a23 = a[11], a30 = a[12], a31 = a[13], a32 = a[14], a33 = a[15], b00 = a00 * a11 - a01 * a10, b01 = a00 * a12 - a02 * a10, b02 = a00 * a13 - a03 * a10, b03 = a01 * a12 - a02 * a11, b04 = a01 * a13 - a03 * a11, b05 = a02 * a13 - a03 * a12, b06 = a20 * a31 - a21 * a30, b07 = a20 * a32 - a22 * a30, b08 = a20 * a33 - a23 * a30, b09 = a21 * a32 - a22 * a31, b10 = a21 * a33 - a23 * a31, b11 = a22 * a33 - a23 * a32, det = b00 * b11 - b01 * b10 + b02 * b09 + b03 * b08 - b04 * b07 + b05 * b06;
-        if (!det) {
-          return null;
-        }
-        det = 1 / det;
-        out[0] = (a11 * b11 - a12 * b10 + a13 * b09) * det;
-        out[1] = (a02 * b10 - a01 * b11 - a03 * b09) * det;
-        out[2] = (a31 * b05 - a32 * b04 + a33 * b03) * det;
-        out[3] = (a22 * b04 - a21 * b05 - a23 * b03) * det;
-        out[4] = (a12 * b08 - a10 * b11 - a13 * b07) * det;
-        out[5] = (a00 * b11 - a02 * b08 + a03 * b07) * det;
-        out[6] = (a32 * b02 - a30 * b05 - a33 * b01) * det;
-        out[7] = (a20 * b05 - a22 * b02 + a23 * b01) * det;
-        out[8] = (a10 * b10 - a11 * b08 + a13 * b06) * det;
-        out[9] = (a01 * b08 - a00 * b10 - a03 * b06) * det;
-        out[10] = (a30 * b04 - a31 * b02 + a33 * b00) * det;
-        out[11] = (a21 * b02 - a20 * b04 - a23 * b00) * det;
-        out[12] = (a11 * b07 - a10 * b09 - a12 * b06) * det;
-        out[13] = (a00 * b09 - a01 * b07 + a02 * b06) * det;
-        out[14] = (a31 * b01 - a30 * b03 - a32 * b00) * det;
-        out[15] = (a20 * b03 - a21 * b01 + a22 * b00) * det;
-        return out;
-      }
-    }
-  });
-
-  // node_modules/.pnpm/gl-mat4@1.2.0/node_modules/gl-mat4/adjoint.js
-  var require_adjoint = __commonJS({
-    "node_modules/.pnpm/gl-mat4@1.2.0/node_modules/gl-mat4/adjoint.js"(exports, module) {
-      module.exports = adjoint;
-      function adjoint(out, a) {
-        var a00 = a[0], a01 = a[1], a02 = a[2], a03 = a[3], a10 = a[4], a11 = a[5], a12 = a[6], a13 = a[7], a20 = a[8], a21 = a[9], a22 = a[10], a23 = a[11], a30 = a[12], a31 = a[13], a32 = a[14], a33 = a[15];
-        out[0] = a11 * (a22 * a33 - a23 * a32) - a21 * (a12 * a33 - a13 * a32) + a31 * (a12 * a23 - a13 * a22);
-        out[1] = -(a01 * (a22 * a33 - a23 * a32) - a21 * (a02 * a33 - a03 * a32) + a31 * (a02 * a23 - a03 * a22));
-        out[2] = a01 * (a12 * a33 - a13 * a32) - a11 * (a02 * a33 - a03 * a32) + a31 * (a02 * a13 - a03 * a12);
-        out[3] = -(a01 * (a12 * a23 - a13 * a22) - a11 * (a02 * a23 - a03 * a22) + a21 * (a02 * a13 - a03 * a12));
-        out[4] = -(a10 * (a22 * a33 - a23 * a32) - a20 * (a12 * a33 - a13 * a32) + a30 * (a12 * a23 - a13 * a22));
-        out[5] = a00 * (a22 * a33 - a23 * a32) - a20 * (a02 * a33 - a03 * a32) + a30 * (a02 * a23 - a03 * a22);
-        out[6] = -(a00 * (a12 * a33 - a13 * a32) - a10 * (a02 * a33 - a03 * a32) + a30 * (a02 * a13 - a03 * a12));
-        out[7] = a00 * (a12 * a23 - a13 * a22) - a10 * (a02 * a23 - a03 * a22) + a20 * (a02 * a13 - a03 * a12);
-        out[8] = a10 * (a21 * a33 - a23 * a31) - a20 * (a11 * a33 - a13 * a31) + a30 * (a11 * a23 - a13 * a21);
-        out[9] = -(a00 * (a21 * a33 - a23 * a31) - a20 * (a01 * a33 - a03 * a31) + a30 * (a01 * a23 - a03 * a21));
-        out[10] = a00 * (a11 * a33 - a13 * a31) - a10 * (a01 * a33 - a03 * a31) + a30 * (a01 * a13 - a03 * a11);
-        out[11] = -(a00 * (a11 * a23 - a13 * a21) - a10 * (a01 * a23 - a03 * a21) + a20 * (a01 * a13 - a03 * a11));
-        out[12] = -(a10 * (a21 * a32 - a22 * a31) - a20 * (a11 * a32 - a12 * a31) + a30 * (a11 * a22 - a12 * a21));
-        out[13] = a00 * (a21 * a32 - a22 * a31) - a20 * (a01 * a32 - a02 * a31) + a30 * (a01 * a22 - a02 * a21);
-        out[14] = -(a00 * (a11 * a32 - a12 * a31) - a10 * (a01 * a32 - a02 * a31) + a30 * (a01 * a12 - a02 * a11));
-        out[15] = a00 * (a11 * a22 - a12 * a21) - a10 * (a01 * a22 - a02 * a21) + a20 * (a01 * a12 - a02 * a11);
-        return out;
-      }
-    }
-  });
-
-  // node_modules/.pnpm/gl-mat4@1.2.0/node_modules/gl-mat4/determinant.js
-  var require_determinant = __commonJS({
-    "node_modules/.pnpm/gl-mat4@1.2.0/node_modules/gl-mat4/determinant.js"(exports, module) {
-      module.exports = determinant;
-      function determinant(a) {
-        var a00 = a[0], a01 = a[1], a02 = a[2], a03 = a[3], a10 = a[4], a11 = a[5], a12 = a[6], a13 = a[7], a20 = a[8], a21 = a[9], a22 = a[10], a23 = a[11], a30 = a[12], a31 = a[13], a32 = a[14], a33 = a[15], b00 = a00 * a11 - a01 * a10, b01 = a00 * a12 - a02 * a10, b02 = a00 * a13 - a03 * a10, b03 = a01 * a12 - a02 * a11, b04 = a01 * a13 - a03 * a11, b05 = a02 * a13 - a03 * a12, b06 = a20 * a31 - a21 * a30, b07 = a20 * a32 - a22 * a30, b08 = a20 * a33 - a23 * a30, b09 = a21 * a32 - a22 * a31, b10 = a21 * a33 - a23 * a31, b11 = a22 * a33 - a23 * a32;
-        return b00 * b11 - b01 * b10 + b02 * b09 + b03 * b08 - b04 * b07 + b05 * b06;
-      }
-    }
-  });
-
-  // node_modules/.pnpm/gl-mat4@1.2.0/node_modules/gl-mat4/multiply.js
-  var require_multiply = __commonJS({
-    "node_modules/.pnpm/gl-mat4@1.2.0/node_modules/gl-mat4/multiply.js"(exports, module) {
-      module.exports = multiply;
-      function multiply(out, a, b) {
-        var a00 = a[0], a01 = a[1], a02 = a[2], a03 = a[3], a10 = a[4], a11 = a[5], a12 = a[6], a13 = a[7], a20 = a[8], a21 = a[9], a22 = a[10], a23 = a[11], a30 = a[12], a31 = a[13], a32 = a[14], a33 = a[15];
-        var b02 = b[0], b12 = b[1], b22 = b[2], b32 = b[3];
-        out[0] = b02 * a00 + b12 * a10 + b22 * a20 + b32 * a30;
-        out[1] = b02 * a01 + b12 * a11 + b22 * a21 + b32 * a31;
-        out[2] = b02 * a02 + b12 * a12 + b22 * a22 + b32 * a32;
-        out[3] = b02 * a03 + b12 * a13 + b22 * a23 + b32 * a33;
-        b02 = b[4];
-        b12 = b[5];
-        b22 = b[6];
-        b32 = b[7];
-        out[4] = b02 * a00 + b12 * a10 + b22 * a20 + b32 * a30;
-        out[5] = b02 * a01 + b12 * a11 + b22 * a21 + b32 * a31;
-        out[6] = b02 * a02 + b12 * a12 + b22 * a22 + b32 * a32;
-        out[7] = b02 * a03 + b12 * a13 + b22 * a23 + b32 * a33;
-        b02 = b[8];
-        b12 = b[9];
-        b22 = b[10];
-        b32 = b[11];
-        out[8] = b02 * a00 + b12 * a10 + b22 * a20 + b32 * a30;
-        out[9] = b02 * a01 + b12 * a11 + b22 * a21 + b32 * a31;
-        out[10] = b02 * a02 + b12 * a12 + b22 * a22 + b32 * a32;
-        out[11] = b02 * a03 + b12 * a13 + b22 * a23 + b32 * a33;
-        b02 = b[12];
-        b12 = b[13];
-        b22 = b[14];
-        b32 = b[15];
-        out[12] = b02 * a00 + b12 * a10 + b22 * a20 + b32 * a30;
-        out[13] = b02 * a01 + b12 * a11 + b22 * a21 + b32 * a31;
-        out[14] = b02 * a02 + b12 * a12 + b22 * a22 + b32 * a32;
-        out[15] = b02 * a03 + b12 * a13 + b22 * a23 + b32 * a33;
-        return out;
-      }
-    }
-  });
-
-  // node_modules/.pnpm/gl-mat4@1.2.0/node_modules/gl-mat4/translate.js
-  var require_translate = __commonJS({
-    "node_modules/.pnpm/gl-mat4@1.2.0/node_modules/gl-mat4/translate.js"(exports, module) {
-      module.exports = translate;
-      function translate(out, a, v) {
-        var x = v[0], y = v[1], z = v[2], a00, a01, a02, a03, a10, a11, a12, a13, a20, a21, a22, a23;
-        if (a === out) {
-          out[12] = a[0] * x + a[4] * y + a[8] * z + a[12];
-          out[13] = a[1] * x + a[5] * y + a[9] * z + a[13];
-          out[14] = a[2] * x + a[6] * y + a[10] * z + a[14];
-          out[15] = a[3] * x + a[7] * y + a[11] * z + a[15];
-        } else {
-          a00 = a[0];
-          a01 = a[1];
-          a02 = a[2];
-          a03 = a[3];
-          a10 = a[4];
-          a11 = a[5];
-          a12 = a[6];
-          a13 = a[7];
-          a20 = a[8];
-          a21 = a[9];
-          a22 = a[10];
-          a23 = a[11];
-          out[0] = a00;
-          out[1] = a01;
-          out[2] = a02;
-          out[3] = a03;
-          out[4] = a10;
-          out[5] = a11;
-          out[6] = a12;
-          out[7] = a13;
-          out[8] = a20;
-          out[9] = a21;
-          out[10] = a22;
-          out[11] = a23;
-          out[12] = a00 * x + a10 * y + a20 * z + a[12];
-          out[13] = a01 * x + a11 * y + a21 * z + a[13];
-          out[14] = a02 * x + a12 * y + a22 * z + a[14];
-          out[15] = a03 * x + a13 * y + a23 * z + a[15];
-        }
-        return out;
-      }
-    }
-  });
-
-  // node_modules/.pnpm/gl-mat4@1.2.0/node_modules/gl-mat4/scale.js
-  var require_scale = __commonJS({
-    "node_modules/.pnpm/gl-mat4@1.2.0/node_modules/gl-mat4/scale.js"(exports, module) {
-      module.exports = scale;
-      function scale(out, a, v) {
-        var x = v[0], y = v[1], z = v[2];
-        out[0] = a[0] * x;
-        out[1] = a[1] * x;
-        out[2] = a[2] * x;
-        out[3] = a[3] * x;
-        out[4] = a[4] * y;
-        out[5] = a[5] * y;
-        out[6] = a[6] * y;
-        out[7] = a[7] * y;
-        out[8] = a[8] * z;
-        out[9] = a[9] * z;
-        out[10] = a[10] * z;
-        out[11] = a[11] * z;
-        out[12] = a[12];
-        out[13] = a[13];
-        out[14] = a[14];
-        out[15] = a[15];
-        return out;
-      }
-    }
-  });
-
-  // node_modules/.pnpm/gl-mat4@1.2.0/node_modules/gl-mat4/rotate.js
-  var require_rotate = __commonJS({
-    "node_modules/.pnpm/gl-mat4@1.2.0/node_modules/gl-mat4/rotate.js"(exports, module) {
-      module.exports = rotate2;
-      function rotate2(out, a, rad, axis) {
-        var x = axis[0], y = axis[1], z = axis[2], len2 = Math.sqrt(x * x + y * y + z * z), s, c, t, a00, a01, a02, a03, a10, a11, a12, a13, a20, a21, a22, a23, b00, b01, b02, b10, b11, b12, b20, b21, b22;
-        if (Math.abs(len2) < 1e-6) {
-          return null;
-        }
-        len2 = 1 / len2;
-        x *= len2;
-        y *= len2;
-        z *= len2;
-        s = Math.sin(rad);
-        c = Math.cos(rad);
-        t = 1 - c;
-        a00 = a[0];
-        a01 = a[1];
-        a02 = a[2];
-        a03 = a[3];
-        a10 = a[4];
-        a11 = a[5];
-        a12 = a[6];
-        a13 = a[7];
-        a20 = a[8];
-        a21 = a[9];
-        a22 = a[10];
-        a23 = a[11];
-        b00 = x * x * t + c;
-        b01 = y * x * t + z * s;
-        b02 = z * x * t - y * s;
-        b10 = x * y * t - z * s;
-        b11 = y * y * t + c;
-        b12 = z * y * t + x * s;
-        b20 = x * z * t + y * s;
-        b21 = y * z * t - x * s;
-        b22 = z * z * t + c;
-        out[0] = a00 * b00 + a10 * b01 + a20 * b02;
-        out[1] = a01 * b00 + a11 * b01 + a21 * b02;
-        out[2] = a02 * b00 + a12 * b01 + a22 * b02;
-        out[3] = a03 * b00 + a13 * b01 + a23 * b02;
-        out[4] = a00 * b10 + a10 * b11 + a20 * b12;
-        out[5] = a01 * b10 + a11 * b11 + a21 * b12;
-        out[6] = a02 * b10 + a12 * b11 + a22 * b12;
-        out[7] = a03 * b10 + a13 * b11 + a23 * b12;
-        out[8] = a00 * b20 + a10 * b21 + a20 * b22;
-        out[9] = a01 * b20 + a11 * b21 + a21 * b22;
-        out[10] = a02 * b20 + a12 * b21 + a22 * b22;
-        out[11] = a03 * b20 + a13 * b21 + a23 * b22;
-        if (a !== out) {
-          out[12] = a[12];
-          out[13] = a[13];
-          out[14] = a[14];
-          out[15] = a[15];
-        }
-        return out;
-      }
-    }
-  });
-
-  // node_modules/.pnpm/gl-mat4@1.2.0/node_modules/gl-mat4/rotateX.js
-  var require_rotateX = __commonJS({
-    "node_modules/.pnpm/gl-mat4@1.2.0/node_modules/gl-mat4/rotateX.js"(exports, module) {
-      module.exports = rotateX;
-      function rotateX(out, a, rad) {
-        var s = Math.sin(rad), c = Math.cos(rad), a10 = a[4], a11 = a[5], a12 = a[6], a13 = a[7], a20 = a[8], a21 = a[9], a22 = a[10], a23 = a[11];
-        if (a !== out) {
-          out[0] = a[0];
-          out[1] = a[1];
-          out[2] = a[2];
-          out[3] = a[3];
-          out[12] = a[12];
-          out[13] = a[13];
-          out[14] = a[14];
-          out[15] = a[15];
-        }
-        out[4] = a10 * c + a20 * s;
-        out[5] = a11 * c + a21 * s;
-        out[6] = a12 * c + a22 * s;
-        out[7] = a13 * c + a23 * s;
-        out[8] = a20 * c - a10 * s;
-        out[9] = a21 * c - a11 * s;
-        out[10] = a22 * c - a12 * s;
-        out[11] = a23 * c - a13 * s;
-        return out;
-      }
-    }
-  });
-
-  // node_modules/.pnpm/gl-mat4@1.2.0/node_modules/gl-mat4/rotateY.js
-  var require_rotateY = __commonJS({
-    "node_modules/.pnpm/gl-mat4@1.2.0/node_modules/gl-mat4/rotateY.js"(exports, module) {
-      module.exports = rotateY;
-      function rotateY(out, a, rad) {
-        var s = Math.sin(rad), c = Math.cos(rad), a00 = a[0], a01 = a[1], a02 = a[2], a03 = a[3], a20 = a[8], a21 = a[9], a22 = a[10], a23 = a[11];
-        if (a !== out) {
-          out[4] = a[4];
-          out[5] = a[5];
-          out[6] = a[6];
-          out[7] = a[7];
-          out[12] = a[12];
-          out[13] = a[13];
-          out[14] = a[14];
-          out[15] = a[15];
-        }
-        out[0] = a00 * c - a20 * s;
-        out[1] = a01 * c - a21 * s;
-        out[2] = a02 * c - a22 * s;
-        out[3] = a03 * c - a23 * s;
-        out[8] = a00 * s + a20 * c;
-        out[9] = a01 * s + a21 * c;
-        out[10] = a02 * s + a22 * c;
-        out[11] = a03 * s + a23 * c;
-        return out;
-      }
-    }
-  });
-
-  // node_modules/.pnpm/gl-mat4@1.2.0/node_modules/gl-mat4/rotateZ.js
-  var require_rotateZ = __commonJS({
-    "node_modules/.pnpm/gl-mat4@1.2.0/node_modules/gl-mat4/rotateZ.js"(exports, module) {
-      module.exports = rotateZ;
-      function rotateZ(out, a, rad) {
-        var s = Math.sin(rad), c = Math.cos(rad), a00 = a[0], a01 = a[1], a02 = a[2], a03 = a[3], a10 = a[4], a11 = a[5], a12 = a[6], a13 = a[7];
-        if (a !== out) {
-          out[8] = a[8];
-          out[9] = a[9];
-          out[10] = a[10];
-          out[11] = a[11];
-          out[12] = a[12];
-          out[13] = a[13];
-          out[14] = a[14];
-          out[15] = a[15];
-        }
-        out[0] = a00 * c + a10 * s;
-        out[1] = a01 * c + a11 * s;
-        out[2] = a02 * c + a12 * s;
-        out[3] = a03 * c + a13 * s;
-        out[4] = a10 * c - a00 * s;
-        out[5] = a11 * c - a01 * s;
-        out[6] = a12 * c - a02 * s;
-        out[7] = a13 * c - a03 * s;
-        return out;
-      }
-    }
-  });
-
-  // node_modules/.pnpm/gl-mat4@1.2.0/node_modules/gl-mat4/fromRotation.js
-  var require_fromRotation = __commonJS({
-    "node_modules/.pnpm/gl-mat4@1.2.0/node_modules/gl-mat4/fromRotation.js"(exports, module) {
-      module.exports = fromRotation;
-      function fromRotation(out, rad, axis) {
-        var s, c, t;
-        var x = axis[0];
-        var y = axis[1];
-        var z = axis[2];
-        var len2 = Math.sqrt(x * x + y * y + z * z);
-        if (Math.abs(len2) < 1e-6) {
-          return null;
-        }
-        len2 = 1 / len2;
-        x *= len2;
-        y *= len2;
-        z *= len2;
-        s = Math.sin(rad);
-        c = Math.cos(rad);
-        t = 1 - c;
-        out[0] = x * x * t + c;
-        out[1] = y * x * t + z * s;
-        out[2] = z * x * t - y * s;
-        out[3] = 0;
-        out[4] = x * y * t - z * s;
-        out[5] = y * y * t + c;
-        out[6] = z * y * t + x * s;
-        out[7] = 0;
-        out[8] = x * z * t + y * s;
-        out[9] = y * z * t - x * s;
-        out[10] = z * z * t + c;
-        out[11] = 0;
-        out[12] = 0;
-        out[13] = 0;
-        out[14] = 0;
-        out[15] = 1;
-        return out;
-      }
-    }
-  });
-
-  // node_modules/.pnpm/gl-mat4@1.2.0/node_modules/gl-mat4/fromRotationTranslation.js
-  var require_fromRotationTranslation = __commonJS({
-    "node_modules/.pnpm/gl-mat4@1.2.0/node_modules/gl-mat4/fromRotationTranslation.js"(exports, module) {
-      module.exports = fromRotationTranslation;
-      function fromRotationTranslation(out, q, v) {
-        var x = q[0], y = q[1], z = q[2], w = q[3], x2 = x + x, y2 = y + y, z2 = z + z, xx = x * x2, xy = x * y2, xz = x * z2, yy = y * y2, yz = y * z2, zz = z * z2, wx = w * x2, wy = w * y2, wz = w * z2;
-        out[0] = 1 - (yy + zz);
-        out[1] = xy + wz;
-        out[2] = xz - wy;
-        out[3] = 0;
-        out[4] = xy - wz;
-        out[5] = 1 - (xx + zz);
-        out[6] = yz + wx;
-        out[7] = 0;
-        out[8] = xz + wy;
-        out[9] = yz - wx;
-        out[10] = 1 - (xx + yy);
-        out[11] = 0;
-        out[12] = v[0];
-        out[13] = v[1];
-        out[14] = v[2];
-        out[15] = 1;
-        return out;
-      }
-    }
-  });
-
-  // node_modules/.pnpm/gl-mat4@1.2.0/node_modules/gl-mat4/fromScaling.js
-  var require_fromScaling = __commonJS({
-    "node_modules/.pnpm/gl-mat4@1.2.0/node_modules/gl-mat4/fromScaling.js"(exports, module) {
-      module.exports = fromScaling;
-      function fromScaling(out, v) {
-        out[0] = v[0];
-        out[1] = 0;
-        out[2] = 0;
-        out[3] = 0;
-        out[4] = 0;
-        out[5] = v[1];
-        out[6] = 0;
-        out[7] = 0;
-        out[8] = 0;
-        out[9] = 0;
-        out[10] = v[2];
-        out[11] = 0;
-        out[12] = 0;
-        out[13] = 0;
-        out[14] = 0;
-        out[15] = 1;
-        return out;
-      }
-    }
-  });
-
-  // node_modules/.pnpm/gl-mat4@1.2.0/node_modules/gl-mat4/fromTranslation.js
-  var require_fromTranslation = __commonJS({
-    "node_modules/.pnpm/gl-mat4@1.2.0/node_modules/gl-mat4/fromTranslation.js"(exports, module) {
-      module.exports = fromTranslation;
-      function fromTranslation(out, v) {
-        out[0] = 1;
-        out[1] = 0;
-        out[2] = 0;
-        out[3] = 0;
-        out[4] = 0;
-        out[5] = 1;
-        out[6] = 0;
-        out[7] = 0;
-        out[8] = 0;
-        out[9] = 0;
-        out[10] = 1;
-        out[11] = 0;
-        out[12] = v[0];
-        out[13] = v[1];
-        out[14] = v[2];
-        out[15] = 1;
-        return out;
-      }
-    }
-  });
-
-  // node_modules/.pnpm/gl-mat4@1.2.0/node_modules/gl-mat4/fromXRotation.js
-  var require_fromXRotation = __commonJS({
-    "node_modules/.pnpm/gl-mat4@1.2.0/node_modules/gl-mat4/fromXRotation.js"(exports, module) {
-      module.exports = fromXRotation;
-      function fromXRotation(out, rad) {
-        var s = Math.sin(rad), c = Math.cos(rad);
-        out[0] = 1;
-        out[1] = 0;
-        out[2] = 0;
-        out[3] = 0;
-        out[4] = 0;
-        out[5] = c;
-        out[6] = s;
-        out[7] = 0;
-        out[8] = 0;
-        out[9] = -s;
-        out[10] = c;
-        out[11] = 0;
-        out[12] = 0;
-        out[13] = 0;
-        out[14] = 0;
-        out[15] = 1;
-        return out;
-      }
-    }
-  });
-
-  // node_modules/.pnpm/gl-mat4@1.2.0/node_modules/gl-mat4/fromYRotation.js
-  var require_fromYRotation = __commonJS({
-    "node_modules/.pnpm/gl-mat4@1.2.0/node_modules/gl-mat4/fromYRotation.js"(exports, module) {
-      module.exports = fromYRotation;
-      function fromYRotation(out, rad) {
-        var s = Math.sin(rad), c = Math.cos(rad);
-        out[0] = c;
-        out[1] = 0;
-        out[2] = -s;
-        out[3] = 0;
-        out[4] = 0;
-        out[5] = 1;
-        out[6] = 0;
-        out[7] = 0;
-        out[8] = s;
-        out[9] = 0;
-        out[10] = c;
-        out[11] = 0;
-        out[12] = 0;
-        out[13] = 0;
-        out[14] = 0;
-        out[15] = 1;
-        return out;
-      }
-    }
-  });
-
-  // node_modules/.pnpm/gl-mat4@1.2.0/node_modules/gl-mat4/fromZRotation.js
-  var require_fromZRotation = __commonJS({
-    "node_modules/.pnpm/gl-mat4@1.2.0/node_modules/gl-mat4/fromZRotation.js"(exports, module) {
-      module.exports = fromZRotation;
-      function fromZRotation(out, rad) {
-        var s = Math.sin(rad), c = Math.cos(rad);
-        out[0] = c;
-        out[1] = s;
-        out[2] = 0;
-        out[3] = 0;
-        out[4] = -s;
-        out[5] = c;
-        out[6] = 0;
-        out[7] = 0;
-        out[8] = 0;
-        out[9] = 0;
-        out[10] = 1;
-        out[11] = 0;
-        out[12] = 0;
-        out[13] = 0;
-        out[14] = 0;
-        out[15] = 1;
-        return out;
-      }
-    }
-  });
-
-  // node_modules/.pnpm/gl-mat4@1.2.0/node_modules/gl-mat4/fromQuat.js
-  var require_fromQuat = __commonJS({
-    "node_modules/.pnpm/gl-mat4@1.2.0/node_modules/gl-mat4/fromQuat.js"(exports, module) {
-      module.exports = fromQuat;
-      function fromQuat(out, q) {
-        var x = q[0], y = q[1], z = q[2], w = q[3], x2 = x + x, y2 = y + y, z2 = z + z, xx = x * x2, yx = y * x2, yy = y * y2, zx = z * x2, zy = z * y2, zz = z * z2, wx = w * x2, wy = w * y2, wz = w * z2;
-        out[0] = 1 - yy - zz;
-        out[1] = yx + wz;
-        out[2] = zx - wy;
-        out[3] = 0;
-        out[4] = yx - wz;
-        out[5] = 1 - xx - zz;
-        out[6] = zy + wx;
-        out[7] = 0;
-        out[8] = zx + wy;
-        out[9] = zy - wx;
-        out[10] = 1 - xx - yy;
-        out[11] = 0;
-        out[12] = 0;
-        out[13] = 0;
-        out[14] = 0;
-        out[15] = 1;
-        return out;
-      }
-    }
-  });
-
-  // node_modules/.pnpm/gl-mat4@1.2.0/node_modules/gl-mat4/frustum.js
-  var require_frustum = __commonJS({
-    "node_modules/.pnpm/gl-mat4@1.2.0/node_modules/gl-mat4/frustum.js"(exports, module) {
-      module.exports = frustum;
-      function frustum(out, left, right, bottom, top, near, far) {
-        var rl = 1 / (right - left), tb = 1 / (top - bottom), nf = 1 / (near - far);
-        out[0] = near * 2 * rl;
-        out[1] = 0;
-        out[2] = 0;
-        out[3] = 0;
-        out[4] = 0;
-        out[5] = near * 2 * tb;
-        out[6] = 0;
-        out[7] = 0;
-        out[8] = (right + left) * rl;
-        out[9] = (top + bottom) * tb;
-        out[10] = (far + near) * nf;
-        out[11] = -1;
-        out[12] = 0;
-        out[13] = 0;
-        out[14] = far * near * 2 * nf;
-        out[15] = 0;
-        return out;
-      }
-    }
-  });
-
-  // node_modules/.pnpm/gl-mat4@1.2.0/node_modules/gl-mat4/perspective.js
-  var require_perspective = __commonJS({
-    "node_modules/.pnpm/gl-mat4@1.2.0/node_modules/gl-mat4/perspective.js"(exports, module) {
-      module.exports = perspective;
-      function perspective(out, fovy, aspect, near, far) {
-        var f = 1 / Math.tan(fovy / 2), nf = 1 / (near - far);
-        out[0] = f / aspect;
-        out[1] = 0;
-        out[2] = 0;
-        out[3] = 0;
-        out[4] = 0;
-        out[5] = f;
-        out[6] = 0;
-        out[7] = 0;
-        out[8] = 0;
-        out[9] = 0;
-        out[10] = (far + near) * nf;
-        out[11] = -1;
-        out[12] = 0;
-        out[13] = 0;
-        out[14] = 2 * far * near * nf;
-        out[15] = 0;
-        return out;
-      }
-    }
-  });
-
-  // node_modules/.pnpm/gl-mat4@1.2.0/node_modules/gl-mat4/perspectiveFromFieldOfView.js
-  var require_perspectiveFromFieldOfView = __commonJS({
-    "node_modules/.pnpm/gl-mat4@1.2.0/node_modules/gl-mat4/perspectiveFromFieldOfView.js"(exports, module) {
-      module.exports = perspectiveFromFieldOfView;
-      function perspectiveFromFieldOfView(out, fov, near, far) {
-        var upTan = Math.tan(fov.upDegrees * Math.PI / 180), downTan = Math.tan(fov.downDegrees * Math.PI / 180), leftTan = Math.tan(fov.leftDegrees * Math.PI / 180), rightTan = Math.tan(fov.rightDegrees * Math.PI / 180), xScale = 2 / (leftTan + rightTan), yScale = 2 / (upTan + downTan);
-        out[0] = xScale;
-        out[1] = 0;
-        out[2] = 0;
-        out[3] = 0;
-        out[4] = 0;
-        out[5] = yScale;
-        out[6] = 0;
-        out[7] = 0;
-        out[8] = -((leftTan - rightTan) * xScale * 0.5);
-        out[9] = (upTan - downTan) * yScale * 0.5;
-        out[10] = far / (near - far);
-        out[11] = -1;
-        out[12] = 0;
-        out[13] = 0;
-        out[14] = far * near / (near - far);
-        out[15] = 0;
-        return out;
-      }
-    }
-  });
-
-  // node_modules/.pnpm/gl-mat4@1.2.0/node_modules/gl-mat4/ortho.js
-  var require_ortho = __commonJS({
-    "node_modules/.pnpm/gl-mat4@1.2.0/node_modules/gl-mat4/ortho.js"(exports, module) {
-      module.exports = ortho;
-      function ortho(out, left, right, bottom, top, near, far) {
-        var lr = 1 / (left - right), bt = 1 / (bottom - top), nf = 1 / (near - far);
-        out[0] = -2 * lr;
-        out[1] = 0;
-        out[2] = 0;
-        out[3] = 0;
-        out[4] = 0;
-        out[5] = -2 * bt;
-        out[6] = 0;
-        out[7] = 0;
-        out[8] = 0;
-        out[9] = 0;
-        out[10] = 2 * nf;
-        out[11] = 0;
-        out[12] = (left + right) * lr;
-        out[13] = (top + bottom) * bt;
-        out[14] = (far + near) * nf;
-        out[15] = 1;
-        return out;
-      }
-    }
-  });
-
-  // node_modules/.pnpm/gl-mat4@1.2.0/node_modules/gl-mat4/lookAt.js
-  var require_lookAt = __commonJS({
-    "node_modules/.pnpm/gl-mat4@1.2.0/node_modules/gl-mat4/lookAt.js"(exports, module) {
-      var identity6 = require_identity();
-      module.exports = lookAt;
-      function lookAt(out, eye, center, up) {
-        var x0, x1, x2, y0, y1, y2, z0, z1, z2, len2, eyex = eye[0], eyey = eye[1], eyez = eye[2], upx = up[0], upy = up[1], upz = up[2], centerx = center[0], centery = center[1], centerz = center[2];
-        if (Math.abs(eyex - centerx) < 1e-6 && Math.abs(eyey - centery) < 1e-6 && Math.abs(eyez - centerz) < 1e-6) {
-          return identity6(out);
-        }
-        z0 = eyex - centerx;
-        z1 = eyey - centery;
-        z2 = eyez - centerz;
-        len2 = 1 / Math.sqrt(z0 * z0 + z1 * z1 + z2 * z2);
-        z0 *= len2;
-        z1 *= len2;
-        z2 *= len2;
-        x0 = upy * z2 - upz * z1;
-        x1 = upz * z0 - upx * z2;
-        x2 = upx * z1 - upy * z0;
-        len2 = Math.sqrt(x0 * x0 + x1 * x1 + x2 * x2);
-        if (!len2) {
-          x0 = 0;
-          x1 = 0;
-          x2 = 0;
-        } else {
-          len2 = 1 / len2;
-          x0 *= len2;
-          x1 *= len2;
-          x2 *= len2;
-        }
-        y0 = z1 * x2 - z2 * x1;
-        y1 = z2 * x0 - z0 * x2;
-        y2 = z0 * x1 - z1 * x0;
-        len2 = Math.sqrt(y0 * y0 + y1 * y1 + y2 * y2);
-        if (!len2) {
-          y0 = 0;
-          y1 = 0;
-          y2 = 0;
-        } else {
-          len2 = 1 / len2;
-          y0 *= len2;
-          y1 *= len2;
-          y2 *= len2;
-        }
-        out[0] = x0;
-        out[1] = y0;
-        out[2] = z0;
-        out[3] = 0;
-        out[4] = x1;
-        out[5] = y1;
-        out[6] = z1;
-        out[7] = 0;
-        out[8] = x2;
-        out[9] = y2;
-        out[10] = z2;
-        out[11] = 0;
-        out[12] = -(x0 * eyex + x1 * eyey + x2 * eyez);
-        out[13] = -(y0 * eyex + y1 * eyey + y2 * eyez);
-        out[14] = -(z0 * eyex + z1 * eyey + z2 * eyez);
-        out[15] = 1;
-        return out;
-      }
-    }
-  });
-
-  // node_modules/.pnpm/gl-mat4@1.2.0/node_modules/gl-mat4/str.js
-  var require_str = __commonJS({
-    "node_modules/.pnpm/gl-mat4@1.2.0/node_modules/gl-mat4/str.js"(exports, module) {
-      module.exports = str;
-      function str(a) {
-        return "mat4(" + a[0] + ", " + a[1] + ", " + a[2] + ", " + a[3] + ", " + a[4] + ", " + a[5] + ", " + a[6] + ", " + a[7] + ", " + a[8] + ", " + a[9] + ", " + a[10] + ", " + a[11] + ", " + a[12] + ", " + a[13] + ", " + a[14] + ", " + a[15] + ")";
-      }
-    }
-  });
-
-  // node_modules/.pnpm/gl-mat4@1.2.0/node_modules/gl-mat4/index.js
-  var require_gl_mat4 = __commonJS({
-    "node_modules/.pnpm/gl-mat4@1.2.0/node_modules/gl-mat4/index.js"(exports, module) {
-      module.exports = {
-        create: require_create(),
-        clone: require_clone(),
-        copy: require_copy(),
-        identity: require_identity(),
-        transpose: require_transpose(),
-        invert: require_invert(),
-        adjoint: require_adjoint(),
-        determinant: require_determinant(),
-        multiply: require_multiply(),
-        translate: require_translate(),
-        scale: require_scale(),
-        rotate: require_rotate(),
-        rotateX: require_rotateX(),
-        rotateY: require_rotateY(),
-        rotateZ: require_rotateZ(),
-        fromRotation: require_fromRotation(),
-        fromRotationTranslation: require_fromRotationTranslation(),
-        fromScaling: require_fromScaling(),
-        fromTranslation: require_fromTranslation(),
-        fromXRotation: require_fromXRotation(),
-        fromYRotation: require_fromYRotation(),
-        fromZRotation: require_fromZRotation(),
-        fromQuat: require_fromQuat(),
-        frustum: require_frustum(),
-        perspective: require_perspective(),
-        perspectiveFromFieldOfView: require_perspectiveFromFieldOfView(),
-        ortho: require_ortho(),
-        lookAt: require_lookAt(),
-        str: require_str()
-      };
-    }
-  });
-
   // node_modules/.pnpm/is-mobile@4.0.0/node_modules/is-mobile/index.js
   var require_is_mobile = __commonJS({
     "node_modules/.pnpm/is-mobile@4.0.0/node_modules/is-mobile/index.js"(exports, module) {
@@ -6836,7 +5910,84 @@ var Plotly = (() => {
   }
 
   // src/lib/matrix.js
-  var import_gl_mat4 = __toESM(require_gl_mat4(), 1);
+  function mat4Multiply(out, a, b) {
+    var a00 = a[0], a01 = a[1], a02 = a[2], a03 = a[3];
+    var a10 = a[4], a11 = a[5], a12 = a[6], a13 = a[7];
+    var a20 = a[8], a21 = a[9], a22 = a[10], a23 = a[11];
+    var a30 = a[12], a31 = a[13], a32 = a[14], a33 = a[15];
+    var b02, b12, b22, b32;
+    b02 = b[0];
+    b12 = b[1];
+    b22 = b[2];
+    b32 = b[3];
+    out[0] = b02 * a00 + b12 * a10 + b22 * a20 + b32 * a30;
+    out[1] = b02 * a01 + b12 * a11 + b22 * a21 + b32 * a31;
+    out[2] = b02 * a02 + b12 * a12 + b22 * a22 + b32 * a32;
+    out[3] = b02 * a03 + b12 * a13 + b22 * a23 + b32 * a33;
+    b02 = b[4];
+    b12 = b[5];
+    b22 = b[6];
+    b32 = b[7];
+    out[4] = b02 * a00 + b12 * a10 + b22 * a20 + b32 * a30;
+    out[5] = b02 * a01 + b12 * a11 + b22 * a21 + b32 * a31;
+    out[6] = b02 * a02 + b12 * a12 + b22 * a22 + b32 * a32;
+    out[7] = b02 * a03 + b12 * a13 + b22 * a23 + b32 * a33;
+    b02 = b[8];
+    b12 = b[9];
+    b22 = b[10];
+    b32 = b[11];
+    out[8] = b02 * a00 + b12 * a10 + b22 * a20 + b32 * a30;
+    out[9] = b02 * a01 + b12 * a11 + b22 * a21 + b32 * a31;
+    out[10] = b02 * a02 + b12 * a12 + b22 * a22 + b32 * a32;
+    out[11] = b02 * a03 + b12 * a13 + b22 * a23 + b32 * a33;
+    b02 = b[12];
+    b12 = b[13];
+    b22 = b[14];
+    b32 = b[15];
+    out[12] = b02 * a00 + b12 * a10 + b22 * a20 + b32 * a30;
+    out[13] = b02 * a01 + b12 * a11 + b22 * a21 + b32 * a31;
+    out[14] = b02 * a02 + b12 * a12 + b22 * a22 + b32 * a32;
+    out[15] = b02 * a03 + b12 * a13 + b22 * a23 + b32 * a33;
+    return out;
+  }
+  function mat4Invert(out, a) {
+    var a00 = a[0], a01 = a[1], a02 = a[2], a03 = a[3];
+    var a10 = a[4], a11 = a[5], a12 = a[6], a13 = a[7];
+    var a20 = a[8], a21 = a[9], a22 = a[10], a23 = a[11];
+    var a30 = a[12], a31 = a[13], a32 = a[14], a33 = a[15];
+    var b00 = a00 * a11 - a01 * a10;
+    var b01 = a00 * a12 - a02 * a10;
+    var b02 = a00 * a13 - a03 * a10;
+    var b03 = a01 * a12 - a02 * a11;
+    var b04 = a01 * a13 - a03 * a11;
+    var b05 = a02 * a13 - a03 * a12;
+    var b06 = a20 * a31 - a21 * a30;
+    var b07 = a20 * a32 - a22 * a30;
+    var b08 = a20 * a33 - a23 * a30;
+    var b09 = a21 * a32 - a22 * a31;
+    var b10 = a21 * a33 - a23 * a31;
+    var b11 = a22 * a33 - a23 * a32;
+    var det = b00 * b11 - b01 * b10 + b02 * b09 + b03 * b08 - b04 * b07 + b05 * b06;
+    if (!det) return null;
+    det = 1 / det;
+    out[0] = (a11 * b11 - a12 * b10 + a13 * b09) * det;
+    out[1] = (a02 * b10 - a01 * b11 - a03 * b09) * det;
+    out[2] = (a31 * b05 - a32 * b04 + a33 * b03) * det;
+    out[3] = (a22 * b04 - a21 * b05 - a23 * b03) * det;
+    out[4] = (a12 * b08 - a10 * b11 - a13 * b07) * det;
+    out[5] = (a00 * b11 - a02 * b08 + a03 * b07) * det;
+    out[6] = (a32 * b02 - a30 * b05 - a33 * b01) * det;
+    out[7] = (a20 * b05 - a22 * b02 + a23 * b01) * det;
+    out[8] = (a10 * b10 - a11 * b08 + a13 * b06) * det;
+    out[9] = (a01 * b08 - a00 * b10 - a03 * b06) * det;
+    out[10] = (a30 * b04 - a31 * b02 + a33 * b00) * det;
+    out[11] = (a21 * b02 - a20 * b04 - a23 * b00) * det;
+    out[12] = (a11 * b07 - a10 * b09 - a12 * b06) * det;
+    out[13] = (a00 * b09 - a01 * b07 + a02 * b06) * det;
+    out[14] = (a31 * b01 - a30 * b03 - a32 * b00) * det;
+    out[15] = (a20 * b03 - a21 * b01 + a22 * b00) * det;
+    return out;
+  }
   var init2dArray = function(rowLength, colLength) {
     var array2 = new Array(rowLength);
     for (var i = 0; i < rowLength; i++) array2[i] = new Array(colLength);
@@ -6961,7 +6112,7 @@ var Plotly = (() => {
   };
   var inverseTransformMatrix = function(m) {
     var out = [];
-    import_gl_mat4.default.invert(out, m);
+    mat4Invert(out, m);
     return [
       [out[0], out[1], out[2], out[3]],
       [out[4], out[5], out[6], out[7]],
@@ -6972,7 +6123,6 @@ var Plotly = (() => {
   var matrix_default = { init2dArray, transposeRagged, dot, translationMatrix, rotationMatrix, rotationXYMatrix, apply3DTransform, apply2DTransform, apply2DTransform2, convertCssMatrix, inverseTransformMatrix };
 
   // src/lib/dom.js
-  var import_gl_mat42 = __toESM(require_gl_mat4(), 1);
   function getGraphDiv(gd) {
     var gdElement;
     if (typeof gd === "string") {
@@ -7076,7 +6226,7 @@ var Plotly = (() => {
       var t = getElementTransformMatrix(e);
       if (t) {
         var m = matrix_default.convertCssMatrix(t);
-        out = import_gl_mat42.default.multiply(out, out, m);
+        out = mat4Multiply(out, out, m);
       }
     });
     return out;
