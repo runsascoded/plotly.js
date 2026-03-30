@@ -2,7 +2,7 @@
  * sanitized modulus function that always returns in the range [0, d)
  * rather than (-d, 0] if v is negative
  */
-function mod(v, d) {
+export function mod(v: number, d: number): number {
     var out = v % d;
     return out < 0 ? out + d : out;
 }
@@ -11,15 +11,10 @@ function mod(v, d) {
  * sanitized modulus function that always returns in the range [-d/2, d/2]
  * rather than (-d, 0] if v is negative
  */
-function modHalf(v, d) {
+export function modHalf(v: number, d: number): number {
     return Math.abs(v) > (d / 2) ?
         v - Math.round(v / d) * d :
         v;
 }
 
-export { mod, modHalf };
-
-export default {
-    mod: mod,
-    modHalf: modHalf
-};
+export default { mod, modHalf };

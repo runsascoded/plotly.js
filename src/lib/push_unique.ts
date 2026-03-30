@@ -1,8 +1,8 @@
-export default function pushUnique(array, item) {
+export default function pushUnique<T>(array: T[], item: T): T[] {
     if(item instanceof RegExp) {
         var itemStr = item.toString();
         for(var i = 0; i < array.length; i++) {
-            if(array[i] instanceof RegExp && array[i].toString() === itemStr) {
+            if((array[i] as unknown) instanceof RegExp && (array[i] as unknown as RegExp).toString() === itemStr) {
                 return array;
             }
         }
