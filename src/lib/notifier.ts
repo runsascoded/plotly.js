@@ -1,15 +1,15 @@
 import { select } from 'd3-selection';
 import isNumeric from 'fast-isnumeric';
 
-var NOTEDATA = [];
+var NOTEDATA: string[] = [];
 
-export default function(text, displayLength) {
+export default function(text: string, displayLength?: number | string): void {
     if(NOTEDATA.indexOf(text) !== -1) return;
 
     NOTEDATA.push(text);
 
     var ts = 1000;
-    if(isNumeric(displayLength)) ts = displayLength;
+    if(isNumeric(displayLength)) ts = displayLength as number;
     else if(displayLength === 'long') ts = 3000;
 
     var notifierContainer = select('body')
@@ -21,11 +21,11 @@ export default function(text, displayLength) {
 
     var notes = notifierContainer.selectAll('.notifier-note').data(NOTEDATA);
 
-    function killNote(transition) {
+    function killNote(transition: any): void {
         transition
             .duration(700)
             .style('opacity', 0)
-            .on('end', function(thisText) {
+            .on('end', function(this: Element, thisText: string) {
                 var thisIndex = NOTEDATA.indexOf(thisText);
                 if(thisIndex !== -1) NOTEDATA.splice(thisIndex, 1);
                 select(this).remove();
@@ -35,7 +35,7 @@ export default function(text, displayLength) {
     notes.enter().append('div')
         .classed('notifier-note', true)
         .style('opacity', 0)
-        .each(function(thisText) {
+        .each(function(this: Element, thisText: string) {
             var note = select(this);
 
             note.append('button')

@@ -1,8 +1,8 @@
 import { select } from 'd3-selection';
 
-export default function makeTraceGroups(traceLayer, cdModule, cls) {
+export default function makeTraceGroups(traceLayer: any, cdModule: any[], cls: string): any {
     var traces = traceLayer.selectAll('g.' + cls.replace(/\s/g, '.'))
-        .data(cdModule, function(cd) { return cd[0].trace.uid; });
+        .data(cdModule, function(cd: any) { return cd[0].trace.uid; });
 
     traces.exit().remove();
 
@@ -14,7 +14,7 @@ export default function makeTraceGroups(traceLayer, cdModule, cls) {
     // stash ref node to trace group in calcdata,
     // useful for (fast) styleOnSelect
     var k = traceLayer.classed('rangeplot') ? 'nodeRangePlot3' : 'node3';
-    traces.each(function(cd) { cd[0][k] = select(this); });
+    traces.each(function(this: Element, cd: any) { cd[0][k] = select(this); });
 
     return traces;
 }

@@ -1,11 +1,11 @@
 import showNoWebGlMsg from './show_no_webgl_msg.js';
 import createRegl from '@plotly/regl';
 
-export default function prepareRegl(gd, extensions, reglPrecompiled) {
+export default function prepareRegl(gd: any, extensions?: string[], reglPrecompiled?: any): boolean {
     var fullLayout = gd._fullLayout;
     var success = true;
 
-    fullLayout._glcanvas.each(function(d) {
+    fullLayout._glcanvas.each(function(this: HTMLCanvasElement, d: any) {
         if(d.regl) {
             d.regl.preloadCachedCode(reglPrecompiled);
             return;
@@ -14,13 +14,13 @@ export default function prepareRegl(gd, extensions, reglPrecompiled) {
         if(d.pick && !fullLayout._has('parcoords')) return;
 
         try {
-            d.regl = createRegl({
+            d.regl = (createRegl as any)({
                 canvas: this,
                 attributes: {
                     antialias: !d.pick,
                     preserveDrawingBuffer: true
                 },
-                pixelRatio: gd._context.plotGlPixelRatio || global.devicePixelRatio,
+                pixelRatio: gd._context.plotGlPixelRatio || (globalThis as any).devicePixelRatio,
                 extensions: extensions || [],
                 cachedCode: reglPrecompiled || {}
             });
@@ -31,7 +31,7 @@ export default function prepareRegl(gd, extensions, reglPrecompiled) {
         if(!d.regl) success = false;
 
         if(success) {
-            this.addEventListener('webglcontextlost', function(event) {
+            this.addEventListener('webglcontextlost', function(event: WebGLContextEvent) {
                 if(gd && gd.emit) {
                     gd.emit('plotly_webglcontextlost', {
                         event: event,

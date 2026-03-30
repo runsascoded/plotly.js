@@ -1,4 +1,4 @@
-export default function incrementNumeric(x, delta) {
+export default function incrementNumeric(x: number, delta: number): number {
     if(!delta) return x;
 
     // Note 1:
@@ -20,7 +20,7 @@ export default function incrementNumeric(x, delta) {
         var lenX0 = String(x).length;
 
         if(lenX1 >= lenX0 + lenDt) { // likely a rounding error!
-            var s = parseFloat(newX).toPrecision(12);
+            var s = parseFloat(newX as any).toPrecision(12);
             if(s.indexOf('e+') === -1) newX = +s;
         }
     }

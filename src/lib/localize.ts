@@ -1,6 +1,6 @@
 import Registry from '../registry.js';
 
-export default function localize(gd, s) {
+export default function localize(gd: any, s: string): string {
     var locale = gd._context.locale;
 
     /*

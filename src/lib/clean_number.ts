@@ -5,7 +5,7 @@ const { BADNUM } = _numerical;
 // precompile for speed
 var JUNK = /^['"%,$#\s']+|[, ]|['"%,$#\s']+$/g;
 
-export default function cleanNumber(v) {
+export default function cleanNumber(v: any): number {
     if(typeof v === 'string') {
         v = v.replace(JUNK, '');
     }

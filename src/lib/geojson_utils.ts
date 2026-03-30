@@ -1,12 +1,12 @@
 import _numerical from '../constants/numerical.js';
 const { BADNUM } = _numerical;
 
-export var calcTraceToLineCoords = function(calcTrace) {
+export var calcTraceToLineCoords = function(calcTrace: any[]): number[][][] {
     var trace = calcTrace[0].trace;
     var connectgaps = trace.connectgaps;
 
-    var coords = [];
-    var lineString = [];
+    var coords: number[][][] = [];
+    var lineString: number[][] = [];
 
     for(var i = 0; i < calcTrace.length; i++) {
         var calcPt = calcTrace[i];
@@ -27,7 +27,12 @@ export var calcTraceToLineCoords = function(calcTrace) {
     return coords;
 };
 
-export var makeLine = function(coords) {
+interface GeoJSONGeometry {
+    type: string;
+    coordinates: any;
+}
+
+export var makeLine = function(coords: number[][][]): GeoJSONGeometry {
     if(coords.length === 1) {
         return {
             type: 'LineString',
@@ -41,7 +46,7 @@ export var makeLine = function(coords) {
     }
 };
 
-export var makePolygon = function(coords) {
+export var makePolygon = function(coords: number[][][]): GeoJSONGeometry {
     if(coords.length === 1) {
         return {
             type: 'Polygon',
@@ -61,7 +66,7 @@ export var makePolygon = function(coords) {
     }
 };
 
-export var makeBlank = function() {
+export var makeBlank = function(): GeoJSONGeometry {
     return {
         type: 'Point',
         coordinates: []

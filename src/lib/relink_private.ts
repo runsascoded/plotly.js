@@ -1,7 +1,7 @@
 import { isArrayOrTypedArray } from './array.js';
 import isPlainObject from './is_plain_object.js';
 
-export default function relinkPrivateKeys(toContainer, fromContainer) {
+export default function relinkPrivateKeys(toContainer: any, fromContainer: any): void {
     for(var k in fromContainer) {
         var fromVal = fromContainer[k];
         var toVal = toContainer[k];

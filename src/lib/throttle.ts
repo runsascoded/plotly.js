@@ -1,6 +1,12 @@
-var timerCache = {};
+interface ThrottleCache {
+    ts: number;
+    timer: ReturnType<typeof setTimeout> | null;
+    onDone?: (() => void) | null;
+}
 
-export var throttle = function throttle(id, minInterval, callback) {
+var timerCache: Record<string, ThrottleCache> = {};
+
+export var throttle = function throttle(id: string, minInterval: number, callback: () => void): void {
     var cache = timerCache[id];
     var now = Date.now();
 
@@ -20,7 +26,7 @@ export var throttle = function throttle(id, minInterval, callback) {
 
     _clearTimeout(cache);
 
-    function exec() {
+    function exec(): void {
         callback();
         cache.ts = Date.now();
         if(cache.onDone) {
@@ -40,7 +46,7 @@ export var throttle = function throttle(id, minInterval, callback) {
     }, minInterval);
 };
 
-export var done = function(id) {
+export var done = function(id: string): Promise<void> {
     var cache = timerCache[id];
     if(!cache || !cache.timer) return Promise.resolve();
 
@@ -54,7 +60,7 @@ export var done = function(id) {
     });
 };
 
-export var clear = function(id) {
+export var clear = function(id?: string): void {
     if(id) {
         _clearTimeout(timerCache[id]);
         delete timerCache[id];
@@ -63,7 +69,7 @@ export var clear = function(id) {
     }
 };
 
-function _clearTimeout(cache) {
+function _clearTimeout(cache: ThrottleCache | undefined): void {
     if(cache && cache.timer !== null) {
         clearTimeout(cache.timer);
         cache.timer = null;

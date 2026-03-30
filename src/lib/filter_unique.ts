@@ -1,6 +1,6 @@
-export default function filterUnique(array) {
-    var seen = {};
-    var out = [];
+export default function filterUnique(array: any[]): any[] {
+    var seen: Record<string, number> = {};
+    var out: any[] = [];
     var j = 0;
 
     for(var i = 0; i < array.length; i++) {

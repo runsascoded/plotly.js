@@ -1,4 +1,4 @@
-export var counter = function(head, tail, openEnded, matchBeginning) {
+export var counter = function(head: string, tail?: string, openEnded?: boolean, matchBeginning?: boolean): RegExp {
     var fullTail = (tail || '') + (openEnded ? '' : '$');
     var startWithPrefix = matchBeginning === false ? '' : '^';
     if(head === 'xy') {

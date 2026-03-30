@@ -5,7 +5,7 @@ var ASCEND = /^(.*)(\.[^\.\[\]]+|\[\d\])$/;
 // SIMPLEATTR: is this an un-nested attribute? (no dots or brackets)
 var SIMPLEATTR = /^[^\.\[\]]+$/;
 
-export default function(baseAttr, relativeAttr) {
+export default function(baseAttr: string, relativeAttr: string): string {
     while(relativeAttr) {
         var match = baseAttr.match(ASCEND);
 

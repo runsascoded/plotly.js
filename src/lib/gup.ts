@@ -1,6 +1,6 @@
 import identity from './identity.js';
 
-function wrap(d) {return [d];}
+function wrap(d: any): any[] {return [d];}
 
 export default {
 
@@ -11,7 +11,7 @@ export default {
     // of elements, e.g. points, lines, rows, requiring an array as input.
     // The role of the `keyFun` is to identify what elements are being entered/exited/updated,
     // otherwise D3 reverts to using a plain index which would screw up `transition`s.
-    keyFun: function(d) {return d.key;},
+    keyFun: function(d: any): string {return d.key;},
     repeat: wrap,
     descend: identity,
 
@@ -20,5 +20,5 @@ export default {
     // newcomer to the codebase may not know what the `[0]` is, and whether there can be further
     // elements (not atm).
     wrap: wrap,
-    unwrap: function(d) {return d[0];}
+    unwrap: function(d: any[]): any {return d[0];}
 };

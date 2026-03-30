@@ -3,7 +3,7 @@ import setCursor from './setcursor.js';
 var STASHATTR = 'data-savedcursor';
 var NO_CURSOR = '!!';
 
-export default function overrideCursor(el3, csr) {
+export default function overrideCursor(el3: any, csr?: string): void {
     var savedCursor = el3.attr(STASHATTR);
     if(csr) {
         if(!savedCursor) {

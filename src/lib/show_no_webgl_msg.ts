@@ -1,8 +1,8 @@
 import Color from '../components/color/index.js';
 
-var noop = function() {};
+var noop = function(): void {};
 
-export default function showNoWebGlMsg(scene) {
+export default function showNoWebGlMsg(scene: any): false {
     for(var prop in scene) {
         if(typeof scene[prop] === 'function') scene[prop] = noop;
     }
@@ -19,8 +19,8 @@ export default function showNoWebGlMsg(scene) {
     div.style.position = 'absolute';
     div.style.left = div.style.top = '0px';
     div.style.width = div.style.height = '100%';
-    div.style['background-color'] = Color.lightLine;
-    div.style['z-index'] = 30;
+    div.style['background-color' as any] = Color.lightLine;
+    div.style['z-index' as any] = '30';
 
     var p = document.createElement('p');
     p.textContent = 'WebGL is not supported by your browser - visit https://get.webgl.org for more info';
