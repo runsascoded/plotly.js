@@ -9,7 +9,7 @@ const { BADNUM } = _numerical;
 // linelow
 var roundingError = 1e-9;
 
-export var findBin = function(val, bins, linelow) {
+export var findBin = function(val: number, bins: any, linelow?: boolean): number {
     if(isNumeric(bins.start)) {
         return linelow ?
             Math.ceil((val - bins.start) / bins.size - roundingError) - 1 :
@@ -19,7 +19,7 @@ export var findBin = function(val, bins, linelow) {
         var n2 = bins.length;
         var c = 0;
         var binSize = (n2 > 1) ? (bins[n2 - 1] - bins[0]) / (n2 - 1) : 1;
-        var n, test;
+        var n: number, test: (a: number, b: number) => boolean;
         if(binSize >= 0) {
             test = linelow ? lessThan : lessOrEqual;
         } else {
@@ -37,32 +37,32 @@ export var findBin = function(val, bins, linelow) {
     }
 };
 
-function lessThan(a, b) { return a < b; }
-function lessOrEqual(a, b) { return a <= b; }
-function greaterThan(a, b) { return a > b; }
-function greaterOrEqual(a, b) { return a >= b; }
+function lessThan(a: number, b: number): boolean { return a < b; }
+function lessOrEqual(a: number, b: number): boolean { return a <= b; }
+function greaterThan(a: number, b: number): boolean { return a > b; }
+function greaterOrEqual(a: number, b: number): boolean { return a >= b; }
 
-export var sorterAsc = function(a, b) { return a - b; };
-export var sorterDes = function(a, b) { return b - a; };
+export var sorterAsc = function(a: number, b: number): number { return a - b; };
+export var sorterDes = function(a: number, b: number): number { return b - a; };
 
-export var distinctVals = function(valsIn) {
+export var distinctVals = function(valsIn: number[]): { vals: number[]; minDiff: number } {
     var vals = valsIn.slice();  // otherwise we sort the original array...
     vals.sort(sorterAsc); // undefined listed in the end
 
-    var last;
+    var last: number;
     for(last = vals.length - 1; last > -1; last--) {
         if(vals[last] !== BADNUM) break;
     }
 
     var minDiff = (vals[last] - vals[0]) || 1;
     var errDiff = minDiff / (last || 1) / 10000;
-    var newVals = [];
-    var preV;
+    var newVals: number[] = [];
+    var preV: number | undefined;
     for(var i = 0; i <= last; i++) {
         var v = vals[i];
 
         // make sure values aren't just off by a rounding error
-        var diff = v - preV;
+        var diff = v - preV!;
 
         if(preV === undefined) {
             newVals.push(v);
@@ -78,10 +78,10 @@ export var distinctVals = function(valsIn) {
     return {vals: newVals, minDiff: minDiff};
 };
 
-export var roundUp = function(val, arrayIn, reverse) {
+export var roundUp = function(val: number, arrayIn: number[], reverse?: boolean): number {
     var low = 0;
     var high = arrayIn.length - 1;
-    var mid;
+    var mid: number;
     var c = 0;
     var dlow = reverse ? 0 : 1;
     var dhigh = reverse ? 1 : 0;
@@ -95,7 +95,7 @@ export var roundUp = function(val, arrayIn, reverse) {
     return arrayIn[low];
 };
 
-export var sort = function(array, sortFn) {
+export var sort = function<T>(array: T[], sortFn: (a: T, b: T) => number): T[] {
     var notOrdered = 0;
     var notReversed = 0;
     for(var i = 1; i < array.length; i++) {
@@ -107,14 +107,14 @@ export var sort = function(array, sortFn) {
     return notReversed ? array : array.reverse();
 };
 
-export var findIndexOfMin = function(arr, fn) {
-    fn = fn || identity;
+export var findIndexOfMin = function<T>(arr: T[], fn?: (d: T) => number): number | undefined {
+    fn = fn || identity as any;
 
     var min = Infinity;
-    var ind;
+    var ind: number | undefined;
 
     for(var i = 0; i < arr.length; i++) {
-        var v = fn(arr[i]);
+        var v = fn!(arr[i]);
         if(v < min) {
             min = v;
             ind = i;

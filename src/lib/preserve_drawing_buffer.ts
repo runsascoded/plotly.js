@@ -1,8 +1,12 @@
 import isNumeric from 'fast-isnumeric';
 import isMobileOrTablet from 'is-mobile';
 
-export default function preserveDrawingBuffer(opts) {
-    var ua;
+interface PreserveDrawingBufferOpts {
+    userAgent?: string;
+}
+
+export default function preserveDrawingBuffer(opts?: PreserveDrawingBufferOpts): boolean {
+    var ua: any;
 
     if(opts && opts.hasOwnProperty('userAgent')) {
         ua = opts.userAgent;
@@ -13,7 +17,7 @@ export default function preserveDrawingBuffer(opts) {
     if(typeof ua !== 'string') return true;
 
     var enable = isMobileOrTablet({
-        ua: { headers: {'user-agent': ua }},
+        ua: { headers: {'user-agent': ua }} as any,
         tablet: true,
         featureDetect: false
     });
@@ -27,7 +31,7 @@ export default function preserveDrawingBuffer(opts) {
                 for(var k = i - 1; k > -1; k--) {
                     var prevPart = allParts[k];
                     if(prevPart.slice(0, 8) === 'Version/') {
-                        var v = prevPart.slice(8).split('.')[0];
+                        var v: any = prevPart.slice(8).split('.')[0];
                         if(isNumeric(v)) v = +v;
                         if(v >= 13) return true;
                     }
@@ -39,9 +43,9 @@ export default function preserveDrawingBuffer(opts) {
     return enable;
 }
 
-function getUserAgent() {
+function getUserAgent(): any {
     // similar to https://github.com/juliangruber/is-mobile/blob/91ca39ccdd4cfc5edfb5391e2515b923a730fbea/index.js#L14-L17
-    var ua;
+    var ua: any;
     if(typeof navigator !== 'undefined') {
         ua = navigator.userAgent;
     }
