@@ -1,8 +1,6 @@
 import isNumeric from 'fast-isnumeric';
-import Lib from '../../lib/index.js';
+import { dateTime2ms, incrementMonth } from '../../lib/index.js';
 import constants from '../../constants/numerical.js';
-var dateTime2ms = Lib.dateTime2ms;
-var incrementMonth = Lib.incrementMonth;
 var ONEAVGMONTH = constants.ONEAVGMONTH;
 
 export default function alignPeriod(trace, ax, axLetter, vals) {

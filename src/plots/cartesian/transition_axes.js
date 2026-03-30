@@ -1,6 +1,6 @@
 import * as d3Ease from 'd3-ease';
 import Registry from '../../registry.js';
-import Lib from '../../lib/index.js';
+import { simpleMap } from '../../lib/index.js';
 import { hideOutsideRangePoints, setPointGroupScale, setScale, setTextPointsScale, setTranslate } from '../../components/drawing/index.js';
 import Axes from './axes.js';
 
@@ -50,8 +50,8 @@ export default function transitionAxes(gd, edits, transitionOpts, makeOnComplete
         var viewBox = [];
 
         if(editX) {
-            var xr0 = Lib.simpleMap(edit.xr0, xa.r2l);
-            var xr1 = Lib.simpleMap(edit.xr1, xa.r2l);
+            var xr0 = simpleMap(edit.xr0, xa.r2l);
+            var xr1 = simpleMap(edit.xr1, xa.r2l);
             var dx0 = xr0[1] - xr0[0];
             var dx1 = xr1[1] - xr1[0];
             viewBox[0] = (xr0[0] * (1 - progress) + progress * xr1[0] - xr0[0]) / (xr0[1] - xr0[0]) * xlen;
@@ -64,8 +64,8 @@ export default function transitionAxes(gd, edits, transitionOpts, makeOnComplete
         }
 
         if(editY) {
-            var yr0 = Lib.simpleMap(edit.yr0, ya.r2l);
-            var yr1 = Lib.simpleMap(edit.yr1, ya.r2l);
+            var yr0 = simpleMap(edit.yr0, ya.r2l);
+            var yr1 = simpleMap(edit.yr1, ya.r2l);
             var dy0 = yr0[1] - yr0[0];
             var dy1 = yr1[1] - yr1[0];
             viewBox[1] = (yr0[1] * (1 - progress) + progress * yr1[1] - yr0[1]) / (yr0[0] - yr0[1]) * ylen;

@@ -1,5 +1,5 @@
 import { select } from 'd3-selection';
-import Lib from '../../lib/index.js';
+import { setTransormAndDisplay } from '../../lib/index.js';
 
 function resizeText(gd, gTrace, traceType) {
     var fullLayout = gd._fullLayout;
@@ -28,7 +28,7 @@ function resizeText(gd, gTrace, traceType) {
                 transform.scale = (shouldHide && transform.hide) ? 0 : minSize / transform.fontSize;
 
                 var el = select(this).select('text');
-                Lib.setTransormAndDisplay(el, transform);
+                setTransormAndDisplay(el, transform);
             }
         });
     }

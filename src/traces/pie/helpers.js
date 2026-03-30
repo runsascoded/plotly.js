@@ -1,4 +1,4 @@
-import Lib from '../../lib/index.js';
+import { isArrayOrTypedArray, numSeparate } from '../../lib/index.js';
 
 function format(vRounded) {
     return (
@@ -10,16 +10,16 @@ function format(vRounded) {
 
 export var formatPiePercent = function formatPiePercent(v, separators) {
     var vRounded = format((v * 100).toPrecision(3));
-    return Lib.numSeparate(vRounded, separators) + '%';
+    return numSeparate(vRounded, separators) + '%';
 };
 
 export var formatPieValue = function formatPieValue(v, separators) {
     var vRounded = format(v.toPrecision(10));
-    return Lib.numSeparate(vRounded, separators);
+    return numSeparate(vRounded, separators);
 };
 
 export var getFirstFilled = function getFirstFilled(array, indices) {
-    if(!Lib.isArrayOrTypedArray(array)) return;
+    if(!isArrayOrTypedArray(array)) return;
     for(var i = 0; i < indices.length; i++) {
         var v = array[indices[i]];
         if(v || v === 0 || v === '') return v;
@@ -27,7 +27,7 @@ export var getFirstFilled = function getFirstFilled(array, indices) {
 };
 
 export var castOption = function castOption(item, indices) {
-    if(Lib.isArrayOrTypedArray(item)) return getFirstFilled(item, indices);
+    if(isArrayOrTypedArray(item)) return getFirstFilled(item, indices);
     else if(item) return item;
 };
 

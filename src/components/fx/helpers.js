@@ -1,4 +1,4 @@
-import Lib from '../../lib/index.js';
+import { isArrayOrTypedArray, nestedProperty } from '../../lib/index.js';
 
 export var getSubplot = function (trace) {
     return trace.subplot || trace.xaxis + trace.yaxis || trace.geo;
@@ -135,7 +135,7 @@ export var appendArrayPointValue = function (pointData, trace, pointNumber) {
         var key = getPointKey(astr);
 
         if (pointData[key] === undefined) {
-            var val = Lib.nestedProperty(trace, astr).get();
+            var val = nestedProperty(trace, astr).get();
             var pointVal = getPointData(val, pointNumber);
 
             if (pointVal !== undefined) pointData[key] = pointVal;
@@ -155,7 +155,7 @@ export var appendArrayMultiPointValues = function (pointData, trace, pointNumber
         var key = getPointKey(astr);
 
         if (pointData[key] === undefined) {
-            var val = Lib.nestedProperty(trace, astr).get();
+            var val = nestedProperty(trace, astr).get();
             var keyVal = new Array(pointNumbers.length);
 
             for (var j = 0; j < pointNumbers.length; j++) {
@@ -181,7 +181,7 @@ function getPointKey(astr) {
 
 function getPointData(val, pointNumber) {
     if (Array.isArray(pointNumber)) {
-        if (Lib.isArrayOrTypedArray(val) && Lib.isArrayOrTypedArray(val[pointNumber[0]])) {
+        if (isArrayOrTypedArray(val) && isArrayOrTypedArray(val[pointNumber[0]])) {
             return val[pointNumber[0]][pointNumber[1]];
         }
     } else {

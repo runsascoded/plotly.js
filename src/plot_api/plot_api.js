@@ -1,7 +1,7 @@
 import { select, selectAll } from 'd3-selection';
 import isNumeric from 'fast-isnumeric';
 var hasHover = typeof matchMedia === 'function' ? !matchMedia('(hover: none)').matches : typeof window !== 'undefined';
-import Lib from '../lib/index.js';
+import Lib, { clearResponsive, equalDomRects, error, extendDeep, extendDeepAll, extendDeepNoArrays, extendFlat, getFullTransformMatrix, getGraphDiv, inverseTransformMatrix, isArrayOrTypedArray, isHidden, isPlainObject, isPlotDiv, isTypedArray, log, nestedProperty, noop, pushUnique, randstr, relativeAttr, sorterDes, syncOrAsync, warn } from '../lib/index.js';
 import Events from '../lib/events.js';
 import Queue from '../lib/queue.js';
 import Registry from '../registry.js';
@@ -22,7 +22,6 @@ import subroutines from './subroutines.js';
 import editTypes from './edit_types.js';
 import _constants from '../plots/cartesian/constants.js';
 const { AX_NAME_PATTERN } = _constants;
-var nestedProperty = Lib.nestedProperty;
 
 // Lazy-resolve to avoid pulling in ~70KB selections module in lite bundle
 function clearOutline(gd) { return Registry.getComponentMethod('selections', 'clearOutline')(gd); }
@@ -54,12 +53,12 @@ var numericNameWarningCountLimit = 5;
 function _doPlot(gd, data, layout, config) {
     var frames;
 
-    gd = Lib.getGraphDiv(gd);
+    gd = getGraphDiv(gd);
 
     // Events.init is idempotent and bails early if gd has already been init'd
     Events.init(gd);
 
-    if (Lib.isPlainObject(data)) {
+    if (isPlainObject(data)) {
         var obj = data;
         data = obj.data;
         layout = obj.layout;
@@ -74,8 +73,8 @@ function _doPlot(gd, data, layout, config) {
 
     // if there's no data or layout, and this isn't yet a plotly plot
     // container, log a warning to help plotly.js users debug
-    if (!data && !layout && !Lib.isPlotDiv(gd)) {
-        Lib.warn('Calling _doPlot as if redrawing ' + "but this container doesn't yet have a plot.", gd);
+    if (!data && !layout && !isPlotDiv(gd)) {
+        warn('Calling _doPlot as if redrawing ' + "but this container doesn't yet have a plot.", gd);
     }
 
     function addFrames() {
@@ -175,21 +174,21 @@ function _doPlot(gd, data, layout, config) {
         if (!gd._responsiveChartHandler) {
             // Keep a reference to the resize handler to purge it down the road
             gd._responsiveChartHandler = function () {
-                if (!Lib.isHidden(gd)) Plots.resize(gd);
+                if (!isHidden(gd)) Plots.resize(gd);
             };
 
             // Listen to window resize
             window.addEventListener('resize', gd._responsiveChartHandler);
         }
     } else {
-        Lib.clearResponsive(gd);
+        clearResponsive(gd);
     }
 
     /*
      * start async-friendly code - now we're actually drawing things
      */
 
-    var oldMargins = Lib.extendFlat({}, fullLayout._size);
+    var oldMargins = extendFlat({}, fullLayout._size);
 
     // draw framework first so that margin-pushing
     // components can position themselves correctly
@@ -260,9 +259,9 @@ function _doPlot(gd, data, layout, config) {
                 ) {
                     var msg = 'WebGL context buffer and canvas dimensions do not match due to browser/WebGL bug.';
                     if (drawFrameworkCalls) {
-                        Lib.error(msg);
+                        error(msg);
                     } else {
-                        Lib.log(msg + ' Clearing graph and plotting again.');
+                        log(msg + ' Clearing graph and plotting again.');
                         Plots.cleanPlot([], {}, gd._fullData, fullLayout);
                         Plots.supplyDefaults(gd);
                         fullLayout = gd._fullLayout;
@@ -316,7 +315,7 @@ function _doPlot(gd, data, layout, config) {
     function marginPushersAgain() {
         if (!Plots.didMarginChange(oldMargins, fullLayout._size)) return;
 
-        return Lib.syncOrAsync([marginPushers, subroutines.layoutStyles], gd);
+        return syncOrAsync([marginPushers, subroutines.layoutStyles], gd);
     }
 
     function positionAndAutorange() {
@@ -327,7 +326,7 @@ function _doPlot(gd, data, layout, config) {
 
         // TODO: autosize extra for text markers and images
         // see https://github.com/plotly/plotly.js/issues/1111
-        return Lib.syncOrAsync(
+        return syncOrAsync(
             [
                 Registry.getComponentMethod('shapes', 'calcAutorange'),
                 Registry.getComponentMethod('annotations', 'calcAutorange'),
@@ -421,7 +420,7 @@ function _doPlot(gd, data, layout, config) {
 
     // even if everything we did was synchronous, return a promise
     // so that the caller doesn't care which route we took
-    var plotDone = Lib.syncOrAsync(seq, gd);
+    var plotDone = syncOrAsync(seq, gd);
     if (!plotDone || !plotDone.then) plotDone = Promise.resolve();
 
     return plotDone.then(function () {
@@ -445,7 +444,7 @@ function _doPlot(gd, data, layout, config) {
                     Plots.doAutoMargin
                 );
 
-                var deferredDone = Lib.syncOrAsync(deferredSeq, gd);
+                var deferredDone = syncOrAsync(deferredSeq, gd);
                 if (!deferredDone || !deferredDone.then) deferredDone = Promise.resolve();
                 deferredDone.then(function () {
                     performance.mark('plotly-deferredMargin-end');
@@ -469,14 +468,14 @@ function emitAfterPlot(gd) {
 }
 
 function setPlotConfig(obj) {
-    return Lib.extendFlat(dfltConfig, obj);
+    return extendFlat(dfltConfig, obj);
 }
 
 function setBackground(gd, bgColor) {
     try {
         gd._fullLayout._paper.style('background', bgColor);
     } catch (e) {
-        Lib.error(e);
+        error(e);
     }
 }
 
@@ -487,7 +486,7 @@ function opaqueSetBackground(gd, bgColor) {
 
 function setPlotContext(gd, config) {
     if (!gd._context) {
-        gd._context = Lib.extendDeep({}, dfltConfig);
+        gd._context = extendDeep({}, dfltConfig);
 
         // stash <base> href, used to make robust clipPath URLs
         var base = select('base');
@@ -589,9 +588,9 @@ function setPlotContext(gd, config) {
 
 // convenience function to force a full redraw, mostly for use by plotly.js
 function redraw(gd) {
-    gd = Lib.getGraphDiv(gd);
+    gd = getGraphDiv(gd);
 
-    if (!Lib.isPlotDiv(gd)) {
+    if (!isPlotDiv(gd)) {
         throw new Error('This element is not a Plotly plot: ' + gd);
     }
 
@@ -614,7 +613,7 @@ function redraw(gd) {
  * @param {Object} config
  */
 function newPlot(gd, data, layout, config) {
-    gd = Lib.getGraphDiv(gd);
+    gd = getGraphDiv(gd);
 
     // remove gl contexts
     Plots.cleanPlot([], {}, gd._fullData || [], gd._fullLayout || {});
@@ -769,12 +768,12 @@ function checkAddTracesArgs(gd, traces, newIndices) {
  * @param maxPoints
  */
 function assertExtendTracesArgs(gd, update, indices, maxPoints) {
-    var maxPointsIsObject = Lib.isPlainObject(maxPoints);
+    var maxPointsIsObject = isPlainObject(maxPoints);
 
     if (!Array.isArray(gd.data)) {
         throw new Error('gd.data must be an array');
     }
-    if (!Lib.isPlainObject(update)) {
+    if (!isPlainObject(update)) {
         throw new Error('update must be a key:value object');
     }
 
@@ -818,7 +817,7 @@ function assertExtendTracesArgs(gd, update, indices, maxPoints) {
  * @return {Object[]}
  */
 function getExtendProperties(gd, update, indices, maxPoints) {
-    var maxPointsIsObject = Lib.isPlainObject(maxPoints);
+    var maxPointsIsObject = isPlainObject(maxPoints);
     var updateProps = [];
     var trace, target, prop, insert, maxp;
 
@@ -845,10 +844,10 @@ function getExtendProperties(gd, update, indices, maxPoints) {
             target = prop.get();
             insert = update[key][j];
 
-            if (!Lib.isArrayOrTypedArray(insert)) {
+            if (!isArrayOrTypedArray(insert)) {
                 throw new Error('attribute: ' + key + ' index: ' + j + ' must be an array');
             }
-            if (!Lib.isArrayOrTypedArray(target)) {
+            if (!isArrayOrTypedArray(target)) {
                 throw new Error('cannot extend missing or non-array attribute: ' + key);
             }
             if (target.constructor !== insert.constructor) {
@@ -944,12 +943,12 @@ function concatTypedArray(arr0, arr1) {
  *
  */
 function extendTraces(gd, update, indices, maxPoints) {
-    gd = Lib.getGraphDiv(gd);
+    gd = getGraphDiv(gd);
 
     function updateArray(target, insert, maxp) {
         var newArray, remainder;
 
-        if (Lib.isTypedArray(target)) {
+        if (isTypedArray(target)) {
             if (maxp < 0) {
                 var none = new target.constructor(0);
                 var both = concatTypedArray(target, insert);
@@ -1000,12 +999,12 @@ function extendTraces(gd, update, indices, maxPoints) {
 }
 
 function prependTraces(gd, update, indices, maxPoints) {
-    gd = Lib.getGraphDiv(gd);
+    gd = getGraphDiv(gd);
 
     function updateArray(target, insert, maxp) {
         var newArray, remainder;
 
-        if (Lib.isTypedArray(target)) {
+        if (isTypedArray(target)) {
             if (maxp <= 0) {
                 var none = new target.constructor(0);
                 var both = concatTypedArray(insert, target);
@@ -1064,7 +1063,7 @@ function prependTraces(gd, update, indices, maxPoints) {
  *
  */
 function addTraces(gd, traces, newIndices) {
-    gd = Lib.getGraphDiv(gd);
+    gd = getGraphDiv(gd);
 
     var currentIndices = [];
     var undoFunc = deleteTraces;
@@ -1084,7 +1083,7 @@ function addTraces(gd, traces, newIndices) {
 
     // make sure traces do not repeat existing ones
     traces = traces.map(function (trace) {
-        return Lib.extendFlat({}, trace);
+        return extendFlat({}, trace);
     });
 
     helpers.cleanData(traces);
@@ -1138,7 +1137,7 @@ function addTraces(gd, traces, newIndices) {
  * @param {Number|Number[]} indices The indices
  */
 function deleteTraces(gd, indices) {
-    gd = Lib.getGraphDiv(gd);
+    gd = getGraphDiv(gd);
 
     var traces = [];
     var undoFunc = addTraces;
@@ -1160,7 +1159,7 @@ function deleteTraces(gd, indices) {
     indices = positivifyIndices(indices, gd.data.length - 1);
 
     // we want descending here so that splicing later doesn't affect indexing
-    indices.sort(Lib.sorterDes);
+    indices.sort(sorterDes);
     for (i = 0; i < indices.length; i += 1) {
         deletedTrace = gd.data.splice(indices[i], 1)[0];
         traces.push(deletedTrace);
@@ -1204,7 +1203,7 @@ function deleteTraces(gd, indices) {
  *      Plotly.moveTraces(gd, [b, d, e, a, c])  // same as 'move to end'
  */
 function moveTraces(gd, currentIndices, newIndices) {
-    gd = Lib.getGraphDiv(gd);
+    gd = getGraphDiv(gd);
 
     var newData = [];
     var movingTraceMap = [];
@@ -1300,17 +1299,17 @@ function moveTraces(gd, currentIndices, newIndices) {
  * style files that want to specify cyclical default values).
  */
 function restyle(gd, astr, val, _traces) {
-    gd = Lib.getGraphDiv(gd);
+    gd = getGraphDiv(gd);
     helpers.clearPromiseQueue(gd);
 
     var aobj = {};
     if (typeof astr === 'string') aobj[astr] = val;
-    else if (Lib.isPlainObject(astr)) {
+    else if (isPlainObject(astr)) {
         // the 3-arg form
-        aobj = Lib.extendFlat({}, astr);
+        aobj = extendFlat({}, astr);
         if (_traces === undefined) _traces = val;
     } else {
-        Lib.warn('Restyle fail.', astr, val, _traces);
+        warn('Restyle fail.', astr, val, _traces);
         return Promise.reject();
     }
 
@@ -1358,7 +1357,7 @@ function restyle(gd, astr, val, _traces) {
 
     Queue.add(gd, restyle, [gd, specs.undoit, specs.traces], restyle, [gd, specs.redoit, specs.traces]);
 
-    var plotDone = Lib.syncOrAsync(seq, gd);
+    var plotDone = syncOrAsync(seq, gd);
     if (!plotDone || !plotDone.then) plotDone = Promise.resolve();
 
     return plotDone.then(function () {
@@ -1402,10 +1401,10 @@ function storeCurrent(attr, val, newVal, preGUI) {
         for (var i = 0; i < maxLen; i++) {
             storeCurrent(attr + '[' + i + ']', arrayVal[i], arrayNew[i], preGUI);
         }
-    } else if (Lib.isPlainObject(val) || Lib.isPlainObject(newVal)) {
-        var objVal = Lib.isPlainObject(val) ? val : {};
-        var objNew = Lib.isPlainObject(newVal) ? newVal : {};
-        var objBoth = Lib.extendFlat({}, objVal, objNew);
+    } else if (isPlainObject(val) || isPlainObject(newVal)) {
+        var objVal = isPlainObject(val) ? val : {};
+        var objNew = isPlainObject(newVal) ? newVal : {};
+        var objBoth = extendFlat({}, objVal, objNew);
         for (var key in objBoth) {
             storeCurrent(attr + '.' + key, objVal[key], objNew[key], preGUI);
         }
@@ -1439,7 +1438,7 @@ function _restyle(gd, aobj, traces) {
     var data = gd.data;
     var guiEditFlag = fullLayout._guiEditing;
     var layoutNP = makeNP(fullLayout._preGUI, guiEditFlag);
-    var eventData = Lib.extendDeepAll({}, aobj);
+    var eventData = extendDeepAll({}, aobj);
     var i;
 
     // initialize flags
@@ -1590,7 +1589,7 @@ function _restyle(gd, aobj, traces) {
 
             if (valObject && valObject.impliedEdits && newVal !== null) {
                 for (var impliedKey in valObject.impliedEdits) {
-                    doextra(Lib.relativeAttr(ai, impliedKey), valObject.impliedEdits[impliedKey], i);
+                    doextra(relativeAttr(ai, impliedKey), valObject.impliedEdits[impliedKey], i);
                 }
             } else if (
                 (finalPart === 'thicknessmode' || finalPart === 'lenmode') &&
@@ -1677,7 +1676,7 @@ function _restyle(gd, aobj, traces) {
                     if (
                         valObject.arrayOk &&
                         !Registry.traceIs(contFull, 'regl') &&
-                        (Lib.isArrayOrTypedArray(newVal) || Lib.isArrayOrTypedArray(oldVal))
+                        (isArrayOrTypedArray(newVal) || isArrayOrTypedArray(oldVal))
                     ) {
                         flags.calc = true;
                     } else editTypes.update(flags, valObject);
@@ -1747,7 +1746,7 @@ function _restyle(gd, aobj, traces) {
         undoit: undoit,
         redoit: redoit,
         traces: traces,
-        eventData: Lib.extendDeepNoArrays([], [eventData, traces])
+        eventData: extendDeepNoArrays([], [eventData, traces])
     };
 }
 
@@ -1772,16 +1771,16 @@ function _restyle(gd, aobj, traces) {
  *  allows setting multiple attributes simultaneously
  */
 function relayout(gd, astr, val) {
-    gd = Lib.getGraphDiv(gd);
+    gd = getGraphDiv(gd);
     helpers.clearPromiseQueue(gd);
 
     var aobj = {};
     if (typeof astr === 'string') {
         aobj[astr] = val;
-    } else if (Lib.isPlainObject(astr)) {
-        aobj = Lib.extendFlat({}, astr);
+    } else if (isPlainObject(astr)) {
+        aobj = extendFlat({}, astr);
     } else {
-        Lib.warn('Relayout fail.', astr, val);
+        warn('Relayout fail.', astr, val);
         return Promise.reject();
     }
 
@@ -1819,7 +1818,7 @@ function relayout(gd, astr, val) {
 
     Queue.add(gd, relayout, [gd, specs.undoit], relayout, [gd, specs.redoit]);
 
-    var plotDone = Lib.syncOrAsync(seq, gd);
+    var plotDone = syncOrAsync(seq, gd);
     if (!plotDone || !plotDone.then) plotDone = Promise.resolve(gd);
 
     return plotDone.then(function () {
@@ -1922,7 +1921,7 @@ function _relayout(gd, aobj) {
     var layoutNP = makeNP(fullLayout._preGUI, guiEditFlag);
     var keys = Object.keys(aobj);
     var axes = Axes.list(gd);
-    var eventData = Lib.extendDeepAll({}, aobj);
+    var eventData = extendDeepAll({}, aobj);
     var arrayEdits = {};
 
     var arrayStr, i, j;
@@ -2022,7 +2021,7 @@ function _relayout(gd, aobj) {
 
         if (valObject && valObject.impliedEdits && vi !== null) {
             for (var impliedKey in valObject.impliedEdits) {
-                doextra(Lib.relativeAttr(ai, impliedKey), valObject.impliedEdits[impliedKey]);
+                doextra(relativeAttr(ai, impliedKey), valObject.impliedEdits[impliedKey]);
             }
         }
 
@@ -2162,7 +2161,7 @@ function _relayout(gd, aobj) {
                 } else if (manageArrays.isRemoveVal(vi)) {
                     undoit[ai] = (nestedProperty(layout, arrayStr).get() || [])[i];
                 } else {
-                    Lib.warn('unrecognized full object value', aobj);
+                    warn('unrecognized full object value', aobj);
                 }
             }
             editTypes.update(flags, updateValObject);
@@ -2297,21 +2296,21 @@ function updateAutosize(gd) {
  *
  */
 function update(gd, traceUpdate, layoutUpdate, _traces) {
-    gd = Lib.getGraphDiv(gd);
+    gd = getGraphDiv(gd);
     helpers.clearPromiseQueue(gd);
 
-    if (!Lib.isPlainObject(traceUpdate)) traceUpdate = {};
-    if (!Lib.isPlainObject(layoutUpdate)) layoutUpdate = {};
+    if (!isPlainObject(traceUpdate)) traceUpdate = {};
+    if (!isPlainObject(layoutUpdate)) layoutUpdate = {};
 
     if (Object.keys(traceUpdate).length) gd.changed = true;
     if (Object.keys(layoutUpdate).length) gd.changed = true;
 
     var traces = helpers.coerceTraceIndices(gd, _traces);
 
-    var restyleSpecs = _restyle(gd, Lib.extendFlat({}, traceUpdate), traces);
+    var restyleSpecs = _restyle(gd, extendFlat({}, traceUpdate), traces);
     var restyleFlags = restyleSpecs.flags;
 
-    var relayoutSpecs = _relayout(gd, Lib.extendFlat({}, layoutUpdate));
+    var relayoutSpecs = _relayout(gd, extendFlat({}, layoutUpdate));
     var relayoutFlags = relayoutSpecs.flags;
 
     // clear calcdata and/or axis types if required
@@ -2352,7 +2351,7 @@ function update(gd, traceUpdate, layoutUpdate, _traces) {
         restyleSpecs.traces
     ]);
 
-    var plotDone = Lib.syncOrAsync(seq, gd);
+    var plotDone = syncOrAsync(seq, gd);
     if (!plotDone || !plotDone.then) plotDone = Promise.resolve(gd);
 
     return plotDone.then(function () {
@@ -2470,11 +2469,11 @@ function getTraceIndexFromUid(uid, data, tracei) {
 }
 
 function valsMatch(v1, v2) {
-    var v1IsObj = Lib.isPlainObject(v1);
+    var v1IsObj = isPlainObject(v1);
     var v1IsArray = Array.isArray(v1);
     if (v1IsObj || v1IsArray) {
         return (
-            ((v1IsObj && Lib.isPlainObject(v2)) || (v1IsArray && Array.isArray(v2))) &&
+            ((v1IsObj && isPlainObject(v2)) || (v1IsArray && Array.isArray(v2))) &&
             JSON.stringify(v1) === JSON.stringify(v2)
         );
     }
@@ -2533,7 +2532,7 @@ function applyUIRevisions(data, layout, oldFullData, oldFullLayout) {
                 }
             }
         } else {
-            Lib.warn('unrecognized GUI edit: ' + key);
+            warn('unrecognized GUI edit: ' + key);
         }
         // if we got this far, the new value was accepted as the new starting
         // point (either because it changed or revision changed)
@@ -2610,7 +2609,7 @@ function applyUIRevisions(data, layout, oldFullData, oldFullLayout) {
                     }
                 }
             } else {
-                Lib.warn('unrecognized GUI edit: ' + key + ' in trace uid ' + uid);
+                warn('unrecognized GUI edit: ' + key + ' in trace uid ' + uid);
             }
             delete tracePreGUI[key];
         }
@@ -2647,17 +2646,17 @@ function react(gd, data, layout, config) {
         return addFrames(gd, frames);
     }
 
-    gd = Lib.getGraphDiv(gd);
+    gd = getGraphDiv(gd);
     helpers.clearPromiseQueue(gd);
 
     var oldFullData = gd._fullData;
     var oldFullLayout = gd._fullLayout;
 
     // you can use this as the initial draw as well as to update
-    if (!Lib.isPlotDiv(gd) || !oldFullData || !oldFullLayout) {
+    if (!isPlotDiv(gd) || !oldFullData || !oldFullLayout) {
         plotDone = newPlot(gd, data, layout, config);
     } else {
-        if (Lib.isPlainObject(data)) {
+        if (isPlainObject(data)) {
             var obj = data;
             data = obj.data;
             layout = obj.layout;
@@ -2669,7 +2668,7 @@ function react(gd, data, layout, config) {
         // assume that if there's a config at all, we're reacting to it too,
         // and completely replace the previous config
         if (config) {
-            const oldConfig = Lib.extendDeepAll({}, gd._context);
+            const oldConfig = extendDeepAll({}, gd._context);
             gd._context = undefined;
             setPlotContext(gd, config);
             configChanged = !helpers.collectionsAreEqual(oldConfig, gd._context);
@@ -2769,13 +2768,13 @@ function react(gd, data, layout, config) {
                     var indices = relayoutFlags.arrays[componentType];
                     if (indices.length) {
                         var drawOne = Registry.getComponentMethod(componentType, 'drawOne');
-                        if (drawOne !== Lib.noop) {
+                        if (drawOne !== noop) {
                             for (var i = 0; i < indices.length; i++) {
                                 drawOne(gd, indices[i]);
                             }
                         } else {
                             var draw = Registry.getComponentMethod(componentType, 'draw');
-                            if (draw === Lib.noop) {
+                            if (draw === noop) {
                                 throw new Error('cannot draw components: ' + componentType);
                             }
                             draw(gd);
@@ -2797,7 +2796,7 @@ function react(gd, data, layout, config) {
 
             seq.push(Plots.rehover, Plots.redrag, Plots.reselect);
 
-            plotDone = Lib.syncOrAsync(seq, gd);
+            plotDone = syncOrAsync(seq, gd);
             if (!plotDone || !plotDone.then) plotDone = Promise.resolve(gd);
         }
     }
@@ -2936,7 +2935,7 @@ function getDiffFlags(oldContainer, newContainer, outerparts, opts) {
     function changed() {
         var editType = valObject.editType;
         if (inArray && editType.indexOf('arraydraw') !== -1) {
-            Lib.pushUnique(flags.arrays[inArray], arrayIndex);
+            pushUnique(flags.arrays[inArray], arrayIndex);
             return;
         }
         editTypes.update(flags, valObject);
@@ -3036,7 +3035,7 @@ function getDiffFlags(oldContainer, newContainer, outerparts, opts) {
                     newVal[i],
                     parts.concat(i),
                     // add array indices, but not if we're already in an array
-                    Lib.extendFlat({ inArray: key, arrayIndex: i }, opts)
+                    extendFlat({ inArray: key, arrayIndex: i }, opts)
                 );
             }
 
@@ -3048,7 +3047,7 @@ function getDiffFlags(oldContainer, newContainer, outerparts, opts) {
                     arrayEditIndices.push(i);
                 }
             }
-        } else if (!valType && Lib.isPlainObject(oldVal)) {
+        } else if (!valType && isPlainObject(oldVal)) {
             getDiffFlags(oldVal, newVal, parts, opts);
         } else if (canBeDataArray) {
             if (wasArray && nowArray) {
@@ -3118,9 +3117,9 @@ function getDiffFlags(oldContainer, newContainer, outerparts, opts) {
  *      configuration for the animation
  */
 function animate(gd, frameOrGroupNameOrFrameList, animationOpts) {
-    gd = Lib.getGraphDiv(gd);
+    gd = getGraphDiv(gd);
 
-    if (!Lib.isPlotDiv(gd)) {
+    if (!isPlotDiv(gd)) {
         throw new Error(
             'This element is not a Plotly plot: ' +
                 gd +
@@ -3366,13 +3365,13 @@ function animate(gd, frameOrGroupNameOrFrameList, animationOpts) {
         var frameList = [];
         var allFrames = frameOrGroupNameOrFrameList === undefined || frameOrGroupNameOrFrameList === null;
         var isFrameArray = Array.isArray(frameOrGroupNameOrFrameList);
-        var isSingleFrame = !allFrames && !isFrameArray && Lib.isPlainObject(frameOrGroupNameOrFrameList);
+        var isSingleFrame = !allFrames && !isFrameArray && isPlainObject(frameOrGroupNameOrFrameList);
 
         if (isSingleFrame) {
             // In this case, a simple object has been passed to animate.
             frameList.push({
                 type: 'object',
-                data: setTransitionConfig(Lib.extendFlat({}, frameOrGroupNameOrFrameList))
+                data: setTransitionConfig(extendFlat({}, frameOrGroupNameOrFrameList))
             });
         } else if (allFrames || ['string', 'number'].indexOf(typeof frameOrGroupNameOrFrameList) !== -1) {
             // In this case, null or undefined has been passed so that we want to
@@ -3401,10 +3400,10 @@ function animate(gd, frameOrGroupNameOrFrameList, animationOpts) {
                         name: frameOrName,
                         data: setTransitionConfig({ name: frameOrName })
                     });
-                } else if (Lib.isPlainObject(frameOrName)) {
+                } else if (isPlainObject(frameOrName)) {
                     frameList.push({
                         type: 'object',
-                        data: setTransitionConfig(Lib.extendFlat({}, frameOrName))
+                        data: setTransitionConfig(extendFlat({}, frameOrName))
                     });
                 }
             }
@@ -3414,7 +3413,7 @@ function animate(gd, frameOrGroupNameOrFrameList, animationOpts) {
         for (i = 0; i < frameList.length; i++) {
             frame = frameList[i];
             if (frame.type === 'byname' && !trans._frameHash[frame.data.name]) {
-                Lib.warn('animate failure: frame not found: "' + frame.data.name + '"');
+                warn('animate failure: frame not found: "' + frame.data.name + '"');
                 reject();
                 return;
             }
@@ -3484,13 +3483,13 @@ function animate(gd, frameOrGroupNameOrFrameList, animationOpts) {
  *      will be overwritten.
  */
 function addFrames(gd, frameList, indices) {
-    gd = Lib.getGraphDiv(gd);
+    gd = getGraphDiv(gd);
 
     if (frameList === null || frameList === undefined) {
         return Promise.resolve();
     }
 
-    if (!Lib.isPlotDiv(gd)) {
+    if (!isPlotDiv(gd)) {
         throw new Error(
             'This element is not a Plotly plot: ' +
                 gd +
@@ -3518,7 +3517,7 @@ function addFrames(gd, frameList, indices) {
     var insertions = [];
     var _frameHashLocal = {};
     for (i = frameList.length - 1; i >= 0; i--) {
-        if (!Lib.isPlainObject(frameList[i])) continue;
+        if (!isPlainObject(frameList[i])) continue;
 
         // The entire logic for checking for this type of name collision can be removed once we migrate to ES6 and
         // use a Map instead of an Object instance, as Map keys aren't converted to strings.
@@ -3536,7 +3535,7 @@ function addFrames(gd, frameList, indices) {
         ) {
             numericNameWarningCount++;
 
-            Lib.warn(
+            warn(
                 'addFrames: overwriting frame "' +
                     (_frameHash[name] || _frameHashLocal[name]).name +
                     '" with a frame whose name of type "number" also equates to "' +
@@ -3547,7 +3546,7 @@ function addFrames(gd, frameList, indices) {
             );
 
             if (numericNameWarningCount === numericNameWarningCountLimit) {
-                Lib.warn(
+                warn(
                     'addFrames: This API call has yielded too many of these warnings. ' +
                         'For the rest of this call, further warnings about numeric frame ' +
                         'names will be suppressed.'
@@ -3578,7 +3577,7 @@ function addFrames(gd, frameList, indices) {
         frame = insertions[i].frame;
 
         if (typeof frame.name === 'number') {
-            Lib.warn(
+            warn(
                 'Warning: addFrames accepts frames with numeric names, but the numbers are' +
                     'implicitly cast to strings'
             );
@@ -3627,9 +3626,9 @@ function addFrames(gd, frameList, indices) {
  *      list of integer indices of frames to be deleted
  */
 function deleteFrames(gd, frameList) {
-    gd = Lib.getGraphDiv(gd);
+    gd = getGraphDiv(gd);
 
-    if (!Lib.isPlotDiv(gd)) {
+    if (!isPlotDiv(gd)) {
         throw new Error('This element is not a Plotly plot: ' + gd);
     }
 
@@ -3671,7 +3670,7 @@ function deleteFrames(gd, frameList) {
  *      the id or DOM element of the graph container div
  */
 function purge(gd) {
-    gd = Lib.getGraphDiv(gd);
+    gd = getGraphDiv(gd);
 
     var fullLayout = gd._fullLayout || {};
     var fullData = gd._fullData || [];
@@ -3699,9 +3698,9 @@ function calcInverseTransform(gd) {
     var fullLayout = gd._fullLayout;
 
     var newBBox = gd.getBoundingClientRect();
-    if (Lib.equalDomRects(newBBox, fullLayout._lastBBox)) return;
+    if (equalDomRects(newBBox, fullLayout._lastBBox)) return;
 
-    var m = (fullLayout._invTransform = Lib.inverseTransformMatrix(Lib.getFullTransformMatrix(gd)));
+    var m = (fullLayout._invTransform = inverseTransformMatrix(getFullTransformMatrix(gd)));
     fullLayout._invScaleX = Math.sqrt(m[0][0] * m[0][0] + m[0][1] * m[0][1] + m[0][2] * m[0][2]);
     fullLayout._invScaleY = Math.sqrt(m[1][0] * m[1][0] + m[1][1] * m[1][1] + m[1][2] * m[1][2]);
     fullLayout._lastBBox = newBBox;
@@ -3779,7 +3778,7 @@ function makePlotFramework(gd) {
         selectAll('defs').each(function () {
             if (this.id) otherUids[this.id.split('-')[1]] = 1;
         });
-        fullLayout._uid = Lib.randstr(otherUids);
+        fullLayout._uid = randstr(otherUids);
     }
 
     fullLayout._paperdiv.selectAll('.main-svg').attr(xmlnsNamespaces.svgAttrs);

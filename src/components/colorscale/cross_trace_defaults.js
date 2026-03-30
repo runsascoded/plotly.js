@@ -1,4 +1,4 @@
-import Lib from '../../lib/index.js';
+import { nestedProperty } from '../../lib/index.js';
 import _helpers from './helpers.js';
 const { hasColorscale, extractOpts } = _helpers;
 
@@ -12,7 +12,7 @@ export default function crossTraceDefaults(fullData, fullLayout) {
 
     function relinkColorAttrs(outerCont, cbOpt) {
         var cont = cbOpt.container ?
-            Lib.nestedProperty(outerCont, cbOpt.container).get() :
+            nestedProperty(outerCont, cbOpt.container).get() :
             outerCont;
 
         if(cont) {

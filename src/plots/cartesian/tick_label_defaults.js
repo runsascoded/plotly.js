@@ -1,4 +1,4 @@
-import Lib from '../../lib/index.js';
+import Lib, { coerceFont, isPlainObject } from '../../lib/index.js';
 import _index from '../../components/color/index.js';
 const { contrast } = _index;
 import layoutAttributes from './layout_attributes.js';
@@ -9,7 +9,7 @@ export default function handleTickLabelDefaults(containerIn, containerOut, coerc
     if(!options) options = {};
 
     var labelalias = coerce('labelalias');
-    if(!Lib.isPlainObject(labelalias)) delete containerOut.labelalias;
+    if(!isPlainObject(labelalias)) delete containerOut.labelalias;
 
     var showAttrDflt = getShowAttrDflt(containerIn);
 
@@ -31,7 +31,7 @@ export default function handleTickLabelDefaults(containerIn, containerOut, coerc
             (contColor && contColor !== layoutAttributes.color.dflt) ?
             contColor : font.color;
 
-        Lib.coerceFont(coerce, 'tickfont', font, { overrideDflt: {
+        coerceFont(coerce, 'tickfont', font, { overrideDflt: {
             color: dfltFontColor
         }});
 

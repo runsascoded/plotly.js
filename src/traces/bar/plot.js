@@ -1,7 +1,7 @@
 import { select } from 'd3-selection';
 function d3Round(x, n) { return n ? Math.round(x * (n = Math.pow(10, n))) / n : Math.round(x); }
 import isNumeric from 'fast-isnumeric';
-import Lib from '../../lib/index.js';
+import { castOption, ensureSingle, ensureUniformFontSize, formatPercent, identity, makeTraceGroups, setTransormAndDisplay, texttemplateString } from '../../lib/index.js';
 import svgTextUtils from '../../lib/svg_text_utils.js';
 import Color from '../../components/color/index.js';
 import { bBox, font, hideOutsideRangePoint, makePointStyleFns, setClipUrl, singlePointStyle } from '../../components/drawing/index.js';
@@ -101,7 +101,7 @@ function plot(gd, plotinfo, cdModule, traceLayer, opts, makeOnCompleteCallback) 
         clearMinTextSize('bar', fullLayout);
     }
 
-    var bartraces = Lib.makeTraceGroups(traceLayer, cdModule, 'trace bars').each(function (cd) {
+    var bartraces = makeTraceGroups(traceLayer, cdModule, 'trace bars').each(function (cd) {
         var plotGroup = select(this);
         var trace = cd[0].trace;
         var t = cd[0].t;
@@ -118,10 +118,10 @@ function plot(gd, plotinfo, cdModule, traceLayer, opts, makeOnCompleteCallback) 
         var isHorizontal = trace.orientation === 'h';
         var withTransition = hasTransition(opts);
 
-        var pointGroup = Lib.ensureSingle(plotGroup, 'g', 'points');
+        var pointGroup = ensureSingle(plotGroup, 'g', 'points');
 
         var keyFunc = getKeyFunc(trace);
-        var bars = pointGroup.selectAll('g.point').data(Lib.identity, keyFunc);
+        var bars = pointGroup.selectAll('g.point').data(identity, keyFunc);
 
         bars.enter().append('g').classed('point', true);
 
@@ -496,7 +496,7 @@ function plot(gd, plotinfo, cdModule, traceLayer, opts, makeOnCompleteCallback) 
                 path = rectanglePath;
             }
 
-            var sel = transition(Lib.ensureSingle(bar, 'path'), fullLayout, opts, makeOnCompleteCallback);
+            var sel = transition(ensureSingle(bar, 'path'), fullLayout, opts, makeOnCompleteCallback);
             sel.style('vector-effect', isStatic ? 'none' : 'non-scaling-stroke')
                 .attr('d', isNaN((x1 - x0) * (y1 - y0)) || (isBlank && gd._context.staticPlot) ? 'M0,0Z' : path)
                 .call(setClipUrl, plotinfo.layerClipId, gd);
@@ -531,7 +531,7 @@ function appendBarText(gd, plotinfo, bar, cd, i, x0, x1, y0, y1, r, overhead, op
     var textPosition;
 
     function appendTextNode(bar, text, textFont) {
-        var textSelection = Lib.ensureSingle(bar, 'text')
+        var textSelection = ensureSingle(bar, 'text')
             .text(text)
             .attr({
                 class: 'bartext bartext-' + textPosition,
@@ -622,7 +622,7 @@ function appendBarText(gd, plotinfo, bar, cd, i, x0, x1, y0, y1, r, overhead, op
             // draw text using insideTextFont and check if it fits inside bar
             textPosition = 'inside';
 
-            textFont = Lib.ensureUniformFontSize(gd, insideTextFont);
+            textFont = ensureUniformFontSize(gd, insideTextFont);
 
             textSelection = appendTextNode(bar, text, textFont);
 
@@ -677,7 +677,7 @@ function appendBarText(gd, plotinfo, bar, cd, i, x0, x1, y0, y1, r, overhead, op
     }
 
     if (!textSelection) {
-        textFont = Lib.ensureUniformFontSize(gd, textPosition === 'outside' ? outsideTextFont : insideTextFont);
+        textFont = ensureUniformFontSize(gd, textPosition === 'outside' ? outsideTextFont : insideTextFont);
 
         textSelection = appendTextNode(bar, text, textFont);
 
@@ -723,7 +723,7 @@ function appendBarText(gd, plotinfo, bar, cd, i, x0, x1, y0, y1, r, overhead, op
     calcBar.transform = transform;
 
     var s = transition(textSelection, fullLayout, opts, makeOnCompleteCallback);
-    Lib.setTransormAndDisplay(s, transform);
+    setTransormAndDisplay(s, transform);
 }
 
 function textfitsInsideBar(barWidth, barHeight, textWidth, textHeight, isHorizontal) {
@@ -996,7 +996,7 @@ function getTextPosition(trace, index) {
 
 function calcTexttemplate(fullLayout, cd, index, xa, ya) {
     var trace = cd[0].trace;
-    var texttemplate = Lib.castOption(trace, index, 'texttemplate');
+    var texttemplate = castOption(trace, index, 'texttemplate');
     if (!texttemplate) return '';
     var isHistogram = trace.type === 'histogram';
     var isWaterfall = trace.type === 'waterfall';
@@ -1031,7 +1031,7 @@ function calcTexttemplate(fullLayout, cd, index, xa, ya) {
     obj.label = cdi.p;
     obj.labelLabel = obj[pLetter + 'Label'] = formatLabel(cdi.p);
 
-    var tx = Lib.castOption(trace, cdi.i, 'text');
+    var tx = castOption(trace, cdi.i, 'text');
     if (tx === 0 || tx) obj.text = tx;
 
     obj.value = cdi.s;
@@ -1059,16 +1059,16 @@ function calcTexttemplate(fullLayout, cd, index, xa, ya) {
         obj.valueLabel = formatNumber(obj.value);
 
         obj.percentInitial = cdi.begR;
-        obj.percentInitialLabel = Lib.formatPercent(cdi.begR);
+        obj.percentInitialLabel = formatPercent(cdi.begR);
         obj.percentPrevious = cdi.difR;
-        obj.percentPreviousLabel = Lib.formatPercent(cdi.difR);
+        obj.percentPreviousLabel = formatPercent(cdi.difR);
         obj.percentTotal = cdi.sumR;
-        obj.percenTotalLabel = Lib.formatPercent(cdi.sumR);
+        obj.percenTotalLabel = formatPercent(cdi.sumR);
     }
 
-    var customdata = Lib.castOption(trace, cdi.i, 'customdata');
+    var customdata = castOption(trace, cdi.i, 'customdata');
     if (customdata) obj.customdata = customdata;
-    return Lib.texttemplateString({
+    return texttemplateString({
         data: [pt, obj, trace._meta],
         fallback: trace.texttemplatefallback,
         labels: obj,
@@ -1109,7 +1109,7 @@ function calcTextinfo(cd, index, xa, ya) {
     }
 
     if (hasFlag('text')) {
-        tx = Lib.castOption(trace, cdi.i, 'text');
+        tx = castOption(trace, cdi.i, 'text');
         if (tx === 0 || tx) text.push(tx);
     }
 
@@ -1134,17 +1134,17 @@ function calcTextinfo(cd, index, xa, ya) {
         var hasMultiplePercents = nPercent > 1;
 
         if (hasFlag('percent initial')) {
-            tx = Lib.formatPercent(cdi.begR);
+            tx = formatPercent(cdi.begR);
             if (hasMultiplePercents) tx += ' of initial';
             text.push(tx);
         }
         if (hasFlag('percent previous')) {
-            tx = Lib.formatPercent(cdi.difR);
+            tx = formatPercent(cdi.difR);
             if (hasMultiplePercents) tx += ' of previous';
             text.push(tx);
         }
         if (hasFlag('percent total')) {
-            tx = Lib.formatPercent(cdi.sumR);
+            tx = formatPercent(cdi.sumR);
             if (hasMultiplePercents) tx += ' of total';
             text.push(tx);
         }

@@ -1,7 +1,7 @@
 import { select } from 'd3-selection';
 import Registry from '../registry.js';
 import Plots from '../plots/plots.js';
-import Lib from '../lib/index.js';
+import { ensureSingle, ensureSingleById, isBottomAnchor, isLeftAnchor, isMiddleAnchor, isRightAnchor, isTopAnchor, pushUnique, syncOrAsync } from '../lib/index.js';
 import svgTextUtils from '../lib/svg_text_utils.js';
 import clearGlCanvases from '../lib/clear_gl_canvases.js';
 import Color from '../components/color/index.js';
@@ -22,7 +22,7 @@ var SVG_TEXT_ANCHOR_MIDDLE = 'middle';
 var SVG_TEXT_ANCHOR_END = 'end';
 
 export var layoutStyles = function(gd) {
-    return Lib.syncOrAsync([Plots.doAutoMargin, lsInner], gd);
+    return syncOrAsync([Plots.doAutoMargin, lsInner], gd);
 };
 
 function overlappingDomain(xDomain, yDomain, domains) {
@@ -140,7 +140,7 @@ function lsInner(gd) {
 
             if(overlappingDomain(xDomain, yDomain, lowerDomains) && subplot.indexOf(zindexSeparator) === -1) {
                 var pgNode = plotgroup.node();
-                var plotgroupBg = plotinfo.bg = Lib.ensureSingle(plotgroup, 'rect', 'bg');
+                var plotgroupBg = plotinfo.bg = ensureSingle(plotgroup, 'rect', 'bg');
                 pgNode.insertBefore(plotgroupBg.node(), pgNode.childNodes[0]);
                 backgroundIds.push(subplot);
             } else {
@@ -193,7 +193,7 @@ function lsInner(gd) {
             // Clip so that data only shows up on the plot area.
             var clipId = plotinfo.clipId = 'clip' + fullLayout._uid + subplot + 'plot';
 
-            var plotClip = Lib.ensureSingleById(fullLayout._clips, 'clipPath', clipId, function(s) {
+            var plotClip = ensureSingleById(fullLayout._clips, 'clipPath', clipId, function(s) {
                 s.classed('plotclip', true)
                     .append('rect');
             });
@@ -469,9 +469,9 @@ export var drawMainTitle = function(gd) {
 
 function isOutsideContainer(gd, title, position, y, titleHeight) {
     var plotHeight = title.yref === 'paper' ? gd._fullLayout._size.h : gd._fullLayout.height;
-    var yPosTop = Lib.isTopAnchor(title) ? y : y - titleHeight; // Standardize to the top of the title
+    var yPosTop = isTopAnchor(title) ? y : y - titleHeight; // Standardize to the top of the title
     var yPosRel = position === 'b' ? plotHeight - yPosTop : yPosTop; // Position relative to the top or bottom of plot
-    if((Lib.isTopAnchor(title) && position === 't') || Lib.isBottomAnchor(title) && position === 'b') {
+    if((isTopAnchor(title) && position === 't') || isBottomAnchor(title) && position === 'b') {
         return false;
     } else {
         return yPosRel < titleHeight;
@@ -601,9 +601,9 @@ function getMainTitleTextAnchor(fullLayout) {
     var title = fullLayout.title;
 
     var textAnchor = SVG_TEXT_ANCHOR_MIDDLE;
-    if(Lib.isRightAnchor(title)) {
+    if(isRightAnchor(title)) {
         textAnchor = SVG_TEXT_ANCHOR_END;
-    } else if(Lib.isLeftAnchor(title)) {
+    } else if(isLeftAnchor(title)) {
         textAnchor = SVG_TEXT_ANCHOR_START;
     }
 
@@ -614,9 +614,9 @@ function getMainTitleDy(fullLayout) {
     var title = fullLayout.title;
 
     var dy = '0em';
-    if(Lib.isTopAnchor(title)) {
+    if(isTopAnchor(title)) {
         dy = alignmentConstants.CAP_SHIFT + 'em';
-    } else if(Lib.isMiddleAnchor(title)) {
+    } else if(isMiddleAnchor(title)) {
         dy = alignmentConstants.MID_SHIFT + 'em';
     }
 
@@ -767,9 +767,9 @@ export var redrawReglTraces = function(gd) {
                 if(trace.type === 'splom') {
                     fullLayout._splomScenes[trace.uid].draw();
                 } else if(trace.type === 'scattergl') {
-                    Lib.pushUnique(cartesianIds, trace.xaxis + trace.yaxis);
+                    pushUnique(cartesianIds, trace.xaxis + trace.yaxis);
                 } else if(trace.type === 'scatterpolargl') {
-                    Lib.pushUnique(polarIds, trace.subplot);
+                    pushUnique(polarIds, trace.subplot);
                 }
             }
         }

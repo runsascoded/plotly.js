@@ -1,6 +1,6 @@
 import { select } from 'd3-selection';
 import Registry from '../../registry.js';
-import Lib from '../../lib/index.js';
+import { constrain, ensureSingle, isArrayOrTypedArray, mean, minExtend, nestedProperty, strTranslate } from '../../lib/index.js';
 import { dashLine, fillGroupStyle, getPatternAttr, gradient, lineGroupStyle, pattern, pointStyle, textPointStyle, tryColorscale } from '../drawing/index.js';
 import Color from '../color/index.js';
 import _helpers from '../colorscale/helpers.js';
@@ -9,7 +9,6 @@ import subTypes from '../../traces/scatter/subtypes.js';
 import stylePie from '../../traces/pie/style_one.js';
 import { castOption as pieCastOption } from '../../traces/pie/helpers.js';
 import constants from './constants.js';
-var strTranslate = Lib.strTranslate;
 
 var CST_MARKER_SIZE = 12;
 var CST_LINE_WIDTH = 5;
@@ -40,7 +39,7 @@ export default function style(s, gd, legend) {
     s.each(function(d) {
         var traceGroup = select(this);
 
-        var layers = Lib.ensureSingle(traceGroup, 'g', 'layers');
+        var layers = ensureSingle(traceGroup, 'g', 'layers');
         layers.style('opacity', d[0].trace.opacity);
 
         var indentation = legend.indentation;
@@ -180,8 +179,8 @@ export default function style(s, gd, legend) {
 
         if(showLine || showGradientLine) {
             var lw = boundLineWidth(undefined, trace.line, MAX_LINE_WIDTH, CST_LINE_WIDTH);
-            tMod = Lib.minExtend(trace, {line: {width: lw}});
-            dMod = [Lib.minExtend(d0, {trace: tMod})];
+            tMod = minExtend(trace, {line: {width: lw}});
+            dMod = [minExtend(d0, {trace: tMod})];
         }
 
         var line = this3.select('.legendlines').selectAll('path')
@@ -215,8 +214,8 @@ export default function style(s, gd, legend) {
         // use d0.trace to infer arrayOk attributes
 
         function boundVal(attrIn, arrayToValFn, bounds, cst) {
-            var valIn = Lib.nestedProperty(trace, attrIn).get();
-            var valToBound = (Lib.isArrayOrTypedArray(valIn) && arrayToValFn) ?
+            var valIn = nestedProperty(trace, attrIn).get();
+            var valToBound = (isArrayOrTypedArray(valIn) && arrayToValFn) ?
                 arrayToValFn(valIn) :
                 valIn;
 
@@ -244,16 +243,16 @@ export default function style(s, gd, legend) {
             if(showMarker) {
                 dEdit.mc = boundVal('marker.color', pickFirst);
                 dEdit.mx = boundVal('marker.symbol', pickFirst);
-                dEdit.mo = boundVal('marker.opacity', Lib.mean, [0.2, 1]);
+                dEdit.mo = boundVal('marker.opacity', mean, [0.2, 1]);
                 dEdit.mlc = boundVal('marker.line.color', pickFirst);
-                dEdit.mlw = boundVal('marker.line.width', Lib.mean, [0, 5], CST_MARKER_LINE_WIDTH);
+                dEdit.mlw = boundVal('marker.line.width', mean, [0, 5], CST_MARKER_LINE_WIDTH);
                 tEdit.marker = {
                     sizeref: 1,
                     sizemin: 1,
                     sizemode: 'diameter'
                 };
 
-                var ms = boundVal('marker.size', Lib.mean, [2, 16], CST_MARKER_SIZE);
+                var ms = boundVal('marker.size', mean, [2, 16], CST_MARKER_SIZE);
                 dEdit.ms = ms;
                 tEdit.marker.size = ms;
             }
@@ -278,8 +277,8 @@ export default function style(s, gd, legend) {
                 dEdit.tS = boundVal('textfont.shadow', pickFirst);
             }
 
-            dMod = [Lib.minExtend(d0, dEdit)];
-            tMod = Lib.minExtend(trace, tEdit);
+            dMod = [minExtend(d0, dEdit)];
+            tMod = minExtend(trace, tEdit);
 
             // always show legend items in base state
             tMod.selectedpoints = null;
@@ -446,9 +445,9 @@ export default function style(s, gd, legend) {
             if((trace.boxpoints === 'all' || trace.points === 'all') &&
                 Color.opacity(trace.fillcolor) === 0 && Color.opacity((trace.line || {}).color) === 0
             ) {
-                var tMod = Lib.minExtend(trace, {
+                var tMod = minExtend(trace, {
                     marker: {
-                        size: constantItemSizing ? CST_MARKER_SIZE : Lib.constrain(trace.marker.size, 2, 16),
+                        size: constantItemSizing ? CST_MARKER_SIZE : constrain(trace.marker.size, 2, 16),
                         sizeref: 1,
                         sizemin: 1,
                         sizemode: 'diameter'
@@ -548,8 +547,8 @@ export default function style(s, gd, legend) {
             var lw = boundLineWidth(pieCastOption(cont.line.width, d0.pts), cont.line, MAX_MARKER_LINE_WIDTH, CST_MARKER_LINE_WIDTH);
 
             var opt = 'pieLike';
-            var tMod = Lib.minExtend(trace, {marker: {line: {width: lw}}}, opt);
-            var d0Mod = Lib.minExtend(d0, {trace: tMod}, opt);
+            var tMod = minExtend(trace, {marker: {line: {width: lw}}}, opt);
+            var d0Mod = minExtend(d0, {trace: tMod}, opt);
 
             stylePie(pts, d0Mod, tMod, gd);
         }
@@ -660,7 +659,7 @@ export default function style(s, gd, legend) {
             var fillColor;
             if(!colorscale) {
                 var color = trace.vertexcolor || trace.facecolor || trace.color;
-                fillColor = Lib.isArrayOrTypedArray(color) ? (color[i] || color[0]) : color;
+                fillColor = isArrayOrTypedArray(color) ? (color[i] || color[0]) : color;
             } else {
                 if(!useGradient) {
                     var len = colorscale.length;
@@ -723,7 +722,7 @@ function getStyleGuide(d) {
 }
 
 function dimAttr(v, dflt, max) {
-    if(v && Lib.isArrayOrTypedArray(v)) return dflt;
+    if(v && isArrayOrTypedArray(v)) return dflt;
     if(v > max) return max;
     return v;
 }

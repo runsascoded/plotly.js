@@ -1,8 +1,7 @@
 import mouseOffset from 'mouse-event-offset';
 var hasHover = typeof matchMedia === 'function' ? !matchMedia('(hover: none)').matches : typeof window !== 'undefined';
 import supportsPassive from 'has-passive-events';
-import _index from '../../lib/index.js';
-const { removeElement } = _index;
+import { removeElement } from '../../lib/index.js';
 import constants from '../../plots/cartesian/constants.js';
 import unhover from './unhover.js';
 import _req0 from './align.js';

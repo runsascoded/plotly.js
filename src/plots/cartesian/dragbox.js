@@ -1,5 +1,5 @@
 import { select } from 'd3-selection';
-import Lib from '../../lib/index.js';
+import { _, apply3DTransform, ensureSingle, extendFlat, log, notifier, numberFormat, simpleMap, strTranslate, syncOrAsync } from '../../lib/index.js';
 import tinycolor from 'tinycolor2';
 import supportsPassive from 'has-passive-events';
 import Registry from '../../registry.js';
@@ -19,8 +19,6 @@ import Plots from '../plots.js';
 import { getFromId } from './axis_ids.js';
 import scaleZoom from './scale_zoom.js';
 import constants from './constants.js';
-var numberFormat = Lib.numberFormat;
-var strTranslate = Lib.strTranslate;
 var selectingOrDrawing = helpers.selectingOrDrawing;
 var freeMode = helpers.freeMode;
 
@@ -327,7 +325,7 @@ function makeDragBox(gd, plotinfo, x, y, w, h, ns, ew) {
         y0 = startY - dragBBox.top;
 
         gd._fullLayout._calcInverseTransform(gd);
-        var transformedCoords = Lib.apply3DTransform(gd._fullLayout._invTransform)(x0, y0);
+        var transformedCoords = apply3DTransform(gd._fullLayout._invTransform)(x0, y0);
         x0 = transformedCoords[0];
         y0 = transformedCoords[1];
 
@@ -481,7 +479,7 @@ function makeDragBox(gd, plotinfo, x, y, w, h, ns, ew) {
         var wheelDelta = -e.deltaY;
         if(!isFinite(wheelDelta)) wheelDelta = e.wheelDelta / 10;
         if(!isFinite(wheelDelta)) {
-            Lib.log('Did not find wheel motion attributes: ', e);
+            log('Did not find wheel motion attributes: ', e);
             return;
         }
 
@@ -494,7 +492,7 @@ function makeDragBox(gd, plotinfo, x, y, w, h, ns, ew) {
         function zoomWheelOneAxis(ax, centerFraction, zoom) {
             if(ax.fixedrange) return;
 
-            var axRange = Lib.simpleMap(ax.range, ax.r2l);
+            var axRange = simpleMap(ax.range, ax.r2l);
             var v0 = axRange[0] + (axRange[1] - axRange[0]) * centerFraction;
             function doZoom(v) { return ax.l2r(v0 + (v - v0) * zoom); }
             ax.range = axRange.map(doZoom);
@@ -854,7 +852,7 @@ function makeDragBox(gd, plotinfo, x, y, w, h, ns, ew) {
 
         // since we may have been redrawing some things during the drag, we may have
         // accumulated MathJax promises - wait for them before we relayout.
-        Lib.syncOrAsync([
+        syncOrAsync([
             Plots.previousPromises,
             function() {
                 gd._fullLayout._replotting = false;
@@ -896,8 +894,8 @@ function makeDragBox(gd, plotinfo, x, y, w, h, ns, ew) {
                     if(xa.limitRange) xa.limitRange();
                     if(ya.limitRange) ya.limitRange();
 
-                    var xrng = Lib.simpleMap(xa.range, xa.r2l);
-                    var yrng = Lib.simpleMap(ya.range, ya.r2l);
+                    var xrng = simpleMap(xa.range, xa.r2l);
+                    var yrng = simpleMap(ya.range, ya.r2l);
 
                     sp._scene.update({range: [xrng[0], yrng[0], xrng[1], yrng[1]]});
                 }
@@ -1046,7 +1044,7 @@ function makeDragBox(gd, plotinfo, x, y, w, h, ns, ew) {
 }
 
 function makeDragger(plotinfo, nodeName, dragClass, cursor) {
-    var dragger3 = Lib.ensureSingle(plotinfo.draglayer, nodeName, dragClass, function(s) {
+    var dragger3 = ensureSingle(plotinfo.draglayer, nodeName, dragClass, function(s) {
         s.classed('drag', true)
             .style({fill: 'transparent', 'stroke-width': 0})
             .attr('data-subplot', plotinfo.id);
@@ -1216,7 +1214,7 @@ function removeZoombox(gd) {
 
 function showDoubleClickNotifier(gd) {
     if(SHOWZOOMOUTTIP && gd.data && gd._context.showTips) {
-        Lib.notifier(Lib._(gd, 'Double-click to zoom back out'), 'long');
+        notifier(_(gd, 'Double-click to zoom back out'), 'long');
         SHOWZOOMOUTTIP = false;
     }
 }
@@ -1307,7 +1305,7 @@ function calcLinks(gd, groups, xaHash, yaHash, exclude) {
         // merge xLinks and yLinks if the subplot is constrained,
         // since we'll always apply both anyway and the two will contain
         // duplicates
-        Lib.extendFlat(xLinks, yLinks);
+        extendFlat(xLinks, yLinks);
         yLinks = {};
     }
 

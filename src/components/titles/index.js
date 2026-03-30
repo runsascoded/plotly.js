@@ -3,14 +3,13 @@ function d3Round(x, n) { return n ? Math.round(x * (n = Math.pow(10, n))) / n : 
 import isNumeric from 'fast-isnumeric';
 import Plots from '../../plots/plots.js';
 import Registry from '../../registry.js';
-import Lib from '../../lib/index.js';
+import { bBoxIntersect, ensureSingle, extendFlat, strTranslate, syncOrAsync, templateString } from '../../lib/index.js';
 import { bBox, font } from '../drawing/index.js';
 import Color from '../color/index.js';
 import svgTextUtils from '../../lib/svg_text_utils.js';
 import interactConstants from '../../constants/interactions.js';
 import _alignment from '../../constants/alignment.js';
 const { OPPOSITE_SIDE } = _alignment;
-var strTranslate = Lib.strTranslate;
 var numStripRE = / [XY][0-9]* /;
 var SUBTITLE_PADDING_MATHJAX_EM = 1.6;
 var SUBTITLE_PADDING_EM = 1.6;
@@ -43,7 +42,7 @@ var SUBTITLE_PADDING_EM = 1.6;
  *      containerGroup - if an svg <g> element already exists to hold this
  *          title, include here. Otherwise it will go in fullLayout._infolayer
  *      _meta {object (optional} - meta key-value to for title with
- *          Lib.templateString, default to fullLayout._meta, if not provided
+ *          templateString, default to fullLayout._meta, if not provided
  *
  *  @return {selection} d3 selection of title container group
  */
@@ -129,16 +128,16 @@ function draw(gd, titleClass, options) {
     }
 
     if(options._meta) {
-        txt = Lib.templateString(txt, options._meta);
+        txt = templateString(txt, options._meta);
     } else if(fullLayout._meta) {
-        txt = Lib.templateString(txt, fullLayout._meta);
+        txt = templateString(txt, fullLayout._meta);
     }
 
     var elShouldExist = txt || subtitleTxt || editable;
 
     var hColorbarMoveTitle;
     if(!group) {
-        group = Lib.ensureSingle(fullLayout._infolayer, 'g', 'g-' + titleClass);
+        group = ensureSingle(fullLayout._infolayer, 'g', 'g-' + titleClass);
         hColorbarMoveTitle = fullLayout._hColorbarMoveTitle;
     }
 
@@ -169,7 +168,7 @@ function draw(gd, titleClass, options) {
     if(!elShouldExist) return group;
 
     function titleLayout(titleEl, subtitleEl) {
-        Lib.syncOrAsync([drawTitle, scootTitle], { title: titleEl, subtitle: subtitleEl });
+        syncOrAsync([drawTitle, scootTitle], { title: titleEl, subtitle: subtitleEl });
     }
 
     function drawTitle(titleAndSubtitleEls) {
@@ -237,7 +236,7 @@ function draw(gd, titleClass, options) {
             var titleElMathBbox = titleElMathGroup.node() ? titleElMathGroup.node().getBBox() : undefined;
             var subtitleY = titleElMathBbox ? titleElMathBbox.y + titleElMathBbox.height + (SUBTITLE_PADDING_MATHJAX_EM * subFontSize) : titleElBbox.y + titleElBbox.height + (SUBTITLE_PADDING_EM * subFontSize);
 
-            var subtitleAttributes = Lib.extendFlat({}, attributes, {
+            var subtitleAttributes = extendFlat({}, attributes, {
                 y: subtitleY
             });
 
@@ -314,7 +313,7 @@ function draw(gd, titleClass, options) {
                 avoid.selection.each(function() {
                     var avoidbb = bBox(this);
 
-                    if(Lib.bBoxIntersect(titlebb, avoidbb, pad)) {
+                    if(bBoxIntersect(titlebb, avoidbb, pad)) {
                         shift = Math.max(shift, shiftSign * (
                             avoidbb[avoid.side] - titlebb[backside]) + pad);
                     }

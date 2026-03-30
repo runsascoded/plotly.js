@@ -1,5 +1,5 @@
 import { select } from 'd3-selection';
-import Lib from '../../lib/index.js';
+import { castOption, coerceHoverinfo, isD3Selection } from '../../lib/index.js';
 import dragElement from '../dragelement/index.js';
 import helpers from './helpers.js';
 import layoutAttributes from './layout_attributes.js';
@@ -51,7 +51,7 @@ export default {
 function loneUnhover(containerOrSelection) {
     // duck type whether the arg is a d3 selection because ie9 doesn't
     // handle instanceof like modern browsers do.
-    var selection = Lib.isD3Selection(containerOrSelection) ?
+    var selection = isD3Selection(containerOrSelection) ?
             containerOrSelection :
             select(containerOrSelection);
 
@@ -62,13 +62,13 @@ function loneUnhover(containerOrSelection) {
 // helpers for traces that use Fx.loneHover
 
 function castHoverOption(trace, ptNumber, attr) {
-    return Lib.castOption(trace, ptNumber, 'hoverlabel.' + attr);
+    return castOption(trace, ptNumber, 'hoverlabel.' + attr);
 }
 
 function castHoverinfo(trace, fullLayout, ptNumber) {
     function _coerce(val) {
-        return Lib.coerceHoverinfo({hoverinfo: val}, {_module: trace._module}, fullLayout);
+        return coerceHoverinfo({hoverinfo: val}, {_module: trace._module}, fullLayout);
     }
 
-    return Lib.castOption(trace, ptNumber, 'hoverinfo', _coerce);
+    return castOption(trace, ptNumber, 'hoverinfo', _coerce);
 }

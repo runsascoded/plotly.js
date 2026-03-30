@@ -1,7 +1,7 @@
 import { select } from 'd3-selection';
 import isNumeric from 'fast-isnumeric';
 import tinycolor from 'tinycolor2';
-import Lib from '../../lib/index.js';
+import { apply3DTransform, castOption, constrain, ensureSingle, extractOption, getGraphDiv, hovertemplateString, log, mean, pushUnique, strRotate, strTranslate, templateString, throttle, warn } from '../../lib/index.js';
 import Events from '../../lib/events.js';
 import svgTextUtils from '../../lib/svg_text_utils.js';
 import overrideCursor from '../../lib/override_cursor.js';
@@ -16,9 +16,6 @@ import helpers from './helpers.js';
 import constants from './constants.js';
 import legendSupplyDefaults from '../legend/defaults.js';
 import legendDraw from '../legend/draw.js';
-var pushUnique = Lib.pushUnique;
-var strTranslate = Lib.strTranslate;
-var strRotate = Lib.strRotate;
 
 // hover labels for multiple horizontal bars get tilted by some angle,
 // then need to be offset differently if they overlap
@@ -55,11 +52,11 @@ function distanceSort(a, b) {
 }
 
 export var hover = function hover(gd, evt, subplot, noHoverEvent) {
-    gd = Lib.getGraphDiv(gd);
+    gd = getGraphDiv(gd);
     // The 'target' property changes when bubbling out of Shadow DOM.
     // Throttling can delay reading the target, so we save the current value.
     var eventTarget = evt.target;
-    Lib.throttle(gd._fullLayout._uid + constants.HOVERID, constants.HOVERMINTIME, function () {
+    throttle(gd._fullLayout._uid + constants.HOVERID, constants.HOVERMINTIME, function () {
         _hover(gd, evt, subplot, noHoverEvent, eventTarget);
     });
 };
@@ -274,7 +271,7 @@ function _hover(gd, evt, subplot, noHoverEvent, eventTarget) {
             xaArray[i] = _subplot.xaxis;
             yaArray[i] = _subplot.yaxis;
         } else {
-            Lib.warn('Unrecognized subplot: ' + spId);
+            warn('Unrecognized subplot: ' + spId);
             return;
         }
     }
@@ -385,7 +382,7 @@ function _hover(gd, evt, subplot, noHoverEvent, eventTarget) {
             ypx = evt.clientY - dbb.top;
 
             fullLayout._calcInverseTransform(gd);
-            var transformedCoords = Lib.apply3DTransform(fullLayout._invTransform)(xpx, ypx);
+            var transformedCoords = apply3DTransform(fullLayout._invTransform)(xpx, ypx);
 
             xpx = transformedCoords[0];
             ypx = transformedCoords[1];
@@ -407,7 +404,7 @@ function _hover(gd, evt, subplot, noHoverEvent, eventTarget) {
         else yvalArray = helpers.p2c(yaArray, ypx);
 
         if (!isNumeric(xvalArray[0]) || !isNumeric(yvalArray[0])) {
-            Lib.warn('Fx.hover failed', evt, gd);
+            warn('Fx.hover failed', evt, gd);
             return dragElement.unhoverRaw(gd, evt);
         }
     }
@@ -551,7 +548,7 @@ function _hover(gd, evt, subplot, noHoverEvent, eventTarget) {
                         }
                     }
                 } else {
-                    Lib.log('Unrecognized trace type in hover:', trace);
+                    log('Unrecognized trace type in hover:', trace);
                 }
             }
 
@@ -963,10 +960,10 @@ function createHoverText(hoverData, opts) {
     };
     commonLabel.each(function () {
         var label = select(this);
-        var lpath = Lib.ensureSingle(label, 'path', '', function (s) {
+        var lpath = ensureSingle(label, 'path', '', function (s) {
             s.style({ 'stroke-width': '1px' });
         });
-        var ltext = Lib.ensureSingle(label, 'text', '', function (s) {
+        var ltext = ensureSingle(label, 'text', '', function (s) {
             // prohibit tex interpretation until we can handle
             // tex and regular text together
             s.attr('data-notex', 1);
@@ -1187,7 +1184,7 @@ function createHoverText(hoverData, opts) {
 
         var mainText = !unifiedhovertitleText
             ? t0
-            : Lib.hovertemplateString({
+            : hovertemplateString({
                   data:
                       hovermode === 'x unified' ? [{ xa: item0.xa, x: item0.xVal }] : [{ ya: item0.ya, y: item0.yVal }],
                   fallback: item0.trace.hovertemplatefallback,
@@ -1291,7 +1288,7 @@ function createHoverText(hoverData, opts) {
             }
         } else {
             lyTop = lyBottom =
-                Lib.mean(
+                mean(
                     groupedHoverData.map(function (c) {
                         return (c.y0 + c.y1) / 2;
                     })
@@ -1320,7 +1317,7 @@ function createHoverText(hoverData, opts) {
             }
         } else {
             lxRight = lxLeft =
-                Lib.mean(
+                mean(
                     groupedHoverData.map(function (c) {
                         return (c.x0 + c.x1) / 2;
                     })
@@ -1559,7 +1556,7 @@ function getHoverLabelText(d, showCommonLabel, hovermode, fullLayout, t0, g) {
     if (d.nameOverride !== undefined) d.name = d.nameOverride;
 
     if (d.name) {
-        if (d.trace._meta) d.name = Lib.templateString(d.name, d.trace._meta);
+        if (d.trace._meta) d.name = templateString(d.name, d.trace._meta);
         name = plainText(d.name, d.nameLength);
     }
 
@@ -1615,7 +1612,7 @@ function getHoverLabelText(d, showCommonLabel, hovermode, fullLayout, t0, g) {
             labels[h0 + 'otherLabel'] = labels[h0 + 'Label'];
         }
 
-        text = Lib.hovertemplateString({
+        text = hovertemplateString({
             data: [d.eventData[0] || {}, d.trace._meta],
             fallback: d.trace.hovertemplatefallback,
             labels,
@@ -2049,11 +2046,11 @@ function cleanPoint(d, hovermode) {
 
     var getVal = Array.isArray(index)
         ? function (calcKey, traceKey) {
-              var v = Lib.castOption(cd0, index, calcKey);
-              return pass(v) ? v : Lib.extractOption({}, trace, '', traceKey);
+              var v = castOption(cd0, index, calcKey);
+              return pass(v) ? v : extractOption({}, trace, '', traceKey);
           }
         : function (calcKey, traceKey) {
-              return Lib.extractOption(cd, trace, calcKey, traceKey);
+              return extractOption(cd, trace, calcKey, traceKey);
           };
 
     function fill(key, calcKey, traceKey) {
@@ -2079,10 +2076,10 @@ function cleanPoint(d, hovermode) {
             : d.ya._offset + (d.y0 + d.y1) / 2;
 
     // then constrain all the positions to be on the plot
-    d.x0 = Lib.constrain(d.x0, 0, d.xa._length);
-    d.x1 = Lib.constrain(d.x1, 0, d.xa._length);
-    d.y0 = Lib.constrain(d.y0, 0, d.ya._length);
-    d.y1 = Lib.constrain(d.y1, 0, d.ya._length);
+    d.x0 = constrain(d.x0, 0, d.xa._length);
+    d.x1 = constrain(d.x1, 0, d.xa._length);
+    d.y0 = constrain(d.y0, 0, d.ya._length);
+    d.y1 = constrain(d.y1, 0, d.ya._length);
 
     // and convert the x and y label values into formatted text
     if (d.xLabelVal !== undefined) {
@@ -2437,8 +2434,8 @@ function getBoundingClientRect(gd, node) {
     var x1 = x0 + rect.width;
     var y1 = y0 + rect.height;
 
-    var A = Lib.apply3DTransform(fullLayout._invTransform)(x0, y0);
-    var B = Lib.apply3DTransform(fullLayout._invTransform)(x1, y1);
+    var A = apply3DTransform(fullLayout._invTransform)(x0, y0);
+    var B = apply3DTransform(fullLayout._invTransform)(x1, y1);
 
     var Ax = A[0];
     var Ay = A[1];

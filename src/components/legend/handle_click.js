@@ -1,6 +1,5 @@
 import Registry from '../../registry.js';
-import Lib from '../../lib/index.js';
-var pushUnique = Lib.pushUnique;
+import { _, notifier, pushUnique } from '../../lib/index.js';
 
 var SHOWISOLATETIP = true;
 
@@ -16,7 +15,7 @@ export default function handleClick(g, gd, numClicks) {
     if(numClicks === 1 && itemClick === 'toggle' && itemDoubleClick === 'toggleothers' &&
         SHOWISOLATETIP && gd.data && gd._context.showTips
     ) {
-        Lib.notifier(Lib._(gd, 'Double-click on legend to isolate one trace'), 'long');
+        notifier(_(gd, 'Double-click on legend to isolate one trace'), 'long');
         SHOWISOLATETIP = false;
     } else {
         SHOWISOLATETIP = false;

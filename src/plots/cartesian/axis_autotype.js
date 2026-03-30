@@ -1,11 +1,8 @@
 import isNumeric from 'fast-isnumeric';
-import Lib from '../../lib/index.js';
+import { cleanNumber, isArrayOrTypedArray, isDateTime } from '../../lib/index.js';
 import _numerical from '../../constants/numerical.js';
 const { BADNUM } = _numerical;
 
-var isArrayOrTypedArray = Lib.isArrayOrTypedArray;
-var isDateTime = Lib.isDateTime;
-var cleanNumber = Lib.cleanNumber;
 var round = Math.round;
 
 export default function autoType(array, calendar, opts) {

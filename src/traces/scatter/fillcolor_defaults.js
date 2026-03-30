@@ -1,6 +1,5 @@
 import Color from '../../components/color/index.js';
-import _index from '../../lib/index.js';
-const { isArrayOrTypedArray } = _index;
+import { isArrayOrTypedArray } from '../../lib/index.js';
 
 function averageColors(colorscale) {
     var color = Color.interpolate(colorscale[0][1], colorscale[1][1], 0.5);

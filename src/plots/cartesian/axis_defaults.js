@@ -1,6 +1,6 @@
 import isNumeric from 'fast-isnumeric';
 import Registry from '../../registry.js';
-import Lib from '../../lib/index.js';
+import Lib, { bigFont, coerceFont, warn } from '../../lib/index.js';
 import Template from '../../plot_api/plot_template.js';
 import handleArrayContainerDefaults from '../array_container_defaults.js';
 import layoutAttributes from './layout_attributes.js';
@@ -96,8 +96,8 @@ export default function handleAxisDefaults(containerIn, containerOut, coerce, op
     if(!visible) return containerOut;
 
     coerce('title.text', dfltTitle);
-    Lib.coerceFont(coerce, 'title.font', font, { overrideDflt: {
-        size: Lib.bigFont(font.size),
+    coerceFont(coerce, 'title.font', font, { overrideDflt: {
+        size: bigFont(font.size),
         color: dfltFontColor
     }});
 
@@ -188,7 +188,7 @@ export default function handleAxisDefaults(containerIn, containerOut, coerce, op
                     var trace = options.data[i];
                     if(trace.type === 'scattergl' || trace.type === 'splom') {
                         trace.visible = false;
-                        Lib.warn(trace.type +
+                        warn(trace.type +
                             ' traces do not work on axes with rangebreaks.' +
                             ' Setting trace ' + trace.index + ' to `visible: false`.');
                     }

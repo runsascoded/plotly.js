@@ -1,4 +1,4 @@
-import Lib from '../../lib/index.js';
+import Lib, { isPlainObject, simpleMap } from '../../lib/index.js';
 import Color from '../../components/color/index.js';
 import { isUnifiedHover } from '../../components/fx/helpers.js';
 import handleHoverModeDefaults from '../../components/fx/hovermode_defaults.js';
@@ -113,8 +113,8 @@ export default function supplyLayoutDefaults(layoutIn, layoutOut, fullData) {
     var subplots = layoutOut._subplots;
     var xIds = subplots.xaxis;
     var yIds = subplots.yaxis;
-    var xNames = Lib.simpleMap(xIds, id2name);
-    var yNames = Lib.simpleMap(yIds, id2name);
+    var xNames = simpleMap(xIds, id2name);
+    var yNames = simpleMap(yIds, id2name);
     var axNames = xNames.concat(yNames);
 
     // plot_bgcolor only makes sense if there's a (2D) plot!
@@ -206,7 +206,7 @@ export default function supplyLayoutDefaults(layoutIn, layoutOut, fullData) {
         axId = name2id(axName);
         axLetter = axName.charAt(0);
 
-        if(!Lib.isPlainObject(layoutIn[axName])) {
+        if(!isPlainObject(layoutIn[axName])) {
             layoutIn[axName] = {};
         }
 
@@ -297,7 +297,7 @@ export default function supplyLayoutDefaults(layoutIn, layoutOut, fullData) {
         axName = id2name(axId);
         axLetter = axName.charAt(0);
 
-        if(!Lib.isPlainObject(layoutIn[axName])) {
+        if(!isPlainObject(layoutIn[axName])) {
             layoutIn[axName] = {};
         }
 

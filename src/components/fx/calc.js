@@ -1,4 +1,4 @@
-import Lib from '../../lib/index.js';
+import { coerceHoverinfo, fillArray, identity } from '../../lib/index.js';
 import Registry from '../../registry.js';
 
 export default function calc(gd) {
@@ -7,7 +7,7 @@ export default function calc(gd) {
 
     function makeCoerceHoverInfo(trace) {
         return function(val) {
-            return Lib.coerceHoverinfo({hoverinfo: val}, {_module: trace._module}, fullLayout);
+            return coerceHoverinfo({hoverinfo: val}, {_module: trace._module}, fullLayout);
         };
     }
 
@@ -20,7 +20,7 @@ export default function calc(gd) {
         // won't match the data array order.
         if(Registry.traceIs(trace, 'pie-like')) continue;
 
-        var fillFn = Registry.traceIs(trace, '2dMap') ? paste : Lib.fillArray;
+        var fillFn = Registry.traceIs(trace, '2dMap') ? paste : fillArray;
 
         fillFn(trace.hoverinfo, cd, 'hi', makeCoerceHoverInfo(trace));
 
@@ -43,7 +43,7 @@ export default function calc(gd) {
 }
 
 function paste(traceAttr, cd, cdAttr, fn) {
-    fn = fn || Lib.identity;
+    fn = fn || identity;
 
     if(Array.isArray(traceAttr)) {
         cd[0][cdAttr] = fn(traceAttr);

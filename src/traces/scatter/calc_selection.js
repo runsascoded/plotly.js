@@ -1,7 +1,7 @@
-import Lib from '../../lib/index.js';
+import { isArrayOrTypedArray, tagSelected } from '../../lib/index.js';
 
 export default function calcSelection(cd, trace) {
-    if(Lib.isArrayOrTypedArray(trace.selectedpoints)) {
-        Lib.tagSelected(cd, trace);
+    if(isArrayOrTypedArray(trace.selectedpoints)) {
+        tagSelected(cd, trace);
     }
 }

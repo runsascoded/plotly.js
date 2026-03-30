@@ -1,6 +1,6 @@
 import { select } from 'd3-selection';
 import isNumeric from 'fast-isnumeric';
-import Lib from '../../lib/index.js';
+import { deg2rad, extendFlat, isArrayOrTypedArray, simpleMap } from '../../lib/index.js';
 import _numerical from '../../constants/numerical.js';
 const { FP_SAFE } = _numerical;
 import Registry from '../../registry.js';
@@ -58,7 +58,7 @@ function getAutoRange(gd, ax) {
     var maxArray = extremes.max;
 
     if(minArray.length === 0 || maxArray.length === 0) {
-        return Lib.simpleMap(ax.range, ax.r2l);
+        return simpleMap(ax.range, ax.r2l);
     }
 
     var minmin = minArray[0].val;
@@ -80,7 +80,7 @@ function getAutoRange(gd, ax) {
         autorange === 'max reversed';
 
     if(!axReverse && ax.range) {
-        var rng = Lib.simpleMap(ax.range, ax.r2l);
+        var rng = simpleMap(ax.range, ax.r2l);
         axReverse = rng[1] < rng[0];
     }
 
@@ -185,7 +185,7 @@ function getAutoRange(gd, ax) {
     // maintain reversal
     if(axReverse) newRange.reverse();
 
-    return Lib.simpleMap(newRange, ax.l2r || Number);
+    return simpleMap(newRange, ax.l2r || Number);
 }
 
 // find axis rangebreaks in [v0,v1] and compute its length in value space
@@ -217,7 +217,7 @@ function makePadFn(fullLayout, ax, max) {
     ) {
         var axReverse = ax.isReversed();
         if(!axReverse) {
-            var rng = Lib.simpleMap(ax.range, ax.r2l);
+            var rng = simpleMap(ax.range, ax.r2l);
             axReverse = rng[1] < rng[0];
         }
         if(axReverse) max = !max;
@@ -270,7 +270,7 @@ function padInsideLabelsOnAnchorAxis(fullLayout, ax, max) {
                 )
             )) {
                 if(anchorAxis._vals) {
-                    var rad = Lib.deg2rad(anchorAxis._tickAngles[anchorAxis._id + 'tick'] || 0);
+                    var rad = deg2rad(anchorAxis._tickAngles[anchorAxis._id + 'tick'] || 0);
                     var cosA = Math.abs(Math.cos(rad));
                     var sinA = Math.abs(Math.sin(rad));
 
@@ -373,7 +373,7 @@ function doAutoRange(gd, ax, presetRange) {
         ax.range = presetRange ? presetRange.slice() : getAutoRange(gd, ax);
 
         ax._r = ax.range.slice();
-        ax._rl = Lib.simpleMap(ax._r, ax.r2l);
+        ax._rl = simpleMap(ax._r, ax.r2l);
 
         // doAutoRange will get called on fullLayout,
         // but we want to report its results back to layout
@@ -399,7 +399,7 @@ function doAutoRange(gd, ax, presetRange) {
                 axeRangeOpts.range = getAutoRange(gd, ax);
             }
         }
-        anchorAx._input.rangeslider[ax._name] = Lib.extendFlat({}, axeRangeOpts);
+        anchorAx._input.rangeslider[ax._name] = extendFlat({}, axeRangeOpts);
     }
 }
 
@@ -698,7 +698,7 @@ function applyAutorangeOptions(range, ax) {
         var lMin = ax.d2l(min);
         var lMax = ax.d2l(max);
 
-        if(!Lib.isArrayOrTypedArray(include)) include = [include];
+        if(!isArrayOrTypedArray(include)) include = [include];
         for(var i = 0; i < include.length; i++) {
             var v = ax.d2l(include[i]);
             if(lMin >= v) {

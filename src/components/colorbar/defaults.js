@@ -1,4 +1,4 @@
-import Lib from '../../lib/index.js';
+import Lib, { bigFont, coerceFont, extendFlat, noneOrAll } from '../../lib/index.js';
 import Template from '../../plot_api/plot_template.js';
 import handleTickValueDefaults from '../../plots/cartesian/tick_value_defaults.js';
 import handleTickMarkDefaults from '../../plots/cartesian/tick_mark_defaults.js';
@@ -76,7 +76,7 @@ export default function colorbarDefaults(containerIn, containerOut, layout) {
     coerce('xpad');
     coerce('yanchor', defaultYAnchor);
     coerce('ypad');
-    Lib.noneOrAll(colorbarIn, colorbarOut, ['x', 'y']);
+    noneOrAll(colorbarIn, colorbarOut, ['x', 'y']);
 
     coerce('outlinecolor');
     coerce('outlinewidth');
@@ -123,10 +123,10 @@ export default function colorbarDefaults(containerIn, containerOut, layout) {
 
     var tickFont = colorbarOut.showticklabels ? colorbarOut.tickfont : font;
 
-    var dfltTitleFont = Lib.extendFlat({}, font, {
+    var dfltTitleFont = extendFlat({}, font, {
         family: tickFont.family,
-        size: Lib.bigFont(tickFont.size)
+        size: bigFont(tickFont.size)
     });
-    Lib.coerceFont(coerce, 'title.font', dfltTitleFont);
+    coerceFont(coerce, 'title.font', dfltTitleFont);
     coerce('title.side', isVertical ? 'top' : 'right');
 }

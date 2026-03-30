@@ -1,20 +1,20 @@
-import Lib from '../../lib/index.js';
+import { mergeArray, mergeArrayCastPositive } from '../../lib/index.js';
 
 export default function arraysToCalcdata(cd, trace) {
     for(var i = 0; i < cd.length; i++) cd[i].i = i;
 
-    Lib.mergeArray(trace.text, cd, 'tx');
-    Lib.mergeArray(trace.hovertext, cd, 'htx');
+    mergeArray(trace.text, cd, 'tx');
+    mergeArray(trace.hovertext, cd, 'htx');
 
     var marker = trace.marker;
     if(marker) {
-        Lib.mergeArray(marker.opacity, cd, 'mo', true);
-        Lib.mergeArray(marker.color, cd, 'mc');
+        mergeArray(marker.opacity, cd, 'mo', true);
+        mergeArray(marker.color, cd, 'mc');
 
         var markerLine = marker.line;
         if(markerLine) {
-            Lib.mergeArray(markerLine.color, cd, 'mlc');
-            Lib.mergeArrayCastPositive(markerLine.width, cd, 'mlw');
+            mergeArray(markerLine.color, cd, 'mlc');
+            mergeArrayCastPositive(markerLine.width, cd, 'mlw');
         }
     }
 }

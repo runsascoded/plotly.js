@@ -1,6 +1,6 @@
 import isNumeric from 'fast-isnumeric';
 import Registry from '../registry.js';
-import Lib from '../lib/index.js';
+import { isIndex, isPlainObject, log, nestedProperty, swapAttrs, warn } from '../lib/index.js';
 import Plots from '../plots/plots.js';
 import AxisIds from '../plots/cartesian/axis_ids.js';
 import Color from '../components/color/index.js';
@@ -13,7 +13,7 @@ const AX_LETTERS = ['x', 'y', 'z'];
 
 export var clearPromiseQueue = function (gd) {
     if (Array.isArray(gd._promises) && gd._promises.length > 0) {
-        Lib.log('Clearing previous rejected promises from queue.');
+        log('Clearing previous rejected promises from queue.');
     }
 
     gd._promises = [];
@@ -82,7 +82,7 @@ export var cleanLayout = function (layout) {
     for (i = 0; i < annotationsLen; i++) {
         var ann = layout.annotations[i];
 
-        if (!Lib.isPlainObject(ann)) continue;
+        if (!isPlainObject(ann)) continue;
 
         cleanAxRef(ann, 'xref');
         cleanAxRef(ann, 'yref');
@@ -92,7 +92,7 @@ export var cleanLayout = function (layout) {
     for (i = 0; i < shapesLen; i++) {
         var shape = layout.shapes[i];
 
-        if (!Lib.isPlainObject(shape)) continue;
+        if (!isPlainObject(shape)) continue;
 
         cleanAxRef(shape, 'xref');
         cleanAxRef(shape, 'yref');
@@ -102,7 +102,7 @@ export var cleanLayout = function (layout) {
     for (i = 0; i < imagesLen; i++) {
         var image = layout.images[i];
 
-        if (!Lib.isPlainObject(image)) continue;
+        if (!isPlainObject(image)) continue;
 
         cleanAxRef(image, 'xref');
         cleanAxRef(image, 'yref');
@@ -212,13 +212,13 @@ export var cleanData = function (data) {
         }
 
         // fix typo in surface 'highlight*' definitions
-        if (trace.type === 'surface' && Lib.isPlainObject(trace.contours)) {
+        if (trace.type === 'surface' && isPlainObject(trace.contours)) {
             var dims = ['x', 'y', 'z'];
 
             for (i = 0; i < dims.length; i++) {
                 var opts = trace.contours[dims[i]];
 
-                if (!Lib.isPlainObject(opts)) continue;
+                if (!isPlainObject(opts)) continue;
 
                 if (opts.highlightColor) {
                     opts.highlightcolor = opts.highlightColor;
@@ -281,7 +281,7 @@ export var cleanData = function (data) {
 };
 
 function cleanFinanceDir(dirContainer) {
-    if (!Lib.isPlainObject(dirContainer)) return false;
+    if (!isPlainObject(dirContainer)) return false;
 
     var dirName = dirContainer.name;
 
@@ -335,7 +335,7 @@ function emptyContainer(outer, innerStr) {
 
 export var swapXYData = function (trace) {
     var i;
-    Lib.swapAttrs(trace, ['?', '?0', 'd?', '?bins', 'nbins?', 'autobin?', '?src', 'error_?']);
+    swapAttrs(trace, ['?', '?0', 'd?', '?bins', 'nbins?', 'autobin?', '?src', 'error_?']);
     if (Array.isArray(trace.z) && Array.isArray(trace.z[0])) {
         if (trace.transpose) delete trace.transpose;
         else trace.transpose = true;
@@ -344,9 +344,9 @@ export var swapXYData = function (trace) {
         var errorY = trace.error_y;
         var copyYstyle =
             'copy_ystyle' in errorY ? errorY.copy_ystyle : !(errorY.color || errorY.thickness || errorY.width);
-        Lib.swapAttrs(trace, ['error_?.copy_ystyle']);
+        swapAttrs(trace, ['error_?.copy_ystyle']);
         if (copyYstyle) {
-            Lib.swapAttrs(trace, ['error_?.color', 'error_?.thickness', 'error_?.width']);
+            swapAttrs(trace, ['error_?.color', 'error_?.thickness', 'error_?.width']);
         }
     }
     if (typeof trace.hoverinfo === 'string') {
@@ -369,10 +369,10 @@ export var coerceTraceIndices = function (gd, traceIndices) {
     } else if (Array.isArray(traceIndices)) {
         var traceIndicesOut = [];
         for (var i = 0; i < traceIndices.length; i++) {
-            if (Lib.isIndex(traceIndices[i], gd.data.length)) {
+            if (isIndex(traceIndices[i], gd.data.length)) {
                 traceIndicesOut.push(traceIndices[i]);
             } else {
-                Lib.warn('trace index (', traceIndices[i], ') is not a number or is out of bounds');
+                warn('trace index (', traceIndices[i], ') is not a number or is out of bounds');
             }
         }
         return traceIndicesOut;
@@ -394,7 +394,7 @@ export var manageArrayContainers = function (np, newVal, undoit) {
 
         // Clear item in array container when new value is null
         var contPath = parts.slice(0, pLength - 1).join('.');
-        var cont = Lib.nestedProperty(obj, contPath).get();
+        var cont = nestedProperty(obj, contPath).get();
         cont.splice(pLast, 1);
 
         // Note that nested property clears null / undefined at end of
@@ -454,7 +454,7 @@ export var clearAxisTypes = function (gd, traces, layoutUpdate) {
                 var typeAttr = axAttr + '.type';
 
                 if (layoutUpdate[axAttr] === undefined && layoutUpdate[typeAttr] === undefined) {
-                    Lib.nestedProperty(gd.layout, typeAttr).set(null);
+                    nestedProperty(gd.layout, typeAttr).set(null);
                 }
             }
         }
@@ -468,7 +468,7 @@ export var clearAxisTypes = function (gd, traces, layoutUpdate) {
  * @param {Object|Array} collection2: Second collection to compare
  */
 const collectionsAreEqual = (collection1, collection2) => {
-    const isArrayOrObject = (...vals) => vals.every((v) => Lib.isPlainObject(v)) || vals.every((v) => Array.isArray(v));
+    const isArrayOrObject = (...vals) => vals.every((v) => isPlainObject(v)) || vals.every((v) => Array.isArray(v));
     if ([collection1, collection2].every((a) => Array.isArray(a))) {
         if (collection1.length !== collection2.length) return false;
 
@@ -482,7 +482,7 @@ const collectionsAreEqual = (collection1, collection2) => {
         }
 
         return true;
-    } else if ([collection1, collection2].every((a) => Lib.isPlainObject(a))) {
+    } else if ([collection1, collection2].every((a) => isPlainObject(a))) {
         if (Object.keys(collection1).length !== Object.keys(collection2).length) return false;
 
         for (const k in collection1) {

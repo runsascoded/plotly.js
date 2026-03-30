@@ -1,6 +1,6 @@
 import { select } from 'd3-selection';
 function d3Round(x, n) { return n ? Math.round(x * (n = Math.pow(10, n))) / n : Math.round(x); }
-import Lib from '../../lib/index.js';
+import { ensureSingle, ensureSingleById, extendFlat, extractOption, identity, isArrayOrTypedArray, nestedProperty, numberFormat, strTranslate, texttemplateString } from '../../lib/index.js';
 import isNumeric from 'fast-isnumeric';
 import tinycolor from 'tinycolor2';
 import Registry from '../../registry.js';
@@ -15,10 +15,8 @@ import subTypes from '../../traces/scatter/subtypes.js';
 import makeBubbleSizeFn from '../../traces/scatter/make_bubble_size_func.js';
 import { appendArrayPointValue } from '../../components/fx/helpers.js';
 import SYMBOLDEFS from './symbol_defs.js';
-var numberFormat = Lib.numberFormat;
 export var tester;
 export var testref;
-var strTranslate = Lib.strTranslate;
 var LINE_SPACING = alignment.LINE_SPACING;
 
 
@@ -494,7 +492,7 @@ function gradientWithBounds(sel, gd, gradientID, type, colorscale, prop, start, 
     var gradient = fullLayout._defs
         .select('.gradients')
         .selectAll('#' + fullID)
-        .data([type + colorStops.join(';')], Lib.identity);
+        .data([type + colorStops.join(';')], identity);
 
     gradient.exit().remove();
 
@@ -797,7 +795,7 @@ export function pattern(
     var pattern = fullLayout._defs
         .select('.patterns')
         .selectAll('#' + fullID)
-        .data([str], Lib.identity);
+        .data([str], identity);
 
     pattern.exit().remove();
 
@@ -854,7 +852,7 @@ export function pattern(
 export function initGradients(gd) {
     var fullLayout = gd._fullLayout;
 
-    var gradientsGroup = Lib.ensureSingle(fullLayout._defs, 'g', 'gradients');
+    var gradientsGroup = ensureSingle(fullLayout._defs, 'g', 'gradients');
     gradientsGroup.selectAll('linearGradient,radialGradient').remove();
 
     select(gd).selectAll('.gradient_filled').classed('gradient_filled', false);
@@ -863,14 +861,14 @@ export function initGradients(gd) {
 export function initPatterns(gd) {
     var fullLayout = gd._fullLayout;
 
-    var patternsGroup = Lib.ensureSingle(fullLayout._defs, 'g', 'patterns');
+    var patternsGroup = ensureSingle(fullLayout._defs, 'g', 'patterns');
     patternsGroup.selectAll('pattern').remove();
 
     select(gd).selectAll('.pattern_filled').classed('pattern_filled', false);
 };
 
 export function getPatternAttr(mp, i, dflt) {
-    if (mp && Lib.isArrayOrTypedArray(mp)) {
+    if (mp && isArrayOrTypedArray(mp)) {
         return i < mp.length ? mp[i] : dflt;
     }
     return mp;
@@ -943,10 +941,10 @@ export function singlePointStyle(d, sel, trace, fns, gd, pt) {
 
         if ('mlc' in d) lineColor = d.mlcc = fns.lineScale(d.mlc);
         // weird case: array wasn't long enough to apply to every point
-        else if (Lib.isArrayOrTypedArray(markerLine.color)) lineColor = Color.defaultLine;
+        else if (isArrayOrTypedArray(markerLine.color)) lineColor = Color.defaultLine;
         else lineColor = markerLine.color;
 
-        if (Lib.isArrayOrTypedArray(marker.color)) {
+        if (isArrayOrTypedArray(marker.color)) {
             fillColor = Color.defaultLine;
             perPointGradient = true;
         }
@@ -980,7 +978,7 @@ export function singlePointStyle(d, sel, trace, fns, gd, pt) {
 
         // for legend - arrays will propagate through here, but we don't need
         // to treat it as per-point.
-        if (Lib.isArrayOrTypedArray(gradientType)) {
+        if (isArrayOrTypedArray(gradientType)) {
             gradientType = gradientType[0];
             if (!gradientInfo[gradientType]) gradientType = 0;
         }
@@ -1024,12 +1022,12 @@ export function singlePointStyle(d, sel, trace, fns, gd, pt) {
             perPointPattern =
                 perPointPattern ||
                 d.mcc ||
-                Lib.isArrayOrTypedArray(markerPattern.shape) ||
-                Lib.isArrayOrTypedArray(markerPattern.path) ||
-                Lib.isArrayOrTypedArray(markerPattern.bgcolor) ||
-                Lib.isArrayOrTypedArray(markerPattern.fgcolor) ||
-                Lib.isArrayOrTypedArray(markerPattern.size) ||
-                Lib.isArrayOrTypedArray(markerPattern.solidity);
+                isArrayOrTypedArray(markerPattern.shape) ||
+                isArrayOrTypedArray(markerPattern.path) ||
+                isArrayOrTypedArray(markerPattern.bgcolor) ||
+                isArrayOrTypedArray(markerPattern.fgcolor) ||
+                isArrayOrTypedArray(markerPattern.size) ||
+                isArrayOrTypedArray(markerPattern.solidity);
 
             var patternID = trace.uid;
             if (perPointPattern) patternID += '-' + d.i;
@@ -1049,7 +1047,7 @@ export function singlePointStyle(d, sel, trace, fns, gd, pt) {
                 patternFGOpacity
             );
         } else {
-            Lib.isArrayOrTypedArray(fillColor) ? Color.fill(sel, fillColor[d.i]) : Color.fill(sel, fillColor);
+            isArrayOrTypedArray(fillColor) ? Color.fill(sel, fillColor[d.i]) : Color.fill(sel, fillColor);
         }
 
         if (lineWidth) {
@@ -1076,7 +1074,7 @@ export function makePointStyleFns(trace) {
     }
 
     if (trace.selectedpoints) {
-        Lib.extendFlat(out, makeSelectedPointStyleFns(trace));
+        extendFlat(out, makeSelectedPointStyleFns(trace));
     }
 
     return out;
@@ -1098,7 +1096,7 @@ export function makeSelectedPointStyleFns(trace) {
     var smoIsDefined = smo !== undefined;
     var usmoIsDefined = usmo !== undefined;
 
-    if (Lib.isArrayOrTypedArray(mo) || smoIsDefined || usmoIsDefined) {
+    if (isArrayOrTypedArray(mo) || smoIsDefined || usmoIsDefined) {
         out.selectedOpacityFn = function (d) {
             var base = d.mo === undefined ? marker.opacity : d.mo;
 
@@ -1220,15 +1218,15 @@ export function selectedPointStyle(s, trace) {
 };
 
 export function tryColorscale(marker, prefix) {
-    var cont = prefix ? Lib.nestedProperty(marker, prefix).get() : marker;
+    var cont = prefix ? nestedProperty(marker, prefix).get() : marker;
 
     if (cont) {
         var colorArray = cont.color;
-        if ((cont.colorscale || cont._colorAx) && Lib.isArrayOrTypedArray(colorArray)) {
+        if ((cont.colorscale || cont._colorAx) && isArrayOrTypedArray(colorArray)) {
             return Colorscale.makeColorScaleFuncFromTrace(cont);
         }
     }
-    return Lib.identity;
+    return identity;
 };
 
 var TEXTOFFSETSIGN = {
@@ -1283,8 +1281,8 @@ export function textPointStyle(s, trace, gd) {
         var p = select(this);
 
         var text = texttemplate
-            ? Lib.extractOption(d, trace, 'txt', 'texttemplate')
-            : Lib.extractOption(d, trace, 'tx', 'text');
+            ? extractOption(d, trace, 'txt', 'texttemplate')
+            : extractOption(d, trace, 'tx', 'text');
 
         if (!text && text !== 0) {
             p.remove();
@@ -1296,7 +1294,7 @@ export function textPointStyle(s, trace, gd) {
             var labels = fn ? fn(d, trace, fullLayout) : {};
             var pointValues = {};
             appendArrayPointValue(pointValues, trace, d.i);
-            text = Lib.texttemplateString({
+            text = texttemplateString({
                 data: [pointValues, d, trace._meta],
                 fallback: trace.texttemplatefallback,
                 labels,
@@ -1466,7 +1464,7 @@ function applyBackoff(pt, start) {
         trace.line &&
         trace.line.shape !== 'spline'
     ) {
-        var arrayBackoff = Lib.isArrayOrTypedArray(backoff);
+        var arrayBackoff = isArrayOrTypedArray(backoff);
         var end = pt;
 
         var x1 = start ? start[0] : lastDrawnX || 0;
@@ -1488,10 +1486,10 @@ function applyBackoff(pt, start) {
 
             var endMarker = end.marker;
             var endMarkerSymbol = endMarker.symbol;
-            if (Lib.isArrayOrTypedArray(endMarkerSymbol)) endMarkerSymbol = endMarkerSymbol[endI];
+            if (isArrayOrTypedArray(endMarkerSymbol)) endMarkerSymbol = endMarkerSymbol[endI];
 
             var endMarkerSize = endMarker.size;
-            if (Lib.isArrayOrTypedArray(endMarkerSize)) endMarkerSize = endMarkerSize[endI];
+            if (isArrayOrTypedArray(endMarkerSize)) endMarkerSize = endMarkerSize[endI];
 
             b = endMarker ? symbolBackOffs[symbolNumber(endMarkerSymbol)] * endMarkerSize : 0;
             b += getMarkerStandoff(d[endI], trace) || 0;
@@ -1513,7 +1511,7 @@ export { applyBackoff };
 // off-screen svg render testing element, shared by the whole page
 // uses the id 'js-plotly-tester' and stores it in tester
 export function makeTester() {
-    var _tester = Lib.ensureSingleById(select('body'), 'svg', 'js-plotly-tester', function (s) {
+    var _tester = ensureSingleById(select('body'), 'svg', 'js-plotly-tester', function (s) {
         s.attr(xmlnsNamespaces.svgAttrs).style({
             position: 'absolute',
             left: '-10000px',
@@ -1527,7 +1525,7 @@ export function makeTester() {
     // browsers differ on how they describe the bounding rect of
     // the svg if its contents spill over... so make a 1x1px
     // reference point we can measure off of.
-    var _testref = Lib.ensureSingle(_tester, 'path', 'js-reference-point', function (s) {
+    var _testref = ensureSingle(_tester, 'path', 'js-reference-point', function (s) {
         s.attr('d', 'M0,0H1V1H0Z').style({
             'stroke-width': 0,
             fill: 'black'
@@ -1577,7 +1575,7 @@ export function bBox(node, inTester, hash) {
     var out;
     if (hash) {
         out = savedBBoxes[hash];
-        if (out) return Lib.extendFlat({}, out);
+        if (out) return extendFlat({}, out);
     } else if (node.childNodes.length === 1) {
         /*
          * If we have only one child element, which is itself hashable, make
@@ -1620,7 +1618,7 @@ export function bBox(node, inTester, hash) {
             hash += '~' + x + '~' + y + '~' + transform;
 
             out = savedBBoxes[hash];
-            if (out) return Lib.extendFlat({}, out);
+            if (out) return extendFlat({}, out);
         }
     }
     var testNode, testerNode;
@@ -1663,7 +1661,7 @@ export function bBox(node, inTester, hash) {
     if (hash) savedBBoxes[hash] = bb;
     savedBBoxesCount++;
 
-    return Lib.extendFlat({}, bb);
+    return extendFlat({}, bb);
 };
 
 // capture everything about a node (at least in our usage) that
@@ -1861,7 +1859,7 @@ function getMarkerAngle(d, trace) {
 
     if (angle === undefined) {
         angle = trace.marker.angle;
-        if (!angle || Lib.isArrayOrTypedArray(angle)) {
+        if (!angle || isArrayOrTypedArray(angle)) {
             angle = 0;
         }
     }

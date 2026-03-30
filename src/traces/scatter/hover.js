@@ -1,9 +1,8 @@
-import Lib from '../../lib/index.js';
+import { extendFlat, fillText, isArrayOrTypedArray } from '../../lib/index.js';
 import Fx from '../../components/fx/index.js';
 import Registry from '../../registry.js';
 import getTraceColor from './get_trace_color.js';
 import Color from '../../components/color/index.js';
-var fillText = Lib.fillText;
 
 export default function hoverPoints(pointData, xval, yval, hovermode) {
     var cd = pointData.cd;
@@ -95,7 +94,7 @@ export default function hoverPoints(pointData, xval, yval, hovermode) {
             var xLabelVal = (orientation === 'h') ? sizeVal : di.orig_x !== undefined ? di.orig_x : di.x;
             var yLabelVal = (orientation === 'v') ? sizeVal : di.orig_y !== undefined ? di.orig_y : di.y;
 
-            Lib.extendFlat(pointData, {
+            extendFlat(pointData, {
                 color: getTraceColor(trace, di),
 
                 x0: xc - rad,
@@ -237,7 +236,7 @@ export default function hoverPoints(pointData, xval, yval, hovermode) {
                 color = trace.line.color;
             }
 
-            Lib.extendFlat(pointData, {
+            extendFlat(pointData, {
                 // never let a 2D override 1D type as closest point
                 // also: no spikeDistance, it's not allowed for fills
                 distance: pointData.maxHoverDistance,
@@ -251,7 +250,7 @@ export default function hoverPoints(pointData, xval, yval, hovermode) {
 
             delete pointData.index;
 
-            if(trace.text && !Lib.isArrayOrTypedArray(trace.text)) {
+            if(trace.text && !isArrayOrTypedArray(trace.text)) {
                 pointData.text = String(trace.text);
             } else pointData.text = trace.name;
 

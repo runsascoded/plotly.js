@@ -200,7 +200,8 @@ function equalDomRects(a, b) {
     );
 }
 
-export { addStyleRule };
+export { addStyleRule, getGraphDiv, isPlotDiv, removeElement, addRelatedStyleRule, deleteRelatedStyleRule, setStyleOnHover, getFullTransformMatrix, getElementTransformMatrix, getElementAndAncestors, equalDomRects };
+
 export default {
     getGraphDiv: getGraphDiv,
     isPlotDiv: isPlotDiv,

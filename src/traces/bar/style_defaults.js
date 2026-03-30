@@ -2,8 +2,7 @@ import Color from '../../components/color/index.js';
 import _helpers from '../../components/colorscale/helpers.js';
 const { hasColorscale } = _helpers;
 import colorscaleDefaults from '../../components/colorscale/defaults.js';
-import _index from '../../lib/index.js';
-const { coercePattern } = _index;
+import { coercePattern } from '../../lib/index.js';
 
 export default function handleStyleDefaults(traceIn, traceOut, coerce, defaultColor, layout) {
     var markerColor = coerce('marker.color', defaultColor);

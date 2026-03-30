@@ -215,6 +215,8 @@ function pathAnnulus(r0, r1, a0, a1, cx, cy) {
     return _path(r0, r1, a0, a1, cx, cy, 1);
 }
 
+export { deg2rad, rad2deg, angleDelta, angleDist, isFullCircle, isAngleInsideSector, isPtInsideSector, pathArc, pathSector, pathAnnulus };
+
 export default {
     deg2rad: deg2rad,
     rad2deg: rad2deg,

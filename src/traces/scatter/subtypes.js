@@ -1,4 +1,4 @@
-import Lib from '../../lib/index.js';
+import { isArrayOrTypedArray, isPlainObject } from '../../lib/index.js';
 import { isTypedArraySpec } from '../../lib/array.js';
 
 export default {
@@ -22,8 +22,8 @@ export default {
 
     isBubble: function(trace) {
         var marker = trace.marker;
-        return Lib.isPlainObject(marker) && (
-            Lib.isArrayOrTypedArray(marker.size) ||
+        return isPlainObject(marker) && (
+            isArrayOrTypedArray(marker.size) ||
             isTypedArraySpec(marker.size)
         );
     }

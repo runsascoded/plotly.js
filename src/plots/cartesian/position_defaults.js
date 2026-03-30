@@ -1,5 +1,5 @@
 import isNumeric from 'fast-isnumeric';
-import Lib from '../../lib/index.js';
+import Lib, { noneOrAll } from '../../lib/index.js';
 
 export default function handlePositionDefaults(containerIn, containerOut, coerce, options) {
     var counterAxes = options.counterAxes || [];
@@ -78,7 +78,7 @@ export default function handlePositionDefaults(containerIn, containerOut, coerce
         // the minimum value of max canvas width across browsers and devices is 4096
         // which applied in the calculation below:
         if(domain[0] > domain[1] - 1 / 4096) containerOut.domain = dfltDomain;
-        Lib.noneOrAll(containerIn.domain, containerOut.domain, dfltDomain);
+        noneOrAll(containerIn.domain, containerOut.domain, dfltDomain);
 
         // tickmode sync needs an overlaying axis, otherwise
         // we should default it to 'auto'
