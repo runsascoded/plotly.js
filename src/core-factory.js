@@ -20,7 +20,9 @@ import './lib/d3-compat.js';
 import 'd3-transition';
 import 'native-promise-only';
 import Registry from './registry.js';
-import plotApi from './plot_api/index.js';
+// Import plot_api.js directly (not index.js) to avoid pulling in
+// to_image, validate, template_api, snapshot/download
+import main from './plot_api/plot_api.js';
 import FxModule from './components/fx/index.js';
 import PlotsModule from './plots/plots.js';
 import { version } from './version.js';
@@ -34,6 +36,14 @@ import modebar from './components/modebar/index.js';
 import localeEn from './locale-en.js';
 import localeEnUs from './locale-en-us.js';
 
+// API methods needed for runtime (excludes toImage, validate, etc.)
+var apiMethodNames = [
+    'newPlot', 'react', 'restyle', 'relayout', 'redraw', 'update',
+    'extendTraces', 'prependTraces', 'addTraces', 'deleteTraces', 'moveTraces',
+    'purge', 'addFrames', 'deleteFrames', 'animate', 'setPlotConfig',
+    '_doPlot', '_guiRestyle', '_guiRelayout', '_guiUpdate', '_storeDirectGUIEdit',
+];
+
 export function createPlotly({ traces = [], components = [], Icons, Snapshot, PlotSchema } = {}) {
     var register = Registry.register;
     var Plotly = { version, register };
@@ -42,11 +52,11 @@ export function createPlotly({ traces = [], components = [], Icons, Snapshot, Pl
     if(PlotSchema) Plotly.PlotSchema = PlotSchema;
 
     // Register API methods
-    var methodNames = Object.keys(plotApi);
-    for(var i = 0; i < methodNames.length; i++) {
-        var name = methodNames[i];
-        if(name.charAt(0) !== '_') Plotly[name] = plotApi[name];
-        register({ moduleType: 'apiMethod', name: name, fn: plotApi[name] });
+    for(var i = 0; i < apiMethodNames.length; i++) {
+        var name = apiMethodNames[i];
+        if(!main[name]) continue;
+        if(name.charAt(0) !== '_') Plotly[name] = main[name];
+        register({ moduleType: 'apiMethod', name: name, fn: main[name] });
     }
 
     // Register essential components (always needed)

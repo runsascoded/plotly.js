@@ -1,16 +1,63 @@
-import { EventEmitter } from 'events';
+// Minimal EventEmitter (replaces Node.js 'events' package, ~15 KB)
+function MiniEmitter() {
+    this._events = {};
+}
+MiniEmitter.prototype.on = function(event, fn) {
+    var handlers = this._events[event];
+    if(!handlers) this._events[event] = fn;
+    else if(typeof handlers === 'function') this._events[event] = [handlers, fn];
+    else handlers.push(fn);
+    return this;
+};
+MiniEmitter.prototype.once = function(event, fn) {
+    var self = this;
+    function wrapper() {
+        self.removeListener(event, wrapper);
+        fn.apply(this, arguments);
+    }
+    wrapper.listener = fn;
+    return this.on(event, wrapper);
+};
+MiniEmitter.prototype.removeListener = function(event, fn) {
+    var handlers = this._events[event];
+    if(!handlers) return this;
+    if(typeof handlers === 'function') {
+        if(handlers === fn || handlers.listener === fn) delete this._events[event];
+    } else {
+        for(var i = handlers.length - 1; i >= 0; i--) {
+            if(handlers[i] === fn || handlers[i].listener === fn) {
+                handlers.splice(i, 1);
+                break;
+            }
+        }
+        if(handlers.length === 0) delete this._events[event];
+        else if(handlers.length === 1) this._events[event] = handlers[0];
+    }
+    return this;
+};
+MiniEmitter.prototype.removeAllListeners = function(event) {
+    if(event) delete this._events[event];
+    else this._events = {};
+    return this;
+};
+MiniEmitter.prototype.emit = function(event, data) {
+    var handlers = this._events[event];
+    if(!handlers) return false;
+    if(typeof handlers === 'function') handlers.call(this, data);
+    else {
+        var arr = handlers.slice();
+        for(var i = 0; i < arr.length; i++) arr[i].call(this, data);
+    }
+    return true;
+};
 
 var Events = {
 
     init: function(plotObj) {
-        /*
-         * If we have already instantiated an emitter for this plot
-         * return early.
-         */
-        if(plotObj._ev instanceof EventEmitter) return plotObj;
+        if(plotObj._ev instanceof MiniEmitter) return plotObj;
 
-        var ev = new EventEmitter();
-        var internalEv = new EventEmitter();
+        var ev = new MiniEmitter();
+        var internalEv = new MiniEmitter();
 
         /*
          * Assign to plot._ev while we still live in a land
