@@ -9,7 +9,9 @@ Provide a customized plotly.js for use across several projects (NJ crashes, PATH
 ## Current fork changes (vs upstream v3.3.1)
 
 - **ESM conversion**: All 971 source files converted from CJS to ES modules. `"type": "module"` in package.json. Enables tree-shaking by bundlers.
-- **d3 v7 migration**: Replaced `@plotly/d3` (vendored d3 v3, 229 KB CJS blob) with modern d3 v7 ESM packages. 160 KB / 8% bundle size reduction. `src/lib/d3-compat.js` polyfills v3 patterns (enter/merge, `.style({})`, `.select()` data propagation).
+- **d3 v7 migration**: Replaced `@plotly/d3` (vendored d3 v3, 229 KB CJS blob) with modern d3 v7 ESM packages. `src/lib/d3-compat.js` polyfills v3 patterns (enter/merge, `.style({})`, `.select()` data propagation).
+- **Tree-shakeable factory**: `createPlotly()` in `lib/factory.js` — consumers import only traces/components they need. Scatter+bar+legend: 741 KB min (-32% vs upstream basic 1,089 KB).
+- **Dep inlining**: `gl-mat4` → inline 4x4 ops, Node.js `events` → MiniEmitter, shapes decoupled from core
 - **z-order fix**: Preserve z-indexed subplots during `relayout` for correct pan/zoom
 - **Touch fix**: Prevent duplicate `plotly_click` and scroll-triggered clicks
 - **Flush legend toggle rects**: Expand legend item hit areas so they tile flush (no hover gaps)
