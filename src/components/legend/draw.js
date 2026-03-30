@@ -99,7 +99,7 @@ function drawOne(gd, opts) {
     if(!inHover) {
         var calcdata = (gd.calcdata || []).slice();
 
-        var shapes = fullLayout.shapes;
+        var shapes = fullLayout.shapes || [];
         for(var i = 0; i < shapes.length; i++) {
             var shape = shapes[i];
             if(!shape.showlegend) continue;

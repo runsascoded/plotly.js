@@ -14582,25 +14582,6 @@ var Plotly = (() => {
   };
   var axis_ids_default = { id2name, name2id, cleanId, list, listIds, getFromId, getFromTrace, idSort, ref2id, isLinked };
 
-  // src/components/shapes/handle_outline.js
-  function clearOutlineControllers(gd) {
-    var zoomLayer = gd._fullLayout._zoomlayer;
-    if (zoomLayer) {
-      zoomLayer.selectAll(".outline-controllers").remove();
-    }
-  }
-  function clearOutline(gd) {
-    var zoomLayer = gd._fullLayout._zoomlayer;
-    if (zoomLayer) {
-      zoomLayer.selectAll(".select-outline").remove();
-    }
-    gd._fullLayout._outlining = false;
-  }
-  var handle_outline_default = {
-    clearOutlineControllers,
-    clearOutline
-  };
-
   // src/traces/scatter/layout_attributes.js
   var layout_attributes_default3 = {
     scattermode: {
@@ -14941,7 +14922,6 @@ var Plotly = (() => {
 
   // src/plots/plots.js
   var { BADNUM: BADNUM5 } = numerical_default;
-  var { clearOutline: clearOutline2 } = handle_outline_default;
   var relinkPrivateKeys2 = lib_default.relinkPrivateKeys;
   var _ = lib_default._;
   var plots = {};
@@ -15205,10 +15185,8 @@ var Plotly = (() => {
       newFullLayout._shouldCreateBgLayer = true;
     }
     if (oldFullLayout._zoomlayer && !gd._dragging) {
-      clearOutline2({
-        // mock old gd
-        _fullLayout: oldFullLayout
-      });
+      oldFullLayout._zoomlayer.selectAll(".select-outline").remove();
+      oldFullLayout._outlining = false;
     }
     fillMetaTextHelpers(newFullData, newFullLayout);
     relinkPrivateKeys2(newFullLayout, oldFullLayout);
@@ -29570,7 +29548,7 @@ var Plotly = (() => {
     var legendData;
     if (!inHover) {
       var calcdata = (gd.calcdata || []).slice();
-      var shapes = fullLayout.shapes;
+      var shapes = fullLayout.shapes || [];
       for (var i = 0; i < shapes.length; i++) {
         var shape = shapes[i];
         if (!shape.showlegend) continue;
@@ -32407,1920 +32385,7 @@ var Plotly = (() => {
     }
   };
 
-  // src/components/shapes/draw_newshape/helpers.js
-  var import_parse_svg_path2 = __toESM(require_parse_svg_path(), 1);
-
-  // src/components/shapes/draw_newshape/constants.js
-  var CIRCLE_SIDES = 32;
-  var constants_default4 = {
-    CIRCLE_SIDES,
-    i000: 0,
-    i090: CIRCLE_SIDES / 4,
-    i180: CIRCLE_SIDES / 2,
-    i270: CIRCLE_SIDES / 4 * 3,
-    cos45: Math.cos(Math.PI / 4),
-    sin45: Math.sin(Math.PI / 4),
-    SQRT2: Math.sqrt(2)
-  };
-
-  // src/components/selections/helpers.js
-  var { strTranslate: strTranslate7 } = lib_default;
-  function p2r(ax, v) {
-    switch (ax.type) {
-      case "log":
-        return ax.p2d(v);
-      case "date":
-        return ax.p2r(v, 0, ax.calendar);
-      default:
-        return ax.p2r(v);
-    }
-  }
-  function r2p(ax, v) {
-    switch (ax.type) {
-      case "log":
-        return ax.d2p(v);
-      case "date":
-        return ax.r2p(v, 0, ax.calendar);
-      default:
-        return ax.r2p(v);
-    }
-  }
-  function axValue(ax) {
-    var index = ax._id.charAt(0) === "y" ? 1 : 0;
-    return function(v) {
-      return p2r(ax, v[index]);
-    };
-  }
-  function getTransform(plotinfo) {
-    return strTranslate7(
-      plotinfo.xaxis._offset,
-      plotinfo.yaxis._offset
-    );
-  }
-  var helpers_default6 = {
-    p2r,
-    r2p,
-    axValue,
-    getTransform
-  };
-
-  // src/components/shapes/draw_newshape/helpers.js
-  var CIRCLE_SIDES2 = constants_default4.CIRCLE_SIDES;
-  var SQRT2 = constants_default4.SQRT2;
-  var p2r2 = helpers_default6.p2r;
-  var r2p2 = helpers_default6.r2p;
-  var iC = [0, 3, 4, 5, 6, 1, 2];
-  var iQS = [0, 3, 4, 1, 2];
-  var writePaths = function(polygons) {
-    var nI = polygons.length;
-    if (!nI) return "M0,0Z";
-    var str = "";
-    for (var i = 0; i < nI; i++) {
-      var nJ = polygons[i].length;
-      for (var j = 0; j < nJ; j++) {
-        var w = polygons[i][j][0];
-        if (w === "Z") {
-          str += "Z";
-        } else {
-          var nK = polygons[i][j].length;
-          for (var k = 0; k < nK; k++) {
-            var realK = k;
-            if (w === "Q" || w === "S") {
-              realK = iQS[k];
-            } else if (w === "C") {
-              realK = iC[k];
-            }
-            str += polygons[i][j][realK];
-            if (k > 0 && k < nK - 1) {
-              str += ",";
-            }
-          }
-        }
-      }
-    }
-    return str;
-  };
-  var readPaths = function(str, gd, plotinfo, isActiveShape) {
-    var cmd = (0, import_parse_svg_path2.default)(str);
-    var polys = [];
-    var n = -1;
-    var newPoly = function() {
-      n++;
-      polys[n] = [];
-    };
-    var k;
-    var x = 0;
-    var y = 0;
-    var initX;
-    var initY;
-    var recStart = function() {
-      initX = x;
-      initY = y;
-    };
-    recStart();
-    for (var i = 0; i < cmd.length; i++) {
-      var newPos = [];
-      var x1, x2, y1, y2;
-      var c = cmd[i][0];
-      var w = c;
-      switch (c) {
-        case "M":
-          newPoly();
-          x = +cmd[i][1];
-          y = +cmd[i][2];
-          newPos.push([w, x, y]);
-          recStart();
-          break;
-        case "Q":
-        case "S":
-          x1 = +cmd[i][1];
-          y1 = +cmd[i][2];
-          x = +cmd[i][3];
-          y = +cmd[i][4];
-          newPos.push([w, x, y, x1, y1]);
-          break;
-        case "C":
-          x1 = +cmd[i][1];
-          y1 = +cmd[i][2];
-          x2 = +cmd[i][3];
-          y2 = +cmd[i][4];
-          x = +cmd[i][5];
-          y = +cmd[i][6];
-          newPos.push([w, x, y, x1, y1, x2, y2]);
-          break;
-        case "T":
-        case "L":
-          x = +cmd[i][1];
-          y = +cmd[i][2];
-          newPos.push([w, x, y]);
-          break;
-        case "H":
-          w = "L";
-          x = +cmd[i][1];
-          newPos.push([w, x, y]);
-          break;
-        case "V":
-          w = "L";
-          y = +cmd[i][1];
-          newPos.push([w, x, y]);
-          break;
-        case "A":
-          w = "L";
-          var rx = +cmd[i][1];
-          var ry = +cmd[i][2];
-          if (!+cmd[i][4]) {
-            rx = -rx;
-            ry = -ry;
-          }
-          var cenX = x - rx;
-          var cenY = y;
-          for (k = 1; k <= CIRCLE_SIDES2 / 2; k++) {
-            var t = 2 * Math.PI * k / CIRCLE_SIDES2;
-            newPos.push([
-              w,
-              cenX + rx * Math.cos(t),
-              cenY + ry * Math.sin(t)
-            ]);
-          }
-          break;
-        case "Z":
-          if (x !== initX || y !== initY) {
-            x = initX;
-            y = initY;
-            newPos.push([w, x, y]);
-          }
-          break;
-      }
-      var domain = (plotinfo || {}).domain;
-      var size = gd._fullLayout._size;
-      var xPixelSized = plotinfo && plotinfo.xsizemode === "pixel";
-      var yPixelSized = plotinfo && plotinfo.ysizemode === "pixel";
-      var noOffset = isActiveShape === false;
-      for (var j = 0; j < newPos.length; j++) {
-        for (k = 0; k + 2 < 7; k += 2) {
-          var _x = newPos[j][k + 1];
-          var _y = newPos[j][k + 2];
-          if (_x === void 0 || _y === void 0) continue;
-          x = _x;
-          y = _y;
-          if (plotinfo) {
-            if (plotinfo.xaxis && plotinfo.xaxis.p2r) {
-              if (noOffset) _x -= plotinfo.xaxis._offset;
-              if (xPixelSized) {
-                _x = r2p2(plotinfo.xaxis, plotinfo.xanchor) + _x;
-              } else {
-                _x = p2r2(plotinfo.xaxis, _x);
-              }
-            } else {
-              if (noOffset) _x -= size.l;
-              if (domain) _x = domain.x[0] + _x / size.w;
-              else _x = _x / size.w;
-            }
-            if (plotinfo.yaxis && plotinfo.yaxis.p2r) {
-              if (noOffset) _y -= plotinfo.yaxis._offset;
-              if (yPixelSized) {
-                _y = r2p2(plotinfo.yaxis, plotinfo.yanchor) - _y;
-              } else {
-                _y = p2r2(plotinfo.yaxis, _y);
-              }
-            } else {
-              if (noOffset) _y -= size.t;
-              if (domain) _y = domain.y[1] - _y / size.h;
-              else _y = 1 - _y / size.h;
-            }
-          }
-          newPos[j][k + 1] = _x;
-          newPos[j][k + 2] = _y;
-        }
-        polys[n].push(
-          newPos[j].slice()
-        );
-      }
-    }
-    return polys;
-  };
-  function almostEq(a, b) {
-    return Math.abs(a - b) <= 1e-6;
-  }
-  function dist(a, b) {
-    var dx = b[1] - a[1];
-    var dy = b[2] - a[2];
-    return Math.sqrt(
-      dx * dx + dy * dy
-    );
-  }
-  var pointsOnRectangle = function(cell) {
-    var len2 = cell.length;
-    if (len2 !== 5) return false;
-    for (var j = 1; j < 3; j++) {
-      var e01 = cell[0][j] - cell[1][j];
-      var e32 = cell[3][j] - cell[2][j];
-      if (!almostEq(e01, e32)) return false;
-      var e03 = cell[0][j] - cell[3][j];
-      var e12 = cell[1][j] - cell[2][j];
-      if (!almostEq(e03, e12)) return false;
-    }
-    if (!almostEq(cell[0][1], cell[1][1]) && !almostEq(cell[0][1], cell[3][1])) return false;
-    return !!(dist(cell[0], cell[1]) * dist(cell[0], cell[3]));
-  };
-  var pointsOnEllipse = function(cell) {
-    var len2 = cell.length;
-    if (len2 !== CIRCLE_SIDES2 + 1) return false;
-    len2 = CIRCLE_SIDES2;
-    for (var i = 0; i < len2; i++) {
-      var k = (len2 * 2 - i) % len2;
-      var k2 = (len2 / 2 + k) % len2;
-      var i2 = (len2 / 2 + i) % len2;
-      if (!almostEq(
-        dist(cell[i], cell[i2]),
-        dist(cell[k], cell[k2])
-      )) return false;
-    }
-    return true;
-  };
-  var handleEllipse = function(isEllipse, start2, end) {
-    if (!isEllipse) return [start2, end];
-    var pos = ellipseOver({
-      x0: start2[0],
-      y0: start2[1],
-      x1: end[0],
-      y1: end[1]
-    });
-    var cx = (pos.x1 + pos.x0) / 2;
-    var cy = (pos.y1 + pos.y0) / 2;
-    var rx = (pos.x1 - pos.x0) / 2;
-    var ry = (pos.y1 - pos.y0) / 2;
-    if (!rx) rx = ry = ry / SQRT2;
-    if (!ry) ry = rx = rx / SQRT2;
-    var cell = [];
-    for (var i = 0; i < CIRCLE_SIDES2; i++) {
-      var t = i * 2 * Math.PI / CIRCLE_SIDES2;
-      cell.push([
-        cx + rx * Math.cos(t),
-        cy + ry * Math.sin(t)
-      ]);
-    }
-    return cell;
-  };
-  var ellipseOver = function(pos) {
-    var x0 = pos.x0;
-    var y0 = pos.y0;
-    var x1 = pos.x1;
-    var y1 = pos.y1;
-    var dx = x1 - x0;
-    var dy = y1 - y0;
-    x0 -= dx;
-    y0 -= dy;
-    var cx = (x0 + x1) / 2;
-    var cy = (y0 + y1) / 2;
-    var scale = SQRT2;
-    dx *= scale;
-    dy *= scale;
-    return {
-      x0: cx - dx,
-      y0: cy - dy,
-      x1: cx + dx,
-      y1: cy + dy
-    };
-  };
-  var fixDatesForPaths = function(polygons, xaxis, yaxis) {
-    var xIsDate = xaxis.type === "date";
-    var yIsDate = yaxis.type === "date";
-    if (!xIsDate && !yIsDate) return polygons;
-    for (var i = 0; i < polygons.length; i++) {
-      for (var j = 0; j < polygons[i].length; j++) {
-        for (var k = 0; k + 2 < polygons[i][j].length; k += 2) {
-          if (xIsDate) polygons[i][j][k + 1] = polygons[i][j][k + 1].replace(" ", "_");
-          if (yIsDate) polygons[i][j][k + 2] = polygons[i][j][k + 2].replace(" ", "_");
-        }
-      }
-    }
-    return polygons;
-  };
-  var helpers_default7 = { writePaths, readPaths, pointsOnRectangle, pointsOnEllipse, handleEllipse, ellipseOver, fixDatesForPaths };
-
-  // src/components/shapes/draw_newshape/newshapes.js
-  var drawMode2 = helpers_default5.drawMode;
-  var openMode2 = helpers_default5.openMode;
-  var i000 = constants_default4.i000;
-  var i090 = constants_default4.i090;
-  var i180 = constants_default4.i180;
-  var i270 = constants_default4.i270;
-  var cos45 = constants_default4.cos45;
-  var sin45 = constants_default4.sin45;
-  var p2r3 = helpers_default6.p2r;
-  var r2p3 = helpers_default6.r2p;
-  var clearOutline3 = handle_outline_default.clearOutline;
-  var readPaths2 = helpers_default7.readPaths;
-  var writePaths2 = helpers_default7.writePaths;
-  var ellipseOver2 = helpers_default7.ellipseOver;
-  var fixDatesForPaths2 = helpers_default7.fixDatesForPaths;
-  function newShapes(outlines, dragOptions) {
-    if (!outlines.length) return;
-    var e = outlines[0][0];
-    if (!e) return;
-    var gd = dragOptions.gd;
-    var isActiveShape = dragOptions.isActiveShape;
-    var dragmode = dragOptions.dragmode;
-    var shapes = (gd.layout || {}).shapes || [];
-    if (!drawMode2(dragmode) && isActiveShape !== void 0) {
-      var id2 = gd._fullLayout._activeShapeIndex;
-      if (id2 < shapes.length) {
-        switch (gd._fullLayout.shapes[id2].type) {
-          case "rect":
-            dragmode = "drawrect";
-            break;
-          case "circle":
-            dragmode = "drawcircle";
-            break;
-          case "line":
-            dragmode = "drawline";
-            break;
-          case "path":
-            var path = shapes[id2].path || "";
-            if (path[path.length - 1] === "Z") {
-              dragmode = "drawclosedpath";
-            } else {
-              dragmode = "drawopenpath";
-            }
-            break;
-        }
-      }
-    }
-    var newShape = createShapeObj(outlines, dragOptions, dragmode);
-    clearOutline3(gd);
-    var editHelpers = dragOptions.editHelpers;
-    var modifyItem = (editHelpers || {}).modifyItem;
-    var allShapes = [];
-    for (var q = 0; q < shapes.length; q++) {
-      var beforeEdit = gd._fullLayout.shapes[q];
-      allShapes[q] = beforeEdit._input;
-      if (isActiveShape !== void 0 && q === gd._fullLayout._activeShapeIndex) {
-        var afterEdit = newShape;
-        switch (beforeEdit.type) {
-          case "line":
-          case "rect":
-          case "circle":
-            var xaxis = axis_ids_default.getFromId(gd, beforeEdit.xref);
-            if (beforeEdit.xref.charAt(0) === "x" && xaxis.type.includes("category")) {
-              modifyItem("x0", afterEdit.x0 - (beforeEdit.x0shift || 0));
-              modifyItem("x1", afterEdit.x1 - (beforeEdit.x1shift || 0));
-            } else {
-              modifyItem("x0", afterEdit.x0);
-              modifyItem("x1", afterEdit.x1);
-            }
-            var yaxis = axis_ids_default.getFromId(gd, beforeEdit.yref);
-            if (beforeEdit.yref.charAt(0) === "y" && yaxis.type.includes("category")) {
-              modifyItem("y0", afterEdit.y0 - (beforeEdit.y0shift || 0));
-              modifyItem("y1", afterEdit.y1 - (beforeEdit.y1shift || 0));
-            } else {
-              modifyItem("y0", afterEdit.y0);
-              modifyItem("y1", afterEdit.y1);
-            }
-            break;
-          case "path":
-            modifyItem("path", afterEdit.path);
-            break;
-        }
-      }
-    }
-    if (isActiveShape === void 0) {
-      allShapes.push(newShape);
-      return allShapes;
-    }
-    return editHelpers ? editHelpers.getUpdateObj() : {};
-  }
-  function createShapeObj(outlines, dragOptions, dragmode) {
-    var e = outlines[0][0];
-    var gd = dragOptions.gd;
-    var d = e.getAttribute("d");
-    var newStyle = gd._fullLayout.newshape;
-    var plotinfo = dragOptions.plotinfo;
-    var isActiveShape = dragOptions.isActiveShape;
-    var xaxis = plotinfo.xaxis;
-    var yaxis = plotinfo.yaxis;
-    var xPaper = !!plotinfo.domain || !plotinfo.xaxis;
-    var yPaper = !!plotinfo.domain || !plotinfo.yaxis;
-    var isOpenMode = openMode2(dragmode);
-    var polygons = readPaths2(d, gd, plotinfo, isActiveShape);
-    var newShape = {
-      editable: true,
-      visible: newStyle.visible,
-      name: newStyle.name,
-      showlegend: newStyle.showlegend,
-      legend: newStyle.legend,
-      legendwidth: newStyle.legendwidth,
-      legendgroup: newStyle.legendgroup,
-      legendgrouptitle: {
-        text: newStyle.legendgrouptitle.text,
-        font: newStyle.legendgrouptitle.font
-      },
-      legendrank: newStyle.legendrank,
-      label: newStyle.label,
-      xref: xPaper ? "paper" : xaxis._id,
-      yref: yPaper ? "paper" : yaxis._id,
-      layer: newStyle.layer,
-      opacity: newStyle.opacity,
-      line: {
-        color: newStyle.line.color,
-        width: newStyle.line.width,
-        dash: newStyle.line.dash
-      }
-    };
-    if (!isOpenMode) {
-      newShape.fillcolor = newStyle.fillcolor;
-      newShape.fillrule = newStyle.fillrule;
-    }
-    var cell;
-    if (polygons.length === 1) cell = polygons[0];
-    if (cell && cell.length === 5 && // ensure we only have 4 corners for a rect
-    dragmode === "drawrect") {
-      newShape.type = "rect";
-      newShape.x0 = cell[0][1];
-      newShape.y0 = cell[0][2];
-      newShape.x1 = cell[2][1];
-      newShape.y1 = cell[2][2];
-    } else if (cell && dragmode === "drawline") {
-      newShape.type = "line";
-      newShape.x0 = cell[0][1];
-      newShape.y0 = cell[0][2];
-      newShape.x1 = cell[1][1];
-      newShape.y1 = cell[1][2];
-    } else if (cell && dragmode === "drawcircle") {
-      newShape.type = "circle";
-      var xA = cell[i000][1];
-      var xB = cell[i090][1];
-      var xC = cell[i180][1];
-      var xD = cell[i270][1];
-      var yA = cell[i000][2];
-      var yB = cell[i090][2];
-      var yC = cell[i180][2];
-      var yD = cell[i270][2];
-      var xDateOrLog = plotinfo.xaxis && (plotinfo.xaxis.type === "date" || plotinfo.xaxis.type === "log");
-      var yDateOrLog = plotinfo.yaxis && (plotinfo.yaxis.type === "date" || plotinfo.yaxis.type === "log");
-      if (xDateOrLog) {
-        xA = r2p3(plotinfo.xaxis, xA);
-        xB = r2p3(plotinfo.xaxis, xB);
-        xC = r2p3(plotinfo.xaxis, xC);
-        xD = r2p3(plotinfo.xaxis, xD);
-      }
-      if (yDateOrLog) {
-        yA = r2p3(plotinfo.yaxis, yA);
-        yB = r2p3(plotinfo.yaxis, yB);
-        yC = r2p3(plotinfo.yaxis, yC);
-        yD = r2p3(plotinfo.yaxis, yD);
-      }
-      var x0 = (xB + xD) / 2;
-      var y0 = (yA + yC) / 2;
-      var rx = (xD - xB + xC - xA) / 2;
-      var ry = (yD - yB + yC - yA) / 2;
-      var pos = ellipseOver2({
-        x0,
-        y0,
-        x1: x0 + rx * cos45,
-        y1: y0 + ry * sin45
-      });
-      if (xDateOrLog) {
-        pos.x0 = p2r3(plotinfo.xaxis, pos.x0);
-        pos.x1 = p2r3(plotinfo.xaxis, pos.x1);
-      }
-      if (yDateOrLog) {
-        pos.y0 = p2r3(plotinfo.yaxis, pos.y0);
-        pos.y1 = p2r3(plotinfo.yaxis, pos.y1);
-      }
-      newShape.x0 = pos.x0;
-      newShape.y0 = pos.y0;
-      newShape.x1 = pos.x1;
-      newShape.y1 = pos.y1;
-    } else {
-      newShape.type = "path";
-      if (xaxis && yaxis) fixDatesForPaths2(polygons, xaxis, yaxis);
-      newShape.path = writePaths2(polygons);
-      cell = null;
-    }
-    return newShape;
-  }
-  var newshapes_default = {
-    newShapes,
-    createShapeObj
-  };
-
-  // src/components/selections/draw_newselection/newselections.js
-  var selectMode2 = helpers_default5.selectMode;
-  var clearOutline4 = handle_outline_default.clearOutline;
-  var readPaths3 = helpers_default7.readPaths;
-  var writePaths3 = helpers_default7.writePaths;
-  var fixDatesForPaths3 = helpers_default7.fixDatesForPaths;
-  function newSelections(outlines, dragOptions) {
-    if (!outlines.length) return;
-    var e = outlines[0][0];
-    if (!e) return;
-    var d = e.getAttribute("d");
-    var gd = dragOptions.gd;
-    var newStyle = gd._fullLayout.newselection;
-    var plotinfo = dragOptions.plotinfo;
-    var xaxis = plotinfo.xaxis;
-    var yaxis = plotinfo.yaxis;
-    var isActiveSelection = dragOptions.isActiveSelection;
-    var dragmode = dragOptions.dragmode;
-    var selections = (gd.layout || {}).selections || [];
-    if (!selectMode2(dragmode) && isActiveSelection !== void 0) {
-      var id2 = gd._fullLayout._activeSelectionIndex;
-      if (id2 < selections.length) {
-        switch (gd._fullLayout.selections[id2].type) {
-          case "rect":
-            dragmode = "select";
-            break;
-          case "path":
-            dragmode = "lasso";
-            break;
-        }
-      }
-    }
-    var polygons = readPaths3(d, gd, plotinfo, isActiveSelection);
-    var newSelection = {
-      xref: xaxis._id,
-      yref: yaxis._id,
-      opacity: newStyle.opacity,
-      line: {
-        color: newStyle.line.color,
-        width: newStyle.line.width,
-        dash: newStyle.line.dash
-      }
-    };
-    var cell;
-    if (polygons.length === 1) cell = polygons[0];
-    if (cell && cell.length === 5 && // ensure we only have 4 corners for a rect
-    dragmode === "select") {
-      newSelection.type = "rect";
-      newSelection.x0 = cell[0][1];
-      newSelection.y0 = cell[0][2];
-      newSelection.x1 = cell[2][1];
-      newSelection.y1 = cell[2][2];
-    } else {
-      newSelection.type = "path";
-      if (xaxis && yaxis) fixDatesForPaths3(polygons, xaxis, yaxis);
-      newSelection.path = writePaths3(polygons);
-      cell = null;
-    }
-    clearOutline4(gd);
-    var editHelpers = dragOptions.editHelpers;
-    var modifyItem = (editHelpers || {}).modifyItem;
-    var allSelections = [];
-    for (var q = 0; q < selections.length; q++) {
-      var beforeEdit = gd._fullLayout.selections[q];
-      if (!beforeEdit) {
-        allSelections[q] = beforeEdit;
-        continue;
-      }
-      allSelections[q] = beforeEdit._input;
-      if (isActiveSelection !== void 0 && q === gd._fullLayout._activeSelectionIndex) {
-        var afterEdit = newSelection;
-        switch (beforeEdit.type) {
-          case "rect":
-            modifyItem("x0", afterEdit.x0);
-            modifyItem("x1", afterEdit.x1);
-            modifyItem("y0", afterEdit.y0);
-            modifyItem("y1", afterEdit.y1);
-            break;
-          case "path":
-            modifyItem("path", afterEdit.path);
-            break;
-        }
-      }
-    }
-    if (isActiveSelection === void 0) {
-      allSelections.push(newSelection);
-      return allSelections;
-    }
-    return editHelpers ? editHelpers.getUpdateObj() : {};
-  }
-
-  // src/components/shapes/constants.js
-  var constants_default5 = {
-    segmentRE: /[MLHVQCTSZ][^MLHVQCTSZ]*/g,
-    paramRE: /[^\s,]+/g,
-    // which numbers in each path segment are x (or y) values
-    // drawn is which param is a drawn point, as opposed to a
-    // control point (which doesn't count toward autorange.
-    // TODO: this means curved paths could extend beyond the
-    // autorange bounds. This is a bit tricky to get right
-    // unless we revert to bounding boxes, but perhaps there's
-    // a calculation we could do...)
-    paramIsX: {
-      M: { 0: true, drawn: 0 },
-      L: { 0: true, drawn: 0 },
-      H: { 0: true, drawn: 0 },
-      V: {},
-      Q: { 0: true, 2: true, drawn: 2 },
-      C: { 0: true, 2: true, 4: true, drawn: 4 },
-      T: { 0: true, drawn: 0 },
-      S: { 0: true, 2: true, drawn: 2 },
-      // A: {0: true, 5: true},
-      Z: {}
-    },
-    paramIsY: {
-      M: { 1: true, drawn: 1 },
-      L: { 1: true, drawn: 1 },
-      H: {},
-      V: { 0: true, drawn: 0 },
-      Q: { 1: true, 3: true, drawn: 3 },
-      C: { 1: true, 3: true, 5: true, drawn: 5 },
-      T: { 1: true, drawn: 1 },
-      S: { 1: true, 3: true, drawn: 5 },
-      // A: {1: true, 6: true},
-      Z: {}
-    },
-    numParams: {
-      M: 2,
-      L: 2,
-      H: 1,
-      V: 1,
-      Q: 4,
-      C: 6,
-      T: 2,
-      S: 4,
-      // A: 7,
-      Z: 0
-    }
-  };
-
-  // src/components/shapes/helpers.js
-  var rangeToShapePosition = function(ax) {
-    return ax.type === "log" ? ax.r2d : function(v) {
-      return v;
-    };
-  };
-  var shapePositionToRange = function(ax) {
-    return ax.type === "log" ? ax.d2r : function(v) {
-      return v;
-    };
-  };
-  var decodeDate = function(convertToPx) {
-    return function(v) {
-      if (v.replace) v = v.replace("_", " ");
-      return convertToPx(v);
-    };
-  };
-  var encodeDate = function(convertToDate) {
-    return function(v) {
-      return convertToDate(v).replace(" ", "_");
-    };
-  };
-  var extractPathCoords = function(path, paramsToUse, isRaw) {
-    var extractedCoordinates = [];
-    var segments = path.match(constants_default5.segmentRE);
-    segments.forEach(function(segment) {
-      var relevantParamIdx = paramsToUse[segment.charAt(0)].drawn;
-      if (relevantParamIdx === void 0) return;
-      var params = segment.slice(1).match(constants_default5.paramRE);
-      if (!params || params.length < relevantParamIdx) return;
-      var str = params[relevantParamIdx];
-      var pos = isRaw ? str : lib_default.cleanNumber(str);
-      extractedCoordinates.push(pos);
-    });
-    return extractedCoordinates;
-  };
-  var getDataToPixel = function(gd, axis, shift, isVertical3, refType) {
-    var gs = gd._fullLayout._size;
-    var dataToPixel;
-    if (axis) {
-      if (refType === "domain") {
-        dataToPixel = function(v) {
-          return axis._length * (isVertical3 ? 1 - v : v) + axis._offset;
-        };
-      } else {
-        var d2r = shapePositionToRange(axis);
-        dataToPixel = function(v) {
-          var shiftPixels = getPixelShift(axis, shift);
-          return axis._offset + axis.r2p(d2r(v, true)) + shiftPixels;
-        };
-        if (axis.type === "date") dataToPixel = decodeDate(dataToPixel);
-      }
-    } else if (isVertical3) {
-      dataToPixel = function(v) {
-        return gs.t + gs.h * (1 - v);
-      };
-    } else {
-      dataToPixel = function(v) {
-        return gs.l + gs.w * v;
-      };
-    }
-    return dataToPixel;
-  };
-  var getPixelToData = function(gd, axis, isVertical3, opt) {
-    var gs = gd._fullLayout._size;
-    var pixelToData;
-    if (axis) {
-      if (opt === "domain") {
-        pixelToData = function(p) {
-          var q = (p - axis._offset) / axis._length;
-          return isVertical3 ? 1 - q : q;
-        };
-      } else {
-        var r2d = rangeToShapePosition(axis);
-        pixelToData = function(p) {
-          return r2d(axis.p2r(p - axis._offset));
-        };
-      }
-    } else if (isVertical3) {
-      pixelToData = function(p) {
-        return 1 - (p - gs.t) / gs.h;
-      };
-    } else {
-      pixelToData = function(p) {
-        return (p - gs.l) / gs.w;
-      };
-    }
-    return pixelToData;
-  };
-  var roundPositionForSharpStrokeRendering = function(pos, strokeWidth) {
-    var strokeWidthIsOdd = Math.round(strokeWidth % 2) === 1;
-    var posValAsInt = Math.round(pos);
-    return strokeWidthIsOdd ? posValAsInt + 0.5 : posValAsInt;
-  };
-  var makeShapesOptionsAndPlotinfo = function(gd, index) {
-    var options = gd._fullLayout.shapes[index] || {};
-    var plotinfo = gd._fullLayout._plots[options.xref + options.yref];
-    var hasPlotinfo = !!plotinfo;
-    if (hasPlotinfo) {
-      plotinfo._hadPlotinfo = true;
-    } else {
-      plotinfo = {};
-      if (options.xref && options.xref !== "paper") plotinfo.xaxis = gd._fullLayout[options.xref + "axis"];
-      if (options.yref && options.yref !== "paper") plotinfo.yaxis = gd._fullLayout[options.yref + "axis"];
-    }
-    plotinfo.xsizemode = options.xsizemode;
-    plotinfo.ysizemode = options.ysizemode;
-    plotinfo.xanchor = options.xanchor;
-    plotinfo.yanchor = options.yanchor;
-    return {
-      options,
-      plotinfo
-    };
-  };
-  var makeSelectionsOptionsAndPlotinfo = function(gd, index) {
-    var options = gd._fullLayout.selections[index] || {};
-    var plotinfo = gd._fullLayout._plots[options.xref + options.yref];
-    var hasPlotinfo = !!plotinfo;
-    if (hasPlotinfo) {
-      plotinfo._hadPlotinfo = true;
-    } else {
-      plotinfo = {};
-      if (options.xref) plotinfo.xaxis = gd._fullLayout[options.xref + "axis"];
-      if (options.yref) plotinfo.yaxis = gd._fullLayout[options.yref + "axis"];
-    }
-    return {
-      options,
-      plotinfo
-    };
-  };
-  var getPathString = function(gd, options) {
-    var type = options.type;
-    var xRefType = axes_default.getRefType(options.xref);
-    var yRefType = axes_default.getRefType(options.yref);
-    var xa = axes_default.getFromId(gd, options.xref);
-    var ya = axes_default.getFromId(gd, options.yref);
-    var gs = gd._fullLayout._size;
-    var x2r, x2p, y2r, y2p;
-    var xShiftStart = getPixelShift(xa, options.x0shift);
-    var xShiftEnd = getPixelShift(xa, options.x1shift);
-    var yShiftStart = getPixelShift(ya, options.y0shift);
-    var yShiftEnd = getPixelShift(ya, options.y1shift);
-    var x0, x1, y0, y1;
-    if (xa) {
-      if (xRefType === "domain") {
-        x2p = function(v) {
-          return xa._offset + xa._length * v;
-        };
-      } else {
-        x2r = shapePositionToRange(xa);
-        x2p = function(v) {
-          return xa._offset + xa.r2p(x2r(v, true));
-        };
-      }
-    } else {
-      x2p = function(v) {
-        return gs.l + gs.w * v;
-      };
-    }
-    if (ya) {
-      if (yRefType === "domain") {
-        y2p = function(v) {
-          return ya._offset + ya._length * (1 - v);
-        };
-      } else {
-        y2r = shapePositionToRange(ya);
-        y2p = function(v) {
-          return ya._offset + ya.r2p(y2r(v, true));
-        };
-      }
-    } else {
-      y2p = function(v) {
-        return gs.t + gs.h * (1 - v);
-      };
-    }
-    if (type === "path") {
-      if (xa && xa.type === "date") x2p = decodeDate(x2p);
-      if (ya && ya.type === "date") y2p = decodeDate(y2p);
-      return convertPath(options, x2p, y2p);
-    }
-    if (options.xsizemode === "pixel") {
-      var xAnchorPos = x2p(options.xanchor);
-      x0 = xAnchorPos + options.x0 + xShiftStart;
-      x1 = xAnchorPos + options.x1 + xShiftEnd;
-    } else {
-      x0 = x2p(options.x0) + xShiftStart;
-      x1 = x2p(options.x1) + xShiftEnd;
-    }
-    if (options.ysizemode === "pixel") {
-      var yAnchorPos = y2p(options.yanchor);
-      y0 = yAnchorPos - options.y0 + yShiftStart;
-      y1 = yAnchorPos - options.y1 + yShiftEnd;
-    } else {
-      y0 = y2p(options.y0) + yShiftStart;
-      y1 = y2p(options.y1) + yShiftEnd;
-    }
-    if (type === "line") return "M" + x0 + "," + y0 + "L" + x1 + "," + y1;
-    if (type === "rect") return "M" + x0 + "," + y0 + "H" + x1 + "V" + y1 + "H" + x0 + "Z";
-    var cx = (x0 + x1) / 2;
-    var cy = (y0 + y1) / 2;
-    var rx = Math.abs(cx - x0);
-    var ry = Math.abs(cy - y0);
-    var rArc = "A" + rx + "," + ry;
-    var rightPt = cx + rx + "," + cy;
-    var topPt = cx + "," + (cy - ry);
-    return "M" + rightPt + rArc + " 0 1,1 " + topPt + rArc + " 0 0,1 " + rightPt + "Z";
-  };
-  function convertPath(options, x2p, y2p) {
-    var pathIn = options.path;
-    var xSizemode = options.xsizemode;
-    var ySizemode = options.ysizemode;
-    var xAnchor = options.xanchor;
-    var yAnchor = options.yanchor;
-    return pathIn.replace(constants_default5.segmentRE, function(segment) {
-      var paramNumber = 0;
-      var segmentType = segment.charAt(0);
-      var xParams = constants_default5.paramIsX[segmentType];
-      var yParams = constants_default5.paramIsY[segmentType];
-      var nParams = constants_default5.numParams[segmentType];
-      var paramString = segment.slice(1).replace(constants_default5.paramRE, function(param) {
-        if (xParams[paramNumber]) {
-          if (xSizemode === "pixel") param = x2p(xAnchor) + Number(param);
-          else param = x2p(param);
-        } else if (yParams[paramNumber]) {
-          if (ySizemode === "pixel") param = y2p(yAnchor) - Number(param);
-          else param = y2p(param);
-        }
-        paramNumber++;
-        if (paramNumber > nParams) param = "X";
-        return param;
-      });
-      if (paramNumber > nParams) {
-        paramString = paramString.replace(/[\s,]*X.*/, "");
-        lib_default.log("Ignoring extra params in segment " + segment);
-      }
-      return segmentType + paramString;
-    });
-  }
-  function getPixelShift(axis, shift) {
-    shift = shift || 0;
-    var shiftPixels = 0;
-    if (shift && axis && (axis.type === "category" || axis.type === "multicategory")) {
-      shiftPixels = (axis.r2p(1) - axis.r2p(0)) * shift;
-    }
-    return shiftPixels;
-  }
-  var helpers_default8 = { rangeToShapePosition, shapePositionToRange, decodeDate, encodeDate, extractPathCoords, getDataToPixel, getPixelToData, roundPositionForSharpStrokeRendering, makeShapesOptionsAndPlotinfo, makeSelectionsOptionsAndPlotinfo, getPathString };
-
-  // src/components/shapes/display_labels.js
-  var { FROM_TL: FROM_TL2 } = alignment_default;
-  var getPathString2 = helpers_default8.getPathString;
-  function drawLabel(gd, index, options, shapeGroup) {
-    shapeGroup.selectAll(".shape-label").remove();
-    if (!(options.label.text || options.label.texttemplate)) return;
-    var text;
-    if (options.label.texttemplate) {
-      var templateValues = {};
-      if (options.type !== "path") {
-        var _xa = axes_default.getFromId(gd, options.xref);
-        var _ya = axes_default.getFromId(gd, options.yref);
-        for (var key in label_texttemplate_default) {
-          var val = label_texttemplate_default[key](options, _xa, _ya);
-          if (val !== void 0) templateValues[key] = val;
-        }
-      }
-      text = lib_default.texttemplateStringForShapes({
-        data: [templateValues],
-        fallback: options.label.texttemplatefallback,
-        locale: gd._fullLayout._d3locale,
-        template: options.label.texttemplate
-      });
-    } else {
-      text = options.label.text;
-    }
-    var labelGroupAttrs = {
-      "data-index": index
-    };
-    var font2 = options.label.font;
-    var labelTextAttrs = {
-      "data-notex": 1
-    };
-    var labelGroup = shapeGroup.append("g").attr(labelGroupAttrs).classed("shape-label", true);
-    var labelText = labelGroup.append("text").attr(labelTextAttrs).classed("shape-label-text", true).text(text);
-    var shapex0, shapex1, shapey0, shapey1;
-    if (options.path) {
-      var d = getPathString2(gd, options);
-      var polygons = readPaths(d, gd);
-      shapex0 = Infinity;
-      shapey0 = Infinity;
-      shapex1 = -Infinity;
-      shapey1 = -Infinity;
-      for (var i = 0; i < polygons.length; i++) {
-        for (var j = 0; j < polygons[i].length; j++) {
-          var p = polygons[i][j];
-          for (var k = 1; k < p.length; k += 2) {
-            var _x = p[k];
-            var _y = p[k + 1];
-            shapex0 = Math.min(shapex0, _x);
-            shapex1 = Math.max(shapex1, _x);
-            shapey0 = Math.min(shapey0, _y);
-            shapey1 = Math.max(shapey1, _y);
-          }
-        }
-      }
-    } else {
-      var xa = axes_default.getFromId(gd, options.xref);
-      var xShiftStart = options.x0shift;
-      var xShiftEnd = options.x1shift;
-      var xRefType = axes_default.getRefType(options.xref);
-      var ya = axes_default.getFromId(gd, options.yref);
-      var yShiftStart = options.y0shift;
-      var yShiftEnd = options.y1shift;
-      var yRefType = axes_default.getRefType(options.yref);
-      var x2p = function(v, shift) {
-        var dataToPixel = helpers_default8.getDataToPixel(gd, xa, shift, false, xRefType);
-        return dataToPixel(v);
-      };
-      var y2p = function(v, shift) {
-        var dataToPixel = helpers_default8.getDataToPixel(gd, ya, shift, true, yRefType);
-        return dataToPixel(v);
-      };
-      shapex0 = x2p(options.x0, xShiftStart);
-      shapex1 = x2p(options.x1, xShiftEnd);
-      shapey0 = y2p(options.y0, yShiftStart);
-      shapey1 = y2p(options.y1, yShiftEnd);
-    }
-    var textangle = options.label.textangle;
-    if (textangle === "auto") {
-      if (options.type === "line") {
-        textangle = calcTextAngle(shapex0, shapey0, shapex1, shapey1);
-      } else {
-        textangle = 0;
-      }
-    }
-    labelText.call(function(s) {
-      s.call(drawing_default.font, font2).attr({});
-      svg_text_utils_default.convertToTspans(s, gd);
-      return s;
-    });
-    var textBB = drawing_default.bBox(labelText.node());
-    var textPos = calcTextPosition(shapex0, shapey0, shapex1, shapey1, options, textangle, textBB);
-    var textx = textPos.textx;
-    var texty = textPos.texty;
-    var xanchor = textPos.xanchor;
-    labelText.attr({
-      "text-anchor": {
-        left: "start",
-        center: "middle",
-        right: "end"
-      }[xanchor],
-      y: texty,
-      x: textx,
-      transform: "rotate(" + textangle + "," + textx + "," + texty + ")"
-    }).call(svg_text_utils_default.positionText, textx, texty);
-  }
-  function calcTextAngle(shapex0, shapey0, shapex1, shapey1) {
-    var dy, dx;
-    dx = Math.abs(shapex1 - shapex0);
-    if (shapex1 >= shapex0) {
-      dy = shapey0 - shapey1;
-    } else {
-      dy = shapey1 - shapey0;
-    }
-    return -180 / Math.PI * Math.atan2(dy, dx);
-  }
-  function calcTextPosition(shapex0, shapey0, shapex1, shapey1, shapeOptions, actualTextAngle, textBB) {
-    var textPosition = shapeOptions.label.textposition;
-    var textAngle = shapeOptions.label.textangle;
-    var textPadding = shapeOptions.label.padding;
-    var shapeType = shapeOptions.type;
-    var textAngleRad = Math.PI / 180 * actualTextAngle;
-    var sinA = Math.sin(textAngleRad);
-    var cosA = Math.cos(textAngleRad);
-    var xanchor = shapeOptions.label.xanchor;
-    var yanchor = shapeOptions.label.yanchor;
-    var textx, texty, paddingX, paddingY;
-    if (shapeType === "line") {
-      if (textPosition === "start") {
-        textx = shapex0;
-        texty = shapey0;
-      } else if (textPosition === "end") {
-        textx = shapex1;
-        texty = shapey1;
-      } else {
-        textx = (shapex0 + shapex1) / 2;
-        texty = (shapey0 + shapey1) / 2;
-      }
-      if (xanchor === "auto") {
-        if (textPosition === "start") {
-          if (textAngle === "auto") {
-            if (shapex1 > shapex0) xanchor = "left";
-            else if (shapex1 < shapex0) xanchor = "right";
-            else xanchor = "center";
-          } else {
-            if (shapex1 > shapex0) xanchor = "right";
-            else if (shapex1 < shapex0) xanchor = "left";
-            else xanchor = "center";
-          }
-        } else if (textPosition === "end") {
-          if (textAngle === "auto") {
-            if (shapex1 > shapex0) xanchor = "right";
-            else if (shapex1 < shapex0) xanchor = "left";
-            else xanchor = "center";
-          } else {
-            if (shapex1 > shapex0) xanchor = "left";
-            else if (shapex1 < shapex0) xanchor = "right";
-            else xanchor = "center";
-          }
-        } else {
-          xanchor = "center";
-        }
-      }
-      var paddingConstantsX = { left: 1, center: 0, right: -1 };
-      var paddingConstantsY = { bottom: -1, middle: 0, top: 1 };
-      if (textAngle === "auto") {
-        var paddingDirection = paddingConstantsY[yanchor];
-        paddingX = -textPadding * sinA * paddingDirection;
-        paddingY = textPadding * cosA * paddingDirection;
-      } else {
-        var paddingDirectionX = paddingConstantsX[xanchor];
-        var paddingDirectionY = paddingConstantsY[yanchor];
-        paddingX = textPadding * paddingDirectionX;
-        paddingY = textPadding * paddingDirectionY;
-      }
-      textx = textx + paddingX;
-      texty = texty + paddingY;
-    } else {
-      paddingX = textPadding + 3;
-      if (textPosition.indexOf("right") !== -1) {
-        textx = Math.max(shapex0, shapex1) - paddingX;
-        if (xanchor === "auto") xanchor = "right";
-      } else if (textPosition.indexOf("left") !== -1) {
-        textx = Math.min(shapex0, shapex1) + paddingX;
-        if (xanchor === "auto") xanchor = "left";
-      } else {
-        textx = (shapex0 + shapex1) / 2;
-        if (xanchor === "auto") xanchor = "center";
-      }
-      if (textPosition.indexOf("top") !== -1) {
-        texty = Math.min(shapey0, shapey1);
-      } else if (textPosition.indexOf("bottom") !== -1) {
-        texty = Math.max(shapey0, shapey1);
-      } else {
-        texty = (shapey0 + shapey1) / 2;
-      }
-      paddingY = textPadding;
-      if (yanchor === "bottom") {
-        texty = texty - paddingY;
-      } else if (yanchor === "top") {
-        texty = texty + paddingY;
-      }
-    }
-    var shiftFraction = FROM_TL2[yanchor];
-    var baselineAdjust = shapeOptions.label.font.size;
-    var textHeight = textBB.height;
-    var xshift = (textHeight * shiftFraction - baselineAdjust) * sinA;
-    var yshift = -(textHeight * shiftFraction - baselineAdjust) * cosA;
-    return { textx: textx + xshift, texty: texty + yshift, xanchor };
-  }
-
-  // src/components/shapes/display_outlines.js
-  var { newShapes: newShapes2, createShapeObj: createShapeObj2 } = newshapes_default;
-  var strTranslate8 = lib_default.strTranslate;
-  var drawMode3 = helpers_default5.drawMode;
-  var selectMode3 = helpers_default5.selectMode;
-  var i0002 = constants_default4.i000;
-  var i0902 = constants_default4.i090;
-  var i1802 = constants_default4.i180;
-  var i2702 = constants_default4.i270;
-  var clearOutlineControllers2 = handle_outline_default.clearOutlineControllers;
-  var pointsOnRectangle2 = helpers_default7.pointsOnRectangle;
-  var pointsOnEllipse2 = helpers_default7.pointsOnEllipse;
-  var writePaths4 = helpers_default7.writePaths;
-  function displayOutlines(polygons, outlines, dragOptions, nCalls) {
-    if (!nCalls) nCalls = 0;
-    var gd = dragOptions.gd;
-    function redraw3() {
-      displayOutlines(polygons, outlines, dragOptions, nCalls++);
-      if (pointsOnEllipse2(polygons[0]) || dragOptions.hasText) {
-        update3({ redrawing: true });
-      }
-    }
-    function update3(opts) {
-      var updateObject = {};
-      if (dragOptions.isActiveShape !== void 0) {
-        dragOptions.isActiveShape = false;
-        updateObject = newShapes2(outlines, dragOptions);
-      }
-      if (dragOptions.isActiveSelection !== void 0) {
-        dragOptions.isActiveSelection = false;
-        updateObject = newSelections(outlines, dragOptions);
-        gd._fullLayout._reselect = true;
-      }
-      if (Object.keys(updateObject).length) {
-        registry_default.call((opts || {}).redrawing ? "relayout" : "_guiRelayout", gd, updateObject);
-      }
-    }
-    var fullLayout = gd._fullLayout;
-    var zoomLayer = fullLayout._zoomlayer;
-    var dragmode = dragOptions.dragmode;
-    var isDrawMode = drawMode3(dragmode);
-    var isSelectMode = selectMode3(dragmode);
-    if (isDrawMode || isSelectMode) {
-      gd._fullLayout._outlining = true;
-    }
-    clearOutlineControllers2(gd);
-    outlines.attr("d", writePaths4(polygons));
-    var vertexDragOptions;
-    var groupDragOptions;
-    var indexI;
-    var indexJ;
-    var copyPolygons;
-    if (!nCalls && (dragOptions.isActiveShape || dragOptions.isActiveSelection)) {
-      copyPolygons = recordPositions([], polygons);
-      var g = zoomLayer.append("g").attr("class", "outline-controllers");
-      addVertexControllers(g);
-      addGroupControllers();
-    }
-    if (isDrawMode && dragOptions.hasText) {
-      var shapeGroup = zoomLayer.select(".label-temp");
-      var shapeOptions = createShapeObj2(outlines, dragOptions, dragOptions.dragmode);
-      drawLabel(gd, "label-temp", shapeOptions, shapeGroup);
-    }
-    function startDragVertex(evt) {
-      indexI = +evt.srcElement.getAttribute("data-i");
-      indexJ = +evt.srcElement.getAttribute("data-j");
-      vertexDragOptions[indexI][indexJ].moveFn = moveVertexController;
-    }
-    function moveVertexController(dx, dy) {
-      if (!polygons.length) return;
-      var x0 = copyPolygons[indexI][indexJ][1];
-      var y0 = copyPolygons[indexI][indexJ][2];
-      var cell = polygons[indexI];
-      var len2 = cell.length;
-      if (pointsOnRectangle2(cell)) {
-        var _dx = dx;
-        var _dy = dy;
-        if (dragOptions.isActiveSelection) {
-          var nextPoint = getNextPoint(cell, indexJ);
-          if (nextPoint[1] === cell[indexJ][1]) {
-            _dy = 0;
-          } else {
-            _dx = 0;
-          }
-        }
-        for (var q = 0; q < len2; q++) {
-          if (q === indexJ) continue;
-          var pos = cell[q];
-          if (pos[1] === cell[indexJ][1]) {
-            pos[1] = x0 + _dx;
-          }
-          if (pos[2] === cell[indexJ][2]) {
-            pos[2] = y0 + _dy;
-          }
-        }
-        cell[indexJ][1] = x0 + _dx;
-        cell[indexJ][2] = y0 + _dy;
-        if (!pointsOnRectangle2(cell)) {
-          for (var j = 0; j < len2; j++) {
-            for (var k = 0; k < cell[j].length; k++) {
-              cell[j][k] = copyPolygons[indexI][j][k];
-            }
-          }
-        }
-      } else {
-        cell[indexJ][1] = x0 + dx;
-        cell[indexJ][2] = y0 + dy;
-      }
-      redraw3();
-    }
-    function endDragVertexController() {
-      update3();
-    }
-    function removeVertex() {
-      if (!polygons.length) return;
-      if (!polygons[indexI]) return;
-      if (!polygons[indexI].length) return;
-      var newPolygon = [];
-      for (var j = 0; j < polygons[indexI].length; j++) {
-        if (j !== indexJ) {
-          newPolygon.push(
-            polygons[indexI][j]
-          );
-        }
-      }
-      if (newPolygon.length > 1 && !(newPolygon.length === 2 && newPolygon[1][0] === "Z")) {
-        if (indexJ === 0) {
-          newPolygon[0][0] = "M";
-        }
-        polygons[indexI] = newPolygon;
-        redraw3();
-        update3();
-      }
-    }
-    function clickVertexController(numClicks, evt) {
-      if (numClicks === 2) {
-        indexI = +evt.srcElement.getAttribute("data-i");
-        indexJ = +evt.srcElement.getAttribute("data-j");
-        var cell = polygons[indexI];
-        if (!pointsOnRectangle2(cell) && !pointsOnEllipse2(cell)) {
-          removeVertex();
-        }
-      }
-    }
-    function addVertexControllers(g2) {
-      vertexDragOptions = [];
-      for (var i = 0; i < polygons.length; i++) {
-        var cell = polygons[i];
-        var onRect = pointsOnRectangle2(cell);
-        var onEllipse = !onRect && pointsOnEllipse2(cell);
-        vertexDragOptions[i] = [];
-        var len2 = cell.length;
-        for (var j = 0; j < len2; j++) {
-          if (cell[j][0] === "Z") continue;
-          if (onEllipse && j !== i0002 && j !== i0902 && j !== i1802 && j !== i2702) {
-            continue;
-          }
-          var rectSelection = onRect && dragOptions.isActiveSelection;
-          var nextPoint;
-          if (rectSelection) nextPoint = getNextPoint(cell, j);
-          var x = cell[j][1];
-          var y = cell[j][2];
-          var vertex = g2.append(rectSelection ? "rect" : "circle").attr("data-i", i).attr("data-j", j).style({
-            fill: color_default.background,
-            stroke: color_default.defaultLine,
-            "stroke-width": 1,
-            "shape-rendering": "crispEdges"
-          });
-          if (rectSelection) {
-            var dx = nextPoint[1] - x;
-            var dy = nextPoint[2] - y;
-            var width = dy ? 5 : Math.max(Math.min(25, Math.abs(dx) - 5), 5);
-            var height = dx ? 5 : Math.max(Math.min(25, Math.abs(dy) - 5), 5);
-            vertex.classed(dy ? "cursor-ew-resize" : "cursor-ns-resize", true).attr("width", width).attr("height", height).attr("x", x - width / 2).attr("y", y - height / 2).attr("transform", strTranslate8(dx / 2, dy / 2));
-          } else {
-            vertex.classed("cursor-grab", true).attr("r", 5).attr("cx", x).attr("cy", y);
-          }
-          vertexDragOptions[i][j] = {
-            element: vertex.node(),
-            gd,
-            prepFn: startDragVertex,
-            doneFn: endDragVertexController,
-            clickFn: clickVertexController
-          };
-          dragelement_default.init(vertexDragOptions[i][j]);
-        }
-      }
-    }
-    function moveGroup(dx, dy) {
-      if (!polygons.length) return;
-      for (var i = 0; i < polygons.length; i++) {
-        for (var j = 0; j < polygons[i].length; j++) {
-          for (var k = 0; k + 2 < polygons[i][j].length; k += 2) {
-            polygons[i][j][k + 1] = copyPolygons[i][j][k + 1] + dx;
-            polygons[i][j][k + 2] = copyPolygons[i][j][k + 2] + dy;
-          }
-        }
-      }
-    }
-    function moveGroupController(dx, dy) {
-      moveGroup(dx, dy);
-      redraw3();
-    }
-    function startDragGroupController(evt) {
-      indexI = +evt.srcElement.getAttribute("data-i");
-      if (!indexI) indexI = 0;
-      groupDragOptions[indexI].moveFn = moveGroupController;
-    }
-    function endDragGroupController() {
-      update3();
-    }
-    function clickGroupController(numClicks) {
-      if (numClicks === 2) {
-        eraseActiveSelection(gd);
-      }
-    }
-    function addGroupControllers() {
-      groupDragOptions = [];
-      if (!polygons.length) return;
-      var i = 0;
-      groupDragOptions[i] = {
-        element: outlines[0][0],
-        gd,
-        prepFn: startDragGroupController,
-        doneFn: endDragGroupController,
-        clickFn: clickGroupController
-      };
-      dragelement_default.init(groupDragOptions[i]);
-    }
-  }
-  function recordPositions(polygonsOut, polygonsIn) {
-    for (var i = 0; i < polygonsIn.length; i++) {
-      var cell = polygonsIn[i];
-      polygonsOut[i] = [];
-      for (var j = 0; j < cell.length; j++) {
-        polygonsOut[i][j] = [];
-        for (var k = 0; k < cell[j].length; k++) {
-          polygonsOut[i][j][k] = cell[j][k];
-        }
-      }
-    }
-    return polygonsOut;
-  }
-  function getNextPoint(cell, j) {
-    var x = cell[j][1];
-    var y = cell[j][2];
-    var len2 = cell.length;
-    var nextJ, nextX, nextY;
-    nextJ = (j + 1) % len2;
-    nextX = cell[nextJ][1];
-    nextY = cell[nextJ][2];
-    if (nextX === x && nextY === y) {
-      nextJ = (j + 2) % len2;
-      nextX = cell[nextJ][1];
-      nextY = cell[nextJ][2];
-    }
-    return [nextJ, nextX, nextY];
-  }
-  function eraseActiveSelection(gd) {
-    if (!selectMode3(gd._fullLayout.dragmode)) return;
-    clearOutlineControllers2(gd);
-    var id2 = gd._fullLayout._activeSelectionIndex;
-    var selections = (gd.layout || {}).selections || [];
-    if (id2 < selections.length) {
-      var list2 = [];
-      for (var q = 0; q < selections.length; q++) {
-        if (q !== id2) {
-          list2.push(selections[q]);
-        }
-      }
-      delete gd._fullLayout._activeSelectionIndex;
-      var erasedSelection = gd._fullLayout.selections[id2];
-      gd._fullLayout._deselect = {
-        xref: erasedSelection.xref,
-        yref: erasedSelection.yref
-      };
-      registry_default.call("_guiRelayout", gd, {
-        selections: list2
-      });
-    }
-  }
-
-  // src/components/shapes/draw.js
-  var { clearOutlineControllers: clearOutlineControllers3 } = handle_outline_default;
-  var getPathString3 = helpers_default8.getPathString;
-  var draw_default = {
-    draw: draw3,
-    drawOne: drawOne2,
-    eraseActiveShape,
-    drawLabel
-  };
-  function draw3(gd) {
-    var fullLayout = gd._fullLayout;
-    fullLayout._shapeUpperLayer.selectAll("path").remove();
-    fullLayout._shapeLowerLayer.selectAll("path").remove();
-    fullLayout._shapeUpperLayer.selectAll("text").remove();
-    fullLayout._shapeLowerLayer.selectAll("text").remove();
-    for (var k in fullLayout._plots) {
-      var shapelayer = fullLayout._plots[k].shapelayer;
-      if (shapelayer) {
-        shapelayer.selectAll("path").remove();
-        shapelayer.selectAll("text").remove();
-      }
-    }
-    for (var i = 0; i < fullLayout.shapes.length; i++) {
-      if (fullLayout.shapes[i].visible === true) {
-        drawOne2(gd, i);
-      }
-    }
-  }
-  function shouldSkipEdits(gd) {
-    return !!gd._fullLayout._outlining;
-  }
-  function couldHaveActiveShape(gd) {
-    return !gd._context.edits.shapePosition;
-  }
-  function drawOne2(gd, index) {
-    gd._fullLayout._paperdiv.selectAll('.shapelayer [data-index="' + index + '"]').remove();
-    var o = helpers_default8.makeShapesOptionsAndPlotinfo(gd, index);
-    var options = o.options;
-    var plotinfo = o.plotinfo;
-    if (!options._input || options.visible !== true) return;
-    if (options.layer === "above") {
-      drawShape(gd._fullLayout._shapeUpperLayer);
-    } else if (options.xref === "paper" || options.yref === "paper") {
-      drawShape(gd._fullLayout._shapeLowerLayer);
-    } else if (options.layer === "between") {
-      drawShape(plotinfo.shapelayerBetween);
-    } else {
-      if (plotinfo._hadPlotinfo) {
-        var mainPlot = plotinfo.mainplotinfo || plotinfo;
-        drawShape(mainPlot.shapelayer);
-      } else {
-        drawShape(gd._fullLayout._shapeLowerLayer);
-      }
-    }
-    function drawShape(shapeLayer) {
-      var d = getPathString3(gd, options);
-      var attrs2 = {
-        "data-index": index,
-        "fill-rule": options.fillrule,
-        d
-      };
-      var opacity = options.opacity;
-      var fillColor = options.fillcolor;
-      var lineColor = options.line.width ? options.line.color : "rgba(0,0,0,0)";
-      var lineWidth = options.line.width;
-      var lineDash = options.line.dash;
-      if (!lineWidth && options.editable === true) {
-        lineWidth = 5;
-        lineDash = "solid";
-      }
-      var isOpen = d[d.length - 1] !== "Z";
-      var isActiveShape = couldHaveActiveShape(gd) && options.editable && gd._fullLayout._activeShapeIndex === index;
-      if (isActiveShape) {
-        fillColor = isOpen ? "rgba(0,0,0,0)" : gd._fullLayout.activeshape.fillcolor;
-        opacity = gd._fullLayout.activeshape.opacity;
-      }
-      var shapeGroup = shapeLayer.append("g").classed("shape-group", true).attr({ "data-index": index });
-      var path = shapeGroup.append("path").attr(attrs2).style("opacity", opacity).call(color_default.stroke, lineColor).call(color_default.fill, fillColor).call(drawing_default.dashLine, lineDash, lineWidth);
-      setClipPath(shapeGroup, gd, options);
-      drawLabel(gd, index, options, shapeGroup);
-      var editHelpers;
-      if (isActiveShape || gd._context.edits.shapePosition) editHelpers = arrayEditor(gd.layout, "shapes", options);
-      if (isActiveShape) {
-        path.style({
-          cursor: "move"
-        });
-        var dragOptions = {
-          element: path.node(),
-          plotinfo,
-          gd,
-          editHelpers,
-          hasText: options.label.text || options.label.texttemplate,
-          isActiveShape: true
-          // i.e. to enable controllers
-        };
-        var polygons = readPaths(d, gd);
-        displayOutlines(polygons, path, dragOptions);
-      } else {
-        if (gd._context.edits.shapePosition) {
-          setupDragElement(gd, path, options, index, shapeLayer, editHelpers);
-        } else if (options.editable === true) {
-          path.style(
-            "pointer-events",
-            isOpen || color_default.opacity(fillColor) * opacity <= 0.5 ? "stroke" : "all"
-          );
-        }
-      }
-      path.node().addEventListener("click", function() {
-        return activateShape(gd, path);
-      });
-    }
-  }
-  function setClipPath(shapePath, gd, shapeOptions) {
-    var clipAxes = (shapeOptions.xref + shapeOptions.yref).replace(/paper/g, "").replace(/[xyz][0-9]* *domain/g, "");
-    drawing_default.setClipUrl(
-      shapePath,
-      clipAxes ? "clip" + gd._fullLayout._uid + clipAxes : null,
-      gd
-    );
-  }
-  function setupDragElement(gd, shapePath, shapeOptions, index, shapeLayer, editHelpers) {
-    var MINWIDTH = 10;
-    var MINHEIGHT = 10;
-    var xPixelSized = shapeOptions.xsizemode === "pixel";
-    var yPixelSized = shapeOptions.ysizemode === "pixel";
-    var isLine = shapeOptions.type === "line";
-    var isPath = shapeOptions.type === "path";
-    var modifyItem = editHelpers.modifyItem;
-    var x0, y0, x1, y1, xAnchor, yAnchor;
-    var n0, s0, w0, e0, optN, optS, optW, optE;
-    var pathIn;
-    var shapeGroup = select_default2(shapePath.node().parentNode);
-    var xa = axes_default.getFromId(gd, shapeOptions.xref);
-    var xRefType = axes_default.getRefType(shapeOptions.xref);
-    var ya = axes_default.getFromId(gd, shapeOptions.yref);
-    var yRefType = axes_default.getRefType(shapeOptions.yref);
-    var shiftXStart = shapeOptions.x0shift;
-    var shiftXEnd = shapeOptions.x1shift;
-    var shiftYStart = shapeOptions.y0shift;
-    var shiftYEnd = shapeOptions.y1shift;
-    var x2p = function(v, shift) {
-      var dataToPixel = helpers_default8.getDataToPixel(gd, xa, shift, false, xRefType);
-      return dataToPixel(v);
-    };
-    var y2p = function(v, shift) {
-      var dataToPixel = helpers_default8.getDataToPixel(gd, ya, shift, true, yRefType);
-      return dataToPixel(v);
-    };
-    var p2x = helpers_default8.getPixelToData(gd, xa, false, xRefType);
-    var p2y = helpers_default8.getPixelToData(gd, ya, true, yRefType);
-    var sensoryElement = obtainSensoryElement();
-    var dragOptions = {
-      element: sensoryElement.node(),
-      gd,
-      prepFn: startDrag,
-      doneFn: endDrag,
-      clickFn: abortDrag
-    };
-    var dragMode;
-    dragelement_default.init(dragOptions);
-    sensoryElement.node().onmousemove = updateDragMode;
-    function obtainSensoryElement() {
-      return isLine ? createLineDragHandles() : shapePath;
-    }
-    function createLineDragHandles() {
-      var minSensoryWidth = 10;
-      var sensoryWidth = Math.max(shapeOptions.line.width, minSensoryWidth);
-      var g = shapeLayer.append("g").attr("data-index", index).attr("drag-helper", true);
-      g.append("path").attr("d", shapePath.attr("d")).style({
-        cursor: "move",
-        "stroke-width": sensoryWidth,
-        "stroke-opacity": "0"
-        // ensure not visible
-      });
-      var circleStyle = {
-        "fill-opacity": "0"
-        // ensure not visible
-      };
-      var circleRadius = Math.max(sensoryWidth / 2, minSensoryWidth);
-      g.append("circle").attr({
-        "data-line-point": "start-point",
-        cx: xPixelSized ? x2p(shapeOptions.xanchor) + shapeOptions.x0 : x2p(shapeOptions.x0, shiftXStart),
-        cy: yPixelSized ? y2p(shapeOptions.yanchor) - shapeOptions.y0 : y2p(shapeOptions.y0, shiftYStart),
-        r: circleRadius
-      }).style(circleStyle).classed("cursor-grab", true);
-      g.append("circle").attr({
-        "data-line-point": "end-point",
-        cx: xPixelSized ? x2p(shapeOptions.xanchor) + shapeOptions.x1 : x2p(shapeOptions.x1, shiftXEnd),
-        cy: yPixelSized ? y2p(shapeOptions.yanchor) - shapeOptions.y1 : y2p(shapeOptions.y1, shiftYEnd),
-        r: circleRadius
-      }).style(circleStyle).classed("cursor-grab", true);
-      return g;
-    }
-    function updateDragMode(evt) {
-      if (shouldSkipEdits(gd)) {
-        dragMode = null;
-        return;
-      }
-      if (isLine) {
-        if (evt.target.tagName === "path") {
-          dragMode = "move";
-        } else {
-          dragMode = evt.target.attributes["data-line-point"].value === "start-point" ? "resize-over-start-point" : "resize-over-end-point";
-        }
-      } else {
-        var dragBBox = dragOptions.element.getBoundingClientRect();
-        var w = dragBBox.right - dragBBox.left;
-        var h = dragBBox.bottom - dragBBox.top;
-        var x = evt.clientX - dragBBox.left;
-        var y = evt.clientY - dragBBox.top;
-        var cursor = !isPath && w > MINWIDTH && h > MINHEIGHT && !evt.shiftKey ? dragelement_default.getCursor(x / w, 1 - y / h) : "move";
-        setCursor(shapePath, cursor);
-        dragMode = cursor.split("-")[0];
-      }
-    }
-    function startDrag(evt) {
-      if (shouldSkipEdits(gd)) return;
-      if (xPixelSized) {
-        xAnchor = x2p(shapeOptions.xanchor);
-      }
-      if (yPixelSized) {
-        yAnchor = y2p(shapeOptions.yanchor);
-      }
-      if (shapeOptions.type === "path") {
-        pathIn = shapeOptions.path;
-      } else {
-        x0 = xPixelSized ? shapeOptions.x0 : x2p(shapeOptions.x0);
-        y0 = yPixelSized ? shapeOptions.y0 : y2p(shapeOptions.y0);
-        x1 = xPixelSized ? shapeOptions.x1 : x2p(shapeOptions.x1);
-        y1 = yPixelSized ? shapeOptions.y1 : y2p(shapeOptions.y1);
-      }
-      if (x0 < x1) {
-        w0 = x0;
-        optW = "x0";
-        e0 = x1;
-        optE = "x1";
-      } else {
-        w0 = x1;
-        optW = "x1";
-        e0 = x0;
-        optE = "x0";
-      }
-      if (!yPixelSized && y0 < y1 || yPixelSized && y0 > y1) {
-        n0 = y0;
-        optN = "y0";
-        s0 = y1;
-        optS = "y1";
-      } else {
-        n0 = y1;
-        optN = "y1";
-        s0 = y0;
-        optS = "y0";
-      }
-      updateDragMode(evt);
-      renderVisualCues(shapeLayer, shapeOptions);
-      deactivateClipPathTemporarily(shapePath, shapeOptions, gd);
-      dragOptions.moveFn = dragMode === "move" ? moveShape : resizeShape;
-      dragOptions.altKey = evt.altKey;
-    }
-    function endDrag() {
-      if (shouldSkipEdits(gd)) return;
-      setCursor(shapePath);
-      removeVisualCues(shapeLayer);
-      setClipPath(shapePath, gd, shapeOptions);
-      registry_default.call("_guiRelayout", gd, editHelpers.getUpdateObj());
-    }
-    function abortDrag() {
-      if (shouldSkipEdits(gd)) return;
-      removeVisualCues(shapeLayer);
-    }
-    function moveShape(dx, dy) {
-      if (shapeOptions.type === "path") {
-        var noOp = function(coord) {
-          return coord;
-        };
-        var moveX = noOp;
-        var moveY = noOp;
-        if (xPixelSized) {
-          modifyItem("xanchor", shapeOptions.xanchor = p2x(xAnchor + dx));
-        } else {
-          moveX = function moveX2(x) {
-            return p2x(x2p(x) + dx);
-          };
-          if (xa && xa.type === "date") moveX = helpers_default8.encodeDate(moveX);
-        }
-        if (yPixelSized) {
-          modifyItem("yanchor", shapeOptions.yanchor = p2y(yAnchor + dy));
-        } else {
-          moveY = function moveY2(y) {
-            return p2y(y2p(y) + dy);
-          };
-          if (ya && ya.type === "date") moveY = helpers_default8.encodeDate(moveY);
-        }
-        modifyItem("path", shapeOptions.path = movePath(pathIn, moveX, moveY));
-      } else {
-        if (xPixelSized) {
-          modifyItem("xanchor", shapeOptions.xanchor = p2x(xAnchor + dx));
-        } else {
-          modifyItem("x0", shapeOptions.x0 = p2x(x0 + dx));
-          modifyItem("x1", shapeOptions.x1 = p2x(x1 + dx));
-        }
-        if (yPixelSized) {
-          modifyItem("yanchor", shapeOptions.yanchor = p2y(yAnchor + dy));
-        } else {
-          modifyItem("y0", shapeOptions.y0 = p2y(y0 + dy));
-          modifyItem("y1", shapeOptions.y1 = p2y(y1 + dy));
-        }
-      }
-      shapePath.attr("d", getPathString3(gd, shapeOptions));
-      renderVisualCues(shapeLayer, shapeOptions);
-      drawLabel(gd, index, shapeOptions, shapeGroup);
-    }
-    function resizeShape(dx, dy) {
-      if (isPath) {
-        var noOp = function(coord) {
-          return coord;
-        };
-        var moveX = noOp;
-        var moveY = noOp;
-        if (xPixelSized) {
-          modifyItem("xanchor", shapeOptions.xanchor = p2x(xAnchor + dx));
-        } else {
-          moveX = function moveX2(x) {
-            return p2x(x2p(x) + dx);
-          };
-          if (xa && xa.type === "date") moveX = helpers_default8.encodeDate(moveX);
-        }
-        if (yPixelSized) {
-          modifyItem("yanchor", shapeOptions.yanchor = p2y(yAnchor + dy));
-        } else {
-          moveY = function moveY2(y) {
-            return p2y(y2p(y) + dy);
-          };
-          if (ya && ya.type === "date") moveY = helpers_default8.encodeDate(moveY);
-        }
-        modifyItem("path", shapeOptions.path = movePath(pathIn, moveX, moveY));
-      } else if (isLine) {
-        if (dragMode === "resize-over-start-point") {
-          var newX0 = x0 + dx;
-          var newY0 = yPixelSized ? y0 - dy : y0 + dy;
-          modifyItem("x0", shapeOptions.x0 = xPixelSized ? newX0 : p2x(newX0));
-          modifyItem("y0", shapeOptions.y0 = yPixelSized ? newY0 : p2y(newY0));
-        } else if (dragMode === "resize-over-end-point") {
-          var newX1 = x1 + dx;
-          var newY1 = yPixelSized ? y1 - dy : y1 + dy;
-          modifyItem("x1", shapeOptions.x1 = xPixelSized ? newX1 : p2x(newX1));
-          modifyItem("y1", shapeOptions.y1 = yPixelSized ? newY1 : p2y(newY1));
-        }
-      } else {
-        var has = function(str) {
-          return dragMode.indexOf(str) !== -1;
-        };
-        var hasN = has("n");
-        var hasS = has("s");
-        var hasW = has("w");
-        var hasE = has("e");
-        var newN = hasN ? n0 + dy : n0;
-        var newS = hasS ? s0 + dy : s0;
-        var newW = hasW ? w0 + dx : w0;
-        var newE = hasE ? e0 + dx : e0;
-        if (yPixelSized) {
-          if (hasN) newN = n0 - dy;
-          if (hasS) newS = s0 - dy;
-        }
-        if (!yPixelSized && newS - newN > MINHEIGHT || yPixelSized && newN - newS > MINHEIGHT) {
-          modifyItem(optN, shapeOptions[optN] = yPixelSized ? newN : p2y(newN));
-          modifyItem(optS, shapeOptions[optS] = yPixelSized ? newS : p2y(newS));
-        }
-        if (newE - newW > MINWIDTH) {
-          modifyItem(optW, shapeOptions[optW] = xPixelSized ? newW : p2x(newW));
-          modifyItem(optE, shapeOptions[optE] = xPixelSized ? newE : p2x(newE));
-        }
-      }
-      shapePath.attr("d", getPathString3(gd, shapeOptions));
-      renderVisualCues(shapeLayer, shapeOptions);
-      drawLabel(gd, index, shapeOptions, shapeGroup);
-    }
-    function renderVisualCues(shapeLayer2, shapeOptions2) {
-      if (xPixelSized || yPixelSized) {
-        renderAnchor();
-      }
-      function renderAnchor() {
-        var isNotPath = shapeOptions2.type !== "path";
-        var visualCues = shapeLayer2.selectAll(".visual-cue").data([0]);
-        var strokeWidth = 1;
-        visualCues.enter().append("path").attr({
-          fill: "#fff",
-          "fill-rule": "evenodd",
-          stroke: "#000",
-          "stroke-width": strokeWidth
-        }).classed("visual-cue", true);
-        var posX = x2p(
-          xPixelSized ? shapeOptions2.xanchor : lib_default.midRange(
-            isNotPath ? [shapeOptions2.x0, shapeOptions2.x1] : helpers_default8.extractPathCoords(shapeOptions2.path, constants_default5.paramIsX)
-          )
-        );
-        var posY = y2p(
-          yPixelSized ? shapeOptions2.yanchor : lib_default.midRange(
-            isNotPath ? [shapeOptions2.y0, shapeOptions2.y1] : helpers_default8.extractPathCoords(shapeOptions2.path, constants_default5.paramIsY)
-          )
-        );
-        posX = helpers_default8.roundPositionForSharpStrokeRendering(posX, strokeWidth);
-        posY = helpers_default8.roundPositionForSharpStrokeRendering(posY, strokeWidth);
-        if (xPixelSized && yPixelSized) {
-          var crossPath = "M" + (posX - 1 - strokeWidth) + "," + (posY - 1 - strokeWidth) + "h-8v2h8 v8h2v-8 h8v-2h-8 v-8h-2 Z";
-          visualCues.attr("d", crossPath);
-        } else if (xPixelSized) {
-          var vBarPath = "M" + (posX - 1 - strokeWidth) + "," + (posY - 9 - strokeWidth) + "v18 h2 v-18 Z";
-          visualCues.attr("d", vBarPath);
-        } else {
-          var hBarPath = "M" + (posX - 9 - strokeWidth) + "," + (posY - 1 - strokeWidth) + "h18 v2 h-18 Z";
-          visualCues.attr("d", hBarPath);
-        }
-      }
-    }
-    function removeVisualCues(shapeLayer2) {
-      shapeLayer2.selectAll(".visual-cue").remove();
-    }
-    function deactivateClipPathTemporarily(shapePath2, shapeOptions2, gd2) {
-      var xref = shapeOptions2.xref;
-      var yref = shapeOptions2.yref;
-      var xa2 = axes_default.getFromId(gd2, xref);
-      var ya2 = axes_default.getFromId(gd2, yref);
-      var clipAxes = "";
-      if (xref !== "paper" && !xa2.autorange) clipAxes += xref;
-      if (yref !== "paper" && !ya2.autorange) clipAxes += yref;
-      drawing_default.setClipUrl(
-        shapePath2,
-        clipAxes ? "clip" + gd2._fullLayout._uid + clipAxes : null,
-        gd2
-      );
-    }
-  }
-  function movePath(pathIn, moveX, moveY) {
-    return pathIn.replace(constants_default5.segmentRE, function(segment) {
-      var paramNumber = 0;
-      var segmentType = segment.charAt(0);
-      var xParams = constants_default5.paramIsX[segmentType];
-      var yParams = constants_default5.paramIsY[segmentType];
-      var nParams = constants_default5.numParams[segmentType];
-      var paramString = segment.slice(1).replace(constants_default5.paramRE, function(param) {
-        if (paramNumber >= nParams) return param;
-        if (xParams[paramNumber]) param = moveX(param);
-        else if (yParams[paramNumber]) param = moveY(param);
-        paramNumber++;
-        return param;
-      });
-      return segmentType + paramString;
-    });
-  }
-  function activateShape(gd, path) {
-    if (!couldHaveActiveShape(gd)) return;
-    var element = path.node();
-    var id2 = +element.getAttribute("data-index");
-    if (id2 >= 0) {
-      if (id2 === gd._fullLayout._activeShapeIndex) {
-        deactivateShape(gd);
-        return;
-      }
-      gd._fullLayout._activeShapeIndex = id2;
-      gd._fullLayout._deactivateShape = deactivateShape;
-      draw3(gd);
-    }
-  }
-  function deactivateShape(gd) {
-    if (!couldHaveActiveShape(gd)) return;
-    var id2 = gd._fullLayout._activeShapeIndex;
-    if (id2 >= 0) {
-      clearOutlineControllers3(gd);
-      delete gd._fullLayout._activeShapeIndex;
-      draw3(gd);
-    }
-  }
-  function eraseActiveShape(gd) {
-    if (!couldHaveActiveShape(gd)) return;
-    clearOutlineControllers3(gd);
-    var id2 = gd._fullLayout._activeShapeIndex;
-    var shapes = (gd.layout || {}).shapes || [];
-    if (id2 < shapes.length) {
-      var list2 = [];
-      for (var q = 0; q < shapes.length; q++) {
-        if (q !== id2) {
-          list2.push(shapes[q]);
-        }
-      }
-      delete gd._fullLayout._activeShapeIndex;
-      return registry_default.call("_guiRelayout", gd, {
-        shapes: list2
-      });
-    }
-  }
-
   // src/components/modebar/buttons.js
-  var { eraseActiveShape: eraseActiveShape2 } = draw_default;
   var _2 = lib_default._;
   var modeBarButtons = {};
   modeBarButtons.toImage = {
@@ -34470,7 +32535,9 @@ var Plotly = (() => {
       return _2(gd, "Erase active shape");
     },
     icon: ploticon_default.eraseshape,
-    click: eraseActiveShape2
+    click: function(gd) {
+      return registry_default.getComponentMethod("shapes", "eraseActiveShape")(gd);
+    }
   };
   modeBarButtons.zoomIn2d = {
     name: "zoomIn2d",
@@ -35070,7 +33137,7 @@ var Plotly = (() => {
     addToForeButtons(buttons_default[k]);
   });
   foreButtons.sort();
-  var constants_default6 = {
+  var constants_default4 = {
     DRAW_MODES,
     backButtons,
     foreButtons
@@ -35366,7 +33433,7 @@ var Plotly = (() => {
   var modebar_default = createModeBar;
 
   // src/components/modebar/manage.js
-  var { DRAW_MODES: DRAW_MODES2 } = constants_default6;
+  var { DRAW_MODES: DRAW_MODES2 } = constants_default4;
   var { extendDeep: extendDeep2 } = lib_default;
   function manageModeBar(gd) {
     var fullLayout = gd._fullLayout;
@@ -36673,15 +34740,15 @@ var Plotly = (() => {
   var subroutines_default = { layoutStyles, drawMainTitle, doTraceStyle, doColorBars, layoutReplot, doLegend, doTicksRelayout, doModeBar, doCamera, drawData, redrawReglTraces, doAutoRangeAndConstraints, finalDraw, drawMarginPushers };
 
   // src/plots/cartesian/dragbox.js
-  var { FROM_TL: FROM_TL3 } = alignment_default;
+  var { FROM_TL: FROM_TL2 } = alignment_default;
   var numberFormat3 = lib_default.numberFormat;
-  var strTranslate9 = lib_default.strTranslate;
+  var strTranslate7 = lib_default.strTranslate;
   var selectingOrDrawing2 = helpers_default5.selectingOrDrawing;
   var freeMode2 = helpers_default5.freeMode;
   function prepSelect() {
     return registry_default.getComponentMethod("selections", "prepSelect").apply(null, arguments);
   }
-  function clearOutline5() {
+  function clearOutline() {
     return registry_default.getComponentMethod("selections", "clearOutline").apply(null, arguments);
   }
   function selectOnClick() {
@@ -36815,7 +34882,7 @@ var Plotly = (() => {
     };
     function clearAndResetSelect() {
       dragOptions.plotinfo.selection = false;
-      clearOutline5(gd);
+      clearOutline(gd);
     }
     function clickFn(numClicks, evt) {
       var gd2 = dragOptions.gd;
@@ -37393,7 +35460,7 @@ var Plotly = (() => {
       return 0;
     }
     function getShift(ax, scaleFactor, from) {
-      return ax._length * (1 - scaleFactor) * FROM_TL3[from || ax.constraintoward || "middle"];
+      return ax._length * (1 - scaleFactor) * FROM_TL2[from || ax.constraintoward || "middle"];
     }
     return dragger;
   }
@@ -37491,7 +35558,7 @@ var Plotly = (() => {
     return zoomlayer.append("path").attr("class", "zoombox").style({
       fill: lum > 0.2 ? "rgba(0,0,0,0)" : "rgba(255,255,255,0)",
       "stroke-width": 0
-    }).attr("transform", strTranslate9(xs, ys)).attr("d", path0 + "Z");
+    }).attr("transform", strTranslate7(xs, ys)).attr("d", path0 + "Z");
   }
   function makeCorners(zoomlayer, xs, ys) {
     return zoomlayer.append("path").attr("class", "zoombox-corners").style({
@@ -37499,7 +35566,7 @@ var Plotly = (() => {
       stroke: color_default.defaultLine,
       "stroke-width": 1,
       opacity: 0
-    }).attr("transform", strTranslate9(xs, ys)).attr("d", "M0,0Z");
+    }).attr("transform", strTranslate7(xs, ys)).attr("d", "M0,0Z");
   }
   function updateZoombox(zb, corners, box, path0, dimmed, lum) {
     zb.attr(
@@ -38305,14 +36372,14 @@ var Plotly = (() => {
     }
     return false;
   };
-  var helpers_default9 = { clearPromiseQueue, cleanLayout, cleanData, swapXYData, coerceTraceIndices, manageArrayContainers, hasParent, clearAxisTypes, collectionsAreEqual };
+  var helpers_default6 = { clearPromiseQueue, cleanLayout, cleanData, swapXYData, coerceTraceIndices, manageArrayContainers, hasParent, clearAxisTypes, collectionsAreEqual };
 
   // src/plot_api/plot_api.js
   var hasHover2 = typeof matchMedia === "function" ? !matchMedia("(hover: none)").matches : typeof window !== "undefined";
   var { dfltConfig: dfltConfig4 } = plot_config_default;
   var { AX_NAME_PATTERN } = constants_default2;
   var nestedProperty3 = lib_default.nestedProperty;
-  function clearOutline6(gd) {
+  function clearOutline2(gd) {
     return registry_default.getComponentMethod("selections", "clearOutline")(gd);
   }
   var numericNameWarningCount = 0;
@@ -38346,13 +36413,13 @@ var Plotly = (() => {
     if (!Array.isArray(gd._promises)) gd._promises = [];
     var graphWasEmpty = (gd.data || []).length === 0 && Array.isArray(data);
     if (Array.isArray(data)) {
-      helpers_default9.cleanData(data);
+      helpers_default6.cleanData(data);
       if (graphWasEmpty) gd.data = data;
       else gd.data.push.apply(gd.data, data);
       gd.empty = false;
     }
     if (!gd.layout || graphWasEmpty) {
-      gd.layout = helpers_default9.cleanLayout(layout);
+      gd.layout = helpers_default6.cleanLayout(layout);
     }
     performance.mark("plotly-supplyDefaults-start");
     plots_default.supplyDefaults(gd);
@@ -38689,8 +36756,8 @@ var Plotly = (() => {
     if (!lib_default.isPlotDiv(gd)) {
       throw new Error("This element is not a Plotly plot: " + gd);
     }
-    helpers_default9.cleanData(gd.data);
-    helpers_default9.cleanLayout(gd.layout);
+    helpers_default6.cleanData(gd.data);
+    helpers_default6.cleanLayout(gd.layout);
     gd.calcdata = void 0;
     return _doPlot(gd).then(function() {
       gd.emit("plotly_redraw");
@@ -38963,7 +37030,7 @@ var Plotly = (() => {
     traces = traces.map(function(trace) {
       return lib_default.extendFlat({}, trace);
     });
-    helpers_default9.cleanData(traces);
+    helpers_default6.cleanData(traces);
     for (i = 0; i < traces.length; i++) {
       gd.data.push(traces[i]);
     }
@@ -39056,7 +37123,7 @@ var Plotly = (() => {
   }
   function restyle(gd, astr, val, _traces) {
     gd = lib_default.getGraphDiv(gd);
-    helpers_default9.clearPromiseQueue(gd);
+    helpers_default6.clearPromiseQueue(gd);
     var aobj = {};
     if (typeof astr === "string") aobj[astr] = val;
     else if (lib_default.isPlainObject(astr)) {
@@ -39067,11 +37134,11 @@ var Plotly = (() => {
       return Promise.reject();
     }
     if (Object.keys(aobj).length) gd.changed = true;
-    var traces = helpers_default9.coerceTraceIndices(gd, _traces);
+    var traces = helpers_default6.coerceTraceIndices(gd, _traces);
     var specs = _restyle(gd, aobj, traces);
     var flags = specs.flags;
     if (flags.calc) gd.calcdata = void 0;
-    if (flags.clearAxisTypes) helpers_default9.clearAxisTypes(gd, traces, {});
+    if (flags.clearAxisTypes) helpers_default6.clearAxisTypes(gd, traces, {});
     var seq = [];
     if (flags.fullReplot) {
       seq.push(_doPlot);
@@ -39176,7 +37243,7 @@ var Plotly = (() => {
         });
         return;
       }
-      if (attr2 in aobj || helpers_default9.hasParent(aobj, attr2)) return;
+      if (attr2 in aobj || helpers_default6.hasParent(aobj, attr2)) return;
       var extraparam;
       if (attr2.slice(0, 6) === "LAYOUT") {
         extraparam = layoutNP(gd.layout, attr2.replace("LAYOUT", ""));
@@ -39206,7 +37273,7 @@ var Plotly = (() => {
       };
     }
     for (var ai in aobj) {
-      if (helpers_default9.hasParent(aobj, ai)) {
+      if (helpers_default6.hasParent(aobj, ai)) {
         throw new Error("cannot set " + ai + " and a parent attribute simultaneously");
       }
       var vi = aobj[ai];
@@ -39292,10 +37359,10 @@ var Plotly = (() => {
           } else if (ai === "orientationaxes") {
             cont.orientation = { v: "h", h: "v" }[contFull.orientation];
           }
-          helpers_default9.swapXYData(cont);
+          helpers_default6.swapXYData(cont);
           flags.calc = flags.clearAxisTypes = true;
         } else if (plots_default.dataArrayContainers.indexOf(param.parts[0]) !== -1) {
-          helpers_default9.manageArrayContainers(param, newVal, undoit);
+          helpers_default6.manageArrayContainers(param, newVal, undoit);
           flags.calc = true;
         } else {
           if (valObject) {
@@ -39350,7 +37417,7 @@ var Plotly = (() => {
   }
   function relayout(gd, astr, val) {
     gd = lib_default.getGraphDiv(gd);
-    helpers_default9.clearPromiseQueue(gd);
+    helpers_default6.clearPromiseQueue(gd);
     var aobj = {};
     if (typeof astr === "string") {
       aobj[astr] = val;
@@ -39441,7 +37508,7 @@ var Plotly = (() => {
       return axes_default.draw(gd, "redraw");
     };
     seq.push(
-      clearOutline6,
+      clearOutline2,
       subroutines_default.doAutoRangeAndConstraints,
       drawAxes,
       subroutines_default.drawData,
@@ -39483,7 +37550,7 @@ var Plotly = (() => {
         });
         return;
       }
-      if (attr2 in aobj || helpers_default9.hasParent(aobj, attr2)) return;
+      if (attr2 in aobj || helpers_default6.hasParent(aobj, attr2)) return;
       var p2 = layoutNP(layout, attr2);
       if (!(attr2 in undoit)) {
         undoit[attr2] = undefinedToNull(p2.get());
@@ -39498,7 +37565,7 @@ var Plotly = (() => {
       return axId2;
     }
     for (var ai in aobj) {
-      if (helpers_default9.hasParent(aobj, ai)) {
+      if (helpers_default6.hasParent(aobj, ai)) {
         throw new Error("cannot set " + ai + " and a parent attribute simultaneously");
       }
       var p = layoutNP(layout, ai);
@@ -39676,18 +37743,18 @@ var Plotly = (() => {
   }
   function update(gd, traceUpdate, layoutUpdate, _traces) {
     gd = lib_default.getGraphDiv(gd);
-    helpers_default9.clearPromiseQueue(gd);
+    helpers_default6.clearPromiseQueue(gd);
     if (!lib_default.isPlainObject(traceUpdate)) traceUpdate = {};
     if (!lib_default.isPlainObject(layoutUpdate)) layoutUpdate = {};
     if (Object.keys(traceUpdate).length) gd.changed = true;
     if (Object.keys(layoutUpdate).length) gd.changed = true;
-    var traces = helpers_default9.coerceTraceIndices(gd, _traces);
+    var traces = helpers_default6.coerceTraceIndices(gd, _traces);
     var restyleSpecs = _restyle(gd, lib_default.extendFlat({}, traceUpdate), traces);
     var restyleFlags = restyleSpecs.flags;
     var relayoutSpecs = _relayout(gd, lib_default.extendFlat({}, layoutUpdate));
     var relayoutFlags = relayoutSpecs.flags;
     if (restyleFlags.calc || relayoutFlags.calc) gd.calcdata = void 0;
-    if (restyleFlags.clearAxisTypes) helpers_default9.clearAxisTypes(gd, traces, layoutUpdate);
+    if (restyleFlags.clearAxisTypes) helpers_default6.clearAxisTypes(gd, traces, layoutUpdate);
     var seq = [];
     if (relayoutFlags.layoutReplot) {
       seq.push(subroutines_default.layoutReplot);
@@ -39919,7 +37986,7 @@ var Plotly = (() => {
       return addFrames3(gd, frames);
     }
     gd = lib_default.getGraphDiv(gd);
-    helpers_default9.clearPromiseQueue(gd);
+    helpers_default6.clearPromiseQueue(gd);
     var oldFullData = gd._fullData;
     var oldFullLayout = gd._fullLayout;
     if (!lib_default.isPlotDiv(gd) || !oldFullData || !oldFullLayout) {
@@ -39937,7 +38004,7 @@ var Plotly = (() => {
         const oldConfig = lib_default.extendDeepAll({}, gd._context);
         gd._context = void 0;
         setPlotContext(gd, config);
-        configChanged = !helpers_default9.collectionsAreEqual(oldConfig, gd._context);
+        configChanged = !helpers_default6.collectionsAreEqual(oldConfig, gd._context);
       }
       if (configChanged) {
         const eventListeners = gd._ev.eventNames().map((name8) => [name8, gd._ev.listeners(name8)]);
@@ -39949,9 +38016,9 @@ var Plotly = (() => {
         });
       } else {
         gd.data = data || [];
-        helpers_default9.cleanData(gd.data);
+        helpers_default6.cleanData(gd.data);
         gd.layout = layout || {};
-        helpers_default9.cleanLayout(gd.layout);
+        helpers_default6.cleanLayout(gd.layout);
         applyUIRevisions(gd.data, gd.layout, oldFullData, oldFullLayout);
         plots_default.supplyDefaults(gd, { skipUpdateCalc: true });
         var newFullData = gd._fullData;
@@ -40348,7 +38415,7 @@ var Plotly = (() => {
             gd,
             newFrame.frame.data,
             newFrame.frame.layout,
-            helpers_default9.coerceTraceIndices(gd, newFrame.frame.traces),
+            helpers_default6.coerceTraceIndices(gd, newFrame.frame.traces),
             newFrame.frameOpts,
             newFrame.transitionOpts
           ).then(function() {
@@ -41052,7 +39119,7 @@ var Plotly = (() => {
     return buf;
   }
   var IMAGE_URL_PREFIX = /^data:image\/\w+;base64,/;
-  var helpers_default10 = { getDelay, getRedrawFunc, encodeSVG, encodeJSON, createObjectURL, revokeObjectURL, createBlob, octetStream, IMAGE_URL_PREFIX };
+  var helpers_default7 = { getDelay, getRedrawFunc, encodeSVG, encodeJSON, createObjectURL, revokeObjectURL, createBlob, octetStream, IMAGE_URL_PREFIX };
 
   // src/snapshot/tosvg.js
   var DOUBLEQUOTE_REGEX = /"/g;
@@ -41172,17 +39239,17 @@ var Plotly = (() => {
       var img = new Image2();
       var svgBlob, url;
       if (format6 === "svg" || lib_default.isSafari()) {
-        url = helpers_default10.encodeSVG(svg2);
+        url = helpers_default7.encodeSVG(svg2);
       } else {
-        svgBlob = helpers_default10.createBlob(svg2, "svg");
-        url = helpers_default10.createObjectURL(svgBlob);
+        svgBlob = helpers_default7.createBlob(svg2, "svg");
+        url = helpers_default7.createObjectURL(svgBlob);
       }
       canvas.width = w1;
       canvas.height = h1;
       img.onload = function() {
         var imgData;
         svgBlob = null;
-        helpers_default10.revokeObjectURL(url);
+        helpers_default7.revokeObjectURL(url);
         if (format6 !== "svg") {
           ctx.drawImage(img, 0, 0, w1, h1);
         }
@@ -41213,7 +39280,7 @@ var Plotly = (() => {
       };
       img.onerror = function(err) {
         svgBlob = null;
-        helpers_default10.revokeObjectURL(url);
+        helpers_default7.revokeObjectURL(url);
         reject(err);
         if (!opts.promise) {
           return ev.emit("error", err);
@@ -41314,10 +39381,10 @@ var Plotly = (() => {
       staticPlot: true,
       setBackground: setBackground2
     });
-    var redrawFunc = helpers_default10.getRedrawFunc(clonedGd);
+    var redrawFunc = helpers_default7.getRedrawFunc(clonedGd);
     function wait() {
       return new Promise(function(resolve) {
-        setTimeout(resolve, helpers_default10.getDelay(clonedGd._fullLayout));
+        setTimeout(resolve, helpers_default7.getDelay(clonedGd._fullLayout));
       });
     }
     function convert3() {
@@ -41337,7 +39404,7 @@ var Plotly = (() => {
           if (imageDataOnly) {
             return resolve(json);
           } else {
-            return resolve(helpers_default10.encodeJSON(json));
+            return resolve(helpers_default7.encodeJSON(json));
           }
         }
         cleanup();
@@ -41345,7 +39412,7 @@ var Plotly = (() => {
           if (imageDataOnly) {
             return resolve(svg2);
           } else {
-            return resolve(helpers_default10.encodeSVG(svg2));
+            return resolve(helpers_default7.encodeSVG(svg2));
           }
         }
         var canvas = document.createElement("canvas");
@@ -41367,7 +39434,7 @@ var Plotly = (() => {
     }
     function urlToImageData(url) {
       if (imageDataOnly) {
-        return url.replace(helpers_default10.IMAGE_URL_PREFIX, "");
+        return url.replace(helpers_default7.IMAGE_URL_PREFIX, "");
       } else {
         return url;
       }
@@ -41667,20 +39734,20 @@ var Plotly = (() => {
       var blob;
       var objectUrl;
       if (canUseSaveLink) {
-        blob = helpers_default10.createBlob(url, format6);
-        objectUrl = helpers_default10.createObjectURL(blob);
+        blob = helpers_default7.createBlob(url, format6);
+        objectUrl = helpers_default7.createObjectURL(blob);
         saveLink.href = objectUrl;
         saveLink.download = name7;
         document.body.appendChild(saveLink);
         saveLink.click();
         document.body.removeChild(saveLink);
-        helpers_default10.revokeObjectURL(objectUrl);
+        helpers_default7.revokeObjectURL(objectUrl);
         blob = null;
         return resolve(name7);
       }
       if (lib_default.isSafari()) {
         var prefix = format6 === "svg" ? "," : ";base64,";
-        helpers_default10.octetStream(prefix + encodeURIComponent(url));
+        helpers_default7.octetStream(prefix + encodeURIComponent(url));
         return resolve(name7);
       }
       reject(new Error("download error"));
@@ -41721,7 +39788,6 @@ var Plotly = (() => {
 
   // src/plot_api/index.js
   var { getGraphDiv: getGraphDiv3 } = dom_default;
-  var { eraseActiveShape: eraseActiveShape3 } = draw_default;
   var _doPlot2 = plot_api_default._doPlot;
   var newPlot2 = plot_api_default.newPlot;
   var restyle2 = plot_api_default.restyle;
@@ -41744,7 +39810,7 @@ var Plotly = (() => {
   var animate2 = plot_api_default.animate;
   var setPlotConfig2 = plot_api_default.setPlotConfig;
   var deleteActiveShape = function(gd) {
-    return eraseActiveShape3(getGraphDiv3(gd));
+    return registry_default.getComponentMethod("shapes", "eraseActiveShape")(getGraphDiv3(gd));
   };
   var toImage2 = to_image_default;
   var validate3 = validate2;
@@ -41820,7 +39886,7 @@ var Plotly = (() => {
   var selector;
 
   // src/traces/scatter/constants.js
-  var constants_default7 = {
+  var constants_default5 = {
     PTS_LINESONLY: 20,
     // fixed parameters of clustering and clipping algorithms
     // fraction of clustering tolerance "so close we don't even consider it a new point"
@@ -41965,7 +40031,7 @@ var Plotly = (() => {
       flags: ["points", "fills"],
       editType: "style"
     },
-    hovertemplate: hovertemplateAttrs({}, { keys: constants_default7.eventDataKeys }),
+    hovertemplate: hovertemplateAttrs({}, { keys: constants_default5.eventDataKeys }),
     hovertemplatefallback: templatefallbackAttrs(),
     line: {
       color: {
@@ -42505,7 +40571,7 @@ var Plotly = (() => {
     if (layout.scattermode === "group" && traceOut.orientation === void 0) {
       coerce3("orientation", "v");
     }
-    var defaultMode = !stackGroupOpts && len2 < constants_default7.PTS_LINESONLY ? "lines+markers" : "lines";
+    var defaultMode = !stackGroupOpts && len2 < constants_default5.PTS_LINESONLY ? "lines+markers" : "lines";
     coerce3("text");
     coerce3("hovertext");
     coerce3("mode", defaultMode);
@@ -43833,7 +41899,7 @@ var Plotly = (() => {
     var linear4 = shape === "linear";
     var fill = trace.fill && trace.fill !== "none";
     var segments = [];
-    var minTolerance = constants_default7.minTolerance;
+    var minTolerance = constants_default5.minTolerance;
     var len2 = d.length;
     var pts = new Array(len2);
     var pti = 0;
@@ -43888,14 +41954,14 @@ var Plotly = (() => {
       if (offScreenFraction && nextPt2 && crossesViewport(xFrac, yFrac, nextPt2[0] / xLen, nextPt2[1] / yLen)) {
         offScreenFraction = 0;
       }
-      return (1 + constants_default7.toleranceGrowth * offScreenFraction) * baseTolerance;
+      return (1 + constants_default5.toleranceGrowth * offScreenFraction) * baseTolerance;
     }
     function ptDist(pt1, pt2) {
       var dx = pt1[0] - pt2[0];
       var dy = pt1[1] - pt2[1];
       return Math.sqrt(dx * dx + dy * dy);
     }
-    var maxScreensAway = constants_default7.maxScreensAway;
+    var maxScreensAway = constants_default5.maxScreensAway;
     var xEdge0 = -xLen * maxScreensAway;
     var xEdge1 = xLen * (1 + maxScreensAway);
     var yEdge0 = -yLen * maxScreensAway;
@@ -46613,7 +44679,7 @@ var Plotly = (() => {
   // src/components/annotations/draw_arrow_head.js
   var strScale = lib_default.strScale;
   var strRotate2 = lib_default.strRotate;
-  var strTranslate10 = lib_default.strTranslate;
+  var strTranslate8 = lib_default.strTranslate;
   function drawArrowHead(el3, ends, options) {
     var el = el3.node();
     var headStyle = arrow_paths_default[options.arrowhead || 0];
@@ -46689,7 +44755,7 @@ var Plotly = (() => {
       select_default2(el.parentNode).append("path").attr({
         class: el3.attr("class"),
         d: arrowHeadStyle.path,
-        transform: strTranslate10(p.x, p.y) + strRotate2(rot * 180 / Math.PI) + strScale(arrowScale)
+        transform: strTranslate8(p.x, p.y) + strRotate2(rot * 180 / Math.PI) + strScale(arrowScale)
       }).style({
         fill: color_default.rgb(options.arrowcolor),
         "stroke-width": 0
@@ -46700,23 +44766,23 @@ var Plotly = (() => {
   }
 
   // src/components/annotations/draw.js
-  var strTranslate11 = lib_default.strTranslate;
-  var draw_default2 = {
-    draw: draw4,
-    drawOne: drawOne3,
+  var strTranslate9 = lib_default.strTranslate;
+  var draw_default = {
+    draw: draw3,
+    drawOne: drawOne2,
     drawRaw
   };
-  function draw4(gd) {
+  function draw3(gd) {
     var fullLayout = gd._fullLayout;
     fullLayout._infolayer.selectAll(".annotation").remove();
     for (var i = 0; i < fullLayout.annotations.length; i++) {
       if (fullLayout.annotations[i].visible) {
-        drawOne3(gd, i);
+        drawOne2(gd, i);
       }
     }
     return plots_default.previousPromises(gd);
   }
-  function drawOne3(gd, index) {
+  function drawOne2(gd, index) {
     var fullLayout = gd._fullLayout;
     var options = fullLayout.annotations[index] || {};
     var xa = axes_default.getFromId(gd, options.xref);
@@ -47085,7 +45151,7 @@ var Plotly = (() => {
           }
           var arrowDrag = arrowGroup.append("path").classed("annotation-arrow", true).classed("anndrag", true).classed("cursor-move", true).attr({
             d: "M3,3H-3V-3H3ZM0,0L" + (tailX - arrowDragHeadX) + "," + (tailY - arrowDragHeadY),
-            transform: strTranslate11(arrowDragHeadX, arrowDragHeadY)
+            transform: strTranslate9(arrowDragHeadX, arrowDragHeadY)
           }).style("stroke-width", strokewidth + 6 + "px").call(color_default.stroke, "rgba(0,0,0,0)").call(color_default.fill, "rgba(0,0,0,0)");
           var annx0, anny0;
           dragelement_default.init({
@@ -47121,7 +45187,7 @@ var Plotly = (() => {
               if (options.ayref === options.yref) {
                 modifyItem("ay", shiftPosition(ya, dy2, "ay", gs, options));
               }
-              arrowGroup.attr("transform", strTranslate11(dx2, dy2));
+              arrowGroup.attr("transform", strTranslate9(dx2, dy2));
               annTextGroup.attr({
                 transform: "rotate(" + textangle + "," + xcenter + "," + ycenter + ")"
               });
@@ -47197,7 +45263,7 @@ var Plotly = (() => {
               }
             } else return;
             annTextGroup.attr({
-              transform: strTranslate11(dx, dy) + baseTextTransform
+              transform: strTranslate9(dx, dy) + baseTextTransform
             });
             setCursor(annTextGroupInner, csr);
           },
@@ -47692,12 +45758,12 @@ var Plotly = (() => {
   }
 
   // src/components/annotations/calc_autorange.js
-  var { draw: draw5 } = draw_default2;
+  var { draw: draw4 } = draw_default;
   function calcAutorange(gd) {
     var fullLayout = gd._fullLayout;
     var annotationList = lib_default.filterVisible(fullLayout.annotations);
     if (annotationList.length && gd._fullData.length) {
-      return lib_default.syncOrAsync([draw5, annAutorange], gd);
+      return lib_default.syncOrAsync([draw4, annAutorange], gd);
     }
   }
   function annAutorange(gd) {
@@ -47788,9 +45854,9 @@ var Plotly = (() => {
     supplyLayoutDefaults: supplyLayoutDefaults6,
     includeBasePlot: makeIncludeComponents("annotations"),
     calcAutorange,
-    draw: draw_default2.draw,
-    drawOne: draw_default2.drawOne,
-    drawRaw: draw_default2.drawRaw,
+    draw: draw_default.draw,
+    drawOne: draw_default.drawOne,
+    drawRaw: draw_default.drawRaw,
     hasClickToShow: click_default.hasClickToShow,
     onClick: click_default.onClick,
     convertCoords
@@ -47962,9 +46028,9 @@ var Plotly = (() => {
   var project_default = project;
 
   // src/components/annotations3d/draw.js
-  var { drawRaw: drawRaw2 } = draw_default2;
+  var { drawRaw: drawRaw2 } = draw_default;
   var axLetters = ["x", "y", "z"];
-  function draw6(scene) {
+  function draw5(scene) {
     var fullSceneLayout = scene.fullSceneLayout;
     var dataScale = scene.dataScale;
     var anns = fullSceneLayout.annotations;
@@ -48007,7 +46073,7 @@ var Plotly = (() => {
     handleDefaults: handleDefaults2,
     includeBasePlot: includeGL3D,
     convert,
-    draw: draw6
+    draw: draw5
   };
   function includeGL3D(layoutIn, layoutOut) {
     var GL3D = registry_default.subplotsRegistry.gl3d;
@@ -48023,38 +46089,1477 @@ var Plotly = (() => {
     }
   }
 
+  // src/components/shapes/draw_newshape/helpers.js
+  var import_parse_svg_path2 = __toESM(require_parse_svg_path(), 1);
+
+  // src/components/shapes/draw_newshape/constants.js
+  var CIRCLE_SIDES = 32;
+  var constants_default6 = {
+    CIRCLE_SIDES,
+    i000: 0,
+    i090: CIRCLE_SIDES / 4,
+    i180: CIRCLE_SIDES / 2,
+    i270: CIRCLE_SIDES / 4 * 3,
+    cos45: Math.cos(Math.PI / 4),
+    sin45: Math.sin(Math.PI / 4),
+    SQRT2: Math.sqrt(2)
+  };
+
+  // src/components/selections/helpers.js
+  var { strTranslate: strTranslate10 } = lib_default;
+  function p2r(ax, v) {
+    switch (ax.type) {
+      case "log":
+        return ax.p2d(v);
+      case "date":
+        return ax.p2r(v, 0, ax.calendar);
+      default:
+        return ax.p2r(v);
+    }
+  }
+  function r2p(ax, v) {
+    switch (ax.type) {
+      case "log":
+        return ax.d2p(v);
+      case "date":
+        return ax.r2p(v, 0, ax.calendar);
+      default:
+        return ax.r2p(v);
+    }
+  }
+  function axValue(ax) {
+    var index = ax._id.charAt(0) === "y" ? 1 : 0;
+    return function(v) {
+      return p2r(ax, v[index]);
+    };
+  }
+  function getTransform(plotinfo) {
+    return strTranslate10(
+      plotinfo.xaxis._offset,
+      plotinfo.yaxis._offset
+    );
+  }
+  var helpers_default8 = {
+    p2r,
+    r2p,
+    axValue,
+    getTransform
+  };
+
+  // src/components/shapes/draw_newshape/helpers.js
+  var CIRCLE_SIDES2 = constants_default6.CIRCLE_SIDES;
+  var SQRT2 = constants_default6.SQRT2;
+  var p2r2 = helpers_default8.p2r;
+  var r2p2 = helpers_default8.r2p;
+  var iC = [0, 3, 4, 5, 6, 1, 2];
+  var iQS = [0, 3, 4, 1, 2];
+  var writePaths = function(polygons) {
+    var nI = polygons.length;
+    if (!nI) return "M0,0Z";
+    var str = "";
+    for (var i = 0; i < nI; i++) {
+      var nJ = polygons[i].length;
+      for (var j = 0; j < nJ; j++) {
+        var w = polygons[i][j][0];
+        if (w === "Z") {
+          str += "Z";
+        } else {
+          var nK = polygons[i][j].length;
+          for (var k = 0; k < nK; k++) {
+            var realK = k;
+            if (w === "Q" || w === "S") {
+              realK = iQS[k];
+            } else if (w === "C") {
+              realK = iC[k];
+            }
+            str += polygons[i][j][realK];
+            if (k > 0 && k < nK - 1) {
+              str += ",";
+            }
+          }
+        }
+      }
+    }
+    return str;
+  };
+  var readPaths = function(str, gd, plotinfo, isActiveShape) {
+    var cmd = (0, import_parse_svg_path2.default)(str);
+    var polys = [];
+    var n = -1;
+    var newPoly = function() {
+      n++;
+      polys[n] = [];
+    };
+    var k;
+    var x = 0;
+    var y = 0;
+    var initX;
+    var initY;
+    var recStart = function() {
+      initX = x;
+      initY = y;
+    };
+    recStart();
+    for (var i = 0; i < cmd.length; i++) {
+      var newPos = [];
+      var x1, x2, y1, y2;
+      var c = cmd[i][0];
+      var w = c;
+      switch (c) {
+        case "M":
+          newPoly();
+          x = +cmd[i][1];
+          y = +cmd[i][2];
+          newPos.push([w, x, y]);
+          recStart();
+          break;
+        case "Q":
+        case "S":
+          x1 = +cmd[i][1];
+          y1 = +cmd[i][2];
+          x = +cmd[i][3];
+          y = +cmd[i][4];
+          newPos.push([w, x, y, x1, y1]);
+          break;
+        case "C":
+          x1 = +cmd[i][1];
+          y1 = +cmd[i][2];
+          x2 = +cmd[i][3];
+          y2 = +cmd[i][4];
+          x = +cmd[i][5];
+          y = +cmd[i][6];
+          newPos.push([w, x, y, x1, y1, x2, y2]);
+          break;
+        case "T":
+        case "L":
+          x = +cmd[i][1];
+          y = +cmd[i][2];
+          newPos.push([w, x, y]);
+          break;
+        case "H":
+          w = "L";
+          x = +cmd[i][1];
+          newPos.push([w, x, y]);
+          break;
+        case "V":
+          w = "L";
+          y = +cmd[i][1];
+          newPos.push([w, x, y]);
+          break;
+        case "A":
+          w = "L";
+          var rx = +cmd[i][1];
+          var ry = +cmd[i][2];
+          if (!+cmd[i][4]) {
+            rx = -rx;
+            ry = -ry;
+          }
+          var cenX = x - rx;
+          var cenY = y;
+          for (k = 1; k <= CIRCLE_SIDES2 / 2; k++) {
+            var t = 2 * Math.PI * k / CIRCLE_SIDES2;
+            newPos.push([
+              w,
+              cenX + rx * Math.cos(t),
+              cenY + ry * Math.sin(t)
+            ]);
+          }
+          break;
+        case "Z":
+          if (x !== initX || y !== initY) {
+            x = initX;
+            y = initY;
+            newPos.push([w, x, y]);
+          }
+          break;
+      }
+      var domain = (plotinfo || {}).domain;
+      var size = gd._fullLayout._size;
+      var xPixelSized = plotinfo && plotinfo.xsizemode === "pixel";
+      var yPixelSized = plotinfo && plotinfo.ysizemode === "pixel";
+      var noOffset = isActiveShape === false;
+      for (var j = 0; j < newPos.length; j++) {
+        for (k = 0; k + 2 < 7; k += 2) {
+          var _x = newPos[j][k + 1];
+          var _y = newPos[j][k + 2];
+          if (_x === void 0 || _y === void 0) continue;
+          x = _x;
+          y = _y;
+          if (plotinfo) {
+            if (plotinfo.xaxis && plotinfo.xaxis.p2r) {
+              if (noOffset) _x -= plotinfo.xaxis._offset;
+              if (xPixelSized) {
+                _x = r2p2(plotinfo.xaxis, plotinfo.xanchor) + _x;
+              } else {
+                _x = p2r2(plotinfo.xaxis, _x);
+              }
+            } else {
+              if (noOffset) _x -= size.l;
+              if (domain) _x = domain.x[0] + _x / size.w;
+              else _x = _x / size.w;
+            }
+            if (plotinfo.yaxis && plotinfo.yaxis.p2r) {
+              if (noOffset) _y -= plotinfo.yaxis._offset;
+              if (yPixelSized) {
+                _y = r2p2(plotinfo.yaxis, plotinfo.yanchor) - _y;
+              } else {
+                _y = p2r2(plotinfo.yaxis, _y);
+              }
+            } else {
+              if (noOffset) _y -= size.t;
+              if (domain) _y = domain.y[1] - _y / size.h;
+              else _y = 1 - _y / size.h;
+            }
+          }
+          newPos[j][k + 1] = _x;
+          newPos[j][k + 2] = _y;
+        }
+        polys[n].push(
+          newPos[j].slice()
+        );
+      }
+    }
+    return polys;
+  };
+  function almostEq(a, b) {
+    return Math.abs(a - b) <= 1e-6;
+  }
+  function dist(a, b) {
+    var dx = b[1] - a[1];
+    var dy = b[2] - a[2];
+    return Math.sqrt(
+      dx * dx + dy * dy
+    );
+  }
+  var pointsOnRectangle = function(cell) {
+    var len2 = cell.length;
+    if (len2 !== 5) return false;
+    for (var j = 1; j < 3; j++) {
+      var e01 = cell[0][j] - cell[1][j];
+      var e32 = cell[3][j] - cell[2][j];
+      if (!almostEq(e01, e32)) return false;
+      var e03 = cell[0][j] - cell[3][j];
+      var e12 = cell[1][j] - cell[2][j];
+      if (!almostEq(e03, e12)) return false;
+    }
+    if (!almostEq(cell[0][1], cell[1][1]) && !almostEq(cell[0][1], cell[3][1])) return false;
+    return !!(dist(cell[0], cell[1]) * dist(cell[0], cell[3]));
+  };
+  var pointsOnEllipse = function(cell) {
+    var len2 = cell.length;
+    if (len2 !== CIRCLE_SIDES2 + 1) return false;
+    len2 = CIRCLE_SIDES2;
+    for (var i = 0; i < len2; i++) {
+      var k = (len2 * 2 - i) % len2;
+      var k2 = (len2 / 2 + k) % len2;
+      var i2 = (len2 / 2 + i) % len2;
+      if (!almostEq(
+        dist(cell[i], cell[i2]),
+        dist(cell[k], cell[k2])
+      )) return false;
+    }
+    return true;
+  };
+  var handleEllipse = function(isEllipse, start2, end) {
+    if (!isEllipse) return [start2, end];
+    var pos = ellipseOver({
+      x0: start2[0],
+      y0: start2[1],
+      x1: end[0],
+      y1: end[1]
+    });
+    var cx = (pos.x1 + pos.x0) / 2;
+    var cy = (pos.y1 + pos.y0) / 2;
+    var rx = (pos.x1 - pos.x0) / 2;
+    var ry = (pos.y1 - pos.y0) / 2;
+    if (!rx) rx = ry = ry / SQRT2;
+    if (!ry) ry = rx = rx / SQRT2;
+    var cell = [];
+    for (var i = 0; i < CIRCLE_SIDES2; i++) {
+      var t = i * 2 * Math.PI / CIRCLE_SIDES2;
+      cell.push([
+        cx + rx * Math.cos(t),
+        cy + ry * Math.sin(t)
+      ]);
+    }
+    return cell;
+  };
+  var ellipseOver = function(pos) {
+    var x0 = pos.x0;
+    var y0 = pos.y0;
+    var x1 = pos.x1;
+    var y1 = pos.y1;
+    var dx = x1 - x0;
+    var dy = y1 - y0;
+    x0 -= dx;
+    y0 -= dy;
+    var cx = (x0 + x1) / 2;
+    var cy = (y0 + y1) / 2;
+    var scale = SQRT2;
+    dx *= scale;
+    dy *= scale;
+    return {
+      x0: cx - dx,
+      y0: cy - dy,
+      x1: cx + dx,
+      y1: cy + dy
+    };
+  };
+  var fixDatesForPaths = function(polygons, xaxis, yaxis) {
+    var xIsDate = xaxis.type === "date";
+    var yIsDate = yaxis.type === "date";
+    if (!xIsDate && !yIsDate) return polygons;
+    for (var i = 0; i < polygons.length; i++) {
+      for (var j = 0; j < polygons[i].length; j++) {
+        for (var k = 0; k + 2 < polygons[i][j].length; k += 2) {
+          if (xIsDate) polygons[i][j][k + 1] = polygons[i][j][k + 1].replace(" ", "_");
+          if (yIsDate) polygons[i][j][k + 2] = polygons[i][j][k + 2].replace(" ", "_");
+        }
+      }
+    }
+    return polygons;
+  };
+  var helpers_default9 = { writePaths, readPaths, pointsOnRectangle, pointsOnEllipse, handleEllipse, ellipseOver, fixDatesForPaths };
+
+  // src/components/shapes/handle_outline.js
+  function clearOutlineControllers(gd) {
+    var zoomLayer = gd._fullLayout._zoomlayer;
+    if (zoomLayer) {
+      zoomLayer.selectAll(".outline-controllers").remove();
+    }
+  }
+  function clearOutline3(gd) {
+    var zoomLayer = gd._fullLayout._zoomlayer;
+    if (zoomLayer) {
+      zoomLayer.selectAll(".select-outline").remove();
+    }
+    gd._fullLayout._outlining = false;
+  }
+  var handle_outline_default = {
+    clearOutlineControllers,
+    clearOutline: clearOutline3
+  };
+
+  // src/components/shapes/draw_newshape/newshapes.js
+  var drawMode2 = helpers_default5.drawMode;
+  var openMode2 = helpers_default5.openMode;
+  var i000 = constants_default6.i000;
+  var i090 = constants_default6.i090;
+  var i180 = constants_default6.i180;
+  var i270 = constants_default6.i270;
+  var cos45 = constants_default6.cos45;
+  var sin45 = constants_default6.sin45;
+  var p2r3 = helpers_default8.p2r;
+  var r2p3 = helpers_default8.r2p;
+  var clearOutline4 = handle_outline_default.clearOutline;
+  var readPaths2 = helpers_default9.readPaths;
+  var writePaths2 = helpers_default9.writePaths;
+  var ellipseOver2 = helpers_default9.ellipseOver;
+  var fixDatesForPaths2 = helpers_default9.fixDatesForPaths;
+  function newShapes(outlines, dragOptions) {
+    if (!outlines.length) return;
+    var e = outlines[0][0];
+    if (!e) return;
+    var gd = dragOptions.gd;
+    var isActiveShape = dragOptions.isActiveShape;
+    var dragmode = dragOptions.dragmode;
+    var shapes = (gd.layout || {}).shapes || [];
+    if (!drawMode2(dragmode) && isActiveShape !== void 0) {
+      var id2 = gd._fullLayout._activeShapeIndex;
+      if (id2 < shapes.length) {
+        switch (gd._fullLayout.shapes[id2].type) {
+          case "rect":
+            dragmode = "drawrect";
+            break;
+          case "circle":
+            dragmode = "drawcircle";
+            break;
+          case "line":
+            dragmode = "drawline";
+            break;
+          case "path":
+            var path = shapes[id2].path || "";
+            if (path[path.length - 1] === "Z") {
+              dragmode = "drawclosedpath";
+            } else {
+              dragmode = "drawopenpath";
+            }
+            break;
+        }
+      }
+    }
+    var newShape = createShapeObj(outlines, dragOptions, dragmode);
+    clearOutline4(gd);
+    var editHelpers = dragOptions.editHelpers;
+    var modifyItem = (editHelpers || {}).modifyItem;
+    var allShapes = [];
+    for (var q = 0; q < shapes.length; q++) {
+      var beforeEdit = gd._fullLayout.shapes[q];
+      allShapes[q] = beforeEdit._input;
+      if (isActiveShape !== void 0 && q === gd._fullLayout._activeShapeIndex) {
+        var afterEdit = newShape;
+        switch (beforeEdit.type) {
+          case "line":
+          case "rect":
+          case "circle":
+            var xaxis = axis_ids_default.getFromId(gd, beforeEdit.xref);
+            if (beforeEdit.xref.charAt(0) === "x" && xaxis.type.includes("category")) {
+              modifyItem("x0", afterEdit.x0 - (beforeEdit.x0shift || 0));
+              modifyItem("x1", afterEdit.x1 - (beforeEdit.x1shift || 0));
+            } else {
+              modifyItem("x0", afterEdit.x0);
+              modifyItem("x1", afterEdit.x1);
+            }
+            var yaxis = axis_ids_default.getFromId(gd, beforeEdit.yref);
+            if (beforeEdit.yref.charAt(0) === "y" && yaxis.type.includes("category")) {
+              modifyItem("y0", afterEdit.y0 - (beforeEdit.y0shift || 0));
+              modifyItem("y1", afterEdit.y1 - (beforeEdit.y1shift || 0));
+            } else {
+              modifyItem("y0", afterEdit.y0);
+              modifyItem("y1", afterEdit.y1);
+            }
+            break;
+          case "path":
+            modifyItem("path", afterEdit.path);
+            break;
+        }
+      }
+    }
+    if (isActiveShape === void 0) {
+      allShapes.push(newShape);
+      return allShapes;
+    }
+    return editHelpers ? editHelpers.getUpdateObj() : {};
+  }
+  function createShapeObj(outlines, dragOptions, dragmode) {
+    var e = outlines[0][0];
+    var gd = dragOptions.gd;
+    var d = e.getAttribute("d");
+    var newStyle = gd._fullLayout.newshape;
+    var plotinfo = dragOptions.plotinfo;
+    var isActiveShape = dragOptions.isActiveShape;
+    var xaxis = plotinfo.xaxis;
+    var yaxis = plotinfo.yaxis;
+    var xPaper = !!plotinfo.domain || !plotinfo.xaxis;
+    var yPaper = !!plotinfo.domain || !plotinfo.yaxis;
+    var isOpenMode = openMode2(dragmode);
+    var polygons = readPaths2(d, gd, plotinfo, isActiveShape);
+    var newShape = {
+      editable: true,
+      visible: newStyle.visible,
+      name: newStyle.name,
+      showlegend: newStyle.showlegend,
+      legend: newStyle.legend,
+      legendwidth: newStyle.legendwidth,
+      legendgroup: newStyle.legendgroup,
+      legendgrouptitle: {
+        text: newStyle.legendgrouptitle.text,
+        font: newStyle.legendgrouptitle.font
+      },
+      legendrank: newStyle.legendrank,
+      label: newStyle.label,
+      xref: xPaper ? "paper" : xaxis._id,
+      yref: yPaper ? "paper" : yaxis._id,
+      layer: newStyle.layer,
+      opacity: newStyle.opacity,
+      line: {
+        color: newStyle.line.color,
+        width: newStyle.line.width,
+        dash: newStyle.line.dash
+      }
+    };
+    if (!isOpenMode) {
+      newShape.fillcolor = newStyle.fillcolor;
+      newShape.fillrule = newStyle.fillrule;
+    }
+    var cell;
+    if (polygons.length === 1) cell = polygons[0];
+    if (cell && cell.length === 5 && // ensure we only have 4 corners for a rect
+    dragmode === "drawrect") {
+      newShape.type = "rect";
+      newShape.x0 = cell[0][1];
+      newShape.y0 = cell[0][2];
+      newShape.x1 = cell[2][1];
+      newShape.y1 = cell[2][2];
+    } else if (cell && dragmode === "drawline") {
+      newShape.type = "line";
+      newShape.x0 = cell[0][1];
+      newShape.y0 = cell[0][2];
+      newShape.x1 = cell[1][1];
+      newShape.y1 = cell[1][2];
+    } else if (cell && dragmode === "drawcircle") {
+      newShape.type = "circle";
+      var xA = cell[i000][1];
+      var xB = cell[i090][1];
+      var xC = cell[i180][1];
+      var xD = cell[i270][1];
+      var yA = cell[i000][2];
+      var yB = cell[i090][2];
+      var yC = cell[i180][2];
+      var yD = cell[i270][2];
+      var xDateOrLog = plotinfo.xaxis && (plotinfo.xaxis.type === "date" || plotinfo.xaxis.type === "log");
+      var yDateOrLog = plotinfo.yaxis && (plotinfo.yaxis.type === "date" || plotinfo.yaxis.type === "log");
+      if (xDateOrLog) {
+        xA = r2p3(plotinfo.xaxis, xA);
+        xB = r2p3(plotinfo.xaxis, xB);
+        xC = r2p3(plotinfo.xaxis, xC);
+        xD = r2p3(plotinfo.xaxis, xD);
+      }
+      if (yDateOrLog) {
+        yA = r2p3(plotinfo.yaxis, yA);
+        yB = r2p3(plotinfo.yaxis, yB);
+        yC = r2p3(plotinfo.yaxis, yC);
+        yD = r2p3(plotinfo.yaxis, yD);
+      }
+      var x0 = (xB + xD) / 2;
+      var y0 = (yA + yC) / 2;
+      var rx = (xD - xB + xC - xA) / 2;
+      var ry = (yD - yB + yC - yA) / 2;
+      var pos = ellipseOver2({
+        x0,
+        y0,
+        x1: x0 + rx * cos45,
+        y1: y0 + ry * sin45
+      });
+      if (xDateOrLog) {
+        pos.x0 = p2r3(plotinfo.xaxis, pos.x0);
+        pos.x1 = p2r3(plotinfo.xaxis, pos.x1);
+      }
+      if (yDateOrLog) {
+        pos.y0 = p2r3(plotinfo.yaxis, pos.y0);
+        pos.y1 = p2r3(plotinfo.yaxis, pos.y1);
+      }
+      newShape.x0 = pos.x0;
+      newShape.y0 = pos.y0;
+      newShape.x1 = pos.x1;
+      newShape.y1 = pos.y1;
+    } else {
+      newShape.type = "path";
+      if (xaxis && yaxis) fixDatesForPaths2(polygons, xaxis, yaxis);
+      newShape.path = writePaths2(polygons);
+      cell = null;
+    }
+    return newShape;
+  }
+  var newshapes_default = {
+    newShapes,
+    createShapeObj
+  };
+
+  // src/components/selections/draw_newselection/newselections.js
+  var selectMode2 = helpers_default5.selectMode;
+  var clearOutline5 = handle_outline_default.clearOutline;
+  var readPaths3 = helpers_default9.readPaths;
+  var writePaths3 = helpers_default9.writePaths;
+  var fixDatesForPaths3 = helpers_default9.fixDatesForPaths;
+  function newSelections(outlines, dragOptions) {
+    if (!outlines.length) return;
+    var e = outlines[0][0];
+    if (!e) return;
+    var d = e.getAttribute("d");
+    var gd = dragOptions.gd;
+    var newStyle = gd._fullLayout.newselection;
+    var plotinfo = dragOptions.plotinfo;
+    var xaxis = plotinfo.xaxis;
+    var yaxis = plotinfo.yaxis;
+    var isActiveSelection = dragOptions.isActiveSelection;
+    var dragmode = dragOptions.dragmode;
+    var selections = (gd.layout || {}).selections || [];
+    if (!selectMode2(dragmode) && isActiveSelection !== void 0) {
+      var id2 = gd._fullLayout._activeSelectionIndex;
+      if (id2 < selections.length) {
+        switch (gd._fullLayout.selections[id2].type) {
+          case "rect":
+            dragmode = "select";
+            break;
+          case "path":
+            dragmode = "lasso";
+            break;
+        }
+      }
+    }
+    var polygons = readPaths3(d, gd, plotinfo, isActiveSelection);
+    var newSelection = {
+      xref: xaxis._id,
+      yref: yaxis._id,
+      opacity: newStyle.opacity,
+      line: {
+        color: newStyle.line.color,
+        width: newStyle.line.width,
+        dash: newStyle.line.dash
+      }
+    };
+    var cell;
+    if (polygons.length === 1) cell = polygons[0];
+    if (cell && cell.length === 5 && // ensure we only have 4 corners for a rect
+    dragmode === "select") {
+      newSelection.type = "rect";
+      newSelection.x0 = cell[0][1];
+      newSelection.y0 = cell[0][2];
+      newSelection.x1 = cell[2][1];
+      newSelection.y1 = cell[2][2];
+    } else {
+      newSelection.type = "path";
+      if (xaxis && yaxis) fixDatesForPaths3(polygons, xaxis, yaxis);
+      newSelection.path = writePaths3(polygons);
+      cell = null;
+    }
+    clearOutline5(gd);
+    var editHelpers = dragOptions.editHelpers;
+    var modifyItem = (editHelpers || {}).modifyItem;
+    var allSelections = [];
+    for (var q = 0; q < selections.length; q++) {
+      var beforeEdit = gd._fullLayout.selections[q];
+      if (!beforeEdit) {
+        allSelections[q] = beforeEdit;
+        continue;
+      }
+      allSelections[q] = beforeEdit._input;
+      if (isActiveSelection !== void 0 && q === gd._fullLayout._activeSelectionIndex) {
+        var afterEdit = newSelection;
+        switch (beforeEdit.type) {
+          case "rect":
+            modifyItem("x0", afterEdit.x0);
+            modifyItem("x1", afterEdit.x1);
+            modifyItem("y0", afterEdit.y0);
+            modifyItem("y1", afterEdit.y1);
+            break;
+          case "path":
+            modifyItem("path", afterEdit.path);
+            break;
+        }
+      }
+    }
+    if (isActiveSelection === void 0) {
+      allSelections.push(newSelection);
+      return allSelections;
+    }
+    return editHelpers ? editHelpers.getUpdateObj() : {};
+  }
+
+  // src/components/shapes/constants.js
+  var constants_default7 = {
+    segmentRE: /[MLHVQCTSZ][^MLHVQCTSZ]*/g,
+    paramRE: /[^\s,]+/g,
+    // which numbers in each path segment are x (or y) values
+    // drawn is which param is a drawn point, as opposed to a
+    // control point (which doesn't count toward autorange.
+    // TODO: this means curved paths could extend beyond the
+    // autorange bounds. This is a bit tricky to get right
+    // unless we revert to bounding boxes, but perhaps there's
+    // a calculation we could do...)
+    paramIsX: {
+      M: { 0: true, drawn: 0 },
+      L: { 0: true, drawn: 0 },
+      H: { 0: true, drawn: 0 },
+      V: {},
+      Q: { 0: true, 2: true, drawn: 2 },
+      C: { 0: true, 2: true, 4: true, drawn: 4 },
+      T: { 0: true, drawn: 0 },
+      S: { 0: true, 2: true, drawn: 2 },
+      // A: {0: true, 5: true},
+      Z: {}
+    },
+    paramIsY: {
+      M: { 1: true, drawn: 1 },
+      L: { 1: true, drawn: 1 },
+      H: {},
+      V: { 0: true, drawn: 0 },
+      Q: { 1: true, 3: true, drawn: 3 },
+      C: { 1: true, 3: true, 5: true, drawn: 5 },
+      T: { 1: true, drawn: 1 },
+      S: { 1: true, 3: true, drawn: 5 },
+      // A: {1: true, 6: true},
+      Z: {}
+    },
+    numParams: {
+      M: 2,
+      L: 2,
+      H: 1,
+      V: 1,
+      Q: 4,
+      C: 6,
+      T: 2,
+      S: 4,
+      // A: 7,
+      Z: 0
+    }
+  };
+
+  // src/components/shapes/helpers.js
+  var rangeToShapePosition = function(ax) {
+    return ax.type === "log" ? ax.r2d : function(v) {
+      return v;
+    };
+  };
+  var shapePositionToRange = function(ax) {
+    return ax.type === "log" ? ax.d2r : function(v) {
+      return v;
+    };
+  };
+  var decodeDate = function(convertToPx) {
+    return function(v) {
+      if (v.replace) v = v.replace("_", " ");
+      return convertToPx(v);
+    };
+  };
+  var encodeDate = function(convertToDate) {
+    return function(v) {
+      return convertToDate(v).replace(" ", "_");
+    };
+  };
+  var extractPathCoords = function(path, paramsToUse, isRaw) {
+    var extractedCoordinates = [];
+    var segments = path.match(constants_default7.segmentRE);
+    segments.forEach(function(segment) {
+      var relevantParamIdx = paramsToUse[segment.charAt(0)].drawn;
+      if (relevantParamIdx === void 0) return;
+      var params = segment.slice(1).match(constants_default7.paramRE);
+      if (!params || params.length < relevantParamIdx) return;
+      var str = params[relevantParamIdx];
+      var pos = isRaw ? str : lib_default.cleanNumber(str);
+      extractedCoordinates.push(pos);
+    });
+    return extractedCoordinates;
+  };
+  var getDataToPixel = function(gd, axis, shift, isVertical3, refType) {
+    var gs = gd._fullLayout._size;
+    var dataToPixel;
+    if (axis) {
+      if (refType === "domain") {
+        dataToPixel = function(v) {
+          return axis._length * (isVertical3 ? 1 - v : v) + axis._offset;
+        };
+      } else {
+        var d2r = shapePositionToRange(axis);
+        dataToPixel = function(v) {
+          var shiftPixels = getPixelShift(axis, shift);
+          return axis._offset + axis.r2p(d2r(v, true)) + shiftPixels;
+        };
+        if (axis.type === "date") dataToPixel = decodeDate(dataToPixel);
+      }
+    } else if (isVertical3) {
+      dataToPixel = function(v) {
+        return gs.t + gs.h * (1 - v);
+      };
+    } else {
+      dataToPixel = function(v) {
+        return gs.l + gs.w * v;
+      };
+    }
+    return dataToPixel;
+  };
+  var getPixelToData = function(gd, axis, isVertical3, opt) {
+    var gs = gd._fullLayout._size;
+    var pixelToData;
+    if (axis) {
+      if (opt === "domain") {
+        pixelToData = function(p) {
+          var q = (p - axis._offset) / axis._length;
+          return isVertical3 ? 1 - q : q;
+        };
+      } else {
+        var r2d = rangeToShapePosition(axis);
+        pixelToData = function(p) {
+          return r2d(axis.p2r(p - axis._offset));
+        };
+      }
+    } else if (isVertical3) {
+      pixelToData = function(p) {
+        return 1 - (p - gs.t) / gs.h;
+      };
+    } else {
+      pixelToData = function(p) {
+        return (p - gs.l) / gs.w;
+      };
+    }
+    return pixelToData;
+  };
+  var roundPositionForSharpStrokeRendering = function(pos, strokeWidth) {
+    var strokeWidthIsOdd = Math.round(strokeWidth % 2) === 1;
+    var posValAsInt = Math.round(pos);
+    return strokeWidthIsOdd ? posValAsInt + 0.5 : posValAsInt;
+  };
+  var makeShapesOptionsAndPlotinfo = function(gd, index) {
+    var options = gd._fullLayout.shapes[index] || {};
+    var plotinfo = gd._fullLayout._plots[options.xref + options.yref];
+    var hasPlotinfo = !!plotinfo;
+    if (hasPlotinfo) {
+      plotinfo._hadPlotinfo = true;
+    } else {
+      plotinfo = {};
+      if (options.xref && options.xref !== "paper") plotinfo.xaxis = gd._fullLayout[options.xref + "axis"];
+      if (options.yref && options.yref !== "paper") plotinfo.yaxis = gd._fullLayout[options.yref + "axis"];
+    }
+    plotinfo.xsizemode = options.xsizemode;
+    plotinfo.ysizemode = options.ysizemode;
+    plotinfo.xanchor = options.xanchor;
+    plotinfo.yanchor = options.yanchor;
+    return {
+      options,
+      plotinfo
+    };
+  };
+  var makeSelectionsOptionsAndPlotinfo = function(gd, index) {
+    var options = gd._fullLayout.selections[index] || {};
+    var plotinfo = gd._fullLayout._plots[options.xref + options.yref];
+    var hasPlotinfo = !!plotinfo;
+    if (hasPlotinfo) {
+      plotinfo._hadPlotinfo = true;
+    } else {
+      plotinfo = {};
+      if (options.xref) plotinfo.xaxis = gd._fullLayout[options.xref + "axis"];
+      if (options.yref) plotinfo.yaxis = gd._fullLayout[options.yref + "axis"];
+    }
+    return {
+      options,
+      plotinfo
+    };
+  };
+  var getPathString = function(gd, options) {
+    var type = options.type;
+    var xRefType = axes_default.getRefType(options.xref);
+    var yRefType = axes_default.getRefType(options.yref);
+    var xa = axes_default.getFromId(gd, options.xref);
+    var ya = axes_default.getFromId(gd, options.yref);
+    var gs = gd._fullLayout._size;
+    var x2r, x2p, y2r, y2p;
+    var xShiftStart = getPixelShift(xa, options.x0shift);
+    var xShiftEnd = getPixelShift(xa, options.x1shift);
+    var yShiftStart = getPixelShift(ya, options.y0shift);
+    var yShiftEnd = getPixelShift(ya, options.y1shift);
+    var x0, x1, y0, y1;
+    if (xa) {
+      if (xRefType === "domain") {
+        x2p = function(v) {
+          return xa._offset + xa._length * v;
+        };
+      } else {
+        x2r = shapePositionToRange(xa);
+        x2p = function(v) {
+          return xa._offset + xa.r2p(x2r(v, true));
+        };
+      }
+    } else {
+      x2p = function(v) {
+        return gs.l + gs.w * v;
+      };
+    }
+    if (ya) {
+      if (yRefType === "domain") {
+        y2p = function(v) {
+          return ya._offset + ya._length * (1 - v);
+        };
+      } else {
+        y2r = shapePositionToRange(ya);
+        y2p = function(v) {
+          return ya._offset + ya.r2p(y2r(v, true));
+        };
+      }
+    } else {
+      y2p = function(v) {
+        return gs.t + gs.h * (1 - v);
+      };
+    }
+    if (type === "path") {
+      if (xa && xa.type === "date") x2p = decodeDate(x2p);
+      if (ya && ya.type === "date") y2p = decodeDate(y2p);
+      return convertPath(options, x2p, y2p);
+    }
+    if (options.xsizemode === "pixel") {
+      var xAnchorPos = x2p(options.xanchor);
+      x0 = xAnchorPos + options.x0 + xShiftStart;
+      x1 = xAnchorPos + options.x1 + xShiftEnd;
+    } else {
+      x0 = x2p(options.x0) + xShiftStart;
+      x1 = x2p(options.x1) + xShiftEnd;
+    }
+    if (options.ysizemode === "pixel") {
+      var yAnchorPos = y2p(options.yanchor);
+      y0 = yAnchorPos - options.y0 + yShiftStart;
+      y1 = yAnchorPos - options.y1 + yShiftEnd;
+    } else {
+      y0 = y2p(options.y0) + yShiftStart;
+      y1 = y2p(options.y1) + yShiftEnd;
+    }
+    if (type === "line") return "M" + x0 + "," + y0 + "L" + x1 + "," + y1;
+    if (type === "rect") return "M" + x0 + "," + y0 + "H" + x1 + "V" + y1 + "H" + x0 + "Z";
+    var cx = (x0 + x1) / 2;
+    var cy = (y0 + y1) / 2;
+    var rx = Math.abs(cx - x0);
+    var ry = Math.abs(cy - y0);
+    var rArc = "A" + rx + "," + ry;
+    var rightPt = cx + rx + "," + cy;
+    var topPt = cx + "," + (cy - ry);
+    return "M" + rightPt + rArc + " 0 1,1 " + topPt + rArc + " 0 0,1 " + rightPt + "Z";
+  };
+  function convertPath(options, x2p, y2p) {
+    var pathIn = options.path;
+    var xSizemode = options.xsizemode;
+    var ySizemode = options.ysizemode;
+    var xAnchor = options.xanchor;
+    var yAnchor = options.yanchor;
+    return pathIn.replace(constants_default7.segmentRE, function(segment) {
+      var paramNumber = 0;
+      var segmentType = segment.charAt(0);
+      var xParams = constants_default7.paramIsX[segmentType];
+      var yParams = constants_default7.paramIsY[segmentType];
+      var nParams = constants_default7.numParams[segmentType];
+      var paramString = segment.slice(1).replace(constants_default7.paramRE, function(param) {
+        if (xParams[paramNumber]) {
+          if (xSizemode === "pixel") param = x2p(xAnchor) + Number(param);
+          else param = x2p(param);
+        } else if (yParams[paramNumber]) {
+          if (ySizemode === "pixel") param = y2p(yAnchor) - Number(param);
+          else param = y2p(param);
+        }
+        paramNumber++;
+        if (paramNumber > nParams) param = "X";
+        return param;
+      });
+      if (paramNumber > nParams) {
+        paramString = paramString.replace(/[\s,]*X.*/, "");
+        lib_default.log("Ignoring extra params in segment " + segment);
+      }
+      return segmentType + paramString;
+    });
+  }
+  function getPixelShift(axis, shift) {
+    shift = shift || 0;
+    var shiftPixels = 0;
+    if (shift && axis && (axis.type === "category" || axis.type === "multicategory")) {
+      shiftPixels = (axis.r2p(1) - axis.r2p(0)) * shift;
+    }
+    return shiftPixels;
+  }
+  var helpers_default10 = { rangeToShapePosition, shapePositionToRange, decodeDate, encodeDate, extractPathCoords, getDataToPixel, getPixelToData, roundPositionForSharpStrokeRendering, makeShapesOptionsAndPlotinfo, makeSelectionsOptionsAndPlotinfo, getPathString };
+
+  // src/components/shapes/display_labels.js
+  var { FROM_TL: FROM_TL3 } = alignment_default;
+  var getPathString2 = helpers_default10.getPathString;
+  function drawLabel(gd, index, options, shapeGroup) {
+    shapeGroup.selectAll(".shape-label").remove();
+    if (!(options.label.text || options.label.texttemplate)) return;
+    var text;
+    if (options.label.texttemplate) {
+      var templateValues = {};
+      if (options.type !== "path") {
+        var _xa = axes_default.getFromId(gd, options.xref);
+        var _ya = axes_default.getFromId(gd, options.yref);
+        for (var key in label_texttemplate_default) {
+          var val = label_texttemplate_default[key](options, _xa, _ya);
+          if (val !== void 0) templateValues[key] = val;
+        }
+      }
+      text = lib_default.texttemplateStringForShapes({
+        data: [templateValues],
+        fallback: options.label.texttemplatefallback,
+        locale: gd._fullLayout._d3locale,
+        template: options.label.texttemplate
+      });
+    } else {
+      text = options.label.text;
+    }
+    var labelGroupAttrs = {
+      "data-index": index
+    };
+    var font2 = options.label.font;
+    var labelTextAttrs = {
+      "data-notex": 1
+    };
+    var labelGroup = shapeGroup.append("g").attr(labelGroupAttrs).classed("shape-label", true);
+    var labelText = labelGroup.append("text").attr(labelTextAttrs).classed("shape-label-text", true).text(text);
+    var shapex0, shapex1, shapey0, shapey1;
+    if (options.path) {
+      var d = getPathString2(gd, options);
+      var polygons = readPaths(d, gd);
+      shapex0 = Infinity;
+      shapey0 = Infinity;
+      shapex1 = -Infinity;
+      shapey1 = -Infinity;
+      for (var i = 0; i < polygons.length; i++) {
+        for (var j = 0; j < polygons[i].length; j++) {
+          var p = polygons[i][j];
+          for (var k = 1; k < p.length; k += 2) {
+            var _x = p[k];
+            var _y = p[k + 1];
+            shapex0 = Math.min(shapex0, _x);
+            shapex1 = Math.max(shapex1, _x);
+            shapey0 = Math.min(shapey0, _y);
+            shapey1 = Math.max(shapey1, _y);
+          }
+        }
+      }
+    } else {
+      var xa = axes_default.getFromId(gd, options.xref);
+      var xShiftStart = options.x0shift;
+      var xShiftEnd = options.x1shift;
+      var xRefType = axes_default.getRefType(options.xref);
+      var ya = axes_default.getFromId(gd, options.yref);
+      var yShiftStart = options.y0shift;
+      var yShiftEnd = options.y1shift;
+      var yRefType = axes_default.getRefType(options.yref);
+      var x2p = function(v, shift) {
+        var dataToPixel = helpers_default10.getDataToPixel(gd, xa, shift, false, xRefType);
+        return dataToPixel(v);
+      };
+      var y2p = function(v, shift) {
+        var dataToPixel = helpers_default10.getDataToPixel(gd, ya, shift, true, yRefType);
+        return dataToPixel(v);
+      };
+      shapex0 = x2p(options.x0, xShiftStart);
+      shapex1 = x2p(options.x1, xShiftEnd);
+      shapey0 = y2p(options.y0, yShiftStart);
+      shapey1 = y2p(options.y1, yShiftEnd);
+    }
+    var textangle = options.label.textangle;
+    if (textangle === "auto") {
+      if (options.type === "line") {
+        textangle = calcTextAngle(shapex0, shapey0, shapex1, shapey1);
+      } else {
+        textangle = 0;
+      }
+    }
+    labelText.call(function(s) {
+      s.call(drawing_default.font, font2).attr({});
+      svg_text_utils_default.convertToTspans(s, gd);
+      return s;
+    });
+    var textBB = drawing_default.bBox(labelText.node());
+    var textPos = calcTextPosition(shapex0, shapey0, shapex1, shapey1, options, textangle, textBB);
+    var textx = textPos.textx;
+    var texty = textPos.texty;
+    var xanchor = textPos.xanchor;
+    labelText.attr({
+      "text-anchor": {
+        left: "start",
+        center: "middle",
+        right: "end"
+      }[xanchor],
+      y: texty,
+      x: textx,
+      transform: "rotate(" + textangle + "," + textx + "," + texty + ")"
+    }).call(svg_text_utils_default.positionText, textx, texty);
+  }
+  function calcTextAngle(shapex0, shapey0, shapex1, shapey1) {
+    var dy, dx;
+    dx = Math.abs(shapex1 - shapex0);
+    if (shapex1 >= shapex0) {
+      dy = shapey0 - shapey1;
+    } else {
+      dy = shapey1 - shapey0;
+    }
+    return -180 / Math.PI * Math.atan2(dy, dx);
+  }
+  function calcTextPosition(shapex0, shapey0, shapex1, shapey1, shapeOptions, actualTextAngle, textBB) {
+    var textPosition = shapeOptions.label.textposition;
+    var textAngle = shapeOptions.label.textangle;
+    var textPadding = shapeOptions.label.padding;
+    var shapeType = shapeOptions.type;
+    var textAngleRad = Math.PI / 180 * actualTextAngle;
+    var sinA = Math.sin(textAngleRad);
+    var cosA = Math.cos(textAngleRad);
+    var xanchor = shapeOptions.label.xanchor;
+    var yanchor = shapeOptions.label.yanchor;
+    var textx, texty, paddingX, paddingY;
+    if (shapeType === "line") {
+      if (textPosition === "start") {
+        textx = shapex0;
+        texty = shapey0;
+      } else if (textPosition === "end") {
+        textx = shapex1;
+        texty = shapey1;
+      } else {
+        textx = (shapex0 + shapex1) / 2;
+        texty = (shapey0 + shapey1) / 2;
+      }
+      if (xanchor === "auto") {
+        if (textPosition === "start") {
+          if (textAngle === "auto") {
+            if (shapex1 > shapex0) xanchor = "left";
+            else if (shapex1 < shapex0) xanchor = "right";
+            else xanchor = "center";
+          } else {
+            if (shapex1 > shapex0) xanchor = "right";
+            else if (shapex1 < shapex0) xanchor = "left";
+            else xanchor = "center";
+          }
+        } else if (textPosition === "end") {
+          if (textAngle === "auto") {
+            if (shapex1 > shapex0) xanchor = "right";
+            else if (shapex1 < shapex0) xanchor = "left";
+            else xanchor = "center";
+          } else {
+            if (shapex1 > shapex0) xanchor = "left";
+            else if (shapex1 < shapex0) xanchor = "right";
+            else xanchor = "center";
+          }
+        } else {
+          xanchor = "center";
+        }
+      }
+      var paddingConstantsX = { left: 1, center: 0, right: -1 };
+      var paddingConstantsY = { bottom: -1, middle: 0, top: 1 };
+      if (textAngle === "auto") {
+        var paddingDirection = paddingConstantsY[yanchor];
+        paddingX = -textPadding * sinA * paddingDirection;
+        paddingY = textPadding * cosA * paddingDirection;
+      } else {
+        var paddingDirectionX = paddingConstantsX[xanchor];
+        var paddingDirectionY = paddingConstantsY[yanchor];
+        paddingX = textPadding * paddingDirectionX;
+        paddingY = textPadding * paddingDirectionY;
+      }
+      textx = textx + paddingX;
+      texty = texty + paddingY;
+    } else {
+      paddingX = textPadding + 3;
+      if (textPosition.indexOf("right") !== -1) {
+        textx = Math.max(shapex0, shapex1) - paddingX;
+        if (xanchor === "auto") xanchor = "right";
+      } else if (textPosition.indexOf("left") !== -1) {
+        textx = Math.min(shapex0, shapex1) + paddingX;
+        if (xanchor === "auto") xanchor = "left";
+      } else {
+        textx = (shapex0 + shapex1) / 2;
+        if (xanchor === "auto") xanchor = "center";
+      }
+      if (textPosition.indexOf("top") !== -1) {
+        texty = Math.min(shapey0, shapey1);
+      } else if (textPosition.indexOf("bottom") !== -1) {
+        texty = Math.max(shapey0, shapey1);
+      } else {
+        texty = (shapey0 + shapey1) / 2;
+      }
+      paddingY = textPadding;
+      if (yanchor === "bottom") {
+        texty = texty - paddingY;
+      } else if (yanchor === "top") {
+        texty = texty + paddingY;
+      }
+    }
+    var shiftFraction = FROM_TL3[yanchor];
+    var baselineAdjust = shapeOptions.label.font.size;
+    var textHeight = textBB.height;
+    var xshift = (textHeight * shiftFraction - baselineAdjust) * sinA;
+    var yshift = -(textHeight * shiftFraction - baselineAdjust) * cosA;
+    return { textx: textx + xshift, texty: texty + yshift, xanchor };
+  }
+
+  // src/components/shapes/display_outlines.js
+  var { newShapes: newShapes2, createShapeObj: createShapeObj2 } = newshapes_default;
+  var strTranslate11 = lib_default.strTranslate;
+  var drawMode3 = helpers_default5.drawMode;
+  var selectMode3 = helpers_default5.selectMode;
+  var i0002 = constants_default6.i000;
+  var i0902 = constants_default6.i090;
+  var i1802 = constants_default6.i180;
+  var i2702 = constants_default6.i270;
+  var clearOutlineControllers2 = handle_outline_default.clearOutlineControllers;
+  var pointsOnRectangle2 = helpers_default9.pointsOnRectangle;
+  var pointsOnEllipse2 = helpers_default9.pointsOnEllipse;
+  var writePaths4 = helpers_default9.writePaths;
+  function displayOutlines(polygons, outlines, dragOptions, nCalls) {
+    if (!nCalls) nCalls = 0;
+    var gd = dragOptions.gd;
+    function redraw3() {
+      displayOutlines(polygons, outlines, dragOptions, nCalls++);
+      if (pointsOnEllipse2(polygons[0]) || dragOptions.hasText) {
+        update3({ redrawing: true });
+      }
+    }
+    function update3(opts) {
+      var updateObject = {};
+      if (dragOptions.isActiveShape !== void 0) {
+        dragOptions.isActiveShape = false;
+        updateObject = newShapes2(outlines, dragOptions);
+      }
+      if (dragOptions.isActiveSelection !== void 0) {
+        dragOptions.isActiveSelection = false;
+        updateObject = newSelections(outlines, dragOptions);
+        gd._fullLayout._reselect = true;
+      }
+      if (Object.keys(updateObject).length) {
+        registry_default.call((opts || {}).redrawing ? "relayout" : "_guiRelayout", gd, updateObject);
+      }
+    }
+    var fullLayout = gd._fullLayout;
+    var zoomLayer = fullLayout._zoomlayer;
+    var dragmode = dragOptions.dragmode;
+    var isDrawMode = drawMode3(dragmode);
+    var isSelectMode = selectMode3(dragmode);
+    if (isDrawMode || isSelectMode) {
+      gd._fullLayout._outlining = true;
+    }
+    clearOutlineControllers2(gd);
+    outlines.attr("d", writePaths4(polygons));
+    var vertexDragOptions;
+    var groupDragOptions;
+    var indexI;
+    var indexJ;
+    var copyPolygons;
+    if (!nCalls && (dragOptions.isActiveShape || dragOptions.isActiveSelection)) {
+      copyPolygons = recordPositions([], polygons);
+      var g = zoomLayer.append("g").attr("class", "outline-controllers");
+      addVertexControllers(g);
+      addGroupControllers();
+    }
+    if (isDrawMode && dragOptions.hasText) {
+      var shapeGroup = zoomLayer.select(".label-temp");
+      var shapeOptions = createShapeObj2(outlines, dragOptions, dragOptions.dragmode);
+      drawLabel(gd, "label-temp", shapeOptions, shapeGroup);
+    }
+    function startDragVertex(evt) {
+      indexI = +evt.srcElement.getAttribute("data-i");
+      indexJ = +evt.srcElement.getAttribute("data-j");
+      vertexDragOptions[indexI][indexJ].moveFn = moveVertexController;
+    }
+    function moveVertexController(dx, dy) {
+      if (!polygons.length) return;
+      var x0 = copyPolygons[indexI][indexJ][1];
+      var y0 = copyPolygons[indexI][indexJ][2];
+      var cell = polygons[indexI];
+      var len2 = cell.length;
+      if (pointsOnRectangle2(cell)) {
+        var _dx = dx;
+        var _dy = dy;
+        if (dragOptions.isActiveSelection) {
+          var nextPoint = getNextPoint(cell, indexJ);
+          if (nextPoint[1] === cell[indexJ][1]) {
+            _dy = 0;
+          } else {
+            _dx = 0;
+          }
+        }
+        for (var q = 0; q < len2; q++) {
+          if (q === indexJ) continue;
+          var pos = cell[q];
+          if (pos[1] === cell[indexJ][1]) {
+            pos[1] = x0 + _dx;
+          }
+          if (pos[2] === cell[indexJ][2]) {
+            pos[2] = y0 + _dy;
+          }
+        }
+        cell[indexJ][1] = x0 + _dx;
+        cell[indexJ][2] = y0 + _dy;
+        if (!pointsOnRectangle2(cell)) {
+          for (var j = 0; j < len2; j++) {
+            for (var k = 0; k < cell[j].length; k++) {
+              cell[j][k] = copyPolygons[indexI][j][k];
+            }
+          }
+        }
+      } else {
+        cell[indexJ][1] = x0 + dx;
+        cell[indexJ][2] = y0 + dy;
+      }
+      redraw3();
+    }
+    function endDragVertexController() {
+      update3();
+    }
+    function removeVertex() {
+      if (!polygons.length) return;
+      if (!polygons[indexI]) return;
+      if (!polygons[indexI].length) return;
+      var newPolygon = [];
+      for (var j = 0; j < polygons[indexI].length; j++) {
+        if (j !== indexJ) {
+          newPolygon.push(
+            polygons[indexI][j]
+          );
+        }
+      }
+      if (newPolygon.length > 1 && !(newPolygon.length === 2 && newPolygon[1][0] === "Z")) {
+        if (indexJ === 0) {
+          newPolygon[0][0] = "M";
+        }
+        polygons[indexI] = newPolygon;
+        redraw3();
+        update3();
+      }
+    }
+    function clickVertexController(numClicks, evt) {
+      if (numClicks === 2) {
+        indexI = +evt.srcElement.getAttribute("data-i");
+        indexJ = +evt.srcElement.getAttribute("data-j");
+        var cell = polygons[indexI];
+        if (!pointsOnRectangle2(cell) && !pointsOnEllipse2(cell)) {
+          removeVertex();
+        }
+      }
+    }
+    function addVertexControllers(g2) {
+      vertexDragOptions = [];
+      for (var i = 0; i < polygons.length; i++) {
+        var cell = polygons[i];
+        var onRect = pointsOnRectangle2(cell);
+        var onEllipse = !onRect && pointsOnEllipse2(cell);
+        vertexDragOptions[i] = [];
+        var len2 = cell.length;
+        for (var j = 0; j < len2; j++) {
+          if (cell[j][0] === "Z") continue;
+          if (onEllipse && j !== i0002 && j !== i0902 && j !== i1802 && j !== i2702) {
+            continue;
+          }
+          var rectSelection = onRect && dragOptions.isActiveSelection;
+          var nextPoint;
+          if (rectSelection) nextPoint = getNextPoint(cell, j);
+          var x = cell[j][1];
+          var y = cell[j][2];
+          var vertex = g2.append(rectSelection ? "rect" : "circle").attr("data-i", i).attr("data-j", j).style({
+            fill: color_default.background,
+            stroke: color_default.defaultLine,
+            "stroke-width": 1,
+            "shape-rendering": "crispEdges"
+          });
+          if (rectSelection) {
+            var dx = nextPoint[1] - x;
+            var dy = nextPoint[2] - y;
+            var width = dy ? 5 : Math.max(Math.min(25, Math.abs(dx) - 5), 5);
+            var height = dx ? 5 : Math.max(Math.min(25, Math.abs(dy) - 5), 5);
+            vertex.classed(dy ? "cursor-ew-resize" : "cursor-ns-resize", true).attr("width", width).attr("height", height).attr("x", x - width / 2).attr("y", y - height / 2).attr("transform", strTranslate11(dx / 2, dy / 2));
+          } else {
+            vertex.classed("cursor-grab", true).attr("r", 5).attr("cx", x).attr("cy", y);
+          }
+          vertexDragOptions[i][j] = {
+            element: vertex.node(),
+            gd,
+            prepFn: startDragVertex,
+            doneFn: endDragVertexController,
+            clickFn: clickVertexController
+          };
+          dragelement_default.init(vertexDragOptions[i][j]);
+        }
+      }
+    }
+    function moveGroup(dx, dy) {
+      if (!polygons.length) return;
+      for (var i = 0; i < polygons.length; i++) {
+        for (var j = 0; j < polygons[i].length; j++) {
+          for (var k = 0; k + 2 < polygons[i][j].length; k += 2) {
+            polygons[i][j][k + 1] = copyPolygons[i][j][k + 1] + dx;
+            polygons[i][j][k + 2] = copyPolygons[i][j][k + 2] + dy;
+          }
+        }
+      }
+    }
+    function moveGroupController(dx, dy) {
+      moveGroup(dx, dy);
+      redraw3();
+    }
+    function startDragGroupController(evt) {
+      indexI = +evt.srcElement.getAttribute("data-i");
+      if (!indexI) indexI = 0;
+      groupDragOptions[indexI].moveFn = moveGroupController;
+    }
+    function endDragGroupController() {
+      update3();
+    }
+    function clickGroupController(numClicks) {
+      if (numClicks === 2) {
+        eraseActiveSelection(gd);
+      }
+    }
+    function addGroupControllers() {
+      groupDragOptions = [];
+      if (!polygons.length) return;
+      var i = 0;
+      groupDragOptions[i] = {
+        element: outlines[0][0],
+        gd,
+        prepFn: startDragGroupController,
+        doneFn: endDragGroupController,
+        clickFn: clickGroupController
+      };
+      dragelement_default.init(groupDragOptions[i]);
+    }
+  }
+  function recordPositions(polygonsOut, polygonsIn) {
+    for (var i = 0; i < polygonsIn.length; i++) {
+      var cell = polygonsIn[i];
+      polygonsOut[i] = [];
+      for (var j = 0; j < cell.length; j++) {
+        polygonsOut[i][j] = [];
+        for (var k = 0; k < cell[j].length; k++) {
+          polygonsOut[i][j][k] = cell[j][k];
+        }
+      }
+    }
+    return polygonsOut;
+  }
+  function getNextPoint(cell, j) {
+    var x = cell[j][1];
+    var y = cell[j][2];
+    var len2 = cell.length;
+    var nextJ, nextX, nextY;
+    nextJ = (j + 1) % len2;
+    nextX = cell[nextJ][1];
+    nextY = cell[nextJ][2];
+    if (nextX === x && nextY === y) {
+      nextJ = (j + 2) % len2;
+      nextX = cell[nextJ][1];
+      nextY = cell[nextJ][2];
+    }
+    return [nextJ, nextX, nextY];
+  }
+  function eraseActiveSelection(gd) {
+    if (!selectMode3(gd._fullLayout.dragmode)) return;
+    clearOutlineControllers2(gd);
+    var id2 = gd._fullLayout._activeSelectionIndex;
+    var selections = (gd.layout || {}).selections || [];
+    if (id2 < selections.length) {
+      var list2 = [];
+      for (var q = 0; q < selections.length; q++) {
+        if (q !== id2) {
+          list2.push(selections[q]);
+        }
+      }
+      delete gd._fullLayout._activeSelectionIndex;
+      var erasedSelection = gd._fullLayout.selections[id2];
+      gd._fullLayout._deselect = {
+        xref: erasedSelection.xref,
+        yref: erasedSelection.yref
+      };
+      registry_default.call("_guiRelayout", gd, {
+        selections: list2
+      });
+    }
+  }
+
   // src/components/selections/draw.js
-  var { clearOutlineControllers: clearOutlineControllers4 } = handle_outline_default;
-  var getPathString4 = helpers_default8.getPathString;
-  var draw_default3 = {
-    draw: draw7,
-    drawOne: drawOne4,
+  var { clearOutlineControllers: clearOutlineControllers3 } = handle_outline_default;
+  var getPathString3 = helpers_default10.getPathString;
+  var draw_default2 = {
+    draw: draw6,
+    drawOne: drawOne3,
     activateLastSelection
   };
-  function draw7(gd) {
+  function draw6(gd) {
     var fullLayout = gd._fullLayout;
-    clearOutlineControllers4(gd);
+    clearOutlineControllers3(gd);
     fullLayout._selectionLayer.selectAll("path").remove();
     for (var k in fullLayout._plots) {
       var selectionLayer = fullLayout._plots[k].selectionLayer;
       if (selectionLayer) selectionLayer.selectAll("path").remove();
     }
     for (var i = 0; i < fullLayout.selections.length; i++) {
-      drawOne4(gd, i);
+      drawOne3(gd, i);
     }
   }
   function couldHaveActiveSelection(gd) {
     return gd._context.editSelection;
   }
-  function drawOne4(gd, index) {
+  function drawOne3(gd, index) {
     gd._fullLayout._paperdiv.selectAll('.selectionlayer [data-index="' + index + '"]').remove();
-    var o = helpers_default8.makeSelectionsOptionsAndPlotinfo(gd, index);
+    var o = helpers_default10.makeSelectionsOptionsAndPlotinfo(gd, index);
     var options = o.options;
     var plotinfo = o.plotinfo;
     if (!options._input) return;
     drawSelection(gd._fullLayout._selectionLayer);
     function drawSelection(selectionLayer) {
-      var d = getPathString4(gd, options);
+      var d = getPathString3(gd, options);
       var attrs2 = {
         "data-index": index,
         "fill-rule": "evenodd",
@@ -48081,7 +47586,7 @@ var Plotly = (() => {
           sensory ? "solid" : lineDash,
           sensory ? 4 + lineWidth : lineWidth
         );
-        setClipPath2(path, gd, options);
+        setClipPath(path, gd, options);
         if (isActiveSelection) {
           var editHelpers = arrayEditor(gd.layout, "selections", options);
           path.style({
@@ -48109,7 +47614,7 @@ var Plotly = (() => {
       });
     }
   }
-  function setClipPath2(selectionPath, gd, selectionOptions) {
+  function setClipPath(selectionPath, gd, selectionOptions) {
     var clipAxes = selectionOptions.xref + selectionOptions.yref;
     drawing_default.setClipUrl(
       selectionPath,
@@ -48128,7 +47633,7 @@ var Plotly = (() => {
       }
       gd._fullLayout._activeSelectionIndex = id2;
       gd._fullLayout._deactivateSelection = deactivateSelection;
-      draw7(gd);
+      draw6(gd);
     }
   }
   function activateLastSelection(gd) {
@@ -48136,15 +47641,15 @@ var Plotly = (() => {
     var id2 = gd._fullLayout.selections.length - 1;
     gd._fullLayout._activeSelectionIndex = id2;
     gd._fullLayout._deactivateSelection = deactivateSelection;
-    draw7(gd);
+    draw6(gd);
   }
   function deactivateSelection(gd) {
     if (!couldHaveActiveSelection(gd)) return;
     var id2 = gd._fullLayout._activeSelectionIndex;
     if (id2 >= 0) {
-      clearOutlineControllers4(gd);
+      clearOutlineControllers3(gd);
       delete gd._fullLayout._activeSelectionIndex;
-      draw7(gd);
+      draw6(gd);
     }
   }
 
@@ -48166,23 +47671,23 @@ var Plotly = (() => {
 
   // src/components/selections/select.js
   var { dashStyle } = drawing_default;
-  var { clearOutline: clearOutline7 } = handle_outline_default;
+  var { clearOutline: clearOutline6 } = handle_outline_default;
   var { newShapes: newShapes3 } = newshapes_default;
-  var { activateLastSelection: activateLastSelection2 } = draw_default3;
+  var { activateLastSelection: activateLastSelection2 } = draw_default2;
   var freeMode3 = helpers_default5.freeMode;
   var rectMode2 = helpers_default5.rectMode;
   var drawMode4 = helpers_default5.drawMode;
   var openMode3 = helpers_default5.openMode;
   var selectMode4 = helpers_default5.selectMode;
-  var handleEllipse2 = helpers_default7.handleEllipse;
-  var readPaths4 = helpers_default7.readPaths;
+  var handleEllipse2 = helpers_default9.handleEllipse;
+  var readPaths4 = helpers_default9.readPaths;
   var ascending3 = lib_default.sorterAsc;
   var MINSELECT = constants_default8.MINSELECT;
   var filteredPolygon = polygon_default.filter;
   var polygonTester2 = polygon_default.tester;
-  var p2r4 = helpers_default6.p2r;
-  var axValue2 = helpers_default6.axValue;
-  var getTransform2 = helpers_default6.getTransform;
+  var p2r4 = helpers_default8.p2r;
+  var axValue2 = helpers_default8.axValue;
+  var getTransform2 = helpers_default8.getTransform;
   function hasSubplot(dragOptions) {
     return dragOptions.subplot !== void 0;
   }
@@ -48641,7 +48146,7 @@ var Plotly = (() => {
       clearSelectionsCache(dragOptions);
     }
     if (!selectingOnSameSubplot) {
-      clearOutline7(gd);
+      clearOutline6(gd);
       fullLayout._lastSelectedSubplot = plotinfo.id;
     }
   }
@@ -49188,8 +48693,8 @@ var Plotly = (() => {
           var path = segments[j];
           if (!path) continue;
           path += "Z";
-          var allX = helpers_default8.extractPathCoords(path, constants_default5.paramIsX, "raw");
-          var allY = helpers_default8.extractPathCoords(path, constants_default5.paramIsY, "raw");
+          var allX = helpers_default10.extractPathCoords(path, constants_default7.paramIsX, "raw");
+          var allY = helpers_default10.extractPathCoords(path, constants_default7.paramIsY, "raw");
           xmin = Infinity;
           xmax = -Infinity;
           ymin = Infinity;
@@ -49306,7 +48811,7 @@ var Plotly = (() => {
   var select_default4 = {
     reselect,
     prepSelect: prepSelect2,
-    clearOutline: clearOutline7,
+    clearOutline: clearOutline6,
     clearSelectionsCache,
     selectOnClick: selectOnClick2
   };
@@ -49397,8 +48902,8 @@ var Plotly = (() => {
       var axRef = axes_default.coerceRef(selectionIn, selectionOut, gdMock, axLetter);
       ax = axes_default.getFromId(gdMock, axRef);
       ax._selectionIndices.push(selectionOut._index);
-      r2pos = helpers_default8.rangeToShapePosition(ax);
-      pos2r = helpers_default8.shapePositionToRange(ax);
+      r2pos = helpers_default10.rangeToShapePosition(ax);
+      pos2r = helpers_default10.shapePositionToRange(ax);
       if (noPath) {
         var attr0 = axLetter + "0";
         var attr1 = axLetter + "1";
@@ -49443,14 +48948,506 @@ var Plotly = (() => {
     supplyLayoutDefaults: supplyLayoutDefaults7,
     supplyDrawNewSelectionDefaults,
     includeBasePlot: makeIncludeComponents("selections"),
-    draw: draw_default3.draw,
-    drawOne: draw_default3.drawOne,
+    draw: draw_default2.draw,
+    drawOne: draw_default2.drawOne,
     reselect: select_default4.reselect,
     prepSelect: select_default4.prepSelect,
     clearOutline: select_default4.clearOutline,
     clearSelectionsCache: select_default4.clearSelectionsCache,
     selectOnClick: select_default4.selectOnClick
   };
+
+  // src/components/shapes/draw.js
+  var { clearOutlineControllers: clearOutlineControllers4 } = handle_outline_default;
+  var getPathString4 = helpers_default10.getPathString;
+  var draw_default3 = {
+    draw: draw7,
+    drawOne: drawOne4,
+    eraseActiveShape,
+    drawLabel
+  };
+  function draw7(gd) {
+    var fullLayout = gd._fullLayout;
+    fullLayout._shapeUpperLayer.selectAll("path").remove();
+    fullLayout._shapeLowerLayer.selectAll("path").remove();
+    fullLayout._shapeUpperLayer.selectAll("text").remove();
+    fullLayout._shapeLowerLayer.selectAll("text").remove();
+    for (var k in fullLayout._plots) {
+      var shapelayer = fullLayout._plots[k].shapelayer;
+      if (shapelayer) {
+        shapelayer.selectAll("path").remove();
+        shapelayer.selectAll("text").remove();
+      }
+    }
+    for (var i = 0; i < fullLayout.shapes.length; i++) {
+      if (fullLayout.shapes[i].visible === true) {
+        drawOne4(gd, i);
+      }
+    }
+  }
+  function shouldSkipEdits(gd) {
+    return !!gd._fullLayout._outlining;
+  }
+  function couldHaveActiveShape(gd) {
+    return !gd._context.edits.shapePosition;
+  }
+  function drawOne4(gd, index) {
+    gd._fullLayout._paperdiv.selectAll('.shapelayer [data-index="' + index + '"]').remove();
+    var o = helpers_default10.makeShapesOptionsAndPlotinfo(gd, index);
+    var options = o.options;
+    var plotinfo = o.plotinfo;
+    if (!options._input || options.visible !== true) return;
+    if (options.layer === "above") {
+      drawShape(gd._fullLayout._shapeUpperLayer);
+    } else if (options.xref === "paper" || options.yref === "paper") {
+      drawShape(gd._fullLayout._shapeLowerLayer);
+    } else if (options.layer === "between") {
+      drawShape(plotinfo.shapelayerBetween);
+    } else {
+      if (plotinfo._hadPlotinfo) {
+        var mainPlot = plotinfo.mainplotinfo || plotinfo;
+        drawShape(mainPlot.shapelayer);
+      } else {
+        drawShape(gd._fullLayout._shapeLowerLayer);
+      }
+    }
+    function drawShape(shapeLayer) {
+      var d = getPathString4(gd, options);
+      var attrs2 = {
+        "data-index": index,
+        "fill-rule": options.fillrule,
+        d
+      };
+      var opacity = options.opacity;
+      var fillColor = options.fillcolor;
+      var lineColor = options.line.width ? options.line.color : "rgba(0,0,0,0)";
+      var lineWidth = options.line.width;
+      var lineDash = options.line.dash;
+      if (!lineWidth && options.editable === true) {
+        lineWidth = 5;
+        lineDash = "solid";
+      }
+      var isOpen = d[d.length - 1] !== "Z";
+      var isActiveShape = couldHaveActiveShape(gd) && options.editable && gd._fullLayout._activeShapeIndex === index;
+      if (isActiveShape) {
+        fillColor = isOpen ? "rgba(0,0,0,0)" : gd._fullLayout.activeshape.fillcolor;
+        opacity = gd._fullLayout.activeshape.opacity;
+      }
+      var shapeGroup = shapeLayer.append("g").classed("shape-group", true).attr({ "data-index": index });
+      var path = shapeGroup.append("path").attr(attrs2).style("opacity", opacity).call(color_default.stroke, lineColor).call(color_default.fill, fillColor).call(drawing_default.dashLine, lineDash, lineWidth);
+      setClipPath2(shapeGroup, gd, options);
+      drawLabel(gd, index, options, shapeGroup);
+      var editHelpers;
+      if (isActiveShape || gd._context.edits.shapePosition) editHelpers = arrayEditor(gd.layout, "shapes", options);
+      if (isActiveShape) {
+        path.style({
+          cursor: "move"
+        });
+        var dragOptions = {
+          element: path.node(),
+          plotinfo,
+          gd,
+          editHelpers,
+          hasText: options.label.text || options.label.texttemplate,
+          isActiveShape: true
+          // i.e. to enable controllers
+        };
+        var polygons = readPaths(d, gd);
+        displayOutlines(polygons, path, dragOptions);
+      } else {
+        if (gd._context.edits.shapePosition) {
+          setupDragElement(gd, path, options, index, shapeLayer, editHelpers);
+        } else if (options.editable === true) {
+          path.style(
+            "pointer-events",
+            isOpen || color_default.opacity(fillColor) * opacity <= 0.5 ? "stroke" : "all"
+          );
+        }
+      }
+      path.node().addEventListener("click", function() {
+        return activateShape(gd, path);
+      });
+    }
+  }
+  function setClipPath2(shapePath, gd, shapeOptions) {
+    var clipAxes = (shapeOptions.xref + shapeOptions.yref).replace(/paper/g, "").replace(/[xyz][0-9]* *domain/g, "");
+    drawing_default.setClipUrl(
+      shapePath,
+      clipAxes ? "clip" + gd._fullLayout._uid + clipAxes : null,
+      gd
+    );
+  }
+  function setupDragElement(gd, shapePath, shapeOptions, index, shapeLayer, editHelpers) {
+    var MINWIDTH = 10;
+    var MINHEIGHT = 10;
+    var xPixelSized = shapeOptions.xsizemode === "pixel";
+    var yPixelSized = shapeOptions.ysizemode === "pixel";
+    var isLine = shapeOptions.type === "line";
+    var isPath = shapeOptions.type === "path";
+    var modifyItem = editHelpers.modifyItem;
+    var x0, y0, x1, y1, xAnchor, yAnchor;
+    var n0, s0, w0, e0, optN, optS, optW, optE;
+    var pathIn;
+    var shapeGroup = select_default2(shapePath.node().parentNode);
+    var xa = axes_default.getFromId(gd, shapeOptions.xref);
+    var xRefType = axes_default.getRefType(shapeOptions.xref);
+    var ya = axes_default.getFromId(gd, shapeOptions.yref);
+    var yRefType = axes_default.getRefType(shapeOptions.yref);
+    var shiftXStart = shapeOptions.x0shift;
+    var shiftXEnd = shapeOptions.x1shift;
+    var shiftYStart = shapeOptions.y0shift;
+    var shiftYEnd = shapeOptions.y1shift;
+    var x2p = function(v, shift) {
+      var dataToPixel = helpers_default10.getDataToPixel(gd, xa, shift, false, xRefType);
+      return dataToPixel(v);
+    };
+    var y2p = function(v, shift) {
+      var dataToPixel = helpers_default10.getDataToPixel(gd, ya, shift, true, yRefType);
+      return dataToPixel(v);
+    };
+    var p2x = helpers_default10.getPixelToData(gd, xa, false, xRefType);
+    var p2y = helpers_default10.getPixelToData(gd, ya, true, yRefType);
+    var sensoryElement = obtainSensoryElement();
+    var dragOptions = {
+      element: sensoryElement.node(),
+      gd,
+      prepFn: startDrag,
+      doneFn: endDrag,
+      clickFn: abortDrag
+    };
+    var dragMode;
+    dragelement_default.init(dragOptions);
+    sensoryElement.node().onmousemove = updateDragMode;
+    function obtainSensoryElement() {
+      return isLine ? createLineDragHandles() : shapePath;
+    }
+    function createLineDragHandles() {
+      var minSensoryWidth = 10;
+      var sensoryWidth = Math.max(shapeOptions.line.width, minSensoryWidth);
+      var g = shapeLayer.append("g").attr("data-index", index).attr("drag-helper", true);
+      g.append("path").attr("d", shapePath.attr("d")).style({
+        cursor: "move",
+        "stroke-width": sensoryWidth,
+        "stroke-opacity": "0"
+        // ensure not visible
+      });
+      var circleStyle = {
+        "fill-opacity": "0"
+        // ensure not visible
+      };
+      var circleRadius = Math.max(sensoryWidth / 2, minSensoryWidth);
+      g.append("circle").attr({
+        "data-line-point": "start-point",
+        cx: xPixelSized ? x2p(shapeOptions.xanchor) + shapeOptions.x0 : x2p(shapeOptions.x0, shiftXStart),
+        cy: yPixelSized ? y2p(shapeOptions.yanchor) - shapeOptions.y0 : y2p(shapeOptions.y0, shiftYStart),
+        r: circleRadius
+      }).style(circleStyle).classed("cursor-grab", true);
+      g.append("circle").attr({
+        "data-line-point": "end-point",
+        cx: xPixelSized ? x2p(shapeOptions.xanchor) + shapeOptions.x1 : x2p(shapeOptions.x1, shiftXEnd),
+        cy: yPixelSized ? y2p(shapeOptions.yanchor) - shapeOptions.y1 : y2p(shapeOptions.y1, shiftYEnd),
+        r: circleRadius
+      }).style(circleStyle).classed("cursor-grab", true);
+      return g;
+    }
+    function updateDragMode(evt) {
+      if (shouldSkipEdits(gd)) {
+        dragMode = null;
+        return;
+      }
+      if (isLine) {
+        if (evt.target.tagName === "path") {
+          dragMode = "move";
+        } else {
+          dragMode = evt.target.attributes["data-line-point"].value === "start-point" ? "resize-over-start-point" : "resize-over-end-point";
+        }
+      } else {
+        var dragBBox = dragOptions.element.getBoundingClientRect();
+        var w = dragBBox.right - dragBBox.left;
+        var h = dragBBox.bottom - dragBBox.top;
+        var x = evt.clientX - dragBBox.left;
+        var y = evt.clientY - dragBBox.top;
+        var cursor = !isPath && w > MINWIDTH && h > MINHEIGHT && !evt.shiftKey ? dragelement_default.getCursor(x / w, 1 - y / h) : "move";
+        setCursor(shapePath, cursor);
+        dragMode = cursor.split("-")[0];
+      }
+    }
+    function startDrag(evt) {
+      if (shouldSkipEdits(gd)) return;
+      if (xPixelSized) {
+        xAnchor = x2p(shapeOptions.xanchor);
+      }
+      if (yPixelSized) {
+        yAnchor = y2p(shapeOptions.yanchor);
+      }
+      if (shapeOptions.type === "path") {
+        pathIn = shapeOptions.path;
+      } else {
+        x0 = xPixelSized ? shapeOptions.x0 : x2p(shapeOptions.x0);
+        y0 = yPixelSized ? shapeOptions.y0 : y2p(shapeOptions.y0);
+        x1 = xPixelSized ? shapeOptions.x1 : x2p(shapeOptions.x1);
+        y1 = yPixelSized ? shapeOptions.y1 : y2p(shapeOptions.y1);
+      }
+      if (x0 < x1) {
+        w0 = x0;
+        optW = "x0";
+        e0 = x1;
+        optE = "x1";
+      } else {
+        w0 = x1;
+        optW = "x1";
+        e0 = x0;
+        optE = "x0";
+      }
+      if (!yPixelSized && y0 < y1 || yPixelSized && y0 > y1) {
+        n0 = y0;
+        optN = "y0";
+        s0 = y1;
+        optS = "y1";
+      } else {
+        n0 = y1;
+        optN = "y1";
+        s0 = y0;
+        optS = "y0";
+      }
+      updateDragMode(evt);
+      renderVisualCues(shapeLayer, shapeOptions);
+      deactivateClipPathTemporarily(shapePath, shapeOptions, gd);
+      dragOptions.moveFn = dragMode === "move" ? moveShape : resizeShape;
+      dragOptions.altKey = evt.altKey;
+    }
+    function endDrag() {
+      if (shouldSkipEdits(gd)) return;
+      setCursor(shapePath);
+      removeVisualCues(shapeLayer);
+      setClipPath2(shapePath, gd, shapeOptions);
+      registry_default.call("_guiRelayout", gd, editHelpers.getUpdateObj());
+    }
+    function abortDrag() {
+      if (shouldSkipEdits(gd)) return;
+      removeVisualCues(shapeLayer);
+    }
+    function moveShape(dx, dy) {
+      if (shapeOptions.type === "path") {
+        var noOp = function(coord) {
+          return coord;
+        };
+        var moveX = noOp;
+        var moveY = noOp;
+        if (xPixelSized) {
+          modifyItem("xanchor", shapeOptions.xanchor = p2x(xAnchor + dx));
+        } else {
+          moveX = function moveX2(x) {
+            return p2x(x2p(x) + dx);
+          };
+          if (xa && xa.type === "date") moveX = helpers_default10.encodeDate(moveX);
+        }
+        if (yPixelSized) {
+          modifyItem("yanchor", shapeOptions.yanchor = p2y(yAnchor + dy));
+        } else {
+          moveY = function moveY2(y) {
+            return p2y(y2p(y) + dy);
+          };
+          if (ya && ya.type === "date") moveY = helpers_default10.encodeDate(moveY);
+        }
+        modifyItem("path", shapeOptions.path = movePath(pathIn, moveX, moveY));
+      } else {
+        if (xPixelSized) {
+          modifyItem("xanchor", shapeOptions.xanchor = p2x(xAnchor + dx));
+        } else {
+          modifyItem("x0", shapeOptions.x0 = p2x(x0 + dx));
+          modifyItem("x1", shapeOptions.x1 = p2x(x1 + dx));
+        }
+        if (yPixelSized) {
+          modifyItem("yanchor", shapeOptions.yanchor = p2y(yAnchor + dy));
+        } else {
+          modifyItem("y0", shapeOptions.y0 = p2y(y0 + dy));
+          modifyItem("y1", shapeOptions.y1 = p2y(y1 + dy));
+        }
+      }
+      shapePath.attr("d", getPathString4(gd, shapeOptions));
+      renderVisualCues(shapeLayer, shapeOptions);
+      drawLabel(gd, index, shapeOptions, shapeGroup);
+    }
+    function resizeShape(dx, dy) {
+      if (isPath) {
+        var noOp = function(coord) {
+          return coord;
+        };
+        var moveX = noOp;
+        var moveY = noOp;
+        if (xPixelSized) {
+          modifyItem("xanchor", shapeOptions.xanchor = p2x(xAnchor + dx));
+        } else {
+          moveX = function moveX2(x) {
+            return p2x(x2p(x) + dx);
+          };
+          if (xa && xa.type === "date") moveX = helpers_default10.encodeDate(moveX);
+        }
+        if (yPixelSized) {
+          modifyItem("yanchor", shapeOptions.yanchor = p2y(yAnchor + dy));
+        } else {
+          moveY = function moveY2(y) {
+            return p2y(y2p(y) + dy);
+          };
+          if (ya && ya.type === "date") moveY = helpers_default10.encodeDate(moveY);
+        }
+        modifyItem("path", shapeOptions.path = movePath(pathIn, moveX, moveY));
+      } else if (isLine) {
+        if (dragMode === "resize-over-start-point") {
+          var newX0 = x0 + dx;
+          var newY0 = yPixelSized ? y0 - dy : y0 + dy;
+          modifyItem("x0", shapeOptions.x0 = xPixelSized ? newX0 : p2x(newX0));
+          modifyItem("y0", shapeOptions.y0 = yPixelSized ? newY0 : p2y(newY0));
+        } else if (dragMode === "resize-over-end-point") {
+          var newX1 = x1 + dx;
+          var newY1 = yPixelSized ? y1 - dy : y1 + dy;
+          modifyItem("x1", shapeOptions.x1 = xPixelSized ? newX1 : p2x(newX1));
+          modifyItem("y1", shapeOptions.y1 = yPixelSized ? newY1 : p2y(newY1));
+        }
+      } else {
+        var has = function(str) {
+          return dragMode.indexOf(str) !== -1;
+        };
+        var hasN = has("n");
+        var hasS = has("s");
+        var hasW = has("w");
+        var hasE = has("e");
+        var newN = hasN ? n0 + dy : n0;
+        var newS = hasS ? s0 + dy : s0;
+        var newW = hasW ? w0 + dx : w0;
+        var newE = hasE ? e0 + dx : e0;
+        if (yPixelSized) {
+          if (hasN) newN = n0 - dy;
+          if (hasS) newS = s0 - dy;
+        }
+        if (!yPixelSized && newS - newN > MINHEIGHT || yPixelSized && newN - newS > MINHEIGHT) {
+          modifyItem(optN, shapeOptions[optN] = yPixelSized ? newN : p2y(newN));
+          modifyItem(optS, shapeOptions[optS] = yPixelSized ? newS : p2y(newS));
+        }
+        if (newE - newW > MINWIDTH) {
+          modifyItem(optW, shapeOptions[optW] = xPixelSized ? newW : p2x(newW));
+          modifyItem(optE, shapeOptions[optE] = xPixelSized ? newE : p2x(newE));
+        }
+      }
+      shapePath.attr("d", getPathString4(gd, shapeOptions));
+      renderVisualCues(shapeLayer, shapeOptions);
+      drawLabel(gd, index, shapeOptions, shapeGroup);
+    }
+    function renderVisualCues(shapeLayer2, shapeOptions2) {
+      if (xPixelSized || yPixelSized) {
+        renderAnchor();
+      }
+      function renderAnchor() {
+        var isNotPath = shapeOptions2.type !== "path";
+        var visualCues = shapeLayer2.selectAll(".visual-cue").data([0]);
+        var strokeWidth = 1;
+        visualCues.enter().append("path").attr({
+          fill: "#fff",
+          "fill-rule": "evenodd",
+          stroke: "#000",
+          "stroke-width": strokeWidth
+        }).classed("visual-cue", true);
+        var posX = x2p(
+          xPixelSized ? shapeOptions2.xanchor : lib_default.midRange(
+            isNotPath ? [shapeOptions2.x0, shapeOptions2.x1] : helpers_default10.extractPathCoords(shapeOptions2.path, constants_default7.paramIsX)
+          )
+        );
+        var posY = y2p(
+          yPixelSized ? shapeOptions2.yanchor : lib_default.midRange(
+            isNotPath ? [shapeOptions2.y0, shapeOptions2.y1] : helpers_default10.extractPathCoords(shapeOptions2.path, constants_default7.paramIsY)
+          )
+        );
+        posX = helpers_default10.roundPositionForSharpStrokeRendering(posX, strokeWidth);
+        posY = helpers_default10.roundPositionForSharpStrokeRendering(posY, strokeWidth);
+        if (xPixelSized && yPixelSized) {
+          var crossPath = "M" + (posX - 1 - strokeWidth) + "," + (posY - 1 - strokeWidth) + "h-8v2h8 v8h2v-8 h8v-2h-8 v-8h-2 Z";
+          visualCues.attr("d", crossPath);
+        } else if (xPixelSized) {
+          var vBarPath = "M" + (posX - 1 - strokeWidth) + "," + (posY - 9 - strokeWidth) + "v18 h2 v-18 Z";
+          visualCues.attr("d", vBarPath);
+        } else {
+          var hBarPath = "M" + (posX - 9 - strokeWidth) + "," + (posY - 1 - strokeWidth) + "h18 v2 h-18 Z";
+          visualCues.attr("d", hBarPath);
+        }
+      }
+    }
+    function removeVisualCues(shapeLayer2) {
+      shapeLayer2.selectAll(".visual-cue").remove();
+    }
+    function deactivateClipPathTemporarily(shapePath2, shapeOptions2, gd2) {
+      var xref = shapeOptions2.xref;
+      var yref = shapeOptions2.yref;
+      var xa2 = axes_default.getFromId(gd2, xref);
+      var ya2 = axes_default.getFromId(gd2, yref);
+      var clipAxes = "";
+      if (xref !== "paper" && !xa2.autorange) clipAxes += xref;
+      if (yref !== "paper" && !ya2.autorange) clipAxes += yref;
+      drawing_default.setClipUrl(
+        shapePath2,
+        clipAxes ? "clip" + gd2._fullLayout._uid + clipAxes : null,
+        gd2
+      );
+    }
+  }
+  function movePath(pathIn, moveX, moveY) {
+    return pathIn.replace(constants_default7.segmentRE, function(segment) {
+      var paramNumber = 0;
+      var segmentType = segment.charAt(0);
+      var xParams = constants_default7.paramIsX[segmentType];
+      var yParams = constants_default7.paramIsY[segmentType];
+      var nParams = constants_default7.numParams[segmentType];
+      var paramString = segment.slice(1).replace(constants_default7.paramRE, function(param) {
+        if (paramNumber >= nParams) return param;
+        if (xParams[paramNumber]) param = moveX(param);
+        else if (yParams[paramNumber]) param = moveY(param);
+        paramNumber++;
+        return param;
+      });
+      return segmentType + paramString;
+    });
+  }
+  function activateShape(gd, path) {
+    if (!couldHaveActiveShape(gd)) return;
+    var element = path.node();
+    var id2 = +element.getAttribute("data-index");
+    if (id2 >= 0) {
+      if (id2 === gd._fullLayout._activeShapeIndex) {
+        deactivateShape(gd);
+        return;
+      }
+      gd._fullLayout._activeShapeIndex = id2;
+      gd._fullLayout._deactivateShape = deactivateShape;
+      draw7(gd);
+    }
+  }
+  function deactivateShape(gd) {
+    if (!couldHaveActiveShape(gd)) return;
+    var id2 = gd._fullLayout._activeShapeIndex;
+    if (id2 >= 0) {
+      clearOutlineControllers4(gd);
+      delete gd._fullLayout._activeShapeIndex;
+      draw7(gd);
+    }
+  }
+  function eraseActiveShape(gd) {
+    if (!couldHaveActiveShape(gd)) return;
+    clearOutlineControllers4(gd);
+    var id2 = gd._fullLayout._activeShapeIndex;
+    var shapes = (gd.layout || {}).shapes || [];
+    if (id2 < shapes.length) {
+      var list2 = [];
+      for (var q = 0; q < shapes.length; q++) {
+        if (q !== id2) {
+          list2.push(shapes[q]);
+        }
+      }
+      delete gd._fullLayout._activeShapeIndex;
+      return registry_default.call("_guiRelayout", gd, {
+        shapes: list2
+      });
+    }
+  }
 
   // src/components/shapes/attributes.js
   var { line: scatterLineAttrs2 } = attributes_default9;
@@ -49708,8 +49705,8 @@ var Plotly = (() => {
       if (axRefType === "range") {
         ax = axes_default.getFromId(gdMock, axRef);
         ax._shapeIndices.push(shapeOut._index);
-        r2pos = helpers_default8.rangeToShapePosition(ax);
-        pos2r = helpers_default8.shapePositionToRange(ax);
+        r2pos = helpers_default10.rangeToShapePosition(ax);
+        pos2r = helpers_default10.shapePositionToRange(ax);
         if (ax.type === "category" || ax.type === "multicategory") {
           coerce3(axLetter + "0shift");
           coerce3(axLetter + "1shift");
@@ -49823,14 +49820,14 @@ var Plotly = (() => {
       var yRefType = axes_default.getRefType(shape.yref);
       if (shape.xref !== "paper" && xRefType !== "domain") {
         ax = axes_default.getFromId(gd, shape.xref);
-        bounds = shapeBounds(ax, shape, constants_default5.paramIsX);
+        bounds = shapeBounds(ax, shape, constants_default7.paramIsX);
         if (bounds) {
           shape._extremes[ax._id] = axes_default.findExtremes(ax, bounds, calcXPaddingOptions(shape));
         }
       }
       if (shape.yref !== "paper" && yRefType !== "domain") {
         ax = axes_default.getFromId(gd, shape.yref);
-        bounds = shapeBounds(ax, shape, constants_default5.paramIsY);
+        bounds = shapeBounds(ax, shape, constants_default7.paramIsY);
         if (bounds) {
           shape._extremes[ax._id] = axes_default.findExtremes(ax, bounds, calcYPaddingOptions(shape));
         }
@@ -49847,7 +49844,7 @@ var Plotly = (() => {
     var ppad = lineWidth / 2;
     var axisDirectionReverted = isYAxis;
     if (sizeMode === "pixel") {
-      var coords = path ? helpers_default8.extractPathCoords(path, isYAxis ? constants_default5.paramIsY : constants_default5.paramIsX) : [v0, v1];
+      var coords = path ? helpers_default10.extractPathCoords(path, isYAxis ? constants_default7.paramIsY : constants_default7.paramIsX) : [v0, v1];
       var maxValue = lib_default.aggNums(Math.max, null, coords);
       var minValue = lib_default.aggNums(Math.min, null, coords);
       var beforePad = minValue < 0 ? Math.abs(minValue) + ppad : ppad;
@@ -49885,18 +49882,18 @@ var Plotly = (() => {
     if (!shape.path) return;
     var min2 = Infinity;
     var max2 = -Infinity;
-    var segments = shape.path.match(constants_default5.segmentRE);
+    var segments = shape.path.match(constants_default7.segmentRE);
     var i;
     var segment;
     var drawnParam;
     var params;
     var val;
-    if (ax.type === "date") convertVal = helpers_default8.decodeDate(convertVal);
+    if (ax.type === "date") convertVal = helpers_default10.decodeDate(convertVal);
     for (i = 0; i < segments.length; i++) {
       segment = segments[i];
       drawnParam = paramsToUse[segment.charAt(0)].drawn;
       if (drawnParam === void 0) continue;
-      params = segments[i].slice(1).match(constants_default5.paramRE);
+      params = segments[i].slice(1).match(constants_default7.paramRE);
       if (!params || params.length < drawnParam) continue;
       val = convertVal(params[drawnParam]);
       if (val < min2) min2 = val;
@@ -49914,8 +49911,9 @@ var Plotly = (() => {
     supplyDrawNewShapeDefaults,
     includeBasePlot: makeIncludeComponents("shapes"),
     calcAutorange: calcAutorange2,
-    draw: draw_default.draw,
-    drawOne: draw_default.drawOne
+    draw: draw_default3.draw,
+    drawOne: draw_default3.drawOne,
+    eraseActiveShape: draw_default3.eraseActiveShape
   };
 
   // src/components/images/attributes.js
@@ -54615,7 +54613,7 @@ var Plotly = (() => {
     clonedGd.style.left = "-5000px";
     document.body.appendChild(clonedGd);
     function wait() {
-      var delay = helpers_default10.getDelay(clonedGd._fullLayout);
+      var delay = helpers_default7.getDelay(clonedGd._fullLayout);
       setTimeout(function() {
         var svg2 = toSVG(clonedGd);
         var canvas = document.createElement("canvas");
@@ -54633,7 +54631,7 @@ var Plotly = (() => {
         };
       }, delay);
     }
-    var redrawFunc = helpers_default10.getRedrawFunc(clonedGd);
+    var redrawFunc = helpers_default7.getRedrawFunc(clonedGd);
     registry_default.call("_doPlot", clonedGd, clone2.data, clone2.layout, clone2.config).then(redrawFunc).then(wait).catch(function(err) {
       ev.emit("error", err);
     });
@@ -54643,8 +54641,8 @@ var Plotly = (() => {
 
   // src/snapshot/index.js
   var Snapshot = {
-    getDelay: helpers_default10.getDelay,
-    getRedrawFunc: helpers_default10.getRedrawFunc,
+    getDelay: helpers_default7.getDelay,
+    getRedrawFunc: helpers_default7.getRedrawFunc,
     clone: clonePlot,
     toSVG,
     svgToImg: svgtoimg_default,

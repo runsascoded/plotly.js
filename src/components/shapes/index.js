@@ -16,5 +16,6 @@ export default {
 
     calcAutorange: _req4,
     draw: drawModule.draw,
-    drawOne: drawModule.drawOne
+    drawOne: drawModule.drawOne,
+    eraseActiveShape: drawModule.eraseActiveShape
 };
