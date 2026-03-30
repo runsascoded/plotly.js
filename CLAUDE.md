@@ -107,7 +107,8 @@ Consumer apps should NOT need to build their own legend UIs, implement trace fad
 ## Specs
 
 Active specs in `specs/`:
-- `remove-registration-system.md` — eliminate global registry, enable full tree-shaking, remove sub-path entry points
+- `remove-registration-system.md` — eliminate global registry, enable full tree-shaking (partially done: factory entry point works, shapes/modebar decoupled, drawing converted to named exports)
+- `pltly-factory-migration.md` — migrate pltly React wrapper to use `createPlotly()` factory
 
 Completed specs in `specs/done/` (15 total):
 `esm-conversion`, `esm-cjs-interop`, `esm-ternary-attrs`, `esm-css-imports`,
