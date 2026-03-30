@@ -7,7 +7,6 @@ import clearGlCanvases from '../lib/clear_gl_canvases.js';
 import Color from '../components/color/index.js';
 import Drawing from '../components/drawing/index.js';
 import Titles from '../components/titles/index.js';
-import ModeBar from '../components/modebar/index.js';
 import Axes from '../plots/cartesian/axes.js';
 import alignmentConstants from '../constants/alignment.js';
 import axisConstraints from '../plots/cartesian/constraints.js';
@@ -65,7 +64,7 @@ function lsInner(gd) {
     gd._context.setBackground(gd, fullLayout.paper_bgcolor);
 
     drawMainTitle(gd);
-    ModeBar.manage(gd);
+    Registry.getComponentMethod('modebar', 'manage')(gd);
 
     // _has('cartesian') means SVG specifically
     if(!fullLayout._has('cartesian')) {
@@ -693,7 +692,7 @@ export var doTicksRelayout = function(gd) {
 export var doModeBar = function(gd) {
     var fullLayout = gd._fullLayout;
 
-    ModeBar.manage(gd);
+    Registry.getComponentMethod('modebar', 'manage')(gd);
 
     for(var i = 0; i < fullLayout._basePlotModules.length; i++) {
         var updateFx = fullLayout._basePlotModules[i].updateFx;

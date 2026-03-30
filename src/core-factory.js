@@ -31,7 +31,6 @@ import './plotcss.js';
 // Essential components that every plot needs (always registered)
 import colorscale from './components/colorscale/index.js';
 import fx from './components/fx/index.js';
-import modebar from './components/modebar/index.js';
 
 import localeEn from './locale-en.js';
 import localeEnUs from './locale-en-us.js';
@@ -60,7 +59,7 @@ export function createPlotly({ traces = [], components = [], Icons, Snapshot, Pl
     }
 
     // Register essential components (always needed)
-    register([colorscale, fx, modebar]);
+    register([colorscale, fx]);
 
     // Register user-chosen traces and components
     for(var t = 0; t < traces.length; t++) register(traces[t]);
