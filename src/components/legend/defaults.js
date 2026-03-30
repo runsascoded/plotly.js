@@ -1,5 +1,5 @@
 import Registry from '../../registry.js';
-import Lib from '../../lib/index.js';
+import Lib, { bigFont, coerceFont, extendFlat, noneOrAll, pushUnique } from '../../lib/index.js';
 import Template from '../../plot_api/plot_template.js';
 import plotsAttrs from '../../plots/attributes.js';
 import attributes from './attributes.js';
@@ -15,7 +15,7 @@ function groupDefaults(legendId, layoutIn, layoutOut, fullData) {
     }
 
     // N.B. unified hover needs to inherit from font, bgcolor & bordercolor even when legend.visible is false
-    var itemFont = Lib.coerceFont(coerce, 'font', layoutOut.font);
+    var itemFont = coerceFont(coerce, 'font', layoutOut.font);
     coerce('bgcolor', layoutOut.paper_bgcolor);
     coerce('bordercolor');
 
@@ -30,7 +30,7 @@ function groupDefaults(legendId, layoutIn, layoutOut, fullData) {
     };
 
     var globalFont = layoutOut.font || {};
-    var grouptitlefont = Lib.coerceFont(coerce, 'grouptitlefont', globalFont, {
+    var grouptitlefont = coerceFont(coerce, 'grouptitlefont', globalFont, {
         overrideDflt: {
             size: Math.round(globalFont.size * 1.1)
         }
@@ -108,7 +108,7 @@ function groupDefaults(legendId, layoutIn, layoutOut, fullData) {
                 }
             }
 
-            Lib.coerceFont(traceCoerce, 'legendgrouptitle.font', grouptitlefont);
+            coerceFont(traceCoerce, 'legendgrouptitle.font', grouptitlefont);
             traceCoerce('legendsymbol.path');
         }
         if((!isShape && Registry.traceIs(trace, 'bar') && layoutOut.barmode === 'stack') ||
@@ -226,16 +226,16 @@ function groupDefaults(legendId, layoutIn, layoutOut, fullData) {
     coerce('yanchor', defaultYAnchor);
     coerce('maxheight');
     coerce('valign');
-    Lib.noneOrAll(containerIn, containerOut, ['x', 'y']);
+    noneOrAll(containerIn, containerOut, ['x', 'y']);
 
     var titleText = coerce('title.text');
     if(titleText) {
         coerce('title.side', isHorizontal ? 'left' : 'top');
-        var dfltTitleFont = Lib.extendFlat({}, itemFont, {
-            size: Lib.bigFont(itemFont.size)
+        var dfltTitleFont = extendFlat({}, itemFont, {
+            size: bigFont(itemFont.size)
         });
 
-        Lib.coerceFont(coerce, 'title.font', dfltTitleFont);
+        coerceFont(coerce, 'title.font', dfltTitleFont);
     }
 }
 
@@ -267,7 +267,7 @@ export default function legendDefaults(layoutIn, layoutOut, fullData) {
         if (Array.isArray(allLegendsData[i].legend)) {
             legends = legends.concat(allLegendsData[i].legend);
         } else {
-            Lib.pushUnique(legends, allLegendsData[i].legend);
+            pushUnique(legends, allLegendsData[i].legend);
         }
     }
 

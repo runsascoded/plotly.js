@@ -1,4 +1,4 @@
-import Lib from '../../lib/index.js';
+import { constrain } from '../../lib/index.js';
 
 // set cursors pointing toward the closest corner/side,
 // to indicate alignment
@@ -13,12 +13,12 @@ export default function getCursor(x, y, xanchor, yanchor) {
     if(xanchor === 'left') x = 0;
     else if(xanchor === 'center') x = 1;
     else if(xanchor === 'right') x = 2;
-    else x = Lib.constrain(Math.floor(x * 3), 0, 2);
+    else x = constrain(Math.floor(x * 3), 0, 2);
 
     if(yanchor === 'bottom') y = 0;
     else if(yanchor === 'middle') y = 1;
     else if(yanchor === 'top') y = 2;
-    else y = Lib.constrain(Math.floor(y * 3), 0, 2);
+    else y = constrain(Math.floor(y * 3), 0, 2);
 
     return cursorset[y][x];
 }

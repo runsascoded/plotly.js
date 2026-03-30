@@ -1,8 +1,7 @@
 import Fx from '../../components/fx/index.js';
 import Registry from '../../registry.js';
 import Color from '../../components/color/index.js';
-import _index from '../../lib/index.js';
-const { fillText } = _index;
+import { fillText } from '../../lib/index.js';
 import { getLineWidth } from './helpers.js';
 import _axes from '../../plots/cartesian/axes.js';
 const { hoverLabelText } = _axes;

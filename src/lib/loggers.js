@@ -70,4 +70,8 @@ loggers.error = function() {
     }
 };
 
+export var log = loggers.log;
+export var warn = loggers.warn;
+export var error = loggers.error;
+
 export default loggers;

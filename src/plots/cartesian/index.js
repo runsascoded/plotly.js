@@ -1,6 +1,6 @@
 import { select } from 'd3-selection';
 import Registry from '../../registry.js';
-import Lib from '../../lib/index.js';
+import { ensureSingle, extendFlat, pushUnique, sorterAsc } from '../../lib/index.js';
 import Plots from '../plots.js';
 import { setClipUrl } from '../../components/drawing/index.js';
 import { getModuleCalcData } from '../get_data.js';
@@ -13,10 +13,9 @@ import _req2 from './layout_defaults.js';
 import _req3 from './transition_axes.js';
 import { updateFx as _req4 } from './graph_interact.js';
 
-var ensureSingle = Lib.ensureSingle;
 
 function ensureSingleAndAddDatum(parent, nodeType, className) {
-    return Lib.ensureSingle(parent, nodeType, className, function(s) {
+    return ensureSingle(parent, nodeType, className, function(s) {
         s.datum(className);
     });
 }
@@ -60,7 +59,7 @@ export var finalizeSubplots = function(layoutIn, layoutOut) {
 
             if(!allY[yi]) {
                 allY[yi] = 1;
-                Lib.pushUnique(yList, yi);
+                pushUnique(yList, yi);
             }
         }
     }
@@ -76,7 +75,7 @@ export var finalizeSubplots = function(layoutIn, layoutOut) {
 
             if(!allX[xi]) {
                 allX[xi] = 1;
-                Lib.pushUnique(xList, xi);
+                pushUnique(xList, xi);
             }
         }
     }
@@ -138,7 +137,7 @@ export var plot = function(gd, traces, transitionOpts, makeOnCompleteCallback) {
                 var idWithZ = subplotInfo.id;
                 if(idWithZ.indexOf(zindexSeparator) !== -1) continue;
                 idWithZ += zindexSeparator + (z + 1);
-                subplotInfo = Lib.extendFlat({}, subplotInfo, {
+                subplotInfo = extendFlat({}, subplotInfo, {
                     id: idWithZ,
                     plot: fullLayout._cartesianlayer.selectAll('.subplot').select('.' + idWithZ)
                 });
@@ -385,7 +384,7 @@ export var drawFramework = function(gd) {
     // Group by zorder group in ascending order
     var zindices = Object.keys(traceZorderGroups)
         .map(Number)
-        .sort(Lib.sorterAsc);
+        .sort(sorterAsc);
 
     if(!zindices.length) zindices = [0];
 
@@ -429,7 +428,7 @@ export var drawFramework = function(gd) {
 
         var plotinfo = fullLayout._plots[id];
         if(!plotinfo) {
-            plotinfo = Lib.extendFlat({}, fullLayout._plots[idWithoutZ]);
+            plotinfo = extendFlat({}, fullLayout._plots[idWithoutZ]);
 
             if(plotinfo) {
                 plotinfo.id = id;

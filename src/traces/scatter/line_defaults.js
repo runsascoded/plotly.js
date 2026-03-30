@@ -1,5 +1,4 @@
-import _index from '../../lib/index.js';
-const { isArrayOrTypedArray } = _index;
+import { isArrayOrTypedArray } from '../../lib/index.js';
 import _helpers from '../../components/colorscale/helpers.js';
 const { hasColorscale } = _helpers;
 import colorscaleDefaults from '../../components/colorscale/defaults.js';

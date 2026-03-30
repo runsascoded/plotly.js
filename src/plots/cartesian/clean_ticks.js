@@ -1,5 +1,5 @@
 import isNumeric from 'fast-isnumeric';
-import Lib from '../../lib/index.js';
+import { cleanDate, dateTick0 } from '../../lib/index.js';
 import constants from '../../constants/numerical.js';
 var ONEDAY = constants.ONEDAY;
 var ONEWEEK = constants.ONEWEEK;
@@ -49,8 +49,8 @@ export var dtick = function(dtick, axType) {
 
 export var tick0 = function(tick0, axType, calendar, dtick) {
     if(axType === 'date') {
-        return Lib.cleanDate(tick0,
-            Lib.dateTick0(calendar, (dtick % ONEWEEK === 0) ? 1 : 0)
+        return cleanDate(tick0,
+            dateTick0(calendar, (dtick % ONEWEEK === 0) ? 1 : 0)
         );
     }
     if(dtick === 'D1' || dtick === 'D2') {

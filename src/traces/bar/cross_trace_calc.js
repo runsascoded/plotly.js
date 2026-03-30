@@ -1,6 +1,5 @@
 import isNumeric from 'fast-isnumeric';
-import _index from '../../lib/index.js';
-const { isArrayOrTypedArray } = _index;
+import { isArrayOrTypedArray } from '../../lib/index.js';
 import _numerical from '../../constants/numerical.js';
 const { BADNUM } = _numerical;
 import Registry from '../../registry.js';

@@ -1,5 +1,4 @@
-import _index from '../../lib/index.js';
-const { distinctVals } = _index;
+import { distinctVals } from '../../lib/index.js';
 export default Sieve;
 
 /**

@@ -1,5 +1,5 @@
 import isNumeric from 'fast-isnumeric';
-import Lib from '../../lib/index.js';
+import { aggNums, nestedProperty } from '../../lib/index.js';
 import _helpers from './helpers.js';
 const { extractOpts } = _helpers;
 
@@ -9,7 +9,7 @@ export default function calc(gd, trace, opts) {
     var containerStr = opts.containerStr;
 
     var container = containerStr ?
-        Lib.nestedProperty(trace, containerStr).get() :
+        nestedProperty(trace, containerStr).get() :
         trace;
 
     var cOpts = extractOpts(container);
@@ -18,8 +18,8 @@ export default function calc(gd, trace, opts) {
     var max = cOpts.max;
     var mid = cOpts.mid;
 
-    var minVal = function() { return Lib.aggNums(Math.min, null, vals); };
-    var maxVal = function() { return Lib.aggNums(Math.max, null, vals); };
+    var minVal = function() { return aggNums(Math.min, null, vals); };
+    var maxVal = function() { return aggNums(Math.max, null, vals); };
 
     if(min === undefined) {
         min = minVal();

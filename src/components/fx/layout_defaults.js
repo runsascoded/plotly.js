@@ -1,4 +1,4 @@
-import Lib from '../../lib/index.js';
+import Lib, { coerceFont } from '../../lib/index.js';
 import layoutAttributes from './layout_attributes.js';
 import handleHoverModeDefaults from './hovermode_defaults.js';
 import handleHoverLabelDefaults from './hoverlabel_defaults.js';
@@ -34,5 +34,5 @@ export default function supplyLayoutDefaults(layoutIn, layoutOut) {
 
     handleHoverLabelDefaults(layoutIn, layoutOut, coerce);
 
-    Lib.coerceFont(coerce, 'hoverlabel.grouptitlefont', layoutOut.hoverlabel.font);
+    coerceFont(coerce, 'hoverlabel.grouptitlefont', layoutOut.hoverlabel.font);
 }

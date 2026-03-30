@@ -1,4 +1,4 @@
-import Lib from '../lib/index.js';
+import { extendDeep, extendDeepAll } from '../lib/index.js';
 import _plot_config from '../plot_api/plot_config.js';
 const { dfltConfig } = _plot_config;
 
@@ -19,8 +19,8 @@ function copyArgArray(gd, args) {
         if(arg === gd) copy[i] = arg;
         else if(typeof arg === 'object') {
             copy[i] = Array.isArray(arg) ?
-                Lib.extendDeep([], arg) :
-                Lib.extendDeepAll({}, arg);
+                extendDeep([], arg) :
+                extendDeepAll({}, arg);
         } else copy[i] = arg;
     }
 

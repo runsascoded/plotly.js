@@ -1,5 +1,5 @@
 import isNumeric from 'fast-isnumeric';
-import Lib from '../../lib/index.js';
+import Lib, { coerceFont, coerceSelectionMarkerOpacity, extendFlat } from '../../lib/index.js';
 import Color from '../../components/color/index.js';
 import Registry from '../../registry.js';
 import handleXYDefaults from '../scatter/xy_defaults.js';
@@ -8,7 +8,6 @@ import handleStyleDefaults from './style_defaults.js';
 import handleGroupingDefaults from '../scatter/grouping_defaults.js';
 import attributes from './attributes.js';
 
-var coerceFont = Lib.coerceFont;
 
 function supplyDefaults(traceIn, traceOut, defaultColor, layout) {
     function coerce(attr, dflt) {
@@ -55,7 +54,7 @@ function supplyDefaults(traceIn, traceOut, defaultColor, layout) {
     errorBarsSupplyDefaults(traceIn, traceOut, lineColor || Color.defaultLine, { axis: 'y' });
     errorBarsSupplyDefaults(traceIn, traceOut, lineColor || Color.defaultLine, { axis: 'x', inherit: 'y' });
 
-    Lib.coerceSelectionMarkerOpacity(traceOut, coerce);
+    coerceSelectionMarkerOpacity(traceOut, coerce);
 }
 
 function crossTraceDefaults(fullData, fullLayout) {
@@ -124,7 +123,7 @@ function handleText(traceIn, traceOut, layout, coerce, textposition, opts) {
         // even if `textposition` is `outside` for each trace – since
         // an outside label can become an inside one, for example because
         // of a bar being stacked on top of it.
-        var insideTextFontDefault = Lib.extendFlat({}, dfltFont);
+        var insideTextFontDefault = extendFlat({}, dfltFont);
         var isTraceTextfontColorSet = traceIn.textfont && traceIn.textfont.color;
         var isColorInheritedFromLayoutFont = !isTraceTextfontColorSet;
         if (isColorInheritedFromLayoutFont) {
@@ -133,7 +132,7 @@ function handleText(traceIn, traceOut, layout, coerce, textposition, opts) {
         coerceFont(coerce, 'insidetextfont', insideTextFontDefault);
 
         if (hasPathbar) {
-            var pathbarTextFontDefault = Lib.extendFlat({}, dfltFont);
+            var pathbarTextFontDefault = extendFlat({}, dfltFont);
             if (isColorInheritedFromLayoutFont) {
                 delete pathbarTextFontDefault.color;
             }

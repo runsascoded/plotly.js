@@ -1,4 +1,4 @@
-import Lib from '../../lib/index.js';
+import Lib, { coerceSelectionMarkerOpacity } from '../../lib/index.js';
 import Registry from '../../registry.js';
 import attributes from './attributes.js';
 import constants from './constants.js';
@@ -91,5 +91,5 @@ export default function supplyDefaults(traceIn, traceOut, defaultColor, layout) 
     errorBarsSupplyDefaults(traceIn, traceOut, lineColor || markerColor || defaultColor, { axis: 'y' });
     errorBarsSupplyDefaults(traceIn, traceOut, lineColor || markerColor || defaultColor, { axis: 'x', inherit: 'y' });
 
-    Lib.coerceSelectionMarkerOpacity(traceOut, coerce);
+    coerceSelectionMarkerOpacity(traceOut, coerce);
 }

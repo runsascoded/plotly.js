@@ -1,13 +1,11 @@
 import { applyBackoff } from '../../components/drawing/index.js';
 import numConstants from '../../constants/numerical.js';
-import Lib from '../../lib/index.js';
+import { constrain, isArrayOrTypedArray, segmentsIntersect } from '../../lib/index.js';
 import constants from './constants.js';
 var BADNUM = numConstants.BADNUM;
 var LOG_CLIP = numConstants.LOG_CLIP;
 var LOG_CLIP_PLUS = LOG_CLIP + 0.5;
 var LOG_CLIP_MINUS = LOG_CLIP - 0.5;
-var segmentsIntersect = Lib.segmentsIntersect;
-var constrain = Lib.constrain;
 
 export default function linePoints(d, opts) {
     var trace = opts.trace || {};
@@ -210,7 +208,7 @@ export default function linePoints(d, opts) {
             if(ptInt1) out.push(ptInt1);
             if(ptInt2) out.push(ptInt2);
 
-            var midShift = 2 * Lib.constrain((pt1[dim] + pt2[dim]) / 2, limit0, limit1) -
+            var midShift = 2 * constrain((pt1[dim] + pt2[dim]) / 2, limit0, limit1) -
                 ((ptInt1 || pt1)[dim] + (ptInt2 || pt2)[dim]);
             if(midShift) {
                 var ptToAlter;
@@ -276,7 +274,7 @@ export default function linePoints(d, opts) {
         lastXEdge = lastYEdge = 0;
     }
 
-    var arrayMarker = Lib.isArrayOrTypedArray(marker);
+    var arrayMarker = isArrayOrTypedArray(marker);
 
     function addPt(pt) {
         if(pt && backoff) {

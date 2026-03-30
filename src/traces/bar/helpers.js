@@ -1,7 +1,6 @@
 import isNumeric from 'fast-isnumeric';
 import tinycolor from 'tinycolor2';
-import _index from '../../lib/index.js';
-const { isArrayOrTypedArray } = _index;
+import { isArrayOrTypedArray } from '../../lib/index.js';
 
 export var coerceString = function(attributeDefinition, value, defaultValue) {
     if(typeof value === 'string') {

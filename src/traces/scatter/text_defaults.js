@@ -1,10 +1,10 @@
-import Lib from '../../lib/index.js';
+import { coerceFont } from '../../lib/index.js';
 
 export default function(traceIn, traceOut, layout, coerce, opts) {
     opts = opts || {};
 
     coerce('textposition');
-    Lib.coerceFont(coerce, 'textfont', opts.font || layout.font, opts);
+    coerceFont(coerce, 'textfont', opts.font || layout.font, opts);
 
     if(!opts.noSelect) {
         coerce('selected.textfont.color');

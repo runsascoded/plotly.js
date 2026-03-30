@@ -17,6 +17,8 @@ function modHalf(v, d) {
         v;
 }
 
+export { mod, modHalf };
+
 export default {
     mod: mod,
     modHalf: modHalf

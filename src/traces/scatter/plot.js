@@ -3,15 +3,13 @@ import { select } from 'd3-selection';
 import 'd3-transition';
 import { extent } from 'd3-array';
 import Registry from '../../registry.js';
-import Lib from '../../lib/index.js';
+import { ensureSingle, identity, noop, simpleMap } from '../../lib/index.js';
 import { hideOutsideRangePoint, lineGroupStyle, makePointStyleFns, pointStyle, setClipUrl, singleFillStyle, singleLineStyle, singlePointStyle, smoothclosed, smoothopen, steps, textPointStyle, translatePoint, translatePoints } from '../../components/drawing/index.js';
 import subTypes from './subtypes.js';
 import linePoints from './line_points.js';
 import linkTraces from './link_traces.js';
 import _polygon from '../../lib/polygon.js';
 const { tester: polygonTester } = _polygon;
-var ensureSingle = Lib.ensureSingle;
-var identity = Lib.identity;
 
 export default function plot(
     gd,
@@ -198,7 +196,7 @@ function plotOne(gd, idx, plotinfo, cdscatter, cdscatterAll, element, transition
 
     // initialize line join data / method
     var segments = [];
-    var makeUpdate = Lib.noop;
+    var makeUpdate = noop;
 
     ownFillEl3 = trace._ownFill;
 
@@ -623,8 +621,8 @@ function plotOne(gd, idx, plotinfo, cdscatter, cdscatterAll, element, transition
 function selectMarkers(gd, idx, plotinfo, cdscatter, cdscatterAll) {
     var xa = plotinfo.xaxis;
     var ya = plotinfo.yaxis;
-    var xr = extent(Lib.simpleMap(xa.range, xa.r2c));
-    var yr = extent(Lib.simpleMap(ya.range, ya.r2c));
+    var xr = extent(simpleMap(xa.range, xa.r2c));
+    var yr = extent(simpleMap(ya.range, ya.r2c));
 
     var trace = cdscatter[0].trace;
     if(!subTypes.hasMarkers(trace)) return;

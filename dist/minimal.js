@@ -130,7 +130,7 @@ var Plotly = (() => {
       var segment = /([astvzqmhlc])([^astvzqmhlc]*)/ig;
       function parse(path) {
         var data = [];
-        path.replace(segment, function(_3, command, args) {
+        path.replace(segment, function(_2, command, args) {
           var type = command.toLowerCase();
           args = parseValues(args);
           if (type == "m" && args.length > 2) {
@@ -2925,14 +2925,14 @@ var Plotly = (() => {
   var noop = { value: () => {
   } };
   function dispatch() {
-    for (var i = 0, n = arguments.length, _3 = {}, t; i < n; ++i) {
-      if (!(t = arguments[i] + "") || t in _3 || /[\s.]/.test(t)) throw new Error("illegal type: " + t);
-      _3[t] = [];
+    for (var i = 0, n = arguments.length, _2 = {}, t; i < n; ++i) {
+      if (!(t = arguments[i] + "") || t in _2 || /[\s.]/.test(t)) throw new Error("illegal type: " + t);
+      _2[t] = [];
     }
-    return new Dispatch(_3);
+    return new Dispatch(_2);
   }
-  function Dispatch(_3) {
-    this._ = _3;
+  function Dispatch(_2) {
+    this._ = _2;
   }
   function parseTypenames2(typenames, types) {
     return typenames.trim().split(/^|\s+/).map(function(t) {
@@ -2945,21 +2945,21 @@ var Plotly = (() => {
   Dispatch.prototype = dispatch.prototype = {
     constructor: Dispatch,
     on: function(typename, callback) {
-      var _3 = this._, T = parseTypenames2(typename + "", _3), t, i = -1, n = T.length;
+      var _2 = this._, T = parseTypenames2(typename + "", _2), t, i = -1, n = T.length;
       if (arguments.length < 2) {
-        while (++i < n) if ((t = (typename = T[i]).type) && (t = get(_3[t], typename.name))) return t;
+        while (++i < n) if ((t = (typename = T[i]).type) && (t = get(_2[t], typename.name))) return t;
         return;
       }
       if (callback != null && typeof callback !== "function") throw new Error("invalid callback: " + callback);
       while (++i < n) {
-        if (t = (typename = T[i]).type) _3[t] = set(_3[t], typename.name, callback);
-        else if (callback == null) for (t in _3) _3[t] = set(_3[t], typename.name, null);
+        if (t = (typename = T[i]).type) _2[t] = set(_2[t], typename.name, callback);
+        else if (callback == null) for (t in _2) _2[t] = set(_2[t], typename.name, null);
       }
       return this;
     },
     copy: function() {
-      var copy2 = {}, _3 = this._;
-      for (var t in _3) copy2[t] = _3[t].slice();
+      var copy2 = {}, _2 = this._;
+      for (var t in _2) copy2[t] = _2[t].slice();
       return new Dispatch(copy2);
     },
     call: function(type, that) {
@@ -4957,6 +4957,9 @@ var Plotly = (() => {
       notifier_default(lines.join("<br>"), "stick");
     }
   };
+  var log = loggers.log;
+  var warn = loggers.warn;
+  var error = loggers.error;
   var loggers_default = loggers;
 
   // src/lib/noop.js
@@ -8113,7 +8116,6 @@ var Plotly = (() => {
     }
     return 0;
   }
-  var array_default = { ensureArray, decodeTypedArraySpec, isTypedArraySpec, concat, maxRowLength, minRowLength, isTypedArray, isArrayOrTypedArray, isArray1D, isArrayBuffer };
 
   // src/lib/mod.js
   function mod(v, d) {
@@ -9618,7 +9620,6 @@ var Plotly = (() => {
     }
     return new RegExp(startWithPrefix + head + "([2-9]|[1-9][0-9]+)?" + fullTail);
   };
-  var regex_default = { counter };
 
   // src/lib/coerce.js
   var { DESELECTDIM } = interactions_default;
@@ -9978,7 +9979,6 @@ var Plotly = (() => {
     valObjectDef.coerceFunction(value, propMock, failed, opts);
     return out !== failed;
   }
-  var coerce_default = { valObjectMeta, coerce, coerce2, coerceFont, coercePattern, coerceHoverinfo, coerceSelectionMarkerOpacity, validate };
 
   // src/lib/dates.js
   var import_fast_isnumeric5 = __toESM(require_fast_isnumeric(), 1);
@@ -10282,7 +10282,6 @@ var Plotly = (() => {
       exactDays: exactDays / dataCount
     };
   };
-  var dates_default = { dateTick0, dfltRange, isJSDate, dateTime2ms, isDateTime, ms2DateTime, ms2DateTimeLocal, cleanDate, formatDate, incrementMonth, findExactDates };
 
   // src/lib/search.js
   var import_fast_isnumeric6 = __toESM(require_fast_isnumeric(), 1);
@@ -10401,7 +10400,6 @@ var Plotly = (() => {
     }
     return ind;
   };
-  var search_default = { findBin, sorterAsc, sorterDes, distinctVals, roundUp, sort, findIndexOfMin };
 
   // src/lib/stats.js
   var import_fast_isnumeric7 = __toESM(require_fast_isnumeric(), 1);
@@ -10463,7 +10461,6 @@ var Plotly = (() => {
     var frac = n % 1;
     return frac * arr[Math.ceil(n)] + (1 - frac) * arr[Math.floor(n)];
   };
-  var stats_default = { aggNums, len, mean, geometricMean, midRange, variance, stdev, median, interp };
 
   // src/lib/angles.js
   var mod3 = mod_default.mod;
@@ -10573,18 +10570,6 @@ var Plotly = (() => {
   function pathAnnulus(r0, r1, a0, a1, cx, cy) {
     return _path(r0, r1, a0, a1, cx, cy, 1);
   }
-  var angles_default = {
-    deg2rad,
-    rad2deg,
-    angleDelta,
-    angleDist,
-    isFullCircle,
-    isAngleInsideSector,
-    isPtInsideSector,
-    pathArc,
-    pathSector,
-    pathAnnulus
-  };
 
   // src/lib/anchor_utils.js
   var isLeftAnchor = function isLeftAnchor2(opts) {
@@ -10605,7 +10590,6 @@ var Plotly = (() => {
   var isBottomAnchor = function isBottomAnchor2(opts) {
     return opts.yanchor === "bottom" || opts.yanchor === "auto" && opts.y <= 1 / 3;
   };
-  var anchor_utils_default = { isLeftAnchor, isCenterAnchor, isRightAnchor, isTopAnchor, isMiddleAnchor, isBottomAnchor };
 
   // src/lib/geometry2d.js
   var { mod: mod4 } = mod_default;
@@ -10743,7 +10727,6 @@ var Plotly = (() => {
     }
     return pt;
   };
-  var geometry2d_default = { segmentDistance, getTextLocation, clearLocationCache, getVisibleSegment, findPointOnPath, segmentsIntersect };
 
   // src/lib/throttle.js
   var timerCache = {};
@@ -10934,19 +10917,19 @@ var Plotly = (() => {
   // src/lib/relative_attr.js
   var ASCEND = /^(.*)(\.[^\.\[\]]+|\[\d\])$/;
   var SIMPLEATTR = /^[^\.\[\]]+$/;
-  function relative_attr_default(baseAttr, relativeAttr) {
-    while (relativeAttr) {
+  function relative_attr_default(baseAttr, relativeAttr2) {
+    while (relativeAttr2) {
       var match = baseAttr.match(ASCEND);
       if (match) baseAttr = match[1];
       else if (baseAttr.match(SIMPLEATTR)) baseAttr = "";
-      else throw new Error("bad relativeAttr call:" + [baseAttr, relativeAttr]);
-      if (relativeAttr.charAt(0) === "^") relativeAttr = relativeAttr.slice(1);
+      else throw new Error("bad relativeAttr call:" + [baseAttr, relativeAttr2]);
+      if (relativeAttr2.charAt(0) === "^") relativeAttr2 = relativeAttr2.slice(1);
       else break;
     }
-    if (baseAttr && relativeAttr.charAt(0) !== "[") {
-      return baseAttr + "." + relativeAttr;
+    if (baseAttr && relativeAttr2.charAt(0) !== "[") {
+      return baseAttr + "." + relativeAttr2;
     }
-    return baseAttr + relativeAttr;
+    return baseAttr + relativeAttr2;
   }
 
   // src/lib/to_log_range.js
@@ -11141,209 +11124,105 @@ var Plotly = (() => {
   }
 
   // src/lib/index.js
+  var nestedProperty2 = nestedProperty;
+  var keyedContainer2 = keyedContainer;
+  var relativeAttr = relative_attr_default;
+  var isPlainObject2 = isPlainObject;
+  var toLogRange2 = toLogRange;
+  var relinkPrivateKeys2 = relinkPrivateKeys;
+  var sortObjectKeys2 = sortObjectKeys;
+  var clearResponsive2 = clearResponsive;
+  var preserveDrawingBuffer2 = preserveDrawingBuffer;
+  var makeTraceGroups2 = makeTraceGroups;
+  var notifier = notifier_default;
+  var filterUnique2 = filterUnique;
+  var filterVisible2 = filterVisible;
+  var pushUnique2 = pushUnique;
+  var increment = incrementNumeric;
+  var cleanNumber2 = cleanNumber;
+  var noop3 = noop2;
+  var identity3 = identity2;
   var MAX_SAFE = numerical_default.FP_SAFE;
   var MIN_SAFE = -MAX_SAFE;
   var BADNUM4 = numerical_default.BADNUM;
-  var lib = {};
-  lib.adjustFormat = function adjustFormat(formatStr) {
+  function adjustFormat(formatStr) {
     if (!formatStr || /^\d[.]\df/.test(formatStr) || /[.]\d%/.test(formatStr)) return formatStr;
     if (formatStr === "0.f") return "~f";
     if (/^\d%/.test(formatStr)) return "~%";
     if (/^\ds/.test(formatStr)) return "~s";
     if (!/^[~,.0$]/.test(formatStr) && /[&fps]/.test(formatStr)) return "~" + formatStr;
     return formatStr;
-  };
+  }
   var seenBadFormats = {};
-  lib.warnBadFormat = function(f) {
+  function warnBadFormat(f) {
     var key = String(f);
     if (!seenBadFormats[key]) {
       seenBadFormats[key] = 1;
-      lib.warn('encountered bad format: "' + key + '"');
+      warn('encountered bad format: "' + key + '"');
     }
-  };
-  lib.noFormat = function(value) {
+  }
+  function noFormat(value) {
     return String(value);
-  };
-  lib.numberFormat = function(formatStr) {
+  }
+  function numberFormat(formatStr) {
     var fn;
     try {
-      fn = format(lib.adjustFormat(formatStr));
+      fn = format(adjustFormat(formatStr));
     } catch (e) {
-      lib.warnBadFormat(formatStr);
-      return lib.noFormat;
+      warnBadFormat(formatStr);
+      return noFormat;
     }
     return fn;
-  };
-  lib.nestedProperty = nestedProperty;
-  lib.keyedContainer = keyedContainer;
-  lib.relativeAttr = relative_attr_default;
-  lib.isPlainObject = isPlainObject;
-  lib.toLogRange = toLogRange;
-  lib.relinkPrivateKeys = relinkPrivateKeys;
-  lib.isArrayBuffer = array_default.isArrayBuffer;
-  lib.isTypedArray = array_default.isTypedArray;
-  lib.isArrayOrTypedArray = array_default.isArrayOrTypedArray;
-  lib.isArray1D = array_default.isArray1D;
-  lib.ensureArray = array_default.ensureArray;
-  lib.concat = array_default.concat;
-  lib.maxRowLength = array_default.maxRowLength;
-  lib.minRowLength = array_default.minRowLength;
-  lib.mod = mod_default.mod;
-  lib.modHalf = mod_default.modHalf;
-  lib.valObjectMeta = coerce_default.valObjectMeta;
-  lib.coerce = coerce_default.coerce;
-  lib.coerce2 = coerce_default.coerce2;
-  lib.coerceFont = coerce_default.coerceFont;
-  lib.coercePattern = coerce_default.coercePattern;
-  lib.coerceHoverinfo = coerce_default.coerceHoverinfo;
-  lib.coerceSelectionMarkerOpacity = coerce_default.coerceSelectionMarkerOpacity;
-  lib.validate = coerce_default.validate;
-  lib.dateTime2ms = dates_default.dateTime2ms;
-  lib.isDateTime = dates_default.isDateTime;
-  lib.ms2DateTime = dates_default.ms2DateTime;
-  lib.ms2DateTimeLocal = dates_default.ms2DateTimeLocal;
-  lib.cleanDate = dates_default.cleanDate;
-  lib.isJSDate = dates_default.isJSDate;
-  lib.formatDate = dates_default.formatDate;
-  lib.incrementMonth = dates_default.incrementMonth;
-  lib.dateTick0 = dates_default.dateTick0;
-  lib.dfltRange = dates_default.dfltRange;
-  lib.findExactDates = dates_default.findExactDates;
-  lib.MIN_MS = dates_default.MIN_MS;
-  lib.MAX_MS = dates_default.MAX_MS;
-  lib.findBin = search_default.findBin;
-  lib.sorterAsc = search_default.sorterAsc;
-  lib.sorterDes = search_default.sorterDes;
-  lib.distinctVals = search_default.distinctVals;
-  lib.roundUp = search_default.roundUp;
-  lib.sort = search_default.sort;
-  lib.findIndexOfMin = search_default.findIndexOfMin;
-  lib.sortObjectKeys = sortObjectKeys;
-  lib.aggNums = stats_default.aggNums;
-  lib.len = stats_default.len;
-  lib.mean = stats_default.mean;
-  lib.geometricMean = stats_default.geometricMean;
-  lib.median = stats_default.median;
-  lib.midRange = stats_default.midRange;
-  lib.variance = stats_default.variance;
-  lib.stdev = stats_default.stdev;
-  lib.interp = stats_default.interp;
-  lib.init2dArray = matrix_default.init2dArray;
-  lib.transposeRagged = matrix_default.transposeRagged;
-  lib.dot = matrix_default.dot;
-  lib.translationMatrix = matrix_default.translationMatrix;
-  lib.rotationMatrix = matrix_default.rotationMatrix;
-  lib.rotationXYMatrix = matrix_default.rotationXYMatrix;
-  lib.apply3DTransform = matrix_default.apply3DTransform;
-  lib.apply2DTransform = matrix_default.apply2DTransform;
-  lib.apply2DTransform2 = matrix_default.apply2DTransform2;
-  lib.convertCssMatrix = matrix_default.convertCssMatrix;
-  lib.inverseTransformMatrix = matrix_default.inverseTransformMatrix;
-  lib.deg2rad = angles_default.deg2rad;
-  lib.rad2deg = angles_default.rad2deg;
-  lib.angleDelta = angles_default.angleDelta;
-  lib.angleDist = angles_default.angleDist;
-  lib.isFullCircle = angles_default.isFullCircle;
-  lib.isAngleInsideSector = angles_default.isAngleInsideSector;
-  lib.isPtInsideSector = angles_default.isPtInsideSector;
-  lib.pathArc = angles_default.pathArc;
-  lib.pathSector = angles_default.pathSector;
-  lib.pathAnnulus = angles_default.pathAnnulus;
-  lib.isLeftAnchor = anchor_utils_default.isLeftAnchor;
-  lib.isCenterAnchor = anchor_utils_default.isCenterAnchor;
-  lib.isRightAnchor = anchor_utils_default.isRightAnchor;
-  lib.isTopAnchor = anchor_utils_default.isTopAnchor;
-  lib.isMiddleAnchor = anchor_utils_default.isMiddleAnchor;
-  lib.isBottomAnchor = anchor_utils_default.isBottomAnchor;
-  lib.segmentsIntersect = geometry2d_default.segmentsIntersect;
-  lib.segmentDistance = geometry2d_default.segmentDistance;
-  lib.getTextLocation = geometry2d_default.getTextLocation;
-  lib.clearLocationCache = geometry2d_default.clearLocationCache;
-  lib.getVisibleSegment = geometry2d_default.getVisibleSegment;
-  lib.findPointOnPath = geometry2d_default.findPointOnPath;
-  lib.extendFlat = extend_default.extendFlat;
-  lib.extendDeep = extend_default.extendDeep;
-  lib.extendDeepAll = extend_default.extendDeepAll;
-  lib.extendDeepNoArrays = extend_default.extendDeepNoArrays;
-  lib.log = loggers_default.log;
-  lib.warn = loggers_default.warn;
-  lib.error = loggers_default.error;
-  lib.counterRegex = regex_default.counter;
-  lib.throttle = throttle_default.throttle;
-  lib.throttleDone = throttle_default.done;
-  lib.clearThrottle = throttle_default.clear;
-  lib.getGraphDiv = dom_default.getGraphDiv;
-  lib.isPlotDiv = dom_default.isPlotDiv;
-  lib.removeElement = dom_default.removeElement;
-  lib.addStyleRule = dom_default.addStyleRule;
-  lib.addRelatedStyleRule = dom_default.addRelatedStyleRule;
-  lib.deleteRelatedStyleRule = dom_default.deleteRelatedStyleRule;
-  lib.setStyleOnHover = dom_default.setStyleOnHover;
-  lib.getFullTransformMatrix = dom_default.getFullTransformMatrix;
-  lib.getElementTransformMatrix = dom_default.getElementTransformMatrix;
-  lib.getElementAndAncestors = dom_default.getElementAndAncestors;
-  lib.equalDomRects = dom_default.equalDomRects;
-  lib.clearResponsive = clearResponsive;
-  lib.preserveDrawingBuffer = preserveDrawingBuffer;
-  lib.makeTraceGroups = makeTraceGroups;
-  lib._ = localize;
-  lib.notifier = notifier_default;
-  lib.filterUnique = filterUnique;
-  lib.filterVisible = filterVisible;
-  lib.pushUnique = pushUnique;
-  lib.increment = incrementNumeric;
-  lib.cleanNumber = cleanNumber;
-  lib.ensureNumber = function ensureNumber(v) {
+  }
+  function ensureNumber(v) {
     if (!(0, import_fast_isnumeric11.default)(v)) return BADNUM4;
     v = Number(v);
     return v > MAX_SAFE || v < MIN_SAFE ? BADNUM4 : v;
-  };
-  lib.isIndex = function(v, len2) {
+  }
+  function isIndex(v, len2) {
     if (len2 !== void 0 && v >= len2) return false;
     return (0, import_fast_isnumeric11.default)(v) && v >= 0 && v % 1 === 0;
-  };
-  lib.noop = noop2;
-  lib.identity = identity2;
-  lib.repeat = function(v, cnt) {
+  }
+  function repeat(v, cnt) {
     var out = new Array(cnt);
     for (var i = 0; i < cnt; i++) {
       out[i] = v;
     }
     return out;
-  };
-  lib.swapAttrs = function(cont, attrList, part1, part2) {
+  }
+  function swapAttrs(cont, attrList, part1, part2) {
     if (!part1) part1 = "x";
     if (!part2) part2 = "y";
     for (var i = 0; i < attrList.length; i++) {
       var attr2 = attrList[i];
-      var xp = lib.nestedProperty(cont, attr2.replace("?", part1));
-      var yp = lib.nestedProperty(cont, attr2.replace("?", part2));
+      var xp = nestedProperty2(cont, attr2.replace("?", part1));
+      var yp = nestedProperty2(cont, attr2.replace("?", part2));
       var temp = xp.get();
       xp.set(yp.get());
       yp.set(temp);
     }
-  };
-  lib.raiseToTop = function raiseToTop(elem) {
+  }
+  function raiseToTop(elem) {
     elem.parentNode.appendChild(elem);
-  };
-  lib.cancelTransition = function(selection2) {
-    return selection2.transition().duration(0);
-  };
-  lib.constrain = function(v, v0, v1) {
+  }
+  function cancelTransition(sel) {
+    return sel.transition().duration(0);
+  }
+  function constrain(v, v0, v1) {
     if (v0 > v1) return Math.max(v1, Math.min(v0, v));
     return Math.max(v0, Math.min(v1, v));
-  };
-  lib.bBoxIntersect = function(a, b, pad3) {
+  }
+  function bBoxIntersect(a, b, pad3) {
     pad3 = pad3 || 0;
     return a.left <= b.right + pad3 && b.left <= a.right + pad3 && a.top <= b.bottom + pad3 && b.top <= a.bottom + pad3;
-  };
-  lib.simpleMap = function(array2, func, x1, x2, opts) {
+  }
+  function simpleMap(array2, func, x1, x2, opts) {
     var len2 = array2.length;
     var out = new Array(len2);
     for (var i = 0; i < len2; i++) out[i] = func(array2[i], x1, x2, opts);
     return out;
-  };
-  lib.randstr = function randstr(existing, bits, base, _recursion) {
+  }
+  function randstr(existing, bits, base, _recursion) {
     if (!base) base = 16;
     if (bits === void 0) bits = 24;
     if (bits <= 0) return "0";
@@ -11366,13 +11245,13 @@ var Plotly = (() => {
     var parsed = parseInt(res, base);
     if (existing && existing[res] || parsed !== Infinity && parsed >= Math.pow(2, bits)) {
       if (_recursion > 10) {
-        lib.warn("randstr failed uniqueness");
+        warn("randstr failed uniqueness");
         return res;
       }
       return randstr(existing, bits, base, (_recursion || 0) + 1);
     } else return res;
-  };
-  lib.OptionControl = function(opt, optname) {
+  }
+  function OptionControl(opt, optname) {
     if (!opt) opt = {};
     if (!optname) optname = "opt";
     var self = {};
@@ -11384,8 +11263,8 @@ var Plotly = (() => {
     };
     self["_" + optname] = opt;
     return self;
-  };
-  lib.smooth = function(arrayIn, FWHM) {
+  }
+  function smooth(arrayIn, FWHM) {
     FWHM = Math.round(FWHM) || 0;
     if (FWHM < 2) return arrayIn;
     var alen = arrayIn.length;
@@ -11413,11 +11292,11 @@ var Plotly = (() => {
       arrayOut[i] = v;
     }
     return arrayOut;
-  };
-  lib.syncOrAsync = function(sequence, arg, finalStep) {
+  }
+  function syncOrAsync(sequence, arg, finalStep) {
     var ret, fni;
     function continueAsync() {
-      return lib.syncOrAsync(sequence, arg, finalStep);
+      return syncOrAsync(sequence, arg, finalStep);
     }
     while (sequence.length) {
       fni = sequence.splice(0, 1)[0];
@@ -11427,12 +11306,12 @@ var Plotly = (() => {
       }
     }
     return finalStep && finalStep(arg);
-  };
-  lib.stripTrailingSlash = function(str) {
+  }
+  function stripTrailingSlash(str) {
     if (str.slice(-1) === "/") return str.slice(0, -1);
     return str;
-  };
-  lib.noneOrAll = function(containerIn, containerOut, attrList) {
+  }
+  function noneOrAll(containerIn, containerOut, attrList) {
     if (!containerIn) return;
     var hasAny = false;
     var hasAll = true;
@@ -11448,36 +11327,36 @@ var Plotly = (() => {
         containerIn[attrList[i]] = containerOut[attrList[i]];
       }
     }
-  };
-  lib.mergeArray = function(traceAttr, cd, cdAttr, fn) {
+  }
+  function mergeArray(traceAttr, cd, cdAttr, fn) {
     var hasFn = typeof fn === "function";
-    if (lib.isArrayOrTypedArray(traceAttr)) {
+    if (isArrayOrTypedArray(traceAttr)) {
       var imax = Math.min(traceAttr.length, cd.length);
       for (var i = 0; i < imax; i++) {
         var v = traceAttr[i];
         cd[i][cdAttr] = hasFn ? fn(v) : v;
       }
     }
-  };
-  lib.mergeArrayCastPositive = function(traceAttr, cd, cdAttr) {
-    return lib.mergeArray(traceAttr, cd, cdAttr, function(v) {
+  }
+  function mergeArrayCastPositive(traceAttr, cd, cdAttr) {
+    return mergeArray(traceAttr, cd, cdAttr, function(v) {
       var w = +v;
       return !isFinite(w) ? 0 : w > 0 ? w : 0;
     });
-  };
-  lib.fillArray = function(traceAttr, cd, cdAttr, fn) {
-    fn = fn || lib.identity;
-    if (lib.isArrayOrTypedArray(traceAttr)) {
+  }
+  function fillArray(traceAttr, cd, cdAttr, fn) {
+    fn = fn || identity3;
+    if (isArrayOrTypedArray(traceAttr)) {
       for (var i = 0; i < cd.length; i++) {
         cd[i][cdAttr] = fn(traceAttr[i]);
       }
     }
-  };
-  lib.castOption = function(trace, ptNumber, astr, fn) {
-    fn = fn || lib.identity;
-    var val = lib.nestedProperty(trace, astr).get();
-    if (lib.isArrayOrTypedArray(val)) {
-      if (Array.isArray(ptNumber) && lib.isArrayOrTypedArray(val[ptNumber[0]])) {
+  }
+  function castOption(trace, ptNumber, astr, fn) {
+    fn = fn || identity3;
+    var val = nestedProperty2(trace, astr).get();
+    if (isArrayOrTypedArray(val)) {
+      if (Array.isArray(ptNumber) && isArrayOrTypedArray(val[ptNumber[0]])) {
         return fn(val[ptNumber[0]][ptNumber[1]]);
       } else {
         return fn(val[ptNumber]);
@@ -11485,12 +11364,12 @@ var Plotly = (() => {
     } else {
       return val;
     }
-  };
-  lib.extractOption = function(calcPt, trace, calcKey, traceKey) {
+  }
+  function extractOption(calcPt, trace, calcKey, traceKey) {
     if (calcKey in calcPt) return calcPt[calcKey];
-    var traceVal = lib.nestedProperty(trace, traceKey).get();
+    var traceVal = nestedProperty2(trace, traceKey).get();
     if (!Array.isArray(traceVal)) return traceVal;
-  };
+  }
   function makePtIndex2PtNumber(indexToPoints) {
     var ptIndex2ptNumber = {};
     for (var k in indexToPoints) {
@@ -11501,7 +11380,7 @@ var Plotly = (() => {
     }
     return ptIndex2ptNumber;
   }
-  lib.tagSelected = function(calcTrace, trace, ptNumber2cdIndex) {
+  function tagSelected(calcTrace, trace, ptNumber2cdIndex) {
     var selectedpoints = trace.selectedpoints;
     var indexToPoints = trace._indexToPoints;
     var ptIndex2ptNumber;
@@ -11513,7 +11392,7 @@ var Plotly = (() => {
     }
     for (var i = 0; i < selectedpoints.length; i++) {
       var ptIndex = selectedpoints[i];
-      if (lib.isIndex(ptIndex) || lib.isArrayOrTypedArray(ptIndex) && lib.isIndex(ptIndex[0]) && lib.isIndex(ptIndex[1])) {
+      if (isIndex(ptIndex) || isArrayOrTypedArray(ptIndex) && isIndex(ptIndex[0]) && isIndex(ptIndex[1])) {
         var ptNumber = ptIndex2ptNumber ? ptIndex2ptNumber[ptIndex] : ptIndex;
         var cdIndex = ptNumber2cdIndex ? ptNumber2cdIndex[ptNumber] : ptNumber;
         if (isCdIndexValid(cdIndex)) {
@@ -11521,8 +11400,8 @@ var Plotly = (() => {
         }
       }
     }
-  };
-  lib.selIndices2selPoints = function(trace) {
+  }
+  function selIndices2selPoints(trace) {
     var selectedpoints = trace.selectedpoints;
     var indexToPoints = trace._indexToPoints;
     if (indexToPoints) {
@@ -11530,9 +11409,9 @@ var Plotly = (() => {
       var out = [];
       for (var i = 0; i < selectedpoints.length; i++) {
         var ptIndex = selectedpoints[i];
-        if (lib.isIndex(ptIndex)) {
+        if (isIndex(ptIndex)) {
           var ptNumber = ptIndex2ptNumber[ptIndex];
-          if (lib.isIndex(ptNumber)) {
+          if (isIndex(ptNumber)) {
             out.push(ptNumber);
           }
         }
@@ -11541,17 +11420,17 @@ var Plotly = (() => {
     } else {
       return selectedpoints;
     }
-  };
-  lib.getTargetArray = function(trace, transformOpts) {
+  }
+  function getTargetArray(trace, transformOpts) {
     var target = transformOpts.target;
     if (typeof target === "string" && target) {
-      var array2 = lib.nestedProperty(trace, target).get();
-      return lib.isArrayOrTypedArray(array2) ? array2 : false;
-    } else if (lib.isArrayOrTypedArray(target)) {
+      var array2 = nestedProperty2(trace, target).get();
+      return isArrayOrTypedArray(array2) ? array2 : false;
+    } else if (isArrayOrTypedArray(target)) {
       return target;
     }
     return false;
-  };
+  }
   function minExtend(obj1, obj2, opt) {
     var objOut = {};
     if (typeof obj2 !== "object") obj2 = {};
@@ -11569,7 +11448,7 @@ var Plotly = (() => {
         } else {
           objOut[k] = v.slice(0, arrayLen);
         }
-      } else if (lib.isTypedArray(v)) {
+      } else if (isTypedArray(v)) {
         if (arrayLen === -1) {
           objOut[k] = v.subarray();
         } else {
@@ -11588,28 +11467,27 @@ var Plotly = (() => {
     }
     return objOut;
   }
-  lib.minExtend = minExtend;
-  lib.titleCase = function(s) {
+  function titleCase(s) {
     return s.charAt(0).toUpperCase() + s.slice(1);
-  };
-  lib.containsAny = function(s, fragments) {
+  }
+  function containsAny(s, fragments) {
     for (var i = 0; i < fragments.length; i++) {
       if (s.indexOf(fragments[i]) !== -1) return true;
     }
     return false;
-  };
+  }
   var IS_SAFARI_REGEX = /Version\/[\d\.]+.*Safari/;
-  lib.isSafari = function() {
+  function isSafari() {
     return IS_SAFARI_REGEX.test(window.navigator.userAgent);
-  };
+  }
   var IS_IOS_REGEX = /iPad|iPhone|iPod/;
-  lib.isIOS = function() {
+  function isIOS() {
     return IS_IOS_REGEX.test(window.navigator.userAgent);
-  };
+  }
   var IS_MAC_WKWEBVIEW_REGEX = /Macintosh.+AppleWebKit.+Gecko\)$/;
-  lib.isMacWKWebView = () => IS_MAC_WKWEBVIEW_REGEX.test(window.navigator.userAgent);
+  var isMacWKWebView = () => IS_MAC_WKWEBVIEW_REGEX.test(window.navigator.userAgent);
   var FIREFOX_VERSION_REGEX = /Firefox\/(\d+)\.\d+/;
-  lib.getFirefoxVersion = function() {
+  function getFirefoxVersion() {
     var match = FIREFOX_VERSION_REGEX.exec(window.navigator.userAgent);
     if (match && match.length === 2) {
       var versionInt = parseInt(match[1]);
@@ -11618,26 +11496,26 @@ var Plotly = (() => {
       }
     }
     return null;
-  };
-  lib.isD3Selection = function(obj) {
+  }
+  function isD3Selection(obj) {
     return obj instanceof selection_default;
-  };
-  lib.ensureSingle = function(parent, nodeType, className, enterFn) {
+  }
+  function ensureSingle(parent, nodeType, className, enterFn) {
     var sel = parent.select(nodeType + (className ? "." + className : ""));
     if (sel.size()) return sel;
     var layer = parent.append(nodeType);
     if (className) layer.classed(className, true);
     if (enterFn) layer.call(enterFn);
     return layer;
-  };
-  lib.ensureSingleById = function(parent, nodeType, id2, enterFn) {
+  }
+  function ensureSingleById(parent, nodeType, id2, enterFn) {
     var sel = parent.select(nodeType + "#" + id2);
     if (sel.size()) return sel;
     var layer = parent.append(nodeType).attr("id", id2);
     if (enterFn) layer.call(enterFn);
     return layer;
-  };
-  lib.objectFromPath = function(path, value) {
+  }
+  function objectFromPath(path, value) {
     var keys = path.split(".");
     var tmpObj;
     var obj = tmpObj = {};
@@ -11665,13 +11543,13 @@ var Plotly = (() => {
       }
     }
     return obj;
-  };
+  }
   var dottedPropertyRegex = /^([^\[\.]+)\.(.+)?/;
   var indexedPropertyRegex = /^([^\.]+)\[([0-9]+)\](\.)?(.+)?/;
   function notValid(prop) {
     return prop.slice(0, 2) === "__";
   }
-  lib.expandObjectPaths = function(data) {
+  function expandObjectPaths(data) {
     var match, key, prop, datum2, idx, dest, trailingPath;
     if (typeof data === "object" && !Array.isArray(data)) {
       for (key in data) {
@@ -11681,9 +11559,9 @@ var Plotly = (() => {
             prop = match[1];
             if (notValid(prop)) continue;
             delete data[key];
-            data[prop] = lib.extendDeepNoArrays(
+            data[prop] = extendDeepNoArrays(
               data[prop] || {},
-              lib.objectFromPath(key, lib.expandObjectPaths(datum2))[prop]
+              objectFromPath(key, expandObjectPaths(datum2))[prop]
             );
           } else if (match = key.match(indexedPropertyRegex)) {
             datum2 = data[key];
@@ -11695,21 +11573,21 @@ var Plotly = (() => {
             if (match[3] === ".") {
               trailingPath = match[4];
               dest = data[prop][idx] = data[prop][idx] || {};
-              lib.extendDeepNoArrays(dest, lib.objectFromPath(trailingPath, lib.expandObjectPaths(datum2)));
+              extendDeepNoArrays(dest, objectFromPath(trailingPath, expandObjectPaths(datum2)));
             } else {
               if (notValid(prop)) continue;
-              data[prop][idx] = lib.expandObjectPaths(datum2);
+              data[prop][idx] = expandObjectPaths(datum2);
             }
           } else {
             if (notValid(key)) continue;
-            data[key] = lib.expandObjectPaths(data[key]);
+            data[key] = expandObjectPaths(data[key]);
           }
         }
       }
     }
     return data;
-  };
-  lib.numSeparate = function(value, separators, separatethousands) {
+  }
+  function numSeparate(value, separators, separatethousands) {
     if (!separatethousands) separatethousands = false;
     if (typeof separators !== "string" || separators.length === 0) {
       throw new Error("Separator string required for formatting!");
@@ -11729,34 +11607,34 @@ var Plotly = (() => {
       }
     }
     return x1 + x2;
-  };
-  lib.TEMPLATE_STRING_REGEX = /%{([^\s%{}:]*)([:|\|][^}]*)?}/g;
+  }
+  var TEMPLATE_STRING_REGEX = /%{([^\s%{}:]*)([:|\|][^}]*)?}/g;
   var SIMPLE_PROPERTY_REGEX2 = /^\w*$/;
-  lib.templateString = function(string, obj) {
+  function templateString(string, obj) {
     var getterCache = {};
-    return string.replace(lib.TEMPLATE_STRING_REGEX, function(dummy, key) {
+    return string.replace(TEMPLATE_STRING_REGEX, function(dummy, key) {
       var v;
       if (SIMPLE_PROPERTY_REGEX2.test(key)) {
         v = obj[key];
       } else {
-        getterCache[key] = getterCache[key] || lib.nestedProperty(obj, key).get;
+        getterCache[key] = getterCache[key] || nestedProperty2(obj, key).get;
         v = getterCache[key](true);
       }
       return v !== void 0 ? v : "";
     });
-  };
+  }
   var hovertemplateWarnings = {
     max: 10,
     count: 0,
     name: "hovertemplate"
   };
-  lib.hovertemplateString = (params) => templateFormatString(__spreadProps(__spreadValues({}, params), { opts: hovertemplateWarnings }));
+  var hovertemplateString = (params) => templateFormatString(__spreadProps(__spreadValues({}, params), { opts: hovertemplateWarnings }));
   var texttemplateWarnings = {
     max: 10,
     count: 0,
     name: "texttemplate"
   };
-  lib.texttemplateString = (params) => templateFormatString(__spreadProps(__spreadValues({}, params), { opts: texttemplateWarnings }));
+  var texttemplateString = (params) => templateFormatString(__spreadProps(__spreadValues({}, params), { opts: texttemplateWarnings }));
   var MULT_DIV_REGEX = /^(\S+)([\*\/])(-?\d+(\.\d+)?)$/;
   function multDivParser(inputStr) {
     var match = inputStr.match(MULT_DIV_REGEX);
@@ -11769,10 +11647,10 @@ var Plotly = (() => {
     name: "texttemplate",
     parseMultDiv: true
   };
-  lib.texttemplateStringForShapes = (params) => templateFormatString(__spreadProps(__spreadValues({}, params), { opts: texttemplateWarningsForShapes }));
+  var texttemplateStringForShapes = (params) => templateFormatString(__spreadProps(__spreadValues({}, params), { opts: texttemplateWarningsForShapes }));
   var TEMPLATE_STRING_FORMAT_SEPARATOR = /^[:|\|]/;
   function templateFormatString({ data = [], locale: locale4, fallback, labels = {}, opts, template }) {
-    return template.replace(lib.TEMPLATE_STRING_REGEX, (match, key, format5) => {
+    return template.replace(TEMPLATE_STRING_REGEX, (match, key, format5) => {
       const isOther = ["xother", "yother"].includes(key);
       const isSpaceOther = ["_xother", "_yother"].includes(key);
       const isSpaceOtherSpace = ["_xother_", "_yother_"].includes(key);
@@ -11800,7 +11678,7 @@ var Plotly = (() => {
             break;
           }
           if (!SIMPLE_PROPERTY_REGEX2.test(key)) {
-            value = lib.nestedProperty(obj, key).get(true);
+            value = nestedProperty2(obj, key).get(true);
           }
           if (value !== void 0) break;
         }
@@ -11809,7 +11687,7 @@ var Plotly = (() => {
         const { count, max: max2, name: name6 } = opts;
         const fallbackValue = fallback === false ? match : fallback;
         if (count < max2) {
-          lib.warn(
+          warn(
             [
               `Variable '${key}' in ${name6} could not be found!`,
               "Please verify that the template is correct.",
@@ -11817,7 +11695,7 @@ var Plotly = (() => {
             ].join(" ")
           );
         }
-        if (count === max2) lib.warn(`Too many '${name6}' warnings - additional warnings will be suppressed.`);
+        if (count === max2) warn(`Too many '${name6}' warnings - additional warnings will be suppressed.`);
         opts.count++;
         return fallbackValue;
       }
@@ -11826,15 +11704,15 @@ var Plotly = (() => {
       if (format5) {
         var fmt;
         if (format5[0] === ":") {
-          fmt = locale4 ? locale4.numberFormat : lib.numberFormat;
+          fmt = locale4 ? locale4.numberFormat : numberFormat;
           if (value !== "") {
             value = fmt(format5.replace(TEMPLATE_STRING_FORMAT_SEPARATOR, ""))(value);
           }
         }
         if (format5[0] === "|") {
           fmt = locale4 ? locale4.timeFormat : utcFormat;
-          var ms = lib.dateTime2ms(value);
-          value = lib.formatDate(ms, format5.replace(TEMPLATE_STRING_FORMAT_SEPARATOR, ""), false, fmt);
+          var ms = dateTime2ms(value);
+          value = formatDate(ms, format5.replace(TEMPLATE_STRING_FORMAT_SEPARATOR, ""), false, fmt);
         }
       } else {
         var keyLabel = key + "Label";
@@ -11850,7 +11728,7 @@ var Plotly = (() => {
   }
   var char0 = 48;
   var char9 = 57;
-  lib.subplotSort = function(a, b) {
+  function subplotSort(a, b) {
     var l = Math.min(a.length, b.length) + 1;
     var numA = 0;
     var numB = 0;
@@ -11867,32 +11745,32 @@ var Plotly = (() => {
       }
     }
     return numB - numA;
-  };
+  }
   var randSeed = 2e9;
-  lib.seedPseudoRandom = function() {
+  function seedPseudoRandom() {
     randSeed = 2e9;
-  };
-  lib.pseudoRandom = function() {
+  }
+  function pseudoRandom() {
     var lastVal = randSeed;
     randSeed = (69069 * randSeed + 1) % 4294967296;
-    if (Math.abs(randSeed - lastVal) < 429496729) return lib.pseudoRandom();
+    if (Math.abs(randSeed - lastVal) < 429496729) return pseudoRandom();
     return randSeed / 4294967296;
-  };
-  lib.fillText = function(calcPt, trace, contOut) {
+  }
+  function fillText(calcPt, trace, contOut) {
     var fill = Array.isArray(contOut) ? function(v) {
       contOut.push(v);
     } : function(v) {
       contOut.text = v;
     };
-    var htx = lib.extractOption(calcPt, trace, "htx", "hovertext");
-    if (lib.isValidTextValue(htx)) return fill(htx);
-    var tx = lib.extractOption(calcPt, trace, "tx", "text");
-    if (lib.isValidTextValue(tx)) return fill(tx);
-  };
-  lib.isValidTextValue = function(v) {
+    var htx = extractOption(calcPt, trace, "htx", "hovertext");
+    if (isValidTextValue(htx)) return fill(htx);
+    var tx = extractOption(calcPt, trace, "tx", "text");
+    if (isValidTextValue(tx)) return fill(tx);
+  }
+  function isValidTextValue(v) {
     return v || v === 0;
-  };
-  lib.formatPercent = function(ratio, n) {
+  }
+  function formatPercent(ratio, n) {
     n = n || 0;
     var str = (Math.round(100 * ratio * Math.pow(10, n)) * Math.pow(0.1, n)).toFixed(n) + "%";
     for (var i = 0; i < n; i++) {
@@ -11902,21 +11780,21 @@ var Plotly = (() => {
       }
     }
     return str;
-  };
-  lib.isHidden = function(gd) {
+  }
+  function isHidden(gd) {
     var display = window.getComputedStyle(gd).display;
     return !display || display === "none";
-  };
-  lib.strTranslate = function(x, y) {
+  }
+  function strTranslate(x, y) {
     return x || y ? "translate(" + x + "," + y + ")" : "";
-  };
-  lib.strRotate = function(a) {
+  }
+  function strRotate(a) {
     return a ? "rotate(" + a + ")" : "";
-  };
-  lib.strScale = function(s) {
+  }
+  function strScale(s) {
     return s !== 1 ? "scale(" + s + ")" : "";
-  };
-  lib.getTextTransform = function(transform2) {
+  }
+  function getTextTransform(transform2) {
     var noCenter = transform2.noCenter;
     var textX = transform2.textX;
     var textY = transform2.textY;
@@ -11928,36 +11806,219 @@ var Plotly = (() => {
     var scale = transform2.scale;
     if (!scale) scale = 0;
     else if (scale > 1) scale = 1;
-    return lib.strTranslate(targetX - scale * (textX + anchorX), targetY - scale * (textY + anchorY)) + lib.strScale(scale) + (rotate2 ? "rotate(" + rotate2 + (noCenter ? "" : " " + textX + " " + textY) + ")" : "");
-  };
-  lib.setTransormAndDisplay = function(s, transform2) {
-    s.attr("transform", lib.getTextTransform(transform2));
+    return strTranslate(targetX - scale * (textX + anchorX), targetY - scale * (textY + anchorY)) + strScale(scale) + (rotate2 ? "rotate(" + rotate2 + (noCenter ? "" : " " + textX + " " + textY) + ")" : "");
+  }
+  function setTransormAndDisplay(s, transform2) {
+    s.attr("transform", getTextTransform(transform2));
     s.style("display", transform2.scale ? null : "none");
-  };
-  lib.ensureUniformFontSize = function(gd, baseFont) {
-    var out = lib.extendFlat({}, baseFont);
+  }
+  function ensureUniformFontSize(gd, baseFont) {
+    var out = extendFlat({}, baseFont);
     out.size = Math.max(baseFont.size, gd._fullLayout.uniformtext.minsize || 0);
     return out;
-  };
-  lib.join2 = function(arr, mainSeparator, lastSeparator) {
+  }
+  function join2(arr, mainSeparator, lastSeparator) {
     var len2 = arr.length;
     if (len2 > 1) {
       return arr.slice(0, -1).join(mainSeparator) + lastSeparator + arr[len2 - 1];
     }
     return arr.join(mainSeparator);
-  };
-  lib.bigFont = function(size) {
+  }
+  function bigFont(size) {
     return Math.round(1.2 * size);
-  };
-  var firefoxVersion = lib.getFirefoxVersion();
+  }
+  var firefoxVersion = getFirefoxVersion();
   var isProblematicFirefox = firefoxVersion !== null && firefoxVersion < 86;
-  lib.getPositionFromD3Event = function(event2) {
+  function getPositionFromD3Event(event2) {
     if (isProblematicFirefox) {
       return [event2.layerX, event2.layerY];
     } else {
       return [event2.offsetX, event2.offsetY];
     }
-  };
+  }
+  var lib = {};
+  lib.adjustFormat = adjustFormat;
+  lib.warnBadFormat = warnBadFormat;
+  lib.noFormat = noFormat;
+  lib.numberFormat = numberFormat;
+  lib.nestedProperty = nestedProperty2;
+  lib.keyedContainer = keyedContainer2;
+  lib.relativeAttr = relativeAttr;
+  lib.isPlainObject = isPlainObject2;
+  lib.toLogRange = toLogRange2;
+  lib.relinkPrivateKeys = relinkPrivateKeys2;
+  lib.isArrayBuffer = isArrayBuffer;
+  lib.isTypedArray = isTypedArray;
+  lib.isArrayOrTypedArray = isArrayOrTypedArray;
+  lib.isArray1D = isArray1D;
+  lib.ensureArray = ensureArray;
+  lib.concat = concat;
+  lib.maxRowLength = maxRowLength;
+  lib.minRowLength = minRowLength;
+  lib.mod = mod;
+  lib.modHalf = modHalf;
+  lib.valObjectMeta = valObjectMeta;
+  lib.coerce = coerce;
+  lib.coerce2 = coerce2;
+  lib.coerceFont = coerceFont;
+  lib.coercePattern = coercePattern;
+  lib.coerceHoverinfo = coerceHoverinfo;
+  lib.coerceSelectionMarkerOpacity = coerceSelectionMarkerOpacity;
+  lib.validate = validate;
+  lib.dateTime2ms = dateTime2ms;
+  lib.isDateTime = isDateTime;
+  lib.ms2DateTime = ms2DateTime;
+  lib.ms2DateTimeLocal = ms2DateTimeLocal;
+  lib.cleanDate = cleanDate;
+  lib.isJSDate = isJSDate;
+  lib.formatDate = formatDate;
+  lib.incrementMonth = incrementMonth;
+  lib.dateTick0 = dateTick0;
+  lib.dfltRange = dfltRange;
+  lib.findExactDates = findExactDates;
+  lib.MIN_MS = MIN_MS;
+  lib.MAX_MS = MAX_MS;
+  lib.findBin = findBin;
+  lib.sorterAsc = sorterAsc;
+  lib.sorterDes = sorterDes;
+  lib.distinctVals = distinctVals;
+  lib.roundUp = roundUp;
+  lib.sort = sort;
+  lib.findIndexOfMin = findIndexOfMin;
+  lib.sortObjectKeys = sortObjectKeys2;
+  lib.aggNums = aggNums;
+  lib.len = len;
+  lib.mean = mean;
+  lib.geometricMean = geometricMean;
+  lib.median = median;
+  lib.midRange = midRange;
+  lib.variance = variance;
+  lib.stdev = stdev;
+  lib.interp = interp;
+  lib.init2dArray = init2dArray;
+  lib.transposeRagged = transposeRagged;
+  lib.dot = dot;
+  lib.translationMatrix = translationMatrix;
+  lib.rotationMatrix = rotationMatrix;
+  lib.rotationXYMatrix = rotationXYMatrix;
+  lib.apply3DTransform = apply3DTransform;
+  lib.apply2DTransform = apply2DTransform;
+  lib.apply2DTransform2 = apply2DTransform2;
+  lib.convertCssMatrix = convertCssMatrix;
+  lib.inverseTransformMatrix = inverseTransformMatrix;
+  lib.deg2rad = deg2rad;
+  lib.rad2deg = rad2deg;
+  lib.angleDelta = angleDelta;
+  lib.angleDist = angleDist;
+  lib.isFullCircle = isFullCircle;
+  lib.isAngleInsideSector = isAngleInsideSector;
+  lib.isPtInsideSector = isPtInsideSector;
+  lib.pathArc = pathArc;
+  lib.pathSector = pathSector;
+  lib.pathAnnulus = pathAnnulus;
+  lib.isLeftAnchor = isLeftAnchor;
+  lib.isCenterAnchor = isCenterAnchor;
+  lib.isRightAnchor = isRightAnchor;
+  lib.isTopAnchor = isTopAnchor;
+  lib.isMiddleAnchor = isMiddleAnchor;
+  lib.isBottomAnchor = isBottomAnchor;
+  lib.segmentsIntersect = segmentsIntersect;
+  lib.segmentDistance = segmentDistance;
+  lib.getTextLocation = getTextLocation;
+  lib.clearLocationCache = clearLocationCache;
+  lib.getVisibleSegment = getVisibleSegment;
+  lib.findPointOnPath = findPointOnPath;
+  lib.extendFlat = extendFlat;
+  lib.extendDeep = extendDeep;
+  lib.extendDeepAll = extendDeepAll;
+  lib.extendDeepNoArrays = extendDeepNoArrays;
+  lib.log = log;
+  lib.warn = warn;
+  lib.error = error;
+  lib.counterRegex = counter;
+  lib.throttle = throttle;
+  lib.throttleDone = done;
+  lib.clearThrottle = clear;
+  lib.getGraphDiv = getGraphDiv;
+  lib.isPlotDiv = isPlotDiv;
+  lib.removeElement = removeElement;
+  lib.addStyleRule = addStyleRule;
+  lib.addRelatedStyleRule = addRelatedStyleRule;
+  lib.deleteRelatedStyleRule = deleteRelatedStyleRule;
+  lib.setStyleOnHover = setStyleOnHover;
+  lib.getFullTransformMatrix = getFullTransformMatrix;
+  lib.getElementTransformMatrix = getElementTransformMatrix;
+  lib.getElementAndAncestors = getElementAndAncestors;
+  lib.equalDomRects = equalDomRects;
+  lib.clearResponsive = clearResponsive2;
+  lib.preserveDrawingBuffer = preserveDrawingBuffer2;
+  lib.makeTraceGroups = makeTraceGroups2;
+  lib._ = localize;
+  lib.notifier = notifier;
+  lib.filterUnique = filterUnique2;
+  lib.filterVisible = filterVisible2;
+  lib.pushUnique = pushUnique2;
+  lib.increment = increment;
+  lib.cleanNumber = cleanNumber2;
+  lib.ensureNumber = ensureNumber;
+  lib.isIndex = isIndex;
+  lib.noop = noop3;
+  lib.identity = identity3;
+  lib.repeat = repeat;
+  lib.swapAttrs = swapAttrs;
+  lib.raiseToTop = raiseToTop;
+  lib.cancelTransition = cancelTransition;
+  lib.constrain = constrain;
+  lib.bBoxIntersect = bBoxIntersect;
+  lib.simpleMap = simpleMap;
+  lib.randstr = randstr;
+  lib.OptionControl = OptionControl;
+  lib.smooth = smooth;
+  lib.syncOrAsync = syncOrAsync;
+  lib.stripTrailingSlash = stripTrailingSlash;
+  lib.noneOrAll = noneOrAll;
+  lib.mergeArray = mergeArray;
+  lib.mergeArrayCastPositive = mergeArrayCastPositive;
+  lib.fillArray = fillArray;
+  lib.castOption = castOption;
+  lib.extractOption = extractOption;
+  lib.tagSelected = tagSelected;
+  lib.selIndices2selPoints = selIndices2selPoints;
+  lib.getTargetArray = getTargetArray;
+  lib.minExtend = minExtend;
+  lib.titleCase = titleCase;
+  lib.containsAny = containsAny;
+  lib.isSafari = isSafari;
+  lib.isIOS = isIOS;
+  lib.isMacWKWebView = isMacWKWebView;
+  lib.getFirefoxVersion = getFirefoxVersion;
+  lib.isD3Selection = isD3Selection;
+  lib.ensureSingle = ensureSingle;
+  lib.ensureSingleById = ensureSingleById;
+  lib.objectFromPath = objectFromPath;
+  lib.expandObjectPaths = expandObjectPaths;
+  lib.numSeparate = numSeparate;
+  lib.TEMPLATE_STRING_REGEX = TEMPLATE_STRING_REGEX;
+  lib.templateString = templateString;
+  lib.hovertemplateString = hovertemplateString;
+  lib.texttemplateString = texttemplateString;
+  lib.texttemplateStringForShapes = texttemplateStringForShapes;
+  lib.subplotSort = subplotSort;
+  lib.seedPseudoRandom = seedPseudoRandom;
+  lib.pseudoRandom = pseudoRandom;
+  lib.fillText = fillText;
+  lib.isValidTextValue = isValidTextValue;
+  lib.formatPercent = formatPercent;
+  lib.isHidden = isHidden;
+  lib.strTranslate = strTranslate;
+  lib.strRotate = strRotate;
+  lib.strScale = strScale;
+  lib.getTextTransform = getTextTransform;
+  lib.setTransormAndDisplay = setTransormAndDisplay;
+  lib.ensureUniformFontSize = ensureUniformFontSize;
+  lib.join2 = join2;
+  lib.bigFont = bigFont;
+  lib.getPositionFromD3Event = getPositionFromD3Event;
   var lib_default = lib;
 
   // src/lib/events.js
@@ -12094,7 +12155,7 @@ var Plotly = (() => {
       arg = args[i];
       if (arg === gd) copy2[i] = arg;
       else if (typeof arg === "object") {
-        copy2[i] = Array.isArray(arg) ? lib_default.extendDeep([], arg) : lib_default.extendDeepAll({}, arg);
+        copy2[i] = Array.isArray(arg) ? extendDeep([], arg) : extendDeepAll({}, arg);
       } else copy2[i] = arg;
     }
     return copy2;
@@ -12197,11 +12258,6 @@ var Plotly = (() => {
 
   // src/plot_api/plot_schema.js
   var { configAttributes: configAttributes2 } = plot_config_default;
-  var extendDeepAll3 = lib_default.extendDeepAll;
-  var isPlainObject2 = lib_default.isPlainObject;
-  var isArrayOrTypedArray2 = lib_default.isArrayOrTypedArray;
-  var nestedProperty2 = lib_default.nestedProperty;
-  var valObjectMeta2 = lib_default.valObjectMeta;
   var IS_SUBPLOT_OBJ = "_isSubplotObj";
   var IS_LINKED_TO_ARRAY = "_isLinkedToArray";
   var ARRAY_ATTR_REGEXPS = "_arrayAttrRegexps";
@@ -12214,7 +12270,7 @@ var Plotly = (() => {
     });
     return {
       defs: {
-        valObjects: valObjectMeta2,
+        valObjects: valObjectMeta,
         metaKeys: UNDERSCORE_ATTRS.concat(["description", "role", "editType", "impliedEdits"]),
         editType: {
           traces: edit_types_default.traces,
@@ -12262,7 +12318,7 @@ var Plotly = (() => {
       var item = container[stack[i]];
       var newAstrPartial = astrPartial + stack[i];
       if (i === stack.length - 1) {
-        if (isArrayOrTypedArray2(item)) {
+        if (isArrayOrTypedArray(item)) {
           arrayAttributes.push(baseAttrName + newAstrPartial);
         }
       } else {
@@ -12348,7 +12404,7 @@ var Plotly = (() => {
   function recurseIntoValObject(valObject, parts, i) {
     if (!valObject) return false;
     if (valObject._isLinkedToArray) {
-      if (isIndex(parts[i])) i++;
+      if (isIndex2(parts[i])) i++;
       else if (i < parts.length) return false;
     }
     for (; i < parts.length; i++) {
@@ -12358,11 +12414,11 @@ var Plotly = (() => {
       if (i === parts.length - 1) break;
       if (valObject._isLinkedToArray) {
         i++;
-        if (!isIndex(parts[i])) return false;
+        if (!isIndex2(parts[i])) return false;
       } else if (valObject.valType === "info_array") {
         i++;
         var index = parts[i];
-        if (!isIndex(index)) return false;
+        if (!isIndex2(index)) return false;
         var items = valObject.items;
         if (Array.isArray(items)) {
           if (index >= items.length) return false;
@@ -12370,7 +12426,7 @@ var Plotly = (() => {
             i++;
             if (parts.length === i) return valObject;
             var index2 = parts[i];
-            if (!isIndex(index2)) return false;
+            if (!isIndex2(index2)) return false;
             valObject = items[index][index2];
           } else valObject = items[index];
         } else {
@@ -12380,7 +12436,7 @@ var Plotly = (() => {
     }
     return valObject;
   }
-  function isIndex(val) {
+  function isIndex2(val) {
     return val === Math.round(val) && val >= 0;
   }
   function getTraceAttributes(type) {
@@ -12388,13 +12444,13 @@ var Plotly = (() => {
     _module = registry_default.modules[type]._module, basePlotModule = _module.basePlotModule;
     var attributes3 = {};
     attributes3.type = null;
-    var copyBaseAttributes = extendDeepAll3({}, attributes_default2);
-    var copyModuleAttributes = extendDeepAll3({}, _module.attributes);
+    var copyBaseAttributes = extendDeepAll({}, attributes_default2);
+    var copyModuleAttributes = extendDeepAll({}, _module.attributes);
     crawl2(copyModuleAttributes, function(attr2, attrName, attrs2, level, fullAttrString) {
       nestedProperty2(copyBaseAttributes, fullAttrString).set(void 0);
       if (attr2 === void 0) nestedProperty2(copyModuleAttributes, fullAttrString).set(void 0);
     });
-    extendDeepAll3(attributes3, copyBaseAttributes);
+    extendDeepAll(attributes3, copyBaseAttributes);
     if (registry_default.traceIs(type, "noOpacity")) {
       delete attributes3.opacity;
     }
@@ -12409,9 +12465,9 @@ var Plotly = (() => {
     if (!_module.selectPoints) {
       delete attributes3.selectedpoints;
     }
-    extendDeepAll3(attributes3, copyModuleAttributes);
+    extendDeepAll(attributes3, copyModuleAttributes);
     if (basePlotModule.attributes) {
-      extendDeepAll3(attributes3, basePlotModule.attributes);
+      extendDeepAll(attributes3, basePlotModule.attributes);
     }
     attributes3.type = type;
     var out = {
@@ -12423,7 +12479,7 @@ var Plotly = (() => {
     };
     if (_module.layoutAttributes) {
       var layoutAttributes2 = {};
-      extendDeepAll3(layoutAttributes2, _module.layoutAttributes);
+      extendDeepAll(layoutAttributes2, _module.layoutAttributes);
       out.layoutAttributes = formatAttributes(layoutAttributes2);
     }
     if (!_module.animatable) {
@@ -12438,7 +12494,7 @@ var Plotly = (() => {
   function getLayoutAttributes() {
     var layoutAttributes2 = {};
     var key, _module;
-    extendDeepAll3(layoutAttributes2, layout_attributes_default2);
+    extendDeepAll(layoutAttributes2, layout_attributes_default2);
     for (key in registry_default.subplotsRegistry) {
       _module = registry_default.subplotsRegistry[key];
       if (!_module.layoutAttributes) continue;
@@ -12464,7 +12520,7 @@ var Plotly = (() => {
         delete layoutAttributes2.xaxis.shift;
         delete layoutAttributes2.xaxis.autoshift;
       } else if (_module.name === "colorscale") {
-        extendDeepAll3(layoutAttributes2, _module.layoutAttributes);
+        extendDeepAll(layoutAttributes2, _module.layoutAttributes);
       } else if (_module.layoutAttributes) {
         insertAttrs(layoutAttributes2, _module.layoutAttributes, _module.name);
       }
@@ -12475,7 +12531,7 @@ var Plotly = (() => {
   }
   function getFramesAttributes() {
     var attrs2 = {
-      frames: extendDeepAll3({}, frame_attributes_default)
+      frames: extendDeepAll({}, frame_attributes_default)
     };
     formatAttributes(attrs2);
     return attrs2.frames;
@@ -12536,13 +12592,13 @@ var Plotly = (() => {
   }
   function handleBasePlotModule(layoutAttributes2, _module, astr) {
     var np = nestedProperty2(layoutAttributes2, astr);
-    var attrs2 = extendDeepAll3({}, _module.layoutAttributes);
+    var attrs2 = extendDeepAll({}, _module.layoutAttributes);
     attrs2[IS_SUBPLOT_OBJ] = true;
     np.set(attrs2);
   }
   function insertAttrs(baseAttrs, newAttrs, astr) {
     var np = nestedProperty2(baseAttrs, astr);
-    np.set(extendDeepAll3(np.get() || {}, newAttrs));
+    np.set(extendDeepAll(np.get() || {}, newAttrs));
   }
   var plot_schema_default = { get: get3, crawl: crawl2, isValObject, findArrayAttributes, getTraceValObject, getLayoutValObject, IS_SUBPLOT_OBJ, IS_LINKED_TO_ARRAY, DEPRECATED, UNDERSCORE_ATTRS };
 
@@ -12577,7 +12633,7 @@ var Plotly = (() => {
       }
     }
     function newTrace(traceIn) {
-      traceType = lib_default.coerce(traceIn, {}, attributes_default2, "type");
+      traceType = coerce(traceIn, {}, attributes_default2, "type");
       var traceOut = { type: traceType, _template: null };
       if (traceType in traceCounts) {
         typeTemplates = dataTemplate[traceType];
@@ -12596,7 +12652,7 @@ var Plotly = (() => {
   var newContainer = function(container, name6, baseName) {
     var template = container._template;
     var part = template && (template[name6] || baseName && template[baseName]);
-    if (!lib_default.isPlainObject(part)) part = null;
+    if (!isPlainObject2(part)) part = null;
     var out = container[name6] = { _template: part };
     return out;
   };
@@ -12656,12 +12712,12 @@ var Plotly = (() => {
   function arrayDefaultKey(name6) {
     var lastChar = name6.length - 1;
     if (name6.charAt(lastChar) !== "s") {
-      lib_default.warn("bad argument to arrayDefaultKey: " + name6);
+      warn("bad argument to arrayDefaultKey: " + name6);
     }
     return name6.slice(0, -1) + "defaults";
   }
   var arrayEditor = function(parentIn, containerStr, itemOut) {
-    var lengthIn = (lib_default.nestedProperty(parentIn, containerStr).get() || []).length;
+    var lengthIn = (nestedProperty2(parentIn, containerStr).get() || []).length;
     var index = itemOut._index;
     var templateItemName = index >= lengthIn && (itemOut._input || {})._templateitemname;
     if (templateItemName) index = lengthIn;
@@ -12680,7 +12736,7 @@ var Plotly = (() => {
     }
     function modifyItem(attr2, value) {
       if (templateItemName) {
-        lib_default.nestedProperty(update3[itemStr], attr2).set(value);
+        nestedProperty2(update3[itemStr], attr2).set(value);
       } else {
         update3[itemStr + "." + attr2] = value;
       }
@@ -12694,7 +12750,7 @@ var Plotly = (() => {
       if (attr2) modifyItem(attr2, value);
       var updateToApply = getUpdateObj();
       for (var key in updateToApply) {
-        lib_default.nestedProperty(parentIn, key).set(updateToApply[key]);
+        nestedProperty2(parentIn, key).set(updateToApply[key]);
       }
     }
     return {
@@ -12964,7 +13020,7 @@ var Plotly = (() => {
         }
       };
     } else {
-      lib_default.log("Unable to automatically bind plot updates to API command");
+      log("Unable to automatically bind plot updates to API command");
       ret.lookupTable = {};
       ret.remove = function() {
       };
@@ -13052,7 +13108,7 @@ var Plotly = (() => {
     } else {
       return false;
     }
-    value = lib_default.nestedProperty(container, binding.prop).get();
+    value = nestedProperty2(container, binding.prop).get();
     obj = cache[binding.type] = cache[binding.type] || {};
     if (obj.hasOwnProperty(binding.prop)) {
       if (obj[binding.prop] !== value) {
@@ -13074,7 +13130,7 @@ var Plotly = (() => {
       allArgs.push(args[i]);
     }
     return _method.apply(null, allArgs).catch(function(err) {
-      lib_default.warn("API call to Plotly." + method + " rejected.", err);
+      warn("API call to Plotly." + method + " rejected.", err);
       return Promise.reject(err);
     });
   };
@@ -13112,7 +13168,7 @@ var Plotly = (() => {
     var aobj = {};
     if (typeof astr === "string") {
       aobj[astr] = args[1];
-    } else if (lib_default.isPlainObject(astr)) {
+    } else if (isPlainObject2(astr)) {
       aobj = astr;
     } else {
       return bindings;
@@ -13131,7 +13187,7 @@ var Plotly = (() => {
     aobj = {};
     if (typeof astr === "string") {
       aobj[astr] = val;
-    } else if (lib_default.isPlainObject(astr)) {
+    } else if (isPlainObject2(astr)) {
       aobj = astr;
       if (traces === void 0) {
         traces = val;
@@ -13187,7 +13243,7 @@ var Plotly = (() => {
       var attr2 = attrs2[attrName];
       if (attrName[0] === "_") return;
       var thisPath = path + (depth > 0 ? "." : "") + attrName;
-      if (lib_default.isPlainObject(attr2)) {
+      if (isPlainObject2(attr2)) {
         crawl3(attr2, callback, thisPath, depth + 1);
       } else {
         callback(thisPath, attrName, attr2);
@@ -13198,10 +13254,8 @@ var Plotly = (() => {
 
   // src/plots/plots.js
   var { BADNUM: BADNUM5 } = numerical_default;
-  var relinkPrivateKeys2 = lib_default.relinkPrivateKeys;
-  var _ = lib_default._;
   var plots = {};
-  lib_default.extendFlat(plots, registry_default);
+  extendFlat(plots, registry_default);
   plots.attributes = attributes_default2;
   plots.attributes.type.values = plots.allTypes;
   plots.fontAttrs = font_attributes_default;
@@ -13211,7 +13265,7 @@ var Plotly = (() => {
   plots.manageCommandObserver = command_default.manageCommandObserver;
   plots.hasSimpleAPICommandBindings = command_default.hasSimpleAPICommandBindings;
   plots.redrawText = function(gd) {
-    gd = lib_default.getGraphDiv(gd);
+    gd = getGraphDiv(gd);
     return new Promise(function(resolve) {
       setTimeout(function() {
         if (!gd._fullLayout) return;
@@ -13223,17 +13277,17 @@ var Plotly = (() => {
     });
   };
   plots.resize = function(gd) {
-    gd = lib_default.getGraphDiv(gd);
+    gd = getGraphDiv(gd);
     var resolveLastResize;
     var p = new Promise(function(resolve, reject) {
-      if (!gd || lib_default.isHidden(gd)) {
+      if (!gd || isHidden(gd)) {
         reject(new Error("Resize must be passed a displayed plot div element."));
       }
       if (gd._redrawTimer) clearTimeout(gd._redrawTimer);
       if (gd._resolveResize) resolveLastResize = gd._resolveResize;
       gd._resolveResize = resolve;
       gd._redrawTimer = setTimeout(function() {
-        if (!gd.layout || gd.layout.width && gd.layout.height || lib_default.isHidden(gd)) {
+        if (!gd.layout || gd.layout.width && gd.layout.height || isHidden(gd)) {
           resolve(gd);
           return;
         }
@@ -13263,7 +13317,7 @@ var Plotly = (() => {
   plots.addLinks = function(gd) {
     if (!gd._context.showLink && !gd._context.showSources) return;
     var fullLayout = gd._fullLayout;
-    var linkContainer = lib_default.ensureSingle(fullLayout._paper, "text", "js-plot-link-container", function(s) {
+    var linkContainer = ensureSingle(fullLayout._paper, "text", "js-plot-link-container", function(s) {
       s.style({
         "font-family": '"Open Sans", Arial, sans-serif',
         "font-size": "12px",
@@ -13370,14 +13424,14 @@ var Plotly = (() => {
     var i;
     if (!gd._transitionData) plots.createTransitionData(gd);
     newFullLayout._dfltTitle = {
-      plot: _(gd, "Click to enter Plot title"),
-      subtitle: _(gd, "Click to enter Plot subtitle"),
-      x: _(gd, "Click to enter X axis title"),
-      y: _(gd, "Click to enter Y axis title"),
-      colorbar: _(gd, "Click to enter Colorscale title"),
-      annotation: _(gd, "new text")
+      plot: localize(gd, "Click to enter Plot title"),
+      subtitle: localize(gd, "Click to enter Plot subtitle"),
+      x: localize(gd, "Click to enter X axis title"),
+      y: localize(gd, "Click to enter Y axis title"),
+      colorbar: localize(gd, "Click to enter Colorscale title"),
+      annotation: localize(gd, "new text")
     };
-    newFullLayout._traceWord = _(gd, "trace");
+    newFullLayout._traceWord = localize(gd, "trace");
     var formatObj = getFormatObj(gd, d3FormatKeys);
     newFullLayout._mapboxAccessToken = context.mapboxAccessToken;
     if (oldFullLayout._initialAutoSizeIsDone) {
@@ -13423,13 +13477,13 @@ var Plotly = (() => {
     if (splomXa.length > 1 && splomYa.length > 1) {
       registry_default.getComponentMethod("grid", "sizeDefaults")(newLayout, newFullLayout);
       for (i = 0; i < splomXa.length; i++) {
-        lib_default.pushUnique(subplots.xaxis, splomXa[i]);
+        pushUnique2(subplots.xaxis, splomXa[i]);
       }
       for (i = 0; i < splomYa.length; i++) {
-        lib_default.pushUnique(subplots.yaxis, splomYa[i]);
+        pushUnique2(subplots.yaxis, splomYa[i]);
       }
       for (var k in splomSubplots) {
-        lib_default.pushUnique(subplots.cartesian, k);
+        pushUnique2(subplots.cartesian, k);
       }
     }
     newFullLayout._has = plots._hasPlotType.bind(newFullLayout);
@@ -13443,7 +13497,7 @@ var Plotly = (() => {
     var crossTraceDefaultsFuncs = [];
     for (i = 0; i < _modules.length; i++) {
       var funci = _modules[i].crossTraceDefaults;
-      if (funci) lib_default.pushUnique(crossTraceDefaultsFuncs, funci);
+      if (funci) pushUnique2(crossTraceDefaultsFuncs, funci);
     }
     for (i = 0; i < crossTraceDefaultsFuncs.length; i++) {
       crossTraceDefaultsFuncs[i](newFullData, newFullLayout);
@@ -13498,8 +13552,8 @@ var Plotly = (() => {
           var j, astr, oldArrayVal;
           for (j = 0; j < arrayAttrs.length; j++) {
             astr = arrayAttrs[j];
-            oldArrayVal = lib_default.nestedProperty(oldTrace, astr).get().slice();
-            lib_default.nestedProperty(newTrace, astr).set(oldArrayVal);
+            oldArrayVal = nestedProperty2(oldTrace, astr).get().slice();
+            nestedProperty2(newTrace, astr).set(oldArrayVal);
           }
         }
         cd0.trace = newTrace;
@@ -13533,7 +13587,7 @@ var Plotly = (() => {
       if (typeof newUid === "number") newUid = String(newUid);
       if (tryUid(newUid, i)) continue;
       if (i < oldLen && tryUid(oldFullInput[i].uid, i)) continue;
-      setUid(lib_default.randstr(seenUids), i);
+      setUid(randstr(seenUids), i);
     }
     return out;
   }
@@ -13551,7 +13605,7 @@ var Plotly = (() => {
           collectableSubplotTypes2.push(subplotType);
           if (Array.isArray(subplotAttr)) {
             for (j = 0; j < subplotAttr.length; j++) {
-              lib_default.pushUnique(collectableSubplotTypes2, subplotAttr[j]);
+              pushUnique2(collectableSubplotTypes2, subplotAttr[j]);
             }
           }
         }
@@ -13603,11 +13657,11 @@ var Plotly = (() => {
       numberFormat: function(formatStr) {
         try {
           formatStr = locale_default(formatObj).format(
-            lib_default.adjustFormat(formatStr)
+            adjustFormat(formatStr)
           );
         } catch (e) {
-          lib_default.warnBadFormat(formatStr);
-          return lib_default.noFormat;
+          warnBadFormat(formatStr);
+          return noFormat;
         }
         return formatStr;
       },
@@ -13767,7 +13821,7 @@ var Plotly = (() => {
     for (i = 0; i < axList.length; i++) {
       ax = axList[i];
       ax._counterAxes.sort(axis_ids_default.idSort);
-      ax._subplotsWith.sort(lib_default.subplotSort);
+      ax._subplotsWith.sort(subplotSort);
       ax._mainSubplot = findMainSubplot(ax, newFullLayout);
       if (ax._counterAxes.length && (ax.spikemode && ax.spikemode.indexOf("across") !== -1 || ax.automargin && ax.mirror && ax.anchor !== "free" || registry_default.getComponentMethod("rangeslider", "isVisible")(ax))) {
         var min2 = 1;
@@ -13830,9 +13884,9 @@ var Plotly = (() => {
       );
     }
     for (i = 0; i < colorAttrs.length; i++) {
-      var origprop = lib_default.nestedProperty(trace, "_input." + colorAttrs[i]);
+      var origprop = nestedProperty2(trace, "_input." + colorAttrs[i]);
       if (!origprop.get()) {
-        lib_default.nestedProperty(trace, colorAttrs[i]).set(null);
+        nestedProperty2(trace, colorAttrs[i]).set(null);
       }
     }
   };
@@ -13848,9 +13902,9 @@ var Plotly = (() => {
       dataOut.push(fullTrace2);
       var _module = fullTrace2._module;
       if (!_module) return;
-      lib_default.pushUnique(modules2, _module);
-      if (fullTrace2.visible === true) lib_default.pushUnique(visibleModules, _module);
-      lib_default.pushUnique(basePlotModules, fullTrace2._module.basePlotModule);
+      pushUnique2(modules2, _module);
+      if (fullTrace2.visible === true) pushUnique2(visibleModules, _module);
+      pushUnique2(basePlotModules, fullTrace2._module.basePlotModule);
       cnt++;
       if (fullTrace2._input.visible !== false) colorCnt++;
     }
@@ -13970,14 +14024,14 @@ var Plotly = (() => {
           for (i = 0; i < subplotAttr.length; i++) {
             var attri = subplotAttr[i];
             var vali = lib_default.coerce(traceIn, traceOut, subplotAttrs, attri);
-            if (subplots[attri]) lib_default.pushUnique(subplots[attri], vali);
+            if (subplots[attri]) pushUnique2(subplots[attri], vali);
             subplotId += vali;
           }
         } else {
           subplotId = lib_default.coerce(traceIn, traceOut, subplotAttrs, subplotAttr);
         }
         if (subplots[basePlotModule.name]) {
-          lib_default.pushUnique(subplots[basePlotModule.name], subplotId);
+          pushUnique2(subplots[basePlotModule.name], subplotId);
         }
       }
     }
@@ -14016,14 +14070,14 @@ var Plotly = (() => {
         traceOut.visible = !!traceOut.visible;
       }
       if (!registry_default.traceIs(traceOut, "noHover")) {
-        if (!traceOut.hovertemplate) lib_default.coerceHoverinfo(traceIn, traceOut, layout);
+        if (!traceOut.hovertemplate) coerceHoverinfo(traceIn, traceOut, layout);
         if (traceOut.type !== "parcats") {
           registry_default.getComponentMethod("fx", "supplyDefaults")(traceIn, traceOut, defaultColor, layout);
         }
       }
       if (_module && _module.selectPoints) {
         var selectedpoints = coerce3("selectedpoints");
-        if (lib_default.isTypedArray(selectedpoints)) {
+        if (isTypedArray(selectedpoints)) {
           traceOut.selectedpoints = Array.from(selectedpoints);
         }
       }
@@ -14035,15 +14089,15 @@ var Plotly = (() => {
       return lib_default.coerce(layoutIn, layoutOut, plots.layoutAttributes, attr2, dflt);
     }
     var template = layoutIn.template;
-    if (lib_default.isPlainObject(template)) {
+    if (isPlainObject2(template)) {
       layoutOut.template = template;
       layoutOut._template = template.layout;
       layoutOut._dataTemplate = template.data;
     }
     coerce3("autotypenumbers");
-    var font3 = lib_default.coerceFont(coerce3, "font");
+    var font3 = coerceFont(coerce3, "font");
     var fontSize = font3.size;
-    lib_default.coerceFont(coerce3, "title.font", font3, { overrideDflt: {
+    coerceFont(coerce3, "title.font", font3, { overrideDflt: {
       size: Math.round(fontSize * 1.4)
     } });
     coerce3("title.text", layoutOut._dfltTitle.plot);
@@ -14059,7 +14113,7 @@ var Plotly = (() => {
     coerce3("title.y");
     coerce3("title.yanchor");
     coerce3("title.subtitle.text", layoutOut._dfltTitle.subtitle);
-    lib_default.coerceFont(coerce3, "title.subtitle.font", font3, {
+    coerceFont(coerce3, "title.subtitle.font", font3, {
       overrideDflt: {
         size: Math.round(layoutOut.title.font.size * 0.7)
       }
@@ -14116,7 +14170,7 @@ var Plotly = (() => {
       "supplyDrawNewSelectionDefaults"
     )(layoutIn, layoutOut, coerce3);
     coerce3("meta");
-    if (lib_default.isPlainObject(layoutIn.transition)) {
+    if (isPlainObject2(layoutIn.transition)) {
       coerce3("transition.duration");
       coerce3("transition.easing");
       coerce3("transition.ordering");
@@ -14139,7 +14193,7 @@ var Plotly = (() => {
     var frameMargins = context.frameMargins;
     var newWidth;
     var newHeight;
-    var isPlotDiv2 = lib_default.isPlotDiv(gd);
+    var isPlotDiv2 = isPlotDiv2(gd);
     if (isPlotDiv2) gd.emit("plotly_autosize");
     if (context.fillFrame) {
       newWidth = window.innerWidth;
@@ -14189,7 +14243,7 @@ var Plotly = (() => {
       Cartesian.finalizeSubplots(layoutIn, layoutOut);
     }
     for (var subplotType in layoutOut._subplots) {
-      layoutOut._subplots[subplotType].sort(lib_default.subplotSort);
+      layoutOut._subplots[subplotType].sort(subplotSort);
     }
     for (i = 0; i < basePlotModules.length; i++) {
       _module = basePlotModules[i];
@@ -14234,8 +14288,8 @@ var Plotly = (() => {
         window.cancelAnimationFrame(gd._transitionData._animationRaf);
       }
     }
-    lib_default.clearThrottle();
-    lib_default.clearResponsive(gd);
+    clear();
+    clearResponsive2(gd);
     delete gd.data;
     delete gd.layout;
     delete gd._fullData;
@@ -14272,7 +14326,7 @@ var Plotly = (() => {
     for (i = 0; i < _modules.length; i++) {
       var _module = _modules[i];
       if (_module.style) {
-        lib_default.pushUnique(styleModules, _module.style);
+        pushUnique2(styleModules, _module.style);
       }
     }
     for (i = 0; i < styleModules.length; i++) {
@@ -14330,12 +14384,12 @@ var Plotly = (() => {
     var margin = fullLayout.margin;
     var minreducedwidth = fullLayout.minreducedwidth;
     var minreducedheight = fullLayout.minreducedheight;
-    var minFinalWidth = lib_default.constrain(
+    var minFinalWidth = constrain(
       width - margin.l - margin.r,
       MIN_SPECIFIED_WIDTH,
       minreducedwidth
     );
-    var minFinalHeight = lib_default.constrain(
+    var minFinalHeight = constrain(
       height - margin.t - margin.b,
       MIN_SPECIFIED_HEIGHT,
       minreducedheight
@@ -14403,7 +14457,7 @@ var Plotly = (() => {
     var gs = fullLayout._size;
     var margin = fullLayout.margin;
     var reservedMargins = { t: 0, b: 0, l: 0, r: 0 };
-    var oldMargins = lib_default.extendFlat({}, gs);
+    var oldMargins = extendFlat({}, gs);
     var ml = margin.l;
     var mr = margin.r;
     var mt = margin.t;
@@ -14478,12 +14532,12 @@ var Plotly = (() => {
         }
       }
     }
-    var minFinalWidth = lib_default.constrain(
+    var minFinalWidth = constrain(
       width - margin.l - margin.r,
       MIN_SPECIFIED_WIDTH,
       minreducedwidth
     );
-    var minFinalHeight = lib_default.constrain(
+    var minFinalHeight = constrain(
       height - margin.t - margin.b,
       MIN_SPECIFIED_HEIGHT,
       minreducedheight
@@ -14522,7 +14576,7 @@ var Plotly = (() => {
         return registry_default.call("_doPlot", gd);
       } else {
         fullLayout._size = oldMargins;
-        lib_default.warn("Too many auto-margin redraws.");
+        warn("Too many auto-margin redraws.");
       }
     }
     refineTicks(gd);
@@ -14562,7 +14616,7 @@ var Plotly = (() => {
       if (typeof d === "function") {
         return keepFunction ? "_function_" : null;
       }
-      if (lib_default.isPlainObject(d)) {
+      if (isPlainObject2(d)) {
         var o = {};
         var src;
         Object.keys(d).sort().forEach(function(v) {
@@ -14578,7 +14632,7 @@ var Plotly = (() => {
           } else if (mode === "keepstream") {
             src = d[v + "src"];
             if (typeof src === "string" && src.indexOf(":") > 0) {
-              if (!lib_default.isPlainObject(d.stream)) {
+              if (!isPlainObject2(d.stream)) {
                 return;
               }
             }
@@ -14593,7 +14647,7 @@ var Plotly = (() => {
         return o;
       }
       var dIsArray = Array.isArray(d);
-      var dIsTypedArray = lib_default.isTypedArray(d);
+      var dIsTypedArray = isTypedArray(d);
       if ((dIsArray || dIsTypedArray) && d.dtype && d.shape) {
         var bdata = d.bdata;
         return stripObj({
@@ -14601,7 +14655,7 @@ var Plotly = (() => {
           shape: d.shape,
           bdata: (
             // case of ArrayBuffer
-            lib_default.isArrayBuffer(bdata) ? encode(bdata) : (
+            isArrayBuffer(bdata) ? encode(bdata) : (
               // case of b64 string
               bdata
             )
@@ -14614,9 +14668,9 @@ var Plotly = (() => {
         });
       }
       if (dIsTypedArray) {
-        return lib_default.simpleMap(d, lib_default.identity);
+        return simpleMap(d, identity3);
       }
-      if (lib_default.isJSDate(d)) return lib_default.ms2DateTimeLocal(+d);
+      if (isJSDate(d)) return ms2DateTimeLocal(+d);
       return d;
     }
     var obj = {
@@ -14748,28 +14802,28 @@ var Plotly = (() => {
   };
   plots.extendObjectWithContainers = function(dest, src, containerPaths) {
     var containerProp, containerVal, i, j, srcProp, destProp, srcContainer, destContainer;
-    var copy2 = lib_default.extendDeepNoArrays({}, src || {});
-    var expandedObj = lib_default.expandObjectPaths(copy2);
+    var copy2 = extendDeepNoArrays({}, src || {});
+    var expandedObj = expandObjectPaths(copy2);
     var containerObj = {};
     if (containerPaths && containerPaths.length) {
       for (i = 0; i < containerPaths.length; i++) {
-        containerProp = lib_default.nestedProperty(expandedObj, containerPaths[i]);
+        containerProp = nestedProperty2(expandedObj, containerPaths[i]);
         containerVal = containerProp.get();
         if (containerVal === void 0) {
-          lib_default.nestedProperty(containerObj, containerPaths[i]).set(null);
+          nestedProperty2(containerObj, containerPaths[i]).set(null);
         } else {
           containerProp.set(null);
-          lib_default.nestedProperty(containerObj, containerPaths[i]).set(containerVal);
+          nestedProperty2(containerObj, containerPaths[i]).set(containerVal);
         }
       }
     }
-    dest = lib_default.extendDeepNoArrays(dest || {}, expandedObj);
+    dest = extendDeepNoArrays(dest || {}, expandedObj);
     if (containerPaths && containerPaths.length) {
       for (i = 0; i < containerPaths.length; i++) {
-        srcProp = lib_default.nestedProperty(containerObj, containerPaths[i]);
+        srcProp = nestedProperty2(containerObj, containerPaths[i]);
         srcContainer = srcProp.get();
         if (!srcContainer) continue;
-        destProp = lib_default.nestedProperty(dest, containerPaths[i]);
+        destProp = nestedProperty2(dest, containerPaths[i]);
         destContainer = destProp.get();
         if (!Array.isArray(destContainer)) {
           destContainer = [];
@@ -14814,7 +14868,7 @@ var Plotly = (() => {
         }
         gd.data[traceIndices[i]] = plots.extendTrace(gd.data[traceIndices[i]], data[i]);
       }
-      var layoutUpdate = lib_default.expandObjectPaths(lib_default.extendDeepNoArrays({}, layout));
+      var layoutUpdate = expandObjectPaths(extendDeepNoArrays({}, layout));
       var axisAttrRe = /^[xy]axis[0-9]*$/;
       for (var attr2 in layoutUpdate) {
         if (!axisAttrRe.test(attr2)) continue;
@@ -14824,7 +14878,7 @@ var Plotly = (() => {
       delete gd.calcdata;
       plots.supplyDefaults(gd);
       plots.doCalcdata(gd);
-      var newLayout = lib_default.expandObjectPaths(layout);
+      var newLayout = expandObjectPaths(layout);
       if (newLayout) {
         var subplots = gd._fullLayout._plots;
         for (var k in subplots) {
@@ -14854,7 +14908,7 @@ var Plotly = (() => {
             editY = { yr0, yr1 };
           }
           if (editX || editY) {
-            axEdits.push(lib_default.extendFlat({ plotinfo }, editX, editY));
+            axEdits.push(extendFlat({ plotinfo }, editX, editY));
           }
         }
       }
@@ -14873,7 +14927,7 @@ var Plotly = (() => {
         }
       }
       if (hasAxisTransition) {
-        traceTransitionOpts = lib_default.extendFlat({}, transitionOpts);
+        traceTransitionOpts = extendFlat({}, transitionOpts);
         traceTransitionOpts.duration = 0;
         delete transitionedTraces.cartesian;
       } else {
@@ -14916,7 +14970,7 @@ var Plotly = (() => {
           editY = { yr0, yr1 };
         }
         if (editX || editY) {
-          axEdits.push(lib_default.extendFlat({ plotinfo }, editX, editY));
+          axEdits.push(extendFlat({ plotinfo }, editX, editY));
         }
       }
       return Promise.resolve();
@@ -14948,7 +15002,7 @@ var Plotly = (() => {
       }
       if (axEdits.length && restyleFlags.anim) {
         if (transitionOpts.ordering === "traces first") {
-          axisTransitionOpts = lib_default.extendFlat({}, transitionOpts, { duration: 0 });
+          axisTransitionOpts = extendFlat({}, transitionOpts, { duration: 0 });
           transitionedTraces = allTraceIndices;
           traceTransitionOpts = transitionOpts;
           setTimeout(transitionAxes3, transitionOpts.duration);
@@ -14956,7 +15010,7 @@ var Plotly = (() => {
         } else {
           axisTransitionOpts = transitionOpts;
           transitionedTraces = null;
-          traceTransitionOpts = lib_default.extendFlat({}, transitionOpts, { duration: 0 });
+          traceTransitionOpts = extendFlat({}, transitionOpts, { duration: 0 });
           setTimeout(transitionTraces, axisTransitionOpts.duration);
           transitionAxes3();
         }
@@ -15046,7 +15100,7 @@ var Plotly = (() => {
       plots.reselect,
       executeTransitions
     ];
-    var transitionStarting = lib_default.syncOrAsync(seq, gd);
+    var transitionStarting = syncOrAsync(seq, gd);
     if (!transitionStarting || !transitionStarting.then) {
       transitionStarting = Promise.resolve();
     }
@@ -15187,29 +15241,29 @@ var Plotly = (() => {
     }
     var aggFn = {
       min: function(values) {
-        return lib_default.aggNums(Math.min, null, values);
+        return aggNums(Math.min, null, values);
       },
       max: function(values) {
-        return lib_default.aggNums(Math.max, null, values);
+        return aggNums(Math.max, null, values);
       },
       sum: function(values) {
-        return lib_default.aggNums(function(a, b) {
+        return aggNums(function(a, b) {
           return a + b;
         }, null, values);
       },
       total: function(values) {
-        return lib_default.aggNums(function(a, b) {
+        return aggNums(function(a, b) {
           return a + b;
         }, null, values);
       },
       mean: function(values) {
-        return lib_default.mean(values);
+        return mean(values);
       },
       "geometric mean": function(values) {
-        return lib_default.geometricMean(values);
+        return geometricMean(values);
       },
       median: function(values) {
-        return lib_default.median(values);
+        return median(values);
       }
     };
     function sortAscending(a, b) {
@@ -15327,7 +15381,7 @@ var Plotly = (() => {
       }
       axLookup[ax._id] = 1;
     }
-    lib_default.simpleMap(axList, setupOne);
+    simpleMap(axList, setupOne);
     var matchGroups = fullLayout._axisMatchGroups || [];
     for (var i = 0; i < matchGroups.length; i++) {
       for (var axId in matchGroups[i]) {
@@ -15348,7 +15402,7 @@ var Plotly = (() => {
       if (fn) {
         var spType = _module.basePlotModule.name;
         if (hash[spType]) {
-          lib_default.pushUnique(hash[spType], fn);
+          pushUnique2(hash[spType], fn);
         } else {
           hash[spType] = [fn];
         }
@@ -15413,7 +15467,7 @@ var Plotly = (() => {
     for (var moduleName in traceHash) {
       var moduleCalcData = traceHash[moduleName];
       var _module = moduleCalcData[0][0].trace._module;
-      _module.plot(gd, subplot, lib_default.filterVisible(moduleCalcData), subplotLayout);
+      _module.plot(gd, subplot, filterVisible2(moduleCalcData), subplotLayout);
     }
     subplot.traceHash = traceHash;
   };
@@ -15497,7 +15551,6 @@ var Plotly = (() => {
 
   // src/lib/svg_text_utils.js
   var { LINE_SPACING } = alignment_default;
-  var strTranslate = lib_default.strTranslate;
   var FIND_TEX = /([^$]*)([$]+[^$]*[$]+)([^$]*)/;
   var convertToTspans = function(_context, gd, _callback) {
     var str = _context.text();
@@ -15614,12 +15667,12 @@ var Plotly = (() => {
       (MathJax.version || "").split(".")[0]
     );
     if (MathJaxVersion !== 2 && MathJaxVersion !== 3) {
-      lib_default.warn("No MathJax version:", MathJax.version);
+      warn("No MathJax version:", MathJax.version);
       return;
     }
     var originalRenderer, originalConfig, originalProcessSectionDelay, tmpDiv;
     var setConfig2 = function() {
-      originalConfig = lib_default.extendDeepAll({}, MathJax.Hub.config);
+      originalConfig = extendDeepAll({}, MathJax.Hub.config);
       originalProcessSectionDelay = MathJax.Hub.processSectionDelay;
       if (MathJax.Hub.processSectionDelay !== void 0) {
         MathJax.Hub.processSectionDelay = 0;
@@ -15633,7 +15686,7 @@ var Plotly = (() => {
       });
     };
     var setConfig3 = function() {
-      originalConfig = lib_default.extendDeepAll({}, MathJax.config);
+      originalConfig = extendDeepAll({}, MathJax.config);
       if (!MathJax.config.tex) {
         MathJax.config.tex = {};
       }
@@ -15652,7 +15705,7 @@ var Plotly = (() => {
       }
     };
     var initiateMathJax = function() {
-      var randomID = "math-output-" + lib_default.randstr({}, 64);
+      var randomID = "math-output-" + randstr({}, 64);
       tmpDiv = select_default2("body").append("div").attr({ id: randomID }).style({
         visibility: "hidden",
         position: "absolute",
@@ -15667,7 +15720,7 @@ var Plotly = (() => {
       );
       var node = !sel.empty() && tmpDiv.select("svg").node();
       if (!node) {
-        lib_default.log("There was an error in the tex syntax.", _texString);
+        log("There was an error in the tex syntax.", _texString);
         _callback();
       } else {
         var nodeBBox = node.getBoundingClientRect();
@@ -15901,12 +15954,12 @@ var Plotly = (() => {
     }
     function exitNode(type) {
       if (nodeStack.length === 1) {
-        lib_default.log("Ignoring unexpected end tag </" + type + ">.", str);
+        log("Ignoring unexpected end tag </" + type + ">.", str);
         return;
       }
       var innerNode = nodeStack.pop();
       if (type !== innerNode.type) {
-        lib_default.log("Start tag <" + innerNode.type + "> doesnt match end tag <" + type + ">. Pretending it did match.", str);
+        log("Start tag <" + innerNode.type + "> doesnt match end tag <" + type + ">. Pretending it did match.", str);
       }
       currentNode = nodeStack[nodeStack.length - 1].node;
     }
@@ -16081,7 +16134,7 @@ var Plotly = (() => {
       var gd = options.gd || {};
       if (options.gd) {
         gd._fullLayout._calcInverseTransform(gd);
-        var transformedCoords = lib_default.apply3DTransform(gd._fullLayout._invTransform)(x0, y0);
+        var transformedCoords = apply3DTransform(gd._fullLayout._invTransform)(x0, y0);
         x0 = transformedCoords[0];
         y0 = transformedCoords[1];
       }
@@ -16297,7 +16350,7 @@ var Plotly = (() => {
   var e5 = Math.sqrt(10);
   var e2 = Math.sqrt(2);
   function tickSpec(start2, stop, count) {
-    const step = (stop - start2) / Math.max(0, count), power = Math.floor(Math.log10(step)), error = step / Math.pow(10, power), factor = error >= e10 ? 10 : error >= e5 ? 5 : error >= e2 ? 2 : 1;
+    const step = (stop - start2) / Math.max(0, count), power = Math.floor(Math.log10(step)), error2 = step / Math.pow(10, power), factor = error2 >= e10 ? 10 : error2 >= e5 ? 5 : error2 >= e2 ? 2 : 1;
     let i1, i2, inc;
     if (power < 0) {
       inc = Math.pow(10, -power) / factor;
@@ -16411,7 +16464,7 @@ var Plotly = (() => {
 
   // node_modules/.pnpm/d3-scale@4.0.2/node_modules/d3-scale/src/continuous.js
   var unit = [0, 1];
-  function identity3(x) {
+  function identity4(x) {
     return x;
   }
   function normalize(a, b) {
@@ -16453,10 +16506,10 @@ var Plotly = (() => {
     return target.domain(source.domain()).range(source.range()).interpolate(source.interpolate()).clamp(source.clamp()).unknown(source.unknown());
   }
   function transformer() {
-    var domain = unit, range = unit, interpolate = value_default, transform2, untransform, unknown, clamp = identity3, piecewise, output, input;
+    var domain = unit, range = unit, interpolate = value_default, transform2, untransform, unknown, clamp = identity4, piecewise, output, input;
     function rescale() {
       var n = Math.min(domain.length, range.length);
-      if (clamp !== identity3) clamp = clamper(domain[0], domain[n - 1]);
+      if (clamp !== identity4) clamp = clamper(domain[0], domain[n - 1]);
       piecewise = n > 2 ? polymap : bimap;
       output = input = null;
       return scale;
@@ -16467,23 +16520,23 @@ var Plotly = (() => {
     scale.invert = function(y) {
       return clamp(untransform((input || (input = piecewise(range, domain.map(transform2), number_default)))(y)));
     };
-    scale.domain = function(_3) {
-      return arguments.length ? (domain = Array.from(_3, number2), rescale()) : domain.slice();
+    scale.domain = function(_2) {
+      return arguments.length ? (domain = Array.from(_2, number2), rescale()) : domain.slice();
     };
-    scale.range = function(_3) {
-      return arguments.length ? (range = Array.from(_3), rescale()) : range.slice();
+    scale.range = function(_2) {
+      return arguments.length ? (range = Array.from(_2), rescale()) : range.slice();
     };
-    scale.rangeRound = function(_3) {
-      return range = Array.from(_3), interpolate = round_default, rescale();
+    scale.rangeRound = function(_2) {
+      return range = Array.from(_2), interpolate = round_default, rescale();
     };
-    scale.clamp = function(_3) {
-      return arguments.length ? (clamp = _3 ? true : identity3, rescale()) : clamp !== identity3;
+    scale.clamp = function(_2) {
+      return arguments.length ? (clamp = _2 ? true : identity4, rescale()) : clamp !== identity4;
     };
-    scale.interpolate = function(_3) {
-      return arguments.length ? (interpolate = _3, rescale()) : interpolate;
+    scale.interpolate = function(_2) {
+      return arguments.length ? (interpolate = _2, rescale()) : interpolate;
     };
-    scale.unknown = function(_3) {
-      return arguments.length ? (unknown = _3, scale) : unknown;
+    scale.unknown = function(_2) {
+      return arguments.length ? (unknown = _2, scale) : unknown;
     };
     return function(t, u) {
       transform2 = t, untransform = u;
@@ -16491,7 +16544,7 @@ var Plotly = (() => {
     };
   }
   function continuous() {
-    return transformer()(identity3, identity3);
+    return transformer()(identity4, identity4);
   }
 
   // node_modules/.pnpm/d3-format@1.4.5/node_modules/d3-format/src/formatDecimal.js
@@ -17249,11 +17302,11 @@ var Plotly = (() => {
   var import_fast_isnumeric13 = __toESM(require_fast_isnumeric(), 1);
   var { isValid: isValidScale2 } = scales_default;
   function hasColorscale(trace, containerStr, colorKey) {
-    var container = containerStr ? lib_default.nestedProperty(trace, containerStr).get() || {} : trace;
+    var container = containerStr ? nestedProperty2(trace, containerStr).get() || {} : trace;
     var color3 = container[colorKey || "color"];
     if (color3 && color3._inputArray) color3 = color3._inputArray;
     var isArrayWithOneNumber = false;
-    if (lib_default.isArrayOrTypedArray(color3)) {
+    if (isArrayOrTypedArray(color3)) {
       for (var i = 0; i < color3.length; i++) {
         if ((0, import_fast_isnumeric13.default)(color3[i])) {
           isArrayWithOneNumber = true;
@@ -17261,7 +17314,7 @@ var Plotly = (() => {
         }
       }
     }
-    return lib_default.isPlainObject(container) && (isArrayWithOneNumber || container.showscale === true || (0, import_fast_isnumeric13.default)(container.cmin) && (0, import_fast_isnumeric13.default)(container.cmax) || isValidScale2(container.colorscale) || lib_default.isPlainObject(container.colorbar));
+    return isPlainObject2(container) && (isArrayWithOneNumber || container.showscale === true || (0, import_fast_isnumeric13.default)(container.cmin) && (0, import_fast_isnumeric13.default)(container.cmax) || isValidScale2(container.colorscale) || isPlainObject2(container.colorbar));
   }
   var constantAttrs = ["showscale", "autocolorscale", "colorscale", "reversescale", "colorbar"];
   var letterAttrs = ["min", "max", "mid", "auto"];
@@ -18418,7 +18471,7 @@ var Plotly = (() => {
 
   // src/components/colorbar/has_colorbar.js
   function hasColorbar(container) {
-    return lib_default.isPlainObject(container.colorbar);
+    return isPlainObject2(container.colorbar);
   }
 
   // src/plots/cartesian/clean_ticks.js
@@ -18458,9 +18511,9 @@ var Plotly = (() => {
   };
   var tick02 = function(tick03, axType, calendar, dtick3) {
     if (axType === "date") {
-      return lib_default.cleanDate(
+      return cleanDate(
         tick03,
-        lib_default.dateTick0(calendar, dtick3 % ONEWEEK === 0 ? 1 : 0)
+        dateTick0(calendar, dtick3 % ONEWEEK === 0 ? 1 : 0)
       );
     }
     if (dtick3 === "D1" || dtick3 === "D2") {
@@ -18471,7 +18524,6 @@ var Plotly = (() => {
   var clean_ticks_default = { dtick: dtick2, tick0: tick02 };
 
   // src/plots/cartesian/tick_value_defaults.js
-  var { isArrayOrTypedArray: isArrayOrTypedArray3 } = lib_default;
   function handleTickValueDefaults(containerIn, containerOut, coerce3, axType, opts) {
     if (!opts) opts = {};
     var isMinor = opts.isMinor;
@@ -18486,7 +18538,7 @@ var Plotly = (() => {
     var _tick0 = readInput("tick0");
     var _dtick = readInput("dtick");
     var _tickvals = readInput("tickvals");
-    var tickmodeDefault = isArrayOrTypedArray3(_tickvals) ? "array" : _dtick ? "linear" : "auto";
+    var tickmodeDefault = isArrayOrTypedArray(_tickvals) ? "array" : _dtick ? "linear" : "auto";
     var tickmode2 = coerce3(prefix + "tickmode", tickmodeDefault);
     if (tickmode2 === "auto" || tickmode2 === "sync") {
       coerce3(prefix + "nticks");
@@ -18515,9 +18567,9 @@ var Plotly = (() => {
     var cOut = isMinor ? containerOut.minor : containerOut;
     var lAttr = isMinor ? layout_attributes_default4.minor : layout_attributes_default4;
     var prefix = isMinor ? "minor." : "";
-    var tickLen = lib_default.coerce2(cIn, cOut, lAttr, "ticklen", isMinor ? (containerOut.ticklen || 5) * 0.6 : void 0);
-    var tickWidth = lib_default.coerce2(cIn, cOut, lAttr, "tickwidth", isMinor ? containerOut.tickwidth || 1 : void 0);
-    var tickColor = lib_default.coerce2(cIn, cOut, lAttr, "tickcolor", (isMinor ? containerOut.tickcolor : void 0) || cOut.color);
+    var tickLen = coerce2(cIn, cOut, lAttr, "ticklen", isMinor ? (containerOut.ticklen || 5) * 0.6 : void 0);
+    var tickWidth = coerce2(cIn, cOut, lAttr, "tickwidth", isMinor ? containerOut.tickwidth || 1 : void 0);
+    var tickColor = coerce2(cIn, cOut, lAttr, "tickcolor", (isMinor ? containerOut.tickcolor : void 0) || cOut.color);
     var showTicks = coerce3(prefix + "ticks", !isMinor && options.outerTicks || tickLen || tickWidth || tickColor ? "outside" : "");
     if (!showTicks) {
       delete cOut.ticklen;
@@ -18545,13 +18597,13 @@ var Plotly = (() => {
     var name6 = opts.name;
     var inclusionAttr = opts.inclusionAttr || "visible";
     var previousContOut = parentObjOut[name6];
-    var contIn = lib_default.isArrayOrTypedArray(parentObjIn[name6]) ? parentObjIn[name6] : [];
+    var contIn = isArrayOrTypedArray(parentObjIn[name6]) ? parentObjIn[name6] : [];
     var contOut = parentObjOut[name6] = [];
     var templater = plot_template_default.arrayTemplater(parentObjOut, name6, inclusionAttr);
     var i, itemOut;
     for (i = 0; i < contIn.length; i++) {
       var itemIn = contIn[i];
-      if (!lib_default.isPlainObject(itemIn)) {
+      if (!isPlainObject2(itemIn)) {
         itemOut = templater.newItem({});
         itemOut[inclusionAttr] = false;
       } else {
@@ -18570,10 +18622,10 @@ var Plotly = (() => {
       opts.handleItemDefaults({}, itemOut, parentObjOut, opts, {});
       contOut.push(itemOut);
     }
-    if (lib_default.isArrayOrTypedArray(previousContOut)) {
+    if (isArrayOrTypedArray(previousContOut)) {
       var len2 = Math.min(previousContOut.length, contOut.length);
       for (i = 0; i < len2; i++) {
-        lib_default.relinkPrivateKeys(contOut[i], previousContOut[i]);
+        relinkPrivateKeys2(contOut[i], previousContOut[i]);
       }
     }
     return contOut;
@@ -18584,7 +18636,7 @@ var Plotly = (() => {
   function handleTickLabelDefaults(containerIn, containerOut, coerce3, axType, options) {
     if (!options) options = {};
     var labelalias = coerce3("labelalias");
-    if (!lib_default.isPlainObject(labelalias)) delete containerOut.labelalias;
+    if (!isPlainObject2(labelalias)) delete containerOut.labelalias;
     var showAttrDflt = getShowAttrDflt(containerIn);
     var showTickLabels = coerce3("showticklabels");
     if (showTickLabels) {
@@ -18602,7 +18654,7 @@ var Plotly = (() => {
         // explicitly provided
         contColor && contColor !== layout_attributes_default4.color.dflt ? contColor : font3.color
       );
-      lib_default.coerceFont(coerce3, "tickfont", font3, { overrideDflt: {
+      coerceFont(coerce3, "tickfont", font3, { overrideDflt: {
         color: dfltFontColor
       } });
       if (!options.noTicklabelstep && axType !== "multicategory" && axType !== "log") {
@@ -18717,7 +18769,7 @@ var Plotly = (() => {
     coerce3("xpad");
     coerce3("yanchor", defaultYAnchor);
     coerce3("ypad");
-    lib_default.noneOrAll(colorbarIn, colorbarOut, ["x", "y"]);
+    noneOrAll(colorbarIn, colorbarOut, ["x", "y"]);
     coerce3("outlinecolor");
     coerce3("outlinewidth");
     coerce3("bordercolor");
@@ -18762,11 +18814,11 @@ var Plotly = (() => {
     handleTickMarkDefaults(colorbarIn, colorbarOut, coerce3, "linear", opts);
     coerce3("title.text", layout._dfltTitle.colorbar);
     var tickFont = colorbarOut.showticklabels ? colorbarOut.tickfont : font3;
-    var dfltTitleFont = lib_default.extendFlat({}, font3, {
+    var dfltTitleFont = extendFlat({}, font3, {
       family: tickFont.family,
-      size: lib_default.bigFont(tickFont.size)
+      size: bigFont(tickFont.size)
     });
-    lib_default.coerceFont(coerce3, "title.font", dfltTitleFont);
+    coerceFont(coerce3, "title.font", dfltTitleFont);
     coerce3("title.side", isVertical3 ? "top" : "right");
   }
 
@@ -18774,7 +18826,7 @@ var Plotly = (() => {
   var { isValid: isValidScale3 } = scales_default;
   function npMaybe(parentCont, prefix) {
     var containerStr = prefix.slice(0, prefix.length - 1);
-    return prefix ? lib_default.nestedProperty(parentCont, containerStr).get() || {} : parentCont;
+    return prefix ? nestedProperty2(parentCont, containerStr).get() || {} : parentCont;
   }
   function colorScaleDefaults(parentContIn, parentContOut, layout, coerce3, opts) {
     var prefix = opts.prefix;
@@ -18792,13 +18844,13 @@ var Plotly = (() => {
       var colorAxes = layout._colorAxes || {};
       var colorAx = coerce3(prefix + "coloraxis");
       if (colorAx) {
-        var colorbarVisuals = traceIs(parentContOut, "contour") && lib_default.nestedProperty(parentContOut, "contours.coloring").get() || "heatmap";
+        var colorbarVisuals = traceIs(parentContOut, "contour") && nestedProperty2(parentContOut, "contours.coloring").get() || "heatmap";
         var stash = colorAxes[colorAx];
         if (stash) {
           stash[2].push(thisFn);
           if (stash[0] !== colorbarVisuals) {
             stash[0] = false;
-            lib_default.warn([
+            warn([
               "Ignoring coloraxis:",
               colorAx,
               "setting",
@@ -18879,7 +18931,7 @@ var Plotly = (() => {
       }
     }
     function relinkColorAttrs(outerCont, cbOpt) {
-      var cont = cbOpt.container ? lib_default.nestedProperty(outerCont, cbOpt.container).get() : outerCont;
+      var cont = cbOpt.container ? nestedProperty2(outerCont, cbOpt.container).get() : outerCont;
       if (cont) {
         if (cont.coloraxis) {
           cont._colorAx = fullLayout[cont.coloraxis];
@@ -18930,17 +18982,17 @@ var Plotly = (() => {
     var fullLayout = gd._fullLayout;
     var vals = opts.vals;
     var containerStr = opts.containerStr;
-    var container = containerStr ? lib_default.nestedProperty(trace, containerStr).get() : trace;
+    var container = containerStr ? nestedProperty2(trace, containerStr).get() : trace;
     var cOpts = extractOpts3(container);
     var auto = cOpts.auto !== false;
     var min2 = cOpts.min;
     var max2 = cOpts.max;
     var mid = cOpts.mid;
     var minVal = function() {
-      return lib_default.aggNums(Math.min, null, vals);
+      return aggNums(Math.min, null, vals);
     };
     var maxVal = function() {
-      return lib_default.aggNums(Math.max, null, vals);
+      return aggNums(Math.max, null, vals);
     };
     if (min2 === void 0) {
       min2 = minVal();
@@ -19020,7 +19072,7 @@ var Plotly = (() => {
     },
     isBubble: function(trace) {
       var marker2 = trace.marker;
-      return lib_default.isPlainObject(marker2) && (lib_default.isArrayOrTypedArray(marker2.size) || isTypedArraySpec(marker2.size));
+      return isPlainObject2(marker2) && (isArrayOrTypedArray(marker2.size) || isTypedArraySpec(marker2.size));
     }
   };
 
@@ -19150,7 +19202,7 @@ var Plotly = (() => {
       var astr = arrayAttrs[i];
       var key = getPointKey(astr);
       if (pointData[key] === void 0) {
-        var val = lib_default.nestedProperty(trace, astr).get();
+        var val = nestedProperty2(trace, astr).get();
         var pointVal = getPointData(val, pointNumber);
         if (pointVal !== void 0) pointData[key] = pointVal;
       }
@@ -19165,7 +19217,7 @@ var Plotly = (() => {
       var astr = arrayAttrs[i];
       var key = getPointKey(astr);
       if (pointData[key] === void 0) {
-        var val = lib_default.nestedProperty(trace, astr).get();
+        var val = nestedProperty2(trace, astr).get();
         var keyVal = new Array(pointNumbers.length);
         for (var j = 0; j < pointNumbers.length; j++) {
           keyVal[j] = getPointData(val, pointNumbers[j]);
@@ -19187,7 +19239,7 @@ var Plotly = (() => {
   }
   function getPointData(val, pointNumber) {
     if (Array.isArray(pointNumber)) {
-      if (lib_default.isArrayOrTypedArray(val) && lib_default.isArrayOrTypedArray(val[pointNumber[0]])) {
+      if (isArrayOrTypedArray(val) && isArrayOrTypedArray(val[pointNumber[0]])) {
         return val[pointNumber[0]][pointNumber[1]];
       }
     } else {
@@ -19895,10 +19947,8 @@ var Plotly = (() => {
     return n ? Math.round(x * (n = Math.pow(10, n))) / n : Math.round(x);
   }
   var { DESELECTDIM: DESELECTDIM2 } = interactions_default;
-  var numberFormat = lib_default.numberFormat;
   var tester;
   var testref;
-  var strTranslate2 = lib_default.strTranslate;
   var LINE_SPACING2 = alignment_default.LINE_SPACING;
   function font2(s, font3) {
     var variant = font3.variant;
@@ -19955,7 +20005,7 @@ var Plotly = (() => {
       if (sel.node().nodeName === "text") {
         sel.attr("x", x).attr("y", y);
       } else {
-        sel.attr("transform", strTranslate2(x, y));
+        sel.attr("transform", strTranslate(x, y));
       }
     } else {
       return false;
@@ -20243,7 +20293,7 @@ var Plotly = (() => {
     }
     var fullLayout = gd._fullLayout;
     var fullID = "g" + fullLayout._uid + "-" + gradientID;
-    var gradient2 = fullLayout._defs.select(".gradients").selectAll("#" + fullID).data([type + colorStops.join(";")], lib_default.identity);
+    var gradient2 = fullLayout._defs.select(".gradients").selectAll("#" + fullID).data([type + colorStops.join(";")], identity3);
     gradient2.exit().remove();
     gradient2.enter().append(info.node).each(function() {
       var el = select_default2(this);
@@ -20399,7 +20449,7 @@ var Plotly = (() => {
         break;
     }
     var str = [shape || "noSh", bgcolor || "noBg", fgcolor || "noFg", size, solidity].join(";");
-    var pattern3 = fullLayout._defs.select(".patterns").selectAll("#" + fullID).data([str], lib_default.identity);
+    var pattern3 = fullLayout._defs.select(".patterns").selectAll("#" + fullID).data([str], identity3);
     pattern3.exit().remove();
     pattern3.enter().append("pattern").each(function() {
       var el = select_default2(this);
@@ -20433,18 +20483,18 @@ var Plotly = (() => {
   }
   function initGradients(gd) {
     var fullLayout = gd._fullLayout;
-    var gradientsGroup = lib_default.ensureSingle(fullLayout._defs, "g", "gradients");
+    var gradientsGroup = ensureSingle(fullLayout._defs, "g", "gradients");
     gradientsGroup.selectAll("linearGradient,radialGradient").remove();
     select_default2(gd).selectAll(".gradient_filled").classed("gradient_filled", false);
   }
   function initPatterns(gd) {
     var fullLayout = gd._fullLayout;
-    var patternsGroup = lib_default.ensureSingle(fullLayout._defs, "g", "patterns");
+    var patternsGroup = ensureSingle(fullLayout._defs, "g", "patterns");
     patternsGroup.selectAll("pattern").remove();
     select_default2(gd).selectAll(".pattern_filled").classed("pattern_filled", false);
   }
   function getPatternAttr(mp, i, dflt) {
-    if (mp && lib_default.isArrayOrTypedArray(mp)) {
+    if (mp && isArrayOrTypedArray(mp)) {
       return i < mp.length ? mp[i] : dflt;
     }
     return mp;
@@ -20489,9 +20539,9 @@ var Plotly = (() => {
       lineWidth = (d.mlw + 1 || markerLineWidth2 + 1 || // TODO: we need the latter for legends... can we get rid of it?
       (d.trace ? (d.trace.marker.line || {}).width : 0) + 1) - 1 || 0;
       if ("mlc" in d) lineColor = d.mlcc = fns.lineScale(d.mlc);
-      else if (lib_default.isArrayOrTypedArray(markerLine2.color)) lineColor = color_default.defaultLine;
+      else if (isArrayOrTypedArray(markerLine2.color)) lineColor = color_default.defaultLine;
       else lineColor = markerLine2.color;
-      if (lib_default.isArrayOrTypedArray(marker2.color)) {
+      if (isArrayOrTypedArray(marker2.color)) {
         fillColor = color_default.defaultLine;
         perPointGradient = true;
       }
@@ -20515,7 +20565,7 @@ var Plotly = (() => {
       var gradientType = d.mgt;
       if (gradientType) perPointGradient = true;
       else gradientType = markerGradient && markerGradient.type;
-      if (lib_default.isArrayOrTypedArray(gradientType)) {
+      if (isArrayOrTypedArray(gradientType)) {
         gradientType = gradientType[0];
         if (!gradientInfo[gradientType]) gradientType = 0;
       }
@@ -20551,7 +20601,7 @@ var Plotly = (() => {
         var patternFGOpacity = markerPattern.fgopacity;
         var patternSize = pAttr(markerPattern.size, d.i, 8);
         var patternSolidity = pAttr(markerPattern.solidity, d.i, 0.3);
-        perPointPattern = perPointPattern || d.mcc || lib_default.isArrayOrTypedArray(markerPattern.shape) || lib_default.isArrayOrTypedArray(markerPattern.path) || lib_default.isArrayOrTypedArray(markerPattern.bgcolor) || lib_default.isArrayOrTypedArray(markerPattern.fgcolor) || lib_default.isArrayOrTypedArray(markerPattern.size) || lib_default.isArrayOrTypedArray(markerPattern.solidity);
+        perPointPattern = perPointPattern || d.mcc || isArrayOrTypedArray(markerPattern.shape) || isArrayOrTypedArray(markerPattern.path) || isArrayOrTypedArray(markerPattern.bgcolor) || isArrayOrTypedArray(markerPattern.fgcolor) || isArrayOrTypedArray(markerPattern.size) || isArrayOrTypedArray(markerPattern.solidity);
         var patternID = trace.uid;
         if (perPointPattern) patternID += "-" + d.i;
         pattern2(
@@ -20569,7 +20619,7 @@ var Plotly = (() => {
           patternFGOpacity
         );
       } else {
-        lib_default.isArrayOrTypedArray(fillColor) ? color_default.fill(sel, fillColor[d.i]) : color_default.fill(sel, fillColor);
+        isArrayOrTypedArray(fillColor) ? color_default.fill(sel, fillColor[d.i]) : color_default.fill(sel, fillColor);
       }
       if (lineWidth) {
         color_default.stroke(sel, lineColor);
@@ -20587,7 +20637,7 @@ var Plotly = (() => {
       };
     }
     if (trace.selectedpoints) {
-      lib_default.extendFlat(out, makeSelectedPointStyleFns(trace));
+      extendFlat(out, makeSelectedPointStyleFns(trace));
     }
     return out;
   }
@@ -20603,7 +20653,7 @@ var Plotly = (() => {
     var usmo = unselectedMarker.opacity;
     var smoIsDefined = smo !== void 0;
     var usmoIsDefined = usmo !== void 0;
-    if (lib_default.isArrayOrTypedArray(mo) || smoIsDefined || usmoIsDefined) {
+    if (isArrayOrTypedArray(mo) || smoIsDefined || usmoIsDefined) {
       out.selectedOpacityFn = function(d) {
         var base = d.mo === void 0 ? marker2.opacity : d.mo;
         if (d.selected) {
@@ -20700,14 +20750,14 @@ var Plotly = (() => {
     }
   }
   function tryColorscale(marker2, prefix) {
-    var cont = prefix ? lib_default.nestedProperty(marker2, prefix).get() : marker2;
+    var cont = prefix ? nestedProperty2(marker2, prefix).get() : marker2;
     if (cont) {
       var colorArray = cont.color;
-      if ((cont.colorscale || cont._colorAx) && lib_default.isArrayOrTypedArray(colorArray)) {
+      if ((cont.colorscale || cont._colorAx) && isArrayOrTypedArray(colorArray)) {
         return colorscale_default.makeColorScaleFuncFromTrace(cont);
       }
     }
-    return lib_default.identity;
+    return identity3;
   }
   var TEXTOFFSETSIGN = {
     start: 1,
@@ -20726,7 +20776,7 @@ var Plotly = (() => {
     var dy = fontSize * 0.75 + TEXTOFFSETSIGN[v] * r + (TEXTOFFSETSIGN[v] - 1) * numLines * fontSize / 2;
     s.attr("text-anchor", h);
     if (!dontTouchParent) {
-      group.attr("transform", strTranslate2(dx, dy));
+      group.attr("transform", strTranslate(dx, dy));
     }
   }
   function extracTextFontSize(d, trace) {
@@ -20744,7 +20794,7 @@ var Plotly = (() => {
     var fullLayout = gd._fullLayout;
     s.each(function(d) {
       var p = select_default2(this);
-      var text = texttemplate ? lib_default.extractOption(d, trace, "txt", "texttemplate") : lib_default.extractOption(d, trace, "tx", "text");
+      var text = texttemplate ? extractOption(d, trace, "txt", "texttemplate") : extractOption(d, trace, "tx", "text");
       if (!text && text !== 0) {
         p.remove();
         return;
@@ -20754,7 +20804,7 @@ var Plotly = (() => {
         var labels = fn ? fn(d, trace, fullLayout) : {};
         var pointValues = {};
         appendArrayPointValue(pointValues, trace, d.i);
-        text = lib_default.texttemplateString({
+        text = texttemplateString({
           data: [pointValues, d, trace._meta],
           fallback: trace.texttemplatefallback,
           labels,
@@ -20893,7 +20943,7 @@ var Plotly = (() => {
     var d = pt.d;
     var i = pt.i;
     if (backoff && trace && trace.marker && trace.marker.angle % 360 === 0 && trace.line && trace.line.shape !== "spline") {
-      var arrayBackoff = lib_default.isArrayOrTypedArray(backoff);
+      var arrayBackoff = isArrayOrTypedArray(backoff);
       var end = pt;
       var x1 = start2 ? start2[0] : lastDrawnX || 0;
       var y1 = start2 ? start2[1] : lastDrawnY || 0;
@@ -20908,9 +20958,9 @@ var Plotly = (() => {
         if (trace.type === "scatter") endI--;
         var endMarker = end.marker;
         var endMarkerSymbol = endMarker.symbol;
-        if (lib_default.isArrayOrTypedArray(endMarkerSymbol)) endMarkerSymbol = endMarkerSymbol[endI];
+        if (isArrayOrTypedArray(endMarkerSymbol)) endMarkerSymbol = endMarkerSymbol[endI];
         var endMarkerSize = endMarker.size;
-        if (lib_default.isArrayOrTypedArray(endMarkerSize)) endMarkerSize = endMarkerSize[endI];
+        if (isArrayOrTypedArray(endMarkerSize)) endMarkerSize = endMarkerSize[endI];
         b = endMarker ? symbolBackOffs[symbolNumber(endMarkerSymbol)] * endMarkerSize : 0;
         b += getMarkerStandoff(d[endI], trace) || 0;
       }
@@ -20923,7 +20973,7 @@ var Plotly = (() => {
     return pt;
   }
   function makeTester() {
-    var _tester = lib_default.ensureSingleById(select_default2("body"), "svg", "js-plotly-tester", function(s) {
+    var _tester = ensureSingleById(select_default2("body"), "svg", "js-plotly-tester", function(s) {
       s.attr(xmlns_namespaces_default.svgAttrs).style({
         position: "absolute",
         left: "-10000px",
@@ -20933,7 +20983,7 @@ var Plotly = (() => {
         "z-index": "1"
       });
     });
-    var _testref = lib_default.ensureSingle(_tester, "path", "js-reference-point", function(s) {
+    var _testref = ensureSingle(_tester, "path", "js-reference-point", function(s) {
       s.attr("d", "M0,0H1V1H0Z").style({
         "stroke-width": 0,
         fill: "black"
@@ -20950,7 +21000,7 @@ var Plotly = (() => {
     var out;
     if (hash) {
       out = savedBBoxes[hash];
-      if (out) return lib_default.extendFlat({}, out);
+      if (out) return extendFlat({}, out);
     } else if (node.childNodes.length === 1) {
       var innerNode = node.childNodes[0];
       hash = nodeHash(innerNode);
@@ -20972,7 +21022,7 @@ var Plotly = (() => {
         }
         hash += "~" + x + "~" + y + "~" + transform2;
         out = savedBBoxes[hash];
-        if (out) return lib_default.extendFlat({}, out);
+        if (out) return extendFlat({}, out);
       }
     }
     var testNode, testerNode;
@@ -21001,7 +21051,7 @@ var Plotly = (() => {
     }
     if (hash) savedBBoxes[hash] = bb;
     savedBBoxesCount++;
-    return lib_default.extendFlat({}, bb);
+    return extendFlat({}, bb);
   }
   function nodeHash(node) {
     var inputText = node.getAttribute("data-unformatted");
@@ -21037,7 +21087,7 @@ var Plotly = (() => {
     x = x || 0;
     y = y || 0;
     transform2 = transform2.replace(re3, "").trim();
-    transform2 += strTranslate2(x, y);
+    transform2 += strTranslate(x, y);
     transform2 = transform2.trim();
     element[setter]("transform", transform2);
     return transform2;
@@ -21094,7 +21144,7 @@ var Plotly = (() => {
       if (xScale === 1 && yScale === 1) {
         transforms = [];
       } else {
-        transforms = [strTranslate2(x, y), "scale(" + xScale + "," + yScale + ")", strTranslate2(-x, -y)];
+        transforms = [strTranslate(x, y), "scale(" + xScale + "," + yScale + ")", strTranslate(-x, -y)];
       }
       if (existingTransform) {
         transforms.push(existingTransform);
@@ -21131,7 +21181,7 @@ var Plotly = (() => {
     var angle = d.ma;
     if (angle === void 0) {
       angle = trace.marker.angle;
-      if (!angle || lib_default.isArrayOrTypedArray(angle)) {
+      if (!angle || isArrayOrTypedArray(angle)) {
         angle = 0;
       }
     }
@@ -21272,7 +21322,6 @@ var Plotly = (() => {
     return n ? Math.round(x * (n = Math.pow(10, n))) / n : Math.round(x);
   }
   var { OPPOSITE_SIDE } = alignment_default;
-  var strTranslate3 = lib_default.strTranslate;
   var numStripRE = / [XY][0-9]* /;
   var SUBTITLE_PADDING_MATHJAX_EM = 1.6;
   var SUBTITLE_PADDING_EM = 1.6;
@@ -21341,14 +21390,14 @@ var Plotly = (() => {
       }
     }
     if (options._meta) {
-      txt = lib_default.templateString(txt, options._meta);
+      txt = templateString(txt, options._meta);
     } else if (fullLayout._meta) {
-      txt = lib_default.templateString(txt, fullLayout._meta);
+      txt = templateString(txt, fullLayout._meta);
     }
     var elShouldExist = txt || subtitleTxt || editable;
     var hColorbarMoveTitle;
     if (!group) {
-      group = lib_default.ensureSingle(fullLayout._infolayer, "g", "g-" + titleClass);
+      group = ensureSingle(fullLayout._infolayer, "g", "g-" + titleClass);
       hColorbarMoveTitle = fullLayout._hColorbarMoveTitle;
     }
     var el = group.selectAll("text." + titleClass).data(elShouldExist ? [0] : []);
@@ -21366,7 +21415,7 @@ var Plotly = (() => {
     }
     if (!elShouldExist) return group;
     function titleLayout(titleEl, subtitleEl2) {
-      lib_default.syncOrAsync([drawTitle2, scootTitle], { title: titleEl, subtitle: subtitleEl2 });
+      syncOrAsync([drawTitle2, scootTitle], { title: titleEl, subtitle: subtitleEl2 });
     }
     function drawTitle2(titleAndSubtitleEls) {
       var titleEl = titleAndSubtitleEls.title;
@@ -21381,7 +21430,7 @@ var Plotly = (() => {
           transformVal += "rotate(" + [transform2.rotate, attributes3.x, attributes3.y] + ")";
         }
         if (transform2.offset || hColorbarMoveTitle) {
-          transformVal += strTranslate3(0, (transform2.offset || 0) - (hColorbarMoveTitle || 0));
+          transformVal += strTranslate(0, (transform2.offset || 0) - (hColorbarMoveTitle || 0));
         }
       } else {
         transformVal = null;
@@ -21414,7 +21463,7 @@ var Plotly = (() => {
         var titleElBbox2 = titleEl.node().getBBox();
         var titleElMathBbox = titleElMathGroup.node() ? titleElMathGroup.node().getBBox() : void 0;
         var subtitleY2 = titleElMathBbox ? titleElMathBbox.y + titleElMathBbox.height + SUBTITLE_PADDING_MATHJAX_EM * subFontSize : titleElBbox2.y + titleElBbox2.height + SUBTITLE_PADDING_EM * subFontSize;
-        var subtitleAttributes = lib_default.extendFlat({}, attributes3, {
+        var subtitleAttributes = extendFlat({}, attributes3, {
           y: subtitleY2
         });
         subtitleEl2.attr("transform", transformVal);
@@ -21468,7 +21517,7 @@ var Plotly = (() => {
           titlebb.bottom -= offsetTop;
           avoid.selection.each(function() {
             var avoidbb = bBox(this);
-            if (lib_default.bBoxIntersect(titlebb, avoidbb, pad3)) {
+            if (bBoxIntersect(titlebb, avoidbb, pad3)) {
               shift = Math.max(shift, shiftSign * (avoidbb[avoid.side] - titlebb[backside]) + pad3);
             }
           });
@@ -21482,7 +21531,7 @@ var Plotly = (() => {
             top: [0, -shift],
             bottom: [0, shift]
           }[avoid.side];
-          titleGroup.attr("transform", strTranslate3(shiftTemplate[0], shiftTemplate[1]));
+          titleGroup.attr("transform", strTranslate(shiftTemplate[0], shiftTemplate[1]));
         }
       }
     }
@@ -21542,19 +21591,16 @@ var Plotly = (() => {
   // src/plots/cartesian/axis_autotype.js
   var import_fast_isnumeric20 = __toESM(require_fast_isnumeric(), 1);
   var { BADNUM: BADNUM6 } = numerical_default;
-  var isArrayOrTypedArray4 = lib_default.isArrayOrTypedArray;
-  var isDateTime2 = lib_default.isDateTime;
-  var cleanNumber2 = lib_default.cleanNumber;
   var round2 = Math.round;
   function autoType(array2, calendar, opts) {
     var a = array2;
     var noMultiCategory = opts.noMultiCategory;
-    if (isArrayOrTypedArray4(a) && !a.length) return "-";
+    if (isArrayOrTypedArray(a) && !a.length) return "-";
     if (!noMultiCategory && multiCategory(a)) return "multicategory";
     if (noMultiCategory && Array.isArray(a[0])) {
       var b = [];
       for (var i = 0; i < a.length; i++) {
-        if (isArrayOrTypedArray4(a[i])) {
+        if (isArrayOrTypedArray(a[i])) {
           for (var j = 0; j < a[i].length; j++) {
             b.push(a[i][j]);
           }
@@ -21590,7 +21636,7 @@ var Plotly = (() => {
       var stri = String(ai);
       if (seen[stri]) continue;
       seen[stri] = 1;
-      if (isDateTime2(ai, calendar)) dats++;
+      if (isDateTime(ai, calendar)) dats++;
       if ((0, import_fast_isnumeric20.default)(ai)) nums++;
     }
     return dats > nums * 2;
@@ -21618,7 +21664,7 @@ var Plotly = (() => {
     return cats > nums * 2;
   }
   function multiCategory(a) {
-    return isArrayOrTypedArray4(a[0]) && isArrayOrTypedArray4(a[1]);
+    return isArrayOrTypedArray(a[0]) && isArrayOrTypedArray(a[1]);
   }
 
   // src/plots/cartesian/autorange.js
@@ -21644,7 +21690,7 @@ var Plotly = (() => {
     var minArray = extremes.min;
     var maxArray = extremes.max;
     if (minArray.length === 0 || maxArray.length === 0) {
-      return lib_default.simpleMap(ax.range, ax.r2l);
+      return simpleMap(ax.range, ax.r2l);
     }
     var minmin = minArray[0].val;
     var maxmax = maxArray[0].val;
@@ -21659,7 +21705,7 @@ var Plotly = (() => {
     var autorange = ax.autorange;
     var axReverse = autorange === "reversed" || autorange === "min reversed" || autorange === "max reversed";
     if (!axReverse && ax.range) {
-      var rng = lib_default.simpleMap(ax.range, ax.r2l);
+      var rng = simpleMap(ax.range, ax.r2l);
       axReverse = rng[1] < rng[0];
     }
     if (ax.autorange === "reversed") {
@@ -21737,7 +21783,7 @@ var Plotly = (() => {
     newRange = applyAutorangeOptions(newRange, ax);
     if (ax.limitRange) ax.limitRange();
     if (axReverse) newRange.reverse();
-    return lib_default.simpleMap(newRange, ax.l2r || Number);
+    return simpleMap(newRange, ax.l2r || Number);
   }
   function calcBreaksLength(ax, v0, v1) {
     var lBreaks = 0;
@@ -21756,7 +21802,7 @@ var Plotly = (() => {
     if ((ax.ticklabelposition || "").indexOf("inside") !== -1 || (anchorAxis.ticklabelposition || "").indexOf("inside") !== -1) {
       var axReverse = ax.isReversed();
       if (!axReverse) {
-        var rng = lib_default.simpleMap(ax.range, ax.r2l);
+        var rng = simpleMap(ax.range, ax.r2l);
         axReverse = rng[1] < rng[0];
       }
       if (axReverse) max2 = !max2;
@@ -21785,7 +21831,7 @@ var Plotly = (() => {
       if ((anchorAxis.ticklabelposition || "").indexOf("inside") !== -1) {
         if (!max2 && (anchorAxis.side === "left" || anchorAxis.side === "bottom") || max2 && (anchorAxis.side === "top" || anchorAxis.side === "right")) {
           if (anchorAxis._vals) {
-            var rad = lib_default.deg2rad(anchorAxis._tickAngles[anchorAxis._id + "tick"] || 0);
+            var rad = deg2rad(anchorAxis._tickAngles[anchorAxis._id + "tick"] || 0);
             var cosA = Math.abs(Math.cos(rad));
             var sinA = Math.abs(Math.sin(rad));
             if (!anchorAxis._vals[0].bb) {
@@ -21870,7 +21916,7 @@ var Plotly = (() => {
     if (ax.autorange) {
       ax.range = presetRange ? presetRange.slice() : getAutoRange(gd, ax);
       ax._r = ax.range.slice();
-      ax._rl = lib_default.simpleMap(ax._r, ax.r2l);
+      ax._rl = simpleMap(ax._r, ax.r2l);
       var axIn = ax._input;
       var edits = {};
       edits[ax._attr + ".range"] = ax.range;
@@ -21887,7 +21933,7 @@ var Plotly = (() => {
           axeRangeOpts.range = getAutoRange(gd, ax);
         }
       }
-      anchorAx._input.rangeslider[ax._name] = lib_default.extendFlat({}, axeRangeOpts);
+      anchorAx._input.rangeslider[ax._name] = extendFlat({}, axeRangeOpts);
     }
   }
   function findExtremes(ax, data, opts) {
@@ -22048,7 +22094,7 @@ var Plotly = (() => {
     if (include !== void 0) {
       var lMin = ax.d2l(min2);
       var lMax = ax.d2l(max2);
-      if (!lib_default.isArrayOrTypedArray(include)) include = [include];
+      if (!isArrayOrTypedArray(include)) include = [include];
       for (var i = 0; i < include.length; i++) {
         var v = ax.d2l(include[i]);
         if (lMin >= v) {
@@ -22071,12 +22117,6 @@ var Plotly = (() => {
   function d3Round3(x, n) {
     return n ? Math.round(x * (n = Math.pow(10, n))) / n : Math.round(x);
   }
-  var numberFormat2 = lib_default.numberFormat;
-  var cleanNumber3 = lib_default.cleanNumber;
-  var ms2DateTime2 = lib_default.ms2DateTime;
-  var dateTime2ms2 = lib_default.dateTime2ms;
-  var ensureNumber2 = lib_default.ensureNumber;
-  var isArrayOrTypedArray5 = lib_default.isArrayOrTypedArray;
   var FP_SAFE2 = numerical_default.FP_SAFE;
   var BADNUM7 = numerical_default.BADNUM;
   var LOG_CLIP = numerical_default.LOG_CLIP;
@@ -22105,23 +22145,23 @@ var Plotly = (() => {
         return 0.5 * (r0 + r1 - 2 * LOG_CLIP * Math.abs(r0 - r1));
       } else return BADNUM7;
     }
-    function dt2ms(v, _3, calendar, opts) {
+    function dt2ms(v, _2, calendar, opts) {
       if ((opts || {}).msUTC && (0, import_fast_isnumeric22.default)(v)) {
         return +v;
       }
-      var ms = dateTime2ms2(v, calendar || ax.calendar);
+      var ms = dateTime2ms(v, calendar || ax.calendar);
       if (ms === BADNUM7) {
         if ((0, import_fast_isnumeric22.default)(v)) {
           v = +v;
-          var msecTenths = Math.floor(lib_default.mod(v + 0.05, 1) * 10);
+          var msecTenths = Math.floor(mod(v + 0.05, 1) * 10);
           var msRounded = Math.round(v - msecTenths / 10);
-          ms = dateTime2ms2(new Date(msRounded)) + msecTenths / 10;
+          ms = dateTime2ms(new Date(msRounded)) + msecTenths / 10;
         } else return BADNUM7;
       }
       return ms;
     }
     function ms2dt(v, r, calendar) {
-      return ms2DateTime2(v, r, calendar || ax.calendar);
+      return ms2DateTime(v, r, calendar || ax.calendar);
     }
     function getCategoryName(v) {
       return ax._categories[Math.round(v)];
@@ -22213,8 +22253,8 @@ var Plotly = (() => {
         return _p2l(px, ax._m2, ax._B[q]);
       };
     }
-    ax.c2l = ax.type === "log" ? toLog : ensureNumber2;
-    ax.l2c = ax.type === "log" ? fromLog : ensureNumber2;
+    ax.c2l = ax.type === "log" ? toLog : ensureNumber;
+    ax.l2c = ax.type === "log" ? fromLog : ensureNumber;
     ax.l2p = l2p;
     ax.p2l = p2l;
     ax.c2p = ax.type === "log" ? function(v, clip) {
@@ -22224,22 +22264,22 @@ var Plotly = (() => {
       return fromLog(p2l(px));
     } : p2l;
     if (["linear", "-"].indexOf(ax.type) !== -1) {
-      ax.d2r = ax.r2d = ax.d2c = ax.r2c = ax.d2l = ax.r2l = cleanNumber3;
-      ax.c2d = ax.c2r = ax.l2d = ax.l2r = ensureNumber2;
+      ax.d2r = ax.r2d = ax.d2c = ax.r2c = ax.d2l = ax.r2l = cleanNumber2;
+      ax.c2d = ax.c2r = ax.l2d = ax.l2r = ensureNumber;
       ax.d2p = ax.r2p = function(v) {
-        return ax.l2p(cleanNumber3(v));
+        return ax.l2p(cleanNumber2(v));
       };
       ax.p2d = ax.p2r = p2l;
-      ax.cleanPos = ensureNumber2;
+      ax.cleanPos = ensureNumber;
     } else if (ax.type === "log") {
       ax.d2r = ax.d2l = function(v, clip) {
-        return toLog(cleanNumber3(v), clip);
+        return toLog(cleanNumber2(v), clip);
       };
       ax.r2d = ax.r2c = function(v) {
-        return fromLog(cleanNumber3(v));
+        return fromLog(cleanNumber2(v));
       };
-      ax.d2c = ax.r2l = cleanNumber3;
-      ax.c2d = ax.l2r = ensureNumber2;
+      ax.d2c = ax.r2l = cleanNumber2;
+      ax.c2d = ax.l2r = ensureNumber;
       ax.c2r = toLog;
       ax.l2d = fromLog;
       ax.d2p = function(v, clip) {
@@ -22249,22 +22289,22 @@ var Plotly = (() => {
         return fromLog(p2l(px));
       };
       ax.r2p = function(v) {
-        return ax.l2p(cleanNumber3(v));
+        return ax.l2p(cleanNumber2(v));
       };
       ax.p2r = p2l;
-      ax.cleanPos = ensureNumber2;
+      ax.cleanPos = ensureNumber;
     } else if (ax.type === "date") {
-      ax.d2r = ax.r2d = lib_default.identity;
+      ax.d2r = ax.r2d = identity3;
       ax.d2c = ax.r2c = ax.d2l = ax.r2l = dt2ms;
       ax.c2d = ax.c2r = ax.l2d = ax.l2r = ms2dt;
-      ax.d2p = ax.r2p = function(v, _3, calendar) {
+      ax.d2p = ax.r2p = function(v, _2, calendar) {
         return ax.l2p(dt2ms(v, 0, calendar));
       };
       ax.p2d = ax.p2r = function(px, r, calendar) {
         return ms2dt(p2l(px), r, calendar);
       };
       ax.cleanPos = function(v) {
-        return lib_default.cleanDate(v, BADNUM7, ax.calendar);
+        return cleanDate(v, BADNUM7, ax.calendar);
       };
     } else if (ax.type === "category") {
       ax.d2c = ax.d2l = setCategoryIndex;
@@ -22274,7 +22314,7 @@ var Plotly = (() => {
         var index = getRangePosition(v);
         return index !== void 0 ? index : ax.fraction2r(0.5);
       };
-      ax.l2r = ax.c2r = ensureNumber2;
+      ax.l2r = ax.c2r = ensureNumber;
       ax.r2l = getRangePosition;
       ax.d2p = function(v) {
         return ax.l2p(ax.r2c(v));
@@ -22286,7 +22326,7 @@ var Plotly = (() => {
       ax.p2r = p2l;
       ax.cleanPos = function(v) {
         if (typeof v === "string" && v !== "") return v;
-        return ensureNumber2(v);
+        return ensureNumber(v);
       };
     } else if (ax.type === "multicategory") {
       ax.r2d = ax.c2d = ax.l2d = getCategoryName;
@@ -22296,7 +22336,7 @@ var Plotly = (() => {
         return index !== void 0 ? index : ax.fraction2r(0.5);
       };
       ax.r2c_just_indices = getCategoryIndex;
-      ax.l2r = ax.c2r = ensureNumber2;
+      ax.l2r = ax.c2r = ensureNumber;
       ax.r2l = getCategoryPosition;
       ax.d2p = function(v) {
         return ax.l2p(ax.r2c(v));
@@ -22308,7 +22348,7 @@ var Plotly = (() => {
       ax.p2r = p2l;
       ax.cleanPos = function(v) {
         if (Array.isArray(v) || typeof v === "string" && v !== "") return v;
-        return ensureNumber2(v);
+        return ensureNumber(v);
       };
       ax.setupMultiCategory = function(fullData) {
         var traceIndices = ax._traceIndices;
@@ -22328,8 +22368,8 @@ var Plotly = (() => {
           var trace = fullData[traceIndices[i]];
           if (axLetter in trace) {
             var arrayIn = trace[axLetter];
-            var len2 = trace._length || lib_default.minRowLength(arrayIn);
-            if (isArrayOrTypedArray5(arrayIn[0]) && isArrayOrTypedArray5(arrayIn[1])) {
+            var len2 = trace._length || minRowLength(arrayIn);
+            if (isArrayOrTypedArray(arrayIn[0]) && isArrayOrTypedArray(arrayIn[1])) {
               for (j = 0; j < len2; j++) {
                 var v0 = arrayIn[0][j];
                 var v1 = arrayIn[1][j];
@@ -22373,11 +22413,11 @@ var Plotly = (() => {
       var maxallowed = ax.maxallowed;
       if (minallowed === void 0 && maxallowed === void 0) return;
       if (!rangeAttr) rangeAttr = "range";
-      var range = lib_default.nestedProperty(ax, rangeAttr).get();
-      var rng = lib_default.simpleMap(range, ax.r2l);
+      var range = nestedProperty2(ax, rangeAttr).get();
+      var rng = simpleMap(range, ax.r2l);
       var axrev = rng[1] < rng[0];
       if (axrev) rng.reverse();
-      var bounds = lib_default.simpleMap([minallowed, maxallowed], ax.r2l);
+      var bounds = simpleMap([minallowed, maxallowed], ax.r2l);
       if (minallowed !== void 0 && rng[0] < bounds[0]) range[axrev ? 1 : 0] = minallowed;
       if (maxallowed !== void 0 && rng[1] > bounds[1]) range[axrev ? 0 : 1] = maxallowed;
       if (range[0] === range[1]) {
@@ -22402,9 +22442,9 @@ var Plotly = (() => {
     ax._cleanRange = function(rangeAttr, opts) {
       if (!opts) opts = {};
       if (!rangeAttr) rangeAttr = "range";
-      var range = lib_default.nestedProperty(ax, rangeAttr).get();
+      var range = nestedProperty2(ax, rangeAttr).get();
       var i, dflt;
-      if (ax.type === "date") dflt = lib_default.dfltRange(ax.calendar);
+      if (ax.type === "date") dflt = dfltRange(ax.calendar);
       else if (axLetter === "y") dflt = constants_default2.DFLTRANGEY;
       else if (ax._name === "realaxis") dflt = [0, 1];
       else dflt = opts.dfltRange || constants_default2.DFLTRANGEX;
@@ -22413,26 +22453,26 @@ var Plotly = (() => {
         dflt[0] = 0;
       }
       if (!range || range.length !== 2) {
-        lib_default.nestedProperty(ax, rangeAttr).set(dflt);
+        nestedProperty2(ax, rangeAttr).set(dflt);
         return;
       }
       var nullRange0 = range[0] === null;
       var nullRange1 = range[1] === null;
       if (ax.type === "date" && !ax.autorange) {
-        range[0] = lib_default.cleanDate(range[0], BADNUM7, ax.calendar);
-        range[1] = lib_default.cleanDate(range[1], BADNUM7, ax.calendar);
+        range[0] = cleanDate(range[0], BADNUM7, ax.calendar);
+        range[1] = cleanDate(range[1], BADNUM7, ax.calendar);
       }
       for (i = 0; i < 2; i++) {
         if (ax.type === "date") {
-          if (!lib_default.isDateTime(range[i], ax.calendar)) {
+          if (!isDateTime(range[i], ax.calendar)) {
             ax[rangeAttr] = dflt;
             break;
           }
           if (ax.r2l(range[0]) === ax.r2l(range[1])) {
-            var linCenter = lib_default.constrain(
+            var linCenter = constrain(
               ax.r2l(range[0]),
-              lib_default.MIN_MS + 1e3,
-              lib_default.MAX_MS - 1e3
+              MIN_MS + 1e3,
+              MAX_MS - 1e3
             );
             range[0] = ax.l2r(linCenter - 1e3);
             range[1] = ax.l2r(linCenter + 1e3);
@@ -22524,16 +22564,16 @@ var Plotly = (() => {
       var bnds, b02, b12, vb, vDate;
       if (!rangebreaksIn._cachedPatterns) {
         rangebreaksIn._cachedPatterns = rangebreaksIn.map(function(brk2) {
-          return brk2.enabled && brk2.bounds ? lib_default.simpleMap(
+          return brk2.enabled && brk2.bounds ? simpleMap(
             brk2.bounds,
-            brk2.pattern ? cleanNumber3 : ax.d2c
+            brk2.pattern ? cleanNumber2 : ax.d2c
             // case of pattern: ''
           ) : null;
         });
       }
       if (!rangebreaksIn._cachedValues) {
         rangebreaksIn._cachedValues = rangebreaksIn.map(function(brk2) {
-          return brk2.enabled && brk2.values ? lib_default.simpleMap(brk2.values, ax.d2c).sort(lib_default.sorterAsc) : null;
+          return brk2.enabled && brk2.values ? simpleMap(brk2.values, ax.d2c).sort(sorterAsc) : null;
         });
       }
       for (var i = 0; i < rangebreaksIn.length; i++) {
@@ -22592,8 +22632,8 @@ var Plotly = (() => {
         return 0;
       });
       var addBreak = function(min2, max2) {
-        min2 = lib_default.constrain(min2, r0, r1);
-        max2 = lib_default.constrain(max2, r0, r1);
+        min2 = constrain(min2, r0, r1);
+        max2 = constrain(max2, r0, r1);
         if (min2 === max2) return;
         var isNewBreak = true;
         for (var j2 = 0; j2 < rangebreaksOut.length; j2++) {
@@ -22621,7 +22661,7 @@ var Plotly = (() => {
             if (brk.pattern) {
               t03 = Math.floor(t03);
             }
-            bnds = lib_default.simpleMap(brk.bounds, brk.pattern ? cleanNumber3 : ax.r2l);
+            bnds = simpleMap(brk.bounds, brk.pattern ? cleanNumber2 : ax.r2l);
             b02 = bnds[0];
             b12 = bnds[1];
             var t0Date = new Date(t03);
@@ -22648,7 +22688,7 @@ var Plotly = (() => {
               addBreak(t, t + bndDelta);
             }
           } else {
-            var vals = lib_default.simpleMap(brk.values, ax.d2c);
+            var vals = simpleMap(brk.values, ax.d2c);
             for (var j = 0; j < vals.length; j++) {
               b02 = vals[j];
               b12 = b02 + brk.dvalue;
@@ -22668,8 +22708,8 @@ var Plotly = (() => {
       var cal = axType === "date" && trace[axLetter2 + "calendar"];
       if (axLetter2 in trace) {
         arrayIn = trace[axLetter2];
-        len2 = trace._length || lib_default.minRowLength(arrayIn);
-        if (lib_default.isTypedArray(arrayIn) && (axType === "linear" || axType === "log")) {
+        len2 = trace._length || minRowLength(arrayIn);
+        if (isTypedArray(arrayIn) && (axType === "linear" || axType === "log")) {
           if (len2 === arrayIn.length) {
             return arrayIn;
           } else if (arrayIn.subarray) {
@@ -22788,7 +22828,7 @@ var Plotly = (() => {
       ax._extraFormat = fullLayout._extraFormat;
     }
     ax._separators = fullLayout.separators;
-    ax._numFormat = locale4 ? locale4.numberFormat : numberFormat2;
+    ax._numFormat = locale4 ? locale4.numberFormat : numberFormat;
     delete ax._minDtick;
     delete ax._forceTick0;
   }
@@ -22797,7 +22837,6 @@ var Plotly = (() => {
   function d3Round4(x, n) {
     return n ? Math.round(x * (n = Math.pow(10, n))) / n : Math.round(x);
   }
-  var strTranslate4 = lib_default.strTranslate;
   var ONEMAXYEAR = numerical_default.ONEMAXYEAR;
   var ONEAVGYEAR = numerical_default.ONEAVGYEAR;
   var ONEMINYEAR = numerical_default.ONEMINYEAR;
@@ -22871,7 +22910,7 @@ var Plotly = (() => {
       values: axlist.concat(extraOption ? typeof extraOption === "string" ? [extraOption] : extraOption : []),
       dflt
     };
-    return lib_default.coerce(containerIn, containerOut, attrDef, refAttr);
+    return coerce(containerIn, containerOut, attrDef, refAttr);
   };
   axes.getRefType = function(ar) {
     if (ar === void 0) {
@@ -22893,7 +22932,7 @@ var Plotly = (() => {
     var cleanPos, pos;
     var axRefType = axes.getRefType(axRef);
     if (axRefType !== "range") {
-      cleanPos = lib_default.ensureNumber;
+      cleanPos = ensureNumber;
       pos = coerce3(attr2, dflt);
     } else {
       var ax = axes.getFromId(gd, axRef);
@@ -22904,7 +22943,7 @@ var Plotly = (() => {
     containerOut[attr2] = cleanPos(pos);
   };
   axes.cleanPosition = function(pos, gd, axRef) {
-    var cleanPos = axRef === "paper" || axRef === "pixel" ? lib_default.ensureNumber : axes.getFromId(gd, axRef).cleanPos;
+    var cleanPos = axRef === "paper" || axRef === "pixel" ? ensureNumber : axes.getFromId(gd, axRef).cleanPos;
     return cleanPos(pos);
   };
   axes.redrawComponents = function(gd, axIds) {
@@ -22934,7 +22973,7 @@ var Plotly = (() => {
   var getDataConversions = axes.getDataConversions = function(gd, trace, target, targetArray) {
     var ax;
     var d2cTarget = target === "x" || target === "y" || target === "z" ? target : targetArray;
-    if (lib_default.isArrayOrTypedArray(d2cTarget)) {
+    if (isArrayOrTypedArray(d2cTarget)) {
       ax = {
         type: autoType(targetArray, void 0, {
           autotypenumbers: gd._fullLayout.autotypenumbers
@@ -23026,8 +23065,8 @@ var Plotly = (() => {
     return hasOneAxisChanged;
   };
   axes.autoBin = function(data, ax, nbins, is2d, calendar, size) {
-    var dataMin = lib_default.aggNums(Math.min, null, data);
-    var dataMax = lib_default.aggNums(Math.max, null, data);
+    var dataMin = aggNums(Math.min, null, data);
+    var dataMax = aggNums(Math.max, null, data);
     if (ax.type === "category" || ax.type === "multicategory") {
       return {
         start: dataMin - 0.5,
@@ -23046,7 +23085,7 @@ var Plotly = (() => {
     } else {
       dummyAx = {
         type: ax.type,
-        range: lib_default.simpleMap([dataMin, dataMax], ax.c2r, 0, calendar),
+        range: simpleMap([dataMin, dataMax], ax.c2r, 0, calendar),
         calendar
       };
     }
@@ -23059,16 +23098,16 @@ var Plotly = (() => {
       var size0;
       if (nbins) size0 = (dataMax - dataMin) / nbins;
       else {
-        var distinctData = lib_default.distinctVals(data);
+        var distinctData = distinctVals(data);
         var msexp = Math.pow(10, Math.floor(
           Math.log(distinctData.minDiff) / Math.LN10
         ));
-        var minSize = msexp * lib_default.roundUp(
+        var minSize = msexp * roundUp(
           distinctData.minDiff / msexp,
           [0.9, 1.9, 4.9, 9.9],
           true
         );
-        size0 = Math.max(minSize, 2 * lib_default.stdev(data) / Math.pow(data.length, is2d ? 0.25 : 0.4));
+        size0 = Math.max(minSize, 2 * stdev(data) / Math.pow(data.length, is2d ? 0.25 : 0.4));
         if (!(0, import_fast_isnumeric23.default)(size0)) size0 = 1;
       }
       axes.autoTicks(dummyAx, size0);
@@ -23134,7 +23173,7 @@ var Plotly = (() => {
     return binStart;
   }
   function autoShiftMonthBins(binStart, data, dtick3, dataMin, calendar) {
-    var stats = lib_default.findExactDates(data, calendar);
+    var stats = findExactDates(data, calendar);
     var threshold = 0.8;
     if (stats.exactDays > threshold) {
       var numMonths = Number(dtick3.slice(1));
@@ -23159,10 +23198,10 @@ var Plotly = (() => {
         var tick2 = axes.tickIncrement(ax._tmin, ax.dtick, true);
         mockMinorRange = [ax._tmin, tick2 * 0.99 + ax._tmin * 0.01];
       } else {
-        var rl = lib_default.simpleMap(ax.range, ax.r2l);
+        var rl = simpleMap(ax.range, ax.r2l);
         mockMinorRange = [rl[0], 0.8 * rl[0] + 0.2 * rl[1]];
       }
-      mockAx.range = lib_default.simpleMap(mockMinorRange, ax.l2r);
+      mockAx.range = simpleMap(mockMinorRange, ax.l2r);
       mockAx._isMinor = true;
       axes.prepTicks(mockAx, opts);
       if (hasMajor) {
@@ -23219,17 +23258,17 @@ var Plotly = (() => {
     return Math.abs(a / b - 1) < 1e-3;
   }
   axes.prepTicks = function(ax, opts) {
-    var rng = lib_default.simpleMap(ax.range, ax.r2l, void 0, void 0, opts);
+    var rng = simpleMap(ax.range, ax.r2l, void 0, void 0, opts);
     if (ax.tickmode === "auto" || !ax.dtick) {
       var nt = ax.nticks;
       var minPx;
       if (!nt) {
         if (ax.type === "category" || ax.type === "multicategory") {
-          minPx = ax.tickfont ? lib_default.bigFont(ax.tickfont.size || 12) : 15;
+          minPx = ax.tickfont ? bigFont(ax.tickfont.size || 12) : 15;
           nt = ax._length / minPx;
         } else {
           minPx = ax._id.charAt(0) === "y" ? 40 : 80;
-          nt = lib_default.constrain(ax._length / minPx, 4, 9) + 1;
+          nt = constrain(ax._length / minPx, 4, 9) + 1;
         }
         if (ax._name === "radialaxis") nt *= 2;
       }
@@ -23373,8 +23412,8 @@ var Plotly = (() => {
     var ticklabelstep = ax.ticklabelstep;
     var isPeriod = ax.ticklabelmode === "period";
     var isReversed3 = ax.range[0] > ax.range[1];
-    var ticklabelIndex = !ax.ticklabelindex || lib_default.isArrayOrTypedArray(ax.ticklabelindex) ? ax.ticklabelindex : [ax.ticklabelindex];
-    var rng = lib_default.simpleMap(ax.range, ax.r2l, void 0, void 0, opts);
+    var ticklabelIndex = !ax.ticklabelindex || isArrayOrTypedArray(ax.ticklabelindex) ? ax.ticklabelindex : [ax.ticklabelindex];
+    var rng = simpleMap(ax.range, ax.r2l, void 0, void 0, opts);
     var axrev = rng[1] < rng[0];
     var minRange = Math.min(rng[0], rng[1]);
     var maxRange = Math.max(rng[0], rng[1]);
@@ -23394,7 +23433,7 @@ var Plotly = (() => {
         ax.minor._dtickInit = ax.minor.dtick;
         ax.minor._tick0Init = ax.minor.tick0;
       }
-      var mockAx = major ? ax : lib_default.extendFlat({}, ax, ax.minor);
+      var mockAx = major ? ax : extendFlat({}, ax, ax.minor);
       if (isMinor) {
         axes.prepMinorTicks(mockAx, ax, opts);
       } else {
@@ -23516,7 +23555,7 @@ var Plotly = (() => {
         ticklabelIndex.map(function(nextLabelIdx) {
           var minorIdx = majorIdx + nextLabelIdx;
           if (minorIdx >= 0 && minorIdx < allTickVals.length) {
-            lib_default.pushUnique(allTicklabelVals, allTickVals[minorIdx]);
+            pushUnique2(allTicklabelVals, allTickVals[minorIdx]);
           }
         });
       });
@@ -23661,7 +23700,7 @@ var Plotly = (() => {
     return ticksOut;
   }
   function arrayTicks(ax, majorOnly) {
-    var rng = lib_default.simpleMap(ax.range, ax.r2l);
+    var rng = simpleMap(ax.range, ax.r2l);
     var exRng = expandRange(rng);
     var tickMin = Math.min(exRng[0], exRng[1]);
     var tickMax = Math.max(exRng[0], exRng[1]);
@@ -23676,7 +23715,7 @@ var Plotly = (() => {
       var vals = !isMinor ? ax.tickvals : ax.minor.tickvals;
       var text = !isMinor ? ax.ticktext : [];
       if (!vals) continue;
-      if (!lib_default.isArrayOrTypedArray(text)) text = [];
+      if (!isArrayOrTypedArray(text)) text = [];
       for (var i = 0; i < vals.length; i++) {
         var vali = tickVal2l(vals[i]);
         if (vali > tickMin && vali < tickMax) {
@@ -23700,7 +23739,7 @@ var Plotly = (() => {
   var roundLog2 = [-0.301, 0, 0.301, 0.699, 1];
   var roundAngles = [15, 30, 45, 90, 180];
   function roundDTick(roughDTick, base, roundingSet) {
-    return base * lib_default.roundUp(roughDTick / base, roundingSet);
+    return base * roundUp(roughDTick / base, roundingSet);
   }
   axes.autoTicks = function(ax, roughDTick, isMinor) {
     var base;
@@ -23708,7 +23747,7 @@ var Plotly = (() => {
       return Math.pow(v, Math.floor(Math.log(roughDTick) / Math.LN10));
     }
     if (ax.type === "date") {
-      ax.tick0 = lib_default.dateTick0(ax.calendar, 0);
+      ax.tick0 = dateTick0(ax.calendar, 0);
       var roughX2 = 2 * roughDTick;
       if (roughX2 > ONEAVGYEAR) {
         roughDTick /= ONEAVGYEAR;
@@ -23724,9 +23763,9 @@ var Plotly = (() => {
           var isPeriod = ax.ticklabelmode === "period";
           if (isPeriod) ax._rawTick0 = ax.tick0;
           if (/%[uVW]/.test(tickformat)) {
-            ax.tick0 = lib_default.dateTick0(ax.calendar, 2);
+            ax.tick0 = dateTick0(ax.calendar, 2);
           } else {
-            ax.tick0 = lib_default.dateTick0(ax.calendar, 1);
+            ax.tick0 = dateTick0(ax.calendar, 1);
           }
           if (isPeriod) ax._dowTick0 = ax.tick0;
         }
@@ -23742,7 +23781,7 @@ var Plotly = (() => {
       }
     } else if (ax.type === "log") {
       ax.tick0 = 0;
-      var rng = lib_default.simpleMap(ax.range, ax.r2l);
+      var rng = simpleMap(ax.range, ax.r2l);
       if (ax._isMinor) {
         roughDTick *= 1.5;
       }
@@ -23817,22 +23856,22 @@ var Plotly = (() => {
   }
   axes.tickIncrement = function(x, dtick3, axrev, calendar) {
     var axSign = axrev ? -1 : 1;
-    if ((0, import_fast_isnumeric23.default)(dtick3)) return lib_default.increment(x, axSign * dtick3);
+    if ((0, import_fast_isnumeric23.default)(dtick3)) return increment(x, axSign * dtick3);
     var tType = dtick3.charAt(0);
     var dtSigned = axSign * Number(dtick3.slice(1));
-    if (tType === "M") return lib_default.incrementMonth(x, dtSigned, calendar);
+    if (tType === "M") return incrementMonth(x, dtSigned, calendar);
     if (tType === "L") return Math.log(Math.pow(10, x) + dtSigned) / Math.LN10;
     if (tType === "D") {
       var tickset = dtick3 === "D2" ? roundLog2 : roundLog1;
       var x2 = x + axSign * 0.01;
-      var frac = lib_default.roundUp(lib_default.mod(x2, 1), tickset, axrev);
+      var frac = roundUp(mod(x2, 1), tickset, axrev);
       return Math.floor(x2) + Math.log(d3Round4(Math.pow(10, frac), 1)) / Math.LN10;
     }
     throw "unrecognized dtick " + String(dtick3);
   };
   axes.tickFirst = function(ax, opts) {
     var r2l = ax.r2l || Number;
-    var rng = lib_default.simpleMap(ax.range, r2l, void 0, void 0, opts);
+    var rng = simpleMap(ax.range, r2l, void 0, void 0, opts);
     var axrev = rng[1] < rng[0];
     var sRound = axrev ? Math.floor : Math.ceil;
     var r0 = expandRange(rng)[0];
@@ -23841,7 +23880,7 @@ var Plotly = (() => {
     if ((0, import_fast_isnumeric23.default)(dtick3)) {
       var tmin = sRound((r0 - tick03) / dtick3) * dtick3 + tick03;
       if (ax.type === "category" || ax.type === "multicategory") {
-        tmin = lib_default.constrain(tmin, 0, ax._categories.length - 1);
+        tmin = constrain(tmin, 0, ax._categories.length - 1);
       }
       return tmin;
     }
@@ -23862,7 +23901,7 @@ var Plotly = (() => {
         t03 = axes.tickIncrement(t03, newDTick, mult < 0 ? !axrev : axrev, ax.calendar);
         cnt++;
       }
-      lib_default.error("tickFirst did not converge", ax);
+      error("tickFirst did not converge", ax);
       return t03;
     } else if (tType === "L") {
       return Math.log(sRound(
@@ -23870,7 +23909,7 @@ var Plotly = (() => {
       ) * dtNum + tick03) / Math.LN10;
     } else if (tType === "D") {
       var tickset = dtick3 === "D2" ? roundLog2 : roundLog1;
-      var frac = lib_default.roundUp(lib_default.mod(r0, 1), tickset, axrev);
+      var frac = roundUp(mod(r0, 1), tickset, axrev);
       return Math.floor(r0) + Math.log(d3Round4(Math.pow(10, frac), 1)) / Math.LN10;
     } else throw "unrecognized dtick " + String(dtick3);
   };
@@ -23885,8 +23924,8 @@ var Plotly = (() => {
       var p = ax.l2p(v);
       return p >= 0 && p <= ax._length ? v : null;
     };
-    if (arrayMode && lib_default.isArrayOrTypedArray(ax.ticktext)) {
-      var rng = lib_default.simpleMap(ax.range, ax.r2l);
+    if (arrayMode && isArrayOrTypedArray(ax.ticktext)) {
+      var rng = simpleMap(ax.range, ax.r2l);
       var minDiff = (Math.abs(rng[1] - rng[0]) - (ax._lBreaks || 0)) / 1e4;
       for (i = 0; i < ax.ticktext.length; i++) {
         if (Math.abs(x - tickVal2l(ax.tickvals[i])) < minDiff) break;
@@ -23900,7 +23939,7 @@ var Plotly = (() => {
         return out;
       }
     }
-    function isHidden(showAttr) {
+    function isHidden2(showAttr) {
       if (showAttr === void 0) return true;
       if (hover3) return showAttr === "none";
       var firstOrLast = {
@@ -23909,7 +23948,7 @@ var Plotly = (() => {
       }[showAttr];
       return showAttr !== "all" && x !== firstOrLast;
     }
-    var hideexp = hover3 ? "never" : ax.exponentformat !== "none" && isHidden(ax.showexponent) ? "hide" : "";
+    var hideexp = hover3 ? "never" : ax.exponentformat !== "none" && isHidden2(ax.showexponent) ? "hide" : "";
     if (axType === "date") formatDate2(ax, out, hover3, extraPrecision);
     else if (axType === "log") formatLog(ax, out, hover3, extraPrecision, hideexp);
     else if (axType === "category") formatCategory(ax, out);
@@ -23917,8 +23956,8 @@ var Plotly = (() => {
     else if (isAngular(ax)) formatAngle(ax, out, hover3, extraPrecision, hideexp);
     else formatLinear(ax, out, hover3, extraPrecision, hideexp);
     if (!noSuffixPrefix) {
-      if (ax.tickprefix && !isHidden(ax.showtickprefix)) out.text = ax.tickprefix + out.text;
-      if (ax.ticksuffix && !isHidden(ax.showticksuffix)) out.text += ax.ticksuffix;
+      if (ax.tickprefix && !isHidden2(ax.showtickprefix)) out.text = ax.tickprefix + out.text;
+      if (ax.ticksuffix && !isHidden2(ax.showticksuffix)) out.text += ax.ticksuffix;
     }
     if (ax.labelalias && ax.labelalias.hasOwnProperty(out.text)) {
       var t = ax.labelalias[out.text];
@@ -23933,9 +23972,9 @@ var Plotly = (() => {
     return out;
   };
   axes.hoverLabelText = function(ax, values, hoverformat) {
-    if (hoverformat) ax = lib_default.extendFlat({}, ax, { hoverformat });
-    var val = lib_default.isArrayOrTypedArray(values) ? values[0] : values;
-    var val2 = lib_default.isArrayOrTypedArray(values) ? values[1] : void 0;
+    if (hoverformat) ax = extendFlat({}, ax, { hoverformat });
+    var val = isArrayOrTypedArray(values) ? values[0] : values;
+    var val2 = isArrayOrTypedArray(values) ? values[1] : void 0;
     if (val2 !== void 0 && val2 !== val) {
       return axes.hoverLabelText(ax, val, hoverformat) + " - " + axes.hoverLabelText(ax, val2, hoverformat);
     }
@@ -24020,9 +24059,9 @@ var Plotly = (() => {
     }
     if (tickformat || dtChar0 === "L") {
       out.text = numFormat(Math.pow(10, x), ax, hideexp, extraPrecision);
-    } else if ((0, import_fast_isnumeric23.default)(dtick3) || dtChar0 === "D" && (ax.minorloglabels === "complete" || lib_default.mod(x + 0.01, 1) < 0.1)) {
+    } else if ((0, import_fast_isnumeric23.default)(dtick3) || dtChar0 === "D" && (ax.minorloglabels === "complete" || mod(x + 0.01, 1) < 0.1)) {
       var isMinor;
-      if (ax.minorloglabels === "complete" && !(lib_default.mod(x + 0.01, 1) < 0.1)) {
+      if (ax.minorloglabels === "complete" && !(mod(x + 0.01, 1) < 0.1)) {
         isMinor = true;
         out.fontSize *= 0.75;
       }
@@ -24048,7 +24087,7 @@ var Plotly = (() => {
     } else if (dtChar0 === "D") {
       out.text = ax.minorloglabels === "none" ? "" : (
         /* ax.minorloglabels === 'small digits' */
-        String(Math.round(Math.pow(10, lib_default.mod(x, 1))))
+        String(Math.round(Math.pow(10, mod(x, 1))))
       );
       out.fontSize *= 0.75;
     } else throw "unrecognized dtick " + String(dtick3);
@@ -24097,7 +24136,7 @@ var Plotly = (() => {
       } else {
         var frac = num2frac(num);
         if (frac[1] >= 100) {
-          out.text = numFormat(lib_default.deg2rad(out.x), ax, hideexp, extraPrecision);
+          out.text = numFormat(deg2rad(out.x), ax, hideexp, extraPrecision);
         } else {
           var isNeg = out.x < 0;
           if (frac[1] === 1) {
@@ -24205,7 +24244,7 @@ var Plotly = (() => {
         var dp = v.indexOf(".") + 1;
         if (dp) v = v.slice(0, dp + tickRound).replace(/\.?0+$/, "");
       }
-      v = lib_default.numSeparate(v, ax._separators, separatethousands);
+      v = numSeparate(v, ax._separators, separatethousands);
     }
     if (exponent && exponentFormat !== "hide") {
       if (shouldSwitchSIToPowerFormat(exponent, exponentFormat)) exponentFormat = "power";
@@ -24391,7 +24430,7 @@ var Plotly = (() => {
       }
     });
     var axShifts = { false: { left: 0, right: 0 } };
-    return lib_default.syncOrAsync(axList.map(function(axId) {
+    return syncOrAsync(axList.map(function(axId) {
       return function() {
         if (!axId) return;
         var ax = axes.getFromId(gd, axId);
@@ -24403,7 +24442,7 @@ var Plotly = (() => {
           incrementShift(ax, ax._fullDepth || 0, axShifts, true);
         }
         ax._r = ax.range.slice();
-        ax._rl = lib_default.simpleMap(ax._r, ax.r2l);
+        ax._rl = simpleMap(ax._r, ax.r2l);
         return axDone;
       };
     }));
@@ -24713,7 +24752,7 @@ var Plotly = (() => {
       plots_default.autoMargin(gd, axMirrorAutoMarginID(ax), mirrorPush);
       plots_default.autoMargin(gd, rangeSliderAutoMarginID(ax), rangeSliderPush);
     });
-    return lib_default.syncOrAsync(seq);
+    return syncOrAsync(seq);
   };
   function filterPush(push, automargin) {
     if (!push) return;
@@ -24738,7 +24777,7 @@ var Plotly = (() => {
     var _push = function(d, bndIndex) {
       var xb = d.xbnd[bndIndex];
       if (xb !== null) {
-        out.push(lib_default.extendFlat({}, d, { x: xb }));
+        out.push(extendFlat({}, d, { x: xb }));
       }
     };
     if (vals.length) {
@@ -24761,7 +24800,7 @@ var Plotly = (() => {
       }
     }
     for (var k in lookup2) {
-      out.push(tickTextObj(ax, lib_default.interp(lookup2[k], 0.5), k));
+      out.push(tickTextObj(ax, interp(lookup2[k], 0.5), k));
     }
     return out;
   }
@@ -24772,7 +24811,7 @@ var Plotly = (() => {
     var _push = function(d2, bndIndex) {
       var xb = d2.xbnd[bndIndex];
       if (xb !== null) {
-        out.push(lib_default.extendFlat({}, d2, { x: xb }));
+        out.push(extendFlat({}, d2, { x: xb }));
       }
     };
     if (ax.showdividers && vals.length) {
@@ -24837,9 +24876,9 @@ var Plotly = (() => {
   };
   axes.makeTransTickFn = function(ax) {
     return ax._id.charAt(0) === "x" ? function(d) {
-      return strTranslate4(ax._offset + ax.l2p(d.x), 0);
+      return strTranslate(ax._offset + ax.l2p(d.x), 0);
     } : function(d) {
-      return strTranslate4(0, ax._offset + ax.l2p(d.x));
+      return strTranslate(0, ax._offset + ax.l2p(d.x));
     };
   };
   axes.makeTransTickLabelFn = function(ax) {
@@ -24861,12 +24900,12 @@ var Plotly = (() => {
       standoff = standoff * standoffSign;
     }
     return ax._id.charAt(0) === "x" ? function(d) {
-      return strTranslate4(
+      return strTranslate(
         u + ax._offset + ax.l2p(getPosX(d)) + shift,
         v + standoff
       );
     } : function(d) {
-      return strTranslate4(
+      return strTranslate(
         v + standoff,
         u + ax._offset + ax.l2p(getPosX(d)) + shift
       );
@@ -24943,7 +24982,7 @@ var Plotly = (() => {
     if (labelsOverTicks) {
       labelStandoff += tickLen;
       if (angle) {
-        var rad = lib_default.deg2rad(angle);
+        var rad = deg2rad(angle);
         labelStandoff = tickLen * Math.cos(rad) + 1;
         labelShift = tickLen * Math.sin(rad);
       }
@@ -25019,7 +25058,7 @@ var Plotly = (() => {
       if (insideTickLabels) {
         var ang = (0, import_fast_isnumeric23.default)(tickangle) ? +tickangle : 0;
         if (ang !== 0) {
-          var rA = lib_default.deg2rad(ang);
+          var rA = deg2rad(ang);
           xQ = Math.abs(Math.sin(rA)) * CAP_SHIFT * flipIt;
           ff = 0;
         }
@@ -25197,7 +25236,7 @@ var Plotly = (() => {
         var lineHeight = LINE_SPACING3 * d.fontSize;
         var anchorHeight = labelFns.heightFn(d, (0, import_fast_isnumeric23.default)(angle) ? +angle : 0, (nLines - 1) * lineHeight);
         if (anchorHeight) {
-          transform2 += strTranslate4(0, anchorHeight);
+          transform2 += strTranslate(0, anchorHeight);
         }
         if (mathjaxGroup.empty()) {
           var thisText = thisLabel.select("text");
@@ -25212,7 +25251,7 @@ var Plotly = (() => {
         } else {
           var mjWidth = bBox(mathjaxGroup.node()).width;
           var mjShift = mjWidth * { end: -0.5, start: 0.5 }[anchor];
-          mathjaxGroup.attr("transform", transform2 + strTranslate4(mjShift, 0));
+          mathjaxGroup.attr("transform", transform2 + strTranslate(mjShift, 0));
         }
       });
     }
@@ -25224,7 +25263,7 @@ var Plotly = (() => {
       var p02 = 0;
       var p12 = isX ? gd._fullLayout.width : gd._fullLayout.height;
       if (ticklabeloverflow.indexOf("domain") !== -1) {
-        var rl = lib_default.simpleMap(ax.range, ax.r2l);
+        var rl = simpleMap(ax.range, ax.r2l);
         p02 = ax.l2p(rl[0]) + ax._offset;
         p12 = ax.l2p(rl[1]) + ax._offset;
       }
@@ -25399,7 +25438,7 @@ var Plotly = (() => {
           var isAligned = tickson !== "boundaries" && (isBottom || isLeft || isTop || isRight);
           var pad3 = !isAligned ? 0 : (ax.tickwidth || 0) + 2 * TEXTPAD2;
           for (i = 0; i < lbbArray.length - 1; i++) {
-            if (lib_default.bBoxIntersect(lbbArray[i], lbbArray[i + 1], pad3)) {
+            if (bBoxIntersect(lbbArray[i], lbbArray[i + 1], pad3)) {
               autoangle = newAngle;
               break;
             }
@@ -25509,7 +25548,7 @@ var Plotly = (() => {
         fullLayout._insideTickLabelsUpdaterange[anchorAx._name + ".range"] = newRange;
       }
     }
-    var done2 = lib_default.syncOrAsync(seq);
+    var done2 = syncOrAsync(seq);
     if (done2 && done2.then) gd._promises.push(done2);
     return done2;
   };
@@ -25626,7 +25665,7 @@ var Plotly = (() => {
     });
   }
   axes.shouldShowZeroLine = function(gd, ax, counterAxis) {
-    var rng = lib_default.simpleMap(ax.range, ax.r2l);
+    var rng = simpleMap(ax.range, ax.r2l);
     return rng[0] * rng[1] <= 0 && ax.zeroline && (ax.type === "linear" || ax.type === "-") && !(ax.rangebreaks && ax.maskBreaks(0) === BADNUM8) && (clipEnds(ax, 0) || !anyCounterAxLineAtZero(gd, ax, counterAxis, rng) || hasBarsOrFill(gd, ax));
   };
   axes.clipEnds = function(ax, vals) {
@@ -25806,12 +25845,12 @@ var Plotly = (() => {
     for (i = 0; i < gd._fullLayout.annotations.length; i++) {
       var ann = gd._fullLayout.annotations[i];
       if (xIds.indexOf(ann.xref) !== -1 && yIds.indexOf(ann.yref) !== -1) {
-        lib_default.swapAttrs(layout.annotations[i], ["?"]);
+        swapAttrs(layout.annotations[i], ["?"]);
       }
     }
   }
   function swapAxisAttrs(layout, key, xFullAxes, yFullAxes, dfltTitle) {
-    var np = lib_default.nestedProperty;
+    var np = nestedProperty2;
     var xVal = np(layout[xFullAxes[0]._name], key).get();
     var yVal = np(layout[yFullAxes[0]._name], key).get();
     var i;
@@ -25987,17 +26026,16 @@ var Plotly = (() => {
     if (xanchor === "left") x = 0;
     else if (xanchor === "center") x = 1;
     else if (xanchor === "right") x = 2;
-    else x = lib_default.constrain(Math.floor(x * 3), 0, 2);
+    else x = constrain(Math.floor(x * 3), 0, 2);
     if (yanchor === "bottom") y = 0;
     else if (yanchor === "middle") y = 1;
     else if (yanchor === "top") y = 2;
-    else y = lib_default.constrain(Math.floor(y * 3), 0, 2);
+    else y = constrain(Math.floor(y * 3), 0, 2);
     return cursorset[y][x];
   }
 
   // src/components/dragelement/index.js
   var hasHover = typeof matchMedia === "function" ? !matchMedia("(hover: none)").matches : typeof window !== "undefined";
-  var { removeElement: removeElement2 } = lib_default;
   var dragElement = {};
   dragElement.align = align2;
   dragElement.getCursor = getCursor;
@@ -26108,7 +26146,7 @@ var Plotly = (() => {
       document.removeEventListener("mouseup", onDone);
       document.removeEventListener("touchend", onDone);
       if (hasHover) {
-        removeElement2(dragCover);
+        removeElement(dragCover);
       } else if (cursor) {
         dragCover.documentElement.style.cursor = cursor;
         cursor = null;
@@ -26391,7 +26429,7 @@ var Plotly = (() => {
     function coerce3(attr2, dflt) {
       return lib_default.coerce(containerIn, containerOut, attributes_default7, attr2, dflt);
     }
-    var itemFont = lib_default.coerceFont(coerce3, "font", layoutOut.font);
+    var itemFont = coerceFont(coerce3, "font", layoutOut.font);
     coerce3("bgcolor", layoutOut.paper_bgcolor);
     coerce3("bordercolor");
     var visible = coerce3("visible");
@@ -26403,7 +26441,7 @@ var Plotly = (() => {
       return lib_default.coerce(traceIn, traceOut, attributes_default2, attr2, dflt);
     };
     var globalFont2 = layoutOut.font || {};
-    var grouptitlefont = lib_default.coerceFont(coerce3, "grouptitlefont", globalFont2, {
+    var grouptitlefont = coerceFont(coerce3, "grouptitlefont", globalFont2, {
       overrideDflt: {
         size: Math.round(globalFont2.size * 1.1)
       }
@@ -26454,7 +26492,7 @@ var Plotly = (() => {
             legendTraceCount++;
           }
         }
-        lib_default.coerceFont(traceCoerce, "legendgrouptitle.font", grouptitlefont);
+        coerceFont(traceCoerce, "legendgrouptitle.font", grouptitlefont);
         traceCoerce("legendsymbol.path");
       }
       if (!isShape && registry_default.traceIs(trace, "bar") && layoutOut.barmode === "stack" || ["tonextx", "tonexty"].indexOf(trace.fill) !== -1) {
@@ -26545,14 +26583,14 @@ var Plotly = (() => {
     coerce3("yanchor", defaultYAnchor);
     coerce3("maxheight");
     coerce3("valign");
-    lib_default.noneOrAll(containerIn, containerOut, ["x", "y"]);
+    noneOrAll(containerIn, containerOut, ["x", "y"]);
     var titleText = coerce3("title.text");
     if (titleText) {
       coerce3("title.side", isHorizontal ? "left" : "top");
-      var dfltTitleFont = lib_default.extendFlat({}, itemFont, {
-        size: lib_default.bigFont(itemFont.size)
+      var dfltTitleFont = extendFlat({}, itemFont, {
+        size: bigFont(itemFont.size)
       });
-      lib_default.coerceFont(coerce3, "title.font", dfltTitleFont);
+      coerceFont(coerce3, "title.font", dfltTitleFont);
     }
   }
   function legendDefaults(layoutIn, layoutOut, fullData) {
@@ -26577,7 +26615,7 @@ var Plotly = (() => {
       if (Array.isArray(allLegendsData[i].legend)) {
         legends = legends.concat(allLegendsData[i].legend);
       } else {
-        lib_default.pushUnique(legends, allLegendsData[i].legend);
+        pushUnique2(legends, allLegendsData[i].legend);
       }
     }
     layoutOut._legends = [];
@@ -26786,24 +26824,24 @@ var Plotly = (() => {
         );
       };
     }
-    drag.filter = function(_3) {
-      return arguments.length ? (filter3 = typeof _3 === "function" ? _3 : constant_default3(!!_3), drag) : filter3;
+    drag.filter = function(_2) {
+      return arguments.length ? (filter3 = typeof _2 === "function" ? _2 : constant_default3(!!_2), drag) : filter3;
     };
-    drag.container = function(_3) {
-      return arguments.length ? (container = typeof _3 === "function" ? _3 : constant_default3(_3), drag) : container;
+    drag.container = function(_2) {
+      return arguments.length ? (container = typeof _2 === "function" ? _2 : constant_default3(_2), drag) : container;
     };
-    drag.subject = function(_3) {
-      return arguments.length ? (subject = typeof _3 === "function" ? _3 : constant_default3(_3), drag) : subject;
+    drag.subject = function(_2) {
+      return arguments.length ? (subject = typeof _2 === "function" ? _2 : constant_default3(_2), drag) : subject;
     };
-    drag.touchable = function(_3) {
-      return arguments.length ? (touchable = typeof _3 === "function" ? _3 : constant_default3(!!_3), drag) : touchable;
+    drag.touchable = function(_2) {
+      return arguments.length ? (touchable = typeof _2 === "function" ? _2 : constant_default3(!!_2), drag) : touchable;
     };
     drag.on = function() {
       var value = listeners.on.apply(listeners, arguments);
       return value === listeners ? drag : value;
     };
-    drag.clickDistance = function(_3) {
-      return arguments.length ? (clickDistance2 = (_3 = +_3) * _3, drag) : Math.sqrt(clickDistance2);
+    drag.clickDistance = function(_2) {
+      return arguments.length ? (clickDistance2 = (_2 = +_2) * _2, drag) : Math.sqrt(clickDistance2);
     };
     return drag;
   }
@@ -26850,15 +26888,14 @@ var Plotly = (() => {
       return "translate(" + this.x + "," + this.y + ") scale(" + this.k + ")";
     }
   };
-  var identity4 = new Transform(1, 0, 0);
+  var identity5 = new Transform(1, 0, 0);
   transform.prototype = Transform.prototype;
   function transform(node) {
-    while (!node.__zoom) if (!(node = node.parentNode)) return identity4;
+    while (!node.__zoom) if (!(node = node.parentNode)) return identity5;
     return node.__zoom;
   }
 
   // src/components/legend/handle_click.js
-  var pushUnique2 = lib_default.pushUnique;
   var SHOWISOLATETIP = true;
   function handleClick(g, gd, numClicks) {
     var fullLayout = gd._fullLayout;
@@ -26867,7 +26904,7 @@ var Plotly = (() => {
     var itemDoubleClick = fullLayout.legend.itemdoubleclick;
     var groupClick = fullLayout.legend.groupclick;
     if (numClicks === 1 && itemClick === "toggle" && itemDoubleClick === "toggleothers" && SHOWISOLATETIP && gd.data && gd._context.showTips) {
-      lib_default.notifier(lib_default._(gd, "Double-click on legend to isolate one trace"), "long");
+      notifier(localize(gd, "Double-click on legend to isolate one trace"), "long");
       SHOWISOLATETIP = false;
     } else {
       SHOWISOLATETIP = false;
@@ -27229,14 +27266,14 @@ var Plotly = (() => {
 
   // src/traces/pie/helpers.js
   var getFirstFilled = function getFirstFilled2(array2, indices) {
-    if (!lib_default.isArrayOrTypedArray(array2)) return;
+    if (!isArrayOrTypedArray(array2)) return;
     for (var i = 0; i < indices.length; i++) {
       var v = array2[indices[i]];
       if (v || v === 0 || v === "") return v;
     }
   };
-  var castOption = function castOption2(item, indices) {
-    if (lib_default.isArrayOrTypedArray(item)) return getFirstFilled(item, indices);
+  var castOption2 = function castOption3(item, indices) {
+    if (isArrayOrTypedArray(item)) return getFirstFilled(item, indices);
     else if (item) return item;
   };
 
@@ -27253,14 +27290,13 @@ var Plotly = (() => {
   // src/traces/pie/style_one.js
   function styleOne(s, pt, trace, gd) {
     var line = trace.marker.line;
-    var lineColor = castOption(line.color, pt.pts) || color_default.defaultLine;
-    var lineWidth = castOption(line.width, pt.pts) || 0;
+    var lineColor = castOption2(line.color, pt.pts) || color_default.defaultLine;
+    var lineWidth = castOption2(line.width, pt.pts) || 0;
     s.call(fillOne, pt, trace, gd).style("stroke-width", lineWidth).call(color_default.stroke, lineColor);
   }
 
   // src/components/legend/style.js
   var { extractOpts: extractOpts4 } = helpers_default;
-  var strTranslate5 = lib_default.strTranslate;
   var CST_MARKER_SIZE = 12;
   var CST_LINE_WIDTH = 5;
   var CST_MARKER_LINE_WIDTH = 2;
@@ -27272,7 +27308,7 @@ var Plotly = (() => {
     var constantItemSizing = legend.itemsizing === "constant";
     var itemWidth = legend.itemwidth;
     var centerPos = (itemWidth + constants_default3.itemGap * 2) / 2;
-    var centerTransform = strTranslate5(centerPos, 0);
+    var centerTransform = strTranslate(centerPos, 0);
     var boundLineWidth = function(mlw, cont, max2, cst) {
       var v;
       if (mlw + 1) {
@@ -27286,7 +27322,7 @@ var Plotly = (() => {
     };
     s.each(function(d) {
       var traceGroup = select_default2(this);
-      var layers = lib_default.ensureSingle(traceGroup, "g", "layers");
+      var layers = ensureSingle(traceGroup, "g", "layers");
       layers.style("opacity", d[0].trace.opacity);
       var indentation = legend.indentation;
       var valign = legend.valign;
@@ -27298,7 +27334,7 @@ var Plotly = (() => {
         var factor = { top: 1, bottom: -1 }[valign];
         var markerOffsetY = factor * (0.5 * (lineHeight - height + 3)) || 0;
         var markerOffsetX = legend.indentation;
-        layers.attr("transform", strTranslate5(markerOffsetX, markerOffsetY));
+        layers.attr("transform", strTranslate(markerOffsetX, markerOffsetY));
       }
       var fill = layers.selectAll("g.legendfill").data([d]);
       fill.enter().append("g").classed("legendfill", true);
@@ -27381,8 +27417,8 @@ var Plotly = (() => {
       fill.attr("d", pathStart + "h" + itemWidth + "v6h-" + itemWidth + "z").call(fillStyle);
       if (showLine || showGradientLine) {
         var lw = boundLineWidth(void 0, trace.line, MAX_LINE_WIDTH, CST_LINE_WIDTH);
-        tMod = lib_default.minExtend(trace, { line: { width: lw } });
-        dMod = [lib_default.minExtend(d0, { trace: tMod })];
+        tMod = minExtend(trace, { line: { width: lw } });
+        dMod = [minExtend(d0, { trace: tMod })];
       }
       var line = this3.select(".legendlines").selectAll("path").data(showLine || showGradientLine ? [dMod] : []);
       line.enter().append("path").classed("js-line", true);
@@ -27400,8 +27436,8 @@ var Plotly = (() => {
       var showText = !showMarker && !anyLine && !anyFill && subtypes_default.hasText(trace);
       var dMod, tMod;
       function boundVal(attrIn, arrayToValFn, bounds, cst) {
-        var valIn = lib_default.nestedProperty(trace, attrIn).get();
-        var valToBound = lib_default.isArrayOrTypedArray(valIn) && arrayToValFn ? arrayToValFn(valIn) : valIn;
+        var valIn = nestedProperty2(trace, attrIn).get();
+        var valToBound = isArrayOrTypedArray(valIn) && arrayToValFn ? arrayToValFn(valIn) : valIn;
         if (constantItemSizing && valToBound && cst !== void 0) {
           valToBound = cst;
         }
@@ -27421,15 +27457,15 @@ var Plotly = (() => {
         if (showMarker) {
           dEdit.mc = boundVal("marker.color", pickFirst);
           dEdit.mx = boundVal("marker.symbol", pickFirst);
-          dEdit.mo = boundVal("marker.opacity", lib_default.mean, [0.2, 1]);
+          dEdit.mo = boundVal("marker.opacity", mean, [0.2, 1]);
           dEdit.mlc = boundVal("marker.line.color", pickFirst);
-          dEdit.mlw = boundVal("marker.line.width", lib_default.mean, [0, 5], CST_MARKER_LINE_WIDTH);
+          dEdit.mlw = boundVal("marker.line.width", mean, [0, 5], CST_MARKER_LINE_WIDTH);
           tEdit.marker = {
             sizeref: 1,
             sizemin: 1,
             sizemode: "diameter"
           };
-          var ms = boundVal("marker.size", lib_default.mean, [2, 16], CST_MARKER_SIZE);
+          var ms = boundVal("marker.size", mean, [2, 16], CST_MARKER_SIZE);
           dEdit.ms = ms;
           tEdit.marker.size = ms;
         }
@@ -27451,8 +27487,8 @@ var Plotly = (() => {
           dEdit.tE = boundVal("textfont.lineposition", pickFirst);
           dEdit.tS = boundVal("textfont.shadow", pickFirst);
         }
-        dMod = [lib_default.minExtend(d0, dEdit)];
-        tMod = lib_default.minExtend(trace, tEdit);
+        dMod = [minExtend(d0, dEdit)];
+        tMod = minExtend(trace, tEdit);
         tMod.selectedpoints = null;
         tMod.texttemplate = null;
       }
@@ -27563,9 +27599,9 @@ var Plotly = (() => {
       pts.each(function() {
         var p = select_default2(this);
         if ((trace.boxpoints === "all" || trace.points === "all") && color_default.opacity(trace.fillcolor) === 0 && color_default.opacity((trace.line || {}).color) === 0) {
-          var tMod = lib_default.minExtend(trace, {
+          var tMod = minExtend(trace, {
             marker: {
-              size: constantItemSizing ? CST_MARKER_SIZE : lib_default.constrain(trace.marker.size, 2, 16),
+              size: constantItemSizing ? CST_MARKER_SIZE : constrain(trace.marker.size, 2, 16),
               sizeref: 1,
               sizemin: 1,
               sizemode: "diameter"
@@ -27582,12 +27618,12 @@ var Plotly = (() => {
     function styleCandles(d) {
       var trace = d[0].trace;
       var pts = select_default2(this).select("g.legendpoints").selectAll("path.legendcandle").data(trace.visible && trace.type === "candlestick" ? [d, d] : []);
-      pts.enter().append("path").classed("legendcandle", true).attr("d", function(_3, i) {
+      pts.enter().append("path").classed("legendcandle", true).attr("d", function(_2, i) {
         if (i) return "M-15,0H-8M-8,6V-6H8Z";
         return "M15,0H8M8,-6V6H-8Z";
       }).attr("transform", centerTransform).style("stroke-miterlimit", 1);
       pts.exit().remove();
-      pts.each(function(_3, i) {
+      pts.each(function(_2, i) {
         var p = select_default2(this);
         var cont = trace[i ? "increasing" : "decreasing"];
         var w = boundLineWidth(void 0, cont.line, MAX_MARKER_LINE_WIDTH, CST_MARKER_LINE_WIDTH);
@@ -27598,12 +27634,12 @@ var Plotly = (() => {
     function styleOHLC(d) {
       var trace = d[0].trace;
       var pts = select_default2(this).select("g.legendpoints").selectAll("path.legendohlc").data(trace.visible && trace.type === "ohlc" ? [d, d] : []);
-      pts.enter().append("path").classed("legendohlc", true).attr("d", function(_3, i) {
+      pts.enter().append("path").classed("legendohlc", true).attr("d", function(_2, i) {
         if (i) return "M-15,0H0M-8,-6V0";
         return "M15,0H0M8,6V0";
       }).attr("transform", centerTransform).style("stroke-miterlimit", 1);
       pts.exit().remove();
-      pts.each(function(_3, i) {
+      pts.each(function(_2, i) {
         var p = select_default2(this);
         var cont = trace[i ? "increasing" : "decreasing"];
         var w = boundLineWidth(void 0, cont.line, MAX_MARKER_LINE_WIDTH, CST_MARKER_LINE_WIDTH);
@@ -27626,10 +27662,10 @@ var Plotly = (() => {
       pts.exit().remove();
       if (pts.size()) {
         var cont = trace.marker || {};
-        var lw = boundLineWidth(castOption(cont.line.width, d0.pts), cont.line, MAX_MARKER_LINE_WIDTH, CST_MARKER_LINE_WIDTH);
+        var lw = boundLineWidth(castOption2(cont.line.width, d0.pts), cont.line, MAX_MARKER_LINE_WIDTH, CST_MARKER_LINE_WIDTH);
         var opt = "pieLike";
-        var tMod = lib_default.minExtend(trace, { marker: { line: { width: lw } } }, opt);
-        var d0Mod = lib_default.minExtend(d0, { trace: tMod }, opt);
+        var tMod = minExtend(trace, { marker: { line: { width: lw } } }, opt);
+        var d0Mod = minExtend(d0, { trace: tMod }, opt);
         styleOne(pts, d0Mod, tMod, gd);
       }
     }
@@ -27735,7 +27771,7 @@ var Plotly = (() => {
         var fillColor;
         if (!colorscale) {
           var color3 = trace.vertexcolor || trace.facecolor || trace.color;
-          fillColor = lib_default.isArrayOrTypedArray(color3) ? color3[i] || color3[0] : color3;
+          fillColor = isArrayOrTypedArray(color3) ? color3[i] || color3[0] : color3;
         } else {
           if (!useGradient) {
             var len2 = colorscale.length;
@@ -27793,7 +27829,7 @@ var Plotly = (() => {
     };
   }
   function dimAttr(v, dflt, max2) {
-    if (v && lib_default.isArrayOrTypedArray(v)) return dflt;
+    if (v && isArrayOrTypedArray(v)) return dflt;
     if (v > max2) return max2;
     return v;
   }
@@ -27905,35 +27941,35 @@ var Plotly = (() => {
       fullLayout._topdefs.select("#" + clipId).remove();
       return plots_default.autoMargin(gd, legendId);
     }
-    var legend = lib_default.ensureSingle(layer, "g", legendId, function(s) {
+    var legend = ensureSingle(layer, "g", legendId, function(s) {
       if (!inHover) s.attr("pointer-events", "all");
     });
-    var clipPath = lib_default.ensureSingleById(fullLayout._topdefs, "clipPath", clipId, function(s) {
+    var clipPath = ensureSingleById(fullLayout._topdefs, "clipPath", clipId, function(s) {
       s.append("rect");
     });
-    var bg = lib_default.ensureSingle(legend, "rect", "bg", function(s) {
+    var bg = ensureSingle(legend, "rect", "bg", function(s) {
       s.attr("shape-rendering", "crispEdges");
     });
     bg.call(color_default.stroke, legendObj.bordercolor).call(color_default.fill, legendObj.bgcolor).style("stroke-width", legendObj.borderwidth + "px");
-    var scrollBox = lib_default.ensureSingle(legend, "g", "scrollbox");
+    var scrollBox = ensureSingle(legend, "g", "scrollbox");
     var title = legendObj.title;
     legendObj._titleWidth = 0;
     legendObj._titleHeight = 0;
     var titleEl;
     if (title.text) {
-      titleEl = lib_default.ensureSingle(scrollBox, "text", legendId + "titletext");
+      titleEl = ensureSingle(scrollBox, "text", legendId + "titletext");
       titleEl.attr("text-anchor", "start").call(font2, title.font).text(title.text);
       textLayout(titleEl, scrollBox, gd, legendObj, MAIN_TITLE);
     } else {
       scrollBox.selectAll("." + legendId + "titletext").remove();
     }
-    var scrollBar = lib_default.ensureSingle(legend, "rect", "scrollbar", function(s) {
+    var scrollBar = ensureSingle(legend, "rect", "scrollbar", function(s) {
       s.attr(constants_default3.scrollBarEnterAttrs).call(color_default.fill, constants_default3.scrollBarColor);
     });
     var groups = scrollBox.selectAll("g.groups").data(legendData);
     groups.enter().append("g").attr("class", "groups");
     groups.exit().remove();
-    var traces = groups.selectAll("g.traces").data(lib_default.identity);
+    var traces = groups.selectAll("g.traces").data(identity3);
     traces.enter().append("g").attr("class", "traces");
     traces.exit().remove();
     traces.style("opacity", function(d) {
@@ -27948,7 +27984,7 @@ var Plotly = (() => {
     }).call(style, gd, legendObj).each(function() {
       if (!inHover) select_default2(this).call(setupTraceToggle, gd, legendId);
     });
-    lib_default.syncOrAsync([
+    syncOrAsync([
       plots_default.previousPromises,
       function() {
         return computeLegendDimensions(gd, groups, traces, legendObj);
@@ -27978,13 +28014,13 @@ var Plotly = (() => {
           if (fullLayout.margin.autoexpand) {
             var lx0 = lx;
             var ly0 = ly;
-            lx = isPaperX ? lib_default.constrain(lx, 0, fullLayout.width - legendObj._width) : lx0;
-            ly = isPaperY ? lib_default.constrain(ly, 0, fullLayout.height - legendObj._effHeight) : ly0;
+            lx = isPaperX ? constrain(lx, 0, fullLayout.width - legendObj._width) : lx0;
+            ly = isPaperY ? constrain(ly, 0, fullLayout.height - legendObj._effHeight) : ly0;
             if (lx !== lx0) {
-              lib_default.log("Constrain " + legendId + ".x to make legend fit inside graph");
+              log("Constrain " + legendId + ".x to make legend fit inside graph");
             }
             if (ly !== ly0) {
-              lib_default.log("Constrain " + legendId + ".y to make legend fit inside graph");
+              log("Constrain " + legendId + ".y to make legend fit inside graph");
             }
           }
           setTranslate(legend, lx, ly);
@@ -28034,7 +28070,7 @@ var Plotly = (() => {
           setClipUrl(scrollBox, clipId, gd);
           scrollHandler(scrollBoxY, scrollBarHeight, scrollRatio);
           legend.on("wheel", function(event2) {
-            scrollBoxY = lib_default.constrain(
+            scrollBoxY = constrain(
               legendObj._scrollY + event2.deltaY / scrollBoxYMax * scrollBarYMax,
               0,
               scrollBoxYMax
@@ -28047,11 +28083,11 @@ var Plotly = (() => {
           var eventY0, eventY1, scrollBoxY0;
           var getScrollBarDragY = function(scrollBoxY02, eventY02, eventY12) {
             var y = (eventY12 - eventY02) / scrollRatio + scrollBoxY02;
-            return lib_default.constrain(y, 0, scrollBoxYMax);
+            return constrain(y, 0, scrollBoxYMax);
           };
           var getNaturalDragY = function(scrollBoxY02, eventY02, eventY12) {
             var y = (eventY02 - eventY12) / scrollRatio + scrollBoxY02;
-            return lib_default.constrain(y, 0, scrollBoxYMax);
+            return constrain(y, 0, scrollBoxYMax);
           };
           var scrollBarDrag = drag_default().on("start", function(event2) {
             var e = event2.sourceEvent;
@@ -28204,13 +28240,13 @@ var Plotly = (() => {
       if (!legendObj.entries) {
         name6 = isPieLike ? legendItem.label : trace.name;
         if (trace._meta) {
-          name6 = lib_default.templateString(name6, trace._meta);
+          name6 = templateString(name6, trace._meta);
         }
       } else {
         name6 = legendItem.text;
       }
     }
-    var textEl = lib_default.ensureSingle(g, "text", legendId + "text");
+    var textEl = ensureSingle(g, "text", legendId + "text");
     textEl.attr("text-anchor", "start").call(font2, textFont).text(isEditable ? ensureLength(name6, maxNameLength) : name6);
     var textGap = legendObj.indentation + legendObj.itemwidth + constants_default3.itemGap * 2;
     svg_text_utils_default.positionText(textEl, textGap, 0);
@@ -28241,7 +28277,7 @@ var Plotly = (() => {
     var doubleClickDelay = gd._context.doubleClickDelay;
     var newMouseDownTime;
     var numClicks = 1;
-    var traceToggle = lib_default.ensureSingle(g, "rect", legendId + "toggle", function(s) {
+    var traceToggle = ensureSingle(g, "rect", legendId + "toggle", function(s) {
       if (!gd._context.staticPlot) {
         s.style("cursor", "pointer").attr("pointer-events", "all");
       }
@@ -28573,10 +28609,10 @@ var Plotly = (() => {
     }
   }
   function getXanchor(legendObj) {
-    return lib_default.isRightAnchor(legendObj) ? "right" : lib_default.isCenterAnchor(legendObj) ? "center" : "left";
+    return isRightAnchor(legendObj) ? "right" : isCenterAnchor(legendObj) ? "center" : "left";
   }
   function getYanchor(legendObj) {
-    return lib_default.isBottomAnchor(legendObj) ? "bottom" : lib_default.isMiddleAnchor(legendObj) ? "middle" : "top";
+    return isBottomAnchor(legendObj) ? "bottom" : isMiddleAnchor(legendObj) ? "middle" : "top";
   }
   function getId(legendObj) {
     return legendObj._id || "legend";
@@ -28584,9 +28620,6 @@ var Plotly = (() => {
 
   // src/components/fx/hover.js
   var { zindexSeparator } = constants_default2;
-  var pushUnique3 = lib_default.pushUnique;
-  var strTranslate6 = lib_default.strTranslate;
-  var strRotate = lib_default.strRotate;
   var YANGLE = constants_default.YANGLE;
   var YA_RADIANS = Math.PI * YANGLE / 180;
   var YFACTOR = 1 / Math.sin(YA_RADIANS);
@@ -28609,9 +28642,9 @@ var Plotly = (() => {
     return a.distance - b.distance;
   }
   var hover = function hover2(gd, evt, subplot, noHoverEvent) {
-    gd = lib_default.getGraphDiv(gd);
+    gd = getGraphDiv(gd);
     var eventTarget = evt.target;
-    lib_default.throttle(gd._fullLayout._uid + constants_default.HOVERID, constants_default.HOVERMINTIME, function() {
+    throttle(gd._fullLayout._uid + constants_default.HOVERID, constants_default.HOVERMINTIME, function() {
       _hover(gd, evt, subplot, noHoverEvent, eventTarget);
     });
   };
@@ -28751,7 +28784,7 @@ var Plotly = (() => {
           var subplotsWith = (hovermodeHasX ? firstXaxis : firstYaxis)._subplotsWith;
           if (subplotsWith && subplotsWith.length) {
             for (var q = 0; q < subplotsWith.length; q++) {
-              pushUnique3(subplots, subplotsWith[q]);
+              pushUnique2(subplots, subplotsWith[q]);
             }
           }
         }
@@ -28778,7 +28811,7 @@ var Plotly = (() => {
         xaArray[i] = _subplot.xaxis;
         yaArray[i] = _subplot.yaxis;
       } else {
-        lib_default.warn("Unrecognized subplot: " + spId);
+        warn("Unrecognized subplot: " + spId);
         return;
       }
     }
@@ -28845,7 +28878,7 @@ var Plotly = (() => {
         xpx = evt.clientX - dbb.left;
         ypx = evt.clientY - dbb.top;
         fullLayout._calcInverseTransform(gd);
-        var transformedCoords = lib_default.apply3DTransform(fullLayout._invTransform)(xpx, ypx);
+        var transformedCoords = apply3DTransform(fullLayout._invTransform)(xpx, ypx);
         xpx = transformedCoords[0];
         ypx = transformedCoords[1];
         if (xpx < 0 || xpx > xaArray[0]._length || ypx < 0 || ypx > yaArray[0]._length) {
@@ -28859,7 +28892,7 @@ var Plotly = (() => {
       if ("yval" in evt) yvalArray = helpers_default2.flat(subplots, evt.yval);
       else yvalArray = helpers_default2.p2c(yaArray, ypx);
       if (!(0, import_fast_isnumeric24.default)(xvalArray[0]) || !(0, import_fast_isnumeric24.default)(yvalArray[0])) {
-        lib_default.warn("Fx.hover failed", evt, gd);
+        warn("Fx.hover failed", evt, gd);
         return dragelement_default.unhoverRaw(gd, evt);
       }
     }
@@ -28969,7 +29002,7 @@ var Plotly = (() => {
               }
             }
           } else {
-            lib_default.log("Unrecognized trace type in hover:", trace);
+            log("Unrecognized trace type in hover:", trace);
           }
         }
         if (hovermode === "closest" && hoverData.length > closedataPreviousLength) {
@@ -29278,10 +29311,10 @@ var Plotly = (() => {
     };
     commonLabel.each(function() {
       var label = select_default2(this);
-      var lpath = lib_default.ensureSingle(label, "path", "", function(s) {
+      var lpath = ensureSingle(label, "path", "", function(s) {
         s.style({ "stroke-width": "1px" });
       });
-      var ltext = lib_default.ensureSingle(label, "text", "", function(s) {
+      var ltext = ensureSingle(label, "text", "", function(s) {
         s.attr("data-notex", 1);
       });
       var commonBgColor = commonLabelOpts.bgcolor || color_default.defaultLine;
@@ -29396,7 +29429,7 @@ var Plotly = (() => {
         textClip.select("path").attr("d", clipPath);
         setClipUrl(ltext, clipPath ? clipId : null, gd);
       }
-      label.attr("transform", strTranslate6(lx2, ly2));
+      label.attr("transform", strTranslate(lx2, ly2));
     });
     if (helpers_default2.isUnifiedHover(hovermode)) {
       container.selectAll("g.hovertext").remove();
@@ -29406,7 +29439,7 @@ var Plotly = (() => {
       var font3 = hoverlabel.font;
       var item0 = groupedHoverData[0];
       var unifiedhovertitleText = ((hovermode === "x unified" ? item0.xa : item0.ya).unifiedhovertitle || {}).text;
-      var mainText = !unifiedhovertitleText ? t03 : lib_default.hovertemplateString({
+      var mainText = !unifiedhovertitleText ? t03 : hovertemplateString({
         data: hovermode === "x unified" ? [{ xa: item0.xa, x: item0.xVal }] : [{ ya: item0.ya, y: item0.yVal }],
         fallback: item0.trace.hovertemplatefallback,
         locale: fullLayout._d3locale,
@@ -29491,7 +29524,7 @@ var Plotly = (() => {
           );
         }
       } else {
-        lyTop = lyBottom = lib_default.mean(
+        lyTop = lyBottom = mean(
           groupedHoverData.map(function(c) {
             return (c.y0 + c.y1) / 2;
           })
@@ -29517,7 +29550,7 @@ var Plotly = (() => {
           );
         }
       } else {
-        lxRight = lxLeft = lib_default.mean(
+        lxRight = lxLeft = mean(
           groupedHoverData.map(function(c) {
             return (c.x0 + c.x1) / 2;
           })
@@ -29558,7 +29591,7 @@ var Plotly = (() => {
         }
       }
       ly += HOVERTEXTPAD;
-      legendContainer.attr("transform", strTranslate6(lx - 1, ly - 1));
+      legendContainer.attr("transform", strTranslate(lx - 1, ly - 1));
       return legendContainer;
     }
     var hoverLabels = container.selectAll("g.hovertext").data(hoverData, function(d) {
@@ -29683,7 +29716,7 @@ var Plotly = (() => {
       }
       tx.attr("text-anchor", d.anchor);
       if (tx2width) tx2.attr("text-anchor", d.anchor);
-      g.attr("transform", strTranslate6(htx, hty) + (rotateLabels ? strRotate(YANGLE) : ""));
+      g.attr("transform", strTranslate(htx, hty) + (rotateLabels ? strRotate(YANGLE) : ""));
     });
     return {
       hoverLabels,
@@ -29696,7 +29729,7 @@ var Plotly = (() => {
     var text = "";
     if (d.nameOverride !== void 0) d.name = d.nameOverride;
     if (d.name) {
-      if (d.trace._meta) d.name = lib_default.templateString(d.name, d.trace._meta);
+      if (d.trace._meta) d.name = templateString(d.name, d.trace._meta);
       name6 = plainText2(d.name, d.nameLength);
     }
     var h0 = hovermode.charAt(0);
@@ -29731,14 +29764,14 @@ var Plotly = (() => {
         labels[h0 + "other"] = labels[h0 + "Val"];
         labels[h0 + "otherLabel"] = labels[h0 + "Label"];
       }
-      text = lib_default.hovertemplateString({
+      text = hovertemplateString({
         data: [d.eventData[0] || {}, d.trace._meta],
         fallback: d.trace.hovertemplatefallback,
         labels,
         locale: fullLayout._d3locale,
         template: hovertemplate
       });
-      text = text.replace(EXTRA_STRING_REGEX, (_3, extra) => {
+      text = text.replace(EXTRA_STRING_REGEX, (_2, extra) => {
         name6 = plainText2(extra, d.nameLength);
         return "";
       });
@@ -30007,10 +30040,10 @@ var Plotly = (() => {
       return v || (0, import_fast_isnumeric24.default)(v) && v === 0;
     }
     var getVal = Array.isArray(index) ? function(calcKey, traceKey) {
-      var v = lib_default.castOption(cd0, index, calcKey);
-      return pass(v) ? v : lib_default.extractOption({}, trace, "", traceKey);
+      var v = castOption(cd0, index, calcKey);
+      return pass(v) ? v : extractOption({}, trace, "", traceKey);
     } : function(calcKey, traceKey) {
-      return lib_default.extractOption(cd, trace, calcKey, traceKey);
+      return extractOption(cd, trace, calcKey, traceKey);
     };
     function fill(key, calcKey, traceKey) {
       var val = getVal(calcKey, traceKey);
@@ -30028,10 +30061,10 @@ var Plotly = (() => {
     fill("nameLength", "hnl", "hoverlabel.namelength");
     fill("textAlign", "hta", "hoverlabel.align");
     d.posref = hovermode === "y" || hovermode === "closest" && trace.orientation === "h" ? d.xa._offset + (d.x0 + d.x1) / 2 : d.ya._offset + (d.y0 + d.y1) / 2;
-    d.x0 = lib_default.constrain(d.x0, 0, d.xa._length);
-    d.x1 = lib_default.constrain(d.x1, 0, d.xa._length);
-    d.y0 = lib_default.constrain(d.y0, 0, d.ya._length);
-    d.y1 = lib_default.constrain(d.y1, 0, d.ya._length);
+    d.x0 = constrain(d.x0, 0, d.xa._length);
+    d.x1 = constrain(d.x1, 0, d.xa._length);
+    d.y0 = constrain(d.y0, 0, d.ya._length);
+    d.y1 = constrain(d.y1, 0, d.ya._length);
     if (d.xLabelVal !== void 0) {
       d.xLabel = "xLabel" in d ? d.xLabel : axes_default.hoverLabelText(d.xa, d.xLabelVal, trace.xhoverformat);
       d.xVal = d.xa.c2d(d.xLabelVal);
@@ -30280,8 +30313,8 @@ var Plotly = (() => {
     var y0 = rect.top;
     var x1 = x0 + rect.width;
     var y1 = y0 + rect.height;
-    var A = lib_default.apply3DTransform(fullLayout._invTransform)(x0, y0);
-    var B = lib_default.apply3DTransform(fullLayout._invTransform)(x1, y1);
+    var A = apply3DTransform(fullLayout._invTransform)(x0, y0);
+    var B = apply3DTransform(fullLayout._invTransform)(x1, y1);
     var Ax = A[0];
     var Ay = A[1];
     var Bx = B[0];
@@ -30327,7 +30360,7 @@ var Plotly = (() => {
     coerce3("hoverlabel.bordercolor", opts.bordercolor);
     coerce3("hoverlabel.namelength", opts.namelength);
     coerce3("hoverlabel.showarrow", opts.showarrow);
-    lib_default.coerceFont(coerce3, "hoverlabel.font", opts.font);
+    coerceFont(coerce3, "hoverlabel.font", opts.font);
     coerce3("hoverlabel.align", opts.align);
   }
 
@@ -30344,7 +30377,7 @@ var Plotly = (() => {
     function coerce3(attr2, dflt) {
       return lib_default.coerce(traceIn, traceOut, attributes_default, attr2, dflt);
     }
-    var opts = lib_default.extendFlat({}, layout.hoverlabel);
+    var opts = extendFlat({}, layout.hoverlabel);
     if (traceOut.hovertemplate) opts.namelength = -1;
     handleHoverLabelDefaults(traceIn, traceOut, coerce3, opts);
   }
@@ -30380,7 +30413,7 @@ var Plotly = (() => {
       layoutOut.dragmode = "pan";
     }
     handleHoverLabelDefaults(layoutIn, layoutOut, coerce3);
-    lib_default.coerceFont(coerce3, "hoverlabel.grouptitlefont", layoutOut.hoverlabel.font);
+    coerceFont(coerce3, "hoverlabel.grouptitlefont", layoutOut.hoverlabel.font);
   }
 
   // src/components/fx/calc.js
@@ -30389,14 +30422,14 @@ var Plotly = (() => {
     var fullLayout = gd._fullLayout;
     function makeCoerceHoverInfo(trace2) {
       return function(val) {
-        return lib_default.coerceHoverinfo({ hoverinfo: val }, { _module: trace2._module }, fullLayout);
+        return coerceHoverinfo({ hoverinfo: val }, { _module: trace2._module }, fullLayout);
       };
     }
     for (var i = 0; i < calcdata.length; i++) {
       var cd = calcdata[i];
       var trace = cd[0].trace;
       if (registry_default.traceIs(trace, "pie-like")) continue;
-      var fillFn = registry_default.traceIs(trace, "2dMap") ? paste : lib_default.fillArray;
+      var fillFn = registry_default.traceIs(trace, "2dMap") ? paste : fillArray;
       fillFn(trace.hoverinfo, cd, "hi", makeCoerceHoverInfo(trace));
       if (trace.hovertemplate) fillFn(trace.hovertemplate, cd, "ht");
       if (!trace.hoverlabel) continue;
@@ -30414,7 +30447,7 @@ var Plotly = (() => {
     }
   }
   function paste(traceAttr, cd, cdAttr, fn) {
-    fn = fn || lib_default.identity;
+    fn = fn || identity3;
     if (Array.isArray(traceAttr)) {
       cd[0][cdAttr] = fn(traceAttr);
     }
@@ -30465,18 +30498,18 @@ var Plotly = (() => {
     click
   };
   function loneUnhover(containerOrSelection) {
-    var selection2 = lib_default.isD3Selection(containerOrSelection) ? containerOrSelection : select_default2(containerOrSelection);
+    var selection2 = isD3Selection(containerOrSelection) ? containerOrSelection : select_default2(containerOrSelection);
     selection2.selectAll("g.hovertext").remove();
     selection2.selectAll(".spikeline").remove();
   }
   function castHoverOption(trace, ptNumber, attr2) {
-    return lib_default.castOption(trace, ptNumber, "hoverlabel." + attr2);
+    return castOption(trace, ptNumber, "hoverlabel." + attr2);
   }
   function castHoverinfo(trace, fullLayout, ptNumber) {
     function _coerce(val) {
-      return lib_default.coerceHoverinfo({ hoverinfo: val }, { _module: trace._module }, fullLayout);
+      return coerceHoverinfo({ hoverinfo: val }, { _module: trace._module }, fullLayout);
     }
-    return lib_default.castOption(trace, ptNumber, "hoverinfo", _coerce);
+    return castOption(trace, ptNumber, "hoverinfo", _coerce);
   }
 
   // src/plots/cartesian/dragbox.js
@@ -30564,7 +30597,7 @@ var Plotly = (() => {
           for (var axId2 in group) {
             var axName2 = id2name(axId2);
             if ((layoutIn[axName2] || {}).fixedrange === false) {
-              lib_default.warn(
+              warn(
                 "fixedrange was specified as false for axis " + axName2 + " but was overridden because another axis in its constraint group has fixedrange true"
               );
             }
@@ -30724,14 +30757,14 @@ var Plotly = (() => {
       }
       updateConstraintGroups(constraintGroups, thisID, matches, matchRatio);
     } else if (axIn.matches && axIds.indexOf(axIn.matches) !== -1) {
-      lib_default.warn("ignored " + axOut._name + '.matches: "' + axIn.matches + '" to avoid an infinite loop');
+      warn("ignored " + axOut._name + '.matches: "' + axIn.matches + '" to avoid an infinite loop');
     }
     if (scaleanchor) {
       var scaleratio = coerce3("scaleratio");
       if (!scaleratio) scaleratio = axOut.scaleratio = 1;
       updateConstraintGroups(constraintGroups, thisID, scaleanchor, scaleratio);
     } else if (axIn.scaleanchor && axIds.indexOf(axIn.scaleanchor) !== -1) {
-      lib_default.warn("ignored " + axOut._name + '.scaleanchor: "' + axIn.scaleanchor + '" to avoid either an infinite loop and possibly inconsistent scaleratios, or because this axis declares a *matches* constraint.');
+      warn("ignored " + axOut._name + '.scaleanchor: "' + axIn.scaleanchor + '" to avoid either an infinite loop and possibly inconsistent scaleratios, or because this axis declares a *matches* constraint.');
     }
   }
   function extent2(layoutOut, ax) {
@@ -30969,7 +31002,7 @@ var Plotly = (() => {
   var SVG_TEXT_ANCHOR_MIDDLE = "middle";
   var SVG_TEXT_ANCHOR_END = "end";
   var layoutStyles = function(gd) {
-    return lib_default.syncOrAsync([plots_default.doAutoMargin, lsInner], gd);
+    return syncOrAsync([plots_default.doAutoMargin, lsInner], gd);
   };
   function overlappingDomain(xDomain, yDomain, domains) {
     for (var i = 0; i < domains.length; i++) {
@@ -31040,7 +31073,7 @@ var Plotly = (() => {
         var plotgroup = plotinfo.plotgroup;
         if (overlappingDomain(xDomain, yDomain, lowerDomains) && subplot.indexOf(zindexSeparator2) === -1) {
           var pgNode = plotgroup.node();
-          var plotgroupBg = plotinfo.bg = lib_default.ensureSingle(plotgroup, "rect", "bg");
+          var plotgroupBg = plotinfo.bg = ensureSingle(plotgroup, "rect", "bg");
           pgNode.insertBefore(plotgroupBg.node(), pgNode.childNodes[0]);
           backgroundIds.push(subplot);
         } else {
@@ -31079,7 +31112,7 @@ var Plotly = (() => {
         xa = plotinfo.xaxis;
         ya = plotinfo.yaxis;
         var clipId = plotinfo.clipId = "clip" + fullLayout._uid + subplot + "plot";
-        var plotClip = lib_default.ensureSingleById(fullLayout._clips, "clipPath", clipId, function(s) {
+        var plotClip = ensureSingleById(fullLayout._clips, "clipPath", clipId, function(s) {
           s.classed("plotclip", true).append("rect");
         });
         plotinfo.clipRect = plotClip.select("rect").attr({
@@ -31257,9 +31290,9 @@ var Plotly = (() => {
   };
   function isOutsideContainer(gd, title, position, y, titleHeight) {
     var plotHeight = title.yref === "paper" ? gd._fullLayout._size.h : gd._fullLayout.height;
-    var yPosTop = lib_default.isTopAnchor(title) ? y : y - titleHeight;
+    var yPosTop = isTopAnchor(title) ? y : y - titleHeight;
     var yPosRel = position === "b" ? plotHeight - yPosTop : yPosTop;
-    if (lib_default.isTopAnchor(title) && position === "t" || lib_default.isBottomAnchor(title) && position === "b") {
+    if (isTopAnchor(title) && position === "t" || isBottomAnchor(title) && position === "b") {
       return false;
     } else {
       return yPosRel < titleHeight;
@@ -31369,9 +31402,9 @@ var Plotly = (() => {
   function getMainTitleTextAnchor(fullLayout) {
     var title = fullLayout.title;
     var textAnchor = SVG_TEXT_ANCHOR_MIDDLE;
-    if (lib_default.isRightAnchor(title)) {
+    if (isRightAnchor(title)) {
       textAnchor = SVG_TEXT_ANCHOR_END;
-    } else if (lib_default.isLeftAnchor(title)) {
+    } else if (isLeftAnchor(title)) {
       textAnchor = SVG_TEXT_ANCHOR_START;
     }
     return textAnchor;
@@ -31379,9 +31412,9 @@ var Plotly = (() => {
   function getMainTitleDy(fullLayout) {
     var title = fullLayout.title;
     var dy = "0em";
-    if (lib_default.isTopAnchor(title)) {
+    if (isTopAnchor(title)) {
       dy = alignment_default.CAP_SHIFT + "em";
-    } else if (lib_default.isMiddleAnchor(title)) {
+    } else if (isMiddleAnchor(title)) {
       dy = alignment_default.MID_SHIFT + "em";
     }
     return dy;
@@ -31485,9 +31518,9 @@ var Plotly = (() => {
           if (trace.type === "splom") {
             fullLayout._splomScenes[trace.uid].draw();
           } else if (trace.type === "scattergl") {
-            lib_default.pushUnique(cartesianIds, trace.xaxis + trace.yaxis);
+            pushUnique2(cartesianIds, trace.xaxis + trace.yaxis);
           } else if (trace.type === "scatterpolargl") {
-            lib_default.pushUnique(polarIds, trace.subplot);
+            pushUnique2(polarIds, trace.subplot);
           }
         }
       }
@@ -31538,8 +31571,6 @@ var Plotly = (() => {
 
   // src/plots/cartesian/dragbox.js
   var { FROM_TL: FROM_TL2 } = alignment_default;
-  var numberFormat3 = lib_default.numberFormat;
-  var strTranslate7 = lib_default.strTranslate;
   var selectingOrDrawing2 = helpers_default4.selectingOrDrawing;
   var freeMode2 = helpers_default4.freeMode;
   function prepSelect() {
@@ -31742,7 +31773,7 @@ var Plotly = (() => {
       x0 = startX - dragBBox.left;
       y0 = startY - dragBBox.top;
       gd._fullLayout._calcInverseTransform(gd);
-      var transformedCoords = lib_default.apply3DTransform(gd._fullLayout._invTransform)(x0, y0);
+      var transformedCoords = apply3DTransform(gd._fullLayout._invTransform)(x0, y0);
       x0 = transformedCoords[0];
       y0 = transformedCoords[1];
       box = { l: x0, r: x0, w: 0, t: y0, b: y0, h: 0 };
@@ -31864,7 +31895,7 @@ var Plotly = (() => {
       var wheelDelta = -e.deltaY;
       if (!isFinite(wheelDelta)) wheelDelta = e.wheelDelta / 10;
       if (!isFinite(wheelDelta)) {
-        lib_default.log("Did not find wheel motion attributes: ", e);
+        log("Did not find wheel motion attributes: ", e);
         return;
       }
       var zoom = Math.exp(-Math.min(Math.max(wheelDelta, -20), 20) / 200);
@@ -31874,7 +31905,7 @@ var Plotly = (() => {
       var i;
       function zoomWheelOneAxis(ax, centerFraction, zoom2) {
         if (ax.fixedrange) return;
-        var axRange = lib_default.simpleMap(ax.range, ax.r2l);
+        var axRange = simpleMap(ax.range, ax.r2l);
         var v0 = axRange[0] + (axRange[1] - axRange[0]) * centerFraction;
         function doZoom(v) {
           return ax.l2r(v0 + (v - v0) * zoom2);
@@ -32134,7 +32165,7 @@ var Plotly = (() => {
     }
     function dragTail() {
       updateSubplots([0, 0, pw, ph]);
-      lib_default.syncOrAsync([
+      syncOrAsync([
         plots_default.previousPromises,
         function() {
           gd._fullLayout._replotting = false;
@@ -32164,8 +32195,8 @@ var Plotly = (() => {
           if (sp._scene) {
             if (xa.limitRange) xa.limitRange();
             if (ya.limitRange) ya.limitRange();
-            var xrng = lib_default.simpleMap(xa.range, xa.r2l);
-            var yrng = lib_default.simpleMap(ya.range, ya.r2l);
+            var xrng = simpleMap(xa.range, xa.r2l);
+            var yrng = simpleMap(ya.range, ya.r2l);
             sp._scene.update({ range: [xrng[0], yrng[0], xrng[1], yrng[1]] });
           }
         }
@@ -32262,7 +32293,7 @@ var Plotly = (() => {
     return dragger;
   }
   function makeDragger(plotinfo, nodeName, dragClass, cursor) {
-    var dragger3 = lib_default.ensureSingle(plotinfo.draglayer, nodeName, dragClass, function(s) {
+    var dragger3 = ensureSingle(plotinfo.draglayer, nodeName, dragClass, function(s) {
       s.classed("drag", true).style({ fill: "transparent", "stroke-width": 0 }).attr("data-subplot", plotinfo.id);
     });
     dragger3.call(setCursor, cursor);
@@ -32287,10 +32318,10 @@ var Plotly = (() => {
       return initialVal;
     } else if (ax.type === "log") {
       dig = Math.ceil(Math.max(0, -Math.log(diff) / Math.LN10)) + 3;
-      return numberFormat3("." + dig + "g")(Math.pow(10, initialVal));
+      return numberFormat("." + dig + "g")(Math.pow(10, initialVal));
     } else {
       dig = Math.floor(Math.log(Math.abs(initialVal)) / Math.LN10) - Math.floor(Math.log(diff) / Math.LN10) + 4;
-      return numberFormat3("." + String(dig) + "g")(initialVal);
+      return numberFormat("." + String(dig) + "g")(initialVal);
     }
   }
   function zoomAxRanges(axList, r0Fraction, r1Fraction, updates, linkedAxes) {
@@ -32355,7 +32386,7 @@ var Plotly = (() => {
     return zoomlayer.append("path").attr("class", "zoombox").style({
       fill: lum > 0.2 ? "rgba(0,0,0,0)" : "rgba(255,255,255,0)",
       "stroke-width": 0
-    }).attr("transform", strTranslate7(xs, ys)).attr("d", path0 + "Z");
+    }).attr("transform", strTranslate(xs, ys)).attr("d", path0 + "Z");
   }
   function makeCorners(zoomlayer, xs, ys) {
     return zoomlayer.append("path").attr("class", "zoombox-corners").style({
@@ -32363,7 +32394,7 @@ var Plotly = (() => {
       stroke: color_default.defaultLine,
       "stroke-width": 1,
       opacity: 0
-    }).attr("transform", strTranslate7(xs, ys)).attr("d", "M0,0Z");
+    }).attr("transform", strTranslate(xs, ys)).attr("d", "M0,0Z");
   }
   function updateZoombox(zb, corners, box, path0, dimmed, lum) {
     zb.attr(
@@ -32383,7 +32414,7 @@ var Plotly = (() => {
   }
   function showDoubleClickNotifier(gd) {
     if (SHOWZOOMOUTTIP && gd.data && gd._context.showTips) {
-      lib_default.notifier(lib_default._(gd, "Double-click to zoom back out"), "long");
+      notifier(localize(gd, "Double-click to zoom back out"), "long");
       SHOWZOOMOUTTIP = false;
     }
   }
@@ -32431,7 +32462,7 @@ var Plotly = (() => {
       }
     }
     if (isSubplotConstrained) {
-      lib_default.extendFlat(xLinks, yLinks);
+      extendFlat(xLinks, yLinks);
       yLinks = {};
     }
     var xaHashLinked = {};
@@ -32827,7 +32858,7 @@ var Plotly = (() => {
   var AX_LETTERS = ["x", "y", "z"];
   var clearPromiseQueue = function(gd) {
     if (Array.isArray(gd._promises) && gd._promises.length > 0) {
-      lib_default.log("Clearing previous rejected promises from queue.");
+      log("Clearing previous rejected promises from queue.");
     }
     gd._promises = [];
   };
@@ -32878,21 +32909,21 @@ var Plotly = (() => {
     var annotationsLen = Array.isArray(layout.annotations) ? layout.annotations.length : 0;
     for (i = 0; i < annotationsLen; i++) {
       var ann = layout.annotations[i];
-      if (!lib_default.isPlainObject(ann)) continue;
+      if (!isPlainObject2(ann)) continue;
       cleanAxRef(ann, "xref");
       cleanAxRef(ann, "yref");
     }
     var shapesLen = Array.isArray(layout.shapes) ? layout.shapes.length : 0;
     for (i = 0; i < shapesLen; i++) {
       var shape = layout.shapes[i];
-      if (!lib_default.isPlainObject(shape)) continue;
+      if (!isPlainObject2(shape)) continue;
       cleanAxRef(shape, "xref");
       cleanAxRef(shape, "yref");
     }
     var imagesLen = Array.isArray(layout.images) ? layout.images.length : 0;
     for (i = 0; i < imagesLen; i++) {
       var image = layout.images[i];
-      if (!lib_default.isPlainObject(image)) continue;
+      if (!isPlainObject2(image)) continue;
       cleanAxRef(image, "xref");
       cleanAxRef(image, "yref");
     }
@@ -32970,11 +33001,11 @@ var Plotly = (() => {
           if (container.colorscale === "YIOrRd") container.colorscale = "YlOrRd";
         }
       }
-      if (trace.type === "surface" && lib_default.isPlainObject(trace.contours)) {
+      if (trace.type === "surface" && isPlainObject2(trace.contours)) {
         var dims = ["x", "y", "z"];
         for (i = 0; i < dims.length; i++) {
           var opts = trace.contours[dims[i]];
-          if (!lib_default.isPlainObject(opts)) continue;
+          if (!isPlainObject2(opts)) continue;
           if (opts.highlightColor) {
             opts.highlightcolor = opts.highlightColor;
             delete opts.highlightColor;
@@ -33014,7 +33045,7 @@ var Plotly = (() => {
     }
   };
   function cleanFinanceDir(dirContainer) {
-    if (!lib_default.isPlainObject(dirContainer)) return false;
+    if (!isPlainObject2(dirContainer)) return false;
     var dirName = dirContainer.name;
     delete dirContainer.name;
     delete dirContainer.showlegend;
@@ -33049,7 +33080,7 @@ var Plotly = (() => {
   }
   var swapXYData = function(trace) {
     var i;
-    lib_default.swapAttrs(trace, ["?", "?0", "d?", "?bins", "nbins?", "autobin?", "?src", "error_?"]);
+    swapAttrs(trace, ["?", "?0", "d?", "?bins", "nbins?", "autobin?", "?src", "error_?"]);
     if (Array.isArray(trace.z) && Array.isArray(trace.z[0])) {
       if (trace.transpose) delete trace.transpose;
       else trace.transpose = true;
@@ -33057,9 +33088,9 @@ var Plotly = (() => {
     if (trace.error_x && trace.error_y) {
       var errorY = trace.error_y;
       var copyYstyle = "copy_ystyle" in errorY ? errorY.copy_ystyle : !(errorY.color || errorY.thickness || errorY.width);
-      lib_default.swapAttrs(trace, ["error_?.copy_ystyle"]);
+      swapAttrs(trace, ["error_?.copy_ystyle"]);
       if (copyYstyle) {
-        lib_default.swapAttrs(trace, ["error_?.color", "error_?.thickness", "error_?.width"]);
+        swapAttrs(trace, ["error_?.color", "error_?.thickness", "error_?.width"]);
       }
     }
     if (typeof trace.hoverinfo === "string") {
@@ -33075,16 +33106,16 @@ var Plotly = (() => {
     if ((0, import_fast_isnumeric25.default)(traceIndices)) {
       return [traceIndices];
     } else if (!Array.isArray(traceIndices) || !traceIndices.length) {
-      return gd.data.map(function(_3, i2) {
+      return gd.data.map(function(_2, i2) {
         return i2;
       });
     } else if (Array.isArray(traceIndices)) {
       var traceIndicesOut = [];
       for (var i = 0; i < traceIndices.length; i++) {
-        if (lib_default.isIndex(traceIndices[i], gd.data.length)) {
+        if (isIndex(traceIndices[i], gd.data.length)) {
           traceIndicesOut.push(traceIndices[i]);
         } else {
-          lib_default.warn("trace index (", traceIndices[i], ") is not a number or is out of bounds");
+          warn("trace index (", traceIndices[i], ") is not a number or is out of bounds");
         }
       }
       return traceIndicesOut;
@@ -33099,7 +33130,7 @@ var Plotly = (() => {
     var pLastIsNumber = (0, import_fast_isnumeric25.default)(pLast);
     if (pLastIsNumber && newVal === null) {
       var contPath = parts.slice(0, pLength - 1).join(".");
-      var cont = lib_default.nestedProperty(obj, contPath).get();
+      var cont = nestedProperty2(obj, contPath).get();
       cont.splice(pLast, 1);
     } else if (pLastIsNumber && np.get() === void 0) {
       if (np.get() === void 0) undoit[np.astr] = null;
@@ -33135,14 +33166,14 @@ var Plotly = (() => {
           }
           var typeAttr = axAttr + ".type";
           if (layoutUpdate[axAttr] === void 0 && layoutUpdate[typeAttr] === void 0) {
-            lib_default.nestedProperty(gd.layout, typeAttr).set(null);
+            nestedProperty2(gd.layout, typeAttr).set(null);
           }
         }
       }
     }
   };
   var collectionsAreEqual = (collection1, collection2) => {
-    const isArrayOrObject = (...vals) => vals.every((v) => lib_default.isPlainObject(v)) || vals.every((v) => Array.isArray(v));
+    const isArrayOrObject = (...vals) => vals.every((v) => isPlainObject2(v)) || vals.every((v) => Array.isArray(v));
     if ([collection1, collection2].every((a) => Array.isArray(a))) {
       if (collection1.length !== collection2.length) return false;
       for (let i = 0; i < collection1.length; i++) {
@@ -33154,7 +33185,7 @@ var Plotly = (() => {
         }
       }
       return true;
-    } else if ([collection1, collection2].every((a) => lib_default.isPlainObject(a))) {
+    } else if ([collection1, collection2].every((a) => isPlainObject2(a))) {
       if (Object.keys(collection1).length !== Object.keys(collection2).length) return false;
       for (const k in collection1) {
         if (k.startsWith("_")) continue;
@@ -33175,7 +33206,6 @@ var Plotly = (() => {
   var hasHover2 = typeof matchMedia === "function" ? !matchMedia("(hover: none)").matches : typeof window !== "undefined";
   var { dfltConfig: dfltConfig4 } = plot_config_default;
   var { AX_NAME_PATTERN } = constants_default2;
-  var nestedProperty3 = lib_default.nestedProperty;
   function clearOutline2(gd) {
     return registry_default.getComponentMethod("selections", "clearOutline")(gd);
   }
@@ -33183,9 +33213,9 @@ var Plotly = (() => {
   var numericNameWarningCountLimit = 5;
   function _doPlot(gd, data, layout, config) {
     var frames;
-    gd = lib_default.getGraphDiv(gd);
+    gd = getGraphDiv(gd);
     events_default.init(gd);
-    if (lib_default.isPlainObject(data)) {
+    if (isPlainObject2(data)) {
       var obj = data;
       data = obj.data;
       layout = obj.layout;
@@ -33195,8 +33225,8 @@ var Plotly = (() => {
     performance.mark("plotly-total-start");
     var okToPlot = events_default.triggerHandler(gd, "plotly_beforeplot", [data, layout, config]);
     if (okToPlot === false) return Promise.reject();
-    if (!data && !layout && !lib_default.isPlotDiv(gd)) {
-      lib_default.warn("Calling _doPlot as if redrawing but this container doesn't yet have a plot.", gd);
+    if (!data && !layout && !isPlotDiv(gd)) {
+      warn("Calling _doPlot as if redrawing but this container doesn't yet have a plot.", gd);
     }
     function addFrames3() {
       if (frames) {
@@ -33247,14 +33277,14 @@ var Plotly = (() => {
     if (gd._context.responsive) {
       if (!gd._responsiveChartHandler) {
         gd._responsiveChartHandler = function() {
-          if (!lib_default.isHidden(gd)) plots_default.resize(gd);
+          if (!isHidden(gd)) plots_default.resize(gd);
         };
         window.addEventListener("resize", gd._responsiveChartHandler);
       }
     } else {
-      lib_default.clearResponsive(gd);
+      clearResponsive2(gd);
     }
-    var oldMargins = lib_default.extendFlat({}, fullLayout._size);
+    var oldMargins = extendFlat({}, fullLayout._size);
     var drawFrameworkCalls = 0;
     function drawFramework2() {
       var basePlotModules = fullLayout._basePlotModules;
@@ -33304,9 +33334,9 @@ var Plotly = (() => {
           if (Math.floor(fullLayout.width * plotGlPixelRatio) !== regl._gl.drawingBufferWidth || Math.floor(fullLayout.height * plotGlPixelRatio) !== regl._gl.drawingBufferHeight) {
             var msg = "WebGL context buffer and canvas dimensions do not match due to browser/WebGL bug.";
             if (drawFrameworkCalls) {
-              lib_default.error(msg);
+              error(msg);
             } else {
-              lib_default.log(msg + " Clearing graph and plotting again.");
+              log(msg + " Clearing graph and plotting again.");
               plots_default.cleanPlot([], {}, gd._fullData, fullLayout);
               plots_default.supplyDefaults(gd);
               fullLayout = gd._fullLayout;
@@ -33345,14 +33375,14 @@ var Plotly = (() => {
     }
     function marginPushersAgain() {
       if (!plots_default.didMarginChange(oldMargins, fullLayout._size)) return;
-      return lib_default.syncOrAsync([marginPushers, subroutines_default.layoutStyles], gd);
+      return syncOrAsync([marginPushers, subroutines_default.layoutStyles], gd);
     }
     function positionAndAutorange() {
       if (!recalc) {
         doAutoRangeAndConstraints2();
         return;
       }
-      return lib_default.syncOrAsync(
+      return syncOrAsync(
         [
           registry_default.getComponentMethod("shapes", "calcAutorange"),
           registry_default.getComponentMethod("annotations", "calcAutorange"),
@@ -33421,7 +33451,7 @@ var Plotly = (() => {
       );
     }
     seq.push(plots_default.previousPromises);
-    var plotDone = lib_default.syncOrAsync(seq, gd);
+    var plotDone = syncOrAsync(seq, gd);
     if (!plotDone || !plotDone.then) plotDone = Promise.resolve();
     return plotDone.then(function() {
       performance.mark("plotly-total-end");
@@ -33439,7 +33469,7 @@ var Plotly = (() => {
             subroutines_default.finalDraw,
             plots_default.doAutoMargin
           );
-          var deferredDone = lib_default.syncOrAsync(deferredSeq, gd);
+          var deferredDone = syncOrAsync(deferredSeq, gd);
           if (!deferredDone || !deferredDone.then) deferredDone = Promise.resolve();
           deferredDone.then(function() {
             performance.mark("plotly-deferredMargin-end");
@@ -33459,13 +33489,13 @@ var Plotly = (() => {
     }
   }
   function setPlotConfig(obj) {
-    return lib_default.extendFlat(dfltConfig4, obj);
+    return extendFlat(dfltConfig4, obj);
   }
   function setBackground(gd, bgColor) {
     try {
       gd._fullLayout._paper.style("background", bgColor);
     } catch (e) {
-      lib_default.error(e);
+      error(e);
     }
   }
   function opaqueSetBackground(gd, bgColor) {
@@ -33474,7 +33504,7 @@ var Plotly = (() => {
   }
   function setPlotContext(gd, config) {
     if (!gd._context) {
-      gd._context = lib_default.extendDeep({}, dfltConfig4);
+      gd._context = extendDeep({}, dfltConfig4);
       var base = select_default2("base");
       gd._context._baseUrl = base.size() && base.attr("href") ? window.location.href.split("#")[0] : "";
     }
@@ -33551,8 +33581,8 @@ var Plotly = (() => {
     }
   }
   function redraw(gd) {
-    gd = lib_default.getGraphDiv(gd);
-    if (!lib_default.isPlotDiv(gd)) {
+    gd = getGraphDiv(gd);
+    if (!isPlotDiv(gd)) {
       throw new Error("This element is not a Plotly plot: " + gd);
     }
     helpers_default5.cleanData(gd.data);
@@ -33564,7 +33594,7 @@ var Plotly = (() => {
     });
   }
   function newPlot(gd, data, layout, config) {
-    gd = lib_default.getGraphDiv(gd);
+    gd = getGraphDiv(gd);
     plots_default.cleanPlot([], {}, gd._fullData || [], gd._fullLayout || {});
     plots_default.purge(gd);
     return _doPlot(gd, data, layout, config);
@@ -33644,11 +33674,11 @@ var Plotly = (() => {
     }
   }
   function assertExtendTracesArgs(gd, update3, indices, maxPoints) {
-    var maxPointsIsObject = lib_default.isPlainObject(maxPoints);
+    var maxPointsIsObject = isPlainObject2(maxPoints);
     if (!Array.isArray(gd.data)) {
       throw new Error("gd.data must be an array");
     }
-    if (!lib_default.isPlainObject(update3)) {
+    if (!isPlainObject2(update3)) {
       throw new Error("update must be a key:value object");
     }
     if (typeof indices === "undefined") {
@@ -33667,7 +33697,7 @@ var Plotly = (() => {
     }
   }
   function getExtendProperties(gd, update3, indices, maxPoints) {
-    var maxPointsIsObject = lib_default.isPlainObject(maxPoints);
+    var maxPointsIsObject = isPlainObject2(maxPoints);
     var updateProps = [];
     var trace, target, prop, insert, maxp;
     if (!Array.isArray(indices)) indices = [indices];
@@ -33675,13 +33705,13 @@ var Plotly = (() => {
     for (var key in update3) {
       for (var j = 0; j < indices.length; j++) {
         trace = gd.data[indices[j]];
-        prop = nestedProperty3(trace, key);
+        prop = nestedProperty2(trace, key);
         target = prop.get();
         insert = update3[key][j];
-        if (!lib_default.isArrayOrTypedArray(insert)) {
+        if (!isArrayOrTypedArray(insert)) {
           throw new Error("attribute: " + key + " index: " + j + " must be an array");
         }
-        if (!lib_default.isArrayOrTypedArray(target)) {
+        if (!isArrayOrTypedArray(target)) {
           throw new Error("cannot extend missing or non-array attribute: " + key);
         }
         if (target.constructor !== insert.constructor) {
@@ -33723,10 +33753,10 @@ var Plotly = (() => {
     return arr2;
   }
   function extendTraces(gd, update3, indices, maxPoints) {
-    gd = lib_default.getGraphDiv(gd);
+    gd = getGraphDiv(gd);
     function updateArray(target, insert, maxp) {
       var newArray, remainder;
-      if (lib_default.isTypedArray(target)) {
+      if (isTypedArray(target)) {
         if (maxp < 0) {
           var none2 = new target.constructor(0);
           var both = concatTypedArray(target, insert);
@@ -33769,10 +33799,10 @@ var Plotly = (() => {
     return promise;
   }
   function prependTraces(gd, update3, indices, maxPoints) {
-    gd = lib_default.getGraphDiv(gd);
+    gd = getGraphDiv(gd);
     function updateArray(target, insert, maxp) {
       var newArray, remainder;
-      if (lib_default.isTypedArray(target)) {
+      if (isTypedArray(target)) {
         if (maxp <= 0) {
           var none2 = new target.constructor(0);
           var both = concatTypedArray(insert, target);
@@ -33814,7 +33844,7 @@ var Plotly = (() => {
     return promise;
   }
   function addTraces(gd, traces, newIndices) {
-    gd = lib_default.getGraphDiv(gd);
+    gd = getGraphDiv(gd);
     var currentIndices = [];
     var undoFunc = deleteTraces;
     var redoFunc = addTraces;
@@ -33827,7 +33857,7 @@ var Plotly = (() => {
       traces = [traces];
     }
     traces = traces.map(function(trace) {
-      return lib_default.extendFlat({}, trace);
+      return extendFlat({}, trace);
     });
     helpers_default5.cleanData(traces);
     for (i = 0; i < traces.length; i++) {
@@ -33846,9 +33876,9 @@ var Plotly = (() => {
     }
     try {
       checkMoveTracesArgs(gd, currentIndices, newIndices);
-    } catch (error) {
+    } catch (error2) {
       gd.data.splice(gd.data.length - traces.length, traces.length);
-      throw error;
+      throw error2;
     }
     queue_default.startSequence(gd);
     queue_default.add(gd, undoFunc, undoArgs, redoFunc, redoArgs);
@@ -33857,7 +33887,7 @@ var Plotly = (() => {
     return promise;
   }
   function deleteTraces(gd, indices) {
-    gd = lib_default.getGraphDiv(gd);
+    gd = getGraphDiv(gd);
     var traces = [];
     var undoFunc = addTraces;
     var redoFunc = deleteTraces;
@@ -33872,7 +33902,7 @@ var Plotly = (() => {
     }
     assertIndexArray(gd, indices, "indices");
     indices = positivifyIndices(indices, gd.data.length - 1);
-    indices.sort(lib_default.sorterDes);
+    indices.sort(sorterDes);
     for (i = 0; i < indices.length; i += 1) {
       deletedTrace = gd.data.splice(indices[i], 1)[0];
       traces.push(deletedTrace);
@@ -33882,7 +33912,7 @@ var Plotly = (() => {
     return promise;
   }
   function moveTraces(gd, currentIndices, newIndices) {
-    gd = lib_default.getGraphDiv(gd);
+    gd = getGraphDiv(gd);
     var newData = [];
     var movingTraceMap = [];
     var undoFunc = moveTraces;
@@ -33921,15 +33951,15 @@ var Plotly = (() => {
     return promise;
   }
   function restyle(gd, astr, val, _traces) {
-    gd = lib_default.getGraphDiv(gd);
+    gd = getGraphDiv(gd);
     helpers_default5.clearPromiseQueue(gd);
     var aobj = {};
     if (typeof astr === "string") aobj[astr] = val;
-    else if (lib_default.isPlainObject(astr)) {
-      aobj = lib_default.extendFlat({}, astr);
+    else if (isPlainObject2(astr)) {
+      aobj = extendFlat({}, astr);
       if (_traces === void 0) _traces = val;
     } else {
-      lib_default.warn("Restyle fail.", astr, val, _traces);
+      warn("Restyle fail.", astr, val, _traces);
       return Promise.reject();
     }
     if (Object.keys(aobj).length) gd.changed = true;
@@ -33954,7 +33984,7 @@ var Plotly = (() => {
     }
     seq.push(plots_default.rehover, plots_default.redrag, plots_default.reselect);
     queue_default.add(gd, restyle, [gd, specs.undoit, specs.traces], restyle, [gd, specs.redoit, specs.traces]);
-    var plotDone = lib_default.syncOrAsync(seq, gd);
+    var plotDone = syncOrAsync(seq, gd);
     if (!plotDone || !plotDone.then) plotDone = Promise.resolve();
     return plotDone.then(function() {
       gd.emit("plotly_restyle", specs.eventData);
@@ -33966,9 +33996,9 @@ var Plotly = (() => {
     return val;
   }
   function makeNP(preGUI, guiEditFlag) {
-    if (!guiEditFlag) return nestedProperty3;
+    if (!guiEditFlag) return nestedProperty2;
     return function(container, attr2, prefix) {
-      var np = nestedProperty3(container, attr2);
+      var np = nestedProperty2(container, attr2);
       var npSet2 = np.set;
       np.set = function(val) {
         var fullAttr = (prefix || "") + attr2;
@@ -33986,10 +34016,10 @@ var Plotly = (() => {
       for (var i = 0; i < maxLen; i++) {
         storeCurrent(attr2 + "[" + i + "]", arrayVal[i], arrayNew[i], preGUI);
       }
-    } else if (lib_default.isPlainObject(val) || lib_default.isPlainObject(newVal)) {
-      var objVal = lib_default.isPlainObject(val) ? val : {};
-      var objNew = lib_default.isPlainObject(newVal) ? newVal : {};
-      var objBoth = lib_default.extendFlat({}, objVal, objNew);
+    } else if (isPlainObject2(val) || isPlainObject2(newVal)) {
+      var objVal = isPlainObject2(val) ? val : {};
+      var objNew = isPlainObject2(newVal) ? newVal : {};
+      var objBoth = extendFlat({}, objVal, objNew);
       for (var key in objBoth) {
         storeCurrent(attr2 + "." + key, objVal[key], objNew[key], preGUI);
       }
@@ -33999,7 +34029,7 @@ var Plotly = (() => {
   }
   function _storeDirectGUIEdit(container, preGUI, edits) {
     for (var attr2 in edits) {
-      var np = nestedProperty3(container, attr2);
+      var np = nestedProperty2(container, attr2);
       storeCurrent(attr2, np.get(), edits[attr2], preGUI);
     }
   }
@@ -34009,7 +34039,7 @@ var Plotly = (() => {
     var data = gd.data;
     var guiEditFlag = fullLayout._guiEditing;
     var layoutNP = makeNP(fullLayout._preGUI, guiEditFlag);
-    var eventData2 = lib_default.extendDeepAll({}, aobj);
+    var eventData2 = extendDeepAll({}, aobj);
     var i;
     var flags = edit_types_default.traceFlags();
     var redoit = {};
@@ -34108,11 +34138,11 @@ var Plotly = (() => {
         var finalPart = param.parts[param.parts.length - 1];
         var prefix = ai.slice(0, ai.length - finalPart.length - 1);
         var prefixDot = prefix ? prefix + "." : "";
-        var innerContFull = prefix ? nestedProperty3(contFull, prefix).get() : contFull;
+        var innerContFull = prefix ? nestedProperty2(contFull, prefix).get() : contFull;
         valObject = plot_schema_default.getTraceValObject(contFull, param.parts);
         if (valObject && valObject.impliedEdits && newVal !== null) {
           for (var impliedKey in valObject.impliedEdits) {
-            doextra(lib_default.relativeAttr(ai, impliedKey), valObject.impliedEdits[impliedKey], i);
+            doextra(relativeAttr(ai, impliedKey), valObject.impliedEdits[impliedKey], i);
           }
         } else if ((finalPart === "thicknessmode" || finalPart === "lenmode") && oldVal !== newVal && (newVal === "fraction" || newVal === "pixels") && innerContFull) {
           var gs = fullLayout._size;
@@ -34140,15 +34170,15 @@ var Plotly = (() => {
           lib_default.swapAttrs(cont, ["d?", "?0"], "label", labelsTo);
           lib_default.swapAttrs(cont, ["?", "?src"], "values", valuesTo);
           if (oldVal === "pie" || oldVal === "funnelarea") {
-            nestedProperty3(cont, "marker.color").set(nestedProperty3(cont, "marker.colors").get());
+            nestedProperty2(cont, "marker.color").set(nestedProperty2(cont, "marker.colors").get());
             fullLayout._pielayer.selectAll("g.trace").remove();
           } else if (registry_default.traceIs(cont, "cartesian")) {
-            nestedProperty3(cont, "marker.colors").set(nestedProperty3(cont, "marker.color").get());
+            nestedProperty2(cont, "marker.colors").set(nestedProperty2(cont, "marker.color").get());
           }
         }
         undoit[ai][i] = undefinedToNull(oldVal);
-        var swapAttrs = ["swapxy", "swapxyaxes", "orientation", "orientationaxes"];
-        if (swapAttrs.indexOf(ai) !== -1) {
+        var swapAttrs2 = ["swapxy", "swapxyaxes", "orientation", "orientationaxes"];
+        if (swapAttrs2.indexOf(ai) !== -1) {
           if (ai === "orientation") {
             param.set(newVal);
             var defaultOrientation = cont.x && !cont.y ? "h" : "v";
@@ -34165,7 +34195,7 @@ var Plotly = (() => {
           flags.calc = true;
         } else {
           if (valObject) {
-            if (valObject.arrayOk && !registry_default.traceIs(contFull, "regl") && (lib_default.isArrayOrTypedArray(newVal) || lib_default.isArrayOrTypedArray(oldVal))) {
+            if (valObject.arrayOk && !registry_default.traceIs(contFull, "regl") && (isArrayOrTypedArray(newVal) || isArrayOrTypedArray(oldVal))) {
               flags.calc = true;
             } else edit_types_default.update(flags, valObject);
           } else {
@@ -34178,7 +34208,7 @@ var Plotly = (() => {
         axes_default.swap(gd, traces);
       }
       if (ai === "orientationaxes") {
-        var hovermode = nestedProperty3(gd.layout, "hovermode");
+        var hovermode = nestedProperty2(gd.layout, "hovermode");
         var h = hovermode.get();
         if (h === "x") {
           hovermode.set("y");
@@ -34211,19 +34241,19 @@ var Plotly = (() => {
       undoit,
       redoit,
       traces,
-      eventData: lib_default.extendDeepNoArrays([], [eventData2, traces])
+      eventData: extendDeepNoArrays([], [eventData2, traces])
     };
   }
   function relayout(gd, astr, val) {
-    gd = lib_default.getGraphDiv(gd);
+    gd = getGraphDiv(gd);
     helpers_default5.clearPromiseQueue(gd);
     var aobj = {};
     if (typeof astr === "string") {
       aobj[astr] = val;
-    } else if (lib_default.isPlainObject(astr)) {
-      aobj = lib_default.extendFlat({}, astr);
+    } else if (isPlainObject2(astr)) {
+      aobj = extendFlat({}, astr);
     } else {
-      lib_default.warn("Relayout fail.", astr, val);
+      warn("Relayout fail.", astr, val);
       return Promise.reject();
     }
     if (Object.keys(aobj).length) gd.changed = true;
@@ -34246,7 +34276,7 @@ var Plotly = (() => {
     }
     seq.push(plots_default.rehover, plots_default.redrag, plots_default.reselect);
     queue_default.add(gd, relayout, [gd, specs.undoit], relayout, [gd, specs.redoit]);
-    var plotDone = lib_default.syncOrAsync(seq, gd);
+    var plotDone = syncOrAsync(seq, gd);
     if (!plotDone || !plotDone.then) plotDone = Promise.resolve(gd);
     return plotDone.then(function() {
       gd.emit("plotly_relayout", specs.eventData);
@@ -34324,7 +34354,7 @@ var Plotly = (() => {
     var layoutNP = makeNP(fullLayout._preGUI, guiEditFlag);
     var keys = Object.keys(aobj);
     var axes2 = axes_default.list(gd);
-    var eventData2 = lib_default.extendDeepAll({}, aobj);
+    var eventData2 = extendDeepAll({}, aobj);
     var arrayEdits = {};
     var arrayStr, i, j;
     keys = Object.keys(aobj);
@@ -34375,8 +34405,8 @@ var Plotly = (() => {
       var pleaf = p.parts[pend];
       var pleafPlus = p.parts[pend - 1] + "." + pleaf;
       var ptrunk = p.parts.slice(0, pend).join(".");
-      var parentIn = nestedProperty3(gd.layout, ptrunk).get();
-      var parentFull = nestedProperty3(fullLayout, ptrunk).get();
+      var parentIn = nestedProperty2(gd.layout, ptrunk).get();
+      var parentFull = nestedProperty2(fullLayout, ptrunk).get();
       var vOld = p.get();
       if (vi === void 0) continue;
       redoit[ai] = vi;
@@ -34384,7 +34414,7 @@ var Plotly = (() => {
       var valObject = plot_schema_default.getLayoutValObject(fullLayout, p.parts);
       if (valObject && valObject.impliedEdits && vi !== null) {
         for (var impliedKey in valObject.impliedEdits) {
-          doextra(lib_default.relativeAttr(ai, impliedKey), valObject.impliedEdits[impliedKey]);
+          doextra(relativeAttr(ai, impliedKey), valObject.impliedEdits[impliedKey]);
         }
       }
       if (["width", "height"].indexOf(ai) !== -1) {
@@ -34400,16 +34430,16 @@ var Plotly = (() => {
         doextra("height", vi ? null : fullLayout.height);
       } else if (pleafPlus.match(AX_RANGE_RE)) {
         recordAlteredAxis(pleafPlus);
-        nestedProperty3(fullLayout, ptrunk + "._inputRange").set(null);
+        nestedProperty2(fullLayout, ptrunk + "._inputRange").set(null);
       } else if (pleafPlus.match(AX_AUTORANGE_RE)) {
         recordAlteredAxis(pleafPlus);
-        nestedProperty3(fullLayout, ptrunk + "._inputRange").set(null);
-        var axFull = nestedProperty3(fullLayout, ptrunk).get();
+        nestedProperty2(fullLayout, ptrunk + "._inputRange").set(null);
+        var axFull = nestedProperty2(fullLayout, ptrunk).get();
         if (axFull._inputDomain) {
           axFull._input.domain = axFull._inputDomain.slice();
         }
       } else if (pleafPlus.match(AX_DOMAIN_RE)) {
-        nestedProperty3(fullLayout, ptrunk + "._inputDomain").set(null);
+        nestedProperty2(fullLayout, ptrunk + "._inputDomain").set(null);
       }
       if (pleaf === "type") {
         ax = parentIn;
@@ -34445,9 +34475,9 @@ var Plotly = (() => {
           doextra(ptrunk + ".autorange", true);
           doextra(ptrunk + ".range", null);
         }
-        nestedProperty3(fullLayout, ptrunk + "._inputRange").set(null);
+        nestedProperty2(fullLayout, ptrunk + "._inputRange").set(null);
       } else if (pleaf.match(AX_NAME_PATTERN)) {
-        var fullProp = nestedProperty3(fullLayout, ai).get();
+        var fullProp = nestedProperty2(fullLayout, ai).get();
         var newType = (vi || {}).type;
         if (!newType || newType === "-") newType = "linear";
         registry_default.getComponentMethod("annotations", "convertCoords")(gd, fullProp, newType, doextra);
@@ -34463,9 +34493,9 @@ var Plotly = (() => {
           if (manage_arrays_default.isAddVal(vi)) {
             undoit[ai] = null;
           } else if (manage_arrays_default.isRemoveVal(vi)) {
-            undoit[ai] = (nestedProperty3(layout, arrayStr).get() || [])[i];
+            undoit[ai] = (nestedProperty2(layout, arrayStr).get() || [])[i];
           } else {
-            lib_default.warn("unrecognized full object value", aobj);
+            warn("unrecognized full object value", aobj);
           }
         }
         edit_types_default.update(flags, updateValObject);
@@ -34541,16 +34571,16 @@ var Plotly = (() => {
     return fullLayout.width !== oldWidth || fullLayout.height !== oldHeight;
   }
   function update(gd, traceUpdate, layoutUpdate, _traces) {
-    gd = lib_default.getGraphDiv(gd);
+    gd = getGraphDiv(gd);
     helpers_default5.clearPromiseQueue(gd);
-    if (!lib_default.isPlainObject(traceUpdate)) traceUpdate = {};
-    if (!lib_default.isPlainObject(layoutUpdate)) layoutUpdate = {};
+    if (!isPlainObject2(traceUpdate)) traceUpdate = {};
+    if (!isPlainObject2(layoutUpdate)) layoutUpdate = {};
     if (Object.keys(traceUpdate).length) gd.changed = true;
     if (Object.keys(layoutUpdate).length) gd.changed = true;
     var traces = helpers_default5.coerceTraceIndices(gd, _traces);
-    var restyleSpecs = _restyle(gd, lib_default.extendFlat({}, traceUpdate), traces);
+    var restyleSpecs = _restyle(gd, extendFlat({}, traceUpdate), traces);
     var restyleFlags = restyleSpecs.flags;
-    var relayoutSpecs = _relayout(gd, lib_default.extendFlat({}, layoutUpdate));
+    var relayoutSpecs = _relayout(gd, extendFlat({}, layoutUpdate));
     var relayoutFlags = relayoutSpecs.flags;
     if (restyleFlags.calc || relayoutFlags.calc) gd.calcdata = void 0;
     if (restyleFlags.clearAxisTypes) helpers_default5.clearAxisTypes(gd, traces, layoutUpdate);
@@ -34579,7 +34609,7 @@ var Plotly = (() => {
       relayoutSpecs.redoit,
       restyleSpecs.traces
     ]);
-    var plotDone = lib_default.syncOrAsync(seq, gd);
+    var plotDone = syncOrAsync(seq, gd);
     if (!plotDone || !plotDone.then) plotDone = Promise.resolve(gd);
     return plotDone.then(function() {
       gd.emit("plotly_update", {
@@ -34644,13 +34674,13 @@ var Plotly = (() => {
     }
   }
   function getNewRev(revAttr, container) {
-    var newRev = nestedProperty3(container, revAttr).get();
+    var newRev = nestedProperty2(container, revAttr).get();
     if (newRev !== void 0) return newRev;
     var parts = revAttr.split(".");
     parts.pop();
     while (parts.length > 1) {
       parts.pop();
-      newRev = nestedProperty3(container, parts.join(".") + ".uirevision").get();
+      newRev = nestedProperty2(container, parts.join(".") + ".uirevision").get();
       if (newRev !== void 0) return newRev;
     }
     return container.uirevision;
@@ -34668,10 +34698,10 @@ var Plotly = (() => {
     return !data[tracei] || data[tracei].uid ? -1 : tracei;
   }
   function valsMatch(v1, v2) {
-    var v1IsObj = lib_default.isPlainObject(v1);
+    var v1IsObj = isPlainObject2(v1);
     var v1IsArray = Array.isArray(v1);
     if (v1IsObj || v1IsArray) {
-      return (v1IsObj && lib_default.isPlainObject(v2) || v1IsArray && Array.isArray(v2)) && JSON.stringify(v1) === JSON.stringify(v2);
+      return (v1IsObj && isPlainObject2(v2) || v1IsArray && Array.isArray(v2)) && JSON.stringify(v1) === JSON.stringify(v2);
     }
     return v1 === v2;
   }
@@ -34687,18 +34717,18 @@ var Plotly = (() => {
         head = match.head;
         tail = match.tail;
         revAttr = match.attr || head + ".uirevision";
-        oldRev = nestedProperty3(oldFullLayout, revAttr).get();
+        oldRev = nestedProperty2(oldFullLayout, revAttr).get();
         newRev = oldRev && getNewRev(revAttr, layout);
         if (newRev && newRev === oldRev) {
           preGUIVal = layoutPreGUI[key];
           if (preGUIVal === null) preGUIVal = void 0;
-          newNP = nestedProperty3(layout, key);
+          newNP = nestedProperty2(layout, key);
           newVal = newNP.get();
           if (valsMatch(newVal, preGUIVal)) {
             if (newVal === void 0 && tail === "autorange") {
               bothInheritAutorange.push(head);
             }
-            newNP.set(undefinedToNull(nestedProperty3(oldFullLayout, key).get()));
+            newNP.set(undefinedToNull(nestedProperty2(oldFullLayout, key).get()));
             continue;
           } else if (tail === "autorange" || tail.slice(0, 6) === "range[") {
             var pre0 = layoutPreGUI[head + ".range[0]"];
@@ -34706,18 +34736,18 @@ var Plotly = (() => {
             var preAuto = layoutPreGUI[head + ".autorange"];
             if (preAuto || preAuto === null && pre0 === null && pre1 === null) {
               if (!(head in newAutorangeIn)) {
-                var newContainer2 = nestedProperty3(layout, head).get();
+                var newContainer2 = nestedProperty2(layout, head).get();
                 newAutorangeIn[head] = newContainer2 && (newContainer2.autorange || newContainer2.autorange !== false && (!newContainer2.range || newContainer2.range.length !== 2));
               }
               if (newAutorangeIn[head]) {
-                newNP.set(undefinedToNull(nestedProperty3(oldFullLayout, key).get()));
+                newNP.set(undefinedToNull(nestedProperty2(oldFullLayout, key).get()));
                 continue;
               }
             }
           }
         }
       } else {
-        lib_default.warn("unrecognized GUI edit: " + key);
+        warn("unrecognized GUI edit: " + key);
       }
       delete layoutPreGUI[key];
       if (match && match.tail.slice(0, 6) === "range[") {
@@ -34727,7 +34757,7 @@ var Plotly = (() => {
     for (var i = 0; i < bothInheritAutorange.length; i++) {
       var axAttr = bothInheritAutorange[i];
       if (newRangeAccepted[axAttr]) {
-        var newAx = nestedProperty3(layout, axAttr).get();
+        var newAx = nestedProperty2(layout, axAttr).get();
         if (newAx) delete newAx.autorange;
       }
     }
@@ -34755,7 +34785,7 @@ var Plotly = (() => {
         match = findUIPattern(key, traceUIControlPatterns);
         if (match) {
           if (match.attr) {
-            oldRev = nestedProperty3(oldFullLayout, match.attr).get();
+            oldRev = nestedProperty2(oldFullLayout, match.attr).get();
             newRev = oldRev && getNewRev(match.attr, layout);
           } else {
             oldRev = fullInput.uirevision;
@@ -34765,15 +34795,15 @@ var Plotly = (() => {
           if (newRev && newRev === oldRev) {
             preGUIVal = tracePreGUI[key];
             if (preGUIVal === null) preGUIVal = void 0;
-            newNP = nestedProperty3(newTrace, key);
+            newNP = nestedProperty2(newTrace, key);
             newVal = newNP.get();
             if (valsMatch(newVal, preGUIVal)) {
-              newNP.set(undefinedToNull(nestedProperty3(fullInput, key).get()));
+              newNP.set(undefinedToNull(nestedProperty2(fullInput, key).get()));
               continue;
             }
           }
         } else {
-          lib_default.warn("unrecognized GUI edit: " + key + " in trace uid " + uid);
+          warn("unrecognized GUI edit: " + key + " in trace uid " + uid);
         }
         delete tracePreGUI[key];
       }
@@ -34784,14 +34814,14 @@ var Plotly = (() => {
     function addFrames3() {
       return addFrames3(gd, frames);
     }
-    gd = lib_default.getGraphDiv(gd);
+    gd = getGraphDiv(gd);
     helpers_default5.clearPromiseQueue(gd);
     var oldFullData = gd._fullData;
     var oldFullLayout = gd._fullLayout;
-    if (!lib_default.isPlotDiv(gd) || !oldFullData || !oldFullLayout) {
+    if (!isPlotDiv(gd) || !oldFullData || !oldFullLayout) {
       plotDone = newPlot(gd, data, layout, config);
     } else {
-      if (lib_default.isPlainObject(data)) {
+      if (isPlainObject2(data)) {
         var obj = data;
         data = obj.data;
         layout = obj.layout;
@@ -34800,7 +34830,7 @@ var Plotly = (() => {
       }
       var configChanged = false;
       if (config) {
-        const oldConfig = lib_default.extendDeepAll({}, gd._context);
+        const oldConfig = extendDeepAll({}, gd._context);
         gd._context = void 0;
         setPlotContext(gd, config);
         configChanged = !helpers_default5.collectionsAreEqual(oldConfig, gd._context);
@@ -34863,13 +34893,13 @@ var Plotly = (() => {
             var indices = relayoutFlags.arrays[componentType];
             if (indices.length) {
               var drawOne5 = registry_default.getComponentMethod(componentType, "drawOne");
-              if (drawOne5 !== lib_default.noop) {
+              if (drawOne5 !== noop3) {
                 for (var i = 0; i < indices.length; i++) {
                   drawOne5(gd, indices[i]);
                 }
               } else {
                 var draw13 = registry_default.getComponentMethod(componentType, "draw");
-                if (draw13 === lib_default.noop) {
+                if (draw13 === noop3) {
                   throw new Error("cannot draw components: " + componentType);
                 }
                 draw13(gd);
@@ -34888,7 +34918,7 @@ var Plotly = (() => {
           seq.push(emitAfterPlot);
         }
         seq.push(plots_default.rehover, plots_default.redrag, plots_default.reselect);
-        plotDone = lib_default.syncOrAsync(seq, gd);
+        plotDone = syncOrAsync(seq, gd);
         if (!plotDone || !plotDone.then) plotDone = Promise.resolve(gd);
       }
     }
@@ -34995,7 +35025,7 @@ var Plotly = (() => {
     function changed() {
       var editType = valObject.editType;
       if (inArray && editType.indexOf("arraydraw") !== -1) {
-        lib_default.pushUnique(flags.arrays[inArray], arrayIndex);
+        pushUnique2(flags.arrays[inArray], arrayIndex);
         return;
       }
       edit_types_default.update(flags, valObject);
@@ -35065,7 +35095,7 @@ var Plotly = (() => {
             newVal[i],
             parts.concat(i),
             // add array indices, but not if we're already in an array
-            lib_default.extendFlat({ inArray: key, arrayIndex: i }, opts)
+            extendFlat({ inArray: key, arrayIndex: i }, opts)
           );
         }
         if (extraIndices) {
@@ -35073,7 +35103,7 @@ var Plotly = (() => {
             arrayEditIndices.push(i);
           }
         }
-      } else if (!valType && lib_default.isPlainObject(oldVal)) {
+      } else if (!valType && isPlainObject2(oldVal)) {
         getDiffFlags(oldVal, newVal, parts, opts);
       } else if (canBeDataArray) {
         if (wasArray && nowArray) {
@@ -35105,8 +35135,8 @@ var Plotly = (() => {
     }
   }
   function animate(gd, frameOrGroupNameOrFrameList, animationOpts) {
-    gd = lib_default.getGraphDiv(gd);
-    if (!lib_default.isPlotDiv(gd)) {
+    gd = getGraphDiv(gd);
+    if (!isPlotDiv(gd)) {
       throw new Error(
         "This element is not a Plotly plot: " + gd + ". It's likely that you've failed to create a plot before animating it. For more details, see https://plotly.com/javascript/animations/"
       );
@@ -35266,11 +35296,11 @@ var Plotly = (() => {
       var frameList = [];
       var allFrames = frameOrGroupNameOrFrameList === void 0 || frameOrGroupNameOrFrameList === null;
       var isFrameArray = Array.isArray(frameOrGroupNameOrFrameList);
-      var isSingleFrame = !allFrames && !isFrameArray && lib_default.isPlainObject(frameOrGroupNameOrFrameList);
+      var isSingleFrame = !allFrames && !isFrameArray && isPlainObject2(frameOrGroupNameOrFrameList);
       if (isSingleFrame) {
         frameList.push({
           type: "object",
-          data: setTransitionConfig(lib_default.extendFlat({}, frameOrGroupNameOrFrameList))
+          data: setTransitionConfig(extendFlat({}, frameOrGroupNameOrFrameList))
         });
       } else if (allFrames || ["string", "number"].indexOf(typeof frameOrGroupNameOrFrameList) !== -1) {
         for (i = 0; i < trans._frames.length; i++) {
@@ -35294,10 +35324,10 @@ var Plotly = (() => {
               name: frameOrName,
               data: setTransitionConfig({ name: frameOrName })
             });
-          } else if (lib_default.isPlainObject(frameOrName)) {
+          } else if (isPlainObject2(frameOrName)) {
             frameList.push({
               type: "object",
-              data: setTransitionConfig(lib_default.extendFlat({}, frameOrName))
+              data: setTransitionConfig(extendFlat({}, frameOrName))
             });
           }
         }
@@ -35305,7 +35335,7 @@ var Plotly = (() => {
       for (i = 0; i < frameList.length; i++) {
         frame2 = frameList[i];
         if (frame2.type === "byname" && !trans._frameHash[frame2.data.name]) {
-          lib_default.warn('animate failure: frame not found: "' + frame2.data.name + '"');
+          warn('animate failure: frame not found: "' + frame2.data.name + '"');
           reject();
           return;
         }
@@ -35346,11 +35376,11 @@ var Plotly = (() => {
     });
   }
   function addFrames(gd, frameList, indices) {
-    gd = lib_default.getGraphDiv(gd);
+    gd = getGraphDiv(gd);
     if (frameList === null || frameList === void 0) {
       return Promise.resolve();
     }
-    if (!lib_default.isPlotDiv(gd)) {
+    if (!isPlotDiv(gd)) {
       throw new Error(
         "This element is not a Plotly plot: " + gd + ". It's likely that you've failed to create a plot before adding frames. For more details, see https://plotly.com/javascript/animations/"
       );
@@ -35365,18 +35395,18 @@ var Plotly = (() => {
     var insertions = [];
     var _frameHashLocal = {};
     for (i = frameList.length - 1; i >= 0; i--) {
-      if (!lib_default.isPlainObject(frameList[i])) continue;
+      if (!isPlainObject2(frameList[i])) continue;
       var lookupName = frameList[i].name;
       var name6 = (_frameHash[lookupName] || _frameHashLocal[lookupName] || {}).name;
       var newName2 = frameList[i].name;
       var collisionPresent = _frameHash[name6] || _frameHashLocal[name6];
       if (name6 && newName2 && typeof newName2 === "number" && collisionPresent && numericNameWarningCount < numericNameWarningCountLimit) {
         numericNameWarningCount++;
-        lib_default.warn(
+        warn(
           'addFrames: overwriting frame "' + (_frameHash[name6] || _frameHashLocal[name6]).name + '" with a frame whose name of type "number" also equates to "' + name6 + '". This is valid but may potentially lead to unexpected behavior since all plotly.js frame names are stored internally as strings.'
         );
         if (numericNameWarningCount === numericNameWarningCountLimit) {
-          lib_default.warn(
+          warn(
             "addFrames: This API call has yielded too many of these warnings. For the rest of this call, further warnings about numeric frame names will be suppressed."
           );
         }
@@ -35398,7 +35428,7 @@ var Plotly = (() => {
     for (i = insertions.length - 1; i >= 0; i--) {
       frame2 = insertions[i].frame;
       if (typeof frame2.name === "number") {
-        lib_default.warn(
+        warn(
           "Warning: addFrames accepts frames with numeric names, but the numbers areimplicitly cast to strings"
         );
       }
@@ -35426,8 +35456,8 @@ var Plotly = (() => {
     return plots_default.modifyFrames(gd, ops);
   }
   function deleteFrames(gd, frameList) {
-    gd = lib_default.getGraphDiv(gd);
-    if (!lib_default.isPlotDiv(gd)) {
+    gd = getGraphDiv(gd);
+    if (!isPlotDiv(gd)) {
       throw new Error("This element is not a Plotly plot: " + gd);
     }
     var i, idx;
@@ -35455,7 +35485,7 @@ var Plotly = (() => {
     return plots_default.modifyFrames(gd, ops);
   }
   function purge(gd) {
-    gd = lib_default.getGraphDiv(gd);
+    gd = getGraphDiv(gd);
     var fullLayout = gd._fullLayout || {};
     var fullData = gd._fullData || [];
     plots_default.cleanPlot([], {}, fullData, fullLayout);
@@ -35468,8 +35498,8 @@ var Plotly = (() => {
   function calcInverseTransform(gd) {
     var fullLayout = gd._fullLayout;
     var newBBox = gd.getBoundingClientRect();
-    if (lib_default.equalDomRects(newBBox, fullLayout._lastBBox)) return;
-    var m = fullLayout._invTransform = lib_default.inverseTransformMatrix(lib_default.getFullTransformMatrix(gd));
+    if (equalDomRects(newBBox, fullLayout._lastBBox)) return;
+    var m = fullLayout._invTransform = inverseTransformMatrix(getFullTransformMatrix(gd));
     fullLayout._invScaleX = Math.sqrt(m[0][0] * m[0][0] + m[0][1] * m[0][1] + m[0][2] * m[0][2]);
     fullLayout._invScaleY = Math.sqrt(m[1][0] * m[1][0] + m[1][1] * m[1][1] + m[1][2] * m[1][2]);
     fullLayout._lastBBox = newBBox;
@@ -35500,7 +35530,7 @@ var Plotly = (() => {
       selectAll_default2("defs").each(function() {
         if (this.id) otherUids[this.id.split("-")[1]] = 1;
       });
-      fullLayout._uid = lib_default.randstr(otherUids);
+      fullLayout._uid = randstr(otherUids);
     }
     fullLayout._paperdiv.selectAll(".main-svg").attr(xmlns_namespaces_default.svgAttrs);
     fullLayout._defs = fullLayout._paper.append("defs").attr("id", "defs-" + fullLayout._uid);
@@ -36255,7 +36285,7 @@ var Plotly = (() => {
   var { dfltConfig: dfltConfig6 } = plot_config_default;
   var isPlainObject4 = lib_default.isPlainObject;
   var isArray3 = Array.isArray;
-  var isArrayOrTypedArray6 = lib_default.isArrayOrTypedArray;
+  var isArrayOrTypedArray2 = lib_default.isArrayOrTypedArray;
   function validate2(data, layout) {
     if (data === void 0) data = [];
     if (layout === void 0) layout = {};
@@ -36395,13 +36425,13 @@ var Plotly = (() => {
         }
       } else if (!isPlainObject4(valIn) && isPlainObject4(valOut)) {
         list2.push(format4("object", base, p, valIn));
-      } else if (!isArrayOrTypedArray6(valIn) && isArrayOrTypedArray6(valOut) && !isInfoArray && !isColorscale) {
+      } else if (!isArrayOrTypedArray2(valIn) && isArrayOrTypedArray2(valOut) && !isInfoArray && !isColorscale) {
         list2.push(format4("array", base, p, valIn));
       } else if (!(k in objOut)) {
         list2.push(format4("unused", base, p, valIn));
       } else if (!lib_default.validate(valIn, nestedSchema)) {
         list2.push(format4("value", base, p, valIn));
-      } else if (nestedSchema.valType === "enumerated" && (nestedSchema.coerceNumber && valIn !== +valOut || !isArrayOrTypedArray6(valIn) && valIn !== valOut || String(valIn) !== String(valOut))) {
+      } else if (nestedSchema.valType === "enumerated" && (nestedSchema.coerceNumber && valIn !== +valOut || !isArrayOrTypedArray2(valIn) && valIn !== valOut || String(valIn) !== String(valOut))) {
         list2.push(format4("dynamic", base, p, valIn, valOut));
       }
     }
@@ -37111,9 +37141,9 @@ var Plotly = (() => {
     var handleCalendarDefaults = registry_default.getComponentMethod("calendars", "handleTraceDefaults");
     handleCalendarDefaults(traceIn, traceOut, ["x", "y"], layout);
     if (x) {
-      var xlen = lib_default.minRowLength(x);
+      var xlen = minRowLength(x);
       if (y) {
-        len2 = Math.min(xlen, lib_default.minRowLength(y));
+        len2 = Math.min(xlen, minRowLength(y));
       } else {
         len2 = xlen;
         coerce3("y0");
@@ -37121,7 +37151,7 @@ var Plotly = (() => {
       }
     } else {
       if (!y) return 0;
-      len2 = lib_default.minRowLength(y);
+      len2 = minRowLength(y);
       coerce3("x0");
       coerce3("dx");
     }
@@ -37130,13 +37160,12 @@ var Plotly = (() => {
   }
 
   // src/traces/scatter/period_defaults.js
-  var { dateTick0: dateTick02 } = lib_default;
   var ONEWEEK4 = numerical_default.ONEWEEK;
   function getPeriod0Dflt(period2, calendar) {
     if (period2 % ONEWEEK4 === 0) {
-      return dateTick02(calendar, 1);
+      return dateTick0(calendar, 1);
     }
-    return dateTick02(calendar, 0);
+    return dateTick0(calendar, 0);
   }
   function handlePeriodDefaults(traceIn, traceOut, layout, coerce3, opts) {
     if (!opts) {
@@ -37281,7 +37310,6 @@ var Plotly = (() => {
   }
 
   // src/traces/scatter/line_defaults.js
-  var { isArrayOrTypedArray: isArrayOrTypedArray7 } = lib_default;
   var { hasColorscale: hasColorscale4 } = helpers_default;
   function lineDefaults(traceIn, traceOut, defaultColor, layout, coerce3, opts) {
     if (!opts) opts = {};
@@ -37291,7 +37319,7 @@ var Plotly = (() => {
     if (hasColorscale4(traceIn, "line")) {
       colorScaleDefaults(traceIn, traceOut, layout, coerce3, { prefix: "line.", cLetter: "c" });
     } else {
-      var lineColorDflt = (isArrayOrTypedArray7(markerColor) ? false : markerColor) || defaultColor;
+      var lineColorDflt = (isArrayOrTypedArray(markerColor) ? false : markerColor) || defaultColor;
       coerce3("line.color", lineColorDflt);
     }
     coerce3("line.width");
@@ -37309,7 +37337,7 @@ var Plotly = (() => {
   function text_defaults_default(traceIn, traceOut, layout, coerce3, opts) {
     opts = opts || {};
     coerce3("textposition");
-    lib_default.coerceFont(coerce3, "textfont", opts.font || layout.font, opts);
+    coerceFont(coerce3, "textfont", opts.font || layout.font, opts);
     if (!opts.noSelect) {
       coerce3("selected.textfont.color");
       coerce3("unselected.textfont.color");
@@ -37317,7 +37345,6 @@ var Plotly = (() => {
   }
 
   // src/traces/scatter/fillcolor_defaults.js
-  var { isArrayOrTypedArray: isArrayOrTypedArray8 } = lib_default;
   function averageColors(colorscale) {
     var color3 = color_default.interpolate(colorscale[0][1], colorscale[1][1], 0.5);
     for (var i = 2; i < colorscale.length; i++) {
@@ -37332,9 +37359,9 @@ var Plotly = (() => {
     if (traceOut.marker) {
       var markerColor = traceOut.marker.color;
       var markerLineColor = (traceOut.marker.line || {}).color;
-      if (markerColor && !isArrayOrTypedArray8(markerColor)) {
+      if (markerColor && !isArrayOrTypedArray(markerColor)) {
         inheritColorFromMarker = markerColor;
-      } else if (markerLineColor && !isArrayOrTypedArray8(markerLineColor)) {
+      } else if (markerLineColor && !isArrayOrTypedArray(markerLineColor)) {
         inheritColorFromMarker = markerLineColor;
       }
     }
@@ -37418,7 +37445,7 @@ var Plotly = (() => {
     var errorBarsSupplyDefaults = registry_default.getComponentMethod("errorbars", "supplyDefaults");
     errorBarsSupplyDefaults(traceIn, traceOut, lineColor || markerColor || defaultColor, { axis: "y" });
     errorBarsSupplyDefaults(traceIn, traceOut, lineColor || markerColor || defaultColor, { axis: "x", inherit: "y" });
-    lib_default.coerceSelectionMarkerOpacity(traceOut, coerce3);
+    coerceSelectionMarkerOpacity(traceOut, coerce3);
   }
 
   // src/traces/scatter/grouping_defaults.js
@@ -37504,8 +37531,6 @@ var Plotly = (() => {
 
   // src/plots/cartesian/align_period.js
   var import_fast_isnumeric28 = __toESM(require_fast_isnumeric(), 1);
-  var dateTime2ms3 = lib_default.dateTime2ms;
-  var incrementMonth2 = lib_default.incrementMonth;
   var ONEAVGMONTH2 = numerical_default.ONEAVGMONTH;
   function alignPeriod(trace, ax, axLetter, vals) {
     if (ax.type !== "date") return { vals };
@@ -37526,7 +37551,7 @@ var Plotly = (() => {
     var isStart = "start" === alignment;
     var isEnd = "end" === alignment;
     var period0 = trace[axLetter + "period0"];
-    var base = dateTime2ms3(period0, calendar) || 0;
+    var base = dateTime2ms(period0, calendar) || 0;
     var newVals = [];
     var starts = [];
     var ends = [];
@@ -37536,14 +37561,14 @@ var Plotly = (() => {
       var nEstimated, startTime, endTime;
       if (mPeriod) {
         nEstimated = Math.round((v - base) / (mPeriod * ONEAVGMONTH2));
-        endTime = incrementMonth2(base, mPeriod * nEstimated, calendar);
+        endTime = incrementMonth(base, mPeriod * nEstimated, calendar);
         while (endTime > v) {
-          endTime = incrementMonth2(endTime, -mPeriod, calendar);
+          endTime = incrementMonth(endTime, -mPeriod, calendar);
         }
         while (endTime <= v) {
-          endTime = incrementMonth2(endTime, mPeriod, calendar);
+          endTime = incrementMonth(endTime, mPeriod, calendar);
         }
-        startTime = incrementMonth2(endTime, -mPeriod, calendar);
+        startTime = incrementMonth(endTime, -mPeriod, calendar);
       } else {
         nEstimated = Math.round((v - base) / period2);
         endTime = base + nEstimated * period2;
@@ -37597,47 +37622,47 @@ var Plotly = (() => {
   // src/traces/scatter/arrays_to_calcdata.js
   function arraysToCalcdata(cd, trace) {
     for (var i = 0; i < cd.length; i++) cd[i].i = i;
-    lib_default.mergeArray(trace.text, cd, "tx");
-    lib_default.mergeArray(trace.texttemplate, cd, "txt");
-    lib_default.mergeArray(trace.hovertext, cd, "htx");
-    lib_default.mergeArray(trace.customdata, cd, "data");
-    lib_default.mergeArray(trace.textposition, cd, "tp");
+    mergeArray(trace.text, cd, "tx");
+    mergeArray(trace.texttemplate, cd, "txt");
+    mergeArray(trace.hovertext, cd, "htx");
+    mergeArray(trace.customdata, cd, "data");
+    mergeArray(trace.textposition, cd, "tp");
     if (trace.textfont) {
-      lib_default.mergeArrayCastPositive(trace.textfont.size, cd, "ts");
-      lib_default.mergeArray(trace.textfont.color, cd, "tc");
-      lib_default.mergeArray(trace.textfont.family, cd, "tf");
-      lib_default.mergeArray(trace.textfont.weight, cd, "tw");
-      lib_default.mergeArray(trace.textfont.style, cd, "ty");
-      lib_default.mergeArray(trace.textfont.variant, cd, "tv");
-      lib_default.mergeArray(trace.textfont.textcase, cd, "tC");
-      lib_default.mergeArray(trace.textfont.lineposition, cd, "tE");
-      lib_default.mergeArray(trace.textfont.shadow, cd, "tS");
+      mergeArrayCastPositive(trace.textfont.size, cd, "ts");
+      mergeArray(trace.textfont.color, cd, "tc");
+      mergeArray(trace.textfont.family, cd, "tf");
+      mergeArray(trace.textfont.weight, cd, "tw");
+      mergeArray(trace.textfont.style, cd, "ty");
+      mergeArray(trace.textfont.variant, cd, "tv");
+      mergeArray(trace.textfont.textcase, cd, "tC");
+      mergeArray(trace.textfont.lineposition, cd, "tE");
+      mergeArray(trace.textfont.shadow, cd, "tS");
     }
     var marker2 = trace.marker;
     if (marker2) {
-      lib_default.mergeArrayCastPositive(marker2.size, cd, "ms");
-      lib_default.mergeArrayCastPositive(marker2.opacity, cd, "mo");
-      lib_default.mergeArray(marker2.symbol, cd, "mx");
-      lib_default.mergeArray(marker2.angle, cd, "ma");
-      lib_default.mergeArray(marker2.standoff, cd, "mf");
-      lib_default.mergeArray(marker2.color, cd, "mc");
+      mergeArrayCastPositive(marker2.size, cd, "ms");
+      mergeArrayCastPositive(marker2.opacity, cd, "mo");
+      mergeArray(marker2.symbol, cd, "mx");
+      mergeArray(marker2.angle, cd, "ma");
+      mergeArray(marker2.standoff, cd, "mf");
+      mergeArray(marker2.color, cd, "mc");
       var markerLine2 = marker2.line;
       if (marker2.line) {
-        lib_default.mergeArray(markerLine2.color, cd, "mlc");
-        lib_default.mergeArrayCastPositive(markerLine2.width, cd, "mlw");
+        mergeArray(markerLine2.color, cd, "mlc");
+        mergeArrayCastPositive(markerLine2.width, cd, "mlw");
       }
       var markerGradient = marker2.gradient;
       if (markerGradient && markerGradient.type !== "none") {
-        lib_default.mergeArray(markerGradient.type, cd, "mgt");
-        lib_default.mergeArray(markerGradient.color, cd, "mgc");
+        mergeArray(markerGradient.type, cd, "mgt");
+        mergeArray(markerGradient.color, cd, "mgc");
       }
     }
   }
 
   // src/traces/scatter/calc_selection.js
   function calcSelection(cd, trace) {
-    if (lib_default.isArrayOrTypedArray(trace.selectedpoints)) {
-      lib_default.tagSelected(cd, trace);
+    if (isArrayOrTypedArray(trace.selectedpoints)) {
+      tagSelected(cd, trace);
     }
   }
 
@@ -37664,7 +37689,7 @@ var Plotly = (() => {
     var yAttr = "y";
     var posAttr;
     if (stackGroupOpts) {
-      lib_default.pushUnique(stackGroupOpts.traceIndices, trace.index);
+      pushUnique2(stackGroupOpts.traceIndices, trace.index);
       isV = stackGroupOpts.orientation === "v";
       if (isV) {
         yAttr = "s";
@@ -37723,7 +37748,7 @@ var Plotly = (() => {
           cd.splice(i, 1);
         } else i++;
       }
-      lib_default.sort(cd, function(a, b) {
+      sort(cd, function(a, b) {
         return a[posAttr] - b[posAttr] || a.i - b.i;
       });
       if (interpolateGaps) {
@@ -37809,7 +37834,7 @@ var Plotly = (() => {
         return Math.max((v || 0) / sizeref, 3);
       };
     }
-    if (lib_default.isArrayOrTypedArray(marker2.size)) {
+    if (isArrayOrTypedArray(marker2.size)) {
       var ax = { type: "linear" };
       axes_default.setConvert(ax);
       var s = ax.makeCalcdata(trace.marker, "size");
@@ -37850,7 +37875,6 @@ var Plotly = (() => {
   var import_fast_isnumeric30 = __toESM(require_fast_isnumeric(), 1);
 
   // src/traces/bar/sieve.js
-  var { distinctVals: distinctVals2 } = lib_default;
   var sieve_default = Sieve;
   function Sieve(traces, opts) {
     this.traces = traces;
@@ -37874,7 +37898,7 @@ var Plotly = (() => {
       }
     }
     this.positions = positions;
-    var dv2 = distinctVals2(positions);
+    var dv2 = distinctVals(positions);
     this.distinctPositions = dv2.vals;
     if (dv2.vals.length === 1 && width1 !== Infinity) this.minDiff = width1;
     else this.minDiff = Math.min(dv2.minDiff, width1);
@@ -37902,7 +37926,6 @@ var Plotly = (() => {
   };
 
   // src/traces/bar/cross_trace_calc.js
-  var { isArrayOrTypedArray: isArrayOrTypedArray9 } = lib_default;
   var { BADNUM: BADNUM10 } = numerical_default;
   function crossTraceCalc(gd, plotinfo) {
     var xa = plotinfo.xaxis;
@@ -38037,7 +38060,7 @@ var Plotly = (() => {
       var d2c = sa.type === "category" || sa.type === "multicategory" ? function() {
         return null;
       } : sa.d2c;
-      if (isArrayOrTypedArray9(base)) {
+      if (isArrayOrTypedArray(base)) {
         for (j = 0; j < Math.min(base.length, cd.length); j++) {
           b = d2c(base[j], 0, scalendar);
           if ((0, import_fast_isnumeric30.default)(b)) {
@@ -38178,7 +38201,7 @@ var Plotly = (() => {
       var offset = fullTrace._offset || fullTrace.offset;
       var initialPoffset = t.poffset;
       var newPoffset;
-      if (isArrayOrTypedArray9(offset)) {
+      if (isArrayOrTypedArray(offset)) {
         newPoffset = Array.prototype.slice.call(offset, 0, calcTrace.length);
         for (j = 0; j < newPoffset.length; j++) {
           if (!(0, import_fast_isnumeric30.default)(newPoffset[j])) {
@@ -38194,7 +38217,7 @@ var Plotly = (() => {
       }
       var width = fullTrace._width || fullTrace.width;
       var initialBarwidth = t.barwidth;
-      if (isArrayOrTypedArray9(width)) {
+      if (isArrayOrTypedArray(width)) {
         var newBarwidth = Array.prototype.slice.call(width, 0, calcTrace.length);
         for (j = 0; j < newBarwidth.length; j++) {
           if (!(0, import_fast_isnumeric30.default)(newBarwidth[j])) newBarwidth[j] = initialBarwidth;
@@ -38227,9 +38250,9 @@ var Plotly = (() => {
       var calcTrace = calcTraces[i];
       var t = calcTrace[0].t;
       var poffset = t.poffset;
-      var poffsetIsArray = isArrayOrTypedArray9(poffset);
+      var poffsetIsArray = isArrayOrTypedArray(poffset);
       var barwidth = t.barwidth;
-      var barwidthIsArray = isArrayOrTypedArray9(barwidth);
+      var barwidthIsArray = isArrayOrTypedArray(barwidth);
       for (var j = 0; j < calcTrace.length; j++) {
         var calcBar = calcTrace[j];
         var width = calcBar.w = barwidthIsArray ? barwidth[j] : barwidth;
@@ -38263,8 +38286,8 @@ var Plotly = (() => {
         var t = calcTrace0.t;
         var poffset = t.poffset;
         var barwidth = t.barwidth;
-        var poffsetIsArray = isArrayOrTypedArray9(poffset);
-        var barwidthIsArray = isArrayOrTypedArray9(barwidth);
+        var poffsetIsArray = isArrayOrTypedArray(poffset);
+        var barwidthIsArray = isArrayOrTypedArray(barwidth);
         for (j = 0; j < calcTrace.length; j++) {
           bar = calcTrace[j];
           var calcBarOffset = poffsetIsArray ? poffset[j] : poffset;
@@ -38483,7 +38506,7 @@ var Plotly = (() => {
       cd = calcTraces[i];
       cd[0].t.extents = extents;
       var poffset = cd[0].t.poffset;
-      var poffsetIsArray = isArrayOrTypedArray9(poffset);
+      var poffsetIsArray = isArrayOrTypedArray(poffset);
       for (j = 0; j < cd.length; j++) {
         var di = cd[j];
         var p0 = di[pLetter] - di.w / 2;
@@ -38683,8 +38706,6 @@ var Plotly = (() => {
   var LOG_CLIP2 = numerical_default.LOG_CLIP;
   var LOG_CLIP_PLUS = LOG_CLIP2 + 0.5;
   var LOG_CLIP_MINUS = LOG_CLIP2 - 0.5;
-  var segmentsIntersect2 = lib_default.segmentsIntersect;
-  var constrain = lib_default.constrain;
   function linePoints(d, opts) {
     var trace = opts.trace || {};
     var xa = opts.xaxis;
@@ -38780,7 +38801,7 @@ var Plotly = (() => {
       var ptCount = 0;
       for (var i2 = 0; i2 < 4; i2++) {
         var edge = edges[i2];
-        var ptInt = segmentsIntersect2(
+        var ptInt = segmentsIntersect(
           pt1[0],
           pt1[1],
           pt2[0],
@@ -38825,7 +38846,7 @@ var Plotly = (() => {
         if (ptInt1 && ptInt2 && sameEdge(ptInt1, ptInt2)) return out;
         if (ptInt1) out.push(ptInt1);
         if (ptInt2) out.push(ptInt2);
-        var midShift = 2 * lib_default.constrain((pt1[dim] + pt2[dim]) / 2, limit0, limit1) - ((ptInt1 || pt1)[dim] + (ptInt2 || pt2)[dim]);
+        var midShift = 2 * constrain((pt1[dim] + pt2[dim]) / 2, limit0, limit1) - ((ptInt1 || pt1)[dim] + (ptInt2 || pt2)[dim]);
         if (midShift) {
           var ptToAlter;
           if (ptInt1 && ptInt2) {
@@ -38876,7 +38897,7 @@ var Plotly = (() => {
       lastFarPt = null;
       lastXEdge = lastYEdge = 0;
     }
-    var arrayMarker = lib_default.isArrayOrTypedArray(marker2);
+    var arrayMarker = isArrayOrTypedArray(marker2);
     function addPt(pt) {
       if (pt && backoff) {
         pt.i = i;
@@ -39237,8 +39258,6 @@ var Plotly = (() => {
 
   // src/traces/scatter/plot.js
   var { tester: polygonTester } = polygon_default;
-  var ensureSingle = lib_default.ensureSingle;
-  var identity5 = lib_default.identity;
   function plot(gd, plotinfo, cdscatter, scatterLayer, transitionOpts, makeOnCompleteCallback) {
     var join, onComplete;
     var isFullReplot = !transitionOpts;
@@ -39284,7 +39303,7 @@ var Plotly = (() => {
       var fillData = [];
       if (trace._ownfill) fillData.push("_ownFill");
       if (trace._nexttrace) fillData.push("_nextFill");
-      var fillJoin = fills.selectAll("g").data(fillData, identity5);
+      var fillJoin = fills.selectAll("g").data(fillData, identity3);
       fillJoin.enter().append("g");
       fillJoin.exit().each(function(d2) {
         trace[d2] = null;
@@ -39348,7 +39367,7 @@ var Plotly = (() => {
     trace._polygons = [];
     var fillsegments = [];
     var segments = [];
-    var makeUpdate = lib_default.noop;
+    var makeUpdate = noop3;
     ownFillEl3 = trace._ownFill;
     if (subtypes_default.hasLines(trace) || trace.fill !== "none") {
       if (tonext) {
@@ -39550,7 +39569,7 @@ var Plotly = (() => {
       var markerFilter = hideFilter;
       var textFilter = hideFilter;
       if (showMarkers || showText) {
-        var showFilter = identity5;
+        var showFilter = identity3;
         var stackGroup = trace2.stackgroup;
         var isInferZero = stackGroup && gd._fullLayout._scatterStackOpts[xa._id + ya._id][stackGroup].stackgaps === "infer zero";
         if (trace2.marker.maxdisplayed || trace2._needsCull) {
@@ -39629,8 +39648,8 @@ var Plotly = (() => {
   function selectMarkers(gd, idx, plotinfo, cdscatter, cdscatterAll) {
     var xa = plotinfo.xaxis;
     var ya = plotinfo.yaxis;
-    var xr = extent(lib_default.simpleMap(xa.range, xa.r2c));
-    var yr = extent(lib_default.simpleMap(ya.range, ya.r2c));
+    var xr = extent(simpleMap(xa.range, xa.r2c));
+    var yr = extent(simpleMap(ya.range, ya.r2c));
     var trace = cdscatter[0].trace;
     if (!subtypes_default.hasMarkers(trace)) return;
     var mnum = trace.marker.maxdisplayed;
@@ -39744,7 +39763,6 @@ var Plotly = (() => {
   }
 
   // src/traces/scatter/hover.js
-  var fillText = lib_default.fillText;
   function hoverPoints(pointData, xval, yval, hovermode) {
     var cd = pointData.cd;
     var trace = cd[0].trace;
@@ -39798,7 +39816,7 @@ var Plotly = (() => {
         var sizeVal = orientation && (di.sNorm || di.s);
         var xLabelVal = orientation === "h" ? sizeVal : di.orig_x !== void 0 ? di.orig_x : di.x;
         var yLabelVal = orientation === "v" ? sizeVal : di.orig_y !== void 0 ? di.orig_y : di.y;
-        lib_default.extendFlat(pointData, {
+        extendFlat(pointData, {
           color: getTraceColor(trace, di),
           x0: xc - rad,
           x1: xc + rad,
@@ -39894,7 +39912,7 @@ var Plotly = (() => {
         else if (color_default.opacity((trace.line || {}).color)) {
           color3 = trace.line.color;
         }
-        lib_default.extendFlat(pointData, {
+        extendFlat(pointData, {
           // never let a 2D override 1D type as closest point
           // also: no spikeDistance, it's not allowed for fills
           distance: pointData.maxHoverDistance,
@@ -39906,7 +39924,7 @@ var Plotly = (() => {
           hovertemplate: false
         });
         delete pointData.index;
-        if (trace.text && !lib_default.isArrayOrTypedArray(trace.text)) {
+        if (trace.text && !isArrayOrTypedArray(trace.text)) {
           pointData.text = String(trace.text);
         } else pointData.text = trace.name;
         return [pointData];
@@ -40222,8 +40240,8 @@ var Plotly = (() => {
     handlePrefixSuffixDefaults(containerIn, containerOut, coerce3, axType, options);
     if (!visible) return containerOut;
     coerce3("title.text", dfltTitle);
-    lib_default.coerceFont(coerce3, "title.font", font3, { overrideDflt: {
-      size: lib_default.bigFont(font3.size),
+    coerceFont(coerce3, "title.font", font3, { overrideDflt: {
+      size: bigFont(font3.size),
       color: dfltFontColor
     } });
     handleTickValueDefaults(containerIn, containerOut, coerce3, axType);
@@ -40288,7 +40306,7 @@ var Plotly = (() => {
             var trace = options.data[i];
             if (trace.type === "scattergl" || trace.type === "splom") {
               trace.visible = false;
-              lib_default.warn(trace.type + " traces do not work on axes with rangebreaks. Setting trace " + trace.index + " to `visible: false`.");
+              warn(trace.type + " traces do not work on axes with rangebreaks. Setting trace " + trace.index + " to `visible: false`.");
             }
           }
         }
@@ -40456,7 +40474,7 @@ var Plotly = (() => {
     if (!overlaying) {
       var domain = coerce3("domain", dfltDomain);
       if (domain[0] > domain[1] - 1 / 4096) containerOut.domain = dfltDomain;
-      lib_default.noneOrAll(containerIn.domain, containerOut.domain, dfltDomain);
+      noneOrAll(containerIn.domain, containerOut.domain, dfltDomain);
       if (containerOut.tickmode === "sync") {
         containerOut.tickmode = "auto";
       }
@@ -40543,8 +40561,8 @@ var Plotly = (() => {
     var subplots = layoutOut._subplots;
     var xIds = subplots.xaxis;
     var yIds = subplots.yaxis;
-    var xNames = lib_default.simpleMap(xIds, id2name3);
-    var yNames = lib_default.simpleMap(yIds, id2name3);
+    var xNames = simpleMap(xIds, id2name3);
+    var yNames = simpleMap(yIds, id2name3);
     var axNames = xNames.concat(yNames);
     var plotBgColor = color_default.background;
     if (xIds.length && yIds.length) {
@@ -40607,7 +40625,7 @@ var Plotly = (() => {
       axName = axNames[i];
       axId = name2id3(axName);
       axLetter = axName.charAt(0);
-      if (!lib_default.isPlainObject(layoutIn[axName])) {
+      if (!isPlainObject2(layoutIn[axName])) {
         layoutIn[axName] = {};
       }
       axLayoutIn = layoutIn[axName];
@@ -40672,7 +40690,7 @@ var Plotly = (() => {
       axId = missingMatchedAxisIds[i++];
       axName = id2name3(axId);
       axLetter = axName.charAt(0);
-      if (!lib_default.isPlainObject(layoutIn[axName])) {
+      if (!isPlainObject2(layoutIn[axName])) {
         layoutIn[axName] = {};
       }
       axLayoutIn = layoutIn[axName];
@@ -40767,8 +40785,8 @@ var Plotly = (() => {
       var editY = !!edit.yr1;
       var viewBox = [];
       if (editX) {
-        var xr0 = lib_default.simpleMap(edit.xr0, xa.r2l);
-        var xr1 = lib_default.simpleMap(edit.xr1, xa.r2l);
+        var xr0 = simpleMap(edit.xr0, xa.r2l);
+        var xr1 = simpleMap(edit.xr1, xa.r2l);
         var dx0 = xr0[1] - xr0[0];
         var dx1 = xr1[1] - xr1[0];
         viewBox[0] = (xr0[0] * (1 - progress) + progress * xr1[0] - xr0[0]) / (xr0[1] - xr0[0]) * xlen;
@@ -40780,8 +40798,8 @@ var Plotly = (() => {
         viewBox[2] = xlen;
       }
       if (editY) {
-        var yr0 = lib_default.simpleMap(edit.yr0, ya.r2l);
-        var yr1 = lib_default.simpleMap(edit.yr1, ya.r2l);
+        var yr0 = simpleMap(edit.yr0, ya.r2l);
+        var yr1 = simpleMap(edit.yr1, ya.r2l);
         var dy0 = yr0[1] - yr0[0];
         var dy1 = yr1[1] - yr1[0];
         viewBox[1] = (yr0[1] * (1 - progress) + progress * yr1[1] - yr0[1]) / (yr0[0] - yr0[1]) * ylen;
@@ -40871,9 +40889,8 @@ var Plotly = (() => {
   }
 
   // src/plots/cartesian/index.js
-  var ensureSingle2 = lib_default.ensureSingle;
   function ensureSingleAndAddDatum(parent, nodeType, className) {
-    return lib_default.ensureSingle(parent, nodeType, className, function(s) {
+    return ensureSingle(parent, nodeType, className, function(s) {
       s.datum(className);
     });
   }
@@ -40910,7 +40927,7 @@ var Plotly = (() => {
         spAll.push(xi + yi);
         if (!allY[yi]) {
           allY[yi] = 1;
-          lib_default.pushUnique(yList, yi);
+          pushUnique2(yList, yi);
         }
       }
     }
@@ -40923,7 +40940,7 @@ var Plotly = (() => {
         spAll.push(xi + yi);
         if (!allX[xi]) {
           allX[xi] = 1;
-          lib_default.pushUnique(xList, xi);
+          pushUnique2(xList, xi);
         }
       }
     }
@@ -40968,7 +40985,7 @@ var Plotly = (() => {
           var idWithZ = subplotInfo.id;
           if (idWithZ.indexOf(zindexSeparator3) !== -1) continue;
           idWithZ += zindexSeparator3 + (z + 1);
-          subplotInfo = lib_default.extendFlat({}, subplotInfo, {
+          subplotInfo = extendFlat({}, subplotInfo, {
             id: idWithZ,
             plot: fullLayout._cartesianlayer.selectAll(".subplot").select("." + idWithZ)
           });
@@ -41131,7 +41148,7 @@ var Plotly = (() => {
       if (!traceZorderGroups[zi]) traceZorderGroups[zi] = [];
       traceZorderGroups[zi].push(cdi);
     }
-    var zindices = Object.keys(traceZorderGroups).map(Number).sort(lib_default.sorterAsc);
+    var zindices = Object.keys(traceZorderGroups).map(Number).sort(sorterAsc);
     if (!zindices.length) zindices = [0];
     fullLayout._zindices = zindices;
     var initialSubplotData = makeSubplotData(gd);
@@ -41161,7 +41178,7 @@ var Plotly = (() => {
       var idWithoutZ = hasZ ? id2.slice(0, posZ) : id2;
       var plotinfo = fullLayout._plots[id2];
       if (!plotinfo) {
-        plotinfo = lib_default.extendFlat({}, fullLayout._plots[idWithoutZ]);
+        plotinfo = extendFlat({}, fullLayout._plots[idWithoutZ]);
         if (plotinfo) {
           plotinfo.id = id2;
           fullLayout._plots[id2] = plotinfo;
@@ -41172,7 +41189,7 @@ var Plotly = (() => {
         plotinfo.plotgroup = select_default2(this);
         makeSubplotLayer(gd, plotinfo);
         if (!hasZ) {
-          plotinfo.draglayer = ensureSingle2(fullLayout._draggers, "g", id2);
+          plotinfo.draglayer = ensureSingle(fullLayout._draggers, "g", id2);
         }
       }
     });
@@ -41254,48 +41271,48 @@ var Plotly = (() => {
     var mainplotinfo = plotinfo.mainplotinfo;
     if (!plotinfo.mainplot || hasMultipleZ) {
       if (hasOnlyLargeSploms) {
-        plotinfo.xlines = ensureSingle2(plotgroup, "path", "xlines-above");
-        plotinfo.ylines = ensureSingle2(plotgroup, "path", "ylines-above");
-        plotinfo.xaxislayer = ensureSingle2(plotgroup, "g", "xaxislayer-above");
-        plotinfo.yaxislayer = ensureSingle2(plotgroup, "g", "yaxislayer-above");
+        plotinfo.xlines = ensureSingle(plotgroup, "path", "xlines-above");
+        plotinfo.ylines = ensureSingle(plotgroup, "path", "ylines-above");
+        plotinfo.xaxislayer = ensureSingle(plotgroup, "g", "xaxislayer-above");
+        plotinfo.yaxislayer = ensureSingle(plotgroup, "g", "yaxislayer-above");
       } else {
         if (!hasZ) {
-          var backLayer = ensureSingle2(plotgroup, "g", "layer-subplot");
-          plotinfo.shapelayer = ensureSingle2(backLayer, "g", "shapelayer");
-          plotinfo.imagelayer = ensureSingle2(backLayer, "g", "imagelayer");
+          var backLayer = ensureSingle(plotgroup, "g", "layer-subplot");
+          plotinfo.shapelayer = ensureSingle(backLayer, "g", "shapelayer");
+          plotinfo.imagelayer = ensureSingle(backLayer, "g", "imagelayer");
           if (mainplotinfo && hasMultipleZ) {
             plotinfo.minorGridlayer = mainplotinfo.minorGridlayer;
             plotinfo.gridlayer = mainplotinfo.gridlayer;
             plotinfo.zerolinelayer = mainplotinfo.zerolinelayer;
           } else {
-            plotinfo.minorGridlayer = ensureSingle2(plotgroup, "g", "minor-gridlayer");
-            plotinfo.gridlayer = ensureSingle2(plotgroup, "g", "gridlayer");
-            plotinfo.zerolinelayer = ensureSingle2(plotgroup, "g", "zerolinelayer");
+            plotinfo.minorGridlayer = ensureSingle(plotgroup, "g", "minor-gridlayer");
+            plotinfo.gridlayer = ensureSingle(plotgroup, "g", "gridlayer");
+            plotinfo.zerolinelayer = ensureSingle(plotgroup, "g", "zerolinelayer");
           }
-          var betweenLayer = ensureSingle2(plotgroup, "g", "layer-between");
-          plotinfo.shapelayerBetween = ensureSingle2(betweenLayer, "g", "shapelayer");
-          plotinfo.imagelayerBetween = ensureSingle2(betweenLayer, "g", "imagelayer");
-          ensureSingle2(plotgroup, "path", "xlines-below");
-          ensureSingle2(plotgroup, "path", "ylines-below");
-          plotinfo.overlinesBelow = ensureSingle2(plotgroup, "g", "overlines-below");
-          ensureSingle2(plotgroup, "g", "xaxislayer-below");
-          ensureSingle2(plotgroup, "g", "yaxislayer-below");
-          plotinfo.overaxesBelow = ensureSingle2(plotgroup, "g", "overaxes-below");
+          var betweenLayer = ensureSingle(plotgroup, "g", "layer-between");
+          plotinfo.shapelayerBetween = ensureSingle(betweenLayer, "g", "shapelayer");
+          plotinfo.imagelayerBetween = ensureSingle(betweenLayer, "g", "imagelayer");
+          ensureSingle(plotgroup, "path", "xlines-below");
+          ensureSingle(plotgroup, "path", "ylines-below");
+          plotinfo.overlinesBelow = ensureSingle(plotgroup, "g", "overlines-below");
+          ensureSingle(plotgroup, "g", "xaxislayer-below");
+          ensureSingle(plotgroup, "g", "yaxislayer-below");
+          plotinfo.overaxesBelow = ensureSingle(plotgroup, "g", "overaxes-below");
         }
-        plotinfo.overplot = ensureSingle2(plotgroup, "g", "overplot");
-        plotinfo.plot = ensureSingle2(plotinfo.overplot, "g", id2);
+        plotinfo.overplot = ensureSingle(plotgroup, "g", "overplot");
+        plotinfo.plot = ensureSingle(plotinfo.overplot, "g", id2);
         if (mainplotinfo && hasMultipleZ) {
           plotinfo.zerolinelayerAbove = mainplotinfo.zerolinelayerAbove;
         } else {
-          plotinfo.zerolinelayerAbove = ensureSingle2(plotgroup, "g", "zerolinelayer-above");
+          plotinfo.zerolinelayerAbove = ensureSingle(plotgroup, "g", "zerolinelayer-above");
         }
         if (!hasZ) {
-          plotinfo.xlines = ensureSingle2(plotgroup, "path", "xlines-above");
-          plotinfo.ylines = ensureSingle2(plotgroup, "path", "ylines-above");
-          plotinfo.overlinesAbove = ensureSingle2(plotgroup, "g", "overlines-above");
-          ensureSingle2(plotgroup, "g", "xaxislayer-above");
-          ensureSingle2(plotgroup, "g", "yaxislayer-above");
-          plotinfo.overaxesAbove = ensureSingle2(plotgroup, "g", "overaxes-above");
+          plotinfo.xlines = ensureSingle(plotgroup, "path", "xlines-above");
+          plotinfo.ylines = ensureSingle(plotgroup, "path", "ylines-above");
+          plotinfo.overlinesAbove = ensureSingle(plotgroup, "g", "overlines-above");
+          ensureSingle(plotgroup, "g", "xaxislayer-above");
+          ensureSingle(plotgroup, "g", "yaxislayer-above");
+          plotinfo.overaxesAbove = ensureSingle(plotgroup, "g", "overaxes-above");
           plotinfo.xlines = plotgroup.select(".xlines-" + xLayer);
           plotinfo.ylines = plotgroup.select(".ylines-" + yLayer);
           plotinfo.xaxislayer = plotgroup.select(".xaxislayer-" + xLayer);
@@ -41310,15 +41327,15 @@ var Plotly = (() => {
       plotinfo.gridlayer = mainplotinfo.gridlayer;
       plotinfo.zerolinelayer = mainplotinfo.zerolinelayer;
       plotinfo.zerolinelayerAbove = mainplotinfo.zerolinelayerAbove;
-      ensureSingle2(mainplotinfo.overlinesBelow, "path", xId);
-      ensureSingle2(mainplotinfo.overlinesBelow, "path", yId);
-      ensureSingle2(mainplotinfo.overaxesBelow, "g", xId);
-      ensureSingle2(mainplotinfo.overaxesBelow, "g", yId);
-      plotinfo.plot = ensureSingle2(mainplotinfo.overplot, "g", id2);
-      ensureSingle2(mainplotinfo.overlinesAbove, "path", xId);
-      ensureSingle2(mainplotinfo.overlinesAbove, "path", yId);
-      ensureSingle2(mainplotinfo.overaxesAbove, "g", xId);
-      ensureSingle2(mainplotinfo.overaxesAbove, "g", yId);
+      ensureSingle(mainplotinfo.overlinesBelow, "path", xId);
+      ensureSingle(mainplotinfo.overlinesBelow, "path", yId);
+      ensureSingle(mainplotinfo.overaxesBelow, "g", xId);
+      ensureSingle(mainplotinfo.overaxesBelow, "g", yId);
+      plotinfo.plot = ensureSingle(mainplotinfo.overplot, "g", id2);
+      ensureSingle(mainplotinfo.overlinesAbove, "path", xId);
+      ensureSingle(mainplotinfo.overlinesAbove, "path", yId);
+      ensureSingle(mainplotinfo.overaxesAbove, "g", xId);
+      ensureSingle(mainplotinfo.overaxesAbove, "g", yId);
       plotinfo.xlines = mainplotgroup.select(".overlines-" + xLayer).select("." + xId);
       plotinfo.ylines = mainplotgroup.select(".overlines-" + yLayer).select("." + yId);
       plotinfo.xaxislayer = mainplotgroup.select(".overaxes-" + xLayer).select("." + xId);
@@ -41479,9 +41496,9 @@ var Plotly = (() => {
   ];
 
   // src/components/annotations/draw_arrow_head.js
-  var strScale = lib_default.strScale;
+  var strScale2 = lib_default.strScale;
   var strRotate2 = lib_default.strRotate;
-  var strTranslate8 = lib_default.strTranslate;
+  var strTranslate2 = lib_default.strTranslate;
   function drawArrowHead(el3, ends, options) {
     var el = el3.node();
     var headStyle = arrow_paths_default[options.arrowhead || 0];
@@ -41557,7 +41574,7 @@ var Plotly = (() => {
       select_default2(el.parentNode).append("path").attr({
         class: el3.attr("class"),
         d: arrowHeadStyle.path,
-        transform: strTranslate8(p.x, p.y) + strRotate2(rot * 180 / Math.PI) + strScale(arrowScale)
+        transform: strTranslate2(p.x, p.y) + strRotate2(rot * 180 / Math.PI) + strScale2(arrowScale)
       }).style({
         fill: color_default.rgb(options.arrowcolor),
         "stroke-width": 0
@@ -41568,7 +41585,7 @@ var Plotly = (() => {
   }
 
   // src/components/annotations/draw.js
-  var strTranslate9 = lib_default.strTranslate;
+  var strTranslate3 = lib_default.strTranslate;
   var draw_default = {
     draw: draw3,
     drawOne: drawOne2,
@@ -41953,7 +41970,7 @@ var Plotly = (() => {
           }
           var arrowDrag = arrowGroup.append("path").classed("annotation-arrow", true).classed("anndrag", true).classed("cursor-move", true).attr({
             d: "M3,3H-3V-3H3ZM0,0L" + (tailX - arrowDragHeadX) + "," + (tailY - arrowDragHeadY),
-            transform: strTranslate9(arrowDragHeadX, arrowDragHeadY)
+            transform: strTranslate3(arrowDragHeadX, arrowDragHeadY)
           }).style("stroke-width", strokewidth + 6 + "px").call(color_default.stroke, "rgba(0,0,0,0)").call(color_default.fill, "rgba(0,0,0,0)");
           var annx0, anny0;
           dragelement_default.init({
@@ -41989,7 +42006,7 @@ var Plotly = (() => {
               if (options.ayref === options.yref) {
                 modifyItem("ay", shiftPosition(ya, dy2, "ay", gs, options));
               }
-              arrowGroup.attr("transform", strTranslate9(dx2, dy2));
+              arrowGroup.attr("transform", strTranslate3(dx2, dy2));
               annTextGroup.attr({
                 transform: "rotate(" + textangle + "," + xcenter + "," + ycenter + ")"
               });
@@ -42065,11 +42082,11 @@ var Plotly = (() => {
               }
             } else return;
             annTextGroup.attr({
-              transform: strTranslate9(dx, dy) + baseTextTransform
+              transform: strTranslate3(dx, dy) + baseTextTransform
             });
             setCursor(annTextGroupInner, csr);
           },
-          clickFn: function(_3, initialEvent) {
+          clickFn: function(_2, initialEvent) {
             if (options.captureevents) {
               gd.emit("plotly_clickannotation", makeEventData2(initialEvent));
             }
@@ -42908,7 +42925,7 @@ var Plotly = (() => {
   };
 
   // src/components/selections/helpers.js
-  var { strTranslate: strTranslate10 } = lib_default;
+  var { strTranslate: strTranslate4 } = lib_default;
   function p2r(ax, v) {
     switch (ax.type) {
       case "log":
@@ -42936,7 +42953,7 @@ var Plotly = (() => {
     };
   }
   function getTransform(plotinfo) {
-    return strTranslate10(
+    return strTranslate4(
       plotinfo.xaxis._offset,
       plotinfo.yaxis._offset
     );
@@ -44050,7 +44067,7 @@ var Plotly = (() => {
 
   // src/components/shapes/display_outlines.js
   var { newShapes: newShapes2, createShapeObj: createShapeObj2 } = newshapes_default;
-  var strTranslate11 = lib_default.strTranslate;
+  var strTranslate5 = lib_default.strTranslate;
   var drawMode3 = helpers_default4.drawMode;
   var selectMode3 = helpers_default4.selectMode;
   var i0002 = constants_default5.i000;
@@ -44221,7 +44238,7 @@ var Plotly = (() => {
             var dy = nextPoint[2] - y;
             var width = dy ? 5 : Math.max(Math.min(25, Math.abs(dx) - 5), 5);
             var height = dx ? 5 : Math.max(Math.min(25, Math.abs(dy) - 5), 5);
-            vertex.classed(dy ? "cursor-ew-resize" : "cursor-ns-resize", true).attr("width", width).attr("height", height).attr("x", x - width / 2).attr("y", y - height / 2).attr("transform", strTranslate11(dx / 2, dy / 2));
+            vertex.classed(dy ? "cursor-ew-resize" : "cursor-ns-resize", true).attr("width", width).attr("height", height).attr("x", x - width / 2).attr("y", y - height / 2).attr("transform", strTranslate5(dx / 2, dy / 2));
           } else {
             vertex.classed("cursor-grab", true).attr("r", 5).attr("cx", x).attr("cy", y);
           }
@@ -48271,7 +48288,7 @@ var Plotly = (() => {
   }
 
   // src/components/sliders/draw.js
-  var strTranslate12 = lib_default.strTranslate;
+  var strTranslate6 = lib_default.strTranslate;
   var LINE_SPACING6 = alignment_default.LINE_SPACING;
   var FROM_TL4 = alignment_default.FROM_TL;
   var FROM_BR2 = alignment_default.FROM_BR;
@@ -48642,7 +48659,7 @@ var Plotly = (() => {
     if (doTransition && sliderOpts.transition.duration > 0) {
       el = el.transition().duration(sliderOpts.transition.duration).ease(sliderOpts.transition.easing);
     }
-    el.attr("transform", strTranslate12(x - constants_default9.gripWidth * 0.5, sliderOpts._dims.currentValueTotalHeight));
+    el.attr("transform", strTranslate6(x - constants_default9.gripWidth * 0.5, sliderOpts._dims.currentValueTotalHeight));
   }
   function normalizedValueToPosition(sliderOpts, normalizedPosition) {
     var dims = sliderOpts._dims;
@@ -48909,7 +48926,7 @@ var Plotly = (() => {
   }
 
   // src/components/rangeslider/draw.js
-  var strTranslate13 = lib_default.strTranslate;
+  var strTranslate7 = lib_default.strTranslate;
   function draw_default4(gd) {
     var fullLayout = gd._fullLayout;
     var rangeSliderData = fullLayout._rangeSliderData;
@@ -48957,7 +48974,7 @@ var Plotly = (() => {
       var y = Math.round(
         gs.t + gs.h * (1 - axisOpts._counterDomainMin) + (axisOpts.side === "bottom" ? axisOpts._depth : 0) + opts2._offsetShift + constants_default10.extraPad
       );
-      rangeSlider.attr("transform", strTranslate13(x, y));
+      rangeSlider.attr("transform", strTranslate7(x, y));
       opts2._rl = lib_default.simpleMap(opts2.range, axisOpts.r2l);
       var rl0 = opts2._rl[0];
       var rl1 = opts2._rl[1];
@@ -49151,8 +49168,8 @@ var Plotly = (() => {
     var offset = 0.5;
     var xMin = Math.round(clampHandle(pixelMin - hw2)) - offset;
     var xMax = Math.round(clampHandle(pixelMax - hw2)) + offset;
-    rangeSlider.select("g." + constants_default10.grabberMinClassName).attr("transform", strTranslate13(xMin, offset));
-    rangeSlider.select("g." + constants_default10.grabberMaxClassName).attr("transform", strTranslate13(xMax, offset));
+    rangeSlider.select("g." + constants_default10.grabberMinClassName).attr("transform", strTranslate7(xMin, offset));
+    rangeSlider.select("g." + constants_default10.grabberMaxClassName).attr("transform", strTranslate7(xMax, offset));
   }
   function drawBg(rangeSlider, gd, axisOpts, opts) {
     var bg = lib_default.ensureSingle(rangeSlider, "rect", constants_default10.bgClassName, function(s) {
@@ -49168,7 +49185,7 @@ var Plotly = (() => {
     bg.attr({
       width: opts._width + borderCorrect,
       height: opts._height + borderCorrect,
-      transform: strTranslate13(offsetShift, offsetShift),
+      transform: strTranslate7(offsetShift, offsetShift),
       "stroke-width": lw
     }).call(color_default.stroke, opts.bordercolor).call(color_default.fill, opts.bgcolor);
   }
@@ -49527,7 +49544,7 @@ var Plotly = (() => {
   }
 
   // src/components/rangeselector/get_update_object.js
-  var { titleCase } = lib_default;
+  var { titleCase: titleCase2 } = lib_default;
   function getUpdateObject(axisLayout, buttonLayout) {
     var axName = axisLayout._name;
     var update3 = {};
@@ -49544,7 +49561,7 @@ var Plotly = (() => {
     var currentRange = axisLayout.range;
     var base = new Date(axisLayout.r2l(currentRange[1]));
     var step = buttonLayout.step;
-    var utcStep = src_exports["utc" + titleCase(step)];
+    var utcStep = src_exports["utc" + titleCase2(step)];
     var count = buttonLayout.count;
     var range0;
     switch (buttonLayout.stepmode) {
@@ -49561,7 +49578,7 @@ var Plotly = (() => {
   }
 
   // src/components/rangeselector/draw.js
-  var strTranslate14 = lib_default.strTranslate;
+  var strTranslate8 = lib_default.strTranslate;
   var LINE_SPACING8 = alignment_default.LINE_SPACING;
   var FROM_TL5 = alignment_default.FROM_TL;
   var FROM_BR3 = alignment_default.FROM_BR;
@@ -49673,7 +49690,7 @@ var Plotly = (() => {
       var tHeight = opts.font.size * LINE_SPACING8;
       var tLines = svg_text_utils_default.lineCount(text);
       var wEff = Math.max(tWidth + 10, constants_default11.minButtonWidth);
-      button.attr("transform", strTranslate14(borderWidth + width, borderWidth));
+      button.attr("transform", strTranslate8(borderWidth + width, borderWidth));
       rect.attr({
         x: 0,
         y: 0,
@@ -49720,7 +49737,7 @@ var Plotly = (() => {
       b: height * FROM_BR3[yanchor],
       t: height * FROM_TL5[yanchor]
     });
-    selector.attr("transform", strTranslate14(lx, ly));
+    selector.attr("transform", strTranslate8(lx, ly));
   }
 
   // src/components/rangeselector/index.js
@@ -50455,7 +50472,7 @@ var Plotly = (() => {
   // src/components/colorbar/draw.js
   var { flipScale: flipScale2 } = helpers_default;
   var { cn } = constants_default12;
-  var strTranslate15 = lib_default.strTranslate;
+  var strTranslate9 = lib_default.strTranslate;
   var LINE_SPACING9 = alignment_default.LINE_SPACING;
   var FROM_TL6 = alignment_default.FROM_TL;
   var FROM_BR4 = alignment_default.FROM_BR;
@@ -50663,8 +50680,8 @@ var Plotly = (() => {
       vFrac + lenFrac - xpad / gs.w
     ];
     ax.setScale();
-    g.attr("transform", strTranslate15(Math.round(gs.l), Math.round(gs.t)));
-    var titleCont = g.select("." + cn.cbtitleunshift).attr("transform", strTranslate15(-Math.round(gs.l), -Math.round(gs.t)));
+    g.attr("transform", strTranslate9(Math.round(gs.l), Math.round(gs.t)));
+    var titleCont = g.select("." + cn.cbtitleunshift).attr("transform", strTranslate9(-Math.round(gs.l), -Math.round(gs.t)));
     var ticklabelposition = ax.ticklabelposition;
     var titleFontSize = ax.title.font.size;
     var axLayer = g.select("." + cn.cbaxis);
@@ -50774,7 +50791,7 @@ var Plotly = (() => {
               var nlines = svg_text_utils_default.lineCount(titleText);
               titleTrans[1] += (1 - nlines) * lineSize;
             }
-            titleGroup.attr("transform", strTranslate15(titleTrans[0], titleTrans[1]));
+            titleGroup.attr("transform", strTranslate9(titleTrans[0], titleTrans[1]));
             ax.setScale();
           }
         } else {
@@ -50782,18 +50799,18 @@ var Plotly = (() => {
             if (titleSide === "right") {
               ax.domain[0] += (titleWidth + titleFontSize / 2) / gs.w;
             }
-            titleGroup.attr("transform", strTranslate15(titleTrans[0], titleTrans[1]));
+            titleGroup.attr("transform", strTranslate9(titleTrans[0], titleTrans[1]));
             ax.setScale();
           }
         }
       }
       g.selectAll("." + cn.cbfills + ",." + cn.cblines).attr(
         "transform",
-        isVertical3 ? strTranslate15(0, Math.round(gs.h * (1 - ax.domain[1]))) : strTranslate15(Math.round(gs.w * ax.domain[0]), 0)
+        isVertical3 ? strTranslate9(0, Math.round(gs.h * (1 - ax.domain[1]))) : strTranslate9(Math.round(gs.w * ax.domain[0]), 0)
       );
       axLayer.attr(
         "transform",
-        isVertical3 ? strTranslate15(0, Math.round(-gs.t)) : strTranslate15(Math.round(-gs.l), 0)
+        isVertical3 ? strTranslate9(0, Math.round(-gs.t)) : strTranslate9(Math.round(-gs.l), 0)
       );
       var fills = g.select("." + cn.cbfills).selectAll("rect." + cn.cbfill).attr("style", "").data(fillLevels);
       fills.enter().append("rect").classed(cn.cbfill, true).attr("style", "");
@@ -50874,7 +50891,7 @@ var Plotly = (() => {
           }
         }
         if (rightSideHorizontal) {
-          titleEl.attr("transform", strTranslate15(titleWidth2 / 2 + titleFontSize / 2, 0));
+          titleEl.attr("transform", strTranslate9(titleWidth2 / 2 + titleFontSize / 2, 0));
           titleWidth2 *= 2;
         }
         innerThickness = Math.max(
@@ -50904,7 +50921,7 @@ var Plotly = (() => {
       var yShift = isVertical3 ? 0 : (1 - yRatio) * outerThickness - moveY;
       xShift = isPaperX ? gs.l - xShift : -xShift;
       yShift = isPaperY ? gs.t - yShift : -yShift;
-      g.attr("transform", strTranslate15(
+      g.attr("transform", strTranslate9(
         xShift,
         yShift
       ));
@@ -51038,7 +51055,7 @@ var Plotly = (() => {
         setCursor(g);
       },
       moveFn: function(dx, dy) {
-        g.attr("transform", t03 + strTranslate15(dx, dy));
+        g.attr("transform", t03 + strTranslate9(dx, dy));
         xf = dragelement_default.align(
           (isVertical3 ? opts._uFrac : opts._vFrac) + dx / gs.w,
           isVertical3 ? opts._thickFrac : opts._lenFrac,
@@ -51387,39 +51404,39 @@ var Plotly = (() => {
   };
 
   // src/components/modebar/buttons.js
-  var _2 = lib_default._;
+  var _ = lib_default._;
   var modeBarButtons = {};
   modeBarButtons.toImage = {
     name: "toImage",
     title: function(gd) {
       var opts = gd._context.toImageButtonOptions || {};
       var format5 = opts.format || "png";
-      return format5 === "png" ? _2(gd, "Download plot as a PNG") : (
+      return format5 === "png" ? _(gd, "Download plot as a PNG") : (
         // legacy text
-        _2(gd, "Download plot")
+        _(gd, "Download plot")
       );
     },
     icon: ploticon_default.camera,
     click: function(gd) {
       var toImageButtonOptions = gd._context.toImageButtonOptions;
       var opts = { format: toImageButtonOptions.format || "png" };
-      lib_default.notifier(_2(gd, "Taking snapshot - this may take a few seconds"), "long");
+      lib_default.notifier(_(gd, "Taking snapshot - this may take a few seconds"), "long");
       ["filename", "width", "height", "scale"].forEach(function(key) {
         if (key in toImageButtonOptions) {
           opts[key] = toImageButtonOptions[key];
         }
       });
       registry_default.call("downloadImage", gd, opts).then(function(filename) {
-        lib_default.notifier(_2(gd, "Snapshot succeeded") + " - " + filename, "long");
+        lib_default.notifier(_(gd, "Snapshot succeeded") + " - " + filename, "long");
       }).catch(function() {
-        lib_default.notifier(_2(gd, "Sorry, there was a problem downloading your snapshot!"), "long");
+        lib_default.notifier(_(gd, "Sorry, there was a problem downloading your snapshot!"), "long");
       });
     }
   };
   modeBarButtons.sendDataToCloud = {
     name: "sendDataToCloud",
     title: function(gd) {
-      return _2(gd, "Edit in Chart Studio");
+      return _(gd, "Edit in Chart Studio");
     },
     icon: ploticon_default.disk,
     click: function(gd) {
@@ -51429,7 +51446,7 @@ var Plotly = (() => {
   modeBarButtons.editInChartStudio = {
     name: "editInChartStudio",
     title: function(gd) {
-      return _2(gd, "Edit in Chart Studio");
+      return _(gd, "Edit in Chart Studio");
     },
     icon: ploticon_default.pencil,
     click: function(gd) {
@@ -51440,7 +51457,7 @@ var Plotly = (() => {
     name: "zoom2d",
     _cat: "zoom",
     title: function(gd) {
-      return _2(gd, "Zoom");
+      return _(gd, "Zoom");
     },
     attr: "dragmode",
     val: "zoom",
@@ -51451,7 +51468,7 @@ var Plotly = (() => {
     name: "pan2d",
     _cat: "pan",
     title: function(gd) {
-      return _2(gd, "Pan");
+      return _(gd, "Pan");
     },
     attr: "dragmode",
     val: "pan",
@@ -51462,7 +51479,7 @@ var Plotly = (() => {
     name: "select2d",
     _cat: "select",
     title: function(gd) {
-      return _2(gd, "Box Select");
+      return _(gd, "Box Select");
     },
     attr: "dragmode",
     val: "select",
@@ -51473,7 +51490,7 @@ var Plotly = (() => {
     name: "lasso2d",
     _cat: "lasso",
     title: function(gd) {
-      return _2(gd, "Lasso Select");
+      return _(gd, "Lasso Select");
     },
     attr: "dragmode",
     val: "lasso",
@@ -51483,7 +51500,7 @@ var Plotly = (() => {
   modeBarButtons.drawclosedpath = {
     name: "drawclosedpath",
     title: function(gd) {
-      return _2(gd, "Draw closed freeform");
+      return _(gd, "Draw closed freeform");
     },
     attr: "dragmode",
     val: "drawclosedpath",
@@ -51493,7 +51510,7 @@ var Plotly = (() => {
   modeBarButtons.drawopenpath = {
     name: "drawopenpath",
     title: function(gd) {
-      return _2(gd, "Draw open freeform");
+      return _(gd, "Draw open freeform");
     },
     attr: "dragmode",
     val: "drawopenpath",
@@ -51503,7 +51520,7 @@ var Plotly = (() => {
   modeBarButtons.drawline = {
     name: "drawline",
     title: function(gd) {
-      return _2(gd, "Draw line");
+      return _(gd, "Draw line");
     },
     attr: "dragmode",
     val: "drawline",
@@ -51513,7 +51530,7 @@ var Plotly = (() => {
   modeBarButtons.drawrect = {
     name: "drawrect",
     title: function(gd) {
-      return _2(gd, "Draw rectangle");
+      return _(gd, "Draw rectangle");
     },
     attr: "dragmode",
     val: "drawrect",
@@ -51523,7 +51540,7 @@ var Plotly = (() => {
   modeBarButtons.drawcircle = {
     name: "drawcircle",
     title: function(gd) {
-      return _2(gd, "Draw circle");
+      return _(gd, "Draw circle");
     },
     attr: "dragmode",
     val: "drawcircle",
@@ -51533,7 +51550,7 @@ var Plotly = (() => {
   modeBarButtons.eraseshape = {
     name: "eraseshape",
     title: function(gd) {
-      return _2(gd, "Erase active shape");
+      return _(gd, "Erase active shape");
     },
     icon: ploticon_default.eraseshape,
     click: function(gd) {
@@ -51544,7 +51561,7 @@ var Plotly = (() => {
     name: "zoomIn2d",
     _cat: "zoomin",
     title: function(gd) {
-      return _2(gd, "Zoom in");
+      return _(gd, "Zoom in");
     },
     attr: "zoom",
     val: "in",
@@ -51555,7 +51572,7 @@ var Plotly = (() => {
     name: "zoomOut2d",
     _cat: "zoomout",
     title: function(gd) {
-      return _2(gd, "Zoom out");
+      return _(gd, "Zoom out");
     },
     attr: "zoom",
     val: "out",
@@ -51566,7 +51583,7 @@ var Plotly = (() => {
     name: "autoScale2d",
     _cat: "autoscale",
     title: function(gd) {
-      return _2(gd, "Autoscale");
+      return _(gd, "Autoscale");
     },
     attr: "zoom",
     val: "auto",
@@ -51577,7 +51594,7 @@ var Plotly = (() => {
     name: "resetScale2d",
     _cat: "resetscale",
     title: function(gd) {
-      return _2(gd, "Reset axes");
+      return _(gd, "Reset axes");
     },
     attr: "zoom",
     val: "reset",
@@ -51588,7 +51605,7 @@ var Plotly = (() => {
     name: "hoverClosestCartesian",
     _cat: "hoverclosest",
     title: function(gd) {
-      return _2(gd, "Show closest data on hover");
+      return _(gd, "Show closest data on hover");
     },
     attr: "hovermode",
     val: "closest",
@@ -51600,7 +51617,7 @@ var Plotly = (() => {
     name: "hoverCompareCartesian",
     _cat: "hoverCompare",
     title: function(gd) {
-      return _2(gd, "Compare data on hover");
+      return _(gd, "Compare data on hover");
     },
     attr: "hovermode",
     val: function(gd) {
@@ -51679,7 +51696,7 @@ var Plotly = (() => {
     name: "zoom3d",
     _cat: "zoom",
     title: function(gd) {
-      return _2(gd, "Zoom");
+      return _(gd, "Zoom");
     },
     attr: "scene.dragmode",
     val: "zoom",
@@ -51690,7 +51707,7 @@ var Plotly = (() => {
     name: "pan3d",
     _cat: "pan",
     title: function(gd) {
-      return _2(gd, "Pan");
+      return _(gd, "Pan");
     },
     attr: "scene.dragmode",
     val: "pan",
@@ -51700,7 +51717,7 @@ var Plotly = (() => {
   modeBarButtons.orbitRotation = {
     name: "orbitRotation",
     title: function(gd) {
-      return _2(gd, "Orbital rotation");
+      return _(gd, "Orbital rotation");
     },
     attr: "scene.dragmode",
     val: "orbit",
@@ -51710,7 +51727,7 @@ var Plotly = (() => {
   modeBarButtons.tableRotation = {
     name: "tableRotation",
     title: function(gd) {
-      return _2(gd, "Turntable rotation");
+      return _(gd, "Turntable rotation");
     },
     attr: "scene.dragmode",
     val: "turntable",
@@ -51735,7 +51752,7 @@ var Plotly = (() => {
     name: "resetCameraDefault3d",
     _cat: "resetCameraDefault",
     title: function(gd) {
-      return _2(gd, "Reset camera to default");
+      return _(gd, "Reset camera to default");
     },
     attr: "resetDefault",
     icon: ploticon_default.home,
@@ -51745,7 +51762,7 @@ var Plotly = (() => {
     name: "resetCameraLastSave3d",
     _cat: "resetCameraLastSave",
     title: function(gd) {
-      return _2(gd, "Reset camera to last save");
+      return _(gd, "Reset camera to last save");
     },
     attr: "resetLastSave",
     icon: ploticon_default.movie,
@@ -51790,7 +51807,7 @@ var Plotly = (() => {
     name: "hoverClosest3d",
     _cat: "hoverclosest",
     title: function(gd) {
-      return _2(gd, "Toggle show closest data on hover");
+      return _(gd, "Toggle show closest data on hover");
     },
     attr: "hovermode",
     val: null,
@@ -51836,7 +51853,7 @@ var Plotly = (() => {
     name: "zoomInGeo",
     _cat: "zoomin",
     title: function(gd) {
-      return _2(gd, "Zoom in");
+      return _(gd, "Zoom in");
     },
     attr: "zoom",
     val: "in",
@@ -51847,7 +51864,7 @@ var Plotly = (() => {
     name: "zoomOutGeo",
     _cat: "zoomout",
     title: function(gd) {
-      return _2(gd, "Zoom out");
+      return _(gd, "Zoom out");
     },
     attr: "zoom",
     val: "out",
@@ -51858,7 +51875,7 @@ var Plotly = (() => {
     name: "resetGeo",
     _cat: "reset",
     title: function(gd) {
-      return _2(gd, "Reset");
+      return _(gd, "Reset");
     },
     attr: "reset",
     val: null,
@@ -51869,7 +51886,7 @@ var Plotly = (() => {
     name: "hoverClosestGeo",
     _cat: "hoverclosest",
     title: function(gd) {
-      return _2(gd, "Toggle show closest data on hover");
+      return _(gd, "Toggle show closest data on hover");
     },
     attr: "hovermode",
     val: null,
@@ -51901,7 +51918,7 @@ var Plotly = (() => {
     name: "hoverClosestPie",
     _cat: "hoverclosest",
     title: function(gd) {
-      return _2(gd, "Toggle show closest data on hover");
+      return _(gd, "Toggle show closest data on hover");
     },
     attr: "hovermode",
     val: "closest",
@@ -51924,7 +51941,7 @@ var Plotly = (() => {
   modeBarButtons.resetViewSankey = {
     name: "resetSankeyGroup",
     title: function(gd) {
-      return _2(gd, "Reset view");
+      return _(gd, "Reset view");
     },
     icon: ploticon_default.home,
     click: function(gd) {
@@ -51945,7 +51962,7 @@ var Plotly = (() => {
   modeBarButtons.toggleHover = {
     name: "toggleHover",
     title: function(gd) {
-      return _2(gd, "Toggle show closest data on hover");
+      return _(gd, "Toggle show closest data on hover");
     },
     attr: "hovermode",
     val: null,
@@ -51961,7 +51978,7 @@ var Plotly = (() => {
   modeBarButtons.resetViews = {
     name: "resetViews",
     title: function(gd) {
-      return _2(gd, "Reset views");
+      return _(gd, "Reset views");
     },
     icon: ploticon_default.home,
     click: function(gd, ev) {
@@ -51979,7 +51996,7 @@ var Plotly = (() => {
   modeBarButtons.toggleSpikelines = {
     name: "toggleSpikelines",
     title: function(gd) {
-      return _2(gd, "Toggle Spike Lines");
+      return _(gd, "Toggle Spike Lines");
     },
     icon: ploticon_default.spikeline,
     attr: "_cartesianSpikesEnabled",
@@ -52006,7 +52023,7 @@ var Plotly = (() => {
     name: "resetViewMapbox",
     _cat: "resetView",
     title: function(gd) {
-      return _2(gd, "Reset view");
+      return _(gd, "Reset view");
     },
     attr: "reset",
     icon: ploticon_default.home,
@@ -52018,7 +52035,7 @@ var Plotly = (() => {
     name: "resetViewMap",
     _cat: "resetView",
     title: function(gd) {
-      return _2(gd, "Reset view");
+      return _(gd, "Reset view");
     },
     attr: "reset",
     icon: ploticon_default.home,
@@ -52030,7 +52047,7 @@ var Plotly = (() => {
     name: "zoomInMapbox",
     _cat: "zoomin",
     title: function(gd) {
-      return _2(gd, "Zoom in");
+      return _(gd, "Zoom in");
     },
     attr: "zoom",
     val: "in",
@@ -52041,7 +52058,7 @@ var Plotly = (() => {
     name: "zoomInMap",
     _cat: "zoomin",
     title: function(gd) {
-      return _2(gd, "Zoom in");
+      return _(gd, "Zoom in");
     },
     attr: "zoom",
     val: "in",
@@ -52052,7 +52069,7 @@ var Plotly = (() => {
     name: "zoomOutMapbox",
     _cat: "zoomout",
     title: function(gd) {
-      return _2(gd, "Zoom out");
+      return _(gd, "Zoom out");
     },
     attr: "zoom",
     val: "out",
@@ -52063,7 +52080,7 @@ var Plotly = (() => {
     name: "zoomOutMap",
     _cat: "zoomout",
     title: function(gd) {
-      return _2(gd, "Zoom out");
+      return _(gd, "Zoom out");
     },
     attr: "zoom",
     val: "out",
@@ -53152,7 +53169,6 @@ var Plotly = (() => {
 
   // src/traces/bar/style_defaults.js
   var { hasColorscale: hasColorscale6 } = helpers_default;
-  var { coercePattern: coercePattern3 } = lib_default;
   function handleStyleDefaults(traceIn, traceOut, coerce3, defaultColor, layout) {
     var markerColor = coerce3("marker.color", defaultColor);
     var hasMarkerColorscale = hasColorscale6(traceIn, "marker");
@@ -53177,13 +53193,12 @@ var Plotly = (() => {
     }
     coerce3("marker.line.width");
     coerce3("marker.opacity");
-    coercePattern3(coerce3, "marker.pattern", markerColor, hasMarkerColorscale);
+    coercePattern(coerce3, "marker.pattern", markerColor, hasMarkerColorscale);
     coerce3("selected.marker.color");
     coerce3("unselected.marker.color");
   }
 
   // src/traces/bar/defaults.js
-  var coerceFont2 = lib_default.coerceFont;
   function supplyDefaults3(traceIn, traceOut, defaultColor, layout) {
     function coerce3(attr2, dflt) {
       return lib_default.coerce(traceIn, traceOut, attributes_default21, attr2, dflt);
@@ -53219,7 +53234,7 @@ var Plotly = (() => {
     var errorBarsSupplyDefaults = registry_default.getComponentMethod("errorbars", "supplyDefaults");
     errorBarsSupplyDefaults(traceIn, traceOut, lineColor || color_default.defaultLine, { axis: "y" });
     errorBarsSupplyDefaults(traceIn, traceOut, lineColor || color_default.defaultLine, { axis: "x", inherit: "y" });
-    lib_default.coerceSelectionMarkerOpacity(traceOut, coerce3);
+    coerceSelectionMarkerOpacity(traceOut, coerce3);
   }
   function crossTraceDefaults3(fullData, fullLayout) {
     var traceIn, traceOut;
@@ -53264,22 +53279,22 @@ var Plotly = (() => {
     var hasInside = hasBoth || textposition === "inside";
     var hasOutside = hasBoth || textposition === "outside";
     if (hasInside || hasOutside) {
-      var dfltFont = coerceFont2(coerce3, "textfont", layout.font);
-      var insideTextFontDefault = lib_default.extendFlat({}, dfltFont);
+      var dfltFont = coerceFont(coerce3, "textfont", layout.font);
+      var insideTextFontDefault = extendFlat({}, dfltFont);
       var isTraceTextfontColorSet = traceIn.textfont && traceIn.textfont.color;
       var isColorInheritedFromLayoutFont = !isTraceTextfontColorSet;
       if (isColorInheritedFromLayoutFont) {
         delete insideTextFontDefault.color;
       }
-      coerceFont2(coerce3, "insidetextfont", insideTextFontDefault);
+      coerceFont(coerce3, "insidetextfont", insideTextFontDefault);
       if (hasPathbar) {
-        var pathbarTextFontDefault = lib_default.extendFlat({}, dfltFont);
+        var pathbarTextFontDefault = extendFlat({}, dfltFont);
         if (isColorInheritedFromLayoutFont) {
           delete pathbarTextFontDefault.color;
         }
-        coerceFont2(coerce3, "pathbar.textfont", pathbarTextFontDefault);
+        coerceFont(coerce3, "pathbar.textfont", pathbarTextFontDefault);
       }
-      if (hasOutside) coerceFont2(coerce3, "outsidetextfont", dfltFont);
+      if (hasOutside) coerceFont(coerce3, "outsidetextfont", dfltFont);
       if (moduleHasSelected) coerce3("selected.textfont.color");
       if (moduleHasUnselected) coerce3("unselected.textfont.color");
       if (moduleHasConstrain) coerce3("constraintext");
@@ -53346,16 +53361,16 @@ var Plotly = (() => {
   // src/traces/bar/arrays_to_calcdata.js
   function arraysToCalcdata2(cd, trace) {
     for (var i = 0; i < cd.length; i++) cd[i].i = i;
-    lib_default.mergeArray(trace.text, cd, "tx");
-    lib_default.mergeArray(trace.hovertext, cd, "htx");
+    mergeArray(trace.text, cd, "tx");
+    mergeArray(trace.hovertext, cd, "htx");
     var marker2 = trace.marker;
     if (marker2) {
-      lib_default.mergeArray(marker2.opacity, cd, "mo", true);
-      lib_default.mergeArray(marker2.color, cd, "mc");
+      mergeArray(marker2.opacity, cd, "mo", true);
+      mergeArray(marker2.color, cd, "mc");
       var markerLine2 = marker2.line;
       if (markerLine2) {
-        lib_default.mergeArray(markerLine2.color, cd, "mlc");
-        lib_default.mergeArrayCastPositive(markerLine2.width, cd, "mlw");
+        mergeArray(markerLine2.color, cd, "mlc");
+        mergeArrayCastPositive(markerLine2.width, cd, "mlw");
       }
     }
   }
@@ -53443,7 +53458,7 @@ var Plotly = (() => {
         if (transform2) {
           transform2.scale = shouldHide && transform2.hide ? 0 : minSize / transform2.fontSize;
           var el = select_default2(this).select("text");
-          lib_default.setTransormAndDisplay(el, transform2);
+          setTransormAndDisplay(el, transform2);
         }
       });
     }
@@ -53478,7 +53493,6 @@ var Plotly = (() => {
 
   // src/traces/bar/helpers.js
   var import_fast_isnumeric40 = __toESM(require_fast_isnumeric(), 1);
-  var { isArrayOrTypedArray: isArrayOrTypedArray10 } = lib_default;
   var coerceString = function(attributeDefinition, value, defaultValue) {
     if (typeof value === "string") {
       if (value || !attributeDefinition.noBlank) return value;
@@ -53508,12 +53522,12 @@ var Plotly = (() => {
   };
   var getValue = function(arrayOrScalar, index) {
     var value;
-    if (!isArrayOrTypedArray10(arrayOrScalar)) value = arrayOrScalar;
+    if (!isArrayOrTypedArray(arrayOrScalar)) value = arrayOrScalar;
     else if (index < arrayOrScalar.length) value = arrayOrScalar[index];
     return value;
   };
   var getLineWidth = function(trace, di) {
-    var w = 0 < di.mlw ? di.mlw : !isArrayOrTypedArray10(trace.marker.line.width) ? trace.marker.line.width : 0;
+    var w = 0 < di.mlw ? di.mlw : !isArrayOrTypedArray(trace.marker.line.width) ? trace.marker.line.width : 0;
     return w;
   };
   var helpers_default11 = { coerceString, coerceNumber, coerceColor, coerceEnumerated, getValue, getLineWidth };
@@ -53549,7 +53563,7 @@ var Plotly = (() => {
   function styleTextPoints(sel, trace, gd) {
     sel.selectAll("text").each(function(d) {
       var tx = select_default2(this);
-      var textFont = lib_default.ensureUniformFontSize(gd, determineFont(tx, d, trace, gd));
+      var textFont = ensureUniformFontSize(gd, determineFont(tx, d, trace, gd));
       font2(tx, textFont);
     });
   }
@@ -53571,7 +53585,7 @@ var Plotly = (() => {
       var tx = select_default2(this);
       var textFont;
       if (d.selected) {
-        textFont = lib_default.ensureUniformFontSize(gd, determineFont(tx, d, trace, gd));
+        textFont = ensureUniformFontSize(gd, determineFont(tx, d, trace, gd));
         var selectedFontColor = trace.selected.textfont && trace.selected.textfont.color;
         if (selectedFontColor) {
           textFont.color = selectedFontColor;
@@ -53775,7 +53789,7 @@ var Plotly = (() => {
       };
       clearMinTextSize2("bar", fullLayout);
     }
-    var bartraces = lib_default.makeTraceGroups(traceLayer, cdModule, "trace bars").each(function(cd) {
+    var bartraces = makeTraceGroups2(traceLayer, cdModule, "trace bars").each(function(cd) {
       var plotGroup = select_default2(this);
       var trace = cd[0].trace;
       var t = cd[0].t;
@@ -53790,9 +53804,9 @@ var Plotly = (() => {
       }
       var isHorizontal = trace.orientation === "h";
       var withTransition = hasTransition(opts);
-      var pointGroup = lib_default.ensureSingle(plotGroup, "g", "points");
+      var pointGroup = ensureSingle(plotGroup, "g", "points");
       var keyFunc2 = getKeyFunc(trace);
-      var bars = pointGroup.selectAll("g.point").data(lib_default.identity, keyFunc2);
+      var bars = pointGroup.selectAll("g.point").data(identity3, keyFunc2);
       bars.enter().append("g").classed("point", true);
       bars.exit().remove();
       bars.each(function(di, i) {
@@ -53923,7 +53937,7 @@ var Plotly = (() => {
         } else {
           path = rectanglePath;
         }
-        var sel = transition2(lib_default.ensureSingle(bar, "path"), fullLayout, opts, makeOnCompleteCallback);
+        var sel = transition2(ensureSingle(bar, "path"), fullLayout, opts, makeOnCompleteCallback);
         sel.style("vector-effect", isStatic ? "none" : "non-scaling-stroke").attr("d", isNaN((x1 - x0) * (y1 - y0)) || isBlank && gd._context.staticPlot ? "M0,0Z" : path).call(setClipUrl, plotinfo.layerClipId, gd);
         if (!fullLayout.uniformtext.mode && withTransition) {
           var styleFns = makePointStyleFns(trace);
@@ -53945,7 +53959,7 @@ var Plotly = (() => {
     var fullLayout = gd._fullLayout;
     var textPosition;
     function appendTextNode(bar2, text2, textFont2) {
-      var textSelection2 = lib_default.ensureSingle(bar2, "text").text(text2).attr({
+      var textSelection2 = ensureSingle(bar2, "text").text(text2).attr({
         class: "bartext bartext-" + textPosition,
         "text-anchor": "middle",
         // prohibit tex interpretation until we can handle
@@ -54005,7 +54019,7 @@ var Plotly = (() => {
     if (textPosition === "auto") {
       if (isOutmostBar) {
         textPosition = "inside";
-        textFont = lib_default.ensureUniformFontSize(gd, insideTextFont);
+        textFont = ensureUniformFontSize(gd, insideTextFont);
         textSelection = appendTextNode(bar, text, textFont);
         textBB = bBox(textSelection.node());
         textWidth = textBB.width;
@@ -54047,7 +54061,7 @@ var Plotly = (() => {
       }
     }
     if (!textSelection) {
-      textFont = lib_default.ensureUniformFontSize(gd, textPosition === "outside" ? outsideTextFont : insideTextFont);
+      textFont = ensureUniformFontSize(gd, textPosition === "outside" ? outsideTextFont : insideTextFont);
       textSelection = appendTextNode(bar, text, textFont);
       var currentTransform = textSelection.attr("transform");
       textSelection.attr("transform", "");
@@ -54083,7 +54097,7 @@ var Plotly = (() => {
     recordMinTextSize2(trace.type === "histogram" ? "bar" : trace.type, transform2, fullLayout);
     calcBar.transform = transform2;
     var s = transition2(textSelection, fullLayout, opts, makeOnCompleteCallback);
-    lib_default.setTransormAndDisplay(s, transform2);
+    setTransormAndDisplay(s, transform2);
   }
   function textfitsInsideBar(barWidth, barHeight, textWidth, textHeight, isHorizontal) {
     if (barWidth < 0 || barHeight < 0) return false;
@@ -54294,7 +54308,7 @@ var Plotly = (() => {
   }
   function calcTexttemplate(fullLayout, cd, index, xa, ya) {
     var trace = cd[0].trace;
-    var texttemplate = lib_default.castOption(trace, index, "texttemplate");
+    var texttemplate = castOption(trace, index, "texttemplate");
     if (!texttemplate) return "";
     var isHistogram = trace.type === "histogram";
     var isWaterfall = trace.type === "waterfall";
@@ -54323,7 +54337,7 @@ var Plotly = (() => {
     var obj = {};
     obj.label = cdi.p;
     obj.labelLabel = obj[pLetter + "Label"] = formatLabel(cdi.p);
-    var tx = lib_default.castOption(trace, cdi.i, "text");
+    var tx = castOption(trace, cdi.i, "text");
     if (tx === 0 || tx) obj.text = tx;
     obj.value = cdi.s;
     obj.valueLabel = obj[vLetter + "Label"] = formatNumber(cdi.s);
@@ -54345,15 +54359,15 @@ var Plotly = (() => {
       obj.value = cdi.s;
       obj.valueLabel = formatNumber(obj.value);
       obj.percentInitial = cdi.begR;
-      obj.percentInitialLabel = lib_default.formatPercent(cdi.begR);
+      obj.percentInitialLabel = formatPercent(cdi.begR);
       obj.percentPrevious = cdi.difR;
-      obj.percentPreviousLabel = lib_default.formatPercent(cdi.difR);
+      obj.percentPreviousLabel = formatPercent(cdi.difR);
       obj.percentTotal = cdi.sumR;
-      obj.percenTotalLabel = lib_default.formatPercent(cdi.sumR);
+      obj.percenTotalLabel = formatPercent(cdi.sumR);
     }
-    var customdata = lib_default.castOption(trace, cdi.i, "customdata");
+    var customdata = castOption(trace, cdi.i, "customdata");
     if (customdata) obj.customdata = customdata;
-    return lib_default.texttemplateString({
+    return texttemplateString({
       data: [pt, obj, trace._meta],
       fallback: trace.texttemplatefallback,
       labels: obj,
@@ -54386,7 +54400,7 @@ var Plotly = (() => {
       text.push(formatLabel(cd[index].p));
     }
     if (hasFlag("text")) {
-      tx = lib_default.castOption(trace, cdi.i, "text");
+      tx = castOption(trace, cdi.i, "text");
       if (tx === 0 || tx) text.push(tx);
     }
     if (isWaterfall) {
@@ -54405,17 +54419,17 @@ var Plotly = (() => {
       if (hasFlag("percent total")) nPercent++;
       var hasMultiplePercents = nPercent > 1;
       if (hasFlag("percent initial")) {
-        tx = lib_default.formatPercent(cdi.begR);
+        tx = formatPercent(cdi.begR);
         if (hasMultiplePercents) tx += " of initial";
         text.push(tx);
       }
       if (hasFlag("percent previous")) {
-        tx = lib_default.formatPercent(cdi.difR);
+        tx = formatPercent(cdi.difR);
         if (hasMultiplePercents) tx += " of previous";
         text.push(tx);
       }
       if (hasFlag("percent total")) {
-        tx = lib_default.formatPercent(cdi.sumR);
+        tx = formatPercent(cdi.sumR);
         if (hasMultiplePercents) tx += " of total";
         text.push(tx);
       }
@@ -54428,7 +54442,6 @@ var Plotly = (() => {
   };
 
   // src/traces/bar/hover.js
-  var { fillText: fillText2 } = lib_default;
   var { hoverLabelText } = axes_default;
   var { BADNUM: BADNUM13 } = numerical_default;
   function hoverPoints2(pointData, xval, yval, hovermode, opts) {
@@ -54562,7 +54575,7 @@ var Plotly = (() => {
     pointData.baseLabel = hoverLabelText(sa, di.b, trace[sizeLetter + "hoverformat"]);
     pointData.spikeDistance = (thisBarSizeFn(di) + thisBarPositionFn(di)) / 2;
     pointData[posLetter + "Spike"] = pa.c2p(di.p, true);
-    fillText2(di, trace, pointData);
+    fillText(di, trace, pointData);
     pointData.hovertemplate = trace.hovertemplate;
     return pointData;
   }

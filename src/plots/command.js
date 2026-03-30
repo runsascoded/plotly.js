@@ -1,5 +1,5 @@
 import Registry from '../registry.js';
-import Lib from '../lib/index.js';
+import { isPlainObject, log, nestedProperty, warn } from '../lib/index.js';
 
 export var manageCommandObserver = function(gd, container, commandList, onchange) {
     var ret = {};
@@ -85,7 +85,7 @@ export var manageCommandObserver = function(gd, container, commandList, onchange
     } else {
         // TODO: It'd be really neat to actually give a *reason* for this, but at least a warning
         // is a start
-        Lib.log('Unable to automatically bind plot updates to API command');
+        log('Unable to automatically bind plot updates to API command');
 
         ret.lookupTable = {};
         ret.remove = function() {};
@@ -194,7 +194,7 @@ function bindingValueHasChanged(gd, binding, cache) {
         return false;
     }
 
-    value = Lib.nestedProperty(container, binding.prop).get();
+    value = nestedProperty(container, binding.prop).get();
 
     obj = cache[binding.type] = cache[binding.type] || {};
 
@@ -224,7 +224,7 @@ export var executeAPICommand = function(gd, method, args) {
     }
 
     return _method.apply(null, allArgs).catch(function(err) {
-        Lib.warn('API call to Plotly.' + method + ' rejected.', err);
+        warn('API call to Plotly.' + method + ' rejected.', err);
         return Promise.reject(err);
     });
 };
@@ -274,7 +274,7 @@ function computeLayoutBindings(gd, args) {
     var aobj = {};
     if(typeof astr === 'string') {
         aobj[astr] = args[1];
-    } else if(Lib.isPlainObject(astr)) {
+    } else if(isPlainObject(astr)) {
         aobj = astr;
     } else {
         return bindings;
@@ -298,7 +298,7 @@ function computeDataBindings(gd, args) {
     aobj = {};
     if(typeof astr === 'string') {
         aobj[astr] = val;
-    } else if(Lib.isPlainObject(astr)) {
+    } else if(isPlainObject(astr)) {
         // the 3-arg form
         aobj = astr;
 
@@ -369,7 +369,7 @@ function crawl(attrs, callback, path, depth) {
 
         var thisPath = path + (depth > 0 ? '.' : '') + attrName;
 
-        if(Lib.isPlainObject(attr)) {
+        if(isPlainObject(attr)) {
             crawl(attr, callback, thisPath, depth + 1);
         } else {
             // Only execute the callback on leaf nodes:

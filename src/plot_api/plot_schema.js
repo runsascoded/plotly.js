@@ -1,5 +1,5 @@
 import Registry from '../registry.js';
-import Lib from '../lib/index.js';
+import Lib, { extendDeepAll, isArrayOrTypedArray, isPlainObject, nestedProperty, valObjectMeta } from '../lib/index.js';
 import baseAttributes from '../plots/attributes.js';
 import baseLayoutAttributes from '../plots/layout_attributes.js';
 import frameAttributes from '../plots/frame_attributes.js';
@@ -8,11 +8,6 @@ import _plot_config from './plot_config.js';
 const { configAttributes } = _plot_config;
 import editTypes from './edit_types.js';
 
-var extendDeepAll = Lib.extendDeepAll;
-var isPlainObject = Lib.isPlainObject;
-var isArrayOrTypedArray = Lib.isArrayOrTypedArray;
-var nestedProperty = Lib.nestedProperty;
-var valObjectMeta = Lib.valObjectMeta;
 
 var IS_SUBPLOT_OBJ = '_isSubplotObj';
 var IS_LINKED_TO_ARRAY = '_isLinkedToArray';

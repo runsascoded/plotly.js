@@ -1,17 +1,11 @@
 function d3Round(x, n) { return n ? Math.round(x * (n = Math.pow(10, n))) / n : Math.round(x); }
 import { utcFormat } from 'd3-time-format';
-import Lib from '../../lib/index.js';
+import { MAX_MS, MIN_MS, cleanDate, cleanNumber, constrain, dateTime2ms, dfltRange, ensureNumber, identity, isArrayOrTypedArray, isDateTime, isTypedArray, minRowLength, mod, ms2DateTime, nestedProperty, numberFormat, simpleMap, sorterAsc } from '../../lib/index.js';
 import isNumeric from 'fast-isnumeric';
 import numConstants from '../../constants/numerical.js';
 import axisIds from './axis_ids.js';
 import constants from './constants.js';
-var numberFormat = Lib.numberFormat;
 
-var cleanNumber = Lib.cleanNumber;
-var ms2DateTime = Lib.ms2DateTime;
-var dateTime2ms = Lib.dateTime2ms;
-var ensureNumber = Lib.ensureNumber;
-var isArrayOrTypedArray = Lib.isArrayOrTypedArray;
 
 var FP_SAFE = numConstants.FP_SAFE;
 var BADNUM = numConstants.BADNUM;
@@ -74,8 +68,8 @@ export default function setConvert(ax, fullLayout) {
             if(isNumeric(v)) {
                 v = +v;
                 // keep track of tenths of ms, that `new Date` will drop
-                // same logic as in Lib.ms2DateTime
-                var msecTenths = Math.floor(Lib.mod(v + 0.05, 1) * 10);
+                // same logic as in ms2DateTime
+                var msecTenths = Math.floor(mod(v + 0.05, 1) * 10);
                 var msRounded = Math.round(v - msecTenths / 10);
                 ms = dateTime2ms(new Date(msRounded)) + msecTenths / 10;
             } else return BADNUM;
@@ -266,7 +260,7 @@ export default function setConvert(ax, fullLayout) {
          * uses this to limit precision, toLog uses true to clip negatives
          * to offscreen low rather than undefined), it's safe to pass 0.
          */
-        ax.d2r = ax.r2d = Lib.identity;
+        ax.d2r = ax.r2d = identity;
 
         ax.d2c = ax.r2c = ax.d2l = ax.r2l = dt2ms;
         ax.c2d = ax.c2r = ax.l2d = ax.l2r = ms2dt;
@@ -274,7 +268,7 @@ export default function setConvert(ax, fullLayout) {
         ax.d2p = ax.r2p = function(v, _, calendar) { return ax.l2p(dt2ms(v, 0, calendar)); };
         ax.p2d = ax.p2r = function(px, r, calendar) { return ms2dt(p2l(px), r, calendar); };
 
-        ax.cleanPos = function(v) { return Lib.cleanDate(v, BADNUM, ax.calendar); };
+        ax.cleanPos = function(v) { return cleanDate(v, BADNUM, ax.calendar); };
     } else if(ax.type === 'category') {
         // d is categories (string)
         // c and l are indices (numbers)
@@ -354,7 +348,7 @@ export default function setConvert(ax, fullLayout) {
 
                 if(axLetter in trace) {
                     var arrayIn = trace[axLetter];
-                    var len = trace._length || Lib.minRowLength(arrayIn);
+                    var len = trace._length || minRowLength(arrayIn);
 
                     if(isArrayOrTypedArray(arrayIn[0]) && isArrayOrTypedArray(arrayIn[1])) {
                         for(j = 0; j < len; j++) {
@@ -411,12 +405,12 @@ export default function setConvert(ax, fullLayout) {
         if(minallowed === undefined && maxallowed === undefined) return;
 
         if(!rangeAttr) rangeAttr = 'range';
-        var range = Lib.nestedProperty(ax, rangeAttr).get();
-        var rng = Lib.simpleMap(range, ax.r2l);
+        var range = nestedProperty(ax, rangeAttr).get();
+        var rng = simpleMap(range, ax.r2l);
         var axrev = rng[1] < rng[0];
         if(axrev) rng.reverse();
 
-        var bounds = Lib.simpleMap([minallowed, maxallowed], ax.r2l);
+        var bounds = simpleMap([minallowed, maxallowed], ax.r2l);
 
         if(minallowed !== undefined && rng[0] < bounds[0]) range[axrev ? 1 : 0] = minallowed;
         if(maxallowed !== undefined && rng[1] > bounds[1]) range[axrev ? 0 : 1] = maxallowed;
@@ -456,10 +450,10 @@ export default function setConvert(ax, fullLayout) {
         if(!opts) opts = {};
         if(!rangeAttr) rangeAttr = 'range';
 
-        var range = Lib.nestedProperty(ax, rangeAttr).get();
+        var range = nestedProperty(ax, rangeAttr).get();
         var i, dflt;
 
-        if(ax.type === 'date') dflt = Lib.dfltRange(ax.calendar);
+        if(ax.type === 'date') dflt = dfltRange(ax.calendar);
         else if(axLetter === 'y') dflt = constants.DFLTRANGEY;
         else if(ax._name === 'realaxis') dflt = [0, 1];
         else dflt = opts.dfltRange || constants.DFLTRANGEX;
@@ -472,7 +466,7 @@ export default function setConvert(ax, fullLayout) {
         }
 
         if(!range || range.length !== 2) {
-            Lib.nestedProperty(ax, rangeAttr).set(dflt);
+            nestedProperty(ax, rangeAttr).set(dflt);
             return;
         }
 
@@ -482,21 +476,21 @@ export default function setConvert(ax, fullLayout) {
         if(ax.type === 'date' && !ax.autorange) {
             // check if milliseconds or js date objects are provided for range
             // and convert to date strings
-            range[0] = Lib.cleanDate(range[0], BADNUM, ax.calendar);
-            range[1] = Lib.cleanDate(range[1], BADNUM, ax.calendar);
+            range[0] = cleanDate(range[0], BADNUM, ax.calendar);
+            range[1] = cleanDate(range[1], BADNUM, ax.calendar);
         }
 
         for(i = 0; i < 2; i++) {
             if(ax.type === 'date') {
-                if(!Lib.isDateTime(range[i], ax.calendar)) {
+                if(!isDateTime(range[i], ax.calendar)) {
                     ax[rangeAttr] = dflt;
                     break;
                 }
 
                 if(ax.r2l(range[0]) === ax.r2l(range[1])) {
                     // split by +/- 1 second
-                    var linCenter = Lib.constrain(ax.r2l(range[0]),
-                        Lib.MIN_MS + 1000, Lib.MAX_MS - 1000);
+                    var linCenter = constrain(ax.r2l(range[0]),
+                        MIN_MS + 1000, MAX_MS - 1000);
                     range[0] = ax.l2r(linCenter - 1000);
                     range[1] = ax.l2r(linCenter + 1000);
                     break;
@@ -619,7 +613,7 @@ export default function setConvert(ax, fullLayout) {
 
         if(!rangebreaksIn._cachedPatterns) {
             rangebreaksIn._cachedPatterns = rangebreaksIn.map(function(brk) {
-                return brk.enabled && brk.bounds ? Lib.simpleMap(brk.bounds, brk.pattern ?
+                return brk.enabled && brk.bounds ? simpleMap(brk.bounds, brk.pattern ?
                     cleanNumber :
                     ax.d2c // case of pattern: ''
                 ) : null;
@@ -627,7 +621,7 @@ export default function setConvert(ax, fullLayout) {
         }
         if(!rangebreaksIn._cachedValues) {
             rangebreaksIn._cachedValues = rangebreaksIn.map(function(brk) {
-                return brk.enabled && brk.values ? Lib.simpleMap(brk.values, ax.d2c).sort(Lib.sorterAsc) : null;
+                return brk.enabled && brk.values ? simpleMap(brk.values, ax.d2c).sort(sorterAsc) : null;
             });
         }
 
@@ -706,8 +700,8 @@ export default function setConvert(ax, fullLayout) {
         });
 
         var addBreak = function(min, max) {
-            min = Lib.constrain(min, r0, r1);
-            max = Lib.constrain(max, r0, r1);
+            min = constrain(min, r0, r1);
+            max = constrain(max, r0, r1);
             if(min === max) return;
 
             var isNewBreak = true;
@@ -740,7 +734,7 @@ export default function setConvert(ax, fullLayout) {
                         t0 = Math.floor(t0);
                     }
 
-                    bnds = Lib.simpleMap(brk.bounds, brk.pattern ? cleanNumber : ax.r2l);
+                    bnds = simpleMap(brk.bounds, brk.pattern ? cleanNumber : ax.r2l);
                     b0 = bnds[0];
                     b1 = bnds[1];
 
@@ -794,7 +788,7 @@ export default function setConvert(ax, fullLayout) {
                         addBreak(t, t + bndDelta);
                     }
                 } else {
-                    var vals = Lib.simpleMap(brk.values, ax.d2c);
+                    var vals = simpleMap(brk.values, ax.d2c);
                     for(var j = 0; j < vals.length; j++) {
                         b0 = vals[j];
                         b1 = b0 + brk.dvalue;
@@ -826,9 +820,9 @@ export default function setConvert(ax, fullLayout) {
 
         if(axLetter in trace) {
             arrayIn = trace[axLetter];
-            len = trace._length || Lib.minRowLength(arrayIn);
+            len = trace._length || minRowLength(arrayIn);
 
-            if(Lib.isTypedArray(arrayIn) && (axType === 'linear' || axType === 'log')) {
+            if(isTypedArray(arrayIn) && (axType === 'linear' || axType === 'log')) {
                 if(len === arrayIn.length) {
                     return arrayIn;
                 } else if(arrayIn.subarray) {

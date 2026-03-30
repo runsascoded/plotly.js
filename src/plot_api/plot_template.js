@@ -1,4 +1,4 @@
-import Lib from '../lib/index.js';
+import { coerce, isPlainObject, nestedProperty, warn } from '../lib/index.js';
 import plotAttributes from '../plots/attributes.js';
 
 var TEMPLATEITEMNAME = 'templateitemname';
@@ -51,7 +51,7 @@ export var traceTemplater = function(dataTemplate) {
     }
 
     function newTrace(traceIn) {
-        traceType = Lib.coerce(traceIn, {}, plotAttributes, 'type');
+        traceType = coerce(traceIn, {}, plotAttributes, 'type');
         var traceOut = {type: traceType, _template: null};
         if(traceType in traceCounts) {
             typeTemplates = dataTemplate[traceType];
@@ -82,7 +82,7 @@ export var traceTemplater = function(dataTemplate) {
 export var newContainer = function(container, name, baseName) {
     var template = container._template;
     var part = template && (template[name] || (baseName && template[baseName]));
-    if(!Lib.isPlainObject(part)) part = null;
+    if(!isPlainObject(part)) part = null;
 
     var out = container[name] = {_template: part};
     return out;
@@ -171,14 +171,14 @@ function validItemName(name) {
 function arrayDefaultKey(name) {
     var lastChar = name.length - 1;
     if(name.charAt(lastChar) !== 's') {
-        Lib.warn('bad argument to arrayDefaultKey: ' + name);
+        warn('bad argument to arrayDefaultKey: ' + name);
     }
     return name.slice(0, -1) + 'defaults';
 }
 export { arrayDefaultKey };
 
 export var arrayEditor = function(parentIn, containerStr, itemOut) {
-    var lengthIn = (Lib.nestedProperty(parentIn, containerStr).get() || []).length;
+    var lengthIn = (nestedProperty(parentIn, containerStr).get() || []).length;
     var index = itemOut._index;
     // Check that we are indeed off the end of this container.
     // Otherwise a devious user could put a key `_templateitemname` in their
@@ -204,7 +204,7 @@ export var arrayEditor = function(parentIn, containerStr, itemOut) {
     function modifyItem(attr, value) {
         if(templateItemName) {
             // we're making a new object: edit that object
-            Lib.nestedProperty(update[itemStr], attr).set(value);
+            nestedProperty(update[itemStr], attr).set(value);
         } else {
             // we're editing an existing object: include *just* the edit
             update[itemStr + '.' + attr] = value;
@@ -221,7 +221,7 @@ export var arrayEditor = function(parentIn, containerStr, itemOut) {
         if(attr) modifyItem(attr, value);
         var updateToApply = getUpdateObj();
         for(var key in updateToApply) {
-            Lib.nestedProperty(parentIn, key).set(updateToApply[key]);
+            nestedProperty(parentIn, key).set(updateToApply[key]);
         }
     }
 

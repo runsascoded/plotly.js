@@ -1,10 +1,9 @@
 import { select } from 'd3-selection';
 import { dispatch } from 'd3-dispatch';
-import Lib from '../lib/index.js';
+import { apply3DTransform, extendDeepAll, log, randstr, strTranslate, warn } from '../lib/index.js';
 import xmlnsNamespaces from '../constants/xmlns_namespaces.js';
 import _alignment from '../constants/alignment.js';
 const { LINE_SPACING } = _alignment;
-var strTranslate = Lib.strTranslate;
 
 // text converter
 
@@ -181,7 +180,7 @@ function texToSVG(_texString, _config, _callback) {
         MathJaxVersion !== 2 &&
         MathJaxVersion !== 3
     ) {
-        Lib.warn('No MathJax version:', MathJax.version);
+        warn('No MathJax version:', MathJax.version);
         return;
     }
 
@@ -191,7 +190,7 @@ function texToSVG(_texString, _config, _callback) {
         tmpDiv;
 
     var setConfig2 = function() {
-        originalConfig = Lib.extendDeepAll({}, MathJax.Hub.config);
+        originalConfig = extendDeepAll({}, MathJax.Hub.config);
 
         originalProcessSectionDelay = MathJax.Hub.processSectionDelay;
         if(MathJax.Hub.processSectionDelay !== undefined) {
@@ -209,7 +208,7 @@ function texToSVG(_texString, _config, _callback) {
     };
 
     var setConfig3 = function() {
-        originalConfig = Lib.extendDeepAll({}, MathJax.config);
+        originalConfig = extendDeepAll({}, MathJax.config);
 
         if(!MathJax.config.tex) {
             MathJax.config.tex = {};
@@ -233,7 +232,7 @@ function texToSVG(_texString, _config, _callback) {
     };
 
     var initiateMathJax = function() {
-        var randomID = 'math-output-' + Lib.randstr({}, 64);
+        var randomID = 'math-output-' + randstr({}, 64);
         tmpDiv = select('body').append('div')
             .attr({id: randomID})
             .style({
@@ -257,7 +256,7 @@ function texToSVG(_texString, _config, _callback) {
 
         var node = !sel.empty() && tmpDiv.select('svg').node();
         if(!node) {
-            Lib.log('There was an error in the tex syntax.', _texString);
+            log('There was an error in the tex syntax.', _texString);
             _callback();
         } else {
             var nodeBBox = node.getBoundingClientRect();
@@ -633,14 +632,14 @@ function buildSVGText(containerNode, str) {
         // A bare closing tag can't close the root node. If we encounter this it
         // means there's an extra closing tag that can just be ignored:
         if(nodeStack.length === 1) {
-            Lib.log('Ignoring unexpected end tag </' + type + '>.', str);
+            log('Ignoring unexpected end tag </' + type + '>.', str);
             return;
         }
 
         var innerNode = nodeStack.pop();
 
         if(type !== innerNode.type) {
-            Lib.log('Start tag <' + innerNode.type + '> doesnt match end tag <' +
+            log('Start tag <' + innerNode.type + '> doesnt match end tag <' +
                 type + '>. Pretending it did match.', str);
         }
         currentNode = nodeStack[nodeStack.length - 1].node;
@@ -846,7 +845,7 @@ function alignHTMLWith(_base, container, options) {
         var gd = options.gd || {};
         if(options.gd) {
             gd._fullLayout._calcInverseTransform(gd);
-            var transformedCoords = Lib.apply3DTransform(gd._fullLayout._invTransform)(x0, y0);
+            var transformedCoords = apply3DTransform(gd._fullLayout._invTransform)(x0, y0);
             x0 = transformedCoords[0];
             y0 = transformedCoords[1];
         }

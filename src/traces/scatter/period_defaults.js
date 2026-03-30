@@ -1,5 +1,4 @@
-import _index from '../../lib/index.js';
-const { dateTick0 } = _index;
+import { dateTick0 } from '../../lib/index.js';
 import numConstants from '../../constants/numerical.js';
 var ONEWEEK = numConstants.ONEWEEK;
 

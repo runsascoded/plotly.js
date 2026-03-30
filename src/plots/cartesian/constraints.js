@@ -1,4 +1,4 @@
-import Lib from '../../lib/index.js';
+import Lib, { warn } from '../../lib/index.js';
 import autorange from './autorange.js';
 import { id2name } from './axis_ids.js';
 import layoutAttributes from './layout_attributes.js';
@@ -55,7 +55,7 @@ export var handleDefaults = function(layoutIn, layoutOut, opts) {
                 for(var axId2 in group) {
                     var axName2 = id2name(axId2);
                     if((layoutIn[axName2] || {}).fixedrange === false) {
-                        Lib.warn(
+                        warn(
                             'fixedrange was specified as false for axis ' +
                             axName2 + ' but was overridden because another ' +
                             'axis in its constraint group has fixedrange true'
@@ -276,7 +276,7 @@ function handleOneAxDefaults(axIn, axOut, opts) {
         }
         updateConstraintGroups(constraintGroups, thisID, matches, matchRatio);
     } else if(axIn.matches && axIds.indexOf(axIn.matches) !== -1) {
-        Lib.warn('ignored ' + axOut._name + '.matches: "' +
+        warn('ignored ' + axOut._name + '.matches: "' +
             axIn.matches + '" to avoid an infinite loop');
     }
 
@@ -292,7 +292,7 @@ function handleOneAxDefaults(axIn, axOut, opts) {
 
         updateConstraintGroups(constraintGroups, thisID, scaleanchor, scaleratio);
     } else if(axIn.scaleanchor && axIds.indexOf(axIn.scaleanchor) !== -1) {
-        Lib.warn('ignored ' + axOut._name + '.scaleanchor: "' +
+        warn('ignored ' + axOut._name + '.scaleanchor: "' +
             axIn.scaleanchor + '" to avoid either an infinite loop ' +
             'and possibly inconsistent scaleratios, or because this axis ' +
             'declares a *matches* constraint.');

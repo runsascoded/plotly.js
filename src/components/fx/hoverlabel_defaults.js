@@ -1,4 +1,4 @@
-import Lib from '../../lib/index.js';
+import { coerceFont } from '../../lib/index.js';
 import Color from '../color/index.js';
 import { isUnifiedHover } from './helpers.js';
 
@@ -35,6 +35,6 @@ export default function handleHoverLabelDefaults(contIn, contOut, coerce, opts) 
     coerce('hoverlabel.bordercolor', opts.bordercolor);
     coerce('hoverlabel.namelength', opts.namelength);
     coerce('hoverlabel.showarrow', opts.showarrow);
-    Lib.coerceFont(coerce, 'hoverlabel.font', opts.font);
+    coerceFont(coerce, 'hoverlabel.font', opts.font);
     coerce('hoverlabel.align', opts.align);
 }

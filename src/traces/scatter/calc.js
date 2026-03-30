@@ -1,5 +1,5 @@
 import isNumeric from 'fast-isnumeric';
-import Lib from '../../lib/index.js';
+import { isArrayOrTypedArray, pushUnique, sort } from '../../lib/index.js';
 import Axes from '../../plots/cartesian/axes.js';
 import alignPeriod from '../../plots/cartesian/align_period.js';
 import _numerical from '../../constants/numerical.js';
@@ -33,7 +33,7 @@ function calc(gd, trace) {
     var yAttr = 'y';
     var posAttr;
     if(stackGroupOpts) {
-        Lib.pushUnique(stackGroupOpts.traceIndices, trace.index);
+        pushUnique(stackGroupOpts.traceIndices, trace.index);
         isV = stackGroupOpts.orientation === 'v';
 
         // size, like we use for bar
@@ -106,7 +106,7 @@ function calc(gd, trace) {
             } else i++;
         }
 
-        Lib.sort(cd, function(a, b) {
+        sort(cd, function(a, b) {
             return (a[posAttr] - b[posAttr]) || (a.i - b.i);
         });
 
@@ -235,7 +235,7 @@ function calcMarkerSize(trace, serieslen) {
         };
     }
 
-    if(Lib.isArrayOrTypedArray(marker.size)) {
+    if(isArrayOrTypedArray(marker.size)) {
         // I tried auto-type but category and dates dont make much sense.
         var ax = {type: 'linear'};
         Axes.setConvert(ax);

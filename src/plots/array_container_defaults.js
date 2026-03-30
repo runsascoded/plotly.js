@@ -1,4 +1,4 @@
-import Lib from '../lib/index.js';
+import { isArrayOrTypedArray, isPlainObject, relinkPrivateKeys } from '../lib/index.js';
 import Template from '../plot_api/plot_template.js';
 
 export default function handleArrayContainerDefaults(parentObjIn, parentObjOut, opts) {
@@ -7,7 +7,7 @@ export default function handleArrayContainerDefaults(parentObjIn, parentObjOut, 
 
     var previousContOut = parentObjOut[name];
 
-    var contIn = Lib.isArrayOrTypedArray(parentObjIn[name]) ? parentObjIn[name] : [];
+    var contIn = isArrayOrTypedArray(parentObjIn[name]) ? parentObjIn[name] : [];
     var contOut = parentObjOut[name] = [];
     var templater = Template.arrayTemplater(parentObjOut, name, inclusionAttr);
     var i, itemOut;
@@ -15,7 +15,7 @@ export default function handleArrayContainerDefaults(parentObjIn, parentObjOut, 
     for(i = 0; i < contIn.length; i++) {
         var itemIn = contIn[i];
 
-        if(!Lib.isPlainObject(itemIn)) {
+        if(!isPlainObject(itemIn)) {
             itemOut = templater.newItem({});
             itemOut[inclusionAttr] = false;
         } else {
@@ -41,10 +41,10 @@ export default function handleArrayContainerDefaults(parentObjIn, parentObjOut, 
 
     // in case this array gets its defaults rebuilt independent of the whole layout,
     // relink the private keys just for this array.
-    if(Lib.isArrayOrTypedArray(previousContOut)) {
+    if(isArrayOrTypedArray(previousContOut)) {
         var len = Math.min(previousContOut.length, contOut.length);
         for(i = 0; i < len; i++) {
-            Lib.relinkPrivateKeys(contOut[i], previousContOut[i]);
+            relinkPrivateKeys(contOut[i], previousContOut[i]);
         }
     }
 

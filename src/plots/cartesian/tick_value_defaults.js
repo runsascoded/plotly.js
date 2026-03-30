@@ -1,6 +1,5 @@
 import cleanTicks from './clean_ticks.js';
-import _index from '../../lib/index.js';
-const { isArrayOrTypedArray } = _index;
+import { isArrayOrTypedArray } from '../../lib/index.js';
 import { isTypedArraySpec } from '../../lib/array.js';
 import { decodeTypedArraySpec } from '../../lib/array.js';
 

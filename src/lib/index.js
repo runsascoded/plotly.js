@@ -3,47 +3,95 @@ import { utcFormat } from 'd3-time-format';
 import { format as d3Format } from 'd3-format';
 import isNumeric from 'fast-isnumeric';
 import numConstants from '../constants/numerical.js';
-import arrayModule from './array.js';
-import modModule from './mod.js';
-import coerceModule from './coerce.js';
-import datesModule from './dates.js';
-import searchModule from './search.js';
-import statsModule from './stats.js';
-import matrixModule from './matrix.js';
-import anglesModule from './angles.js';
-import anchorUtils from './anchor_utils.js';
-import geom2dModule from './geometry2d.js';
-import extendModule from './extend.js';
-import loggersModule from './loggers.js';
-import regexModule from './regex.js';
-import throttleModule from './throttle.js';
-import domModule from './dom.js';
-import _req0 from './nested_property.js';
-import _req1 from './keyed_container.js';
-import _req2 from './relative_attr.js';
-import _req3 from './is_plain_object.js';
-import _req4 from './to_log_range.js';
-import _req5 from './relink_private.js';
-import _req6 from './sort_object_keys.js';
-import _req7 from './clear_responsive.js';
-import _req8 from './preserve_drawing_buffer.js';
-import _req9 from './make_trace_groups.js';
-import _req10 from './localize.js';
-import _req11 from './notifier.js';
-import _req12 from './filter_unique.js';
-import _req13 from './filter_visible.js';
-import _req14 from './push_unique.js';
-import _req15 from './increment.js';
-import _req16 from './clean_number.js';
-import _req17 from './noop.js';
-import _req18 from './identity.js';
+
+export { isArrayBuffer, isTypedArray, isArrayOrTypedArray, isArray1D, ensureArray, concat, maxRowLength, minRowLength } from './array.js';
+export { mod, modHalf } from './mod.js';
+export { valObjectMeta, coerce, coerce2, coerceFont, coercePattern, coerceHoverinfo, coerceSelectionMarkerOpacity, validate } from './coerce.js';
+export { dateTime2ms, isDateTime, ms2DateTime, ms2DateTimeLocal, cleanDate, isJSDate, formatDate, incrementMonth, dateTick0, dfltRange, findExactDates, MIN_MS, MAX_MS } from './dates.js';
+export { findBin, sorterAsc, sorterDes, distinctVals, roundUp, sort, findIndexOfMin } from './search.js';
+export { aggNums, len, mean, geometricMean, median, midRange, variance, stdev, interp } from './stats.js';
+export { init2dArray, transposeRagged, dot, translationMatrix, rotationMatrix, rotationXYMatrix, apply3DTransform, apply2DTransform, apply2DTransform2, convertCssMatrix, inverseTransformMatrix } from './matrix.js';
+export { deg2rad, rad2deg, angleDelta, angleDist, isFullCircle, isAngleInsideSector, isPtInsideSector, pathArc, pathSector, pathAnnulus } from './angles.js';
+export { isLeftAnchor, isCenterAnchor, isRightAnchor, isTopAnchor, isMiddleAnchor, isBottomAnchor } from './anchor_utils.js';
+export { segmentsIntersect, segmentDistance, getTextLocation, clearLocationCache, getVisibleSegment, findPointOnPath } from './geometry2d.js';
+export { extendFlat, extendDeep, extendDeepAll, extendDeepNoArrays } from './extend.js';
+export { log, warn, error } from './loggers.js';
+export { getGraphDiv, isPlotDiv, removeElement, addStyleRule, addRelatedStyleRule, deleteRelatedStyleRule, setStyleOnHover, getFullTransformMatrix, getElementTransformMatrix, getElementAndAncestors, equalDomRects } from './dom.js';
+
+import { counter as counterRegex } from './regex.js';
+export { counterRegex };
+
+import { throttle, done as throttleDone, clear as clearThrottle } from './throttle.js';
+export { throttle, throttleDone, clearThrottle };
+
+import _nestedProperty from './nested_property.js';
+export var nestedProperty = _nestedProperty;
+
+import _keyedContainer from './keyed_container.js';
+export var keyedContainer = _keyedContainer;
+
+import _relativeAttr from './relative_attr.js';
+export var relativeAttr = _relativeAttr;
+
+import _isPlainObject from './is_plain_object.js';
+export var isPlainObject = _isPlainObject;
+
+import _toLogRange from './to_log_range.js';
+export var toLogRange = _toLogRange;
+
+import _relinkPrivateKeys from './relink_private.js';
+export var relinkPrivateKeys = _relinkPrivateKeys;
+
+import _sortObjectKeys from './sort_object_keys.js';
+export var sortObjectKeys = _sortObjectKeys;
+
+import _clearResponsive from './clear_responsive.js';
+export var clearResponsive = _clearResponsive;
+
+import _preserveDrawingBuffer from './preserve_drawing_buffer.js';
+export var preserveDrawingBuffer = _preserveDrawingBuffer;
+
+import _makeTraceGroups from './make_trace_groups.js';
+export var makeTraceGroups = _makeTraceGroups;
+
+import _localize from './localize.js';
+export { _localize as _ };
+
+import _notifier from './notifier.js';
+export var notifier = _notifier;
+
+import _filterUnique from './filter_unique.js';
+export var filterUnique = _filterUnique;
+
+import _filterVisible from './filter_visible.js';
+export var filterVisible = _filterVisible;
+
+import _pushUnique from './push_unique.js';
+export var pushUnique = _pushUnique;
+
+import _increment from './increment.js';
+export var increment = _increment;
+
+import _cleanNumber from './clean_number.js';
+export var cleanNumber = _cleanNumber;
+
+import _noop from './noop.js';
+export var noop = _noop;
+
+import _identity from './identity.js';
+export var identity = _identity;
+
+// Re-import modules needed by inline functions
+import { isArrayOrTypedArray, isTypedArray } from './array.js';
+import { extendFlat, extendDeepNoArrays } from './extend.js';
+import { warn } from './loggers.js';
+import { formatDate, dateTime2ms } from './dates.js';
+
 var MAX_SAFE = numConstants.FP_SAFE;
 var MIN_SAFE = -MAX_SAFE;
 var BADNUM = numConstants.BADNUM;
 
-var lib = ({});
-
-lib.adjustFormat = function adjustFormat(formatStr) {
+export function adjustFormat(formatStr) {
     if (!formatStr || /^\d[.]\df/.test(formatStr) || /[.]\d%/.test(formatStr)) return formatStr;
 
     if (formatStr === '0.f') return '~f';
@@ -54,181 +102,38 @@ lib.adjustFormat = function adjustFormat(formatStr) {
     if (!/^[~,.0$]/.test(formatStr) && /[&fps]/.test(formatStr)) return '~' + formatStr;
 
     return formatStr;
-};
+}
 
 var seenBadFormats = {};
-lib.warnBadFormat = function (f) {
+export function warnBadFormat(f) {
     var key = String(f);
     if (!seenBadFormats[key]) {
         seenBadFormats[key] = 1;
-        lib.warn('encountered bad format: "' + key + '"');
+        warn('encountered bad format: "' + key + '"');
     }
-};
+}
 
-lib.noFormat = function (value) {
+export function noFormat(value) {
     return String(value);
-};
+}
 
-lib.numberFormat = function (formatStr) {
+export function numberFormat(formatStr) {
     var fn;
     try {
-        fn = d3Format(lib.adjustFormat(formatStr));
+        fn = d3Format(adjustFormat(formatStr));
     } catch (e) {
-        lib.warnBadFormat(formatStr);
-        return lib.noFormat;
+        warnBadFormat(formatStr);
+        return noFormat;
     }
 
     return fn;
-};
+}
 
-lib.nestedProperty = _req0;
-lib.keyedContainer = _req1;
-lib.relativeAttr = _req2;
-lib.isPlainObject = _req3;
-lib.toLogRange = _req4;
-lib.relinkPrivateKeys = _req5;
-
-lib.isArrayBuffer = arrayModule.isArrayBuffer;
-lib.isTypedArray = arrayModule.isTypedArray;
-lib.isArrayOrTypedArray = arrayModule.isArrayOrTypedArray;
-lib.isArray1D = arrayModule.isArray1D;
-lib.ensureArray = arrayModule.ensureArray;
-lib.concat = arrayModule.concat;
-lib.maxRowLength = arrayModule.maxRowLength;
-lib.minRowLength = arrayModule.minRowLength;
-
-lib.mod = modModule.mod;
-lib.modHalf = modModule.modHalf;
-
-lib.valObjectMeta = coerceModule.valObjectMeta;
-lib.coerce = coerceModule.coerce;
-lib.coerce2 = coerceModule.coerce2;
-lib.coerceFont = coerceModule.coerceFont;
-lib.coercePattern = coerceModule.coercePattern;
-lib.coerceHoverinfo = coerceModule.coerceHoverinfo;
-lib.coerceSelectionMarkerOpacity = coerceModule.coerceSelectionMarkerOpacity;
-lib.validate = coerceModule.validate;
-
-lib.dateTime2ms = datesModule.dateTime2ms;
-lib.isDateTime = datesModule.isDateTime;
-lib.ms2DateTime = datesModule.ms2DateTime;
-lib.ms2DateTimeLocal = datesModule.ms2DateTimeLocal;
-lib.cleanDate = datesModule.cleanDate;
-lib.isJSDate = datesModule.isJSDate;
-lib.formatDate = datesModule.formatDate;
-lib.incrementMonth = datesModule.incrementMonth;
-lib.dateTick0 = datesModule.dateTick0;
-lib.dfltRange = datesModule.dfltRange;
-lib.findExactDates = datesModule.findExactDates;
-lib.MIN_MS = datesModule.MIN_MS;
-lib.MAX_MS = datesModule.MAX_MS;
-
-lib.findBin = searchModule.findBin;
-lib.sorterAsc = searchModule.sorterAsc;
-lib.sorterDes = searchModule.sorterDes;
-lib.distinctVals = searchModule.distinctVals;
-lib.roundUp = searchModule.roundUp;
-lib.sort = searchModule.sort;
-lib.findIndexOfMin = searchModule.findIndexOfMin;
-
-lib.sortObjectKeys = _req6;
-
-lib.aggNums = statsModule.aggNums;
-lib.len = statsModule.len;
-lib.mean = statsModule.mean;
-lib.geometricMean = statsModule.geometricMean;
-lib.median = statsModule.median;
-lib.midRange = statsModule.midRange;
-lib.variance = statsModule.variance;
-lib.stdev = statsModule.stdev;
-lib.interp = statsModule.interp;
-
-lib.init2dArray = matrixModule.init2dArray;
-lib.transposeRagged = matrixModule.transposeRagged;
-lib.dot = matrixModule.dot;
-lib.translationMatrix = matrixModule.translationMatrix;
-lib.rotationMatrix = matrixModule.rotationMatrix;
-lib.rotationXYMatrix = matrixModule.rotationXYMatrix;
-lib.apply3DTransform = matrixModule.apply3DTransform;
-lib.apply2DTransform = matrixModule.apply2DTransform;
-lib.apply2DTransform2 = matrixModule.apply2DTransform2;
-lib.convertCssMatrix = matrixModule.convertCssMatrix;
-lib.inverseTransformMatrix = matrixModule.inverseTransformMatrix;
-
-lib.deg2rad = anglesModule.deg2rad;
-lib.rad2deg = anglesModule.rad2deg;
-lib.angleDelta = anglesModule.angleDelta;
-lib.angleDist = anglesModule.angleDist;
-lib.isFullCircle = anglesModule.isFullCircle;
-lib.isAngleInsideSector = anglesModule.isAngleInsideSector;
-lib.isPtInsideSector = anglesModule.isPtInsideSector;
-lib.pathArc = anglesModule.pathArc;
-lib.pathSector = anglesModule.pathSector;
-lib.pathAnnulus = anglesModule.pathAnnulus;
-
-lib.isLeftAnchor = anchorUtils.isLeftAnchor;
-lib.isCenterAnchor = anchorUtils.isCenterAnchor;
-lib.isRightAnchor = anchorUtils.isRightAnchor;
-lib.isTopAnchor = anchorUtils.isTopAnchor;
-lib.isMiddleAnchor = anchorUtils.isMiddleAnchor;
-lib.isBottomAnchor = anchorUtils.isBottomAnchor;
-
-lib.segmentsIntersect = geom2dModule.segmentsIntersect;
-lib.segmentDistance = geom2dModule.segmentDistance;
-lib.getTextLocation = geom2dModule.getTextLocation;
-lib.clearLocationCache = geom2dModule.clearLocationCache;
-lib.getVisibleSegment = geom2dModule.getVisibleSegment;
-lib.findPointOnPath = geom2dModule.findPointOnPath;
-
-lib.extendFlat = extendModule.extendFlat;
-lib.extendDeep = extendModule.extendDeep;
-lib.extendDeepAll = extendModule.extendDeepAll;
-lib.extendDeepNoArrays = extendModule.extendDeepNoArrays;
-
-lib.log = loggersModule.log;
-lib.warn = loggersModule.warn;
-lib.error = loggersModule.error;
-
-lib.counterRegex = regexModule.counter;
-
-lib.throttle = throttleModule.throttle;
-lib.throttleDone = throttleModule.done;
-lib.clearThrottle = throttleModule.clear;
-
-lib.getGraphDiv = domModule.getGraphDiv;
-lib.isPlotDiv = domModule.isPlotDiv;
-lib.removeElement = domModule.removeElement;
-lib.addStyleRule = domModule.addStyleRule;
-lib.addRelatedStyleRule = domModule.addRelatedStyleRule;
-lib.deleteRelatedStyleRule = domModule.deleteRelatedStyleRule;
-lib.setStyleOnHover = domModule.setStyleOnHover;
-lib.getFullTransformMatrix = domModule.getFullTransformMatrix;
-lib.getElementTransformMatrix = domModule.getElementTransformMatrix;
-lib.getElementAndAncestors = domModule.getElementAndAncestors;
-lib.equalDomRects = domModule.equalDomRects;
-
-lib.clearResponsive = _req7;
-lib.preserveDrawingBuffer = _req8;
-
-lib.makeTraceGroups = _req9;
-
-lib._ = _req10;
-
-lib.notifier = _req11;
-
-lib.filterUnique = _req12;
-lib.filterVisible = _req13;
-lib.pushUnique = _req14;
-
-lib.increment = _req15;
-
-lib.cleanNumber = _req16;
-
-lib.ensureNumber = function ensureNumber(v) {
+export function ensureNumber(v) {
     if (!isNumeric(v)) return BADNUM;
     v = Number(v);
     return v > MAX_SAFE || v < MIN_SAFE ? BADNUM : v;
-};
+}
 
 /**
  * Is v a valid array index? Accepts numeric strings as well as numbers.
@@ -238,13 +143,10 @@ lib.ensureNumber = function ensureNumber(v) {
  *
  * @return {bool}: v is a valid array index
  */
-lib.isIndex = function (v, len) {
+export function isIndex(v, len) {
     if (len !== undefined && v >= len) return false;
     return isNumeric(v) && v >= 0 && v % 1 === 0;
-};
-
-lib.noop = _req17;
-lib.identity = _req18;
+}
 
 /**
  * create an array of length 'cnt' filled with 'v' at all indices
@@ -253,61 +155,61 @@ lib.identity = _req18;
  * @param {number} cnt
  * @return {array}
  */
-lib.repeat = function (v, cnt) {
+export function repeat(v, cnt) {
     var out = new Array(cnt);
     for (var i = 0; i < cnt; i++) {
         out[i] = v;
     }
     return out;
-};
+}
 
 /**
  * swap x and y of the same attribute in container cont
  * specify attr with a ? in place of x/y
  * you can also swap other things than x/y by providing part1 and part2
  */
-lib.swapAttrs = function (cont, attrList, part1, part2) {
+export function swapAttrs(cont, attrList, part1, part2) {
     if (!part1) part1 = 'x';
     if (!part2) part2 = 'y';
     for (var i = 0; i < attrList.length; i++) {
         var attr = attrList[i];
-        var xp = lib.nestedProperty(cont, attr.replace('?', part1));
-        var yp = lib.nestedProperty(cont, attr.replace('?', part2));
+        var xp = nestedProperty(cont, attr.replace('?', part1));
+        var yp = nestedProperty(cont, attr.replace('?', part2));
         var temp = xp.get();
         xp.set(yp.get());
         yp.set(temp);
     }
-};
+}
 
 /**
  * SVG painter's algo worked around with reinsertion
  */
-lib.raiseToTop = function raiseToTop(elem) {
+export function raiseToTop(elem) {
     elem.parentNode.appendChild(elem);
-};
+}
 
 /**
  * cancel a possibly pending transition; returned selection may be used by caller
  */
-lib.cancelTransition = function (selection) {
-    return selection.transition().duration(0);
-};
+export function cancelTransition(sel) {
+    return sel.transition().duration(0);
+}
 
 // constrain - restrict a number v to be between v0 and v1
-lib.constrain = function (v, v0, v1) {
+export function constrain(v, v0, v1) {
     if (v0 > v1) return Math.max(v1, Math.min(v0, v));
     return Math.max(v0, Math.min(v1, v));
-};
+}
 
 /**
  * do two bounding boxes from getBoundingClientRect,
  * ie {left,right,top,bottom,width,height}, overlap?
  * takes optional padding pixels
  */
-lib.bBoxIntersect = function (a, b, pad) {
+export function bBoxIntersect(a, b, pad) {
     pad = pad || 0;
     return a.left <= b.right + pad && b.left <= a.right + pad && a.top <= b.bottom + pad && b.top <= a.bottom + pad;
-};
+}
 
 /*
  * simpleMap: alternative to Array.map that only
@@ -318,12 +220,12 @@ lib.bBoxIntersect = function (a, b, pad) {
  * func: the function to apply
  * x1, x2: optional extra args
  */
-lib.simpleMap = function (array, func, x1, x2, opts) {
+export function simpleMap(array, func, x1, x2, opts) {
     var len = array.length;
     var out = new Array(len);
     for (var i = 0; i < len; i++) out[i] = func(array[i], x1, x2, opts);
     return out;
-};
+}
 
 /**
  * Random string generator
@@ -335,7 +237,7 @@ lib.simpleMap = function (array, func, x1, x2, opts) {
  * @param {int} base
  *     base of string representation, default 16. Should be a power of 2.
  */
-lib.randstr = function randstr(existing, bits, base, _recursion) {
+export function randstr(existing, bits, base, _recursion) {
     if (!base) base = 16;
     if (bits === undefined) bits = 24;
     if (bits <= 0) return '0';
@@ -364,14 +266,14 @@ lib.randstr = function randstr(existing, bits, base, _recursion) {
     var parsed = parseInt(res, base);
     if ((existing && existing[res]) || (parsed !== Infinity && parsed >= Math.pow(2, bits))) {
         if (_recursion > 10) {
-            lib.warn('randstr failed uniqueness');
+            warn('randstr failed uniqueness');
             return res;
         }
         return randstr(existing, bits, base, (_recursion || 0) + 1);
     } else return res;
-};
+}
 
-lib.OptionControl = function (opt, optname) {
+export function OptionControl(opt, optname) {
     /*
      * An environment to contain all option setters and
      * getters that collectively modify opts.
@@ -395,14 +297,14 @@ lib.OptionControl = function (opt, optname) {
 
     self['_' + optname] = opt;
     return self;
-};
+}
 
 /**
  * lib.smooth: smooth arrayIn by convolving with
  * a hann window with given full width at half max
  * bounce the ends in, so the output has the same length as the input
  */
-lib.smooth = function (arrayIn, FWHM) {
+export function smooth(arrayIn, FWHM) {
     FWHM = Math.round(FWHM) || 0; // only makes sense for integers
     if (FWHM < 2) return arrayIn;
 
@@ -441,7 +343,7 @@ lib.smooth = function (arrayIn, FWHM) {
     }
 
     return arrayOut;
-};
+}
 
 /**
  * syncOrAsync: run a sequence of functions synchronously
@@ -454,11 +356,11 @@ lib.smooth = function (arrayIn, FWHM) {
  * this doesn't happen yet because we want to make sure
  * that it gets reported
  */
-lib.syncOrAsync = function (sequence, arg, finalStep) {
+export function syncOrAsync(sequence, arg, finalStep) {
     var ret, fni;
 
     function continueAsync() {
-        return lib.syncOrAsync(sequence, arg, finalStep);
+        return syncOrAsync(sequence, arg, finalStep);
     }
 
     while (sequence.length) {
@@ -471,18 +373,18 @@ lib.syncOrAsync = function (sequence, arg, finalStep) {
     }
 
     return finalStep && finalStep(arg);
-};
+}
 
 /**
  * Helper to strip trailing slash, from
  * http://stackoverflow.com/questions/6680825/return-string-without-trailing-slash
  */
-lib.stripTrailingSlash = function (str) {
+export function stripTrailingSlash(str) {
     if (str.slice(-1) === '/') return str.slice(0, -1);
     return str;
-};
+}
 
-lib.noneOrAll = function (containerIn, containerOut, attrList) {
+export function noneOrAll(containerIn, containerOut, attrList) {
     /**
      * some attributes come together, so if you have one of them
      * in the input, you should copy the default values of the others
@@ -506,7 +408,7 @@ lib.noneOrAll = function (containerIn, containerOut, attrList) {
             containerIn[attrList[i]] = containerOut[attrList[i]];
         }
     }
-};
+}
 
 /** merges calcdata field (given by cdAttr) with traceAttr values
  *
@@ -517,24 +419,24 @@ lib.noneOrAll = function (containerIn, containerOut, attrList) {
  * @param {object} cd : calcdata trace
  * @param {string} cdAttr : calcdata key
  */
-lib.mergeArray = function (traceAttr, cd, cdAttr, fn) {
+export function mergeArray(traceAttr, cd, cdAttr, fn) {
     var hasFn = typeof fn === 'function';
-    if (lib.isArrayOrTypedArray(traceAttr)) {
+    if (isArrayOrTypedArray(traceAttr)) {
         var imax = Math.min(traceAttr.length, cd.length);
         for (var i = 0; i < imax; i++) {
             var v = traceAttr[i];
             cd[i][cdAttr] = hasFn ? fn(v) : v;
         }
     }
-};
+}
 
 // cast numbers to positive numbers, returns 0 if not greater than 0
-lib.mergeArrayCastPositive = function (traceAttr, cd, cdAttr) {
-    return lib.mergeArray(traceAttr, cd, cdAttr, function (v) {
+export function mergeArrayCastPositive(traceAttr, cd, cdAttr) {
+    return mergeArray(traceAttr, cd, cdAttr, function (v) {
         var w = +v;
         return !isFinite(w) ? 0 : w > 0 ? w : 0;
     });
-};
+}
 
 /** fills calcdata field (given by cdAttr) with traceAttr values
  *  or function of traceAttr values (e.g. some fallback)
@@ -546,15 +448,15 @@ lib.mergeArrayCastPositive = function (traceAttr, cd, cdAttr) {
  * @param {string} cdAttr : calcdata key
  * @param {function} [fn] : optional function to apply to each array item
  */
-lib.fillArray = function (traceAttr, cd, cdAttr, fn) {
-    fn = fn || lib.identity;
+export function fillArray(traceAttr, cd, cdAttr, fn) {
+    fn = fn || identity;
 
-    if (lib.isArrayOrTypedArray(traceAttr)) {
+    if (isArrayOrTypedArray(traceAttr)) {
         for (var i = 0; i < cd.length; i++) {
             cd[i][cdAttr] = fn(traceAttr[i]);
         }
     }
-};
+}
 
 /** Handler for trace-wide vs per-point options
  *
@@ -565,13 +467,13 @@ lib.fillArray = function (traceAttr, cd, cdAttr, fn) {
  *
  * @return {any}
  */
-lib.castOption = function (trace, ptNumber, astr, fn) {
-    fn = fn || lib.identity;
+export function castOption(trace, ptNumber, astr, fn) {
+    fn = fn || identity;
 
-    var val = lib.nestedProperty(trace, astr).get();
+    var val = nestedProperty(trace, astr).get();
 
-    if (lib.isArrayOrTypedArray(val)) {
-        if (Array.isArray(ptNumber) && lib.isArrayOrTypedArray(val[ptNumber[0]])) {
+    if (isArrayOrTypedArray(val)) {
+        if (Array.isArray(ptNumber) && isArrayOrTypedArray(val[ptNumber[0]])) {
             return fn(val[ptNumber[0]][ptNumber[1]]);
         } else {
             return fn(val[ptNumber]);
@@ -579,7 +481,7 @@ lib.castOption = function (trace, ptNumber, astr, fn) {
     } else {
         return val;
     }
-};
+}
 
 /** Extract option from calcdata item, correctly falling back to
  *  trace value if not found.
@@ -590,16 +492,16 @@ lib.castOption = function (trace, ptNumber, astr, fn) {
  *  @param {string} traceKey : aka trace attribute string
  *  @return {any}
  */
-lib.extractOption = function (calcPt, trace, calcKey, traceKey) {
+export function extractOption(calcPt, trace, calcKey, traceKey) {
     if (calcKey in calcPt) return calcPt[calcKey];
 
     // fallback to trace value,
     //   must check if value isn't itself an array
     //   which means the trace attribute has a corresponding
     //   calcdata key, but its value is falsy
-    var traceVal = lib.nestedProperty(trace, traceKey).get();
+    var traceVal = nestedProperty(trace, traceKey).get();
     if (!Array.isArray(traceVal)) return traceVal;
-};
+}
 
 function makePtIndex2PtNumber(indexToPoints) {
     var ptIndex2ptNumber = {};
@@ -625,7 +527,7 @@ function makePtIndex2PtNumber(indexToPoints) {
  *  optional map object for trace types that do not have 1-to-1 point number to
  *  calcdata item index correspondence (e.g. histogram)
  */
-lib.tagSelected = function (calcTrace, trace, ptNumber2cdIndex) {
+export function tagSelected(calcTrace, trace, ptNumber2cdIndex) {
     var selectedpoints = trace.selectedpoints;
     var indexToPoints = trace._indexToPoints;
     var ptIndex2ptNumber;
@@ -643,8 +545,8 @@ lib.tagSelected = function (calcTrace, trace, ptNumber2cdIndex) {
         var ptIndex = selectedpoints[i];
 
         if (
-            lib.isIndex(ptIndex) ||
-            (lib.isArrayOrTypedArray(ptIndex) && lib.isIndex(ptIndex[0]) && lib.isIndex(ptIndex[1]))
+            isIndex(ptIndex) ||
+            (isArrayOrTypedArray(ptIndex) && isIndex(ptIndex[0]) && isIndex(ptIndex[1]))
         ) {
             var ptNumber = ptIndex2ptNumber ? ptIndex2ptNumber[ptIndex] : ptIndex;
             var cdIndex = ptNumber2cdIndex ? ptNumber2cdIndex[ptNumber] : ptNumber;
@@ -654,9 +556,9 @@ lib.tagSelected = function (calcTrace, trace, ptNumber2cdIndex) {
             }
         }
     }
-};
+}
 
-lib.selIndices2selPoints = function (trace) {
+export function selIndices2selPoints(trace) {
     var selectedpoints = trace.selectedpoints;
     var indexToPoints = trace._indexToPoints;
 
@@ -666,9 +568,9 @@ lib.selIndices2selPoints = function (trace) {
 
         for (var i = 0; i < selectedpoints.length; i++) {
             var ptIndex = selectedpoints[i];
-            if (lib.isIndex(ptIndex)) {
+            if (isIndex(ptIndex)) {
                 var ptNumber = ptIndex2ptNumber[ptIndex];
-                if (lib.isIndex(ptNumber)) {
+                if (isIndex(ptNumber)) {
                     out.push(ptNumber);
                 }
             }
@@ -678,7 +580,7 @@ lib.selIndices2selPoints = function (trace) {
     } else {
         return selectedpoints;
     }
-};
+}
 
 /** Returns target as set by 'target' transform attribute
  *
@@ -690,18 +592,18 @@ lib.selIndices2selPoints = function (trace) {
  *
  * @return {array or false} : the target array (NOT a copy!!) or false if invalid
  */
-lib.getTargetArray = function (trace, transformOpts) {
+export function getTargetArray(trace, transformOpts) {
     var target = transformOpts.target;
 
     if (typeof target === 'string' && target) {
-        var array = lib.nestedProperty(trace, target).get();
-        return lib.isArrayOrTypedArray(array) ? array : false;
-    } else if (lib.isArrayOrTypedArray(target)) {
+        var array = nestedProperty(trace, target).get();
+        return isArrayOrTypedArray(array) ? array : false;
+    } else if (isArrayOrTypedArray(target)) {
         return target;
     }
 
     return false;
-};
+}
 
 /**
  * modified version of jQuery's extend to strip out private objs and functions,
@@ -709,7 +611,7 @@ lib.getTargetArray = function (trace, transformOpts) {
  * because extend-like algorithms are hella slow
  * obj2 is assumed to already be clean of these things (including no arrays)
  */
-function minExtend(obj1, obj2, opt) {
+export function minExtend(obj1, obj2, opt) {
     var objOut = {};
     if (typeof obj2 !== 'object') obj2 = {};
 
@@ -729,7 +631,7 @@ function minExtend(obj1, obj2, opt) {
             } else {
                 objOut[k] = v.slice(0, arrayLen);
             }
-        } else if (lib.isTypedArray(v)) {
+        } else if (isTypedArray(v)) {
             if (arrayLen === -1) {
                 objOut[k] = v.subarray();
             } else {
@@ -750,37 +652,36 @@ function minExtend(obj1, obj2, opt) {
 
     return objOut;
 }
-lib.minExtend = minExtend;
 
-lib.titleCase = function (s) {
+export function titleCase(s) {
     return s.charAt(0).toUpperCase() + s.slice(1);
-};
+}
 
-lib.containsAny = function (s, fragments) {
+export function containsAny(s, fragments) {
     for (var i = 0; i < fragments.length; i++) {
         if (s.indexOf(fragments[i]) !== -1) return true;
     }
     return false;
-};
+}
 
 var IS_SAFARI_REGEX = /Version\/[\d\.]+.*Safari/;
-lib.isSafari = function () {
+export function isSafari() {
     return IS_SAFARI_REGEX.test(window.navigator.userAgent);
-};
+}
 
 var IS_IOS_REGEX = /iPad|iPhone|iPod/;
-lib.isIOS = function () {
+export function isIOS() {
     return IS_IOS_REGEX.test(window.navigator.userAgent);
-};
+}
 
 // The WKWebView user agent string doesn't include 'Safari', so we need a separate test
 // for a UA string like this:
 // Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko)
 const IS_MAC_WKWEBVIEW_REGEX = /Macintosh.+AppleWebKit.+Gecko\)$/;
-lib.isMacWKWebView = () => IS_MAC_WKWEBVIEW_REGEX.test(window.navigator.userAgent);
+export var isMacWKWebView = () => IS_MAC_WKWEBVIEW_REGEX.test(window.navigator.userAgent);
 
 var FIREFOX_VERSION_REGEX = /Firefox\/(\d+)\.\d+/;
-lib.getFirefoxVersion = function () {
+export function getFirefoxVersion() {
     var match = FIREFOX_VERSION_REGEX.exec(window.navigator.userAgent);
     if (match && match.length === 2) {
         var versionInt = parseInt(match[1]);
@@ -789,11 +690,11 @@ lib.getFirefoxVersion = function () {
         }
     }
     return null;
-};
+}
 
-lib.isD3Selection = function (obj) {
+export function isD3Selection(obj) {
     return obj instanceof selection;
-};
+}
 
 /**
  * Append element to DOM only if not present.
@@ -823,7 +724,7 @@ lib.isD3Selection = function (obj) {
  * `querySelectorAll`.
  *
  */
-lib.ensureSingle = function (parent, nodeType, className, enterFn) {
+export function ensureSingle(parent, nodeType, className, enterFn) {
     var sel = parent.select(nodeType + (className ? '.' + className : ''));
     if (sel.size()) return sel;
 
@@ -832,7 +733,7 @@ lib.ensureSingle = function (parent, nodeType, className, enterFn) {
     if (enterFn) layer.call(enterFn);
 
     return layer;
-};
+}
 
 /**
  * Same as Lib.ensureSingle, but using id as selector.
@@ -844,7 +745,7 @@ lib.ensureSingle = function (parent, nodeType, className, enterFn) {
  * @param {fn} enterFn (optional) : optional fn applied to entering elements only
  * @return {d3 selection} selection of new layer
  */
-lib.ensureSingleById = function (parent, nodeType, id, enterFn) {
+export function ensureSingleById(parent, nodeType, id, enterFn) {
     var sel = parent.select(nodeType + '#' + id);
     if (sel.size()) return sel;
 
@@ -852,7 +753,7 @@ lib.ensureSingleById = function (parent, nodeType, id, enterFn) {
     if (enterFn) layer.call(enterFn);
 
     return layer;
-};
+}
 
 /**
  * Converts a string path to an object.
@@ -869,7 +770,7 @@ lib.ensureSingleById = function (parent, nodeType, id, enterFn) {
  *
  * @return {Object} the constructed object with a full nested path
  */
-lib.objectFromPath = function (path, value) {
+export function objectFromPath(path, value) {
     var keys = path.split('.');
     var tmpObj;
     var obj = (tmpObj = {});
@@ -905,7 +806,7 @@ lib.objectFromPath = function (path, value) {
     }
 
     return obj;
-};
+}
 
 /**
  * Iterate through an object in-place, converting dotted properties to objects.
@@ -943,7 +844,7 @@ function notValid(prop) {
     return prop.slice(0, 2) === '__';
 }
 
-lib.expandObjectPaths = function (data) {
+export function expandObjectPaths(data) {
     var match, key, prop, datum, idx, dest, trailingPath;
     if (typeof data === 'object' && !Array.isArray(data)) {
         for (key in data) {
@@ -955,9 +856,9 @@ lib.expandObjectPaths = function (data) {
 
                     delete data[key];
 
-                    data[prop] = lib.extendDeepNoArrays(
+                    data[prop] = extendDeepNoArrays(
                         data[prop] || {},
-                        lib.objectFromPath(key, lib.expandObjectPaths(datum))[prop]
+                        objectFromPath(key, expandObjectPaths(datum))[prop]
                     );
                 } else if ((match = key.match(indexedPropertyRegex))) {
                     datum = data[key];
@@ -989,24 +890,24 @@ lib.expandObjectPaths = function (data) {
                         // the other, so that both properties *will not* be present in the
                         // result. Fixing this would require a more intelligent tracking
                         // of changes and merging than extendDeepNoArrays currently accomplishes.
-                        lib.extendDeepNoArrays(dest, lib.objectFromPath(trailingPath, lib.expandObjectPaths(datum)));
+                        extendDeepNoArrays(dest, objectFromPath(trailingPath, expandObjectPaths(datum)));
                     } else {
                         // This is the case where this property is the end of the line,
                         // e.g. xaxis.range[0]
 
                         if (notValid(prop)) continue;
-                        data[prop][idx] = lib.expandObjectPaths(datum);
+                        data[prop][idx] = expandObjectPaths(datum);
                     }
                 } else {
                     if (notValid(key)) continue;
-                    data[key] = lib.expandObjectPaths(data[key]);
+                    data[key] = expandObjectPaths(data[key]);
                 }
             }
         }
     }
 
     return data;
-};
+}
 
 /**
  * Converts value to string separated by the provided separators.
@@ -1029,7 +930,7 @@ lib.expandObjectPaths = function (data) {
  *
  * @return  {string}    the value that has been separated
  */
-lib.numSeparate = function (value, separators, separatethousands) {
+export function numSeparate(value, separators, separatethousands) {
     if (!separatethousands) separatethousands = false;
 
     if (typeof separators !== 'string' || separators.length === 0) {
@@ -1056,9 +957,9 @@ lib.numSeparate = function (value, separators, separatethousands) {
     }
 
     return x1 + x2;
-};
+}
 
-lib.TEMPLATE_STRING_REGEX = /%{([^\s%{}:]*)([:|\|][^}]*)?}/g;
+export var TEMPLATE_STRING_REGEX = /%{([^\s%{}:]*)([:|\|][^}]*)?}/g;
 var SIMPLE_PROPERTY_REGEX = /^\w*$/;
 
 /**
@@ -1073,36 +974,36 @@ var SIMPLE_PROPERTY_REGEX = /^\w*$/;
  *
  * @return {string} templated string
  */
-lib.templateString = function (string, obj) {
+export function templateString(string, obj) {
     // Not all that useful, but cache nestedProperty instantiation
     // just in case it speeds things up *slightly*:
     var getterCache = {};
 
-    return string.replace(lib.TEMPLATE_STRING_REGEX, function (dummy, key) {
+    return string.replace(TEMPLATE_STRING_REGEX, function (dummy, key) {
         var v;
         if (SIMPLE_PROPERTY_REGEX.test(key)) {
             v = obj[key];
         } else {
-            getterCache[key] = getterCache[key] || lib.nestedProperty(obj, key).get;
+            getterCache[key] = getterCache[key] || nestedProperty(obj, key).get;
             v = getterCache[key](true); // true means don't replace undefined with null
         }
         return v !== undefined ? v : '';
     });
-};
+}
 
 const hovertemplateWarnings = {
     max: 10,
     count: 0,
     name: 'hovertemplate'
 };
-lib.hovertemplateString = (params) => templateFormatString({ ...params, opts: hovertemplateWarnings });
+export var hovertemplateString = (params) => templateFormatString({ ...params, opts: hovertemplateWarnings });
 
 const texttemplateWarnings = {
     max: 10,
     count: 0,
     name: 'texttemplate'
 };
-lib.texttemplateString = (params) => templateFormatString({ ...params, opts: texttemplateWarnings });
+export var texttemplateString = (params) => templateFormatString({ ...params, opts: texttemplateWarnings });
 
 // Regex for parsing multiplication and division operations applied to a template key
 // Used for shape.label.texttemplate
@@ -1120,7 +1021,7 @@ var texttemplateWarningsForShapes = {
     name: 'texttemplate',
     parseMultDiv: true
 };
-lib.texttemplateStringForShapes = (params) => templateFormatString({ ...params, opts: texttemplateWarningsForShapes });
+export var texttemplateStringForShapes = (params) => templateFormatString({ ...params, opts: texttemplateWarningsForShapes });
 
 var TEMPLATE_STRING_FORMAT_SEPARATOR = /^[:|\|]/;
 /**
@@ -1147,7 +1048,7 @@ var TEMPLATE_STRING_FORMAT_SEPARATOR = /^[:|\|]/;
  * @return {string} templated string
  */
 function templateFormatString({ data = [], locale, fallback, labels = {}, opts, template }) {
-    return template.replace(lib.TEMPLATE_STRING_REGEX, (match, key, format) => {
+    return template.replace(TEMPLATE_STRING_REGEX, (match, key, format) => {
         const isOther = ['xother', 'yother'].includes(key);
         const isSpaceOther = ['_xother', '_yother'].includes(key);
         const isSpaceOtherSpace = ['_xother_', '_yother_'].includes(key);
@@ -1182,7 +1083,7 @@ function templateFormatString({ data = [], locale, fallback, labels = {}, opts, 
 
                 if (!SIMPLE_PROPERTY_REGEX.test(key)) {
                     // true here means don't convert null to undefined
-                    value = lib.nestedProperty(obj, key).get(true);
+                    value = nestedProperty(obj, key).get(true);
                 }
                 if (value !== undefined) break;
             }
@@ -1192,7 +1093,7 @@ function templateFormatString({ data = [], locale, fallback, labels = {}, opts, 
             const { count, max, name } = opts;
             const fallbackValue = fallback === false ? match : fallback;
             if (count < max) {
-                lib.warn(
+                warn(
                     [
                         `Variable '${key}' in ${name} could not be found!`,
                         'Please verify that the template is correct.',
@@ -1200,7 +1101,7 @@ function templateFormatString({ data = [], locale, fallback, labels = {}, opts, 
                     ].join(' ')
                 );
             }
-            if (count === max) lib.warn(`Too many '${name}' warnings - additional warnings will be suppressed.`);
+            if (count === max) warn(`Too many '${name}' warnings - additional warnings will be suppressed.`);
             opts.count++;
 
             return fallbackValue;
@@ -1212,7 +1113,7 @@ function templateFormatString({ data = [], locale, fallback, labels = {}, opts, 
         if (format) {
             var fmt;
             if (format[0] === ':') {
-                fmt = locale ? locale.numberFormat : lib.numberFormat;
+                fmt = locale ? locale.numberFormat : numberFormat;
                 if (value !== '') {
                     // e.g. skip missing data on heatmap
                     value = fmt(format.replace(TEMPLATE_STRING_FORMAT_SEPARATOR, ''))(value);
@@ -1221,8 +1122,8 @@ function templateFormatString({ data = [], locale, fallback, labels = {}, opts, 
 
             if (format[0] === '|') {
                 fmt = locale ? locale.timeFormat : utcFormat;
-                var ms = lib.dateTime2ms(value);
-                value = lib.formatDate(ms, format.replace(TEMPLATE_STRING_FORMAT_SEPARATOR, ''), false, fmt);
+                var ms = dateTime2ms(value);
+                value = formatDate(ms, format.replace(TEMPLATE_STRING_FORMAT_SEPARATOR, ''), false, fmt);
             }
         } else {
             var keyLabel = key + 'Label';
@@ -1244,7 +1145,7 @@ function templateFormatString({ data = [], locale, fallback, labels = {}, opts, 
  */
 var char0 = 48;
 var char9 = 57;
-lib.subplotSort = function (a, b) {
+export function subplotSort(a, b) {
     var l = Math.min(a.length, b.length) + 1;
     var numA = 0;
     var numB = 0;
@@ -1263,23 +1164,23 @@ lib.subplotSort = function (a, b) {
         }
     }
     return numB - numA;
-};
+}
 
 // repeatable pseudorandom generator
 var randSeed = 2000000000;
 
-lib.seedPseudoRandom = function () {
+export function seedPseudoRandom() {
     randSeed = 2000000000;
-};
+}
 
-lib.pseudoRandom = function () {
+export function pseudoRandom() {
     var lastVal = randSeed;
     randSeed = (69069 * randSeed + 1) % 4294967296;
     // don't let consecutive vals be too close together
     // gets away from really trying to be random, in favor of better local uniformity
-    if (Math.abs(randSeed - lastVal) < 429496729) return lib.pseudoRandom();
+    if (Math.abs(randSeed - lastVal) < 429496729) return pseudoRandom();
     return randSeed / 4294967296;
-};
+}
 
 /** Fill hover 'pointData' container with 'correct' hover text value
  *
@@ -1294,7 +1195,7 @@ lib.pseudoRandom = function () {
  *  @param {object} trace
  *  @param {object || array} contOut (mutated here)
  */
-lib.fillText = function (calcPt, trace, contOut) {
+export function fillText(calcPt, trace, contOut) {
     var fill = Array.isArray(contOut)
         ? function (v) {
               contOut.push(v);
@@ -1303,23 +1204,23 @@ lib.fillText = function (calcPt, trace, contOut) {
               contOut.text = v;
           };
 
-    var htx = lib.extractOption(calcPt, trace, 'htx', 'hovertext');
-    if (lib.isValidTextValue(htx)) return fill(htx);
+    var htx = extractOption(calcPt, trace, 'htx', 'hovertext');
+    if (isValidTextValue(htx)) return fill(htx);
 
-    var tx = lib.extractOption(calcPt, trace, 'tx', 'text');
-    if (lib.isValidTextValue(tx)) return fill(tx);
-};
+    var tx = extractOption(calcPt, trace, 'tx', 'text');
+    if (isValidTextValue(tx)) return fill(tx);
+}
 
 // accept all truthy values and 0 (which gets cast to '0' in the hover labels)
-lib.isValidTextValue = function (v) {
+export function isValidTextValue(v) {
     return v || v === 0;
-};
+}
 
 /**
  * @param {number} ratio
  * @param {number} n (number of decimal places)
  */
-lib.formatPercent = function (ratio, n) {
+export function formatPercent(ratio, n) {
     n = n || 0;
     var str = (Math.round(100 * ratio * Math.pow(10, n)) * Math.pow(0.1, n)).toFixed(n) + '%';
     for (var i = 0; i < n; i++) {
@@ -1329,24 +1230,24 @@ lib.formatPercent = function (ratio, n) {
         }
     }
     return str;
-};
+}
 
-lib.isHidden = function (gd) {
+export function isHidden(gd) {
     var display = window.getComputedStyle(gd).display;
     return !display || display === 'none';
-};
+}
 
-lib.strTranslate = function (x, y) {
+export function strTranslate(x, y) {
     return x || y ? 'translate(' + x + ',' + y + ')' : '';
-};
+}
 
-lib.strRotate = function (a) {
+export function strRotate(a) {
     return a ? 'rotate(' + a + ')' : '';
-};
+}
 
-lib.strScale = function (s) {
+export function strScale(s) {
     return s !== 1 ? 'scale(' + s + ')' : '';
-};
+}
 
 /** Return transform text for bar bar-like rectangles and pie-like slices
  *  @param {object} transform
@@ -1360,7 +1261,7 @@ lib.strScale = function (s) {
  *  - rotate: (optional) rotation applied after scale
  *  - noCenter: when defined no extra arguments needed in rotation
  */
-lib.getTextTransform = function (transform) {
+export function getTextTransform(transform) {
     var noCenter = transform.noCenter;
     var textX = transform.textX;
     var textY = transform.textY;
@@ -1374,22 +1275,22 @@ lib.getTextTransform = function (transform) {
     else if (scale > 1) scale = 1;
 
     return (
-        lib.strTranslate(targetX - scale * (textX + anchorX), targetY - scale * (textY + anchorY)) +
-        lib.strScale(scale) +
+        strTranslate(targetX - scale * (textX + anchorX), targetY - scale * (textY + anchorY)) +
+        strScale(scale) +
         (rotate ? 'rotate(' + rotate + (noCenter ? '' : ' ' + textX + ' ' + textY) + ')' : '')
     );
-};
+}
 
-lib.setTransormAndDisplay = function (s, transform) {
-    s.attr('transform', lib.getTextTransform(transform));
+export function setTransormAndDisplay(s, transform) {
+    s.attr('transform', getTextTransform(transform));
     s.style('display', transform.scale ? null : 'none');
-};
+}
 
-lib.ensureUniformFontSize = function (gd, baseFont) {
-    var out = lib.extendFlat({}, baseFont);
+export function ensureUniformFontSize(gd, baseFont) {
+    var out = extendFlat({}, baseFont);
     out.size = Math.max(baseFont.size, gd._fullLayout.uniformtext.minsize || 0);
     return out;
-};
+}
 
 /**
  * provide a human-readable list e.g. "A, B, C and D" with an ending separator
@@ -1400,19 +1301,19 @@ lib.ensureUniformFontSize = function (gd, baseFont) {
  *
  * @return {string} : joined list
  */
-lib.join2 = function (arr, mainSeparator, lastSeparator) {
+export function join2(arr, mainSeparator, lastSeparator) {
     var len = arr.length;
     if (len > 1) {
         return arr.slice(0, -1).join(mainSeparator) + lastSeparator + arr[len - 1];
     }
     return arr.join(mainSeparator);
-};
+}
 
-lib.bigFont = function (size) {
+export function bigFont(size) {
     return Math.round(1.2 * size);
-};
+}
 
-var firefoxVersion = lib.getFirefoxVersion();
+var firefoxVersion = getFirefoxVersion();
 // see https://bugzilla.mozilla.org/show_bug.cgi?id=1684973
 var isProblematicFirefox = firefoxVersion !== null && firefoxVersion < 86;
 
@@ -1421,13 +1322,335 @@ var isProblematicFirefox = firefoxVersion !== null && firefoxVersion < 86;
  * @returns An array with two numbers, representing the x and y coordinates of the mouse pointer
  *   at the event relative to the targeted node.
  */
-lib.getPositionFromD3Event = function (event) {
+export function getPositionFromD3Event(event) {
     if (isProblematicFirefox) {
         // layerX and layerY are non-standard, so we only fallback to them when we have to:
         return [event.layerX, event.layerY];
     } else {
         return [event.offsetX, event.offsetY];
     }
-};
+}
+
+// Backward-compatible default export with all methods
+var lib = {};
+
+lib.adjustFormat = adjustFormat;
+lib.warnBadFormat = warnBadFormat;
+lib.noFormat = noFormat;
+lib.numberFormat = numberFormat;
+
+lib.nestedProperty = nestedProperty;
+lib.keyedContainer = keyedContainer;
+lib.relativeAttr = relativeAttr;
+lib.isPlainObject = isPlainObject;
+lib.toLogRange = toLogRange;
+lib.relinkPrivateKeys = relinkPrivateKeys;
+
+// Re-import for default export assignment
+import {
+    isArrayBuffer as _isArrayBuffer,
+    isTypedArray as _isTypedArray,
+    isArrayOrTypedArray as _isArrayOrTypedArray,
+    isArray1D as _isArray1D,
+    ensureArray as _ensureArray,
+    concat as _concat,
+    maxRowLength as _maxRowLength,
+    minRowLength as _minRowLength,
+} from './array.js';
+lib.isArrayBuffer = _isArrayBuffer;
+lib.isTypedArray = _isTypedArray;
+lib.isArrayOrTypedArray = _isArrayOrTypedArray;
+lib.isArray1D = _isArray1D;
+lib.ensureArray = _ensureArray;
+lib.concat = _concat;
+lib.maxRowLength = _maxRowLength;
+lib.minRowLength = _minRowLength;
+
+import { mod as _mod, modHalf as _modHalf } from './mod.js';
+lib.mod = _mod;
+lib.modHalf = _modHalf;
+
+import {
+    valObjectMeta as _valObjectMeta,
+    coerce as _coerce,
+    coerce2 as _coerce2,
+    coerceFont as _coerceFont,
+    coercePattern as _coercePattern,
+    coerceHoverinfo as _coerceHoverinfo,
+    coerceSelectionMarkerOpacity as _coerceSelectionMarkerOpacity,
+    validate as _validate,
+} from './coerce.js';
+lib.valObjectMeta = _valObjectMeta;
+lib.coerce = _coerce;
+lib.coerce2 = _coerce2;
+lib.coerceFont = _coerceFont;
+lib.coercePattern = _coercePattern;
+lib.coerceHoverinfo = _coerceHoverinfo;
+lib.coerceSelectionMarkerOpacity = _coerceSelectionMarkerOpacity;
+lib.validate = _validate;
+
+import {
+    dateTime2ms as _dateTime2ms,
+    isDateTime as _isDateTime,
+    ms2DateTime as _ms2DateTime,
+    ms2DateTimeLocal as _ms2DateTimeLocal,
+    cleanDate as _cleanDate,
+    isJSDate as _isJSDate,
+    formatDate as _formatDate,
+    incrementMonth as _incrementMonth,
+    dateTick0 as _dateTick0,
+    dfltRange as _dfltRange,
+    findExactDates as _findExactDates,
+    MIN_MS as _MIN_MS,
+    MAX_MS as _MAX_MS,
+} from './dates.js';
+lib.dateTime2ms = _dateTime2ms;
+lib.isDateTime = _isDateTime;
+lib.ms2DateTime = _ms2DateTime;
+lib.ms2DateTimeLocal = _ms2DateTimeLocal;
+lib.cleanDate = _cleanDate;
+lib.isJSDate = _isJSDate;
+lib.formatDate = _formatDate;
+lib.incrementMonth = _incrementMonth;
+lib.dateTick0 = _dateTick0;
+lib.dfltRange = _dfltRange;
+lib.findExactDates = _findExactDates;
+lib.MIN_MS = _MIN_MS;
+lib.MAX_MS = _MAX_MS;
+
+import {
+    findBin as _findBin,
+    sorterAsc as _sorterAsc,
+    sorterDes as _sorterDes,
+    distinctVals as _distinctVals,
+    roundUp as _roundUp,
+    sort as _sort,
+    findIndexOfMin as _findIndexOfMin,
+} from './search.js';
+lib.findBin = _findBin;
+lib.sorterAsc = _sorterAsc;
+lib.sorterDes = _sorterDes;
+lib.distinctVals = _distinctVals;
+lib.roundUp = _roundUp;
+lib.sort = _sort;
+lib.findIndexOfMin = _findIndexOfMin;
+
+lib.sortObjectKeys = sortObjectKeys;
+
+import {
+    aggNums as _aggNums,
+    len as _len,
+    mean as _mean,
+    geometricMean as _geometricMean,
+    median as _median,
+    midRange as _midRange,
+    variance as _variance,
+    stdev as _stdev,
+    interp as _interp,
+} from './stats.js';
+lib.aggNums = _aggNums;
+lib.len = _len;
+lib.mean = _mean;
+lib.geometricMean = _geometricMean;
+lib.median = _median;
+lib.midRange = _midRange;
+lib.variance = _variance;
+lib.stdev = _stdev;
+lib.interp = _interp;
+
+import {
+    init2dArray as _init2dArray,
+    transposeRagged as _transposeRagged,
+    dot as _dot,
+    translationMatrix as _translationMatrix,
+    rotationMatrix as _rotationMatrix,
+    rotationXYMatrix as _rotationXYMatrix,
+    apply3DTransform as _apply3DTransform,
+    apply2DTransform as _apply2DTransform,
+    apply2DTransform2 as _apply2DTransform2,
+    convertCssMatrix as _convertCssMatrix,
+    inverseTransformMatrix as _inverseTransformMatrix,
+} from './matrix.js';
+lib.init2dArray = _init2dArray;
+lib.transposeRagged = _transposeRagged;
+lib.dot = _dot;
+lib.translationMatrix = _translationMatrix;
+lib.rotationMatrix = _rotationMatrix;
+lib.rotationXYMatrix = _rotationXYMatrix;
+lib.apply3DTransform = _apply3DTransform;
+lib.apply2DTransform = _apply2DTransform;
+lib.apply2DTransform2 = _apply2DTransform2;
+lib.convertCssMatrix = _convertCssMatrix;
+lib.inverseTransformMatrix = _inverseTransformMatrix;
+
+import {
+    deg2rad as _deg2rad,
+    rad2deg as _rad2deg,
+    angleDelta as _angleDelta,
+    angleDist as _angleDist,
+    isFullCircle as _isFullCircle,
+    isAngleInsideSector as _isAngleInsideSector,
+    isPtInsideSector as _isPtInsideSector,
+    pathArc as _pathArc,
+    pathSector as _pathSector,
+    pathAnnulus as _pathAnnulus,
+} from './angles.js';
+lib.deg2rad = _deg2rad;
+lib.rad2deg = _rad2deg;
+lib.angleDelta = _angleDelta;
+lib.angleDist = _angleDist;
+lib.isFullCircle = _isFullCircle;
+lib.isAngleInsideSector = _isAngleInsideSector;
+lib.isPtInsideSector = _isPtInsideSector;
+lib.pathArc = _pathArc;
+lib.pathSector = _pathSector;
+lib.pathAnnulus = _pathAnnulus;
+
+import {
+    isLeftAnchor as _isLeftAnchor,
+    isCenterAnchor as _isCenterAnchor,
+    isRightAnchor as _isRightAnchor,
+    isTopAnchor as _isTopAnchor,
+    isMiddleAnchor as _isMiddleAnchor,
+    isBottomAnchor as _isBottomAnchor,
+} from './anchor_utils.js';
+lib.isLeftAnchor = _isLeftAnchor;
+lib.isCenterAnchor = _isCenterAnchor;
+lib.isRightAnchor = _isRightAnchor;
+lib.isTopAnchor = _isTopAnchor;
+lib.isMiddleAnchor = _isMiddleAnchor;
+lib.isBottomAnchor = _isBottomAnchor;
+
+import {
+    segmentsIntersect as _segmentsIntersect,
+    segmentDistance as _segmentDistance,
+    getTextLocation as _getTextLocation,
+    clearLocationCache as _clearLocationCache,
+    getVisibleSegment as _getVisibleSegment,
+    findPointOnPath as _findPointOnPath,
+} from './geometry2d.js';
+lib.segmentsIntersect = _segmentsIntersect;
+lib.segmentDistance = _segmentDistance;
+lib.getTextLocation = _getTextLocation;
+lib.clearLocationCache = _clearLocationCache;
+lib.getVisibleSegment = _getVisibleSegment;
+lib.findPointOnPath = _findPointOnPath;
+
+import {
+    extendFlat as _extendFlat,
+    extendDeep as _extendDeep,
+    extendDeepAll as _extendDeepAll,
+    extendDeepNoArrays as _extendDeepNoArrays,
+} from './extend.js';
+lib.extendFlat = _extendFlat;
+lib.extendDeep = _extendDeep;
+lib.extendDeepAll = _extendDeepAll;
+lib.extendDeepNoArrays = _extendDeepNoArrays;
+
+import { log as _log, warn as _warn, error as _error } from './loggers.js';
+lib.log = _log;
+lib.warn = _warn;
+lib.error = _error;
+
+lib.counterRegex = counterRegex;
+
+lib.throttle = throttle;
+lib.throttleDone = throttleDone;
+lib.clearThrottle = clearThrottle;
+
+import {
+    getGraphDiv as _getGraphDiv,
+    isPlotDiv as _isPlotDiv,
+    removeElement as _removeElement,
+    addStyleRule as _addStyleRule,
+    addRelatedStyleRule as _addRelatedStyleRule,
+    deleteRelatedStyleRule as _deleteRelatedStyleRule,
+    setStyleOnHover as _setStyleOnHover,
+    getFullTransformMatrix as _getFullTransformMatrix,
+    getElementTransformMatrix as _getElementTransformMatrix,
+    getElementAndAncestors as _getElementAndAncestors,
+    equalDomRects as _equalDomRects,
+} from './dom.js';
+lib.getGraphDiv = _getGraphDiv;
+lib.isPlotDiv = _isPlotDiv;
+lib.removeElement = _removeElement;
+lib.addStyleRule = _addStyleRule;
+lib.addRelatedStyleRule = _addRelatedStyleRule;
+lib.deleteRelatedStyleRule = _deleteRelatedStyleRule;
+lib.setStyleOnHover = _setStyleOnHover;
+lib.getFullTransformMatrix = _getFullTransformMatrix;
+lib.getElementTransformMatrix = _getElementTransformMatrix;
+lib.getElementAndAncestors = _getElementAndAncestors;
+lib.equalDomRects = _equalDomRects;
+
+lib.clearResponsive = clearResponsive;
+lib.preserveDrawingBuffer = preserveDrawingBuffer;
+lib.makeTraceGroups = makeTraceGroups;
+lib._ = _localize;
+lib.notifier = notifier;
+lib.filterUnique = filterUnique;
+lib.filterVisible = filterVisible;
+lib.pushUnique = pushUnique;
+lib.increment = increment;
+lib.cleanNumber = cleanNumber;
+lib.ensureNumber = ensureNumber;
+lib.isIndex = isIndex;
+lib.noop = noop;
+lib.identity = identity;
+lib.repeat = repeat;
+lib.swapAttrs = swapAttrs;
+lib.raiseToTop = raiseToTop;
+lib.cancelTransition = cancelTransition;
+lib.constrain = constrain;
+lib.bBoxIntersect = bBoxIntersect;
+lib.simpleMap = simpleMap;
+lib.randstr = randstr;
+lib.OptionControl = OptionControl;
+lib.smooth = smooth;
+lib.syncOrAsync = syncOrAsync;
+lib.stripTrailingSlash = stripTrailingSlash;
+lib.noneOrAll = noneOrAll;
+lib.mergeArray = mergeArray;
+lib.mergeArrayCastPositive = mergeArrayCastPositive;
+lib.fillArray = fillArray;
+lib.castOption = castOption;
+lib.extractOption = extractOption;
+lib.tagSelected = tagSelected;
+lib.selIndices2selPoints = selIndices2selPoints;
+lib.getTargetArray = getTargetArray;
+lib.minExtend = minExtend;
+lib.titleCase = titleCase;
+lib.containsAny = containsAny;
+lib.isSafari = isSafari;
+lib.isIOS = isIOS;
+lib.isMacWKWebView = isMacWKWebView;
+lib.getFirefoxVersion = getFirefoxVersion;
+lib.isD3Selection = isD3Selection;
+lib.ensureSingle = ensureSingle;
+lib.ensureSingleById = ensureSingleById;
+lib.objectFromPath = objectFromPath;
+lib.expandObjectPaths = expandObjectPaths;
+lib.numSeparate = numSeparate;
+lib.TEMPLATE_STRING_REGEX = TEMPLATE_STRING_REGEX;
+lib.templateString = templateString;
+lib.hovertemplateString = hovertemplateString;
+lib.texttemplateString = texttemplateString;
+lib.texttemplateStringForShapes = texttemplateStringForShapes;
+lib.subplotSort = subplotSort;
+lib.seedPseudoRandom = seedPseudoRandom;
+lib.pseudoRandom = pseudoRandom;
+lib.fillText = fillText;
+lib.isValidTextValue = isValidTextValue;
+lib.formatPercent = formatPercent;
+lib.isHidden = isHidden;
+lib.strTranslate = strTranslate;
+lib.strRotate = strRotate;
+lib.strScale = strScale;
+lib.getTextTransform = getTextTransform;
+lib.setTransormAndDisplay = setTransormAndDisplay;
+lib.ensureUniformFontSize = ensureUniformFontSize;
+lib.join2 = join2;
+lib.bigFont = bigFont;
+lib.getPositionFromD3Event = getPositionFromD3Event;
 
 export default lib;

@@ -1,5 +1,5 @@
 import isNumeric from 'fast-isnumeric';
-import Lib from '../../lib/index.js';
+import { nestedProperty, warn } from '../../lib/index.js';
 import hasColorbar from '../colorbar/has_colorbar.js';
 import colorbarDefaults from '../colorbar/defaults.js';
 import _scales from './scales.js';
@@ -9,7 +9,7 @@ import { traceIs } from '../../registry.js';
 function npMaybe(parentCont, prefix) {
     var containerStr = prefix.slice(0, prefix.length - 1);
     return prefix ?
-        Lib.nestedProperty(parentCont, containerStr).get() || {} :
+        nestedProperty(parentCont, containerStr).get() || {} :
         parentCont;
 }
 
@@ -36,7 +36,7 @@ export default function colorScaleDefaults(parentContIn, parentContOut, layout, 
         if(colorAx) {
             var colorbarVisuals = (
                 traceIs(parentContOut, 'contour') &&
-                Lib.nestedProperty(parentContOut, 'contours.coloring').get()
+                nestedProperty(parentContOut, 'contours.coloring').get()
             ) || 'heatmap';
 
             var stash = colorAxes[colorAx];
@@ -46,7 +46,7 @@ export default function colorScaleDefaults(parentContIn, parentContOut, layout, 
 
                 if(stash[0] !== colorbarVisuals) {
                     stash[0] = false;
-                    Lib.warn([
+                    warn([
                         'Ignoring coloraxis:', colorAx, 'setting',
                         'as it is linked to incompatible colorscales.'
                     ].join(' '));

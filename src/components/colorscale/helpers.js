@@ -1,21 +1,21 @@
 import { scaleLinear, scaleLog, scaleOrdinal } from 'd3-scale';
 import tinycolor from 'tinycolor2';
 import isNumeric from 'fast-isnumeric';
-import Lib from '../../lib/index.js';
+import { isArrayOrTypedArray, isPlainObject, nestedProperty } from '../../lib/index.js';
 import Color from '../color/index.js';
 import _scales from './scales.js';
 const { isValid: isValidScale } = _scales;
 
 function hasColorscale(trace, containerStr, colorKey) {
     var container = containerStr ?
-        Lib.nestedProperty(trace, containerStr).get() || {} :
+        nestedProperty(trace, containerStr).get() || {} :
         trace;
 
     var color = container[colorKey || 'color'];
     if(color && color._inputArray) color = color._inputArray;
 
     var isArrayWithOneNumber = false;
-    if(Lib.isArrayOrTypedArray(color)) {
+    if(isArrayOrTypedArray(color)) {
         for(var i = 0; i < color.length; i++) {
             if(isNumeric(color[i])) {
                 isArrayWithOneNumber = true;
@@ -25,12 +25,12 @@ function hasColorscale(trace, containerStr, colorKey) {
     }
 
     return (
-        Lib.isPlainObject(container) && (
+        isPlainObject(container) && (
             isArrayWithOneNumber ||
             container.showscale === true ||
             (isNumeric(container.cmin) && isNumeric(container.cmax)) ||
             isValidScale(container.colorscale) ||
-            Lib.isPlainObject(container.colorbar)
+            isPlainObject(container.colorbar)
         )
     );
 }
