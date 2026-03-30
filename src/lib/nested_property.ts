@@ -1,17 +1,25 @@
 import isNumeric from 'fast-isnumeric';
 import { isArrayOrTypedArray } from './array.js';
 
-export default function nestedProperty(container, propStr) {
+interface NestedPropertyResult {
+    set: (val: any) => void;
+    get: (retainNull?: boolean) => any;
+    astr: string;
+    parts: (string | number)[];
+    obj: any;
+}
+
+export default function nestedProperty(container: any, propStr: string | number): NestedPropertyResult {
     if(isNumeric(propStr)) propStr = String(propStr);
     else if(typeof propStr !== 'string' ||
-            propStr.slice(-4) === '[-1]') {
+            (propStr as string).slice(-4) === '[-1]') {
         throw 'bad property string';
     }
 
-    var propParts = propStr.split('.');
-    var indexed;
-    var indices;
-    var i, j;
+    var propParts: (string | number)[] = (propStr as string).split('.');
+    var indexed: RegExpMatchArray | null;
+    var indices: string[];
+    var i: number, j: number;
 
     for(j = 0; j < propParts.length; j++) {
         // guard against polluting __proto__ and other internals
@@ -44,26 +52,26 @@ export default function nestedProperty(container, propStr) {
     }
 
     if(typeof container !== 'object') {
-        return badContainer(container, propStr, propParts);
+        return badContainer(container, propStr as string, propParts);
     }
 
     return {
-        set: npSet(container, propParts, propStr),
+        set: npSet(container, propParts, propStr as string),
         get: npGet(container, propParts),
-        astr: propStr,
+        astr: propStr as string,
         parts: propParts,
         obj: container
     };
 }
 
-function npGet(cont, parts) {
-    return function(retainNull) {
+function npGet(cont: any, parts: (string | number)[]): (retainNull?: boolean) => any {
+    return function(retainNull?: boolean): any {
         var curCont = cont;
-        var curPart;
-        var allSame;
-        var out;
-        var i;
-        var j;
+        var curPart: string | number;
+        var allSame: boolean;
+        var out: any;
+        var i: number;
+        var j: number;
 
         for(i = 0; i < parts.length - 1; i++) {
             curPart = parts[i];
@@ -108,18 +116,18 @@ function npGet(cont, parts) {
  * "ignore this edit"
  */
 var ARGS_PATTERN = /(^|\.)args\[/;
-function isDeletable(val, propStr) {
+function isDeletable(val: any, propStr: string): boolean {
     return (val === undefined) || (val === null && !propStr.match(ARGS_PATTERN));
 }
 
-function npSet(cont, parts, propStr) {
-    return function(val) {
+function npSet(cont: any, parts: (string | number)[], propStr: string): (val: any) => void {
+    return function(val: any): void {
         var curCont = cont;
         var propPart = '';
-        var containerLevels = [[cont, propPart]];
+        var containerLevels: [any, string][] = [[cont, propPart]];
         var toDelete = isDeletable(val, propStr);
-        var curPart;
-        var i;
+        var curPart: string | number;
+        var i: number;
 
         for(i = 0; i < parts.length - 1; i++) {
             curPart = parts[i];
@@ -167,26 +175,27 @@ function npSet(cont, parts, propStr) {
     };
 }
 
-function joinPropStr(propStr, newPart) {
-    var toAdd = newPart;
+function joinPropStr(propStr: string, newPart: string | number): string {
+    var toAdd: string;
     if(isNumeric(newPart)) toAdd = '[' + newPart + ']';
     else if(propStr) toAdd = '.' + newPart;
+    else toAdd = String(newPart);
 
     return propStr + toAdd;
 }
 
 // handle special -1 array index
-function setArrayAll(containerArray, innerParts, val, propStr) {
+function setArrayAll(containerArray: any[], innerParts: (string | number)[], val: any, propStr: string): boolean {
     var arrayVal = isArrayOrTypedArray(val);
     var allSet = true;
     var thisVal = val;
-    var thisPropStr = propStr.replace('-1', 0);
+    var thisPropStr = propStr.replace('-1', '0');
     var deleteThis = arrayVal ? false : isDeletable(val, thisPropStr);
     var firstPart = innerParts[0];
-    var i;
+    var i: number;
 
     for(i = 0; i < containerArray.length; i++) {
-        thisPropStr = propStr.replace('-1', i);
+        thisPropStr = propStr.replace('-1', String(i));
         if(arrayVal) {
             thisVal = val[i % val.length];
             deleteThis = isDeletable(thisVal, thisPropStr);
@@ -195,7 +204,7 @@ function setArrayAll(containerArray, innerParts, val, propStr) {
         if(!checkNewContainer(containerArray, i, firstPart, deleteThis)) {
             continue;
         }
-        npSet(containerArray[i], innerParts, propStr.replace('-1', i))(thisVal);
+        npSet(containerArray[i], innerParts, propStr.replace('-1', String(i)))(thisVal);
     }
     return allSet;
 }
@@ -205,7 +214,7 @@ function setArrayAll(containerArray, innerParts, val, propStr) {
  * returns false if there's no container and none is needed
  * because we're only deleting an attribute
  */
-function checkNewContainer(container, part, nextPart, toDelete) {
+function checkNewContainer(container: any, part: string | number, nextPart: string | number, toDelete: boolean): boolean {
     if(container[part] === undefined) {
         if(toDelete) return false;
 
@@ -215,7 +224,7 @@ function checkNewContainer(container, part, nextPart, toDelete) {
     return true;
 }
 
-function badContainer(container, propStr, propParts) {
+function badContainer(container: any, propStr: string, propParts: (string | number)[]): NestedPropertyResult {
     return {
         set: function() { throw 'bad container'; },
         get: function() {},

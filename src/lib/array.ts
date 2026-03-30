@@ -6,12 +6,12 @@ var isArray = Array.isArray;
 var ab = ArrayBuffer;
 var dv = DataView;
 
-function isTypedArray(a) {
+function isTypedArray(a: any): boolean {
     return ab.isView(a) && !(a instanceof dv);
 }
 export { isTypedArray };
 
-function isArrayOrTypedArray(a) {
+function isArrayOrTypedArray(a: any): boolean {
     return isArray(a) || isTypedArray(a);
 }
 export { isArrayOrTypedArray };
@@ -24,12 +24,12 @@ export { isArrayOrTypedArray };
  * Looks only at the first element, if the dimensionality is
  * not consistent we won't figure that out here.
  */
-function isArray1D(a) {
+function isArray1D(a: any): boolean {
     return !isArrayOrTypedArray(a[0]);
 }
 export { isArray1D };
 
-export var ensureArray = function(out, n) {
+export var ensureArray = function(out: any, n: number): any[] {
     // TODO: typed array support here? This is only used in
     // traces/carpet/compute_control_points
     if(!isArray(out)) out = [];
@@ -41,7 +41,7 @@ export var ensureArray = function(out, n) {
     return out;
 };
 
-var typedArrays = {
+var typedArrays: Record<string, any> = {
     u1c: typeof Uint8ClampedArray === 'undefined' ? undefined :
                 Uint8ClampedArray, // not supported in numpy?
 
@@ -89,25 +89,25 @@ typedArrays.int32 = typedArrays.i4;
 typedArrays.float32 = typedArrays.f4;
 typedArrays.float64 = typedArrays.f8;
 
-function isArrayBuffer(a) {
+function isArrayBuffer(a: any): boolean {
     return a.constructor === ArrayBuffer;
 }
 export { isArrayBuffer };
 
-export var decodeTypedArraySpec = function(vIn) {
-    var out = [];
+export var decodeTypedArraySpec = function(vIn: any): any {
+    var out: any = [];
     var v = coerceTypedArraySpec(vIn);
     var dtype = v.dtype;
 
     var T = typedArrays[dtype];
     if(!T) throw new Error('Error in dtype: "' + dtype + '"');
-    var BYTES_PER_ELEMENT = T.BYTES_PER_ELEMENT;
+    var BYTES_PER_ELEMENT: number = T.BYTES_PER_ELEMENT;
 
     var buffer = v.bdata;
     if(!isArrayBuffer(buffer)) {
         buffer = b64decode(buffer);
     }
-    var shape = v.shape === undefined ?
+    var shape: any[] = v.shape === undefined ?
         // detect 1-d length
         [buffer.byteLength / BYTES_PER_ELEMENT] :
         // convert number to string and split to array
@@ -116,7 +116,7 @@ export var decodeTypedArraySpec = function(vIn) {
     shape.reverse(); // i.e. to match numpy order
     var ndim = shape.length;
 
-    var nj, j;
+    var nj: number, j: number;
     var ni = +shape[0];
 
     var rowBytes = BYTES_PER_ELEMENT * ni;
@@ -154,7 +154,7 @@ export var decodeTypedArraySpec = function(vIn) {
     return out;
 };
 
-export var isTypedArraySpec = function(v) {
+export var isTypedArraySpec = function(v: any): boolean {
     return (
         isPlainObject(v) &&
         v.hasOwnProperty('dtype') && (typeof v.dtype === 'string') &&
@@ -167,7 +167,7 @@ export var isTypedArraySpec = function(v) {
     );
 };
 
-function coerceTypedArraySpec(v) {
+function coerceTypedArraySpec(v: any): { bdata: any; dtype: string; shape: any } {
     return {
         bdata: v.bdata,
         dtype: v.dtype,
@@ -175,15 +175,15 @@ function coerceTypedArraySpec(v) {
     };
 }
 
-export var concat = function() {
-    var args = [];
+export var concat = function(...arrays: any[]): any {
+    var args: any[] = [];
     var allArray = true;
     var totalLen = 0;
 
-    var _constructor, arg0, i, argi, posi, leni, out, j;
+    var _constructor: any, arg0: any, i: number, argi: any, posi: number, leni: number, out: any, j: number;
 
-    for(i = 0; i < arguments.length; i++) {
-        argi = arguments[i];
+    for(i = 0; i < arrays.length; i++) {
+        argi = arrays[i];
         leni = argi.length;
         if(leni) {
             if(arg0) args.push(argi);
@@ -219,8 +219,8 @@ export var concat = function() {
         out.set(arg0);
         for(i = 0; i < args.length; i++) {
             argi = args[i];
-            out.set(argi, posi);
-            posi += argi.length;
+            out.set(argi, posi!);
+            posi! += argi.length;
         }
         return out;
     }
@@ -230,21 +230,21 @@ export var concat = function() {
     for(j = 0; j < arg0.length; j++) out[j] = arg0[j];
     for(i = 0; i < args.length; i++) {
         argi = args[i];
-        for(j = 0; j < argi.length; j++) out[posi + j] = argi[j];
-        posi += j;
+        for(j = 0; j < argi.length; j++) out[posi! + j] = argi[j];
+        posi! += j;
     }
     return out;
 };
 
-export var maxRowLength = function(z) {
+export var maxRowLength = function(z: any): number {
     return _rowLength(z, Math.max, 0);
 };
 
-export var minRowLength = function(z) {
+export var minRowLength = function(z: any): number {
     return _rowLength(z, Math.min, Infinity);
 };
 
-function _rowLength(z, fn, len0) {
+function _rowLength(z: any, fn: (a: number, b: number) => number, len0: number): number {
     if(isArrayOrTypedArray(z)) {
         if(isArrayOrTypedArray(z[0])) {
             var len = len0;

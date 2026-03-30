@@ -4,14 +4,10 @@ const { dfltConfig } = _plot_config;
 
 /**
  * Copy arg array *without* removing `undefined` values from objects.
- *
- * @param gd
- * @param args
- * @returns {Array}
  */
-function copyArgArray(gd, args) {
-    var copy = [];
-    var arg;
+function copyArgArray(gd: any, args: any[]): any[] {
+    var copy: any[] = [];
+    var arg: any;
 
     for(var i = 0; i < args.length; i++) {
         arg = args[i];
@@ -31,22 +27,14 @@ function copyArgArray(gd, args) {
 // Undo/Redo queue for plots
 // -----------------------------------------------------
 
-var queue = {};
-
-// TODO: disable/enable undo and redo buttons appropriately
+var queue: Record<string, any> = {};
 
 /**
  * Add an item to the undoQueue for a graphDiv
- *
- * @param gd
- * @param undoFunc Function undo this operation
- * @param undoArgs Args to supply undoFunc with
- * @param redoFunc Function to redo this operation
- * @param redoArgs Args to supply redoFunc with
  */
-queue.add = function(gd, undoFunc, undoArgs, redoFunc, redoArgs) {
-    var queueObj,
-        queueIndex;
+queue.add = function(gd: any, undoFunc: Function, undoArgs: any[], redoFunc: Function, redoArgs: any[]): void {
+    var queueObj: any,
+        queueIndex: number;
 
     // make sure we have the queue and our position in it
     gd.undoQueue = gd.undoQueue || {index: 0, queue: [], sequence: false};
@@ -85,10 +73,8 @@ queue.add = function(gd, undoFunc, undoArgs, redoFunc, redoArgs) {
 
 /**
  * Begin a sequence of undoQueue changes
- *
- * @param gd
  */
-queue.startSequence = function(gd) {
+queue.startSequence = function(gd: any): void {
     gd.undoQueue = gd.undoQueue || {index: 0, queue: [], sequence: false};
     gd.undoQueue.sequence = true;
     gd.undoQueue.beginSequence = true;
@@ -98,10 +84,8 @@ queue.startSequence = function(gd) {
  * Stop a sequence of undoQueue changes
  *
  * Call this *after* you're sure your undo chain has ended
- *
- * @param gd
  */
-queue.stopSequence = function(gd) {
+queue.stopSequence = function(gd: any): void {
     gd.undoQueue = gd.undoQueue || {index: 0, queue: [], sequence: false};
     gd.undoQueue.sequence = false;
     gd.undoQueue.beginSequence = false;
@@ -109,11 +93,9 @@ queue.stopSequence = function(gd) {
 
 /**
  * Move one step back in the undo queue, and undo the object there.
- *
- * @param gd
  */
-queue.undo = function undo(gd) {
-    var queueObj, i;
+queue.undo = function undo(gd: any): void {
+    var queueObj: any, i: number;
 
     if(gd.undoQueue === undefined ||
             isNaN(gd.undoQueue.index) ||
@@ -138,11 +120,9 @@ queue.undo = function undo(gd) {
 
 /**
  * Redo the current object in the undo, then move forward in the queue.
- *
- * @param gd
  */
-queue.redo = function redo(gd) {
-    var queueObj, i;
+queue.redo = function redo(gd: any): void {
+    var queueObj: any, i: number;
 
     if(gd.undoQueue === undefined ||
             isNaN(gd.undoQueue.index) ||
@@ -169,12 +149,8 @@ queue.redo = function redo(gd) {
  * Called by undo/redo to make the actual changes.
  *
  * Not meant to be called publically, but included for mocking out in tests.
- *
- * @param gd
- * @param func
- * @param args
  */
-queue.plotDo = function(gd, func, args) {
+queue.plotDo = function(gd: any, func: Function, args: any[]): void {
     gd.autoplay = true;
 
     // this *won't* copy gd and it preserves `undefined` properties!

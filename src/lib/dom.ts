@@ -6,15 +6,14 @@ import matrix, { mat4Multiply } from './matrix.js';
  * Allow referencing a graph DOM element either directly
  * or by its id string
  *
- * @param {HTMLDivElement|string} gd: a graph element or its id
- *
- * @returns {HTMLDivElement} the DOM element of the graph
+ * @param gd a graph element or its id
+ * @returns the DOM element of the graph
  */
-function getGraphDiv(gd) {
-    var gdElement;
+function getGraphDiv(gd: HTMLDivElement | string): HTMLDivElement {
+    var gdElement: HTMLDivElement | null;
 
     if(typeof gd === 'string') {
-        gdElement = document.getElementById(gd);
+        gdElement = document.getElementById(gd) as HTMLDivElement | null;
 
         if(gdElement === null) {
             throw new Error('No DOM element with id \'' + gd + '\' exists on the page.');
@@ -29,16 +28,16 @@ function getGraphDiv(gd) {
     return gd;
 }
 
-function isPlotDiv(el) {
+function isPlotDiv(el: any): boolean {
     var el3 = select(el);
     return el3.node() instanceof HTMLElement &&
         el3.size() &&
         el3.classed('js-plotly-plot');
 }
 
-function removeElement(el) {
+function removeElement(el: Element | null): void {
     var elParent = el && el.parentNode;
-    if(elParent) elParent.removeChild(el);
+    if(elParent) elParent.removeChild(el!);
 }
 
 /**
@@ -46,7 +45,7 @@ function removeElement(el) {
  * makes one stylesheet that contains all rules added
  * by all calls to this function
  */
-function addStyleRule(selector, styleString) {
+function addStyleRule(selector: string, styleString: string): void {
     addRelatedStyleRule('global', selector, styleString);
 }
 
@@ -54,9 +53,9 @@ function addStyleRule(selector, styleString) {
  * for dynamically adding style rules
  * to a stylesheet uniquely identified by a uid
  */
-function addRelatedStyleRule(uid, selector, styleString) {
+function addRelatedStyleRule(uid: string, selector: string, styleString: string): void {
     var id = 'plotly.js-style-' + uid;
-    var style = document.getElementById(id);
+    var style: HTMLStyleElement | null = document.getElementById(id) as HTMLStyleElement | null;
     if(style && style.matches('.no-inline-styles')) {
         // Do not proceed if user disable inline styles explicitly...
         return;
@@ -74,15 +73,15 @@ function addRelatedStyleRule(uid, selector, styleString) {
         loggers.warn('Cannot addRelatedStyleRule, probably due to strict CSP...');
     } else if(styleSheet.insertRule) {
         styleSheet.insertRule(selector + '{' + styleString + '}', 0);
-    } else if(styleSheet.addRule) {
-        styleSheet.addRule(selector, styleString, 0);
+    } else if((styleSheet as any).addRule) {
+        (styleSheet as any).addRule(selector, styleString, 0);
     } else loggers.warn('addStyleRule failed');
 }
 
 /**
  * to remove from the page a stylesheet identified by a given uid
  */
-function deleteRelatedStyleRule(uid) {
+function deleteRelatedStyleRule(uid: string): void {
     var id = 'plotly.js-style-' + uid;
     var style = document.getElementById(id);
     if(style) removeElement(style);
@@ -92,13 +91,14 @@ function deleteRelatedStyleRule(uid) {
  * Setup event listeners on button elements to emulate the ':hover' state without using inline styles,
  * which is not allowed with strict CSP.  This supports modebar buttons set with the 'active' class,
  * in which case, the active style remains even when it's no longer hovered.
- * @param {string} selector selector for button elements to be styled when hovered
- * @param {string} activeSelector selector used to determine if selected element is active
- * @param {string} childSelector the child element on which the styling needs to be updated
- * @param {string} activeStyle    style that has to be applied when 'hovered' or 'active'
- * @param {string} inactiveStyle    style that has to be applied when not 'hovered' nor 'active'
+ * @param selector selector for button elements to be styled when hovered
+ * @param activeSelector selector used to determine if selected element is active
+ * @param childSelector the child element on which the styling needs to be updated
+ * @param activeStyle    style that has to be applied when 'hovered' or 'active'
+ * @param inactiveStyle    style that has to be applied when not 'hovered' nor 'active'
+ * @param element optional root element to query within
  */
-function setStyleOnHover(selector, activeSelector, childSelector, activeStyle, inactiveStyle, element) {
+function setStyleOnHover(selector: string, activeSelector: string, childSelector: string, activeStyle: string, inactiveStyle: string, element?: Document | Element): void {
     var activeStyleParts = activeStyle.split(':');
     var inactiveStyleParts = inactiveStyle.split(':');
     var eventAddedAttrName = 'data-btn-style-event-added';
@@ -109,31 +109,31 @@ function setStyleOnHover(selector, activeSelector, childSelector, activeStyle, i
         if(!el.getAttribute(eventAddedAttrName)) {
             // Emulate ":hover" CSS style using JS event handlers to set the
             // style in a strict CSP-compliant manner.
-            el.addEventListener('mouseenter', function() {
-                var childEl = this.querySelector(childSelector);
+            el.addEventListener('mouseenter', function(this: any) {
+                var childEl = this.querySelector(childSelector) as HTMLElement | null;
                 if(childEl) {
-                    childEl.style[activeStyleParts[0]] = activeStyleParts[1];
+                    (childEl.style as any)[activeStyleParts[0]] = activeStyleParts[1];
                 }
             });
-            el.addEventListener('mouseleave', function() {
-                var childEl = this.querySelector(childSelector);
+            el.addEventListener('mouseleave', function(this: any) {
+                var childEl = this.querySelector(childSelector) as HTMLElement | null;
                 if(childEl) {
                     if(activeSelector && this.matches(activeSelector)) {
-                        childEl.style[activeStyleParts[0]] = activeStyleParts[1];
+                        (childEl.style as any)[activeStyleParts[0]] = activeStyleParts[1];
                     } else {
-                        childEl.style[inactiveStyleParts[0]] = inactiveStyleParts[1];
+                        (childEl.style as any)[inactiveStyleParts[0]] = inactiveStyleParts[1];
                     }
                 }
             });
-            el.setAttribute(eventAddedAttrName, true);
+            el.setAttribute(eventAddedAttrName, 'true');
         }
     });
 }
 
-function getFullTransformMatrix(element) {
+function getFullTransformMatrix(element: Element): number[] {
     var allElements = getElementAndAncestors(element);
     // the identity matrix
-    var out = [
+    var out: number[] = [
         1, 0, 0, 0,
         0, 1, 0, 0,
         0, 0, 1, 0,
@@ -152,7 +152,7 @@ function getFullTransformMatrix(element) {
 /**
  * extracts and parses the 2d css style transform matrix from some element
  */
-function getElementTransformMatrix(element) {
+function getElementTransformMatrix(element: Element): number[] | null {
     var style = window.getComputedStyle(element, null);
     var transform = (
       style.getPropertyValue('-webkit-transform') ||
@@ -174,11 +174,11 @@ function getElementTransformMatrix(element) {
 /**
  * retrieve all DOM elements that are ancestors of the specified one (including itself)
  */
-function getElementAndAncestors(element) {
-    var allElements = [];
+function getElementAndAncestors(element: Element | Node): Element[] {
+    var allElements: Element[] = [];
     while(isTransformableElement(element)) {
-        allElements.push(element);
-        element = element.parentNode;
+        allElements.push(element as Element);
+        element = (element as Element).parentNode!;
         if(typeof ShadowRoot === 'function' && element instanceof ShadowRoot) {
             element = element.host;
         }
@@ -186,12 +186,12 @@ function getElementAndAncestors(element) {
     return allElements;
 }
 
-function isTransformableElement(element) {
+function isTransformableElement(element: any): boolean {
     return element && (element instanceof Element || element instanceof HTMLElement);
 }
 
-function equalDomRects(a, b) {
-    return (
+function equalDomRects(a: DOMRect | null, b: DOMRect | null): boolean {
+    return !!(
         a && b &&
         a.top === b.top &&
         a.left === b.left &&

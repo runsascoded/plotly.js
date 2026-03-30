@@ -2,7 +2,26 @@ import { dot } from './matrix.js';
 import _numerical from '../constants/numerical.js';
 const { BADNUM } = _numerical;
 
-var polygon = {};
+type Point = [number, number];
+
+interface PolygonTester {
+    xmin: number;
+    xmax: number;
+    ymin: number;
+    ymax: number;
+    pts: Point[];
+    contains: (pt: Point, omitFirstEdge?: boolean) => boolean;
+    isRect: boolean;
+    degenerate: boolean;
+}
+
+interface PolygonFilter {
+    addPt: (pt: Point) => void;
+    raw: Point[];
+    filtered: Point[];
+}
+
+var polygon: Record<string, any> = {};
 
 /**
  * Turn an array of [x, y] pairs into a polygon object
@@ -20,13 +39,13 @@ var polygon = {};
  *              don't double-count the edge where they meet.
  *          returns boolean: is pt inside the polygon (including on its edges)
  */
-polygon.tester = function tester(ptsIn) {
+polygon.tester = function tester(ptsIn: Point[]): PolygonTester {
     var pts = ptsIn.slice();
     var xmin = pts[0][0];
     var xmax = xmin;
     var ymin = pts[0][1];
     var ymax = ymin;
-    var i;
+    var i: number;
 
     if(
         pts[pts.length - 1][0] !== pts[0][0] ||
@@ -47,7 +66,7 @@ polygon.tester = function tester(ptsIn) {
     // tester for the rectangular case without sacrificing speed
 
     var isRect = false;
-    var rectFirstEdgeTest;
+    var rectFirstEdgeTest: ((pt: Point) => boolean) | undefined;
 
     if(pts.length === 5) {
         if(pts[0][0] === pts[1][0]) { // vert, horz, vert, horz
@@ -55,19 +74,19 @@ polygon.tester = function tester(ptsIn) {
                     pts[0][1] === pts[3][1] &&
                     pts[1][1] === pts[2][1]) {
                 isRect = true;
-                rectFirstEdgeTest = function(pt) { return pt[0] === pts[0][0]; };
+                rectFirstEdgeTest = function(pt: Point): boolean { return pt[0] === pts[0][0]; };
             }
         } else if(pts[0][1] === pts[1][1]) { // horz, vert, horz, vert
             if(pts[2][1] === pts[3][1] &&
                     pts[0][0] === pts[3][0] &&
                     pts[1][0] === pts[2][0]) {
                 isRect = true;
-                rectFirstEdgeTest = function(pt) { return pt[1] === pts[0][1]; };
+                rectFirstEdgeTest = function(pt: Point): boolean { return pt[1] === pts[0][1]; };
             }
         }
     }
 
-    function rectContains(pt, omitFirstEdge) {
+    function rectContains(pt: Point, omitFirstEdge?: boolean): boolean {
         var x = pt[0];
         var y = pt[1];
 
@@ -75,12 +94,12 @@ polygon.tester = function tester(ptsIn) {
             // pt is outside the bounding box of polygon
             return false;
         }
-        if(omitFirstEdge && rectFirstEdgeTest(pt)) return false;
+        if(omitFirstEdge && rectFirstEdgeTest!(pt)) return false;
 
         return true;
     }
 
-    function contains(pt, omitFirstEdge) {
+    function contains(pt: Point, omitFirstEdge?: boolean): boolean {
         var x = pt[0];
         var y = pt[1];
 
@@ -93,11 +112,11 @@ polygon.tester = function tester(ptsIn) {
         var x1 = pts[0][0];
         var y1 = pts[0][1];
         var crossings = 0;
-        var i;
-        var x0;
-        var y0;
-        var xmini;
-        var ycross;
+        var i: number;
+        var x0: number;
+        var y0: number;
+        var xmini: number;
+        var ycross: number;
 
         for(i = 1; i < imax; i++) {
             // find all crossings of a vertical line upward from pt with
@@ -178,15 +197,15 @@ polygon.tester = function tester(ptsIn) {
  *      before the line counts as bent
  * @returns boolean: true means this segment is bent, false means straight
  */
-polygon.isSegmentBent = function isSegmentBent(pts, start, end, tolerance) {
+polygon.isSegmentBent = function isSegmentBent(pts: Point[], start: number, end: number, tolerance: number): boolean {
     var startPt = pts[start];
-    var segment = [pts[end][0] - startPt[0], pts[end][1] - startPt[1]];
-    var segmentSquared = dot(segment, segment);
+    var segment: number[] = [pts[end][0] - startPt[0], pts[end][1] - startPt[1]];
+    var segmentSquared: number = dot(segment, segment);
     var segmentLen = Math.sqrt(segmentSquared);
-    var unitPerp = [-segment[1] / segmentLen, segment[0] / segmentLen];
-    var i;
-    var part;
-    var partParallel;
+    var unitPerp: number[] = [-segment[1] / segmentLen, segment[0] / segmentLen];
+    var i: number;
+    var part: number[];
+    var partParallel: number;
 
     for(i = start + 1; i < end; i++) {
         part = [pts[i][0] - startPt[0], pts[i][1] - startPt[1]];
@@ -211,12 +230,12 @@ polygon.isSegmentBent = function isSegmentBent(pts, start, end, tolerance) {
  *      raw is all the input points
  *      filtered is the resulting filtered Array of [x, y] pairs
  */
-polygon.filter = function filter(pts, tolerance) {
-    var ptsFiltered = [pts[0]];
+polygon.filter = function filter(pts: Point[], tolerance: number): PolygonFilter {
+    var ptsFiltered: Point[] = [pts[0]];
     var doneRawIndex = 0;
     var doneFilteredIndex = 0;
 
-    function addPt(pt) {
+    function addPt(pt: Point): void {
         pts.push(pt);
         var prevFilterLen = ptsFiltered.length;
         var iLast = doneRawIndex;
@@ -235,7 +254,7 @@ polygon.filter = function filter(pts, tolerance) {
     }
 
     if(pts.length > 1) {
-        var lastPt = pts.pop();
+        var lastPt = pts.pop()!;
         addPt(lastPt);
     }
 

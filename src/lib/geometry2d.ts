@@ -1,7 +1,45 @@
 import _mod from './mod.js';
 const { mod } = _mod;
+
+interface Point {
+    x: number;
+    y: number;
+}
+
+interface TextLocation {
+    x: number;
+    y: number;
+    theta: number;
+}
+
+interface VisibleSegment {
+    min: number;
+    max: number;
+    len: number;
+    total: number;
+    isClosed: boolean;
+}
+
+interface Bounds {
+    left: number;
+    right: number;
+    top: number;
+    bottom: number;
+}
+
+interface FindPointOpts {
+    pathLength?: number;
+    tolerance?: number;
+    iterationLimit?: number;
+}
+
+interface SVGPathLike {
+    getPointAtLength(len: number): Point;
+    getTotalLength(): number;
+}
+
 export { segmentsIntersect };
-function segmentsIntersect(x1, y1, x2, y2, x3, y3, x4, y4) {
+function segmentsIntersect(x1: number, y1: number, x2: number, y2: number, x3: number, y3: number, x4: number, y4: number): Point | null {
     var a = x2 - x1;
     var b = x3 - x1;
     var c = x4 - x3;
@@ -20,7 +58,7 @@ function segmentsIntersect(x1, y1, x2, y2, x3, y3, x4, y4) {
     return {x: x1 + a * t, y: y1 + d * t};
 }
 
-export var segmentDistance = function segmentDistance(x1, y1, x2, y2, x3, y3, x4, y4) {
+export var segmentDistance = function segmentDistance(x1: number, y1: number, x2: number, y2: number, x3: number, y3: number, x4: number, y4: number): number {
     if(segmentsIntersect(x1, y1, x2, y2, x3, y3, x4, y4)) return 0;
 
     // the two segments and their lengths squared
@@ -48,7 +86,7 @@ export var segmentDistance = function segmentDistance(x1, y1, x2, y2, x3, y3, x4
  * [xac, yac] is the vector c-a
  * llab is the length squared of (b-a), just to simplify calculation
  */
-function perpDistance2(xab, yab, llab, xac, yac) {
+function perpDistance2(xab: number, yab: number, llab: number, xac: number, yac: number): number {
     var fcAB = (xac * xab + yac * yab);
     if(fcAB < 0) {
         // point c is closer to point a
@@ -68,9 +106,11 @@ function perpDistance2(xab, yab, llab, xac, yac) {
 // a very short-term cache for getTextLocation, just because
 // we're often looping over the same locations multiple times
 // invalidated as soon as we look at a different path
-var locationCache, workingPath, workingTextWidth;
+var locationCache: Record<number, TextLocation>;
+var workingPath: SVGPathLike | null;
+var workingTextWidth: number;
 
-export var getTextLocation = function getTextLocation(path, totalPathLen, positionOnPath, textWidth) {
+export var getTextLocation = function getTextLocation(path: SVGPathLike, totalPathLen: number, positionOnPath: number, textWidth: number): TextLocation {
     if(path !== workingPath || textWidth !== workingTextWidth) {
         locationCache = {};
         workingPath = path;
@@ -92,16 +132,16 @@ export var getTextLocation = function getTextLocation(path, totalPathLen, positi
     var x = (pCenter.x * 4 + p0.x + p1.x) / 6;
     var y = (pCenter.y * 4 + p0.y + p1.y) / 6;
 
-    var out = {x: x, y: y, theta: theta};
+    var out: TextLocation = {x: x, y: y, theta: theta};
     locationCache[positionOnPath] = out;
     return out;
 };
 
-export var clearLocationCache = function() {
+export var clearLocationCache = function(): void {
     workingPath = null;
 };
 
-export var getVisibleSegment = function getVisibleSegment(path, bounds, buffer) {
+export var getVisibleSegment = function getVisibleSegment(path: SVGPathLike, bounds: Bounds, buffer: number): VisibleSegment | undefined {
     var left = bounds.left;
     var right = bounds.right;
     var top = bounds.top;
@@ -111,9 +151,9 @@ export var getVisibleSegment = function getVisibleSegment(path, bounds, buffer) 
     var pTotal = path.getTotalLength();
     var pMax = pTotal;
 
-    var pt0, ptTotal;
+    var pt0: Point, ptTotal: Point;
 
-    function getDistToPlot(len) {
+    function getDistToPlot(len: number): number {
         var pt = path.getPointAtLength(len);
 
         // hold on to the start and end points for `closed`
@@ -145,12 +185,12 @@ export var getVisibleSegment = function getVisibleSegment(path, bounds, buffer) 
         len: pMax - pMin,
         total: pTotal,
         isClosed: pMin === 0 && pMax === pTotal &&
-            Math.abs(pt0.x - ptTotal.x) < 0.1 &&
-            Math.abs(pt0.y - ptTotal.y) < 0.1
+            Math.abs(pt0!.x - ptTotal!.x) < 0.1 &&
+            Math.abs(pt0!.y - ptTotal!.y) < 0.1
     };
 };
 
-export var findPointOnPath = function findPointOnPath(path, val, coord, opts) {
+export var findPointOnPath = function findPointOnPath(path: SVGPathLike, val: number, coord: 'x' | 'y', opts?: FindPointOpts): Point {
     opts = opts || {};
 
     var pathLength = opts.pathLength || path.getTotalLength();
@@ -164,9 +204,9 @@ export var findPointOnPath = function findPointOnPath(path, val, coord, opts) {
     var i = 0;
     var b0 = 0;
     var b1 = pathLength;
-    var mid;
-    var pt;
-    var diff;
+    var mid: number;
+    var pt: Point;
+    var diff: number;
 
     while(i < iterationLimit) {
         mid = (b0 + b1) / 2;
@@ -184,7 +224,7 @@ export var findPointOnPath = function findPointOnPath(path, val, coord, opts) {
             i++;
         }
     }
-    return pt;
+    return pt!;
 };
 
 export default { segmentDistance, getTextLocation, clearLocationCache, getVisibleSegment, findPointOnPath, segmentsIntersect };

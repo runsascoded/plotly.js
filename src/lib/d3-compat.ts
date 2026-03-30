@@ -14,18 +14,18 @@
 import { selection } from 'd3-selection';
 import 'd3-transition';
 
-var _origStyle = selection.prototype.style;
-var _origAttr = selection.prototype.attr;
-var _origEnter = selection.prototype.enter;
-var _origSelect = selection.prototype.select;
+var _origStyle = (selection.prototype as any).style;
+var _origAttr = (selection.prototype as any).attr;
+var _origEnter = (selection.prototype as any).enter;
+var _origSelect = (selection.prototype as any).select;
 
 // Patch .select() to NOT propagate parent data to child (v3 behavior).
 // In d3 v4+, select() copies parent.__data__ to child.__data__, which breaks
 // plotly.js code that uses .select() just to find elements without affecting data.
-selection.prototype.select = function(selector) {
+(selection.prototype as any).select = function(this: any, selector: any): any {
     if(typeof selector === 'string') {
         // Save __data__ on all elements that might be affected
-        var savedData = [];
+        var savedData: Array<{ node: any; data: any }> = [];
         var groups = this._groups;
         for(var j = 0; j < groups.length; ++j) {
             for(var i = 0; i < groups[j].length; ++i) {
@@ -49,7 +49,7 @@ selection.prototype.select = function(selector) {
 };
 
 // Patch .style() to accept object arg
-selection.prototype.style = function(nameOrObj, value, priority) {
+(selection.prototype as any).style = function(this: any, nameOrObj: any, value?: any, priority?: any): any {
     if(typeof nameOrObj === 'object' && nameOrObj !== null) {
         for(var key in nameOrObj) {
             _origStyle.call(this, key, nameOrObj[key]);
@@ -60,7 +60,7 @@ selection.prototype.style = function(nameOrObj, value, priority) {
 };
 
 // Patch .attr() to accept object arg AND handle null-node getters
-selection.prototype.attr = function(nameOrObj, value) {
+(selection.prototype as any).attr = function(this: any, nameOrObj: any, value?: any): any {
     // Object form: .attr({key: val, ...})
     if(typeof nameOrObj === 'object' && nameOrObj !== null && !(nameOrObj instanceof String)) {
         for(var key in nameOrObj) {
@@ -79,13 +79,13 @@ selection.prototype.attr = function(nameOrObj, value) {
 // In d3 v3, after enter().append(), the appended nodes were automatically part of the
 // update selection. In v4+, enter and update are separate selections. This polyfill
 // wraps .append() and .insert() on enter selections to merge entered nodes back.
-selection.prototype.enter = function() {
+(selection.prototype as any).enter = function(this: any): any {
     var enterSel = _origEnter.call(this);
     var updateSel = this;
     var _origAppend = enterSel.append;
     var _origInsert = enterSel.insert;
 
-    enterSel.append = function() {
+    enterSel.append = function(this: any): any {
         var result = _origAppend.apply(this, arguments);
         // Merge entered nodes into the update selection's _groups
         var enterGroups = result._groups;
@@ -100,7 +100,7 @@ selection.prototype.enter = function() {
         return result;
     };
 
-    enterSel.insert = function() {
+    enterSel.insert = function(this: any): any {
         var result = _origInsert.apply(this, arguments);
         var enterGroups = result._groups;
         var updateGroups = updateSel._groups;

@@ -12,7 +12,7 @@
 import { getModule, modules } from '../registry.js';
 import basePlotAttributes from '../plots/attributes.js';
 
-export function traceIs(trace, category) {
+export function traceIs(trace: any, category: string): boolean {
     // Fast path: trace already has _module (post-supplyDefaults)
     if(trace && trace._module && trace._module.categories) {
         return !!trace._module.categories[category];

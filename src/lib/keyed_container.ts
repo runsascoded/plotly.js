@@ -20,11 +20,19 @@ var VALUE = 2;
 var BOTH = 3;
 var UNSET = 4;
 
-export default function keyedContainer(baseObj, path, keyName, valueName) {
+interface KeyedContainerObj {
+    set(name: string, value: any): KeyedContainerObj | undefined;
+    get(name: string): any;
+    rename(name: string, newName: string): KeyedContainerObj;
+    remove(name: string): KeyedContainerObj;
+    constructUpdate(): Record<string, any>;
+}
+
+export default function keyedContainer(baseObj: any, path: string, keyName?: string, valueName?: string): KeyedContainerObj {
     keyName = keyName || 'name';
     valueName = valueName || 'value';
-    var i, arr, baseProp;
-    var changeTypes = {};
+    var i: number, arr: any[], baseProp: any;
+    var changeTypes: Record<number, number> = {};
 
     if(path && path.length) {
         baseProp = nestedProperty(baseObj, path);
@@ -36,17 +44,17 @@ export default function keyedContainer(baseObj, path, keyName, valueName) {
     path = path || '';
 
     // Construct an index:
-    var indexLookup = {};
+    var indexLookup: Record<string, number> = {};
     if(arr) {
         for(i = 0; i < arr.length; i++) {
-            indexLookup[arr[i][keyName]] = i;
+            indexLookup[arr[i][keyName!]] = i;
         }
     }
 
-    var isSimpleValueProp = SIMPLE_PROPERTY_REGEX.test(valueName);
+    var isSimpleValueProp = SIMPLE_PROPERTY_REGEX.test(valueName!);
 
-    var obj = {
-        set: function(name, value) {
+    var obj: KeyedContainerObj = {
+        set: function(name: string, value: any): KeyedContainerObj | undefined {
             var changeType = value === null ? UNSET : NONE;
 
             // create the base array if necessary
@@ -64,17 +72,17 @@ export default function keyedContainer(baseObj, path, keyName, valueName) {
                 changeType = changeType | BOTH;
                 idx = arr.length;
                 indexLookup[name] = idx;
-            } else if(value !== (isSimpleValueProp ? arr[idx][valueName] : nestedProperty(arr[idx], valueName).get())) {
+            } else if(value !== (isSimpleValueProp ? arr[idx][valueName!] : nestedProperty(arr[idx], valueName!).get())) {
                 changeType = changeType | VALUE;
             }
 
             var newValue = arr[idx] = arr[idx] || {};
-            newValue[keyName] = name;
+            newValue[keyName!] = name;
 
             if(isSimpleValueProp) {
-                newValue[valueName] = value;
+                newValue[valueName!] = value;
             } else {
-                nestedProperty(newValue, valueName).set(value);
+                nestedProperty(newValue, valueName!).set(value);
             }
 
             // If it's not an unset, force that bit to be unset. This is all related to the fact
@@ -87,7 +95,7 @@ export default function keyedContainer(baseObj, path, keyName, valueName) {
 
             return obj;
         },
-        get: function(name) {
+        get: function(name: string): any {
             if(!arr) return;
 
             var idx = indexLookup[name];
@@ -95,12 +103,12 @@ export default function keyedContainer(baseObj, path, keyName, valueName) {
             if(idx === undefined) {
                 return undefined;
             } else if(isSimpleValueProp) {
-                return arr[idx][valueName];
+                return arr[idx][valueName!];
             } else {
-                return nestedProperty(arr[idx], valueName).get();
+                return nestedProperty(arr[idx], valueName!).get();
             }
         },
-        rename: function(name, newName) {
+        rename: function(name: string, newName: string): KeyedContainerObj {
             var idx = indexLookup[name];
 
             if(idx === undefined) return obj;
@@ -109,11 +117,11 @@ export default function keyedContainer(baseObj, path, keyName, valueName) {
             indexLookup[newName] = idx;
             delete indexLookup[name];
 
-            arr[idx][keyName] = newName;
+            arr[idx][keyName!] = newName;
 
             return obj;
         },
-        remove: function(name) {
+        remove: function(name: string): KeyedContainerObj {
             var idx = indexLookup[name];
 
             if(idx === undefined) return obj;
@@ -123,7 +131,7 @@ export default function keyedContainer(baseObj, path, keyName, valueName) {
                 // This object contains more than just the key/value, so unset
                 // the value without modifying the entry otherwise:
                 changeTypes[idx] = changeTypes[idx] | VALUE;
-                return obj.set(name, null);
+                return obj.set(name, null) as KeyedContainerObj;
             }
 
             if(isSimpleValueProp) {
@@ -131,14 +139,14 @@ export default function keyedContainer(baseObj, path, keyName, valueName) {
                     changeTypes[i] = changeTypes[i] | BOTH;
                 }
                 for(i = idx; i < arr.length; i++) {
-                    indexLookup[arr[i][keyName]]--;
+                    indexLookup[arr[i][keyName!]]--;
                 }
                 arr.splice(idx, 1);
                 delete(indexLookup[name]);
             } else {
                 // Perform this update *strictly* so we can check whether the result's
                 // been pruned. If so, it's a removal. If not, it's a value unset only.
-                nestedProperty(object, valueName).set(null);
+                nestedProperty(object, valueName!).set(null);
 
                 // Now check if the top level nested property has any keys left. If so,
                 // the object still has values so we only want to unset the key. If not,
@@ -150,22 +158,22 @@ export default function keyedContainer(baseObj, path, keyName, valueName) {
 
             return obj;
         },
-        constructUpdate: function() {
-            var astr, idx;
-            var update = {};
+        constructUpdate: function(): Record<string, any> {
+            var astr: string, idx: string;
+            var update: Record<string, any> = {};
             var changed = Object.keys(changeTypes);
             for(var i = 0; i < changed.length; i++) {
                 idx = changed[i];
                 astr = path + '[' + idx + ']';
-                if(arr[idx]) {
-                    if(changeTypes[idx] & NAME) {
-                        update[astr + '.' + keyName] = arr[idx][keyName];
+                if(arr[idx as any]) {
+                    if(changeTypes[idx as any] & NAME) {
+                        update[astr + '.' + keyName!] = arr[idx as any][keyName!];
                     }
-                    if(changeTypes[idx] & VALUE) {
+                    if(changeTypes[idx as any] & VALUE) {
                         if(isSimpleValueProp) {
-                            update[astr + '.' + valueName] = (changeTypes[idx] & UNSET) ? null : arr[idx][valueName];
+                            update[astr + '.' + valueName!] = (changeTypes[idx as any] & UNSET) ? null : arr[idx as any][valueName!];
                         } else {
-                            update[astr + '.' + valueName] = (changeTypes[idx] & UNSET) ? null : nestedProperty(arr[idx], valueName).get();
+                            update[astr + '.' + valueName!] = (changeTypes[idx as any] & UNSET) ? null : nestedProperty(arr[idx as any], valueName!).get();
                         }
                     }
                 } else {

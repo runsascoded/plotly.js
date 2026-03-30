@@ -1,59 +1,75 @@
 // Minimal EventEmitter (replaces Node.js 'events' package, ~15 KB)
-function MiniEmitter() {
-    this._events = {};
+
+type EventHandler = (...args: any[]) => any;
+interface WrappedHandler extends EventHandler {
+    listener?: EventHandler;
+    fired?: boolean;
 }
-MiniEmitter.prototype.on = function(event, fn) {
-    var handlers = this._events[event];
-    if(!handlers) this._events[event] = fn;
-    else if(typeof handlers === 'function') this._events[event] = [handlers, fn];
-    else handlers.push(fn);
-    return this;
-};
-MiniEmitter.prototype.once = function(event, fn) {
-    var self = this;
-    function wrapper() {
-        self.removeListener(event, wrapper);
-        fn.apply(this, arguments);
+
+class MiniEmitter {
+    _events: Record<string, EventHandler | EventHandler[]>;
+
+    constructor() {
+        this._events = {};
     }
-    wrapper.listener = fn;
-    return this.on(event, wrapper);
-};
-MiniEmitter.prototype.removeListener = function(event, fn) {
-    var handlers = this._events[event];
-    if(!handlers) return this;
-    if(typeof handlers === 'function') {
-        if(handlers === fn || handlers.listener === fn) delete this._events[event];
-    } else {
-        for(var i = handlers.length - 1; i >= 0; i--) {
-            if(handlers[i] === fn || handlers[i].listener === fn) {
-                handlers.splice(i, 1);
-                break;
-            }
+
+    on(event: string, fn: EventHandler): this {
+        var handlers = this._events[event];
+        if(!handlers) this._events[event] = fn;
+        else if(typeof handlers === 'function') this._events[event] = [handlers, fn];
+        else (handlers as EventHandler[]).push(fn);
+        return this;
+    }
+
+    once(event: string, fn: EventHandler): this {
+        var self = this;
+        function wrapper(this: any) {
+            self.removeListener(event, wrapper);
+            fn.apply(this, arguments as any);
         }
-        if(handlers.length === 0) delete this._events[event];
-        else if(handlers.length === 1) this._events[event] = handlers[0];
+        (wrapper as WrappedHandler).listener = fn;
+        return this.on(event, wrapper);
     }
-    return this;
-};
-MiniEmitter.prototype.removeAllListeners = function(event) {
-    if(event) delete this._events[event];
-    else this._events = {};
-    return this;
-};
-MiniEmitter.prototype.emit = function(event, data) {
-    var handlers = this._events[event];
-    if(!handlers) return false;
-    if(typeof handlers === 'function') handlers.call(this, data);
-    else {
-        var arr = handlers.slice();
-        for(var i = 0; i < arr.length; i++) arr[i].call(this, data);
+
+    removeListener(event: string, fn: EventHandler): this {
+        var handlers = this._events[event];
+        if(!handlers) return this;
+        if(typeof handlers === 'function') {
+            if(handlers === fn || (handlers as WrappedHandler).listener === fn) delete this._events[event];
+        } else {
+            for(var i = (handlers as EventHandler[]).length - 1; i >= 0; i--) {
+                if((handlers as EventHandler[])[i] === fn || ((handlers as EventHandler[])[i] as WrappedHandler).listener === fn) {
+                    (handlers as EventHandler[]).splice(i, 1);
+                    break;
+                }
+            }
+            if((handlers as EventHandler[]).length === 0) delete this._events[event];
+            else if((handlers as EventHandler[]).length === 1) this._events[event] = (handlers as EventHandler[])[0];
+        }
+        return this;
     }
-    return true;
-};
+
+    removeAllListeners(event?: string): this {
+        if(event) delete this._events[event];
+        else this._events = {};
+        return this;
+    }
+
+    emit(event: string, data?: any): boolean {
+        var handlers = this._events[event];
+        if(!handlers) return false;
+        if(typeof handlers === 'function') (handlers as EventHandler).call(this, data);
+        else {
+            var arr = (handlers as EventHandler[]).slice();
+            for(var i = 0; i < arr.length; i++) arr[i].call(this, data);
+        }
+        return true;
+    }
+}
 
 var Events = {
 
-    init: function(plotObj) {
+    init: function(plotObj: any): any {
         if(plotObj._ev instanceof MiniEmitter) return plotObj;
 
         var ev = new MiniEmitter();
@@ -99,7 +115,7 @@ var Events = {
         plotObj._removeInternalListener = internalEv.removeListener.bind(internalEv);
         plotObj._removeAllInternalListeners = internalEv.removeAllListeners.bind(internalEv);
 
-        plotObj.emit = function(event, data) {
+        plotObj.emit = function(event: string, data?: any): void {
             ev.emit(event, data);
             internalEv.emit(event, data);
         };
@@ -127,20 +143,20 @@ var Events = {
      * all handlers for a particular event and returns the return value
      * of the LAST handler.
      */
-    triggerHandler: function(plotObj, event, data) {
-        var nodeEventHandlerValue;
+    triggerHandler: function(plotObj: any, event: string, data?: any): any {
+        var nodeEventHandlerValue: any;
 
         /*
          * Now run all the node style event handlers
          */
-        var ev = plotObj._ev;
+        var ev: MiniEmitter = plotObj._ev;
         if(!ev) return;
 
-        var handlers = ev._events[event];
+        var handlers: any = ev._events[event];
         if(!handlers) return;
 
         // making sure 'this' is the EventEmitter instance
-        function apply(handler) {
+        function apply(handler: WrappedHandler): any {
             // The 'once' case, we can't just call handler() as we need
             // the return value here. So,
             // - remove handler
@@ -160,7 +176,7 @@ var Events = {
         // handlers can be function or an array of functions
         handlers = Array.isArray(handlers) ? handlers : [handlers];
 
-        var i;
+        var i: number;
         for(i = 0; i < handlers.length - 1; i++) {
             apply(handlers[i]);
         }
@@ -170,7 +186,7 @@ var Events = {
         return nodeEventHandlerValue;
     },
 
-    purge: function(plotObj) {
+    purge: function(plotObj: any): any {
         delete plotObj._ev;
         delete plotObj.on;
         delete plotObj.once;
