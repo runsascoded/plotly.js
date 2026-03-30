@@ -110,6 +110,11 @@ async function main() {
     const forkMinimal = await measureEntry('fork-minimal', 'lib/index-minimal.js');
     const forkLite = await measureEntry('fork-lite', 'lib/index-lite.js');
 
+    // Factory: tree-shaken scatter+bar+legend only
+    const appFactory = await bundleSize('app-factory', {
+        entryPoints: [join(__dirname, 'app-factory.js')],
+    });
+
     // App-level comparison (what consumers actually experience)
     const appUpBasic = await measureApp('app-upstream-basic', join(__dirname, 'upstream/plotly-basic.min.js'));
     const appForkLite = await measureApp('app-fork-lite', join(root, 'lib/index-lite.js'));
@@ -122,10 +127,12 @@ async function main() {
         ['fork basic (min)',           forkBasic,    upBasic],
         ['fork minimal (min)',         forkMinimal,  upBasic],
         ['fork lite (min)',            forkLite,     upBasic],
+        ['fork factory (min)',         appFactory,   upBasic],
         ['', 0, 0],
         ['app + upstream basic',       appUpBasic,   appUpBasic],
         ['app + fork basic',           appForkBasic, appUpBasic],
         ['app + fork lite',            appForkLite,  appUpBasic],
+        ['app + fork factory',         appFactory,   appUpBasic],
     ];
 
     for (const [label, size, baseline] of allResults) {

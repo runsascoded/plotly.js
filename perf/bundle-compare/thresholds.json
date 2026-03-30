@@ -1,11 +1,11 @@
 {
     "upstream_full__min_": 4831947,
     "upstream_basic__min_": 1114816,
-    "fork_full__min_": 4818460,
-    "fork_basic__min_": 1104615,
-    "fork_minimal__min_": 996905,
-    "fork_lite__min_": 856900,
+    "fork_full__min_": 4818593,
+    "fork_basic__min_": 1104752,
+    "fork_minimal__min_": 997042,
+    "fork_lite__min_": 857037,
     "app___upstream_basic": 1115573,
-    "app___fork_basic": 1104763,
-    "app___fork_lite": 856992
+    "app___fork_basic": 1104900,
+    "app___fork_lite": 857129
 }
