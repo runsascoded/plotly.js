@@ -34523,11 +34523,11 @@ void main() {
   var error = loggers.error;
   var loggers_default = loggers;
 
-  // src/lib/noop.js
+  // src/lib/noop.ts
   function noop2() {
   }
 
-  // src/lib/push_unique.js
+  // src/lib/push_unique.ts
   function pushUnique(array2, item) {
     if (item instanceof RegExp) {
       var itemStr = item.toString();
@@ -34541,9 +34541,10 @@ void main() {
     return array2;
   }
 
-  // src/lib/is_plain_object.js
+  // src/lib/is_plain_object.ts
   function isPlainObject(obj) {
-    if (window && window.process && window.process.versions) {
+    var _a;
+    if ((_a = globalThis.process) == null ? void 0 : _a.versions) {
       return Object.prototype.toString.call(obj) === "[object Object]";
     }
     return Object.prototype.toString.call(obj) === "[object Object]" && Object.getPrototypeOf(obj).hasOwnProperty("hasOwnProperty");
@@ -37678,7 +37679,7 @@ void main() {
     return 0;
   }
 
-  // src/lib/mod.js
+  // src/lib/mod.ts
   function mod(v, d2) {
     var out = v % d2;
     return out < 0 ? out + d2 : out;
@@ -37686,10 +37687,7 @@ void main() {
   function modHalf(v, d2) {
     return Math.abs(v) > d2 / 2 ? v - Math.round(v / d2) * d2 : v;
   }
-  var mod_default = {
-    mod,
-    modHalf
-  };
+  var mod_default = { mod, modHalf };
 
   // src/lib/coerce.js
   var import_fast_isnumeric4 = __toESM(require_fast_isnumeric(), 1);
@@ -39847,7 +39845,7 @@ void main() {
   // src/lib/search.js
   var import_fast_isnumeric6 = __toESM(require_fast_isnumeric(), 1);
 
-  // src/lib/identity.js
+  // src/lib/identity.ts
   function identity2(d2) {
     return d2;
   }
@@ -40493,7 +40491,7 @@ void main() {
     return baseAttr + relativeAttr2;
   }
 
-  // src/lib/to_log_range.js
+  // src/lib/to_log_range.ts
   var import_fast_isnumeric8 = __toESM(require_fast_isnumeric(), 1);
   function toLogRange(val, range) {
     if (val > 0) return Math.log(val) / Math.LN10;
