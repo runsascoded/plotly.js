@@ -2,8 +2,6 @@ import Registry from '../../registry.js';
 import Plots from '../../plots/plots.js';
 import axisIds from '../../plots/cartesian/axis_ids.js';
 import Icons from '../../fonts/ploticon.js';
-import _draw from '../shapes/draw.js';
-const { eraseActiveShape } = _draw;
 import Lib from '../../lib/index.js';
 var _ = Lib._;
 
@@ -173,7 +171,7 @@ modeBarButtons.eraseshape = {
     name: 'eraseshape',
     title: function(gd) { return _(gd, 'Erase active shape'); },
     icon: Icons.eraseshape,
-    click: eraseActiveShape
+    click: function(gd) { return Registry.getComponentMethod('shapes', 'eraseActiveShape')(gd); }
 };
 
 modeBarButtons.zoomIn2d = {

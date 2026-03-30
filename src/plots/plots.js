@@ -12,8 +12,6 @@ import _numerical from '../constants/numerical.js';
 const { BADNUM } = _numerical;
 import axisIDs from './cartesian/axis_ids.js';
 import cartesianConstants from './cartesian/constants.js';
-import _handle_outline from '../components/shapes/handle_outline.js';
-const { clearOutline } = _handle_outline;
 import scatterAttrs from '../traces/scatter/layout_attributes.js';
 import animationAttrs from './animation_attributes.js';
 import frameAttrs from './frame_attributes.js';
@@ -473,9 +471,8 @@ plots.supplyDefaults = function(gd, opts) {
     // we should try to come up with a better solution when implementing
     // https://github.com/plotly/plotly.js/issues/1851
     if(oldFullLayout._zoomlayer && !gd._dragging) {
-        clearOutline({ // mock old gd
-            _fullLayout: oldFullLayout
-        });
+        oldFullLayout._zoomlayer.selectAll('.select-outline').remove();
+        oldFullLayout._outlining = false;
     }
 
     // fill in meta helpers

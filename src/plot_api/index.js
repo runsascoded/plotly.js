@@ -1,8 +1,7 @@
 import main from './plot_api.js';
 import _dom from '../lib/dom.js';
 const { getGraphDiv } = _dom;
-import _draw from '../components/shapes/draw.js';
-const { eraseActiveShape } = _draw;
+import Registry from '../registry.js';
 import templateApi from './template_api.js';
 import _req0 from './to_image.js';
 import _req1 from './validate.js';
@@ -30,7 +29,7 @@ export var animate = main.animate;
 export var setPlotConfig = main.setPlotConfig;
 
 export var deleteActiveShape = function(gd) {
-    return eraseActiveShape(getGraphDiv(gd));
+    return Registry.getComponentMethod('shapes', 'eraseActiveShape')(getGraphDiv(gd));
 };
 
 export var toImage = _req0;
