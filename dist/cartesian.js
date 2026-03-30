@@ -17502,11 +17502,11 @@ var Plotly = (() => {
   };
 
   // src/components/fx/layout_attributes.js
-  var font = font_attributes_default({
+  var font2 = font_attributes_default({
     editType: "none"
   });
-  font.family.dflt = constants_default.HOVERFONT;
-  font.size.dflt = constants_default.HOVERFONTSIZE;
+  font2.family.dflt = constants_default.HOVERFONT;
+  font2.size.dflt = constants_default.HOVERFONTSIZE;
   var layout_attributes_default = {
     clickmode: {
       valType: "flaglist",
@@ -17567,7 +17567,7 @@ var Plotly = (() => {
         valType: "color",
         editType: "none"
       },
-      font,
+      font: font2,
       grouptitlefont: font_attributes_default({
         editType: "none"
       }),
@@ -26073,9 +26073,9 @@ var Plotly = (() => {
       layoutOut._dataTemplate = template.data;
     }
     coerce3("autotypenumbers");
-    var font3 = coerceFont(coerce3, "font");
-    var fontSize = font3.size;
-    coerceFont(coerce3, "title.font", font3, { overrideDflt: {
+    var font4 = coerceFont(coerce3, "font");
+    var fontSize = font4.size;
+    coerceFont(coerce3, "title.font", font4, { overrideDflt: {
       size: Math.round(fontSize * 1.4)
     } });
     coerce3("title.text", layoutOut._dfltTitle.plot);
@@ -26091,7 +26091,7 @@ var Plotly = (() => {
     coerce3("title.y");
     coerce3("title.yanchor");
     coerce3("title.subtitle.text", layoutOut._dfltTitle.subtitle);
-    coerceFont(coerce3, "title.subtitle.font", font3, {
+    coerceFont(coerce3, "title.subtitle.font", font4, {
       overrideDflt: {
         size: Math.round(layoutOut.title.font.size * 0.7)
       }
@@ -30680,15 +30680,15 @@ var Plotly = (() => {
       if (!options.noTicklabelstandoff) {
         coerce3("ticklabelstandoff");
       }
-      var font3 = options.font || {};
+      var font4 = options.font || {};
       var contColor = containerOut.color;
       var position = containerOut.ticklabelposition || "";
       var dfltFontColor = position.indexOf("inside") !== -1 ? contrast(options.bgColor) : (
         // as with title.font.color, inherit axis.color only if one was
         // explicitly provided
-        contColor && contColor !== layout_attributes_default4.color.dflt ? contColor : font3.color
+        contColor && contColor !== layout_attributes_default4.color.dflt ? contColor : font4.color
       );
-      coerceFont(coerce3, "tickfont", font3, { overrideDflt: {
+      coerceFont(coerce3, "tickfont", font4, { overrideDflt: {
         color: dfltFontColor
       } });
       if (!options.noTicklabelstep && axType !== "multicategory" && axType !== "log") {
@@ -30832,13 +30832,13 @@ var Plotly = (() => {
     }, "ticklabelposition");
     coerce3("ticklabeloverflow", ticklabelposition.indexOf("inside") !== -1 ? "hide past domain" : "hide past div");
     handleTickValueDefaults(colorbarIn, colorbarOut, coerce3, "linear");
-    var font3 = layout.font;
+    var font4 = layout.font;
     var opts = {
       noAutotickangles: true,
       noTicklabelshift: true,
       noTicklabelstandoff: true,
       outerTicks: false,
-      font: font3
+      font: font4
     };
     if (ticklabelposition.indexOf("inside") !== -1) {
       opts.bgColor = "black";
@@ -30847,8 +30847,8 @@ var Plotly = (() => {
     handleTickLabelDefaults(colorbarIn, colorbarOut, coerce3, "linear", opts);
     handleTickMarkDefaults(colorbarIn, colorbarOut, coerce3, "linear", opts);
     coerce3("title.text", layout._dfltTitle.colorbar);
-    var tickFont = colorbarOut.showticklabels ? colorbarOut.tickfont : font3;
-    var dfltTitleFont = extendFlat({}, font3, {
+    var tickFont = colorbarOut.showticklabels ? colorbarOut.tickfont : font4;
+    var dfltTitleFont = extendFlat({}, font4, {
       family: tickFont.family,
       size: bigFont(tickFont.size)
     });
@@ -31984,16 +31984,16 @@ var Plotly = (() => {
   var tester;
   var testref;
   var LINE_SPACING2 = alignment_default.LINE_SPACING;
-  function font2(s, font3) {
-    var variant = font3.variant;
-    var style12 = font3.style;
-    var weight = font3.weight;
-    var color3 = font3.color;
-    var size = font3.size;
-    var family = font3.family;
-    var shadow = font3.shadow;
-    var lineposition = font3.lineposition;
-    var textcase = font3.textcase;
+  function font3(s, font4) {
+    var variant = font4.variant;
+    var style12 = font4.style;
+    var weight = font4.weight;
+    var color3 = font4.color;
+    var size = font4.size;
+    var family = font4.family;
+    var shadow = font4.shadow;
+    var lineposition = font4.lineposition;
+    var textcase = font4.textcase;
     if (family) s.style("font-family", family);
     if (size + 1) s.style("font-size", size + "px");
     if (color3) s.call(color_default.fill, color3);
@@ -32849,7 +32849,7 @@ var Plotly = (() => {
       var pos = d.tp || trace.textposition;
       var fontSize = extracTextFontSize(d, trace);
       var fontColor = selectedTextColorFn ? selectedTextColorFn(d) : d.tc || trace.textfont.color;
-      p.call(font2, {
+      p.call(font3, {
         family: d.tf || trace.textfont.family,
         weight: d.tw || trace.textfont.weight,
         style: d.ty || trace.textfont.style,
@@ -33126,18 +33126,6 @@ var Plotly = (() => {
     element[setter]("transform", transform2);
     return transform2;
   }
-  function getScale2(element) {
-    var re3 = /.*\bscale\((\d*\.?\d*)[^\d]*(\d*\.?\d*)[^\d].*/;
-    var getter = element.attr ? "attr" : "getAttribute";
-    var transform2 = element[getter]("transform") || "";
-    var translate = transform2.replace(re3, function(match, p1, p2) {
-      return [p1, p2].join(" ");
-    }).split(" ");
-    return {
-      x: +translate[0] || 1,
-      y: +translate[1] || 1
-    };
-  }
   function setScale(element, x, y) {
     var re3 = /(\bscale\(.*?\);?)/;
     var getter = element.attr ? "attr" : "getAttribute";
@@ -33293,63 +33281,6 @@ var Plotly = (() => {
     previousTraceUid = trace.uid;
     return angle;
   }
-  var drawing_default = {
-    font: font2,
-    setPosition,
-    setSize,
-    setRect,
-    translatePoint,
-    translatePoints,
-    hideOutsideRangePoint,
-    hideOutsideRangePoints,
-    crispRound,
-    singleLineStyle,
-    lineGroupStyle,
-    dashLine,
-    dashStyle,
-    singleFillStyle,
-    fillGroupStyle,
-    symbolNames,
-    symbolFuncs,
-    symbolBackOffs,
-    symbolNeedLines,
-    symbolNoDot,
-    symbolNoFill,
-    symbolList,
-    symbolNumber,
-    gradient,
-    pattern: pattern2,
-    initGradients,
-    initPatterns,
-    getPatternAttr,
-    pointStyle,
-    singlePointStyle,
-    makePointStyleFns,
-    makeSelectedPointStyleFns,
-    makeSelectedTextStyleFns,
-    selectedPointStyle,
-    tryColorscale,
-    textPointStyle,
-    selectedTextStyle,
-    smoothopen,
-    smoothclosed,
-    steps,
-    applyBackoff,
-    makeTester,
-    savedBBoxes,
-    bBox,
-    setClipUrl,
-    getTranslate,
-    setTranslate,
-    getScale: getScale2,
-    setScale,
-    setPointGroupScale,
-    setTextPointsScale,
-    getMarkerStandoff,
-    getMarkerAngle,
-    tester,
-    testref
-  };
 
   // src/components/titles/index.js
   function d3Round2(x, n) {
@@ -33481,7 +33412,7 @@ var Plotly = (() => {
           }
         }
       }
-      titleEl.style("opacity", opacity2 * color_default.opacity(fontColor)).call(font2, {
+      titleEl.style("opacity", opacity2 * color_default.opacity(fontColor)).call(font3, {
         color: color_default.rgb(fontColor),
         size: d3Round2(fontSize, 2),
         family: fontFamily,
@@ -33501,7 +33432,7 @@ var Plotly = (() => {
           y: subtitleY2
         });
         subtitleEl2.attr("transform", transformVal);
-        subtitleEl2.style("opacity", subtitleOpacity * color_default.opacity(subFontColor)).call(font2, {
+        subtitleEl2.style("opacity", subtitleOpacity * color_default.opacity(subFontColor)).call(font3, {
           color: color_default.rgb(subFontColor),
           size: d3Round2(subFontSize, 2),
           family: subFontFamily,
@@ -37234,7 +37165,7 @@ var Plotly = (() => {
     tickLabels.enter().append("g").classed(cls, 1).append("text").attr("text-anchor", "middle").each(function(d) {
       var thisLabel = select_default2(this);
       var newPromise = gd._promises.length;
-      thisLabel.call(svg_text_utils_default.positionText, labelFns.xFn(d), labelFns.yFn(d)).call(font2, {
+      thisLabel.call(svg_text_utils_default.positionText, labelFns.xFn(d), labelFns.yFn(d)).call(font3, {
         family: d.font,
         size: d.fontSize,
         color: d.fontColor,
@@ -40007,7 +39938,7 @@ var Plotly = (() => {
     var titleEl;
     if (title.text) {
       titleEl = ensureSingle(scrollBox, "text", legendId + "titletext");
-      titleEl.attr("text-anchor", "start").call(font2, title.font).text(title.text);
+      titleEl.attr("text-anchor", "start").call(font3, title.font).text(title.text);
       textLayout(titleEl, scrollBox, gd, legendObj, MAIN_TITLE);
     } else {
       scrollBox.selectAll("." + legendId + "titletext").remove();
@@ -40296,7 +40227,7 @@ var Plotly = (() => {
       }
     }
     var textEl = ensureSingle(g, "text", legendId + "text");
-    textEl.attr("text-anchor", "start").call(font2, textFont).text(isEditable ? ensureLength(name8, maxNameLength) : name8);
+    textEl.attr("text-anchor", "start").call(font3, textFont).text(isEditable ? ensureLength(name8, maxNameLength) : name8);
     var textGap = legendObj.indentation + legendObj.itemwidth + constants_default3.itemGap * 2;
     svg_text_utils_default.positionText(textEl, textGap, 0);
     if (isEditable) {
@@ -41385,7 +41316,7 @@ var Plotly = (() => {
         fill: commonBgColor,
         stroke: commonStroke
       });
-      ltext.text(t03).call(font3, commonLabelFont).call(svg_text_utils_default.positionText, 0, 0).call(svg_text_utils_default.convertToTspans, gd);
+      ltext.text(t03).call(font4, commonLabelFont).call(svg_text_utils_default.positionText, 0, 0).call(svg_text_utils_default.convertToTspans, gd);
       label.attr("transform", "");
       var tbb2 = getBoundingClientRect(gd, ltext.node());
       var lx2, ly2;
@@ -41460,7 +41391,7 @@ var Plotly = (() => {
           if (anchor === "end") {
             ltext.selectAll("tspan").each(function() {
               var s = select_default2(this);
-              var dummy = tester.append("text").text(s.text()).call(font3, commonLabelFont);
+              var dummy = tester.append("text").text(s.text()).call(font4, commonLabelFont);
               var dummyBB = getBoundingClientRect(gd, dummy.node());
               if (Math.round(dummyBB.width) < Math.round(tbb2.width)) {
                 s.attr("x", ltx - dummyBB.width);
@@ -41485,7 +41416,7 @@ var Plotly = (() => {
       const groupedHoverData = hoverData.filter((data) => data.hoverinfo !== "none");
       if (groupedHoverData.length === 0) return [];
       var hoverlabel = fullLayout.hoverlabel;
-      var font3 = hoverlabel.font;
+      var font4 = hoverlabel.font;
       var item0 = groupedHoverData[0];
       var unifiedhovertitleText = ((hovermode === "x unified" ? item0.xa : item0.ya).unifiedhovertitle || {}).text;
       var mainText = !unifiedhovertitleText ? t03 : hovertemplateString({
@@ -41497,8 +41428,8 @@ var Plotly = (() => {
       var mockLayoutIn = {
         showlegend: true,
         legend: {
-          title: { text: mainText, font: font3 },
-          font: font3,
+          title: { text: mainText, font: font4 },
+          font: font4,
           bgcolor: hoverlabel.bgcolor,
           bordercolor: hoverlabel.bordercolor,
           borderwidth: 1,
@@ -41508,7 +41439,7 @@ var Plotly = (() => {
         }
       };
       var mockLayoutOut = {
-        font: font3
+        font: font4
       };
       legendDefaults(mockLayoutIn, mockLayoutOut, gd._fullData);
       var mockLegend = mockLayoutOut.legend;
@@ -41651,7 +41582,7 @@ var Plotly = (() => {
       g.append("rect").call(color_default.fill, color_default.addOpacity(bgColor, 0.8));
       g.append("text").classed("name", true);
       g.append("path").style("stroke-width", "1px");
-      g.append("text").classed("nums", true).call(font3, {
+      g.append("text").classed("nums", true).call(font4, {
         weight: fontWeight,
         style: fontStyle,
         variant: fontVariant,
@@ -41676,7 +41607,7 @@ var Plotly = (() => {
       var texts2 = getHoverLabelText(d, showCommonLabel, hovermode, fullLayout, t03, g);
       var text2 = texts2[0];
       var name9 = texts2[1];
-      var tx = g.select("text.nums").call(font3, {
+      var tx = g.select("text.nums").call(font4, {
         family: d.fontFamily || fontFamily,
         size: d.fontSize || fontSize,
         color: d.fontColor || contrastColor,
@@ -41691,7 +41622,7 @@ var Plotly = (() => {
       var tx2width = 0;
       var tx2height = 0;
       if (name9 && name9 !== text2) {
-        tx2.call(font3, {
+        tx2.call(font4, {
           family: d.fontFamily || fontFamily,
           size: d.fontSize || fontSize,
           color: nameColor,
@@ -48030,7 +47961,7 @@ var Plotly = (() => {
     var width = fullLayout.width;
     var height = fullLayout.height;
     var i;
-    svg2.insert("rect", ":first-child").call(drawing_default.setRect, 0, 0, width, height).call(color_default.fill, fullLayout.paper_bgcolor);
+    svg2.insert("rect", ":first-child").call(setRect, 0, 0, width, height).call(color_default.fill, fullLayout.paper_bgcolor);
     var basePlotModules = fullLayout._basePlotModules || [];
     for (i = 0; i < basePlotModules.length; i++) {
       var _module = basePlotModules[i];
@@ -52228,7 +52159,7 @@ var Plotly = (() => {
   var { WEEKDAY_PATTERN: DAY_OF_WEEK2, HOUR_PATTERN: HOUR2 } = constants_default2;
   function handleAxisDefaults(containerIn, containerOut, coerce3, options, layoutOut) {
     var letter = options.letter;
-    var font3 = options.font || {};
+    var font4 = options.font || {};
     var splomStash = options.splomStash || {};
     var visible = coerce3("visible", !options.visibleDflt);
     var axTemplate = containerOut._template || {};
@@ -52284,13 +52215,13 @@ var Plotly = (() => {
       }
     }
     var dfltColor = coerce3("color");
-    var dfltFontColor = dfltColor !== layout_attributes_default4.color.dflt ? dfltColor : font3.color;
+    var dfltFontColor = dfltColor !== layout_attributes_default4.color.dflt ? dfltColor : font4.color;
     var dfltTitle = splomStash.label || layoutOut._dfltTitle[letter];
     handlePrefixSuffixDefaults(containerIn, containerOut, coerce3, axType, options);
     if (!visible) return containerOut;
     coerce3("title.text", dfltTitle);
-    coerceFont(coerce3, "title.font", font3, { overrideDflt: {
-      size: bigFont(font3.size),
+    coerceFont(coerce3, "title.font", font4, { overrideDflt: {
+      size: bigFont(font4.size),
       color: dfltFontColor
     } });
     handleTickValueDefaults(containerIn, containerOut, coerce3, axType);
@@ -53758,11 +53689,11 @@ var Plotly = (() => {
     var annTextClip = fullLayout._topclips.selectAll("#" + annClipID).data(isSizeConstrained ? [0] : []);
     annTextClip.enter().append("clipPath").classed("annclip", true).attr("id", annClipID).append("rect");
     annTextClip.exit().remove();
-    var font3 = options.font;
+    var font4 = options.font;
     var text = fullLayout._meta ? lib_default.templateString(options.text, fullLayout._meta) : options.text;
     var annText = annTextGroupInner.append("text").classed("annotation-text", true).text(text);
     function textLayout2(s) {
-      s.call(drawing_default.font, font3).attr({
+      s.call(font4, font4).attr({
         "text-anchor": {
           left: "start",
           right: "end"
@@ -53782,7 +53713,7 @@ var Plotly = (() => {
       }
       var mathjaxGroup = annTextGroupInner.select(".annotation-text-math-group");
       var hasMathjax = !mathjaxGroup.empty();
-      var anntextBB = drawing_default.bBox(
+      var anntextBB = bBox(
         (hasMathjax ? mathjaxGroup : annText).node()
       );
       var textWidth = anntextBB.width;
@@ -53924,28 +53855,28 @@ var Plotly = (() => {
         mathjaxGroup.select("svg").attr({
           x: borderfull + xShift - 1,
           y: borderfull + yShift
-        }).call(drawing_default.setClipUrl, isSizeConstrained ? annClipID : null, gd);
+        }).call(setClipUrl, isSizeConstrained ? annClipID : null, gd);
       } else {
         var texty = borderfull + yShift - anntextBB.top;
         var textx = borderfull + xShift - anntextBB.left;
-        annText.call(svg_text_utils_default.positionText, textx, texty).call(drawing_default.setClipUrl, isSizeConstrained ? annClipID : null, gd);
+        annText.call(svg_text_utils_default.positionText, textx, texty).call(setClipUrl, isSizeConstrained ? annClipID : null, gd);
       }
       annTextClip.select("rect").call(
-        drawing_default.setRect,
+        setRect,
         borderfull,
         borderfull,
         annWidth,
         annHeight
       );
       annTextBG.call(
-        drawing_default.setRect,
+        setRect,
         borderwidth / 2,
         borderwidth / 2,
         outerWidth - borderwidth,
         outerHeight - borderwidth
       );
       annTextGroupInner.call(
-        drawing_default.setTranslate,
+        setTranslate,
         Math.round(annPosPx.x.text - outerWidth / 2),
         Math.round(annPosPx.y.text - outerHeight / 2)
       );
@@ -54026,7 +53957,7 @@ var Plotly = (() => {
             element: arrowDrag.node(),
             gd,
             prepFn: function() {
-              var pos = drawing_default.getTranslate(annTextGroupInner);
+              var pos = getTranslate(annTextGroupInner);
               annx0 = pos.x;
               anny0 = pos.y;
               if (xa && xa.autorange) {
@@ -54040,7 +53971,7 @@ var Plotly = (() => {
               var annxy0 = applyTransform(annx0, anny0);
               var xcenter = annxy0[0] + dx2;
               var ycenter = annxy0[1] + dy2;
-              annTextGroupInner.call(drawing_default.setTranslate, xcenter, ycenter);
+              annTextGroupInner.call(setTranslate, xcenter, ycenter);
               modifyItem(
                 "x",
                 shiftPosition(xa, dx2, "x", gs, options)
@@ -55931,7 +55862,7 @@ var Plotly = (() => {
     var labelGroupAttrs = {
       "data-index": index
     };
-    var font3 = options.label.font;
+    var font4 = options.label.font;
     var labelTextAttrs = {
       "data-notex": 1
     };
@@ -55989,11 +55920,11 @@ var Plotly = (() => {
       }
     }
     labelText.call(function(s) {
-      s.call(drawing_default.font, font3).attr({});
+      s.call(font4, font4).attr({});
       svg_text_utils_default.convertToTspans(s, gd);
       return s;
     });
-    var textBB = drawing_default.bBox(labelText.node());
+    var textBB = bBox(labelText.node());
     var textPos = calcTextPosition(shapex0, shapey0, shapex1, shapey1, options, textangle, textBB);
     var textx = textPos.textx;
     var texty = textPos.texty;
@@ -56450,7 +56381,7 @@ var Plotly = (() => {
       var allPaths = [];
       for (var sensory = 1; sensory >= 0; sensory--) {
         var path = selectionLayer.append("path").attr(attrs3).style("opacity", sensory ? 0.1 : opacity2).call(color_default.stroke, lineColor).call(color_default.fill, fillColor).call(
-          drawing_default.dashLine,
+          dashLine,
           sensory ? "solid" : lineDash,
           sensory ? 4 + lineWidth : lineWidth
         );
@@ -56484,7 +56415,7 @@ var Plotly = (() => {
   }
   function setClipPath(selectionPath, gd, selectionOptions) {
     var clipAxes = selectionOptions.xref + selectionOptions.yref;
-    drawing_default.setClipUrl(
+    setClipUrl(
       selectionPath,
       "clip" + gd._fullLayout._uid + clipAxes,
       gd
@@ -56538,7 +56469,6 @@ var Plotly = (() => {
   };
 
   // src/components/selections/select.js
-  var { dashStyle: dashStyle2 } = drawing_default;
   var { clearOutline: clearOutline6 } = handle_outline_default;
   var { newShapes: newShapes3 } = newshapes_default;
   var { activateLastSelection: activateLastSelection2 } = draw_default2;
@@ -56607,7 +56537,7 @@ var Plotly = (() => {
     var strokeC = newStyle.line.color || (isCartesian ? color_default.contrast(gd._fullLayout.plot_bgcolor) : "#7f7f7f");
     outlines.enter().append("path").attr("class", "select-outline select-outline-" + plotinfo.id).style({
       opacity: isDrawMode ? newStyle.opacity / 2 : 1,
-      "stroke-dasharray": dashStyle2(newStyle.line.dash, newStyle.line.width),
+      "stroke-dasharray": dashStyle(newStyle.line.dash, newStyle.line.width),
       "stroke-width": newStyle.line.width + "px",
       "shape-rendering": "crispEdges"
     }).call(color_default.stroke, strokeC).call(color_default.fill, fillC).attr("fill-rule", "evenodd").classed("cursor-move", isDrawMode ? true : false).attr("transform", transform2).attr("d", path0 + "Z");
@@ -57902,7 +57832,7 @@ var Plotly = (() => {
         opacity2 = gd._fullLayout.activeshape.opacity;
       }
       var shapeGroup = shapeLayer.append("g").classed("shape-group", true).attr({ "data-index": index });
-      var path = shapeGroup.append("path").attr(attrs3).style("opacity", opacity2).call(color_default.stroke, lineColor).call(color_default.fill, fillColor).call(drawing_default.dashLine, lineDash, lineWidth);
+      var path = shapeGroup.append("path").attr(attrs3).style("opacity", opacity2).call(color_default.stroke, lineColor).call(color_default.fill, fillColor).call(dashLine, lineDash, lineWidth);
       setClipPath2(shapeGroup, gd, options);
       drawLabel(gd, index, options, shapeGroup);
       var editHelpers;
@@ -57939,7 +57869,7 @@ var Plotly = (() => {
   }
   function setClipPath2(shapePath, gd, shapeOptions) {
     var clipAxes = (shapeOptions.xref + shapeOptions.yref).replace(/paper/g, "").replace(/[xyz][0-9]* *domain/g, "");
-    drawing_default.setClipUrl(
+    setClipUrl(
       shapePath,
       clipAxes ? "clip" + gd._fullLayout._uid + clipAxes : null,
       gd
@@ -58251,7 +58181,7 @@ var Plotly = (() => {
       var clipAxes = "";
       if (xref !== "paper" && !xa2.autorange) clipAxes += xref;
       if (yref !== "paper" && !ya2.autorange) clipAxes += yref;
-      drawing_default.setClipUrl(
+      setClipUrl(
         shapePath2,
         clipAxes ? "clip" + gd2._fullLayout._uid + clipAxes : null,
         gd2
@@ -59041,7 +58971,7 @@ var Plotly = (() => {
       var xId = xa && axes_default.getRefType(d.xref) !== "domain" ? xa._id : "";
       var yId = ya && axes_default.getRefType(d.yref) !== "domain" ? ya._id : "";
       var clipAxes = xId + yId;
-      drawing_default.setClipUrl(
+      setClipUrl(
         thisImage,
         clipAxes ? "clip" + fullLayout._uid + clipAxes : null,
         gd
@@ -59492,7 +59422,7 @@ var Plotly = (() => {
         width: Math.ceil(clipR) - Math.floor(clipL),
         height: Math.ceil(clipB) - Math.floor(clipT)
       });
-      this.container.call(drawing_default.setClipUrl, clipId, this.gd);
+      this.container.call(setClipUrl, clipId, this.gd);
       this.bg.attr({
         x: l,
         y: t,
@@ -59504,7 +59434,7 @@ var Plotly = (() => {
         width: 0,
         height: 0
       });
-      this.container.on("wheel", null).on(".drag", null).call(drawing_default.setClipUrl, null);
+      this.container.on("wheel", null).on(".drag", null).call(setClipUrl, null);
       delete this._clipRect;
     }
     if (needsHorizontalScrollBar || needsVerticalScrollBar) {
@@ -59531,7 +59461,7 @@ var Plotly = (() => {
         width: 0,
         height: 0
       });
-      this.container.on("wheel", null).on(".drag", null).call(drawing_default.setClipUrl, null);
+      this.container.on("wheel", null).on(".drag", null).call(setClipUrl, null);
       delete this._clipRect;
     }
     if (this.hbar) {
@@ -59600,7 +59530,7 @@ var Plotly = (() => {
     this.translateX = translateX;
     this.translateY = translateY;
     this.container.call(
-      drawing_default.setTranslate,
+      setTranslate2,
       this._box.l - this.position.l - translateX,
       this._box.t - this.position.t - translateY
     );
@@ -59613,7 +59543,7 @@ var Plotly = (() => {
     if (this.hbar) {
       var xf = translateX / translateXMax;
       this.hbar.call(
-        drawing_default.setTranslate,
+        setTranslate2,
         translateX + xf * this._hbarTranslateMax,
         translateY
       );
@@ -59621,7 +59551,7 @@ var Plotly = (() => {
     if (this.vbar) {
       var yf = translateY / translateYMax;
       this.vbar.call(
-        drawing_default.setTranslate,
+        setTranslate2,
         translateX,
         translateY + yf * this._vbarTranslateMax
       );
@@ -59713,7 +59643,7 @@ var Plotly = (() => {
     };
     header.call(drawItem, menuOpts, headerOpts, gd).call(setItemPosition, menuOpts, posOpts, positionOverrides);
     var arrow = lib_default.ensureSingle(gHeader, "text", constants_default8.headerArrowClassName, function(s) {
-      s.attr("text-anchor", "end").call(drawing_default.font, menuOpts.font).text(constants_default8.arrowSymbol[menuOpts.direction]);
+      s.attr("text-anchor", "end").call(font3, menuOpts.font).text(constants_default8.arrowSymbol[menuOpts.direction]);
     });
     arrow.attr({
       x: dims.headerWidth - constants_default8.arrowOffsetX + menuOpts.pad.l,
@@ -59732,7 +59662,7 @@ var Plotly = (() => {
     header.on("mouseout", function(event2) {
       header.call(styleOnMouseOut, menuOpts);
     });
-    drawing_default.setTranslate(gHeader, dims.lx, dims.ly);
+    setTranslate(gHeader, dims.lx, dims.ly);
   }
   function drawButtons(gd, gHeader, gButton, scrollBox, menuOpts) {
     if (!gButton) {
@@ -59884,7 +59814,7 @@ var Plotly = (() => {
     var tx = itemOpts.label;
     var _meta = gd._fullLayout._meta;
     if (_meta) tx = lib_default.templateString(tx, _meta);
-    text.call(drawing_default.font, menuOpts.font).text(tx).call(svg_text_utils_default.convertToTspans, gd);
+    text.call(font3, menuOpts.font).text(tx).call(svg_text_utils_default.convertToTspans, gd);
   }
   function styleButtons(buttons, menuOpts) {
     var active = menuOpts.active;
@@ -59914,14 +59844,14 @@ var Plotly = (() => {
       lx: 0,
       ly: 0
     };
-    var fakeButtons = drawing_default.tester.selectAll("g." + constants_default8.dropdownButtonClassName).data(lib_default.filterVisible(menuOpts.buttons));
+    var fakeButtons = tester.selectAll("g." + constants_default8.dropdownButtonClassName).data(lib_default.filterVisible(menuOpts.buttons));
     fakeButtons.enter().append("g").classed(constants_default8.dropdownButtonClassName, true);
     var isVertical3 = ["up", "down"].indexOf(menuOpts.direction) !== -1;
     fakeButtons.each(function(buttonOpts, i) {
       var button = select_default2(this);
       button.call(drawItem, menuOpts, buttonOpts, gd);
       var text = button.select("." + constants_default8.itemTextClassName);
-      var tWidth = text.node() && drawing_default.bBox(text.node()).width;
+      var tWidth = text.node() && bBox(text.node()).width;
       var wEff = Math.max(tWidth + constants_default8.textPadX, constants_default8.minWidth);
       var tHeight = menuOpts.font.size * LINE_SPACING5;
       var tLines = svg_text_utils_default.lineCount(text);
@@ -60007,7 +59937,7 @@ var Plotly = (() => {
     var borderWidth = menuOpts.borderwidth;
     var index = posOpts.index;
     var dims = menuOpts._dims;
-    drawing_default.setTranslate(item, borderWidth + posOpts.x, borderWidth + posOpts.y);
+    setTranslate(item, borderWidth + posOpts.x, borderWidth + posOpts.y);
     var isVertical3 = ["up", "down"].indexOf(menuOpts.direction) !== -1;
     var finalHeight = overrideOpts.height || (isVertical3 ? dims.heights[index] : dims.height1);
     rect.attr({
@@ -60395,7 +60325,7 @@ var Plotly = (() => {
     return opts._index;
   }
   function findDimensions2(gd, sliderOpts) {
-    var sliderLabels = drawing_default.tester.selectAll("g." + constants_default9.labelGroupClass).data(sliderOpts._visibleSteps);
+    var sliderLabels = tester.selectAll("g." + constants_default9.labelGroupClass).data(sliderOpts._visibleSteps);
     sliderLabels.enter().append("g").classed(constants_default9.labelGroupClass, true);
     var maxLabelWidth = 0;
     var labelHeight = 0;
@@ -60404,7 +60334,7 @@ var Plotly = (() => {
       var text = drawLabel2(labelGroup, { step: stepOpts }, sliderOpts);
       var textNode = text.node();
       if (textNode) {
-        var bBox2 = drawing_default.bBox(textNode);
+        var bBox2 = bBox2(textNode);
         labelHeight = Math.max(labelHeight, bBox2.height);
         maxLabelWidth = Math.max(maxLabelWidth, bBox2.width);
       }
@@ -60435,10 +60365,10 @@ var Plotly = (() => {
     dims.currentValueTotalHeight = 0;
     dims.currentValueMaxLines = 1;
     if (sliderOpts.currentvalue.visible) {
-      var dummyGroup = drawing_default.tester.append("g");
+      var dummyGroup = tester.append("g");
       sliderLabels.each(function(stepOpts) {
         var curValPrefix = drawCurrentValue(dummyGroup, sliderOpts, stepOpts.label);
-        var curValSize = curValPrefix.node() && drawing_default.bBox(curValPrefix.node()) || { width: 0, height: 0 };
+        var curValSize = curValPrefix.node() && bBox(curValPrefix.node()) || { width: 0, height: 0 };
         var lines = svg_text_utils_default.lineCount(curValPrefix);
         dims.currentValueMaxWidth = Math.max(dims.currentValueMaxWidth, Math.ceil(curValSize.width));
         dims.currentValueHeight = Math.max(dims.currentValueHeight, Math.ceil(curValSize.height));
@@ -60493,7 +60423,7 @@ var Plotly = (() => {
     }
     sliderGroup.call(drawCurrentValue, sliderOpts).call(drawRail, sliderOpts).call(drawLabelGroup, sliderOpts).call(drawTicks, sliderOpts).call(drawTouchRect, gd, sliderOpts).call(drawGrip, gd, sliderOpts);
     var dims = sliderOpts._dims;
-    drawing_default.setTranslate(sliderGroup, dims.lx + sliderOpts.pad.l, dims.ly + sliderOpts.pad.t);
+    setTranslate(sliderGroup, dims.lx + sliderOpts.pad.l, dims.ly + sliderOpts.pad.t);
     sliderGroup.call(setGripPosition, sliderOpts, false);
     sliderGroup.call(drawCurrentValue, sliderOpts);
   }
@@ -60532,7 +60462,7 @@ var Plotly = (() => {
     if (sliderOpts.currentvalue.suffix) {
       str += sliderOpts.currentvalue.suffix;
     }
-    text.call(drawing_default.font, sliderOpts.currentvalue.font).text(str).call(svg_text_utils_default.convertToTspans, sliderOpts._gd);
+    text.call(font3, sliderOpts.currentvalue.font).text(str).call(svg_text_utils_default.convertToTspans, sliderOpts._gd);
     var lines = svg_text_utils_default.lineCount(text);
     var y0 = (dims.currentValueMaxLines + 1 - lines) * sliderOpts.currentvalue.font.size * LINE_SPACING6;
     svg_text_utils_default.positionText(text, x0, y0);
@@ -60559,7 +60489,7 @@ var Plotly = (() => {
     var tx = data.step.label;
     var _meta = sliderOpts._gd._fullLayout._meta;
     if (_meta) tx = lib_default.templateString(tx, _meta);
-    text.call(drawing_default.font, sliderOpts.font).text(tx).call(svg_text_utils_default.convertToTspans, sliderOpts._gd);
+    text.call(font3, sliderOpts.font).text(tx).call(svg_text_utils_default.convertToTspans, sliderOpts._gd);
     return text;
   }
   function drawLabelGroup(sliderGroup, sliderOpts) {
@@ -60571,7 +60501,7 @@ var Plotly = (() => {
     labelItems.each(function(d) {
       var item = select_default2(this);
       item.call(drawLabel2, d, sliderOpts);
-      drawing_default.setTranslate(
+      setTranslate(
         item,
         normalizedValueToPosition(sliderOpts, d.fraction),
         constants_default9.tickOffset + sliderOpts.ticklen + // position is the baseline of the top line of text only, even
@@ -60675,7 +60605,7 @@ var Plotly = (() => {
       var isMajor = i % dims.labelStride === 0;
       var item = select_default2(this);
       item.attr({ height: isMajor ? sliderOpts.ticklen : sliderOpts.minorticklen }).call(color_default.fill, isMajor ? sliderOpts.tickcolor : sliderOpts.tickcolor);
-      drawing_default.setTranslate(
+      setTranslate(
         item,
         normalizedValueToPosition(sliderOpts, i / (sliderOpts._stepCount - 1)) - 0.5 * sliderOpts.tickwidth,
         (isMajor ? constants_default9.tickOffset : constants_default9.minorTickOffset) + dims.currentValueTotalHeight
@@ -60727,7 +60657,7 @@ var Plotly = (() => {
       width: dims.inputAreaLength,
       height: Math.max(dims.inputAreaWidth, constants_default9.tickOffset + sliderOpts.ticklen + dims.labelHeight)
     }).call(color_default.fill, sliderOpts.bgcolor).attr("opacity", 0);
-    drawing_default.setTranslate(rect, 0, dims.currentValueTotalHeight);
+    setTranslate(rect, 0, dims.currentValueTotalHeight);
   }
   function drawRail(sliderGroup, sliderOpts) {
     var dims = sliderOpts._dims;
@@ -60740,7 +60670,7 @@ var Plotly = (() => {
       ry: constants_default9.railRadius,
       "shape-rendering": "crispEdges"
     }).call(color_default.stroke, sliderOpts.bordercolor).call(color_default.fill, sliderOpts.bgcolor).style("stroke-width", sliderOpts.borderwidth + "px");
-    drawing_default.setTranslate(
+    setTranslate(
       rect,
       constants_default9.railInset,
       (dims.inputAreaWidth - constants_default9.railWidth) * 0.5 + dims.currentValueTotalHeight
@@ -61230,7 +61160,7 @@ var Plotly = (() => {
     });
     var borderCorrect = opts.borderwidth % 2 === 0 ? opts.borderwidth : opts.borderwidth - 1;
     var offsetShift = -opts._offsetShift;
-    var lw = drawing_default.crispRound(gd, opts.borderwidth);
+    var lw = crispRound(gd, opts.borderwidth);
     bg.attr({
       width: opts._width + borderCorrect,
       height: opts._height + borderCorrect,
@@ -61253,7 +61183,7 @@ var Plotly = (() => {
     var rangePlots = rangeSlider.selectAll("g." + constants_default10.rangePlotClassName).data(axisOpts._subplotsWith, lib_default.identity);
     rangePlots.enter().append("g").attr("class", function(id2) {
       return constants_default10.rangePlotClassName + " " + id2;
-    }).call(drawing_default.setClipUrl, opts._clipId, gd);
+    }).call(setClipUrl, opts._clipId, gd);
     rangePlots.order();
     rangePlots.exit().remove();
     var mainplotinfo;
@@ -61711,7 +61641,7 @@ var Plotly = (() => {
     var text = lib_default.ensureSingle(button, "text", "selector-text", function(s) {
       s.attr("text-anchor", "middle");
     });
-    text.call(drawing_default.font, selectorLayout.font).text(getLabel2(d, gd._fullLayout._meta)).call(textLayout2);
+    text.call(font3, selectorLayout.font).text(getLabel2(d, gd._fullLayout._meta)).call(textLayout2);
   }
   function getLabel2(opts, _meta) {
     if (opts.label) {
@@ -61735,7 +61665,7 @@ var Plotly = (() => {
       var button = select_default2(this);
       var rect = button.select(".selector-rect");
       var text = button.select(".selector-text");
-      var tWidth = text.node() && drawing_default.bBox(text.node()).width;
+      var tWidth = text.node() && bBox(text.node()).width;
       var tHeight = opts.font.size * LINE_SPACING8;
       var tLines = svg_text_utils_default.lineCount(text);
       var wEff = Math.max(tWidth + 10, constants_default11.minButtonWidth);
@@ -62399,7 +62329,7 @@ var Plotly = (() => {
       if (hasAnimation) {
         enter.style("opacity", 0).transition().duration(transitionOpts.duration).style("opacity", 1);
       }
-      drawing_default.setClipUrl(errorbars, plotinfo.layerClipId, gd);
+      setClipUrl(errorbars, plotinfo.layerClipId, gd);
       errorbars.each(function(d2) {
         var errorbar = select_default2(this);
         var coords = errorCoords(d2, xa, ya);
@@ -62839,14 +62769,14 @@ var Plotly = (() => {
         }
         var bb;
         if (mathJaxNode) {
-          bb = drawing_default.bBox(mathJaxNode);
+          bb = bBox(mathJaxNode);
           titleWidth = bb.width;
           titleHeight = bb.height;
           if (titleHeight > lineSize) {
             titleTrans[1] -= (titleHeight - lineSize) / 2;
           }
         } else if (titleText.node() && !titleText.classed(cn.jsPlaceholder)) {
-          bb = drawing_default.bBox(titleText.node());
+          bb = bBox(titleText.node());
           titleWidth = bb.width;
           titleHeight = bb.height;
         }
@@ -62898,7 +62828,7 @@ var Plotly = (() => {
         }
         var fillEl = select_default2(this).attr(isVertical3 ? "x" : "y", uPx).attr(isVertical3 ? "y" : "x", min(z)).attr(isVertical3 ? "width" : "height", Math.max(thickPx, 2)).attr(isVertical3 ? "height" : "width", Math.max(max(z) - min(z), 2));
         if (opts._fillgradient) {
-          drawing_default.gradient(fillEl, gd, opts._id, isVertical3 ? "vertical" : "horizontalreversed", opts._fillgradient, "fill");
+          gradient(fillEl, gd, opts._id, isVertical3 ? "vertical" : "horizontalreversed", opts._fillgradient, "fill");
         } else {
           var colorString = fillColormap(d).replace("e-", "");
           fillEl.attr("fill", tinycolor(colorString).toHexString());
@@ -62913,7 +62843,7 @@ var Plotly = (() => {
         select_default2(this).attr(
           "d",
           "M" + (isVertical3 ? a + "," + b : b + "," + a) + (isVertical3 ? "h" : "v") + thickPx
-        ).call(drawing_default.lineGroupStyle, line.width, lineColormap(d), line.dash);
+        ).call(lineGroupStyle, line.width, lineColormap(d), line.dash);
       });
       axLayer.selectAll("g." + ax._id + "tick,path").remove();
       var shift = uPx + thickPx + (outlinewidth || 0) / 2 - (opts.ticks === "outside" ? 1 : 0);
@@ -62936,7 +62866,7 @@ var Plotly = (() => {
       var bb;
       var innerThickness = thickPx + outlinewidth / 2;
       if (ticklabelposition.indexOf("inside") === -1) {
-        bb = drawing_default.bBox(axLayer.node());
+        bb = bBox(axLayer.node());
         innerThickness += isVertical3 ? bb.width : bb.height;
       }
       titleEl = titleCont.select("text");
@@ -62948,11 +62878,11 @@ var Plotly = (() => {
         var _titleHeight;
         var mathJaxNode = titleCont.select(".h" + ax._id + "title-math-group").node();
         if (mathJaxNode && (isVertical3 && topOrBottom || !isVertical3 && !topOrBottom)) {
-          bb = drawing_default.bBox(mathJaxNode);
+          bb = bBox(mathJaxNode);
           titleWidth2 = bb.width;
           _titleHeight = bb.height;
         } else {
-          bb = drawing_default.bBox(titleCont.node());
+          bb = bBox(titleCont.node());
           titleWidth2 = bb.right - gs.l - (isVertical3 ? uPx : vPx);
           _titleHeight = bb.bottom - gs.t - (isVertical3 ? vPx : uPx);
           if (!isVertical3 && titleSide === "top") {
@@ -62999,15 +62929,15 @@ var Plotly = (() => {
         var tickLabels = axLayer.selectAll("text");
         var numTicks = tickLabels[0].length;
         var border = g.select("." + cn.cbbg).node();
-        var oBb = drawing_default.bBox(border);
-        var oTr = drawing_default.getTranslate(g);
+        var oBb = bBox(border);
+        var oTr = getTranslate(g);
         var TEXTPAD5 = 2;
         tickLabels.each(function(d, i) {
           var first = 0;
           var last = numTicks - 1;
           if (i === first || i === last) {
-            var iBb = drawing_default.bBox(this);
-            var iTr = drawing_default.getTranslate(this);
+            var iBb = bBox(this);
+            var iTr = getTranslate(this);
             var deltaX;
             if (i === last) {
               var iRight = iBb.right + iTr.x;
@@ -65634,7 +65564,7 @@ var Plotly = (() => {
     sel.selectAll("text").each(function(d) {
       var tx = select_default2(this);
       var textFont = ensureUniformFontSize(gd, determineFont(tx, d, trace, gd));
-      font2(tx, textFont);
+      font3(tx, textFont);
     });
   }
   function styleOnSelect2(gd, cd, sel) {
@@ -65660,7 +65590,7 @@ var Plotly = (() => {
         if (selectedFontColor) {
           textFont.color = selectedFontColor;
         }
-        font2(tx, textFont);
+        font3(tx, textFont);
       } else {
         selectedTextStyle(tx, trace);
       }
@@ -66035,7 +65965,7 @@ var Plotly = (() => {
         // prohibit tex interpretation until we can handle
         // tex and regular text together
         "data-notex": 1
-      }).call(font2, textFont2).call(svg_text_utils_default.convertToTspans, gd);
+      }).call(font3, textFont2).call(svg_text_utils_default.convertToTspans, gd);
       return textSelection2;
     }
     var trace = cd[0].trace;
@@ -66163,7 +66093,7 @@ var Plotly = (() => {
         overhead
       });
     }
-    transform2.fontSize = font2.size;
+    transform2.fontSize = font3.size;
     recordMinTextSize2(trace.type === "histogram" ? "bar" : trace.type, transform2, fullLayout);
     calcBar.transform = transform2;
     var s = transition3(textSelection, fullLayout, opts, makeOnCompleteCallback);
@@ -67970,7 +67900,7 @@ var Plotly = (() => {
     });
     paths.enter().append("path").classed("point", true);
     paths.exit().remove();
-    paths.call(drawing_default.translatePoints, xa, ya);
+    paths.call(translatePoints, xa, ya);
   }
   function plotBoxMean(sel, axes2, trace, t) {
     var valAxis = axes2.val;
@@ -68051,7 +67981,7 @@ var Plotly = (() => {
           "stroke-dasharray": 2 * lineWidth + "px," + lineWidth + "px"
         }).call(color_default.stroke, trace.line.color);
         var pts = el.selectAll("path.point");
-        drawing_default.pointStyle(pts, trace, gd);
+        pointStyle(pts, trace, gd);
       }
     });
   }
@@ -68059,9 +67989,9 @@ var Plotly = (() => {
     var trace = cd[0].trace;
     var pts = sel.selectAll("path.point");
     if (trace.selectedpoints) {
-      drawing_default.selectedPointStyle(pts, trace);
+      selectedPointStyle(pts, trace);
     } else {
-      drawing_default.pointStyle(pts, trace, gd);
+      pointStyle(pts, trace, gd);
     }
   }
   var style_default5 = {
@@ -70274,7 +70204,7 @@ var Plotly = (() => {
           return supports.apply(null, d);
         });
       } else {
-        var image3 = drawing_default.tester.append("image").attr("style", pixelated_image_default.STYLE);
+        var image3 = tester.append("image").attr("style", pixelated_image_default.STYLE);
         var cStyles = window.getComputedStyle(image3.node());
         var imageRendering = cStyles.imageRendering;
         _supportsPixelated = declarations.some(function(d) {
@@ -70643,8 +70573,8 @@ var Plotly = (() => {
             });
           }
         }
-        var font3 = trace.textfont;
-        var fontSize = font3.size;
+        var font4 = trace.textfont;
+        var fontSize = font4.size;
         var globalFontSize = gd._fullLayout.font.size;
         if (!fontSize || fontSize === "auto") {
           var minW = Infinity;
@@ -70685,22 +70615,22 @@ var Plotly = (() => {
         var labels = selectLabels(plotGroup).data(textData);
         labels.enter().append("g").classed(labelClass, 1).append("text").attr("text-anchor", "middle").each(function(d2) {
           var thisLabel = select_default2(this);
-          var fontColor = font3.color;
+          var fontColor = font4.color;
           if (!fontColor || fontColor === "auto") {
             fontColor = color_default.contrast(
               d2.z === void 0 ? gd._fullLayout.plot_bgcolor : "rgba(" + sclFunc(d2.z).join() + ")"
             );
           }
-          thisLabel.attr("data-notex", 1).call(svg_text_utils_default.positionText, xFn(d2), yFn(d2)).call(drawing_default.font, {
-            family: font3.family,
+          thisLabel.attr("data-notex", 1).call(svg_text_utils_default.positionText, xFn(d2), yFn(d2)).call(font4, {
+            family: font4.family,
             size: fontSize,
             color: fontColor,
-            weight: font3.weight,
-            style: font3.style,
-            variant: font3.variant,
-            textcase: font3.textcase,
-            lineposition: font3.lineposition,
-            shadow: font3.shadow
+            weight: font4.weight,
+            style: font4.style,
+            variant: font4.variant,
+            textcase: font4.textcase,
+            lineposition: font4.lineposition,
+            shadow: font4.shadow
           }).text(d2.t).call(svg_text_utils_default.convertToTspans, gd);
         });
       }
@@ -71414,7 +71344,7 @@ var Plotly = (() => {
       return Math.abs(pt[0] - perimeter[2][0]) < 0.01;
     }
     while (startsleft.length) {
-      addpath = drawing_default.smoothopen(pi2.edgepaths[i], pi2.smoothing);
+      addpath = smoothopen(pi2.edgepaths[i], pi2.smoothing);
       fullpath += newloop ? addpath : addpath.replace(/^M/, "L");
       startsleft.splice(startsleft.indexOf(i), 1);
       endpt = pi2.edgepaths[i][pi2.edgepaths[i].length - 1];
@@ -71465,7 +71395,7 @@ var Plotly = (() => {
       }
     }
     for (i = 0; i < pi2.paths.length; i++) {
-      fullpath += drawing_default.smoothclosed(pi2.paths[i], pi2.smoothing);
+      fullpath += smoothclosed(pi2.paths[i], pi2.smoothing);
     }
     return fullpath;
   }
@@ -71485,7 +71415,7 @@ var Plotly = (() => {
       var labelData = [];
       lib_default.clearLocationCache();
       var contourFormat = labelFormatter(gd, cd0);
-      var dummyText = drawing_default.tester.append("text").attr("data-notex", 1).call(drawing_default.font, contours.labelfont);
+      var dummyText = tester.append("text").attr("data-notex", 1).call(font3, contours.labelfont);
       var xa = pathinfo[0].xaxis;
       var ya = pathinfo[0].yaxis;
       var xLen = xa._length;
@@ -71572,7 +71502,7 @@ var Plotly = (() => {
       opencontourlines.exit().remove();
       opencontourlines.enter().append("path").classed("openline", true);
       opencontourlines.attr("d", function(d) {
-        return drawing_default.smoothopen(d, smoothing);
+        return smoothopen(d, smoothing);
       }).style("stroke-miterlimit", 1).style("vector-effect", isStatic ? "none" : "non-scaling-stroke");
       var closedcontourlines = linegroup.selectAll("path.closedline").data(function(d) {
         return d.ppaths || d.paths;
@@ -71580,7 +71510,7 @@ var Plotly = (() => {
       closedcontourlines.exit().remove();
       closedcontourlines.enter().append("path").classed("closedline", true);
       closedcontourlines.attr("d", function(d) {
-        return drawing_default.smoothclosed(d, smoothing);
+        return smoothclosed(d, smoothing);
       }).style("stroke-miterlimit", 1).style("vector-effect", isStatic ? "none" : "non-scaling-stroke");
     }
     return linegroup;
@@ -71591,7 +71521,7 @@ var Plotly = (() => {
     var lineClip = clips.selectAll("#" + clipId).data(clipLinesForLabels ? [0] : []);
     lineClip.exit().remove();
     lineClip.enter().append("clipPath").classed("contourlineclip", true).attr("id", clipId);
-    drawing_default.setClipUrl(lineContainer, clipId, gd);
+    setClipUrl(lineContainer, clipId, gd);
     return lineClip;
   };
   var labelFormatter = function(gd, cd0) {
@@ -71639,7 +71569,7 @@ var Plotly = (() => {
     var text = contourFormat(level);
     dummyText.text(text).call(svg_text_utils_default.convertToTspans, gd);
     var el = dummyText.node();
-    var bBox2 = drawing_default.bBox(el, true);
+    var bBox2 = bBox2(el, true);
     return {
       text,
       width: bBox2.width,
@@ -71812,7 +71742,7 @@ var Plotly = (() => {
         (clipPathInfo.prefixBoundary ? "M" + perimeter.join("L") + "Z" : "") + joinAllPaths(clipPathInfo, perimeter)
       );
     } else clipId = null;
-    drawing_default.setClipUrl(plotGroup, clipId, gd);
+    setClipUrl(plotGroup, clipId, gd);
   }
   function makeClipMask(cd0) {
     var empties = cd0.trace._emptypoints;
@@ -71930,7 +71860,7 @@ var Plotly = (() => {
       var colorMap = colorLines || colorFills ? makeColorMap(trace) : null;
       c.selectAll("g.contourlevel").each(function(d2) {
         select_default2(this).selectAll("path").call(
-          drawing_default.lineGroupStyle,
+          lineGroupStyle,
           line.width,
           colorLines ? colorMap(d2.level) : line.color,
           line.dash
@@ -71938,7 +71868,7 @@ var Plotly = (() => {
       });
       var labelFont = contours2.labelfont;
       c.selectAll("g.contourlabels text").each(function(d2) {
-        drawing_default.font(select_default2(this), {
+        font3(select_default2(this), {
           weight: labelFont.weight,
           style: labelFont.style,
           variant: labelFont.variant,
@@ -73984,7 +73914,7 @@ var Plotly = (() => {
             var sliceText = lib_default.ensureSingle(select_default2(this), "text", "", function(s) {
               s.attr("data-notex", 1);
             });
-            var font3 = lib_default.ensureUniformFontSize(
+            var font4 = lib_default.ensureUniformFontSize(
               gd,
               textPosition === "outside" ? determineOutsideTextFont(trace, pt, fullLayout.font) : determineInsideTextFont(trace, pt, fullLayout.font)
             );
@@ -73992,8 +73922,8 @@ var Plotly = (() => {
               class: "slicetext",
               transform: "",
               "text-anchor": "middle"
-            }).call(drawing_default.font, font3).call(svg_text_utils_default.convertToTspans, gd);
-            var textBB = drawing_default.bBox(sliceText.node());
+            }).call(font4, font4).call(svg_text_utils_default.convertToTspans, gd);
+            var textBB = bBox(sliceText.node());
             var transform2;
             if (textPosition === "outside") {
               transform2 = transformOutsideText(textBB, pt);
@@ -74001,8 +73931,8 @@ var Plotly = (() => {
               transform2 = transformInsideText(textBB, pt, cd0);
               if (textPosition === "auto" && transform2.scale < 1) {
                 var newFont = lib_default.ensureUniformFontSize(gd, trace.outsidetextfont);
-                sliceText.call(drawing_default.font, newFont);
-                textBB = drawing_default.bBox(sliceText.node());
+                sliceText.call(font4, newFont);
+                textBB = bBox(sliceText.node());
                 transform2 = transformOutsideText(textBB, pt);
               }
             }
@@ -74020,7 +73950,7 @@ var Plotly = (() => {
               pt.labelExtraY = 0;
               hasOutsideText = true;
             }
-            transform2.fontSize = font3.size;
+            transform2.fontSize = font4.size;
             recordMinTextSize3(trace.type, transform2, fullLayout);
             cd[i].transform = transform2;
             lib_default.setTransormAndDisplay(sliceText, transform2);
@@ -74041,7 +73971,7 @@ var Plotly = (() => {
             class: "titletext",
             transform: "",
             "text-anchor": "middle"
-          }).call(drawing_default.font, trace.title.font).call(svg_text_utils_default.convertToTspans, gd);
+          }).call(font, trace.title.font).call(svg_text_utils_default.convertToTspans, gd);
           var transform2;
           if (trace.title.position === "middle center") {
             transform2 = positionTitleInside(cd0);
@@ -74056,7 +73986,7 @@ var Plotly = (() => {
         if (hasOutsideText) scootLabels(quadrants, trace);
         plotTextLines(slices, trace);
         if (hasOutsideText && trace.automargin) {
-          var traceBbox = drawing_default.bBox(plotGroup.node());
+          var traceBbox = bBox(plotGroup.node());
           var domain = trace.domain;
           var vpw = gs.w * (domain.x[1] - domain.x[0]);
           var vph = gs.h * (domain.y[1] - domain.y[0]);
@@ -74283,8 +74213,8 @@ var Plotly = (() => {
         if (trace._meta) {
           txt = lib_default.templateString(txt, trace._meta);
         }
-        var dummyTitle = drawing_default.tester.append("text").attr("data-notex", 1).text(txt).call(drawing_default.font, trace.title.font).call(svg_text_utils_default.convertToTspans, gd);
-        var bBox2 = drawing_default.bBox(dummyTitle.node(), true);
+        var dummyTitle = tester.append("text").attr("data-notex", 1).text(txt).call(font, trace.title.font).call(svg_text_utils_default.convertToTspans, gd);
+        var bBox2 = bBox2(dummyTitle.node(), true);
         cd0.titleBox = {
           width: bBox2.width,
           height: bBox2.height
@@ -75155,8 +75085,8 @@ var Plotly = (() => {
     });
     _this.plotContainer = lib_default.ensureSingle(_this.container, "g", _this.id);
     _this.updateLayers(ternaryLayout);
-    drawing_default.setClipUrl(_this.layers.backplot, clipId, gd);
-    drawing_default.setClipUrl(_this.layers.grids, clipId, gd);
+    setClipUrl(_this.layers.backplot, clipId, gd);
+    setClipUrl(_this.layers.grids, clipId, gd);
   };
   proto2.updateFx = function(fullLayout) {
     fullLayout._ternarylayer.selectAll("g.toplevel").style("cursor", fullLayout.dragmode === "pan" ? "move" : "crosshair");
@@ -75328,7 +75258,7 @@ var Plotly = (() => {
     if (!_this.graphDiv._context.staticPlot) {
       _this.initInteractions();
     }
-    drawing_default.setClipUrl(
+    setClipUrl(
       _this.layers.frontplot,
       _this._hasClipOnAxisFalse ? null : _this.clipId,
       _this.graphDiv
@@ -75639,7 +75569,7 @@ var Plotly = (() => {
       _this.caxis.range = [_this.sum - mins.a - mins.b, mins.c];
       _this.drawAxes(false);
       if (_this._hasClipOnAxisFalse) {
-        _this.plotContainer.select(".scatterlayer").selectAll(".trace").call(drawing_default.hideOutsideRangePoints, _this);
+        _this.plotContainer.select(".scatterlayer").selectAll(".trace").call(hideOutsideRangePoints, _this);
       }
       gd.emit("plotly_relayouting", makeUpdate(mins));
     }
@@ -76329,7 +76259,7 @@ var Plotly = (() => {
         simplify: true,
         linearized: true
       });
-      return drawing_default.smoothopen(segments[0], 1);
+      return smoothopen(segments[0], 1);
     }
     lib_default.makeTraceGroups(violinLayer, cdViolins, "trace violins").each(function(cd) {
       var plotGroup = select_default2(this);

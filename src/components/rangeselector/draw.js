@@ -2,7 +2,7 @@ import { select } from 'd3-selection';
 import Registry from '../../registry.js';
 import Plots from '../../plots/plots.js';
 import Color from '../color/index.js';
-import Drawing from '../drawing/index.js';
+import { bBox, font } from '../drawing/index.js';
 import Lib from '../../lib/index.js';
 import svgTextUtils from '../../lib/svg_text_utils.js';
 import axisIds from '../../plots/cartesian/axis_ids.js';
@@ -135,7 +135,7 @@ function drawButtonText(button, selectorLayout, d, gd) {
         s.attr('text-anchor', 'middle');
     });
 
-    text.call(Drawing.font, selectorLayout.font)
+    text.call(font, selectorLayout.font)
         .text(getLabel(d, gd._fullLayout._meta))
         .call(textLayout);
 }
@@ -173,7 +173,7 @@ function reposition(gd, buttons, opts, axName, selector) {
         var rect = button.select('.selector-rect');
         var text = button.select('.selector-text');
 
-        var tWidth = text.node() && Drawing.bBox(text.node()).width;
+        var tWidth = text.node() && bBox(text.node()).width;
         var tHeight = opts.font.size * LINE_SPACING;
         var tLines = svgTextUtils.lineCount(text);
 

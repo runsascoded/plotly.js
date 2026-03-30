@@ -4,7 +4,7 @@ import * as geoProjection from 'd3-geo-projection';
 import Registry from '../../registry.js';
 import Lib from '../../lib/index.js';
 import Color from '../../components/color/index.js';
-import Drawing from '../../components/drawing/index.js';
+import { dashLine, setClipUrl, setRect } from '../../components/drawing/index.js';
 import Fx from '../../components/fx/index.js';
 import Plots from '../plots.js';
 import Axes from '../cartesian/axes.js';
@@ -380,12 +380,12 @@ proto.updateBaseLayers = function(fullLayout, geoLayout) {
         } else if(isAxisLayer(d)) {
             path.datum(makeGraticule(d, geoLayout, fullLayout))
                 .call(Color.stroke, geoLayout[d].gridcolor)
-                .call(Drawing.dashLine, geoLayout[d].griddash, geoLayout[d].gridwidth);
+                .call(dashLine, geoLayout[d].griddash, geoLayout[d].gridwidth);
         }
 
         if(isLineLayer(d)) {
             path.call(Color.stroke, geoLayout[adj + 'color'])
-                .call(Drawing.dashLine, '', geoLayout[adj + 'width']);
+                .call(dashLine, '', geoLayout[adj + 'width']);
         } else if(isFillLayer(d)) {
             path.call(Color.fill, geoLayout[adj + 'color']);
         }
@@ -401,10 +401,10 @@ proto.updateDims = function(fullLayout, geoLayout) {
     var w = b[1][0] - l + hFrameWidth;
     var h = b[1][1] - t + hFrameWidth;
 
-    Drawing.setRect(this.clipRect, l, t, w, h);
+    setRect(this.clipRect, l, t, w, h);
 
     this.bgRect
-        .call(Drawing.setRect, l, t, w, h)
+        .call(setRect, l, t, w, h)
         .call(Color.fill, geoLayout.bgcolor);
 
     this.xaxis._offset = l;
@@ -543,7 +543,7 @@ proto.makeFramework = function() {
 
     _this.framework = select(_this.container).append('g')
         .attr('class', 'geo ' + _this.id)
-        .call(Drawing.setClipUrl, clipId, gd);
+        .call(setClipUrl, clipId, gd);
 
     // sane lonlat to px
     _this.project = function(v) {

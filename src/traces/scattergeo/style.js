@@ -1,5 +1,5 @@
 import { select } from 'd3-selection';
-import Drawing from '../../components/drawing/index.js';
+import { dashLine, lineGroupStyle } from '../../components/drawing/index.js';
 import Color from '../../components/color/index.js';
 import scatterStyle from '../scatter/style.js';
 var stylePoints = scatterStyle.stylePoints;
@@ -18,7 +18,7 @@ function styleTrace(gd, calcTrace) {
     stylePoints(s, trace, gd);
     styleText(s, trace, gd);
 
-    // this part is incompatible with Drawing.lineGroupStyle
+    // this part is incompatible with lineGroupStyle
     s.selectAll('path.js-line')
         .style('fill', 'none')
         .each(function(d) {
@@ -27,7 +27,7 @@ function styleTrace(gd, calcTrace) {
             var line = trace.line || {};
 
             path.call(Color.stroke, line.color)
-                .call(Drawing.dashLine, line.dash || '', line.width || 0);
+                .call(dashLine, line.dash || '', line.width || 0);
 
             if(trace.fill !== 'none') {
                 path.call(Color.fill, trace.fillcolor);

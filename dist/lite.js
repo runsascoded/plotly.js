@@ -19490,18 +19490,6 @@ var Plotly = (() => {
     element[setter]("transform", transform2);
     return transform2;
   }
-  function getScale2(element) {
-    var re3 = /.*\bscale\((\d*\.?\d*)[^\d]*(\d*\.?\d*)[^\d].*/;
-    var getter = element.attr ? "attr" : "getAttribute";
-    var transform2 = element[getter]("transform") || "";
-    var translate = transform2.replace(re3, function(match, p1, p2) {
-      return [p1, p2].join(" ");
-    }).split(" ");
-    return {
-      x: +translate[0] || 1,
-      y: +translate[1] || 1
-    };
-  }
   function setScale(element, x, y) {
     var re3 = /(\bscale\(.*?\);?)/;
     var getter = element.attr ? "attr" : "getAttribute";
@@ -19657,63 +19645,6 @@ var Plotly = (() => {
     previousTraceUid = trace.uid;
     return angle;
   }
-  var drawing_default = {
-    font: font2,
-    setPosition,
-    setSize,
-    setRect,
-    translatePoint,
-    translatePoints,
-    hideOutsideRangePoint,
-    hideOutsideRangePoints,
-    crispRound,
-    singleLineStyle,
-    lineGroupStyle,
-    dashLine,
-    dashStyle,
-    singleFillStyle,
-    fillGroupStyle,
-    symbolNames,
-    symbolFuncs,
-    symbolBackOffs,
-    symbolNeedLines,
-    symbolNoDot,
-    symbolNoFill,
-    symbolList,
-    symbolNumber,
-    gradient,
-    pattern: pattern2,
-    initGradients,
-    initPatterns,
-    getPatternAttr,
-    pointStyle,
-    singlePointStyle,
-    makePointStyleFns,
-    makeSelectedPointStyleFns,
-    makeSelectedTextStyleFns,
-    selectedPointStyle,
-    tryColorscale,
-    textPointStyle,
-    selectedTextStyle,
-    smoothopen,
-    smoothclosed,
-    steps,
-    applyBackoff,
-    makeTester,
-    savedBBoxes,
-    bBox,
-    setClipUrl,
-    getTranslate,
-    setTranslate,
-    getScale: getScale2,
-    setScale,
-    setPointGroupScale,
-    setTextPointsScale,
-    getMarkerStandoff,
-    getMarkerAngle,
-    tester,
-    testref
-  };
 
   // src/components/titles/index.js
   function d3Round2(x, n) {
@@ -34379,7 +34310,7 @@ var Plotly = (() => {
     var width = fullLayout.width;
     var height = fullLayout.height;
     var i;
-    svg2.insert("rect", ":first-child").call(drawing_default.setRect, 0, 0, width, height).call(color_default.fill, fullLayout.paper_bgcolor);
+    svg2.insert("rect", ":first-child").call(setRect, 0, 0, width, height).call(color_default.fill, fullLayout.paper_bgcolor);
     var basePlotModules = fullLayout._basePlotModules || [];
     for (i = 0; i < basePlotModules.length; i++) {
       var _module = basePlotModules[i];
@@ -40879,11 +40810,11 @@ var Plotly = (() => {
       }
     }
     labelText.call(function(s) {
-      s.call(drawing_default.font, font3).attr({});
+      s.call(font3, font3).attr({});
       svg_text_utils_default.convertToTspans(s, gd);
       return s;
     });
-    var textBB = drawing_default.bBox(labelText.node());
+    var textBB = bBox(labelText.node());
     var textPos = calcTextPosition(shapex0, shapey0, shapex1, shapey1, options, textangle, textBB);
     var textx = textPos.textx;
     var texty = textPos.texty;
@@ -41363,7 +41294,7 @@ var Plotly = (() => {
         opacity = gd._fullLayout.activeshape.opacity;
       }
       var shapeGroup = shapeLayer.append("g").classed("shape-group", true).attr({ "data-index": index });
-      var path = shapeGroup.append("path").attr(attrs2).style("opacity", opacity).call(color_default.stroke, lineColor).call(color_default.fill, fillColor).call(drawing_default.dashLine, lineDash, lineWidth);
+      var path = shapeGroup.append("path").attr(attrs2).style("opacity", opacity).call(color_default.stroke, lineColor).call(color_default.fill, fillColor).call(dashLine, lineDash, lineWidth);
       setClipPath(shapeGroup, gd, options);
       drawLabel(gd, index, options, shapeGroup);
       var editHelpers;
@@ -41400,7 +41331,7 @@ var Plotly = (() => {
   }
   function setClipPath(shapePath, gd, shapeOptions) {
     var clipAxes = (shapeOptions.xref + shapeOptions.yref).replace(/paper/g, "").replace(/[xyz][0-9]* *domain/g, "");
-    drawing_default.setClipUrl(
+    setClipUrl(
       shapePath,
       clipAxes ? "clip" + gd._fullLayout._uid + clipAxes : null,
       gd
@@ -41712,7 +41643,7 @@ var Plotly = (() => {
       var clipAxes = "";
       if (xref !== "paper" && !xa2.autorange) clipAxes += xref;
       if (yref !== "paper" && !ya2.autorange) clipAxes += yref;
-      drawing_default.setClipUrl(
+      setClipUrl(
         shapePath2,
         clipAxes ? "clip" + gd2._fullLayout._uid + clipAxes : null,
         gd2
@@ -42828,7 +42759,7 @@ var Plotly = (() => {
       if (hasAnimation) {
         enter.style("opacity", 0).transition().duration(transitionOpts.duration).style("opacity", 1);
       }
-      drawing_default.setClipUrl(errorbars, plotinfo.layerClipId, gd);
+      setClipUrl(errorbars, plotinfo.layerClipId, gd);
       errorbars.each(function(d2) {
         var errorbar = select_default2(this);
         var coords = errorCoords(d2, xa, ya);

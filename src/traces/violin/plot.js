@@ -1,6 +1,6 @@
 import { select } from 'd3-selection';
 import Lib from '../../lib/index.js';
-import Drawing from '../../components/drawing/index.js';
+import { smoothopen } from '../../components/drawing/index.js';
 import boxPlot from '../box/plot.js';
 import linePoints from '../scatter/line_points.js';
 import helpers from './helpers.js';
@@ -22,7 +22,7 @@ export default function plot(gd, plotinfo, cdViolins, violinLayer) {
             simplify: true,
             linearized: true
         });
-        return Drawing.smoothopen(segments[0], 1);
+        return smoothopen(segments[0], 1);
     }
 
     Lib.makeTraceGroups(violinLayer, cdViolins, 'trace violins').each(function(cd) {

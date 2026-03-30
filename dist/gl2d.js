@@ -50707,18 +50707,6 @@ void main() {
     element[setter]("transform", transform2);
     return transform2;
   }
-  function getScale2(element) {
-    var re3 = /.*\bscale\((\d*\.?\d*)[^\d]*(\d*\.?\d*)[^\d].*/;
-    var getter = element.attr ? "attr" : "getAttribute";
-    var transform2 = element[getter]("transform") || "";
-    var translate = transform2.replace(re3, function(match, p1, p2) {
-      return [p1, p2].join(" ");
-    }).split(" ");
-    return {
-      x: +translate[0] || 1,
-      y: +translate[1] || 1
-    };
-  }
   function setScale(element, x, y) {
     var re3 = /(\bscale\(.*?\);?)/;
     var getter = element.attr ? "attr" : "getAttribute";
@@ -50874,63 +50862,6 @@ void main() {
     previousTraceUid = trace.uid;
     return angle;
   }
-  var drawing_default = {
-    font: font2,
-    setPosition,
-    setSize,
-    setRect,
-    translatePoint,
-    translatePoints,
-    hideOutsideRangePoint,
-    hideOutsideRangePoints,
-    crispRound,
-    singleLineStyle,
-    lineGroupStyle,
-    dashLine,
-    dashStyle,
-    singleFillStyle,
-    fillGroupStyle,
-    symbolNames,
-    symbolFuncs,
-    symbolBackOffs,
-    symbolNeedLines,
-    symbolNoDot,
-    symbolNoFill,
-    symbolList,
-    symbolNumber,
-    gradient,
-    pattern: pattern2,
-    initGradients,
-    initPatterns,
-    getPatternAttr,
-    pointStyle,
-    singlePointStyle,
-    makePointStyleFns,
-    makeSelectedPointStyleFns,
-    makeSelectedTextStyleFns,
-    selectedPointStyle,
-    tryColorscale,
-    textPointStyle,
-    selectedTextStyle,
-    smoothopen,
-    smoothclosed,
-    steps,
-    applyBackoff,
-    makeTester,
-    savedBBoxes,
-    bBox,
-    setClipUrl,
-    getTranslate,
-    setTranslate,
-    getScale: getScale2,
-    setScale,
-    setPointGroupScale,
-    setTextPointsScale,
-    getMarkerStandoff,
-    getMarkerAngle,
-    tester,
-    testref
-  };
 
   // src/components/titles/index.js
   function d3Round2(x, n) {
@@ -65596,7 +65527,7 @@ void main() {
     var width = fullLayout.width;
     var height = fullLayout.height;
     var i;
-    svg2.insert("rect", ":first-child").call(drawing_default.setRect, 0, 0, width, height).call(color_default.fill, fullLayout.paper_bgcolor);
+    svg2.insert("rect", ":first-child").call(setRect, 0, 0, width, height).call(color_default.fill, fullLayout.paper_bgcolor);
     var basePlotModules = fullLayout._basePlotModules || [];
     for (i = 0; i < basePlotModules.length; i++) {
       var _module = basePlotModules[i];
@@ -71328,7 +71259,7 @@ void main() {
     var text = fullLayout._meta ? lib_default.templateString(options.text, fullLayout._meta) : options.text;
     var annText = annTextGroupInner.append("text").classed("annotation-text", true).text(text);
     function textLayout2(s) {
-      s.call(drawing_default.font, font3).attr({
+      s.call(font3, font3).attr({
         "text-anchor": {
           left: "start",
           right: "end"
@@ -71348,7 +71279,7 @@ void main() {
       }
       var mathjaxGroup = annTextGroupInner.select(".annotation-text-math-group");
       var hasMathjax = !mathjaxGroup.empty();
-      var anntextBB = drawing_default.bBox(
+      var anntextBB = bBox(
         (hasMathjax ? mathjaxGroup : annText).node()
       );
       var textWidth = anntextBB.width;
@@ -71490,28 +71421,28 @@ void main() {
         mathjaxGroup.select("svg").attr({
           x: borderfull + xShift - 1,
           y: borderfull + yShift
-        }).call(drawing_default.setClipUrl, isSizeConstrained ? annClipID : null, gd);
+        }).call(setClipUrl, isSizeConstrained ? annClipID : null, gd);
       } else {
         var texty = borderfull + yShift - anntextBB.top;
         var textx = borderfull + xShift - anntextBB.left;
-        annText.call(svg_text_utils_default.positionText, textx, texty).call(drawing_default.setClipUrl, isSizeConstrained ? annClipID : null, gd);
+        annText.call(svg_text_utils_default.positionText, textx, texty).call(setClipUrl, isSizeConstrained ? annClipID : null, gd);
       }
       annTextClip.select("rect").call(
-        drawing_default.setRect,
+        setRect,
         borderfull,
         borderfull,
         annWidth,
         annHeight
       );
       annTextBG.call(
-        drawing_default.setRect,
+        setRect,
         borderwidth / 2,
         borderwidth / 2,
         outerWidth - borderwidth,
         outerHeight - borderwidth
       );
       annTextGroupInner.call(
-        drawing_default.setTranslate,
+        setTranslate,
         Math.round(annPosPx.x.text - outerWidth / 2),
         Math.round(annPosPx.y.text - outerHeight / 2)
       );
@@ -71592,7 +71523,7 @@ void main() {
             element: arrowDrag.node(),
             gd,
             prepFn: function() {
-              var pos = drawing_default.getTranslate(annTextGroupInner);
+              var pos = getTranslate(annTextGroupInner);
               annx0 = pos.x;
               anny0 = pos.y;
               if (xa && xa.autorange) {
@@ -71606,7 +71537,7 @@ void main() {
               var annxy0 = applyTransform(annx0, anny0);
               var xcenter = annxy0[0] + dx2;
               var ycenter = annxy0[1] + dy2;
-              annTextGroupInner.call(drawing_default.setTranslate, xcenter, ycenter);
+              annTextGroupInner.call(setTranslate, xcenter, ycenter);
               modifyItem(
                 "x",
                 shiftPosition(xa, dx2, "x", gs, options)
@@ -73555,11 +73486,11 @@ void main() {
       }
     }
     labelText.call(function(s) {
-      s.call(drawing_default.font, font3).attr({});
+      s.call(font3, font3).attr({});
       svg_text_utils_default.convertToTspans(s, gd);
       return s;
     });
-    var textBB = drawing_default.bBox(labelText.node());
+    var textBB = bBox(labelText.node());
     var textPos = calcTextPosition(shapex0, shapey0, shapex1, shapey1, options, textangle, textBB);
     var textx = textPos.textx;
     var texty = textPos.texty;
@@ -74016,7 +73947,7 @@ void main() {
       var allPaths = [];
       for (var sensory = 1; sensory >= 0; sensory--) {
         var path = selectionLayer.append("path").attr(attrs3).style("opacity", sensory ? 0.1 : opacity).call(color_default.stroke, lineColor).call(color_default.fill, fillColor).call(
-          drawing_default.dashLine,
+          dashLine,
           sensory ? "solid" : lineDash,
           sensory ? 4 + lineWidth : lineWidth
         );
@@ -74050,7 +73981,7 @@ void main() {
   }
   function setClipPath(selectionPath, gd, selectionOptions) {
     var clipAxes = selectionOptions.xref + selectionOptions.yref;
-    drawing_default.setClipUrl(
+    setClipUrl(
       selectionPath,
       "clip" + gd._fullLayout._uid + clipAxes,
       gd
@@ -74104,7 +74035,6 @@ void main() {
   };
 
   // src/components/selections/select.js
-  var { dashStyle: dashStyle2 } = drawing_default;
   var { clearOutline: clearOutline6 } = handle_outline_default;
   var { newShapes: newShapes3 } = newshapes_default;
   var { activateLastSelection: activateLastSelection2 } = draw_default2;
@@ -74173,7 +74103,7 @@ void main() {
     var strokeC = newStyle.line.color || (isCartesian ? color_default.contrast(gd._fullLayout.plot_bgcolor) : "#7f7f7f");
     outlines.enter().append("path").attr("class", "select-outline select-outline-" + plotinfo.id).style({
       opacity: isDrawMode ? newStyle.opacity / 2 : 1,
-      "stroke-dasharray": dashStyle2(newStyle.line.dash, newStyle.line.width),
+      "stroke-dasharray": dashStyle(newStyle.line.dash, newStyle.line.width),
       "stroke-width": newStyle.line.width + "px",
       "shape-rendering": "crispEdges"
     }).call(color_default.stroke, strokeC).call(color_default.fill, fillC).attr("fill-rule", "evenodd").classed("cursor-move", isDrawMode ? true : false).attr("transform", transform2).attr("d", path0 + "Z");
@@ -75468,7 +75398,7 @@ void main() {
         opacity = gd._fullLayout.activeshape.opacity;
       }
       var shapeGroup = shapeLayer.append("g").classed("shape-group", true).attr({ "data-index": index });
-      var path = shapeGroup.append("path").attr(attrs3).style("opacity", opacity).call(color_default.stroke, lineColor).call(color_default.fill, fillColor).call(drawing_default.dashLine, lineDash, lineWidth);
+      var path = shapeGroup.append("path").attr(attrs3).style("opacity", opacity).call(color_default.stroke, lineColor).call(color_default.fill, fillColor).call(dashLine, lineDash, lineWidth);
       setClipPath2(shapeGroup, gd, options);
       drawLabel(gd, index, options, shapeGroup);
       var editHelpers;
@@ -75505,7 +75435,7 @@ void main() {
   }
   function setClipPath2(shapePath, gd, shapeOptions) {
     var clipAxes = (shapeOptions.xref + shapeOptions.yref).replace(/paper/g, "").replace(/[xyz][0-9]* *domain/g, "");
-    drawing_default.setClipUrl(
+    setClipUrl(
       shapePath,
       clipAxes ? "clip" + gd._fullLayout._uid + clipAxes : null,
       gd
@@ -75817,7 +75747,7 @@ void main() {
       var clipAxes = "";
       if (xref !== "paper" && !xa2.autorange) clipAxes += xref;
       if (yref !== "paper" && !ya2.autorange) clipAxes += yref;
-      drawing_default.setClipUrl(
+      setClipUrl(
         shapePath2,
         clipAxes ? "clip" + gd2._fullLayout._uid + clipAxes : null,
         gd2
@@ -76607,7 +76537,7 @@ void main() {
       var xId = xa && axes_default.getRefType(d2.xref) !== "domain" ? xa._id : "";
       var yId = ya && axes_default.getRefType(d2.yref) !== "domain" ? ya._id : "";
       var clipAxes = xId + yId;
-      drawing_default.setClipUrl(
+      setClipUrl(
         thisImage,
         clipAxes ? "clip" + fullLayout._uid + clipAxes : null,
         gd
@@ -77058,7 +76988,7 @@ void main() {
         width: Math.ceil(clipR) - Math.floor(clipL),
         height: Math.ceil(clipB) - Math.floor(clipT)
       });
-      this.container.call(drawing_default.setClipUrl, clipId, this.gd);
+      this.container.call(setClipUrl, clipId, this.gd);
       this.bg.attr({
         x: l,
         y: t,
@@ -77070,7 +77000,7 @@ void main() {
         width: 0,
         height: 0
       });
-      this.container.on("wheel", null).on(".drag", null).call(drawing_default.setClipUrl, null);
+      this.container.on("wheel", null).on(".drag", null).call(setClipUrl, null);
       delete this._clipRect;
     }
     if (needsHorizontalScrollBar || needsVerticalScrollBar) {
@@ -77097,7 +77027,7 @@ void main() {
         width: 0,
         height: 0
       });
-      this.container.on("wheel", null).on(".drag", null).call(drawing_default.setClipUrl, null);
+      this.container.on("wheel", null).on(".drag", null).call(setClipUrl, null);
       delete this._clipRect;
     }
     if (this.hbar) {
@@ -77166,7 +77096,7 @@ void main() {
     this.translateX = translateX;
     this.translateY = translateY;
     this.container.call(
-      drawing_default.setTranslate,
+      setTranslate2,
       this._box.l - this.position.l - translateX,
       this._box.t - this.position.t - translateY
     );
@@ -77179,7 +77109,7 @@ void main() {
     if (this.hbar) {
       var xf = translateX / translateXMax;
       this.hbar.call(
-        drawing_default.setTranslate,
+        setTranslate2,
         translateX + xf * this._hbarTranslateMax,
         translateY
       );
@@ -77187,7 +77117,7 @@ void main() {
     if (this.vbar) {
       var yf = translateY / translateYMax;
       this.vbar.call(
-        drawing_default.setTranslate,
+        setTranslate2,
         translateX,
         translateY + yf * this._vbarTranslateMax
       );
@@ -77279,7 +77209,7 @@ void main() {
     };
     header.call(drawItem, menuOpts, headerOpts, gd).call(setItemPosition, menuOpts, posOpts, positionOverrides);
     var arrow = lib_default.ensureSingle(gHeader, "text", constants_default8.headerArrowClassName, function(s) {
-      s.attr("text-anchor", "end").call(drawing_default.font, menuOpts.font).text(constants_default8.arrowSymbol[menuOpts.direction]);
+      s.attr("text-anchor", "end").call(font2, menuOpts.font).text(constants_default8.arrowSymbol[menuOpts.direction]);
     });
     arrow.attr({
       x: dims.headerWidth - constants_default8.arrowOffsetX + menuOpts.pad.l,
@@ -77298,7 +77228,7 @@ void main() {
     header.on("mouseout", function(event2) {
       header.call(styleOnMouseOut, menuOpts);
     });
-    drawing_default.setTranslate(gHeader, dims.lx, dims.ly);
+    setTranslate(gHeader, dims.lx, dims.ly);
   }
   function drawButtons(gd, gHeader, gButton, scrollBox, menuOpts) {
     if (!gButton) {
@@ -77450,7 +77380,7 @@ void main() {
     var tx = itemOpts.label;
     var _meta = gd._fullLayout._meta;
     if (_meta) tx = lib_default.templateString(tx, _meta);
-    text.call(drawing_default.font, menuOpts.font).text(tx).call(svg_text_utils_default.convertToTspans, gd);
+    text.call(font2, menuOpts.font).text(tx).call(svg_text_utils_default.convertToTspans, gd);
   }
   function styleButtons(buttons, menuOpts) {
     var active = menuOpts.active;
@@ -77480,14 +77410,14 @@ void main() {
       lx: 0,
       ly: 0
     };
-    var fakeButtons = drawing_default.tester.selectAll("g." + constants_default8.dropdownButtonClassName).data(lib_default.filterVisible(menuOpts.buttons));
+    var fakeButtons = tester.selectAll("g." + constants_default8.dropdownButtonClassName).data(lib_default.filterVisible(menuOpts.buttons));
     fakeButtons.enter().append("g").classed(constants_default8.dropdownButtonClassName, true);
     var isVertical3 = ["up", "down"].indexOf(menuOpts.direction) !== -1;
     fakeButtons.each(function(buttonOpts, i) {
       var button = select_default2(this);
       button.call(drawItem, menuOpts, buttonOpts, gd);
       var text = button.select("." + constants_default8.itemTextClassName);
-      var tWidth = text.node() && drawing_default.bBox(text.node()).width;
+      var tWidth = text.node() && bBox(text.node()).width;
       var wEff = Math.max(tWidth + constants_default8.textPadX, constants_default8.minWidth);
       var tHeight = menuOpts.font.size * LINE_SPACING5;
       var tLines = svg_text_utils_default.lineCount(text);
@@ -77573,7 +77503,7 @@ void main() {
     var borderWidth = menuOpts.borderwidth;
     var index = posOpts.index;
     var dims = menuOpts._dims;
-    drawing_default.setTranslate(item, borderWidth + posOpts.x, borderWidth + posOpts.y);
+    setTranslate(item, borderWidth + posOpts.x, borderWidth + posOpts.y);
     var isVertical3 = ["up", "down"].indexOf(menuOpts.direction) !== -1;
     var finalHeight = overrideOpts.height || (isVertical3 ? dims.heights[index] : dims.height1);
     rect.attr({
@@ -77961,7 +77891,7 @@ void main() {
     return opts._index;
   }
   function findDimensions2(gd, sliderOpts) {
-    var sliderLabels = drawing_default.tester.selectAll("g." + constants_default9.labelGroupClass).data(sliderOpts._visibleSteps);
+    var sliderLabels = tester.selectAll("g." + constants_default9.labelGroupClass).data(sliderOpts._visibleSteps);
     sliderLabels.enter().append("g").classed(constants_default9.labelGroupClass, true);
     var maxLabelWidth = 0;
     var labelHeight = 0;
@@ -77970,7 +77900,7 @@ void main() {
       var text = drawLabel2(labelGroup, { step: stepOpts }, sliderOpts);
       var textNode = text.node();
       if (textNode) {
-        var bBox2 = drawing_default.bBox(textNode);
+        var bBox2 = bBox2(textNode);
         labelHeight = Math.max(labelHeight, bBox2.height);
         maxLabelWidth = Math.max(maxLabelWidth, bBox2.width);
       }
@@ -78001,10 +77931,10 @@ void main() {
     dims.currentValueTotalHeight = 0;
     dims.currentValueMaxLines = 1;
     if (sliderOpts.currentvalue.visible) {
-      var dummyGroup = drawing_default.tester.append("g");
+      var dummyGroup = tester.append("g");
       sliderLabels.each(function(stepOpts) {
         var curValPrefix = drawCurrentValue(dummyGroup, sliderOpts, stepOpts.label);
-        var curValSize = curValPrefix.node() && drawing_default.bBox(curValPrefix.node()) || { width: 0, height: 0 };
+        var curValSize = curValPrefix.node() && bBox(curValPrefix.node()) || { width: 0, height: 0 };
         var lines = svg_text_utils_default.lineCount(curValPrefix);
         dims.currentValueMaxWidth = Math.max(dims.currentValueMaxWidth, Math.ceil(curValSize.width));
         dims.currentValueHeight = Math.max(dims.currentValueHeight, Math.ceil(curValSize.height));
@@ -78059,7 +77989,7 @@ void main() {
     }
     sliderGroup.call(drawCurrentValue, sliderOpts).call(drawRail, sliderOpts).call(drawLabelGroup, sliderOpts).call(drawTicks, sliderOpts).call(drawTouchRect, gd, sliderOpts).call(drawGrip, gd, sliderOpts);
     var dims = sliderOpts._dims;
-    drawing_default.setTranslate(sliderGroup, dims.lx + sliderOpts.pad.l, dims.ly + sliderOpts.pad.t);
+    setTranslate(sliderGroup, dims.lx + sliderOpts.pad.l, dims.ly + sliderOpts.pad.t);
     sliderGroup.call(setGripPosition, sliderOpts, false);
     sliderGroup.call(drawCurrentValue, sliderOpts);
   }
@@ -78098,7 +78028,7 @@ void main() {
     if (sliderOpts.currentvalue.suffix) {
       str += sliderOpts.currentvalue.suffix;
     }
-    text.call(drawing_default.font, sliderOpts.currentvalue.font).text(str).call(svg_text_utils_default.convertToTspans, sliderOpts._gd);
+    text.call(font2, sliderOpts.currentvalue.font).text(str).call(svg_text_utils_default.convertToTspans, sliderOpts._gd);
     var lines = svg_text_utils_default.lineCount(text);
     var y0 = (dims.currentValueMaxLines + 1 - lines) * sliderOpts.currentvalue.font.size * LINE_SPACING6;
     svg_text_utils_default.positionText(text, x0, y0);
@@ -78125,7 +78055,7 @@ void main() {
     var tx = data.step.label;
     var _meta = sliderOpts._gd._fullLayout._meta;
     if (_meta) tx = lib_default.templateString(tx, _meta);
-    text.call(drawing_default.font, sliderOpts.font).text(tx).call(svg_text_utils_default.convertToTspans, sliderOpts._gd);
+    text.call(font2, sliderOpts.font).text(tx).call(svg_text_utils_default.convertToTspans, sliderOpts._gd);
     return text;
   }
   function drawLabelGroup(sliderGroup, sliderOpts) {
@@ -78137,7 +78067,7 @@ void main() {
     labelItems.each(function(d2) {
       var item = select_default2(this);
       item.call(drawLabel2, d2, sliderOpts);
-      drawing_default.setTranslate(
+      setTranslate(
         item,
         normalizedValueToPosition(sliderOpts, d2.fraction),
         constants_default9.tickOffset + sliderOpts.ticklen + // position is the baseline of the top line of text only, even
@@ -78241,7 +78171,7 @@ void main() {
       var isMajor = i % dims.labelStride === 0;
       var item = select_default2(this);
       item.attr({ height: isMajor ? sliderOpts.ticklen : sliderOpts.minorticklen }).call(color_default.fill, isMajor ? sliderOpts.tickcolor : sliderOpts.tickcolor);
-      drawing_default.setTranslate(
+      setTranslate(
         item,
         normalizedValueToPosition(sliderOpts, i / (sliderOpts._stepCount - 1)) - 0.5 * sliderOpts.tickwidth,
         (isMajor ? constants_default9.tickOffset : constants_default9.minorTickOffset) + dims.currentValueTotalHeight
@@ -78293,7 +78223,7 @@ void main() {
       width: dims.inputAreaLength,
       height: Math.max(dims.inputAreaWidth, constants_default9.tickOffset + sliderOpts.ticklen + dims.labelHeight)
     }).call(color_default.fill, sliderOpts.bgcolor).attr("opacity", 0);
-    drawing_default.setTranslate(rect, 0, dims.currentValueTotalHeight);
+    setTranslate(rect, 0, dims.currentValueTotalHeight);
   }
   function drawRail(sliderGroup, sliderOpts) {
     var dims = sliderOpts._dims;
@@ -78306,7 +78236,7 @@ void main() {
       ry: constants_default9.railRadius,
       "shape-rendering": "crispEdges"
     }).call(color_default.stroke, sliderOpts.bordercolor).call(color_default.fill, sliderOpts.bgcolor).style("stroke-width", sliderOpts.borderwidth + "px");
-    drawing_default.setTranslate(
+    setTranslate(
       rect,
       constants_default9.railInset,
       (dims.inputAreaWidth - constants_default9.railWidth) * 0.5 + dims.currentValueTotalHeight
@@ -78796,7 +78726,7 @@ void main() {
     });
     var borderCorrect = opts.borderwidth % 2 === 0 ? opts.borderwidth : opts.borderwidth - 1;
     var offsetShift = -opts._offsetShift;
-    var lw = drawing_default.crispRound(gd, opts.borderwidth);
+    var lw = crispRound(gd, opts.borderwidth);
     bg.attr({
       width: opts._width + borderCorrect,
       height: opts._height + borderCorrect,
@@ -78819,7 +78749,7 @@ void main() {
     var rangePlots = rangeSlider.selectAll("g." + constants_default10.rangePlotClassName).data(axisOpts._subplotsWith, lib_default.identity);
     rangePlots.enter().append("g").attr("class", function(id2) {
       return constants_default10.rangePlotClassName + " " + id2;
-    }).call(drawing_default.setClipUrl, opts._clipId, gd);
+    }).call(setClipUrl, opts._clipId, gd);
     rangePlots.order();
     rangePlots.exit().remove();
     var mainplotinfo;
@@ -79277,7 +79207,7 @@ void main() {
     var text = lib_default.ensureSingle(button, "text", "selector-text", function(s) {
       s.attr("text-anchor", "middle");
     });
-    text.call(drawing_default.font, selectorLayout.font).text(getLabel2(d2, gd._fullLayout._meta)).call(textLayout2);
+    text.call(font2, selectorLayout.font).text(getLabel2(d2, gd._fullLayout._meta)).call(textLayout2);
   }
   function getLabel2(opts, _meta) {
     if (opts.label) {
@@ -79301,7 +79231,7 @@ void main() {
       var button = select_default2(this);
       var rect = button.select(".selector-rect");
       var text = button.select(".selector-text");
-      var tWidth = text.node() && drawing_default.bBox(text.node()).width;
+      var tWidth = text.node() && bBox(text.node()).width;
       var tHeight = opts.font.size * LINE_SPACING8;
       var tLines = svg_text_utils_default.lineCount(text);
       var wEff = Math.max(tWidth + 10, constants_default11.minButtonWidth);
@@ -79965,7 +79895,7 @@ void main() {
       if (hasAnimation) {
         enter.style("opacity", 0).transition().duration(transitionOpts.duration).style("opacity", 1);
       }
-      drawing_default.setClipUrl(errorbars, plotinfo.layerClipId, gd);
+      setClipUrl(errorbars, plotinfo.layerClipId, gd);
       errorbars.each(function(d3) {
         var errorbar = select_default2(this);
         var coords = errorCoords(d3, xa, ya);
@@ -80405,14 +80335,14 @@ void main() {
         }
         var bb;
         if (mathJaxNode) {
-          bb = drawing_default.bBox(mathJaxNode);
+          bb = bBox(mathJaxNode);
           titleWidth = bb.width;
           titleHeight = bb.height;
           if (titleHeight > lineSize) {
             titleTrans[1] -= (titleHeight - lineSize) / 2;
           }
         } else if (titleText.node() && !titleText.classed(cn.jsPlaceholder)) {
-          bb = drawing_default.bBox(titleText.node());
+          bb = bBox(titleText.node());
           titleWidth = bb.width;
           titleHeight = bb.height;
         }
@@ -80464,7 +80394,7 @@ void main() {
         }
         var fillEl = select_default2(this).attr(isVertical3 ? "x" : "y", uPx).attr(isVertical3 ? "y" : "x", min(z)).attr(isVertical3 ? "width" : "height", Math.max(thickPx, 2)).attr(isVertical3 ? "height" : "width", Math.max(max(z) - min(z), 2));
         if (opts._fillgradient) {
-          drawing_default.gradient(fillEl, gd, opts._id, isVertical3 ? "vertical" : "horizontalreversed", opts._fillgradient, "fill");
+          gradient(fillEl, gd, opts._id, isVertical3 ? "vertical" : "horizontalreversed", opts._fillgradient, "fill");
         } else {
           var colorString = fillColormap(d2).replace("e-", "");
           fillEl.attr("fill", tinycolor(colorString).toHexString());
@@ -80479,7 +80409,7 @@ void main() {
         select_default2(this).attr(
           "d",
           "M" + (isVertical3 ? a + "," + b : b + "," + a) + (isVertical3 ? "h" : "v") + thickPx
-        ).call(drawing_default.lineGroupStyle, line.width, lineColormap(d2), line.dash);
+        ).call(lineGroupStyle, line.width, lineColormap(d2), line.dash);
       });
       axLayer.selectAll("g." + ax._id + "tick,path").remove();
       var shift = uPx + thickPx + (outlinewidth || 0) / 2 - (opts.ticks === "outside" ? 1 : 0);
@@ -80502,7 +80432,7 @@ void main() {
       var bb;
       var innerThickness = thickPx + outlinewidth / 2;
       if (ticklabelposition.indexOf("inside") === -1) {
-        bb = drawing_default.bBox(axLayer.node());
+        bb = bBox(axLayer.node());
         innerThickness += isVertical3 ? bb.width : bb.height;
       }
       titleEl = titleCont.select("text");
@@ -80514,11 +80444,11 @@ void main() {
         var _titleHeight;
         var mathJaxNode = titleCont.select(".h" + ax._id + "title-math-group").node();
         if (mathJaxNode && (isVertical3 && topOrBottom || !isVertical3 && !topOrBottom)) {
-          bb = drawing_default.bBox(mathJaxNode);
+          bb = bBox(mathJaxNode);
           titleWidth2 = bb.width;
           _titleHeight = bb.height;
         } else {
-          bb = drawing_default.bBox(titleCont.node());
+          bb = bBox(titleCont.node());
           titleWidth2 = bb.right - gs.l - (isVertical3 ? uPx : vPx);
           _titleHeight = bb.bottom - gs.t - (isVertical3 ? vPx : uPx);
           if (!isVertical3 && titleSide === "top") {
@@ -80565,15 +80495,15 @@ void main() {
         var tickLabels = axLayer.selectAll("text");
         var numTicks = tickLabels[0].length;
         var border = g.select("." + cn.cbbg).node();
-        var oBb = drawing_default.bBox(border);
-        var oTr = drawing_default.getTranslate(g);
+        var oBb = bBox(border);
+        var oTr = getTranslate(g);
         var TEXTPAD3 = 2;
         tickLabels.each(function(d2, i) {
           var first = 0;
           var last = numTicks - 1;
           if (i === first || i === last) {
-            var iBb = drawing_default.bBox(this);
-            var iTr = drawing_default.getTranslate(this);
+            var iBb = bBox(this);
+            var iTr = getTranslate(this);
             var deltaX;
             if (i === last) {
               var iRight = iBb.right + iTr.x;
@@ -84488,19 +84418,19 @@ void main() {
   var SYMBOL_SIZE2 = constants_default15.SYMBOL_SIZE;
   var SYMBOL_STROKE = constants_default15.SYMBOL_STROKE;
   var SYMBOL_SDF = {};
-  var SYMBOL_SVG_CIRCLE = drawing_default.symbolFuncs[0](SYMBOL_SIZE2 * 0.05);
+  var SYMBOL_SVG_CIRCLE = symbolFuncs[0](SYMBOL_SIZE2 * 0.05);
   function getSymbolSdf(d2, trace) {
     var symbol = d2.mx;
     if (symbol === "circle") return null;
     var symbolPath, symbolSdf;
-    var symbolNumber2 = drawing_default.symbolNumber(symbol);
-    var symbolFunc = drawing_default.symbolFuncs[symbolNumber2 % 100];
-    var symbolNoDot2 = !!drawing_default.symbolNoDot[symbolNumber2 % 100];
-    var symbolNoFill2 = !!drawing_default.symbolNoFill[symbolNumber2 % 100];
+    var symbolNumber2 = symbolNumber2(symbol);
+    var symbolFunc = symbolFuncs[symbolNumber2 % 100];
+    var symbolNoDot2 = !!symbolNoDot2[symbolNumber2 % 100];
+    var symbolNoFill2 = !!symbolNoFill2[symbolNumber2 % 100];
     var isDot = helpers_default12.isDotSymbol(symbol);
     if (d2.ma) symbol += "_" + d2.ma;
     if (SYMBOL_SDF[symbol]) return SYMBOL_SDF[symbol];
-    var angle = drawing_default.getMarkerAngle(d2, trace);
+    var angle = getMarkerAngle(d2, trace);
     if (isDot && !symbolNoDot2) {
       symbolPath = symbolFunc(SYMBOL_SIZE2 * 1.1, angle) + SYMBOL_SVG_CIRCLE;
     } else {

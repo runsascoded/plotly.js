@@ -1,5 +1,5 @@
 import { select } from 'd3-selection';
-import Drawing from '../../components/drawing/index.js';
+import { bBox, dashStyle, font } from '../../components/drawing/index.js';
 import map1dArray from './map_1d_array.js';
 import makepath from './makepath.js';
 import orientText from './orient_text.js';
@@ -101,7 +101,7 @@ function drawGridLines(xaxis, yaxis, layer, axis, axisLetter, gridlines, isStati
         el.attr('d', path)
             .style('stroke-width', gridline.width)
             .style('stroke', gridline.color)
-            .style('stroke-dasharray', Drawing.dashStyle(gridline.dash, gridline.width))
+            .style('stroke-dasharray', dashStyle(gridline.dash, gridline.width))
             .style('fill', 'none');
     });
 
@@ -139,11 +139,11 @@ function drawAxisLabels(gd, xaxis, yaxis, trace, t, layer, labels, labelClass) {
                 'text-anchor': direction > 0 ? 'start' : 'end',
                 'data-notex': 1
             })
-            .call(Drawing.font, label.font)
+            .call(font, label.font)
             .text(label.text)
             .call(svgTextUtils.convertToTspans, gd);
 
-        var bbox = Drawing.bBox(this);
+        var bbox = bBox(this);
 
         labelEl.attr('transform',
                 // Translate to the correct point:
@@ -233,7 +233,7 @@ function drawAxisTitle(gd, layer, trace, t, xy, dxy, axis, xa, ya, labelOrientat
                 strTranslate(0, offset)
             )
             .attr('text-anchor', 'middle')
-            .call(Drawing.font, axis.title.font);
+            .call(font, axis.title.font);
     });
 
     titleJoin.exit().remove();

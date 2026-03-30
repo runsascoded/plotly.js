@@ -1,7 +1,7 @@
 import { select } from 'd3-selection';
 import Plots from '../../plots/plots.js';
 import Color from '../color/index.js';
-import Drawing from '../drawing/index.js';
+import { bBox, font, setTranslate, tester } from '../drawing/index.js';
 import Lib from '../../lib/index.js';
 import svgTextUtils from '../../lib/svg_text_utils.js';
 import { arrayEditor } from '../../plot_api/plot_template.js';
@@ -183,7 +183,7 @@ function drawHeader(gd, gHeader, gButton, scrollBox, menuOpts) {
     // draw drop arrow at the right edge
     var arrow = Lib.ensureSingle(gHeader, 'text', constants.headerArrowClassName, function(s) {
         s.attr('text-anchor', 'end')
-            .call(Drawing.font, menuOpts.font)
+            .call(font, menuOpts.font)
             .text(constants.arrowSymbol[menuOpts.direction]);
     });
 
@@ -209,7 +209,7 @@ function drawHeader(gd, gHeader, gButton, scrollBox, menuOpts) {
     });
 
     // translate header group
-    Drawing.setTranslate(gHeader, dims.lx, dims.ly);
+    setTranslate(gHeader, dims.lx, dims.ly);
 }
 
 function drawButtons(gd, gHeader, gButton, scrollBox, menuOpts) {
@@ -431,7 +431,7 @@ function drawItemText(item, menuOpts, itemOpts, gd) {
     var _meta = gd._fullLayout._meta;
     if(_meta) tx = Lib.templateString(tx, _meta);
 
-    text.call(Drawing.font, menuOpts.font)
+    text.call(font, menuOpts.font)
         .text(tx)
         .call(svgTextUtils.convertToTspans, gd);
 }
@@ -474,7 +474,7 @@ function findDimensions(gd, menuOpts) {
         ly: 0
     };
 
-    var fakeButtons = Drawing.tester.selectAll('g.' + constants.dropdownButtonClassName)
+    var fakeButtons = tester.selectAll('g.' + constants.dropdownButtonClassName)
         .data(Lib.filterVisible(menuOpts.buttons));
 
     fakeButtons.enter().append('g')
@@ -491,7 +491,7 @@ function findDimensions(gd, menuOpts) {
         var text = button.select('.' + constants.itemTextClassName);
 
         // width is given by max width of all buttons
-        var tWidth = text.node() && Drawing.bBox(text.node()).width;
+        var tWidth = text.node() && bBox(text.node()).width;
         var wEff = Math.max(tWidth + constants.textPadX, constants.minWidth);
 
         // height is determined by item text
@@ -600,7 +600,7 @@ function setItemPosition(item, menuOpts, posOpts, overrideOpts) {
     var index = posOpts.index;
     var dims = menuOpts._dims;
 
-    Drawing.setTranslate(item, borderWidth + posOpts.x, borderWidth + posOpts.y);
+    setTranslate(item, borderWidth + posOpts.x, borderWidth + posOpts.y);
 
     var isVertical = ['up', 'down'].indexOf(menuOpts.direction) !== -1;
     var finalHeight = overrideOpts.height || (isVertical ? dims.heights[index] : dims.height1);

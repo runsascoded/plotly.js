@@ -1,7 +1,7 @@
 import { zoom as d3Zoom } from 'd3-zoom';
 import { drag as d3Drag } from 'd3-drag';
 import Color from '../color/index.js';
-import Drawing from '../drawing/index.js';
+import { setTranslate, setClipUrl } from '../drawing/index.js';
 import Lib from '../../lib/index.js';
 export default ScrollBox;
 
@@ -237,7 +237,7 @@ ScrollBox.prototype.enable = function enable(position, translateX, translateY) {
             height: Math.ceil(clipB) - Math.floor(clipT)
         });
 
-        this.container.call(Drawing.setClipUrl, clipId, this.gd);
+        this.container.call(setClipUrl, clipId, this.gd);
 
         this.bg.attr({
             x: l,
@@ -253,7 +253,7 @@ ScrollBox.prototype.enable = function enable(position, translateX, translateY) {
         this.container
             .on('wheel', null)
             .on('.drag', null)
-            .call(Drawing.setClipUrl, null);
+            .call(setClipUrl, null);
         delete this._clipRect;
     }
 
@@ -309,7 +309,7 @@ ScrollBox.prototype.disable = function disable() {
         this.container
             .on('wheel', null)
             .on('.drag', null)
-            .call(Drawing.setClipUrl, null);
+            .call(setClipUrl, null);
         delete this._clipRect;
     }
 
@@ -422,7 +422,7 @@ ScrollBox.prototype.setTranslate = function setTranslate(translateX, translateY)
     this.translateX = translateX;
     this.translateY = translateY;
 
-    this.container.call(Drawing.setTranslate,
+    this.container.call(setTranslate,
         this._box.l - this.position.l - translateX,
         this._box.t - this.position.t - translateY);
 
@@ -436,7 +436,7 @@ ScrollBox.prototype.setTranslate = function setTranslate(translateX, translateY)
     if(this.hbar) {
         var xf = translateX / translateXMax;
 
-        this.hbar.call(Drawing.setTranslate,
+        this.hbar.call(setTranslate,
             translateX + xf * this._hbarTranslateMax,
             translateY);
     }
@@ -444,7 +444,7 @@ ScrollBox.prototype.setTranslate = function setTranslate(translateX, translateY)
     if(this.vbar) {
         var yf = translateY / translateYMax;
 
-        this.vbar.call(Drawing.setTranslate,
+        this.vbar.call(setTranslate,
             translateX,
             translateY + yf * this._vbarTranslateMax);
     }

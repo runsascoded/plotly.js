@@ -1,6 +1,6 @@
 import { select } from 'd3-selection';
 import Lib from '../../lib/index.js';
-import Drawing from '../../components/drawing/index.js';
+import { bBox, font, setClipUrl, smoothclosed, smoothopen, tester } from '../../components/drawing/index.js';
 import Colorscale from '../../components/colorscale/index.js';
 import svgTextUtils from '../../lib/svg_text_utils.js';
 import Axes from '../../plots/cartesian/axes.js';
@@ -126,7 +126,7 @@ function joinAllPaths(pi, perimeter) {
     function isright(pt) { return Math.abs(pt[0] - perimeter[2][0]) < 0.01; }
 
     while(startsleft.length) {
-        addpath = Drawing.smoothopen(pi.edgepaths[i], pi.smoothing);
+        addpath = smoothopen(pi.edgepaths[i], pi.smoothing);
         fullpath += newloop ? addpath : addpath.replace(/^M/, 'L');
         startsleft.splice(startsleft.indexOf(i), 1);
         endpt = pi.edgepaths[i][pi.edgepaths[i].length - 1];
@@ -189,7 +189,7 @@ function joinAllPaths(pi, perimeter) {
 
     // finally add the interior paths
     for(i = 0; i < pi.paths.length; i++) {
-        fullpath += Drawing.smoothclosed(pi.paths[i], pi.smoothing);
+        fullpath += smoothclosed(pi.paths[i], pi.smoothing);
     }
 
     return fullpath;
@@ -227,9 +227,9 @@ function makeLinesAndLabels(plotgroup, pathinfo, gd, cd0, contours) {
 
         var contourFormat = labelFormatter(gd, cd0);
 
-        var dummyText = Drawing.tester.append('text')
+        var dummyText = tester.append('text')
             .attr('data-notex', 1)
-            .call(Drawing.font, contours.labelfont);
+            .call(font, contours.labelfont);
 
         var xa = pathinfo[0].xaxis;
         var ya = pathinfo[0].yaxis;
@@ -337,7 +337,7 @@ export var createLines = function(lineContainer, makeLines, pathinfo, isStatic) 
 
         opencontourlines
             .attr('d', function(d) {
-                return Drawing.smoothopen(d, smoothing);
+                return smoothopen(d, smoothing);
             })
             .style('stroke-miterlimit', 1)
             .style('vector-effect', isStatic ? 'none' : 'non-scaling-stroke');
@@ -351,7 +351,7 @@ export var createLines = function(lineContainer, makeLines, pathinfo, isStatic) 
 
         closedcontourlines
             .attr('d', function(d) {
-                return Drawing.smoothclosed(d, smoothing);
+                return smoothclosed(d, smoothing);
             })
             .style('stroke-miterlimit', 1)
             .style('vector-effect', isStatic ? 'none' : 'non-scaling-stroke');
@@ -372,7 +372,7 @@ export var createLineClip = function(lineContainer, clipLinesForLabels, gd, uid)
         .classed('contourlineclip', true)
         .attr('id', clipId);
 
-    Drawing.setClipUrl(lineContainer, clipId, gd);
+    setClipUrl(lineContainer, clipId, gd);
 
     return lineClip;
 };
@@ -428,7 +428,7 @@ export var calcTextOpts = function(level, contourFormat, dummyText, gd) {
         .call(svgTextUtils.convertToTspans, gd);
 
     var el = dummyText.node();
-    var bBox = Drawing.bBox(el, true);
+    var bBox = bBox(el, true);
 
     return {
         text: text,
@@ -653,7 +653,7 @@ function clipGaps(plotGroup, plotinfo, gd, cd0, perimeter) {
         );
     } else clipId = null;
 
-    Drawing.setClipUrl(plotGroup, clipId, gd);
+    setClipUrl(plotGroup, clipId, gd);
 }
 
 function makeClipMask(cd0) {

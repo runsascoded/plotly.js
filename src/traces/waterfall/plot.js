@@ -1,6 +1,6 @@
 import { select } from 'd3-selection';
 import Lib from '../../lib/index.js';
-import Drawing from '../../components/drawing/index.js';
+import { setClipUrl } from '../../components/drawing/index.js';
 import _numerical from '../../constants/numerical.js';
 const { BADNUM } = _numerical;
 import barPlot from '../bar/plot.js';
@@ -96,7 +96,7 @@ function plotConnectors(gd, plotinfo, cdModule, traceLayer) {
 
             Lib.ensureSingle(select(this), 'path')
                 .attr('d', shape)
-                .call(Drawing.setClipUrl, plotinfo.layerClipId, gd);
+                .call(setClipUrl, plotinfo.layerClipId, gd);
         });
     });
 }

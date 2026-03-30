@@ -1,5 +1,5 @@
 import { select } from 'd3-selection';
-import Drawing from '../../components/drawing/index.js';
+import { font, bBox } from '../../components/drawing/index.js';
 import Lib from '../../lib/index.js';
 import svgTextUtils from '../../lib/svg_text_utils.js';
 import barPlot from '../bar/plot.js';
@@ -99,11 +99,11 @@ export default function plot(gd, cdModule) {
                             transform: '',
                             'text-anchor': 'middle'
                         })
-                        .call(Drawing.font, font)
+                        .call(font, font)
                         .call(svgTextUtils.convertToTspans, gd);
 
                     // position the text relative to the slice
-                    var textBB = Drawing.bBox(sliceText.node());
+                    var textBB = bBox(sliceText.node());
                     var transform;
 
                     var x0, x1;
@@ -153,7 +153,7 @@ export default function plot(gd, cdModule) {
                         transform: '',
                         'text-anchor': 'middle',
                     })
-                .call(Drawing.font, trace.title.font)
+                .call(font, trace.title.font)
                 .call(svgTextUtils.convertToTspans, gd);
 
                 var transform = positionTitleOutside(cd0, fullLayout._size);

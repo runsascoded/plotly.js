@@ -1,5 +1,5 @@
 import { select } from 'd3-selection';
-import Drawing from '../../components/drawing/index.js';
+import { dashLine, lineGroupStyle } from '../../components/drawing/index.js';
 import Color from '../../components/color/index.js';
 import _interactions from '../../constants/interactions.js';
 const { DESELECTDIM } = _interactions;
@@ -25,7 +25,7 @@ function style(gd, cd, sel) {
                 select(this)
                     .call(Color.fill, cont.color)
                     .call(Color.stroke, cont.line.color)
-                    .call(Drawing.dashLine, cont.line.dash, cont.line.width)
+                    .call(dashLine, cont.line.dash, cont.line.width)
                     .style('opacity', trace.selectedpoints && !di.selected ? DESELECTDIM : 1);
             }
         });
@@ -35,7 +35,7 @@ function style(gd, cd, sel) {
         gTrace.selectAll('.lines').each(function() {
             var cont = trace.connector.line;
 
-            Drawing.lineGroupStyle(
+            lineGroupStyle(
                 select(this).selectAll('path'),
                 cont.width,
                 cont.color,

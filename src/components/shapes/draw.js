@@ -8,7 +8,7 @@ import drawLabel from './display_labels.js';
 import _handle_outline from './handle_outline.js';
 const { clearOutlineControllers } = _handle_outline;
 import Color from '../color/index.js';
-import Drawing from '../drawing/index.js';
+import { dashLine, setClipUrl } from '../drawing/index.js';
 import { arrayEditor } from '../../plot_api/plot_template.js';
 import dragElement from '../dragelement/index.js';
 import setCursor from '../../lib/setcursor.js';
@@ -132,7 +132,7 @@ function drawOne(gd, index) {
             .style('opacity', opacity)
             .call(Color.stroke, lineColor)
             .call(Color.fill, fillColor)
-            .call(Drawing.dashLine, lineDash, lineWidth);
+            .call(dashLine, lineDash, lineWidth);
 
         setClipPath(shapeGroup, gd, options);
 
@@ -181,7 +181,7 @@ function setClipPath(shapePath, gd, shapeOptions) {
     // clip axis
     var clipAxes = (shapeOptions.xref + shapeOptions.yref).replace(/paper/g, '').replace(/[xyz][0-9]* *domain/g, '');
 
-    Drawing.setClipUrl(
+    setClipUrl(
         shapePath,
         clipAxes ? 'clip' + gd._fullLayout._uid + clipAxes : null,
         gd
@@ -587,7 +587,7 @@ function setupDragElement(gd, shapePath, shapeOptions, index, shapeLayer, editHe
         if(xref !== 'paper' && !xa.autorange) clipAxes += xref;
         if(yref !== 'paper' && !ya.autorange) clipAxes += yref;
 
-        Drawing.setClipUrl(
+        setClipUrl(
             shapePath,
             clipAxes ? 'clip' + gd._fullLayout._uid + clipAxes : null,
             gd

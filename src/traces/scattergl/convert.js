@@ -3,7 +3,7 @@ import svgSdf from 'svg-path-sdf';
 import rgba from 'color-normalize';
 import Registry from '../../registry.js';
 import Lib from '../../lib/index.js';
-import Drawing from '../../components/drawing/index.js';
+import { symbolNoDot, getMarkerAngle, symbolFuncs } from '../../components/drawing/index.js';
 import AxisIDs from '../../plots/cartesian/axis_ids.js';
 import _gl_format_color from '../../lib/gl_format_color.js';
 const { formatColor } = _gl_format_color;
@@ -454,17 +454,17 @@ var SYMBOL_SDF_SIZE = constants.SYMBOL_SDF_SIZE;
 var SYMBOL_SIZE = constants.SYMBOL_SIZE;
 var SYMBOL_STROKE = constants.SYMBOL_STROKE;
 var SYMBOL_SDF = {};
-var SYMBOL_SVG_CIRCLE = Drawing.symbolFuncs[0](SYMBOL_SIZE * 0.05);
+var SYMBOL_SVG_CIRCLE = symbolFuncs[0](SYMBOL_SIZE * 0.05);
 
 function getSymbolSdf(d, trace) {
     var symbol = d.mx;
     if (symbol === 'circle') return null;
 
     var symbolPath, symbolSdf;
-    var symbolNumber = Drawing.symbolNumber(symbol);
-    var symbolFunc = Drawing.symbolFuncs[symbolNumber % 100];
-    var symbolNoDot = !!Drawing.symbolNoDot[symbolNumber % 100];
-    var symbolNoFill = !!Drawing.symbolNoFill[symbolNumber % 100];
+    var symbolNumber = symbolNumber(symbol);
+    var symbolFunc = symbolFuncs[symbolNumber % 100];
+    var symbolNoDot = !!symbolNoDot[symbolNumber % 100];
+    var symbolNoFill = !!symbolNoFill[symbolNumber % 100];
 
     var isDot = helpers.isDotSymbol(symbol);
 
@@ -474,7 +474,7 @@ function getSymbolSdf(d, trace) {
     // get symbol sdf from cache or generate it
     if (SYMBOL_SDF[symbol]) return SYMBOL_SDF[symbol];
 
-    var angle = Drawing.getMarkerAngle(d, trace);
+    var angle = getMarkerAngle(d, trace);
     if (isDot && !symbolNoDot) {
         symbolPath = symbolFunc(SYMBOL_SIZE * 1.1, angle) + SYMBOL_SVG_CIRCLE;
     } else {

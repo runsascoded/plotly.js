@@ -2,7 +2,7 @@ import { select } from 'd3-selection';
 import Registry from '../../registry.js';
 import Plots from '../../plots/plots.js';
 import Lib from '../../lib/index.js';
-import Drawing from '../drawing/index.js';
+import { crispRound, setClipUrl } from '../drawing/index.js';
 import Color from '../color/index.js';
 import Titles from '../titles/index.js';
 import Cartesian from '../../plots/cartesian/index.js';
@@ -405,7 +405,7 @@ function drawBg(rangeSlider, gd, axisOpts, opts) {
         opts.borderwidth - 1;
 
     var offsetShift = -opts._offsetShift;
-    var lw = Drawing.crispRound(gd, opts.borderwidth);
+    var lw = crispRound(gd, opts.borderwidth);
 
     bg.attr({
         width: opts._width + borderCorrect,
@@ -438,7 +438,7 @@ function drawRangePlot(rangeSlider, gd, axisOpts, opts) {
 
     rangePlots.enter().append('g')
         .attr('class', function(id) { return constants.rangePlotClassName + ' ' + id; })
-        .call(Drawing.setClipUrl, opts._clipId, gd);
+        .call(setClipUrl, opts._clipId, gd);
 
     rangePlots.order();
 

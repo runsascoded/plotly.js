@@ -2,7 +2,7 @@ import Lib from '../../lib/index.js';
 import { getSubplotCalcData } from '../get_data.js';
 import xmlnsNamespaces from '../../constants/xmlns_namespaces.js';
 import { select } from 'd3-selection';
-import Drawing from '../../components/drawing/index.js';
+import { bBox as drawingBBox } from '../../components/drawing/index.js';
 import svgTextUtils from '../../lib/svg_text_utils.js';
 import Map from './map.js';
 import _req0 from './layout_attributes.js';
@@ -119,7 +119,7 @@ export var toSVG = function(gd) {
               'data-unformatted': attributions
           });
 
-        var bBox = Drawing.bBox(attributionText.node());
+        var bBox = drawingBBox(attributionText.node());
 
         // Break into multiple lines twice larger than domain
         var maxWidth = size.w * (domain.x[1] - domain.x[0]);
@@ -130,7 +130,7 @@ export var toSVG = function(gd) {
               .attr('data-unformatted', multilineAttributions)
               .call(svgTextUtils.convertToTspans, gd);
 
-            bBox = Drawing.bBox(attributionText.node());
+            bBox = drawingBBox(attributionText.node());
         }
         attributionText.attr('transform', strTranslate(-3, -bBox.height + 8));
 

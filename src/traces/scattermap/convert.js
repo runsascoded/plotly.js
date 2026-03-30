@@ -4,7 +4,7 @@ import _numerical from '../../constants/numerical.js';
 const { BADNUM } = _numerical;
 import geoJsonUtils from '../../lib/geojson_utils.js';
 import Colorscale from '../../components/colorscale/index.js';
-import Drawing from '../../components/drawing/index.js';
+import { makeSelectedPointStyleFns } from '../../components/drawing/index.js';
 import makeBubbleSizeFn from '../scatter/make_bubble_size_func.js';
 import subTypes from '../scatter/subtypes.js';
 import _constants from './constants.js';
@@ -239,7 +239,7 @@ function makeCircleOpts(calcTrace) {
 
     var fns;
     if (selectedpoints) {
-        fns = Drawing.makeSelectedPointStyleFns(trace);
+        fns = makeSelectedPointStyleFns(trace);
 
         for (i = 0; i < features.length; i++) {
             var d = features[i].properties;

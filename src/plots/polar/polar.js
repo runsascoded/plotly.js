@@ -3,7 +3,7 @@ import tinycolor from 'tinycolor2';
 import Registry from '../../registry.js';
 import Lib from '../../lib/index.js';
 import Color from '../../components/color/index.js';
-import Drawing from '../../components/drawing/index.js';
+import { bBox, getTranslate, hideOutsideRangePoints, setClipUrl } from '../../components/drawing/index.js';
 import Plots from '../plots.js';
 import Axes from '../../plots/cartesian/axes.js';
 import setConvertCartesian from '../cartesian/set_convert.js';
@@ -325,7 +325,7 @@ proto.updateLayout = function(fullLayout, polarLayout) {
 
     layers.frontplot
         .attr('transform', strTranslate(xOffset2, yOffset2))
-        .call(Drawing.setClipUrl, _this._hasClipOnAxisFalse ? null : _this.clipIds.forTraces, _this.gd);
+        .call(setClipUrl, _this._hasClipOnAxisFalse ? null : _this.clipIds.forTraces, _this.gd);
 
     layers.bg
         .attr('d', dPath)
@@ -564,7 +564,7 @@ proto.updateRadialAxisTitle = function(fullLayout, polarLayout, _angle) {
     // because if plot is editable, pad needs to be calculated anyways
     // to properly show placeholder text when title is empty.
     if(radialLayout.title) {
-        var h = Drawing.bBox(_this.layers['radial-axis'].node()).height;
+        var h = bBox(_this.layers['radial-axis'].node()).height;
         var ts = radialLayout.title.font.size;
         var side = radialLayout.side;
         pad =
@@ -1373,13 +1373,13 @@ proto.updateAngularDrag = function(fullLayout) {
         // 'un-rotate' marker and text points
         scatterPoints.each(function() {
             var sel = select(this);
-            var xy = Drawing.getTranslate(sel);
+            var xy = getTranslate(sel);
             sel.attr('transform', strTranslate(xy.x, xy.y) + strRotate([da]));
         });
         scatterTextPoints.each(function() {
             var sel = select(this);
             var tx = sel.select('text');
-            var xy = Drawing.getTranslate(sel);
+            var xy = getTranslate(sel);
             // N.B rotate -> translate ordering matters
             sel.attr('transform', strRotate([da, tx.attr('x'), tx.attr('y')]) + strTranslate(xy.x, xy.y));
         });
@@ -1389,7 +1389,7 @@ proto.updateAngularDrag = function(fullLayout) {
         _this.updateAngularAxis(fullLayoutNow, polarLayoutNow);
 
         if(_this._hasClipOnAxisFalse && !Lib.isFullCircle(_this.sectorInRad)) {
-            scatterTraces.call(Drawing.hideOutsideRangePoints, _this);
+            scatterTraces.call(hideOutsideRangePoints, _this);
         }
 
         var hasRegl = false;

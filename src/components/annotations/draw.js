@@ -4,7 +4,7 @@ import Plots from '../../plots/plots.js';
 import Lib from '../../lib/index.js';
 import Axes from '../../plots/cartesian/axes.js';
 import Color from '../color/index.js';
-import Drawing from '../drawing/index.js';
+import { bBox, getTranslate, setClipUrl, setRect, setTranslate } from '../drawing/index.js';
 import Fx from '../fx/index.js';
 import svgTextUtils from '../../lib/svg_text_utils.js';
 import setCursor from '../../lib/setcursor.js';
@@ -233,7 +233,7 @@ function drawRaw(gd, options, index, subplotId, xa, ya) {
         .text(text);
 
     function textLayout(s) {
-        s.call(Drawing.font, font)
+        s.call(font, font)
         .attr({
             'text-anchor': {
                 left: 'start',
@@ -260,7 +260,7 @@ function drawRaw(gd, options, index, subplotId, xa, ya) {
 
         var mathjaxGroup = annTextGroupInner.select('.annotation-text-math-group');
         var hasMathjax = !mathjaxGroup.empty();
-        var anntextBB = Drawing.bBox(
+        var anntextBB = bBox(
                 (hasMathjax ? mathjaxGroup : annText).node());
         var textWidth = anntextBB.width;
         var textHeight = anntextBB.height;
@@ -450,22 +450,22 @@ function drawRaw(gd, options, index, subplotId, xa, ya) {
                 x: borderfull + xShift - 1,
                 y: borderfull + yShift
             })
-            .call(Drawing.setClipUrl, isSizeConstrained ? annClipID : null, gd);
+            .call(setClipUrl, isSizeConstrained ? annClipID : null, gd);
         } else {
             var texty = borderfull + yShift - anntextBB.top;
             var textx = borderfull + xShift - anntextBB.left;
 
             annText.call(svgTextUtils.positionText, textx, texty)
-                .call(Drawing.setClipUrl, isSizeConstrained ? annClipID : null, gd);
+                .call(setClipUrl, isSizeConstrained ? annClipID : null, gd);
         }
 
-        annTextClip.select('rect').call(Drawing.setRect, borderfull, borderfull,
+        annTextClip.select('rect').call(setRect, borderfull, borderfull,
             annWidth, annHeight);
 
-        annTextBG.call(Drawing.setRect, borderwidth / 2, borderwidth / 2,
+        annTextBG.call(setRect, borderwidth / 2, borderwidth / 2,
             outerWidth - borderwidth, outerHeight - borderwidth);
 
-        annTextGroupInner.call(Drawing.setTranslate,
+        annTextGroupInner.call(setTranslate,
             Math.round(annPosPx.x.text - outerWidth / 2),
             Math.round(annPosPx.y.text - outerHeight / 2));
 
@@ -583,7 +583,7 @@ function drawRaw(gd, options, index, subplotId, xa, ya) {
                     element: arrowDrag.node(),
                     gd: gd,
                     prepFn: function() {
-                        var pos = Drawing.getTranslate(annTextGroupInner);
+                        var pos = getTranslate(annTextGroupInner);
 
                         annx0 = pos.x;
                         anny0 = pos.y;
@@ -598,7 +598,7 @@ function drawRaw(gd, options, index, subplotId, xa, ya) {
                         var annxy0 = applyTransform(annx0, anny0);
                         var xcenter = annxy0[0] + dx;
                         var ycenter = annxy0[1] + dy;
-                        annTextGroupInner.call(Drawing.setTranslate, xcenter, ycenter);
+                        annTextGroupInner.call(setTranslate, xcenter, ycenter);
 
                         modifyItem('x',
                             shiftPosition(xa, dx, 'x', gs, options));

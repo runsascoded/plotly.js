@@ -3,7 +3,7 @@ import displayOutlines from '../shapes/display_outlines.js';
 import _handle_outline from '../shapes/handle_outline.js';
 const { clearOutlineControllers } = _handle_outline;
 import Color from '../color/index.js';
-import Drawing from '../drawing/index.js';
+import { dashLine, setClipUrl } from '../drawing/index.js';
 import { arrayEditor } from '../../plot_api/plot_template.js';
 import helpers from '../shapes/helpers.js';
 var getPathString = helpers.getPathString;
@@ -88,7 +88,7 @@ function drawOne(gd, index) {
                 .call(Color.stroke, lineColor)
                 .call(Color.fill, fillColor)
                 // make it easier to select senory background path
-                .call(Drawing.dashLine,
+                .call(dashLine,
                     sensory ? 'solid' : lineDash,
                     sensory ? 4 + lineWidth : lineWidth
                 );
@@ -130,7 +130,7 @@ function drawOne(gd, index) {
 function setClipPath(selectionPath, gd, selectionOptions) {
     var clipAxes = selectionOptions.xref + selectionOptions.yref;
 
-    Drawing.setClipUrl(
+    setClipUrl(
         selectionPath,
         'clip' + gd._fullLayout._uid + clipAxes,
         gd

@@ -4,7 +4,7 @@ import _helpers from '../../components/colorscale/helpers.js';
 const { hasColorscale } = _helpers;
 import colorscaleCalc from '../../components/colorscale/calc.js';
 import filterUnique from '../../lib/filter_unique.js';
-import Drawing from '../../components/drawing/index.js';
+import { tryColorscale } from '../../components/drawing/index.js';
 import Lib from '../../lib/index.js';
 import isNumeric from 'fast-isnumeric';
 
@@ -72,7 +72,7 @@ export default function calc(gd, trace) {
                 cLetter: 'c'
             });
         }
-        markerColorscale = Drawing.tryColorscale(line);
+        markerColorscale = tryColorscale(line);
     } else {
         markerColorscale = Lib.identity;
     }

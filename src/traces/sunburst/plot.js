@@ -2,7 +2,7 @@ import { select } from 'd3-selection';
 import * as d3Hierarchy from 'd3-hierarchy';
 import { interpolate } from 'd3-interpolate';
 import { transition as d3Transition } from 'd3-transition';
-import Drawing from '../../components/drawing/index.js';
+import { font, bBox } from '../../components/drawing/index.js';
 import Lib from '../../lib/index.js';
 import svgTextUtils from '../../lib/svg_text_utils.js';
 import uniformText from '../bar/uniform_text.js';
@@ -290,11 +290,11 @@ function plotOne(gd, cd, element, transitionOpts) {
             .text(formatSliceLabel(pt, entry, trace, cd, fullLayout))
             .classed('slicetext', true)
             .attr('text-anchor', 'middle')
-            .call(Drawing.font, font)
+            .call(font, font)
             .call(svgTextUtils.convertToTspans, gd);
 
         // position the text relative to the slice
-        var textBB = Drawing.bBox(sliceText.node());
+        var textBB = bBox(sliceText.node());
         pt.transform = transformInsideText(textBB, pt, cd0);
         pt.transform.targetX = getTargetX(pt);
         pt.transform.targetY = getTargetY(pt);

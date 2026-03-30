@@ -1,5 +1,5 @@
 import { select } from 'd3-selection';
-import Drawing from '../../components/drawing/index.js';
+import { font, lineGroupStyle } from '../../components/drawing/index.js';
 import heatmapStyle from '../heatmap/style.js';
 import makeColorMap from './make_color_map.js';
 
@@ -27,7 +27,7 @@ export default function style(gd) {
 
         c.selectAll('g.contourlevel').each(function(d) {
             select(this).selectAll('path')
-                .call(Drawing.lineGroupStyle,
+                .call(lineGroupStyle,
                     line.width,
                     colorLines ? colorMap(d.level) : line.color,
                     line.dash);
@@ -35,7 +35,7 @@ export default function style(gd) {
 
         var labelFont = contours.labelfont;
         c.selectAll('g.contourlabels text').each(function(d) {
-            Drawing.font(select(this), {
+            font(select(this), {
                 weight: labelFont.weight,
                 style: labelFont.style,
                 variant: labelFont.variant,
