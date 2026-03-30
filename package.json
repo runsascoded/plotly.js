@@ -215,6 +215,7 @@
     "./mapbox": "./lib/index-mapbox.js",
     "./strict": "./lib/index-strict.js",
     "./core": "./lib/core.js",
+    "./factory": "./lib/factory.js",
     "./lib/*": "./lib/*",
     "./src/*": "./src/*",
     "./dist/*": "./dist/*"
