@@ -1,7 +1,7 @@
 import { select } from 'd3-selection';
 function d3Round(x, n) { return n ? Math.round(x * (n = Math.pow(10, n))) / n : Math.round(x); }
 import isNumeric from 'fast-isnumeric';
-import Plots from '../../plots/plots.js';
+import { previousPromises } from '../../plots/plots.js';
 import Registry from '../../registry.js';
 import { bBoxIntersect, ensureSingle, extendFlat, strTranslate, syncOrAsync, templateString } from '../../lib/index.js';
 import { bBox, font } from '../drawing/index.js';
@@ -257,7 +257,7 @@ function draw(gd, titleClass, options) {
                 .call(svgTextUtils.convertToTspans, gd);
         }
 
-        return Plots.previousPromises(gd);
+        return previousPromises(gd);
     }
 
     function scootTitle(titleAndSubtitleEls) {

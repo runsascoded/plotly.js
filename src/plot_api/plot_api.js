@@ -6,7 +6,7 @@ import Events from '../lib/events.js';
 import Queue from '../lib/queue.js';
 import Registry from '../registry.js';
 import PlotSchema from './plot_schema.js';
-import Plots from '../plots/plots.js';
+import { addLinks, allowAutoMargin, cleanPlot, clearAutoMarginIds, computeFrame, createTransitionData, dataArrayContainers, didMarginChange, doAutoMargin, doCalcdata, modifyFrames, plotAutoSize, previousPromises, purge as plotsPurge, redrag, rehover, reselect, resize, supplyAnimationDefaults, supplyDefaults, supplyDefaultsUpdateCalc, supplyFrameDefaults, transition as plotsTransition, transitionFromReact } from '../plots/plots.js';
 import Axes from '../plots/cartesian/axes.js';
 import handleRangeDefaults from '../plots/cartesian/range_defaults.js';
 import cartesianLayoutAttributes from '../plots/cartesian/layout_attributes.js';
@@ -125,7 +125,7 @@ function _doPlot(gd, data, layout, config) {
     }
 
     performance.mark('plotly-supplyDefaults-start');
-    Plots.supplyDefaults(gd);
+    supplyDefaults(gd);
     performance.mark('plotly-supplyDefaults-end');
     performance.measure('plotly-supplyDefaults', 'plotly-supplyDefaults-start', 'plotly-supplyDefaults-end');
 
@@ -159,7 +159,7 @@ function _doPlot(gd, data, layout, config) {
     var recalc = !gd.calcdata || gd.calcdata.length !== (gd._fullData || []).length;
     if (recalc) {
         performance.mark('plotly-calcdata-start');
-        Plots.doCalcdata(gd);
+        doCalcdata(gd);
         performance.mark('plotly-calcdata-end');
         performance.measure('plotly-calcdata', 'plotly-calcdata-start', 'plotly-calcdata-end');
     }
@@ -174,7 +174,7 @@ function _doPlot(gd, data, layout, config) {
         if (!gd._responsiveChartHandler) {
             // Keep a reference to the resize handler to purge it down the road
             gd._responsiveChartHandler = function () {
-                if (!isHidden(gd)) Plots.resize(gd);
+                if (!isHidden(gd)) resize(gd);
             };
 
             // Listen to window resize
@@ -262,10 +262,10 @@ function _doPlot(gd, data, layout, config) {
                         error(msg);
                     } else {
                         log(msg + ' Clearing graph and plotting again.');
-                        Plots.cleanPlot([], {}, gd._fullData, fullLayout);
-                        Plots.supplyDefaults(gd);
+                        cleanPlot([], {}, gd._fullData, fullLayout);
+                        supplyDefaults(gd);
                         fullLayout = gd._fullLayout;
-                        Plots.doCalcdata(gd);
+                        doCalcdata(gd);
                         drawFrameworkCalls++;
                         return drawFramework();
                     }
@@ -281,7 +281,7 @@ function _doPlot(gd, data, layout, config) {
             }
         }
 
-        return Plots.previousPromises(gd);
+        return previousPromises(gd);
     }
 
     function marginPushers() {
@@ -290,11 +290,11 @@ function _doPlot(gd, data, layout, config) {
         // automargin calculation.
         // This means *every* margin pusher must be listed here, even if it
         // doesn't actually try to push the margins until later.
-        Plots.clearAutoMarginIds(gd);
+        clearAutoMarginIds(gd);
 
         subroutines.drawMarginPushers(gd);
         Axes.allowAutoMargin(gd);
-        if (gd._fullLayout.title.text && gd._fullLayout.title.automargin) Plots.allowAutoMargin(gd, 'title.automargin');
+        if (gd._fullLayout.title.text && gd._fullLayout.title.automargin) allowAutoMargin(gd, 'title.automargin');
 
         // TODO can this be moved elsewhere?
         if (fullLayout._has('pie')) {
@@ -302,18 +302,18 @@ function _doPlot(gd, data, layout, config) {
             for (var i = 0; i < fullData.length; i++) {
                 var trace = fullData[i];
                 if (trace.type === 'pie' && trace.automargin) {
-                    Plots.allowAutoMargin(gd, 'pie.' + trace.uid + '.automargin');
+                    allowAutoMargin(gd, 'pie.' + trace.uid + '.automargin');
                 }
             }
         }
 
-        Plots.doAutoMargin(gd);
-        return Plots.previousPromises(gd);
+        doAutoMargin(gd);
+        return previousPromises(gd);
     }
 
     // in case the margins changed, draw margin pushers again
     function marginPushersAgain() {
-        if (!Plots.didMarginChange(oldMargins, fullLayout._size)) return;
+        if (!didMarginChange(oldMargins, fullLayout._size)) return;
 
         return syncOrAsync([marginPushers, subroutines.layoutStyles], gd);
     }
@@ -374,7 +374,7 @@ function _doPlot(gd, data, layout, config) {
 
     var deferAutoMargin = gd._context.deferAutoMargin;
 
-    var seq = [Plots.previousPromises, addFrames, drawFramework];
+    var seq = [previousPromises, addFrames, drawFramework];
 
     if (!deferAutoMargin) {
         seq.push(timedMarginPushers, marginPushersAgain);
@@ -400,10 +400,10 @@ function _doPlot(gd, data, layout, config) {
         timedDrawData,
         subroutines.finalDraw,
         initInteractions,
-        Plots.addLinks,
-        Plots.rehover,
-        Plots.redrag,
-        Plots.reselect
+        addLinks,
+        rehover,
+        redrag,
+        reselect
     );
 
     if (!deferAutoMargin) {
@@ -412,11 +412,11 @@ function _doPlot(gd, data, layout, config) {
             // happens outside of marginPushers where all the other automargins are
             // calculated. Would be much better to separate margin calculations from
             // component drawing - see https://github.com/plotly/plotly.js/issues/2704
-            Plots.doAutoMargin
+            doAutoMargin
         );
     }
 
-    seq.push(Plots.previousPromises);
+    seq.push(previousPromises);
 
     // even if everything we did was synchronous, return a promise
     // so that the caller doesn't care which route we took
@@ -441,7 +441,7 @@ function _doPlot(gd, data, layout, config) {
                 deferredSeq.push(
                     timedDrawData,
                     subroutines.finalDraw,
-                    Plots.doAutoMargin
+                    doAutoMargin
                 );
 
                 var deferredDone = syncOrAsync(deferredSeq, gd);
@@ -616,9 +616,9 @@ function newPlot(gd, data, layout, config) {
     gd = getGraphDiv(gd);
 
     // remove gl contexts
-    Plots.cleanPlot([], {}, gd._fullData || [], gd._fullLayout || {});
+    cleanPlot([], {}, gd._fullData || [], gd._fullLayout || {});
 
-    Plots.purge(gd);
+    plotsPurge(gd);
     return _doPlot(gd, data, layout, config);
 }
 
@@ -1330,14 +1330,14 @@ function restyle(gd, astr, val, _traces) {
     if (flags.fullReplot) {
         seq.push(_doPlot);
     } else {
-        seq.push(Plots.previousPromises);
+        seq.push(previousPromises);
 
         // maybe only call Plots.supplyDataDefaults in the splom case,
         // to skip over long and slow axes defaults
-        Plots.supplyDefaults(gd);
+        supplyDefaults(gd);
 
         if (flags.markerSize) {
-            Plots.doCalcdata(gd);
+            doCalcdata(gd);
             addAxRangeSequence(seq);
 
             // TODO
@@ -1353,7 +1353,7 @@ function restyle(gd, astr, val, _traces) {
         seq.push(emitAfterPlot);
     }
 
-    seq.push(Plots.rehover, Plots.redrag, Plots.reselect);
+    seq.push(rehover, redrag, reselect);
 
     Queue.add(gd, restyle, [gd, specs.undoit, specs.traces], restyle, [gd, specs.redoit, specs.traces]);
 
@@ -1665,7 +1665,7 @@ function _restyle(gd, aobj, traces) {
                 }
                 helpers.swapXYData(cont);
                 flags.calc = flags.clearAxisTypes = true;
-            } else if (Plots.dataArrayContainers.indexOf(param.parts[0]) !== -1) {
+            } else if (dataArrayContainers.indexOf(param.parts[0]) !== -1) {
                 // TODO: use manageArrays.applyContainerArrayChanges here too
                 helpers.manageArrayContainers(param, newVal, undoit);
                 flags.calc = true;
@@ -1797,11 +1797,11 @@ function relayout(gd, astr, val) {
     // even if we don't have anything left in aobj,
     // something may have happened within relayout that we
     // need to wait for
-    var seq = [Plots.previousPromises];
+    var seq = [previousPromises];
     if (flags.layoutReplot) {
         seq.push(subroutines.layoutReplot);
     } else if (Object.keys(aobj).length) {
-        axRangeSupplyDefaultsByPass(gd, flags, specs) || Plots.supplyDefaults(gd);
+        axRangeSupplyDefaultsByPass(gd, flags, specs) || supplyDefaults(gd);
 
         if (flags.legend) seq.push(subroutines.doLegend);
         if (flags.layoutstyle) seq.push(subroutines.layoutStyles);
@@ -1814,7 +1814,7 @@ function relayout(gd, astr, val) {
         seq.push(emitAfterPlot);
     }
 
-    seq.push(Plots.rehover, Plots.redrag, Plots.reselect);
+    seq.push(rehover, redrag, reselect);
 
     Queue.add(gd, relayout, [gd, specs.undoit], relayout, [gd, specs.redoit]);
 
@@ -2275,7 +2275,7 @@ function updateAutosize(gd) {
     var oldHeight = fullLayout.height;
 
     // calculate autosizing
-    if (gd.layout.autosize) Plots.plotAutoSize(gd, gd.layout, fullLayout);
+    if (gd.layout.autosize) plotAutoSize(gd, gd.layout, fullLayout);
 
     return fullLayout.width !== oldWidth || fullLayout.height !== oldHeight;
 }
@@ -2327,8 +2327,8 @@ function update(gd, traceUpdate, layoutUpdate, _traces) {
     } else if (restyleFlags.fullReplot) {
         seq.push(_doPlot);
     } else {
-        seq.push(Plots.previousPromises);
-        axRangeSupplyDefaultsByPass(gd, relayoutFlags, relayoutSpecs) || Plots.supplyDefaults(gd);
+        seq.push(previousPromises);
+        axRangeSupplyDefaultsByPass(gd, relayoutFlags, relayoutSpecs) || supplyDefaults(gd);
 
         if (restyleFlags.style) seq.push(subroutines.doTraceStyle);
         if (restyleFlags.colorbars || relayoutFlags.colorbars) seq.push(subroutines.doColorBars);
@@ -2342,7 +2342,7 @@ function update(gd, traceUpdate, layoutUpdate, _traces) {
         seq.push(emitAfterPlot);
     }
 
-    seq.push(Plots.rehover, Plots.redrag, Plots.reselect);
+    seq.push(rehover, redrag, reselect);
 
     Queue.add(gd, update, [gd, restyleSpecs.undoit, relayoutSpecs.undoit, restyleSpecs.traces], update, [
         gd,
@@ -2696,7 +2696,7 @@ function react(gd, data, layout, config) {
             // "true" skips updating calcdata and remapping arrays from calcTransforms,
             // which supplyDefaults usually does at the end, but we may need to NOT do
             // if the diff (which we haven't determined yet) says we'll recalc
-            Plots.supplyDefaults(gd, { skipUpdateCalc: true });
+            supplyDefaults(gd, { skipUpdateCalc: true });
 
             var newFullData = gd._fullData;
             var newFullLayout = gd._fullLayout;
@@ -2732,7 +2732,7 @@ function react(gd, data, layout, config) {
                 }
                 // otherwise do the calcdata updates and calcTransform array remaps that we skipped earlier
             } else {
-                Plots.supplyDefaultsUpdateCalc(gd.calcdata, newFullData);
+                supplyDefaultsUpdateCalc(gd.calcdata, newFullData);
             }
 
             // Note: what restyle/relayout use impliedEdits and clearAxisTypes for
@@ -2743,7 +2743,7 @@ function react(gd, data, layout, config) {
 
             if (frames) {
                 gd._transitionData = {};
-                Plots.createTransitionData(gd);
+                createTransitionData(gd);
                 seq.push(addFrames);
             }
 
@@ -2754,11 +2754,11 @@ function react(gd, data, layout, config) {
             if (newFullLayout.transition && (restyleFlags.anim || relayoutFlags.anim)) {
                 if (relayoutFlags.ticks) seq.push(subroutines.doTicksRelayout);
 
-                Plots.doCalcdata(gd);
+                doCalcdata(gd);
                 subroutines.doAutoRangeAndConstraints(gd);
 
                 seq.push(function () {
-                    return Plots.transitionFromReact(gd, restyleFlags, relayoutFlags, oldFullLayout);
+                    return transitionFromReact(gd, restyleFlags, relayoutFlags, oldFullLayout);
                 });
             } else if (restyleFlags.fullReplot || relayoutFlags.layoutReplot) {
                 gd._fullLayout._skipDefaults = true;
@@ -2782,7 +2782,7 @@ function react(gd, data, layout, config) {
                     }
                 }
 
-                seq.push(Plots.previousPromises);
+                seq.push(previousPromises);
                 if (restyleFlags.style) seq.push(subroutines.doTraceStyle);
                 if (restyleFlags.colorbars || relayoutFlags.colorbars) seq.push(subroutines.doColorBars);
                 if (relayoutFlags.legend) seq.push(subroutines.doLegend);
@@ -2794,7 +2794,7 @@ function react(gd, data, layout, config) {
                 seq.push(emitAfterPlot);
             }
 
-            seq.push(Plots.rehover, Plots.redrag, Plots.reselect);
+            seq.push(rehover, redrag, reselect);
 
             plotDone = syncOrAsync(seq, gd);
             if (!plotDone || !plotDone.then) plotDone = Promise.resolve(gd);
@@ -3137,7 +3137,7 @@ function animate(gd, frameOrGroupNameOrFrameList, animationOpts) {
         trans._frameQueue = [];
     }
 
-    animationOpts = Plots.supplyAnimationDefaults(animationOpts);
+    animationOpts = supplyAnimationDefaults(animationOpts);
     var transitionOpts = animationOpts.transition;
     var frameOpts = animationOpts.frame;
 
@@ -3211,7 +3211,7 @@ function animate(gd, frameOrGroupNameOrFrameList, animationOpts) {
 
                 if (frameList[i].type === 'byname') {
                     // If it's a named frame, compute it:
-                    computedFrame = Plots.computeFrame(gd, frameList[i].name);
+                    computedFrame = computeFrame(gd, frameList[i].name);
                 } else {
                     // Otherwise we must have been given a simple object, so treat
                     // the input itself as the computed frame.
@@ -3292,7 +3292,7 @@ function animate(gd, frameOrGroupNameOrFrameList, animationOpts) {
                 // This is simply called and it's left to .transition to decide how to manage
                 // interrupting current transitions. That means we don't need to worry about
                 // how it resolves or what happens after this:
-                Plots.transition(
+                plotsTransition(
                     gd,
                     newFrame.frame.data,
                     newFrame.frame.layout,
@@ -3557,7 +3557,7 @@ function addFrames(gd, frameList, indices) {
         _frameHashLocal[lookupName] = { name: lookupName };
 
         insertions.push({
-            frame: Plots.supplyFrameDefaults(frameList[i]),
+            frame: supplyFrameDefaults(frameList[i]),
             index: indices && indices[i] !== undefined && indices[i] !== null ? indices[i] : bigIndex + i
         });
     }
@@ -3606,14 +3606,14 @@ function addFrames(gd, frameList, indices) {
         }
     }
 
-    var undoFunc = Plots.modifyFrames;
-    var redoFunc = Plots.modifyFrames;
+    var undoFunc = modifyFrames;
+    var redoFunc = modifyFrames;
     var undoArgs = [gd, revops];
     var redoArgs = [gd, ops];
 
     if (Queue) Queue.add(gd, undoFunc, undoArgs, redoFunc, redoArgs);
 
-    return Plots.modifyFrames(gd, ops);
+    return modifyFrames(gd, ops);
 }
 
 /**
@@ -3653,14 +3653,14 @@ function deleteFrames(gd, frameList) {
         revops.unshift({ type: 'insert', index: idx, value: _frames[idx] });
     }
 
-    var undoFunc = Plots.modifyFrames;
-    var redoFunc = Plots.modifyFrames;
+    var undoFunc = modifyFrames;
+    var redoFunc = modifyFrames;
     var undoArgs = [gd, revops];
     var redoArgs = [gd, ops];
 
     if (Queue) Queue.add(gd, undoFunc, undoArgs, redoFunc, redoArgs);
 
-    return Plots.modifyFrames(gd, ops);
+    return modifyFrames(gd, ops);
 }
 
 /**
@@ -3676,10 +3676,10 @@ function purge(gd) {
     var fullData = gd._fullData || [];
 
     // remove gl contexts
-    Plots.cleanPlot([], {}, fullData, fullLayout);
+    cleanPlot([], {}, fullData, fullLayout);
 
     // purge properties
-    Plots.purge(gd);
+    plotsPurge(gd);
 
     // purge event emitter methods
     Events.purge(gd);

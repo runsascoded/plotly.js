@@ -1,7 +1,7 @@
 import { select } from 'd3-selection';
 import Registry from '../../registry.js';
 import { ensureSingle, extendFlat, pushUnique, sorterAsc } from '../../lib/index.js';
-import Plots from '../plots.js';
+import { style as plotsStyle } from '../plots.js';
 import { setClipUrl } from '../../components/drawing/index.js';
 import { getModuleCalcData } from '../get_data.js';
 import axisIds from './axis_ids.js';
@@ -454,7 +454,7 @@ export var drawFramework = function(gd) {
 export var rangePlot = function(gd, plotinfo, cdSubplot) {
     makeSubplotLayer(gd, plotinfo);
     plotOne(gd, plotinfo, cdSubplot);
-    Plots.style(gd);
+    plotsStyle(gd);
 };
 
 function makeSubplotData(gd) {

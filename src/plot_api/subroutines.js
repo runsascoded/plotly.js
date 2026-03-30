@@ -1,6 +1,6 @@
 import { select } from 'd3-selection';
 import Registry from '../registry.js';
-import Plots from '../plots/plots.js';
+import { allowAutoMargin, autoMargin, doAutoMargin, previousPromises, style } from '../plots/plots.js';
 import { ensureSingle, ensureSingleById, isBottomAnchor, isLeftAnchor, isMiddleAnchor, isRightAnchor, isTopAnchor, pushUnique, syncOrAsync } from '../lib/index.js';
 import svgTextUtils from '../lib/svg_text_utils.js';
 import clearGlCanvases from '../lib/clear_gl_canvases.js';
@@ -22,7 +22,7 @@ var SVG_TEXT_ANCHOR_MIDDLE = 'middle';
 var SVG_TEXT_ANCHOR_END = 'end';
 
 export var layoutStyles = function(gd) {
-    return syncOrAsync([Plots.doAutoMargin, lsInner], gd);
+    return syncOrAsync([doAutoMargin, lsInner], gd);
 };
 
 function overlappingDomain(xDomain, yDomain, domains) {
@@ -68,7 +68,7 @@ function lsInner(gd) {
 
     // _has('cartesian') means SVG specifically
     if(!fullLayout._has('cartesian')) {
-        return Plots.previousPromises(gd);
+        return previousPromises(gd);
     }
 
     function getLinePosition(ax, counterAx, side) {
@@ -346,7 +346,7 @@ function lsInner(gd) {
 
     Axes.makeClipPaths(gd);
 
-    return Plots.previousPromises(gd);
+    return previousPromises(gd);
 }
 
 function shouldShowLinesOrTicks(ax, subplot) {
@@ -540,8 +540,8 @@ function applyTitleAutoMargin(gd, y, pushMargin, titleHeight) {
         reservedPush[position] = pushMargin;
         gd._fullLayout._reservedMargin[titleID] = reservedPush;
     }
-    Plots.allowAutoMargin(gd, titleID);
-    Plots.autoMargin(gd, titleID, push);
+    allowAutoMargin(gd, titleID);
+    autoMargin(gd, titleID, push);
 }
 
 function getMainTitleX(fullLayout, textAnchor) {
@@ -654,15 +654,15 @@ export var doTraceStyle = function(gd) {
         redrawReglTraces(gd);
     }
 
-    Plots.style(gd);
+    style(gd);
     Registry.getComponentMethod('legend', 'draw')(gd);
 
-    return Plots.previousPromises(gd);
+    return previousPromises(gd);
 };
 
 export var doColorBars = function(gd) {
     Registry.getComponentMethod('colorbar', 'draw')(gd);
-    return Plots.previousPromises(gd);
+    return previousPromises(gd);
 };
 
 export var layoutReplot = function(gd) {
@@ -673,7 +673,7 @@ export var layoutReplot = function(gd) {
 
 export var doLegend = function(gd) {
     Registry.getComponentMethod('legend', 'draw')(gd);
-    return Plots.previousPromises(gd);
+    return previousPromises(gd);
 };
 
 export var doTicksRelayout = function(gd) {
@@ -686,7 +686,7 @@ export var doTicksRelayout = function(gd) {
     }
 
     drawMainTitle(gd);
-    return Plots.previousPromises(gd);
+    return previousPromises(gd);
 };
 
 export var doModeBar = function(gd) {
@@ -699,7 +699,7 @@ export var doModeBar = function(gd) {
         if(updateFx) updateFx(gd);
     }
 
-    return Plots.previousPromises(gd);
+    return previousPromises(gd);
 };
 
 export var doCamera = function(gd) {
@@ -728,7 +728,7 @@ export var drawData = function(gd) {
     redrawReglTraces(gd);
 
     // styling separate from drawing
-    Plots.style(gd);
+    style(gd);
 
     // draw components that can be drawn on axes,
     // and that do not push the margins
@@ -740,7 +740,7 @@ export var drawData = function(gd) {
     // Mark the first render as complete
     fullLayout._replotting = false;
 
-    return Plots.previousPromises(gd);
+    return previousPromises(gd);
 };
 
 export var redrawReglTraces = function(gd) {

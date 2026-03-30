@@ -15,7 +15,7 @@ import _alignment from '../../constants/alignment.js';
 const { FROM_TL } = _alignment;
 import clearGlCanvases from '../../lib/clear_gl_canvases.js';
 import { redrawReglTraces } from '../../plot_api/subroutines.js';
-import Plots from '../plots.js';
+import { previousPromises } from '../plots.js';
 import { getFromId } from './axis_ids.js';
 import scaleZoom from './scale_zoom.js';
 import constants from './constants.js';
@@ -853,7 +853,7 @@ function makeDragBox(gd, plotinfo, x, y, w, h, ns, ew) {
         // since we may have been redrawing some things during the drag, we may have
         // accumulated MathJax promises - wait for them before we relayout.
         syncOrAsync([
-            Plots.previousPromises,
+            previousPromises,
             function() {
                 gd._fullLayout._replotting = false;
                 Registry.call('_guiRelayout', gd, updates);

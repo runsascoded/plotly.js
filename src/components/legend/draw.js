@@ -2,7 +2,7 @@ import { select } from 'd3-selection';
 import { zoom as d3Zoom } from 'd3-zoom';
 import { drag as d3Drag } from 'd3-drag';
 import { constrain, ensureSingle, ensureSingleById, identity, isBottomAnchor, isCenterAnchor, isMiddleAnchor, isRightAnchor, log, syncOrAsync, templateString } from '../../lib/index.js';
-import Plots from '../../plots/plots.js';
+import { autoMargin, previousPromises } from '../../plots/plots.js';
 import Registry from '../../registry.js';
 import Events from '../../lib/events.js';
 import dragElement from '../dragelement/index.js';
@@ -145,7 +145,7 @@ function drawOne(gd, opts) {
     if(!inHover && (!fullLayout.showlegend || !legendData.length)) {
         layer.selectAll('.' + legendId).remove();
         fullLayout._topdefs.select('#' + clipId).remove();
-        return Plots.autoMargin(gd, legendId);
+        return autoMargin(gd, legendId);
     }
 
     var legend = ensureSingle(layer, 'g', legendId, function(s) {
@@ -206,7 +206,7 @@ function drawOne(gd, opts) {
     .each(function() { if(!inHover) select(this).call(setupTraceToggle, gd, legendId); });
 
     syncOrAsync([
-        Plots.previousPromises,
+        previousPromises,
         function() { return computeLegendDimensions(gd, groups, traces, legendObj); },
         function() {
             var gs = fullLayout._size;
@@ -973,7 +973,7 @@ function expandMargin(gd, legendId, lx, ly) {
     };
 
     if(isPaperX && isPaperY) {
-        return Plots.autoMargin(gd, legendId, {
+        return autoMargin(gd, legendId, {
             x: legendObj.x,
             y: legendObj.y,
             l: legendObj._width * (FROM_TL[xanchor]),

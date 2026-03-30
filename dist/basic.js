@@ -4857,9 +4857,9 @@ var Plotly = (() => {
     }
     return this.each((value == null ? tweenRemove : tweenFunction)(id2, name7, value));
   }
-  function tweenValue(transition3, name7, value) {
-    var id2 = transition3._id;
-    transition3.each(function() {
+  function tweenValue(transition4, name7, value) {
+    var id2 = transition4._id;
+    transition4.each(function() {
       var schedule = set2(this, id2);
       (schedule.value || (schedule.value = {}))[name7] = value.apply(this, arguments);
     });
@@ -5035,9 +5035,9 @@ var Plotly = (() => {
   }
 
   // node_modules/.pnpm/d3-transition@3.0.1_d3-selection@3.0.0/node_modules/d3-transition/src/transition/merge.js
-  function merge_default2(transition3) {
-    if (transition3._id !== this._id) throw new Error();
-    for (var groups0 = this._groups, groups1 = transition3._groups, m0 = groups0.length, m1 = groups1.length, m = Math.min(m0, m1), merges = new Array(m0), j = 0; j < m; ++j) {
+  function merge_default2(transition4) {
+    if (transition4._id !== this._id) throw new Error();
+    for (var groups0 = this._groups, groups1 = transition4._groups, m0 = groups0.length, m1 = groups1.length, m = Math.min(m0, m1), merges = new Array(m0), j = 0; j < m; ++j) {
       for (var group0 = groups0[j], group1 = groups1[j], n = group0.length, merge = merges[j] = new Array(n), node, i = 0; i < n; ++i) {
         if (node = group0[i] || group1[i]) {
           merge[i] = node;
@@ -5801,8 +5801,8 @@ var Plotly = (() => {
     var notifierContainer = select_default2("body").selectAll(".plotly-notifier").data([0]);
     notifierContainer.enter().append("div").classed("plotly-notifier", true);
     var notes = notifierContainer.selectAll(".notifier-note").data(NOTEDATA);
-    function killNote(transition3) {
-      transition3.duration(700).style("opacity", 0).on("end", function(thisText) {
+    function killNote(transition4) {
+      transition4.duration(700).style("opacity", 0).on("end", function(thisText) {
         var thisIndex = NOTEDATA.indexOf(thisText);
         if (thisIndex !== -1) NOTEDATA.splice(thisIndex, 1);
         select_default2(this).remove();
@@ -6152,17 +6152,17 @@ var Plotly = (() => {
   }
   function addRelatedStyleRule(uid, selector, styleString) {
     var id2 = "plotly.js-style-" + uid;
-    var style6 = document.getElementById(id2);
-    if (style6 && style6.matches(".no-inline-styles")) {
+    var style7 = document.getElementById(id2);
+    if (style7 && style7.matches(".no-inline-styles")) {
       return;
     }
-    if (!style6) {
-      style6 = document.createElement("style");
-      style6.setAttribute("id", id2);
-      style6.appendChild(document.createTextNode(""));
-      document.head.appendChild(style6);
+    if (!style7) {
+      style7 = document.createElement("style");
+      style7.setAttribute("id", id2);
+      style7.appendChild(document.createTextNode(""));
+      document.head.appendChild(style7);
     }
-    var styleSheet = style6.sheet;
+    var styleSheet = style7.sheet;
     if (!styleSheet) {
       loggers_default.warn("Cannot addRelatedStyleRule, probably due to strict CSP...");
     } else if (styleSheet.insertRule) {
@@ -6173,8 +6173,8 @@ var Plotly = (() => {
   }
   function deleteRelatedStyleRule(uid) {
     var id2 = "plotly.js-style-" + uid;
-    var style6 = document.getElementById(id2);
-    if (style6) removeElement(style6);
+    var style7 = document.getElementById(id2);
+    if (style7) removeElement(style7);
   }
   function setStyleOnHover(selector, activeSelector, childSelector, activeStyle, inactiveStyle, element) {
     var activeStyleParts = activeStyle.split(":");
@@ -6235,8 +6235,8 @@ var Plotly = (() => {
     return out;
   }
   function getElementTransformMatrix(element) {
-    var style6 = window.getComputedStyle(element, null);
-    var transform2 = style6.getPropertyValue("-webkit-transform") || style6.getPropertyValue("-moz-transform") || style6.getPropertyValue("-ms-transform") || style6.getPropertyValue("-o-transform") || style6.getPropertyValue("transform");
+    var style7 = window.getComputedStyle(element, null);
+    var transform2 = style7.getPropertyValue("-webkit-transform") || style7.getPropertyValue("-moz-transform") || style7.getPropertyValue("-ms-transform") || style7.getPropertyValue("-o-transform") || style7.getPropertyValue("transform");
     if (transform2 === "none") return null;
     return transform2.replace("matrix", "").replace("3d", "").slice(1, -1).split(",").map(function(n) {
       return +n;
@@ -10773,8 +10773,8 @@ var Plotly = (() => {
       }
     }
   };
-  var coerce = function(containerIn, containerOut, attributes4, attribute, dflt) {
-    var opts = nestedProperty(attributes4, attribute).get();
+  var coerce = function(containerIn, containerOut, attributes5, attribute, dflt) {
+    var opts = nestedProperty(attributes5, attribute).get();
     var propIn = nestedProperty(containerIn, attribute);
     var propOut = nestedProperty(containerOut, attribute);
     var v = propIn.get();
@@ -10806,9 +10806,9 @@ var Plotly = (() => {
     }
     return out;
   };
-  var coerce2 = function(containerIn, containerOut, attributes4, attribute, dflt) {
+  var coerce2 = function(containerIn, containerOut, attributes5, attribute, dflt) {
     var propIn = nestedProperty(containerIn, attribute);
-    var propOut = coerce(containerIn, containerOut, attributes4, attribute, dflt);
+    var propOut = coerce(containerIn, containerOut, attributes5, attribute, dflt);
     var valIn = propIn.get();
     return valIn !== void 0 && valIn !== null ? propOut : false;
   };
@@ -13290,7 +13290,7 @@ var Plotly = (() => {
     return recurseIntoValObject(valObject, parts, 1);
   };
   function layoutHeadAttr(fullLayout, head) {
-    var i, key, _module, attributes4;
+    var i, key, _module, attributes5;
     var basePlotModules = fullLayout._basePlotModules;
     if (basePlotModules) {
       var out;
@@ -13308,9 +13308,9 @@ var Plotly = (() => {
     var modules2 = fullLayout._modules;
     if (modules2) {
       for (i = 0; i < modules2.length; i++) {
-        attributes4 = modules2[i].layoutAttributes;
-        if (attributes4 && head in attributes4) {
-          return attributes4[head];
+        attributes5 = modules2[i].layoutAttributes;
+        if (attributes5 && head in attributes5) {
+          return attributes5[head];
         }
       }
     }
@@ -13366,45 +13366,45 @@ var Plotly = (() => {
   function getTraceAttributes(type) {
     var _module, basePlotModule;
     _module = registry_default.modules[type]._module, basePlotModule = _module.basePlotModule;
-    var attributes4 = {};
-    attributes4.type = null;
+    var attributes5 = {};
+    attributes5.type = null;
     var copyBaseAttributes = extendDeepAll({}, attributes_default2);
     var copyModuleAttributes = extendDeepAll({}, _module.attributes);
     crawl2(copyModuleAttributes, function(attr2, attrName, attrs2, level, fullAttrString) {
       nestedProperty2(copyBaseAttributes, fullAttrString).set(void 0);
       if (attr2 === void 0) nestedProperty2(copyModuleAttributes, fullAttrString).set(void 0);
     });
-    extendDeepAll(attributes4, copyBaseAttributes);
+    extendDeepAll(attributes5, copyBaseAttributes);
     if (registry_default.traceIs(type, "noOpacity")) {
-      delete attributes4.opacity;
+      delete attributes5.opacity;
     }
     if (!registry_default.traceIs(type, "showLegend")) {
-      delete attributes4.showlegend;
-      delete attributes4.legendgroup;
+      delete attributes5.showlegend;
+      delete attributes5.legendgroup;
     }
     if (registry_default.traceIs(type, "noHover")) {
-      delete attributes4.hoverinfo;
-      delete attributes4.hoverlabel;
+      delete attributes5.hoverinfo;
+      delete attributes5.hoverlabel;
     }
     if (!_module.selectPoints) {
-      delete attributes4.selectedpoints;
+      delete attributes5.selectedpoints;
     }
-    extendDeepAll(attributes4, copyModuleAttributes);
+    extendDeepAll(attributes5, copyModuleAttributes);
     if (basePlotModule.attributes) {
-      extendDeepAll(attributes4, basePlotModule.attributes);
+      extendDeepAll(attributes5, basePlotModule.attributes);
     }
-    attributes4.type = type;
+    attributes5.type = type;
     var out = {
       meta: _module.meta || {},
       categories: _module.categories || {},
       animatable: Boolean(_module.animatable),
       type,
-      attributes: formatAttributes(attributes4)
+      attributes: formatAttributes(attributes5)
     };
     if (_module.layoutAttributes) {
-      var layoutAttributes2 = {};
-      extendDeepAll(layoutAttributes2, _module.layoutAttributes);
-      out.layoutAttributes = formatAttributes(layoutAttributes2);
+      var layoutAttributes3 = {};
+      extendDeepAll(layoutAttributes3, _module.layoutAttributes);
+      out.layoutAttributes = formatAttributes(layoutAttributes3);
     }
     if (!_module.animatable) {
       crawl2(out, function(attr2) {
@@ -13416,19 +13416,19 @@ var Plotly = (() => {
     return out;
   }
   function getLayoutAttributes() {
-    var layoutAttributes2 = {};
+    var layoutAttributes3 = {};
     var key, _module;
-    extendDeepAll(layoutAttributes2, layout_attributes_default2);
+    extendDeepAll(layoutAttributes3, layout_attributes_default2);
     for (key in registry_default.subplotsRegistry) {
       _module = registry_default.subplotsRegistry[key];
       if (!_module.layoutAttributes) continue;
       if (Array.isArray(_module.attr)) {
         for (var i = 0; i < _module.attr.length; i++) {
-          handleBasePlotModule(layoutAttributes2, _module, _module.attr[i]);
+          handleBasePlotModule(layoutAttributes3, _module, _module.attr[i]);
         }
       } else {
         var astr = _module.attr === "subplot" ? _module.name : _module.attr;
-        handleBasePlotModule(layoutAttributes2, _module, astr);
+        handleBasePlotModule(layoutAttributes3, _module, astr);
       }
     }
     for (key in registry_default.componentsRegistry) {
@@ -13438,19 +13438,19 @@ var Plotly = (() => {
         var subplots = schema.subplots;
         if (subplots && subplots.xaxis && !subplots.yaxis) {
           for (var xkey in subplots.xaxis) {
-            delete layoutAttributes2.yaxis[xkey];
+            delete layoutAttributes3.yaxis[xkey];
           }
         }
-        delete layoutAttributes2.xaxis.shift;
-        delete layoutAttributes2.xaxis.autoshift;
+        delete layoutAttributes3.xaxis.shift;
+        delete layoutAttributes3.xaxis.autoshift;
       } else if (_module.name === "colorscale") {
-        extendDeepAll(layoutAttributes2, _module.layoutAttributes);
+        extendDeepAll(layoutAttributes3, _module.layoutAttributes);
       } else if (_module.layoutAttributes) {
-        insertAttrs(layoutAttributes2, _module.layoutAttributes, _module.name);
+        insertAttrs(layoutAttributes3, _module.layoutAttributes, _module.name);
       }
     }
     return {
-      layoutAttributes: formatAttributes(layoutAttributes2)
+      layoutAttributes: formatAttributes(layoutAttributes3)
     };
   }
   function getFramesAttributes() {
@@ -13514,8 +13514,8 @@ var Plotly = (() => {
     }
     walk(attrs2);
   }
-  function handleBasePlotModule(layoutAttributes2, _module, astr) {
-    var np = nestedProperty2(layoutAttributes2, astr);
+  function handleBasePlotModule(layoutAttributes3, _module, astr) {
+    var np = nestedProperty2(layoutAttributes3, astr);
     var attrs2 = extendDeepAll({}, _module.layoutAttributes);
     attrs2[IS_SUBPLOT_OBJ] = true;
     np.set(attrs2);
@@ -14178,17 +14178,15 @@ var Plotly = (() => {
 
   // src/plots/plots.js
   var { BADNUM: BADNUM5 } = numerical_default;
-  var plots = {};
-  extendFlat(plots, registry_default);
-  plots.attributes = attributes_default2;
-  plots.attributes.type.values = plots.allTypes;
-  plots.fontAttrs = font_attributes_default;
-  plots.layoutAttributes = layout_attributes_default2;
-  plots.executeAPICommand = command_default.executeAPICommand;
-  plots.computeAPICommandBindings = command_default.computeAPICommandBindings;
-  plots.manageCommandObserver = command_default.manageCommandObserver;
-  plots.hasSimpleAPICommandBindings = command_default.hasSimpleAPICommandBindings;
-  plots.redrawText = function(gd) {
+  var attributes = attributes_default2;
+  attributes.type.values = registry_default.allTypes;
+  var fontAttrs = font_attributes_default;
+  var layoutAttributes = layout_attributes_default2;
+  var executeAPICommand2 = command_default.executeAPICommand;
+  var computeAPICommandBindings2 = command_default.computeAPICommandBindings;
+  var manageCommandObserver2 = command_default.manageCommandObserver;
+  var hasSimpleAPICommandBindings2 = command_default.hasSimpleAPICommandBindings;
+  function redrawText(gd) {
     gd = getGraphDiv(gd);
     return new Promise(function(resolve) {
       setTimeout(function() {
@@ -14196,11 +14194,11 @@ var Plotly = (() => {
         registry_default.getComponentMethod("annotations", "draw")(gd);
         registry_default.getComponentMethod("legend", "draw")(gd);
         registry_default.getComponentMethod("colorbar", "draw")(gd);
-        resolve(plots.previousPromises(gd));
+        resolve(previousPromises(gd));
       }, 300);
     });
-  };
-  plots.resize = function(gd) {
+  }
+  function resize(gd) {
     gd = getGraphDiv(gd);
     var resolveLastResize;
     var p = new Promise(function(resolve, reject) {
@@ -14230,15 +14228,15 @@ var Plotly = (() => {
     });
     if (resolveLastResize) resolveLastResize(p);
     return p;
-  };
-  plots.previousPromises = function(gd) {
+  }
+  function previousPromises(gd) {
     if ((gd._promises || []).length) {
       return Promise.all(gd._promises).then(function() {
         gd._promises = [];
       });
     }
-  };
-  plots.addLinks = function(gd) {
+  }
+  function addLinks(gd) {
     if (!gd._context.showLink && !gd._context.showSources) return;
     var fullLayout = gd._fullLayout;
     var linkContainer = ensureSingle(fullLayout._paper, "text", "js-plot-link-container", function(s) {
@@ -14270,7 +14268,7 @@ var Plotly = (() => {
     if (gd._context.showSources) gd._context.showSources(gd);
     if (gd._context.showLink) positionPlayWithData(gd, toolspan);
     spacespan.text(toolspan.text() && sourcespan.text() ? " - " : "");
-  };
+  }
   function positionPlayWithData(gd, container) {
     container.text("");
     var link = container.append("a").attr({
@@ -14280,7 +14278,7 @@ var Plotly = (() => {
     }).text(gd._context.linkText + " " + String.fromCharCode(187));
     if (gd._context.sendData) {
       link.on("click", function() {
-        plots.sendDataToCloud(gd);
+        sendDataToCloud(gd);
       });
     } else {
       var path = window.location.pathname.split("/");
@@ -14291,7 +14289,7 @@ var Plotly = (() => {
       });
     }
   }
-  plots.sendDataToCloud = function(gd) {
+  function sendDataToCloud(gd) {
     var baseUrl = (window.PLOTLYENV || {}).BASE_URL || gd._context.plotlyServerURL;
     if (!baseUrl) return;
     gd.emit("plotly_beforeexport");
@@ -14305,12 +14303,12 @@ var Plotly = (() => {
       type: "text",
       name: "data"
     });
-    hiddenformInput.node().value = plots.graphJson(gd, false, "keepdata");
+    hiddenformInput.node().value = graphJson(gd, false, "keepdata");
     hiddenform.node().submit();
     hiddenformDiv.remove();
     gd.emit("plotly_afterexport");
     return false;
-  };
+  }
   var d3FormatKeys = [
     "days",
     "shortDays",
@@ -14331,7 +14329,7 @@ var Plotly = (() => {
     "dayMonth",
     "dayMonthYear"
   ];
-  plots.supplyDefaults = function(gd, opts) {
+  function supplyDefaults(gd, opts) {
     var skipUpdateCalc = opts && opts.skipUpdateCalc;
     var oldFullLayout = gd._fullLayout || {};
     if (oldFullLayout._skipDefaults) {
@@ -14346,7 +14344,7 @@ var Plotly = (() => {
     var oldCalcdata = gd.calcdata || [];
     var context = gd._context || {};
     var i;
-    if (!gd._transitionData) plots.createTransitionData(gd);
+    if (!gd._transitionData) createTransitionData(gd);
     newFullLayout._dfltTitle = {
       plot: localize(gd, "Click to enter Plot title"),
       subtitle: localize(gd, "Click to enter Plot subtitle"),
@@ -14361,18 +14359,18 @@ var Plotly = (() => {
     if (oldFullLayout._initialAutoSizeIsDone) {
       var oldWidth = oldFullLayout.width;
       var oldHeight = oldFullLayout.height;
-      plots.supplyLayoutGlobalDefaults(newLayout, newFullLayout, formatObj);
+      supplyLayoutGlobalDefaults(newLayout, newFullLayout, formatObj);
       if (!newLayout.width) newFullLayout.width = oldWidth;
       if (!newLayout.height) newFullLayout.height = oldHeight;
-      plots.sanitizeMargins(newFullLayout);
+      sanitizeMargins(newFullLayout);
     } else {
-      plots.supplyLayoutGlobalDefaults(newLayout, newFullLayout, formatObj);
+      supplyLayoutGlobalDefaults(newLayout, newFullLayout, formatObj);
       var missingWidthOrHeight = !newLayout.width || !newLayout.height;
       var autosize = newFullLayout.autosize;
       var autosizable = context.autosizable;
       var initialAutoSize = missingWidthOrHeight && (autosize || autosizable);
-      if (initialAutoSize) plots.plotAutoSize(gd, newLayout, newFullLayout);
-      else if (missingWidthOrHeight) plots.sanitizeMargins(newFullLayout);
+      if (initialAutoSize) plotAutoSize(gd, newLayout, newFullLayout);
+      else if (missingWidthOrHeight) sanitizeMargins(newFullLayout);
       if (!autosize && missingWidthOrHeight) {
         newLayout.width = newFullLayout.width;
         newLayout.height = newFullLayout.height;
@@ -14395,7 +14393,7 @@ var Plotly = (() => {
     newFullLayout._colorAxes = {};
     newFullLayout._requestRangeslider = {};
     newFullLayout._traceUids = getTraceUids(oldFullData, newData);
-    plots.supplyDataDefaults(newData, newFullData, newLayout, newFullLayout);
+    supplyDataDefaults(newData, newFullData, newLayout, newFullLayout);
     var splomXa = Object.keys(splomAxes.x);
     var splomYa = Object.keys(splomAxes.y);
     if (splomXa.length > 1 && splomYa.length > 1) {
@@ -14410,13 +14408,13 @@ var Plotly = (() => {
         pushUnique2(subplots.cartesian, k);
       }
     }
-    newFullLayout._has = plots._hasPlotType.bind(newFullLayout);
+    newFullLayout._has = _hasPlotType.bind(newFullLayout);
     if (oldFullData.length === newFullData.length) {
       for (i = 0; i < newFullData.length; i++) {
         relinkPrivateKeys2(newFullData[i], oldFullData[i]);
       }
     }
-    plots.supplyLayoutModuleDefaults(newLayout, newFullLayout, newFullData, gd._transitionData);
+    supplyLayoutModuleDefaults(newLayout, newFullLayout, newFullData, gd._transitionData);
     var _modules = newFullLayout._visibleModules;
     var crossTraceDefaultsFuncs = [];
     for (i = 0; i < _modules.length; i++) {
@@ -14427,8 +14425,8 @@ var Plotly = (() => {
       crossTraceDefaultsFuncs[i](newFullData, newFullLayout);
     }
     newFullLayout._hasOnlyLargeSploms = newFullLayout._basePlotModules.length === 1 && newFullLayout._basePlotModules[0].name === "splom" && splomXa.length > 15 && splomYa.length > 15 && newFullLayout.shapes.length === 0 && newFullLayout.images.length === 0;
-    plots.linkSubplots(newFullData, newFullLayout, oldFullData, oldFullLayout);
-    plots.cleanPlot(newFullData, newFullLayout, oldFullData, oldFullLayout);
+    linkSubplots(newFullData, newFullLayout, oldFullData, oldFullLayout);
+    cleanPlot(newFullData, newFullLayout, oldFullData, oldFullLayout);
     var hadCartesian = !!(oldFullLayout._has && oldFullLayout._has("cartesian"));
     var hasCartesian = !!(newFullLayout._has && newFullLayout._has("cartesian"));
     var hadBgLayer = hadCartesian;
@@ -14462,10 +14460,10 @@ var Plotly = (() => {
     initMargins(newFullLayout);
     registry_default.getComponentMethod("rangeslider", "makeData")(newFullLayout);
     if (!skipUpdateCalc && oldCalcdata.length === newFullData.length) {
-      plots.supplyDefaultsUpdateCalc(oldCalcdata, newFullData);
+      supplyDefaultsUpdateCalc(oldCalcdata, newFullData);
     }
-  };
-  plots.supplyDefaultsUpdateCalc = function(oldCalcdata, newFullData) {
+  }
+  function supplyDefaultsUpdateCalc(oldCalcdata, newFullData) {
     for (var i = 0; i < newFullData.length; i++) {
       var newTrace = newFullData[i];
       var cd0 = (oldCalcdata[i] || [])[0];
@@ -14483,7 +14481,7 @@ var Plotly = (() => {
         cd0.trace = newTrace;
       }
     }
-  };
+  }
   function getTraceUids(oldFullData, newData) {
     var len2 = newData.length;
     var oldFullInput = [];
@@ -14619,7 +14617,7 @@ var Plotly = (() => {
       _meta.data = meta4data;
     }
   }
-  plots.createTransitionData = function(gd) {
+  function createTransitionData(gd) {
     if (!gd._transitionData) {
       gd._transitionData = {};
     }
@@ -14635,8 +14633,8 @@ var Plotly = (() => {
     if (!gd._transitionData._interruptCallbacks) {
       gd._transitionData._interruptCallbacks = [];
     }
-  };
-  plots._hasPlotType = function(category2) {
+  }
+  function _hasPlotType(category2) {
     var i;
     var basePlotModules = this._basePlotModules || [];
     for (i = 0; i < basePlotModules.length; i++) {
@@ -14650,8 +14648,8 @@ var Plotly = (() => {
       if (_module && _module.categories[category2]) return true;
     }
     return false;
-  };
-  plots.cleanPlot = function(newFullData, newFullLayout, oldFullData, oldFullLayout) {
+  }
+  function cleanPlot(newFullData, newFullLayout, oldFullData, oldFullLayout) {
     var i, j;
     var basePlotModules = oldFullLayout._basePlotModules || [];
     for (i = 0; i < basePlotModules.length; i++) {
@@ -14682,8 +14680,8 @@ var Plotly = (() => {
           oldFullLayout._infolayer.select(".cb" + oldUid).remove();
         }
       }
-  };
-  plots.linkSubplots = function(newFullData, newFullLayout, oldFullData, oldFullLayout) {
+  }
+  function linkSubplots(newFullData, newFullLayout, oldFullData, oldFullLayout) {
     var i, j;
     var oldSubplots = oldFullLayout._plots || {};
     var newSubplots = newFullLayout._plots = {};
@@ -14761,7 +14759,7 @@ var Plotly = (() => {
         }
       }
     }
-  };
+  }
   function findMainSubplot(ax, fullLayout) {
     var mockGd = { _fullLayout: fullLayout };
     var isX = ax._id.charAt(0) === "x";
@@ -14789,7 +14787,7 @@ var Plotly = (() => {
     }
     return mainSubplotID || nextBestMainSubplotID;
   }
-  plots.clearExpandedTraceDefaultColors = function(trace) {
+  function clearExpandedTraceDefaultColors(trace) {
     var colorAttrs, path, i;
     function locateColorAttrs(attr2, attrName, attrs2, level) {
       path[level] = attrName;
@@ -14813,8 +14811,8 @@ var Plotly = (() => {
         nestedProperty2(trace, colorAttrs[i]).set(null);
       }
     }
-  };
-  plots.supplyDataDefaults = function(dataIn, dataOut, layout, fullLayout) {
+  }
+  function supplyDataDefaults(dataIn, dataOut, layout, fullLayout) {
     var modules2 = fullLayout._modules;
     var visibleModules = fullLayout._visibleModules;
     var basePlotModules = fullLayout._basePlotModules;
@@ -14840,7 +14838,7 @@ var Plotly = (() => {
       trace = dataIn[i];
       fullTrace = templater.newTrace(trace);
       fullTrace.uid = fullLayout._traceUids[i];
-      plots.supplyTraceDefaults(trace, fullTrace, colorCnt, fullLayout, i);
+      supplyTraceDefaults(trace, fullTrace, colorCnt, fullLayout, i);
       fullTrace.index = i;
       fullTrace._input = trace;
       fullTrace._fullInput = fullTrace;
@@ -14864,8 +14862,8 @@ var Plotly = (() => {
       fullTrace.xaxis = carpetAxis.xaxis;
       fullTrace.yaxis = carpetAxis.yaxis;
     }
-  };
-  plots.supplyAnimationDefaults = function(opts) {
+  }
+  function supplyAnimationDefaults(opts) {
     opts = opts || {};
     var i;
     var optsOut = {};
@@ -14878,22 +14876,22 @@ var Plotly = (() => {
     if (Array.isArray(opts.frame)) {
       optsOut.frame = [];
       for (i = 0; i < opts.frame.length; i++) {
-        optsOut.frame[i] = plots.supplyAnimationFrameDefaults(opts.frame[i] || {});
+        optsOut.frame[i] = supplyAnimationFrameDefaults(opts.frame[i] || {});
       }
     } else {
-      optsOut.frame = plots.supplyAnimationFrameDefaults(opts.frame || {});
+      optsOut.frame = supplyAnimationFrameDefaults(opts.frame || {});
     }
     if (Array.isArray(opts.transition)) {
       optsOut.transition = [];
       for (i = 0; i < opts.transition.length; i++) {
-        optsOut.transition[i] = plots.supplyAnimationTransitionDefaults(opts.transition[i] || {});
+        optsOut.transition[i] = supplyAnimationTransitionDefaults(opts.transition[i] || {});
       }
     } else {
-      optsOut.transition = plots.supplyAnimationTransitionDefaults(opts.transition || {});
+      optsOut.transition = supplyAnimationTransitionDefaults(opts.transition || {});
     }
     return optsOut;
-  };
-  plots.supplyAnimationFrameDefaults = function(opts) {
+  }
+  function supplyAnimationFrameDefaults(opts) {
     var optsOut = {};
     function coerce3(attr2, dflt) {
       return lib_default.coerce(opts || {}, optsOut, animation_attributes_default.frame, attr2, dflt);
@@ -14901,8 +14899,8 @@ var Plotly = (() => {
     coerce3("duration");
     coerce3("redraw");
     return optsOut;
-  };
-  plots.supplyAnimationTransitionDefaults = function(opts) {
+  }
+  function supplyAnimationTransitionDefaults(opts) {
     var optsOut = {};
     function coerce3(attr2, dflt) {
       return lib_default.coerce(opts || {}, optsOut, animation_attributes_default.transition, attr2, dflt);
@@ -14910,8 +14908,8 @@ var Plotly = (() => {
     coerce3("duration");
     coerce3("easing");
     return optsOut;
-  };
-  plots.supplyFrameDefaults = function(frameIn) {
+  }
+  function supplyFrameDefaults(frameIn) {
     var frameOut = {};
     function coerce3(attr2, dflt) {
       return lib_default.coerce(frameIn, frameOut, frame_attributes_default, attr2, dflt);
@@ -14923,19 +14921,19 @@ var Plotly = (() => {
     coerce3("data");
     coerce3("layout");
     return frameOut;
-  };
-  plots.supplyTraceDefaults = function(traceIn, traceOut, colorIndex, layout, traceInIndex) {
+  }
+  function supplyTraceDefaults(traceIn, traceOut, colorIndex, layout, traceInIndex) {
     var colorway = layout.colorway || color_default.defaults;
     var defaultColor = colorway[colorIndex % colorway.length];
     var i;
     function coerce3(attr2, dflt) {
-      return lib_default.coerce(traceIn, traceOut, plots.attributes, attr2, dflt);
+      return lib_default.coerce(traceIn, traceOut, attributes, attr2, dflt);
     }
     var visible = coerce3("visible");
     coerce3("type");
     coerce3("name", layout._traceWord + " " + traceInIndex);
     coerce3("uirevision", layout.uirevision);
-    var _module = plots.getModule(traceOut);
+    var _module = registry_default.getModule(traceOut);
     traceOut._module = _module;
     if (_module) {
       var basePlotModule = _module.basePlotModule;
@@ -14967,13 +14965,13 @@ var Plotly = (() => {
         lib_default.coerce(
           traceIn,
           traceOut,
-          _module.attributes.showlegend ? _module.attributes : plots.attributes,
+          _module.attributes.showlegend ? _module.attributes : attributes,
           "showlegend"
         );
         lib_default.coerce(
           traceIn,
           traceOut,
-          _module.attributes.legend ? _module.attributes : plots.attributes,
+          _module.attributes.legend ? _module.attributes : attributes,
           "legend"
         );
         coerce3("legendwidth");
@@ -15007,10 +15005,10 @@ var Plotly = (() => {
       }
     }
     return traceOut;
-  };
-  plots.supplyLayoutGlobalDefaults = function(layoutIn, layoutOut, formatObj) {
+  }
+  function supplyLayoutGlobalDefaults(layoutIn, layoutOut, formatObj) {
     function coerce3(attr2, dflt) {
-      return lib_default.coerce(layoutIn, layoutOut, plots.layoutAttributes, attr2, dflt);
+      return lib_default.coerce(layoutIn, layoutOut, layoutAttributes, attr2, dflt);
     }
     var template = layoutIn.template;
     if (isPlainObject2(template)) {
@@ -15071,7 +15069,7 @@ var Plotly = (() => {
     coerce3("margin.b");
     coerce3("margin.pad");
     coerce3("margin.autoexpand");
-    if (layoutIn.width && layoutIn.height) plots.sanitizeMargins(layoutOut);
+    if (layoutIn.width && layoutIn.height) sanitizeMargins(layoutOut);
     registry_default.getComponentMethod("grid", "sizeDefaults")(layoutIn, layoutOut);
     coerce3("paper_bgcolor");
     coerce3("separators", formatObj.decimal + formatObj.thousands);
@@ -15108,23 +15106,23 @@ var Plotly = (() => {
       "supplyLayoutGlobalDefaults"
     )(layoutIn, layoutOut, coerce3);
     lib_default.coerce(layoutIn, layoutOut, layout_attributes_default3, "scattermode");
-  };
+  }
   function getComputedSize(attr2) {
     return typeof attr2 === "string" && attr2.slice(-2) === "px" && parseFloat(attr2);
   }
-  plots.plotAutoSize = function plotAutoSize(gd, layout, fullLayout) {
+  function plotAutoSize(gd, layout, fullLayout) {
     var context = gd._context || {};
     var frameMargins = context.frameMargins;
     var newWidth;
     var newHeight;
-    var isPlotDiv2 = isPlotDiv2(gd);
-    if (isPlotDiv2) gd.emit("plotly_autosize");
+    var isPlot = isPlotDiv(gd);
+    if (isPlot) gd.emit("plotly_autosize");
     if (context.fillFrame) {
       newWidth = window.innerWidth;
       newHeight = window.innerHeight;
       document.body.style.overflow = "hidden";
     } else {
-      var computedStyle = isPlotDiv2 ? window.getComputedStyle(gd) : {};
+      var computedStyle = isPlot ? window.getComputedStyle(gd) : {};
       newWidth = getComputedSize(computedStyle.width) || getComputedSize(computedStyle.maxWidth) || fullLayout.width;
       newHeight = getComputedSize(computedStyle.height) || getComputedSize(computedStyle.maxHeight) || fullLayout.height;
       if ((0, import_fast_isnumeric12.default)(frameMargins) && frameMargins > 0) {
@@ -15133,8 +15131,8 @@ var Plotly = (() => {
         newHeight = Math.round(factor * newHeight);
       }
     }
-    var minWidth = plots.layoutAttributes.width.min;
-    var minHeight = plots.layoutAttributes.height.min;
+    var minWidth = layoutAttributes.width.min;
+    var minHeight = layoutAttributes.height.min;
     if (newWidth < minWidth) newWidth = minWidth;
     if (newHeight < minHeight) newHeight = minHeight;
     var widthHasChanged = !layout.width && Math.abs(fullLayout.width - newWidth) > 1;
@@ -15146,9 +15144,9 @@ var Plotly = (() => {
     if (!gd._initialAutoSize) {
       gd._initialAutoSize = { width: newWidth, height: newHeight };
     }
-    plots.sanitizeMargins(fullLayout);
-  };
-  plots.supplyLayoutModuleDefaults = function(layoutIn, layoutOut, fullData, transitionData) {
+    sanitizeMargins(fullLayout);
+  }
+  function supplyLayoutModuleDefaults(layoutIn, layoutOut, fullData, transitionData) {
     var componentsRegistry2 = registry_default.componentsRegistry;
     var basePlotModules = layoutOut._basePlotModules;
     var component, i, _module;
@@ -15195,8 +15193,8 @@ var Plotly = (() => {
         _module.supplyLayoutDefaults(layoutIn, layoutOut, fullData);
       }
     }
-  };
-  plots.purge = function(gd) {
+  }
+  function purge(gd) {
     var fullLayout = gd._fullLayout || {};
     if (fullLayout._glcontainer !== void 0) {
       fullLayout._glcontainer.selectAll(".gl-canvas").remove();
@@ -15242,8 +15240,8 @@ var Plotly = (() => {
     delete gd._mouseDownTime;
     delete gd._legendMouseDownTime;
     if (gd.removeAllListeners) gd.removeAllListeners();
-  };
-  plots.style = function(gd) {
+  }
+  function style(gd) {
     var _modules = gd._fullLayout._visibleModules;
     var styleModules = [];
     var i;
@@ -15256,8 +15254,8 @@ var Plotly = (() => {
     for (i = 0; i < styleModules.length; i++) {
       styleModules[i](gd);
     }
-  };
-  plots.sanitizeMargins = function(fullLayout) {
+  }
+  function sanitizeMargins(fullLayout) {
     if (!fullLayout || !fullLayout.margin) return;
     var width = fullLayout.width;
     var height = fullLayout.height;
@@ -15275,13 +15273,13 @@ var Plotly = (() => {
       margin.t = Math.floor(correction * margin.t);
       margin.b = Math.floor(correction * margin.b);
     }
-  };
-  plots.clearAutoMarginIds = function(gd) {
+  }
+  function clearAutoMarginIds(gd) {
     gd._fullLayout._pushmarginIds = {};
-  };
-  plots.allowAutoMargin = function(gd, id2) {
+  }
+  function allowAutoMargin(gd, id2) {
     gd._fullLayout._pushmarginIds[id2] = 1;
-  };
+  }
   function initMargins(fullLayout) {
     var margin = fullLayout.margin;
     if (!fullLayout._size) {
@@ -15301,7 +15299,7 @@ var Plotly = (() => {
   }
   var MIN_SPECIFIED_WIDTH = 2;
   var MIN_SPECIFIED_HEIGHT = 2;
-  plots.autoMargin = function(gd, id2, o) {
+  function autoMargin(gd, id2, o) {
     var fullLayout = gd._fullLayout;
     var width = fullLayout.width;
     var height = fullLayout.height;
@@ -15358,10 +15356,10 @@ var Plotly = (() => {
         pushMarginIds[id2] = 1;
       }
       if (!fullLayout._replotting) {
-        return plots.doAutoMargin(gd);
+        return doAutoMargin(gd);
       }
     }
-  };
+  }
   function needsRedrawForShift(gd) {
     if ("_redrawFromAutoMarginCount" in gd._fullLayout) {
       return false;
@@ -15372,7 +15370,7 @@ var Plotly = (() => {
     }
     return false;
   }
-  plots.doAutoMargin = function(gd) {
+  function doAutoMargin(gd) {
     var fullLayout = gd._fullLayout;
     var width = fullLayout.width;
     var height = fullLayout.height;
@@ -15489,7 +15487,7 @@ var Plotly = (() => {
     gs.p = Math.round(margin.pad);
     gs.w = Math.round(width) - gs.l - gs.r;
     gs.h = Math.round(height) - gs.t - gs.b;
-    if (!fullLayout._replotting && (plots.didMarginChange(oldMargins, gs) || needsRedrawForShift(gd))) {
+    if (!fullLayout._replotting && (didMarginChange(oldMargins, gs) || needsRedrawForShift(gd))) {
       if ("_redrawFromAutoMarginCount" in fullLayout) {
         fullLayout._redrawFromAutoMarginCount++;
       } else {
@@ -15504,7 +15502,7 @@ var Plotly = (() => {
       }
     }
     refineTicks(gd);
-  };
+  }
   function refineTicks(gd) {
     var axList = axis_ids_default.list(gd, "", true);
     [
@@ -15518,7 +15516,7 @@ var Plotly = (() => {
     });
   }
   var marginKeys = ["l", "r", "t", "b", "p", "w", "h"];
-  plots.didMarginChange = function(margin0, margin1) {
+  function didMarginChange(margin0, margin1) {
     for (var i = 0; i < marginKeys.length; i++) {
       var k = marginKeys[i];
       var m0 = margin0[k];
@@ -15528,10 +15526,10 @@ var Plotly = (() => {
       }
     }
     return false;
-  };
-  plots.graphJson = function(gd, dataonly, mode, output, useDefaults, includeConfig) {
+  }
+  function graphJson(gd, dataonly, mode, output, useDefaults, includeConfig) {
     if (useDefaults && dataonly && !gd._fullData || useDefaults && !dataonly && !gd._fullLayout) {
-      plots.supplyDefaults(gd);
+      supplyDefaults(gd);
     }
     var data = useDefaults ? gd._fullData : gd.data;
     var layout = useDefaults ? gd._fullLayout : gd.layout;
@@ -15623,8 +15621,8 @@ var Plotly = (() => {
     if (frames) obj.frames = stripObj(frames);
     if (includeConfig) obj.config = stripObj(gd._context, true);
     return output === "object" ? obj : JSON.stringify(obj);
-  };
-  plots.modifyFrames = function(gd, operations) {
+  }
+  function modifyFrames(gd, operations) {
     var i, op, frame2;
     var _frames = gd._transitionData._frames;
     var _frameHash = gd._transitionData._frameHash;
@@ -15661,8 +15659,8 @@ var Plotly = (() => {
       }
     }
     return Promise.resolve();
-  };
-  plots.computeFrame = function(gd, frameName) {
+  }
+  function computeFrame(gd, frameName) {
     var frameLookup = gd._transitionData._frameHash;
     var i, traceIndices, traceIndex, destIndex;
     if (!frameName) {
@@ -15682,7 +15680,7 @@ var Plotly = (() => {
     var result = {};
     while (framePtr = frameStack.pop()) {
       if (framePtr.layout) {
-        result.layout = plots.extendLayout(result.layout, framePtr.layout);
+        result.layout = extendLayout(result.layout, framePtr.layout);
       }
       if (framePtr.data) {
         if (!result.data) {
@@ -15708,13 +15706,13 @@ var Plotly = (() => {
             destIndex = result.data.length;
             result.traces[destIndex] = traceIndex;
           }
-          result.data[destIndex] = plots.extendTrace(result.data[destIndex], framePtr.data[i]);
+          result.data[destIndex] = extendTrace(result.data[destIndex], framePtr.data[i]);
         }
       }
     }
     return result;
-  };
-  plots.recomputeFrameHash = function(gd) {
+  }
+  function recomputeFrameHash(gd) {
     var hash = gd._transitionData._frameHash = {};
     var frames = gd._transitionData._frames;
     for (var i = 0; i < frames.length; i++) {
@@ -15723,8 +15721,8 @@ var Plotly = (() => {
         hash[frame2.name] = frame2;
       }
     }
-  };
-  plots.extendObjectWithContainers = function(dest, src, containerPaths) {
+  }
+  function extendObjectWithContainers(dest, src, containerPaths) {
     var containerProp, containerVal, i, j, srcProp, destProp, srcContainer, destContainer;
     var copy2 = extendDeepNoArrays({}, src || {});
     var expandedObj = expandObjectPaths(copy2);
@@ -15757,23 +15755,23 @@ var Plotly = (() => {
           var srcObj = srcContainer[j];
           if (srcObj === null) destContainer[j] = null;
           else {
-            destContainer[j] = plots.extendObjectWithContainers(destContainer[j], srcObj);
+            destContainer[j] = extendObjectWithContainers(destContainer[j], srcObj);
           }
         }
         destProp.set(destContainer);
       }
     }
     return dest;
-  };
-  plots.dataArrayContainers = ["transforms", "dimensions"];
-  plots.layoutArrayContainers = registry_default.layoutArrayContainers;
-  plots.extendTrace = function(destTrace, srcTrace) {
-    return plots.extendObjectWithContainers(destTrace, srcTrace, plots.dataArrayContainers);
-  };
-  plots.extendLayout = function(destLayout, srcLayout) {
-    return plots.extendObjectWithContainers(destLayout, srcLayout, plots.layoutArrayContainers);
-  };
-  plots.transition = function(gd, data, layout, traces, frameOpts, transitionOpts) {
+  }
+  var dataArrayContainers = ["transforms", "dimensions"];
+  var layoutArrayContainers2 = registry_default.layoutArrayContainers;
+  function extendTrace(destTrace, srcTrace) {
+    return extendObjectWithContainers(destTrace, srcTrace, dataArrayContainers);
+  }
+  function extendLayout(destLayout, srcLayout) {
+    return extendObjectWithContainers(destLayout, srcLayout, layoutArrayContainers2);
+  }
+  function transition2(gd, data, layout, traces, frameOpts, transitionOpts) {
     var opts = { redraw: frameOpts.redraw };
     var transitionedTraces = {};
     var axEdits = [];
@@ -15790,7 +15788,7 @@ var Plotly = (() => {
           if (!transitionedTraces[n]) transitionedTraces[n] = [];
           transitionedTraces[n].push(traceIdx);
         }
-        gd.data[traceIndices[i]] = plots.extendTrace(gd.data[traceIndices[i]], data[i]);
+        gd.data[traceIndices[i]] = extendTrace(gd.data[traceIndices[i]], data[i]);
       }
       var layoutUpdate = expandObjectPaths(extendDeepNoArrays({}, layout));
       var axisAttrRe = /^[xy]axis[0-9]*$/;
@@ -15798,10 +15796,10 @@ var Plotly = (() => {
         if (!axisAttrRe.test(attr2)) continue;
         delete layoutUpdate[attr2].range;
       }
-      plots.extendLayout(gd.layout, layoutUpdate);
+      extendLayout(gd.layout, layoutUpdate);
       delete gd.calcdata;
-      plots.supplyDefaults(gd);
-      plots.doCalcdata(gd);
+      supplyDefaults(gd);
+      doCalcdata(gd);
       var newLayout = expandObjectPaths(layout);
       if (newLayout) {
         var subplots = gd._fullLayout._plots;
@@ -15864,8 +15862,8 @@ var Plotly = (() => {
       }
     };
     return _transition(gd, transitionOpts, opts);
-  };
-  plots.transitionFromReact = function(gd, restyleFlags, relayoutFlags, oldFullLayout) {
+  }
+  function transitionFromReact(gd, restyleFlags, relayoutFlags, oldFullLayout) {
     var fullLayout = gd._fullLayout;
     var transitionOpts = fullLayout.transition;
     var opts = {};
@@ -15948,7 +15946,7 @@ var Plotly = (() => {
       }
     };
     return _transition(gd, transitionOpts, opts);
-  };
+  }
   function _transition(gd, transitionOpts, opts) {
     var aborted = false;
     function executeCallbacks(list2) {
@@ -16017,11 +16015,11 @@ var Plotly = (() => {
       return executeCallbacks(gd._transitionData._interruptCallbacks);
     }
     var seq = [
-      plots.previousPromises,
+      previousPromises,
       interruptPreviousTransitions,
       opts.prepareFn,
-      plots.rehover,
-      plots.reselect,
+      rehover,
+      reselect,
       executeTransitions
     ];
     var transitionStarting = syncOrAsync(seq, gd);
@@ -16032,7 +16030,7 @@ var Plotly = (() => {
       return gd;
     });
   }
-  plots.doCalcdata = function(gd, traces) {
+  function doCalcdata(gd, traces) {
     var axList = axis_ids_default.list(gd);
     var fullData = gd._fullData;
     var fullLayout = gd._fullLayout;
@@ -16139,7 +16137,7 @@ var Plotly = (() => {
     }
     registry_default.getComponentMethod("fx", "calc")(gd);
     registry_default.getComponentMethod("errorbars", "calc")(gd);
-  };
+  }
   var sortAxisCategoriesByValueRegex = /(total|sum|min|max|mean|geometric mean|median) (ascending|descending)/;
   function sortAxisCategoriesByValue(axList, gd) {
     var affectedTraces = [];
@@ -16350,25 +16348,25 @@ var Plotly = (() => {
       }
     }
   }
-  plots.rehover = function(gd) {
+  function rehover(gd) {
     if (gd._fullLayout._rehover) {
       gd._fullLayout._rehover();
     }
-  };
-  plots.redrag = function(gd) {
+  }
+  function redrag(gd) {
     if (gd._fullLayout._redrag) {
       gd._fullLayout._redrag();
     }
-  };
-  plots.reselect = function(gd) {
+  }
+  function reselect(gd) {
     var fullLayout = gd._fullLayout;
     var A = (gd.layout || {}).selections;
     var B = fullLayout._previousSelections;
     fullLayout._previousSelections = A;
     var mayEmitSelected = fullLayout._reselect || JSON.stringify(A) !== JSON.stringify(B);
     registry_default.getComponentMethod("selections", "reselect")(gd, mayEmitSelected);
-  };
-  plots.generalUpdatePerTraceModule = function(gd, subplot, subplotCalcData, subplotLayout) {
+  }
+  function generalUpdatePerTraceModule(gd, subplot, subplotCalcData, subplotLayout) {
     var traceHashOld = subplot.traceHash;
     var traceHash = {};
     var i;
@@ -16394,18 +16392,74 @@ var Plotly = (() => {
       _module.plot(gd, subplot, filterVisible2(moduleCalcData), subplotLayout);
     }
     subplot.traceHash = traceHash;
-  };
-  plots.plotBasePlot = function(desiredType, gd, traces, transitionOpts, makeOnCompleteCallback) {
+  }
+  function plotBasePlot(desiredType, gd, traces, transitionOpts, makeOnCompleteCallback) {
     var _module = registry_default.getModule(desiredType);
     var cdmodule = getModuleCalcData(gd.calcdata, _module)[0];
     _module.plot(gd, cdmodule, transitionOpts, makeOnCompleteCallback);
-  };
-  plots.cleanBasePlot = function(desiredType, newFullData, newFullLayout, oldFullData, oldFullLayout) {
+  }
+  function cleanBasePlot(desiredType, newFullData, newFullLayout, oldFullData, oldFullLayout) {
     var had = oldFullLayout._has && oldFullLayout._has(desiredType);
     var has = newFullLayout._has && newFullLayout._has(desiredType);
     if (had && !has) {
       oldFullLayout["_" + desiredType + "layer"].selectAll("g.trace").remove();
     }
+  }
+  var plots = {
+    attributes,
+    fontAttrs,
+    layoutAttributes,
+    executeAPICommand: executeAPICommand2,
+    computeAPICommandBindings: computeAPICommandBindings2,
+    manageCommandObserver: manageCommandObserver2,
+    hasSimpleAPICommandBindings: hasSimpleAPICommandBindings2,
+    redrawText,
+    resize,
+    previousPromises,
+    addLinks,
+    sendDataToCloud,
+    supplyDefaults,
+    supplyDefaultsUpdateCalc,
+    createTransitionData,
+    _hasPlotType,
+    cleanPlot,
+    linkSubplots,
+    clearExpandedTraceDefaultColors,
+    supplyDataDefaults,
+    supplyAnimationDefaults,
+    supplyAnimationFrameDefaults,
+    supplyAnimationTransitionDefaults,
+    supplyFrameDefaults,
+    supplyTraceDefaults,
+    supplyLayoutGlobalDefaults,
+    plotAutoSize,
+    supplyLayoutModuleDefaults,
+    purge,
+    style,
+    sanitizeMargins,
+    clearAutoMarginIds,
+    allowAutoMargin,
+    autoMargin,
+    doAutoMargin,
+    didMarginChange,
+    graphJson,
+    modifyFrames,
+    computeFrame,
+    recomputeFrameHash,
+    extendObjectWithContainers,
+    dataArrayContainers,
+    layoutArrayContainers: layoutArrayContainers2,
+    extendTrace,
+    extendLayout,
+    transition: transition2,
+    transitionFromReact,
+    doCalcdata,
+    rehover,
+    redrag,
+    reselect,
+    generalUpdatePerTraceModule,
+    plotBasePlot,
+    cleanBasePlot
   };
   var plots_default = plots;
 
@@ -20876,7 +20930,7 @@ var Plotly = (() => {
   var LINE_SPACING2 = alignment_default.LINE_SPACING;
   function font2(s, font3) {
     var variant = font3.variant;
-    var style6 = font3.style;
+    var style7 = font3.style;
     var weight = font3.weight;
     var color3 = font3.color;
     var size = font3.size;
@@ -20888,7 +20942,7 @@ var Plotly = (() => {
     if (size + 1) s.style("font-size", size + "px");
     if (color3) s.call(color_default.fill, color3);
     if (weight) s.style("font-weight", weight);
-    if (style6) s.style("font-style", style6);
+    if (style7) s.style("font-style", style7);
     if (variant) s.style("font-variant", variant);
     if (textcase) s.style("text-transform", dropNone(textcase2transform(textcase)));
     if (shadow)
@@ -22256,7 +22310,7 @@ var Plotly = (() => {
     var placeholder = options.placeholder;
     var traceIndex = options.traceIndex;
     var avoid = options.avoid || {};
-    var attributes4 = options.attributes;
+    var attributes5 = options.attributes;
     var transform2 = options.transform;
     var group = options.containerGroup;
     var opacity = 1;
@@ -22351,7 +22405,7 @@ var Plotly = (() => {
       if (transform2) {
         transformVal = "";
         if (transform2.rotate) {
-          transformVal += "rotate(" + [transform2.rotate, attributes4.x, attributes4.y] + ")";
+          transformVal += "rotate(" + [transform2.rotate, attributes5.x, attributes5.y] + ")";
         }
         if (transform2.offset || hColorbarMoveTitle) {
           transformVal += strTranslate(0, (transform2.offset || 0) - (hColorbarMoveTitle || 0));
@@ -22381,13 +22435,13 @@ var Plotly = (() => {
         textcase: fontTextcase,
         shadow: fontShadow,
         lineposition: fontLineposition
-      }).attr(attributes4).call(svg_text_utils_default.convertToTspans, gd, adjustSubtitlePosition);
+      }).attr(attributes5).call(svg_text_utils_default.convertToTspans, gd, adjustSubtitlePosition);
       if (subtitleEl2 && !subtitleEl2.empty()) {
         var titleElMathGroup = group.select("." + titleClass + "-math-group");
         var titleElBbox2 = titleEl.node().getBBox();
         var titleElMathBbox = titleElMathGroup.node() ? titleElMathGroup.node().getBBox() : void 0;
         var subtitleY2 = titleElMathBbox ? titleElMathBbox.y + titleElMathBbox.height + SUBTITLE_PADDING_MATHJAX_EM * subFontSize : titleElBbox2.y + titleElBbox2.height + SUBTITLE_PADDING_EM * subFontSize;
-        var subtitleAttributes = extendFlat({}, attributes4, {
+        var subtitleAttributes = extendFlat({}, attributes5, {
           y: subtitleY2
         });
         subtitleEl2.attr("transform", transformVal);
@@ -22403,7 +22457,7 @@ var Plotly = (() => {
           lineposition: subFontLineposition
         }).attr(subtitleAttributes).call(svg_text_utils_default.convertToTspans, gd);
       }
-      return plots_default.previousPromises(gd);
+      return previousPromises(gd);
     }
     function scootTitle(titleAndSubtitleEls) {
       var titleElIn = titleAndSubtitleEls.title;
@@ -22481,7 +22535,7 @@ var Plotly = (() => {
       }).on("cancel", function() {
         this.text(this.attr("data-unformatted")).call(titleLayout);
       }).on("input", function(d) {
-        this.text(d || " ").call(svg_text_utils_default.positionText, attributes4.x, attributes4.y);
+        this.text(d || " ").call(svg_text_utils_default.positionText, attributes5.x, attributes5.y);
       });
       if (subtitleEnabled) {
         if (subtitleEnabled && !txt) {
@@ -25672,9 +25726,9 @@ var Plotly = (() => {
         filterPush(push, ax.automargin);
         filterPush(mirrorPush, ax.automargin);
       }
-      plots_default.autoMargin(gd, axAutoMarginID(ax), push);
-      plots_default.autoMargin(gd, axMirrorAutoMarginID(ax), mirrorPush);
-      plots_default.autoMargin(gd, rangeSliderAutoMarginID(ax), rangeSliderPush);
+      autoMargin(gd, axAutoMarginID(ax), push);
+      autoMargin(gd, axMirrorAutoMarginID(ax), mirrorPush);
+      autoMargin(gd, rangeSliderAutoMarginID(ax), rangeSliderPush);
     });
     return syncOrAsync(seq);
   };
@@ -26659,13 +26713,13 @@ var Plotly = (() => {
     for (var i = 0; i < axList.length; i++) {
       var ax = axList[i];
       if (ax.automargin) {
-        plots_default.allowAutoMargin(gd, axAutoMarginID(ax));
+        allowAutoMargin(gd, axAutoMarginID(ax));
         if (ax.mirror) {
-          plots_default.allowAutoMargin(gd, axMirrorAutoMarginID(ax));
+          allowAutoMargin(gd, axMirrorAutoMarginID(ax));
         }
       }
       if (registry_default.getComponentMethod("rangeslider", "isVisible")(ax)) {
-        plots_default.allowAutoMargin(gd, rangeSliderAutoMarginID(ax));
+        allowAutoMargin(gd, rangeSliderAutoMarginID(ax));
       }
     }
   };
@@ -28241,7 +28295,7 @@ var Plotly = (() => {
   var CST_MARKER_LINE_WIDTH = 2;
   var MAX_LINE_WIDTH = 10;
   var MAX_MARKER_LINE_WIDTH = 5;
-  function style(s, gd, legend) {
+  function style2(s, gd, legend) {
     var fullLayout = gd._fullLayout;
     if (!legend) legend = fullLayout.legend;
     var constantItemSizing = legend.itemsizing === "constant";
@@ -28878,7 +28932,7 @@ var Plotly = (() => {
     if (!inHover && (!fullLayout.showlegend || !legendData.length)) {
       layer.selectAll("." + legendId).remove();
       fullLayout._topdefs.select("#" + clipId).remove();
-      return plots_default.autoMargin(gd, legendId);
+      return autoMargin(gd, legendId);
     }
     var legend = ensureSingle(layer, "g", legendId, function(s) {
       if (!inHover) s.attr("pointer-events", "all");
@@ -28920,11 +28974,11 @@ var Plotly = (() => {
       }
     }).each(function() {
       select_default2(this).call(drawTexts, gd, legendObj);
-    }).call(style, gd, legendObj).each(function() {
+    }).call(style2, gd, legendObj).each(function() {
       if (!inHover) select_default2(this).call(setupTraceToggle, gd, legendId);
     });
     syncOrAsync([
-      plots_default.previousPromises,
+      previousPromises,
       function() {
         return computeLegendDimensions(gd, groups, traces, legendObj);
       },
@@ -29527,7 +29581,7 @@ var Plotly = (() => {
       t: ly + legendObj._effHeight
     };
     if (isPaperX && isPaperY) {
-      return plots_default.autoMargin(gd, legendId, {
+      return autoMargin(gd, legendId, {
         x: legendObj.x,
         y: legendObj.y,
         l: legendObj._width * FROM_TL[xanchor],
@@ -31304,7 +31358,7 @@ var Plotly = (() => {
   }
 
   // src/components/fx/layout_global_defaults.js
-  function supplyLayoutGlobalDefaults(layoutIn, layoutOut) {
+  function supplyLayoutGlobalDefaults2(layoutIn, layoutOut) {
     function coerce3(attr2, dflt) {
       return lib_default.coerce(layoutIn, layoutOut, layout_attributes_default, attr2, dflt);
     }
@@ -31312,7 +31366,7 @@ var Plotly = (() => {
   }
 
   // src/components/fx/defaults.js
-  function supplyDefaults(traceIn, traceOut, defaultColor, layout) {
+  function supplyDefaults2(traceIn, traceOut, defaultColor, layout) {
     function coerce3(attr2, dflt) {
       return lib_default.coerce(traceIn, traceOut, attributes_default, attr2, dflt);
     }
@@ -31419,8 +31473,8 @@ var Plotly = (() => {
     },
     attributes: attributes_default,
     layoutAttributes: layout_attributes_default,
-    supplyLayoutGlobalDefaults,
-    supplyDefaults,
+    supplyLayoutGlobalDefaults: supplyLayoutGlobalDefaults2,
+    supplyDefaults: supplyDefaults2,
     supplyLayoutDefaults: supplyLayoutDefaults2,
     calc: calc2,
     getDistanceFunction: helpers_default2.getDistanceFunction,
@@ -31941,7 +31995,7 @@ var Plotly = (() => {
   var SVG_TEXT_ANCHOR_MIDDLE = "middle";
   var SVG_TEXT_ANCHOR_END = "end";
   var layoutStyles = function(gd) {
-    return syncOrAsync([plots_default.doAutoMargin, lsInner], gd);
+    return syncOrAsync([doAutoMargin, lsInner], gd);
   };
   function overlappingDomain(xDomain, yDomain, domains) {
     for (var i = 0; i < domains.length; i++) {
@@ -31970,7 +32024,7 @@ var Plotly = (() => {
     drawMainTitle(gd);
     registry_default.getComponentMethod("modebar", "manage")(gd);
     if (!fullLayout._has("cartesian")) {
-      return plots_default.previousPromises(gd);
+      return previousPromises(gd);
     }
     function getLinePosition(ax2, counterAx2, side) {
       var lwHalf = ax2._lw / 2;
@@ -32141,7 +32195,7 @@ var Plotly = (() => {
       plotinfo.ylines.attr("d", yPath);
     }
     axes_default.makeClipPaths(gd);
-    return plots_default.previousPromises(gd);
+    return previousPromises(gd);
   }
   function shouldShowLinesOrTicks(ax, subplot) {
     return (ax.ticks || ax.showline) && (subplot === ax._mainSubplot || ax.mirror === "all" || ax.mirror === "allticks");
@@ -32288,8 +32342,8 @@ var Plotly = (() => {
       reservedPush[position] = pushMargin;
       gd._fullLayout._reservedMargin[titleID] = reservedPush;
     }
-    plots_default.allowAutoMargin(gd, titleID);
-    plots_default.autoMargin(gd, titleID, push);
+    allowAutoMargin(gd, titleID);
+    autoMargin(gd, titleID, push);
   }
   function getMainTitleX(fullLayout, textAnchor) {
     var title = fullLayout.title;
@@ -32380,13 +32434,13 @@ var Plotly = (() => {
       clearGlCanvases(gd);
       redrawReglTraces(gd);
     }
-    plots_default.style(gd);
+    style(gd);
     registry_default.getComponentMethod("legend", "draw")(gd);
-    return plots_default.previousPromises(gd);
+    return previousPromises(gd);
   };
   var doColorBars = function(gd) {
     registry_default.getComponentMethod("colorbar", "draw")(gd);
-    return plots_default.previousPromises(gd);
+    return previousPromises(gd);
   };
   var layoutReplot = function(gd) {
     var layout = gd.layout;
@@ -32395,7 +32449,7 @@ var Plotly = (() => {
   };
   var doLegend = function(gd) {
     registry_default.getComponentMethod("legend", "draw")(gd);
-    return plots_default.previousPromises(gd);
+    return previousPromises(gd);
   };
   var doTicksRelayout = function(gd) {
     axes_default.draw(gd, "redraw");
@@ -32405,7 +32459,7 @@ var Plotly = (() => {
       redrawReglTraces(gd);
     }
     drawMainTitle(gd);
-    return plots_default.previousPromises(gd);
+    return previousPromises(gd);
   };
   var doModeBar = function(gd) {
     var fullLayout = gd._fullLayout;
@@ -32414,7 +32468,7 @@ var Plotly = (() => {
       var updateFx3 = fullLayout._basePlotModules[i].updateFx;
       if (updateFx3) updateFx3(gd);
     }
-    return plots_default.previousPromises(gd);
+    return previousPromises(gd);
   };
   var doCamera = function(gd) {
     var fullLayout = gd._fullLayout;
@@ -32433,13 +32487,13 @@ var Plotly = (() => {
       basePlotModules[i].plot(gd);
     }
     redrawReglTraces(gd);
-    plots_default.style(gd);
+    style(gd);
     registry_default.getComponentMethod("selections", "draw")(gd);
     registry_default.getComponentMethod("shapes", "draw")(gd);
     registry_default.getComponentMethod("annotations", "draw")(gd);
     registry_default.getComponentMethod("images", "draw")(gd);
     fullLayout._replotting = false;
-    return plots_default.previousPromises(gd);
+    return previousPromises(gd);
   };
   var redrawReglTraces = function(gd) {
     var fullLayout = gd._fullLayout;
@@ -33105,7 +33159,7 @@ var Plotly = (() => {
     function dragTail() {
       updateSubplots([0, 0, pw, ph]);
       syncOrAsync([
-        plots_default.previousPromises,
+        previousPromises,
         function() {
           gd._fullLayout._replotting = false;
           registry_default.call("_guiRelayout", gd, updates);
@@ -33816,10 +33870,10 @@ var Plotly = (() => {
       if (!layout.scene) layout.scene = layout.scene1;
       delete layout.scene1;
     }
-    var axisAttrRegex = (plots_default.subplotsRegistry.cartesian || {}).attrRegex;
-    var polarAttrRegex = (plots_default.subplotsRegistry.polar || {}).attrRegex;
-    var ternaryAttrRegex = (plots_default.subplotsRegistry.ternary || {}).attrRegex;
-    var sceneAttrRegex = (plots_default.subplotsRegistry.gl3d || {}).attrRegex;
+    var axisAttrRegex = (registry_default.subplotsRegistry.cartesian || {}).attrRegex;
+    var polarAttrRegex = (registry_default.subplotsRegistry.polar || {}).attrRegex;
+    var ternaryAttrRegex = (registry_default.subplotsRegistry.ternary || {}).attrRegex;
+    var sceneAttrRegex = (registry_default.subplotsRegistry.gl3d || {}).attrRegex;
     var keys = Object.keys(layout);
     for (i = 0; i < keys.length; i++) {
       var key = keys[i];
@@ -33920,7 +33974,7 @@ var Plotly = (() => {
       if (trace.xaxis) trace.xaxis = cleanId3(trace.xaxis, "x");
       if (trace.yaxis) trace.yaxis = cleanId3(trace.yaxis, "y");
       if (traceIs2(trace, "gl3d") && trace.scene) {
-        trace.scene = plots_default.subplotsRegistry.gl3d.cleanId(trace.scene);
+        trace.scene = registry_default.subplotsRegistry.gl3d.cleanId(trace.scene);
       }
       if (!traceIs2(trace, "pie-like") && !traceIs2(trace, "bar-like")) {
         if (Array.isArray(trace.textposition)) {
@@ -34188,7 +34242,7 @@ var Plotly = (() => {
       gd.layout = helpers_default6.cleanLayout(layout);
     }
     performance.mark("plotly-supplyDefaults-start");
-    plots_default.supplyDefaults(gd);
+    supplyDefaults(gd);
     performance.mark("plotly-supplyDefaults-end");
     performance.measure("plotly-supplyDefaults", "plotly-supplyDefaults-start", "plotly-supplyDefaults-end");
     var fullLayout = gd._fullLayout;
@@ -34206,7 +34260,7 @@ var Plotly = (() => {
     var recalc = !gd.calcdata || gd.calcdata.length !== (gd._fullData || []).length;
     if (recalc) {
       performance.mark("plotly-calcdata-start");
-      plots_default.doCalcdata(gd);
+      doCalcdata(gd);
       performance.mark("plotly-calcdata-end");
       performance.measure("plotly-calcdata", "plotly-calcdata-start", "plotly-calcdata-end");
     }
@@ -34216,7 +34270,7 @@ var Plotly = (() => {
     if (gd._context.responsive) {
       if (!gd._responsiveChartHandler) {
         gd._responsiveChartHandler = function() {
-          if (!isHidden(gd)) plots_default.resize(gd);
+          if (!isHidden(gd)) resize(gd);
         };
         window.addEventListener("resize", gd._responsiveChartHandler);
       }
@@ -34276,10 +34330,10 @@ var Plotly = (() => {
               error(msg);
             } else {
               log(msg + " Clearing graph and plotting again.");
-              plots_default.cleanPlot([], {}, gd._fullData, fullLayout);
-              plots_default.supplyDefaults(gd);
+              cleanPlot([], {}, gd._fullData, fullLayout);
+              supplyDefaults(gd);
               fullLayout = gd._fullLayout;
-              plots_default.doCalcdata(gd);
+              doCalcdata(gd);
               drawFrameworkCalls++;
               return drawFramework2();
             }
@@ -34293,27 +34347,27 @@ var Plotly = (() => {
           fullLayout._modebardiv.style("width", null).style("height", fullLayout.height + "px");
         }
       }
-      return plots_default.previousPromises(gd);
+      return previousPromises(gd);
     }
     function marginPushers() {
-      plots_default.clearAutoMarginIds(gd);
+      clearAutoMarginIds(gd);
       subroutines_default.drawMarginPushers(gd);
       axes_default.allowAutoMargin(gd);
-      if (gd._fullLayout.title.text && gd._fullLayout.title.automargin) plots_default.allowAutoMargin(gd, "title.automargin");
+      if (gd._fullLayout.title.text && gd._fullLayout.title.automargin) allowAutoMargin(gd, "title.automargin");
       if (fullLayout._has("pie")) {
         var fullData = gd._fullData;
         for (var i2 = 0; i2 < fullData.length; i2++) {
           var trace = fullData[i2];
           if (trace.type === "pie" && trace.automargin) {
-            plots_default.allowAutoMargin(gd, "pie." + trace.uid + ".automargin");
+            allowAutoMargin(gd, "pie." + trace.uid + ".automargin");
           }
         }
       }
-      plots_default.doAutoMargin(gd);
-      return plots_default.previousPromises(gd);
+      doAutoMargin(gd);
+      return previousPromises(gd);
     }
     function marginPushersAgain() {
-      if (!plots_default.didMarginChange(oldMargins, fullLayout._size)) return;
+      if (!didMarginChange(oldMargins, fullLayout._size)) return;
       return syncOrAsync([marginPushers, subroutines_default.layoutStyles], gd);
     }
     function positionAndAutorange() {
@@ -34354,7 +34408,7 @@ var Plotly = (() => {
       return result;
     }
     var deferAutoMargin = gd._context.deferAutoMargin;
-    var seq = [plots_default.previousPromises, addFrames3, drawFramework2];
+    var seq = [previousPromises, addFrames3, drawFramework2];
     if (!deferAutoMargin) {
       seq.push(timedMarginPushers, marginPushersAgain);
     }
@@ -34375,10 +34429,10 @@ var Plotly = (() => {
       timedDrawData,
       subroutines_default.finalDraw,
       initInteractions,
-      plots_default.addLinks,
-      plots_default.rehover,
-      plots_default.redrag,
-      plots_default.reselect
+      addLinks,
+      rehover,
+      redrag,
+      reselect
     );
     if (!deferAutoMargin) {
       seq.push(
@@ -34386,10 +34440,10 @@ var Plotly = (() => {
         // happens outside of marginPushers where all the other automargins are
         // calculated. Would be much better to separate margin calculations from
         // component drawing - see https://github.com/plotly/plotly.js/issues/2704
-        plots_default.doAutoMargin
+        doAutoMargin
       );
     }
-    seq.push(plots_default.previousPromises);
+    seq.push(previousPromises);
     var plotDone = syncOrAsync(seq, gd);
     if (!plotDone || !plotDone.then) plotDone = Promise.resolve();
     return plotDone.then(function() {
@@ -34406,7 +34460,7 @@ var Plotly = (() => {
           deferredSeq.push(
             timedDrawData,
             subroutines_default.finalDraw,
-            plots_default.doAutoMargin
+            doAutoMargin
           );
           var deferredDone = syncOrAsync(deferredSeq, gd);
           if (!deferredDone || !deferredDone.then) deferredDone = Promise.resolve();
@@ -34534,8 +34588,8 @@ var Plotly = (() => {
   }
   function newPlot(gd, data, layout, config) {
     gd = getGraphDiv(gd);
-    plots_default.cleanPlot([], {}, gd._fullData || [], gd._fullLayout || {});
-    plots_default.purge(gd);
+    cleanPlot([], {}, gd._fullData || [], gd._fullLayout || {});
+    purge(gd);
     return _doPlot(gd, data, layout, config);
   }
   function positivifyIndices(indices, maxIndex) {
@@ -34911,17 +34965,17 @@ var Plotly = (() => {
     if (flags.fullReplot) {
       seq.push(_doPlot);
     } else {
-      seq.push(plots_default.previousPromises);
-      plots_default.supplyDefaults(gd);
+      seq.push(previousPromises);
+      supplyDefaults(gd);
       if (flags.markerSize) {
-        plots_default.doCalcdata(gd);
+        doCalcdata(gd);
         addAxRangeSequence(seq);
       }
       if (flags.style) seq.push(subroutines_default.doTraceStyle);
       if (flags.colorbars) seq.push(subroutines_default.doColorBars);
       seq.push(emitAfterPlot);
     }
-    seq.push(plots_default.rehover, plots_default.redrag, plots_default.reselect);
+    seq.push(rehover, redrag, reselect);
     queue_default.add(gd, restyle, [gd, specs.undoit, specs.traces], restyle, [gd, specs.redoit, specs.traces]);
     var plotDone = syncOrAsync(seq, gd);
     if (!plotDone || !plotDone.then) plotDone = Promise.resolve();
@@ -35129,7 +35183,7 @@ var Plotly = (() => {
           }
           helpers_default6.swapXYData(cont);
           flags.calc = flags.clearAxisTypes = true;
-        } else if (plots_default.dataArrayContainers.indexOf(param.parts[0]) !== -1) {
+        } else if (dataArrayContainers.indexOf(param.parts[0]) !== -1) {
           helpers_default6.manageArrayContainers(param, newVal, undoit);
           flags.calc = true;
         } else {
@@ -35199,11 +35253,11 @@ var Plotly = (() => {
     var specs = _relayout(gd, aobj);
     var flags = specs.flags;
     if (flags.calc) gd.calcdata = void 0;
-    var seq = [plots_default.previousPromises];
+    var seq = [previousPromises];
     if (flags.layoutReplot) {
       seq.push(subroutines_default.layoutReplot);
     } else if (Object.keys(aobj).length) {
-      axRangeSupplyDefaultsByPass(gd, flags, specs) || plots_default.supplyDefaults(gd);
+      axRangeSupplyDefaultsByPass(gd, flags, specs) || supplyDefaults(gd);
       if (flags.legend) seq.push(subroutines_default.doLegend);
       if (flags.layoutstyle) seq.push(subroutines_default.layoutStyles);
       if (flags.axrange) addAxRangeSequence(seq, specs.rangesAltered);
@@ -35213,7 +35267,7 @@ var Plotly = (() => {
       if (flags.colorbars) seq.push(subroutines_default.doColorBars);
       seq.push(emitAfterPlot);
     }
-    seq.push(plots_default.rehover, plots_default.redrag, plots_default.reselect);
+    seq.push(rehover, redrag, reselect);
     queue_default.add(gd, relayout, [gd, specs.undoit], relayout, [gd, specs.redoit]);
     var plotDone = syncOrAsync(seq, gd);
     if (!plotDone || !plotDone.then) plotDone = Promise.resolve(gd);
@@ -35506,7 +35560,7 @@ var Plotly = (() => {
     var fullLayout = gd._fullLayout;
     var oldWidth = fullLayout.width;
     var oldHeight = fullLayout.height;
-    if (gd.layout.autosize) plots_default.plotAutoSize(gd, gd.layout, fullLayout);
+    if (gd.layout.autosize) plotAutoSize(gd, gd.layout, fullLayout);
     return fullLayout.width !== oldWidth || fullLayout.height !== oldHeight;
   }
   function update(gd, traceUpdate, layoutUpdate, _traces) {
@@ -35529,8 +35583,8 @@ var Plotly = (() => {
     } else if (restyleFlags.fullReplot) {
       seq.push(_doPlot);
     } else {
-      seq.push(plots_default.previousPromises);
-      axRangeSupplyDefaultsByPass(gd, relayoutFlags, relayoutSpecs) || plots_default.supplyDefaults(gd);
+      seq.push(previousPromises);
+      axRangeSupplyDefaultsByPass(gd, relayoutFlags, relayoutSpecs) || supplyDefaults(gd);
       if (restyleFlags.style) seq.push(subroutines_default.doTraceStyle);
       if (restyleFlags.colorbars || relayoutFlags.colorbars) seq.push(subroutines_default.doColorBars);
       if (relayoutFlags.legend) seq.push(subroutines_default.doLegend);
@@ -35541,7 +35595,7 @@ var Plotly = (() => {
       if (relayoutFlags.camera) seq.push(subroutines_default.doCamera);
       seq.push(emitAfterPlot);
     }
-    seq.push(plots_default.rehover, plots_default.redrag, plots_default.reselect);
+    seq.push(rehover, redrag, reselect);
     queue_default.add(gd, update, [gd, restyleSpecs.undoit, relayoutSpecs.undoit, restyleSpecs.traces], update, [
       gd,
       restyleSpecs.redoit,
@@ -35788,14 +35842,14 @@ var Plotly = (() => {
         gd.layout = layout || {};
         helpers_default6.cleanLayout(gd.layout);
         applyUIRevisions(gd.data, gd.layout, oldFullData, oldFullLayout);
-        plots_default.supplyDefaults(gd, { skipUpdateCalc: true });
+        supplyDefaults(gd, { skipUpdateCalc: true });
         var newFullData = gd._fullData;
         var newFullLayout = gd._fullLayout;
         var immutable = newFullLayout.datarevision === void 0;
-        var transition3 = newFullLayout.transition;
-        var relayoutFlags = diffLayout(gd, oldFullLayout, newFullLayout, immutable, transition3);
+        var transition4 = newFullLayout.transition;
+        var relayoutFlags = diffLayout(gd, oldFullLayout, newFullLayout, immutable, transition4);
         var newDataRevision = relayoutFlags.newDataRevision;
-        var restyleFlags = diffData(gd, oldFullData, newFullData, immutable, transition3, newDataRevision);
+        var restyleFlags = diffData(gd, oldFullData, newFullData, immutable, transition4, newDataRevision);
         if (updateAutosize(gd)) relayoutFlags.layoutReplot = true;
         if (restyleFlags.calc || relayoutFlags.calc) {
           gd.calcdata = void 0;
@@ -35809,20 +35863,20 @@ var Plotly = (() => {
             }
           }
         } else {
-          plots_default.supplyDefaultsUpdateCalc(gd.calcdata, newFullData);
+          supplyDefaultsUpdateCalc(gd.calcdata, newFullData);
         }
         var seq = [];
         if (frames) {
           gd._transitionData = {};
-          plots_default.createTransitionData(gd);
+          createTransitionData(gd);
           seq.push(addFrames3);
         }
         if (newFullLayout.transition && (restyleFlags.anim || relayoutFlags.anim)) {
           if (relayoutFlags.ticks) seq.push(subroutines_default.doTicksRelayout);
-          plots_default.doCalcdata(gd);
+          doCalcdata(gd);
           subroutines_default.doAutoRangeAndConstraints(gd);
           seq.push(function() {
-            return plots_default.transitionFromReact(gd, restyleFlags, relayoutFlags, oldFullLayout);
+            return transitionFromReact(gd, restyleFlags, relayoutFlags, oldFullLayout);
           });
         } else if (restyleFlags.fullReplot || relayoutFlags.layoutReplot) {
           gd._fullLayout._skipDefaults = true;
@@ -35845,7 +35899,7 @@ var Plotly = (() => {
               }
             }
           }
-          seq.push(plots_default.previousPromises);
+          seq.push(previousPromises);
           if (restyleFlags.style) seq.push(subroutines_default.doTraceStyle);
           if (restyleFlags.colorbars || relayoutFlags.colorbars) seq.push(subroutines_default.doColorBars);
           if (relayoutFlags.legend) seq.push(subroutines_default.doLegend);
@@ -35856,7 +35910,7 @@ var Plotly = (() => {
           if (relayoutFlags.camera) seq.push(subroutines_default.doCamera);
           seq.push(emitAfterPlot);
         }
-        seq.push(plots_default.rehover, plots_default.redrag, plots_default.reselect);
+        seq.push(rehover, redrag, reselect);
         plotDone = syncOrAsync(seq, gd);
         if (!plotDone || !plotDone.then) plotDone = Promise.resolve(gd);
       }
@@ -35866,9 +35920,9 @@ var Plotly = (() => {
       return gd;
     });
   }
-  function diffData(gd, oldFullData, newFullData, immutable, transition3, newDataRevision) {
+  function diffData(gd, oldFullData, newFullData, immutable, transition4, newDataRevision) {
     var sameTraceLength = oldFullData.length === newFullData.length;
-    if (!transition3 && !sameTraceLength) {
+    if (!transition4 && !sameTraceLength) {
       return {
         fullReplot: true,
         calc: true
@@ -35890,7 +35944,7 @@ var Plotly = (() => {
       getValObject: getTraceValObject2,
       flags,
       immutable,
-      transition: transition3,
+      transition: transition4,
       newDataRevision,
       gd
     };
@@ -35906,12 +35960,12 @@ var Plotly = (() => {
     if (flags.calc || flags.plot) {
       flags.fullReplot = true;
     }
-    if (transition3 && flags.nChanges && flags.nChangesAnim) {
+    if (transition4 && flags.nChanges && flags.nChangesAnim) {
       flags.anim = flags.nChanges === flags.nChangesAnim && sameTraceLength ? "all" : "some";
     }
     return flags;
   }
-  function diffLayout(gd, oldFullLayout, newFullLayout, immutable, transition3) {
+  function diffLayout(gd, oldFullLayout, newFullLayout, immutable, transition4) {
     var flags = edit_types_default.layoutFlags();
     flags.arrays = {};
     flags.rangesAltered = {};
@@ -35942,14 +35996,14 @@ var Plotly = (() => {
       getValObject: getLayoutValObject2,
       flags,
       immutable,
-      transition: transition3,
+      transition: transition4,
       gd
     };
     getDiffFlags(oldFullLayout, newFullLayout, [], diffOpts);
     if (flags.plot || flags.calc) {
       flags.layoutReplot = true;
     }
-    if (transition3 && flags.nChanges && flags.nChangesAnim) {
+    if (transition4 && flags.nChanges && flags.nChangesAnim) {
       flags.anim = flags.nChanges === flags.nChangesAnim ? "all" : "some";
     }
     return flags;
@@ -36084,7 +36138,7 @@ var Plotly = (() => {
     if (!trans._frameQueue) {
       trans._frameQueue = [];
     }
-    animationOpts = plots_default.supplyAnimationDefaults(animationOpts);
+    animationOpts = supplyAnimationDefaults(animationOpts);
     var transitionOpts = animationOpts.transition;
     var frameOpts = animationOpts.frame;
     if (trans._frameWaitingCnt === void 0) {
@@ -36138,7 +36192,7 @@ var Plotly = (() => {
         for (var i2 = 0; i2 < frameList2.length; i2++) {
           var computedFrame;
           if (frameList2[i2].type === "byname") {
-            computedFrame = plots_default.computeFrame(gd, frameList2[i2].name);
+            computedFrame = computeFrame(gd, frameList2[i2].name);
           } else {
             computedFrame = frameList2[i2].data;
           }
@@ -36179,7 +36233,7 @@ var Plotly = (() => {
           gd._fullLayout._currentFrame = stringName;
           trans._lastFrameAt = Date.now();
           trans._timeToNext = newFrame.frameOpts.duration;
-          plots_default.transition(
+          transition2(
             gd,
             newFrame.frame.data,
             newFrame.frame.layout,
@@ -36352,7 +36406,7 @@ var Plotly = (() => {
       }
       _frameHashLocal[lookupName] = { name: lookupName };
       insertions.push({
-        frame: plots_default.supplyFrameDefaults(frameList[i]),
+        frame: supplyFrameDefaults(frameList[i]),
         index: indices && indices[i] !== void 0 && indices[i] !== null ? indices[i] : bigIndex + i
       });
     }
@@ -36387,12 +36441,12 @@ var Plotly = (() => {
         frameCount++;
       }
     }
-    var undoFunc = plots_default.modifyFrames;
-    var redoFunc = plots_default.modifyFrames;
+    var undoFunc = modifyFrames;
+    var redoFunc = modifyFrames;
     var undoArgs = [gd, revops];
     var redoArgs = [gd, ops];
     if (queue_default) queue_default.add(gd, undoFunc, undoArgs, redoFunc, redoArgs);
-    return plots_default.modifyFrames(gd, ops);
+    return modifyFrames(gd, ops);
   }
   function deleteFrames(gd, frameList) {
     gd = getGraphDiv(gd);
@@ -36416,19 +36470,19 @@ var Plotly = (() => {
       ops.push({ type: "delete", index: idx });
       revops.unshift({ type: "insert", index: idx, value: _frames[idx] });
     }
-    var undoFunc = plots_default.modifyFrames;
-    var redoFunc = plots_default.modifyFrames;
+    var undoFunc = modifyFrames;
+    var redoFunc = modifyFrames;
     var undoArgs = [gd, revops];
     var redoArgs = [gd, ops];
     if (queue_default) queue_default.add(gd, undoFunc, undoArgs, redoFunc, redoArgs);
-    return plots_default.modifyFrames(gd, ops);
+    return modifyFrames(gd, ops);
   }
-  function purge(gd) {
+  function purge2(gd) {
     gd = getGraphDiv(gd);
     var fullLayout = gd._fullLayout || {};
     var fullData = gd._fullData || [];
-    plots_default.cleanPlot([], {}, fullData, fullLayout);
-    plots_default.purge(gd);
+    cleanPlot([], {}, fullData, fullLayout);
+    purge(gd);
     events_default.purge(gd);
     if (fullLayout._container) fullLayout._container.remove();
     delete gd._context;
@@ -36507,7 +36561,7 @@ var Plotly = (() => {
   var _guiRelayout = guiEdit(relayout);
   var _guiRestyle = guiEdit(restyle);
   var _guiUpdate = guiEdit(update);
-  var plot_api_default = { _guiRelayout, _guiRestyle, _guiUpdate, animate, addFrames, deleteFrames, addTraces, deleteTraces, extendTraces, moveTraces, prependTraces, newPlot, _doPlot, purge, react, redraw, relayout, restyle, setPlotConfig, update, _storeDirectGUIEdit };
+  var plot_api_default = { _guiRelayout, _guiRestyle, _guiUpdate, animate, addFrames, deleteFrames, addTraces, deleteTraces, extendTraces, moveTraces, prependTraces, newPlot, _doPlot, purge: purge2, react, redraw, relayout, restyle, setPlotConfig, update, _storeDirectGUIEdit };
 
   // src/plot_api/template_api.js
   var { dfltConfig: dfltConfig5 } = plot_config_default;
@@ -37575,7 +37629,7 @@ var Plotly = (() => {
   var addTraces2 = plot_api_default.addTraces;
   var deleteTraces2 = plot_api_default.deleteTraces;
   var moveTraces2 = plot_api_default.moveTraces;
-  var purge2 = plot_api_default.purge;
+  var purge3 = plot_api_default.purge;
   var addFrames2 = plot_api_default.addFrames;
   var deleteFrames2 = plot_api_default.deleteFrames;
   var animate2 = plot_api_default.animate;
@@ -37588,7 +37642,7 @@ var Plotly = (() => {
   var downloadImage2 = download_default;
   var makeTemplate2 = template_api_default.makeTemplate;
   var validateTemplate2 = template_api_default.validateTemplate;
-  var plot_api_default2 = { _doPlot: _doPlot2, newPlot: newPlot2, restyle: restyle2, relayout: relayout2, redraw: redraw2, update: update2, _guiRestyle: _guiRestyle2, _guiRelayout: _guiRelayout2, _guiUpdate: _guiUpdate2, _storeDirectGUIEdit: _storeDirectGUIEdit2, react: react2, extendTraces: extendTraces2, prependTraces: prependTraces2, addTraces: addTraces2, deleteTraces: deleteTraces2, moveTraces: moveTraces2, purge: purge2, addFrames: addFrames2, deleteFrames: deleteFrames2, animate: animate2, setPlotConfig: setPlotConfig2, deleteActiveShape, toImage: toImage2, validate: validate3, downloadImage: downloadImage2, makeTemplate: makeTemplate2, validateTemplate: validateTemplate2 };
+  var plot_api_default2 = { _doPlot: _doPlot2, newPlot: newPlot2, restyle: restyle2, relayout: relayout2, redraw: redraw2, update: update2, _guiRestyle: _guiRestyle2, _guiRelayout: _guiRelayout2, _guiUpdate: _guiUpdate2, _storeDirectGUIEdit: _storeDirectGUIEdit2, react: react2, extendTraces: extendTraces2, prependTraces: prependTraces2, addTraces: addTraces2, deleteTraces: deleteTraces2, moveTraces: moveTraces2, purge: purge3, addFrames: addFrames2, deleteFrames: deleteFrames2, animate: animate2, setPlotConfig: setPlotConfig2, deleteActiveShape, toImage: toImage2, validate: validate3, downloadImage: downloadImage2, makeTemplate: makeTemplate2, validateTemplate: validateTemplate2 };
 
   // src/core.js
   var import_native_promise_only = __toESM(require_npo_src(), 1);
@@ -38324,7 +38378,7 @@ var Plotly = (() => {
 
   // src/traces/scatter/defaults.js
   var { coercePattern: coercePattern2 } = lib_default;
-  function supplyDefaults2(traceIn, traceOut, defaultColor, layout) {
+  function supplyDefaults3(traceIn, traceOut, defaultColor, layout) {
     function coerce3(attr2, dflt) {
       return lib_default.coerce(traceIn, traceOut, attributes_default8, attr2, dflt);
     }
@@ -40214,12 +40268,12 @@ var Plotly = (() => {
       if (makeOnCompleteCallback) {
         onComplete = makeOnCompleteCallback();
       }
-      var transition3 = transition3().duration(transitionOpts.duration).ease(transitionOpts.easing).on("end", function() {
+      var transition4 = transition4().duration(transitionOpts.duration).ease(transitionOpts.easing).on("end", function() {
         onComplete && onComplete();
       }).on("interrupt", function() {
         onComplete && onComplete();
       });
-      transition3.each(function() {
+      transition4.each(function() {
         scatterLayer.selectAll("g.trace").each(function(d, i) {
           plotOne(gd, i, plotinfo, d, cdscatterSorted, this, transitionOpts);
         });
@@ -40257,7 +40311,7 @@ var Plotly = (() => {
     var i;
     selectMarkers(gd, idx, plotinfo, cdscatter, cdscatterAll);
     var hasTransition2 = !!transitionOpts && transitionOpts.duration > 0;
-    function transition3(selection2) {
+    function transition4(selection2) {
       return hasTransition2 ? selection2.transition() : selection2;
     }
     var xa = plotinfo.xaxis;
@@ -40271,7 +40325,7 @@ var Plotly = (() => {
     var text = ensureSingle(tr, "g", "text");
     registry_default.getComponentMethod("errorbars", "plot")(gd, errorBarGroup, plotinfo, transitionOpts);
     if (trace.visible !== true) return;
-    transition3(tr).style("opacity", trace.opacity);
+    transition4(tr).style("opacity", trace.opacity);
     var ownFillEl3, tonext;
     var ownFillDir = trace.fill.charAt(trace.fill.length - 1);
     if (ownFillDir !== "x" && ownFillDir !== "y") ownFillDir = "";
@@ -40385,9 +40439,9 @@ var Plotly = (() => {
             var el = select_default2(this);
             el.datum(cdscatter);
             if (isEnter) {
-              transition3(el.style("opacity", 0).attr("d", thispath).call(lineGroupStyle)).style("opacity", 1);
+              transition4(el.style("opacity", 0).attr("d", thispath).call(lineGroupStyle)).style("opacity", 1);
             } else {
-              var sel = transition3(el);
+              var sel = transition4(el);
               sel.attr("d", thispath);
               singleLineStyle(cdscatter, sel);
             }
@@ -40396,12 +40450,12 @@ var Plotly = (() => {
       };
     }
     var lineJoin = lines.selectAll(".js-line").data(segments);
-    transition3(lineJoin.exit()).style("opacity", 0).remove();
+    transition4(lineJoin.exit()).style("opacity", 0).remove();
     lineJoin.each(makeUpdate(false));
     lineJoin.enter().append("path").classed("js-line", true).style("vector-effect", isStatic ? "none" : "non-scaling-stroke").call(lineGroupStyle).each(makeUpdate(true));
     setClipUrl(lineJoin, plotinfo.layerClipId, gd);
     function clearFill(selection2) {
-      transition3(selection2).attr("d", "M0,0Z");
+      transition4(selection2).attr("d", "M0,0Z");
     }
     var makeSelfPolygons = function() {
       var polygons = new Array(fillsegments.length);
@@ -40441,10 +40495,10 @@ var Plotly = (() => {
         if (pt0 && pt1) {
           if (ownFillDir) {
             pt0[fillAxisIndex] = pt1[fillAxisIndex] = fillAxisZero;
-            transition3(ownFillEl3).attr("d", "M" + pt1 + "L" + pt0 + "L" + fullpath.slice(1)).call(singleFillStyle, gd);
+            transition4(ownFillEl3).attr("d", "M" + pt1 + "L" + pt0 + "L" + fullpath.slice(1)).call(singleFillStyle, gd);
             thisPolygons = makePolygonsToPrevious(null);
           } else {
-            transition3(ownFillEl3).attr("d", fullpath + "Z").call(singleFillStyle, gd);
+            transition4(ownFillEl3).attr("d", fullpath + "Z").call(singleFillStyle, gd);
             thisPolygons = makeSelfPolygons();
           }
         }
@@ -40453,11 +40507,11 @@ var Plotly = (() => {
       } else if (tonext) {
         if (trace.fill.slice(0, 6) === "tonext" && fullpath && prevRevpath) {
           if (trace.fill === "tonext") {
-            transition3(tonext).attr("d", fullpath + "Z" + prevRevpath + "Z").call(singleFillStyle, gd);
+            transition4(tonext).attr("d", fullpath + "Z" + prevRevpath + "Z").call(singleFillStyle, gd);
             thisPolygons = makeSelfPolygons();
             trace._polygons = thisPolygons.concat(prevPolygons);
           } else {
-            transition3(tonext).attr("d", fullpath + "L" + prevRevpath.slice(1) + "Z").call(singleFillStyle, gd);
+            transition4(tonext).attr("d", fullpath + "L" + prevRevpath.slice(1) + "Z").call(singleFillStyle, gd);
             thisPolygons = makePolygonsToPrevious(prevFillsegments);
             trace._polygons = thisPolygons;
           }
@@ -40532,7 +40586,7 @@ var Plotly = (() => {
       }
       join.each(function(d) {
         var el = select_default2(this);
-        var sel = transition3(el);
+        var sel = transition4(el);
         hasNode = translatePoint(d, sel, xa, ya);
         if (hasNode) {
           singlePointStyle(d, sel, trace2, styleFns, gd);
@@ -40557,7 +40611,7 @@ var Plotly = (() => {
       join.order();
       join.each(function(d) {
         var g = select_default2(this);
-        var sel = transition3(g.select("text"));
+        var sel = transition4(g.select("text"));
         hasNode = translatePoint(d, sel, xa, ya);
         if (hasNode) {
           if (plotinfo.layerClipId) {
@@ -40571,7 +40625,7 @@ var Plotly = (() => {
         var x = xa.c2p(d.x);
         var y = ya.c2p(d.y);
         select_default2(this).selectAll("tspan.line").each(function() {
-          transition3(select_default2(this)).attr({ x, y });
+          transition4(select_default2(this)).attr({ x, y });
         });
       });
       join.exit().remove();
@@ -40636,7 +40690,7 @@ var Plotly = (() => {
   }
 
   // src/traces/scatter/style.js
-  function style2(gd) {
+  function style3(gd) {
     var s = select_default2(gd).selectAll("g.trace.scatter");
     s.style("opacity", function(d) {
       return d[0].trace.opacity;
@@ -40672,7 +40726,7 @@ var Plotly = (() => {
     }
   }
   var style_default3 = {
-    style: style2,
+    style: style3,
     stylePoints,
     styleText,
     styleOnSelect
@@ -41839,8 +41893,8 @@ var Plotly = (() => {
   var idRoot = ["x", "y"];
   var idRegex2 = constants_default2.idRegex;
   var attrRegex = constants_default2.attrRegex;
-  var attributes = attributes_default9;
-  var layoutAttributes = layout_attributes_default4;
+  var attributes2 = attributes_default9;
+  var layoutAttributes2 = layout_attributes_default4;
   var supplyLayoutDefaults4 = supplyLayoutDefaults3;
   var transitionAxes2 = transitionAxes;
   var finalizeSubplots = function(layoutIn, layoutOut) {
@@ -42136,7 +42190,7 @@ var Plotly = (() => {
   var rangePlot = function(gd, plotinfo, cdSubplot) {
     makeSubplotLayer(gd, plotinfo);
     plotOne2(gd, plotinfo, cdSubplot);
-    plots_default.style(gd);
+    style(gd);
   };
   function makeSubplotData(gd) {
     var fullLayout = gd._fullLayout;
@@ -42347,7 +42401,7 @@ var Plotly = (() => {
     canvases.each(canvasToImage);
   };
   var updateFx2 = updateFx;
-  var cartesian_default = { name, attr, idRoot, idRegex: idRegex2, attrRegex, attributes, layoutAttributes, supplyLayoutDefaults: supplyLayoutDefaults4, transitionAxes: transitionAxes2, finalizeSubplots, plot: plot2, clean: clean3, drawFramework, rangePlot, toSVG: toSVG2, updateFx: updateFx2 };
+  var cartesian_default = { name, attr, idRoot, idRegex: idRegex2, attrRegex, attributes: attributes2, layoutAttributes: layoutAttributes2, supplyLayoutDefaults: supplyLayoutDefaults4, transitionAxes: transitionAxes2, finalizeSubplots, plot: plot2, clean: clean3, drawFramework, rangePlot, toSVG: toSVG2, updateFx: updateFx2 };
 
   // src/traces/scatter/index.js
   var { calc: _req5 } = calc_default;
@@ -42359,7 +42413,7 @@ var Plotly = (() => {
     isBubble: subtypes_default.isBubble,
     attributes: attributes_default8,
     layoutAttributes: layout_attributes_default3,
-    supplyDefaults: supplyDefaults2,
+    supplyDefaults: supplyDefaults3,
     crossTraceDefaults: crossTraceDefaults2,
     supplyLayoutDefaults: layout_defaults_default,
     calc: _req5,
@@ -45651,9 +45705,9 @@ var Plotly = (() => {
       }
       displayOutlines(convertPoly(mergedPolygons, isOpenMode), outlines, dragOptions);
       if (isSelectMode) {
-        var _res = reselect(gd, false);
+        var _res = reselect2(gd, false);
         var extraPoints = _res.eventData ? _res.eventData.points.slice() : [];
-        _res = reselect(gd, false, selectionTesters, searchTraces, dragOptions);
+        _res = reselect2(gd, false, selectionTesters, searchTraces, dragOptions);
         selectionTesters = _res.selectionTesters;
         eventData3 = _res.eventData;
         var poly;
@@ -46212,7 +46266,7 @@ var Plotly = (() => {
     }
     return allSelections;
   }
-  function reselect(gd, mayEmitSelected, selectionTesters, searchTraces, dragOptions) {
+  function reselect2(gd, mayEmitSelected, selectionTesters, searchTraces, dragOptions) {
     var hadSearchTraces = !!searchTraces;
     var plotinfo, xRef, yRef;
     if (dragOptions) {
@@ -46567,7 +46621,7 @@ var Plotly = (() => {
     gd.emit("plotly_deselect", null);
   }
   var select_default4 = {
-    reselect,
+    reselect: reselect2,
     prepSelect: prepSelect2,
     clearOutline: clearOutline6,
     clearSelectionsCache,
@@ -50694,7 +50748,7 @@ var Plotly = (() => {
   };
 
   // src/plots/domain.js
-  var attributes2 = function(opts, extra) {
+  var attributes3 = function(opts, extra) {
     opts = opts || {};
     extra = extra || {};
     var base = {
@@ -50808,7 +50862,7 @@ var Plotly = (() => {
       max: 1,
       editType: "plot"
     },
-    domain: attributes2({ name: "grid", editType: "plot", noGridCell: true }, {}),
+    domain: attributes3({ name: "grid", editType: "plot", noGridCell: true }, {}),
     xside: {
       valType: "enumerated",
       values: ["bottom", "bottom plot", "top plot", "top"],
@@ -51351,7 +51405,7 @@ var Plotly = (() => {
   }
 
   // src/components/errorbars/style.js
-  function style3(traces) {
+  function style4(traces) {
     traces.each(function(d) {
       var trace = d[0].trace;
       var yObj = trace.error_y || {};
@@ -51397,7 +51451,7 @@ var Plotly = (() => {
     calc: calc4,
     makeComputeError,
     plot: plot3,
-    style: style3,
+    style: style4,
     hoverInfo
   };
   function hoverInfo(calcPoint, trace, hoverPoint) {
@@ -52173,7 +52227,7 @@ var Plotly = (() => {
     layoutAttributes: attributes_default7,
     supplyLayoutDefaults: legendDefaults,
     draw: draw2,
-    style
+    style: style2
   };
 
   // src/fonts/ploticon.js
@@ -53201,10 +53255,10 @@ var Plotly = (() => {
       this.element.className += " vertical";
       buttons = buttons.reverse();
     }
-    var style6 = fullLayout.modebar;
+    var style7 = fullLayout.modebar;
     var groupSelector = "#" + modeBarId + " .modebar-group";
     document.querySelectorAll(groupSelector).forEach(function(group) {
-      group.style.backgroundColor = style6.bgcolor;
+      group.style.backgroundColor = style7.bgcolor;
     });
     var needsNewButtons = !this.hasButtons(buttons);
     var needsNewLogo = this.hasLogo !== context.displaylogo;
@@ -53227,7 +53281,7 @@ var Plotly = (() => {
       }
     }
     this.updateActiveButton();
-    lib_default.setStyleOnHover("#" + modeBarId + " .modebar-btn", ".active", ".icon path", "fill: " + style6.activecolor, "fill: " + style6.color, this.element);
+    lib_default.setStyleOnHover("#" + modeBarId + " .modebar-btn", ".active", ".icon path", "fill: " + style7.activecolor, "fill: " + style7.color, this.element);
   };
   proto.updateButtons = function(buttons) {
     var _this = this;
@@ -53255,8 +53309,8 @@ var Plotly = (() => {
   proto.createGroup = function() {
     var group = document.createElement("div");
     group.className = "modebar-group";
-    var style6 = this.graphInfo._fullLayout.modebar;
-    group.style.backgroundColor = style6.bgcolor;
+    var style7 = this.graphInfo._fullLayout.modebar;
+    group.style.backgroundColor = style7.bgcolor;
     return group;
   };
   proto.createButton = function(config) {
@@ -53333,13 +53387,13 @@ var Plotly = (() => {
       var isToggleButton = button.getAttribute("data-toggle") === "true";
       var button3 = select_default2(button);
       var updateButtonStyle = function(button2, isActive4) {
-        var style6 = fullLayout.modebar;
+        var style7 = fullLayout.modebar;
         var childEl = button2.querySelector(".icon path");
         if (childEl) {
           if (isActive4 || button2.matches(":hover")) {
-            childEl.style.fill = style6.activecolor;
+            childEl.style.fill = style7.activecolor;
           } else {
-            childEl.style.fill = style6.color;
+            childEl.style.fill = style7.color;
           }
         }
       };
@@ -54159,7 +54213,7 @@ var Plotly = (() => {
   }
 
   // src/traces/bar/defaults.js
-  function supplyDefaults3(traceIn, traceOut, defaultColor, layout) {
+  function supplyDefaults4(traceIn, traceOut, defaultColor, layout) {
     function coerce3(attr2, dflt) {
       return lib_default.coerce(traceIn, traceOut, attributes_default21, attr2, dflt);
     }
@@ -54268,7 +54322,7 @@ var Plotly = (() => {
     }
   }
   var defaults_default2 = {
-    supplyDefaults: supplyDefaults3,
+    supplyDefaults: supplyDefaults4,
     crossTraceDefaults: crossTraceDefaults3,
     handleText,
     validateCornerradius
@@ -54497,7 +54551,7 @@ var Plotly = (() => {
   var attributeTextFont = attributes_default21.textfont;
   var attributeInsideTextFont = attributes_default21.insidetextfont;
   var attributeOutsideTextFont = attributes_default21.outsidetextfont;
-  function style4(gd) {
+  function style5(gd) {
     var s = select_default2(gd).selectAll('g[class^="barlayer"]').selectAll("g.trace");
     resizeText2(gd, s, "bar");
     var barcount = s.size();
@@ -54673,7 +54727,7 @@ var Plotly = (() => {
     return cd.mcc || cd.mc || trace.marker.color;
   }
   var style_default4 = {
-    style: style4,
+    style: style5,
     styleTextPoints,
     styleOnSelect: styleOnSelect2,
     getInsideTextFont,
@@ -54717,7 +54771,7 @@ var Plotly = (() => {
     p[1] = pAxis.c2p(di.p1, true);
     return isHorizontal ? [s, p] : [p, s];
   }
-  function transition2(selection2, fullLayout, opts, makeOnCompleteCallback) {
+  function transition3(selection2, fullLayout, opts, makeOnCompleteCallback) {
     if (!fullLayout.uniformtext.mode && hasTransition(opts)) {
       var onComplete;
       if (makeOnCompleteCallback) {
@@ -54897,7 +54951,7 @@ var Plotly = (() => {
         } else {
           path = rectanglePath;
         }
-        var sel = transition2(ensureSingle(bar, "path"), fullLayout, opts, makeOnCompleteCallback);
+        var sel = transition3(ensureSingle(bar, "path"), fullLayout, opts, makeOnCompleteCallback);
         sel.style("vector-effect", isStatic ? "none" : "non-scaling-stroke").attr("d", isNaN((x1 - x0) * (y1 - y0)) || isBlank && gd._context.staticPlot ? "M0,0Z" : path).call(setClipUrl, plotinfo.layerClipId, gd);
         if (!fullLayout.uniformtext.mode && withTransition) {
           var styleFns = makePointStyleFns(trace);
@@ -55056,7 +55110,7 @@ var Plotly = (() => {
     transform2.fontSize = font2.size;
     recordMinTextSize2(trace.type === "histogram" ? "bar" : trace.type, transform2, fullLayout);
     calcBar.transform = transform2;
-    var s = transition2(textSelection, fullLayout, opts, makeOnCompleteCallback);
+    var s = transition3(textSelection, fullLayout, opts, makeOnCompleteCallback);
     setTransormAndDisplay(s, transform2);
   }
   function textfitsInsideBar(barWidth, barHeight, textWidth, textHeight, isHorizontal) {
@@ -55780,7 +55834,7 @@ var Plotly = (() => {
       editType: "plot"
     },
     // position and shape
-    domain: attributes2({ name: "pie", trace: true, editType: "calc" }),
+    domain: attributes3({ name: "pie", trace: true, editType: "calc" }),
     hole: {
       valType: "number",
       min: 0,
@@ -55862,7 +55916,7 @@ var Plotly = (() => {
     if (traceIn.marker && !traceOut.marker.pattern.fgcolor) traceOut.marker.pattern.fgcolor = traceIn.marker.colors;
     if (!traceOut.marker.pattern.bgcolor) traceOut.marker.pattern.bgcolor = layout.paper_bgcolor;
   }
-  function supplyDefaults4(traceIn, traceOut, defaultColor, layout) {
+  function supplyDefaults5(traceIn, traceOut, defaultColor, layout) {
     function coerce3(attr2, dflt) {
       return lib_default.coerce(traceIn, traceOut, attributes_default22, attr2, dflt);
     }
@@ -55928,7 +55982,7 @@ var Plotly = (() => {
   var defaults_default3 = {
     handleLabelsAndValues,
     handleMarkerDefaults,
-    supplyDefaults: supplyDefaults4
+    supplyDefaults: supplyDefaults5
   };
 
   // src/traces/pie/layout_attributes.js
@@ -56447,7 +56501,7 @@ var Plotly = (() => {
     var family = helpers_default4.castOption(trace.outsidetextfont.family, pt.pts) || helpers_default4.castOption(trace.textfont.family, pt.pts) || layoutFont.family;
     var size = helpers_default4.castOption(trace.outsidetextfont.size, pt.pts) || helpers_default4.castOption(trace.textfont.size, pt.pts) || layoutFont.size;
     var weight = helpers_default4.castOption(trace.outsidetextfont.weight, pt.pts) || helpers_default4.castOption(trace.textfont.weight, pt.pts) || layoutFont.weight;
-    var style6 = helpers_default4.castOption(trace.outsidetextfont.style, pt.pts) || helpers_default4.castOption(trace.textfont.style, pt.pts) || layoutFont.style;
+    var style7 = helpers_default4.castOption(trace.outsidetextfont.style, pt.pts) || helpers_default4.castOption(trace.textfont.style, pt.pts) || layoutFont.style;
     var variant = helpers_default4.castOption(trace.outsidetextfont.variant, pt.pts) || helpers_default4.castOption(trace.textfont.variant, pt.pts) || layoutFont.variant;
     var textcase = helpers_default4.castOption(trace.outsidetextfont.textcase, pt.pts) || helpers_default4.castOption(trace.textfont.textcase, pt.pts) || layoutFont.textcase;
     var lineposition = helpers_default4.castOption(trace.outsidetextfont.lineposition, pt.pts) || helpers_default4.castOption(trace.textfont.lineposition, pt.pts) || layoutFont.lineposition;
@@ -56457,7 +56511,7 @@ var Plotly = (() => {
       family,
       size,
       weight,
-      style: style6,
+      style: style7,
       variant,
       textcase,
       lineposition,
@@ -56472,7 +56526,7 @@ var Plotly = (() => {
     var family = helpers_default4.castOption(trace.insidetextfont.family, pt.pts) || helpers_default4.castOption(trace.textfont.family, pt.pts) || layoutFont.family;
     var size = helpers_default4.castOption(trace.insidetextfont.size, pt.pts) || helpers_default4.castOption(trace.textfont.size, pt.pts) || layoutFont.size;
     var weight = helpers_default4.castOption(trace.insidetextfont.weight, pt.pts) || helpers_default4.castOption(trace.textfont.weight, pt.pts) || layoutFont.weight;
-    var style6 = helpers_default4.castOption(trace.insidetextfont.style, pt.pts) || helpers_default4.castOption(trace.textfont.style, pt.pts) || layoutFont.style;
+    var style7 = helpers_default4.castOption(trace.insidetextfont.style, pt.pts) || helpers_default4.castOption(trace.textfont.style, pt.pts) || layoutFont.style;
     var variant = helpers_default4.castOption(trace.insidetextfont.variant, pt.pts) || helpers_default4.castOption(trace.textfont.variant, pt.pts) || layoutFont.variant;
     var textcase = helpers_default4.castOption(trace.insidetextfont.textcase, pt.pts) || helpers_default4.castOption(trace.textfont.textcase, pt.pts) || layoutFont.textcase;
     var lineposition = helpers_default4.castOption(trace.insidetextfont.lineposition, pt.pts) || helpers_default4.castOption(trace.textfont.lineposition, pt.pts) || layoutFont.lineposition;
@@ -56482,7 +56536,7 @@ var Plotly = (() => {
       family,
       size,
       weight,
-      style: style6,
+      style: style7,
       variant,
       textcase,
       lineposition,
@@ -56976,7 +57030,7 @@ var Plotly = (() => {
 
   // src/traces/pie/style.js
   var { resizeText: resizeText3 } = uniform_text_default;
-  function style5(gd) {
+  function style6(gd) {
     var s = gd._fullLayout._pielayer.selectAll(".trace");
     resizeText3(gd, s, "pie");
     s.each(function(cd) {
@@ -57012,7 +57066,7 @@ var Plotly = (() => {
     calc: _req4,
     crossTraceCalc: _req52,
     plot: _req62,
-    style: style5,
+    style: style6,
     styleOne,
     moduleType: "trace",
     name: "pie",
@@ -63890,7 +63944,7 @@ var Plotly = (() => {
   // src/components/calendars/index.js
   var EPOCHJD2 = numerical_default.EPOCHJD;
   var ONEDAY6 = numerical_default.ONEDAY;
-  var attributes3 = {
+  var attributes4 = {
     valType: "enumerated",
     values: lib_default.sortObjectKeys(calendars_default.calendars),
     editType: "calc",
@@ -63898,7 +63952,7 @@ var Plotly = (() => {
   };
   var handleDefaults5 = function(contIn, contOut, attr2, dflt) {
     var attrs2 = {};
-    attrs2[attr2] = attributes3;
+    attrs2[attr2] = attributes4;
     return lib_default.coerce(contIn, contOut, attrs2, attr2, dflt);
   };
   var handleTraceDefaults = function(traceIn, traceOut, coords, layout) {
@@ -64026,7 +64080,7 @@ var Plotly = (() => {
     return calendarObj;
   }
   function makeAttrs(description) {
-    return lib_default.extendFlat({}, attributes3, { description });
+    return lib_default.extendFlat({}, attributes4, { description });
   }
   function makeTraceAttrsDescription(coord) {
     return "Sets the calendar system to use with `" + coord + "` date data.";
@@ -64091,7 +64145,7 @@ var Plotly = (() => {
         }
       }
     },
-    layoutAttributes: attributes3,
+    layoutAttributes: attributes4,
     handleDefaults: handleDefaults5,
     handleTraceDefaults,
     CANONICAL_SUNDAY,

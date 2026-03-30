@@ -1,7 +1,7 @@
 import { select } from 'd3-selection';
 function d3Round(x, n) { return n ? Math.round(x * (n = Math.pow(10, n))) / n : Math.round(x); }
 import isNumeric from 'fast-isnumeric';
-import Plots from '../../plots/plots.js';
+import { allowAutoMargin, autoMargin } from '../../plots/plots.js';
 import Registry from '../../registry.js';
 import Lib, { aggNums, bBoxIntersect, bigFont, coerce, constrain, dateTick0, deg2rad, distinctVals, ensureNumber, error, extendFlat, findExactDates, increment, incrementMonth, interp, isArrayOrTypedArray, mod, nestedProperty, numSeparate, pushUnique, roundUp, simpleMap, stdev, strTranslate, swapAttrs, syncOrAsync } from '../../lib/index.js';
 import svgTextUtils from '../../lib/svg_text_utils.js';
@@ -2873,9 +2873,9 @@ axes.drawOne = function(gd, ax, opts) {
             filterPush(mirrorPush, ax.automargin);
         }
 
-        Plots.autoMargin(gd, axAutoMarginID(ax), push);
-        Plots.autoMargin(gd, axMirrorAutoMarginID(ax), mirrorPush);
-        Plots.autoMargin(gd, rangeSliderAutoMarginID(ax), rangeSliderPush);
+        autoMargin(gd, axAutoMarginID(ax), push);
+        autoMargin(gd, axMirrorAutoMarginID(ax), mirrorPush);
+        autoMargin(gd, rangeSliderAutoMarginID(ax), rangeSliderPush);
     });
 
     return syncOrAsync(seq);
@@ -4436,13 +4436,13 @@ axes.allowAutoMargin = function(gd) {
     for(var i = 0; i < axList.length; i++) {
         var ax = axList[i];
         if(ax.automargin) {
-            Plots.allowAutoMargin(gd, axAutoMarginID(ax));
+            allowAutoMargin(gd, axAutoMarginID(ax));
             if(ax.mirror) {
-                Plots.allowAutoMargin(gd, axMirrorAutoMarginID(ax));
+                allowAutoMargin(gd, axMirrorAutoMarginID(ax));
             }
         }
         if(Registry.getComponentMethod('rangeslider', 'isVisible')(ax)) {
-            Plots.allowAutoMargin(gd, rangeSliderAutoMarginID(ax));
+            allowAutoMargin(gd, rangeSliderAutoMarginID(ax));
         }
     }
 };
