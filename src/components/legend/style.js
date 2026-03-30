@@ -1,7 +1,7 @@
 import { select } from 'd3-selection';
 import Registry from '../../registry.js';
 import Lib from '../../lib/index.js';
-import Drawing from '../drawing/index.js';
+import { dashLine, fillGroupStyle, getPatternAttr, gradient, lineGroupStyle, pattern, pointStyle, textPointStyle, tryColorscale } from '../drawing/index.js';
 import Color from '../color/index.js';
 import _helpers from '../colorscale/helpers.js';
 const { extractOpts } = _helpers;
@@ -141,10 +141,10 @@ export default function style(s, gd, legend) {
         var fillStyle = function(s) {
             if(s.size()) {
                 if(showFill) {
-                    Drawing.fillGroupStyle(s, gd, true);
+                    fillGroupStyle(s, gd, true);
                 } else {
                     var gradientID = 'legendfill-' + trace.uid;
-                    Drawing.gradient(s, gd, gradientID,
+                    gradient(s, gd, gradientID,
                         getGradientDirection(reversescale),
                         colorscale, 'fill');
                 }
@@ -154,8 +154,8 @@ export default function style(s, gd, legend) {
         var lineGradient = function(s) {
             if(s.size()) {
                 var gradientID = 'legendline-' + trace.uid;
-                Drawing.lineGroupStyle(s);
-                Drawing.gradient(s, gd, gradientID,
+                lineGroupStyle(s);
+                gradient(s, gd, gradientID,
                     getGradientDirection(reversescale),
                     colorscale, 'stroke');
             }
@@ -196,7 +196,7 @@ export default function style(s, gd, legend) {
         // so add an invisibly small angle to the line
         // This issue (and workaround) exist across (Mac) Chrome, FF, and Safari
         line.attr('d', pathStart + (showGradientLine ? 'l' + itemWidth + ',0.0001' : 'h' + itemWidth))
-            .call(showLine ? Drawing.lineGroupStyle : lineGradient);
+            .call(showLine ? lineGroupStyle : lineGradient);
     }
 
     function stylePoints(d) {
@@ -297,7 +297,7 @@ export default function style(s, gd, legend) {
             .classed('scatterpts', true)
             .attr('transform', centerTransform);
         pts.exit().remove();
-        pts.call(Drawing.pointStyle, tMod, gd);
+        pts.call(pointStyle, tMod, gd);
 
         // 'mrc' is set in pointStyle and used in textPointStyle:
         // constrain it here
@@ -309,7 +309,7 @@ export default function style(s, gd, legend) {
             .append('g').classed('pointtext', true)
                 .append('text').attr('transform', centerTransform);
         txt.exit().remove();
-        txt.selectAll('text').call(Drawing.textPointStyle, tMod, gd);
+        txt.selectAll('text').call(textPointStyle, tMod, gd);
     }
 
     function styleWaterfalls(d) {
@@ -397,12 +397,12 @@ export default function style(s, gd, legend) {
                 var cOpts = extractOpts(marker);
                 var mid = cOpts.mid;
                 if(mid === undefined) mid = (cOpts.max + cOpts.min) / 2;
-                mcc = Drawing.tryColorscale(marker, '')(mid);
+                mcc = tryColorscale(marker, '')(mid);
             }
             var fillColor = mcc || d0.mc || marker.color;
 
             var markerPattern = marker.pattern;
-            var pAttr = Drawing.getPatternAttr;
+            var pAttr = getPatternAttr;
             var patternShape = markerPattern && (
                 pAttr(markerPattern.shape, 0, '') || pAttr(markerPattern.path, 0, '')
             );
@@ -415,7 +415,7 @@ export default function style(s, gd, legend) {
                 var patternSolidity = dimAttr(markerPattern.solidity, 0.5, 1);
                 var patternID = 'legend-' + trace.uid;
                 p.call(
-                    Drawing.pattern, 'legend', gd, patternID,
+                    pattern, 'legend', gd, patternID,
                     patternShape, patternSize, patternSolidity,
                     mcc, markerPattern.fillmode,
                     patternBGColor, patternFGColor, patternFGOpacity
@@ -454,7 +454,7 @@ export default function style(s, gd, legend) {
                         sizemode: 'diameter'
                     }
                 });
-                pts.call(Drawing.pointStyle, tMod, gd);
+                pts.call(pointStyle, tMod, gd);
             } else {
                 var w = boundLineWidth(undefined, trace.line, MAX_MARKER_LINE_WIDTH, CST_MARKER_LINE_WIDTH);
 
@@ -514,7 +514,7 @@ export default function style(s, gd, legend) {
             var w = boundLineWidth(undefined, cont.line, MAX_MARKER_LINE_WIDTH, CST_MARKER_LINE_WIDTH);
 
             p.style('fill', 'none')
-                .call(Drawing.dashLine, cont.line.dash, w);
+                .call(dashLine, cont.line.dash, w);
 
             if(w) Color.stroke(p, cont.line.color);
         });
@@ -651,7 +651,7 @@ export default function style(s, gd, legend) {
             var fillGradient = function(s) {
                 if(s.size()) {
                     var gradientID = 'legendfill-' + trace.uid;
-                    Drawing.gradient(s, gd, gradientID,
+                    gradient(s, gd, gradientID,
                         getGradientDirection(reversescale, useGradient === 'radial'),
                         colorscale, 'fill');
                 }

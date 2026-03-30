@@ -5,7 +5,7 @@ import Lib from '../lib/index.js';
 import svgTextUtils from '../lib/svg_text_utils.js';
 import clearGlCanvases from '../lib/clear_gl_canvases.js';
 import Color from '../components/color/index.js';
-import Drawing from '../components/drawing/index.js';
+import { bBox, crispRound, setClipUrl, setRect, setSize, setTranslate } from '../components/drawing/index.js';
 import Titles from '../components/titles/index.js';
 import Axes from '../plots/cartesian/axes.js';
 import alignmentConstants from '../constants/alignment.js';
@@ -60,7 +60,7 @@ function lsInner(gd) {
         height: (gd._context.responsive && fullLayout.autosize && !gd._context._hasZeroHeight && !gd.layout.height) ? '100%' : fullLayout.height + 'px'
     })
     .selectAll('.main-svg')
-    .call(Drawing.setSize, fullLayout.width, fullLayout.height);
+    .call(setSize, fullLayout.width, fullLayout.height);
     gd._context.setBackground(gd, fullLayout.paper_bgcolor);
 
     drawMainTitle(gd);
@@ -95,7 +95,7 @@ function lsInner(gd) {
         ax._linepositions = {};
 
         // stash crispRounded linewidth so we don't need to pass gd all over the place
-        ax._lw = Drawing.crispRound(gd, ax.linewidth, 1);
+        ax._lw = crispRound(gd, ax.linewidth, 1);
 
         // figure out the main axis line and main mirror line position.
         // it's easier to follow the logic if we handle these separately from
@@ -176,7 +176,7 @@ function lsInner(gd) {
 
         if(plotinfo.bg && xa._offset !== undefined && ya._offset !== undefined) {
             plotinfo.bg
-                .call(Drawing.setRect,
+                .call(setRect,
                     xa._offset - pad, ya._offset - pad,
                     xa._length + 2 * pad, ya._length + 2 * pad)
                 .call(Color.fill, fullLayout.plot_bgcolor)
@@ -203,7 +203,7 @@ function lsInner(gd) {
                 height: ya._length
             });
 
-            Drawing.setTranslate(plotinfo.plot, xa._offset, ya._offset);
+            setTranslate(plotinfo.plot, xa._offset, ya._offset);
 
             var plotClipId;
             var layerClipId;
@@ -216,10 +216,10 @@ function lsInner(gd) {
                 layerClipId = null;
             }
 
-            Drawing.setClipUrl(plotinfo.plot, plotClipId, gd);
+            setClipUrl(plotinfo.plot, plotClipId, gd);
 
             // stash layer clipId value (null or same as clipId)
-            // to DRY up Drawing.setClipUrl calls on trace-module and trace layers
+            // to DRY up setClipUrl calls on trace-module and trace layers
             // downstream
             plotinfo.layerClipId = layerClipId;
         }
@@ -424,7 +424,7 @@ export var drawMainTitle = function(gd) {
 
     if(title.text && title.automargin) {
         var titleObj = select(gd).selectAll('.gtitle');
-        var titleHeight = Drawing.bBox(select(gd).selectAll('.g-gtitle').node()).height;
+        var titleHeight = bBox(select(gd).selectAll('.g-gtitle').node()).height;
         var pushMargin = needsMarginPush(gd, title, titleHeight);
         if(pushMargin > 0) {
             applyTitleAutoMargin(gd, y, pushMargin, titleHeight);

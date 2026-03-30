@@ -4,7 +4,7 @@ import 'd3-transition';
 import { extent } from 'd3-array';
 import Registry from '../../registry.js';
 import Lib from '../../lib/index.js';
-import Drawing from '../../components/drawing/index.js';
+import { hideOutsideRangePoint, lineGroupStyle, makePointStyleFns, pointStyle, setClipUrl, singleFillStyle, singleLineStyle, singlePointStyle, smoothclosed, smoothopen, steps, textPointStyle, translatePoint, translatePoints } from '../../components/drawing/index.js';
 import subTypes from './subtypes.js';
 import linePoints from './line_points.js';
 import linkTraces from './link_traces.js';
@@ -86,7 +86,7 @@ export default function plot(
 function createFills(gd, traceJoin, plotinfo) {
     traceJoin.each(function(d) {
         var fills = ensureSingle(select(this), 'g', 'fills');
-        Drawing.setClipUrl(fills, plotinfo.layerClipId, gd);
+        setClipUrl(fills, plotinfo.layerClipId, gd);
 
         var trace = d[0].trace;
 
@@ -209,8 +209,8 @@ function plotOne(gd, idx, plotinfo, cdscatter, cdscatterAll, element, transition
         }
 
         if(['hv', 'vh', 'hvh', 'vhv'].indexOf(line.shape) !== -1) {
-            pathfn = Drawing.steps(line.shape);
-            revpathbase = Drawing.steps(
+            pathfn = steps(line.shape);
+            revpathbase = steps(
                 line.shape.split('').reverse().join('')
             );
         } else if(line.shape === 'spline') {
@@ -219,9 +219,9 @@ function plotOne(gd, idx, plotinfo, cdscatter, cdscatterAll, element, transition
                 if(pts.length > 1 && pts[0][0] === pLast[0] && pts[0][1] === pLast[1]) {
                     // identical start and end points: treat it as a
                     // closed curve so we don't get a kink
-                    return Drawing.smoothclosed(pts.slice(1), line.smoothing);
+                    return smoothclosed(pts.slice(1), line.smoothing);
                 } else {
-                    return Drawing.smoothopen(pts, line.smoothing);
+                    return smoothopen(pts, line.smoothing);
                 }
             };
         } else {
@@ -306,12 +306,12 @@ function plotOne(gd, idx, plotinfo, cdscatter, cdscatterAll, element, transition
                     if(isEnter) {
                         transition(el.style('opacity', 0)
                             .attr('d', thispath)
-                            .call(Drawing.lineGroupStyle))
+                            .call(lineGroupStyle))
                                 .style('opacity', 1);
                     } else {
                         var sel = transition(el);
                         sel.attr('d', thispath);
-                        Drawing.singleLineStyle(cdscatter, sel);
+                        singleLineStyle(cdscatter, sel);
                     }
                 }
             };
@@ -329,10 +329,10 @@ function plotOne(gd, idx, plotinfo, cdscatter, cdscatterAll, element, transition
     lineJoin.enter().append('path')
         .classed('js-line', true)
         .style('vector-effect', isStatic ? 'none' : 'non-scaling-stroke')
-        .call(Drawing.lineGroupStyle)
+        .call(lineGroupStyle)
         .each(makeUpdate(true));
 
-    Drawing.setClipUrl(lineJoin, plotinfo.layerClipId, gd);
+    setClipUrl(lineJoin, plotinfo.layerClipId, gd);
 
     function clearFill(selection) {
         transition(selection).attr('d', 'M0,0Z');
@@ -397,14 +397,14 @@ function plotOne(gd, idx, plotinfo, cdscatter, cdscatterAll, element, transition
                     // the points on the axes are the first two points. Otherwise
                     // animations get a little crazy if the number of points changes.
                     transition(ownFillEl3).attr('d', 'M' + pt1 + 'L' + pt0 + 'L' + fullpath.slice(1))
-                        .call(Drawing.singleFillStyle, gd);
+                        .call(singleFillStyle, gd);
 
                     // create hover polygons that extend to the axis as well.
                     thisPolygons = makePolygonsToPrevious(null); // polygon to axis
                 } else {
                     // fill to self: just join the path to itself
                     transition(ownFillEl3).attr('d', fullpath + 'Z')
-                        .call(Drawing.singleFillStyle, gd);
+                        .call(singleFillStyle, gd);
 
                     // and simply emit hover polygons for each segment
                     thisPolygons = makeSelfPolygons();
@@ -421,7 +421,7 @@ function plotOne(gd, idx, plotinfo, cdscatter, cdscatterAll, element, transition
                     // This makes strange results if one path is *not* entirely
                     // inside the other, but then that is a strange usage.
                     transition(tonext).attr('d', fullpath + 'Z' + prevRevpath + 'Z')
-                        .call(Drawing.singleFillStyle, gd);
+                        .call(singleFillStyle, gd);
 
                                             // and simply emit hover polygons for each segment
                     thisPolygons = makeSelfPolygons();
@@ -436,7 +436,7 @@ function plotOne(gd, idx, plotinfo, cdscatter, cdscatterAll, element, transition
                     // things depending on whether the new endpoint projects onto the
                     // existing curve or off the end of it
                     transition(tonext).attr('d', fullpath + 'L' + prevRevpath.slice(1) + 'Z')
-                        .call(Drawing.singleFillStyle, gd);
+                        .call(singleFillStyle, gd);
 
                     // create hover polygons that extend to the previous trace.
                     thisPolygons = makePolygonsToPrevious(prevFillsegments);
@@ -526,8 +526,8 @@ function plotOne(gd, idx, plotinfo, cdscatter, cdscatterAll, element, transition
 
         if(hasTransition) {
             enter
-                .call(Drawing.pointStyle, trace, gd)
-                .call(Drawing.translatePoints, xa, ya)
+                .call(pointStyle, trace, gd)
+                .call(translatePoints, xa, ya)
                 .style('opacity', 0)
                 .transition()
                 .style('opacity', 1);
@@ -537,19 +537,19 @@ function plotOne(gd, idx, plotinfo, cdscatter, cdscatterAll, element, transition
 
         var styleFns;
         if(showMarkers) {
-            styleFns = Drawing.makePointStyleFns(trace);
+            styleFns = makePointStyleFns(trace);
         }
 
         join.each(function(d) {
             var el = select(this);
             var sel = transition(el);
-            hasNode = Drawing.translatePoint(d, sel, xa, ya);
+            hasNode = translatePoint(d, sel, xa, ya);
 
             if(hasNode) {
-                Drawing.singlePointStyle(d, sel, trace, styleFns, gd);
+                singlePointStyle(d, sel, trace, styleFns, gd);
 
                 if(plotinfo.layerClipId) {
-                    Drawing.hideOutsideRangePoint(d, sel, xa, ya, trace.xcalendar, trace.ycalendar);
+                    hideOutsideRangePoint(d, sel, xa, ya, trace.xcalendar, trace.ycalendar);
                 }
 
                 if(trace.customdata) {
@@ -581,11 +581,11 @@ function plotOne(gd, idx, plotinfo, cdscatter, cdscatterAll, element, transition
         join.each(function(d) {
             var g = select(this);
             var sel = transition(g.select('text'));
-            hasNode = Drawing.translatePoint(d, sel, xa, ya);
+            hasNode = translatePoint(d, sel, xa, ya);
 
             if(hasNode) {
                 if(plotinfo.layerClipId) {
-                    Drawing.hideOutsideRangePoint(d, g, xa, ya, trace.xcalendar, trace.ycalendar);
+                    hideOutsideRangePoint(d, g, xa, ya, trace.xcalendar, trace.ycalendar);
                 }
             } else {
                 g.remove();
@@ -593,7 +593,7 @@ function plotOne(gd, idx, plotinfo, cdscatter, cdscatterAll, element, transition
         });
 
         join.selectAll('text')
-            .call(Drawing.textPointStyle, trace, gd)
+            .call(textPointStyle, trace, gd)
             .each(function(d) {
                 // This just *has* to be totally custom because of SVG text positioning :(
                 // It's obviously copied from translatePoint; we just can't use that
@@ -616,8 +616,8 @@ function plotOne(gd, idx, plotinfo, cdscatter, cdscatterAll, element, transition
     // on `plotinfo._hasClipOnAxisFalse === true` subplots
     var hasClipOnAxisFalse = trace.cliponaxis === false;
     var clipUrl = hasClipOnAxisFalse ? null : plotinfo.layerClipId;
-    Drawing.setClipUrl(points, clipUrl, gd);
-    Drawing.setClipUrl(text, clipUrl, gd);
+    setClipUrl(points, clipUrl, gd);
+    setClipUrl(text, clipUrl, gd);
 }
 
 function selectMarkers(gd, idx, plotinfo, cdscatter, cdscatterAll) {

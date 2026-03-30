@@ -10,7 +10,7 @@ import Plots from '../plots/plots.js';
 import Axes from '../plots/cartesian/axes.js';
 import handleRangeDefaults from '../plots/cartesian/range_defaults.js';
 import cartesianLayoutAttributes from '../plots/cartesian/layout_attributes.js';
-import Drawing from '../components/drawing/index.js';
+import { initGradients, initPatterns, makeTester } from '../components/drawing/index.js';
 import Color from '../components/color/index.js';
 import { initInteractions } from '../plots/cartesian/graph_interact.js';
 import xmlnsNamespaces from '../constants/xmlns_namespaces.js';
@@ -95,9 +95,9 @@ function _doPlot(gd, data, layout, config) {
     select(gd).classed('js-plotly-plot', true);
 
     // off-screen getBoundingClientRect testing space,
-    // in #js-plotly-tester (and stored as Drawing.tester)
+    // in #js-plotly-tester (and stored as tester)
     // so we can share cached text across tabs
-    Drawing.makeTester();
+    makeTester();
 
     // collect promises for any async actions during plotting
     // any part of the plotting code can push to gd._promises, then
@@ -147,8 +147,8 @@ function _doPlot(gd, data, layout, config) {
     }
 
     // clear gradient and pattern defs on each .plot call, because we know we'll loop through all traces
-    Drawing.initGradients(gd);
-    Drawing.initPatterns(gd);
+    initGradients(gd);
+    initPatterns(gd);
 
     // save initial show spikes once per graph
     if (graphWasEmpty) Axes.saveShowSpikeInitial(gd);

@@ -1,7 +1,7 @@
 import * as d3Ease from 'd3-ease';
 import Registry from '../../registry.js';
 import Lib from '../../lib/index.js';
-import Drawing from '../../components/drawing/index.js';
+import { hideOutsideRangePoints, setPointGroupScale, setScale, setTextPointsScale, setTranslate } from '../../components/drawing/index.js';
 import Axes from './axes.js';
 
 export default function transitionAxes(gd, edits, transitionOpts, makeOnCompleteCallback) {
@@ -19,12 +19,12 @@ export default function transitionAxes(gd, edits, transitionOpts, makeOnComplete
         var ya = subplot.yaxis;
 
         fullLayout._defs.select('#' + subplot.clipId + '> rect')
-            .call(Drawing.setTranslate, 0, 0)
-            .call(Drawing.setScale, 1, 1);
+            .call(setTranslate, 0, 0)
+            .call(setScale, 1, 1);
 
         subplot.plot
-            .call(Drawing.setTranslate, xa._offset, ya._offset)
-            .call(Drawing.setScale, 1, 1);
+            .call(setTranslate, xa._offset, ya._offset)
+            .call(setScale, 1, 1);
 
         var traceGroups = subplot.plot.selectAll('.scatterlayer .trace');
 
@@ -32,11 +32,11 @@ export default function transitionAxes(gd, edits, transitionOpts, makeOnComplete
         // scale to individual points to counteract the scale of the trace
         // as a whole:
         traceGroups.selectAll('.point')
-            .call(Drawing.setPointGroupScale, 1, 1);
+            .call(setPointGroupScale, 1, 1);
         traceGroups.selectAll('.textpoint')
-            .call(Drawing.setTextPointsScale, 1, 1);
+            .call(setTextPointsScale, 1, 1);
         traceGroups
-            .call(Drawing.hideOutsideRangePoints, subplot);
+            .call(hideOutsideRangePoints, subplot);
     }
 
     function updateSubplot(edit, progress) {
@@ -91,17 +91,17 @@ export default function transitionAxes(gd, edits, transitionOpts, makeOnComplete
         var plotDy = ya._offset - fracDy;
 
         plotinfo.clipRect
-            .call(Drawing.setTranslate, clipDx, clipDy)
-            .call(Drawing.setScale, 1 / xScaleFactor, 1 / yScaleFactor);
+            .call(setTranslate, clipDx, clipDy)
+            .call(setScale, 1 / xScaleFactor, 1 / yScaleFactor);
 
         plotinfo.plot
-            .call(Drawing.setTranslate, plotDx, plotDy)
-            .call(Drawing.setScale, xScaleFactor, yScaleFactor);
+            .call(setTranslate, plotDx, plotDy)
+            .call(setScale, xScaleFactor, yScaleFactor);
 
         // apply an inverse scale to individual points to counteract
         // the scale of the trace group.
-        Drawing.setPointGroupScale(plotinfo.zoomScalePts, 1 / xScaleFactor, 1 / yScaleFactor);
-        Drawing.setTextPointsScale(plotinfo.zoomScaleTxt, 1 / xScaleFactor, 1 / yScaleFactor);
+        setPointGroupScale(plotinfo.zoomScalePts, 1 / xScaleFactor, 1 / yScaleFactor);
+        setTextPointsScale(plotinfo.zoomScaleTxt, 1 / xScaleFactor, 1 / yScaleFactor);
     }
 
     var onComplete;

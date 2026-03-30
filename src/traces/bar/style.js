@@ -1,6 +1,6 @@
 import { select } from 'd3-selection';
 import Color from '../../components/color/index.js';
-import Drawing from '../../components/drawing/index.js';
+import { font, pointStyle, selectedPointStyle, selectedTextStyle } from '../../components/drawing/index.js';
 import Lib from '../../lib/index.js';
 import Registry from '../../registry.js';
 import _uniform_text from './uniform_text.js';
@@ -43,16 +43,16 @@ function style(gd) {
 }
 
 function stylePoints(sel, trace, gd) {
-    Drawing.pointStyle(sel.selectAll('path'), trace, gd);
+    pointStyle(sel.selectAll('path'), trace, gd);
     styleTextPoints(sel, trace, gd);
 }
 
 function styleTextPoints(sel, trace, gd) {
     sel.selectAll('text').each(function(d) {
         var tx = select(this);
-        var font = Lib.ensureUniformFontSize(gd, determineFont(tx, d, trace, gd));
+        var textFont = Lib.ensureUniformFontSize(gd, determineFont(tx, d, trace, gd));
 
-        Drawing.font(tx, font);
+        font(tx, textFont);
     });
 }
 
@@ -68,26 +68,26 @@ function styleOnSelect(gd, cd, sel) {
 }
 
 function stylePointsInSelectionMode(s, trace, gd) {
-    Drawing.selectedPointStyle(s.selectAll('path'), trace);
+    selectedPointStyle(s.selectAll('path'), trace);
     styleTextInSelectionMode(s.selectAll('text'), trace, gd);
 }
 
 function styleTextInSelectionMode(txs, trace, gd) {
     txs.each(function(d) {
         var tx = select(this);
-        var font;
+        var textFont;
 
         if(d.selected) {
-            font = Lib.ensureUniformFontSize(gd, determineFont(tx, d, trace, gd));
+            textFont = Lib.ensureUniformFontSize(gd, determineFont(tx, d, trace, gd));
 
             var selectedFontColor = trace.selected.textfont && trace.selected.textfont.color;
             if(selectedFontColor) {
-                font.color = selectedFontColor;
+                textFont.color = selectedFontColor;
             }
 
-            Drawing.font(tx, font);
+            font(tx, textFont);
         } else {
-            Drawing.selectedTextStyle(tx, trace);
+            selectedTextStyle(tx, trace);
         }
     });
 }

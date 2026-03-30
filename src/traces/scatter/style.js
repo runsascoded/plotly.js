@@ -1,5 +1,5 @@
 import { select } from 'd3-selection';
-import Drawing from '../../components/drawing/index.js';
+import { fillGroupStyle, lineGroupStyle, pointStyle, selectedPointStyle, selectedTextStyle, textPointStyle } from '../../components/drawing/index.js';
 import Registry from '../../registry.js';
 
 function style(gd) {
@@ -22,28 +22,28 @@ function style(gd) {
     });
 
     s.selectAll('g.trace path.js-line')
-        .call(Drawing.lineGroupStyle);
+        .call(lineGroupStyle);
 
     s.selectAll('g.trace path.js-fill')
-        .call(Drawing.fillGroupStyle, gd, false);
+        .call(fillGroupStyle, gd, false);
 
     Registry.getComponentMethod('errorbars', 'style')(s);
 }
 
 function stylePoints(sel, trace, gd) {
-    Drawing.pointStyle(sel.selectAll('path.point'), trace, gd);
+    pointStyle(sel.selectAll('path.point'), trace, gd);
 }
 
 function styleText(sel, trace, gd) {
-    Drawing.textPointStyle(sel.selectAll('text'), trace, gd);
+    textPointStyle(sel.selectAll('text'), trace, gd);
 }
 
 function styleOnSelect(gd, cd, sel) {
     var trace = cd[0].trace;
 
     if(trace.selectedpoints) {
-        Drawing.selectedPointStyle(sel.selectAll('path.point'), trace);
-        Drawing.selectedTextStyle(sel.selectAll('text'), trace);
+        selectedPointStyle(sel.selectAll('path.point'), trace);
+        selectedTextStyle(sel.selectAll('text'), trace);
     } else {
         stylePoints(sel, trace, gd);
         styleText(sel, trace, gd);

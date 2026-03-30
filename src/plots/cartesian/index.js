@@ -2,7 +2,7 @@ import { select } from 'd3-selection';
 import Registry from '../../registry.js';
 import Lib from '../../lib/index.js';
 import Plots from '../plots.js';
-import Drawing from '../../components/drawing/index.js';
+import { setClipUrl } from '../../components/drawing/index.js';
 import { getModuleCalcData } from '../get_data.js';
 import axisIds from './axis_ids.js';
 import constants from './constants.js';
@@ -269,7 +269,7 @@ function plotOne(gd, plotinfo, cdSubplot, transitionOpts, makeOnCompleteCallback
 
         // layers that allow `cliponaxis: false`
         if(constants.clipOnAxisFalseQuery.indexOf('.' + className) === -1) {
-            Drawing.setClipUrl(sel, plotinfo.layerClipId, gd);
+            setClipUrl(sel, plotinfo.layerClipId, gd);
         }
     });
 

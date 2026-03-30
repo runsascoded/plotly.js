@@ -4,7 +4,7 @@ import isNumeric from 'fast-isnumeric';
 import Plots from '../../plots/plots.js';
 import Registry from '../../registry.js';
 import Lib from '../../lib/index.js';
-import Drawing from '../drawing/index.js';
+import { bBox, font } from '../drawing/index.js';
 import Color from '../color/index.js';
 import svgTextUtils from '../../lib/svg_text_utils.js';
 import interactConstants from '../../constants/interactions.js';
@@ -63,16 +63,16 @@ function draw(gd, titleClass, options) {
     var txt = (title && title.text ? title.text : '').trim();
     var titleIsPlaceholder = false;
 
-    var font = title && title.font ? title.font : {};
-    var fontFamily = font.family;
-    var fontSize = font.size;
-    var fontColor = font.color;
-    var fontWeight = font.weight;
-    var fontStyle = font.style;
-    var fontVariant = font.variant;
-    var fontTextcase = font.textcase;
-    var fontLineposition = font.lineposition;
-    var fontShadow = font.shadow;
+    var titleFont = title && title.font ? title.font : {};
+    var fontFamily = titleFont.family;
+    var fontSize = titleFont.size;
+    var fontColor = titleFont.color;
+    var fontWeight = titleFont.weight;
+    var fontStyle = titleFont.style;
+    var fontVariant = titleFont.variant;
+    var fontTextcase = titleFont.textcase;
+    var fontLineposition = titleFont.lineposition;
+    var fontShadow = titleFont.shadow;
 
     // Get subtitle properties
     var subtitleProp = options.subtitlePropName;
@@ -214,7 +214,7 @@ function draw(gd, titleClass, options) {
         }
 
         titleEl.style('opacity', opacity * Color.opacity(fontColor))
-        .call(Drawing.font, {
+        .call(font, {
             color: Color.rgb(fontColor),
             size: d3Round(fontSize, 2),
             family: fontFamily,
@@ -243,7 +243,7 @@ function draw(gd, titleClass, options) {
 
             subtitleEl.attr('transform', transformVal);
             subtitleEl.style('opacity', subtitleOpacity * Color.opacity(subFontColor))
-            .call(Drawing.font, {
+            .call(font, {
                 color: Color.rgb(subFontColor),
                 size: d3Round(subFontSize, 2),
                 family: subFontFamily,
@@ -274,7 +274,7 @@ function draw(gd, titleClass, options) {
             var shiftSign = (avoid.side === 'left' || avoid.side === 'top') ? -1 : 1;
             var pad = isNumeric(avoid.pad) ? avoid.pad : 2;
 
-            var titlebb = Drawing.bBox(titleGroup.node());
+            var titlebb = bBox(titleGroup.node());
 
             // Account for reservedMargins
             var reservedMargins = {t: 0, b: 0, l: 0, r: 0};
@@ -312,7 +312,7 @@ function draw(gd, titleClass, options) {
                 // iterate over a set of elements (avoid.selection)
                 // to avoid collisions with
                 avoid.selection.each(function() {
-                    var avoidbb = Drawing.bBox(this);
+                    var avoidbb = bBox(this);
 
                     if(Lib.bBoxIntersect(titlebb, avoidbb, pad)) {
                         shift = Math.max(shift, shiftSign * (

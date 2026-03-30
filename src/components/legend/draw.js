@@ -6,7 +6,7 @@ import Plots from '../../plots/plots.js';
 import Registry from '../../registry.js';
 import Events from '../../lib/events.js';
 import dragElement from '../dragelement/index.js';
-import Drawing from '../drawing/index.js';
+import { bBox, font, getTranslate, setClipUrl, setRect, setTranslate } from '../drawing/index.js';
 import Color from '../color/index.js';
 import svgTextUtils from '../../lib/svg_text_utils.js';
 import handleClick from './handle_click.js';
@@ -55,12 +55,12 @@ export default function draw(gd, opts) {
 function horizontalAlignTitle(titleEl, legendObj, bw) {
     if((legendObj.title.side !== 'top center') && (legendObj.title.side !== 'top right')) return;
 
-    var font = legendObj.title.font;
-    var lineHeight = font.size * LINE_SPACING;
+    var titleFont = legendObj.title.font;
+    var lineHeight = titleFont.size * LINE_SPACING;
     var titleOffset = 0;
     var textNode = titleEl.node();
 
-    var width = Drawing.bBox(textNode).width;  // width of the title text
+    var width = bBox(textNode).width;  // width of the title text
 
     if(legendObj.title.side === 'top center') {
         titleOffset = 0.5 * (legendObj._width - 2 * bw - 2 * constants.titlePad - width);
@@ -172,7 +172,7 @@ function drawOne(gd, opts) {
     if(title.text) {
         titleEl = Lib.ensureSingle(scrollBox, 'text', legendId + 'titletext');
         titleEl.attr('text-anchor', 'start')
-            .call(Drawing.font, title.font)
+            .call(font, title.font)
             .text(title.text);
 
         textLayout(titleEl, scrollBox, gd, legendObj, MAIN_TITLE); // handle mathjax or multi-line text and compute title height
@@ -258,7 +258,7 @@ function drawOne(gd, opts) {
 
                 // Set size and position of all the elements that make up a legend:
                 // legend, background and border, scroll box and scroll bar as well as title
-                Drawing.setTranslate(legend, lx, ly);
+                setTranslate(legend, lx, ly);
             }
 
             // to be safe, remove previous listeners
@@ -279,7 +279,7 @@ function drawOne(gd, opts) {
                     y: bw / 2
                 });
 
-                Drawing.setTranslate(scrollBox, 0, 0);
+                setTranslate(scrollBox, 0, 0);
 
                 clipPath.select('rect').attr({
                     width: legendObj._width - 2 * bw,
@@ -288,9 +288,9 @@ function drawOne(gd, opts) {
                     y: bw
                 });
 
-                Drawing.setClipUrl(scrollBox, clipId, gd);
+                setClipUrl(scrollBox, clipId, gd);
 
-                Drawing.setRect(scrollBar, 0, 0, 0, 0);
+                setRect(scrollBar, 0, 0, 0, 0);
                 delete legendObj._scrollY;
             } else {
                 var scrollBarHeight = Math.max(constants.scrollBarMinHeight,
@@ -325,7 +325,7 @@ function drawOne(gd, opts) {
                     y: bw + scrollBoxY
                 });
 
-                Drawing.setClipUrl(scrollBox, clipId, gd);
+                setClipUrl(scrollBox, clipId, gd);
 
                 scrollHandler(scrollBoxY, scrollBarHeight, scrollRatio);
 
@@ -399,9 +399,9 @@ function drawOne(gd, opts) {
 
             function scrollHandler(scrollBoxY, scrollBarHeight, scrollRatio) {
                 legendObj._scrollY = gd._fullLayout[legendId]._scrollY = scrollBoxY;
-                Drawing.setTranslate(scrollBox, 0, -scrollBoxY);
+                setTranslate(scrollBox, 0, -scrollBoxY);
 
-                Drawing.setRect(
+                setRect(
                     scrollBar,
                     legendObj._width,
                     constants.scrollBarMargin + scrollBoxY * scrollRatio,
@@ -423,7 +423,7 @@ function drawOne(gd, opts) {
                         if(e.target === scrollBar.node()) {
                             return;
                         }
-                        var transform = Drawing.getTranslate(legend);
+                        var transform = getTranslate(legend);
                         x0 = transform.x;
                         y0 = transform.y;
                     },
@@ -432,7 +432,7 @@ function drawOne(gd, opts) {
                             var newX = x0 + dx;
                             var newY = y0 + dy;
 
-                            Drawing.setTranslate(legend, newX, newY);
+                            setTranslate(legend, newX, newY);
                             xf = dragElement.align(newX, legendObj._width, gs.l, gs.l + gs.w, legendObj.xanchor);
                             yf = dragElement.align(newY + legendObj._height, -legendObj._height, gs.t + gs.h, gs.t, legendObj.yanchor);
                         }
@@ -520,12 +520,12 @@ function drawTexts(g, gd, legendObj) {
     var isEditable = !legendObj._inHover && gd._context.edits.legendText && !isPieLike;
     var maxNameLength = legendObj._maxNameLength;
 
-    var name, font;
+    var name, textFont;
     if(legendItem.groupTitle) {
         name = legendItem.groupTitle.text;
-        font = legendItem.groupTitle.font;
+        textFont = legendItem.groupTitle.font;
     } else {
-        font = legendObj.font;
+        textFont = legendObj.font;
         if(!legendObj.entries) {
             name = isPieLike ? legendItem.label : trace.name;
             if(trace._meta) {
@@ -539,7 +539,7 @@ function drawTexts(g, gd, legendObj) {
     var textEl = Lib.ensureSingle(g, 'text', legendId + 'text');
 
     textEl.attr('text-anchor', 'start')
-        .call(Drawing.font, font)
+        .call(font, textFont)
         .text(isEditable ? ensureLength(name, maxNameLength) : name);
 
     var textGap = legendObj.indentation + legendObj.itemwidth + constants.itemGap * 2;
@@ -646,27 +646,27 @@ function computeTextDimensions(g, gd, legendObj, aTitle) {
         legendObj = gd._fullLayout[legendId];
     }
     var bw = legendObj.borderwidth;
-    var font;
+    var itemFont;
     if(aTitle === MAIN_TITLE) {
-        font = legendObj.title.font;
+        itemFont = legendObj.title.font;
     } else if(legendItem.groupTitle) {
-        font = legendItem.groupTitle.font;
+        itemFont = legendItem.groupTitle.font;
     } else {
-        font = legendObj.font;
+        itemFont = legendObj.font;
     }
-    var lineHeight = font.size * LINE_SPACING;
+    var lineHeight = itemFont.size * LINE_SPACING;
     var height, width;
 
     if(mathjaxNode) {
-        var mathjaxBB = Drawing.bBox(mathjaxNode);
+        var mathjaxBB = bBox(mathjaxNode);
 
         height = mathjaxBB.height;
         width = mathjaxBB.width;
 
         if(aTitle === MAIN_TITLE) {
-            Drawing.setTranslate(mathjaxGroup, bw, bw + height * 0.75);
+            setTranslate(mathjaxGroup, bw, bw + height * 0.75);
         } else { // legend item
-            Drawing.setTranslate(mathjaxGroup, 0, height * 0.25);
+            setTranslate(mathjaxGroup, 0, height * 0.25);
         }
     } else {
         var cls = '.' + legendId + (
@@ -679,7 +679,7 @@ function computeTextDimensions(g, gd, legendObj, aTitle) {
         var textNode = textEl.node();
 
         height = lineHeight * textLines;
-        width = textNode ? Drawing.bBox(textNode).width : 0;
+        width = textNode ? bBox(textNode).width : 0;
 
         // approximation to height offset to center the font
         // to avoid getBoundingClientRect
@@ -785,7 +785,7 @@ function computeLegendDimensions(gd, groups, traces, legendObj) {
     if(isVertical) {
         traces.each(function(d) {
             var h = d[0].height;
-            Drawing.setTranslate(this,
+            setTranslate(this,
                 bw + titleSize[0],
                 bw + titleSize[1] + legendObj._height + h / 2 + itemGap
             );
@@ -799,7 +799,7 @@ function computeLegendDimensions(gd, groups, traces, legendObj) {
 
         if(isGrouped) {
             groups.each(function(d, i) {
-                Drawing.setTranslate(this, 0, i * legendObj.tracegroupgap);
+                setTranslate(this, 0, i * legendObj.tracegroupgap);
             });
             legendObj._height += (legendObj._lgroupsLength - 1) * legendObj.tracegroupgap;
         }
@@ -840,7 +840,7 @@ function computeLegendDimensions(gd, groups, traces, legendObj) {
                     var w = getTraceWidth(d, legendObj, textGap);
                     var h = d[0].height;
 
-                    Drawing.setTranslate(this,
+                    setTranslate(this,
                         titleSize[0],
                         titleSize[1] + bw + itemGap + h / 2 + offsetY
                     );
@@ -867,7 +867,7 @@ function computeLegendDimensions(gd, groups, traces, legendObj) {
                     maxGroupHeightInRow = Math.max(maxGroupHeightInRow, offsetY);
                 }
 
-                Drawing.setTranslate(this, groupOffsetX, groupOffsetY);
+                setTranslate(this, groupOffsetX, groupOffsetY);
 
                 groupOffsetX += next;
             });
@@ -899,7 +899,7 @@ function computeLegendDimensions(gd, groups, traces, legendObj) {
                     maxItemHeightInRow = 0;
                 }
 
-                Drawing.setTranslate(this,
+                setTranslate(this,
                     titleSize[0] + bw + offsetX,
                     titleSize[1] + bw + offsetY + h / 2 + itemGap
                 );
@@ -949,7 +949,7 @@ function computeLegendDimensions(gd, groups, traces, legendObj) {
         if(!isVertical && !isFraction) {
             w += itemGap;
         }
-        Drawing.setRect(traceToggle, 0, -h / 2, w, h);
+        setRect(traceToggle, 0, -h / 2, w, h);
     });
 }
 
