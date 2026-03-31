@@ -32,6 +32,7 @@ export interface GraphDiv extends HTMLDivElement {
     _dragdata?: any;
     _hmpixcount?: number;
     _hmlumcount?: number;
+    _transitioning?: boolean;
     _transitioningWithDuration?: boolean;
     _legendMouseDownTime?: number;
     on: (event: string, fn: (data: any) => void) => void;
