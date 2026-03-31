@@ -264,7 +264,7 @@ function makeDragBox(gd: GraphDiv, plotinfo: PlotInfo, x?: any, y?: any, w?: any
                 Fx.click(gd, evt, plotinfo.id);
             }
         } else if(numClicks === 1 && singleEnd) {
-            var ax: any = ns ? ya0 : xa0;
+            var ax = ns ? ya0 : xa0;
             var end = (ns === 's' || ew === 'w') ? 0 : 1;
             var attrStr = ax._name + '.range[' + end + ']';
             var initialText = getEndText(ax, end);
@@ -696,7 +696,7 @@ function makeDragBox(gd: GraphDiv, plotinfo: PlotInfo, x?: any, y?: any, w?: any
             [];
 
         for(var i = 0; i < matchedAxes.length; i++) {
-            var ax: any = matchedAxes[i];
+            var ax = matchedAxes[i];
             var axId = ax._id;
             var axId2 = matches.xLinks[axId] || matches.yLinks[axId];
             var ax2 = constrainedAxes[0] || xaHash[axId2] || yaHash[axId2];
@@ -749,7 +749,7 @@ function makeDragBox(gd: GraphDiv, plotinfo: PlotInfo, x?: any, y?: any, w?: any
         updates = {};
         for(i = 0; i < activeAxIds.length; i++) {
             var axId = activeAxIds[i];
-            var ax: any = getFromId(gd, axId);
+            var ax = getFromId(gd, axId);
             Axes.drawOne(gd, ax, {skipTitle: true});
             updates[ax._name + '.range[0]'] = ax.range[0];
             updates[ax._name + '.range[1]'] = ax.range[1];

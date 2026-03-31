@@ -1,9 +1,10 @@
+import type { GraphDiv, FullAxis } from '../../../types/core';
 import Lib from '../../lib/index.js';
 import Axes from '../../plots/cartesian/axes.js';
 import _draw from './draw.js';
 const { draw } = _draw;
 
-export default function calcAutorange(gd: any) {
+export default function calcAutorange(gd: GraphDiv) {
     var fullLayout = gd._fullLayout;
     var annotationList = Lib.filterVisible(fullLayout.annotations);
 
@@ -12,7 +13,7 @@ export default function calcAutorange(gd: any) {
     }
 }
 
-function annAutorange(gd: any) {
+function annAutorange(gd: GraphDiv) {
     var fullLayout = gd._fullLayout;
 
     // find the bounding boxes for each of these annotations'
@@ -31,7 +32,7 @@ function annAutorange(gd: any) {
     });
 }
 
-function calcAxisExpansion(ann: any, ax: any) {
+function calcAxisExpansion(ann: any, ax: FullAxis) {
     var axId = ax._id;
     var letter = axId.charAt(0);
     var pos = ann[letter];

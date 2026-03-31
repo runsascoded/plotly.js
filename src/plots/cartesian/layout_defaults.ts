@@ -1,3 +1,4 @@
+import type { FullTrace } from '../../../types/core';
 import Lib, { isPlainObject, simpleMap } from '../../lib/index.js';
 import Color from '../../components/color/index.js';
 import { isUnifiedHover } from '../../components/fx/helpers.js';
@@ -41,7 +42,7 @@ export default function supplyLayoutDefaults(layoutIn?: any, layoutOut?: any, fu
 
     // look for axes in the data
     for(i = 0; i < fullData.length; i++) {
-        var trace: any = fullData[i];
+        var trace: FullTrace = fullData[i];
         if(!traceIs(trace, 'cartesian')) continue;
 
         var xaName;

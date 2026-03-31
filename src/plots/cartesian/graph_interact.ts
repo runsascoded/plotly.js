@@ -1,4 +1,5 @@
 import { select } from 'd3-selection';
+import type { GraphDiv } from '../../../types/core';
 import Fx from '../../components/fx/index.js';
 import dragElement from '../../components/dragelement/index.js';
 import setCursor from '../../lib/setcursor.js';
@@ -7,8 +8,8 @@ const { makeDragBox } = _dragbox;
 import _constants from './constants.js';
 const { DRAGGERSIZE } = _constants;
 
-export var initInteractions = function initInteractions(gd?: any): any {
-    var fullLayout: any = gd._fullLayout;
+export var initInteractions = function initInteractions(gd: GraphDiv): any {
+    var fullLayout = gd._fullLayout;
 
     if(gd._context.staticPlot) {
         // this sweeps up more than just cartesian drag elements...
@@ -143,8 +144,8 @@ export var initInteractions = function initInteractions(gd?: any): any {
     updateFx(gd);
 };
 
-export var updateFx = function(gd?: any): any {
-    var fullLayout: any = gd._fullLayout;
+export var updateFx = function(gd: GraphDiv): any {
+    var fullLayout = gd._fullLayout;
     var cursor = fullLayout.dragmode === 'pan' ? 'move' : 'crosshair';
     setCursor(fullLayout._draggers, cursor);
 };
