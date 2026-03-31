@@ -1,7 +1,7 @@
 import { coerce2 } from '../../lib/index.js';
 import layoutAttributes from './layout_attributes.js';
 
-export default function handleTickMarkDefaults(containerIn?: any, containerOut?: any, coerce?: any, options?: any): any {
+export default function handleTickMarkDefaults(containerIn?: any, containerOut?: any, coerce?: any, _axType?: any, options?: any): any {
     var isMinor = options.isMinor;
     var cIn = isMinor ? containerIn.minor || {} : containerIn;
     var cOut = isMinor ? containerOut.minor : containerOut;

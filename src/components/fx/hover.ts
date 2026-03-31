@@ -745,7 +745,7 @@ function _hover(gd: any, evt: any, subplot: any, noHoverEvent: any, eventTarget:
         findHoverPoints(winX, winY);
 
         var finalPoints = [];
-        var seen = {};
+        var seen: any = {};
         var id = 0;
         var insert = function (newHd) {
             var key = multipleHoverPoints[newHd.trace.type] ? hoverDataKey(newHd) : newHd.trace.index;

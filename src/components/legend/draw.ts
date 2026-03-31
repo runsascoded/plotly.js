@@ -439,7 +439,7 @@ function drawOne(gd: any, opts: any): void {
                     },
                     doneFn: function() {
                         if(xf !== undefined && yf !== undefined) {
-                            var obj = {};
+                            var obj: any = {};
                             obj[legendId + '.x'] = xf;
                             obj[legendId + '.y'] = yf;
                             Registry.call('_guiRelayout', gd, obj);
@@ -768,7 +768,7 @@ function computeLegendDimensions(gd: any, groups: any, traces: any, legendObj: a
     var isAbovePlotArea = legendObj.y > 1 || (legendObj.y === 1 && yanchor === 'bottom');
 
     var traceGroupGap = legendObj.tracegroupgap;
-    var legendGroupWidths = {};
+    var legendGroupWidths: any = {};
 
     const { orientation, yref } = legendObj;
     let { maxheight } = legendObj;
