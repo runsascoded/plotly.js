@@ -1,4 +1,5 @@
 import { select } from 'd3-selection';
+import type { FullAxis, FullLayout, GraphDiv } from '../../types/core';
 import Registry from '../registry.js';
 import { allowAutoMargin, autoMargin, doAutoMargin, previousPromises, style } from '../plots/plots.js';
 import { ensureSingle, ensureSingleById, isBottomAnchor, isLeftAnchor, isMiddleAnchor, isRightAnchor, isTopAnchor, pushUnique, syncOrAsync } from '../lib/index.js';
@@ -21,7 +22,7 @@ var SVG_TEXT_ANCHOR_START = 'start';
 var SVG_TEXT_ANCHOR_MIDDLE = 'middle';
 var SVG_TEXT_ANCHOR_END = 'end';
 
-export var layoutStyles = function(gd?: any): any {
+export var layoutStyles = function(gd: GraphDiv): any {
     return syncOrAsync([doAutoMargin, lsInner], gd);
 };
 
@@ -40,8 +41,8 @@ function overlappingDomain(xDomain?: any, yDomain?: any, domains?: any): any {
     return false;
 }
 
-function lsInner(gd?: any): any {
-    var fullLayout: any = gd._fullLayout;
+function lsInner(gd: GraphDiv): any {
+    var fullLayout = gd._fullLayout;
     var gs = fullLayout._size;
     var pad = gs.p;
     var axList = Axes.list(gd, '', true);
@@ -400,9 +401,9 @@ function findCounterAxisLineWidth(ax?: any, side?: any, counterAx?: any, axList?
     return 0;
 }
 
-export var drawMainTitle = function(gd?: any): any {
+export var drawMainTitle = function(gd: GraphDiv): any {
     var title: any = gd._fullLayout.title;
-    var fullLayout: any = gd._fullLayout;
+    var fullLayout = gd._fullLayout;
     var textAnchor = getMainTitleTextAnchor(fullLayout);
     var dy = getMainTitleDy(fullLayout);
     var y = getMainTitleY(fullLayout, dy);
@@ -623,14 +624,14 @@ function getMainTitleDy(fullLayout?: any): any {
     return dy;
 }
 
-export var doTraceStyle = function(gd?: any): any {
+export var doTraceStyle = function(gd: GraphDiv): any {
     var calcdata = gd.calcdata;
     var editStyleCalls = [];
     var i;
 
     for(i = 0; i < calcdata.length; i++) {
         var cd = calcdata[i];
-        var cd0 = cd[0] || {};
+        var cd0: any = cd[0] || {};
         var trace: any = cd0.trace || {};
         var _module = trace._module || {};
 
@@ -660,23 +661,23 @@ export var doTraceStyle = function(gd?: any): any {
     return previousPromises(gd);
 };
 
-export var doColorBars = function(gd?: any): any {
+export var doColorBars = function(gd: GraphDiv): any {
     Registry.getComponentMethod('colorbar', 'draw')(gd);
     return previousPromises(gd);
 };
 
-export var layoutReplot = function(gd?: any): any {
+export var layoutReplot = function(gd: GraphDiv): any {
     var layout = gd.layout;
     gd.layout = undefined;
     return Registry.call('_doPlot', gd, '', layout);
 };
 
-export var doLegend = function(gd?: any): any {
+export var doLegend = function(gd: GraphDiv): any {
     Registry.getComponentMethod('legend', 'draw')(gd);
     return previousPromises(gd);
 };
 
-export var doTicksRelayout = function(gd?: any): any {
+export var doTicksRelayout = function(gd: GraphDiv): any {
     Axes.draw(gd, 'redraw');
 
     if(gd._fullLayout._hasOnlyLargeSploms) {
@@ -689,8 +690,8 @@ export var doTicksRelayout = function(gd?: any): any {
     return previousPromises(gd);
 };
 
-export var doModeBar = function(gd?: any): any {
-    var fullLayout: any = gd._fullLayout;
+export var doModeBar = function(gd: GraphDiv): any {
+    var fullLayout = gd._fullLayout;
 
     Registry.getComponentMethod('modebar', 'manage')(gd);
 
@@ -702,8 +703,8 @@ export var doModeBar = function(gd?: any): any {
     return previousPromises(gd);
 };
 
-export var doCamera = function(gd?: any): any {
-    var fullLayout: any = gd._fullLayout;
+export var doCamera = function(gd: GraphDiv): any {
+    var fullLayout = gd._fullLayout;
     var sceneIds = fullLayout._subplots.gl3d;
 
     for(var i = 0; i < sceneIds.length; i++) {
@@ -714,8 +715,8 @@ export var doCamera = function(gd?: any): any {
     }
 };
 
-export var drawData = function(gd?: any): any {
-    var fullLayout: any = gd._fullLayout;
+export var drawData = function(gd: GraphDiv): any {
+    var fullLayout = gd._fullLayout;
 
     clearGlCanvases(gd);
 
@@ -743,8 +744,8 @@ export var drawData = function(gd?: any): any {
     return previousPromises(gd);
 };
 
-export var redrawReglTraces = function(gd?: any): any {
-    var fullLayout: any = gd._fullLayout;
+export var redrawReglTraces = function(gd: GraphDiv): any {
+    var fullLayout = gd._fullLayout;
 
     if(fullLayout._has('regl')) {
         var fullData = gd._fullData;
@@ -786,7 +787,7 @@ export var redrawReglTraces = function(gd?: any): any {
     }
 };
 
-export var doAutoRangeAndConstraints = function(gd?: any): any {
+export var doAutoRangeAndConstraints = function(gd: GraphDiv): any {
     var axList = Axes.list(gd, '', true);
     var ax;
 
@@ -818,7 +819,7 @@ export var doAutoRangeAndConstraints = function(gd?: any): any {
     enforceAxisConstraints(gd);
 };
 
-export var finalDraw = function(gd?: any): any {
+export var finalDraw = function(gd: GraphDiv): any {
     // TODO: rangesliders really belong in marginPushers but they need to be
     // drawn after data - can we at least get the margin pushing part separated
     // out and done earlier?
@@ -830,7 +831,7 @@ export var finalDraw = function(gd?: any): any {
     Registry.getComponentMethod('rangeselector', 'draw')(gd);
 };
 
-export var drawMarginPushers = function(gd?: any): any {
+export var drawMarginPushers = function(gd: GraphDiv): any {
     Registry.getComponentMethod('legend', 'draw')(gd);
     Registry.getComponentMethod('rangeselector', 'draw')(gd);
     Registry.getComponentMethod('sliders', 'draw')(gd);

@@ -117,7 +117,7 @@ export default function colorbarDefaults(containerIn: any, containerOut: any, la
     }
     handlePrefixSuffixDefaults(colorbarIn, colorbarOut, coerce, 'linear', opts);
     handleTickLabelDefaults(colorbarIn, colorbarOut, coerce, 'linear', opts);
-    handleTickMarkDefaults(colorbarIn, colorbarOut, coerce, 'linear', opts);
+    handleTickMarkDefaults(colorbarIn, colorbarOut, coerce, opts);
 
     coerce('title.text', layout._dfltTitle.colorbar);
 

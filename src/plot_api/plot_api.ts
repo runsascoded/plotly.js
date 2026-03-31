@@ -434,7 +434,7 @@ function _doPlot(gd?: any, data?: any, layout?: any, config?: any): any {
             requestAnimationFrame(function () {
                 performance.mark('plotly-deferredMargin-start');
 
-                var deferredSeq = [timedMarginPushers, marginPushersAgain];
+                var deferredSeq: any[] = [timedMarginPushers, marginPushersAgain];
                 if (hasCartesian) deferredSeq.push(positionAndAutorange);
                 deferredSeq.push(subroutines.layoutStyles);
                 if (hasCartesian) deferredSeq.push(drawAxes);

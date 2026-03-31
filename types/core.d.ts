@@ -213,7 +213,7 @@ export interface TraceModule {
 export interface BasePlotModule {
     name: string;
     attr?: string[];
-    plot?: (gd: GraphDiv, plotinfo: PlotInfo, cdModule: CalcData[]) => void;
+    plot?: (gd: GraphDiv, plotinfo?: PlotInfo, cdModule?: CalcData[]) => void;
     drawFramework?: (gd: GraphDiv) => void;
     clean?: (newFullData: FullTrace[], newFullLayout: FullLayout, oldFullData: FullTrace[], oldFullLayout: FullLayout) => void;
     [key: string]: any;

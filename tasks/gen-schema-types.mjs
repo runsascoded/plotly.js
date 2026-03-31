@@ -44,7 +44,7 @@ function valTypeToTS(attr) {
         case 'enumerated':
             if(attr.values) {
                 return attr.values.map(v => {
-                    if(typeof v === 'string') return `'${v}'`;
+                    if(typeof v === 'string') return `'${v.replace(/\\/g, '\\\\').replace(/'/g, "\\'")}'`;
                     if(typeof v === 'boolean') return String(v);
                     return String(v);
                 }).join(' | ');

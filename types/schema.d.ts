@@ -54,7 +54,7 @@ export interface ScatterTrace {
         fgopacity?: number;
         fillmode?: 'replace' | 'overlay';
         path?: string;
-        shape?: '' | '/' | '\' | 'x' | '-' | '|' | '+' | '.';
+        shape?: '' | '/' | '\\' | 'x' | '-' | '|' | '+' | '.';
         size?: number;
         solidity?: number;
     };
