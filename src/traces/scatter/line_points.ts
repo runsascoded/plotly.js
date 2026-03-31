@@ -1,3 +1,4 @@
+import type { CalcDatum } from '../../../types/core';
 import { applyBackoff } from '../../components/drawing/index.js';
 import numConstants from '../../constants/numerical.js';
 import { constrain, isArrayOrTypedArray, segmentsIntersect } from '../../lib/index.js';
@@ -7,7 +8,7 @@ var LOG_CLIP = numConstants.LOG_CLIP;
 var LOG_CLIP_PLUS = LOG_CLIP + 0.5;
 var LOG_CLIP_MINUS = LOG_CLIP - 0.5;
 
-export default function linePoints(d: any[], opts: any): any[][] {
+export default function linePoints(d: CalcDatum[], opts: any): any[][] {
     var trace = opts.trace || {};
     var xa = opts.xaxis;
     var ya = opts.yaxis;

@@ -1,9 +1,10 @@
+import type { CalcDatum, FullAxis } from '../../../types/core';
 import subtypes from './subtypes.js';
 
 export default function selectPoints(searchInfo: any, selectionTester: any): any[] {
-    var cd = searchInfo.cd;
-    var xa = searchInfo.xaxis;
-    var ya = searchInfo.yaxis;
+    var cd: CalcDatum[] = searchInfo.cd;
+    var xa: FullAxis = searchInfo.xaxis;
+    var ya: FullAxis = searchInfo.yaxis;
     var selection = [];
     var trace = cd[0].trace;
     var i;

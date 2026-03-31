@@ -1,10 +1,11 @@
+import type { FullLayout, FullTrace, InputTrace } from '../../../types/core';
 import Color from '../../components/color/index.js';
 import _helpers from '../../components/colorscale/helpers.js';
 const { hasColorscale } = _helpers;
 import colorscaleDefaults from '../../components/colorscale/defaults.js';
 import subTypes from './subtypes.js';
 
-export default function markerDefaults(traceIn: any, traceOut: any, defaultColor: any, layout: any, coerce: any, opts?: any): void {
+export default function markerDefaults(traceIn: InputTrace, traceOut: FullTrace, defaultColor: string, layout: FullLayout, coerce: any, opts?: any): void {
     var isBubble = subTypes.isBubble(traceIn);
     var lineColor = (traceIn.line || {}).color;
     var defaultMLC;

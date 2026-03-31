@@ -1,6 +1,7 @@
+import type { CalcDatum, FullLayout, FullTrace } from '../../../types/core';
 import Axes from '../../plots/cartesian/axes.js';
 
-export default function formatLabels(cdi: any, trace: any, fullLayout: any): any {
+export default function formatLabels(cdi: CalcDatum, trace: FullTrace, fullLayout: FullLayout): any {
     var labels: any = {};
 
     var mockGd = {_fullLayout: fullLayout};

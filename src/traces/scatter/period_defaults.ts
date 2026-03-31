@@ -1,3 +1,4 @@
+import type { FullLayout, FullTrace, InputTrace } from '../../../types/core';
 import { dateTick0 } from '../../lib/index.js';
 import numConstants from '../../constants/numerical.js';
 var ONEWEEK = numConstants.ONEWEEK;
@@ -9,7 +10,7 @@ function getPeriod0Dflt(period: any, calendar: any): any {
     return dateTick0(calendar, 0);
 }
 
-export default function handlePeriodDefaults(traceIn: any, traceOut: any, layout: any, coerce: any, opts?: any): void {
+export default function handlePeriodDefaults(traceIn: InputTrace, traceOut: FullTrace, layout: FullLayout, coerce: any, opts?: any): void {
     if(!opts) {
         opts = {
             x: true,

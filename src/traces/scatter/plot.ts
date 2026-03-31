@@ -1,3 +1,4 @@
+import type { CalcDatum, GraphDiv, PlotInfo } from '../../../types/core';
 import { transition } from 'd3-transition';
 import { select } from 'd3-selection';
 import 'd3-transition';
@@ -11,7 +12,7 @@ import linkTraces from './link_traces.js';
 import _polygon from '../../lib/polygon.js';
 const { tester: polygonTester } = _polygon;
 
-export default function plot(gd: any, plotinfo: any, cdscatter: any[], scatterLayer: any, transitionOpts: any, makeOnCompleteCallback: any): void {
+export default function plot(gd: GraphDiv, plotinfo: PlotInfo, cdscatter: CalcDatum[][], scatterLayer: any, transitionOpts: any, makeOnCompleteCallback: any): void {
     var join, onComplete;
 
     // If transition config is provided, then it is only a partial replot and traces not
@@ -74,7 +75,7 @@ export default function plot(gd: any, plotinfo: any, cdscatter: any[], scatterLa
     scatterLayer.selectAll('path:not([d])').remove();
 }
 
-function createFills(gd: any, traceJoin: any, plotinfo: any): void {
+function createFills(gd: GraphDiv, traceJoin: any, plotinfo: PlotInfo): void {
     traceJoin.each(function(d) {
         var fills = ensureSingle(select(this), 'g', 'fills');
         setClipUrl(fills, plotinfo.layerClipId, gd);
@@ -102,7 +103,7 @@ function createFills(gd: any, traceJoin: any, plotinfo: any): void {
     });
 }
 
-function plotOne(gd: any, idx: number, plotinfo: any, cdscatter: any[], cdscatterAll: any[], element: any, transitionOpts: any): void {
+function plotOne(gd: GraphDiv, idx: number, plotinfo: PlotInfo, cdscatter: CalcDatum[], cdscatterAll: CalcDatum[][], element: any, transitionOpts: any): void {
     var isStatic = gd._context.staticPlot;
     var i;
 
@@ -611,7 +612,7 @@ function plotOne(gd: any, idx: number, plotinfo: any, cdscatter: any[], cdscatte
     setClipUrl(text, clipUrl, gd);
 }
 
-function selectMarkers(gd: any, idx: number, plotinfo: any, cdscatter: any[], cdscatterAll: any[]): void {
+function selectMarkers(gd: GraphDiv, idx: number, plotinfo: PlotInfo, cdscatter: CalcDatum[], cdscatterAll: CalcDatum[][]): void {
     var xa = plotinfo.xaxis;
     var ya = plotinfo.yaxis;
     var xr = extent(simpleMap(xa.range, xa.r2c));

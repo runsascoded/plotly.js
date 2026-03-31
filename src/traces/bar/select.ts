@@ -1,7 +1,9 @@
+import type { CalcDatum, FullAxis } from '../../../types/core';
+
 export default function selectPoints(searchInfo: any, selectionTester: any): any[] {
-    var cd = searchInfo.cd;
-    var xa = searchInfo.xaxis;
-    var ya = searchInfo.yaxis;
+    var cd: CalcDatum[] = searchInfo.cd;
+    var xa: FullAxis = searchInfo.xaxis;
+    var ya: FullAxis = searchInfo.yaxis;
     var trace = cd[0].trace;
     var isFunnel = (trace.type === 'funnel');
     var isHorizontal = (trace.orientation === 'h');
@@ -34,7 +36,7 @@ export default function selectPoints(searchInfo: any, selectionTester: any): any
     return selection;
 }
 
-function getCentroid(d: any, xa: any, ya: any, isHorizontal: boolean, isFunnel: boolean): number[] {
+function getCentroid(d: any, xa: FullAxis, ya: FullAxis, isHorizontal: boolean, isFunnel: boolean): number[] {
     var x0 = xa.c2p(isHorizontal ? d.s0 : d.p0, true);
     var x1 = xa.c2p(isHorizontal ? d.s1 : d.p1, true);
     var y0 = ya.c2p(isHorizontal ? d.p0 : d.s0, true);

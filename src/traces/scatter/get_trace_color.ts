@@ -1,7 +1,8 @@
+import type { CalcDatum, FullTrace } from '../../../types/core';
 import Color from '../../components/color/index.js';
 import subtypes from './subtypes.js';
 
-export default function getTraceColor(trace: any, di: any): string {
+export default function getTraceColor(trace: FullTrace, di: CalcDatum): string {
     var lc, tc;
 
     // TODO: text modes

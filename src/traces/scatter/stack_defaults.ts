@@ -1,6 +1,8 @@
+import type { FullLayout, FullTrace, InputTrace } from '../../../types/core';
+
 var perStackAttrs = ['orientation', 'groupnorm', 'stackgaps'];
 
-export default function handleStackDefaults(traceIn: any, traceOut: any, layout: any, coerce: any): any {
+export default function handleStackDefaults(traceIn: InputTrace, traceOut: FullTrace, layout: FullLayout, coerce: any): any {
     var stackOpts = layout._scatterStackOpts;
 
     var stackGroup = coerce('stackgroup');

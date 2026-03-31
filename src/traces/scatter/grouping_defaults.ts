@@ -1,6 +1,7 @@
+import type { FullLayout, FullTrace, InputTrace } from '../../../types/core';
 import { getAxisGroup } from '../../plots/cartesian/constraints.js';
 
-export default function handleGroupingDefaults(traceIn: any, traceOut: any, fullLayout: any, coerce: any, barmode: any): void {
+export default function handleGroupingDefaults(traceIn: InputTrace, traceOut: FullTrace, fullLayout: FullLayout, coerce: any, barmode: any): void {
     var orientation = traceOut.orientation;
     // N.B. grouping is done across all trace types that support it
     var posAxId = traceOut[{v: 'x', h: 'y'}[orientation] + 'axis'];

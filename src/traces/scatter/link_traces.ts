@@ -1,6 +1,8 @@
+import type { CalcDatum, GraphDiv, PlotInfo } from '../../../types/core';
+
 var LINKEDFILLS = {tonextx: 1, tonexty: 1, tonext: 1};
 
-export default function linkTraces(gd: any, plotinfo: any, cdscatter: any[]): any[] {
+export default function linkTraces(gd: GraphDiv, plotinfo: PlotInfo, cdscatter: CalcDatum[][]): CalcDatum[][] {
     var trace, i, group, prevtrace, groupIndex;
 
     // first sort traces to keep stacks & filled-together groups together

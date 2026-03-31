@@ -1,3 +1,4 @@
+import type { FullTrace, GraphDiv } from '../../../types/core';
 import Axes from '../../plots/cartesian/axes.js';
 import alignPeriod from '../../plots/cartesian/align_period.js';
 import _helpers from '../../components/colorscale/helpers.js';
@@ -6,7 +7,7 @@ import colorscaleCalc from '../../components/colorscale/calc.js';
 import arraysToCalcdata from './arrays_to_calcdata.js';
 import calcSelection from '../scatter/calc_selection.js';
 
-export default function calc(gd: any, trace: any): any[] {
+export default function calc(gd: GraphDiv, trace: FullTrace): any[] {
     var xa = Axes.getFromId(gd, trace.xaxis || 'x');
     var ya = Axes.getFromId(gd, trace.yaxis || 'y');
     var size, pos, origPos, pObj, hasPeriod, pLetter;

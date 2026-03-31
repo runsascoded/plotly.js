@@ -1,3 +1,4 @@
+import type { FullTrace } from '../../../types/core';
 import Fx from '../../components/fx/index.js';
 import Registry from '../../registry.js';
 import Color from '../../components/color/index.js';
@@ -206,7 +207,7 @@ function hoverOnBars(pointData: any, xval: number, yval: number, hovermode: any,
     return pointData;
 }
 
-function getTraceColor(trace: any, di: any): string | undefined {
+function getTraceColor(trace: FullTrace, di: any): string | undefined {
     var mc = di.mcc || trace.marker.color;
     var mlc = di.mlcc || trace.marker.line.color;
     var mlw = getLineWidth(trace, di);

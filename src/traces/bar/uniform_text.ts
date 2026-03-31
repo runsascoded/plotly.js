@@ -1,7 +1,8 @@
+import type { GraphDiv, FullLayout } from '../../../types/core';
 import { select } from 'd3-selection';
 import { setTransormAndDisplay } from '../../lib/index.js';
 
-function resizeText(gd: any, gTrace: any, traceType: string): void {
+function resizeText(gd: GraphDiv, gTrace: any, traceType: string): void {
     var fullLayout = gd._fullLayout;
     var minSize = fullLayout['_' + traceType + 'Text_minsize'];
     if(minSize) {
@@ -34,7 +35,7 @@ function resizeText(gd: any, gTrace: any, traceType: string): void {
     }
 }
 
-function recordMinTextSize(traceType: string, transform: any, fullLayout: any): void {
+function recordMinTextSize(traceType: string, transform: any, fullLayout: FullLayout): void {
     if(fullLayout.uniformtext.mode) {
         var minKey = getMinKey(traceType);
         var minSize = fullLayout.uniformtext.minsize;
@@ -52,7 +53,7 @@ function recordMinTextSize(traceType: string, transform: any, fullLayout: any): 
     }
 }
 
-function clearMinTextSize(traceType: string, fullLayout: any): void {
+function clearMinTextSize(traceType: string, fullLayout: FullLayout): void {
     var minKey = getMinKey(traceType);
     fullLayout[minKey] = undefined;
 }

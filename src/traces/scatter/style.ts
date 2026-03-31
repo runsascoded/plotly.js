@@ -1,8 +1,9 @@
+import type { CalcDatum, FullTrace, GraphDiv } from '../../../types/core';
 import { select } from 'd3-selection';
 import { fillGroupStyle, lineGroupStyle, pointStyle, selectedPointStyle, selectedTextStyle, textPointStyle } from '../../components/drawing/index.js';
 import Registry from '../../registry.js';
 
-function style(gd: any): void {
+function style(gd: GraphDiv): void {
     var s = select(gd).selectAll('g.trace.scatter');
 
     s.style('opacity', function(d) {
@@ -30,15 +31,15 @@ function style(gd: any): void {
     Registry.getComponentMethod('errorbars', 'style')(s);
 }
 
-function stylePoints(sel: any, trace: any, gd: any): void {
+function stylePoints(sel: any, trace: FullTrace, gd: GraphDiv): void {
     pointStyle(sel.selectAll('path.point'), trace, gd);
 }
 
-function styleText(sel: any, trace: any, gd: any): void {
+function styleText(sel: any, trace: FullTrace, gd: GraphDiv): void {
     textPointStyle(sel.selectAll('text'), trace, gd);
 }
 
-function styleOnSelect(gd: any, cd: any[], sel: any): void {
+function styleOnSelect(gd: GraphDiv, cd: CalcDatum[], sel: any): void {
     var trace = cd[0].trace;
 
     if(trace.selectedpoints) {

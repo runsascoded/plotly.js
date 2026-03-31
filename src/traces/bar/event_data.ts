@@ -1,4 +1,6 @@
-export default function eventData(out: any, pt: any, trace: any): any {
+import type { FullTrace } from '../../../types/core';
+
+export default function eventData(out: any, pt: any, trace: FullTrace): any {
     // standard cartesian event data
     out.x = 'xVal' in pt ? pt.xVal : pt.x;
     out.y = 'yVal' in pt ? pt.yVal : pt.y;

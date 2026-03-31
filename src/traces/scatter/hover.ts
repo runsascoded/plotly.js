@@ -1,3 +1,4 @@
+import type { FullAxis } from '../../../types/core';
 import { extendFlat, fillText, isArrayOrTypedArray } from '../../lib/index.js';
 import Fx from '../../components/fx/index.js';
 import Registry from '../../registry.js';

@@ -1,3 +1,4 @@
+import type { CalcDatum, FullTrace, GraphDiv } from '../../../types/core';
 import { select } from 'd3-selection';
 import Color from '../../components/color/index.js';
 import { font, pointStyle, selectedPointStyle, selectedTextStyle } from '../../components/drawing/index.js';
@@ -11,7 +12,7 @@ var attributeTextFont = attributes.textfont;
 var attributeInsideTextFont = attributes.insidetextfont;
 var attributeOutsideTextFont = attributes.outsidetextfont;
 
-function style(gd: any): void {
+function style(gd: GraphDiv): void {
     var s = select(gd).selectAll('g[class^="barlayer"]').selectAll('g.trace');
     resizeText(gd, s, 'bar');
 
@@ -42,12 +43,12 @@ function style(gd: any): void {
     Registry.getComponentMethod('errorbars', 'style')(s);
 }
 
-function stylePoints(sel: any, trace: any, gd: any): void {
+function stylePoints(sel: any, trace: FullTrace, gd: GraphDiv): void {
     pointStyle(sel.selectAll('path'), trace, gd);
     styleTextPoints(sel, trace, gd);
 }
 
-function styleTextPoints(sel: any, trace: any, gd: any): void {
+function styleTextPoints(sel: any, trace: FullTrace, gd: GraphDiv): void {
     sel.selectAll('text').each(function(d) {
         var tx = select(this);
         var textFont = ensureUniformFontSize(gd, determineFont(tx, d, trace, gd));
@@ -56,7 +57,7 @@ function styleTextPoints(sel: any, trace: any, gd: any): void {
     });
 }
 
-function styleOnSelect(gd: any, cd: any[], sel: any): void {
+function styleOnSelect(gd: GraphDiv, cd: CalcDatum[], sel: any): void {
     var trace = cd[0].trace;
 
     if(trace.selectedpoints) {
@@ -67,12 +68,12 @@ function styleOnSelect(gd: any, cd: any[], sel: any): void {
     }
 }
 
-function stylePointsInSelectionMode(s: any, trace: any, gd: any): void {
+function stylePointsInSelectionMode(s: any, trace: FullTrace, gd: GraphDiv): void {
     selectedPointStyle(s.selectAll('path'), trace);
     styleTextInSelectionMode(s.selectAll('text'), trace, gd);
 }
 
-function styleTextInSelectionMode(txs: any, trace: any, gd: any): void {
+function styleTextInSelectionMode(txs: any, trace: FullTrace, gd: GraphDiv): void {
     txs.each(function(d) {
         var tx = select(this);
         var textFont;
@@ -92,7 +93,7 @@ function styleTextInSelectionMode(txs: any, trace: any, gd: any): void {
     });
 }
 
-function determineFont(tx: any, d: any, trace: any, gd: any): any {
+function determineFont(tx: any, d: any, trace: FullTrace, gd: GraphDiv): any {
     var layoutFont = gd._fullLayout.font;
     var textFont = trace.textfont;
 
@@ -106,12 +107,12 @@ function determineFont(tx: any, d: any, trace: any, gd: any): any {
     return textFont;
 }
 
-function getTextFont(trace: any, index: number, defaultValue: any): any {
+function getTextFont(trace: FullTrace, index: number, defaultValue: any): any {
     return getFontValue(
       attributeTextFont, trace.textfont, index, defaultValue);
 }
 
-function getInsideTextFont(trace: any, index: number, layoutFont: any, barColor: any): any {
+function getInsideTextFont(trace: FullTrace, index: number, layoutFont: any, barColor: any): any {
     var defaultFont = getTextFont(trace, index, layoutFont);
 
     var wouldFallBackToLayoutFont =
@@ -135,7 +136,7 @@ function getInsideTextFont(trace: any, index: number, layoutFont: any, barColor:
       attributeInsideTextFont, trace.insidetextfont, index, defaultFont);
 }
 
-function getOutsideTextFont(trace: any, index: number, layoutFont: any): any {
+function getOutsideTextFont(trace: FullTrace, index: number, layoutFont: any): any {
     var defaultFont = getTextFont(trace, index, layoutFont);
     return getFontValue(
       attributeOutsideTextFont, trace.outsidetextfont, index, defaultFont);
@@ -176,7 +177,7 @@ function getFontValue(attributeDefinition: any, attributeValue: any, index: numb
     };
 }
 
-function getBarColor(cd: any, trace: any): string {
+function getBarColor(cd: any, trace: FullTrace): string {
     if(trace.type === 'waterfall') {
         return trace[cd.dir].marker.color;
     }

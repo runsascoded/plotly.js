@@ -1,3 +1,4 @@
+import type { FullLayout, FullTrace, InputTrace } from '../../../types/core';
 import isNumeric from 'fast-isnumeric';
 import Lib, { coerceFont, coerceSelectionMarkerOpacity, extendFlat } from '../../lib/index.js';
 import Color from '../../components/color/index.js';
@@ -9,7 +10,7 @@ import handleGroupingDefaults from '../scatter/grouping_defaults.js';
 import attributes from './attributes.js';
 
 
-function supplyDefaults(traceIn: any, traceOut: any, defaultColor: any, layout: any): void {
+function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace, defaultColor: string, layout: FullLayout): void {
     function coerce(attr: string, dflt?: any) {
         return Lib.coerce(traceIn, traceOut, attributes, attr, dflt);
     }
@@ -57,7 +58,7 @@ function supplyDefaults(traceIn: any, traceOut: any, defaultColor: any, layout: 
     coerceSelectionMarkerOpacity(traceOut, coerce);
 }
 
-function crossTraceDefaults(fullData: any[], fullLayout: any): void {
+function crossTraceDefaults(fullData: FullTrace[], fullLayout: FullLayout): void {
     var traceIn, traceOut;
 
     function coerce(attr: string, dflt?: any) {
@@ -102,7 +103,7 @@ function validateCornerradius(r: any): any {
     return undefined;
 }
 
-function handleText(traceIn: any, traceOut: any, layout: any, coerce: any, textposition: any, opts?: any): void {
+function handleText(traceIn: InputTrace, traceOut: FullTrace, layout: FullLayout, coerce: any, textposition: any, opts?: any): void {
     opts = opts || {};
     var moduleHasSelected = !(opts.moduleHasSelected === false);
     var moduleHasUnselected = !(opts.moduleHasUnselected === false);

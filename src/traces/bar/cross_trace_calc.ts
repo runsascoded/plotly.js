@@ -1,3 +1,4 @@
+import type { FullAxis, GraphDiv, PlotInfo } from '../../../types/core';
 import isNumeric from 'fast-isnumeric';
 import { isArrayOrTypedArray } from '../../lib/index.js';
 import _numerical from '../../constants/numerical.js';
@@ -14,7 +15,7 @@ import Sieve from './sieve.js';
  * now doing this one subplot at a time
  */
 
-function crossTraceCalc(gd: any, plotinfo: any): void {
+function crossTraceCalc(gd: GraphDiv, plotinfo: PlotInfo): void {
     var xa = plotinfo.xaxis;
     var ya = plotinfo.yaxis;
 
@@ -62,7 +63,7 @@ function crossTraceCalc(gd: any, plotinfo: any): void {
     setGroupPositions(gd, ya, xa, calcTracesHorz, opts);
 }
 
-function setGroupPositions(gd: any, pa: any, sa: any, calcTraces: any[], opts: any): void {
+function setGroupPositions(gd: GraphDiv, pa: FullAxis, sa: FullAxis, calcTraces: any[], opts: any): void {
     if(!calcTraces.length) return;
 
     var excluded;
@@ -172,7 +173,7 @@ function standardizeCornerradius(calcTraces: any[]): void {
     }
 }
 
-function initBase(sa: any, calcTraces: any[]): void {
+function initBase(sa: FullAxis, calcTraces: any[]): void {
     var i, j;
 
     for(i = 0; i < calcTraces.length; i++) {
@@ -215,7 +216,7 @@ function initBase(sa: any, calcTraces: any[]): void {
     }
 }
 
-function setGroupPositionsInOverlayMode(gd: any, pa: any, sa: any, calcTraces: any[], opts: any): void {
+function setGroupPositionsInOverlayMode(gd: GraphDiv, pa: FullAxis, sa: FullAxis, calcTraces: any[], opts: any): void {
     // update position axis and set bar offsets and widths
     for(var i = 0; i < calcTraces.length; i++) {
         var calcTrace = calcTraces[i];
@@ -243,7 +244,7 @@ function setGroupPositionsInOverlayMode(gd: any, pa: any, sa: any, calcTraces: a
     }
 }
 
-function setGroupPositionsInGroupMode(gd: any, pa: any, sa: any, calcTraces: any[], opts: any): void {
+function setGroupPositionsInGroupMode(gd: GraphDiv, pa: FullAxis, sa: FullAxis, calcTraces: any[], opts: any): void {
     var sieve = new Sieve(calcTraces, {
         posAxis: pa,
         sepNegVal: false,
@@ -266,7 +267,7 @@ function setGroupPositionsInGroupMode(gd: any, pa: any, sa: any, calcTraces: any
     }
 }
 
-function setGroupPositionsInStackOrRelativeMode(gd: any, pa: any, sa: any, calcTraces: any[], opts: any): void {
+function setGroupPositionsInStackOrRelativeMode(gd: GraphDiv, pa: FullAxis, sa: FullAxis, calcTraces: any[], opts: any): void {
     var sieve = new Sieve(calcTraces, {
         posAxis: pa,
         sepNegVal: opts.mode === 'relative',
@@ -310,7 +311,7 @@ function setGroupPositionsInStackOrRelativeMode(gd: any, pa: any, sa: any, calcT
  *      overlap/stack.
  * Angular axes (for barpolar type) don't support group offsets.
  */
-function setOffsetAndWidth(gd: any, pa: any, sieve: any, opts: any): void {
+function setOffsetAndWidth(gd: GraphDiv, pa: FullAxis, sieve: any, opts: any): void {
     var fullLayout = gd._fullLayout;
     var positions = sieve.positions;
     var distinctPositions = sieve.distinctPositions;
@@ -463,7 +464,7 @@ function applyAttributes(sieve: any): void {
     }
 }
 
-function setBarCenterAndWidth(pa: any, sieve: any): void {
+function setBarCenterAndWidth(pa: FullAxis, sieve: any): void {
     var calcTraces = sieve.traces;
     var pLetter = getAxisLetter(pa);
 
@@ -492,7 +493,7 @@ function setBarCenterAndWidth(pa: any, sieve: any): void {
     }
 }
 
-function updatePositionAxis(pa: any, sieve: any, allowMinDtick?: boolean): void {
+function updatePositionAxis(pa: FullAxis, sieve: any, allowMinDtick?: boolean): void {
     var calcTraces = sieve.traces;
     var minDiff = sieve.minDiff;
     var vpad = minDiff / 2;
@@ -537,7 +538,7 @@ function updatePositionAxis(pa: any, sieve: any, allowMinDtick?: boolean): void 
 // store these bar bases and tops in calcdata
 // and make sure the size axis includes zero,
 // along with the bases and tops of each bar.
-function setBaseAndTop(sa: any, sieve: any): void {
+function setBaseAndTop(sa: FullAxis, sieve: any): void {
     var calcTraces = sieve.traces;
     var sLetter = getAxisLetter(sa);
 
@@ -572,7 +573,7 @@ function setBaseAndTop(sa: any, sieve: any): void {
     }
 }
 
-function stackBars(sa: any, sieve: any, opts: any): void {
+function stackBars(sa: FullAxis, sieve: any, opts: any): void {
     var sLetter = getAxisLetter(sa);
     var calcTraces = sieve.traces;
     var calcTrace;
@@ -665,7 +666,7 @@ function sieveBars(sieve: any): void {
     }
 }
 
-function unhideBarsWithinTrace(sieve: any, pa: any): void {
+function unhideBarsWithinTrace(sieve: any, pa: FullAxis): void {
     var calcTraces = sieve.traces;
 
     for(var i = 0; i < calcTraces.length; i++) {
@@ -701,7 +702,7 @@ function unhideBarsWithinTrace(sieve: any, pa: any): void {
 //
 // normalizeBars requires that either sieveBars or stackBars has been
 // previously invoked.
-function normalizeBars(sa: any, sieve: any, opts: any): void {
+function normalizeBars(sa: FullAxis, sieve: any, opts: any): void {
     var calcTraces = sieve.traces;
     var sLetter = getAxisLetter(sa);
     var sTop = opts.norm === 'fraction' ? 1 : 100;
@@ -760,7 +761,7 @@ function normalizeBars(sa: any, sieve: any, opts: any): void {
 // Add an `_sMin` and `_sMax` value for each bar representing the min and max size value
 // across all bars sharing the same position as that bar. These values are used for rounded
 // bar corners, to carry rounding down to lower bars in the stack as needed.
-function setHelperValuesForRoundedCorners(calcTraces: any[], sMinByPos: any, sMaxByPos: any, pa: any): void {
+function setHelperValuesForRoundedCorners(calcTraces: any[], sMinByPos: any, sMaxByPos: any, pa: FullAxis): void {
     var pLetter = getAxisLetter(pa);
     // Set `_sMin` and `_sMax` value for each bar
     for(var i = 0; i < calcTraces.length; i++) {
@@ -779,7 +780,7 @@ function setHelperValuesForRoundedCorners(calcTraces: any[], sMinByPos: any, sMa
 // narrower than the space they're in.
 // run once per trace group (subplot & direction) and
 // the same mapping is attached to all calcdata traces
-function collectExtents(calcTraces: any[], pa: any): void {
+function collectExtents(calcTraces: any[], pa: FullAxis): void {
     var pLetter = getAxisLetter(pa);
     var extents: any = {};
     var i, j, cd;
@@ -858,7 +859,7 @@ function collectExtents(calcTraces: any[], pa: any): void {
     }
 }
 
-function getAxisLetter(ax: any): string {
+function getAxisLetter(ax: FullAxis): string {
     return ax._id.charAt(0);
 }
 

@@ -1,9 +1,10 @@
+import type { FullLayout, FullTrace, InputTrace } from '../../../types/core';
 import { isArrayOrTypedArray } from '../../lib/index.js';
 import _helpers from '../../components/colorscale/helpers.js';
 const { hasColorscale } = _helpers;
 import colorscaleDefaults from '../../components/colorscale/defaults.js';
 
-export default function lineDefaults(traceIn: any, traceOut: any, defaultColor: any, layout: any, coerce: any, opts?: any): void {
+export default function lineDefaults(traceIn: InputTrace, traceOut: FullTrace, defaultColor: string, layout: FullLayout, coerce: any, opts?: any): void {
     if(!opts) opts = {};
 
     var markerColor = (traceIn.marker || {}).color;

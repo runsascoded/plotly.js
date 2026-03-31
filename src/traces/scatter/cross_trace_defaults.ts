@@ -1,8 +1,9 @@
+import type { FullLayout, FullTrace } from '../../../types/core';
 import Lib from '../../lib/index.js';
 import handleGroupingDefaults from './grouping_defaults.js';
 import attributes from './attributes.js';
 
-export default function crossTraceDefaults(fullData: any[], fullLayout: any): void {
+export default function crossTraceDefaults(fullData: FullTrace[], fullLayout: FullLayout): void {
     var traceIn, traceOut, i;
     var scattermode = fullLayout.scattermode;
 

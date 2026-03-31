@@ -1,3 +1,4 @@
+import type { FullLayout, FullTrace, Layout } from '../../../types/core';
 import Registry from '../../registry.js';
 import Axes from '../../plots/cartesian/axes.js';
 import Lib from '../../lib/index.js';
@@ -5,7 +6,7 @@ import layoutAttributes from './layout_attributes.js';
 import _defaults from './defaults.js';
 const { validateCornerradius } = _defaults;
 
-export default function(layoutIn: any, layoutOut: any, fullData: any[]): void {
+export default function(layoutIn: Layout, layoutOut: FullLayout, fullData: FullTrace[]): void {
     function coerce(attr: string, dflt?: any) {
         return Lib.coerce(layoutIn, layoutOut, layoutAttributes, attr, dflt);
     }

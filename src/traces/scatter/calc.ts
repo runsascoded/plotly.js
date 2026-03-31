@@ -1,3 +1,4 @@
+import type { CalcDatum, FullAxis, FullLayout, FullTrace, GraphDiv } from '../../../types/core';
 import isNumeric from 'fast-isnumeric';
 import { isArrayOrTypedArray, pushUnique, sort } from '../../lib/index.js';
 import Axes from '../../plots/cartesian/axes.js';
@@ -9,7 +10,7 @@ import calcColorscale from './colorscale_calc.js';
 import arraysToCalcdata from './arrays_to_calcdata.js';
 import calcSelection from './calc_selection.js';
 
-function calc(gd: any, trace: any): any[] {
+function calc(gd: GraphDiv, trace: FullTrace): any[] {
     var fullLayout = gd._fullLayout;
     var xa = trace._xA = Axes.getFromId(gd, trace.xaxis || 'x', 'x');
     var ya = trace._yA = Axes.getFromId(gd, trace.yaxis || 'y', 'y');
@@ -153,7 +154,7 @@ function calc(gd: any, trace: any): any[] {
     return cd;
 }
 
-function calcAxisExpansion(gd: any, trace: any, xa: any, ya: any, x: any[], y: any[], ppad: any): void {
+function calcAxisExpansion(gd: GraphDiv, trace: FullTrace, xa: FullAxis, ya: FullAxis, x: any[], y: any[], ppad: any): void {
     var serieslen = trace._length;
     var fullLayout = gd._fullLayout;
     var xId = xa._id;
@@ -216,7 +217,7 @@ function calcAxisExpansion(gd: any, trace: any, xa: any, ya: any, x: any[], y: a
     if(yId) trace._extremes[yId] = Axes.findExtremes(ya, y, yOptions);
 }
 
-function calcMarkerSize(trace: any, serieslen: number): any {
+function calcMarkerSize(trace: FullTrace, serieslen: number): any {
     if(!subTypes.hasMarkers(trace)) return;
 
     // Treat size like x or y arrays --- Run d2c
@@ -259,19 +260,19 @@ function calcMarkerSize(trace: any, serieslen: number): any {
  * so I don't need to worry about transforms, but if we ever do
  * per-trace calc this will get confused.
  */
-function setFirstScatter(fullLayout: any, trace: any): void {
+function setFirstScatter(fullLayout: FullLayout, trace: FullTrace): void {
     var group = firstScatterGroup(trace);
     var firstScatter = fullLayout._firstScatter;
     if(!firstScatter[group]) firstScatter[group] = trace.uid;
 }
 
-function firstScatterGroup(trace: any): string {
+function firstScatterGroup(trace: FullTrace): string {
     var stackGroup = trace.stackgroup;
     return trace.xaxis + trace.yaxis + trace.type +
         (stackGroup ? '-' + stackGroup : '');
 }
 
-function getStackOpts(trace: any, fullLayout: any, xa: any, ya: any): any {
+function getStackOpts(trace: FullTrace, fullLayout: FullLayout, xa: FullAxis, ya: FullAxis): any {
     var stackGroup = trace.stackgroup;
     if(!stackGroup) return;
     var stackOpts = fullLayout._scatterStackOpts[xa._id + ya._id][stackGroup];

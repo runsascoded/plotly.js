@@ -1,6 +1,7 @@
+import type { FullTrace } from '../../../types/core';
 import isNumeric from 'fast-isnumeric';
 
-export default function makeBubbleSizeFn(trace: any, factor?: number): (v: any) => number {
+export default function makeBubbleSizeFn(trace: FullTrace, factor?: number): (v: any) => number {
     if(!factor) {
         factor = 2;
     }

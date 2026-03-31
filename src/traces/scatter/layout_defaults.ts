@@ -1,7 +1,8 @@
+import type { FullLayout, Layout } from '../../../types/core';
 import Lib from '../../lib/index.js';
 import layoutAttributes from './layout_attributes.js';
 
-export default function(layoutIn: any, layoutOut: any): void {
+export default function(layoutIn: Layout, layoutOut: FullLayout): void {
     function coerce(attr, dflt) {
         return Lib.coerce(layoutIn, layoutOut, layoutAttributes, attr, dflt);
     }

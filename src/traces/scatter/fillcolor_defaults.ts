@@ -1,3 +1,4 @@
+import type { FullTrace, InputTrace } from '../../../types/core';
 import Color from '../../components/color/index.js';
 import { isArrayOrTypedArray } from '../../lib/index.js';
 
@@ -10,7 +11,7 @@ function averageColors(colorscale: any[]): string {
     return color;
 }
 
-export default function fillColorDefaults(traceIn: any, traceOut: any, defaultColor: any, coerce: any, opts?: any): void {
+export default function fillColorDefaults(traceIn: InputTrace, traceOut: FullTrace, defaultColor: string, coerce: any, opts?: any): void {
     if(!opts) opts = {};
 
     var inheritColorFromMarker = false;

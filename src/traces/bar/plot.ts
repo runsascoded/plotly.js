@@ -1,3 +1,4 @@
+import type { CalcDatum, FullLayout, GraphDiv, PlotInfo } from '../../../types/core';
 import { select } from 'd3-selection';
 function d3Round(x: number, n?: number): number { return n ? Math.round(x * (n = Math.pow(10, n))) / n : Math.round(x); }
 import isNumeric from 'fast-isnumeric';
@@ -58,7 +59,7 @@ function getXY(di: any, xa: any, ya: any, isHorizontal: boolean): number[][] {
     return isHorizontal ? [s, p] : [p, s];
 }
 
-function transition(selection: any, fullLayout: any, opts: any, makeOnCompleteCallback: any): any {
+function transition(selection: any, fullLayout: FullLayout, opts: any, makeOnCompleteCallback: any): any {
     if (!fullLayout.uniformtext.mode && hasTransition(opts)) {
         var onComplete;
         if (makeOnCompleteCallback) {
@@ -83,7 +84,7 @@ function hasTransition(transitionOpts: any): boolean {
     return transitionOpts && transitionOpts.duration > 0;
 }
 
-function plot(gd: any, plotinfo: any, cdModule: any[], traceLayer: any, opts: any, makeOnCompleteCallback: any): void {
+function plot(gd: GraphDiv, plotinfo: PlotInfo, cdModule: CalcDatum[][], traceLayer: any, opts: any, makeOnCompleteCallback: any): void {
     var xa = plotinfo.xaxis;
     var ya = plotinfo.yaxis;
     var fullLayout = gd._fullLayout;

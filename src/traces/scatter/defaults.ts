@@ -1,3 +1,4 @@
+import type { FullLayout, FullTrace, InputTrace } from '../../../types/core';
 import Lib, { coerceSelectionMarkerOpacity } from '../../lib/index.js';
 import Registry from '../../registry.js';
 import attributes from './attributes.js';
@@ -14,7 +15,7 @@ import handleFillColorDefaults from './fillcolor_defaults.js';
 import _index from '../../lib/index.js';
 const { coercePattern } = _index;
 
-export default function supplyDefaults(traceIn: any, traceOut: any, defaultColor: any, layout: any): void {
+export default function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace, defaultColor: string, layout: FullLayout): void {
     function coerce(attr: string, dflt?: any) {
         return Lib.coerce(traceIn, traceOut, attributes, attr, dflt);
     }

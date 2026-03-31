@@ -1,3 +1,4 @@
+import type { FullTrace } from '../../../types/core';
 import isNumeric from 'fast-isnumeric';
 import tinycolor from 'tinycolor2';
 import { isArrayOrTypedArray } from '../../lib/index.js';
@@ -56,7 +57,7 @@ export var getValue = function(arrayOrScalar: any, index: number): any {
     return value;
 };
 
-export var getLineWidth = function(trace: any, di: any): number {
+export var getLineWidth = function(trace: FullTrace, di: any): number {
     var w =
         (0 < di.mlw) ? di.mlw :
         !isArrayOrTypedArray(trace.marker.line.width) ? trace.marker.line.width :
