@@ -1,12 +1,12 @@
-export var isGrouped = function isGrouped(legendLayout) {
+export var isGrouped = function isGrouped(legendLayout: any): boolean {
     return (legendLayout.traceorder || '').indexOf('grouped') !== -1;
 };
 
-export var isVertical = function isVertical(legendLayout) {
+export var isVertical = function isVertical(legendLayout: any): boolean {
     return legendLayout.orientation !== 'h';
 };
 
-export var isReversed = function isReversed(legendLayout) {
+export var isReversed = function isReversed(legendLayout: any): boolean {
     return (legendLayout.traceorder || '').indexOf('reversed') !== -1;
 };
 

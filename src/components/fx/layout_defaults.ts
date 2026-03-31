@@ -3,8 +3,8 @@ import layoutAttributes from './layout_attributes.js';
 import handleHoverModeDefaults from './hovermode_defaults.js';
 import handleHoverLabelDefaults from './hoverlabel_defaults.js';
 
-export default function supplyLayoutDefaults(layoutIn, layoutOut) {
-    function coerce(attr, dflt) {
+export default function supplyLayoutDefaults(layoutIn: any, layoutOut: any): void {
+    function coerce(attr: string, dflt?: any): any {
         return Lib.coerce(layoutIn, layoutOut, layoutAttributes, attr, dflt);
     }
 

@@ -34,24 +34,24 @@ var YSHIFTY = Math.sin(YA_RADIANS);
 var HOVERARROWSIZE = constants.HOVERARROWSIZE;
 var HOVERTEXTPAD = constants.HOVERTEXTPAD;
 
-var multipleHoverPoints = {
+var multipleHoverPoints: Record<string, boolean> = {
     box: true,
     ohlc: true,
     violin: true,
     candlestick: true
 };
 
-var cartesianScatterPoints = {
+var cartesianScatterPoints: Record<string, boolean> = {
     scatter: true,
     scattergl: true,
     splom: true
 };
 
-function distanceSort(a, b) {
+function distanceSort(a: any, b: any): number {
     return a.distance - b.distance;
 }
 
-export var hover = function hover(gd, evt, subplot, noHoverEvent) {
+export var hover = function hover(gd: any, evt: any, subplot?: any, noHoverEvent?: boolean): void {
     gd = getGraphDiv(gd);
     // The 'target' property changes when bubbling out of Shadow DOM.
     // Throttling can delay reading the target, so we save the current value.
@@ -61,7 +61,7 @@ export var hover = function hover(gd, evt, subplot, noHoverEvent) {
     });
 };
 
-export var loneHover = function loneHover(hoverItems, opts) {
+export var loneHover = function loneHover(hoverItems: any, opts: any): any {
     var multiHover = true;
     if (!Array.isArray(hoverItems)) {
         multiHover = false;
@@ -195,7 +195,7 @@ export var loneHover = function loneHover(hoverItems, opts) {
 };
 
 // The actual implementation is here:
-function _hover(gd, evt, subplot, noHoverEvent, eventTarget) {
+function _hover(gd: any, evt: any, subplot: any, noHoverEvent: any, eventTarget: any): any {
     if (!subplot) subplot = 'xy';
 
     if (typeof subplot === 'string') {
@@ -416,7 +416,7 @@ function _hover(gd, evt, subplot, noHoverEvent, eventTarget) {
     // find the closest point in each trace
     // this is minimum dx and/or dy, depending on mode
     // and the pixel position for the label (labelXpx, labelYpx)
-    function findHoverPoints(customXVal, customYVal) {
+    function findHoverPoints(customXVal?: any, customYVal?: any): void {
         for (curvenum = 0; curvenum < searchData.length; curvenum++) {
             cd = searchData[curvenum];
 
@@ -617,7 +617,7 @@ function _hover(gd, evt, subplot, noHoverEvent, eventTarget) {
 
     findHoverPoints();
 
-    function selectClosestPoint(pointsData, spikedistance, spikeOnWinning) {
+    function selectClosestPoint(pointsData: any[], spikedistance: number, spikeOnWinning: any): any {
         var resultPoint = null;
         var minDistance = Infinity;
         var thisSpikeDistance;
@@ -637,7 +637,7 @@ function _hover(gd, evt, subplot, noHoverEvent, eventTarget) {
         return resultPoint;
     }
 
-    function fillSpikePoint(point) {
+    function fillSpikePoint(point: any): any {
         if (!point) return null;
         return {
             xa: point.xa,
@@ -869,13 +869,13 @@ function _hover(gd, evt, subplot, noHoverEvent, eventTarget) {
     });
 }
 
-function hoverDataKey(d) {
+function hoverDataKey(d: any): string {
     return [d.trace.index, d.index, d.x0, d.y0, d.name, d.attr, d.xa ? d.xa._id : '', d.ya ? d.ya._id : ''].join(',');
 }
 
 var EXTRA_STRING_REGEX = /<extra>([\s\S]*)<\/extra>/;
 
-function createHoverText(hoverData, opts) {
+function createHoverText(hoverData: any[], opts: any): any {
     var gd = opts.gd;
     var fullLayout = gd._fullLayout;
     var hovermode = opts.hovermode;
@@ -1205,7 +1205,7 @@ function createHoverText(hoverData, opts) {
                 orientation: 'v'
             }
         };
-        var mockLayoutOut = {
+        var mockLayoutOut: any = {
             font: font
         };
         legendSupplyDefaults(mockLayoutIn, mockLayoutOut, gd._fullData);
@@ -1549,7 +1549,7 @@ function createHoverText(hoverData, opts) {
     };
 }
 
-function getHoverLabelText(d, showCommonLabel, hovermode, fullLayout, t0, g) {
+function getHoverLabelText(d: any, showCommonLabel: boolean, hovermode: any, fullLayout: any, t0: any, g?: any): [string, string] {
     var name = '';
     var text = '';
     // to get custom 'name' labels pass cleanPoint
@@ -1642,7 +1642,7 @@ function getHoverLabelText(d, showCommonLabel, hovermode, fullLayout, t0, g) {
 // know what happens if the group spans all the way from one edge to
 // the other, though it hardly matters - there's just too much
 // information then.
-function hoverAvoidOverlaps(hoverLabels, rotateLabels, fullLayout, commonLabelBoundingBox) {
+function hoverAvoidOverlaps(hoverLabels: any, rotateLabels: boolean, fullLayout: any, commonLabelBoundingBox: any): void {
     var axKey = rotateLabels ? 'xa' : 'ya';
     var crossAxKey = rotateLabels ? 'ya' : 'xa';
     var nummoves = 0;
@@ -1760,7 +1760,7 @@ function hoverAvoidOverlaps(hoverLabels, rotateLabels, fullLayout, commonLabelBo
 
     var donepositioning, topOverlap, bottomOverlap, i, j, pti, sumdp;
 
-    function constrainGroup(grp) {
+    function constrainGroup(grp: any[]): void {
         var minPt = grp[0];
         var maxPt = grp[grp.length - 1];
 
@@ -1888,7 +1888,7 @@ function hoverAvoidOverlaps(hoverLabels, rotateLabels, fullLayout, commonLabelBo
     }
 }
 
-function getHoverLabelOffsets(hoverLabel, rotateLabels) {
+function getHoverLabelOffsets(hoverLabel: any, rotateLabels: boolean): { x: number; y: number } {
     var offsetX = 0;
     var offsetY = hoverLabel.offset;
 
@@ -1906,7 +1906,7 @@ function getHoverLabelOffsets(hoverLabel, rotateLabels) {
 /**
  * Calculate the shift in x for text and text2 elements
  */
-function getTextShiftX(hoverLabel) {
+function getTextShiftX(hoverLabel: any): { alignShift: number; textShiftX: number; text2ShiftX: number } {
     var alignShift = { start: 1, end: -1, middle: 0 }[hoverLabel.anchor];
     var textShiftX = alignShift * (HOVERARROWSIZE + HOVERTEXTPAD);
     var text2ShiftX = textShiftX + alignShift * (hoverLabel.txwidth + HOVERTEXTPAD);
@@ -1924,7 +1924,7 @@ function getTextShiftX(hoverLabel) {
     };
 }
 
-function alignHoverText(hoverLabels, rotateLabels, scaleX, scaleY) {
+function alignHoverText(hoverLabels: any, rotateLabels: boolean, scaleX: number, scaleY: number): void {
     var pX = function (x) {
         return x * scaleX;
     };
@@ -2034,13 +2034,13 @@ function alignHoverText(hoverLabels, rotateLabels, scaleX, scaleY) {
     });
 }
 
-function cleanPoint(d, hovermode) {
+function cleanPoint(d: any, hovermode: any): any {
     var index = d.index;
     var trace = d.trace || {};
     var cd0 = d.cd[0];
     var cd = d.cd[index] || {};
 
-    function pass(v) {
+    function pass(v: any): boolean {
         return v || (isNumeric(v) && v === 0);
     }
 
@@ -2053,7 +2053,7 @@ function cleanPoint(d, hovermode) {
               return extractOption(cd, trace, calcKey, traceKey);
           };
 
-    function fill(key, calcKey, traceKey) {
+    function fill(key: string, calcKey: string, traceKey: string): void {
         var val = getVal(calcKey, traceKey);
         if (pass(val)) d[key] = val;
     }
@@ -2131,7 +2131,7 @@ function cleanPoint(d, hovermode) {
     return d;
 }
 
-function createSpikelines(gd, closestPoints, opts) {
+function createSpikelines(gd: any, closestPoints: any, opts: any): void {
     var container = opts.container;
     var fullLayout = opts.fullLayout;
     var gs = fullLayout._size;
@@ -2319,7 +2319,7 @@ function createSpikelines(gd, closestPoints, opts) {
     }
 }
 
-function hoverChanged(gd, evt, oldhoverdata) {
+function hoverChanged(gd: any, evt: any, oldhoverdata: any): boolean {
     // don't emit any events if nothing changed
     if (!oldhoverdata || oldhoverdata.length !== gd._hoverdata.length) return true;
 
@@ -2339,7 +2339,7 @@ function hoverChanged(gd, evt, oldhoverdata) {
     return false;
 }
 
-function spikesChanged(gd, oldspikepoints) {
+function spikesChanged(gd: any, oldspikepoints?: any): boolean {
     // don't relayout the plot because of new spikelines if spikelines points didn't change
     if (!oldspikepoints) return true;
     if (
@@ -2350,14 +2350,14 @@ function spikesChanged(gd, oldspikepoints) {
     return false;
 }
 
-function plainText(s, len) {
+function plainText(s: any, len: any): string {
     return svgTextUtils.plainText(s || '', {
         len: len,
         allowedTags: ['br', 'sub', 'sup', 'b', 'i', 'em', 's', 'u']
     });
 }
 
-function orderRangePoints(hoverData, hovermode) {
+function orderRangePoints(hoverData: any[], hovermode: any): any[] {
     var axLetter = hovermode.charAt(0);
 
     var first = [];
@@ -2379,7 +2379,7 @@ function orderRangePoints(hoverData, hovermode) {
     return first.concat(second).concat(last);
 }
 
-function getCoord(axLetter, winningPoint, fullLayout) {
+function getCoord(axLetter: string, winningPoint: any, fullLayout: any): any {
     var ax = winningPoint[axLetter + 'a'];
     var val = winningPoint[axLetter + 'Val'];
 
@@ -2421,10 +2421,10 @@ function getCoord(axLetter, winningPoint, fullLayout) {
 // Top/left hover offsets relative to graph div. As long as hover content is
 // a sibling of the graph div, it will be positioned correctly relative to
 // the offset parent, whatever that may be.
-const getTopOffset = (gd) => gd.offsetTop + gd.clientTop;
-const getLeftOffset = (gd) => gd.offsetLeft + gd.clientLeft;
+const getTopOffset = (gd: any): number => gd.offsetTop + gd.clientTop;
+const getLeftOffset = (gd: any): number => gd.offsetLeft + gd.clientLeft;
 
-function getBoundingClientRect(gd, node) {
+function getBoundingClientRect(gd: any, node: any): any {
     var fullLayout = gd._fullLayout;
 
     var rect = node.getBoundingClientRect();

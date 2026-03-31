@@ -1,7 +1,7 @@
 import Registry from '../../registry.js';
 import { hover } from './hover.js';
 
-export default function click(gd, evt, subplot) {
+export default function click(gd: any, evt: any, subplot: any): void {
     var annotationsDone = Registry.getComponentMethod('annotations', 'onClick')(gd, gd._hoverdata);
 
     // fallback to fail-safe in case the plot type's hover method doesn't pass the subplot.
@@ -12,7 +12,7 @@ export default function click(gd, evt, subplot) {
         hover(gd, evt, subplot, true);
     }
 
-    function emitClick() { gd.emit('plotly_click', {points: gd._hoverdata, event: evt}); }
+    function emitClick(): void { gd.emit('plotly_click', {points: gd._hoverdata, event: evt}); }
 
     if(gd._hoverdata && evt && evt.target) {
         if(annotationsDone && annotationsDone.then) {

@@ -1,20 +1,20 @@
 import Registry from '../../registry.js';
 import helpers from './helpers.js';
 
-export default function getLegendData(calcdata, opts, hasMultipleLegends) {
+export default function getLegendData(calcdata: any[], opts: any, hasMultipleLegends?: boolean): any[] {
     var inHover = opts._inHover;
     var grouped = helpers.isGrouped(opts);
     var reversed = helpers.isReversed(opts);
 
-    var lgroupToTraces = {};
-    var lgroups = [];
+    var lgroupToTraces: Record<string, any[]> = {};
+    var lgroups: string[] = [];
     var hasOneNonBlankGroup = false;
-    var slicesShown = {};
+    var slicesShown: Record<string, Record<string, boolean>> = {};
     var lgroupi = 0;
     var maxNameLength = 0;
-    var i, j;
+    var i: number, j: number;
 
-    function addOneItem(legendId, legendGroup, legendItem) {
+    function addOneItem(legendId: any, legendGroup: string, legendItem: any): void {
         if(opts.visible === false) return;
         if(hasMultipleLegends && legendId !== opts._id) return;
 
@@ -83,7 +83,7 @@ export default function getLegendData(calcdata, opts, hasMultipleLegends) {
     // collapse all groups into one if all groups are blank
     var shouldCollapse = !hasOneNonBlankGroup || !grouped;
 
-    var legendData = [];
+    var legendData: any[] = [];
     for(i = 0; i < lgroups.length; i++) {
         var t = lgroupToTraces[lgroups[i]];
         if(shouldCollapse) {
@@ -107,14 +107,14 @@ export default function getLegendData(calcdata, opts, hasMultipleLegends) {
         legendData[i][0]._preGroupSort = i;
     }
 
-    var orderFn1 = function(a, b) {
+    var orderFn1 = function(a: any, b: any): number {
         return (
             // fallback for old Chrome < 70 https://bugs.chromium.org/p/v8/issues/detail?id=90
             ((a[0]._groupMinRank - b[0]._groupMinRank) || (a[0]._preGroupSort - b[0]._preGroupSort))
         );
     };
 
-    var orderFn2 = function(a, b) {
+    var orderFn2 = function(a: any, b: any): number {
         return (
             // fallback for old Chrome < 70 https://bugs.chromium.org/p/v8/issues/detail?id=90
             ((a.trace.legendrank - b.trace.legendrank) || (a._preSort - b._preSort))
@@ -122,16 +122,16 @@ export default function getLegendData(calcdata, opts, hasMultipleLegends) {
     };
 
     // sort considering minimum group legendrank
-    legendData.forEach(function(a, k) { a[0]._preGroupSort = k; });
+    legendData.forEach(function(a: any, k: number) { a[0]._preGroupSort = k; });
     legendData.sort(orderFn1);
     for(i = 0; i < legendData.length; i++) {
         // sort considering trace.legendrank and legend.traceorder
-        legendData[i].forEach(function(a, k) { a._preSort = k; });
+        legendData[i].forEach(function(a: any, k: number) { a._preSort = k; });
         legendData[i].sort(orderFn2);
 
         var firstItemTrace = legendData[i][0].trace;
 
-        var groupTitle = null;
+        var groupTitle: any = null;
         // get group title text
         for(j = 0; j < legendData[i].length; j++) {
             var gt = legendData[i][j].trace.legendgrouptitle;

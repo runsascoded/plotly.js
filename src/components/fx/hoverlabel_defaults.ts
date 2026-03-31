@@ -2,12 +2,12 @@ import { coerceFont } from '../../lib/index.js';
 import Color from '../color/index.js';
 import { isUnifiedHover } from './helpers.js';
 
-export default function handleHoverLabelDefaults(contIn, contOut, coerce, opts) {
+export default function handleHoverLabelDefaults(contIn: any, contOut: any, coerce: (attr: string, dflt?: any) => any, opts?: any): void {
     opts = opts || {};
 
     var hasLegend = contOut.legend;
 
-    function inheritFontAttr(attr) {
+    function inheritFontAttr(attr: string): void {
         if(!opts.font[attr]) {
             opts.font[attr] = hasLegend ? contOut.legend.font[attr] : contOut.font[attr];
         }

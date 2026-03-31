@@ -1,8 +1,8 @@
 import Lib from '../../lib/index.js';
 import layoutAttributes from './layout_attributes.js';
 
-export default function handleHoverModeDefaults(layoutIn, layoutOut) {
-    function coerce(attr, dflt) {
+export default function handleHoverModeDefaults(layoutIn: any, layoutOut: any): any {
+    function coerce(attr: string, dflt?: any): any {
         // don't coerce if it is already coerced in other place e.g. in cartesian defaults
         if(layoutOut[attr] !== undefined) return layoutOut[attr];
 

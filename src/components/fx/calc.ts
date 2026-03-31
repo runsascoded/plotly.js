@@ -1,12 +1,12 @@
 import { coerceHoverinfo, fillArray, identity } from '../../lib/index.js';
 import Registry from '../../registry.js';
 
-export default function calc(gd) {
+export default function calc(gd: any): void {
     var calcdata = gd.calcdata;
     var fullLayout = gd._fullLayout;
 
-    function makeCoerceHoverInfo(trace) {
-        return function(val) {
+    function makeCoerceHoverInfo(trace: any): (val: any) => any {
+        return function(val: any): any {
             return coerceHoverinfo({hoverinfo: val}, {_module: trace._module}, fullLayout);
         };
     }
@@ -42,7 +42,7 @@ export default function calc(gd) {
     }
 }
 
-function paste(traceAttr, cd, cdAttr, fn) {
+function paste(traceAttr: any, cd: any, cdAttr: string, fn?: (val: any) => any): void {
     fn = fn || identity;
 
     if(Array.isArray(traceAttr)) {

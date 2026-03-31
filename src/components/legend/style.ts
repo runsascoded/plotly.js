@@ -16,7 +16,7 @@ var CST_MARKER_LINE_WIDTH = 2;
 var MAX_LINE_WIDTH = 10;
 var MAX_MARKER_LINE_WIDTH = 5;
 
-export default function style(s, gd, legend) {
+export default function style(s: any, gd: any, legend?: any): void {
     var fullLayout = gd._fullLayout;
     if(!legend) legend = fullLayout.legend;
     var constantItemSizing = legend.itemsizing === 'constant';
@@ -24,7 +24,7 @@ export default function style(s, gd, legend) {
     var centerPos = (itemWidth + constants.itemGap * 2) / 2;
     var centerTransform = strTranslate(centerPos, 0);
 
-    var boundLineWidth = function(mlw, cont, max, cst) {
+    var boundLineWidth = function(mlw: any, cont: any, max: number, cst: number): number {
         var v;
         if(mlw + 1) {
             v = mlw;
@@ -36,7 +36,7 @@ export default function style(s, gd, legend) {
         return constantItemSizing ? cst : Math.min(v, max);
     };
 
-    s.each(function(d) {
+    s.each(function(this: any, d: any) {
         var traceGroup = select(this);
 
         var layers = ensureSingle(traceGroup, 'g', 'layers');
@@ -91,7 +91,7 @@ export default function style(s, gd, legend) {
     .each(styleOHLC)
     .each(styleCustomSymbol);
 
-    function styleCustomSymbol(d) {
+    function styleCustomSymbol(this: any, d: any): void {
         var trace = d[0].trace;
         var legendsymbol = trace.legendsymbol;
         var customPath = legendsymbol && legendsymbol.path;
@@ -120,7 +120,7 @@ export default function style(s, gd, legend) {
             .style('stroke', 'none');
     }
 
-    function styleLines(d) {
+    function styleLines(this: any, d: any): void {
         var styleGuide = getStyleGuide(d);
         var showFill = styleGuide.showFill;
         var showLine = styleGuide.showLine;
@@ -137,7 +137,7 @@ export default function style(s, gd, legend) {
         var colorscale = cOpts.colorscale;
         var reversescale = cOpts.reversescale;
 
-        var fillStyle = function(s) {
+        var fillStyle = function(s: any): void {
             if(s.size()) {
                 if(showFill) {
                     fillGroupStyle(s, gd, true);
@@ -150,7 +150,7 @@ export default function style(s, gd, legend) {
             }
         };
 
-        var lineGradient = function(s) {
+        var lineGradient = function(s: any): void {
             if(s.size()) {
                 var gradientID = 'legendline-' + trace.uid;
                 lineGroupStyle(s);
@@ -198,7 +198,7 @@ export default function style(s, gd, legend) {
             .call(showLine ? lineGroupStyle : lineGradient);
     }
 
-    function stylePoints(d) {
+    function stylePoints(this: any, d: any): void {
         var styleGuide = getStyleGuide(d);
         var anyFill = styleGuide.anyFill;
         var anyLine = styleGuide.anyLine;
@@ -213,7 +213,7 @@ export default function style(s, gd, legend) {
         // 'scatter3d' don't use gd.calcdata,
         // use d0.trace to infer arrayOk attributes
 
-        function boundVal(attrIn, arrayToValFn, bounds, cst) {
+        function boundVal(attrIn: string, arrayToValFn?: any, bounds?: any, cst?: any): any {
             var valIn = nestedProperty(trace, attrIn).get();
             var valToBound = (isArrayOrTypedArray(valIn) && arrayToValFn) ?
                 arrayToValFn(valIn) :
@@ -230,15 +230,15 @@ export default function style(s, gd, legend) {
             return valToBound;
         }
 
-        function pickFirst(array) {
+        function pickFirst(array: any[]): any {
             if(d0._distinct && d0.index && array[d0.index]) return array[d0.index];
             return array[0];
         }
 
         // constrain text, markers, etc so they'll fit on the legend
         if(showMarker || showText || showLine) {
-            var dEdit = {};
-            var tEdit = {};
+            var dEdit: any = {};
+            var tEdit: any = {};
 
             if(showMarker) {
                 dEdit.mc = boundVal('marker.color', pickFirst);
@@ -311,7 +311,7 @@ export default function style(s, gd, legend) {
         txt.selectAll('text').call(textPointStyle, tMod, gd);
     }
 
-    function styleWaterfalls(d) {
+    function styleWaterfalls(this: any, d: any): void {
         var trace = d[0].trace;
         var isWaterfall = trace.type === 'waterfall';
 
@@ -338,7 +338,7 @@ export default function style(s, gd, legend) {
             .style('stroke-miterlimit', 1);
         pts.exit().remove();
 
-        pts.each(function(dd) {
+        pts.each(function(this: any, dd: any) {
             var pt = select(this);
             var cont = trace[dd[0]].marker;
             var lw = boundLineWidth(undefined, cont.line, MAX_MARKER_LINE_WIDTH, CST_MARKER_LINE_WIDTH);
@@ -353,15 +353,15 @@ export default function style(s, gd, legend) {
         });
     }
 
-    function styleBars(d) {
+    function styleBars(this: any, d: any): void {
         styleBarLike(d, this);
     }
 
-    function styleFunnels(d) {
+    function styleFunnels(this: any, d: any): void {
         styleBarLike(d, this, 'funnel');
     }
 
-    function styleBarLike(d, lThis, desiredType) {
+    function styleBarLike(d: any, lThis: any, desiredType?: string): void {
         var trace = d[0].trace;
         var marker = trace.marker || {};
         var markerLine = marker.line || {};
@@ -382,7 +382,7 @@ export default function style(s, gd, legend) {
             .attr('transform', centerTransform);
         barpath.exit().remove();
 
-        barpath.each(function(d) {
+        barpath.each(function(this: any, d: any) {
             var p = select(this);
             var d0 = d[0];
             var w = boundLineWidth(d0.mlw, marker.line, MAX_MARKER_LINE_WIDTH, CST_MARKER_LINE_WIDTH);
@@ -427,7 +427,7 @@ export default function style(s, gd, legend) {
         });
     }
 
-    function styleBoxes(d) {
+    function styleBoxes(this: any, d: any): void {
         var trace = d[0].trace;
 
         var pts = select(this).select('g.legendpoints')
@@ -439,7 +439,7 @@ export default function style(s, gd, legend) {
             .attr('transform', centerTransform);
         pts.exit().remove();
 
-        pts.each(function() {
+        pts.each(function(this: any) {
             var p = select(this);
 
             if((trace.boxpoints === 'all' || trace.points === 'all') &&
@@ -465,7 +465,7 @@ export default function style(s, gd, legend) {
         });
     }
 
-    function styleCandles(d) {
+    function styleCandles(this: any, d: any): void {
         var trace = d[0].trace;
 
         var pts = select(this).select('g.legendpoints')
@@ -480,7 +480,7 @@ export default function style(s, gd, legend) {
             .style('stroke-miterlimit', 1);
         pts.exit().remove();
 
-        pts.each(function(_, i) {
+        pts.each(function(this: any, _: any, i: number) {
             var p = select(this);
             var cont = trace[i ? 'increasing' : 'decreasing'];
             var w = boundLineWidth(undefined, cont.line, MAX_MARKER_LINE_WIDTH, CST_MARKER_LINE_WIDTH);
@@ -492,7 +492,7 @@ export default function style(s, gd, legend) {
         });
     }
 
-    function styleOHLC(d) {
+    function styleOHLC(this: any, d: any): void {
         var trace = d[0].trace;
 
         var pts = select(this).select('g.legendpoints')
@@ -507,7 +507,7 @@ export default function style(s, gd, legend) {
             .style('stroke-miterlimit', 1);
         pts.exit().remove();
 
-        pts.each(function(_, i) {
+        pts.each(function(this: any, _: any, i: number) {
             var p = select(this);
             var cont = trace[i ? 'increasing' : 'decreasing'];
             var w = boundLineWidth(undefined, cont.line, MAX_MARKER_LINE_WIDTH, CST_MARKER_LINE_WIDTH);
@@ -519,15 +519,15 @@ export default function style(s, gd, legend) {
         });
     }
 
-    function stylePies(d) {
+    function stylePies(this: any, d: any): void {
         stylePieLike(d, this, 'pie');
     }
 
-    function styleFunnelareas(d) {
+    function styleFunnelareas(this: any, d: any): void {
         stylePieLike(d, this, 'funnelarea');
     }
 
-    function stylePieLike(d, lThis, desiredType) {
+    function stylePieLike(d: any, lThis: any, desiredType?: string): void {
         var d0 = d[0];
         var trace = d0.trace;
 
@@ -554,7 +554,7 @@ export default function style(s, gd, legend) {
         }
     }
 
-    function styleSpatial(d) { // i.e. maninly traces having z and colorscale
+    function styleSpatial(this: any, d: any): void { // i.e. maninly traces having z and colorscale
         var trace = d[0].trace;
 
         var useGradient;
@@ -641,13 +641,13 @@ export default function style(s, gd, legend) {
             .style('stroke-miterlimit', 1);
         pts.exit().remove();
 
-        pts.each(function(dd, i) {
+        pts.each(function(this: any, dd: any, i: number) {
             var pt = select(this);
 
             var cOpts = extractOpts(trace);
             var colorscale = cOpts.colorscale;
             var reversescale = cOpts.reversescale;
-            var fillGradient = function(s) {
+            var fillGradient = function(s: any): void {
                 if(s.size()) {
                     var gradientID = 'legendfill-' + trace.uid;
                     gradient(s, gd, gradientID,
@@ -680,12 +680,12 @@ export default function style(s, gd, legend) {
     }
 }
 
-function getGradientDirection(reversescale, isRadial) {
+function getGradientDirection(reversescale: boolean, isRadial?: boolean): string {
     var str = isRadial ? 'radial' : 'horizontal';
     return str + (reversescale ? '' : 'reversed');
 }
 
-function getStyleGuide(d) {
+function getStyleGuide(d: any): any {
     var trace = d[0].trace;
     var contours = trace.contours;
     var showLine = subTypes.hasLines(trace);
@@ -721,7 +721,7 @@ function getStyleGuide(d) {
     };
 }
 
-function dimAttr(v, dflt, max) {
+function dimAttr(v: any, dflt: any, max: number): any {
     if(v && isArrayOrTypedArray(v)) return dflt;
     if(v > max) return max;
     return v;

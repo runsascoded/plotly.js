@@ -23,7 +23,7 @@ var MAIN_TITLE = 1;
 
 var LEGEND_PATTERN = /^legend[0-9]*$/;
 
-export default function draw(gd, opts) {
+export default function draw(gd: any, opts?: any): void {
     if(opts) {
         drawOne(gd, opts);
     } else {
@@ -33,7 +33,7 @@ export default function draw(gd, opts) {
         // remove old legends that won't stay on the graph
         var oldLegends = fullLayout._infolayer.selectAll('[class^="legend"]');
 
-        oldLegends.each(function() {
+        oldLegends.each(function(this: any) {
             var el = select(this);
             var classes = el.attr('class');
             var cls = classes.split(' ')[0];
@@ -52,7 +52,7 @@ export default function draw(gd, opts) {
 }
 
 // After legend dimensions are calculated the title can be aligned horizontally left, center, right
-function horizontalAlignTitle(titleEl, legendObj, bw) {
+function horizontalAlignTitle(titleEl: any, legendObj: any, bw: number): void {
     if((legendObj.title.side !== 'top center') && (legendObj.title.side !== 'top right')) return;
 
     var titleFont = legendObj.title.font;
@@ -74,7 +74,7 @@ function horizontalAlignTitle(titleEl, legendObj, bw) {
     );
 }
 
-function drawOne(gd, opts) {
+function drawOne(gd: any, opts: any): void {
     var legendObj = opts || {};
 
     var fullLayout = gd._fullLayout;
@@ -145,7 +145,7 @@ function drawOne(gd, opts) {
     if(!inHover && (!fullLayout.showlegend || !legendData.length)) {
         layer.selectAll('.' + legendId).remove();
         fullLayout._topdefs.select('#' + clipId).remove();
-        return autoMargin(gd, legendId);
+        return (autoMargin as any)(gd, legendId);
     }
 
     var legend = ensureSingle(layer, 'g', legendId, function(s) {
@@ -201,9 +201,9 @@ function drawOne(gd, opts) {
             return trace.visible === 'legendonly' ? 0.5 : 1;
         }
     })
-    .each(function() { select(this).call(drawTexts, gd, legendObj); })
+    .each(function(this: any) { select(this).call(drawTexts, gd, legendObj); })
     .call(style, gd, legendObj)
-    .each(function() { if(!inHover) select(this).call(setupTraceToggle, gd, legendId); });
+    .each(function(this: any) { if(!inHover) select(this).call(setupTraceToggle, gd, legendId); });
 
     syncOrAsync([
         previousPromises,
@@ -445,8 +445,8 @@ function drawOne(gd, opts) {
                             Registry.call('_guiRelayout', gd, obj);
                         }
                     },
-                    clickFn: function(numClicks, e) {
-                        var clickedTrace = layer.selectAll('g.traces').filter(function() {
+                    clickFn: function(numClicks: number, e: any) {
+                        var clickedTrace = layer.selectAll('g.traces').filter(function(this: any) {
                             var bbox = this.getBoundingClientRect();
                             return (
                                 e.clientX >= bbox.left && e.clientX <= bbox.right &&
@@ -462,7 +462,7 @@ function drawOne(gd, opts) {
         }], gd);
 }
 
-function getTraceWidth(d, legendObj, textGap) {
+function getTraceWidth(d: any, legendObj: any, textGap: number, isGrouped?: boolean): number {
     var legendItem = d[0];
     var legendWidth = legendItem.width;
     var mode = legendObj.entrywidthmode;
@@ -474,9 +474,9 @@ function getTraceWidth(d, legendObj, textGap) {
     return textGap + (traceLegendWidth || legendWidth);
 }
 
-function clickOrDoubleClick(gd, legend, legendItem, numClicks, evt) {
+function clickOrDoubleClick(gd: any, legend: any, legendItem: any, numClicks: number, evt: any): void {
     var trace = legendItem.data()[0][0].trace;
-    var evtData = {
+    var evtData: any = {
         event: evt,
         node: legendItem.node(),
         curveNumber: trace.index,
@@ -512,7 +512,7 @@ function clickOrDoubleClick(gd, legend, legendItem, numClicks, evt) {
     }
 }
 
-function drawTexts(g, gd, legendObj) {
+function drawTexts(g: any, gd: any, legendObj: any): void {
     var legendId = getId(legendObj);
     var legendItem = g.data()[0][0];
     var trace = legendItem.trace;
@@ -548,12 +548,13 @@ function drawTexts(g, gd, legendObj) {
     if(isEditable) {
         textEl.call(svgTextUtils.makeEditable, {gd: gd, text: name})
             .call(textLayout, g, gd, legendObj)
-            .on('edit', function(event) {
+            .on('edit', function(this: any, event: any) {
+                var newName = event;
                 this.text(ensureLength(newName, maxNameLength))
                     .call(textLayout, g, gd, legendObj);
 
                 var fullInput = legendItem.trace._fullInput || {};
-                var update = {};
+                var update: any = {};
 
                 update.name = newName;
 
@@ -575,7 +576,7 @@ function drawTexts(g, gd, legendObj) {
  * most characters are wider than spaces so a string of spaces will usually be
  * no wider than the real labels.
  */
-function ensureLength(str, maxLength) {
+function ensureLength(str: string, maxLength: number): string {
     var targetLength = Math.max(4, maxLength);
     if(str && str.trim().length >= targetLength / 2) return str;
     str = str || '';
@@ -583,7 +584,7 @@ function ensureLength(str, maxLength) {
     return str;
 }
 
-function setupTraceToggle(g, gd, legendId) {
+function setupTraceToggle(g: any, gd: any, legendId: string): void {
     var doubleClickDelay = gd._context.doubleClickDelay;
     var newMouseDownTime;
     var numClicks = 1;
@@ -620,14 +621,14 @@ function setupTraceToggle(g, gd, legendId) {
     });
 }
 
-function textLayout(s, g, gd, legendObj, aTitle) {
+function textLayout(s: any, g: any, gd: any, legendObj: any, aTitle?: number): void {
     if(legendObj._inHover) s.attr('data-notex', true); // do not process MathJax for unified hover
     svgTextUtils.convertToTspans(s, gd, function() {
         computeTextDimensions(g, gd, legendObj, aTitle);
     });
 }
 
-function computeTextDimensions(g, gd, legendObj, aTitle) {
+function computeTextDimensions(g: any, gd: any, legendObj: any, aTitle?: number): void {
     var legendItem = g.data()[0][0];
     var showlegend = legendItem && legendItem.trace.showlegend;
     if (Array.isArray(showlegend)) {
@@ -717,7 +718,7 @@ function computeTextDimensions(g, gd, legendObj, aTitle) {
     }
 }
 
-function getTitleSize(legendObj) {
+function getTitleSize(legendObj: any): [number, number] {
     var w = 0;
     var h = 0;
 
@@ -744,7 +745,7 @@ function getTitleSize(legendObj) {
  *  - _width: legend width
  *  - _maxWidth (for orientation:h only): maximum width before starting new row
  */
-function computeLegendDimensions(gd, groups, traces, legendObj) {
+function computeLegendDimensions(gd: any, groups: any, traces: any, legendObj: any): void {
     var fullLayout = gd._fullLayout;
     var legendId = getId(legendObj);
     if(!legendObj) {
@@ -783,7 +784,7 @@ function computeLegendDimensions(gd, groups, traces, legendObj) {
     var titleSize = getTitleSize(legendObj);
 
     if(isVertical) {
-        traces.each(function(d) {
+        traces.each(function(this: any, d: any) {
             var h = d[0].height;
             setTranslate(this,
                 bw + titleSize[0],
@@ -798,7 +799,7 @@ function computeLegendDimensions(gd, groups, traces, legendObj) {
         legendObj._height += endPad;
 
         if(isGrouped) {
-            groups.each(function(d, i) {
+            groups.each(function(this: any, d: any, i: number) {
                 setTranslate(this, 0, i * legendObj.tracegroupgap);
             });
             legendObj._height += (legendObj._lgroupsLength - 1) * legendObj.tracegroupgap;
@@ -820,7 +821,7 @@ function computeLegendDimensions(gd, groups, traces, legendObj) {
         2 * textGap);
         var maxItemWidth = 0;
         var combinedItemWidth = 0;
-        traces.each(function(d) {
+        traces.each(function(this: any, d: any) {
             var w = getTraceWidth(d, legendObj, textGap);
             maxItemWidth = Math.max(maxItemWidth, w);
             combinedItemWidth += w;
@@ -833,10 +834,10 @@ function computeLegendDimensions(gd, groups, traces, legendObj) {
             var maxGroupHeightInRow = 0;
             var groupOffsetX = 0;
             var groupOffsetY = 0;
-            groups.each(function() {
+            groups.each(function(this: any) {
                 var maxWidthInGroup = 0;
                 var offsetY = 0;
-                select(this).selectAll('g.traces').each(function(d) {
+                select(this).selectAll('g.traces').each(function(this: any, d: any) {
                     var w = getTraceWidth(d, legendObj, textGap);
                     var h = d[0].height;
 
@@ -882,7 +883,7 @@ function computeLegendDimensions(gd, groups, traces, legendObj) {
             var offsetX = 0;
             var offsetY = 0;
             var rowWidth = 0;
-            traces.each(function(d) {
+            traces.each(function(this: any, d: any) {
                 var h = d[0].height;
                 var w = getTraceWidth(d, legendObj, textGap, isGrouped);
                 var next = (oneRowLegend ? w : maxItemWidth);
@@ -937,7 +938,7 @@ function computeLegendDimensions(gd, groups, traces, legendObj) {
 
     var edits = gd._context.edits;
     var isEditable = edits.legendText || edits.legendPosition;
-    traces.each(function(d) {
+    traces.each(function(this: any, d: any) {
         var traceToggle = select(this).select('.' + legendId + 'toggle');
         var h = d[0].height;
         var legendgroup = d[0].trace.legendgroup;
@@ -953,7 +954,7 @@ function computeLegendDimensions(gd, groups, traces, legendObj) {
     });
 }
 
-function expandMargin(gd, legendId, lx, ly) {
+function expandMargin(gd: any, legendId: string, lx: number, ly: number): any {
     var fullLayout = gd._fullLayout;
     var legendObj = fullLayout[legendId];
     var xanchor = getXanchor(legendObj);
@@ -994,18 +995,18 @@ function expandMargin(gd, legendId, lx, ly) {
     }
 }
 
-function getXanchor(legendObj) {
+function getXanchor(legendObj: any): string {
     return isRightAnchor(legendObj) ? 'right' :
         isCenterAnchor(legendObj) ? 'center' :
         'left';
 }
 
-function getYanchor(legendObj) {
+function getYanchor(legendObj: any): string {
     return isBottomAnchor(legendObj) ? 'bottom' :
         isMiddleAnchor(legendObj) ? 'middle' :
         'top';
 }
 
-function getId(legendObj) {
+function getId(legendObj: any): string {
     return legendObj._id || 'legend';
 }

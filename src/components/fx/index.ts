@@ -48,7 +48,7 @@ export default {
     click: _req6
 };
 
-function loneUnhover(containerOrSelection) {
+function loneUnhover(containerOrSelection: any): void {
     // duck type whether the arg is a d3 selection because ie9 doesn't
     // handle instanceof like modern browsers do.
     var selection = isD3Selection(containerOrSelection) ?
@@ -61,12 +61,12 @@ function loneUnhover(containerOrSelection) {
 
 // helpers for traces that use Fx.loneHover
 
-function castHoverOption(trace, ptNumber, attr) {
+function castHoverOption(trace: any, ptNumber: any, attr: string): any {
     return castOption(trace, ptNumber, 'hoverlabel.' + attr);
 }
 
-function castHoverinfo(trace, fullLayout, ptNumber) {
-    function _coerce(val) {
+function castHoverinfo(trace: any, fullLayout: any, ptNumber: any): any {
+    function _coerce(val: any): any {
         return coerceHoverinfo({hoverinfo: val}, {_module: trace._module}, fullLayout);
     }
 

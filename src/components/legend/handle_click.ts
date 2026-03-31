@@ -3,7 +3,7 @@ import { _, notifier, pushUnique } from '../../lib/index.js';
 
 var SHOWISOLATETIP = true;
 
-export default function handleClick(g, gd, numClicks) {
+export default function handleClick(g: any, gd: any, numClicks: number): void {
     var fullLayout = gd._fullLayout;
 
     if(gd._dragged || gd._editing) return;
@@ -21,7 +21,7 @@ export default function handleClick(g, gd, numClicks) {
         SHOWISOLATETIP = false;
     }
 
-    var mode;
+    var mode: any;
     if(numClicks === 1) mode = itemClick;
     else if(numClicks === 2) mode = itemDoubleClick;
     if(!mode) return;
@@ -36,7 +36,7 @@ export default function handleClick(g, gd, numClicks) {
     if(legendItem.groupTitle && legendItem.noClick) return;
 
     var fullData = gd._fullData;
-    var shapesWithLegend = (fullLayout.shapes || []).filter(function(d) { return d.showlegend; });
+    var shapesWithLegend = (fullLayout.shapes || []).filter(function(d: any) { return d.showlegend; });
     var allLegendItems = fullData.concat(shapesWithLegend);
 
     var fullTrace = legendItem.trace;
@@ -46,13 +46,13 @@ export default function handleClick(g, gd, numClicks) {
 
     var legendgroup = fullTrace.legendgroup;
 
-    var i, j, kcont, key, keys, val;
-    var dataUpdate = {};
-    var dataIndices = [];
-    var carrs = [];
-    var carrIdx = [];
+    var i: number, j: number, kcont: any, key: string, keys: string[], val: any;
+    var dataUpdate: any = {};
+    var dataIndices: number[] = [];
+    var carrs: any[] = [];
+    var carrIdx: number[] = [];
 
-    function insertDataUpdate(traceIndex, value) {
+    function insertDataUpdate(traceIndex: number, value: any): number {
         var attrIndex = dataIndices.indexOf(traceIndex);
         var valueArray = dataUpdate.visible;
         if(!valueArray) {
@@ -69,18 +69,18 @@ export default function handleClick(g, gd, numClicks) {
         return attrIndex;
     }
 
-    var updatedShapes = (fullLayout.shapes || []).map(function(d) {
+    var updatedShapes = (fullLayout.shapes || []).map(function(d: any) {
         return d._input;
     });
 
     var shapesUpdated = false;
 
-    function insertShapesUpdate(shapeIndex, value) {
+    function insertShapesUpdate(shapeIndex: number, value: any): void {
         updatedShapes[shapeIndex].visible = value;
         shapesUpdated = true;
     }
 
-    function setVisibility(fullTrace, visibility) {
+    function setVisibility(fullTrace: any, visibility: any): void {
         if(legendItem.groupTitle && !toggleGroup) return;
 
         var fullInput = fullTrace._fullInput || fullTrace;
@@ -114,7 +114,7 @@ export default function handleClick(g, gd, numClicks) {
             else hiddenSlices.splice(thisLabelIndex, 1);
         } else if(mode === 'toggleothers') {
             var changed = thisLabelIndex !== -1;
-            var unhideList = [];
+            var unhideList: any[] = [];
             for(i = 0; i < gd.calcdata.length; i++) {
                 var cdi = gd.calcdata[i];
                 for(j = 0; j < cdi.length; j++) {
@@ -145,8 +145,8 @@ export default function handleClick(g, gd, numClicks) {
         Registry.call('_guiRelayout', gd, 'hiddenlabels', hiddenSlices);
     } else {
         var hasLegendgroup = legendgroup && legendgroup.length;
-        var traceIndicesInGroup = [];
-        var tracei;
+        var traceIndicesInGroup: number[] = [];
+        var tracei: any;
         if(hasLegendgroup) {
             for(i = 0; i < allLegendItems.length; i++) {
                 tracei = allLegendItems[i];
@@ -158,7 +158,7 @@ export default function handleClick(g, gd, numClicks) {
         }
 
         if(mode === 'toggle') {
-            var nextVisibility;
+            var nextVisibility: any;
 
             switch(fullTrace.visible) {
                 case true:
@@ -189,7 +189,7 @@ export default function handleClick(g, gd, numClicks) {
         } else if(mode === 'toggleothers') {
             // Compute the clicked index. expandedIndex does what we want for expanded traces
             // but also culls hidden traces. That means we have some work to do.
-            var isClicked, isInGroup, notInLegend, otherState, _item;
+            var isClicked: boolean, isInGroup: boolean, notInLegend: boolean, otherState: any, _item: any;
             var isIsolated = true;
             for(i = 0; i < allLegendItems.length; i++) {
                 _item = allLegendItems[i];

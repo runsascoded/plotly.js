@@ -1,10 +1,10 @@
 import { isArrayOrTypedArray, nestedProperty } from '../../lib/index.js';
 
-export var getSubplot = function (trace) {
+export var getSubplot = function(trace: any): string {
     return trace.subplot || trace.xaxis + trace.yaxis || trace.geo;
 };
 
-export var isTraceInSubplots = function (trace, subplots) {
+export var isTraceInSubplots = function(trace: any, subplots: string[]): boolean {
     if (trace.type === 'splom') {
         var xaxes = trace.xaxes || [];
         var yaxes = trace.yaxes || [];
@@ -21,7 +21,7 @@ export var isTraceInSubplots = function (trace, subplots) {
     return subplots.indexOf(getSubplot(trace)) !== -1;
 };
 
-export var flat = function (subplots, v) {
+export var flat = function(subplots: any[], v: any): any[] {
     var out = new Array(subplots.length);
     for (var i = 0; i < subplots.length; i++) {
         out[i] = v;
@@ -29,7 +29,7 @@ export var flat = function (subplots, v) {
     return out;
 };
 
-export var p2c = function (axArray, v) {
+export var p2c = function(axArray: any[], v: any): any[] {
     var out = new Array(axArray.length);
     for (var i = 0; i < axArray.length; i++) {
         out[i] = axArray[i].p2c(v);
@@ -37,12 +37,12 @@ export var p2c = function (axArray, v) {
     return out;
 };
 
-export var getDistanceFunction = function (mode, dx, dy, dxy) {
+export var getDistanceFunction = function(mode: string, dx: any, dy: any, dxy?: any): any {
     if (mode === 'closest') return dxy || quadrature(dx, dy);
     return mode.charAt(0) === 'x' ? dx : dy;
 };
 
-export var getClosest = function (cd, distfn, pointData) {
+export var getClosest = function(cd: any[], distfn: (di: any) => number, pointData: any): any {
     // do we already have a point number? (array mode only)
     if (pointData.index !== false) {
         if (pointData.index >= 0 && pointData.index < cd.length) {
@@ -69,23 +69,23 @@ export var getClosest = function (cd, distfn, pointData) {
     return pointData;
 };
 
-export var inbox = function (v0, v1, passVal) {
+export var inbox = function(v0: number, v1: number, passVal: number): number {
     return v0 * v1 < 0 || v0 === 0 ? passVal : Infinity;
 };
 
-export var quadrature = function (dx, dy) {
-    return function (di) {
+export var quadrature = function(dx: (di: any) => number, dy: (di: any) => number): (di: any) => number {
+    return function(di: any): number {
         var x = dx(di);
         var y = dy(di);
         return Math.sqrt(x * x + y * y);
     };
 };
 
-export var makeEventData = function (pt, trace, cd) {
+export var makeEventData = function(pt: any, trace: any, cd: any): any {
     // hover uses 'index', select uses 'pointNumber'
     var pointNumber = 'index' in pt ? pt.index : pt.pointNumber;
 
-    var out = {
+    var out: any = {
         data: trace._input,
         fullData: trace,
         curveNumber: trace.index,
@@ -123,7 +123,7 @@ export var makeEventData = function (pt, trace, cd) {
     return out;
 };
 
-export var appendArrayPointValue = function (pointData, trace, pointNumber) {
+export var appendArrayPointValue = function(pointData: any, trace: any, pointNumber: any): void {
     var arrayAttrs = trace._arrayAttrs;
 
     if (!arrayAttrs) {
@@ -143,7 +143,7 @@ export var appendArrayPointValue = function (pointData, trace, pointNumber) {
     }
 };
 
-export var appendArrayMultiPointValues = function (pointData, trace, pointNumbers) {
+export var appendArrayMultiPointValues = function(pointData: any, trace: any, pointNumbers: any[]): void {
     var arrayAttrs = trace._arrayAttrs;
 
     if (!arrayAttrs) {
@@ -166,7 +166,7 @@ export var appendArrayMultiPointValues = function (pointData, trace, pointNumber
     }
 };
 
-var pointKeyMap = {
+var pointKeyMap: Record<string, string> = {
     ids: 'id',
     locations: 'location',
     labels: 'label',
@@ -175,11 +175,11 @@ var pointKeyMap = {
     parents: 'parent'
 };
 
-function getPointKey(astr) {
+function getPointKey(astr: string): string {
     return pointKeyMap[astr] || astr;
 }
 
-function getPointData(val, pointNumber) {
+function getPointData(val: any, pointNumber: any): any {
     if (Array.isArray(pointNumber)) {
         if (isArrayOrTypedArray(val) && isArrayOrTypedArray(val[pointNumber[0]])) {
             return val[pointNumber[0]][pointNumber[1]];
@@ -189,22 +189,22 @@ function getPointData(val, pointNumber) {
     }
 }
 
-var xyHoverMode = {
+var xyHoverMode: Record<string, boolean> = {
     x: true,
     y: true
 };
 
-var unifiedHoverMode = {
+var unifiedHoverMode: Record<string, boolean> = {
     'x unified': true,
     'y unified': true
 };
 
-export var isUnifiedHover = function (hovermode) {
+export var isUnifiedHover = function(hovermode: any): boolean {
     if (typeof hovermode !== 'string') return false;
     return !!unifiedHoverMode[hovermode];
 };
 
-export var isXYhover = function (hovermode) {
+export var isXYhover = function(hovermode: any): boolean {
     if (typeof hovermode !== 'string') return false;
     return !!xyHoverMode[hovermode];
 };

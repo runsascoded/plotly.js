@@ -6,11 +6,11 @@ import attributes from './attributes.js';
 import basePlotLayoutAttributes from '../../plots/layout_attributes.js';
 import helpers from './helpers.js';
 
-function groupDefaults(legendId, layoutIn, layoutOut, fullData) {
+function groupDefaults(legendId: string, layoutIn: any, layoutOut: any, fullData: any[]): void {
     var containerIn = layoutIn[legendId] || {};
     var containerOut = Template.newContainer(layoutOut, legendId);
 
-    function coerce(attr, dflt) {
+    function coerce(attr: string, dflt?: any): any {
         return Lib.coerce(containerIn, containerOut, attributes, attr, dflt);
     }
 
@@ -22,8 +22,8 @@ function groupDefaults(legendId, layoutIn, layoutOut, fullData) {
     var visible = coerce('visible');
     if(!visible) return;
 
-    var trace;
-    var traceCoerce = function(attr, dflt) {
+    var trace: any;
+    var traceCoerce = function(attr: string, dflt?: any): any {
         var traceIn = trace._input;
         var traceOut = trace;
         return Lib.coerce(traceIn, traceOut, plotsAttrs, attr, dflt);
@@ -40,16 +40,16 @@ function groupDefaults(legendId, layoutIn, layoutOut, fullData) {
     var legendReallyHasATrace = false;
     var defaultOrder = 'normal';
 
-    var shapesWithLegend = (layoutOut.shapes || []).filter(function(d) { return d.showlegend; });
+    var shapesWithLegend = (layoutOut.shapes || []).filter(function(d: any) { return d.showlegend; });
 
-    function isPieWithLegendArray(trace) {
+    function isPieWithLegendArray(trace: any): boolean {
         return Registry.traceIs(trace, 'pie-like')
             && trace._length != null
             && (Array.isArray(trace.legend) || Array.isArray(trace.showlegend));
-    };
+    }
     fullData
         .filter(isPieWithLegendArray)
-        .forEach(function (trace) {
+        .forEach(function (trace: any) {
             if (trace.visible) {
                 legendTraceCount++;
             }
@@ -73,7 +73,7 @@ function groupDefaults(legendId, layoutIn, layoutOut, fullData) {
             }
         });
 
-    var allLegendItems = fullData.concat(shapesWithLegend).filter(function(d) {
+    var allLegendItems = fullData.concat(shapesWithLegend).filter(function(d: any) {
         return !isPieWithLegendArray(trace) && legendId === (d.legend || 'legend');
     });
 
@@ -152,7 +152,7 @@ function groupDefaults(legendId, layoutIn, layoutOut, fullData) {
     var isHorizontal = orientation === 'h';
     var isPaperY = yref === 'paper';
     var isPaperX = xref === 'paper';
-    var defaultX, defaultY, defaultYAnchor;
+    var defaultX: number, defaultY: number, defaultYAnchor: string;
     var defaultXAnchor = 'left';
 
     if(isHorizontal) {
@@ -239,8 +239,8 @@ function groupDefaults(legendId, layoutIn, layoutOut, fullData) {
     }
 }
 
-export default function legendDefaults(layoutIn, layoutOut, fullData) {
-    var i;
+export default function legendDefaults(layoutIn: any, layoutOut: any, fullData: any[]): void {
+    var i: number;
 
     var allLegendsData = fullData.slice();
 
@@ -251,7 +251,7 @@ export default function legendDefaults(layoutIn, layoutOut, fullData) {
             var shape = shapes[i];
             if(!shape.showlegend) continue;
 
-            var mockTrace = {
+            var mockTrace: any = {
                 _input: shape._input,
                 visible: shape.visible,
                 showlegend: shape.showlegend,
@@ -262,7 +262,7 @@ export default function legendDefaults(layoutIn, layoutOut, fullData) {
         }
     }
 
-    var legends = ['legend'];
+    var legends: string[] = ['legend'];
     for(i = 0; i < allLegendsData.length; i++) {
         if (Array.isArray(allLegendsData[i].legend)) {
             legends = legends.concat(allLegendsData[i].legend);
