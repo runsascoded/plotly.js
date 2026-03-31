@@ -19,7 +19,7 @@ export interface GraphDiv extends HTMLDivElement {
     _fullData: FullTrace[];
     _fullLayout: FullLayout;
     _transitionData?: TransitionData;
-    calcdata: CalcData[][];
+    calcdata: CalcData[];
     _context: PlotConfig;
     _promises: Promise<void>[];
     _ev?: EventEmitter;

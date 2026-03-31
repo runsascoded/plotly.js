@@ -1,18 +1,20 @@
-import { coerceHoverinfo, fillArray, identity } from '../../lib/index.js';
+import type { GraphDiv, FullTrace, CalcDatum } from '../../../types/core';
+import { fillArray, identity } from '../../lib/index.js';
+import { coerceHoverinfo } from '../../lib/index.js';
 import Registry from '../../registry.js';
 
-export default function calc(gd: any): void {
+export default function calc(gd: GraphDiv): void {
     var calcdata = gd.calcdata;
     var fullLayout = gd._fullLayout;
 
-    function makeCoerceHoverInfo(trace: any): (val: any) => any {
+    function makeCoerceHoverInfo(trace: FullTrace): (val: any) => any {
         return function(val: any): any {
             return coerceHoverinfo({hoverinfo: val}, {_module: trace._module}, fullLayout);
         };
     }
 
     for(var i = 0; i < calcdata.length; i++) {
-        var cd = calcdata[i];
+        var cd: CalcDatum[] = calcdata[i];
         var trace = cd[0].trace;
 
         // don't include hover calc fields for pie traces
@@ -42,7 +44,7 @@ export default function calc(gd: any): void {
     }
 }
 
-function paste(traceAttr: any, cd: any, cdAttr: string, fn?: (val: any) => any): void {
+function paste(traceAttr: any, cd: CalcDatum[], cdAttr: string, fn?: (val: any) => any): void {
     fn = fn || identity;
 
     if(Array.isArray(traceAttr)) {

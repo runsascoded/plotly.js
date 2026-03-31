@@ -1,4 +1,5 @@
 import { select } from 'd3-selection';
+import type { GraphDiv, FullTrace, FullAxis } from '../../../types/core';
 function d3Round(x: number, n: number): number { return n ? Math.round(x * (n = Math.pow(10, n))) / n : Math.round(x); }
 import { ensureSingle, ensureSingleById, extendFlat, extractOption, identity, isArrayOrTypedArray, nestedProperty, numberFormat, strTranslate, texttemplateString } from '../../lib/index.js';
 import isNumeric from 'fast-isnumeric';
@@ -132,7 +133,7 @@ export function hideOutsideRangePoints(traceGroups: any, subplot: any): void {
     });
 }
 
-export function crispRound(gd: any, lineWidth: number, dflt?: number): number {
+export function crispRound(gd: GraphDiv, lineWidth: number, dflt?: number): number {
     if (!lineWidth || !isNumeric(lineWidth)) return dflt || 0;
 
     if (gd._context.staticPlot) return lineWidth;
@@ -191,7 +192,7 @@ export function dashStyle(dash: string, lineWidth: number): string {
     return dash;
 }
 
-function setFillStyle(sel: any, trace: any, gd: any, forLegend: boolean): void {
+function setFillStyle(sel: any, trace: FullTrace, gd: GraphDiv, forLegend: boolean): void {
     var markerPattern = trace.fillpattern;
     var fillgradient = trace.fillgradient;
     var pAttr = getPatternAttr;
@@ -274,14 +275,14 @@ function setFillStyle(sel: any, trace: any, gd: any, forLegend: boolean): void {
     }
 }
 
-export function singleFillStyle(sel: any, gd: any): void {
+export function singleFillStyle(sel: any, gd: GraphDiv): void {
     var node = select(sel.node());
     var data = node.data();
     var trace = ((data[0] || [])[0] || {}).trace || {};
     setFillStyle(sel, trace, gd, false);
 }
 
-export function fillGroupStyle(s: any, gd: any, forLegend?: boolean): void {
+export function fillGroupStyle(s: any, gd: GraphDiv, forLegend?: boolean): void {
     s.style('stroke-width', 0).each(function (this: any, d: any) {
         var shape = select(this);
         if (d[0].trace) {
@@ -375,7 +376,7 @@ var gradientInfo: Record<string, any> = {
     verticalreversed: { type: 'linear', start: { x: 0, y: 1 }, stop: { x: 0, y: 0 }, reversed: true }
 };
 
-export function gradient(sel: any, gd: any, gradientID: string, type: string, colorscale: any[], prop: string): void {
+export function gradient(sel: any, gd: GraphDiv, gradientID: string, type: string, colorscale: any[], prop: string): void {
     var info = gradientInfo[type];
     return gradientWithBounds(
         sel,
@@ -391,7 +392,7 @@ export function gradient(sel: any, gd: any, gradientID: string, type: string, co
     );
 }
 
-function gradientWithBounds(sel: any, gd: any, gradientID: string, type: string, colorscale: any[], prop: string, start: any, stop: any, inUserSpace: boolean, reversed: boolean): void {
+function gradientWithBounds(sel: any, gd: GraphDiv, gradientID: string, type: string, colorscale: any[], prop: string, start: any, stop: any, inUserSpace: boolean, reversed: boolean): void {
     var len = colorscale.length;
 
     var info: any;
@@ -464,7 +465,7 @@ function gradientWithBounds(sel: any, gd: any, gradientID: string, type: string,
 export function pattern(
     sel: any,
     calledBy: string,
-    gd: any,
+    gd: GraphDiv,
     patternID: string,
     shape: string,
     size: number,
@@ -760,7 +761,7 @@ export function pattern(
     sel.classed('pattern_filled', true);
 }
 
-export function initGradients(gd: any): void {
+export function initGradients(gd: GraphDiv): void {
     var fullLayout = gd._fullLayout;
 
     var gradientsGroup = ensureSingle(fullLayout._defs, 'g', 'gradients');
@@ -769,7 +770,7 @@ export function initGradients(gd: any): void {
     select(gd).selectAll('.gradient_filled').classed('gradient_filled', false);
 }
 
-export function initPatterns(gd: any): void {
+export function initPatterns(gd: GraphDiv): void {
     var fullLayout = gd._fullLayout;
 
     var patternsGroup = ensureSingle(fullLayout._defs, 'g', 'patterns');
@@ -785,7 +786,7 @@ export function getPatternAttr(mp: any, i: number, dflt: any): any {
     return mp;
 }
 
-export function pointStyle(s: any, trace: any, gd: any, pt?: any): void {
+export function pointStyle(s: any, trace: FullTrace, gd: GraphDiv, pt?: any): void {
     if (!s.size()) return;
 
     var fns = makePointStyleFns(trace);
@@ -795,7 +796,7 @@ export function pointStyle(s: any, trace: any, gd: any, pt?: any): void {
     });
 }
 
-export function singlePointStyle(d: any, sel: any, trace: any, fns: any, gd: any, pt?: any): void {
+export function singlePointStyle(d: any, sel: any, trace: FullTrace, fns: any, gd: GraphDiv, pt?: any): void {
     var marker = trace.marker;
     var markerLine = marker.line;
 
@@ -955,7 +956,7 @@ export function singlePointStyle(d: any, sel: any, trace: any, fns: any, gd: any
     }
 }
 
-export function makePointStyleFns(trace: any): any {
+export function makePointStyleFns(trace: FullTrace): any {
     var out: Record<string, any> = {};
     var marker = trace.marker;
 
@@ -977,7 +978,7 @@ export function makePointStyleFns(trace: any): any {
     return out;
 }
 
-export function makeSelectedPointStyleFns(trace: any): any {
+export function makeSelectedPointStyleFns(trace: FullTrace): any {
     var out: Record<string, any> = {};
 
     var selectedAttrs = trace.selected || {};
@@ -1042,7 +1043,7 @@ export function makeSelectedPointStyleFns(trace: any): any {
     return out;
 }
 
-export function makeSelectedTextStyleFns(trace: any): any {
+export function makeSelectedTextStyleFns(trace: FullTrace): any {
     var out: Record<string, any> = {};
 
     var selectedAttrs = trace.selected || {};
@@ -1070,7 +1071,7 @@ export function makeSelectedTextStyleFns(trace: any): any {
     return out;
 }
 
-export function selectedPointStyle(s: any, trace: any): void {
+export function selectedPointStyle(s: any, trace: FullTrace): void {
     if (!s.size() || !trace.selectedpoints) return;
 
     var fns = makeSelectedPointStyleFns(trace);
@@ -1151,12 +1152,12 @@ function textPointPosition(s: any, textPosition: string, fontSize: number, marke
     }
 }
 
-function extracTextFontSize(d: any, trace: any): number {
+function extracTextFontSize(d: any, trace: FullTrace): number {
     var fontSize = d.ts || trace.textfont.size;
     return isNumeric(fontSize) && fontSize > 0 ? fontSize : 0;
 }
 
-export function textPointStyle(s: any, trace: any, gd: any): void {
+export function textPointStyle(s: any, trace: FullTrace, gd: GraphDiv): void {
     if (!s.size()) return;
 
     var selectedTextColorFn: any;
@@ -1215,7 +1216,7 @@ export function textPointStyle(s: any, trace: any, gd: any): void {
     });
 }
 
-export function selectedTextStyle(s: any, trace: any): void {
+export function selectedTextStyle(s: any, trace: FullTrace): void {
     if (!s.size() || !trace.selectedpoints) return;
 
     var fns = makeSelectedTextStyleFns(trace);
@@ -1498,11 +1499,11 @@ function nodeHash(node: any): string | undefined {
     return inputText + node.getAttribute('data-math') + node.getAttribute('text-anchor') + node.getAttribute('style');
 }
 
-export function setClipUrl(s: any, localId: string, gd: any): void {
+export function setClipUrl(s: any, localId: string, gd: GraphDiv): void {
     s.attr('clip-path', getFullUrl(localId, gd));
 }
 
-function getFullUrl(localId: string, gd: any): string | null {
+function getFullUrl(localId: string, gd: GraphDiv): string | null {
     if (!localId) return null;
 
     var context = gd._context;
@@ -1629,7 +1630,7 @@ export function setTextPointsScale(selection: any, xScale: number, yScale: numbe
     });
 }
 
-function getMarkerStandoff(d: any, trace: any): number {
+function getMarkerStandoff(d: any, trace: FullTrace): number {
     var standoff: number;
 
     if (d) standoff = d.mf;
@@ -1664,7 +1665,7 @@ var previousY: number;
 var previousI: number;
 var previousTraceUid: string;
 
-function getMarkerAngle(d: any, trace: any): number | null {
+function getMarkerAngle(d: any, trace: FullTrace): number | null {
     var angle: any = d.ma;
 
     if (angle === undefined) {
