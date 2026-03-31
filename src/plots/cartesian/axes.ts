@@ -16,6 +16,7 @@ import autoType from './axis_autotype.js';
 import axisIds from './axis_ids.js';
 import autorange from './autorange.js';
 import _req0 from './set_convert.js';
+import type { GraphDiv, FullLayout, FullAxis } from '../../../types/core';
 var ONEMAXYEAR = constants.ONEMAXYEAR;
 var ONEAVGYEAR = constants.ONEAVGYEAR;
 var ONEMINYEAR = constants.ONEMINYEAR;
@@ -163,7 +164,7 @@ axes.coercePosition = function(containerOut?: any, gd?: any, coerce?: any, axRef
         cleanPos = ensureNumber;
         pos = coerce(attr, dflt);
     } else {
-        var ax: any = axes.getFromId(gd, axRef);
+        var ax = axes.getFromId(gd, axRef);
         dflt = ax.fraction2r(dflt);
         pos = coerce(attr, dflt);
         cleanPos = ax.cleanPos;
@@ -182,14 +183,14 @@ axes.cleanPosition = function(pos?: any, gd?: any, axRef?: any) {
 axes.redrawComponents = function(gd?: any, axIds?: any) {
     axIds = axIds ? axIds : axes.listIds(gd);
 
-    var fullLayout: any = gd._fullLayout;
+    var fullLayout = gd._fullLayout;
 
     function _redrawOneComp(moduleName?: any, methodName?: any, stashName?: any, shortCircuit?: any) {
         var method = Registry.getComponentMethod(moduleName, methodName);
         var stash = {};
 
         for(var i = 0; i < axIds.length; i++) {
-            var ax: any = fullLayout[axes.id2name(axIds[i])];
+            var ax = fullLayout[axes.id2name(axIds[i])];
             var indices = ax[stashName];
 
             for(var j = 0; j < indices.length; j++) {
@@ -316,7 +317,7 @@ axes.saveRangeInitial = function(gd?: any, overwrite?: any) {
     var hasOneAxisChanged = false;
 
     for(var i = 0; i < axList.length; i++) {
-        var ax: any = axList[i];
+        var ax = axList[i];
         var isNew =
             ax._rangeInitial0 === undefined &&
             ax._rangeInitial1 === undefined;
@@ -345,7 +346,7 @@ axes.saveShowSpikeInitial = function(gd?: any, overwrite?: any) {
     var allSpikesEnabled = 'on';
 
     for(var i = 0; i < axList.length; i++) {
-        var ax: any = axList[i];
+        var ax = axList[i];
         var isNew = (ax._showSpikeInitial === undefined);
         var hasChanged = isNew || !(ax.showspikes === ax._showspikes);
 
@@ -2309,7 +2310,7 @@ axes.findSubplotsWithAxis = function(subplots?: any, ax?: any) {
 
 // makeClipPaths: prepare clipPaths for all single axes and all possible xy pairings
 axes.makeClipPaths = function(gd?: any) {
-    var fullLayout: any = gd._fullLayout;
+    var fullLayout = gd._fullLayout;
 
     // for more info: https://github.com/plotly/plotly.js/issues/2595
     if(fullLayout._hasOnlyLargeSploms) return;
@@ -2376,7 +2377,7 @@ axes.makeClipPaths = function(gd?: any) {
  * - ax._rl (stored linearized range for use by zoom/pan)
  */
 axes.draw = function(gd?: any, arg?: any, opts?: any) {
-    var fullLayout: any = gd._fullLayout;
+    var fullLayout = gd._fullLayout;
 
     if(arg === 'redraw') {
         fullLayout._paper.selectAll('g.subplot').each(function(d) {
@@ -2416,7 +2417,7 @@ axes.draw = function(gd?: any, arg?: any, opts?: any) {
 
     // order axes that have dependency to other axes
     axList.map(function(axId) {
-        var ax: any = axes.getFromId(gd, axId);
+        var ax = axes.getFromId(gd, axId);
 
         if(ax.tickmode === 'sync' && ax.overlaying) {
             var overlayingIndex = axList.findIndex(function(axis) {return axis === ax.overlaying;});
@@ -2433,7 +2434,7 @@ axes.draw = function(gd?: any, arg?: any, opts?: any) {
         return function() {
             if(!axId) return;
 
-            var ax: any = axes.getFromId(gd, axId);
+            var ax = axes.getFromId(gd, axId);
 
             if(!opts) opts = {};
             opts.axShifts = axShifts;
@@ -2489,7 +2490,7 @@ axes.drawOne = function(gd?: any, ax?: any, opts?: any) {
 
     ax.setScale();
 
-    var fullLayout: any = gd._fullLayout;
+    var fullLayout = gd._fullLayout;
     var axId = ax._id;
     var axLetter = axId.charAt(0);
     var counterLetter = axes.counterLetter(axId);
@@ -3591,7 +3592,7 @@ axes.drawZeroLine = function(gd?: any, ax?: any, opts?: any) {
 axes.drawLabels = function(gd?: any, ax?: any, opts?: any) {
     opts = opts || {};
 
-    var fullLayout: any = gd._fullLayout;
+    var fullLayout = gd._fullLayout;
     var axId = ax._id;
     var zerolineIsAbove = ax.zerolinelayer === 'above traces';
     var cls = opts.cls || axId + 'tick';
@@ -3767,7 +3768,7 @@ axes.drawLabels = function(gd?: any, ax?: any, opts?: any) {
         for(var subplot in fullLayout._plots) {
             var plotinfo = fullLayout._plots[subplot];
             if(ax._id !== plotinfo.xaxis._id && ax._id !== plotinfo.yaxis._id) continue;
-            var anchorAx: any = isX ? plotinfo.yaxis : plotinfo.xaxis;
+            var anchorAx = isX ? plotinfo.yaxis : plotinfo.xaxis;
             if(anchorAx) {
                 anchorAx['_visibleLabelMin_' + ax._id] = visibleLabelMin;
                 anchorAx['_visibleLabelMax_' + ax._id] = visibleLabelMax;
@@ -4011,7 +4012,7 @@ axes.drawLabels = function(gd?: any, ax?: any, opts?: any) {
         };
     };
 
-    var anchorAx: any = ax._anchorAxis;
+    var anchorAx = ax._anchorAxis;
     if(
         anchorAx && (anchorAx.autorange || anchorAx.insiderange) &&
         insideTicklabelposition(ax) &&
@@ -4227,7 +4228,7 @@ function approxTitleDepth(ax?: any): any {
  *  - {boolean} showticklabels
  */
 function drawTitle(gd?: any, ax?: any): any {
-    var fullLayout: any = gd._fullLayout;
+    var fullLayout = gd._fullLayout;
     var axId = ax._id;
     var axLetter = axId.charAt(0);
     var fontSize = ax.title.font.size;
@@ -4348,7 +4349,7 @@ function anyCounterAxLineAtZero(gd?: any, ax?: any, counterAxis?: any, rng?: any
     var mainCounterAxis = counterAxis._mainAxis;
     if(!mainCounterAxis) return;
 
-    var fullLayout: any = gd._fullLayout;
+    var fullLayout = gd._fullLayout;
     var axLetter = ax._id.charAt(0);
     var counterLetter = axes.counterLetter(ax._id);
 
@@ -4383,7 +4384,7 @@ function anyCounterAxLineAtZero(gd?: any, ax?: any, counterAxis?: any, rng?: any
 
     var counterLetterAxes = axes.list(gd, counterLetter);
     for(var i = 0; i < counterLetterAxes.length; i++) {
-        var counterAxis2: any = counterLetterAxes[i];
+        var counterAxis2 = counterLetterAxes[i];
         if(
             counterAxis2._mainAxis === mainCounterAxis &&
             lineNearZero(counterAxis2, zeroPosition)
@@ -4399,7 +4400,7 @@ function hasBarsOrFill(gd?: any, ax?: any): any {
     var axLetter = ax._id.charAt(0);
 
     for(var i = 0; i < fullData.length; i++) {
-        var trace: any = fullData[i];
+        var trace = fullData[i];
 
         if(trace.visible === true && (trace.xaxis + trace.yaxis) === subplot) {
             if(
@@ -4434,7 +4435,7 @@ function selectTickLabel(gTick?: any): any {
 axes.allowAutoMargin = function(gd?: any) {
     var axList = axes.list(gd, '', true);
     for(var i = 0; i < axList.length; i++) {
-        var ax: any = axList[i];
+        var ax = axList[i];
         if(ax.automargin) {
             allowAutoMargin(gd, axAutoMarginID(ax));
             if(ax.mirror) {

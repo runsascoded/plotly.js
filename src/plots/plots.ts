@@ -20,6 +20,7 @@ import commandModule from './command.js';
 import _req0 from './attributes.js';
 import _req1 from './font_attributes.js';
 import _req2 from './layout_attributes.js';
+import type { GraphDiv, FullLayout, FullTrace, FullAxis, CalcData, CalcDatum } from '../../types/core';
 
 
 export var attributes = _req0;
@@ -113,7 +114,7 @@ export function addLinks(gd?: any): any {
     // Do not do anything if showLink and showSources are not set to true in config
     if(!gd._context.showLink && !gd._context.showSources) return;
 
-    var fullLayout: any = gd._fullLayout;
+    var fullLayout = gd._fullLayout;
 
     var linkContainer = ensureSingle(fullLayout._paper, 'text', 'js-plot-link-container', function(s) {
         s.style({
@@ -266,21 +267,21 @@ var extraFormatKeys = [
  */
 export function supplyDefaults(gd?: any, opts?: any): any {
     var skipUpdateCalc = opts && opts.skipUpdateCalc;
-    var oldFullLayout: any = gd._fullLayout || {};
+    var oldFullLayout = gd._fullLayout || {} as FullLayout;
 
     if(oldFullLayout._skipDefaults) {
         delete oldFullLayout._skipDefaults;
         return;
     }
 
-    var newFullLayout: any = gd._fullLayout = {};
-    var newLayout: any = gd.layout || {};
+    var newFullLayout = gd._fullLayout = {} as FullLayout;
+    var newLayout = gd.layout || {};
 
-    var oldFullData: any = gd._fullData || [];
-    var newFullData = gd._fullData = [];
+    var oldFullData = gd._fullData || [];
+    var newFullData = gd._fullData = [] as FullTrace[];
     var newData = gd.data || [];
 
-    var oldCalcdata: any = gd.calcdata || [];
+    var oldCalcdata = gd.calcdata || [] as CalcData[];
 
     var context = gd._context || {};
 
@@ -507,10 +508,10 @@ export function supplyDefaults(gd?: any, opts?: any): any {
     }
 };
 
-export function supplyDefaultsUpdateCalc(oldCalcdata?: any, newFullData?: any): any {
+export function supplyDefaultsUpdateCalc(oldCalcdata: CalcData[], newFullData: FullTrace[]): any {
     for(var i = 0; i < newFullData.length; i++) {
         var newTrace = newFullData[i];
-        var cd0: any = (oldCalcdata[i] || [])[0];
+        var cd0 = (oldCalcdata[i] || [])[0] as CalcDatum | undefined;
         if(cd0 && cd0.trace) {
             var oldTrace = cd0.trace;
             if(oldTrace._hasCalcTransform) {
@@ -712,7 +713,7 @@ function fillMetaTextHelpers(newFullData?: any, newFullLayout?: any): any {
     }
 
     for(var i = 0; i < newFullData.length; i++) {
-        var trace: any = newFullData[i];
+        var trace = newFullData[i];
 
         if(trace.meta) {
             meta4data[trace.index] = trace._meta = {meta: trace.meta};
@@ -870,7 +871,7 @@ export function linkSubplots(newFullData?: any, newFullLayout?: any, oldFullData
         plotinfo._hasClipOnAxisFalse = false;
 
         for(j = 0; j < newFullData.length; j++) {
-            var trace: any = newFullData[j];
+            var trace = newFullData[j];
 
             if(
                 trace.xaxis === plotinfo.xaxis._id &&
@@ -1040,7 +1041,7 @@ export function clearExpandedTraceDefaultColors(trace?: any): any {
     }
 };
 
-export function supplyDataDefaults(dataIn?: any, dataOut?: any, layout?: any, fullLayout?: any): any {
+export function supplyDataDefaults(dataIn: any, dataOut: FullTrace[], layout: any, fullLayout: FullLayout): any {
     var modules = fullLayout._modules;
     var visibleModules = fullLayout._visibleModules;
     var basePlotModules = fullLayout._basePlotModules;
@@ -1054,7 +1055,7 @@ export function supplyDataDefaults(dataIn?: any, dataOut?: any, layout?: any, fu
     function pushModule(fullTrace?: any) {
         dataOut.push(fullTrace);
 
-        var _module: any = fullTrace._module;
+        var _module = fullTrace._module;
         if(!_module) return;
 
         pushUnique(modules, _module);
@@ -1598,7 +1599,7 @@ export function purge(gd?: any): any {
     // note: we DO NOT remove _context because it doesn't change when we insert
     // a new plot, and may have been set outside of our scope.
 
-    var fullLayout: any = gd._fullLayout || {};
+    var fullLayout = gd._fullLayout || {} as FullLayout;
     if(fullLayout._glcontainer !== undefined) {
         fullLayout._glcontainer.selectAll('.gl-canvas').remove();
         fullLayout._glcontainer.remove();
@@ -1667,7 +1668,7 @@ export function purge(gd?: any): any {
     if(gd.removeAllListeners) gd.removeAllListeners();
 };
 
-export function style(gd?: any): any {
+export function style(gd: GraphDiv): any {
     var _modules = gd._fullLayout._visibleModules;
     var styleModules = [];
     var i;
@@ -1676,7 +1677,7 @@ export function style(gd?: any): any {
     // make sure to not unnecessary call them multiple times.
 
     for(i = 0; i < _modules.length; i++) {
-        var _module: any = _modules[i];
+        var _module = _modules[i];
         if(_module.style) {
             pushUnique(styleModules, _module.style);
         }
@@ -1687,13 +1688,13 @@ export function style(gd?: any): any {
     }
 };
 
-export function sanitizeMargins(fullLayout?: any): any {
+export function sanitizeMargins(fullLayout: FullLayout): any {
     // polar doesn't do margins...
     if(!fullLayout || !fullLayout.margin) return;
 
     var width = fullLayout.width;
     var height = fullLayout.height;
-    var margin: any = fullLayout.margin;
+    var margin = fullLayout.margin;
     var plotWidth = width - (margin.l + margin.r);
     var plotHeight = height - (margin.t + margin.b);
     var correction;
@@ -1723,17 +1724,17 @@ export function allowAutoMargin(gd?: any, id?: any): any {
     gd._fullLayout._pushmarginIds[id] = 1;
 };
 
-function initMargins(fullLayout?: any): any {
-    var margin: any = fullLayout.margin;
+function initMargins(fullLayout: FullLayout): any {
+    var margin = fullLayout.margin;
 
     if(!fullLayout._size) {
-        var gs: any = fullLayout._size = {
+        var gs = fullLayout._size = {
             l: Math.round(margin.l),
             r: Math.round(margin.r),
             t: Math.round(margin.t),
             b: Math.round(margin.b),
-            p: Math.round(margin.pad)
-        };
+            p: Math.round(margin.pad),
+        } as any;
         gs.w = Math.round(fullLayout.width) - gs.l - gs.r;
         gs.h = Math.round(fullLayout.height) - gs.t - gs.b;
     }
@@ -1761,11 +1762,11 @@ var MIN_SPECIFIED_HEIGHT = 2;
  *     l, r, t, b: the pixels to pad past the plot fraction x[l|r] and y[t|b]
  *     pad: extra pixels to add in all directions, default 12 (why?)
  */
-export function autoMargin(gd?: any, id?: any, o?: any): any {
-    var fullLayout: any = gd._fullLayout;
+export function autoMargin(gd: GraphDiv, id?: any, o?: any): any {
+    var fullLayout = gd._fullLayout;
     var width = fullLayout.width;
     var height = fullLayout.height;
-    var margin: any = fullLayout.margin;
+    var margin = fullLayout.margin;
     var minreducedwidth = fullLayout.minreducedwidth;
     var minreducedheight = fullLayout.minreducedheight;
 
@@ -1784,7 +1785,7 @@ export function autoMargin(gd?: any, id?: any, o?: any): any {
     var maxSpaceW = Math.max(0, width - minFinalWidth);
     var maxSpaceH = Math.max(0, height - minFinalHeight);
 
-    var pushMargin: any = fullLayout._pushmargin;
+    var pushMargin = fullLayout._pushmargin;
     var pushMarginIds = fullLayout._pushmarginIds;
 
     if(margin.autoexpand !== false) {
@@ -1847,16 +1848,16 @@ function needsRedrawForShift(gd?: any): any {
     return false;
 }
 
-export function doAutoMargin(gd?: any): any {
-    var fullLayout: any = gd._fullLayout;
+export function doAutoMargin(gd: GraphDiv): any {
+    var fullLayout = gd._fullLayout;
     var width = fullLayout.width;
     var height = fullLayout.height;
 
-    if(!fullLayout._size) fullLayout._size = {};
+    if(!fullLayout._size) fullLayout._size = {} as any;
     initMargins(fullLayout);
 
-    var gs: any = fullLayout._size;
-    var margin: any = fullLayout.margin;
+    var gs = fullLayout._size;
+    var margin = fullLayout.margin;
     var reservedMargins = {t: 0, b: 0, l: 0, r: 0};
     var oldMargins = extendFlat({}, gs);
 
@@ -1867,7 +1868,7 @@ export function doAutoMargin(gd?: any): any {
     var mr = margin.r;
     var mt = margin.t;
     var mb = margin.b;
-    var pushMargin: any = fullLayout._pushmargin;
+    var pushMargin = fullLayout._pushmargin;
     var pushMarginIds = fullLayout._pushmarginIds;
     var minreducedwidth = fullLayout.minreducedwidth;
     var minreducedheight = fullLayout.minreducedheight;
@@ -2472,8 +2473,8 @@ export function transition(gd?: any, data?: any, layout?: any, traces?: any, fra
 
         for(var i = 0; i < traceIndices.length; i++) {
             var traceIdx = traceIndices[i];
-            var trace: any = gd._fullData[traceIdx];
-            var _module: any = trace._module;
+            var trace = gd._fullData[traceIdx];
+            var _module = trace._module;
 
             // There's nothing to do if this module is not defined:
             if(!_module) continue;
@@ -2618,7 +2619,7 @@ export function transition(gd?: any, data?: any, layout?: any, traces?: any, fra
  * @param {object} oldFullLayout : old (pre Plotly.react) fullLayout
  */
 export function transitionFromReact(gd?: any, restyleFlags?: any, relayoutFlags?: any, oldFullLayout?: any): any {
-    var fullLayout: any = gd._fullLayout;
+    var fullLayout = gd._fullLayout;
     var transitionOpts: any = fullLayout.transition;
     var opts: any = {};
     var axEdits = [];
@@ -2664,7 +2665,7 @@ export function transitionFromReact(gd?: any, restyleFlags?: any, relayoutFlags?
 
     opts.runFn = function(makeCallback?: any) {
         var fullData = gd._fullData;
-        var fullLayout: any = gd._fullLayout;
+        var fullLayout = gd._fullLayout;
         var basePlotModules = fullLayout._basePlotModules;
 
         var axisTransitionOpts;
@@ -2856,17 +2857,17 @@ function _transition(gd?: any, transitionOpts?: any, opts?: any): any {
     return transitionStarting.then(function() { return gd; });
 }
 
-export function doCalcdata(gd?: any, traces?: any): any {
+export function doCalcdata(gd: GraphDiv, traces?: any): any {
     var axList = axisIDs.list(gd);
     var fullData = gd._fullData;
-    var fullLayout: any = gd._fullLayout;
+    var fullLayout = gd._fullLayout;
 
     var trace, _module, i, j;
 
     // XXX: Is this correct? Needs a closer look so that *some* traces can be recomputed without
     // *all* needing doCalcdata:
     var calcdata = new Array(fullData.length);
-    var oldCalcdata: any = (gd.calcdata || []).slice();
+    var oldCalcdata = (gd.calcdata || []).slice();
     gd.calcdata = calcdata;
 
     // extra helper variables
@@ -3045,7 +3046,7 @@ function sortAxisCategoriesByValue(axList?: any, gd?: any): any {
         var axLetter = ax._id.charAt(0);
         if(type === 'histogram2dcontour') {
             var counterAxLetter = ax._counterAxes[0];
-            var counterAx: any = axisIDs.getFromId(gd, counterAxLetter);
+            var counterAx = axisIDs.getFromId(gd, counterAxLetter);
 
             var xCategorical = axLetter === 'x' || (counterAxLetter === 'x' && counterAx.type === 'category');
             var yCategorical = axLetter === 'y' || (counterAxLetter === 'y' && counterAx.type === 'category');
@@ -3083,7 +3084,7 @@ function sortAxisCategoriesByValue(axList?: any, gd?: any): any {
     }
 
     for(i = 0; i < axList.length; i++) {
-        var ax: any = axList[i];
+        var ax = axList[i];
         if(ax.type !== 'category') continue;
 
         // Order by value
@@ -3104,12 +3105,12 @@ function sortAxisCategoriesByValue(axList?: any, gd?: any): any {
             // Collect values across traces
             for(j = 0; j < ax._traceIndices.length; j++) {
                 var traceIndex = ax._traceIndices[j];
-                var fullTrace: any = gd._fullData[traceIndex];
+                var fullTrace = gd._fullData[traceIndex];
 
                 // Skip over invisible traces
                 if(fullTrace.visible !== true) continue;
 
-                var type: any = fullTrace.type;
+                var type = fullTrace.type;
                 if(Registry.traceIs(fullTrace, 'histogram')) {
                     delete fullTrace._xautoBinFinished;
                     delete fullTrace._yautoBinFinished;
@@ -3245,7 +3246,7 @@ function setupAxisCategories(axList?: any, fullData?: any, fullLayout?: any): an
 }
 
 function doCrossTraceCalc(gd?: any): any {
-    var fullLayout: any = gd._fullLayout;
+    var fullLayout = gd._fullLayout;
     var modules = fullLayout._visibleModules;
     var hash = {};
     var i, j, k;
@@ -3303,7 +3304,7 @@ export function redrag(gd?: any): any {
 };
 
 export function reselect(gd?: any): any {
-    var fullLayout: any = gd._fullLayout;
+    var fullLayout = gd._fullLayout;
 
     var A = (gd.layout || {}).selections;
     var B = fullLayout._previousSelections;
@@ -3315,7 +3316,7 @@ export function reselect(gd?: any): any {
     Registry.getComponentMethod('selections', 'reselect')(gd, mayEmitSelected);
 };
 
-export function generalUpdatePerTraceModule(gd?: any, subplot?: any, subplotCalcData?: any, subplotLayout?: any): any {
+export function generalUpdatePerTraceModule(gd: GraphDiv, subplot?: any, subplotCalcData?: any, subplotLayout?: any): any {
     var traceHashOld = subplot.traceHash;
     var traceHash = {};
     var i;
@@ -3323,7 +3324,7 @@ export function generalUpdatePerTraceModule(gd?: any, subplot?: any, subplotCalc
     // build up moduleName -> calcData hash
     for(i = 0; i < subplotCalcData.length; i++) {
         var calcTraces = subplotCalcData[i];
-        var trace: any = calcTraces[0].trace;
+        var trace = calcTraces[0].trace;
 
         // skip over visible === false traces
         // as they don't have `_module` ref
@@ -3339,7 +3340,7 @@ export function generalUpdatePerTraceModule(gd?: any, subplot?: any, subplotCalc
     for(var moduleNameOld in traceHashOld) {
         if(!traceHash[moduleNameOld]) {
             var fakeCalcTrace = traceHashOld[moduleNameOld][0];
-            var fakeTrace: any = fakeCalcTrace[0].trace;
+            var fakeTrace = fakeCalcTrace[0].trace;
 
             fakeTrace.visible = false;
             traceHash[moduleNameOld] = [fakeCalcTrace];
@@ -3349,7 +3350,7 @@ export function generalUpdatePerTraceModule(gd?: any, subplot?: any, subplotCalc
     // call module plot method
     for(var moduleName in traceHash) {
         var moduleCalcData = traceHash[moduleName];
-        var _module: any = moduleCalcData[0][0].trace._module;
+        var _module = moduleCalcData[0][0].trace._module;
 
         _module.plot(gd, subplot, filterVisible(moduleCalcData), subplotLayout);
     }
@@ -3359,7 +3360,7 @@ export function generalUpdatePerTraceModule(gd?: any, subplot?: any, subplotCalc
 };
 
 export function plotBasePlot(desiredType?: any, gd?: any, traces?: any, transitionOpts?: any, makeOnCompleteCallback?: any): any {
-    var _module: any = Registry.getModule(desiredType);
+    var _module = Registry.getModule(desiredType);
     var cdmodule = getModuleCalcData(gd.calcdata, _module)[0];
     _module.plot(gd, cdmodule, transitionOpts, makeOnCompleteCallback);
 };

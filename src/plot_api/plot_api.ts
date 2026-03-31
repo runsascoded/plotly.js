@@ -22,9 +22,10 @@ import subroutines from './subroutines.js';
 import editTypes from './edit_types.js';
 import _constants from '../plots/cartesian/constants.js';
 const { AX_NAME_PATTERN } = _constants;
+import type { GraphDiv, FullLayout, FullTrace, Layout, PlotConfig } from '../../types/core';
 
 // Lazy-resolve to avoid pulling in ~70KB selections module in lite bundle
-function clearOutline(gd?: any): any { return Registry.getComponentMethod('selections', 'clearOutline')(gd); }
+function clearOutline(gd: GraphDiv): any { return Registry.getComponentMethod('selections', 'clearOutline')(gd); }
 
 var numericNameWarningCount = 0;
 var numericNameWarningCountLimit = 5;
@@ -129,7 +130,7 @@ function _doPlot(gd?: any, data?: any, layout?: any, config?: any): any {
     performance.mark('plotly-supplyDefaults-end');
     performance.measure('plotly-supplyDefaults', 'plotly-supplyDefaults-start', 'plotly-supplyDefaults-end');
 
-    var fullLayout: any = gd._fullLayout;
+    var fullLayout = gd._fullLayout;
     var hasCartesian = fullLayout._has('cartesian');
 
     // so we don't try to re-call _doPlot from inside
@@ -300,7 +301,7 @@ function _doPlot(gd?: any, data?: any, layout?: any, config?: any): any {
         if (fullLayout._has('pie')) {
             var fullData = gd._fullData;
             for (var i = 0; i < fullData.length; i++) {
-                var trace: any = fullData[i];
+                var trace = fullData[i];
                 if (trace.type === 'pie' && trace.automargin) {
                     allowAutoMargin(gd, 'pie.' + trace.uid + '.automargin');
                 }
@@ -457,8 +458,8 @@ function _doPlot(gd?: any, data?: any, layout?: any, config?: any): any {
     });
 }
 
-function emitAfterPlot(gd?: any): any {
-    var fullLayout: any = gd._fullLayout;
+function emitAfterPlot(gd: GraphDiv): any {
+    var fullLayout = gd._fullLayout;
 
     if (fullLayout._redrawFromAutoMarginCount) {
         fullLayout._redrawFromAutoMarginCount--;
@@ -471,7 +472,7 @@ function setPlotConfig(obj?: any): any {
     return extendFlat(dfltConfig, obj);
 }
 
-function setBackground(gd?: any, bgColor?: any): any {
+function setBackground(gd: GraphDiv, bgColor?: any): any {
     try {
         gd._fullLayout._paper.style('background', bgColor);
     } catch (e) {
@@ -479,7 +480,7 @@ function setBackground(gd?: any, bgColor?: any): any {
     }
 }
 
-function opaqueSetBackground(gd?: any, bgColor?: any): any {
+function opaqueSetBackground(gd: GraphDiv, bgColor?: any): any {
     var blend = Color.combine(bgColor, 'white');
     setBackground(gd, blend);
 }
@@ -493,7 +494,7 @@ function setPlotContext(gd?: any, config?: any): any {
         gd._context._baseUrl = base.size() && base.attr('href') ? window.location.href.split('#')[0] : '';
     }
 
-    var context: any = gd._context;
+    var context = gd._context;
 
     var i, keys, key;
 
@@ -1433,7 +1434,7 @@ function _storeDirectGUIEdit(container?: any, preGUI?: any, edits?: any): any {
 }
 
 function _restyle(gd?: any, aobj?: any, traces?: any): any {
-    var fullLayout: any = gd._fullLayout;
+    var fullLayout = gd._fullLayout;
     var fullData = gd._fullData;
     var data = gd.data;
     var guiEditFlag = fullLayout._guiEditing;
@@ -1724,7 +1725,7 @@ function _restyle(gd?: any, aobj?: any, traces?: any): any {
         if (['orientation', 'type'].indexOf(ai) !== -1) {
             axlist = [];
             for (i = 0; i < traces.length; i++) {
-                var trace: any = data[traces[i]];
+                var trace = data[traces[i]];
 
                 if (Registry.traceIs(trace, 'cartesian')) {
                     addToAxlist(trace.xaxis || 'x');
@@ -1830,7 +1831,7 @@ function relayout(gd?: any, astr?: any, val?: any): any {
 // Optimization mostly for large splom traces where
 // Plots.supplyDefaults can take > 100ms
 function axRangeSupplyDefaultsByPass(gd?: any, flags?: any, specs?: any): any {
-    var fullLayout: any = gd._fullLayout;
+    var fullLayout = gd._fullLayout;
 
     if (!flags.axrange) return false;
 
@@ -1855,7 +1856,7 @@ function axRangeSupplyDefaultsByPass(gd?: any, flags?: any, specs?: any): any {
         if (axOut._matchGroup) {
             for (var axId2 in axOut._matchGroup) {
                 if (axId2 !== axId) {
-                    var ax2: any = fullLayout[Axes.id2name(axId2)];
+                    var ax2 = fullLayout[Axes.id2name(axId2)];
                     ax2.autorange = axOut.autorange;
                     ax2.range = axOut.range.slice();
                     ax2._input.range = axOut.range.slice();
@@ -1916,7 +1917,7 @@ var AX_DOMAIN_RE = /^[xyz]axis[0-9]*\.domain(\[[0|1]\])?$/;
 
 function _relayout(gd?: any, aobj?: any): any {
     var layout = gd.layout;
-    var fullLayout: any = gd._fullLayout;
+    var fullLayout = gd._fullLayout;
     var guiEditFlag = fullLayout._guiEditing;
     var layoutNP = makeNP(fullLayout._preGUI, guiEditFlag);
     var keys = Object.keys(aobj);
@@ -2270,7 +2271,7 @@ function _relayout(gd?: any, aobj?: any): any {
  * returns true if either height or width changed
  */
 function updateAutosize(gd?: any): any {
-    var fullLayout: any = gd._fullLayout;
+    var fullLayout = gd._fullLayout;
     var oldWidth = fullLayout.width;
     var oldHeight = fullLayout.height;
 
@@ -2649,7 +2650,7 @@ function react(gd?: any, data?: any, layout?: any, config?: any): any {
     gd = getGraphDiv(gd);
     helpers.clearPromiseQueue(gd);
 
-    var oldFullData: any = gd._fullData;
+    var oldFullData = gd._fullData;
     var oldFullLayout = gd._fullLayout;
 
     // you can use this as the initial draw as well as to update
@@ -2699,7 +2700,7 @@ function react(gd?: any, data?: any, layout?: any, config?: any): any {
             supplyDefaults(gd, { skipUpdateCalc: true });
 
             var newFullData = gd._fullData;
-            var newFullLayout: any = gd._fullLayout;
+            var newFullLayout = gd._fullLayout;
             var immutable = newFullLayout.datarevision === undefined;
             var transition = newFullLayout.transition;
 
@@ -3672,7 +3673,7 @@ function deleteFrames(gd?: any, frameList?: any): any {
 function purge(gd?: any): any {
     gd = getGraphDiv(gd);
 
-    var fullLayout: any = gd._fullLayout || {};
+    var fullLayout = gd._fullLayout || {} as FullLayout;
     var fullData = gd._fullData || [];
 
     // remove gl contexts
@@ -3695,7 +3696,7 @@ function purge(gd?: any): any {
 
 // determines if the graph div requires a recalculation of its inverse matrix transforms by comparing old + new bounding boxes.
 function calcInverseTransform(gd?: any): any {
-    var fullLayout: any = gd._fullLayout;
+    var fullLayout = gd._fullLayout;
 
     var newBBox = gd.getBoundingClientRect();
     if (equalDomRects(newBBox, fullLayout._lastBBox)) return;
@@ -3711,7 +3712,7 @@ function calcInverseTransform(gd?: any): any {
 // -------------------------------------------------------
 function makePlotFramework(gd?: any): any {
     var gd3 = select(gd);
-    var fullLayout: any = gd._fullLayout;
+    var fullLayout = gd._fullLayout;
 
     fullLayout._calcInverseTransform = calcInverseTransform;
     fullLayout._calcInverseTransform(gd);

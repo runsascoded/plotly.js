@@ -19,6 +19,7 @@ import { previousPromises } from '../plots.js';
 import { getFromId } from './axis_ids.js';
 import scaleZoom from './scale_zoom.js';
 import constants from './constants.js';
+import type { GraphDiv, FullAxis, PlotInfo } from '../../../types/core';
 var selectingOrDrawing = helpers.selectingOrDrawing;
 var freeMode = helpers.freeMode;
 
@@ -43,7 +44,7 @@ var SHOWZOOMOUTTIP = true;
 //          's' - bottom only
 //          'ns' - top and bottom together, difference unchanged
 //      ew - same for horizontal axis
-function makeDragBox(gd?: any, plotinfo?: any, x?: any, y?: any, w?: any, h?: any, ns?: any, ew?: any): any {
+function makeDragBox(gd: GraphDiv, plotinfo: PlotInfo, x?: any, y?: any, w?: any, h?: any, ns?: any, ew?: any): any {
     // mouseDown stores ms of first mousedown event in the last
     // `gd._context.doubleClickDelay` ms on the drag bars
     // numClicks stores how many mousedowns have been seen
@@ -132,7 +133,7 @@ function makeDragBox(gd?: any, plotinfo?: any, x?: any, y?: any, w?: any, h?: an
     recomputeAxisLists();
 
     var cursor = getDragCursor(yActive + xActive, gd._fullLayout.dragmode, isMainDrag);
-    var dragger: any = makeRectDragger(plotinfo, ns + ew + 'drag', cursor, x, y, w, h);
+    var dragger = makeRectDragger(plotinfo, ns + ew + 'drag', cursor, x, y, w, h);
 
     // still need to make the element if the axes are disabled
     // but nuke its events (except for maindrag which needs them for hover)
@@ -242,7 +243,7 @@ function makeDragBox(gd?: any, plotinfo?: any, x?: any, y?: any, w?: any, h?: an
     }
 
     function clickFn(numClicks?: any, evt?: any) {
-        var gd: any = dragOptions.gd;
+        var gd = dragOptions.gd as GraphDiv;
         if(gd._fullLayout._activeShapeIndex >= 0) {
             gd._fullLayout._deactivateShape(gd);
             return;
@@ -453,7 +454,7 @@ function makeDragBox(gd?: any, plotinfo?: any, x?: any, y?: any, w?: any, h?: an
     // wait a little after scrolling before redrawing
     var redrawTimer = null;
     var REDRAWDELAY = constants.REDRAWDELAY;
-    var mainplot = plotinfo.mainplot ? gd._fullLayout._plots[plotinfo.mainplot] : plotinfo;
+    var mainplot = plotinfo.mainplot ? gd._fullLayout._plots[plotinfo.mainplot as any] : plotinfo;
 
     function zoomWheel(e?: any) {
         // deactivate mousewheel scrolling on embedded graphs

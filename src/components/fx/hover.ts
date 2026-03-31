@@ -16,6 +16,7 @@ import helpers from './helpers.js';
 import constants from './constants.js';
 import legendSupplyDefaults from '../legend/defaults.js';
 import legendDraw from '../legend/draw.js';
+import type { GraphDiv, FullLayout, FullAxis, FullTrace } from '../../../types/core';
 
 // hover labels for multiple horizontal bars get tilted by some angle,
 // then need to be offset differently if they overlap
@@ -52,7 +53,7 @@ function distanceSort(a: any, b: any): number {
 }
 
 export var hover = function hover(gd: any, evt: any, subplot?: any, noHoverEvent?: boolean): void {
-    gd = getGraphDiv(gd);
+    gd = getGraphDiv(gd) as GraphDiv;
     // The 'target' property changes when bubbling out of Shadow DOM.
     // Throttling can delay reading the target, so we save the current value.
     var eventTarget = evt.target;
@@ -195,7 +196,7 @@ export var loneHover = function loneHover(hoverItems: any, opts: any): any {
 };
 
 // The actual implementation is here:
-function _hover(gd: any, evt: any, subplot: any, noHoverEvent: any, eventTarget: any): any {
+function _hover(gd: GraphDiv, evt: any, subplot: any, noHoverEvent: any, eventTarget: any): any {
     if (!subplot) subplot = 'xy';
 
     if (typeof subplot === 'string') {
@@ -1549,7 +1550,7 @@ function createHoverText(hoverData: any[], opts: any): any {
     };
 }
 
-function getHoverLabelText(d: any, showCommonLabel: boolean, hovermode: any, fullLayout: any, t0: any, g?: any): [string, string] {
+function getHoverLabelText(d: any, showCommonLabel: boolean, hovermode: any, fullLayout: FullLayout, t0: any, g?: any): [string, string] {
     var name = '';
     var text = '';
     // to get custom 'name' labels pass cleanPoint
@@ -1642,7 +1643,7 @@ function getHoverLabelText(d: any, showCommonLabel: boolean, hovermode: any, ful
 // know what happens if the group spans all the way from one edge to
 // the other, though it hardly matters - there's just too much
 // information then.
-function hoverAvoidOverlaps(hoverLabels: any, rotateLabels: boolean, fullLayout: any, commonLabelBoundingBox: any): void {
+function hoverAvoidOverlaps(hoverLabels: any, rotateLabels: boolean, fullLayout: FullLayout, commonLabelBoundingBox: any): void {
     var axKey = rotateLabels ? 'xa' : 'ya';
     var crossAxKey = rotateLabels ? 'ya' : 'xa';
     var nummoves = 0;
@@ -2131,7 +2132,7 @@ function cleanPoint(d: any, hovermode: any): any {
     return d;
 }
 
-function createSpikelines(gd: any, closestPoints: any, opts: any): void {
+function createSpikelines(gd: GraphDiv, closestPoints: any, opts: any): void {
     var container = opts.container;
     var fullLayout = opts.fullLayout;
     var gs = fullLayout._size;
@@ -2319,7 +2320,7 @@ function createSpikelines(gd: any, closestPoints: any, opts: any): void {
     }
 }
 
-function hoverChanged(gd: any, evt: any, oldhoverdata: any): boolean {
+function hoverChanged(gd: GraphDiv, evt: any, oldhoverdata: any): boolean {
     // don't emit any events if nothing changed
     if (!oldhoverdata || oldhoverdata.length !== gd._hoverdata.length) return true;
 
@@ -2339,7 +2340,7 @@ function hoverChanged(gd: any, evt: any, oldhoverdata: any): boolean {
     return false;
 }
 
-function spikesChanged(gd: any, oldspikepoints?: any): boolean {
+function spikesChanged(gd: GraphDiv, oldspikepoints?: any): boolean {
     // don't relayout the plot because of new spikelines if spikelines points didn't change
     if (!oldspikepoints) return true;
     if (
@@ -2379,7 +2380,7 @@ function orderRangePoints(hoverData: any[], hovermode: any): any[] {
     return first.concat(second).concat(last);
 }
 
-function getCoord(axLetter: string, winningPoint: any, fullLayout: any): any {
+function getCoord(axLetter: string, winningPoint: any, fullLayout: FullLayout): any {
     var ax = winningPoint[axLetter + 'a'];
     var val = winningPoint[axLetter + 'Val'];
 
@@ -2421,10 +2422,10 @@ function getCoord(axLetter: string, winningPoint: any, fullLayout: any): any {
 // Top/left hover offsets relative to graph div. As long as hover content is
 // a sibling of the graph div, it will be positioned correctly relative to
 // the offset parent, whatever that may be.
-const getTopOffset = (gd: any): number => gd.offsetTop + gd.clientTop;
-const getLeftOffset = (gd: any): number => gd.offsetLeft + gd.clientLeft;
+const getTopOffset = (gd: GraphDiv): number => gd.offsetTop + gd.clientTop;
+const getLeftOffset = (gd: GraphDiv): number => gd.offsetLeft + gd.clientLeft;
 
-function getBoundingClientRect(gd: any, node: any): any {
+function getBoundingClientRect(gd: GraphDiv, node: any): any {
     var fullLayout = gd._fullLayout;
 
     var rect = node.getBoundingClientRect();

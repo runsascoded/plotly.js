@@ -12,6 +12,7 @@ import _req1 from './layout_attributes.js';
 import _req2 from './layout_defaults.js';
 import _req3 from './transition_axes.js';
 import { updateFx as _req4 } from './graph_interact.js';
+import type { GraphDiv, FullLayout, FullTrace, PlotInfo } from '../../../types/core';
 
 
 function ensureSingleAndAddDatum(parent?: any, nodeType?: any, className?: any): any {
@@ -106,8 +107,8 @@ export var finalizeSubplots = function(layoutIn?: any, layoutOut?: any): any {
     }
 };
 
-export var plot = function(gd?: any, traces?: any, transitionOpts?: any, makeOnCompleteCallback?: any): any {
-    var fullLayout: any = gd._fullLayout;
+export var plot = function(gd: GraphDiv, traces?: any, transitionOpts?: any, makeOnCompleteCallback?: any): any {
+    var fullLayout = gd._fullLayout;
     var subplots = fullLayout._subplots.cartesian;
     var calcdata = gd.calcdata;
     var i;
@@ -150,7 +151,7 @@ export var plot = function(gd?: any, traces?: any, transitionOpts?: any, makeOnC
             // For each trace
             for(var j = 0; j < calcdata.length; j++) {
                 var cd = calcdata[j];
-                var trace: any = cd[0].trace;
+                var trace = cd[0].trace;
 
                 if(zorder !== (trace.zorder || 0)) continue;
 
@@ -189,9 +190,9 @@ export var plot = function(gd?: any, traces?: any, transitionOpts?: any, makeOnC
     }
 };
 
-function plotOne(gd?: any, plotinfo?: any, cdSubplot?: any, transitionOpts?: any, makeOnCompleteCallback?: any): any {
+function plotOne(gd: GraphDiv, plotinfo: PlotInfo, cdSubplot?: any, transitionOpts?: any, makeOnCompleteCallback?: any): any {
     var traceLayerClasses = constants.traceLayerClasses;
-    var fullLayout: any = gd._fullLayout;
+    var fullLayout = gd._fullLayout;
     var zindices = fullLayout._zindices;
 
     var modules = fullLayout._modules;
@@ -298,10 +299,10 @@ function plotOne(gd?: any, plotinfo?: any, cdSubplot?: any, transitionOpts?: any
     }
 }
 
-export var clean = function(newFullData?: any, newFullLayout?: any, oldFullData?: any, oldFullLayout?: any): any {
+export var clean = function(newFullData: FullTrace[], newFullLayout: FullLayout, oldFullData: FullTrace[], oldFullLayout: FullLayout): any {
     var oldPlots = oldFullLayout._plots || {};
     var newPlots = newFullLayout._plots || {};
-    var oldSubplotList = oldFullLayout._subplots || {};
+    var oldSubplotList = oldFullLayout._subplots || {} as any;
     var plotinfo;
     var i, k;
 
@@ -365,8 +366,8 @@ export var clean = function(newFullData?: any, newFullLayout?: any, oldFullData?
     }
 };
 
-export var drawFramework = function(gd?: any): any {
-    var fullLayout: any = gd._fullLayout;
+export var drawFramework = function(gd: GraphDiv): any {
+    var fullLayout = gd._fullLayout;
     var calcdata = gd.calcdata;
     var i;
 
@@ -374,7 +375,7 @@ export var drawFramework = function(gd?: any): any {
     var traceZorderGroups = {};
     for(i = 0; i < calcdata.length; i++) {
         var cdi = calcdata[i][0];
-        var trace: any = cdi.trace;
+        var trace = cdi.trace;
 
         var zi = trace.zorder || 0;
         if(!traceZorderGroups[zi]) traceZorderGroups[zi] = [];
@@ -426,7 +427,7 @@ export var drawFramework = function(gd?: any): any {
             id.slice(0, posZ) :
             id;
 
-        var plotinfo: any = fullLayout._plots[id];
+        var plotinfo = fullLayout._plots[id];
         if(!plotinfo) {
             plotinfo = extendFlat({}, fullLayout._plots[idWithoutZ]);
 
@@ -458,7 +459,7 @@ export var rangePlot = function(gd?: any, plotinfo?: any, cdSubplot?: any): any 
 };
 
 function makeSubplotData(gd?: any): any {
-    var fullLayout: any = gd._fullLayout;
+    var fullLayout = gd._fullLayout;
     var numZ = fullLayout._zindices.length;
 
     var ids = fullLayout._subplots.cartesian;
@@ -536,7 +537,7 @@ function makeSubplotData(gd?: any): any {
 }
 
 function makeSubplotLayer(gd?: any, plotinfo?: any): any {
-    var fullLayout: any = gd._fullLayout;
+    var fullLayout = gd._fullLayout;
     var plotgroup = plotinfo.plotgroup;
     var id = plotinfo.id;
 

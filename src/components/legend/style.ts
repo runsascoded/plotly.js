@@ -9,6 +9,7 @@ import subTypes from '../../traces/scatter/subtypes.js';
 import stylePie from '../../traces/pie/style_one.js';
 import { castOption as pieCastOption } from '../../traces/pie/helpers.js';
 import constants from './constants.js';
+import type { GraphDiv } from '../../../types/core';
 
 var CST_MARKER_SIZE = 12;
 var CST_LINE_WIDTH = 5;
@@ -16,7 +17,7 @@ var CST_MARKER_LINE_WIDTH = 2;
 var MAX_LINE_WIDTH = 10;
 var MAX_MARKER_LINE_WIDTH = 5;
 
-export default function style(s: any, gd: any, legend?: any): void {
+export default function style(s: any, gd: GraphDiv, legend?: any): void {
     var fullLayout = gd._fullLayout;
     if(!legend) legend = fullLayout.legend;
     var constantItemSizing = legend.itemsizing === 'constant';

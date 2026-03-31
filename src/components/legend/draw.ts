@@ -15,6 +15,7 @@ import alignmentConstants from '../../constants/alignment.js';
 import getLegendData from './get_legend_data.js';
 import style from './style.js';
 import helpers from './helpers.js';
+import type { GraphDiv, FullLayout } from '../../../types/core';
 var LINE_SPACING = alignmentConstants.LINE_SPACING;
 var FROM_TL = alignmentConstants.FROM_TL;
 var FROM_BR = alignmentConstants.FROM_BR;
@@ -23,7 +24,7 @@ var MAIN_TITLE = 1;
 
 var LEGEND_PATTERN = /^legend[0-9]*$/;
 
-export default function draw(gd: any, opts?: any): void {
+export default function draw(gd: GraphDiv, opts?: any): void {
     if(opts) {
         drawOne(gd, opts);
     } else {
@@ -74,7 +75,7 @@ function horizontalAlignTitle(titleEl: any, legendObj: any, bw: number): void {
     );
 }
 
-function drawOne(gd: any, opts: any): void {
+function drawOne(gd: GraphDiv, opts: any): void {
     var legendObj = opts || {};
 
     var fullLayout = gd._fullLayout;
@@ -131,7 +132,7 @@ function drawOne(gd: any, opts: any): void {
                 },
             };
 
-            calcdata.push([{ trace: shapeLegend }]);
+            calcdata.push([{ trace: shapeLegend }] as any);
         }
 
         legendData = fullLayout.showlegend && getLegendData(calcdata, legendObj, fullLayout._legends.length > 1);
@@ -474,7 +475,7 @@ function getTraceWidth(d: any, legendObj: any, textGap: number, isGrouped?: bool
     return textGap + (traceLegendWidth || legendWidth);
 }
 
-function clickOrDoubleClick(gd: any, legend: any, legendItem: any, numClicks: number, evt: any): void {
+function clickOrDoubleClick(gd: GraphDiv, legend: any, legendItem: any, numClicks: number, evt: any): void {
     var trace = legendItem.data()[0][0].trace;
     var evtData: any = {
         event: evt,
@@ -512,7 +513,7 @@ function clickOrDoubleClick(gd: any, legend: any, legendItem: any, numClicks: nu
     }
 }
 
-function drawTexts(g: any, gd: any, legendObj: any): void {
+function drawTexts(g: any, gd: GraphDiv, legendObj: any): void {
     var legendId = getId(legendObj);
     var legendItem = g.data()[0][0];
     var trace = legendItem.trace;
@@ -584,7 +585,7 @@ function ensureLength(str: string, maxLength: number): string {
     return str;
 }
 
-function setupTraceToggle(g: any, gd: any, legendId: string): void {
+function setupTraceToggle(g: any, gd: GraphDiv, legendId: string): void {
     var doubleClickDelay = gd._context.doubleClickDelay;
     var newMouseDownTime;
     var numClicks = 1;
@@ -621,14 +622,14 @@ function setupTraceToggle(g: any, gd: any, legendId: string): void {
     });
 }
 
-function textLayout(s: any, g: any, gd: any, legendObj: any, aTitle?: number): void {
+function textLayout(s: any, g: any, gd: GraphDiv, legendObj: any, aTitle?: number): void {
     if(legendObj._inHover) s.attr('data-notex', true); // do not process MathJax for unified hover
     svgTextUtils.convertToTspans(s, gd, function() {
         computeTextDimensions(g, gd, legendObj, aTitle);
     });
 }
 
-function computeTextDimensions(g: any, gd: any, legendObj: any, aTitle?: number): void {
+function computeTextDimensions(g: any, gd: GraphDiv, legendObj: any, aTitle?: number): void {
     var legendItem = g.data()[0][0];
     var showlegend = legendItem && legendItem.trace.showlegend;
     if (Array.isArray(showlegend)) {
@@ -745,7 +746,7 @@ function getTitleSize(legendObj: any): [number, number] {
  *  - _width: legend width
  *  - _maxWidth (for orientation:h only): maximum width before starting new row
  */
-function computeLegendDimensions(gd: any, groups: any, traces: any, legendObj: any): void {
+function computeLegendDimensions(gd: GraphDiv, groups: any, traces: any, legendObj: any): void {
     var fullLayout = gd._fullLayout;
     var legendId = getId(legendObj);
     if(!legendObj) {
@@ -954,7 +955,7 @@ function computeLegendDimensions(gd: any, groups: any, traces: any, legendObj: a
     });
 }
 
-function expandMargin(gd: any, legendId: string, lx: number, ly: number): any {
+function expandMargin(gd: GraphDiv, legendId: string, lx: number, ly: number): any {
     var fullLayout = gd._fullLayout;
     var legendObj = fullLayout[legendId];
     var xanchor = getXanchor(legendObj);
