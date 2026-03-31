@@ -1,7 +1,8 @@
+import type { FullLayout } from '../../../types/core';
 import Lib from '../../lib/index.js';
 import Color from '../color/index.js';
 
-export default function handleAnnotationCommonDefaults(annIn: any, annOut: any, fullLayout: any, coerce: any) {
+export default function handleAnnotationCommonDefaults(annIn: any, annOut: any, fullLayout: FullLayout, coerce: any) {
     coerce('opacity');
     var bgColor = coerce('bgcolor');
 

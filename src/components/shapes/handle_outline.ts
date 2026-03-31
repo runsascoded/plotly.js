@@ -1,11 +1,13 @@
-function clearOutlineControllers(gd: any) {
+import type { GraphDiv } from '../../../types/core';
+
+function clearOutlineControllers(gd: GraphDiv) {
     var zoomLayer = gd._fullLayout._zoomlayer;
     if(zoomLayer) {
         zoomLayer.selectAll('.outline-controllers').remove();
     }
 }
 
-function clearOutline(gd: any) {
+function clearOutline(gd: GraphDiv) {
     var zoomLayer = gd._fullLayout._zoomlayer;
     if(zoomLayer) {
         // until we get around to persistent selections, remove the outline

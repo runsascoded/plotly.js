@@ -1,9 +1,10 @@
+import type { GraphDiv } from '../../../types/core';
 import Registry from '../../registry.js';
 import { _, notifier, pushUnique } from '../../lib/index.js';
 
 var SHOWISOLATETIP = true;
 
-export default function handleClick(g: any, gd: any, numClicks: number): void {
+export default function handleClick(g: any, gd: GraphDiv, numClicks: number): void {
     var fullLayout = gd._fullLayout;
 
     if(gd._dragged || gd._editing) return;

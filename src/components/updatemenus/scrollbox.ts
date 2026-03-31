@@ -1,3 +1,4 @@
+import type { GraphDiv } from '../../../types/core';
 import { zoom as d3Zoom } from 'd3-zoom';
 import { drag as d3Drag } from 'd3-drag';
 import Color from '../color/index.js';
@@ -13,7 +14,7 @@ export default ScrollBox;
  * @param           container   Container to be scroll-boxed (as a D3 selection)
  * @param {string}  id          Id for the clip path to implement the scroll box
  */
-function ScrollBox(gd: any, container: any, id: any) {
+function ScrollBox(gd: GraphDiv, container: any, id: any) {
     this.gd = gd;
     this.container = container;
     this.id = id;

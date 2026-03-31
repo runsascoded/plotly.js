@@ -1,3 +1,4 @@
+import type { GraphDiv } from '../../../types/core';
 import { select } from 'd3-selection';
 import { extent, min, max } from 'd3-array';
 import tinycolor from 'tinycolor2';
@@ -25,7 +26,7 @@ var LINE_SPACING = alignmentConstants.LINE_SPACING;
 var FROM_TL = alignmentConstants.FROM_TL;
 var FROM_BR = alignmentConstants.FROM_BR;
 
-function draw(gd: any) {
+function draw(gd: GraphDiv) {
     var fullLayout = gd._fullLayout;
 
     var colorBars = fullLayout._infolayer
@@ -61,7 +62,7 @@ function draw(gd: any) {
     colorBars.order();
 }
 
-function makeColorBarData(gd: any) {
+function makeColorBarData(gd: GraphDiv) {
     var fullLayout = gd._fullLayout;
     var calcdata = gd.calcdata;
     var out = [];
@@ -164,7 +165,7 @@ function makeColorBarData(gd: any) {
     return out;
 }
 
-function drawColorBar(g: any, opts: any, gd: any) {
+function drawColorBar(g: any, opts: any, gd: GraphDiv) {
     var isVertical = opts.orientation === 'v';
     var len = opts.len;
     var lenmode = opts.lenmode;
@@ -851,7 +852,7 @@ function drawColorBar(g: any, opts: any, gd: any) {
     ], gd);
 }
 
-function makeEditable(g: any, opts: any, gd: any) {
+function makeEditable(g: any, opts: any, gd: GraphDiv) {
     var isVertical = opts.orientation === 'v';
     var fullLayout = gd._fullLayout;
     var gs = fullLayout._size;
@@ -896,7 +897,7 @@ function makeEditable(g: any, opts: any, gd: any) {
     });
 }
 
-function calcLevels(gd: any, opts: any, zrange: any) {
+function calcLevels(gd: GraphDiv, opts: any, zrange: any) {
     var levelsIn = opts._levels;
     var lineLevels = [];
     var fillLevels = [];
@@ -947,7 +948,7 @@ function calcLevels(gd: any, opts: any, zrange: any) {
     return {line: lineLevels, fill: fillLevels};
 }
 
-function mockColorBarAxis(gd: any, opts: any, zrange: any) {
+function mockColorBarAxis(gd: GraphDiv, opts: any, zrange: any) {
     var fullLayout = gd._fullLayout;
 
     var isVertical = opts.orientation === 'v';

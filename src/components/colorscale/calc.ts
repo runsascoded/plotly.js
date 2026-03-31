@@ -1,9 +1,10 @@
+import type { GraphDiv, FullTrace } from '../../../types/core';
 import isNumeric from 'fast-isnumeric';
 import { aggNums, nestedProperty } from '../../lib/index.js';
 import _helpers from './helpers.js';
 const { extractOpts } = _helpers;
 
-export default function calc(gd: any, trace: any, opts: any): void {
+export default function calc(gd: GraphDiv, trace: FullTrace, opts: any): void {
     var fullLayout = gd._fullLayout;
     var vals = opts.vals;
     var containerStr = opts.containerStr;

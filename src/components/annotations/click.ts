@@ -1,3 +1,4 @@
+import type { GraphDiv, FullAxis } from '../../../types/core';
 import Lib from '../../lib/index.js';
 import Registry from '../../registry.js';
 import { arrayEditor } from '../../plot_api/plot_template.js';
@@ -17,7 +18,7 @@ export default {
  *
  * returns: boolean
  */
-function hasClickToShow(gd: any, hoverData: any) {
+function hasClickToShow(gd: GraphDiv, hoverData: any) {
     var sets = getToggleSets(gd, hoverData);
     return sets.on.length > 0 || sets.explicitOff.length > 0;
 }
@@ -32,7 +33,7 @@ function hasClickToShow(gd: any, hoverData: any) {
  *
  * returns: Promise that the update is complete
  */
-function onClick(gd: any, hoverData: any) {
+function onClick(gd: GraphDiv, hoverData: any) {
     var toggleSets = getToggleSets(gd, hoverData);
     var onSet = toggleSets.on;
     var offSet = toggleSets.off.concat(toggleSets.explicitOff);
@@ -71,7 +72,7 @@ function onClick(gd: any, hoverData: any) {
  *   explicitOff: Array (indices to turn off because you *are* hovering on them)
  * }
  */
-function getToggleSets(gd: any, hoverData: any) {
+function getToggleSets(gd: GraphDiv, hoverData: any) {
     var annotations = gd._fullLayout.annotations;
     var onSet = [];
     var offSet = [];
@@ -121,6 +122,6 @@ function getToggleSets(gd: any, hoverData: any) {
 }
 
 // to handle log axes until v3
-function clickData2r(d: any, ax: any) {
+function clickData2r(d: any, ax: FullAxis) {
     return ax.type === 'log' ? ax.l2r(d) : ax.d2r(d);
 }

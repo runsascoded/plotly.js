@@ -1,3 +1,4 @@
+import type { FullLayout } from '../../../types/core';
 import Lib from '../../lib/index.js';
 import Axes from '../../plots/cartesian/axes.js';
 import handleArrayContainerDefaults from '../../plots/array_container_defaults.js';
@@ -24,7 +25,7 @@ function dfltLabelYanchor(isLine: any, labelTextPosition: any) {
             : 'middle';
 }
 
-function handleShapeDefaults(shapeIn: any, shapeOut: any, fullLayout: any) {
+function handleShapeDefaults(shapeIn: any, shapeOut: any, fullLayout: FullLayout) {
     function coerce(attr: any, dflt?: any) {
         return Lib.coerce(shapeIn, shapeOut, attributes, attr, dflt);
     }

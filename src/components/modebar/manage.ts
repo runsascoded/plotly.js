@@ -1,3 +1,4 @@
+import type { FullLayout, GraphDiv } from '../../../types/core';
 import axisIds from '../../plots/cartesian/axis_ids.js';
 import scatterSubTypes from '../../traces/scatter/subtypes.js';
 import Registry from '../../registry.js';
@@ -9,7 +10,7 @@ const { DRAW_MODES } = _constants;
 import _index from '../../lib/index.js';
 const { extendDeep } = _index;
 
-export default function manageModeBar(gd: any) {
+export default function manageModeBar(gd: GraphDiv) {
     var fullLayout = gd._fullLayout;
     var context = gd._context;
     var modeBar = fullLayout._modeBar;
@@ -52,7 +53,7 @@ export default function manageModeBar(gd: any) {
 }
 
 // logic behind which buttons are displayed by default
-function getButtonGroups(gd: any) {
+function getButtonGroups(gd: GraphDiv) {
     var fullLayout = gd._fullLayout;
     var fullData = gd._fullData;
     var context = gd._context;
@@ -145,7 +146,7 @@ function getButtonGroups(gd: any) {
     var resetGroup = [];
     var dragModeGroup = [];
 
-    if((hasCartesian || hasPie || hasFunnelarea || hasTernary) + hasGeo + hasGL3D + hasMapbox + hasMap + hasPolar + hasSmith > 1) {
+    if(+(hasCartesian || hasPie || hasFunnelarea || hasTernary) + +hasGeo + +hasGL3D + +hasMapbox + +hasMap + +hasPolar + +hasSmith > 1) {
         // graphs with more than one plot types get 'union buttons'
         // which reset the view or toggle hover labels across all subplots.
         hoverGroup = ['toggleHover'];
@@ -256,7 +257,7 @@ function getButtonGroups(gd: any) {
     return appendButtonsToGroups(groups, buttonsToAdd);
 }
 
-function areAllAxesFixed(fullLayout: any) {
+function areAllAxesFixed(fullLayout: FullLayout) {
     var axList = axisIds.list({_fullLayout: fullLayout}, null, true);
 
     for(var i = 0; i < axList.length; i++) {

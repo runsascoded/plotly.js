@@ -1,3 +1,4 @@
+import type { GraphDiv } from '../../../../types/core';
 import parseSvgPath from 'parse-svg-path';
 import constants from './constants.js';
 import cartesianHelpers from '../../selections/helpers.js';
@@ -43,7 +44,7 @@ export var writePaths = function(polygons: any) {
     return str;
 };
 
-export var readPaths = function(str: any, gd: any, plotinfo?: any, isActiveShape?: any) {
+export var readPaths = function(str: any, gd: GraphDiv, plotinfo?: any, isActiveShape?: any) {
     var cmd = parseSvgPath(str);
 
     var polys = [];

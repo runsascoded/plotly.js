@@ -1,9 +1,10 @@
+import type { FullAxis, GraphDiv } from '../../../types/core';
 import Lib from '../../lib/index.js';
 import Axes from '../../plots/cartesian/axes.js';
 import constants from './constants.js';
 import helpers from './helpers.js';
 
-export default function calcAutorange(gd: any) {
+export default function calcAutorange(gd: GraphDiv) {
     var fullLayout = gd._fullLayout;
     var shapeList = Lib.filterVisible(fullLayout.shapes);
 
@@ -69,7 +70,7 @@ function calcPaddingOptions(lineWidth: any, sizeMode: any, v0: any, v1: any, pat
     }
 }
 
-function shapeBounds(ax: any, shape: any, paramsToUse: any) {
+function shapeBounds(ax: FullAxis, shape: any, paramsToUse: any) {
     var dim = ax._id.charAt(0) === 'x' ? 'x' : 'y';
     var isCategory = ax.type === 'category' || ax.type === 'multicategory';
     var v0;

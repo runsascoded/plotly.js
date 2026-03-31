@@ -1,3 +1,4 @@
+import type { GraphDiv } from '../../../types/core';
 import { select } from 'd3-selection';
 import isNumeric from 'fast-isnumeric';
 import Lib from '../../lib/index.js';
@@ -344,7 +345,7 @@ proto.destroy = function() {
     Lib.removeElement(this.container.querySelector('.modebar'));
 };
 
-function createModeBar(gd: any, buttons: any) {
+function createModeBar(gd: GraphDiv, buttons: any) {
     var fullLayout = gd._fullLayout;
 
     var modeBar = new ModeBar({

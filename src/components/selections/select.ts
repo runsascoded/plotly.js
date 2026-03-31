@@ -1,3 +1,4 @@
+import type { FullAxis, GraphDiv } from '../../../types/core';
 import polybool from 'polybooljs';
 import pointInPolygon from 'point-in-polygon/nested';
 import Registry from '../../registry.js';
@@ -484,7 +485,7 @@ function prepSelect(evt: any, startX: any, startY: any, dragOptions: any, mode: 
     };
 }
 
-function selectOnClick(evt: any, gd: any, xAxes: any, yAxes: any, subplot: any, dragOptions: any, polygonOutlines: any) {
+function selectOnClick(evt: any, gd: GraphDiv, xAxes: any, yAxes: any, subplot: any, dragOptions: any, polygonOutlines: any) {
     var hoverData = gd._hoverdata;
     var fullLayout = gd._fullLayout;
     var clickmode = fullLayout.clickmode;
@@ -666,7 +667,7 @@ function multiTester(list: any, _selectionTesters?: any) {
     };
 }
 
-function coerceSelectionsCache(evt: any, gd: any, dragOptions: any) {
+function coerceSelectionsCache(evt: any, gd: GraphDiv, dragOptions: any) {
     var fullLayout = gd._fullLayout;
     var plotinfo = dragOptions.plotinfo;
     var dragmode = dragOptions.dragmode;
@@ -700,11 +701,11 @@ function coerceSelectionsCache(evt: any, gd: any, dragOptions: any) {
     }
 }
 
-function hasActiveShape(gd: any) {
+function hasActiveShape(gd: GraphDiv) {
     return gd._fullLayout._activeShapeIndex >= 0;
 }
 
-function hasActiveSelection(gd: any) {
+function hasActiveSelection(gd: GraphDiv) {
     return gd._fullLayout._activeSelectionIndex >= 0;
 }
 
@@ -767,11 +768,11 @@ function clearSelectionsCache(dragOptions: any, immediateSelect?: any) {
     plotinfo.selection.mergedPolygons = dragOptions.mergedPolygons = [];
 }
 
-function getAxId(ax: any) {
+function getAxId(ax: FullAxis) {
     return ax._id;
 }
 
-function determineSearchTraces(gd: any, xAxes: any, yAxes: any, subplot: any) {
+function determineSearchTraces(gd: GraphDiv, xAxes: any, yAxes: any, subplot: any) {
     if(!gd.calcdata) return [];
 
     var searchTraces = [];
@@ -929,7 +930,7 @@ function isOnlyOnePointSelected(searchTraces: any) {
     return len === 1;
 }
 
-function updateSelectedState(gd: any, searchTraces: any, eventData?: any) {
+function updateSelectedState(gd: GraphDiv, searchTraces: any, eventData?: any) {
     var i;
 
     // before anything else, update preGUI if necessary
@@ -982,7 +983,7 @@ function updateSelectedState(gd: any, searchTraces: any, eventData?: any) {
     updateReglSelectedState(gd, searchTraces);
 }
 
-function updateReglSelectedState(gd: any, searchTraces: any) {
+function updateReglSelectedState(gd: GraphDiv, searchTraces: any) {
     var hasRegl = false;
 
     for(var i = 0; i < searchTraces.length; i++) {
@@ -1088,7 +1089,7 @@ function _doSelect(selectionTesters: any, searchTraces: any) {
     return allSelections;
 }
 
-function reselect(gd: any, mayEmitSelected: any, selectionTesters?: any, searchTraces?: any, dragOptions?: any) {
+function reselect(gd: GraphDiv, mayEmitSelected: any, selectionTesters?: any, searchTraces?: any, dragOptions?: any) {
     var hadSearchTraces = !!searchTraces;
     var plotinfo, xRef, yRef;
     if(dragOptions) {
@@ -1272,7 +1273,7 @@ function reselect(gd: any, mayEmitSelected: any, selectionTesters?: any, searchT
     };
 }
 
-function epmtySplomSelectionBatch(gd: any) {
+function epmtySplomSelectionBatch(gd: GraphDiv) {
     var cd = gd.calcdata;
     if(!cd) return;
 
@@ -1302,7 +1303,7 @@ function subplotSelected(xRef: any, yRef: any, searchTraces?: any) {
     return false;
 }
 
-function deselectSubplot(gd: any, xRef: any, yRef: any, searchTraces: any) {
+function deselectSubplot(gd: GraphDiv, xRef: any, yRef: any, searchTraces: any) {
     searchTraces = determineSearchTraces(
         gd,
         [getFromId(gd, xRef, 'x')],
@@ -1338,7 +1339,7 @@ function addTester(layoutPolygons: any, xRef: any, yRef: any, selectionTesters: 
     return selectionTesters;
 }
 
-function getLayoutPolygons(gd: any, onlyActiveOnes?: any) {
+function getLayoutPolygons(gd: GraphDiv, onlyActiveOnes?: any) {
     var allPolygons = [];
 
     var fullLayout = gd._fullLayout;
@@ -1451,7 +1452,7 @@ function getSubtract(polygon: any, previousPolygons: any) {
     return subtract;
 }
 
-function convert(ax: any, d: any) {
+function convert(ax: FullAxis, d: any) {
     if(ax.type === 'date') d = d.replace('_', ' ');
     return ax.type === 'log' ? ax.c2p(d) : ax.r2p(d, null, ax.calendar);
 }
@@ -1546,11 +1547,11 @@ function getFillRangeItems(dragOptions: any) {
     );
 }
 
-function emitSelecting(gd: any, eventData: any) {
+function emitSelecting(gd: GraphDiv, eventData: any) {
     gd.emit('plotly_selecting', eventData);
 }
 
-function emitSelected(gd: any, eventData: any) {
+function emitSelected(gd: GraphDiv, eventData: any) {
     if(eventData) {
         eventData.selections = (gd.layout || {}).selections || [];
     }
@@ -1558,7 +1559,7 @@ function emitSelected(gd: any, eventData: any) {
     gd.emit('plotly_selected', eventData);
 }
 
-function emitDeselect(gd: any) {
+function emitDeselect(gd: GraphDiv) {
     gd.emit('plotly_deselect', null);
 }
 

@@ -1,3 +1,4 @@
+import type { GraphDiv } from '../../../types/core';
 import { select } from 'd3-selection';
 import Registry from '../../registry.js';
 import Plots from '../../plots/plots.js';
@@ -14,7 +15,7 @@ var LINE_SPACING = alignmentConstants.LINE_SPACING;
 var FROM_TL = alignmentConstants.FROM_TL;
 var FROM_BR = alignmentConstants.FROM_BR;
 
-export default function draw(gd: any) {
+export default function draw(gd: GraphDiv) {
     var fullLayout = gd._fullLayout;
 
     var selectors = fullLayout._infolayer.selectAll('.rangeselector')
@@ -73,7 +74,7 @@ export default function draw(gd: any) {
     });
 }
 
-function makeSelectorData(gd: any) {
+function makeSelectorData(gd: GraphDiv) {
     var axes = axisIds.list(gd, 'x', true);
     var data = [];
 
@@ -126,7 +127,7 @@ function getFillColor(selectorLayout: any, d: any) {
         selectorLayout.bgcolor;
 }
 
-function drawButtonText(button: any, selectorLayout: any, d: any, gd: any) {
+function drawButtonText(button: any, selectorLayout: any, d: any, gd: GraphDiv) {
     function textLayout(s: any) {
         svgTextUtils.convertToTspans(s, gd);
     }
@@ -152,7 +153,7 @@ function getLabel(opts: any, _meta: any) {
     return opts.count + opts.step.charAt(0);
 }
 
-function reposition(gd: any, buttons: any, opts: any, axName: any, selector: any) {
+function reposition(gd: GraphDiv, buttons: any, opts: any, axName: any, selector: any) {
     var width = 0;
     var height = 0;
 

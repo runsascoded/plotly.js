@@ -1,9 +1,10 @@
+import type { GraphDiv } from '../../../types/core';
 import { list as listAxes } from '../../plots/cartesian/axis_ids.js';
 import _autorange from '../../plots/cartesian/autorange.js';
 const { getAutoRange } = _autorange;
 import constants from './constants.js';
 
-export default function calcAutorange(gd: any) {
+export default function calcAutorange(gd: GraphDiv) {
     var axes = listAxes(gd, 'x', true);
 
     // Compute new slider range using axis autorange if necessary.

@@ -1,3 +1,4 @@
+import type { GraphDiv } from '../../../types/core';
 import { readPaths } from '../shapes/draw_newshape/helpers.js';
 import displayOutlines from '../shapes/display_outlines.js';
 import _handle_outline from '../shapes/handle_outline.js';
@@ -14,7 +15,7 @@ export default {
     activateLastSelection: activateLastSelection
 };
 
-function draw(gd: any) {
+function draw(gd: GraphDiv) {
     var fullLayout = gd._fullLayout;
 
     clearOutlineControllers(gd);
@@ -32,11 +33,11 @@ function draw(gd: any) {
     }
 }
 
-function couldHaveActiveSelection(gd: any) {
+function couldHaveActiveSelection(gd: GraphDiv) {
     return gd._context.editSelection;
 }
 
-function drawOne(gd: any, index: any) {
+function drawOne(gd: GraphDiv, index: any) {
     // remove the existing selection if there is one.
     // because indices can change, we need to look in all selection layers
     gd._fullLayout._paperdiv
@@ -127,7 +128,7 @@ function drawOne(gd: any, index: any) {
     }
 }
 
-function setClipPath(selectionPath: any, gd: any, selectionOptions: any) {
+function setClipPath(selectionPath: any, gd: GraphDiv, selectionOptions: any) {
     var clipAxes = selectionOptions.xref + selectionOptions.yref;
 
     setClipUrl(
@@ -137,7 +138,7 @@ function setClipPath(selectionPath: any, gd: any, selectionOptions: any) {
     );
 }
 
-function activateSelection(gd: any, path: any) {
+function activateSelection(gd: GraphDiv, path: any) {
     if(!couldHaveActiveSelection(gd)) return;
 
     var element = path.node();
@@ -155,7 +156,7 @@ function activateSelection(gd: any, path: any) {
     }
 }
 
-function activateLastSelection(gd: any) {
+function activateLastSelection(gd: GraphDiv) {
     if(!couldHaveActiveSelection(gd)) return;
 
     var id = gd._fullLayout.selections.length - 1;
@@ -164,7 +165,7 @@ function activateLastSelection(gd: any) {
     draw(gd);
 }
 
-function deactivateSelection(gd: any) {
+function deactivateSelection(gd: GraphDiv) {
     if(!couldHaveActiveSelection(gd)) return;
 
     var id = gd._fullLayout._activeSelectionIndex;

@@ -1,9 +1,10 @@
+import type { FullAxis } from '../../../types/core';
 import _index from '../../lib/index.js';
 const { strTranslate } = _index;
 
 // in v3 (once log ranges are fixed),
 // we'll be able to p2r here for all axis types
-function p2r(ax: any, v: any) {
+function p2r(ax: FullAxis, v: any) {
     switch(ax.type) {
         case 'log':
             return ax.p2d(v);
@@ -14,7 +15,7 @@ function p2r(ax: any, v: any) {
     }
 }
 
-function r2p(ax: any, v: any) {
+function r2p(ax: FullAxis, v: any) {
     switch(ax.type) {
         case 'log':
             return ax.d2p(v);
@@ -25,7 +26,7 @@ function r2p(ax: any, v: any) {
     }
 }
 
-function axValue(ax: any) {
+function axValue(ax: FullAxis) {
     var index = (ax._id.charAt(0) === 'y') ? 1 : 0;
     return function(v: any) { return p2r(ax, v[index]); };
 }

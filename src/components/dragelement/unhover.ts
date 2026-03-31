@@ -1,3 +1,4 @@
+import type { GraphDiv } from '../../../types/core';
 import Events from '../../lib/events.js';
 import throttle from '../../lib/throttle.js';
 import _dom from '../../lib/dom.js';
@@ -6,8 +7,8 @@ import hoverConstants from '../fx/constants.js';
 
 var unhover: any = {};
 
-unhover.wrapped = function(gd: any, evt: any, subplot?: string): void {
-    gd = getGraphDiv(gd);
+unhover.wrapped = function(gd: GraphDiv, evt: any, subplot?: string): void {
+    gd = getGraphDiv(gd) as GraphDiv;
 
     // Important, clear any queued hovers
     if(gd._fullLayout) {
@@ -18,7 +19,7 @@ unhover.wrapped = function(gd: any, evt: any, subplot?: string): void {
 };
 
 // remove hover effects on mouse out, and emit unhover event
-unhover.raw = function raw(gd: any, evt?: any): void {
+unhover.raw = function raw(gd: GraphDiv, evt?: any): void {
     var fullLayout = gd._fullLayout;
     var oldhoverdata = gd._hoverdata;
 

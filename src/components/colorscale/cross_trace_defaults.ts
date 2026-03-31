@@ -1,8 +1,9 @@
+import type { FullLayout, FullTrace } from '../../../types/core';
 import { nestedProperty } from '../../lib/index.js';
 import _helpers from './helpers.js';
 const { hasColorscale, extractOpts } = _helpers;
 
-export default function crossTraceDefaults(fullData: any[], fullLayout: any): void {
+export default function crossTraceDefaults(fullData: FullTrace[], fullLayout: FullLayout): void {
     function replace(cont: any, k: string): void {
         var val = cont['_' + k];
         if(val !== undefined) {

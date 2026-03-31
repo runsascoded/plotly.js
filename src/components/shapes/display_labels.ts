@@ -1,3 +1,4 @@
+import type { GraphDiv } from '../../../types/core';
 import Lib from '../../lib/index.js';
 import Axes from '../../plots/cartesian/axes.js';
 import svgTextUtils from '../../lib/svg_text_utils.js';
@@ -9,7 +10,7 @@ import _alignment from '../../constants/alignment.js';
 const { FROM_TL } = _alignment;
 var getPathString = helpers.getPathString;
 
-export default function drawLabel(gd: any, index: any, options: any, shapeGroup: any) {
+export default function drawLabel(gd: GraphDiv, index: any, options: any, shapeGroup: any) {
     // Remove existing label
     shapeGroup.selectAll('.shape-label').remove();
 

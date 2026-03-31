@@ -1,3 +1,4 @@
+import type { GraphDiv } from '../../../types/core';
 import Lib from '../../lib/index.js';
 import dragElement from '../dragelement/index.js';
 import dragHelpers from '../dragelement/helpers.js';
@@ -371,7 +372,7 @@ function getNextPoint(cell: any, j: any) {
     return [nextJ, nextX, nextY];
 }
 
-function eraseActiveSelection(gd: any) {
+function eraseActiveSelection(gd: GraphDiv) {
     // Do not allow removal of selections on other dragmodes.
     // This ensures the user could still double click to
     // deselect all trace.selectedpoints,

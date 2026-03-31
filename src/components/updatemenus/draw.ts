@@ -1,3 +1,4 @@
+import type { GraphDiv } from '../../../types/core';
 import { select } from 'd3-selection';
 import Plots from '../../plots/plots.js';
 import Color from '../color/index.js';
@@ -10,7 +11,7 @@ const { LINE_SPACING } = _alignment;
 import constants from './constants.js';
 import ScrollBox from './scrollbox.js';
 
-export default function draw(gd: any) {
+export default function draw(gd: GraphDiv) {
     var fullLayout = gd._fullLayout;
     var menuData = Lib.filterVisible(fullLayout[constants.name]);
 
@@ -140,7 +141,7 @@ function isActive(gButton: any, menuOpts: any) {
     return +gButton.attr(constants.menuIndexAttrName) === menuOpts._index;
 }
 
-function setActive(gd: any, menuOpts: any, buttonOpts: any, gHeader: any, gButton: any, scrollBox: any, buttonIndex: any, isSilentUpdate?: any) {
+function setActive(gd: GraphDiv, menuOpts: any, buttonOpts: any, gHeader: any, gButton: any, scrollBox: any, buttonIndex: any, isSilentUpdate?: any) {
     // update 'active' attribute in menuOpts
     menuOpts.active = buttonIndex;
 
@@ -162,7 +163,7 @@ function setActive(gd: any, menuOpts: any, buttonOpts: any, gHeader: any, gButto
     }
 }
 
-function drawHeader(gd: any, gHeader: any, gButton: any, scrollBox: any, menuOpts: any) {
+function drawHeader(gd: GraphDiv, gHeader: any, gButton: any, scrollBox: any, menuOpts: any) {
     var header = Lib.ensureSingle(gHeader, 'g', constants.headerClassName, function(s: any) {
         s.style('pointer-events', 'all');
     });
@@ -212,7 +213,7 @@ function drawHeader(gd: any, gHeader: any, gButton: any, scrollBox: any, menuOpt
     setTranslate(gHeader, dims.lx, dims.ly);
 }
 
-function drawButtons(gd: any, gHeader: any, gButton: any, scrollBox: any, menuOpts: any) {
+function drawButtons(gd: GraphDiv, gHeader: any, gButton: any, scrollBox: any, menuOpts: any) {
     // If this is a set of buttons, set pointer events = all since we play
     // some minor games with which container is which in order to simplify
     // the drawing of *either* buttons or menus
@@ -337,7 +338,7 @@ function drawButtons(gd: any, gHeader: any, gButton: any, scrollBox: any, menuOp
     }
 }
 
-function drawScrollBox(gd: any, gHeader: any, gButton: any, scrollBox: any, menuOpts: any, position: any) {
+function drawScrollBox(gd: GraphDiv, gHeader: any, gButton: any, scrollBox: any, menuOpts: any, position: any) {
     // enable the scrollbox
     var direction = menuOpts.direction;
     var isVertical = (direction === 'up' || direction === 'down');
@@ -400,7 +401,7 @@ function hideScrollBox(scrollBox: any) {
     }
 }
 
-function drawItem(item: any, menuOpts: any, itemOpts: any, gd: any) {
+function drawItem(item: any, menuOpts: any, itemOpts: any, gd: GraphDiv) {
     item.call(drawItemRect, menuOpts)
         .call(drawItemText, menuOpts, itemOpts, gd);
 }
@@ -419,7 +420,7 @@ function drawItemRect(item: any, menuOpts: any) {
         .style('stroke-width', menuOpts.borderwidth + 'px');
 }
 
-function drawItemText(item: any, menuOpts: any, itemOpts: any, gd: any) {
+function drawItemText(item: any, menuOpts: any, itemOpts: any, gd: GraphDiv) {
     var text = Lib.ensureSingle(item, 'text', constants.itemTextClassName, function(s: any) {
         s.attr({
             'text-anchor': 'start',
@@ -460,7 +461,7 @@ function styleOnMouseOut(item: any, menuOpts: any) {
 }
 
 // find item dimensions (this mutates menuOpts)
-function findDimensions(gd: any, menuOpts: any) {
+function findDimensions(gd: GraphDiv, menuOpts: any) {
     var dims: any = menuOpts._dims = {
         width1: 0,
         height1: 0,

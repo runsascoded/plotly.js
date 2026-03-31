@@ -87,7 +87,7 @@ export function setRect(s: any, x: number, y: number, w: number, h: number): voi
     s.call(setPosition, x, y).call(setSize, w, h);
 }
 
-export function translatePoint(d: any, sel: any, xa: any, ya: any): boolean {
+export function translatePoint(d: any, sel: any, xa: FullAxis, ya: FullAxis): boolean {
     var x = xa.c2p(d.x);
     var y = ya.c2p(d.y);
 
@@ -104,14 +104,14 @@ export function translatePoint(d: any, sel: any, xa: any, ya: any): boolean {
     return true;
 }
 
-export function translatePoints(s: any, xa: any, ya: any): void {
+export function translatePoints(s: any, xa: FullAxis, ya: FullAxis): void {
     s.each(function (this: any, d: any) {
         var sel = select(this);
         translatePoint(d, sel, xa, ya);
     });
 }
 
-export function hideOutsideRangePoint(d: any, sel: any, xa: any, ya: any, xcalendar: any, ycalendar: any): void {
+export function hideOutsideRangePoint(d: any, sel: any, xa: FullAxis, ya: FullAxis, xcalendar: any, ycalendar: any): void {
     sel.attr('display', xa.isPtWithinRange(d, xcalendar) && ya.isPtWithinRange(d, ycalendar) ? null : 'none');
 }
 

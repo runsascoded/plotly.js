@@ -1,3 +1,4 @@
+import type { FullLayout } from '../../../types/core';
 import Lib from '../../lib/index.js';
 import Axes from '../../plots/cartesian/axes.js';
 import handleArrayContainerDefaults from '../../plots/array_container_defaults.js';
@@ -31,7 +32,7 @@ export default function supplyLayoutDefaults(layoutIn: any, layoutOut: any) {
     }
 }
 
-function handleSelectionDefaults(selectionIn: any, selectionOut: any, fullLayout: any) {
+function handleSelectionDefaults(selectionIn: any, selectionOut: any, fullLayout: FullLayout) {
     function coerce(attr: any, dflt?: any) {
         return Lib.coerce(selectionIn, selectionOut, attributes, attr, dflt);
     }

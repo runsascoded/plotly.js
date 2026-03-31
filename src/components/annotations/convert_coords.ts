@@ -1,7 +1,8 @@
+import type { GraphDiv } from '../../../types/core';
 import isNumeric from 'fast-isnumeric';
 import toLogRange from '../../lib/to_log_range.js';
 
-export default function convertCoords(gd: any, ax: any, newType: any, doExtra: any) {
+export default function convertCoords(gd: GraphDiv, ax: any, newType: any, doExtra: any) {
     ax = ax || {};
 
     var toLog = (newType === 'log') && (ax.type === 'linear');

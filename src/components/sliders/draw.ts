@@ -1,3 +1,4 @@
+import type { FullLayout, GraphDiv } from '../../../types/core';
 import { select } from 'd3-selection';
 import { pointer } from 'd3-selection';
 import Plots from '../../plots/plots.js';
@@ -13,7 +14,7 @@ var LINE_SPACING = alignmentConstants.LINE_SPACING;
 var FROM_TL = alignmentConstants.FROM_TL;
 var FROM_BR = alignmentConstants.FROM_BR;
 
-export default function draw(gd: any) {
+export default function draw(gd: GraphDiv) {
     var staticPlot = gd._context.staticPlot;
     var fullLayout = gd._fullLayout;
     var sliderData = makeSliderData(fullLayout, gd);
@@ -93,7 +94,7 @@ function autoMarginId(sliderOpts: any) {
 }
 
 // This really only just filters by visibility:
-function makeSliderData(fullLayout: any, gd: any) {
+function makeSliderData(fullLayout: FullLayout, gd: GraphDiv) {
     var contOpts = fullLayout[constants.name];
     var sliderData = [];
 
@@ -113,7 +114,7 @@ function keyFunction(opts: any) {
 }
 
 // Compute the dimensions (mutates sliderOpts):
-function findDimensions(gd: any, sliderOpts: any) {
+function findDimensions(gd: GraphDiv, sliderOpts: any) {
     var sliderLabels = tester.selectAll('g.' + constants.labelGroupClass)
         .data(sliderOpts._visibleSteps);
 
@@ -241,7 +242,7 @@ function findDimensions(gd: any, sliderOpts: any) {
     Plots.autoMargin(gd, autoMarginId(sliderOpts), marginOpts);
 }
 
-function drawSlider(gd: any, sliderGroup: any, sliderOpts: any) {
+function drawSlider(gd: GraphDiv, sliderGroup: any, sliderOpts: any) {
     // This is related to the other long notes in this file regarding what happens
     // when slider steps disappear. This particular fix handles what happens when
     // the *current* slider step is removed. The drawing functions will error out
@@ -328,7 +329,7 @@ function drawCurrentValue(sliderGroup: any, sliderOpts: any, valueOverride: any)
     return text;
 }
 
-function drawGrip(sliderGroup: any, gd: any, sliderOpts: any) {
+function drawGrip(sliderGroup: any, gd: GraphDiv, sliderOpts: any) {
     var grip = Lib.ensureSingle(sliderGroup, 'rect', constants.gripRectClass, function(s: any) {
         s.call(attachGripEvents, gd, sliderGroup, sliderOpts)
             .style('pointer-events', 'all');
@@ -394,7 +395,7 @@ function drawLabelGroup(sliderGroup: any, sliderOpts: any) {
     });
 }
 
-function handleInput(gd: any, sliderGroup: any, sliderOpts: any, normalizedPosition: any, doTransition: any) {
+function handleInput(gd: GraphDiv, sliderGroup: any, sliderOpts: any, normalizedPosition: any, doTransition: any) {
     var quantizedPosition = Math.round(normalizedPosition * (sliderOpts._stepCount - 1));
     var quantizedIndex = sliderOpts._visibleSteps[quantizedPosition]._index;
 
@@ -403,7 +404,7 @@ function handleInput(gd: any, sliderGroup: any, sliderOpts: any, normalizedPosit
     }
 }
 
-function setActive(gd: any, sliderGroup: any, sliderOpts: any, index: any, doCallback: any, doTransition: any) {
+function setActive(gd: GraphDiv, sliderGroup: any, sliderOpts: any, index: any, doCallback: any, doTransition: any) {
     var previousActive = sliderOpts.active;
     sliderOpts.active = index;
 
@@ -446,7 +447,7 @@ function setActive(gd: any, sliderGroup: any, sliderOpts: any, index: any, doCal
     }
 }
 
-function attachGripEvents(item: any, gd: any, sliderGroup: any) {
+function attachGripEvents(item: any, gd: GraphDiv, sliderGroup: any) {
     if(gd._context.staticPlot) return;
 
     var node = sliderGroup.node();
@@ -592,7 +593,7 @@ function positionToNormalizedValue(sliderOpts: any, position: any) {
     return Math.min(1, Math.max(0, (position - constants.stepInset - dims.inputAreaStart) / (dims.inputAreaLength - 2 * constants.stepInset - 2 * dims.inputAreaStart)));
 }
 
-function drawTouchRect(sliderGroup: any, gd: any, sliderOpts: any) {
+function drawTouchRect(sliderGroup: any, gd: GraphDiv, sliderOpts: any) {
     var dims = sliderOpts._dims;
     var rect = Lib.ensureSingle(sliderGroup, 'rect', constants.railTouchRectClass, function(s: any) {
         s.call(attachGripEvents, gd, sliderGroup, sliderOpts)

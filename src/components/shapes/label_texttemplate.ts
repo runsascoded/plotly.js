@@ -1,3 +1,5 @@
+import type { FullAxis } from '../../../types/core';
+
 // Wrapper functions to handle paper-referenced shapes, which have no axis
 
 function d2l(v: any, axis: any) {
@@ -18,23 +20,23 @@ function x1shiftFn(shape: any) { return shape.x1shift || 0; }
 function y0shiftFn(shape: any) { return shape.y0shift || 0; }
 function y1shiftFn(shape: any) { return shape.y1shift || 0; }
 
-function dxFn(shape: any, xa: any) {
+function dxFn(shape: any, xa: FullAxis) {
     return d2l(shape.x1, xa) + x1shiftFn(shape) - d2l(shape.x0, xa) - x0shiftFn(shape);
 }
 
-function dyFn(shape: any, xa: any, ya: any) {
+function dyFn(shape: any, xa: FullAxis, ya: FullAxis) {
     return d2l(shape.y1, ya) + y1shiftFn(shape) - d2l(shape.y0, ya) - y0shiftFn(shape);
 }
 
-function widthFn(shape: any, xa: any) {
+function widthFn(shape: any, xa: FullAxis) {
     return Math.abs(dxFn(shape, xa));
 }
 
-function heightFn(shape: any, xa: any, ya: any) {
+function heightFn(shape: any, xa: FullAxis, ya: FullAxis) {
     return Math.abs(dyFn(shape, xa, ya));
 }
 
-function lengthFn(shape: any, xa: any, ya: any) {
+function lengthFn(shape: any, xa: FullAxis, ya: FullAxis) {
     return (shape.type !== 'line') ? undefined :
         Math.sqrt(
             Math.pow(dxFn(shape, xa), 2) +
@@ -42,15 +44,15 @@ function lengthFn(shape: any, xa: any, ya: any) {
         );
 }
 
-function xcenterFn(shape: any, xa: any) {
+function xcenterFn(shape: any, xa: FullAxis) {
     return l2d((d2l(shape.x1, xa) + x1shiftFn(shape) + d2l(shape.x0, xa) + x0shiftFn(shape)) / 2, xa);
 }
 
-function ycenterFn(shape: any, xa: any, ya: any) {
+function ycenterFn(shape: any, xa: FullAxis, ya: FullAxis) {
     return l2d((d2l(shape.y1, ya) + y1shiftFn(shape) + d2l(shape.y0, ya) + y0shiftFn(shape)) / 2, ya);
 }
 
-function slopeFn(shape: any, xa: any, ya: any) {
+function slopeFn(shape: any, xa: FullAxis, ya: FullAxis) {
     return (shape.type !== 'line') ? undefined : (
         dyFn(shape, xa, ya) / dxFn(shape, xa)
     );

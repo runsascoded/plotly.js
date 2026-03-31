@@ -1,3 +1,4 @@
+import type { GraphDiv } from '../../../types/core';
 import { select } from 'd3-selection';
 import Registry from '../../registry.js';
 import Lib from '../../lib/index.js';
@@ -23,7 +24,7 @@ export default {
     drawLabel: drawLabel,
 };
 
-function draw(gd: any) {
+function draw(gd: GraphDiv) {
     var fullLayout = gd._fullLayout;
 
     // Remove previous shapes before drawing new in shapes in fullLayout.shapes
@@ -50,16 +51,16 @@ function draw(gd: any) {
     // return Plots.previousPromises(gd);
 }
 
-function shouldSkipEdits(gd: any) {
+function shouldSkipEdits(gd: GraphDiv) {
     return !!gd._fullLayout._outlining;
 }
 
-function couldHaveActiveShape(gd: any) {
+function couldHaveActiveShape(gd: GraphDiv) {
     // for now keep config.editable: true as it was before shape-drawing PR
     return !gd._context.edits.shapePosition;
 }
 
-function drawOne(gd: any, index: any) {
+function drawOne(gd: GraphDiv, index: any) {
     // remove the existing shape if there is one.
     // because indices can change, we need to look in all shape layers
     gd._fullLayout._paperdiv
@@ -172,7 +173,7 @@ function drawOne(gd: any, index: any) {
     }
 }
 
-function setClipPath(shapePath: any, gd: any, shapeOptions: any) {
+function setClipPath(shapePath: any, gd: GraphDiv, shapeOptions: any) {
     // note that for layer="below" the clipAxes can be different from the
     // subplot we're drawing this in. This could cause problems if the shape
     // spans two subplots. See https://github.com/plotly/plotly.js/issues/1452
@@ -188,7 +189,7 @@ function setClipPath(shapePath: any, gd: any, shapeOptions: any) {
     );
 }
 
-function setupDragElement(gd: any, shapePath: any, shapeOptions: any, index: any, shapeLayer: any, editHelpers: any) {
+function setupDragElement(gd: GraphDiv, shapePath: any, shapeOptions: any, index: any, shapeLayer: any, editHelpers: any) {
     var MINWIDTH = 10;
     var MINHEIGHT = 10;
 
@@ -577,7 +578,7 @@ function setupDragElement(gd: any, shapePath: any, shapeOptions: any, index: any
         shapeLayer.selectAll('.visual-cue').remove();
     }
 
-    function deactivateClipPathTemporarily(shapePath: any, shapeOptions: any, gd: any) {
+    function deactivateClipPathTemporarily(shapePath: any, shapeOptions: any, gd: GraphDiv) {
         var xref = shapeOptions.xref;
         var yref = shapeOptions.yref;
         var xa = Axes.getFromId(gd, xref);
@@ -618,7 +619,7 @@ function movePath(pathIn: any, moveX: any, moveY: any) {
     });
 }
 
-function activateShape(gd: any, path: any) {
+function activateShape(gd: GraphDiv, path: any) {
     if(!couldHaveActiveShape(gd)) return;
 
     var element = path.node();
@@ -636,7 +637,7 @@ function activateShape(gd: any, path: any) {
     }
 }
 
-function deactivateShape(gd: any) {
+function deactivateShape(gd: GraphDiv) {
     if(!couldHaveActiveShape(gd)) return;
 
     var id = gd._fullLayout._activeShapeIndex;
@@ -647,7 +648,7 @@ function deactivateShape(gd: any) {
     }
 }
 
-function eraseActiveShape(gd: any) {
+function eraseActiveShape(gd: GraphDiv) {
     if(!couldHaveActiveShape(gd)) return;
 
     clearOutlineControllers(gd);

@@ -1,3 +1,4 @@
+import type { FullLayout } from '../../../types/core';
 import Lib from '../../lib/index.js';
 import Axes from '../../plots/cartesian/axes.js';
 import handleArrayContainerDefaults from '../../plots/array_container_defaults.js';
@@ -13,7 +14,7 @@ export default function supplyLayoutDefaults(layoutIn: any, layoutOut: any) {
     handleArrayContainerDefaults(layoutIn, layoutOut, opts);
 }
 
-function imageDefaults(imageIn: any, imageOut: any, fullLayout: any) {
+function imageDefaults(imageIn: any, imageOut: any, fullLayout: FullLayout) {
     function coerce(attr: any, dflt?: any) {
         return Lib.coerce(imageIn, imageOut, attributes, attr, dflt);
     }

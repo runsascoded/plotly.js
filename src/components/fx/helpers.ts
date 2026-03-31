@@ -1,10 +1,11 @@
+import type { FullTrace } from '../../../types/core';
 import { isArrayOrTypedArray, nestedProperty } from '../../lib/index.js';
 
-export var getSubplot = function(trace: any): string {
+export var getSubplot = function(trace: FullTrace): string {
     return trace.subplot || trace.xaxis + trace.yaxis || trace.geo;
 };
 
-export var isTraceInSubplots = function(trace: any, subplots: string[]): boolean {
+export var isTraceInSubplots = function(trace: FullTrace, subplots: string[]): boolean {
     if (trace.type === 'splom') {
         var xaxes = trace.xaxes || [];
         var yaxes = trace.yaxes || [];
@@ -81,7 +82,7 @@ export var quadrature = function(dx: (di: any) => number, dy: (di: any) => numbe
     };
 };
 
-export var makeEventData = function(pt: any, trace: any, cd: any): any {
+export var makeEventData = function(pt: any, trace: FullTrace, cd: any): any {
     // hover uses 'index', select uses 'pointNumber'
     var pointNumber = 'index' in pt ? pt.index : pt.pointNumber;
 
@@ -123,7 +124,7 @@ export var makeEventData = function(pt: any, trace: any, cd: any): any {
     return out;
 };
 
-export var appendArrayPointValue = function(pointData: any, trace: any, pointNumber: any): void {
+export var appendArrayPointValue = function(pointData: any, trace: FullTrace, pointNumber: any): void {
     var arrayAttrs = trace._arrayAttrs;
 
     if (!arrayAttrs) {
@@ -143,7 +144,7 @@ export var appendArrayPointValue = function(pointData: any, trace: any, pointNum
     }
 };
 
-export var appendArrayMultiPointValues = function(pointData: any, trace: any, pointNumbers: any[]): void {
+export var appendArrayMultiPointValues = function(pointData: any, trace: FullTrace, pointNumbers: any[]): void {
     var arrayAttrs = trace._arrayAttrs;
 
     if (!arrayAttrs) {

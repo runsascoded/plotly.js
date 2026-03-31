@@ -1,3 +1,4 @@
+import type { GraphDiv } from '../../../types/core';
 import { select } from 'd3-selection';
 function d3Round(x: number, n?: number): number { return n ? Math.round(x * (n = Math.pow(10, n))) / n : Math.round(x); }
 import isNumeric from 'fast-isnumeric';
@@ -46,7 +47,7 @@ var SUBTITLE_PADDING_EM = 1.6;
  *
  *  @return {selection} d3 selection of title container group
  */
-function draw(gd: any, titleClass: string, options: any): any {
+function draw(gd: GraphDiv, titleClass: string, options: any): any {
     var fullLayout = gd._fullLayout;
 
     var cont = options.propContainer;

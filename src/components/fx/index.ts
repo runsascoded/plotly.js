@@ -1,3 +1,4 @@
+import type { FullLayout, FullTrace } from '../../../types/core';
 import { select } from 'd3-selection';
 import { castOption, coerceHoverinfo, isD3Selection } from '../../lib/index.js';
 import dragElement from '../dragelement/index.js';
@@ -61,11 +62,11 @@ function loneUnhover(containerOrSelection: any): void {
 
 // helpers for traces that use Fx.loneHover
 
-function castHoverOption(trace: any, ptNumber: any, attr: string): any {
+function castHoverOption(trace: FullTrace, ptNumber: any, attr: string): any {
     return castOption(trace, ptNumber, 'hoverlabel.' + attr);
 }
 
-function castHoverinfo(trace: any, fullLayout: any, ptNumber: any): any {
+function castHoverinfo(trace: FullTrace, fullLayout: FullLayout, ptNumber: any): any {
     function _coerce(val: any): any {
         return coerceHoverinfo({hoverinfo: val}, {_module: trace._module}, fullLayout);
     }

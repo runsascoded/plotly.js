@@ -1,13 +1,14 @@
+import type { FullAxis, GraphDiv } from '../../../types/core';
 import constants from './constants.js';
 import Lib from '../../lib/index.js';
 import Axes from '../../plots/cartesian/axes.js';
 
-export var rangeToShapePosition = function(ax: any) {
+export var rangeToShapePosition = function(ax: FullAxis) {
     return (ax.type === 'log') ? ax.r2d : function(v: any) { return v; };
 };
 
-export var shapePositionToRange = function(ax: any) {
-    return (ax.type === 'log') ? ax.d2r : function(v: any) { return v; };
+export var shapePositionToRange = function(ax: FullAxis) {
+    return (ax.type === 'log') ? ax.d2r : function(v: any, _clip?: any) { return v; };
 };
 
 export var decodeDate = function(convertToPx: any) {
@@ -41,7 +42,7 @@ export var extractPathCoords = function(path: any, paramsToUse: any, isRaw?: any
     return extractedCoordinates;
 };
 
-export var getDataToPixel = function(gd: any, axis: any, shift: any, isVertical: any, refType: any) {
+export var getDataToPixel = function(gd: GraphDiv, axis: FullAxis, shift: any, isVertical: any, refType: any) {
     var gs = gd._fullLayout._size;
     var dataToPixel;
 
@@ -69,7 +70,7 @@ export var getDataToPixel = function(gd: any, axis: any, shift: any, isVertical:
     return dataToPixel;
 };
 
-export var getPixelToData = function(gd: any, axis: any, isVertical: any, opt: any) {
+export var getPixelToData = function(gd: GraphDiv, axis: FullAxis, isVertical: any, opt: any) {
     var gs = gd._fullLayout._size;
     var pixelToData;
 
@@ -99,10 +100,10 @@ export var roundPositionForSharpStrokeRendering = function(pos: any, strokeWidth
     return strokeWidthIsOdd ? posValAsInt + 0.5 : posValAsInt;
 };
 
-export var makeShapesOptionsAndPlotinfo = function(gd: any, index: any) {
+export var makeShapesOptionsAndPlotinfo = function(gd: GraphDiv, index: any) {
     var options = gd._fullLayout.shapes[index] || {};
 
-    var plotinfo = gd._fullLayout._plots[options.xref + options.yref];
+    var plotinfo: any = gd._fullLayout._plots[options.xref + options.yref];
     var hasPlotinfo = !!plotinfo;
     if(hasPlotinfo) {
         plotinfo._hadPlotinfo = true;
@@ -123,10 +124,10 @@ export var makeShapesOptionsAndPlotinfo = function(gd: any, index: any) {
     };
 };
 
-export var makeSelectionsOptionsAndPlotinfo = function(gd: any, index: any) {
+export var makeSelectionsOptionsAndPlotinfo = function(gd: GraphDiv, index: any) {
     var options = gd._fullLayout.selections[index] || {};
 
-    var plotinfo = gd._fullLayout._plots[options.xref + options.yref];
+    var plotinfo: any = gd._fullLayout._plots[options.xref + options.yref];
     var hasPlotinfo = !!plotinfo;
     if(hasPlotinfo) {
         plotinfo._hadPlotinfo = true;
@@ -142,7 +143,7 @@ export var makeSelectionsOptionsAndPlotinfo = function(gd: any, index: any) {
     };
 };
 
-export var getPathString = function(gd: any, options: any) {
+export var getPathString = function(gd: GraphDiv, options: any) {
     var type = options.type;
     var xRefType = Axes.getRefType(options.xref);
     var yRefType = Axes.getRefType(options.yref);

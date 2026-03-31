@@ -64,7 +64,7 @@ function buttonDefaults(buttonIn: any, buttonOut: any, selectorOut: any, opts: a
 }
 
 function getPosDflt(containerOut: any, layout: any, counterAxes: any) {
-    var anchoredList = counterAxes.filter(function(ax: any) {
+    var anchoredList = counterAxes.filter(function(ax: string) {
         return layout[ax].anchor === containerOut._id;
     });
 

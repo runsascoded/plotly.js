@@ -52,7 +52,7 @@ function distanceSort(a: any, b: any): number {
     return a.distance - b.distance;
 }
 
-export var hover = function hover(gd: any, evt: any, subplot?: any, noHoverEvent?: boolean): void {
+export var hover = function hover(gd: GraphDiv, evt: any, subplot?: any, noHoverEvent?: boolean): void {
     gd = getGraphDiv(gd) as GraphDiv;
     // The 'target' property changes when bubbling out of Shadow DOM.
     // Throttling can delay reading the target, so we save the current value.

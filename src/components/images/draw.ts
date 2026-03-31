@@ -1,10 +1,11 @@
+import type { GraphDiv } from '../../../types/core';
 import { select } from 'd3-selection';
 import { setClipUrl } from '../drawing/index.js';
 import Axes from '../../plots/cartesian/axes.js';
 import axisIds from '../../plots/cartesian/axis_ids.js';
 import xmlnsNamespaces from '../../constants/xmlns_namespaces.js';
 
-export default function draw(gd: any) {
+export default function draw(gd: GraphDiv) {
     var fullLayout = gd._fullLayout;
     var imageDataAbove = [];
     var imageDataSubplot: any = {};
@@ -73,7 +74,7 @@ export default function draw(gd: any) {
             thisImage.attr('xlink:href', d.source);
             this._imgSrc = d.source;
         } else {
-            var imagePromise = new Promise(function(resolve: any) {
+            var imagePromise: Promise<void> = new Promise(function(resolve: any) {
                 var img = new Image();
                 this.img = img;
 

@@ -1,3 +1,4 @@
+import type { FullTrace, InputTrace } from '../../../types/core';
 import { scaleLinear } from 'd3-scale';
 import tinycolor from 'tinycolor2';
 import isNumeric from 'fast-isnumeric';
@@ -6,7 +7,7 @@ import Color from '../color/index.js';
 import _scales from './scales.js';
 const { isValid: isValidScale } = _scales;
 
-function hasColorscale(trace: any, containerStr: string, colorKey?: string): boolean {
+function hasColorscale(trace: FullTrace | InputTrace, containerStr: string, colorKey?: string): boolean {
     var container = containerStr ?
         nestedProperty(trace, containerStr).get() || {} :
         trace;
@@ -162,7 +163,7 @@ function makeColorScaleFunc(specs: any, opts?: any): any {
     return sclFunc;
 }
 
-function makeColorScaleFuncFromTrace(trace: any, opts?: any): any {
+function makeColorScaleFuncFromTrace(trace: FullTrace, opts?: any): any {
     return makeColorScaleFunc(extractScale(trace), opts);
 }
 

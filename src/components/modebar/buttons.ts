@@ -1,3 +1,4 @@
+import type { GraphDiv } from '../../../types/core';
 import Registry from '../../registry.js';
 import Plots from '../../plots/plots.js';
 import axisIds from '../../plots/cartesian/axis_ids.js';
@@ -34,7 +35,7 @@ var modeBarButtons: any = {};
  */
 modeBarButtons.toImage = {
     name: 'toImage',
-    title: function(gd: any) {
+    title: function(gd: GraphDiv) {
         var opts = gd._context.toImageButtonOptions || {};
         var format = opts.format || 'png';
         return format === 'png' ?
@@ -42,7 +43,7 @@ modeBarButtons.toImage = {
             _(gd, 'Download plot'); // generic non-PNG text
     },
     icon: Icons.camera,
-    click: function(gd: any) {
+    click: function(gd: GraphDiv) {
         var toImageButtonOptions = gd._context.toImageButtonOptions;
         var opts = {format: toImageButtonOptions.format || 'png'};
 
@@ -66,18 +67,18 @@ modeBarButtons.toImage = {
 
 modeBarButtons.sendDataToCloud = {
     name: 'sendDataToCloud',
-    title: function(gd: any) { return _(gd, 'Edit in Chart Studio'); },
+    title: function(gd: GraphDiv) { return _(gd, 'Edit in Chart Studio'); },
     icon: Icons.disk,
-    click: function(gd: any) {
+    click: function(gd: GraphDiv) {
         Plots.sendDataToCloud(gd);
     }
 };
 
 modeBarButtons.editInChartStudio = {
     name: 'editInChartStudio',
-    title: function(gd: any) { return _(gd, 'Edit in Chart Studio'); },
+    title: function(gd: GraphDiv) { return _(gd, 'Edit in Chart Studio'); },
     icon: Icons.pencil,
-    click: function(gd: any) {
+    click: function(gd: GraphDiv) {
         Plots.sendDataToCloud(gd);
     }
 };
@@ -85,7 +86,7 @@ modeBarButtons.editInChartStudio = {
 modeBarButtons.zoom2d = {
     name: 'zoom2d',
     _cat: 'zoom',
-    title: function(gd: any) { return _(gd, 'Zoom'); },
+    title: function(gd: GraphDiv) { return _(gd, 'Zoom'); },
     attr: 'dragmode',
     val: 'zoom',
     icon: Icons.zoombox,
@@ -95,7 +96,7 @@ modeBarButtons.zoom2d = {
 modeBarButtons.pan2d = {
     name: 'pan2d',
     _cat: 'pan',
-    title: function(gd: any) { return _(gd, 'Pan'); },
+    title: function(gd: GraphDiv) { return _(gd, 'Pan'); },
     attr: 'dragmode',
     val: 'pan',
     icon: Icons.pan,
@@ -105,7 +106,7 @@ modeBarButtons.pan2d = {
 modeBarButtons.select2d = {
     name: 'select2d',
     _cat: 'select',
-    title: function(gd: any) { return _(gd, 'Box Select'); },
+    title: function(gd: GraphDiv) { return _(gd, 'Box Select'); },
     attr: 'dragmode',
     val: 'select',
     icon: Icons.selectbox,
@@ -115,7 +116,7 @@ modeBarButtons.select2d = {
 modeBarButtons.lasso2d = {
     name: 'lasso2d',
     _cat: 'lasso',
-    title: function(gd: any) { return _(gd, 'Lasso Select'); },
+    title: function(gd: GraphDiv) { return _(gd, 'Lasso Select'); },
     attr: 'dragmode',
     val: 'lasso',
     icon: Icons.lasso,
@@ -124,7 +125,7 @@ modeBarButtons.lasso2d = {
 
 modeBarButtons.drawclosedpath = {
     name: 'drawclosedpath',
-    title: function(gd: any) { return _(gd, 'Draw closed freeform'); },
+    title: function(gd: GraphDiv) { return _(gd, 'Draw closed freeform'); },
     attr: 'dragmode',
     val: 'drawclosedpath',
     icon: Icons.drawclosedpath,
@@ -133,7 +134,7 @@ modeBarButtons.drawclosedpath = {
 
 modeBarButtons.drawopenpath = {
     name: 'drawopenpath',
-    title: function(gd: any) { return _(gd, 'Draw open freeform'); },
+    title: function(gd: GraphDiv) { return _(gd, 'Draw open freeform'); },
     attr: 'dragmode',
     val: 'drawopenpath',
     icon: Icons.drawopenpath,
@@ -142,7 +143,7 @@ modeBarButtons.drawopenpath = {
 
 modeBarButtons.drawline = {
     name: 'drawline',
-    title: function(gd: any) { return _(gd, 'Draw line'); },
+    title: function(gd: GraphDiv) { return _(gd, 'Draw line'); },
     attr: 'dragmode',
     val: 'drawline',
     icon: Icons.drawline,
@@ -151,7 +152,7 @@ modeBarButtons.drawline = {
 
 modeBarButtons.drawrect = {
     name: 'drawrect',
-    title: function(gd: any) { return _(gd, 'Draw rectangle'); },
+    title: function(gd: GraphDiv) { return _(gd, 'Draw rectangle'); },
     attr: 'dragmode',
     val: 'drawrect',
     icon: Icons.drawrect,
@@ -160,7 +161,7 @@ modeBarButtons.drawrect = {
 
 modeBarButtons.drawcircle = {
     name: 'drawcircle',
-    title: function(gd: any) { return _(gd, 'Draw circle'); },
+    title: function(gd: GraphDiv) { return _(gd, 'Draw circle'); },
     attr: 'dragmode',
     val: 'drawcircle',
     icon: Icons.drawcircle,
@@ -169,15 +170,15 @@ modeBarButtons.drawcircle = {
 
 modeBarButtons.eraseshape = {
     name: 'eraseshape',
-    title: function(gd: any) { return _(gd, 'Erase active shape'); },
+    title: function(gd: GraphDiv) { return _(gd, 'Erase active shape'); },
     icon: Icons.eraseshape,
-    click: function(gd: any) { return Registry.getComponentMethod('shapes', 'eraseActiveShape')(gd); }
+    click: function(gd: GraphDiv) { return Registry.getComponentMethod('shapes', 'eraseActiveShape')(gd); }
 };
 
 modeBarButtons.zoomIn2d = {
     name: 'zoomIn2d',
     _cat: 'zoomin',
-    title: function(gd: any) { return _(gd, 'Zoom in'); },
+    title: function(gd: GraphDiv) { return _(gd, 'Zoom in'); },
     attr: 'zoom',
     val: 'in',
     icon: Icons.zoom_plus,
@@ -187,7 +188,7 @@ modeBarButtons.zoomIn2d = {
 modeBarButtons.zoomOut2d = {
     name: 'zoomOut2d',
     _cat: 'zoomout',
-    title: function(gd: any) { return _(gd, 'Zoom out'); },
+    title: function(gd: GraphDiv) { return _(gd, 'Zoom out'); },
     attr: 'zoom',
     val: 'out',
     icon: Icons.zoom_minus,
@@ -197,7 +198,7 @@ modeBarButtons.zoomOut2d = {
 modeBarButtons.autoScale2d = {
     name: 'autoScale2d',
     _cat: 'autoscale',
-    title: function(gd: any) { return _(gd, 'Autoscale'); },
+    title: function(gd: GraphDiv) { return _(gd, 'Autoscale'); },
     attr: 'zoom',
     val: 'auto',
     icon: Icons.autoscale,
@@ -207,7 +208,7 @@ modeBarButtons.autoScale2d = {
 modeBarButtons.resetScale2d = {
     name: 'resetScale2d',
     _cat: 'resetscale',
-    title: function(gd: any) { return _(gd, 'Reset axes'); },
+    title: function(gd: GraphDiv) { return _(gd, 'Reset axes'); },
     attr: 'zoom',
     val: 'reset',
     icon: Icons.home,
@@ -217,7 +218,7 @@ modeBarButtons.resetScale2d = {
 modeBarButtons.hoverClosestCartesian = {
     name: 'hoverClosestCartesian',
     _cat: 'hoverclosest',
-    title: function(gd: any) { return _(gd, 'Show closest data on hover'); },
+    title: function(gd: GraphDiv) { return _(gd, 'Show closest data on hover'); },
     attr: 'hovermode',
     val: 'closest',
     icon: Icons.tooltip_basic,
@@ -228,9 +229,9 @@ modeBarButtons.hoverClosestCartesian = {
 modeBarButtons.hoverCompareCartesian = {
     name: 'hoverCompareCartesian',
     _cat: 'hoverCompare',
-    title: function(gd: any) { return _(gd, 'Compare data on hover'); },
+    title: function(gd: GraphDiv) { return _(gd, 'Compare data on hover'); },
     attr: 'hovermode',
-    val: function(gd: any) {
+    val: function(gd: GraphDiv) {
         return gd._fullLayout._isHoriz ? 'y' : 'x';
     },
     icon: Icons.tooltip_compare,
@@ -238,7 +239,7 @@ modeBarButtons.hoverCompareCartesian = {
     click: handleCartesian
 };
 
-function handleCartesian(gd: any, ev: any) {
+function handleCartesian(gd: GraphDiv, ev: any) {
     var button = ev.currentTarget;
     var astr = button.getAttribute('data-attr');
     var val = button.getAttribute('data-val') || true;
@@ -319,7 +320,7 @@ function handleCartesian(gd: any, ev: any) {
 modeBarButtons.zoom3d = {
     name: 'zoom3d',
     _cat: 'zoom',
-    title: function(gd: any) { return _(gd, 'Zoom'); },
+    title: function(gd: GraphDiv) { return _(gd, 'Zoom'); },
     attr: 'scene.dragmode',
     val: 'zoom',
     icon: Icons.zoombox,
@@ -329,7 +330,7 @@ modeBarButtons.zoom3d = {
 modeBarButtons.pan3d = {
     name: 'pan3d',
     _cat: 'pan',
-    title: function(gd: any) { return _(gd, 'Pan'); },
+    title: function(gd: GraphDiv) { return _(gd, 'Pan'); },
     attr: 'scene.dragmode',
     val: 'pan',
     icon: Icons.pan,
@@ -338,7 +339,7 @@ modeBarButtons.pan3d = {
 
 modeBarButtons.orbitRotation = {
     name: 'orbitRotation',
-    title: function(gd: any) { return _(gd, 'Orbital rotation'); },
+    title: function(gd: GraphDiv) { return _(gd, 'Orbital rotation'); },
     attr: 'scene.dragmode',
     val: 'orbit',
     icon: Icons['3d_rotate'],
@@ -347,14 +348,14 @@ modeBarButtons.orbitRotation = {
 
 modeBarButtons.tableRotation = {
     name: 'tableRotation',
-    title: function(gd: any) { return _(gd, 'Turntable rotation'); },
+    title: function(gd: GraphDiv) { return _(gd, 'Turntable rotation'); },
     attr: 'scene.dragmode',
     val: 'turntable',
     icon: Icons['z-axis'],
     click: handleDrag3d
 };
 
-function handleDrag3d(gd: any, ev: any) {
+function handleDrag3d(gd: GraphDiv, ev: any) {
     var button = ev.currentTarget;
     var attr = button.getAttribute('data-attr');
     var val = button.getAttribute('data-val') || true;
@@ -377,7 +378,7 @@ function handleDrag3d(gd: any, ev: any) {
 modeBarButtons.resetCameraDefault3d = {
     name: 'resetCameraDefault3d',
     _cat: 'resetCameraDefault',
-    title: function(gd: any) { return _(gd, 'Reset camera to default'); },
+    title: function(gd: GraphDiv) { return _(gd, 'Reset camera to default'); },
     attr: 'resetDefault',
     icon: Icons.home,
     click: handleCamera3d
@@ -386,13 +387,13 @@ modeBarButtons.resetCameraDefault3d = {
 modeBarButtons.resetCameraLastSave3d = {
     name: 'resetCameraLastSave3d',
     _cat: 'resetCameraLastSave',
-    title: function(gd: any) { return _(gd, 'Reset camera to last save'); },
+    title: function(gd: GraphDiv) { return _(gd, 'Reset camera to last save'); },
     attr: 'resetLastSave',
     icon: Icons.movie,
     click: handleCamera3d
 };
 
-function handleCamera3d(gd: any, ev: any) {
+function handleCamera3d(gd: GraphDiv, ev: any) {
     var button = ev.currentTarget;
     var attr = button.getAttribute('data-attr');
     var resetLastSave = attr === 'resetLastSave';
@@ -436,7 +437,7 @@ function handleCamera3d(gd: any, ev: any) {
 modeBarButtons.hoverClosest3d = {
     name: 'hoverClosest3d',
     _cat: 'hoverclosest',
-    title: function(gd: any) { return _(gd, 'Toggle show closest data on hover'); },
+    title: function(gd: GraphDiv) { return _(gd, 'Toggle show closest data on hover'); },
     attr: 'hovermode',
     val: null,
     toggle: true,
@@ -445,7 +446,7 @@ modeBarButtons.hoverClosest3d = {
     click: handleHover3d
 };
 
-function getNextHover3d(gd: any, ev: any) {
+function getNextHover3d(gd: GraphDiv, ev: any) {
     var button = ev.currentTarget;
     var val = button._previousVal;
     var fullLayout = gd._fullLayout;
@@ -483,7 +484,7 @@ function getNextHover3d(gd: any, ev: any) {
     return layoutUpdate;
 }
 
-function handleHover3d(gd: any, ev: any) {
+function handleHover3d(gd: GraphDiv, ev: any) {
     var layoutUpdate = getNextHover3d(gd, ev);
     Registry.call('_guiRelayout', gd, layoutUpdate);
 }
@@ -491,7 +492,7 @@ function handleHover3d(gd: any, ev: any) {
 modeBarButtons.zoomInGeo = {
     name: 'zoomInGeo',
     _cat: 'zoomin',
-    title: function(gd: any) { return _(gd, 'Zoom in'); },
+    title: function(gd: GraphDiv) { return _(gd, 'Zoom in'); },
     attr: 'zoom',
     val: 'in',
     icon: Icons.zoom_plus,
@@ -501,7 +502,7 @@ modeBarButtons.zoomInGeo = {
 modeBarButtons.zoomOutGeo = {
     name: 'zoomOutGeo',
     _cat: 'zoomout',
-    title: function(gd: any) { return _(gd, 'Zoom out'); },
+    title: function(gd: GraphDiv) { return _(gd, 'Zoom out'); },
     attr: 'zoom',
     val: 'out',
     icon: Icons.zoom_minus,
@@ -511,7 +512,7 @@ modeBarButtons.zoomOutGeo = {
 modeBarButtons.resetGeo = {
     name: 'resetGeo',
     _cat: 'reset',
-    title: function(gd: any) { return _(gd, 'Reset'); },
+    title: function(gd: GraphDiv) { return _(gd, 'Reset'); },
     attr: 'reset',
     val: null,
     icon: Icons.autoscale,
@@ -521,7 +522,7 @@ modeBarButtons.resetGeo = {
 modeBarButtons.hoverClosestGeo = {
     name: 'hoverClosestGeo',
     _cat: 'hoverclosest',
-    title: function(gd: any) { return _(gd, 'Toggle show closest data on hover'); },
+    title: function(gd: GraphDiv) { return _(gd, 'Toggle show closest data on hover'); },
     attr: 'hovermode',
     val: null,
     toggle: true,
@@ -530,7 +531,7 @@ modeBarButtons.hoverClosestGeo = {
     click: toggleHover
 };
 
-function handleGeo(gd: any, ev: any) {
+function handleGeo(gd: GraphDiv, ev: any) {
     var button = ev.currentTarget;
     var attr = button.getAttribute('data-attr');
     var val = button.getAttribute('data-val') || true;
@@ -557,7 +558,7 @@ function handleGeo(gd: any, ev: any) {
 modeBarButtons.hoverClosestPie = {
     name: 'hoverClosestPie',
     _cat: 'hoverclosest',
-    title: function(gd: any) { return _(gd, 'Toggle show closest data on hover'); },
+    title: function(gd: GraphDiv) { return _(gd, 'Toggle show closest data on hover'); },
     attr: 'hovermode',
     val: 'closest',
     icon: Icons.tooltip_basic,
@@ -565,7 +566,7 @@ modeBarButtons.hoverClosestPie = {
     click: toggleHover
 };
 
-function getNextHover(gd: any) {
+function getNextHover(gd: GraphDiv) {
     var fullLayout = gd._fullLayout;
 
     if(fullLayout.hovermode) return false;
@@ -576,16 +577,16 @@ function getNextHover(gd: any) {
     return 'closest';
 }
 
-function toggleHover(gd: any) {
+function toggleHover(gd: GraphDiv) {
     var newHover = getNextHover(gd);
     Registry.call('_guiRelayout', gd, 'hovermode', newHover);
 }
 
 modeBarButtons.resetViewSankey = {
     name: 'resetSankeyGroup',
-    title: function(gd: any) { return _(gd, 'Reset view'); },
+    title: function(gd: GraphDiv) { return _(gd, 'Reset view'); },
     icon: Icons.home,
-    click: function(gd: any) {
+    click: function(gd: GraphDiv) {
         var aObj = {
             'node.groups': [],
             'node.x': [],
@@ -605,7 +606,7 @@ modeBarButtons.resetViewSankey = {
 
 modeBarButtons.toggleHover = {
     name: 'toggleHover',
-    title: function(gd: any) { return _(gd, 'Toggle show closest data on hover'); },
+    title: function(gd: GraphDiv) { return _(gd, 'Toggle show closest data on hover'); },
     attr: 'hovermode',
     val: null,
     toggle: true,
@@ -621,7 +622,7 @@ modeBarButtons.toggleHover = {
 
 modeBarButtons.resetViews = {
     name: 'resetViews',
-    title: function(gd: any) { return _(gd, 'Reset views'); },
+    title: function(gd: GraphDiv) { return _(gd, 'Reset views'); },
     icon: Icons.home,
     click: function(gd: any, ev: any) {
         var button = ev.currentTarget;
@@ -641,11 +642,11 @@ modeBarButtons.resetViews = {
 
 modeBarButtons.toggleSpikelines = {
     name: 'toggleSpikelines',
-    title: function(gd: any) { return _(gd, 'Toggle Spike Lines'); },
+    title: function(gd: GraphDiv) { return _(gd, 'Toggle Spike Lines'); },
     icon: Icons.spikeline,
     attr: '_cartesianSpikesEnabled',
     val: 'on',
-    click: function(gd: any) {
+    click: function(gd: GraphDiv) {
         var fullLayout = gd._fullLayout;
         var allSpikesEnabled = fullLayout._cartesianSpikesEnabled;
 
@@ -654,7 +655,7 @@ modeBarButtons.toggleSpikelines = {
     }
 };
 
-function setSpikelineVisibility(gd: any) {
+function setSpikelineVisibility(gd: GraphDiv) {
     var fullLayout = gd._fullLayout;
     var areSpikesOn = fullLayout._cartesianSpikesEnabled === 'on';
     var axList = axisIds.list(gd, null, true);
@@ -671,10 +672,10 @@ function setSpikelineVisibility(gd: any) {
 modeBarButtons.resetViewMapbox = {
     name: 'resetViewMapbox',
     _cat: 'resetView',
-    title: function(gd: any) { return _(gd, 'Reset view'); },
+    title: function(gd: GraphDiv) { return _(gd, 'Reset view'); },
     attr: 'reset',
     icon: Icons.home,
-    click: function(gd: any) {
+    click: function(gd: GraphDiv) {
         resetView(gd, 'mapbox');
     }
 };
@@ -682,10 +683,10 @@ modeBarButtons.resetViewMapbox = {
 modeBarButtons.resetViewMap = {
     name: 'resetViewMap',
     _cat: 'resetView',
-    title: function(gd: any) { return _(gd, 'Reset view'); },
+    title: function(gd: GraphDiv) { return _(gd, 'Reset view'); },
     attr: 'reset',
     icon: Icons.home,
-    click: function(gd: any) {
+    click: function(gd: GraphDiv) {
         resetView(gd, 'map');
     }
 };
@@ -693,7 +694,7 @@ modeBarButtons.resetViewMap = {
 modeBarButtons.zoomInMapbox = {
     name: 'zoomInMapbox',
     _cat: 'zoomin',
-    title: function(gd: any) { return _(gd, 'Zoom in'); },
+    title: function(gd: GraphDiv) { return _(gd, 'Zoom in'); },
     attr: 'zoom',
     val: 'in',
     icon: Icons.zoom_plus,
@@ -703,7 +704,7 @@ modeBarButtons.zoomInMapbox = {
 modeBarButtons.zoomInMap = {
     name: 'zoomInMap',
     _cat: 'zoomin',
-    title: function(gd: any) { return _(gd, 'Zoom in'); },
+    title: function(gd: GraphDiv) { return _(gd, 'Zoom in'); },
     attr: 'zoom',
     val: 'in',
     icon: Icons.zoom_plus,
@@ -713,7 +714,7 @@ modeBarButtons.zoomInMap = {
 modeBarButtons.zoomOutMapbox = {
     name: 'zoomOutMapbox',
     _cat: 'zoomout',
-    title: function(gd: any) { return _(gd, 'Zoom out'); },
+    title: function(gd: GraphDiv) { return _(gd, 'Zoom out'); },
     attr: 'zoom',
     val: 'out',
     icon: Icons.zoom_minus,
@@ -723,22 +724,22 @@ modeBarButtons.zoomOutMapbox = {
 modeBarButtons.zoomOutMap = {
     name: 'zoomOutMap',
     _cat: 'zoomout',
-    title: function(gd: any) { return _(gd, 'Zoom out'); },
+    title: function(gd: GraphDiv) { return _(gd, 'Zoom out'); },
     attr: 'zoom',
     val: 'out',
     icon: Icons.zoom_minus,
     click: handleMapZoom
 };
 
-function handleMapboxZoom(gd: any, ev: any) {
+function handleMapboxZoom(gd: GraphDiv, ev: any) {
     _handleMapZoom(gd, ev, 'mapbox');
 }
 
-function handleMapZoom(gd: any, ev: any) {
+function handleMapZoom(gd: GraphDiv, ev: any) {
     _handleMapZoom(gd, ev, 'map');
 }
 
-function _handleMapZoom(gd: any, ev: any, mapType: any) {
+function _handleMapZoom(gd: GraphDiv, ev: any, mapType: any) {
     var button = ev.currentTarget;
     var val = button.getAttribute('data-val');
     var fullLayout = gd._fullLayout;
@@ -756,7 +757,7 @@ function _handleMapZoom(gd: any, ev: any, mapType: any) {
     Registry.call('_guiRelayout', gd, aObj);
 }
 
-function resetView(gd: any, subplotType: any) {
+function resetView(gd: GraphDiv, subplotType: any) {
     var fullLayout = gd._fullLayout;
     var subplotIds = fullLayout._subplots[subplotType] || [];
     var aObj: any = {};

@@ -1,3 +1,4 @@
+import type { GraphDiv, FullAxis } from '../../../types/core';
 import { selectAll } from 'd3-selection';
 import Registry from '../../registry.js';
 import Plots from '../../plots/plots.js';
@@ -22,7 +23,7 @@ export default {
 /*
  * draw: draw all annotations without any new modifications
  */
-function draw(gd: any) {
+function draw(gd: GraphDiv) {
     var fullLayout = gd._fullLayout;
 
     fullLayout._infolayer.selectAll('.annotation').remove();
@@ -41,7 +42,7 @@ function draw(gd: any) {
  *
  * index (int): the annotation to draw
  */
-function drawOne(gd: any, index: any) {
+function drawOne(gd: GraphDiv, index: any) {
     var fullLayout = gd._fullLayout;
     var options = fullLayout.annotations[index] || {};
     var xa = Axes.getFromId(gd, options.xref);
@@ -58,7 +59,7 @@ function drawOne(gd: any, index: any) {
 // the plot.
 // axDomainRef: if true and axa defined, draws relative to axis domain,
 // otherwise draws relative to data (if axa defined) or paper (if not).
-function shiftPosition(axa: any, dAx: any, axLetter: any, gs: any, options: any) {
+function shiftPosition(axa: FullAxis, dAx: any, axLetter: any, gs: any, options: any) {
     var optAx = options[axLetter];
     var axRef = options[axLetter + 'ref'];
     var vertical = axLetter.indexOf('y') !== -1;
@@ -89,7 +90,7 @@ function shiftPosition(axa: any, dAx: any, axLetter: any, gs: any, options: any)
  * @param {object | undefined} xa : full x-axis object to compute subplot pos-to-px
  * @param {object | undefined} ya : ... y-axis
  */
-function drawRaw(gd: any, options: any, index: any, subplotId: any, xa: any, ya: any) {
+function drawRaw(gd: GraphDiv, options: any, index: any, subplotId: any, xa: FullAxis, ya: FullAxis) {
     var fullLayout = gd._fullLayout;
     var gs = gd._fullLayout._size;
     var edits = gd._context.edits;

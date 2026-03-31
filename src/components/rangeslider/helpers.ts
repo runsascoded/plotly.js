@@ -1,3 +1,4 @@
+import type { FullAxis, FullLayout, GraphDiv } from '../../../types/core';
 import axisIDs from '../../plots/cartesian/axis_ids.js';
 import svgTextUtils from '../../lib/svg_text_utils.js';
 import constants from './constants.js';
@@ -5,13 +6,13 @@ import _alignment from '../../constants/alignment.js';
 const { LINE_SPACING } = _alignment;
 var name = constants.name;
 
-function isVisible(ax: any) {
+function isVisible(ax: FullAxis) {
     var rangeSlider = ax && ax[name];
     return rangeSlider && rangeSlider.visible;
 }
 export { isVisible };
 
-export var makeData = function(fullLayout: any) {
+export var makeData = function(fullLayout: FullLayout) {
     var axes = axisIDs.list({ _fullLayout: fullLayout }, 'x', true);
     var margin = fullLayout.margin;
     var rangeSliderData = [];
@@ -32,7 +33,7 @@ export var makeData = function(fullLayout: any) {
     fullLayout._rangeSliderData = rangeSliderData;
 };
 
-export var autoMarginOpts = function(gd: any, ax: any) {
+export var autoMarginOpts = function(gd: GraphDiv, ax: FullAxis) {
     var fullLayout = gd._fullLayout;
     var opts = ax[name];
     var axLetter = ax._id.charAt(0);
@@ -41,12 +42,13 @@ export var autoMarginOpts = function(gd: any, ax: any) {
     var titleHeight = 0;
     if(ax.side === 'bottom') {
         bottomDepth = ax._depth;
-        if(ax.title.text !== fullLayout._dfltTitle[axLetter]) {
+        var axTitle = ax.title as { text: string; font: any };
+        if(axTitle.text !== fullLayout._dfltTitle[axLetter]) {
             // as in rangeslider/draw.js
-            titleHeight = 1.5 * ax.title.font.size + 10 + opts._offsetShift;
+            titleHeight = 1.5 * axTitle.font.size + 10 + opts._offsetShift;
             // multi-line extra bump
-            var extraLines = (ax.title.text.match(svgTextUtils.BR_TAG_ALL) || []).length;
-            titleHeight += extraLines * ax.title.font.size * LINE_SPACING;
+            var extraLines = (axTitle.text.match(svgTextUtils.BR_TAG_ALL) || []).length;
+            titleHeight += extraLines * axTitle.font.size * LINE_SPACING;
         }
     }
 

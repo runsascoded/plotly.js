@@ -1,3 +1,4 @@
+import type { FullTrace } from '../../../types/core';
 import Lib from '../../lib/index.js';
 import _edit_types from '../../plot_api/edit_types.js';
 const { overrideAll } = _edit_types;
@@ -50,7 +51,7 @@ export default {
     hoverInfo: hoverInfo
 };
 
-function hoverInfo(calcPoint: any, trace: any, hoverPoint: any): void {
+function hoverInfo(calcPoint: any, trace: FullTrace, hoverPoint: any): void {
     if((trace.error_y || {}).visible) {
         hoverPoint.yerr = calcPoint.yh - calcPoint.y;
         if(!trace.error_y.symmetric) hoverPoint.yerrneg = calcPoint.y - calcPoint.ys;

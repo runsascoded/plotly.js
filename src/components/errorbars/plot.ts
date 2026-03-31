@@ -1,9 +1,10 @@
+import type { GraphDiv, FullAxis } from '../../../types/core';
 import { select } from 'd3-selection';
 import isNumeric from 'fast-isnumeric';
 import { setClipUrl } from '../drawing/index.js';
 import subTypes from '../../traces/scatter/subtypes.js';
 
-export default function plot(gd: any, traces: any, plotinfo: any, transitionOpts: any): void {
+export default function plot(gd: GraphDiv, traces: any, plotinfo: any, transitionOpts: any): void {
     var isNew: boolean;
 
     var xa = plotinfo.xaxis;
@@ -120,7 +121,7 @@ export default function plot(gd: any, traces: any, plotinfo: any, transitionOpts
     });
 }
 
-function errorCoords(d: any, xa: any, ya: any): any {
+function errorCoords(d: any, xa: FullAxis, ya: FullAxis): any {
     var out: Record<string, any> = {
         x: xa.c2p(d.x),
         y: ya.c2p(d.y)

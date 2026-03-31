@@ -1,10 +1,11 @@
+import type { GraphDiv, FullAxis, FullTrace } from '../../../types/core';
 import isNumeric from 'fast-isnumeric';
 import Registry from '../../registry.js';
 import Axes from '../../plots/cartesian/axes.js';
 import Lib from '../../lib/index.js';
 import makeComputeError from './compute_error.js';
 
-export default function calc(gd: any): void {
+export default function calc(gd: GraphDiv): void {
     var calcdata = gd.calcdata;
 
     for(var i = 0; i < calcdata.length; i++) {
@@ -20,7 +21,7 @@ export default function calc(gd: any): void {
     }
 }
 
-function calcOneAxis(calcTrace: any[], trace: any, axis: any, coord: string): void {
+function calcOneAxis(calcTrace: any[], trace: FullTrace, axis: FullAxis, coord: string): void {
     var opts = trace['error_' + coord] || {};
     var isVisible = (opts.visible && ['linear', 'log'].indexOf(axis.type) !== -1);
     var vals: number[] = [];

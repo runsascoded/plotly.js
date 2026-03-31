@@ -1,3 +1,4 @@
+import type { FullTrace } from '../../../types/core';
 import Registry from '../../registry.js';
 import Lib, { bigFont, coerceFont, extendFlat, noneOrAll, pushUnique } from '../../lib/index.js';
 import Template from '../../plot_api/plot_template.js';
@@ -22,7 +23,7 @@ function groupDefaults(legendId: string, layoutIn: any, layoutOut: any, fullData
     var visible = coerce('visible');
     if(!visible) return;
 
-    var trace: any;
+    var trace: FullTrace;
     var traceCoerce = function(attr: string, dflt?: any): any {
         var traceIn = trace._input;
         var traceOut = trace;
@@ -42,14 +43,14 @@ function groupDefaults(legendId: string, layoutIn: any, layoutOut: any, fullData
 
     var shapesWithLegend = (layoutOut.shapes || []).filter(function(d: any) { return d.showlegend; });
 
-    function isPieWithLegendArray(trace: any): boolean {
+    function isPieWithLegendArray(trace: FullTrace): boolean {
         return Registry.traceIs(trace, 'pie-like')
             && trace._length != null
             && (Array.isArray(trace.legend) || Array.isArray(trace.showlegend));
     }
     fullData
         .filter(isPieWithLegendArray)
-        .forEach(function (trace: any) {
+        .forEach(function (trace: FullTrace) {
             if (trace.visible) {
                 legendTraceCount++;
             }

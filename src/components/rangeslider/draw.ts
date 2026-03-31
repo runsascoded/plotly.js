@@ -1,3 +1,4 @@
+import type { GraphDiv } from '../../../types/core';
 import { select } from 'd3-selection';
 import Registry from '../../registry.js';
 import Plots from '../../plots/plots.js';
@@ -12,7 +13,7 @@ import setCursor from '../../lib/setcursor.js';
 import constants from './constants.js';
 var strTranslate = Lib.strTranslate;
 
-export default function(gd: any) {
+export default function(gd: GraphDiv) {
     var fullLayout = gd._fullLayout;
     var rangeSliderData = fullLayout._rangeSliderData;
     for(var i = 0; i < rangeSliderData.length; i++) {
@@ -227,7 +228,7 @@ function eventX(event: any) {
     return 0;
 }
 
-function setupDragElement(rangeSlider: any, gd: any, axisOpts: any, opts: any) {
+function setupDragElement(rangeSlider: any, gd: GraphDiv, axisOpts: any, opts: any) {
     if(gd._context.staticPlot) return;
 
     var slideBox = rangeSlider.select('rect.' + constants.slideBoxClassName).node();
@@ -315,7 +316,7 @@ function setupDragElement(rangeSlider: any, gd: any, axisOpts: any, opts: any) {
     rangeSlider.on('touchstart', mouseDownHandler);
 }
 
-function setDataRange(rangeSlider: any, gd: any, axisOpts: any, opts: any) {
+function setDataRange(rangeSlider: any, gd: GraphDiv, axisOpts: any, opts: any) {
     function clamp(v: any) {
         return axisOpts.l2r(Lib.constrain(v, opts._rl[0], opts._rl[1]));
     }
@@ -328,7 +329,7 @@ function setDataRange(rangeSlider: any, gd: any, axisOpts: any, opts: any) {
     });
 }
 
-function setPixelRange(rangeSlider: any, gd: any, axisOpts: any, opts: any, oppAxisOpts: any, oppAxisRangeOpts: any) {
+function setPixelRange(rangeSlider: any, gd: GraphDiv, axisOpts: any, opts: any, oppAxisOpts: any, oppAxisRangeOpts: any) {
     var hw2 = constants.handleWidth / 2;
 
     function clamp(v: any) {
@@ -391,7 +392,7 @@ function setPixelRange(rangeSlider: any, gd: any, axisOpts: any, opts: any, oppA
         .attr('transform', strTranslate(xMax, offset));
 }
 
-function drawBg(rangeSlider: any, gd: any, axisOpts: any, opts: any) {
+function drawBg(rangeSlider: any, gd: GraphDiv, axisOpts: any, opts: any) {
     var bg = Lib.ensureSingle(rangeSlider, 'rect', constants.bgClassName, function(s: any) {
         s.attr({
             x: 0,
@@ -417,7 +418,7 @@ function drawBg(rangeSlider: any, gd: any, axisOpts: any, opts: any) {
     .call(Color.fill, opts.bgcolor);
 }
 
-function addClipPath(rangeSlider: any, gd: any, axisOpts: any, opts: any) {
+function addClipPath(rangeSlider: any, gd: GraphDiv, axisOpts: any, opts: any) {
     var fullLayout = gd._fullLayout;
 
     var clipPath = Lib.ensureSingleById(fullLayout._topdefs, 'clipPath', opts._clipId, function(s: any) {
@@ -430,7 +431,7 @@ function addClipPath(rangeSlider: any, gd: any, axisOpts: any, opts: any) {
     });
 }
 
-function drawRangePlot(rangeSlider: any, gd: any, axisOpts: any, opts: any) {
+function drawRangePlot(rangeSlider: any, gd: GraphDiv, axisOpts: any, opts: any) {
     var calcData = gd.calcdata;
 
     var rangePlots = rangeSlider.selectAll('g.' + constants.rangePlotClassName)
@@ -528,7 +529,7 @@ function filterRangePlotCalcData(calcData: any, subplotId: any) {
     return out;
 }
 
-function drawMasks(rangeSlider: any, gd: any, axisOpts: any, opts: any, oppAxisRangeOpts: any) {
+function drawMasks(rangeSlider: any, gd: GraphDiv, axisOpts: any, opts: any, oppAxisRangeOpts: any) {
     var maskMin = Lib.ensureSingle(rangeSlider, 'rect', constants.maskMinClassName, function(s: any) {
         s.attr({
             x: 0,
@@ -579,7 +580,7 @@ function drawMasks(rangeSlider: any, gd: any, axisOpts: any, opts: any, oppAxisR
     }
 }
 
-function drawSlideBox(rangeSlider: any, gd: any, axisOpts: any, opts: any) {
+function drawSlideBox(rangeSlider: any, gd: GraphDiv, axisOpts: any, opts: any) {
     if(gd._context.staticPlot) return;
 
     var slideBox = Lib.ensureSingle(rangeSlider, 'rect', constants.slideBoxClassName, function(s: any) {
@@ -596,7 +597,7 @@ function drawSlideBox(rangeSlider: any, gd: any, axisOpts: any, opts: any) {
     });
 }
 
-function drawGrabbers(rangeSlider: any, gd: any, axisOpts: any, opts: any) {
+function drawGrabbers(rangeSlider: any, gd: GraphDiv, axisOpts: any, opts: any) {
     // <g grabber />
     var grabberMin = Lib.ensureSingle(rangeSlider, 'g', constants.grabberMinClassName);
     var grabberMax = Lib.ensureSingle(rangeSlider, 'g', constants.grabberMaxClassName);
