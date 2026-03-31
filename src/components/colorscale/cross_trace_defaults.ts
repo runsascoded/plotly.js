@@ -2,22 +2,21 @@ import { nestedProperty } from '../../lib/index.js';
 import _helpers from './helpers.js';
 const { hasColorscale, extractOpts } = _helpers;
 
-export default function crossTraceDefaults(fullData, fullLayout) {
-    function replace(cont, k) {
+export default function crossTraceDefaults(fullData: any[], fullLayout: any): void {
+    function replace(cont: any, k: string): void {
         var val = cont['_' + k];
         if(val !== undefined) {
             cont[k] = val;
         }
     }
 
-    function relinkColorAttrs(outerCont, cbOpt) {
+    function relinkColorAttrs(outerCont: any, cbOpt: any): void {
         var cont = cbOpt.container ?
             nestedProperty(outerCont, cbOpt.container).get() :
             outerCont;
 
         if(cont) {
             if(cont.coloraxis) {
-                // stash ref to color axis
                 cont._colorAx = fullLayout[cont.coloraxis];
             } else {
                 var cOpts = extractOpts(cont);

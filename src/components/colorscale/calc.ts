@@ -3,7 +3,7 @@ import { aggNums, nestedProperty } from '../../lib/index.js';
 import _helpers from './helpers.js';
 const { extractOpts } = _helpers;
 
-export default function calc(gd, trace, opts) {
+export default function calc(gd: any, trace: any, opts: any): void {
     var fullLayout = gd._fullLayout;
     var vals = opts.vals;
     var containerStr = opts.containerStr;
@@ -18,8 +18,8 @@ export default function calc(gd, trace, opts) {
     var max = cOpts.max;
     var mid = cOpts.mid;
 
-    var minVal = function() { return aggNums(Math.min, null, vals); };
-    var maxVal = function() { return aggNums(Math.max, null, vals); };
+    var minVal = function(): number { return aggNums(Math.min, null, vals); };
+    var maxVal = function(): number { return aggNums(Math.max, null, vals); };
 
     if(min === undefined) {
         min = minVal();

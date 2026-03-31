@@ -4,7 +4,7 @@ import Axes from '../../plots/cartesian/axes.js';
 import Lib from '../../lib/index.js';
 import makeComputeError from './compute_error.js';
 
-export default function calc(gd) {
+export default function calc(gd: any): void {
     var calcdata = gd.calcdata;
 
     for(var i = 0; i < calcdata.length; i++) {
@@ -20,10 +20,10 @@ export default function calc(gd) {
     }
 }
 
-function calcOneAxis(calcTrace, trace, axis, coord) {
+function calcOneAxis(calcTrace: any[], trace: any, axis: any, coord: string): void {
     var opts = trace['error_' + coord] || {};
     var isVisible = (opts.visible && ['linear', 'log'].indexOf(axis.type) !== -1);
-    var vals = [];
+    var vals: number[] = [];
 
     if(!isVisible) return;
 
@@ -34,18 +34,7 @@ function calcOneAxis(calcTrace, trace, axis, coord) {
 
         var iIn = calcPt.i;
 
-        // for types that don't include `i` in each calcdata point
         if(iIn === undefined) iIn = i;
-
-        // for stacked area inserted points
-        // TODO: errorbars have been tested cursorily with stacked area,
-        // but not thoroughly. It's not even really clear what you want to do:
-        // Should it just be calculated based on that trace's size data?
-        // Should you add errors from below in quadrature?
-        // And what about normalization, where in principle the errors shrink
-        // again when you get up to the top end?
-        // One option would be to forbid errorbars with stacking until we
-        // decide how to handle these questions.
         else if(iIn === null) continue;
 
         var calcCoord = calcPt[coord];

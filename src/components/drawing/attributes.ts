@@ -1,9 +1,5 @@
 export var dash = {
     valType: 'string',
-    // string type usually doesn't take values... this one should really be
-    // a special type or at least a special coercion function, from the GUI
-    // you only get these values but elsewhere the user can supply a list of
-    // dash lengths in px, and it will be honored
     values: ['solid', 'dot', 'dash', 'longdash', 'dashdot', 'longdashdot'],
     dflt: 'solid',
     editType: 'style',

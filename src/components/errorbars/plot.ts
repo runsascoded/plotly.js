@@ -3,8 +3,8 @@ import isNumeric from 'fast-isnumeric';
 import { setClipUrl } from '../drawing/index.js';
 import subTypes from '../../traces/scatter/subtypes.js';
 
-export default function plot(gd, traces, plotinfo, transitionOpts) {
-    var isNew;
+export default function plot(gd: any, traces: any, plotinfo: any, transitionOpts: any): void {
+    var isNew: boolean;
 
     var xa = plotinfo.xaxis;
     var ya = plotinfo.yaxis;
@@ -12,19 +12,15 @@ export default function plot(gd, traces, plotinfo, transitionOpts) {
     var hasAnimation = transitionOpts && transitionOpts.duration > 0;
     var isStatic = gd._context.staticPlot;
 
-    traces.each(function(d) {
+    traces.each(function(this: any, d: any) {
         var trace = d[0].trace;
-        // || {} is in case the trace (specifically scatterternary)
-        // doesn't support error bars at all, but does go through
-        // the scatter.plot mechanics, which calls ErrorBars.plot
-        // internally
         var xObj = trace.error_x || {};
         var yObj = trace.error_y || {};
 
-        var keyFunc;
+        var keyFunc: ((d: any) => any) | undefined;
 
         if(trace.ids) {
-            keyFunc = function(d) {return d.id;};
+            keyFunc = function(d: any) {return d.id;};
         }
 
         var sparse = (
@@ -57,13 +53,13 @@ export default function plot(gd, traces, plotinfo, transitionOpts) {
 
         setClipUrl(errorbars, plotinfo.layerClipId, gd);
 
-        errorbars.each(function(d) {
+        errorbars.each(function(this: any, d: any) {
             var errorbar = select(this);
             var coords = errorCoords(d, xa, ya);
 
             if(sparse && !d.vis) return;
 
-            var path;
+            var path: string;
 
             var yerror = errorbar.select('path.yerror');
             if(yObj.visible && isNumeric(coords.x) &&
@@ -124,20 +120,16 @@ export default function plot(gd, traces, plotinfo, transitionOpts) {
     });
 }
 
-// compute the coordinates of the error-bar objects
-function errorCoords(d, xa, ya) {
-    var out = {
+function errorCoords(d: any, xa: any, ya: any): any {
+    var out: Record<string, any> = {
         x: xa.c2p(d.x),
         y: ya.c2p(d.y)
     };
 
-    // calculate the error bar size and hat and shoe locations
     if(d.yh !== undefined) {
         out.yh = ya.c2p(d.yh);
         out.ys = ya.c2p(d.ys);
 
-        // if the shoes go off-scale (ie log scale, error bars past zero)
-        // clip the bar and hide the shoes
         if(!isNumeric(out.ys)) {
             out.noYS = true;
             out.ys = ya.c2p(d.ys, true);

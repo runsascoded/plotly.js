@@ -1,4 +1,4 @@
-import { scaleLinear, scaleLog, scaleOrdinal } from 'd3-scale';
+import { scaleLinear } from 'd3-scale';
 import tinycolor from 'tinycolor2';
 import isNumeric from 'fast-isnumeric';
 import { isArrayOrTypedArray, isPlainObject, nestedProperty } from '../../lib/index.js';
@@ -6,7 +6,7 @@ import Color from '../color/index.js';
 import _scales from './scales.js';
 const { isValid: isValidScale } = _scales;
 
-function hasColorscale(trace, containerStr, colorKey) {
+function hasColorscale(trace: any, containerStr: string, colorKey?: string): boolean {
     var container = containerStr ?
         nestedProperty(trace, containerStr).get() || {} :
         trace;
@@ -38,27 +38,12 @@ function hasColorscale(trace, containerStr, colorKey) {
 var constantAttrs = ['showscale', 'autocolorscale', 'colorscale', 'reversescale', 'colorbar'];
 var letterAttrs = ['min', 'max', 'mid', 'auto'];
 
-/**
- * Extract 'c' / 'z', trace / color axis colorscale options
- *
- * Note that it would be nice to replace all z* with c* equivalents in v3
- *
- * @param {object} cont : attribute container
- * @return {object}:
- *  - min: cmin or zmin
- *  - max: cmax or zmax
- *  - mid: cmid or zmid
- *  - auto: cauto or zauto
- *  - *scale: *scale attrs
- *  - colorbar: colorbar
- *  - _sync: function syncing attr and underscore dual (useful when calc'ing min/max)
- */
-function extractOpts(cont) {
+function extractOpts(cont: any): any {
     var colorAx = cont._colorAx;
     var cont2 = colorAx ? colorAx : cont;
-    var out = {};
-    var cLetter;
-    var i, k;
+    var out: Record<string, any> = {};
+    var cLetter: string;
+    var i: number, k: string;
 
     for(i = 0; i < constantAttrs.length; i++) {
         k = constantAttrs[i];
@@ -72,7 +57,7 @@ function extractOpts(cont) {
             out[k] = cont2['c' + k];
         }
     } else {
-        var k2;
+        var k2: string;
         for(i = 0; i < letterAttrs.length; i++) {
             k = letterAttrs[i];
             k2 = 'c' + k;
@@ -85,10 +70,10 @@ function extractOpts(cont) {
                 out[k] = cont2[k2];
             }
         }
-        cLetter = k2.charAt(0);
+        cLetter = k2!.charAt(0);
     }
 
-    out._sync = function(k, v) {
+    out._sync = function(k: string, v: any): void {
         var k2 = letterAttrs.indexOf(k) !== -1 ? cLetter + k : k;
         cont2[k2] = cont2['_' + k2] = v;
     };
@@ -96,20 +81,7 @@ function extractOpts(cont) {
     return out;
 }
 
-/**
- * Extract colorscale into numeric domain and color range.
- *
- * @param {object} cont colorscale container (e.g. trace, marker)
- *  - colorscale {array of arrays}
- *  - cmin/zmin {number}
- *  - cmax/zmax {number}
- *  - reversescale {boolean}
- *
- * @return {object}
- *  - domain {array}
- *  - range {array}
- */
-function extractScale(cont) {
+function extractScale(cont: any): { domain: number[]; range: string[] } {
     var cOpts = extractOpts(cont);
     var cmin = cOpts.min;
     var cmax = cOpts.max;
@@ -131,7 +103,7 @@ function extractScale(cont) {
     return {domain: domain, range: range};
 }
 
-function flipScale(scl) {
+function flipScale(scl: any[]): any[] {
     var N = scl.length;
     var sclNew = new Array(N);
 
@@ -142,20 +114,7 @@ function flipScale(scl) {
     return sclNew;
 }
 
-/**
- * General colorscale function generator.
- *
- * @param {object} specs output of Colorscale.extractScale or precomputed domain, range.
- *  - domain {array}
- *  - range {array}
- *
- * @param {object} opts
- *  - noNumericCheck {boolean} if true, scale func bypasses numeric checks
- *  - returnArray {boolean} if true, scale func return 4-item array instead of color strings
- *
- * @return {function}
- */
-function makeColorScaleFunc(specs, opts) {
+function makeColorScaleFunc(specs: any, opts?: any): any {
     opts = opts || {};
 
     var domain = specs.domain;
@@ -175,40 +134,39 @@ function makeColorScaleFunc(specs, opts) {
 
     var noNumericCheck = opts.noNumericCheck;
     var returnArray = opts.returnArray;
-    var sclFunc;
+    var sclFunc: any;
 
     if(noNumericCheck && returnArray) {
         sclFunc = _sclFunc;
     } else if(noNumericCheck) {
-        sclFunc = function(v) {
+        sclFunc = function(v: any): string {
             return colorArray2rbga(_sclFunc(v));
         };
     } else if(returnArray) {
-        sclFunc = function(v) {
+        sclFunc = function(v: any): any {
             if(isNumeric(v)) return _sclFunc(v);
             else if(tinycolor(v).isValid()) return v;
             else return Color.defaultLine;
         };
     } else {
-        sclFunc = function(v) {
+        sclFunc = function(v: any): string {
             if(isNumeric(v)) return colorArray2rbga(_sclFunc(v));
             else if(tinycolor(v).isValid()) return v;
             else return Color.defaultLine;
         };
     }
 
-    // colorbar draw looks into the d3 scale closure for domain and range
     sclFunc.domain = _sclFunc.domain;
-    sclFunc.range = function() { return range; };
+    sclFunc.range = function(): string[] { return range; };
 
     return sclFunc;
 }
 
-function makeColorScaleFuncFromTrace(trace, opts) {
+function makeColorScaleFuncFromTrace(trace: any, opts?: any): any {
     return makeColorScaleFunc(extractScale(trace), opts);
 }
 
-function colorArray2rbga(colorArray) {
+function colorArray2rbga(colorArray: number[]): string {
     var colorObj = {
         r: colorArray[0],
         g: colorArray[1],

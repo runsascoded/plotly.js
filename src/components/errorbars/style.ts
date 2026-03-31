@@ -1,8 +1,8 @@
 import { select } from 'd3-selection';
 import Color from '../color/index.js';
 
-export default function style(traces) {
-    traces.each(function(d) {
+export default function style(traces: any): void {
+    traces.each(function(this: any, d: any) {
         var trace = d[0].trace;
         var yObj = trace.error_y || {};
         var xObj = trace.error_x || {};

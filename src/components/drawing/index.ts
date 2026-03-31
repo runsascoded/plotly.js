@@ -1,5 +1,5 @@
 import { select } from 'd3-selection';
-function d3Round(x, n) { return n ? Math.round(x * (n = Math.pow(10, n))) / n : Math.round(x); }
+function d3Round(x: number, n: number): number { return n ? Math.round(x * (n = Math.pow(10, n))) / n : Math.round(x); }
 import { ensureSingle, ensureSingleById, extendFlat, extractOption, identity, isArrayOrTypedArray, nestedProperty, numberFormat, strTranslate, texttemplateString } from '../../lib/index.js';
 import isNumeric from 'fast-isnumeric';
 import tinycolor from 'tinycolor2';
@@ -15,8 +15,8 @@ import subTypes from '../../traces/scatter/subtypes.js';
 import makeBubbleSizeFn from '../../traces/scatter/make_bubble_size_func.js';
 import { appendArrayPointValue } from '../../components/fx/helpers.js';
 import SYMBOLDEFS from './symbol_defs.js';
-export var tester;
-export var testref;
+export var tester: any;
+export var testref: any;
 var LINE_SPACING = alignment.LINE_SPACING;
 
 
@@ -24,7 +24,7 @@ var LINE_SPACING = alignment.LINE_SPACING;
 // styling functions for plot elements
 // -----------------------------------------------------
 
-export function font(s, font) {
+export function font(s: any, font: any): void {
     var variant = font.variant;
     var style = font.style;
     var weight = font.weight;
@@ -50,24 +50,24 @@ export function font(s, font) {
             shadow === 'auto' ? svgTextUtils.makeTextShadow(Color.contrast(color)) : dropNone(shadow)
         );
     if (lineposition) s.style('text-decoration-line', dropNone(lineposition2decorationLine(lineposition)));
-};
+}
 
-function dropNone(a) {
+function dropNone(a: string): string | undefined {
     return a === 'none' ? undefined : a;
 }
 
-var textcase2transformOptions = {
+var textcase2transformOptions: Record<string, string> = {
     normal: 'none',
     lower: 'lowercase',
     upper: 'uppercase',
     'word caps': 'capitalize'
 };
 
-function textcase2transform(textcase) {
+function textcase2transform(textcase: string): string {
     return textcase2transformOptions[textcase];
 }
 
-function lineposition2decorationLine(lineposition) {
+function lineposition2decorationLine(lineposition: string): string {
     return lineposition
         .replace('under', 'underline')
         .replace('over', 'overline')
@@ -76,39 +76,21 @@ function lineposition2decorationLine(lineposition) {
         .join(' ');
 }
 
-/*
- * Positioning helpers
- * Note: do not use `setPosition` with <text> nodes modified by
- * `svgTextUtils.convertToTspans`. Use `svgTextUtils.positionText`
- * instead, so that <tspan.line> elements get updated to match.
- */
-export function setPosition(s, x, y) {
+export function setPosition(s: any, x: number, y: number): void {
     s.attr('x', x).attr('y', y);
-};
-export function setSize(s, w, h) {
+}
+export function setSize(s: any, w: number, h: number): void {
     s.attr('width', w).attr('height', h);
-};
-export function setRect(s, x, y, w, h) {
+}
+export function setRect(s: any, x: number, y: number, w: number, h: number): void {
     s.call(setPosition, x, y).call(setSize, w, h);
-};
+}
 
-/** Translate node
- *
- * @param {object} d : calcdata point item
- * @param {sel} sel : d3 selction of node to translate
- * @param {object} xa : corresponding full xaxis object
- * @param {object} ya : corresponding full yaxis object
- *
- * @return {boolean} :
- *  true if selection got translated
- *  false if selection could not get translated
- */
-export function translatePoint(d, sel, xa, ya) {
+export function translatePoint(d: any, sel: any, xa: any, ya: any): boolean {
     var x = xa.c2p(d.x);
     var y = ya.c2p(d.y);
 
     if (isNumeric(x) && isNumeric(y) && sel.node()) {
-        // for multiline text this works better
         if (sel.node().nodeName === 'text') {
             sel.attr('x', x).attr('y', y);
         } else {
@@ -119,51 +101,47 @@ export function translatePoint(d, sel, xa, ya) {
     }
 
     return true;
-};
+}
 
-export function translatePoints(s, xa, ya) {
-    s.each(function (d) {
+export function translatePoints(s: any, xa: any, ya: any): void {
+    s.each(function (this: any, d: any) {
         var sel = select(this);
         translatePoint(d, sel, xa, ya);
     });
-};
+}
 
-export function hideOutsideRangePoint(d, sel, xa, ya, xcalendar, ycalendar) {
+export function hideOutsideRangePoint(d: any, sel: any, xa: any, ya: any, xcalendar: any, ycalendar: any): void {
     sel.attr('display', xa.isPtWithinRange(d, xcalendar) && ya.isPtWithinRange(d, ycalendar) ? null : 'none');
-};
+}
 
-export function hideOutsideRangePoints(traceGroups, subplot) {
+export function hideOutsideRangePoints(traceGroups: any, subplot: any): void {
     if (!subplot._hasClipOnAxisFalse) return;
 
     var xa = subplot.xaxis;
     var ya = subplot.yaxis;
 
-    traceGroups.each(function (d) {
+    traceGroups.each(function (this: any, d: any) {
         var trace = d[0].trace;
         var xcalendar = trace.xcalendar;
         var ycalendar = trace.ycalendar;
         var selector = Registry.traceIs(trace, 'bar-like') ? '.bartext' : '.point,.textpoint';
 
-        traceGroups.selectAll(selector).each(function (d) {
+        traceGroups.selectAll(selector).each(function (this: any, d: any) {
             hideOutsideRangePoint(d, select(this), xa, ya, xcalendar, ycalendar);
         });
     });
-};
+}
 
-export function crispRound(gd, lineWidth, dflt) {
-    // for lines that disable antialiasing we want to
-    // make sure the width is an integer, and at least 1 if it's nonzero
-
+export function crispRound(gd: any, lineWidth: number, dflt?: number): number {
     if (!lineWidth || !isNumeric(lineWidth)) return dflt || 0;
 
-    // but not for static plots - these don't get antialiased anyway.
     if (gd._context.staticPlot) return lineWidth;
 
     if (lineWidth < 1) return 1;
     return Math.round(lineWidth);
-};
+}
 
-export function singleLineStyle(d, s, lw, lc, ld) {
+export function singleLineStyle(d: any, s: any, lw?: number, lc?: string, ld?: string): void {
     s.style('fill', 'none');
     var line = (((d || [])[0] || {}).trace || {}).line || {};
     var lw1 = lw || line.width || 0;
@@ -171,10 +149,10 @@ export function singleLineStyle(d, s, lw, lc, ld) {
 
     Color.stroke(s, lc || line.color);
     dashLine(s, dash, lw1);
-};
+}
 
-export function lineGroupStyle(s, lw, lc, ld) {
-    s.style('fill', 'none').each(function (d) {
+export function lineGroupStyle(s: any, lw?: number, lc?: string, ld?: string): void {
+    s.style('fill', 'none').each(function (this: any, d: any) {
         var line = (((d || [])[0] || {}).trace || {}).line || {};
         var lw1 = lw || line.width || 0;
         var dash = ld || line.dash || '';
@@ -183,9 +161,9 @@ export function lineGroupStyle(s, lw, lc, ld) {
             .call(Color.stroke, lc || line.color)
             .call(dashLine, dash, lw1);
     });
-};
+}
 
-export function dashLine(s, dash, lineWidth) {
+export function dashLine(s: any, dash: string, lineWidth: number): void {
     lineWidth = +lineWidth || 0;
 
     dash = dashStyle(dash, lineWidth);
@@ -194,9 +172,9 @@ export function dashLine(s, dash, lineWidth) {
         'stroke-dasharray': dash,
         'stroke-width': lineWidth + 'px'
     });
-};
+}
 
-export function dashStyle(dash, lineWidth) {
+export function dashStyle(dash: string, lineWidth: number): string {
     lineWidth = +lineWidth || 1;
     var dlw = Math.max(lineWidth, 3);
 
@@ -209,12 +187,11 @@ export function dashStyle(dash, lineWidth) {
     } else if (dash === 'longdashdot') {
         dash = 5 * dlw + 'px,' + 2 * dlw + 'px,' + dlw + 'px,' + 2 * dlw + 'px';
     }
-    // otherwise user wrote the dasharray themselves - leave it be
 
     return dash;
-};
+}
 
-function setFillStyle(sel, trace, gd, forLegend) {
+function setFillStyle(sel: any, trace: any, gd: any, forLegend: boolean): void {
     var markerPattern = trace.fillpattern;
     var fillgradient = trace.fillgradient;
     var pAttr = getPatternAttr;
@@ -248,7 +225,7 @@ function setFillStyle(sel, trace, gd, forLegend) {
         }
 
         if (!forLegend && (fillgradient.start !== undefined || fillgradient.stop !== undefined)) {
-            var start, stop;
+            var start: any, stop: any;
             if (direction === 'horizontal') {
                 start = {
                     x: fillgradient.start,
@@ -297,34 +274,31 @@ function setFillStyle(sel, trace, gd, forLegend) {
     }
 }
 
-// Same as fillGroupStyle, except in this case the selection may be a transition
-export function singleFillStyle(sel, gd) {
+export function singleFillStyle(sel: any, gd: any): void {
     var node = select(sel.node());
     var data = node.data();
     var trace = ((data[0] || [])[0] || {}).trace || {};
     setFillStyle(sel, trace, gd, false);
-};
+}
 
-export function fillGroupStyle(s, gd, forLegend) {
-    s.style('stroke-width', 0).each(function (d) {
+export function fillGroupStyle(s: any, gd: any, forLegend?: boolean): void {
+    s.style('stroke-width', 0).each(function (this: any, d: any) {
         var shape = select(this);
-        // N.B. 'd' won't be a calcdata item when
-        // fill !== 'none' on a segment-less and marker-less trace
         if (d[0].trace) {
-            setFillStyle(shape, d[0].trace, gd, forLegend);
+            setFillStyle(shape, d[0].trace, gd, forLegend!);
         }
     });
-};
+}
 
-export var symbolNames = [];
-export var symbolFuncs = [];
-export var symbolBackOffs = [];
-export var symbolNeedLines = {};
-export var symbolNoDot = {};
-export var symbolNoFill = {};
-export var symbolList = [];
+export var symbolNames: string[] = [];
+export var symbolFuncs: any[] = [];
+export var symbolBackOffs: number[] = [];
+export var symbolNeedLines: Record<number, boolean> = {};
+export var symbolNoDot: Record<number, boolean> = {};
+export var symbolNoFill: Record<number, boolean> = {};
+export var symbolList: any[] = [];
 
-Object.keys(SYMBOLDEFS).forEach(function (k) {
+Object.keys(SYMBOLDEFS).forEach(function (k: string) {
     var symDef = SYMBOLDEFS[k];
     var n = symDef.n;
     symbolList.push(
@@ -362,10 +336,9 @@ Object.keys(SYMBOLDEFS).forEach(function (k) {
 });
 
 var MAXSYMBOL = symbolNames.length;
-// add a dot in the middle of the symbol
 var DOTPATH = 'M0,0.5L0.5,0L0,-0.5L-0.5,0Z';
 
-export function symbolNumber(v) {
+export function symbolNumber(v: any): number {
     if (isNumeric(v)) {
         v = +v;
     } else if (typeof v === 'string') {
@@ -385,15 +358,15 @@ export function symbolNumber(v) {
     }
 
     return v % 100 >= MAXSYMBOL || v >= 400 ? 0 : Math.floor(Math.max(v, 0));
-};
+}
 
-function makePointPath(symbolNumber, r, t, s) {
+function makePointPath(symbolNumber: number, r: number, t: number, s: number): string {
     var base = symbolNumber % 100;
     return symbolFuncs[base](r, t, s) + (symbolNumber >= 200 ? DOTPATH : '');
 }
 
 var stopFormatter = numberFormat('~f');
-var gradientInfo = {
+var gradientInfo: Record<string, any> = {
     radial: { type: 'radial' },
     radialreversed: { type: 'radial', reversed: true },
     horizontal: { type: 'linear', start: { x: 1, y: 0 }, stop: { x: 0, y: 0 } },
@@ -402,21 +375,7 @@ var gradientInfo = {
     verticalreversed: { type: 'linear', start: { x: 0, y: 1 }, stop: { x: 0, y: 0 }, reversed: true }
 };
 
-/**
- * gradient: create and apply a gradient fill
- *
- * @param {object} sel: d3 selection to apply this gradient to
- *     You can use `selection.call(Drawing.gradient, ...)`
- * @param {DOM element} gd: the graph div `sel` is part of
- * @param {string} gradientID: a unique (within this plot) identifier
- *     for this gradient, so that we don't create unnecessary definitions
- * @param {string} type: 'radial', 'horizontal', or 'vertical', optionally with
- *     'reversed' at the end. Normally radial goes center to edge,
- *     horizontal goes right to left, and vertical goes bottom to top
- * @param {array} colorscale: as in attribute values, [[fraction, color], ...]
- * @param {string} prop: the property to apply to, 'fill' or 'stroke'
- */
-export function gradient(sel, gd, gradientID, type, colorscale, prop) {
+export function gradient(sel: any, gd: any, gradientID: string, type: string, colorscale: any[], prop: string): void {
     var info = gradientInfo[type];
     return gradientWithBounds(
         sel,
@@ -430,34 +389,12 @@ export function gradient(sel, gd, gradientID, type, colorscale, prop) {
         false,
         info.reversed
     );
-};
+}
 
-/**
- * gradient_with_bounds: create and apply a gradient fill for defined start and stop positions
- *
- * @param {object} sel: d3 selection to apply this gradient to
- *     You can use `selection.call(Drawing.gradient, ...)`
- * @param {DOM element} gd: the graph div `sel` is part of
- * @param {string} gradientID: a unique (within this plot) identifier
- *     for this gradient, so that we don't create unnecessary definitions
- * @param {string} type: 'radial' or 'linear'. Radial goes center to edge,
- *     horizontal goes as defined by start and stop
- * @param {array} colorscale: as in attribute values, [[fraction, color], ...]
- * @param {string} prop: the property to apply to, 'fill' or 'stroke'
- * @param {object} start: start point for linear gradients, { x: number, y: number }.
- *     Ignored if type is 'radial'.
- * @param {object} stop: stop point for linear gradients, { x: number, y: number }.
- *     Ignored if type is 'radial'.
- * @param {boolean} inUserSpace: If true, start and stop give absolute values in the plot.
- *     If false, start and stop are fractions of the traces extent along each axis.
- * @param {boolean} reversed: If true, the gradient is reversed between normal start and stop,
- *     i.e., the colorscale is applied in order from stop to start for linear, from edge
- *     to center for radial gradients.
- */
-function gradientWithBounds(sel, gd, gradientID, type, colorscale, prop, start, stop, inUserSpace, reversed) {
+function gradientWithBounds(sel: any, gd: any, gradientID: string, type: string, colorscale: any[], prop: string, start: any, stop: any, inUserSpace: boolean, reversed: boolean): void {
     var len = colorscale.length;
 
-    var info;
+    var info: any;
     if (type === 'linear') {
         info = {
             node: 'linearGradient',
@@ -499,7 +436,7 @@ function gradientWithBounds(sel, gd, gradientID, type, colorscale, prop, start, 
     gradient
         .enter()
         .append(info.node)
-        .each(function () {
+        .each(function (this: any) {
             var el = select(this);
             if (info.attrs) el.attr(info.attrs);
 
@@ -509,7 +446,7 @@ function gradientWithBounds(sel, gd, gradientID, type, colorscale, prop, start, 
             stops.exit().remove();
             stops.enter().append('stop');
 
-            stops.each(function (d) {
+            stops.each(function (this: any, d: any) {
                 var tc = tinycolor(d[1]);
                 select(this).attr({
                     offset: d[0] + '%',
@@ -524,37 +461,20 @@ function gradientWithBounds(sel, gd, gradientID, type, colorscale, prop, start, 
     sel.classed('gradient_filled', true);
 }
 
-/**
- * pattern: create and apply a pattern fill
- *
- * @param {object} sel: d3 selection to apply this pattern to
- *     You can use `selection.call(Drawing.pattern, ...)`
- * @param {string} calledBy: option to know the caller component
- * @param {DOM element} gd: the graph div `sel` is part of
- * @param {string} patternID: a unique (within this plot) identifier
- *     for this pattern, so that we don't create unnecessary definitions
- * @param {number} size: size of unit squares for repetition of this pattern
- * @param {number} solidity: how solid lines of this pattern are
- * @param {string} mcc: color when painted with colorscale
- * @param {string} fillmode: fillmode for this pattern
- * @param {string} bgcolor: background color for this pattern
- * @param {string} fgcolor: foreground color for this pattern
- * @param {number} fgopacity: foreground opacity for this pattern
- */
 export function pattern(
-    sel,
-    calledBy,
-    gd,
-    patternID,
-    shape,
-    size,
-    solidity,
-    mcc,
-    fillmode,
-    bgcolor,
-    fgcolor,
-    fgopacity
-) {
+    sel: any,
+    calledBy: string,
+    gd: any,
+    patternID: string,
+    shape: string,
+    size: number,
+    solidity: number,
+    mcc: string | undefined,
+    fillmode: string,
+    bgcolor: string,
+    fgcolor: string,
+    fgopacity: number
+): void {
     var isLegend = calledBy === 'legend';
 
     if (mcc) {
@@ -562,23 +482,22 @@ export function pattern(
             bgcolor = mcc;
             fgcolor = Color.contrast(bgcolor);
         } else {
-            bgcolor = undefined;
+            bgcolor = undefined as any;
             fgcolor = mcc;
         }
     }
 
     var fullLayout = gd._fullLayout;
     var fullID = 'p' + fullLayout._uid + '-' + patternID;
-    var width, height;
+    var width: number, height: number;
 
-    // linear interpolation
-    var linearFn = function (x, x0, x1, y0, y1) {
+    var linearFn = function (x: number, x0: number, x1: number, y0: number, y1: number): number {
         return y0 + ((y1 - y0) * (x - x0)) / (x1 - x0);
     };
 
-    var path, linewidth, radius;
-    var patternTag;
-    var patternAttrs = {};
+    var path: string, linewidth: number, radius: number;
+    var patternTag: string;
+    var patternAttrs: Record<string, any> = {};
 
     var fgC = tinycolor(fgcolor);
     var fgRGB = Color.tinyRGB(fgC);
@@ -802,7 +721,7 @@ export function pattern(
     pattern
         .enter()
         .append('pattern')
-        .each(function () {
+        .each(function (this: any) {
             var el = select(this);
 
             el.attr({
@@ -810,7 +729,6 @@ export function pattern(
                 width: width + 'px',
                 height: height + 'px',
                 patternUnits: 'userSpaceOnUse',
-                // for legends scale down patterns just a bit so that default size (i.e 8) nicely fit in small icons
                 patternTransform: isLegend ? 'scale(0.8)' : ''
             });
 
@@ -840,51 +758,44 @@ export function pattern(
     sel.style('fill', getFullUrl(fullID, gd)).style('fill-opacity', null);
 
     sel.classed('pattern_filled', true);
-};
+}
 
-/*
- * Make the gradients container and clear out any previous gradients.
- * We never collect all the gradients we need in one place,
- * so we can't ever remove gradients that have stopped being useful,
- * except all at once before a full redraw.
- * The upside of this is arbitrary points can share gradient defs
- */
-export function initGradients(gd) {
+export function initGradients(gd: any): void {
     var fullLayout = gd._fullLayout;
 
     var gradientsGroup = ensureSingle(fullLayout._defs, 'g', 'gradients');
     gradientsGroup.selectAll('linearGradient,radialGradient').remove();
 
     select(gd).selectAll('.gradient_filled').classed('gradient_filled', false);
-};
+}
 
-export function initPatterns(gd) {
+export function initPatterns(gd: any): void {
     var fullLayout = gd._fullLayout;
 
     var patternsGroup = ensureSingle(fullLayout._defs, 'g', 'patterns');
     patternsGroup.selectAll('pattern').remove();
 
     select(gd).selectAll('.pattern_filled').classed('pattern_filled', false);
-};
+}
 
-export function getPatternAttr(mp, i, dflt) {
+export function getPatternAttr(mp: any, i: number, dflt: any): any {
     if (mp && isArrayOrTypedArray(mp)) {
         return i < mp.length ? mp[i] : dflt;
     }
     return mp;
-};
+}
 
-export function pointStyle(s, trace, gd, pt) {
+export function pointStyle(s: any, trace: any, gd: any, pt?: any): void {
     if (!s.size()) return;
 
     var fns = makePointStyleFns(trace);
 
-    s.each(function (d) {
+    s.each(function (this: any, d: any) {
         singlePointStyle(d, select(this), trace, fns, gd, pt);
     });
-};
+}
 
-export function singlePointStyle(d, sel, trace, fns, gd, pt) {
+export function singlePointStyle(d: any, sel: any, trace: any, fns: any, gd: any, pt?: any): void {
     var marker = trace.marker;
     var markerLine = marker.line;
 
@@ -893,27 +804,22 @@ export function singlePointStyle(d, sel, trace, fns, gd, pt) {
     sel.style('opacity', fns.selectedOpacityFn ? fns.selectedOpacityFn(d) : d.mo === undefined ? marker.opacity : d.mo);
 
     if (fns.ms2mrc) {
-        var r;
+        var r: number;
 
-        // handle multi-trace graph edit case
         if (d.ms === 'various' || marker.size === 'various') {
             r = 3;
         } else {
             r = fns.ms2mrc(d.ms);
         }
 
-        // store the calculated size so hover can use it
         d.mrc = r;
 
         if (fns.selectedSizeFn) {
             r = d.mrc = fns.selectedSizeFn(d);
         }
 
-        // turn the symbol into a sanitized number
         var x = symbolNumber(d.mx || marker.symbol) || 0;
 
-        // save if this marker is open
-        // because that impacts how to handle colors
         d.om = x % 200 >= 100;
 
         var angle = getMarkerAngle(d, trace);
@@ -923,9 +829,8 @@ export function singlePointStyle(d, sel, trace, fns, gd, pt) {
     }
 
     var perPointGradient = false;
-    var fillColor, lineColor, lineWidth;
+    var fillColor: any, lineColor: any, lineWidth: number;
 
-    // 'so' is suspected outliers, for box plots
     if (d.so) {
         lineWidth = markerLine.outlierwidth;
         lineColor = markerLine.outliercolor;
@@ -936,11 +841,9 @@ export function singlePointStyle(d, sel, trace, fns, gd, pt) {
         lineWidth =
             (d.mlw + 1 ||
                 markerLineWidth + 1 ||
-                // TODO: we need the latter for legends... can we get rid of it?
                 (d.trace ? (d.trace.marker.line || {}).width : 0) + 1) - 1 || 0;
 
         if ('mlc' in d) lineColor = d.mlcc = fns.lineScale(d.mlc);
-        // weird case: array wasn't long enough to apply to every point
         else if (isArrayOrTypedArray(markerLine.color)) lineColor = Color.defaultLine;
         else lineColor = markerLine.color;
 
@@ -961,8 +864,6 @@ export function singlePointStyle(d, sel, trace, fns, gd, pt) {
     }
 
     if (d.om) {
-        // open markers can't have zero linewidth, default to 1px,
-        // and use fill color as stroke color
         sel.call(Color.stroke, fillColor).style({
             'stroke-width': (lineWidth || 1) + 'px',
             fill: 'none'
@@ -976,8 +877,6 @@ export function singlePointStyle(d, sel, trace, fns, gd, pt) {
         if (gradientType) perPointGradient = true;
         else gradientType = markerGradient && markerGradient.type;
 
-        // for legend - arrays will propagate through here, but we don't need
-        // to treat it as per-point.
         if (isArrayOrTypedArray(gradientType)) {
             gradientType = gradientType[0];
             if (!gradientInfo[gradientType]) gradientType = 0;
@@ -1054,14 +953,12 @@ export function singlePointStyle(d, sel, trace, fns, gd, pt) {
             Color.stroke(sel, lineColor);
         }
     }
-};
+}
 
-export function makePointStyleFns(trace) {
-    var out = {};
+export function makePointStyleFns(trace: any): any {
+    var out: Record<string, any> = {};
     var marker = trace.marker;
 
-    // allow array marker and marker line colors to be
-    // scaled by given max and min to colorscales
     out.markerScale = tryColorscale(marker, '');
     out.lineScale = tryColorscale(marker, 'line');
 
@@ -1078,10 +975,10 @@ export function makePointStyleFns(trace) {
     }
 
     return out;
-};
+}
 
-export function makeSelectedPointStyleFns(trace) {
-    var out = {};
+export function makeSelectedPointStyleFns(trace: any): any {
+    var out: Record<string, any> = {};
 
     var selectedAttrs = trace.selected || {};
     var unselectedAttrs = trace.unselected || {};
@@ -1097,7 +994,7 @@ export function makeSelectedPointStyleFns(trace) {
     var usmoIsDefined = usmo !== undefined;
 
     if (isArrayOrTypedArray(mo) || smoIsDefined || usmoIsDefined) {
-        out.selectedOpacityFn = function (d) {
+        out.selectedOpacityFn = function (d: any): number {
             var base = d.mo === undefined ? marker.opacity : d.mo;
 
             if (d.selected) {
@@ -1113,7 +1010,7 @@ export function makeSelectedPointStyleFns(trace) {
     var usmc = unselectedMarker.color;
 
     if (smc || usmc) {
-        out.selectedColorFn = function (d) {
+        out.selectedColorFn = function (d: any): string {
             var base = d.mcc || mc;
 
             if (d.selected) {
@@ -1131,7 +1028,7 @@ export function makeSelectedPointStyleFns(trace) {
     var usmsIsDefined = usms !== undefined;
 
     if (Registry.traceIs(trace, 'symbols') && (smsIsDefined || usmsIsDefined)) {
-        out.selectedSizeFn = function (d) {
+        out.selectedSizeFn = function (d: any): number {
             var base = d.mrc || ms / 2;
 
             if (d.selected) {
@@ -1143,10 +1040,10 @@ export function makeSelectedPointStyleFns(trace) {
     }
 
     return out;
-};
+}
 
-export function makeSelectedTextStyleFns(trace) {
-    var out = {};
+export function makeSelectedTextStyleFns(trace: any): any {
+    var out: Record<string, any> = {};
 
     var selectedAttrs = trace.selected || {};
     var unselectedAttrs = trace.unselected || {};
@@ -1159,7 +1056,7 @@ export function makeSelectedTextStyleFns(trace) {
     var stc = selectedTextFont.color;
     var utc = unselectedTextFont.color;
 
-    out.selectedTextColorFn = function (d) {
+    out.selectedTextColorFn = function (d: any): string {
         var base = d.tc || tc;
 
         if (d.selected) {
@@ -1171,29 +1068,29 @@ export function makeSelectedTextStyleFns(trace) {
     };
 
     return out;
-};
+}
 
-export function selectedPointStyle(s, trace) {
+export function selectedPointStyle(s: any, trace: any): void {
     if (!s.size() || !trace.selectedpoints) return;
 
     var fns = makeSelectedPointStyleFns(trace);
     var marker = trace.marker || {};
-    var seq = [];
+    var seq: any[] = [];
 
     if (fns.selectedOpacityFn) {
-        seq.push(function (pt, d) {
+        seq.push(function (pt: any, d: any) {
             pt.style('opacity', fns.selectedOpacityFn(d));
         });
     }
 
     if (fns.selectedColorFn) {
-        seq.push(function (pt, d) {
+        seq.push(function (pt: any, d: any) {
             Color.fill(pt, fns.selectedColorFn(d));
         });
     }
 
     if (fns.selectedSizeFn) {
-        seq.push(function (pt, d) {
+        seq.push(function (pt: any, d: any) {
             var mx = d.mx || marker.symbol || 0;
             var mrc2 = fns.selectedSizeFn(d);
 
@@ -1202,22 +1099,21 @@ export function selectedPointStyle(s, trace) {
                 makePointPath(symbolNumber(mx), mrc2, getMarkerAngle(d, trace), getMarkerStandoff(d, trace))
             );
 
-            // save for Drawing.selectedTextStyle
             d.mrc2 = mrc2;
         });
     }
 
     if (seq.length) {
-        s.each(function (d) {
+        s.each(function (this: any, d: any) {
             var pt = select(this);
             for (var i = 0; i < seq.length; i++) {
                 seq[i](pt, d);
             }
         });
     }
-};
+}
 
-export function tryColorscale(marker, prefix) {
+export function tryColorscale(marker: any, prefix: string): any {
     var cont = prefix ? nestedProperty(marker, prefix).get() : marker;
 
     if (cont) {
@@ -1227,9 +1123,9 @@ export function tryColorscale(marker, prefix) {
         }
     }
     return identity;
-};
+}
 
-var TEXTOFFSETSIGN = {
+var TEXTOFFSETSIGN: Record<string, number> = {
     start: 1,
     end: -1,
     middle: 0,
@@ -1237,38 +1133,33 @@ var TEXTOFFSETSIGN = {
     top: -1
 };
 
-function textPointPosition(s, textPosition, fontSize, markerRadius, dontTouchParent) {
+function textPointPosition(s: any, textPosition: string, fontSize: number, markerRadius: number, dontTouchParent?: boolean): void {
     var group = select(s.node().parentNode);
 
     var v = textPosition.indexOf('top') !== -1 ? 'top' : textPosition.indexOf('bottom') !== -1 ? 'bottom' : 'middle';
     var h = textPosition.indexOf('left') !== -1 ? 'end' : textPosition.indexOf('right') !== -1 ? 'start' : 'middle';
 
-    // if markers are shown, offset a little more than
-    // the nominal marker size
-    // ie 2/1.6 * nominal, bcs some markers are a bit bigger
     var r = markerRadius ? markerRadius / 0.8 + 1 : 0;
 
     var numLines = (svgTextUtils.lineCount(s) - 1) * LINE_SPACING + 1;
     var dx = TEXTOFFSETSIGN[h] * r;
     var dy = fontSize * 0.75 + TEXTOFFSETSIGN[v] * r + ((TEXTOFFSETSIGN[v] - 1) * numLines * fontSize) / 2;
 
-    // fix the overall text group position
     s.attr('text-anchor', h);
     if (!dontTouchParent) {
         group.attr('transform', strTranslate(dx, dy));
     }
 }
 
-function extracTextFontSize(d, trace) {
+function extracTextFontSize(d: any, trace: any): number {
     var fontSize = d.ts || trace.textfont.size;
     return isNumeric(fontSize) && fontSize > 0 ? fontSize : 0;
 }
 
-// draw text at points
-export function textPointStyle(s, trace, gd) {
+export function textPointStyle(s: any, trace: any, gd: any): void {
     if (!s.size()) return;
 
-    var selectedTextColorFn;
+    var selectedTextColorFn: any;
     if (trace.selectedpoints) {
         var fns = makeSelectedTextStyleFns(trace);
         selectedTextColorFn = fns.selectedTextColorFn;
@@ -1277,7 +1168,7 @@ export function textPointStyle(s, trace, gd) {
     var texttemplate = trace.texttemplate;
     var fullLayout = gd._fullLayout;
 
-    s.each(function (d) {
+    s.each(function (this: any, d: any) {
         var p = select(this);
 
         var text = texttemplate
@@ -1292,7 +1183,7 @@ export function textPointStyle(s, trace, gd) {
         if (texttemplate) {
             var fn = trace._module.formatLabels;
             var labels = fn ? fn(d, trace, fullLayout) : {};
-            var pointValues = {};
+            var pointValues: Record<string, any> = {};
             appendArrayPointValue(pointValues, trace, d.i);
             text = texttemplateString({
                 data: [pointValues, d, trace._meta],
@@ -1322,14 +1213,14 @@ export function textPointStyle(s, trace, gd) {
             .call(svgTextUtils.convertToTspans, gd)
             .call(textPointPosition, pos, fontSize, d.mrc);
     });
-};
+}
 
-export function selectedTextStyle(s, trace) {
+export function selectedTextStyle(s: any, trace: any): void {
     if (!s.size() || !trace.selectedpoints) return;
 
     var fns = makeSelectedTextStyleFns(trace);
 
-    s.each(function (d) {
+    s.each(function (this: any, d: any) {
         var tx = select(this);
         var tc = fns.selectedTextColorFn(d);
         var tp = d.tp || trace.textposition;
@@ -1339,18 +1230,16 @@ export function selectedTextStyle(s, trace) {
         var dontTouchParent = Registry.traceIs(trace, 'bar-like');
         textPointPosition(tx, tp, fontSize, d.mrc2 || d.mrc, dontTouchParent);
     });
-};
+}
 
-// generalized Catmull-Rom splines, per
-// http://www.cemyuksel.com/research/catmullrom_param/catmullrom.pdf
 var CatmullRomExp = 0.5;
-export function smoothopen(pts, smoothness) {
+export function smoothopen(pts: number[][], smoothness: number): string {
     if (pts.length < 3) {
         return 'M' + pts.join('L');
     }
     var path = 'M' + pts[0];
-    var tangents = [];
-    var i;
+    var tangents: number[][][] = [];
+    var i: number;
     for (i = 1; i < pts.length - 1; i++) {
         tangents.push(makeTangent(pts[i - 1], pts[i], pts[i + 1], smoothness));
     }
@@ -1360,16 +1249,16 @@ export function smoothopen(pts, smoothness) {
     }
     path += 'Q' + tangents[pts.length - 3][1] + ' ' + pts[pts.length - 1];
     return path;
-};
+}
 
-export function smoothclosed(pts, smoothness) {
+export function smoothclosed(pts: number[][], smoothness: number): string {
     if (pts.length < 3) {
         return 'M' + pts.join('L') + 'Z';
     }
     var path = 'M' + pts[0];
     var pLast = pts.length - 1;
     var tangents = [makeTangent(pts[pLast], pts[0], pts[1], smoothness)];
-    var i;
+    var i: number;
     for (i = 1; i < pLast; i++) {
         tangents.push(makeTangent(pts[i - 1], pts[i], pts[i + 1], smoothness));
     }
@@ -1380,29 +1269,29 @@ export function smoothclosed(pts, smoothness) {
     }
     path += 'C' + tangents[pLast][1] + ' ' + tangents[0][0] + ' ' + pts[0] + 'Z';
     return path;
-};
+}
 
-var lastDrawnX, lastDrawnY;
+var lastDrawnX: number, lastDrawnY: number;
 
-function roundEnd(pt, isY, isLastPoint) {
+function roundEnd(pt: any, isY: number, isLastPoint: boolean): number {
     if (isLastPoint) pt = applyBackoff(pt);
 
     return isY ? roundY(pt[1]) : roundX(pt[0]);
 }
 
-function roundX(p) {
+function roundX(p: number): number {
     var v = d3Round(p, 2);
     lastDrawnX = v;
     return v;
 }
 
-function roundY(p) {
+function roundY(p: number): number {
     var v = d3Round(p, 2);
     lastDrawnY = v;
     return v;
 }
 
-function makeTangent(prevpt, thispt, nextpt, smoothness) {
+function makeTangent(prevpt: number[], thispt: number[], nextpt: number[], smoothness: number): number[][] {
     var d1x = prevpt[0] - thispt[0];
     var d1y = prevpt[1] - thispt[1];
     var d2x = nextpt[0] - thispt[0];
@@ -1419,28 +1308,26 @@ function makeTangent(prevpt, thispt, nextpt, smoothness) {
     ];
 }
 
-// step paths - returns a generator function for paths
-// with the given step shape
-var STEPPATH = {
-    hv: function (p0, p1, isLastPoint) {
+var STEPPATH: Record<string, (p0: number[], p1: any, isLastPoint: boolean) => string> = {
+    hv: function (p0: number[], p1: any, isLastPoint: boolean): string {
         return 'H' + roundX(p1[0]) + 'V' + roundEnd(p1, 1, isLastPoint);
     },
-    vh: function (p0, p1, isLastPoint) {
+    vh: function (p0: number[], p1: any, isLastPoint: boolean): string {
         return 'V' + roundY(p1[1]) + 'H' + roundEnd(p1, 0, isLastPoint);
     },
-    hvh: function (p0, p1, isLastPoint) {
+    hvh: function (p0: number[], p1: any, isLastPoint: boolean): string {
         return 'H' + roundX((p0[0] + p1[0]) / 2) + 'V' + roundY(p1[1]) + 'H' + roundEnd(p1, 0, isLastPoint);
     },
-    vhv: function (p0, p1, isLastPoint) {
+    vhv: function (p0: number[], p1: any, isLastPoint: boolean): string {
         return 'V' + roundY((p0[1] + p1[1]) / 2) + 'H' + roundX(p1[0]) + 'V' + roundEnd(p1, 1, isLastPoint);
     }
 };
-var STEPLINEAR = function (p0, p1, isLastPoint) {
+var STEPLINEAR = function (p0: number[], p1: any, isLastPoint: boolean): string {
     return 'L' + roundEnd(p1, 0, isLastPoint) + ',' + roundEnd(p1, 1, isLastPoint);
 };
-export function steps(shape) {
+export function steps(shape: string): (pts: number[][]) => string {
     var onestep = STEPPATH[shape] || STEPLINEAR;
-    return function (pts) {
+    return function (pts: number[][]): string {
         var path = 'M' + roundX(pts[0][0]) + ',' + roundY(pts[0][1]);
         var len = pts.length;
         for (var i = 1; i < len; i++) {
@@ -1448,9 +1335,9 @@ export function steps(shape) {
         }
         return path;
     };
-};
+}
 
-function applyBackoff(pt, start) {
+function applyBackoff(pt: any, start?: number[]): any {
     var backoff = pt.backoff;
     var trace = pt.trace;
     var d = pt.d;
@@ -1482,7 +1369,7 @@ function applyBackoff(pt, start) {
 
         if (b === 'auto') {
             var endI = end.i;
-            if (trace.type === 'scatter') endI--; // Why we need this hack?
+            if (trace.type === 'scatter') endI--;
 
             var endMarker = end.marker;
             var endMarkerSymbol = endMarker.symbol;
@@ -1508,10 +1395,8 @@ function applyBackoff(pt, start) {
 
 export { applyBackoff };
 
-// off-screen svg render testing element, shared by the whole page
-// uses the id 'js-plotly-tester' and stores it in tester
-export function makeTester() {
-    var _tester = ensureSingleById(select('body'), 'svg', 'js-plotly-tester', function (s) {
+export function makeTester(): void {
+    var _tester = ensureSingleById(select('body'), 'svg', 'js-plotly-tester', function (s: any) {
         s.attr(xmlnsNamespaces.svgAttrs).style({
             position: 'absolute',
             left: '-10000px',
@@ -1522,10 +1407,7 @@ export function makeTester() {
         });
     });
 
-    // browsers differ on how they describe the bounding rect of
-    // the svg if its contents spill over... so make a 1x1px
-    // reference point we can measure off of.
-    var _testref = ensureSingle(_tester, 'path', 'js-reference-point', function (s) {
+    var _testref = ensureSingle(_tester, 'path', 'js-reference-point', function (s: any) {
         s.attr('d', 'M0,0H1V1H0Z').style({
             'stroke-width': 0,
             fill: 'black'
@@ -1534,55 +1416,19 @@ export function makeTester() {
 
     tester = _tester;
     testref = _testref;
-};
+}
 
-/*
- * use our offscreen tester to get a clientRect for an element,
- * in a reference frame where it isn't translated (or transformed) and
- * its anchor point is at (0,0)
- * always returns a copy of the bbox, so the caller can modify it safely
- *
- * @param {SVGElement} node: the element to measure. If possible this should be
- *   a <text> or MathJax <g> element that's already passed through
- *   `convertToTspans` because in that case we can cache the results, but it's
- *   possible to pass in any svg element.
- *
- * @param {boolean} inTester: is this element already in `tester`?
- *   If you are measuring a dummy element, rather than one you really intend
- *   to use on the plot, making it in `tester` in the first place
- *   allows us to test faster because it cuts out cloning and appending it.
- *
- * @param {string} hash: for internal use only, if we already know the cache key
- *   for this element beforehand.
- *
- * @return {object}: a plain object containing the width, height, left, right,
- *   top, and bottom of `node`
- */
-export var savedBBoxes = {};
+export var savedBBoxes: Record<string, any> = {};
 var savedBBoxesCount = 0;
 var maxSavedBBoxes = 10000;
 
-export function bBox(node, inTester, hash) {
-    /*
-     * Cache elements we've already measured so we don't have to
-     * remeasure the same thing many times
-     * We have a few bBox callers though who pass a node larger than
-     * a <text> or a MathJax <g>, such as an axis group containing many labels.
-     * These will not generate a hash (unless we figure out an appropriate
-     * hash key for them) and thus we will not hash them.
-     */
+export function bBox(node: any, inTester?: boolean, hash?: string): any {
     if (!hash) hash = nodeHash(node);
-    var out;
+    var out: any;
     if (hash) {
         out = savedBBoxes[hash];
         if (out) return extendFlat({}, out);
     } else if (node.childNodes.length === 1) {
-        /*
-         * If we have only one child element, which is itself hashable, make
-         * a new hash from this element plus its x,y,transform
-         * These bounding boxes *include* x,y,transform - mostly for use by
-         * callers trying to avoid overlaps (ie titles)
-         */
         var innerNode = node.childNodes[0];
 
         hash = nodeHash(innerNode);
@@ -1592,8 +1438,6 @@ export function bBox(node, inTester, hash) {
             var transform = innerNode.getAttribute('transform');
 
             if (!transform) {
-                // in this case, just varying x and y, don't bother caching
-                // the final bBox because the alteration is quick.
                 var innerBB = bBox(innerNode, false, hash);
                 if (x) {
                     innerBB.left += x;
@@ -1605,34 +1449,22 @@ export function bBox(node, inTester, hash) {
                 }
                 return innerBB;
             }
-            /*
-             * else we have a transform - rather than make a complicated
-             * (and error-prone and probably slow) transform parser/calculator,
-             * just continue on calculating the boundingClientRect of the group
-             * and use the new composite hash to cache it.
-             * That said, `innerNode.transform.baseVal` is an array of
-             * `SVGTransform` objects, that *do* seem to have a nice matrix
-             * multiplication interface that we could use to avoid making
-             * another getBoundingClientRect call...
-             */
             hash += '~' + x + '~' + y + '~' + transform;
 
             out = savedBBoxes[hash];
             if (out) return extendFlat({}, out);
         }
     }
-    var testNode, testerNode;
+    var testNode: any, testerNode: any;
     if (inTester) {
         testNode = node;
     } else {
         testerNode = tester.node();
 
-        // copy the node to test into the tester
         testNode = node.cloneNode(true);
         testerNode.appendChild(testNode);
     }
 
-    // standardize its position (and newline tspans if any)
     select(testNode).attr('transform', null).call(svgTextUtils.positionText, 0, 0);
 
     var testRect = testNode.getBoundingClientRect();
@@ -1649,46 +1481,28 @@ export function bBox(node, inTester, hash) {
         bottom: testRect.bottom - refRect.top
     };
 
-    // make sure we don't have too many saved boxes,
-    // or a long session could overload on memory
-    // by saving boxes for long-gone elements
     if (savedBBoxesCount >= maxSavedBBoxes) {
         savedBBoxes = {};
         savedBBoxesCount = 0;
     }
 
-    // cache this bbox
     if (hash) savedBBoxes[hash] = bb;
     savedBBoxesCount++;
 
     return extendFlat({}, bb);
-};
+}
 
-// capture everything about a node (at least in our usage) that
-// impacts its bounding box, given that bBox clears x, y, and transform
-function nodeHash(node) {
+function nodeHash(node: any): string | undefined {
     var inputText = node.getAttribute('data-unformatted');
     if (inputText === null) return;
     return inputText + node.getAttribute('data-math') + node.getAttribute('text-anchor') + node.getAttribute('style');
 }
 
-/**
- * Set clipPath URL in a way that work for all situations.
- *
- * In details, graphs on pages with <base> HTML tags need to prepend
- * the clip path ids with the page's base url EXCEPT during toImage exports.
- *
- * @param {d3 selection} s : node to add clip-path attribute
- * @param {string} localId : local clip-path (w/o base url) id
- * @param {DOM element || object} gd
- * - context._baseUrl {string}
- * - context._exportedPlot {boolean}
- */
-export function setClipUrl(s, localId, gd) {
+export function setClipUrl(s: any, localId: string, gd: any): void {
     s.attr('clip-path', getFullUrl(localId, gd));
-};
+}
 
-function getFullUrl(localId, gd) {
+function getFullUrl(localId: string, gd: any): string | null {
     if (!localId) return null;
 
     var context = gd._context;
@@ -1696,15 +1510,13 @@ function getFullUrl(localId, gd) {
     return baseUrl ? "url('" + baseUrl + '#' + localId + "')" : 'url(#' + localId + ')';
 }
 
-export function getTranslate(element) {
-    // Note the separator [^\d] between x and y in this regex
-    // We generally use ',' but IE will convert it to ' '
+export function getTranslate(element: any): { x: number; y: number } {
     var re = /.*\btranslate\((-?\d*\.?\d*)[^-\d]*(-?\d*\.?\d*)[^\d].*/;
     var getter = element.attr ? 'attr' : 'getAttribute';
     var transform = element[getter]('transform') || '';
 
     var translate = transform
-        .replace(re, function (match, p1, p2) {
+        .replace(re, function (match: string, p1: string, p2: string) {
             return [p1, p2].join(' ');
         })
         .split(' ');
@@ -1713,9 +1525,9 @@ export function getTranslate(element) {
         x: +translate[0] || 0,
         y: +translate[1] || 0
     };
-};
+}
 
-export function setTranslate(element, x, y) {
+export function setTranslate(element: any, x: number, y: number): string {
     var re = /(\btranslate\(.*?\);?)/;
     var getter = element.attr ? 'attr' : 'getAttribute';
     var setter = element.attr ? 'attr' : 'setAttribute';
@@ -1731,15 +1543,15 @@ export function setTranslate(element, x, y) {
     element[setter]('transform', transform);
 
     return transform;
-};
+}
 
-export function getScale(element) {
+export function getScale(element: any): { x: number; y: number } {
     var re = /.*\bscale\((\d*\.?\d*)[^\d]*(\d*\.?\d*)[^\d].*/;
     var getter = element.attr ? 'attr' : 'getAttribute';
     var transform = element[getter]('transform') || '';
 
     var translate = transform
-        .replace(re, function (match, p1, p2) {
+        .replace(re, function (match: string, p1: string, p2: string) {
             return [p1, p2].join(' ');
         })
         .split(' ');
@@ -1748,9 +1560,9 @@ export function getScale(element) {
         x: +translate[0] || 1,
         y: +translate[1] || 1
     };
-};
+}
 
-export function setScale(element, x, y) {
+export function setScale(element: any, x: number, y: number): string {
     var re = /(\bscale\(.*?\);?)/;
     var getter = element.attr ? 'attr' : 'getAttribute';
     var setter = element.attr ? 'attr' : 'setAttribute';
@@ -1766,34 +1578,33 @@ export function setScale(element, x, y) {
     element[setter]('transform', transform);
 
     return transform;
-};
+}
 
 var SCALE_RE = /\s*sc.*/;
 
-export function setPointGroupScale(selection, xScale, yScale) {
+export function setPointGroupScale(selection: any, xScale: number, yScale: number): void {
     xScale = xScale || 1;
     yScale = yScale || 1;
 
     if (!selection) return;
 
-    // The same scale transform for every point:
     var scale = xScale === 1 && yScale === 1 ? '' : 'scale(' + xScale + ',' + yScale + ')';
 
-    selection.each(function () {
+    selection.each(function (this: any) {
         var t = (this.getAttribute('transform') || '').replace(SCALE_RE, '');
         t += scale;
         t = t.trim();
         this.setAttribute('transform', t);
     });
-};
+}
 
 var TEXT_POINT_LAST_TRANSLATION_RE = /translate\([^)]*\)\s*$/;
 
-export function setTextPointsScale(selection, xScale, yScale) {
+export function setTextPointsScale(selection: any, xScale: number, yScale: number): void {
     if (!selection) return;
 
-    selection.each(function () {
-        var transforms;
+    selection.each(function (this: any) {
+        var transforms: any[];
         var el = select(this);
         var text = el.select('text');
 
@@ -1816,10 +1627,10 @@ export function setTextPointsScale(selection, xScale, yScale) {
 
         el.attr('transform', transforms.join(''));
     });
-};
+}
 
-function getMarkerStandoff(d, trace) {
-    var standoff;
+function getMarkerStandoff(d: any, trace: any): number {
+    var standoff: number;
 
     if (d) standoff = d.mf;
 
@@ -1828,7 +1639,6 @@ function getMarkerStandoff(d, trace) {
     }
 
     if (!trace._geo && !trace._xA) {
-        // case of legends
         return -standoff;
     }
 
@@ -1841,21 +1651,21 @@ var atan2 = Math.atan2;
 var cos = Math.cos;
 var sin = Math.sin;
 
-function rotate(t, xy) {
+function rotate(t: number, xy: number[]): number[] {
     var x = xy[0];
     var y = xy[1];
     return [x * cos(t) - y * sin(t), x * sin(t) + y * cos(t)];
 }
 
-var previousLon;
-var previousLat;
-var previousX;
-var previousY;
-var previousI;
-var previousTraceUid;
+var previousLon: number;
+var previousLat: number;
+var previousX: number;
+var previousY: number;
+var previousI: number;
+var previousTraceUid: string;
 
-function getMarkerAngle(d, trace) {
-    var angle = d.ma;
+function getMarkerAngle(d: any, trace: any): number | null {
+    var angle: any = d.ma;
 
     if (angle === undefined) {
         angle = trace.marker.angle;
@@ -1864,7 +1674,7 @@ function getMarkerAngle(d, trace) {
         }
     }
 
-    var x, y;
+    var x: number, y: number;
     var ref = trace.marker.angleref;
     if (ref === 'previous' || ref === 'north') {
         if (trace._geo) {
@@ -1878,7 +1688,6 @@ function getMarkerAngle(d, trace) {
                 x = xa.c2p(d.x);
                 y = ya.c2p(d.y);
             } else {
-                // case of legends
                 return 90;
             }
         }
@@ -1889,11 +1698,11 @@ function getMarkerAngle(d, trace) {
 
             var north = trace._geo.project([
                 lon,
-                lat + 1e-5 // epsilon
+                lat + 1e-5
             ]);
 
             var east = trace._geo.project([
-                lon + 1e-5, // epsilon
+                lon + 1e-5,
                 lat
             ]);
 
@@ -1901,13 +1710,9 @@ function getMarkerAngle(d, trace) {
 
             var v = atan2(north[1] - y, north[0] - x);
 
-            var t;
+            var t: number;
             if (ref === 'north') {
                 t = (angle / 180) * Math.PI;
-                // To use counter-clockwise angles i.e.
-                // East: 90, West: -90
-                // to facilitate wind visualisations
-                // in future we should use t = -t here.
             } else if (ref === 'previous') {
                 var lon1 = (lon / 180) * Math.PI;
                 var lat1 = (lat / 180) * Math.PI;
@@ -1925,8 +1730,8 @@ function getMarkerAngle(d, trace) {
                 previousLat = lat;
             }
 
-            var A = rotate(u, [cos(t), 0]);
-            var B = rotate(v, [sin(t), 0]);
+            var A = rotate(u, [cos(t!), 0]);
+            var B = rotate(v, [sin(t!), 0]);
 
             angle = (atan2(A[1] + B[1], A[0] + B[0]) / Math.PI) * 180;
 
@@ -1936,9 +1741,9 @@ function getMarkerAngle(d, trace) {
         }
 
         if (ref === 'previous' && !trace._geo) {
-            if (previousTraceUid === trace.uid && d.i === previousI + 1 && isNumeric(x) && isNumeric(y)) {
-                var dX = x - previousX;
-                var dY = y - previousY;
+            if (previousTraceUid === trace.uid && d.i === previousI + 1 && isNumeric(x!) && isNumeric(y!)) {
+                var dX = x! - previousX;
+                var dY = y! - previousY;
 
                 var shape = trace.line ? trace.line.shape || '' : '';
 
@@ -1953,8 +1758,8 @@ function getMarkerAngle(d, trace) {
         }
     }
 
-    previousX = x;
-    previousY = y;
+    previousX = x!;
+    previousY = y!;
     previousI = d.i;
     previousTraceUid = trace.uid;
 
@@ -1962,5 +1767,3 @@ function getMarkerAngle(d, trace) {
 }
 
 export { getMarkerAngle };
-
-

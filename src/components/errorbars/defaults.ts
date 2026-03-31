@@ -4,12 +4,12 @@ import Lib from '../../lib/index.js';
 import Template from '../../plot_api/plot_template.js';
 import attributes from './attributes.js';
 
-export default function(traceIn, traceOut, defaultColor, opts) {
+export default function(traceIn: any, traceOut: any, defaultColor: string, opts: any): void {
     var objName = 'error_' + opts.axis;
     var containerOut = Template.newContainer(traceOut, objName);
     var containerIn = traceIn[objName] || {};
 
-    function coerce(attr, dflt) {
+    function coerce(attr: string, dflt?: any): any {
         return Lib.coerce(containerIn, containerOut, attributes, attr, dflt);
     }
 

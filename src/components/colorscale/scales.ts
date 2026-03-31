@@ -1,6 +1,6 @@
 import tinycolor from 'tinycolor2';
 
-var scales = {
+var scales: Record<string, any[][]> = {
     Greys: [
         [0, 'rgb(0,0,0)'], [1, 'rgb(255,255,255)']
     ],
@@ -33,21 +33,17 @@ var scales = {
         [0, 'rgb(0,0,255)'], [1, 'rgb(255,0,0)']
     ],
 
-    // modified RdBu based on
-    // http://www.kennethmoreland.com/color-maps/
     RdBu: [
         [0, 'rgb(5,10,172)'], [0.35, 'rgb(106,137,247)'],
         [0.5, 'rgb(190,190,190)'], [0.6, 'rgb(220,170,132)'],
         [0.7, 'rgb(230,145,90)'], [1, 'rgb(178,10,28)']
     ],
 
-    // Scale for non-negative numeric values
     Reds: [
         [0, 'rgb(220,220,220)'], [0.2, 'rgb(245,195,157)'],
         [0.4, 'rgb(245,160,105)'], [1, 'rgb(178,10,28)']
     ],
 
-    // Scale for non-positive numeric values
     Blues: [
         [0, 'rgb(5,10,172)'], [0.35, 'rgb(40,60,190)'],
         [0.5, 'rgb(70,100,245)'], [0.6, 'rgb(90,120,245)'],
@@ -133,11 +129,11 @@ var scales = {
 
 var defaultScale = scales.RdBu;
 
-function getScale(scl, dflt) {
+function getScale(scl: any, dflt?: any): any {
     if(!dflt) dflt = defaultScale;
     if(!scl) return dflt;
 
-    function parseScale() {
+    function parseScale(): void {
         try {
             scl = scales[scl] || JSON.parse(scl);
         } catch(e) {
@@ -155,7 +151,7 @@ function getScale(scl, dflt) {
     return scl;
 }
 
-function isValidScaleArray(scl) {
+function isValidScaleArray(scl: any): boolean {
     var highestVal = 0;
 
     if(!Array.isArray(scl) || scl.length < 2) return false;
@@ -177,7 +173,7 @@ function isValidScaleArray(scl) {
     return true;
 }
 
-function isValidScale(scl) {
+function isValidScale(scl: any): boolean {
     if(scales[scl] !== undefined) return true;
     else return isValidScaleArray(scl);
 }

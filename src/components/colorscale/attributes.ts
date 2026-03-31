@@ -5,11 +5,11 @@ import _scales from './scales.js';
 const { scales: palettes } = _scales;
 var paletteStr = sortObjectKeys(palettes);
 
-function code(s) {
+function code(s: string): string {
     return '`' + s + '`';
 }
 
-export default function colorScaleAttrs(context, opts) {
+export default function colorScaleAttrs(context: string, opts: any): any {
     context = context || '';
     opts = opts || {};
 
@@ -43,12 +43,12 @@ export default function colorScaleAttrs(context, opts) {
     var minFull = code(contextHead + min);
     var maxFull = code(contextHead + max);
     var minmaxFull = minFull + ' and ' + maxFull;
-    var autoImpliedEdits = {};
+    var autoImpliedEdits: Record<string, any> = {};
     autoImpliedEdits[min] = autoImpliedEdits[max] = undefined;
-    var minmaxImpliedEdits = {};
+    var minmaxImpliedEdits: Record<string, any> = {};
     minmaxImpliedEdits[auto] = false;
 
-    var attrs = {};
+    var attrs: Record<string, any> = {};
 
     if(colorAttr === 'color') {
         attrs.color = {

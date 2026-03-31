@@ -6,14 +6,14 @@ import _scales from './scales.js';
 const { isValid: isValidScale } = _scales;
 import { traceIs } from '../../registry.js';
 
-function npMaybe(parentCont, prefix) {
+function npMaybe(parentCont: any, prefix: string): any {
     var containerStr = prefix.slice(0, prefix.length - 1);
     return prefix ?
         nestedProperty(parentCont, containerStr).get() || {} :
         parentCont;
 }
 
-export default function colorScaleDefaults(parentContIn, parentContOut, layout, coerce, opts) {
+export default function colorScaleDefaults(parentContIn: any, parentContOut: any, layout: any, coerce: any, opts: any): void {
     var prefix = opts.prefix;
     var cLetter = opts.cLetter;
     var inTrace = '_module' in parentContOut;
@@ -21,9 +21,7 @@ export default function colorScaleDefaults(parentContIn, parentContOut, layout, 
     var containerOut = npMaybe(parentContOut, prefix);
     var template = npMaybe(parentContOut._template || {}, prefix) || {};
 
-    // colorScaleDefaults wrapper called if-ever we need to reset the colorscale
-    // attributes for containers that were linked to invalid color axes
-    var thisFn = function() {
+    var thisFn = function(): void {
         delete parentContIn.coloraxis;
         delete parentContOut.coloraxis;
         return colorScaleDefaults(parentContIn, parentContOut, layout, coerce, opts);
@@ -52,10 +50,6 @@ export default function colorScaleDefaults(parentContIn, parentContOut, layout, 
                     ].join(' '));
                 }
             } else {
-                // stash:
-                // - colorbar visual 'type'
-                // - colorbar options to help in Colorbar.draw
-                // - list of colorScaleDefaults wrapper functions
                 colorAxes[colorAx] = [colorbarVisuals, parentContOut, [thisFn]];
             }
             return;
@@ -74,8 +68,6 @@ export default function colorScaleDefaults(parentContIn, parentContOut, layout, 
         coerce(prefix + cLetter + 'max');
     }
 
-    // handles both the trace case (autocolorscale is false by default) and
-    // the marker and marker.line case (autocolorscale is true by default)
     var sclIn = containerIn.colorscale;
     var sclTemplate = template.colorscale;
     var autoColorscaleDflt;
@@ -87,8 +79,6 @@ export default function colorScaleDefaults(parentContIn, parentContOut, layout, 
     coerce(prefix + 'reversescale');
 
     if(prefix !== 'marker.line.') {
-        // handles both the trace case where the dflt is listed in attributes and
-        // the marker case where the dflt is determined by hasColorbar
         var showScaleDflt;
         if(prefix && inTrace) showScaleDflt = hasColorbar(containerIn);
 

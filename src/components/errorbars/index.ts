@@ -8,7 +8,7 @@ import _req2 from './compute_error.js';
 import _req3 from './plot.js';
 import _req4 from './style.js';
 
-var xyAttrs = {
+var xyAttrs: Record<string, any> = {
     error_x: Lib.extendFlat({}, attributes),
     error_y: Lib.extendFlat({}, attributes)
 };
@@ -16,7 +16,7 @@ delete xyAttrs.error_x.copy_zstyle;
 delete xyAttrs.error_y.copy_zstyle;
 delete xyAttrs.error_y.copy_ystyle;
 
-var xyzAttrs = {
+var xyzAttrs: Record<string, any> = {
     error_x: Lib.extendFlat({}, attributes),
     error_y: Lib.extendFlat({}, attributes),
     error_z: Lib.extendFlat({}, attributes)
@@ -50,7 +50,7 @@ export default {
     hoverInfo: hoverInfo
 };
 
-function hoverInfo(calcPoint, trace, hoverPoint) {
+function hoverInfo(calcPoint: any, trace: any, hoverPoint: any): void {
     if((trace.error_y || {}).visible) {
         hoverPoint.yerr = calcPoint.yh - calcPoint.y;
         if(!trace.error_y.symmetric) hoverPoint.yerrneg = calcPoint.y - calcPoint.ys;
