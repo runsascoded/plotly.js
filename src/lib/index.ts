@@ -25,61 +25,61 @@ import { throttle, done as throttleDone, clear as clearThrottle } from './thrott
 export { throttle, throttleDone, clearThrottle };
 
 import _nestedProperty from './nested_property.js';
-export var nestedProperty = _nestedProperty;
+export var nestedProperty: any = _nestedProperty;
 
 import _keyedContainer from './keyed_container.js';
-export var keyedContainer = _keyedContainer;
+export var keyedContainer: any = _keyedContainer;
 
 import _relativeAttr from './relative_attr.js';
-export var relativeAttr = _relativeAttr;
+export var relativeAttr: any = _relativeAttr;
 
 import _isPlainObject from './is_plain_object.js';
-export var isPlainObject = _isPlainObject;
+export var isPlainObject: any = _isPlainObject;
 
 import _toLogRange from './to_log_range.js';
-export var toLogRange = _toLogRange;
+export var toLogRange: any = _toLogRange;
 
 import _relinkPrivateKeys from './relink_private.js';
-export var relinkPrivateKeys = _relinkPrivateKeys;
+export var relinkPrivateKeys: any = _relinkPrivateKeys;
 
 import _sortObjectKeys from './sort_object_keys.js';
-export var sortObjectKeys = _sortObjectKeys;
+export var sortObjectKeys: any = _sortObjectKeys;
 
 import _clearResponsive from './clear_responsive.js';
-export var clearResponsive = _clearResponsive;
+export var clearResponsive: any = _clearResponsive;
 
 import _preserveDrawingBuffer from './preserve_drawing_buffer.js';
-export var preserveDrawingBuffer = _preserveDrawingBuffer;
+export var preserveDrawingBuffer: any = _preserveDrawingBuffer;
 
 import _makeTraceGroups from './make_trace_groups.js';
-export var makeTraceGroups = _makeTraceGroups;
+export var makeTraceGroups: any = _makeTraceGroups;
 
 import _localize from './localize.js';
 export { _localize as _ };
 
 import _notifier from './notifier.js';
-export var notifier = _notifier;
+export var notifier: any = _notifier;
 
 import _filterUnique from './filter_unique.js';
-export var filterUnique = _filterUnique;
+export var filterUnique: any = _filterUnique;
 
 import _filterVisible from './filter_visible.js';
-export var filterVisible = _filterVisible;
+export var filterVisible: any = _filterVisible;
 
 import _pushUnique from './push_unique.js';
-export var pushUnique = _pushUnique;
+export var pushUnique: any = _pushUnique;
 
 import _increment from './increment.js';
-export var increment = _increment;
+export var increment: any = _increment;
 
 import _cleanNumber from './clean_number.js';
-export var cleanNumber = _cleanNumber;
+export var cleanNumber: any = _cleanNumber;
 
 import _noop from './noop.js';
-export var noop = _noop;
+export var noop: any = _noop;
 
 import _identity from './identity.js';
-export var identity = _identity;
+export var identity: any = _identity;
 
 // Re-import modules needed by inline functions
 import { isArrayOrTypedArray, isTypedArray } from './array.js';
@@ -87,11 +87,11 @@ import { extendFlat, extendDeepNoArrays } from './extend.js';
 import { warn } from './loggers.js';
 import { formatDate, dateTime2ms } from './dates.js';
 
-var MAX_SAFE = numConstants.FP_SAFE;
-var MIN_SAFE = -MAX_SAFE;
-var BADNUM = numConstants.BADNUM;
+var MAX_SAFE: number = numConstants.FP_SAFE;
+var MIN_SAFE: number = -MAX_SAFE;
+var BADNUM: number = numConstants.BADNUM;
 
-export function adjustFormat(formatStr) {
+export function adjustFormat(formatStr: string): string {
     if (!formatStr || /^\d[.]\df/.test(formatStr) || /[.]\d%/.test(formatStr)) return formatStr;
 
     if (formatStr === '0.f') return '~f';
@@ -104,8 +104,8 @@ export function adjustFormat(formatStr) {
     return formatStr;
 }
 
-var seenBadFormats = {};
-export function warnBadFormat(f) {
+var seenBadFormats: Record<string, number> = {};
+export function warnBadFormat(f: any): void {
     var key = String(f);
     if (!seenBadFormats[key]) {
         seenBadFormats[key] = 1;
@@ -113,12 +113,12 @@ export function warnBadFormat(f) {
     }
 }
 
-export function noFormat(value) {
+export function noFormat(value: any): string {
     return String(value);
 }
 
-export function numberFormat(formatStr) {
-    var fn;
+export function numberFormat(formatStr: string): (v: any) => string {
+    var fn: (v: any) => string;
     try {
         fn = d3Format(adjustFormat(formatStr));
     } catch (e) {
@@ -129,7 +129,7 @@ export function numberFormat(formatStr) {
     return fn;
 }
 
-export function ensureNumber(v) {
+export function ensureNumber(v: any): number {
     if (!isNumeric(v)) return BADNUM;
     v = Number(v);
     return v > MAX_SAFE || v < MIN_SAFE ? BADNUM : v;
@@ -143,7 +143,7 @@ export function ensureNumber(v) {
  *
  * @return {bool}: v is a valid array index
  */
-export function isIndex(v, len) {
+export function isIndex(v: any, len?: number): boolean {
     if (len !== undefined && v >= len) return false;
     return isNumeric(v) && v >= 0 && v % 1 === 0;
 }
@@ -155,7 +155,7 @@ export function isIndex(v, len) {
  * @param {number} cnt
  * @return {array}
  */
-export function repeat(v, cnt) {
+export function repeat(v: any, cnt: number): any[] {
     var out = new Array(cnt);
     for (var i = 0; i < cnt; i++) {
         out[i] = v;
@@ -168,7 +168,7 @@ export function repeat(v, cnt) {
  * specify attr with a ? in place of x/y
  * you can also swap other things than x/y by providing part1 and part2
  */
-export function swapAttrs(cont, attrList, part1, part2) {
+export function swapAttrs(cont: any, attrList: string[], part1?: string, part2?: string): void {
     if (!part1) part1 = 'x';
     if (!part2) part2 = 'y';
     for (var i = 0; i < attrList.length; i++) {
@@ -184,19 +184,19 @@ export function swapAttrs(cont, attrList, part1, part2) {
 /**
  * SVG painter's algo worked around with reinsertion
  */
-export function raiseToTop(elem) {
+export function raiseToTop(elem: any): void {
     elem.parentNode.appendChild(elem);
 }
 
 /**
  * cancel a possibly pending transition; returned selection may be used by caller
  */
-export function cancelTransition(sel) {
+export function cancelTransition(sel: any): any {
     return sel.transition().duration(0);
 }
 
 // constrain - restrict a number v to be between v0 and v1
-export function constrain(v, v0, v1) {
+export function constrain(v: number, v0: number, v1: number): number {
     if (v0 > v1) return Math.max(v1, Math.min(v0, v));
     return Math.max(v0, Math.min(v1, v));
 }
@@ -206,7 +206,7 @@ export function constrain(v, v0, v1) {
  * ie {left,right,top,bottom,width,height}, overlap?
  * takes optional padding pixels
  */
-export function bBoxIntersect(a, b, pad) {
+export function bBoxIntersect(a: any, b: any, pad?: number): boolean {
     pad = pad || 0;
     return a.left <= b.right + pad && b.left <= a.right + pad && a.top <= b.bottom + pad && b.top <= a.bottom + pad;
 }
@@ -220,7 +220,7 @@ export function bBoxIntersect(a, b, pad) {
  * func: the function to apply
  * x1, x2: optional extra args
  */
-export function simpleMap(array, func, x1, x2, opts) {
+export function simpleMap(array: any[], func: any, x1?: any, x2?: any, opts?: any): any[] {
     var len = array.length;
     var out = new Array(len);
     for (var i = 0; i < len; i++) out[i] = func(array[i], x1, x2, opts);
@@ -237,14 +237,14 @@ export function simpleMap(array, func, x1, x2, opts) {
  * @param {int} base
  *     base of string representation, default 16. Should be a power of 2.
  */
-export function randstr(existing, bits, base, _recursion) {
+export function randstr(existing?: any, bits?: number, base?: number, _recursion?: number): string {
     if (!base) base = 16;
     if (bits === undefined) bits = 24;
     if (bits <= 0) return '0';
 
     var digits = Math.log(Math.pow(2, bits)) / Math.log(base);
     var res = '';
-    var i, b, x;
+    var i: number, b: number, x: string;
 
     for (i = 2; digits === Infinity; i *= 2) {
         digits = (Math.log(Math.pow(2, bits / i)) / Math.log(base)) * i;
@@ -265,7 +265,7 @@ export function randstr(existing, bits, base, _recursion) {
 
     var parsed = parseInt(res, base);
     if ((existing && existing[res]) || (parsed !== Infinity && parsed >= Math.pow(2, bits))) {
-        if (_recursion > 10) {
+        if (_recursion! > 10) {
             warn('randstr failed uniqueness');
             return res;
         }
@@ -273,7 +273,7 @@ export function randstr(existing, bits, base, _recursion) {
     } else return res;
 }
 
-export function OptionControl(opt, optname) {
+export function OptionControl(opt?: any, optname?: string): any {
     /*
      * An environment to contain all option setters and
      * getters that collectively modify opts.
@@ -286,11 +286,11 @@ export function OptionControl(opt, optname) {
     if (!opt) opt = {};
     if (!optname) optname = 'opt';
 
-    var self = {};
+    var self: any = {};
     self.optionList = [];
 
-    self._newoption = function (optObj) {
-        optObj[optname] = opt;
+    self._newoption = function (optObj: any) {
+        optObj[optname!] = opt;
         self[optObj.name] = optObj;
         self.optionList.push(optObj);
     };
@@ -304,7 +304,7 @@ export function OptionControl(opt, optname) {
  * a hann window with given full width at half max
  * bounce the ends in, so the output has the same length as the input
  */
-export function smooth(arrayIn, FWHM) {
+export function smooth(arrayIn: number[], FWHM: number): number[] {
     FWHM = Math.round(FWHM) || 0; // only makes sense for integers
     if (FWHM < 2) return arrayIn;
 
@@ -313,10 +313,10 @@ export function smooth(arrayIn, FWHM) {
     var wlen = 2 * FWHM - 1;
     var w = new Array(wlen);
     var arrayOut = new Array(alen);
-    var i;
-    var j;
-    var k;
-    var v;
+    var i: number;
+    var j: number;
+    var k: number;
+    var v: number;
 
     // first make the window array
     for (i = 0; i < wlen; i++) {
@@ -356,10 +356,10 @@ export function smooth(arrayIn, FWHM) {
  * this doesn't happen yet because we want to make sure
  * that it gets reported
  */
-export function syncOrAsync(sequence, arg, finalStep) {
-    var ret, fni;
+export function syncOrAsync(sequence: any[], arg?: any, finalStep?: any): any {
+    var ret: any, fni: any;
 
-    function continueAsync() {
+    function continueAsync(): any {
         return syncOrAsync(sequence, arg, finalStep);
     }
 
@@ -379,12 +379,12 @@ export function syncOrAsync(sequence, arg, finalStep) {
  * Helper to strip trailing slash, from
  * http://stackoverflow.com/questions/6680825/return-string-without-trailing-slash
  */
-export function stripTrailingSlash(str) {
+export function stripTrailingSlash(str: string): string {
     if (str.slice(-1) === '/') return str.slice(0, -1);
     return str;
 }
 
-export function noneOrAll(containerIn, containerOut, attrList) {
+export function noneOrAll(containerIn: any, containerOut: any, attrList: string[]): void {
     /**
      * some attributes come together, so if you have one of them
      * in the input, you should copy the default values of the others
@@ -394,8 +394,8 @@ export function noneOrAll(containerIn, containerOut, attrList) {
 
     var hasAny = false;
     var hasAll = true;
-    var i;
-    var val;
+    var i: number;
+    var val: any;
 
     for (i = 0; i < attrList.length; i++) {
         val = containerIn[attrList[i]];
@@ -419,20 +419,20 @@ export function noneOrAll(containerIn, containerOut, attrList) {
  * @param {object} cd : calcdata trace
  * @param {string} cdAttr : calcdata key
  */
-export function mergeArray(traceAttr, cd, cdAttr, fn) {
+export function mergeArray(traceAttr: any, cd: any[], cdAttr: string, fn?: (v: any) => any): void {
     var hasFn = typeof fn === 'function';
     if (isArrayOrTypedArray(traceAttr)) {
         var imax = Math.min(traceAttr.length, cd.length);
         for (var i = 0; i < imax; i++) {
             var v = traceAttr[i];
-            cd[i][cdAttr] = hasFn ? fn(v) : v;
+            cd[i][cdAttr] = hasFn ? fn!(v) : v;
         }
     }
 }
 
 // cast numbers to positive numbers, returns 0 if not greater than 0
-export function mergeArrayCastPositive(traceAttr, cd, cdAttr) {
-    return mergeArray(traceAttr, cd, cdAttr, function (v) {
+export function mergeArrayCastPositive(traceAttr: any, cd: any[], cdAttr: string): void {
+    return mergeArray(traceAttr, cd, cdAttr, function (v: any) {
         var w = +v;
         return !isFinite(w) ? 0 : w > 0 ? w : 0;
     });
@@ -448,7 +448,7 @@ export function mergeArrayCastPositive(traceAttr, cd, cdAttr) {
  * @param {string} cdAttr : calcdata key
  * @param {function} [fn] : optional function to apply to each array item
  */
-export function fillArray(traceAttr, cd, cdAttr, fn) {
+export function fillArray(traceAttr: any, cd: any[], cdAttr: string, fn?: (v: any) => any): void {
     fn = fn || identity;
 
     if (isArrayOrTypedArray(traceAttr)) {
@@ -467,7 +467,7 @@ export function fillArray(traceAttr, cd, cdAttr, fn) {
  *
  * @return {any}
  */
-export function castOption(trace, ptNumber, astr, fn) {
+export function castOption(trace: any, ptNumber: any, astr: string, fn?: (v: any) => any): any {
     fn = fn || identity;
 
     var val = nestedProperty(trace, astr).get();
@@ -492,7 +492,7 @@ export function castOption(trace, ptNumber, astr, fn) {
  *  @param {string} traceKey : aka trace attribute string
  *  @return {any}
  */
-export function extractOption(calcPt, trace, calcKey, traceKey) {
+export function extractOption(calcPt: any, trace: any, calcKey: string, traceKey: string): any {
     if (calcKey in calcPt) return calcPt[calcKey];
 
     // fallback to trace value,
@@ -503,8 +503,8 @@ export function extractOption(calcPt, trace, calcKey, traceKey) {
     if (!Array.isArray(traceVal)) return traceVal;
 }
 
-function makePtIndex2PtNumber(indexToPoints) {
-    var ptIndex2ptNumber = {};
+function makePtIndex2PtNumber(indexToPoints: any): Record<string, number> {
+    var ptIndex2ptNumber: Record<string, number> = {};
     for (var k in indexToPoints) {
         var pts = indexToPoints[k];
         for (var j = 0; j < pts.length; j++) {
@@ -527,17 +527,17 @@ function makePtIndex2PtNumber(indexToPoints) {
  *  optional map object for trace types that do not have 1-to-1 point number to
  *  calcdata item index correspondence (e.g. histogram)
  */
-export function tagSelected(calcTrace, trace, ptNumber2cdIndex) {
+export function tagSelected(calcTrace: any[], trace: any, ptNumber2cdIndex?: any): void {
     var selectedpoints = trace.selectedpoints;
     var indexToPoints = trace._indexToPoints;
-    var ptIndex2ptNumber;
+    var ptIndex2ptNumber: any;
 
     // make pt index-to-number map object, which takes care of transformed traces
     if (indexToPoints) {
         ptIndex2ptNumber = makePtIndex2PtNumber(indexToPoints);
     }
 
-    function isCdIndexValid(v) {
+    function isCdIndexValid(v: any): boolean {
         return v !== undefined && v < calcTrace.length;
     }
 
@@ -558,13 +558,13 @@ export function tagSelected(calcTrace, trace, ptNumber2cdIndex) {
     }
 }
 
-export function selIndices2selPoints(trace) {
+export function selIndices2selPoints(trace: any): any {
     var selectedpoints = trace.selectedpoints;
     var indexToPoints = trace._indexToPoints;
 
     if (indexToPoints) {
         var ptIndex2ptNumber = makePtIndex2PtNumber(indexToPoints);
-        var out = [];
+        var out: any[] = [];
 
         for (var i = 0; i < selectedpoints.length; i++) {
             var ptIndex = selectedpoints[i];
@@ -592,7 +592,7 @@ export function selIndices2selPoints(trace) {
  *
  * @return {array or false} : the target array (NOT a copy!!) or false if invalid
  */
-export function getTargetArray(trace, transformOpts) {
+export function getTargetArray(trace: any, transformOpts: any): any[] | false {
     var target = transformOpts.target;
 
     if (typeof target === 'string' && target) {
@@ -611,14 +611,14 @@ export function getTargetArray(trace, transformOpts) {
  * because extend-like algorithms are hella slow
  * obj2 is assumed to already be clean of these things (including no arrays)
  */
-export function minExtend(obj1, obj2, opt) {
-    var objOut = {};
+export function minExtend(obj1: any, obj2: any, opt?: string): any {
+    var objOut: any = {};
     if (typeof obj2 !== 'object') obj2 = {};
 
     var arrayLen = opt === 'pieLike' ? -1 : 3;
 
     var keys = Object.keys(obj1);
-    var i, k, v;
+    var i: number, k: string, v: any;
 
     for (i = 0; i < keys.length; i++) {
         k = keys[i];
@@ -653,11 +653,11 @@ export function minExtend(obj1, obj2, opt) {
     return objOut;
 }
 
-export function titleCase(s) {
+export function titleCase(s: string): string {
     return s.charAt(0).toUpperCase() + s.slice(1);
 }
 
-export function containsAny(s, fragments) {
+export function containsAny(s: string, fragments: string[]): boolean {
     for (var i = 0; i < fragments.length; i++) {
         if (s.indexOf(fragments[i]) !== -1) return true;
     }
@@ -665,12 +665,12 @@ export function containsAny(s, fragments) {
 }
 
 var IS_SAFARI_REGEX = /Version\/[\d\.]+.*Safari/;
-export function isSafari() {
+export function isSafari(): boolean {
     return IS_SAFARI_REGEX.test(window.navigator.userAgent);
 }
 
 var IS_IOS_REGEX = /iPad|iPhone|iPod/;
-export function isIOS() {
+export function isIOS(): boolean {
     return IS_IOS_REGEX.test(window.navigator.userAgent);
 }
 
@@ -678,10 +678,10 @@ export function isIOS() {
 // for a UA string like this:
 // Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko)
 const IS_MAC_WKWEBVIEW_REGEX = /Macintosh.+AppleWebKit.+Gecko\)$/;
-export var isMacWKWebView = () => IS_MAC_WKWEBVIEW_REGEX.test(window.navigator.userAgent);
+export var isMacWKWebView = (): boolean => IS_MAC_WKWEBVIEW_REGEX.test(window.navigator.userAgent);
 
 var FIREFOX_VERSION_REGEX = /Firefox\/(\d+)\.\d+/;
-export function getFirefoxVersion() {
+export function getFirefoxVersion(): number | null {
     var match = FIREFOX_VERSION_REGEX.exec(window.navigator.userAgent);
     if (match && match.length === 2) {
         var versionInt = parseInt(match[1]);
@@ -692,7 +692,7 @@ export function getFirefoxVersion() {
     return null;
 }
 
-export function isD3Selection(obj) {
+export function isD3Selection(obj: any): boolean {
     return obj instanceof selection;
 }
 
@@ -724,7 +724,7 @@ export function isD3Selection(obj) {
  * `querySelectorAll`.
  *
  */
-export function ensureSingle(parent, nodeType, className, enterFn) {
+export function ensureSingle(parent: any, nodeType: string, className?: string, enterFn?: any): any {
     var sel = parent.select(nodeType + (className ? '.' + className : ''));
     if (sel.size()) return sel;
 
@@ -745,7 +745,7 @@ export function ensureSingle(parent, nodeType, className, enterFn) {
  * @param {fn} enterFn (optional) : optional fn applied to entering elements only
  * @return {d3 selection} selection of new layer
  */
-export function ensureSingleById(parent, nodeType, id, enterFn) {
+export function ensureSingleById(parent: any, nodeType: string, id: string, enterFn?: any): any {
     var sel = parent.select(nodeType + '#' + id);
     if (sel.size()) return sel;
 
@@ -770,14 +770,14 @@ export function ensureSingleById(parent, nodeType, id, enterFn) {
  *
  * @return {Object} the constructed object with a full nested path
  */
-export function objectFromPath(path, value) {
+export function objectFromPath(path: string, value: any): any {
     var keys = path.split('.');
-    var tmpObj;
-    var obj = (tmpObj = {});
+    var tmpObj: any;
+    var obj: any = (tmpObj = {});
 
     for (var i = 0; i < keys.length; i++) {
         var key = keys[i];
-        var el = null;
+        var el: any = null;
 
         var parts = keys[i].match(/(.*)\[([0-9]+)\]/);
 
@@ -839,13 +839,13 @@ export function objectFromPath(path, value) {
 var dottedPropertyRegex = /^([^\[\.]+)\.(.+)?/;
 var indexedPropertyRegex = /^([^\.]+)\[([0-9]+)\](\.)?(.+)?/;
 
-function notValid(prop) {
+function notValid(prop: string): boolean {
     // guard against polluting __proto__ and other internals getters and setters
     return prop.slice(0, 2) === '__';
 }
 
-export function expandObjectPaths(data) {
-    var match, key, prop, datum, idx, dest, trailingPath;
+export function expandObjectPaths(data: any): any {
+    var match: any, key: string, prop: string, datum: any, idx: number, dest: any, trailingPath: string;
     if (typeof data === 'object' && !Array.isArray(data)) {
         for (key in data) {
             if (data.hasOwnProperty(key)) {
@@ -930,7 +930,7 @@ export function expandObjectPaths(data) {
  *
  * @return  {string}    the value that has been separated
  */
-export function numSeparate(value, separators, separatethousands) {
+export function numSeparate(value: string | number, separators: string, separatethousands?: boolean): string {
     if (!separatethousands) separatethousands = false;
 
     if (typeof separators !== 'string' || separators.length === 0) {
@@ -974,13 +974,13 @@ var SIMPLE_PROPERTY_REGEX = /^\w*$/;
  *
  * @return {string} templated string
  */
-export function templateString(string, obj) {
+export function templateString(string: string, obj: any): string {
     // Not all that useful, but cache nestedProperty instantiation
     // just in case it speeds things up *slightly*:
-    var getterCache = {};
+    var getterCache: Record<string, any> = {};
 
-    return string.replace(TEMPLATE_STRING_REGEX, function (dummy, key) {
-        var v;
+    return string.replace(TEMPLATE_STRING_REGEX, function (dummy: string, key: string) {
+        var v: any;
         if (SIMPLE_PROPERTY_REGEX.test(key)) {
             v = obj[key];
         } else {
@@ -996,21 +996,21 @@ const hovertemplateWarnings = {
     count: 0,
     name: 'hovertemplate'
 };
-export var hovertemplateString = (params) => templateFormatString({ ...params, opts: hovertemplateWarnings });
+export var hovertemplateString = (params: any): string => templateFormatString({ ...params, opts: hovertemplateWarnings });
 
 const texttemplateWarnings = {
     max: 10,
     count: 0,
     name: 'texttemplate'
 };
-export var texttemplateString = (params) => templateFormatString({ ...params, opts: texttemplateWarnings });
+export var texttemplateString = (params: any): string => templateFormatString({ ...params, opts: texttemplateWarnings });
 
 // Regex for parsing multiplication and division operations applied to a template key
 // Used for shape.label.texttemplate
 // Matches a key name (non-whitespace characters), followed by a * or / character, followed by a number
 // For example, the following strings are matched: `x0*2`, `slope/1.60934`, `y1*2.54`
 var MULT_DIV_REGEX = /^(\S+)([\*\/])(-?\d+(\.\d+)?)$/;
-function multDivParser(inputStr) {
+function multDivParser(inputStr: string): { key: string; op: string | null; number: number | null } {
     var match = inputStr.match(MULT_DIV_REGEX);
     if (match) return { key: match[1], op: match[2], number: Number(match[3]) };
     return { key: inputStr, op: null, number: null };
@@ -1021,7 +1021,7 @@ var texttemplateWarningsForShapes = {
     name: 'texttemplate',
     parseMultDiv: true
 };
-export var texttemplateStringForShapes = (params) => templateFormatString({ ...params, opts: texttemplateWarningsForShapes });
+export var texttemplateStringForShapes = (params: any): string => templateFormatString({ ...params, opts: texttemplateWarningsForShapes });
 
 var TEMPLATE_STRING_FORMAT_SEPARATOR = /^[:|\|]/;
 /**
@@ -1047,8 +1047,8 @@ var TEMPLATE_STRING_FORMAT_SEPARATOR = /^[:|\|]/;
  *
  * @return {string} templated string
  */
-function templateFormatString({ data = [], locale, fallback, labels = {}, opts, template }) {
-    return template.replace(TEMPLATE_STRING_REGEX, (match, key, format) => {
+function templateFormatString({ data = [], locale, fallback, labels = {}, opts, template }: any): string {
+    return template.replace(TEMPLATE_STRING_REGEX, (match: string, key: string, format: string) => {
         const isOther = ['xother', 'yother'].includes(key);
         const isSpaceOther = ['_xother', '_yother'].includes(key);
         const isSpaceOtherSpace = ['_xother_', '_yother_'].includes(key);
@@ -1059,8 +1059,8 @@ function templateFormatString({ data = [], locale, fallback, labels = {}, opts, 
         if (isSpaceOther || isSpaceOtherSpace) key = key.substring(1);
         if (isOtherSpace || isSpaceOtherSpace) key = key.substring(0, key.length - 1);
 
-        let parsedOp = null;
-        let parsedNumber = null;
+        let parsedOp: string | null = null;
+        let parsedNumber: number | null = null;
         if (opts.parseMultDiv) {
             var _match = multDivParser(key);
             key = _match.key;
@@ -1068,7 +1068,7 @@ function templateFormatString({ data = [], locale, fallback, labels = {}, opts, 
             parsedNumber = _match.number;
         }
 
-        let value = undefined;
+        let value: any = undefined;
         if (hasOther) {
             // 'other' specifiers that are undefined return an empty string by design
             if (labels[key] === undefined) return '';
@@ -1107,11 +1107,11 @@ function templateFormatString({ data = [], locale, fallback, labels = {}, opts, 
             return fallbackValue;
         }
 
-        if (parsedOp === '*') value *= parsedNumber;
-        if (parsedOp === '/') value /= parsedNumber;
+        if (parsedOp === '*') value *= parsedNumber!;
+        if (parsedOp === '/') value /= parsedNumber!;
 
         if (format) {
-            var fmt;
+            var fmt: any;
             if (format[0] === ':') {
                 fmt = locale ? locale.numberFormat : numberFormat;
                 if (value !== '') {
@@ -1145,7 +1145,7 @@ function templateFormatString({ data = [], locale, fallback, labels = {}, opts, 
  */
 var char0 = 48;
 var char9 = 57;
-export function subplotSort(a, b) {
+export function subplotSort(a: string, b: string): number {
     var l = Math.min(a.length, b.length) + 1;
     var numA = 0;
     var numB = 0;
@@ -1169,11 +1169,11 @@ export function subplotSort(a, b) {
 // repeatable pseudorandom generator
 var randSeed = 2000000000;
 
-export function seedPseudoRandom() {
+export function seedPseudoRandom(): void {
     randSeed = 2000000000;
 }
 
-export function pseudoRandom() {
+export function pseudoRandom(): number {
     var lastVal = randSeed;
     randSeed = (69069 * randSeed + 1) % 4294967296;
     // don't let consecutive vals be too close together
@@ -1195,12 +1195,12 @@ export function pseudoRandom() {
  *  @param {object} trace
  *  @param {object || array} contOut (mutated here)
  */
-export function fillText(calcPt, trace, contOut) {
+export function fillText(calcPt: any, trace: any, contOut: any): void {
     var fill = Array.isArray(contOut)
-        ? function (v) {
+        ? function (v: any) {
               contOut.push(v);
           }
-        : function (v) {
+        : function (v: any) {
               contOut.text = v;
           };
 
@@ -1212,7 +1212,7 @@ export function fillText(calcPt, trace, contOut) {
 }
 
 // accept all truthy values and 0 (which gets cast to '0' in the hover labels)
-export function isValidTextValue(v) {
+export function isValidTextValue(v: any): boolean {
     return v || v === 0;
 }
 
@@ -1220,7 +1220,7 @@ export function isValidTextValue(v) {
  * @param {number} ratio
  * @param {number} n (number of decimal places)
  */
-export function formatPercent(ratio, n) {
+export function formatPercent(ratio: number, n?: number): string {
     n = n || 0;
     var str = (Math.round(100 * ratio * Math.pow(10, n)) * Math.pow(0.1, n)).toFixed(n) + '%';
     for (var i = 0; i < n; i++) {
@@ -1232,20 +1232,20 @@ export function formatPercent(ratio, n) {
     return str;
 }
 
-export function isHidden(gd) {
+export function isHidden(gd: any): boolean {
     var display = window.getComputedStyle(gd).display;
     return !display || display === 'none';
 }
 
-export function strTranslate(x, y) {
+export function strTranslate(x: number, y: number): string {
     return x || y ? 'translate(' + x + ',' + y + ')' : '';
 }
 
-export function strRotate(a) {
+export function strRotate(a: number): string {
     return a ? 'rotate(' + a + ')' : '';
 }
 
-export function strScale(s) {
+export function strScale(s: number): string {
     return s !== 1 ? 'scale(' + s + ')' : '';
 }
 
@@ -1261,7 +1261,7 @@ export function strScale(s) {
  *  - rotate: (optional) rotation applied after scale
  *  - noCenter: when defined no extra arguments needed in rotation
  */
-export function getTextTransform(transform) {
+export function getTextTransform(transform: any): string {
     var noCenter = transform.noCenter;
     var textX = transform.textX;
     var textY = transform.textY;
@@ -1281,12 +1281,12 @@ export function getTextTransform(transform) {
     );
 }
 
-export function setTransormAndDisplay(s, transform) {
+export function setTransormAndDisplay(s: any, transform: any): void {
     s.attr('transform', getTextTransform(transform));
     s.style('display', transform.scale ? null : 'none');
 }
 
-export function ensureUniformFontSize(gd, baseFont) {
+export function ensureUniformFontSize(gd: any, baseFont: any): any {
     var out = extendFlat({}, baseFont);
     out.size = Math.max(baseFont.size, gd._fullLayout.uniformtext.minsize || 0);
     return out;
@@ -1301,7 +1301,7 @@ export function ensureUniformFontSize(gd, baseFont) {
  *
  * @return {string} : joined list
  */
-export function join2(arr, mainSeparator, lastSeparator) {
+export function join2(arr: any[], mainSeparator: string, lastSeparator: string): string {
     var len = arr.length;
     if (len > 1) {
         return arr.slice(0, -1).join(mainSeparator) + lastSeparator + arr[len - 1];
@@ -1309,7 +1309,7 @@ export function join2(arr, mainSeparator, lastSeparator) {
     return arr.join(mainSeparator);
 }
 
-export function bigFont(size) {
+export function bigFont(size: number): number {
     return Math.round(1.2 * size);
 }
 
@@ -1322,7 +1322,7 @@ var isProblematicFirefox = firefoxVersion !== null && firefoxVersion < 86;
  * @returns An array with two numbers, representing the x and y coordinates of the mouse pointer
  *   at the event relative to the targeted node.
  */
-export function getPositionFromD3Event(event) {
+export function getPositionFromD3Event(event: any): number[] {
     if (isProblematicFirefox) {
         // layerX and layerY are non-standard, so we only fallback to them when we have to:
         return [event.layerX, event.layerY];
@@ -1332,7 +1332,7 @@ export function getPositionFromD3Event(event) {
 }
 
 // Backward-compatible default export with all methods
-var lib = {};
+var lib: any = {};
 
 lib.adjustFormat = adjustFormat;
 lib.warnBadFormat = warnBadFormat;

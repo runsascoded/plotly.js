@@ -14,7 +14,7 @@ import { isArrayOrTypedArray } from './array.js';
 import { isTypedArraySpec } from './array.js';
 import { decodeTypedArraySpec } from './array.js';
 
-export var valObjectMeta = {
+export var valObjectMeta: Record<string, any> = {
     data_array: {
         // You can use *dflt=[] to force said array to exist though.
         description: [
@@ -45,7 +45,7 @@ export var valObjectMeta = {
         ].join(' '),
         requiredOpts: [],
         otherOpts: ['dflt'],
-        coerceFunction: function(v, propOut, dflt) {
+        coerceFunction: function(v: any, propOut: any, dflt: any) {
             propOut.set(
                 isArrayOrTypedArray(v) ? v :
                 isTypedArraySpec(v) ? decodeTypedArraySpec(v) :
@@ -60,12 +60,12 @@ export var valObjectMeta = {
         ].join(' '),
         requiredOpts: ['values'],
         otherOpts: ['dflt', 'coerceNumber', 'arrayOk'],
-        coerceFunction: function(v, propOut, dflt, opts) {
+        coerceFunction: function(v: any, propOut: any, dflt: any, opts: any) {
             if(opts.coerceNumber) v = +v;
             if(opts.values.indexOf(v) === -1) propOut.set(dflt);
             else propOut.set(v);
         },
-        validateFunction: function(v, opts) {
+        validateFunction: function(v: any, opts: any): boolean {
             if(opts.coerceNumber) v = +v;
 
             var values = opts.values;
@@ -84,8 +84,8 @@ export var valObjectMeta = {
         description: 'A boolean (true/false) value.',
         requiredOpts: [],
         otherOpts: ['dflt', 'arrayOk'],
-        coerceFunction: function(v, propOut, dflt, opts) {
-            const isBoolean = value => value === true || value === false;
+        coerceFunction: function(v: any, propOut: any, dflt: any, opts: any) {
+            const isBoolean = (value: any): boolean => value === true || value === false;
             if (isBoolean(v) || (opts.arrayOk && Array.isArray(v) && v.length > 0 && v.every(isBoolean))) {
                 propOut.set(v);
             } else {
@@ -102,7 +102,7 @@ export var valObjectMeta = {
         ].join(' '),
         requiredOpts: [],
         otherOpts: ['dflt', 'min', 'max', 'arrayOk'],
-        coerceFunction: function(v, propOut, dflt, opts) {
+        coerceFunction: function(v: any, propOut: any, dflt: any, opts: any) {
             if(isTypedArraySpec(v)) v = decodeTypedArraySpec(v);
 
             if(!isNumeric(v) ||
@@ -120,7 +120,7 @@ export var valObjectMeta = {
         ].join(' '),
         requiredOpts: [],
         otherOpts: ['dflt', 'min', 'max', 'arrayOk', 'extras'],
-        coerceFunction: function(v, propOut, dflt, opts) {
+        coerceFunction: function(v: any, propOut: any, dflt: any, opts: any) {
             if((opts.extras || []).indexOf(v) !== -1) {
                 propOut.set(v);
                 return;
@@ -144,7 +144,7 @@ export var valObjectMeta = {
         requiredOpts: [],
         // TODO 'values shouldn't be in there (edge case: 'dash' in Scatter)
         otherOpts: ['dflt', 'noBlank', 'strict', 'arrayOk', 'values'],
-        coerceFunction: function(v, propOut, dflt, opts) {
+        coerceFunction: function(v: any, propOut: any, dflt: any, opts: any) {
             if(typeof v !== 'string') {
                 var okToCoerce = (typeof v === 'number');
 
@@ -167,7 +167,7 @@ export var valObjectMeta = {
         ].join(' '),
         requiredOpts: [],
         otherOpts: ['dflt', 'arrayOk'],
-        coerceFunction: function(v, propOut, dflt) {
+        coerceFunction: function(v: any, propOut: any, dflt: any) {
             if(isTypedArraySpec(v)) v = decodeTypedArraySpec(v);
 
             if(tinycolor(v).isValid()) propOut.set(v);
@@ -181,8 +181,8 @@ export var valObjectMeta = {
         ].join(' '),
         requiredOpts: [],
         otherOpts: ['dflt'],
-        coerceFunction: function(v, propOut, dflt) {
-            function isColor(color) {
+        coerceFunction: function(v: any, propOut: any, dflt: any) {
+            function isColor(color: any): boolean {
                 return tinycolor(color).isValid();
             }
             if(!Array.isArray(v) || !v.length) propOut.set(dflt);
@@ -201,7 +201,7 @@ export var valObjectMeta = {
         ].join(' '),
         requiredOpts: [],
         otherOpts: ['dflt'],
-        coerceFunction: function(v, propOut, dflt) {
+        coerceFunction: function(v: any, propOut: any, dflt: any) {
             propOut.set(colorscales.get(v, dflt));
         }
     },
@@ -211,7 +211,7 @@ export var valObjectMeta = {
         ].join(' '),
         requiredOpts: [],
         otherOpts: ['dflt', 'arrayOk'],
-        coerceFunction: function(v, propOut, dflt) {
+        coerceFunction: function(v: any, propOut: any, dflt: any) {
             if(isTypedArraySpec(v)) v = decodeTypedArraySpec(v);
 
             if(v === 'auto') propOut.set('auto');
@@ -227,16 +227,16 @@ export var valObjectMeta = {
         ].join(' '),
         requiredOpts: ['dflt'],
         otherOpts: ['regex', 'arrayOk'],
-        coerceFunction: function(v, propOut, dflt, opts) {
+        coerceFunction: function(v: any, propOut: any, dflt: any, opts: any) {
             var regex = opts.regex || counterRegex(dflt);
-            const isSubplotId = value => typeof value === 'string' && regex.test(value);
+            const isSubplotId = (value: any): boolean => typeof value === 'string' && regex.test(value);
             if (isSubplotId(v) || (opts.arrayOk && isArrayOrTypedArray(v) && v.length > 0 && v.every(isSubplotId))) {
                 propOut.set(v);
             } else {
                 propOut.set(dflt);
             }
         },
-        validateFunction: function(v, opts) {
+        validateFunction: function(v: any, opts: any): boolean {
             var dflt = opts.dflt;
 
             if(v === dflt) return true;
@@ -256,7 +256,7 @@ export var valObjectMeta = {
         ].join(' '),
         requiredOpts: ['flags'],
         otherOpts: ['dflt', 'extras', 'arrayOk'],
-        coerceFunction: function(v, propOut, dflt, opts) {
+        coerceFunction: function(v: any, propOut: any, dflt: any, opts: any) {
             if((opts.extras || []).indexOf(v) !== -1) {
                 propOut.set(v);
                 return;
@@ -281,7 +281,7 @@ export var valObjectMeta = {
         description: 'Any type.',
         requiredOpts: [],
         otherOpts: ['dflt', 'values', 'arrayOk'],
-        coerceFunction: function(v, propOut, dflt) {
+        coerceFunction: function(v: any, propOut: any, dflt: any) {
             if(v === undefined) {
                 propOut.set(dflt);
             } else {
@@ -303,11 +303,11 @@ export var valObjectMeta = {
         // if `dimensions='1-2'` and items is a 1D array, then the value can
         // either be a matching 1D array or an array of such matching 1D arrays
         otherOpts: ['dflt', 'freeLength', 'dimensions'],
-        coerceFunction: function(v, propOut, dflt, opts) {
+        coerceFunction: function(v: any, propOut: any, dflt: any, opts: any) {
             // simplified coerce function just for array items
-            function coercePart(v, opts, dflt) {
-                var out;
-                var propPart = {set: function(v) { out = v; }};
+            function coercePart(v: any, opts: any, dflt: any): any {
+                var out: any;
+                var propPart = {set: function(v: any) { out = v; }};
 
                 if(dflt === undefined) dflt = opts.dflt;
 
@@ -326,13 +326,13 @@ export var valObjectMeta = {
             var twoD = opts.dimensions === 2 || (opts.dimensions === '1-2' && Array.isArray(v) && isArrayOrTypedArray(v[0]));
 
             var items = opts.items;
-            var vOut = [];
+            var vOut: any[] = [];
             var arrayItems = Array.isArray(items);
             var arrayItems2D = arrayItems && twoD && isArrayOrTypedArray(items[0]);
             var innerItemsOnly = twoD && arrayItems && !arrayItems2D;
             var len = (arrayItems && !innerItemsOnly) ? items.length : v.length;
 
-            var i, j, row, item, len2, vNew;
+            var i: number, j: number, row: any, item: any, len2: number, vNew: any;
 
             dflt = Array.isArray(dflt) ? dflt : [];
 
@@ -362,7 +362,7 @@ export var valObjectMeta = {
 
             propOut.set(vOut);
         },
-        validateFunction: function(v, opts) {
+        validateFunction: function(v: any, opts: any): boolean {
             if(!isArrayOrTypedArray(v)) return false;
 
             var items = opts.items;
@@ -391,7 +391,7 @@ export var valObjectMeta = {
     }
 };
 
-export var coerce = function(containerIn, containerOut, attributes, attribute, dflt) {
+export var coerce = function(containerIn: any, containerOut: any, attributes: any, attribute: string, dflt?: any): any {
     var opts = nestedProperty(attributes, attribute).get();
     var propIn = nestedProperty(containerIn, attribute);
     var propOut = nestedProperty(containerOut, attribute);
@@ -440,7 +440,7 @@ export var coerce = function(containerIn, containerOut, attributes, attribute, d
     return out;
 };
 
-export var coerce2 = function(containerIn, containerOut, attributes, attribute, dflt) {
+export var coerce2 = function(containerIn: any, containerOut: any, attributes: any, attribute: string, dflt?: any): any {
     var propIn = nestedProperty(containerIn, attribute);
     var propOut = coerce(containerIn, containerOut, attributes, attribute, dflt);
     var valIn = propIn.get();
@@ -448,12 +448,12 @@ export var coerce2 = function(containerIn, containerOut, attributes, attribute, 
     return (valIn !== undefined && valIn !== null) ? propOut : false;
 };
 
-export var coerceFont = function(coerce, attr, dfltObj, opts) {
+export var coerceFont = function(coerce: any, attr: string, dfltObj?: any, opts?: any): any {
     if(!opts) opts = {};
     dfltObj = extendFlat({}, dfltObj);
     dfltObj = extendFlat(dfltObj, opts.overrideDflt || {});
 
-    var out = {
+    var out: any = {
         family: coerce(attr + '.family', dfltObj.family),
         size: coerce(attr + '.size', dfltObj.size),
         color: coerce(attr + '.color', dfltObj.color),
@@ -475,9 +475,9 @@ export var coerceFont = function(coerce, attr, dfltObj, opts) {
     return out;
 };
 
-export var coercePattern = function(coerce, attr, markerColor, hasMarkerColorscale) {
+export var coercePattern = function(coerce: any, attr: string, markerColor: any, hasMarkerColorscale: boolean): void {
     var shape = coerce(attr + '.shape');
-    var path;
+    var path: any;
     if(!shape) {
         path = coerce(attr + '.path');
     }
@@ -508,12 +508,12 @@ export var coercePattern = function(coerce, attr, markerColor, hasMarkerColorsca
     }
 };
 
-export var coerceHoverinfo = function(traceIn, traceOut, layoutOut) {
+export var coerceHoverinfo = function(traceIn: any, traceOut: any, layoutOut: any): any {
     var moduleAttrs = traceOut._module.attributes;
     var attrs = moduleAttrs.hoverinfo ? moduleAttrs : baseTraceAttrs;
 
     var valObj = attrs.hoverinfo;
-    var dflt;
+    var dflt: any;
 
     if(layoutOut._dataLength === 1) {
         var flags = valObj.dflt === 'all' ?
@@ -527,15 +527,15 @@ export var coerceHoverinfo = function(traceIn, traceOut, layoutOut) {
     return coerce(traceIn, traceOut, attrs, 'hoverinfo', dflt);
 };
 
-export var coerceSelectionMarkerOpacity = function(traceOut, coerce) {
+export var coerceSelectionMarkerOpacity = function(traceOut: any, coerce: any): void {
     if(!traceOut.marker) return;
 
     var mo = traceOut.marker.opacity;
     // you can still have a `marker` container with no markers if there's text
     if(mo === undefined) return;
 
-    var smoDflt;
-    var usmoDflt;
+    var smoDflt: any;
+    var usmoDflt: any;
 
     // Don't give [un]selected.marker.opacity a default value if
     // marker.opacity is an array: handle this during style step.
@@ -551,7 +551,7 @@ export var coerceSelectionMarkerOpacity = function(traceOut, coerce) {
     coerce('unselected.marker.opacity', usmoDflt);
 };
 
-function validate(value, opts) {
+function validate(value: any, opts: any): boolean {
     var valObjectDef = valObjectMeta[opts.valType];
 
     if(opts.arrayOk && isArrayOrTypedArray(value)) return true;
@@ -560,9 +560,9 @@ function validate(value, opts) {
         return valObjectDef.validateFunction(value, opts);
     }
 
-    var failed = {};
-    var out = failed;
-    var propMock = { set: function(v) { out = v; } };
+    var failed: any = {};
+    var out: any = failed;
+    var propMock = { set: function(v: any) { out = v; } };
 
     // 'failed' just something mutable that won't be === anything else
 

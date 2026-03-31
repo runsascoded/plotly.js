@@ -6,21 +6,21 @@ const { mod } = _mod;
 import constants from '../constants/numerical.js';
 import Registry from '../registry.js';
 import { utcFormat } from 'd3-time-format';
-var BADNUM = constants.BADNUM;
-var ONEDAY = constants.ONEDAY;
-var ONEHOUR = constants.ONEHOUR;
-var ONEMIN = constants.ONEMIN;
-var ONESEC = constants.ONESEC;
-var EPOCHJD = constants.EPOCHJD;
+var BADNUM: number = constants.BADNUM;
+var ONEDAY: number = constants.ONEDAY;
+var ONEHOUR: number = constants.ONEHOUR;
+var ONEMIN: number = constants.ONEMIN;
+var ONESEC: number = constants.ONESEC;
+var EPOCHJD: number = constants.EPOCHJD;
 
 var DATETIME_REGEXP = /^\s*(-?\d\d\d\d|\d\d)(-(\d?\d)(-(\d?\d)([ Tt]([01]?\d|2[0-3])(:([0-5]\d)(:([0-5]\d(\.\d+)?))?(Z|z|[+\-]\d\d(:?\d\d)?)?)?)?)?)?\s*$/m;
 // special regex for chinese calendars to support yyyy-mmi-dd etc for intercalary months
 var DATETIME_REGEXP_CN = /^\s*(-?\d\d\d\d|\d\d)(-(\d?\di?)(-(\d?\d)([ Tt]([01]?\d|2[0-3])(:([0-5]\d)(:([0-5]\d(\.\d+)?))?(Z|z|[+\-]\d\d(:?\d\d)?)?)?)?)?)?\s*$/m;
 
 // for 2-digit years, the first year we map them onto
-var YFIRST = new Date().getFullYear() - 70;
+var YFIRST: number = new Date().getFullYear() - 70;
 
-function isWorldCalendar(calendar) {
+function isWorldCalendar(calendar: any): boolean {
     return (
         calendar &&
         Registry.componentsRegistry.calendars &&
@@ -28,7 +28,7 @@ function isWorldCalendar(calendar) {
     );
 }
 
-export var dateTick0 = function(calendar, dayOfWeek) {
+export var dateTick0 = function(calendar: any, dayOfWeek: number): any {
     var tick0 = _dateTick0(calendar, !!dayOfWeek);
     if(dayOfWeek < 2) return tick0;
 
@@ -42,7 +42,7 @@ export var dateTick0 = function(calendar, dayOfWeek) {
  *
  * bool sunday is for week ticks, shift it to a Sunday.
  */
-function _dateTick0(calendar, sunday) {
+function _dateTick0(calendar: any, sunday: boolean): string {
     if(isWorldCalendar(calendar)) {
         return sunday ?
             Registry.getComponentMethod('calendars', 'CANONICAL_SUNDAY')[calendar] :
@@ -52,7 +52,7 @@ function _dateTick0(calendar, sunday) {
     }
 }
 
-export var dfltRange = function(calendar) {
+export var dfltRange = function(calendar: any): string[] {
     if(isWorldCalendar(calendar)) {
         return Registry.getComponentMethod('calendars', 'DFLTRANGE')[calendar];
     } else {
@@ -60,16 +60,16 @@ export var dfltRange = function(calendar) {
     }
 };
 
-export var isJSDate = function(v) {
+export var isJSDate = function(v: any): boolean {
     return typeof v === 'object' && v !== null && typeof v.getTime === 'function';
 };
 
 // The absolute limits of our date-time system
 // This is a little weird: we use MIN_MS and MAX_MS in dateTime2ms
 // but we use dateTime2ms to calculate them (after defining it!)
-var MIN_MS, MAX_MS;
+var MIN_MS: number, MAX_MS: number;
 
-export var dateTime2ms = function(s, calendar) {
+export var dateTime2ms = function(s: any, calendar?: any): number {
     // first check if s is a date object
     if(isJSDate(s)) {
         // Convert to the UTC milliseconds that give the same
@@ -106,8 +106,8 @@ export var dateTime2ms = function(s, calendar) {
 
     var match = s.match(isChinese ? DATETIME_REGEXP_CN : DATETIME_REGEXP);
     if(!match) return BADNUM;
-    var y = match[1];
-    var m = match[3] || '1';
+    var y: any = match[1];
+    var m: any = match[3] || '1';
     var d = Number(match[5] || 1);
     var H = Number(match[7] || 0);
     var M = Number(match[9] || 0);
@@ -118,7 +118,7 @@ export var dateTime2ms = function(s, calendar) {
         if(y.length === 2) return BADNUM;
         y = Number(y);
 
-        var cDate;
+        var cDate: any;
         try {
             var calInstance = Registry.getComponentMethod('calendars', 'getCal')(calendar);
             if(isChinese) {
@@ -159,12 +159,12 @@ export var dateTime2ms = function(s, calendar) {
 MIN_MS = dateTime2ms('-9999');
 MAX_MS = dateTime2ms('9999-12-31 23:59:59.9999');
 
-export var isDateTime = function(s, calendar) {
+export var isDateTime = function(s: any, calendar?: any): boolean {
     return (dateTime2ms(s, calendar) !== BADNUM);
 };
 
 // pad a number with zeroes, to given # of digits before the decimal point
-function lpad(val, digits) {
+function lpad(val: number, digits: number): string {
     return String(val + Math.pow(10, digits)).slice(1);
 }
 
@@ -180,14 +180,14 @@ var NINETYDAYS = 90 * ONEDAY;
 var THREEHOURS = 3 * ONEHOUR;
 var FIVEMIN = 5 * ONEMIN;
 
-export var ms2DateTime = function(ms, r, calendar) {
+export var ms2DateTime = function(ms: number, r?: number, calendar?: any): string | number {
     if(typeof ms !== 'number' || !(ms >= MIN_MS && ms <= MAX_MS)) return BADNUM;
 
     if(!r) r = 0;
 
     var msecTenths = Math.floor(mod(ms + 0.05, 1) * 10);
     var msRounded = Math.round(ms - msecTenths / 10);
-    var dateStr, h, m, s, msec10, d;
+    var dateStr: string, h: number, m: number, s: number, msec10: number, d: Date;
 
     if(isWorldCalendar(calendar)) {
         var dateJD = Math.floor(msRounded / ONEDAY) + EPOCHJD;
@@ -232,7 +232,7 @@ export var ms2DateTime = function(ms, r, calendar) {
     return includeTime(dateStr, h, m, s, msec10);
 };
 
-export var ms2DateTimeLocal = function(ms) {
+export var ms2DateTimeLocal = function(ms: number): string | number {
     if(!(ms >= MIN_MS + ONEDAY && ms <= MAX_MS - ONEDAY)) return BADNUM;
 
     var msecTenths = Math.floor(mod(ms + 0.05, 1) * 10);
@@ -246,7 +246,7 @@ export var ms2DateTimeLocal = function(ms) {
     return includeTime(dateStr, h, m, s, msec10);
 };
 
-function includeTime(dateStr, h, m, s, msec10) {
+function includeTime(dateStr: string, h: number, m: number, s: number, msec10: number): string {
     // include each part that has nonzero data in or after it
     if(h || m || s || msec10) {
         dateStr += ' ' + lpad(h, 2) + ':' + lpad(m, 2);
@@ -265,7 +265,7 @@ function includeTime(dateStr, h, m, s, msec10) {
     return dateStr;
 }
 
-export var cleanDate = function(v, dflt, calendar) {
+export var cleanDate = function(v: any, dflt?: any, calendar?: any): any {
     // let us use cleanDate to provide a missing default without an error
     if(v === BADNUM) return dflt;
     if(isJSDate(v) || (typeof v === 'number' && isFinite(v))) {
@@ -300,14 +300,14 @@ export var cleanDate = function(v, dflt, calendar) {
  */
 var fracMatch = /%\d?f/g;
 var halfYearMatch = /%h/g;
-var quarterToHalfYear = {
+var quarterToHalfYear: Record<string, string> = {
     1: '1',
     2: '1',
     3: '2',
     4: '2',
 };
-function modDateFormat(fmt, x, formatter, calendar) {
-    fmt = fmt.replace(fracMatch, function(match) {
+function modDateFormat(fmt: string, x: number, formatter: any, calendar: any): string {
+    fmt = fmt.replace(fracMatch, function(match: string) {
         var digits = Math.min(+(match.charAt(1)) || 6, 6);
         var fracSecs = ((x / 1000 % 1) + 2)
             .toFixed(digits)
@@ -338,7 +338,7 @@ function modDateFormat(fmt, x, formatter, calendar) {
  * only supports UTC times (where every day is 24 hours and 0 is at midnight)
  */
 var MAXSECONDS = [59, 59.9, 59.99, 59.999, 59.9999];
-function formatTime(x, tr) {
+function formatTime(x: number, tr: any): string {
     var timePart = mod(x + 0.05, ONEDAY);
 
     var timeStr = lpad(Math.floor(timePart / ONEHOUR), 2) + ':' +
@@ -374,7 +374,7 @@ function formatTime(x, tr) {
     return timeStr;
 }
 
-export var formatDate = function(x, fmt, tr, formatter, calendar, extraFormat) {
+export var formatDate = function(x: number, fmt: string, tr: any, formatter: any, calendar?: any, extraFormat?: any): string {
     calendar = isWorldCalendar(calendar) && calendar;
 
     if(!fmt) {
@@ -418,7 +418,7 @@ export var formatDate = function(x, fmt, tr, formatter, calendar, extraFormat) {
  */
 var THREEDAYS = 3 * ONEDAY;
 
-export var incrementMonth = function(ms, dMonth, calendar) {
+export var incrementMonth = function(ms: number, dMonth: number, calendar?: any): number {
     calendar = isWorldCalendar(calendar) && calendar;
 
     // pull time out and operate on pure dates, then add time back at the end
@@ -447,13 +447,13 @@ export var incrementMonth = function(ms, dMonth, calendar) {
     return y.setUTCMonth(y.getUTCMonth() + dMonth) + timeMs - THREEDAYS;
 };
 
-export var findExactDates = function(data, calendar) {
+export var findExactDates = function(data: any[], calendar?: any): { exactYears: number; exactMonths: number; exactDays: number } {
     var exactYears = 0;
     var exactMonths = 0;
     var exactDays = 0;
     var blankCount = 0;
-    var d;
-    var di;
+    var d: any;
+    var di: any;
 
     var calInstance = (
         isWorldCalendar(calendar) &&

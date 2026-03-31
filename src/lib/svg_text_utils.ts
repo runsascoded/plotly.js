@@ -9,7 +9,7 @@ const { LINE_SPACING } = _alignment;
 
 var FIND_TEX = /([^$]*)([$]+[^$]*[$]+)([^$]*)/;
 
-export var convertToTspans = function(_context, gd, _callback) {
+export var convertToTspans = function(_context: any, gd: any, _callback?: any): any {
     var str = _context.text();
 
     // Until we get tex integrated more fully (so it can be used along with non-tex)
@@ -35,7 +35,7 @@ export var convertToTspans = function(_context, gd, _callback) {
             'data-math': 'N'
         });
 
-    function showText() {
+    function showText(): void {
         if(!parent.empty()) {
             svgClass = _context.attr('class') + '-math';
             parent.select('svg.' + svgClass).remove();
@@ -59,12 +59,12 @@ export var convertToTspans = function(_context, gd, _callback) {
     }
 
     if(tex) {
-        ((gd && gd._promises) || []).push(new Promise(function(resolve) {
+        ((gd && gd._promises) || []).push(new Promise(function(resolve: any) {
             _context.style('display', 'none');
             var fontSize = parseInt(_context.node().style.fontSize, 10);
             var config = {fontSize: fontSize};
 
-            texToSVG(tex[2], config, function(_svgEl, _glyphDefs, _svgBBox) {
+            texToSVG(tex[2], config, function(_svgEl: any, _glyphDefs: any, _svgBBox: any) {
                 parent.selectAll('svg.' + svgClass).remove();
                 parent.selectAll('g.' + svgClass + '-group').remove();
 
@@ -164,41 +164,41 @@ export var convertToTspans = function(_context, gd, _callback) {
 var LT_MATCH = /(<|&lt;|&#60;)/g;
 var GT_MATCH = /(>|&gt;|&#62;)/g;
 
-function cleanEscapesForTex(s) {
+function cleanEscapesForTex(s: string): string {
     return s.replace(LT_MATCH, '\\lt ')
         .replace(GT_MATCH, '\\gt ');
 }
 
 var inlineMath = [['$', '$'], ['\\(', '\\)']];
 
-function texToSVG(_texString, _config, _callback) {
+function texToSVG(_texString: string, _config: any, _callback: any): void {
     var MathJaxVersion = parseInt(
-        (MathJax.version || '').split('.')[0]
+        ((MathJax as any).version || '').split('.')[0]
     );
 
     if(
         MathJaxVersion !== 2 &&
         MathJaxVersion !== 3
     ) {
-        warn('No MathJax version:', MathJax.version);
+        warn('No MathJax version:', (MathJax as any).version);
         return;
     }
 
-    var originalRenderer,
-        originalConfig,
-        originalProcessSectionDelay,
-        tmpDiv;
+    var originalRenderer: any,
+        originalConfig: any,
+        originalProcessSectionDelay: any,
+        tmpDiv: any;
 
     var setConfig2 = function() {
-        originalConfig = extendDeepAll({}, MathJax.Hub.config);
+        originalConfig = extendDeepAll({}, (MathJax as any).Hub.config);
 
-        originalProcessSectionDelay = MathJax.Hub.processSectionDelay;
-        if(MathJax.Hub.processSectionDelay !== undefined) {
+        originalProcessSectionDelay = (MathJax as any).Hub.processSectionDelay;
+        if((MathJax as any).Hub.processSectionDelay !== undefined) {
             // MathJax 2.5+ but not 3+
-            MathJax.Hub.processSectionDelay = 0;
+            (MathJax as any).Hub.processSectionDelay = 0;
         }
 
-        return MathJax.Hub.Config({
+        return (MathJax as any).Hub.Config({
             messageStyle: 'none',
             tex2jax: {
                 inlineMath: inlineMath
@@ -208,26 +208,26 @@ function texToSVG(_texString, _config, _callback) {
     };
 
     var setConfig3 = function() {
-        originalConfig = extendDeepAll({}, MathJax.config);
+        originalConfig = extendDeepAll({}, (MathJax as any).config);
 
-        if(!MathJax.config.tex) {
-            MathJax.config.tex = {};
+        if(!(MathJax as any).config.tex) {
+            (MathJax as any).config.tex = {};
         }
 
-        MathJax.config.tex.inlineMath = inlineMath;
+        (MathJax as any).config.tex.inlineMath = inlineMath;
     };
 
     var setRenderer2 = function() {
-        originalRenderer = MathJax.Hub.config.menuSettings.renderer;
+        originalRenderer = (MathJax as any).Hub.config.menuSettings.renderer;
         if(originalRenderer !== 'SVG') {
-            return MathJax.Hub.setRenderer('SVG');
+            return (MathJax as any).Hub.setRenderer('SVG');
         }
     };
 
     var setRenderer3 = function() {
-        originalRenderer = MathJax.config.startup.output;
+        originalRenderer = (MathJax as any).config.startup.output;
         if(originalRenderer !== 'svg') {
-            MathJax.config.startup.output = 'svg';
+            (MathJax as any).config.startup.output = 'svg';
         }
     };
 
@@ -245,8 +245,8 @@ function texToSVG(_texString, _config, _callback) {
         var tmpNode = tmpDiv.node();
 
         return MathJaxVersion === 2 ?
-            MathJax.Hub.Typeset(tmpNode) :
-            MathJax.typeset([tmpNode]);
+            (MathJax as any).Hub.Typeset(tmpNode) :
+            (MathJax as any).typeset([tmpNode]);
     };
 
     var finalizeMathJax = function() {
@@ -260,7 +260,7 @@ function texToSVG(_texString, _config, _callback) {
             _callback();
         } else {
             var nodeBBox = node.getBoundingClientRect();
-            var glyphDefs;
+            var glyphDefs: any;
             if(MathJaxVersion === 2) {
                 glyphDefs = select('body').select('#MathJax_SVG_glyphs');
             } else {
@@ -274,29 +274,29 @@ function texToSVG(_texString, _config, _callback) {
 
     var resetRenderer2 = function() {
         if(originalRenderer !== 'SVG') {
-            return MathJax.Hub.setRenderer(originalRenderer);
+            return (MathJax as any).Hub.setRenderer(originalRenderer);
         }
     };
 
     var resetRenderer3 = function() {
         if(originalRenderer !== 'svg') {
-            MathJax.config.startup.output = originalRenderer;
+            (MathJax as any).config.startup.output = originalRenderer;
         }
     };
 
     var resetConfig2 = function() {
         if(originalProcessSectionDelay !== undefined) {
-            MathJax.Hub.processSectionDelay = originalProcessSectionDelay;
+            (MathJax as any).Hub.processSectionDelay = originalProcessSectionDelay;
         }
-        return MathJax.Hub.Config(originalConfig);
+        return (MathJax as any).Hub.Config(originalConfig);
     };
 
     var resetConfig3 = function() {
-        MathJax.config = originalConfig;
+        (MathJax as any).config = originalConfig;
     };
 
     if(MathJaxVersion === 2) {
-        MathJax.Hub.Queue(
+        (MathJax as any).Hub.Queue(
             setConfig2,
             setRenderer2,
             initiateMathJax,
@@ -307,9 +307,9 @@ function texToSVG(_texString, _config, _callback) {
     } else if(MathJaxVersion === 3) {
         setConfig3();
         setRenderer3();
-        MathJax.startup.defaultReady();
+        (MathJax as any).startup.defaultReady();
 
-        MathJax.startup.promise.then(function() {
+        (MathJax as any).startup.promise.then(function() {
             initiateMathJax();
             finalizeMathJax();
 
@@ -319,7 +319,7 @@ function texToSVG(_texString, _config, _callback) {
     }
 }
 
-var TAG_STYLES = {
+var TAG_STYLES: Record<string, string> = {
     // would like to use baseline-shift for sub/sup but FF doesn't support it
     // so we need to use dy along with the uber hacky shift-back-to
     // baseline below
@@ -335,13 +335,13 @@ var TAG_STYLES = {
 };
 
 // baseline shifts for sub and sup
-var SHIFT_DY = {
+var SHIFT_DY: Record<string, string> = {
     sub: '0.3em',
     sup: '-0.6em'
 };
 // reset baseline by adding a tspan (empty except for a zero-width space)
 // with dy of -70% * SHIFT_DY (because font-size=70%)
-var RESET_DY = {
+var RESET_DY: Record<string, string> = {
     sub: '-0.21em',
     sup: '0.42em'
 };
@@ -353,7 +353,7 @@ var ZERO_WIDTH_SPACE = '\u200b';
  * versions treats relative paths as having different flavors of no protocol, while
  * other browsers have these explicitly inherit the protocol of the page they're in.
  */
-var PROTOCOLS = ['http:', 'https:', 'mailto:', '', undefined, ':'];
+var PROTOCOLS: (string | undefined)[] = ['http:', 'https:', 'mailto:', '', undefined, ':'];
 
 export var NEWLINES = /(\r\n?|\n)/g;
 
@@ -396,7 +396,7 @@ var POPUPMATCH = /(^|[\s"'])popup\s*=\s*("([\w=,]*)"|'([\w=,]*)')/i;
 
 // dedicated matcher for these quoted regexes, that can return their results
 // in two different places
-function getQuotedMatch(_str, re) {
+function getQuotedMatch(_str: string, re: RegExp): string | null {
     if(!_str) return null;
     var match = _str.match(re);
     var result = match && (match[3] || match[4]);
@@ -405,17 +405,17 @@ function getQuotedMatch(_str, re) {
 
 var COLORMATCH = /(^|;)\s*color:/;
 
-export var plainText = function(_str, opts) {
+export var plainText = function(_str: string, opts?: any): string {
     opts = opts || {};
 
     var len = (opts.len !== undefined && opts.len !== -1) ? opts.len : Infinity;
-    var allowedTags = opts.allowedTags !== undefined ? opts.allowedTags : ['br'];
+    var allowedTags: string[] = opts.allowedTags !== undefined ? opts.allowedTags : ['br'];
 
     var ellipsis = '...';
     var eLen = ellipsis.length;
 
     var oldParts = _str.split(SPLIT_TAGS);
-    var newParts = [];
+    var newParts: string[] = [];
     var prevTag = '';
     var l = 0;
 
@@ -473,23 +473,23 @@ export var plainText = function(_str, opts) {
  * chars <, >, and &, because these ones can trigger special processing if not
  * replaced by the corresponding entity.
  */
-var entityToUnicode = {
-    mu: 'μ',
+var entityToUnicode: Record<string, string> = {
+    mu: '\u03bc',
     amp: '&',
     lt: '<',
     gt: '>',
-    nbsp: ' ',
-    times: '×',
-    plusmn: '±',
-    deg: '°'
+    nbsp: '\u00a0',
+    times: '\u00d7',
+    plusmn: '\u00b1',
+    deg: '\u00b0'
 };
 
 // NOTE: in general entities can contain uppercase too (so [a-zA-Z]) but all the
 // ones we support use only lowercase. If we ever change that, update the regex.
 var ENTITY_MATCH = /&(#\d+|#x[\da-fA-F]+|[a-z]+);/g;
-function convertEntities(_str) {
-    return _str.replace(ENTITY_MATCH, function(fullMatch, innerMatch) {
-        var outChar;
+function convertEntities(_str: string): string {
+    return _str.replace(ENTITY_MATCH, function(fullMatch: string, innerMatch: string) {
+        var outChar: string | undefined;
         if(innerMatch.charAt(0) === '#') {
             // cannot use String.fromCodePoint in IE
             outChar = fromCodePoint(
@@ -506,8 +506,8 @@ function convertEntities(_str) {
 }
 export { convertEntities };
 
-function fromCodePoint(code) {
-    // Don't allow overflow. In Chrome this turns into � but I feel like it's
+function fromCodePoint(code: number): string | undefined {
+    // Don't allow overflow. In Chrome this turns into \ufffd but I feel like it's
     // more useful to just not convert it at all.
     if(code > 0x10FFFF) return;
     var stringFromCodePoint = String.fromCodePoint;
@@ -533,7 +533,7 @@ function fromCodePoint(code) {
  * @returns {bool}: does the result contain any links? We need to handle the text element
  *   somewhat differently if it does, so just keep track of this when it happens.
  */
-function buildSVGText(containerNode, str) {
+function buildSVGText(containerNode: any, str: string): boolean {
     /*
      * Normalize behavior between IE and others wrt newlines and whitespace:pre
      * this combination makes IE barf https://github.com/plotly/plotly.js/issues/746
@@ -548,11 +548,11 @@ function buildSVGText(containerNode, str) {
     // as we're building the text, keep track of what elements we're nested inside
     // nodeStack will be an array of {node, type, style, href, target, popup}
     // where only type: 'a' gets the last 3 and node is only added when it's created
-    var nodeStack = [];
-    var currentNode;
+    var nodeStack: any[] = [];
+    var currentNode: any;
     var currentLine = -1;
 
-    function newLine() {
+    function newLine(): void {
         currentLine++;
 
         var lineNode = document.createElementNS(xmlnsNamespaces.svg, 'tspan');
@@ -574,10 +574,10 @@ function buildSVGText(containerNode, str) {
         }
     }
 
-    function enterNode(nodeSpec) {
+    function enterNode(nodeSpec: any): void {
         var type = nodeSpec.type;
-        var nodeAttrs = {};
-        var nodeType;
+        var nodeAttrs: any = {};
+        var nodeType: string;
 
         if(type === 'a') {
             nodeType = 'a';
@@ -624,11 +624,11 @@ function buildSVGText(containerNode, str) {
         nodeStack.push(nodeSpec);
     }
 
-    function addTextNode(node, text) {
+    function addTextNode(node: any, text: string): void {
         node.appendChild(document.createTextNode(text));
     }
 
-    function exitNode(type) {
+    function exitNode(type: string): void {
         // A bare closing tag can't close the root node. If we encounter this it
         // means there's an extra closing tag that can just be ignored:
         if(nodeStack.length === 1) {
@@ -658,7 +658,7 @@ function buildSVGText(containerNode, str) {
         var parti = parts[i];
         var match = parti.match(ONE_TAG);
         var tagType = match && match[2].toLowerCase();
-        var tagStyle = TAG_STYLES[tagType];
+        var tagStyle = TAG_STYLES[tagType as string];
 
         if(tagType === 'br') {
             newLine();
@@ -666,12 +666,12 @@ function buildSVGText(containerNode, str) {
             addTextNode(currentNode, convertEntities(parti));
         } else {
             // tag - open or close
-            if(match[1]) {
-                exitNode(tagType);
+            if(match![1]) {
+                exitNode(tagType as string);
             } else {
-                var extra = match[4];
+                var extra = match![4];
 
-                var nodeSpec = {type: tagType};
+                var nodeSpec: any = {type: tagType};
 
                 // now add style, from both the tag name and any extra css
                 // Most of the svg css that users will care about is just like html,
@@ -707,7 +707,7 @@ function buildSVGText(containerNode, str) {
     return hasLink;
 }
 
-function sanitizeHref(href) {
+function sanitizeHref(href: string): string {
     var decodedHref = encodeURI(decodeURI(href));
     var dummyAnchor1 = document.createElement('a');
     var dummyAnchor2 = document.createElement('a');
@@ -728,12 +728,12 @@ function sanitizeHref(href) {
     }
 }
 
-export var sanitizeHTML = function sanitizeHTML(str) {
+export var sanitizeHTML = function sanitizeHTML(str: string): string {
     str = str.replace(NEWLINES, ' ');
 
     var rootNode = document.createElement('p');
-    var currentNode = rootNode;
-    var nodeStack = [];
+    var currentNode: any = rootNode;
+    var nodeStack: any[] = [];
 
     var parts = str.split(SPLIT_TAGS);
     for(var i = 0; i < parts.length; i++) {
@@ -741,16 +741,16 @@ export var sanitizeHTML = function sanitizeHTML(str) {
         var match = parti.match(ONE_TAG);
         var tagType = match && match[2].toLowerCase();
 
-        if(tagType in TAG_STYLES) {
-            if(match[1]) {
+        if(tagType && tagType in TAG_STYLES) {
+            if(match![1]) {
                 if(nodeStack.length) {
                     currentNode = nodeStack.pop();
                 }
             } else {
-                var extra = match[4];
+                var extra = match![4];
 
                 var css = getQuotedMatch(extra, STYLEMATCH);
-                var nodeAttrs = css ? {style: css} : {};
+                var nodeAttrs: any = css ? {style: css} : {};
 
                 if(tagType === 'a') {
                     var href = getQuotedMatch(extra, HREFMATCH);
@@ -784,23 +784,23 @@ export var sanitizeHTML = function sanitizeHTML(str) {
     return rootNode[key];
 };
 
-export var lineCount = function lineCount(s) {
+export var lineCount = function lineCount(s: any): number {
     return s.selectAll('tspan.line').size() || 1;
 };
 
-export var positionText = function positionText(s, x, y) {
-    return s.each(function() {
+export var positionText = function positionText(s: any, x?: number, y?: number): any {
+    return s.each(function(this: any) {
         var text = select(this);
 
-        function setOrGet(attr, val) {
+        function setOrGet(attr: string, val?: number): number {
             if(val === undefined) {
-                val = text.attr(attr);
+                val = text.attr(attr) as any;
                 if(val === null) {
                     text.attr(attr, 0);
                     val = 0;
                 }
             } else text.attr(attr, val);
-            return val;
+            return val as number;
         }
 
         var thisX = setOrGet('x', x);
@@ -812,14 +812,14 @@ export var positionText = function positionText(s, x, y) {
     });
 };
 
-function alignHTMLWith(_base, container, options) {
+function alignHTMLWith(_base: any, container: any, options: any): (this: any) => any {
     var alignH = options.horizontalAlign;
     var alignV = options.verticalAlign || 'top';
     var bRect = _base.node().getBoundingClientRect();
     var cRect = container.node().getBoundingClientRect();
-    var thisRect;
-    var getTop;
-    var getLeft;
+    var thisRect: any;
+    var getTop: () => number;
+    var getLeft: () => number;
 
     if(alignV === 'bottom') {
         getTop = function() { return bRect.bottom - thisRect.height; };
@@ -837,7 +837,7 @@ function alignHTMLWith(_base, container, options) {
         getLeft = function() { return bRect.left; };
     }
 
-    return function() {
+    return function(this: any) {
         thisRect = this.node().getBoundingClientRect();
 
         var x0 = getLeft() - cRect.left;
@@ -861,7 +861,7 @@ function alignHTMLWith(_base, container, options) {
 
 var onePx = '1px ';
 
-export var makeTextShadow = function(color) {
+export var makeTextShadow = function(color: string): string {
     var x = onePx;
     var y = onePx;
     var b = onePx;
@@ -871,22 +871,22 @@ export var makeTextShadow = function(color) {
         '-' + x + y + b + color;
 };
 
-export var makeEditable = function(context, options) {
+export var makeEditable = function(context: any, options: any): any {
     var gd = options.gd;
     var _delegate = options.delegate;
-    var dispatch = dispatch('edit', 'input', 'cancel');
+    var d = dispatch('edit', 'input', 'cancel');
     var handlerElement = _delegate || context;
 
     context.style({'pointer-events': _delegate ? 'none' : 'all'});
 
     if(context.size() !== 1) throw new Error('boo');
 
-    function handleClick() {
+    function handleClick(): void {
         appendEditable();
         context.style({opacity: 0});
         // also hide any mathjax svg
         var svgClass = handlerElement.attr('class');
-        var mathjaxClass;
+        var mathjaxClass: string;
         if(svgClass) mathjaxClass = '.' + svgClass.split(' ')[0] + '-math-group';
         else mathjaxClass = '[class*=-math-group]';
         if(mathjaxClass) {
@@ -894,17 +894,17 @@ export var makeEditable = function(context, options) {
         }
     }
 
-    function selectElementContents(_el) {
+    function selectElementContents(_el: any): void {
         var el = _el.node();
         var range = document.createRange();
         range.selectNodeContents(el);
         var sel = window.getSelection();
-        sel.removeAllRanges();
-        sel.addRange(range);
+        sel!.removeAllRanges();
+        sel!.addRange(range);
         el.focus();
     }
 
-    function appendEditable() {
+    function appendEditable(): void {
         var plotDiv = select(gd);
         var container = plotDiv.select('.svg-container');
         var div = container.append('div');
@@ -930,12 +930,12 @@ export var makeEditable = function(context, options) {
             .attr({contenteditable: true})
             .text(initialText)
             .call(alignHTMLWith(context, container, options))
-            .on('blur', function(event) {
+            .on('blur', function(this: any, event: any) {
                 gd._editing = false;
                 context.text(this.textContent)
                     .style({opacity: 1});
                 var svgClass = select(this).attr('class');
-                var mathjaxClass;
+                var mathjaxClass: string;
                 if(svgClass) mathjaxClass = '.' + svgClass.split(' ')[0] + '-math-group';
                 else mathjaxClass = '[class*=-math-group]';
                 if(mathjaxClass) {
@@ -944,31 +944,31 @@ export var makeEditable = function(context, options) {
                 var text = this.textContent;
                 select(this).transition().duration(0).remove();
                 select(document).on('mouseup', null);
-                dispatch.edit.call(context, text);
+                d.call('edit', context, text);
             })
-            .on('focus', function(event) {
+            .on('focus', function(this: any, event: any) {
                 var editDiv = this;
                 gd._editing = true;
-                select(document).on('mouseup', function(event) {
+                select(document).on('mouseup', function(event: any) {
                     if(event.target === editDiv) return false;
                     if(document.activeElement === div.node()) div.node().blur();
                 });
             })
-            .on('keyup', function(event) {
+            .on('keyup', function(this: any, event: any) {
                 if(event.which === 27) {
                     gd._editing = false;
                     context.style({opacity: 1});
                     select(this)
                         .style({opacity: 0})
-                        .on('blur', function(event) { return false; })
+                        .on('blur', function(event: any) { return false; })
                         .transition().remove();
-                    dispatch.cancel.call(context, this.textContent);
+                    d.call('cancel', context, this.textContent);
                 } else {
-                    dispatch.input.call(context, this.textContent);
+                    d.call('input', context, this.textContent);
                     select(this).call(alignHTMLWith(context, container, options));
                 }
             })
-            .on('keydown', function(event) {
+            .on('keydown', function(this: any, event: any) {
                 if(event.which === 13) this.blur();
             })
             .call(selectElementContents);
@@ -977,7 +977,7 @@ export var makeEditable = function(context, options) {
     if(options.immediate) handleClick();
     else handlerElement.on('click', handleClick);
 
-    return Object.assign(context, { on: dispatch.on.bind(dispatch) });
+    return Object.assign(context, { on: d.on.bind(d) });
 };
 
 export default { convertToTspans, NEWLINES, BR_TAG_ALL, plainText, sanitizeHTML, lineCount, positionText, makeTextShadow, makeEditable, convertEntities };

@@ -10,15 +10,15 @@ import nestedProperty from './nested_property.js';
 import polygon from './polygon.js';
 
 // make list of all country iso3 ids from at runtime
-var countryIds = Object.keys(countryRegex);
+var countryIds: string[] = Object.keys(countryRegex);
 
-var locationmodeToIdFinder = {
+var locationmodeToIdFinder: Record<string, (location: string) => string | false> = {
     'ISO-3': identity,
     'USA-states': identity,
     'country names': countryNameToISO3
 };
 
-function countryNameToISO3(countryName) {
+function countryNameToISO3(countryName: string): string | false {
     for(var i = 0; i < countryIds.length; i++) {
         var iso3 = countryIds[i];
         var regex = new RegExp(countryRegex[iso3]);
@@ -31,12 +31,12 @@ function countryNameToISO3(countryName) {
     return false;
 }
 
-function locationToFeature(locationmode, location, features) {
+function locationToFeature(locationmode: string, location: any, features: any[]): any {
     if(!location || typeof location !== 'string') return false;
 
     var locationId = locationmodeToIdFinder[locationmode](location);
-    var filteredFeatures;
-    var f, i;
+    var filteredFeatures: any[];
+    var f: any, i: number;
 
     if(locationId) {
         if(locationmode === 'USA-states') {
@@ -71,15 +71,15 @@ function locationToFeature(locationmode, location, features) {
     return false;
 }
 
-function feature2polygons(feature) {
+function feature2polygons(feature: any): any[] {
     var geometry = feature.geometry;
     var coords = geometry.coordinates;
     var loc = feature.id;
 
-    var polygons = [];
-    var appendPolygon, j, k, m;
+    var polygons: any[] = [];
+    var appendPolygon: (pts: any[]) => void, j: number, k: number, m: number;
 
-    function doesCrossAntiMerdian(pts) {
+    function doesCrossAntiMerdian(pts: number[][]): number | null {
         for(var l = 0; l < pts.length - 1; l++) {
             if(pts[l][0] > 0 && pts[l + 1][0] < 0) return l;
         }
@@ -94,8 +94,8 @@ function feature2polygons(feature) {
         // Note that other countries have polygons on either side of the antimeridian
         // (e.g. some Aleutian island for the USA), but those don't confuse
         // the 'contains' method; these are skipped here.
-        appendPolygon = function(_pts) {
-            var pts;
+        appendPolygon = function(_pts: number[][]) {
+            var pts: number[][];
 
             if(doesCrossAntiMerdian(_pts) === null) {
                 pts = _pts;
@@ -115,7 +115,7 @@ function feature2polygons(feature) {
     } else if(loc === 'ATA') {
         // Antarctica has a landmass that wraps around every longitudes which
         // confuses the 'contains' methods.
-        appendPolygon = function(pts) {
+        appendPolygon = function(pts: number[][]) {
             var crossAntiMeridianIndex = doesCrossAntiMerdian(pts);
 
             // polygon that do not cross anti-meridian need no special handling
@@ -152,7 +152,7 @@ function feature2polygons(feature) {
         };
     } else {
         // otherwise using same array ref is fine
-        appendPolygon = function(pts) {
+        appendPolygon = function(pts: number[][]) {
             polygons.push(polygon.tester(pts));
         };
     }
@@ -175,9 +175,9 @@ function feature2polygons(feature) {
     return polygons;
 }
 
-function getTraceGeojson(trace) {
+function getTraceGeojson(trace: any): any {
     var g = trace.geojson;
-    var PlotlyGeoAssets = window.PlotlyGeoAssets || {};
+    var PlotlyGeoAssets = (window as any).PlotlyGeoAssets || {};
     var geojsonIn = typeof g === 'string' ? PlotlyGeoAssets[g] : g;
 
     // This should not happen, but just in case something goes
@@ -190,15 +190,15 @@ function getTraceGeojson(trace) {
     return geojsonIn;
 }
 
-function extractTraceFeature(calcTrace) {
+function extractTraceFeature(calcTrace: any[]): any[] | false {
     var trace = calcTrace[0].trace;
 
     var geojsonIn = getTraceGeojson(trace);
     if(!geojsonIn) return false;
 
-    var lookup = {};
-    var featuresOut = [];
-    var i;
+    var lookup: Record<string, any> = {};
+    var featuresOut: any[] = [];
+    var i: number;
 
     for(i = 0; i < trace._length; i++) {
         var cdi = calcTrace[i];
@@ -207,7 +207,7 @@ function extractTraceFeature(calcTrace) {
         }
     }
 
-    function appendFeature(fIn) {
+    function appendFeature(fIn: any): void {
         var id = nestedProperty(fIn, trace.featureidkey || 'id').get();
         var cdi = lookup[id];
 
@@ -215,11 +215,11 @@ function extractTraceFeature(calcTrace) {
             var geometry = fIn.geometry;
 
             if(geometry.type === 'Polygon' || geometry.type === 'MultiPolygon') {
-                var fOut = {
+                var fOut: any = {
                     type: 'Feature',
                     id: id,
                     geometry: geometry,
-                    properties: {}
+                    properties: {} as any
                 };
 
                 // Compute centroid, add it to the properties
@@ -282,9 +282,9 @@ function extractTraceFeature(calcTrace) {
 // (just like we currently do for geo choropleth polygons),
 // maybe instead it would make more sense to compute the centroid
 // of each polygon and consider those on hover/select
-function findCentroid(feature) {
+function findCentroid(feature: any): number[] {
     var geometry = feature.geometry;
-    var poly;
+    var poly: any;
 
     if(geometry.type === 'MultiPolygon') {
         var coords = geometry.coordinates;
@@ -292,7 +292,7 @@ function findCentroid(feature) {
 
         for(var i = 0; i < coords.length; i++) {
             var polyi = {type: 'Polygon', coordinates: coords[i]};
-            var area = turfArea(polyi);
+            var area = turfArea(polyi as any);
             if(area > maxArea) {
                 maxArea = area;
                 poly = polyi;
@@ -305,11 +305,11 @@ function findCentroid(feature) {
     return turfCentroid(poly).geometry.coordinates;
 }
 
-function fetchTraceGeoData(calcData) {
-    var PlotlyGeoAssets = window.PlotlyGeoAssets || {};
-    var promises = [];
+function fetchTraceGeoData(calcData: any[]): Promise<any>[] {
+    var PlotlyGeoAssets = (window as any).PlotlyGeoAssets || {};
+    var promises: Promise<any>[] = [];
 
-    function fetch(url) {
+    function fetch(url: string): Promise<any> {
         return new Promise(function(resolve, reject) {
             window.fetch(url).then(function(r) {
                 if(!r.ok) {
@@ -327,7 +327,7 @@ function fetchTraceGeoData(calcData) {
         });
     }
 
-    function wait(url) {
+    function wait(url: string): Promise<any> {
         return new Promise(function(resolve, reject) {
             var cnt = 0;
             var interval = setInterval(function() {
@@ -363,7 +363,7 @@ function fetchTraceGeoData(calcData) {
 
 // TODO `turf/bbox` gives wrong result when the input feature/geometry
 // crosses the anti-meridian. We should try to implement our own bbox logic.
-function computeBbox(d) {
+function computeBbox(d: any): any {
     return turfBbox(d);
 }
 
