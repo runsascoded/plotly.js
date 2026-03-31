@@ -1,7 +1,7 @@
 import Registry from '../../registry.js';
 import { hover } from './hover.js';
 
-export default function click(gd: any, evt: any, subplot: any): void {
+export default function click(gd: any, evt: any, subplot?: any): void {
     var annotationsDone = Registry.getComponentMethod('annotations', 'onClick')(gd, gd._hoverdata);
 
     // fallback to fail-safe in case the plot type's hover method doesn't pass the subplot.
