@@ -1,11 +1,11 @@
-export var selectMode = function(dragmode) {
+export var selectMode = function(dragmode: string): boolean {
     return (
         dragmode === 'lasso' ||
         dragmode === 'select'
     );
 };
 
-export var drawMode = function(dragmode) {
+export var drawMode = function(dragmode: string): boolean {
     return (
         dragmode === 'drawclosedpath' ||
         dragmode === 'drawopenpath' ||
@@ -15,14 +15,14 @@ export var drawMode = function(dragmode) {
     );
 };
 
-export var openMode = function(dragmode) {
+export var openMode = function(dragmode: string): boolean {
     return (
         dragmode === 'drawline' ||
         dragmode === 'drawopenpath'
     );
 };
 
-export var rectMode = function(dragmode) {
+export var rectMode = function(dragmode: string): boolean {
     return (
         dragmode === 'select' ||
         dragmode === 'drawline' ||
@@ -31,7 +31,7 @@ export var rectMode = function(dragmode) {
     );
 };
 
-export var freeMode = function(dragmode) {
+export var freeMode = function(dragmode: string): boolean {
     return (
         dragmode === 'lasso' ||
         dragmode === 'drawclosedpath' ||
@@ -39,7 +39,7 @@ export var freeMode = function(dragmode) {
     );
 };
 
-export var selectingOrDrawing = function(dragmode) {
+export var selectingOrDrawing = function(dragmode: string): boolean {
     return (freeMode(dragmode) || rectMode(dragmode));
 };
 

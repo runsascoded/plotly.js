@@ -7,4 +7,4 @@ export default {
         COLOR: '#FF4136',
         SYMBOL: '▼'
     }
-};
+} as const;

@@ -49,4 +49,4 @@ export default {
         top: 'bottom',
         bottom: 'top'
     }
-};
+} as const;

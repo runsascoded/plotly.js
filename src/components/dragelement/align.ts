@@ -1,4 +1,4 @@
-export default function align(v, dv, v0, v1, anchor) {
+export default function align(v: number, dv: number, v0: number, v1: number, anchor?: string): number {
     var vmin = (v - v0) / (v1 - v0);
     var vmax = vmin + dv / (v1 - v0);
     var vc = (vmin + vmax) / 2;

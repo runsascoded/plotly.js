@@ -7,7 +7,7 @@ import unhover from './unhover.js';
 import _req0 from './align.js';
 import _req1 from './cursor.js';
 
-var dragElement = {};
+var dragElement: any = {};
 
 dragElement.align = _req0;
 dragElement.getCursor = _req1;
@@ -69,20 +69,20 @@ dragElement.unhoverRaw = unhover.raw;
  *          By default, clamping is done using `minDrag` to x and y displacements
  *          independently.
  */
-dragElement.init = function init(options) {
+dragElement.init = function init(options: any): void {
     var gd = options.gd;
     var numClicks = 1;
     var doubleClickDelay = gd._context.doubleClickDelay;
     var element = options.element;
 
-    var startX,
-        startY,
-        newMouseDownTime,
-        cursor,
-        dragCover,
-        initialEvent,
-        initialTarget,
-        rightClick;
+    var startX: number,
+        startY: number,
+        newMouseDownTime: number,
+        cursor: string | null,
+        dragCover: any,
+        initialEvent: any,
+        initialTarget: any,
+        rightClick: boolean;
 
     if(!gd._mouseDownTime) gd._mouseDownTime = 0;
 
@@ -100,7 +100,7 @@ dragElement.init = function init(options) {
         element.addEventListener('touchstart', onStart, {passive: false});
     }
 
-    function _clampFn(dx, dy, minDrag) {
+    function _clampFn(dx: number, dy: number, minDrag: number): [number, number] {
         if(Math.abs(dx) < minDrag) dx = 0;
         if(Math.abs(dy) < minDrag) dy = 0;
         return [dx, dy];
@@ -108,7 +108,7 @@ dragElement.init = function init(options) {
 
     var clampFn = options.clampFn || _clampFn;
 
-    function onStart(e) {
+    function onStart(e: any): void {
         // On touch-only devices, ignore synthetic mouse events the browser
         // generates after touch — they would trigger a duplicate plotly_click.
         if(!hasHover && e.type === 'mousedown') return;
@@ -162,13 +162,13 @@ dragElement.init = function init(options) {
         } else if(!hasHover) {
             // Track touch movement for tap-vs-scroll discrimination even
             // when dragging is disabled. Don't preventDefault (allow scrolling).
-            document.addEventListener('touchmove', onScrollTrack, {passive: true});
+            document.addEventListener('touchmove', onScrollTrack, {passive: true} as AddEventListenerOptions);
         }
 
         return;
     }
 
-    function onScrollTrack(e) {
+    function onScrollTrack(e: any): void {
         var offset = pointerOffset(e);
         var minDrag = options.minDrag || constants.MINDRAG;
         if(Math.abs(offset[0] - startX) > minDrag || Math.abs(offset[1] - startY) > minDrag) {
@@ -176,7 +176,7 @@ dragElement.init = function init(options) {
         }
     }
 
-    function onMove(e) {
+    function onMove(e: any): void {
         e.preventDefault();
 
         var offset = pointerOffset(e);
@@ -202,7 +202,7 @@ dragElement.init = function init(options) {
         return;
     }
 
-    function onDone(e) {
+    function onDone(e: any): void {
         delete gd._dragdata;
 
         if(options.dragmode !== false) {
@@ -244,7 +244,7 @@ dragElement.init = function init(options) {
             // since the shadow DOM puts restrictions on what can go in the event,
             // but copy as much as possible since it will be passed on to
             // plotly_click handlers
-            var clickEvent;
+            var clickEvent: any;
             if (initialEvent.target === initialTarget) {
                 clickEvent = initialEvent;
             } else {
@@ -254,8 +254,8 @@ dragElement.init = function init(options) {
                     toElement: initialTarget
                 };
                 Object.keys(initialEvent)
-                    .concat(Object.keys(initialEvent.__proto__))
-                    .forEach(k => {
+                    .concat(Object.keys((initialEvent as any).__proto__))
+                    .forEach((k: string) => {
                         var v = initialEvent[k];
                         if (!clickEvent[k] && (typeof v !== 'function')) {
                             clickEvent[k] = v;
@@ -282,17 +282,17 @@ dragElement.init = function init(options) {
     }
 };
 
-function coverSlip() {
+function coverSlip(): HTMLDivElement {
     var cover = document.createElement('div');
 
     cover.className = 'dragcover';
     var cStyle = cover.style;
     cStyle.position = 'fixed';
-    cStyle.left = 0;
-    cStyle.right = 0;
-    cStyle.top = 0;
-    cStyle.bottom = 0;
-    cStyle.zIndex = 999999999;
+    cStyle.left = '0';
+    cStyle.right = '0';
+    cStyle.top = '0';
+    cStyle.bottom = '0';
+    cStyle.zIndex = '999999999';
     cStyle.background = 'none';
 
     document.body.appendChild(cover);
@@ -302,7 +302,7 @@ function coverSlip() {
 
 dragElement.coverSlip = coverSlip;
 
-function pointerOffset(e) {
+function pointerOffset(e: any): [number, number] {
     return mouseOffset(
         e.changedTouches ? e.changedTouches[0] : e,
         document.body

@@ -4,9 +4,9 @@ import _dom from '../../lib/dom.js';
 const { getGraphDiv } = _dom;
 import hoverConstants from '../fx/constants.js';
 
-var unhover = {};
+var unhover: any = {};
 
-unhover.wrapped = function(gd, evt, subplot) {
+unhover.wrapped = function(gd: any, evt: any, subplot?: string): void {
     gd = getGraphDiv(gd);
 
     // Important, clear any queued hovers
@@ -18,7 +18,7 @@ unhover.wrapped = function(gd, evt, subplot) {
 };
 
 // remove hover effects on mouse out, and emit unhover event
-unhover.raw = function raw(gd, evt) {
+unhover.raw = function raw(gd: any, evt?: any): void {
     var fullLayout = gd._fullLayout;
     var oldhoverdata = gd._hoverdata;
 

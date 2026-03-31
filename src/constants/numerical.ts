@@ -58,4 +58,4 @@ export default {
      * wider than the regular ascii dash "-"
      */
     MINUS_SIGN: '\u2212'
-};
+} as const;

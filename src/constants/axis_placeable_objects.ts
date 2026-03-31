@@ -1,5 +1,5 @@
 export default {
-    axisRefDescription: function(axisname, lower, upper) {
+    axisRefDescription: function(axisname: string, lower: string, upper: string): string {
         return [
             'If set to a', axisname, 'axis id (e.g. *' + axisname + '* or',
             '*' + axisname + '2*), the `' + axisname + '` position refers to a',

@@ -1,4 +1,4 @@
-export var defaults = [
+export var defaults: readonly string[] = [
     '#1f77b4',  // muted blue
     '#ff7f0e',  // safety orange
     '#2ca02c',  // cooked asparagus green
@@ -11,10 +11,10 @@ export var defaults = [
     '#17becf'   // blue-teal
 ];
 
-export var defaultLine = '#444';
-export var lightLine = '#eee';
-export var background = '#fff';
-export var borderLine = '#BEC8D9';
-export var lightFraction = 100 * (0xe - 0x4) / (0xf - 0x4);
+export var defaultLine: string = '#444';
+export var lightLine: string = '#eee';
+export var background: string = '#fff';
+export var borderLine: string = '#BEC8D9';
+export var lightFraction: number = 100 * (0xe - 0x4) / (0xf - 0x4);
 
 export default { defaults, defaultLine, lightLine, background, borderLine, lightFraction };

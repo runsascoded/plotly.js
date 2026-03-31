@@ -3,13 +3,13 @@ import { constrain } from '../../lib/index.js';
 // set cursors pointing toward the closest corner/side,
 // to indicate alignment
 // x and y are 0-1, fractions of the plot area
-var cursorset = [
+var cursorset: string[][] = [
     ['sw-resize', 's-resize', 'se-resize'],
     ['w-resize', 'move', 'e-resize'],
     ['nw-resize', 'n-resize', 'ne-resize']
 ];
 
-export default function getCursor(x, y, xanchor, yanchor) {
+export default function getCursor(x: number, y: number, xanchor?: string, yanchor?: string): string {
     if(xanchor === 'left') x = 0;
     else if(xanchor === 'center') x = 1;
     else if(xanchor === 'right') x = 2;

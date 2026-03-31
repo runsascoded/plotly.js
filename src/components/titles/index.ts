@@ -1,5 +1,5 @@
 import { select } from 'd3-selection';
-function d3Round(x, n) { return n ? Math.round(x * (n = Math.pow(10, n))) / n : Math.round(x); }
+function d3Round(x: number, n?: number): number { return n ? Math.round(x * (n = Math.pow(10, n))) / n : Math.round(x); }
 import isNumeric from 'fast-isnumeric';
 import { previousPromises } from '../../plots/plots.js';
 import Registry from '../../registry.js';
@@ -46,7 +46,7 @@ var SUBTITLE_PADDING_EM = 1.6;
  *
  *  @return {selection} d3 selection of title container group
  */
-function draw(gd, titleClass, options) {
+function draw(gd: any, titleClass: string, options: any): any {
     var fullLayout = gd._fullLayout;
 
     var cont = options.propContainer;
@@ -96,13 +96,13 @@ function draw(gd, titleClass, options) {
     // only make this title editable if we positively identify its property
     // as one that has editing enabled.
     // Subtitle is editable if and only if title is editable
-    var editAttr;
+    var editAttr: string | undefined;
     if(prop === 'title.text') editAttr = 'titleText';
     else if(prop.indexOf('axis') !== -1) editAttr = 'axisTitleText';
     else if(prop.indexOf('colorbar') !== -1) editAttr = 'colorbarTitleText';
     var editable = gd._context.edits[editAttr];
 
-    function matchesPlaceholder(text, placeholder) {
+    function matchesPlaceholder(text: string | undefined, placeholder: string | undefined): boolean {
         if(text === undefined || placeholder === undefined) return false;
         // look for placeholder text while stripping out numbers from eg X2, Y3
         // this is just for backward compatibility with the old version that had
@@ -135,7 +135,7 @@ function draw(gd, titleClass, options) {
 
     var elShouldExist = txt || subtitleTxt || editable;
 
-    var hColorbarMoveTitle;
+    var hColorbarMoveTitle: any;
     if(!group) {
         group = ensureSingle(fullLayout._infolayer, 'g', 'g-' + titleClass);
         hColorbarMoveTitle = fullLayout._hColorbarMoveTitle;
@@ -153,7 +153,7 @@ function draw(gd, titleClass, options) {
         .attr('class', titleClass);
     el.exit().remove();
 
-    var subtitleEl = null;
+    var subtitleEl: any = null;
     var subtitleClass = titleClass + '-subtitle';
     var subtitleElShouldExist = subtitleTxt || editable;
 
@@ -167,15 +167,15 @@ function draw(gd, titleClass, options) {
 
     if(!elShouldExist) return group;
 
-    function titleLayout(titleEl, subtitleEl) {
+    function titleLayout(titleEl: any, subtitleEl: any): void {
         syncOrAsync([drawTitle, scootTitle], { title: titleEl, subtitle: subtitleEl });
     }
 
-    function drawTitle(titleAndSubtitleEls) {
+    function drawTitle(titleAndSubtitleEls: any): any {
         var titleEl = titleAndSubtitleEls.title;
         var subtitleEl = titleAndSubtitleEls.subtitle;
 
-        var transformVal;
+        var transformVal: string | null;
 
         if(!transform && hColorbarMoveTitle) {
             transform = {};
@@ -198,7 +198,7 @@ function draw(gd, titleClass, options) {
         // Callback to adjust the subtitle position after mathjax is rendered
         // Mathjax is rendered asynchronously, which is why this step needs to be
         // passed as a callback
-        function adjustSubtitlePosition(titleElMathGroup) {
+        function adjustSubtitlePosition(titleElMathGroup: any): void {
             if(!titleElMathGroup) return;
 
             var subtitleElement = select(titleElMathGroup.node().parentNode).select('.' + subtitleClass);
@@ -260,7 +260,7 @@ function draw(gd, titleClass, options) {
         return previousPromises(gd);
     }
 
-    function scootTitle(titleAndSubtitleEls) {
+    function scootTitle(titleAndSubtitleEls: any): void {
         var titleElIn = titleAndSubtitleEls.title;
         var titleGroup = select(titleElIn.node().parentNode);
 
@@ -269,14 +269,14 @@ function draw(gd, titleClass, options) {
 
             // move toward avoid.side (= left, right, top, bottom) if needed
             // can include pad (pixels, default 2)
-            var backside = OPPOSITE_SIDE[avoid.side];
+            var backside = OPPOSITE_SIDE[avoid.side as keyof typeof OPPOSITE_SIDE];
             var shiftSign = (avoid.side === 'left' || avoid.side === 'top') ? -1 : 1;
             var pad = isNumeric(avoid.pad) ? avoid.pad : 2;
 
             var titlebb = bBox(titleGroup.node());
 
             // Account for reservedMargins
-            var reservedMargins = {t: 0, b: 0, l: 0, r: 0};
+            var reservedMargins: Record<string, number> = {t: 0, b: 0, l: 0, r: 0};
             var margins = gd._fullLayout._reservedMargin;
             for(var key in margins) {
                 for(var side in margins[key]) {
@@ -284,7 +284,7 @@ function draw(gd, titleClass, options) {
                     reservedMargins[side] = Math.max(reservedMargins[side], val);
                 }
             }
-            var paperbb = {
+            var paperbb: Record<string, number> = {
                 left: reservedMargins.l,
                 top: reservedMargins.t,
                 right: fullLayout.width - reservedMargins.r,
@@ -310,7 +310,7 @@ function draw(gd, titleClass, options) {
 
                 // iterate over a set of elements (avoid.selection)
                 // to avoid collisions with
-                avoid.selection.each(function() {
+                avoid.selection.each(function(this: any) {
                     var avoidbb = bBox(this);
 
                     if(bBoxIntersect(titlebb, avoidbb, pad)) {
@@ -324,26 +324,26 @@ function draw(gd, titleClass, options) {
             }
 
             if(shift > 0 || maxshift < 0) {
-                var shiftTemplate = {
+                var shiftTemplate: Record<string, [number, number]> = {
                     left: [-shift, 0],
                     right: [shift, 0],
                     top: [0, -shift],
                     bottom: [0, shift]
-                }[avoid.side];
-                titleGroup.attr('transform', strTranslate(shiftTemplate[0], shiftTemplate[1]));
+                };
+                titleGroup.attr('transform', strTranslate(shiftTemplate[avoid.side][0], shiftTemplate[avoid.side][1]));
             }
         }
     }
 
     el.call(titleLayout, subtitleEl);
 
-    function setPlaceholder(element, placeholderText) {
+    function setPlaceholder(element: any, placeholderText: string): void {
         element.text(placeholderText)
-            .on('mouseover.opacity', function() {
+            .on('mouseover.opacity', function(this: any) {
                 select(this).transition()
                     .duration(interactConstants.SHOW_PLACEHOLDER).style('opacity', 1);
             })
-            .on('mouseout.opacity', function() {
+            .on('mouseout.opacity', function(this: any) {
                 select(this).transition()
                     .duration(interactConstants.HIDE_PLACEHOLDER).style('opacity', 0);
             });
@@ -356,18 +356,18 @@ function draw(gd, titleClass, options) {
         } else el.on('.opacity', null);
 
         el.call(svgTextUtils.makeEditable, {gd: gd})
-            .on('edit', function(text) {
+            .on('edit', function(this: any, text: string) {
                 if(traceIndex !== undefined) {
                     Registry.call('_guiRestyle', gd, prop, text, traceIndex);
                 } else {
                     Registry.call('_guiRelayout', gd, prop, text);
                 }
             })
-            .on('cancel', function() {
+            .on('cancel', function(this: any) {
                 this.text(this.attr('data-unformatted'))
                     .call(titleLayout);
             })
-            .on('input', function(d) {
+            .on('input', function(this: any, d: string) {
                 this.text(d || ' ')
                     .call(svgTextUtils.positionText, attributes.x, attributes.y);
             });
@@ -386,14 +386,14 @@ function draw(gd, titleClass, options) {
                 subtitleIsPlaceholder = true;
             } else subtitleEl.on('.opacity', null);
             subtitleEl.call(svgTextUtils.makeEditable, {gd: gd})
-                .on('edit', function(text) {
+                .on('edit', function(this: any, text: string) {
                     Registry.call('_guiRelayout', gd, 'title.subtitle.text', text);
                 })
-                .on('cancel', function() {
+                .on('cancel', function(this: any) {
                     this.text(this.attr('data-unformatted'))
                         .call(titleLayout);
                 })
-                .on('input', function(d) {
+                .on('input', function(this: any, d: string) {
                     this.text(d || ' ')
                         .call(svgTextUtils.positionText, subtitleEl.attr('x'), subtitleEl.attr('y'));
                 });

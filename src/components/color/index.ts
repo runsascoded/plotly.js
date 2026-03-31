@@ -3,7 +3,7 @@ import isNumeric from 'fast-isnumeric';
 import { isTypedArray } from '../../lib/array.js';
 import colorAttrs from './attributes.js';
 
-var color = {};
+var color: any = {};
 
 color.defaults = colorAttrs.defaults;
 var defaultLine = color.defaultLine = colorAttrs.defaultLine;
@@ -14,17 +14,17 @@ var background = color.background = colorAttrs.background;
  * tinyRGB: turn a tinycolor into an rgb string, but
  * unlike the built-in tinycolor.toRgbString this never includes alpha
  */
-color.tinyRGB = function(tc) {
+color.tinyRGB = function(tc: any): string {
     var c = tc.toRgb();
     return 'rgb(' + Math.round(c.r) + ', ' +
         Math.round(c.g) + ', ' + Math.round(c.b) + ')';
 };
 
-color.rgb = function(cstr) { return color.tinyRGB(tinycolor(cstr)); };
+color.rgb = function(cstr: string): string { return color.tinyRGB(tinycolor(cstr)); };
 
-color.opacity = function(cstr) { return cstr ? tinycolor(cstr).getAlpha() : 0; };
+color.opacity = function(cstr: string): number { return cstr ? tinycolor(cstr).getAlpha() : 0; };
 
-color.addOpacity = function(cstr, op) {
+color.addOpacity = function(cstr: string, op: number): string {
     var c = tinycolor(cstr).toRgb();
     return 'rgba(' + Math.round(c.r) + ', ' +
         Math.round(c.g) + ', ' + Math.round(c.b) + ', ' + op + ')';
@@ -33,7 +33,7 @@ color.addOpacity = function(cstr, op) {
 // combine two colors into one apparent color
 // if back has transparency or is missing,
 // color.background is assumed behind it
-color.combine = function(front, back) {
+color.combine = function(front: string, back?: string): string {
     var fc = tinycolor(front).toRgb();
     if(fc.a === 1) return tinycolor(front).toRgbString();
 
@@ -57,7 +57,7 @@ color.combine = function(front, back) {
  * Ignores alpha channel values.
  * The resulting color is computed as: factor * first + (1 - factor) * second.
  */
-color.interpolate = function(first, second, factor) {
+color.interpolate = function(first: string, second: string, factor: number): string {
     var fc = tinycolor(first).toRgb();
     var sc = tinycolor(second).toRgb();
 
@@ -78,7 +78,7 @@ color.interpolate = function(first, second, factor) {
  * If lightAmount / darkAmount are used, we adjust by these percentages,
  * otherwise we go all the way to white or black.
  */
-color.contrast = function(cstr, lightAmount, darkAmount) {
+color.contrast = function(cstr: string, lightAmount?: number, darkAmount?: number): string {
     var tc = tinycolor(cstr);
 
     if(tc.getAlpha() !== 1) tc = tinycolor(color.combine(cstr, background));
@@ -90,12 +90,12 @@ color.contrast = function(cstr, lightAmount, darkAmount) {
     return newColor.toString();
 };
 
-color.stroke = function(s, c) {
+color.stroke = function(s: any, c: string): void {
     var tc = tinycolor(c);
     s.style({stroke: color.tinyRGB(tc), 'stroke-opacity': tc.getAlpha()});
 };
 
-color.fill = function(s, c) {
+color.fill = function(s: any, c: string): void {
     var tc = tinycolor(c);
     s.style({
         fill: color.tinyRGB(tc),
@@ -105,11 +105,11 @@ color.fill = function(s, c) {
 
 // search container for colors with the deprecated rgb(fractions) format
 // and convert them to rgb(0-255 values)
-color.clean = function(container) {
+color.clean = function(container: any): void {
     if(!container || typeof container !== 'object') return;
 
     var keys = Object.keys(container);
-    var i, j, key, val;
+    var i: number, j: number, key: string, val: any;
 
     for(i = 0; i < keys.length; i++) {
         key = keys[i];
@@ -138,7 +138,7 @@ color.clean = function(container) {
     }
 };
 
-function cleanOne(val) {
+function cleanOne(val: any): any {
     if(isNumeric(val) || typeof val !== 'string') return val;
 
     var valTrim = val.trim();
@@ -147,7 +147,7 @@ function cleanOne(val) {
     var match = valTrim.match(/^rgba?\s*\(([^()]*)\)$/);
     if(!match) return val;
 
-    var parts = match[1].trim().split(/\s*[\s,]\s*/);
+    var parts: any[] = match[1].trim().split(/\s*[\s,]\s*/);
     var rgba = valTrim.charAt(3) === 'a' && parts.length === 4;
     if(!rgba && parts.length !== 3) return val;
 

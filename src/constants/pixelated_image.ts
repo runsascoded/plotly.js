@@ -1,4 +1,4 @@
-export var CSS_DECLARATIONS = [
+export var CSS_DECLARATIONS: readonly [string, string][] = [
     ['image-rendering', 'optimizeSpeed'],
     ['image-rendering', '-moz-crisp-edges'],
     ['image-rendering', '-o-crisp-edges'],
@@ -8,7 +8,7 @@ export var CSS_DECLARATIONS = [
     ['image-rendering', 'pixelated']
 ];
 
-export var STYLE = CSS_DECLARATIONS.map(function(d) {
+export var STYLE: string = CSS_DECLARATIONS.map(function(d) {
     return d.join(': ') + '; ';
 }).join('');
 

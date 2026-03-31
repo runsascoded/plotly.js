@@ -7,4 +7,4 @@ export default {
     'diamond-open': '◇',
     cross: '+',
     x: '❌'
-};
+} as const;
