@@ -1,4 +1,4 @@
-export default function makeFillcolorAttr(hasFillgradient: boolean): any {
+export default function makeFillcolorAttr(hasFillgradient?: boolean): any {
     return {
         valType: 'color',
         editType: 'style',

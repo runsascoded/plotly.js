@@ -1114,7 +1114,7 @@ export function selectedPointStyle(s: any, trace: FullTrace): void {
     }
 }
 
-export function tryColorscale(marker: any, prefix: string): any {
+export function tryColorscale(marker: any, prefix?: string): any {
     var cont = prefix ? nestedProperty(marker, prefix).get() : marker;
 
     if (cont) {

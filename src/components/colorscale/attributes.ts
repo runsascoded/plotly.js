@@ -9,7 +9,7 @@ function code(s: string): string {
     return '`' + s + '`';
 }
 
-export default function colorScaleAttrs(context: string, opts: any): any {
+export default function colorScaleAttrs(context: string, opts?: any): any {
     context = context || '';
     opts = opts || {};
 
