@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>plotly.js — upstream basic v3.3.1</title>
+<style>
+body { margin: 0; font-family: system-ui, sans-serif; background: #fafafa; }
+.header { padding: 12px 20px; background: #fff; border-bottom: 1px solid #e0e0e0; }
+.header h2 { margin: 0 0 4px; font-size: 18px; }
+.header .meta { color: #666; font-size: 14px; }
+.header .size { font-weight: 600; color: #333; }
+#plot { max-width: 900px; margin: 20px auto; }
+</style>
+</head>
+<body>
+<div class="header">
+  <h2>Upstream plotly.js-basic-dist v3.3.1</h2>
+  <div class="meta">
+    scatter + bar + pie &middot; CJS pre-built bundle &middot;
+    <span class="size" id="size"></span>
+  </div>
+</div>
+<div id="plot"></div>
+<script src="app.js"></script>
+<script>document.getElementById('size').textContent = (document.querySelector('script[src="app.js"]').textContent || '').length ? '' : Math.round(performance.getEntriesByName(location.origin + '/app.js')[0]?.transferSize / 1024) + ' KB transferred';</script>
+<script>
+  // Show bundle size from performance API
+  setTimeout(function() {
+    var entries = performance.getEntriesByType('resource').filter(function(e) { return e.name.includes('app.js'); });
+    if(entries.length) {
+      var e = entries[0];
+      document.getElementById('size').textContent = Math.round(e.decodedBodySize / 1024) + ' KB (' + Math.round(e.transferSize / 1024) + ' KB gzipped)';
+    }
+  }, 1000);
+</script>
+</body>
+</html>

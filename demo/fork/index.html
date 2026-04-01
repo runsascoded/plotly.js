@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>plotly.js — fork factory (tree-shaken)</title>
+<style>
+body { margin: 0; font-family: system-ui, sans-serif; background: #fafafa; }
+.header { padding: 12px 20px; background: #fff; border-bottom: 1px solid #e0e0e0; }
+.header h2 { margin: 0 0 4px; font-size: 18px; }
+.header .meta { color: #666; font-size: 14px; }
+.header .size { font-weight: 600; color: #333; }
+.header .savings { color: #2e7d32; font-weight: 600; }
+#plot { max-width: 900px; margin: 20px auto; }
+</style>
+</head>
+<body>
+<div class="header">
+  <h2>Fork: <code>createPlotly()</code> factory</h2>
+  <div class="meta">
+    scatter + bar + legend only &middot; ESM + d3 v7 + tree-shaken &middot;
+    <span class="size" id="size"></span>
+    <span class="savings" id="savings"></span>
+  </div>
+</div>
+<div id="plot"></div>
+<script src="app.js"></script>
+<script>
+  setTimeout(function() {
+    var entries = performance.getEntriesByType('resource').filter(function(e) { return e.name.includes('app.js'); });
+    if(entries.length) {
+      var e = entries[0];
+      var kb = Math.round(e.decodedBodySize / 1024);
+      var gzKb = Math.round(e.transferSize / 1024);
+      document.getElementById('size').textContent = kb + ' KB (' + gzKb + ' KB gzipped)';
+      var upstreamKb = 1089;
+      var pct = Math.round((upstreamKb - kb) / upstreamKb * 100);
+      document.getElementById('savings').textContent = ' — ' + pct + '% smaller than upstream';
+    }
+  }, 1000);
+</script>
+</body>
+</html>
