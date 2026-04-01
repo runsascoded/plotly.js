@@ -26,7 +26,7 @@ function sortObject(obj) {
 // Build plotly as a self-contained IIFE for jsdom evaluation
 // This is the same approach as the old schema task but uses ESM source
 const result = await build({
-    entryPoints: ['src/core.js'],
+    entryPoints: ['src/core.ts'],
     bundle: true,
     format: 'iife',
     globalName: 'Plotly',

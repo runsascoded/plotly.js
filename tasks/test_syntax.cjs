@@ -13,7 +13,7 @@ var isJasmineTestDescribe = common.isJasmineTestDescribe;
 var hasJasmineTestTag = common.hasJasmineTestTag;
 
 var constants = require('./util/constants.cjs');
-var srcGlob = path.join(constants.pathToSrc, '**/*.js');
+var srcGlob = path.join(constants.pathToSrc, '**/*.ts');
 var libGlob = path.join(constants.pathToLib, '**/*.js');
 var testGlob = path.join(constants.pathToJasmineTests, '**/*.js');
 var bundleTestGlob = path.join(constants.pathToJasmineBundleTests, '**/*.js');
