@@ -3,6 +3,7 @@ var fs = require('fs');
 
 var falafel = require('falafel');
 var { glob } = require('glob');
+var esbuild = require('esbuild');
 
 var constants = require('./util/constants.cjs');
 var srcGlob = path.join(constants.pathToSrc, '**/*.ts');
@@ -25,7 +26,9 @@ function findLocaleStrings() {
         var maxLen = 0;
 
         files.forEach(function(file) {
-            var code = fs.readFileSync(file, 'utf-8');
+            var raw = fs.readFileSync(file, 'utf-8');
+            // Strip TypeScript annotations so falafel (JS parser) can handle .ts files
+            var code = esbuild.transformSync(raw, { loader: 'ts', target: 'esnext' }).code;
             var filePartialPath = file.substr(constants.pathToSrc.length);
 
             falafel(code, { ecmaVersion: 'latest', sourceType: 'module', locations: true }, function(node) {

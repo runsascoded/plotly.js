@@ -3,6 +3,7 @@ var fs = require('fs');
 
 var falafel = require('falafel');
 var { glob } = require('glob');
+var esbuild = require('esbuild');
 var madge = require('madge');
 var readLastLines = require('read-last-lines');
 var trueCasePath = require('true-case-path').trueCasePathSync;
@@ -104,7 +105,11 @@ function assertSrcContents() {
 
     glob(combineGlobs([srcGlob, libGlob])).then((files) => {
         files.forEach(function(file) {
-            var code = fs.readFileSync(file, 'utf-8');
+            var raw = fs.readFileSync(file, 'utf-8');
+            // Strip TypeScript annotations for falafel (JS parser)
+            var code = file.endsWith('.ts')
+                ? esbuild.transformSync(raw, { loader: 'ts', target: 'esnext' }).code
+                : raw;
 
             // parse through code string while keeping track of comments
             var comments = [];
