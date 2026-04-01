@@ -36,8 +36,8 @@ var Plotly = (() => {
     return a;
   };
   var __spreadProps = (a, b) => __defProps(a, __getOwnPropDescs(b));
-  var __commonJS = (cb, mod5) => function __require() {
-    return mod5 || (0, cb[__getOwnPropNames(cb)[0]])((mod5 = { exports: {} }).exports, mod5), mod5.exports;
+  var __commonJS = (cb, mod4) => function __require() {
+    return mod4 || (0, cb[__getOwnPropNames(cb)[0]])((mod4 = { exports: {} }).exports, mod4), mod4.exports;
   };
   var __export = (target, all) => {
     for (var name6 in all)
@@ -51,15 +51,15 @@ var Plotly = (() => {
     }
     return to;
   };
-  var __toESM = (mod5, isNodeMode, target) => (target = mod5 != null ? __create(__getProtoOf(mod5)) : {}, __copyProps(
+  var __toESM = (mod4, isNodeMode, target) => (target = mod4 != null ? __create(__getProtoOf(mod4)) : {}, __copyProps(
     // If the importer is in node compatibility mode or this is not an ESM
     // file that has been converted to a CommonJS file using a Babel-
     // compatible transform (i.e. "__esModule" has not been set), then set
     // "default" to the CommonJS "module.exports" for node compatibility.
-    isNodeMode || !mod5 || !mod5.__esModule ? __defProp(target, "default", { value: mod5, enumerable: true }) : target,
-    mod5
+    isNodeMode || !mod4 || !mod4.__esModule ? __defProp(target, "default", { value: mod4, enumerable: true }) : target,
+    mod4
   ));
-  var __toCommonJS = (mod5) => __copyProps(__defProp({}, "__esModule", { value: true }), mod5);
+  var __toCommonJS = (mod4) => __copyProps(__defProp({}, "__esModule", { value: true }), mod4);
 
   // node_modules/.pnpm/is-string-blank@1.0.1/node_modules/is-string-blank/index.js
   var require_is_string_blank = __commonJS({
@@ -690,7 +690,7 @@ var Plotly = (() => {
             chain.reject(err);
           }
         }
-        function resolve(msg) {
+        function resolve(msg2) {
           var _then, self = this;
           if (self.triggered) {
             return;
@@ -700,12 +700,12 @@ var Plotly = (() => {
             self = self.def;
           }
           try {
-            if (_then = isThenable(msg)) {
+            if (_then = isThenable(msg2)) {
               schedule(function() {
                 var def_wrapper = new MakeDefWrapper(self);
                 try {
                   _then.call(
-                    msg,
+                    msg2,
                     function $resolve$() {
                       resolve.apply(def_wrapper, arguments);
                     },
@@ -718,7 +718,7 @@ var Plotly = (() => {
                 }
               });
             } else {
-              self.msg = msg;
+              self.msg = msg2;
               self.state = 1;
               if (self.chain.length > 0) {
                 schedule(notify, self);
@@ -728,7 +728,7 @@ var Plotly = (() => {
             reject.call(new MakeDefWrapper(self), err);
           }
         }
-        function reject(msg) {
+        function reject(msg2) {
           var self = this;
           if (self.triggered) {
             return;
@@ -737,7 +737,7 @@ var Plotly = (() => {
           if (self.def) {
             self = self.def;
           }
-          self.msg = msg;
+          self.msg = msg2;
           self.state = 2;
           if (self.chain.length > 0) {
             schedule(notify, self);
@@ -747,8 +747,8 @@ var Plotly = (() => {
           for (var idx = 0; idx < arr.length; idx++) {
             (function IIFE(idx2) {
               Constructor.resolve(arr[idx2]).then(
-                function $resolver$(msg) {
-                  resolver(idx2, msg);
+                function $resolver$(msg2) {
+                  resolver(idx2, msg2);
                 },
                 rejecter
               );
@@ -799,11 +799,11 @@ var Plotly = (() => {
           try {
             executor.call(
               void 0,
-              function publicResolve(msg) {
-                resolve.call(def, msg);
+              function publicResolve(msg2) {
+                resolve.call(def, msg2);
               },
-              function publicReject(msg) {
-                reject.call(def, msg);
+              function publicReject(msg2) {
+                reject.call(def, msg2);
               }
             );
           } catch (err) {
@@ -825,24 +825,24 @@ var Plotly = (() => {
           /*configurable=*/
           false
         );
-        builtInProp(Promise2, "resolve", function Promise$resolve(msg) {
+        builtInProp(Promise2, "resolve", function Promise$resolve(msg2) {
           var Constructor = this;
-          if (msg && typeof msg == "object" && msg.__NPO__ === 1) {
-            return msg;
+          if (msg2 && typeof msg2 == "object" && msg2.__NPO__ === 1) {
+            return msg2;
           }
           return new Constructor(function executor(resolve2, reject2) {
             if (typeof resolve2 != "function" || typeof reject2 != "function") {
               throw TypeError("Not a function");
             }
-            resolve2(msg);
+            resolve2(msg2);
           });
         });
-        builtInProp(Promise2, "reject", function Promise$reject(msg) {
+        builtInProp(Promise2, "reject", function Promise$reject(msg2) {
           return new this(function executor(resolve2, reject2) {
             if (typeof resolve2 != "function" || typeof reject2 != "function") {
               throw TypeError("Not a function");
             }
-            reject2(msg);
+            reject2(msg2);
           });
         });
         builtInProp(Promise2, "all", function Promise$all(arr) {
@@ -858,8 +858,8 @@ var Plotly = (() => {
               throw TypeError("Not a function");
             }
             var len2 = arr.length, msgs = Array(len2), count = 0;
-            iteratePromises(Constructor, arr, function resolver(idx, msg) {
-              msgs[idx] = msg;
+            iteratePromises(Constructor, arr, function resolver(idx, msg2) {
+              msgs[idx] = msg2;
               if (++count === len2) {
                 resolve2(msgs);
               }
@@ -875,8 +875,8 @@ var Plotly = (() => {
             if (typeof resolve2 != "function" || typeof reject2 != "function") {
               throw TypeError("Not a function");
             }
-            iteratePromises(Constructor, arr, function resolver(idx, msg) {
-              resolve2(msg);
+            iteratePromises(Constructor, arr, function resolver(idx, msg2) {
+              resolve2(msg2);
             }, reject2);
           });
         });
@@ -4548,7 +4548,7 @@ var Plotly = (() => {
   selection_default.prototype.interrupt = interrupt_default2;
   selection_default.prototype.transition = transition_default2;
 
-  // src/lib/d3-compat.js
+  // src/lib/d3-compat.ts
   var _origStyle = selection_default.prototype.style;
   var _origAttr = selection_default.prototype.attr;
   var _origEnter = selection_default.prototype.enter;
@@ -4631,218 +4631,447 @@ var Plotly = (() => {
     return enterSel;
   };
 
-  // src/plot_api/plot_config.js
+  // src/plot_api/plot_config.ts
   var configAttributes = {
     staticPlot: {
       valType: "boolean",
-      dflt: false
+      dflt: false,
+      description: [
+        "Determines whether the graphs are interactive or not.",
+        "If *false*, no interactivity, for export or image generation."
+      ].join(" ")
     },
     typesetMath: {
       valType: "boolean",
-      dflt: true
+      dflt: true,
+      description: [
+        "Determines whether math should be typeset or not,",
+        "when MathJax (either v2 or v3) is present on the page."
+      ].join(" ")
     },
     plotlyServerURL: {
       valType: "string",
-      dflt: ""
+      dflt: "",
+      description: [
+        "When set it determines base URL for",
+        "the 'Edit in Chart Studio' `showEditInChartStudio`/`showSendToCloud` mode bar button",
+        "and the showLink/sendData on-graph link.",
+        "To enable sending your data to Chart Studio Cloud, you need to",
+        "set both `plotlyServerURL` to 'https://chart-studio.plotly.com' and",
+        "also set `showSendToCloud` to true."
+      ].join(" ")
     },
     editable: {
       valType: "boolean",
-      dflt: false
+      dflt: false,
+      description: [
+        "Determines whether the graph is editable or not.",
+        "Sets all pieces of `edits`",
+        "unless a separate `edits` config item overrides individual parts."
+      ].join(" ")
     },
     edits: {
       annotationPosition: {
         valType: "boolean",
-        dflt: false
+        dflt: false,
+        description: [
+          "Determines if the main anchor of the annotation is editable.",
+          "The main anchor corresponds to the",
+          "text (if no arrow) or the arrow (which drags the whole thing leaving",
+          "the arrow length & direction unchanged)."
+        ].join(" ")
       },
       annotationTail: {
         valType: "boolean",
-        dflt: false
+        dflt: false,
+        description: [
+          "Has only an effect for annotations with arrows.",
+          "Enables changing the length and direction of the arrow."
+        ].join(" ")
       },
       annotationText: {
         valType: "boolean",
-        dflt: false
+        dflt: false,
+        description: "Enables editing annotation text."
       },
       axisTitleText: {
         valType: "boolean",
-        dflt: false
+        dflt: false,
+        description: "Enables editing axis title text."
       },
       colorbarPosition: {
         valType: "boolean",
-        dflt: false
+        dflt: false,
+        description: "Enables moving colorbars."
       },
       colorbarTitleText: {
         valType: "boolean",
-        dflt: false
+        dflt: false,
+        description: "Enables editing colorbar title text."
       },
       legendPosition: {
         valType: "boolean",
-        dflt: false
+        dflt: false,
+        description: "Enables moving the legend."
       },
       legendText: {
         valType: "boolean",
-        dflt: false
+        dflt: false,
+        description: "Enables editing the trace name fields from the legend"
       },
       shapePosition: {
         valType: "boolean",
-        dflt: false
+        dflt: false,
+        description: "Enables moving shapes."
       },
       titleText: {
         valType: "boolean",
-        dflt: false
+        dflt: false,
+        description: "Enables editing the global layout title."
       }
     },
     editSelection: {
       valType: "boolean",
-      dflt: true
+      dflt: true,
+      description: "Enables moving selections."
     },
     autosizable: {
       valType: "boolean",
-      dflt: false
+      dflt: false,
+      description: [
+        "Determines whether the graphs are plotted with respect to",
+        "layout.autosize:true and infer its container size."
+      ].join(" ")
     },
     responsive: {
       valType: "boolean",
-      dflt: false
+      dflt: false,
+      description: [
+        "Determines whether to change the layout size when window is resized.",
+        "In v3, this option will be removed and will always be true."
+      ].join(" ")
     },
     deferAutoMargin: {
       valType: "boolean",
-      dflt: false
+      dflt: false,
+      description: [
+        "When true, defers margin calculation (legend/title/axis label measurement)",
+        "to a requestAnimationFrame after the initial render. This gets traces",
+        "on screen faster at the cost of a possible single-frame layout shift",
+        "as margins adjust. Best used with explicit layout.width and layout.height."
+      ].join(" ")
     },
     fillFrame: {
       valType: "boolean",
-      dflt: false
+      dflt: false,
+      description: [
+        "When `layout.autosize` is turned on, determines whether the graph",
+        "fills the container (the default) or the screen (if set to *true*)."
+      ].join(" ")
     },
     frameMargins: {
       valType: "number",
       dflt: 0,
       min: 0,
-      max: 0.5
+      max: 0.5,
+      description: [
+        "When `layout.autosize` is turned on, set the frame margins",
+        "in fraction of the graph size."
+      ].join(" ")
     },
     scrollZoom: {
       valType: "flaglist",
       flags: ["cartesian", "gl3d", "geo", "mapbox", "map"],
       extras: [true, false],
-      dflt: "gl3d+geo+map"
+      dflt: "gl3d+geo+map",
+      description: [
+        "Determines whether mouse wheel or two-finger scroll zooms is enable.",
+        "Turned on by default for gl3d, geo, mapbox and map subplots",
+        "(as these subplot types do not have zoombox via pan),",
+        "but turned off by default for cartesian subplots.",
+        "Set `scrollZoom` to *false* to disable scrolling for all subplots."
+      ].join(" ")
     },
     doubleClick: {
       valType: "enumerated",
       values: [false, "reset", "autosize", "reset+autosize"],
-      dflt: "reset+autosize"
+      dflt: "reset+autosize",
+      description: [
+        "Sets the double click interaction mode.",
+        "Has an effect only in cartesian plots.",
+        "If *false*, double click is disable.",
+        "If *reset*, double click resets the axis ranges to their initial values.",
+        "If *autosize*, double click set the axis ranges to their autorange values.",
+        "If *reset+autosize*, the odd double clicks resets the axis ranges",
+        "to their initial values and even double clicks set the axis ranges",
+        "to their autorange values."
+      ].join(" ")
     },
     doubleClickDelay: {
       valType: "number",
       dflt: 300,
-      min: 0
+      min: 0,
+      description: [
+        "Sets the delay for registering a double-click in ms.",
+        "This is the time interval (in ms) between first mousedown and",
+        "2nd mouseup to constitute a double-click.",
+        "This setting propagates to all on-subplot double clicks",
+        "(except for geo, mapbox and map) and on-legend double clicks."
+      ].join(" ")
     },
     showAxisDragHandles: {
       valType: "boolean",
-      dflt: true
+      dflt: true,
+      description: [
+        "Set to *false* to omit cartesian axis pan/zoom drag handles."
+      ].join(" ")
     },
     showAxisRangeEntryBoxes: {
       valType: "boolean",
-      dflt: true
+      dflt: true,
+      description: [
+        "Set to *false* to omit direct range entry at the pan/zoom drag points,",
+        "note that `showAxisDragHandles` must be enabled to have an effect."
+      ].join(" ")
     },
     showTips: {
       valType: "boolean",
-      dflt: true
+      dflt: true,
+      description: [
+        "Determines whether or not tips are shown while interacting",
+        "with the resulting graphs."
+      ].join(" ")
     },
     showLink: {
       valType: "boolean",
-      dflt: false
+      dflt: false,
+      description: [
+        "Determines whether a link to Chart Studio Cloud is displayed",
+        "at the bottom right corner of resulting graphs.",
+        "Use with `sendData` and `linkText`."
+      ].join(" ")
     },
     linkText: {
       valType: "string",
       dflt: "Edit chart",
-      noBlank: true
+      noBlank: true,
+      description: [
+        "Sets the text appearing in the `showLink` link."
+      ].join(" ")
     },
     sendData: {
       valType: "boolean",
-      dflt: true
+      dflt: true,
+      description: [
+        "If *showLink* is true, does it contain data",
+        "just link to a Chart Studio Cloud file?"
+      ].join(" ")
     },
     showSources: {
       valType: "any",
-      dflt: false
+      dflt: false,
+      description: [
+        "Adds a source-displaying function to show sources on",
+        "the resulting graphs."
+      ].join(" ")
     },
     displayModeBar: {
       valType: "enumerated",
       values: ["hover", true, false],
-      dflt: "hover"
+      dflt: "hover",
+      description: [
+        "Determines the mode bar display mode.",
+        "If *true*, the mode bar is always visible.",
+        "If *false*, the mode bar is always hidden.",
+        "If *hover*, the mode bar is visible while the mouse cursor",
+        "is on the graph container."
+      ].join(" ")
     },
     showSendToCloud: {
       valType: "boolean",
-      dflt: false
+      dflt: false,
+      description: [
+        'Should we include a ModeBar button, labeled "Edit in Chart Studio",',
+        "that sends this chart to chart-studio.plotly.com (formerly plot.ly) or another plotly server",
+        "as specified by `plotlyServerURL` for editing, export, etc? Prior to version 1.43.0",
+        "this button was included by default, now it is opt-in using this flag.",
+        "Note that this button can (depending on `plotlyServerURL` being set) send your data",
+        "to an external server. However that server does not persist your data",
+        'until you arrive at the Chart Studio and explicitly click "Save".'
+      ].join(" ")
     },
     showEditInChartStudio: {
       valType: "boolean",
-      dflt: false
+      dflt: false,
+      description: [
+        "Same as `showSendToCloud`, but use a pencil icon instead of a floppy-disk.",
+        "Note that if both `showSendToCloud` and `showEditInChartStudio` are turned,",
+        "only `showEditInChartStudio` will be honored."
+      ].join(" ")
     },
     modeBarButtonsToRemove: {
       valType: "any",
-      dflt: []
+      dflt: [],
+      description: [
+        "Remove mode bar buttons by name.",
+        "See ./components/modebar/buttons.js for the list of names."
+      ].join(" ")
     },
     modeBarButtonsToAdd: {
       valType: "any",
-      dflt: []
+      dflt: [],
+      description: [
+        "Add mode bar button using config objects",
+        "See ./components/modebar/buttons.js for list of arguments.",
+        "To enable predefined modebar buttons e.g. shape drawing, hover and spikelines,",
+        "simply provide their string name(s). This could include:",
+        "*v1hovermode*, *hoverclosest*, *hovercompare*, *togglehover*, *togglespikelines*,",
+        "*drawline*, *drawopenpath*, *drawclosedpath*, *drawcircle*, *drawrect* and *eraseshape*.",
+        "Please note that these predefined buttons will only be shown if they are compatible",
+        "with all trace types used in a graph."
+      ].join(" ")
     },
     modeBarButtons: {
       valType: "any",
-      dflt: false
+      dflt: false,
+      description: [
+        "Define fully custom mode bar buttons as nested array,",
+        "where the outer arrays represents button groups, and",
+        "the inner arrays have buttons config objects or names of default buttons",
+        "See ./components/modebar/buttons.js for more info."
+      ].join(" ")
     },
     toImageButtonOptions: {
       valType: "any",
-      dflt: {}
+      dflt: {},
+      description: [
+        "Statically override options for toImage modebar button",
+        "allowed keys are format, filename, width, height, scale",
+        "see ../components/modebar/buttons.js"
+      ].join(" ")
     },
     displaylogo: {
       valType: "boolean",
-      dflt: true
+      dflt: true,
+      description: [
+        "Determines whether or not the plotly logo is displayed",
+        "on the end of the mode bar."
+      ].join(" ")
     },
     watermark: {
       valType: "boolean",
-      dflt: false
+      dflt: false,
+      description: "watermark the images with the company's logo"
     },
     plotGlPixelRatio: {
       valType: "number",
       dflt: 2,
       min: 1,
-      max: 4
+      max: 4,
+      description: [
+        "Set the pixel ratio during WebGL image export."
+      ].join(" ")
     },
     setBackground: {
       valType: "any",
-      dflt: "transparent"
+      dflt: "transparent",
+      description: [
+        "Set function to add the background color (i.e. `layout.paper_color`)",
+        "to a different container.",
+        "This function take the graph div as first argument and the current background",
+        "color as second argument.",
+        "Alternatively, set to string *opaque* to ensure there is white behind it."
+      ].join(" ")
     },
     topojsonURL: {
       valType: "string",
       noBlank: true,
       // TODO: Switch the default back to 'https://cdn.plot.ly/' once we remove the legacy maps
-      dflt: "https://cdn.plot.ly/un/"
+      dflt: "https://cdn.plot.ly/un/",
+      description: [
+        "Set the URL to topojson used in geo charts.",
+        "By default, the topojson files are fetched from cdn.plot.ly.",
+        "For example, set this option to:",
+        "<path-to-plotly.js>/dist/topojson/",
+        "to render geographical feature using the topojson files",
+        "that ship with the plotly.js module."
+      ].join(" ")
     },
     mapboxAccessToken: {
       valType: "string",
-      dflt: null
+      dflt: null,
+      description: [
+        "Mapbox access token (required to plot mapbox trace types)",
+        "If using an Mapbox Atlas server, set this option to ''",
+        "so that plotly.js won't attempt to authenticate to the public Mapbox server."
+      ].join(" ")
     },
     logging: {
       valType: "integer",
       min: 0,
       max: 2,
-      dflt: 1
+      dflt: 1,
+      description: [
+        "Turn all console logging on or off (errors will be thrown)",
+        "This should ONLY be set via Plotly.setPlotConfig",
+        "Available levels:",
+        "0: no logs",
+        "1: warnings and errors, but not informational messages",
+        "2: verbose logs"
+      ].join(" ")
     },
     notifyOnLogging: {
       valType: "integer",
       min: 0,
       max: 2,
-      dflt: 0
+      dflt: 0,
+      description: [
+        "Set on-graph logging (notifier) level",
+        "This should ONLY be set via Plotly.setPlotConfig",
+        "Available levels:",
+        "0: no on-graph logs",
+        "1: warnings and errors, but not informational messages",
+        "2: verbose logs"
+      ].join(" ")
     },
     queueLength: {
       valType: "integer",
       min: 0,
-      dflt: 0
+      dflt: 0,
+      description: "Sets the length of the undo/redo queue."
     },
     locale: {
       valType: "string",
-      dflt: "en-US"
+      dflt: "en-US",
+      description: [
+        "Which localization should we use?",
+        "Should be a string like 'en' or 'en-US'."
+      ].join(" ")
     },
     locales: {
       valType: "any",
-      dflt: {}
+      dflt: {},
+      description: [
+        "Localization definitions",
+        "Locales can be provided either here (specific to one chart) or globally",
+        "by registering them as modules.",
+        "Should be an object of objects {locale: {dictionary: {...}, format: {...}}}",
+        "{",
+        "  da: {",
+        "      dictionary: {'Reset axes': 'Nulstil aksler', ...},",
+        "      format: {months: [...], shortMonths: [...]}",
+        "  },",
+        "  ...",
+        "}",
+        "All parts are optional. When looking for translation or format fields, we",
+        "look first for an exact match in a config locale, then in a registered",
+        "module. If those fail, we strip off any regionalization ('en-US' -> 'en')",
+        "and try each (config, registry) again. The final fallback for translation",
+        "is untranslated (which is US English) and for formats is the base English",
+        "(the only consequence being the last fallback date format %x is DD/MM/YYYY",
+        "instead of MM/DD/YYYY). Currently `grouping` and `currency` are ignored",
+        "for our automatic number formatting, but can be used in custom formats."
+      ].join(" ")
     }
   };
   var dfltConfig = {};
@@ -4865,7 +5094,7 @@ var Plotly = (() => {
     dfltConfig
   };
 
-  // src/lib/notifier.js
+  // src/lib/notifier.ts
   var import_fast_isnumeric = __toESM(require_fast_isnumeric(), 1);
   var NOTEDATA = [];
   function notifier_default(text, displayLength) {
@@ -4903,56 +5132,56 @@ var Plotly = (() => {
     });
   }
 
-  // src/lib/loggers.js
+  // src/lib/loggers.ts
   var { dfltConfig: dfltConfig2 } = plot_config_default;
   var loggers = {};
-  loggers.log = function() {
+  loggers.log = function(...args) {
     var i;
     if (dfltConfig2.logging > 1) {
       var messages = ["LOG:"];
-      for (i = 0; i < arguments.length; i++) {
-        messages.push(arguments[i]);
+      for (i = 0; i < args.length; i++) {
+        messages.push(args[i]);
       }
       console.trace.apply(console, messages);
     }
     if (dfltConfig2.notifyOnLogging > 1) {
       var lines = [];
-      for (i = 0; i < arguments.length; i++) {
-        lines.push(arguments[i]);
+      for (i = 0; i < args.length; i++) {
+        lines.push(args[i]);
       }
       notifier_default(lines.join("<br>"), "long");
     }
   };
-  loggers.warn = function() {
+  loggers.warn = function(...args) {
     var i;
     if (dfltConfig2.logging > 0) {
       var messages = ["WARN:"];
-      for (i = 0; i < arguments.length; i++) {
-        messages.push(arguments[i]);
+      for (i = 0; i < args.length; i++) {
+        messages.push(args[i]);
       }
       console.trace.apply(console, messages);
     }
     if (dfltConfig2.notifyOnLogging > 0) {
       var lines = [];
-      for (i = 0; i < arguments.length; i++) {
-        lines.push(arguments[i]);
+      for (i = 0; i < args.length; i++) {
+        lines.push(args[i]);
       }
       notifier_default(lines.join("<br>"), "stick");
     }
   };
-  loggers.error = function() {
+  loggers.error = function(...args) {
     var i;
     if (dfltConfig2.logging > 0) {
       var messages = ["ERROR:"];
-      for (i = 0; i < arguments.length; i++) {
-        messages.push(arguments[i]);
+      for (i = 0; i < args.length; i++) {
+        messages.push(args[i]);
       }
       console.error.apply(console, messages);
     }
     if (dfltConfig2.notifyOnLogging > 0) {
       var lines = [];
-      for (i = 0; i < arguments.length; i++) {
-        lines.push(arguments[i]);
+      for (i = 0; i < args.length; i++) {
+        lines.push(args[i]);
       }
       notifier_default(lines.join("<br>"), "stick");
     }
@@ -4989,7 +5218,7 @@ var Plotly = (() => {
     return Object.prototype.toString.call(obj) === "[object Object]" && Object.getPrototypeOf(obj).hasOwnProperty("hasOwnProperty");
   }
 
-  // src/lib/matrix.js
+  // src/lib/matrix.ts
   function mat4Multiply(out, a, b) {
     var a00 = a[0], a01 = a[1], a02 = a[2], a03 = a[3];
     var a10 = a[4], a11 = a[5], a12 = a[6], a13 = a[7];
@@ -5123,25 +5352,25 @@ var Plotly = (() => {
       translationMatrix(-x, -y)
     );
   };
-  var apply3DTransform = function(transform2) {
+  var apply3DTransform = function(transform) {
     return function() {
       var args = arguments;
       var xyz = arguments.length === 1 ? args[0] : [args[0], args[1], args[2] || 0];
-      return dot(transform2, [xyz[0], xyz[1], xyz[2], 1]).slice(0, 3);
+      return dot(transform, [xyz[0], xyz[1], xyz[2], 1]).slice(0, 3);
     };
   };
-  var apply2DTransform = function(transform2) {
+  var apply2DTransform = function(transform) {
     return function() {
       var args = arguments;
       if (args.length === 3) {
         args = args[0];
       }
       var xy = arguments.length === 1 ? args[0] : [args[0], args[1]];
-      return dot(transform2, [xy[0], xy[1], 1]).slice(0, 2);
+      return dot(transform, [xy[0], xy[1], 1]).slice(0, 2);
     };
   };
-  var apply2DTransform2 = function(transform2) {
-    var at = apply2DTransform(transform2);
+  var apply2DTransform2 = function(transform) {
+    var at = apply2DTransform(transform);
     return function(xys) {
       return at(xys.slice(0, 2)).concat(at(xys.slice(2, 4)));
     };
@@ -5202,7 +5431,7 @@ var Plotly = (() => {
   };
   var matrix_default = { init2dArray, transposeRagged, dot, translationMatrix, rotationMatrix, rotationXYMatrix, apply3DTransform, apply2DTransform, apply2DTransform2, convertCssMatrix, inverseTransformMatrix };
 
-  // src/lib/dom.js
+  // src/lib/dom.ts
   function getGraphDiv(gd) {
     var gdElement;
     if (typeof gd === "string") {
@@ -5278,7 +5507,7 @@ var Plotly = (() => {
             }
           }
         });
-        el.setAttribute(eventAddedAttrName, true);
+        el.setAttribute(eventAddedAttrName, "true");
       }
     });
   }
@@ -5313,9 +5542,9 @@ var Plotly = (() => {
   }
   function getElementTransformMatrix(element) {
     var style6 = window.getComputedStyle(element, null);
-    var transform2 = style6.getPropertyValue("-webkit-transform") || style6.getPropertyValue("-moz-transform") || style6.getPropertyValue("-ms-transform") || style6.getPropertyValue("-o-transform") || style6.getPropertyValue("transform");
-    if (transform2 === "none") return null;
-    return transform2.replace("matrix", "").replace("3d", "").slice(1, -1).split(",").map(function(n) {
+    var transform = style6.getPropertyValue("-webkit-transform") || style6.getPropertyValue("-moz-transform") || style6.getPropertyValue("-ms-transform") || style6.getPropertyValue("-o-transform") || style6.getPropertyValue("transform");
+    if (transform === "none") return null;
+    return transform.replace("matrix", "").replace("3d", "").slice(1, -1).split(",").map(function(n) {
       return +n;
     });
   }
@@ -5334,7 +5563,7 @@ var Plotly = (() => {
     return element && (element instanceof Element || element instanceof HTMLElement);
   }
   function equalDomRects(a, b) {
-    return a && b && a.top === b.top && a.left === b.left && a.right === b.right && a.bottom === b.bottom;
+    return !!(a && b && a.top === b.top && a.left === b.left && a.right === b.right && a.bottom === b.bottom);
   }
   var dom_default = {
     getGraphDiv,
@@ -5350,7 +5579,7 @@ var Plotly = (() => {
     equalDomRects
   };
 
-  // src/lib/extend.js
+  // src/lib/extend.ts
   var isArray = Array.isArray;
   function primitivesLoopSplice(source, target) {
     var i, value;
@@ -5365,17 +5594,17 @@ var Plotly = (() => {
     }
     return true;
   }
-  var extendFlat = function() {
-    return _extend(arguments, false, false, false);
+  var extendFlat = function(...args) {
+    return _extend(args, false, false, false);
   };
-  var extendDeep = function() {
-    return _extend(arguments, true, false, false);
+  var extendDeep = function(...args) {
+    return _extend(args, true, false, false);
   };
-  var extendDeepAll = function() {
-    return _extend(arguments, true, true, false);
+  var extendDeepAll = function(...args) {
+    return _extend(args, true, true, false);
   };
-  var extendDeepNoArrays = function() {
-    return _extend(arguments, true, false, true);
+  var extendDeepNoArrays = function(...args) {
+    return _extend(args, true, false, true);
   };
   function _extend(inputs, isDeep, keepAllKeys, noArrayCopies) {
     var target = inputs[0];
@@ -5413,7 +5642,7 @@ var Plotly = (() => {
   }
   var extend_default = { extendFlat, extendDeep, extendDeepAll, extendDeepNoArrays };
 
-  // src/plots/font_attributes.js
+  // src/plots/font_attributes.ts
   function font_attributes_default(opts) {
     var variantValues = opts.variantValues;
     var editType = opts.editType;
@@ -5425,7 +5654,10 @@ var Plotly = (() => {
       min: 1,
       max: 1e3,
       extras: ["normal", "bold"],
-      dflt: "normal"
+      dflt: "normal",
+      description: [
+        "Sets the weight (or boldness) of the font."
+      ].join(" ")
     };
     if (opts.noNumericWeightValues) {
       weight.valType = "enumerated";
@@ -5439,7 +5671,13 @@ var Plotly = (() => {
         valType: "string",
         noBlank: true,
         strict: true,
-        editType
+        editType,
+        description: [
+          "HTML font family - the typeface that will be applied by the web browser.",
+          "The web browser can only apply a font if it is available on the system where",
+          "it runs. Provide multiple font families, separated by commas, to indicate",
+          "the order in which to apply fonts if they aren't available."
+        ].join(" ")
       },
       size: {
         valType: "number",
@@ -5455,7 +5693,10 @@ var Plotly = (() => {
         editType,
         valType: "enumerated",
         values: ["normal", "italic"],
-        dflt: "normal"
+        dflt: "normal",
+        description: [
+          "Sets whether a font should be styled with a normal or italic face from its family."
+        ].join(" ")
       },
       variant: opts.noFontVariant ? void 0 : {
         editType,
@@ -5468,29 +5709,48 @@ var Plotly = (() => {
           "petite-caps",
           "unicase"
         ],
-        dflt: "normal"
+        dflt: "normal",
+        description: [
+          "Sets the variant of the font."
+        ].join(" ")
       },
       textcase: opts.noFontTextcase ? void 0 : {
         editType,
         valType: "enumerated",
         values: ["normal", "word caps", "upper", "lower"],
-        dflt: "normal"
+        dflt: "normal",
+        description: [
+          "Sets capitalization of text.",
+          "It can be used to make text appear in all-uppercase or all-lowercase,",
+          "or with each word capitalized."
+        ].join(" ")
       },
       lineposition: opts.noFontLineposition ? void 0 : {
         editType,
         valType: "flaglist",
         flags: ["under", "over", "through"],
         extras: ["none"],
-        dflt: "none"
+        dflt: "none",
+        description: [
+          "Sets the kind of decoration line(s) with text,",
+          "such as an *under*, *over* or *through*",
+          "as well as combinations e.g. *under+over*, etc."
+        ].join(" ")
       },
       shadow: opts.noFontShadow ? void 0 : {
         editType,
         valType: "string",
-        dflt: opts.autoShadowDflt ? "auto" : "none"
+        dflt: opts.autoShadowDflt ? "auto" : "none",
+        description: [
+          "Sets the shape and color of the shadow behind text.",
+          "*auto* places minimal shadow and applies contrast text font color.",
+          "See https://developer.mozilla.org/en-US/docs/Web/CSS/text-shadow for additional options."
+        ].join(" ")
       },
-      editType
+      editType,
       // blank strings so compress_attributes can remove
       // TODO - that's uber hacky... better solution?
+      description: "" + (opts.description || "")
     };
     if (opts.autoSize) attrs2.size.dflt = "auto";
     if (opts.autoColor) attrs2.color.dflt = "auto";
@@ -5516,7 +5776,7 @@ var Plotly = (() => {
     return attrs2;
   }
 
-  // src/components/fx/constants.js
+  // src/components/fx/constants.ts
   var constants_default = {
     // hover labels for multiple horizontal bars get tilted by this angle
     YANGLE: 60,
@@ -5534,9 +5794,10 @@ var Plotly = (() => {
     HOVERID: "-hover"
   };
 
-  // src/components/fx/layout_attributes.js
+  // src/components/fx/layout_attributes.ts
   var font = font_attributes_default({
-    editType: "none"
+    editType: "none",
+    description: "Sets the default hover label font used by all traces on the graph."
   });
   font.family.dflt = constants_default.HOVERFONT;
   font.size.dflt = constants_default.HOVERFONTSIZE;
@@ -5546,7 +5807,22 @@ var Plotly = (() => {
       flags: ["event", "select"],
       dflt: "event",
       editType: "plot",
-      extras: ["none"]
+      extras: ["none"],
+      description: [
+        "Determines the mode of single click interactions.",
+        "*event* is the default value and emits the `plotly_click`",
+        "event. In addition this mode emits the `plotly_selected` event",
+        "in drag modes *lasso* and *select*, but with no event data attached",
+        "(kept for compatibility reasons).",
+        "The *select* flag enables selecting single",
+        "data points via click. This mode also supports persistent selections,",
+        "meaning that pressing Shift while clicking, adds to / subtracts from an",
+        "existing selection. *select* with `hovermode`: *x* can be confusing, consider",
+        "explicitly setting `hovermode`: *closest* when using this feature.",
+        "Selection events are sent accordingly as long as *event* flag is set as well.",
+        "When the *event* flag is missing, `plotly_click` and `plotly_selected`",
+        "events are not fired."
+      ].join(" ")
     },
     dragmode: {
       valType: "enumerated",
@@ -5565,61 +5841,128 @@ var Plotly = (() => {
         false
       ],
       dflt: "zoom",
-      editType: "modebar"
+      editType: "modebar",
+      description: [
+        "Determines the mode of drag interactions.",
+        "*select* and *lasso* apply only to scatter traces with",
+        "markers or text. *orbit* and *turntable* apply only to",
+        "3D scenes."
+      ].join(" ")
     },
     hovermode: {
       valType: "enumerated",
       values: ["x", "y", "closest", false, "x unified", "y unified"],
       dflt: "closest",
-      editType: "modebar"
+      editType: "modebar",
+      description: [
+        "Determines the mode of hover interactions.",
+        "If *closest*, a single hoverlabel will appear",
+        "for the *closest* point within the `hoverdistance`.",
+        "If *x* (or *y*), multiple hoverlabels will appear for multiple points",
+        "at the *closest* x- (or y-) coordinate within the `hoverdistance`,",
+        "with the caveat that no more than one hoverlabel will appear per trace.",
+        "If *x unified* (or *y unified*), a single hoverlabel will appear",
+        "multiple points at the closest x- (or y-) coordinate within the `hoverdistance`",
+        "with the caveat that no more than one hoverlabel will appear per trace.",
+        "In this mode, spikelines are enabled by default perpendicular to the specified axis.",
+        "If false, hover interactions are disabled."
+      ].join(" ")
     },
     hoversubplots: {
       valType: "enumerated",
       values: ["single", "overlaying", "axis"],
       dflt: "overlaying",
-      editType: "none"
+      editType: "none",
+      description: [
+        "Determines expansion of hover effects to other subplots",
+        "If *single* just the axis pair of the primary point is included without overlaying subplots.",
+        "If *overlaying* all subplots using the main axis and occupying the same space are included.",
+        "If *axis*, also include stacked subplots using the same axis",
+        "when `hovermode` is set to *x*, *x unified*, *y* or *y unified*."
+      ].join(" ")
     },
     hoverdistance: {
       valType: "integer",
       min: -1,
       dflt: 20,
-      editType: "none"
+      editType: "none",
+      description: [
+        "Sets the default distance (in pixels) to look for data",
+        "to add hover labels (-1 means no cutoff, 0 means no looking for data).",
+        "This is only a real distance for hovering on point-like objects,",
+        "like scatter points. For area-like objects (bars, scatter fills, etc)",
+        "hovering is on inside the area and off outside, but these objects",
+        "will not supersede hover on point-like objects in case of conflict."
+      ].join(" ")
     },
     spikedistance: {
       valType: "integer",
       min: -1,
       dflt: -1,
-      editType: "none"
+      editType: "none",
+      description: [
+        "Sets the default distance (in pixels) to look for data to draw",
+        "spikelines to (-1 means no cutoff, 0 means no looking for data).",
+        "As with hoverdistance, distance does not apply to area-like objects.",
+        "In addition, some objects can be hovered on but will not generate",
+        "spikelines, such as scatter fills."
+      ].join(" ")
     },
     hoverlabel: {
       bgcolor: {
         valType: "color",
-        editType: "none"
+        editType: "none",
+        description: [
+          "Sets the background color of all hover labels on graph"
+        ].join(" ")
       },
       bordercolor: {
         valType: "color",
-        editType: "none"
+        editType: "none",
+        description: [
+          "Sets the border color of all hover labels on graph."
+        ].join(" ")
       },
       font,
       grouptitlefont: font_attributes_default({
-        editType: "none"
+        editType: "none",
+        description: [
+          "Sets the font for group titles in hover (unified modes).",
+          "Defaults to `hoverlabel.font`."
+        ].join(" ")
       }),
       align: {
         valType: "enumerated",
         values: ["left", "right", "auto"],
         dflt: "auto",
-        editType: "none"
+        editType: "none",
+        description: [
+          "Sets the horizontal alignment of the text content within hover label box.",
+          "Has an effect only if the hover label text spans more two or more lines"
+        ].join(" ")
       },
       namelength: {
         valType: "integer",
         min: -1,
         dflt: 15,
-        editType: "none"
+        editType: "none",
+        description: [
+          "Sets the default length (in number of characters) of the trace name in",
+          "the hover labels for all traces. -1 shows the whole name",
+          "regardless of length. 0-3 shows the first 0-3 characters, and",
+          "an integer >3 will show the whole name if it is less than that",
+          "many characters, but if it is longer, will truncate to",
+          "`namelength - 3` characters and add an ellipsis."
+        ].join(" ")
       },
       showarrow: {
         valType: "boolean",
         dflt: true,
-        editType: "none"
+        editType: "none",
+        description: [
+          "Sets whether or not to show the hover label arrow/triangle",
+          "pointing to the data point."
+        ].join(" ")
       },
       editType: "none"
     },
@@ -5627,23 +5970,31 @@ var Plotly = (() => {
       valType: "enumerated",
       values: ["h", "v", "d", "any"],
       dflt: "any",
+      description: [
+        "When `dragmode` is set to *select*, this limits the selection of the drag to",
+        "horizontal, vertical or diagonal. *h* only allows horizontal selection,",
+        "*v* only vertical, *d* only diagonal and *any* sets no limit."
+      ].join(" "),
       editType: "none"
     }
   };
 
-  // src/components/fx/attributes.js
+  // src/components/fx/attributes.ts
   var { hoverlabel: hoverLabelAttrs } = layout_attributes_default;
   var attributes_default = {
     hoverlabel: {
       bgcolor: extendFlat({}, hoverLabelAttrs.bgcolor, {
-        arrayOk: true
+        arrayOk: true,
+        description: "Sets the background color of the hover labels for this trace"
       }),
       bordercolor: extendFlat({}, hoverLabelAttrs.bordercolor, {
-        arrayOk: true
+        arrayOk: true,
+        description: "Sets the border color of the hover labels for this trace."
       }),
       font: font_attributes_default({
         arrayOk: true,
-        editType: "none"
+        editType: "none",
+        description: "Sets the font used in hover labels."
       }),
       align: extendFlat({}, hoverLabelAttrs.align, { arrayOk: true }),
       namelength: extendFlat({}, hoverLabelAttrs.namelength, { arrayOk: true }),
@@ -5652,7 +6003,7 @@ var Plotly = (() => {
     }
   };
 
-  // src/plots/attributes.js
+  // src/plots/attributes.ts
   var attributes_default2 = {
     type: {
       valType: "enumerated",
@@ -5667,49 +6018,93 @@ var Plotly = (() => {
       valType: "enumerated",
       values: [true, false, "legendonly"],
       dflt: true,
-      editType: "calc"
+      editType: "calc",
+      description: [
+        "Determines whether or not this trace is visible.",
+        "If *legendonly*, the trace is not drawn,",
+        "but can appear as a legend item",
+        "(provided that the legend itself is visible)."
+      ].join(" ")
     },
     showlegend: {
       valType: "boolean",
       dflt: true,
-      editType: "style"
+      editType: "style",
+      description: [
+        "Determines whether or not an item corresponding to this",
+        "trace is shown in the legend."
+      ].join(" ")
     },
     legend: {
       valType: "subplotid",
       dflt: "legend",
-      editType: "style"
+      editType: "style",
+      description: [
+        "Sets the reference to a legend to show this trace in.",
+        "References to these legends are *legend*, *legend2*, *legend3*, etc.",
+        "Settings for these legends are set in the layout, under",
+        "`layout.legend`, `layout.legend2`, etc."
+      ].join(" ")
     },
     legendgroup: {
       valType: "string",
       dflt: "",
-      editType: "style"
+      editType: "style",
+      description: [
+        "Sets the legend group for this trace.",
+        "Traces and shapes part of the same legend group hide/show at the same time",
+        "when toggling legend items."
+      ].join(" ")
     },
     legendgrouptitle: {
       text: {
         valType: "string",
         dflt: "",
-        editType: "style"
+        editType: "style",
+        description: [
+          "Sets the title of the legend group."
+        ].join(" ")
       },
       font: font_attributes_default({
-        editType: "style"
+        editType: "style",
+        description: [
+          "Sets this legend group's title font."
+        ].join(" ")
       }),
       editType: "style"
     },
     legendrank: {
       valType: "number",
       dflt: 1e3,
-      editType: "style"
+      editType: "style",
+      description: [
+        "Sets the legend rank for this trace.",
+        "Items and groups with smaller ranks are presented on top/left side while",
+        "with *reversed* `legend.traceorder` they are on bottom/right side.",
+        "The default legendrank is 1000,",
+        "so that you can use ranks less than 1000 to place certain items before all unranked items,",
+        "and ranks greater than 1000 to go after all unranked items.",
+        "When having unranked or equal rank items shapes would be displayed after traces",
+        "i.e. according to their order in data and layout."
+      ].join(" ")
     },
     legendwidth: {
       valType: "number",
       min: 0,
-      editType: "style"
+      editType: "style",
+      description: "Sets the width (in px or fraction) of the legend for this trace."
     },
     legendsymbol: {
       path: {
         valType: "string",
         dflt: "",
-        editType: "style"
+        editType: "style",
+        description: [
+          "Sets a custom SVG path to use as the legend symbol for this trace,",
+          "replacing the default colored square/line.",
+          "The path is scaled to fit the legend item dimensions",
+          "and filled with the trace color."
+        ].join(" ")
       },
       editType: "style"
     },
@@ -5718,30 +6113,64 @@ var Plotly = (() => {
       min: 0,
       max: 1,
       dflt: 1,
-      editType: "style"
+      editType: "style",
+      description: "Sets the opacity of the trace."
     },
     name: {
       valType: "string",
-      editType: "style"
+      editType: "style",
+      description: [
+        "Sets the trace name.",
+        "The trace name appears as the legend item and on hover."
+      ].join(" ")
     },
     uid: {
       valType: "string",
       editType: "plot",
-      anim: true
+      anim: true,
+      description: [
+        "Assign an id to this trace,",
+        "Use this to provide object constancy between traces during animations",
+        "and transitions."
+      ].join(" ")
     },
     ids: {
       valType: "data_array",
       editType: "calc",
-      anim: true
+      anim: true,
+      description: [
+        "Assigns id labels to each datum.",
+        "These ids for object constancy of data points during animation.",
+        "Should be an array of strings, not numbers or any other type."
+      ].join(" ")
     },
     customdata: {
       valType: "data_array",
-      editType: "calc"
+      editType: "calc",
+      description: [
+        "Assigns extra data each datum.",
+        "This may be useful when listening to hover, click and selection events.",
+        "Note that, *scatter* traces also appends customdata items in the markers",
+        "DOM elements"
+      ].join(" ")
     },
     meta: {
       valType: "any",
       arrayOk: true,
-      editType: "plot"
+      editType: "plot",
+      description: [
+        "Assigns extra meta information associated with this trace",
+        "that can be used in various text attributes.",
+        "Attributes such as trace `name`, graph, axis and colorbar `title.text`, annotation `text`",
+        "`rangeselector`, `updatemenues` and `sliders` `label` text",
+        "all support `meta`.",
+        "To access the trace `meta` values in an attribute in the same trace, simply use",
+        "`%{meta[i]}` where `i` is the index or key of the `meta`",
+        "item in question.",
+        "To access trace `meta` in layout attributes, use",
+        "`%{data[n[.meta[i]}` where `i` is the index or key of the `meta`",
+        "and `n` is the trace index."
+      ].join(" ")
     },
     // N.B. these cannot be 'data_array' as they do not have the same length as
     // other data arrays and arrayOk attributes in general
@@ -5750,7 +6179,14 @@ var Plotly = (() => {
     // https://github.com/plotly/plotly.js/issues/1894
     selectedpoints: {
       valType: "any",
-      editType: "calc"
+      editType: "calc",
+      description: [
+        "Array containing integer indices of selected points.",
+        "Has an effect only for traces that support selections.",
+        "Note that an empty array means an empty selection where the `unselected`",
+        "are turned on for all points, whereas, any other non-array values means no",
+        "selection all where the `selected` and `unselected` styles have no effect."
+      ].join(" ")
     },
     hoverinfo: {
       valType: "flaglist",
@@ -5758,7 +6194,12 @@ var Plotly = (() => {
       extras: ["all", "none", "skip"],
       arrayOk: true,
       dflt: "all",
-      editType: "none"
+      editType: "none",
+      description: [
+        "Determines which trace information appear on hover.",
+        "If `none` or `skip` are set, no information is displayed upon hovering.",
+        "But, if `none` is set, click and hover events are still fired."
+      ].join(" ")
     },
     hoverlabel: attributes_default.hoverlabel,
     stream: {
@@ -5766,48 +6207,99 @@ var Plotly = (() => {
         valType: "string",
         noBlank: true,
         strict: true,
-        editType: "calc"
+        editType: "calc",
+        description: [
+          "The stream id number links a data trace on a plot with a stream.",
+          "See https://chart-studio.plotly.com/settings for more details."
+        ].join(" ")
       },
       maxpoints: {
         valType: "number",
         min: 0,
         max: 1e4,
         dflt: 500,
-        editType: "calc"
+        editType: "calc",
+        description: [
+          "Sets the maximum number of points to keep on the plots from an",
+          "incoming stream.",
+          "If `maxpoints` is set to *50*, only the newest 50 points will",
+          "be displayed on the plot."
+        ].join(" ")
       },
       editType: "calc"
     },
     uirevision: {
       valType: "any",
-      editType: "none"
+      editType: "none",
+      description: [
+        "Controls persistence of some user-driven changes to the trace:",
+        "`constraintrange` in `parcoords` traces, as well as some",
+        "`editable: true` modifications such as `name` and `colorbar.title`.",
+        "Defaults to `layout.uirevision`.",
+        "Note that other user-driven trace attribute changes are controlled",
+        "by `layout` attributes:",
+        "`trace.visible` is controlled by `layout.legend.uirevision`,",
+        "`selectedpoints` is controlled by `layout.selectionrevision`,",
+        "and `colorbar.(x|y)` (accessible with `config: {editable: true}`)",
+        "is controlled by `layout.editrevision`.",
+        "Trace changes are tracked by `uid`, which only falls back on trace",
+        "index if no `uid` is provided. So if your app can add/remove traces",
+        "before the end of the `data` array, such that the same trace has a",
+        "different index, you can still preserve user-driven changes if you",
+        "give each trace a `uid` that stays with it as it moves."
+      ].join(" ")
     }
   };
 
-  // src/plots/animation_attributes.js
+  // src/plots/animation_attributes.ts
   var animation_attributes_default = {
     mode: {
       valType: "enumerated",
       dflt: "afterall",
-      values: ["immediate", "next", "afterall"]
+      values: ["immediate", "next", "afterall"],
+      description: [
+        "Describes how a new animate call interacts with currently-running",
+        "animations. If `immediate`, current animations are interrupted and",
+        "the new animation is started. If `next`, the current frame is allowed",
+        "to complete, after which the new animation is started. If `afterall`",
+        "all existing frames are animated to completion before the new animation",
+        "is started."
+      ].join(" ")
     },
     direction: {
       valType: "enumerated",
       values: ["forward", "reverse"],
-      dflt: "forward"
+      dflt: "forward",
+      description: [
+        "The direction in which to play the frames triggered by the animation call"
+      ].join(" ")
     },
     fromcurrent: {
       valType: "boolean",
-      dflt: false
+      dflt: false,
+      description: [
+        "Play frames starting at the current frame instead of the beginning."
+      ].join(" ")
     },
     frame: {
       duration: {
         valType: "number",
         min: 0,
-        dflt: 500
+        dflt: 500,
+        description: [
+          "The duration in milliseconds of each frame. If greater than the frame",
+          "duration, it will be limited to the frame duration."
+        ].join(" ")
       },
       redraw: {
         valType: "boolean",
-        dflt: true
+        dflt: true,
+        description: [
+          "Redraw the plot at completion of the transition. This is desirable",
+          "for transitions that include properties that cannot be transitioned,",
+          "but may significantly slow down updates that do not require a full",
+          "redraw of the plot"
+        ].join(" ")
       }
     },
     transition: {
@@ -5815,7 +6307,11 @@ var Plotly = (() => {
         valType: "number",
         min: 0,
         dflt: 500,
-        editType: "none"
+        editType: "none",
+        description: [
+          "The duration of the transition, in milliseconds. If equal to zero,",
+          "updates are synchronous."
+        ].join(" ")
       },
       easing: {
         valType: "enumerated",
@@ -5858,18 +6354,23 @@ var Plotly = (() => {
           "back-in-out",
           "bounce-in-out"
         ],
-        editType: "none"
+        editType: "none",
+        description: "The easing function used for the transition"
       },
       ordering: {
         valType: "enumerated",
         values: ["layout first", "traces first"],
         dflt: "layout first",
-        editType: "none"
+        editType: "none",
+        description: [
+          "Determines whether the figure's layout or traces smoothly transitions",
+          "during updates that make both traces and layout change."
+        ].join(" ")
       }
     }
   };
 
-  // src/components/color/attributes.js
+  // src/components/color/attributes.ts
   var defaults = [
     "#1f77b4",
     // muted blue
@@ -5899,11 +6400,23 @@ var Plotly = (() => {
   var lightFraction = 100 * (14 - 4) / (15 - 4);
   var attributes_default3 = { defaults, defaultLine, lightLine, background, borderLine, lightFraction };
 
-  // src/plot_api/edit_types.js
+  // src/plot_api/edit_types.ts
   var traceOpts = {
     valType: "flaglist",
     extras: ["none"],
-    flags: ["calc", "clearAxisTypes", "plot", "style", "markerSize", "colorbars"]
+    flags: ["calc", "clearAxisTypes", "plot", "style", "markerSize", "colorbars"],
+    description: [
+      "trace attributes should include an `editType` string matching this flaglist.",
+      "*calc* is the most extensive: a full (re)plot starting by clearing `gd.calcdata`",
+      "to force it to be regenerated",
+      "*clearAxisTypes* resets the types of the axes this trace is on, because new data could",
+      "cause the automatic axis type detection to change. Log type will not be cleared, as that",
+      "is never automatically chosen so must have been user-specified.",
+      "*plot* (re)plots but without first clearing `gd.calcdata`.",
+      "*style* only calls `module.style` (or module.editStyle) for all trace modules and redraws the legend.",
+      "*markerSize* is like *style*, but propagate axis-range changes due to scatter `marker.size`",
+      "*colorbars* only redraws colorbars."
+    ].join(" ")
   };
   var layoutOpts = {
     valType: "flaglist",
@@ -5919,7 +6432,22 @@ var Plotly = (() => {
       "camera",
       "arraydraw",
       "colorbars"
-    ]
+    ],
+    description: [
+      "layout attributes should include an `editType` string matching this flaglist.",
+      "*calc* is the most extensive: a full (re)plot starting by clearing `gd.calcdata`",
+      "to force it to be regenerated",
+      "*plot* (re)plots but without first clearing `gd.calcdata`.",
+      "*legend* only redraws the legend.",
+      "*ticks* only redraws axis ticks, labels, and gridlines.",
+      "*axrange* minimal sequence when updating axis ranges.",
+      "*layoutstyle* reapplies global and SVG cartesian axis styles.",
+      "*modebar* just updates the modebar.",
+      "*camera* just updates the camera settings for gl3d scenes.",
+      "*arraydraw* allows component arrays to invoke the redraw routines just for the",
+      "component(s) that changed.",
+      "*colorbars* only redraws colorbars."
+    ].join(" ")
   };
   var traceEditTypeFlags = traceOpts.flags.slice().concat(["fullReplot"]);
   var layoutEditTypeFlags = layoutOpts.flags.slice().concat("layoutReplot");
@@ -5990,16 +6518,17 @@ var Plotly = (() => {
     }
   }
 
-  // src/components/drawing/attributes.js
+  // src/components/drawing/attributes.ts
   var dash = {
     valType: "string",
-    // string type usually doesn't take values... this one should really be
-    // a special type or at least a special coercion function, from the GUI
-    // you only get these values but elsewhere the user can supply a list of
-    // dash lengths in px, and it will be honored
     values: ["solid", "dot", "dash", "longdash", "dashdot", "longdashdot"],
     dflt: "solid",
-    editType: "style"
+    editType: "style",
+    description: [
+      "Sets the dash style of lines. Set to a dash type string",
+      "(*solid*, *dot*, *dash*, *longdash*, *dashdot*, or *longdashdot*)",
+      "or a dash length list in px (eg *5px,10px,2px,2px*)."
+    ].join(" ")
   };
   var pattern = {
     shape: {
@@ -6007,41 +6536,74 @@ var Plotly = (() => {
       values: ["", "/", "\\", "x", "-", "|", "+", "."],
       dflt: "",
       arrayOk: true,
-      editType: "style"
+      editType: "style",
+      description: [
+        "Sets the shape of the pattern fill.",
+        "By default, no pattern is used for filling the area."
+      ].join(" ")
     },
     path: {
       valType: "string",
       arrayOk: true,
-      editType: "style"
+      editType: "style",
+      description: [
+        "Sets a custom path for pattern fill.",
+        "Use with no `shape` or `solidity`, provide an SVG path string for",
+        "the regions of the square from (0,0) to (`size`,`size`) to color."
+      ].join(" ")
     },
     fillmode: {
       valType: "enumerated",
       values: ["replace", "overlay"],
       dflt: "replace",
-      editType: "style"
+      editType: "style",
+      description: [
+        "Determines whether `marker.color` should be used",
+        "as a default to `bgcolor` or a `fgcolor`."
+      ].join(" ")
     },
     bgcolor: {
       valType: "color",
       arrayOk: true,
-      editType: "style"
+      editType: "style",
+      description: [
+        "When there is no colorscale sets the color of background pattern fill.",
+        "Defaults to a `marker.color` background when `fillmode` is *overlay*.",
+        "Otherwise, defaults to a transparent background."
+      ].join(" ")
     },
     fgcolor: {
       valType: "color",
       arrayOk: true,
-      editType: "style"
+      editType: "style",
+      description: [
+        "When there is no colorscale sets the color of foreground pattern fill.",
+        "Defaults to a `marker.color` background when `fillmode` is *replace*.",
+        "Otherwise, defaults to dark grey or white",
+        "to increase contrast with the `bgcolor`."
+      ].join(" ")
     },
     fgopacity: {
       valType: "number",
       editType: "style",
       min: 0,
-      max: 1
+      max: 1,
+      description: [
+        "Sets the opacity of the foreground pattern fill.",
+        "Defaults to a 0.5 when `fillmode` is *overlay*.",
+        "Otherwise, defaults to 1."
+      ].join(" ")
     },
     size: {
       valType: "number",
       min: 0,
       dflt: 8,
       arrayOk: true,
-      editType: "style"
+      editType: "style",
+      description: [
+        "Sets the size of unit squares of the pattern fill in pixels,",
+        "which corresponds to the interval of repetition of the pattern."
+      ].join(" ")
     },
     solidity: {
       valType: "number",
@@ -6049,46 +6611,121 @@ var Plotly = (() => {
       max: 1,
       dflt: 0.3,
       arrayOk: true,
-      editType: "style"
+      editType: "style",
+      description: [
+        "Sets the solidity of the pattern fill.",
+        "Solidity is roughly the fraction of the area filled by the pattern.",
+        "Solidity of 0 shows only the background color without pattern",
+        "and solidty of 1 shows only the foreground color without pattern."
+      ].join(" ")
     },
-    editType: "style"
+    editType: "style",
+    description: [
+      "Sets the pattern within the marker."
+    ].join(" ")
   };
 
-  // src/constants/docs.js
+  // src/constants/docs.ts
   var docs_default = {
     FORMAT_LINK: "https://github.com/d3/d3-format/tree/v1.4.5#d3-format",
     DATE_FORMAT_LINK: "https://github.com/d3/d3-time-format/tree/v2.2.3#locale_format"
   };
 
-  // src/plots/template_attributes.js
+  // src/plots/template_attributes.ts
   var { DATE_FORMAT_LINK, FORMAT_LINK } = docs_default;
   var MISSING_UNDEFINED_DESCRIPTION = [
     "Variables that can't be found will be replaced with the specifier.",
     'For example, a template of "data: %{x}, %{y}" will result in a value of "data: 1, %{y}" if x is 1 and y is missing.',
     "Variables with an undefined value will be replaced with the fallback value."
   ].join(" ");
+  function templateFormatStringDescription({ supportOther } = {}) {
+    const supportOtherText = " as well as %{xother}, {%_xother}, {%_xother_}, {%xother_}. When showing info for several points, *xother* will be added to those with different x positions from the first point. An underscore before or after *(x|y)other* will add a space on that side, only when this field is shown.";
+    return [
+      "Variables are inserted using %{variable},",
+      'for example "y: %{y}"' + (supportOther ? supportOtherText : "."),
+      `Numbers are formatted using d3-format's syntax %{variable:d3-format}, for example "Price: %{y:$.2f}".`,
+      FORMAT_LINK,
+      "for details on the formatting syntax.",
+      `Dates are formatted using d3-time-format's syntax %{variable|d3-time-format}, for example "Day: %{2019-01-01|%A}".`,
+      DATE_FORMAT_LINK,
+      "for details on the date formatting syntax.",
+      MISSING_UNDEFINED_DESCRIPTION
+    ].join(" ");
+  }
+  function describeVariables({ description, keys = [] }) {
+    let descPart = description ? " " : "";
+    if (keys.length > 0) {
+      const quotedKeys = keys.map((k) => `\`${k}\``);
+      descPart += "Finally, the template string has access to ";
+      if (keys.length === 1) {
+        descPart += `variable ${quotedKeys[0]}`;
+      } else {
+        descPart += `variables ${quotedKeys.slice(0, -1).join(", ")} and ${quotedKeys.slice(-1)}.`;
+      }
+    }
+    return descPart;
+  }
   var hovertemplateAttrs = ({ editType = "none", arrayOk } = {}, extra = {}) => __spreadValues({
     valType: "string",
     dflt: "",
-    editType
+    editType,
+    description: [
+      "Template string used for rendering the information that appear on hover box.",
+      "Note that this will override `hoverinfo`.",
+      templateFormatStringDescription({ supportOther: true }),
+      "The variables available in `hovertemplate` are the ones emitted as event data described at this link https://plotly.com/javascript/plotlyjs-events/#event-data.",
+      "Additionally, all attributes that can be specified per-point (the ones that are `arrayOk: true`) are available.",
+      describeVariables(extra),
+      "Anything contained in tag `<extra>` is displayed in the secondary box, for example `<extra>%{fullData.name}</extra>`.",
+      "To hide the secondary box completely, use an empty tag `<extra></extra>`."
+    ].join(" ")
   }, arrayOk !== false ? { arrayOk: true } : {});
   var texttemplateAttrs = ({ editType = "calc", arrayOk } = {}, extra = {}) => __spreadValues({
     valType: "string",
     dflt: "",
-    editType
+    editType,
+    description: [
+      "Template string used for rendering the information text that appears on points.",
+      "Note that this will override `textinfo`.",
+      templateFormatStringDescription(),
+      "All attributes that can be specified per-point (the ones that are `arrayOk: true`) are available.",
+      describeVariables(extra)
+    ].join(" ")
   }, arrayOk !== false ? { arrayOk: true } : {});
   var shapeTexttemplateAttrs = ({ editType = "arraydraw", newshape } = {}, extra = {}) => ({
     valType: "string",
     dflt: "",
-    editType
+    editType,
+    description: [
+      `Template string used for rendering the ${newshape ? "new " : ""}shape's label.`,
+      "Note that this will override `text`.",
+      "Variables are inserted using %{variable},",
+      'for example "x0: %{x0}".',
+      `Numbers are formatted using d3-format's syntax %{variable:d3-format}, for example "Price: %{x0:$.2f}". See`,
+      FORMAT_LINK,
+      "for details on the formatting syntax.",
+      `Dates are formatted using d3-time-format's syntax %{variable|d3-time-format}, for example "Day: %{x0|%m %b %Y}". See`,
+      DATE_FORMAT_LINK,
+      "for details on the date formatting syntax.",
+      "A single multiplication or division operation may be applied to numeric variables, and combined with",
+      'd3 number formatting, for example "Length in cm: %{x0*2.54}", "%{slope*60:.1f} meters per second."',
+      "For log axes, variable values are given in log units.",
+      "For date axes, x/y coordinate variables and center variables use datetimes, while all other variable values use values in ms.",
+      describeVariables(extra),
+      MISSING_UNDEFINED_DESCRIPTION
+    ].join(" ")
   });
   var templatefallbackAttrs = ({ editType = "none" } = {}) => ({
     valType: "any",
     dflt: "-",
-    editType
+    editType,
+    description: [
+      "Fallback string that's displayed when a variable referenced in a template is missing.",
+      "If the boolean value 'false' is passed in, the specifier with the missing variable will be displayed."
+    ].join(" ")
   });
 
-  // src/components/shapes/label_texttemplate.js
+  // src/components/shapes/label_texttemplate.ts
   function d2l(v, axis) {
     return axis ? axis.d2l(v) : v;
   }
@@ -6160,32 +6797,72 @@ var Plotly = (() => {
     ycenter: ycenterFn
   };
 
-  // src/components/shapes/draw_newshape/attributes.js
+  // src/components/shapes/draw_newshape/attributes.ts
   var { overrideAll: overrideAll2 } = edit_types_default;
   var attributes_default4 = overrideAll2(
     {
       newshape: {
-        visible: extendFlat({}, attributes_default2.visible, {}),
+        visible: extendFlat({}, attributes_default2.visible, {
+          description: [
+            "Determines whether or not new shape is visible.",
+            "If *legendonly*, the shape is not drawn,",
+            "but can appear as a legend item",
+            "(provided that the legend itself is visible)."
+          ].join(" ")
+        }),
         showlegend: {
           valType: "boolean",
-          dflt: false
+          dflt: false,
+          description: ["Determines whether or not new", "shape is shown in the legend."].join(" ")
         },
-        legend: extendFlat({}, attributes_default2.legend, {}),
-        legendgroup: extendFlat({}, attributes_default2.legendgroup, {}),
+        legend: extendFlat({}, attributes_default2.legend, {
+          description: [
+            "Sets the reference to a legend to show new shape in.",
+            "References to these legends are *legend*, *legend2*, *legend3*, etc.",
+            "Settings for these legends are set in the layout, under",
+            "`layout.legend`, `layout.legend2`, etc."
+          ].join(" ")
+        }),
+        legendgroup: extendFlat({}, attributes_default2.legendgroup, {
+          description: [
+            "Sets the legend group for new shape.",
+            "Traces and shapes part of the same legend group hide/show at the same time",
+            "when toggling legend items."
+          ].join(" ")
+        }),
         legendgrouptitle: {
           text: extendFlat({}, attributes_default2.legendgrouptitle.text, {}),
-          font: font_attributes_default({})
+          font: font_attributes_default({
+            description: ["Sets this legend group's title font."].join(" ")
+          })
         },
-        legendrank: extendFlat({}, attributes_default2.legendrank, {}),
-        legendwidth: extendFlat({}, attributes_default2.legendwidth, {}),
+        legendrank: extendFlat({}, attributes_default2.legendrank, {
+          description: [
+            "Sets the legend rank for new shape.",
+            "Items and groups with smaller ranks are presented on top/left side while",
+            "with *reversed* `legend.traceorder` they are on bottom/right side.",
+            "The default legendrank is 1000,",
+            "so that you can use ranks less than 1000 to place certain items before all unranked items,",
+            "and ranks greater than 1000 to go after all unranked items."
+          ].join(" ")
+        }),
+        legendwidth: extendFlat({}, attributes_default2.legendwidth, {
+          description: "Sets the width (in px or fraction) of the legend for new shape."
+        }),
         line: {
           color: {
-            valType: "color"
+            valType: "color",
+            description: [
+              "Sets the line color.",
+              "By default uses either dark grey or white",
+              "to increase contrast with background color."
+            ].join(" ")
           },
           width: {
             valType: "number",
             min: 0,
-            dflt: 4
+            dflt: 4,
+            description: "Sets the line width (in px)."
           },
           dash: extendFlat({}, dash, {
             dflt: "solid"
@@ -6193,41 +6870,72 @@ var Plotly = (() => {
         },
         fillcolor: {
           valType: "color",
-          dflt: "rgba(0,0,0,0)"
+          dflt: "rgba(0,0,0,0)",
+          description: [
+            "Sets the color filling new shapes' interior.",
+            "Please note that if using a fillcolor with alpha greater than half,",
+            "drag inside the active shape starts moving the shape underneath,",
+            "otherwise a new shape could be started over."
+          ].join(" ")
         },
         fillrule: {
           valType: "enumerated",
           values: ["evenodd", "nonzero"],
-          dflt: "evenodd"
+          dflt: "evenodd",
+          description: [
+            "Determines the path's interior.",
+            "For more info please visit https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/fill-rule"
+          ].join(" ")
         },
         opacity: {
           valType: "number",
           min: 0,
           max: 1,
-          dflt: 1
+          dflt: 1,
+          description: "Sets the opacity of new shapes."
         },
         layer: {
           valType: "enumerated",
           values: ["below", "above", "between"],
-          dflt: "above"
+          dflt: "above",
+          description: [
+            "Specifies whether new shapes are drawn below gridlines (*below*),",
+            "between gridlines and traces (*between*) or above traces (*above*)."
+          ].join(" ")
         },
         drawdirection: {
           valType: "enumerated",
           values: ["ortho", "horizontal", "vertical", "diagonal"],
-          dflt: "diagonal"
+          dflt: "diagonal",
+          description: [
+            "When `dragmode` is set to *drawrect*, *drawline* or *drawcircle*",
+            "this limits the drag to be horizontal, vertical or diagonal.",
+            "Using *diagonal* there is no limit e.g. in drawing lines in any direction.",
+            "*ortho* limits the draw to be either horizontal or vertical.",
+            "*horizontal* allows horizontal extend.",
+            "*vertical* allows vertical extend."
+          ].join(" ")
         },
-        name: extendFlat({}, attributes_default2.name, {}),
+        name: extendFlat({}, attributes_default2.name, {
+          description: ["Sets new shape name.", "The name appears as the legend item."].join(" ")
+        }),
         label: {
           text: {
             valType: "string",
-            dflt: ""
+            dflt: "",
+            description: [
+              "Sets the text to display with the new shape.",
+              "It is also used for legend item if `name` is not provided."
+            ].join(" ")
           },
           texttemplate: shapeTexttemplateAttrs(
             { newshape: true },
             { keys: Object.keys(label_texttemplate_default) }
           ),
           texttemplatefallback: templatefallbackAttrs({ editType: "arraydraw" }),
-          font: font_attributes_default({}),
+          font: font_attributes_default({
+            description: "Sets the new shape label text font."
+          }),
           textposition: {
             valType: "enumerated",
             values: [
@@ -6243,25 +6951,59 @@ var Plotly = (() => {
               "start",
               "middle",
               "end"
-            ]
+            ],
+            description: [
+              "Sets the position of the label text relative to the new shape.",
+              "Supported values for rectangles, circles and paths are",
+              "*top left*, *top center*, *top right*, *middle left*,",
+              "*middle center*, *middle right*, *bottom left*, *bottom center*,",
+              "and *bottom right*.",
+              "Supported values for lines are *start*, *middle*, and *end*.",
+              "Default: *middle center* for rectangles, circles, and paths; *middle* for lines."
+            ].join(" ")
           },
           textangle: {
             valType: "angle",
-            dflt: "auto"
+            dflt: "auto",
+            description: [
+              "Sets the angle at which the label text is drawn",
+              "with respect to the horizontal. For lines, angle *auto*",
+              "is the same angle as the line. For all other shapes,",
+              "angle *auto* is horizontal."
+            ].join(" ")
           },
           xanchor: {
             valType: "enumerated",
             values: ["auto", "left", "center", "right"],
-            dflt: "auto"
+            dflt: "auto",
+            description: [
+              "Sets the label's horizontal position anchor",
+              "This anchor binds the specified `textposition` to the *left*, *center*",
+              "or *right* of the label text.",
+              "For example, if `textposition` is set to *top right* and",
+              "`xanchor` to *right* then the right-most portion of the",
+              "label text lines up with the right-most edge of the",
+              "new shape."
+            ].join(" ")
           },
           yanchor: {
             valType: "enumerated",
-            values: ["top", "middle", "bottom"]
+            values: ["top", "middle", "bottom"],
+            description: [
+              "Sets the label's vertical position anchor",
+              "This anchor binds the specified `textposition` to the *top*, *middle*",
+              "or *bottom* of the label text.",
+              "For example, if `textposition` is set to *top right* and",
+              "`yanchor` to *top* then the top-most portion of the",
+              "label text lines up with the top-most edge of the",
+              "new shape."
+            ].join(" ")
           },
           padding: {
             valType: "number",
             dflt: 3,
-            min: 0
+            min: 0,
+            description: "Sets padding (in px) between edge of label and edge of new shape."
           }
         }
       },
@@ -6275,7 +7017,8 @@ var Plotly = (() => {
           valType: "number",
           min: 0,
           max: 1,
-          dflt: 0.5
+          dflt: 0.5,
+          description: "Sets the opacity of the active shape."
         }
       }
     },
@@ -6283,25 +7026,38 @@ var Plotly = (() => {
     "from-root"
   );
 
-  // src/components/selections/draw_newselection/attributes.js
+  // src/components/selections/draw_newselection/attributes.ts
   var attributes_default5 = {
     newselection: {
       mode: {
         valType: "enumerated",
         values: ["immediate", "gradual"],
         dflt: "immediate",
-        editType: "none"
+        editType: "none",
+        description: [
+          "Describes how a new selection is created.",
+          "If `immediate`, a new selection is created after first mouse up.",
+          "If `gradual`, a new selection is not created after first mouse.",
+          "By adding to and subtracting from the initial selection,",
+          "this option allows declaring extra outlines of the selection."
+        ].join(" ")
       },
       line: {
         color: {
           valType: "color",
-          editType: "none"
+          editType: "none",
+          description: [
+            "Sets the line color.",
+            "By default uses either dark grey or white",
+            "to increase contrast with background color."
+          ].join(" ")
         },
         width: {
           valType: "number",
           min: 1,
           dflt: 1,
-          editType: "none"
+          editType: "none",
+          description: "Sets the line width (in px)."
         },
         dash: extendFlat({}, dash, {
           dflt: "dot",
@@ -6316,50 +7072,61 @@ var Plotly = (() => {
       fillcolor: {
         valType: "color",
         dflt: "rgba(0,0,0,0)",
-        editType: "none"
+        editType: "none",
+        description: "Sets the color filling the active selection' interior."
       },
       opacity: {
         valType: "number",
         min: 0,
         max: 1,
         dflt: 0.5,
-        editType: "none"
+        editType: "none",
+        description: "Sets the opacity of the active selection."
       },
       editType: "none"
     }
   };
 
-  // src/plots/pad_attributes.js
+  // src/plots/pad_attributes.ts
   function pad_attributes_default(opts) {
     var editType = opts.editType;
     return {
       t: {
         valType: "number",
         dflt: 0,
-        editType
+        editType,
+        description: "The amount of padding (in px) along the top of the component."
       },
       r: {
         valType: "number",
         dflt: 0,
-        editType
+        editType,
+        description: "The amount of padding (in px) on the right side of the component."
       },
       b: {
         valType: "number",
         dflt: 0,
-        editType
+        editType,
+        description: "The amount of padding (in px) along the bottom of the component."
       },
       l: {
         valType: "number",
         dflt: 0,
-        editType
+        editType,
+        description: "The amount of padding (in px) on the left side of the component."
       },
       editType
     };
   }
 
-  // src/plots/layout_attributes.js
+  // src/plots/layout_attributes.ts
   var globalFont = font_attributes_default({
-    editType: "calc"
+    editType: "calc",
+    description: [
+      "Sets the global font.",
+      "Note that fonts used in traces and other",
+      "layout components inherit from the global font."
+    ].join(" ")
   });
   globalFont.family.dflt = '"Open Sans", verdana, arial, sans-serif';
   globalFont.size.dflt = 12;
@@ -6369,18 +7136,22 @@ var Plotly = (() => {
     title: {
       text: {
         valType: "string",
-        editType: "layoutstyle"
+        editType: "layoutstyle",
+        description: "Sets the plot's title."
       },
       font: font_attributes_default({
-        editType: "layoutstyle"
+        editType: "layoutstyle",
+        description: "Sets the title font."
       }),
       subtitle: {
         text: {
           valType: "string",
-          editType: "layoutstyle"
+          editType: "layoutstyle",
+          description: "Sets the plot's subtitle."
         },
         font: font_attributes_default({
-          editType: "layoutstyle"
+          editType: "layoutstyle",
+          description: "Sets the subtitle font."
         }),
         editType: "layoutstyle"
       },
@@ -6388,45 +7159,100 @@ var Plotly = (() => {
         valType: "enumerated",
         dflt: "container",
         values: ["container", "paper"],
-        editType: "layoutstyle"
+        editType: "layoutstyle",
+        description: [
+          "Sets the container `x` refers to.",
+          "*container* spans the entire `width` of the plot.",
+          "*paper* refers to the width of the plotting area only."
+        ].join(" ")
       },
       yref: {
         valType: "enumerated",
         dflt: "container",
         values: ["container", "paper"],
-        editType: "layoutstyle"
+        editType: "layoutstyle",
+        description: [
+          "Sets the container `y` refers to.",
+          "*container* spans the entire `height` of the plot.",
+          "*paper* refers to the height of the plotting area only."
+        ].join(" ")
       },
       x: {
         valType: "number",
         min: 0,
         max: 1,
         dflt: 0.5,
-        editType: "layoutstyle"
+        editType: "layoutstyle",
+        description: [
+          "Sets the x position with respect to `xref` in normalized",
+          "coordinates from *0* (left) to *1* (right)."
+        ].join(" ")
       },
       y: {
         valType: "number",
         min: 0,
         max: 1,
         dflt: "auto",
-        editType: "layoutstyle"
+        editType: "layoutstyle",
+        description: [
+          "Sets the y position with respect to `yref` in normalized",
+          "coordinates from *0* (bottom) to *1* (top).",
+          "*auto* places the baseline of the title onto the",
+          "vertical center of the top margin."
+        ].join(" ")
       },
       xanchor: {
         valType: "enumerated",
         dflt: "auto",
         values: ["auto", "left", "center", "right"],
-        editType: "layoutstyle"
+        editType: "layoutstyle",
+        description: [
+          "Sets the title's horizontal alignment with respect to its x position.",
+          "*left* means that the title starts at x,",
+          "*right* means that the title ends at x",
+          "and *center* means that the title's center is at x.",
+          "*auto* divides `xref` by three and calculates the `xanchor`",
+          "value automatically based on the value of `x`."
+        ].join(" ")
       },
       yanchor: {
         valType: "enumerated",
         dflt: "auto",
         values: ["auto", "top", "middle", "bottom"],
-        editType: "layoutstyle"
+        editType: "layoutstyle",
+        description: [
+          "Sets the title's vertical alignment with respect to its y position.",
+          "*top* means that the title's cap line is at y,",
+          "*bottom* means that the title's baseline is at y",
+          "and *middle* means that the title's midline is at y.",
+          "*auto* divides `yref` by three and calculates the `yanchor`",
+          "value automatically based on the value of `y`."
+        ].join(" ")
       },
-      pad: extendFlat(pad_attributes_default({ editType: "layoutstyle" }), {}),
+      pad: extendFlat(pad_attributes_default({ editType: "layoutstyle" }), {
+        description: [
+          "Sets the padding of the title.",
+          "Each padding value only applies when the corresponding",
+          "`xanchor`/`yanchor` value is set accordingly. E.g. for left",
+          "padding to take effect, `xanchor` must be set to *left*.",
+          "The same rule applies if `xanchor`/`yanchor` is determined automatically.",
+          "Padding is muted if the respective anchor value is *middle*/*center*."
+        ].join(" ")
+      }),
       automargin: {
         valType: "boolean",
         dflt: false,
-        editType: "plot"
+        editType: "plot",
+        description: [
+          "Determines whether the title can automatically push the figure margins.",
+          "If `yref='paper'` then the margin will expand to ensure that the title doesn\u2019t",
+          "overlap with the edges of the container. If `yref='container'` then the margins",
+          "will ensure that the title doesn\u2019t overlap with the plot area, tick labels,",
+          "and axis titles. If `automargin=true` and the margins need to be expanded,",
+          "then y will be set to a default 1 and yanchor will be set to an appropriate",
+          "default to ensure that minimal margin space is needed. Note that when `yref='paper'`,",
+          "only 1 or 0 are allowed y values. Invalid values will be reset to the default 1."
+        ].join(" ")
       },
       editType: "layoutstyle"
     },
@@ -6435,13 +7261,26 @@ var Plotly = (() => {
         valType: "enumerated",
         values: [false, "hide", "show"],
         dflt: false,
-        editType: "plot"
+        editType: "plot",
+        description: [
+          "Determines how the font size for various text",
+          "elements are uniformed between each trace type.",
+          "If the computed text sizes were smaller than",
+          "the minimum size defined by `uniformtext.minsize`",
+          "using *hide* option hides the text; and",
+          "using *show* option shows the text without further downscaling.",
+          "Please note that if the size defined by `minsize` is greater than",
+          "the font size defined by trace, then the `minsize` is used."
+        ].join(" ")
       },
       minsize: {
         valType: "number",
         min: 0,
         dflt: 0,
-        editType: "plot"
+        editType: "plot",
+        description: [
+          "Sets the minimum text size between traces of the same type."
+        ].join(" ")
       },
       editType: "plot"
     },
@@ -6450,131 +7289,247 @@ var Plotly = (() => {
       dflt: false,
       // autosize, width, and height get special editType treatment in _relayout
       // so we can handle noop resizes more efficiently
-      editType: "none"
+      editType: "none",
+      description: [
+        "Determines whether or not a layout width or height",
+        "that has been left undefined by the user",
+        "is initialized on each relayout.",
+        "Note that, regardless of this attribute,",
+        "an undefined layout width or height",
+        "is always initialized on the first call to plot."
+      ].join(" ")
     },
     width: {
       valType: "number",
       min: 10,
       dflt: 700,
-      editType: "plot"
+      editType: "plot",
+      description: [
+        "Sets the plot's width (in px)."
+      ].join(" ")
     },
     height: {
       valType: "number",
       min: 10,
       dflt: 450,
-      editType: "plot"
+      editType: "plot",
+      description: [
+        "Sets the plot's height (in px)."
+      ].join(" ")
     },
     minreducedwidth: {
       valType: "number",
       min: 2,
       dflt: 64,
-      editType: "plot"
+      editType: "plot",
+      description: "Minimum width of the plot with margin.automargin applied (in px)"
     },
     minreducedheight: {
       valType: "number",
       min: 2,
       dflt: 64,
-      editType: "plot"
+      editType: "plot",
+      description: "Minimum height of the plot with margin.automargin applied (in px)"
     },
     margin: {
       l: {
         valType: "number",
         min: 0,
         dflt: 80,
-        editType: "plot"
+        editType: "plot",
+        description: "Sets the left margin (in px)."
       },
       r: {
         valType: "number",
         min: 0,
         dflt: 80,
-        editType: "plot"
+        editType: "plot",
+        description: "Sets the right margin (in px)."
       },
       t: {
         valType: "number",
         min: 0,
         dflt: 100,
-        editType: "plot"
+        editType: "plot",
+        description: "Sets the top margin (in px)."
       },
       b: {
         valType: "number",
         min: 0,
         dflt: 80,
-        editType: "plot"
+        editType: "plot",
+        description: "Sets the bottom margin (in px)."
       },
       pad: {
         valType: "number",
         min: 0,
         dflt: 0,
-        editType: "plot"
+        editType: "plot",
+        description: [
+          "Sets the amount of padding (in px)",
+          "between the plotting area and the axis lines"
+        ].join(" ")
       },
       autoexpand: {
         valType: "boolean",
         dflt: true,
-        editType: "plot"
+        editType: "plot",
+        description: [
+          "Turns on/off margin expansion computations.",
+          "Legends, colorbars, updatemenus, sliders, axis rangeselector and rangeslider",
+          "are allowed to push the margins by defaults."
+        ].join(" ")
       },
       editType: "plot"
     },
     computed: {
       valType: "any",
-      editType: "none"
+      editType: "none",
+      description: [
+        "Placeholder for exporting automargin-impacting values namely",
+        "`margin.t`, `margin.b`, `margin.l` and `margin.r` in *full-json* mode."
+      ].join(" ")
     },
     paper_bgcolor: {
       valType: "color",
       dflt: attributes_default3.background,
-      editType: "plot"
+      editType: "plot",
+      description: "Sets the background color of the paper where the graph is drawn."
     },
     plot_bgcolor: {
       // defined here, but set in cartesian.supplyLayoutDefaults
       // because it needs to know if there are (2D) axes or not
       valType: "color",
       dflt: attributes_default3.background,
-      editType: "layoutstyle"
+      editType: "layoutstyle",
+      description: [
+        "Sets the background color of the plotting area in-between x and y axes."
+      ].join(" ")
     },
     autotypenumbers: {
       valType: "enumerated",
       values: ["convert types", "strict"],
       dflt: "convert types",
-      editType: "calc"
+      editType: "calc",
+      description: [
+        "Using *strict* a numeric string in trace data is not converted to a number.",
+        "Using *convert types* a numeric string in trace data may be",
+        "treated as a number during automatic axis `type` detection.",
+        "This is the default value; however it could be overridden for individual axes."
+      ].join(" ")
     },
     separators: {
       valType: "string",
-      editType: "plot"
+      editType: "plot",
+      description: [
+        "Sets the decimal and thousand separators.",
+        "For example, *. * puts a '.' before decimals and a space",
+        "between thousands. In English locales, dflt is *.,* but",
+        "other locales may alter this default."
+      ].join(" ")
     },
     hidesources: {
       valType: "boolean",
       dflt: false,
-      editType: "plot"
+      editType: "plot",
+      description: [
+        "Determines whether or not a text link citing the data source is",
+        "placed at the bottom-right cored of the figure.",
+        "Has only an effect only on graphs that have been generated via",
+        "forked graphs from the Chart Studio Cloud (at https://chart-studio.plotly.com or on-premise)."
+      ].join(" ")
     },
     showlegend: {
       // handled in legend.supplyLayoutDefaults
       // but included here because it's not in the legend object
       valType: "boolean",
-      editType: "legend"
+      editType: "legend",
+      description: [
+        "Determines whether or not a legend is drawn.",
+        "Default is `true` if there is a trace to show and any of these:",
+        "a) Two or more traces would by default be shown in the legend.",
+        "b) One pie trace is shown in the legend.",
+        "c) One trace is explicitly given with `showlegend: true`."
+      ].join(" ")
     },
     colorway: {
       valType: "colorlist",
       dflt: attributes_default3.defaults,
-      editType: "calc"
+      editType: "calc",
+      description: "Sets the default trace colors."
     },
     datarevision: {
       valType: "any",
-      editType: "calc"
+      editType: "calc",
+      description: [
+        "If provided, a changed value tells `Plotly.react` that",
+        "one or more data arrays has changed. This way you can modify",
+        "arrays in-place rather than making a complete new copy for an",
+        "incremental change.",
+        "If NOT provided, `Plotly.react` assumes that data arrays are",
+        "being treated as immutable, thus any data array with a",
+        "different identity from its predecessor contains new data."
+      ].join(" ")
     },
     uirevision: {
       valType: "any",
-      editType: "none"
+      editType: "none",
+      description: [
+        "Used to allow user interactions with the plot to persist after",
+        "`Plotly.react` calls that are unaware of these interactions.",
+        "If `uirevision` is omitted, or if it is given and it changed from",
+        "the previous `Plotly.react` call, the exact new figure is used.",
+        "If `uirevision` is truthy and did NOT change, any attribute",
+        "that has been affected by user interactions and did not receive a",
+        "different value in the new figure will keep the interaction value.",
+        "`layout.uirevision` attribute serves as the default for",
+        "`uirevision` attributes in various sub-containers. For finer",
+        "control you can set these sub-attributes directly. For example,",
+        "if your app separately controls the data on the x and y axes you",
+        "might set `xaxis.uirevision=*time*` and `yaxis.uirevision=*cost*`.",
+        "Then if only the y data is changed, you can update",
+        "`yaxis.uirevision=*quantity*` and the y axis range will reset but",
+        "the x axis range will retain any user-driven zoom."
+      ].join(" ")
     },
     editrevision: {
       valType: "any",
-      editType: "none"
+      editType: "none",
+      description: [
+        "Controls persistence of user-driven changes in `editable: true`",
+        "configuration, other than trace names and axis titles.",
+        "Defaults to `layout.uirevision`."
+      ].join(" ")
     },
     selectionrevision: {
       valType: "any",
-      editType: "none"
+      editType: "none",
+      description: [
+        "Controls persistence of user-driven changes in selected points",
+        "from all traces."
+      ].join(" ")
     },
     template: {
       valType: "any",
-      editType: "calc"
+      editType: "calc",
+      description: [
+        "Default attributes to be applied to the plot. Templates can be",
+        "created from existing plots using `Plotly.makeTemplate`, or",
+        "created manually. They should be objects with format:",
+        "`{layout: layoutTemplate, data: {[type]: [traceTemplate, ...]}, ...}`",
+        "`layoutTemplate` and `traceTemplate` are objects matching the",
+        "attribute structure of `layout` and a data trace. ",
+        "Trace templates are applied cyclically to traces of each type.",
+        "Container arrays (eg `annotations`) have special handling:",
+        "An object ending in `defaults` (eg `annotationdefaults`) is applied",
+        "to each array item. But if an item has a `templateitemname` key",
+        "we look in the template array for an item with matching `name` and",
+        "apply that instead. If no matching `name` is found we mark the item",
+        "invisible. Any named template item not referenced is appended to",
+        "the end of the array, so you can use this for a watermark annotation",
+        "or a logo image, for example. To omit one of these items on the plot,",
+        "make an item with matching `templateitemname` and `visible: false`."
+      ].join(" ")
     },
     newshape: attributes_default4.newshape,
     activeshape: attributes_default4.activeshape,
@@ -6583,9 +7538,22 @@ var Plotly = (() => {
     meta: {
       valType: "any",
       arrayOk: true,
-      editType: "plot"
+      editType: "plot",
+      description: [
+        "Assigns extra meta information that can be used in various `text` attributes.",
+        "Attributes such as the graph, axis and colorbar `title.text`, annotation `text`",
+        "`trace.name` in legend items, `rangeselector`, `updatemenus` and `sliders` `label` text",
+        "all support `meta`. One can access `meta` fields using template strings:",
+        "`%{meta[i]}` where `i` is the index of the `meta`",
+        "item in question.",
+        "`meta` can also be an object for example `{key: value}` which can be accessed",
+        "%{meta[key]}."
+      ].join(" ")
     },
     transition: extendFlat({}, animation_attributes_default.transition, {
+      description: [
+        "Sets transition options used during Plotly.react updates."
+      ].join(" "),
       editType: "none"
     })
   };
@@ -6600,7 +7568,7 @@ var Plotly = (() => {
     }
   })();
 
-  // src/registry.js
+  // src/registry.ts
   var { addStyleRule: addStyleRule2 } = dom_default;
   var extendFlat2 = extend_default.extendFlat;
   var extendDeepAll2 = extend_default.extendDeepAll;
@@ -6671,9 +7639,9 @@ var Plotly = (() => {
     if (!_module) return noop2;
     return _module[method] || noop2;
   };
-  var call = function() {
-    var name6 = arguments[0];
-    var args = [].slice.call(arguments, 1);
+  var call = function(..._args) {
+    var name6 = _args[0];
+    var args = _args.slice(1);
     return apiMethodRegistry[name6].apply(null, args);
   };
   function registerTraceModule(_module) {
@@ -6835,7 +7803,7 @@ var Plotly = (() => {
   }
   var registry_default = { modules, allCategories, allTypes, subplotsRegistry, componentsRegistry, layoutArrayContainers, layoutArrayRegexes, traceLayoutAttributes, localeRegistry, apiMethodRegistry, collectableSubplotTypes, register, getModule, traceIs, getComponentMethod, call };
 
-  // src/plot_api/plot_api.js
+  // src/plot_api/plot_api.ts
   var import_fast_isnumeric26 = __toESM(require_fast_isnumeric(), 1);
 
   // node_modules/.pnpm/d3-time@1.1.0/node_modules/d3-time/src/interval.js
@@ -7822,10 +8790,10 @@ var Plotly = (() => {
     return locale2;
   }
 
-  // src/lib/index.js
+  // src/lib/index.ts
   var import_fast_isnumeric11 = __toESM(require_fast_isnumeric(), 1);
 
-  // src/constants/numerical.js
+  // src/constants/numerical.ts
   var numerical_default = {
     /**
      * Standardize all missing data in calcdata to use undefined
@@ -7937,7 +8905,7 @@ var Plotly = (() => {
     return arraybuffer;
   };
 
-  // src/lib/array.js
+  // src/lib/array.ts
   var isArray2 = Array.isArray;
   var ab = ArrayBuffer;
   var dv = DataView;
@@ -8048,13 +9016,13 @@ var Plotly = (() => {
       shape: v.shape
     };
   }
-  var concat = function() {
+  var concat = function(...arrays) {
     var args = [];
     var allArray = true;
     var totalLen = 0;
     var _constructor, arg0, i, argi, posi, leni, out, j;
-    for (i = 0; i < arguments.length; i++) {
-      argi = arguments[i];
+    for (i = 0; i < arrays.length; i++) {
+      argi = arrays[i];
       leni = argi.length;
       if (leni) {
         if (arg0) args.push(argi);
@@ -8128,7 +9096,7 @@ var Plotly = (() => {
   }
   var mod_default = { mod, modHalf };
 
-  // src/lib/coerce.js
+  // src/lib/coerce.ts
   var import_fast_isnumeric4 = __toESM(require_fast_isnumeric(), 1);
 
   // node_modules/.pnpm/tinycolor2@1.6.0/node_modules/tinycolor2/esm/tinycolor.js
@@ -8543,7 +9511,7 @@ var Plotly = (() => {
     h = bound01(h, 360) * 6;
     s = bound01(s, 100);
     v = bound01(v, 100);
-    var i = Math.floor(h), f = h - i, p = v * (1 - s), q = v * (1 - f * s), t = v * (1 - (1 - f) * s), mod5 = i % 6, r = [v, q, p, p, t, v][mod5], g = [t, v, v, q, p, p][mod5], b = [p, p, t, v, v, q][mod5];
+    var i = Math.floor(h), f = h - i, p = v * (1 - s), q = v * (1 - f * s), t = v * (1 - (1 - f) * s), mod4 = i % 6, r = [v, q, p, p, t, v][mod4], g = [t, v, v, q, p, p][mod4], b = [p, p, t, v, v, q][mod4];
     return {
       r: r * 255,
       g: g * 255,
@@ -9096,7 +10064,7 @@ var Plotly = (() => {
     };
   }
 
-  // src/components/colorscale/scales.js
+  // src/components/colorscale/scales.ts
   var scales = {
     Greys: [
       [0, "rgb(0,0,0)"],
@@ -9139,8 +10107,6 @@ var Plotly = (() => {
       [0, "rgb(0,0,255)"],
       [1, "rgb(255,0,0)"]
     ],
-    // modified RdBu based on
-    // http://www.kennethmoreland.com/color-maps/
     RdBu: [
       [0, "rgb(5,10,172)"],
       [0.35, "rgb(106,137,247)"],
@@ -9149,14 +10115,12 @@ var Plotly = (() => {
       [0.7, "rgb(230,145,90)"],
       [1, "rgb(178,10,28)"]
     ],
-    // Scale for non-negative numeric values
     Reds: [
       [0, "rgb(220,220,220)"],
       [0.2, "rgb(245,195,157)"],
       [0.4, "rgb(245,160,105)"],
       [1, "rgb(178,10,28)"]
     ],
-    // Scale for non-positive numeric values
     Blues: [
       [0, "rgb(5,10,172)"],
       [0.35, "rgb(40,60,190)"],
@@ -9316,7 +10280,7 @@ var Plotly = (() => {
     isValid: isValidScale
   };
 
-  // src/components/color/index.js
+  // src/components/color/index.ts
   var import_fast_isnumeric2 = __toESM(require_fast_isnumeric(), 1);
   var color2 = {};
   color2.defaults = attributes_default3.defaults;
@@ -9430,18 +10394,16 @@ var Plotly = (() => {
   }
   var color_default = color2;
 
-  // src/constants/interactions.js
+  // src/constants/interactions.ts
   var interactions_default = {
-    /**
-     * Timing information for interactive elements
-     */
+    /** Timing information for interactive elements */
     SHOW_PLACEHOLDER: 100,
     HIDE_PLACEHOLDER: 1e3,
     // opacity dimming fraction for points that are not in selection
     DESELECTDIM: 0.2
   };
 
-  // src/lib/nested_property.js
+  // src/lib/nested_property.ts
   var import_fast_isnumeric3 = __toESM(require_fast_isnumeric(), 1);
   function nestedProperty(container, propStr) {
     if ((0, import_fast_isnumeric3.default)(propStr)) propStr = String(propStr);
@@ -9561,21 +10523,22 @@ var Plotly = (() => {
     };
   }
   function joinPropStr(propStr, newPart) {
-    var toAdd = newPart;
+    var toAdd;
     if ((0, import_fast_isnumeric3.default)(newPart)) toAdd = "[" + newPart + "]";
     else if (propStr) toAdd = "." + newPart;
+    else toAdd = String(newPart);
     return propStr + toAdd;
   }
   function setArrayAll(containerArray, innerParts, val, propStr) {
     var arrayVal = isArrayOrTypedArray(val);
     var allSet = true;
     var thisVal = val;
-    var thisPropStr = propStr.replace("-1", 0);
+    var thisPropStr = propStr.replace("-1", "0");
     var deleteThis = arrayVal ? false : isDeletable(val, thisPropStr);
     var firstPart = innerParts[0];
     var i;
     for (i = 0; i < containerArray.length; i++) {
-      thisPropStr = propStr.replace("-1", i);
+      thisPropStr = propStr.replace("-1", String(i));
       if (arrayVal) {
         thisVal = val[i % val.length];
         deleteThis = isDeletable(thisVal, thisPropStr);
@@ -9584,7 +10547,7 @@ var Plotly = (() => {
       if (!checkNewContainer(containerArray, i, firstPart, deleteThis)) {
         continue;
       }
-      npSet(containerArray[i], innerParts, propStr.replace("-1", i))(thisVal);
+      npSet(containerArray[i], innerParts, propStr.replace("-1", String(i)))(thisVal);
     }
     return allSet;
   }
@@ -9609,7 +10572,7 @@ var Plotly = (() => {
     };
   }
 
-  // src/lib/regex.js
+  // src/lib/regex.ts
   var counter = function(head, tail, openEnded, matchBeginning) {
     var fullTail = (tail || "") + (openEnded ? "" : "$");
     var startWithPrefix = matchBeginning === false ? "" : "^";
@@ -9619,12 +10582,40 @@ var Plotly = (() => {
     return new RegExp(startWithPrefix + head + "([2-9]|[1-9][0-9]+)?" + fullTail);
   };
 
-  // src/lib/coerce.js
+  // src/lib/coerce.ts
   var { DESELECTDIM } = interactions_default;
   var { modHalf: modHalf2 } = mod_default;
   var valObjectMeta = {
     data_array: {
       // You can use *dflt=[] to force said array to exist though.
+      description: [
+        "An {array} of data.",
+        "The value must represent an {array} or it will be ignored,",
+        "but this array can be provided in several forms:",
+        "(1) a regular {array} object",
+        "(2) a typed array (e.g. Float32Array)",
+        "(3) an object with keys dtype, bdata, and optionally shape.",
+        "In this 3rd form, dtype is one of",
+        "*f8*, *f4*.",
+        "*i4*, *u4*,",
+        "*i2*, *u2*,",
+        "*i1*, *u1* or *u1c* for Uint8ClampedArray.",
+        "In addition to shorthand `dtype` above one could also use the following forms:",
+        "*float64*, *float32*,",
+        "*int32*, *uint32*,",
+        "*int16*, *uint16*,",
+        "*int8*, *uint8* or *uint8c* for Uint8ClampedArray.",
+        "`bdata` is either a base64-encoded string or the ArrayBuffer of",
+        "an integer or float typed array.",
+        "For either multi-dimensional arrays you must also",
+        "provide its dimensions separated by comma via `shape`.",
+        "For example using `dtype`: *f4* and `shape`: *5,100* you can",
+        "declare a 2-D array that has 5 rows and 100 columns",
+        "containing float32 values i.e. 4 bits per value.",
+        "`shape` is optional for one dimensional arrays."
+      ].join(" "),
+      requiredOpts: [],
+      otherOpts: ["dflt"],
       coerceFunction: function(v, propOut, dflt) {
         propOut.set(
           isArrayOrTypedArray(v) ? v : isTypedArraySpec(v) ? decodeTypedArraySpec(v) : dflt
@@ -9632,6 +10623,12 @@ var Plotly = (() => {
       }
     },
     enumerated: {
+      description: [
+        "Enumerated value type. The available values are listed",
+        "in `values`."
+      ].join(" "),
+      requiredOpts: ["values"],
+      otherOpts: ["dflt", "coerceNumber", "arrayOk"],
       coerceFunction: function(v, propOut, dflt, opts) {
         if (opts.coerceNumber) v = +v;
         if (opts.values.indexOf(v) === -1) propOut.set(dflt);
@@ -9651,6 +10648,9 @@ var Plotly = (() => {
       }
     },
     boolean: {
+      description: "A boolean (true/false) value.",
+      requiredOpts: [],
+      otherOpts: ["dflt", "arrayOk"],
       coerceFunction: function(v, propOut, dflt, opts) {
         const isBoolean = (value) => value === true || value === false;
         if (isBoolean(v) || opts.arrayOk && Array.isArray(v) && v.length > 0 && v.every(isBoolean)) {
@@ -9661,6 +10661,14 @@ var Plotly = (() => {
       }
     },
     number: {
+      description: [
+        "A number or a numeric value",
+        "(e.g. a number inside a string).",
+        "When applicable, values greater (less) than `max` (`min`)",
+        "are coerced to the `dflt`."
+      ].join(" "),
+      requiredOpts: [],
+      otherOpts: ["dflt", "min", "max", "arrayOk"],
       coerceFunction: function(v, propOut, dflt, opts) {
         if (isTypedArraySpec(v)) v = decodeTypedArraySpec(v);
         if (!(0, import_fast_isnumeric4.default)(v) || opts.min !== void 0 && v < opts.min || opts.max !== void 0 && v > opts.max) {
@@ -9669,6 +10677,13 @@ var Plotly = (() => {
       }
     },
     integer: {
+      description: [
+        "An integer or an integer inside a string.",
+        "When applicable, values greater (less) than `max` (`min`)",
+        "are coerced to the `dflt`."
+      ].join(" "),
+      requiredOpts: [],
+      otherOpts: ["dflt", "min", "max", "arrayOk", "extras"],
       coerceFunction: function(v, propOut, dflt, opts) {
         if ((opts.extras || []).indexOf(v) !== -1) {
           propOut.set(v);
@@ -9681,7 +10696,14 @@ var Plotly = (() => {
       }
     },
     string: {
+      description: [
+        "A string value.",
+        "Numbers are converted to strings except for attributes with",
+        "`strict` set to true."
+      ].join(" "),
+      requiredOpts: [],
       // TODO 'values shouldn't be in there (edge case: 'dash' in Scatter)
+      otherOpts: ["dflt", "noBlank", "strict", "arrayOk", "values"],
       coerceFunction: function(v, propOut, dflt, opts) {
         if (typeof v !== "string") {
           var okToCoerce = typeof v === "number";
@@ -9692,6 +10714,18 @@ var Plotly = (() => {
       }
     },
     color: {
+      description: [
+        "A string describing color.",
+        "Supported formats:",
+        "- hex (e.g. '#d3d3d3')",
+        "- rgb (e.g. 'rgb(255, 0, 0)')",
+        "- rgba (e.g. 'rgb(255, 0, 0, 0.5)')",
+        "- hsl (e.g. 'hsl(0, 100%, 50%)')",
+        "- hsv (e.g. 'hsv(0, 100%, 100%)')",
+        "- named colors (full list: http://www.w3.org/TR/css3-color/#svg-color)"
+      ].join(" "),
+      requiredOpts: [],
+      otherOpts: ["dflt", "arrayOk"],
       coerceFunction: function(v, propOut, dflt) {
         if (isTypedArraySpec(v)) v = decodeTypedArraySpec(v);
         if (tinycolor(v).isValid()) propOut.set(v);
@@ -9699,6 +10733,12 @@ var Plotly = (() => {
       }
     },
     colorlist: {
+      description: [
+        "A list of colors.",
+        "Must be an {array} containing valid colors."
+      ].join(" "),
+      requiredOpts: [],
+      otherOpts: ["dflt"],
       coerceFunction: function(v, propOut, dflt) {
         function isColor(color3) {
           return tinycolor(color3).isValid();
@@ -9709,11 +10749,28 @@ var Plotly = (() => {
       }
     },
     colorscale: {
+      description: [
+        "A Plotly colorscale either picked by a name:",
+        "(any of",
+        Object.keys(scales_default.scales).join(", "),
+        ")",
+        "customized as an {array} of 2-element {arrays} where",
+        "the first element is the normalized color level value",
+        "(starting at *0* and ending at *1*),",
+        "and the second item is a valid color string."
+      ].join(" "),
+      requiredOpts: [],
+      otherOpts: ["dflt"],
       coerceFunction: function(v, propOut, dflt) {
         propOut.set(scales_default.get(v, dflt));
       }
     },
     angle: {
+      description: [
+        "A number (in degree) between -180 and 180."
+      ].join(" "),
+      requiredOpts: [],
+      otherOpts: ["dflt", "arrayOk"],
       coerceFunction: function(v, propOut, dflt) {
         if (isTypedArraySpec(v)) v = decodeTypedArraySpec(v);
         if (v === "auto") propOut.set("auto");
@@ -9722,6 +10779,13 @@ var Plotly = (() => {
       }
     },
     subplotid: {
+      description: [
+        "An id string of a subplot type (given by dflt), optionally",
+        "followed by an integer >1. e.g. if dflt='geo', we can have",
+        "'geo', 'geo2', 'geo3', ..."
+      ].join(" "),
+      requiredOpts: ["dflt"],
+      otherOpts: ["regex", "arrayOk"],
       coerceFunction: function(v, propOut, dflt, opts) {
         var regex = opts.regex || counter(dflt);
         const isSubplotId = (value) => typeof value === "string" && regex.test(value);
@@ -9740,6 +10804,15 @@ var Plotly = (() => {
       }
     },
     flaglist: {
+      description: [
+        "A string representing a combination of flags",
+        "(order does not matter here).",
+        "Combine any of the available `flags` with *+*.",
+        "(e.g. ('lines+markers')).",
+        "Values in `extras` cannot be combined."
+      ].join(" "),
+      requiredOpts: ["flags"],
+      otherOpts: ["dflt", "extras", "arrayOk"],
       coerceFunction: function(v, propOut, dflt, opts) {
         if ((opts.extras || []).indexOf(v) !== -1) {
           propOut.set(v);
@@ -9762,6 +10835,9 @@ var Plotly = (() => {
       }
     },
     any: {
+      description: "Any type.",
+      requiredOpts: [],
+      otherOpts: ["dflt", "values", "arrayOk"],
       coerceFunction: function(v, propOut, dflt) {
         if (v === void 0) {
           propOut.set(dflt);
@@ -9773,11 +10849,16 @@ var Plotly = (() => {
       }
     },
     info_array: {
+      description: [
+        "An {array} of plot information."
+      ].join(" "),
+      requiredOpts: ["items"],
       // set `dimensions=2` for a 2D array or '1-2' for either
       // `items` may be a single object instead of an array, in which case
       // `freeLength` must be true.
       // if `dimensions='1-2'` and items is a 1D array, then the value can
       // either be a matching 1D array or an array of such matching 1D arrays
+      otherOpts: ["dflt", "freeLength", "dimensions"],
       coerceFunction: function(v, propOut, dflt, opts) {
         function coercePart(v2, opts2, dflt2) {
           var out;
@@ -9978,7 +11059,7 @@ var Plotly = (() => {
     return out !== failed;
   }
 
-  // src/lib/dates.js
+  // src/lib/dates.ts
   var import_fast_isnumeric5 = __toESM(require_fast_isnumeric(), 1);
   var { mod: mod2 } = mod_default;
   var BADNUM = numerical_default.BADNUM;
@@ -10281,7 +11362,7 @@ var Plotly = (() => {
     };
   };
 
-  // src/lib/search.js
+  // src/lib/search.ts
   var import_fast_isnumeric6 = __toESM(require_fast_isnumeric(), 1);
 
   // src/lib/identity.ts
@@ -10289,7 +11370,7 @@ var Plotly = (() => {
     return d;
   }
 
-  // src/lib/search.js
+  // src/lib/search.ts
   var { BADNUM: BADNUM2 } = numerical_default;
   var roundingError = 1e-9;
   var findBin = function(val, bins, linelow) {
@@ -10399,7 +11480,7 @@ var Plotly = (() => {
     return ind;
   };
 
-  // src/lib/stats.js
+  // src/lib/stats.ts
   var import_fast_isnumeric7 = __toESM(require_fast_isnumeric(), 1);
   var aggNums = function(f, v, a, len2) {
     var i, b;
@@ -10421,31 +11502,31 @@ var Plotly = (() => {
       return a + 1;
     }, 0, data);
   };
-  var mean = function(data, len2) {
-    if (!len2) len2 = len2(data);
+  var mean = function(data, dataLen) {
+    if (!dataLen) dataLen = len(data);
     return aggNums(function(a, b) {
       return a + b;
-    }, 0, data) / len2;
+    }, 0, data) / dataLen;
   };
-  var geometricMean = function(data, len2) {
-    if (!len2) len2 = len2(data);
+  var geometricMean = function(data, dataLen) {
+    if (!dataLen) dataLen = len(data);
     return Math.pow(aggNums(function(a, b) {
       return a * b;
-    }, 1, data), 1 / len2);
+    }, 1, data), 1 / dataLen);
   };
   var midRange = function(numArr) {
     if (numArr === void 0 || numArr.length === 0) return void 0;
     return (aggNums(Math.max, null, numArr) + aggNums(Math.min, null, numArr)) / 2;
   };
-  var variance = function(data, len2, mean2) {
-    if (!len2) len2 = len2(data);
-    if (!(0, import_fast_isnumeric7.default)(mean2)) mean2 = mean2(data, len2);
+  var variance = function(data, dataLen, dataMean) {
+    if (!dataLen) dataLen = len(data);
+    if (!(0, import_fast_isnumeric7.default)(dataMean)) dataMean = mean(data, dataLen);
     return aggNums(function(a, b) {
-      return a + Math.pow(b - mean2, 2);
-    }, 0, data) / len2;
+      return a + Math.pow(b - dataMean, 2);
+    }, 0, data) / dataLen;
   };
-  var stdev = function(data, len2, mean2) {
-    return Math.sqrt(variance(data, len2, mean2));
+  var stdev = function(data, dataLen, dataMean) {
+    return Math.sqrt(variance(data, dataLen, dataMean));
   };
   var median = function(data) {
     var b = data.slice().sort();
@@ -10460,9 +11541,7 @@ var Plotly = (() => {
     return frac * arr[Math.ceil(n)] + (1 - frac) * arr[Math.floor(n)];
   };
 
-  // src/lib/angles.js
-  var mod3 = mod_default.mod;
-  var modHalf3 = mod_default.modHalf;
+  // src/lib/angles.ts
   var PI = Math.PI;
   var twoPI = 2 * PI;
   function deg2rad(deg) {
@@ -10475,7 +11554,7 @@ var Plotly = (() => {
     return Math.abs(aBnds[1] - aBnds[0]) > twoPI - 1e-14;
   }
   function angleDelta(a, b) {
-    return modHalf3(b - a, twoPI);
+    return modHalf(b - a, twoPI);
   }
   function angleDist(a, b) {
     return Math.abs(angleDelta(a, b));
@@ -10490,10 +11569,10 @@ var Plotly = (() => {
       s0 = aBnds[1];
       s1 = aBnds[0];
     }
-    s0 = mod3(s0, twoPI);
-    s1 = mod3(s1, twoPI);
+    s0 = mod(s0, twoPI);
+    s1 = mod(s1, twoPI);
     if (s0 > s1) s1 += twoPI;
-    var a0 = mod3(a, twoPI);
+    var a0 = mod(a, twoPI);
     var a1 = a0 + twoPI;
     return a0 >= s0 && a0 <= s1 || a1 >= s0 && a1 <= s1;
   }
@@ -10560,16 +11639,16 @@ var Plotly = (() => {
     return p;
   }
   function pathArc(r, a0, a1, cx, cy) {
-    return _path(null, r, a0, a1, cx, cy, 0);
+    return _path(null, r, a0, a1, cx || 0, cy || 0, 0);
   }
   function pathSector(r, a0, a1, cx, cy) {
-    return _path(null, r, a0, a1, cx, cy, 1);
+    return _path(null, r, a0, a1, cx || 0, cy || 0, 1);
   }
   function pathAnnulus(r0, r1, a0, a1, cx, cy) {
-    return _path(r0, r1, a0, a1, cx, cy, 1);
+    return _path(r0, r1, a0, a1, cx || 0, cy || 0, 1);
   }
 
-  // src/lib/anchor_utils.js
+  // src/lib/anchor_utils.ts
   var isLeftAnchor = function isLeftAnchor2(opts) {
     return opts.xanchor === "left" || opts.xanchor === "auto" && opts.x <= 1 / 3;
   };
@@ -10589,8 +11668,8 @@ var Plotly = (() => {
     return opts.yanchor === "bottom" || opts.yanchor === "auto" && opts.y <= 1 / 3;
   };
 
-  // src/lib/geometry2d.js
-  var { mod: mod4 } = mod_default;
+  // src/lib/geometry2d.ts
+  var { mod: mod3 } = mod_default;
   function segmentsIntersect(x1, y1, x2, y2, x3, y3, x4, y4) {
     var a = x2 - x1;
     var b = x3 - x1;
@@ -10646,10 +11725,10 @@ var Plotly = (() => {
     if (locationCache[positionOnPath]) {
       return locationCache[positionOnPath];
     }
-    var p0 = path.getPointAtLength(mod4(positionOnPath - textWidth / 2, totalPathLen));
-    var p1 = path.getPointAtLength(mod4(positionOnPath + textWidth / 2, totalPathLen));
+    var p0 = path.getPointAtLength(mod3(positionOnPath - textWidth / 2, totalPathLen));
+    var p1 = path.getPointAtLength(mod3(positionOnPath + textWidth / 2, totalPathLen));
     var theta = Math.atan((p1.y - p0.y) / (p1.x - p0.x));
-    var pCenter = path.getPointAtLength(mod4(positionOnPath, totalPathLen));
+    var pCenter = path.getPointAtLength(mod3(positionOnPath, totalPathLen));
     var x = (pCenter.x * 4 + p0.x + p1.x) / 6;
     var y = (pCenter.y * 4 + p0.y + p1.y) / 6;
     var out = { x, y, theta };
@@ -10726,7 +11805,7 @@ var Plotly = (() => {
     return pt;
   };
 
-  // src/lib/throttle.js
+  // src/lib/throttle.ts
   var timerCache = {};
   var throttle = function throttle2(id2, minInterval, callback) {
     var cache = timerCache[id2];
@@ -10785,7 +11864,7 @@ var Plotly = (() => {
   }
   var throttle_default = { throttle, done, clear };
 
-  // src/lib/keyed_container.js
+  // src/lib/keyed_container.ts
   var SIMPLE_PROPERTY_REGEX = /^\w*$/;
   var NONE = 0;
   var NAME = 1;
@@ -10852,13 +11931,13 @@ var Plotly = (() => {
           return nestedProperty(arr[idx], valueName).get();
         }
       },
-      rename: function(name6, newName2) {
+      rename: function(name6, newName) {
         var idx = indexLookup[name6];
         if (idx === void 0) return obj;
         changeTypes[idx] = changeTypes[idx] | NAME;
-        indexLookup[newName2] = idx;
+        indexLookup[newName] = idx;
         delete indexLookup[name6];
-        arr[idx][keyName] = newName2;
+        arr[idx][keyName] = newName;
         return obj;
       },
       remove: function(name6) {
@@ -10912,7 +11991,7 @@ var Plotly = (() => {
     return obj;
   }
 
-  // src/lib/relative_attr.js
+  // src/lib/relative_attr.ts
   var ASCEND = /^(.*)(\.[^\.\[\]]+|\[\d\])$/;
   var SIMPLEATTR = /^[^\.\[\]]+$/;
   function relative_attr_default(baseAttr, relativeAttr2) {
@@ -10939,7 +12018,7 @@ var Plotly = (() => {
     return newVal;
   }
 
-  // src/lib/relink_private.js
+  // src/lib/relink_private.ts
   function relinkPrivateKeys(toContainer, fromContainer) {
     for (var k in fromContainer) {
       var fromVal = fromContainer[k];
@@ -10963,12 +12042,12 @@ var Plotly = (() => {
     }
   }
 
-  // src/lib/sort_object_keys.js
+  // src/lib/sort_object_keys.ts
   function sortObjectKeys(obj) {
     return Object.keys(obj).sort();
   }
 
-  // src/lib/clear_responsive.js
+  // src/lib/clear_responsive.ts
   function clearResponsive(gd) {
     if (gd._responsiveChartHandler) {
       window.removeEventListener("resize", gd._responsiveChartHandler);
@@ -10976,7 +12055,7 @@ var Plotly = (() => {
     }
   }
 
-  // src/lib/preserve_drawing_buffer.js
+  // src/lib/preserve_drawing_buffer.ts
   var import_fast_isnumeric9 = __toESM(require_fast_isnumeric(), 1);
   var import_is_mobile = __toESM(require_is_mobile(), 1);
   function preserveDrawingBuffer(opts) {
@@ -11021,7 +12100,7 @@ var Plotly = (() => {
     return ua;
   }
 
-  // src/lib/make_trace_groups.js
+  // src/lib/make_trace_groups.ts
   function makeTraceGroups(traceLayer, cdModule, cls) {
     var traces = traceLayer.selectAll("g." + cls.replace(/\s/g, ".")).data(cdModule, function(cd) {
       return cd[0].trace.uid;
@@ -11036,7 +12115,7 @@ var Plotly = (() => {
     return traces;
   }
 
-  // src/lib/localize.js
+  // src/lib/localize.ts
   function localize(gd, s) {
     var locale4 = gd._context.locale;
     for (var i = 0; i < 2; i++) {
@@ -11056,7 +12135,7 @@ var Plotly = (() => {
     return s;
   }
 
-  // src/lib/filter_unique.js
+  // src/lib/filter_unique.ts
   function filterUnique(array2) {
     var seen = {};
     var out = [];
@@ -11071,7 +12150,7 @@ var Plotly = (() => {
     return out;
   }
 
-  // src/lib/filter_visible.js
+  // src/lib/filter_visible.ts
   function filterVisible(container) {
     var filterFn = isCalcData(container) ? calcDataFilter : baseFilter;
     var out = [];
@@ -11092,7 +12171,7 @@ var Plotly = (() => {
     return Array.isArray(cont) && Array.isArray(cont[0]) && cont[0][0] && cont[0][0].trace;
   }
 
-  // src/lib/increment.js
+  // src/lib/increment.ts
   function incrementNumeric(x, delta) {
     if (!delta) return x;
     var scale = 1 / Math.abs(delta);
@@ -11109,7 +12188,7 @@ var Plotly = (() => {
     return newX;
   }
 
-  // src/lib/clean_number.js
+  // src/lib/clean_number.ts
   var import_fast_isnumeric10 = __toESM(require_fast_isnumeric(), 1);
   var { BADNUM: BADNUM3 } = numerical_default;
   var JUNK = /^['"%,$#\s']+|[, ]|['"%,$#\s']+$/g;
@@ -11121,7 +12200,7 @@ var Plotly = (() => {
     return BADNUM3;
   }
 
-  // src/lib/index.js
+  // src/lib/index.ts
   var nestedProperty2 = nestedProperty;
   var keyedContainer2 = keyedContainer;
   var relativeAttr = relative_attr_default;
@@ -11792,23 +12871,23 @@ var Plotly = (() => {
   function strScale(s) {
     return s !== 1 ? "scale(" + s + ")" : "";
   }
-  function getTextTransform(transform2) {
-    var noCenter = transform2.noCenter;
-    var textX = transform2.textX;
-    var textY = transform2.textY;
-    var targetX = transform2.targetX;
-    var targetY = transform2.targetY;
-    var anchorX = transform2.anchorX || 0;
-    var anchorY = transform2.anchorY || 0;
-    var rotate2 = transform2.rotate;
-    var scale = transform2.scale;
+  function getTextTransform(transform) {
+    var noCenter = transform.noCenter;
+    var textX = transform.textX;
+    var textY = transform.textY;
+    var targetX = transform.targetX;
+    var targetY = transform.targetY;
+    var anchorX = transform.anchorX || 0;
+    var anchorY = transform.anchorY || 0;
+    var rotate2 = transform.rotate;
+    var scale = transform.scale;
     if (!scale) scale = 0;
     else if (scale > 1) scale = 1;
     return strTranslate(targetX - scale * (textX + anchorX), targetY - scale * (textY + anchorY)) + strScale(scale) + (rotate2 ? "rotate(" + rotate2 + (noCenter ? "" : " " + textX + " " + textY) + ")" : "");
   }
-  function setTransormAndDisplay(s, transform2) {
-    s.attr("transform", getTextTransform(transform2));
-    s.style("display", transform2.scale ? null : "none");
+  function setTransormAndDisplay(s, transform) {
+    s.attr("transform", getTextTransform(transform));
+    s.style("display", transform.scale ? null : "none");
   }
   function ensureUniformFontSize(gd, baseFont) {
     var out = extendFlat({}, baseFont);
@@ -12019,57 +13098,59 @@ var Plotly = (() => {
   lib.getPositionFromD3Event = getPositionFromD3Event;
   var lib_default = lib;
 
-  // src/lib/events.js
-  function MiniEmitter() {
-    this._events = {};
-  }
-  MiniEmitter.prototype.on = function(event2, fn) {
-    var handlers = this._events[event2];
-    if (!handlers) this._events[event2] = fn;
-    else if (typeof handlers === "function") this._events[event2] = [handlers, fn];
-    else handlers.push(fn);
-    return this;
-  };
-  MiniEmitter.prototype.once = function(event2, fn) {
-    var self = this;
-    function wrapper() {
-      self.removeListener(event2, wrapper);
-      fn.apply(this, arguments);
+  // src/lib/events.ts
+  var MiniEmitter = class {
+    constructor() {
+      this._events = {};
     }
-    wrapper.listener = fn;
-    return this.on(event2, wrapper);
-  };
-  MiniEmitter.prototype.removeListener = function(event2, fn) {
-    var handlers = this._events[event2];
-    if (!handlers) return this;
-    if (typeof handlers === "function") {
-      if (handlers === fn || handlers.listener === fn) delete this._events[event2];
-    } else {
-      for (var i = handlers.length - 1; i >= 0; i--) {
-        if (handlers[i] === fn || handlers[i].listener === fn) {
-          handlers.splice(i, 1);
-          break;
-        }
+    on(event2, fn) {
+      var handlers = this._events[event2];
+      if (!handlers) this._events[event2] = fn;
+      else if (typeof handlers === "function") this._events[event2] = [handlers, fn];
+      else handlers.push(fn);
+      return this;
+    }
+    once(event2, fn) {
+      var self = this;
+      function wrapper() {
+        self.removeListener(event2, wrapper);
+        fn.apply(this, arguments);
       }
-      if (handlers.length === 0) delete this._events[event2];
-      else if (handlers.length === 1) this._events[event2] = handlers[0];
+      wrapper.listener = fn;
+      return this.on(event2, wrapper);
     }
-    return this;
-  };
-  MiniEmitter.prototype.removeAllListeners = function(event2) {
-    if (event2) delete this._events[event2];
-    else this._events = {};
-    return this;
-  };
-  MiniEmitter.prototype.emit = function(event2, data) {
-    var handlers = this._events[event2];
-    if (!handlers) return false;
-    if (typeof handlers === "function") handlers.call(this, data);
-    else {
-      var arr = handlers.slice();
-      for (var i = 0; i < arr.length; i++) arr[i].call(this, data);
+    removeListener(event2, fn) {
+      var handlers = this._events[event2];
+      if (!handlers) return this;
+      if (typeof handlers === "function") {
+        if (handlers === fn || handlers.listener === fn) delete this._events[event2];
+      } else {
+        for (var i = handlers.length - 1; i >= 0; i--) {
+          if (handlers[i] === fn || handlers[i].listener === fn) {
+            handlers.splice(i, 1);
+            break;
+          }
+        }
+        if (handlers.length === 0) delete this._events[event2];
+        else if (handlers.length === 1) this._events[event2] = handlers[0];
+      }
+      return this;
     }
-    return true;
+    removeAllListeners(event2) {
+      if (event2) delete this._events[event2];
+      else this._events = {};
+      return this;
+    }
+    emit(event2, data) {
+      var handlers = this._events[event2];
+      if (!handlers) return false;
+      if (typeof handlers === "function") handlers.call(this, data);
+      else {
+        var arr = handlers.slice();
+        for (var i = 0; i < arr.length; i++) arr[i].call(this, data);
+      }
+      return true;
+    }
   };
   var Events = {
     init: function(plotObj) {
@@ -12144,7 +13225,7 @@ var Plotly = (() => {
   };
   var events_default = Events;
 
-  // src/lib/queue.js
+  // src/lib/queue.ts
   var { dfltConfig: dfltConfig3 } = plot_config_default;
   function copyArgArray(gd, args) {
     var copy2 = [];
@@ -12231,30 +13312,52 @@ var Plotly = (() => {
   };
   var queue_default = queue;
 
-  // src/plots/frame_attributes.js
+  // src/plots/frame_attributes.ts
   var frame_attributes_default = {
     _isLinkedToArray: "frames_entry",
     group: {
-      valType: "string"
+      valType: "string",
+      description: [
+        "An identifier that specifies the group to which the frame belongs,",
+        "used by animate to select a subset of frames."
+      ].join(" ")
     },
     name: {
-      valType: "string"
+      valType: "string",
+      description: "A label by which to identify the frame"
     },
     traces: {
-      valType: "any"
+      valType: "any",
+      description: [
+        "A list of trace indices that identify the respective traces in the",
+        "data attribute"
+      ].join(" ")
     },
     baseframe: {
-      valType: "string"
+      valType: "string",
+      description: [
+        "The name of the frame into which this frame's properties are merged",
+        "before applying. This is used to unify properties and avoid needing",
+        "to specify the same values for the same properties in multiple frames."
+      ].join(" ")
     },
     data: {
-      valType: "any"
+      valType: "any",
+      description: [
+        "A list of traces this frame modifies. The format is identical to the",
+        "normal trace definition."
+      ].join(" ")
     },
     layout: {
-      valType: "any"
+      valType: "any",
+      description: [
+        "Layout properties which this frame modifies. The format is identical",
+        "to the normal layout definition."
+      ].join(" ")
     }
   };
 
-  // src/plot_api/plot_schema.js
+  // src/plot_api/plot_schema.ts
   var { configAttributes: configAttributes2 } = plot_config_default;
   var IS_SUBPLOT_OBJ = "_isSubplotObj";
   var IS_LINKED_TO_ARRAY = "_isLinkedToArray";
@@ -12274,7 +13377,24 @@ var Plotly = (() => {
           traces: edit_types_default.traces,
           layout: edit_types_default.layout
         },
-        impliedEdits: {}
+        impliedEdits: {
+          description: [
+            "Sometimes when an attribute is changed, other attributes",
+            "must be altered as well in order to achieve the intended",
+            "result. For example, when `range` is specified, it is",
+            "important to set `autorange` to `false` or the new `range`",
+            "value would be lost in the redraw. `impliedEdits` is the",
+            "mechanism to do this: `impliedEdits: {autorange: false}`.",
+            "Each key is a relative paths to the attribute string to",
+            "change, using *^* to ascend into the parent container,",
+            "for example `range[0]` has `impliedEdits: {*^autorange*: false}`.",
+            "A value of `undefined` means that the attribute will not be",
+            "changed, but its previous value should be recorded in case",
+            "we want to reverse this change later. For example, `autorange`",
+            "has `impliedEdits: {*range[0]*: undefined, *range[1]*:undefined}",
+            "because the range will likely be changed by redraw."
+          ].join(" ")
+        }
       },
       traces,
       layout: getLayoutAttributes(),
@@ -12544,6 +13664,7 @@ var Plotly = (() => {
     function makeSrcAttr(attrName) {
       return {
         valType: "string",
+        description: "Sets the source reference on Chart Studio Cloud for `" + attrName + "`.",
         editType: "none"
       };
     }
@@ -12600,20 +13721,38 @@ var Plotly = (() => {
   }
   var plot_schema_default = { get: get3, crawl: crawl2, isValObject, findArrayAttributes, getTraceValObject, getLayoutValObject, IS_SUBPLOT_OBJ, IS_LINKED_TO_ARRAY, DEPRECATED, UNDERSCORE_ATTRS };
 
-  // src/plots/plots.js
+  // src/plots/plots.ts
   var import_fast_isnumeric12 = __toESM(require_fast_isnumeric(), 1);
 
-  // src/plot_api/plot_template.js
+  // src/plot_api/plot_template.ts
   var TEMPLATEITEMNAME = "templateitemname";
   var templateAttrs = {
     name: {
       valType: "string",
-      editType: "none"
+      editType: "none",
+      description: [
+        "When used in a template, named items are created in the output figure",
+        "in addition to any items the figure already has in this array.",
+        "You can modify these items in the output figure by making your own",
+        "item with `templateitemname` matching this `name`",
+        "alongside your modifications (including `visible: false` or",
+        "`enabled: false` to hide it).",
+        "Has no effect outside of a template."
+      ].join(" ")
     }
   };
   templateAttrs[TEMPLATEITEMNAME] = {
     valType: "string",
-    editType: "calc"
+    editType: "calc",
+    description: [
+      "Used to refer to a named item in this array in the template. Named",
+      "items from the template will be created even without a matching item",
+      "in the input figure, but you can modify one by making an item with",
+      "`templateitemname` matching its `name`, alongside your modifications",
+      "(including `visible: false` or `enabled: false` to hide it).",
+      "If there is no template or no matching item, this item will be",
+      "hidden unless you explicitly show it with `visible: true`."
+    ].join(" ")
   };
   var templatedArray = function(name6, attrs2) {
     attrs2._isLinkedToArray = name6;
@@ -12760,7 +13899,7 @@ var Plotly = (() => {
   };
   var plot_template_default = { templatedArray, traceTemplater, newContainer, arrayTemplater, arrayEditor, arrayDefaultKey };
 
-  // src/plots/cartesian/constants.js
+  // src/plots/cartesian/constants.ts
   var constants_default2 = {
     idRegex: {
       x: counter("x", "( domain)?"),
@@ -12821,7 +13960,7 @@ var Plotly = (() => {
     // used for zindex of cartesian subplots e.g. xy, xyz2, xyz3, etc.
   };
 
-  // src/plots/cartesian/axis_ids.js
+  // src/plots/cartesian/axis_ids.ts
   var id2name = function id2name2(id2) {
     if (typeof id2 !== "string" || !id2.match(constants_default2.AX_ID_PATTERN)) return;
     var axNum = id2.split(" ")[0].slice(1);
@@ -12912,23 +14051,36 @@ var Plotly = (() => {
   };
   var axis_ids_default = { id2name, name2id, cleanId, list, listIds, getFromId, getFromTrace, idSort, ref2id, isLinked };
 
-  // src/traces/scatter/layout_attributes.js
+  // src/traces/scatter/layout_attributes.ts
   var layout_attributes_default3 = {
     scattermode: {
       valType: "enumerated",
       values: ["group", "overlay"],
       dflt: "overlay",
-      editType: "calc"
+      editType: "calc",
+      description: [
+        "Determines how scatter points at the same location coordinate",
+        "are displayed on the graph.",
+        "With *group*, the scatter points are plotted next to one another",
+        "centered around the shared location.",
+        "With *overlay*, the scatter points are plotted over one another,",
+        "you might need to reduce *opacity* to see multiple scatter points."
+      ].join(" ")
     },
     scattergap: {
       valType: "number",
       min: 0,
       max: 1,
-      editType: "calc"
+      editType: "calc",
+      description: [
+        "Sets the gap (in plot fraction) between scatter points of",
+        "adjacent location coordinates.",
+        "Defaults to `bargap`."
+      ].join(" ")
     }
   };
 
-  // src/plots/get_data.js
+  // src/plots/get_data.ts
   var { SUBPLOT_PATTERN } = constants_default2;
   var getModuleCalcData = function(calcdata, arg1, arg2) {
     var moduleCalcData = [];
@@ -12959,7 +14111,7 @@ var Plotly = (() => {
     return [moduleCalcData, remainingCalcData];
   };
 
-  // src/plots/command.js
+  // src/plots/command.ts
   var manageCommandObserver = function(gd, container, commandList, onchange) {
     var ret = {};
     var enabled = true;
@@ -13250,7 +14402,7 @@ var Plotly = (() => {
   }
   var command_default = { manageCommandObserver, hasSimpleAPICommandBindings, executeAPICommand, computeAPICommandBindings };
 
-  // src/plots/plots.js
+  // src/plots/plots.ts
   var { BADNUM: BADNUM5 } = numerical_default;
   var attributes = attributes_default2;
   attributes.type.values = registry_default.allTypes;
@@ -14091,9 +15243,9 @@ var Plotly = (() => {
       layoutOut._dataTemplate = template.data;
     }
     coerce3("autotypenumbers");
-    var font3 = coerceFont(coerce3, "font");
-    var fontSize = font3.size;
-    coerceFont(coerce3, "title.font", font3, { overrideDflt: {
+    var font5 = coerceFont(coerce3, "font");
+    var fontSize = font5.size;
+    coerceFont(coerce3, "title.font", font5, { overrideDflt: {
       size: Math.round(fontSize * 1.4)
     } });
     coerce3("title.text", layoutOut._dfltTitle.plot);
@@ -14109,7 +15261,7 @@ var Plotly = (() => {
     coerce3("title.y");
     coerce3("title.yanchor");
     coerce3("title.subtitle.text", layoutOut._dfltTitle.subtitle);
-    coerceFont(coerce3, "title.subtitle.font", font3, {
+    coerceFont(coerce3, "title.subtitle.font", font5, {
       overrideDflt: {
         size: Math.round(layoutOut.title.font.size * 0.7)
       }
@@ -14713,11 +15865,11 @@ var Plotly = (() => {
         case "replace":
           frame2 = op.value;
           var oldName = (_frames[op.index] || {}).name;
-          var newName2 = frame2.name;
-          _frames[op.index] = _frameHash[newName2] = frame2;
-          if (newName2 !== oldName) {
+          var newName = frame2.name;
+          _frames[op.index] = _frameHash[newName] = frame2;
+          if (newName !== oldName) {
             delete _frameHash[oldName];
-            _frameHash[newName2] = frame2;
+            _frameHash[newName] = frame2;
           }
           break;
         case "insert":
@@ -15159,12 +16311,12 @@ var Plotly = (() => {
           }
         }
         for (j = 0; j < trace.transforms.length; j++) {
-          var transform2 = trace.transforms[j];
-          _module = transformsRegistry[transform2.type];
+          var transform = trace.transforms[j];
+          _module = registry_default.transformsRegistry[transform.type];
           if (_module && _module.calcTransform) {
             trace._hasCalcTransform = true;
             hasCalcTransform = true;
-            _module.calcTransform(gd, trace, transform2);
+            _module.calcTransform(gd, trace, transform);
           }
         }
       }
@@ -15537,10 +16689,10 @@ var Plotly = (() => {
   };
   var plots_default = plots;
 
-  // src/plots/cartesian/axes.js
+  // src/plots/cartesian/axes.ts
   var import_fast_isnumeric23 = __toESM(require_fast_isnumeric(), 1);
 
-  // src/constants/xmlns_namespaces.js
+  // src/constants/xmlns_namespaces.ts
   var xmlns = "http://www.w3.org/2000/xmlns/";
   var svg = "http://www.w3.org/2000/svg";
   var xlink = "http://www.w3.org/1999/xlink";
@@ -15550,7 +16702,7 @@ var Plotly = (() => {
   };
   var xmlns_namespaces_default = { xmlns, svg, xlink, svgAttrs };
 
-  // src/constants/alignment.js
+  // src/constants/alignment.ts
   var alignment_default = {
     // from bottom left: this is the origin of our paper-reference
     // positioning system
@@ -15601,7 +16753,7 @@ var Plotly = (() => {
     }
   };
 
-  // src/lib/svg_text_utils.js
+  // src/lib/svg_text_utils.ts
   var { LINE_SPACING } = alignment_default;
   var FIND_TEX = /([^$]*)([$]+[^$]*[$]+)([^$]*)/;
   var convertToTspans = function(_context, gd, _callback) {
@@ -16085,7 +17237,7 @@ var Plotly = (() => {
       var parti = parts[i];
       var match = parti.match(ONE_TAG);
       var tagType = match && match[2].toLowerCase();
-      if (tagType in TAG_STYLES) {
+      if (tagType && tagType in TAG_STYLES) {
         if (match[1]) {
           if (nodeStack.length) {
             currentNode = nodeStack.pop();
@@ -16208,7 +17360,7 @@ var Plotly = (() => {
   var makeEditable = function(context, options) {
     var gd = options.gd;
     var _delegate = options.delegate;
-    var dispatch2 = dispatch2("edit", "input", "cancel");
+    var d = dispatch_default2("edit", "input", "cancel");
     var handlerElement = _delegate || context;
     context.style({ "pointer-events": _delegate ? "none" : "all" });
     if (context.size() !== 1) throw new Error("boo");
@@ -16264,7 +17416,7 @@ var Plotly = (() => {
         var text = this.textContent;
         select_default2(this).transition().duration(0).remove();
         select_default2(document).on("mouseup", null);
-        dispatch2.edit.call(context, text);
+        d.call("edit", context, text);
       }).on("focus", function(event2) {
         var editDiv = this;
         gd._editing = true;
@@ -16279,9 +17431,9 @@ var Plotly = (() => {
           select_default2(this).style({ opacity: 0 }).on("blur", function(event3) {
             return false;
           }).transition().remove();
-          dispatch2.cancel.call(context, this.textContent);
+          d.call("cancel", context, this.textContent);
         } else {
-          dispatch2.input.call(context, this.textContent);
+          d.call("input", context, this.textContent);
           select_default2(this).call(alignHTMLWith(context, container, options));
         }
       }).on("keydown", function(event2) {
@@ -16290,14 +17442,14 @@ var Plotly = (() => {
     }
     if (options.immediate) handleClick2();
     else handlerElement.on("click", handleClick2);
-    return Object.assign(context, { on: dispatch2.on.bind(dispatch2) });
+    return Object.assign(context, { on: d.on.bind(d) });
   };
   var svg_text_utils_default = { convertToTspans, NEWLINES, BR_TAG_ALL, plainText, sanitizeHTML, lineCount, positionText, makeTextShadow, makeEditable, convertEntities };
 
-  // src/components/titles/index.js
+  // src/components/titles/index.ts
   var import_fast_isnumeric19 = __toESM(require_fast_isnumeric(), 1);
 
-  // src/components/drawing/index.js
+  // src/components/drawing/index.ts
   var import_fast_isnumeric18 = __toESM(require_fast_isnumeric(), 1);
 
   // node_modules/.pnpm/d3-array@3.2.4/node_modules/d3-array/src/ascending.js
@@ -16558,7 +17710,7 @@ var Plotly = (() => {
     return target.domain(source.domain()).range(source.range()).interpolate(source.interpolate()).clamp(source.clamp()).unknown(source.unknown());
   }
   function transformer() {
-    var domain = unit, range = unit, interpolate = value_default, transform2, untransform, unknown, clamp = identity4, piecewise, output, input;
+    var domain = unit, range = unit, interpolate = value_default, transform, untransform, unknown, clamp = identity4, piecewise, output, input;
     function rescale() {
       var n = Math.min(domain.length, range.length);
       if (clamp !== identity4) clamp = clamper(domain[0], domain[n - 1]);
@@ -16567,10 +17719,10 @@ var Plotly = (() => {
       return scale;
     }
     function scale(x) {
-      return x == null || isNaN(x = +x) ? unknown : (output || (output = piecewise(domain.map(transform2), range, interpolate)))(transform2(clamp(x)));
+      return x == null || isNaN(x = +x) ? unknown : (output || (output = piecewise(domain.map(transform), range, interpolate)))(transform(clamp(x)));
     }
     scale.invert = function(y) {
-      return clamp(untransform((input || (input = piecewise(range, domain.map(transform2), number_default)))(y)));
+      return clamp(untransform((input || (input = piecewise(range, domain.map(transform), number_default)))(y)));
     };
     scale.domain = function(_2) {
       return arguments.length ? (domain = Array.from(_2, number2), rescale()) : domain.slice();
@@ -16591,7 +17743,7 @@ var Plotly = (() => {
       return arguments.length ? (unknown = _2, scale) : unknown;
     };
     return function(t, u) {
-      transform2 = t, untransform = u;
+      transform = t, untransform = u;
       return rescale();
     };
   }
@@ -17350,7 +18502,7 @@ var Plotly = (() => {
   var [utcTicks, utcTickInterval] = ticker(utcYear2, utcMonth, utcSunday2, unixDay, utcHour, utcMinute);
   var [timeTicks, timeTickInterval] = ticker(timeYear, timeMonth, timeSunday, timeDay, timeHour, timeMinute);
 
-  // src/components/colorscale/helpers.js
+  // src/components/colorscale/helpers.ts
   var import_fast_isnumeric13 = __toESM(require_fast_isnumeric(), 1);
   var { isValid: isValidScale2 } = scales_default;
   function hasColorscale(trace, containerStr, colorKey) {
@@ -17492,7 +18644,7 @@ var Plotly = (() => {
     makeColorScaleFuncFromTrace
   };
 
-  // src/plots/cartesian/axis_format_attributes.js
+  // src/plots/cartesian/axis_format_attributes.ts
   var FORMAT_LINK2 = docs_default.FORMAT_LINK;
   var DATE_FORMAT_LINK2 = docs_default.DATE_FORMAT_LINK;
   function axisHoverFormat(x, noDates) {
@@ -17528,7 +18680,7 @@ var Plotly = (() => {
     descriptionWithDates
   };
 
-  // src/plots/cartesian/layout_attributes.js
+  // src/plots/cartesian/layout_attributes.ts
   var { descriptionWithDates: descriptionWithDates2 } = axis_format_attributes_default;
   var { ONEDAY: ONEDAY2 } = numerical_default;
   var HOUR = constants_default2.HOUR_PATTERN;
@@ -17537,43 +18689,107 @@ var Plotly = (() => {
     valType: "enumerated",
     values: ["auto", "linear", "array"],
     editType: "ticks",
-    impliedEdits: { tick0: void 0, dtick: void 0 }
+    impliedEdits: { tick0: void 0, dtick: void 0 },
+    description: [
+      "Sets the tick mode for this axis.",
+      "If *auto*, the number of ticks is set via `nticks`.",
+      "If *linear*, the placement of the ticks is determined by",
+      "a starting position `tick0` and a tick step `dtick`",
+      "(*linear* is the default value if `tick0` and `dtick` are provided).",
+      "If *array*, the placement of the ticks is set via `tickvals`",
+      "and the tick text is `ticktext`.",
+      "(*array* is the default value if `tickvals` is provided)."
+    ].join(" ")
   };
   var tickmode = extendFlat({}, minorTickmode, {
-    values: minorTickmode.values.slice().concat(["sync"])
+    values: minorTickmode.values.slice().concat(["sync"]),
+    description: [
+      minorTickmode.description,
+      "If *sync*, the number of ticks will sync with the overlayed axis",
+      "set by `overlaying` property."
+    ].join(" ")
   });
   function makeNticks(minor) {
     return {
       valType: "integer",
       min: 0,
       dflt: minor ? 5 : 0,
-      editType: "ticks"
+      editType: "ticks",
+      description: [
+        "Specifies the maximum number of ticks for the particular axis.",
+        "The actual number of ticks will be chosen automatically to be",
+        "less than or equal to `nticks`.",
+        "Has an effect only if `tickmode` is set to *auto*."
+      ].join(" ")
     };
   }
   var tick0 = {
     valType: "any",
     editType: "ticks",
-    impliedEdits: { tickmode: "linear" }
+    impliedEdits: { tickmode: "linear" },
+    description: [
+      "Sets the placement of the first tick on this axis.",
+      "Use with `dtick`.",
+      "If the axis `type` is *log*, then you must take the log of your starting tick",
+      "(e.g. to set the starting tick to 100, set the `tick0` to 2)",
+      "except when `dtick`=*L<f>* (see `dtick` for more info).",
+      "If the axis `type` is *date*, it should be a date string, like date data.",
+      "If the axis `type` is *category*, it should be a number, using the scale where",
+      "each category is assigned a serial number from zero in the order it appears."
+    ].join(" ")
   };
   var dtick = {
     valType: "any",
     editType: "ticks",
-    impliedEdits: { tickmode: "linear" }
+    impliedEdits: { tickmode: "linear" },
+    description: [
+      "Sets the step in-between ticks on this axis. Use with `tick0`.",
+      "Must be a positive number, or special strings available to *log* and *date* axes.",
+      "If the axis `type` is *log*, then ticks are set every 10^(n*dtick) where n",
+      "is the tick number. For example,",
+      "to set a tick mark at 1, 10, 100, 1000, ... set dtick to 1.",
+      "To set tick marks at 1, 100, 10000, ... set dtick to 2.",
+      "To set tick marks at 1, 5, 25, 125, 625, 3125, ... set dtick to log_10(5), or 0.69897000433.",
+      "*log* has several special values; *L<f>*, where `f` is a positive number,",
+      "gives ticks linearly spaced in value (but not position).",
+      "For example `tick0` = 0.1, `dtick` = *L0.5* will put ticks at 0.1, 0.6, 1.1, 1.6 etc.",
+      "To show powers of 10 plus small digits between, use *D1* (all digits) or *D2* (only 2 and 5).",
+      "`tick0` is ignored for *D1* and *D2*.",
+      "If the axis `type` is *date*, then you must convert the time to milliseconds.",
+      "For example, to set the interval between ticks to one day,",
+      "set `dtick` to 86400000.0.",
+      "*date* also has special values *M<n>* gives ticks spaced by a number of months.",
+      "`n` must be a positive integer.",
+      "To set ticks on the 15th of every third month, set `tick0` to *2000-01-15* and `dtick` to *M3*.",
+      "To set ticks every 4 years, set `dtick` to *M48*"
+    ].join(" ")
   };
   var tickvals = {
     valType: "data_array",
-    editType: "ticks"
+    editType: "ticks",
+    description: [
+      "Sets the values at which ticks on this axis appear.",
+      "Only has an effect if `tickmode` is set to *array*.",
+      "Used with `ticktext`."
+    ].join(" ")
   };
   var ticks2 = {
     valType: "enumerated",
     values: ["outside", "inside", ""],
-    editType: "ticks"
+    editType: "ticks",
+    description: [
+      "Determines whether ticks are drawn or not.",
+      "If **, this axis' ticks are not drawn.",
+      "If *outside* (*inside*), this axis' are drawn outside (inside)",
+      "the axis lines."
+    ].join(" ")
   };
   function makeTicklen(minor) {
     var obj = {
       valType: "number",
       min: 0,
-      editType: "ticks"
+      editType: "ticks",
+      description: "Sets the tick length (in px)."
     };
     if (!minor) obj.dflt = 5;
     return obj;
@@ -17582,7 +18798,8 @@ var Plotly = (() => {
     var obj = {
       valType: "number",
       min: 0,
-      editType: "ticks"
+      editType: "ticks",
+      description: "Sets the tick width (in px)."
     };
     if (!minor) obj.dflt = 1;
     return obj;
@@ -17590,18 +18807,21 @@ var Plotly = (() => {
   var tickcolor = {
     valType: "color",
     dflt: attributes_default3.defaultLine,
-    editType: "ticks"
+    editType: "ticks",
+    description: "Sets the tick color."
   };
   var gridcolor = {
     valType: "color",
     dflt: attributes_default3.lightLine,
-    editType: "ticks"
+    editType: "ticks",
+    description: "Sets the color of the grid lines."
   };
   function makeGridwidth(minor) {
     var obj = {
       valType: "number",
       min: 0,
-      editType: "ticks"
+      editType: "ticks",
+      description: "Sets the width (in px) of the grid lines."
     };
     if (!minor) obj.dflt = 1;
     return obj;
@@ -17609,30 +18829,56 @@ var Plotly = (() => {
   var griddash = extendFlat({}, dash, { editType: "ticks" });
   var showgrid = {
     valType: "boolean",
-    editType: "ticks"
+    editType: "ticks",
+    description: [
+      "Determines whether or not grid lines are drawn.",
+      "If *true*, the grid lines are drawn at every tick mark."
+    ].join(" ")
   };
   var layout_attributes_default4 = {
     visible: {
       valType: "boolean",
-      editType: "plot"
+      editType: "plot",
+      description: [
+        "A single toggle to hide the axis while preserving interaction like dragging.",
+        "Default is true when a cheater plot is present on the axis, otherwise",
+        "false"
+      ].join(" ")
     },
     color: {
       valType: "color",
       dflt: attributes_default3.defaultLine,
-      editType: "ticks"
+      editType: "ticks",
+      description: [
+        "Sets default for all colors associated with this axis",
+        "all at once: line, font, tick, and grid colors.",
+        "Grid color is lightened by blending this with the plot background",
+        "Individual pieces can override this."
+      ].join(" ")
     },
     title: {
       text: {
         valType: "string",
-        editType: "ticks"
+        editType: "ticks",
+        description: "Sets the title of this axis."
       },
       font: font_attributes_default({
-        editType: "ticks"
+        editType: "ticks",
+        description: "Sets this axis' title font."
       }),
       standoff: {
         valType: "number",
         min: 0,
-        editType: "ticks"
+        editType: "ticks",
+        description: [
+          "Sets the standoff distance (in px) between the axis labels and the title text",
+          "The default value is a function of the axis tick labels, the title `font.size`",
+          "and the axis `linewidth`.",
+          "Note that the axis title position is always constrained within the margins,",
+          "so the actual standoff distance is always less than the set or default value.",
+          "By setting `standoff` and turning on `automargin`, plotly.js will push the",
+          "margins to fit the axis title at given standoff distance."
+        ].join(" ")
       },
       editType: "ticks"
     },
@@ -17648,47 +18894,88 @@ var Plotly = (() => {
       // value back to the input - so it doesn't make sense to template this.
       // Note: we do NOT prohibit this in `coerce`, so if someone enters a
       // type in the template explicitly it will be honored as the default.
-      _noTemplating: true
+      _noTemplating: true,
+      description: [
+        "Sets the axis type.",
+        "By default, plotly attempts to determined the axis type",
+        "by looking into the data of the traces that referenced",
+        "the axis in question."
+      ].join(" ")
     },
     autotypenumbers: {
       valType: "enumerated",
       values: ["convert types", "strict"],
       dflt: "convert types",
-      editType: "calc"
+      editType: "calc",
+      description: [
+        "Using *strict* a numeric string in trace data is not converted to a number.",
+        "Using *convert types* a numeric string in trace data may be",
+        "treated as a number during automatic axis `type` detection.",
+        "Defaults to layout.autotypenumbers."
+      ].join(" ")
     },
     autorange: {
       valType: "enumerated",
       values: [true, false, "reversed", "min reversed", "max reversed", "min", "max"],
       dflt: true,
       editType: "axrange",
-      impliedEdits: { "range[0]": void 0, "range[1]": void 0 }
+      impliedEdits: { "range[0]": void 0, "range[1]": void 0 },
+      description: [
+        "Determines whether or not the range of this axis is",
+        "computed in relation to the input data.",
+        "See `rangemode` for more info.",
+        "If `range` is provided and it has a value for both the",
+        "lower and upper bound, `autorange` is set to *false*.",
+        "Using *min* applies autorange only to set the minimum.",
+        "Using *max* applies autorange only to set the maximum.",
+        "Using *min reversed* applies autorange only to set the minimum on a reversed axis.",
+        "Using *max reversed* applies autorange only to set the maximum on a reversed axis.",
+        "Using *reversed* applies autorange on both ends and reverses the axis direction."
+      ].join(" ")
     },
     autorangeoptions: {
       minallowed: {
         valType: "any",
         editType: "plot",
-        impliedEdits: { "range[0]": void 0, "range[1]": void 0 }
+        impliedEdits: { "range[0]": void 0, "range[1]": void 0 },
+        description: [
+          "Use this value exactly as autorange minimum."
+        ].join(" ")
       },
       maxallowed: {
         valType: "any",
         editType: "plot",
-        impliedEdits: { "range[0]": void 0, "range[1]": void 0 }
+        impliedEdits: { "range[0]": void 0, "range[1]": void 0 },
+        description: [
+          "Use this value exactly as autorange maximum."
+        ].join(" ")
       },
       clipmin: {
         valType: "any",
         editType: "plot",
-        impliedEdits: { "range[0]": void 0, "range[1]": void 0 }
+        impliedEdits: { "range[0]": void 0, "range[1]": void 0 },
+        description: [
+          "Clip autorange minimum if it goes beyond this value.",
+          "Has no effect when `autorangeoptions.minallowed` is provided."
+        ].join(" ")
       },
       clipmax: {
         valType: "any",
         editType: "plot",
-        impliedEdits: { "range[0]": void 0, "range[1]": void 0 }
+        impliedEdits: { "range[0]": void 0, "range[1]": void 0 },
+        description: [
+          "Clip autorange maximum if it goes beyond this value.",
+          "Has no effect when `autorangeoptions.maxallowed` is provided."
+        ].join(" ")
       },
       include: {
         valType: "any",
         arrayOk: true,
         editType: "plot",
-        impliedEdits: { "range[0]": void 0, "range[1]": void 0 }
+        impliedEdits: { "range[0]": void 0, "range[1]": void 0 },
+        description: [
+          "Ensure this value is included in autorange."
+        ].join(" ")
       },
       editType: "plot"
     },
@@ -17696,7 +18983,16 @@ var Plotly = (() => {
       valType: "enumerated",
       values: ["normal", "tozero", "nonnegative"],
       dflt: "normal",
-      editType: "plot"
+      editType: "plot",
+      description: [
+        "If *normal*, the range is computed in relation to the extrema",
+        "of the input data.",
+        "If *tozero*, the range extends to 0,",
+        "regardless of the input data",
+        "If *nonnegative*, the range is non-negative,",
+        "regardless of the input data.",
+        "Applies only to linear axes."
+      ].join(" ")
     },
     range: {
       valType: "info_array",
@@ -17706,29 +19002,57 @@ var Plotly = (() => {
       ],
       editType: "axrange",
       impliedEdits: { autorange: false },
-      anim: true
+      anim: true,
+      description: [
+        "Sets the range of this axis.",
+        "If the axis `type` is *log*, then you must take the log of your",
+        "desired range (e.g. to set the range from 1 to 100,",
+        "set the range from 0 to 2).",
+        "If the axis `type` is *date*, it should be date strings,",
+        "like date data, though Date objects and unix milliseconds",
+        "will be accepted and converted to strings.",
+        "If the axis `type` is *category*, it should be numbers,",
+        "using the scale where each category is assigned a serial",
+        "number from zero in the order it appears.",
+        "Leaving either or both elements `null` impacts the default `autorange`."
+      ].join(" ")
     },
     minallowed: {
       valType: "any",
       editType: "plot",
-      impliedEdits: { "^autorange": false }
+      impliedEdits: { "^autorange": false },
+      description: [
+        "Determines the minimum range of this axis."
+      ].join(" ")
     },
     maxallowed: {
       valType: "any",
       editType: "plot",
-      impliedEdits: { "^autorange": false }
+      impliedEdits: { "^autorange": false },
+      description: [
+        "Determines the maximum range of this axis."
+      ].join(" ")
     },
     fixedrange: {
       valType: "boolean",
       dflt: false,
-      editType: "calc"
+      editType: "calc",
+      description: [
+        "Determines whether or not this axis is zoom-able.",
+        "If true, then zoom is disabled."
+      ].join(" ")
     },
     modebardisable: {
       valType: "flaglist",
       flags: ["autoscale", "zoominout"],
       extras: ["none"],
       dflt: "none",
-      editType: "modebar"
+      editType: "modebar",
+      description: [
+        "Disables certain modebar buttons for this axis.",
+        "*autoscale* disables the autoscale buttons, *zoominout*",
+        "disables the zoom-in and zoom-out buttons."
+      ].join(" ")
     },
     insiderange: {
       valType: "info_array",
@@ -17736,7 +19060,14 @@ var Plotly = (() => {
         { valType: "any", editType: "plot" },
         { valType: "any", editType: "plot" }
       ],
-      editType: "plot"
+      editType: "plot",
+      description: [
+        "Could be used to set the desired inside range of this axis",
+        "(excluding the labels) when `ticklabelposition` of",
+        "the anchored axis has *inside*.",
+        "Not implemented for axes with `type` *log*.",
+        "This would be ignored when `range` is provided."
+      ].join(" ")
     },
     // scaleanchor: not used directly, just put here for reference
     // values are any opposite-letter axis id, or `false`.
@@ -17747,24 +19078,65 @@ var Plotly = (() => {
         constants_default2.idRegex.y.toString(),
         false
       ],
-      editType: "plot"
+      editType: "plot",
+      description: [
+        "If set to another axis id (e.g. `x2`, `y`), the range of this axis",
+        "changes together with the range of the corresponding axis",
+        "such that the scale of pixels per unit is in a constant ratio.",
+        "Both axes are still zoomable, but when you zoom one, the other will",
+        "zoom the same amount, keeping a fixed midpoint.",
+        "`constrain` and `constraintoward` determine how we enforce the constraint.",
+        "You can chain these, ie `yaxis: {scaleanchor: *x*}, xaxis2: {scaleanchor: *y*}`",
+        "but you can only link axes of the same `type`.",
+        "The linked axis can have the opposite letter (to constrain the aspect ratio)",
+        "or the same letter (to match scales across subplots).",
+        "Loops (`yaxis: {scaleanchor: *x*}, xaxis: {scaleanchor: *y*}` or longer) are redundant",
+        "and the last constraint encountered will be ignored to avoid possible",
+        "inconsistent constraints via `scaleratio`.",
+        "Note that setting axes simultaneously in both a `scaleanchor` and a `matches` constraint",
+        "is currently forbidden.",
+        "Setting `false` allows to remove a default constraint (occasionally,",
+        "you may need to prevent a default `scaleanchor` constraint from",
+        'being applied, eg. when having an image trace `yaxis: {scaleanchor: "x"}`',
+        "is set automatically in order for pixels to be rendered as squares,",
+        "setting `yaxis: {scaleanchor: false}` allows to remove the constraint)."
+      ].join(" ")
     },
     scaleratio: {
       valType: "number",
       min: 0,
       dflt: 1,
-      editType: "plot"
+      editType: "plot",
+      description: [
+        "If this axis is linked to another by `scaleanchor`, this determines the pixel",
+        "to unit scale ratio. For example, if this value is 10, then every unit on",
+        "this axis spans 10 times the number of pixels as a unit on the linked axis.",
+        "Use this for example to create an elevation profile where the vertical scale",
+        "is exaggerated a fixed amount with respect to the horizontal."
+      ].join(" ")
     },
     constrain: {
       valType: "enumerated",
       values: ["range", "domain"],
-      editType: "plot"
+      editType: "plot",
+      description: [
+        "If this axis needs to be compressed (either due to its own `scaleanchor` and",
+        "`scaleratio` or those of the other axis), determines how that happens:",
+        "by increasing the *range*, or by decreasing the *domain*.",
+        "Default is *domain* for axes containing image traces, *range* otherwise."
+      ].join(" ")
     },
     // constraintoward: not used directly, just put here for reference
     constraintoward: {
       valType: "enumerated",
       values: ["left", "center", "right", "top", "middle", "bottom"],
-      editType: "plot"
+      editType: "plot",
+      description: [
+        "If this axis needs to be compressed (either due to its own `scaleanchor` and",
+        "`scaleratio` or those of the other axis), determines which direction we push",
+        "the originally specified plot area. Options are *left*, *center* (default),",
+        "and *right* for x axes, and *top*, *middle* (default), and *bottom* for y axes."
+      ].join(" ")
     },
     matches: {
       valType: "enumerated",
@@ -17772,13 +19144,26 @@ var Plotly = (() => {
         constants_default2.idRegex.x.toString(),
         constants_default2.idRegex.y.toString()
       ],
-      editType: "calc"
+      editType: "calc",
+      description: [
+        "If set to another axis id (e.g. `x2`, `y`), the range of this axis",
+        "will match the range of the corresponding axis in data-coordinates space.",
+        "Moreover, matching axes share auto-range values, category lists and",
+        "histogram auto-bins.",
+        "Note that setting axes simultaneously in both a `scaleanchor` and a `matches` constraint",
+        "is currently forbidden.",
+        "Moreover, note that matching axes must have the same `type`."
+      ].join(" ")
     },
     rangebreaks: templatedArray("rangebreak", {
       enabled: {
         valType: "boolean",
         dflt: true,
-        editType: "calc"
+        editType: "calc",
+        description: [
+          "Determines whether this axis rangebreak is enabled or disabled.",
+          "Please note that `rangebreaks` only work for *date* axis type."
+        ].join(" ")
       },
       bounds: {
         valType: "info_array",
@@ -17786,12 +19171,30 @@ var Plotly = (() => {
           { valType: "any", editType: "calc" },
           { valType: "any", editType: "calc" }
         ],
-        editType: "calc"
+        editType: "calc",
+        description: [
+          "Sets the lower and upper bounds of this axis rangebreak.",
+          "Can be used with `pattern`."
+        ].join(" ")
       },
       pattern: {
         valType: "enumerated",
         values: [DAY_OF_WEEK, HOUR, ""],
-        editType: "calc"
+        editType: "calc",
+        description: [
+          "Determines a pattern on the time line that generates breaks.",
+          "If *" + DAY_OF_WEEK + "* - days of the week in English e.g. 'Sunday' or `sun`",
+          "(matching is case-insensitive and considers only the first three characters),",
+          "as well as Sunday-based integers between 0 and 6.",
+          "If *" + HOUR + "* - hour (24-hour clock) as decimal numbers between 0 and 24.",
+          "for more info.",
+          "Examples:",
+          "- { pattern: '" + DAY_OF_WEEK + "', bounds: [6, 1] }",
+          " or simply { bounds: ['sat', 'mon'] }",
+          "  breaks from Saturday to Monday (i.e. skips the weekends).",
+          "- { pattern: '" + HOUR + "', bounds: [17, 8] }",
+          "  breaks from 5pm to 8am (i.e. skips non-work hours)."
+        ].join(" ")
       },
       values: {
         valType: "info_array",
@@ -17800,14 +19203,23 @@ var Plotly = (() => {
         items: {
           valType: "any",
           editType: "calc"
-        }
+        },
+        description: [
+          "Sets the coordinate values corresponding to the rangebreaks.",
+          "An alternative to `bounds`.",
+          "Use `dvalue` to set the size of the values along the axis."
+        ].join(" ")
       },
       dvalue: {
         // TODO could become 'any' to add support for 'months', 'years'
         valType: "number",
         editType: "calc",
         min: 0,
-        dflt: ONEDAY2
+        dflt: ONEDAY2,
+        description: [
+          "Sets the size of each `values` item.",
+          "The default is one day in milliseconds."
+        ].join(" ")
       },
       /*
       gap: {
@@ -17815,12 +19227,20 @@ var Plotly = (() => {
           min: 0,
           dflt: 0, // for *date* axes, maybe something else for *linear*
           editType: 'calc',
+          description: [
+              'Sets the gap distance between the start and the end of this rangebreak.',
+              'Use with `gapmode` to set the unit of measurement.'
+          ].join(' ')
       },
       gapmode: {
           valType: 'enumerated',
           values: ['pixels', 'fraction'],
           dflt: 'pixels',
           editType: 'calc',
+          description: [
+              'Determines if the `gap` value corresponds to a pixel length',
+              'or a fraction of the plot area.'
+          ].join(' ')
       },
       */
       // To complete https://github.com/plotly/plotly.js/issues/4210
@@ -17839,25 +19259,52 @@ var Plotly = (() => {
       valType: "integer",
       min: 1,
       dflt: 1,
-      editType: "ticks"
+      editType: "ticks",
+      description: [
+        "Sets the spacing between tick labels as compared to the spacing between ticks.",
+        "A value of 1 (default) means each tick gets a label.",
+        "A value of 2 means shows every 2nd label.",
+        "A larger value n means only every nth tick is labeled.",
+        "`tick0` determines which labels are shown.",
+        "Not implemented for axes with `type` *log* or *multicategory*, or when `tickmode` is *array*."
+      ].join(" ")
     },
     tickvals,
     ticktext: {
       valType: "data_array",
-      editType: "ticks"
+      editType: "ticks",
+      description: [
+        "Sets the text displayed at the ticks position via `tickvals`.",
+        "Only has an effect if `tickmode` is set to *array*.",
+        "Used with `tickvals`."
+      ].join(" ")
     },
     ticks: ticks2,
     tickson: {
       valType: "enumerated",
       values: ["labels", "boundaries"],
       dflt: "labels",
-      editType: "ticks"
+      editType: "ticks",
+      description: [
+        "Determines where ticks and grid lines are drawn with respect to their",
+        "corresponding tick labels.",
+        "Only has an effect for axes of `type` *category* or *multicategory*.",
+        "When set to *boundaries*, ticks and grid lines are drawn half a category",
+        "to the left/bottom of labels."
+      ].join(" ")
     },
     ticklabelmode: {
       valType: "enumerated",
       values: ["instant", "period"],
       dflt: "instant",
-      editType: "ticks"
+      editType: "ticks",
+      description: [
+        "Determines where tick labels are drawn with respect to their",
+        "corresponding ticks and grid lines.",
+        "Only has an effect for axes of `type` *date*",
+        "When set to *period*, tick labels are drawn in the middle of the period",
+        "between ticks."
+      ].join(" ")
     },
     // ticklabelposition: not used directly, as values depend on direction (similar to side)
     // left/right options are for x axes, and top/bottom options are for y axes
@@ -17876,7 +19323,19 @@ var Plotly = (() => {
         "inside bottom"
       ],
       dflt: "outside",
-      editType: "calc"
+      editType: "calc",
+      description: [
+        "Determines where tick labels are drawn with respect to the axis.",
+        "Please note that",
+        "top or bottom has no effect on x axes or when `ticklabelmode` is set to *period*",
+        "or when `tickson` is set to *boundaries*. Similarly,",
+        "left or right has no effect on y axes or when `ticklabelmode` is set to *period*",
+        "or when `tickson` is set to *boundaries*.",
+        "Has no effect on *multicategory* axes.",
+        "When used on axes linked by `matches` or `scaleanchor`,",
+        "no extra padding for inside labels would be added by autorange,",
+        "so that the scales could match."
+      ].join(" ")
     },
     ticklabeloverflow: {
       valType: "enumerated",
@@ -17885,30 +19344,67 @@ var Plotly = (() => {
         "hide past div",
         "hide past domain"
       ],
-      editType: "calc"
+      editType: "calc",
+      description: [
+        "Determines how we handle tick labels that would overflow either the graph div or the domain of the axis.",
+        "The default value for inside tick labels is *hide past domain*.",
+        "Otherwise on *category* and *multicategory* axes the default is *allow*.",
+        "In other cases the default is *hide past div*."
+      ].join(" ")
     },
     ticklabelshift: {
       valType: "integer",
       dflt: 0,
-      editType: "ticks"
+      editType: "ticks",
+      description: [
+        "Shifts the tick labels by the specified number of pixels in parallel to the axis.",
+        "Positive values move the labels in the positive direction of the axis."
+      ].join(" ")
     },
     ticklabelstandoff: {
       valType: "integer",
       dflt: 0,
-      editType: "ticks"
+      editType: "ticks",
+      description: [
+        "Sets the standoff distance (in px) between the axis tick labels and their default position.",
+        "A positive `ticklabelstandoff` moves the labels farther away from the plot area",
+        "if `ticklabelposition` is *outside*, and deeper into the plot area if",
+        "`ticklabelposition` is *inside*. A negative `ticklabelstandoff` works in the opposite",
+        "direction, moving outside ticks towards the plot area and inside ticks towards",
+        "the outside. If the negative value is large enough, inside ticks can even end up",
+        "outside and vice versa."
+      ].join(" ")
     },
     ticklabelindex: {
       // in the future maybe add `extras: ['all', 'minor']` to allow showing labels for all ticks
       // or for all minor ticks.
       valType: "integer",
       arrayOk: true,
-      editType: "calc"
+      editType: "calc",
+      description: [
+        "Only for axes with `type` *date* or *linear*.",
+        "Instead of drawing the major tick label, draw the label for the minor tick",
+        "that is n positions away from the major tick. E.g. to always draw the label for the",
+        "minor tick before each major tick, choose `ticklabelindex` -1. This is useful for date",
+        "axes with `ticklabelmode` *period* if you want to label the period that ends with each",
+        "major tick instead of the period that begins there."
+      ].join(" ")
     },
     mirror: {
       valType: "enumerated",
       values: [true, "ticks", false, "all", "allticks"],
       dflt: false,
-      editType: "ticks+layoutstyle"
+      editType: "ticks+layoutstyle",
+      description: [
+        "Determines if the axis lines or/and ticks are mirrored to",
+        "the opposite side of the plotting area.",
+        "If *true*, the axis lines are mirrored.",
+        "If *ticks*, the axis lines and ticks are mirrored.",
+        "If *false*, mirroring is disable.",
+        "If *all*, axis lines are mirrored on all shared-axes subplots.",
+        "If *allticks*, axis lines and ticks are mirrored",
+        "on all shared-axes subplots."
+      ].join(" ")
     },
     ticklen: makeTicklen(),
     tickwidth: makeTickwidth(),
@@ -17916,55 +19412,92 @@ var Plotly = (() => {
     showticklabels: {
       valType: "boolean",
       dflt: true,
-      editType: "ticks"
+      editType: "ticks",
+      description: "Determines whether or not the tick labels are drawn."
     },
     labelalias: {
       valType: "any",
       dflt: false,
-      editType: "ticks"
+      editType: "ticks",
+      description: [
+        "Replacement text for specific tick or hover labels.",
+        "For example using {US: 'USA', CA: 'Canada'} changes US to USA",
+        "and CA to Canada. The labels we would have shown must match",
+        "the keys exactly, after adding any tickprefix or ticksuffix.",
+        "For negative numbers the minus sign symbol used (U+2212) is wider than the regular ascii dash.",
+        "That means you need to use \u22121 instead of -1.",
+        "labelalias can be used with any axis type, and both keys (if needed)",
+        "and values (if desired) can include html-like tags or MathJax."
+      ].join(" ")
     },
     automargin: {
       valType: "flaglist",
       flags: ["height", "width", "left", "right", "top", "bottom"],
       extras: [true, false],
       dflt: false,
-      editType: "ticks"
+      editType: "ticks",
+      description: [
+        "Determines whether long tick labels automatically grow the figure",
+        "margins."
+      ].join(" ")
     },
     showspikes: {
       valType: "boolean",
       dflt: false,
-      editType: "modebar"
+      editType: "modebar",
+      description: [
+        "Determines whether or not spikes (aka droplines) are drawn for this axis.",
+        "Note: This only takes affect when hovermode = closest"
+      ].join(" ")
     },
     spikecolor: {
       valType: "color",
       dflt: null,
-      editType: "none"
+      editType: "none",
+      description: "Sets the spike color. If undefined, will use the series color"
     },
     spikethickness: {
       valType: "number",
       dflt: 3,
-      editType: "none"
+      editType: "none",
+      description: "Sets the width (in px) of the zero line."
     },
     spikedash: extendFlat({}, dash, { dflt: "dash", editType: "none" }),
     spikemode: {
       valType: "flaglist",
       flags: ["toaxis", "across", "marker"],
       dflt: "toaxis",
-      editType: "none"
+      editType: "none",
+      description: [
+        "Determines the drawing mode for the spike line",
+        "If *toaxis*, the line is drawn from the data point to the axis the ",
+        "series is plotted on.",
+        "If *across*, the line is drawn across the entire plot area, and",
+        "supercedes *toaxis*.",
+        "If *marker*, then a marker dot is drawn on the axis the series is",
+        "plotted on"
+      ].join(" ")
     },
     spikesnap: {
       valType: "enumerated",
       values: ["data", "cursor", "hovered data"],
       dflt: "hovered data",
-      editType: "none"
+      editType: "none",
+      description: "Determines whether spikelines are stuck to the cursor or to the closest datapoints."
     },
     tickfont: font_attributes_default({
-      editType: "ticks"
+      editType: "ticks",
+      description: "Sets the tick font."
     }),
     tickangle: {
       valType: "angle",
       dflt: "auto",
-      editType: "ticks"
+      editType: "ticks",
+      description: [
+        "Sets the angle of the tick labels with respect to the horizontal.",
+        "For example, a `tickangle` of -90 draws the tick labels",
+        "vertically."
+      ].join(" ")
     },
     autotickangles: {
       valType: "info_array",
@@ -17973,52 +19506,93 @@ var Plotly = (() => {
         valType: "angle"
       },
       dflt: [0, 30, 90],
-      editType: "ticks"
+      editType: "ticks",
+      description: [
+        "When `tickangle` is set to *auto*, it will be set to the first",
+        "angle in this array that is large enough to prevent label",
+        "overlap."
+      ].join(" ")
     },
     tickprefix: {
       valType: "string",
       dflt: "",
-      editType: "ticks"
+      editType: "ticks",
+      description: "Sets a tick label prefix."
     },
     showtickprefix: {
       valType: "enumerated",
       values: ["all", "first", "last", "none"],
       dflt: "all",
-      editType: "ticks"
+      editType: "ticks",
+      description: [
+        "If *all*, all tick labels are displayed with a prefix.",
+        "If *first*, only the first tick is displayed with a prefix.",
+        "If *last*, only the last tick is displayed with a suffix.",
+        "If *none*, tick prefixes are hidden."
+      ].join(" ")
     },
     ticksuffix: {
       valType: "string",
       dflt: "",
-      editType: "ticks"
+      editType: "ticks",
+      description: "Sets a tick label suffix."
     },
     showticksuffix: {
       valType: "enumerated",
       values: ["all", "first", "last", "none"],
       dflt: "all",
-      editType: "ticks"
+      editType: "ticks",
+      description: "Same as `showtickprefix` but for tick suffixes."
     },
     showexponent: {
       valType: "enumerated",
       values: ["all", "first", "last", "none"],
       dflt: "all",
-      editType: "ticks"
+      editType: "ticks",
+      description: [
+        "If *all*, all exponents are shown besides their significands.",
+        "If *first*, only the exponent of the first tick is shown.",
+        "If *last*, only the exponent of the last tick is shown.",
+        "If *none*, no exponents appear."
+      ].join(" ")
     },
     exponentformat: {
       valType: "enumerated",
       values: ["none", "e", "E", "power", "SI", "B", "SI extended"],
       dflt: "B",
-      editType: "ticks"
+      editType: "ticks",
+      description: [
+        "Determines a formatting rule for the tick exponents.",
+        "For example, consider the number 1,000,000,000.",
+        "If *none*, it appears as 1,000,000,000.",
+        "If *e*, 1e+9.",
+        "If *E*, 1E+9.",
+        "If *power*, 1x10^9 (with 9 in a super script).",
+        "If *SI*, 1G.",
+        "If *B*, 1B.",
+        '*SI* uses prefixes from "femto" f (10^-15) to "tera" T (10^12).',
+        '*SI extended* covers instead the full SI range from "quecto" q (10^-30) to "quetta" Q (10^30).',
+        "If *SI* or *SI extended* is used and the exponent is beyond the above ranges, the formatting rule",
+        "will automatically be switched to the power notation."
+      ].join(" ")
     },
     minexponent: {
       valType: "number",
       dflt: 3,
       min: 0,
-      editType: "ticks"
+      editType: "ticks",
+      description: [
+        "Hide SI prefix for 10^n if |n| is below this number.",
+        "This only has an effect when `tickformat` is *SI* or *B*."
+      ].join(" ")
     },
     separatethousands: {
       valType: "boolean",
       dflt: false,
-      editType: "ticks"
+      editType: "ticks",
+      description: [
+        'If "true", even 4-digit integers are separated'
+      ].join(" ")
     },
     tickformat: {
       valType: "string",
@@ -18030,7 +19604,11 @@ var Plotly = (() => {
       enabled: {
         valType: "boolean",
         dflt: true,
-        editType: "ticks"
+        editType: "ticks",
+        description: [
+          "Determines whether or not this stop is used.",
+          "If `false`, this stop is ignored even within its `dtickrange`."
+        ].join(" ")
       },
       dtickrange: {
         valType: "info_array",
@@ -18038,12 +19616,20 @@ var Plotly = (() => {
           { valType: "any", editType: "ticks" },
           { valType: "any", editType: "ticks" }
         ],
-        editType: "ticks"
+        editType: "ticks",
+        description: [
+          "range [*min*, *max*], where *min*, *max* - dtick values",
+          "which describe some zoom level, it is possible to omit *min*",
+          "or *max* value by passing *null*"
+        ].join(" ")
       },
       value: {
         valType: "string",
         dflt: "",
-        editType: "ticks"
+        editType: "ticks",
+        description: [
+          "string - dtickformat for described zoom level, the same as *tickformat*"
+        ].join(" ")
       },
       editType: "ticks"
     }),
@@ -18057,7 +19643,11 @@ var Plotly = (() => {
       text: {
         valType: "string",
         dflt: "",
-        editType: "none"
+        editType: "none",
+        description: [
+          "Template string used for rendering the title that appear on x or y unified hover box.",
+          templateFormatStringDescription()
+        ].join(" ")
       },
       editType: "none"
     },
@@ -18065,18 +19655,23 @@ var Plotly = (() => {
     showline: {
       valType: "boolean",
       dflt: false,
-      editType: "ticks+layoutstyle"
+      editType: "ticks+layoutstyle",
+      description: [
+        "Determines whether or not a line bounding this axis is drawn."
+      ].join(" ")
     },
     linecolor: {
       valType: "color",
       dflt: attributes_default3.defaultLine,
-      editType: "layoutstyle"
+      editType: "layoutstyle",
+      description: "Sets the axis line color."
     },
     linewidth: {
       valType: "number",
       min: 0,
       dflt: 1,
-      editType: "ticks+layoutstyle"
+      editType: "ticks+layoutstyle",
+      description: "Sets the width (in px) of the axis line."
     },
     showgrid,
     gridcolor,
@@ -18084,38 +19679,65 @@ var Plotly = (() => {
     griddash,
     zeroline: {
       valType: "boolean",
-      editType: "ticks"
+      editType: "ticks",
+      description: [
+        "Determines whether or not a line is drawn at along the 0 value",
+        "of this axis.",
+        "If *true*, the zero line is drawn on top of the grid lines."
+      ].join(" ")
     },
     zerolinecolor: {
       valType: "color",
       dflt: attributes_default3.defaultLine,
-      editType: "ticks"
+      editType: "ticks",
+      description: "Sets the line color of the zero line."
     },
     zerolinelayer: {
       valType: "enumerated",
       values: ["above traces", "below traces"],
       dflt: "below traces",
-      editType: "plot"
+      editType: "plot",
+      description: [
+        "Sets the layer on which this zeroline is displayed.",
+        "If *above traces*, this zeroline is displayed above all the subplot's traces",
+        "If *below traces*, this zeroline is displayed below all the subplot's traces,",
+        "but above the grid lines. Limitation: *zerolinelayer* currently has no effect",
+        "if the *zorder* property is set on any trace."
+      ].join(" ")
     },
     zerolinewidth: {
       valType: "number",
       dflt: 1,
-      editType: "ticks"
+      editType: "ticks",
+      description: "Sets the width (in px) of the zero line."
     },
     showdividers: {
       valType: "boolean",
       dflt: true,
-      editType: "ticks"
+      editType: "ticks",
+      description: [
+        "Determines whether or not a dividers are drawn",
+        "between the category levels of this axis.",
+        "Only has an effect on *multicategory* axes."
+      ].join(" ")
     },
     dividercolor: {
       valType: "color",
       dflt: attributes_default3.defaultLine,
-      editType: "ticks"
+      editType: "ticks",
+      description: [
+        "Sets the color of the dividers",
+        "Only has an effect on *multicategory* axes."
+      ].join(" ")
     },
     dividerwidth: {
       valType: "number",
       dflt: 1,
-      editType: "ticks"
+      editType: "ticks",
+      description: [
+        "Sets the width (in px) of the dividers",
+        "Only has an effect on *multicategory* axes."
+      ].join(" ")
     },
     // TODO dividerlen: that would override "to label base" length?
     // positioning attributes
@@ -18128,14 +19750,24 @@ var Plotly = (() => {
         constants_default2.idRegex.x.toString(),
         constants_default2.idRegex.y.toString()
       ],
-      editType: "plot"
+      editType: "plot",
+      description: [
+        "If set to an opposite-letter axis id (e.g. `x2`, `y`), this axis is bound to",
+        "the corresponding opposite-letter axis.",
+        "If set to *free*, this axis' position is determined by `position`."
+      ].join(" ")
     },
     // side: not used directly, as values depend on direction
     // values are top, bottom for x axes, and left, right for y
     side: {
       valType: "enumerated",
       values: ["top", "bottom", "left", "right"],
-      editType: "plot"
+      editType: "plot",
+      description: [
+        "Determines whether a x (y) axis is positioned",
+        "at the *bottom* (*left*) or *top* (*right*)",
+        "of the plotting area."
+      ].join(" ")
     },
     // overlaying: not used directly, just put here for reference
     // values are false and any other same-letter axis id that's not
@@ -18147,7 +19779,15 @@ var Plotly = (() => {
         constants_default2.idRegex.x.toString(),
         constants_default2.idRegex.y.toString()
       ],
-      editType: "plot"
+      editType: "plot",
+      description: [
+        "If set a same-letter axis id, this axis is overlaid on top of",
+        "the corresponding same-letter axis, with traces and axes visible for both",
+        "axes.",
+        "If *false*, this axis does not overlay any same-letter axes.",
+        "In this case, for axes with overlapping domains only the highest-numbered",
+        "axis will be visible."
+      ].join(" ")
     },
     minor: {
       tickmode: minorTickmode,
@@ -18169,13 +19809,27 @@ var Plotly = (() => {
       valType: "enumerated",
       values: ["small digits", "complete", "none"],
       dflt: "small digits",
-      editType: "calc"
+      editType: "calc",
+      description: [
+        "Determines how minor log labels are displayed.",
+        "If *small digits*, small digits i.e. 2 or 5 are displayed.",
+        "If *complete*, complete digits are displayed.",
+        "If *none*, no labels are displayed."
+      ].join(" ")
     },
     layer: {
       valType: "enumerated",
       values: ["above traces", "below traces"],
       dflt: "above traces",
-      editType: "plot"
+      editType: "plot",
+      description: [
+        "Sets the layer on which this axis is displayed.",
+        "If *above traces*, this axis is displayed above all the subplot's traces",
+        "If *below traces*, this axis is displayed below all the subplot's traces,",
+        "but above the grid lines.",
+        "Useful when used together with scatter-like traces with `cliponaxis`",
+        "set to *false* to show markers and/or text nodes above this axis."
+      ].join(" ")
     },
     domain: {
       valType: "info_array",
@@ -18184,23 +19838,46 @@ var Plotly = (() => {
         { valType: "number", min: 0, max: 1, editType: "plot" }
       ],
       dflt: [0, 1],
-      editType: "plot"
+      editType: "plot",
+      description: [
+        "Sets the domain of this axis (in plot fraction)."
+      ].join(" ")
     },
     position: {
       valType: "number",
       min: 0,
       max: 1,
       dflt: 0,
-      editType: "plot"
+      editType: "plot",
+      description: [
+        "Sets the position of this axis in the plotting space",
+        "(in normalized coordinates).",
+        "Only has an effect if `anchor` is set to *free*."
+      ].join(" ")
     },
     autoshift: {
       valType: "boolean",
       dflt: false,
-      editType: "plot"
+      editType: "plot",
+      description: [
+        "Automatically reposition the axis to avoid",
+        "overlap with other axes with the same `overlaying` value.",
+        "This repositioning will account for any `shift` amount applied to other",
+        "axes on the same side with `autoshift` is set to true.",
+        "Only has an effect if `anchor` is set to *free*."
+      ].join(" ")
     },
     shift: {
       valType: "number",
-      editType: "plot"
+      editType: "plot",
+      description: [
+        "Moves the axis a given number of pixels from where it would have been otherwise.",
+        "Accepts both positive and negative values, which will shift the axis either right",
+        "or left, respectively.",
+        "If `autoshift` is set to true, then this defaults to a padding of -3 if `side` is set to *left*.",
+        "and defaults to +3 if `side` is set to *right*. Defaults to 0 if `autoshift` is set to false.",
+        "Only has an effect if `anchor` is set to *free*."
+      ].join(" ")
     },
     categoryorder: {
       valType: "enumerated",
@@ -18225,82 +19902,171 @@ var Plotly = (() => {
         "median descending"
       ],
       dflt: "trace",
-      editType: "calc"
+      editType: "calc",
+      description: [
+        "Specifies the ordering logic for the case of categorical variables.",
+        "By default, plotly uses *trace*, which specifies the order that is present in the data supplied.",
+        "Set `categoryorder` to *category ascending* or *category descending* if order should be determined by",
+        "the alphanumerical order of the category names.",
+        "Set `categoryorder` to *array* to derive the ordering from the attribute `categoryarray`. If a category",
+        "is not found in the `categoryarray` array, the sorting behavior for that attribute will be identical to",
+        "the *trace* mode. The unspecified categories will follow the categories in `categoryarray`.",
+        "Set `categoryorder` to *total ascending* or *total descending* if order should be determined by the",
+        "numerical order of the values.",
+        "Similarly, the order can be determined by the min, max, sum, mean, geometric mean or median of all the values."
+      ].join(" ")
     },
     categoryarray: {
       valType: "data_array",
-      editType: "calc"
+      editType: "calc",
+      description: [
+        "Sets the order in which categories on this axis appear.",
+        "Only has an effect if `categoryorder` is set to *array*.",
+        "Used with `categoryorder`."
+      ].join(" ")
     },
     uirevision: {
       valType: "any",
-      editType: "none"
+      editType: "none",
+      description: [
+        "Controls persistence of user-driven changes in axis `range`,",
+        "`autorange`, and `title` if in `editable: true` configuration.",
+        "Defaults to `layout.uirevision`."
+      ].join(" ")
     },
     editType: "calc"
   };
 
-  // src/components/colorbar/attributes.js
+  // src/components/colorbar/attributes.ts
   var { overrideAll: overrideAll3 } = edit_types_default;
   var attributes_default6 = overrideAll3({
     orientation: {
       valType: "enumerated",
       values: ["h", "v"],
-      dflt: "v"
+      dflt: "v",
+      description: "Sets the orientation of the colorbar."
     },
     thicknessmode: {
       valType: "enumerated",
       values: ["fraction", "pixels"],
-      dflt: "pixels"
+      dflt: "pixels",
+      description: [
+        "Determines whether this color bar's thickness",
+        "(i.e. the measure in the constant color direction)",
+        "is set in units of plot *fraction* or in *pixels*.",
+        "Use `thickness` to set the value."
+      ].join(" ")
     },
     thickness: {
       valType: "number",
       min: 0,
-      dflt: 30
+      dflt: 30,
+      description: [
+        "Sets the thickness of the color bar",
+        "This measure excludes the size of the padding, ticks and labels."
+      ].join(" ")
     },
     lenmode: {
       valType: "enumerated",
       values: ["fraction", "pixels"],
-      dflt: "fraction"
+      dflt: "fraction",
+      description: [
+        "Determines whether this color bar's length",
+        "(i.e. the measure in the color variation direction)",
+        "is set in units of plot *fraction* or in *pixels.",
+        "Use `len` to set the value."
+      ].join(" ")
     },
     len: {
       valType: "number",
       min: 0,
-      dflt: 1
+      dflt: 1,
+      description: [
+        "Sets the length of the color bar",
+        "This measure excludes the padding of both ends.",
+        "That is, the color bar length is this length minus the",
+        "padding on both ends."
+      ].join(" ")
     },
     x: {
-      valType: "number"
+      valType: "number",
+      description: [
+        "Sets the x position with respect to `xref` of the color bar (in plot fraction).",
+        "When `xref` is *paper*, defaults to 1.02 when `orientation` is *v* and",
+        "0.5 when `orientation` is *h*.",
+        "When `xref` is *container*, defaults to *1* when `orientation` is *v* and",
+        "0.5 when `orientation` is *h*.",
+        "Must be between *0* and *1* if `xref` is *container*",
+        "and between *-2* and *3* if `xref` is *paper*."
+      ].join(" ")
     },
     xref: {
       valType: "enumerated",
       dflt: "paper",
       values: ["container", "paper"],
-      editType: "layoutstyle"
+      editType: "layoutstyle",
+      description: [
+        "Sets the container `x` refers to.",
+        "*container* spans the entire `width` of the plot.",
+        "*paper* refers to the width of the plotting area only."
+      ].join(" ")
     },
     xanchor: {
       valType: "enumerated",
-      values: ["left", "center", "right"]
+      values: ["left", "center", "right"],
+      description: [
+        "Sets this color bar's horizontal position anchor.",
+        "This anchor binds the `x` position to the *left*, *center*",
+        "or *right* of the color bar.",
+        "Defaults to *left* when `orientation` is *v* and",
+        "*center* when `orientation` is *h*."
+      ].join(" ")
     },
     xpad: {
       valType: "number",
       min: 0,
-      dflt: 10
+      dflt: 10,
+      description: "Sets the amount of padding (in px) along the x direction."
     },
     y: {
-      valType: "number"
+      valType: "number",
+      description: [
+        "Sets the y position with respect to `yref` of the color bar (in plot fraction).",
+        "When `yref` is *paper*, defaults to 0.5 when `orientation` is *v* and",
+        "1.02 when `orientation` is *h*.",
+        "When `yref` is *container*, defaults to 0.5 when `orientation` is *v* and",
+        "1 when `orientation` is *h*.",
+        "Must be between *0* and *1* if `yref` is *container*",
+        "and between *-2* and *3* if `yref` is *paper*."
+      ].join(" ")
     },
     yref: {
       valType: "enumerated",
       dflt: "paper",
       values: ["container", "paper"],
-      editType: "layoutstyle"
+      editType: "layoutstyle",
+      description: [
+        "Sets the container `y` refers to.",
+        "*container* spans the entire `height` of the plot.",
+        "*paper* refers to the height of the plotting area only."
+      ].join(" ")
     },
     yanchor: {
       valType: "enumerated",
-      values: ["top", "middle", "bottom"]
+      values: ["top", "middle", "bottom"],
+      description: [
+        "Sets this color bar's vertical position anchor",
+        "This anchor binds the `y` position to the *top*, *middle*",
+        "or *bottom* of the color bar.",
+        "Defaults to *middle* when `orientation` is *v* and",
+        "*bottom* when `orientation` is *h*."
+      ].join(" ")
     },
     ypad: {
       valType: "number",
       min: 0,
-      dflt: 10
+      dflt: 10,
+      description: "Sets the amount of padding (in px) along the y direction."
     },
     // a possible line around the bar itself
     outlinecolor: layout_attributes_default4.linecolor,
@@ -18311,11 +20077,15 @@ var Plotly = (() => {
     borderwidth: {
       valType: "number",
       min: 0,
-      dflt: 0
+      dflt: 0,
+      description: [
+        "Sets the width (in px) or the border enclosing this color bar."
+      ].join(" ")
     },
     bgcolor: {
       valType: "color",
-      dflt: "rgba(0,0,0,0)"
+      dflt: "rgba(0,0,0,0)",
+      description: "Sets the color of padded area."
     },
     // tick and title properties named and function exactly as in axes
     tickmode: layout_attributes_default4.minor.tickmode,
@@ -18325,7 +20095,13 @@ var Plotly = (() => {
     tickvals: layout_attributes_default4.tickvals,
     ticktext: layout_attributes_default4.ticktext,
     ticks: extendFlat({}, layout_attributes_default4.ticks, { dflt: "" }),
-    ticklabeloverflow: extendFlat({}, layout_attributes_default4.ticklabeloverflow, {}),
+    ticklabeloverflow: extendFlat({}, layout_attributes_default4.ticklabeloverflow, {
+      description: [
+        "Determines how we handle tick labels that would overflow either the graph div or the domain of the axis.",
+        "The default value for inside tick labels is *hide past domain*.",
+        "In other cases the default is *hide past div*."
+      ].join(" ")
+    }),
     // ticklabelposition: not used directly, as values depend on orientation
     // left/right options are for x axes, and top/bottom options are for y axes
     ticklabelposition: {
@@ -18342,7 +20118,12 @@ var Plotly = (() => {
         "outside bottom",
         "inside bottom"
       ],
-      dflt: "outside"
+      dflt: "outside",
+      description: [
+        "Determines where tick labels are drawn relative to the ticks.",
+        "Left and right options are used when `orientation` is *h*,",
+        "top and bottom when `orientation` is *v*."
+      ].join(" ")
     },
     ticklen: layout_attributes_default4.ticklen,
     tickwidth: layout_attributes_default4.tickwidth,
@@ -18350,7 +20131,9 @@ var Plotly = (() => {
     ticklabelstep: layout_attributes_default4.ticklabelstep,
     showticklabels: layout_attributes_default4.showticklabels,
     labelalias: layout_attributes_default4.labelalias,
-    tickfont: font_attributes_default({}),
+    tickfont: font_attributes_default({
+      description: "Sets the color bar's tick label font"
+    }),
     tickangle: layout_attributes_default4.tickangle,
     tickformat: layout_attributes_default4.tickformat,
     tickformatstops: layout_attributes_default4.tickformatstops,
@@ -18364,17 +20147,26 @@ var Plotly = (() => {
     showexponent: layout_attributes_default4.showexponent,
     title: {
       text: {
-        valType: "string"
+        valType: "string",
+        description: "Sets the title of the color bar."
       },
-      font: font_attributes_default({}),
+      font: font_attributes_default({
+        description: "Sets this color bar's title font."
+      }),
       side: {
         valType: "enumerated",
-        values: ["right", "top", "bottom"]
+        values: ["right", "top", "bottom"],
+        description: [
+          "Determines the location of color bar's title",
+          "with respect to the color bar.",
+          "Defaults to *top* when `orientation` if *v* and ",
+          "defaults to *right* when `orientation` if *h*."
+        ].join(" ")
       }
     }
   }, "colorbars", "from-root");
 
-  // src/components/colorscale/attributes.js
+  // src/components/colorscale/attributes.ts
   var { scales: palettes } = scales_default;
   var paletteStr = sortObjectKeys(palettes);
   function code(s) {
@@ -18416,7 +20208,17 @@ var Plotly = (() => {
       attrs2.color = {
         valType: "color",
         arrayOk: true,
-        editType: editTypeOverride || "style"
+        editType: editTypeOverride || "style",
+        description: [
+          "Sets the",
+          context,
+          "color.",
+          "It accepts either a specific color",
+          "or an array of numbers that are mapped to the colorscale",
+          "relative to the max and min values of the array or relative to",
+          minmaxFull,
+          "if set."
+        ].join(" ")
       };
       if (opts.anim) {
         attrs2.color.anim = true;
@@ -18426,49 +20228,119 @@ var Plotly = (() => {
       valType: "boolean",
       dflt: true,
       editType: "calc",
-      impliedEdits: autoImpliedEdits
+      impliedEdits: autoImpliedEdits,
+      description: [
+        "Determines whether or not the color domain is computed",
+        "with respect to the input data (here " + colorAttrFull + ") or the bounds set in",
+        minmaxFull + effectDesc,
+        "Defaults to `false` when",
+        minmaxFull,
+        "are set by the user."
+      ].join(" ")
     };
     attrs2[min2] = {
       valType: "number",
       dflt: null,
       editType: editTypeOverride || "plot",
-      impliedEdits: minmaxImpliedEdits
+      impliedEdits: minmaxImpliedEdits,
+      description: [
+        "Sets the lower bound of the color domain." + effectDesc,
+        "Value should have the same units as",
+        colorAttrFull,
+        "and if set,",
+        maxFull,
+        "must be set as well."
+      ].join(" ")
     };
     attrs2[max2] = {
       valType: "number",
       dflt: null,
       editType: editTypeOverride || "plot",
-      impliedEdits: minmaxImpliedEdits
+      impliedEdits: minmaxImpliedEdits,
+      description: [
+        "Sets the upper bound of the color domain." + effectDesc,
+        "Value should have the same units as",
+        colorAttrFull,
+        "and if set,",
+        minFull,
+        "must be set as well."
+      ].join(" ")
     };
     attrs2[mid] = {
       valType: "number",
       dflt: null,
       editType: "calc",
-      impliedEdits: autoImpliedEdits
+      impliedEdits: autoImpliedEdits,
+      description: [
+        "Sets the mid-point of the color domain by scaling",
+        minFull,
+        "and/or",
+        maxFull,
+        "to be equidistant to this point." + effectDesc,
+        "Value should have the same units as",
+        colorAttrFull + ".",
+        "Has no effect when",
+        autoFull,
+        "is `false`."
+      ].join(" ")
     };
     attrs2.colorscale = {
       valType: "colorscale",
       editType: "calc",
       dflt: colorscaleDflt,
-      impliedEdits: { autocolorscale: false }
+      impliedEdits: { autocolorscale: false },
+      description: [
+        "Sets the colorscale." + effectDesc,
+        "The colorscale must be an array containing",
+        "arrays mapping a normalized value to an",
+        "rgb, rgba, hex, hsl, hsv, or named color string.",
+        "At minimum, a mapping for the lowest (0) and highest (1)",
+        "values are required. For example,",
+        "`[[0, 'rgb(0,0,255)'], [1, 'rgb(255,0,0)']]`.",
+        "To control the bounds of the colorscale in color space,",
+        "use",
+        minmaxFull + ".",
+        "Alternatively, `colorscale` may be a palette name string",
+        "of the following list: " + paletteStr + "."
+      ].join(" ")
     };
     attrs2.autocolorscale = {
       valType: "boolean",
       // gets overrode in 'heatmap' & 'surface' for backwards comp.
       dflt: opts.autoColorDflt === false ? false : true,
       editType: "calc",
-      impliedEdits: { colorscale: void 0 }
+      impliedEdits: { colorscale: void 0 },
+      description: [
+        "Determines whether the colorscale is a default palette (`autocolorscale: true`)",
+        "or the palette determined by",
+        code(contextHead + "colorscale") + "." + effectDesc,
+        "In case `colorscale` is unspecified or `autocolorscale` is true, the default",
+        "palette will be chosen according to whether numbers in the `color` array are",
+        "all positive, all negative or mixed."
+      ].join(" ")
     };
     attrs2.reversescale = {
       valType: "boolean",
       dflt: false,
-      editType: "plot"
+      editType: "plot",
+      description: [
+        "Reverses the color mapping if true." + effectDesc,
+        "If true,",
+        minFull,
+        "will correspond to the last color",
+        "in the array and",
+        maxFull,
+        "will correspond to the first color."
+      ].join(" ")
     };
     if (!noScale) {
       attrs2.showscale = {
         valType: "boolean",
         dflt: showScaleDflt,
-        editType: "calc"
+        editType: "calc",
+        description: [
+          "Determines whether or not a colorbar is displayed for this trace." + effectDesc
+        ].join(" ")
       };
       attrs2.colorbar = attributes_default6;
     }
@@ -18477,14 +20349,22 @@ var Plotly = (() => {
         valType: "subplotid",
         regex: counter("coloraxis"),
         dflt: null,
-        editType: "calc"
+        editType: "calc",
+        description: [
+          "Sets a reference to a shared color axis.",
+          "References to these shared color axes are *coloraxis*, *coloraxis2*, *coloraxis3*, etc.",
+          "Settings for these shared color axes are set in the layout, under",
+          "`layout.coloraxis`, `layout.coloraxis2`, etc.",
+          "Note that multiple color scales can be linked to the same color axis."
+        ].join(" ")
       };
     }
     return attrs2;
   }
 
-  // src/components/colorscale/layout_attributes.js
+  // src/components/colorscale/layout_attributes.ts
   var { scales: scales2 } = scales_default;
+  var msg = "Note that `autocolorscale` must be true for this attribute to work.";
   var layout_attributes_default5 = {
     editType: "calc",
     colorscale: {
@@ -18492,25 +20372,37 @@ var Plotly = (() => {
       sequential: {
         valType: "colorscale",
         dflt: scales2.Reds,
-        editType: "calc"
+        editType: "calc",
+        description: [
+          "Sets the default sequential colorscale for positive values.",
+          msg
+        ].join(" ")
       },
       sequentialminus: {
         valType: "colorscale",
         dflt: scales2.Blues,
-        editType: "calc"
+        editType: "calc",
+        description: [
+          "Sets the default sequential colorscale for negative values.",
+          msg
+        ].join(" ")
       },
       diverging: {
         valType: "colorscale",
         dflt: scales2.RdBu,
-        editType: "calc"
+        editType: "calc",
+        description: [
+          "Sets the default diverging colorscale.",
+          msg
+        ].join(" ")
       }
     },
     coloraxis: extendFlat({
-      // not really a 'subplot' attribute container,
-      // but this is the flag we use to denote attributes that
-      // support yaxis, yaxis2, yaxis3, ... counters
       _isSubplotObj: true,
-      editType: "calc"
+      editType: "calc",
+      description: [
+        ""
+      ].join(" ")
     }, colorScaleAttrs("", {
       colorAttr: "corresponding trace color array(s)",
       noColorAxis: true,
@@ -18518,15 +20410,15 @@ var Plotly = (() => {
     }))
   };
 
-  // src/components/colorscale/defaults.js
+  // src/components/colorscale/defaults.ts
   var import_fast_isnumeric15 = __toESM(require_fast_isnumeric(), 1);
 
-  // src/components/colorbar/has_colorbar.js
+  // src/components/colorbar/has_colorbar.ts
   function hasColorbar(container) {
     return isPlainObject2(container.colorbar);
   }
 
-  // src/plots/cartesian/clean_ticks.js
+  // src/plots/cartesian/clean_ticks.ts
   var import_fast_isnumeric14 = __toESM(require_fast_isnumeric(), 1);
   var ONEDAY3 = numerical_default.ONEDAY;
   var ONEWEEK = numerical_default.ONEWEEK;
@@ -18575,7 +20467,7 @@ var Plotly = (() => {
   };
   var clean_ticks_default = { dtick: dtick2, tick0: tick02 };
 
-  // src/plots/cartesian/tick_value_defaults.js
+  // src/plots/cartesian/tick_value_defaults.ts
   function handleTickValueDefaults(containerIn, containerOut, coerce3, axType, opts) {
     if (!opts) opts = {};
     var isMinor = opts.isMinor;
@@ -18612,7 +20504,7 @@ var Plotly = (() => {
     }
   }
 
-  // src/plots/cartesian/tick_mark_defaults.js
+  // src/plots/cartesian/tick_mark_defaults.ts
   function handleTickMarkDefaults(containerIn, containerOut, coerce3, options) {
     var isMinor = options.isMinor;
     var cIn = isMinor ? containerIn.minor || {} : containerIn;
@@ -18630,7 +20522,7 @@ var Plotly = (() => {
     }
   }
 
-  // src/plots/cartesian/show_dflt.js
+  // src/plots/cartesian/show_dflt.ts
   function getShowAttrDflt(containerIn) {
     var showAttrsAll = ["showexponent", "showtickprefix", "showticksuffix"];
     var showAttrs = showAttrsAll.filter(function(a) {
@@ -18644,7 +20536,7 @@ var Plotly = (() => {
     }
   }
 
-  // src/plots/array_container_defaults.js
+  // src/plots/array_container_defaults.ts
   function handleArrayContainerDefaults(parentObjIn, parentObjOut, opts) {
     var name6 = opts.name;
     var inclusionAttr = opts.inclusionAttr || "visible";
@@ -18683,7 +20575,7 @@ var Plotly = (() => {
     return contOut;
   }
 
-  // src/plots/cartesian/tick_label_defaults.js
+  // src/plots/cartesian/tick_label_defaults.ts
   var { contrast } = color_default;
   function handleTickLabelDefaults(containerIn, containerOut, coerce3, axType, options) {
     if (!options) options = {};
@@ -18698,15 +20590,15 @@ var Plotly = (() => {
       if (!options.noTicklabelstandoff) {
         coerce3("ticklabelstandoff");
       }
-      var font3 = options.font || {};
+      var font5 = options.font || {};
       var contColor = containerOut.color;
       var position = containerOut.ticklabelposition || "";
       var dfltFontColor = position.indexOf("inside") !== -1 ? contrast(options.bgColor) : (
         // as with title.font.color, inherit axis.color only if one was
         // explicitly provided
-        contColor && contColor !== layout_attributes_default4.color.dflt ? contColor : font3.color
+        contColor && contColor !== layout_attributes_default4.color.dflt ? contColor : font5.color
       );
-      coerceFont(coerce3, "tickfont", font3, { overrideDflt: {
+      coerceFont(coerce3, "tickfont", font5, { overrideDflt: {
         color: dfltFontColor
       } });
       if (!options.noTicklabelstep && axType !== "multicategory" && axType !== "log") {
@@ -18751,7 +20643,7 @@ var Plotly = (() => {
     }
   }
 
-  // src/plots/cartesian/prefix_suffix_defaults.js
+  // src/plots/cartesian/prefix_suffix_defaults.ts
   function handlePrefixSuffixDefaults(containerIn, containerOut, coerce3, axType, options) {
     if (!options) options = {};
     var tickSuffixDflt = options.tickSuffixDflt;
@@ -18762,7 +20654,7 @@ var Plotly = (() => {
     if (tickSuffix) coerce3("showticksuffix", showAttrDflt);
   }
 
-  // src/components/colorbar/defaults.js
+  // src/components/colorbar/defaults.ts
   function colorbarDefaults(containerIn, containerOut, layout) {
     var colorbarOut = plot_template_default.newContainer(containerOut, "colorbar");
     var colorbarIn = containerIn.colorbar || {};
@@ -18850,23 +20742,23 @@ var Plotly = (() => {
     }, "ticklabelposition");
     coerce3("ticklabeloverflow", ticklabelposition.indexOf("inside") !== -1 ? "hide past domain" : "hide past div");
     handleTickValueDefaults(colorbarIn, colorbarOut, coerce3, "linear");
-    var font3 = layout.font;
+    var font5 = layout.font;
     var opts = {
       noAutotickangles: true,
       noTicklabelshift: true,
       noTicklabelstandoff: true,
       outerTicks: false,
-      font: font3
+      font: font5
     };
     if (ticklabelposition.indexOf("inside") !== -1) {
       opts.bgColor = "black";
     }
     handlePrefixSuffixDefaults(colorbarIn, colorbarOut, coerce3, "linear", opts);
     handleTickLabelDefaults(colorbarIn, colorbarOut, coerce3, "linear", opts);
-    handleTickMarkDefaults(colorbarIn, colorbarOut, coerce3, "linear", opts);
+    handleTickMarkDefaults(colorbarIn, colorbarOut, coerce3, opts);
     coerce3("title.text", layout._dfltTitle.colorbar);
-    var tickFont = colorbarOut.showticklabels ? colorbarOut.tickfont : font3;
-    var dfltTitleFont = extendFlat({}, font3, {
+    var tickFont = colorbarOut.showticklabels ? colorbarOut.tickfont : font5;
+    var dfltTitleFont = extendFlat({}, font5, {
       family: tickFont.family,
       size: bigFont(tickFont.size)
     });
@@ -18874,7 +20766,7 @@ var Plotly = (() => {
     coerce3("title.side", isVertical3 ? "top" : "right");
   }
 
-  // src/components/colorscale/defaults.js
+  // src/components/colorscale/defaults.ts
   var { isValid: isValidScale3 } = scales_default;
   function npMaybe(parentCont, prefix) {
     var containerStr = prefix.slice(0, prefix.length - 1);
@@ -18944,7 +20836,7 @@ var Plotly = (() => {
     }
   }
 
-  // src/components/colorscale/layout_defaults.js
+  // src/components/colorscale/layout_defaults.ts
   function supplyLayoutDefaults(layoutIn, layoutOut) {
     function coerce3(attr2, dflt) {
       return lib_default.coerce(layoutIn, layoutOut, layout_attributes_default5, attr2, dflt);
@@ -18973,7 +20865,7 @@ var Plotly = (() => {
     }
   }
 
-  // src/components/colorscale/cross_trace_defaults.js
+  // src/components/colorscale/cross_trace_defaults.ts
   var { hasColorscale: hasColorscale2, extractOpts: extractOpts2 } = helpers_default;
   function crossTraceDefaults(fullData, fullLayout) {
     function replace(cont, k2) {
@@ -19027,7 +20919,7 @@ var Plotly = (() => {
     }
   }
 
-  // src/components/colorscale/calc.js
+  // src/components/colorscale/calc.ts
   var import_fast_isnumeric16 = __toESM(require_fast_isnumeric(), 1);
   var { extractOpts: extractOpts3 } = helpers_default;
   function calc(gd, trace, opts) {
@@ -19086,7 +20978,7 @@ var Plotly = (() => {
     }
   }
 
-  // src/components/colorscale/index.js
+  // src/components/colorscale/index.ts
   var colorscale_default = {
     moduleType: "component",
     name: "colorscale",
@@ -19110,7 +21002,7 @@ var Plotly = (() => {
     makeColorScaleFuncFromTrace: helpers_default.makeColorScaleFuncFromTrace
   };
 
-  // src/traces/scatter/subtypes.js
+  // src/traces/scatter/subtypes.ts
   var subtypes_default = {
     hasLines: function(trace) {
       return trace.visible && trace.mode && trace.mode.indexOf("lines") !== -1;
@@ -19128,7 +21020,7 @@ var Plotly = (() => {
     }
   };
 
-  // src/traces/scatter/make_bubble_size_func.js
+  // src/traces/scatter/make_bubble_size_func.ts
   var import_fast_isnumeric17 = __toESM(require_fast_isnumeric(), 1);
   function makeBubbleSizeFn(trace, factor) {
     if (!factor) {
@@ -19148,7 +21040,7 @@ var Plotly = (() => {
     };
   }
 
-  // src/components/fx/helpers.js
+  // src/components/fx/helpers.ts
   var getSubplot = function(trace) {
     return trace.subplot || trace.xaxis + trace.yaxis || trace.geo;
   };
@@ -19316,7 +21208,7 @@ var Plotly = (() => {
   };
   var helpers_default2 = { getSubplot, isTraceInSubplots, flat, p2c, getDistanceFunction, getClosest, inbox, quadrature, makeEventData, appendArrayPointValue, appendArrayMultiPointValues, isUnifiedHover, isXYhover };
 
-  // src/components/drawing/symbol_defs.js
+  // src/components/drawing/symbol_defs.ts
   var import_parse_svg_path = __toESM(require_parse_svg_path(), 1);
   function round(x, n) {
     return n ? Math.round(x * (n = Math.pow(10, n))) / n : Math.round(x);
@@ -19994,7 +21886,7 @@ var Plotly = (() => {
     return str;
   }
 
-  // src/components/drawing/index.js
+  // src/components/drawing/index.ts
   function d3Round(x, n) {
     return n ? Math.round(x * (n = Math.pow(10, n))) / n : Math.round(x);
   }
@@ -20002,16 +21894,16 @@ var Plotly = (() => {
   var tester;
   var testref;
   var LINE_SPACING2 = alignment_default.LINE_SPACING;
-  function font2(s, font3) {
-    var variant = font3.variant;
-    var style6 = font3.style;
-    var weight = font3.weight;
-    var color3 = font3.color;
-    var size = font3.size;
-    var family = font3.family;
-    var shadow = font3.shadow;
-    var lineposition = font3.lineposition;
-    var textcase = font3.textcase;
+  function font2(s, font5) {
+    var variant = font5.variant;
+    var style6 = font5.style;
+    var weight = font5.weight;
+    var color3 = font5.color;
+    var size = font5.size;
+    var family = font5.family;
+    var shadow = font5.shadow;
+    var lineposition = font5.lineposition;
+    var textcase = font5.textcase;
     if (family) s.style("font-family", family);
     if (size + 1) s.style("font-size", size + "px");
     if (color3) s.call(color_default.fill, color3);
@@ -20510,7 +22402,6 @@ var Plotly = (() => {
         width: width + "px",
         height: height + "px",
         patternUnits: "userSpaceOnUse",
-        // for legends scale down patterns just a bit so that default size (i.e 8) nicely fit in small icons
         patternTransform: isLegend ? "scale(0.8)" : ""
       });
       if (bgcolor) {
@@ -20588,8 +22479,7 @@ var Plotly = (() => {
       fillColor = marker2.outliercolor;
     } else {
       var markerLineWidth2 = (markerLine2 || {}).width;
-      lineWidth = (d.mlw + 1 || markerLineWidth2 + 1 || // TODO: we need the latter for legends... can we get rid of it?
-      (d.trace ? (d.trace.marker.line || {}).width : 0) + 1) - 1 || 0;
+      lineWidth = (d.mlw + 1 || markerLineWidth2 + 1 || (d.trace ? (d.trace.marker.line || {}).width : 0) + 1) - 1 || 0;
       if ("mlc" in d) lineColor = d.mlcc = fns.lineScale(d.mlc);
       else if (isArrayOrTypedArray(markerLine2.color)) lineColor = color_default.defaultLine;
       else lineColor = markerLine2.color;
@@ -21059,8 +22949,8 @@ var Plotly = (() => {
       if (hash) {
         var x = +innerNode.getAttribute("x") || 0;
         var y = +innerNode.getAttribute("y") || 0;
-        var transform2 = innerNode.getAttribute("transform");
-        if (!transform2) {
+        var transform = innerNode.getAttribute("transform");
+        if (!transform) {
           var innerBB = bBox(innerNode, false, hash);
           if (x) {
             innerBB.left += x;
@@ -21072,7 +22962,7 @@ var Plotly = (() => {
           }
           return innerBB;
         }
-        hash += "~" + x + "~" + y + "~" + transform2;
+        hash += "~" + x + "~" + y + "~" + transform;
         out = savedBBoxes[hash];
         if (out) return extendFlat({}, out);
       }
@@ -21122,8 +23012,8 @@ var Plotly = (() => {
   function getTranslate(element) {
     var re3 = /.*\btranslate\((-?\d*\.?\d*)[^-\d]*(-?\d*\.?\d*)[^\d].*/;
     var getter = element.attr ? "attr" : "getAttribute";
-    var transform2 = element[getter]("transform") || "";
-    var translate = transform2.replace(re3, function(match, p1, p2) {
+    var transform = element[getter]("transform") || "";
+    var translate = transform.replace(re3, function(match, p1, p2) {
       return [p1, p2].join(" ");
     }).split(" ");
     return {
@@ -21135,27 +23025,27 @@ var Plotly = (() => {
     var re3 = /(\btranslate\(.*?\);?)/;
     var getter = element.attr ? "attr" : "getAttribute";
     var setter = element.attr ? "attr" : "setAttribute";
-    var transform2 = element[getter]("transform") || "";
+    var transform = element[getter]("transform") || "";
     x = x || 0;
     y = y || 0;
-    transform2 = transform2.replace(re3, "").trim();
-    transform2 += strTranslate(x, y);
-    transform2 = transform2.trim();
-    element[setter]("transform", transform2);
-    return transform2;
+    transform = transform.replace(re3, "").trim();
+    transform += strTranslate(x, y);
+    transform = transform.trim();
+    element[setter]("transform", transform);
+    return transform;
   }
   function setScale(element, x, y) {
     var re3 = /(\bscale\(.*?\);?)/;
     var getter = element.attr ? "attr" : "getAttribute";
     var setter = element.attr ? "attr" : "setAttribute";
-    var transform2 = element[getter]("transform") || "";
+    var transform = element[getter]("transform") || "";
     x = x || 1;
     y = y || 1;
-    transform2 = transform2.replace(re3, "").trim();
-    transform2 += "scale(" + x + "," + y + ")";
-    transform2 = transform2.trim();
-    element[setter]("transform", transform2);
-    return transform2;
+    transform = transform.replace(re3, "").trim();
+    transform += "scale(" + x + "," + y + ")";
+    transform = transform.trim();
+    element[setter]("transform", transform);
+    return transform;
   }
   var SCALE_RE = /\s*sc.*/;
   function setPointGroupScale(selection2, xScale, yScale) {
@@ -21248,11 +23138,9 @@ var Plotly = (() => {
         var north = trace._geo.project([
           lon,
           lat + 1e-5
-          // epsilon
         ]);
         var east = trace._geo.project([
           lon + 1e-5,
-          // epsilon
           lat
         ]);
         var u = atan2(east[1] - y, east[0] - x);
@@ -21300,7 +23188,7 @@ var Plotly = (() => {
     return angle;
   }
 
-  // src/components/titles/index.js
+  // src/components/titles/index.ts
   function d3Round2(x, n) {
     return n ? Math.round(x * (n = Math.pow(10, n))) / n : Math.round(x);
   }
@@ -21316,7 +23204,7 @@ var Plotly = (() => {
     var traceIndex = options.traceIndex;
     var avoid = options.avoid || {};
     var attributes4 = options.attributes;
-    var transform2 = options.transform;
+    var transform = options.transform;
     var group = options.containerGroup;
     var opacity = 1;
     var title = cont.title;
@@ -21404,16 +23292,16 @@ var Plotly = (() => {
       var titleEl = titleAndSubtitleEls.title;
       var subtitleEl2 = titleAndSubtitleEls.subtitle;
       var transformVal;
-      if (!transform2 && hColorbarMoveTitle) {
-        transform2 = {};
+      if (!transform && hColorbarMoveTitle) {
+        transform = {};
       }
-      if (transform2) {
+      if (transform) {
         transformVal = "";
-        if (transform2.rotate) {
-          transformVal += "rotate(" + [transform2.rotate, attributes4.x, attributes4.y] + ")";
+        if (transform.rotate) {
+          transformVal += "rotate(" + [transform.rotate, attributes4.x, attributes4.y] + ")";
         }
-        if (transform2.offset || hColorbarMoveTitle) {
-          transformVal += strTranslate(0, (transform2.offset || 0) - (hColorbarMoveTitle || 0));
+        if (transform.offset || hColorbarMoveTitle) {
+          transformVal += strTranslate(0, (transform.offset || 0) - (hColorbarMoveTitle || 0));
         }
       } else {
         transformVal = null;
@@ -21513,8 +23401,8 @@ var Plotly = (() => {
             right: [shift, 0],
             top: [0, -shift],
             bottom: [0, shift]
-          }[avoid.side];
-          titleGroup.attr("transform", strTranslate(shiftTemplate[0], shiftTemplate[1]));
+          };
+          titleGroup.attr("transform", strTranslate(shiftTemplate[avoid.side][0], shiftTemplate[avoid.side][1]));
         }
       }
     }
@@ -21571,7 +23459,7 @@ var Plotly = (() => {
     SUBTITLE_PADDING_MATHJAX_EM
   };
 
-  // src/plots/cartesian/axis_autotype.js
+  // src/plots/cartesian/axis_autotype.ts
   var import_fast_isnumeric20 = __toESM(require_fast_isnumeric(), 1);
   var { BADNUM: BADNUM6 } = numerical_default;
   var round2 = Math.round;
@@ -21650,7 +23538,7 @@ var Plotly = (() => {
     return isArrayOrTypedArray(a[0]) && isArrayOrTypedArray(a[1]);
   }
 
-  // src/plots/cartesian/autorange.js
+  // src/plots/cartesian/autorange.ts
   var import_fast_isnumeric21 = __toESM(require_fast_isnumeric(), 1);
   var { FP_SAFE } = numerical_default;
   var getFromId2 = axis_ids_default.getFromId;
@@ -22095,7 +23983,7 @@ var Plotly = (() => {
     return [min2, max2];
   }
 
-  // src/plots/cartesian/set_convert.js
+  // src/plots/cartesian/set_convert.ts
   var import_fast_isnumeric22 = __toESM(require_fast_isnumeric(), 1);
   function d3Round3(x, n) {
     return n ? Math.round(x * (n = Math.pow(10, n))) / n : Math.round(x);
@@ -22816,7 +24704,7 @@ var Plotly = (() => {
     delete ax._forceTick0;
   }
 
-  // src/plots/cartesian/axes.js
+  // src/plots/cartesian/axes.ts
   function d3Round4(x, n) {
     return n ? Math.round(x * (n = Math.pow(10, n))) / n : Math.round(x);
   }
@@ -25214,17 +27102,17 @@ var Plotly = (() => {
         var thisLabel = select_default2(this);
         var mathjaxGroup = thisLabel.select(".text-math-group");
         var anchor = labelFns.anchorFn(d, angle);
-        var transform2 = opts.transFn.call(thisLabel.node(), d) + ((0, import_fast_isnumeric23.default)(angle) && +angle !== 0 ? " rotate(" + angle + "," + labelFns.xFn(d) + "," + (labelFns.yFn(d) - d.fontSize / 2) + ")" : "");
+        var transform = opts.transFn.call(thisLabel.node(), d) + ((0, import_fast_isnumeric23.default)(angle) && +angle !== 0 ? " rotate(" + angle + "," + labelFns.xFn(d) + "," + (labelFns.yFn(d) - d.fontSize / 2) + ")" : "");
         var nLines = svg_text_utils_default.lineCount(thisLabel);
         var lineHeight = LINE_SPACING3 * d.fontSize;
         var anchorHeight = labelFns.heightFn(d, (0, import_fast_isnumeric23.default)(angle) ? +angle : 0, (nLines - 1) * lineHeight);
         if (anchorHeight) {
-          transform2 += strTranslate(0, anchorHeight);
+          transform += strTranslate(0, anchorHeight);
         }
         if (mathjaxGroup.empty()) {
           var thisText = thisLabel.select("text");
           thisText.attr({
-            transform: transform2,
+            transform,
             "text-anchor": anchor
           });
           thisText.style("display", null);
@@ -25234,7 +27122,7 @@ var Plotly = (() => {
         } else {
           var mjWidth = bBox(mathjaxGroup.node()).width;
           var mjShift = mjWidth * { end: -0.5, start: 0.5 }[anchor];
-          mathjaxGroup.attr("transform", transform2 + strTranslate(mjShift, 0));
+          mathjaxGroup.attr("transform", transform + strTranslate(mjShift, 0));
         }
       });
     }
@@ -25612,14 +27500,14 @@ var Plotly = (() => {
       }
     }
     var pos = axes.getPxPosition(gd, ax);
-    var transform2, x, y;
+    var transform, x, y;
     if (axLetter === "x") {
       x = ax._offset + ax._length / 2;
       y = ax.side === "top" ? pos - titleStandoff : pos + titleStandoff;
     } else {
       y = ax._offset + ax._length / 2;
       x = ax.side === "right" ? pos + titleStandoff : pos - titleStandoff;
-      transform2 = { rotate: "-90", offset: 0 };
+      transform = { rotate: "-90", offset: 0 };
     }
     var avoid;
     if (ax.type !== "multicategory") {
@@ -25643,7 +27531,7 @@ var Plotly = (() => {
       propName: ax._name + ".title.text",
       placeholder: fullLayout._dfltTitle[axLetter],
       avoid,
-      transform: transform2,
+      transform,
       attributes: { x, y, "text-anchor": "middle" }
     });
   }
@@ -25667,7 +27555,7 @@ var Plotly = (() => {
     var axLetter = ax._id.charAt(0);
     var counterLetter = axes.counterLetter(ax._id);
     var zeroPosition = ax._offset + (Math.abs(rng[0]) < Math.abs(rng[1]) === (axLetter === "x") ? 0 : ax._length);
-    function lineNearZero(ax2) {
+    function lineNearZero(ax2, ..._rest) {
       if (!ax2.showline || !ax2.linewidth) return false;
       var tolerance = Math.max((ax2.linewidth + ax.zerolinewidth) / 2, 1);
       function closeEnough(pos2) {
@@ -25899,7 +27787,7 @@ var Plotly = (() => {
   }
   var axes_default = axes;
 
-  // src/plots/cartesian/autorange_options_defaults.js
+  // src/plots/cartesian/autorange_options_defaults.ts
   function handleAutorangeOptionsDefaults(coerce3, autorange, range) {
     var minRange, maxRange;
     if (range) {
@@ -25914,7 +27802,7 @@ var Plotly = (() => {
     coerce3("autorangeoptions.include");
   }
 
-  // src/plots/cartesian/range_defaults.js
+  // src/plots/cartesian/range_defaults.ts
   function handleRangeDefaults(containerIn, containerOut, coerce3, options) {
     var axTemplate = containerOut._template || {};
     var axType = containerOut.type || axTemplate.type || "-";
@@ -25952,11 +27840,11 @@ var Plotly = (() => {
     containerOut.cleanRange();
   }
 
-  // src/components/dragelement/index.js
+  // src/components/dragelement/index.ts
   var import_mouse_event_offset = __toESM(require_mouse_event_offset(), 1);
   var import_has_passive_events = __toESM(require_has_passive_events(), 1);
 
-  // src/components/dragelement/unhover.js
+  // src/components/dragelement/unhover.ts
   var { getGraphDiv: getGraphDiv2 } = dom_default;
   var unhover = {};
   unhover.wrapped = function(gd, evt, subplot) {
@@ -25986,7 +27874,7 @@ var Plotly = (() => {
   };
   var unhover_default = unhover;
 
-  // src/components/dragelement/align.js
+  // src/components/dragelement/align.ts
   function align2(v, dv2, v0, v1, anchor) {
     var vmin = (v - v0) / (v1 - v0);
     var vmax = vmin + dv2 / (v1 - v0);
@@ -25999,7 +27887,7 @@ var Plotly = (() => {
     return vc;
   }
 
-  // src/components/dragelement/cursor.js
+  // src/components/dragelement/cursor.ts
   var cursorset = [
     ["sw-resize", "s-resize", "se-resize"],
     ["w-resize", "move", "e-resize"],
@@ -26017,7 +27905,7 @@ var Plotly = (() => {
     return cursorset[y][x];
   }
 
-  // src/components/dragelement/index.js
+  // src/components/dragelement/index.ts
   var hasHover = typeof matchMedia === "function" ? !matchMedia("(hover: none)").matches : typeof window !== "undefined";
   var dragElement = {};
   dragElement.align = align2;
@@ -26176,11 +28064,11 @@ var Plotly = (() => {
     cover.className = "dragcover";
     var cStyle = cover.style;
     cStyle.position = "fixed";
-    cStyle.left = 0;
-    cStyle.right = 0;
-    cStyle.top = 0;
-    cStyle.bottom = 0;
-    cStyle.zIndex = 999999999;
+    cStyle.left = "0";
+    cStyle.right = "0";
+    cStyle.top = "0";
+    cStyle.bottom = "0";
+    cStyle.zIndex = "999999999";
     cStyle.background = "none";
     document.body.appendChild(cover);
     return cover;
@@ -26194,10 +28082,10 @@ var Plotly = (() => {
   }
   var dragelement_default = dragElement;
 
-  // src/components/fx/hover.js
+  // src/components/fx/hover.ts
   var import_fast_isnumeric24 = __toESM(require_fast_isnumeric(), 1);
 
-  // src/lib/setcursor.js
+  // src/lib/setcursor.ts
   function setCursor(el3, csr) {
     (el3.attr("class") || "").split(" ").forEach(function(cls) {
       if (cls.indexOf("cursor-") === 0) el3.classed(cls, false);
@@ -26205,7 +28093,7 @@ var Plotly = (() => {
     if (csr) el3.classed("cursor-" + csr, true);
   }
 
-  // src/lib/override_cursor.js
+  // src/lib/override_cursor.ts
   var STASHATTR = "data-savedcursor";
   var NO_CURSOR = "!!";
   function overrideCursor(el3, csr) {
@@ -26231,7 +28119,7 @@ var Plotly = (() => {
     }
   }
 
-  // src/components/legend/attributes.js
+  // src/components/legend/attributes.ts
   var attributes_default7 = {
     // not really a 'subplot' attribute container,
     // but this is the flag we use to denote attributes that
@@ -26240,160 +28128,292 @@ var Plotly = (() => {
     visible: {
       valType: "boolean",
       dflt: true,
-      editType: "legend"
+      editType: "legend",
+      description: [
+        "Determines whether or not this legend is visible."
+      ].join(" ")
     },
     bgcolor: {
       valType: "color",
-      editType: "legend"
+      editType: "legend",
+      description: [
+        "Sets the legend background color.",
+        "Defaults to `layout.paper_bgcolor`."
+      ].join(" ")
     },
     bordercolor: {
       valType: "color",
       dflt: attributes_default3.defaultLine,
-      editType: "legend"
+      editType: "legend",
+      description: "Sets the color of the border enclosing the legend."
     },
     maxheight: {
       valType: "number",
       min: 0,
-      editType: "legend"
+      editType: "legend",
+      description: [
+        "Sets the max height (in px) of the legend, or max height ratio (reference height * ratio) if less than or equal to 1.",
+        "Default value is: 0.5 for horizontal legends; 1 for vertical legends. The minimum allowed height is 30px.",
+        "For a ratio of 0.5, the legend will take up to 50% of the reference height before displaying a scrollbar.",
+        "The reference height is the full layout height with the following exception: vertically oriented legends with",
+        'a `yref` of `"paper", located to the side of the plot. In this case, the reference height is the plot height.'
+      ].join(" ")
     },
     borderwidth: {
       valType: "number",
       min: 0,
       dflt: 0,
-      editType: "legend"
+      editType: "legend",
+      description: "Sets the width (in px) of the border enclosing the legend."
     },
     font: font_attributes_default({
-      editType: "legend"
+      editType: "legend",
+      description: "Sets the font used to text the legend items."
     }),
     grouptitlefont: font_attributes_default({
-      editType: "legend"
+      editType: "legend",
+      description: [
+        "Sets the font for group titles in legend.",
+        "Defaults to `legend.font` with its size increased about 10%."
+      ].join(" ")
     }),
     orientation: {
       valType: "enumerated",
       values: ["v", "h"],
       dflt: "v",
-      editType: "legend"
+      editType: "legend",
+      description: "Sets the orientation of the legend."
     },
     traceorder: {
       valType: "flaglist",
       flags: ["reversed", "grouped"],
       extras: ["normal"],
-      editType: "legend"
+      editType: "legend",
+      description: [
+        "Determines the order at which the legend items are displayed.",
+        "If *normal*, the items are displayed top-to-bottom in the same",
+        "order as the input data.",
+        "If *reversed*, the items are displayed in the opposite order",
+        "as *normal*.",
+        "If *grouped*, the items are displayed in groups",
+        "(when a trace `legendgroup` is provided).",
+        "if *grouped+reversed*, the items are displayed in the opposite order",
+        "as *grouped*."
+      ].join(" ")
     },
     tracegroupgap: {
       valType: "number",
       min: 0,
       dflt: 10,
-      editType: "legend"
+      editType: "legend",
+      description: [
+        "Sets the amount of vertical space (in px) between legend groups."
+      ].join(" ")
     },
     entrywidth: {
       valType: "number",
       min: 0,
-      editType: "legend"
+      editType: "legend",
+      description: [
+        "Sets the width (in px or fraction) of the legend.",
+        "Use 0 to size the entry based on the text width,",
+        "when `entrywidthmode` is set to *pixels*."
+      ].join(" ")
     },
     entrywidthmode: {
       valType: "enumerated",
       values: ["fraction", "pixels"],
       dflt: "pixels",
-      editType: "legend"
+      editType: "legend",
+      description: "Determines what entrywidth means."
     },
     indentation: {
       valType: "number",
       min: -15,
       dflt: 0,
-      editType: "legend"
+      editType: "legend",
+      description: "Sets the indentation (in px) of the legend entries."
     },
     itemsizing: {
       valType: "enumerated",
       values: ["trace", "constant"],
       dflt: "trace",
-      editType: "legend"
+      editType: "legend",
+      description: [
+        "Determines if the legend items symbols scale with their corresponding *trace* attributes",
+        "or remain *constant* independent of the symbol size on the graph."
+      ].join(" ")
     },
     itemwidth: {
       valType: "number",
       min: 30,
       dflt: 30,
-      editType: "legend"
+      editType: "legend",
+      description: "Sets the width (in px) of the legend item symbols (the part other than the title.text)."
     },
     itemclick: {
       valType: "enumerated",
       values: ["toggle", "toggleothers", false],
       dflt: "toggle",
-      editType: "legend"
+      editType: "legend",
+      description: [
+        "Determines the behavior on legend item click.",
+        "*toggle* toggles the visibility of the item clicked on the graph.",
+        "*toggleothers* makes the clicked item the sole visible item on the graph.",
+        "*false* disables legend item click interactions."
+      ].join(" ")
     },
     itemdoubleclick: {
       valType: "enumerated",
       values: ["toggle", "toggleothers", false],
       dflt: "toggleothers",
-      editType: "legend"
+      editType: "legend",
+      description: [
+        "Determines the behavior on legend item double-click.",
+        "*toggle* toggles the visibility of the item clicked on the graph.",
+        "*toggleothers* makes the clicked item the sole visible item on the graph.",
+        "*false* disables legend item double-click interactions."
+      ].join(" ")
     },
     groupclick: {
       valType: "enumerated",
       values: ["toggleitem", "togglegroup"],
       dflt: "togglegroup",
-      editType: "legend"
+      editType: "legend",
+      description: [
+        "Determines the behavior on legend group item click.",
+        "*toggleitem* toggles the visibility of the individual item clicked on the graph.",
+        "*togglegroup* toggles the visibility of all items in the same legendgroup as the item clicked on the graph."
+      ].join(" ")
     },
     x: {
       valType: "number",
-      editType: "legend"
+      editType: "legend",
+      description: [
+        "Sets the x position with respect to `xref` (in normalized coordinates) of the legend.",
+        "When `xref` is *paper*, defaults to *1.02* for vertical legends and",
+        "defaults to *0* for horizontal legends.",
+        "When `xref` is *container*, defaults to *1* for vertical legends and",
+        "defaults to *0* for horizontal legends.",
+        "Must be between *0* and *1* if `xref` is *container*.",
+        "and between *-2* and *3* if `xref` is *paper*."
+      ].join(" ")
     },
     xref: {
       valType: "enumerated",
       dflt: "paper",
       values: ["container", "paper"],
-      editType: "layoutstyle"
+      editType: "layoutstyle",
+      description: [
+        "Sets the container `x` refers to.",
+        "*container* spans the entire `width` of the plot.",
+        "*paper* refers to the width of the plotting area only."
+      ].join(" ")
     },
     xanchor: {
       valType: "enumerated",
       values: ["auto", "left", "center", "right"],
       dflt: "left",
-      editType: "legend"
+      editType: "legend",
+      description: [
+        "Sets the legend's horizontal position anchor.",
+        "This anchor binds the `x` position to the *left*, *center*",
+        "or *right* of the legend.",
+        "Value *auto* anchors legends to the right for `x` values greater than or equal to 2/3,",
+        "anchors legends to the left for `x` values less than or equal to 1/3 and",
+        "anchors legends with respect to their center otherwise."
+      ].join(" ")
     },
     y: {
       valType: "number",
-      editType: "legend"
+      editType: "legend",
+      description: [
+        "Sets the y position with respect to `yref` (in normalized coordinates) of the legend.",
+        "When `yref` is *paper*, defaults to *1* for vertical legends,",
+        "defaults to *-0.1* for horizontal legends on graphs w/o range sliders and",
+        "defaults to *1.1* for horizontal legends on graph with one or multiple range sliders.",
+        "When `yref` is *container*, defaults to *1*.",
+        "Must be between *0* and *1* if `yref` is *container*",
+        "and between *-2* and *3* if `yref` is *paper*."
+      ].join(" ")
     },
     yref: {
       valType: "enumerated",
       dflt: "paper",
       values: ["container", "paper"],
-      editType: "layoutstyle"
+      editType: "layoutstyle",
+      description: [
+        "Sets the container `y` refers to.",
+        "*container* spans the entire `height` of the plot.",
+        "*paper* refers to the height of the plotting area only."
+      ].join(" ")
     },
     yanchor: {
       valType: "enumerated",
       values: ["auto", "top", "middle", "bottom"],
-      editType: "legend"
+      editType: "legend",
+      description: [
+        "Sets the legend's vertical position anchor.",
+        "This anchor binds the `y` position to the *top*, *middle*",
+        "or *bottom* of the legend.",
+        "Value *auto* anchors legends at their bottom for `y` values less than or equal to 1/3,",
+        "anchors legends to at their top for `y` values greater than or equal to 2/3 and",
+        "anchors legends with respect to their middle otherwise."
+      ].join(" ")
     },
     uirevision: {
       valType: "any",
-      editType: "none"
+      editType: "none",
+      description: [
+        "Controls persistence of legend-driven changes in trace and pie label",
+        "visibility. Defaults to `layout.uirevision`."
+      ].join(" ")
     },
     valign: {
       valType: "enumerated",
       values: ["top", "middle", "bottom"],
       dflt: "middle",
-      editType: "legend"
+      editType: "legend",
+      description: [
+        "Sets the vertical alignment of the symbols with respect to their associated text."
+      ].join(" ")
     },
     title: {
       text: {
         valType: "string",
         dflt: "",
-        editType: "legend"
+        editType: "legend",
+        description: [
+          "Sets the title of the legend."
+        ].join(" ")
       },
       font: font_attributes_default({
-        editType: "legend"
+        editType: "legend",
+        description: [
+          "Sets this legend's title font.",
+          "Defaults to `legend.font` with its size increased about 20%."
+        ].join(" ")
       }),
       side: {
         valType: "enumerated",
         values: ["top", "left", "top left", "top center", "top right"],
-        editType: "legend"
+        editType: "legend",
+        description: [
+          "Determines the location of legend's title",
+          "with respect to the legend items.",
+          "Defaulted to *top* with `orientation` is *h*.",
+          "Defaulted to *left* with `orientation` is *v*.",
+          "The *top left* options could be used to expand",
+          "top center and top right are for horizontal alignment",
+          "legend area in both x and y sides."
+        ].join(" ")
       },
       editType: "legend"
     },
     editType: "legend"
   };
 
-  // src/components/legend/helpers.js
+  // src/components/legend/helpers.ts
   var isGrouped = function isGrouped2(legendLayout) {
     return (legendLayout.traceorder || "").indexOf("grouped") !== -1;
   };
@@ -26405,7 +28425,7 @@ var Plotly = (() => {
   };
   var helpers_default3 = { isGrouped, isVertical, isReversed };
 
-  // src/components/legend/defaults.js
+  // src/components/legend/defaults.ts
   function groupDefaults(legendId, layoutIn, layoutOut, fullData) {
     var containerIn = layoutIn[legendId] || {};
     var containerOut = plot_template_default.newContainer(layoutOut, legendId);
@@ -26438,7 +28458,6 @@ var Plotly = (() => {
     function isPieWithLegendArray(trace2) {
       return registry_default.traceIs(trace2, "pie-like") && trace2._length != null && (Array.isArray(trace2.legend) || Array.isArray(trace2.showlegend));
     }
-    ;
     fullData.filter(isPieWithLegendArray).forEach(function(trace2) {
       if (trace2.visible) {
         legendTraceCount++;
@@ -26829,56 +28848,7 @@ var Plotly = (() => {
     return drag;
   }
 
-  // node_modules/.pnpm/d3-zoom@3.0.0/node_modules/d3-zoom/src/transform.js
-  function Transform(k, x, y) {
-    this.k = k;
-    this.x = x;
-    this.y = y;
-  }
-  Transform.prototype = {
-    constructor: Transform,
-    scale: function(k) {
-      return k === 1 ? this : new Transform(this.k * k, this.x, this.y);
-    },
-    translate: function(x, y) {
-      return x === 0 & y === 0 ? this : new Transform(this.k, this.x + this.k * x, this.y + this.k * y);
-    },
-    apply: function(point) {
-      return [point[0] * this.k + this.x, point[1] * this.k + this.y];
-    },
-    applyX: function(x) {
-      return x * this.k + this.x;
-    },
-    applyY: function(y) {
-      return y * this.k + this.y;
-    },
-    invert: function(location) {
-      return [(location[0] - this.x) / this.k, (location[1] - this.y) / this.k];
-    },
-    invertX: function(x) {
-      return (x - this.x) / this.k;
-    },
-    invertY: function(y) {
-      return (y - this.y) / this.k;
-    },
-    rescaleX: function(x) {
-      return x.copy().domain(x.range().map(this.invertX, this).map(x.invert, x));
-    },
-    rescaleY: function(y) {
-      return y.copy().domain(y.range().map(this.invertY, this).map(y.invert, y));
-    },
-    toString: function() {
-      return "translate(" + this.x + "," + this.y + ") scale(" + this.k + ")";
-    }
-  };
-  var identity5 = new Transform(1, 0, 0);
-  transform.prototype = Transform.prototype;
-  function transform(node) {
-    while (!node.__zoom) if (!(node = node.parentNode)) return identity5;
-    return node.__zoom;
-  }
-
-  // src/components/legend/handle_click.js
+  // src/components/legend/handle_click.ts
   var SHOWISOLATETIP = true;
   function handleClick(g, gd, numClicks) {
     var fullLayout = gd._fullLayout;
@@ -27087,7 +29057,7 @@ var Plotly = (() => {
     }
   }
 
-  // src/components/legend/constants.js
+  // src/components/legend/constants.ts
   var constants_default3 = {
     scrollBarWidth: 6,
     scrollBarMinHeight: 20,
@@ -27100,7 +29070,7 @@ var Plotly = (() => {
     itemGap: 5
   };
 
-  // src/components/legend/get_legend_data.js
+  // src/components/legend/get_legend_data.ts
   function getLegendData(calcdata, opts, hasMultipleLegends) {
     var inHover = opts._inHover;
     var grouped = helpers_default3.isGrouped(opts);
@@ -27247,7 +29217,7 @@ var Plotly = (() => {
     return legendData;
   }
 
-  // src/traces/pie/helpers.js
+  // src/traces/pie/helpers.ts
   var getFirstFilled = function getFirstFilled2(array2, indices) {
     if (!isArrayOrTypedArray(array2)) return;
     for (var i = 0; i < indices.length; i++) {
@@ -27260,7 +29230,7 @@ var Plotly = (() => {
     else if (item) return item;
   };
 
-  // src/traces/pie/fill_one.js
+  // src/traces/pie/fill_one.ts
   function fillOne(s, pt, trace, gd) {
     var pattern3 = trace.marker.pattern;
     if (pattern3 && pattern3.shape) {
@@ -27270,7 +29240,7 @@ var Plotly = (() => {
     }
   }
 
-  // src/traces/pie/style_one.js
+  // src/traces/pie/style_one.ts
   function styleOne(s, pt, trace, gd) {
     var line = trace.marker.line;
     var lineColor = castOption2(line.color, pt.pts) || color_default.defaultLine;
@@ -27278,7 +29248,7 @@ var Plotly = (() => {
     s.call(fillOne, pt, trace, gd).style("stroke-width", lineWidth).call(color_default.stroke, lineColor);
   }
 
-  // src/components/legend/style.js
+  // src/components/legend/style.ts
   var { extractOpts: extractOpts4 } = helpers_default;
   var CST_MARKER_SIZE = 12;
   var CST_LINE_WIDTH = 5;
@@ -27817,7 +29787,7 @@ var Plotly = (() => {
     return v;
   }
 
-  // src/components/legend/draw.js
+  // src/components/legend/draw.ts
   var LINE_SPACING4 = alignment_default.LINE_SPACING;
   var FROM_TL = alignment_default.FROM_TL;
   var FROM_BR = alignment_default.FROM_BR;
@@ -28130,9 +30100,9 @@ var Plotly = (() => {
               if (e.target === scrollBar.node()) {
                 return;
               }
-              var transform2 = getTranslate(legend);
-              x0 = transform2.x;
-              y0 = transform2.y;
+              var transform = getTranslate(legend);
+              x0 = transform.x;
+              y0 = transform.y;
             },
             moveFn: function(dx, dy) {
               if (x0 !== void 0 && y0 !== void 0) {
@@ -28165,7 +30135,7 @@ var Plotly = (() => {
       }
     ], gd);
   }
-  function getTraceWidth(d, legendObj, textGap) {
+  function getTraceWidth(d, legendObj, textGap, isGrouped3) {
     var legendItem = d[0];
     var legendWidth = legendItem.width;
     var mode = legendObj.entrywidthmode;
@@ -28235,6 +30205,7 @@ var Plotly = (() => {
     svg_text_utils_default.positionText(textEl, textGap, 0);
     if (isEditable) {
       textEl.call(svg_text_utils_default.makeEditable, { gd, text: name6 }).call(textLayout, g, gd, legendObj).on("edit", function(event2) {
+        var newName = event2;
         this.text(ensureLength(newName, maxNameLength)).call(textLayout, g, gd, legendObj);
         var fullInput = legendItem.trace._fullInput || {};
         var update3 = {};
@@ -28601,7 +30572,7 @@ var Plotly = (() => {
     return legendObj._id || "legend";
   }
 
-  // src/components/fx/hover.js
+  // src/components/fx/hover.ts
   var { zindexSeparator } = constants_default2;
   var YANGLE = constants_default.YANGLE;
   var YA_RADIANS = Math.PI * YANGLE / 180;
@@ -29319,7 +31290,7 @@ var Plotly = (() => {
         fill: commonBgColor,
         stroke: commonStroke
       });
-      ltext.text(t03).call(font3, commonLabelFont).call(svg_text_utils_default.positionText, 0, 0).call(svg_text_utils_default.convertToTspans, gd);
+      ltext.text(t03).call(font5, commonLabelFont).call(svg_text_utils_default.positionText, 0, 0).call(svg_text_utils_default.convertToTspans, gd);
       label.attr("transform", "");
       var tbb2 = getBoundingClientRect(gd, ltext.node());
       var lx2, ly2;
@@ -29394,7 +31365,7 @@ var Plotly = (() => {
           if (anchor === "end") {
             ltext.selectAll("tspan").each(function() {
               var s = select_default2(this);
-              var dummy = tester.append("text").text(s.text()).call(font3, commonLabelFont);
+              var dummy = tester.append("text").text(s.text()).call(font5, commonLabelFont);
               var dummyBB = getBoundingClientRect(gd, dummy.node());
               if (Math.round(dummyBB.width) < Math.round(tbb2.width)) {
                 s.attr("x", ltx - dummyBB.width);
@@ -29419,7 +31390,7 @@ var Plotly = (() => {
       const groupedHoverData = hoverData.filter((data) => data.hoverinfo !== "none");
       if (groupedHoverData.length === 0) return [];
       var hoverlabel = fullLayout.hoverlabel;
-      var font3 = hoverlabel.font;
+      var font5 = hoverlabel.font;
       var item0 = groupedHoverData[0];
       var unifiedhovertitleText = ((hovermode === "x unified" ? item0.xa : item0.ya).unifiedhovertitle || {}).text;
       var mainText = !unifiedhovertitleText ? t03 : hovertemplateString({
@@ -29431,8 +31402,8 @@ var Plotly = (() => {
       var mockLayoutIn = {
         showlegend: true,
         legend: {
-          title: { text: mainText, font: font3 },
-          font: font3,
+          title: { text: mainText, font: font5 },
+          font: font5,
           bgcolor: hoverlabel.bgcolor,
           bordercolor: hoverlabel.bordercolor,
           borderwidth: 1,
@@ -29442,7 +31413,7 @@ var Plotly = (() => {
         }
       };
       var mockLayoutOut = {
-        font: font3
+        font: font5
       };
       legendDefaults(mockLayoutIn, mockLayoutOut, gd._fullData);
       var mockLegend = mockLayoutOut.legend;
@@ -29585,7 +31556,7 @@ var Plotly = (() => {
       g.append("rect").call(color_default.fill, color_default.addOpacity(bgColor, 0.8));
       g.append("text").classed("name", true);
       g.append("path").style("stroke-width", "1px");
-      g.append("text").classed("nums", true).call(font3, {
+      g.append("text").classed("nums", true).call(font5, {
         weight: fontWeight,
         style: fontStyle,
         variant: fontVariant,
@@ -29610,7 +31581,7 @@ var Plotly = (() => {
       var texts2 = getHoverLabelText(d, showCommonLabel, hovermode, fullLayout, t03, g);
       var text2 = texts2[0];
       var name7 = texts2[1];
-      var tx = g.select("text.nums").call(font3, {
+      var tx = g.select("text.nums").call(font5, {
         family: d.fontFamily || fontFamily,
         size: d.fontSize || fontSize,
         color: d.fontColor || contrastColor,
@@ -29625,7 +31596,7 @@ var Plotly = (() => {
       var tx2width = 0;
       var tx2height = 0;
       if (name7 && name7 !== text2) {
-        tx2.call(font3, {
+        tx2.call(font5, {
           family: d.fontFamily || fontFamily,
           size: d.fontSize || fontSize,
           color: nameColor,
@@ -30315,7 +32286,7 @@ var Plotly = (() => {
   }
   var hover_default = { hover, loneHover };
 
-  // src/components/fx/hoverlabel_defaults.js
+  // src/components/fx/hoverlabel_defaults.ts
   function handleHoverLabelDefaults(contIn, contOut, coerce3, opts) {
     opts = opts || {};
     var hasLegend = contOut.legend;
@@ -30347,7 +32318,7 @@ var Plotly = (() => {
     coerce3("hoverlabel.align", opts.align);
   }
 
-  // src/components/fx/layout_global_defaults.js
+  // src/components/fx/layout_global_defaults.ts
   function supplyLayoutGlobalDefaults2(layoutIn, layoutOut) {
     function coerce3(attr2, dflt) {
       return lib_default.coerce(layoutIn, layoutOut, layout_attributes_default, attr2, dflt);
@@ -30355,7 +32326,7 @@ var Plotly = (() => {
     handleHoverLabelDefaults(layoutIn, layoutOut, coerce3);
   }
 
-  // src/components/fx/defaults.js
+  // src/components/fx/defaults.ts
   function supplyDefaults2(traceIn, traceOut, defaultColor, layout) {
     function coerce3(attr2, dflt) {
       return lib_default.coerce(traceIn, traceOut, attributes_default, attr2, dflt);
@@ -30365,7 +32336,7 @@ var Plotly = (() => {
     handleHoverLabelDefaults(traceIn, traceOut, coerce3, opts);
   }
 
-  // src/components/fx/hovermode_defaults.js
+  // src/components/fx/hovermode_defaults.ts
   function handleHoverModeDefaults(layoutIn, layoutOut) {
     function coerce3(attr2, dflt) {
       if (layoutOut[attr2] !== void 0) return layoutOut[attr2];
@@ -30376,7 +32347,7 @@ var Plotly = (() => {
     return coerce3("hovermode");
   }
 
-  // src/components/fx/layout_defaults.js
+  // src/components/fx/layout_defaults.ts
   function supplyLayoutDefaults2(layoutIn, layoutOut) {
     function coerce3(attr2, dflt) {
       return lib_default.coerce(layoutIn, layoutOut, layout_attributes_default, attr2, dflt);
@@ -30399,7 +32370,7 @@ var Plotly = (() => {
     coerceFont(coerce3, "hoverlabel.grouptitlefont", layoutOut.hoverlabel.font);
   }
 
-  // src/components/fx/calc.js
+  // src/components/fx/calc.ts
   function calc2(gd) {
     var calcdata = gd.calcdata;
     var fullLayout = gd._fullLayout;
@@ -30436,7 +32407,7 @@ var Plotly = (() => {
     }
   }
 
-  // src/components/fx/click.js
+  // src/components/fx/click.ts
   function click(gd, evt, subplot) {
     var annotationsDone = registry_default.getComponentMethod("annotations", "onClick")(gd, gd._hoverdata);
     if (subplot !== void 0) {
@@ -30453,7 +32424,7 @@ var Plotly = (() => {
     }
   }
 
-  // src/components/fx/index.js
+  // src/components/fx/index.ts
   var fx_default = {
     moduleType: "component",
     name: "fx",
@@ -30495,10 +32466,10 @@ var Plotly = (() => {
     return castOption(trace, ptNumber, "hoverinfo", _coerce);
   }
 
-  // src/plots/cartesian/dragbox.js
+  // src/plots/cartesian/dragbox.ts
   var import_has_passive_events2 = __toESM(require_has_passive_events(), 1);
 
-  // src/components/dragelement/helpers.js
+  // src/components/dragelement/helpers.ts
   var selectMode = function(dragmode) {
     return dragmode === "lasso" || dragmode === "select";
   };
@@ -30519,7 +32490,7 @@ var Plotly = (() => {
   };
   var helpers_default4 = { selectMode, drawMode, openMode, rectMode, freeMode, selectingOrDrawing };
 
-  // src/lib/clear_gl_canvases.js
+  // src/lib/clear_gl_canvases.ts
   function clearGlCanvases(gd) {
     var fullLayout = gd._fullLayout;
     if (fullLayout._glcanvas && fullLayout._glcanvas.size()) {
@@ -30529,7 +32500,7 @@ var Plotly = (() => {
     }
   }
 
-  // src/plots/cartesian/scale_zoom.js
+  // src/plots/cartesian/scale_zoom.ts
   var { FROM_BL } = alignment_default;
   function scaleZoom(ax, factor, centerFraction) {
     if (centerFraction === void 0) {
@@ -30544,7 +32515,7 @@ var Plotly = (() => {
     ax.setScale();
   }
 
-  // src/plots/cartesian/constraints.js
+  // src/plots/cartesian/constraints.ts
   var { ALMOST_EQUAL } = numerical_default;
   var { FROM_BL: FROM_BL2 } = alignment_default;
   var handleDefaults = function(layoutIn, layoutOut, opts) {
@@ -30976,7 +32947,7 @@ var Plotly = (() => {
   }
   var constraints_default = { handleDefaults, enforce, getAxisGroup, clean };
 
-  // src/plot_api/subroutines.js
+  // src/plot_api/subroutines.ts
   var { doAutoRange: doAutoRange2 } = autorange_default;
   var { zindexSeparator: zindexSeparator2 } = constants_default2;
   var enforceAxisConstraints = constraints_default.enforce;
@@ -31552,18 +33523,18 @@ var Plotly = (() => {
   };
   var subroutines_default = { layoutStyles, drawMainTitle, doTraceStyle, doColorBars, layoutReplot, doLegend, doTicksRelayout, doModeBar, doCamera, drawData, redrawReglTraces, doAutoRangeAndConstraints, finalDraw, drawMarginPushers };
 
-  // src/plots/cartesian/dragbox.js
+  // src/plots/cartesian/dragbox.ts
   var { FROM_TL: FROM_TL2 } = alignment_default;
   var selectingOrDrawing2 = helpers_default4.selectingOrDrawing;
   var freeMode2 = helpers_default4.freeMode;
-  function prepSelect() {
-    return registry_default.getComponentMethod("selections", "prepSelect").apply(null, arguments);
+  function prepSelect(...args) {
+    return registry_default.getComponentMethod("selections", "prepSelect").apply(null, args);
   }
-  function clearOutline() {
-    return registry_default.getComponentMethod("selections", "clearOutline").apply(null, arguments);
+  function clearOutline(...args) {
+    return registry_default.getComponentMethod("selections", "clearOutline").apply(null, args);
   }
-  function selectOnClick() {
-    return registry_default.getComponentMethod("selections", "selectOnClick").apply(null, arguments);
+  function selectOnClick(...args) {
+    return registry_default.getComponentMethod("selections", "selectOnClick").apply(null, args);
   }
   var MINDRAG = constants_default2.MINDRAG;
   var MINZOOM = constants_default2.MINZOOM;
@@ -32508,7 +34479,7 @@ var Plotly = (() => {
     attachWheelEventHandler
   };
 
-  // src/plots/cartesian/graph_interact.js
+  // src/plots/cartesian/graph_interact.ts
   var { makeDragBox: makeDragBox2 } = dragbox_default;
   var { DRAGGERSIZE } = constants_default2;
   var initInteractions = function initInteractions2(gd) {
@@ -32690,7 +34661,7 @@ var Plotly = (() => {
     setCursor(fullLayout._draggers, cursor);
   };
 
-  // src/plot_api/container_array_match.js
+  // src/plot_api/container_array_match.ts
   function containerArrayMatch(astr) {
     var rootContainers = registry_default.layoutArrayContainers;
     var regexpContainers = registry_default.layoutArrayRegexes;
@@ -32713,7 +34684,7 @@ var Plotly = (() => {
     return { array: arrayStr, index: Number(match[1]), property: match[3] || "" };
   }
 
-  // src/plot_api/manage_arrays.js
+  // src/plot_api/manage_arrays.ts
   var containerArrayMatch2 = containerArrayMatch;
   var isAddVal = function isAddVal2(val) {
     return val === "add" || isPlainObject(val);
@@ -32833,7 +34804,7 @@ var Plotly = (() => {
   };
   var manage_arrays_default = { containerArrayMatch: containerArrayMatch2, isAddVal, isRemoveVal, applyContainerArrayChanges };
 
-  // src/plot_api/helpers.js
+  // src/plot_api/helpers.ts
   var import_fast_isnumeric25 = __toESM(require_fast_isnumeric(), 1);
   var cleanId3 = axis_ids_default.cleanId;
   var getFromTrace2 = axis_ids_default.getFromTrace;
@@ -33005,8 +34976,8 @@ var Plotly = (() => {
         var increasingName = cleanFinanceDir(trace.increasing);
         var decreasingName = cleanFinanceDir(trace.decreasing);
         if (increasingName !== false && decreasingName !== false) {
-          var newName2 = commonPrefix(increasingName, decreasingName, increasingShowlegend, decreasingShowlegend);
-          if (newName2) trace.name = newName2;
+          var newName = commonPrefix(increasingName, decreasingName, increasingShowlegend, decreasingShowlegend);
+          if (newName) trace.name = newName;
         } else if ((increasingName || decreasingName) && !trace.name) {
           trace.name = increasingName || decreasingName;
         }
@@ -33185,7 +35156,7 @@ var Plotly = (() => {
   };
   var helpers_default5 = { clearPromiseQueue, cleanLayout, cleanData, swapXYData, coerceTraceIndices, manageArrayContainers, hasParent, clearAxisTypes, collectionsAreEqual };
 
-  // src/plot_api/plot_api.js
+  // src/plot_api/plot_api.ts
   var hasHover2 = typeof matchMedia === "function" ? !matchMedia("(hover: none)").matches : typeof window !== "undefined";
   var { dfltConfig: dfltConfig4 } = plot_config_default;
   var { AX_NAME_PATTERN } = constants_default2;
@@ -33211,7 +35182,7 @@ var Plotly = (() => {
     if (!data && !layout && !isPlotDiv(gd)) {
       warn("Calling _doPlot as if redrawing but this container doesn't yet have a plot.", gd);
     }
-    function addFrames3() {
+    function addFrames3(..._args) {
       if (frames) {
         return addFrames3(gd, frames);
       }
@@ -33315,11 +35286,11 @@ var Plotly = (() => {
         var regl = fullLayout._glcanvas.data()[0].regl;
         if (regl) {
           if (Math.floor(fullLayout.width * plotGlPixelRatio) !== regl._gl.drawingBufferWidth || Math.floor(fullLayout.height * plotGlPixelRatio) !== regl._gl.drawingBufferHeight) {
-            var msg = "WebGL context buffer and canvas dimensions do not match due to browser/WebGL bug.";
+            var msg2 = "WebGL context buffer and canvas dimensions do not match due to browser/WebGL bug.";
             if (drawFrameworkCalls) {
-              error(msg);
+              error(msg2);
             } else {
-              log(msg + " Clearing graph and plotting again.");
+              log(msg2 + " Clearing graph and plotting again.");
               cleanPlot([], {}, gd._fullData, fullLayout);
               supplyDefaults(gd);
               fullLayout = gd._fullLayout;
@@ -34794,7 +36765,7 @@ var Plotly = (() => {
   }
   function react(gd, data, layout, config) {
     var frames, plotDone;
-    function addFrames3() {
+    function addFrames3(..._args) {
       return addFrames3(gd, frames);
     }
     gd = getGraphDiv(gd);
@@ -35381,9 +37352,9 @@ var Plotly = (() => {
       if (!isPlainObject2(frameList[i])) continue;
       var lookupName = frameList[i].name;
       var name6 = (_frameHash[lookupName] || _frameHashLocal[lookupName] || {}).name;
-      var newName2 = frameList[i].name;
+      var newName = frameList[i].name;
       var collisionPresent = _frameHash[name6] || _frameHashLocal[name6];
-      if (name6 && newName2 && typeof newName2 === "number" && collisionPresent && numericNameWarningCount < numericNameWarningCountLimit) {
+      if (name6 && newName && typeof newName === "number" && collisionPresent && numericNameWarningCount < numericNameWarningCountLimit) {
         numericNameWarningCount++;
         warn(
           'addFrames: overwriting frame "' + (_frameHash[name6] || _frameHashLocal[name6]).name + '" with a frame whose name of type "number" also equates to "' + name6 + '". This is valid but may potentially lead to unexpected behavior since all plotly.js frame names are stored internally as strings.'
@@ -35553,7 +37524,7 @@ var Plotly = (() => {
   var _guiUpdate = guiEdit(update);
   var plot_api_default = { _guiRelayout, _guiRestyle, _guiUpdate, animate, addFrames, deleteFrames, addTraces, deleteTraces, extendTraces, moveTraces, prependTraces, newPlot, _doPlot, purge: purge2, react, redraw, relayout, restyle, setPlotConfig, update, _storeDirectGUIEdit };
 
-  // src/plot_api/template_api.js
+  // src/plot_api/template_api.ts
   var { dfltConfig: dfltConfig5 } = plot_config_default;
   var isPlainObject3 = lib_default.isPlainObject;
   var makeTemplate = function(figure) {
@@ -35849,43 +37820,43 @@ var Plotly = (() => {
     }
   }
   function format3(opts) {
-    var msg;
+    var msg2;
     switch (opts.code) {
       case "data":
-        msg = "The template has no key data.";
+        msg2 = "The template has no key data.";
         break;
       case "layout":
-        msg = "The template has no key layout.";
+        msg2 = "The template has no key layout.";
         break;
       case "missing":
         if (opts.path) {
-          msg = "There are no templates for item " + opts.path + " with name " + opts.templateitemname;
+          msg2 = "There are no templates for item " + opts.path + " with name " + opts.templateitemname;
         } else {
-          msg = "There are no templates for trace " + opts.index + ", of type " + opts.traceType + ".";
+          msg2 = "There are no templates for trace " + opts.index + ", of type " + opts.traceType + ".";
         }
         break;
       case "unused":
         if (opts.path) {
-          msg = "The template item at " + opts.path + " was not used in constructing the plot.";
+          msg2 = "The template item at " + opts.path + " was not used in constructing the plot.";
         } else if (opts.dataCount) {
-          msg = "Some of the templates of type " + opts.traceType + " were not used. The template has " + opts.templateCount + " traces, the data only has " + opts.dataCount + " of this type.";
+          msg2 = "Some of the templates of type " + opts.traceType + " were not used. The template has " + opts.templateCount + " traces, the data only has " + opts.dataCount + " of this type.";
         } else {
-          msg = "The template has " + opts.templateCount + " traces of type " + opts.traceType + " but there are none in the data.";
+          msg2 = "The template has " + opts.templateCount + " traces of type " + opts.traceType + " but there are none in the data.";
         }
         break;
       case "reused":
-        msg = "Some of the templates of type " + opts.traceType + " were used more than once. The template has " + opts.templateCount + " traces, the data has " + opts.dataCount + " of this type.";
+        msg2 = "Some of the templates of type " + opts.traceType + " were used more than once. The template has " + opts.templateCount + " traces, the data has " + opts.dataCount + " of this type.";
         break;
     }
-    opts.msg = msg;
+    opts.msg = msg2;
     return opts;
   }
   var template_api_default = { makeTemplate, validateTemplate };
 
-  // src/plot_api/to_image.js
+  // src/plot_api/to_image.ts
   var import_fast_isnumeric27 = __toESM(require_fast_isnumeric(), 1);
 
-  // src/snapshot/helpers.js
+  // src/snapshot/helpers.ts
   var getDelay = function(fullLayout) {
     if (!fullLayout._has) return 0;
     return fullLayout._has("gl3d") || fullLayout._has("mapbox") || fullLayout._has("map") ? 500 : 0;
@@ -35933,7 +37904,7 @@ var Plotly = (() => {
   var IMAGE_URL_PREFIX = /^data:image\/\w+;base64,/;
   var helpers_default6 = { getDelay, getRedrawFunc, encodeSVG, encodeJSON, createObjectURL, revokeObjectURL, createBlob, octetStream, IMAGE_URL_PREFIX };
 
-  // src/snapshot/tosvg.js
+  // src/snapshot/tosvg.ts
   var DOUBLEQUOTE_REGEX = /"/g;
   var DUMMY_SUB = "TOBESTRIPPED";
   var DUMMY_REGEX = new RegExp('("' + DUMMY_SUB + ")|(" + DUMMY_SUB + '")', "g");
@@ -36033,7 +38004,7 @@ var Plotly = (() => {
     return s;
   }
 
-  // src/snapshot/svgtoimg.js
+  // src/snapshot/svgtoimg.ts
   var import_events5 = __toESM(require_events(), 1);
   function svgToImg(opts) {
     var ev = opts.emitter || new import_events5.EventEmitter();
@@ -36107,36 +38078,64 @@ var Plotly = (() => {
   }
   var svgtoimg_default = svgToImg;
 
-  // src/version.js
+  // src/version.ts
   var version = "3.3.1";
 
-  // src/plot_api/to_image.js
+  // src/plot_api/to_image.ts
   var attrs = {
     format: {
       valType: "enumerated",
       values: ["png", "jpeg", "webp", "svg", "full-json"],
-      dflt: "png"
+      dflt: "png",
+      description: "Sets the format of exported image."
     },
     width: {
       valType: "number",
-      min: 1
+      min: 1,
+      description: [
+        "Sets the exported image width.",
+        "Defaults to the value found in `layout.width`",
+        "If set to *null*, the exported image width will match the current graph width."
+      ].join(" ")
     },
     height: {
       valType: "number",
-      min: 1
+      min: 1,
+      description: [
+        "Sets the exported image height.",
+        "Defaults to the value found in `layout.height`",
+        "If set to *null*, the exported image height will match the current graph height."
+      ].join(" ")
     },
     scale: {
       valType: "number",
       min: 0,
-      dflt: 1
+      dflt: 1,
+      description: [
+        "Sets a scaling for the generated image.",
+        "If set, all features of a graphs (e.g. text, line width)",
+        "are scaled, unlike simply setting",
+        "a bigger *width* and *height*."
+      ].join(" ")
     },
     setBackground: {
       valType: "any",
-      dflt: false
+      dflt: false,
+      description: [
+        "Sets the image background mode.",
+        "By default, the image background is determined by `layout.paper_bgcolor`,",
+        "the *transparent* mode.",
+        "One might consider setting `setBackground` to *opaque*",
+        "when exporting a *jpeg* image as JPEGs do not support opacity."
+      ].join(" ")
     },
     imageDataOnly: {
       valType: "boolean",
-      dflt: false
+      dflt: false,
+      description: [
+        "Determines whether or not the return value is prefixed by",
+        "the image format's corresponding 'data:image;' spec."
+      ].join(" ")
     }
   };
   function toImage(gd, opts) {
@@ -36264,7 +38263,7 @@ var Plotly = (() => {
   }
   var to_image_default = toImage;
 
-  // src/plot_api/validate.js
+  // src/plot_api/validate.ts
   var { dfltConfig: dfltConfig6 } = plot_config_default;
   var isPlainObject4 = lib_default.isPlainObject;
   var isArray3 = Array.isArray;
@@ -36493,15 +38492,15 @@ var Plotly = (() => {
       trace = null;
     }
     var astr = convertPathToAttributeString(path);
-    var msg = code2msgFunc[code2](base, astr, valIn, valOut);
-    lib_default.log(msg);
+    var msg2 = code2msgFunc[code2](base, astr, valIn, valOut);
+    lib_default.log(msg2);
     return {
       code: code2,
       container,
       trace,
       path,
       astr,
-      msg
+      msg: msg2
     };
   }
   function isInSchema(schema, key) {
@@ -36541,7 +38540,7 @@ var Plotly = (() => {
     return astr;
   }
 
-  // src/snapshot/filesaver.js
+  // src/snapshot/filesaver.ts
   function fileSaver(url, name6, format5) {
     var saveLink = document.createElement("a");
     var canUseSaveLink = "download" in saveLink;
@@ -36571,7 +38570,7 @@ var Plotly = (() => {
   }
   var filesaver_default = fileSaver;
 
-  // src/snapshot/download.js
+  // src/snapshot/download.ts
   function downloadImage(gd, opts) {
     var _gd;
     if (!lib_default.isPlainObject(gd)) _gd = lib_default.getGraphDiv(gd);
@@ -36601,7 +38600,7 @@ var Plotly = (() => {
   }
   var download_default = downloadImage;
 
-  // src/plot_api/index.js
+  // src/plot_api/index.ts
   var { getGraphDiv: getGraphDiv3 } = dom_default;
   var _doPlot2 = plot_api_default._doPlot;
   var newPlot2 = plot_api_default.newPlot;
@@ -36634,10 +38633,10 @@ var Plotly = (() => {
   var validateTemplate2 = template_api_default.validateTemplate;
   var plot_api_default2 = { _doPlot: _doPlot2, newPlot: newPlot2, restyle: restyle2, relayout: relayout2, redraw: redraw2, update: update2, _guiRestyle: _guiRestyle2, _guiRelayout: _guiRelayout2, _guiUpdate: _guiUpdate2, _storeDirectGUIEdit: _storeDirectGUIEdit2, react: react2, extendTraces: extendTraces2, prependTraces: prependTraces2, addTraces: addTraces2, deleteTraces: deleteTraces2, moveTraces: moveTraces2, purge: purge3, addFrames: addFrames2, deleteFrames: deleteFrames2, animate: animate2, setPlotConfig: setPlotConfig2, deleteActiveShape, toImage: toImage2, validate: validate3, downloadImage: downloadImage2, makeTemplate: makeTemplate2, validateTemplate: validateTemplate2 };
 
-  // src/core.js
+  // src/core.ts
   var import_native_promise_only = __toESM(require_npo_src(), 1);
 
-  // src/plotcss.js
+  // src/plotcss.ts
   var rules = {
     "X,X div": 'direction:ltr;font-family:"Open Sans",verdana,arial,sans-serif;margin:0;padding:0;border:0;',
     "X input,X button": 'font-family:"Open Sans",verdana,arial,sans-serif;',
@@ -36700,7 +38699,7 @@ var Plotly = (() => {
   var fullSelector;
   var selector;
 
-  // src/traces/scatter/constants.js
+  // src/traces/scatter/constants.ts
   var constants_default4 = {
     PTS_LINESONLY: 20,
     // fixed parameters of clustering and clipping algorithms
@@ -36714,28 +38713,46 @@ var Plotly = (() => {
     eventDataKeys: []
   };
 
-  // src/traces/scatter/fillcolor_attribute.js
+  // src/traces/scatter/fillcolor_attribute.ts
   function makeFillcolorAttr(hasFillgradient) {
     return {
       valType: "color",
       editType: "style",
-      anim: true
+      anim: true,
+      description: [
+        "Sets the fill color.",
+        "Defaults to a half-transparent variant of the line color,",
+        "marker color, or marker line color, whichever is available." + (hasFillgradient ? " If fillgradient is specified, fillcolor is ignored except for setting the background color of the hover label, if any." : "")
+      ].join(" ")
     };
   }
 
-  // src/traces/scatter/attributes.js
+  // src/traces/scatter/attributes.ts
   var { axisHoverFormat: axisHoverFormat2 } = axis_format_attributes_default;
   function axisPeriod(axis) {
     return {
       valType: "any",
       dflt: 0,
-      editType: "calc"
+      editType: "calc",
+      description: [
+        "Only relevant when the axis `type` is *date*.",
+        "Sets the period positioning in milliseconds or *M<n>* on the " + axis + " axis.",
+        "Special values in the form of *M<n>* could be used to declare",
+        "the number of months. In this case `n` must be a positive integer."
+      ].join(" ")
     };
   }
   function axisPeriod0(axis) {
     return {
       valType: "any",
-      editType: "calc"
+      editType: "calc",
+      description: [
+        "Only relevant when the axis `type` is *date*.",
+        "Sets the base for period positioning in milliseconds or date string on the " + axis + " axis.",
+        "When `" + axis + "period` is round number of weeks,",
+        "the `" + axis + "period0` by default would be on a Sunday i.e. 2000-01-02,",
+        "otherwise it would be at 2000-01-01."
+      ].join(" ")
     };
   }
   function axisPeriodAlignment(axis) {
@@ -36743,43 +38760,63 @@ var Plotly = (() => {
       valType: "enumerated",
       values: ["start", "middle", "end"],
       dflt: "middle",
-      editType: "calc"
+      editType: "calc",
+      description: [
+        "Only relevant when the axis `type` is *date*.",
+        "Sets the alignment of data points on the " + axis + " axis."
+      ].join(" ")
     };
   }
   var attributes_default8 = {
     x: {
       valType: "data_array",
       editType: "calc+clearAxisTypes",
-      anim: true
+      anim: true,
+      description: "Sets the x coordinates."
     },
     x0: {
       valType: "any",
       dflt: 0,
       editType: "calc+clearAxisTypes",
-      anim: true
+      anim: true,
+      description: [
+        "Alternate to `x`.",
+        "Builds a linear space of x coordinates.",
+        "Use with `dx`",
+        "where `x0` is the starting coordinate and `dx` the step."
+      ].join(" ")
     },
     dx: {
       valType: "number",
       dflt: 1,
       editType: "calc",
-      anim: true
+      anim: true,
+      description: ["Sets the x coordinate step.", "See `x0` for more info."].join(" ")
     },
     y: {
       valType: "data_array",
       editType: "calc+clearAxisTypes",
-      anim: true
+      anim: true,
+      description: "Sets the y coordinates."
     },
     y0: {
       valType: "any",
       dflt: 0,
       editType: "calc+clearAxisTypes",
-      anim: true
+      anim: true,
+      description: [
+        "Alternate to `y`.",
+        "Builds a linear space of y coordinates.",
+        "Use with `dy`",
+        "where `y0` is the starting coordinate and `dy` the step."
+      ].join(" ")
     },
     dy: {
       valType: "number",
       dflt: 1,
       editType: "calc",
-      anim: true
+      anim: true,
+      description: ["Sets the y coordinate step.", "See `y0` for more info."].join(" ")
     },
     xperiod: axisPeriod("x"),
     yperiod: axisPeriod("y"),
@@ -36792,40 +38829,106 @@ var Plotly = (() => {
     offsetgroup: {
       valType: "string",
       dflt: "",
-      editType: "calc"
+      editType: "calc",
+      description: [
+        "Set several traces linked to the same position axis",
+        "or matching axes to the same",
+        "offsetgroup where bars of the same position coordinate will line up."
+      ].join(" ")
     },
     alignmentgroup: {
       valType: "string",
       dflt: "",
-      editType: "calc"
+      editType: "calc",
+      description: [
+        "Set several traces linked to the same position axis",
+        "or matching axes to the same",
+        "alignmentgroup. This controls whether bars compute their positional",
+        "range dependently or independently."
+      ].join(" ")
     },
     stackgroup: {
       valType: "string",
       dflt: "",
-      editType: "calc"
+      editType: "calc",
+      description: [
+        "Set several scatter traces (on the same subplot) to the same",
+        "stackgroup in order to add their y values (or their x values if",
+        "`orientation` is *h*). If blank or omitted this trace will not be",
+        "stacked. Stacking also turns `fill` on by default, using *tonexty*",
+        "(*tonextx*) if `orientation` is *h* (*v*) and sets the default",
+        "`mode` to *lines* irrespective of point count.",
+        "You can only stack on a numeric (linear or log) axis.",
+        "Traces in a `stackgroup` will only fill to (or be filled to) other",
+        "traces in the same group. With multiple `stackgroup`s or some",
+        "traces stacked and some not, if fill-linked traces are not already",
+        "consecutive, the later ones will be pushed down in the drawing order."
+      ].join(" ")
     },
     orientation: {
       valType: "enumerated",
       values: ["v", "h"],
-      editType: "calc"
+      editType: "calc",
+      description: [
+        "Only relevant in the following cases:",
+        "1. when `scattermode` is set to *group*.",
+        "2. when `stackgroup` is used, and only the first",
+        "`orientation` found in the `stackgroup` will be used - including",
+        "if `visible` is *legendonly* but not if it is `false`. Sets the",
+        "stacking direction. With *v* (*h*), the y (x) values of subsequent",
+        "traces are added. Also affects the default value of `fill`."
+      ].join(" ")
     },
     groupnorm: {
       valType: "enumerated",
       values: ["", "fraction", "percent"],
       dflt: "",
-      editType: "calc"
+      editType: "calc",
+      description: [
+        "Only relevant when `stackgroup` is used, and only the first",
+        "`groupnorm` found in the `stackgroup` will be used - including",
+        "if `visible` is *legendonly* but not if it is `false`.",
+        "Sets the normalization for the sum of this `stackgroup`.",
+        "With *fraction*, the value of each trace at each location is",
+        "divided by the sum of all trace values at that location.",
+        "*percent* is the same but multiplied by 100 to show percentages.",
+        "If there are multiple subplots, or multiple `stackgroup`s on one",
+        "subplot, each will be normalized within its own set."
+      ].join(" ")
     },
     stackgaps: {
       valType: "enumerated",
       values: ["infer zero", "interpolate"],
       dflt: "infer zero",
-      editType: "calc"
+      editType: "calc",
+      description: [
+        "Only relevant when `stackgroup` is used, and only the first",
+        "`stackgaps` found in the `stackgroup` will be used - including",
+        "if `visible` is *legendonly* but not if it is `false`.",
+        "Determines how we handle locations at which other traces in this",
+        "group have data but this one does not.",
+        "With *infer zero* we insert a zero at these locations.",
+        "With *interpolate* we linearly interpolate between existing",
+        "values, and extrapolate a constant beyond the existing values."
+        // TODO - implement interrupt mode
+        // '*interrupt* omits this trace from the stack at this location by',
+        // 'dropping abruptly, midway between the existing and missing locations.'
+      ].join(" ")
     },
     text: {
       valType: "string",
       dflt: "",
       arrayOk: true,
-      editType: "calc"
+      editType: "calc",
+      description: [
+        "Sets text elements associated with each (x,y) pair.",
+        "If a single string, the same string appears over",
+        "all the data points.",
+        "If an array of string, the items are mapped in order to the",
+        "this trace's (x,y) coordinates.",
+        "If trace `hoverinfo` contains a *text* flag and *hovertext* is not set,",
+        "these elements will be seen in the hover labels."
+      ].join(" ")
     },
     texttemplate: texttemplateAttrs(),
     texttemplatefallback: templatefallbackAttrs({ editType: "calc" }),
@@ -36833,18 +38936,41 @@ var Plotly = (() => {
       valType: "string",
       dflt: "",
       arrayOk: true,
-      editType: "style"
+      editType: "style",
+      description: [
+        "Sets hover text elements associated with each (x,y) pair.",
+        "If a single string, the same string appears over",
+        "all the data points.",
+        "If an array of string, the items are mapped in order to the",
+        "this trace's (x,y) coordinates.",
+        "To be seen, trace `hoverinfo` must contain a *text* flag."
+      ].join(" ")
     },
     mode: {
       valType: "flaglist",
       flags: ["lines", "markers", "text"],
       extras: ["none"],
-      editType: "calc"
+      editType: "calc",
+      description: [
+        "Determines the drawing mode for this scatter trace.",
+        "If the provided `mode` includes *text* then the `text` elements",
+        "appear at the coordinates. Otherwise, the `text` elements",
+        "appear on hover.",
+        "If there are less than " + constants_default4.PTS_LINESONLY + " points",
+        "and the trace is not stacked",
+        "then the default is *lines+markers*. Otherwise, *lines*."
+      ].join(" ")
     },
     hoveron: {
       valType: "flaglist",
       flags: ["points", "fills"],
-      editType: "style"
+      editType: "style",
+      description: [
+        "Do the hover effects highlight individual points (markers or",
+        "line points) or do they highlight filled regions?",
+        "If the fill is *toself* or *tonext* and there are no markers",
+        "or text, then the default is *fills*, otherwise it is *points*."
+      ].join(" ")
     },
     hovertemplate: hovertemplateAttrs({}, { keys: constants_default4.eventDataKeys }),
     hovertemplatefallback: templatefallbackAttrs(),
@@ -36852,27 +38978,39 @@ var Plotly = (() => {
       color: {
         valType: "color",
         editType: "style",
-        anim: true
+        anim: true,
+        description: "Sets the line color."
       },
       width: {
         valType: "number",
         min: 0,
         dflt: 2,
         editType: "style",
-        anim: true
+        anim: true,
+        description: "Sets the line width (in px)."
       },
       shape: {
         valType: "enumerated",
         values: ["linear", "spline", "hv", "vh", "hvh", "vhv"],
         dflt: "linear",
-        editType: "plot"
+        editType: "plot",
+        description: [
+          "Determines the line shape.",
+          "With *spline* the lines are drawn using spline interpolation.",
+          "The other available values correspond to step-wise line shapes."
+        ].join(" ")
       },
       smoothing: {
         valType: "number",
         min: 0,
         max: 1.3,
         dflt: 1,
-        editType: "plot"
+        editType: "plot",
+        description: [
+          "Has an effect only if `shape` is set to *spline*",
+          "Sets the amount of smoothing.",
+          "*0* corresponds to no smoothing (equivalent to a *linear* shape)."
+        ].join(" ")
       },
       dash: extendFlat({}, dash, { editType: "style" }),
       backoff: {
@@ -36881,29 +39019,72 @@ var Plotly = (() => {
         min: 0,
         dflt: "auto",
         arrayOk: true,
-        editType: "plot"
+        editType: "plot",
+        description: [
+          "Sets the line back off from the end point of the nth line segment (in px).",
+          "This option is useful e.g. to avoid overlap with arrowhead markers.",
+          "With *auto* the lines would trim before markers if `marker.angleref` is set to *previous*."
+        ].join(" ")
       },
       simplify: {
         valType: "boolean",
         dflt: true,
-        editType: "plot"
+        editType: "plot",
+        description: [
+          "Simplifies lines by removing nearly-collinear points. When transitioning",
+          "lines, it may be desirable to disable this so that the number of points",
+          "along the resulting SVG path is unaffected."
+        ].join(" ")
       },
       editType: "plot"
     },
     connectgaps: {
       valType: "boolean",
       dflt: false,
-      editType: "calc"
+      editType: "calc",
+      description: [
+        "Determines whether or not gaps",
+        "(i.e. {nan} or missing values)",
+        "in the provided data arrays are connected."
+      ].join(" ")
     },
     cliponaxis: {
       valType: "boolean",
       dflt: true,
-      editType: "plot"
+      editType: "plot",
+      description: [
+        "Determines whether or not markers and text nodes",
+        "are clipped about the subplot axes.",
+        "To show markers and text nodes above axis lines and tick labels,",
+        "make sure to set `xaxis.layer` and `yaxis.layer` to *below traces*."
+      ].join(" ")
     },
     fill: {
       valType: "enumerated",
       values: ["none", "tozeroy", "tozerox", "tonexty", "tonextx", "toself", "tonext"],
-      editType: "calc"
+      editType: "calc",
+      description: [
+        "Sets the area to fill with a solid color.",
+        "Defaults to *none* unless this trace is stacked, then it gets",
+        "*tonexty* (*tonextx*) if `orientation` is *v* (*h*)",
+        "Use with `fillcolor` if not *none*.",
+        "*tozerox* and *tozeroy* fill to x=0 and y=0 respectively.",
+        "*tonextx* and *tonexty* fill between the endpoints of this",
+        "trace and the endpoints of the trace before it, connecting those",
+        "endpoints with straight lines (to make a stacked area graph);",
+        "if there is no trace before it, they behave like *tozerox* and",
+        "*tozeroy*.",
+        "*toself* connects the endpoints of the trace (or each segment",
+        "of the trace if it has gaps) into a closed shape.",
+        "*tonext* fills the space between two traces if one completely",
+        "encloses the other (eg consecutive contour lines), and behaves like",
+        "*toself* if there is no trace before it. *tonext* should not be",
+        "used if one trace does not enclose the other.",
+        "Traces in a `stackgroup` will only fill to (or be filled to) other",
+        "traces in the same group. With multiple `stackgroup`s or some",
+        "traces stacked and some not, if fill-linked traces are not already",
+        "consecutive, the later ones will be pushed down in the drawing order."
+      ].join(" ")
     },
     fillcolor: makeFillcolorAttr(true),
     fillgradient: extendFlat({
@@ -36911,21 +39092,51 @@ var Plotly = (() => {
         valType: "enumerated",
         values: ["radial", "horizontal", "vertical", "none"],
         dflt: "none",
-        editType: "calc"
+        editType: "calc",
+        description: ["Sets the type/orientation of the color gradient for the fill.", "Defaults to *none*."].join(
+          " "
+        )
       },
       start: {
         valType: "number",
-        editType: "calc"
+        editType: "calc",
+        description: [
+          "Sets the gradient start value.",
+          "It is given as the absolute position on the axis determined by",
+          "the orientiation. E.g., if orientation is *horizontal*, the",
+          "gradient will be horizontal and start from the x-position",
+          "given by start. If omitted, the gradient starts at the lowest",
+          "value of the trace along the respective axis.",
+          "Ignored if orientation is *radial*."
+        ].join(" ")
       },
       stop: {
         valType: "number",
-        editType: "calc"
+        editType: "calc",
+        description: [
+          "Sets the gradient end value.",
+          "It is given as the absolute position on the axis determined by",
+          "the orientiation. E.g., if orientation is *horizontal*, the",
+          "gradient will be horizontal and end at the x-position",
+          "given by end. If omitted, the gradient ends at the highest",
+          "value of the trace along the respective axis.",
+          "Ignored if orientation is *radial*."
+        ].join(" ")
       },
       colorscale: {
         valType: "colorscale",
-        editType: "style"
+        editType: "style",
+        description: [
+          "Sets the fill gradient colors as a color scale.",
+          "The color scale is interpreted as a gradient",
+          "applied in the direction specified by *orientation*,",
+          "from the lowest to the highest value of the scatter",
+          "plot along that axis, or from the center to the most",
+          "distant point from it, if orientation is *radial*."
+        ].join(" ")
       },
-      editType: "calc"
+      editType: "calc",
+      description: ["Sets a fill gradient.", "If not specified, the fillcolor is used instead."].join(" ")
     }),
     fillpattern: pattern,
     marker: extendFlat(
@@ -36935,7 +39146,14 @@ var Plotly = (() => {
           values: symbolList,
           dflt: "circle",
           arrayOk: true,
-          editType: "style"
+          editType: "style",
+          description: [
+            "Sets the marker symbol type.",
+            "Adding 100 is equivalent to appending *-open* to a symbol name.",
+            "Adding 200 is equivalent to appending *-dot* to a symbol name.",
+            "Adding 300 is equivalent to appending *-open-dot*",
+            "or *dot-open* to a symbol name."
+          ].join(" ")
         },
         opacity: {
           valType: "number",
@@ -36943,22 +39161,29 @@ var Plotly = (() => {
           max: 1,
           arrayOk: true,
           editType: "style",
-          anim: true
+          anim: true,
+          description: "Sets the marker opacity."
         },
         angle: {
           valType: "angle",
           dflt: 0,
           arrayOk: true,
           editType: "plot",
-          anim: false
+          anim: false,
           // TODO: possibly set to true in future
+          description: ["Sets the marker angle in respect to `angleref`."].join(" ")
         },
         angleref: {
           valType: "enumerated",
           values: ["previous", "up"],
           dflt: "up",
           editType: "plot",
-          anim: false
+          anim: false,
+          description: [
+            "Sets the reference for marker angle.",
+            "With *previous*, angle 0 points along the line from the previous point to this one.",
+            "With *up*, angle 0 points toward the top of the screen."
+          ].join(" ")
         },
         standoff: {
           valType: "number",
@@ -36966,7 +39191,12 @@ var Plotly = (() => {
           dflt: 0,
           arrayOk: true,
           editType: "plot",
-          anim: true
+          anim: true,
+          description: [
+            "Moves the marker away from the data point in the direction of `angle` (in px).",
+            "This can be useful for example if you have another marker at this",
+            "location and you want to point an arrowhead marker at it."
+          ].join(" ")
         },
         size: {
           valType: "number",
@@ -36974,30 +39204,49 @@ var Plotly = (() => {
           dflt: 6,
           arrayOk: true,
           editType: "calc",
-          anim: true
+          anim: true,
+          description: "Sets the marker size (in px)."
         },
         maxdisplayed: {
           valType: "number",
           min: 0,
           dflt: 0,
-          editType: "plot"
+          editType: "plot",
+          description: [
+            "Sets a maximum number of points to be drawn on the graph.",
+            "*0* corresponds to no limit."
+          ].join(" ")
         },
         sizeref: {
           valType: "number",
           dflt: 1,
-          editType: "calc"
+          editType: "calc",
+          description: [
+            "Has an effect only if `marker.size` is set to a numerical array.",
+            "Sets the scale factor used to determine the rendered size of",
+            "marker points. Use with `sizemin` and `sizemode`."
+          ].join(" ")
         },
         sizemin: {
           valType: "number",
           min: 0,
           dflt: 0,
-          editType: "calc"
+          editType: "calc",
+          description: [
+            "Has an effect only if `marker.size` is set to a numerical array.",
+            "Sets the minimum size (in px) of the rendered marker points."
+          ].join(" ")
         },
         sizemode: {
           valType: "enumerated",
           values: ["diameter", "area"],
           dflt: "diameter",
-          editType: "calc"
+          editType: "calc",
+          description: [
+            "Has an effect only if `marker.size` is set to a numerical array.",
+            "Sets the rule for which the data in `size` is converted",
+            "to pixels."
+          ].join(" ")
         },
         line: extendFlat(
           {
@@ -37006,7 +39255,8 @@ var Plotly = (() => {
               min: 0,
               arrayOk: true,
               editType: "style",
-              anim: true
+              anim: true,
+              description: "Sets the width (in px) of the lines bounding the marker points."
             },
             editType: "calc"
           },
@@ -37018,12 +39268,18 @@ var Plotly = (() => {
             values: ["radial", "horizontal", "vertical", "none"],
             arrayOk: true,
             dflt: "none",
-            editType: "calc"
+            editType: "calc",
+            description: ["Sets the type of gradient used to fill the markers"].join(" ")
           },
           color: {
             valType: "color",
             arrayOk: true,
-            editType: "calc"
+            editType: "calc",
+            description: [
+              "Sets the final color of the gradient fill:",
+              "the center color for radial, the right for horizontal,",
+              "or the bottom for vertical."
+            ].join(" ")
           },
           editType: "calc"
         },
@@ -37037,23 +39293,27 @@ var Plotly = (() => {
           valType: "number",
           min: 0,
           max: 1,
-          editType: "style"
+          editType: "style",
+          description: "Sets the marker opacity of selected points."
         },
         color: {
           valType: "color",
-          editType: "style"
+          editType: "style",
+          description: "Sets the marker color of selected points."
         },
         size: {
           valType: "number",
           min: 0,
-          editType: "style"
+          editType: "style",
+          description: "Sets the marker size of selected points."
         },
         editType: "style"
       },
       textfont: {
         color: {
           valType: "color",
-          editType: "style"
+          editType: "style",
+          description: "Sets the text font color of selected points."
         },
         editType: "style"
       },
@@ -37065,23 +39325,27 @@ var Plotly = (() => {
           valType: "number",
           min: 0,
           max: 1,
-          editType: "style"
+          editType: "style",
+          description: "Sets the marker opacity of unselected points, applied only when a selection exists."
         },
         color: {
           valType: "color",
-          editType: "style"
+          editType: "style",
+          description: "Sets the marker color of unselected points, applied only when a selection exists."
         },
         size: {
           valType: "number",
           min: 0,
-          editType: "style"
+          editType: "style",
+          description: "Sets the marker size of unselected points, applied only when a selection exists."
         },
         editType: "style"
       },
       textfont: {
         color: {
           valType: "color",
-          editType: "style"
+          editType: "style",
+          description: "Sets the text font color of unselected points, applied only when a selection exists."
         },
         editType: "style"
       },
@@ -37102,21 +39366,28 @@ var Plotly = (() => {
       ],
       dflt: "middle center",
       arrayOk: true,
-      editType: "calc"
+      editType: "calc",
+      description: ["Sets the positions of the `text` elements", "with respects to the (x,y) coordinates."].join(" ")
     },
     textfont: font_attributes_default({
       editType: "calc",
       colorEditType: "style",
-      arrayOk: true
+      arrayOk: true,
+      description: "Sets the text font."
     }),
     zorder: {
       valType: "integer",
       dflt: 0,
-      editType: "plot"
+      editType: "plot",
+      description: [
+        "Sets the layer on which this trace is displayed, relative to",
+        "other SVG traces on the same subplot. SVG traces with higher `zorder`",
+        "appear in front of those with lower `zorder`."
+      ].join(" ")
     }
   };
 
-  // src/traces/scatter/xy_defaults.js
+  // src/traces/scatter/xy_defaults.ts
   function handleXYDefaults(traceIn, traceOut, layout, coerce3) {
     var x = coerce3("x");
     var y = coerce3("y");
@@ -37142,7 +39413,7 @@ var Plotly = (() => {
     return len2;
   }
 
-  // src/traces/scatter/period_defaults.js
+  // src/traces/scatter/period_defaults.ts
   var ONEWEEK4 = numerical_default.ONEWEEK;
   function getPeriod0Dflt(period2, calendar) {
     if (period2 % ONEWEEK4 === 0) {
@@ -37173,7 +39444,7 @@ var Plotly = (() => {
     }
   }
 
-  // src/traces/scatter/stack_defaults.js
+  // src/traces/scatter/stack_defaults.ts
   var perStackAttrs = ["orientation", "groupnorm", "stackgaps"];
   function handleStackDefaults(traceIn, traceOut, layout, coerce3) {
     var stackOpts = layout._scatterStackOpts;
@@ -37238,7 +39509,7 @@ var Plotly = (() => {
     }
   }
 
-  // src/traces/scatter/marker_defaults.js
+  // src/traces/scatter/marker_defaults.ts
   var { hasColorscale: hasColorscale3 } = helpers_default;
   function markerDefaults(traceIn, traceOut, defaultColor, layout, coerce3, opts) {
     var isBubble = subtypes_default.isBubble(traceIn);
@@ -37292,7 +39563,7 @@ var Plotly = (() => {
     }
   }
 
-  // src/traces/scatter/line_defaults.js
+  // src/traces/scatter/line_defaults.ts
   var { hasColorscale: hasColorscale4 } = helpers_default;
   function lineDefaults(traceIn, traceOut, defaultColor, layout, coerce3, opts) {
     if (!opts) opts = {};
@@ -37310,13 +39581,13 @@ var Plotly = (() => {
     if (opts.backoff) coerce3("line.backoff");
   }
 
-  // src/traces/scatter/line_shape_defaults.js
+  // src/traces/scatter/line_shape_defaults.ts
   function handleLineShapeDefaults(traceIn, traceOut, coerce3) {
     var shape = coerce3("line.shape");
     if (shape === "spline") coerce3("line.smoothing");
   }
 
-  // src/traces/scatter/text_defaults.js
+  // src/traces/scatter/text_defaults.ts
   function text_defaults_default(traceIn, traceOut, layout, coerce3, opts) {
     opts = opts || {};
     coerce3("textposition");
@@ -37327,7 +39598,7 @@ var Plotly = (() => {
     }
   }
 
-  // src/traces/scatter/fillcolor_defaults.js
+  // src/traces/scatter/fillcolor_defaults.ts
   function averageColors(colorscale) {
     var color3 = color_default.interpolate(colorscale[0][1], colorscale[1][1], 0.5);
     for (var i = 2; i < colorscale.length; i++) {
@@ -37366,7 +39637,7 @@ var Plotly = (() => {
     ));
   }
 
-  // src/traces/scatter/defaults.js
+  // src/traces/scatter/defaults.ts
   var { coercePattern: coercePattern2 } = lib_default;
   function supplyDefaults3(traceIn, traceOut, defaultColor, layout) {
     function coerce3(attr2, dflt) {
@@ -37431,7 +39702,7 @@ var Plotly = (() => {
     coerceSelectionMarkerOpacity(traceOut, coerce3);
   }
 
-  // src/traces/scatter/grouping_defaults.js
+  // src/traces/scatter/grouping_defaults.ts
   function handleGroupingDefaults(traceIn, traceOut, fullLayout, coerce3, barmode) {
     var orientation = traceOut.orientation;
     var posAxId = traceOut[{ v: "x", h: "y" }[orientation] + "axis"];
@@ -37464,7 +39735,7 @@ var Plotly = (() => {
     }
   }
 
-  // src/traces/scatter/cross_trace_defaults.js
+  // src/traces/scatter/cross_trace_defaults.ts
   function crossTraceDefaults2(fullData, fullLayout) {
     var traceIn, traceOut, i;
     var scattermode = fullLayout.scattermode;
@@ -37498,7 +39769,7 @@ var Plotly = (() => {
     }
   }
 
-  // src/traces/scatter/layout_defaults.js
+  // src/traces/scatter/layout_defaults.ts
   function layout_defaults_default(layoutIn, layoutOut) {
     function coerce3(attr2, dflt) {
       return lib_default.coerce(layoutIn, layoutOut, layout_attributes_default3, attr2, dflt);
@@ -37509,10 +39780,10 @@ var Plotly = (() => {
     }
   }
 
-  // src/traces/scatter/calc.js
+  // src/traces/scatter/calc.ts
   var import_fast_isnumeric29 = __toESM(require_fast_isnumeric(), 1);
 
-  // src/plots/cartesian/align_period.js
+  // src/plots/cartesian/align_period.ts
   var import_fast_isnumeric28 = __toESM(require_fast_isnumeric(), 1);
   var ONEAVGMONTH2 = numerical_default.ONEAVGMONTH;
   function alignPeriod(trace, ax, axLetter, vals) {
@@ -37574,7 +39845,7 @@ var Plotly = (() => {
     };
   }
 
-  // src/traces/scatter/colorscale_calc.js
+  // src/traces/scatter/colorscale_calc.ts
   var { hasColorscale: hasColorscale5 } = helpers_default;
   function calcMarkerColorscale(gd, trace) {
     if (subtypes_default.hasLines(trace) && hasColorscale5(trace, "line")) {
@@ -37602,7 +39873,7 @@ var Plotly = (() => {
     }
   }
 
-  // src/traces/scatter/arrays_to_calcdata.js
+  // src/traces/scatter/arrays_to_calcdata.ts
   function arraysToCalcdata(cd, trace) {
     for (var i = 0; i < cd.length; i++) cd[i].i = i;
     mergeArray(trace.text, cd, "tx");
@@ -37642,14 +39913,14 @@ var Plotly = (() => {
     }
   }
 
-  // src/traces/scatter/calc_selection.js
+  // src/traces/scatter/calc_selection.ts
   function calcSelection(cd, trace) {
     if (isArrayOrTypedArray(trace.selectedpoints)) {
       tagSelected(cd, trace);
     }
   }
 
-  // src/traces/scatter/calc.js
+  // src/traces/scatter/calc.ts
   var { BADNUM: BADNUM9 } = numerical_default;
   function calc3(gd, trace) {
     var fullLayout = gd._fullLayout;
@@ -37854,10 +40125,10 @@ var Plotly = (() => {
     getStackOpts
   };
 
-  // src/traces/bar/cross_trace_calc.js
+  // src/traces/bar/cross_trace_calc.ts
   var import_fast_isnumeric30 = __toESM(require_fast_isnumeric(), 1);
 
-  // src/traces/bar/sieve.js
+  // src/traces/bar/sieve.ts
   var sieve_default = Sieve;
   function Sieve(traces, opts) {
     this.traces = traces;
@@ -37908,7 +40179,7 @@ var Plotly = (() => {
     return prefix + label + "g" + group;
   };
 
-  // src/traces/bar/cross_trace_calc.js
+  // src/traces/bar/cross_trace_calc.ts
   var { BADNUM: BADNUM10 } = numerical_default;
   function crossTraceCalc(gd, plotinfo) {
     var xa = plotinfo.xaxis;
@@ -38527,7 +40798,7 @@ var Plotly = (() => {
     setGroupPositions
   };
 
-  // src/traces/scatter/cross_trace_calc.js
+  // src/traces/scatter/cross_trace_calc.ts
   var { setGroupPositions: setGroupPositions2 } = cross_trace_calc_default;
   function groupCrossTraceCalc(gd, plotinfo) {
     var xa = plotinfo.xaxis;
@@ -38684,7 +40955,7 @@ var Plotly = (() => {
     return pt0.s + (pt1.s - pt0.s) * (position - pt0[posAttr]) / (pt1[posAttr] - pt0[posAttr]);
   }
 
-  // src/traces/scatter/line_points.js
+  // src/traces/scatter/line_points.ts
   var BADNUM11 = numerical_default.BADNUM;
   var LOG_CLIP2 = numerical_default.LOG_CLIP;
   var LOG_CLIP_PLUS = LOG_CLIP2 + 0.5;
@@ -39030,7 +41301,7 @@ var Plotly = (() => {
     return segments;
   }
 
-  // src/traces/scatter/link_traces.js
+  // src/traces/scatter/link_traces.ts
   var LINKEDFILLS = { tonextx: 1, tonexty: 1, tonext: 1 };
   function linkTraces(gd, plotinfo, cdscatter) {
     var trace, i, group, prevtrace, groupIndex;
@@ -39088,7 +41359,7 @@ var Plotly = (() => {
     return cdscatterSorted;
   }
 
-  // src/lib/polygon.js
+  // src/lib/polygon.ts
   var { BADNUM: BADNUM12 } = numerical_default;
   var polygon = {};
   polygon.tester = function tester2(ptsIn) {
@@ -39239,7 +41510,7 @@ var Plotly = (() => {
   };
   var polygon_default = polygon;
 
-  // src/traces/scatter/plot.js
+  // src/traces/scatter/plot.ts
   var { tester: polygonTester } = polygon_default;
   function plot(gd, plotinfo, cdscatter, scatterLayer, transitionOpts, makeOnCompleteCallback) {
     var join, onComplete;
@@ -39657,14 +41928,14 @@ var Plotly = (() => {
     });
   }
 
-  // src/traces/scatter/marker_colorbar.js
+  // src/traces/scatter/marker_colorbar.ts
   var marker_colorbar_default = {
     container: "marker",
     min: "cmin",
     max: "cmax"
   };
 
-  // src/traces/scatter/format_labels.js
+  // src/traces/scatter/format_labels.ts
   function formatLabels(cdi, trace, fullLayout) {
     var labels = {};
     var mockGd = { _fullLayout: fullLayout };
@@ -39679,7 +41950,7 @@ var Plotly = (() => {
     return labels;
   }
 
-  // src/traces/scatter/style.js
+  // src/traces/scatter/style.ts
   function style3(gd) {
     var s = select_default2(gd).selectAll("g.trace.scatter");
     s.style("opacity", function(d) {
@@ -39722,7 +41993,7 @@ var Plotly = (() => {
     styleOnSelect
   };
 
-  // src/traces/scatter/get_trace_color.js
+  // src/traces/scatter/get_trace_color.ts
   function getTraceColor(trace, di) {
     var lc, tc;
     if (trace.mode === "lines") {
@@ -39745,7 +42016,7 @@ var Plotly = (() => {
     }
   }
 
-  // src/traces/scatter/hover.js
+  // src/traces/scatter/hover.ts
   function hoverPoints(pointData, xval, yval, hovermode) {
     var cd = pointData.cd;
     var trace = cd[0].trace;
@@ -39915,7 +42186,7 @@ var Plotly = (() => {
     }
   }
 
-  // src/traces/scatter/select.js
+  // src/traces/scatter/select.ts
   function selectPoints(searchInfo, selectionTester) {
     var cd = searchInfo.cd;
     var xa = searchInfo.xaxis;
@@ -39952,21 +42223,35 @@ var Plotly = (() => {
     return selection2;
   }
 
-  // src/plots/cartesian/attributes.js
+  // src/plots/cartesian/attributes.ts
   var attributes_default9 = {
     xaxis: {
       valType: "subplotid",
       dflt: "x",
-      editType: "calc+clearAxisTypes"
+      editType: "calc+clearAxisTypes",
+      description: [
+        "Sets a reference between this trace's x coordinates and",
+        "a 2D cartesian x axis.",
+        "If *x* (the default value), the x coordinates refer to",
+        "`layout.xaxis`.",
+        "If *x2*, the x coordinates refer to `layout.xaxis2`, and so on."
+      ].join(" ")
     },
     yaxis: {
       valType: "subplotid",
       dflt: "y",
-      editType: "calc+clearAxisTypes"
+      editType: "calc+clearAxisTypes",
+      description: [
+        "Sets a reference between this trace's y coordinates and",
+        "a 2D cartesian y axis.",
+        "If *y* (the default value), the y coordinates refer to",
+        "`layout.yaxis`.",
+        "If *y2*, the y coordinates refer to `layout.yaxis2`, and so on."
+      ].join(" ")
     }
   };
 
-  // src/plots/cartesian/type_defaults.js
+  // src/plots/cartesian/type_defaults.ts
   function handleTypeDefaults(containerIn, containerOut, coerce3, options) {
     coerce3("autotypenumbers", options.autotypenumbersDflt);
     var axType = coerce3("type", (options.splomStash || {}).type);
@@ -40043,10 +42328,10 @@ var Plotly = (() => {
     return isBox && !isCandlestick && axLetter === posLetter && trace[posLetter] === void 0 && trace[posLetter + "0"] === void 0;
   }
 
-  // src/plots/cartesian/axis_defaults.js
+  // src/plots/cartesian/axis_defaults.ts
   var import_fast_isnumeric31 = __toESM(require_fast_isnumeric(), 1);
 
-  // src/plots/cartesian/category_order_defaults.js
+  // src/plots/cartesian/category_order_defaults.ts
   function findCategories(ax, opts) {
     var dataAttr = opts.dataAttr || ax._id.charAt(0);
     var lookup2 = {};
@@ -40102,7 +42387,7 @@ var Plotly = (() => {
     }
   }
 
-  // src/plots/cartesian/line_grid_defaults.js
+  // src/plots/cartesian/line_grid_defaults.ts
   var colorMix = tinycolor.mix;
   function handleLineGridDefaults(containerIn, containerOut, coerce3, opts) {
     opts = opts || {};
@@ -40158,11 +42443,11 @@ var Plotly = (() => {
     }
   }
 
-  // src/plots/cartesian/axis_defaults.js
+  // src/plots/cartesian/axis_defaults.ts
   var { WEEKDAY_PATTERN: DAY_OF_WEEK2, HOUR_PATTERN: HOUR2 } = constants_default2;
   function handleAxisDefaults(containerIn, containerOut, coerce3, options, layoutOut) {
     var letter = options.letter;
-    var font3 = options.font || {};
+    var font5 = options.font || {};
     var splomStash = options.splomStash || {};
     var visible = coerce3("visible", !options.visibleDflt);
     var axTemplate = containerOut._template || {};
@@ -40218,13 +42503,13 @@ var Plotly = (() => {
       }
     }
     var dfltColor = coerce3("color");
-    var dfltFontColor = dfltColor !== layout_attributes_default4.color.dflt ? dfltColor : font3.color;
+    var dfltFontColor = dfltColor !== layout_attributes_default4.color.dflt ? dfltColor : font5.color;
     var dfltTitle = splomStash.label || layoutOut._dfltTitle[letter];
     handlePrefixSuffixDefaults(containerIn, containerOut, coerce3, axType, options);
     if (!visible) return containerOut;
     coerce3("title.text", dfltTitle);
-    coerceFont(coerce3, "title.font", font3, { overrideDflt: {
-      size: bigFont(font3.size),
+    coerceFont(coerce3, "title.font", font5, { overrideDflt: {
+      size: bigFont(font5.size),
       color: dfltFontColor
     } });
     handleTickValueDefaults(containerIn, containerOut, coerce3, axType);
@@ -40394,7 +42679,7 @@ var Plotly = (() => {
     return dayStrToNum[v.slice(0, 3).toLowerCase()];
   }
 
-  // src/plots/cartesian/position_defaults.js
+  // src/plots/cartesian/position_defaults.ts
   var import_fast_isnumeric32 = __toESM(require_fast_isnumeric(), 1);
   function handlePositionDefaults(containerIn, containerOut, coerce3, options) {
     var counterAxes = options.counterAxes || [];
@@ -40466,7 +42751,7 @@ var Plotly = (() => {
     return containerOut;
   }
 
-  // src/plots/cartesian/layout_defaults.js
+  // src/plots/cartesian/layout_defaults.ts
   var { AX_ID_PATTERN } = constants_default2;
   var id2name3 = axis_ids_default.id2name;
   var name2id3 = axis_ids_default.name2id;
@@ -40741,7 +43026,7 @@ var Plotly = (() => {
     });
   }
 
-  // src/plots/cartesian/transition_axes.js
+  // src/plots/cartesian/transition_axes.ts
   function transitionAxes(gd, edits, transitionOpts, makeOnCompleteCallback) {
     var fullLayout = gd._fullLayout;
     if (edits.length === 0) {
@@ -40871,7 +43156,7 @@ var Plotly = (() => {
     return Promise.resolve();
   }
 
-  // src/plots/cartesian/index.js
+  // src/plots/cartesian/index.ts
   function ensureSingleAndAddDatum(parent, nodeType, className) {
     return ensureSingle(parent, nodeType, className, function(s) {
       s.datum(className);
@@ -41393,7 +43678,7 @@ var Plotly = (() => {
   var updateFx2 = updateFx;
   var cartesian_default = { name, attr, idRoot, idRegex: idRegex2, attrRegex, attributes: attributes2, layoutAttributes: layoutAttributes2, supplyLayoutDefaults: supplyLayoutDefaults4, transitionAxes: transitionAxes2, finalizeSubplots, plot: plot2, clean: clean3, drawFramework, rangePlot, toSVG: toSVG2, updateFx: updateFx2 };
 
-  // src/traces/scatter/index.js
+  // src/traces/scatter/index.ts
   var { calc: _req5 } = calc_default;
   var { style: _req11, styleOnSelect: _req12 } = style_default3;
   var scatter_default = {
@@ -41429,10 +43714,18 @@ var Plotly = (() => {
       "scatter-like",
       "zoomScale"
     ],
-    meta: {}
+    meta: {
+      description: [
+        "The scatter trace type encompasses line charts, scatter charts, text charts, and bubble charts.",
+        "The data visualized as scatter point or lines is set in `x` and `y`.",
+        "Text (appearing either on the chart or on hover only) is via `text`.",
+        "Bubble charts are achieved by setting `marker.size` and/or `marker.color`",
+        "to numerical arrays."
+      ].join(" ")
+    }
   };
 
-  // src/components/annotations/arrow_paths.js
+  // src/components/annotations/arrow_paths.ts
   var arrow_paths_default = [
     // no arrow
     {
@@ -41478,7 +43771,7 @@ var Plotly = (() => {
     }
   ];
 
-  // src/components/annotations/draw_arrow_head.js
+  // src/components/annotations/draw_arrow_head.ts
   var strScale2 = lib_default.strScale;
   var strRotate2 = lib_default.strRotate;
   var strTranslate2 = lib_default.strTranslate;
@@ -41567,7 +43860,7 @@ var Plotly = (() => {
     if (doEnd) drawhead(headStyle, end, endRot, scale);
   }
 
-  // src/components/annotations/draw.js
+  // src/components/annotations/draw.ts
   var strTranslate3 = lib_default.strTranslate;
   var draw_default = {
     draw: draw3,
@@ -41692,11 +43985,11 @@ var Plotly = (() => {
     var annTextClip = fullLayout._topclips.selectAll("#" + annClipID).data(isSizeConstrained ? [0] : []);
     annTextClip.enter().append("clipPath").classed("annclip", true).attr("id", annClipID).append("rect");
     annTextClip.exit().remove();
-    var font3 = options.font;
+    var font5 = options.font;
     var text = fullLayout._meta ? lib_default.templateString(options.text, fullLayout._meta) : options.text;
     var annText = annTextGroupInner.append("text").classed("annotation-text", true).text(text);
     function textLayout2(s) {
-      s.call(font3, font3).attr({
+      s.call(font5, font5).attr({
         "text-anchor": {
           left: "start",
           right: "end"
@@ -41892,9 +44185,9 @@ var Plotly = (() => {
         var tailY = annPosPx.y.tail + dy;
         var textX = annPosPx.x.text + dx;
         var textY = annPosPx.y.text + dy;
-        var transform2 = lib_default.rotationXYMatrix(textangle, textX, textY);
-        var applyTransform = lib_default.apply2DTransform(transform2);
-        var applyTransform2 = lib_default.apply2DTransform2(transform2);
+        var transform = lib_default.rotationXYMatrix(textangle, textX, textY);
+        var applyTransform = lib_default.apply2DTransform(transform);
+        var applyTransform2 = lib_default.apply2DTransform2(transform);
         var width = +annTextBG.attr("width");
         var height = +annTextBG.attr("height");
         var xLeft = textX - 0.5 * width;
@@ -42099,7 +44392,7 @@ var Plotly = (() => {
     } else annText.call(textLayout2);
   }
 
-  // src/components/annotations/click.js
+  // src/components/annotations/click.ts
   var click_default = {
     hasClickToShow,
     onClick
@@ -42165,146 +44458,303 @@ var Plotly = (() => {
     return ax.type === "log" ? ax.l2r(d) : ax.d2r(d);
   }
 
-  // src/components/annotations/attributes.js
+  // src/constants/axis_placeable_objects.ts
+  var axis_placeable_objects_default = {
+    axisRefDescription: function(axisname, lower2, upper) {
+      return [
+        "If set to a",
+        axisname,
+        "axis id (e.g. *" + axisname + "* or",
+        "*" + axisname + "2*), the `" + axisname + "` position refers to a",
+        axisname,
+        "coordinate. If set to *paper*, the `" + axisname + "`",
+        "position refers to the distance from the",
+        lower2,
+        "of the plotting",
+        "area in normalized coordinates where *0* (*1*) corresponds to the",
+        lower2,
+        "(" + upper + "). If set to a",
+        axisname,
+        "axis ID followed by",
+        "*domain* (separated by a space), the position behaves like for",
+        "*paper*, but refers to the distance in fractions of the domain",
+        "length from the",
+        lower2,
+        "of the domain of that axis: e.g.,",
+        "*" + axisname + "2 domain* refers to the domain of the second",
+        axisname,
+        " axis and a",
+        axisname,
+        "position of 0.5 refers to the",
+        "point between the",
+        lower2,
+        "and the",
+        upper,
+        "of the domain of the",
+        "second",
+        axisname,
+        "axis."
+      ].join(" ");
+    }
+  };
+
+  // src/components/annotations/attributes.ts
+  function arrowAxisRefDescription(axis) {
+    return [
+      "In order for absolute positioning of the arrow to work, *a" + axis + "ref* must be exactly the same as *" + axis + "ref*, otherwise *a" + axis + "ref* will revert to *pixel* (explained next).",
+      "For relative positioning, *a" + axis + "ref* can be set to *pixel*,",
+      "in which case the *a" + axis + "* value is specified in pixels",
+      "relative to *" + axis + "*.",
+      "Absolute positioning is useful",
+      "for trendline annotations which should continue to indicate",
+      "the correct trend when zoomed. Relative positioning is useful",
+      "for specifying the text offset for an annotated point."
+    ].join(" ");
+  }
+  function arrowCoordinateDescription(axis, lower2, upper) {
+    return [
+      "Sets the",
+      axis,
+      "component of the arrow tail about the arrow head.",
+      "If `a" + axis + "ref` is `pixel`, a positive (negative)",
+      "component corresponds to an arrow pointing",
+      "from",
+      upper,
+      "to",
+      lower2,
+      "(" + lower2,
+      "to",
+      upper + ").",
+      "If `a" + axis + "ref` is not `pixel` and is exactly the same as `" + axis + "ref`,",
+      "this is an absolute value on that axis,",
+      "like `" + axis + "`, specified in the same coordinates as `" + axis + "ref`."
+    ].join(" ");
+  }
   var attributes_default10 = templatedArray("annotation", {
     visible: {
       valType: "boolean",
       dflt: true,
-      editType: "calc+arraydraw"
+      editType: "calc+arraydraw",
+      description: [
+        "Determines whether or not this annotation is visible."
+      ].join(" ")
     },
     text: {
       valType: "string",
-      editType: "calc+arraydraw"
+      editType: "calc+arraydraw",
+      description: [
+        "Sets the text associated with this annotation.",
+        "Plotly uses a subset of HTML tags to do things like",
+        "newline (`<br>`), bold (`<b></b>`), italics (`<i></i>`),",
+        "hyperlinks (`<a href='...'></a>`). Tags `<em>`, `<sup>`,",
+        "`<sub>`, `<s>`, `<u>`, and `<span>` are also supported."
+      ].join(" ")
     },
     textangle: {
       valType: "angle",
       dflt: 0,
-      editType: "calc+arraydraw"
+      editType: "calc+arraydraw",
+      description: [
+        "Sets the angle at which the `text` is drawn",
+        "with respect to the horizontal."
+      ].join(" ")
     },
     font: font_attributes_default({
       editType: "calc+arraydraw",
-      colorEditType: "arraydraw"
+      colorEditType: "arraydraw",
+      description: "Sets the annotation text font."
     }),
     width: {
       valType: "number",
       min: 1,
       dflt: null,
-      editType: "calc+arraydraw"
+      editType: "calc+arraydraw",
+      description: [
+        "Sets an explicit width for the text box. null (default) lets the",
+        "text set the box width. Wider text will be clipped.",
+        "There is no automatic wrapping; use <br> to start a new line."
+      ].join(" ")
     },
     height: {
       valType: "number",
       min: 1,
       dflt: null,
-      editType: "calc+arraydraw"
+      editType: "calc+arraydraw",
+      description: [
+        "Sets an explicit height for the text box. null (default) lets the",
+        "text set the box height. Taller text will be clipped."
+      ].join(" ")
     },
     opacity: {
       valType: "number",
       min: 0,
       max: 1,
       dflt: 1,
-      editType: "arraydraw"
+      editType: "arraydraw",
+      description: "Sets the opacity of the annotation (text + arrow)."
     },
     align: {
       valType: "enumerated",
       values: ["left", "center", "right"],
       dflt: "center",
-      editType: "arraydraw"
+      editType: "arraydraw",
+      description: [
+        "Sets the horizontal alignment of the `text` within the box.",
+        "Has an effect only if `text` spans two or more lines",
+        "(i.e. `text` contains one or more <br> HTML tags) or if an",
+        "explicit width is set to override the text width."
+      ].join(" ")
     },
     valign: {
       valType: "enumerated",
       values: ["top", "middle", "bottom"],
       dflt: "middle",
-      editType: "arraydraw"
+      editType: "arraydraw",
+      description: [
+        "Sets the vertical alignment of the `text` within the box.",
+        "Has an effect only if an explicit height is set to override",
+        "the text height."
+      ].join(" ")
     },
     bgcolor: {
       valType: "color",
       dflt: "rgba(0,0,0,0)",
-      editType: "arraydraw"
+      editType: "arraydraw",
+      description: "Sets the background color of the annotation."
     },
     bordercolor: {
       valType: "color",
       dflt: "rgba(0,0,0,0)",
-      editType: "arraydraw"
+      editType: "arraydraw",
+      description: [
+        "Sets the color of the border enclosing the annotation `text`."
+      ].join(" ")
     },
     borderpad: {
       valType: "number",
       min: 0,
       dflt: 1,
-      editType: "calc+arraydraw"
+      editType: "calc+arraydraw",
+      description: [
+        "Sets the padding (in px) between the `text`",
+        "and the enclosing border."
+      ].join(" ")
     },
     borderwidth: {
       valType: "number",
       min: 0,
       dflt: 1,
-      editType: "calc+arraydraw"
+      editType: "calc+arraydraw",
+      description: [
+        "Sets the width (in px) of the border enclosing",
+        "the annotation `text`."
+      ].join(" ")
     },
     // arrow
     showarrow: {
       valType: "boolean",
       dflt: true,
-      editType: "calc+arraydraw"
+      editType: "calc+arraydraw",
+      description: [
+        "Determines whether or not the annotation is drawn with an arrow.",
+        "If *true*, `text` is placed near the arrow's tail.",
+        "If *false*, `text` lines up with the `x` and `y` provided."
+      ].join(" ")
     },
     arrowcolor: {
       valType: "color",
-      editType: "arraydraw"
+      editType: "arraydraw",
+      description: "Sets the color of the annotation arrow."
     },
     arrowhead: {
       valType: "integer",
       min: 0,
       max: arrow_paths_default.length,
       dflt: 1,
-      editType: "arraydraw"
+      editType: "arraydraw",
+      description: "Sets the end annotation arrow head style."
     },
     startarrowhead: {
       valType: "integer",
       min: 0,
       max: arrow_paths_default.length,
       dflt: 1,
-      editType: "arraydraw"
+      editType: "arraydraw",
+      description: "Sets the start annotation arrow head style."
     },
     arrowside: {
       valType: "flaglist",
       flags: ["end", "start"],
       extras: ["none"],
       dflt: "end",
-      editType: "arraydraw"
+      editType: "arraydraw",
+      description: "Sets the annotation arrow head position."
     },
     arrowsize: {
       valType: "number",
       min: 0.3,
       dflt: 1,
-      editType: "calc+arraydraw"
+      editType: "calc+arraydraw",
+      description: [
+        "Sets the size of the end annotation arrow head, relative to `arrowwidth`.",
+        "A value of 1 (default) gives a head about 3x as wide as the line."
+      ].join(" ")
     },
     startarrowsize: {
       valType: "number",
       min: 0.3,
       dflt: 1,
-      editType: "calc+arraydraw"
+      editType: "calc+arraydraw",
+      description: [
+        "Sets the size of the start annotation arrow head, relative to `arrowwidth`.",
+        "A value of 1 (default) gives a head about 3x as wide as the line."
+      ].join(" ")
     },
     arrowwidth: {
       valType: "number",
       min: 0.1,
-      editType: "calc+arraydraw"
+      editType: "calc+arraydraw",
+      description: "Sets the width (in px) of annotation arrow line."
     },
     standoff: {
       valType: "number",
       min: 0,
       dflt: 0,
-      editType: "calc+arraydraw"
+      editType: "calc+arraydraw",
+      description: [
+        "Sets a distance, in pixels, to move the end arrowhead away from the",
+        "position it is pointing at, for example to point at the edge of",
+        "a marker independent of zoom. Note that this shortens the arrow",
+        "from the `ax` / `ay` vector, in contrast to `xshift` / `yshift`",
+        "which moves everything by this amount."
+      ].join(" ")
     },
     startstandoff: {
       valType: "number",
       min: 0,
       dflt: 0,
-      editType: "calc+arraydraw"
+      editType: "calc+arraydraw",
+      description: [
+        "Sets a distance, in pixels, to move the start arrowhead away from the",
+        "position it is pointing at, for example to point at the edge of",
+        "a marker independent of zoom. Note that this shortens the arrow",
+        "from the `ax` / `ay` vector, in contrast to `xshift` / `yshift`",
+        "which moves everything by this amount."
+      ].join(" ")
     },
     ax: {
       valType: "any",
-      editType: "calc+arraydraw"
+      editType: "calc+arraydraw",
+      description: [
+        arrowCoordinateDescription("x", "left", "right")
+      ].join(" ")
     },
     ay: {
       valType: "any",
-      editType: "calc+arraydraw"
+      editType: "calc+arraydraw",
+      description: [
+        arrowCoordinateDescription("y", "top", "bottom")
+      ].join(" ")
     },
     axref: {
       valType: "enumerated",
@@ -42313,7 +44763,13 @@ var Plotly = (() => {
         "pixel",
         constants_default2.idRegex.x.toString()
       ],
-      editType: "calc"
+      editType: "calc",
+      description: [
+        "Indicates in what coordinates the tail of the",
+        "annotation (ax,ay) is specified.",
+        axis_placeable_objects_default.axisRefDescription("x", "left", "right"),
+        arrowAxisRefDescription("x")
+      ].join(" ")
     },
     ayref: {
       valType: "enumerated",
@@ -42322,7 +44778,13 @@ var Plotly = (() => {
         "pixel",
         constants_default2.idRegex.y.toString()
       ],
-      editType: "calc"
+      editType: "calc",
+      description: [
+        "Indicates in what coordinates the tail of the",
+        "annotation (ax,ay) is specified.",
+        axis_placeable_objects_default.axisRefDescription("y", "bottom", "top"),
+        arrowAxisRefDescription("y")
+      ].join(" ")
     },
     // positioning
     xref: {
@@ -42331,22 +44793,54 @@ var Plotly = (() => {
         "paper",
         constants_default2.idRegex.x.toString()
       ],
-      editType: "calc"
+      editType: "calc",
+      description: [
+        "Sets the annotation's x coordinate axis.",
+        axis_placeable_objects_default.axisRefDescription("x", "left", "right")
+      ].join(" ")
     },
     x: {
       valType: "any",
-      editType: "calc+arraydraw"
+      editType: "calc+arraydraw",
+      description: [
+        "Sets the annotation's x position.",
+        "If the axis `type` is *log*, then you must take the",
+        "log of your desired range.",
+        "If the axis `type` is *date*, it should be date strings,",
+        "like date data, though Date objects and unix milliseconds",
+        "will be accepted and converted to strings.",
+        "If the axis `type` is *category*, it should be numbers,",
+        "using the scale where each category is assigned a serial",
+        "number from zero in the order it appears."
+      ].join(" ")
     },
     xanchor: {
       valType: "enumerated",
       values: ["auto", "left", "center", "right"],
       dflt: "auto",
-      editType: "calc+arraydraw"
+      editType: "calc+arraydraw",
+      description: [
+        "Sets the text box's horizontal position anchor",
+        "This anchor binds the `x` position to the *left*, *center*",
+        "or *right* of the annotation.",
+        "For example, if `x` is set to 1, `xref` to *paper* and",
+        "`xanchor` to *right* then the right-most portion of the",
+        "annotation lines up with the right-most edge of the",
+        "plotting area.",
+        "If *auto*, the anchor is equivalent to *center* for",
+        "data-referenced annotations or if there is an arrow,",
+        "whereas for paper-referenced with no arrow, the anchor picked",
+        "corresponds to the closest side."
+      ].join(" ")
     },
     xshift: {
       valType: "number",
       dflt: 0,
-      editType: "calc+arraydraw"
+      editType: "calc+arraydraw",
+      description: [
+        "Shifts the position of the whole annotation and arrow to the",
+        "right (positive) or left (negative) by this many pixels."
+      ].join(" ")
     },
     yref: {
       valType: "enumerated",
@@ -42354,63 +44848,144 @@ var Plotly = (() => {
         "paper",
         constants_default2.idRegex.y.toString()
       ],
-      editType: "calc"
+      editType: "calc",
+      description: [
+        "Sets the annotation's y coordinate axis.",
+        axis_placeable_objects_default.axisRefDescription("y", "bottom", "top")
+      ].join(" ")
     },
     y: {
       valType: "any",
-      editType: "calc+arraydraw"
+      editType: "calc+arraydraw",
+      description: [
+        "Sets the annotation's y position.",
+        "If the axis `type` is *log*, then you must take the",
+        "log of your desired range.",
+        "If the axis `type` is *date*, it should be date strings,",
+        "like date data, though Date objects and unix milliseconds",
+        "will be accepted and converted to strings.",
+        "If the axis `type` is *category*, it should be numbers,",
+        "using the scale where each category is assigned a serial",
+        "number from zero in the order it appears."
+      ].join(" ")
     },
     yanchor: {
       valType: "enumerated",
       values: ["auto", "top", "middle", "bottom"],
       dflt: "auto",
-      editType: "calc+arraydraw"
+      editType: "calc+arraydraw",
+      description: [
+        "Sets the text box's vertical position anchor",
+        "This anchor binds the `y` position to the *top*, *middle*",
+        "or *bottom* of the annotation.",
+        "For example, if `y` is set to 1, `yref` to *paper* and",
+        "`yanchor` to *top* then the top-most portion of the",
+        "annotation lines up with the top-most edge of the",
+        "plotting area.",
+        "If *auto*, the anchor is equivalent to *middle* for",
+        "data-referenced annotations or if there is an arrow,",
+        "whereas for paper-referenced with no arrow, the anchor picked",
+        "corresponds to the closest side."
+      ].join(" ")
     },
     yshift: {
       valType: "number",
       dflt: 0,
-      editType: "calc+arraydraw"
+      editType: "calc+arraydraw",
+      description: [
+        "Shifts the position of the whole annotation and arrow up",
+        "(positive) or down (negative) by this many pixels."
+      ].join(" ")
     },
     clicktoshow: {
       valType: "enumerated",
       values: [false, "onoff", "onout"],
       dflt: false,
-      editType: "arraydraw"
+      editType: "arraydraw",
+      description: [
+        "Makes this annotation respond to clicks on the plot.",
+        "If you click a data point that exactly matches the `x` and `y`",
+        "values of this annotation, and it is hidden (visible: false),",
+        "it will appear. In *onoff* mode, you must click the same point",
+        "again to make it disappear, so if you click multiple points,",
+        "you can show multiple annotations. In *onout* mode, a click",
+        "anywhere else in the plot (on another data point or not) will",
+        "hide this annotation.",
+        "If you need to show/hide this annotation in response to different",
+        "`x` or `y` values, you can set `xclick` and/or `yclick`. This is",
+        "useful for example to label the side of a bar. To label markers",
+        "though, `standoff` is preferred over `xclick` and `yclick`."
+      ].join(" ")
     },
     xclick: {
       valType: "any",
-      editType: "arraydraw"
+      editType: "arraydraw",
+      description: [
+        "Toggle this annotation when clicking a data point whose `x` value",
+        "is `xclick` rather than the annotation's `x` value."
+      ].join(" ")
     },
     yclick: {
       valType: "any",
-      editType: "arraydraw"
+      editType: "arraydraw",
+      description: [
+        "Toggle this annotation when clicking a data point whose `y` value",
+        "is `yclick` rather than the annotation's `y` value."
+      ].join(" ")
     },
     hovertext: {
       valType: "string",
-      editType: "arraydraw"
+      editType: "arraydraw",
+      description: [
+        "Sets text to appear when hovering over this annotation.",
+        "If omitted or blank, no hover label will appear."
+      ].join(" ")
     },
     hoverlabel: {
       bgcolor: {
         valType: "color",
-        editType: "arraydraw"
+        editType: "arraydraw",
+        description: [
+          "Sets the background color of the hover label.",
+          "By default uses the annotation's `bgcolor` made opaque,",
+          "or white if it was transparent."
+        ].join(" ")
       },
       bordercolor: {
         valType: "color",
-        editType: "arraydraw"
+        editType: "arraydraw",
+        description: [
+          "Sets the border color of the hover label.",
+          "By default uses either dark grey or white, for maximum",
+          "contrast with `hoverlabel.bgcolor`."
+        ].join(" ")
       },
       font: font_attributes_default({
-        editType: "arraydraw"
+        editType: "arraydraw",
+        description: [
+          "Sets the hover label text font.",
+          "By default uses the global hover font and size,",
+          "with color from `hoverlabel.bordercolor`."
+        ].join(" ")
       }),
       editType: "arraydraw"
     },
     captureevents: {
       valType: "boolean",
-      editType: "arraydraw"
+      editType: "arraydraw",
+      description: [
+        "Determines whether the annotation text box captures mouse move",
+        "and click events, or allows those events to pass through to data",
+        "points in the plot that may be behind the annotation. By default",
+        "`captureevents` is *false* unless `hovertext` is provided.",
+        "If you use the event `plotly_clickannotation` without `hovertext`",
+        "you must explicitly enable `captureevents`."
+      ].join(" ")
     },
     editType: "calc"
   });
 
-  // src/components/annotations/common_defaults.js
+  // src/components/annotations/common_defaults.ts
   function handleAnnotationCommonDefaults(annIn, annOut, fullLayout, coerce3) {
     coerce3("opacity");
     var bgColor = coerce3("bgcolor");
@@ -42463,7 +45038,7 @@ var Plotly = (() => {
     coerce3("captureevents", !!hoverText);
   }
 
-  // src/components/annotations/defaults.js
+  // src/components/annotations/defaults.ts
   function supplyLayoutDefaults5(layoutIn, layoutOut) {
     handleArrayContainerDefaults(layoutIn, layoutOut, {
       name: "annotations",
@@ -42521,7 +45096,7 @@ var Plotly = (() => {
     }
   }
 
-  // src/plots/cartesian/include_components.js
+  // src/plots/cartesian/include_components.ts
   function makeIncludeComponents(containerArrayName) {
     return function includeComponents(layoutIn, layoutOut) {
       var array2 = layoutIn[containerArrayName];
@@ -42559,7 +45134,7 @@ var Plotly = (() => {
     };
   }
 
-  // src/components/annotations/calc_autorange.js
+  // src/components/annotations/calc_autorange.ts
   var { draw: draw4 } = draw_default;
   function calcAutorange(gd) {
     var fullLayout = gd._fullLayout;
@@ -42621,7 +45196,7 @@ var Plotly = (() => {
     ann._extremes[axId] = extremes;
   }
 
-  // src/components/annotations/convert_coords.js
+  // src/components/annotations/convert_coords.ts
   var import_fast_isnumeric33 = __toESM(require_fast_isnumeric(), 1);
   function convertCoords(gd, ax, newType, doExtra) {
     ax = ax || {};
@@ -42648,7 +45223,7 @@ var Plotly = (() => {
     }
   }
 
-  // src/components/annotations/index.js
+  // src/components/annotations/index.ts
   var annotations_default = {
     moduleType: "component",
     name: "annotations",
@@ -42664,24 +45239,39 @@ var Plotly = (() => {
     convertCoords
   };
 
-  // src/components/annotations3d/attributes.js
+  // src/components/annotations3d/attributes.ts
   var { overrideAll: overrideAll4 } = edit_types_default;
   var attributes_default11 = overrideAll4(templatedArray("annotation", {
     visible: attributes_default10.visible,
     x: {
-      valType: "any"
+      valType: "any",
+      description: [
+        "Sets the annotation's x position."
+      ].join(" ")
     },
     y: {
-      valType: "any"
+      valType: "any",
+      description: [
+        "Sets the annotation's y position."
+      ].join(" ")
     },
     z: {
-      valType: "any"
+      valType: "any",
+      description: [
+        "Sets the annotation's z position."
+      ].join(" ")
     },
     ax: {
-      valType: "number"
+      valType: "number",
+      description: [
+        "Sets the x component of the arrow tail about the arrow head (in pixels)."
+      ].join(" ")
     },
     ay: {
-      valType: "number"
+      valType: "number",
+      description: [
+        "Sets the y component of the arrow tail about the arrow head (in pixels)."
+      ].join(" ")
     },
     xanchor: attributes_default10.xanchor,
     xshift: attributes_default10.xshift,
@@ -42724,7 +45314,7 @@ var Plotly = (() => {
     // zref: 'z'
   }), "calc", "from-root");
 
-  // src/components/annotations3d/defaults.js
+  // src/components/annotations3d/defaults.ts
   function handleDefaults2(sceneLayoutIn, sceneLayoutOut, opts) {
     handleArrayContainerDefaults(sceneLayoutIn, sceneLayoutOut, {
       name: "annotations",
@@ -42765,7 +45355,7 @@ var Plotly = (() => {
     }
   }
 
-  // src/components/annotations3d/convert.js
+  // src/components/annotations3d/convert.ts
   function convert(scene) {
     var fullSceneLayout = scene.fullSceneLayout;
     var anns = fullSceneLayout.annotations;
@@ -42806,7 +45396,7 @@ var Plotly = (() => {
     };
   }
 
-  // src/plots/gl3d/project.js
+  // src/plots/gl3d/project.ts
   function xformMatrix(m, v) {
     var out = [0, 0, 0, 0];
     var i, j;
@@ -42829,7 +45419,7 @@ var Plotly = (() => {
   }
   var project_default = project;
 
-  // src/components/annotations3d/draw.js
+  // src/components/annotations3d/draw.ts
   var { drawRaw: drawRaw2 } = draw_default;
   var axLetters = ["x", "y", "z"];
   function draw5(scene) {
@@ -42862,7 +45452,7 @@ var Plotly = (() => {
     }
   }
 
-  // src/components/annotations3d/index.js
+  // src/components/annotations3d/index.ts
   var annotations3d_default = {
     moduleType: "component",
     name: "annotations3d",
@@ -42891,10 +45481,10 @@ var Plotly = (() => {
     }
   }
 
-  // src/components/shapes/draw_newshape/helpers.js
+  // src/components/shapes/draw_newshape/helpers.ts
   var import_parse_svg_path2 = __toESM(require_parse_svg_path(), 1);
 
-  // src/components/shapes/draw_newshape/constants.js
+  // src/components/shapes/draw_newshape/constants.ts
   var CIRCLE_SIDES = 32;
   var constants_default5 = {
     CIRCLE_SIDES,
@@ -42907,7 +45497,7 @@ var Plotly = (() => {
     SQRT2: Math.sqrt(2)
   };
 
-  // src/components/selections/helpers.js
+  // src/components/selections/helpers.ts
   var { strTranslate: strTranslate4 } = lib_default;
   function p2r(ax, v) {
     switch (ax.type) {
@@ -42948,7 +45538,7 @@ var Plotly = (() => {
     getTransform
   };
 
-  // src/components/shapes/draw_newshape/helpers.js
+  // src/components/shapes/draw_newshape/helpers.ts
   var CIRCLE_SIDES2 = constants_default5.CIRCLE_SIDES;
   var SQRT2 = constants_default5.SQRT2;
   var p2r2 = helpers_default7.p2r;
@@ -43223,7 +45813,7 @@ var Plotly = (() => {
   };
   var helpers_default8 = { writePaths, readPaths, pointsOnRectangle, pointsOnEllipse, handleEllipse, ellipseOver, fixDatesForPaths };
 
-  // src/components/shapes/handle_outline.js
+  // src/components/shapes/handle_outline.ts
   function clearOutlineControllers(gd) {
     var zoomLayer = gd._fullLayout._zoomlayer;
     if (zoomLayer) {
@@ -43242,7 +45832,7 @@ var Plotly = (() => {
     clearOutline: clearOutline3
   };
 
-  // src/components/shapes/draw_newshape/newshapes.js
+  // src/components/shapes/draw_newshape/newshapes.ts
   var drawMode2 = helpers_default4.drawMode;
   var openMode2 = helpers_default4.openMode;
   var i000 = constants_default5.i000;
@@ -43448,7 +46038,7 @@ var Plotly = (() => {
     createShapeObj
   };
 
-  // src/components/selections/draw_newselection/newselections.js
+  // src/components/selections/draw_newselection/newselections.ts
   var selectMode2 = helpers_default4.selectMode;
   var clearOutline5 = handle_outline_default.clearOutline;
   var readPaths3 = helpers_default8.readPaths;
@@ -43539,7 +46129,7 @@ var Plotly = (() => {
     return editHelpers ? editHelpers.getUpdateObj() : {};
   }
 
-  // src/components/shapes/constants.js
+  // src/components/shapes/constants.ts
   var constants_default6 = {
     segmentRE: /[MLHVQCTSZ][^MLHVQCTSZ]*/g,
     paramRE: /[^\s,]+/g,
@@ -43588,14 +46178,14 @@ var Plotly = (() => {
     }
   };
 
-  // src/components/shapes/helpers.js
+  // src/components/shapes/helpers.ts
   var rangeToShapePosition = function(ax) {
     return ax.type === "log" ? ax.r2d : function(v) {
       return v;
     };
   };
   var shapePositionToRange = function(ax) {
-    return ax.type === "log" ? ax.d2r : function(v) {
+    return ax.type === "log" ? ax.d2r : function(v, _clip) {
       return v;
     };
   };
@@ -43836,7 +46426,7 @@ var Plotly = (() => {
   }
   var helpers_default9 = { rangeToShapePosition, shapePositionToRange, decodeDate, encodeDate, extractPathCoords, getDataToPixel, getPixelToData, roundPositionForSharpStrokeRendering, makeShapesOptionsAndPlotinfo, makeSelectionsOptionsAndPlotinfo, getPathString };
 
-  // src/components/shapes/display_labels.js
+  // src/components/shapes/display_labels.ts
   var { FROM_TL: FROM_TL3 } = alignment_default;
   var getPathString2 = helpers_default9.getPathString;
   function drawLabel(gd, index, options, shapeGroup) {
@@ -43865,7 +46455,7 @@ var Plotly = (() => {
     var labelGroupAttrs = {
       "data-index": index
     };
-    var font3 = options.label.font;
+    var font5 = options.label.font;
     var labelTextAttrs = {
       "data-notex": 1
     };
@@ -43923,7 +46513,7 @@ var Plotly = (() => {
       }
     }
     labelText.call(function(s) {
-      s.call(font3, font3).attr({});
+      s.call(font5, font5).attr({});
       svg_text_utils_default.convertToTspans(s, gd);
       return s;
     });
@@ -44048,7 +46638,7 @@ var Plotly = (() => {
     return { textx: textx + xshift, texty: texty + yshift, xanchor };
   }
 
-  // src/components/shapes/display_outlines.js
+  // src/components/shapes/display_outlines.ts
   var { newShapes: newShapes2, createShapeObj: createShapeObj2 } = newshapes_default;
   var strTranslate5 = lib_default.strTranslate;
   var drawMode3 = helpers_default4.drawMode;
@@ -44330,7 +46920,7 @@ var Plotly = (() => {
     }
   }
 
-  // src/components/selections/draw.js
+  // src/components/selections/draw.ts
   var { clearOutlineControllers: clearOutlineControllers3 } = handle_outline_default;
   var getPathString3 = helpers_default9.getPathString;
   var draw_default2 = {
@@ -44455,11 +47045,11 @@ var Plotly = (() => {
     }
   }
 
-  // src/components/selections/select.js
+  // src/components/selections/select.ts
   var import_polybooljs = __toESM(require_polybooljs(), 1);
   var import_nested = __toESM(require_nested(), 1);
 
-  // src/components/selections/constants.js
+  // src/components/selections/constants.ts
   var constants_default7 = {
     // max pixels off straight before a lasso select line counts as bent
     BENDPX: 1.5,
@@ -44471,7 +47061,7 @@ var Plotly = (() => {
     SELECTID: "-select"
   };
 
-  // src/components/selections/select.js
+  // src/components/selections/select.ts
   var { clearOutline: clearOutline6 } = handle_outline_default;
   var { newShapes: newShapes3 } = newshapes_default;
   var { activateLastSelection: activateLastSelection2 } = draw_default2;
@@ -44508,7 +47098,7 @@ var Plotly = (() => {
     var zoomLayer = fullLayout._zoomlayer;
     var dragBBox = dragOptions.element.getBoundingClientRect();
     var plotinfo = dragOptions.plotinfo;
-    var transform2 = getTransform2(plotinfo);
+    var transform = getTransform2(plotinfo);
     var x0 = startX - dragBBox.left;
     var y0 = startY - dragBBox.top;
     fullLayout._calcInverseTransform(gd);
@@ -44543,12 +47133,12 @@ var Plotly = (() => {
       "stroke-dasharray": dashStyle(newStyle.line.dash, newStyle.line.width),
       "stroke-width": newStyle.line.width + "px",
       "shape-rendering": "crispEdges"
-    }).call(color_default.stroke, strokeC).call(color_default.fill, fillC).attr("fill-rule", "evenodd").classed("cursor-move", isDrawMode ? true : false).attr("transform", transform2).attr("d", path0 + "Z");
+    }).call(color_default.stroke, strokeC).call(color_default.fill, fillC).attr("fill-rule", "evenodd").classed("cursor-move", isDrawMode ? true : false).attr("transform", transform).attr("d", path0 + "Z");
     var corners = zoomLayer.append("path").attr("class", "zoombox-corners").style({
       fill: color_default.background,
       stroke: color_default.defaultLine,
       "stroke-width": 1
-    }).attr("transform", transform2).attr("d", "M0,0Z");
+    }).attr("transform", transform).attr("d", "M0,0Z");
     if (isDrawMode && dragOptions.hasText) {
       var shapeGroup = zoomLayer.select(".label-temp");
       if (shapeGroup.empty()) {
@@ -44894,7 +47484,7 @@ var Plotly = (() => {
       subtract: !!pointSelectionDef.subtract
     };
   }
-  function multiTester(list2) {
+  function multiTester(list2, _selectionTesters) {
     if (!list2.length) return;
     var testers = [];
     var xmin = isPointSelectionDef(list2[0]) ? 0 : list2[0][0][0];
@@ -45617,39 +48207,64 @@ var Plotly = (() => {
     selectOnClick: selectOnClick2
   };
 
-  // src/components/selections/attributes.js
+  // src/components/selections/attributes.ts
   var { line: scatterLineAttrs } = attributes_default8;
   var { extendFlat: extendFlat3 } = extend_default;
   var { overrideAll: overrideAll5 } = edit_types_default;
   var attributes_default12 = overrideAll5(templatedArray("selection", {
     type: {
       valType: "enumerated",
-      values: ["rect", "path"]
+      values: ["rect", "path"],
+      description: [
+        "Specifies the selection type to be drawn.",
+        "If *rect*, a rectangle is drawn linking",
+        "(`x0`,`y0`), (`x1`,`y0`), (`x1`,`y1`) and (`x0`,`y1`).",
+        "If *path*, draw a custom SVG path using `path`."
+      ].join(" ")
     },
-    xref: extendFlat3({}, attributes_default10.xref, {}),
-    yref: extendFlat3({}, attributes_default10.yref, {}),
+    xref: extendFlat3({}, attributes_default10.xref, {
+      description: [
+        "Sets the selection's x coordinate axis.",
+        axis_placeable_objects_default.axisRefDescription("x", "left", "right")
+      ].join(" ")
+    }),
+    yref: extendFlat3({}, attributes_default10.yref, {
+      description: [
+        "Sets the selection's x coordinate axis.",
+        axis_placeable_objects_default.axisRefDescription("y", "bottom", "top")
+      ].join(" ")
+    }),
     x0: {
-      valType: "any"
+      valType: "any",
+      description: "Sets the selection's starting x position."
     },
     x1: {
-      valType: "any"
+      valType: "any",
+      description: "Sets the selection's end x position."
     },
     y0: {
-      valType: "any"
+      valType: "any",
+      description: "Sets the selection's starting y position."
     },
     y1: {
-      valType: "any"
+      valType: "any",
+      description: "Sets the selection's end y position."
     },
     path: {
       valType: "string",
-      editType: "arraydraw"
+      editType: "arraydraw",
+      description: [
+        "For `type` *path* - a valid SVG path similar to `shapes.path` in data coordinates.",
+        "Allowed segments are: M, L and Z."
+      ].join(" ")
     },
     opacity: {
       valType: "number",
       min: 0,
       max: 1,
       dflt: 0.7,
-      editType: "arraydraw"
+      editType: "arraydraw",
+      description: "Sets the opacity of the selection."
     },
     line: {
       color: scatterLineAttrs.color,
@@ -45663,7 +48278,7 @@ var Plotly = (() => {
     }
   }), "arraydraw", "from-root");
 
-  // src/components/selections/defaults.js
+  // src/components/selections/defaults.ts
   function supplyLayoutDefaults6(layoutIn, layoutOut) {
     handleArrayContainerDefaults(layoutIn, layoutOut, {
       name: "selections",
@@ -45729,7 +48344,7 @@ var Plotly = (() => {
     }
   }
 
-  // src/components/selections/draw_newselection/defaults.js
+  // src/components/selections/draw_newselection/defaults.ts
   function supplyDrawNewSelectionDefaults(layoutIn, layoutOut, coerce3) {
     coerce3("newselection.mode");
     var newselectionLineWidth = coerce3("newselection.line.width");
@@ -45741,7 +48356,7 @@ var Plotly = (() => {
     coerce3("activeselection.opacity");
   }
 
-  // src/components/selections/index.js
+  // src/components/selections/index.ts
   var selections_default = {
     moduleType: "component",
     name: "selections",
@@ -45758,7 +48373,7 @@ var Plotly = (() => {
     selectOnClick: select_default4.selectOnClick
   };
 
-  // src/components/shapes/draw.js
+  // src/components/shapes/draw.ts
   var { clearOutlineControllers: clearOutlineControllers4 } = handle_outline_default;
   var getPathString4 = helpers_default9.getPathString;
   var draw_default3 = {
@@ -46250,125 +48865,268 @@ var Plotly = (() => {
     }
   }
 
-  // src/components/shapes/attributes.js
+  // src/components/shapes/attributes.ts
   var { line: scatterLineAttrs2 } = attributes_default8;
   var attributes_default13 = templatedArray("shape", {
     visible: extendFlat({}, attributes_default2.visible, {
-      editType: "calc+arraydraw"
+      editType: "calc+arraydraw",
+      description: [
+        "Determines whether or not this shape is visible.",
+        "If *legendonly*, the shape is not drawn,",
+        "but can appear as a legend item",
+        "(provided that the legend itself is visible)."
+      ].join(" ")
     }),
     showlegend: {
       valType: "boolean",
       dflt: false,
-      editType: "calc+arraydraw"
+      editType: "calc+arraydraw",
+      description: ["Determines whether or not this", "shape is shown in the legend."].join(" ")
     },
     legend: extendFlat({}, attributes_default2.legend, {
-      editType: "calc+arraydraw"
+      editType: "calc+arraydraw",
+      description: [
+        "Sets the reference to a legend to show this shape in.",
+        "References to these legends are *legend*, *legend2*, *legend3*, etc.",
+        "Settings for these legends are set in the layout, under",
+        "`layout.legend`, `layout.legend2`, etc."
+      ].join(" ")
     }),
     legendgroup: extendFlat({}, attributes_default2.legendgroup, {
-      editType: "calc+arraydraw"
+      editType: "calc+arraydraw",
+      description: [
+        "Sets the legend group for this shape.",
+        "Traces and shapes part of the same legend group hide/show at the same time",
+        "when toggling legend items."
+      ].join(" ")
     }),
     legendgrouptitle: {
       text: extendFlat({}, attributes_default2.legendgrouptitle.text, {
         editType: "calc+arraydraw"
       }),
       font: font_attributes_default({
-        editType: "calc+arraydraw"
+        editType: "calc+arraydraw",
+        description: ["Sets this legend group's title font."].join(" ")
       }),
       editType: "calc+arraydraw"
     },
     legendrank: extendFlat({}, attributes_default2.legendrank, {
-      editType: "calc+arraydraw"
+      editType: "calc+arraydraw",
+      description: [
+        "Sets the legend rank for this shape.",
+        "Items and groups with smaller ranks are presented on top/left side while",
+        "with *reversed* `legend.traceorder` they are on bottom/right side.",
+        "The default legendrank is 1000,",
+        "so that you can use ranks less than 1000 to place certain items before all unranked items,",
+        "and ranks greater than 1000 to go after all unranked items.",
+        "When having unranked or equal rank items shapes would be displayed after traces",
+        "i.e. according to their order in data and layout."
+      ].join(" ")
     }),
     legendwidth: extendFlat({}, attributes_default2.legendwidth, {
-      editType: "calc+arraydraw"
+      editType: "calc+arraydraw",
+      description: "Sets the width (in px or fraction) of the legend for this shape."
     }),
     type: {
       valType: "enumerated",
       values: ["circle", "rect", "path", "line"],
-      editType: "calc+arraydraw"
+      editType: "calc+arraydraw",
+      description: [
+        "Specifies the shape type to be drawn.",
+        "If *line*, a line is drawn from (`x0`,`y0`) to (`x1`,`y1`)",
+        "with respect to the axes' sizing mode.",
+        "If *circle*, a circle is drawn from",
+        "((`x0`+`x1`)/2, (`y0`+`y1`)/2))",
+        "with radius",
+        "(|(`x0`+`x1`)/2 - `x0`|, |(`y0`+`y1`)/2 -`y0`)|)",
+        "with respect to the axes' sizing mode.",
+        "If *rect*, a rectangle is drawn linking",
+        "(`x0`,`y0`), (`x1`,`y0`), (`x1`,`y1`), (`x0`,`y1`), (`x0`,`y0`)",
+        "with respect to the axes' sizing mode.",
+        "If *path*, draw a custom SVG path using `path`.",
+        "with respect to the axes' sizing mode."
+      ].join(" ")
     },
     layer: {
       valType: "enumerated",
       values: ["below", "above", "between"],
       dflt: "above",
-      editType: "arraydraw"
+      editType: "arraydraw",
+      description: [
+        "Specifies whether shapes are drawn below gridlines (*below*),",
+        "between gridlines and traces (*between*) or above traces (*above*)."
+      ].join(" ")
     },
-    xref: extendFlat({}, attributes_default10.xref, {}),
+    xref: extendFlat({}, attributes_default10.xref, {
+      description: [
+        "Sets the shape's x coordinate axis.",
+        axis_placeable_objects_default.axisRefDescription("x", "left", "right")
+      ].join(" ")
+    }),
     xsizemode: {
       valType: "enumerated",
       values: ["scaled", "pixel"],
       dflt: "scaled",
-      editType: "calc+arraydraw"
+      editType: "calc+arraydraw",
+      description: [
+        "Sets the shapes's sizing mode along the x axis.",
+        "If set to *scaled*, `x0`, `x1` and x coordinates within `path` refer to",
+        "data values on the x axis or a fraction of the plot area's width",
+        "(`xref` set to *paper*).",
+        "If set to *pixel*, `xanchor` specifies the x position in terms",
+        "of data or plot fraction but `x0`, `x1` and x coordinates within `path`",
+        "are pixels relative to `xanchor`. This way, the shape can have",
+        "a fixed width while maintaining a position relative to data or",
+        "plot fraction."
+      ].join(" ")
     },
     xanchor: {
       valType: "any",
-      editType: "calc+arraydraw"
+      editType: "calc+arraydraw",
+      description: [
+        "Only relevant in conjunction with `xsizemode` set to *pixel*.",
+        "Specifies the anchor point on the x axis to which `x0`, `x1`",
+        "and x coordinates within `path` are relative to.",
+        "E.g. useful to attach a pixel sized shape to a certain data value.",
+        "No effect when `xsizemode` not set to *pixel*."
+      ].join(" ")
     },
     x0: {
       valType: "any",
-      editType: "calc+arraydraw"
+      editType: "calc+arraydraw",
+      description: ["Sets the shape's starting x position.", "See `type` and `xsizemode` for more info."].join(" ")
     },
     x1: {
       valType: "any",
-      editType: "calc+arraydraw"
+      editType: "calc+arraydraw",
+      description: ["Sets the shape's end x position.", "See `type` and `xsizemode` for more info."].join(" ")
     },
     x0shift: {
       valType: "number",
       dflt: 0,
       min: -1,
       max: 1,
-      editType: "calc"
+      editType: "calc",
+      description: [
+        "Shifts `x0` away from the center of the category when `xref` is a *category* or",
+        "*multicategory* axis. -0.5 corresponds to the start of the category and 0.5",
+        "corresponds to the end of the category."
+      ].join(" ")
     },
     x1shift: {
       valType: "number",
       dflt: 0,
       min: -1,
       max: 1,
-      editType: "calc"
+      editType: "calc",
+      description: [
+        "Shifts `x1` away from the center of the category when `xref` is a *category* or",
+        "*multicategory* axis. -0.5 corresponds to the start of the category and 0.5",
+        "corresponds to the end of the category."
+      ].join(" ")
     },
-    yref: extendFlat({}, attributes_default10.yref, {}),
+    yref: extendFlat({}, attributes_default10.yref, {
+      description: [
+        "Sets the shape's y coordinate axis.",
+        axis_placeable_objects_default.axisRefDescription("y", "bottom", "top")
+      ].join(" ")
+    }),
     ysizemode: {
       valType: "enumerated",
       values: ["scaled", "pixel"],
       dflt: "scaled",
-      editType: "calc+arraydraw"
+      editType: "calc+arraydraw",
+      description: [
+        "Sets the shapes's sizing mode along the y axis.",
+        "If set to *scaled*, `y0`, `y1` and y coordinates within `path` refer to",
+        "data values on the y axis or a fraction of the plot area's height",
+        "(`yref` set to *paper*).",
+        "If set to *pixel*, `yanchor` specifies the y position in terms",
+        "of data or plot fraction but `y0`, `y1` and y coordinates within `path`",
+        "are pixels relative to `yanchor`. This way, the shape can have",
+        "a fixed height while maintaining a position relative to data or",
+        "plot fraction."
+      ].join(" ")
     },
     yanchor: {
       valType: "any",
-      editType: "calc+arraydraw"
+      editType: "calc+arraydraw",
+      description: [
+        "Only relevant in conjunction with `ysizemode` set to *pixel*.",
+        "Specifies the anchor point on the y axis to which `y0`, `y1`",
+        "and y coordinates within `path` are relative to.",
+        "E.g. useful to attach a pixel sized shape to a certain data value.",
+        "No effect when `ysizemode` not set to *pixel*."
+      ].join(" ")
     },
     y0: {
       valType: "any",
-      editType: "calc+arraydraw"
+      editType: "calc+arraydraw",
+      description: ["Sets the shape's starting y position.", "See `type` and `ysizemode` for more info."].join(" ")
     },
     y1: {
       valType: "any",
-      editType: "calc+arraydraw"
+      editType: "calc+arraydraw",
+      description: ["Sets the shape's end y position.", "See `type` and `ysizemode` for more info."].join(" ")
     },
     y0shift: {
       valType: "number",
       dflt: 0,
       min: -1,
       max: 1,
-      editType: "calc"
+      editType: "calc",
+      description: [
+        "Shifts `y0` away from the center of the category when `yref` is a *category* or",
+        "*multicategory* axis. -0.5 corresponds to the start of the category and 0.5",
+        "corresponds to the end of the category."
+      ].join(" ")
     },
     y1shift: {
       valType: "number",
       dflt: 0,
       min: -1,
       max: 1,
-      editType: "calc"
+      editType: "calc",
+      description: [
+        "Shifts `y1` away from the center of the category when `yref` is a *category* or",
+        "*multicategory* axis. -0.5 corresponds to the start of the category and 0.5",
+        "corresponds to the end of the category."
+      ].join(" ")
     },
     path: {
       valType: "string",
-      editType: "calc+arraydraw"
+      editType: "calc+arraydraw",
+      description: [
+        "For `type` *path* - a valid SVG path with the pixel values",
+        "replaced by data values in `xsizemode`/`ysizemode` being *scaled*",
+        "and taken unmodified as pixels relative to `xanchor` and `yanchor`",
+        "in case of *pixel* size mode.",
+        "There are a few restrictions / quirks",
+        "only absolute instructions, not relative. So the allowed segments",
+        "are: M, L, H, V, Q, C, T, S, and Z",
+        "arcs (A) are not allowed because radius rx and ry are relative.",
+        "In the future we could consider supporting relative commands,",
+        "but we would have to decide on how to handle date and log axes.",
+        "Note that even as is, Q and C Bezier paths that are smooth on",
+        "linear axes may not be smooth on log, and vice versa.",
+        'no chained "polybezier" commands - specify the segment type for',
+        "each one.",
+        "On category axes, values are numbers scaled to the serial numbers",
+        "of categories because using the categories themselves there would",
+        "be no way to describe fractional positions",
+        "On data axes: because space and T are both normal components of path",
+        "strings, we can't use either to separate date from time parts.",
+        "Therefore we'll use underscore for this purpose:",
+        "2015-02-21_13:45:56.789"
+      ].join(" ")
     },
     opacity: {
       valType: "number",
       min: 0,
       max: 1,
       dflt: 1,
-      editType: "arraydraw"
+      editType: "arraydraw",
+      description: "Sets the opacity of the shape."
     },
     line: {
       color: extendFlat({}, scatterLineAttrs2.color, { editType: "arraydraw" }),
@@ -46379,30 +49137,45 @@ var Plotly = (() => {
     fillcolor: {
       valType: "color",
       dflt: "rgba(0,0,0,0)",
-      editType: "arraydraw"
+      editType: "arraydraw",
+      description: ["Sets the color filling the shape's interior. Only applies to closed shapes."].join(" ")
     },
     fillrule: {
       valType: "enumerated",
       values: ["evenodd", "nonzero"],
       dflt: "evenodd",
-      editType: "arraydraw"
+      editType: "arraydraw",
+      description: [
+        "Determines which regions of complex paths constitute the interior.",
+        "For more info please visit https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/fill-rule"
+      ].join(" ")
     },
     editable: {
       valType: "boolean",
       dflt: false,
-      editType: "calc+arraydraw"
+      editType: "calc+arraydraw",
+      description: [
+        "Determines whether the shape could be activated for edit or not.",
+        "Has no effect when the older editable shapes mode is enabled via",
+        "`config.editable` or `config.edits.shapePosition`."
+      ].join(" ")
     },
     label: {
       text: {
         valType: "string",
         dflt: "",
-        editType: "arraydraw"
+        editType: "arraydraw",
+        description: [
+          "Sets the text to display with shape.",
+          "It is also used for legend item if `name` is not provided."
+        ].join(" ")
       },
       texttemplate: shapeTexttemplateAttrs({}, { keys: Object.keys(label_texttemplate_default) }),
       texttemplatefallback: templatefallbackAttrs({ editType: "arraydraw" }),
       font: font_attributes_default({
         editType: "calc+arraydraw",
-        colorEditType: "arraydraw"
+        colorEditType: "arraydraw",
+        description: "Sets the shape label text font."
       }),
       textposition: {
         valType: "enumerated",
@@ -46420,36 +49193,70 @@ var Plotly = (() => {
           "middle",
           "end"
         ],
-        editType: "arraydraw"
+        editType: "arraydraw",
+        description: [
+          "Sets the position of the label text relative to the shape.",
+          "Supported values for rectangles, circles and paths are",
+          "*top left*, *top center*, *top right*, *middle left*,",
+          "*middle center*, *middle right*, *bottom left*, *bottom center*,",
+          "and *bottom right*.",
+          "Supported values for lines are *start*, *middle*, and *end*.",
+          "Default: *middle center* for rectangles, circles, and paths; *middle* for lines."
+        ].join(" ")
       },
       textangle: {
         valType: "angle",
         dflt: "auto",
-        editType: "calc+arraydraw"
+        editType: "calc+arraydraw",
+        description: [
+          "Sets the angle at which the label text is drawn",
+          "with respect to the horizontal. For lines, angle *auto*",
+          "is the same angle as the line. For all other shapes,",
+          "angle *auto* is horizontal."
+        ].join(" ")
       },
       xanchor: {
         valType: "enumerated",
         values: ["auto", "left", "center", "right"],
         dflt: "auto",
-        editType: "calc+arraydraw"
+        editType: "calc+arraydraw",
+        description: [
+          "Sets the label's horizontal position anchor",
+          "This anchor binds the specified `textposition` to the *left*, *center*",
+          "or *right* of the label text.",
+          "For example, if `textposition` is set to *top right* and",
+          "`xanchor` to *right* then the right-most portion of the",
+          "label text lines up with the right-most edge of the",
+          "shape."
+        ].join(" ")
       },
       yanchor: {
         valType: "enumerated",
         values: ["top", "middle", "bottom"],
-        editType: "calc+arraydraw"
+        editType: "calc+arraydraw",
+        description: [
+          "Sets the label's vertical position anchor",
+          "This anchor binds the specified `textposition` to the *top*, *middle*",
+          "or *bottom* of the label text.",
+          "For example, if `textposition` is set to *top right* and",
+          "`yanchor` to *top* then the top-most portion of the",
+          "label text lines up with the top-most edge of the",
+          "shape."
+        ].join(" ")
       },
       padding: {
         valType: "number",
         dflt: 3,
         min: 0,
-        editType: "arraydraw"
+        editType: "arraydraw",
+        description: "Sets padding (in px) between edge of label and edge of shape."
       },
       editType: "arraydraw"
     },
     editType: "arraydraw"
   });
 
-  // src/components/shapes/defaults.js
+  // src/components/shapes/defaults.ts
   function supplyLayoutDefaults7(layoutIn, layoutOut) {
     handleArrayContainerDefaults(layoutIn, layoutOut, {
       name: "shapes",
@@ -46566,7 +49373,7 @@ var Plotly = (() => {
     }
   }
 
-  // src/components/shapes/draw_newshape/defaults.js
+  // src/components/shapes/draw_newshape/defaults.ts
   function dfltLabelYanchor2(isLine, labelTextPosition) {
     return isLine ? "bottom" : labelTextPosition.indexOf("top") !== -1 ? "top" : labelTextPosition.indexOf("bottom") !== -1 ? "bottom" : "middle";
   }
@@ -46607,7 +49414,7 @@ var Plotly = (() => {
     coerce3("activeshape.opacity");
   }
 
-  // src/components/shapes/calc_autorange.js
+  // src/components/shapes/calc_autorange.ts
   function calcAutorange2(gd) {
     var fullLayout = gd._fullLayout;
     var shapeList = lib_default.filterVisible(fullLayout.shapes);
@@ -46703,7 +49510,7 @@ var Plotly = (() => {
     if (max2 >= min2) return [min2, max2];
   }
 
-  // src/components/shapes/index.js
+  // src/components/shapes/index.ts
   var shapes_default = {
     moduleType: "component",
     name: "shapes",
@@ -46717,67 +49524,114 @@ var Plotly = (() => {
     eraseActiveShape: draw_default3.eraseActiveShape
   };
 
-  // src/components/images/attributes.js
+  // src/components/images/attributes.ts
   var attributes_default14 = templatedArray("image", {
     visible: {
       valType: "boolean",
       dflt: true,
-      editType: "arraydraw"
+      editType: "arraydraw",
+      description: [
+        "Determines whether or not this image is visible."
+      ].join(" ")
     },
     source: {
       valType: "string",
-      editType: "arraydraw"
+      editType: "arraydraw",
+      description: [
+        "Specifies the URL of the image to be used.",
+        "The URL must be accessible from the domain where the",
+        "plot code is run, and can be either relative or absolute."
+      ].join(" ")
     },
     layer: {
       valType: "enumerated",
       values: ["below", "above"],
       dflt: "above",
-      editType: "arraydraw"
+      editType: "arraydraw",
+      description: [
+        "Specifies whether images are drawn below or above traces.",
+        "When `xref` and `yref` are both set to `paper`,",
+        "image is drawn below the entire plot area."
+      ].join(" ")
     },
     sizex: {
       valType: "number",
       dflt: 0,
-      editType: "arraydraw"
+      editType: "arraydraw",
+      description: [
+        "Sets the image container size horizontally.",
+        "The image will be sized based on the `position` value.",
+        "When `xref` is set to `paper`, units are sized relative",
+        "to the plot width.",
+        "When `xref` ends with ` domain`, units are sized relative",
+        "to the axis width."
+      ].join(" ")
     },
     sizey: {
       valType: "number",
       dflt: 0,
-      editType: "arraydraw"
+      editType: "arraydraw",
+      description: [
+        "Sets the image container size vertically.",
+        "The image will be sized based on the `position` value.",
+        "When `yref` is set to `paper`, units are sized relative",
+        "to the plot height.",
+        "When `yref` ends with ` domain`, units are sized relative",
+        "to the axis height."
+      ].join(" ")
     },
     sizing: {
       valType: "enumerated",
       values: ["fill", "contain", "stretch"],
       dflt: "contain",
-      editType: "arraydraw"
+      editType: "arraydraw",
+      description: [
+        "Specifies which dimension of the image to constrain."
+      ].join(" ")
     },
     opacity: {
       valType: "number",
       min: 0,
       max: 1,
       dflt: 1,
-      editType: "arraydraw"
+      editType: "arraydraw",
+      description: "Sets the opacity of the image."
     },
     x: {
       valType: "any",
       dflt: 0,
-      editType: "arraydraw"
+      editType: "arraydraw",
+      description: [
+        "Sets the image's x position.",
+        "When `xref` is set to `paper`, units are sized relative",
+        "to the plot height.",
+        "See `xref` for more info"
+      ].join(" ")
     },
     y: {
       valType: "any",
       dflt: 0,
-      editType: "arraydraw"
+      editType: "arraydraw",
+      description: [
+        "Sets the image's y position.",
+        "When `yref` is set to `paper`, units are sized relative",
+        "to the plot height.",
+        "See `yref` for more info"
+      ].join(" ")
     },
     xanchor: {
       valType: "enumerated",
       values: ["left", "center", "right"],
       dflt: "left",
-      editType: "arraydraw"
+      editType: "arraydraw",
+      description: "Sets the anchor for the x position"
     },
     yanchor: {
       valType: "enumerated",
       values: ["top", "middle", "bottom"],
       dflt: "top",
-      editType: "arraydraw"
+      editType: "arraydraw",
+      description: "Sets the anchor for the y position."
     },
     xref: {
       valType: "enumerated",
@@ -46786,7 +49640,11 @@ var Plotly = (() => {
         constants_default2.idRegex.x.toString()
       ],
       dflt: "paper",
-      editType: "arraydraw"
+      editType: "arraydraw",
+      description: [
+        "Sets the images's x coordinate axis.",
+        axis_placeable_objects_default.axisRefDescription("x", "left", "right")
+      ].join(" ")
     },
     yref: {
       valType: "enumerated",
@@ -46795,12 +49653,16 @@ var Plotly = (() => {
         constants_default2.idRegex.y.toString()
       ],
       dflt: "paper",
-      editType: "arraydraw"
+      editType: "arraydraw",
+      description: [
+        "Sets the images's y coordinate axis.",
+        axis_placeable_objects_default.axisRefDescription("y", "bottom", "top")
+      ].join(" ")
     },
     editType: "arraydraw"
   });
 
-  // src/components/images/defaults.js
+  // src/components/images/defaults.ts
   var name2 = "images";
   function supplyLayoutDefaults8(layoutIn, layoutOut) {
     var opts = {
@@ -46837,7 +49699,7 @@ var Plotly = (() => {
     return imageOut;
   }
 
-  // src/components/images/draw.js
+  // src/components/images/draw.ts
   function draw8(gd) {
     var fullLayout = gd._fullLayout;
     var imageDataAbove = [];
@@ -47018,7 +49880,7 @@ var Plotly = (() => {
     }
   }
 
-  // src/components/images/convert_coords.js
+  // src/components/images/convert_coords.ts
   var import_fast_isnumeric34 = __toESM(require_fast_isnumeric(), 1);
   function convertCoords2(gd, ax, newType, doExtra) {
     ax = ax || {};
@@ -47055,7 +49917,7 @@ var Plotly = (() => {
     }
   }
 
-  // src/components/images/index.js
+  // src/components/images/index.ts
   var images_default = {
     moduleType: "component",
     name: "images",
@@ -47066,7 +49928,7 @@ var Plotly = (() => {
     convertCoords: convertCoords2
   };
 
-  // src/components/updatemenus/constants.js
+  // src/components/updatemenus/constants.ts
   var constants_default8 = {
     // layout attribute name
     name: "updatemenus",
@@ -47119,16 +49981,24 @@ var Plotly = (() => {
     }
   };
 
-  // src/components/updatemenus/attributes.js
+  // src/components/updatemenus/attributes.ts
   var { overrideAll: overrideAll6 } = edit_types_default;
   var buttonsAttrs = templatedArray("button", {
     visible: {
-      valType: "boolean"
+      valType: "boolean",
+      description: "Determines whether or not this button is visible."
     },
     method: {
       valType: "enumerated",
       values: ["restyle", "relayout", "animate", "update", "skip"],
-      dflt: "restyle"
+      dflt: "restyle",
+      description: [
+        "Sets the Plotly method to be called on click.",
+        "If the `skip` method is used, the API updatemenu will function as normal",
+        "but will perform no API calls and will not bind automatically to state",
+        "updates. This may be used to create a component interface and attach to",
+        "updatemenu events manually via JavaScript."
+      ].join(" ")
     },
     args: {
       valType: "info_array",
@@ -47137,7 +50007,11 @@ var Plotly = (() => {
         { valType: "any" },
         { valType: "any" },
         { valType: "any" }
-      ]
+      ],
+      description: [
+        "Sets the arguments values to be passed to the Plotly",
+        "method set in `method` on click."
+      ].join(" ")
     },
     args2: {
       valType: "info_array",
@@ -47146,82 +50020,133 @@ var Plotly = (() => {
         { valType: "any" },
         { valType: "any" },
         { valType: "any" }
-      ]
+      ],
+      description: [
+        "Sets a 2nd set of `args`,",
+        "these arguments values are passed to the Plotly",
+        "method set in `method` when clicking this button while in the active state.",
+        "Use this to create toggle buttons."
+      ].join(" ")
     },
     label: {
       valType: "string",
-      dflt: ""
+      dflt: "",
+      description: "Sets the text label to appear on the button."
     },
     execute: {
       valType: "boolean",
-      dflt: true
+      dflt: true,
+      description: [
+        "When true, the API method is executed. When false, all other behaviors are the same",
+        "and command execution is skipped. This may be useful when hooking into, for example,",
+        "the `plotly_buttonclicked` method and executing the API command manually without losing",
+        "the benefit of the updatemenu automatically binding to the state of the plot through the",
+        "specification of `method` and `args`."
+      ].join(" ")
     }
   });
   var attributes_default15 = overrideAll6(templatedArray("updatemenu", {
     _arrayAttrRegexps: [/^updatemenus\[(0|[1-9][0-9]+)\]\.buttons/],
     visible: {
-      valType: "boolean"
+      valType: "boolean",
+      description: [
+        "Determines whether or not the update menu is visible."
+      ].join(" ")
     },
     type: {
       valType: "enumerated",
       values: ["dropdown", "buttons"],
-      dflt: "dropdown"
+      dflt: "dropdown",
+      description: [
+        "Determines whether the buttons are accessible via a dropdown menu",
+        "or whether the buttons are stacked horizontally or vertically"
+      ].join(" ")
     },
     direction: {
       valType: "enumerated",
       values: ["left", "right", "up", "down"],
-      dflt: "down"
+      dflt: "down",
+      description: [
+        "Determines the direction in which the buttons are laid out, whether",
+        "in a dropdown menu or a row/column of buttons. For `left` and `up`,",
+        "the buttons will still appear in left-to-right or top-to-bottom order",
+        "respectively."
+      ].join(" ")
     },
     active: {
       valType: "integer",
       min: -1,
-      dflt: 0
+      dflt: 0,
+      description: [
+        "Determines which button (by index starting from 0) is",
+        "considered active."
+      ].join(" ")
     },
     showactive: {
       valType: "boolean",
-      dflt: true
+      dflt: true,
+      description: "Highlights active dropdown item or active button if true."
     },
     buttons: buttonsAttrs,
     x: {
       valType: "number",
       min: -2,
       max: 3,
-      dflt: -0.05
+      dflt: -0.05,
+      description: "Sets the x position (in normalized coordinates) of the update menu."
     },
     xanchor: {
       valType: "enumerated",
       values: ["auto", "left", "center", "right"],
-      dflt: "right"
+      dflt: "right",
+      description: [
+        "Sets the update menu's horizontal position anchor.",
+        "This anchor binds the `x` position to the *left*, *center*",
+        "or *right* of the range selector."
+      ].join(" ")
     },
     y: {
       valType: "number",
       min: -2,
       max: 3,
-      dflt: 1
+      dflt: 1,
+      description: "Sets the y position (in normalized coordinates) of the update menu."
     },
     yanchor: {
       valType: "enumerated",
       values: ["auto", "top", "middle", "bottom"],
-      dflt: "top"
+      dflt: "top",
+      description: [
+        "Sets the update menu's vertical position anchor",
+        "This anchor binds the `y` position to the *top*, *middle*",
+        "or *bottom* of the range selector."
+      ].join(" ")
     },
-    pad: extendFlat(pad_attributes_default({ editType: "arraydraw" }), {}),
-    font: font_attributes_default({}),
+    pad: extendFlat(pad_attributes_default({ editType: "arraydraw" }), {
+      description: "Sets the padding around the buttons or dropdown menu."
+    }),
+    font: font_attributes_default({
+      description: "Sets the font of the update menu button text."
+    }),
     bgcolor: {
-      valType: "color"
+      valType: "color",
+      description: "Sets the background color of the update menu buttons."
     },
     bordercolor: {
       valType: "color",
-      dflt: attributes_default3.borderLine
+      dflt: attributes_default3.borderLine,
+      description: "Sets the color of the border enclosing the update menu."
     },
     borderwidth: {
       valType: "number",
       min: 0,
       dflt: 1,
-      editType: "arraydraw"
+      editType: "arraydraw",
+      description: "Sets the width (in px) of the border enclosing the update menu."
     }
   }), "arraydraw", "from-root");
 
-  // src/components/updatemenus/defaults.js
+  // src/components/updatemenus/defaults.ts
   var name3 = constants_default8.name;
   var buttonAttrs = attributes_default15.buttons;
   function updateMenusDefaults(layoutIn, layoutOut) {
@@ -47276,7 +50201,7 @@ var Plotly = (() => {
     }
   }
 
-  // src/components/updatemenus/scrollbox.js
+  // src/components/updatemenus/scrollbox.ts
   var scrollbox_default = ScrollBox;
   function ScrollBox(gd, container, id2) {
     this.gd = gd;
@@ -47482,35 +50407,35 @@ var Plotly = (() => {
       delete this._vbarTranslateMax;
     }
   };
-  ScrollBox.prototype._onBoxDrag = function _onBoxDrag() {
+  ScrollBox.prototype._onBoxDrag = function _onBoxDrag(event2) {
     var translateX = this.translateX;
     var translateY = this.translateY;
     if (this.hbar) {
-      translateX -= event.dx;
+      translateX -= event2.dx;
     }
     if (this.vbar) {
-      translateY -= event.dy;
+      translateY -= event2.dy;
     }
     this.setTranslate(translateX, translateY);
   };
-  ScrollBox.prototype._onBoxWheel = function _onBoxWheel() {
+  ScrollBox.prototype._onBoxWheel = function _onBoxWheel(event2) {
     var translateX = this.translateX;
     var translateY = this.translateY;
     if (this.hbar) {
-      translateX += event.deltaY;
+      translateX += event2.deltaY;
     }
     if (this.vbar) {
-      translateY += event.deltaY;
+      translateY += event2.deltaY;
     }
     this.setTranslate(translateX, translateY);
   };
-  ScrollBox.prototype._onBarDrag = function _onBarDrag() {
+  ScrollBox.prototype._onBarDrag = function _onBarDrag(event2) {
     var translateX = this.translateX;
     var translateY = this.translateY;
     if (this.hbar) {
       var xMin = translateX + this._hbarXMin;
       var xMax = xMin + this._hbarTranslateMax;
-      var x = lib_default.constrain(event.x, xMin, xMax);
+      var x = lib_default.constrain(event2.x, xMin, xMax);
       var xf = (x - xMin) / (xMax - xMin);
       var translateXMax = this.position.w - this._box.w;
       translateX = xf * translateXMax;
@@ -47518,14 +50443,14 @@ var Plotly = (() => {
     if (this.vbar) {
       var yMin = translateY + this._vbarYMin;
       var yMax = yMin + this._vbarTranslateMax;
-      var y = lib_default.constrain(event.y, yMin, yMax);
+      var y = lib_default.constrain(event2.y, yMin, yMax);
       var yf = (y - yMin) / (yMax - yMin);
       var translateYMax = this.position.h - this._box.h;
       translateY = yf * translateYMax;
     }
     this.setTranslate(translateX, translateY);
   };
-  ScrollBox.prototype.setTranslate = function setTranslate2(translateX, translateY) {
+  ScrollBox.prototype.setTranslate = function setTranslate3(translateX, translateY) {
     var translateXMax = this.position.w - this._box.w;
     var translateYMax = this.position.h - this._box.h;
     translateX = lib_default.constrain(translateX || 0, 0, translateXMax);
@@ -47533,7 +50458,7 @@ var Plotly = (() => {
     this.translateX = translateX;
     this.translateY = translateY;
     this.container.call(
-      setTranslate2,
+      setTranslate3,
       this._box.l - this.position.l - translateX,
       this._box.t - this.position.t - translateY
     );
@@ -47546,7 +50471,7 @@ var Plotly = (() => {
     if (this.hbar) {
       var xf = translateX / translateXMax;
       this.hbar.call(
-        setTranslate2,
+        setTranslate3,
         translateX + xf * this._hbarTranslateMax,
         translateY
       );
@@ -47554,14 +50479,14 @@ var Plotly = (() => {
     if (this.vbar) {
       var yf = translateY / translateYMax;
       this.vbar.call(
-        setTranslate2,
+        setTranslate3,
         translateX,
         translateY + yf * this._vbarTranslateMax
       );
     }
   };
 
-  // src/components/updatemenus/draw.js
+  // src/components/updatemenus/draw.ts
   var { LINE_SPACING: LINE_SPACING5 } = alignment_default;
   function draw9(gd) {
     var fullLayout = gd._fullLayout;
@@ -47968,7 +50893,7 @@ var Plotly = (() => {
     gButton.attr(constants_default8.menuIndexAttrName, newMenuIndexAttr || "-1").selectAll("g." + constants_default8.dropdownButtonClassName).remove();
   }
 
-  // src/components/updatemenus/index.js
+  // src/components/updatemenus/index.ts
   var updatemenus_default = {
     moduleType: "component",
     name: constants_default8.name,
@@ -47977,7 +50902,7 @@ var Plotly = (() => {
     draw: draw9
   };
 
-  // src/components/sliders/constants.js
+  // src/components/sliders/constants.ts
   var constants_default9 = {
     // layout attribute name
     name: "sliders",
@@ -48043,17 +50968,27 @@ var Plotly = (() => {
     currentValueInset: 0
   };
 
-  // src/components/sliders/attributes.js
+  // src/components/sliders/attributes.ts
   var { overrideAll: overrideAll7 } = edit_types_default;
   var stepsAttrs = templatedArray("step", {
     visible: {
       valType: "boolean",
-      dflt: true
+      dflt: true,
+      description: [
+        "Determines whether or not this step is included in the slider."
+      ].join(" ")
     },
     method: {
       valType: "enumerated",
       values: ["restyle", "relayout", "animate", "update", "skip"],
-      dflt: "restyle"
+      dflt: "restyle",
+      description: [
+        "Sets the Plotly method to be called when the slider value is changed.",
+        "If the `skip` method is used, the API slider will function as normal",
+        "but will perform no API calls and will not bind automatically to state",
+        "updates. This may be used to create a component interface and attach to",
+        "slider events manually via JavaScript."
+      ].join(" ")
     },
     args: {
       valType: "info_array",
@@ -48062,137 +50997,214 @@ var Plotly = (() => {
         { valType: "any" },
         { valType: "any" },
         { valType: "any" }
-      ]
+      ],
+      description: [
+        "Sets the arguments values to be passed to the Plotly",
+        "method set in `method` on slide."
+      ].join(" ")
     },
     label: {
-      valType: "string"
+      valType: "string",
+      description: "Sets the text label to appear on the slider"
     },
     value: {
-      valType: "string"
+      valType: "string",
+      description: [
+        "Sets the value of the slider step, used to refer to the step programatically.",
+        "Defaults to the slider label if not provided."
+      ].join(" ")
     },
     execute: {
       valType: "boolean",
-      dflt: true
+      dflt: true,
+      description: [
+        "When true, the API method is executed. When false, all other behaviors are the same",
+        "and command execution is skipped. This may be useful when hooking into, for example,",
+        "the `plotly_sliderchange` method and executing the API command manually without losing",
+        "the benefit of the slider automatically binding to the state of the plot through the",
+        "specification of `method` and `args`."
+      ].join(" ")
     }
   });
   var attributes_default16 = overrideAll7(templatedArray("slider", {
     visible: {
       valType: "boolean",
-      dflt: true
+      dflt: true,
+      description: [
+        "Determines whether or not the slider is visible."
+      ].join(" ")
     },
     active: {
       valType: "number",
       min: 0,
-      dflt: 0
+      dflt: 0,
+      description: [
+        "Determines which button (by index starting from 0) is",
+        "considered active."
+      ].join(" ")
     },
     steps: stepsAttrs,
     lenmode: {
       valType: "enumerated",
       values: ["fraction", "pixels"],
-      dflt: "fraction"
+      dflt: "fraction",
+      description: [
+        "Determines whether this slider length",
+        "is set in units of plot *fraction* or in *pixels.",
+        "Use `len` to set the value."
+      ].join(" ")
     },
     len: {
       valType: "number",
       min: 0,
-      dflt: 1
+      dflt: 1,
+      description: [
+        "Sets the length of the slider",
+        "This measure excludes the padding of both ends.",
+        "That is, the slider's length is this length minus the",
+        "padding on both ends."
+      ].join(" ")
     },
     x: {
       valType: "number",
       min: -2,
       max: 3,
-      dflt: 0
+      dflt: 0,
+      description: "Sets the x position (in normalized coordinates) of the slider."
     },
-    pad: extendDeepAll(pad_attributes_default({ editType: "arraydraw" }), {}, { t: { dflt: 20 } }),
+    pad: extendDeepAll(pad_attributes_default({ editType: "arraydraw" }), {
+      description: "Set the padding of the slider component along each side."
+    }, { t: { dflt: 20 } }),
     xanchor: {
       valType: "enumerated",
       values: ["auto", "left", "center", "right"],
-      dflt: "left"
+      dflt: "left",
+      description: [
+        "Sets the slider's horizontal position anchor.",
+        "This anchor binds the `x` position to the *left*, *center*",
+        "or *right* of the range selector."
+      ].join(" ")
     },
     y: {
       valType: "number",
       min: -2,
       max: 3,
-      dflt: 0
+      dflt: 0,
+      description: "Sets the y position (in normalized coordinates) of the slider."
     },
     yanchor: {
       valType: "enumerated",
       values: ["auto", "top", "middle", "bottom"],
-      dflt: "top"
+      dflt: "top",
+      description: [
+        "Sets the slider's vertical position anchor",
+        "This anchor binds the `y` position to the *top*, *middle*",
+        "or *bottom* of the range selector."
+      ].join(" ")
     },
     transition: {
       duration: {
         valType: "number",
         min: 0,
-        dflt: 150
+        dflt: 150,
+        description: "Sets the duration of the slider transition"
       },
       easing: {
         valType: "enumerated",
         values: animation_attributes_default.transition.easing.values,
-        dflt: "cubic-in-out"
+        dflt: "cubic-in-out",
+        description: "Sets the easing function of the slider transition"
       }
     },
     currentvalue: {
       visible: {
         valType: "boolean",
-        dflt: true
+        dflt: true,
+        description: [
+          "Shows the currently-selected value above the slider."
+        ].join(" ")
       },
       xanchor: {
         valType: "enumerated",
         values: ["left", "center", "right"],
-        dflt: "left"
+        dflt: "left",
+        description: [
+          "The alignment of the value readout relative to the length of the slider."
+        ].join(" ")
       },
       offset: {
         valType: "number",
-        dflt: 10
+        dflt: 10,
+        description: [
+          "The amount of space, in pixels, between the current value label",
+          "and the slider."
+        ].join(" ")
       },
       prefix: {
-        valType: "string"
+        valType: "string",
+        description: "When currentvalue.visible is true, this sets the prefix of the label."
       },
       suffix: {
-        valType: "string"
+        valType: "string",
+        description: "When currentvalue.visible is true, this sets the suffix of the label."
       },
-      font: font_attributes_default({})
+      font: font_attributes_default({
+        description: "Sets the font of the current value label text."
+      })
     },
-    font: font_attributes_default({}),
+    font: font_attributes_default({
+      description: "Sets the font of the slider step labels."
+    }),
     activebgcolor: {
       valType: "color",
-      dflt: constants_default9.gripBgActiveColor
+      dflt: constants_default9.gripBgActiveColor,
+      description: [
+        "Sets the background color of the slider grip",
+        "while dragging."
+      ].join(" ")
     },
     bgcolor: {
       valType: "color",
-      dflt: constants_default9.railBgColor
+      dflt: constants_default9.railBgColor,
+      description: "Sets the background color of the slider."
     },
     bordercolor: {
       valType: "color",
-      dflt: constants_default9.railBorderColor
+      dflt: constants_default9.railBorderColor,
+      description: "Sets the color of the border enclosing the slider."
     },
     borderwidth: {
       valType: "number",
       min: 0,
-      dflt: constants_default9.railBorderWidth
+      dflt: constants_default9.railBorderWidth,
+      description: "Sets the width (in px) of the border enclosing the slider."
     },
     ticklen: {
       valType: "number",
       min: 0,
-      dflt: constants_default9.tickLength
+      dflt: constants_default9.tickLength,
+      description: "Sets the length in pixels of step tick marks"
     },
     tickcolor: {
       valType: "color",
-      dflt: constants_default9.tickColor
+      dflt: constants_default9.tickColor,
+      description: "Sets the color of the border enclosing the slider."
     },
     tickwidth: {
       valType: "number",
       min: 0,
-      dflt: 1
+      dflt: 1,
+      description: "Sets the tick width (in px)."
     },
     minorticklen: {
       valType: "number",
       min: 0,
-      dflt: constants_default9.minorTickLength
+      dflt: constants_default9.minorTickLength,
+      description: "Sets the length in pixels of minor step tick marks"
     }
   }), "arraydraw", "from-root");
 
-  // src/components/sliders/defaults.js
+  // src/components/sliders/defaults.ts
   var name4 = constants_default9.name;
   var stepAttrs = attributes_default16.steps;
   function slidersDefaults(layoutIn, layoutOut) {
@@ -48269,7 +51281,7 @@ var Plotly = (() => {
     }
   }
 
-  // src/components/sliders/draw.js
+  // src/components/sliders/draw.ts
   var strTranslate6 = lib_default.strTranslate;
   var LINE_SPACING6 = alignment_default.LINE_SPACING;
   var FROM_TL4 = alignment_default.FROM_TL;
@@ -48680,7 +51692,7 @@ var Plotly = (() => {
     );
   }
 
-  // src/components/sliders/index.js
+  // src/components/sliders/index.ts
   var sliders_default = {
     moduleType: "component",
     name: constants_default9.name,
@@ -48689,29 +51701,37 @@ var Plotly = (() => {
     draw: draw10
   };
 
-  // src/components/rangeslider/attributes.js
+  // src/components/rangeslider/attributes.ts
   var attributes_default17 = {
     bgcolor: {
       valType: "color",
       dflt: attributes_default3.background,
-      editType: "plot"
+      editType: "plot",
+      description: "Sets the background color of the range slider."
     },
     bordercolor: {
       valType: "color",
       dflt: attributes_default3.defaultLine,
-      editType: "plot"
+      editType: "plot",
+      description: "Sets the border color of the range slider."
     },
     borderwidth: {
       valType: "integer",
       dflt: 0,
       min: 0,
-      editType: "plot"
+      editType: "plot",
+      description: "Sets the border width of the range slider."
     },
     autorange: {
       valType: "boolean",
       dflt: true,
       editType: "calc",
-      impliedEdits: { "range[0]": void 0, "range[1]": void 0 }
+      impliedEdits: { "range[0]": void 0, "range[1]": void 0 },
+      description: [
+        "Determines whether or not the range slider range is",
+        "computed in relation to the input data.",
+        "If `range` is provided, then `autorange` is set to *false*."
+      ].join(" ")
     },
     range: {
       valType: "info_array",
@@ -48720,24 +51740,44 @@ var Plotly = (() => {
         { valType: "any", editType: "calc", impliedEdits: { "^autorange": false } }
       ],
       editType: "calc",
-      impliedEdits: { autorange: false }
+      impliedEdits: { autorange: false },
+      description: [
+        "Sets the range of the range slider.",
+        "If not set, defaults to the full xaxis range.",
+        "If the axis `type` is *log*, then you must take the",
+        "log of your desired range.",
+        "If the axis `type` is *date*, it should be date strings,",
+        "like date data, though Date objects and unix milliseconds",
+        "will be accepted and converted to strings.",
+        "If the axis `type` is *category*, it should be numbers,",
+        "using the scale where each category is assigned a serial",
+        "number from zero in the order it appears."
+      ].join(" ")
     },
     thickness: {
       valType: "number",
       dflt: 0.15,
       min: 0,
       max: 1,
-      editType: "plot"
+      editType: "plot",
+      description: [
+        "The height of the range slider as a fraction of the",
+        "total plot area height."
+      ].join(" ")
     },
     visible: {
       valType: "boolean",
       dflt: true,
-      editType: "calc"
+      editType: "calc",
+      description: [
+        "Determines whether or not the range slider will be visible.",
+        "If visible, perpendicular axes will be set to `fixedrange`"
+      ].join(" ")
     },
     editType: "calc"
   };
 
-  // src/components/rangeslider/oppaxis_attributes.js
+  // src/components/rangeslider/oppaxis_attributes.ts
   var oppaxis_attributes_default = {
     // not really a 'subplot' attribute container,
     // but this is the flag we use to denote attributes that
@@ -48747,7 +51787,15 @@ var Plotly = (() => {
       valType: "enumerated",
       values: ["auto", "fixed", "match"],
       dflt: "match",
-      editType: "calc"
+      editType: "calc",
+      description: [
+        "Determines whether or not the range of this axis in",
+        "the rangeslider use the same value than in the main plot",
+        "when zooming in/out.",
+        "If *auto*, the autorange will be used.",
+        "If *fixed*, the `range` is used.",
+        "If *match*, the current range of the corresponding y-axis on the main subplot is used."
+      ].join(" ")
     },
     range: {
       valType: "info_array",
@@ -48755,12 +51803,15 @@ var Plotly = (() => {
         { valType: "any", editType: "plot" },
         { valType: "any", editType: "plot" }
       ],
-      editType: "plot"
+      editType: "plot",
+      description: [
+        "Sets the range of this axis for the rangeslider."
+      ].join(" ")
     },
     editType: "calc"
   };
 
-  // src/components/rangeslider/constants.js
+  // src/components/rangeslider/constants.ts
   var constants_default10 = {
     // attribute container name
     name: "rangeslider",
@@ -48793,7 +51844,7 @@ var Plotly = (() => {
     extraPad: 15
   };
 
-  // src/components/rangeslider/helpers.js
+  // src/components/rangeslider/helpers.ts
   var { LINE_SPACING: LINE_SPACING7 } = alignment_default;
   var name5 = constants_default10.name;
   function isVisible(ax) {
@@ -48824,10 +51875,11 @@ var Plotly = (() => {
     var titleHeight = 0;
     if (ax.side === "bottom") {
       bottomDepth = ax._depth;
-      if (ax.title.text !== fullLayout._dfltTitle[axLetter]) {
-        titleHeight = 1.5 * ax.title.font.size + 10 + opts._offsetShift;
-        var extraLines = (ax.title.text.match(svg_text_utils_default.BR_TAG_ALL) || []).length;
-        titleHeight += extraLines * ax.title.font.size * LINE_SPACING7;
+      var axTitle = ax.title;
+      if (axTitle.text !== fullLayout._dfltTitle[axLetter]) {
+        titleHeight = 1.5 * axTitle.font.size + 10 + opts._offsetShift;
+        var extraLines = (axTitle.text.match(svg_text_utils_default.BR_TAG_ALL) || []).length;
+        titleHeight += extraLines * axTitle.font.size * LINE_SPACING7;
       }
     }
     return {
@@ -48842,7 +51894,7 @@ var Plotly = (() => {
   };
   var helpers_default10 = { makeData, autoMarginOpts, isVisible };
 
-  // src/components/rangeslider/defaults.js
+  // src/components/rangeslider/defaults.ts
   function handleDefaults3(layoutIn, layoutOut, axName) {
     var axIn = layoutIn[axName];
     var axOut = layoutOut[axName];
@@ -48893,7 +51945,7 @@ var Plotly = (() => {
     containerOut._input = containerIn;
   }
 
-  // src/components/rangeslider/calc_autorange.js
+  // src/components/rangeslider/calc_autorange.ts
   var { getAutoRange: getAutoRange2 } = autorange_default;
   function calcAutorange3(gd) {
     var axes2 = list(gd, "x", true);
@@ -48907,7 +51959,7 @@ var Plotly = (() => {
     }
   }
 
-  // src/components/rangeslider/draw.js
+  // src/components/rangeslider/draw.ts
   var strTranslate7 = lib_default.strTranslate;
   function draw_default4(gd) {
     var fullLayout = gd._fullLayout;
@@ -49344,7 +52396,7 @@ var Plotly = (() => {
     grabAreaMax.attr("height", opts._height);
   }
 
-  // src/components/rangeslider/index.js
+  // src/components/rangeslider/index.ts
   var rangeslider_default = {
     moduleType: "component",
     name: "rangeslider",
@@ -49366,94 +52418,142 @@ var Plotly = (() => {
     autoMarginOpts: helpers_default10.autoMarginOpts
   };
 
-  // src/components/rangeselector/attributes.js
+  // src/components/rangeselector/attributes.ts
   var buttonAttrs2 = templatedArray("button", {
     visible: {
       valType: "boolean",
       dflt: true,
-      editType: "plot"
+      editType: "plot",
+      description: "Determines whether or not this button is visible."
     },
     step: {
       valType: "enumerated",
       values: ["month", "year", "day", "hour", "minute", "second", "all"],
       dflt: "month",
-      editType: "plot"
+      editType: "plot",
+      description: [
+        "The unit of measurement that the `count` value will set the range by."
+      ].join(" ")
     },
     stepmode: {
       valType: "enumerated",
       values: ["backward", "todate"],
       dflt: "backward",
-      editType: "plot"
+      editType: "plot",
+      description: [
+        "Sets the range update mode.",
+        "If *backward*, the range update shifts the start of range",
+        "back *count* times *step* milliseconds.",
+        "If *todate*, the range update shifts the start of range",
+        "back to the first timestamp from *count* times",
+        "*step* milliseconds back.",
+        "For example, with `step` set to *year* and `count` set to *1*",
+        "the range update shifts the start of the range back to",
+        "January 01 of the current year.",
+        "Month and year *todate* are currently available only",
+        "for the built-in (Gregorian) calendar."
+      ].join(" ")
     },
     count: {
       valType: "number",
       min: 0,
       dflt: 1,
-      editType: "plot"
+      editType: "plot",
+      description: [
+        "Sets the number of steps to take to update the range.",
+        "Use with `step` to specify the update interval."
+      ].join(" ")
     },
     label: {
       valType: "string",
-      editType: "plot"
+      editType: "plot",
+      description: "Sets the text label to appear on the button."
     },
-    editType: "plot"
+    editType: "plot",
+    description: [
+      "Sets the specifications for each buttons.",
+      "By default, a range selector comes with no buttons."
+    ].join(" ")
   });
   var attributes_default18 = {
     visible: {
       valType: "boolean",
-      editType: "plot"
+      editType: "plot",
+      description: [
+        "Determines whether or not this range selector is visible.",
+        "Note that range selectors are only available for x axes of",
+        "`type` set to or auto-typed to *date*."
+      ].join(" ")
     },
     buttons: buttonAttrs2,
     x: {
       valType: "number",
       min: -2,
       max: 3,
-      editType: "plot"
+      editType: "plot",
+      description: "Sets the x position (in normalized coordinates) of the range selector."
     },
     xanchor: {
       valType: "enumerated",
       values: ["auto", "left", "center", "right"],
       dflt: "left",
-      editType: "plot"
+      editType: "plot",
+      description: [
+        "Sets the range selector's horizontal position anchor.",
+        "This anchor binds the `x` position to the *left*, *center*",
+        "or *right* of the range selector."
+      ].join(" ")
     },
     y: {
       valType: "number",
       min: -2,
       max: 3,
-      editType: "plot"
+      editType: "plot",
+      description: "Sets the y position (in normalized coordinates) of the range selector."
     },
     yanchor: {
       valType: "enumerated",
       values: ["auto", "top", "middle", "bottom"],
       dflt: "bottom",
-      editType: "plot"
+      editType: "plot",
+      description: [
+        "Sets the range selector's vertical position anchor",
+        "This anchor binds the `y` position to the *top*, *middle*",
+        "or *bottom* of the range selector."
+      ].join(" ")
     },
     font: font_attributes_default({
-      editType: "plot"
+      editType: "plot",
+      description: "Sets the font of the range selector button text."
     }),
     bgcolor: {
       valType: "color",
       dflt: attributes_default3.lightLine,
-      editType: "plot"
+      editType: "plot",
+      description: "Sets the background color of the range selector buttons."
     },
     activecolor: {
       valType: "color",
-      editType: "plot"
+      editType: "plot",
+      description: "Sets the background color of the active range selector button."
     },
     bordercolor: {
       valType: "color",
       dflt: attributes_default3.defaultLine,
-      editType: "plot"
+      editType: "plot",
+      description: "Sets the color of the border enclosing the range selector."
     },
     borderwidth: {
       valType: "number",
       min: 0,
       dflt: 0,
-      editType: "plot"
+      editType: "plot",
+      description: "Sets the width (in px) of the border enclosing the range selector."
     },
     editType: "plot"
   };
 
-  // src/components/rangeselector/constants.js
+  // src/components/rangeselector/constants.ts
   var constants_default11 = {
     // 'y' position pad above counter axis domain
     yPad: 0.02,
@@ -49467,7 +52567,7 @@ var Plotly = (() => {
     darkAmount: 10
   };
 
-  // src/components/rangeselector/defaults.js
+  // src/components/rangeselector/defaults.ts
   function handleDefaults4(containerIn, containerOut, layout, counterAxes, calendar) {
     var selectorIn = containerIn.rangeselector || {};
     var selectorOut = plot_template_default.newContainer(containerOut, "rangeselector");
@@ -49525,7 +52625,7 @@ var Plotly = (() => {
     return [containerOut.domain[0], posY + constants_default11.yPad];
   }
 
-  // src/components/rangeselector/get_update_object.js
+  // src/components/rangeselector/get_update_object.ts
   var { titleCase: titleCase2 } = lib_default;
   function getUpdateObject(axisLayout, buttonLayout) {
     var axName = axisLayout._name;
@@ -49559,7 +52659,7 @@ var Plotly = (() => {
     return [range0, range1];
   }
 
-  // src/components/rangeselector/draw.js
+  // src/components/rangeselector/draw.ts
   var strTranslate8 = lib_default.strTranslate;
   var LINE_SPACING8 = alignment_default.LINE_SPACING;
   var FROM_TL5 = alignment_default.FROM_TL;
@@ -49722,7 +52822,7 @@ var Plotly = (() => {
     selector.attr("transform", strTranslate8(lx, ly));
   }
 
-  // src/components/rangeselector/index.js
+  // src/components/rangeselector/index.ts
   var rangeselector_default = {
     moduleType: "component",
     name: "rangeselector",
@@ -49736,7 +52836,7 @@ var Plotly = (() => {
     draw: draw11
   };
 
-  // src/plots/domain.js
+  // src/plots/domain.ts
   var attributes3 = function(opts, extra) {
     opts = opts || {};
     extra = extra || {};
@@ -49753,8 +52853,24 @@ var Plotly = (() => {
     var contPart = opts.trace ? "trace " : "subplot ";
     var descPart = extra.description ? " " + extra.description : "";
     var out = {
-      x: extendFlat({}, base, {}),
-      y: extendFlat({}, base, {}),
+      x: extendFlat({}, base, {
+        description: [
+          "Sets the horizontal domain of this ",
+          namePart,
+          contPart,
+          "(in plot fraction).",
+          descPart
+        ].join("")
+      }),
+      y: extendFlat({}, base, {
+        description: [
+          "Sets the vertical domain of this ",
+          namePart,
+          contPart,
+          "(in plot fraction).",
+          descPart
+        ].join("")
+      }),
       editType: opts.editType
     };
     if (!opts.noGridCell) {
@@ -49762,86 +52878,173 @@ var Plotly = (() => {
         valType: "integer",
         min: 0,
         dflt: 0,
-        editType: opts.editType
+        editType: opts.editType,
+        description: [
+          "If there is a layout grid, use the domain ",
+          "for this row in the grid for this ",
+          namePart,
+          contPart,
+          ".",
+          descPart
+        ].join("")
       };
       out.column = {
         valType: "integer",
         min: 0,
         dflt: 0,
-        editType: opts.editType
+        editType: opts.editType,
+        description: [
+          "If there is a layout grid, use the domain ",
+          "for this column in the grid for this ",
+          namePart,
+          contPart,
+          ".",
+          descPart
+        ].join("")
       };
     }
     return out;
   };
 
-  // src/components/grid/index.js
+  // src/components/grid/index.ts
   var { idRegex: cartesianIdRegex } = constants_default2;
   var gridAttrs = {
     rows: {
       valType: "integer",
       min: 1,
-      editType: "plot"
+      editType: "plot",
+      description: [
+        "The number of rows in the grid. If you provide a 2D `subplots`",
+        "array or a `yaxes` array, its length is used as the default.",
+        "But it's also possible to have a different length, if you",
+        "want to leave a row at the end for non-cartesian subplots."
+      ].join(" ")
     },
     roworder: {
       valType: "enumerated",
       values: ["top to bottom", "bottom to top"],
       dflt: "top to bottom",
-      editType: "plot"
+      editType: "plot",
+      description: [
+        "Is the first row the top or the bottom? Note that columns",
+        "are always enumerated from left to right."
+      ].join(" ")
     },
     columns: {
       valType: "integer",
       min: 1,
-      editType: "plot"
+      editType: "plot",
+      description: [
+        "The number of columns in the grid. If you provide a 2D `subplots`",
+        "array, the length of its longest row is used as the default.",
+        "If you give an `xaxes` array, its length is used as the default.",
+        "But it's also possible to have a different length, if you",
+        "want to leave a row at the end for non-cartesian subplots."
+      ].join(" ")
     },
     subplots: {
       valType: "info_array",
       freeLength: true,
       dimensions: 2,
       items: { valType: "enumerated", values: [counter("xy").toString(), ""], editType: "plot" },
-      editType: "plot"
+      editType: "plot",
+      description: [
+        "Used for freeform grids, where some axes may be shared across subplots",
+        "but others are not. Each entry should be a cartesian subplot id, like",
+        "*xy* or *x3y2*, or ** to leave that cell empty. You may reuse x axes",
+        "within the same column, and y axes within the same row.",
+        "Non-cartesian subplots and traces that support `domain` can place themselves",
+        "in this grid separately using the `gridcell` attribute."
+      ].join(" ")
     },
     xaxes: {
       valType: "info_array",
       freeLength: true,
       items: { valType: "enumerated", values: [cartesianIdRegex.x.toString(), ""], editType: "plot" },
-      editType: "plot"
+      editType: "plot",
+      description: [
+        "Used with `yaxes` when the x and y axes are shared across columns and rows.",
+        "Each entry should be an x axis id like *x*, *x2*, etc., or ** to",
+        "not put an x axis in that column. Entries other than ** must be unique.",
+        "Ignored if `subplots` is present. If missing but `yaxes` is present,",
+        "will generate consecutive IDs."
+      ].join(" ")
     },
     yaxes: {
       valType: "info_array",
       freeLength: true,
       items: { valType: "enumerated", values: [cartesianIdRegex.y.toString(), ""], editType: "plot" },
-      editType: "plot"
+      editType: "plot",
+      description: [
+        "Used with `yaxes` when the x and y axes are shared across columns and rows.",
+        "Each entry should be an y axis id like *y*, *y2*, etc., or ** to",
+        "not put a y axis in that row. Entries other than ** must be unique.",
+        "Ignored if `subplots` is present. If missing but `xaxes` is present,",
+        "will generate consecutive IDs."
+      ].join(" ")
     },
     pattern: {
       valType: "enumerated",
       values: ["independent", "coupled"],
       dflt: "coupled",
-      editType: "plot"
+      editType: "plot",
+      description: [
+        "If no `subplots`, `xaxes`, or `yaxes` are given but we do have `rows` and `columns`,",
+        "we can generate defaults using consecutive axis IDs, in two ways:",
+        "*coupled* gives one x axis per column and one y axis per row.",
+        "*independent* uses a new xy pair for each cell, left-to-right across each row",
+        "then iterating rows according to `roworder`."
+      ].join(" ")
     },
     xgap: {
       valType: "number",
       min: 0,
       max: 1,
-      editType: "plot"
+      editType: "plot",
+      description: [
+        "Horizontal space between grid cells, expressed as a fraction",
+        "of the total width available to one cell. Defaults to 0.1",
+        "for coupled-axes grids and 0.2 for independent grids."
+      ].join(" ")
     },
     ygap: {
       valType: "number",
       min: 0,
       max: 1,
-      editType: "plot"
+      editType: "plot",
+      description: [
+        "Vertical space between grid cells, expressed as a fraction",
+        "of the total height available to one cell. Defaults to 0.1",
+        "for coupled-axes grids and 0.3 for independent grids."
+      ].join(" ")
     },
-    domain: attributes3({ name: "grid", editType: "plot", noGridCell: true }, {}),
+    domain: attributes3({ name: "grid", editType: "plot", noGridCell: true }, {
+      description: [
+        "The first and last cells end exactly at the domain",
+        "edges, with no grout around the edges."
+      ].join(" ")
+    }),
     xside: {
       valType: "enumerated",
       values: ["bottom", "bottom plot", "top plot", "top"],
       dflt: "bottom plot",
-      editType: "plot"
+      editType: "plot",
+      description: [
+        "Sets where the x axis labels and titles go. *bottom* means",
+        "the very bottom of the grid. *bottom plot* is the lowest plot",
+        "that each x axis is used in. *top* and *top plot* are similar."
+      ].join(" ")
     },
     yside: {
       valType: "enumerated",
       values: ["left", "left plot", "right plot", "right"],
       dflt: "left plot",
-      editType: "plot"
+      editType: "plot",
+      description: [
+        "Sets where the y axis labels and titles go. *left* means",
+        "the very left edge of the grid. *left plot* is the leftmost plot",
+        "that each y axis is used in. *right* and *right plot* are similar."
+      ].join(" ")
     },
     editType: "plot"
   };
@@ -50057,40 +53260,80 @@ var Plotly = (() => {
     contentDefaults
   };
 
-  // src/components/errorbars/attributes.js
+  // src/components/errorbars/attributes.ts
   var attributes_default19 = {
     visible: {
       valType: "boolean",
-      editType: "calc"
+      editType: "calc",
+      description: [
+        "Determines whether or not this set of error bars is visible."
+      ].join(" ")
     },
     type: {
       valType: "enumerated",
       values: ["percent", "constant", "sqrt", "data"],
-      editType: "calc"
+      editType: "calc",
+      description: [
+        "Determines the rule used to generate the error bars.",
+        "If *constant*, the bar lengths are of a constant value.",
+        "Set this constant in `value`.",
+        "If *percent*, the bar lengths correspond to a percentage of",
+        "underlying data. Set this percentage in `value`.",
+        "If *sqrt*, the bar lengths correspond to the square of the",
+        "underlying data.",
+        "If *data*, the bar lengths are set with data set `array`."
+      ].join(" ")
     },
     symmetric: {
       valType: "boolean",
-      editType: "calc"
+      editType: "calc",
+      description: [
+        "Determines whether or not the error bars have the same length",
+        "in both direction",
+        "(top/bottom for vertical bars, left/right for horizontal bars."
+      ].join(" ")
     },
     array: {
       valType: "data_array",
-      editType: "calc"
+      editType: "calc",
+      description: [
+        "Sets the data corresponding the length of each error bar.",
+        "Values are plotted relative to the underlying data."
+      ].join(" ")
     },
     arrayminus: {
       valType: "data_array",
-      editType: "calc"
+      editType: "calc",
+      description: [
+        "Sets the data corresponding the length of each error bar in the",
+        "bottom (left) direction for vertical (horizontal) bars",
+        "Values are plotted relative to the underlying data."
+      ].join(" ")
     },
     value: {
       valType: "number",
       min: 0,
       dflt: 10,
-      editType: "calc"
+      editType: "calc",
+      description: [
+        "Sets the value of either the percentage",
+        "(if `type` is set to *percent*) or the constant",
+        "(if `type` is set to *constant*) corresponding to the lengths of",
+        "the error bars."
+      ].join(" ")
     },
     valueminus: {
       valType: "number",
       min: 0,
       dflt: 10,
-      editType: "calc"
+      editType: "calc",
+      description: [
+        "Sets the value of either the percentage",
+        "(if `type` is set to *percent*) or the constant",
+        "(if `type` is set to *constant*) corresponding to the lengths of",
+        "the error bars in the",
+        "bottom (left) direction for vertical (horizontal) bars"
+      ].join(" ")
     },
     traceref: {
       valType: "integer",
@@ -50114,23 +53357,29 @@ var Plotly = (() => {
     },
     color: {
       valType: "color",
-      editType: "style"
+      editType: "style",
+      description: "Sets the stroke color of the error bars."
     },
     thickness: {
       valType: "number",
       min: 0,
       dflt: 2,
-      editType: "style"
+      editType: "style",
+      description: "Sets the thickness (in px) of the error bars."
     },
     width: {
       valType: "number",
       min: 0,
-      editType: "plot"
+      editType: "plot",
+      description: [
+        "Sets the width (in px) of the cross-bar at both ends",
+        "of the error bars."
+      ].join(" ")
     },
     editType: "calc"
   };
 
-  // src/components/errorbars/defaults.js
+  // src/components/errorbars/defaults.ts
   var import_fast_isnumeric35 = __toESM(require_fast_isnumeric(), 1);
   function defaults_default(traceIn, traceOut, defaultColor, opts) {
     var objName = "error_" + opts.axis;
@@ -50175,10 +53424,10 @@ var Plotly = (() => {
     }
   }
 
-  // src/components/errorbars/calc.js
+  // src/components/errorbars/calc.ts
   var import_fast_isnumeric36 = __toESM(require_fast_isnumeric(), 1);
 
-  // src/components/errorbars/compute_error.js
+  // src/components/errorbars/compute_error.ts
   function makeComputeError(opts) {
     var type = opts.type;
     var symmetric = opts.symmetric;
@@ -50234,9 +53483,12 @@ var Plotly = (() => {
         return Math.sqrt(Math.abs(dataPt));
       };
     }
+    return function() {
+      return 0;
+    };
   }
 
-  // src/components/errorbars/calc.js
+  // src/components/errorbars/calc.ts
   function calc4(gd) {
     var calcdata = gd.calcdata;
     for (var i = 0; i < calcdata.length; i++) {
@@ -50281,7 +53533,7 @@ var Plotly = (() => {
     baseExtremes.max = baseExtremes.max.concat(extremes.max);
   }
 
-  // src/components/errorbars/plot.js
+  // src/components/errorbars/plot.ts
   var import_fast_isnumeric37 = __toESM(require_fast_isnumeric(), 1);
   function plot3(gd, traces, plotinfo, transitionOpts) {
     var isNew;
@@ -50372,7 +53624,7 @@ var Plotly = (() => {
     return out;
   }
 
-  // src/components/errorbars/style.js
+  // src/components/errorbars/style.ts
   function style4(traces) {
     traces.each(function(d) {
       var trace = d[0].trace;
@@ -50385,7 +53637,7 @@ var Plotly = (() => {
     });
   }
 
-  // src/components/errorbars/index.js
+  // src/components/errorbars/index.ts
   var { overrideAll: overrideAll8 } = edit_types_default;
   var xyAttrs = {
     error_x: lib_default.extendFlat({}, attributes_default19),
@@ -50433,7 +53685,7 @@ var Plotly = (() => {
     }
   }
 
-  // src/components/colorbar/constants.js
+  // src/components/colorbar/constants.ts
   var constants_default12 = {
     cn: {
       colorbar: "colorbar",
@@ -50451,7 +53703,7 @@ var Plotly = (() => {
     }
   };
 
-  // src/components/colorbar/draw.js
+  // src/components/colorbar/draw.ts
   var { flipScale: flipScale2 } = helpers_default;
   var { cn } = constants_default12;
   var strTranslate9 = lib_default.strTranslate;
@@ -50806,7 +54058,7 @@ var Plotly = (() => {
           i === fillLevels.length - 1 ? zrange[1] : (fillLevels[i] + fillLevels[i + 1]) / 2
         ].map(ax.c2p).map(Math.round);
         if (isVertical3) {
-          z[1] = lib_default.constrain(z[1] + (z[1] > z[0]) ? 1 : -1, zBounds[0], zBounds[1]);
+          z[1] = lib_default.constrain(z[1] + (z[1] > z[0] ? 1 : -1), zBounds[0], zBounds[1]);
         }
         var fillEl = select_default2(this).attr(isVertical3 ? "x" : "y", uPx).attr(isVertical3 ? "y" : "x", min(z)).attr(isVertical3 ? "width" : "height", Math.max(thickPx, 2)).attr(isVertical3 ? "height" : "width", Math.max(max(z) - min(z), 2));
         if (opts._fillgradient) {
@@ -51177,7 +54429,7 @@ var Plotly = (() => {
     draw: draw12
   };
 
-  // src/components/colorbar/index.js
+  // src/components/colorbar/index.ts
   var { draw: _req2 } = draw_default5;
   var colorbar_default = {
     moduleType: "component",
@@ -51188,7 +54440,7 @@ var Plotly = (() => {
     hasColorbar
   };
 
-  // src/components/legend/index.js
+  // src/components/legend/index.ts
   var legend_default = {
     moduleType: "component",
     name: "legend",
@@ -51198,7 +54450,7 @@ var Plotly = (() => {
     style: style2
   };
 
-  // src/fonts/ploticon.js
+  // src/fonts/ploticon.ts
   var ploticon_default = {
     undo: {
       width: 857.1,
@@ -51385,7 +54637,7 @@ var Plotly = (() => {
     }
   };
 
-  // src/components/modebar/buttons.js
+  // src/components/modebar/buttons.ts
   var _ = lib_default._;
   var modeBarButtons = {};
   modeBarButtons.toImage = {
@@ -52108,7 +55360,7 @@ var Plotly = (() => {
   }
   var buttons_default = modeBarButtons;
 
-  // src/components/modebar/constants.js
+  // src/components/modebar/constants.ts
   var buttonList = Object.keys(buttons_default);
   var DRAW_MODES = [
     "drawline",
@@ -52143,46 +55395,67 @@ var Plotly = (() => {
     foreButtons
   };
 
-  // src/components/modebar/attributes.js
+  // src/components/modebar/attributes.ts
   var attributes_default20 = {
     editType: "modebar",
     orientation: {
       valType: "enumerated",
       values: ["v", "h"],
       dflt: "h",
-      editType: "modebar"
+      editType: "modebar",
+      description: "Sets the orientation of the modebar."
     },
     bgcolor: {
       valType: "color",
-      editType: "modebar"
+      editType: "modebar",
+      description: "Sets the background color of the modebar."
     },
     color: {
       valType: "color",
-      editType: "modebar"
+      editType: "modebar",
+      description: "Sets the color of the icons in the modebar."
     },
     activecolor: {
       valType: "color",
-      editType: "modebar"
+      editType: "modebar",
+      description: "Sets the color of the active or hovered on icons in the modebar."
     },
     uirevision: {
       valType: "any",
-      editType: "none"
+      editType: "none",
+      description: [
+        "Controls persistence of user-driven changes related to the modebar,",
+        "including `hovermode`, `dragmode`, and `showspikes` at both the",
+        "root level and inside subplots. Defaults to `layout.uirevision`."
+      ].join(" ")
     },
     add: {
       valType: "string",
       arrayOk: true,
       dflt: "",
-      editType: "modebar"
+      editType: "modebar",
+      description: [
+        "Determines which predefined modebar buttons to add.",
+        "Please note that these buttons will only be shown if they are",
+        "compatible with all trace types used in a graph.",
+        "Similar to `config.modeBarButtonsToAdd` option.",
+        "This may include *" + constants_default13.backButtons.join("*, *") + "*."
+      ].join(" ")
     },
     remove: {
       valType: "string",
       arrayOk: true,
       dflt: "",
-      editType: "modebar"
+      editType: "modebar",
+      description: [
+        "Determines which predefined modebar buttons to remove.",
+        "Similar to `config.modeBarButtonsToRemove` option.",
+        "This may include *" + constants_default13.foreButtons.join("*, *") + "*."
+      ].join(" ")
     }
   };
 
-  // src/components/modebar/defaults.js
+  // src/components/modebar/defaults.ts
   function supplyLayoutDefaults9(layoutIn, layoutOut) {
     var containerIn = layoutIn.modebar || {};
     var containerOut = plot_template_default.newContainer(layoutOut, "modebar");
@@ -52199,7 +55472,7 @@ var Plotly = (() => {
     coerce3("remove");
   }
 
-  // src/components/modebar/modebar.js
+  // src/components/modebar/modebar.ts
   var import_fast_isnumeric38 = __toESM(require_fast_isnumeric(), 1);
   var Parser = new DOMParser();
   function ModeBar(opts) {
@@ -52427,7 +55700,7 @@ var Plotly = (() => {
   }
   var modebar_default = createModeBar;
 
-  // src/components/modebar/manage.js
+  // src/components/modebar/manage.ts
   var { DRAW_MODES: DRAW_MODES2 } = constants_default13;
   var { extendDeep: extendDeep2 } = lib_default;
   function manageModeBar(gd) {
@@ -52542,7 +55815,7 @@ var Plotly = (() => {
     var hoverGroup = [];
     var resetGroup = [];
     var dragModeGroup = [];
-    if ((hasCartesian || hasPie || hasFunnelarea || hasTernary) + hasGeo + hasGL3D + hasMapbox + hasMap + hasPolar + hasSmith > 1) {
+    if (+(hasCartesian || hasPie || hasFunnelarea || hasTernary) + +hasGeo + +hasGL3D + +hasMapbox + +hasMap + +hasPolar + +hasSmith > 1) {
       hoverGroup = ["toggleHover"];
       resetGroup = ["resetViews"];
     } else if (hasGeo) {
@@ -52702,7 +55975,7 @@ var Plotly = (() => {
     return customButtons;
   }
 
-  // src/components/modebar/index.js
+  // src/components/modebar/index.ts
   var modebar_default2 = {
     moduleType: "component",
     name: "modebar",
@@ -52711,7 +55984,7 @@ var Plotly = (() => {
     manage: manageModeBar
   };
 
-  // src/locale-en.js
+  // src/locale-en.ts
   var locale_en_default = {
     moduleType: "locale",
     name: "en",
@@ -52764,7 +56037,7 @@ var Plotly = (() => {
     }
   };
 
-  // src/locale-en-us.js
+  // src/locale-en-us.ts
   var locale_en_us_default = {
     moduleType: "locale",
     name: "en-US",
@@ -52776,7 +56049,7 @@ var Plotly = (() => {
     }
   };
 
-  // src/snapshot/cloneplot.js
+  // src/snapshot/cloneplot.ts
   var extendFlat4 = lib_default.extendFlat;
   var extendDeep3 = lib_default.extendDeep;
   function cloneLayoutOverride(tileClass) {
@@ -52896,7 +56169,7 @@ var Plotly = (() => {
     return plotTile;
   }
 
-  // src/snapshot/toimage.js
+  // src/snapshot/toimage.ts
   var import_events6 = __toESM(require_events(), 1);
   function toImage3(gd, opts) {
     var ev = new import_events6.EventEmitter();
@@ -52932,7 +56205,7 @@ var Plotly = (() => {
   }
   var toimage_default = toImage3;
 
-  // src/snapshot/index.js
+  // src/snapshot/index.ts
   var Snapshot = {
     getDelay: helpers_default6.getDelay,
     getRedrawFunc: helpers_default6.getRedrawFunc,
@@ -52944,7 +56217,7 @@ var Plotly = (() => {
   };
   var snapshot_default = Snapshot;
 
-  // src/core.js
+  // src/core.ts
   var register3 = registry_default.register;
   var Plotly = { version, register: register3, Icons: ploticon_default, Snapshot: snapshot_default, PlotSchema: plot_schema_default };
   var methodNames = Object.keys(plot_api_default2);
@@ -52966,7 +56239,7 @@ var Plotly = (() => {
   Plotly.Fx = { hover: fx_default.hover, unhover: fx_default.unhover, loneHover: fx_default.loneHover, loneUnhover: fx_default.loneUnhover };
   var core_default = Plotly;
 
-  // src/traces/bar/constants.js
+  // src/traces/bar/constants.ts
   var constants_default14 = {
     // padding in pixels around text
     TEXTPAD: 3,
@@ -52977,12 +56250,13 @@ var Plotly = (() => {
     eventDataKeys: ["value", "label"]
   };
 
-  // src/traces/bar/attributes.js
+  // src/traces/bar/attributes.ts
   var { axisHoverFormat: axisHoverFormat3 } = axis_format_attributes_default;
   var textFontAttrs = font_attributes_default({
     editType: "calc",
     arrayOk: true,
-    colorEditType: "style"
+    colorEditType: "style",
+    description: ""
   });
   var scatterMarkerAttrs = attributes_default8.marker;
   var scatterMarkerLineAttrs = scatterMarkerAttrs.line;
@@ -53007,12 +56281,18 @@ var Plotly = (() => {
         dflt: 1,
         min: 0,
         max: 1,
-        editType: "style"
+        editType: "style",
+        description: "Sets the opacity of the bars."
       },
       pattern,
       cornerradius: {
         valType: "any",
-        editType: "calc"
+        editType: "calc",
+        description: [
+          "Sets the rounding of corners. May be an integer number of pixels,",
+          "or a percentage of bar width (as a string ending in %). Defaults to `layout.barcornerradius`.",
+          "In stack or relative barmode, the first trace to set cornerradius is used for the whole stack."
+        ].join(" ")
       }
     }
   );
@@ -53042,52 +56322,109 @@ var Plotly = (() => {
       values: ["inside", "outside", "auto", "none"],
       dflt: "auto",
       arrayOk: true,
-      editType: "calc"
+      editType: "calc",
+      description: [
+        "Specifies the location of the `text`.",
+        "*inside* positions `text` inside, next to the bar end",
+        "(rotated and scaled if needed).",
+        "*outside* positions `text` outside, next to the bar end",
+        "(scaled if needed), unless there is another bar stacked on",
+        "this one, then the text gets pushed inside.",
+        "*auto* tries to position `text` inside the bar, but if",
+        "the bar is too small and no bar is stacked on this one",
+        "the text is moved outside.",
+        "If *none*, no text appears."
+      ].join(" ")
     },
     insidetextanchor: {
       valType: "enumerated",
       values: ["end", "middle", "start"],
       dflt: "end",
-      editType: "plot"
+      editType: "plot",
+      description: [
+        "Determines if texts are kept at center or start/end points in `textposition` *inside* mode."
+      ].join(" ")
     },
     textangle: {
       valType: "angle",
       dflt: "auto",
-      editType: "plot"
+      editType: "plot",
+      description: [
+        "Sets the angle of the tick labels with respect to the bar.",
+        "For example, a `tickangle` of -90 draws the tick labels",
+        "vertically. With *auto* the texts may automatically be",
+        "rotated to fit with the maximum size in bars."
+      ].join(" ")
     },
-    textfont: extendFlat({}, textFontAttrs, {}),
-    insidetextfont: extendFlat({}, textFontAttrs, {}),
-    outsidetextfont: extendFlat({}, textFontAttrs, {}),
+    textfont: extendFlat({}, textFontAttrs, {
+      description: "Sets the font used for `text`."
+    }),
+    insidetextfont: extendFlat({}, textFontAttrs, {
+      description: "Sets the font used for `text` lying inside the bar."
+    }),
+    outsidetextfont: extendFlat({}, textFontAttrs, {
+      description: "Sets the font used for `text` lying outside the bar."
+    }),
     constraintext: {
       valType: "enumerated",
       values: ["inside", "outside", "both", "none"],
       dflt: "both",
-      editType: "calc"
+      editType: "calc",
+      description: [
+        "Constrain the size of text inside or outside a bar to be no",
+        "larger than the bar itself."
+      ].join(" ")
     },
-    cliponaxis: extendFlat({}, attributes_default8.cliponaxis, {}),
+    cliponaxis: extendFlat({}, attributes_default8.cliponaxis, {
+      description: [
+        "Determines whether the text nodes",
+        "are clipped about the subplot axes.",
+        "To show the text nodes above axis lines and tick labels,",
+        "make sure to set `xaxis.layer` and `yaxis.layer` to *below traces*."
+      ].join(" ")
+    }),
     orientation: {
       valType: "enumerated",
       values: ["v", "h"],
-      editType: "calc+clearAxisTypes"
+      editType: "calc+clearAxisTypes",
+      description: [
+        "Sets the orientation of the bars.",
+        "With *v* (*h*), the value of the each bar spans",
+        "along the vertical (horizontal)."
+      ].join(" ")
     },
     base: {
       valType: "any",
       dflt: null,
       arrayOk: true,
-      editType: "calc"
+      editType: "calc",
+      description: [
+        "Sets where the bar base is drawn (in position axis units).",
+        "In *stack* or *relative* barmode,",
+        "traces that set *base* will be excluded",
+        "and drawn in *overlay* mode instead."
+      ].join(" ")
     },
     offset: {
       valType: "number",
       dflt: null,
       arrayOk: true,
-      editType: "calc"
+      editType: "calc",
+      description: [
+        "Shifts the position where the bar is drawn",
+        "(in position axis units).",
+        "In *group* barmode,",
+        "traces that set *offset* will be excluded",
+        "and drawn in *overlay* mode instead."
+      ].join(" ")
     },
     width: {
       valType: "number",
       dflt: null,
       min: 0,
       arrayOk: true,
-      editType: "calc"
+      editType: "calc",
+      description: ["Sets the bar width (in position axis units)."].join(" ")
     },
     marker,
     offsetgroup: attributes_default8.offsetgroup,
@@ -53113,43 +56450,72 @@ var Plotly = (() => {
     zorder: attributes_default8.zorder
   };
 
-  // src/traces/bar/layout_attributes.js
+  // src/traces/bar/layout_attributes.ts
   var layout_attributes_default6 = {
     barmode: {
       valType: "enumerated",
       values: ["stack", "group", "overlay", "relative"],
       dflt: "group",
-      editType: "calc"
+      editType: "calc",
+      description: [
+        "Determines how bars at the same location coordinate",
+        "are displayed on the graph.",
+        "With *stack*, the bars are stacked on top of one another",
+        "With *relative*, the bars are stacked on top of one another,",
+        "with negative values below the axis, positive values above",
+        "With *group*, the bars are plotted next to one another",
+        "centered around the shared location.",
+        "With *overlay*, the bars are plotted over one another,",
+        "you might need to reduce *opacity* to see multiple bars."
+      ].join(" ")
     },
     barnorm: {
       valType: "enumerated",
       values: ["", "fraction", "percent"],
       dflt: "",
-      editType: "calc"
+      editType: "calc",
+      description: [
+        "Sets the normalization for bar traces on the graph.",
+        "With *fraction*, the value of each bar is divided by the sum of all",
+        "values at that location coordinate.",
+        "*percent* is the same but multiplied by 100 to show percentages."
+      ].join(" ")
     },
     bargap: {
       valType: "number",
       min: 0,
       max: 1,
-      editType: "calc"
+      editType: "calc",
+      description: [
+        "Sets the gap (in plot fraction) between bars of",
+        "adjacent location coordinates."
+      ].join(" ")
     },
     bargroupgap: {
       valType: "number",
       min: 0,
       max: 1,
       dflt: 0,
-      editType: "calc"
+      editType: "calc",
+      description: [
+        "Sets the gap (in plot fraction) between bars of",
+        "the same location coordinate."
+      ].join(" ")
     },
     barcornerradius: {
       valType: "any",
-      editType: "calc"
+      editType: "calc",
+      description: [
+        "Sets the rounding of bar corners. May be an integer number of pixels,",
+        "or a percentage of bar width (as a string ending in %)."
+      ].join(" ")
     }
   };
 
-  // src/traces/bar/defaults.js
+  // src/traces/bar/defaults.ts
   var import_fast_isnumeric39 = __toESM(require_fast_isnumeric(), 1);
 
-  // src/traces/bar/style_defaults.js
+  // src/traces/bar/style_defaults.ts
   var { hasColorscale: hasColorscale6 } = helpers_default;
   function handleStyleDefaults(traceIn, traceOut, coerce3, defaultColor, layout) {
     var markerColor = coerce3("marker.color", defaultColor);
@@ -53180,7 +56546,7 @@ var Plotly = (() => {
     coerce3("unselected.marker.color");
   }
 
-  // src/traces/bar/defaults.js
+  // src/traces/bar/defaults.ts
   function supplyDefaults4(traceIn, traceOut, defaultColor, layout) {
     function coerce3(attr2, dflt) {
       return lib_default.coerce(traceIn, traceOut, attributes_default21, attr2, dflt);
@@ -53296,7 +56662,7 @@ var Plotly = (() => {
     validateCornerradius
   };
 
-  // src/traces/bar/layout_defaults.js
+  // src/traces/bar/layout_defaults.ts
   var { validateCornerradius: validateCornerradius2 } = defaults_default2;
   function layout_defaults_default2(layoutIn, layoutOut, fullData) {
     function coerce3(attr2, dflt) {
@@ -53340,7 +56706,7 @@ var Plotly = (() => {
     layoutOut.barcornerradius = validateCornerradius2(r);
   }
 
-  // src/traces/bar/arrays_to_calcdata.js
+  // src/traces/bar/arrays_to_calcdata.ts
   function arraysToCalcdata2(cd, trace) {
     for (var i = 0; i < cd.length; i++) cd[i].i = i;
     mergeArray(trace.text, cd, "tx");
@@ -53357,7 +56723,7 @@ var Plotly = (() => {
     }
   }
 
-  // src/traces/bar/calc.js
+  // src/traces/bar/calc.ts
   var { hasColorscale: hasColorscale7 } = helpers_default;
   function calc5(gd, trace) {
     var xa = axes_default.getFromId(gd, trace.xaxis || "x");
@@ -53412,10 +56778,10 @@ var Plotly = (() => {
     return cd;
   }
 
-  // src/traces/bar/plot.js
+  // src/traces/bar/plot.ts
   var import_fast_isnumeric41 = __toESM(require_fast_isnumeric(), 1);
 
-  // src/traces/bar/uniform_text.js
+  // src/traces/bar/uniform_text.ts
   function resizeText(gd, gTrace, traceType) {
     var fullLayout = gd._fullLayout;
     var minSize = fullLayout["_" + traceType + "Text_minsize"];
@@ -53436,23 +56802,23 @@ var Plotly = (() => {
           selector = "g.points > g.point";
       }
       gTrace.selectAll(selector).each(function(d) {
-        var transform2 = d.transform;
-        if (transform2) {
-          transform2.scale = shouldHide && transform2.hide ? 0 : minSize / transform2.fontSize;
+        var transform = d.transform;
+        if (transform) {
+          transform.scale = shouldHide && transform.hide ? 0 : minSize / transform.fontSize;
           var el = select_default2(this).select("text");
-          setTransormAndDisplay(el, transform2);
+          setTransormAndDisplay(el, transform);
         }
       });
     }
   }
-  function recordMinTextSize(traceType, transform2, fullLayout) {
+  function recordMinTextSize(traceType, transform, fullLayout) {
     if (fullLayout.uniformtext.mode) {
       var minKey = getMinKey(traceType);
       var minSize = fullLayout.uniformtext.minsize;
-      var size = transform2.scale * transform2.fontSize;
-      transform2.hide = size < minSize;
+      var size = transform.scale * transform.fontSize;
+      transform.hide = size < minSize;
       fullLayout[minKey] = fullLayout[minKey] || Infinity;
-      if (!transform2.hide) {
+      if (!transform.hide) {
         fullLayout[minKey] = Math.min(
           fullLayout[minKey],
           Math.max(size, minSize)
@@ -53473,7 +56839,7 @@ var Plotly = (() => {
     resizeText
   };
 
-  // src/traces/bar/helpers.js
+  // src/traces/bar/helpers.ts
   var import_fast_isnumeric40 = __toESM(require_fast_isnumeric(), 1);
   var coerceString = function(attributeDefinition, value, defaultValue) {
     if (typeof value === "string") {
@@ -53514,7 +56880,7 @@ var Plotly = (() => {
   };
   var helpers_default11 = { coerceString, coerceNumber, coerceColor, coerceEnumerated, getValue, getLineWidth };
 
-  // src/traces/bar/style.js
+  // src/traces/bar/style.ts
   var { resizeText: resizeText2 } = uniform_text_default;
   var attributeTextFont = attributes_default21.textfont;
   var attributeInsideTextFont = attributes_default21.insidetextfont;
@@ -53704,7 +57070,7 @@ var Plotly = (() => {
     resizeText: resizeText2
   };
 
-  // src/traces/bar/plot.js
+  // src/traces/bar/plot.ts
   function d3Round5(x, n) {
     return n ? Math.round(x * (n = Math.pow(10, n))) / n : Math.round(x);
   }
@@ -53723,7 +57089,7 @@ var Plotly = (() => {
     }
   }
   function sign(v) {
-    return (v > 0) - (v < 0);
+    return (v > 0 ? 1 : 0) - (v < 0 ? 1 : 0);
   }
   function dirSign(a, b) {
     return a < b ? 1 : -1;
@@ -53834,7 +57200,7 @@ var Plotly = (() => {
           lw = helpers_default11.getLineWidth(trace, di);
           mc = di.mc || trace.marker.color;
         }
-        function roundWithLine(v) {
+        function roundWithLine(v, _vc, _hideZeroSpan) {
           var offset = d3Round5(lw / 2 % 1, 2);
           return opts.gap === 0 && opts.groupgap === 0 ? d3Round5(Math.round(v) - offset, 2) : v;
         }
@@ -54055,17 +57421,17 @@ var Plotly = (() => {
       }
     }
     var angle = trace.textangle;
-    var transform2, constrained;
+    var transform, constrained;
     if (textPosition === "outside") {
       constrained = trace.constraintext === "both" || trace.constraintext === "outside";
-      transform2 = toMoveOutsideBar(x0, x1, y0, y1, textBB, {
+      transform = toMoveOutsideBar(x0, x1, y0, y1, textBB, {
         isHorizontal,
         constrained,
         angle
       });
     } else {
       constrained = trace.constraintext === "both" || trace.constraintext === "inside";
-      transform2 = toMoveInsideBar(x0, x1, y0, y1, textBB, {
+      transform = toMoveInsideBar(x0, x1, y0, y1, textBB, {
         isHorizontal,
         constrained,
         angle,
@@ -54075,11 +57441,11 @@ var Plotly = (() => {
         overhead
       });
     }
-    transform2.fontSize = font2.size;
-    recordMinTextSize2(trace.type === "histogram" ? "bar" : trace.type, transform2, fullLayout);
-    calcBar.transform = transform2;
+    transform.fontSize = font2.size;
+    recordMinTextSize2(trace.type === "histogram" ? "bar" : trace.type, transform, fullLayout);
+    calcBar.transform = transform;
     var s = transition3(textSelection, fullLayout, opts, makeOnCompleteCallback);
-    setTransormAndDisplay(s, transform2);
+    setTransormAndDisplay(s, transform);
   }
   function textfitsInsideBar(barWidth, barHeight, textWidth, textHeight, isHorizontal) {
     if (barWidth < 0 || barHeight < 0) return false;
@@ -54423,7 +57789,7 @@ var Plotly = (() => {
     toMoveInsideBar
   };
 
-  // src/traces/bar/hover.js
+  // src/traces/bar/hover.ts
   var { hoverLabelText } = axes_default;
   var { BADNUM: BADNUM13 } = numerical_default;
   function hoverPoints2(pointData, xval, yval, hovermode, opts) {
@@ -54574,7 +57940,7 @@ var Plotly = (() => {
     getTraceColor: getTraceColor2
   };
 
-  // src/traces/bar/event_data.js
+  // src/traces/bar/event_data.ts
   function eventData(out, pt, trace) {
     out.x = "xVal" in pt ? pt.xVal : pt.x;
     out.y = "yVal" in pt ? pt.yVal : pt.y;
@@ -54590,7 +57956,7 @@ var Plotly = (() => {
     return out;
   }
 
-  // src/traces/bar/select.js
+  // src/traces/bar/select.ts
   function selectPoints2(searchInfo, selectionTester) {
     var cd = searchInfo.cd;
     var xa = searchInfo.xaxis;
@@ -54638,7 +58004,7 @@ var Plotly = (() => {
     }
   }
 
-  // src/traces/bar/index.js
+  // src/traces/bar/index.ts
   var { supplyDefaults: _req22, crossTraceDefaults: _req3 } = defaults_default2;
   var { crossTraceCalc: _req6 } = cross_trace_calc_default;
   var { plot: _req9 } = plot_default;
@@ -54665,7 +58031,14 @@ var Plotly = (() => {
     basePlotModule: cartesian_default,
     categories: ["bar-like", "cartesian", "svg", "bar", "oriented", "errorBarsOK", "showLegend", "zoomScale"],
     animatable: true,
-    meta: {}
+    meta: {
+      description: [
+        "The data visualized by the span of the bars is set in `y`",
+        "if `orientation` is set to *v* (the default)",
+        "and the labels are set in `x`.",
+        "By setting `orientation` to *h*, the roles are interchanged."
+      ].join(" ")
+    }
   };
 
   // lib/index-minimal.js

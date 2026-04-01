@@ -1,0 +1,42 @@
+import type { FullTrace, GraphDiv } from '../../../types/core';
+import { select } from 'd3-selection';
+import Color from '../../components/color/index.js';
+import Lib from '../../lib/index.js';
+import _uniform_text from '../bar/uniform_text.js';
+const { resizeText } = _uniform_text;
+import fillOne from './fill_one.js';
+
+function style(gd: GraphDiv): void {
+    var s = gd._fullLayout._sunburstlayer.selectAll('.trace');
+    resizeText(gd, s, 'sunburst');
+
+    s.each(function(cd) {
+        var gTrace = select(this);
+        var cd0 = cd[0];
+        var trace = cd0.trace;
+
+        gTrace.style('opacity', trace.opacity);
+
+        gTrace.selectAll('path.surface').each(function(pt) {
+            select(this).call(styleOne, pt, trace, gd);
+        });
+    });
+}
+
+function styleOne(s: any, pt: any, trace: FullTrace, gd: GraphDiv): void {
+    var cdi = pt.data.data;
+    var isLeaf = !pt.children;
+    var ptNumber = cdi.i;
+    var lineColor = Lib.castOption(trace, ptNumber, 'marker.line.color') || Color.defaultLine;
+    var lineWidth = Lib.castOption(trace, ptNumber, 'marker.line.width') || 0;
+
+    s.call(fillOne, pt, trace, gd)
+        .style('stroke-width', lineWidth)
+        .call(Color.stroke, lineColor)
+        .style('opacity', isLeaf ? trace.leaf.opacity : null);
+}
+
+export default {
+    style: style,
+    styleOne: styleOne
+};

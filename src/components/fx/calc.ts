@@ -1,0 +1,53 @@
+import type { GraphDiv, FullTrace, CalcDatum } from '../../../types/core';
+import { fillArray, identity } from '../../lib/index.js';
+import { coerceHoverinfo } from '../../lib/index.js';
+import Registry from '../../registry.js';
+
+export default function calc(gd: GraphDiv): void {
+    var calcdata = gd.calcdata;
+    var fullLayout = gd._fullLayout;
+
+    function makeCoerceHoverInfo(trace: FullTrace): (val: any) => any {
+        return function(val: any): any {
+            return coerceHoverinfo({hoverinfo: val}, {_module: trace._module}, fullLayout);
+        };
+    }
+
+    for(var i = 0; i < calcdata.length; i++) {
+        var cd: CalcDatum[] = calcdata[i];
+        var trace = cd[0].trace;
+
+        // don't include hover calc fields for pie traces
+        // as calcdata items might be sorted by value and
+        // won't match the data array order.
+        if(Registry.traceIs(trace, 'pie-like')) continue;
+
+        var fillFn = Registry.traceIs(trace, '2dMap') ? paste : fillArray;
+
+        fillFn(trace.hoverinfo, cd, 'hi', makeCoerceHoverInfo(trace));
+
+        if(trace.hovertemplate) fillFn(trace.hovertemplate, cd, 'ht');
+
+        if(!trace.hoverlabel) continue;
+
+        fillFn(trace.hoverlabel.bgcolor, cd, 'hbg');
+        fillFn(trace.hoverlabel.bordercolor, cd, 'hbc');
+        fillFn(trace.hoverlabel.font.size, cd, 'hts');
+        fillFn(trace.hoverlabel.font.color, cd, 'htc');
+        fillFn(trace.hoverlabel.font.family, cd, 'htf');
+        fillFn(trace.hoverlabel.font.weight, cd, 'htw');
+        fillFn(trace.hoverlabel.font.style, cd, 'hty');
+        fillFn(trace.hoverlabel.font.variant, cd, 'htv');
+        fillFn(trace.hoverlabel.namelength, cd, 'hnl');
+        fillFn(trace.hoverlabel.align, cd, 'hta');
+        fillFn(trace.hoverlabel.showarrow, cd, 'htsa');
+    }
+}
+
+function paste(traceAttr: any, cd: CalcDatum[], cdAttr: string, fn?: (val: any) => any): void {
+    fn = fn || identity;
+
+    if(Array.isArray(traceAttr)) {
+        cd[0][cdAttr] = fn(traceAttr);
+    }
+}
