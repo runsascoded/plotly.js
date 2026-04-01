@@ -82,7 +82,7 @@ function writeLibFiles(obj) {
     for(var name in obj) {
         var targetPath = '../' + obj[name];
         var fullPath = path.join(constants.pathToLib, '..', obj[name]);
-        if(fs.existsSync(path.join(fullPath, 'index.js'))) {
+        if(fs.existsSync(path.join(fullPath, 'index.js')) || fs.existsSync(path.join(fullPath, 'index.ts'))) {
             targetPath += '/index.js';
         } else {
             targetPath += '.js';
