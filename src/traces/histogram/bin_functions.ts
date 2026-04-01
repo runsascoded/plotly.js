@@ -1,6 +1,6 @@
 import isNumeric from 'fast-isnumeric';
 
-export default {
+var binFunctions: Record<string, (...args: any[]) => any> = {
     count: function(n, i, size) {
         size[n]++;
         return 1;
@@ -58,3 +58,5 @@ export default {
         return 0;
     }
 };
+
+export default binFunctions;

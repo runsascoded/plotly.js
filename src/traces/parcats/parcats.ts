@@ -1537,7 +1537,7 @@ function createParcatsViewModel(graphDiv, layout: FullLayout, wrappedParcatsMode
 
     // Construct parcatsViewModel
     // --------------------------
-    var parcatsViewModel = {
+    var parcatsViewModel: any = {
         trace: trace,
         key: trace.uid,
         model: parcatsModel,

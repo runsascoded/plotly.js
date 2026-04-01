@@ -17,12 +17,12 @@ import Color from '../../components/color/index.js';
 var strScale = Lib.strScale;
 var strTranslate = Lib.strTranslate;
 var rad2deg = Lib.rad2deg;
-var anchor = {
+var anchor: any = {
     left: 'start',
     center: 'middle',
     right: 'end'
 };
-var position = {
+var position: any = {
     left: 0,
     center: 0.5,
     right: 1

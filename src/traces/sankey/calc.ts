@@ -16,9 +16,9 @@ function convertToD3Sankey(trace: FullTrace) {
     var hasLinkColorArray = isArrayOrTypedArray(linkSpec.color);
     var hasLinkHoverColorArray = isArrayOrTypedArray(linkSpec.hovercolor);
     var hasLinkCustomdataArray = isArrayOrTypedArray(linkSpec.customdata);
-    var linkedNodes = {};
+    var linkedNodes: any = {};
 
-    var components = {};
+    var components: any = {};
     var componentCount = linkSpec.colorscales.length;
     var i;
     for(i = 0; i < componentCount; i++) {
@@ -40,7 +40,7 @@ function convertToD3Sankey(trace: FullTrace) {
     // Group nodes
     var j;
     var groups = trace.node.groups;
-    var groupLookup = {};
+    var groupLookup: any = {};
     for(i = 0; i < groups.length; i++) {
         var group = groups[i];
         // Build a lookup table to quickly find in which group a node is

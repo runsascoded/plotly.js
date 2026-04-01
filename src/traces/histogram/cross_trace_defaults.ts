@@ -21,7 +21,7 @@ var BINDIRECTIONS = ['x', 'y'];
 export default function crossTraceDefaults(fullData: FullTrace[], fullLayout: FullLayout): void {
     var allBinOpts = fullLayout._histogramBinOpts = {};
     var histTraces = [];
-    var mustMatchTracesLookup = {};
+    var mustMatchTracesLookup: any = {};
     var otherTracesList = [];
 
     var traceOut, traces, groupName, binDir;

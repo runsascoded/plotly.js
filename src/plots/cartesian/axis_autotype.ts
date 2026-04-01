@@ -89,7 +89,7 @@ function category(a?: any, convertNumeric?: any): any {
     var inc = getIncrement(len);
     var nums = 0;
     var cats = 0;
-    var seen = {};
+    var seen: any = {};
 
     for(var f = 0; f < len; f += inc) {
         var i = round(f);

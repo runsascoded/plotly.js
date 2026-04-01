@@ -6,7 +6,7 @@ export default function linkTraces(gd: GraphDiv, plotinfo: PlotInfo, cdscatter: 
     var trace, i, group, prevtrace, groupIndex;
 
     // first sort traces to keep stacks & filled-together groups together
-    var groupIndices = {};
+    var groupIndices: any = {};
     var needsSort = false;
     var prevGroupIndex = -1;
     var nextGroupIndex = 0;
@@ -43,7 +43,7 @@ export default function linkTraces(gd: GraphDiv, plotinfo: PlotInfo, cdscatter: 
     }
 
     // now link traces to each other
-    var prevtraces = {};
+    var prevtraces: any = {};
     for(i = 0; i < cdscatterSorted.length; i++) {
         trace = cdscatterSorted[i][0].trace;
         group = trace.stackgroup || '';

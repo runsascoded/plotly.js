@@ -7,7 +7,7 @@ import toSVG from '../snapshot/tosvg.js';
 import svgToImg from '../snapshot/svgtoimg.js';
 import { version } from '../version.js';
 
-var attrs = {
+var attrs: any = {
     format: {
         valType: 'enumerated',
         values: ['png', 'jpeg', 'webp', 'svg', 'full-json'],

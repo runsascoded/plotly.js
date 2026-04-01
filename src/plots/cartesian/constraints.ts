@@ -417,7 +417,7 @@ function multiplyScales(a?: any, b?: any): any {
 function finalRatios(group?: any, fullLayout?: any): any {
     var size = fullLayout._size;
     var yRatio = size.h / size.w;
-    var out = {};
+    var out: any = {};
     var keys = Object.keys(group);
     for(var i = 0; i < keys.length; i++) {
         var key = keys[i];
@@ -462,8 +462,8 @@ export var enforce = function enforce(gd?: any): any {
         // autorange of a subset of axes we will ignore other
         // axes for this purpose.
         var matchScale = Infinity;
-        var normScales = {};
-        var axes = {};
+        var normScales: any = {};
+        var axes: any = {};
         var hasAnyDomainConstraint = false;
 
         // find the (normalized) scale of each axis in the group

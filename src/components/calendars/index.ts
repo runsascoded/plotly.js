@@ -93,7 +93,7 @@ var DFLTRANGE = {
  * to an ugly placeholder
  */
 var UNKNOWN = '##';
-var d3ToWorldCalendars = {
+var d3ToWorldCalendars: any = {
     d: {0: 'dd', '-': 'd'}, // 2-digit or unpadded day of month
     e: {0: 'd', '-': 'd'}, // alternate, always unpadded day of month
     a: {0: 'D', '-': 'D'}, // short weekday name

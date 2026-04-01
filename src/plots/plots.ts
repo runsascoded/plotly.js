@@ -484,7 +484,7 @@ export function supplyDefaults(gd?: any, opts?: any): any {
     // track trace GUI changes by uid rather than by trace index
     if(!newFullLayout._tracePreGUI) newFullLayout._tracePreGUI = {};
     var tracePreGUI = newFullLayout._tracePreGUI;
-    var uids = {};
+    var uids: any = {};
     var uid;
     for(uid in tracePreGUI) uids[uid] = 'old';
     for(i = 0; i < newFullData.length; i++) {
@@ -546,7 +546,7 @@ function getTraceUids(oldFullData?: any, newData?: any): any {
     }
     var oldLen = oldFullInput.length;
     var out = new Array(len);
-    var seenUids = {};
+    var seenUids: any = {};
 
     function setUid(uid?: any, i?: any) {
         out[i] = uid;
@@ -582,7 +582,7 @@ function getTraceUids(oldFullData?: any, newData?: any): any {
  */
 function emptySubplotLists(): any {
     var collectableSubplotTypes = Registry.collectableSubplotTypes;
-    var out = {};
+    var out: any = {};
     var i, j;
 
     if(!collectableSubplotTypes) {
@@ -1073,7 +1073,7 @@ export function supplyDataDefaults(dataIn: any, dataOut: FullTrace[], layout: an
         if(fullTrace._input.visible !== false) colorCnt++;
     }
 
-    var carpetIndex = {};
+    var carpetIndex: any = {};
     var carpetDependents = [];
     var dataTemplate = (layout.template || {}).data || {};
     var templater = Template.traceTemplater(dataTemplate);
@@ -2083,7 +2083,7 @@ export function graphJson(gd?: any, dataonly?: any, mode?: any, output?: any, us
             return keepFunction ? '_function_' : null;
         }
         if(isPlainObject(d)) {
-            var o = {};
+            var o: any = {};
             var src;
             Object.keys(d).sort().forEach(function(v) {
                 // remove private elements and functions
@@ -3065,7 +3065,7 @@ function sortAxisCategoriesByValue(axList?: any, gd?: any): any {
         }
     }
 
-    var aggFn = {
+    var aggFn: any = {
         min: function(values) {return aggNums(Math.min, null, values);},
         max: function(values) {return aggNums(Math.max, null, values);},
         sum: function(values) {return aggNums(function(a, b) { return a + b;}, null, values);},
@@ -3221,7 +3221,7 @@ function sortAxisCategoriesByValue(axList?: any, gd?: any): any {
 }
 
 function setupAxisCategories(axList?: any, fullData?: any, fullLayout?: any): any {
-    var axLookup = {};
+    var axLookup: any = {};
 
     function setupOne(ax?: any) {
         ax.clearCalc();
@@ -3248,7 +3248,7 @@ function setupAxisCategories(axList?: any, fullData?: any, fullLayout?: any): an
 function doCrossTraceCalc(gd?: any): any {
     var fullLayout = gd._fullLayout;
     var modules = fullLayout._visibleModules;
-    var hash = {};
+    var hash: any = {};
     var i, j, k;
 
     // position and range calculations for traces that
@@ -3318,7 +3318,7 @@ export function reselect(gd?: any): any {
 
 export function generalUpdatePerTraceModule(gd: GraphDiv, subplot?: any, subplotCalcData?: any, subplotLayout?: any): any {
     var traceHashOld = subplot.traceHash;
-    var traceHash = {};
+    var traceHash: any = {};
     var i;
 
     // build up moduleName -> calcData hash

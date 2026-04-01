@@ -953,7 +953,7 @@ function createHoverText(hoverData: any[], opts: any): any {
     commonLabel.exit().remove();
 
     // set rect (without arrow) behind label below for later collision detection
-    var commonLabelRect = {
+    var commonLabelRect: any = {
         minX: 0,
         maxX: 0,
         minY: 0,

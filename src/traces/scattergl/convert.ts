@@ -645,7 +645,7 @@ function convertErrorBarPositions(gd: GraphDiv, trace: FullTrace, positions, x, 
         if (opts && opts.visible && (ax.type === 'linear' || ax.type === 'log')) {
             var computeError = makeComputeError(opts);
             var pOffset = { x: 0, y: 1 }[axLetter];
-            var eOffset = { x: [0, 1, 2, 3], y: [2, 3, 0, 1] }[axLetter];
+            var eOffset: any = { x: [0, 1, 2, 3], y: [2, 3, 0, 1] }[axLetter];
             var errors = new Float64Array(4 * count);
             var minShoe = Infinity;
             var maxHat = -Infinity;

@@ -227,7 +227,7 @@ function fillLayoutSchema(schema?: any, dataOut?: any): any {
 }
 
 // validation error codes
-var code2msgFunc = {
+var code2msgFunc: any = {
     object: function(base, astr) {
         var prefix;
 

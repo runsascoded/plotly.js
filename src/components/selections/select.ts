@@ -485,7 +485,7 @@ function prepSelect(evt: any, startX: any, startY: any, dragOptions: any, mode: 
     };
 }
 
-function selectOnClick(evt: any, gd: GraphDiv, xAxes: any, yAxes: any, subplot: any, dragOptions: any, polygonOutlines: any) {
+function selectOnClick(evt: any, gd: GraphDiv, xAxes: any, yAxes: any, subplot: any, dragOptions: any, polygonOutlines?: any) {
     var hoverData = gd._hoverdata;
     var fullLayout = gd._fullLayout;
     var clickmode = fullLayout.clickmode;
@@ -1208,7 +1208,7 @@ function reselect(gd: GraphDiv, mayEmitSelected: any, selectionTesters?: any, se
         }
     }
 
-    var eventData = {points: allSelections};
+    var eventData: any = {points: allSelections};
     updateSelectedState(gd, allSearchTraces, eventData);
 
     var clickmode = fullLayout.clickmode;

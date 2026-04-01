@@ -34,7 +34,7 @@ export default function calc(gd: GraphDiv, trace: FullTrace) {
     var anchorToHeaderRowBlock = makeAnchorToRowBlock(headerRowHeights, headerHeight);
     var headerRowBlocks = makeRowBlock(anchorToHeaderRowBlock, []);
     var rowBlocks = makeRowBlock(anchorToRowBlock, headerRowBlocks);
-    var uniqueKeys = {};
+    var uniqueKeys: any = {};
 
     var columnOrder = trace._fullInput.columnorder;
     if(isArrayOrTypedArray(columnOrder)) columnOrder = Array.from(columnOrder);
@@ -152,7 +152,7 @@ function makeRowBlock(anchorToRowBlock, auxiliary) {
 }
 
 function makeAnchorToRowBlock(rowHeights, minimumFillHeight) {
-    var anchorToRowBlock = {};
+    var anchorToRowBlock: any = {};
     var currentRowHeight;
     var currentAnchor = 0;
     var currentBlockHeight = 0;

@@ -4,7 +4,7 @@ import Lib from '../../lib/index.js';
 import _numerical from '../../constants/numerical.js';
 const { BADNUM } = _numerical;
 
-export default function clean2dArray(zOld,  trace: FullTrace,  xa: FullAxis,  ya: FullAxis) {
+export default function clean2dArray(zOld: any,  trace?: FullTrace,  xa?: FullAxis,  ya?: FullAxis) {
     var rowlen, collen, getCollen, old2new, i, j;
 
     function cleanZvalue(v) {
@@ -33,7 +33,7 @@ export default function clean2dArray(zOld,  trace: FullTrace,  xa: FullAxis,  ya
         if(trace && trace.type !== 'carpet' && trace.type !== 'contourcarpet' &&
             ax && ax.type === 'category' && trace['_' + ax._id.charAt(0)].length) {
             var axLetter = ax._id.charAt(0);
-            var axMapping = {};
+            var axMapping: any = {};
             var traceCategories = trace['_' + axLetter + 'CategoryMap'] || trace[axLetter];
             for(i = 0; i < traceCategories.length; i++) {
                 axMapping[traceCategories[i]] = i;

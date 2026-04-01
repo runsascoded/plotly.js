@@ -527,13 +527,13 @@ function applyTitleAutoMargin(gd?: any, y?: any, pushMargin?: any, titleHeight?:
     var titleID = 'title.automargin';
     var title: any = gd._fullLayout.title;
     var position = title.y > 0.5 ? 't' : 'b';
-    var push = {
+    var push: any = {
         x: title.x,
         y: title.y,
         t: 0,
         b: 0
     };
-    var reservedPush = {};
+    var reservedPush: any = {};
 
     if(title.yref === 'paper' && isOutsideContainer(gd, title, position, y, titleHeight)) {
         push[position] = pushMargin;
@@ -791,7 +791,7 @@ export var doAutoRangeAndConstraints = function(gd: GraphDiv): any {
     var axList = Axes.list(gd, '', true);
     var ax;
 
-    var autoRangeDone = {};
+    var autoRangeDone: any = {};
 
     for(var i = 0; i < axList.length; i++) {
         ax = axList[i];

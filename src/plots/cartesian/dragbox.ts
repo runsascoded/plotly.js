@@ -769,7 +769,7 @@ function makeDragBox(gd: GraphDiv, plotinfo: PlotInfo, x?: any, y?: any, w?: any
         if(matches.xaxes) axList = axList.concat(matches.xaxes);
         if(matches.yaxes) axList = axList.concat(matches.yaxes);
 
-        var attrs = {};
+        var attrs: any = {};
         var ax, i;
 
         // For reset+autosize mode:
@@ -1251,8 +1251,8 @@ function xyCorners(box?: any): any {
 
 function calcLinks(gd?: any, groups?: any, xaHash?: any, yaHash?: any, exclude?: any): any {
     var isSubplotConstrained = false;
-    var xLinks = {};
-    var yLinks = {};
+    var xLinks: any = {};
+    var yLinks: any = {};
     var xID, yID, xLinkID, yLinkID;
     var xExclude = (exclude || {}).xaHash;
     var yExclude = (exclude || {}).yaHash;
@@ -1310,7 +1310,7 @@ function calcLinks(gd?: any, groups?: any, xaHash?: any, yaHash?: any, exclude?:
         yLinks = {};
     }
 
-    var xaHashLinked = {};
+    var xaHashLinked: any = {};
     var xaxesLinked = [];
     for(xLinkID in xLinks) {
         var xa = getFromId(gd, xLinkID);
@@ -1318,7 +1318,7 @@ function calcLinks(gd?: any, groups?: any, xaHash?: any, yaHash?: any, exclude?:
         xaHashLinked[xa._id] = xa;
     }
 
-    var yaHashLinked = {};
+    var yaHashLinked: any = {};
     var yaxesLinked = [];
     for(yLinkID in yLinks) {
         var ya = getFromId(gd, yLinkID);

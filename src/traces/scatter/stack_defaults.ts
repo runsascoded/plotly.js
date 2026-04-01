@@ -37,7 +37,7 @@ export default function handleStackDefaults(traceIn: InputTrace, traceOut: FullT
         // in principle it should be OK I guess, as long as explicit group styles
         // don't override explicit base-trace styles?
 
-        var dflts = {
+        var dflts: any = {
             orientation: (traceOut.x && !traceOut.y) ? 'h' : 'v'
         };
 

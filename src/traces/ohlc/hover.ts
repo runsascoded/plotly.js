@@ -6,7 +6,7 @@ import _index from '../../lib/index.js';
 const { fillText } = _index;
 import delta from '../../constants/delta.js';
 
-var DIRSYMBOL = {
+var DIRSYMBOL: any = {
     increasing: delta.INCREASING.SYMBOL,
     decreasing: delta.DECREASING.SYMBOL
 };
@@ -109,7 +109,7 @@ function hoverSplit(pointData,  xval,  yval,  hovermode) {
     // several attributes can have the same y-coordinate. We will
     // bunch them together in a single text block. For this, we keep
     // a dictionary mapping y-coord -> point data.
-    var usedVals = {};
+    var usedVals: any = {};
 
     for(var i = 0; i < attrs.length; i++) {
         var attr = attrs[i];

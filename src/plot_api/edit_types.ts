@@ -84,7 +84,7 @@ export default {
 };
 
 function falseObj(keys?: any): any {
-    var out = {};
+    var out: any = {};
     for(var i = 0; i < keys.length; i++) out[keys[i]] = false;
     return out;
 }

@@ -23,8 +23,8 @@ export var calc = function(gd: GraphDiv, trace: FullTrace) {
     var hasValues = Lib.isArrayOrTypedArray(values);
     var cd = [];
 
-    var parent2children = {};
-    var refs = {};
+    var parent2children: any = {};
+    var refs: any = {};
     var addToLookup = function(parent, v) {
         if(parent2children[parent]) parent2children[parent].push(v);
         else parent2children[parent] = [v];

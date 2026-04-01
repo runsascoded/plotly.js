@@ -112,7 +112,7 @@ function plotOne(gd: GraphDiv, cd: any[], element: Element, transitionOpts: any)
     // previous root 'pt' (can be empty)
     var prevEntry = null;
     // stash of 'previous' position data used by tweening functions
-    var prevLookup = {};
+    var prevLookup: any = {};
 
     if (hasTransition) {
         // Important: do this before binding new sliceData!

@@ -165,7 +165,7 @@ export default function crossTraceCalc(gd: GraphDiv, plotinfo: PlotInfo): void {
 
 function insertBlank(calcTrace: any[], index: number, position: number, traceIndex: number, hasAnyBlanks: boolean[], interpolate: boolean, posAttr: string): void {
     hasAnyBlanks[traceIndex] = true;
-    var newEntry = {
+    var newEntry: any = {
         i: null,
         gap: true,
         s: 0

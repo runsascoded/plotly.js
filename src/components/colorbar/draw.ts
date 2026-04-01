@@ -820,7 +820,7 @@ function drawColorBar(g: any, opts: any, gd: GraphDiv) {
         var sideX = opts.x < 0.5 ? 'l' : 'r';
 
         gd._fullLayout._reservedMargin[opts._id] = {};
-        var possibleReservedMargins = {
+        var possibleReservedMargins: any = {
             r: (fullLayout.width - lx - xShift),
             l: lx + marginOpts.r,
             b: (fullLayout.height - ly - yShift),

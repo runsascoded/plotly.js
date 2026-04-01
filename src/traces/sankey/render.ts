@@ -113,7 +113,7 @@ function sankeyModel(layout, d, traceIndex) {
         for(i = 0; i < graph.nodes.length; i++) {
             var node = graph.nodes[i];
             // Links connecting the same two nodes are part of a flow
-            var flows = {};
+            var flows: any = {};
             var flowKey;
             var link;
             for(j = 0; j < node.targetLinks.length; j++) {
@@ -131,7 +131,7 @@ function sankeyModel(layout, d, traceIndex) {
 
                 // Find the total size of the flow and total size per label
                 var total = 0;
-                var totalPerLabel = {};
+                var totalPerLabel: any = {};
                 for(k = 0; k < flowLinks.length; k++) {
                     link = flowLinks[k];
                     if(!totalPerLabel[link.label]) totalPerLabel[link.label] = 0;

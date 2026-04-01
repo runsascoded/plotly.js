@@ -133,7 +133,7 @@ export default function transitionAxes(gd?: any, edits?: any, transitionOpts?: a
     }
 
     function transitionInterrupt() {
-        var aobj = {};
+        var aobj: any = {};
 
         for(var i = 0; i < edits.length; i++) {
             var edit = edits[i];

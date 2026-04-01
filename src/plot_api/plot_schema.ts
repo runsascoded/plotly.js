@@ -21,7 +21,7 @@ export { DEPRECATED };
 export { UNDERSCORE_ATTRS };
 
 export var get = function(): any {
-    var traces = {};
+    var traces: any = {};
 
     Registry.allTypes.forEach(function(type) {
         traces[type] = getTraceAttributes(type);
@@ -438,7 +438,7 @@ function getLayoutAttributes(): any {
 }
 
 function getFramesAttributes(): any {
-    var attrs = {
+    var attrs: any = {
         frames: extendDeepAll({}, frameAttributes)
     };
 

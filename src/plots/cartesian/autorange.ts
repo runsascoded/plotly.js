@@ -381,7 +381,7 @@ function doAutoRange(gd?: any, ax?: any, presetRange?: any): any {
         var axIn: any = ax._input;
 
         // before we edit _input, store preGUI values
-        var edits = {};
+        var edits: any = {};
         edits[ax._attr + '.range'] = ax.range;
         edits[ax._attr + '.autorange'] = ax.autorange;
         Registry.call('_storeDirectGUIEdit', gd.layout, gd._fullLayout._preGUI, edits);

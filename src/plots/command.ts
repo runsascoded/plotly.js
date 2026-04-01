@@ -271,7 +271,7 @@ function computeLayoutBindings(gd?: any, args?: any): any {
     var bindings = [];
 
     var astr = args[0];
-    var aobj = {};
+    var aobj: any = {};
     if(typeof astr === 'string') {
         aobj[astr] = args[1];
     } else if(isPlainObject(astr)) {

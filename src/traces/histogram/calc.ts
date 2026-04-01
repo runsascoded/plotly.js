@@ -98,7 +98,7 @@ function calc(gd: GraphDiv, trace: FullTrace): any[] {
     // stash left and right gaps by group
     if(!gd._fullLayout._roundFnOpts) gd._fullLayout._roundFnOpts = {};
     var groupName = trace['_' + mainData + 'bingroup'];
-    var roundFnOpts = {leftGap: Infinity, rightGap: Infinity};
+    var roundFnOpts: any = {leftGap: Infinity, rightGap: Infinity};
     if(groupName) {
         if(!gd._fullLayout._roundFnOpts[groupName]) gd._fullLayout._roundFnOpts[groupName] = roundFnOpts;
         roundFnOpts = gd._fullLayout._roundFnOpts[groupName];
@@ -110,7 +110,7 @@ function calc(gd: GraphDiv, trace: FullTrace): any[] {
     var uniqueValsPerBin = true;
     var leftGap = roundFnOpts.leftGap;
     var rightGap = roundFnOpts.rightGap;
-    var ptNumber2cdIndex = {};
+    var ptNumber2cdIndex: any = {};
     for(i = 0; i < pos0.length; i++) {
         var posi = pos0[i];
         n = Lib.findBin(posi, bins);

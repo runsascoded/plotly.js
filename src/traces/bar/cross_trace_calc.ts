@@ -810,8 +810,8 @@ function collectExtents(calcTraces: any[], pa: FullAxis): void {
     // Find min and max size axis extent for each position
     // This is used for rounded bar corners, to carry rounding
     // down to lower bars in the case of stacked bars
-    var sMinByPos = {};
-    var sMaxByPos = {};
+    var sMinByPos: any = {};
+    var sMaxByPos: any = {};
 
     // Check whether any trace has rounded corners
     var anyTraceHasCornerradius = calcTraces.some(function(x) {

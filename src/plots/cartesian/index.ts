@@ -39,8 +39,8 @@ export var finalizeSubplots = function(layoutIn?: any, layoutOut?: any): any {
     var yList = subplots.yaxis;
     var spSVG = subplots.cartesian;
     var spAll = spSVG;
-    var allX = {};
-    var allY = {};
+    var allX: any = {};
+    var allY: any = {};
     var i, xi, yi;
 
     for(i = 0; i < spAll.length; i++) {
@@ -372,7 +372,7 @@ export var drawFramework = function(gd: GraphDiv): any {
     var i;
 
     // Separate traces by zorder and plot each zorder group separately
-    var traceZorderGroups = {};
+    var traceZorderGroups: any = {};
     for(i = 0; i < calcdata.length; i++) {
         var cdi = calcdata[i][0];
         var trace = cdi.trace;
@@ -684,7 +684,7 @@ function makeSubplotLayer(gd?: any, plotinfo?: any): any {
 function purgeSubplotLayers(layers?: any, fullLayout?: any): any {
     if(!layers) return;
 
-    var overlayIdsToRemove = {};
+    var overlayIdsToRemove: any = {};
 
     layers.each(function(d) {
         var id = d[0];

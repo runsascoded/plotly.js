@@ -28,16 +28,16 @@ function appendList(cont?: any, k?: any, item?: any): any {
 export default function supplyLayoutDefaults(layoutIn?: any, layoutOut?: any, fullData?: any): any {
     var autotypenumbersDflt = layoutOut.autotypenumbers;
 
-    var ax2traces = {};
-    var xaMayHide = {};
-    var yaMayHide = {};
-    var xaMustDisplay = {};
-    var yaMustDisplay = {};
-    var yaMustNotReverse = {};
-    var yaMayReverse = {};
-    var axHasImage = {};
-    var outerTicks = {};
-    var noGrids = {};
+    var ax2traces: any = {};
+    var xaMayHide: any = {};
+    var yaMayHide: any = {};
+    var xaMustDisplay: any = {};
+    var yaMustDisplay: any = {};
+    var yaMustNotReverse: any = {};
+    var yaMayReverse: any = {};
+    var axHasImage: any = {};
+    var outerTicks: any = {};
+    var noGrids: any = {};
     var i, j;
 
     // look for axes in the data
@@ -184,7 +184,7 @@ export default function supplyLayoutDefaults(layoutIn?: any, layoutOut?: any, fu
     var allAxisIds = counterAxes.x.concat(counterAxes.y);
     // lookup and list of axis ids that axes in axNames have a reference to,
     // even though they are missing from allAxisIds
-    var missingMatchedAxisIdsLookup = {};
+    var missingMatchedAxisIdsLookup: any = {};
     var missingMatchedAxisIds = [];
 
     // fill in 'missing' axis lookup when an axis is set to match an axis

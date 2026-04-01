@@ -2,7 +2,7 @@ import { isTypedArraySpec } from '../../lib/array.js';
 
 function findCategories(ax?: any, opts?: any): any {
     var dataAttr = opts.dataAttr || ax._id.charAt(0);
-    var lookup = {};
+    var lookup: any = {};
     var axData;
     var i, j;
 

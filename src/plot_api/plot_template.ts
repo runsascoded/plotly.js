@@ -3,7 +3,7 @@ import plotAttributes from '../plots/attributes.js';
 
 var TEMPLATEITEMNAME = 'templateitemname';
 
-var templateAttrs = {
+var templateAttrs: any = {
     name: {
         valType: 'string',
         editType: 'none',
@@ -40,7 +40,7 @@ export var templatedArray = function(name?: any, attrs?: any): any {
 };
 
 export var traceTemplater = function(dataTemplate?: any): any {
-    var traceCounts = {};
+    var traceCounts: any = {};
     var traceType, typeTemplates;
 
     for(traceType in dataTemplate) {
@@ -96,7 +96,7 @@ export var arrayTemplater = function(container?: any, name?: any, inclusionAttr?
         templateItems = [];
     }
 
-    var usedNames = {};
+    var usedNames: any = {};
 
     function newItem(itemIn?: any) {
         // include name and templateitemname in the output object for ALL
@@ -145,7 +145,7 @@ export var arrayTemplater = function(container?: any, name?: any, inclusionAttr?
             // only allow named items to be added as defaults,
             // and only allow each name once
             if(validItemName(name) && !usedNames[name]) {
-                var outi = {
+                var outi: any = {
                     _template: templateItem,
                     name: name,
                     _input: {_templateitemname: name}

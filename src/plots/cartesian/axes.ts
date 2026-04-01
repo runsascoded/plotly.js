@@ -100,7 +100,7 @@ axes.coerceRef = function(containerIn?: any, containerOut?: any, gd?: any, attr?
     var axLetter = attr.charAt(attr.length - 1);
     var axlist = gd._fullLayout._subplots[axLetter + 'axis'];
     var refAttr = attr + 'ref';
-    var attrDef = {};
+    var attrDef: any = {};
 
     if(!dflt) dflt = axlist[0] || (typeof extraOption === 'string' ? extraOption : extraOption[0]);
     if(!extraOption) extraOption = dflt;
@@ -187,7 +187,7 @@ axes.redrawComponents = function(gd?: any, axIds?: any) {
 
     function _redrawOneComp(moduleName?: any, methodName?: any, stashName?: any, shortCircuit?: any) {
         var method = Registry.getComponentMethod(moduleName, methodName);
-        var stash = {};
+        var stash: any = {};
 
         for(var i = 0; i < axIds.length; i++) {
             var ax = fullLayout[axes.id2name(axIds[i])];
@@ -2548,7 +2548,7 @@ axes.drawOne = function(gd?: any, ax?: any, opts?: any) {
     // calcLabelLevelBbox can be expensive,
     // so make sure to not call it twice during the same Axes.drawOne call
     // by stashing label-level bounding boxes per tick-label class
-    var llbboxes = {};
+    var llbboxes: any = {};
     function getLabelLevelBbox(suffix?: any) {
         var cls = axId + (suffix || 'tick');
         if(!llbboxes[cls]) llbboxes[cls] = calcLabelLevelBbox(ax, cls, mainLinePositionShift);
@@ -2585,7 +2585,7 @@ axes.drawOne = function(gd?: any, ax?: any, opts?: any) {
 
         // keep track of which subplots (by main counter axis) we've already
         // drawn grids for, so we don't overdraw overlaying subplots
-        var finishedGrids = {};
+        var finishedGrids: any = {};
 
         for(i = 0; i < subplotsWithAx.length; i++) {
             sp = subplotsWithAx[i];
@@ -2646,7 +2646,7 @@ axes.drawOne = function(gd?: any, ax?: any, opts?: any) {
         }
 
         if(ax.showdividers && outsideTicks && ax.tickson === 'boundaries') {
-            var dividerLookup = {};
+            var dividerLookup: any = {};
             for(i = 0; i < dividerVals.length; i++) {
                 dividerLookup[dividerVals[i].x] = 1;
             }
@@ -2924,7 +2924,7 @@ function getBoundaryVals(ax?: any, vals?: any): any {
 
 function getSecondaryLabelVals(ax?: any, vals?: any): any {
     var out: any = [];
-    var lookup = {};
+    var lookup: any = {};
 
     for(var i = 0; i < vals.length; i++) {
         var d = vals[i];

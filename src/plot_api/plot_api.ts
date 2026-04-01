@@ -896,8 +896,8 @@ function spliceTraces(gd?: any, update?: any, indices?: any, maxPoints?: any, up
     assertExtendTracesArgs(gd, update, indices, maxPoints);
 
     var updateProps = getExtendProperties(gd, update, indices, maxPoints);
-    var undoUpdate = {};
-    var undoPoints = {};
+    var undoUpdate: any = {};
+    var undoPoints: any = {};
 
     for (var i = 0; i < updateProps.length; i++) {
         var prop = updateProps[i].prop;
@@ -1775,7 +1775,7 @@ function relayout(gd?: any, astr?: any, val?: any): any {
     gd = getGraphDiv(gd);
     helpers.clearPromiseQueue(gd);
 
-    var aobj = {};
+    var aobj: any = {};
     if (typeof astr === 'string') {
         aobj[astr] = val;
     } else if (isPlainObject(astr)) {
@@ -1923,7 +1923,7 @@ function _relayout(gd?: any, aobj?: any): any {
     var keys = Object.keys(aobj);
     var axes = Axes.list(gd);
     var eventData = extendDeepAll({}, aobj);
-    var arrayEdits = {};
+    var arrayEdits: any = {};
 
     var arrayStr, i, j;
 
@@ -1950,8 +1950,8 @@ function _relayout(gd?: any, aobj?: any): any {
 
     // copies of the change (and previous values of anything affected)
     // for the undo / redo queue
-    var redoit = {};
-    var undoit = {};
+    var redoit: any = {};
+    var undoit: any = {};
 
     // for attrs that interact (like scales & autoscales), save the
     // old vals before making the change
@@ -1979,7 +1979,7 @@ function _relayout(gd?: any, aobj?: any): any {
     // for constraint enforcement: keep track of all axes (as {id: name})
     // we're editing the (auto)range of, so we can tell the others constrained
     // to scale with them that it's OK for them to shrink
-    var rangesAltered = {};
+    var rangesAltered: any = {};
     var ax;
 
     function recordAlteredAxis(pleafPlus?: any) {
@@ -2485,8 +2485,8 @@ function applyUIRevisions(data?: any, layout?: any, oldFullData?: any, oldFullLa
     var layoutPreGUI = oldFullLayout._preGUI;
     var key, revAttr, oldRev, newRev, match, preGUIVal, newNP, newVal, head, tail;
     var bothInheritAutorange = [];
-    var newAutorangeIn = {};
-    var newRangeAccepted = {};
+    var newAutorangeIn: any = {};
+    var newRangeAccepted: any = {};
     for (key in layoutPreGUI) {
         match = findUIPattern(key, layoutUIControlPatterns);
         if (match) {
@@ -2843,7 +2843,7 @@ function diffData(gd?: any, oldFullData?: any, newFullData?: any, immutable?: an
         gd: gd
     };
 
-    var seenUIDs = {};
+    var seenUIDs: any = {};
 
     for (i = 0; i < oldFullData.length; i++) {
         if (newFullData[i]) {
@@ -3516,7 +3516,7 @@ function addFrames(gd?: any, frameList?: any, indices?: any): any {
     var bigIndex = _frames.length + frameList.length * 2;
 
     var insertions = [];
-    var _frameHashLocal = {};
+    var _frameHashLocal: any = {};
     for (i = frameList.length - 1; i >= 0; i--) {
         if (!isPlainObject(frameList[i])) continue;
 
@@ -3775,7 +3775,7 @@ function makePlotFramework(gd?: any): any {
     fullLayout._hoverpaper = fullLayout._paperdiv.append('svg').classed('main-svg', true);
 
     if (!fullLayout._uid) {
-        var otherUids = {};
+        var otherUids: any = {};
         selectAll('defs').each(function () {
             if (this.id) otherUids[this.id.split('-')[1]] = 1;
         });

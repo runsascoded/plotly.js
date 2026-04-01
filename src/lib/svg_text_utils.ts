@@ -62,7 +62,7 @@ export var convertToTspans = function(_context: any, gd: any, _callback?: any): 
         ((gd && gd._promises) || []).push(new Promise(function(resolve: any) {
             _context.style('display', 'none');
             var fontSize = parseInt(_context.node().style.fontSize, 10);
-            var config = {fontSize: fontSize};
+            var config: any = {fontSize: fontSize};
 
             texToSVG(tex[2], config, function(_svgEl: any, _glyphDefs: any, _svgBBox: any) {
                 parent.selectAll('svg.' + svgClass).remove();

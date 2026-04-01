@@ -1,4 +1,4 @@
-export default function makeBinAttrs(axLetter: string, match: boolean): any {
+export default function makeBinAttrs(axLetter: string, match?: boolean): any {
     return {
         start: {
             valType: 'any', // for date axes

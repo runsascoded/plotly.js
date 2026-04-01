@@ -30,7 +30,7 @@ export default function handleSubplotDefaults(layoutIn?: any, layoutOut?: any, f
 
         if(!opts.noUirevision) coerce('uirevision', layoutOut.uirevision);
 
-        var dfltDomains = {};
+        var dfltDomains: any = {};
         dfltDomains[partition] = [i / idsLength, (i + 1) / idsLength];
         handleDomainDefaults(subplotLayoutOut, layoutOut, coerce, dfltDomains);
 

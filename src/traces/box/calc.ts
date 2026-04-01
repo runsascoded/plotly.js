@@ -364,7 +364,7 @@ function initNestedArray(len: number): any[][] {
     return arr;
 }
 
-var TRACE_TO_CALC = {
+var TRACE_TO_CALC: any = {
     text: 'tx',
     hovertext: 'htx'
 };
@@ -387,7 +387,7 @@ function calcSelection(cd: any[], trace: FullTrace): void {
     if(Lib.isArrayOrTypedArray(trace.selectedpoints)) {
         for(var i = 0; i < cd.length; i++) {
             var pts = cd[i].pts || [];
-            var ptNumber2cdIndex = {};
+            var ptNumber2cdIndex: any = {};
 
             for(var j = 0; j < pts.length; j++) {
                 ptNumber2cdIndex[pts[j].i] = j;

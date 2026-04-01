@@ -967,7 +967,7 @@ function expandMargin(gd: GraphDiv, legendId: string, lx: number, ly: number): a
     gd._fullLayout._reservedMargin[legendId] = {};
     var sideY = legendObj.y < 0.5 ? 'b' : 't';
     var sideX = legendObj.x < 0.5 ? 'l' : 'r';
-    var possibleReservedMargins = {
+    var possibleReservedMargins: any = {
         r: (fullLayout.width - lx),
         l: lx + legendObj._width,
         b: (fullLayout.height - ly),

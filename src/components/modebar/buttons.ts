@@ -587,7 +587,7 @@ modeBarButtons.resetViewSankey = {
     title: function(gd: GraphDiv) { return _(gd, 'Reset view'); },
     icon: Icons.home,
     click: function(gd: GraphDiv) {
-        var aObj = {
+        var aObj: any = {
             'node.groups': [],
             'node.x': [],
             'node.y': []

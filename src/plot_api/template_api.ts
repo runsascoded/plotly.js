@@ -182,7 +182,7 @@ function walkStyleKeys(parent?: any, templateOut?: any, getAttributeInfo?: any, 
         } else if(attr._isLinkedToArray && Array.isArray(child)) {
             var dfltDone = false;
             var namedIndex = 0;
-            var usedNames = {};
+            var usedNames: any = {};
             for(var i = 0; i < child.length; i++) {
                 var item = child[i];
                 if(isPlainObject(item)) {
@@ -262,7 +262,7 @@ export var validateTemplate = function(figureIn?: any, template?: any): any {
     var fullLayout = figure._fullLayout;
     var fullData = figure._fullData;
 
-    var layoutPaths = {};
+    var layoutPaths: any = {};
     function crawlLayoutForContainers(obj?: any, paths?: any) {
         for(var key in obj) {
             if(key.charAt(0) !== '_' && isPlainObject(obj[key])) {
@@ -304,7 +304,7 @@ export var validateTemplate = function(figureIn?: any, template?: any): any {
     if(!isPlainObject(dataTemplate)) {
         errorList.push({code: 'data'});
     } else {
-        var typeCount = {};
+        var typeCount: any = {};
         var traceType;
         for(var i = 0; i < fullData.length; i++) {
             var fullTrace = fullData[i];
