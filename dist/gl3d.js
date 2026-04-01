@@ -16444,12 +16444,12 @@ var Plotly = (() => {
               };
               proto12.update = function(bounds, labels, labelFont, ticks3, tickFont) {
                 var data = [];
-                function addItem(t, text, font6, size, lineSpacing2, styletags2) {
+                function addItem(t, text, font4, size, lineSpacing2, styletags2) {
                   var fontKey = [
-                    font6.style,
-                    font6.weight,
-                    font6.variant,
-                    font6.family
+                    font4.style,
+                    font4.weight,
+                    font4.variant,
+                    font4.family
                   ].join("_");
                   var fontcache = __TEXT_CACHE[fontKey];
                   if (!fontcache) {
@@ -16459,10 +16459,10 @@ var Plotly = (() => {
                   if (!mesh) {
                     mesh = fontcache[text] = tryVectorizeText(text, {
                       triangles: true,
-                      font: font6.family,
-                      fontStyle: font6.style,
-                      fontWeight: font6.weight,
-                      fontVariant: font6.variant,
+                      font: font4.family,
+                      fontStyle: font4.style,
+                      fontWeight: font4.weight,
+                      fontVariant: font4.variant,
                       textAlign: "center",
                       textBaseline: "middle",
                       lineSpacing: lineSpacing2,
@@ -16509,7 +16509,7 @@ var Plotly = (() => {
                     if (!ticks3[d][i].text) {
                       continue;
                     }
-                    var font5 = {
+                    var font3 = {
                       family: ticks3[d][i].font || tickFont[d].family,
                       style: tickFont[d].fontStyle || tickFont[d].style,
                       weight: tickFont[d].fontWeight || tickFont[d].weight,
@@ -16518,7 +16518,7 @@ var Plotly = (() => {
                     addItem(
                       ticks3[d][i].x,
                       ticks3[d][i].text,
-                      font5,
+                      font3,
                       ticks3[d][i].fontSize || 12,
                       lineSpacing,
                       styletags
@@ -30232,7 +30232,7 @@ var Plotly = (() => {
                   this.highlightId = [a0 / 255, a1 / 255, a2 / 255, 0];
                 }
               };
-              function get_glyphData(glyphs, index, font5, pixelRatio) {
+              function get_glyphData(glyphs, index, font3, pixelRatio) {
                 var str;
                 if (isArrayOrTypedArray8(glyphs)) {
                   if (index < glyphs.length) {
@@ -30249,17 +30249,17 @@ var Plotly = (() => {
                   str = "\u25BC";
                   visible = false;
                 }
-                if (!font5) font5 = {};
-                var family = font5.family;
+                if (!font3) font3 = {};
+                var family = font3.family;
                 if (isArrayOrTypedArray8(family)) family = family[index];
                 if (!family) family = "normal";
-                var weight = font5.weight;
+                var weight = font3.weight;
                 if (isArrayOrTypedArray8(weight)) weight = weight[index];
                 if (!weight) weight = "normal";
-                var style5 = font5.style;
+                var style5 = font3.style;
                 if (isArrayOrTypedArray8(style5)) style5 = style5[index];
                 if (!style5) style5 = "normal";
-                var variant = font5.variant;
+                var variant = font3.variant;
                 if (isArrayOrTypedArray8(variant)) variant = variant[index];
                 if (!variant) variant = "normal";
                 var glyph = getGlyph(str, {
@@ -30268,7 +30268,7 @@ var Plotly = (() => {
                   style: style5,
                   variant
                 }, pixelRatio);
-                var glyph = getGlyph(str, font5, pixelRatio);
+                var glyph = getGlyph(str, font3, pixelRatio);
                 return {
                   mesh: glyph[0],
                   lines: glyph[1],
@@ -30327,7 +30327,7 @@ var Plotly = (() => {
                 }
                 this.dirty = true;
                 var points = options.position;
-                var font5 = {
+                var font3 = {
                   family: options.font || "normal",
                   style: options.fontStyle || "normal",
                   weight: options.fontWeight || "normal",
@@ -30368,7 +30368,7 @@ var Plotly = (() => {
                           continue count_loop;
                         }
                       }
-                      var glyphData = get_glyphData(glyphs, i, font5, this.pixelRatio);
+                      var glyphData = get_glyphData(glyphs, i, font3, this.pixelRatio);
                       var glyphMesh = glyphData.mesh;
                       var glyphLines = glyphData.lines;
                       var glyphBounds = glyphData.bounds;
@@ -30399,7 +30399,7 @@ var Plotly = (() => {
                         upperBound[j] = Math.max(upperBound[j], x[j]);
                         lowerBound[j] = Math.min(lowerBound[j], x[j]);
                       }
-                      var glyphData = get_glyphData(glyphs, i, font5, this.pixelRatio);
+                      var glyphData = get_glyphData(glyphs, i, font3, this.pixelRatio);
                       var glyphMesh = glyphData.mesh;
                       var glyphLines = glyphData.lines;
                       var glyphBounds = glyphData.bounds;
@@ -33246,12 +33246,12 @@ var Plotly = (() => {
               var vectorizeText = __webpack_require__2(4359);
               module2.exports = getGlyph;
               var GLYPH_CACHE = {};
-              function getGlyph(symbol, font5, pixelRatio) {
+              function getGlyph(symbol, font3, pixelRatio) {
                 var fontKey = [
-                  font5.style,
-                  font5.weight,
-                  font5.variant,
-                  font5.family
+                  font3.style,
+                  font3.weight,
+                  font3.variant,
+                  font3.family
                 ].join("_");
                 var fontCache = GLYPH_CACHE[fontKey];
                 if (!fontCache) {
@@ -33264,10 +33264,10 @@ var Plotly = (() => {
                   textAlign: "center",
                   textBaseline: "middle",
                   lineHeight: 1,
-                  font: font5.family,
-                  fontStyle: font5.style,
-                  fontWeight: font5.weight,
-                  fontVariant: font5.variant,
+                  font: font3.family,
+                  fontStyle: font3.style,
+                  fontWeight: font3.weight,
+                  fontVariant: font3.variant,
                   lineSpacing: 1.25,
                   styletags: {
                     breaklines: true,
@@ -50502,9 +50502,9 @@ var Plotly = (() => {
       layoutOut._dataTemplate = template.data;
     }
     coerce3("autotypenumbers");
-    var font5 = coerceFont(coerce3, "font");
-    var fontSize = font5.size;
-    coerceFont(coerce3, "title.font", font5, { overrideDflt: {
+    var font3 = coerceFont(coerce3, "font");
+    var fontSize = font3.size;
+    coerceFont(coerce3, "title.font", font3, { overrideDflt: {
       size: Math.round(fontSize * 1.4)
     } });
     coerce3("title.text", layoutOut._dfltTitle.plot);
@@ -50520,7 +50520,7 @@ var Plotly = (() => {
     coerce3("title.y");
     coerce3("title.yanchor");
     coerce3("title.subtitle.text", layoutOut._dfltTitle.subtitle);
-    coerceFont(coerce3, "title.subtitle.font", font5, {
+    coerceFont(coerce3, "title.subtitle.font", font3, {
       overrideDflt: {
         size: Math.round(layoutOut.title.font.size * 0.7)
       }
@@ -55849,15 +55849,15 @@ var Plotly = (() => {
       if (!options.noTicklabelstandoff) {
         coerce3("ticklabelstandoff");
       }
-      var font5 = options.font || {};
+      var font3 = options.font || {};
       var contColor = containerOut.color;
       var position = containerOut.ticklabelposition || "";
       var dfltFontColor = position.indexOf("inside") !== -1 ? contrast(options.bgColor) : (
         // as with title.font.color, inherit axis.color only if one was
         // explicitly provided
-        contColor && contColor !== layout_attributes_default4.color.dflt ? contColor : font5.color
+        contColor && contColor !== layout_attributes_default4.color.dflt ? contColor : font3.color
       );
-      coerceFont(coerce3, "tickfont", font5, { overrideDflt: {
+      coerceFont(coerce3, "tickfont", font3, { overrideDflt: {
         color: dfltFontColor
       } });
       if (!options.noTicklabelstep && axType !== "multicategory" && axType !== "log") {
@@ -56001,13 +56001,13 @@ var Plotly = (() => {
     }, "ticklabelposition");
     coerce3("ticklabeloverflow", ticklabelposition.indexOf("inside") !== -1 ? "hide past domain" : "hide past div");
     handleTickValueDefaults(colorbarIn, colorbarOut, coerce3, "linear");
-    var font5 = layout.font;
+    var font3 = layout.font;
     var opts = {
       noAutotickangles: true,
       noTicklabelshift: true,
       noTicklabelstandoff: true,
       outerTicks: false,
-      font: font5
+      font: font3
     };
     if (ticklabelposition.indexOf("inside") !== -1) {
       opts.bgColor = "black";
@@ -56016,8 +56016,8 @@ var Plotly = (() => {
     handleTickLabelDefaults(colorbarIn, colorbarOut, coerce3, "linear", opts);
     handleTickMarkDefaults(colorbarIn, colorbarOut, coerce3, opts);
     coerce3("title.text", layout._dfltTitle.colorbar);
-    var tickFont = colorbarOut.showticklabels ? colorbarOut.tickfont : font5;
-    var dfltTitleFont = extendFlat({}, font5, {
+    var tickFont = colorbarOut.showticklabels ? colorbarOut.tickfont : font3;
+    var dfltTitleFont = extendFlat({}, font3, {
       family: tickFont.family,
       size: bigFont(tickFont.size)
     });
@@ -57153,16 +57153,16 @@ var Plotly = (() => {
   var tester;
   var testref;
   var LINE_SPACING2 = alignment_default.LINE_SPACING;
-  function font2(s, font5) {
-    var variant = font5.variant;
-    var style5 = font5.style;
-    var weight = font5.weight;
-    var color3 = font5.color;
-    var size = font5.size;
-    var family = font5.family;
-    var shadow = font5.shadow;
-    var lineposition = font5.lineposition;
-    var textcase = font5.textcase;
+  function font2(s, font3) {
+    var variant = font3.variant;
+    var style5 = font3.style;
+    var weight = font3.weight;
+    var color3 = font3.color;
+    var size = font3.size;
+    var family = font3.family;
+    var shadow = font3.shadow;
+    var lineposition = font3.lineposition;
+    var textcase = font3.textcase;
     if (family) s.style("font-family", family);
     if (size + 1) s.style("font-size", size + "px");
     if (color3) s.call(color_default.fill, color3);
@@ -66549,7 +66549,7 @@ var Plotly = (() => {
         fill: commonBgColor,
         stroke: commonStroke
       });
-      ltext.text(t03).call(font5, commonLabelFont).call(svg_text_utils_default.positionText, 0, 0).call(svg_text_utils_default.convertToTspans, gd);
+      ltext.text(t03).call(font2, commonLabelFont).call(svg_text_utils_default.positionText, 0, 0).call(svg_text_utils_default.convertToTspans, gd);
       label.attr("transform", "");
       var tbb2 = getBoundingClientRect(gd, ltext.node());
       var lx2, ly2;
@@ -66624,7 +66624,7 @@ var Plotly = (() => {
           if (anchor === "end") {
             ltext.selectAll("tspan").each(function() {
               var s = select_default2(this);
-              var dummy = tester.append("text").text(s.text()).call(font5, commonLabelFont);
+              var dummy = tester.append("text").text(s.text()).call(font2, commonLabelFont);
               var dummyBB = getBoundingClientRect(gd, dummy.node());
               if (Math.round(dummyBB.width) < Math.round(tbb2.width)) {
                 s.attr("x", ltx - dummyBB.width);
@@ -66649,7 +66649,7 @@ var Plotly = (() => {
       const groupedHoverData = hoverData.filter((data) => data.hoverinfo !== "none");
       if (groupedHoverData.length === 0) return [];
       var hoverlabel = fullLayout.hoverlabel;
-      var font5 = hoverlabel.font;
+      var font3 = hoverlabel.font;
       var item0 = groupedHoverData[0];
       var unifiedhovertitleText = ((hovermode === "x unified" ? item0.xa : item0.ya).unifiedhovertitle || {}).text;
       var mainText = !unifiedhovertitleText ? t03 : hovertemplateString({
@@ -66661,8 +66661,8 @@ var Plotly = (() => {
       var mockLayoutIn = {
         showlegend: true,
         legend: {
-          title: { text: mainText, font: font5 },
-          font: font5,
+          title: { text: mainText, font: font3 },
+          font: font3,
           bgcolor: hoverlabel.bgcolor,
           bordercolor: hoverlabel.bordercolor,
           borderwidth: 1,
@@ -66672,7 +66672,7 @@ var Plotly = (() => {
         }
       };
       var mockLayoutOut = {
-        font: font5
+        font: font3
       };
       legendDefaults(mockLayoutIn, mockLayoutOut, gd._fullData);
       var mockLegend = mockLayoutOut.legend;
@@ -66815,7 +66815,7 @@ var Plotly = (() => {
       g.append("rect").call(color_default.fill, color_default.addOpacity(bgColor, 0.8));
       g.append("text").classed("name", true);
       g.append("path").style("stroke-width", "1px");
-      g.append("text").classed("nums", true).call(font5, {
+      g.append("text").classed("nums", true).call(font2, {
         weight: fontWeight,
         style: fontStyle,
         variant: fontVariant,
@@ -66840,7 +66840,7 @@ var Plotly = (() => {
       var texts2 = getHoverLabelText(d, showCommonLabel, hovermode, fullLayout, t03, g);
       var text2 = texts2[0];
       var name9 = texts2[1];
-      var tx = g.select("text.nums").call(font5, {
+      var tx = g.select("text.nums").call(font2, {
         family: d.fontFamily || fontFamily,
         size: d.fontSize || fontSize,
         color: d.fontColor || contrastColor,
@@ -66855,7 +66855,7 @@ var Plotly = (() => {
       var tx2width = 0;
       var tx2height = 0;
       if (name9 && name9 !== text2) {
-        tx2.call(font5, {
+        tx2.call(font2, {
           family: d.fontFamily || fontFamily,
           size: d.fontSize || fontSize,
           color: nameColor,
@@ -77706,7 +77706,7 @@ var Plotly = (() => {
   var { WEEKDAY_PATTERN: DAY_OF_WEEK2, HOUR_PATTERN: HOUR2 } = constants_default2;
   function handleAxisDefaults(containerIn, containerOut, coerce3, options, layoutOut) {
     var letter = options.letter;
-    var font5 = options.font || {};
+    var font3 = options.font || {};
     var splomStash = options.splomStash || {};
     var visible = coerce3("visible", !options.visibleDflt);
     var axTemplate = containerOut._template || {};
@@ -77762,13 +77762,13 @@ var Plotly = (() => {
       }
     }
     var dfltColor = coerce3("color");
-    var dfltFontColor = dfltColor !== layout_attributes_default4.color.dflt ? dfltColor : font5.color;
+    var dfltFontColor = dfltColor !== layout_attributes_default4.color.dflt ? dfltColor : font3.color;
     var dfltTitle = splomStash.label || layoutOut._dfltTitle[letter];
     handlePrefixSuffixDefaults(containerIn, containerOut, coerce3, axType, options);
     if (!visible) return containerOut;
     coerce3("title.text", dfltTitle);
-    coerceFont(coerce3, "title.font", font5, { overrideDflt: {
-      size: bigFont(font5.size),
+    coerceFont(coerce3, "title.font", font3, { overrideDflt: {
+      size: bigFont(font3.size),
       color: dfltFontColor
     } });
     handleTickValueDefaults(containerIn, containerOut, coerce3, axType);
@@ -79244,11 +79244,11 @@ var Plotly = (() => {
     var annTextClip = fullLayout._topclips.selectAll("#" + annClipID).data(isSizeConstrained ? [0] : []);
     annTextClip.enter().append("clipPath").classed("annclip", true).attr("id", annClipID).append("rect");
     annTextClip.exit().remove();
-    var font5 = options.font;
+    var font3 = options.font;
     var text = fullLayout._meta ? lib_default.templateString(options.text, fullLayout._meta) : options.text;
     var annText = annTextGroupInner.append("text").classed("annotation-text", true).text(text);
     function textLayout2(s) {
-      s.call(font5, font5).attr({
+      s.call(font3, font3).attr({
         "text-anchor": {
           left: "start",
           right: "end"
@@ -81714,7 +81714,7 @@ var Plotly = (() => {
     var labelGroupAttrs = {
       "data-index": index
     };
-    var font5 = options.label.font;
+    var font3 = options.label.font;
     var labelTextAttrs = {
       "data-notex": 1
     };
@@ -81772,7 +81772,7 @@ var Plotly = (() => {
       }
     }
     labelText.call(function(s) {
-      s.call(font5, font5).attr({});
+      s.call(font2, font3).attr({});
       svg_text_utils_default.convertToTspans(s, gd);
       return s;
     });

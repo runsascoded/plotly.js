@@ -1,7 +1,7 @@
 import type { GraphDiv } from '../../../types/core';
 import { select } from 'd3-selection';
 import Lib from '../../lib/index.js';
-import { font, bBox } from '../../components/drawing/index.js';
+import { font as drawingFont, bBox } from '../../components/drawing/index.js';
 import svgTextUtils from '../../lib/svg_text_utils.js';
 import partition from './partition.js';
 import _style from './style.js';
@@ -191,7 +191,7 @@ export default function drawDescendants(gd: GraphDiv, cd: any[], entry: any, sli
         sliceText.text(text)
             .classed('slicetext', true)
             .attr('text-anchor', hasRight ? 'end' : (hasLeft || singleLineHeader) ? 'start' : 'middle')
-            .call(font, font)
+            .call(drawingFont, font)
             .call(svgTextUtils.convertToTspans, gd);
 
         pt.textBB = bBox(sliceText.node());

@@ -1,7 +1,7 @@
 import { select } from 'd3-selection';
 import tinycolor from 'tinycolor2';
 import Registry from '../../registry.js';
-import { font } from '../../components/drawing/index.js';
+import { font as drawingFont } from '../../components/drawing/index.js';
 import Axes from '../../plots/cartesian/axes.js';
 import Lib from '../../lib/index.js';
 import svgTextUtils from '../../lib/svg_text_utils.js';
@@ -544,7 +544,7 @@ export default function(gd, plotinfo, cdheatmaps, heatmapLayer) {
                     thisLabel
                         .attr('data-notex', 1)
                         .call(svgTextUtils.positionText, xFn(d), yFn(d))
-                        .call(font as any, {
+                        .call(drawingFont as any, {
                             family: font.family,
                             size: fontSize,
                             color: fontColor,

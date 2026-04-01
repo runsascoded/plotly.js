@@ -27,6 +27,9 @@ import { resize, graphJson, sendDataToCloud } from './plots/plots.js';
 import { version } from './version.js';
 import './plotcss.js';
 
+// Scatter is the default trace type — always registered as a baseline
+import scatter from './traces/scatter/index.js';
+
 // Essential components that every plot needs (always registered)
 import colorscale from './components/colorscale/index.js';
 import fx from './components/fx/index.js';
@@ -57,7 +60,8 @@ export function createPlotly({ traces = [], components = [], Icons, Snapshot, Pl
         register({ moduleType: 'apiMethod', name: name, fn: main[name] });
     }
 
-    // Register essential components (always needed)
+    // Register essentials (scatter is the default trace type, always needed)
+    register(scatter);
     register([colorscale, fx]);
 
     // Register user-chosen traces and components

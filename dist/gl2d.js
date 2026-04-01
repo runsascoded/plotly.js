@@ -17235,7 +17235,7 @@ void main() {
         if (systemFontKeywords.indexOf(value) !== -1) {
           return cache[value] = { system: value };
         }
-        var font5 = {
+        var font3 = {
           style: "normal",
           variant: "normal",
           weight: "normal",
@@ -17249,40 +17249,40 @@ void main() {
         while (token = tokens.shift()) {
           if (globalKeywords.indexOf(token) !== -1) {
             ["style", "variant", "weight", "stretch"].forEach(function(prop) {
-              font5[prop] = token;
+              font3[prop] = token;
             });
-            return cache[value] = font5;
+            return cache[value] = font3;
           }
           if (fontStyleKeywords.indexOf(token) !== -1) {
-            font5.style = token;
+            font3.style = token;
             continue;
           }
           if (token === "normal" || token === "small-caps") {
-            font5.variant = token;
+            font3.variant = token;
             continue;
           }
           if (fontStretchKeywords.indexOf(token) !== -1) {
-            font5.stretch = token;
+            font3.stretch = token;
             continue;
           }
           if (fontWeightKeywords.indexOf(token) !== -1) {
-            font5.weight = token;
+            font3.weight = token;
             continue;
           }
           if (isSize(token)) {
             var parts = splitBy(token, "/");
-            font5.size = parts[0];
+            font3.size = parts[0];
             if (parts[1] != null) {
-              font5.lineHeight = parseLineHeight(parts[1]);
+              font3.lineHeight = parseLineHeight(parts[1]);
             } else if (tokens[0] === "/") {
               tokens.shift();
-              font5.lineHeight = parseLineHeight(tokens.shift());
+              font3.lineHeight = parseLineHeight(tokens.shift());
             }
             if (!tokens.length) {
               throw new Error("Missing required font-family.");
             }
-            font5.family = splitBy(tokens.join(" "), /\s*,\s*/).map(unquote);
-            return cache[value] = font5;
+            font3.family = splitBy(tokens.join(" "), /\s*,\s*/).map(unquote);
+            return cache[value] = font3;
           }
           throw new Error("Unknown or unsupported font token: " + token);
         }
@@ -27251,10 +27251,10 @@ void main() {
         options = options || {};
         var shape = options.shape ? options.shape : options.canvas ? [options.canvas.width, options.canvas.height] : [512, 512];
         var canvas = options.canvas || document.createElement("canvas");
-        var font5 = options.font;
+        var font3 = options.font;
         var step = typeof options.step === "number" ? [options.step, options.step] : options.step || [32, 32];
         var chars2 = options.chars || defaultChars;
-        if (font5 && typeof font5 !== "string") font5 = stringifyFont(font5);
+        if (font3 && typeof font3 !== "string") font3 = stringifyFont(font3);
         if (!Array.isArray(chars2)) {
           chars2 = String(chars2).split("");
         } else if (chars2.length === 2 && typeof chars2[0] === "number" && typeof chars2[1] === "number") {
@@ -27270,7 +27270,7 @@ void main() {
         var ctx = canvas.getContext("2d");
         ctx.fillStyle = "#000";
         ctx.fillRect(0, 0, canvas.width, canvas.height);
-        ctx.font = font5;
+        ctx.font = font3;
         ctx.textAlign = "center";
         ctx.textBaseline = "middle";
         ctx.fillStyle = "#fff";
@@ -29626,17 +29626,17 @@ void main() {
       module.exports = measure;
       measure.canvas = document.createElement("canvas");
       measure.cache = {};
-      function measure(font5, o) {
+      function measure(font3, o) {
         if (!o) o = {};
-        if (typeof font5 === "string" || Array.isArray(font5)) {
-          o.family = font5;
+        if (typeof font3 === "string" || Array.isArray(font3)) {
+          o.family = font3;
         }
         var family = Array.isArray(o.family) ? o.family.join(", ") : o.family;
         if (!family) throw Error("`family` must be defined");
         var fs = o.size || o.fontSize || o.em || 48;
         var weight = o.weight || o.fontWeight || "";
         var style5 = o.style || o.fontStyle || "";
-        var font5 = [style5, weight, fs].join(" ") + "px " + family;
+        var font3 = [style5, weight, fs].join(" ") + "px " + family;
         var origin = o.origin || "top";
         if (measure.cache[family]) {
           if (fs <= measure.cache[family].em) {
@@ -29656,7 +29656,7 @@ void main() {
         var l = Math.ceil(fs * 1.5);
         canvas.height = l;
         canvas.width = l * 0.5;
-        ctx.font = font5;
+        ctx.font = font3;
         var char = "H";
         var result = {
           top: 0
@@ -29974,33 +29974,33 @@ void main() {
         }
         var newFont = false, newFontSize = false;
         if (o.font) {
-          (Array.isArray(o.font) ? o.font : [o.font]).forEach(function(font6, i2) {
-            if (typeof font6 === "string") {
+          (Array.isArray(o.font) ? o.font : [o.font]).forEach(function(font4, i2) {
+            if (typeof font4 === "string") {
               try {
-                font6 = Font.parse(font6);
+                font4 = Font.parse(font4);
               } catch (e) {
-                font6 = Font.parse(GlText.baseFontSize + "px " + font6);
+                font4 = Font.parse(GlText.baseFontSize + "px " + font4);
               }
             } else {
-              var fontStyle = font6.style;
-              var fontWeight = font6.weight;
-              var fontStretch = font6.stretch;
-              var fontVariant = font6.variant;
-              font6 = Font.parse(Font.stringify(font6));
-              if (fontStyle) font6.style = fontStyle;
-              if (fontWeight) font6.weight = fontWeight;
-              if (fontStretch) font6.stretch = fontStretch;
-              if (fontVariant) font6.variant = fontVariant;
+              var fontStyle = font4.style;
+              var fontWeight = font4.weight;
+              var fontStretch = font4.stretch;
+              var fontVariant = font4.variant;
+              font4 = Font.parse(Font.stringify(font4));
+              if (fontStyle) font4.style = fontStyle;
+              if (fontWeight) font4.weight = fontWeight;
+              if (fontStretch) font4.stretch = fontStretch;
+              if (fontVariant) font4.variant = fontVariant;
             }
             var baseString = Font.stringify({
               size: GlText.baseFontSize,
-              family: font6.family,
-              stretch: isStretchSupported ? font6.stretch : void 0,
-              variant: font6.variant,
-              weight: font6.weight,
-              style: font6.style
+              family: font4.family,
+              stretch: isStretchSupported ? font4.stretch : void 0,
+              variant: font4.variant,
+              weight: font4.weight,
+              style: font4.style
             });
-            var unit2 = parseUnit(font6.size);
+            var unit2 = parseUnit(font4.size);
             var fs = Math.round(unit2[0] * px(unit2[1]));
             if (fs !== this$1.fontSize[i2]) {
               newFontSize = true;
@@ -30010,25 +30010,25 @@ void main() {
               newFont = true;
               this$1.font[i2] = GlText.fonts[baseString];
               if (!this$1.font[i2]) {
-                var family = font6.family.join(", ");
-                var style5 = [font6.style];
-                if (font6.style != font6.variant) {
-                  style5.push(font6.variant);
+                var family = font4.family.join(", ");
+                var style5 = [font4.style];
+                if (font4.style != font4.variant) {
+                  style5.push(font4.variant);
                 }
-                if (font6.variant != font6.weight) {
-                  style5.push(font6.weight);
+                if (font4.variant != font4.weight) {
+                  style5.push(font4.weight);
                 }
-                if (isStretchSupported && font6.weight != font6.stretch) {
-                  style5.push(font6.stretch);
+                if (isStretchSupported && font4.weight != font4.stretch) {
+                  style5.push(font4.stretch);
                 }
                 this$1.font[i2] = {
                   baseString,
                   // typeface
                   family,
-                  weight: font6.weight,
-                  stretch: font6.stretch,
-                  style: font6.style,
-                  variant: font6.variant,
+                  weight: font4.weight,
+                  stretch: font4.stretch,
+                  style: font4.style,
+                  variant: font4.variant,
                   // widths of characters
                   width: {},
                   // kernin pairs offsets
@@ -30045,18 +30045,18 @@ void main() {
           });
         }
         if (newFont || newFontSize) {
-          this.font.forEach(function(font6, i2) {
+          this.font.forEach(function(font4, i2) {
             var fontString = Font.stringify({
               size: this$1.fontSize[i2],
-              family: font6.family,
-              stretch: isStretchSupported ? font6.stretch : void 0,
-              variant: font6.variant,
-              weight: font6.weight,
-              style: font6.style
+              family: font4.family,
+              stretch: isStretchSupported ? font4.stretch : void 0,
+              variant: font4.variant,
+              weight: font4.weight,
+              style: font4.style
             });
             this$1.fontAtlas[i2] = this$1.shader.atlas[fontString];
             if (!this$1.fontAtlas[i2]) {
-              var metrics2 = font6.metrics;
+              var metrics2 = font4.metrics;
               this$1.shader.atlas[fontString] = this$1.fontAtlas[i2] = {
                 fontString,
                 // even step is better for rendered characters
@@ -30101,8 +30101,8 @@ void main() {
             this.counts = [this.count];
           }
           newAtlasChars = [];
-          this.font.forEach(function(font6, idx) {
-            GlText.atlasContext.font = font6.baseString;
+          this.font.forEach(function(font4, idx) {
+            GlText.atlasContext.font = font4.baseString;
             var atlas2 = this$1.fontAtlas[idx];
             for (var i2 = 0; i2 < this$1.text.length; i2++) {
               var char2 = this$1.text.charAt(i2);
@@ -30111,14 +30111,14 @@ void main() {
                 atlas2.chars.push(char2);
                 newAtlasChars.push(char2);
               }
-              if (font6.width[char2] == null) {
-                font6.width[char2] = GlText.atlasContext.measureText(char2).width / GlText.baseFontSize;
+              if (font4.width[char2] == null) {
+                font4.width[char2] = GlText.atlasContext.measureText(char2).width / GlText.baseFontSize;
                 if (this$1.kerning) {
                   var pairs = [];
-                  for (var baseChar in font6.width) {
+                  for (var baseChar in font4.width) {
                     pairs.push(baseChar + char2, char2 + baseChar);
                   }
-                  extend2(font6.kerning, kerning(font6.family, {
+                  extend2(font4.kerning, kerning(font4.family, {
                     pairs
                   }));
                 }
@@ -30171,20 +30171,20 @@ void main() {
           this.textWidth = [];
           for (var i$3 = 0, ptr$1 = 0; i$3 < this.counts.length; i$3++) {
             var count$1 = this.counts[i$3];
-            var font5 = this.font[i$3] || this.font[0];
+            var font3 = this.font[i$3] || this.font[0];
             var atlas = this.fontAtlas[i$3] || this.fontAtlas[0];
             for (var j$2 = 0; j$2 < count$1; j$2++) {
               var char = this.text.charAt(ptr$1);
               var prevChar = this.text.charAt(ptr$1 - 1);
               charIds[ptr$1] = atlas.ids[char];
-              sizeData[ptr$1 * 2] = font5.width[char];
+              sizeData[ptr$1 * 2] = font3.width[char];
               if (j$2) {
                 var prevWidth = sizeData[ptr$1 * 2 - 2];
                 var currWidth = sizeData[ptr$1 * 2];
                 var prevOffset = sizeData[ptr$1 * 2 - 1];
                 var offset = prevOffset + prevWidth * 0.5 + currWidth * 0.5;
                 if (this.kerning) {
-                  var kerning$1 = font5.kerning[prevChar + char];
+                  var kerning$1 = font3.kerning[prevChar + char];
                   if (kerning$1) {
                     offset += kerning$1 * 1e-3;
                   }
@@ -30210,7 +30210,7 @@ void main() {
           pool.freeUint8(charIds);
           pool.freeFloat(sizeData);
           if (newAtlasChars.length) {
-            this.font.forEach(function(font6, i2) {
+            this.font.forEach(function(font4, i2) {
               var atlas2 = this$1.fontAtlas[i2];
               var step = atlas2.step;
               var maxCols = Math.floor(GlText.maxAtlasSize / step);
@@ -44804,9 +44804,9 @@ void main() {
       layoutOut._dataTemplate = template.data;
     }
     coerce3("autotypenumbers");
-    var font5 = coerceFont(coerce3, "font");
-    var fontSize = font5.size;
-    coerceFont(coerce3, "title.font", font5, { overrideDflt: {
+    var font3 = coerceFont(coerce3, "font");
+    var fontSize = font3.size;
+    coerceFont(coerce3, "title.font", font3, { overrideDflt: {
       size: Math.round(fontSize * 1.4)
     } });
     coerce3("title.text", layoutOut._dfltTitle.plot);
@@ -44822,7 +44822,7 @@ void main() {
     coerce3("title.y");
     coerce3("title.yanchor");
     coerce3("title.subtitle.text", layoutOut._dfltTitle.subtitle);
-    coerceFont(coerce3, "title.subtitle.font", font5, {
+    coerceFont(coerce3, "title.subtitle.font", font3, {
       overrideDflt: {
         size: Math.round(layoutOut.title.font.size * 0.7)
       }
@@ -50227,15 +50227,15 @@ void main() {
       if (!options.noTicklabelstandoff) {
         coerce3("ticklabelstandoff");
       }
-      var font5 = options.font || {};
+      var font3 = options.font || {};
       var contColor = containerOut.color;
       var position = containerOut.ticklabelposition || "";
       var dfltFontColor = position.indexOf("inside") !== -1 ? contrast(options.bgColor) : (
         // as with title.font.color, inherit axis.color only if one was
         // explicitly provided
-        contColor && contColor !== layout_attributes_default4.color.dflt ? contColor : font5.color
+        contColor && contColor !== layout_attributes_default4.color.dflt ? contColor : font3.color
       );
-      coerceFont(coerce3, "tickfont", font5, { overrideDflt: {
+      coerceFont(coerce3, "tickfont", font3, { overrideDflt: {
         color: dfltFontColor
       } });
       if (!options.noTicklabelstep && axType !== "multicategory" && axType !== "log") {
@@ -50379,13 +50379,13 @@ void main() {
     }, "ticklabelposition");
     coerce3("ticklabeloverflow", ticklabelposition.indexOf("inside") !== -1 ? "hide past domain" : "hide past div");
     handleTickValueDefaults(colorbarIn, colorbarOut, coerce3, "linear");
-    var font5 = layout.font;
+    var font3 = layout.font;
     var opts = {
       noAutotickangles: true,
       noTicklabelshift: true,
       noTicklabelstandoff: true,
       outerTicks: false,
-      font: font5
+      font: font3
     };
     if (ticklabelposition.indexOf("inside") !== -1) {
       opts.bgColor = "black";
@@ -50394,8 +50394,8 @@ void main() {
     handleTickLabelDefaults(colorbarIn, colorbarOut, coerce3, "linear", opts);
     handleTickMarkDefaults(colorbarIn, colorbarOut, coerce3, opts);
     coerce3("title.text", layout._dfltTitle.colorbar);
-    var tickFont = colorbarOut.showticklabels ? colorbarOut.tickfont : font5;
-    var dfltTitleFont = extendFlat({}, font5, {
+    var tickFont = colorbarOut.showticklabels ? colorbarOut.tickfont : font3;
+    var dfltTitleFont = extendFlat({}, font3, {
       family: tickFont.family,
       size: bigFont(tickFont.size)
     });
@@ -51531,16 +51531,16 @@ void main() {
   var tester;
   var testref;
   var LINE_SPACING2 = alignment_default.LINE_SPACING;
-  function font2(s, font5) {
-    var variant = font5.variant;
-    var style5 = font5.style;
-    var weight = font5.weight;
-    var color3 = font5.color;
-    var size = font5.size;
-    var family = font5.family;
-    var shadow = font5.shadow;
-    var lineposition = font5.lineposition;
-    var textcase = font5.textcase;
+  function font2(s, font3) {
+    var variant = font3.variant;
+    var style5 = font3.style;
+    var weight = font3.weight;
+    var color3 = font3.color;
+    var size = font3.size;
+    var family = font3.family;
+    var shadow = font3.shadow;
+    var lineposition = font3.lineposition;
+    var textcase = font3.textcase;
     if (family) s.style("font-family", family);
     if (size + 1) s.style("font-size", size + "px");
     if (color3) s.call(color_default.fill, color3);
@@ -60927,7 +60927,7 @@ void main() {
         fill: commonBgColor,
         stroke: commonStroke
       });
-      ltext.text(t03).call(font5, commonLabelFont).call(svg_text_utils_default.positionText, 0, 0).call(svg_text_utils_default.convertToTspans, gd);
+      ltext.text(t03).call(font2, commonLabelFont).call(svg_text_utils_default.positionText, 0, 0).call(svg_text_utils_default.convertToTspans, gd);
       label.attr("transform", "");
       var tbb2 = getBoundingClientRect(gd, ltext.node());
       var lx2, ly2;
@@ -61002,7 +61002,7 @@ void main() {
           if (anchor === "end") {
             ltext.selectAll("tspan").each(function() {
               var s = select_default2(this);
-              var dummy = tester.append("text").text(s.text()).call(font5, commonLabelFont);
+              var dummy = tester.append("text").text(s.text()).call(font2, commonLabelFont);
               var dummyBB = getBoundingClientRect(gd, dummy.node());
               if (Math.round(dummyBB.width) < Math.round(tbb2.width)) {
                 s.attr("x", ltx - dummyBB.width);
@@ -61027,7 +61027,7 @@ void main() {
       const groupedHoverData = hoverData.filter((data) => data.hoverinfo !== "none");
       if (groupedHoverData.length === 0) return [];
       var hoverlabel = fullLayout.hoverlabel;
-      var font5 = hoverlabel.font;
+      var font3 = hoverlabel.font;
       var item0 = groupedHoverData[0];
       var unifiedhovertitleText = ((hovermode === "x unified" ? item0.xa : item0.ya).unifiedhovertitle || {}).text;
       var mainText = !unifiedhovertitleText ? t03 : hovertemplateString({
@@ -61039,8 +61039,8 @@ void main() {
       var mockLayoutIn = {
         showlegend: true,
         legend: {
-          title: { text: mainText, font: font5 },
-          font: font5,
+          title: { text: mainText, font: font3 },
+          font: font3,
           bgcolor: hoverlabel.bgcolor,
           bordercolor: hoverlabel.bordercolor,
           borderwidth: 1,
@@ -61050,7 +61050,7 @@ void main() {
         }
       };
       var mockLayoutOut = {
-        font: font5
+        font: font3
       };
       legendDefaults(mockLayoutIn, mockLayoutOut, gd._fullData);
       var mockLegend = mockLayoutOut.legend;
@@ -61193,7 +61193,7 @@ void main() {
       g.append("rect").call(color_default.fill, color_default.addOpacity(bgColor, 0.8));
       g.append("text").classed("name", true);
       g.append("path").style("stroke-width", "1px");
-      g.append("text").classed("nums", true).call(font5, {
+      g.append("text").classed("nums", true).call(font2, {
         weight: fontWeight,
         style: fontStyle,
         variant: fontVariant,
@@ -61218,7 +61218,7 @@ void main() {
       var texts2 = getHoverLabelText(d2, showCommonLabel, hovermode, fullLayout, t03, g);
       var text2 = texts2[0];
       var name8 = texts2[1];
-      var tx = g.select("text.nums").call(font5, {
+      var tx = g.select("text.nums").call(font2, {
         family: d2.fontFamily || fontFamily,
         size: d2.fontSize || fontSize,
         color: d2.fontColor || contrastColor,
@@ -61233,7 +61233,7 @@ void main() {
       var tx2width = 0;
       var tx2height = 0;
       if (name8 && name8 !== text2) {
-        tx2.call(font5, {
+        tx2.call(font2, {
           family: d2.fontFamily || fontFamily,
           size: d2.fontSize || fontSize,
           color: nameColor,
@@ -72084,7 +72084,7 @@ void main() {
   var { WEEKDAY_PATTERN: DAY_OF_WEEK2, HOUR_PATTERN: HOUR2 } = constants_default2;
   function handleAxisDefaults(containerIn, containerOut, coerce3, options, layoutOut) {
     var letter = options.letter;
-    var font5 = options.font || {};
+    var font3 = options.font || {};
     var splomStash = options.splomStash || {};
     var visible = coerce3("visible", !options.visibleDflt);
     var axTemplate = containerOut._template || {};
@@ -72140,13 +72140,13 @@ void main() {
       }
     }
     var dfltColor = coerce3("color");
-    var dfltFontColor = dfltColor !== layout_attributes_default4.color.dflt ? dfltColor : font5.color;
+    var dfltFontColor = dfltColor !== layout_attributes_default4.color.dflt ? dfltColor : font3.color;
     var dfltTitle = splomStash.label || layoutOut._dfltTitle[letter];
     handlePrefixSuffixDefaults(containerIn, containerOut, coerce3, axType, options);
     if (!visible) return containerOut;
     coerce3("title.text", dfltTitle);
-    coerceFont(coerce3, "title.font", font5, { overrideDflt: {
-      size: bigFont(font5.size),
+    coerceFont(coerce3, "title.font", font3, { overrideDflt: {
+      size: bigFont(font3.size),
       color: dfltFontColor
     } });
     handleTickValueDefaults(containerIn, containerOut, coerce3, axType);
@@ -73622,11 +73622,11 @@ void main() {
     var annTextClip = fullLayout._topclips.selectAll("#" + annClipID).data(isSizeConstrained ? [0] : []);
     annTextClip.enter().append("clipPath").classed("annclip", true).attr("id", annClipID).append("rect");
     annTextClip.exit().remove();
-    var font5 = options.font;
+    var font3 = options.font;
     var text = fullLayout._meta ? lib_default.templateString(options.text, fullLayout._meta) : options.text;
     var annText = annTextGroupInner.append("text").classed("annotation-text", true).text(text);
     function textLayout2(s) {
-      s.call(font5, font5).attr({
+      s.call(font3, font3).attr({
         "text-anchor": {
           left: "start",
           right: "end"
@@ -76092,7 +76092,7 @@ void main() {
     var labelGroupAttrs = {
       "data-index": index
     };
-    var font5 = options.label.font;
+    var font3 = options.label.font;
     var labelTextAttrs = {
       "data-notex": 1
     };
@@ -76150,7 +76150,7 @@ void main() {
       }
     }
     labelText.call(function(s) {
-      s.call(font5, font5).attr({});
+      s.call(font2, font3).attr({});
       svg_text_utils_default.convertToTspans(s, gd);
       return s;
     });
@@ -88478,14 +88478,14 @@ void main() {
     di.htx = Array.isArray(trace.hovertext) ? trace.hovertext[id2] : trace.hovertext;
     di.data = Array.isArray(trace.customdata) ? trace.customdata[id2] : trace.customdata;
     di.tp = Array.isArray(trace.textposition) ? trace.textposition[id2] : trace.textposition;
-    var font5 = trace.textfont;
-    if (font5) {
-      di.ts = lib_default.isArrayOrTypedArray(font5.size) ? font5.size[id2] : font5.size;
-      di.tc = lib_default.isArrayOrTypedArray(font5.color) ? font5.color[id2] : font5.color;
-      di.tf = Array.isArray(font5.family) ? font5.family[id2] : font5.family;
-      di.tw = Array.isArray(font5.weight) ? font5.weight[id2] : font5.weight;
-      di.ty = Array.isArray(font5.style) ? font5.style[id2] : font5.style;
-      di.tv = Array.isArray(font5.variant) ? font5.variant[id2] : font5.variant;
+    var font3 = trace.textfont;
+    if (font3) {
+      di.ts = lib_default.isArrayOrTypedArray(font3.size) ? font3.size[id2] : font3.size;
+      di.tc = lib_default.isArrayOrTypedArray(font3.color) ? font3.color[id2] : font3.color;
+      di.tf = Array.isArray(font3.family) ? font3.family[id2] : font3.family;
+      di.tw = Array.isArray(font3.weight) ? font3.weight[id2] : font3.weight;
+      di.ty = Array.isArray(font3.style) ? font3.style[id2] : font3.style;
+      di.tv = Array.isArray(font3.variant) ? font3.variant[id2] : font3.variant;
     }
     var marker = trace.marker;
     if (marker) {

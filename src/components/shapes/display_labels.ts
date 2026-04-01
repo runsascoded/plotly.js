@@ -2,7 +2,7 @@ import type { GraphDiv } from '../../../types/core';
 import Lib from '../../lib/index.js';
 import Axes from '../../plots/cartesian/axes.js';
 import svgTextUtils from '../../lib/svg_text_utils.js';
-import { font, bBox } from '../drawing/index.js';
+import { font as drawingFont, bBox } from '../drawing/index.js';
 import { readPaths } from './draw_newshape/helpers.js';
 import helpers from './helpers.js';
 import shapeLabelTexttemplateVars from './label_texttemplate.js';
@@ -116,7 +116,7 @@ export default function drawLabel(gd: GraphDiv, index: any, options: any, shapeG
 
     // Do an initial render so we can get the text bounding box height
     labelText.call(function (s: any) {
-        s.call(font, font).attr({});
+        s.call(drawingFont, font).attr({});
         svgTextUtils.convertToTspans(s, gd);
         return s;
     });
