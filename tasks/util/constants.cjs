@@ -170,8 +170,8 @@ module.exports = {
     strictIndex: strictIndex,
     pathToPlotlyIndex: pathToPlotlyIndex,
     pathToPlotlyStrict: pathToPlotlyStrict,
-    pathToPlotlyCore: path.join(pathToSrc, 'core.js'),
-    pathToPlotlyVersion: path.join(pathToSrc, 'version.js'),
+    pathToPlotlyCore: path.join(pathToSrc, 'core.ts'),
+    pathToPlotlyVersion: path.join(pathToSrc, 'version.ts'),
     pathToPlotlyBuild: path.join(pathToBuild, 'plotly.js'),
     pathToPlotlyBuildMin: path.join(pathToBuild, 'plotly.min.js'),
     pathToPlotlyDist: path.join(pathToDist, 'plotly.js'),
@@ -195,7 +195,7 @@ module.exports = {
     pathToPlotlyGeoAssetsDist: path.join(pathToDist, 'plotly-geo-assets.js'),
 
     pathToSCSS: path.join(pathToSrc, 'css/style.scss'),
-    pathToCSSBuild: path.join(pathToSrc, 'plotcss.js'),
+    pathToCSSBuild: path.join(pathToSrc, 'plotcss.ts'),
     pathToCSSDist: path.join(pathToDist, 'plotly.css'),
 
     pathToTestDashboardBundle: path.join(pathToBuild, 'test_dashboard-bundle.js'),

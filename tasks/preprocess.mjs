@@ -3,8 +3,8 @@ import path from 'path';
 import * as sass from 'sass';
 
 import constants from './util/constants.cjs';
-import mapboxConstants from '../src/plots/mapbox/constants.js';
-var mapBoxGLStyleRules = mapboxConstants.styleRules;
+import { createRequire } from 'module';
+var mapBoxGLStyleRules = createRequire(import.meta.url)('./util/mapbox-style-rules.json');
 import common from './util/common.cjs';
 import updateVersion from './util/update_version.cjs';
 

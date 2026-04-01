@@ -1,5 +1,5 @@
 import { addStyleRule } from '../src/lib/dom.js';
-var rules: any = {
+var rules = {
     "X,X div": "direction:ltr;font-family:\"Open Sans\",verdana,arial,sans-serif;margin:0;padding:0;border:0;",
     "X input,X button": "font-family:\"Open Sans\",verdana,arial,sans-serif;",
     "X input:focus,X button:focus": "outline:none;",
