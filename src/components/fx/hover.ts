@@ -5,7 +5,7 @@ import { apply3DTransform, castOption, constrain, ensureSingle, extractOption, g
 import Events from '../../lib/events.js';
 import svgTextUtils from '../../lib/svg_text_utils.js';
 import overrideCursor from '../../lib/override_cursor.js';
-import { dashStyle, font, setClipUrl, setRect, tester } from '../drawing/index.js';
+import { dashStyle, font as drawingFont, setClipUrl, setRect, tester } from '../drawing/index.js';
 import Color from '../color/index.js';
 import dragElement from '../dragelement/index.js';
 import Axes from '../../plots/cartesian/axes.js';
@@ -993,7 +993,7 @@ function createHoverText(hoverData: any[], opts: any): any {
 
         ltext
             .text(t0)
-            .call(font, commonLabelFont)
+            .call(drawingFont, commonLabelFont)
             .call(svgTextUtils.positionText, 0, 0)
             .call(svgTextUtils.convertToTspans, gd);
 
@@ -1144,7 +1144,7 @@ function createHoverText(hoverData: any[], opts: any): any {
                 if (anchor === 'end') {
                     ltext.selectAll('tspan').each(function () {
                         var s = select(this);
-                        var dummy = tester.append('text').text(s.text()).call(font, commonLabelFont);
+                        var dummy = tester.append('text').text(s.text()).call(drawingFont, commonLabelFont);
                         var dummyBB = getBoundingClientRect(gd, dummy.node());
                         if (Math.round(dummyBB.width) < Math.round(tbb.width)) {
                             s.attr('x', ltx - dummyBB.width);
@@ -1392,7 +1392,7 @@ function createHoverText(hoverData: any[], opts: any): any {
             g.append('text').classed('name', true);
             // trace data label (path and text.nums)
             g.append('path').style('stroke-width', '1px');
-            g.append('text').classed('nums', true).call(font, {
+            g.append('text').classed('nums', true).call(drawingFont, {
                 weight: fontWeight,
                 style: fontStyle,
                 variant: fontVariant,
@@ -1431,7 +1431,7 @@ function createHoverText(hoverData: any[], opts: any): any {
         // main label
         var tx = g
             .select('text.nums')
-            .call(font, {
+            .call(drawingFont, {
                 family: d.fontFamily || fontFamily,
                 size: d.fontSize || fontSize,
                 color: d.fontColor || contrastColor,
@@ -1453,7 +1453,7 @@ function createHoverText(hoverData: any[], opts: any): any {
 
         // secondary label for non-empty 'name'
         if (name && name !== text) {
-            tx2.call(font, {
+            tx2.call(drawingFont, {
                 family: d.fontFamily || fontFamily,
                 size: d.fontSize || fontSize,
                 color: nameColor,

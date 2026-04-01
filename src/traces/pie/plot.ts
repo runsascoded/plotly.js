@@ -3,7 +3,7 @@ import { select } from 'd3-selection';
 import Plots from '../../plots/plots.js';
 import Fx from '../../components/fx/index.js';
 import Color from '../../components/color/index.js';
-import { bBox, font, tester } from '../../components/drawing/index.js';
+import { bBox, font as drawingFont, tester } from '../../components/drawing/index.js';
 import Lib from '../../lib/index.js';
 import svgTextUtils from '../../lib/svg_text_utils.js';
 import uniformText from '../bar/uniform_text.js';
@@ -185,7 +185,7 @@ function plot(gd: GraphDiv, cdModule: any[]): any {
                             transform: '',
                             'text-anchor': 'middle'
                         })
-                        .call(font, font)
+                        .call(drawingFont, font)
                         .call(svgTextUtils.convertToTspans, gd);
 
                     // position the text relative to the slice
@@ -199,7 +199,7 @@ function plot(gd: GraphDiv, cdModule: any[]): any {
                         if (textPosition === 'auto' && transform.scale < 1) {
                             var newFont = Lib.ensureUniformFontSize(gd, trace.outsidetextfont);
 
-                            sliceText.call(font, newFont);
+                            sliceText.call(drawingFont, newFont);
                             textBB = bBox(sliceText.node());
 
                             transform = transformOutsideText(textBB, pt);
@@ -257,7 +257,7 @@ function plot(gd: GraphDiv, cdModule: any[]): any {
                         transform: '',
                         'text-anchor': 'middle'
                     })
-                    .call(font, trace.title.font)
+                    .call(drawingFont, trace.title.font)
                     .call(svgTextUtils.convertToTspans, gd);
 
                 var transform;
@@ -662,7 +662,7 @@ function prerenderTitles(cdModule: any[], gd: GraphDiv): void {
                 .append('text')
                 .attr('data-notex', 1)
                 .text(txt)
-                .call(font, trace.title.font)
+                .call(drawingFont, trace.title.font)
                 .call(svgTextUtils.convertToTspans, gd);
             var bBox = bBox(dummyTitle.node(), true);
             cd0.titleBox = {

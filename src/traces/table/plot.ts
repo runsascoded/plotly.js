@@ -6,7 +6,7 @@ import { zoom as d3Zoom } from 'd3-zoom';
 import { drag as d3Drag } from 'd3-drag';
 import Lib from '../../lib/index.js';
 import gup from '../../lib/gup.js';
-import { font, setClipUrl } from '../../components/drawing/index.js';
+import { font as drawingFont, setClipUrl } from '../../components/drawing/index.js';
 import svgUtil from '../../lib/svg_text_utils.js';
 import _index from '../../lib/index.js';
 const { raiseToTop, strTranslate, cancelTransition: cancelEeaseColumn } = _index;
@@ -506,7 +506,7 @@ function supplyStylingValues(columnCell) {
 function setFont(cellText) {
     cellText
         .each(function(d) {
-            font(select(this), d.font);
+            drawingFont(select(this), d.font);
         });
 }
 

@@ -1,6 +1,6 @@
 import type { GraphDiv } from '../../../types/core';
 import { select } from 'd3-selection';
-import { font, bBox } from '../../components/drawing/index.js';
+import { font as drawingFont, bBox } from '../../components/drawing/index.js';
 import Lib from '../../lib/index.js';
 import svgTextUtils from '../../lib/svg_text_utils.js';
 import barPlot from '../bar/plot.js';
@@ -100,7 +100,7 @@ export default function plot(gd: GraphDiv,  cdModule) {
                             transform: '',
                             'text-anchor': 'middle'
                         })
-                        .call(font, font)
+                        .call(drawingFont, font)
                         .call(svgTextUtils.convertToTspans, gd);
 
                     // position the text relative to the slice
@@ -154,7 +154,7 @@ export default function plot(gd: GraphDiv,  cdModule) {
                         transform: '',
                         'text-anchor': 'middle',
                     })
-                .call(font, trace.title.font)
+                .call(drawingFont, trace.title.font)
                 .call(svgTextUtils.convertToTspans, gd);
 
                 var transform = positionTitleOutside(cd0, fullLayout._size);
