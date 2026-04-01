@@ -15,7 +15,7 @@ import { updateFx as _req4 } from './graph_interact.js';
 import type { GraphDiv, FullLayout, FullTrace, PlotInfo } from '../../../types/core';
 
 
-function ensureSingleAndAddDatum(parent?: any, nodeType?: any, className?: any): any {
+function ensureSingleAndAddDatum(parent?: any, nodeType?: any, className?: any): void {
     return ensureSingle(parent, nodeType, className, function(s) {
         s.datum(className);
     });
@@ -33,7 +33,7 @@ export var layoutAttributes = _req1;
 export var supplyLayoutDefaults = _req2;
 export var transitionAxes = _req3;
 
-export var finalizeSubplots = function(layoutIn?: any, layoutOut?: any): any {
+export var finalizeSubplots = function(layoutIn?: any, layoutOut?: any): void {
     var subplots = layoutOut._subplots;
     var xList = subplots.xaxis;
     var yList = subplots.yaxis;
@@ -107,7 +107,7 @@ export var finalizeSubplots = function(layoutIn?: any, layoutOut?: any): any {
     }
 };
 
-export var plot = function(gd: GraphDiv, traces?: any, transitionOpts?: any, makeOnCompleteCallback?: any): any {
+export var plot = function(gd: GraphDiv, traces?: any, transitionOpts?: any, makeOnCompleteCallback?: any): void {
     var fullLayout = gd._fullLayout;
     var subplots = fullLayout._subplots.cartesian;
     var calcdata = gd.calcdata;
@@ -299,7 +299,7 @@ function plotOne(gd: GraphDiv, plotinfo: PlotInfo, cdSubplot?: any, transitionOp
     }
 }
 
-export var clean = function(newFullData: FullTrace[], newFullLayout: FullLayout, oldFullData: FullTrace[], oldFullLayout: FullLayout): any {
+export var clean = function(newFullData: FullTrace[], newFullLayout: FullLayout, oldFullData: FullTrace[], oldFullLayout: FullLayout): void {
     var oldPlots = oldFullLayout._plots || {};
     var newPlots = newFullLayout._plots || {};
     var oldSubplotList = oldFullLayout._subplots || {} as any;
@@ -452,7 +452,7 @@ export var drawFramework = function(gd: GraphDiv): any {
     });
 };
 
-export var rangePlot = function(gd?: any, plotinfo?: any, cdSubplot?: any): any {
+export var rangePlot = function(gd?: any, plotinfo?: any, cdSubplot?: any): void {
     makeSubplotLayer(gd, plotinfo);
     plotOne(gd, plotinfo, cdSubplot);
     plotsStyle(gd);
@@ -536,7 +536,7 @@ function makeSubplotData(gd?: any): any {
     return subplotData;
 }
 
-function makeSubplotLayer(gd?: any, plotinfo?: any): any {
+function makeSubplotLayer(gd?: any, plotinfo?: any): void {
     var fullLayout = gd._fullLayout;
     var plotgroup = plotinfo.plotgroup;
     var id = plotinfo.id;
@@ -681,7 +681,7 @@ function makeSubplotLayer(gd?: any, plotinfo?: any): any {
     }
 }
 
-function purgeSubplotLayers(layers?: any, fullLayout?: any): any {
+function purgeSubplotLayers(layers?: any, fullLayout?: any): void {
     if(!layers) return;
 
     var overlayIdsToRemove: any = {};
@@ -714,7 +714,7 @@ function purgeSubplotLayers(layers?: any, fullLayout?: any): any {
     }
 }
 
-function removeSubplotExtras(subplotId?: any, fullLayout?: any): any {
+function removeSubplotExtras(subplotId?: any, fullLayout?: any): void {
     fullLayout._draggers.selectAll('g.' + subplotId).remove();
     fullLayout._defs.select('#clip' + fullLayout._uid + subplotId + 'plot').remove();
 }

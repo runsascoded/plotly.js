@@ -1,6 +1,6 @@
 import handleAutorangeOptionsDefaults from './autorange_options_defaults.js';
 
-export default function handleRangeDefaults(containerIn?: any, containerOut?: any, coerce?: any, options?: any): any {
+export default function handleRangeDefaults(containerIn?: any, containerOut?: any, coerce?: any, options?: any): void {
     var axTemplate = containerOut._template || {};
     var axType = containerOut.type || axTemplate.type || '-';
 

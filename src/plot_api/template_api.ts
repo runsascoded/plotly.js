@@ -151,7 +151,7 @@ function getBaseKey(key?: any): any {
     return key.replace(/[0-9]+$/, '');
 }
 
-function walkStyleKeys(parent?: any, templateOut?: any, getAttributeInfo?: any, path?: any, basePath?: any): any {
+function walkStyleKeys(parent?: any, templateOut?: any, getAttributeInfo?: any, path?: any, basePath?: any): void {
     var pathAttr = basePath && getAttributeInfo(basePath);
     for(var key in parent) {
         var child = parent[key];

@@ -1,6 +1,7 @@
 import Registry from '../registry.js';
+import type { GraphDiv } from '../../types/core';
 
-export default function localize(gd: any, s: string): string {
+export default function localize(gd: GraphDiv, s: string): string {
     var locale = gd._context.locale;
 
     /*

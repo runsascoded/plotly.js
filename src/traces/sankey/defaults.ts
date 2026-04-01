@@ -8,7 +8,7 @@ import handleHoverLabelDefaults from '../../components/fx/hoverlabel_defaults.js
 import Template from '../../plot_api/plot_template.js';
 import handleArrayContainerDefaults from '../../plots/array_container_defaults.js';
 
-export default function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace, defaultColor: string, layout: FullLayout): void {
+export default function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace, defaultColor: string, layout: FullLayout): any {
     function coerce(attr: string, dflt?: any) {
         return Lib.coerce(traceIn, traceOut, attributes, attr, dflt);
     }

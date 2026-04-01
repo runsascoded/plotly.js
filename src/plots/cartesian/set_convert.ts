@@ -19,11 +19,11 @@ var ONESEC = numConstants.ONESEC;
 var HOUR_PATTERN = constants.HOUR_PATTERN;
 var WEEKDAY_PATTERN = constants.WEEKDAY_PATTERN;
 
-function fromLog(v?: any): any {
+function fromLog(v?: any): number {
     return Math.pow(10, v);
 }
 
-function isValidCategory(v?: any): any {
+function isValidCategory(v?: any): boolean {
     return v !== null && v !== undefined;
 }
 

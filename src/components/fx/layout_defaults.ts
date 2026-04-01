@@ -2,8 +2,9 @@ import Lib, { coerceFont } from '../../lib/index.js';
 import layoutAttributes from './layout_attributes.js';
 import handleHoverModeDefaults from './hovermode_defaults.js';
 import handleHoverLabelDefaults from './hoverlabel_defaults.js';
+import type { FullLayout } from '../../../types/core';
 
-export default function supplyLayoutDefaults(layoutIn: any, layoutOut: any): void {
+export default function supplyLayoutDefaults(layoutIn: any, layoutOut: FullLayout): void {
     function coerce(attr: string, dflt?: any): any {
         return Lib.coerce(layoutIn, layoutOut, layoutAttributes, attr, dflt);
     }

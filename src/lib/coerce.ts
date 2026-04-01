@@ -13,6 +13,7 @@ const { modHalf } = _mod;
 import { isArrayOrTypedArray } from './array.js';
 import { isTypedArraySpec } from './array.js';
 import { decodeTypedArraySpec } from './array.js';
+import type { FullLayout } from '../../types/core';
 
 export var valObjectMeta: Record<string, any> = {
     data_array: {
@@ -508,7 +509,7 @@ export var coercePattern = function(coerce: any, attr: string, markerColor: any,
     }
 };
 
-export var coerceHoverinfo = function(traceIn: any, traceOut: any, layoutOut: any): any {
+export var coerceHoverinfo = function(traceIn: any, traceOut: any, layoutOut: FullLayout): any {
     var moduleAttrs = traceOut._module.attributes;
     var attrs = moduleAttrs.hoverinfo ? moduleAttrs : baseTraceAttrs;
 

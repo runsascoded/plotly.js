@@ -21,7 +21,7 @@ export default function colorScaleDefaults(parentContIn: any, parentContOut: any
     var containerOut = npMaybe(parentContOut, prefix);
     var template = npMaybe(parentContOut._template || {}, prefix) || {};
 
-    var thisFn = function(): void {
+    var thisFn = function(): any {
         delete parentContIn.coloraxis;
         delete parentContOut.coloraxis;
         return colorScaleDefaults(parentContIn, parentContOut, layout, coerce, opts);

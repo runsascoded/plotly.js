@@ -361,7 +361,7 @@ function computeDataBindings(gd?: any, args?: any): any {
     return bindings;
 }
 
-function crawl(attrs?: any, callback?: any, path?: any, depth?: any): any {
+function crawl(attrs?: any, callback?: any, path?: any, depth?: any): void {
     Object.keys(attrs).forEach(function(attrName) {
         var attr: any = attrs[attrName];
 

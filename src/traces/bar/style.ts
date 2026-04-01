@@ -12,7 +12,7 @@ var attributeTextFont = attributes.textfont;
 var attributeInsideTextFont = attributes.insidetextfont;
 var attributeOutsideTextFont = attributes.outsidetextfont;
 
-function style(gd: GraphDiv): void {
+function style(gd: GraphDiv): any {
     var s = select(gd).selectAll('g[class^="barlayer"]').selectAll('g.trace');
     resizeText(gd, s, 'bar');
 

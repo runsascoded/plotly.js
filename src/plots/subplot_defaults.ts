@@ -2,7 +2,7 @@ import Lib from '../lib/index.js';
 import Template from '../plot_api/plot_template.js';
 import { defaults as handleDomainDefaults } from './domain.js';
 
-export default function handleSubplotDefaults(layoutIn?: any, layoutOut?: any, fullData?: any, opts?: any): any {
+export default function handleSubplotDefaults(layoutIn?: any, layoutOut?: any, fullData?: any, opts?: any): void {
     var subplotType = opts.type;
     var subplotAttributes = opts.attributes;
     var handleDefaults = opts.handleDefaults;

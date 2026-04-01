@@ -3,6 +3,7 @@ import { utcFormat } from 'd3-time-format';
 import { format as d3Format } from 'd3-format';
 import isNumeric from 'fast-isnumeric';
 import numConstants from '../constants/numerical.js';
+import type { GraphDiv } from '../../types/core';
 
 export { isArrayBuffer, isTypedArray, isArrayOrTypedArray, isArray1D, ensureArray, concat, maxRowLength, minRowLength } from './array.js';
 export { mod, modHalf } from './mod.js';
@@ -1195,7 +1196,7 @@ export function pseudoRandom(): number {
  *  @param {object} trace
  *  @param {object || array} contOut (mutated here)
  */
-export function fillText(calcPt: any, trace: any, contOut: any): void {
+export function fillText(calcPt: any, trace: any, contOut: any): any {
     var fill = Array.isArray(contOut)
         ? function (v: any) {
               contOut.push(v);
@@ -1232,7 +1233,7 @@ export function formatPercent(ratio: number, n?: number): string {
     return str;
 }
 
-export function isHidden(gd: any): boolean {
+export function isHidden(gd: GraphDiv): boolean {
     var display = window.getComputedStyle(gd).display;
     return !display || display === 'none';
 }
@@ -1286,7 +1287,7 @@ export function setTransormAndDisplay(s: any, transform: any): void {
     s.style('display', transform.scale ? null : 'none');
 }
 
-export function ensureUniformFontSize(gd: any, baseFont: any): any {
+export function ensureUniformFontSize(gd: GraphDiv, baseFont: any): any {
     var out = extendFlat({}, baseFont);
     out.size = Math.max(baseFont.size, gd._fullLayout.uniformtext.minsize || 0);
     return out;

@@ -43,7 +43,7 @@ export default function preserveDrawingBuffer(opts?: PreserveDrawingBufferOpts):
     return enable;
 }
 
-function getUserAgent(): any {
+function getUserAgent(): string {
     // similar to https://github.com/juliangruber/is-mobile/blob/91ca39ccdd4cfc5edfb5391e2515b923a730fbea/index.js#L14-L17
     var ua: any;
     if(typeof navigator !== 'undefined') {

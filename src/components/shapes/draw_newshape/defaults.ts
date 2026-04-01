@@ -1,5 +1,6 @@
 import Color from '../../color/index.js';
 import Lib from '../../../lib/index.js';
+import type { FullLayout } from '../../../../types/core';
 
 function dfltLabelYanchor(isLine: any, labelTextPosition: any) {
     // If shape is a line, default y-anchor is 'bottom' (so that text is above line by default)
@@ -14,7 +15,7 @@ function dfltLabelYanchor(isLine: any, labelTextPosition: any) {
             : 'middle';
 }
 
-export default function supplyDrawNewShapeDefaults(layoutIn: any, layoutOut: any, coerce: any) {
+export default function supplyDrawNewShapeDefaults(layoutIn: any, layoutOut: FullLayout, coerce: any) {
     coerce('newshape.visible');
     coerce('newshape.name');
     coerce('newshape.showlegend');

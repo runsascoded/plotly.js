@@ -2,8 +2,9 @@ import Lib from '../../lib/index.js';
 import Template from '../../plot_api/plot_template.js';
 import colorScaleAttrs from './layout_attributes.js';
 import colorScaleDefaults from './defaults.js';
+import type { FullLayout } from '../../../types/core';
 
-export default function supplyLayoutDefaults(layoutIn: any, layoutOut: any): void {
+export default function supplyLayoutDefaults(layoutIn: any, layoutOut: FullLayout): void {
     function coerce(attr: string, dflt?: any): any {
         return Lib.coerce(layoutIn, layoutOut, colorScaleAttrs, attr, dflt);
     }

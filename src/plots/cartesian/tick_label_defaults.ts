@@ -5,7 +5,7 @@ import layoutAttributes from './layout_attributes.js';
 import getShowAttrDflt from './show_dflt.js';
 import handleArrayContainerDefaults from '../array_container_defaults.js';
 
-export default function handleTickLabelDefaults(containerIn?: any, containerOut?: any, coerce?: any, axType?: any, options?: any): any {
+export default function handleTickLabelDefaults(containerIn?: any, containerOut?: any, coerce?: any, axType?: any, options?: any): void {
     if(!options) options = {};
 
     var labelalias = coerce('labelalias');
@@ -76,7 +76,7 @@ export default function handleTickLabelDefaults(containerIn?: any, containerOut?
     }
 }
 
-function tickformatstopDefaults(valueIn?: any, valueOut?: any): any {
+function tickformatstopDefaults(valueIn?: any, valueOut?: any): void {
     function coerce(attr?: any, dflt?: any) {
         return Lib.coerce(valueIn, valueOut, layoutAttributes.tickformatstops, attr, dflt);
     }

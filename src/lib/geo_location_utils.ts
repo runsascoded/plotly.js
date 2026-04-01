@@ -31,7 +31,7 @@ function countryNameToISO3(countryName: string): string | false {
     return false;
 }
 
-function locationToFeature(locationmode: string, location: any, features: any[]): any {
+function locationToFeature(locationmode: string, location: any, features: any[]): boolean {
     if(!location || typeof location !== 'string') return false;
 
     var locationId = locationmodeToIdFinder[locationmode](location);

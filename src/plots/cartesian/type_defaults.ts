@@ -1,7 +1,7 @@
 import { traceIs } from '../../registry.js';
 import autoType from './axis_autotype.js';
 
-export default function handleTypeDefaults(containerIn?: any, containerOut?: any, coerce?: any, options?: any): any {
+export default function handleTypeDefaults(containerIn?: any, containerOut?: any, coerce?: any, options?: any): void {
     coerce('autotypenumbers', options.autotypenumbersDflt);
     var axType = coerce('type', (options.splomStash || {}).type);
 
@@ -109,7 +109,7 @@ function getBoxPosLetter(trace?: any): any {
     return {v: 'x', h: 'y'}[trace.orientation || 'v'];
 }
 
-function isBoxWithoutPositionCoords(trace?: any, axLetter?: any): any {
+function isBoxWithoutPositionCoords(trace?: any, axLetter?: any): boolean {
     var posLetter = getBoxPosLetter(trace);
     var isBox = traceIs(trace, 'box-violin');
     var isCandlestick = traceIs(trace._fullInput || {}, 'candlestick');

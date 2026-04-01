@@ -154,7 +154,7 @@ function calc(gd: GraphDiv, trace: FullTrace): any[] {
     return cd;
 }
 
-function calcAxisExpansion(gd: GraphDiv, trace: FullTrace, xa: FullAxis, ya: FullAxis, x: any[], y: any[], ppad: any): void {
+function calcAxisExpansion(gd: GraphDiv, trace: FullTrace, xa: FullAxis, ya: FullAxis, x: any[], y: any[], ppad: any): any {
     var serieslen = trace._length;
     var fullLayout = gd._fullLayout;
     var xId = xa._id;

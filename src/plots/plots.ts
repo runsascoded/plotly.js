@@ -110,7 +110,7 @@ export function previousPromises(gd?: any): any {
  *
  * Add source links to your graph inside the 'showSources' config argument.
  */
-export function addLinks(gd?: any): any {
+export function addLinks(gd?: any): void {
     // Do not do anything if showLink and showSources are not set to true in config
     if(!gd._context.showLink && !gd._context.showSources) return;
 
@@ -167,7 +167,7 @@ export function addLinks(gd?: any): any {
 
 // note that now this function is only adding the brand in
 // iframes and 3rd-party apps
-function positionPlayWithData(gd?: any, container?: any): any {
+function positionPlayWithData(gd?: any, container?: any): void {
     container.text('');
     var link = container.append('a')
         .attr({
@@ -191,7 +191,7 @@ function positionPlayWithData(gd?: any, container?: any): any {
     }
 }
 
-export function sendDataToCloud(gd?: any): any {
+export function sendDataToCloud(gd?: any): boolean {
     var baseUrl = ((window as any).PLOTLYENV || {}).BASE_URL || gd._context.plotlyServerURL;
     if(!baseUrl) return;
 
@@ -265,7 +265,7 @@ var extraFormatKeys = [
  *   is a list of all the transform modules invoked.
  *
  */
-export function supplyDefaults(gd?: any, opts?: any): any {
+export function supplyDefaults(gd?: any, opts?: any): void {
     var skipUpdateCalc = opts && opts.skipUpdateCalc;
     var oldFullLayout = gd._fullLayout || {} as FullLayout;
 
@@ -508,7 +508,7 @@ export function supplyDefaults(gd?: any, opts?: any): any {
     }
 };
 
-export function supplyDefaultsUpdateCalc(oldCalcdata: CalcData[], newFullData: FullTrace[]): any {
+export function supplyDefaultsUpdateCalc(oldCalcdata: CalcData[], newFullData: FullTrace[]): void {
     for(var i = 0; i < newFullData.length; i++) {
         var newTrace = newFullData[i];
         var cd0 = (oldCalcdata[i] || [])[0] as CalcDatum | undefined;
@@ -701,7 +701,7 @@ function getFormatter(formatObj?: any, separators?: any): any {
     };
 }
 
-function fillMetaTextHelpers(newFullData?: any, newFullLayout?: any): any {
+function fillMetaTextHelpers(newFullData?: any, newFullLayout?: any): void {
     var _meta;
     var meta4data = [];
 
@@ -734,7 +734,7 @@ function fillMetaTextHelpers(newFullData?: any, newFullLayout?: any): any {
 }
 
 // Create storage for all of the data related to frames and transitions:
-export function createTransitionData(gd?: any): any {
+export function createTransitionData(gd?: any): void {
     // Set up the default keyframe if it doesn't exist:
     if(!gd._transitionData) {
         gd._transitionData = {};
@@ -760,7 +760,7 @@ export function createTransitionData(gd?: any): any {
 // helper function to be bound to fullLayout to check
 // whether a certain plot type is present on plot
 // or trace has a category
-export function _hasPlotType(category?: any): any {
+export function _hasPlotType(category?: any): boolean {
     var i;
 
     // check base plot modules
@@ -782,7 +782,7 @@ export function _hasPlotType(category?: any): any {
     return false;
 };
 
-export function cleanPlot(newFullData?: any, newFullLayout?: any, oldFullData?: any, oldFullLayout?: any): any {
+export function cleanPlot(newFullData?: any, newFullLayout?: any, oldFullData?: any, oldFullLayout?: any): void {
     var i, j;
 
     var basePlotModules = oldFullLayout._basePlotModules || [];
@@ -825,7 +825,7 @@ export function cleanPlot(newFullData?: any, newFullLayout?: any, oldFullData?: 
     }
 };
 
-export function linkSubplots(newFullData?: any, newFullLayout?: any, oldFullData?: any, oldFullLayout?: any): any {
+export function linkSubplots(newFullData?: any, newFullLayout?: any, oldFullData?: any, oldFullLayout?: any): void {
     var i, j;
 
     var oldSubplots = oldFullLayout._plots || {};
@@ -1005,7 +1005,7 @@ function findMainSubplot(ax?: any, fullLayout?: any): any {
 // The result is that expanded trace default colors have no effect, with
 // the final result that groups are indistinguishable. This function clears
 // those colors so that individual groupby groups get unique colors.
-export function clearExpandedTraceDefaultColors(trace?: any): any {
+export function clearExpandedTraceDefaultColors(trace?: any): void {
     var colorAttrs, path, i;
 
     // This uses weird closure state in order to satisfy the linter rule
@@ -1303,7 +1303,7 @@ export function supplyTraceDefaults(traceIn?: any, traceOut?: any, colorIndex?: 
     return traceOut;
 };
 
-export function supplyLayoutGlobalDefaults(layoutIn?: any, layoutOut?: any, formatObj?: any): any {
+export function supplyLayoutGlobalDefaults(layoutIn?: any, layoutOut?: any, formatObj?: any): void {
     function coerce(attr?: any, dflt?: any) {
         return Lib.coerce(layoutIn, layoutOut, layoutAttributes, attr, dflt);
     }
@@ -1458,7 +1458,7 @@ function getComputedSize(attr?: any): any {
     );
 }
 
-export function plotAutoSize(gd?: any, layout?: any, fullLayout?: any): any {
+export function plotAutoSize(gd?: any, layout?: any, fullLayout?: any): void {
     var context = gd._context || {};
     var frameMargins = context.frameMargins;
     var newWidth;
@@ -1518,7 +1518,7 @@ export function plotAutoSize(gd?: any, layout?: any, fullLayout?: any): any {
     sanitizeMargins(fullLayout);
 };
 
-export function supplyLayoutModuleDefaults(layoutIn?: any, layoutOut?: any, fullData?: any, transitionData?: any): any {
+export function supplyLayoutModuleDefaults(layoutIn?: any, layoutOut?: any, fullData?: any, transitionData?: any): void {
     var componentsRegistry = Registry.componentsRegistry;
     var basePlotModules = layoutOut._basePlotModules;
     var component, i, _module;
@@ -1595,7 +1595,7 @@ export function supplyLayoutModuleDefaults(layoutIn?: any, layoutOut?: any, full
 
 // Remove all plotly attributes from a div so it can be replotted fresh
 // TODO: these really need to be encapsulated into a much smaller set...
-export function purge(gd?: any): any {
+export function purge(gd?: any): void {
     // note: we DO NOT remove _context because it doesn't change when we insert
     // a new plot, and may have been set outside of our scope.
 
@@ -1668,7 +1668,7 @@ export function purge(gd?: any): any {
     if(gd.removeAllListeners) gd.removeAllListeners();
 };
 
-export function style(gd: GraphDiv): any {
+export function style(gd: GraphDiv): void {
     var _modules = gd._fullLayout._visibleModules;
     var styleModules = [];
     var i;
@@ -1688,7 +1688,7 @@ export function style(gd: GraphDiv): any {
     }
 };
 
-export function sanitizeMargins(fullLayout: FullLayout): any {
+export function sanitizeMargins(fullLayout: FullLayout): void {
     // polar doesn't do margins...
     if(!fullLayout || !fullLayout.margin) return;
 
@@ -1716,15 +1716,15 @@ export function sanitizeMargins(fullLayout: FullLayout): any {
     }
 };
 
-export function clearAutoMarginIds(gd?: any): any {
+export function clearAutoMarginIds(gd?: any): void {
     gd._fullLayout._pushmarginIds = {};
 };
 
-export function allowAutoMargin(gd?: any, id?: any): any {
+export function allowAutoMargin(gd?: any, id?: any): void {
     gd._fullLayout._pushmarginIds[id] = 1;
 };
 
-function initMargins(fullLayout: FullLayout): any {
+function initMargins(fullLayout: FullLayout): void {
     var margin = fullLayout.margin;
 
     if(!fullLayout._size) {
@@ -1762,7 +1762,7 @@ var MIN_SPECIFIED_HEIGHT = 2;
  *     l, r, t, b: the pixels to pad past the plot fraction x[l|r] and y[t|b]
  *     pad: extra pixels to add in all directions, default 12 (why?)
  */
-export function autoMargin(gd: GraphDiv, id?: any, o?: any): any {
+export function autoMargin(gd: GraphDiv, id?: any, o?: any): void {
     var fullLayout = gd._fullLayout;
     var width = fullLayout.width;
     var height = fullLayout.height;
@@ -1837,7 +1837,7 @@ export function autoMargin(gd: GraphDiv, id?: any, o?: any): any {
     }
 };
 
-function needsRedrawForShift(gd?: any): any {
+function needsRedrawForShift(gd?: any): boolean {
     if('_redrawFromAutoMarginCount' in gd._fullLayout) {
         return false;
     }
@@ -1848,7 +1848,7 @@ function needsRedrawForShift(gd?: any): any {
     return false;
 }
 
-export function doAutoMargin(gd: GraphDiv): any {
+export function doAutoMargin(gd: GraphDiv): void {
     var fullLayout = gd._fullLayout;
     var width = fullLayout.width;
     var height = fullLayout.height;
@@ -2014,7 +2014,7 @@ export function doAutoMargin(gd: GraphDiv): any {
     refineTicks(gd);
 };
 
-function refineTicks(gd?: any): any {
+function refineTicks(gd?: any): void {
     var axList = axisIDs.list(gd, '', true);
 
     [
@@ -2030,7 +2030,7 @@ function refineTicks(gd?: any): any {
 
 var marginKeys = ['l', 'r', 't', 'b', 'p', 'w', 'h'];
 
-export function didMarginChange(margin0?: any, margin1?: any): any {
+export function didMarginChange(margin0?: any, margin1?: any): boolean {
     for(var i = 0; i < marginKeys.length; i++) {
         var k = marginKeys[i];
         var m0 = margin0[k];
@@ -2342,7 +2342,7 @@ export function computeFrame(gd?: any, frameName?: any): any {
  * is necessary is if you poke around manually in `gd._transitionData._frames`
  * and create and haven't updated the lookup table.
  */
-export function recomputeFrameHash(gd?: any): any {
+export function recomputeFrameHash(gd?: any): void {
     var hash = gd._transitionData._frameHash = {};
     var frames = gd._transitionData._frames;
     for(var i = 0; i < frames.length; i++) {
@@ -2857,7 +2857,7 @@ function _transition(gd?: any, transitionOpts?: any, opts?: any): any {
     return transitionStarting.then(function() { return gd; });
 }
 
-export function doCalcdata(gd: GraphDiv, traces?: any): any {
+export function doCalcdata(gd: GraphDiv, traces?: any): void {
     var axList = axisIDs.list(gd);
     var fullData = gd._fullData;
     var fullLayout = gd._fullLayout;
@@ -3220,7 +3220,7 @@ function sortAxisCategoriesByValue(axList?: any, gd?: any): any {
     return affectedTraces;
 }
 
-function setupAxisCategories(axList?: any, fullData?: any, fullLayout?: any): any {
+function setupAxisCategories(axList?: any, fullData?: any, fullLayout?: any): void {
     var axLookup: any = {};
 
     function setupOne(ax?: any) {
@@ -3245,7 +3245,7 @@ function setupAxisCategories(axList?: any, fullData?: any, fullLayout?: any): an
     }
 }
 
-function doCrossTraceCalc(gd?: any): any {
+function doCrossTraceCalc(gd?: any): void {
     var fullLayout = gd._fullLayout;
     var modules = fullLayout._visibleModules;
     var hash: any = {};
@@ -3291,19 +3291,19 @@ function doCrossTraceCalc(gd?: any): any {
     }
 }
 
-export function rehover(gd?: any): any {
+export function rehover(gd?: any): void {
     if(gd._fullLayout._rehover) {
         gd._fullLayout._rehover();
     }
 };
 
-export function redrag(gd?: any): any {
+export function redrag(gd?: any): void {
     if(gd._fullLayout._redrag) {
         gd._fullLayout._redrag();
     }
 };
 
-export function reselect(gd?: any): any {
+export function reselect(gd?: any): void {
     var fullLayout = gd._fullLayout;
 
     var A = (gd.layout || {}).selections;
@@ -3316,7 +3316,7 @@ export function reselect(gd?: any): any {
     Registry.getComponentMethod('selections', 'reselect')(gd, mayEmitSelected);
 };
 
-export function generalUpdatePerTraceModule(gd: GraphDiv, subplot?: any, subplotCalcData?: any, subplotLayout?: any): any {
+export function generalUpdatePerTraceModule(gd: GraphDiv, subplot?: any, subplotCalcData?: any, subplotLayout?: any): void {
     var traceHashOld = subplot.traceHash;
     var traceHash: any = {};
     var i;
@@ -3359,13 +3359,13 @@ export function generalUpdatePerTraceModule(gd: GraphDiv, subplot?: any, subplot
     subplot.traceHash = traceHash;
 };
 
-export function plotBasePlot(desiredType?: any, gd?: any, traces?: any, transitionOpts?: any, makeOnCompleteCallback?: any): any {
+export function plotBasePlot(desiredType?: any, gd?: any, traces?: any, transitionOpts?: any, makeOnCompleteCallback?: any): void {
     var _module = Registry.getModule(desiredType);
     var cdmodule = getModuleCalcData(gd.calcdata, _module)[0];
     _module.plot(gd, cdmodule, transitionOpts, makeOnCompleteCallback);
 };
 
-export function cleanBasePlot(desiredType?: any, newFullData?: any, newFullLayout?: any, oldFullData?: any, oldFullLayout?: any): any {
+export function cleanBasePlot(desiredType?: any, newFullData?: any, newFullLayout?: any, oldFullData?: any, oldFullLayout?: any): void {
     var had = (oldFullLayout._has && oldFullLayout._has(desiredType));
     var has = (newFullLayout._has && newFullLayout._has(desiredType));
 

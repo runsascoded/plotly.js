@@ -26,9 +26,9 @@ var freeMode = helpers.freeMode;
 // Lazy-resolve selections via Registry to avoid pulling in ~70KB when
 // the selections component isn't registered (e.g. in the lite bundle).
 // Returns the function if registered, noop otherwise.
-function prepSelect(...args: any[]): any { return Registry.getComponentMethod('selections', 'prepSelect').apply(null, args); }
-function clearOutline(...args: any[]): any { return Registry.getComponentMethod('selections', 'clearOutline').apply(null, args); }
-function selectOnClick(...args: any[]): any { return Registry.getComponentMethod('selections', 'selectOnClick').apply(null, args); }
+function prepSelect(...args: any[]): void { return Registry.getComponentMethod('selections', 'prepSelect').apply(null, args); }
+function clearOutline(...args: any[]): void { return Registry.getComponentMethod('selections', 'clearOutline').apply(null, args); }
+function selectOnClick(...args: any[]): void { return Registry.getComponentMethod('selections', 'selectOnClick').apply(null, args); }
 var MINDRAG = constants.MINDRAG;
 var MINZOOM = constants.MINZOOM;
 
@@ -1062,7 +1062,7 @@ function makeRectDragger(plotinfo?: any, dragClass?: any, cursor?: any, x?: any,
     return dragger;
 }
 
-function isDirectionActive(axList?: any, activeVal?: any): any {
+function isDirectionActive(axList?: any, activeVal?: any): string {
     for(var i = 0; i < axList.length; i++) {
         if(!axList[i].fixedrange) return activeVal;
     }
@@ -1088,7 +1088,7 @@ function getEndText(ax?: any, end?: any): any {
     }
 }
 
-function zoomAxRanges(axList?: any, r0Fraction?: any, r1Fraction?: any, updates?: any, linkedAxes?: any): any {
+function zoomAxRanges(axList?: any, r0Fraction?: any, r1Fraction?: any, updates?: any, linkedAxes?: any): void {
     for(var i = 0; i < axList.length; i++) {
         var axi: any = axList[i];
         if(axi.fixedrange) continue;
@@ -1115,7 +1115,7 @@ function zoomAxRanges(axList?: any, r0Fraction?: any, r1Fraction?: any, updates?
     }
 }
 
-function dragAxList(axList?: any, pix?: any): any {
+function dragAxList(axList?: any, pix?: any): void {
     for(var i = 0; i < axList.length; i++) {
         var axi: any = axList[i];
         if(!axi.fixedrange) {
@@ -1188,14 +1188,14 @@ function makeCorners(zoomlayer?: any, xs?: any, ys?: any): any {
         .attr('d', 'M0,0Z');
 }
 
-function updateZoombox(zb?: any, corners?: any, box?: any, path0?: any, dimmed?: any, lum?: any): any {
+function updateZoombox(zb?: any, corners?: any, box?: any, path0?: any, dimmed?: any, lum?: any): void {
     zb.attr('d',
         path0 + 'M' + (box.l) + ',' + (box.t) + 'v' + (box.h) +
         'h' + (box.w) + 'v-' + (box.h) + 'h-' + (box.w) + 'Z');
     transitionZoombox(zb, corners, dimmed, lum);
 }
 
-function transitionZoombox(zb?: any, corners?: any, dimmed?: any, lum?: any): any {
+function transitionZoombox(zb?: any, corners?: any, dimmed?: any, lum?: any): void {
     if(!dimmed) {
         zb.transition()
             .style('fill', lum > 0.2 ? 'rgba(0,0,0,0.4)' :
@@ -1207,20 +1207,20 @@ function transitionZoombox(zb?: any, corners?: any, dimmed?: any, lum?: any): an
     }
 }
 
-function removeZoombox(gd?: any): any {
+function removeZoombox(gd?: any): void {
     select(gd)
         .selectAll('.zoombox,.js-zoombox-backdrop,.js-zoombox-menu,.zoombox-corners')
         .remove();
 }
 
-function showDoubleClickNotifier(gd?: any): any {
+function showDoubleClickNotifier(gd?: any): void {
     if(SHOWZOOMOUTTIP && gd.data && gd._context.showTips) {
         notifier(_(gd, 'Double-click to zoom back out'), 'long');
         SHOWZOOMOUTTIP = false;
     }
 }
 
-function xCorners(box?: any, y0?: any): any {
+function xCorners(box?: any, y0?: any): string {
     return 'M' +
         (box.l - 0.5) + ',' + (y0 - MINZOOM - 0.5) +
         'h-3v' + (2 * MINZOOM + 1) + 'h3ZM' +
@@ -1228,7 +1228,7 @@ function xCorners(box?: any, y0?: any): any {
         'h3v' + (2 * MINZOOM + 1) + 'h-3Z';
 }
 
-function yCorners(box?: any, x0?: any): any {
+function yCorners(box?: any, x0?: any): string {
     return 'M' +
         (x0 - MINZOOM - 0.5) + ',' + (box.t - 0.5) +
         'v-3h' + (2 * MINZOOM + 1) + 'v3ZM' +
@@ -1236,7 +1236,7 @@ function yCorners(box?: any, x0?: any): any {
         'v3h' + (2 * MINZOOM + 1) + 'v-3Z';
 }
 
-function xyCorners(box?: any): any {
+function xyCorners(box?: any): string {
     var clen = Math.floor(Math.min(box.b - box.t, box.r - box.l, MINZOOM) / 2);
     return 'M' +
         (box.l - 3.5) + ',' + (box.t - 0.5 + clen) + 'h3v' + (-clen) +
@@ -1338,7 +1338,7 @@ function calcLinks(gd?: any, groups?: any, xaHash?: any, yaHash?: any, exclude?:
 }
 
 // still seems to be some confusion about onwheel vs onmousewheel...
-function attachWheelEventHandler(element?: any, handler?: any): any {
+function attachWheelEventHandler(element?: any, handler?: any): void {
     if(!supportsPassive) {
         if(element.onwheel !== undefined) element.onwheel = handler;
         else if(element.onmousewheel !== undefined) element.onmousewheel = handler;

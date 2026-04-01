@@ -146,7 +146,7 @@ export var cleanLayout = function (layout?: any) {
     return layout;
 };
 
-function cleanAxRef(container?: any, attr?: any): any {
+function cleanAxRef(container?: any, attr?: any): void {
     var valIn = container[attr];
     var axLetter = attr.charAt(0);
     if (valIn && valIn !== 'paper') {

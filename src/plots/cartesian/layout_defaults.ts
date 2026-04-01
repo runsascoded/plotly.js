@@ -20,7 +20,7 @@ var name2id = axisIds.name2id;
 var traceIs = Registry.traceIs;
 var getComponentMethod = Registry.getComponentMethod;
 
-function appendList(cont?: any, k?: any, item?: any): any {
+function appendList(cont?: any, k?: any, item?: any): void {
     if(Array.isArray(cont[k])) cont[k].push(item);
     else cont[k] = [item];
 }

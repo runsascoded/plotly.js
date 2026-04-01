@@ -15,7 +15,7 @@ import handleFillColorDefaults from './fillcolor_defaults.js';
 import _index from '../../lib/index.js';
 const { coercePattern } = _index;
 
-export default function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace, defaultColor: string, layout: FullLayout): void {
+export default function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace, defaultColor: string, layout: FullLayout): any {
     function coerce(attr: string, dflt?: any) {
         return Lib.coerce(traceIn, traceOut, attributes, attr, dflt);
     }

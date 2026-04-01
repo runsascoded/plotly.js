@@ -25,7 +25,7 @@ const { AX_NAME_PATTERN } = _constants;
 import type { GraphDiv, FullLayout, FullTrace, Layout, PlotConfig } from '../../types/core';
 
 // Lazy-resolve to avoid pulling in ~70KB selections module in lite bundle
-function clearOutline(gd: GraphDiv): any { return Registry.getComponentMethod('selections', 'clearOutline')(gd); }
+function clearOutline(gd: GraphDiv): void { return Registry.getComponentMethod('selections', 'clearOutline')(gd); }
 
 var numericNameWarningCount = 0;
 var numericNameWarningCountLimit = 5;
@@ -78,7 +78,7 @@ function _doPlot(gd?: any, data?: any, layout?: any, config?: any): any {
         warn('Calling _doPlot as if redrawing ' + "but this container doesn't yet have a plot.", gd);
     }
 
-    function addFrames(..._args: any[]): any {
+    function addFrames(..._args: any[]): void {
         if (frames) {
             return addFrames(gd, frames);
         }
@@ -458,7 +458,7 @@ function _doPlot(gd?: any, data?: any, layout?: any, config?: any): any {
     });
 }
 
-function emitAfterPlot(gd: GraphDiv): any {
+function emitAfterPlot(gd: GraphDiv): void {
     var fullLayout = gd._fullLayout;
 
     if (fullLayout._redrawFromAutoMarginCount) {
@@ -472,7 +472,7 @@ function setPlotConfig(obj?: any): any {
     return extendFlat(dfltConfig, obj);
 }
 
-function setBackground(gd: GraphDiv, bgColor?: any): any {
+function setBackground(gd: GraphDiv, bgColor?: any): void {
     try {
         gd._fullLayout._paper.style('background', bgColor);
     } catch (e) {
@@ -480,12 +480,12 @@ function setBackground(gd: GraphDiv, bgColor?: any): any {
     }
 }
 
-function opaqueSetBackground(gd: GraphDiv, bgColor?: any): any {
+function opaqueSetBackground(gd: GraphDiv, bgColor?: any): void {
     var blend = Color.combine(bgColor, 'white');
     setBackground(gd, blend);
 }
 
-function setPlotContext(gd?: any, config?: any): any {
+function setPlotContext(gd?: any, config?: any): void {
     if (!gd._context) {
         gd._context = extendDeep({}, dfltConfig);
 
@@ -655,7 +655,7 @@ function positivifyIndices(indices?: any, maxIndex?: any): any {
  * @param indices
  * @param arrayName
  */
-function assertIndexArray(gd?: any, indices?: any, arrayName?: any): any {
+function assertIndexArray(gd?: any, indices?: any, arrayName?: any): void {
     var i, index;
 
     for (i = 0; i < indices.length; i++) {
@@ -689,7 +689,7 @@ function assertIndexArray(gd?: any, indices?: any, arrayName?: any): any {
  * @param currentIndices
  * @param newIndices
  */
-function checkMoveTracesArgs(gd?: any, currentIndices?: any, newIndices?: any): any {
+function checkMoveTracesArgs(gd?: any, currentIndices?: any, newIndices?: any): void {
     // check that gd has attribute 'data' and 'data' is array
     if (!Array.isArray(gd.data)) {
         throw new Error('gd.data must be an array.');
@@ -723,7 +723,7 @@ function checkMoveTracesArgs(gd?: any, currentIndices?: any, newIndices?: any): 
  * @param traces
  * @param newIndices
  */
-function checkAddTracesArgs(gd?: any, traces?: any, newIndices?: any): any {
+function checkAddTracesArgs(gd?: any, traces?: any, newIndices?: any): void {
     var i, value;
 
     // check that gd has attribute 'data' and 'data' is array
@@ -768,7 +768,7 @@ function checkAddTracesArgs(gd?: any, traces?: any, newIndices?: any): any {
  * @param indices
  * @param maxPoints
  */
-function assertExtendTracesArgs(gd?: any, update?: any, indices?: any, maxPoints?: any): any {
+function assertExtendTracesArgs(gd?: any, update?: any, indices?: any, maxPoints?: any): void {
     var maxPointsIsObject = isPlainObject(maxPoints);
 
     if (!Array.isArray(gd.data)) {
@@ -1394,7 +1394,7 @@ function makeNP(preGUI?: any, guiEditFlag?: any): any {
     };
 }
 
-function storeCurrent(attr?: any, val?: any, newVal?: any, preGUI?: any): any {
+function storeCurrent(attr?: any, val?: any, newVal?: any, preGUI?: any): void {
     if (Array.isArray(val) || Array.isArray(newVal)) {
         var arrayVal = Array.isArray(val) ? val : [];
         var arrayNew = Array.isArray(newVal) ? newVal : [];
@@ -1426,7 +1426,7 @@ function storeCurrent(attr?: any, val?: any, newVal?: any, preGUI?: any): any {
  *     `layout._preGUI` or `layout._tracePreGUI[uid]`
  * @param {object} edits: the {attr: val} object as normally passed to `relayout` etc
  */
-function _storeDirectGUIEdit(container?: any, preGUI?: any, edits?: any): any {
+function _storeDirectGUIEdit(container?: any, preGUI?: any, edits?: any): void {
     for (var attr in edits) {
         var np: any = nestedProperty(container, attr);
         storeCurrent(attr, np.get(), edits[attr], preGUI);
@@ -1830,7 +1830,7 @@ function relayout(gd?: any, astr?: any, val?: any): any {
 
 // Optimization mostly for large splom traces where
 // Plots.supplyDefaults can take > 100ms
-function axRangeSupplyDefaultsByPass(gd?: any, flags?: any, specs?: any): any {
+function axRangeSupplyDefaultsByPass(gd?: any, flags?: any, specs?: any): boolean {
     var fullLayout = gd._fullLayout;
 
     if (!flags.axrange) return false;
@@ -1868,7 +1868,7 @@ function axRangeSupplyDefaultsByPass(gd?: any, flags?: any, specs?: any): any {
     return true;
 }
 
-function addAxRangeSequence(seq?: any, rangesAltered?: any): any {
+function addAxRangeSequence(seq?: any, rangesAltered?: any): void {
     // N.B. leave as sequence of subroutines (for now) instead of
     // subroutine of its own so that finalDraw always gets
     // executed after drawData
@@ -2270,7 +2270,7 @@ function _relayout(gd?: any, aobj?: any): any {
  * puts the new size into fullLayout
  * returns true if either height or width changed
  */
-function updateAutosize(gd?: any): any {
+function updateAutosize(gd?: any): boolean {
     var fullLayout = gd._fullLayout;
     var oldWidth = fullLayout.width;
     var oldHeight = fullLayout.height;
@@ -2454,7 +2454,7 @@ function getNewRev(revAttr?: any, container?: any): any {
     return container.uirevision;
 }
 
-function getFullTraceIndexFromUid(uid?: any, fullData?: any): any {
+function getFullTraceIndexFromUid(uid?: any, fullData?: any): number {
     for (var i = 0; i < fullData.length; i++) {
         if (fullData[i]._fullInput.uid === uid) return i;
     }
@@ -2469,7 +2469,7 @@ function getTraceIndexFromUid(uid?: any, data?: any, tracei?: any): any {
     return !data[tracei] || data[tracei].uid ? -1 : tracei;
 }
 
-function valsMatch(v1?: any, v2?: any): any {
+function valsMatch(v1?: any, v2?: any): boolean {
     var v1IsObj = isPlainObject(v1);
     var v1IsArray = Array.isArray(v1);
     if (v1IsObj || v1IsArray) {
@@ -2640,7 +2640,7 @@ function applyUIRevisions(data?: any, layout?: any, oldFullData?: any, oldFullLa
  *      object containing `data`, `layout`, `config`, and `frames` members
  *
  */
-function react(gd?: any, data?: any, layout?: any, config?: any): any {
+function react(gd?: any, data?: any, layout?: any, config?: any): void {
     var frames, plotDone;
 
     function addFrames(..._args: any[]): any {
@@ -2924,7 +2924,7 @@ function diffLayout(gd?: any, oldFullLayout?: any, newFullLayout?: any, immutabl
     return flags;
 }
 
-function getDiffFlags(oldContainer?: any, newContainer?: any, outerparts?: any, opts?: any): any {
+function getDiffFlags(oldContainer?: any, newContainer?: any, outerparts?: any, opts?: any): void {
     var valObject, key, astr;
 
     var getValObject = opts.getValObject;
@@ -3695,7 +3695,7 @@ function purge(gd?: any): any {
 }
 
 // determines if the graph div requires a recalculation of its inverse matrix transforms by comparing old + new bounding boxes.
-function calcInverseTransform(gd?: any): any {
+function calcInverseTransform(gd?: any): void {
     var fullLayout = gd._fullLayout;
 
     var newBBox = gd.getBoundingClientRect();
@@ -3710,7 +3710,7 @@ function calcInverseTransform(gd?: any): any {
 // -------------------------------------------------------
 // makePlotFramework: Create the plot container and axes
 // -------------------------------------------------------
-function makePlotFramework(gd?: any): any {
+function makePlotFramework(gd?: any): void {
     var gd3 = select(gd);
     var fullLayout = gd._fullLayout;
 

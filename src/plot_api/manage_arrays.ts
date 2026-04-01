@@ -10,11 +10,11 @@ export var isAddVal = function isAddVal(val?: any): any {
     return val === 'add' || isPlainObject(val);
 };
 
-export var isRemoveVal = function isRemoveVal(val?: any): any {
+export var isRemoveVal = function isRemoveVal(val?: any): boolean {
     return val === null || val === 'remove';
 };
 
-export var applyContainerArrayChanges = function applyContainerArrayChanges(gd?: any, np?: any, edits?: any, flags?: any, _nestedProperty?: any): any {
+export var applyContainerArrayChanges = function applyContainerArrayChanges(gd?: any, np?: any, edits?: any, flags?: any, _nestedProperty?: any): boolean {
     var componentType = np.astr;
     var supplyComponentDefaults = Registry.getComponentMethod(componentType, 'supplyLayoutDefaults');
     var draw = Registry.getComponentMethod(componentType, 'draw');

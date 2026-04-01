@@ -5,7 +5,7 @@ import handleArrayContainerDefaults from '../../plots/array_container_defaults.j
 import attributes from './attributes.js';
 import helpers from '../shapes/helpers.js';
 
-export default function supplyLayoutDefaults(layoutIn: any, layoutOut: any) {
+export default function supplyLayoutDefaults(layoutIn: any, layoutOut: FullLayout) {
     handleArrayContainerDefaults(layoutIn, layoutOut, {
         name: 'selections',
         handleItemDefaults: handleSelectionDefaults

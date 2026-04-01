@@ -4,7 +4,7 @@ import { _, notifier, pushUnique } from '../../lib/index.js';
 
 var SHOWISOLATETIP = true;
 
-export default function handleClick(g: any, gd: GraphDiv, numClicks: number): void {
+export default function handleClick(g: any, gd: GraphDiv, numClicks: number): any {
     var fullLayout = gd._fullLayout;
 
     if(gd._dragged || gd._editing) return;

@@ -121,7 +121,7 @@ function isDeletable(val: any, propStr: string): boolean {
 }
 
 function npSet(cont: any, parts: (string | number)[], propStr: string): (val: any) => void {
-    return function(val: any): void {
+    return function(val: any): any {
         var curCont = cont;
         var propPart = '';
         var containerLevels: [any, string][] = [[cont, propPart]];

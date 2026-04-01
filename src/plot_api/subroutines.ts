@@ -26,7 +26,7 @@ export var layoutStyles = function(gd: GraphDiv): any {
     return syncOrAsync([doAutoMargin, lsInner], gd);
 };
 
-function overlappingDomain(xDomain?: any, yDomain?: any, domains?: any): any {
+function overlappingDomain(xDomain?: any, yDomain?: any, domains?: any): boolean {
     for(var i = 0; i < domains.length; i++) {
         var existingX = domains[i][0];
         var existingY = domains[i][1];
@@ -360,7 +360,7 @@ function shouldShowLinesOrTicks(ax?: any, subplot?: any): any {
  * It's assumed that counterAx is known to overlay the subplot we're working on
  * but it may not be its main axis.
  */
-function shouldShowLineThisSide(ax?: any, side?: any, counterAx?: any): any {
+function shouldShowLineThisSide(ax?: any, side?: any, counterAx?: any): boolean {
     // does counterAx get a line at all?
     if(!counterAx.showline || !counterAx._lw) return false;
 
@@ -388,7 +388,7 @@ function shouldShowLineThisSide(ax?: any, side?: any, counterAx?: any): any {
  * then at all other potential counteraxes on or overlaying this subplot.
  * Take the line width from the first one that has a line.
  */
-function findCounterAxisLineWidth(ax?: any, side?: any, counterAx?: any, axList?: any): any {
+function findCounterAxisLineWidth(ax?: any, side?: any, counterAx?: any, axList?: any): number {
     if(shouldShowLineThisSide(ax, side, counterAx)) {
         return counterAx._lw;
     }
@@ -401,7 +401,7 @@ function findCounterAxisLineWidth(ax?: any, side?: any, counterAx?: any, axList?
     return 0;
 }
 
-export var drawMainTitle = function(gd: GraphDiv): any {
+export var drawMainTitle = function(gd: GraphDiv): void {
     var title: any = gd._fullLayout.title;
     var fullLayout = gd._fullLayout;
     var textAnchor = getMainTitleTextAnchor(fullLayout);
@@ -498,7 +498,7 @@ function containerPushVal(position?: any, titleY?: any, titleYanchor?: any, heig
     return push;
 }
 
-function needsMarginPush(gd?: any, title?: any, titleHeight?: any): any {
+function needsMarginPush(gd?: any, title?: any, titleHeight?: any): number {
     var titleY = title.y;
     var titleYanchor = title.yanchor;
     var position = titleY > 0.5 ? 't' : 'b';
@@ -703,7 +703,7 @@ export var doModeBar = function(gd: GraphDiv): any {
     return previousPromises(gd);
 };
 
-export var doCamera = function(gd: GraphDiv): any {
+export var doCamera = function(gd: GraphDiv): void {
     var fullLayout = gd._fullLayout;
     var sceneIds = fullLayout._subplots.gl3d;
 
@@ -744,7 +744,7 @@ export var drawData = function(gd: GraphDiv): any {
     return previousPromises(gd);
 };
 
-export var redrawReglTraces = function(gd: GraphDiv): any {
+export var redrawReglTraces = function(gd: GraphDiv): void {
     var fullLayout = gd._fullLayout;
 
     if(fullLayout._has('regl')) {
@@ -787,7 +787,7 @@ export var redrawReglTraces = function(gd: GraphDiv): any {
     }
 };
 
-export var doAutoRangeAndConstraints = function(gd: GraphDiv): any {
+export var doAutoRangeAndConstraints = function(gd: GraphDiv): void {
     var axList = Axes.list(gd, '', true);
     var ax;
 
@@ -819,7 +819,7 @@ export var doAutoRangeAndConstraints = function(gd: GraphDiv): any {
     enforceAxisConstraints(gd);
 };
 
-export var finalDraw = function(gd: GraphDiv): any {
+export var finalDraw = function(gd: GraphDiv): void {
     // TODO: rangesliders really belong in marginPushers but they need to be
     // drawn after data - can we at least get the margin pushing part separated
     // out and done earlier?
@@ -831,7 +831,7 @@ export var finalDraw = function(gd: GraphDiv): any {
     Registry.getComponentMethod('rangeselector', 'draw')(gd);
 };
 
-export var drawMarginPushers = function(gd: GraphDiv): any {
+export var drawMarginPushers = function(gd: GraphDiv): void {
     Registry.getComponentMethod('legend', 'draw')(gd);
     Registry.getComponentMethod('rangeselector', 'draw')(gd);
     Registry.getComponentMethod('sliders', 'draw')(gd);

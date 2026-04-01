@@ -14,7 +14,7 @@ import type { GraphDiv } from '../../types/core';
  * @param {object} opts (see Plotly.toImage in ../plot_api/to_image)
  * @return {promise}
  */
-function downloadImage(gd: any, opts: any) {
+function downloadImage(gd: GraphDiv, opts: any) {
     var _gd;
     if(!Lib.isPlainObject(gd)) _gd = Lib.getGraphDiv(gd);
 

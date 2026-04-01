@@ -1,6 +1,6 @@
 import getShowAttrDflt from './show_dflt.js';
 
-export default function handlePrefixSuffixDefaults(containerIn?: any, containerOut?: any, coerce?: any, axType?: any, options?: any): any {
+export default function handlePrefixSuffixDefaults(containerIn?: any, containerOut?: any, coerce?: any, axType?: any, options?: any): void {
     if(!options) options = {};
     var tickSuffixDflt = options.tickSuffixDflt;
 

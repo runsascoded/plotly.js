@@ -18,7 +18,7 @@ var strTranslate = Lib.strTranslate;
 var recordMinTextSize = uniformText.recordMinTextSize;
 var clearMinTextSize = uniformText.clearMinTextSize;
 
-function plot(gd: GraphDiv, cdModule: any[]): void {
+function plot(gd: GraphDiv, cdModule: any[]): any {
     var isStatic = gd._context.staticPlot;
 
     var fullLayout = gd._fullLayout;
@@ -375,7 +375,7 @@ function plotTextLines(slices: any, trace: FullTrace): void {
     });
 }
 
-function attachFxHandlers(sliceTop: any, gd: GraphDiv, cd: any[]): void {
+function attachFxHandlers(sliceTop: any, gd: GraphDiv, cd: any[]): any {
     var cd0 = cd[0];
     var cx = cd0.cx;
     var cy = cd0.cy;
@@ -955,7 +955,7 @@ function getMaxPull(trace: FullTrace): number {
     return maxPull;
 }
 
-function scootLabels(quadrants: any[][], trace: FullTrace): void {
+function scootLabels(quadrants: any[][], trace: FullTrace): any {
     var xHalf,
         yHalf,
         equatorFirst,
@@ -1217,7 +1217,7 @@ function getCoords(r: number, angle: number): [number, number] {
     return [r * Math.sin(angle), -r * Math.cos(angle)];
 }
 
-function formatSliceLabel(gd: GraphDiv, pt: any, cd0: any): void {
+function formatSliceLabel(gd: GraphDiv, pt: any, cd0: any): any {
     var fullLayout = gd._fullLayout;
     var trace = cd0.trace;
     // look for textemplate

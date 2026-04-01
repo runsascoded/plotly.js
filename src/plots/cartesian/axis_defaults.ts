@@ -200,7 +200,7 @@ export default function handleAxisDefaults(containerIn?: any, containerOut?: any
     return containerOut;
 }
 
-function rangebreaksDefaults(itemIn?: any, itemOut?: any, containerOut?: any): any {
+function rangebreaksDefaults(itemIn?: any, itemOut?: any, containerOut?: any): void {
     function coerce(attr?: any, dflt?: any) {
         return Lib.coerce(itemIn, itemOut, layoutAttributes.rangebreaks, attr, dflt);
     }

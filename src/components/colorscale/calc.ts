@@ -4,7 +4,7 @@ import { aggNums, nestedProperty } from '../../lib/index.js';
 import _helpers from './helpers.js';
 const { extractOpts } = _helpers;
 
-export default function calc(gd: GraphDiv, trace: FullTrace, opts: any): void {
+export default function calc(gd: GraphDiv, trace: FullTrace, opts: any): any {
     var fullLayout = gd._fullLayout;
     var vals = opts.vals;
     var containerStr = opts.containerStr;

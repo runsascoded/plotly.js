@@ -1,6 +1,7 @@
 import parcoords from './parcoords.js';
 import prepareRegl from '../../lib/prepare_regl.js';
 import { isVisible } from './helpers.js';
+import type { GraphDiv } from '../../../types/core';
 var reglPrecompiled: any = {};
 
 function newIndex(visibleIndices: any, orig: any, dim: any) {
@@ -21,7 +22,7 @@ function sorter(visibleIndices: any, orig: any) {
     };
 }
 
-function plot(gd: any, cdModule: any) {
+function plot(gd: GraphDiv, cdModule: any) {
     var fullLayout = gd._fullLayout;
 
     var success = prepareRegl(gd, [], reglPrecompiled);

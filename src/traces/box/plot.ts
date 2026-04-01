@@ -166,7 +166,7 @@ function plotBoxAndWhiskers(sel: any, axes: { pos: FullAxis; val: FullAxis }, tr
     });
 }
 
-function plotPoints(sel: any, axes: { x: FullAxis; y: FullAxis }, trace: FullTrace, t: any): void {
+function plotPoints(sel: any, axes: { x: FullAxis; y: FullAxis }, trace: FullTrace, t: any): any {
     var xa = axes.x;
     var ya = axes.y;
     var bdPos = t.bdPos;

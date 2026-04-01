@@ -2,11 +2,12 @@ import Lib from '../../lib/index.js';
 import handleArrayContainerDefaults from '../../plots/array_container_defaults.js';
 import attributes from './attributes.js';
 import constants from './constants.js';
+import type { FullLayout } from '../../../types/core';
 
 var name = constants.name;
 var buttonAttrs = attributes.buttons;
 
-export default function updateMenusDefaults(layoutIn: any, layoutOut: any) {
+export default function updateMenusDefaults(layoutIn: any, layoutOut: FullLayout) {
     var opts = {
         name: name,
         handleItemDefaults: menuDefaults
@@ -15,7 +16,7 @@ export default function updateMenusDefaults(layoutIn: any, layoutOut: any) {
     handleArrayContainerDefaults(layoutIn, layoutOut, opts);
 }
 
-function menuDefaults(menuIn: any, menuOut: any, layoutOut: any) {
+function menuDefaults(menuIn: any, menuOut: any, layoutOut: FullLayout) {
     function coerce(attr: any, dflt?: any) {
         return Lib.coerce(menuIn, menuOut, attributes, attr, dflt);
     }

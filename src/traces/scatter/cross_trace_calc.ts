@@ -38,7 +38,7 @@ function groupCrossTraceCalc(gd: GraphDiv, plotinfo: PlotInfo): void {
     setGroupPositions(gd, ya, xa, calcTracesHorz, opts);
 }
 
-export default function crossTraceCalc(gd: GraphDiv, plotinfo: PlotInfo): void {
+export default function crossTraceCalc(gd: GraphDiv, plotinfo: PlotInfo): any {
     if(gd._fullLayout.scattermode === 'group') {
         groupCrossTraceCalc(gd, plotinfo);
     }

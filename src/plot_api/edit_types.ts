@@ -117,7 +117,7 @@ function overrideAll(attrs?: any, editTypeOverride?: any, overrideContainers?: a
     return out;
 }
 
-function overrideOne(attr?: any, editTypeOverride?: any, overrideContainers?: any, key?: any): any {
+function overrideOne(attr?: any, editTypeOverride?: any, overrideContainers?: any, key?: any): void {
     if(attr.valType) {
         var out = extendFlat({}, attr);
         out.editType = editTypeOverride;

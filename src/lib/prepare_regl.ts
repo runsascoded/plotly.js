@@ -1,7 +1,8 @@
 import showNoWebGlMsg from './show_no_webgl_msg.js';
 import createRegl from '@plotly/regl';
+import type { GraphDiv } from '../../types/core';
 
-export default function prepareRegl(gd: any, extensions?: string[], reglPrecompiled?: any): boolean {
+export default function prepareRegl(gd: GraphDiv, extensions?: string[], reglPrecompiled?: any): boolean {
     var fullLayout = gd._fullLayout;
     var success = true;
 

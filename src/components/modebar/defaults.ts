@@ -2,8 +2,9 @@ import Lib from '../../lib/index.js';
 import Color from '../color/index.js';
 import Template from '../../plot_api/plot_template.js';
 import attributes from './attributes.js';
+import type { FullLayout } from '../../../types/core';
 
-export default function supplyLayoutDefaults(layoutIn: any, layoutOut: any) {
+export default function supplyLayoutDefaults(layoutIn: any, layoutOut: FullLayout) {
     var containerIn = layoutIn.modebar || {};
     var containerOut = Template.newContainer(layoutOut, 'modebar');
 

@@ -1,5 +1,6 @@
 import Registry from '../../registry.js';
 import Lib from '../../lib/index.js';
+import type { FullLayout } from '../../../types/core';
 import _req0 from './attributes.js';
 import _req1 from './attributes.js';
 import _req2 from './defaults.js';
@@ -24,7 +25,7 @@ export default {
     draw: _req4
 };
 
-function includeGL3D(layoutIn: any, layoutOut: any) {
+function includeGL3D(layoutIn: any, layoutOut: FullLayout) {
     var GL3D = Registry.subplotsRegistry.gl3d;
     if(!GL3D) return;
 

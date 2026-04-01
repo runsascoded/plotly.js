@@ -4,7 +4,7 @@ import Color from '../../components/color/index.js';
 import _style from '../scatter/style.js';
 const { stylePoints } = _style;
 
-export default function style(gd: GraphDiv): void {
+export default function style(gd: GraphDiv): any {
     var s = select(gd).selectAll('g.trace.violins');
 
     s.style('opacity', function(d) { return d[0].trace.opacity; });

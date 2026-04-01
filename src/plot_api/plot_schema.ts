@@ -65,7 +65,7 @@ export var get = function(): any {
     };
 };
 
-export var crawl = function(attrs?: any, callback?: any, specifiedLevel?: any, attrString?: any): any {
+export var crawl = function(attrs?: any, callback?: any, specifiedLevel?: any, attrString?: any): void {
     var level = specifiedLevel || 0;
     attrString = attrString || '';
 
@@ -85,7 +85,7 @@ export var crawl = function(attrs?: any, callback?: any, specifiedLevel?: any, a
     });
 };
 
-export var isValObject = function(obj?: any): any {
+export var isValObject = function(obj?: any): boolean {
     return obj && obj.valType !== undefined;
 };
 
@@ -183,7 +183,7 @@ export var getLayoutValObject = function(fullLayout?: any, parts?: any): any {
     return recurseIntoValObject(valObject, parts, 1);
 };
 
-function layoutHeadAttr(fullLayout?: any, head?: any): any {
+function layoutHeadAttr(fullLayout?: any, head?: any): boolean {
     var i, key, _module, attributes;
 
     // look for attributes of the subplot types used on the plot
@@ -241,7 +241,7 @@ function layoutHeadAttr(fullLayout?: any, head?: any): any {
     return false;
 }
 
-function recurseIntoValObject(valObject?: any, parts?: any, i?: any): any {
+function recurseIntoValObject(valObject?: any, parts?: any, i?: any): boolean | void {
     if(!valObject) return false;
 
     if(valObject._isLinkedToArray) {
@@ -455,7 +455,7 @@ function formatAttributes(attrs?: any): any {
     return attrs;
 }
 
-function mergeValTypeAndRole(attrs?: any): any {
+function mergeValTypeAndRole(attrs?: any): void {
     function makeSrcAttr(attrName?: any) {
         return {
             valType: 'string',
@@ -479,7 +479,7 @@ function mergeValTypeAndRole(attrs?: any): any {
     crawl(attrs, callback);
 }
 
-function formatArrayContainers(attrs?: any): any {
+function formatArrayContainers(attrs?: any): void {
     function callback(attr?: any, attrName?: any, attrs?: any) {
         if(!attr) return;
 
@@ -499,7 +499,7 @@ function formatArrayContainers(attrs?: any): any {
 
 // this can take around 10ms and should only be run from PlotSchema.get(),
 // to ensure JSON.stringify(PlotSchema.get()) gives the intended result.
-function stringify(attrs?: any): any {
+function stringify(attrs?: any): void {
     function walk(attr?: any) {
         for(var k in attr) {
             if(isPlainObject(attr[k])) {
@@ -520,7 +520,7 @@ function stringify(attrs?: any): any {
     walk(attrs);
 }
 
-function handleBasePlotModule(layoutAttributes?: any, _module?: any, astr?: any): any {
+function handleBasePlotModule(layoutAttributes?: any, _module?: any, astr?: any): void {
     var np = nestedProperty(layoutAttributes, astr);
     var attrs = extendDeepAll({}, _module.layoutAttributes);
 
@@ -528,7 +528,7 @@ function handleBasePlotModule(layoutAttributes?: any, _module?: any, astr?: any)
     np.set(attrs);
 }
 
-function insertAttrs(baseAttrs?: any, newAttrs?: any, astr?: any): any {
+function insertAttrs(baseAttrs?: any, newAttrs?: any, astr?: any): void {
     var np = nestedProperty(baseAttrs, astr);
 
     np.set(extendDeepAll(np.get() || {}, newAttrs));

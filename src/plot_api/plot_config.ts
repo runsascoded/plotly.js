@@ -474,7 +474,7 @@ var configAttributes = {
 
 var dfltConfig: any = {};
 
-function crawl(src?: any, target?: any): any {
+function crawl(src?: any, target?: any): void {
     for(var k in src) {
         var obj = src[k];
         if(obj.valType) {

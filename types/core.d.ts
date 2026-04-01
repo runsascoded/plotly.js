@@ -35,6 +35,10 @@ export interface GraphDiv extends HTMLDivElement {
     _transitioning?: boolean;
     _transitioningWithDuration?: boolean;
     _legendMouseDownTime?: number;
+    _responsiveChartHandler?: EventListener;
+    undoQueue?: any;
+    autoplay?: boolean;
+    fn?: string;
     on: (event: string, fn: (data: any) => void) => void;
     once: (event: string, fn: (data: any) => void) => void;
     removeListener: (event: string, fn: (data: any) => void) => void;

@@ -5,7 +5,7 @@ import handleArrayContainerDefaults from '../../plots/array_container_defaults.j
 import attributes from './attributes.js';
 var name = 'images';
 
-export default function supplyLayoutDefaults(layoutIn: any, layoutOut: any) {
+export default function supplyLayoutDefaults(layoutIn: any, layoutOut: FullLayout) {
     var opts = {
         name: name,
         handleItemDefaults: imageDefaults

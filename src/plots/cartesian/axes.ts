@@ -714,7 +714,7 @@ function nMonths(dtick?: any): any {
     return +(dtick.substring(1));
 }
 
-function adjustPeriodDelta(ax?: any): any { // adjusts ax.dtick and sets ax._definedDelta
+function adjustPeriodDelta(ax?: any): void { // adjusts ax.dtick and sets ax._definedDelta
     var definedDelta;
 
     function mDate() {
@@ -810,7 +810,7 @@ function adjustPeriodDelta(ax?: any): any { // adjusts ax.dtick and sets ax._def
     ax._definedDelta = definedDelta;
 }
 
-function positionPeriodTicks(tickVals?: any, ax?: any, definedDelta?: any): any {
+function positionPeriodTicks(tickVals?: any, ax?: any, definedDelta?: any): void {
     for(var i = 0; i < tickVals.length; i++) {
         var v = tickVals[i].value;
 
@@ -1499,7 +1499,7 @@ axes.autoTicks = function(ax?: any, roughDTick?: any, isMinor?: any) {
 //   for numeric ticks, integer # digits after . to round to
 //   for date ticks, the last date part to show (y,m,d,H,M,S)
 //      or an integer # digits past seconds
-function autoTickRound(ax?: any): any {
+function autoTickRound(ax?: any): void {
     var dtick = ax.dtick;
 
     ax._tickexponent = 0;
@@ -1799,7 +1799,7 @@ function tickTextObj(ax?: any, x?: any, text?: any): any {
     };
 }
 
-function formatDate(ax?: any, out?: any, hover?: any, extraPrecision?: any): any {
+function formatDate(ax?: any, out?: any, hover?: any, extraPrecision?: any): void {
     var tr = ax._tickround;
     var fmt = (hover && ax.hoverformat) || axes.getTickFormat(ax);
 
@@ -1870,7 +1870,7 @@ function formatDate(ax?: any, out?: any, hover?: any, extraPrecision?: any): any
     out.text = dateStr;
 }
 
-function formatLog(ax?: any, out?: any, hover?: any, extraPrecision?: any, hideexp?: any): any {
+function formatLog(ax?: any, out?: any, hover?: any, extraPrecision?: any, hideexp?: any): void {
     var dtick = ax.dtick;
     var x = out.x;
     var tickformat = ax.tickformat;
@@ -1947,13 +1947,13 @@ function formatLog(ax?: any, out?: any, hover?: any, extraPrecision?: any, hidee
     }
 }
 
-function formatCategory(ax?: any, out?: any): any {
+function formatCategory(ax?: any, out?: any): void {
     var tt = ax._categories[Math.round(out.x)];
     if(tt === undefined) tt = '';
     out.text = String(tt);
 }
 
-function formatMultiCategory(ax?: any, out?: any, hover?: any): any {
+function formatMultiCategory(ax?: any, out?: any, hover?: any): void {
     var v = Math.round(out.x);
     var cats = ax._categories[v] || [];
     var tt = cats[1] === undefined ? '' : String(cats[1]);
@@ -1969,7 +1969,7 @@ function formatMultiCategory(ax?: any, out?: any, hover?: any): any {
     }
 }
 
-function formatLinear(ax?: any, out?: any, hover?: any, extraPrecision?: any, hideexp?: any): any {
+function formatLinear(ax?: any, out?: any, hover?: any, extraPrecision?: any, hideexp?: any): void {
     if(hideexp === 'never') {
         // If this is a hover label, then we must *never* hide the exponent
         // for the sake of display, which could give the wrong value by
@@ -1987,7 +1987,7 @@ function formatLinear(ax?: any, out?: any, hover?: any, extraPrecision?: any, hi
     out.text = numFormat(out.x, ax, hideexp, extraPrecision);
 }
 
-function formatAngle(ax?: any, out?: any, hover?: any, extraPrecision?: any, hideexp?: any): any {
+function formatAngle(ax?: any, out?: any, hover?: any, extraPrecision?: any, hideexp?: any): void {
     if(ax.thetaunit === 'radians' && !hover) {
         var num = out.x / 180;
 
@@ -2070,7 +2070,7 @@ const isSIFormat = (exponentFormat) => ['SI', 'SI extended','B'].includes(expone
 // 10^14 -> 100T
 // 10^15 -> 1x10^15
 // 10^16 -> 1x10^16
-function beyondSI(exponent?: any): any {
+function beyondSI(exponent?: any): boolean {
     return exponent > 14 || exponent < -15;
 }
 
@@ -2082,11 +2082,11 @@ function beyondSI(exponent?: any): any {
 // 10^31 -> 10Q
 // 10^32 -> 100Q
 // 10^33 -> 1x10^33
-function beyondSIExtended(exponent?: any): any {
+function beyondSIExtended(exponent?: any): boolean {
     return exponent > 32 || exponent < -30;
 }
 
-function shouldSwitchSIToPowerFormat(exponent?: any, exponentFormat?: any): any {
+function shouldSwitchSIToPowerFormat(exponent?: any, exponentFormat?: any): boolean {
     if (!isSIFormat(exponentFormat)) return false;
     if (exponentFormat === 'SI extended' && beyondSIExtended(exponent)) return true;
     if (exponentFormat !== 'SI extended' && beyondSI(exponent)) return true;
@@ -4128,7 +4128,7 @@ axes.drawLabels = function(gd?: any, ax?: any, opts?: any) {
  * - {fn} path
  * - {fn} transFn
  */
-function drawDividers(gd?: any, ax?: any, opts?: any): any {
+function drawDividers(gd?: any, ax?: any, opts?: any): void {
     var cls = ax._id + 'divider';
     var vals = opts.vals;
 
@@ -4227,7 +4227,7 @@ function approxTitleDepth(ax?: any): any {
  *  - {number} linewidth
  *  - {boolean} showticklabels
  */
-function drawTitle(gd?: any, ax?: any): any {
+function drawTitle(gd?: any, ax?: any): void {
     var fullLayout = gd._fullLayout;
     var axId = ax._id;
     var axLetter = axId.charAt(0);
@@ -4394,7 +4394,7 @@ function anyCounterAxLineAtZero(gd?: any, ax?: any, counterAxis?: any, rng?: any
     }
 }
 
-function hasBarsOrFill(gd?: any, ax?: any): any {
+function hasBarsOrFill(gd?: any, ax?: any): boolean {
     var fullData = gd._fullData;
     var subplot = ax._mainSubplot;
     var axLetter = ax._id.charAt(0);
@@ -4499,13 +4499,13 @@ function makeAxisGroups(gd?: any, traces?: any): any {
     return groups;
 }
 
-function mergeAxisGroups(intoSet?: any, fromSet?: any): any {
+function mergeAxisGroups(intoSet?: any, fromSet?: any): void {
     for(var i = 0; i < fromSet.length; i++) {
         if(intoSet.indexOf(fromSet[i]) === -1) intoSet.push(fromSet[i]);
     }
 }
 
-function swapAxisGroup(gd?: any, xIds?: any, yIds?: any): any {
+function swapAxisGroup(gd?: any, xIds?: any, yIds?: any): void {
     var xFullAxes = [];
     var yFullAxes = [];
     var layout = gd.layout;
@@ -4567,7 +4567,7 @@ function swapAxisGroup(gd?: any, xIds?: any, yIds?: any): any {
     }
 }
 
-function swapAxisAttrs(layout?: any, key?: any, xFullAxes?: any, yFullAxes?: any, dfltTitle?: any): any {
+function swapAxisAttrs(layout?: any, key?: any, xFullAxes?: any, yFullAxes?: any, dfltTitle?: any): void {
     // in case the value is the default for either axis,
     // look at the first axis in each list and see if
     // this key's value is undefined
@@ -4594,7 +4594,7 @@ function swapAxisAttrs(layout?: any, key?: any, xFullAxes?: any, yFullAxes?: any
     }
 }
 
-function isAngular(ax?: any): any {
+function isAngular(ax?: any): boolean {
     return ax._id === 'angularaxis';
 }
 
@@ -4609,11 +4609,11 @@ function moveOutsideBreak(v?: any, ax?: any): any {
     return v;
 }
 
-function insideTicklabelposition(ax?: any): any {
+function insideTicklabelposition(ax?: any): boolean {
     return ((ax.ticklabelposition || '').indexOf('inside') !== -1);
 }
 
-function hideCounterAxisInsideTickLabels(ax?: any, opts?: any): any {
+function hideCounterAxisInsideTickLabels(ax?: any, opts?: any): void {
     if(insideTicklabelposition(ax._anchorAxis || {})) {
         if(ax._hideCounterAxisInsideTickLabels) {
             ax._hideCounterAxisInsideTickLabels(opts);
@@ -4621,7 +4621,7 @@ function hideCounterAxisInsideTickLabels(ax?: any, opts?: any): any {
     }
 }
 
-function incrementShift(ax?: any, shiftVal?: any, axShifts?: any, normalize?: any): any {
+function incrementShift(ax?: any, shiftVal?: any, axShifts?: any, normalize?: any): void {
     // Need to set 'overlay' for anchored axis
     var overlay = ((ax.anchor !== 'free') && ((ax.overlaying === undefined) || (ax.overlaying === false))) ? ax._id : ax.overlaying;
     var shiftValAdj;

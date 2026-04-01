@@ -3,13 +3,14 @@ import { dispatch } from 'd3-dispatch';
 import { apply3DTransform, extendDeepAll, log, randstr, strTranslate, warn } from '../lib/index.js';
 import xmlnsNamespaces from '../constants/xmlns_namespaces.js';
 import _alignment from '../constants/alignment.js';
+import type { GraphDiv } from '../../types/core';
 const { LINE_SPACING } = _alignment;
 
 // text converter
 
 var FIND_TEX = /([^$]*)([$]+[^$]*[$]+)([^$]*)/;
 
-export var convertToTspans = function(_context: any, gd: any, _callback?: any): any {
+export var convertToTspans = function(_context: any, gd: GraphDiv, _callback?: any): any {
     var str = _context.text();
 
     // Until we get tex integrated more fully (so it can be used along with non-tex)
@@ -788,7 +789,7 @@ export var lineCount = function lineCount(s: any): number {
     return s.selectAll('tspan.line').size() || 1;
 };
 
-export var positionText = function positionText(s: any, x?: number, y?: number): any {
+export var positionText = function positionText(s: any, x?: number, y?: number): void {
     return s.each(function(this: any) {
         var text = select(this);
 
@@ -904,7 +905,7 @@ export var makeEditable = function(context: any, options: any): any {
         el.focus();
     }
 
-    function appendEditable(): void {
+    function appendEditable(): any {
         var plotDiv = select(gd);
         var container = plotDiv.select('.svg-container');
         var div = container.append('div');

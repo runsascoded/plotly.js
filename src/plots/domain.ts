@@ -74,7 +74,7 @@ export var attributes = function(opts?: any, extra?: any): any {
     return out;
 };
 
-export var defaults = function(containerOut?: any, layout?: any, coerce?: any, dfltDomains?: any): any {
+export var defaults = function(containerOut?: any, layout?: any, coerce?: any, dfltDomains?: any): void {
     var dfltX = (dfltDomains && dfltDomains.x) || [0, 1];
     var dfltY = (dfltDomains && dfltDomains.y) || [0, 1];
 

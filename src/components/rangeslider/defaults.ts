@@ -3,8 +3,9 @@ import Template from '../../plot_api/plot_template.js';
 import axisIds from '../../plots/cartesian/axis_ids.js';
 import attributes from './attributes.js';
 import oppAxisAttrs from './oppaxis_attributes.js';
+import type { FullLayout } from '../../../types/core';
 
-export default function handleDefaults(layoutIn: any, layoutOut: any, axName: any) {
+export default function handleDefaults(layoutIn: any, layoutOut: FullLayout, axName: any) {
     var axIn = layoutIn[axName];
     var axOut = layoutOut[axName];
 

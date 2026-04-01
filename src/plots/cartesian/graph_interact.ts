@@ -8,7 +8,7 @@ const { makeDragBox } = _dragbox;
 import _constants from './constants.js';
 const { DRAGGERSIZE } = _constants;
 
-export var initInteractions = function initInteractions(gd: GraphDiv): any {
+export var initInteractions = function initInteractions(gd: GraphDiv): void {
     var fullLayout = gd._fullLayout;
 
     if(gd._context.staticPlot) {
@@ -144,7 +144,7 @@ export var initInteractions = function initInteractions(gd: GraphDiv): any {
     updateFx(gd);
 };
 
-export var updateFx = function(gd: GraphDiv): any {
+export var updateFx = function(gd: GraphDiv): void {
     var fullLayout = gd._fullLayout;
     var cursor = fullLayout.dragmode === 'pan' ? 'move' : 'crosshair';
     setCursor(fullLayout._draggers, cursor);

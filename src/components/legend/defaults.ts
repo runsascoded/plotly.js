@@ -1,4 +1,4 @@
-import type { FullTrace } from '../../../types/core';
+import type { FullLayout, FullTrace } from '../../../types/core';
 import Registry from '../../registry.js';
 import Lib, { bigFont, coerceFont, extendFlat, noneOrAll, pushUnique } from '../../lib/index.js';
 import Template from '../../plot_api/plot_template.js';
@@ -7,7 +7,7 @@ import attributes from './attributes.js';
 import basePlotLayoutAttributes from '../../plots/layout_attributes.js';
 import helpers from './helpers.js';
 
-function groupDefaults(legendId: string, layoutIn: any, layoutOut: any, fullData: any[]): void {
+function groupDefaults(legendId: string, layoutIn: any, layoutOut: FullLayout, fullData: any[]): any {
     var containerIn = layoutIn[legendId] || {};
     var containerOut = Template.newContainer(layoutOut, legendId);
 
@@ -240,7 +240,7 @@ function groupDefaults(legendId: string, layoutIn: any, layoutOut: any, fullData
     }
 }
 
-export default function legendDefaults(layoutIn: any, layoutOut: any, fullData: any[]): void {
+export default function legendDefaults(layoutIn: any, layoutOut: FullLayout, fullData: any[]): void {
     var i: number;
 
     var allLegendsData = fullData.slice();

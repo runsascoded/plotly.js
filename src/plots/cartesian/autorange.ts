@@ -366,7 +366,7 @@ function concatExtremes(gd?: any, ax?: any, noMatch?: any): any {
     return {min: minArray, max: maxArray};
 }
 
-function doAutoRange(gd?: any, ax?: any, presetRange?: any): any {
+function doAutoRange(gd?: any, ax?: any, presetRange?: any): void {
     ax.setScale();
 
     if(ax.autorange) {
@@ -551,11 +551,11 @@ function findExtremes(ax?: any, data?: any, opts?: any): any {
     };
 }
 
-function collapseMinArray(array?: any, newVal?: any, newPad?: any, opts?: any): any {
+function collapseMinArray(array?: any, newVal?: any, newPad?: any, opts?: any): void {
     collapseArray(array, newVal, newPad, opts, lessOrEqual);
 }
 
-function collapseMaxArray(array?: any, newVal?: any, newPad?: any, opts?: any): any {
+function collapseMaxArray(array?: any, newVal?: any, newPad?: any, opts?: any): void {
     collapseArray(array, newVal, newPad, opts, greaterOrEqual);
 }
 
@@ -596,7 +596,7 @@ function collapseMaxArray(array?: any, newVal?: any, newPad?: any, opts?: any): 
  * - If the item supersedes the new point, set includeThis false
  * - If the new pt supersedes the item, delete it from 'array'
  */
-function collapseArray(array?: any, newVal?: any, newPad?: any, opts?: any, atLeastAsExtreme?: any): any {
+function collapseArray(array?: any, newVal?: any, newPad?: any, opts?: any, atLeastAsExtreme?: any): void {
     var tozero = opts.tozero;
     var extrapad = opts.extrapad;
     var includeThis = true;
@@ -672,7 +672,7 @@ function applyAutorangeMaxOptions(v?: any, ax?: any): any {
     return v;
 }
 
-function hasValidMinAndMax(ax?: any, min?: any, max?: any): any {
+function hasValidMinAndMax(ax?: any, min?: any, max?: any): boolean {
     // in case both min and max are defined, ensure min < max
     if(
         min !== undefined &&

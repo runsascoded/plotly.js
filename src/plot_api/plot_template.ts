@@ -164,7 +164,7 @@ export var arrayTemplater = function(container?: any, name?: any, inclusionAttr?
     };
 };
 
-function validItemName(name?: any): any {
+function validItemName(name?: any): boolean {
     return name && typeof name === 'string';
 }
 

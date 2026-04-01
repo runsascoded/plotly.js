@@ -7,6 +7,7 @@ import { selectMode } from '../../components/dragelement/helpers.js';
 import prepareRegl from '../../lib/prepare_regl.js';
 import subTypes from '../scatter/subtypes.js';
 import linkTraces from '../scatter/link_traces.js';
+import type { GraphDiv } from '../../../types/core';
 import _edit_style from './edit_style.js';
 const { styleTextSelection } = _edit_style;
 
@@ -31,7 +32,7 @@ function getViewport(fullLayout: any, xaxis: any, yaxis: any, plotGlPixelRatio: 
     ];
 }
 
-function plot(gd: any, subplot: any, cdata: any) {
+function plot(gd: GraphDiv, subplot: any, cdata: any) {
     if(!cdata.length) return;
 
     var fullLayout = gd._fullLayout;

@@ -5,7 +5,7 @@ import handleArrayContainerDefaults from '../../plots/array_container_defaults.j
 import handleAnnotationCommonDefaults from './common_defaults.js';
 import attributes from './attributes.js';
 
-export default function supplyLayoutDefaults(layoutIn: any, layoutOut: any) {
+export default function supplyLayoutDefaults(layoutIn: any, layoutOut: FullLayout) {
     handleArrayContainerDefaults(layoutIn, layoutOut, {
         name: 'annotations',
         handleItemDefaults: handleAnnotationDefaults

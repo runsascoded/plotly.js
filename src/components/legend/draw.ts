@@ -75,7 +75,7 @@ function horizontalAlignTitle(titleEl: any, legendObj: any, bw: number): void {
     );
 }
 
-function drawOne(gd: GraphDiv, opts: any): void {
+function drawOne(gd: GraphDiv, opts: any): any {
     var legendObj = opts || {};
 
     var fullLayout = gd._fullLayout;

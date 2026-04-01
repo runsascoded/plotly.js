@@ -102,7 +102,7 @@ export var ref2id = function(ar?: any): any {
     return (/^[xyz]/.test(ar)) ? ar.split(' ')[0] : false;
 };
 
-function isFound(axId?: any, list?: any): any {
+function isFound(axId?: any, list?: any): boolean {
     if(list && list.length) {
         for(var i = 0; i < list.length; i++) {
             if(list[i][axId]) return true;

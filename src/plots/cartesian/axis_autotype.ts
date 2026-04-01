@@ -5,7 +5,7 @@ const { BADNUM } = _numerical;
 
 var round = Math.round;
 
-export default function autoType(array?: any, calendar?: any, opts?: any): any {
+export default function autoType(array?: any, calendar?: any, opts?: any): string {
     var a = array;
 
     var noMultiCategory = opts.noMultiCategory;
@@ -38,7 +38,7 @@ function hasTypeNumber(v?: any, convertNumeric?: any): any {
 
 // is there at least one number in array? If not, we should leave
 // ax.type empty so it can be autoset later
-function linearOK(a?: any, convertNumeric?: any): any {
+function linearOK(a?: any, convertNumeric?: any): boolean {
     var len = a.length;
 
     for(var i = 0; i < len; i++) {
@@ -54,7 +54,7 @@ function linearOK(a?: any, convertNumeric?: any): any {
 // dates as non-dates, to exclude cases with mostly 2 & 4 digit
 // numbers and a few dates
 // as with categories, consider DISTINCT values only.
-function moreDates(a?: any, calendar?: any): any {
+function moreDates(a?: any, calendar?: any): boolean {
     var len = a.length;
 
     var inc = getIncrement(len);
@@ -77,13 +77,13 @@ function moreDates(a?: any, calendar?: any): any {
 }
 
 // return increment to test at most 1000 points, evenly spaced
-function getIncrement(len?: any): any {
+function getIncrement(len?: any): number {
     return Math.max(1, (len - 1) / 1000);
 }
 
 // are the (x,y)-values in gd.data mostly text?
 // require twice as many DISTINCT categories as distinct numbers
-function category(a?: any, convertNumeric?: any): any {
+function category(a?: any, convertNumeric?: any): boolean {
     var len = a.length;
 
     var inc = getIncrement(len);

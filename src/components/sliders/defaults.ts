@@ -2,18 +2,19 @@ import Lib from '../../lib/index.js';
 import handleArrayContainerDefaults from '../../plots/array_container_defaults.js';
 import attributes from './attributes.js';
 import constants from './constants.js';
+import type { FullLayout } from '../../../types/core';
 
 var name = constants.name;
 var stepAttrs = attributes.steps;
 
-export default function slidersDefaults(layoutIn: any, layoutOut: any) {
+export default function slidersDefaults(layoutIn: any, layoutOut: FullLayout) {
     handleArrayContainerDefaults(layoutIn, layoutOut, {
         name: name,
         handleItemDefaults: sliderDefaults
     });
 }
 
-function sliderDefaults(sliderIn: any, sliderOut: any, layoutOut: any) {
+function sliderDefaults(sliderIn: any, sliderOut: any, layoutOut: FullLayout) {
     function coerce(attr: any, dflt?: any) {
         return Lib.coerce(sliderIn, sliderOut, attributes, attr, dflt);
     }

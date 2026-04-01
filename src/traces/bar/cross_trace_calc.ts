@@ -173,7 +173,7 @@ function standardizeCornerradius(calcTraces: any[]): void {
     }
 }
 
-function initBase(sa: FullAxis, calcTraces: any[]): void {
+function initBase(sa: FullAxis, calcTraces: any[]): any {
     var i, j;
 
     for(i = 0; i < calcTraces.length; i++) {

@@ -277,7 +277,7 @@ var code2msgFunc: any = {
     }
 };
 
-function inBase(base?: any): any {
+function inBase(base?: any): string {
     if(isArray(base)) return 'In data trace ' + base[1] + ', ';
 
     return 'In ' + base + ', ';

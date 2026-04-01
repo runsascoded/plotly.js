@@ -84,7 +84,7 @@ function hasTransition(transitionOpts: any): boolean {
     return transitionOpts && transitionOpts.duration > 0;
 }
 
-function plot(gd: GraphDiv, plotinfo: PlotInfo, cdModule: CalcDatum[][], traceLayer: any, opts: any, makeOnCompleteCallback: any): void {
+function plot(gd: GraphDiv, plotinfo: PlotInfo, cdModule: CalcDatum[][], traceLayer: any, opts: any, makeOnCompleteCallback: any): any {
     var xa = plotinfo.xaxis;
     var ya = plotinfo.yaxis;
     var fullLayout = gd._fullLayout;
@@ -524,7 +524,7 @@ function plot(gd: GraphDiv, plotinfo: PlotInfo, cdModule: CalcDatum[][], traceLa
     Registry.getComponentMethod('errorbars', 'plot')(gd, bartraces, plotinfo, opts);
 }
 
-function appendBarText(gd: any, plotinfo: any, bar: any, cd: any[], i: number, x0: number, x1: number, y0: number, y1: number, r: number, overhead: number, opts: any, makeOnCompleteCallback: any): void {
+function appendBarText(gd: GraphDiv, plotinfo: any, bar: any, cd: any[], i: number, x0: number, x1: number, y0: number, y1: number, r: number, overhead: number, opts: any, makeOnCompleteCallback: any): void {
     var xa = plotinfo.xaxis;
     var ya = plotinfo.yaxis;
 
@@ -995,7 +995,7 @@ function getTextPosition(trace: any, index: number): string {
     return helpers.coerceEnumerated(attributeTextPosition, value);
 }
 
-function calcTexttemplate(fullLayout: any, cd: any[], index: number, xa: any, ya: any): string {
+function calcTexttemplate(fullLayout: any, cd: any[], index: number, xa: any, ya: any): any {
     var trace = cd[0].trace;
     var texttemplate = castOption(trace, index, 'texttemplate');
     if (!texttemplate) return '';

@@ -12,7 +12,7 @@ import linkTraces from './link_traces.js';
 import _polygon from '../../lib/polygon.js';
 const { tester: polygonTester } = _polygon;
 
-export default function plot(gd: GraphDiv, plotinfo: PlotInfo, cdscatter: CalcDatum[][], scatterLayer: any, transitionOpts?: any, makeOnCompleteCallback?: any): void {
+export default function plot(gd: GraphDiv, plotinfo: PlotInfo, cdscatter: CalcDatum[][], scatterLayer: any, transitionOpts?: any, makeOnCompleteCallback?: any): any {
     var join, onComplete;
 
     // If transition config is provided, then it is only a partial replot and traces not
@@ -103,7 +103,7 @@ function createFills(gd: GraphDiv, traceJoin: any, plotinfo: PlotInfo): void {
     });
 }
 
-function plotOne(gd: GraphDiv, idx: number, plotinfo: PlotInfo, cdscatter: CalcDatum[], cdscatterAll: CalcDatum[][], element: any, transitionOpts: any): void {
+function plotOne(gd: GraphDiv, idx: number, plotinfo: PlotInfo, cdscatter: CalcDatum[], cdscatterAll: CalcDatum[][], element: any, transitionOpts: any): any {
     var isStatic = gd._context.staticPlot;
     var i;
 

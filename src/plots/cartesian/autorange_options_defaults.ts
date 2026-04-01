@@ -1,4 +1,4 @@
-export default function handleAutorangeOptionsDefaults(coerce?: any, autorange?: any, range?: any): any {
+export default function handleAutorangeOptionsDefaults(coerce?: any, autorange?: any, range?: any): void {
     var minRange, maxRange;
     if(range) {
         var isReversed = (

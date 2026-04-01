@@ -17,7 +17,7 @@ var CST_MARKER_LINE_WIDTH = 2;
 var MAX_LINE_WIDTH = 10;
 var MAX_MARKER_LINE_WIDTH = 5;
 
-export default function style(s: any, gd: GraphDiv, legend?: any): void {
+export default function style(s: any, gd: GraphDiv, legend?: any): any {
     var fullLayout = gd._fullLayout;
     if(!legend) legend = fullLayout.legend;
     var constantItemSizing = legend.itemsizing === 'constant';
@@ -121,7 +121,7 @@ export default function style(s: any, gd: GraphDiv, legend?: any): void {
             .style('stroke', 'none');
     }
 
-    function styleLines(this: any, d: any): void {
+    function styleLines(this: any, d: any): any {
         var styleGuide = getStyleGuide(d);
         var showFill = styleGuide.showFill;
         var showLine = styleGuide.showLine;
@@ -199,7 +199,7 @@ export default function style(s: any, gd: GraphDiv, legend?: any): void {
             .call(showLine ? lineGroupStyle : lineGradient);
     }
 
-    function stylePoints(this: any, d: any): void {
+    function stylePoints(this: any, d: any): any {
         var styleGuide = getStyleGuide(d);
         var anyFill = styleGuide.anyFill;
         var anyLine = styleGuide.anyLine;

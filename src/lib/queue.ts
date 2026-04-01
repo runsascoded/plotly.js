@@ -1,11 +1,12 @@
 import { extendDeep, extendDeepAll } from '../lib/index.js';
 import _plot_config from '../plot_api/plot_config.js';
 const { dfltConfig } = _plot_config;
+import type { GraphDiv } from '../../types/core';
 
 /**
  * Copy arg array *without* removing `undefined` values from objects.
  */
-function copyArgArray(gd: any, args: any[]): any[] {
+function copyArgArray(gd: GraphDiv, args: any[]): any[] {
     var copy: any[] = [];
     var arg: any;
 
@@ -32,7 +33,7 @@ var queue: Record<string, any> = {};
 /**
  * Add an item to the undoQueue for a graphDiv
  */
-queue.add = function(gd: any, undoFunc: Function, undoArgs: any[], redoFunc: Function, redoArgs: any[]): void {
+queue.add = function(gd: GraphDiv, undoFunc: Function, undoArgs: any[], redoFunc: Function, redoArgs: any[]): void {
     var queueObj: any,
         queueIndex: number;
 
@@ -74,7 +75,7 @@ queue.add = function(gd: any, undoFunc: Function, undoArgs: any[], redoFunc: Fun
 /**
  * Begin a sequence of undoQueue changes
  */
-queue.startSequence = function(gd: any): void {
+queue.startSequence = function(gd: GraphDiv): void {
     gd.undoQueue = gd.undoQueue || {index: 0, queue: [], sequence: false};
     gd.undoQueue.sequence = true;
     gd.undoQueue.beginSequence = true;
@@ -85,7 +86,7 @@ queue.startSequence = function(gd: any): void {
  *
  * Call this *after* you're sure your undo chain has ended
  */
-queue.stopSequence = function(gd: any): void {
+queue.stopSequence = function(gd: GraphDiv): void {
     gd.undoQueue = gd.undoQueue || {index: 0, queue: [], sequence: false};
     gd.undoQueue.sequence = false;
     gd.undoQueue.beginSequence = false;
@@ -94,7 +95,7 @@ queue.stopSequence = function(gd: any): void {
 /**
  * Move one step back in the undo queue, and undo the object there.
  */
-queue.undo = function undo(gd: any): void {
+queue.undo = function undo(gd: GraphDiv): void {
     var queueObj: any, i: number;
 
     if(gd.undoQueue === undefined ||
@@ -121,7 +122,7 @@ queue.undo = function undo(gd: any): void {
 /**
  * Redo the current object in the undo, then move forward in the queue.
  */
-queue.redo = function redo(gd: any): void {
+queue.redo = function redo(gd: GraphDiv): void {
     var queueObj: any, i: number;
 
     if(gd.undoQueue === undefined ||
@@ -150,7 +151,7 @@ queue.redo = function redo(gd: any): void {
  *
  * Not meant to be called publically, but included for mocking out in tests.
  */
-queue.plotDo = function(gd: any, func: Function, args: any[]): void {
+queue.plotDo = function(gd: GraphDiv, func: Function, args: any[]): void {
     gd.autoplay = true;
 
     // this *won't* copy gd and it preserves `undefined` properties!

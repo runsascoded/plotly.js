@@ -4,7 +4,7 @@ import isNumeric from 'fast-isnumeric';
 import { setClipUrl } from '../drawing/index.js';
 import subTypes from '../../traces/scatter/subtypes.js';
 
-export default function plot(gd: GraphDiv, traces: any, plotinfo: any, transitionOpts: any): void {
+export default function plot(gd: GraphDiv, traces: any, plotinfo: any, transitionOpts: any): any {
     var isNew: boolean;
 
     var xa = plotinfo.xaxis;

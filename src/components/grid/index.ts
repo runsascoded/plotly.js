@@ -4,6 +4,7 @@ import { attributes as domainAttrs } from '../../plots/domain.js';
 import _constants from '../../plots/cartesian/constants.js';
 const { idRegex: cartesianIdRegex } = _constants;
 import Template from '../../plot_api/plot_template.js';
+import type { FullLayout } from '../../../types/core';
 
 var gridAttrs = {
     rows: {
@@ -156,7 +157,7 @@ function getAxes(layout: any, grid: any, axLetter: any) {
 
 // the shape of the grid - this needs to be done BEFORE supplyDataDefaults
 // so that non-subplot traces can place themselves in the grid
-function sizeDefaults(layoutIn: any, layoutOut: any) {
+function sizeDefaults(layoutIn: any, layoutOut: FullLayout) {
     var gridIn = layoutIn.grid || {};
     var xAxes = getAxes(layoutOut, gridIn, 'x');
     var yAxes = getAxes(layoutOut, gridIn, 'y');
@@ -238,7 +239,7 @@ function fillGridPositions(axLetter: any, coerce: any, dfltGap: any, dfltSide: a
 
 // the (cartesian) contents of the grid - this needs to happen AFTER supplyDataDefaults
 // so that we know what cartesian subplots are available
-function contentDefaults(layoutIn: any, layoutOut: any) {
+function contentDefaults(layoutIn: any, layoutOut: FullLayout) {
     var gridOut = layoutOut.grid;
     // make sure we got to the end of handleGridSizing
     if(!gridOut || !gridOut._domains) return;

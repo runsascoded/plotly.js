@@ -180,7 +180,7 @@ function getPointKey(astr: string): string {
     return pointKeyMap[astr] || astr;
 }
 
-function getPointData(val: any, pointNumber: any): any {
+function getPointData(val: any, pointNumber: any): void {
     if (Array.isArray(pointNumber)) {
         if (isArrayOrTypedArray(val) && isArrayOrTypedArray(val[pointNumber[0]])) {
             return val[pointNumber[0]][pointNumber[1]];

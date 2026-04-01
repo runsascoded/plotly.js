@@ -612,7 +612,7 @@ modeBarButtons.toggleHover = {
     toggle: true,
     icon: Icons.tooltip_basic,
     gravity: 'ne',
-    click: function(gd: any, ev: any) {
+    click: function(gd: GraphDiv, ev: any) {
         var layoutUpdate = getNextHover3d(gd, ev);
         layoutUpdate.hovermode = getNextHover(gd);
 
@@ -624,7 +624,7 @@ modeBarButtons.resetViews = {
     name: 'resetViews',
     title: function(gd: GraphDiv) { return _(gd, 'Reset views'); },
     icon: Icons.home,
-    click: function(gd: any, ev: any) {
+    click: function(gd: GraphDiv, ev: any) {
         var button = ev.currentTarget;
 
         button.setAttribute('data-attr', 'zoom');

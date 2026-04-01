@@ -33,7 +33,7 @@ function findCategories(ax?: any, opts?: any): any {
     return Object.keys(lookup);
 }
 
-export default function handleCategoryOrderDefaults(containerIn?: any, containerOut?: any, coerce?: any, opts?: any): any {
+export default function handleCategoryOrderDefaults(containerIn?: any, containerOut?: any, coerce?: any, opts?: any): void {
     if(containerOut.type !== 'category') return;
 
     var arrayIn = containerIn.categoryarray;

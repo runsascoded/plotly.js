@@ -95,7 +95,7 @@ export default function keyedContainer(baseObj: any, path: string, keyName?: str
 
             return obj;
         },
-        get: function(name: string): any {
+        get: function(name: string): void {
             if(!arr) return;
 
             var idx = indexLookup[name];

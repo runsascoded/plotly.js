@@ -3,7 +3,7 @@ import { isArrayOrTypedArray } from '../../lib/index.js';
 import { isTypedArraySpec } from '../../lib/array.js';
 import { decodeTypedArraySpec } from '../../lib/array.js';
 
-export default function handleTickValueDefaults(containerIn?: any, containerOut?: any, coerce?: any, axType?: any, opts?: any): any {
+export default function handleTickValueDefaults(containerIn?: any, containerOut?: any, coerce?: any, axType?: any, opts?: any): void {
     if(!opts) opts = {};
     var isMinor = opts.isMinor;
     var cIn = isMinor ? containerIn.minor || {} : containerIn;

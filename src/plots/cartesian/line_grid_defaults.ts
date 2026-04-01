@@ -3,7 +3,7 @@ var colorMix = tinycolor.mix;
 import colorAttrs from '../../components/color/attributes.js';
 import Lib from '../../lib/index.js';
 
-export default function handleLineGridDefaults(containerIn?: any, containerOut?: any, coerce?: any, opts?: any): any {
+export default function handleLineGridDefaults(containerIn?: any, containerOut?: any, coerce?: any, opts?: any): void {
     opts = opts || {};
 
     var dfltColor = opts.dfltColor;

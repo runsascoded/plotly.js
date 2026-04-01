@@ -138,7 +138,7 @@ color.clean = function(container: any): void {
     }
 };
 
-function cleanOne(val: any): any {
+function cleanOne(val: any): string {
     if(isNumeric(val) || typeof val !== 'string') return val;
 
     var valTrim = val.trim();

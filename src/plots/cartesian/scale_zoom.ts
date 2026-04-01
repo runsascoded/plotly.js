@@ -1,7 +1,7 @@
 import _alignment from '../../constants/alignment.js';
 const { FROM_BL } = _alignment;
 
-export default function scaleZoom(ax?: any, factor?: any, centerFraction?: any): any {
+export default function scaleZoom(ax?: any, factor?: any, centerFraction?: any): void {
     if(centerFraction === undefined) {
         centerFraction = FROM_BL[ax.constraintoward || 'center'];
     }

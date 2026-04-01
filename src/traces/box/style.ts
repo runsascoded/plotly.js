@@ -3,7 +3,7 @@ import { select } from 'd3-selection';
 import Color from '../../components/color/index.js';
 import { pointStyle, selectedPointStyle } from '../../components/drawing/index.js';
 
-function style(gd: GraphDiv, cd?: any[], sel?: any): void {
+function style(gd: GraphDiv, cd?: any[], sel?: any): any {
     var s = sel ? sel : select(gd).selectAll('g.trace.boxes');
 
     s.style('opacity', function(d) { return d[0].trace.opacity; });

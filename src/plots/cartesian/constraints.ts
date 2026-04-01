@@ -9,7 +9,7 @@ const { ALMOST_EQUAL } = _numerical;
 import _alignment from '../../constants/alignment.js';
 const { FROM_BL } = _alignment;
 
-export var handleDefaults = function(layoutIn?: any, layoutOut?: any, opts?: any): any {
+export var handleDefaults = function(layoutIn?: any, layoutOut?: any, opts?: any): void {
     var axIds = opts.axIds;
     var axHasImage = opts.axHasImage;
 
@@ -175,7 +175,7 @@ export var handleDefaults = function(layoutIn?: any, layoutOut?: any, opts?: any
     }
 };
 
-function handleOneAxDefaults(axIn?: any, axOut?: any, opts?: any): any {
+function handleOneAxDefaults(axIn?: any, axOut?: any, opts?: any): void {
     var axIds = opts.axIds;
     var layoutOut: any = opts.layoutOut;
     var hasImage = opts.hasImage;
@@ -332,7 +332,7 @@ function getConstraintGroup(groups?: any, thisID?: any): any {
  * thatID: the id of the axis to scale it with
  * scaleratio: the ratio of this axis to the thatID axis
  */
-function updateConstraintGroups(constraintGroups?: any, thisID?: any, thatID?: any, scaleratio?: any): any {
+function updateConstraintGroups(constraintGroups?: any, thisID?: any, thatID?: any, scaleratio?: any): void {
     var i, j, groupi, keyj, thisGroupIndex;
 
     var thisGroup = getConstraintGroup(constraintGroups, thisID);
@@ -438,7 +438,7 @@ function finalRatios(group?: any, fullLayout?: any): any {
     return out;
 }
 
-export var enforce = function enforce(gd?: any): any {
+export var enforce = function enforce(gd?: any): void {
     var fullLayout = gd._fullLayout;
     var constraintGroups = fullLayout._axisConstraintGroups || [];
 
@@ -611,7 +611,7 @@ export var getAxisGroup = function getAxisGroup(fullLayout?: any, axId?: any): a
     return axId;
 };
 
-export var clean = function clean(gd?: any, ax?: any): any {
+export var clean = function clean(gd?: any, ax?: any): void {
     if(ax._inputDomain) {
         var isConstrained = false;
         var axId = ax._id;
@@ -629,7 +629,7 @@ export var clean = function clean(gd?: any, ax?: any): any {
     }
 };
 
-function updateDomain(ax?: any, factor?: any): any {
+function updateDomain(ax?: any, factor?: any): void {
     var inputDomain = ax._inputDomain;
     var centerFraction = FROM_BL[ax.constraintoward];
     var center = inputDomain[0] + (inputDomain[1] - inputDomain[0]) * centerFraction;

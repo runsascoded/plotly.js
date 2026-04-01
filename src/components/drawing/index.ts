@@ -376,7 +376,7 @@ var gradientInfo: Record<string, any> = {
     verticalreversed: { type: 'linear', start: { x: 0, y: 1 }, stop: { x: 0, y: 0 }, reversed: true }
 };
 
-export function gradient(sel: any, gd: GraphDiv, gradientID: string, type: string, colorscale: any[], prop: string): void {
+export function gradient(sel: any, gd: GraphDiv, gradientID: string, type: string, colorscale: any[], prop: string): any {
     var info = gradientInfo[type];
     return gradientWithBounds(
         sel,
@@ -1157,7 +1157,7 @@ function extracTextFontSize(d: any, trace: FullTrace): number {
     return isNumeric(fontSize) && fontSize > 0 ? fontSize : 0;
 }
 
-export function textPointStyle(s: any, trace: FullTrace, gd: GraphDiv): void {
+export function textPointStyle(s: any, trace: FullTrace, gd: GraphDiv): any {
     if (!s.size()) return;
 
     var selectedTextColorFn: any;
