@@ -7,7 +7,7 @@ export default function plot(gd: GraphDiv,  plotinfo: PlotInfo,  cdOHLC,  ohlcLa
     const xa = plotinfo.xaxis;
     const posHasRangeBreaks = !!xa.rangebreaks;
 
-    Lib.makeTraceGroups(ohlcLayer, cdOHLC, 'trace ohlc').each(function(cd) {
+    Lib.makeTraceGroups(ohlcLayer, cdOHLC, 'trace ohlc').each(function(this: any, cd) {
         const plotGroup = select(this);
         const cd0 = cd[0];
         const t = cd0.t;

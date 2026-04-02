@@ -12,7 +12,7 @@ import type { GraphDiv } from '../../../types/core';
 function plot(gd: GraphDiv, geo, calcData) {
     const choroplethLayer = geo.layers.backplot.select('.choroplethlayer');
 
-    Lib.makeTraceGroups(choroplethLayer, calcData, 'trace choropleth').each(function(calcTrace) {
+    Lib.makeTraceGroups(choroplethLayer, calcData, 'trace choropleth').each(function(this: any, calcTrace) {
         const sel = select(this);
 
         const paths = sel.selectAll('path.choroplethlocation')

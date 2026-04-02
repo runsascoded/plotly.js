@@ -2343,7 +2343,7 @@ axes.makeClipPaths = function(gd?: any) {
 
     axClips.exit().remove();
 
-    axClips.each(function(d) {
+    axClips.each(function(this: any, d) {
         select(this).select('rect').attr({
             x: d.x._offset || 0,
             y: d.y._offset || 0,
@@ -2980,7 +2980,7 @@ function calcLabelLevelBbox(ax?: any, cls?: any, mainLinePositionShift?: any): a
         bottom = -Infinity;
         left = Infinity;
         right = -Infinity;
-        ax._selections[cls].each(function() {
+        ax._selections[cls].each(function(this: any) {
             const thisLabel = selectTickLabel(this);
             // Use parent node <g.(x|y)tick>, to make bBox
             // retrieve a bbox computed with transform info
@@ -3399,7 +3399,7 @@ axes.drawTicks = function(gd?: any, ax?: any, opts?: any) {
         .classed(cls, 1)
         .classed('ticks', 1)
         .classed('crisp', opts.crisp !== false)
-        .each(function(d) {
+        .each(function(this: any, d) {
             return Color.stroke(select(this), d.minor ? ax.minor.tickcolor : ax.tickcolor);
         })
         .style('stroke-width', function(d) {
@@ -3492,7 +3492,7 @@ axes.drawGrid = function(gd?: any, ax?: any, opts?: any) {
 
         grid.attr('transform', opts.transFn)
             .attr('d', opts.path)
-            .each(function(d) {
+            .each(function(this: any, d) {
                 return Color.stroke(select(this), d.minor ?
                     ax.minor.gridcolor :
                     (ax.gridcolor || '#ddd')
@@ -3615,7 +3615,7 @@ axes.drawLabels = function(gd?: any, ax?: any, opts?: any) {
             // only so tex has predictable alignment that we can
             // alter later
             .attr('text-anchor', 'middle')
-            .each(function(d) {
+            .each(function(this: any, d) {
                 const thisLabel = select(this);
                 const newPromise = gd._promises.length;
 
@@ -3654,14 +3654,14 @@ axes.drawLabels = function(gd?: any, ax?: any, opts?: any) {
     tickLabels.exit().remove();
 
     if(opts.repositionOnUpdate) {
-        tickLabels.each(function(d) {
+        tickLabels.each(function(this: any, d) {
             select(this).select('text')
                 .call(svgTextUtils.positionText, labelFns.xFn(d), labelFns.yFn(d));
         });
     }
 
     function positionLabels(s?: any, angle?: any) {
-        s.each(function(d) {
+        s.each(function(this: any, d) {
             const thisLabel = select(this);
             const mathjaxGroup = thisLabel.select('.text-math-group');
             const anchor = labelFns.anchorFn(d, angle);
@@ -3729,7 +3729,7 @@ axes.drawLabels = function(gd?: any, ax?: any, opts?: any) {
         let visibleLabelMin = Infinity;
         let visibleLabelMax = -Infinity;
 
-        tickLabels.each(function(d) {
+        tickLabels.each(function(this: any, d) {
             const thisLabel = select(this);
             const mathjaxGroup = thisLabel.select('.text-math-group');
 
@@ -3810,11 +3810,11 @@ axes.drawLabels = function(gd?: any, ax?: any, opts?: any) {
                     else if(e.K === GRID_PATH.K) sel = mainPlotinfo.gridlayer.selectAll('.' + ax._id);
                     else sel = mainPlotinfo[ax._id.charAt(0) + 'axislayer'];
 
-                    sel.each(function() {
+                    sel.each(function(this: any) {
                         let w = select(this);
                         if(e.L) w = w.selectAll(e.L);
 
-                        w.each(function(d) {
+                        w.each(function(this: any, d) {
                             const q = ax.l2p(
                                 isPeriodLabel ? getPosX(d) : d.x
                             ) + ax._offset;
@@ -3863,7 +3863,7 @@ axes.drawLabels = function(gd?: any, ax?: any, opts?: any) {
             const lbbArray = [];
             let i;
             let maxLines = 1;
-            tickLabels.each(function(d) {
+            tickLabels.each(function(this: any, d) {
                 maxFontSize = Math.max(maxFontSize, d.fontSize);
 
                 const x = ax.l2p(d.x);
@@ -3989,7 +3989,7 @@ axes.drawLabels = function(gd?: any, ax?: any, opts?: any) {
     const computeTickLabelBoundingBoxes = function() {
         let labelsMaxW = 0;
         let labelsMaxH = 0;
-        tickLabels.each(function(d, i) {
+        tickLabels.each(function(this: any, d, i) {
             const thisLabel = selectTickLabel(this);
             const mathjaxGroup = thisLabel.select('.text-math-group');
 

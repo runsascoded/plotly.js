@@ -9,7 +9,7 @@ import zip3 from '../../plots/gl3d/zip3.js';
 import { gl_cone3d as _req0 } from '../../../stackgl_modules/esm.js';
 const createConeMesh = _req0.createConeMesh;
 
-function Cone(scene, uid) {
+function Cone(this: any, scene, uid) {
     this.scene = scene;
     this.uid = uid;
     this.mesh = null;

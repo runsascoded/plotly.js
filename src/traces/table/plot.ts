@@ -91,7 +91,7 @@ export default function plot(gd: GraphDiv, wrappedTraceHolders: any[]) {
         .attr('width', function(d) {return d.width;})
         .attr('height', function(d) {return d.height;});
 
-    tableControlView.each(function(d) {
+    tableControlView.each(function(this: any, d) {
         setClipUrl(select(this), scrollAreaBottomClipKey(gd, d), gd);
     });
 
@@ -108,7 +108,7 @@ export default function plot(gd: GraphDiv, wrappedTraceHolders: any[]) {
 
     if(dynamic) {
         yColumn.call(d3Drag()
-            .origin(function(d) {
+            .origin(function(this: any, d) {
                 const movedColumn = select(this);
                 easeColumn(movedColumn, d, -c.uplift);
                 raiseToTop(this);
@@ -149,7 +149,7 @@ export default function plot(gd: GraphDiv, wrappedTraceHolders: any[]) {
         );
     }
 
-    yColumn.each(function(d) {
+    yColumn.each(function(this: any, d) {
         setClipUrl(select(this), columnBoundaryClipKey(gd, d), gd);
     });
 
@@ -505,7 +505,7 @@ function supplyStylingValues(columnCell) {
 
 function setFont(cellText) {
     cellText
-        .each(function(d) {
+        .each(function(this: any, d) {
             drawingFont(select(this), d.font);
         });
 }
@@ -514,7 +514,7 @@ function sizeAndStyleRect(cellRect) {
     cellRect
         .attr('width', function(d) {return d.column.columnWidth;})
         .attr('stroke-width', function(d) {return d.cellBorderWidth;})
-        .each(function(d) {
+        .each(function(this: any, d) {
             const atomicSelection = select(this);
             Color.stroke(atomicSelection, gridPick(d.calcdata.cells.line.color, d.column.specIndex, d.rowNumber));
             Color.fill(atomicSelection, gridPick(d.calcdata.cells.fill.color, d.column.specIndex, d.rowNumber));
@@ -565,7 +565,7 @@ function populateCellText(cellText, tableControlView, allColumnBlock, gd) {
         .attr('dy', function(d) {
             return d.needsConvertToTspans ? 0 : '0.75em';
         })
-        .each(function(d) {
+        .each(function(this: any, d) {
             const element = this;
             const selection = select(element);
 
@@ -760,7 +760,7 @@ function wrapTextMaker(columnBlock, element, tableControlView, gd) {
         cellTextHolder
             .each(function(d) {
                 const fragments = d.fragments;
-                cellTextHolder.selectAll('tspan.line').each(function(dd, i) {
+                cellTextHolder.selectAll('tspan.line').each(function(this: any, dd, i) {
                     fragments[i].width = this.getComputedTextLength();
                 });
                 // last element is only for measuring the separator character, so it's ignored:
@@ -828,7 +828,7 @@ function updateYPositionMaker(columnBlock, element, tableControlView, gd, d) {
         }
 
         cellTextHolder
-            .attr('transform', function() {
+            .attr('transform', function(this: any) {
                 // this code block is only invoked for items where d.cellHeightMayIncrease is truthy
                 const element = this;
                 const columnCellElement = element.parentNode;

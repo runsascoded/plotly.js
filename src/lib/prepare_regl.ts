@@ -32,7 +32,7 @@ export default function prepareRegl(gd: GraphDiv, extensions?: string[], reglPre
         if(!d.regl) success = false;
 
         if(success) {
-            this.addEventListener('webglcontextlost', function(event: WebGLContextEvent) {
+            this.addEventListener('webglcontextlost', function(event: Event) {
                 if(gd && gd.emit) {
                     gd.emit('plotly_webglcontextlost', {
                         event: event,

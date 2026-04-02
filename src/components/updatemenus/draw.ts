@@ -55,7 +55,7 @@ export default function draw(gd: GraphDiv) {
         .classed(constants.containerClassName, true)
         .style('cursor', 'pointer');
 
-    menus.exit().each(function() {
+    menus.exit().each(function(this: any) {
         // Most components don't need to explicitly remove autoMargin, because
         // marginPushers does this - but updatemenu updates don't go through
         // a full replot so we need to explicitly remove it.
@@ -103,7 +103,7 @@ export default function draw(gd: GraphDiv) {
     }).remove();
 
     // draw headers!
-    headerGroups.each(function(menuOpts: any) {
+    headerGroups.each(function(this: any, menuOpts: any) {
         const gHeader = select(this);
 
         const _gButton = menuOpts.type === 'dropdown' ? gButton : null;
@@ -283,7 +283,7 @@ function drawButtons(gd: GraphDiv, gHeader: any, gButton: any, scrollBox: any, m
         t: posOpts.y + menuOpts.borderwidth
     };
 
-    buttons.each(function(buttonOpts: any, buttonIndex: any) {
+    buttons.each(function(this: any, buttonOpts: any, buttonIndex: any) {
         const button = select(this);
 
         button
@@ -440,7 +440,7 @@ function drawItemText(item: any, menuOpts: any, itemOpts: any, gd: GraphDiv) {
 function styleButtons(buttons: any, menuOpts: any) {
     const active = menuOpts.active;
 
-    buttons.each(function(buttonOpts: any, i: any) {
+    buttons.each(function(this: any, buttonOpts: any, i: any) {
         const button = select(this);
 
         if(i === active && menuOpts.showactive) {
@@ -484,7 +484,7 @@ function findDimensions(gd: GraphDiv, menuOpts: any) {
     const isVertical = ['up', 'down'].indexOf(menuOpts.direction) !== -1;
 
     // loop over fake buttons to find width / height
-    fakeButtons.each(function(buttonOpts: any, i: any) {
+    fakeButtons.each(function(this: any, buttonOpts: any, i: any) {
         const button = select(this);
 
         button.call(drawItem, menuOpts, buttonOpts, gd);

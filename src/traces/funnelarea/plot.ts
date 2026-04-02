@@ -31,21 +31,21 @@ export default function plot(gd: GraphDiv,  cdModule) {
     prerenderTitles(cdModule, gd);
     layoutAreas(cdModule, fullLayout._size);
 
-    Lib.makeTraceGroups(fullLayout._funnelarealayer, cdModule, 'trace').each(function(cd) {
+    Lib.makeTraceGroups(fullLayout._funnelarealayer, cdModule, 'trace').each(function(this: any, cd) {
         const plotGroup = select(this);
         const cd0 = cd[0];
         const trace = cd0.trace;
 
         setCoords(cd);
 
-        plotGroup.each(function() {
+        plotGroup.each(function(this: any) {
             const slices = select(this).selectAll('g.slice').data(cd);
 
             slices.enter().append('g')
                 .classed('slice', true);
             slices.exit().remove();
 
-            slices.each(function(pt, i) {
+            slices.each(function(this: any, pt, i) {
                 if(pt.hidden) {
                     select(this).selectAll('path,g').remove();
                     return;
@@ -85,8 +85,8 @@ export default function plot(gd: GraphDiv,  cdModule) {
                     .classed('slicetext', true);
                 sliceTextGroup.exit().remove();
 
-                sliceTextGroup.each(function() {
-                    const sliceText = Lib.ensureSingle(select(this), 'text', '', function(s) {
+                sliceTextGroup.each(function(this: any) {
+                    const sliceText = Lib.ensureSingle(select(this), 'text', '', function(this: any, s) {
                         // prohibit tex interpretation until we can handle
                         // tex and regular text together
                         s.attr('data-notex', 1);
@@ -137,8 +137,8 @@ export default function plot(gd: GraphDiv,  cdModule) {
                 .classed('titletext', true);
             titleTextGroup.exit().remove();
 
-            titleTextGroup.each(function() {
-                const titleText = Lib.ensureSingle(select(this), 'text', '', function(s) {
+            titleTextGroup.each(function(this: any) {
+                const titleText = Lib.ensureSingle(select(this), 'text', '', function(this: any, s) {
                     // prohibit tex interpretation as above
                     s.attr('data-notex', 1);
                 });

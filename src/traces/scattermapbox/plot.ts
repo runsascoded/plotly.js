@@ -8,7 +8,7 @@ const ORDER = {
     nonCluster: ['fill', 'line', 'circle', 'symbol'],
 };
 
-function ScatterMapbox(subplot: PlotInfo, uid, clusterEnabled, isHidden) {
+function ScatterMapbox(this: any, subplot: PlotInfo, uid, clusterEnabled, isHidden) {
     this.type = 'scattermapbox';
     this.subplot = subplot;
     this.uid = uid;

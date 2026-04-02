@@ -27,7 +27,7 @@ function plot(gd: GraphDiv, geo, calcData) {
     // TODO find a way to order the inner nodes on update
     gTraces.selectAll('*').remove();
 
-    gTraces.each(function(calcTrace) {
+    gTraces.each(function(this: any, calcTrace) {
         const s = select(this);
         const trace = calcTrace[0].trace;
 
@@ -50,7 +50,7 @@ function plot(gd: GraphDiv, geo, calcData) {
                 .data(Lib.identity)
              .enter().append('path')
                 .classed('point', true)
-                .each(function(calcPt) { removeBADNUM(calcPt, this); });
+                .each(function(this: any, calcPt) { removeBADNUM(calcPt, this); });
         }
 
         if(subTypes.hasText(trace)) {
@@ -58,7 +58,7 @@ function plot(gd: GraphDiv, geo, calcData) {
                 .data(Lib.identity)
               .enter().append('g')
                 .append('text')
-                .each(function(calcPt) { removeBADNUM(calcPt, this); });
+                .each(function(this: any, calcPt) { removeBADNUM(calcPt, this); });
         }
 
         // call style here within topojson request callback

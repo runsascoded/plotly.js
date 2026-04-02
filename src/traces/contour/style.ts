@@ -11,7 +11,7 @@ export default function style(gd: GraphDiv) {
         return d[0].trace.opacity;
     });
 
-    contours.each(function(d) {
+    contours.each(function(this: any, d) {
         const c = select(this);
         const trace = d[0].trace;
         const contours = trace.contours;
@@ -26,7 +26,7 @@ export default function style(gd: GraphDiv) {
 
         const colorMap = (colorLines || colorFills) ? makeColorMap(trace) : null;
 
-        c.selectAll('g.contourlevel').each(function(d) {
+        c.selectAll('g.contourlevel').each(function(this: any, d) {
             select(this).selectAll('path')
                 .call(lineGroupStyle,
                     line.width,
@@ -35,7 +35,7 @@ export default function style(gd: GraphDiv) {
         });
 
         const labelFont = contours.labelfont;
-        c.selectAll('g.contourlabels text').each(function(d) {
+        c.selectAll('g.contourlabels text').each(function(this: any, d) {
             font(select(this), {
                 weight: labelFont.weight,
                 style: labelFont.style,

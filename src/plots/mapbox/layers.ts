@@ -3,7 +3,7 @@ import { sanitizeHTML } from '../../lib/svg_text_utils.js';
 import convertTextOpts from './convert_text_opts.js';
 import constants from './constants.js';
 
-function MapboxLayer(subplot, index) {
+function MapboxLayer(this: any, subplot, index) {
     this.subplot = subplot;
 
     this.uid = subplot.uid + '-' + index;

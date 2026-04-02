@@ -258,7 +258,7 @@ function plotOne(gd: GraphDiv, plotinfo: PlotInfo, cdSubplot?: any, transitionOp
 
     layers.order();
 
-    layers.each(function(d) {
+    layers.each(function(this: any, d) {
         const sel = select(this);
         const className = d.className;
 
@@ -419,7 +419,7 @@ export const drawFramework = function(gd: GraphDiv): any {
     subplotLayers.exit()
         .call(purgeSubplotLayers, fullLayout);
 
-    subplotLayers.each(function(d) {
+    subplotLayers.each(function(this: any, d) {
         const id = d[0];
         const posZ = id.indexOf(zindexSeparator);
         const hasZ = posZ !== -1;
@@ -686,7 +686,7 @@ function purgeSubplotLayers(layers?: any, fullLayout?: any): void {
 
     const overlayIdsToRemove: any = {};
 
-    layers.each(function(d) {
+    layers.each(function(this: any, d) {
         const id = d[0];
         const plotgroup = select(this);
 
@@ -725,7 +725,7 @@ export const toSVG = function(gd?: any): any {
     const canvases = root.filter(function(d, i) {return i === root.size() - 1;})
         .selectAll('.gl-canvas-context, .gl-canvas-focus');
 
-    function canvasToImage() {
+    function canvasToImage(this: any) {
         const canvas = this;
         const imageData = canvas.toDataURL('image/png');
         const image = imageRoot.append('svg:image');

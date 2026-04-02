@@ -10,10 +10,10 @@ export default function style(gd: GraphDiv,  cd,  sel) {
         return d[0].trace.opacity;
     });
 
-    s.each(function(d) {
+    s.each(function(this: any, d) {
         const trace = d[0].trace;
 
-        select(this).selectAll('path').each(function(di) {
+        select(this).selectAll('path').each(function(this: any, di) {
             if(di.empty) return;
 
             const dirLine = trace[di.dir].line;

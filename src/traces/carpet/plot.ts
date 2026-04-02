@@ -17,7 +17,7 @@ export default function plot(gd: GraphDiv, plotinfo, cdcarpet, carpetLayer) {
     const fullLayout = gd._fullLayout;
     const clipLayer = fullLayout._clips;
 
-    Lib.makeTraceGroups(carpetLayer, cdcarpet, 'trace').each(function(cd) {
+    Lib.makeTraceGroups(carpetLayer, cdcarpet, 'trace').each(function(this: any, cd) {
         const axisLayer = select(this);
         const cd0 = cd[0];
         const trace = cd0.trace;
@@ -87,7 +87,7 @@ function drawGridLines(xaxis: any, yaxis: any, layer: any, axis: any, axisLetter
         .classed(lineClass, true)
         .style('vector-effect', isStatic ? 'none' : 'non-scaling-stroke');
 
-    gridJoin.each(function(d) {
+    gridJoin.each(function(this: any, d) {
         const gridline = d;
         const x = gridline.x;
         const y = gridline.y;
@@ -118,7 +118,7 @@ function drawAxisLabels(gd, xaxis, yaxis, trace, t, layer, labels, labelClass) {
     let maxExtent = 0;
     let labelOrientation: any = {};
 
-    labelJoin.each(function(label, i) {
+    labelJoin.each(function(this: any, label, i) {
         // Most of the positioning is done in calc_labels. Only the parts that depend upon
         // the screen space representation of the x and y axes are here:
         let orientation;
@@ -204,7 +204,7 @@ function drawAxisTitle(gd, layer, trace, t, xy, dxy, axis, xa, ya, labelOrientat
         .classed(labelClass, true);
 
     // There's only one, but we'll do it as a join so it's updated nicely:
-    titleJoin.each(function() {
+    titleJoin.each(function(this: any) {
         const orientation = orientText(trace, xa, ya, xy, dxy);
 
         if(['start', 'both'].indexOf(axis.showticklabels) === -1) {

@@ -10,13 +10,13 @@ function style(gd: GraphDiv): void {
         return d[0].trace.opacity;
     });
 
-    s.selectAll('g.points').each(function(d) {
+    s.selectAll('g.points').each(function(this: any, d) {
         const sel = select(this);
         const trace = d.trace || d[0].trace;
         stylePoints(sel, trace, gd);
     });
 
-    s.selectAll('g.text').each(function(d) {
+    s.selectAll('g.text').each(function(this: any, d) {
         const sel = select(this);
         const trace = d.trace || d[0].trace;
         styleText(sel, trace, gd);

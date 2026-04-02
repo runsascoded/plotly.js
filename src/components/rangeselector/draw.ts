@@ -31,7 +31,7 @@ export default function draw(gd: GraphDiv) {
         'pointer-events': 'all'
     });
 
-    selectors.each(function(d: any) {
+    selectors.each(function(this: any, d: any) {
         const selector = select(this);
         const axisLayout = d;
         const selectorLayout = axisLayout.rangeselector;
@@ -44,7 +44,7 @@ export default function draw(gd: GraphDiv) {
 
         buttons.exit().remove();
 
-        buttons.each(function(d: any) {
+        buttons.each(function(this: any, d: any) {
             const button = select(this);
             const update = getUpdateObject(axisLayout, d);
 
@@ -159,7 +159,7 @@ function reposition(gd: GraphDiv, buttons: any, opts: any, axName: any, selector
 
     const borderWidth = opts.borderwidth;
 
-    buttons.each(function() {
+    buttons.each(function(this: any) {
         const button = select(this);
         const text = button.select('.selector-text');
 
@@ -169,7 +169,7 @@ function reposition(gd: GraphDiv, buttons: any, opts: any, axName: any, selector
         height = Math.max(height, hEff);
     });
 
-    buttons.each(function() {
+    buttons.each(function(this: any) {
         const button = select(this);
         const rect = button.select('.selector-rect');
         const text = button.select('.selector-text');

@@ -61,7 +61,7 @@ export default function(gd: GraphDiv) {
         .attr('pointer-events', 'all');
 
     // for all present range sliders
-    rangeSliders.each(function(axisOpts: any) {
+    rangeSliders.each(function(this: any, axisOpts: any) {
         const rangeSlider = select(this);
         const opts = axisOpts[constants.name];
         const oppAxisOpts = fullLayout[axisIDs.id2name(axisOpts.anchor)];
@@ -235,7 +235,7 @@ function setupDragElement(rangeSlider: any, gd: GraphDiv, axisOpts: any, opts: a
     const grabAreaMin = rangeSlider.select('rect.' + constants.grabAreaMinClassName).node();
     const grabAreaMax = rangeSlider.select('rect.' + constants.grabAreaMaxClassName).node();
 
-    function mouseDownHandler(event: any) {
+    function mouseDownHandler(this: any, event: any) {
         const target = event.target;
         const startX = eventX(event);
         const offsetX = startX - rangeSlider.node().getBoundingClientRect().left;
@@ -302,7 +302,7 @@ function setupDragElement(rangeSlider: any, gd: GraphDiv, axisOpts: any, opts: a
             setDataRange(rangeSlider, gd, axisOpts, opts);
         }
 
-        function mouseUp() {
+        function mouseUp(this: any) {
             dragCover.removeEventListener('mousemove', mouseMove);
             dragCover.removeEventListener('mouseup', mouseUp);
             this.removeEventListener('touchmove', mouseMove);
@@ -446,7 +446,7 @@ function drawRangePlot(rangeSlider: any, gd: GraphDiv, axisOpts: any, opts: any)
 
     let mainplotinfo;
 
-    rangePlots.each(function(id: any, i: any) {
+    rangePlots.each(function(this: any, id: any, i: any) {
         const plotgroup = select(this);
         const isMainPlot = (i === 0);
 

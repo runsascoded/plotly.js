@@ -15,11 +15,11 @@ function style(gd: GraphDiv,  cd,  sel) {
 
     s.style('opacity', function(d) { return d[0].trace.opacity; });
 
-    s.each(function(d) {
+    s.each(function(this: any, d) {
         const gTrace = select(this);
         const trace = d[0].trace;
 
-        gTrace.selectAll('.point > path').each(function(di) {
+        gTrace.selectAll('.point > path').each(function(this: any, di) {
             if(!di.isBlank) {
                 const cont = trace[di.dir].marker;
 
@@ -33,7 +33,7 @@ function style(gd: GraphDiv,  cd,  sel) {
 
         styleTextPoints(gTrace, trace, gd);
 
-        gTrace.selectAll('.lines').each(function() {
+        gTrace.selectAll('.lines').each(function(this: any) {
             const cont = trace.connector.line;
 
             lineGroupStyle(

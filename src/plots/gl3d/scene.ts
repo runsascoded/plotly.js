@@ -23,7 +23,7 @@ let STATIC_CANVAS, STATIC_CONTEXT;
 
 let tabletmode = false;
 
-function Scene(options: any, fullLayout: FullLayout) {
+function Scene(this: any, options: any, fullLayout: FullLayout) {
     // create sub container for plot
     const sceneContainer = document.createElement('div');
     const plotContainer = options.container;

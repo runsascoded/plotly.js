@@ -12,7 +12,7 @@ const { extractOpts } = _index2;
 import { ndarray_linear_interpolate as _req0 } from '../../../stackgl_modules/esm.js';
 const ndarrayInterp2d = _req0.d2;
 
-function SurfaceTrace(scene, surface, uid) {
+function SurfaceTrace(this: any, scene, surface, uid) {
     this.scene = scene;
     this.uid = uid;
     this.surface = surface;

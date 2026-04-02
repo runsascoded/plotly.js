@@ -61,7 +61,7 @@ export default function draw(gd: GraphDiv) {
     };
 
     // Images must be converted to dataURL's for exporting.
-    function setImage(d: any) {
+    function setImage(this: any, d: any) {
         const thisImage = select(this);
 
         if(this._imgSrc === d.source) {
@@ -74,7 +74,7 @@ export default function draw(gd: GraphDiv) {
             thisImage.attr('xlink:href', d.source);
             this._imgSrc = d.source;
         } else {
-            const imagePromise: Promise<void> = new Promise(function(resolve: any) {
+            const imagePromise: Promise<void> = new Promise(function(this: any, resolve: any) {
                 const img = new Image();
                 this.img = img;
 
@@ -104,7 +104,7 @@ export default function draw(gd: GraphDiv) {
                 img.src = d.source;
                 this._imgSrc = d.source;
 
-                function errorHandler() {
+                function errorHandler(this: any) {
                     thisImage.remove();
                     resolve();
                 }
@@ -114,7 +114,7 @@ export default function draw(gd: GraphDiv) {
         }
     }
 
-    function applyAttributes(d: any) {
+    function applyAttributes(this: any, d: any) {
         const thisImage = select(this);
 
         // Axes if specified
@@ -216,11 +216,11 @@ export default function draw(gd: GraphDiv) {
     imagesBelow.exit().remove();
     imagesAbove.exit().remove();
 
-    imagesBelow.each(function(d: any) {
+    imagesBelow.each(function(this: any, d: any) {
         setImage.bind(this)(d);
         applyAttributes.bind(this)(d);
     });
-    imagesAbove.each(function(d: any) {
+    imagesAbove.each(function(this: any, d: any) {
         setImage.bind(this)(d);
         applyAttributes.bind(this)(d);
     });
@@ -243,7 +243,7 @@ export default function draw(gd: GraphDiv) {
         imagesOnSubplot.enter().append('image');
         imagesOnSubplot.exit().remove();
 
-        imagesOnSubplot.each(function(d: any) {
+        imagesOnSubplot.each(function(this: any, d: any) {
             setImage.bind(this)(d);
             applyAttributes.bind(this)(d);
         });

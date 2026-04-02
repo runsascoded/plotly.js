@@ -14,7 +14,7 @@ import Axes from '../../plots/cartesian/axes.js';
 import { appendArrayPointValue } from '../../components/fx/helpers.js';
 import calculateError from './calc_errors.js';
 
-function LineWithMarkers(scene, uid) {
+function LineWithMarkers(this: any, scene, uid) {
     this.scene = scene;
     this.uid = uid;
     this.linePlot = null;

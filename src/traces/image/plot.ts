@@ -13,7 +13,7 @@ export default function plot(gd: GraphDiv, plotinfo: any, cdimage: any[], imageL
 
     const supportsPixelated = !gd._context._exportedPlot && supportsPixelatedImage();
 
-    Lib.makeTraceGroups(imageLayer, cdimage, 'im').each(function(cd) {
+    Lib.makeTraceGroups(imageLayer, cdimage, 'im').each(function(this: any, cd) {
         const plotGroup = select(this);
         const cd0 = cd[0];
         const trace = cd0.trace;

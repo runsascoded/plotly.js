@@ -49,7 +49,7 @@ export default function plot(gd, cdModule, transitionOpts, makeOnCompleteCallbac
         }
     }
 
-    Lib.makeTraceGroups(fullLayout._indicatorlayer, cdModule, 'trace').each(function(cd) {
+    Lib.makeTraceGroups(fullLayout._indicatorlayer, cdModule, 'trace').each(function(this: any, cd) {
         const cd0 = cd[0];
         const trace = cd0.trace;
 
@@ -594,7 +594,7 @@ function drawNumbers(gd, plotGroup, cd, opts) {
                 .ease(transitionOpts.easing)
                 .on('end', function() { writeNumber(); onComplete && onComplete(); })
                 .on('interrupt', function() { writeNumber(); onComplete && onComplete(); })
-                .attrTween('text', function() {
+                .attrTween('text', function(this: any) {
                     const that = select(this);
                     const interpolator = interpolateNumber(cd[0].lastY, cd[0].y);
                     trace._lastValue = cd[0].y;
@@ -651,7 +651,7 @@ function drawNumbers(gd, plotGroup, cd, opts) {
                 .transition()
                 .duration(transitionOpts.duration)
                 .ease(transitionOpts.easing)
-                .tween('text', function() {
+                .tween('text', function(this: any) {
                     const that = select(this);
                     const to = deltaValue(cd[0]);
                     const from = trace._deltaLastValue;
@@ -789,8 +789,8 @@ function drawNumbers(gd, plotGroup, cd, opts) {
 // Apply fill, stroke, stroke-width to SVG shape
 function styleShape(p) {
     p
-        .each(function(d) { Color.stroke(select(this), d.line.color);})
-        .each(function(d) { Color.fill(select(this), d.color);})
+        .each(function(this: any, d) { Color.stroke(select(this), d.line.color);})
+        .each(function(this: any, d) { Color.fill(select(this), d.color);})
         .style('stroke-width', function(d) { return d.line.width;});
 }
 

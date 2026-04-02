@@ -2,7 +2,7 @@ import convert from './convert.js';
 import _constants from '../../plots/map/constants.js';
 const { traceLayerPrefix: LAYER_PREFIX } = _constants;
 
-function DensityMap(subplot, uid) {
+function DensityMap(this: any, subplot, uid) {
     this.type = 'densitymap';
     this.subplot = subplot;
     this.uid = uid;

@@ -9,7 +9,7 @@ export default function style(gd: GraphDiv): any {
 
     s.style('opacity', function(d) { return d[0].trace.opacity; });
 
-    s.each(function(d) {
+    s.each(function(this: any, d) {
         const trace = d[0].trace;
         const sel = select(this);
         const box = trace.box || {};

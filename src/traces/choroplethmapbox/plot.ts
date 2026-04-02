@@ -3,7 +3,7 @@ const { convert, convertOnSelect } = _convert;
 import _constants from '../../plots/mapbox/constants.js';
 const { traceLayerPrefix: LAYER_PREFIX } = _constants;
 
-function ChoroplethMapbox(subplot, uid) {
+function ChoroplethMapbox(this: any, subplot, uid) {
     this.type = 'choroplethmapbox';
     this.subplot = subplot;
     this.uid = uid;

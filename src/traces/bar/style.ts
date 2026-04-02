@@ -25,7 +25,7 @@ function style(gd: GraphDiv): any {
     // for gapless (either stacked or neighboring grouped) bars use
     // crispEdges to turn off antialiasing so an artificial gap
     // isn't introduced.
-    .each(function(d) {
+    .each(function(this: any, d) {
         if((fullLayout.barmode === 'stack' && barcount > 1) ||
                 (fullLayout.bargap === 0 &&
                  fullLayout.bargroupgap === 0 &&
@@ -34,7 +34,7 @@ function style(gd: GraphDiv): any {
         }
     });
 
-    s.selectAll('g.points').each(function(d) {
+    s.selectAll('g.points').each(function(this: any, d) {
         const sel = select(this);
         const trace = d[0].trace;
         stylePoints(sel, trace, gd);
@@ -49,7 +49,7 @@ function stylePoints(sel: any, trace: FullTrace, gd: GraphDiv): void {
 }
 
 function styleTextPoints(sel: any, trace: FullTrace, gd: GraphDiv): void {
-    sel.selectAll('text').each(function(d) {
+    sel.selectAll('text').each(function(this: any, d) {
         const tx = select(this);
         const textFont = ensureUniformFontSize(gd, determineFont(tx, d, trace, gd));
 
@@ -74,7 +74,7 @@ function stylePointsInSelectionMode(s: any, trace: FullTrace, gd: GraphDiv): voi
 }
 
 function styleTextInSelectionMode(txs: any, trace: FullTrace, gd: GraphDiv): void {
-    txs.each(function(d) {
+    txs.each(function(this: any, d) {
         const tx = select(this);
         let textFont;
 

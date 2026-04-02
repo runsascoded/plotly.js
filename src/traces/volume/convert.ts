@@ -10,7 +10,7 @@ import zip3 from '../../plots/gl3d/zip3.js';
 import _convert from '../isosurface/convert.js';
 const { findNearestOnAxis, generateIsoMeshes } = _convert;
 
-function VolumeTrace(scene, mesh, uid) {
+function VolumeTrace(this: any, scene, mesh, uid) {
     this.scene = scene;
     this.uid = uid;
     this.mesh = mesh;

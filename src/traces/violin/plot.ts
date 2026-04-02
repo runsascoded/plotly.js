@@ -26,7 +26,7 @@ export default function plot(gd: GraphDiv, plotinfo: PlotInfo, cdViolins: any[],
         return smoothopen(segments[0], 1);
     }
 
-    Lib.makeTraceGroups(violinLayer, cdViolins, 'trace violins').each(function(cd) {
+    Lib.makeTraceGroups(violinLayer, cdViolins, 'trace violins').each(function(this: any, cd) {
         const plotGroup = select(this);
         const cd0 = cd[0];
         const t = cd0.t;
@@ -53,7 +53,7 @@ export default function plot(gd: GraphDiv, plotinfo: PlotInfo, cdViolins: any[],
 
         violins.exit().remove();
 
-        violins.each(function(d) {
+        violins.each(function(this: any, d) {
             const pathSel = select(this);
             const density = d.density;
             const len = density.length;
@@ -164,7 +164,7 @@ export default function plot(gd: GraphDiv, plotinfo: PlotInfo, cdViolins: any[],
             .style('fill', 'none')
             .style('vector-effect', isStatic ? 'none' : 'non-scaling-stroke');
         meanPaths.exit().remove();
-        meanPaths.each(function(d) {
+        meanPaths.each(function(this: any, d) {
             const v = valAxis.c2p(d.mean, true);
             const p = helpers.getPositionOnKdePath(d, trace, v);
 

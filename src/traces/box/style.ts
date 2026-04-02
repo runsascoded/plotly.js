@@ -8,7 +8,7 @@ function style(gd: GraphDiv, cd?: any[], sel?: any): any {
 
     s.style('opacity', function(d) { return d[0].trace.opacity; });
 
-    s.each(function(d) {
+    s.each(function(this: any, d) {
         const el = select(this);
         const trace = d[0].trace;
         const lineWidth = trace.line.width;
@@ -22,7 +22,7 @@ function style(gd: GraphDiv, cd?: any[], sel?: any): any {
         const allBoxes = el.selectAll('path.box');
 
         if(trace.type === 'candlestick') {
-            allBoxes.each(function(boxData) {
+            allBoxes.each(function(this: any, boxData) {
                 if(boxData.empty) return;
 
                 const thisBox = select(this);

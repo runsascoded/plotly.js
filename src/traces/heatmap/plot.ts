@@ -29,7 +29,7 @@ export default function(gd, plotinfo, cdheatmaps, heatmapLayer) {
     const xa = plotinfo.xaxis;
     const ya = plotinfo.yaxis;
 
-    Lib.makeTraceGroups(heatmapLayer, cdheatmaps, 'hm').each(function (cd) {
+    Lib.makeTraceGroups(heatmapLayer, cdheatmaps, 'hm').each(function (this: any, cd) {
         const plotGroup = select(this);
         const cd0 = cd[0];
         const trace = cd0.trace;
@@ -531,7 +531,7 @@ export default function(gd, plotinfo, cdheatmaps, heatmapLayer) {
                 .classed(labelClass, 1)
                 .append('text')
                 .attr('text-anchor', 'middle')
-                .each(function (d) {
+                .each(function (this: any, d) {
                     const thisLabel = select(this);
 
                     let fontColor = font.color;

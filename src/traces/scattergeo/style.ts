@@ -22,7 +22,7 @@ function styleTrace(gd: GraphDiv, calcTrace) {
     // this part is incompatible with lineGroupStyle
     s.selectAll('path.js-line')
         .style('fill', 'none')
-        .each(function(d) {
+        .each(function(this: any, d) {
             const path = select(this);
             const trace = d.trace;
             const line = trace.line || {};

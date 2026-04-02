@@ -21,7 +21,7 @@ const _ = Lib._;
 const freeMode = dragHelpers.freeMode;
 const rectMode = dragHelpers.rectMode;
 
-function Ternary(options: any, fullLayout: FullLayout) {
+function Ternary(this: any, options: any, fullLayout: FullLayout) {
     this.id = options.id;
     this.graphDiv = options.graphDiv;
     this.init(fullLayout);
@@ -138,7 +138,7 @@ proto.updateLayers = function(ternaryLayout) {
 
     toplevel.enter().append('g')
         .attr('class', function(d) { return 'toplevel ' + d; })
-        .each(function(d) {
+        .each(function(this: any, d) {
             const s = select(this);
             layers[d] = s;
 

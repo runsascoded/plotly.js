@@ -1039,7 +1039,7 @@ export default function(gd, svg, calcData, layout, callbacks) {
     nodeLabel
         .attr('data-notex', 1) // prohibit tex interpretation until we can handle tex and regular text together
         .text(function(d) { return d.node.label; })
-        .each(function(d) {
+        .each(function(this: any, d) {
             const e = select(this);
             font(e, d.textFont);
             svgTextUtils.convertToTspans(e, gd);
@@ -1047,7 +1047,7 @@ export default function(gd, svg, calcData, layout, callbacks) {
         .attr('text-anchor', function(d) {
             return (d.horizontal && d.left) ? 'end' : 'start';
         })
-        .attr('transform', function(d) {
+        .attr('transform', function(this: any, d) {
             const e = select(this);
             // how much to shift a multi-line label to center it vertically.
             const nLines = svgTextUtils.lineCount(e);

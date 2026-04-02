@@ -57,12 +57,12 @@ export default function plot(gd: GraphDiv, plotinfo: PlotInfo, cdscatter: CalcDa
         trans.each(function() {
             // Must run the selection again since otherwise enters/updates get grouped together
             // and these get executed out of order. Except we need them in order!
-            scatterLayer.selectAll('g.trace').each(function(d, i) {
+            scatterLayer.selectAll('g.trace').each(function(this: any, d, i) {
                 plotOne(gd, i, plotinfo, d, cdscatterSorted, this, transitionOpts);
             });
         });
     } else {
-        join.each(function(d, i) {
+        join.each(function(this: any, d, i) {
             plotOne(gd, i, plotinfo, d, cdscatterSorted, this, transitionOpts);
         });
     }
@@ -76,7 +76,7 @@ export default function plot(gd: GraphDiv, plotinfo: PlotInfo, cdscatter: CalcDa
 }
 
 function createFills(gd: GraphDiv, traceJoin: any, plotinfo: PlotInfo): void {
-    traceJoin.each(function(d) {
+    traceJoin.each(function(this: any, d) {
         const fills = ensureSingle(select(this), 'g', 'fills');
         setClipUrl(fills, plotinfo.layerClipId, gd);
 
@@ -94,7 +94,7 @@ function createFills(gd: GraphDiv, traceJoin: any, plotinfo: PlotInfo): void {
             .each(function(d) { trace[d] = null; })
             .remove();
 
-        fillJoin.order().each(function(d) {
+        fillJoin.order().each(function(this: any, d) {
             // make a path element inside the fill group, just so
             // we can give it its own data later on and the group can
             // keep its simple '_*Fill' data
@@ -272,7 +272,7 @@ function plotOne(gd: GraphDiv, idx: number, plotinfo: PlotInfo, cdscatter: CalcD
         }
 
         makeUpdate = function(isEnter) {
-            return function(pts) {
+            return function(this: any, pts) {
                 thispath = pathfn(pts);
                 thisrevpath = revpathfn(pts); // side-effect: reverses input
                 // calculate SVG path over all segments for fills
@@ -532,7 +532,7 @@ function plotOne(gd: GraphDiv, idx: number, plotinfo: PlotInfo, cdscatter: CalcD
             styleFns = makePointStyleFns(trace);
         }
 
-        join.each(function(d) {
+        join.each(function(this: any, d) {
             const el = select(this);
             const sel = transition(el);
             hasNode = translatePoint(d, sel, xa, ya);
@@ -570,7 +570,7 @@ function plotOne(gd: GraphDiv, idx: number, plotinfo: PlotInfo, cdscatter: CalcD
 
         join.order();
 
-        join.each(function(d) {
+        join.each(function(this: any, d) {
             const g = select(this);
             const sel = transition(g.select('text'));
             hasNode = translatePoint(d, sel, xa, ya);
@@ -586,13 +586,13 @@ function plotOne(gd: GraphDiv, idx: number, plotinfo: PlotInfo, cdscatter: CalcD
 
         join.selectAll('text')
             .call(textPointStyle, trace, gd)
-            .each(function(d) {
+            .each(function(this: any, d) {
                 // This just *has* to be totally custom because of SVG text positioning :(
                 // It's obviously copied from translatePoint; we just can't use that
                 const x = xa.c2p(d.x);
                 const y = ya.c2p(d.y);
 
-                select(this).selectAll('tspan.line').each(function() {
+                select(this).selectAll('tspan.line').each(function(this: any) {
                     transition(select(this)).attr({x: x, y: y});
                 });
             });

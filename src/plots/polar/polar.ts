@@ -37,7 +37,7 @@ const mod = Lib.mod;
 const deg2rad = Lib.deg2rad;
 const rad2deg = Lib.rad2deg;
 
-function Polar(gd: GraphDiv, id: string, isSmith?: boolean) {
+function Polar(this: any, gd: GraphDiv, id: string, isSmith?: boolean) {
     this.isSmith = isSmith || false;
     this.id = id;
     this.gd = gd;
@@ -62,19 +62,19 @@ function Polar(gd: GraphDiv, id: string, isSmith?: boolean) {
     this.framework = fullLayout['_' + (isSmith ? 'smith' : 'polar') + 'layer'].append('g')
         .attr('class', id);
 
-    this.getHole = function(s) {
+    this.getHole = function(this: any, s) {
         return this.isSmith ? 0 : s.hole;
     };
 
-    this.getSector = function(s) {
+    this.getSector = function(this: any, s) {
         return this.isSmith ? [0, 360] : s.sector;
     };
 
-    this.getRadial = function(s) {
+    this.getRadial = function(this: any, s) {
         return this.isSmith ? s.realaxis : s.radialaxis;
     };
 
-    this.getAngular = function(s) {
+    this.getAngular = function(this: any, s) {
         return this.isSmith ? s.imaginaryaxis : s.angularaxis;
     };
 
@@ -149,7 +149,7 @@ proto.updateLayers = function(fullLayout, polarLayout) {
 
     join.enter().append('g')
         .attr('class', function(d) { return subLayer + ' ' + d;})
-        .each(function(d) {
+        .each(function(this: any, d) {
             const sel = layers[d] = select(this);
 
             switch(d) {
@@ -1372,12 +1372,12 @@ proto.updateAngularDrag = function(fullLayout) {
         }
 
         // 'un-rotate' marker and text points
-        scatterPoints.each(function() {
+        scatterPoints.each(function(this: any) {
             const sel = select(this);
             const xy = getTranslate(sel);
             sel.attr('transform', strTranslate(xy.x, xy.y) + strRotate([da]));
         });
-        scatterTextPoints.each(function() {
+        scatterTextPoints.each(function(this: any) {
             const sel = select(this);
             const tx = sel.select('text');
             const xy = getTranslate(sel);

@@ -16,7 +16,7 @@ function styleTrace(gd, calcTrace) {
 
     const sclFunc = Colorscale.makeColorScaleFuncFromTrace(trace);
 
-    locs.each(function(d) {
+    locs.each(function(this: any, d) {
         select(this)
             .attr('fill', sclFunc(d.z))
             .call(Color.stroke, d.mlc || markerLine.color)

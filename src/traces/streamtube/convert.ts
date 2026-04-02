@@ -9,7 +9,7 @@ const createTubeMesh = tube2mesh.createTubeMesh;
 
 const axisName2scaleIndex = {xaxis: 0, yaxis: 1, zaxis: 2};
 
-function Streamtube(scene, uid) {
+function Streamtube(this: any, scene, uid) {
     this.scene = scene;
     this.uid = uid;
     this.mesh = null;

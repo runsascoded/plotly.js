@@ -23,7 +23,7 @@ const geoPath = geo.geoPath;
 const geoDistance = geo.geoDistance;
 const strTranslate = Lib.strTranslate;
 
-function Geo(opts) {
+function Geo(this: any, opts) {
     this.id = opts.id;
     this.graphDiv = opts.graphDiv;
     this.container = opts.container;
@@ -335,7 +335,7 @@ proto.updateBaseLayers = function(fullLayout, geoLayout) {
     const join = _this.framework.selectAll('.layer')
         .data(layerData, String);
 
-    join.exit().each(function(d) {
+    join.exit().each(function(this: any, d) {
         delete layers[d];
         delete basePaths[d];
         select(this).remove();
@@ -343,7 +343,7 @@ proto.updateBaseLayers = function(fullLayout, geoLayout) {
 
     join.enter().append('g')
         .attr('class', function(d) { return 'layer ' + d; })
-        .each(function(d) {
+        .each(function(this: any, d) {
             const layer = layers[d] = select(this);
 
             if(d === 'bg') {

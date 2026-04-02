@@ -2,7 +2,7 @@ import str2RGBArray from '../../../lib/str2rgbarray.js';
 
 const AXES_NAMES = ['xaxis', 'yaxis', 'zaxis'];
 
-function SpikeOptions() {
+function SpikeOptions(this: any) {
     this.enabled = [true, true, true];
     this.colors = [[0, 0, 0, 1],
                    [0, 0, 0, 1],

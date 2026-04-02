@@ -3,7 +3,7 @@ import Lib from '../../../lib/index.js';
 
 const AXES_NAMES = ['xaxis', 'yaxis', 'zaxis'];
 
-function AxesOptions() {
+function AxesOptions(this: any) {
     this.bounds = [
         [-10, -10, -10],
         [10, 10, 10]

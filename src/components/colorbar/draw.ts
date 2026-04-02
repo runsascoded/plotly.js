@@ -37,7 +37,7 @@ function draw(gd: GraphDiv) {
         .attr('class', function(opts: any) { return opts._id; })
         .classed(cn.colorbar, true);
 
-    colorBars.each(function(opts: any) {
+    colorBars.each(function(this: any, opts: any) {
         const g = select(this);
 
         Lib.ensureSingle(g, 'rect', cn.cbbg);
@@ -519,12 +519,12 @@ function drawColorBar(g: any, opts: any, gd: GraphDiv) {
             .map(Math.round)
             .sort(function(a: any, b: any) { return a - b; });
 
-        fills.each(function(d: any, i: any) {
+        fills.each(function(this: any, d: any, i: any) {
             const z = [
                 (i === 0) ? zrange[0] : (fillLevels[i] + fillLevels[i - 1]) / 2,
                 (i === fillLevels.length - 1) ? zrange[1] : (fillLevels[i] + fillLevels[i + 1]) / 2
             ]
-            .map(ax.c2p)
+            .map(ax.c2p as (v: number) => number)
             .map(Math.round);
 
             // offset the side adjoining the next rectangle so they
@@ -559,7 +559,7 @@ function drawColorBar(g: any, opts: any, gd: GraphDiv) {
         lines.enter().append('path')
             .classed(cn.cbline, true);
         lines.exit().remove();
-        lines.each(function(d: any) {
+        lines.each(function(this: any, d: any) {
             const a = uPx;
             const b = (Math.round(ax.c2p(d)) + (line.width / 2) % 1);
 
@@ -729,7 +729,7 @@ function drawColorBar(g: any, opts: any, gd: GraphDiv) {
 
             const TEXTPAD = 2;
 
-            tickLabels.each(function(d: any, i: any) {
+            tickLabels.each(function(this: any, d: any, i: any) {
                 const first = 0;
                 const last = numTicks - 1;
                 if(i === first || i === last) {

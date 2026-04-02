@@ -3775,7 +3775,7 @@ function makePlotFramework(gd?: any): void {
 
     if (!fullLayout._uid) {
         const otherUids: any = {};
-        selectAll('defs').each(function () {
+        selectAll('defs').each(function (this: any) {
             if (this.id) otherUids[this.id.split('-')[1]] = 1;
         });
         fullLayout._uid = randstr(otherUids);

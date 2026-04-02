@@ -10,14 +10,14 @@ function style(gd: GraphDiv): void {
     const s = gd._fullLayout._iciclelayer.selectAll('.trace');
     resizeText(gd, s, 'icicle');
 
-    s.each(function(cd) {
+    s.each(function(this: any, cd) {
         const gTrace = select(this);
         const cd0 = cd[0];
         const trace = cd0.trace;
 
         gTrace.style('opacity', trace.opacity);
 
-        gTrace.selectAll('path.surface').each(function(pt) {
+        gTrace.selectAll('path.surface').each(function(this: any, pt) {
             select(this).call(styleOne, pt, trace, gd);
         });
     });

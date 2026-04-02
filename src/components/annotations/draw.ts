@@ -168,7 +168,7 @@ function drawRaw(gd: GraphDiv, options: any, index: any, subplotId: any, xa: Ful
 
     if(options.hovertext) {
         annTextGroupInner
-        .on('mouseover', function() {
+        .on('mouseover', function(this: any) {
             const hoverOptions = options.hoverlabel;
             const hoverFont = hoverOptions.font;
             const bBox = this.getBoundingClientRect();
@@ -725,7 +725,7 @@ function drawRaw(gd: GraphDiv, options: any, index: any, subplotId: any, xa: Ful
     if(edits.annotationText) {
         annText.call(svgTextUtils.makeEditable, {delegate: annTextGroupInner, gd: gd})
             .call(textLayout)
-            .on('edit', function(_text: any) {
+            .on('edit', function(this: any, _text: any) {
                 options.text = _text;
 
                 this.call(textLayout);

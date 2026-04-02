@@ -343,7 +343,7 @@ function attachDragBehavior(selection) {
     // even if the cursor strays from the interacting bar, which is bound to happen as bars are thin and the user
     // will inevitably leave the hotspot strip. In this regard, it does something similar to what the D3 brush would do.
     selection
-        .on('mousemove', function(event: any) {
+        .on('mousemove', function(this: any, event: any) {
             event.preventDefault();
             if(!d.parent.inBrushDrag) mousemove(this, d);
         })
@@ -351,9 +351,9 @@ function attachDragBehavior(selection) {
             if(!d.parent.inBrushDrag) clearCursor();
         })
         .call(d3Drag()
-            .on('start', function(event: any) { dragstart(this, d); })
-            .on('drag', function(event: any) { drag(this, d); })
-            .on('end', function(event: any) { dragend(this, d); })
+            .on('start', function(this: any, event: any) { dragstart(this, d); })
+            .on('drag', function(this: any, event: any) { drag(this, d); })
+            .on('end', function(this: any, event: any) { dragend(this, d); })
         );
 }
 

@@ -48,12 +48,12 @@ export default function _plot(gd: GraphDiv, cdmodule: any[], transitionOpts: any
         trans.each(function() {
             // Must run the selection again since otherwise enters/updates get grouped together
             // and these get executed out of order. Except we need them in order!
-            layer.selectAll('g.trace').each(function(cd) {
+            layer.selectAll('g.trace').each(function(this: any, cd) {
                 plotOne(gd, cd, this, transitionOpts, drawDescendants);
             });
         });
     } else {
-        join.each(function(cd) {
+        join.each(function(this: any, cd) {
             plotOne(gd, cd, this, transitionOpts, drawDescendants);
         });
 

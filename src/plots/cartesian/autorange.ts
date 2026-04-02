@@ -278,7 +278,7 @@ function padInsideLabelsOnAnchorAxis(fullLayout?: any, ax?: any, max?: any): any
                     if(!anchorAxis._vals[0].bb) {
                         const cls = anchorAxis._id + 'tick';
                         const tickLabels = anchorAxis._selections[cls];
-                        tickLabels.each(function(d) {
+                        tickLabels.each(function(this: any, d) {
                             const thisLabel = select(this);
                             const mathjaxGroup = thisLabel.select('.text-math-group');
                             if(mathjaxGroup.empty()) {

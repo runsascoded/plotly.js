@@ -249,7 +249,7 @@ export default function plot(gd: GraphDiv, calcData: any[]) {
             anchorIndex: anchorIndex
         });
 
-        tooltips.each(function() {
+        tooltips.each(function(this: any) {
             const tooltip = this;
             if(!d.link.concentrationscale) {
                 makeTranslucent(tooltip, 0.65);

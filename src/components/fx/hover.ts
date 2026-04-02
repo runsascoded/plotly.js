@@ -959,7 +959,7 @@ function createHoverText(hoverData: any[], opts: any): any {
         minY: 0,
         maxY: 0
     };
-    commonLabel.each(function () {
+    commonLabel.each(function (this: any) {
         const label = select(this);
         const lpath = ensureSingle(label, 'path', '', function (s) {
             s.style({ 'stroke-width': '1px' });
@@ -1142,7 +1142,7 @@ function createHoverText(hoverData: any[], opts: any): any {
                 // shift each line (except the longest) so that start-of-line
                 // is always visible
                 if (anchor === 'end') {
-                    ltext.selectAll('tspan').each(function () {
+                    ltext.selectAll('tspan').each(function (this: any) {
                         const s = select(this);
                         const dummy = tester.append('text').text(s.text()).call(drawingFont, commonLabelFont);
                         const dummyBB = getBoundingClientRect(gd, dummy.node());
@@ -1385,7 +1385,7 @@ function createHoverText(hoverData: any[], opts: any): any {
         .enter()
         .append('g')
         .classed('hovertext', true)
-        .each(function () {
+        .each(function (this: any) {
             const g = select(this);
             // trace name label (rect and text.name)
             g.append('rect').call(Color.fill, Color.addOpacity(bgColor, 0.8));
@@ -1407,7 +1407,7 @@ function createHoverText(hoverData: any[], opts: any): any {
 
     // then put the text in, position the pointer to the data,
     // and figure out sizes
-    hoverLabels.each(function (d) {
+    hoverLabels.each(function (this: any, d) {
         const g = select(this).attr('transform', '');
 
         let dColor = d.color;
@@ -1935,7 +1935,7 @@ function alignHoverText(hoverLabels: any, rotateLabels: boolean, scaleX: number,
 
     // finally set the text positioning relative to the data and draw the
     // box around it
-    hoverLabels.each(function (d) {
+    hoverLabels.each(function (this: any, d) {
         const g = select(this);
         if (d.del) return g.remove();
 

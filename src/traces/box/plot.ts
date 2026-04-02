@@ -12,7 +12,7 @@ function plot(gd: GraphDiv, plotinfo: PlotInfo, cdbox: any[], boxLayer: any): vo
     const xa = plotinfo.xaxis;
     const ya = plotinfo.yaxis;
 
-    Lib.makeTraceGroups(boxLayer, cdbox, 'trace boxes').each(function(cd) {
+    Lib.makeTraceGroups(boxLayer, cdbox, 'trace boxes').each(function(this: any, cd) {
         const plotGroup = select(this);
         const cd0 = cd[0];
         const t = cd0.t;
@@ -78,7 +78,7 @@ function plotBoxAndWhiskers(sel: any, axes: { pos: FullAxis; val: FullAxis }, tr
 
     paths.exit().remove();
 
-    paths.each(function(d) {
+    paths.each(function(this: any, d) {
         if(d.empty) return select(this).attr('d', 'M0,0Z');
 
         const lcenter = posAxis.c2l(d.pos + bPos, true);
@@ -312,7 +312,7 @@ function plotBoxMean(sel: any, axes: { pos: FullAxis; val: FullAxis }, trace: Fu
 
     paths.exit().remove();
 
-    paths.each(function(d) {
+    paths.each(function(this: any, d) {
         const lcenter = posAxis.c2l(d.pos + bPos, true);
 
         const pos0 = posAxis.l2p(lcenter - bdPos0) + bPosPxOffset;

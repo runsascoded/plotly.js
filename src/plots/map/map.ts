@@ -13,7 +13,7 @@ import createMapLayer from './layers.js';
 const drawMode = dragHelpers.drawMode;
 const selectMode = dragHelpers.selectMode;
 
-function Map(gd, id) {
+function Map(this: any, gd, id) {
     this.id = id;
     this.gd = gd;
 

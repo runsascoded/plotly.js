@@ -29,7 +29,7 @@ function plot(gd: GraphDiv, cdModule: any[]): any {
     prerenderTitles(cdModule, gd);
     layoutAreas(cdModule, gs);
 
-    const plotGroups = Lib.makeTraceGroups(fullLayout._pielayer, cdModule, 'trace').each(function (cd) {
+    const plotGroups = Lib.makeTraceGroups(fullLayout._pielayer, cdModule, 'trace').each(function (this: any, cd) {
         const plotGroup = select(this);
         const cd0 = cd[0];
         const trace = cd0.trace;
@@ -40,7 +40,7 @@ function plot(gd: GraphDiv, cdModule: any[]): any {
         // maybe miter with a small-ish stroke-miterlimit?
         plotGroup.attr('stroke-linejoin', 'round');
 
-        plotGroup.each(function () {
+        plotGroup.each(function (this: any) {
             const slices = select(this).selectAll('g.slice').data(cd);
 
             slices.enter().append('g').classed('slice', true);
@@ -52,7 +52,7 @@ function plot(gd: GraphDiv, cdModule: any[]): any {
             ];
             let hasOutsideText = false;
 
-            slices.each(function (pt, i) {
+            slices.each(function (this: any, pt, i) {
                 if (pt.hidden) {
                     select(this).selectAll('path,g').remove();
                     return;
@@ -164,8 +164,8 @@ function plot(gd: GraphDiv, cdModule: any[]): any {
                 sliceTextGroup.enter().append('g').classed('slicetext', true);
                 sliceTextGroup.exit().remove();
 
-                sliceTextGroup.each(function () {
-                    const sliceText = Lib.ensureSingle(select(this), 'text', '', function (s) {
+                sliceTextGroup.each(function (this: any) {
+                    const sliceText = Lib.ensureSingle(select(this), 'text', '', function (this: any, s) {
                         // prohibit tex interpretation until we can handle
                         // tex and regular text together
                         s.attr('data-notex', 1);
@@ -239,8 +239,8 @@ function plot(gd: GraphDiv, cdModule: any[]): any {
             titleTextGroup.enter().append('g').classed('titletext', true);
             titleTextGroup.exit().remove();
 
-            titleTextGroup.each(function () {
-                const titleText = Lib.ensureSingle(select(this), 'text', '', function (s) {
+            titleTextGroup.each(function (this: any) {
+                const titleText = Lib.ensureSingle(select(this), 'text', '', function (this: any, s) {
                     // prohibit tex interpretation as above
                     s.attr('data-notex', 1);
                 });
@@ -315,7 +315,7 @@ function plot(gd: GraphDiv, cdModule: any[]): any {
     // I have no idea why we haven't seen this in other contexts. Also, sometimes
     // it gets the initial draw correct but on redraw it gets confused.
     setTimeout(function () {
-        plotGroups.selectAll('tspan').each(function () {
+        plotGroups.selectAll('tspan').each(function (this: any) {
             const s = select(this);
             if (s.attr('dy')) s.attr('dy', s.attr('dy'));
         });
@@ -324,7 +324,7 @@ function plot(gd: GraphDiv, cdModule: any[]): any {
 
 // TODO add support for transition
 function plotTextLines(slices: any, trace: FullTrace): void {
-    slices.each(function (pt) {
+    slices.each(function (this: any, pt) {
         const sliceTop = select(this);
 
         if (!pt.labelExtraX && !pt.labelExtraY) {
@@ -486,7 +486,7 @@ function attachFxHandlers(sliceTop: any, gd: GraphDiv, cd: any[]): any {
         });
     });
 
-    sliceTop.on('mouseout', function (evt) {
+    sliceTop.on('mouseout', function (this: any, evt) {
         const fullLayout2 = gd._fullLayout;
         const trace2 = gd._fullData[trace.index];
         const pt = select(this).datum();

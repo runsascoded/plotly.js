@@ -102,7 +102,7 @@ function plot(gd: GraphDiv, plotinfo: PlotInfo, cdModule: CalcDatum[][], traceLa
         clearMinTextSize('bar', fullLayout);
     }
 
-    const bartraces = makeTraceGroups(traceLayer, cdModule, 'trace bars').each(function (cd) {
+    const bartraces = makeTraceGroups(traceLayer, cdModule, 'trace bars').each(function (this: any, cd) {
         const plotGroup = select(this);
         const trace = cd[0].trace;
         const t = cd[0].t;
@@ -128,7 +128,7 @@ function plot(gd: GraphDiv, plotinfo: PlotInfo, cdModule: CalcDatum[][], traceLa
 
         bars.exit().remove();
 
-        bars.each(function (di, i) {
+        bars.each(function (this: any, di, i) {
             const bar = select(this);
 
             // now display the bar

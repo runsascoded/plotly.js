@@ -63,12 +63,12 @@ export const plot = function (gd: GraphDiv, cdmodule: any[], transitionOpts: any
         transition.each(function () {
             // Must run the selection again since otherwise enters/updates get grouped together
             // and these get executed out of order. Except we need them in order!
-            layer.selectAll('g.trace').each(function (cd) {
+            layer.selectAll('g.trace').each(function (this: any, cd) {
                 plotOne(gd, cd, this, transitionOpts);
             });
         });
     } else {
-        join.each(function (cd) {
+        join.each(function (this: any, cd) {
             plotOne(gd, cd, this, transitionOpts);
         });
 
@@ -189,7 +189,7 @@ function plotOne(gd: GraphDiv, cd: any[], element: Element, transitionOpts: any)
         slices
             .exit()
             .transition()
-            .each(function () {
+            .each(function (this: any) {
                 const sliceTop = select(this);
 
                 const slicePath = sliceTop.select('path.surface');
@@ -223,7 +223,7 @@ function plotOne(gd: GraphDiv, cd: any[], element: Element, transitionOpts: any)
 
     let updateSlices = slices;
     if (hasTransition) {
-        updateSlices = updateSlices.transition().on('end', function () {
+        updateSlices = updateSlices.transition().on('end', function (this: any) {
             // N.B. gd._transitioning is (still) *true* by the time
             // transition updates get here
             const sliceTop = select(this);
@@ -235,7 +235,7 @@ function plotOne(gd: GraphDiv, cd: any[], element: Element, transitionOpts: any)
         });
     }
 
-    updateSlices.each(function (pt) {
+    updateSlices.each(function (this: any, pt) {
         const sliceTop = select(this);
 
         const slicePath = Lib.ensureSingle(sliceTop, 'path', 'surface', function (s) {

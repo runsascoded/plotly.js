@@ -176,7 +176,7 @@ function performPlot(parcatsModels, graphDiv, layout: FullLayout, svg) {
             }, key);
 
     // Raise all update bands to the top so that fading enter/exit bands will be behind
-    bandSelection.each(function() {Lib.raiseToTop(this);});
+    bandSelection.each(function(this: any) {Lib.raiseToTop(this);});
 
     // Update band color
     bandSelection
@@ -260,7 +260,7 @@ function performPlot(parcatsModels, graphDiv, layout: FullLayout, svg) {
         })
         .each(
             /** @param {CategoryViewModel} catModel*/
-            function(catModel) {
+            function(this: any, catModel) {
                 font(select(this), catModel.parcatsViewModel.categorylabelfont);
                 svgTextUtils.convertToTspans(select(this), graphDiv);
             });
@@ -297,7 +297,7 @@ function performPlot(parcatsModels, graphDiv, layout: FullLayout, svg) {
         })
         .each(
             /** @param {CategoryViewModel} catModel*/
-            function(catModel) {
+            function(this: any, catModel) {
                 font(select(this), catModel.parcatsViewModel.labelfont);
             });
 
@@ -320,7 +320,7 @@ function performPlot(parcatsModels, graphDiv, layout: FullLayout, svg) {
         .on('end', dragDimensionEnd));
 
     // Save off selections to view models
-    traceSelection.each(function(d) {
+    traceSelection.each(function(this: any, d) {
         d.traceSelection = select(this);
         d.pathSelection = select(this).selectAll('g.paths').selectAll('path.path');
         d.dimensionSelection = select(this).selectAll('g.dimensions').selectAll('g.dimension');
@@ -368,7 +368,7 @@ function compareRawColor(a, b) {
  * Handle path mouseover
  * @param {PathViewModel} d
  */
-function mouseoverPath(d) {
+function mouseoverPath(this: any, d) {
     if(!d.parcatsViewModel.dragDimension) {
         // We're not currently dragging
 
@@ -474,7 +474,7 @@ function mouseoverPath(d) {
  * Handle path mouseout
  * @param {PathViewModel} d
  */
-function mouseoutPath(d) {
+function mouseoutPath(this: any, d) {
     if(!d.parcatsViewModel.dragDimension) {
         // We're not currently dragging
         stylePathsNoHover(select(this));
@@ -637,7 +637,7 @@ function styleForCategoryHovermode(bandElement) {
     bandSel.each(function(bvm) {
         const paths = selectPathsThroughCategoryBandColor(bvm);
         stylePathsHover(paths);
-        paths.each(function() {
+        paths.each(function(this: any) {
             // Raise path to top
             Lib.raiseToTop(this);
         });
@@ -659,7 +659,7 @@ function styleForColorHovermode(bandElement) {
     const bandViewModel = select(bandElement).datum();
     const catPaths = selectPathsThroughCategoryBandColor(bandViewModel);
     stylePathsHover(catPaths);
-    catPaths.each(function() {
+    catPaths.each(function(this: any) {
         // Raise path to top
         Lib.raiseToTop(this);
     });
@@ -668,7 +668,7 @@ function styleForColorHovermode(bandElement) {
     select(bandElement.parentNode)
         .selectAll('rect.bandrect')
         .filter(function(b) {return b.color === bandViewModel.color;})
-        .each(function() {
+        .each(function(this: any) {
             Lib.raiseToTop(this);
             styleBandsHover(select(this));
         });
@@ -833,7 +833,7 @@ function createHoverLabelForDimensionHovermode(gd: GraphDiv, rootBBox, bandEleme
     select(bandElement.parentNode.parentNode)
         .selectAll('g.category')
         .select('rect.catrect')
-        .each(function() {
+        .each(function(this: any) {
             const bandNode = this;
             allHoverlabels.push(createHoverLabelForCategoryHovermode(gd, rootBBox, bandNode));
         });
@@ -961,7 +961,7 @@ function createHoverLabelForColorHovermode(gd: GraphDiv, rootBBox, bandElement) 
  * Handle dimension mouseover
  * @param {CategoryBandViewModel} bandViewModel
  */
-function mouseoverCategoryBand(bandViewModel) {
+function mouseoverCategoryBand(this: any, bandViewModel) {
     if(!bandViewModel.parcatsViewModel.dragDimension) {
         // We're not currently dragging
 
@@ -1019,7 +1019,7 @@ function mouseoverCategoryBand(bandViewModel) {
  * Handle dimension mouseover
  * @param {CategoryBandViewModel} bandViewModel
  */
-function mouseoutCategory(bandViewModel) {
+function mouseoutCategory(this: any, bandViewModel) {
     const parcatsViewModel = bandViewModel.parcatsViewModel;
 
     if(!parcatsViewModel.dragDimension) {
@@ -1055,7 +1055,7 @@ function mouseoutCategory(bandViewModel) {
  * Handle dimension drag start
  * @param {DimensionViewModel} d
  */
-function dragDimensionStart(d) {
+function dragDimensionStart(this: any, d) {
     // Check if dragging is supported
     if(d.parcatsViewModel.arrangement === 'fixed') {
         return;
@@ -1063,7 +1063,7 @@ function dragDimensionStart(d) {
 
     // Save off initial drag indexes for dimension
     d.dragDimensionDisplayInd = d.model.displayInd;
-    d.initialDragDimensionDisplayInds = d.parcatsViewModel.model.dimensions.map(function(d) {return d.displayInd;});
+    d.initialDragDimensionDisplayInds = d.parcatsViewModel.model.dimensions.map(function(this: any, d) {return d.displayInd;});
     d.dragHasMoved = false;
 
     // Check for category hit
@@ -1073,7 +1073,7 @@ function dragDimensionStart(d) {
         .select('rect.catrect')
         .each(
             /** @param {CategoryViewModel} catViewModel */
-            function(catViewModel) {
+            function(this: any, catViewModel) {
                 const catMouseX = pointer(event, this)[0];
                 const catMouseY = pointer(event, this)[1];
 
@@ -1081,7 +1081,7 @@ function dragDimensionStart(d) {
                     -2 <= catMouseY && catMouseY <= catViewModel.height + 2) {
                     // Save off initial drag indexes for categories
                     d.dragCategoryDisplayInd = catViewModel.model.displayInd;
-                    d.initialDragCategoryDisplayInds = d.model.categories.map(function(c) {
+                    d.initialDragCategoryDisplayInds = d.model.categories.map(function(this: any, c) {
                         return c.displayInd;
                     });
 
@@ -1095,7 +1095,7 @@ function dragDimensionStart(d) {
                     select(this.parentNode)
                         .selectAll('rect.bandrect')
                         /** @param {CategoryBandViewModel} bandViewModel */
-                        .each(function(bandViewModel) {
+                        .each(function(this: any, bandViewModel) {
                             if(bandViewModel.y < catMouseY && catMouseY <= bandViewModel.y + bandViewModel.height) {
                                 d.potentialClickBand = this;
                             }
@@ -1210,7 +1210,7 @@ function dragDimension(d) {
  * Handle dimension drag end
  * @param {DimensionViewModel} d
  */
-function dragDimensionEnd(d) {
+function dragDimensionEnd(this: any, d) {
     // Check if dragging is supported
     if(d.parcatsViewModel.arrangement === 'fixed') {
         return;
@@ -1433,7 +1433,7 @@ function updateSvgCategories(parcatsViewModel: any, hasTransition?: any) {
                     return -5;
                 }
             })
-        .each(function(d) {
+        .each(function(this: any, d) {
             // Update attriubutes of <tspan> elements
             let newX;
             let newAnchor;
@@ -1489,7 +1489,7 @@ function updateSvgCategories(parcatsViewModel: any, hasTransition?: any) {
     styleBandsNoHover(bandsSelectionEnter);
 
     // Raise bands to the top
-    bandSelection.each(function() {Lib.raiseToTop(this);});
+    bandSelection.each(function(this: any) {Lib.raiseToTop(this);});
 
     // Remove unused bands
     bandSelection.exit().remove();

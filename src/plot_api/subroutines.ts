@@ -165,7 +165,7 @@ function lsInner(gd: GraphDiv): any {
 
     lowerBackgrounds.exit().remove();
 
-    lowerBackgrounds.each(function(subplot) {
+    lowerBackgrounds.each(function(this: any, subplot) {
         fullLayout._plots[subplot].bg = select(this);
     });
 
@@ -444,7 +444,7 @@ export const drawMainTitle = function(gd: GraphDiv): void {
                     delta = -delta;
                 }
 
-                titleObj.selectAll('.line').each(function() {
+                titleObj.selectAll('.line').each(function(this: any) {
                     const newDy = +(this.getAttribute('dy')).slice(0, -2) - delta + 'em';
                     this.setAttribute('dy', newDy);
                 });

@@ -14,7 +14,7 @@ export default function plot(gd: GraphDiv, subplot, cdbar) {
     const pathFn = makePathFn(subplot);
     const barLayer = subplot.layers.frontplot.select('g.barlayer');
 
-    Lib.makeTraceGroups(barLayer, cdbar, 'trace bars').each(function() {
+    Lib.makeTraceGroups(barLayer, cdbar, 'trace bars').each(function(this: any) {
         const plotGroup = select(this);
         const pointGroup = Lib.ensureSingle(plotGroup, 'g', 'points');
         const bars = pointGroup.selectAll('g.point').data(Lib.identity);
@@ -26,7 +26,7 @@ export default function plot(gd: GraphDiv, subplot, cdbar) {
 
         bars.exit().remove();
 
-        bars.each(function(di) {
+        bars.each(function(this: any, di) {
             const bar = select(this);
 
             const rp0 = di.rp0 = radialAxis.c2p(di.s0);

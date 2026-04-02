@@ -27,7 +27,7 @@ function plotConnectors(gd: GraphDiv,  plotinfo: PlotInfo,  cdModule,  traceLaye
     const xa = plotinfo.xaxis;
     const ya = plotinfo.yaxis;
 
-    Lib.makeTraceGroups(traceLayer, cdModule, 'trace bars').each(function(cd) {
+    Lib.makeTraceGroups(traceLayer, cdModule, 'trace bars').each(function(this: any, cd) {
         const plotGroup = select(this);
         const trace = cd[0].trace;
 
@@ -50,7 +50,7 @@ function plotConnectors(gd: GraphDiv,  plotinfo: PlotInfo,  cdModule,  traceLaye
 
         const len = connectors.size();
 
-        connectors.each(function(di, i) {
+        connectors.each(function(this: any, di, i) {
             // don't draw lines between nulls
             if(i !== len - 1 && !di.cNext) return;
 

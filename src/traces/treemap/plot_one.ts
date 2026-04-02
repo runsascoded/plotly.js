@@ -467,7 +467,7 @@ export default function plotOne(gd: GraphDiv, cd: any[], element: Element, trans
 
         if(hasTransition) {
             slices.exit().transition()
-                .each(function() {
+                .each(function(this: any) {
                     const sliceTop = select(this);
 
                     const slicePath = sliceTop.select('path.surface');

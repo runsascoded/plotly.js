@@ -14,7 +14,7 @@ export default ScrollBox;
  * @param           container   Container to be scroll-boxed (as a D3 selection)
  * @param {string}  id          Id for the clip path to implement the scroll box
  */
-function ScrollBox(gd: GraphDiv, container: any, id: any) {
+function ScrollBox(this: any, gd: GraphDiv, container: any, id: any) {
     this.gd = gd;
     this.container = container;
     this.id = id;

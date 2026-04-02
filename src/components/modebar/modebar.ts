@@ -15,7 +15,7 @@ const Parser = new DOMParser();
  * @Param {object} opts.container  container div to append modeBar
  * @Param {object} opts.graphInfo  primary plot object containing data and layout
  */
-function ModeBar(opts: any) {
+function ModeBar(this: any, opts: any) {
     this.container = opts.container;
     this.element = document.createElement('div');
 

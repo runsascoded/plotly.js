@@ -123,7 +123,7 @@ export function addLinks(gd?: any): void {
             fill: Color.defaultLine,
             'pointer-events': 'all'
         })
-        .each(function() {
+        .each(function(this: any) {
             const links = select(this);
             links.append('tspan').classed('js-link-to-tool', true);
             links.append('tspan').classed('js-link-spacer', true);
@@ -760,7 +760,7 @@ export function createTransitionData(gd?: any): void {
 // helper function to be bound to fullLayout to check
 // whether a certain plot type is present on plot
 // or trace has a category
-export function _hasPlotType(category?: any): boolean {
+export function _hasPlotType(this: any, category?: any): boolean {
     let i;
 
     // check base plot modules

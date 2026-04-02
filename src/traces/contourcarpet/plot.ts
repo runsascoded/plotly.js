@@ -18,7 +18,7 @@ export default function plot(gd: GraphDiv, plotinfo, cdcontours, contourcarpetLa
     const xa = plotinfo.xaxis;
     const ya = plotinfo.yaxis;
 
-    Lib.makeTraceGroups(contourcarpetLayer, cdcontours, 'contour').each(function(cd) {
+    Lib.makeTraceGroups(contourcarpetLayer, cdcontours, 'contour').each(function(this: any, cd) {
         const plotGroup = select(this);
         const cd0 = cd[0];
         const trace = cd0.trace;
@@ -196,10 +196,10 @@ function makeLinesAndLabels(plotgroup, pathinfo, gd, cd0, contours, plotinfo, ca
         const normLength = constants.LABELDISTANCE * plotDiagonal /
             Math.max(1, pathinfo.length / constants.LABELINCREASE);
 
-        linegroup.each(function(d) {
+        linegroup.each(function(this: any, d) {
             const textOpts = contourPlot.calcTextOpts(d.level, contourFormat, dummyText, gd);
 
-            select(this).selectAll('path').each(function(pathData) {
+            select(this).selectAll('path').each(function(this: any, pathData) {
                 const path = this;
                 const pathBounds = Lib.getVisibleSegment(path, bounds, textOpts.height / 2);
                 if(!pathBounds) return;
@@ -328,7 +328,7 @@ function makeFills(trace, plotgroup, xa, ya, pathinfo, perimeter, ab2p, carpet, 
     const fillitems = fillgroup.selectAll('path').data(hasFills ? pathinfo : []);
     fillitems.enter().append('path');
     fillitems.exit().remove();
-    fillitems.each(function(pi) {
+    fillitems.each(function(this: any, pi) {
         // join all paths for this level together into a single path
         // first follow clockwise around the perimeter to close any open paths
         // if the whole perimeter is above this level, start with a path

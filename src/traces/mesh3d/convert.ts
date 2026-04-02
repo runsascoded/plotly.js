@@ -11,7 +11,7 @@ import _index2 from '../../components/colorscale/index.js';
 const { extractOpts } = _index2;
 import zip3 from '../../plots/gl3d/zip3.js';
 
-function Mesh3DTrace(scene, mesh, uid) {
+function Mesh3DTrace(this: any, scene, mesh, uid) {
     this.scene = scene;
     this.uid = uid;
     this.mesh = mesh;

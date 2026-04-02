@@ -13,7 +13,7 @@ import createMapboxLayer from './layers.js';
 const drawMode = dragHelpers.drawMode;
 const selectMode = dragHelpers.selectMode;
 
-function Mapbox(gd, id) {
+function Mapbox(this: any, gd, id) {
     this.id = id;
     this.gd = gd;
 

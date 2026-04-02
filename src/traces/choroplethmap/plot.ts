@@ -3,7 +3,7 @@ const { convert, convertOnSelect } = _convert;
 import _constants from '../../plots/map/constants.js';
 const { traceLayerPrefix: LAYER_PREFIX } = _constants;
 
-function ChoroplethMap(subplot, uid) {
+function ChoroplethMap(this: any, subplot, uid) {
     this.type = 'choroplethmap';
     this.subplot = subplot;
     this.uid = uid;

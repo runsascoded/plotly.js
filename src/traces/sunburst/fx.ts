@@ -187,7 +187,7 @@ export default function attachFxHandlers(sliceTop: any, entry: any, gd: GraphDiv
         });
     };
 
-    const onMouseOut = function(evt) {
+    const onMouseOut = function(this: any, evt) {
         const fullLayoutNow = gd._fullLayout;
         const traceNow = gd._fullData[trace.index];
         const pt = select(this).datum();

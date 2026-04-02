@@ -15,7 +15,7 @@ export default Sieve;
  *  - @param {boolean} [overlapNoMerge]
  *     If true, then don't merge overlapping bars into a single bar
  */
-function Sieve(traces: any[], opts: any) {
+function Sieve(this: any, traces: any[], opts: any) {
     this.traces = traces;
     this.sepNegVal = opts.sepNegVal;
     this.overlapNoMerge = opts.overlapNoMerge;

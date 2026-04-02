@@ -111,7 +111,7 @@ export default function drawDescendants(gd: GraphDiv, cd: any[], entry: any, sli
 
     let updateSlices = slices;
     if(hasTransition) {
-        updateSlices = updateSlices.transition().on('end', function() {
+        updateSlices = updateSlices.transition().on('end', function(this: any) {
             // N.B. gd._transitioning is (still) *true* by the time
             // transition updates get here
             const sliceTop = select(this);
@@ -123,7 +123,7 @@ export default function drawDescendants(gd: GraphDiv, cd: any[], entry: any, sli
         });
     }
 
-    updateSlices.each(function(pt) {
+    updateSlices.each(function(this: any, pt) {
         const isHeader = helpers.isHeader(pt, trace);
 
         // for bbox

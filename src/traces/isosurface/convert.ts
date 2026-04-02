@@ -25,7 +25,7 @@ const findNearestOnAxis = function(w, arr) {
     };
 };
 
-function IsosurfaceTrace(scene, mesh, uid) {
+function IsosurfaceTrace(this: any, scene, mesh, uid) {
     this.scene = scene;
     this.uid = uid;
     this.mesh = mesh;

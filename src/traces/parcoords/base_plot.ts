@@ -25,7 +25,7 @@ export const toSVG = function(gd) {
     const canvases = root.filter(function(d, i) {return i === root.size() - 1;})
         .selectAll('.gl-canvas-context, .gl-canvas-focus');
 
-    function canvasToImage() {
+    function canvasToImage(this: any) {
         const canvas = this;
         const imageData = canvas.toDataURL('image/png');
         const image = imageRoot.append('svg:image');

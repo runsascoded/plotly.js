@@ -78,7 +78,7 @@ export default function toSVG(gd: GraphDiv, format?: string, scale?: number) {
 
     svg.selectAll('text')
         .attr({'data-unformatted': null, 'data-math': null})
-        .each(function() {
+        .each(function(this: any) {
             const txt = select(this);
 
             // hidden text is pre-formatting mathjax, the browser ignores it
@@ -117,7 +117,7 @@ export default function toSVG(gd: GraphDiv, format?: string, scale?: number) {
             }
         });
 
-    svg.selectAll('.gradient_filled,.pattern_filled').each(function() {
+    svg.selectAll('.gradient_filled,.pattern_filled').each(function(this: any) {
         const pt = select(this);
 
         // similar to font family styles above,

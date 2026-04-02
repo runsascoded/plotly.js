@@ -478,7 +478,7 @@ export default function parcoords(gd: GraphDiv, cdModule: any, layout: any, call
     // emit hover / unhover event
     pickLayer
         .style('pointer-events', isStatic ? 'none' : 'auto')
-        .on('mousemove', function(event: any) {
+        .on('mousemove', function(this: any, event: any) {
             if(state.linePickActive() && d.lineLayer && callbacks && callbacks.hover) {
                 const cw = this.width;
                 const ch = this.height;
@@ -554,7 +554,7 @@ export default function parcoords(gd: GraphDiv, cdModule: any, layout: any, call
     });
 
     glLayers
-        .each(function(d) {
+        .each(function(this: any, d) {
             if(d.viewModel) {
                 if(!d.lineLayer || callbacks) { // recreate in case of having callbacks e.g. restyle. Should we test for callback to be a restyle?
                     d.lineLayer = lineLayerMaker(this, d);
@@ -576,7 +576,7 @@ export default function parcoords(gd: GraphDiv, cdModule: any, layout: any, call
     // drag column for reordering columns
     yAxis.call(d3Drag()
         .origin(function(d) { return d; })
-        .on('drag', function(event: any) {
+        .on('drag', function(this: any, event: any) {
             const p = d.parent;
             state.linePickActive(false);
             d.x = Math.max(-c.overdrag, Math.min(d.model.width + c.overdrag, event.x));
@@ -592,13 +592,13 @@ export default function parcoords(gd: GraphDiv, cdModule: any, layout: any, call
             updatePanelLayout(yAxis, p, plotGlPixelRatio);
 
             yAxis.filter(function(e) { return Math.abs(d.xIndex - e.xIndex) !== 0; })
-                .attr('transform', function(d) { return strTranslate(d.xScale(d.xIndex), 0); });
+                .attr('transform', function(this: any, d) { return strTranslate(d.xScale(d.xIndex), 0); });
             select(this).attr('transform', strTranslate(d.x, 0));
             yAxis.each(function(e, i0, i1) { if(i1 === d.parent.key) p.dimensions[i0] = e; });
             p.contextLayer && p.contextLayer.render(p.panels, false, !someFiltersActive(p));
             p.focusLayer.render && p.focusLayer.render(p.panels);
         })
-        .on('end', function(event: any) {
+        .on('end', function(this: any, event: any) {
             const p = d.parent;
             d.x = d.xScale(d.xIndex);
             d.canvasX = d.x * d.model.canvasPixelRatio;
@@ -636,7 +636,7 @@ export default function parcoords(gd: GraphDiv, cdModule: any, layout: any, call
         .classed(c.cn.axis, true);
 
     axis
-        .each(function(d) {
+        .each(function(this: any, d) {
             const wantedTickCount = d.model.height / d.model.tickDistance;
             const scale = d.domainScale;
             const sdom = scale.domain();
@@ -684,7 +684,7 @@ export default function parcoords(gd: GraphDiv, cdModule: any, layout: any, call
 
     axisTitle
         .text(function(d) { return d.label; })
-        .each(function(d) {
+        .each(function(this: any, d) {
             const e = select(this);
             font(e, d.model.labelFont);
             svgTextUtils.convertToTspans(e, gd);
@@ -737,7 +737,7 @@ export default function parcoords(gd: GraphDiv, cdModule: any, layout: any, call
 
     axisExtentTopText
         .text(function(d) { return extremeText(d, true); })
-        .each(function(d) { font(select(this), d.model.rangeFont); });
+        .each(function(this: any, d) { font(select(this), d.model.rangeFont); });
 
     const axisExtentBottom = axisExtent.selectAll('.' + c.cn.axisExtentBottom)
         .data(repeat, keyFun);
@@ -762,7 +762,7 @@ export default function parcoords(gd: GraphDiv, cdModule: any, layout: any, call
 
     axisExtentBottomText
         .text(function(d) { return extremeText(d, false); })
-        .each(function(d) { font(select(this), d.model.rangeFont); });
+        .each(function(this: any, d) { font(select(this), d.model.rangeFont); });
 
     brush.ensureAxisBrush(axisOverlays, paperColor, gd);
 }

@@ -40,7 +40,7 @@ export default function draw(gd: GraphDiv) {
         Plots.autoMargin(gd, autoMarginId(sliderOpts));
     }
 
-    sliders.exit().each(function() {
+    sliders.exit().each(function(this: any) {
         select(this).selectAll('g.' + constants.groupClassName)
             .each(clearSlider);
     })
@@ -65,12 +65,12 @@ export default function draw(gd: GraphDiv) {
         findDimensions(gd, sliderOpts);
     }
 
-    sliderGroups.each(function(sliderOpts: any) {
+    sliderGroups.each(function(this: any, sliderOpts: any) {
         const gSlider = select(this);
 
         computeLabelSteps(sliderOpts);
 
-        Plots.manageCommandObserver(gd, sliderOpts, sliderOpts._visibleSteps, function(data: any) {
+        Plots.manageCommandObserver(gd, sliderOpts, sliderOpts._visibleSteps, function(this: any, data: any) {
             // NB: Same as below. This is *not* always the same as sliderOpts since
             // if a new set of steps comes in, the reference in this callback would
             // be invalid. We need to refetch it from the slider group, which is
@@ -124,7 +124,7 @@ function findDimensions(gd: GraphDiv, sliderOpts: any) {
     // loop over fake buttons to find width / height
     let maxLabelWidth = 0;
     let labelHeight = 0;
-    sliderLabels.each(function(stepOpts: any) {
+    sliderLabels.each(function(this: any, stepOpts: any) {
         const labelGroup = select(this);
 
         const text = drawLabel(labelGroup, {step: stepOpts}, sliderOpts);
@@ -377,7 +377,7 @@ function drawLabelGroup(sliderGroup: any, sliderOpts: any) {
 
     labelItems.exit().remove();
 
-    labelItems.each(function(d: any) {
+    labelItems.each(function(this: any, d: any) {
         const item = select(this);
 
         item.call(drawLabel, d, sliderOpts);
@@ -523,7 +523,7 @@ function drawTicks(sliderGroup: any, sliderOpts: any) {
         'shape-rendering': 'crispEdges'
     });
 
-    tick.each(function(d: any, i: any) {
+    tick.each(function(this: any, d: any, i: any) {
         const isMajor = i % dims.labelStride === 0;
         const item = select(this);
 

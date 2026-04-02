@@ -73,7 +73,7 @@ function sync(geo, projection, cb) {
 function zoomScoped(geo, projection) {
     const zoom = initZoom(geo, projection);
 
-    function handleZoomstart() {
+    function handleZoomstart(this: any) {
         select(this).style(zoomstartStyle);
     }
 
@@ -98,7 +98,7 @@ function zoomScoped(geo, projection) {
         set('center.lat', center[1]);
     }
 
-    function handleZoomend() {
+    function handleZoomend(this: any) {
         select(this).style(zoomendStyle);
         sync(geo, projection, syncCb);
     }
@@ -133,7 +133,7 @@ function zoomNonClipped(geo, projection) {
         );
     }
 
-    function handleZoomstart() {
+    function handleZoomstart(this: any) {
         select(this).style(zoomstartStyle);
 
         mouse0 = pointer(event, this);
@@ -143,7 +143,7 @@ function zoomNonClipped(geo, projection) {
         zoomPoint = position(mouse0);
     }
 
-    function handleZoom() {
+    function handleZoom(this: any) {
         mouse1 = pointer(event, this);
 
         if(outside(mouse0)) {
@@ -178,7 +178,7 @@ function zoomNonClipped(geo, projection) {
         });
     }
 
-    function handleZoomend() {
+    function handleZoomend(this: any) {
         select(this).style(zoomendStyle);
         if(didZoom) sync(geo, projection, syncCb);
     }
@@ -211,7 +211,7 @@ function zoomClipped(geo, projection) {
 
     let zoomPoint;
 
-    zoom.on('zoomstart', function(event) {
+    zoom.on('zoomstart', function(this: any, event) {
         select(this).style(zoomstartStyle);
 
         let mouse0 = pointer(event, this);
@@ -222,7 +222,7 @@ function zoomClipped(geo, projection) {
 
         zoomPoint = position(projection, mouse0);
 
-        zoomOn.call(zoom, 'zoom', function(event) {
+        zoomOn.call(zoom, 'zoom', function(this: any, event) {
             const mouse1 = pointer(event, this);
 
             projection.scale(view.k = event.scale);
@@ -265,7 +265,7 @@ function zoomClipped(geo, projection) {
 
         zoomstarted(event.of(this, arguments));
     })
-    .on('zoomend', function(event) {
+    .on('zoomend', function(this: any, event) {
         select(this).style(zoomendStyle);
         zoomOn.call(zoom, 'zoom', null);
         zoomended(event.of(this, arguments));
