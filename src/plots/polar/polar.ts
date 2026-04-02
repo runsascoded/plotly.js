@@ -62,19 +62,19 @@ function Polar(this: any, gd: GraphDiv, id: string, isSmith?: boolean) {
     this.framework = fullLayout['_' + (isSmith ? 'smith' : 'polar') + 'layer'].append('g')
         .attr('class', id);
 
-    this.getHole = function(this: any, s) {
+    this.getHole = function(this: any, s: any) {
         return this.isSmith ? 0 : s.hole;
     };
 
-    this.getSector = function(this: any, s) {
+    this.getSector = function(this: any, s: any) {
         return this.isSmith ? [0, 360] : s.sector;
     };
 
-    this.getRadial = function(this: any, s) {
+    this.getRadial = function(this: any, s: any) {
         return this.isSmith ? s.realaxis : s.radialaxis;
     };
 
-    this.getAngular = function(this: any, s) {
+    this.getAngular = function(this: any, s: any) {
         return this.isSmith ? s.imaginaryaxis : s.angularaxis;
     };
 
@@ -89,10 +89,11 @@ function Polar(this: any, gd: GraphDiv, id: string, isSmith?: boolean) {
 const proto = Polar.prototype;
 
 export default function createPolar(gd: GraphDiv, id: string, isSmith?: boolean) {
-    return new Polar(gd, id, isSmith);
+    // @ts-ignore TS7009
+    return (new Polar(gd, id, isSmith) as any);
 }
 
-proto.plot = function(polarCalcData, fullLayout) {
+proto.plot = function(polarCalcData: any, fullLayout: any) {
     const _this = this;
     const polarLayout = fullLayout[_this.id];
 
@@ -117,7 +118,7 @@ proto.plot = function(polarCalcData, fullLayout) {
     }
 };
 
-proto.updateLayers = function(fullLayout, polarLayout) {
+proto.updateLayers = function(fullLayout: any, polarLayout: any) {
     const _this = this;
     const isSmith = _this.isSmith;
     const layers = _this.layers;
@@ -148,8 +149,8 @@ proto.updateLayers = function(fullLayout, polarLayout) {
         .data(layerData, String);
 
     join.enter().append('g')
-        .attr('class', function(d) { return subLayer + ' ' + d;})
-        .each(function(this: any, d) {
+        .attr('class', function(d: any) { return subLayer + ' ' + d;})
+        .each(function(this: any, d: any) {
             const sel = layers[d] = select(this);
 
             switch(d) {
@@ -211,7 +212,7 @@ proto.updateLayers = function(fullLayout, polarLayout) {
  *   setup so that polar traces can reuse plot methods of Cartesian traces
  *   which mostly rely on 2pixel methods (e.g ax.c2p)
  */
-proto.updateLayout = function(fullLayout, polarLayout) {
+proto.updateLayout = function(fullLayout: any, polarLayout: any) {
     const _this = this;
     const layers = _this.layers;
     const gs = fullLayout._size;
@@ -334,13 +335,13 @@ proto.updateLayout = function(fullLayout, polarLayout) {
         .call(Color.fill, polarLayout.bgcolor);
 };
 
-proto.mockAxis = function(fullLayout, polarLayout, axLayout, opts) {
+proto.mockAxis = function(fullLayout: any, polarLayout: any, axLayout: any, opts: any) {
     const ax = Lib.extendFlat({}, axLayout, opts);
     setConvertPolar(ax, polarLayout, fullLayout);
     return ax;
 };
 
-proto.mockCartesianAxis = function(fullLayout, polarLayout, opts) {
+proto.mockCartesianAxis = function(fullLayout: any, polarLayout: any, opts: any) {
     const _this = this;
     const isSmith = _this.isSmith;
     const axId = opts._id;
@@ -362,7 +363,7 @@ proto.mockCartesianAxis = function(fullLayout, polarLayout, opts) {
     };
 
     ax.isPtWithinRange = axId === 'x' && !isSmith ?
-        function(d) { return _this.isPtInside(d); } :
+        function(d: any) { return _this.isPtInside(d); } :
         function() { return true; };
 
     ax.setRange();
@@ -371,7 +372,7 @@ proto.mockCartesianAxis = function(fullLayout, polarLayout, opts) {
     return ax;
 };
 
-proto.doAutoRange = function(fullLayout, polarLayout) {
+proto.doAutoRange = function(fullLayout: any, polarLayout: any) {
     const _this = this;
     const gd = _this.gd;
     const radialAxis = _this.radialAxis;
@@ -407,7 +408,7 @@ proto.doAutoRange = function(fullLayout, polarLayout) {
     }
 };
 
-proto.updateRadialAxis = function(fullLayout, polarLayout) {
+proto.updateRadialAxis = function(fullLayout: any, polarLayout: any) {
     const _this = this;
     const gd = _this.gd;
     const layers = _this.layers;
@@ -438,20 +439,20 @@ proto.updateRadialAxis = function(fullLayout, polarLayout) {
 
     // easier to set rotate angle with custom translate function
     const transFn = isSmith ?
-        function(d) {
+        function(d: any) {
             const t = smithTransform(_this, smith([d.x, 0]));
             return strTranslate(t[0] - cx, t[1] - cy);
         } :
-        function(d) {
+        function(d: any) {
             return strTranslate(ax.l2p(d.x) + innerRadius, 0);
         };
 
     // set special grid path function
     const gridPathFn = isSmith ?
-        function(d) {
+        function(d: any) {
             return resistanceArc(_this, d.x, -Infinity, Infinity);
         } :
-        function(d) {
+        function(d: any) {
             return _this.pathArc(ax.r2p(d.x) + innerRadius);
         };
 
@@ -467,10 +468,10 @@ proto.updateRadialAxis = function(fullLayout, polarLayout) {
         let labelShift = 0;
 
         const vals = isSmith ?
-            (ax.tickvals || []).filter(function(x) {
+            (ax.tickvals || []).filter(function(x: any) {
                 // filter negative
                 return x >= 0;
-            }).map(function(x) {
+            }).map(function(x: any) {
                 return Axes.tickText(ax, x, true, false);
             }) : Axes.calcTicks(ax);
 
@@ -548,7 +549,7 @@ proto.updateRadialAxis = function(fullLayout, polarLayout) {
     .call(Color.stroke, radialLayout.linecolor);
 };
 
-proto.updateRadialAxisTitle = function(fullLayout, polarLayout, _angle) {
+proto.updateRadialAxisTitle = function(fullLayout: any, polarLayout: any, _angle: any) {
     if(this.isSmith) return;
 
     const _this = this;
@@ -597,7 +598,7 @@ proto.updateRadialAxisTitle = function(fullLayout, polarLayout, _angle) {
     });
 };
 
-proto.updateAngularAxis = function(fullLayout, polarLayout) {
+proto.updateAngularAxis = function(fullLayout: any, polarLayout: any) {
     const _this = this;
     const gd = _this.gd;
     const layers = _this.layers;
@@ -618,11 +619,11 @@ proto.updateAngularAxis = function(fullLayout, polarLayout) {
 
     // 't'ick to 'g'eometric radians is used all over the place here
     const t2g = isSmith ?
-        function(d) {
+        function(d: any) {
             const t = smithTransform(_this, smith([0, d.x]));
             return Math.atan2(t[0] - cx, t[1] - cy) - Math.PI / 2;
         } :
-        function(d) { return ax.t2g(d.x); };
+        function(d: any) { return ax.t2g(d.x); };
 
     // run rad2deg on tick0 and ditck for thetaunit: 'radians' axes
     if(ax.type === 'linear' && ax.thetaunit === 'radians') {
@@ -630,35 +631,35 @@ proto.updateAngularAxis = function(fullLayout, polarLayout) {
         ax.dtick = rad2deg(ax.dtick);
     }
 
-    const _transFn = function(rad) {
+    const _transFn = function(rad: any) {
         return strTranslate(cx + radius * Math.cos(rad), cy - radius * Math.sin(rad));
     };
 
     const transFn = isSmith ?
-        function(d) {
+        function(d: any) {
             const t = smithTransform(_this, smith([0, d.x]));
             return strTranslate(t[0], t[1]);
         } :
-        function(d) {
+        function(d: any) {
             return _transFn(t2g(d));
         };
 
     const transFn2 = isSmith ?
-        function(d) {
+        function(d: any) {
             const t = smithTransform(_this, smith([0, d.x]));
             const rad = Math.atan2(t[0] - cx, t[1] - cy) - Math.PI / 2;
             return strTranslate(t[0], t[1]) + strRotate(-rad2deg(rad));
         } :
-        function(d) {
+        function(d: any) {
             const rad = t2g(d);
             return _transFn(rad) + strRotate(-rad2deg(rad));
         };
 
     const gridPathFn = isSmith ?
-        function(d) {
+        function(d: any) {
             return reactanceArc(_this, d.x, 0, Infinity);
         } :
-        function(d) {
+        function(d: any) {
             const rad = t2g(d);
             const cosRad = Math.cos(rad);
             const sinRad = Math.sin(rad);
@@ -670,19 +671,19 @@ proto.updateAngularAxis = function(fullLayout, polarLayout) {
     const labelStandoff = out.labelStandoff;
     const labelFns: any = {};
 
-    labelFns.xFn = function(d) {
+    labelFns.xFn = function(d: any) {
         const rad = t2g(d);
         return Math.cos(rad) * labelStandoff;
     };
 
-    labelFns.yFn = function(d) {
+    labelFns.yFn = function(d: any) {
         const rad = t2g(d);
         const ff = Math.sin(rad) > 0 ? 0.2 : 1;
         return -Math.sin(rad) * (labelStandoff + d.fontSize * ff) +
             Math.abs(Math.cos(rad)) * (d.fontSize * MID_SHIFT);
     };
 
-    labelFns.anchorFn = function(d) {
+    labelFns.anchorFn = function(d: any) {
         const rad = t2g(d);
         const cos = Math.cos(rad);
         return Math.abs(cos) < 0.1 ?
@@ -690,7 +691,7 @@ proto.updateAngularAxis = function(fullLayout, polarLayout) {
             (cos > 0 ? 'start' : 'end');
     };
 
-    labelFns.heightFn = function(d, a, h) {
+    labelFns.heightFn = function(d: any, a: any, h: any) {
         const rad = t2g(d);
         return -0.5 * (1 + Math.sin(rad)) * h;
     };
@@ -731,7 +732,7 @@ proto.updateAngularAxis = function(fullLayout, polarLayout) {
     // the range w.r.t sector, so that sectors that cross 360 can
     // show all their ticks.
     if(ax.type === 'category') {
-        vals = vals.filter(function(d) {
+        vals = vals.filter(function(d: any) {
             return Lib.isAngleInsideSector(t2g(d), _this.sectorInRad);
         });
     }
@@ -777,7 +778,7 @@ proto.updateAngularAxis = function(fullLayout, polarLayout) {
     .call(Color.stroke, angularLayout.linecolor);
 };
 
-proto.updateFx = function(fullLayout, polarLayout) {
+proto.updateFx = function(fullLayout: any, polarLayout: any) {
     if(!this.gd._context.staticPlot) {
         const hasDrag = !this.isSmith;
         if(hasDrag) {
@@ -789,7 +790,7 @@ proto.updateFx = function(fullLayout, polarLayout) {
     }
 };
 
-proto.updateHoverAndMainDrag = function(fullLayout) {
+proto.updateHoverAndMainDrag = function(fullLayout: any) {
     const _this = this;
     const isSmith = _this.isSmith;
     const gd = _this.gd;
@@ -812,8 +813,8 @@ proto.updateHoverAndMainDrag = function(fullLayout) {
     const chw = constants.cornerHalfWidth;
     const chl = constants.cornerLen / 2;
 
-    let scaleX;
-    let scaleY;
+    let scaleX: any;
+    let scaleY: any;
 
     const mainDrag = dragBox.makeDragger(layers, 'path', 'maindrag', fullLayout.dragmode === false ? 'none' : 'crosshair');
 
@@ -821,13 +822,13 @@ proto.updateHoverAndMainDrag = function(fullLayout) {
         .attr('d', _this.pathSubplot())
         .attr('transform', strTranslate(cx, cy));
 
-    mainDrag.onmousemove = function(evt) {
+    mainDrag.onmousemove = function(evt: any) {
         Fx.hover(gd, evt, _this.id);
         gd._fullLayout._lasthover = mainDrag;
         gd._fullLayout._hoversubplot = _this.id;
     };
 
-    mainDrag.onmouseout = function(evt) {
+    mainDrag.onmouseout = function(evt: any) {
         if(gd._dragging) return;
         dragElement.unhover(gd, evt);
     };
@@ -846,31 +847,31 @@ proto.updateHoverAndMainDrag = function(fullLayout) {
     };
 
     // mouse px position at drag start (0), move (1)
-    let x0, y0;
+    let x0: any, y0: any;
     // radial distance from circle center at drag start (0), move (1)
-    let r0, r1;
+    let r0: any, r1: any;
     // zoombox persistent quantities
-    let path0, dimmed, lum;
+    let path0: any, dimmed: any, lum: any;
     // zoombox, corners elements
-    let zb, corners;
+    let zb: any, corners: any;
 
-    function norm(x, y) {
+    function norm(x: any, y: any) {
         return Math.sqrt(x * x + y * y);
     }
 
-    function xy2r(x, y) {
+    function xy2r(x: any, y: any) {
         return norm(x - cxx, y - cyy);
     }
 
-    function xy2a(x, y) {
+    function xy2a(x: any, y: any) {
         return Math.atan2(cyy - y, x - cxx);
     }
 
-    function ra2xy(r, a) {
+    function ra2xy(r: any, a: any) {
         return [r * Math.cos(a), r * Math.sin(-a)];
     }
 
-    function pathCorner(r, a) {
+    function pathCorner(r: any, a: any) {
         if(r === 0) return _this.pathSector(2 * chw);
 
         const da = chl / r;
@@ -891,7 +892,7 @@ proto.updateHoverAndMainDrag = function(fullLayout) {
     //
     // ... we could eventually add another mode for cursor
     // angles 'close to' enough to a particular vertex.
-    function pathCornerForPolygons(r, va0, va1) {
+    function pathCornerForPolygons(r: any, va0: any, va1: any) {
         if(r === 0) return _this.pathSector(2 * chw);
 
         const xy0 = ra2xy(r, va0);
@@ -942,7 +943,7 @@ proto.updateHoverAndMainDrag = function(fullLayout) {
 
     // N.B. this sets scoped 'r0' and 'r1'
     // return true if 'valid' zoom distance, false otherwise
-    function clampAndSetR0R1(rr0, rr1) {
+    function clampAndSetR0R1(rr0: any, rr1: any) {
         rr1 = Math.max(Math.min(rr1, radius), innerRadius);
 
         // starting or ending drag near center (outer edge),
@@ -970,7 +971,7 @@ proto.updateHoverAndMainDrag = function(fullLayout) {
         }
     }
 
-    function applyZoomMove(path1, cpath) {
+    function applyZoomMove(path1: any, cpath: any) {
         path1 = path1 || path0;
         cpath = cpath || 'M0,0Z';
 
@@ -984,7 +985,7 @@ proto.updateHoverAndMainDrag = function(fullLayout) {
         gd.emit('plotly_relayouting', updateObj);
     }
 
-    function zoomMove(dx, dy) {
+    function zoomMove(dx: any, dy: any) {
         dx = dx * scaleX;
         dy = dy * scaleY;
 
@@ -1006,12 +1007,12 @@ proto.updateHoverAndMainDrag = function(fullLayout) {
         applyZoomMove(path1, cpath);
     }
 
-    function findPolygonRadius(x, y, va0, va1) {
+    function findPolygonRadius(x: any, y: any, va0: any, va1: any) {
         const xy = helpers.findIntersectionXY(va0, va1, va0, [x - cxx, cyy - y]);
         return norm(xy[0], xy[1]);
     }
 
-    function zoomMoveForPolygons(dx, dy) {
+    function zoomMoveForPolygons(dx: any, dy: any) {
         const x1 = x0 + dx;
         const y1 = y0 + dy;
         const a0 = xy2a(x0, y0);
@@ -1047,7 +1048,7 @@ proto.updateHoverAndMainDrag = function(fullLayout) {
         Registry.call('_guiRelayout', gd, updateObj);
     }
 
-    function computeZoomUpdates(update) {
+    function computeZoomUpdates(update: any) {
         const rl = radialAxis._rl;
         const m = (rl[1] - rl[0]) / (1 - innerRadius / radius) / radius;
         const newRng = [
@@ -1057,7 +1058,7 @@ proto.updateHoverAndMainDrag = function(fullLayout) {
         update[_this.id + '.radialaxis.range'] = newRng;
     }
 
-    function zoomClick(numClicks, evt) {
+    function zoomClick(numClicks: any, evt: any) {
         const clickMode = gd._fullLayout.clickmode;
 
         dragBox.removeZoombox(gd);
@@ -1066,7 +1067,7 @@ proto.updateHoverAndMainDrag = function(fullLayout) {
         if(numClicks === 2) {
             const updateObj = {};
             for(const k in _this.viewInitial) {
-                updateObj[_this.id + '.' + k] = _this.viewInitial[k];
+                (updateObj as any)[_this.id + '.' + k] = _this.viewInitial[k];
             }
 
             gd.emit('plotly_doubleclick', null);
@@ -1082,7 +1083,7 @@ proto.updateHoverAndMainDrag = function(fullLayout) {
         }
     }
 
-    dragOpts.prepFn = function(evt, startX, startY) {
+    dragOpts.prepFn = function(evt: any, startX: any, startY: any) {
         const dragModeNow = gd._fullLayout.dragmode;
 
         const bbox = mainDrag.getBoundingClientRect();
@@ -1127,7 +1128,7 @@ proto.updateHoverAndMainDrag = function(fullLayout) {
     dragElement.init(dragOpts);
 };
 
-proto.updateRadialDrag = function(fullLayout, polarLayout, rngIndex) {
+proto.updateRadialDrag = function(fullLayout: any, polarLayout: any, rngIndex: any) {
     const _this = this;
     const gd = _this.gd;
     const layers = _this.layers;
@@ -1148,7 +1149,7 @@ proto.updateRadialDrag = function(fullLayout, polarLayout, rngIndex) {
     const rbase = rl[rngIndex];
     const m = 0.75 * (rl[1] - rl[0]) / (1 - _this.getHole(polarLayout)) / radius;
 
-    let tx, ty, className;
+    let tx: any, ty: any, className;
     if(rngIndex) {
         tx = cx + (radius + bl2) * Math.cos(angle0);
         ty = cy - (radius + bl2) * Math.sin(angle0);
@@ -1174,13 +1175,13 @@ proto.updateRadialDrag = function(fullLayout, polarLayout, rngIndex) {
     });
 
     // move function (either rotate or re-range flavor)
-    let moveFn2;
+    let moveFn2: any;
     // rotate angle on done
-    let angle1;
+    let angle1: any;
     // re-range range[1] (or range[0]) on done
-    let rprime;
+    let rprime: any;
 
-    function moveFn(dx, dy) {
+    function moveFn(dx: any, dy: any) {
         if(moveFn2) {
             moveFn2(dx, dy);
         } else {
@@ -1200,7 +1201,7 @@ proto.updateRadialDrag = function(fullLayout, polarLayout, rngIndex) {
         gd.emit('plotly_relayouting', update);
     }
 
-    function computeRadialAxisUpdates(update) {
+    function computeRadialAxisUpdates(update: any) {
         if(angle1 !== null) {
             update[_this.id + '.radialaxis.angle'] = angle1;
         } else if(rprime !== null) {
@@ -1216,7 +1217,7 @@ proto.updateRadialDrag = function(fullLayout, polarLayout, rngIndex) {
         }
     }
 
-    function rotateMove(dx, dy) {
+    function rotateMove(dx: any, dy: any) {
         // disable for inner drag boxes
         if(rngIndex === 0) return;
 
@@ -1236,7 +1237,7 @@ proto.updateRadialDrag = function(fullLayout, polarLayout, rngIndex) {
         _this.updateRadialAxisTitle(fullLayoutNow, polarLayoutNow, angle1);
     }
 
-    function rerangeMove(dx, dy) {
+    function rerangeMove(dx: any, dy: any) {
         // project (dx, dy) unto unit radial axis vector
         const dr = Lib.dot([dx, -dy], [Math.cos(angle0), Math.sin(angle0)]);
         rprime = rbase - m * dr;
@@ -1287,7 +1288,7 @@ proto.updateRadialDrag = function(fullLayout, polarLayout, rngIndex) {
         clearOutline(gd);
     };
 
-    dragOpts.clampFn = function(dx, dy) {
+    dragOpts.clampFn = function(dx: any, dy: any) {
         if(Math.sqrt(dx * dx + dy * dy) < constants.MINDRAG) {
             dx = 0;
             dy = 0;
@@ -1298,7 +1299,7 @@ proto.updateRadialDrag = function(fullLayout, polarLayout, rngIndex) {
     dragElement.init(dragOpts);
 };
 
-proto.updateAngularDrag = function(fullLayout) {
+proto.updateAngularDrag = function(fullLayout: any) {
     const _this = this;
     const gd = _this.gd;
     const layers = _this.layers;
@@ -1322,7 +1323,7 @@ proto.updateAngularDrag = function(fullLayout) {
             .call(setCursor, 'move');
     }
 
-    function xy2a(x, y) {
+    function xy2a(x: any, y: any) {
         return Math.atan2(cyy + dbs - y, x - cxx - dbs);
     }
 
@@ -1332,15 +1333,15 @@ proto.updateAngularDrag = function(fullLayout) {
     const scatterTextPoints = scatterTraces.selectAll('.textpoint');
 
     // mouse px position at drag start (0), move (1)
-    let x0, y0;
+    let x0: any, y0: any;
     // angular axis angle rotation at drag start (0), move (1)
-    let rot0, rot1;
+    let rot0: any, rot1: any;
     // induced radial axis rotation (only used on polygon grids)
-    let rrot1;
+    let rrot1: any;
     // angle about circle center at drag start
-    let a0;
+    let a0: any;
 
-    function moveFn(dx, dy) {
+    function moveFn(dx: any, dy: any) {
         const fullLayoutNow = _this.gd._fullLayout;
         const polarLayoutNow = fullLayoutNow[_this.id];
 
@@ -1415,7 +1416,7 @@ proto.updateAngularDrag = function(fullLayout) {
         gd.emit('plotly_relayouting', update);
     }
 
-    function computeRotationUpdates(updateObj) {
+    function computeRotationUpdates(updateObj: any) {
         updateObj[_this.id + '.angularaxis.rotation'] = rot1;
 
         if(_this.vangles) {
@@ -1431,7 +1432,7 @@ proto.updateAngularDrag = function(fullLayout) {
         Registry.call('_guiRelayout', gd, updateObj);
     }
 
-    dragOpts.prepFn = function(evt, startX, startY) {
+    dragOpts.prepFn = function(evt: any, startX: any, startY: any) {
         const polarLayoutNow = fullLayout[_this.id];
         rot0 = polarLayoutNow.angularaxis.rotation;
 
@@ -1461,7 +1462,7 @@ proto.updateAngularDrag = function(fullLayout) {
     dragElement.init(dragOpts);
 };
 
-proto.isPtInside = function(d) {
+proto.isPtInside = function(d: any) {
     if(this.isSmith) return true;
 
     const sectorInRad = this.sectorInRad;
@@ -1475,21 +1476,21 @@ proto.isPtInside = function(d) {
     return fn(r, thetag, rl, sectorInRad, vangles);
 };
 
-proto.pathArc = function(r) {
+proto.pathArc = function(r: any) {
     const sectorInRad = this.sectorInRad;
     const vangles = this.vangles;
     const fn = vangles ? helpers.pathPolygon : Lib.pathArc;
     return fn(r, sectorInRad[0], sectorInRad[1], vangles);
 };
 
-proto.pathSector = function(r) {
+proto.pathSector = function(r: any) {
     const sectorInRad = this.sectorInRad;
     const vangles = this.vangles;
     const fn = vangles ? helpers.pathPolygon : Lib.pathSector;
     return fn(r, sectorInRad[0], sectorInRad[1], vangles);
 };
 
-proto.pathAnnulus = function(r0, r1) {
+proto.pathAnnulus = function(r0: any, r1: any) {
     const sectorInRad = this.sectorInRad;
     const vangles = this.vangles;
     const fn = vangles ? helpers.pathPolygonAnnulus : Lib.pathAnnulus;
@@ -1502,13 +1503,13 @@ proto.pathSubplot = function() {
     return r0 ? this.pathAnnulus(r0, r1) : this.pathSector(r1);
 };
 
-proto.fillViewInitialKey = function(key, val) {
+proto.fillViewInitialKey = function(key: any, val: any) {
     if(!(key in this.viewInitial)) {
         this.viewInitial[key] = val;
     }
 };
 
-function strTickLayout(axLayout) {
+function strTickLayout(axLayout: any) {
     let out = axLayout.ticks + String(axLayout.ticklen) + String(axLayout.showticklabels);
     if('side' in axLayout) out += axLayout.side;
     return out;
@@ -1520,7 +1521,7 @@ function strTickLayout(axLayout) {
 // assumes:
 // - sector[0] < sector[1]
 // - counterclockwise rotation
-function computeSectorBBox(sector) {
+function computeSectorBBox(sector: any) {
     const s0 = sector[0];
     const s1 = sector[1];
     const arc = s1 - s0;
@@ -1569,13 +1570,13 @@ function computeSectorBBox(sector) {
     return [x0, y0, x1, y1];
 }
 
-function snapToVertexAngle(a, vangles) {
-    const fn = function(v) { return Lib.angleDist(a, v); };
+function snapToVertexAngle(a: any, vangles: any) {
+    const fn = function(v: any) { return Lib.angleDist(a, v); };
     const ind = Lib.findIndexOfMin(vangles, fn);
     return vangles[ind];
 }
 
-function updateElement(sel, showAttr, attrs) {
+function updateElement(sel: any, showAttr: any, attrs: any) {
     if(showAttr) {
         sel.attr('display', null);
         sel.attr(attrs);

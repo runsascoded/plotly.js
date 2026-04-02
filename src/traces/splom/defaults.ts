@@ -8,7 +8,7 @@ import mergeLength from '../parcoords/merge_length.js';
 import { isOpenSymbol } from '../scattergl/helpers.js';
 
 export default function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace, defaultColor: string, layout: FullLayout) {
-    function coerce(attr, dflt?) {
+    function coerce(attr: any, dflt?: any) {
         return Lib.coerce(traceIn, traceOut, attributes, attr, dflt);
     }
 
@@ -46,8 +46,8 @@ export default function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace,
     Lib.coerceSelectionMarkerOpacity(traceOut, coerce);
 }
 
-function dimensionDefaults(dimIn, dimOut) {
-    function coerce(attr, dflt?) {
+function dimensionDefaults(dimIn: any, dimOut: any) {
+    function coerce(attr: any, dflt?: any) {
         return Lib.coerce(dimIn, dimOut, attributes.dimensions, attr, dflt);
     }
 
@@ -61,7 +61,7 @@ function dimensionDefaults(dimIn, dimOut) {
     coerce('axis.matches');
 }
 
-function handleAxisDefaults(traceIn: InputTrace, traceOut: FullTrace, layout: FullLayout, coerce) {
+function handleAxisDefaults(traceIn: InputTrace, traceOut: FullTrace, layout: FullLayout, coerce: any) {
     const dimensions = traceOut.dimensions;
     const dimLength = dimensions.length;
     const showUpper = traceOut.showupperhalf;
@@ -90,10 +90,10 @@ function handleAxisDefaults(traceIn: InputTrace, traceOut: FullTrace, layout: Fu
     traceOut._yaxes = {};
 
     // list of 'drawn' x|y axes, use to generate list of subplots
-    const xList = [];
-    const yList = [];
+    const xList: any[] = [];
+    const yList: any[] = [];
 
-    function fillAxisStashes(axId, counterAxId, dim, list) {
+    function fillAxisStashes(axId: any, counterAxId: any, dim: any, list: any) {
         if (!axId) return;
 
         const axLetter = axId.charAt(0);

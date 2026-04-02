@@ -3,7 +3,7 @@ import attributes from './attributes.js';
 import _index from '../../lib/index.js';
 const { fillText } = _index;
 
-export default function hoverPoints(pointData, xval, yval) {
+export default function hoverPoints(pointData: any, xval: any, yval: any) {
     const cd = pointData.cd;
     const trace = cd[0].trace;
     const geo = pointData.subplot;
@@ -48,7 +48,7 @@ export default function hoverPoints(pointData, xval, yval) {
     return [pointData];
 }
 
-function makeHoverInfo(pointData, trace, pt) {
+function makeHoverInfo(pointData: any, trace: any, pt: any) {
     if(trace.hovertemplate) return;
 
     const hoverinfo = pt.hi || trace.hoverinfo;

@@ -40,7 +40,7 @@ function calc(gd: GraphDiv, trace: FullTrace): any[] {
         } else v = 1;
 
         label = labels[i];
-        if(label === undefined || label === '') label = i;
+        if(label === undefined || label === '') label = i as any;
         label = String(label);
 
         const thisLabelIndex = allThisTraceLabels[label];

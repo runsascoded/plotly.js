@@ -8,7 +8,7 @@ import { extendFlat } from '../../lib/extend.js';
 import _edit_types from '../../plot_api/edit_types.js';
 const { overrideAll } = _edit_types;
 
-function makeContourProjAttr(axLetter) {
+function makeContourProjAttr(axLetter: any) {
     return {
         valType: 'boolean',
         dflt: false,
@@ -25,7 +25,7 @@ function makeContourProjAttr(axLetter) {
     };
 }
 
-function makeContourAttr(axLetter) {
+function makeContourAttr(axLetter: any) {
     return {
         show: {
             valType: 'boolean',

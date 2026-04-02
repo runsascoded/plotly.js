@@ -52,7 +52,7 @@ const numericNameWarningCountLimit = 5;
  *
  */
 function _doPlot(gd?: any, data?: any, layout?: any, config?: any): any {
-    let frames;
+    let frames: any;
 
     gd = getGraphDiv(gd);
 
@@ -1304,7 +1304,7 @@ function restyle(gd?: any, astr?: any, val?: any, _traces?: any): any {
     helpers.clearPromiseQueue(gd);
 
     let aobj = {};
-    if (typeof astr === 'string') aobj[astr] = val;
+    if (typeof astr === 'string') (aobj as any)[astr] = val;
     else if (isPlainObject(astr)) {
         // the 3-arg form
         aobj = extendFlat({}, astr);
@@ -1449,7 +1449,7 @@ function _restyle(gd?: any, aobj?: any, traces?: any): any {
     // for the undo / redo queue
     const redoit = {};
     const undoit = {};
-    let axlist;
+    let axlist: any;
 
     // make a new empty vals array for undoit
     function a0() {
@@ -1507,10 +1507,10 @@ function _restyle(gd?: any, aobj?: any, traces?: any): any {
         }
 
         if (!(attr in undoit)) {
-            undoit[attr] = a0();
+            (undoit as any)[attr] = a0();
         }
-        if (undoit[attr][i] === undefined) {
-            undoit[attr][i] = undefinedToNull(extraparam.get());
+        if ((undoit as any)[attr][i] === undefined) {
+            (undoit as any)[attr][i] = undefinedToNull(extraparam.get());
         }
         if (val !== undefined) {
             extraparam.set(val);
@@ -1555,11 +1555,11 @@ function _restyle(gd?: any, aobj?: any, traces?: any): any {
             else vi = null;
         }
 
-        redoit[ai] = vi;
+        (redoit as any)[ai] = vi;
 
         if (ai.slice(0, 6) === 'LAYOUT') {
             param = layoutNP(gd.layout, ai.replace('LAYOUT', ''));
-            undoit[ai] = [undefinedToNull(param.get())];
+            (undoit as any)[ai] = [undefinedToNull(param.get())];
             // since we're allowing val to be an array, allow it here too,
             // even though that's meaningless
             param.set(Array.isArray(vi) ? vi[0] : vi);
@@ -1570,7 +1570,7 @@ function _restyle(gd?: any, aobj?: any, traces?: any): any {
         }
 
         // set attribute in gd.data
-        undoit[ai] = a0();
+        (undoit as any)[ai] = a0();
         for (i = 0; i < traces.length; i++) {
             cont = data[traces[i]];
             contFull = getFullTrace(traces[i]);
@@ -1642,7 +1642,7 @@ function _restyle(gd?: any, aobj?: any, traces?: any): any {
                 }
             }
 
-            undoit[ai][i] = undefinedToNull(oldVal);
+            (undoit as any)[ai][i] = undefinedToNull(oldVal);
             // set the new value - if val is an array, it's one el per trace
             // first check for attributes that get more complex alterations
             const swapAttrs = ['swapxy', 'swapxyaxes', 'orientation', 'orientationaxes'];
@@ -1662,7 +1662,7 @@ function _restyle(gd?: any, aobj?: any, traces?: any): any {
                     // orientationaxes has no value,
                     // it flips everything and the axes
 
-                    cont.orientation = { v: 'h', h: 'v' }[contFull.orientation];
+                    cont.orientation = ({ v: 'h', h: 'v' } as any)[contFull.orientation];
                 }
                 helpers.swapXYData(cont);
                 flags.calc = flags.clearAxisTypes = true;
@@ -1839,7 +1839,7 @@ function axRangeSupplyDefaultsByPass(gd?: any, flags?: any, specs?: any): boolea
         if (k !== 'axrange' && flags[k]) return false;
     }
 
-    let axIn, axOut;
+    let axIn: any, axOut: any;
     const coerce = function (attr?: any, dflt?: any) {
         return Lib.coerce(axIn, axOut, cartesianLayoutAttributes, attr, dflt);
     };
@@ -2641,7 +2641,7 @@ function applyUIRevisions(data?: any, layout?: any, oldFullData?: any, oldFullLa
  *
  */
 function react(gd?: any, data?: any, layout?: any, config?: any): void {
-    let frames, plotDone;
+    let frames: any, plotDone;
     let configChanged = false;
 
     function addFrames(..._args: any[]): any {
@@ -2676,10 +2676,10 @@ function react(gd?: any, data?: any, layout?: any, config?: any): void {
 
         if (configChanged) {
             // Save event listeners as newPlot will remove them
-            const eventListeners = gd._ev.eventNames().map((name) => [name, gd._ev.listeners(name)]);
+            const eventListeners = gd._ev.eventNames().map((name: any) => [name, gd._ev.listeners(name)]);
             plotDone = newPlot(gd, data, layout, config).then(() => {
                 for (const [name, callbacks] of eventListeners) {
-                    callbacks.forEach((cb) => gd.on(name, cb));
+                    callbacks.forEach((cb: any) => gd.on(name, cb));
                 }
 
                 // Call react in case transition should have occurred along with config change
@@ -2823,7 +2823,7 @@ function diffData(gd?: any, oldFullData?: any, newFullData?: any, immutable?: an
     flags.nChanges = 0;
     flags.nChangesAnim = 0;
 
-    let i, trace;
+    let i, trace: any;
 
     function getTraceValObject(parts?: any) {
         const out: any = PlotSchema.getTraceValObject(trace, parts);
@@ -2924,7 +2924,7 @@ function diffLayout(gd?: any, oldFullLayout?: any, newFullLayout?: any, immutabl
 }
 
 function getDiffFlags(oldContainer?: any, newContainer?: any, outerparts?: any, opts?: any): void {
-    let valObject, key, astr;
+    let valObject: any, key: any, astr: any;
 
     const getValObject = opts.getValObject;
     const flags: any = opts.flags;

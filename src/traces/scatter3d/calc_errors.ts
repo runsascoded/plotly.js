@@ -1,6 +1,6 @@
 import Registry from '../../registry.js';
 
-function calculateAxisErrors(data, params, scaleFactor, axis) {
+function calculateAxisErrors(data: any, params: any, scaleFactor: any, axis: any) {
     if(!params || !params.visible) return null;
 
     const computeError = Registry.getComponentMethod('errorbars', 'makeComputeError')(params);
@@ -36,14 +36,14 @@ function calculateAxisErrors(data, params, scaleFactor, axis) {
     return result;
 }
 
-function dataLength(array) {
+function dataLength(array: any) {
     for(let i = 0; i < array.length; i++) {
         if(array[i]) return array[i].length;
     }
     return 0;
 }
 
-function calculateErrors(data, scaleFactor, sceneLayout) {
+function calculateErrors(data: any, scaleFactor: any, sceneLayout: any) {
     const errors = [
         calculateAxisErrors(data.x, data.error_x, scaleFactor[0], sceneLayout.xaxis),
         calculateAxisErrors(data.y, data.error_y, scaleFactor[1], sceneLayout.yaxis),

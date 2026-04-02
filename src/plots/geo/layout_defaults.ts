@@ -17,13 +17,13 @@ export default function supplyLayoutDefaults(layoutIn: any, layoutOut: FullLayou
     });
 }
 
-function handleGeoDefaults(geoLayoutIn, geoLayoutOut, coerce, opts) {
+function handleGeoDefaults(geoLayoutIn: any, geoLayoutOut: any, coerce: any, opts: any) {
     const subplotData = getSubplotData(opts.fullData, 'geo', opts.id);
-    const traceIndices = subplotData.map(function(t) { return t.index; });
+    const traceIndices = subplotData.map(function(t: any) { return t.index; });
 
     const resolution = coerce('resolution');
     let scope = coerce('scope');
-    const scopeParams = constants.scopeDefaults[scope];
+    const scopeParams = (constants.scopeDefaults as any)[scope];
 
     const projType = coerce('projection.type', scopeParams.projType);
     const isAlbersUsa = geoLayoutOut._isAlbersUsa = projType === 'albers usa';
@@ -34,7 +34,7 @@ function handleGeoDefaults(geoLayoutIn, geoLayoutOut, coerce, opts) {
     const isScoped = geoLayoutOut._isScoped = (scope !== 'world');
     const isSatellite = geoLayoutOut._isSatellite = projType === 'satellite';
     const isConic = geoLayoutOut._isConic = projType.indexOf('conic') !== -1 || projType === 'albers';
-    const isClipped = geoLayoutOut._isClipped = !!constants.lonaxisSpan[projType];
+    const isClipped = geoLayoutOut._isClipped = !!(constants.lonaxisSpan as any)[projType];
 
     if(geoLayoutIn.visible === false) {
         // should override template.layout.geo.show* - see issue 4482
@@ -68,7 +68,7 @@ function handleGeoDefaults(geoLayoutIn, geoLayoutOut, coerce, opts) {
         if(isScoped) {
             rangeDflt = scopeParams[axisName + 'Range'];
         } else {
-            const dfltSpans = constants[axisName + 'Span'];
+            const dfltSpans = (constants as any)[axisName + 'Span'];
             const hSpan = (dfltSpans[projType] || dfltSpans['*']) / 2;
             const rot = coerce(
                 'projection.rotation.' + axisName.slice(0, 3),

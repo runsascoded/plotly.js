@@ -1,7 +1,7 @@
 import _index from '../../lib/index.js';
 const { maxRowLength } = _index;
 
-export default function findEmpties(z) {
+export default function findEmpties(z: any) {
     const empties: any[] = [];
     const neighborHash: Record<string, any> = {};
     const noNeighborList: any[] = [];

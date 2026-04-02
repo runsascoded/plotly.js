@@ -44,17 +44,17 @@ function hoverOnBoxes(pointData: any, xval: number, yval: number, hovermode: any
     const t = cd[0].t;
     const isViolin = trace.type === 'violin';
 
-    let pLetter, vLetter, pAxis, vAxis, vVal, pVal, dx, dy, dPos,
-        hoverPseudoDistance, spikePseudoDistance;
+    let pLetter, vLetter, pAxis: any, vAxis, vVal: any, pVal: any, dx: any, dy: any, dPos,
+        hoverPseudoDistance: any, spikePseudoDistance;
 
     const boxDelta = t.bdPos;
     let boxDeltaPos, boxDeltaNeg;
     const posAcceptance = t.wHover;
-    const shiftPos = function(di) { return pAxis.c2l(di.pos) + t.bPos - pAxis.c2l(pVal); };
+    const shiftPos = function(di: any) { return pAxis.c2l(di.pos) + t.bPos - pAxis.c2l(pVal); };
 
     if(isViolin && trace.side !== 'both') {
         if(trace.side === 'positive') {
-            dPos = function(di) {
+            dPos = function(di: any) {
                 const pos = shiftPos(di);
                 return Fx.inbox(pos, pos + posAcceptance, hoverPseudoDistance);
             };
@@ -62,7 +62,7 @@ function hoverOnBoxes(pointData: any, xval: number, yval: number, hovermode: any
             boxDeltaNeg = 0;
         }
         if(trace.side === 'negative') {
-            dPos = function(di) {
+            dPos = function(di: any) {
                 const pos = shiftPos(di);
                 return Fx.inbox(pos - posAcceptance, pos, hoverPseudoDistance);
             };
@@ -70,7 +70,7 @@ function hoverOnBoxes(pointData: any, xval: number, yval: number, hovermode: any
             boxDeltaNeg = boxDelta;
         }
     } else {
-        dPos = function(di) {
+        dPos = function(di: any) {
             const pos = shiftPos(di);
             return Fx.inbox(pos - posAcceptance, pos + posAcceptance, hoverPseudoDistance);
         };
@@ -80,11 +80,11 @@ function hoverOnBoxes(pointData: any, xval: number, yval: number, hovermode: any
     let dVal;
 
     if(isViolin) {
-        dVal = function(di) {
+        dVal = function(di: any) {
             return Fx.inbox(di.span[0] - vVal, di.span[1] - vVal, hoverPseudoDistance);
         };
     } else {
-        dVal = function(di) {
+        dVal = function(di: any) {
             return Fx.inbox(di.min - vVal, di.max - vVal, hoverPseudoDistance);
         };
     }
@@ -114,7 +114,7 @@ function hoverOnBoxes(pointData: any, xval: number, yval: number, hovermode: any
     hoverPseudoDistance = pointData.maxHoverDistance - pseudoDistance;
     spikePseudoDistance = pointData.maxSpikeDistance - pseudoDistance;
 
-    function dxy(di) { return (dx(di) + dy(di)) / 2; }
+    function dxy(di: any) { return (dx(di) + dy(di)) / 2; }
     const distfn = Fx.getDistanceFunction(hovermode, dx, dy, dxy);
     Fx.getClosest(cd, distfn, pointData);
 
@@ -215,11 +215,11 @@ function hoverOnPoints(pointData: any, xval: number, yval: number): any {
     const yPx = ya.c2p(yval);
     let closePtData;
 
-    const dx = function(di) {
+    const dx = function(di: any) {
         const rad = Math.max(3, di.mrc || 0);
         return Math.max(Math.abs(xa.c2p(di.x) - xPx) - rad, 1 - 3 / rad);
     };
-    const dy = function(di) {
+    const dy = function(di: any) {
         const rad = Math.max(3, di.mrc || 0);
         return Math.max(Math.abs(ya.c2p(di.y) - yPx) - rad, 1 - 3 / rad);
     };

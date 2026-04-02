@@ -76,7 +76,7 @@ function convertStyle(gd: GraphDiv, trace: FullTrace) {
             opacity: trace.opacity
         };
 
-        const dashes = (constants.DASHES[trace.line.dash] || [1]).slice();
+        const dashes = ((constants.DASHES as any)[trace.line.dash] || [1]).slice();
         for (i = 0; i < dashes.length; ++i) {
             dashes[i] *= trace.line.width * plotGlPixelRatio;
         }
@@ -126,7 +126,7 @@ function convertTextStyle(gd: GraphDiv, trace: FullTrace) {
         const isArray = Array.isArray(texttemplate);
         const N = isArray ? Math.min(texttemplate.length, count) : count;
         const txt = isArray
-            ? function (i) {
+            ? function (i: any) {
                   return texttemplate[i];
               }
             : function () {
@@ -239,7 +239,7 @@ function convertTextStyle(gd: GraphDiv, trace: FullTrace) {
 
 // scattergl rendering pipeline has limited support of numeric weight values
 // Here we map the numbers to be either bold or normal.
-function weightFallBack(w) {
+function weightFallBack(w: any) {
     if (w <= 1000) {
         return w > 500 ? 'bold' : 'normal';
     }
@@ -398,7 +398,7 @@ function convertMarkerStyle(gd: GraphDiv, trace: FullTrace) {
     return optsOut;
 }
 
-function convertMarkerSelection(gd: GraphDiv, trace: FullTrace, target) {
+function convertMarkerSelection(gd: GraphDiv, trace: FullTrace, target: any) {
     const optsIn = trace.marker;
     let optsOut: any = {};
 
@@ -415,7 +415,7 @@ function convertMarkerSelection(gd: GraphDiv, trace: FullTrace, target) {
     return optsOut;
 }
 
-function convertTextSelection(gd: GraphDiv, trace: FullTrace, target) {
+function convertTextSelection(gd: GraphDiv, trace: FullTrace, target: any) {
     let optsOut: any = {};
 
     if (!target) return optsOut;
@@ -437,7 +437,7 @@ function convertTextSelection(gd: GraphDiv, trace: FullTrace, target) {
     return optsOut;
 }
 
-function convertErrorBarStyle(trace: FullTrace, target, plotGlPixelRatio) {
+function convertErrorBarStyle(trace: FullTrace, target: any, plotGlPixelRatio: any) {
     let optsOut: any = {
         capSize: target.width * 2 * plotGlPixelRatio,
         lineWidth: target.thickness * plotGlPixelRatio,
@@ -457,7 +457,7 @@ const SYMBOL_STROKE = constants.SYMBOL_STROKE;
 const SYMBOL_SDF: any = {};
 const SYMBOL_SVG_CIRCLE = symbolFuncs[0](SYMBOL_SIZE * 0.05);
 
-function getSymbolSdf(d, trace: FullTrace) {
+function getSymbolSdf(d: any, trace: FullTrace) {
     let symbol = d.mx;
     if (symbol === 'circle') return null;
 
@@ -494,7 +494,7 @@ function getSymbolSdf(d, trace: FullTrace) {
     return symbolSdf || null;
 }
 
-function convertLinePositions(gd: GraphDiv, trace: FullTrace, positions) {
+function convertLinePositions(gd: GraphDiv, trace: FullTrace, positions: any) {
     const len = positions.length;
     const count = len / 2;
     let linePositions;
@@ -631,14 +631,14 @@ function convertLinePositions(gd: GraphDiv, trace: FullTrace, positions) {
     };
 }
 
-function convertErrorBarPositions(gd: GraphDiv, trace: FullTrace, positions, x, y) {
+function convertErrorBarPositions(gd: GraphDiv, trace: FullTrace, positions: any, x: any, y: any) {
     const makeComputeError = Registry.getComponentMethod('errorbars', 'makeComputeError');
     const xa = AxisIDs.getFromId(gd, trace.xaxis, 'x');
     const ya = AxisIDs.getFromId(gd, trace.yaxis, 'y');
     const count = positions.length / 2;
     const out: any = {};
 
-    function convertOneAxis(coords, ax: FullAxis) {
+    function convertOneAxis(coords: any, ax: FullAxis) {
         const axLetter = ax._id.charAt(0);
         const opts = trace['error_' + axLetter];
 
@@ -687,7 +687,7 @@ function convertErrorBarPositions(gd: GraphDiv, trace: FullTrace, positions, x, 
     return out;
 }
 
-function convertTextPosition(gd: GraphDiv, trace: FullTrace, textOpts, markerOpts) {
+function convertTextPosition(gd: GraphDiv, trace: FullTrace, textOpts: any, markerOpts: any) {
     const count = trace._length;
     const out: any = {};
     let i;
@@ -706,8 +706,8 @@ function convertTextPosition(gd: GraphDiv, trace: FullTrace, textOpts, markerOpt
             const a = isArrayOrTypedArray(align) ? (align.length > 1 ? align[i] : align[0]) : align;
             const b = isArrayOrTypedArray(baseline) ? (baseline.length > 1 ? baseline[i] : baseline[0]) : baseline;
 
-            const hSign = TEXTOFFSETSIGN[a];
-            const vSign = TEXTOFFSETSIGN[b];
+            const hSign = (TEXTOFFSETSIGN as any)[a];
+            const vSign = (TEXTOFFSETSIGN as any)[b];
             const xPad = ms ? ms / 0.8 + 1 : 0;
             const yPad = -vSign * xPad - vSign * 0.5;
             out.offset[i] = [(hSign * xPad) / fs, yPad / fs];

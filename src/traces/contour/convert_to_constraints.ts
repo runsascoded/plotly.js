@@ -1,10 +1,10 @@
 import Lib from '../../lib/index.js';
 
-export default function(pathinfo, operation) {
+export default function(pathinfo: any, operation: any) {
     let i, pi0, pi1;
 
-    let op0 = function(arr) { return arr.reverse(); };
-    let op1 = function(arr) { return arr; };
+    let op0 = function(arr: any) { return arr.reverse(); };
+    let op1 = function(arr: any) { return arr; };
 
     switch(operation) {
         case '=':
@@ -73,7 +73,7 @@ export default function(pathinfo, operation) {
     }
 }
 
-function copyPathinfo(pi) {
+function copyPathinfo(pi: any) {
     return Lib.extendFlat({}, pi, {
         edgepaths: Lib.extendDeep([], pi.edgepaths),
         paths: Lib.extendDeep([], pi.paths),

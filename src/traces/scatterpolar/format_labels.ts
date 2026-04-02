@@ -2,7 +2,7 @@ import type { FullLayout, FullTrace } from '../../../types/core';
 import Lib from '../../lib/index.js';
 import Axes from '../../plots/cartesian/axes.js';
 
-export default function formatLabels(cdi, trace: FullTrace, fullLayout: FullLayout) {
+export default function formatLabels(cdi: any, trace: FullTrace, fullLayout: FullLayout) {
     const labels: any = {};
 
     let subplot = fullLayout[trace.subplot]._subplot;

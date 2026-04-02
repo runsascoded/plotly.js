@@ -33,7 +33,7 @@ function hoverOnBars(pointData: any, xval: number, yval: number, hovermode: any,
     const maxHoverDistance = pointData.maxHoverDistance;
     const maxSpikeDistance = pointData.maxSpikeDistance;
 
-    let posVal, sizeVal, posLetter, sizeLetter, dx, dy, pRangeCalc;
+    let posVal: any, sizeVal: any, posLetter: any, sizeLetter: any, dx: any, dy: any, pRangeCalc: any;
 
     if(trace.orientation === 'h') {
         posVal = yval;
@@ -54,25 +54,25 @@ function hoverOnBars(pointData: any, xval: number, yval: number, hovermode: any,
     const period = trace[posLetter + 'period'];
     const isClosestOrPeriod = isClosest || period;
 
-    function thisBarMinPos(di) { return thisBarExtPos(di, -1); }
-    function thisBarMaxPos(di) { return thisBarExtPos(di, 1); }
+    function thisBarMinPos(di: any) { return thisBarExtPos(di, -1); }
+    function thisBarMaxPos(di: any) { return thisBarExtPos(di, 1); }
 
-    function thisBarExtPos(di, sgn) {
+    function thisBarExtPos(di: any, sgn: any) {
         const w = di.w;
 
         return di[posLetter] + sgn * w / 2;
     }
 
-    function periodLength(di) {
+    function periodLength(di: any) {
         return di[posLetter + 'End'] - di[posLetter + 'Start'];
     }
 
     let minPos = isClosest ?
         thisBarMinPos : period ?
-        function(di) {
+        function(di: any) {
             return di.p - periodLength(di) / 2;
         } :
-        function(di) {
+        function(di: any) {
             /*
              * In compare mode, accept a bar if you're on it *or* its group.
              * Nearly always it's the group that matters, but in case the bar
@@ -90,14 +90,14 @@ function hoverOnBars(pointData: any, xval: number, yval: number, hovermode: any,
 
     let maxPos = isClosest ?
         thisBarMaxPos : period ?
-        function(di) {
+        function(di: any) {
             return di.p + periodLength(di) / 2;
         } :
-        function(di) {
+        function(di: any) {
             return Math.max(thisBarMaxPos(di), di.p + t.bardelta / 2);
         };
 
-    function inbox(_minPos, _maxPos, maxDistance) {
+    function inbox(_minPos: any, _maxPos: any, maxDistance: any) {
         if(opts.finiteRange) maxDistance = 0;
 
         // add a little to the pseudo-distance for wider bars, so that like scatter,
@@ -106,15 +106,15 @@ function hoverOnBars(pointData: any, xval: number, yval: number, hovermode: any,
             maxDistance + Math.min(1, Math.abs(_maxPos - _minPos) / pRangeCalc) - 1);
     }
 
-    function positionFn(di) {
+    function positionFn(di: any) {
         return inbox(minPos(di), maxPos(di), maxHoverDistance);
     }
 
-    function thisBarPositionFn(di) {
+    function thisBarPositionFn(di: any) {
         return inbox(thisBarMinPos(di), thisBarMaxPos(di), maxSpikeDistance);
     }
 
-    function getSize(di) {
+    function getSize(di: any) {
         let s = di[sizeLetter];
 
         if(isWaterfall) {
@@ -129,7 +129,7 @@ function hoverOnBars(pointData: any, xval: number, yval: number, hovermode: any,
         return s;
     }
 
-    function sizeFn(di) {
+    function sizeFn(di: any) {
         const v = sizeVal;
         const b = di.b;
         const s = getSize(di);
@@ -139,7 +139,7 @@ function hoverOnBars(pointData: any, xval: number, yval: number, hovermode: any,
         return Fx.inbox(b - v, s - v, maxHoverDistance + (s - v) / (s - b) - 1);
     }
 
-    function thisBarSizeFn(di) {
+    function thisBarSizeFn(di: any) {
         const v = sizeVal;
         const b = di.b;
         const s = getSize(di);
@@ -154,7 +154,7 @@ function hoverOnBars(pointData: any, xval: number, yval: number, hovermode: any,
 
     pRangeCalc = Math.abs(pa.r2c(pa.range[1]) - pa.r2c(pa.range[0]));
 
-    function dxy(di) { return (dx(di) + dy(di)) / 2; }
+    function dxy(di: any) { return (dx(di) + dy(di)) / 2; }
     const distfn = Fx.getDistanceFunction(hovermode, dx, dy, dxy);
     Fx.getClosest(cd, distfn, pointData);
 

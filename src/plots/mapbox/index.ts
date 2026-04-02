@@ -72,7 +72,8 @@ export const plot = function plot(gd: GraphDiv) {
         let mapbox = opts._subplot;
 
         if(!mapbox) {
-            mapbox = new Mapbox(gd, id);
+            // @ts-ignore TS7009
+            mapbox = (new Mapbox(gd, id) as any);
             fullLayout[id]._subplot = mapbox;
         }
 
@@ -89,7 +90,7 @@ export const plot = function plot(gd: GraphDiv) {
     }
 };
 
-export const clean = function(newFullData, newFullLayout, oldFullData, oldFullLayout) {
+export const clean = function(newFullData: any, newFullLayout: any, oldFullData: any, oldFullLayout: any) {
     const oldMapboxKeys = oldFullLayout._subplots[MAPBOX] || [];
 
     for(let i = 0; i < oldMapboxKeys.length; i++) {
@@ -101,7 +102,7 @@ export const clean = function(newFullData, newFullLayout, oldFullData, oldFullLa
     }
 };
 
-export const toSVG = function(gd) {
+export const toSVG = function(gd: any) {
     const fullLayout = gd._fullLayout;
     const subplotIds = fullLayout._subplots[MAPBOX];
     const size = fullLayout._size;
@@ -214,15 +215,15 @@ export const toSVG = function(gd) {
 
 // N.B. mapbox-gl only allows one accessToken to be set per page:
 // https://github.com/mapbox/mapbox-gl-js/issues/6331
-function findAccessToken(gd, mapboxIds) {
+function findAccessToken(gd: any, mapboxIds: any) {
     const fullLayout = gd._fullLayout;
     const context = gd._context;
 
     // special case for Mapbox Atlas users
     if(context.mapboxAccessToken === '') return '';
 
-    const tokensUseful = [];
-    const tokensListed = [];
+    const tokensUseful: any[] = [];
+    const tokensListed: any[] = [];
     let hasOneSetMapboxStyle = false;
     let wontWork = false;
 
@@ -273,7 +274,7 @@ function findAccessToken(gd, mapboxIds) {
     }
 }
 
-function isStyleRequireAccessToken(s) {
+function isStyleRequireAccessToken(s: any) {
     return typeof s === 'string' && (
         constants.styleValuesMapbox.indexOf(s) !== -1 ||
         s.indexOf('mapbox://') === 0 ||
@@ -281,7 +282,7 @@ function isStyleRequireAccessToken(s) {
     );
 }
 
-export const updateFx = function(gd) {
+export const updateFx = function(gd: any) {
     const fullLayout = gd._fullLayout;
     const subplotIds = fullLayout._subplots[MAPBOX];
 

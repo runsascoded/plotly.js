@@ -104,7 +104,7 @@ export default function transitionAxes(gd?: any, edits?: any, transitionOpts?: a
         setTextPointsScale(plotinfo.zoomScaleTxt, 1 / xScaleFactor, 1 / yScaleFactor);
     }
 
-    let onComplete;
+    let onComplete: any;
     if(makeOnCompleteCallback) {
         // This module makes the choice whether or not it notifies Plotly.transition
         // about completion:
@@ -118,8 +118,8 @@ export default function transitionAxes(gd?: any, edits?: any, transitionOpts?: a
             const edit = edits[i];
             const xa = edit.plotinfo.xaxis;
             const ya = edit.plotinfo.yaxis;
-            if(edit.xr1) aobj[xa._name + '.range'] = edit.xr1.slice();
-            if(edit.yr1) aobj[ya._name + '.range'] = edit.yr1.slice();
+            if(edit.xr1) (aobj as any)[xa._name + '.range'] = edit.xr1.slice();
+            if(edit.yr1) (aobj as any)[ya._name + '.range'] = edit.yr1.slice();
         }
 
         // Signal that this transition has completed:
@@ -150,9 +150,9 @@ export default function transitionAxes(gd?: any, edits?: any, transitionOpts?: a
         });
     }
 
-    let t1, t2, raf;
+    let t1: any, t2, raf: any;
     const easeMap = { linear: d3Ease.easeLinear, cubic: d3Ease.easeCubic, 'cubic-in-out': d3Ease.easeCubicInOut, sin: d3Ease.easeSin, exp: d3Ease.easeExp, circle: d3Ease.easeCircle, elastic: d3Ease.easeElastic, back: d3Ease.easeBack, bounce: d3Ease.easeBounce };
-    const easeFn = easeMap[transitionOpts.easing] || d3Ease.easeCubic;
+    const easeFn = (easeMap as any)[transitionOpts.easing] || d3Ease.easeCubic;
 
     gd._transitionData._interruptCallbacks.push(function() {
         window.cancelAnimationFrame(raf);

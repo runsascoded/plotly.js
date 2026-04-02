@@ -127,7 +127,7 @@ function setPositionOffset(traceType: string, gd: GraphDiv, boxList: number[], p
         // edge of box/violin
         const edge = bPos + bdPos;
         let edgeplus;
-        let edgeminus;
+        let edgeminus: any;
         // value-space padding
         let vpadplus;
         let vpadminus;

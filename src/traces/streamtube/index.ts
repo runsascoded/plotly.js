@@ -19,7 +19,7 @@ export default {
     },
     calc: _req3,
     plot: _req4,
-    eventData: function(out, pt) {
+    eventData: function(out: any, pt: any) {
         out.tubex = out.x;
         out.tubey = out.y;
         out.tubez = out.z;

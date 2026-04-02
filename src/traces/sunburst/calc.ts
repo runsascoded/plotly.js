@@ -25,18 +25,18 @@ export const calc = function(gd: GraphDiv, trace: FullTrace) {
 
     const parent2children: any = {};
     const refs: any = {};
-    const addToLookup = function(parent, v) {
+    const addToLookup = function(parent: any, v: any) {
         if(parent2children[parent]) parent2children[parent].push(v);
         else parent2children[parent] = [v];
         refs[v] = 1;
     };
 
     // treat number `0` as valid
-    const isValidKey = function(k) {
+    const isValidKey = function(k: any) {
         return k || typeof k === 'number';
     };
 
-    const isValidVal = function(i) {
+    const isValidVal = function(i: any) {
         return !hasValues || (isNumeric(values[i]) && values[i] >= 0);
     };
 
@@ -46,11 +46,11 @@ export const calc = function(gd: GraphDiv, trace: FullTrace) {
 
     if(hasIds) {
         len = Math.min(ids.length, parents.length);
-        isValid = function(i) { return isValidKey(ids[i]) && isValidVal(i); };
-        getId = function(i) { return String(ids[i]); };
+        isValid = function(i: any) { return isValidKey(ids[i]) && isValidVal(i); };
+        getId = function(i: any) { return String(ids[i]); };
     } else {
         len = Math.min(labels.length, parents.length);
-        isValid = function(i) { return isValidKey(labels[i]) && isValidVal(i); };
+        isValid = function(i: any) { return isValidKey(labels[i]) && isValidVal(i); };
         // TODO We could allow some label / parent duplication
         //
         // From AJ:
@@ -58,7 +58,7 @@ export const calc = function(gd: GraphDiv, trace: FullTrace) {
         //  (multiple rows with the same name and different parents -
         //  or even the same parent) but if that name is then used as a parent
         //  which one is it?
-        getId = function(i) { return String(labels[i]); };
+        getId = function(i: any) { return String(labels[i]); };
     }
 
     if(hasValues) len = Math.min(len, values.length);
@@ -131,12 +131,12 @@ export const calc = function(gd: GraphDiv, trace: FullTrace) {
     let root;
     try {
         root = d3Hierarchy.stratify()
-            .id(function(d) { return d.id; })
-            .parentId(function(d) { return d.pid; })(cd);
+            .id(function(d: any) { return d.id; })
+            .parentId(function(d: any) { return d.pid; })(cd);
     } catch(e) {
         return Lib.warn([
             'Failed to build', trace.type, 'hierarchy of', trace.name + '.',
-            'Error:', e.message
+            'Error:', (e as any).message
         ].join(' '));
     }
 
@@ -146,15 +146,15 @@ export const calc = function(gd: GraphDiv, trace: FullTrace) {
     if(hasValues) {
         switch(trace.branchvalues) {
             case 'remainder':
-                hierarchy.sum(function(d) { return d.data.v; });
+                hierarchy.sum(function(d: any) { return d.data.v; });
                 break;
             case 'total':
-                hierarchy.each(function(d) {
+                hierarchy.each(function(d: any) {
                     const cdi = d.data.data;
                     let v = cdi.v;
 
                     if(d.children) {
-                        const partialSum = d.children.reduce(function(a, c) {
+                        const partialSum = d.children.reduce(function(a: any, c: any) {
                             return a + c.data.data.v;
                         }, 0);
 
@@ -190,11 +190,11 @@ export const calc = function(gd: GraphDiv, trace: FullTrace) {
 
     // TODO add way to sort by height also?
     if(trace.sort) {
-        hierarchy.sort(function(a, b) { return b.value - a.value; });
+        hierarchy.sort(function(a: any, b: any) { return b.value - a.value; });
     }
 
-    let pullColor;
-    let scaleColor;
+    let pullColor: any;
+    let scaleColor: any;
     let colors = trace.marker.colors || [];
     const hasColors = !!colors.length;
 
@@ -216,7 +216,7 @@ export const calc = function(gd: GraphDiv, trace: FullTrace) {
 
     // TODO keep track of 'root-children' (i.e. branch) for hover info etc.
 
-    hierarchy.each(function(d) {
+    hierarchy.each(function(d: any) {
         const cdi = d.data.data;
         // N.B. this mutates items in `cd`
         cdi.color = trace._hasColorscale ?
@@ -244,8 +244,8 @@ export const _runCrossTraceCalc = function(desiredType: string, gd: GraphDiv) {
     }
     let dfltColorCount = 0;
 
-    let rootColor;
-    function pickColor(d) {
+    let rootColor: any;
+    function pickColor(d: any) {
         const cdi = d.data.data;
         const id = cdi.id;
 

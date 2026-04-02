@@ -18,7 +18,7 @@ const angleDist = Lib.angleDist;
  * @param {array} vangles : angles of polygon vertices in *radians*
  * @return {boolean}
  */
-function isPtInsidePolygon(r, a, rBnds, aBnds, vangles) {
+function isPtInsidePolygon(r: any, a: any, rBnds: any, aBnds: any, vangles: any) {
     if(!isAngleInsideSector(a, aBnds)) return false;
 
     let r0, r1;
@@ -41,7 +41,7 @@ function isPtInsidePolygon(r, a, rBnds, aBnds, vangles) {
 // (i.e. a line that starts from the origin at angle 'a')
 // given an (xp,yp) pair on the 'v0' <-> 'v1' line
 // (N.B. 'v0' and 'v1' are angles in radians)
-function findIntersectionXY(v0, v1, a, xpyp) {
+function findIntersectionXY(v0: any, v1: any, a: any, xpyp: any) {
     let xstar, ystar;
 
     const xp = xpyp[0];
@@ -92,7 +92,7 @@ function findIntersectionXY(v0, v1, a, xpyp) {
 //
 // where f(x) = m*x + t + yp
 // and   (x0, x1) = (-b +/- del) / (2*a)
-function findXYatLength(l, m, xp, yp) {
+function findXYatLength(l: any, m: any, xp: any, yp: any) {
     const t = -m * xp;
     const a = m * m + 1;
     const b = 2 * (m * t - xp);
@@ -106,7 +106,7 @@ function findXYatLength(l, m, xp, yp) {
     ];
 }
 
-function makeRegularPolygon(r, vangles) {
+function makeRegularPolygon(r: any, vangles: any) {
     const len = vangles.length;
     const vertices = new Array(len + 1);
     let i;
@@ -118,30 +118,30 @@ function makeRegularPolygon(r, vangles) {
     return vertices;
 }
 
-function makeClippedPolygon(r, a0, a1, vangles) {
+function makeClippedPolygon(r: any, a0: any, a1: any, vangles: any) {
     const len = vangles.length;
     const vertices: any[] = [];
     let i, j;
 
-    function a2xy(a) {
+    function a2xy(a: any) {
         return [r * Math.cos(a), r * Math.sin(a)];
     }
 
-    function findXY(va0, va1, s) {
+    function findXY(va0: any, va1: any, s: any) {
         return findIntersectionXY(va0, va1, s, a2xy(va0));
     }
 
-    function cycleIndex(ind) {
+    function cycleIndex(ind: any) {
         return Lib.mod(ind, len);
     }
 
-    function isInside(v) {
+    function isInside(v: any) {
         return isAngleInsideSector(v, [a0, a1]);
     }
 
     // find index in sector closest to a0
     // use it to find intersection of v[i0] <-> v[i0-1] edge with sector radius
-    const i0 = findIndexOfMin(vangles, function(v) {
+    const i0 = findIndexOfMin(vangles, function(v: any) {
         return isInside(v) ? angleDist(v, a0) : Infinity;
     });
     const xy0 = findXY(vangles[i0], vangles[cycleIndex(i0 - 1)], a0);
@@ -156,7 +156,7 @@ function makeClippedPolygon(r, a0, a1, vangles) {
 
     // find index in sector closest to a1,
     // use it to find intersection of v[iN] <-> v[iN+1] edge with sector radius
-    const iN = findIndexOfMin(vangles, function(v) {
+    const iN = findIndexOfMin(vangles, function(v: any) {
         return isInside(v) ? angleDist(v, a1) : Infinity;
     });
     const xyN = findXY(vangles[iN], vangles[cycleIndex(iN + 1)], a1);
@@ -168,13 +168,13 @@ function makeClippedPolygon(r, a0, a1, vangles) {
     return vertices;
 }
 
-function makePolygon(r, a0, a1, vangles) {
+function makePolygon(r: any, a0: any, a1: any, vangles: any) {
     return Lib.isFullCircle([a0, a1]) ?
         makeRegularPolygon(r, vangles) :
         makeClippedPolygon(r, a0, a1, vangles);
 }
 
-function findPolygonOffset(r, a0, a1, vangles) {
+function findPolygonOffset(r: any, a0: any, a1: any, vangles: any) {
     let minX = Infinity;
     let minY = Infinity;
     const vertices = makePolygon(r, a0, a1, vangles);
@@ -194,8 +194,8 @@ function findPolygonOffset(r, a0, a1, vangles) {
  * @param {array} vangles : angles of polygon vertices in *radians*
  * @return {2-item array}
  */
-function findEnclosingVertexAngles(a, vangles) {
-    const minFn = function(v) {
+function findEnclosingVertexAngles(a: any, vangles: any) {
+    const minFn = function(v: any) {
         const adelta = angleDelta(v, a);
         return adelta > 0 ? adelta : Infinity;
     };
@@ -205,11 +205,11 @@ function findEnclosingVertexAngles(a, vangles) {
 }
 
 // to more easily catch 'almost zero' numbers in if-else blocks
-function clampTiny(v) {
+function clampTiny(v: any) {
     return Math.abs(v) > 1e-10 ? v : 0;
 }
 
-function transformForSVG(pts0, cx, cy) {
+function transformForSVG(pts0: any, cx: any, cy: any) {
     cx = cx || 0;
     cy = cy || 0;
 
@@ -235,7 +235,7 @@ function transformForSVG(pts0, cx, cy) {
  * @return {string} svg path
  *
  */
-function pathPolygon(r, a0, a1, vangles, cx, cy) {
+function pathPolygon(r: any, a0: any, a1: any, vangles: any, cx: any, cy: any) {
     const poly = makePolygon(r, a0, a1, vangles);
     return 'M' + transformForSVG(poly, cx, cy).join('L');
 }
@@ -256,7 +256,7 @@ function pathPolygon(r, a0, a1, vangles, cx, cy) {
  * @return {string} svg path
  *
  */
-function pathPolygonAnnulus(r0, r1, a0, a1, vangles, cx, cy) {
+function pathPolygonAnnulus(r0: any, r1: any, a0: any, a1: any, vangles: any, cx: any, cy: any) {
     let rStart, rEnd;
 
     if(r0 < r1) {

@@ -14,10 +14,10 @@ export default function supplyLayoutDefaults(layoutIn: any, layoutOut: FullLayou
 
     // some layout-wide attribute are used in all scenes
     // if 3D is the only visible plot type
-    function getDfltFromLayout(attr) {
+    function getDfltFromLayout(attr: any) {
         if(hasNon3D) return;
 
-        const isValid = Lib.validate(layoutIn[attr], layoutAttributes[attr]);
+        const isValid = Lib.validate(layoutIn[attr], (layoutAttributes as any)[attr]);
         if(isValid) return layoutIn[attr];
     }
 
@@ -35,7 +35,7 @@ export default function supplyLayoutDefaults(layoutIn: any, layoutOut: FullLayou
     });
 }
 
-function handleGl3dDefaults(sceneLayoutIn, sceneLayoutOut, coerce, opts) {
+function handleGl3dDefaults(sceneLayoutIn: any, sceneLayoutOut: any, coerce: any, opts: any) {
     /*
      * Scene numbering proceeds as follows
      * scene

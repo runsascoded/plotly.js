@@ -10,7 +10,7 @@ import zip3 from '../../plots/gl3d/zip3.js';
 import _convert from '../isosurface/convert.js';
 const { findNearestOnAxis, generateIsoMeshes } = _convert;
 
-function VolumeTrace(this: any, scene, mesh, uid) {
+function VolumeTrace(this: any, scene: any, mesh: any, uid: any) {
     this.scene = scene;
     this.uid = uid;
     this.mesh = mesh;
@@ -21,7 +21,7 @@ function VolumeTrace(this: any, scene, mesh, uid) {
 
 const proto = VolumeTrace.prototype;
 
-proto.handlePick = function(selection) {
+proto.handlePick = function(selection: any) {
     if(selection.object === this.mesh) {
         const rawId = selection.data.index;
 
@@ -56,15 +56,15 @@ proto.handlePick = function(selection) {
     }
 };
 
-proto.update = function(data) {
+proto.update = function(data: any) {
     const scene = this.scene;
     const layout = scene.fullSceneLayout;
 
     this.data = generateIsoMeshes(data);
 
     // Unpack position data
-    function toDataCoords(axis, coord, scale, calendar) {
-        return coord.map(function(x) {
+    function toDataCoords(axis: any, coord: any, scale: any, calendar: any) {
+        return coord.map(function(x: any) {
             return axis.d2l(x, 0, calendar) * scale;
         });
     }
@@ -109,10 +109,11 @@ proto.dispose = function() {
     this.mesh.dispose();
 };
 
-function createVolumeTrace(scene, data) {
+function createVolumeTrace(scene: any, data: any) {
     const gl = scene.glplot.gl;
     const mesh = createMesh({gl: gl});
-    const result = new VolumeTrace(scene, mesh, data.uid);
+    // @ts-ignore TS7009
+    const result: any = (new VolumeTrace(scene, mesh, data.uid) as any);
 
     mesh._trace = result;
     result.update(data);

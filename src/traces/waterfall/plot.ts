@@ -8,7 +8,7 @@ import barPlot from '../bar/plot.js';
 import _uniform_text from '../bar/uniform_text.js';
 const { clearMinTextSize } = _uniform_text;
 
-export default function plot(gd: GraphDiv,  plotinfo: PlotInfo,  cdModule,  traceLayer) {
+export default function plot(gd: GraphDiv,  plotinfo: PlotInfo,  cdModule: any,  traceLayer: any) {
     const fullLayout = gd._fullLayout;
 
     clearMinTextSize('waterfall', fullLayout);
@@ -23,11 +23,11 @@ export default function plot(gd: GraphDiv,  plotinfo: PlotInfo,  cdModule,  trac
     plotConnectors(gd, plotinfo, cdModule, traceLayer);
 }
 
-function plotConnectors(gd: GraphDiv,  plotinfo: PlotInfo,  cdModule,  traceLayer) {
+function plotConnectors(gd: GraphDiv,  plotinfo: PlotInfo,  cdModule: any,  traceLayer: any) {
     const xa = plotinfo.xaxis;
     const ya = plotinfo.yaxis;
 
-    Lib.makeTraceGroups(traceLayer, cdModule, 'trace bars').each(function(this: any, cd) {
+    Lib.makeTraceGroups(traceLayer, cdModule, 'trace bars').each(function(this: any, cd: any) {
         const plotGroup = select(this);
         const trace = cd[0].trace;
 
@@ -50,7 +50,7 @@ function plotConnectors(gd: GraphDiv,  plotinfo: PlotInfo,  cdModule,  traceLaye
 
         const len = connectors.size();
 
-        connectors.each(function(this: any, di, i) {
+        connectors.each(function(this: any, di: any, i: any) {
             // don't draw lines between nulls
             if(i !== len - 1 && !di.cNext) return;
 
@@ -102,7 +102,7 @@ function plotConnectors(gd: GraphDiv,  plotinfo: PlotInfo,  cdModule,  traceLaye
     });
 }
 
-function getXY(di,  xa: FullAxis,  ya: FullAxis,  isHorizontal) {
+function getXY(di: any,  xa: FullAxis,  ya: FullAxis,  isHorizontal: any) {
     const s: any[] = [];
     const p: any[] = [];
 

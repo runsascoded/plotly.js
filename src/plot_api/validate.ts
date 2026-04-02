@@ -228,7 +228,7 @@ function fillLayoutSchema(schema?: any, dataOut?: any): any {
 
 // validation error codes
 const code2msgFunc: any = {
-    object: function(base, astr) {
+    object: function(base: any, astr: any) {
         let prefix;
 
         if(base === 'layout' && astr === '') prefix = 'The layout argument';
@@ -238,7 +238,7 @@ const code2msgFunc: any = {
 
         return prefix + ' must be linked to an object container';
     },
-    array: function(base, astr) {
+    array: function(base: any, astr: any) {
         let prefix;
 
         if(base === 'data') prefix = 'The data argument';
@@ -246,15 +246,15 @@ const code2msgFunc: any = {
 
         return prefix + ' must be linked to an array container';
     },
-    schema: function(base, astr) {
+    schema: function(base: any, astr: any) {
         return inBase(base) + 'key ' + astr + ' is not part of the schema';
     },
-    unused: function(base, astr, valIn) {
+    unused: function(base: any, astr: any, valIn: any) {
         const target = isPlainObject(valIn) ? 'container' : 'key';
 
         return inBase(base) + target + ' ' + astr + ' did not get coerced';
     },
-    dynamic: function(base, astr, valIn, valOut) {
+    dynamic: function(base: any, astr: any, valIn: any, valOut: any) {
         return [
             inBase(base) + 'key',
             astr,
@@ -264,12 +264,12 @@ const code2msgFunc: any = {
             'during defaults.'
         ].join(' ');
     },
-    invisible: function(base, astr) {
+    invisible: function(base: any, astr: any) {
         return (
             astr ? (inBase(base) + 'item ' + astr) : ('Trace ' + base[1])
         ) + ' got defaulted to be not visible';
     },
-    value: function(base, astr, valIn) {
+    value: function(base: any, astr: any, valIn: any) {
         return [
             inBase(base) + 'key ' + astr,
             'is set to an invalid value (' + valIn + ')'

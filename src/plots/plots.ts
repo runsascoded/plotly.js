@@ -91,7 +91,7 @@ export function resize(gd?: any): any {
         }, 100);
     });
 
-    if(resolveLastResize) resolveLastResize(p);
+    if(resolveLastResize) (resolveLastResize as any)(p);
     return p;
 };
 
@@ -116,7 +116,7 @@ export function addLinks(gd?: any): void {
 
     const fullLayout = gd._fullLayout;
 
-    const linkContainer = ensureSingle(fullLayout._paper, 'text', 'js-plot-link-container', function(s) {
+    const linkContainer = ensureSingle(fullLayout._paper, 'text', 'js-plot-link-container', function(s: any) {
         s.style({
             'font-family': '"Open Sans", Arial, sans-serif',
             'font-size': '12px',
@@ -685,7 +685,7 @@ function getFormatter(formatObj?: any, separators?: any): any {
     formatObj.thousands = separators.charAt(1);
 
     return {
-        numberFormat: function(formatStr) {
+        numberFormat: function(formatStr: any) {
             try {
                 formatStr = formatLocale(formatObj).format(
                     adjustFormat(formatStr)
@@ -702,7 +702,7 @@ function getFormatter(formatObj?: any, separators?: any): any {
 }
 
 function fillMetaTextHelpers(newFullData?: any, newFullLayout?: any): void {
-    let _meta;
+    let _meta: any;
     const meta4data: any[] = [];
 
     if(newFullLayout.meta) {
@@ -844,13 +844,13 @@ export function linkSubplots(newFullData?: any, newFullLayout?: any, oldFullData
         const oldSubplot = oldSubplots[id];
         const xaxis = axisIDs.getFromId(mockGd, id, 'x');
         const yaxis = axisIDs.getFromId(mockGd, id, 'y');
-        let plotinfo;
+        let plotinfo: any;
 
         // link or create subplot object
         if(oldSubplot) {
-            plotinfo = newSubplots[id] = oldSubplot;
+            plotinfo = (newSubplots as any)[id] = oldSubplot;
         } else {
-            plotinfo = newSubplots[id] = {};
+            plotinfo = (newSubplots as any)[id] = {};
             plotinfo.id = id;
         }
 
@@ -892,8 +892,8 @@ export function linkSubplots(newFullData?: any, newFullLayout?: any, oldFullData
     // properly update/remove these subplots as needed.
     const zindexSeparator = cartesianConstants.zindexSeparator;
     for(const oldId in oldSubplots) {
-        if(oldId.indexOf(zindexSeparator) !== -1 && !newSubplots[oldId]) {
-            newSubplots[oldId] = oldSubplots[oldId];
+        if(oldId.indexOf(zindexSeparator) !== -1 && !(newSubplots as any)[oldId]) {
+            (newSubplots as any)[oldId] = oldSubplots[oldId];
         }
     }
 
@@ -1006,7 +1006,7 @@ function findMainSubplot(ax?: any, fullLayout?: any): any {
 // the final result that groups are indistinguishable. This function clears
 // those colors so that individual groupby groups get unique colors.
 export function clearExpandedTraceDefaultColors(trace?: any): void {
-    let colorAttrs, path, i;
+    let colorAttrs, path: any, i;
 
     // This uses weird closure state in order to satisfy the linter rule
     // that we can't create functions in a loop.
@@ -1882,7 +1882,7 @@ export function doAutoMargin(gd: GraphDiv): void {
         for(const key in margins) {
             for(const side in margins[key]) {
                 const val = margins[key][side];
-                reservedMargins[side] = Math.max(reservedMargins[side], val);
+                (reservedMargins as any)[side] = Math.max((reservedMargins as any)[side], val);
             }
         }
         // fill in the requested margins
@@ -1903,8 +1903,8 @@ export function doAutoMargin(gd: GraphDiv): void {
                     }
                 }
             }
-            const extraMargin = Math.max(0, (margin![s] - autoMarginPush));
-            reservedMargins[s] = Math.max(0, reservedMargins[s] - extraMargin);
+            const extraMargin = Math.max(0, ((margin! as any)[s] - autoMarginPush));
+            (reservedMargins as any)[s] = Math.max(0, (reservedMargins as any)[s] - extraMargin);
         }
 
         // now cycle through all the combinations of l and r
@@ -2078,7 +2078,7 @@ export function graphJson(gd?: any, dataonly?: any, mode?: any, output?: any, us
     const layout: any = (useDefaults) ? gd._fullLayout : gd.layout;
     const frames = (gd._transitionData || {})._frames;
 
-    function stripObj(d?: any, keepFunction?: any) {
+    function stripObj(d?: any, keepFunction?: any): any {
         if(typeof d === 'function') {
             return keepFunction ? '_function_' : null;
         }
@@ -2161,7 +2161,7 @@ export function graphJson(gd?: any, dataonly?: any, mode?: any, output?: any, us
     }
 
     const obj: any = {
-        data: (data || []).map(function(v) {
+        data: (data || []).map(function(v: any) {
             const d = stripObj(v);
             // fit has some little arrays in it that don't contain data,
             // just fit params and meta
@@ -2348,7 +2348,7 @@ export function recomputeFrameHash(gd?: any): void {
     for(let i = 0; i < frames.length; i++) {
         const frame: any = frames[i];
         if(frame && frame.name) {
-            hash[frame.name] = frame;
+            (hash as any)[frame.name] = frame;
         }
     }
 };
@@ -2364,7 +2364,7 @@ export function recomputeFrameHash(gd?: any): void {
  * See extendTrace and extendLayout below for usage.
  */
 export function extendObjectWithContainers(dest?: any, src?: any, containerPaths?: any): any {
-    let containerProp, containerVal, i, j, srcProp, destProp, srcContainer, destContainer;
+    let containerProp, containerVal, i, j, srcProp, destProp, srcContainer, destContainer: any[];
     const copy = extendDeepNoArrays({}, src || {});
     const expandedObj = expandObjectPaths(copy);
     const containerObj = {};
@@ -2668,9 +2668,9 @@ export function transitionFromReact(gd?: any, restyleFlags?: any, relayoutFlags?
         const fullLayout = gd._fullLayout;
         const basePlotModules = fullLayout._basePlotModules;
 
-        let axisTransitionOpts;
-        let traceTransitionOpts;
-        let transitionedTraces;
+        let axisTransitionOpts: any;
+        let traceTransitionOpts: any;
+        let transitionedTraces: any;
 
         const allTraceIndices: any[] = [];
         for(let i = 0; i < fullData.length; i++) {
@@ -3039,7 +3039,7 @@ export function doCalcdata(gd: GraphDiv, traces?: any): void {
 const sortAxisCategoriesByValueRegex = /(total|sum|min|max|mean|geometric mean|median) (ascending|descending)/;
 
 function sortAxisCategoriesByValue(axList?: any, gd?: any): any {
-    let affectedTraces = [];
+    let affectedTraces: any[] = [];
     let i, j, k, l, o;
 
     function zMapCategory(type?: any, ax?: any, value?: any) {
@@ -3051,7 +3051,7 @@ function sortAxisCategoriesByValue(axList?: any, gd?: any): any {
             const xCategorical = axLetter === 'x' || (counterAxLetter === 'x' && counterAx.type === 'category');
             const yCategorical = axLetter === 'y' || (counterAxLetter === 'y' && counterAx.type === 'category');
 
-            return function(o, l) {
+            return function(o: any, l: any) {
                 if(o === 0 || l === 0) return -1; // Skip first row and column
                 if(xCategorical && o === value[l].length - 1) return -1;
                 if(yCategorical && l === value.length - 1) return -1;
@@ -3059,20 +3059,20 @@ function sortAxisCategoriesByValue(axList?: any, gd?: any): any {
                 return (axLetter === 'y' ? l : o) - 1;
             };
         } else {
-            return function(o, l) {
+            return function(o: any, l: any) {
                 return axLetter === 'y' ? l : o;
             };
         }
     }
 
     const aggFn: any = {
-        min: function(values) {return aggNums(Math.min, null, values);},
-        max: function(values) {return aggNums(Math.max, null, values);},
-        sum: function(values) {return aggNums(function(a, b) { return a + b;}, null, values);},
-        total: function(values) {return aggNums(function(a, b) { return a + b;}, null, values);},
-        mean: function(values) {return mean(values);},
-        'geometric mean': function(values) {return geometricMean(values);},
-        median: function(values) {return median(values);}
+        min: function(values: any) {return aggNums(Math.min, null, values);},
+        max: function(values: any) {return aggNums(Math.max, null, values);},
+        sum: function(values: any) {return aggNums(function(a, b) { return a + b;}, null, values);},
+        total: function(values: any) {return aggNums(function(a, b) { return a + b;}, null, values);},
+        mean: function(values: any) {return mean(values);},
+        'geometric mean': function(values: any) {return geometricMean(values);},
+        median: function(values: any) {return median(values);}
     };
 
     function sortAscending(a?: any, b?: any) {

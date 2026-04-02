@@ -12,7 +12,7 @@ function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace, defaultColor: 
     supplyIsoDefaults(traceIn, traceOut, defaultColor, layout, coerce);
 }
 
-function supplyIsoDefaults(traceIn, traceOut, defaultColor, layout, coerce) {
+function supplyIsoDefaults(traceIn: any, traceOut: any, defaultColor: any, layout: any, coerce: any) {
     const isomin = coerce('isomin');
     const isomax = coerce('isomax');
 

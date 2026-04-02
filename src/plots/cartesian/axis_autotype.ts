@@ -66,8 +66,8 @@ function moreDates(a?: any, calendar?: any): boolean {
         const i = round(f);
         const ai = a[i];
         const stri = String(ai);
-        if(seen[stri]) continue;
-        seen[stri] = 1;
+        if((seen as any)[stri]) continue;
+        (seen as any)[stri] = 1;
 
         if(isDateTime(ai, calendar)) dats++;
         if(isNumeric(ai)) nums++;

@@ -12,7 +12,7 @@ import _constants from './constants.js';
 const { maxDimensionCount } = _constants;
 import mergeLength from './merge_length.js';
 
-function handleLineDefaults(traceIn: InputTrace, traceOut: FullTrace, defaultColor: string, layout: FullLayout, coerce) {
+function handleLineDefaults(traceIn: InputTrace, traceOut: FullTrace, defaultColor: string, layout: FullLayout, coerce: any) {
     const lineColor = coerce('line.color', defaultColor);
 
     if(hasColorscale(traceIn, 'line') && Lib.isArrayOrTypedArray(lineColor)) {
@@ -30,8 +30,8 @@ function handleLineDefaults(traceIn: InputTrace, traceOut: FullTrace, defaultCol
     return Infinity;
 }
 
-function dimensionDefaults(dimensionIn, dimensionOut, parentOut, opts) {
-    function coerce(attr, dflt?) {
+function dimensionDefaults(dimensionIn: any, dimensionOut: any, parentOut: any, opts: any) {
+    function coerce(attr: any, dflt?: any) {
         return Lib.coerce(dimensionIn, dimensionOut, attributes.dimensions, attr, dflt);
     }
 
@@ -67,7 +67,7 @@ function dimensionDefaults(dimensionIn, dimensionOut, parentOut, opts) {
 }
 
 export default function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace, defaultColor: string, layout: FullLayout) {
-    function coerce(attr, dflt?) {
+    function coerce(attr: any, dflt?: any) {
         return Lib.coerce(traceIn, traceOut, attributes, attr, dflt);
     }
 

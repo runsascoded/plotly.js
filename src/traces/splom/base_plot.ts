@@ -46,7 +46,7 @@ function drag(gd: GraphDiv) {
     }
 }
 
-function dragOne(gd: GraphDiv, trace: FullTrace, scene) {
+function dragOne(gd: GraphDiv, trace: FullTrace, scene: any) {
     const visibleLength = scene.matrixOptions.data.length;
     const visibleDims = trace._visibleDims;
     const ranges = scene.viewOpts.ranges = new Array(visibleLength);
@@ -98,7 +98,7 @@ function makeGridData(gd: GraphDiv) {
     const lookup: any = {};
     let k;
 
-    function push(prefix, ax: FullAxis, x0, x1, y0, y1) {
+    function push(prefix: any, ax: FullAxis, x0: any, x1: any, y0: any, y1: any) {
         x0 *= plotGlPixelRatio;
         x1 *= plotGlPixelRatio;
         y0 *= plotGlPixelRatio;
@@ -170,7 +170,7 @@ function makeGridData(gd: GraphDiv) {
     return gridBatches;
 }
 
-function clean(newFullData, newFullLayout, oldFullData, oldFullLayout) {
+function clean(newFullData: any, newFullLayout: any, oldFullData: any, oldFullLayout: any) {
     const lookup: any = {};
     let i;
 

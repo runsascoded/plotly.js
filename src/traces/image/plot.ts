@@ -13,7 +13,7 @@ export default function plot(gd: GraphDiv, plotinfo: any, cdimage: any[], imageL
 
     const supportsPixelated = !gd._context._exportedPlot && supportsPixelatedImage();
 
-    Lib.makeTraceGroups(imageLayer, cdimage, 'im').each(function(this: any, cd) {
+    Lib.makeTraceGroups(imageLayer, cdimage, 'im').each(function(this: any, cd: any) {
         const plotGroup = select(this);
         const cd0 = cd[0];
         const trace = cd0.trace;
@@ -31,7 +31,7 @@ export default function plot(gd: GraphDiv, plotinfo: any, cdimage: any[], imageL
         const dx = trace.dx;
         const dy = trace.dy;
 
-        let left, right, temp, top, bottom, i;
+        let left: any, right, temp, top: any, bottom, i;
         // in case of log of a negative
         i = 0;
         while(left === undefined && i < w) {
@@ -87,16 +87,16 @@ export default function plot(gd: GraphDiv, plotinfo: any, cdimage: any[], imageL
         }
 
         // Create a new canvas and draw magnified pixels on it
-        function drawMagnifiedPixelsOnCanvas(readPixel) {
+        function drawMagnifiedPixelsOnCanvas(readPixel: any) {
             const canvas = document.createElement('canvas');
             canvas.width = imageWidth;
             canvas.height = imageHeight;
             const context = canvas.getContext('2d', {willReadFrequently: true});
 
-            const ipx = function(i) {return Lib.constrain(Math.round(xa.c2p(x0 + i * dx) - left), 0, imageWidth);};
-            const jpx = function(j) {return Lib.constrain(Math.round(ya.c2p(y0 + j * dy) - top), 0, imageHeight);};
+            const ipx = function(i: any) {return Lib.constrain(Math.round(xa.c2p(x0 + i * dx) - left), 0, imageWidth);};
+            const jpx = function(j: any) {return Lib.constrain(Math.round(ya.c2p(y0 + j * dy) - top), 0, imageHeight);};
 
-            const cr = constants.colormodel[trace.colormodel];
+            const cr = (constants.colormodel as any)[trace.colormodel];
             const colormodel = (cr.colormodel || trace.colormodel);
             const fmt = cr.fmt;
             let c;
@@ -185,7 +185,7 @@ export default function plot(gd: GraphDiv, plotinfo: any, cdimage: any[], imageL
         .then(function() {
             let href, canvas;
             if(trace._hasZ) {
-                canvas = drawMagnifiedPixelsOnCanvas(function(i, j) {
+                canvas = drawMagnifiedPixelsOnCanvas(function(i: any, j: any) {
                     let _z = z[j][i];
                     if(Lib.isTypedArray(_z)) _z = Array.from(_z);
                     return _z;
@@ -197,7 +197,7 @@ export default function plot(gd: GraphDiv, plotinfo: any, cdimage: any[], imageL
                 } else {
                     const context = trace._canvas.el.getContext('2d', {willReadFrequently: true});
                     const data = context.getImageData(0, 0, w, h).data;
-                    canvas = drawMagnifiedPixelsOnCanvas(function(i, j) {
+                    canvas = drawMagnifiedPixelsOnCanvas(function(i: any, j: any) {
                         const index = 4 * (j * w + i);
                         return [
                             data[index],

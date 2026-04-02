@@ -9,10 +9,10 @@ import _style from './style.js';
 const { style } = _style;
 import type { GraphDiv } from '../../../types/core';
 
-function plot(gd: GraphDiv, geo, calcData) {
+function plot(gd: GraphDiv, geo: any, calcData: any) {
     const choroplethLayer = geo.layers.backplot.select('.choroplethlayer');
 
-    Lib.makeTraceGroups(choroplethLayer, calcData, 'trace choropleth').each(function(this: any, calcTrace) {
+    Lib.makeTraceGroups(choroplethLayer, calcData, 'trace choropleth').each(function(this: any, calcTrace: any) {
         const sel = select(this);
 
         const paths = sel.selectAll('path.choroplethlocation')
@@ -28,7 +28,7 @@ function plot(gd: GraphDiv, geo, calcData) {
     });
 }
 
-function calcGeoJSON(calcTrace, fullLayout) {
+function calcGeoJSON(calcTrace: any, fullLayout: any) {
     const trace = calcTrace[0].trace;
     const geoLayout = fullLayout[trace.geo];
     const geo = geoLayout._subplot;

@@ -17,7 +17,7 @@ topojsonUtils.getTopojsonPath = function(topojsonURL: string, topojsonName: stri
 };
 
 topojsonUtils.getTopojsonFeatures = function(trace: any, topojson: any): any[] {
-    const layer = locationmodeToLayer[trace.locationmode];
+    const layer = (locationmodeToLayer as any)[trace.locationmode];
     const obj = topojson.objects[layer];
 
     return topojsonFeature(topojson, obj).features;

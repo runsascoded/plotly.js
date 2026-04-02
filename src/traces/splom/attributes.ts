@@ -32,14 +32,14 @@ const markerAttrs = extendFlat(colorScaleAttrs('marker'), {
 
 markerAttrs.color.editType = markerAttrs.cmin.editType = markerAttrs.cmax.editType = 'style';
 
-function makeAxesValObject(axLetter) {
+function makeAxesValObject(axLetter: any) {
     return {
         valType: 'info_array',
         freeLength: true,
         editType: 'calc',
         items: {
             valType: 'subplotid',
-            regex: cartesianIdRegex[axLetter],
+            regex: (cartesianIdRegex as any)[axLetter],
             editType: 'plot'
         },
         description: [

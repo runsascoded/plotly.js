@@ -45,19 +45,19 @@ export default function calc(gd: GraphDiv, trace: FullTrace) {
     return [cd0];
 }
 
-function scale(zero, ratio, min, max) {
-    return function(c) {
+function scale(zero: any, ratio: any, min: any, max: any) {
+    return function(c: any) {
         return Lib.constrain((c - zero) * ratio, min, max);
     };
 }
 
-function constrain(min, max) {
-    return function(c) { return Lib.constrain(c, min, max);};
+function constrain(min: any, max: any) {
+    return function(c: any) { return Lib.constrain(c, min, max);};
 }
 
 // Generate a function to scale color components according to zmin/zmax and the colormodel
-function makeScaler(trace) {
-    const cr = constants.colormodel[trace.colormodel];
+function makeScaler(trace: any) {
+    const cr = (constants.colormodel as any)[trace.colormodel];
     const colormodel = (cr.colormodel || trace.colormodel);
     const n = colormodel.length;
 
@@ -76,7 +76,7 @@ function makeScaler(trace) {
         }
     }
 
-    return function(pixel) {
+    return function(pixel: any) {
         const c = pixel.slice(0, n);
         for(let k = 0; k < n; k++) {
             const ck = c[k];

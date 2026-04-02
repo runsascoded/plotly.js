@@ -7,11 +7,11 @@ import makeColorMap from './make_color_map.js';
 export default function style(gd: GraphDiv) {
     const contours = select(gd).selectAll('g.contour');
 
-    contours.style('opacity', function(d) {
+    contours.style('opacity', function(d: any) {
         return d[0].trace.opacity;
     });
 
-    contours.each(function(this: any, d) {
+    contours.each(function(this: any, d: any) {
         const c = select(this);
         const trace = d[0].trace;
         const contours = trace.contours;
@@ -26,7 +26,7 @@ export default function style(gd: GraphDiv) {
 
         const colorMap = (colorLines || colorFills) ? makeColorMap(trace) : null;
 
-        c.selectAll('g.contourlevel').each(function(this: any, d) {
+        c.selectAll('g.contourlevel').each(function(this: any, d: any) {
             select(this).selectAll('path')
                 .call(lineGroupStyle,
                     line.width,
@@ -35,7 +35,7 @@ export default function style(gd: GraphDiv) {
         });
 
         const labelFont = contours.labelfont;
-        c.selectAll('g.contourlabels text').each(function(this: any, d) {
+        c.selectAll('g.contourlabels text').each(function(this: any, d: any) {
             font(select(this), {
                 weight: labelFont.weight,
                 style: labelFont.style,
@@ -53,10 +53,10 @@ export default function style(gd: GraphDiv) {
             c.selectAll('g.contourfill path')
                 .style('fill', trace.fillcolor);
         } else if(colorFills) {
-            let firstFill;
+            let firstFill: any;
 
             c.selectAll('g.contourfill path')
-                .style('fill', function(d) {
+                .style('fill', function(d: any) {
                     if(firstFill === undefined) firstFill = d.level;
                     return colorMap(d.level + 0.5 * cs);
                 });

@@ -130,14 +130,14 @@ export default function calc(gd: GraphDiv, trace: FullTrace) {
     return [{x: false, y: false, t: stash, trace: trace}];
 }
 
-function expandForErrorBars(trace: FullTrace, ax: FullAxis, opts) {
+function expandForErrorBars(trace: FullTrace, ax: FullAxis, opts: any) {
     const extremes = trace._extremes[ax._id];
     const errExt = findExtremes(ax, opts._bnds, {padded: true});
     extremes.min = extremes.min.concat(errExt.min);
     extremes.max = extremes.max.concat(errExt.max);
 }
 
-function sceneOptions(gd: GraphDiv, subplot: PlotInfo, trace: FullTrace, positions, x, y) {
+function sceneOptions(gd: GraphDiv, subplot: PlotInfo, trace: FullTrace, positions: any, x: any, y: any) {
     const opts = convert.style(gd, trace);
 
     if(opts.marker) {

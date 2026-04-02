@@ -10,8 +10,8 @@ export default function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace,
     }
 
     // read in face/vertex properties
-    function readComponents(array) {
-        const ret = array.map(function (attr) {
+    function readComponents(array: any) {
+        const ret = array.map(function (attr: any) {
             const result = coerce(attr);
 
             if (result && Lib.isArrayOrTypedArray(result)) return result;
@@ -19,7 +19,7 @@ export default function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace,
         });
 
         return (
-            ret.every(function (x) {
+            ret.every(function (x: any) {
                 return x && x.length === ret[0].length;
             }) && ret
         );

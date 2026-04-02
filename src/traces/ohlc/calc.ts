@@ -32,7 +32,7 @@ function calc(gd: GraphDiv,  trace: FullTrace) {
     }
 }
 
-function ptFunc(o,  h,  l,  c) {
+function ptFunc(o: any,  h: any,  l: any,  c: any) {
     return {
         o: o,
         h: h,
@@ -43,7 +43,7 @@ function ptFunc(o,  h,  l,  c) {
 
 // shared between OHLC and candlestick
 // ptFunc makes a calcdata point specific to each trace type, from oi, hi, li, ci
-function calcCommon(gd: GraphDiv,  trace: FullTrace,  origX,  x,  ya: FullAxis,  ptFunc) {
+function calcCommon(gd: GraphDiv,  trace: FullTrace,  origX: any,  x: any,  ya: FullAxis,  ptFunc: any) {
     const o = ya.makeCalcdata(trace, 'open');
     const h = ya.makeCalcdata(trace, 'high');
     const l = ya.makeCalcdata(trace, 'low');

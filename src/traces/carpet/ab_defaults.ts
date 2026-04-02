@@ -1,7 +1,7 @@
 import handleAxisDefaults from './axis_defaults.js';
 import Template from '../../plot_api/plot_template.js';
 
-export default function handleABDefaults(traceIn, traceOut, fullLayout, coerce, dfltColor) {
+export default function handleABDefaults(traceIn: any, traceOut: any, fullLayout: any, coerce: any, dfltColor: any) {
     const a = coerce('a');
 
     if(!a) {
@@ -19,7 +19,7 @@ export default function handleABDefaults(traceIn, traceOut, fullLayout, coerce, 
     mimickAxisDefaults(traceIn, traceOut, fullLayout, dfltColor);
 }
 
-function mimickAxisDefaults(traceIn, traceOut, fullLayout, dfltColor) {
+function mimickAxisDefaults(traceIn: any, traceOut: any, fullLayout: any, dfltColor: any) {
     const axesList = ['aaxis', 'baxis'];
 
     axesList.forEach(function(axName) {

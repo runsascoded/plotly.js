@@ -8,9 +8,9 @@ const DOUBLEQUOTE_REGEX = /"/g;
 const DUMMY_SUB = 'TOBESTRIPPED';
 const DUMMY_REGEX = new RegExp('("' + DUMMY_SUB + ')|(' + DUMMY_SUB + '")', 'g');
 
-function htmlEntityDecode(s) {
+function htmlEntityDecode(s: any) {
     const hiddenDiv = select('body').append('div').style({display: 'none'}).html('');
-    const replaced = s.replace(/(&[^;]*;)/gi, function(d) {
+    const replaced = s.replace(/(&[^;]*;)/gi, function(d: any) {
         if(d === '&lt;') { return '&#60;'; } // special handling for brackets
         if(d === '&rt;') { return '&#62;'; }
         if(d.indexOf('<') !== -1 || d.indexOf('>') !== -1) { return ''; }
@@ -20,7 +20,7 @@ function htmlEntityDecode(s) {
     return replaced;
 }
 
-function xmlEntityEncode(str) {
+function xmlEntityEncode(str: any) {
     return str.replace(/&(?!\w+;|\#[0-9]+;| \#x[0-9A-F]+;)/g, '&amp;');
 }
 

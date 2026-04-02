@@ -3,7 +3,7 @@ import Colorscale from '../../components/colorscale/index.js';
 import makeColorMap from './make_color_map.js';
 import endPlus from './end_plus.js';
 
-function calc(gd: GraphDiv,  trace: FullTrace,  opts) {
+function calc(gd: GraphDiv,  trace: FullTrace,  opts: any) {
     const contours = trace.contours;
     const line = trace.line;
     const cs = contours.size || 1;

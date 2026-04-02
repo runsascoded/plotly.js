@@ -96,7 +96,7 @@ function drawOne(gd: GraphDiv, opts: any): any {
 
     if(!gd._legendMouseDownTime) gd._legendMouseDownTime = 0;
 
-    let legendData;
+    let legendData: any;
     if(!inHover) {
         const calcdata = (gd.calcdata || []).slice();
 
@@ -149,15 +149,15 @@ function drawOne(gd: GraphDiv, opts: any): any {
         return (autoMargin as any)(gd, legendId);
     }
 
-    const legend = ensureSingle(layer, 'g', legendId, function(s) {
+    const legend = ensureSingle(layer, 'g', legendId, function(s: any) {
         if(!inHover) s.attr('pointer-events', 'all');
     });
 
-    const clipPath = ensureSingleById(fullLayout._topdefs, 'clipPath', clipId, function(s) {
+    const clipPath = ensureSingleById(fullLayout._topdefs, 'clipPath', clipId, function(s: any) {
         s.append('rect');
     });
 
-    const bg = ensureSingle(legend, 'rect', 'bg', function(s) {
+    const bg = ensureSingle(legend, 'rect', 'bg', function(s: any) {
         s.attr('shape-rendering', 'crispEdges');
     });
     bg.call(Color.stroke, legendObj.bordercolor)
@@ -169,7 +169,7 @@ function drawOne(gd: GraphDiv, opts: any): any {
     const title = legendObj.title;
     legendObj._titleWidth = 0;
     legendObj._titleHeight = 0;
-    let titleEl;
+    let titleEl: any;
     if(title.text) {
         titleEl = ensureSingle(scrollBox, 'text', legendId + 'titletext');
         titleEl.attr('text-anchor', 'start')
@@ -181,7 +181,7 @@ function drawOne(gd: GraphDiv, opts: any): any {
         scrollBox.selectAll('.' + legendId + 'titletext').remove();
     }
 
-    const scrollBar = ensureSingle(legend, 'rect', 'scrollbar', function(s) {
+    const scrollBar = ensureSingle(legend, 'rect', 'scrollbar', function(s: any) {
         s.attr(constants.scrollBarEnterAttrs)
          .call(Color.fill, constants.scrollBarColor);
     });
@@ -194,7 +194,7 @@ function drawOne(gd: GraphDiv, opts: any): any {
     traces.enter().append('g').attr('class', 'traces');
     traces.exit().remove();
 
-    traces.style('opacity', function(d) {
+    traces.style('opacity', function(d: any) {
         const trace = d[0].trace;
         if(Registry.traceIs(trace, 'pie-like')) {
             return hiddenSlices.indexOf(d[0].label) !== -1 ? 0.5 : 1;
@@ -224,15 +224,15 @@ function drawOne(gd: GraphDiv, opts: any): any {
                 let lx, ly;
 
                 if(isPaperX) {
-                    lx = gs.l + gs.w * legendObj.x - FROM_TL[getXanchor(legendObj)] * legendObj._width;
+                    lx = gs.l + gs.w * legendObj.x - (FROM_TL as any)[getXanchor(legendObj)] * legendObj._width;
                 } else {
-                    lx = fullLayout.width! * legendObj.x - FROM_TL[getXanchor(legendObj)] * legendObj._width;
+                    lx = fullLayout.width! * legendObj.x - (FROM_TL as any)[getXanchor(legendObj)] * legendObj._width;
                 }
 
                 if(isPaperY) {
-                    ly = gs.t + gs.h * (1 - legendObj.y) - FROM_TL[getYanchor(legendObj)] * legendObj._effHeight;
+                    ly = gs.t + gs.h * (1 - legendObj.y) - (FROM_TL as any)[getYanchor(legendObj)] * legendObj._effHeight;
                 } else {
-                    ly = fullLayout.height! * (1 - legendObj.y) - FROM_TL[getYanchor(legendObj)] * legendObj._effHeight;
+                    ly = fullLayout.height! * (1 - legendObj.y) - (FROM_TL as any)[getYanchor(legendObj)] * legendObj._effHeight;
                 }
 
                 const expMargin = expandMargin(gd, legendId, lx, ly);
@@ -331,7 +331,7 @@ function drawOne(gd: GraphDiv, opts: any): any {
                 scrollHandler(scrollBoxY, scrollBarHeight, scrollRatio);
 
                 // scroll legend by mousewheel or touchpad swipe up/down
-                legend.on('wheel', function(event) {
+                legend.on('wheel', function(event: any) {
                     scrollBoxY = constrain(
                         legendObj._scrollY +
                             ((event.deltaY / scrollBoxYMax) * scrollBarYMax),
@@ -342,21 +342,21 @@ function drawOne(gd: GraphDiv, opts: any): any {
                     }
                 });
 
-                let eventY0, eventY1, scrollBoxY0;
+                let eventY0: any, eventY1, scrollBoxY0: any;
 
-                const getScrollBarDragY = function(scrollBoxY0, eventY0, eventY1) {
+                const getScrollBarDragY = function(scrollBoxY0: any, eventY0: any, eventY1: any) {
                     const y = ((eventY1 - eventY0) / scrollRatio) + scrollBoxY0;
                     return constrain(y, 0, scrollBoxYMax);
                 };
 
-                const getNaturalDragY = function(scrollBoxY0, eventY0, eventY1) {
+                const getNaturalDragY = function(scrollBoxY0: any, eventY0: any, eventY1: any) {
                     const y = ((eventY0 - eventY1) / scrollRatio) + scrollBoxY0;
                     return constrain(y, 0, scrollBoxYMax);
                 };
 
                 // scroll legend by dragging scrollBAR
                 const scrollBarDrag = d3Drag()
-                .on('start', function(event) {
+                .on('start', function(event: any) {
                     const e = event.sourceEvent;
                     if(e.type === 'touchstart') {
                         eventY0 = e.changedTouches[0].clientY;
@@ -365,7 +365,7 @@ function drawOne(gd: GraphDiv, opts: any): any {
                     }
                     scrollBoxY0 = scrollBoxY;
                 })
-                .on('drag', function(event) {
+                .on('drag', function(event: any) {
                     const e = event.sourceEvent;
                     if(e.buttons === 2 || e.ctrlKey) return;
                     if(e.type === 'touchmove') {
@@ -380,14 +380,14 @@ function drawOne(gd: GraphDiv, opts: any): any {
 
                 // scroll legend by touch-dragging scrollBOX
                 const scrollBoxTouchDrag = d3Drag()
-                .on('start', function(event) {
+                .on('start', function(event: any) {
                     const e = event.sourceEvent;
                     if(e.type === 'touchstart') {
                         eventY0 = e.changedTouches[0].clientY;
                         scrollBoxY0 = scrollBoxY;
                     }
                 })
-                .on('drag', function(event) {
+                .on('drag', function(event: any) {
                     const e = event.sourceEvent;
                     if(e.type === 'touchmove') {
                         eventY1 = e.changedTouches[0].clientY;
@@ -398,7 +398,7 @@ function drawOne(gd: GraphDiv, opts: any): any {
                 scrollBox.call(scrollBoxTouchDrag);
             }
 
-            function scrollHandler(scrollBoxY, scrollBarHeight, scrollRatio) {
+            function scrollHandler(scrollBoxY: any, scrollBarHeight: any, scrollRatio: any) {
                 legendObj._scrollY = gd._fullLayout[legendId]._scrollY = scrollBoxY;
                 setTranslate(scrollBox, 0, -scrollBoxY);
 
@@ -413,14 +413,14 @@ function drawOne(gd: GraphDiv, opts: any): any {
             }
 
             if(gd._context.edits.legendPosition) {
-                let xf, yf, x0, y0;
+                let xf: any, yf: any, x0: any, y0: any;
 
                 legend.classed('cursor-move', true);
 
                 dragElement.init({
                     element: legend.node(),
                     gd: gd,
-                    prepFn: function(e) {
+                    prepFn: function(e: any) {
                         if(e.target === scrollBar.node()) {
                             return;
                         }
@@ -428,7 +428,7 @@ function drawOne(gd: GraphDiv, opts: any): any {
                         x0 = transform.x;
                         y0 = transform.y;
                     },
-                    moveFn: function(dx, dy) {
+                    moveFn: function(dx: any, dy: any) {
                         if(x0 !== undefined && y0 !== undefined) {
                             const newX = x0 + dx;
                             const newY = y0 + dy;
@@ -590,7 +590,7 @@ function setupTraceToggle(g: any, gd: GraphDiv, legendId: string): void {
     let newMouseDownTime;
     let numClicks = 1;
 
-    const traceToggle = ensureSingle(g, 'rect', legendId + 'toggle', function(s) {
+    const traceToggle = ensureSingle(g, 'rect', legendId + 'toggle', function(s: any) {
         if(!gd._context.staticPlot) {
             s.style('cursor', 'pointer').attr('pointer-events', 'all');
         }
@@ -599,7 +599,7 @@ function setupTraceToggle(g: any, gd: GraphDiv, legendId: string): void {
 
     if(gd._context.staticPlot) return;
 
-    traceToggle.on('mousedown', function(event) {
+    traceToggle.on('mousedown', function(event: any) {
         newMouseDownTime = (new Date()).getTime();
         if(newMouseDownTime - gd._legendMouseDownTime! < doubleClickDelay) {
             // in a click train
@@ -610,7 +610,7 @@ function setupTraceToggle(g: any, gd: GraphDiv, legendId: string): void {
             gd._legendMouseDownTime = newMouseDownTime;
         }
     });
-    traceToggle.on('mouseup', function(event) {
+    traceToggle.on('mouseup', function(event: any) {
         if(gd._dragged || gd._editing) return;
         const legend = gd._fullLayout[legendId];
 
@@ -978,10 +978,10 @@ function expandMargin(gd: GraphDiv, legendId: string, lx: number, ly: number): a
         return autoMargin(gd, legendId, {
             x: legendObj.x,
             y: legendObj.y,
-            l: legendObj._width * (FROM_TL[xanchor]),
-            r: legendObj._width * (FROM_BR[xanchor]),
-            b: legendObj._effHeight * (FROM_BR[yanchor]),
-            t: legendObj._effHeight * (FROM_TL[yanchor])
+            l: legendObj._width * ((FROM_TL as any)[xanchor]),
+            r: legendObj._width * ((FROM_BR as any)[xanchor]),
+            b: legendObj._effHeight * ((FROM_BR as any)[yanchor]),
+            t: legendObj._effHeight * ((FROM_TL as any)[yanchor])
         });
     } else if(isPaperX) {
         gd._fullLayout._reservedMargin[legendId][sideY] = possibleReservedMargins[sideY];

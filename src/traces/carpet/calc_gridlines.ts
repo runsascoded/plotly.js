@@ -1,9 +1,9 @@
 import Axes from '../../plots/cartesian/axes.js';
 import { extendFlat } from '../../lib/extend.js';
 
-export default function calcGridlines(trace, axisLetter, crossAxisLetter) {
+export default function calcGridlines(trace: any, axisLetter: any, crossAxisLetter: any) {
     let i, j, j0;
-    let eps, bounds, n1, n2, n, value, v;
+    let eps, bounds, n1, n2, n: any, value, v;
     let j1, v0, v1, d;
 
     const data = trace['_' + axisLetter];
@@ -40,8 +40,8 @@ export default function calcGridlines(trace, axisLetter, crossAxisLetter) {
     // lines fall once every three expanded grid row/cols:
     const stride = axis.smoothing ? 3 : 1;
 
-    function constructValueGridline(value) {
-        let i, j, j0, tj, pxy, i0, ti, xy, dxydi0, dxydi1, dxydj0, dxydj1;
+    function constructValueGridline(value: any) {
+        let i: any, j: any, j0: any, tj: any, pxy, i0: any, ti: any, xy, dxydi0, dxydi1, dxydj0, dxydj1;
         const xpoints: any[] = [];
         const ypoints: any[] = [];
         const ret: any = {};
@@ -59,11 +59,11 @@ export default function calcGridlines(trace, axisLetter, crossAxisLetter) {
             ret.length = nb;
             ret.crossLength = na;
 
-            ret.xy = function(i) {
+            ret.xy = function(i: any) {
                 return trace.evalxy([], i, j);
             };
 
-            ret.dxy = function(i0, ti) {
+            ret.dxy = function(i0: any, ti: any) {
                 return trace.dxydi([], i0, j0, ti, tj);
             };
 
@@ -97,11 +97,11 @@ export default function calcGridlines(trace, axisLetter, crossAxisLetter) {
             ret.length = na;
             ret.crossLength = nb;
 
-            ret.xy = function(j) {
+            ret.xy = function(j: any) {
                 return trace.evalxy([], i, j);
             };
 
-            ret.dxy = function(j0, tj) {
+            ret.dxy = function(j0: any, tj: any) {
                 return trace.dxydj([], i0, j0, ti, tj);
             };
 
@@ -142,8 +142,8 @@ export default function calcGridlines(trace, axisLetter, crossAxisLetter) {
         return ret;
     }
 
-    function constructArrayGridline(idx) {
-        let j, i0, j0, ti, tj;
+    function constructArrayGridline(idx: any) {
+        let j, i0: any, j0: any, ti: any, tj: any;
         const xpoints: any[] = [];
         const ypoints: any[] = [];
         const ret: any = {};
@@ -154,11 +154,11 @@ export default function calcGridlines(trace, axisLetter, crossAxisLetter) {
             j0 = Math.max(0, Math.min(nb - 2, idx));
             tj = Math.min(1, Math.max(0, idx - j0));
 
-            ret.xy = function(i) {
+            ret.xy = function(i: any) {
                 return trace.evalxy([], i, idx);
             };
 
-            ret.dxy = function(i0, ti) {
+            ret.dxy = function(i0: any, ti: any) {
                 return trace.dxydi([], i0, j0, ti, tj);
             };
 
@@ -172,11 +172,11 @@ export default function calcGridlines(trace, axisLetter, crossAxisLetter) {
             i0 = Math.max(0, Math.min(na - 2, idx));
             ti = Math.min(1, Math.max(0, idx - i0));
 
-            ret.xy = function(j) {
+            ret.xy = function(j: any) {
                 return trace.evalxy([], idx, j);
             };
 
-            ret.dxy = function(j0, tj) {
+            ret.dxy = function(j0: any, tj: any) {
                 return trace.dxydj([], i0, j0, ti, tj);
             };
 

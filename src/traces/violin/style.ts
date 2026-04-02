@@ -7,9 +7,9 @@ const { stylePoints } = _style;
 export default function style(gd: GraphDiv): any {
     const s = select(gd).selectAll('g.trace.violins');
 
-    s.style('opacity', function(d) { return d[0].trace.opacity; });
+    s.style('opacity', function(d: any) { return d[0].trace.opacity; });
 
-    s.each(function(this: any, d) {
+    s.each(function(this: any, d: any) {
         const trace = d[0].trace;
         const sel = select(this);
         const box = trace.box || {};

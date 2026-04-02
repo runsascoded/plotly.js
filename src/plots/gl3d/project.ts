@@ -1,4 +1,4 @@
-function xformMatrix(m, v) {
+function xformMatrix(m: any, v: any) {
     const out = [0, 0, 0, 0];
     let i, j;
 
@@ -11,7 +11,7 @@ function xformMatrix(m, v) {
     return out;
 }
 
-function project(camera, v) {
+function project(camera: any, v: any) {
     const p = xformMatrix(camera.projection,
         xformMatrix(camera.view,
         xformMatrix(camera.model, [v[0], v[1], v[2], 1])));

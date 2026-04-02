@@ -1,7 +1,7 @@
 import Registry from '../../registry.js';
 import Lib from '../../lib/index.js';
 
-export default function handleSampleDefaults(traceIn, traceOut, coerce, layout) {
+export default function handleSampleDefaults(traceIn: any, traceOut: any, coerce: any, layout: any) {
     const x = coerce('x');
     const y = coerce('y');
     const xlen = Lib.minRowLength(x);

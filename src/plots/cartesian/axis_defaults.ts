@@ -312,7 +312,7 @@ const dayStrToNum = {
 
 function indexOfDay(v?: any): any {
     if(typeof v !== 'string') return;
-    return dayStrToNum[
+    return (dayStrToNum as any)[
         v.slice(0, 3).toLowerCase()
     ];
 }

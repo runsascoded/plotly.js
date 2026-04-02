@@ -8,7 +8,7 @@ import { extendFlat } from '../../lib/extend.js';
 import _edit_types from '../../plot_api/edit_types.js';
 const { overrideAll } = _edit_types;
 
-function makeSliceAttr(axLetter) {
+function makeSliceAttr(axLetter: any) {
     return {
         show: {
             valType: 'boolean',
@@ -43,7 +43,7 @@ function makeSliceAttr(axLetter) {
     };
 }
 
-function makeCapAttr(axLetter) {
+function makeCapAttr(axLetter: any) {
     return {
         show: {
             valType: 'boolean',

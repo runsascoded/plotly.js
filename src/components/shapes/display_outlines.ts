@@ -78,11 +78,11 @@ export default function displayOutlines(polygons: any, outlines: any, dragOption
     outlines.attr('d', writePaths(polygons));
 
     // add controllers
-    let vertexDragOptions;
-    let groupDragOptions;
-    let indexI; // cell index
-    let indexJ; // vertex or cell-controller index
-    let copyPolygons;
+    let vertexDragOptions: any;
+    let groupDragOptions: any;
+    let indexI: any; // cell index
+    let indexJ: any; // vertex or cell-controller index
+    let copyPolygons: any;
 
     if(!nCalls && (
         dragOptions.isActiveShape ||
@@ -235,7 +235,7 @@ export default function displayOutlines(polygons: any, outlines: any, dragOption
                 }
 
                 const rectSelection = onRect && dragOptions.isActiveSelection;
-                let nextPoint;
+                let nextPoint: any;
                 if(rectSelection) nextPoint = getNextPoint(cell, j);
 
                 const x = cell[j][1];

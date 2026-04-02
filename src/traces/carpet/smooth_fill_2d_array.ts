@@ -1,6 +1,6 @@
 import Lib from '../../lib/index.js';
 
-export default function smoothFill2dArray(data, a, b) {
+export default function smoothFill2dArray(data: any, a: any, b: any) {
     let i, j, k;
     const ip: any[] = [];
     const jp: any[] = [];
@@ -9,7 +9,7 @@ export default function smoothFill2dArray(data, a, b) {
     const ni = data[0].length;
     const nj = data.length;
 
-    function avgSurrounding(i, j) {
+    function avgSurrounding(i: any, j: any) {
         // As a low-quality start, we can simply average surrounding points (in a not
         // non-uniform grid aware manner):
         let sum = 0.0;

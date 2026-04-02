@@ -6,7 +6,7 @@ import _numerical from '../../constants/numerical.js';
 const { BADNUM } = _numerical;
 import { makeBlank } from '../../lib/geojson_utils.js';
 
-export default function convert(calcTrace) {
+export default function convert(calcTrace: any) {
     const trace = calcTrace[0].trace;
     const isVisible = (trace.visible === true && trace._length !== 0);
 

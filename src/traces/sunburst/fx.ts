@@ -29,7 +29,7 @@ export default function attachFxHandlers(sliceTop: any, entry: any, gd: GraphDiv
     // in the same slice that you moused up in
     if(!('_hasHoverEvent' in trace)) trace._hasHoverEvent = false;
 
-    const onMouseOver = function(pt) {
+    const onMouseOver = function(pt: any) {
         const fullLayoutNow = gd._fullLayout;
 
         if(gd._dragging || fullLayoutNow.hovermode === false) return;
@@ -42,7 +42,7 @@ export default function attachFxHandlers(sliceTop: any, entry: any, gd: GraphDiv
 
         const val = helpers.getValue(pt);
 
-        const _cast = function(astr) {
+        const _cast = function(astr: any) {
             return Lib.castOption(traceNow, ptNumber, astr);
         };
 
@@ -67,7 +67,7 @@ export default function attachFxHandlers(sliceTop: any, entry: any, gd: GraphDiv
             const hoverPt: Record<string, any> = {};
             let parts: any[] = [];
             const thisText: any[] = [];
-            const hasFlag = function(flag) { return parts.indexOf(flag) !== -1; };
+            const hasFlag = function(flag: any) { return parts.indexOf(flag) !== -1; };
 
             if(hoverinfo) {
                 parts = hoverinfo === 'all' ?
@@ -89,7 +89,7 @@ export default function attachFxHandlers(sliceTop: any, entry: any, gd: GraphDiv
                 thisText.push(hoverPt.currentPath);
             }
 
-            let tx;
+            let tx: any;
             const allPercents: any[] = [];
             const insertPercent = function() {
                 if(allPercents.indexOf(tx) === -1) { // no need to add redundant info
@@ -161,7 +161,7 @@ export default function attachFxHandlers(sliceTop: any, entry: any, gd: GraphDiv
                 hoverItems.idealAlign = hoverCenterX < 0 ? 'left' : 'right';
             }
 
-            const bbox = [];
+            const bbox: any[] = [];
             Fx.loneHover(hoverItems, {
                 container: fullLayoutNow._hoverlayer.node(),
                 outerContainer: fullLayoutNow._paper.node(),
@@ -187,7 +187,7 @@ export default function attachFxHandlers(sliceTop: any, entry: any, gd: GraphDiv
         });
     };
 
-    const onMouseOut = function(this: any, evt) {
+    const onMouseOut = function(this: any, evt: any) {
         const fullLayoutNow = gd._fullLayout;
         const traceNow = gd._fullData[trace.index];
         const pt = select(this).datum();
@@ -214,7 +214,7 @@ export default function attachFxHandlers(sliceTop: any, entry: any, gd: GraphDiv
         }
     };
 
-    const onClick = function(pt) {
+    const onClick = function(pt: any) {
         // TODO: this does not support right-click. If we want to support it, we
         // would likely need to change pie to use dragElement instead of straight
         // map subplots event binding. Or perhaps better, make a simple wrapper with the

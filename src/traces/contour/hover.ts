@@ -1,7 +1,7 @@
 import Color from '../../components/color/index.js';
 import heatmapHoverPoints from '../heatmap/hover.js';
 
-export default function hoverPoints(pointData,  xval,  yval,  hovermode,  opts) {
+export default function hoverPoints(pointData: any,  xval: any,  yval: any,  hovermode: any,  opts: any) {
     if(!opts) opts = {};
     opts.isContour = true;
 

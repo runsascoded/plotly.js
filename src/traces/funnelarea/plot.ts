@@ -21,7 +21,7 @@ const prerenderTitles = piePlot.prerenderTitles;
 const positionTitleOutside = piePlot.positionTitleOutside;
 const formatSliceLabel = piePlot.formatSliceLabel;
 
-export default function plot(gd: GraphDiv,  cdModule) {
+export default function plot(gd: GraphDiv,  cdModule: any) {
     const isStatic = gd._context.staticPlot;
 
     const fullLayout = gd._fullLayout;
@@ -31,7 +31,7 @@ export default function plot(gd: GraphDiv,  cdModule) {
     prerenderTitles(cdModule, gd);
     layoutAreas(cdModule, fullLayout._size);
 
-    Lib.makeTraceGroups(fullLayout._funnelarealayer, cdModule, 'trace').each(function(this: any, cd) {
+    Lib.makeTraceGroups(fullLayout._funnelarealayer, cdModule, 'trace').each(function(this: any, cd: any) {
         const plotGroup = select(this);
         const cd0 = cd[0];
         const trace = cd0.trace;
@@ -45,7 +45,7 @@ export default function plot(gd: GraphDiv,  cdModule) {
                 .classed('slice', true);
             slices.exit().remove();
 
-            slices.each(function(this: any, pt, i) {
+            slices.each(function(this: any, pt: any, i: any) {
                 if(pt.hidden) {
                     select(this).selectAll('path,g').remove();
                     return;
@@ -86,7 +86,7 @@ export default function plot(gd: GraphDiv,  cdModule) {
                 sliceTextGroup.exit().remove();
 
                 sliceTextGroup.each(function(this: any) {
-                    const sliceText = Lib.ensureSingle(select(this), 'text', '', function(this: any, s) {
+                    const sliceText = Lib.ensureSingle(select(this), 'text', '', function(this: any, s: any) {
                         // prohibit tex interpretation until we can handle
                         // tex and regular text together
                         s.attr('data-notex', 1);
@@ -138,7 +138,7 @@ export default function plot(gd: GraphDiv,  cdModule) {
             titleTextGroup.exit().remove();
 
             titleTextGroup.each(function(this: any) {
-                const titleText = Lib.ensureSingle(select(this), 'text', '', function(this: any, s) {
+                const titleText = Lib.ensureSingle(select(this), 'text', '', function(this: any, s: any) {
                     // prohibit tex interpretation as above
                     s.attr('data-notex', 1);
                 });
@@ -168,21 +168,21 @@ export default function plot(gd: GraphDiv,  cdModule) {
     });
 }
 
-function line(a,  b) {
+function line(a: any,  b: any) {
     const dx = b[0] - a[0];
     const dy = b[1] - a[1];
 
     return 'l' + dx + ',' + dy;
 }
 
-function getBetween(a,  b) {
+function getBetween(a: any,  b: any) {
     return [
         0.5 * (a[0] + b[0]),
         0.5 * (a[1] + b[1])
     ];
 }
 
-function setCoords(cd) {
+function setCoords(cd: any) {
     if(!cd.length) return;
 
     const cd0 = cd[0];

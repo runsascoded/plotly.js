@@ -28,7 +28,7 @@ export { templateFormatStringDescription };
 function describeVariables({ description, keys = [] }: any): any {
     let descPart = description ? ' ' : '';
     if (keys.length > 0) {
-        const quotedKeys = keys.map((k) => `\`${k}\``);
+        const quotedKeys = keys.map((k: any) => `\`${k}\``);
         descPart += 'Finally, the template string has access to ';
         if (keys.length === 1) {
             descPart += `variable ${quotedKeys[0]}`;

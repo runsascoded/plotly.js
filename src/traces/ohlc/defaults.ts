@@ -37,7 +37,7 @@ export default function supplyDefaults(traceIn: InputTrace,  traceOut: FullTrace
     coerce('zorder');
 }
 
-function handleDirection(traceIn: InputTrace,  traceOut: FullTrace,  coerce,  direction) {
+function handleDirection(traceIn: InputTrace,  traceOut: FullTrace,  coerce: any,  direction: any) {
     coerce(direction + '.line.color');
     coerce(direction + '.line.width', traceOut.line.width);
     coerce(direction + '.line.dash', traceOut.line.dash);

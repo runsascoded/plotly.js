@@ -24,7 +24,7 @@ export default function calc(gd: GraphDiv, trace: FullTrace) {
     const visibleDims = trace._visibleDims = [] as any[];
     let i, k, dim, xa, ya;
 
-    function makeCalcdata(ax: FullAxis, dim) {
+    function makeCalcdata(ax: FullAxis, dim: any) {
         // call makeCalcdata with fake input
         const ccol = ax.makeCalcdata({
             v: dim.values,

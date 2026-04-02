@@ -13,7 +13,7 @@ import _polygon from '../../lib/polygon.js';
 const { tester: polygonTester } = _polygon;
 
 export default function plot(gd: GraphDiv, plotinfo: PlotInfo, cdscatter: CalcDatum[][], scatterLayer: any, transitionOpts?: any, makeOnCompleteCallback?: any): any {
-    let join, onComplete;
+    let join, onComplete: any;
 
     // If transition config is provided, then it is only a partial replot and traces not
     // updated are removed.
@@ -24,11 +24,11 @@ export default function plot(gd: GraphDiv, plotinfo: PlotInfo, cdscatter: CalcDa
     const cdscatterSorted = linkTraces(gd, plotinfo, cdscatter);
 
     join = scatterLayer.selectAll('g.trace')
-        .data(cdscatterSorted, function(d) { return d[0].trace.uid; });
+        .data(cdscatterSorted, function(d: any) { return d[0].trace.uid; });
 
     // Append new traces:
     join.enter().append('g')
-        .attr('class', function(d) {
+        .attr('class', function(d: any) {
             return 'trace scatter trace' + d[0].trace.uid;
         })
         .style('stroke-miterlimit', 2);
@@ -57,12 +57,12 @@ export default function plot(gd: GraphDiv, plotinfo: PlotInfo, cdscatter: CalcDa
         trans.each(function() {
             // Must run the selection again since otherwise enters/updates get grouped together
             // and these get executed out of order. Except we need them in order!
-            scatterLayer.selectAll('g.trace').each(function(this: any, d, i) {
+            scatterLayer.selectAll('g.trace').each(function(this: any, d: any, i: any) {
                 plotOne(gd, i, plotinfo, d, cdscatterSorted, this, transitionOpts);
             });
         });
     } else {
-        join.each(function(this: any, d, i) {
+        join.each(function(this: any, d: any, i: any) {
             plotOne(gd, i, plotinfo, d, cdscatterSorted, this, transitionOpts);
         });
     }
@@ -76,7 +76,7 @@ export default function plot(gd: GraphDiv, plotinfo: PlotInfo, cdscatter: CalcDa
 }
 
 function createFills(gd: GraphDiv, traceJoin: any, plotinfo: PlotInfo): void {
-    traceJoin.each(function(this: any, d) {
+    traceJoin.each(function(this: any, d: any) {
         const fills = ensureSingle(select(this), 'g', 'fills');
         setClipUrl(fills, (plotinfo.layerClipId as any), gd);
 
@@ -91,10 +91,10 @@ function createFills(gd: GraphDiv, traceJoin: any, plotinfo: PlotInfo): void {
         fillJoin.enter().append('g');
 
         fillJoin.exit()
-            .each(function(d) { trace[d] = null; })
+            .each(function(d: any) { trace[d] = null; })
             .remove();
 
-        fillJoin.order().each(function(this: any, d) {
+        fillJoin.order().each(function(this: any, d: any) {
             // make a path element inside the fill group, just so
             // we can give it its own data later on and the group can
             // keep its simple '_*Fill' data
@@ -114,7 +114,7 @@ function plotOne(gd: GraphDiv, idx: number, plotinfo: PlotInfo, cdscatter: CalcD
 
     const hasTransition = !!transitionOpts && transitionOpts.duration > 0;
 
-    function transition(selection) {
+    function transition(selection: any) {
         return hasTransition ? selection.transition() : selection;
     }
 
@@ -142,7 +142,7 @@ function plotOne(gd: GraphDiv, idx: number, plotinfo: PlotInfo, cdscatter: CalcD
     let ownFillDir = trace.fill.charAt(trace.fill.length - 1);
     if(ownFillDir !== 'x' && ownFillDir !== 'y') ownFillDir = '';
 
-    let fillAxisIndex, fillAxisZero;
+    let fillAxisIndex: any, fillAxisZero: any;
     if(ownFillDir === 'y') {
         fillAxisIndex = 1;
         fillAxisZero = ya.c2p(0, true);
@@ -176,7 +176,7 @@ function plotOne(gd: GraphDiv, idx: number, plotinfo: PlotInfo, cdscatter: CalcD
     // revpath is fullpath reversed, for fill-to-next
     let revpath = '';
     // functions for converting a point array to a path
-    let pathfn, revpathbase, revpathfn;
+    let pathfn: any, revpathbase: any, revpathfn: any;
     // variables used before and after the data join
     let pt0, lastSegment, pt1;
 
@@ -206,7 +206,7 @@ function plotOne(gd: GraphDiv, idx: number, plotinfo: PlotInfo, cdscatter: CalcD
                 line.shape.split('').reverse().join('')
             );
         } else if(line.shape === 'spline') {
-            pathfn = revpathbase = function(pts) {
+            pathfn = revpathbase = function(pts: any) {
                 const pLast = pts[pts.length - 1];
                 if(pts.length > 1 && pts[0][0] === pLast[0] && pts[0][1] === pLast[1]) {
                     // identical start and end points: treat it as a
@@ -217,12 +217,12 @@ function plotOne(gd: GraphDiv, idx: number, plotinfo: PlotInfo, cdscatter: CalcD
                 }
             };
         } else {
-            pathfn = revpathbase = function(pts) {
+            pathfn = revpathbase = function(pts: any) {
                 return 'M' + pts.join('L');
             };
         }
 
-        revpathfn = function(pts) {
+        revpathfn = function(pts: any) {
             // note: this is destructive (reverses pts in place) so can't use pts after this
             return revpathbase(pts.reverse());
         };
@@ -271,8 +271,8 @@ function plotOne(gd: GraphDiv, idx: number, plotinfo: PlotInfo, cdscatter: CalcD
             pt1 = lastSegment[lastSegment.length - 1].slice();
         }
 
-        makeUpdate = function(isEnter) {
-            return function(this: any, pts) {
+        makeUpdate = function(isEnter: any) {
+            return function(this: any, pts: any) {
                 thispath = pathfn(pts);
                 thisrevpath = revpathfn(pts); // side-effect: reverses input
                 // calculate SVG path over all segments for fills
@@ -326,7 +326,7 @@ function plotOne(gd: GraphDiv, idx: number, plotinfo: PlotInfo, cdscatter: CalcD
 
     setClipUrl(lineJoin, (plotinfo.layerClipId as any), gd);
 
-    function clearFill(selection) {
+    function clearFill(selection: any) {
         transition(selection).attr('d', 'M0,0Z');
     }
 
@@ -339,7 +339,7 @@ function plotOne(gd: GraphDiv, idx: number, plotinfo: PlotInfo, cdscatter: CalcD
         return polygons;
     };
 
-    const makePolygonsToPrevious = function(prevFillsegments) {
+    const makePolygonsToPrevious = function(prevFillsegments: any) {
         let polygons, i;
         if(!prevFillsegments || prevFillsegments.length === 0) {
             // if there are no fill segments of a previous trace, stretch the
@@ -450,24 +450,24 @@ function plotOne(gd: GraphDiv, idx: number, plotinfo: PlotInfo, cdscatter: CalcD
     }
     trace._ownPolygons = thisPolygons;
 
-    function visFilter(d) {
-        return d.filter(function(v) { return !v.gap && v.vis; });
+    function visFilter(d: any) {
+        return d.filter(function(v: any) { return !v.gap && v.vis; });
     }
 
-    function visFilterWithGaps(d) {
-        return d.filter(function(v) { return v.vis; });
+    function visFilterWithGaps(d: any) {
+        return d.filter(function(v: any) { return v.vis; });
     }
 
-    function gapFilter(d) {
-        return d.filter(function(v) { return !v.gap; });
+    function gapFilter(d: any) {
+        return d.filter(function(v: any) { return !v.gap; });
     }
 
-    function keyFunc(d) {
+    function keyFunc(d: any) {
         return d.id;
     }
 
     // Returns a function if the trace is keyed, otherwise returns undefined
-    function getKeyFunc(trace) {
+    function getKeyFunc(trace: any) {
         if(trace.ids) {
             return keyFunc;
         }
@@ -477,7 +477,7 @@ function plotOne(gd: GraphDiv, idx: number, plotinfo: PlotInfo, cdscatter: CalcD
         return false;
     }
 
-    function makePoints(points, text, cdscatter) {
+    function makePoints(points: any, text: any, cdscatter: any) {
         let join, selection, hasNode;
 
         const trace = cdscatter[0].trace;
@@ -527,12 +527,12 @@ function plotOne(gd: GraphDiv, idx: number, plotinfo: PlotInfo, cdscatter: CalcD
 
         join.order();
 
-        let styleFns;
+        let styleFns: any;
         if(showMarkers) {
             styleFns = makePointStyleFns(trace);
         }
 
-        join.each(function(this: any, d) {
+        join.each(function(this: any, d: any) {
             const el = select(this);
             const sel = transition(el);
             hasNode = translatePoint(d, sel, xa, ya);
@@ -570,7 +570,7 @@ function plotOne(gd: GraphDiv, idx: number, plotinfo: PlotInfo, cdscatter: CalcD
 
         join.order();
 
-        join.each(function(this: any, d) {
+        join.each(function(this: any, d: any) {
             const g = select(this);
             const sel = transition(g.select('text'));
             hasNode = translatePoint(d, sel, xa, ya);
@@ -586,7 +586,7 @@ function plotOne(gd: GraphDiv, idx: number, plotinfo: PlotInfo, cdscatter: CalcD
 
         join.selectAll('text')
             .call(textPointStyle, trace, gd)
-            .each(function(this: any, d) {
+            .each(function(this: any, d: any) {
                 // This just *has* to be totally custom because of SVG text positioning :(
                 // It's obviously copied from translatePoint; we just can't use that
                 const x = xa.c2p(d.x);

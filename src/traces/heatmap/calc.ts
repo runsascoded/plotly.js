@@ -23,7 +23,7 @@ export default function calc(gd: GraphDiv,  trace: FullTrace) {
     let zsmooth = isContour ? 'best' : trace.zsmooth;
     let x, x0, dx, origX;
     let y, y0, dy, origY;
-    let z, i, binned;
+    let z: any, i, binned: any;
 
     // cancel minimum tick spacings (only applies to bars and boxes)
     xa._minDtick = 0;
@@ -83,12 +83,12 @@ export default function calc(gd: GraphDiv,  trace: FullTrace) {
         interp2d(z, trace._emptypoints);
     }
 
-    function noZsmooth(msg) {
+    function noZsmooth(msg: any) {
         zsmooth = trace._input.zsmooth = trace.zsmooth = false;
         Lib.warn('cannot use zsmooth: "fast": ' + msg);
     }
 
-    function scaleIsLinear(s) {
+    function scaleIsLinear(s: any) {
         if(s.length > 1) {
             const avgdx = (s[s.length - 1] - s[0]) / (s.length - 1);
             const maxErrX = Math.abs(avgdx / 100);
@@ -166,7 +166,7 @@ export default function calc(gd: GraphDiv,  trace: FullTrace) {
     return [cd0];
 }
 
-function skipBreaks(a) {
+function skipBreaks(a: any) {
     const b: any[] = [];
     const len = a.length;
     for(let i = 0; i < len; i++) {
@@ -176,7 +176,7 @@ function skipBreaks(a) {
     return b;
 }
 
-function dropZonBreaks(x,  y,  z) {
+function dropZonBreaks(x: any,  y: any,  z: any) {
     const newZ: any[] = [];
     let k = -1;
     for(let i = 0; i < z.length; i++) {

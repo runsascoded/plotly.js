@@ -5,7 +5,7 @@ import createSplineEvaluator from './create_spline_evaluator.js';
 import createIDerivativeEvaluator from './create_i_derivative_evaluator.js';
 import createJDerivativeEvaluator from './create_j_derivative_evaluator.js';
 
-export default function setConvert(trace) {
+export default function setConvert(trace: any) {
     const a = trace._a;
     const b = trace._b;
     const na = a.length;
@@ -33,11 +33,11 @@ export default function setConvert(trace) {
     bmin -= btol;
     bmax += btol;
 
-    trace.isVisible = function(a, b) {
+    trace.isVisible = function(a: any, b: any) {
         return a > amin && a < amax && b > bmin && b < bmax;
     };
 
-    trace.isOccluded = function(a, b) {
+    trace.isOccluded = function(a: any, b: any) {
         return a < amin || a > amax || b < bmin || b > bmax;
     };
 
@@ -67,19 +67,19 @@ export default function setConvert(trace) {
      * Convert from i/j data grid coordinates to a/b values. Note in particular that this
      * is *linear* interpolation, even if the data is interpolated bicubically.
      */
-    trace.i2a = function(i) {
+    trace.i2a = function(i: any) {
         const i0 = Math.max(0, Math.floor(i[0]), na - 2);
         const ti = i[0] - i0;
         return (1 - ti) * a[i0] + ti * a[i0 + 1];
     };
 
-    trace.j2b = function(j) {
+    trace.j2b = function(j: any) {
         const j0 = Math.max(0, Math.floor(j[1]), na - 2);
         const tj = j[1] - j0;
         return (1 - tj) * b[j0] + tj * b[j0 + 1];
     };
 
-    trace.ij2ab = function(ij) {
+    trace.ij2ab = function(ij: any) {
         return [trace.i2a(ij[0]), trace.j2b(ij[1])];
     };
 
@@ -88,21 +88,21 @@ export default function setConvert(trace) {
      * through the a/b data arrays and assumes they are monotonic, which is presumed to have
      * been enforced already.
      */
-    trace.a2i = function(aval) {
+    trace.a2i = function(aval: any) {
         const i0 = Math.max(0, Math.min(search(aval, a), na - 2));
         const a0 = a[i0];
         const a1 = a[i0 + 1];
         return Math.max(0, Math.min(na - 1, i0 + (aval - a0) / (a1 - a0)));
     };
 
-    trace.b2j = function(bval) {
+    trace.b2j = function(bval: any) {
         const j0 = Math.max(0, Math.min(search(bval, b), nb - 2));
         const b0 = b[j0];
         const b1 = b[j0 + 1];
         return Math.max(0, Math.min(nb - 1, j0 + (bval - b0) / (b1 - b0)));
     };
 
-    trace.ab2ij = function(ab) {
+    trace.ab2ij = function(ab: any) {
         return [trace.a2i(ab[0]), trace.b2j(ab[1])];
     };
 
@@ -110,11 +110,11 @@ export default function setConvert(trace) {
      * Convert from i/j coordinates to x/y caretesian coordinates. This means either bilinear
      * or bicubic spline evaluation, but the hard part is already done at this point.
      */
-    trace.i2c = function(i, j) {
+    trace.i2c = function(i: any, j: any) {
         return trace.evalxy([], i, j);
     };
 
-    trace.ab2xy = function(aval, bval, extrapolate) {
+    trace.ab2xy = function(aval: any, bval: any, extrapolate: any) {
         if(!extrapolate && (aval < a[0] || aval > a[na - 1] || bval < b[0] || bval > b[nb - 1])) {
             return [false, false];
         }
@@ -130,7 +130,7 @@ export default function setConvert(trace) {
             // at all.
             let iex = 0;
             let jex = 0;
-            const der = [];
+            const der: any[] = [];
 
             let i0, ti, j0, tj;
             if(aval < a[0]) {
@@ -175,15 +175,15 @@ export default function setConvert(trace) {
         return pt;
     };
 
-    trace.c2p = function(xy, xa, ya) {
+    trace.c2p = function(xy: any, xa: any, ya: any) {
         return [xa.c2p(xy[0]), ya.c2p(xy[1])];
     };
 
-    trace.p2x = function(p, xa, ya) {
+    trace.p2x = function(p: any, xa: any, ya: any) {
         return [xa.p2c(p[0]), ya.p2c(p[1])];
     };
 
-    trace.dadi = function(i /* , u*/) {
+    trace.dadi = function(i: any /* , u*/) {
         // Right now only a piecewise linear a or b basis is permitted since smoother interpolation
         // would cause monotonicity problems. As a retult, u is entirely disregarded in this
         // computation, though we'll specify it as a parameter for the sake of completeness and
@@ -199,7 +199,7 @@ export default function setConvert(trace) {
         return a[i0 + 1] - a[i0];
     };
 
-    trace.dbdj = function(j /* , v*/) {
+    trace.dbdj = function(j: any /* , v*/) {
         // See above caveats for dadi which also apply here
         const j0 = Math.max(0, Math.min(b.length - 2, j));
 
@@ -212,14 +212,14 @@ export default function setConvert(trace) {
     //
     // NB: separate grid cell + fractional grid cell coordinate format is due to the discontinuous
     // derivative, as described better in create_i_derivative_evaluator.js
-    trace.dxyda = function(i0, j0, u, v) {
+    trace.dxyda = function(i0: any, j0: any, u: any, v: any) {
         const dxydi = trace.dxydi(null, i0, j0, u, v);
         const dadi = trace.dadi(i0, u);
 
         return [dxydi[0] / dadi, dxydi[1] / dadi];
     };
 
-    trace.dxydb = function(i0, j0, u, v) {
+    trace.dxydb = function(i0: any, j0: any, u: any, v: any) {
         const dxydj = trace.dxydj(null, i0, j0, u, v);
         const dbdj = trace.dbdj(j0, v);
 
@@ -229,7 +229,7 @@ export default function setConvert(trace) {
     // Sometimes we don't care about precision and all we really want is decent rough
     // directions (as is the case with labels). In that case, we can do a very rough finite
     // difference and spare having to worry about precise grid coordinates:
-    trace.dxyda_rough = function(a, b, reldiff) {
+    trace.dxyda_rough = function(a: any, b: any, reldiff: any) {
         const h = arange * (reldiff || 0.1);
         const plus = trace.ab2xy(a + h, b, true);
         const minus = trace.ab2xy(a - h, b, true);
@@ -240,7 +240,7 @@ export default function setConvert(trace) {
         ];
     };
 
-    trace.dxydb_rough = function(a, b, reldiff) {
+    trace.dxydb_rough = function(a: any, b: any, reldiff: any) {
         const h = brange * (reldiff || 0.1);
         const plus = trace.ab2xy(a, b + h, true);
         const minus = trace.ab2xy(a, b - h, true);
@@ -251,11 +251,11 @@ export default function setConvert(trace) {
         ];
     };
 
-    trace.dpdx = function(xa) {
+    trace.dpdx = function(xa: any) {
         return xa._m;
     };
 
-    trace.dpdy = function(ya) {
+    trace.dpdy = function(ya: any) {
         return ya._m;
     };
 }

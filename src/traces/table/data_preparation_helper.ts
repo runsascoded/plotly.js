@@ -7,7 +7,7 @@ import { isArrayOrTypedArray } from '../../lib/array.js';
 
 export default function calc(gd: GraphDiv, trace: FullTrace) {
     const cellsValues = squareStringMatrix(trace.cells.values);
-    const slicer = function(a) {
+    const slicer = function(a: any) {
         return a.slice(trace.header.values.length, a.length);
     };
     let headerValuesIn = squareStringMatrix(trace.header.values);
@@ -38,9 +38,9 @@ export default function calc(gd: GraphDiv, trace: FullTrace) {
 
     let columnOrder = trace._fullInput.columnorder;
     if(isArrayOrTypedArray(columnOrder)) columnOrder = Array.from(columnOrder);
-    columnOrder = columnOrder.concat(slicer(cellsValues.map(function(d, i) {return i;})));
+    columnOrder = columnOrder.concat(slicer(cellsValues.map(function(d: any, i: any) {return i;})));
 
-    let columnWidths = headerValues.map(function(d, i) {
+    let columnWidths = headerValues.map(function(d: any, i: any) {
         const value = isArrayOrTypedArray(trace.columnwidth) ?
             trace.columnwidth[Math.min(i, trace.columnwidth.length - 1)] :
             trace.columnwidth;
@@ -49,7 +49,7 @@ export default function calc(gd: GraphDiv, trace: FullTrace) {
     const totalColumnWidths = columnWidths.reduce(sum, 0);
 
     // fit columns in the available vertical space as there's no vertical scrolling now
-    columnWidths = columnWidths.map(function(d) { return d / totalColumnWidths * groupWidth; });
+    columnWidths = columnWidths.map(function(d: any) { return d / totalColumnWidths * groupWidth; });
 
     const maxLineWidth = Math.max(arrayMax(trace.header.line.width), arrayMax(trace.cells.line.width));
 
@@ -69,11 +69,11 @@ export default function calc(gd: GraphDiv, trace: FullTrace) {
         scrollY: 0, // will be mutated on scroll
         cells: extendFlat({}, trace.cells, {values: cellsValues}),
         headerCells: extendFlat({}, trace.header, {values: headerValues}),
-        gdColumns: headerValues.map(function(d) {return d[0];}),
-        gdColumnsOriginalOrder: headerValues.map(function(d) {return d[0];}),
+        gdColumns: headerValues.map(function(d: any) {return d[0];}),
+        gdColumnsOriginalOrder: headerValues.map(function(d: any) {return d[0];}),
         prevPages: [0, 0],
         scrollbarState: {scrollbarScrollInProgress: false},
-        columns: headerValues.map(function(label, i) {
+        columns: headerValues.map(function(label: any, i: any) {
             const foundKey = uniqueKeys[label];
             uniqueKeys[label] = (foundKey || 0) + 1;
             const key = label + '__' + uniqueKeys[label];
@@ -90,7 +90,7 @@ export default function calc(gd: GraphDiv, trace: FullTrace) {
         })
     };
 
-    calcdata.columns.forEach(function(col) {
+    calcdata.columns.forEach(function(col: any) {
         col.calcdata = calcdata;
         col.x = xScale(col);
     });
@@ -98,7 +98,7 @@ export default function calc(gd: GraphDiv, trace: FullTrace) {
     return calcdata;
 }
 
-function arrayMax(maybeArray) {
+function arrayMax(maybeArray: any) {
     if(isArrayOrTypedArray(maybeArray)) {
         let max = 0;
         for(let i = 0; i < maybeArray.length; i++) {
@@ -109,11 +109,11 @@ function arrayMax(maybeArray) {
     return maybeArray;
 }
 
-function sum(a, b) { return a + b; }
+function sum(a: any, b: any) { return a + b; }
 
 // fill matrix in place to equal lengths
 // and ensure it's uniformly 2D
-function squareStringMatrix(matrixIn) {
+function squareStringMatrix(matrixIn: any) {
     const matrix = matrixIn.slice();
     let minLen = Infinity;
     let maxLen = 0;
@@ -134,24 +134,24 @@ function squareStringMatrix(matrixIn) {
     return matrix;
 }
 
-function emptyStrings(len) {
+function emptyStrings(len: any) {
     const padArray = new Array(len);
     for(let j = 0; j < len; j++) padArray[j] = '';
     return padArray;
 }
 
-function xScale(d) {
-    return d.calcdata.columns.reduce(function(prev, next) {
+function xScale(d: any) {
+    return d.calcdata.columns.reduce(function(prev: any, next: any) {
         return next.xIndex < d.xIndex ? prev + next.columnWidth : prev;
     }, 0);
 }
 
-function makeRowBlock(anchorToRowBlock, auxiliary) {
+function makeRowBlock(anchorToRowBlock: any, auxiliary: any) {
     const blockAnchorKeys = Object.keys(anchorToRowBlock);
     return blockAnchorKeys.map(function(k) {return extendFlat({}, anchorToRowBlock[k], {auxiliaryBlocks: auxiliary});});
 }
 
-function makeAnchorToRowBlock(rowHeights, minimumFillHeight) {
+function makeAnchorToRowBlock(rowHeights: any, minimumFillHeight: any) {
     const anchorToRowBlock: any = {};
     let currentRowHeight;
     let currentAnchor = 0;

@@ -9,7 +9,7 @@ import attributes from './attributes.js';
 import mergeLength from '../parcoords/merge_length.js';
 import { isTypedArraySpec } from '../../lib/array.js';
 
-function handleLineDefaults(traceIn: InputTrace, traceOut: FullTrace, defaultColor: string, layout: FullLayout, coerce) {
+function handleLineDefaults(traceIn: InputTrace, traceOut: FullTrace, defaultColor: string, layout: FullLayout, coerce: any) {
     coerce('line.shape');
     coerce('line.hovertemplate');
     coerce('line.hovertemplatefallback');
@@ -27,8 +27,8 @@ function handleLineDefaults(traceIn: InputTrace, traceOut: FullTrace, defaultCol
     return Infinity;
 }
 
-function dimensionDefaults(dimensionIn, dimensionOut) {
-    function coerce(attr, dflt?) {
+function dimensionDefaults(dimensionIn: any, dimensionOut: any) {
+    function coerce(attr: any, dflt?: any) {
         return Lib.coerce(dimensionIn, dimensionOut, attributes.dimensions, attr, dflt);
     }
 
@@ -68,7 +68,7 @@ function dimensionDefaults(dimensionIn, dimensionOut) {
 }
 
 export default function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace, defaultColor: string, layout: FullLayout) {
-    function coerce(attr, dflt?) {
+    function coerce(attr: any, dflt?: any) {
         return Lib.coerce(traceIn, traceOut, attributes, attr, dflt);
     }
 

@@ -7,11 +7,11 @@ import calcSelection from '../scatter/calc_selection.js';
 import _numerical from '../../constants/numerical.js';
 const { BADNUM } = _numerical;
 
-function isAbsolute(a) {
+function isAbsolute(a: any) {
     return (a === 'a' || a === 'absolute');
 }
 
-function isTotal(a) {
+function isTotal(a: any) {
     return (a === 't' || a === 'total');
 }
 

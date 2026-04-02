@@ -16,7 +16,7 @@ import geoUtils from '../../lib/geo_location_utils.js';
  * https://github.com/mapbox/mapbox-gl-js/issues/8088).
  */
 
-function convert(calcTrace) {
+function convert(calcTrace: any) {
     const trace = calcTrace[0].trace;
     const isVisible = trace.visible === true && trace._length !== 0;
 
@@ -48,7 +48,7 @@ function convert(calcTrace) {
 
     let opacityFn;
     if(Lib.isArrayOrTypedArray(marker.opacity)) {
-        opacityFn = function(d) {
+        opacityFn = function(d: any) {
             const mo = d.mo;
             return isNumeric(mo) ? +Lib.constrain(mo, 0, 1) : 0;
         };
@@ -56,12 +56,12 @@ function convert(calcTrace) {
 
     let lineColorFn;
     if(Lib.isArrayOrTypedArray(markerLine.color)) {
-        lineColorFn = function(d) { return d.mlc; };
+        lineColorFn = function(d: any) { return d.mlc; };
     }
 
     let lineWidthFn;
     if(Lib.isArrayOrTypedArray(markerLine.width)) {
-        lineWidthFn = function(d) { return d.mlw; };
+        lineWidthFn = function(d: any) { return d.mlw; };
     }
 
     for(let i = 0; i < calcTrace.length; i++) {
@@ -108,7 +108,7 @@ function convert(calcTrace) {
     return opts;
 }
 
-function convertOnSelect(calcTrace) {
+function convertOnSelect(calcTrace: any) {
     const trace = calcTrace[0].trace;
     const opts = trace._opts;
     let opacitySetting;

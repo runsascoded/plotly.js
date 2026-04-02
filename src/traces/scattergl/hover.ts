@@ -106,7 +106,7 @@ function hoverPoints(pointData: any, xval: any, yval: any, hovermode?: any) {
     return [calcHover(pointData, x, y, trace)];
 }
 
-function calcHover(pointData, x, y, trace: FullTrace) {
+function calcHover(pointData: any, x: any, y: any, trace: FullTrace) {
     const xa = pointData.xa;
     const ya = pointData.ya;
     const minDist = pointData.distance;

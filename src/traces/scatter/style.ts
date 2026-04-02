@@ -6,17 +6,17 @@ import Registry from '../../registry.js';
 function style(gd: GraphDiv): void {
     const s = select(gd).selectAll('g.trace.scatter');
 
-    s.style('opacity', function(d) {
+    s.style('opacity', function(d: any) {
         return d[0].trace.opacity;
     });
 
-    s.selectAll('g.points').each(function(this: any, d) {
+    s.selectAll('g.points').each(function(this: any, d: any) {
         const sel = select(this);
         const trace = d.trace || d[0].trace;
         stylePoints(sel, trace, gd);
     });
 
-    s.selectAll('g.text').each(function(this: any, d) {
+    s.selectAll('g.text').each(function(this: any, d: any) {
         const sel = select(this);
         const trace = d.trace || d[0].trace;
         styleText(sel, trace, gd);

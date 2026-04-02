@@ -3,7 +3,7 @@ const { FROM_BL } = _alignment;
 
 export default function scaleZoom(ax?: any, factor?: any, centerFraction?: any): void {
     if(centerFraction === undefined) {
-        centerFraction = FROM_BL[ax.constraintoward || 'center'];
+        centerFraction = (FROM_BL as any)[ax.constraintoward || 'center'];
     }
 
     const rangeLinear = [ax.r2l(ax.range[0]), ax.r2l(ax.range[1])];

@@ -3,7 +3,7 @@ const { convert, convertOnSelect } = _convert;
 import _constants from '../../plots/map/constants.js';
 const { traceLayerPrefix: LAYER_PREFIX } = _constants;
 
-function ChoroplethMap(this: any, subplot, uid) {
+function ChoroplethMap(this: any, subplot: any, uid: any) {
     this.type = 'choroplethmap';
     this.subplot = subplot;
     this.uid = uid;
@@ -23,18 +23,18 @@ function ChoroplethMap(this: any, subplot, uid) {
 
 const proto = ChoroplethMap.prototype;
 
-proto.update = function(calcTrace) {
+proto.update = function(calcTrace: any) {
     this._update(convert(calcTrace));
 
     // link ref for quick update during selections
     calcTrace[0].trace._glTrace = this;
 };
 
-proto.updateOnSelect = function(calcTrace) {
+proto.updateOnSelect = function(calcTrace: any) {
     this._update(convertOnSelect(calcTrace));
 };
 
-proto._update = function(optsAll) {
+proto._update = function(optsAll: any) {
     const subplot = this.subplot;
     const layerList = this.layerList;
     const below = subplot.belowLookup['trace-' + this.uid];
@@ -63,7 +63,7 @@ proto._update = function(optsAll) {
     }
 };
 
-proto._addLayers = function(optsAll, below) {
+proto._addLayers = function(optsAll: any, below: any) {
     const subplot = this.subplot;
     const layerList = this.layerList;
     const sourceId = this.sourceId;
@@ -98,9 +98,10 @@ proto.dispose = function() {
     map.removeSource(this.sourceId);
 };
 
-export default function createChoroplethMap(subplot, calcTrace) {
+export default function createChoroplethMap(subplot: any, calcTrace: any) {
     const trace = calcTrace[0].trace;
-    const choroplethMap = new ChoroplethMap(subplot, trace.uid);
+    // @ts-ignore TS7009
+    const choroplethMap: any = (new ChoroplethMap(subplot, trace.uid) as any);
     const sourceId = choroplethMap.sourceId;
     const optsAll = convert(calcTrace);
     const below = choroplethMap.below = subplot.belowLookup['trace-' + trace.uid];

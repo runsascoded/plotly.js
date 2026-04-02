@@ -1,8 +1,8 @@
 import _index from '../../lib/index.js';
 const { isArrayOrTypedArray } = _index;
 
-export default function(a, b, cheaterslope) {
-    let i, j, ascal, bscal, aval, bval;
+export default function(a: any, b: any, cheaterslope: any) {
+    let i, j, ascal: any, bscal: any, aval, bval;
     const data: any[] = [];
 
     const na = isArrayOrTypedArray(a) ? a.length : a;

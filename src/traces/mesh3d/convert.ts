@@ -11,7 +11,7 @@ import _index2 from '../../components/colorscale/index.js';
 const { extractOpts } = _index2;
 import zip3 from '../../plots/gl3d/zip3.js';
 
-function Mesh3DTrace(this: any, scene, mesh, uid) {
+function Mesh3DTrace(this: any, scene: any, mesh: any, uid: any) {
     this.scene = scene;
     this.uid = uid;
     this.mesh = mesh;
@@ -23,7 +23,7 @@ function Mesh3DTrace(this: any, scene, mesh, uid) {
 
 const proto = Mesh3DTrace.prototype;
 
-proto.handlePick = function(selection) {
+proto.handlePick = function(selection: any) {
     if(selection.object === this.mesh) {
         const selectIndex = selection.index = selection.data.index;
 
@@ -48,7 +48,7 @@ proto.handlePick = function(selection) {
     }
 };
 
-function parseColorArray(colors) {
+function parseColorArray(colors: any) {
     const b: any[] = [];
     const len = colors.length;
     for(let i = 0; i < len; i++) {
@@ -58,7 +58,7 @@ function parseColorArray(colors) {
 }
 
 // Unpack position data
-function toDataCoords(axis, coord, scale, calendar) {
+function toDataCoords(axis: any, coord: any, scale: any, calendar: any) {
     const b: any[] = [];
     const len = coord.length;
     for(let i = 0; i < len; i++) {
@@ -68,7 +68,7 @@ function toDataCoords(axis, coord, scale, calendar) {
 }
 
 // Round indices if passed as floats
-function toRoundIndex(a) {
+function toRoundIndex(a: any) {
     const b: any[] = [];
     const len = a.length;
     for(let i = 0; i < len; i++) {
@@ -77,7 +77,7 @@ function toRoundIndex(a) {
     return b;
 }
 
-function delaunayCells(delaunayaxis, positions) {
+function delaunayCells(delaunayaxis: any, positions: any) {
     const d = ['x', 'y', 'z'].indexOf(delaunayaxis);
     const b: any[] = [];
     const len = positions.length;
@@ -88,7 +88,7 @@ function delaunayCells(delaunayaxis, positions) {
 }
 
 // Validate indices
-function hasValidIndices(list, numVertices) {
+function hasValidIndices(list: any, numVertices: any) {
     const len = list.length;
     for(let i = 0; i < len; i++) {
         if(list[i] <= -0.5 || list[i] >= numVertices - 0.5) { // Note: the indices would be rounded -0.49 is valid.
@@ -98,7 +98,7 @@ function hasValidIndices(list, numVertices) {
     return true;
 }
 
-proto.update = function(data) {
+proto.update = function(data: any) {
     const scene = this.scene;
     const layout = scene.fullSceneLayout;
 
@@ -181,10 +181,11 @@ proto.dispose = function() {
     this.mesh.dispose();
 };
 
-function createMesh3DTrace(scene, data) {
+function createMesh3DTrace(scene: any, data: any) {
     const gl = scene.glplot.gl;
     const mesh = createMesh({gl: gl});
-    const result = new Mesh3DTrace(scene, mesh, data.uid);
+    // @ts-ignore TS7009
+    const result: any = (new Mesh3DTrace(scene, mesh, data.uid) as any);
     mesh._trace = result;
     result.update(data);
     scene.glplot.add(mesh);

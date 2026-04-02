@@ -12,7 +12,7 @@ function plot(gd: GraphDiv, plotinfo: PlotInfo, cdbox: any[], boxLayer: any): vo
     const xa = plotinfo.xaxis;
     const ya = plotinfo.yaxis;
 
-    Lib.makeTraceGroups(boxLayer, cdbox, 'trace boxes').each(function(this: any, cd) {
+    Lib.makeTraceGroups(boxLayer, cdbox, 'trace boxes').each(function(this: any, cd: any) {
         const plotGroup = select(this);
         const cd0 = cd[0];
         const t = cd0.t;
@@ -78,7 +78,7 @@ function plotBoxAndWhiskers(sel: any, axes: { pos: FullAxis; val: FullAxis }, tr
 
     paths.exit().remove();
 
-    paths.each(function(this: any, d) {
+    paths.each(function(this: any, d: any) {
         if(d.empty) return select(this).attr('d', 'M0,0Z');
 
         const lcenter = posAxis.c2l(d.pos + bPos, true);
@@ -180,8 +180,8 @@ function plotPoints(sel: any, axes: { x: FullAxis; y: FullAxis }, trace: FullTra
 
     // since box plot points get an extra level of nesting, each
     // box needs the trace styling info
-    const fn = function(d) {
-        d.forEach(function(v) {
+    const fn = function(d: any) {
+        d.forEach(function(v: any) {
             v.t = t;
             v.trace = trace;
         });
@@ -197,7 +197,7 @@ function plotPoints(sel: any, axes: { x: FullAxis; y: FullAxis }, trace: FullTra
     gPoints.exit().remove();
 
     const paths = gPoints.selectAll('path')
-        .data(function(d) {
+        .data(function(d: any) {
             let i;
             const pts = d.pts2;
 
@@ -207,7 +207,7 @@ function plotPoints(sel: any, axes: { x: FullAxis; y: FullAxis }, trace: FullTra
             const spreadLimit = typicalSpread * JITTERSPREAD;
             let jitterFactors: any[] = [];
             let maxJitterFactor = 0;
-            let newJitter;
+            let newJitter: any;
 
             // dynamic jitter
             if(trace.jitter) {
@@ -312,7 +312,7 @@ function plotBoxMean(sel: any, axes: { pos: FullAxis; val: FullAxis }, trace: Fu
 
     paths.exit().remove();
 
-    paths.each(function(this: any, d) {
+    paths.each(function(this: any, d: any) {
         const lcenter = posAxis.c2l(d.pos + bPos, true);
 
         const pos0 = posAxis.l2p(lcenter - bdPos0) + bPosPxOffset;

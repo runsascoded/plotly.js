@@ -73,7 +73,7 @@ export const loneHover = function loneHover(hoverItems: any, opts: any): any {
     const gTop = getTopOffset(gd);
     const gLeft = getLeftOffset(gd);
 
-    const pointsData = hoverItems.map(function (hoverItem) {
+    const pointsData = hoverItems.map(function (hoverItem: any) {
         const _x0 = hoverItem._x0 || hoverItem.x0 || hoverItem.x || 0;
         const _x1 = hoverItem._x1 || hoverItem.x1 || hoverItem.x || 0;
         const _y0 = hoverItem._y0 || hoverItem.y0 || hoverItem.y || 0;
@@ -168,10 +168,10 @@ export const loneHover = function loneHover(hoverItems: any, opts: any): any {
     let lastBottomY = 0;
     let anchor = 0;
     hoverLabel
-        .sort(function (a, b) {
+        .sort(function (a: any, b: any) {
             return a.y0 - b.y0;
         })
-        .each(function (d, i) {
+        .each(function (d: any, i: any) {
             const topY = d.y0 - d.by / 2;
 
             if (topY - tooltipSpacing < lastBottomY) {
@@ -184,7 +184,7 @@ export const loneHover = function loneHover(hoverItems: any, opts: any): any {
 
             if (i === opts.anchorIndex || 0) anchor = d.offset;
         })
-        .each(function (d) {
+        .each(function (d: any) {
             d.offset -= anchor;
         });
 
@@ -220,8 +220,8 @@ function _hover(gd: GraphDiv, evt: any, subplot: any, noHoverEvent: any, eventTa
     const hovermodeHasX = (hovermode || '').charAt(0) === 'x';
     const hovermodeHasY = (hovermode || '').charAt(0) === 'y';
 
-    let firstXaxis;
-    let firstYaxis;
+    let firstXaxis: any;
+    let firstYaxis: any;
 
     if (hasCartesian && (hovermodeHasX || hovermodeHasY) && hoversubplots === 'axis') {
         const subplotsLength = subplots.length;
@@ -246,7 +246,7 @@ function _hover(gd: GraphDiv, evt: any, subplot: any, noHoverEvent: any, eventTa
 
     // list of all overlaid subplots to look at
     if (plotinfo && hoversubplots !== 'single') {
-        const overlayedSubplots = plotinfo.overlays.map(function (pi) {
+        const overlayedSubplots = plotinfo.overlays.map(function (pi: any) {
             return pi.id;
         });
 
@@ -305,9 +305,9 @@ function _hover(gd: GraphDiv, evt: any, subplot: any, noHoverEvent: any, eventTa
 
     // [x|y]valArray: the axis values of the hover event
     // mapped onto each of the currently selected overlaid subplots
-    let xvalArray, yvalArray;
+    let xvalArray: any, yvalArray: any;
 
-    let itemnum, curvenum, cd, trace, subplotId, subploti, _mode, xval, yval, pointData, closedataPreviousLength;
+    let itemnum, curvenum, cd, trace, subplotId, subploti, _mode, xval: any, yval: any, pointData: any, closedataPreviousLength;
 
     // spikePoints: the set of candidate points we've found to draw spikes to
     const spikePoints = {
@@ -571,7 +571,7 @@ function _hover(gd: GraphDiv, evt: any, subplot: any, noHoverEvent: any, eventTa
                         hoverLayer: fullLayout._hoverlayer
                     });
                     if (closestPoints) {
-                        closestPoints = closestPoints.filter(function (point) {
+                        closestPoints = closestPoints.filter(function (point: any) {
                             // some hover points, like scatter fills, do not allow spikes,
                             // so will generate a hover point but without a valid spikeDistance
                             return point.spikeDistance <= spikedistance;
@@ -579,7 +579,7 @@ function _hover(gd: GraphDiv, evt: any, subplot: any, noHoverEvent: any, eventTa
                     }
                     if (closestPoints && closestPoints.length) {
                         let tmpPoint;
-                        const closestVPoints = closestPoints.filter(function (point) {
+                        const closestVPoints = closestPoints.filter(function (point: any) {
                             return point.xa.showspikes && point.xa.spikesnap !== 'hovered data';
                         });
                         if (closestVPoints.length) {
@@ -595,7 +595,7 @@ function _hover(gd: GraphDiv, evt: any, subplot: any, noHoverEvent: any, eventTa
                             }
                         }
 
-                        const closestHPoints = closestPoints.filter(function (point) {
+                        const closestHPoints = closestPoints.filter(function (point: any) {
                             return point.ya.showspikes && point.ya.spikesnap !== 'hovered data';
                         });
                         if (closestHPoints.length) {
@@ -748,7 +748,7 @@ function _hover(gd: GraphDiv, evt: any, subplot: any, noHoverEvent: any, eventTa
         const finalPoints: any[] = [];
         const seen: any = {};
         let id = 0;
-        const insert = function (newHd) {
+        const insert = function (newHd: any) {
             const key = multipleHoverPoints[newHd.trace.type] ? hoverDataKey(newHd) : newHd.trace.index;
             if (!seen[key]) {
                 id++;
@@ -961,10 +961,10 @@ function createHoverText(hoverData: any[], opts: any): any {
     };
     commonLabel.each(function (this: any) {
         const label = select(this);
-        const lpath = ensureSingle(label, 'path', '', function (s) {
+        const lpath = ensureSingle(label, 'path', '', function (s: any) {
             s.style({ 'stroke-width': '1px' });
         });
-        const ltext = ensureSingle(label, 'text', '', function (s) {
+        const ltext = ensureSingle(label, 'text', '', function (s: any) {
             // prohibit tex interpretation until we can handle
             // tex and regular text together
             s.attr('data-notex', 1);
@@ -1244,7 +1244,7 @@ function createHoverText(hoverData: any[], opts: any): any {
 
             mockLegend.entries.push([pt]);
         }
-        mockLegend.entries.sort(function (a, b) {
+        mockLegend.entries.sort(function (a: any, b: any) {
             return a[0].trace.index - b[0].trace.index;
         });
         mockLegend.layer = container;
@@ -1376,7 +1376,7 @@ function createHoverText(hoverData: any[], opts: any): any {
     // show all the individual labels
 
     // first create the objects
-    const hoverLabels = container.selectAll('g.hovertext').data(hoverData, function (d) {
+    const hoverLabels = container.selectAll('g.hovertext').data(hoverData, function (d: any) {
         // N.B. when multiple items have the same result key-function value,
         // only the first of those items in hoverData gets rendered
         return hoverDataKey(d);
@@ -1407,7 +1407,7 @@ function createHoverText(hoverData: any[], opts: any): any {
 
     // then put the text in, position the pointer to the data,
     // and figure out sizes
-    hoverLabels.each(function (this: any, d) {
+    hoverLabels.each(function (this: any, d: any) {
         const g = select(this).attr('transform', '');
 
         let dColor = d.color;
@@ -1660,14 +1660,14 @@ function hoverAvoidOverlaps(hoverLabels: any, rotateLabels: boolean, fullLayout:
     const axisLabelMinY = commonLabelBoundingBox.minY;
     const axisLabelMaxY = commonLabelBoundingBox.maxY;
 
-    const pX = function (x) {
+    const pX = function (x: any) {
         return x * fullLayout._invScaleX;
     };
-    const pY = function (y) {
+    const pY = function (y: any) {
         return y * fullLayout._invScaleY;
     };
 
-    hoverLabels.each(function (d) {
+    hoverLabels.each(function (d: any) {
         const ax = d[axKey];
         const crossAx = d[crossAxKey];
         const axIsX = ax._id.charAt(0) === 'x';
@@ -1759,7 +1759,7 @@ function hoverAvoidOverlaps(hoverLabels: any, rotateLabels: boolean, fullLayout:
         );
     });
 
-    let donepositioning, topOverlap, bottomOverlap, i, j, pti, sumdp;
+    let donepositioning: any, topOverlap, bottomOverlap, i, j, pti, sumdp;
 
     function constrainGroup(grp: any[]): void {
         const minPt = grp[0];
@@ -1908,7 +1908,7 @@ function getHoverLabelOffsets(hoverLabel: any, rotateLabels: boolean): { x: numb
  * Calculate the shift in x for text and text2 elements
  */
 function getTextShiftX(hoverLabel: any): { alignShift: number; textShiftX: number; text2ShiftX: number } {
-    const alignShift = { start: 1, end: -1, middle: 0 }[hoverLabel.anchor];
+    const alignShift = ({ start: 1, end: -1, middle: 0 } as any)[hoverLabel.anchor];
     let textShiftX = alignShift * (HOVERARROWSIZE + HOVERTEXTPAD);
     let text2ShiftX = textShiftX + alignShift * (hoverLabel.txwidth + HOVERTEXTPAD);
 
@@ -1926,16 +1926,16 @@ function getTextShiftX(hoverLabel: any): { alignShift: number; textShiftX: numbe
 }
 
 function alignHoverText(hoverLabels: any, rotateLabels: boolean, scaleX: number, scaleY: number): void {
-    const pX = function (x) {
+    const pX = function (x: any) {
         return x * scaleX;
     };
-    const pY = function (y) {
+    const pY = function (y: any) {
         return y * scaleY;
     };
 
     // finally set the text positioning relative to the data and draw the
     // box around it
-    hoverLabels.each(function (this: any, d) {
+    hoverLabels.each(function (this: any, d: any) {
         const g = select(this);
         if (d.del) return g.remove();
 
@@ -2046,11 +2046,11 @@ function cleanPoint(d: any, hovermode: any): any {
     }
 
     const getVal = Array.isArray(index)
-        ? function (calcKey, traceKey) {
+        ? function (calcKey: any, traceKey: any) {
               const v = castOption(cd0, index, calcKey);
               return pass(v) ? v : extractOption({}, trace, '', traceKey);
           }
-        : function (calcKey, traceKey) {
+        : function (calcKey: any, traceKey: any) {
               return extractOption(cd, trace, calcKey, traceKey);
           };
 

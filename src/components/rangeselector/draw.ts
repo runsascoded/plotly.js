@@ -231,10 +231,10 @@ function reposition(gd: GraphDiv, buttons: any, opts: any, axName: any, selector
     Plots.autoMargin(gd, axName + '-range-selector', {
         x: opts.x,
         y: opts.y,
-        l: width * FROM_TL[xanchor],
-        r: width * FROM_BR[xanchor],
-        b: height * FROM_BR[yanchor],
-        t: height * FROM_TL[yanchor]
+        l: width * (FROM_TL as any)[xanchor],
+        r: width * (FROM_BR as any)[xanchor],
+        b: height * (FROM_BR as any)[yanchor],
+        t: height * (FROM_TL as any)[yanchor]
     });
 
     selector.attr('transform', strTranslate(lx, ly));

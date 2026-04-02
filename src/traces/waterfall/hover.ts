@@ -12,7 +12,7 @@ const DIRSYMBOL = {
     decreasing: delta.DECREASING.SYMBOL
 };
 
-export default function hoverPoints(pointData,  xval,  yval,  hovermode,  opts) {
+export default function hoverPoints(pointData: any,  xval: any,  yval: any,  hovermode: any,  opts: any) {
     const point = hoverOnBars(pointData, xval, yval, hovermode, opts);
     if(!point) return;
 
@@ -23,7 +23,7 @@ export default function hoverPoints(pointData,  xval,  yval,  hovermode,  opts) 
     const vLetter = isHorizontal ? 'x' : 'y';
     const vAxis = isHorizontal ? pointData.xa : pointData.ya;
 
-    function formatNumber(a) {
+    function formatNumber(a: any) {
         return hoverLabelText(vAxis, a, trace[vLetter + 'hoverformat']);
     }
 
@@ -48,7 +48,7 @@ export default function hoverPoints(pointData,  xval,  yval,  hovermode,  opts) 
         const isAll = (hoverinfo === 'all');
         const parts = hoverinfo.split('+');
 
-        const hasFlag = function(flag) { return isAll || parts.indexOf(flag) !== -1; };
+        const hasFlag = function(flag: any) { return isAll || parts.indexOf(flag) !== -1; };
 
         if(!di.isSum) {
             if(hasFlag('final') &&
@@ -76,7 +76,7 @@ export default function hoverPoints(pointData,  xval,  yval,  hovermode,  opts) 
     return [point];
 }
 
-function getTraceColor(trace: FullTrace,  di) {
+function getTraceColor(trace: FullTrace,  di: any) {
     const cont = trace[di.dir].marker;
     const mc = cont.color;
     const mlc = cont.line.color;

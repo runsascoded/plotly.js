@@ -19,7 +19,7 @@ const createPlot = glPlot3d.createScene;
 
 let preserveDrawingBuffer = Lib.preserveDrawingBuffer();
 
-let STATIC_CANVAS, STATIC_CONTEXT;
+let STATIC_CANVAS: any, STATIC_CONTEXT: any;
 
 let tabletmode = false;
 
@@ -38,8 +38,8 @@ function Scene(this: any, options: any, fullLayout: FullLayout) {
     svgContainer.style.position = 'absolute';
     svgContainer.style.top = svgContainer.style.left = '0px';
     svgContainer.style.width = svgContainer.style.height = '100%';
-    svgContainer.style['z-index'] = 20;
-    svgContainer.style['pointer-events'] = 'none';
+    (svgContainer.style as any)['z-index'] = 20;
+    (svgContainer.style as any)['pointer-events'] = 'none';
     sceneContainer.appendChild(svgContainer);
     this.svgContainer = svgContainer;
 
@@ -227,7 +227,7 @@ proto.initializeGLPlot = function() {
         return update;
     };
 
-    const relayoutCallback = function(scene) {
+    const relayoutCallback = function(scene: any) {
         if(scene.fullSceneLayout.dragmode === false) return;
 
         const update = makeUpdate();
@@ -244,7 +244,7 @@ proto.initializeGLPlot = function() {
             tabletmode = true;
         });
 
-        scene.glplot.canvas.addEventListener('wheel', function(e) {
+        scene.glplot.canvas.addEventListener('wheel', function(e: any) {
             if(gd._context._scrollZoom.gl3d) {
                 if(scene.camera._ortho) {
                     const s = (e.deltaX > e.deltaY) ? 1.1 : 1.0 / 1.1;
@@ -269,7 +269,7 @@ proto.initializeGLPlot = function() {
         });
 
         if(!scene.staticMode) {
-            scene.glplot.canvas.addEventListener('webglcontextlost', function(event) {
+            scene.glplot.canvas.addEventListener('webglcontextlost', function(event: any) {
                 if(gd && gd.emit) {
                     gd.emit('plotly_webglcontextlost', {
                         event: event,
@@ -325,7 +325,7 @@ proto.render = function() {
         if(trace.setContourLevels) trace.setContourLevels();
     }
 
-    function formatter(axLetter, val, hoverformat) {
+    function formatter(axLetter: any, val: any, hoverformat: any) {
         const ax = scene.fullSceneLayout[axLetter + 'axis'];
 
         if(ax.type !== 'log') {
@@ -422,7 +422,7 @@ proto.render = function() {
         const eventData = {points: [pointData]};
 
         if(scene.fullSceneLayout.hovermode) {
-            const bbox = [];
+            const bbox: any[] = [];
             Fx.loneHover({
                 trace: traceNow,
                 x: (0.5 + 0.5 * pdata[0] / pdata[3]) * width,
@@ -489,7 +489,7 @@ proto.recoverContext = function() {
 
 const axisProperties = [ 'xaxis', 'yaxis', 'zaxis' ];
 
-function computeTraceBounds(scene, trace, bounds) {
+function computeTraceBounds(scene: any, trace: any, bounds: any) {
     const fullSceneLayout = scene.fullSceneLayout;
 
     for(let d = 0; d < 3; d++) {
@@ -527,7 +527,7 @@ function computeTraceBounds(scene, trace, bounds) {
     }
 }
 
-function computeAnnotationBounds(scene, bounds) {
+function computeAnnotationBounds(scene: any, bounds: any) {
     const fullSceneLayout = scene.fullSceneLayout;
     const annotations = fullSceneLayout.annotations || [];
 
@@ -550,7 +550,7 @@ function computeAnnotationBounds(scene, bounds) {
     }
 }
 
-proto.plot = function(sceneData, fullLayout, layout) {
+proto.plot = function(sceneData: any, fullLayout: any, layout: any) {
     const scene = this;
 
     // Save parameters
@@ -653,7 +653,7 @@ proto.plot = function(sceneData, fullLayout, layout) {
     }
 
     // order object per trace index
-    scene.glplot.objects.sort(function(a, b) {
+    scene.glplot.objects.sort(function(a: any, b: any) {
         return a._trace.data.index - b._trace.data.index;
     });
 
@@ -859,7 +859,7 @@ proto.destroy = function() {
 
 // getCameraArrays :: plotly_coords -> gl-plot3d_coords
 // inverse of getLayoutCamera
-function getCameraArrays(camera) {
+function getCameraArrays(camera: any) {
     return [
         [camera.eye.x, camera.eye.y, camera.eye.z],
         [camera.center.x, camera.center.y, camera.center.z],
@@ -869,7 +869,7 @@ function getCameraArrays(camera) {
 
 // getLayoutCamera :: gl-plot3d_coords -> plotly_coords
 // inverse of getCameraArrays
-function getLayoutCamera(camera) {
+function getLayoutCamera(camera: any) {
     return {
         up: {x: camera.up[0], y: camera.up[1], z: camera.up[2]},
         center: {x: camera.center[0], y: camera.center[1], z: camera.center[2]},
@@ -886,7 +886,7 @@ proto.getCamera = function() {
 };
 
 // set gl-plot3d camera position and scene aspects with a set of plotly coords
-proto.setViewport = function(sceneLayout) {
+proto.setViewport = function(sceneLayout: any) {
     const scene = this;
     const cameraData = sceneLayout.camera;
 
@@ -904,13 +904,13 @@ proto.setViewport = function(sceneLayout) {
     }
 };
 
-proto.isCameraChanged = function(layout) {
+proto.isCameraChanged = function(layout: any) {
     const scene = this;
     const cameraData = scene.getCamera();
     const cameraNestedProp = Lib.nestedProperty(layout, scene.id + '.camera');
     const cameraDataLastSave = cameraNestedProp.get();
 
-    function same(x, y, i, j) {
+    function same(x: any, y: any, i: any, j: any) {
         const vectors = ['up', 'center', 'eye'];
         const components = ['x', 'y', 'z'];
         return y[vectors[i]] && (x[vectors[i]][components[j]] === y[vectors[i]][components[j]]);
@@ -939,7 +939,7 @@ proto.isCameraChanged = function(layout) {
     return changed;
 };
 
-proto.isAspectChanged = function(layout) {
+proto.isAspectChanged = function(layout: any) {
     const scene = this;
     const aspectData = scene.glplot.getAspectratio();
     const aspectNestedProp = Lib.nestedProperty(layout, scene.id + '.aspectratio');
@@ -954,7 +954,7 @@ proto.isAspectChanged = function(layout) {
 };
 
 // save camera to user layout (i.e. gd.layout)
-proto.saveLayout = function(layout) {
+proto.saveLayout = function(layout: any) {
     const scene = this;
     const fullLayout = scene.fullLayout;
 
@@ -1008,7 +1008,7 @@ proto.saveLayout = function(layout) {
     return hasChanged;
 };
 
-proto.updateFx = function(dragmode, hovermode) {
+proto.updateFx = function(dragmode: any, hovermode: any) {
     const scene = this;
     const camera = scene.camera;
     if(camera) {
@@ -1051,7 +1051,7 @@ proto.updateFx = function(dragmode, hovermode) {
     scene.fullSceneLayout.hovermode = hovermode;
 };
 
-function flipPixels(pixels, w, h) {
+function flipPixels(pixels: any, w: any, h: any) {
     for(let i = 0, q = h - 1; i < q; ++i, --q) {
         for(let j = 0; j < w; ++j) {
             for(let k = 0; k < 4; ++k) {
@@ -1065,7 +1065,7 @@ function flipPixels(pixels, w, h) {
     }
 }
 
-function correctRGB(pixels, w, h) {
+function correctRGB(pixels: any, w: any, h: any) {
     for(let i = 0; i < h; ++i) {
         for(let j = 0; j < w; ++j) {
             const k = 4 * (w * i + j);
@@ -1082,7 +1082,7 @@ function correctRGB(pixels, w, h) {
     }
 }
 
-proto.toImage = function(format) {
+proto.toImage = function(format: any) {
     const scene = this;
 
     if(!format) format = 'png';

@@ -50,9 +50,9 @@ function calc(gd: GraphDiv, trace: FullTrace): any[] {
     const extremeFunc = func === 'max' || func === 'min';
     const sizeInit = extremeFunc ? null : 0;
     let binFunc: (n: number, i: number, size: any[], counterData?: any, counts?: any[]) => number = binFunctions.count;
-    const normFunc = normFunctions[norm];
+    const normFunc = (normFunctions as any)[norm];
     let isAvg = false;
-    const pr2c = function(v) { return pa.r2c(v, 0, calendar); };
+    const pr2c = function(v: any) { return pa.r2c(v, 0, calendar); };
     let rawCounterData;
 
     if(Lib.isArrayOrTypedArray(trace[counterData]) && func !== 'count') {
@@ -131,7 +131,7 @@ function calc(gd: GraphDiv, trace: FullTrace): any[] {
 
     let roundFn;
     if(!uniqueValsPerBin) {
-        roundFn = function(v, isRightEdge) {
+        roundFn = function(v: any, isRightEdge: any) {
             return function() {
                 const roundFnOpts = gd._fullLayout._roundFnOpts[groupName];
                 return getBinSpanLabelRound(
@@ -188,8 +188,9 @@ function calc(gd: GraphDiv, trace: FullTrace): any[] {
                 } else {
                     // Defer evaluation of ph(0|1) in crossTraceCalc
                     trace._computePh = true;
-                    cdi.ph0 = roundFn(binEdges[i]);
-                    cdi.ph1 = roundFn(binEdges[i + 1], true);
+                    // @ts-ignore
+                    cdi.ph0 = roundFn!(binEdges[i]);
+                    cdi.ph1 = roundFn!(binEdges[i + 1], true);
                 }
             }
             cd.push(cdi);
@@ -242,16 +243,16 @@ function calcAllAutoBins(gd: GraphDiv, trace: FullTrace, pa: FullAxis, mainData:
     const groupName = trace['_' + mainData + 'bingroup'];
     const binOpts = fullLayout._histogramBinOpts[groupName];
     const isOverlay = fullLayout.barmode === 'overlay';
-    let i, traces, tracei, calendar, pos0, autoVals, cumulativeSpec;
+    let i, traces: any, tracei, calendar: any, pos0, autoVals: any, cumulativeSpec;
 
-    const r2c = function(v) { return pa.r2c(v, 0, calendar); };
-    const c2r = function(v) { return pa.c2r(v, 0, calendar); };
+    const r2c = function(v: any) { return pa.r2c(v, 0, calendar); };
+    const c2r = function(v: any) { return pa.c2r(v, 0, calendar); };
 
     const cleanBound = pa.type === 'date' ?
-        function(v) { return (v || v === 0) ? Lib.cleanDate(v, null, calendar) : null; } :
-        function(v) { return isNumeric(v) ? Number(v) : null; };
+        function(v: any) { return (v || v === 0) ? Lib.cleanDate(v, null, calendar) : null; } :
+        function(v: any) { return isNumeric(v) ? Number(v) : null; };
 
-    function setBound(attr, bins, newBins) {
+    function setBound(attr: any, bins: any, newBins: any) {
         if(bins[attr + 'Found']) {
             bins[attr] = cleanBound(bins[attr]);
             if(bins[attr] === null) bins[attr] = newBins[attr];
@@ -267,7 +268,7 @@ function calcAllAutoBins(gd: GraphDiv, trace: FullTrace, pa: FullAxis, mainData:
         delete trace['_' + mainData + 'autoBinFinished'];
     } else {
         traces = binOpts.traces;
-        let allPos = [];
+        let allPos: any[] = [];
 
         // Note: we're including `legendonly` traces here for autobin purposes,
         // so that showing & hiding from the legend won't affect bins.
@@ -307,7 +308,7 @@ function calcAllAutoBins(gd: GraphDiv, trace: FullTrace, pa: FullAxis, mainData:
         let newBinSpec = Axes.autoBin(allPos, pa, binOpts.nbins, has2dMap, calendar, binOpts.sizeFound && binOpts.size);
 
         const autoBin = traces[0]._autoBin = {};
-        autoVals = autoBin[binOpts.dirs[0]] = {};
+        autoVals = (autoBin as any)[binOpts.dirs[0]] = {};
 
         if(hasHist2dContour) {
             // the "true" 2nd argument reverses the tick direction (which we can't
@@ -535,14 +536,14 @@ function getConnectedHistograms(gd: GraphDiv, trace: FullTrace): FullTrace[] {
 }
 
 function cdf(size: number[], direction: string, currentBin: string): void {
-    let i, vi, prevSum;
+    let i, vi, prevSum: any;
 
-    function firstHalfPoint(i) {
+    function firstHalfPoint(i: any) {
         prevSum = size[i];
         size[i] /= 2;
     }
 
-    function nextHalfPoint(i) {
+    function nextHalfPoint(i: any) {
         vi = size[i];
         size[i] = prevSum + vi / 2;
         prevSum += vi;

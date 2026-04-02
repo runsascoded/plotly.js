@@ -61,7 +61,7 @@ function getXY(di: any, xa: any, ya: any, isHorizontal: boolean): number[][] {
 
 function transition(selection: any, fullLayout: FullLayout, opts: any, makeOnCompleteCallback: any): any {
     if (!fullLayout.uniformtext.mode && hasTransition(opts)) {
-        let onComplete;
+        let onComplete: any;
         if (makeOnCompleteCallback) {
             onComplete = makeOnCompleteCallback();
         }
@@ -102,7 +102,7 @@ function plot(gd: GraphDiv, plotinfo: PlotInfo, cdModule: CalcDatum[][], traceLa
         clearMinTextSize('bar', fullLayout);
     }
 
-    const bartraces = makeTraceGroups(traceLayer, cdModule, 'trace bars').each(function (this: any, cd) {
+    const bartraces = makeTraceGroups(traceLayer, cdModule, 'trace bars').each(function (this: any, cd: any) {
         const plotGroup = select(this);
         const trace = cd[0].trace;
         const t = cd[0].t;
@@ -128,7 +128,7 @@ function plot(gd: GraphDiv, plotinfo: PlotInfo, cdModule: CalcDatum[][], traceLa
 
         bars.exit().remove();
 
-        bars.each(function (this: any, di, i) {
+        bars.each(function (this: any, di: any, i: any) {
             const bar = select(this);
 
             // now display the bar
@@ -178,7 +178,7 @@ function plot(gd: GraphDiv, plotinfo: PlotInfo, cdModule: CalcDatum[][], traceLa
                 }
             }
 
-            let lw;
+            let lw: any;
             let mc;
 
             if (trace.type === 'waterfall') {
@@ -241,7 +241,7 @@ function plot(gd: GraphDiv, plotinfo: PlotInfo, cdModule: CalcDatum[][], traceLa
 
             // Decide whether to use upper or lower bound of current bar stack
             // as reference point for rounding
-            let outerBound;
+            let outerBound: any;
             if (di.s0 > 0) {
                 outerBound = di._sMax;
             } else if (di.s0 < 0) {
@@ -251,7 +251,7 @@ function plot(gd: GraphDiv, plotinfo: PlotInfo, cdModule: CalcDatum[][], traceLa
             }
 
             // Calculate corner radius of bar in pixels
-            function calcCornerRadius(crValue, crForm) {
+            function calcCornerRadius(crValue: any, crForm: any) {
                 if (!crValue) return 0;
 
                 const barWidth = isHorizontal ? Math.abs(y1 - y0) : Math.abs(x1 - x0);
@@ -529,9 +529,9 @@ function appendBarText(gd: GraphDiv, plotinfo: any, bar: any, cd: any[], i: numb
     const ya = plotinfo.yaxis;
 
     const fullLayout = gd._fullLayout;
-    let textPosition;
+    let textPosition: any;
 
-    function appendTextNode(bar, text, textFont) {
+    function appendTextNode(bar: any, text: any, textFont: any) {
         const textSelection = ensureSingle(bar, 'text')
             .text(text)
             .attr({
@@ -1004,8 +1004,8 @@ function calcTexttemplate(fullLayout: any, cd: any[], index: number, xa: any, ya
     const isFunnel = trace.type === 'funnel';
     const isHorizontal = trace.orientation === 'h';
 
-    let pLetter, pAxis;
-    let vLetter, vAxis;
+    let pLetter, pAxis: any;
+    let vLetter, vAxis: any;
     if (isHorizontal) {
         pLetter = 'y';
         pAxis = ya;
@@ -1018,11 +1018,11 @@ function calcTexttemplate(fullLayout: any, cd: any[], index: number, xa: any, ya
         vAxis = ya;
     }
 
-    function formatLabel(u) {
+    function formatLabel(u: any) {
         return tickText(pAxis, pAxis.c2l(u), true).text;
     }
 
-    function formatNumber(v) {
+    function formatNumber(v: any) {
         return tickText(vAxis, vAxis.c2l(v), true).text;
     }
 
@@ -1084,12 +1084,12 @@ function calcTextinfo(cd: any[], index: number, xa: any, ya: any): string {
     const isWaterfall = trace.type === 'waterfall';
     const isFunnel = trace.type === 'funnel';
 
-    function formatLabel(u) {
+    function formatLabel(u: any) {
         const pAxis = isHorizontal ? ya : xa;
         return tickText(pAxis, u, true).text;
     }
 
-    function formatNumber(v) {
+    function formatNumber(v: any) {
         const sAxis = isHorizontal ? xa : ya;
         return tickText(sAxis, +v, true).text;
     }
@@ -1101,7 +1101,7 @@ function calcTextinfo(cd: any[], index: number, xa: any, ya: any): string {
     const text: any[] = [];
     let tx;
 
-    const hasFlag = function (flag) {
+    const hasFlag = function (flag: any) {
         return parts.indexOf(flag) !== -1;
     };
 

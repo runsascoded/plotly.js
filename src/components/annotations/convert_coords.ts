@@ -12,8 +12,8 @@ export default function convertCoords(gd: GraphDiv, ax: any, newType: any, doExt
 
     const annotations = gd._fullLayout.annotations;
     const axLetter = ax._id.charAt(0);
-    let ann;
-    let attrPrefix;
+    let ann: any;
+    let attrPrefix: any;
 
     function convert(attr: any) {
         const currentVal = ann[attr];

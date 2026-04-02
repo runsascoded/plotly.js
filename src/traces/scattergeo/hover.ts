@@ -7,7 +7,7 @@ import _index from '../../lib/index.js';
 const { fillText } = _index;
 import attributes from './attributes.js';
 
-export default function hoverPoints(pointData, xval, yval) {
+export default function hoverPoints(pointData: any, xval: any, yval: any) {
     const cd = pointData.cd;
     const trace = cd[0].trace;
     const xa = pointData.xa;
@@ -17,7 +17,7 @@ export default function hoverPoints(pointData, xval, yval) {
     const isLonLatOverEdges = geo.projection.isLonLatOverEdges;
     const project = geo.project;
 
-    function distFn(d) {
+    function distFn(d: any) {
         const lonlat = d.lonlat;
 
         if(lonlat[0] === BADNUM) return Infinity;
@@ -67,7 +67,7 @@ export default function hoverPoints(pointData, xval, yval) {
     return [pointData];
 }
 
-function getExtraText(trace: FullTrace, pt, pointData, labels) {
+function getExtraText(trace: FullTrace, pt: any, pointData: any, labels: any) {
     if(trace.hovertemplate) return;
 
     const hoverinfo = pt.hi || trace.hoverinfo;
@@ -82,7 +82,7 @@ function getExtraText(trace: FullTrace, pt, pointData, labels) {
     const hasText = (parts.indexOf('text') !== -1);
     const text: any[] = [];
 
-    function format(val) { return val + '\u00B0'; }
+    function format(val: any) { return val + '\u00B0'; }
 
     if(hasLocation) {
         text.push(pt.loc);

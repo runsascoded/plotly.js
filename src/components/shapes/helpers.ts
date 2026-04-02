@@ -150,7 +150,7 @@ export const getPathString = function(gd: GraphDiv, options: any) {
     const xa = Axes.getFromId(gd, options.xref);
     const ya = Axes.getFromId(gd, options.yref);
     const gs = gd._fullLayout._size;
-    let x2r, x2p, y2r, y2p;
+    let x2r: any, x2p, y2r: any, y2p;
     const xShiftStart = getPixelShift(xa, options.x0shift);
     const xShiftEnd = getPixelShift(xa, options.x1shift);
     const yShiftStart = getPixelShift(ya, options.y0shift);
@@ -227,9 +227,9 @@ function convertPath(options: any, x2p: any, y2p: any) {
     return pathIn.replace(constants.segmentRE, function(segment: any) {
         let paramNumber = 0;
         const segmentType = segment.charAt(0);
-        const xParams = constants.paramIsX[segmentType];
-        const yParams = constants.paramIsY[segmentType];
-        const nParams = constants.numParams[segmentType];
+        const xParams = (constants.paramIsX as any)[segmentType];
+        const yParams = (constants.paramIsY as any)[segmentType];
+        const nParams = (constants.numParams as any)[segmentType];
 
         let paramString = segment.slice(1).replace(constants.paramRE, function(param: any) {
             if(xParams[paramNumber]) {

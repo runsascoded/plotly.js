@@ -1,5 +1,5 @@
 import type { FullTrace } from '../../../types/core';
-export default function formatLabels(cdi, trace: FullTrace) {
+export default function formatLabels(cdi: any, trace: FullTrace) {
     const labels: any = {};
 
     const carpet = trace._carpet;

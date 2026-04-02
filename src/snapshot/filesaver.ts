@@ -13,7 +13,7 @@ import helpers from './helpers.js';
 * License: MIT
 *   See https://github.com/eligrey/FileSaver.js/blob/master/LICENSE.md
 */
-function fileSaver(url, name, format) {
+function fileSaver(url: any, name: any, format: any) {
     const saveLink = document.createElement('a');
     const canUseSaveLink = 'download' in saveLink;
 

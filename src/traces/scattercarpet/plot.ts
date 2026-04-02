@@ -3,7 +3,7 @@ import scatterPlot from '../scatter/plot.js';
 import Axes from '../../plots/cartesian/axes.js';
 import { setClipUrl } from '../../components/drawing/index.js';
 
-export default function plot(gd: GraphDiv, plotinfoproxy, data, layer) {
+export default function plot(gd: GraphDiv, plotinfoproxy: any, data: any, layer: any) {
     let i, trace, node;
 
     const carpet = data[0][0].carpet;

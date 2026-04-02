@@ -38,7 +38,7 @@ export default function hoverPoints(pointData: any, xval: number, yval: number) 
         if(parts.indexOf('color') !== -1) fmtColor = true;
     }
 
-    const cr = constants.colormodel[trace.colormodel];
+    const cr = (constants.colormodel as any)[trace.colormodel];
     const colormodel = cr.colormodel || trace.colormodel;
     const dims = colormodel.length;
     const c = trace._scaler(pixel);

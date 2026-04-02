@@ -25,14 +25,14 @@ export default {
     eventData: _req6,
     selectPoints: _req7,
 
-    styleOnSelect: function(_, cd) {
+    styleOnSelect: function(_: any, cd: any) {
         if(cd) {
             const trace = cd[0].trace;
             trace._glTrace.updateOnSelect(cd);
         }
     },
 
-    getBelow: function(trace, subplot) {
+    getBelow: function(trace: any, subplot: any) {
         const mapLayers = subplot.getMapLayers();
 
         // find layer just above top-most "water" layer

@@ -278,7 +278,7 @@ function padInsideLabelsOnAnchorAxis(fullLayout?: any, ax?: any, max?: any): any
                     if(!anchorAxis._vals[0].bb) {
                         const cls = anchorAxis._id + 'tick';
                         const tickLabels = anchorAxis._selections[cls];
-                        tickLabels.each(function(this: any, d) {
+                        tickLabels.each(function(this: any, d: any) {
                             const thisLabel = select(this);
                             const mathjaxGroup = thisLabel.select('.text-math-group');
                             if(mathjaxGroup.empty()) {
@@ -462,7 +462,7 @@ function findExtremes(ax?: any, data?: any, opts?: any): any {
     function makePadAccessor(item?: any) {
         if(Array.isArray(item)) {
             hasArrayOption = true;
-            return function(i) { return Math.max(Number(item[i]||0), 0); };
+            return function(i: any) { return Math.max(Number(item[i]||0), 0); };
         } else {
             const v = Math.max(Number(item||0), 0);
             return function() { return v; };

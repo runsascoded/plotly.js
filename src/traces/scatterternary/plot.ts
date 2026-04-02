@@ -1,7 +1,7 @@
 import type { GraphDiv } from '../../../types/core';
 import scatterPlot from '../scatter/plot.js';
 
-export default function plot(gd: GraphDiv, ternary, moduleCalcData) {
+export default function plot(gd: GraphDiv, ternary: any, moduleCalcData: any) {
     const plotContainer = ternary.plotContainer;
 
     // remove all nodes inside the scatter layer

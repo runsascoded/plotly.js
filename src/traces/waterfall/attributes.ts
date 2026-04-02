@@ -9,7 +9,7 @@ import constants from './constants.js';
 import { extendFlat } from '../../lib/extend.js';
 import Color from '../../components/color/index.js';
 
-function directionAttrs(dirTxt) {
+function directionAttrs(dirTxt: any) {
     return {
         marker: {
             color: extendFlat({}, barAttrs.marker.color, {

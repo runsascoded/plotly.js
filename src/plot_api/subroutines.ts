@@ -46,7 +46,7 @@ function lsInner(gd: GraphDiv): any {
     const gs = fullLayout._size;
     const pad = gs.p;
     const axList = Axes.list(gd, '', true);
-    let i, subplot, plotinfo, ax, xa, ya;
+    let i, subplot: any, plotinfo, ax, xa: any, ya: any;
 
     // Set the width and height of the paper div ('.svg-container') in
     // accordance with the users configuration and layout. 
@@ -106,7 +106,7 @@ function lsInner(gd: GraphDiv): any {
         ax._mainLinePosition = getLinePosition(ax, counterAx, ax.side);
         ax._mainMirrorPosition = (ax.mirror && counterAx) ?
             getLinePosition(ax, counterAx,
-                alignmentConstants.OPPOSITE_SIDE[ax.side]) : null;
+                (alignmentConstants.OPPOSITE_SIDE as any)[ax.side]) : null;
     }
 
     // figure out which backgrounds we need to draw,
@@ -165,7 +165,7 @@ function lsInner(gd: GraphDiv): any {
 
     lowerBackgrounds.exit().remove();
 
-    lowerBackgrounds.each(function(this: any, subplot) {
+    lowerBackgrounds.each(function(this: any, subplot: any) {
         fullLayout._plots[subplot].bg = select(this);
     });
 
@@ -194,7 +194,7 @@ function lsInner(gd: GraphDiv): any {
             // Clip so that data only shows up on the plot area.
             const clipId = plotinfo.clipId = 'clip' + fullLayout._uid + subplot + 'plot';
 
-            const plotClip = ensureSingleById(fullLayout._clips, 'clipPath', clipId, function(s) {
+            const plotClip = ensureSingleById(fullLayout._clips, 'clipPath', clipId, function(s: any) {
                 s.classed('plotclip', true)
                     .append('rect');
             });
@@ -217,7 +217,7 @@ function lsInner(gd: GraphDiv): any {
                 layerClipId = null;
             }
 
-            setClipUrl(plotinfo.plot, plotClipId, gd);
+            setClipUrl(plotinfo.plot, plotClipId as any, gd);
 
             // stash layer clipId value (null or same as clipId)
             // to DRY up setClipUrl calls on trace-module and trace layers
@@ -226,9 +226,9 @@ function lsInner(gd: GraphDiv): any {
         }
     }
 
-    let xLinesXLeft, xLinesXRight, xLinesYBottom, xLinesYTop,
+    let xLinesXLeft: any, xLinesXRight: any, xLinesYBottom, xLinesYTop,
         leftYLineWidth, rightYLineWidth;
-    let yLinesYBottom, yLinesYTop, yLinesXLeft, yLinesXRight,
+    let yLinesYBottom: any, yLinesYTop: any, yLinesXLeft, yLinesXRight,
         connectYBottom, connectYTop;
     let extraSubplot;
 
@@ -375,7 +375,7 @@ function shouldShowLineThisSide(ax?: any, side?: any, counterAx?: any): boolean 
     // in order to handle cases where the user forgot to anchor this axis correctly
     // (because its default anchor has the same domain on the relevant end)
     // check whether the relevant position is the same.
-    const sideIndex = alignmentConstants.FROM_BL[side];
+    const sideIndex = (alignmentConstants.FROM_BL as any)[side];
     if(counterAx.side === side) {
         return anchorAx.domain[sideIndex] === ax.domain[sideIndex];
     }
@@ -749,8 +749,8 @@ export const redrawReglTraces = function(gd: GraphDiv): void {
 
     if(fullLayout._has('regl')) {
         const fullData = gd._fullData;
-        const cartesianIds = [];
-        const polarIds = [];
+        const cartesianIds: any[] = [];
+        const polarIds: any[] = [];
         let i, sp;
 
         if(fullLayout._hasOnlyLargeSploms) {

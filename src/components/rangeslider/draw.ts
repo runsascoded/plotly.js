@@ -444,7 +444,7 @@ function drawRangePlot(rangeSlider: any, gd: GraphDiv, axisOpts: any, opts: any)
 
     rangePlots.exit().remove();
 
-    let mainplotinfo;
+    let mainplotinfo: any;
 
     rangePlots.each(function(this: any, id: any, i: any) {
         const plotgroup = select(this);

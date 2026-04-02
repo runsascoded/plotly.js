@@ -32,7 +32,7 @@ function calc(gd: GraphDiv, trace: FullTrace): any[] {
 
     let xAttr = 'x';
     let yAttr = 'y';
-    let posAttr;
+    let posAttr: any;
     if(stackGroupOpts) {
         pushUnique(stackGroupOpts.traceIndices, trace.index);
         isV = stackGroupOpts.orientation === 'v';
@@ -227,11 +227,11 @@ function calcMarkerSize(trace: FullTrace, serieslen: number): any {
     let markerTrans;
 
     if(trace.marker.sizemode === 'area') {
-        markerTrans = function(v) {
+        markerTrans = function(v: any) {
             return Math.max(Math.sqrt((v || 0) / sizeref), 3);
         };
     } else {
-        markerTrans = function(v) {
+        markerTrans = function(v: any) {
             return Math.max((v || 0) / sizeref, 3);
         };
     }

@@ -17,25 +17,25 @@ export const getRedrawFunc = function(gd: GraphDiv) {
     };
 };
 
-export const encodeSVG = function(svg) {
+export const encodeSVG = function(svg: any) {
     return 'data:image/svg+xml,' + encodeURIComponent(svg);
 };
 
-export const encodeJSON = function(json) {
+export const encodeJSON = function(json: any) {
     return 'data:application/json,' + encodeURIComponent(json);
 };
 
 const DOM_URL = window.URL || window.webkitURL;
 
-export const createObjectURL = function(blob) {
+export const createObjectURL = function(blob: any) {
     return DOM_URL.createObjectURL(blob);
 };
 
-export const revokeObjectURL = function(url) {
+export const revokeObjectURL = function(url: any) {
     return DOM_URL.revokeObjectURL(url);
 };
 
-export const createBlob = function(url, format) {
+export const createBlob = function(url: any, format: any) {
     if(format === 'svg') {
         return new window.Blob([url], {type: 'image/svg+xml;charset=utf-8'});
     } else if(format === 'full-json') {
@@ -46,12 +46,12 @@ export const createBlob = function(url, format) {
     }
 };
 
-export const octetStream = function(s) {
+export const octetStream = function(s: any) {
     document.location.href = 'data:application/octet-stream' + s;
 };
 
 // Taken from https://bl.ocks.org/nolanlawson/0eac306e4dac2114c752
-function fixBinary(b) {
+function fixBinary(b: any) {
     const len = b.length;
     const buf = new ArrayBuffer(len);
     const arr = new Uint8Array(buf);

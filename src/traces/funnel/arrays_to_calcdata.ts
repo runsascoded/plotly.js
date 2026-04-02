@@ -1,7 +1,7 @@
 import type { FullTrace } from '../../../types/core';
 import Lib from '../../lib/index.js';
 
-export default function arraysToCalcdata(cd,  trace: FullTrace) {
+export default function arraysToCalcdata(cd: any,  trace: FullTrace) {
     for(let i = 0; i < cd.length; i++) cd[i].i = i;
 
     Lib.mergeArray(trace.text, cd, 'tx');

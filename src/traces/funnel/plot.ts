@@ -8,7 +8,7 @@ import barPlot from '../bar/plot.js';
 import _uniform_text from '../bar/uniform_text.js';
 const { clearMinTextSize } = _uniform_text;
 
-export default function plot(gd: GraphDiv,  plotinfo: PlotInfo,  cdModule,  traceLayer) {
+export default function plot(gd: GraphDiv,  plotinfo: PlotInfo,  cdModule: any,  traceLayer: any) {
     const fullLayout = gd._fullLayout;
 
     clearMinTextSize('funnel', fullLayout);
@@ -24,11 +24,11 @@ export default function plot(gd: GraphDiv,  plotinfo: PlotInfo,  cdModule,  trac
     });
 }
 
-function plotConnectorRegions(gd: GraphDiv,  plotinfo: PlotInfo,  cdModule,  traceLayer) {
+function plotConnectorRegions(gd: GraphDiv,  plotinfo: PlotInfo,  cdModule: any,  traceLayer: any) {
     const xa = plotinfo.xaxis;
     const ya = plotinfo.yaxis;
 
-    Lib.makeTraceGroups(traceLayer, cdModule, 'trace bars').each(function(this: any, cd) {
+    Lib.makeTraceGroups(traceLayer, cdModule, 'trace bars').each(function(this: any, cd: any) {
         const plotGroup = select(this);
         const trace = cd[0].trace;
 
@@ -50,7 +50,7 @@ function plotConnectorRegions(gd: GraphDiv,  plotinfo: PlotInfo,  cdModule,  tra
 
         const len = connectors.size();
 
-        connectors.each(function(this: any, di, i) {
+        connectors.each(function(this: any, di: any, i: any) {
             // don't draw lines between nulls
             if(i !== len - 1 && !di.cNext) return;
 
@@ -82,11 +82,11 @@ function plotConnectorRegions(gd: GraphDiv,  plotinfo: PlotInfo,  cdModule,  tra
     });
 }
 
-function plotConnectorLines(gd: GraphDiv,  plotinfo: PlotInfo,  cdModule,  traceLayer) {
+function plotConnectorLines(gd: GraphDiv,  plotinfo: PlotInfo,  cdModule: any,  traceLayer: any) {
     const xa = plotinfo.xaxis;
     const ya = plotinfo.yaxis;
 
-    Lib.makeTraceGroups(traceLayer, cdModule, 'trace bars').each(function(this: any, cd) {
+    Lib.makeTraceGroups(traceLayer, cdModule, 'trace bars').each(function(this: any, cd: any) {
         const plotGroup = select(this);
         const trace = cd[0].trace;
 
@@ -108,7 +108,7 @@ function plotConnectorLines(gd: GraphDiv,  plotinfo: PlotInfo,  cdModule,  trace
 
         const len = connectors.size();
 
-        connectors.each(function(this: any, di, i) {
+        connectors.each(function(this: any, di: any, i: any) {
             // don't draw lines between nulls
             if(i !== len - 1 && !di.cNext) return;
 
@@ -137,7 +137,7 @@ function plotConnectorLines(gd: GraphDiv,  plotinfo: PlotInfo,  cdModule,  trace
     });
 }
 
-function getXY(di,  xa: FullAxis,  ya: FullAxis,  isHorizontal) {
+function getXY(di: any,  xa: FullAxis,  ya: FullAxis,  isHorizontal: any) {
     const s: any[] = [];
     const p: any[] = [];
 

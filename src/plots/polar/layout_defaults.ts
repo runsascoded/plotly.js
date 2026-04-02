@@ -17,7 +17,7 @@ import constants from './constants.js';
 import type { FullLayout, FullTrace } from '../../../types/core';
 const axisNames = constants.axisNames;
 
-function handleDefaults(contIn, contOut, coerce, opts) {
+function handleDefaults(contIn: any, contOut: any, coerce: any, opts: any) {
     const bgColor = coerce('bgcolor');
     opts.bgColor = Color.combine(bgColor, opts.paper_bgcolor);
 
@@ -27,7 +27,7 @@ function handleDefaults(contIn, contOut, coerce, opts) {
     // could optimize, subplotData is not always needed!
     const subplotData = getSubplotData(opts.fullData, constants.name, opts.id);
     const layoutOut = opts.layoutOut;
-    let axName;
+    let axName: any;
 
     function coerceAxis(attr: string, dflt?: any) {
         return coerce(axName + '.' + attr, dflt);
@@ -44,9 +44,9 @@ function handleDefaults(contIn, contOut, coerce, opts) {
         const axOut = Template.newContainer(contOut, axName);
         axOut._id = axOut._name = axName;
         axOut._attr = opts.id + '.' + axName;
-        axOut._traceIndices = subplotData.map(function(t) { return t.index; });
+        axOut._traceIndices = subplotData.map(function(t: any) { return t.index; });
 
-        const dataAttr = constants.axisName2dataArray[axName];
+        const dataAttr = (constants.axisName2dataArray as any)[axName];
         let axType = handleAxisTypeDefaults(axIn, axOut, coerceAxis, subplotData, dataAttr, opts);
 
         handleCategoryOrderDefaults(axIn, axOut, coerceAxis, {
@@ -137,7 +137,7 @@ function handleDefaults(contIn, contOut, coerce, opts) {
                 }
 
                 const direction = coerceAxis('direction');
-                coerceAxis('rotation', {counterclockwise: 0, clockwise: 90}[direction]);
+                coerceAxis('rotation', ({counterclockwise: 0, clockwise: 90} as any)[direction]);
                 break;
         }
 
@@ -198,7 +198,7 @@ function handleDefaults(contIn, contOut, coerce, opts) {
                 showLine: true,
                 showGrid: true,
                 noZeroLine: true,
-                attributes: layoutAttributes[axName]
+                attributes: (layoutAttributes as any)[axName]
             });
 
             coerceAxis('layer');
@@ -232,7 +232,7 @@ function handleDefaults(contIn, contOut, coerce, opts) {
     }
 }
 
-function handleAxisTypeDefaults(axIn, axOut, coerce, subplotData, dataAttr, options) {
+function handleAxisTypeDefaults(axIn: any, axOut: any, coerce: any, subplotData: any, dataAttr: any, options: any) {
     const autotypenumbers = coerce('autotypenumbers', options.autotypenumbersDflt);
     const axType = coerce('type');
 

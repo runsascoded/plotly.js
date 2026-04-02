@@ -6,7 +6,7 @@ const AXES_NAMES = ['xaxis', 'yaxis', 'zaxis'];
 
 const centerPoint = [0, 0, 0];
 
-function contourLevelsFromTicks(ticks) {
+function contourLevelsFromTicks(ticks: any) {
     const result = new Array(3);
     for(let i = 0; i < 3; ++i) {
         const tlevel = ticks[i];
@@ -19,7 +19,7 @@ function contourLevelsFromTicks(ticks) {
     return result;
 }
 
-function computeTickMarks(scene) {
+function computeTickMarks(scene: any) {
     const axesOptions = scene.axesOptions;
     const glRange = scene.glplot.axesPixels;
     const sceneLayout = scene.fullSceneLayout;

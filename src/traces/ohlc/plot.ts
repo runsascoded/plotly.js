@@ -2,12 +2,12 @@ import type { GraphDiv, PlotInfo } from '../../../types/core';
 import { select } from 'd3-selection';
 import Lib from '../../lib/index.js';
 
-export default function plot(gd: GraphDiv,  plotinfo: PlotInfo,  cdOHLC,  ohlcLayer) {
+export default function plot(gd: GraphDiv,  plotinfo: PlotInfo,  cdOHLC: any,  ohlcLayer: any) {
     const ya = plotinfo.yaxis;
     const xa = plotinfo.xaxis;
     const posHasRangeBreaks = !!xa.rangebreaks;
 
-    Lib.makeTraceGroups(ohlcLayer, cdOHLC, 'trace ohlc').each(function(this: any, cd) {
+    Lib.makeTraceGroups(ohlcLayer, cdOHLC, 'trace ohlc').each(function(this: any, cd: any) {
         const plotGroup = select(this);
         const cd0 = cd[0];
         const t = cd0.t;
@@ -26,7 +26,7 @@ export default function plot(gd: GraphDiv,  plotinfo: PlotInfo,  cdOHLC,  ohlcLa
 
         paths.exit().remove();
 
-        paths.attr('d', function(d) {
+        paths.attr('d', function(d: any) {
             if(d.empty) return 'M0,0Z';
 
             const xo = xa.c2p(d.pos - tickLen, true);

@@ -14,8 +14,8 @@ export default function makeBubbleSizeFn(trace: FullTrace, factor?: number): (v:
     // Note this only applies to the array-value sizes
 
     const baseFn = (marker.sizemode === 'area') ?
-        function(v) { return Math.sqrt(v / sizeRef); } :
-        function(v) { return v / sizeRef; };
+        function(v: any) { return Math.sqrt(v / sizeRef); } :
+        function(v: any) { return v / sizeRef; };
 
     // TODO add support for position/negative bubbles?
     // TODO add 'sizeoffset' attribute?

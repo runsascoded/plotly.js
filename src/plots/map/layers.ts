@@ -3,7 +3,7 @@ import { sanitizeHTML } from '../../lib/svg_text_utils.js';
 import convertTextOpts from './convert_text_opts.js';
 import constants from './constants.js';
 
-function MapLayer(this: any, subplot, index) {
+function MapLayer(this: any, subplot: any, index: any) {
     this.subplot = subplot;
 
     this.uid = subplot.uid + '-' + index;
@@ -24,7 +24,7 @@ function MapLayer(this: any, subplot, index) {
 
 const proto = MapLayer.prototype;
 
-proto.update = function update(opts) {
+proto.update = function update(opts: any) {
     if(!this.visible) {
         // IMPORTANT: must create source before layer to not cause errors
         this.updateSource(opts);
@@ -45,7 +45,7 @@ proto.update = function update(opts) {
     this.visible = isVisible(opts);
 };
 
-proto.needsNewImage = function(opts) {
+proto.needsNewImage = function(opts: any) {
     const map = this.subplot.map;
     return (
         map.getSource(this.idSource) &&
@@ -57,7 +57,7 @@ proto.needsNewImage = function(opts) {
     );
 };
 
-proto.needsNewSource = function(opts) {
+proto.needsNewSource = function(opts: any) {
     // for some reason changing layer to 'fill' or 'symbol'
     // w/o changing the source throws an exception in map-gl 0.18 ;
     // stay safe and make new source on type changes
@@ -68,7 +68,7 @@ proto.needsNewSource = function(opts) {
     );
 };
 
-proto.needsNewLayer = function(opts) {
+proto.needsNewLayer = function(opts: any) {
     return (
         this.layerType !== opts.type ||
         this.below !== this.subplot.belowLookup['layout-' + this.index]
@@ -79,7 +79,7 @@ proto.lookupBelow = function() {
     return this.subplot.belowLookup['layout-' + this.index];
 };
 
-proto.updateImage = function(opts) {
+proto.updateImage = function(opts: any) {
     const map = this.subplot.map;
     map.getSource(this.idSource).updateImage({
         url: opts.source, coordinates: opts.coordinates
@@ -94,7 +94,7 @@ proto.updateImage = function(opts) {
     }
 };
 
-proto.updateSource = function(opts) {
+proto.updateSource = function(opts: any) {
     const map = this.subplot.map;
 
     if(map.getSource(this.idSource)) map.removeSource(this.idSource);
@@ -109,7 +109,7 @@ proto.updateSource = function(opts) {
     map.addSource(this.idSource, sourceOpts);
 };
 
-proto.findFollowingMapLayerId = function(below) {
+proto.findFollowingMapLayerId = function(below: any) {
     if(below === 'traces') {
         const mapLayers = this.subplot.getMapLayers();
 
@@ -127,7 +127,7 @@ proto.findFollowingMapLayerId = function(below) {
     return below;
 };
 
-proto.updateLayer = function(opts) {
+proto.updateLayer = function(opts: any) {
     const subplot = this.subplot;
     const convertedOpts = convertOpts(opts);
     const below = this.lookupBelow();
@@ -152,7 +152,7 @@ proto.updateLayer = function(opts) {
     this.below = below;
 };
 
-proto.updateStyle = function(opts) {
+proto.updateStyle = function(opts: any) {
     if(isVisible(opts)) {
         const convertedOpts = convertOpts(opts);
         this.subplot.setOptions(this.idLayer, 'setLayoutProperty', convertedOpts.layout);
@@ -173,7 +173,7 @@ proto.dispose = function() {
     if(map.getSource(this.idSource)) map.removeSource(this.idSource);
 };
 
-function isVisible(opts) {
+function isVisible(opts: any) {
     if(!opts.visible) return false;
 
     const source = opts.source;
@@ -191,7 +191,7 @@ function isVisible(opts) {
         (typeof source === 'string' && source.length > 0);
 }
 
-function convertOpts(opts) {
+function convertOpts(opts: any) {
     const layout = {};
     const paint = {};
 
@@ -261,7 +261,7 @@ function convertOpts(opts) {
     };
 }
 
-function convertSourceOpts(opts) {
+function convertSourceOpts(opts: any) {
     const sourceType = opts.sourcetype;
     const source = opts.source;
     const sourceOpts: any = {type: sourceType};
@@ -279,7 +279,7 @@ function convertSourceOpts(opts) {
         sourceOpts.coordinates = opts.coordinates;
     }
 
-    sourceOpts[field] = source;
+    sourceOpts[field as any] = source;
 
     if(opts.sourceattribution) {
         sourceOpts.attribution = sanitizeHTML(opts.sourceattribution);
@@ -288,8 +288,9 @@ function convertSourceOpts(opts) {
     return sourceOpts;
 }
 
-export default function createMapLayer(subplot, index, opts) {
-    const mapLayer = new MapLayer(subplot, index);
+export default function createMapLayer(subplot: any, index: any, opts: any) {
+    // @ts-ignore TS7009
+    const mapLayer: any = (new MapLayer(subplot, index) as any);
 
     mapLayer.update(opts);
 

@@ -10,7 +10,7 @@ import _constants from './constants.js';
 const { isSupportedFont } = _constants;
 
 export default function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace, defaultColor: string, layout: FullLayout) {
-    function coerce(attr, dflt?) {
+    function coerce(attr: any, dflt?: any) {
         return Lib.coerce(traceIn, traceOut, attributes, attr, dflt);
     }
 
@@ -94,7 +94,7 @@ export default function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace,
     Lib.coerceSelectionMarkerOpacity(traceOut, coerce);
 }
 
-function handleLonLatDefaults(traceIn: InputTrace, traceOut: FullTrace, coerce) {
+function handleLonLatDefaults(traceIn: InputTrace, traceOut: FullTrace, coerce: any) {
     const lon = coerce('lon') || [];
     const lat = coerce('lat') || [];
     const len = Math.min(lon.length, lat.length);

@@ -28,12 +28,12 @@ export default function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace)
     let cm;
     if (traceOut._hasZ) {
         coerce('colormodel', 'rgb');
-        cm = constants.colormodel[traceOut.colormodel];
+        cm = (constants.colormodel as any)[traceOut.colormodel];
         coerce('zmin', cm.zminDflt || cm.min);
         coerce('zmax', cm.zmaxDflt || cm.max);
     } else if (traceOut._hasSource) {
         traceOut.colormodel = 'rgba256';
-        cm = constants.colormodel[traceOut.colormodel];
+        cm = (constants.colormodel as any)[traceOut.colormodel];
         traceOut.zmin = cm.zminDflt;
         traceOut.zmax = cm.zmaxDflt;
     }

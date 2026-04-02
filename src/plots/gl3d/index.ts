@@ -39,6 +39,7 @@ export const plot = function plot(gd: GraphDiv) {
         let scene = sceneLayout._scene;
 
         if(!scene) {
+            // @ts-ignore TS7009
             scene = new Scene({
                 id: sceneId,
                 graphDiv: gd,
@@ -79,7 +80,7 @@ export const plot = function plot(gd: GraphDiv) {
     }
 };
 
-export const clean = function(newFullData, newFullLayout, oldFullData, oldFullLayout) {
+export const clean = function(newFullData: any, newFullLayout: any, oldFullData: any, oldFullLayout: any) {
     const oldSceneKeys = oldFullLayout._subplots[GL3D] || [];
 
     for(let i = 0; i < oldSceneKeys.length; i++) {
@@ -97,7 +98,7 @@ export const clean = function(newFullData, newFullLayout, oldFullData, oldFullLa
     }
 };
 
-export const toSVG = function(gd) {
+export const toSVG = function(gd: any) {
     const fullLayout = gd._fullLayout;
     const sceneIds = fullLayout._subplots[GL3D];
     const size = fullLayout._size;
@@ -124,7 +125,7 @@ export const toSVG = function(gd) {
     }
 };
 
-export const cleanId = function cleanId(id) {
+export const cleanId = function cleanId(id: any) {
     if(!id.match(/^scene[0-9]*$/)) return;
 
     let sceneNum = id.slice(5);
@@ -133,7 +134,7 @@ export const cleanId = function cleanId(id) {
     return SCENE + sceneNum;
 };
 
-export const updateFx = function(gd) {
+export const updateFx = function(gd: any) {
     const fullLayout = gd._fullLayout;
     const subplotIds = fullLayout._subplots[GL3D];
 

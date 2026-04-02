@@ -16,7 +16,7 @@ export default function handleConstraintDefaults(traceIn: InputTrace, traceOut: 
     let showLines, lineColor, fillColor;
 
     const operation = coerce('contours.operation');
-    contours._operation = CONSTRAINT_REDUCTION[operation];
+    contours._operation = (CONSTRAINT_REDUCTION as any)[operation];
 
     handleConstraintValueDefaults(coerce, contours);
 
@@ -43,7 +43,7 @@ export default function handleConstraintDefaults(traceIn: InputTrace, traceOut: 
     handleLabelDefaults(coerce, layout, lineColor, opts);
 }
 
-function handleConstraintValueDefaults(coerce,  contours) {
+function handleConstraintValueDefaults(coerce: any,  contours: any) {
     let zvalue;
 
     if(COMPARISON_OPS2.indexOf(contours.operation) === -1) {

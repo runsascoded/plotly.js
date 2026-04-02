@@ -32,7 +32,7 @@ function calc(gd: GraphDiv, trace: FullTrace) {
     // convert width and offset in 'c' coordinate,
     // set 'c' value(s) in trace._width and trace._offset,
     // to make Bar.crossTraceCalc "just work"
-    function d2c(attr) {
+    function d2c(attr: any) {
         const val = trace[attr];
         if(val !== undefined) {
             trace['_' + attr] = isArrayOrTypedArray(val) ?
@@ -67,7 +67,7 @@ function calc(gd: GraphDiv, trace: FullTrace) {
     return cd;
 }
 
-function crossTraceCalc(gd, polarLayout, subplotId) {
+function crossTraceCalc(gd: any, polarLayout: any, subplotId: any) {
     const calcdata = gd.calcdata;
     const barPolarCd: any[] = [];
 

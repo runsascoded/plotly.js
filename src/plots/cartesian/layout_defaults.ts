@@ -128,19 +128,19 @@ export default function supplyLayoutDefaults(layoutIn?: any, layoutOut?: any, fu
     const bgColor = Color.combine(plotBgColor, layoutOut.paper_bgcolor);
 
     // name of single axis (e.g. 'xaxis', 'yaxis2')
-    let axName;
+    let axName: any;
     // id of single axis (e.g. 'y', 'x5')
-    let axId;
+    let axId: any;
     // 'x' or 'y'
     let axLetter;
     // input layout axis container
-    let axLayoutIn;
+    let axLayoutIn: any;
     // full layout axis container
-    let axLayoutOut;
+    let axLayoutOut: any;
 
     function newAxLayoutOut() {
         const traces = ax2traces[axName] || [];
-        axLayoutOut._traceIndices = traces.map(function(t) { return t.index; });
+        axLayoutOut._traceIndices = traces.map(function(t: any) { return t.index; });
         axLayoutOut._annIndices = [];
         axLayoutOut._shapeIndices = [];
         axLayoutOut._selectionIndices = [];
@@ -277,7 +277,7 @@ export default function supplyLayoutDefaults(layoutIn?: any, layoutOut?: any, fu
 
         handlePositionDefaults(axLayoutIn, axLayoutOut, coerce, {
             letter: axLetter,
-            counterAxes: counterAxes[axLetter],
+            counterAxes: (counterAxes as any)[axLetter],
             overlayableAxes: getOverlayableAxes(axLetter, axName),
             grid: layoutOut.grid,
             overlayingDomain: overlayingAnchorDomain
@@ -329,7 +329,7 @@ export default function supplyLayoutDefaults(layoutIn?: any, layoutOut?: any, fu
 
         handlePositionDefaults(axLayoutIn, axLayoutOut, coerce, {
             letter: axLetter,
-            counterAxes: counterAxes[axLetter],
+            counterAxes: (counterAxes as any)[axLetter],
             overlayableAxes: getOverlayableAxes(axLetter, axName),
             grid: layoutOut.grid
         });

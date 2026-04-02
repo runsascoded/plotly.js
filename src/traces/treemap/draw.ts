@@ -14,7 +14,7 @@ export default function _plot(gd: GraphDiv, cdmodule: any[], transitionOpts: any
 
     const fullLayout = gd._fullLayout;
     const layer = fullLayout['_' + type + 'layer'];
-    let join, onComplete;
+    let join, onComplete: any;
 
     // If transition config is provided, then it is only a partial replot and traces not
     // updated are removed.
@@ -23,7 +23,7 @@ export default function _plot(gd: GraphDiv, cdmodule: any[], transitionOpts: any
     clearMinTextSize(type, fullLayout);
 
     join = layer.selectAll('g.trace.' + type)
-        .data(cdmodule, function(cd) { return cd[0].trace.uid; });
+        .data(cdmodule, function(cd: any) { return cd[0].trace.uid; });
 
     join.enter().append('g')
         .classed('trace', true)
@@ -48,12 +48,12 @@ export default function _plot(gd: GraphDiv, cdmodule: any[], transitionOpts: any
         trans.each(function() {
             // Must run the selection again since otherwise enters/updates get grouped together
             // and these get executed out of order. Except we need them in order!
-            layer.selectAll('g.trace').each(function(this: any, cd) {
+            layer.selectAll('g.trace').each(function(this: any, cd: any) {
                 plotOne(gd, cd, this, transitionOpts, drawDescendants);
             });
         });
     } else {
-        join.each(function(this: any, cd) {
+        join.each(function(this: any, cd: any) {
             plotOne(gd, cd, this, transitionOpts, drawDescendants);
         });
 

@@ -6,14 +6,14 @@ import { pointStyle, selectedPointStyle } from '../../components/drawing/index.j
 function style(gd: GraphDiv, cd?: any[], sel?: any): any {
     const s = sel ? sel : select(gd).selectAll('g.trace.boxes');
 
-    s.style('opacity', function(d) { return d[0].trace.opacity; });
+    s.style('opacity', function(d: any) { return d[0].trace.opacity; });
 
-    s.each(function(this: any, d) {
+    s.each(function(this: any, d: any) {
         const el = select(this);
         const trace = d[0].trace;
         const lineWidth = trace.line.width;
 
-        function styleBox(boxSel, lineWidth, lineColor, fillColor) {
+        function styleBox(boxSel: any, lineWidth: any, lineColor: any, fillColor: any) {
             boxSel.style('stroke-width', lineWidth + 'px')
                 .call(Color.stroke, lineColor)
                 .call(Color.fill, fillColor);
@@ -22,7 +22,7 @@ function style(gd: GraphDiv, cd?: any[], sel?: any): any {
         const allBoxes = el.selectAll('path.box');
 
         if(trace.type === 'candlestick') {
-            allBoxes.each(function(this: any, boxData) {
+            allBoxes.each(function(this: any, boxData: any) {
                 if(boxData.empty) return;
 
                 const thisBox = select(this);

@@ -50,7 +50,7 @@ export default function style(s: any, gd: GraphDiv, legend?: any): any {
         if((valign === 'middle' && indentation === 0) || !lineHeight || !height) {
             layers.attr('transform', null);
         } else {
-            const factor = {top: 1, bottom: -1}[valign];
+            const factor = ({top: 1, bottom: -1} as any)[valign];
             const markerOffsetY = (factor * (0.5 * (lineHeight - height + 3))) || 0;
             const markerOffsetX = legend.indentation;
             layers.attr('transform', strTranslate(markerOffsetX, markerOffsetY));
@@ -209,7 +209,7 @@ export default function style(s: any, gd: GraphDiv, legend?: any): any {
         const d0 = d[0];
         const trace = d0.trace;
         const showText = !showMarker && !anyLine && !anyFill && subTypes.hasText(trace);
-        let dMod, tMod;
+        let dMod: any, tMod;
 
         // 'scatter3d' don't use gd.calcdata,
         // use d0.trace to infer arrayOk attributes
@@ -473,7 +473,7 @@ export default function style(s: any, gd: GraphDiv, legend?: any): any {
             .selectAll('path.legendcandle')
             .data(trace.visible && trace.type === 'candlestick' ? [d, d] : []);
         pts.enter().append('path').classed('legendcandle', true)
-            .attr('d', function(_, i) {
+            .attr('d', function(_: any, i: any) {
                 if(i) return 'M-15,0H-8M-8,6V-6H8Z'; // increasing
                 return 'M15,0H8M8,-6V6H-8Z'; // decreasing
             })
@@ -500,7 +500,7 @@ export default function style(s: any, gd: GraphDiv, legend?: any): any {
             .selectAll('path.legendohlc')
             .data(trace.visible && trace.type === 'ohlc' ? [d, d] : []);
         pts.enter().append('path').classed('legendohlc', true)
-            .attr('d', function(_, i) {
+            .attr('d', function(_: any, i: any) {
                 if(i) return 'M-15,0H0M-8,-6V0'; // increasing
                 return 'M15,0H0M8,6V0'; // decreasing
             })
@@ -558,7 +558,7 @@ export default function style(s: any, gd: GraphDiv, legend?: any): any {
     function styleSpatial(this: any, d: any): void { // i.e. maninly traces having z and colorscale
         const trace = d[0].trace;
 
-        let useGradient;
+        let useGradient: any;
         let ptsData: any[] = [];
         if(trace.visible) {
             switch(trace.type) {

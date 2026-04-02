@@ -76,9 +76,9 @@ export default function hoverPoints(pointData: any, xval: number, yval: number, 
                 closeData.push(kdePointData);
 
                 violinLineAttrs = {};
-                violinLineAttrs[pLetter + '1'] = Lib.constrain(paOffset + pOnPath[0], paOffset, paOffset + paLength);
-                violinLineAttrs[pLetter + '2'] = Lib.constrain(paOffset + pOnPath[1], paOffset, paOffset + paLength);
-                violinLineAttrs[vLetter + '1'] = violinLineAttrs[vLetter + '2'] = vAxis._offset + vValPx;
+                (violinLineAttrs as any)[pLetter + '1'] = Lib.constrain(paOffset + pOnPath[0], paOffset, paOffset + paLength);
+                (violinLineAttrs as any)[pLetter + '2'] = Lib.constrain(paOffset + pOnPath[1], paOffset, paOffset + paLength);
+                (violinLineAttrs as any)[vLetter + '1'] = (violinLineAttrs as any)[vLetter + '2'] = vAxis._offset + vValPx;
             }
         }
 

@@ -70,7 +70,7 @@ export default {
     /*
      * update `flags` with the `editType` values found in `attr`
      */
-    update: function(flags, attr) {
+    update: function(flags: any, attr: any) {
         const editType = attr.editType;
         if(editType && editType !== 'none') {
             const editTypeParts = editType.split('+');

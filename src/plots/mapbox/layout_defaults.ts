@@ -14,7 +14,7 @@ export default function supplyLayoutDefaults(layoutIn: any, layoutOut: FullLayou
     });
 }
 
-function handleDefaults(containerIn, containerOut, coerce, opts) {
+function handleDefaults(containerIn: any, containerOut: any, coerce: any, opts: any) {
     coerce('accesstoken', opts.accessToken);
     coerce('style');
     coerce('center.lon');
@@ -45,7 +45,7 @@ function handleDefaults(containerIn, containerOut, coerce, opts) {
     containerOut._input = containerIn;
 }
 
-function handleLayerDefaults(layerIn, layerOut) {
+function handleLayerDefaults(layerIn: any, layerOut: any) {
     function coerce(attr: string, dflt?: any) {
         return Lib.coerce(layerIn, layerOut, layoutAttributes.layers, attr, dflt);
     }

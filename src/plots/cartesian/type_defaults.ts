@@ -38,7 +38,7 @@ function setAutoType(ax?: any, data?: any): any {
     // first check for histograms, as the count direction
     // should always default to a linear axis
     if(d0.type === 'histogram' &&
-        axLetter === {v: 'y', h: 'x'}[d0.orientation || 'v']
+        axLetter === ({v: 'y', h: 'x'} as any)[d0.orientation || 'v']
     ) {
         ax.type = 'linear';
         return;
@@ -50,7 +50,7 @@ function setAutoType(ax?: any, data?: any): any {
 
     // To not confuse 2D x/y used for per-box sample points for multicategory coordinates
     if(d0.type === 'box' && d0._hasPreCompStats &&
-        axLetter === {h: 'x', v: 'y'}[d0.orientation || 'v']
+        axLetter === ({h: 'x', v: 'y'} as any)[d0.orientation || 'v']
     ) {
         opts.noMultiCategory = true;
     }
@@ -106,7 +106,7 @@ function getFirstNonEmptyTrace(data?: any, id?: any, axLetter?: any): any {
 }
 
 function getBoxPosLetter(trace?: any): any {
-    return {v: 'x', h: 'y'}[trace.orientation || 'v'];
+    return ({v: 'x', h: 'y'} as any)[trace.orientation || 'v'];
 }
 
 function isBoxWithoutPositionCoords(trace?: any, axLetter?: any): boolean {

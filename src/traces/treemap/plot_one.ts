@@ -12,7 +12,7 @@ import drawAncestors from './draw_ancestors.js';
 const toMoveInsideBar = barPlot.toMoveInsideBar;
 const recordMinTextSize = uniformText.recordMinTextSize;
 
-function getKey(pt) {
+function getKey(pt: any) {
     return helpers.isHierarchyRoot(pt) ?
         '' : // don't use the dummyId
         helpers.getPtId(pt);
@@ -42,7 +42,7 @@ export default function plotOne(gd: GraphDiv, cd: any[], element: Element, trans
     const hasTransition = !fullLayout.uniformtext.mode && helpers.hasTransition(transitionOpts);
 
     let maxDepth = helpers.getMaxDepth(trace);
-    const hasVisibleDepth = function(pt) {
+    const hasVisibleDepth = function(pt: any) {
         return pt.data.depth - entry.data.depth < maxDepth;
     };
 
@@ -64,12 +64,12 @@ export default function plotOne(gd: GraphDiv, cd: any[], element: Element, trans
         y1: barDifY + barH
     };
 
-    const findClosestEdge = function(pt, ref, size) {
+    const findClosestEdge = function(pt: any, ref: any, size: any) {
         const e = trace.tiling.pad;
-        const isLeftOfRect = function(x) { return x - e <= ref.x0; };
-        const isRightOfRect = function(x) { return x + e >= ref.x1; };
-        const isBottomOfRect = function(y) { return y - e <= ref.y0; };
-        const isTopOfRect = function(y) { return y + e >= ref.y1; };
+        const isLeftOfRect = function(x: any) { return x - e <= ref.x0; };
+        const isRightOfRect = function(x: any) { return x + e >= ref.x1; };
+        const isBottomOfRect = function(y: any) { return y - e <= ref.y0; };
+        const isTopOfRect = function(y: any) { return y + e >= ref.y1; };
 
         if(pt.x0 === ref.x0 && pt.x1 === ref.x1 && pt.y0 === ref.y0 && pt.y1 === ref.y1) {
             return {
@@ -89,17 +89,17 @@ export default function plotOne(gd: GraphDiv, cd: any[], element: Element, trans
     };
 
     // stash of 'previous' position data used by tweening functions
-    let prevEntry = null;
+    let prevEntry: any = null;
     const prevLookupPathbar : Record<string, any> = {};
     const prevLookupSlices : Record<string, any> = {};
-    let nextOfPrevEntry = null;
-    const getPrev = function(pt, onPathbar) {
+    let nextOfPrevEntry: any = null;
+    const getPrev = function(pt: any, onPathbar: any) {
         return onPathbar ?
             prevLookupPathbar[getKey(pt)] :
             prevLookupSlices[getKey(pt)];
     };
 
-    const getOrigin = function(pt, onPathbar, refRect, size) {
+    const getOrigin = function(pt: any, onPathbar: any, refRect: any, size: any) {
         if(onPathbar) {
             return prevLookupPathbar[getKey(hierarchy)] || pathbarOrigin;
         } else {
@@ -125,26 +125,26 @@ export default function plotOne(gd: GraphDiv, cd: any[], element: Element, trans
     const cenX = -vpw / 2 + gs.l + gs.w * (domain.x[1] + domain.x[0]) / 2;
     const cenY = -vph / 2 + gs.t + gs.h * (1 - (domain.y[1] + domain.y[0]) / 2);
 
-    const viewMapX = function(x) { return cenX + x; };
-    const viewMapY = function(y) { return cenY + y; };
+    const viewMapX = function(x: any) { return cenX + x; };
+    const viewMapY = function(y: any) { return cenY + y; };
 
     const barY0 = viewMapY(0);
     const barX0 = viewMapX(0);
 
-    const viewBarX = function(x) { return barX0 + x; };
-    const viewBarY = function(y) { return barY0 + y; };
+    const viewBarX = function(x: any) { return barX0 + x; };
+    const viewBarY = function(y: any) { return barY0 + y; };
 
-    function pos(x, y) {
+    function pos(x: any, y: any) {
         return x + ',' + y;
     }
 
     const xStart = viewBarX(0);
-    const limitX0 = function(p) { p.x = Math.max(xStart, p.x); };
+    const limitX0 = function(p: any) { p.x = Math.max(xStart, p.x); };
 
     const edgeshape = trace.pathbar.edgeshape;
 
     // pathbar(directory) path generation fn
-    const pathAncestor = function(d) {
+    const pathAncestor = function(d: any) {
         const _x0 = viewBarX(Math.max(Math.min(d.x0, d.x0), 0));
         const _x1 = viewBarX(Math.min(Math.max(d.x1, d.x1), barW));
         const _y0 = viewBarY(d.y0);
@@ -208,7 +208,7 @@ export default function plotOne(gd: GraphDiv, cd: any[], element: Element, trans
     // `pad` is a hashmap for treemap: pad.t, pad.b, pad.l, and pad.r
     const pad = trace[isIcicle ? 'tiling' : 'marker'].pad;
 
-    const hasFlag = function(f) { return trace.textposition.indexOf(f) !== -1; };
+    const hasFlag = function(f: any) { return trace.textposition.indexOf(f) !== -1; };
 
     const hasTop = hasFlag('top');
     const hasLeft = hasFlag('left');
@@ -216,7 +216,7 @@ export default function plotOne(gd: GraphDiv, cd: any[], element: Element, trans
     const hasBottom = hasFlag('bottom');
 
     // slice path generation fn
-    const pathDescendant = function(d) {
+    const pathDescendant = function(d: any) {
         const _x0 = viewMapX(d.x0);
         const _x1 = viewMapX(d.x1);
         const _y0 = viewMapY(d.y0);
@@ -240,7 +240,7 @@ export default function plotOne(gd: GraphDiv, cd: any[], element: Element, trans
             if(hasBottom) r = Math.min(r, pad.b);
         }
 
-        const arc = function(rx, ry) { return r ? 'a' + pos(r, r) + ' 0 0 1 ' + pos(rx, ry) : ''; };
+        const arc = function(rx: any, ry: any) { return r ? 'a' + pos(r, r) + ' 0 0 1 ' + pos(rx, ry) : ''; };
 
         return (
            'M' + pos(_x0, _y0 + r) +
@@ -254,7 +254,7 @@ export default function plotOne(gd: GraphDiv, cd: any[], element: Element, trans
         );
     };
 
-    const toMoveInsideSlice = function(pt, opts) {
+    const toMoveInsideSlice = function(pt: any, opts: any) {
         let x0 = pt.x0;
         let x1 = pt.x1;
         let y0 = pt.y0;
@@ -327,7 +327,7 @@ export default function plotOne(gd: GraphDiv, cd: any[], element: Element, trans
         };
     };
 
-    const interpFromParent = function(pt, onPathbar) {
+    const interpFromParent = function(pt: any, onPathbar: any) {
         let parentPrev;
         let i = 0;
         let Q = pt;
@@ -341,7 +341,7 @@ export default function plotOne(gd: GraphDiv, cd: any[], element: Element, trans
         return parentPrev || {};
     };
 
-    const makeExitSliceInterpolator = function(pt, onPathbar, refRect, size) {
+    const makeExitSliceInterpolator = function(pt: any, onPathbar: any, refRect: any, size: any) {
         const prev = getPrev(pt, onPathbar);
         let next;
 
@@ -363,7 +363,7 @@ export default function plotOne(gd: GraphDiv, cd: any[], element: Element, trans
         return interpolate(prev, next);
     };
 
-    const makeUpdateSliceInterpolator = function(pt, onPathbar, refRect, size, opts) {
+    const makeUpdateSliceInterpolator = function(pt: any, onPathbar: any, refRect: any, size: any, opts: any) {
         const prev0 = getPrev(pt, onPathbar);
         let prev;
 
@@ -414,7 +414,7 @@ export default function plotOne(gd: GraphDiv, cd: any[], element: Element, trans
         });
     };
 
-    const makeUpdateTextInterpolator = function(pt, onPathbar, refRect, size) {
+    const makeUpdateTextInterpolator = function(pt: any, onPathbar: any, refRect: any, size: any) {
         const prev0 = getPrev(pt, onPathbar);
         let prev : Record<string, any> = {};
         const origin = getOrigin(pt, onPathbar, refRect, size);
@@ -461,7 +461,7 @@ export default function plotOne(gd: GraphDiv, cd: any[], element: Element, trans
         });
     };
 
-    const handleSlicesExit = function(slices, onPathbar, refRect, size, pathSlice) {
+    const handleSlicesExit = function(slices: any, onPathbar: any, refRect: any, size: any, pathSlice: any) {
         const width = size[0];
         const height = size[1];
 
@@ -471,9 +471,9 @@ export default function plotOne(gd: GraphDiv, cd: any[], element: Element, trans
                     const sliceTop = select(this);
 
                     const slicePath = sliceTop.select('path.surface');
-                    slicePath.transition().attrTween('d', function(pt2) {
+                    slicePath.transition().attrTween('d', function(pt2: any) {
                         const interp = makeExitSliceInterpolator(pt2, onPathbar, refRect, [width, height]);
-                        return function(t) { return pathSlice(interp(t)); };
+                        return function(t: any) { return pathSlice(interp(t)); };
                     });
 
                     const sliceTextGroup = sliceTop.select('g.slicetext');
@@ -485,7 +485,7 @@ export default function plotOne(gd: GraphDiv, cd: any[], element: Element, trans
         }
     };
 
-    const strTransform = function(d) {
+    const strTransform = function(d: any) {
         const transform = d.transform;
 
         if(d.x0 !== d.x1 && d.y0 !== d.y1) {
@@ -507,7 +507,7 @@ export default function plotOne(gd: GraphDiv, cd: any[], element: Element, trans
     if(hasTransition) {
         // Important: do this before binding new sliceData!
 
-        selAncestors.each(function(pt) {
+        selAncestors.each(function(pt: any) {
             prevLookupPathbar[getKey(pt)] = {
                 x0: pt.x0,
                 x1: pt.x1,
@@ -529,7 +529,7 @@ export default function plotOne(gd: GraphDiv, cd: any[], element: Element, trans
             }
         });
 
-        selDescendants.each(function(pt) {
+        selDescendants.each(function(pt: any) {
             prevLookupSlices[getKey(pt)] = {
                 x0: pt.x0,
                 x1: pt.x1,

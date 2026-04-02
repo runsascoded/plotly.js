@@ -236,10 +236,10 @@ function drawRaw(gd: GraphDiv, options: any, index: any, subplotId: any, xa: Ful
     function textLayout(s: any) {
         s.call(font, font)
         .attr({
-            'text-anchor': {
+            'text-anchor': ({
                 left: 'start',
                 right: 'end'
-            }[options.align] || 'middle'
+            } as any)[options.align] || 'middle'
         });
 
         svgTextUtils.convertToTspans(s, gd, drawGraphicalElements);
@@ -276,14 +276,14 @@ function drawRaw(gd: GraphDiv, options: any, index: any, subplotId: any, xa: Ful
                 else if(v > 2 / 3) anchor = 'right';
                 else anchor = 'center';
             }
-            return {
+            return ({
                 center: 0,
                 middle: 0,
                 left: 0.5,
                 bottom: -0.5,
                 right: -0.5,
                 top: 0.5
-            }[anchor];
+            } as any)[anchor];
         }
 
         let annotationIsOffscreen = false;
@@ -576,7 +576,7 @@ function drawRaw(gd: GraphDiv, options: any, index: any, subplotId: any, xa: Ful
                     .call(Color.stroke, 'rgba(0,0,0,0)')
                     .call(Color.fill, 'rgba(0,0,0,0)');
 
-                let annx0, anny0;
+                let annx0: any, anny0: any;
 
                 // dragger for the arrow & head: translates the whole thing
                 // (head/tail/text) all together
@@ -636,7 +636,7 @@ function drawRaw(gd: GraphDiv, options: any, index: any, subplotId: any, xa: Ful
 
         // user dragging the annotation (text, not arrow)
         if(editTextPosition) {
-            let baseTextTransform;
+            let baseTextTransform: any;
 
             // dragger for the textbox: if there's an arrow, just drag the
             // textbox and tail, leave the head untouched

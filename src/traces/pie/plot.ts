@@ -29,7 +29,7 @@ function plot(gd: GraphDiv, cdModule: any[]): any {
     prerenderTitles(cdModule, gd);
     layoutAreas(cdModule, gs);
 
-    const plotGroups = Lib.makeTraceGroups(fullLayout._pielayer, cdModule, 'trace').each(function (this: any, cd) {
+    const plotGroups = Lib.makeTraceGroups(fullLayout._pielayer, cdModule, 'trace').each(function (this: any, cd: any) {
         const plotGroup = select(this);
         const cd0 = cd[0];
         const trace = cd0.trace;
@@ -52,7 +52,7 @@ function plot(gd: GraphDiv, cdModule: any[]): any {
             ];
             let hasOutsideText = false;
 
-            slices.each(function (this: any, pt, i) {
+            slices.each(function (this: any, pt: any, i: any) {
                 if (pt.hidden) {
                     select(this).selectAll('path,g').remove();
                     return;
@@ -88,7 +88,7 @@ function plot(gd: GraphDiv, cdModule: any[]): any {
                 pt.cxFinal = cx;
                 pt.cyFinal = cy;
 
-                function arc(start, finish, cw, scale) {
+                function arc(start: any, finish: any, cw: any, scale: any) {
                     const dx = scale * (finish[0] - start[0]);
                     const dy = scale * (finish[1] - start[1]);
 
@@ -165,7 +165,7 @@ function plot(gd: GraphDiv, cdModule: any[]): any {
                 sliceTextGroup.exit().remove();
 
                 sliceTextGroup.each(function (this: any) {
-                    const sliceText = Lib.ensureSingle(select(this), 'text', '', function (this: any, s) {
+                    const sliceText = Lib.ensureSingle(select(this), 'text', '', function (this: any, s: any) {
                         // prohibit tex interpretation until we can handle
                         // tex and regular text together
                         s.attr('data-notex', 1);
@@ -240,7 +240,7 @@ function plot(gd: GraphDiv, cdModule: any[]): any {
             titleTextGroup.exit().remove();
 
             titleTextGroup.each(function (this: any) {
-                const titleText = Lib.ensureSingle(select(this), 'text', '', function (this: any, s) {
+                const titleText = Lib.ensureSingle(select(this), 'text', '', function (this: any, s: any) {
                     // prohibit tex interpretation as above
                     s.attr('data-notex', 1);
                 });
@@ -324,7 +324,7 @@ function plot(gd: GraphDiv, cdModule: any[]): any {
 
 // TODO add support for transition
 function plotTextLines(slices: any, trace: FullTrace): void {
-    slices.each(function (this: any, pt) {
+    slices.each(function (this: any, pt: any) {
         const sliceTop = select(this);
 
         if (!pt.labelExtraX && !pt.labelExtraY) {
@@ -442,7 +442,7 @@ function attachFxHandlers(sliceTop: any, gd: GraphDiv, cd: any[]): any {
             const hoverLabel = trace2.hoverlabel;
             const hoverFont = hoverLabel.font;
 
-            const bbox = [];
+            const bbox: any[] = [];
             Fx.loneHover(
                 {
                     trace: trace,
@@ -486,7 +486,7 @@ function attachFxHandlers(sliceTop: any, gd: GraphDiv, cd: any[]): any {
         });
     });
 
-    sliceTop.on('mouseout', function (this: any, evt) {
+    sliceTop.on('mouseout', function (this: any, evt: any) {
         const fullLayout2 = gd._fullLayout;
         const trace2 = gd._fullData[trace.index];
         const pt = select(this).datum();
@@ -701,12 +701,12 @@ function transformInsideText(textBB: any, pt: any, cd0: any): any {
     const isAuto = orientation === 'auto';
 
     const allTransforms: any[] = [];
-    let newT;
+    let newT: any;
 
     if (!isAuto) {
         // max size if text is placed (horizontally) at the top or bottom of the arc
 
-        const considerCrossing = function (angle, key) {
+        const considerCrossing = function (angle: any, key: any) {
             if (isCrossing(pt, angle)) {
                 const dStart = Math.abs(angle - pt.startangle);
                 const dStop = Math.abs(angle - pt.stopangle);
@@ -957,27 +957,27 @@ function getMaxPull(trace: FullTrace): number {
 
 function scootLabels(quadrants: any[][], trace: FullTrace): any {
     let xHalf,
-        yHalf,
+        yHalf: any,
         equatorFirst,
-        farthestX,
-        farthestY,
-        xDiffSign,
-        yDiffSign,
+        farthestX: any,
+        farthestY: any,
+        xDiffSign: any,
+        yDiffSign: any,
         thisQuad,
         oppositeQuad,
-        wholeSide,
+        wholeSide: any,
         i,
         thisQuadOutside,
         firstOppositeOutsidePt;
 
-    function topFirst(a, b) {
+    function topFirst(a: any, b: any) {
         return a.pxmid[1] - b.pxmid[1];
     }
-    function bottomFirst(a, b) {
+    function bottomFirst(a: any, b: any) {
         return b.pxmid[1] - a.pxmid[1];
     }
 
-    function scootOneLabel(thisPt, prevPt) {
+    function scootOneLabel(thisPt: any, prevPt: any) {
         if (!prevPt) prevPt = {};
 
         const prevOuterY = prevPt.labelExtraY + (yHalf ? prevPt.yLabelMax : prevPt.yLabelMin);
@@ -1125,7 +1125,7 @@ function groupScale(cdModule: any[], scaleGroups: string[]): void {
             trace = cd0.trace;
 
             if (trace.scalegroup === g) {
-                let area;
+                let area: any;
                 if (trace.type === 'pie') {
                     area = cd0.r * cd0.r;
                 } else if (trace.type === 'funnelarea') {
@@ -1227,7 +1227,7 @@ function formatSliceLabel(gd: GraphDiv, pt: any, cd0: any): any {
     const textinfo = trace.textinfo;
     if (!texttemplate && textinfo && textinfo !== 'none') {
         const parts = textinfo.split('+');
-        const hasFlag = function (flag) {
+        const hasFlag = function (flag: any) {
             return parts.indexOf(flag) !== -1;
         };
         const hasLabel = hasFlag('label');
@@ -1248,7 +1248,7 @@ function formatSliceLabel(gd: GraphDiv, pt: any, cd0: any): any {
         pt.text = text.join('<br>');
     }
 
-    function makeTemplateVariables(pt) {
+    function makeTemplateVariables(pt: any) {
         return {
             label: pt.label,
             value: pt.v,

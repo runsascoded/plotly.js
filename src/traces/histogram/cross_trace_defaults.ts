@@ -24,30 +24,30 @@ export default function crossTraceDefaults(fullData: FullTrace[], fullLayout: Fu
     const mustMatchTracesLookup: any = {};
     const otherTracesList: any[] = [];
 
-    let traceOut, traces, groupName, binDir;
+    let traceOut: any, traces, groupName, binDir;
     let i, j, k;
 
     function coerce(attr: string, dflt?: any) {
         return Lib.coerce(traceOut._input, traceOut, traceOut._module.attributes, attr, dflt);
     }
 
-    function orientation2binDir(traceOut) {
+    function orientation2binDir(traceOut: any) {
         return traceOut.orientation === 'v' ? 'x' : 'y';
     }
 
-    function getAxisType(traceOut, binDir) {
+    function getAxisType(traceOut: any, binDir: any) {
         const ax = axisIds.getFromTrace({_fullLayout: fullLayout}, traceOut, binDir);
         return ax.type;
     }
 
-    function fillBinOpts(traceOut, groupName, binDir) {
+    function fillBinOpts(traceOut: any, groupName: any, binDir: any) {
         // N.B. group traces that don't have a bingroup with themselves
         const fallbackGroupName = traceOut.uid + '__' + binDir;
         if(!groupName) groupName = fallbackGroupName;
 
         const axType = getAxisType(traceOut, binDir);
         const calendar = traceOut[binDir + 'calendar'] || '';
-        const binOpts = allBinOpts[groupName];
+        const binOpts = (allBinOpts as any)[groupName];
         let needsNewItem = true;
 
         if(binOpts) {
@@ -79,7 +79,7 @@ export default function crossTraceDefaults(fullData: FullTrace[], fullLayout: Fu
         }
 
         if(needsNewItem) {
-            allBinOpts[groupName] = {
+            (allBinOpts as any)[groupName] = {
                 traces: [traceOut],
                 dirs: [binDir],
                 axType: axType,
@@ -220,7 +220,7 @@ export default function crossTraceDefaults(fullData: FullTrace[], fullLayout: Fu
 
     // coerce bin attrs!
     for(groupName in allBinOpts) {
-        const binOpts = allBinOpts[groupName];
+        const binOpts = (allBinOpts as any)[groupName];
         traces = binOpts.traces;
 
         for(j = 0; j < BINATTRS.length; j++) {
@@ -236,7 +236,7 @@ export default function crossTraceDefaults(fullData: FullTrace[], fullLayout: Fu
             for(i = 0; i < traces.length; i++) {
                 traceOut = traces[i];
                 binDir = binOpts.dirs[i];
-                aStr = attrSpec.aStr[binDir];
+                aStr = (attrSpec.aStr as any)[binDir];
 
                 if(nestedProperty(traceOut._input, aStr).get() !== undefined) {
                     binOpts[attr] = coerce(aStr);

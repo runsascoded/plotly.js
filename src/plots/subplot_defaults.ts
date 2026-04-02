@@ -13,7 +13,7 @@ export default function handleSubplotDefaults(layoutIn?: any, layoutOut?: any, f
 
     const baseId = idsLength && ids[0].replace(/\d+$/, '');
 
-    let subplotLayoutIn, subplotLayoutOut;
+    let subplotLayoutIn: any, subplotLayoutOut: any;
 
     function coerce(attr?: any, dflt?: any) {
         return Lib.coerce(subplotLayoutIn, subplotLayoutOut, subplotAttributes, attr, dflt);

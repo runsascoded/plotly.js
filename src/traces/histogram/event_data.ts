@@ -22,7 +22,7 @@ export default function eventData(out: any, pt: any, trace: FullTrace, cd: any[]
         delete out.pointNumber;
         delete out.pointIndex;
 
-        let pointIndices;
+        let pointIndices: any[];
         if(trace._indexToPoints) {
             pointIndices = [];
             for(let i = 0; i < pts.length; i++) {

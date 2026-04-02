@@ -223,7 +223,7 @@ export const executeAPICommand = function(gd?: any, method?: any, args?: any): a
         allArgs.push(args[i]);
     }
 
-    return _method.apply(null, allArgs).catch(function(err) {
+    return _method.apply(null, allArgs).catch(function(err: any) {
         warn('API call to Plotly.' + method + ' rejected.', err);
         return Promise.reject(err);
     });
@@ -280,7 +280,7 @@ function computeLayoutBindings(gd?: any, args?: any): any {
         return bindings;
     }
 
-    crawl(aobj, function(path, attrName, attr) {
+    crawl(aobj, function(path: any, attrName: any, attr: any) {
         bindings.push({type: 'layout', prop: path, value: attr});
     }, '', 0);
 
@@ -297,7 +297,7 @@ function computeDataBindings(gd?: any, args?: any): any {
     traces = args[2];
     aobj = {};
     if(typeof astr === 'string') {
-        aobj[astr] = val;
+        (aobj as any)[astr] = val;
     } else if(isPlainObject(astr)) {
         // the 3-arg form
         aobj = astr;
@@ -314,7 +314,7 @@ function computeDataBindings(gd?: any, args?: any): any {
         traces = null;
     }
 
-    crawl(aobj, function(path, attrName, _attr) {
+    crawl(aobj, function(path: any, attrName: any, _attr: any) {
         let thisTraces;
         let attr;
 

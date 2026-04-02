@@ -5,7 +5,7 @@ const { BADNUM } = _numerical;
 import helpers from '../../plots/smith/helpers.js';
 const smith = helpers.smith;
 
-export default function plot(gd: GraphDiv, subplot: PlotInfo, moduleCalcData) {
+export default function plot(gd: GraphDiv, subplot: PlotInfo, moduleCalcData: any) {
     const mlayer = subplot.layers.frontplot.select('g.scatterlayer');
 
     const xa = subplot.xaxis;

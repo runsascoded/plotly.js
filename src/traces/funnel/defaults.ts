@@ -64,14 +64,14 @@ function supplyDefaults(traceIn: InputTrace,  traceOut: FullTrace,  defaultColor
     coerce('zorder');
 }
 
-function defaultFillColor(markerColor) {
+function defaultFillColor(markerColor: any) {
     const cBase = Lib.isArrayOrTypedArray(markerColor) ? '#000' : markerColor;
 
     return Color.addOpacity(cBase, 0.5 * Color.opacity(cBase));
 }
 
-function crossTraceDefaults(fullData,  fullLayout: FullLayout) {
-    let traceIn, traceOut;
+function crossTraceDefaults(fullData: any,  fullLayout: FullLayout) {
+    let traceIn, traceOut: any;
 
     function coerce(attr: string) {
         return Lib.coerce(traceOut._input, traceOut, attributes, attr);

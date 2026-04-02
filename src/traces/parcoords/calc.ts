@@ -26,7 +26,7 @@ export default function calc(gd: GraphDiv, trace: FullTrace) {
     return wrap({lineColor: lineColor, cscale: cscale});
 }
 
-function constHalf(len) {
+function constHalf(len: any) {
     const out = new Array(len);
     for(let i = 0; i < len; i++) {
         out[i] = 0.5;

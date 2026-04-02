@@ -143,8 +143,8 @@ export const readPaths = function(str: any, gd: GraphDiv, plotinfo?: any, isActi
 
             case 'Z':
                 if(x !== initX || y !== initY) {
-                    x = initX;
-                    y = initY;
+                    x = initX as any;
+                    y = initY as any;
                     newPos.push([w, x, y]);
                 }
                 break;

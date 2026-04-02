@@ -162,7 +162,7 @@ function circularityPresent(nodeLen: number, sources: number[], targets: number[
 
     // Tarján's strongly connected components algorithm coded by Mikola Lysenko
     // returns at least one non-singular component if there's circularity in the graph
-    return scc.components.some(function(c) {
+    return scc.components.some(function(c: any) {
         return c.length > 1;
     });
 }

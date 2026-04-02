@@ -2,7 +2,7 @@ import convert from './convert.js';
 import _constants from '../../plots/map/constants.js';
 const { traceLayerPrefix: LAYER_PREFIX } = _constants;
 
-function DensityMap(this: any, subplot, uid) {
+function DensityMap(this: any, subplot: any, uid: any) {
     this.type = 'densitymap';
     this.subplot = subplot;
     this.uid = uid;
@@ -20,7 +20,7 @@ function DensityMap(this: any, subplot, uid) {
 
 const proto = DensityMap.prototype;
 
-proto.update = function(calcTrace) {
+proto.update = function(calcTrace: any) {
     const subplot = this.subplot;
     const layerList = this.layerList;
     const optsAll = convert(calcTrace);
@@ -40,7 +40,7 @@ proto.update = function(calcTrace) {
         const item = layerList[i];
         const k = item[0];
         const id = item[1];
-        const opts = optsAll[k];
+        const opts = (optsAll as any)[k];
 
         subplot.setOptions(id, 'setLayoutProperty', opts.layout);
 
@@ -50,7 +50,7 @@ proto.update = function(calcTrace) {
     }
 };
 
-proto._addLayers = function(optsAll, below) {
+proto._addLayers = function(optsAll: any, below: any) {
     const subplot = this.subplot;
     const layerList = this.layerList;
     const sourceId = this.sourceId;
@@ -85,9 +85,10 @@ proto.dispose = function() {
     map.removeSource(this.sourceId);
 };
 
-export default function createDensityMap(subplot, calcTrace) {
+export default function createDensityMap(subplot: any, calcTrace: any) {
     const trace = calcTrace[0].trace;
-    const densityMap = new DensityMap(subplot, trace.uid);
+    // @ts-ignore TS7009
+    const densityMap: any = (new DensityMap(subplot, trace.uid) as any);
     const sourceId = densityMap.sourceId;
     const optsAll = convert(calcTrace);
     const below = densityMap.below = subplot.belowLookup['trace-' + trace.uid];

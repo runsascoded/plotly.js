@@ -1,7 +1,7 @@
 import type { FullAxis } from '../../../types/core';
 import scatterHover from '../scatter/hover.js';
 
-export default function hoverPoints(pointData, xval, yval, hovermode) {
+export default function hoverPoints(pointData: any, xval: any, yval: any, hovermode: any) {
     const scatterPointData = scatterHover(pointData, xval, yval, hovermode);
     if(!scatterPointData || scatterPointData[0].index === false) return;
 
@@ -47,7 +47,7 @@ export default function hoverPoints(pointData, xval, yval, hovermode) {
 
     const hoverinfo = cdi.hi || trace.hoverinfo;
     const text: any[] = [];
-    function textPart(ax: FullAxis, val) {
+    function textPart(ax: FullAxis, val: any) {
         text.push(ax._hovertitle + ': ' + val);
     }
     if(!trace.hovertemplate) {

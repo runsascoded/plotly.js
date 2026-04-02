@@ -8,7 +8,7 @@ import _constants from '../../plots/mapbox/constants.js';
 const { traceLayerPrefix: LAYER_PREFIX } = _constants;
 const fillText = Lib.fillText;
 
-function hoverPoints(pointData, xval, yval) {
+function hoverPoints(pointData: any, xval: any, yval: any) {
     const cd = pointData.cd;
     const trace = cd[0].trace;
     const xa = pointData.xa;
@@ -20,7 +20,7 @@ function hoverPoints(pointData, xval, yval) {
 
     if(hasCluster) {
         const elems = subplot.map.queryRenderedFeatures(null, {layers: [layer]});
-        clusteredPointsIds = elems.map(function(elem) {return elem.id;});
+        clusteredPointsIds = elems.map(function(elem: any) {return elem.id;});
     }
 
     // compute winding number about [-180, 180] globe
@@ -32,7 +32,7 @@ function hoverPoints(pointData, xval, yval) {
     const lonShift = winding * 360;
     const xval2 = xval - lonShift;
 
-    function distFn(d) {
+    function distFn(d: any) {
         const lonlat = d.lonlat;
         if(lonlat[0] === BADNUM) return Infinity;
         if(hasCluster && clusteredPointsIds.indexOf(d.i + 1) === -1) return Infinity;
@@ -79,7 +79,7 @@ function hoverPoints(pointData, xval, yval) {
     return [pointData];
 }
 
-function getExtraText(trace: FullTrace, di, labels) {
+function getExtraText(trace: FullTrace, di: any, labels: any) {
     if(trace.hovertemplate) return;
 
     const hoverinfo = di.hi || trace.hoverinfo;
@@ -92,7 +92,7 @@ function getExtraText(trace: FullTrace, di, labels) {
 
     // TODO should we use a mock axis to format hover?
     // If so, we'll need to make precision be zoom-level dependent
-    function format(v) {
+    function format(v: any) {
         return v + '\u00B0';
     }
 

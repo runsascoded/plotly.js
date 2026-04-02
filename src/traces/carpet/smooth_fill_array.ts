@@ -1,5 +1,5 @@
-export default function smoothFillArray(data) {
-    let i, i0, i1;
+export default function smoothFillArray(data: any) {
+    let i, i0, i1: any;
     const n = data.length;
 
     for(i = 0; i < n; i++) {
@@ -71,8 +71,8 @@ export default function smoothFillArray(data) {
 
     // Fill in after the last data point:
     if(i1 < n - 1) {
-        m = data[i1] - data[i1 - 1];
-        b = data[i1];
+        m = data[i1 as any] - data[i1 - 1];
+        b = data[i1 as any];
         for(i = i1 + 1; i < n; i++) {
             data[i] = m * (i - i1) + b;
         }

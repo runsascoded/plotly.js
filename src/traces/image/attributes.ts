@@ -10,7 +10,7 @@ const cm = ['rgb', 'rgba', 'rgba256', 'hsl', 'hsla'];
 const zminDesc: any[] = [];
 const zmaxDesc: any[] = [];
 for (let i = 0; i < cm.length; i++) {
-    const cr = colormodel[cm[i]];
+    const cr = (colormodel as any)[cm[i]];
     zminDesc.push('For the `' + cm[i] + '` colormodel, it is [' + (cr.zminDflt || cr.min).join(', ') + '].');
     zmaxDesc.push('For the `' + cm[i] + '` colormodel, it is [' + (cr.zmaxDflt || cr.max).join(', ') + '].');
 }

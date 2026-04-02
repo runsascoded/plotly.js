@@ -104,7 +104,7 @@ axes.coerceRef = function(containerIn?: any, containerOut?: any, gd?: any, attr?
 
     if(!dflt) dflt = axlist[0] || (typeof extraOption === 'string' ? extraOption : extraOption[0]);
     if(!extraOption) extraOption = dflt;
-    axlist = axlist.concat(axlist.map(function(x) { return x + ' domain'; }));
+    axlist = axlist.concat(axlist.map(function(x: any) { return x + ' domain'; }));
 
     // data-ref annotations are not supported in gl2d yet
 
@@ -215,7 +215,7 @@ axes.redrawComponents = function(gd?: any, axIds?: any) {
 };
 
 const getDataConversions = axes.getDataConversions = function(gd?: any, trace?: any, target?: any, targetArray?: any) {
-    let ax;
+    let ax: any;
 
     // If target points to an axis, use the type we already have for that
     // axis to find the data type. Otherwise use the values to autotype.
@@ -379,7 +379,7 @@ axes.autoBin = function(data?: any, ax?: any, nbins?: any, is2d?: any, calendar?
     if(!calendar) calendar = ax.calendar;
 
     // piggyback off tick code to make "nice" bin sizes and edges
-    let dummyAx;
+    let dummyAx: any;
     if(ax.type === 'log') {
         dummyAx = {
             type: 'linear',
@@ -991,7 +991,7 @@ axes.calcTicks = function calcTicks(ax?: any, opts?: any) {
 
         let prevX = null;
         let x = x0;
-        let majorId;
+        let majorId: any;
 
         if(major) {
             // ids for ticklabelstep
@@ -1112,7 +1112,7 @@ axes.calcTicks = function calcTicks(ax?: any, opts?: any) {
             .filter(function(index) { return index !== null; });
 
         majorTickIndices.forEach(function(majorIdx) {
-            ticklabelIndex.map(function(nextLabelIdx) {
+            ticklabelIndex.map(function(nextLabelIdx: any) {
                 const minorIdx = majorIdx + nextLabelIdx;
                 if(minorIdx >= 0 && minorIdx < allTickVals.length) {
                     pushUnique(allTicklabelVals, allTickVals[minorIdx]);
@@ -1204,7 +1204,7 @@ axes.calcTicks = function calcTicks(ax?: any, opts?: any) {
     ax._prevDateHead = '';
     ax._inCalcTicks = true;
 
-    let lastVisibleHead;
+    let lastVisibleHead: any;
     const hideLabel = function(tick?: any) {
         tick.text = '';
         ax._prevDateHead = lastVisibleHead;
@@ -1271,7 +1271,7 @@ axes.calcTicks = function calcTicks(ax?: any, opts?: any) {
 function filterRangeBreaks(ax?: any, ticksOut?: any): any {
     if(ax.rangebreaks) {
         // remove ticks falling inside rangebreaks
-        ticksOut = ticksOut.filter(function(d) {
+        ticksOut = ticksOut.filter(function(d: any) {
             return ax.maskBreaks(d.x) !== BADNUM;
         });
     }
@@ -1699,10 +1699,10 @@ axes.tickText = function(ax?: any, x?: any, hover?: any, noSuffixPrefix?: any) {
         if(showAttr === undefined) return true;
         if(hover) return showAttr === 'none';
 
-        const firstOrLast = {
+        const firstOrLast = ({
             first: ax._tmin,
             last: ax._tmax
-        }[showAttr];
+        } as any)[showAttr];
 
         return showAttr !== 'all' && x !== firstOrLast;
     }
@@ -1810,7 +1810,7 @@ function formatDate(ax?: any, out?: any, hover?: any, extraPrecision?: any): voi
         // second or sub-second precision: extra always shows max digits.
         // for other fields, extra precision just adds one field.
         if(isNumeric(tr)) tr = 4;
-        else tr = {y: 'm', m: 'd', d: 'M', M: 'S', S: 4}[tr];
+        else tr = ({y: 'm', m: 'd', d: 'M', M: 'S', S: 4} as any)[tr];
     }
 
     let dateStr: any = Lib.formatDate(out.x, fmt, tr, ax._dateFormat, ax.calendar, ax._extraFormat);
@@ -2028,7 +2028,7 @@ function num2frac(num?: any): any {
         return Math.abs(a - b) <= 1e-6;
     }
 
-    function findGCD(a?: any, b?: any) {
+    function findGCD(a?: any, b?: any): any {
         return almostEq(b, 0) ? a : findGCD(b, a % b);
     }
 
@@ -2061,7 +2061,7 @@ const SIPREFIXES = ['f', 'p', 'n', 'μ', 'm', '', 'k', 'M', 'G', 'T'];
 // extending SI prefixes
 const SIPREFIXES_EXTENDED = ['q', 'r', 'y', 'z', 'a', ...SIPREFIXES, 'P', 'E', 'Z', 'Y', 'R', 'Q'];
 
-const isSIFormat = (exponentFormat) => ['SI', 'SI extended','B'].includes(exponentFormat);
+const isSIFormat = (exponentFormat: any) => ['SI', 'SI extended','B'].includes(exponentFormat);
 
 // are we beyond the range of common SI prefixes?
 // 10^-16 -> 1x10^-16
@@ -2222,7 +2222,7 @@ axes.getTickFormat = function(ax?: any) {
     }
 
     function isProperStop(dtick?: any, range?: any, convert?: any) {
-        const convertFn = convert || function(x) { return x;};
+        const convertFn = convert || function(x: any) { return x;};
         const leftDtick = range[0];
         const rightDtick = range[1];
         return ((!leftDtick && typeof leftDtick !== 'number') || convertFn(leftDtick) <= convertFn(dtick)) &&
@@ -2280,7 +2280,7 @@ axes.getSubplots = function(gd?: any, ax?: any) {
 
     const out: any = ax ? axes.findSubplotsWithAxis(allSubplots, ax) : allSubplots;
 
-    out.sort(function(a, b) {
+    out.sort(function(a: any, b: any) {
         const aParts = a.slice(1).split('y');
         const bParts = b.slice(1).split('y');
 
@@ -2334,16 +2334,16 @@ axes.makeClipPaths = function(gd?: any) {
     // have to use class instead
     // https://groups.google.com/forum/#!topic/d3-js/6EpAzQ2gU9I
     const axClips = fullLayout._clips.selectAll('.axesclip')
-        .data(clipList, function(d) { return d.x._id + d.y._id; });
+        .data(clipList, function(d: any) { return d.x._id + d.y._id; });
 
     axClips.enter().append('clipPath')
         .classed('axesclip', true)
-        .attr('id', function(d) { return 'clip' + fullLayout._uid + d.x._id + d.y._id; })
+        .attr('id', function(d: any) { return 'clip' + fullLayout._uid + d.x._id + d.y._id; })
       .append('rect');
 
     axClips.exit().remove();
 
-    axClips.each(function(this: any, d) {
+    axClips.each(function(this: any, d: any) {
         select(this).select('rect').attr({
             x: d.x._offset || 0,
             y: d.y._offset || 0,
@@ -2380,7 +2380,7 @@ axes.draw = function(gd?: any, arg?: any, opts?: any) {
     const fullLayout = gd._fullLayout;
 
     if(arg === 'redraw') {
-        fullLayout._paper.selectAll('g.subplot').each(function(d) {
+        fullLayout._paper.selectAll('g.subplot').each(function(d: any) {
             const id = d[0];
             const plotinfo = fullLayout._plots[id];
             if(plotinfo) {
@@ -2409,18 +2409,18 @@ axes.draw = function(gd?: any, arg?: any, opts?: any) {
 
     const fullAxList = axes.list(gd);
     // Get the list of the overlaying axis for all 'shift' axes
-    const overlayingShiftedAx = fullAxList.filter(function(ax) {
+    const overlayingShiftedAx = fullAxList.filter(function(ax: any) {
         return ax.autoshift;
-    }).map(function(ax) {
+    }).map(function(ax: any) {
         return ax.overlaying;
     });
 
     // order axes that have dependency to other axes
-    axList.map(function(axId) {
+    axList.map(function(axId: any) {
         const ax = axes.getFromId(gd, axId);
 
         if(ax.tickmode === 'sync' && ax.overlaying) {
-            const overlayingIndex = axList.findIndex(function(axis) {return axis === ax.overlaying;});
+            const overlayingIndex = axList.findIndex(function(axis: any) {return axis === ax.overlaying;});
 
             if(overlayingIndex >= 0) {
                 axList.unshift(axList.splice(overlayingIndex, 1).shift());
@@ -2430,7 +2430,7 @@ axes.draw = function(gd?: any, arg?: any, opts?: any) {
 
     const axShifts = {false: {left: 0, right: 0}};
 
-    return syncOrAsync(axList.map(function(axId) {
+    return syncOrAsync(axList.map(function(axId: any) {
         return function() {
             if(!axId) return;
 
@@ -2486,7 +2486,7 @@ axes.drawOne = function(gd?: any, ax?: any, opts?: any) {
     const axShifts = opts.axShifts || {};
     const overlayingShiftedAx = opts.overlayingShiftedAx || [];
 
-    let i, sp, plotinfo;
+    let i, sp, plotinfo: any;
 
     ax.setScale();
 
@@ -2650,11 +2650,11 @@ axes.drawOne = function(gd?: any, ax?: any, opts?: any) {
             for(i = 0; i < dividerVals.length; i++) {
                 dividerLookup[dividerVals[i].x] = 1;
             }
-            tickPath = function(d) {
+            tickPath = function(d: any) {
                 return dividerLookup[d.x] ? mirrorMajorTickPath : fullMajorTickPath;
             };
         } else {
-            tickPath = function(d) {
+            tickPath = function(d: any) {
                 return d.minor ? fullMinorTickPath : fullMajorTickPath;
             };
         }
@@ -2715,10 +2715,10 @@ axes.drawOne = function(gd?: any, ax?: any, opts?: any) {
     });
 
     if(ax.type === 'multicategory') {
-        const pad = {x: 2, y: 10}[axLetter];
+        const pad = ({x: 2, y: 10} as any)[axLetter];
 
         seq.push(function() {
-            const bboxKey = {x: 'height', y: 'width'}[axLetter];
+            const bboxKey = ({x: 'height', y: 'width'} as any)[axLetter];
             const standoff = getLabelLevelBbox()[bboxKey] + pad +
                 (ax._tickAngles[axId + 'tick'] ? ax.tickfont.size * LINE_SPACING : 0);
 
@@ -2759,12 +2759,12 @@ axes.drawOne = function(gd?: any, ax?: any, opts?: any) {
 
     seq.push(function() {
         const s = ax.side.charAt(0);
-        const sMirror = OPPOSITE_SIDE[ax.side].charAt(0);
+        const sMirror = (OPPOSITE_SIDE as any)[ax.side].charAt(0);
         const pos = axes.getPxPosition(gd, ax);
         const outsideTickLen = outsideTicks ? ax.ticklen : 0;
         let llbbox;
 
-        let push;
+        let push: any;
         let mirrorPush;
         let rangeSliderPush;
 
@@ -2802,9 +2802,9 @@ axes.drawOne = function(gd?: any, ax?: any, opts?: any) {
             const shift = typeof ax._shift === 'number' ? ax._shift : 0;
             if(axLetter === 'x') {
                 if(s === 'b') {
-                    push[s] = ax._depth;
+                    (push as any)[s] = ax._depth;
                 } else {
-                    push[s] = ax._depth = Math.max(llbbox.width > 0 ? pos - llbbox.top : 0, outsideTickLen);
+                    (push as any)[s] = ax._depth = Math.max(llbbox.width > 0 ? pos - llbbox.top : 0, outsideTickLen);
                     domainIndices.reverse();
                 }
 
@@ -2823,10 +2823,10 @@ axes.drawOne = function(gd?: any, ax?: any, opts?: any) {
             } else {
                 if(s === 'l') {
                     ax._depth = Math.max(llbbox.height > 0 ? pos - llbbox.left : 0, outsideTickLen);
-                    push[s] = ax._depth - shift;
+                    (push as any)[s] = ax._depth - shift;
                 } else {
                     ax._depth = Math.max(llbbox.height > 0 ? llbbox.right - pos : 0, outsideTickLen);
-                    push[s] = ax._depth + shift;
+                    (push as any)[s] = ax._depth + shift;
                     domainIndices.reverse();
                 }
 
@@ -2844,24 +2844,24 @@ axes.drawOne = function(gd?: any, ax?: any, opts?: any) {
                 }
             }
 
-            push[counterLetter] = ax.anchor === 'free' ?
+            (push as any)[counterLetter] = ax.anchor === 'free' ?
                 ax.position :
                 ax._anchorAxis.domain[domainIndices[0]];
 
             if(ax.title.text !== fullLayout._dfltTitle[axLetter]) {
-                push[s] += approxTitleDepth(ax) + (ax.title.standoff || 0);
+                (push as any)[s] += approxTitleDepth(ax) + (ax.title.standoff || 0);
             }
 
             if(ax.mirror && ax.anchor !== 'free') {
                 mirrorPush = {x: 0, y: 0, r: 0, l: 0, t: 0, b: 0};
 
-                mirrorPush[sMirror] = ax.linewidth;
-                if(ax.mirror && ax.mirror !== true) mirrorPush[sMirror] += outsideTickLen;
+                (mirrorPush as any)[sMirror] = ax.linewidth;
+                if(ax.mirror && ax.mirror !== true) (mirrorPush as any)[sMirror] += outsideTickLen;
 
                 if(ax.mirror === true || ax.mirror === 'ticks') {
-                    mirrorPush[counterLetter] = ax._anchorAxis.domain[domainIndices[1]];
+                    (mirrorPush as any)[counterLetter] = ax._anchorAxis.domain[domainIndices[1]];
                 } else if(ax.mirror === 'all' || ax.mirror === 'allticks') {
-                    mirrorPush[counterLetter] = [ax._counterDomainMin, ax._counterDomainMax][domainIndices[1]];
+                    (mirrorPush as any)[counterLetter] = [ax._counterDomainMin, ax._counterDomainMax][domainIndices[1]];
                 }
             }
         }
@@ -2887,12 +2887,12 @@ function filterPush(push?: any, automargin?: any): any {
 
     const keepMargin = Object.keys(MARGIN_MAPPING).reduce(function(data, nextKey) {
         if(automargin.indexOf(nextKey) !== -1) {
-            MARGIN_MAPPING[nextKey].forEach(function(key) { data[key] = 1;});
+            (MARGIN_MAPPING as any)[nextKey].forEach(function(key: any) { (data as any)[key] = 1;});
         }
         return data;
     }, {});
     Object.keys(push).forEach(function(key) {
-        if(!keepMargin[key]) {
+        if(!(keepMargin as any)[key]) {
             if(key.length === 1) push[key] = 0;
             else delete push[key];
         }
@@ -2972,8 +2972,8 @@ function getDividerVals(ax?: any, vals?: any): any {
 }
 
 function calcLabelLevelBbox(ax?: any, cls?: any, mainLinePositionShift?: any): any {
-    let top, bottom;
-    let left, right;
+    let top: any, bottom: any;
+    let left: any, right: any;
 
     if(ax._selections[cls].size()) {
         top = Infinity;
@@ -3029,18 +3029,18 @@ function calcLabelLevelBbox(ax?: any, cls?: any, mainLinePositionShift?: any): a
  */
 axes.getTickSigns = function(ax?: any, minor?: any) {
     const axLetter = ax._id.charAt(0);
-    const sideOpposite = {x: 'top', y: 'right'}[axLetter];
+    const sideOpposite = ({x: 'top', y: 'right'} as any)[axLetter];
     const main = ax.side === sideOpposite ? 1 : -1;
     let out: any = [-1, 1, main, -main];
     // then we flip if outside XOR y axis
 
     const ticks = minor ? (ax.minor || {}).ticks : ax.ticks;
     if((ticks !== 'inside') === (axLetter === 'x')) {
-        out = out.map(function(v) { return -v; });
+        out = out.map(function(v: any) { return -v; });
     }
     // independent of `ticks`; do not flip this one
     if(ax.side) {
-        out.push({l: -1, t: -1, r: 1, b: 1}[ax.side.charAt(0)]);
+        out.push(({l: -1, t: -1, r: 1, b: 1} as any)[ax.side.charAt(0)]);
     }
     return out;
 };
@@ -3056,8 +3056,8 @@ axes.getTickSigns = function(ax?: any, minor?: any) {
  */
 axes.makeTransTickFn = function(ax?: any) {
     return ax._id.charAt(0) === 'x' ?
-        function(d) { return strTranslate(ax._offset + ax.l2p(d.x), 0); } :
-        function(d) { return strTranslate(0, ax._offset + ax.l2p(d.x)); };
+        function(d: any) { return strTranslate(ax._offset + ax.l2p(d.x), 0); } :
+        function(d: any) { return strTranslate(0, ax._offset + ax.l2p(d.x)); };
 };
 
 axes.makeTransTickLabelFn = function(ax?: any) {
@@ -3085,13 +3085,13 @@ axes.makeTransTickLabelFn = function(ax?: any) {
         standoff = standoff * standoffSign;
     }
     return ax._id.charAt(0) === 'x' ?
-        function(d) {
+        function(d: any) {
             return strTranslate(
                 u + ax._offset + ax.l2p(getPosX(d)) + shift,
                 v + standoff
             );
         } :
-        function(d) {
+        function(d: any) {
             return strTranslate(
                 v + standoff,
                 u + ax._offset + ax.l2p(getPosX(d)) + shift
@@ -3248,13 +3248,13 @@ axes.makeLabelFns = function(ax?: any, shift?: any, angle?: any) {
         labelShift: labelShift
     };
 
-    let x0, y0, ff, flipIt;
+    let x0: any, y0: any, ff: any, flipIt: any;
     let xQ = 0;
 
     const side = ax.side;
     const axLetter = ax._id.charAt(0);
     const tickangle = ax.tickangle;
-    let endSide;
+    let endSide: any;
     if(axLetter === 'x') {
         endSide =
             (!insideTickLabels && side === 'bottom') ||
@@ -3381,12 +3381,12 @@ axes.drawTicks = function(gd?: any, ax?: any, opts?: any) {
     const vals = []
         .concat(ax.minor && ax.minor.ticks ?
             // minor vals
-            opts.vals.filter(function(d) { return d.minor && !d.noTick; }) :
+            opts.vals.filter(function(d: any) { return d.minor && !d.noTick; }) :
             []
         )
         .concat(ax.ticks ?
             // major vals
-            opts.vals.filter(function(d) { return !d.minor && !d.noTick; }) :
+            opts.vals.filter(function(d: any) { return !d.minor && !d.noTick; }) :
             []
         );
 
@@ -3399,10 +3399,10 @@ axes.drawTicks = function(gd?: any, ax?: any, opts?: any) {
         .classed(cls, 1)
         .classed('ticks', 1)
         .classed('crisp', opts.crisp !== false)
-        .each(function(this: any, d) {
+        .each(function(this: any, d: any) {
             return Color.stroke(select(this), d.minor ? ax.minor.tickcolor : ax.tickcolor);
         })
-        .style('stroke-width', function(d) {
+        .style('stroke-width', function(d: any) {
             return crispRound(
                 gd,
                 d.minor ? ax.minor.tickwidth : ax.tickwidth,
@@ -3450,8 +3450,8 @@ axes.drawGrid = function(gd?: any, ax?: any, opts?: any) {
     const cls = ax._id + 'grid';
 
     const hasMinor = ax.minor && ax.minor.showgrid;
-    const minorVals = hasMinor ? opts.vals.filter(function(d) { return d.minor; }) : [];
-    let majorVals = ax.showgrid ? opts.vals.filter(function(d) { return !d.minor; }) : [];
+    const minorVals = hasMinor ? opts.vals.filter(function(d: any) { return d.minor; }) : [];
+    let majorVals = ax.showgrid ? opts.vals.filter(function(d: any) { return !d.minor; }) : [];
 
     const counterAx = opts.counterAxis;
     if(counterAx && axes.shouldShowZeroLine(gd, ax, counterAx)) {
@@ -3492,19 +3492,19 @@ axes.drawGrid = function(gd?: any, ax?: any, opts?: any) {
 
         grid.attr('transform', opts.transFn)
             .attr('d', opts.path)
-            .each(function(this: any, d) {
+            .each(function(this: any, d: any) {
                 return Color.stroke(select(this), d.minor ?
                     ax.minor.gridcolor :
                     (ax.gridcolor || '#ddd')
                 );
             })
-            .style('stroke-dasharray', function(d) {
+            .style('stroke-dasharray', function(d: any) {
                 return dashStyle(
                     d.minor ? ax.minor.griddash : ax.griddash,
                     d.minor ? ax.minor.gridwidth : ax.gridwidth
                 );
             })
-            .style('stroke-width', function(d) {
+            .style('stroke-width', function(d: any) {
                 return (d.minor ? wMinor : ax._gw) + 'px';
             })
             .style('display', null); // visible
@@ -3551,7 +3551,7 @@ axes.drawZeroLine = function(gd?: any, ax?: any, opts?: any) {
             // use the fact that only one element can enter to trigger a sort.
             // If several zerolines enter at the same time we will sort once per,
             // but generally this should be a minimal overhead.
-            opts.layer.selectAll('path').sort(function(da, db) {
+            opts.layer.selectAll('path').sort(function(da: any, db: any) {
                 return idSort(da.id, db.id);
             });
         });
@@ -3597,7 +3597,7 @@ axes.drawLabels = function(gd?: any, ax?: any, opts?: any) {
     const zerolineIsAbove = ax.zerolinelayer === 'above traces';
     const cls = opts.cls || axId + 'tick';
 
-    const vals = opts.vals.filter(function(d) { return d.text; });
+    const vals = opts.vals.filter(function(d: any) { return d.text; });
 
     const labelFns = opts.labelFns;
     const tickAngle = opts.secondary ? 0 : ax.tickangle;
@@ -3615,7 +3615,7 @@ axes.drawLabels = function(gd?: any, ax?: any, opts?: any) {
             // only so tex has predictable alignment that we can
             // alter later
             .attr('text-anchor', 'middle')
-            .each(function(this: any, d) {
+            .each(function(this: any, d: any) {
                 const thisLabel = select(this);
                 const newPromise = gd._promises.length;
 
@@ -3654,14 +3654,14 @@ axes.drawLabels = function(gd?: any, ax?: any, opts?: any) {
     tickLabels.exit().remove();
 
     if(opts.repositionOnUpdate) {
-        tickLabels.each(function(this: any, d) {
+        tickLabels.each(function(this: any, d: any) {
             select(this).select('text')
                 .call(svgTextUtils.positionText, labelFns.xFn(d), labelFns.yFn(d));
         });
     }
 
     function positionLabels(s?: any, angle?: any) {
-        s.each(function(this: any, d) {
+        s.each(function(this: any, d: any) {
             const thisLabel = select(this);
             const mathjaxGroup = thisLabel.select('.text-math-group');
             const anchor = labelFns.anchorFn(d, angle);
@@ -3695,7 +3695,7 @@ axes.drawLabels = function(gd?: any, ax?: any, opts?: any) {
                 }
             } else {
                 const mjWidth = bBox(mathjaxGroup.node()).width;
-                const mjShift = mjWidth * {end: -0.5, start: 0.5}[anchor];
+                const mjShift = mjWidth * ({end: -0.5, start: 0.5} as any)[anchor];
                 mathjaxGroup.attr('transform', transform + strTranslate(mjShift, 0));
             }
         });
@@ -3729,7 +3729,7 @@ axes.drawLabels = function(gd?: any, ax?: any, opts?: any) {
         let visibleLabelMin = Infinity;
         let visibleLabelMax = -Infinity;
 
-        tickLabels.each(function(this: any, d) {
+        tickLabels.each(function(this: any, d: any) {
             const thisLabel = select(this);
             const mathjaxGroup = thisLabel.select('.text-math-group');
 
@@ -3794,7 +3794,7 @@ axes.drawLabels = function(gd?: any, ax?: any, opts?: any) {
                     GRID_PATH,
                     TICK_PATH,
                     TICK_TEXT
-                ]).forEach(function(e) {
+                ]).forEach(function(e: any) {
                     const isPeriodLabel =
                         e.K === 'tick' &&
                         e.L === 'text' &&
@@ -3814,7 +3814,7 @@ axes.drawLabels = function(gd?: any, ax?: any, opts?: any) {
                         let w = select(this);
                         if(e.L) w = w.selectAll(e.L);
 
-                        w.each(function(this: any, d) {
+                        w.each(function(this: any, d: any) {
                             const q = ax.l2p(
                                 isPeriodLabel ? getPosX(d) : d.x
                             ) + ax._offset;
@@ -3846,7 +3846,7 @@ axes.drawLabels = function(gd?: any, ax?: any, opts?: any) {
         return labelsReady.length && Promise.all(labelsReady);
     }
 
-    let autoangle = null;
+    let autoangle: any = null;
 
     function fixLabelOverlaps() {
         positionLabels(tickLabels, tickAngle);
@@ -3863,7 +3863,7 @@ axes.drawLabels = function(gd?: any, ax?: any, opts?: any) {
             const lbbArray: any[] = [];
             let i;
             let maxLines = 1;
-            tickLabels.each(function(this: any, d) {
+            tickLabels.each(function(this: any, d: any) {
                 maxFontSize = Math.max(maxFontSize, d.fontSize);
 
                 const x = ax.l2p(d.x);
@@ -3899,15 +3899,15 @@ axes.drawLabels = function(gd?: any, ax?: any, opts?: any) {
             const hypotenuse = Math.sqrt(Math.pow(adjacent, 2) + Math.pow(opposite, 2));
             const maxCos = adjacent / hypotenuse;
             const autoTickAnglesRadians = ax.autotickangles.map(
-                function(degrees) { return degrees * Math.PI / 180; }
+                function(degrees: any) { return degrees * Math.PI / 180; }
             );
             let angleRadians = autoTickAnglesRadians.find(
-                function(angle) { return Math.abs(Math.cos(angle)) <= maxCos; }
+                function(angle: any) { return Math.abs(Math.cos(angle)) <= maxCos; }
             );
             if(angleRadians === undefined) {
                 // no angle with smaller cosine than maxCos, just pick the angle with smallest cosine
                 angleRadians = autoTickAnglesRadians.reduce(
-                    function(currentMax, nextAngle) {
+                    function(currentMax: any, nextAngle: any) {
                         return Math.abs(Math.cos(currentMax)) < Math.abs(Math.cos(nextAngle)) ? currentMax : nextAngle;
                     }
                     , autoTickAnglesRadians[0]
@@ -3989,7 +3989,7 @@ axes.drawLabels = function(gd?: any, ax?: any, opts?: any) {
     const computeTickLabelBoundingBoxes = function() {
         let labelsMaxW = 0;
         let labelsMaxH = 0;
-        tickLabels.each(function(this: any, d, i) {
+        tickLabels.each(function(this: any, d: any, i: any) {
             const thisLabel = selectTickLabel(this);
             const mathjaxGroup = thisLabel.select('.text-math-group');
 
@@ -4288,7 +4288,7 @@ function drawTitle(gd?: any, ax?: any): void {
         transform = {rotate: '-90', offset: 0};
     }
 
-    let avoid;
+    let avoid: any;
 
     if(ax.type !== 'multicategory') {
         const tickLabels = ax._selections[ax._id + 'tick'];
@@ -4337,7 +4337,7 @@ axes.shouldShowZeroLine = function(gd?: any, ax?: any, counterAxis?: any) {
 };
 
 axes.clipEnds = function(ax?: any, vals?: any) {
-    return vals.filter(function(d) { return clipEnds(ax, d.x); });
+    return vals.filter(function(d: any) { return clipEnds(ax, d.x); });
 };
 
 function clipEnds(ax?: any, l?: any): any {
@@ -4405,7 +4405,7 @@ function hasBarsOrFill(gd?: any, ax?: any): boolean {
         if(trace.visible === true && (trace.xaxis + trace.yaxis) === subplot) {
             if(
                 Registry.traceIs(trace, 'bar-like') &&
-                trace.orientation === {x: 'h', y: 'v'}[axLetter]
+                trace.orientation === ({x: 'h', y: 'v'} as any)[axLetter]
             ) return true;
 
             if(

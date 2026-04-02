@@ -1,9 +1,9 @@
-export default function(arrays, na, nb, asmoothing, bsmoothing) {
+export default function(arrays: any, na: any, nb: any, asmoothing: any, bsmoothing: any) {
     const imax = na - 2;
     const jmax = nb - 2;
 
     if(asmoothing && bsmoothing) {
-        return function(out, i, j) {
+        return function(out: any, i: any, j: any) {
             if(!out) out = [];
             let f0, f1, f2, f3, ak, k;
 
@@ -43,7 +43,7 @@ export default function(arrays, na, nb, asmoothing, bsmoothing) {
     } else if(asmoothing) {
         // Handle smooth in the a-direction but linear in the b-direction by performing four
         // linear interpolations followed by one cubic interpolation of the result
-        return function(out, i, j) {
+        return function(out: any, i: any, j: any) {
             if(!out) out = [];
 
             let i0 = Math.max(0, Math.min(Math.floor(i), imax));
@@ -72,7 +72,7 @@ export default function(arrays, na, nb, asmoothing, bsmoothing) {
         };
     } else if(bsmoothing) {
         // Same as the above case, except reversed:
-        return function(out, i, j) {
+        return function(out: any, i: any, j: any) {
             if(!out) out = [];
 
             const i0 = Math.max(0, Math.min(Math.floor(i), imax));
@@ -101,7 +101,7 @@ export default function(arrays, na, nb, asmoothing, bsmoothing) {
         };
     } else {
         // Finally, both directions are linear:
-        return function(out, i, j) {
+        return function(out: any, i: any, j: any) {
             if(!out) out = [];
 
             const i0 = Math.max(0, Math.min(Math.floor(i), imax));

@@ -9,17 +9,17 @@ import _uniform_text from '../bar/uniform_text.js';
 const { resizeText } = _uniform_text;
 const styleTextPoints = barStyle.styleTextPoints;
 
-function style(gd: GraphDiv,  cd,  sel) {
+function style(gd: GraphDiv,  cd: any,  sel: any) {
     const s = sel ? sel : select(gd).selectAll('g[class^="funnellayer"]').selectAll('g.trace');
     resizeText(gd, s, 'funnel');
 
-    s.style('opacity', function(d) { return d[0].trace.opacity; });
+    s.style('opacity', function(d: any) { return d[0].trace.opacity; });
 
-    s.each(function(this: any, d) {
+    s.each(function(this: any, d: any) {
         const gTrace = select(this);
         const trace = d[0].trace;
 
-        gTrace.selectAll('.point > path').each(function(this: any, di) {
+        gTrace.selectAll('.point > path').each(function(this: any, di: any) {
             if(!di.isBlank) {
                 const cont = trace.marker;
 

@@ -1,4 +1,4 @@
-export default function makeClipPath(xctrl, yctrl, aax, bax) {
+export default function makeClipPath(xctrl: any, yctrl: any, aax: any, bax: any) {
     let i, x, y;
     const segments: any[] = [];
 

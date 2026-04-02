@@ -6,11 +6,11 @@ import scatterStyle from '../scatter/style.js';
 const stylePoints = scatterStyle.stylePoints;
 const styleText = scatterStyle.styleText;
 
-export default function style(gd: GraphDiv, calcTrace) {
+export default function style(gd: GraphDiv, calcTrace: any) {
     if(calcTrace) styleTrace(gd, calcTrace);
 }
 
-function styleTrace(gd: GraphDiv, calcTrace) {
+function styleTrace(gd: GraphDiv, calcTrace: any) {
     const trace = calcTrace[0].trace;
     const s = calcTrace[0].node3;
 
@@ -22,7 +22,7 @@ function styleTrace(gd: GraphDiv, calcTrace) {
     // this part is incompatible with lineGroupStyle
     s.selectAll('path.js-line')
         .style('fill', 'none')
-        .each(function(this: any, d) {
+        .each(function(this: any, d: any) {
             const path = select(this);
             const trace = d.trace;
             const line = trace.line || {};

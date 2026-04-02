@@ -5,7 +5,7 @@ const extendFlat = Lib.extendFlat;
 const extendDeep = Lib.extendDeep;
 
 // Put default plotTile layouts here
-function cloneLayoutOverride(tileClass) {
+function cloneLayoutOverride(tileClass: any) {
     let override;
 
     switch(tileClass) {
@@ -40,12 +40,12 @@ function cloneLayoutOverride(tileClass) {
     return override;
 }
 
-function keyIsAxis(keyName) {
+function keyIsAxis(keyName: any) {
     const types = ['xaxis', 'yaxis', 'zaxis'];
     return (types.indexOf(keyName.slice(0, 5)) > -1);
 }
 
-export default function clonePlot(graphObj, options) {
+export default function clonePlot(graphObj: any, options: any) {
     let i;
     const oldData = graphObj.data;
     const oldLayout = graphObj.layout;

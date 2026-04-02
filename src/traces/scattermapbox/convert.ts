@@ -15,7 +15,7 @@ import { appendArrayPointValue } from '../../components/fx/helpers.js';
 import { NEWLINES } from '../../lib/svg_text_utils.js';
 import { BR_TAG_ALL } from '../../lib/svg_text_utils.js';
 
-export default function convert(gd: GraphDiv, calcTrace) {
+export default function convert(gd: GraphDiv, calcTrace: any) {
     const trace = calcTrace[0].trace;
 
     const isVisible = trace.visible === true && trace._length !== 0;
@@ -49,7 +49,7 @@ export default function convert(gd: GraphDiv, calcTrace) {
     }
 
     if (hasFill) {
-        fill.geojson = geoJsonUtils.makePolygon(lineCoords);
+        fill.geojson = geoJsonUtils.makePolygon(lineCoords as any);
         fill.layout.visibility = 'visible';
 
         Lib.extendFlat(fill.paint, {
@@ -58,7 +58,7 @@ export default function convert(gd: GraphDiv, calcTrace) {
     }
 
     if (hasLines) {
-        line.geojson = geoJsonUtils.makeLine(lineCoords);
+        line.geojson = geoJsonUtils.makeLine(lineCoords as any);
         line.layout.visibility = 'visible';
 
         Lib.extendFlat(line.paint, {
@@ -178,7 +178,7 @@ function initContainer(type: any): any {
     };
 }
 
-function makeCircleOpts(calcTrace) {
+function makeCircleOpts(calcTrace: any) {
     const trace = calcTrace[0].trace;
     const marker = trace.marker;
     const selectedpoints = trace.selectedpoints;
@@ -187,11 +187,11 @@ function makeCircleOpts(calcTrace) {
     const arrayOpacity = Lib.isArrayOrTypedArray(marker.opacity);
     let i;
 
-    function addTraceOpacity(o) {
+    function addTraceOpacity(o: any) {
         return trace.opacity * o;
     }
 
-    function size2radius(s) {
+    function size2radius(s: any) {
         return s / 2;
     }
 
@@ -211,7 +211,7 @@ function makeCircleOpts(calcTrace) {
 
     let opacityFn;
     if (arrayOpacity) {
-        opacityFn = function (mo) {
+        opacityFn = function (mo: any) {
             const mo2 = isNumeric(mo) ? +Lib.constrain(mo, 0, 1) : 0;
             return addTraceOpacity(mo2);
         };
@@ -269,7 +269,7 @@ function makeCircleOpts(calcTrace) {
     };
 }
 
-function makeSymbolGeoJSON(calcTrace, gd: GraphDiv) {
+function makeSymbolGeoJSON(calcTrace: any, gd: GraphDiv) {
     const fullLayout = gd._fullLayout;
     const trace = calcTrace[0].trace;
 
@@ -336,11 +336,11 @@ function makeSymbolGeoJSON(calcTrace, gd: GraphDiv) {
 function getFillFunc(attr: any, numeric?: any) {
     if (Lib.isArrayOrTypedArray(attr)) {
         if (numeric) {
-            return function (i) {
+            return function (i: any) {
                 return isNumeric(attr[i]) ? +attr[i] : 0;
             };
         }
-        return function (i) {
+        return function (i: any) {
             return attr[i];
         };
     } else if (attr) {
@@ -357,11 +357,11 @@ function blankFillFunc() {
 }
 
 // only need to check lon (OR lat)
-function isBADNUM(lonlat) {
+function isBADNUM(lonlat: any) {
     return lonlat[0] === BADNUM;
 }
 
-function arrayifyAttribute(values, step) {
+function arrayifyAttribute(values: any, step: any) {
     let newAttribute;
     if (Lib.isArrayOrTypedArray(values) && Lib.isArrayOrTypedArray(step)) {
         newAttribute = ['step', ['get', 'point_count'], values[0]];

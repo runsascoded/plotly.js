@@ -37,7 +37,7 @@ const supportedFonts = [
 ];
 
 export default {
-    isSupportedFont: function(a) {
+    isSupportedFont: function(a: any) {
         return supportedFonts.indexOf(a) !== -1;
     }
 };

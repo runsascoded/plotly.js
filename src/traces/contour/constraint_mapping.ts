@@ -11,7 +11,7 @@ export default {
 
 // This does not in any way shape or form support calendars. It's adapted from
 // transforms/filter.js.
-function coerceValue(operation,  value) {
+function coerceValue(operation: any,  value: any) {
     const hasArrayValue = Array.isArray(value);
 
     let coercedValue;
@@ -36,8 +36,8 @@ function coerceValue(operation,  value) {
 // Returns a parabola scaled so that the min/max is either +/- 1 and zero at the two values
 // provided. The data is mapped by this function when constructing intervals so that it's
 // very easy to construct contours as normal.
-function makeRangeSettings(operation) {
-    return function(value) {
+function makeRangeSettings(operation: any) {
+    return function(value: any) {
         value = coerceValue(operation, value);
 
         // Ensure proper ordering:
@@ -52,8 +52,8 @@ function makeRangeSettings(operation) {
     };
 }
 
-function makeInequalitySettings(operation) {
-    return function(value) {
+function makeInequalitySettings(operation: any) {
+    return function(value: any) {
         value = coerceValue(operation, value);
 
         return {

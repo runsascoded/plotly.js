@@ -17,19 +17,19 @@ const LINE_SPACING = alignmentConstants.LINE_SPACING;
 
 const labelClass = 'heatmap-label';
 
-function selectLabels(plotGroup) {
+function selectLabels(plotGroup: any) {
     return plotGroup.selectAll('g.' + labelClass);
 }
 
-function removeLabels(plotGroup) {
+function removeLabels(plotGroup: any) {
     selectLabels(plotGroup).remove();
 }
 
-export default function(gd, plotinfo, cdheatmaps, heatmapLayer) {
+export default function(gd: any, plotinfo: any, cdheatmaps: any, heatmapLayer: any) {
     const xa = plotinfo.xaxis;
     const ya = plotinfo.yaxis;
 
-    Lib.makeTraceGroups(heatmapLayer, cdheatmaps, 'hm').each(function (this: any, cd) {
+    Lib.makeTraceGroups(heatmapLayer, cdheatmaps, 'hm').each(function (this: any, cd: any) {
         const plotGroup = select(this);
         const cd0 = cd[0];
         const trace = cd0.trace;
@@ -50,7 +50,7 @@ export default function(gd, plotinfo, cdheatmaps, heatmapLayer) {
         let xrev = false;
         let yrev = false;
 
-        let left, right, temp, top, bottom, i, j, k;
+        let left: any, right, temp, top: any, bottom, i, j, k;
 
         // TODO: if there are multiple overlapping categorical heatmaps,
         // or if we allow category sorting, then the categories may not be
@@ -165,20 +165,20 @@ export default function(gd, plotinfo, cdheatmaps, heatmapLayer) {
         let xpx, ypx;
         if (drawingMethod === 'fast') {
             xpx = xrev
-                ? function (index) {
+                ? function (index: any) {
                       return n - 1 - index;
                   }
                 : Lib.identity;
             ypx = yrev
-                ? function (index) {
+                ? function (index: any) {
                       return m - 1 - index;
                   }
                 : Lib.identity;
         } else {
-            xpx = function (index) {
+            xpx = function (index: any) {
                 return Lib.constrain(Math.round(xa.c2p(x[index]) - left), 0, imageWidth);
             };
-            ypx = function (index) {
+            ypx = function (index: any) {
                 return Lib.constrain(Math.round(ya.c2p(y[index]) - top), 0, imageHeight);
             };
         }
@@ -214,7 +214,7 @@ export default function(gd, plotinfo, cdheatmaps, heatmapLayer) {
             return [0, 0, 0, 0];
         }
 
-        function interpColor(r0,  r1,  xinterp,  yinterp) {
+        function interpColor(r0: any,  r1: any,  xinterp: any,  yinterp: any) {
             const z00 = r0[xinterp.bin0];
             if (z00 === undefined) return setColor(undefined, 1);
 
@@ -516,10 +516,10 @@ export default function(gd, plotinfo, cdheatmaps, heatmapLayer) {
             }
             if (fontSize <= 0 || !isFinite(fontSize)) return;
 
-            const xFn = function (d) {
+            const xFn = function (d: any) {
                 return d.x;
             };
-            const yFn = function (d) {
+            const yFn = function (d: any) {
                 return d.y - fontSize * ((d.l * LINE_SPACING) / 2 - 1);
             };
 
@@ -531,7 +531,7 @@ export default function(gd, plotinfo, cdheatmaps, heatmapLayer) {
                 .classed(labelClass, 1)
                 .append('text')
                 .attr('text-anchor', 'middle')
-                .each(function (this: any, d) {
+                .each(function (this: any, d: any) {
                     const thisLabel = select(this);
 
                     let fontColor = font.color;
@@ -563,7 +563,7 @@ export default function(gd, plotinfo, cdheatmaps, heatmapLayer) {
 }
 
 // get interpolated bin value. Returns {bin0:closest bin, frac:fractional dist to next, bin1:next bin}
-function findInterp(pixel,  pixArray) {
+function findInterp(pixel: any,  pixArray: any) {
     const maxBin = pixArray.length - 2;
     const bin = Lib.constrain(Lib.findBin(pixel, pixArray), 0, maxBin);
     const pix0 = pixArray[bin];
@@ -586,7 +586,7 @@ function findInterp(pixel,  pixArray) {
     };
 }
 
-function findInterpFromCenters(pixel,  centerPixArray) {
+function findInterpFromCenters(pixel: any,  centerPixArray: any) {
     const maxBin = centerPixArray.length - 1;
     const bin = Lib.constrain(Lib.findBin(pixel, centerPixArray), 0, maxBin);
     const pix0 = centerPixArray[bin];
@@ -613,7 +613,7 @@ function findInterpFromCenters(pixel,  centerPixArray) {
     };
 }
 
-function putColor(pixels,  pxIndex,  c) {
+function putColor(pixels: any,  pxIndex: any,  c: any) {
     pixels[pxIndex] = c[0];
     pixels[pxIndex + 1] = c[1];
     pixels[pxIndex + 2] = c[2];

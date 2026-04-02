@@ -37,9 +37,9 @@ export default function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace,
 
     const colors = layout.colorway;
 
-    const defaultNodePalette = function(i) {return colors[i % colors.length];};
+    const defaultNodePalette = function(i: any) {return colors[i % colors.length];};
 
-    coerceNode('color', nodeOut.label.map(function(d, i) {
+    coerceNode('color', nodeOut.label.map(function(d: any, i: any) {
         return Color.addOpacity(defaultNodePalette(i), 0.8);
     }));
     coerceNode('customdata');
@@ -66,7 +66,7 @@ export default function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace,
     const defaultLinkColor = darkBG ? 'rgba(255, 255, 255, 0.6)' : 'rgba(0, 0, 0, 0.2)';
     const linkColor = coerceLink('color', defaultLinkColor);
 
-    function makeDefaultHoverColor(_linkColor) {
+    function makeDefaultHoverColor(_linkColor: any) {
         let tc = tinycolor(_linkColor);
         if(!tc.isValid()) {
             // hopefully the user-specified color is valid, but if not that can be caught elsewhere
@@ -112,7 +112,7 @@ export default function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace,
     traceOut._length = null;
 }
 
-function concentrationscalesDefaults(In, Out) {
+function concentrationscalesDefaults(In: any, Out: any) {
     function coerce(attr: string, dflt?: any) {
         return Lib.coerce(In, Out, attributes.link.colorscales, attr, dflt);
     }

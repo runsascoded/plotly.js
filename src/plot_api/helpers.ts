@@ -468,8 +468,8 @@ export const clearAxisTypes = function (gd?: any, traces?: any, layoutUpdate?: a
  * @param {Object|Array} collection1: First collection to compare
  * @param {Object|Array} collection2: Second collection to compare
  */
-const collectionsAreEqual = (collection1, collection2) => {
-    const isArrayOrObject = (...vals) => vals.every((v) => isPlainObject(v)) || vals.every((v) => Array.isArray(v));
+const collectionsAreEqual = (collection1: any, collection2: any) => {
+    const isArrayOrObject = (...vals: any[]) => vals.every((v: any) => isPlainObject(v)) || vals.every((v: any) => Array.isArray(v));
     if ([collection1, collection2].every((a) => Array.isArray(a))) {
         if (collection1.length !== collection2.length) return false;
 

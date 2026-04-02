@@ -2,7 +2,7 @@ import Lib from '../lib/index.js';
 import { EventEmitter } from 'events';
 import helpers from './helpers.js';
 
-function svgToImg(opts) {
+function svgToImg(opts: any) {
     const ev = opts.emitter || new EventEmitter();
 
     const promise = new Promise(function(resolve, reject) {

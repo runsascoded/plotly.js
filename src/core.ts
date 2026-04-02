@@ -35,8 +35,8 @@ const Plotly: any = { version, register, Icons, Snapshot, PlotSchema };
 const methodNames = Object.keys(plotApi);
 for(let i = 0; i < methodNames.length; i++) {
     const name = methodNames[i];
-    if(name.charAt(0) !== '_') Plotly[name] = plotApi[name];
-    register({ moduleType: 'apiMethod', name: name, fn: plotApi[name] });
+    if(name.charAt(0) !== '_') Plotly[name] = (plotApi as any)[name];
+    register({ moduleType: 'apiMethod', name: name, fn: (plotApi as any)[name] });
 }
 register(scatter);
 register([annotations, annotations3d, selections, shapes, images, updatemenus, sliders, rangeslider, rangeselector, grid, errorbars, colorscale, colorbar, legend, fx, modebar]);

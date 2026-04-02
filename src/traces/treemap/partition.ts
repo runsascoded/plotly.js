@@ -49,7 +49,7 @@ export default function partition(entry: any, size: number[], opts: any) {
     return result;
 }
 
-function getTilingMethod(key, squarifyratio, transpose) {
+function getTilingMethod(key: any, squarifyratio: any, transpose: any) {
     switch(key) {
         case 'squarify':
             if(transpose) {
@@ -70,7 +70,7 @@ function getTilingMethod(key, squarifyratio, transpose) {
 // Custom squarify that inverts the row direction decision.
 // Normal squarify uses `dice: dx < dy` (horizontal strips for tall rectangles).
 // Transposed squarify uses `dice: dx >= dy` (horizontal strips for wide rectangles).
-function transposedSquarifyRatio(ratio, parent, x0, y0, x1, y1) {
+function transposedSquarifyRatio(ratio: any, parent: any, x0: any, y0: any, x1: any, y1: any) {
     const nodes = parent.children;
     let nodeValue;
     let i0 = 0;
@@ -120,8 +120,8 @@ function transposedSquarifyRatio(ratio, parent, x0, y0, x1, y1) {
     }
 }
 
-function transposedSquarify(squarifyratio) {
-    function squarify(parent, x0, y0, x1, y1) {
+function transposedSquarify(squarifyratio: any) {
+    function squarify(parent: any, x0: any, y0: any, x1: any, y1: any) {
         transposedSquarifyRatio(squarifyratio, parent, x0, y0, x1, y1);
     }
     return squarify;

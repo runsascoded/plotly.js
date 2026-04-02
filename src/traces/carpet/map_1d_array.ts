@@ -1,7 +1,7 @@
 import _index from '../../lib/index.js';
 const { isArrayOrTypedArray } = _index;
 
-export default function mapArray(out, data, func) {
+export default function mapArray(out: any, data: any, func: any) {
     let i;
 
     if(!isArrayOrTypedArray(out)) {

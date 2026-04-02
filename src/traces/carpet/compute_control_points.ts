@@ -105,7 +105,7 @@ const { ensureArray } = _index;
  * Of course it works whichever way it's oriented; you just need to interpret the
  * input/output accordingly.
  */
-function inferCubicControlPoint(p0, p2, p3) {
+function inferCubicControlPoint(p0: any, p2: any, p3: any) {
     // Extend p1 away from p0 by 50%. This is the equivalent quadratic point that
     // would give the same slope as catmull rom at p0.
     const p2e0 = -0.5 * p3[0] + 1.5 * p2[0];
@@ -117,7 +117,7 @@ function inferCubicControlPoint(p0, p2, p3) {
     ];
 }
 
-export default function computeControlPoints(xe, ye, x, y, asmoothing, bsmoothing) {
+export default function computeControlPoints(xe: any, ye: any, x: any, y: any, asmoothing: any, bsmoothing: any) {
     let i, j, ie, je, xej, yej, xj, yj, cp, p1;
     // At this point, we know these dimensions are correct and representative of
     // the whole 2D arrays:

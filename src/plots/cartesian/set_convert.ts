@@ -214,8 +214,8 @@ export default function setConvert(ax?: any, fullLayout?: any): any {
     ax.l2p = l2p;
     ax.p2l = p2l;
 
-    ax.c2p = (ax.type === 'log') ? function(v, clip) { return l2p(toLog(v, clip)); } : l2p;
-    ax.p2c = (ax.type === 'log') ? function(px) { return fromLog(p2l(px)); } : p2l;
+    ax.c2p = (ax.type === 'log') ? function(v: any, clip: any) { return l2p(toLog(v, clip)); } : l2p;
+    ax.p2c = (ax.type === 'log') ? function(px: any) { return fromLog(p2l(px)); } : p2l;
 
     /*
      * now type-specific conversions for **ALL** other combinations
@@ -612,7 +612,7 @@ export default function setConvert(ax?: any, fullLayout?: any): any {
         let bnds, b0, b1, vb, vDate;
 
         if(!rangebreaksIn._cachedPatterns) {
-            rangebreaksIn._cachedPatterns = rangebreaksIn.map(function(brk) {
+            rangebreaksIn._cachedPatterns = rangebreaksIn.map(function(brk: any) {
                 return brk.enabled && brk.bounds ? simpleMap(brk.bounds, brk.pattern ?
                     cleanNumber :
                     ax.d2c // case of pattern: ''
@@ -620,7 +620,7 @@ export default function setConvert(ax?: any, fullLayout?: any): any {
             });
         }
         if(!rangebreaksIn._cachedValues) {
-            rangebreaksIn._cachedValues = rangebreaksIn.map(function(brk) {
+            rangebreaksIn._cachedValues = rangebreaksIn.map(function(brk: any) {
                 return brk.enabled && brk.values ? simpleMap(brk.values, ax.d2c).sort(sorterAsc) : null;
             });
         }
@@ -693,7 +693,7 @@ export default function setConvert(ax?: any, fullLayout?: any): any {
         const rangebreaksOut: any[] = [];
         if(!ax.rangebreaks) return rangebreaksOut;
 
-        const rangebreaksIn: any = ax.rangebreaks.slice().sort(function(a, b) {
+        const rangebreaksIn: any = ax.rangebreaks.slice().sort(function(a: any, b: any) {
             if(a.pattern === WEEKDAY_PATTERN && b.pattern === HOUR_PATTERN) return -1;
             if(b.pattern === WEEKDAY_PATTERN && a.pattern === HOUR_PATTERN) return 1;
             return 0;
@@ -843,7 +843,7 @@ export default function setConvert(ax?: any, fullLayout?: any): any {
             const dv = (trace['d' + axLetter]) ? Number(trace['d' + axLetter]) : 1;
 
             // the opposing data, for size if we have x and dx etc
-            arrayIn = trace[{x: 'y', y: 'x'}[axLetter]];
+            arrayIn = trace[({x: 'y', y: 'x'} as any)[axLetter]];
             len = trace._length || arrayIn.length;
             arrayOut = new Array(len);
 
@@ -949,7 +949,7 @@ export default function setConvert(ax?: any, fullLayout?: any): any {
     // sort the axis (and all the matching ones) by _initialCategories
     // returns the indices of the traces affected by the reordering
     ax.sortByInitialCategories = function() {
-        let affectedTraces = [];
+        let affectedTraces: any[] = [];
 
         ax._emptyCategories();
 

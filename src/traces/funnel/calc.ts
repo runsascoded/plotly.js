@@ -9,7 +9,7 @@ const { BADNUM } = _numerical;
 export default function calc(gd: GraphDiv,  trace: FullTrace) {
     const xa = Axes.getFromId(gd, trace.xaxis || 'x');
     const ya = Axes.getFromId(gd, trace.yaxis || 'y');
-    let size, pos, origPos, pObj, hasPeriod, pLetter, i, cdi;
+    let size, pos, origPos, pObj, hasPeriod, pLetter, i, cdi: any;
 
     if(trace.orientation === 'h') {
         size = xa.makeCalcdata(trace, 'x');
@@ -93,6 +93,6 @@ export default function calc(gd: GraphDiv,  trace: FullTrace) {
     return cd;
 }
 
-function fixNum(a) {
+function fixNum(a: any) {
     return (a === BADNUM) ? 0 : a;
 }

@@ -8,7 +8,7 @@ import handleTextDefaults from '../scatter/text_defaults.js';
 import attributes from './attributes.js';
 
 export default function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace, defaultColor: string, layout: FullLayout) {
-    function coerce(attr, dflt?) {
+    function coerce(attr: any, dflt?: any) {
         return Lib.coerce(traceIn, traceOut, attributes, attr, dflt);
     }
 
@@ -67,7 +67,7 @@ export default function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace,
     errorBarsSupplyDefaults(traceIn, traceOut, lineColor || markerColor || defaultColor, { axis: 'x', inherit: 'z' });
 }
 
-function handleXYZDefaults(traceIn: InputTrace, traceOut: FullTrace, coerce, layout: FullLayout) {
+function handleXYZDefaults(traceIn: InputTrace, traceOut: FullTrace, coerce: any, layout: FullLayout) {
     let len = 0;
     const x = coerce('x');
     const y = coerce('y');

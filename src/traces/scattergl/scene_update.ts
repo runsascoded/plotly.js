@@ -45,7 +45,7 @@ export default function sceneUpdate(gd: GraphDiv, subplot: PlotInfo) {
         scene.init();
 
         // apply new option to all regl components (used on drag)
-        scene.update = function update(opt) {
+        scene.update = function update(opt: any) {
             const opts = Lib.repeat(opt, scene.count);
 
             if(scene.fill2d) scene.fill2d.update(opts);
@@ -112,7 +112,7 @@ export default function sceneUpdate(gd: GraphDiv, subplot: PlotInfo) {
             if(scene.line2d && scene.line2d.destroy) scene.line2d.destroy();
             if(scene.select2d && scene.select2d.destroy) scene.select2d.destroy();
             if(scene.glText) {
-                scene.glText.forEach(function(text) {
+                scene.glText.forEach(function(text: any) {
                     if(text.destroy) text.destroy();
                 });
             }

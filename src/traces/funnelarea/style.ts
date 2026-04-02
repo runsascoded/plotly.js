@@ -8,14 +8,14 @@ export default function style(gd: GraphDiv) {
     const s = gd._fullLayout._funnelarealayer.selectAll('.trace');
     resizeText(gd, s, 'funnelarea');
 
-    s.each(function(this: any, cd) {
+    s.each(function(this: any, cd: any) {
         const cd0 = cd[0];
         const trace = cd0.trace;
         const traceSelection = select(this);
 
         traceSelection.style({opacity: trace.opacity});
 
-        traceSelection.selectAll('path.surface').each(function(this: any, pt) {
+        traceSelection.selectAll('path.surface').each(function(this: any, pt: any) {
             select(this).call(styleOne, pt, trace, gd);
         });
     });

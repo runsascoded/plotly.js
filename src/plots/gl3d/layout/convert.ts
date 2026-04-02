@@ -62,7 +62,7 @@ function AxesOptions(this: any) {
 
 const proto = AxesOptions.prototype;
 
-proto.merge = function(fullLayout, sceneLayout) {
+proto.merge = function(fullLayout: any, sceneLayout: any) {
     const opts = this;
     for(let i = 0; i < 3; ++i) {
         const axes = sceneLayout[AXES_NAMES[i]];
@@ -155,8 +155,9 @@ proto.merge = function(fullLayout, sceneLayout) {
     }
 };
 
-function createAxesOptions(fullLayout, sceneLayout) {
-    const result = new AxesOptions();
+function createAxesOptions(fullLayout: any, sceneLayout: any) {
+    // @ts-ignore TS7009
+    const result: any = (new AxesOptions() as any);
     result.merge(fullLayout, sceneLayout);
     return result;
 }

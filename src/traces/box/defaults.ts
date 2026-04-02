@@ -70,7 +70,7 @@ function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace, defaultColor: 
 }
 
 function handleSampleDefaults(traceIn: InputTrace, traceOut: FullTrace, coerce: Function, layout: FullLayout): void {
-    function getDims(arr) {
+    function getDims(arr: any) {
         let dims = 0;
         if (arr && arr.length) {
             dims += 1;
@@ -81,8 +81,8 @@ function handleSampleDefaults(traceIn: InputTrace, traceOut: FullTrace, coerce: 
         return dims;
     }
 
-    function valid(astr) {
-        return Lib.validate(traceIn[astr], attributes[astr]);
+    function valid(astr: any) {
+        return Lib.validate(traceIn[astr], (attributes as any)[astr]);
     }
 
     const y = coerce('y');
@@ -127,29 +127,29 @@ function handleSampleDefaults(traceIn: InputTrace, traceOut: FullTrace, coerce: 
             // just x
             case '10':
                 defaultOrientation = 'v';
-                len = Math.min(sLen, xLen);
+                len = Math.min(sLen as any, xLen);
                 break;
             case '20':
                 defaultOrientation = 'h';
-                len = Math.min(sLen, x.length);
+                len = Math.min(sLen as any, x.length);
                 break;
             // just y
             case '01':
                 defaultOrientation = 'h';
-                len = Math.min(sLen, yLen);
+                len = Math.min(sLen as any, yLen);
                 break;
             case '02':
                 defaultOrientation = 'v';
-                len = Math.min(sLen, y.length);
+                len = Math.min(sLen as any, y.length);
                 break;
             // both
             case '12':
                 defaultOrientation = 'v';
-                len = Math.min(sLen, xLen, y.length);
+                len = Math.min(sLen as any, xLen, y.length);
                 break;
             case '21':
                 defaultOrientation = 'h';
-                len = Math.min(sLen, x.length, yLen);
+                len = Math.min(sLen as any, x.length, yLen);
                 break;
             case '11':
                 // this one is ill-defined
@@ -167,7 +167,7 @@ function handleSampleDefaults(traceIn: InputTrace, traceOut: FullTrace, coerce: 
 
                 if (hasCategories) {
                     defaultOrientation = 'v';
-                    len = Math.min(sLen, xLen, y.length);
+                    len = Math.min(sLen as any, xLen, y.length);
                 } else {
                     for (i = 0; i < y.length; i++) {
                         if (autoType(y[i], calendar, opts) === 'category') {
@@ -178,10 +178,10 @@ function handleSampleDefaults(traceIn: InputTrace, traceOut: FullTrace, coerce: 
 
                     if (hasCategories) {
                         defaultOrientation = 'h';
-                        len = Math.min(sLen, x.length, yLen);
+                        len = Math.min(sLen as any, x.length, yLen);
                     } else {
                         defaultOrientation = 'v';
-                        len = Math.min(sLen, xLen, y.length);
+                        len = Math.min(sLen as any, xLen, y.length);
                     }
                 }
                 break;
@@ -283,9 +283,9 @@ function handlePointsDefaults(traceIn: InputTrace, traceOut: FullTrace, coerce: 
 }
 
 function crossTraceDefaults(fullData: FullTrace[], fullLayout: FullLayout): void {
-    let traceIn, traceOut;
+    let traceIn, traceOut: any;
 
-    function coerce(attr) {
+    function coerce(attr: any) {
         return Lib.coerce(traceOut._input, traceOut, attributes, attr);
     }
 

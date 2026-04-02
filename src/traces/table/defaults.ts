@@ -7,8 +7,8 @@ function defaultColumnOrder(traceOut: FullTrace, coerce: (attr: string, dflt?: a
     const specifiedColumnOrder = traceOut.columnorder || [];
     const commonLength = traceOut.header.values.length;
     const truncated = specifiedColumnOrder.slice(0, commonLength);
-    const sorted = truncated.slice().sort(function(a, b) {return a - b;});
-    const oneStepped = truncated.map(function(d) {return sorted.indexOf(d);});
+    const sorted = truncated.slice().sort(function(a: any, b: any) {return a - b;});
+    const oneStepped = truncated.map(function(d: any) {return sorted.indexOf(d);});
     for(let i = oneStepped.length; i < commonLength; i++) {
         oneStepped.push(i);
     }

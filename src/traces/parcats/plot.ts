@@ -1,6 +1,6 @@
 import parcats from './parcats.js';
 
-export default function plot(graphDiv, parcatsModels, transitionOpts, makeOnCompleteCallback) {
+export default function plot(graphDiv: any, parcatsModels: any, transitionOpts: any, makeOnCompleteCallback: any) {
     const fullLayout = graphDiv._fullLayout;
     const svg = fullLayout._paper;
     const size = fullLayout._size;

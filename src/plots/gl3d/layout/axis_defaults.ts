@@ -12,8 +12,8 @@ const axesNames = ['xaxis', 'yaxis', 'zaxis'];
 // that differ from other subplot types.
 const gridLightness = 100 * (204 - 0x44) / (255 - 0x44);
 
-export default function supplyLayoutDefaults(layoutIn, layoutOut, options) {
-    let containerIn, containerOut;
+export default function supplyLayoutDefaults(layoutIn: any, layoutOut: any, options: any) {
+    let containerIn: any, containerOut: any;
 
     function coerce(attr: string, dflt?: any) {
         return Lib.coerce(containerIn, containerOut, layoutAttributes, attr, dflt);

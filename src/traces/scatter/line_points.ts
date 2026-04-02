@@ -29,7 +29,7 @@ export default function linePoints(d: CalcDatum[], opts: any): any[][] {
     const pts = new Array(len);
     let pti = 0;
 
-    let i;
+    let i: any;
 
     // pt variables are pixel coordinates [x,y] of one point
     // these four are the outputs of clustering on a line
@@ -55,7 +55,7 @@ export default function linePoints(d: CalcDatum[], opts: any): any[][] {
     let clusterMinDeviation, clusterMaxDeviation, thisDeviation;
 
     // turn one calcdata point into pixel coordinates
-    function getPt(index) {
+    function getPt(index: any) {
         const di = d[index];
         if(!di) return false;
         let x = opts.linearized ? xa.l2p(di.x) : xa.c2p(di.x);
@@ -82,7 +82,7 @@ export default function linePoints(d: CalcDatum[], opts: any): any[][] {
         return [x, y];
     }
 
-    function crossesViewport(xFrac0, yFrac0, xFrac1, yFrac1) {
+    function crossesViewport(xFrac0: any, yFrac0: any, xFrac1: any, yFrac1: any) {
         const dx = xFrac1 - xFrac0;
         const dy = yFrac1 - yFrac0;
         const dx0 = 0.5 - xFrac0;
@@ -95,9 +95,9 @@ export default function linePoints(d: CalcDatum[], opts: any): any[][] {
         }
     }
 
-    let latestXFrac, latestYFrac;
+    let latestXFrac: any, latestYFrac: any;
     // if we're off-screen, increase tolerance over baseTolerance
-    function getTolerance(pt, nextPt) {
+    function getTolerance(pt: any, nextPt: any) {
         const xFrac = pt[0] / xLen;
         const yFrac = pt[1] / yLen;
         let offScreenFraction = Math.max(0, -xFrac, xFrac - 1, -yFrac, yFrac - 1);
@@ -115,7 +115,7 @@ export default function linePoints(d: CalcDatum[], opts: any): any[][] {
         return (1 + constants.toleranceGrowth * offScreenFraction) * baseTolerance;
     }
 
-    function ptDist(pt1, pt2) {
+    function ptDist(pt1: any, pt2: any) {
         const dx = pt1[0] - pt2[0];
         const dy = pt1[1] - pt2[1];
         return Math.sqrt(dx * dx + dy * dy);
@@ -143,7 +143,7 @@ export default function linePoints(d: CalcDatum[], opts: any): any[][] {
         [xEdge1, yEdge1, xEdge0, yEdge1],
         [xEdge0, yEdge1, xEdge0, yEdge0]
     ];
-    let xEdge, yEdge, lastXEdge, lastYEdge, lastFarPt, edgePt;
+    let xEdge, yEdge, lastXEdge: any, lastYEdge: any, lastFarPt: any, edgePt;
 
     // for linear line shape, edge intersections should be linearly interpolated
     // spline uses this too, which isn't precisely correct but is actually pretty
@@ -171,20 +171,20 @@ export default function linePoints(d: CalcDatum[], opts: any): any[][] {
         return out;
     }
 
-    function onlyConstrainedPoint(pt) {
+    function onlyConstrainedPoint(pt: any) {
         if(pt[0] < xEdge0 || pt[0] > xEdge1 || pt[1] < yEdge0 || pt[1] > yEdge1) {
             return [constrain(pt[0], xEdge0, xEdge1), constrain(pt[1], yEdge0, yEdge1)];
         }
     }
 
-    function sameEdge(pt1, pt2) {
+    function sameEdge(pt1: any, pt2: any) {
         if(pt1[0] === pt2[0] && (pt1[0] === xEdge0 || pt1[0] === xEdge1)) return true;
         if(pt1[1] === pt2[1] && (pt1[1] === yEdge0 || pt1[1] === yEdge1)) return true;
     }
 
     // for line shapes hv and vh, movement in the two dimensions is decoupled,
     // so all we need to do is constrain each dimension independently
-    function getHVEdgeIntersections(pt1, pt2) {
+    function getHVEdgeIntersections(pt1: any, pt2: any) {
         const out: any[] = [];
         const ptInt1 = onlyConstrainedPoint(pt1);
         const ptInt2 = onlyConstrainedPoint(pt2);
@@ -198,8 +198,8 @@ export default function linePoints(d: CalcDatum[], opts: any): any[][] {
     // hvh and vhv we sometimes have to move one of the intersection points
     // out BEYOND the clipping rect, by a maximum of a factor of 2, so that
     // the midpoint line is drawn in the right place
-    function getABAEdgeIntersections(dim, limit0, limit1) {
-        return function(pt1, pt2) {
+    function getABAEdgeIntersections(dim: any, limit0: any, limit1: any) {
+        return function(pt1: any, pt2: any) {
             const ptInt1 = onlyConstrainedPoint(pt1);
             const ptInt2 = onlyConstrainedPoint(pt2);
 
@@ -212,7 +212,7 @@ export default function linePoints(d: CalcDatum[], opts: any): any[][] {
             const midShift = 2 * constrain((pt1[dim] + pt2[dim]) / 2, limit0, limit1) -
                 ((ptInt1 || pt1)[dim] + (ptInt2 || pt2)[dim]);
             if(midShift) {
-                let ptToAlter;
+                let ptToAlter: any;
                 if(ptInt1 && ptInt2) {
                     ptToAlter = (midShift > 0 === ptInt1[dim] > ptInt2[dim]) ? ptInt1 : ptInt2;
                 } else ptToAlter = ptInt1 || ptInt2;
@@ -224,7 +224,7 @@ export default function linePoints(d: CalcDatum[], opts: any): any[][] {
         };
     }
 
-    let getEdgeIntersections;
+    let getEdgeIntersections: any;
     if(shape === 'linear' || shape === 'spline') {
         getEdgeIntersections = getLinearEdgeIntersections;
     } else if(shape === 'hv' || shape === 'vh') {
@@ -234,7 +234,7 @@ export default function linePoints(d: CalcDatum[], opts: any): any[][] {
 
     // a segment pt1->pt2 entirely outside the nearby region:
     // find the corner it gets closest to touching
-    function getClosestCorner(pt1, pt2) {
+    function getClosestCorner(pt1: any, pt2: any) {
         const dx = pt2[0] - pt1[0];
         const m = (pt2[1] - pt1[1]) / dx;
         const b = (pt1[1] * pt2[0] - pt2[1] * pt1[0]) / dx;
@@ -243,7 +243,7 @@ export default function linePoints(d: CalcDatum[], opts: any): any[][] {
         else return [m > 0 ? xEdge1 : xEdge0, yEdge0];
     }
 
-    function updateEdge(pt) {
+    function updateEdge(pt: any) {
         const x = pt[0];
         const y = pt[1];
         const xSame = x === pts[pti - 1][0];
@@ -264,7 +264,7 @@ export default function linePoints(d: CalcDatum[], opts: any): any[][] {
         } else pts[pti++] = pt;
     }
 
-    function updateEdgesForReentry(pt) {
+    function updateEdgesForReentry(pt: any) {
         // if we're outside the nearby region and going back in,
         // we may need to loop around a corner point
         if(pts[pti - 1][0] !== pt[0] && pts[pti - 1][1] !== pt[1]) {
@@ -277,7 +277,7 @@ export default function linePoints(d: CalcDatum[], opts: any): any[][] {
 
     const arrayMarker = isArrayOrTypedArray(marker);
 
-    function addPt(pt) {
+    function addPt(pt: any) {
         if(pt && backoff) {
             pt.i = i;
             pt.d = d;
@@ -387,8 +387,8 @@ export default function linePoints(d: CalcDatum[], opts: any): any[][] {
                 clusterRefDist < getTolerance(clusterHighPt, nextPt) * minTolerance) continue;
 
             clusterUnitVector = [
-                (clusterHighPt[0] - clusterStartPt[0]) / clusterRefDist,
-                (clusterHighPt[1] - clusterStartPt[1]) / clusterRefDist
+                ((clusterHighPt as any)[0] - (clusterStartPt as any)[0]) / clusterRefDist,
+                ((clusterHighPt as any)[1] - (clusterStartPt as any)[1]) / clusterRefDist
             ];
 
             clusterLowPt = clusterStartPt;
@@ -406,8 +406,8 @@ export default function linePoints(d: CalcDatum[], opts: any): any[][] {
                     else break;
                 }
                 thisVector = [
-                    thisPt[0] - clusterStartPt[0],
-                    thisPt[1] - clusterStartPt[1]
+                    thisPt[0] - (clusterStartPt as any)[0],
+                    thisPt[1] - (clusterStartPt as any)[1]
                 ];
                 // cross product (or dot with normal to the cluster vector)
                 thisDeviation = thisVector[0] * clusterUnitVector[1] - thisVector[1] * clusterUnitVector[0];

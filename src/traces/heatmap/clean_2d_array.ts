@@ -7,7 +7,7 @@ const { BADNUM } = _numerical;
 export default function clean2dArray(zOld: any,  trace?: FullTrace,  xa?: FullAxis,  ya?: FullAxis) {
     let rowlen, collen, getCollen, old2new, i, j;
 
-    function cleanZvalue(v) {
+    function cleanZvalue(v: any) {
         if(!isNumeric(v)) return undefined;
         return +v;
     }
@@ -16,15 +16,15 @@ export default function clean2dArray(zOld: any,  trace?: FullTrace,  xa?: FullAx
         rowlen = 0;
         for(i = 0; i < zOld.length; i++) rowlen = Math.max(rowlen, zOld[i].length);
         if(rowlen === 0) return false;
-        getCollen = function(zOld) { return zOld.length; };
-        old2new = function(zOld, i, j) { return (zOld[j] || [])[i]; };
+        getCollen = function(zOld: any) { return zOld.length; };
+        old2new = function(zOld: any, i: any, j: any) { return (zOld[j] || [])[i]; };
     } else {
         rowlen = zOld.length;
-        getCollen = function(zOld, i) { return zOld[i].length; };
-        old2new = function(zOld, i, j) { return (zOld[i] || [])[j]; };
+        getCollen = function(zOld: any, i: any) { return zOld[i].length; };
+        old2new = function(zOld: any, i: any, j: any) { return (zOld[i] || [])[j]; };
     }
 
-    const padOld2new = function(zOld,  i,  j) {
+    const padOld2new = function(zOld: any,  i: any,  j: any) {
         if(i === BADNUM || j === BADNUM) return BADNUM;
         return old2new(zOld, i, j);
     };
@@ -38,7 +38,7 @@ export default function clean2dArray(zOld: any,  trace?: FullTrace,  xa?: FullAx
             for(i = 0; i < traceCategories.length; i++) {
                 axMapping[traceCategories[i]] = i;
             }
-            return function(i) {
+            return function(i: any) {
                 const ind = axMapping[ax._categories[i]];
                 return ind + 1 ? ind : BADNUM;
             };

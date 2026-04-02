@@ -74,7 +74,7 @@ function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace, defaultColor: 
     coerce('title.text');
 
     // Gauge attributes
-    let gaugeIn, gaugeOut, axisIn, axisOut;
+    let gaugeIn: any, gaugeOut: any, axisIn: any, axisOut: any;
     function coerceGauge(attr: string, dflt?: any) {
         return Lib.coerce(gaugeIn, gaugeOut, attributes.gauge, attr, dflt);
     }
@@ -148,7 +148,7 @@ function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace, defaultColor: 
     traceOut._length = null;
 }
 
-function stepDefaults(stepIn, stepOut) {
+function stepDefaults(stepIn: any, stepOut: any) {
     function coerce(attr: string, dflt?: any) {
         return Lib.coerce(stepIn, stepOut, attributes.gauge.steps, attr, dflt);
     }

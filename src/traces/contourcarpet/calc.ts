@@ -37,7 +37,7 @@ export default function calc(gd: GraphDiv, trace: FullTrace) {
     return cd;
 }
 
-function heatmappishCalc(gd, trace) {
+function heatmappishCalc(gd: any, trace: any) {
     // prepare the raw data
     // run makeCalcdata on x and y even for heatmaps, in case of category mappings
     const carpet = trace._carpetTrace;
@@ -49,7 +49,7 @@ function heatmappishCalc(gd, trace) {
         b,
         b0,
         db,
-        z;
+        z: any;
 
     // cancel minimum tick spacings (only applies to bars and boxes)
     aax._minDtick = 0;

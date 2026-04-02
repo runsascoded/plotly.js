@@ -36,7 +36,7 @@ export default function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace,
     coerce('zorder');
 }
 
-function handleDirection(traceIn, traceOut, coerce, direction) {
+function handleDirection(traceIn: any, traceOut: any, coerce: any, direction: any) {
     const lineColor = coerce(direction + '.line.color');
     coerce(direction + '.line.width', traceOut.line.width);
     coerce(direction + '.fillcolor', Color.addOpacity(lineColor, 0.5));

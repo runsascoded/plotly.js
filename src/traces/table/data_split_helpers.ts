@@ -1,6 +1,6 @@
 import { extendFlat } from '../../lib/extend.js';
 
-export const splitToPanels = function(d) {
+export const splitToPanels = function(d: any) {
     const prevPages = [0, 0];
     const headerPanel = extendFlat({}, d, {
         key: 'header',
@@ -37,9 +37,9 @@ export const splitToPanels = function(d) {
     return [revolverPanel1, revolverPanel2, headerPanel];
 };
 
-export const splitToCells = function(d) {
+export const splitToCells = function(d: any) {
     const fromTo = rowFromTo(d);
-    return (d.values || []).slice(fromTo[0], fromTo[1]).map(function(v, i) {
+    return (d.values || []).slice(fromTo[0], fromTo[1]).map(function(v: any, i: any) {
         // By keeping identical key, a DOM node removal, creation and addition is spared, important when visible
         // grid has a lot of elements (quadratic with xcol/ycol count).
         // But it has to be busted when `svgUtil.convertToTspans` is used as it reshapes cell subtrees asynchronously,
@@ -60,7 +60,7 @@ export const splitToCells = function(d) {
     });
 };
 
-function rowFromTo(d) {
+function rowFromTo(d: any) {
     const rowBlock = d.rowBlocks[d.page];
     // fixme rowBlock truthiness check is due to ugly hack of placing 2nd panel as d.page = -1
     const rowFrom = rowBlock ? rowBlock.rows[0].rowIndex : 0;

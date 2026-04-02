@@ -221,7 +221,8 @@ function setGroupPositionsInOverlayMode(gd: GraphDiv, pa: FullAxis, sa: FullAxis
     for(let i = 0; i < calcTraces.length; i++) {
         const calcTrace = calcTraces[i];
 
-        const sieve = new Sieve([calcTrace], {
+        // @ts-ignore TS7009
+        const sieve: any = new Sieve([calcTrace], {
             posAxis: pa,
             sepNegVal: false,
             overlapNoMerge: !opts.norm
@@ -245,7 +246,8 @@ function setGroupPositionsInOverlayMode(gd: GraphDiv, pa: FullAxis, sa: FullAxis
 }
 
 function setGroupPositionsInGroupMode(gd: GraphDiv, pa: FullAxis, sa: FullAxis, calcTraces: any[], opts: any): void {
-    const sieve = new Sieve(calcTraces, {
+    // @ts-ignore TS7009
+    const sieve: any = new Sieve(calcTraces, {
         posAxis: pa,
         sepNegVal: false,
         overlapNoMerge: !opts.norm
@@ -268,7 +270,8 @@ function setGroupPositionsInGroupMode(gd: GraphDiv, pa: FullAxis, sa: FullAxis, 
 }
 
 function setGroupPositionsInStackOrRelativeMode(gd: GraphDiv, pa: FullAxis, sa: FullAxis, calcTraces: any[], opts: any): void {
-    const sieve = new Sieve(calcTraces, {
+    // @ts-ignore TS7009
+    const sieve: any = new Sieve(calcTraces, {
         posAxis: pa,
         sepNegVal: opts.mode === 'relative',
         overlapNoMerge: !(opts.norm || opts.mode === 'stack' || opts.mode === 'relative')
@@ -675,7 +678,8 @@ function unhideBarsWithinTrace(sieve: any, pa: FullAxis): void {
         const offsetIndex = calcTrace[0].t.offsetindex;
 
         if(fullTrace.base === undefined) {
-            const inTraceSieve = new Sieve([calcTrace], {
+            // @ts-ignore TS7009
+            const inTraceSieve: any = new Sieve([calcTrace], {
                 posAxis: pa,
                 sepNegVal: true,
                 overlapNoMerge: true
@@ -710,7 +714,7 @@ function normalizeBars(sa: FullAxis, sieve: any, opts: any): void {
     const sMin = sa.l2c(sa.c2l(0));
     const sMax = opts.mode === 'stack' ? sTop : sMin;
 
-    function needsPadding(v) {
+    function needsPadding(v: any) {
         return (
             isNumeric(sa.c2l(v)) &&
             ((v < sMin - sTiny) || (v > sMax + sTiny) || !isNumeric(sMin))
@@ -803,7 +807,7 @@ function collectExtents(calcTraces: any[], pa: FullAxis): void {
     // the label is 1px too far out; so round positions to 1/10K in case
     // position values don't exactly match from trace to trace
     const roundFactor = 10000 / (pMax - pMin);
-    const round = extents.round = function(p) {
+    const round = extents.round = function(p: any) {
         return String(Math.round(roundFactor * (p - pMin)));
     };
 

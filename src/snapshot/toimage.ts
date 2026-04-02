@@ -53,7 +53,7 @@ function toImage(gd: GraphDiv, opts: any) {
     Registry.call('_doPlot', clonedGd, clone.data, clone.layout, clone.config)
         .then(redrawFunc)
         .then(wait)
-        .catch(function(err) {
+        .catch(function(err: any) {
             ev.emit('error', err);
         });
 

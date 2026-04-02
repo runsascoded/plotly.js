@@ -18,7 +18,7 @@ export default {
     hoverPoints: _req6,
     eventData: _req7,
 
-    getBelow: function(trace, subplot) {
+    getBelow: function(trace: any, subplot: any) {
         const mapLayers = subplot.getMapLayers();
 
         // find first layer with `type: 'symbol'`,

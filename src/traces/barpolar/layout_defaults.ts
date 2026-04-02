@@ -1,9 +1,9 @@
 import Lib from '../../lib/index.js';
 import attrs from './layout_attributes.js';
 
-export default function(layoutIn, layoutOut, fullData) {
+export default function(layoutIn: any, layoutOut: any, fullData: any) {
     const subplotsDone: any = {};
-    let sp;
+    let sp: any;
 
     function coerce(attr: string, dflt?: any) {
         return Lib.coerce(layoutIn[sp] || {}, layoutOut[sp], attrs, attr, dflt);

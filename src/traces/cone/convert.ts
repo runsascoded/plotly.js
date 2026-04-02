@@ -9,7 +9,7 @@ import zip3 from '../../plots/gl3d/zip3.js';
 import { gl_cone3d as _req0 } from '../../../stackgl_modules/esm.js';
 const createConeMesh = _req0.createConeMesh;
 
-function Cone(this: any, scene, uid) {
+function Cone(this: any, scene: any, uid: any) {
     this.scene = scene;
     this.uid = uid;
     this.mesh = null;
@@ -18,7 +18,7 @@ function Cone(this: any, scene, uid) {
 
 const proto = Cone.prototype;
 
-proto.handlePick = function(selection) {
+proto.handlePick = function(selection: any) {
     if(selection.object === this.mesh) {
         const selectIndex = selection.index = selection.data.index;
         const xx = this.data.x[selectIndex];
@@ -49,15 +49,15 @@ const axisName2scaleIndex = {xaxis: 0, yaxis: 1, zaxis: 2};
 const anchor2coneOffset = {tip: 1, tail: 0, cm: 0.25, center: 0.5};
 const anchor2coneSpan = {tip: 1, tail: 1, cm: 0.75, center: 0.5};
 
-function convert(scene, trace) {
+function convert(scene: any, trace: any) {
     const sceneLayout = scene.fullSceneLayout;
     const dataScale = scene.dataScale;
     const coneOpts: any = {};
 
-    function toDataCoords(arr, axisName) {
+    function toDataCoords(arr: any, axisName: any) {
         const ax = sceneLayout[axisName];
-        const scale = dataScale[axisName2scaleIndex[axisName]];
-        return simpleMap(arr, function(v) { return ax.d2l(v) * scale; });
+        const scale = dataScale[(axisName2scaleIndex as any)[axisName]];
+        return simpleMap(arr, function(v: any) { return ax.d2l(v) * scale; });
     }
 
     coneOpts.vectors = zip3(
@@ -77,7 +77,7 @@ function convert(scene, trace) {
     const cOpts = extractOpts(trace);
     coneOpts.colormap = parseColorScale(trace);
     coneOpts.vertexIntensityBounds = [cOpts.min / trace._normMax, cOpts.max / trace._normMax];
-    coneOpts.coneOffset = anchor2coneOffset[trace.anchor];
+    coneOpts.coneOffset = (anchor2coneOffset as any)[trace.anchor];
 
     const sizemode = trace.sizemode;
     if(sizemode === 'scaled') {
@@ -106,12 +106,12 @@ function convert(scene, trace) {
     meshData.opacity = trace.opacity;
 
     // stash autorange pad value
-    trace._pad = anchor2coneSpan[trace.anchor] * meshData.vectorScale * meshData.coneScale * trace._normMax;
+    trace._pad = (anchor2coneSpan as any)[trace.anchor] * meshData.vectorScale * meshData.coneScale * trace._normMax;
 
     return meshData;
 }
 
-proto.update = function(data) {
+proto.update = function(data: any) {
     this.data = data;
 
     const meshData = convert(this.scene, data);
@@ -123,13 +123,14 @@ proto.dispose = function() {
     this.mesh.dispose();
 };
 
-function createConeTrace(scene, data) {
+function createConeTrace(scene: any, data: any) {
     const gl = scene.glplot.gl;
 
     const meshData = convert(scene, data);
     const mesh = createConeMesh(gl, meshData);
 
-    const cone = new Cone(scene, data.uid);
+    // @ts-ignore TS7009
+    const cone: any = (new Cone(scene, data.uid) as any);
     cone.mesh = mesh;
     cone.data = data;
     mesh._trace = cone;

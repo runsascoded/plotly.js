@@ -1,6 +1,6 @@
 import Lib from '../../lib/index.js';
 
-export default function convertTextOpts(textposition, iconSize) {
+export default function convertTextOpts(textposition: any, iconSize: any) {
     const parts = textposition.split(' ');
     const vPos = parts[0];
     const hPos = parts[1];

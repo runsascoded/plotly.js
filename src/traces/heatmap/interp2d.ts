@@ -3,13 +3,13 @@ import Lib from '../../lib/index.js';
 const INTERPTHRESHOLD = 1e-2;
 const NEIGHBORSHIFTS = [[-1, 0], [1, 0], [0, -1], [0, 1]];
 
-function correctionOvershoot(maxFractionalChange) {
+function correctionOvershoot(maxFractionalChange: any) {
     // start with less overshoot, until we know it's converging,
     // then ramp up the overshoot for faster convergence
     return 0.5 - 0.25 * Math.min(1, maxFractionalChange * 0.5);
 }
 
-export default function interp2d(z,  emptyPoints) {
+export default function interp2d(z: any,  emptyPoints: any) {
     let maxFractionalChange = 1;
     let i;
 

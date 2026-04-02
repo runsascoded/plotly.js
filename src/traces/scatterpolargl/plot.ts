@@ -10,14 +10,14 @@ const { TOO_MANY_POINTS } = _constants;
 
 const reglPrecompiled: any = {};
 
-export default function plot(gd: GraphDiv, subplot: PlotInfo, cdata) {
+export default function plot(gd: GraphDiv, subplot: PlotInfo, cdata: any) {
     if(!cdata.length) return;
 
     const radialAxis = subplot.radialAxis;
     const angularAxis = subplot.angularAxis;
     const scene = sceneUpdate(gd, subplot);
 
-    cdata.forEach(function(cdscatter) {
+    cdata.forEach(function(cdscatter: any) {
         if(!cdscatter || !cdscatter[0] || !cdscatter[0].trace) return;
         const cd = cdscatter[0];
         const trace = cd.trace;

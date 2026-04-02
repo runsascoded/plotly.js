@@ -140,7 +140,7 @@ function calcSpan(trace: FullTrace, cdi: any, valAxis: FullAxis, bandwidth: numb
     const spanLoose = [cdi.min - 2 * bandwidth, cdi.max + 2 * bandwidth];
     let spanOut;
 
-    function calcSpanItem(index) {
+    function calcSpanItem(index: any) {
         const s = spanIn[index];
         const sc = valAxis.type === 'multicategory' ?
             valAxis.r2c(s) :

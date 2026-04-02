@@ -10,14 +10,14 @@ import type { GraphDiv } from '../../../types/core';
 const strRotate = Lib.strRotate;
 const strTranslate = Lib.strTranslate;
 
-export default function plot(gd: GraphDiv, plotinfo, cdcarpet, carpetLayer) {
+export default function plot(gd: GraphDiv, plotinfo: any, cdcarpet: any, carpetLayer: any) {
     const isStatic = gd._context.staticPlot;
     const xa = plotinfo.xaxis;
     const ya = plotinfo.yaxis;
     const fullLayout = gd._fullLayout;
     const clipLayer = fullLayout._clips;
 
-    Lib.makeTraceGroups(carpetLayer, cdcarpet, 'trace').each(function(this: any, cd) {
+    Lib.makeTraceGroups(carpetLayer, cdcarpet, 'trace').each(function(this: any, cd: any) {
         const axisLayer = select(this);
         const cd0 = cd[0];
         const trace = cd0.trace;
@@ -50,7 +50,7 @@ export default function plot(gd: GraphDiv, plotinfo, cdcarpet, carpetLayer) {
     });
 }
 
-function drawClipPath(trace, t, layer, xaxis, yaxis) {
+function drawClipPath(trace: any, t: any, layer: any, xaxis: any, yaxis: any) {
     let seg, xp, yp, i;
 
     let clip = layer.select('#' + trace._clipPathId);
@@ -87,7 +87,7 @@ function drawGridLines(xaxis: any, yaxis: any, layer: any, axis: any, axisLetter
         .classed(lineClass, true)
         .style('vector-effect', isStatic ? 'none' : 'non-scaling-stroke');
 
-    gridJoin.each(function(this: any, d) {
+    gridJoin.each(function(this: any, d: any) {
         const gridline = d;
         const x = gridline.x;
         const y = gridline.y;
@@ -109,7 +109,7 @@ function drawGridLines(xaxis: any, yaxis: any, layer: any, axis: any, axisLetter
     gridJoin.exit().remove();
 }
 
-function drawAxisLabels(gd, xaxis, yaxis, trace, t, layer, labels, labelClass) {
+function drawAxisLabels(gd: any, xaxis: any, yaxis: any, trace: any, t: any, layer: any, labels: any, labelClass: any) {
     const labelJoin = layer.selectAll('text.' + labelClass).data(labels);
 
     labelJoin.enter().append('text')
@@ -118,7 +118,7 @@ function drawAxisLabels(gd, xaxis, yaxis, trace, t, layer, labels, labelClass) {
     let maxExtent = 0;
     let labelOrientation: any = {};
 
-    labelJoin.each(function(this: any, label, i) {
+    labelJoin.each(function(this: any, label: any, i: any) {
         // Most of the positioning is done in calc_labels. Only the parts that depend upon
         // the screen space representation of the x and y axes are here:
         let orientation;
@@ -164,7 +164,7 @@ function drawAxisLabels(gd, xaxis, yaxis, trace, t, layer, labels, labelClass) {
     return labelOrientation;
 }
 
-function drawAxisTitles(gd, layer, trace, t, xa, ya, labelOrientationA, labelOrientationB) {
+function drawAxisTitles(gd: any, layer: any, trace: any, t: any, xa: any, ya: any, labelOrientationA: any, labelOrientationB: any) {
     let a, b, xy, dxy;
 
     const aMin = Lib.aggNums(Math.min, null, trace.a);
@@ -194,7 +194,7 @@ function drawAxisTitles(gd, layer, trace, t, xa, ya, labelOrientationA, labelOri
 const lineSpacing = alignmentConstants.LINE_SPACING;
 const midShift = ((1 - alignmentConstants.MID_SHIFT) / lineSpacing) + 1;
 
-function drawAxisTitle(gd, layer, trace, t, xy, dxy, axis, xa, ya, labelOrientation, labelClass) {
+function drawAxisTitle(gd: any, layer: any, trace: any, t: any, xy: any, dxy: any, axis: any, xa: any, ya: any, labelOrientation: any, labelClass: any) {
     const data: any[] = [];
     if(axis.title.text) data.push(axis.title.text);
     const titleJoin = layer.selectAll('text.' + labelClass).data(data);

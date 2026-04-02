@@ -93,8 +93,8 @@ function prepSelect(evt: any, startX: any, startY: any, dragOptions: any, mode: 
     const subtract = evt.altKey &&
         !(drawMode(mode) && isOpenMode);
 
-    let filterPoly, selectionTesters, mergedPolygons, currentPolygon;
-    let i, searchInfo, eventData;
+    let filterPoly: any, selectionTesters: any, mergedPolygons: any, currentPolygon: any;
+    let i, searchInfo, eventData: any;
 
     coerceSelectionsCache(evt, gd, dragOptions);
 
@@ -276,8 +276,8 @@ function prepSelect(evt: any, startX: any, startY: any, dragOptions: any, mode: 
 
                 currentPolygon.xmin = isLineOrEllipse ? x1 : Math.min(x0, x1);
                 currentPolygon.xmax = isLineOrEllipse ? x1 : Math.max(x0, x1);
-                currentPolygon.ymin = Math.min(start, end);
-                currentPolygon.ymax = Math.max(start, end);
+                currentPolygon.ymin = Math.min(start as any, end);
+                currentPolygon.ymax = Math.max(start as any, end);
                 // extras to guide users in keeping a straight selection
                 corners.attr('d', 'M' + currentPolygon.xmin + ',' + (y0 - MINSELECT) +
                     'h-4v' + (2 * MINSELECT) + 'h4Z' +
@@ -289,8 +289,8 @@ function prepSelect(evt: any, startX: any, startY: any, dragOptions: any, mode: 
                     handleEllipse(isEllipse, [start, y1], [end, y1]) : // using y1 instead of y0 allows adjusting the line while drawing
                     [[start, y0], [start, y1], [end, y1], [end, y0]]; // make a horizontal box
 
-                currentPolygon.xmin = Math.min(start, end);
-                currentPolygon.xmax = Math.max(start, end);
+                currentPolygon.xmin = Math.min(start as any, end);
+                currentPolygon.xmax = Math.max(start as any, end);
                 currentPolygon.ymin = isLineOrEllipse ? y1 : Math.min(y0, y1);
                 currentPolygon.ymax = isLineOrEllipse ? y1 : Math.max(y0, y1);
                 corners.attr('d', 'M' + (x0 - MINSELECT) + ',' + currentPolygon.ymin +
@@ -1070,7 +1070,7 @@ function convertPoly(polygonsIn: any, isOpenMode: any) { // add M and L command 
 }
 
 function _doSelect(selectionTesters: any, searchTraces: any) {
-    let allSelections = [];
+    let allSelections: any[] = [];
 
     let thisSelection;
     const traceSelections: any[] = [];
@@ -1098,8 +1098,8 @@ function reselect(gd: GraphDiv, mayEmitSelected: any, selectionTesters?: any, se
         yRef = dragOptions.yaxes[0]._id;
     }
 
-    let allSelections = [];
-    let allSearchTraces = [];
+    let allSelections: any[] = [];
+    let allSearchTraces: any[] = [];
 
     // select layout.selection polygons
     let layoutPolygons = getLayoutPolygons(gd);
@@ -1360,7 +1360,7 @@ function getLayoutPolygons(gd: GraphDiv, onlyActiveOnes?: any) {
 
         let xmin, xmax, ymin, ymax;
 
-        let polygon;
+        let polygon: any;
         if(selection.type === 'rect') {
             polygon = [];
 
@@ -1517,14 +1517,14 @@ function makeFillRangeItems(allAxes: any) {
                 const max = poly[axLetter + 'max'];
 
                 if(min !== undefined && max !== undefined) {
-                    range[id] = [
+                    (range as any)[id] = [
                         p2r(ax, min),
                         p2r(ax, max)
                     ].sort(ascending);
                 }
             } else {
                 if(!lassoPoints) lassoPoints = {};
-                lassoPoints[id] = poly.map(axValue(ax));
+                (lassoPoints as any)[id] = poly.map(axValue(ax));
             }
         }
 

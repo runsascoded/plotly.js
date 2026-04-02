@@ -4,12 +4,12 @@ import parcoordsPlot from './plot.js';
 import xmlnsNamespaces from '../../constants/xmlns_namespaces.js';
 export const name = 'parcoords';
 
-export const plot = function(gd) {
+export const plot = function(gd: any) {
     const calcData = getModuleCalcData(gd.calcdata, 'parcoords')[0];
     if(calcData.length) parcoordsPlot(gd, calcData);
 };
 
-export const clean = function(newFullData, newFullLayout, oldFullData, oldFullLayout) {
+export const clean = function(newFullData: any, newFullLayout: any, oldFullData: any, oldFullLayout: any) {
     const hadParcoords = (oldFullLayout._has && oldFullLayout._has('parcoords'));
     const hasParcoords = (newFullLayout._has && newFullLayout._has('parcoords'));
 
@@ -19,10 +19,10 @@ export const clean = function(newFullData, newFullLayout, oldFullData, oldFullLa
     }
 };
 
-export const toSVG = function(gd) {
+export const toSVG = function(gd: any) {
     const imageRoot = gd._fullLayout._glimages;
     const root = select(gd).selectAll('.svg-container');
-    const canvases = root.filter(function(d, i) {return i === root.size() - 1;})
+    const canvases = root.filter(function(d: any, i: any) {return i === root.size() - 1;})
         .selectAll('.gl-canvas-context, .gl-canvas-focus');
 
     function canvasToImage(this: any) {

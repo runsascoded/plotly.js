@@ -3,9 +3,9 @@ import Lib from '../../lib/index.js';
 import constraintMapping from './constraint_mapping.js';
 import endPlus from './end_plus.js';
 
-export default function emptyPathinfo(contours,  plotinfo: PlotInfo,  cd0) {
+export default function emptyPathinfo(contours: any,  plotinfo: PlotInfo,  cd0: any) {
     const contoursFinal = (contours.type === 'constraint') ?
-        constraintMapping[contours._operation](contours.value) :
+        (constraintMapping as any)[contours._operation](contours.value) :
         contours;
 
     const cs = contoursFinal.size;

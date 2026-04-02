@@ -10,13 +10,13 @@ const numberFormat = Lib.numberFormat;
 
 const _ = Lib._;
 
-function renderableValuePresent(d) {return d !== '';}
+function renderableValuePresent(d: any) {return d !== '';}
 
-function ownTrace(selection, d) {
-    return selection.filter(function(s) {return s.key === d.traceId;});
+function ownTrace(selection: any, d: any) {
+    return selection.filter(function(s: any) {return s.key === d.traceId;});
 }
 
-function makeTranslucent(element, alpha) {
+function makeTranslucent(element: any, alpha: any) {
     select(element)
         .select('path')
         .style('fill-opacity', alpha);
@@ -25,25 +25,25 @@ function makeTranslucent(element, alpha) {
         .style('fill-opacity', alpha);
 }
 
-function makeTextContrasty(element) {
+function makeTextContrasty(element: any) {
     select(element)
         .select('text.name')
         .style('fill', 'black');
 }
 
-function relatedLinks(d) {
-    return function(l) {
+function relatedLinks(d: any) {
+    return function(l: any) {
         return d.node.sourceLinks.indexOf(l.link) !== -1 || d.node.targetLinks.indexOf(l.link) !== -1;
     };
 }
 
-function relatedNodes(l) {
-    return function(d) {
+function relatedNodes(l: any) {
+    return function(d: any) {
         return d.node.sourceLinks.indexOf(l.link) !== -1 || d.node.targetLinks.indexOf(l.link) !== -1;
     };
 }
 
-function nodeHoveredStyle(sankeyNode, d, sankey) {
+function nodeHoveredStyle(sankeyNode: any, d: any, sankey: any) {
     if(d && sankey) {
         ownTrace(sankey, d)
             .selectAll('.' + cn.sankeyLink)
@@ -52,7 +52,7 @@ function nodeHoveredStyle(sankeyNode, d, sankey) {
     }
 }
 
-function nodeNonHoveredStyle(sankeyNode, d, sankey) {
+function nodeNonHoveredStyle(sankeyNode: any, d: any, sankey: any) {
     if(d && sankey) {
         ownTrace(sankey, d)
             .selectAll('.' + cn.sankeyLink)
@@ -61,28 +61,28 @@ function nodeNonHoveredStyle(sankeyNode, d, sankey) {
     }
 }
 
-function linkHoveredStyle(d, sankey, visitNodes, sankeyLink) {
-    sankeyLink.style('fill', function(l) {
+function linkHoveredStyle(d: any, sankey: any, visitNodes: any, sankeyLink: any) {
+    sankeyLink.style('fill', function(l: any) {
         if(!l.link.concentrationscale) {
             return l.tinyColorHoverHue;
         }
-    }).style('fill-opacity', function(l) {
+    }).style('fill-opacity', function(l: any) {
         if(!l.link.concentrationscale) {
             return l.tinyColorHoverAlpha;
         }
     });
 
-    sankeyLink.each(function(curLink) {
+    sankeyLink.each(function(curLink: any) {
         const label = curLink.link.label;
         if(label !== '') {
             ownTrace(sankey, d)
                 .selectAll('.' + cn.sankeyLink)
-                .filter(function(l) {return l.link.label === label;})
-                .style('fill', function(l) {
+                .filter(function(l: any) {return l.link.label === label;})
+                .style('fill', function(l: any) {
                     if(!l.link.concentrationscale) {
                         return l.tinyColorHoverHue;
                     }
-                }).style('fill-opacity', function(l) {
+                }).style('fill-opacity', function(l: any) {
                     if(!l.link.concentrationscale) {
                         return l.tinyColorHoverAlpha;
                     }
@@ -98,21 +98,21 @@ function linkHoveredStyle(d, sankey, visitNodes, sankeyLink) {
     }
 }
 
-function linkNonHoveredStyle(d, sankey, visitNodes, sankeyLink) {
-    sankeyLink.style('fill', function(l) {
+function linkNonHoveredStyle(d: any, sankey: any, visitNodes: any, sankeyLink: any) {
+    sankeyLink.style('fill', function(l: any) {
         return l.tinyColorHue;
-    }).style('fill-opacity', function(l) {
+    }).style('fill-opacity', function(l: any) {
         return l.tinyColorAlpha;
     });
 
-    sankeyLink.each(function(curLink) {
+    sankeyLink.each(function(curLink: any) {
         const label = curLink.link.label;
         if(label !== '') {
             ownTrace(sankey, d)
                 .selectAll('.' + cn.sankeyLink)
-                .filter(function(l) {return l.link.label === label;})
-                .style('fill', function(l) {return l.tinyColorHue;})
-                .style('fill-opacity', function(l) {return l.tinyColorAlpha;});
+                .filter(function(l: any) {return l.link.label === label;})
+                .style('fill', function(l: any) {return l.tinyColorHue;})
+                .style('fill-opacity', function(l: any) {return l.tinyColorAlpha;});
         }
     });
 
@@ -125,7 +125,7 @@ function linkNonHoveredStyle(d, sankey, visitNodes, sankeyLink) {
 }
 
 // does not support array values for now
-function castHoverOption(trace, attr) {
+function castHoverOption(trace: any, attr: any) {
     const labelOpts = trace.hoverlabel || {};
     const val = Lib.nestedProperty(labelOpts, attr).get();
     return Array.isArray(val) ? false : val;
@@ -152,14 +152,14 @@ export default function plot(gd: GraphDiv, calcData: any[]) {
         }
     }
 
-    const linkSelect = function(element, d) {
+    const linkSelect = function(element: any, d: any) {
         const evt = d.link;
         evt.originalEvent = event;
         gd._hoverdata = [evt];
         Fx.click(gd, { target: true } as any);
     };
 
-    const linkHover = function(element, d, sankey) {
+    const linkHover = function(element: any, d: any, sankey: any) {
         if(gd._fullLayout.hovermode === false) return;
         select(element).call(linkHoveredStyle.bind(0, d, sankey, true));
         if(d.link.trace.link.hoverinfo !== 'skip') {
@@ -177,14 +177,14 @@ export default function plot(gd: GraphDiv, calcData: any[]) {
     const incomingLabel = _(gd, 'incoming flow count:') + ' ';
     const outgoingLabel = _(gd, 'outgoing flow count:') + ' ';
 
-    const linkHoverFollow = function(element, d) {
+    const linkHoverFollow = function(element: any, d: any) {
         if(gd._fullLayout.hovermode === false) return;
         let obj = d.link.trace.link;
         if(obj.hoverinfo === 'none' || obj.hoverinfo === 'skip') return;
 
         const hoverItems: any[] = [];
 
-        function hoverCenterPosition(link) {
+        function hoverCenterPosition(link: any) {
             let hoverCenterX, hoverCenterY;
             if(link.circular) {
                 hoverCenterX = (link.circularPathData.leftInnerExtent + link.circularPathData.rightInnerExtent) / 2;
@@ -258,7 +258,7 @@ export default function plot(gd: GraphDiv, calcData: any[]) {
         });
     };
 
-    const linkUnhover = function(element, d, sankey) {
+    const linkUnhover = function(element: any, d: any, sankey: any) {
         if(gd._fullLayout.hovermode === false) return;
         select(element).call(linkNonHoveredStyle.bind(0, d, sankey, true));
         if(d.link.trace.link.hoverinfo !== 'skip') {
@@ -272,7 +272,7 @@ export default function plot(gd: GraphDiv, calcData: any[]) {
         Fx.loneUnhover(fullLayout._hoverlayer.node());
     };
 
-    const nodeSelect = function(element, d, sankey) {
+    const nodeSelect = function(element: any, d: any, sankey: any) {
         const evt = d.node;
         evt.originalEvent = event;
         gd._hoverdata = [evt];
@@ -280,7 +280,7 @@ export default function plot(gd: GraphDiv, calcData: any[]) {
         Fx.click(gd, { target: true } as any);
     };
 
-    const nodeHover = function(element, d, sankey) {
+    const nodeHover = function(element: any, d: any, sankey: any) {
         if(gd._fullLayout.hovermode === false) return;
         select(element).call(nodeHoveredStyle, d, sankey);
         if(d.node.trace.node.hoverinfo !== 'skip') {
@@ -292,7 +292,7 @@ export default function plot(gd: GraphDiv, calcData: any[]) {
         }
     };
 
-    const nodeHoverFollow = function(element, d) {
+    const nodeHoverFollow = function(element: any, d: any) {
         if(gd._fullLayout.hovermode === false) return;
 
         const obj = d.node.trace.node;
@@ -349,7 +349,7 @@ export default function plot(gd: GraphDiv, calcData: any[]) {
         makeTextContrasty(tooltip);
     };
 
-    const nodeUnhover = function(element, d, sankey) {
+    const nodeUnhover = function(element: any, d: any, sankey: any) {
         if(gd._fullLayout.hovermode === false) return;
         select(element).call(nodeNonHoveredStyle, d, sankey);
         if(d.node.trace.node.hoverinfo !== 'skip') {

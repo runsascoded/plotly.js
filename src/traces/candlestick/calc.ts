@@ -4,7 +4,7 @@ import alignPeriod from '../../plots/cartesian/align_period.js';
 import _calc from '../ohlc/calc.js';
 const { calcCommon } = _calc;
 
-export default function(gd, trace) {
+export default function(gd: any, trace: any) {
     const fullLayout = gd._fullLayout;
     const xa = Axes.getFromId(gd, trace.xaxis);
     const ya = Axes.getFromId(gd, trace.yaxis);
@@ -29,7 +29,7 @@ export default function(gd, trace) {
     }
 }
 
-function ptFunc(o, h, l, c) {
+function ptFunc(o: any, h: any, l: any, c: any) {
     return {
         min: l,
         q1: Math.min(o, c),

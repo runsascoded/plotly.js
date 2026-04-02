@@ -13,7 +13,7 @@ const degrees = 180 / Math.PI;
 const zoomstartStyle = {cursor: 'pointer'};
 const zoomendStyle = {cursor: 'auto'};
 
-function createGeoZoom(geo, geoLayout) {
+function createGeoZoom(geo: any, geoLayout: any) {
     const projection = geo.projection;
     let zoomConstructor;
 
@@ -33,14 +33,14 @@ function createGeoZoom(geo, geoLayout) {
 export default createGeoZoom;
 
 // common to all zoom types
-function initZoom(geo, projection) {
+function initZoom(geo: any, projection: any) {
     return d3Zoom()
         .translate(projection.translate())
         .scale(projection.scale());
 }
 
 // sync zoom updates with user & full layout
-function sync(geo, projection, cb) {
+function sync(geo: any, projection: any, cb: any) {
     const id = geo.id;
     const gd = geo.graphDiv;
     const layout = gd.layout;
@@ -51,7 +51,7 @@ function sync(geo, projection, cb) {
     const preGUI: any = {};
     const eventData: any = {};
 
-    function set(propStr, val) {
+    function set(propStr: any, val: any) {
         preGUI[id + '.' + propStr] = Lib.nestedProperty(userOpts, propStr).get();
         Registry.call('_storeDirectGUIEdit', layout, fullLayout._preGUI, preGUI);
 
@@ -70,7 +70,7 @@ function sync(geo, projection, cb) {
 }
 
 // zoom for scoped projections
-function zoomScoped(geo, projection) {
+function zoomScoped(geo: any, projection: any) {
     const zoom = initZoom(geo, projection);
 
     function handleZoomstart(this: any) {
@@ -91,7 +91,7 @@ function zoomScoped(geo, projection) {
         });
     }
 
-    function syncCb(set) {
+    function syncCb(set: any) {
         const center = projection.invert(geo.midPt);
 
         set('center.lon', center[0]);
@@ -112,17 +112,17 @@ function zoomScoped(geo, projection) {
 }
 
 // zoom for non-clipped projections
-function zoomNonClipped(geo, projection) {
+function zoomNonClipped(geo: any, projection: any) {
     const zoom = initZoom(geo, projection);
 
     const INSIDETOLORANCEPXS = 2;
 
-    let mouse0, rotate0, translate0, lastRotate, zoomPoint,
-        mouse1, rotate1, point1, didZoom;
+    let mouse0: any, rotate0: any, translate0: any, lastRotate: any, zoomPoint: any,
+        mouse1, rotate1, point1, didZoom: any;
 
-    function position(x) { return projection.invert(x); }
+    function position(x: any) { return projection.invert(x); }
 
-    function outside(x) {
+    function outside(x: any) {
         const pos = position(x);
         if(!pos) return true;
 
@@ -183,7 +183,7 @@ function zoomNonClipped(geo, projection) {
         if(didZoom) sync(geo, projection, syncCb);
     }
 
-    function syncCb(set) {
+    function syncCb(set: any) {
         const rotate = projection.rotate();
         const center = projection.invert(geo.midPt);
 
@@ -202,16 +202,16 @@ function zoomNonClipped(geo, projection) {
 
 // zoom for clipped projections
 // inspired by https://www.jasondavies.com/maps/d3Geo.zoom.js
-function zoomClipped(geo, projection) {
+function zoomClipped(geo: any, projection: any) {
     const view: any = {r: projection.rotate(), k: projection.scale()};
     const zoom = initZoom(geo, projection);
     const event = d3eventDispatch(zoom, 'zoomstart', 'zoom', 'zoomend');
     let zooming = 0;
     const zoomOn = zoom.on;
 
-    let zoomPoint;
+    let zoomPoint: any;
 
-    zoom.on('zoomstart', function(this: any, event) {
+    zoom.on('zoomstart', function(this: any, event: any) {
         select(this).style(zoomstartStyle);
 
         let mouse0 = pointer(event, this);
@@ -222,7 +222,7 @@ function zoomClipped(geo, projection) {
 
         zoomPoint = position(projection, mouse0);
 
-        zoomOn.call(zoom, 'zoom', function(this: any, event) {
+        zoomOn.call(zoom, 'zoom', function(this: any, event: any) {
             const mouse1 = pointer(event, this);
 
             projection.scale(view.k = event.scale);
@@ -265,13 +265,13 @@ function zoomClipped(geo, projection) {
 
         zoomstarted(event.of(this, arguments));
     })
-    .on('zoomend', function(this: any, event) {
+    .on('zoomend', function(this: any, event: any) {
         select(this).style(zoomendStyle);
         zoomOn.call(zoom, 'zoom', null);
         zoomended(event.of(this, arguments));
         sync(geo, projection, syncCb);
     })
-    .on('zoom.redraw', function(event) {
+    .on('zoom.redraw', function(event: any) {
         geo.render(true);
 
         const _rotate = projection.rotate();
@@ -282,19 +282,19 @@ function zoomClipped(geo, projection) {
         });
     });
 
-    function zoomstarted(dispatch) {
+    function zoomstarted(dispatch: any) {
         if(!zooming++) dispatch({type: 'zoomstart'});
     }
 
-    function zoomed(dispatch) {
+    function zoomed(dispatch: any) {
         dispatch({type: 'zoom'});
     }
 
-    function zoomended(dispatch) {
+    function zoomended(dispatch: any) {
         if(!--zooming) dispatch({type: 'zoomend'});
     }
 
-    function syncCb(set) {
+    function syncCb(set: any) {
         const _rotate = projection.rotate();
         set('projection.rotation.lon', -_rotate[0]);
         set('projection.rotation.lat', -_rotate[1]);
@@ -305,12 +305,12 @@ function zoomClipped(geo, projection) {
 
 // -- helper functions for zoomClipped
 
-function position(projection, point) {
+function position(projection: any, point: any) {
     const spherical = projection.invert(point);
     return spherical && isFinite(spherical[0]) && isFinite(spherical[1]) && cartesian(spherical);
 }
 
-function quaternionFromEuler(euler) {
+function quaternionFromEuler(euler: any) {
     const lambda = 0.5 * euler[0] * radians;
     const phi = 0.5 * euler[1] * radians;
     const gamma = 0.5 * euler[2] * radians;
@@ -328,7 +328,7 @@ function quaternionFromEuler(euler) {
     ];
 }
 
-function multiply(a, b) {
+function multiply(a: any, b: any) {
     const a0 = a[0];
     const a1 = a[1];
     const a2 = a[2];
@@ -345,7 +345,7 @@ function multiply(a, b) {
     ];
 }
 
-function rotateBetween(a, b) {
+function rotateBetween(a: any, b: any) {
     if(!a || !b) return;
     const axis = cross(a, b);
     const norm = Math.sqrt(dot(axis, axis));
@@ -363,7 +363,7 @@ function rotateBetween(a, b) {
 //     but set roll (output[2]) equal to roll0
 //     note that this doesn't depend on the particular projection,
 //     just on the rotation angles
-function unRoll(rotateAngles, pt, lastRotate) {
+function unRoll(rotateAngles: any, pt: any, lastRotate: any) {
     // calculate the fixed point transformed by these Euler angles
     // but with the desired roll undone
     let ptRotated = rotateCartesian(pt, 2, rotateAngles[0]);
@@ -405,21 +405,21 @@ function unRoll(rotateAngles, pt, lastRotate) {
     else return [newYaw2, newPitch2, lastRotate[2]];
 }
 
-function angleDistance(yaw0, pitch0, yaw1, pitch1) {
+function angleDistance(yaw0: any, pitch0: any, yaw1: any, pitch1: any) {
     const dYaw = angleMod(yaw1 - yaw0);
     const dPitch = angleMod(pitch1 - pitch0);
     return Math.sqrt(dYaw * dYaw + dPitch * dPitch);
 }
 
 // reduce an angle in degrees to [-180,180]
-function angleMod(angle) {
+function angleMod(angle: any) {
     return (angle % 360 + 540) % 360 - 180;
 }
 
 // rotate a cartesian vector
 // axis is 0 (x), 1 (y), or 2 (z)
 // angle is in degrees
-function rotateCartesian(vector, axis, angle) {
+function rotateCartesian(vector: any, axis: any, angle: any) {
     const angleRads = angle * radians;
     const vectorOut = vector.slice();
     const ax1 = (axis === 0) ? 1 : 0;
@@ -432,7 +432,7 @@ function rotateCartesian(vector, axis, angle) {
 
     return vectorOut;
 }
-function eulerFromQuaternion(q) {
+function eulerFromQuaternion(q: any) {
     return [
         Math.atan2(2 * (q[0] * q[1] + q[2] * q[3]), 1 - 2 * (q[1] * q[1] + q[2] * q[2])) * degrees,
         Math.asin(Math.max(-1, Math.min(1, 2 * (q[0] * q[2] - q[3] * q[1])))) * degrees,
@@ -440,7 +440,7 @@ function eulerFromQuaternion(q) {
     ];
 }
 
-function cartesian(spherical) {
+function cartesian(spherical: any) {
     const lambda = spherical[0] * radians;
     const phi = spherical[1] * radians;
     const cosPhi = Math.cos(phi);
@@ -451,13 +451,13 @@ function cartesian(spherical) {
     ];
 }
 
-function dot(a, b) {
+function dot(a: any, b: any) {
     let s = 0;
     for(let i = 0, n = a.length; i < n; ++i) s += a[i] * b[i];
     return s;
 }
 
-function cross(a, b) {
+function cross(a: any, b: any) {
     return [
         a[1] * b[2] - a[2] * b[1],
         a[2] * b[0] - a[0] * b[2],

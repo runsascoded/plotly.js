@@ -88,7 +88,8 @@ export default function draw(gd: GraphDiv) {
 
     // setup scrollbox
     const scrollBoxId = 'updatemenus' + fullLayout._uid;
-    const scrollBox = new ScrollBox(gd, gButton, scrollBoxId);
+    // @ts-ignore TS7009
+    const scrollBox: any = (new ScrollBox(gd, gButton, scrollBoxId) as any);
 
     // remove exiting header, remove dropped buttons and reset margins
     if(headerGroups.enter().size()) {
@@ -185,7 +186,7 @@ function drawHeader(gd: GraphDiv, gHeader: any, gButton: any, scrollBox: any, me
     const arrow = Lib.ensureSingle(gHeader, 'text', constants.headerArrowClassName, function(s: any) {
         s.attr('text-anchor', 'end')
             .call(font, menuOpts.font)
-            .text(constants.arrowSymbol[menuOpts.direction]);
+            .text((constants.arrowSymbol as any)[menuOpts.direction]);
     });
 
     arrow.attr({

@@ -155,7 +155,7 @@ const paletteTextureConfig = {
     min: 'nearest'
 };
 
-function ensureDraw(regl) {
+function ensureDraw(regl: any) {
     regl.read({
         x: 0,
         y: 0,
@@ -165,17 +165,17 @@ function ensureDraw(regl) {
     });
 }
 
-function clear(regl, x, y, width, height) {
+function clear(regl: any, x: any, y: any, width: any, height: any) {
     const gl = regl._gl;
     gl.enable(gl.SCISSOR_TEST);
     gl.scissor(x, y, width, height);
     regl.clear({color: [0, 0, 0, 0], depth: 1}); // clearing is done in scissored panel only
 }
 
-function renderBlock(regl, glAes, renderState, blockLineCount, sampleCount, item) {
+function renderBlock(regl: any, glAes: any, renderState: any, blockLineCount: any, sampleCount: any, item: any) {
     const rafKey = item.key;
 
-    function render(blockNumber) {
+    function render(blockNumber: any) {
         const count = Math.min(blockLineCount, sampleCount - blockNumber * blockLineCount);
 
         if(blockNumber === 0) {
@@ -211,14 +211,14 @@ function renderBlock(regl, glAes, renderState, blockLineCount, sampleCount, item
     render(0);
 }
 
-function adjustDepth(d) {
+function adjustDepth(d: any) {
     // WebGL matrix operations use floats with limited precision, potentially causing a number near a border of [0, 1]
     // to end up slightly outside the border. With an epsilon, we reduce the chance that a line gets clipped by the
     // near or the far plane.
     return Math.max(depthLimitEpsilon, Math.min(1 - depthLimitEpsilon, d));
 }
 
-function palette(unitToColor, opacity) {
+function palette(unitToColor: any, opacity: any) {
     const result = new Array(256);
     for(let i = 0; i < 256; i++) {
         result[i] = unitToColor(i / 255).concat(opacity);
@@ -231,11 +231,11 @@ function palette(unitToColor, opacity) {
 // with the end result that each line will be of a unique color, making it possible for the pick handler
 // to uniquely identify which line is hovered over (bijective mapping).
 // The inverse, i.e. readPixel is invoked from 'parcoords.js'
-function calcPickColor(i, rgbIndex) {
+function calcPickColor(i: any, rgbIndex: any) {
     return (i >>> 8 * rgbIndex) % 256 / 255;
 }
 
-function makePoints(sampleCount, dims, color) {
+function makePoints(sampleCount: any, dims: any, color: any) {
     const points = new Array(sampleCount * (maxDim + 4));
     let n = 0;
     for(let i = 0; i < sampleCount; i++) {
@@ -250,7 +250,7 @@ function makePoints(sampleCount, dims, color) {
     return points;
 }
 
-function makeVecAttr(vecIndex, sampleCount, points) {
+function makeVecAttr(vecIndex: any, sampleCount: any, points: any) {
     const pointPairs = new Array(sampleCount * 8);
     let n = 0;
     for(let i = 0; i < sampleCount; i++) {
@@ -268,22 +268,22 @@ function makeVecAttr(vecIndex, sampleCount, points) {
     return pointPairs;
 }
 
-function pad2(num) {
+function pad2(num: any) {
     const s = '0' + num;
     return s.slice(-2);
 }
 
-function getAttrName(i) {
+function getAttrName(i: any) {
     return (i < maxDim) ? 'p' + pad2(i + 1) + '_' + pad2(i + 4) : 'colors';
 }
 
-function setAttributes(attributes, sampleCount, points) {
+function setAttributes(attributes: any, sampleCount: any, points: any) {
     for(let i = 0; i <= maxDim; i += 4) {
         attributes[getAttrName(i)](makeVecAttr(i / 4, sampleCount, points));
     }
 }
 
-function emptyAttributes(regl) {
+function emptyAttributes(regl: any) {
     const attributes: any = {};
     for(let i = 0; i <= maxDim; i += 4) {
         attributes[getAttrName(i)] = regl.buffer({usage: 'dynamic', type: 'float', data: new Uint8Array(0)});
@@ -292,8 +292,8 @@ function emptyAttributes(regl) {
 }
 
 function makeItem(
-    model, leftmost, rightmost, itemNumber, i0, i1, x, y, panelSizeX, panelSizeY,
-    crossfilterDimensionIndex, drwLayer, constraints, plotGlPixelRatio
+    model: any, leftmost: any, rightmost: any, itemNumber: any, i0: any, i1: any, x: any, y: any, panelSizeX: any, panelSizeY: any,
+    crossfilterDimensionIndex: any, drwLayer: any, constraints: any, plotGlPixelRatio: any
 ) {
     const dims: any[][] = [[], []];
     for(let k = 0; k < 64; k++) {
@@ -357,7 +357,7 @@ function makeItem(
     return itemModel;
 }
 
-function expandedPixelRange(bounds) {
+function expandedPixelRange(bounds: any) {
     const dh = maskHeight - 1;
     const a = Math.max(0, Math.floor(bounds[0] * dh), 0);
     const b = Math.min(dh, Math.ceil(bounds[1] * dh), dh);
@@ -367,7 +367,7 @@ function expandedPixelRange(bounds) {
     ];
 }
 
-export default function(canvasGL, d) {
+export default function(canvasGL: any, d: any) {
     // context & pick describe which canvas we're talking about - won't change with new data
     const isContext = d.context;
     const isPick = d.pick;
@@ -391,12 +391,12 @@ export default function(canvasGL, d) {
     };
 
     // state to be set by update and used later
-    let model;
+    let model: any;
     let vm;
-    let initialDims;
-    let sampleCount;
+    let initialDims: any;
+    let sampleCount: any;
     const attributes = emptyAttributes(regl);
-    let maskTexture;
+    let maskTexture: any;
     let paletteTexture = regl.texture(paletteTextureConfig);
 
     const prevAxisOrder: any[] = [];
@@ -491,14 +491,14 @@ export default function(canvasGL, d) {
         count: regl.prop('count')
     });
 
-    function update(dNew) {
+    function update(dNew: any) {
         model = dNew.model;
         vm = dNew.viewModel;
         initialDims = vm.dimensions.slice();
         sampleCount = initialDims[0] ? initialDims[0].values.length : 0;
 
         const lines = model.lines;
-        const color = isPick ? lines.color.map(function(_, i) {return i / lines.color.length;}) : lines.color;
+        const color = isPick ? lines.color.map(function(_: any, i: any) {return i / lines.color.length;}) : lines.color;
 
         const points = makePoints(sampleCount, initialDims, color);
         setAttributes(attributes, sampleCount, points);
@@ -510,7 +510,7 @@ export default function(canvasGL, d) {
         }
     }
 
-    function makeConstraints(isContext) {
+    function makeConstraints(isContext: any) {
         let i, j, k;
 
         const limits: any[][] = [[], []];
@@ -573,7 +573,7 @@ export default function(canvasGL, d) {
         };
     }
 
-    function renderGLParcoords(panels, setChanged, clearOnly) {
+    function renderGLParcoords(panels: any, setChanged: any, clearOnly: any) {
         const panelCount = panels.length;
         let i;
 
@@ -634,7 +634,7 @@ export default function(canvasGL, d) {
         }
     }
 
-    function readPixel(canvasX, canvasY) {
+    function readPixel(canvasX: any, canvasY: any) {
         regl.read({
             x: canvasX,
             y: canvasY,
@@ -645,7 +645,7 @@ export default function(canvasGL, d) {
         return dataPixel;
     }
 
-    function readPixels(canvasX, canvasY, width, height) {
+    function readPixels(canvasX: any, canvasY: any, width: any, height: any) {
         const pixelArray = new Uint8Array(4 * width * height);
         regl.read({
             x: canvasX,

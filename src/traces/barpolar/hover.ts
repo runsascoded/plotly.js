@@ -8,7 +8,7 @@ import _helpers from '../../plots/polar/helpers.js';
 const { isPtInsidePolygon } = _helpers;
 const fillText = Lib.fillText;
 
-export default function hoverPoints(pointData, xval, yval) {
+export default function hoverPoints(pointData: any, xval: any, yval: any) {
     const cd = pointData.cd;
     const trace = cd[0].trace;
 
@@ -28,7 +28,7 @@ export default function hoverPoints(pointData, xval, yval) {
         thetaVal += Math.PI;
     }
 
-    const distFn = function(di) {
+    const distFn = function(di: any) {
         if(inboxFn(rVal, thetaVal, [di.rp0, di.rp1], [di.thetag0, di.thetag1], vangles)) {
             return maxHoverDistance +
                 // add a little to the pseudo-distance for wider bars, so that like scatter,

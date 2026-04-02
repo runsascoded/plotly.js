@@ -200,9 +200,9 @@ function setupDragElement(gd: GraphDiv, shapePath: any, shapeOptions: any, index
 
     const modifyItem = editHelpers.modifyItem;
 
-    let x0, y0, x1, y1, xAnchor, yAnchor;
-    let n0, s0, w0, e0, optN, optS, optW, optE;
-    let pathIn;
+    let x0: any, y0: any, x1: any, y1: any, xAnchor: any, yAnchor: any;
+    let n0: any, s0: any, w0: any, e0: any, optN: any, optS: any, optW: any, optE: any;
+    let pathIn: any;
 
     const shapeGroup = select(shapePath.node().parentNode);
 
@@ -234,7 +234,7 @@ function setupDragElement(gd: GraphDiv, shapePath: any, shapeOptions: any, index
         doneFn: endDrag,
         clickFn: abortDrag
     };
-    let dragMode;
+    let dragMode: any;
 
     dragElement.init(dragOptions);
 
@@ -600,9 +600,9 @@ function movePath(pathIn: any, moveX: any, moveY: any) {
     return pathIn.replace(constants.segmentRE, function(segment: any) {
         let paramNumber = 0;
         const segmentType = segment.charAt(0);
-        const xParams = constants.paramIsX[segmentType];
-        const yParams = constants.paramIsY[segmentType];
-        const nParams = constants.numParams[segmentType];
+        const xParams = (constants.paramIsX as any)[segmentType];
+        const yParams = (constants.paramIsY as any)[segmentType];
+        const nParams = (constants.numParams as any)[segmentType];
 
         const paramString = segment.slice(1).replace(constants.paramRE, function(param: any) {
             if(paramNumber >= nParams) return param;

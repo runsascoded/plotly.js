@@ -22,7 +22,7 @@ export default function supplyLayoutDefaults(layoutIn: any, layoutOut: FullLayou
     });
 }
 
-function handleTernaryDefaults(ternaryLayoutIn, ternaryLayoutOut, coerce, options) {
+function handleTernaryDefaults(ternaryLayoutIn: any, ternaryLayoutOut: any, coerce: any, options: any) {
     const bgColor = coerce('bgcolor');
     const sum = coerce('sum');
     options.bgColor = Color.combine(bgColor, options.paper_bgcolor);
@@ -56,7 +56,7 @@ function handleTernaryDefaults(ternaryLayoutIn, ternaryLayoutOut, coerce, option
     }
 }
 
-function handleAxisDefaults(containerIn, containerOut, options, ternaryLayoutOut) {
+function handleAxisDefaults(containerIn: any, containerOut: any, options: any, ternaryLayoutOut: any) {
     const axAttrs = layoutAttributes[containerOut._name];
 
     function coerce(attr: string, dflt?: any) {

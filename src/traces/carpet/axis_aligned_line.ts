@@ -1,8 +1,8 @@
 import _index from '../../lib/index.js';
 const { isArrayOrTypedArray } = _index;
 
-export default function(carpet, carpetcd, a, b) {
-    let idx, tangent, tanIsoIdx, tanIsoPar, segment, refidx;
+export default function(carpet: any, carpetcd: any, a: any, b: any) {
+    let idx, tangent, tanIsoIdx: any, tanIsoPar: any, segment, refidx;
     let p0, p1, v0, v1, start, end, range;
 
     const axis = isArrayOrTypedArray(a) ? 'a' : 'b';
@@ -15,18 +15,18 @@ export default function(carpet, carpetcd, a, b) {
     const m = axis === 'a' ? carpetcd.b.length : carpetcd.a.length;
     const isoIdx = Math.floor(axis === 'a' ? carpet.b2j(iso) : carpet.a2i(iso));
 
-    const xy = axis === 'a' ? function(value) {
+    const xy = axis === 'a' ? function(value: any) {
         return carpet.evalxy([], value, isoIdx);
-    } : function(value) {
+    } : function(value: any) {
         return carpet.evalxy([], isoIdx, value);
     };
 
     if(smoothing) {
         tanIsoIdx = Math.max(0, Math.min(m - 2, isoIdx));
         tanIsoPar = isoIdx - tanIsoIdx;
-        tangent = axis === 'a' ? function(i, ti) {
+        tangent = axis === 'a' ? function(i: any, ti: any) {
             return carpet.dxydi([], i, tanIsoIdx, ti, tanIsoPar);
-        } : function(j, tj) {
+        } : function(j: any, tj: any) {
             return carpet.dxydj([], tanIsoIdx, j, tanIsoPar, tj);
         };
     }
@@ -65,8 +65,8 @@ export default function(carpet, carpetcd, a, b) {
 
         p1 = xy(end);
         if(smoothing) {
-            v0 = tangent(refidx, start - refidx);
-            v1 = tangent(refidx, end - refidx);
+            v0 = tangent!(refidx, start - refidx);
+            v1 = tangent!(refidx, end - refidx);
 
             segment.push([
                 p0[0] + v0[0] / 3 * range,

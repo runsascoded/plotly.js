@@ -15,7 +15,7 @@ import type { GraphDiv } from '../../types/core';
  * @return {promise}
  */
 function downloadImage(gd: GraphDiv, opts: any) {
-    let _gd;
+    let _gd: any;
     if(!Lib.isPlainObject(gd)) _gd = Lib.getGraphDiv(gd);
 
     opts = opts || {};
@@ -35,12 +35,12 @@ function downloadImage(gd: GraphDiv, opts: any) {
         let filename = opts.filename || gd.fn || 'newplot';
         filename += '.' + opts.format.replace('-', '.');
 
-        promise.then(function(result) {
+        promise.then(function(result: any) {
             if(_gd) _gd._snapshotInProgress = false;
             return fileSaver(result, filename, opts.format);
-        }).then(function(name) {
+        }).then(function(name: any) {
             resolve(name);
-        }).catch(function(err) {
+        }).catch(function(err: any) {
             if(_gd) _gd._snapshotInProgress = false;
             reject(err);
         });

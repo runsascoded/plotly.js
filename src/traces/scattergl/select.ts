@@ -2,7 +2,7 @@ import subTypes from '../scatter/subtypes.js';
 import _edit_style from './edit_style.js';
 const { styleTextSelection } = _edit_style;
 
-export default function select(searchInfo, selectionTester) {
+export default function select(searchInfo: any, selectionTester: any) {
     const cd = searchInfo.cd;
     const xa = searchInfo.xaxis;
     const ya = searchInfo.yaxis;

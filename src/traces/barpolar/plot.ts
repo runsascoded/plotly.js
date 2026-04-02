@@ -5,7 +5,7 @@ import { setClipUrl } from '../../components/drawing/index.js';
 import helpers from '../../plots/polar/helpers.js';
 import type { GraphDiv } from '../../../types/core';
 
-export default function plot(gd: GraphDiv, subplot, cdbar) {
+export default function plot(gd: GraphDiv, subplot: any, cdbar: any) {
     const isStatic = gd._context.staticPlot;
     const xa = subplot.xaxis;
     const ya = subplot.yaxis;
@@ -26,7 +26,7 @@ export default function plot(gd: GraphDiv, subplot, cdbar) {
 
         bars.exit().remove();
 
-        bars.each(function(this: any, di) {
+        bars.each(function(this: any, di: any) {
             const bar = select(this);
 
             const rp0 = di.rp0 = radialAxis.c2p(di.s0);
@@ -68,12 +68,12 @@ export default function plot(gd: GraphDiv, subplot, cdbar) {
     });
 }
 
-function makePathFn(subplot) {
+function makePathFn(subplot: any) {
     const cxx = subplot.cxx;
     const cyy = subplot.cyy;
 
     if(subplot.vangles) {
-        return function(r0, r1, _a0, _a1) {
+        return function(r0: any, r1: any, _a0: any, _a1: any) {
             let a0, a1;
 
             if(Lib.angleDelta(_a0, _a1) > 0) {
@@ -91,7 +91,7 @@ function makePathFn(subplot) {
         };
     }
 
-    return function(r0, r1, a0, a1) {
+    return function(r0: any, r1: any, a0: any, a1: any) {
         return Lib.pathAnnulus(r0, r1, a0, a1, cxx, cyy);
     };
 }

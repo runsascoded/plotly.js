@@ -51,7 +51,7 @@ modeBarButtons.toImage = {
 
         ['filename', 'width', 'height', 'scale'].forEach(function(key: any) {
             if(key in toImageButtonOptions) {
-                opts[key] = toImageButtonOptions[key];
+                (opts as any)[key] = toImageButtonOptions[key];
             }
         });
 

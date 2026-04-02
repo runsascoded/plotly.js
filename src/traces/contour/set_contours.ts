@@ -2,7 +2,7 @@ import type { FullTrace } from '../../../types/core';
 import Axes from '../../plots/cartesian/axes.js';
 import Lib from '../../lib/index.js';
 
-export default function setContours(trace: FullTrace,  vals) {
+export default function setContours(trace: FullTrace,  vals: any) {
     const contours = trace.contours;
 
     // check if we need to auto-choose contour levels
@@ -77,7 +77,7 @@ export default function setContours(trace: FullTrace,  vals) {
  *
  * returns: an axis object
  */
-function autoContours(start,  end,  ncontours) {
+function autoContours(start: any,  end: any,  ncontours: any) {
     const dummyAx: any = {
         type: 'linear',
         range: [start, end]

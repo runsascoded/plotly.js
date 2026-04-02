@@ -56,34 +56,34 @@ function makeDragBox(gd: GraphDiv, plotinfo: PlotInfo, x?: any, y?: any, w?: any
     const singleEnd = (ns + ew).length === 1;
 
     // main subplot x and y (i.e. found in plotinfo - the main ones)
-    let xa0, ya0;
+    let xa0: any, ya0: any;
     // {ax._id: ax} hash objects
-    let xaHash, yaHash;
+    let xaHash: any, yaHash: any;
     // xaHash/yaHash values (arrays)
-    let xaxes, yaxes;
+    let xaxes: any, yaxes: any;
     // main axis offsets
-    let xs, ys;
+    let xs: any, ys: any;
     // main axis lengths
-    let pw, ph;
+    let pw: any, ph: any;
     // contains keys 'xaHash', 'yaHash', 'xaxes', and 'yaxes'
     // which are the x/y {ax._id: ax} hash objects and their values
     // for linked axis relative to this subplot
-    let links;
+    let links: any;
     // similar to `links` but for matching axes
-    let matches;
+    let matches: any;
     // set to ew/ns val when active, set to '' when inactive
-    let xActive, yActive;
+    let xActive: any, yActive: any;
     // are all axes in this subplot are fixed?
-    let allFixedRanges;
+    let allFixedRanges: any;
     // do we need to edit x/y ranges?
-    let editX, editY;
+    let editX: any, editY: any;
     // graph-wide optimization flags
-    let hasScatterGl, hasSplom, hasSVG;
+    let hasScatterGl: any, hasSplom: any, hasSVG: any;
     // collected changes to be made to the plot by relayout at the end
-    let updates;
+    let updates: any;
     // scaling factors from css transform
-    let scaleX;
-    let scaleY;
+    let scaleX: any;
+    let scaleY: any;
 
     // offset the x location of the box if needed
     x += plotinfo.yaxis._shift;
@@ -97,18 +97,18 @@ function makeDragBox(gd: GraphDiv, plotinfo: PlotInfo, x?: any, y?: any, w?: any
         ys = ya0._offset;
 
         xaHash = {};
-        xaHash[xa0._id] = xa0;
+        (xaHash as any)[xa0._id] = xa0;
         yaHash = {};
-        yaHash[ya0._id] = ya0;
+        (yaHash as any)[ya0._id] = ya0;
 
         // if we're dragging two axes at once, also drag overlays
         if(ns && ew) {
             const overlays = plotinfo.overlays;
             for(let i = 0; i < overlays.length; i++) {
                 const xa = overlays[i].xaxis;
-                xaHash[xa._id] = xa;
+                (xaHash as any)[xa._id] = xa;
                 const ya = overlays[i].yaxis;
-                yaHash[ya._id] = ya;
+                (yaHash as any)[ya._id] = ya;
             }
         }
 
@@ -289,7 +289,7 @@ function makeDragBox(gd: GraphDiv, plotinfo: PlotInfo, x?: any, y?: any, w?: any
                         horizontalAlign: hAlign,
                         verticalAlign: vAlign
                     })
-                    .on('edit', function(text) {
+                    .on('edit', function(text: any) {
                         const v = ax.d2r(text);
                         if(v !== undefined) {
                             Registry.call('_guiRelayout', gd, attrStr, v);
@@ -302,23 +302,23 @@ function makeDragBox(gd: GraphDiv, plotinfo: PlotInfo, x?: any, y?: any, w?: any
     dragElement.init(dragOptions);
 
     // x/y px position at start of drag
-    let x0, y0;
+    let x0: any, y0: any;
     // bbox object of the zoombox
-    let box;
+    let box: any;
     // luminance of bg behind zoombox
-    let lum;
+    let lum: any;
     // zoombox path outline
-    let path0;
+    let path0: any;
     // is zoombox dimmed (during drag)
-    let dimmed;
+    let dimmed: any;
     // 'x'-only, 'y' or 'xy' zooming
-    let zoomMode;
+    let zoomMode: any;
     // zoombox d3 selection
-    let zb;
+    let zb: any;
     // zoombox corner d3 selection
-    let corners;
+    let corners: any;
     // zoom takes over minDrag, so it also has to take over gd._dragged
-    let zoomDragged;
+    let zoomDragged: any;
 
     function zoomPrep(e?: any, startX?: any, startY?: any) {
         const dragBBox = dragger.getBoundingClientRect();
@@ -688,11 +688,11 @@ function makeDragBox(gd: GraphDiv, plotinfo: PlotInfo, x?: any, y?: any, w?: any
 
     function updateMatchedAxRange(axLetter?: any, out?: any) {
         const matchedAxes = matches.isSubplotConstrained ?
-            {x: yaxes, y: xaxes}[axLetter] :
+            ({x: yaxes, y: xaxes} as any)[axLetter] :
             matches[axLetter + 'axes'];
 
         const constrainedAxes = matches.isSubplotConstrained ?
-            {x: xaxes, y: yaxes}[axLetter] :
+            ({x: xaxes, y: yaxes} as any)[axLetter] :
             [];
 
         for(let i = 0; i < matchedAxes.length; i++) {
@@ -763,7 +763,7 @@ function makeDragBox(gd: GraphDiv, plotinfo: PlotInfo, x?: any, y?: any, w?: any
 
         let doubleClickConfig = gd._context.doubleClick;
 
-        let axList = [];
+        let axList: any[] = [];
         if(xActive) axList = axList.concat(xaxes);
         if(yActive) axList = axList.concat(yaxes);
         if(matches.xaxes) axList = axList.concat(matches.xaxes);
@@ -933,7 +933,7 @@ function makeDragBox(gd: GraphDiv, plotinfo: PlotInfo, x?: any, y?: any, w?: any
                     xScaleFactor2 = yScaleFactor;
                     clipDx = yActive === 'ns' ?
                         -viewBox[1] * xa._length / ya0._length :
-                        getShift(xa, xScaleFactor2, {n: 'top', s: 'bottom'}[yActive]);
+                        getShift(xa, xScaleFactor2, ({n: 'top', s: 'bottom'} as any)[yActive]);
                 } else {
                     xScaleFactor2 = getLinkedScaleFactor(xa, xScaleFactor, yScaleFactor);
                     clipDx = scaleAndGetShift(xa, xScaleFactor2);
@@ -957,7 +957,7 @@ function makeDragBox(gd: GraphDiv, plotinfo: PlotInfo, x?: any, y?: any, w?: any
                     yScaleFactor2 = xScaleFactor;
                     clipDy = xActive === 'ew' ?
                         -viewBox[0] * ya._length / xa0._length :
-                        getShift(ya, yScaleFactor2, {e: 'right', w: 'left'}[xActive]);
+                        getShift(ya, yScaleFactor2, ({e: 'right', w: 'left'} as any)[xActive]);
                 } else {
                     yScaleFactor2 = getLinkedScaleFactor(ya, xScaleFactor, yScaleFactor);
                     clipDy = scaleAndGetShift(ya, yScaleFactor2);
@@ -1038,14 +1038,14 @@ function makeDragBox(gd: GraphDiv, plotinfo: PlotInfo, x?: any, y?: any, w?: any
     }
 
     function getShift(ax?: any, scaleFactor?: any, from?: any) {
-        return ax._length * (1 - scaleFactor) * FROM_TL[from || ax.constraintoward || 'middle'];
+        return ax._length * (1 - scaleFactor) * (FROM_TL as any)[from || ax.constraintoward || 'middle'];
     }
 
     return dragger;
 }
 
 function makeDragger(plotinfo?: any, nodeName?: any, dragClass?: any, cursor?: any): any {
-    const dragger3 = ensureSingle(plotinfo.draglayer, nodeName, dragClass, function(s) {
+    const dragger3 = ensureSingle(plotinfo.draglayer, nodeName, dragClass, function(s: any) {
         s.classed('drag', true)
             .style({fill: 'transparent', 'stroke-width': 0})
             .attr('data-subplot', plotinfo.id);

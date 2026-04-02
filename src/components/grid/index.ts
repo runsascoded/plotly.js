@@ -251,7 +251,7 @@ function contentDefaults(layoutIn: any, layoutOut: FullLayout) {
     const columns = gridOut.columns;
     const useDefaultSubplots = gridOut.pattern === 'independent';
 
-    let i, j, xId, yId, subplotId, subplotsOut, yPos;
+    let i, j, xId, yId, subplotId, subplotsOut: any, yPos;
 
     const axisMap = gridOut._axisMap = {};
 
@@ -262,7 +262,7 @@ function contentDefaults(layoutIn: any, layoutOut: FullLayout) {
 
         for(i = 0; i < rows; i++) {
             const rowOut = subplotsOut[i] = new Array(columns);
-            const rowIn = subplotsIn[i] || [];
+            const rowIn: any = subplotsIn[i] || [];
             for(j = 0; j < columns; j++) {
                 if(useDefaultSubplots) {
                     subplotId = (index === 1) ? 'xy' : ('x' + index + 'y' + index);
@@ -275,15 +275,15 @@ function contentDefaults(layoutIn: any, layoutOut: FullLayout) {
                     yPos = subplotId.indexOf('y');
                     xId = subplotId.slice(0, yPos);
                     yId = subplotId.slice(yPos);
-                    if((axisMap[xId] !== undefined && axisMap[xId] !== j) ||
-                        (axisMap[yId] !== undefined && axisMap[yId] !== i)
+                    if(((axisMap as any)[xId] !== undefined && (axisMap as any)[xId] !== j) ||
+                        ((axisMap as any)[yId] !== undefined && (axisMap as any)[yId] !== i)
                     ) {
                         continue;
                     }
 
                     rowOut[j] = subplotId;
-                    axisMap[xId] = j;
-                    axisMap[yId] = i;
+                    (axisMap as any)[xId] = j;
+                    (axisMap as any)[yId] = i;
                 }
             }
         }
@@ -306,7 +306,7 @@ function contentDefaults(layoutIn: any, layoutOut: FullLayout) {
         if(side.length < 8) {
             // grid edge -  ie not "* plot" - make these as free axes
             // since we're not guaranteed to have a subplot there at all
-            anchors[axisId] = 'free';
+            (anchors as any)[axisId] = 'free';
         } else if(axLetter === 'x') {
             if((side.charAt(0) === 't') === reversed) {
                 i0 = 0;
@@ -318,13 +318,13 @@ function contentDefaults(layoutIn: any, layoutOut: FullLayout) {
                 iFinal = -1;
             }
             if(hasSubplotGrid) {
-                const column = axisMap[axisId];
+                const column = (axisMap as any)[axisId];
                 for(i = i0; i !== iFinal; i += inc) {
                     subplotId = subplotsOut[i][column];
                     if(!subplotId) continue;
                     yPos = subplotId.indexOf('y');
                     if(subplotId.slice(0, yPos) === axisId) {
-                        anchors[axisId] = subplotId.slice(yPos);
+                        (anchors as any)[axisId] = subplotId.slice(yPos);
                         break;
                     }
                 }
@@ -332,7 +332,7 @@ function contentDefaults(layoutIn: any, layoutOut: FullLayout) {
                 for(i = i0; i !== iFinal; i += inc) {
                     yId = gridOut.yaxes[i];
                     if(subplots.cartesian.indexOf(axisId + yId) !== -1) {
-                        anchors[axisId] = yId;
+                        (anchors as any)[axisId] = yId;
                         break;
                     }
                 }
@@ -348,13 +348,13 @@ function contentDefaults(layoutIn: any, layoutOut: FullLayout) {
                 iFinal = -1;
             }
             if(hasSubplotGrid) {
-                const row = axisMap[axisId];
+                const row = (axisMap as any)[axisId];
                 for(i = i0; i !== iFinal; i += inc) {
                     subplotId = subplotsOut[row][i];
                     if(!subplotId) continue;
                     yPos = subplotId.indexOf('y');
                     if(subplotId.slice(yPos) === axisId) {
-                        anchors[axisId] = subplotId.slice(0, yPos);
+                        (anchors as any)[axisId] = subplotId.slice(0, yPos);
                         break;
                     }
                 }
@@ -362,7 +362,7 @@ function contentDefaults(layoutIn: any, layoutOut: FullLayout) {
                 for(i = i0; i !== iFinal; i += inc) {
                     xId = gridOut.xaxes[i];
                     if(subplots.cartesian.indexOf(xId + axisId) !== -1) {
-                        anchors[axisId] = xId;
+                        (anchors as any)[axisId] = xId;
                         break;
                     }
                 }

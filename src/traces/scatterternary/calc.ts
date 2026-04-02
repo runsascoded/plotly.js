@@ -21,15 +21,15 @@ export default function calc(gd: GraphDiv, trace: FullTrace) {
     // fill in one missing component
     for(i = 0; i < dataArrays.length; i++) {
         dataArray = dataArrays[i];
-        if(arrays[dataArray]) continue;
+        if((arrays as any)[dataArray]) continue;
 
-        fillArray1 = arrays[arraysToFill[dataArray][0]];
-        fillArray2 = arrays[arraysToFill[dataArray][1]];
+        fillArray1 = (arrays as any)[(arraysToFill as any)[dataArray][0]];
+        fillArray2 = (arrays as any)[(arraysToFill as any)[dataArray][1]];
         newArray = new Array(fillArray1.length);
         for(j = 0; j < fillArray1.length; j++) {
             newArray[j] = normSum - fillArray1[j] - fillArray2[j];
         }
-        arrays[dataArray] = newArray;
+        (arrays as any)[dataArray] = newArray;
     }
 
     // make the calcdata array

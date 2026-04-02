@@ -1,4 +1,4 @@
-function sign(x) {
+function sign(x: any) {
     return (
         x < 0 ? -1 :
         x > 0 ? 1 : 0
@@ -6,7 +6,7 @@ function sign(x) {
 }
 
 // adapted from Mike Bostock's https://observablehq.com/@mbostock/smith-chart
-function smith(a) {
+function smith(a: any) {
     const R = a[0];
     const X = a[1];
 
@@ -16,7 +16,7 @@ function smith(a) {
     return [(R * R + X * X - 1) / D, 2 * X / D];
 }
 
-function transform(subplot, a) {
+function transform(subplot: any, a: any) {
     const x = a[0];
     const y = a[1];
 
@@ -26,11 +26,11 @@ function transform(subplot, a) {
     ];
 }
 
-function scale(subplot, r) {
+function scale(subplot: any, r: any) {
     return r * subplot.radius;
 }
 
-function reactanceArc(subplot, X, R1, R2) {
+function reactanceArc(subplot: any, X: any, R1: any, R2: any) {
     const t1 = transform(subplot, smith([R1, X]));
     const x1 = t1[0];
     const y1 = t1[1];
@@ -54,7 +54,7 @@ function reactanceArc(subplot, X, R1, R2) {
     ].join(' ');
 }
 
-function resistanceArc(subplot, R, X1, X2) {
+function resistanceArc(subplot: any, R: any, X1: any, X2: any) {
     const r = scale(subplot, 1 / (R + 1));
 
     const t1 = transform(subplot, smith([R, X1]));

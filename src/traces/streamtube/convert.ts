@@ -9,7 +9,7 @@ const createTubeMesh = tube2mesh.createTubeMesh;
 
 const axisName2scaleIndex = {xaxis: 0, yaxis: 1, zaxis: 2};
 
-function Streamtube(this: any, scene, uid) {
+function Streamtube(this: any, scene: any, uid: any) {
     this.scene = scene;
     this.uid = uid;
     this.mesh = null;
@@ -18,13 +18,13 @@ function Streamtube(this: any, scene, uid) {
 
 const proto = Streamtube.prototype;
 
-proto.handlePick = function(selection) {
+proto.handlePick = function(selection: any) {
     const sceneLayout = this.scene.fullSceneLayout;
     const dataScale = this.scene.dataScale;
 
-    function fromDataScale(v, axisName) {
+    function fromDataScale(v: any, axisName: any) {
         const ax = sceneLayout[axisName];
-        const scale = dataScale[axisName2scaleIndex[axisName]];
+        const scale = dataScale[(axisName2scaleIndex as any)[axisName]];
         return ax.l2c(v) / scale;
     }
 
@@ -53,7 +53,7 @@ proto.handlePick = function(selection) {
     }
 };
 
-function getDfltStartingPositions(vec) {
+function getDfltStartingPositions(vec: any) {
     const len = vec.length;
     let s;
 
@@ -67,7 +67,7 @@ function getDfltStartingPositions(vec) {
     return s;
 }
 
-function getBoundPads(vec) {
+function getBoundPads(vec: any) {
     const len = vec.length;
     if(len === 1) {
         return [0.5, 0.5];
@@ -76,16 +76,16 @@ function getBoundPads(vec) {
     }
 }
 
-function convert(scene, trace) {
+function convert(scene: any, trace: any) {
     const sceneLayout = scene.fullSceneLayout;
     const dataScale = scene.dataScale;
     const len = trace._len;
     const tubeOpts: any = {};
 
-    function toDataCoords(arr, axisName) {
+    function toDataCoords(arr: any, axisName: any) {
         const ax = sceneLayout[axisName];
-        const scale = dataScale[axisName2scaleIndex[axisName]];
-        return Lib.simpleMap(arr, function(v) { return ax.d2l(v) * scale; });
+        const scale = dataScale[(axisName2scaleIndex as any)[axisName]];
+        return Lib.simpleMap(arr, function(v: any) { return ax.d2l(v) * scale; });
     }
 
     tubeOpts.vectors = zip3(
@@ -184,7 +184,7 @@ function convert(scene, trace) {
     return meshData;
 }
 
-proto.update = function(data) {
+proto.update = function(data: any) {
     this.data = data;
 
     const meshData = convert(this.scene, data);
@@ -196,13 +196,14 @@ proto.dispose = function() {
     this.mesh.dispose();
 };
 
-function createStreamtubeTrace(scene, data) {
+function createStreamtubeTrace(scene: any, data: any) {
     const gl = scene.glplot.gl;
 
     const meshData = convert(scene, data);
     const mesh = createTubeMesh(gl, meshData);
 
-    const streamtube = new Streamtube(scene, data.uid);
+    // @ts-ignore TS7009
+    const streamtube: any = (new Streamtube(scene, data.uid) as any);
     streamtube.mesh = mesh;
     streamtube.data = data;
     mesh._trace = streamtube;

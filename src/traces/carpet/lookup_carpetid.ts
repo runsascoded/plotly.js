@@ -1,4 +1,4 @@
-export default function(gd, trace) {
+export default function(gd: any, trace: any) {
     const n = gd._fullData.length;
     let firstAxis;
     for(let i = 0; i < n; i++) {

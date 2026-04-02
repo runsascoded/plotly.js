@@ -12,7 +12,7 @@ const { extractOpts } = _index2;
 import { ndarray_linear_interpolate as _req0 } from '../../../stackgl_modules/esm.js';
 const ndarrayInterp2d = _req0.d2;
 
-function SurfaceTrace(this: any, scene, surface, uid) {
+function SurfaceTrace(this: any, scene: any, surface: any, uid: any) {
     this.scene = scene;
     this.uid = uid;
     this.surface = surface;
@@ -31,7 +31,7 @@ function SurfaceTrace(this: any, scene, surface, uid) {
 
 const proto = SurfaceTrace.prototype;
 
-proto.getXat = function(a, b, calendar, axis) {
+proto.getXat = function(a: any, b: any, calendar: any, axis: any) {
     const v = (
        (!isArrayOrTypedArray(this.data.x)) ?
             a :
@@ -43,7 +43,7 @@ proto.getXat = function(a, b, calendar, axis) {
     return (calendar === undefined) ? v : axis.d2l(v, 0, calendar);
 };
 
-proto.getYat = function(a, b, calendar, axis) {
+proto.getYat = function(a: any, b: any, calendar: any, axis: any) {
     const v = (
        (!isArrayOrTypedArray(this.data.y)) ?
             b :
@@ -55,7 +55,7 @@ proto.getYat = function(a, b, calendar, axis) {
     return (calendar === undefined) ? v : axis.d2l(v, 0, calendar);
 };
 
-proto.getZat = function(a, b, calendar, axis) {
+proto.getZat = function(a: any, b: any, calendar: any, axis: any) {
     let v = this.data.z[b][a];
 
     if(v === null && this.data.connectgaps && this.data._interpolatedZ) {
@@ -65,7 +65,7 @@ proto.getZat = function(a, b, calendar, axis) {
     return (calendar === undefined) ? v : axis.d2l(v, 0, calendar);
 };
 
-proto.handlePick = function(selection) {
+proto.handlePick = function(selection: any) {
     if(selection.object === this.surface) {
         const xRatio = (selection.data.index[0] - 1) / this.dataScaleX - 1;
         const yRatio = (selection.data.index[1] - 1) / this.dataScaleY - 1;
@@ -114,7 +114,7 @@ proto.handlePick = function(selection) {
     }
 };
 
-function isColormapCircular(colormap) {
+function isColormapCircular(colormap: any) {
     const first = colormap[0].rgb;
     const last = colormap[colormap.length - 1].rgb;
 
@@ -159,7 +159,7 @@ const shortPrimes = [
     2903, 2909, 2917, 2927, 2939, 2953, 2957, 2963, 2969, 2971, 2999
 ];
 
-function getPow(a, b) {
+function getPow(a: any, b: any) {
     if(a < b) return 0;
     let n = 0;
     while(Math.floor(a % b) === 0) {
@@ -169,7 +169,7 @@ function getPow(a, b) {
     return n;
 }
 
-function getFactors(a) {
+function getFactors(a: any) {
     const powers: any[] = [];
     for(let i = 0; i < shortPrimes.length; i++) {
         const b = shortPrimes[i];
@@ -180,7 +180,7 @@ function getFactors(a) {
     return powers;
 }
 
-function smallestDivisor(a) {
+function smallestDivisor(a: any) {
     const A = getFactors(a);
     let result = a;
     for(let i = 0; i < shortPrimes.length; i++) {
@@ -192,7 +192,7 @@ function smallestDivisor(a) {
     return result;
 }
 
-function leastCommonMultiple(a, b) {
+function leastCommonMultiple(a: any, b: any) {
     if(a < 1 || b < 1) return undefined;
     const A = getFactors(a);
     const B = getFactors(b);
@@ -205,7 +205,7 @@ function leastCommonMultiple(a, b) {
     return n;
 }
 
-function arrayLCM(A) {
+function arrayLCM(A: any) {
     if(A.length === 0) return undefined;
     let n = 1;
     for(let i = 0; i < A.length; i++) {
@@ -214,7 +214,7 @@ function arrayLCM(A) {
     return n;
 }
 
-proto.calcXnums = function(xlen) {
+proto.calcXnums = function(xlen: any) {
     let i;
     const nums: any[] = [];
     for(i = 1; i < xlen; i++) {
@@ -246,7 +246,7 @@ proto.calcXnums = function(xlen) {
     return nums;
 };
 
-proto.calcYnums = function(ylen) {
+proto.calcYnums = function(ylen: any) {
     let i;
     const nums: any[] = [];
     for(i = 1; i < ylen; i++) {
@@ -283,7 +283,7 @@ const highlyComposites = [1, 2, 4, 6, 12, 24, 36, 48, 60, 120, 180, 240, 360, 72
 const MIN_RESOLUTION = highlyComposites[9];
 const MAX_RESOLUTION = highlyComposites[13];
 
-proto.estimateScale = function(resSrc, axis) {
+proto.estimateScale = function(resSrc: any, axis: any) {
     const nums = (axis === 0) ?
         this.calcXnums(resSrc) :
         this.calcYnums(resSrc);
@@ -312,14 +312,14 @@ proto.estimateScale = function(resSrc, axis) {
 // based on Mikola Lysenko's ndarray-homography
 // see https://github.com/scijs/ndarray-homography
 
-function fnHomography(out, inp, X) {
+function fnHomography(out: any, inp: any, X: any) {
     const w = X[8] + X[2] * inp[0] + X[5] * inp[1];
     out[0] = (X[6] + X[0] * inp[0] + X[3] * inp[1]) / w;
     out[1] = (X[7] + X[1] * inp[0] + X[4] * inp[1]) / w;
     return out;
 }
 
-function homography(dest, src, X) {
+function homography(dest: any, src: any, X: any) {
     warp(dest, src, fnHomography, X);
     return dest;
 }
@@ -327,7 +327,7 @@ function homography(dest, src, X) {
 // based on Mikola Lysenko's ndarray-warp
 // see https://github.com/scijs/ndarray-warp
 
-function warp(dest, src, func, X) {
+function warp(dest: any, src: any, func: any, X: any) {
     const warped = [0, 0];
     const ni = dest.shape[0];
     const nj = dest.shape[1];
@@ -340,7 +340,7 @@ function warp(dest, src, func, X) {
     return dest;
 }
 
-proto.refineCoords = function(coords) {
+proto.refineCoords = function(coords: any) {
     const scaleW = this.dataScaleX;
     const scaleH = this.dataScaleY;
 
@@ -369,7 +369,7 @@ proto.refineCoords = function(coords) {
     }
 };
 
-function insertIfNewLevel(arr, newValue) {
+function insertIfNewLevel(arr: any, newValue: any) {
     let found = false;
     for(let k = 0; k < arr.length; k++) {
         if(newValue === arr[k]) {
@@ -419,7 +419,7 @@ proto.setContourLevels = function() {
     }
 };
 
-proto.update = function(data) {
+proto.update = function(data: any) {
     const scene = this.scene;
     const sceneLayout = scene.fullSceneLayout;
     const surface = this.surface;
@@ -675,10 +675,11 @@ proto.dispose = function() {
     this.surface.dispose();
 };
 
-function createSurfaceTrace(scene, data) {
+function createSurfaceTrace(scene: any, data: any) {
     const gl = scene.glplot.gl;
     const surface = createSurface({ gl: gl });
-    const result = new SurfaceTrace(scene, surface, data.uid);
+    // @ts-ignore TS7009
+    const result: any = (new SurfaceTrace(scene, surface, data.uid) as any);
     surface._trace = result;
     result.update(data);
     scene.glplot.add(surface);

@@ -12,7 +12,7 @@ export const attr = 'subplot';
 export const idRoot = TERNARY;
 export const idRegex = counterRegex(TERNARY);
 export const attributes = {};
-attributes[attr] = {
+(attributes as any)[attr] = {
     valType: 'subplotid',
     dflt: 'ternary',
     editType: 'calc',
@@ -39,6 +39,7 @@ export const plot = function plot(gd: GraphDiv) {
 
         // If ternary is not instantiated, create one!
         if(!ternary) {
+            // @ts-ignore TS7009
             ternary = new Ternary({
                 id: ternaryId,
                 graphDiv: gd,
@@ -54,7 +55,7 @@ export const plot = function plot(gd: GraphDiv) {
     }
 };
 
-export const clean = function(newFullData, newFullLayout, oldFullData, oldFullLayout) {
+export const clean = function(newFullData: any, newFullLayout: any, oldFullData: any, oldFullLayout: any) {
     const oldTernaryKeys = oldFullLayout._subplots[TERNARY] || [];
 
     for(let i = 0; i < oldTernaryKeys.length; i++) {
@@ -72,7 +73,7 @@ export const clean = function(newFullData, newFullLayout, oldFullData, oldFullLa
     }
 };
 
-export const updateFx = function(gd) {
+export const updateFx = function(gd: any) {
     const fullLayout = gd._fullLayout;
     fullLayout._ternarylayer
         .selectAll('g.toplevel')

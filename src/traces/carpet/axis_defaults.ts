@@ -10,10 +10,10 @@ import handleCategoryOrderDefaults from '../../plots/cartesian/category_order_de
 import setConvert from '../../plots/cartesian/set_convert.js';
 import autoType from '../../plots/cartesian/axis_autotype.js';
 
-export default function handleAxisDefaults(containerIn, containerOut, options) {
+export default function handleAxisDefaults(containerIn: any, containerOut: any, options: any) {
     const letter = options.letter;
     const font = options.font || {};
-    const attributes = carpetAttrs[letter + 'axis'];
+    const attributes = (carpetAttrs as any)[letter + 'axis'];
 
     function coerce(attr: string, dflt?: any) {
         return Lib.coerce(containerIn, containerOut, attributes, attr, dflt);
@@ -192,7 +192,7 @@ export default function handleAxisDefaults(containerIn, containerOut, options) {
     return containerOut;
 }
 
-function setAutoType(ax, data) {
+function setAutoType(ax: any, data: any) {
     // new logic: let people specify any type they want,
     // only autotype if type is '-'
     if(ax.type !== '-') return;

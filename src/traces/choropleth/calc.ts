@@ -6,7 +6,7 @@ import arraysToCalcdata from '../scatter/arrays_to_calcdata.js';
 import calcSelection from '../scatter/calc_selection.js';
 import type { FullTrace, GraphDiv } from '../../../types/core';
 
-function isNonBlankString(v) {
+function isNonBlankString(v: any) {
     return v && typeof v === 'string';
 }
 
@@ -17,7 +17,7 @@ export default function calc(gd: GraphDiv, trace: FullTrace) {
     let isValidLoc;
 
     if(trace.geojson) {
-        isValidLoc = function(v) { return isNonBlankString(v) || isNumeric(v); };
+        isValidLoc = function(v: any) { return isNonBlankString(v) || isNumeric(v); };
     } else {
         isValidLoc = isNonBlankString;
     }

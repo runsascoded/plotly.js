@@ -2,7 +2,7 @@ import { extent } from 'd3-array';
 import Colorscale from '../../components/colorscale/index.js';
 import endPlus from './end_plus.js';
 
-export default function makeColorMap(trace) {
+export default function makeColorMap(trace: any) {
     const contours = trace.contours;
     let start = contours.start;
     let end = endPlus(contours);

@@ -12,7 +12,7 @@ export default function plot(gd: GraphDiv, plotinfo: PlotInfo, cdViolins: any[],
     const xa = plotinfo.xaxis;
     const ya = plotinfo.yaxis;
 
-    function makePath(pts, trace) {
+    function makePath(pts: any, trace: any) {
         const segments = linePoints(pts, {
             xaxis: xa,
             yaxis: ya,
@@ -26,7 +26,7 @@ export default function plot(gd: GraphDiv, plotinfo: PlotInfo, cdViolins: any[],
         return smoothopen(segments[0], 1);
     }
 
-    Lib.makeTraceGroups(violinLayer, cdViolins, 'trace violins').each(function(this: any, cd) {
+    Lib.makeTraceGroups(violinLayer, cdViolins, 'trace violins').each(function(this: any, cd: any) {
         const plotGroup = select(this);
         const cd0 = cd[0];
         const t = cd0.t;
@@ -53,7 +53,7 @@ export default function plot(gd: GraphDiv, plotinfo: PlotInfo, cdViolins: any[],
 
         violins.exit().remove();
 
-        violins.each(function(this: any, d) {
+        violins.each(function(this: any, d: any) {
             const pathSel = select(this);
             const density = d.density;
             const len = density.length;
@@ -70,15 +70,15 @@ export default function plot(gd: GraphDiv, plotinfo: PlotInfo, cdViolins: any[],
                     groupStats.maxKDE / bdPos;
             }
 
-            let pathPos, pathNeg, path;
+            let pathPos: any, pathNeg: any, path;
             let i, k, pts, pt;
 
             if(hasPositiveSide) {
                 pts = new Array(len);
                 for(i = 0; i < len; i++) {
                     pt = pts[i] = {};
-                    pt[t.posLetter] = posCenter + (density[i].v / scale);
-                    pt[t.valLetter] = valAxis.c2l(density[i].t, true);
+                    (pt as any)[t.posLetter] = posCenter + (density[i].v / scale);
+                    (pt as any)[t.valLetter] = valAxis.c2l(density[i].t, true);
                 }
                 pathPos = makePath(pts, trace);
             }
@@ -87,8 +87,8 @@ export default function plot(gd: GraphDiv, plotinfo: PlotInfo, cdViolins: any[],
                 pts = new Array(len);
                 for(k = 0, i = len - 1; k < len; k++, i--) {
                     pt = pts[k] = {};
-                    pt[t.posLetter] = posCenter - (density[i].v / scale);
-                    pt[t.valLetter] = valAxis.c2l(density[i].t, true);
+                    (pt as any)[t.posLetter] = posCenter - (density[i].v / scale);
+                    (pt as any)[t.valLetter] = valAxis.c2l(density[i].t, true);
                 }
                 pathNeg = makePath(pts, trace);
             }
@@ -131,10 +131,10 @@ export default function plot(gd: GraphDiv, plotinfo: PlotInfo, cdViolins: any[],
             bPosPxOffset = 0;
         } else if(hasPositiveSide) {
             bdPosScaled = [0, bdPos * boxWidth / 2];
-            bPosPxOffset = boxLineWidth * {x: 1, y: -1}[t.posLetter];
+            bPosPxOffset = boxLineWidth * ({x: 1, y: -1} as any)[t.posLetter];
         } else {
             bdPosScaled = [bdPos * boxWidth / 2, 0];
-            bPosPxOffset = boxLineWidth * {x: -1, y: 1}[t.posLetter];
+            bPosPxOffset = boxLineWidth * ({x: -1, y: 1} as any)[t.posLetter];
         }
 
         // inner box
@@ -164,7 +164,7 @@ export default function plot(gd: GraphDiv, plotinfo: PlotInfo, cdViolins: any[],
             .style('fill', 'none')
             .style('vector-effect', isStatic ? 'none' : 'non-scaling-stroke');
         meanPaths.exit().remove();
-        meanPaths.each(function(this: any, d) {
+        meanPaths.each(function(this: any, d: any) {
             const v = valAxis.c2p(d.mean, true);
             const p = helpers.getPositionOnKdePath(d, trace, v);
 

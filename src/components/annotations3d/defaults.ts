@@ -22,7 +22,7 @@ function handleAnnotationDefaults(annIn: any, annOut: any, sceneLayout: any, opt
 
         // mock in such way that getFromId grabs correct 3D axis
         const gdMock = { _fullLayout: {} };
-        gdMock._fullLayout[axName] = sceneLayout[axName];
+        (gdMock._fullLayout as any)[axName] = sceneLayout[axName];
 
         return Axes.coercePosition(annOut, gdMock, coerce, axLetter, axLetter, 0.5);
     }

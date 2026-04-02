@@ -10,7 +10,7 @@
  */
 const CatmullRomExp = 0.5;
 
-export default function makeControlPoints(p0, p1, p2, smoothness) {
+export default function makeControlPoints(p0: any, p1: any, p2: any, smoothness: any) {
     const d1x = p0[0] - p1[0];
     const d1y = p0[1] - p1[1];
     const d2x = p2[0] - p1[0];

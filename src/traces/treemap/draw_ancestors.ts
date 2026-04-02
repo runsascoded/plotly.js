@@ -50,7 +50,7 @@ export default function drawAncestors(gd: GraphDiv, cd: any[], entry: any, slice
     }).descendants();
 
     // edit slices that show up on graph
-    sliceData = sliceData.filter(function(pt) {
+    sliceData = sliceData.filter(function(pt: any) {
         const level = pathIds.indexOf(pt.data.id);
         if(level === -1) return false;
 
@@ -89,7 +89,7 @@ export default function drawAncestors(gd: GraphDiv, cd: any[], entry: any, slice
         });
     }
 
-    updateSlices.each(function(this: any, pt) {
+    updateSlices.each(function(this: any, pt: any) {
         // for bbox
         pt._x0 = viewX(pt.x0);
         pt._x1 = viewX(pt.x1);
@@ -101,14 +101,14 @@ export default function drawAncestors(gd: GraphDiv, cd: any[], entry: any, slice
 
         const sliceTop = select(this);
 
-        const slicePath = Lib.ensureSingle(sliceTop, 'path', 'surface', function(s) {
+        const slicePath = Lib.ensureSingle(sliceTop, 'path', 'surface', function(s: any) {
             s.style('pointer-events', isStatic ? 'none' : 'all');
         });
 
         if(hasTransition) {
-            slicePath.transition().attrTween('d', function(pt2) {
+            slicePath.transition().attrTween('d', function(pt2: any) {
                 const interp = makeUpdateSliceInterpolator(pt2, onPathbar, refRect, [width, height]);
-                return function(t) { return pathSlice(interp(t)); };
+                return function(t: any) { return pathSlice(interp(t)); };
             });
         } else {
             slicePath.attr('d', pathSlice);
@@ -134,7 +134,7 @@ export default function drawAncestors(gd: GraphDiv, cd: any[], entry: any, slice
         pt._text = (helpers.getPtLabel(pt) || '').split('<br>').join(' ') || '';
 
         const sliceTextGroup = Lib.ensureSingle(sliceTop, 'g', 'slicetext');
-        const sliceText = Lib.ensureSingle(sliceTextGroup, 'text', '', function(s) {
+        const sliceText = Lib.ensureSingle(sliceTextGroup, 'text', '', function(s: any) {
             // prohibit tex interpretation until we can handle
             // tex and regular text together
             s.attr('data-notex', 1);
@@ -158,9 +158,9 @@ export default function drawAncestors(gd: GraphDiv, cd: any[], entry: any, slice
         pt.transform.fontSize = font.size;
 
         if(hasTransition) {
-            sliceText.transition().attrTween('transform', function(pt2) {
+            sliceText.transition().attrTween('transform', function(pt2: any) {
                 const interp = makeUpdateTextInterpolator(pt2, onPathbar, refRect, [width, height]);
-                return function(t) { return strTransform(interp(t)); };
+                return function(t: any) { return strTransform(interp(t)); };
             });
         } else {
             sliceText.attr('transform', strTransform(pt));

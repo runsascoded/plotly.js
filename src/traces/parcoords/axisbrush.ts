@@ -13,17 +13,17 @@ declare let event: any;
 declare let d: any;
 
 const snapRatio = c.bar.snapRatio;
-function snapOvershoot(v, vAdjacent) { return v * (1 - snapRatio) + vAdjacent * snapRatio; }
+function snapOvershoot(v: any, vAdjacent: any) { return v * (1 - snapRatio) + vAdjacent * snapRatio; }
 
 const snapClose = c.bar.snapClose;
-function closeToCovering(v, vAdjacent) { return v * (1 - snapClose) + vAdjacent * snapClose; }
+function closeToCovering(v: any, vAdjacent: any) { return v * (1 - snapClose) + vAdjacent * snapClose; }
 
 // snap for the low end of a range on an ordinal scale
 // on an ordinal scale, always show some overshoot from the exact value,
 // so it's clear we're covering it
 // find the interval we're in, and snap to 1/4 the distance to the next
 // these two could be unified at a slight loss of readability / perf
-function ordinalScaleSnap(isHigh, a, v, existingRanges) {
+function ordinalScaleSnap(isHigh: any, a: any, v: any, existingRanges: any) {
     if(overlappingExisting(v, existingRanges)) return v;
 
     const dir = isHigh ? -1 : 1;
@@ -51,20 +51,20 @@ function ordinalScaleSnap(isHigh, a, v, existingRanges) {
     }
 }
 
-function overlappingExisting(v, existingRanges) {
+function overlappingExisting(v: any, existingRanges: any) {
     for(let i = 0; i < existingRanges.length; i++) {
         if(v >= existingRanges[i][0] && v <= existingRanges[i][1]) return true;
     }
     return false;
 }
 
-function barHorizontalSetup(selection) {
+function barHorizontalSetup(selection: any) {
     selection
         .attr('x', -c.bar.captureWidth / 2)
         .attr('width', c.bar.captureWidth);
 }
 
-function backgroundBarHorizontalSetup(selection) {
+function backgroundBarHorizontalSetup(selection: any) {
     selection
         .attr('visibility', 'visible')
         .style('visibility', 'visible')
@@ -72,7 +72,7 @@ function backgroundBarHorizontalSetup(selection) {
         .attr('opacity', 0);
 }
 
-function setHighlight(d) {
+function setHighlight(d: any) {
     if(!d.brush.filterSpecified) {
         return '0,' + d.height;
     }
@@ -99,15 +99,15 @@ function setHighlight(d) {
     return dashArray;
 }
 
-function unitToPx(unitRanges, height) {
-    return unitRanges.map(function(pr) {
-        return pr.map(function(v) { return Math.max(0, v * height); }).sort(sortAsc);
+function unitToPx(unitRanges: any, height: any) {
+    return unitRanges.map(function(pr: any) {
+        return pr.map(function(v: any) { return Math.max(0, v * height); }).sort(sortAsc);
     });
 }
 
 // is the cursor over the north, middle, or south of a bar?
 // the end handles extend over the last 10% of the bar
-function getRegion(fPix, y) {
+function getRegion(fPix: any, y: any) {
     const pad = c.bar.handleHeight;
     if(y > fPix[1] + pad || y < fPix[0] - pad) return;
     if(y >= 0.9 * fPix[1] + 0.1 * fPix[0]) return 'n';
@@ -120,7 +120,7 @@ function clearCursor() {
         .style('cursor', null);
 }
 
-function styleHighlight(selection) {
+function styleHighlight(selection: any) {
     // stroke-dasharray is used to minimize the number of created DOM nodes, because the requirement calls for up to
     // 1000 individual selections on an axis, and there can be 60 axes per parcoords, and multiple parcoords per
     // dashboard. The technique is similar to https://codepen.io/monfera/pen/rLYqWR and using a `polyline` with
@@ -134,7 +134,7 @@ function renderHighlight(root: any, tweenCallback?: any) {
     styleHighlight(barToStyle);
 }
 
-function getInterval(d, y) {
+function getInterval(d: any, y: any) {
     const b = d.brush;
     const active = b.filterSpecified;
     let closestInterval = NaN;
@@ -204,7 +204,7 @@ function getInterval(d, y) {
     return out;
 }
 
-function dragstart(lThis, d) {
+function dragstart(lThis: any, d: any) {
     event.sourceEvent.stopPropagation();
     const y = d.height - pointer(event, lThis)[1] - 2 * c.verticalPadding;
     const unitLocation = d.unitToPaddedPx.invert(y);
@@ -222,7 +222,7 @@ function dragstart(lThis, d) {
     s.clickableOrdinalRange = interval.clickableOrdinalRange;
     s.stayingIntervals = (d.multiselect && b.filterSpecified) ? b.filter.getConsolidated() : [];
     if(unitRange) {
-        s.stayingIntervals = s.stayingIntervals.filter(function(int2) {
+        s.stayingIntervals = s.stayingIntervals.filter(function(int2: any) {
             return int2[0] !== unitRange[0] && int2[1] !== unitRange[1];
         });
     }
@@ -231,7 +231,7 @@ function dragstart(lThis, d) {
     s.brushStartCallback();
 }
 
-function drag(lThis, d) {
+function drag(lThis: any, d: any) {
     event.sourceEvent.stopPropagation();
     const y = d.height - pointer(event, lThis)[1] - 2 * c.verticalPadding;
     const s = d.brush.svgBrush;
@@ -250,7 +250,7 @@ function drag(lThis, d) {
     renderHighlight(lThis.parentNode);
 }
 
-function dragend(lThis, d) {
+function dragend(lThis: any, d: any) {
     const brush = d.brush;
     const filter = brush.filter;
     const s = brush.svgBrush;
@@ -327,7 +327,7 @@ function dragend(lThis, d) {
     s.brushEndCallback(brush.filterSpecified ? filter.getConsolidated() : []);
 }
 
-function mousemove(lThis, d) {
+function mousemove(lThis: any, d: any) {
     const y = d.height - pointer(event, lThis)[1] - 2 * c.verticalPadding;
     const interval = getInterval(d, y);
 
@@ -338,7 +338,7 @@ function mousemove(lThis, d) {
         .style('cursor', cursor);
 }
 
-function attachDragBehavior(selection) {
+function attachDragBehavior(selection: any) {
     // There's some fiddling with pointer cursor styling so that the cursor preserves its shape while dragging a brush
     // even if the cursor strays from the interacting bar, which is bound to happen as bars are thin and the user
     // will inevitably leave the hotspot strip. In this regard, it does something similar to what the D3 brush would do.
@@ -357,9 +357,9 @@ function attachDragBehavior(selection) {
         );
 }
 
-function startAsc(a, b) { return a[0] - b[0]; }
+function startAsc(a: any, b: any) { return a[0] - b[0]; }
 
-function renderAxisBrush(axisBrush, paperColor, gd: GraphDiv) {
+function renderAxisBrush(axisBrush: any, paperColor: any, gd: GraphDiv) {
     const isStatic = gd._context.staticPlot;
 
     const background = axisBrush.selectAll('.background').data(repeat);
@@ -374,7 +374,7 @@ function renderAxisBrush(axisBrush, paperColor, gd: GraphDiv) {
 
     background
         .call(attachDragBehavior)
-        .attr('height', function(d) {
+        .attr('height', function(d: any) {
             return d.height - c.verticalPadding;
         });
 
@@ -390,7 +390,7 @@ function renderAxisBrush(axisBrush, paperColor, gd: GraphDiv) {
         .attr('stroke-linecap', 'butt');
 
     highlightShadow
-        .attr('y1', function(d) { return d.height; })
+        .attr('y1', function(d: any) { return d.height; })
         .call(styleHighlight);
 
     const highlight = axisBrush.selectAll('.highlight').data(repeat); // we have a set here, can't call it `extent`
@@ -405,11 +405,11 @@ function renderAxisBrush(axisBrush, paperColor, gd: GraphDiv) {
         .attr('stroke-linecap', 'butt');
 
     highlight
-        .attr('y1', function(d) { return d.height; })
+        .attr('y1', function(d: any) { return d.height; })
         .call(styleHighlight);
 }
 
-function ensureAxisBrush(axisOverlays, paperColor, gd: GraphDiv) {
+function ensureAxisBrush(axisOverlays: any, paperColor: any, gd: GraphDiv) {
     const axisBrush = axisOverlays.selectAll('.' + c.cn.axisBrush)
         .data(repeat, keyFun);
 
@@ -420,17 +420,17 @@ function ensureAxisBrush(axisOverlays, paperColor, gd: GraphDiv) {
     renderAxisBrush(axisBrush, paperColor, gd);
 }
 
-function getBrushExtent(brush) {
-    return brush.svgBrush.extent.map(function(e) {return e.slice();});
+function getBrushExtent(brush: any) {
+    return brush.svgBrush.extent.map(function(e: any) {return e.slice();});
 }
 
-function brushClear(brush) {
+function brushClear(brush: any) {
     brush.filterSpecified = false;
     brush.svgBrush.extent = [[-Infinity, Infinity]];
 }
 
-function axisBrushMoved(callback) {
-    return function axisBrushMoved(dimension) {
+function axisBrushMoved(callback: any) {
+    return function axisBrushMoved(dimension: any) {
         const brush = dimension.brush;
         const extent = getBrushExtent(brush);
         const newExtent = extent.slice();
@@ -439,7 +439,7 @@ function axisBrushMoved(callback) {
     };
 }
 
-function dedupeRealRanges(intervals) {
+function dedupeRealRanges(intervals: any) {
     // Fuses elements of intervals if they overlap, yielding discontiguous intervals, results.length <= intervals.length
     // Currently uses closed intervals, ie. dedupeRealRanges([[400, 800], [300, 400]]) -> [300, 800]
     const queue = intervals.slice();
@@ -467,12 +467,12 @@ function dedupeRealRanges(intervals) {
 
 function makeFilter() {
     let filter: any[] = [];
-    let consolidated;
-    let bounds;
+    let consolidated: any;
+    let bounds: any;
     return {
-        set: function(a) {
+        set: function(a: any) {
             filter = a
-                .map(function(d) { return d.slice().sort(sortAsc); })
+                .map(function(d: any) { return d.slice().sort(sortAsc); })
                 .sort(startAsc);
 
             // handle unselected case
@@ -493,7 +493,7 @@ function makeFilter() {
     };
 }
 
-function makeBrush(state, rangeSpecified, initialRange, brushStartCallback, brushCallback, brushEndCallback) {
+function makeBrush(state: any, rangeSpecified: any, initialRange: any, brushStartCallback: any, brushCallback: any, brushEndCallback: any) {
     const filter = makeFilter();
     filter.set(initialRange);
     return {
@@ -510,9 +510,9 @@ function makeBrush(state, rangeSpecified, initialRange, brushStartCallback, brus
 
 // for use by supplyDefaults, but it needed tons of pieces from here so
 // seemed to make more sense just to put the whole routine here
-function cleanRanges(ranges, dimension) {
+function cleanRanges(ranges: any, dimension: any) {
     if(Array.isArray(ranges[0])) {
-        ranges = ranges.map(function(ri) { return ri.sort(sortAsc); });
+        ranges = ranges.map(function(ri: any) { return ri.sort(sortAsc); });
 
         if(!dimension.multiselect) ranges = [ranges[0]];
         else ranges = dedupeRealRanges(ranges.sort(startAsc));
@@ -521,14 +521,14 @@ function cleanRanges(ranges, dimension) {
     // ordinal snapping
     if(dimension.tickvals) {
         const sortedTickVals = dimension.tickvals.slice().sort(sortAsc);
-        ranges = ranges.map(function(ri) {
+        ranges = ranges.map(function(ri: any) {
             const rSnapped = [
                 ordinalScaleSnap(0, sortedTickVals, ri[0], []),
                 ordinalScaleSnap(1, sortedTickVals, ri[1], [])
             ];
             if(rSnapped[1] > rSnapped[0]) return rSnapped;
         })
-        .filter(function(ri) { return ri; });
+        .filter(function(ri: any) { return ri; });
 
         if(!ranges.length) return;
     }

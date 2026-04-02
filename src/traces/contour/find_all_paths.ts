@@ -30,19 +30,19 @@ export default function findAllPaths(pathinfo: any, xtol?: number, ytol?: number
     }
 }
 
-function equalPts(pt1,  pt2,  xtol,  ytol) {
+function equalPts(pt1: any,  pt2: any,  xtol: any,  ytol: any) {
     return Math.abs(pt1[0] - pt2[0]) < xtol &&
            Math.abs(pt1[1] - pt2[1]) < ytol;
 }
 
 // distance in index units - uses the 3rd and 4th items in points
-function ptDist(pt1,  pt2) {
+function ptDist(pt1: any,  pt2: any) {
     const dx = pt1[2] - pt2[2];
     const dy = pt1[3] - pt2[3];
     return Math.sqrt(dx * dx + dy * dy);
 }
 
-function makePath(pi,  loc,  edgeflag,  xtol,  ytol) {
+function makePath(pi: any,  loc: any,  edgeflag: any,  xtol: any,  ytol: any) {
     let locStr = loc.join(',');
     let mi = pi.crossings[locStr];
     let marchStep = getStartStep(mi, edgeflag, loc);
@@ -57,8 +57,8 @@ function makePath(pi,  loc,  edgeflag,  xtol,  ytol) {
     // now follow the path
     for(cnt = 0; cnt < 10000; cnt++) { // just to avoid infinite loops
         if(mi > 20) {
-            mi = constants.CHOOSESADDLE[mi][(marchStep[0] || marchStep[1]) < 0 ? 0 : 1];
-            pi.crossings[locStr] = constants.SADDLEREMAINDER[mi];
+            mi = (constants.CHOOSESADDLE as any)[mi][(marchStep[0] || marchStep[1]) < 0 ? 0 : 1];
+            pi.crossings[locStr] = (constants.SADDLEREMAINDER as any)[mi];
         } else {
             delete pi.crossings[locStr];
         }
@@ -116,7 +116,7 @@ function makePath(pi,  loc,  edgeflag,  xtol,  ytol) {
 
     const distThreshold = totaldist / alldists.length * distThresholdFactor;
 
-    function getpt(i) { return pts[i % pts.length]; }
+    function getpt(i: any) { return pts[i % pts.length]; }
 
     for(cnt = pts.length - 2; cnt >= cropstart; cnt--) {
         distgroup = alldists[cnt];
@@ -226,7 +226,7 @@ function makePath(pi,  loc,  edgeflag,  xtol,  ytol) {
 
 // special function to get the marching step of the
 // first point in the path (leading to loc)
-function getStartStep(mi,  edgeflag,  loc) {
+function getStartStep(mi: any,  edgeflag: any,  loc: any) {
     let dx = 0;
     let dy = 0;
     if(mi > 20 && edgeflag) {
@@ -260,7 +260,7 @@ function getStartStep(mi,  edgeflag,  loc) {
  *   It's crucial to delete these extra two before turning an array of these
  *   points into a path, because those routines require length-2 points.
  */
-function getInterpPx(pi,  loc,  step) {
+function getInterpPx(pi: any,  loc: any,  step: any) {
     const locx = loc[0] + Math.max(step[0], 0);
     const locy = loc[1] + Math.max(step[1], 0);
     const zxy = pi.z[locy][locx];

@@ -3,7 +3,7 @@ import subtypes from '../scatter/subtypes.js';
 import _numerical from '../../constants/numerical.js';
 const { BADNUM } = _numerical;
 
-export default function selectPoints(searchInfo, selectionTester) {
+export default function selectPoints(searchInfo: any, selectionTester: any) {
     const cd = searchInfo.cd;
     const xa = searchInfo.xaxis;
     const ya = searchInfo.yaxis;

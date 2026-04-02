@@ -61,7 +61,7 @@ export default function drawDescendants(gd: GraphDiv, cd: any[], entry: any, sli
 
     let minVisibleDepth = Infinity;
     let maxVisibleDepth = -Infinity;
-    sliceData.forEach(function(pt) {
+    sliceData.forEach(function(pt: any) {
         const depth = pt.depth;
         if(depth >= trace._maxDepth) {
             // hide slices that won't show up on graph
@@ -85,10 +85,10 @@ export default function drawDescendants(gd: GraphDiv, cd: any[], entry: any, sli
     slices.order();
 
     // next coords of previous entry
-    let nextOfPrevEntry = null;
+    let nextOfPrevEntry: any = null;
     if(hasTransition && prevEntry) {
         const prevEntryId = helpers.getPtId(prevEntry);
-        slices.each(function(pt) {
+        slices.each(function(pt: any) {
             if(nextOfPrevEntry === null && (helpers.getPtId(pt) === prevEntryId)) {
                 nextOfPrevEntry = {
                     x0: pt.x0,
@@ -123,7 +123,7 @@ export default function drawDescendants(gd: GraphDiv, cd: any[], entry: any, sli
         });
     }
 
-    updateSlices.each(function(this: any, pt) {
+    updateSlices.each(function(this: any, pt: any) {
         const isHeader = helpers.isHeader(pt, trace);
 
         // for bbox
@@ -139,14 +139,14 @@ export default function drawDescendants(gd: GraphDiv, cd: any[], entry: any, sli
 
         const sliceTop = select(this);
 
-        const slicePath = Lib.ensureSingle(sliceTop, 'path', 'surface', function(s) {
+        const slicePath = Lib.ensureSingle(sliceTop, 'path', 'surface', function(s: any) {
             s.style('pointer-events', isStatic ? 'none' : 'all');
         });
 
         if(hasTransition) {
-            slicePath.transition().attrTween('d', function(pt2) {
+            slicePath.transition().attrTween('d', function(pt2: any) {
                 const interp = makeUpdateSliceInterpolator(pt2, onPathbar, getRefRect(), [width, height]);
-                return function(t) { return pathSlice(interp(t)); };
+                return function(t: any) { return pathSlice(interp(t)); };
             });
         } else {
             slicePath.attr('d', pathSlice);
@@ -176,7 +176,7 @@ export default function drawDescendants(gd: GraphDiv, cd: any[], entry: any, sli
         }
 
         const sliceTextGroup = Lib.ensureSingle(sliceTop, 'g', 'slicetext');
-        const sliceText = Lib.ensureSingle(sliceTextGroup, 'text', '', function(s) {
+        const sliceText = Lib.ensureSingle(sliceTextGroup, 'text', '', function(s: any) {
             // prohibit tex interpretation until we can handle
             // tex and regular text together
             s.attr('data-notex', 1);
@@ -202,9 +202,9 @@ export default function drawDescendants(gd: GraphDiv, cd: any[], entry: any, sli
         pt.transform.fontSize = font.size;
 
         if(hasTransition) {
-            sliceText.transition().attrTween('transform', function(pt2) {
+            sliceText.transition().attrTween('transform', function(pt2: any) {
                 const interp = makeUpdateTextInterpolator(pt2, onPathbar, getRefRect(), [width, height]);
-                return function(t) { return strTransform(interp(t)); };
+                return function(t: any) { return strTransform(interp(t)); };
             });
         } else {
             sliceText.attr('transform', strTransform(pt));

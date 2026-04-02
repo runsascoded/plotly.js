@@ -11,7 +11,7 @@ const DIRSYMBOL: any = {
     decreasing: delta.DECREASING.SYMBOL
 };
 
-function hoverPoints(pointData,  xval,  yval,  hovermode) {
+function hoverPoints(pointData: any,  xval: any,  yval: any,  hovermode: any) {
     const cd = pointData.cd;
     const trace = cd[0].trace;
 
@@ -22,7 +22,7 @@ function hoverPoints(pointData,  xval,  yval,  hovermode) {
     return hoverOnPoints(pointData, xval, yval, hovermode);
 }
 
-function _getClosestPoint(pointData,  xval,  yval,  hovermode) {
+function _getClosestPoint(pointData: any,  xval: any,  yval: any,  hovermode: any) {
     const cd = pointData.cd;
     const xa = pointData.xa;
     const trace = cd[0].trace;
@@ -32,11 +32,11 @@ function _getClosestPoint(pointData,  xval,  yval,  hovermode) {
     const minAttr = type === 'ohlc' ? 'l' : 'min';
     const maxAttr = type === 'ohlc' ? 'h' : 'max';
 
-    let hoverPseudoDistance, spikePseudoDistance;
+    let hoverPseudoDistance: any, spikePseudoDistance;
 
     // potentially shift xval for grouped candlesticks
     const centerShift = t.bPos || 0;
-    const shiftPos = function(di) { return di.pos + centerShift - xval; };
+    const shiftPos = function(di: any) { return di.pos + centerShift - xval; };
 
     // ohlc and candlestick call displayHalfWidth different things...
     const displayHalfWidth = t.bdPos || t.tickLen;
@@ -47,18 +47,18 @@ function _getClosestPoint(pointData,  xval,  yval,  hovermode) {
     hoverPseudoDistance = pointData.maxHoverDistance - pseudoDistance;
     spikePseudoDistance = pointData.maxSpikeDistance - pseudoDistance;
 
-    function dx(di) {
+    function dx(di: any) {
         const pos = shiftPos(di);
         return Fx.inbox(pos - hoverHalfWidth, pos + hoverHalfWidth, hoverPseudoDistance);
     }
 
-    function dy(di) {
+    function dy(di: any) {
         const min = di[minAttr];
         const max = di[maxAttr];
         return (min === max || Fx.inbox(min - yval, max - yval, hoverPseudoDistance)) as any;
     }
 
-    function dxy(di) { return (dx(di) + dy(di)) / 2; }
+    function dxy(di: any) { return (dx(di) + dy(di)) / 2; }
 
     const distfn = Fx.getDistanceFunction(hovermode, dx, dy, dxy);
     Fx.getClosest(cd, distfn, pointData);
@@ -87,7 +87,7 @@ function _getClosestPoint(pointData,  xval,  yval,  hovermode) {
     return pointData;
 }
 
-function hoverSplit(pointData,  xval,  yval,  hovermode) {
+function hoverSplit(pointData: any,  xval: any,  yval: any,  hovermode: any) {
     const cd = pointData.cd;
     const ya = pointData.ya;
     const trace = cd[0].trace;
@@ -138,7 +138,7 @@ function hoverSplit(pointData,  xval,  yval,  hovermode) {
     return closeBoxData;
 }
 
-function hoverOnPoints(pointData,  xval,  yval,  hovermode) {
+function hoverOnPoints(pointData: any,  xval: any,  yval: any,  hovermode: any) {
     const cd = pointData.cd;
     const ya = pointData.ya;
     const trace = cd[0].trace;
@@ -155,7 +155,7 @@ function hoverOnPoints(pointData,  xval,  yval,  hovermode) {
     const i = closestPoint.index = di.i;
     const dir = di.dir;
 
-    function getLabelLine(attr) {
+    function getLabelLine(attr: any) {
         return t.labels[attr] + Axes.hoverLabelText(ya, trace[attr][i], trace.yhoverformat);
     }
 

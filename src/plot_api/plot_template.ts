@@ -187,7 +187,7 @@ export const arrayEditor = function(parentIn?: any, containerStr?: any, itemOut?
     if(templateItemName) index = lengthIn;
     const itemStr = containerStr + '[' + index + ']';
 
-    let update;
+    let update: any;
     function resetUpdate() {
         update = {};
         if(templateItemName) {

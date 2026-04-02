@@ -74,9 +74,9 @@ function onClick(gd: GraphDiv, hoverData: any) {
  */
 function getToggleSets(gd: GraphDiv, hoverData: any) {
     const annotations = gd._fullLayout.annotations;
-    const onSet = [];
+    const onSet: any[] = [];
     const offSet: any[] = [];
-    const explicitOffSet = [];
+    const explicitOffSet: any[] = [];
     const hoverLen = (hoverData || []).length;
 
     let i, j, anni, showMode, pointj, xa, ya, toggleType;

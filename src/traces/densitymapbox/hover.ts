@@ -2,7 +2,7 @@ import Axes from '../../plots/cartesian/axes.js';
 import _hover from '../scattermapbox/hover.js';
 const { hoverPoints: scatterMapboxHoverPoints, getExtraText } = _hover;
 
-export default function hoverPoints(pointData, xval, yval) {
+export default function hoverPoints(pointData: any, xval: any, yval: any) {
     const pts = scatterMapboxHoverPoints(pointData, xval, yval);
     if(!pts) return;
 

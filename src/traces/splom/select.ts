@@ -3,7 +3,7 @@ import subTypes from '../scatter/subtypes.js';
 import helpers from './helpers.js';
 const pushUnique = Lib.pushUnique;
 
-export default function select(searchInfo, selectionTester) {
+export default function select(searchInfo: any, selectionTester: any) {
     const cd = searchInfo.cd;
     const trace = cd[0].trace;
     const stash = cd[0].t;

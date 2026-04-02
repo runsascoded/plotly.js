@@ -10,14 +10,14 @@ function style(gd: GraphDiv): void {
     const s = gd._fullLayout._sunburstlayer.selectAll('.trace');
     resizeText(gd, s, 'sunburst');
 
-    s.each(function(this: any, cd) {
+    s.each(function(this: any, cd: any) {
         const gTrace = select(this);
         const cd0 = cd[0];
         const trace = cd0.trace;
 
         gTrace.style('opacity', trace.opacity);
 
-        gTrace.selectAll('path.surface').each(function(this: any, pt) {
+        gTrace.selectAll('path.surface').each(function(this: any, pt: any) {
             select(this).call(styleOne, pt, trace, gd);
         });
     });

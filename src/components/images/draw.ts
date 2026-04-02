@@ -141,10 +141,10 @@ export default function draw(gd: GraphDiv) {
         }
 
         // Offsets for anchor positioning
-        const xOffset = width * anchors.x[d.xanchor].offset;
-        const yOffset = height * anchors.y[d.yanchor].offset;
+        const xOffset = width * (anchors.x as any)[d.xanchor].offset;
+        const yOffset = height * (anchors.y as any)[d.yanchor].offset;
 
-        let sizing = anchors.x[d.xanchor].sizing + anchors.y[d.yanchor].sizing;
+        let sizing = (anchors.x as any)[d.xanchor].sizing + (anchors.y as any)[d.yanchor].sizing;
 
         // Final positions
         let xPos, yPos;

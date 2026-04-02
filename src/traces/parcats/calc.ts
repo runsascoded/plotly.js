@@ -14,7 +14,7 @@ export default function calc(gd: GraphDiv, trace: FullTrace) {
 
     if(visibleDims.length === 0) return [];
 
-    const uniqueInfoDims = visibleDims.map(function(dim) {
+    const uniqueInfoDims = visibleDims.map(function(dim: any) {
         let categoryValues;
         if(dim.categoryorder === 'trace') {
             // Use order of first occurrence in trace
@@ -55,14 +55,14 @@ export default function calc(gd: GraphDiv, trace: FullTrace) {
 
     validateDimensionDisplayInds(visibleDims);
 
-    visibleDims.forEach(function(dim, dimInd) {
+    visibleDims.forEach(function(dim: any, dimInd: any) {
         validateCategoryProperties(dim, uniqueInfoDims[dimInd]);
     });
 
     // Handle path colors
     // ------------------
     const line = trace.line;
-    let markerColorscale;
+    let markerColorscale: any;
 
     // Process colorscale
     if(line) {
@@ -79,7 +79,7 @@ export default function calc(gd: GraphDiv, trace: FullTrace) {
     }
 
     // Build color generation function
-    function getMarkerColorInfo(index) {
+    function getMarkerColorInfo(index: any) {
         let value, rawColor;
         if(Lib.isArrayOrTypedArray(line.color)) {
             value = line.color[index % line.color.length];
@@ -101,7 +101,7 @@ export default function calc(gd: GraphDiv, trace: FullTrace) {
     const pathModels: any = {};
 
     // Category inds array for each dimension
-    const categoryIndsDims = uniqueInfoDims.map(function(di) {return di.inds;});
+    const categoryIndsDims = uniqueInfoDims.map(function(di: any) {return di.inds;});
 
     // Initialize total count
     totalCount = 0;
@@ -136,7 +136,7 @@ export default function calc(gd: GraphDiv, trace: FullTrace) {
         updatePathModel(pathModels[pathKey], valueInd, count);
     }
 
-    const dimensionModels = visibleDims.map(function(di, i) {
+    const dimensionModels = visibleDims.map(function(di: any, i: any) {
         return createDimensionModel(i, di._index, di._displayindex, di.label, totalCount);
     });
 
@@ -189,10 +189,10 @@ export default function calc(gd: GraphDiv, trace: FullTrace) {
  * @param {Number} count
  * @return {ParcatsModel}
  */
-function createParcatsModel(dimensions, paths, count) {
+function createParcatsModel(dimensions: any, paths: any, count: any) {
     const maxCats = dimensions
-        .map(function(d) {return d.categories.length;})
-        .reduce(function(v1, v2) {return Math.max(v1, v2);});
+        .map(function(d: any) {return d.categories.length;})
+        .reduce(function(v1: any, v2: any) {return Math.max(v1, v2);});
     return {dimensions: dimensions, paths: paths, trace: undefined, maxCats: maxCats, count: count};
 }
 
@@ -228,7 +228,7 @@ function createParcatsModel(dimensions, paths, count) {
  *  Total number of input values
  * @return {DimensionModel}
  */
-function createDimensionModel(dimensionInd, containerInd, displayInd, dimensionLabel, count) {
+function createDimensionModel(dimensionInd: any, containerInd: any, displayInd: any, dimensionLabel: any, count: any) {
     return {
         dimensionInd: dimensionInd,
         containerInd: containerInd,
@@ -272,7 +272,7 @@ function createDimensionModel(dimensionInd, containerInd, displayInd, dimensionL
  * @param {String} categoryLabel
  * @return {CategoryModel}
  */
-function createCategoryModel(dimensionInd, categoryInd, categoryValue, categoryLabel) {
+function createCategoryModel(dimensionInd: any, categoryInd: any, categoryValue: any, categoryLabel: any) {
     return {
         dimensionInd: dimensionInd,
         categoryInd: categoryInd,
@@ -293,7 +293,7 @@ function createCategoryModel(dimensionInd, categoryInd, categoryValue, categoryL
  * @param {Number} valueInd
  * @param {Number} count
  */
-function updateCategoryModel(categoryModel, valueInd, count) {
+function updateCategoryModel(categoryModel: any, valueInd: any, count: any) {
     categoryModel.valueInds.push(valueInd);
     categoryModel.count += count;
 }
@@ -325,7 +325,7 @@ function updateCategoryModel(categoryModel, valueInd, count) {
  * @param rawColor
  * @return {PathModel}
  */
-function createPathModel(categoryInds, color, rawColor) {
+function createPathModel(categoryInds: any, color: any, rawColor: any) {
     return {
         categoryInds: categoryInds,
         color: color,
@@ -343,7 +343,7 @@ function createPathModel(categoryInds, color, rawColor) {
  * @param {Number} valueInd
  * @param {Number} count
  */
-function updatePathModel(pathModel, valueInd, count) {
+function updatePathModel(pathModel: any, valueInd: any, count: any) {
     pathModel.valueInds.push(valueInd);
     pathModel.count += count;
 }
@@ -377,13 +377,13 @@ function updatePathModel(pathModel, valueInd, count) {
  *  UniqueInfo object.
  * @return {UniqueInfo}
  */
-function getUniqueInfo(values, uniqueValues) {
+function getUniqueInfo(values: any, uniqueValues: any) {
     // Initialize uniqueValues if not specified
     if(uniqueValues === undefined || uniqueValues === null) {
         uniqueValues = [];
     } else {
         // Shallow copy so append below doesn't alter input array
-        uniqueValues = uniqueValues.map(function(e) {return e;});
+        uniqueValues = uniqueValues.map(function(e: any) {return e;});
     }
 
     // Initialize Variables
@@ -392,7 +392,7 @@ function getUniqueInfo(values, uniqueValues) {
     const inds: any[] = [];
 
     // Initialize uniqueValueCounts and
-    uniqueValues.forEach(function(uniqueVal, valInd) {
+    uniqueValues.forEach(function(uniqueVal: any, valInd: any) {
         uniqueValueCounts[uniqueVal] = 0;
         uniqueValueInds[uniqueVal] = valInd;
     });
@@ -416,7 +416,7 @@ function getUniqueInfo(values, uniqueValues) {
     }
 
     // Build UniqueInfo
-    const uniqueCounts = uniqueValues.map(function(v) { return uniqueValueCounts[v]; });
+    const uniqueCounts = uniqueValues.map(function(v: any) { return uniqueValueCounts[v]; });
 
     return {
         uniqueValues: uniqueValues,
@@ -431,8 +431,8 @@ function getUniqueInfo(values, uniqueValues) {
  * Otherwise, replace the display order with the dimension order
  * @param {Object} trace
  */
-function validateDimensionDisplayInds(visibleDims) {
-    const displayInds = visibleDims.map(function(d) { return d.displayindex; });
+function validateDimensionDisplayInds(visibleDims: any) {
+    const displayInds = visibleDims.map(function(d: any) { return d.displayindex; });
     let i;
 
     if(isRangePermutation(displayInds)) {
@@ -451,7 +451,7 @@ function validateDimensionDisplayInds(visibleDims) {
  * @param {Object} dim
  * @param {UniqueInfo} uniqueInfoDim
  */
-function validateCategoryProperties(dim, uniqueInfoDim) {
+function validateCategoryProperties(dim: any, uniqueInfoDim: any) {
     // Update categoryarray
     dim._categoryarray = uniqueInfoDim.uniqueValues;
 
@@ -474,7 +474,7 @@ function validateCategoryProperties(dim, uniqueInfoDim) {
  * @param {Array} inds
  * @return {boolean}
  */
-function isRangePermutation(inds) {
+function isRangePermutation(inds: any) {
     const indsSpecified = new Array(inds.length);
 
     for(let i = 0; i < inds.length; i++) {

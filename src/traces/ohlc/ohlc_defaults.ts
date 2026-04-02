@@ -2,7 +2,7 @@ import type { FullLayout, FullTrace, InputTrace } from '../../../types/core';
 import Registry from '../../registry.js';
 import Lib from '../../lib/index.js';
 
-export default function handleOHLC(traceIn: InputTrace,  traceOut: FullTrace,  coerce,  layout: FullLayout) {
+export default function handleOHLC(traceIn: InputTrace,  traceOut: FullTrace,  coerce: any,  layout: FullLayout) {
     const x = coerce('x');
     const open = coerce('open');
     const high = coerce('high');

@@ -16,7 +16,7 @@ import type { GraphDiv, FullLayout, FullTrace, PlotInfo } from '../../../types/c
 
 
 function ensureSingleAndAddDatum(parent?: any, nodeType?: any, className?: any): void {
-    return ensureSingle(parent, nodeType, className, function(s) {
+    return ensureSingle(parent, nodeType, className, function(s: any) {
         s.datum(className);
     });
 }
@@ -247,10 +247,10 @@ function plotOne(gd: GraphDiv, plotinfo: PlotInfo, cdSubplot?: any, transitionOp
     });
 
     const layers = plotinfo.plot.selectAll('g.mlayer')
-        .data(layerData, function(d) { return d.className; });
+        .data(layerData, function(d: any) { return d.className; });
 
     layers.enter().append('g')
-        .attr('class', function(d) { return d.className; })
+        .attr('class', function(d: any) { return d.className; })
         .classed('mlayer', true)
         .classed('rangeplot', plotinfo.isRangePlot);
 
@@ -258,7 +258,7 @@ function plotOne(gd: GraphDiv, plotinfo: PlotInfo, cdSubplot?: any, transitionOp
 
     layers.order();
 
-    layers.each(function(this: any, d) {
+    layers.each(function(this: any, d: any) {
         const sel = select(this);
         const className = d.className;
 
@@ -412,14 +412,14 @@ export const drawFramework = function(gd: GraphDiv): any {
         .data(subplotData, String);
 
     subplotLayers.enter().append('g')
-        .attr('class', function(d) { return 'subplot ' + d[0]; });
+        .attr('class', function(d: any) { return 'subplot ' + d[0]; });
 
     subplotLayers.order();
 
     subplotLayers.exit()
         .call(purgeSubplotLayers, fullLayout);
 
-    subplotLayers.each(function(this: any, d) {
+    subplotLayers.each(function(this: any, d: any) {
         const id = d[0];
         const posZ = id.indexOf(zindexSeparator);
         const hasZ = posZ !== -1;
@@ -544,8 +544,8 @@ function makeSubplotLayer(gd?: any, plotinfo?: any): void {
     const posZ = id.indexOf(zindexSeparator);
     const hasZ = posZ !== -1;
 
-    const xLayer = constants.layerValue2layerClass[plotinfo.xaxis.layer];
-    const yLayer = constants.layerValue2layerClass[plotinfo.yaxis.layer];
+    const xLayer = (constants.layerValue2layerClass as any)[plotinfo.xaxis.layer];
+    const yLayer = (constants.layerValue2layerClass as any)[plotinfo.yaxis.layer];
     const hasOnlyLargeSploms = fullLayout._hasOnlyLargeSploms;
 
     const hasMultipleZ = fullLayout._zindices.length > 1;
@@ -686,7 +686,7 @@ function purgeSubplotLayers(layers?: any, fullLayout?: any): void {
 
     const overlayIdsToRemove: any = {};
 
-    layers.each(function(this: any, d) {
+    layers.each(function(this: any, d: any) {
         const id = d[0];
         const plotgroup = select(this);
 
@@ -722,7 +722,7 @@ function removeSubplotExtras(subplotId?: any, fullLayout?: any): void {
 export const toSVG = function(gd?: any): any {
     const imageRoot = gd._fullLayout._glimages;
     const root = select(gd).selectAll('.svg-container');
-    const canvases = root.filter(function(d, i) {return i === root.size() - 1;})
+    const canvases = root.filter(function(d: any, i: any) {return i === root.size() - 1;})
         .selectAll('.gl-canvas-context, .gl-canvas-focus');
 
     function canvasToImage(this: any) {

@@ -13,7 +13,7 @@ const INCREASING_COLOR = delta.INCREASING.COLOR;
 const DECREASING_COLOR = delta.DECREASING.COLOR;
 const TOTALS_COLOR = '#4499FF';
 
-function handleDirection(coerce,  direction,  defaultColor: string) {
+function handleDirection(coerce: any,  direction: any,  defaultColor: string) {
     coerce(direction + '.marker.color', defaultColor);
     coerce(direction + '.marker.line.color', Color.defaultLine);
     coerce(direction + '.marker.line.width');
@@ -79,8 +79,8 @@ function supplyDefaults(traceIn: InputTrace,  traceOut: FullTrace,  defaultColor
     coerce('zorder');
 }
 
-function crossTraceDefaults(fullData,  fullLayout: FullLayout) {
-    let traceIn, traceOut;
+function crossTraceDefaults(fullData: any,  fullLayout: FullLayout) {
+    let traceIn, traceOut: any;
 
     function coerce(attr: string) {
         return Lib.coerce(traceOut._input, traceOut, attributes, attr);

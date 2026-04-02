@@ -1,4 +1,4 @@
-export default function(pathinfo, contours) {
+export default function(pathinfo: any, contours: any) {
     const pi0 = pathinfo[0];
     const z = pi0.z;
     let i;

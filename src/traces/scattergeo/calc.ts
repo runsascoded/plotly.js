@@ -8,7 +8,7 @@ import calcSelection from '../scatter/calc_selection.js';
 import _index from '../../lib/index.js';
 const { isArrayOrTypedArray, _ } = _index;
 
-function isNonBlankString(v) {
+function isNonBlankString(v: any) {
     return v && typeof v === 'string';
 }
 
@@ -19,7 +19,7 @@ export default function calc(gd: GraphDiv, trace: FullTrace) {
 
     let isValidLoc;
     if(trace.geojson) {
-        isValidLoc = function(v) { return isNonBlankString(v) || isNumeric(v); };
+        isValidLoc = function(v: any) { return isNonBlankString(v) || isNumeric(v); };
     } else {
         isValidLoc = isNonBlankString;
     }

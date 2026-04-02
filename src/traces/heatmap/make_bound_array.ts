@@ -3,7 +3,7 @@ import Registry from '../../registry.js';
 import _index from '../../lib/index.js';
 const { isArrayOrTypedArray } = _index;
 
-export default function makeBoundArray(trace: FullTrace,  arrayIn,  v0In,  dvIn,  numbricks,  ax: FullAxis) {
+export default function makeBoundArray(trace: FullTrace,  arrayIn: any,  v0In: any,  dvIn: any,  numbricks: any,  ax: FullAxis) {
     let arrayOut: any[] = [];
     const isContour = Registry.traceIs(trace, 'contour');
     const isHist = Registry.traceIs(trace, 'histogram');

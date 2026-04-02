@@ -1,6 +1,6 @@
-export default function(arrays, asmoothing, bsmoothing) {
+export default function(arrays: any, asmoothing: any, bsmoothing: any) {
     if(asmoothing && bsmoothing) {
-        return function(out, i0, j0, u, v) {
+        return function(out: any, i0: any, j0: any, u: any, v: any) {
             if(!out) out = [];
             let f0, f1, f2, f3, ak, k;
 
@@ -41,7 +41,7 @@ export default function(arrays, asmoothing, bsmoothing) {
     } else if(asmoothing) {
         // Handle smooth in the a-direction but linear in the b-direction by performing four
         // linear interpolations followed by one cubic interpolation of the result
-        return function(out, i0, j0, u, v) {
+        return function(out: any, i0: any, j0: any, u: any, v: any) {
             if(!out) out = [];
             let f0, f1, k, ak;
             i0 *= 3;
@@ -68,7 +68,7 @@ export default function(arrays, asmoothing, bsmoothing) {
         // so that this function is fully interpolation-agnostic. Otherwise it would need
         // to be called differently in different cases. Which wouldn't be the worst, but
          
-        return function(out, i0, j0, u, v) {
+        return function(out: any, i0: any, j0: any, u: any, v: any) {
          
             if(!out) out = [];
             let f0, f1, f2, f3, k, ak;
@@ -92,7 +92,7 @@ export default function(arrays, asmoothing, bsmoothing) {
     } else {
         // Finally, both directions are linear:
          
-        return function(out, i0, j0, u, v) {
+        return function(out: any, i0: any, j0: any, u: any, v: any) {
          
             if(!out) out = [];
             let f0, f1, k, ak;

@@ -14,7 +14,7 @@ import Axes from '../../plots/cartesian/axes.js';
 import { appendArrayPointValue } from '../../components/fx/helpers.js';
 import calculateError from './calc_errors.js';
 
-function LineWithMarkers(this: any, scene, uid) {
+function LineWithMarkers(this: any, scene: any, uid: any) {
     this.scene = scene;
     this.uid = uid;
     this.linePlot = null;
@@ -35,7 +35,7 @@ function LineWithMarkers(this: any, scene, uid) {
 
 const proto = LineWithMarkers.prototype;
 
-proto.handlePick = function (selection) {
+proto.handlePick = function (selection: any) {
     if (
         selection.object &&
         (selection.object === this.linePlot ||
@@ -70,7 +70,7 @@ proto.handlePick = function (selection) {
     }
 };
 
-function constructDelaunay(points, color, axis) {
+function constructDelaunay(points: any, color: any, axis: any) {
     const u = (axis + 1) % 3;
     const v = (axis + 2) % 3;
     const filteredPoints: any[] = [];
@@ -99,7 +99,7 @@ function constructDelaunay(points, color, axis) {
     };
 }
 
-function calculateErrorParams(errors) {
+function calculateErrorParams(errors: any) {
     const capSize = [0.0, 0.0, 0.0];
     const color = [
         [0, 0, 0],
@@ -122,19 +122,19 @@ function calculateErrorParams(errors) {
     return { capSize: capSize, color: color, lineWidth: lineWidth };
 }
 
-function parseAlignmentX(a) {
+function parseAlignmentX(a: any) {
     if (a === null || a === undefined) return 0;
 
     return a.indexOf('left') > -1 ? -1 : a.indexOf('right') > -1 ? 1 : 0;
 }
 
-function parseAlignmentY(a) {
+function parseAlignmentY(a: any) {
     if (a === null || a === undefined) return 0;
 
     return a.indexOf('top') > -1 ? -1 : a.indexOf('bottom') > -1 ? 1 : 0;
 }
 
-function calculateTextOffset(tp) {
+function calculateTextOffset(tp: any) {
     // Read out text properties
 
     const defaultAlignmentX = 0;
@@ -158,13 +158,13 @@ function calculateTextOffset(tp) {
     return textOffset;
 }
 
-function calculateSize(sizeIn, sizeFn) {
+function calculateSize(sizeIn: any, sizeFn: any) {
     // rough parity with Plotly 2D markers
     return sizeFn(sizeIn * 4);
 }
 
-function calculateSymbol(symbolIn) {
-    return MARKER_SYMBOLS[symbolIn];
+function calculateSymbol(symbolIn: any) {
+    return (MARKER_SYMBOLS as any)[symbolIn];
 }
 
 function formatParam(paramIn: any, len: any, calculate: any, dflt: any, extraFn?: any) {
@@ -182,7 +182,7 @@ function formatParam(paramIn: any, len: any, calculate: any, dflt: any, extraFn?
     return paramOut;
 }
 
-function convertPlotlyOptions(scene, data) {
+function convertPlotlyOptions(scene: any, data: any) {
     const points: any[] = [];
     const sceneLayout = scene.fullSceneLayout;
     const scaleFactor = scene.dataScale;
@@ -199,7 +199,7 @@ function convertPlotlyOptions(scene, data) {
     const ycalendar = data.ycalendar;
     const zcalendar = data.zcalendar;
     let xc, yc, zc;
-    let params, i;
+    let params: any, i;
     let text;
 
     // Convert points
@@ -222,7 +222,7 @@ function convertPlotlyOptions(scene, data) {
         for (i = 0; i < len; i++) text[i] = data.text;
     }
 
-    function formatter(axName, val) {
+    function formatter(axName: any, val: any) {
         const ax = sceneLayout[axName];
         return Axes.tickText(ax, ax.d2l(val), true).text;
     }
@@ -235,7 +235,7 @@ function convertPlotlyOptions(scene, data) {
         const isArray = Array.isArray(texttemplate);
         const N = isArray ? Math.min(texttemplate.length, len) : len;
         const txt = isArray
-            ? function (i) {
+            ? function (i: any) {
                   return texttemplate[i];
               }
             : function () {
@@ -323,7 +323,7 @@ function convertPlotlyOptions(scene, data) {
     return params;
 }
 
-function _arrayToColor(color) {
+function _arrayToColor(color: any) {
     if (Lib.isArrayOrTypedArray(color)) {
         const c = color[0];
 
@@ -331,7 +331,7 @@ function _arrayToColor(color) {
 
         return (
             'rgb(' +
-            color.slice(0, 3).map(function (x) {
+            color.slice(0, 3).map(function (x: any) {
                 return Math.round(x * 255);
             }) +
             ')'
@@ -341,7 +341,7 @@ function _arrayToColor(color) {
     return null;
 }
 
-function arrayToColor(colors) {
+function arrayToColor(colors: any) {
     if (!Lib.isArrayOrTypedArray(colors)) {
         return null;
     }
@@ -353,7 +353,7 @@ function arrayToColor(colors) {
     return colors.map(_arrayToColor);
 }
 
-proto.update = function (data) {
+proto.update = function (data: any) {
     const gl = this.scene.glplot.gl;
     let lineOptions;
     let scatterOptions;
@@ -365,14 +365,14 @@ proto.update = function (data) {
     this.data = data;
 
     // Run data conversion
-    const options = convertPlotlyOptions(this.scene, data);
+    const options: any = convertPlotlyOptions(this.scene, data);
 
     if ('mode' in options) {
         this.mode = options.mode;
     }
     if ('lineDashes' in options) {
-        if (options.lineDashes in DASH_PATTERNS) {
-            dashPattern = DASH_PATTERNS[options.lineDashes];
+        if ((options.lineDashes as any) in DASH_PATTERNS) {
+            dashPattern = (DASH_PATTERNS as any)[options.lineDashes as any];
         }
     }
 
@@ -537,8 +537,9 @@ proto.dispose = function () {
     }
 };
 
-function createLineWithMarkers(scene, data) {
-    const plot = new LineWithMarkers(scene, data.uid);
+function createLineWithMarkers(scene: any, data: any) {
+    // @ts-ignore TS7009
+    const plot: any = (new LineWithMarkers(scene, data.uid) as any);
     plot.update(data);
     return plot;
 }

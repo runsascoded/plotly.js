@@ -82,13 +82,13 @@ function subplotUpdateFx(gd: GraphDiv, index: number) {
         // create mock x/y axes for hover routine
         xaxes: [xaxis],
         yaxes: [yaxis],
-        doneFnCompleted: function(selection) {
+        doneFnCompleted: function(selection: any) {
             const traceNow = gd._fullData[index];
             let newGroups;
             const oldGroups = traceNow.node.groups.slice();
             const newGroup: any[] = [];
 
-            function findNode(pt) {
+            function findNode(pt: any) {
                 const nodes = traceNow._sankey.graph.nodes;
                 for(let i = 0; i < nodes.length; i++) {
                     if(nodes[i].pointNumber === pt) return nodes[i];
@@ -122,7 +122,7 @@ function subplotUpdateFx(gd: GraphDiv, index: number) {
         }
     };
 
-    dragOptions.prepFn = function(e, startX, startY) {
+    dragOptions.prepFn = function(e: any, startX: any, startY: any) {
         prepSelect(e, startX, startY, dragOptions, dragMode);
     };
 

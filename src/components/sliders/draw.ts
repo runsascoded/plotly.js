@@ -224,19 +224,19 @@ function findDimensions(gd: GraphDiv, sliderOpts: any) {
 
     const marginOpts: any = {
         y: sliderOpts.y,
-        b: dims.height * FROM_BR[yanchor],
-        t: dims.height * FROM_TL[yanchor]
+        b: dims.height * (FROM_BR as any)[yanchor],
+        t: dims.height * (FROM_TL as any)[yanchor]
     };
 
     if(sliderOpts.lenmode === 'fraction') {
         marginOpts.l = 0;
-        marginOpts.xl = sliderOpts.x - sliderOpts.len * FROM_TL[xanchor];
+        marginOpts.xl = sliderOpts.x - sliderOpts.len * (FROM_TL as any)[xanchor];
         marginOpts.r = 0;
-        marginOpts.xr = sliderOpts.x + sliderOpts.len * FROM_BR[xanchor];
+        marginOpts.xr = sliderOpts.x + sliderOpts.len * (FROM_BR as any)[xanchor];
     } else {
         marginOpts.x = sliderOpts.x;
-        marginOpts.l = dims.outerLength * FROM_TL[xanchor];
-        marginOpts.r = dims.outerLength * FROM_BR[xanchor];
+        marginOpts.l = dims.outerLength * (FROM_TL as any)[xanchor];
+        marginOpts.r = dims.outerLength * (FROM_BR as any)[xanchor];
     }
 
     Plots.autoMargin(gd, autoMarginId(sliderOpts), marginOpts);

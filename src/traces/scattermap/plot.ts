@@ -8,7 +8,7 @@ const ORDER = {
     nonCluster: ['fill', 'line', 'circle', 'symbol'],
 };
 
-function ScatterMap(this: any, subplot: PlotInfo, uid, clusterEnabled, isHidden) {
+function ScatterMap(this: any, subplot: PlotInfo, uid: any, clusterEnabled: any, isHidden: any) {
     this.type = 'scattermap';
     this.subplot = subplot;
     this.uid = uid;
@@ -44,7 +44,7 @@ function ScatterMap(this: any, subplot: PlotInfo, uid, clusterEnabled, isHidden)
 
 const proto = ScatterMap.prototype;
 
-proto.addSource = function(k, opts, cluster) {
+proto.addSource = function(k: any, opts: any, cluster: any) {
     const sourceOpts = {
         type: 'geojson',
         data: opts.geojson,
@@ -64,13 +64,13 @@ proto.addSource = function(k, opts, cluster) {
     }
 };
 
-proto.setSourceData = function(k, opts) {
+proto.setSourceData = function(k: any, opts: any) {
     this.subplot.map
         .getSource(this.sourceIds[k])
         .setData(opts.geojson);
 };
 
-proto.addLayer = function(k, opts, below) {
+proto.addLayer = function(k: any, opts: any, below: any) {
     const source: any = {
         type: opts.type,
         id: this.layerIds[k],
@@ -101,7 +101,7 @@ proto.addLayer = function(k, opts, below) {
     }
 };
 
-proto.update = function update(calcTrace) {
+proto.update = function update(calcTrace: any) {
     const trace = calcTrace[0].trace;
     const subplot = this.subplot;
     const map = subplot.map;
@@ -111,7 +111,7 @@ proto.update = function update(calcTrace) {
     const hadCluster = !!this.clusterEnabled;
     const lThis = this;
 
-    function addCluster(noSource?) {
+    function addCluster(noSource?: any) {
         if(!noSource) lThis.addSource('circle', optsAll.circle, trace.cluster);
         const order = ORDER.cluster;
         for(let i = 0; i < order.length; i++) {
@@ -121,7 +121,7 @@ proto.update = function update(calcTrace) {
         }
     }
 
-    function removeCluster(noSource?) {
+    function removeCluster(noSource?: any) {
         const order = ORDER.cluster;
         for(let i = order.length - 1; i >= 0; i--) {
             const k = order[i];
@@ -130,7 +130,7 @@ proto.update = function update(calcTrace) {
         if(!noSource) map.removeSource(lThis.sourceIds.circle);
     }
 
-    function addNonCluster(noSource?) {
+    function addNonCluster(noSource?: any) {
         const order = ORDER.nonCluster;
         for(let i = 0; i < order.length; i++) {
             const k = order[i];
@@ -140,7 +140,7 @@ proto.update = function update(calcTrace) {
         }
     }
 
-    function removeNonCluster(noSource?) {
+    function removeNonCluster(noSource?: any) {
         const order = ORDER.nonCluster;
         for(let i = order.length - 1; i >= 0; i--) {
             const k = order[i];
@@ -149,11 +149,11 @@ proto.update = function update(calcTrace) {
         }
     }
 
-    function remove(noSource?) {
+    function remove(noSource?: any) {
         if(hadCluster) removeCluster(noSource); else removeNonCluster(noSource);
     }
 
-    function add(noSource?) {
+    function add(noSource?: any) {
         if(hasCluster) addCluster(noSource); else addNonCluster(noSource);
     }
 
@@ -211,12 +211,13 @@ proto.dispose = function dispose() {
     }
 };
 
-export default function createScatterMap(subplot: PlotInfo, calcTrace) {
+export default function createScatterMap(subplot: PlotInfo, calcTrace: any) {
     const trace = calcTrace[0].trace;
     const hasCluster = trace.cluster && trace.cluster.enabled;
     const isHidden = trace.visible !== true;
 
-    const scatterMap = new ScatterMap(
+    // @ts-ignore TS7009
+    const scatterMap: any = new ScatterMap(
         subplot,
         trace.uid,
         hasCluster,

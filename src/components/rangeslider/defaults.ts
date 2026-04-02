@@ -23,7 +23,7 @@ export default function handleDefaults(layoutIn: any, layoutOut: FullLayout, axN
         return Lib.coerce(containerIn, containerOut, attributes, attr, dflt);
     }
 
-    let rangeContainerIn, rangeContainerOut;
+    let rangeContainerIn: any, rangeContainerOut: any;
     function coerceRange(attr: any, dflt: any) {
         return Lib.coerce(rangeContainerIn, rangeContainerOut, oppAxisAttrs, attr, dflt);
     }

@@ -68,13 +68,13 @@ function makeColorBarData(gd: GraphDiv) {
     const out: any[] = [];
 
     // single out item
-    let opts;
+    let opts: any;
     // colorbar attr parent container
-    let cont;
+    let cont: any;
     // trace attr container
-    let trace;
+    let trace: any;
     // colorbar options
-    let cbOpt;
+    let cbOpt: any;
 
     function initOpts(opts: any) {
         return extendFlat(opts, {
@@ -228,8 +228,8 @@ function drawColorBar(g: any, opts: any, gd: GraphDiv) {
         optsY * posH! + ypad
     );
 
-    const xRatio = {center: 0.5, right: 1}[xanchor] || 0;
-    const yRatio = {top: 1, middle: 0.5}[yanchor] || 0;
+    const xRatio = ({center: 0.5, right: 1} as any)[xanchor] || 0;
+    const yRatio = ({top: 1, middle: 0.5} as any)[yanchor] || 0;
 
     // for dragging... this is getting a little muddled...
     const uFrac = isVertical ?
@@ -767,10 +767,10 @@ function drawColorBar(g: any, opts: any, gd: GraphDiv) {
 
         // auto margin adjustment
         const marginOpts: any = {};
-        const lFrac = FROM_TL[xanchor];
-        const rFrac = FROM_BR[xanchor];
-        const tFrac = FROM_TL[yanchor];
-        const bFrac = FROM_BR[yanchor];
+        const lFrac = (FROM_TL as any)[xanchor];
+        const rFrac = (FROM_BR as any)[xanchor];
+        const tFrac = (FROM_TL as any)[yanchor];
+        const bFrac = (FROM_BR as any)[yanchor];
 
         const extraThickness = outerThickness - thickPx;
         if(isVertical) {
@@ -856,7 +856,7 @@ function makeEditable(g: any, opts: any, gd: GraphDiv) {
     const isVertical = opts.orientation === 'v';
     const fullLayout = gd._fullLayout;
     const gs = fullLayout._size;
-    let t0, xf, yf;
+    let t0: any, xf: any, yf: any;
 
     dragElement.init({
         element: g.node(),

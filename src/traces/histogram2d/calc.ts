@@ -14,10 +14,10 @@ export default function calc(gd: GraphDiv, trace: FullTrace) {
 
     const xcalendar = trace.xcalendar;
     const ycalendar = trace.ycalendar;
-    const xr2c = function(v) { return xa.r2c(v, 0, xcalendar); };
-    const yr2c = function(v) { return ya.r2c(v, 0, ycalendar); };
-    const xc2r = function(v) { return xa.c2r(v, 0, xcalendar); };
-    const yc2r = function(v) { return ya.c2r(v, 0, ycalendar); };
+    const xr2c = function(v: any) { return xa.r2c(v, 0, xcalendar); };
+    const yr2c = function(v: any) { return ya.r2c(v, 0, ycalendar); };
+    const xc2r = function(v: any) { return xa.c2r(v, 0, xcalendar); };
+    const yc2r = function(v: any) { return ya.c2r(v, 0, ycalendar); };
 
     let i, j, n, m;
 
@@ -52,7 +52,7 @@ export default function calc(gd: GraphDiv, trace: FullTrace) {
     const extremefunc = func === 'max' || func === 'min';
     const sizeinit = extremefunc ? null : 0;
     let binfunc = binFunctions.count;
-    const normfunc = normFunctions[norm];
+    const normfunc = (normFunctions as any)[norm];
     let doavg = false;
     let xinc: any[] = [];
     let yinc: any[] = [];
@@ -172,7 +172,7 @@ export default function calc(gd: GraphDiv, trace: FullTrace) {
     };
 }
 
-function makeIncrements(len, bins, dv, nonuniform) {
+function makeIncrements(len: any, bins: any, dv: any, nonuniform: any) {
     const out = new Array(len);
     let i;
     if(nonuniform) {
@@ -184,7 +184,7 @@ function makeIncrements(len, bins, dv, nonuniform) {
     return out;
 }
 
-function binsToCalc(r2c, bins) {
+function binsToCalc(r2c: any, bins: any) {
     return {
         start: r2c(bins.start),
         end: r2c(bins.end),
@@ -192,7 +192,7 @@ function binsToCalc(r2c, bins) {
     };
 }
 
-function getRanges(edges, uniqueVals, gapLow, gapHigh, ax, calendar) {
+function getRanges(edges: any, uniqueVals: any, gapLow: any, gapHigh: any, ax: any, calendar: any) {
     let i;
     const len = edges.length - 1;
     const out = new Array(len);

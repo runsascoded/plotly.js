@@ -101,9 +101,9 @@ export const attrs = {
 
 const aggAttrs = attrs.aggregations;
 
-export const supplyDefaults = function(transformIn, traceOut) {
+export const supplyDefaults = function(transformIn: any, traceOut: any) {
     const transformOut: any = {};
-    let i;
+    let i: any;
 
     function coerce(attr: string, dflt?: any) {
         return Lib.coerce(transformIn, transformOut, attrs, attr, dflt);
@@ -139,7 +139,7 @@ export const supplyDefaults = function(transformIn, traceOut) {
 
     const aggregationsIn = transformIn.aggregations || [];
     const aggregationsOut = transformOut.aggregations = new Array(aggregationsIn.length);
-    let aggregationOut;
+    let aggregationOut: any;
 
     function coercei(attr: string, dflt?: any) {
         return Lib.coerce(aggregationsIn[i], aggregationOut, aggAttrs, attr, dflt);
@@ -176,7 +176,7 @@ export const supplyDefaults = function(transformIn, traceOut) {
     return transformOut;
 };
 
-export const calcTransform = function(gd, trace, opts) {
+export const calcTransform = function(gd: any, trace: any, opts: any) {
     if(!opts.enabled) return;
 
     const groups = opts.groups;
@@ -228,7 +228,7 @@ export const calcTransform = function(gd, trace, opts) {
     trace._length = groupings.length;
 };
 
-function aggregateOneArray(gd, trace, groupings, aggregation) {
+function aggregateOneArray(gd: any, trace: any, groupings: any, aggregation: any) {
     if(!aggregation.enabled) return;
 
     const attr = aggregation.target;
@@ -250,7 +250,7 @@ function aggregateOneArray(gd, trace, groupings, aggregation) {
     }
 }
 
-function getAggregateFunction(opts, conversions) {
+function getAggregateFunction(opts: any, conversions: any) {
     const func = opts.func;
     const d2c = conversions.d2c;
     const c2d = conversions.c2d;
@@ -268,7 +268,7 @@ function getAggregateFunction(opts, conversions) {
         case 'sum':
             // This will produce output in all cases even though it's nonsensical
             // for date or category data.
-            return function(array, indices) {
+            return function(array: any, indices: any) {
                 let total = 0;
                 for(let i = 0; i < indices.length; i++) {
                     const vi = d2c(array[indices[i]]);
@@ -279,7 +279,7 @@ function getAggregateFunction(opts, conversions) {
 
         case 'avg':
             // Generally meaningless for category data but it still does something.
-            return function(array, indices) {
+            return function(array: any, indices: any) {
                 let total = 0;
                 let cnt = 0;
                 for(let i = 0; i < indices.length; i++) {
@@ -293,7 +293,7 @@ function getAggregateFunction(opts, conversions) {
             };
 
         case 'min':
-            return function(array, indices) {
+            return function(array: any, indices: any) {
                 let out = Infinity;
                 for(let i = 0; i < indices.length; i++) {
                     const vi = d2c(array[indices[i]]);
@@ -303,7 +303,7 @@ function getAggregateFunction(opts, conversions) {
             };
 
         case 'max':
-            return function(array, indices) {
+            return function(array: any, indices: any) {
                 let out = -Infinity;
                 for(let i = 0; i < indices.length; i++) {
                     const vi = d2c(array[indices[i]]);
@@ -313,7 +313,7 @@ function getAggregateFunction(opts, conversions) {
             };
 
         case 'range':
-            return function(array, indices) {
+            return function(array: any, indices: any) {
                 let min = Infinity;
                 let max = -Infinity;
                 for(let i = 0; i < indices.length; i++) {
@@ -327,14 +327,14 @@ function getAggregateFunction(opts, conversions) {
             };
 
         case 'change':
-            return function(array, indices) {
+            return function(array: any, indices: any) {
                 const first = d2c(array[indices[0]]);
                 const last = d2c(array[indices[indices.length - 1]]);
                 return (first === BADNUM || last === BADNUM) ? BADNUM : c2d(last - first);
             };
 
         case 'median':
-            return function(array, indices) {
+            return function(array: any, indices: any) {
                 const sortCalc: any[] = [];
                 for(let i = 0; i < indices.length; i++) {
                     const vi = d2c(array[indices[i]]);
@@ -347,7 +347,7 @@ function getAggregateFunction(opts, conversions) {
             };
 
         case 'mode':
-            return function(array, indices) {
+            return function(array: any, indices: any) {
                 const counts: any = {};
                 let maxCnt = 0;
                 let out = BADNUM;
@@ -365,7 +365,7 @@ function getAggregateFunction(opts, conversions) {
             };
 
         case 'rms':
-            return function(array, indices) {
+            return function(array: any, indices: any) {
                 let total = 0;
                 let cnt = 0;
                 for(let i = 0; i < indices.length; i++) {
@@ -379,7 +379,7 @@ function getAggregateFunction(opts, conversions) {
             };
 
         case 'stddev':
-            return function(array, indices) {
+            return function(array: any, indices: any) {
                 // balance numerical stability with performance:
                 // so that we call d2c once per element but don't need to
                 // store them, reference all to the first element
@@ -418,15 +418,15 @@ function getAggregateFunction(opts, conversions) {
     }
 }
 
-function count(array, indices) {
+function count(array: any, indices: any) {
     return indices.length;
 }
 
-function first(array, indices) {
+function first(array: any, indices: any) {
     return array[indices[0]];
 }
 
-function last(array, indices) {
+function last(array: any, indices: any) {
     return array[indices[indices.length - 1]];
 }
 

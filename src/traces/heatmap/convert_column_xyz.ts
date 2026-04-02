@@ -3,7 +3,7 @@ import _numerical from '../../constants/numerical.js';
 const { BADNUM } = _numerical;
 import alignPeriod from '../../plots/cartesian/align_period.js';
 
-export default function convertColumnData(trace,  ax1,  ax2,  var1Name,  var2Name,  arrayVarNames) {
+export default function convertColumnData(trace: any,  ax1: any,  ax2: any,  var1Name: any,  var2Name: any,  arrayVarNames: any) {
     const colLen = trace._length;
     let col1 = ax1.makeCalcdata(trace, var1Name);
     let col2 = ax2.makeCalcdata(trace, var2Name);
@@ -67,11 +67,11 @@ export default function convertColumnData(trace,  ax1,  ax2,  var1Name,  var2Nam
     if(hasColumnHoverText) trace._hovertext = hovertext;
 
     if(ax1 && ax1.type === 'category') {
-        trace['_' + var1Name + 'CategoryMap'] = col1vals.map(function(v) { return ax1._categories[v];});
+        trace['_' + var1Name + 'CategoryMap'] = col1vals.map(function(v: any) { return ax1._categories[v];});
     }
 
     if(ax2 && ax2.type === 'category') {
-        trace['_' + var2Name + 'CategoryMap'] = col2vals.map(function(v) { return ax2._categories[v];});
+        trace['_' + var2Name + 'CategoryMap'] = col2vals.map(function(v: any) { return ax2._categories[v];});
     }
 
     trace._after2before = after2before;

@@ -47,7 +47,7 @@ export const attributes = {
     editType: 'calc'
 };
 
-export const supplyDefaults = function(transformIn) {
+export const supplyDefaults = function(transformIn: any) {
     const transformOut = {};
 
     function coerce(attr: string, dflt?: any) {
@@ -64,7 +64,7 @@ export const supplyDefaults = function(transformIn) {
     return transformOut;
 };
 
-export const calcTransform = function(gd, trace, opts) {
+export const calcTransform = function(gd: any, trace: any, opts: any) {
     if(!opts.enabled) return;
 
     const targetArray = Lib.getTargetArray(trace, opts);
@@ -102,7 +102,7 @@ export const calcTransform = function(gd, trace, opts) {
     trace._length = len;
 };
 
-function getIndices(opts, targetArray, d2c, len) {
+function getIndices(opts: any, targetArray: any, d2c: any, len: any) {
     const sortedArray = new Array(len);
     const indices = new Array(len);
     let i;
@@ -120,10 +120,10 @@ function getIndices(opts, targetArray, d2c, len) {
     return indices;
 }
 
-function getSortFunc(opts, d2c) {
+function getSortFunc(opts: any, d2c: any) {
     switch(opts.order) {
         case 'ascending':
-            return function(a, b) {
+            return function(a: any, b: any) {
                 const ac = d2c(a.v);
                 const bc = d2c(b.v);
                 if(ac === BADNUM) {
@@ -135,7 +135,7 @@ function getSortFunc(opts, d2c) {
                 return ac - bc;
             };
         case 'descending':
-            return function(a, b) {
+            return function(a: any, b: any) {
                 const ac = d2c(a.v);
                 const bc = d2c(b.v);
                 if(ac === BADNUM) {

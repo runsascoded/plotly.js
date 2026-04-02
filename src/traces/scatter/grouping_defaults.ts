@@ -4,7 +4,7 @@ import { getAxisGroup } from '../../plots/cartesian/constraints.js';
 export default function handleGroupingDefaults(traceIn: InputTrace, traceOut: FullTrace, fullLayout: FullLayout, coerce: any, barmode: any): void {
     const orientation = traceOut.orientation;
     // N.B. grouping is done across all trace types that support it
-    const posAxId = traceOut[{v: 'x', h: 'y'}[orientation] + 'axis'];
+    const posAxId = traceOut[({v: 'x', h: 'y'} as any)[orientation] + 'axis'];
     const groupId = getAxisGroup(fullLayout, posAxId) + orientation;
 
     const alignmentOpts = fullLayout._alignmentOpts || {};

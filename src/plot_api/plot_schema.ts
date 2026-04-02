@@ -93,7 +93,7 @@ export const findArrayAttributes = function(trace?: any): any {
     const arrayAttributes: any[] = [];
     let stack: any[] = [];
     let isArrayStack: any[] = [];
-    let baseContainer, baseAttrName;
+    let baseContainer: any, baseAttrName: any;
 
     function callback(attr?: any, attrName?: any, attrs?: any, level?: any) {
         stack = stack.slice(0, level).concat([(attrName as any)]);
@@ -172,7 +172,7 @@ export const getTraceValObject = function(trace?: any, parts?: any): any {
     }
 
     // finally look in the global attributes
-    if(!valObject) valObject = baseAttributes[head];
+    if(!valObject) valObject = (baseAttributes as any)[head];
 
     return recurseIntoValObject(valObject, parts, i);
 };
@@ -236,7 +236,7 @@ function layoutHeadAttr(fullLayout?: any, head?: any): boolean {
         }
     }
 
-    if(head in baseLayoutAttributes) return baseLayoutAttributes[head];
+    if(head in baseLayoutAttributes) return (baseLayoutAttributes as any)[head];
 
     return false;
 }
@@ -308,7 +308,7 @@ function getTraceAttributes(type?: any): any {
     const copyModuleAttributes = extendDeepAll({}, _module.attributes);
 
     // prune global-level trace attributes that are already defined in a trace
-    crawl(copyModuleAttributes, function(attr, attrName, attrs, level, fullAttrString) {
+    crawl(copyModuleAttributes, function(attr: any, attrName: any, attrs: any, level: any, fullAttrString: any) {
         nestedProperty(copyBaseAttributes, fullAttrString).set(undefined);
         // Prune undefined attributes
         if(attr === undefined) nestedProperty(copyModuleAttributes, fullAttrString).set(undefined);
@@ -362,7 +362,7 @@ function getTraceAttributes(type?: any): any {
 
     // drop anim:true in non-animatable modules
     if(!_module.animatable) {
-        crawl(out, function(attr) {
+        crawl(out, function(attr: any) {
             if(isValObject(attr) && 'anim' in attr) {
                 delete attr.anim;
             }

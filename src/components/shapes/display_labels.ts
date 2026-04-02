@@ -25,7 +25,7 @@ export default function drawLabel(gd: GraphDiv, index: any, options: any, shapeG
             const _xa = Axes.getFromId(gd, options.xref);
             const _ya = Axes.getFromId(gd, options.yref);
             for (const key in shapeLabelTexttemplateVars) {
-                const val = shapeLabelTexttemplateVars[key](options, _xa, _ya);
+                const val = (shapeLabelTexttemplateVars as any)[key](options, _xa, _ya);
                 if (val !== undefined) templateValues[key] = val;
             }
         }
@@ -132,11 +132,11 @@ export default function drawLabel(gd: GraphDiv, index: any, options: any, shapeG
     // Update (x,y) position, xanchor, and angle
     labelText
         .attr({
-            'text-anchor': {
+            'text-anchor': ({
                 left: 'start',
                 center: 'middle',
                 right: 'end'
-            }[xanchor],
+            } as any)[xanchor],
             y: texty,
             x: textx,
             transform: 'rotate(' + textangle + ',' + textx + ',' + texty + ')'
@@ -217,13 +217,13 @@ function calcTextPosition(shapex0: any, shapey0: any, shapex1: any, shapey1: any
         const paddingConstantsY = { bottom: -1, middle: 0, top: 1 };
         if (textAngle === 'auto') {
             // Set direction to apply padding (based on `yanchor` only)
-            const paddingDirection = paddingConstantsY[yanchor];
+            const paddingDirection = (paddingConstantsY as any)[yanchor];
             paddingX = -textPadding * sinA * paddingDirection;
             paddingY = textPadding * cosA * paddingDirection;
         } else {
             // Set direction to apply padding (based on `xanchor` and `yanchor`)
-            const paddingDirectionX = paddingConstantsX[xanchor];
-            const paddingDirectionY = paddingConstantsY[yanchor];
+            const paddingDirectionX = (paddingConstantsX as any)[xanchor];
+            const paddingDirectionY = (paddingConstantsY as any)[yanchor];
             paddingX = textPadding * paddingDirectionX;
             paddingY = textPadding * paddingDirectionY;
         }
@@ -264,7 +264,7 @@ function calcTextPosition(shapex0: any, shapey0: any, shapex1: any, shapey1: any
     }
 
     // Shift vertical (& horizontal) position according to `yanchor`
-    const shiftFraction = FROM_TL[yanchor];
+    const shiftFraction = (FROM_TL as any)[yanchor];
     // Adjust so that text is anchored at top of first line rather than at baseline of first line
     const baselineAdjust = shapeOptions.label.font.size;
     const textHeight = textBB.height;

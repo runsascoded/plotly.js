@@ -19,7 +19,7 @@ export const handleDefaults = function(layoutIn?: any, layoutOut?: any, opts?: a
     // similar to _axisConstraintGroups, but only matching axes
     const matchGroups = layoutOut._axisMatchGroups = [];
 
-    let i, group, axId, axName, axIn, axOut, attr, val;
+    let i, group, axId, axName, axIn, axOut: any, attr: any, val;
 
     for(i = 0; i < axIds.length; i++) {
         axName = id2name(axIds[i]);
@@ -52,7 +52,7 @@ export const handleDefaults = function(layoutIn?: any, layoutOut?: any, opts?: a
         for(axId in group) {
             axOut = layoutOut[id2name(axId)];
             if(axOut.fixedrange) {
-                for(const axId2 in group) {
+                for(const axId2 in (group as any)) {
                     const axName2 = id2name(axId2);
                     if((layoutIn[axName2] || {}).fixedrange === false) {
                         warn(
@@ -119,7 +119,7 @@ export const handleDefaults = function(layoutIn?: any, layoutOut?: any, opts?: a
             attr = matchAttrs[j];
             val = null;
             let baseAx;
-            for(axId in group) {
+            for(axId in (group as any)) {
                 axName = id2name(axId);
                 axIn = layoutIn[axName];
                 axOut = layoutOut[axName];
@@ -631,7 +631,7 @@ export const clean = function clean(gd?: any, ax?: any): void {
 
 function updateDomain(ax?: any, factor?: any): void {
     const inputDomain = ax._inputDomain;
-    const centerFraction = FROM_BL[ax.constraintoward];
+    const centerFraction = (FROM_BL as any)[ax.constraintoward];
     const center = inputDomain[0] + (inputDomain[1] - inputDomain[0]) * centerFraction;
 
     ax.domain = ax._input.domain = [

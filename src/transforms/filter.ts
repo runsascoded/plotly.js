@@ -111,7 +111,7 @@ export const attributes = {
     editType: 'calc'
 };
 
-export const supplyDefaults = function(transformIn) {
+export const supplyDefaults = function(transformIn: any) {
     const transformOut: any = {};
 
     function coerce(attr: string, dflt?: any) {
@@ -140,7 +140,7 @@ export const supplyDefaults = function(transformIn) {
     return transformOut;
 };
 
-export const calcTransform = function(gd, trace, opts) {
+export const calcTransform = function(gd: any, trace: any, opts: any) {
     if(!opts.enabled) return;
 
     const targetArray = Lib.getTargetArray(trace, opts);
@@ -178,20 +178,20 @@ export const calcTransform = function(gd, trace, opts) {
     let initFn;
     let fillFn;
     if(preservegaps) {
-        initFn = function(np) {
+        initFn = function(np: any) {
             originalArrays[np.astr] = Lib.extendDeep([], np.get());
             np.set(new Array(len));
         };
-        fillFn = function(np, index) {
+        fillFn = function(np: any, index: any) {
             const val = originalArrays[np.astr][index];
             np.get()[index] = val;
         };
     } else {
-        initFn = function(np) {
+        initFn = function(np: any) {
             originalArrays[np.astr] = Lib.extendDeep([], np.get());
             np.set([]);
         };
-        fillFn = function(np, index) {
+        fillFn = function(np: any, index: any) {
             const val = originalArrays[np.astr][index];
             np.get().push(val);
         };
@@ -215,19 +215,19 @@ export const calcTransform = function(gd, trace, opts) {
     trace._length = index;
 };
 
-function getFilterFunc(opts, d2c, targetCalendar) {
+function getFilterFunc(opts: any, d2c: any, targetCalendar: any) {
     const operation = opts.operation;
     const value = opts.value;
     const hasArrayValue = Lib.isArrayOrTypedArray(value);
 
-    function isOperationIn(array) {
+    function isOperationIn(array: any) {
         return array.indexOf(operation) !== -1;
     }
 
-    const d2cValue = function(v) { return d2c(v, 0, opts.valuecalendar); };
-    const d2cTarget = function(v) { return d2c(v, 0, targetCalendar); };
+    const d2cValue = function(v: any) { return d2c(v, 0, opts.valuecalendar); };
+    const d2cTarget = function(v: any) { return d2c(v, 0, targetCalendar); };
 
-    let coercedValue;
+    let coercedValue: any;
 
     if(isOperationIn(COMPARISON_OPS)) {
         coercedValue = hasArrayValue ? d2cValue(value[0]) : d2cValue(value);
@@ -241,78 +241,78 @@ function getFilterFunc(opts, d2c, targetCalendar) {
 
     switch(operation) {
         case '=':
-            return function(v) { return d2cTarget(v) === coercedValue; };
+            return function(v: any) { return d2cTarget(v) === coercedValue; };
 
         case '!=':
-            return function(v) { return d2cTarget(v) !== coercedValue; };
+            return function(v: any) { return d2cTarget(v) !== coercedValue; };
 
         case '<':
-            return function(v) { return d2cTarget(v) < coercedValue; };
+            return function(v: any) { return d2cTarget(v) < coercedValue; };
 
         case '<=':
-            return function(v) { return d2cTarget(v) <= coercedValue; };
+            return function(v: any) { return d2cTarget(v) <= coercedValue; };
 
         case '>':
-            return function(v) { return d2cTarget(v) > coercedValue; };
+            return function(v: any) { return d2cTarget(v) > coercedValue; };
 
         case '>=':
-            return function(v) { return d2cTarget(v) >= coercedValue; };
+            return function(v: any) { return d2cTarget(v) >= coercedValue; };
 
         case '[]':
-            return function(v) {
+            return function(v: any) {
                 const cv = d2cTarget(v);
                 return cv >= coercedValue[0] && cv <= coercedValue[1];
             };
 
         case '()':
-            return function(v) {
+            return function(v: any) {
                 const cv = d2cTarget(v);
                 return cv > coercedValue[0] && cv < coercedValue[1];
             };
 
         case '[)':
-            return function(v) {
+            return function(v: any) {
                 const cv = d2cTarget(v);
                 return cv >= coercedValue[0] && cv < coercedValue[1];
             };
 
         case '(]':
-            return function(v) {
+            return function(v: any) {
                 const cv = d2cTarget(v);
                 return cv > coercedValue[0] && cv <= coercedValue[1];
             };
 
         case '][':
-            return function(v) {
+            return function(v: any) {
                 const cv = d2cTarget(v);
                 return cv <= coercedValue[0] || cv >= coercedValue[1];
             };
 
         case ')(':
-            return function(v) {
+            return function(v: any) {
                 const cv = d2cTarget(v);
                 return cv < coercedValue[0] || cv > coercedValue[1];
             };
 
         case '](':
-            return function(v) {
+            return function(v: any) {
                 const cv = d2cTarget(v);
                 return cv <= coercedValue[0] || cv > coercedValue[1];
             };
 
         case ')[':
-            return function(v) {
+            return function(v: any) {
                 const cv = d2cTarget(v);
                 return cv < coercedValue[0] || cv >= coercedValue[1];
             };
 
         case '{}':
-            return function(v) {
+            return function(v: any) {
                 return coercedValue.indexOf(d2cTarget(v)) !== -1;
             };
 
         case '}{':
-            return function(v) {
+            return function(v: any) {
                 return coercedValue.indexOf(d2cTarget(v)) === -1;
             };
     }

@@ -13,7 +13,7 @@ const DECREASING_COLOR = delta.DECREASING.COLOR;
 
 const lineAttrs = scatterAttrs.line;
 
-function directionAttrs(lineColorDefault) {
+function directionAttrs(lineColorDefault: any) {
     return {
         line: {
             color: extendFlat({}, lineAttrs.color, { dflt: lineColorDefault }),

@@ -6,7 +6,7 @@ import type { FullLayout, FullTrace, InputTrace } from '../../../types/core';
 
 const MIN = 0.1; // Note: often we don't want the data cube to be disappeared
 
-function createWave(n, minOpacity) {
+function createWave(n: any, minOpacity: any) {
     const arr: any[] = [];
     const steps = 32; // Max: 256
     for (let i = 0; i < steps; i++) {
@@ -17,7 +17,7 @@ function createWave(n, minOpacity) {
     return arr;
 }
 
-function isValidScaleArray(scl) {
+function isValidScaleArray(scl: any) {
     let highestVal = 0;
 
     if (!Array.isArray(scl) || scl.length < 2) return false;
@@ -128,7 +128,7 @@ function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace, defaultColor: 
     traceOut._length = null;
 }
 
-function opacityscaleDefaults(traceIn, traceOut, layout, coerce) {
+function opacityscaleDefaults(traceIn: any, traceOut: any, layout: any, coerce: any) {
     const opacityscale = coerce('opacityscale');
     if (opacityscale === 'max') {
         traceOut.opacityscale = [

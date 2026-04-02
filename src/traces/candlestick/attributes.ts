@@ -5,7 +5,7 @@ const { axisHoverFormat } = _axis_format_attributes;
 import OHLCattrs from '../ohlc/attributes.js';
 import boxAttrs from '../box/attributes.js';
 
-function directionAttrs(lineColorDefault) {
+function directionAttrs(lineColorDefault: any) {
     return {
         line: {
             color: extendFlat({}, boxAttrs.line.color, { dflt: lineColorDefault }),

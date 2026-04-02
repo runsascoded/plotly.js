@@ -11,7 +11,7 @@ const { PTS_LINESONLY } = _constants;
 import attributes from './attributes.js';
 
 export default function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace, defaultColor: string, layout: FullLayout) {
-    function coerce(attr, dflt?) {
+    function coerce(attr: any, dflt?: any) {
         return Lib.coerce(traceIn, traceOut, attributes, attr, dflt);
     }
 
@@ -68,7 +68,7 @@ export default function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace,
     Lib.coerceSelectionMarkerOpacity(traceOut, coerce);
 }
 
-function handleRealImagDefaults(traceIn: InputTrace, traceOut: FullTrace, layout: FullLayout, coerce) {
+function handleRealImagDefaults(traceIn: InputTrace, traceOut: FullTrace, layout: FullLayout, coerce: any) {
     let real = coerce('real');
     let imag = coerce('imag');
     let len;

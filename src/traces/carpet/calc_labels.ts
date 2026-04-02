@@ -1,7 +1,7 @@
 import Axes from '../../plots/cartesian/axes.js';
 import { extendFlat } from '../../lib/extend.js';
 
-export default function calcLabels(trace, axis) {
+export default function calcLabels(trace: any, axis: any) {
     let i, tobj, prefix, suffix, gridline;
 
     const labels = axis._labels = [] as any[];

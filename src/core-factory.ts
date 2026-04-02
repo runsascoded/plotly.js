@@ -55,9 +55,9 @@ export function createPlotly({ traces = [], components = [], Icons, Snapshot, Pl
     // Register API methods
     for(let i = 0; i < apiMethodNames.length; i++) {
         const name = apiMethodNames[i];
-        if(!main[name]) continue;
-        if(name.charAt(0) !== '_') Plotly[name] = main[name];
-        register({ moduleType: 'apiMethod', name: name, fn: main[name] });
+        if(!(main as any)[name]) continue;
+        if(name.charAt(0) !== '_') Plotly[name] = (main as any)[name];
+        register({ moduleType: 'apiMethod', name: name, fn: (main as any)[name] });
     }
 
     // Register essentials (scatter is the default trace type, always needed)

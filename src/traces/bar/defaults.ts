@@ -59,7 +59,7 @@ function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace, defaultColor: 
 }
 
 function crossTraceDefaults(fullData: FullTrace[], fullLayout: FullLayout): void {
-    let traceIn, traceOut;
+    let traceIn, traceOut: any;
 
     function coerce(attr: string, dflt?: any) {
         return Lib.coerce(traceOut._input, traceOut, attributes, attr, dflt);

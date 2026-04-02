@@ -1,6 +1,6 @@
 import constants from './constants.js';
 
-export default function makeCrossings(pathinfo) {
+export default function makeCrossings(pathinfo: any) {
     const z = pathinfo[0].z;
     const m = z.length;
     const n = z[0].length; // we already made sure z isn't ragged in interp2d
@@ -8,7 +8,7 @@ export default function makeCrossings(pathinfo) {
     let xi;
     let yi;
     let startIndices;
-    let ystartIndices;
+    let ystartIndices: any[];
     let label;
     let corners;
     let mi;
@@ -59,7 +59,7 @@ export default function makeCrossings(pathinfo) {
 // except that the saddles bifurcate and I represent them
 // as the decimal combination of the two appropriate
 // non-saddle indices
-function getMarchingIndex(val,  corners) {
+function getMarchingIndex(val: any,  corners: any) {
     const mi = (corners[0][0] > val ? 0 : 1) +
              (corners[0][1] > val ? 0 : 2) +
              (corners[1][1] > val ? 0 : 4) +

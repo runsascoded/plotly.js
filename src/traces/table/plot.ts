@@ -39,9 +39,9 @@ export default function plot(gd: GraphDiv, wrappedTraceHolders: any[]) {
         .style('pointer-events', 'all');
 
     table
-        .attr('width', function(d) {return d.width + d.size.l + d.size.r;})
-        .attr('height', function(d) {return d.height + d.size.t + d.size.b;})
-        .attr('transform', function(d) {
+        .attr('width', function(d: any) {return d.width + d.size.l + d.size.r;})
+        .attr('height', function(d: any) {return d.height + d.size.t + d.size.b;})
+        .attr('transform', function(d: any) {
             return strTranslate(d.translateX, d.translateY);
         });
 
@@ -75,7 +75,7 @@ export default function plot(gd: GraphDiv, wrappedTraceHolders: any[]) {
     }
 
     tableControlView
-        .attr('transform', function(d) {return strTranslate(d.size.l, d.size.t);});
+        .attr('transform', function(d: any) {return strTranslate(d.size.l, d.size.t);});
 
     // scrollBackground merely ensures that mouse events are captured even on crazy fast scrollwheeling
     // otherwise rendering glitches may occur
@@ -88,15 +88,15 @@ export default function plot(gd: GraphDiv, wrappedTraceHolders: any[]) {
         .attr('fill', 'none');
 
     scrollBackground
-        .attr('width', function(d) {return d.width;})
-        .attr('height', function(d) {return d.height;});
+        .attr('width', function(d: any) {return d.width;})
+        .attr('height', function(d: any) {return d.height;});
 
-    tableControlView.each(function(this: any, d) {
+    tableControlView.each(function(this: any, d: any) {
         setClipUrl(select(this), scrollAreaBottomClipKey(gd, d), gd);
     });
 
     const yColumn = tableControlView.selectAll('.' + c.cn.yColumn)
-        .data(function(vm) {return vm.columns;}, gup.keyFun);
+        .data(function(vm: any) {return vm.columns;}, gup.keyFun);
 
     yColumn.enter()
         .append('g')
@@ -104,11 +104,11 @@ export default function plot(gd: GraphDiv, wrappedTraceHolders: any[]) {
 
     yColumn.exit().remove();
 
-    yColumn.attr('transform', function(d) {return strTranslate(d.x, 0);});
+    yColumn.attr('transform', function(d: any) {return strTranslate(d.x, 0);});
 
     if(dynamic) {
         yColumn.call(d3Drag()
-            .origin(function(this: any, d) {
+            .origin(function(this: any, d: any) {
                 const movedColumn = select(this);
                 easeColumn(movedColumn, d, -c.uplift);
                 raiseToTop(this);
@@ -149,7 +149,7 @@ export default function plot(gd: GraphDiv, wrappedTraceHolders: any[]) {
         );
     }
 
-    yColumn.each(function(this: any, d) {
+    yColumn.each(function(this: any, d: any) {
         setClipUrl(select(this), columnBoundaryClipKey(gd, d), gd);
     });
 
@@ -159,10 +159,10 @@ export default function plot(gd: GraphDiv, wrappedTraceHolders: any[]) {
     columnBlock.enter()
         .append('g')
         .classed(c.cn.columnBlock, true)
-        .attr('id', function(d) {return d.key;});
+        .attr('id', function(d: any) {return d.key;});
 
     columnBlock
-        .style('cursor', function(d) {
+        .style('cursor', function(d: any) {
             return d.dragHandle ? 'ew-resize' : d.calcdata.scrollbarState.barWiggleRoom ? 'ns-resize' : 'default';
         });
 
@@ -171,13 +171,13 @@ export default function plot(gd: GraphDiv, wrappedTraceHolders: any[]) {
 
     if(dynamic) {
         cellsColumnBlock.call(d3Drag()
-            .origin(function(d) {
+            .origin(function(d: any) {
                 event!.stopPropagation();
                 return d;
             })
             // @ts-expect-error makeDragRow accepts variable args
             .on('drag', makeDragRow(gd, tableControlView, -1))
-            .on('end', function(event) {
+            .on('end', function(event: any) {
                 // fixme emit plotly notification
             })
         );
@@ -194,7 +194,7 @@ export default function plot(gd: GraphDiv, wrappedTraceHolders: any[]) {
     scrollAreaClip.enter()
         .append('clipPath')
         .classed(c.cn.scrollAreaClip, true)
-        .attr('id', function(d) {return scrollAreaBottomClipKey(gd, d);});
+        .attr('id', function(d: any) {return scrollAreaBottomClipKey(gd, d);});
 
     const scrollAreaClipRect = scrollAreaClip.selectAll('.' + c.cn.scrollAreaClipRect)
         .data(gup.repeat, gup.keyFun);
@@ -207,8 +207,8 @@ export default function plot(gd: GraphDiv, wrappedTraceHolders: any[]) {
         .attr('fill', 'none');
 
     scrollAreaClipRect
-        .attr('width', function(d) {return d.width + 2 * c.overdrag;})
-        .attr('height', function(d) {return d.height + c.uplift;});
+        .attr('width', function(d: any) {return d.width + 2 * c.overdrag;})
+        .attr('height', function(d: any) {return d.height + c.uplift;});
 
     const columnBoundary = yColumn.selectAll('.' + c.cn.columnBoundary)
         .data(gup.repeat, gup.keyFun);
@@ -226,7 +226,7 @@ export default function plot(gd: GraphDiv, wrappedTraceHolders: any[]) {
         .classed(c.cn.columnBoundaryClippath, true);
 
     columnBoundaryClippath
-        .attr('id', function(d) {return columnBoundaryClipKey(gd, d);});
+        .attr('id', function(d: any) {return columnBoundaryClipKey(gd, d);});
 
     const columnBoundaryRect = columnBoundaryClippath.selectAll('.' + c.cn.columnBoundaryRect)
         .data(gup.repeat, gup.keyFun);
@@ -237,33 +237,33 @@ export default function plot(gd: GraphDiv, wrappedTraceHolders: any[]) {
         .attr('fill', 'none');
 
     columnBoundaryRect
-        .attr('width', function(d) { return d.columnWidth + 2 * roundHalfWidth(d); })
-        .attr('height', function(d) {return d.calcdata.height + 2 * roundHalfWidth(d) + c.uplift;})
-        .attr('x', function(d) { return -roundHalfWidth(d); })
-        .attr('y', function(d) { return -roundHalfWidth(d); });
+        .attr('width', function(d: any) { return d.columnWidth + 2 * roundHalfWidth(d); })
+        .attr('height', function(d: any) {return d.calcdata.height + 2 * roundHalfWidth(d) + c.uplift;})
+        .attr('x', function(d: any) { return -roundHalfWidth(d); })
+        .attr('y', function(d: any) { return -roundHalfWidth(d); });
 
     updateBlockYPosition(null, cellsColumnBlock, tableControlView);
 }
 
-function roundHalfWidth(d) {
+function roundHalfWidth(d: any) {
     return Math.ceil(d.calcdata.maxLineWidth / 2);
 }
 
-function scrollAreaBottomClipKey(gd, d) {
+function scrollAreaBottomClipKey(gd: any, d: any) {
     return 'clip' + gd._fullLayout._uid + '_scrollAreaBottomClip_' + d.key;
 }
 
-function columnBoundaryClipKey(gd, d) {
+function columnBoundaryClipKey(gd: any, d: any) {
     return 'clip' + gd._fullLayout._uid + '_columnBoundaryClippath_' + d.calcdata.key + '_' + d.specIndex;
 }
 
-function flatData(selection) {
-    return [].concat.apply([], selection.map(function(g) {return g;}))
-        .map(function(g) {return g.__data__;});
+function flatData(selection: any) {
+    return [].concat.apply([], selection.map(function(g: any) {return g;}))
+        .map(function(g: any) {return g.__data__;});
 }
 
-function renderScrollbarKit(tableControlView, gd, bypassVisibleBar) {
-    function calcTotalHeight(d) {
+function renderScrollbarKit(tableControlView: any, gd: any, bypassVisibleBar: any) {
+    function calcTotalHeight(d: any) {
         const blocks = d.rowBlocks;
         return firstRowAnchor(blocks, blocks.length - 1) + (blocks.length ? rowsHeight(blocks[blocks.length - 1], Infinity) : 1);
     }
@@ -277,7 +277,7 @@ function renderScrollbarKit(tableControlView, gd, bypassVisibleBar) {
         .style('shape-rendering', 'geometricPrecision');
 
     scrollbarKit
-        .each(function(d) {
+        .each(function(d: any) {
             const s = d.scrollbarState;
             s.totalHeight = calcTotalHeight(d);
             s.scrollableAreaHeight = d.groupHeight - headerHeight(d);
@@ -290,7 +290,7 @@ function renderScrollbarKit(tableControlView, gd, bypassVisibleBar) {
             s.bottomY = s.topY + s.barLength;
             s.dragMultiplier = s.wiggleRoom / s.barWiggleRoom;
         })
-        .attr('transform', function(d) {
+        .attr('transform', function(d: any) {
             const xPosition = d.width + c.scrollbarWidth / 2 + c.scrollbarOffset;
             return strTranslate(xPosition, headerHeight(d));
         });
@@ -310,7 +310,7 @@ function renderScrollbarKit(tableControlView, gd, bypassVisibleBar) {
         .classed(c.cn.scrollbarSlider, true);
 
     scrollbarSlider
-        .attr('transform', function(d) {
+        .attr('transform', function(d: any) {
             return strTranslate(0, d.scrollbarState.topY || 0);
         });
 
@@ -326,10 +326,10 @@ function renderScrollbarKit(tableControlView, gd, bypassVisibleBar) {
         .attr('y1', c.scrollbarWidth / 2);
 
     scrollbarGlyph
-        .attr('y2', function(d) {
+        .attr('y2', function(d: any) {
             return d.scrollbarState.barLength - c.scrollbarWidth / 2;
         })
-        .attr('stroke-opacity', function(d) {
+        .attr('stroke-opacity', function(d: any) {
             return d.columnDragInProgress || !d.scrollbarState.barWiggleRoom || bypassVisibleBar ? 0 : 0.4;
         });
 
@@ -363,20 +363,20 @@ function renderScrollbarKit(tableControlView, gd, bypassVisibleBar) {
             }
         })
         .call(d3Drag()
-            .origin(function(d) {
+            .origin(function(d: any) {
                 event!.stopPropagation();
                 d.scrollbarState.scrollbarScrollInProgress = true;
                 return d;
             })
             // @ts-expect-error makeDragRow accepts variable args
             .on('drag', makeDragRow(gd, tableControlView))
-            .on('end', function(event) {
+            .on('end', function(event: any) {
                 // fixme emit Plotly event
             })
         );
 
     scrollbarCaptureZone
-        .attr('y2', function(d) {
+        .attr('y2', function(d: any) {
             return d.scrollbarState.scrollableAreaHeight;
         });
 
@@ -390,7 +390,7 @@ function renderScrollbarKit(tableControlView, gd, bypassVisibleBar) {
     }
 }
 
-function renderColumnCellTree(gd, tableControlView, columnBlock, allColumnBlock) {
+function renderColumnCellTree(gd: any, tableControlView: any, columnBlock: any, allColumnBlock: any) {
     // fixme this perf hotspot
     // this is performance critical code as scrolling calls it on every revolver switch
     // it appears sufficiently fast but there are plenty of low-hanging fruits for performance optimization
@@ -416,7 +416,7 @@ function renderColumnCellTree(gd, tableControlView, columnBlock, allColumnBlock)
     setCellHeightAndPositionY(columnCell);
 }
 
-function renderColumnCells(columnBlock) {
+function renderColumnCells(columnBlock: any) {
     const columnCells = columnBlock.selectAll('.' + c.cn.columnCells)
         .data(gup.repeat, gup.keyFun);
 
@@ -430,9 +430,9 @@ function renderColumnCells(columnBlock) {
     return columnCells;
 }
 
-function renderColumnCell(columnCells) {
+function renderColumnCell(columnCells: any) {
     const columnCell = columnCells.selectAll('.' + c.cn.columnCell)
-        .data(splitData.splitToCells, function(d) {return d.keyWithinBlock;});
+        .data(splitData.splitToCells, function(d: any) {return d.keyWithinBlock;});
 
     columnCell.enter()
         .append('g')
@@ -444,9 +444,9 @@ function renderColumnCell(columnCells) {
     return columnCell;
 }
 
-function renderCellRect(columnCell) {
+function renderCellRect(columnCell: any) {
     const cellRect = columnCell.selectAll('.' + c.cn.cellRect)
-        .data(gup.repeat, function(d) {return d.keyWithinBlock;});
+        .data(gup.repeat, function(d: any) {return d.keyWithinBlock;});
 
     cellRect.enter()
         .append('rect')
@@ -455,22 +455,22 @@ function renderCellRect(columnCell) {
     return cellRect;
 }
 
-function renderCellText(cellTextHolder) {
+function renderCellText(cellTextHolder: any) {
     const cellText = cellTextHolder.selectAll('.' + c.cn.cellText)
-        .data(gup.repeat, function(d) {return d.keyWithinBlock;});
+        .data(gup.repeat, function(d: any) {return d.keyWithinBlock;});
 
     cellText.enter()
         .append('text')
         .classed(c.cn.cellText, true)
         .style('cursor', function() {return 'auto';})
-        .on('mousedown', function(event) {event.stopPropagation();});
+        .on('mousedown', function(event: any) {event.stopPropagation();});
 
     return cellText;
 }
 
-function renderCellTextHolder(columnCell) {
+function renderCellTextHolder(columnCell: any) {
     const cellTextHolder = columnCell.selectAll('.' + c.cn.cellTextHolder)
-        .data(gup.repeat, function(d) {return d.keyWithinBlock;});
+        .data(gup.repeat, function(d: any) {return d.keyWithinBlock;});
 
     cellTextHolder.enter()
         .append('g')
@@ -480,9 +480,9 @@ function renderCellTextHolder(columnCell) {
     return cellTextHolder;
 }
 
-function supplyStylingValues(columnCell) {
+function supplyStylingValues(columnCell: any) {
     columnCell
-        .each(function(d, i) {
+        .each(function(d: any, i: any) {
             const spec = d.calcdata.cells.font;
             const col = d.column.specIndex;
             const font = {
@@ -503,27 +503,27 @@ function supplyStylingValues(columnCell) {
         });
 }
 
-function setFont(cellText) {
+function setFont(cellText: any) {
     cellText
-        .each(function(this: any, d) {
+        .each(function(this: any, d: any) {
             drawingFont(select(this), d.font);
         });
 }
 
-function sizeAndStyleRect(cellRect) {
+function sizeAndStyleRect(cellRect: any) {
     cellRect
-        .attr('width', function(d) {return d.column.columnWidth;})
-        .attr('stroke-width', function(d) {return d.cellBorderWidth;})
-        .each(function(this: any, d) {
+        .attr('width', function(d: any) {return d.column.columnWidth;})
+        .attr('stroke-width', function(d: any) {return d.cellBorderWidth;})
+        .each(function(this: any, d: any) {
             const atomicSelection = select(this);
             Color.stroke(atomicSelection, gridPick(d.calcdata.cells.line.color, d.column.specIndex, d.rowNumber));
             Color.fill(atomicSelection, gridPick(d.calcdata.cells.fill.color, d.column.specIndex, d.rowNumber));
         });
 }
 
-function populateCellText(cellText, tableControlView, allColumnBlock, gd) {
+function populateCellText(cellText: any, tableControlView: any, allColumnBlock: any, gd: any) {
     cellText
-        .text(function(d) {
+        .text(function(d: any) {
             const col = d.column.specIndex;
             const row = d.rowNumber;
 
@@ -551,8 +551,8 @@ function populateCellText(cellText, tableControlView, allColumnBlock, gd) {
             if(d.wrappingNeeded) {
                 const hrefPreservedText = c.wrapSplitCharacter === ' ' ? prefixSuffixedText.replace(/<a href=/ig, '<a_href=') : prefixSuffixedText;
                 const fragments = hrefPreservedText.split(c.wrapSplitCharacter);
-                const hrefRestoredFragments = c.wrapSplitCharacter === ' ' ? fragments.map(function(frag) {return frag.replace(/<a_href=/ig, '<a href=');}) : fragments;
-                d.fragments = hrefRestoredFragments.map(function(f) {return {text: f, width: null};});
+                const hrefRestoredFragments = c.wrapSplitCharacter === ' ' ? fragments.map(function(frag: any) {return frag.replace(/<a_href=/ig, '<a href=');}) : fragments;
+                d.fragments = hrefRestoredFragments.map(function(f: any) {return {text: f, width: null};});
                 d.fragments.push({fragment: c.wrapSpacer, width: null});
                 textToRender = hrefRestoredFragments.join(c.lineBreaker) + c.lineBreaker + c.wrapSpacer;
             } else {
@@ -562,10 +562,10 @@ function populateCellText(cellText, tableControlView, allColumnBlock, gd) {
 
             return textToRender;
         })
-        .attr('dy', function(d) {
+        .attr('dy', function(d: any) {
             return d.needsConvertToTspans ? 0 : '0.75em';
         })
-        .each(function(this: any, d) {
+        .each(function(this: any, d: any) {
             const element = this;
             const selection = select(element);
 
@@ -579,26 +579,26 @@ function populateCellText(cellText, tableControlView, allColumnBlock, gd) {
                     // basic cell adjustment - compliance with `cellPad`
                     // @ts-expect-error strTranslate call pattern
                     .attr('transform', function(d) {return strTranslate(xPosition(d), c.cellPad);})
-                    .attr('text-anchor', function(d) {
+                    .attr('text-anchor', function(d: any) {
                         return ({
                             left: 'start',
                             center: 'middle',
                             right: 'end'
-                        })[d.align];
+                        } as any)[d.align];
                     });
             }
         });
 }
 
-function isLatex(content) {
+function isLatex(content: any) {
     return typeof content === 'string' && content.match(c.latexCheck);
 }
 
-function hasWrapCharacter(text) {return text.indexOf(c.wrapSplitCharacter) !== -1;}
+function hasWrapCharacter(text: any) {return text.indexOf(c.wrapSplitCharacter) !== -1;}
 
-function columnMoved(gd, calcdata, indices) {
+function columnMoved(gd: any, calcdata: any, indices: any) {
     const o = calcdata.gdColumnsOriginalOrder;
-    calcdata.gdColumns.sort(function(a, b) {
+    calcdata.gdColumns.sort(function(a: any, b: any) {
         return indices[o.indexOf(a)] - indices[o.indexOf(b)];
     });
 
@@ -610,7 +610,7 @@ function columnMoved(gd, calcdata, indices) {
     gd.emit('plotly_restyle');
 }
 
-function gridPick(spec, col, row) {
+function gridPick(spec: any, col: any, row: any) {
     if(Lib.isArrayOrTypedArray(spec)) {
         const column = spec[Math.min(col, spec.length - 1)];
         if(Lib.isArrayOrTypedArray(column)) {
@@ -623,7 +623,7 @@ function gridPick(spec, col, row) {
     }
 }
 
-function easeColumn(selection, d, y) {
+function easeColumn(selection: any, d: any, y: any) {
     selection
         .transition()
         .ease(c.releaseTransitionEase)
@@ -631,19 +631,19 @@ function easeColumn(selection, d, y) {
         .attr('transform', strTranslate(d.x, y));
 }
 
-function cellsBlock(d) {return d.type === 'cells';}
-function headerBlock(d) {return d.type === 'header';}
+function cellsBlock(d: any) {return d.type === 'cells';}
+function headerBlock(d: any) {return d.type === 'header';}
 
 /**
  * Revolver panel and cell contents layouting
  */
 
-function headerHeight(d) {
+function headerHeight(d: any) {
     const headerBlocks = d.rowBlocks.length ? d.rowBlocks[0].auxiliaryBlocks : [];
-    return headerBlocks.reduce(function(p, n) {return p + rowsHeight(n, Infinity);}, 0);
+    return headerBlocks.reduce(function(p: any, n: any) {return p + rowsHeight(n, Infinity);}, 0);
 }
 
-function findPagesAndCacheHeights(blocks, scrollY, scrollHeight) {
+function findPagesAndCacheHeights(blocks: any, scrollY: any, scrollHeight: any) {
     const pages: any[] = [];
     let pTop = 0;
 
@@ -675,7 +675,7 @@ function findPagesAndCacheHeights(blocks, scrollY, scrollHeight) {
     return pages;
 }
 
-function updateBlockYPosition(gd, cellsColumnBlock, tableControlView) {
+function updateBlockYPosition(gd: any, cellsColumnBlock: any, tableControlView: any) {
     const d = flatData(cellsColumnBlock)[0];
     if(d === undefined) return;
     const blocks = d.rowBlocks;
@@ -700,14 +700,14 @@ function updateBlockYPosition(gd, cellsColumnBlock, tableControlView) {
     }
 
     cellsColumnBlock
-        .each(function(d, i) {
+        .each(function(d: any, i: any) {
             // these values will also be needed when a block is translated again due to growing cell height
             d.page = pages[i];
             d.scrollY = scrollY;
         });
 
     cellsColumnBlock
-        .attr('transform', function(d) {
+        .attr('transform', function(d: any) {
             const yTranslate = firstRowAnchor(d.rowBlocks, d.page) - d.scrollY;
             return strTranslate(0, yTranslate);
         });
@@ -721,11 +721,11 @@ function updateBlockYPosition(gd, cellsColumnBlock, tableControlView) {
     }
 }
 
-function makeDragRow(gd, allTableControlView, optionalMultiplier, optionalPosition) {
-    return function dragRow(eventD) {
+function makeDragRow(gd: any, allTableControlView: any, optionalMultiplier: any, optionalPosition: any) {
+    return function dragRow(eventD: any) {
         // may come from whichever DOM event target: drag, wheel, bar... eventD corresponds to event target
         const d = eventD.calcdata ? eventD.calcdata : eventD;
-        const tableControlView = allTableControlView.filter(function(dd) {return d.key === dd.key;});
+        const tableControlView = allTableControlView.filter(function(dd: any) {return d.key === dd.key;});
         const multiplier = optionalMultiplier || d.scrollbarState.dragMultiplier;
 
         const initialScrollY = d.scrollY;
@@ -740,27 +740,27 @@ function makeDragRow(gd, allTableControlView, optionalMultiplier, optionalPositi
     };
 }
 
-function conditionalPanelRerender(gd, tableControlView, cellsColumnBlock, pages, prevPages, d, revolverIndex) {
+function conditionalPanelRerender(gd: any, tableControlView: any, cellsColumnBlock: any, pages: any, prevPages: any, d: any, revolverIndex: any) {
     const shouldComponentUpdate = pages[revolverIndex] !== prevPages[revolverIndex];
     if(shouldComponentUpdate) {
         clearTimeout(d.currentRepaint[revolverIndex]);
         d.currentRepaint[revolverIndex] = setTimeout(function() {
             // setTimeout might lag rendering but yields a smoother scroll, because fast scrolling makes
             // some repaints invisible ie. wasteful (DOM work blocks the main thread)
-            const toRerender = cellsColumnBlock.filter(function(d, i) {return i === revolverIndex && pages[i] !== prevPages[i];});
+            const toRerender = cellsColumnBlock.filter(function(d: any, i: any) {return i === revolverIndex && pages[i] !== prevPages[i];});
             renderColumnCellTree(gd, tableControlView, toRerender, cellsColumnBlock);
             prevPages[revolverIndex] = pages[revolverIndex];
         });
     }
 }
 
-function wrapTextMaker(columnBlock, element, tableControlView, gd) {
+function wrapTextMaker(columnBlock: any, element: any, tableControlView: any, gd: any) {
     return function wrapText() {
         const cellTextHolder = select(element.parentNode);
         cellTextHolder
-            .each(function(d) {
+            .each(function(d: any) {
                 const fragments = d.fragments;
-                cellTextHolder.selectAll('tspan.line').each(function(this: any, dd, i) {
+                cellTextHolder.selectAll('tspan.line').each(function(this: any, dd: any, i: any) {
                     fragments[i].width = this.getComputedTextLength();
                 });
                 // last element is only for measuring the separator character, so it's ignored:
@@ -797,7 +797,7 @@ function wrapTextMaker(columnBlock, element, tableControlView, gd) {
     };
 }
 
-function updateYPositionMaker(columnBlock, element, tableControlView, gd, d) {
+function updateYPositionMaker(columnBlock: any, element: any, tableControlView: any, gd: any, d: any) {
     return function updateYPosition() {
         if(d.settledY) return;
         const cellTextHolder = select(element.parentNode);
@@ -843,7 +843,7 @@ function updateYPositionMaker(columnBlock, element, tableControlView, gd, d) {
     };
 }
 
-function xPosition(d, optionalWidth) {
+function xPosition(d: any, optionalWidth: any) {
     switch(d.align) {
         case 'left': return c.cellPad;
         case 'right': return d.column.columnWidth - (optionalWidth || 0) - c.cellPad;
@@ -852,20 +852,20 @@ function xPosition(d, optionalWidth) {
     }
 }
 
-function setCellHeightAndPositionY(columnCell) {
+function setCellHeightAndPositionY(columnCell: any) {
     columnCell
-        .attr('transform', function(d) {
-            const headerHeight = d.rowBlocks[0].auxiliaryBlocks.reduce(function(p, n) {return p + rowsHeight(n, Infinity);}, 0);
+        .attr('transform', function(d: any) {
+            const headerHeight = d.rowBlocks[0].auxiliaryBlocks.reduce(function(p: any, n: any) {return p + rowsHeight(n, Infinity);}, 0);
             const l = getBlock(d);
             const rowAnchor = rowsHeight(l, d.key);
             const yOffset = rowAnchor + headerHeight;
             return strTranslate(0, yOffset);
         })
         .selectAll('.' + c.cn.cellRect)
-        .attr('height', function(d) {return getRow(getBlock(d), d.key).rowHeight;});
+        .attr('height', function(d: any) {return getRow(getBlock(d), d.key).rowHeight;});
 }
 
-function firstRowAnchor(blocks, page) {
+function firstRowAnchor(blocks: any, page: any) {
     let total = 0;
     for(let i = page - 1; i >= 0; i--) {
         total += allRowsHeight(blocks[i]);
@@ -873,7 +873,7 @@ function firstRowAnchor(blocks, page) {
     return total;
 }
 
-function rowsHeight(rowBlock, key) {
+function rowsHeight(rowBlock: any, key: any) {
     let total = 0;
     for(let i = 0; i < rowBlock.rows.length && rowBlock.rows[i].rowIndex < key; i++) {
         total += rowBlock.rows[i].rowHeight;
@@ -881,7 +881,7 @@ function rowsHeight(rowBlock, key) {
     return total;
 }
 
-function allRowsHeight(rowBlock) {
+function allRowsHeight(rowBlock: any) {
     const cached = rowBlock.allRowsHeight;
 
     if(cached !== void(0)) {
@@ -897,5 +897,5 @@ function allRowsHeight(rowBlock) {
     return total;
 }
 
-function getBlock(d) {return d.rowBlocks[d.page];}
-function getRow(l, i) {return l.rows[i - l.firstRowIndex];}
+function getBlock(d: any) {return d.rowBlocks[d.page];}
+function getRow(l: any, i: any) {return l.rows[i - l.firstRowIndex];}

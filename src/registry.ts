@@ -24,7 +24,7 @@ export const localeRegistry: Record<string, any> = {};
 export const apiMethodRegistry: Record<string, any> = {};
 export let collectableSubplotTypes: string[] | null = null;
 
-export const register = function register(_modules) {
+export const register = function register(_modules: any) {
     collectableSubplotTypes = null;
 
     if(!_modules) {
@@ -63,13 +63,13 @@ export const register = function register(_modules) {
     }
 };
 
-export const getModule = function(trace) {
+export const getModule = function(trace: any) {
     const _module = modules[getTraceType(trace)];
     if(!_module) return false;
     return _module._module;
 };
 
-export const traceIs = function(traceType, category) {
+export const traceIs = function(traceType: any, category: any) {
     traceType = getTraceType(traceType);
 
     // old Chart Studio Cloud workspace hack, nothing to see here
@@ -88,7 +88,7 @@ export const traceIs = function(traceType, category) {
     return !!_module.categories[category];
 };
 
-export const getComponentMethod = function(name, method) {
+export const getComponentMethod = function(name: any, method: any) {
     const _module = componentsRegistry[name];
 
     if(!_module) return noop;
@@ -101,7 +101,7 @@ export const call = function(..._args: any[]) {
     return apiMethodRegistry[name].apply(null, args);
 };
 
-function registerTraceModule(_module) {
+function registerTraceModule(_module: any) {
     const thisType = _module.name;
     const categoriesIn = _module.categories;
     const meta = _module.meta;
@@ -168,7 +168,7 @@ function registerTraceModule(_module) {
     }
 }
 
-function registerSubplot(_module) {
+function registerSubplot(_module: any) {
     const plotType = _module.name;
 
     if(subplotsRegistry[plotType]) {
@@ -189,7 +189,7 @@ function registerSubplot(_module) {
     }
 }
 
-function registerComponentModule(_module) {
+function registerComponentModule(_module: any) {
     if(typeof _module.name !== 'string') {
         throw new Error('Component module *name* must be a string.');
     }
@@ -217,7 +217,7 @@ function registerComponentModule(_module) {
     }
 }
 
-function registerTransformModule(_module) {
+function registerTransformModule(_module: any) {
     if(typeof _module.name !== 'string') {
         throw new Error('Transform module *name* must be a string.');
     }
@@ -244,7 +244,7 @@ function registerTransformModule(_module) {
     }
 }
 
-function registerLocale(_module) {
+function registerLocale(_module: any) {
     const locale = _module.name;
     const baseLocale = locale.split('-')[0];
 
@@ -280,7 +280,7 @@ function registerLocale(_module) {
     if(hasFormat) localeObj.format = newFormat;
 }
 
-function findArrayRegexps(_module) {
+function findArrayRegexps(_module: any) {
     if(_module.layoutAttributes) {
         const arrayAttrRegexps = _module.layoutAttributes._arrayAttrRegexps;
         if(arrayAttrRegexps) {
@@ -291,7 +291,7 @@ function findArrayRegexps(_module) {
     }
 }
 
-function mergeComponentAttrsToTrace(componentName, traceType) {
+function mergeComponentAttrsToTrace(componentName: any, traceType: any) {
     const componentSchema = componentsRegistry[componentName].schema;
     if(!componentSchema || !componentSchema.traces) return;
 
@@ -301,7 +301,7 @@ function mergeComponentAttrsToTrace(componentName, traceType) {
     }
 }
 
-function mergeComponentAttrsToSubplot(componentName, subplotName) {
+function mergeComponentAttrsToSubplot(componentName: any, subplotName: any) {
     const componentSchema = componentsRegistry[componentName].schema;
     if(!componentSchema || !componentSchema.subplots) return;
 
@@ -316,7 +316,7 @@ function mergeComponentAttrsToSubplot(componentName, subplotName) {
     }
 }
 
-function getTraceType(traceType) {
+function getTraceType(traceType: any) {
     if(typeof traceType === 'object') traceType = traceType.type;
     return traceType;
 }

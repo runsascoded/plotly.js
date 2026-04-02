@@ -3,7 +3,7 @@ import scatterPlot from '../scatter/plot.js';
 import _numerical from '../../constants/numerical.js';
 const { BADNUM } = _numerical;
 
-export default function plot(gd: GraphDiv, subplot: PlotInfo, moduleCalcData) {
+export default function plot(gd: GraphDiv, subplot: PlotInfo, moduleCalcData: any) {
     const mlayer = subplot.layers.frontplot.select('g.scatterlayer');
 
     const xa = subplot.xaxis;

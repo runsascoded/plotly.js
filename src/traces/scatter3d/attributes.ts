@@ -29,7 +29,7 @@ const lineAttrs = extendFlat(
     colorAttributes('line')
 );
 
-function makeProjectionAttr(axLetter) {
+function makeProjectionAttr(axLetter: any) {
     return {
         show: {
             valType: 'boolean',

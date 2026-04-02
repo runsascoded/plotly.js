@@ -16,7 +16,7 @@ export default function calc(gd: GraphDiv, trace: FullTrace): any[] {
     // N.B. violin reuses same Box.calc
     const numKey = trace.type === 'violin' ? '_numViolins' : '_numBoxes';
 
-    let i, j;
+    let i: any, j;
     let valAxis, valLetter;
     let posAxis, posLetter;
 
@@ -43,7 +43,7 @@ export default function calc(gd: GraphDiv, trace: FullTrace): any[] {
     const dPos = dv.minDiff / 2;
 
     // item in trace calcdata
-    let cdi;
+    let cdi: any;
     // array of {v: v, i, i} sample pts
     let pts;
     // values of the `pts` array of objects
@@ -59,11 +59,11 @@ export default function calc(gd: GraphDiv, trace: FullTrace): any[] {
     // outlier definition based on http://www.physics.csbsju.edu/stats/box2.html
     const ptFilterFn = (trace.boxpoints || trace.points) === 'all' ?
         Lib.identity :
-        function(pt) { return (pt.v < cdi.lf || pt.v > cdi.uf); };
+        function(pt: any) { return (pt.v < cdi.lf || pt.v > cdi.uf); };
 
     if(trace._hasPreCompStats) {
         const valArrayRaw = trace[valLetter];
-        const d2c = function(k) { return valAxis.d2c((trace[k] || [])[i]); };
+        const d2c = function(k: any) { return valAxis.d2c((trace[k] || [])[i]); };
         let minVal = Infinity;
         let maxVal = -Infinity;
 

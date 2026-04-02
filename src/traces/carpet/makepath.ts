@@ -1,4 +1,4 @@
-export default function makePath(xp, yp, isBicubic) {
+export default function makePath(xp: any, yp: any, isBicubic: any) {
     // Prevent d3 errors that would result otherwise:
     if(xp.length === 0) return '';
 

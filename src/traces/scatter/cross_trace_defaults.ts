@@ -4,10 +4,10 @@ import handleGroupingDefaults from './grouping_defaults.js';
 import attributes from './attributes.js';
 
 export default function crossTraceDefaults(fullData: FullTrace[], fullLayout: FullLayout): void {
-    let traceIn, traceOut, i;
+    let traceIn, traceOut: any, i;
     const scattermode = fullLayout.scattermode;
 
-    function coerce(attr) {
+    function coerce(attr: any) {
         return Lib.coerce(traceOut._input, traceOut, attributes, attr);
     }
 

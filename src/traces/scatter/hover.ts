@@ -26,7 +26,7 @@ export default function hoverPoints(pointData: any, xval: number, yval: number, 
         // dx and dy are used in compare modes - here we want to always
         // prioritize the closest data point, at least as long as markers are
         // the same size or nonexistent, but still try to prioritize small markers too.
-        const dx = function(di) {
+        const dx = function(di: any) {
             if(xPeriod) {
                 const x0 = xa.c2p(di.xStart);
                 const x1 = xa.c2p(di.xEnd);
@@ -42,7 +42,7 @@ export default function hoverPoints(pointData: any, xval: number, yval: number, 
             const dxRaw = Math.abs(xa.c2p(di.x) - xpx);
             return (dxRaw < rad) ? (kink * dxRaw / rad) : (dxRaw - rad + kink);
         };
-        const dy = function(di) {
+        const dy = function(di: any) {
             if(yPeriod) {
                 const y0 = ya.c2p(di.yStart);
                 const y1 = ya.c2p(di.yEnd);
@@ -63,7 +63,7 @@ export default function hoverPoints(pointData: any, xval: number, yval: number, 
         // adjust the distance so if you're inside the marker it
         // always will show up regardless of point size, but
         // prioritize smaller points
-        const dxy = function(di) {
+        const dxy = function(di: any) {
             const rad = Math.max(minRad, di.mrc || 0);
             const dx = xa.c2p(di.x) - xpx;
             const dy = ya.c2p(di.y) - ypx;
@@ -117,7 +117,7 @@ export default function hoverPoints(pointData: any, xval: number, yval: number, 
         }
     }
 
-    function isHoverPointInFillElement(el) {
+    function isHoverPointInFillElement(el: any) {
         // Uses SVGElement.isPointInFill to accurately determine wether
         // the hover point / cursor is contained in the fill, taking
         // curved or jagged edges into account, which the Polygon-based
@@ -137,7 +137,7 @@ export default function hoverPoints(pointData: any, xval: number, yval: number, 
         }
     }
 
-    function getHoverLabelPosition(polygons) {
+    function getHoverLabelPosition(polygons: any) {
         // Uses Polygon s to determine the left- and right-most x-coordinates
         // of the subshape of the fill that contains the hover point / cursor.
         // Doing this with the SVGElement directly is quite tricky, so this falls

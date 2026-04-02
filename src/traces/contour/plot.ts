@@ -15,11 +15,11 @@ import closeBoundaries from './close_boundaries.js';
 import constants from './constants.js';
 const costConstants = constants.LABELOPTIMIZER;
 
-export const plot = function plot(gd: GraphDiv,  plotinfo: PlotInfo,  cdcontours,  contourLayer) {
+export const plot = function plot(gd: GraphDiv,  plotinfo: PlotInfo,  cdcontours: any,  contourLayer: any) {
     const xa = plotinfo.xaxis;
     const ya = plotinfo.yaxis;
 
-    Lib.makeTraceGroups(contourLayer, cdcontours, 'contour').each(function(this: any, cd) {
+    Lib.makeTraceGroups(contourLayer, cdcontours, 'contour').each(function(this: any, cd: any) {
         const plotGroup = select(this);
         const cd0 = cd[0];
         const trace = cd0.trace;
@@ -64,7 +64,7 @@ export const plot = function plot(gd: GraphDiv,  plotinfo: PlotInfo,  cdcontours
     });
 };
 
-function makeBackground(plotgroup,  perimeter,  contours) {
+function makeBackground(plotgroup: any,  perimeter: any,  contours: any) {
     const bggroup = Lib.ensureSingle(plotgroup, 'g', 'contourbg');
 
     const bgfill = bggroup.selectAll('path')
@@ -76,7 +76,7 @@ function makeBackground(plotgroup,  perimeter,  contours) {
         .style('stroke', 'none');
 }
 
-function makeFills(plotgroup,  pathinfo,  perimeter,  contours) {
+function makeFills(plotgroup: any,  pathinfo: any,  perimeter: any,  contours: any) {
     const hasFills = contours.coloring === 'fill' || (contours.type === 'constraint' && contours._operation !== '=');
     const boundaryPath = 'M' + perimeter.join('L') + 'Z';
 
@@ -90,7 +90,7 @@ function makeFills(plotgroup,  pathinfo,  perimeter,  contours) {
     const fillitems = fillgroup.selectAll('path').data(hasFills ? pathinfo : []);
     fillitems.enter().append('path');
     fillitems.exit().remove();
-    fillitems.each(function(this: any, pi) {
+    fillitems.each(function(this: any, pi: any) {
         // join all paths for this level together into a single path
         // first follow clockwise around the perimeter to close any open paths
         // if the whole perimeter is above this level, start with a path
@@ -109,10 +109,10 @@ function makeFills(plotgroup,  pathinfo,  perimeter,  contours) {
     });
 }
 
-function joinAllPaths(pi,  perimeter) {
+function joinAllPaths(pi: any,  perimeter: any) {
     let fullpath = '';
     let i = 0;
-    const startsleft = pi.edgepaths.map(function(v, i) { return i; });
+    const startsleft = pi.edgepaths.map(function(v: any, i: any) { return i; });
     let newloop = true;
     let endpt;
     let newendpt;
@@ -121,10 +121,10 @@ function joinAllPaths(pi,  perimeter) {
     let possiblei;
     let addpath;
 
-    function istop(pt) { return Math.abs(pt[1] - perimeter[0][1]) < 0.01; }
-    function isbottom(pt) { return Math.abs(pt[1] - perimeter[2][1]) < 0.01; }
-    function isleft(pt) { return Math.abs(pt[0] - perimeter[0][0]) < 0.01; }
-    function isright(pt) { return Math.abs(pt[0] - perimeter[2][0]) < 0.01; }
+    function istop(pt: any) { return Math.abs(pt[1] - perimeter[0][1]) < 0.01; }
+    function isbottom(pt: any) { return Math.abs(pt[1] - perimeter[2][1]) < 0.01; }
+    function isleft(pt: any) { return Math.abs(pt[0] - perimeter[0][0]) < 0.01; }
+    function isright(pt: any) { return Math.abs(pt[0] - perimeter[2][0]) < 0.01; }
 
     while(startsleft.length) {
         addpath = smoothopen(pi.edgepaths[i], pi.smoothing);
@@ -196,7 +196,7 @@ function joinAllPaths(pi,  perimeter) {
     return fullpath;
 }
 
-function makeLinesAndLabels(plotgroup,  pathinfo,  gd: GraphDiv,  cd0,  contours) {
+function makeLinesAndLabels(plotgroup: any,  pathinfo: any,  gd: GraphDiv,  cd0: any,  contours: any) {
     const isStatic = gd._context.staticPlot;
     const lineContainer = Lib.ensureSingle(plotgroup, 'g', 'contourlines');
     const showLines = contours.showlines !== false;
@@ -221,7 +221,7 @@ function makeLinesAndLabels(plotgroup,  pathinfo,  gd: GraphDiv,  cd0,  contours
 
     if(showLabels) {
         const labelClipPathData: any[] = [];
-        const labelData = [];
+        const labelData: any[] = [];
 
         // invalidate the getTextLocation cache in case paths changed
         Lib.clearLocationCache();
@@ -283,7 +283,7 @@ function makeLinesAndLabels(plotgroup,  pathinfo,  gd: GraphDiv,  cd0,  contours
         const normLength = constants.LABELDISTANCE * plotDiagonal /
             Math.max(1, pathinfo.length / constants.LABELINCREASE);
 
-        linegroup.each(function(this: any, d) {
+        linegroup.each(function(this: any, d: any) {
             const textOpts = calcTextOpts(d.level, contourFormat, dummyText, gd);
 
             select(this).selectAll('path').each(function(this: any) {
@@ -316,7 +316,7 @@ function makeLinesAndLabels(plotgroup,  pathinfo,  gd: GraphDiv,  cd0,  contours
     if(showLabels && !showLines) linegroup.remove();
 }
 
-export const createLines = function(lineContainer,  makeLines,  pathinfo,  isStatic) {
+export const createLines = function(lineContainer: any,  makeLines: any,  pathinfo: any,  isStatic: any) {
     const smoothing = pathinfo[0].smoothing;
 
     const linegroup = lineContainer.selectAll('g.contourlevel')
@@ -330,28 +330,28 @@ export const createLines = function(lineContainer,  makeLines,  pathinfo,  isSta
         // pedgepaths / ppaths are used by contourcarpet, for the paths transformed from a/b to x/y
         // edgepaths / paths are used by contour since it's in x/y from the start
         const opencontourlines = linegroup.selectAll('path.openline')
-            .data(function(d) { return d.pedgepaths || d.edgepaths; });
+            .data(function(d: any) { return d.pedgepaths || d.edgepaths; });
 
         opencontourlines.exit().remove();
         opencontourlines.enter().append('path')
             .classed('openline', true);
 
         opencontourlines
-            .attr('d', function(d) {
+            .attr('d', function(d: any) {
                 return smoothopen(d, smoothing);
             })
             .style('stroke-miterlimit', 1)
             .style('vector-effect', isStatic ? 'none' : 'non-scaling-stroke');
 
         const closedcontourlines = linegroup.selectAll('path.closedline')
-            .data(function(d) { return d.ppaths || d.paths; });
+            .data(function(d: any) { return d.ppaths || d.paths; });
 
         closedcontourlines.exit().remove();
         closedcontourlines.enter().append('path')
             .classed('closedline', true);
 
         closedcontourlines
-            .attr('d', function(d) {
+            .attr('d', function(d: any) {
                 return smoothclosed(d, smoothing);
             })
             .style('stroke-miterlimit', 1)
@@ -361,7 +361,7 @@ export const createLines = function(lineContainer,  makeLines,  pathinfo,  isSta
     return linegroup;
 };
 
-export const createLineClip = function(lineContainer,  clipLinesForLabels,  gd: GraphDiv,  uid) {
+export const createLineClip = function(lineContainer: any,  clipLinesForLabels: any,  gd: GraphDiv,  uid: any) {
     const clips = gd._fullLayout._clips;
     const clipId = clipLinesForLabels ? ('clipline' + uid) : null;
 
@@ -378,7 +378,7 @@ export const createLineClip = function(lineContainer,  clipLinesForLabels,  gd: 
     return lineClip;
 };
 
-export const labelFormatter = function(gd: GraphDiv,  cd0) {
+export const labelFormatter = function(gd: GraphDiv,  cd0: any) {
     const fullLayout = gd._fullLayout;
     const trace = cd0.trace;
     const contours = trace.contours;
@@ -420,10 +420,10 @@ export const labelFormatter = function(gd: GraphDiv,  cd0) {
         }
     }
 
-    return function(v) { return Axes.tickText(formatAxis, v).text; };
+    return function(v: any) { return Axes.tickText(formatAxis, v).text; };
 };
 
-export const calcTextOpts = function(level,  contourFormat,  dummyText,  gd: GraphDiv) {
+export const calcTextOpts = function(level: any,  contourFormat: any,  dummyText: any,  gd: GraphDiv) {
     const text = contourFormat(level);
     dummyText.text(text)
         .call(svgTextUtils.convertToTspans, gd);
@@ -441,7 +441,7 @@ export const calcTextOpts = function(level,  contourFormat,  dummyText,  gd: Gra
     };
 };
 
-export const findBestTextLocation = function(path,  pathBounds,  textOpts,  labelData,  plotBounds) {
+export const findBestTextLocation = function(path: any,  pathBounds: any,  textOpts: any,  labelData: any,  plotBounds: any) {
     const textWidth = textOpts.width;
 
     let p0, dp, pMax, pMin, loc;
@@ -457,7 +457,7 @@ export const findBestTextLocation = function(path,  pathBounds,  textOpts,  labe
 
     let cost = Infinity;
     for(let j = 0; j < costConstants.ITERATIONS; j++) {
-        for(let p = p0; p < pMax; p += dp) {
+        for(let p: any = p0; p < pMax; p += dp) {
             const newLocation = Lib.getTextLocation(path, pathBounds.total, p, textWidth);
             const newCost = locationCost(newLocation, textOpts, labelData, plotBounds);
             if(newCost < cost) {
@@ -484,7 +484,7 @@ export const findBestTextLocation = function(path,  pathBounds,  textOpts,  labe
  * - the angle away from horizontal
  * - being too close to already placed neighbors
  */
-function locationCost(loc,  textOpts,  labelData,  bounds) {
+function locationCost(loc: any,  textOpts: any,  labelData: any,  bounds: any) {
     const halfWidth = textOpts.width / 2;
     const halfHeight = textOpts.height / 2;
     const x = loc.x;
@@ -534,7 +534,7 @@ function locationCost(loc,  textOpts,  labelData,  bounds) {
     return cost;
 }
 
-export const addLabelData = function(loc,  textOpts,  labelData,  labelClipPathData) {
+export const addLabelData = function(loc: any,  textOpts: any,  labelData: any,  labelClipPathData: any) {
     const fontSize = textOpts.fontSize;
     const w = textOpts.width + fontSize / 3;
     const h = Math.max(0, textOpts.height - fontSize / 3);
@@ -546,7 +546,7 @@ export const addLabelData = function(loc,  textOpts,  labelData,  labelClipPathD
     const sin = Math.sin(theta);
     const cos = Math.cos(theta);
 
-    const rotateXY = function(dx,  dy) {
+    const rotateXY = function(dx: any,  dy: any) {
         return [
             x + dx * cos - dy * sin,
             y + dx * sin + dy * cos
@@ -574,9 +574,9 @@ export const addLabelData = function(loc,  textOpts,  labelData,  labelClipPathD
     labelClipPathData.push(bBoxPts);
 };
 
-export const drawLabels = function(labelGroup,  labelData,  gd: GraphDiv,  lineClip,  labelClipPathData) {
+export const drawLabels = function(labelGroup: any,  labelData: any,  gd: GraphDiv,  lineClip: any,  labelClipPathData: any) {
     const labels = labelGroup.selectAll('text')
-        .data(labelData, function(d) {
+        .data(labelData, function(d: any) {
             return d.text + ',' + d.x + ',' + d.y + ',' + d.theta;
         });
 
@@ -587,7 +587,7 @@ export const drawLabels = function(labelGroup,  labelData,  gd: GraphDiv,  lineC
             'data-notex': 1,
             'text-anchor': 'middle'
         })
-        .each(function(this: any, d) {
+        .each(function(this: any, d: any) {
             const x = d.x + Math.sin(d.theta) * d.dy;
             const y = d.y - Math.cos(d.theta) * d.dy;
             select(this)
@@ -611,7 +611,7 @@ export const drawLabels = function(labelGroup,  labelData,  gd: GraphDiv,  lineC
     }
 };
 
-function clipGaps(plotGroup,  plotinfo: PlotInfo,  gd: GraphDiv,  cd0,  perimeter) {
+function clipGaps(plotGroup: any,  plotinfo: PlotInfo,  gd: GraphDiv,  cd0: any,  perimeter: any) {
     const trace = cd0.trace;
     const clips = gd._fullLayout._clips;
     let clipId = 'clip' + trace.uid;
@@ -657,7 +657,7 @@ function clipGaps(plotGroup,  plotinfo: PlotInfo,  gd: GraphDiv,  cd0,  perimete
     setClipUrl(plotGroup, clipId, gd);
 }
 
-function makeClipMask(cd0) {
+function makeClipMask(cd0: any) {
     const empties = cd0.trace._emptypoints;
     const z: any[] = [];
     const m = cd0.z.length;

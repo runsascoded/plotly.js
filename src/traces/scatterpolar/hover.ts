@@ -1,7 +1,7 @@
 import type { FullAxis, FullTrace, PlotInfo } from '../../../types/core';
 import scatterHover from '../scatter/hover.js';
 
-function hoverPoints(pointData, xval, yval, hovermode) {
+function hoverPoints(pointData: any, xval: any, yval: any, hovermode: any) {
     const scatterPointData = scatterHover(pointData, xval, yval, hovermode);
     if(!scatterPointData || scatterPointData[0].index === false) return;
 
@@ -25,7 +25,7 @@ function hoverPoints(pointData, xval, yval, hovermode) {
     return scatterPointData;
 }
 
-function makeHoverPointText(cdi, trace: FullTrace, subplot: PlotInfo, pointData) {
+function makeHoverPointText(cdi: any, trace: FullTrace, subplot: PlotInfo, pointData: any) {
     const radialAxis = subplot.radialAxis;
     const angularAxis = subplot.angularAxis;
     radialAxis._hovertitle = 'r';
@@ -39,7 +39,7 @@ function makeHoverPointText(cdi, trace: FullTrace, subplot: PlotInfo, pointData)
 
     const hoverinfo = cdi.hi || trace.hoverinfo;
     const text: any[] = [];
-    function textPart(ax: FullAxis, val) {
+    function textPart(ax: FullAxis, val: any) {
         text.push(ax._hovertitle + ': ' + val);
     }
 

@@ -1,7 +1,7 @@
 import _index from '../../lib/index.js';
 const { isArray1D } = _index;
 
-export default function handleXYDefaults(traceIn, traceOut, coerce) {
+export default function handleXYDefaults(traceIn: any, traceOut: any, coerce: any) {
     const x = coerce('x');
     const hasX = x && x.length;
     const y = coerce('y');

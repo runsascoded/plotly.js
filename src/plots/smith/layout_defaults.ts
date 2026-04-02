@@ -12,22 +12,22 @@ import constants from './constants.js';
 import type { FullLayout, FullTrace } from '../../../types/core';
 const axisNames = constants.axisNames;
 
-const makeImagDflt = memoize(function(realTickvals) {
+const makeImagDflt = memoize(function(realTickvals: any) {
     // TODO: handle this case outside supply defaults step
     if(Lib.isTypedArray(realTickvals)) realTickvals = Array.from(realTickvals);
 
-    return realTickvals.slice().reverse().map(function(x) { return -x; })
+    return realTickvals.slice().reverse().map(function(x: any) { return -x; })
         .concat([0])
         .concat(realTickvals);
 }, String);
 
-function handleDefaults(contIn, contOut, coerce, opts) {
+function handleDefaults(contIn: any, contOut: any, coerce: any, opts: any) {
     const bgColor = coerce('bgcolor');
     opts.bgColor = Color.combine(bgColor, opts.paper_bgcolor);
 
     const subplotData = getSubplotData(opts.fullData, constants.name, opts.id);
     const layoutOut = opts.layoutOut;
-    let axName;
+    let axName: any;
 
     function coerceAxis(attr: string, dflt?: any) {
         return coerce(axName + '.' + attr, dflt);
@@ -44,7 +44,7 @@ function handleDefaults(contIn, contOut, coerce, opts) {
         const axOut = Template.newContainer(contOut, axName);
         axOut._id = axOut._name = axName;
         axOut._attr = opts.id + '.' + axName;
-        axOut._traceIndices = subplotData.map(function(t) { return t.index; });
+        axOut._traceIndices = subplotData.map(function(t: any) { return t.index; });
 
         const visible = coerceAxis('visible');
 
@@ -117,7 +117,7 @@ function handleDefaults(contIn, contOut, coerce, opts) {
                 showLine: true,
                 showGrid: true,
                 noZeroLine: true,
-                attributes: layoutAttributes[axName]
+                attributes: (layoutAttributes as any)[axName]
             });
 
             coerceAxis('layer');
@@ -144,9 +144,9 @@ export default function supplyLayoutDefaults(layoutIn: any, layoutOut: FullLayou
     });
 }
 
-function memoize(fn, keyFn) {
+function memoize(fn: any, keyFn: any) {
     const cache: any = {};
-    return function(val) {
+    return function(val: any) {
         const newKey = keyFn ? keyFn(val) : val;
         if(newKey in cache) { return cache[newKey]; }
 

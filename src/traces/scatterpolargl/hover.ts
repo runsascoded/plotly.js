@@ -2,7 +2,7 @@ import hover from '../scattergl/hover.js';
 import _hover from '../scatterpolar/hover.js';
 const { makeHoverPointText } = _hover;
 
-function hoverPoints(pointData, xval, yval, hovermode) {
+function hoverPoints(pointData: any, xval: any, yval: any, hovermode: any) {
     const cd = pointData.cd;
     const stash = cd[0].t;
     const rArray = stash.r;

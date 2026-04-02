@@ -47,7 +47,8 @@ export const plot = function plot(gd: GraphDiv) {
         let map = opts._subplot;
 
         if(!map) {
-            map = new Map(gd, id);
+            // @ts-ignore TS7009
+            map = (new Map(gd, id) as any);
             fullLayout[id]._subplot = map;
         }
 
@@ -64,7 +65,7 @@ export const plot = function plot(gd: GraphDiv) {
     }
 };
 
-export const clean = function(newFullData, newFullLayout, oldFullData, oldFullLayout) {
+export const clean = function(newFullData: any, newFullLayout: any, oldFullData: any, oldFullLayout: any) {
     const oldMapKeys = oldFullLayout._subplots[MAP] || [];
 
     for(let i = 0; i < oldMapKeys.length; i++) {
@@ -76,7 +77,7 @@ export const clean = function(newFullData, newFullLayout, oldFullData, oldFullLa
     }
 };
 
-export const toSVG = function(gd) {
+export const toSVG = function(gd: any) {
     const fullLayout = gd._fullLayout;
     const subplotIds = fullLayout._subplots[MAP];
     const size = fullLayout._size;
@@ -155,7 +156,7 @@ export const toSVG = function(gd) {
     }
 };
 
-export const updateFx = function(gd) {
+export const updateFx = function(gd: any) {
     const fullLayout = gd._fullLayout;
     const subplotIds = fullLayout._subplots[MAP];
 

@@ -14,11 +14,11 @@ const { calcMarkerSize } = _calc;
 import subTypes from '../scatter/subtypes.js';
 import style from './style.js';
 
-function plot(gd: GraphDiv, geo, calcData) {
+function plot(gd: GraphDiv, geo: any, calcData: any) {
     const scatterLayer = geo.layers.frontplot.select('.scatterlayer');
     const gTraces = Lib.makeTraceGroups(scatterLayer, calcData, 'trace scattergeo');
 
-    function removeBADNUM(d, node) {
+    function removeBADNUM(d: any, node: any) {
         if(d.lonlat[0] === BADNUM) {
             select(node).remove();
         }
@@ -27,7 +27,7 @@ function plot(gd: GraphDiv, geo, calcData) {
     // TODO find a way to order the inner nodes on update
     gTraces.selectAll('*').remove();
 
-    gTraces.each(function(this: any, calcTrace) {
+    gTraces.each(function(this: any, calcTrace: any) {
         const s = select(this);
         const trace = calcTrace[0].trace;
 
@@ -50,7 +50,7 @@ function plot(gd: GraphDiv, geo, calcData) {
                 .data(Lib.identity)
              .enter().append('path')
                 .classed('point', true)
-                .each(function(this: any, calcPt) { removeBADNUM(calcPt, this); });
+                .each(function(this: any, calcPt: any) { removeBADNUM(calcPt, this); });
         }
 
         if(subTypes.hasText(trace)) {
@@ -58,7 +58,7 @@ function plot(gd: GraphDiv, geo, calcData) {
                 .data(Lib.identity)
               .enter().append('g')
                 .append('text')
-                .each(function(this: any, calcPt) { removeBADNUM(calcPt, this); });
+                .each(function(this: any, calcPt: any) { removeBADNUM(calcPt, this); });
         }
 
         // call style here within topojson request callback
@@ -66,7 +66,7 @@ function plot(gd: GraphDiv, geo, calcData) {
     });
 }
 
-function calcGeoJSON(calcTrace, fullLayout: FullLayout) {
+function calcGeoJSON(calcTrace: any, fullLayout: FullLayout) {
     const trace = calcTrace[0].trace;
     const geoLayout = fullLayout[trace.geo];
     const geo = geoLayout._subplot;

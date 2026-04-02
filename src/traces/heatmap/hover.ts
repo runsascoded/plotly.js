@@ -5,7 +5,7 @@ import _index from '../../components/colorscale/index.js';
 const { extractOpts } = _index;
 const isArrayOrTypedArray = Lib.isArrayOrTypedArray;
 
-export default function hoverPoints(pointData,  xval,  yval,  hovermode,  opts) {
+export default function hoverPoints(pointData: any,  xval: any,  yval: any,  hovermode: any,  opts: any) {
     if(!opts) opts = {};
     const isContour = opts.isContour;
 

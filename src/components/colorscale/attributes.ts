@@ -27,7 +27,7 @@ export default function colorScaleAttrs(context: string, opts?: any): any {
         colorAttr = opts.colorAttr;
         colorAttrFull = opts.colorAttr;
     } else {
-        colorAttr = {z: 'z', c: 'color'}[cLetter];
+        colorAttr = ({z: 'z', c: 'color'} as any)[cLetter];
         colorAttrFull = 'in ' + code(contextHead + colorAttr);
     }
 

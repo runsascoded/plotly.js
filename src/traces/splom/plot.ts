@@ -4,7 +4,7 @@ import Lib from '../../lib/index.js';
 import AxisIDs from '../../plots/cartesian/axis_ids.js';
 import { selectMode } from '../../components/dragelement/helpers.js';
 
-export default function plot(gd: GraphDiv, _, splomCalcData) {
+export default function plot(gd: GraphDiv, _: any, splomCalcData: any) {
     if(!splomCalcData.length) return;
 
     for(let i = 0; i < splomCalcData.length; i++) {
@@ -12,7 +12,7 @@ export default function plot(gd: GraphDiv, _, splomCalcData) {
     }
 }
 
-function plotOne(gd: GraphDiv, cd0) {
+function plotOne(gd: GraphDiv, cd0: any) {
     const fullLayout = gd._fullLayout;
     const gs = fullLayout._size;
     const trace = cd0.trace;

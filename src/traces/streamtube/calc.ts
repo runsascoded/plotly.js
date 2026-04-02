@@ -157,9 +157,9 @@ function processGrid(trace: FullTrace) {
     // Over-specified mesh case, this would error in tube2mesh
     if(!len || len < Xs.length * Ys.length * Zs.length) empty();
 
-    const getArray = function(c) { return c === 'x' ? x : c === 'y' ? y : z; };
-    const getVals = function(c) { return c === 'x' ? Xs : c === 'y' ? Ys : Zs; };
-    const getDir = function(c) { return c[len - 1] < c[0] ? -1 : 1; };
+    const getArray = function(c: any) { return c === 'x' ? x : c === 'y' ? y : z; };
+    const getVals = function(c: any) { return c === 'x' ? Xs : c === 'y' ? Ys : Zs; };
+    const getDir = function(c: any) { return c[len - 1] < c[0] ? -1 : 1; };
 
     const arrK = getArray(gridFill[1]);
     const arrJ = getArray(gridFill[3]);
@@ -170,7 +170,7 @@ function processGrid(trace: FullTrace) {
 
     let arbitrary = false;
 
-    const getIndex = function(_i, _j, _k) {
+    const getIndex = function(_i: any, _j: any, _k: any) {
         return nk * (nj * _i + _j) + _k;
     };
 
@@ -221,7 +221,7 @@ function processGrid(trace: FullTrace) {
     };
 }
 
-function distinctVals(col) {
+function distinctVals(col: any) {
     return Lib.distinctVals(col).vals;
 }
 

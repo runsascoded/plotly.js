@@ -13,7 +13,7 @@ import createMapboxLayer from './layers.js';
 const drawMode = dragHelpers.drawMode;
 const selectMode = dragHelpers.selectMode;
 
-function Mapbox(this: any, gd, id) {
+function Mapbox(this: any, gd: any, id: any) {
     this.id = id;
     this.gd = gd;
 
@@ -45,7 +45,7 @@ function Mapbox(this: any, gd, id) {
 
 const proto = Mapbox.prototype;
 
-proto.plot = function(calcData, fullLayout, promises) {
+proto.plot = function(calcData: any, fullLayout: any, promises: any) {
     const self = this;
     const opts = fullLayout[self.id];
 
@@ -73,7 +73,7 @@ proto.plot = function(calcData, fullLayout, promises) {
     promises.push(promise);
 };
 
-proto.createMap = function(calcData, fullLayout, resolve, reject) {
+proto.createMap = function(calcData: any, fullLayout: any, resolve: any, reject: any) {
     const self = this;
     const opts = fullLayout[self.id];
 
@@ -135,7 +135,7 @@ proto.createMap = function(calcData, fullLayout, resolve, reject) {
     }).catch(reject);
 };
 
-proto.updateMap = function(calcData, fullLayout, resolve, reject) {
+proto.updateMap = function(calcData: any, fullLayout: any, resolve: any, reject: any) {
     const self = this;
     const map = self.map;
     const opts = fullLayout[this.id];
@@ -168,7 +168,7 @@ proto.updateMap = function(calcData, fullLayout, resolve, reject) {
     }).catch(reject);
 };
 
-proto.fillBelowLookup = function(calcData, fullLayout) {
+proto.fillBelowLookup = function(calcData: any, fullLayout: any) {
     const opts = fullLayout[this.id];
     const layers = opts.layers;
     let i, val;
@@ -191,7 +191,7 @@ proto.fillBelowLookup = function(calcData, fullLayout) {
             hasTraceAtTop = true;
         }
 
-        belowLookup['trace-' + trace.uid] = val || '';
+        (belowLookup as any)['trace-' + trace.uid] = val || '';
     }
 
     for(i = 0; i < layers.length; i++) {
@@ -208,7 +208,7 @@ proto.fillBelowLookup = function(calcData, fullLayout) {
             val = '';
         }
 
-        belowLookup['layout-' + i] = val;
+        (belowLookup as any)['layout-' + i] = val;
     }
 
     // N.B. If multiple layers have the 'below' value,
@@ -220,7 +220,7 @@ proto.fillBelowLookup = function(calcData, fullLayout) {
     let k, id;
 
     for(k in belowLookup) {
-        val = belowLookup[k];
+        val = (belowLookup as any)[k];
         if(val2list[val]) {
             val2list[val].push(k);
         } else {
@@ -255,7 +255,7 @@ const traceType2orderIndex: any = {
     scattermapbox: 2
 };
 
-proto.updateData = function(calcData) {
+proto.updateData = function(calcData: any) {
     const traceHash = this.traceHash;
     let traceObj, trace, i, j;
 
@@ -263,7 +263,7 @@ proto.updateData = function(calcData) {
     // in case traces with different `type` have the same
     // below value, but sorting we ensure that
     // e.g. choroplethmapbox traces will be below scattermapbox traces
-    const calcDataSorted = calcData.slice().sort(function(a, b) {
+    const calcDataSorted = calcData.slice().sort(function(a: any, b: any) {
         return (
             traceType2orderIndex[a[0].trace.type] -
             traceType2orderIndex[b[0].trace.type]
@@ -308,7 +308,7 @@ proto.updateData = function(calcData) {
     }
 };
 
-proto.updateLayout = function(fullLayout) {
+proto.updateLayout = function(fullLayout: any) {
     const map = this.map;
     const opts = fullLayout[this.id];
 
@@ -331,7 +331,7 @@ proto.updateLayout = function(fullLayout) {
     }
 };
 
-proto.resolveOnRender = function(resolve) {
+proto.resolveOnRender = function(resolve: any) {
     const map = this.map;
 
     map.on('render', function onRender() {
@@ -346,7 +346,7 @@ proto.resolveOnRender = function(resolve) {
     });
 };
 
-proto.rejectOnError = function(reject) {
+proto.rejectOnError = function(reject: any) {
     const map = this.map;
 
     function handler() {
@@ -360,7 +360,7 @@ proto.rejectOnError = function(reject) {
     map.once('layer.error', handler);
 };
 
-proto.createFramework = function(fullLayout) {
+proto.createFramework = function(fullLayout: any) {
     const self = this;
 
     const div = self.div = document.createElement('div');
@@ -371,11 +371,11 @@ proto.createFramework = function(fullLayout) {
     // create mock x/y axes for hover routine
     self.xaxis = {
         _id: 'x',
-        c2p: function(v) { return self.project(v).x; }
+        c2p: function(v: any) { return self.project(v).x; }
     };
     self.yaxis = {
         _id: 'y',
-        c2p: function(v) { return self.project(v).y; }
+        c2p: function(v: any) { return self.project(v).y; }
     };
 
     self.updateFramework(fullLayout);
@@ -389,13 +389,13 @@ proto.createFramework = function(fullLayout) {
     Axes.setConvert(self.mockAxis, fullLayout);
 };
 
-proto.initFx = function(calcData, fullLayout) {
+proto.initFx = function(calcData: any, fullLayout: any) {
     const self = this;
     const gd = self.gd;
     const map = self.map;
 
     // keep track of pan / zoom in user layout and emit relayout event
-    map.on('moveend', function(evt) {
+    map.on('moveend', function(evt: any) {
         if(!self.map) return;
 
         const fullLayoutNow = gd._fullLayout;
@@ -434,7 +434,7 @@ proto.initFx = function(calcData, fullLayout) {
         self.wheeling = true;
     });
 
-    map.on('mousemove', function(evt) {
+    map.on('mousemove', function(evt: any) {
         const bb = self.div.getBoundingClientRect();
         const xy = [
             evt.originalEvent.offsetX,
@@ -509,8 +509,8 @@ proto.initFx = function(calcData, fullLayout) {
      * Returns a click handler function that is supposed
      * to handle clicks in pan mode.
      */
-    self.onClickInPanFn = function(dragOptions) {
-        return function(evt) {
+    self.onClickInPanFn = function(dragOptions: any) {
+        return function(evt: any) {
             const clickMode = gd._fullLayout.clickmode;
 
             if(clickMode.indexOf('select') > -1) {
@@ -529,14 +529,14 @@ proto.initFx = function(calcData, fullLayout) {
     };
 };
 
-proto.updateFx = function(fullLayout) {
+proto.updateFx = function(fullLayout: any) {
     const self = this;
     const map = self.map;
     const gd = self.gd;
 
     if(self.isStatic) return;
 
-    function invert(pxpy) {
+    function invert(pxpy: any) {
         const obj = self.map.unproject(pxpy);
         return [obj.lng, obj.lat];
     }
@@ -544,16 +544,16 @@ proto.updateFx = function(fullLayout) {
     const dragMode = fullLayout.dragmode;
     let fillRangeItems;
 
-    fillRangeItems = function(eventData, poly) {
+    fillRangeItems = function(eventData: any, poly: any) {
         if(poly.isRect) {
             const ranges = eventData.range = {};
-            ranges[self.id] = [
+            (ranges as any)[self.id] = [
                 invert([poly.xmin, poly.ymin]),
                 invert([poly.xmax, poly.ymax])
             ];
         } else {
             const dataPts = eventData.lassoPoints = {};
-            dataPts[self.id] = poly.map(invert);
+            (dataPts as any)[self.id] = poly.map(invert);
         }
     };
 
@@ -586,7 +586,7 @@ proto.updateFx = function(fullLayout) {
         map.dragPan.disable();
         map.on('zoomstart', self.clearOutline);
 
-        self.dragOptions.prepFn = function(e, startX, startY) {
+        self.dragOptions.prepFn = function(e: any, startX: any, startY: any) {
             prepSelect(e, startX, startY, self.dragOptions, dragMode);
         };
 
@@ -607,7 +607,7 @@ proto.updateFx = function(fullLayout) {
     }
 };
 
-proto.updateFramework = function(fullLayout) {
+proto.updateFramework = function(fullLayout: any) {
     const domain = fullLayout[this.id].domain;
     const size = fullLayout._size;
 
@@ -624,7 +624,7 @@ proto.updateFramework = function(fullLayout) {
     this.yaxis._length = size.h * (domain.y[1] - domain.y[0]);
 };
 
-proto.updateLayers = function(fullLayout) {
+proto.updateLayers = function(fullLayout: any) {
     const opts = fullLayout[this.id];
     const layers = opts.layers;
     let layerList = this.layerList;
@@ -666,7 +666,7 @@ proto.toImage = function() {
 
 // convenience wrapper to create set multiple layer
 // 'layout' or 'paint options at once.
-proto.setOptions = function(id, methodName, opts) {
+proto.setOptions = function(id: any, methodName: any, opts: any) {
     for(const k in opts) {
         this.map[methodName](id, k, opts[k]);
     }
@@ -678,7 +678,7 @@ proto.getMapLayers = function() {
 
 // convenience wrapper that first check in 'below' references
 // a layer that exist and then add the layer to the map,
-proto.addLayer = function(opts, below) {
+proto.addLayer = function(opts: any, below: any) {
     const map = this.map;
 
     if(typeof below === 'string') {
@@ -707,7 +707,7 @@ proto.addLayer = function(opts, below) {
 };
 
 // convenience method to project a [lon, lat] array to pixel coords
-proto.project = function(v) {
+proto.project = function(v: any) {
     return this.map.project(new mapboxgl.LngLat(v[0], v[1]));
 };
 
@@ -739,7 +739,7 @@ proto.getView = function() {
     };
 };
 
-proto.getViewEdits = function(cont) {
+proto.getViewEdits = function(cont: any) {
     const id = this.id;
     const keys = ['center', 'zoom', 'bearing', 'pitch'];
     const obj: any = {};
@@ -752,14 +752,14 @@ proto.getViewEdits = function(cont) {
     return obj;
 };
 
-proto.getViewEditsWithDerived = function(cont) {
+proto.getViewEditsWithDerived = function(cont: any) {
     const id = this.id;
     const obj = this.getViewEdits(cont);
     obj[id + '._derived'] = cont._derived;
     return obj;
 };
 
-function getStyleObj(val, fullLayout) {
+function getStyleObj(val: any, fullLayout: any) {
     const styleObj: any = {};
 
     if(Lib.isPlainObject(val)) {
@@ -770,8 +770,8 @@ function getStyleObj(val, fullLayout) {
 
         if(constants.styleValuesMapbox.indexOf(val) !== -1) {
             styleObj.style = convertStyleVal(val);
-        } else if(constants.stylesNonMapbox[val]) {
-            styleObj.style = constants.stylesNonMapbox[val];
+        } else if((constants.stylesNonMapbox as any)[val]) {
+            styleObj.style = (constants.stylesNonMapbox as any)[val];
             const spec = styleObj.style.sources['plotly-' + val];
             const tiles = spec ? spec.tiles : undefined;
             if(
@@ -796,11 +796,11 @@ function getStyleObj(val, fullLayout) {
 }
 
 // if style is part of the 'official' mapbox values, add URL prefix and suffix
-function convertStyleVal(val) {
+function convertStyleVal(val: any) {
     return constants.styleUrlPrefix + val + '-' + constants.styleUrlSuffix;
 }
 
-function convertCenter(center) {
+function convertCenter(center: any) {
     return [center.lon, center.lat];
 }
 

@@ -30,15 +30,15 @@ const position: any = {
 
 const SI_PREFIX = /[yzafpnµmkMGTPEZY]/;
 
-function hasTransition(transitionOpts) {
+function hasTransition(transitionOpts: any) {
     // If transition config is provided, then it is only a partial replot and traces not
     // updated are removed.
     return transitionOpts && transitionOpts.duration > 0;
 }
 
-export default function plot(gd, cdModule, transitionOpts, makeOnCompleteCallback) {
+export default function plot(gd: any, cdModule: any, transitionOpts: any, makeOnCompleteCallback: any) {
     const fullLayout = gd._fullLayout;
-    let onComplete;
+    let onComplete: any;
 
     if(hasTransition(transitionOpts)) {
         if(makeOnCompleteCallback) {
@@ -49,7 +49,7 @@ export default function plot(gd, cdModule, transitionOpts, makeOnCompleteCallbac
         }
     }
 
-    Lib.makeTraceGroups(fullLayout._indicatorlayer, cdModule, 'trace').each(function(this: any, cd) {
+    Lib.makeTraceGroups(fullLayout._indicatorlayer, cdModule, 'trace').each(function(this: any, cd: any) {
         const cd0 = cd[0];
         const trace = cd0.trace;
 
@@ -84,14 +84,14 @@ export default function plot(gd, cdModule, transitionOpts, makeOnCompleteCallbac
         numbersY = centerY;
         if(!hasGauge) {
             numbersX = size.l + position[numbersAlign] * size.w;
-            numbersScaler = function(el) {
+            numbersScaler = function(el: any) {
                 return fitTextInsideBox(el, size.w, size.h);
             };
         } else {
             if(isAngular) {
                 numbersX = centerX;
                 numbersY = centerY + radius / 2;
-                numbersScaler = function(el) {
+                numbersScaler = function(el: any) {
                     return fitTextInsideCircle(el, 0.9 * innerRadius);
                 };
             }
@@ -99,7 +99,7 @@ export default function plot(gd, cdModule, transitionOpts, makeOnCompleteCallbac
                 const padding = cn.bulletPadding;
                 const p = (1 - cn.bulletNumberDomainSize) + padding;
                 numbersX = size.l + (p + (1 - p) * position[numbersAlign]) * size.w;
-                numbersScaler = function(el) {
+                numbersScaler = function(el: any) {
                     return fitTextInsideBox(el, (cn.bulletNumberDomainSize - padding) * size.w, size.h);
                 };
             }
@@ -219,7 +219,7 @@ export default function plot(gd, cdModule, transitionOpts, makeOnCompleteCallbac
     });
 }
 
-function drawBulletGauge(gd, plotGroup, cd, opts) {
+function drawBulletGauge(gd: any, plotGroup: any, cd: any, opts: any) {
     const trace = cd[0].trace;
 
     const bullet = opts.gauge;
@@ -233,7 +233,7 @@ function drawBulletGauge(gd, plotGroup, cd, opts) {
     const onComplete = opts.onComplete;
 
     // preparing axis
-    let ax, vals, transFn, tickSign, shift;
+    let ax: any, vals, transFn, tickSign, shift;
 
     // Enter bullet, axis
     bullet.enter().append('g').classed('bullet', true);
@@ -277,12 +277,12 @@ function drawBulletGauge(gd, plotGroup, cd, opts) {
         });
     }
 
-    function drawRect(s) {
+    function drawRect(s: any) {
         s
-            .attr('width', function(d) { return Math.max(0, ax.c2p(d.range[1]) - ax.c2p(d.range[0]));})
-            .attr('x', function(d) { return ax.c2p(d.range[0]);})
-            .attr('y', function(d) { return 0.5 * (1 - d.thickness) * bulletHeight;})
-            .attr('height', function(d) { return d.thickness * bulletHeight; });
+            .attr('width', function(d: any) { return Math.max(0, ax.c2p(d.range[1]) - ax.c2p(d.range[0]));})
+            .attr('x', function(d: any) { return ax.c2p(d.range[0]);})
+            .attr('y', function(d: any) { return 0.5 * (1 - d.thickness) * bulletHeight;})
+            .attr('height', function(d: any) { return d.thickness * bulletHeight; });
     }
 
     // Draw bullet background, steps
@@ -337,7 +337,7 @@ function drawBulletGauge(gd, plotGroup, cd, opts) {
     bulletOutline.exit().remove();
 }
 
-function drawAngularGauge(gd, plotGroup, cd, opts) {
+function drawAngularGauge(gd: any, plotGroup: any, cd: any, opts: any) {
     const trace = cd[0].trace;
 
     const size = opts.size;
@@ -354,7 +354,7 @@ function drawAngularGauge(gd, plotGroup, cd, opts) {
 
     // circular gauge
     const theta = Math.PI / 2;
-    function valueToAngle(v) {
+    function valueToAngle(v: any) {
         const min = trace.gauge.axis.range[0];
         const max = trace.gauge.axis.range[1];
         const angle = (v - min) / (max - min) * Math.PI - theta;
@@ -363,16 +363,16 @@ function drawAngularGauge(gd, plotGroup, cd, opts) {
         return angle;
     }
 
-    function arcPathGenerator(size) {
+    function arcPathGenerator(size: any) {
         return d3Arc()
                   .innerRadius((innerRadius + radius) / 2 - size / 2 * (radius - innerRadius))
                   .outerRadius((innerRadius + radius) / 2 + size / 2 * (radius - innerRadius))
                   .startAngle(-theta);
     }
 
-    function drawArc(p) {
+    function drawArc(p: any) {
         p
-            .attr('d', function(d) {
+            .attr('d', function(d: any) {
                 return arcPathGenerator(d.thickness)
                   .startAngle(valueToAngle(d.range[0]))
                   .endAngle(valueToAngle(d.range[1]))();
@@ -400,44 +400,44 @@ function drawAngularGauge(gd, plotGroup, cd, opts) {
     ax.setScale();
 
     // 't'ick to 'g'eometric radians is used all over the place here
-    const t2g = function(d) {
+    const t2g = function(d: any) {
         return (ax.range[0] - d.x) / (ax.range[1] - ax.range[0]) * Math.PI + Math.PI;
     };
 
     const labelFns: Record<string, any> = {};
     const out = Axes.makeLabelFns(ax, 0);
     const labelStandoff = out.labelStandoff;
-    labelFns.xFn = function(d) {
+    labelFns.xFn = function(d: any) {
         const rad = t2g(d);
         return Math.cos(rad) * labelStandoff;
     };
-    labelFns.yFn = function(d) {
+    labelFns.yFn = function(d: any) {
         const rad = t2g(d);
         const ff = Math.sin(rad) > 0 ? 0.2 : 1;
         return -Math.sin(rad) * (labelStandoff + d.fontSize * ff) +
                 Math.abs(Math.cos(rad)) * (d.fontSize * MID_SHIFT);
     };
-    labelFns.anchorFn = function(d) {
+    labelFns.anchorFn = function(d: any) {
         const rad = t2g(d);
         const cos = Math.cos(rad);
         return Math.abs(cos) < 0.1 ?
                 'middle' :
                 (cos > 0 ? 'start' : 'end');
     };
-    labelFns.heightFn = function(d, a, h) {
+    labelFns.heightFn = function(d: any, a: any, h: any) {
         const rad = t2g(d);
         return -0.5 * (1 + Math.sin(rad)) * h;
     };
-    const _transFn = function(rad) {
+    const _transFn = function(rad: any) {
         return strTranslate(
             gaugePosition[0] + radius * Math.cos(rad),
             gaugePosition[1] - radius * Math.sin(rad)
         );
     };
-    transFn = function(d) {
+    transFn = function(d: any) {
         return _transFn(t2g(d));
     };
-    const transFn2 = function(d) {
+    const transFn2 = function(d: any) {
         const rad = t2g(d);
         return _transFn(rad) + 'rotate(' + -rad2deg(rad) + ')';
     };
@@ -515,7 +515,7 @@ function drawAngularGauge(gd, plotGroup, cd, opts) {
     gaugeBorder.exit().remove();
 }
 
-function drawNumbers(gd, plotGroup, cd, opts) {
+function drawNumbers(gd: any, plotGroup: any, cd: any, opts: any) {
     const trace = cd[0].trace;
 
     const numbersX = opts.numbersX;
@@ -527,8 +527,8 @@ function drawNumbers(gd, plotGroup, cd, opts) {
     const onComplete = opts.onComplete;
 
     const numbers = Lib.ensureSingle(plotGroup, 'g', 'numbers');
-    let bignumberbBox, deltabBox;
-    let numbersbBox;
+    let bignumberbBox: any, deltabBox: any;
+    let numbersbBox: any;
 
     const data: any[] = [];
     if(trace._hasNumber) data.push('number');
@@ -540,7 +540,7 @@ function drawNumbers(gd, plotGroup, cd, opts) {
     sel.enter().append('text');
     sel
         .attr('text-anchor', function() {return numbersAnchor;})
-        .attr('class', function(d) { return d;})
+        .attr('class', function(d: any) { return d;})
         .attr('x', null)
         .attr('y', null)
         .attr('dx', null)
@@ -548,16 +548,16 @@ function drawNumbers(gd, plotGroup, cd, opts) {
     sel.exit().remove();
 
     // Function to override the number formatting used during transitions
-    function transitionFormat(valueformat, fmt, from, to) {
+    function transitionFormat(valueformat: any, fmt: any, from: any, to: any) {
         // For now, do not display SI prefix if start and end value do not have any
         if(valueformat.match('s') && // If using SI prefix
             (from >= 0 !== to >= 0) && // If sign change
             (!fmt(from).slice(-1).match(SI_PREFIX) && !fmt(to).slice(-1).match(SI_PREFIX)) // Has no SI prefix
         ) {
-            const transitionValueFormat = valueformat.slice().replace('s', 'f').replace(/\d+/, function(m) { return parseInt(m) - 1;});
+            const transitionValueFormat = valueformat.slice().replace('s', 'f').replace(/\d+/, function(m: any) { return parseInt(m) - 1;});
             // @ts-expect-error mockAxis called with 2 args (3rd is optional)
             const transitionAx = mockAxis(gd, {tickformat: transitionValueFormat});
-            return function(v) {
+            return function(v: any) {
                 // Switch to fixed precision if number is smaller than one
                 if(Math.abs(v) < 1) return Axes.tickText(transitionAx, v).text;
                 return fmt(v);
@@ -572,7 +572,7 @@ function drawNumbers(gd, plotGroup, cd, opts) {
         bignumberAx.setScale();
         Axes.prepTicks(bignumberAx);
 
-        const bignumberFmt = function(v) { return Axes.tickText(bignumberAx, v).text;};
+        const bignumberFmt = function(v: any) { return Axes.tickText(bignumberAx, v).text;};
         const bignumberSuffix = trace.number.suffix;
         const bignumberPrefix = trace.number.prefix;
 
@@ -600,7 +600,7 @@ function drawNumbers(gd, plotGroup, cd, opts) {
                     trace._lastValue = cd[0].y;
 
                     const transitionFmt = transitionFormat(trace.number.valueformat, bignumberFmt, cd[0].lastY, cd[0].y);
-                    return function(t) {
+                    return function(t: any) {
                         that.text(bignumberPrefix + transitionFmt(interpolator(t)) + bignumberSuffix);
                     };
                 });
@@ -617,19 +617,19 @@ function drawNumbers(gd, plotGroup, cd, opts) {
         deltaAx.setScale();
         Axes.prepTicks(deltaAx);
 
-        const deltaFmt = function(v) { return Axes.tickText(deltaAx, v).text;};
+        const deltaFmt = function(v: any) { return Axes.tickText(deltaAx, v).text;};
         const deltaSuffix = trace.delta.suffix;
         const deltaPrefix = trace.delta.prefix;
 
-        const deltaValue = function(d) {
+        const deltaValue = function(d: any) {
             const value = trace.delta.relative ? d.relativeDelta : d.delta;
             return value;
         };
-        const deltaFormatText = function(value, numberFmt) {
+        const deltaFormatText = function(value: any, numberFmt: any) {
             if(value === 0 || typeof value !== 'number' || isNaN(value)) return '-';
             return (value > 0 ? trace.delta.increasing.symbol : trace.delta.decreasing.symbol) + deltaPrefix + numberFmt(value) + deltaSuffix;
         };
-        const deltaFill = function(d) {
+        const deltaFill = function(d: any) {
             return d.delta >= 0 ? trace.delta.increasing.color : trace.delta.decreasing.color;
         };
         if(trace._deltaLastValue === undefined) {
@@ -658,7 +658,7 @@ function drawNumbers(gd, plotGroup, cd, opts) {
                     const transitionFmt = transitionFormat(trace.delta.valueformat, deltaFmt, from, to);
                     const interpolator = interpolateNumber(from, to);
                     trace._deltaLastValue = to;
-                    return function(t) {
+                    return function(t: any) {
                         that.text(deltaFormatText(interpolator(t), transitionFmt));
                         that.call(Color.fill, deltaFill({delta: interpolator(t)}));
                     };
@@ -787,26 +787,26 @@ function drawNumbers(gd, plotGroup, cd, opts) {
 }
 
 // Apply fill, stroke, stroke-width to SVG shape
-function styleShape(p) {
+function styleShape(p: any) {
     p
-        .each(function(this: any, d) { Color.stroke(select(this), d.line.color);})
-        .each(function(this: any, d) { Color.fill(select(this), d.color);})
-        .style('stroke-width', function(d) { return d.line.width;});
+        .each(function(this: any, d: any) { Color.stroke(select(this), d.line.color);})
+        .each(function(this: any, d: any) { Color.fill(select(this), d.color);})
+        .style('stroke-width', function(d: any) { return d.line.width;});
 }
 
 // Returns a tween for a transition’s "d" attribute, transitioning any selected
 // arcs from their current angle to the specified new angle.
-function arcTween(arc, endAngle, newAngle) {
+function arcTween(arc: any, endAngle: any, newAngle: any) {
     return function() {
         const interp = interpolate(endAngle, newAngle);
-        return function(t) {
+        return function(t: any) {
             return arc.endAngle(interp(t))();
         };
     };
 }
 
 // mocks our axis
-function mockAxis(gd, opts, zrange) {
+function mockAxis(gd: any, opts: any, zrange: any) {
     const fullLayout = gd._fullLayout;
 
     const axisIn = Lib.extendFlat({
@@ -839,20 +839,20 @@ function mockAxis(gd, opts, zrange) {
     return axisOut;
 }
 
-function fitTextInsideBox(textBB, width, height) {
+function fitTextInsideBox(textBB: any, width: any, height: any) {
     // compute scaling ratio to have text fit within specified width and height
     const ratio = Math.min(width / textBB.width, height / textBB.height);
     return [ratio, textBB, width + 'x' + height];
 }
 
-function fitTextInsideCircle(textBB, radius) {
+function fitTextInsideCircle(textBB: any, radius: any) {
     // compute scaling ratio to have text fit within specified radius
     const elRadius = Math.sqrt((textBB.width / 2) * (textBB.width / 2) + textBB.height * textBB.height);
     const ratio = radius / elRadius;
     return [ratio, textBB, radius];
 }
 
-function measureText(txt, font, textAnchor, gd) {
+function measureText(txt: any, font: any, textAnchor: any, gd: any) {
     const element = document.createElementNS('http://www.w3.org/2000/svg', 'text');
     const sel = select(element);
     sel.text(txt)
@@ -865,7 +865,7 @@ function measureText(txt, font, textAnchor, gd) {
     return drawingBBox(sel.node());
 }
 
-function cache(trace, name, initialValue, value, key, fn) {
+function cache(trace: any, name: any, initialValue: any, value: any, key: any, fn: any) {
     const objName = '_cache' + name;
     if(!(trace[objName] && trace[objName].key === key)) {
         trace[objName] = {key: key, value: initialValue};

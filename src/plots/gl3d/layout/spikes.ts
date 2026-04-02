@@ -13,7 +13,7 @@ function SpikeOptions(this: any) {
 
 const proto = SpikeOptions.prototype;
 
-proto.merge = function(sceneLayout) {
+proto.merge = function(sceneLayout: any) {
     for(let i = 0; i < 3; ++i) {
         const axes = sceneLayout[AXES_NAMES[i]];
 
@@ -30,8 +30,9 @@ proto.merge = function(sceneLayout) {
     }
 };
 
-function createSpikeOptions(layout) {
-    const result = new SpikeOptions();
+function createSpikeOptions(layout: any) {
+    // @ts-ignore TS7009
+    const result: any = (new SpikeOptions() as any);
     result.merge(layout);
     return result;
 }

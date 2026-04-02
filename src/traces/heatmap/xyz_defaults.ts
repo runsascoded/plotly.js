@@ -40,7 +40,7 @@ export default function handleXYZDefaults(traceIn: InputTrace, traceOut: FullTra
     return true;
 }
 
-function coordDefaults(coordStr,  coerce) {
+function coordDefaults(coordStr: any,  coerce: any) {
     const coord = coerce(coordStr);
     const coordType = coord ? coerce(coordStr + 'type', 'array') : 'scaled';
 
@@ -52,7 +52,7 @@ function coordDefaults(coordStr,  coerce) {
     return coord;
 }
 
-function isValidZ(z) {
+function isValidZ(z: any) {
     let allRowsAreArrays = true;
     let oneRowIsFilled = false;
     let hasOneNumber = false;

@@ -6,7 +6,7 @@ const { hoverOnBars } = _hover;
 import _index2 from '../../lib/index.js';
 const { formatPercent } = _index2;
 
-export default function hoverPoints(pointData,  xval,  yval,  hovermode,  opts) {
+export default function hoverPoints(pointData: any,  xval: any,  yval: any,  hovermode: any,  opts: any) {
     const point = hoverOnBars(pointData, xval, yval, hovermode, opts);
     if(!point) return;
 
@@ -36,7 +36,7 @@ export default function hoverPoints(pointData,  xval,  yval,  hovermode,  opts) 
         const isAll = (hoverinfo === 'all');
         const parts = hoverinfo.split('+');
 
-        const hasFlag = function(flag) { return isAll || parts.indexOf(flag) !== -1; };
+        const hasFlag = function(flag: any) { return isAll || parts.indexOf(flag) !== -1; };
 
         if(hasFlag('percent initial')) {
             text.push(point.percentInitialLabel + ' of initial');
@@ -55,7 +55,7 @@ export default function hoverPoints(pointData,  xval,  yval,  hovermode,  opts) 
     return [point];
 }
 
-function getTraceColor(trace: FullTrace,  di) {
+function getTraceColor(trace: FullTrace,  di: any) {
     const cont = trace.marker;
     const mc = di.mc || cont.color;
     const mlc = di.mlc || cont.line.color;

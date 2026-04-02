@@ -207,7 +207,7 @@ proto.createIcon = function(thisIcon: any) {
         Number(thisIcon.height) :
         thisIcon.ascent - thisIcon.descent;
     const svgNS = 'http://www.w3.org/2000/svg';
-    let icon;
+    let icon: any;
 
     if(thisIcon.path) {
         icon = document.createElementNS(svgNS, 'svg');
@@ -348,7 +348,8 @@ proto.destroy = function() {
 function createModeBar(gd: GraphDiv, buttons: any) {
     const fullLayout = gd._fullLayout;
 
-    const modeBar = new ModeBar({
+    // @ts-ignore TS7009
+    const modeBar: any = new ModeBar({
         graphInfo: gd,
         container: fullLayout._modebardiv.node(),
         buttons: buttons

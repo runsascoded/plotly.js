@@ -11,7 +11,7 @@ const { PTS_LINESONLY } = _constants;
 import attributes from './attributes.js';
 
 function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace, defaultColor: string, layout: FullLayout) {
-    function coerce(attr, dflt?) {
+    function coerce(attr: any, dflt?: any) {
         return Lib.coerce(traceIn, traceOut, attributes, attr, dflt);
     }
 
@@ -69,7 +69,7 @@ function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace, defaultColor: 
     Lib.coerceSelectionMarkerOpacity(traceOut, coerce);
 }
 
-function handleRThetaDefaults(traceIn: InputTrace, traceOut: FullTrace, layout: FullLayout, coerce) {
+function handleRThetaDefaults(traceIn: InputTrace, traceOut: FullTrace, layout: FullLayout, coerce: any) {
     let r = coerce('r');
     let theta = coerce('theta');
 

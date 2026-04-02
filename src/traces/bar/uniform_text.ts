@@ -23,7 +23,7 @@ function resizeText(gd: GraphDiv, gTrace: any, traceType: string): void {
                 selector = 'g.points > g.point';
         }
 
-        gTrace.selectAll(selector).each(function(this: any, d) {
+        gTrace.selectAll(selector).each(function(this: any, d: any) {
             const transform = d.transform;
             if(transform) {
                 transform.scale = (shouldHide && transform.hide) ? 0 : minSize / transform.fontSize;

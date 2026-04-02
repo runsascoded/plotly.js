@@ -1,7 +1,7 @@
 import Lib from '../../lib/index.js';
 import layoutAttributes from './layout_attributes.js';
 
-export default function(layoutIn, layoutOut, fullData) {
+export default function(layoutIn: any, layoutOut: any, fullData: any) {
     let hasTraceType = false;
 
     function coerce(attr: string, dflt?: any) {

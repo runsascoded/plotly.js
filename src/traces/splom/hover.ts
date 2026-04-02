@@ -5,7 +5,7 @@ import _axes from '../../plots/cartesian/axes.js';
 const { getFromId } = _axes;
 import { extendFlat } from '../../lib/extend.js';
 
-function hoverPoints(pointData, xval, yval, hovermode, opts) {
+function hoverPoints(pointData: any, xval: any, yval: any, hovermode: any, opts: any) {
     if(!opts) opts = {};
 
     const hovermodeHasX = (hovermode || '').charAt(0) === 'x';

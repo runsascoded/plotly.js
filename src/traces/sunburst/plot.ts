@@ -24,7 +24,7 @@ const transformInsideText = piePlot.transformInsideText;
 export const plot = function (gd: GraphDiv, cdmodule: any[], transitionOpts: any, makeOnCompleteCallback: any) {
     const fullLayout = gd._fullLayout;
     const layer = fullLayout._sunburstlayer;
-    let join, onComplete;
+    let join, onComplete: any;
 
     // If transition config is provided, then it is only a partial replot and traces not
     // updated are removed.
@@ -33,7 +33,7 @@ export const plot = function (gd: GraphDiv, cdmodule: any[], transitionOpts: any
 
     clearMinTextSize('sunburst', fullLayout);
 
-    join = layer.selectAll('g.trace.sunburst').data(cdmodule, function (cd) {
+    join = layer.selectAll('g.trace.sunburst').data(cdmodule, function (cd: any) {
         return cd[0].trace.uid;
     });
 
@@ -63,12 +63,12 @@ export const plot = function (gd: GraphDiv, cdmodule: any[], transitionOpts: any
         transition.each(function () {
             // Must run the selection again since otherwise enters/updates get grouped together
             // and these get executed out of order. Except we need them in order!
-            layer.selectAll('g.trace').each(function (this: any, cd) {
+            layer.selectAll('g.trace').each(function (this: any, cd: any) {
                 plotOne(gd, cd, this, transitionOpts);
             });
         });
     } else {
-        join.each(function (this: any, cd) {
+        join.each(function (this: any, cd: any) {
             plotOne(gd, cd, this, transitionOpts);
         });
 
@@ -110,13 +110,13 @@ function plotOne(gd: GraphDiv, cd: any[], element: Element, transitionOpts: any)
     }
 
     // previous root 'pt' (can be empty)
-    let prevEntry = null;
+    let prevEntry: any = null;
     // stash of 'previous' position data used by tweening functions
     const prevLookup: any = {};
 
     if (hasTransition) {
         // Important: do this before binding new sliceData!
-        slices.each(function (pt) {
+        slices.each(function (pt: any) {
             prevLookup[helpers.getPtId(pt)] = {
                 rpx0: pt.rpx0,
                 rpx1: pt.rpx1,
@@ -147,13 +147,13 @@ function plotOne(gd: GraphDiv, cd: any[], element: Element, transitionOpts: any)
     }
 
     // filter out slices that won't show up on graph
-    sliceData = sliceData.filter(function (pt) {
+    sliceData = sliceData.filter(function (pt: any) {
         return pt.y1 <= cutoff;
     });
 
     const baseX = getRotationAngle(trace.rotation);
     if (baseX) {
-        sliceData.forEach(function (pt) {
+        sliceData.forEach(function (pt: any) {
             pt.x0 += baseX;
             pt.x1 += baseX;
         });
@@ -161,23 +161,23 @@ function plotOne(gd: GraphDiv, cd: any[], element: Element, transitionOpts: any)
 
     // partition span ('y') to sector radial px value
     const maxY = Math.min(maxHeight, maxDepth);
-    const y2rpx = function (y) {
+    const y2rpx = function (y: any) {
         return ((y - yOffset) / maxY) * rMax;
     };
     // (radial px value, partition angle ('x'))  to px [x,y]
-    const rx2px = function (r, x) {
+    const rx2px = function (r: any, x: any) {
         return [r * Math.cos(x), -r * Math.sin(x)];
     };
     // slice path generation fn
-    const pathSlice = function (d) {
+    const pathSlice = function (d: any) {
         return Lib.pathAnnulus(d.rpx0, d.rpx1, d.x0, d.x1, cx, cy);
     };
     // slice text translate x/y
 
-    const getTargetX = function (d) {
+    const getTargetX = function (d: any) {
         return cx + getTextXY(d)[0] * (d.transform.rCenter || 0) + (d.transform.x || 0);
     };
-    const getTargetY = function (d) {
+    const getTargetY = function (d: any) {
         return cy + getTextXY(d)[1] * (d.transform.rCenter || 0) + (d.transform.y || 0);
     };
 
@@ -193,9 +193,9 @@ function plotOne(gd: GraphDiv, cd: any[], element: Element, transitionOpts: any)
                 const sliceTop = select(this);
 
                 const slicePath = sliceTop.select('path.surface');
-                slicePath.transition().attrTween('d', function (pt2) {
+                slicePath.transition().attrTween('d', function (pt2: any) {
                     const interp = makeExitSliceInterpolator(pt2);
-                    return function (t) {
+                    return function (t: any) {
                         return pathSlice(interp(t));
                     };
                 });
@@ -211,10 +211,10 @@ function plotOne(gd: GraphDiv, cd: any[], element: Element, transitionOpts: any)
     slices.order();
 
     // next x1 (i.e. sector end angle) of previous entry
-    let nextX1ofPrevEntry = null;
+    let nextX1ofPrevEntry: any = null;
     if (hasTransition && prevEntry) {
         const prevEntryId = helpers.getPtId(prevEntry);
-        slices.each(function (pt) {
+        slices.each(function (pt: any) {
             if (nextX1ofPrevEntry === null && helpers.getPtId(pt) === prevEntryId) {
                 nextX1ofPrevEntry = pt.x1;
             }
@@ -235,10 +235,10 @@ function plotOne(gd: GraphDiv, cd: any[], element: Element, transitionOpts: any)
         });
     }
 
-    updateSlices.each(function (this: any, pt) {
+    updateSlices.each(function (this: any, pt: any) {
         const sliceTop = select(this);
 
-        const slicePath = Lib.ensureSingle(sliceTop, 'path', 'surface', function (s) {
+        const slicePath = Lib.ensureSingle(sliceTop, 'path', 'surface', function (s: any) {
             s.style('pointer-events', isStatic ? 'none' : 'all');
         });
 
@@ -255,9 +255,9 @@ function plotOne(gd: GraphDiv, cd: any[], element: Element, transitionOpts: any)
         pt.rInscribed = getInscribedRadiusFraction(pt, trace);
 
         if (hasTransition) {
-            slicePath.transition().attrTween('d', function (pt2) {
+            slicePath.transition().attrTween('d', function (pt2: any) {
                 const interp = makeUpdateSliceInterpolator(pt2);
-                return function (t) {
+                return function (t: any) {
                     return pathSlice(interp(t));
                 };
             });
@@ -280,7 +280,7 @@ function plotOne(gd: GraphDiv, cd: any[], element: Element, transitionOpts: any)
         slicePath.call(styleOne, pt, trace, gd);
 
         const sliceTextGroup = Lib.ensureSingle(sliceTop, 'g', 'slicetext');
-        const sliceText = Lib.ensureSingle(sliceTextGroup, 'text', '', function (s) {
+        const sliceText = Lib.ensureSingle(sliceTextGroup, 'text', '', function (s: any) {
             // prohibit tex interpretation until we can handle
             // tex and regular text together
             s.attr('data-notex', 1);
@@ -302,7 +302,7 @@ function plotOne(gd: GraphDiv, cd: any[], element: Element, transitionOpts: any)
         pt.transform.targetX = getTargetX(pt);
         pt.transform.targetY = getTargetY(pt);
 
-        const strTransform = function (d, textBB) {
+        const strTransform = function (d: any, textBB: any) {
             const transform = d.transform;
             computeTransform(transform, textBB);
 
@@ -313,9 +313,9 @@ function plotOne(gd: GraphDiv, cd: any[], element: Element, transitionOpts: any)
         };
 
         if (hasTransition) {
-            sliceText.transition().attrTween('transform', function (pt2) {
+            sliceText.transition().attrTween('transform', function (pt2: any) {
                 const interp = makeUpdateTextInterpolator(pt2);
-                return function (t) {
+                return function (t: any) {
                     return strTransform(interp(t), textBB);
                 };
             });
@@ -324,7 +324,7 @@ function plotOne(gd: GraphDiv, cd: any[], element: Element, transitionOpts: any)
         }
     });
 
-    function makeExitSliceInterpolator(pt) {
+    function makeExitSliceInterpolator(pt: any) {
         const id = helpers.getPtId(pt);
         const prev = prevLookup[id];
         const entryPrev = prevLookup[helpers.getPtId(entry)];
@@ -342,16 +342,16 @@ function plotOne(gd: GraphDiv, cd: any[], element: Element, transitionOpts: any)
         } else {
             // this happens when maxdepth is set, when leaves must
             // be removed and the rootPt is new (i.e. does not have a 'prev' object)
-            let parent;
+            let parent: any;
             const parentId = helpers.getPtId(pt.parent);
-            slices.each(function (pt2) {
+            slices.each(function (pt2: any) {
                 if (helpers.getPtId(pt2) === parentId) {
                     return (parent = pt2);
                 }
             });
             const parentChildren = parent.children;
-            let ci;
-            parentChildren.forEach(function (pt2, i) {
+            let ci: any;
+            parentChildren.forEach(function (pt2: any, i: any) {
                 if (helpers.getPtId(pt2) === id) {
                     return (ci = i);
                 }
@@ -369,7 +369,7 @@ function plotOne(gd: GraphDiv, cd: any[], element: Element, transitionOpts: any)
         return interpolate(prev, next);
     }
 
-    function makeUpdateSliceInterpolator(pt) {
+    function makeUpdateSliceInterpolator(pt: any) {
         const prev0 = prevLookup[helpers.getPtId(pt)];
         let prev;
         const next = { x0: pt.x0, x1: pt.x1, rpx0: pt.rpx0, rpx1: pt.rpx1 };
@@ -408,9 +408,9 @@ function plotOne(gd: GraphDiv, cd: any[], element: Element, transitionOpts: any)
         return interpolate(prev, next);
     }
 
-    function makeUpdateTextInterpolator(pt) {
+    function makeUpdateTextInterpolator(pt: any) {
         const prev0 = prevLookup[helpers.getPtId(pt)];
-        let prev;
+        let prev: any;
         const transform = pt.transform;
 
         if (prev0) {
@@ -463,11 +463,11 @@ function plotOne(gd: GraphDiv, cd: any[], element: Element, transitionOpts: any)
         // while keeping transition smooth
         const pow = transform.rCenter === 0 ? 3 : prev.transform.rCenter === 0 ? 1 / 3 : 1;
         const _rCenterFn = interpolate(prev.transform.rCenter, transform.rCenter);
-        const rCenterFn = function (t) {
+        const rCenterFn = function (t: any) {
             return _rCenterFn(Math.pow(t, pow));
         };
 
-        return function (t) {
+        return function (t: any) {
             const rpx1 = rpx1Fn(t);
             const x0 = x0Fn(t);
             const x1 = x1Fn(t);
@@ -499,7 +499,7 @@ function plotOne(gd: GraphDiv, cd: any[], element: Element, transitionOpts: any)
         };
     }
 
-    function interpX0X1FromParent(pt) {
+    function interpX0X1FromParent(pt: any) {
         const parent = pt.parent;
         const parentPrev = prevLookup[helpers.getPtId(parent)];
         const out: Record<string, any> = {};
@@ -524,11 +524,11 @@ function plotOne(gd: GraphDiv, cd: any[], element: Element, transitionOpts: any)
 
 // x[0-1] keys are angles [radians]
 // y[0-1] keys are hierarchy heights [integers]
-function partition(entry) {
+function partition(entry: any) {
     return d3Hierarchy.partition().size([2 * Math.PI, entry.height + 1])(entry);
 }
 
-export const formatSliceLabel = function (pt, entry, trace, cd, fullLayout) {
+export const formatSliceLabel = function (pt: any, entry: any, trace: any, cd: any, fullLayout: any) {
     const texttemplate = trace.texttemplate;
     const textinfo = trace.textinfo;
 
@@ -546,7 +546,7 @@ export const formatSliceLabel = function (pt, entry, trace, cd, fullLayout) {
 
     if (!texttemplate) {
         const parts = textinfo.split('+');
-        const hasFlag = function (flag) {
+        const hasFlag = function (flag: any) {
             return parts.indexOf(flag) !== -1;
         };
         const thisText: any[] = [];
@@ -572,8 +572,8 @@ export const formatSliceLabel = function (pt, entry, trace, cd, fullLayout) {
             const hasMultiplePercents = nPercent > 1;
 
             if (nPercent) {
-                let percent;
-                const addPercent = function (key) {
+                let percent: any;
+                const addPercent = function (key: any) {
                     tx = helpers.formatPercent(percent, separators);
 
                     if (hasMultiplePercents) tx += ' of ' + key;
@@ -643,7 +643,7 @@ export const formatSliceLabel = function (pt, entry, trace, cd, fullLayout) {
     });
 };
 
-function getInscribedRadiusFraction(pt) {
+function getInscribedRadiusFraction(pt: any) {
     if (pt.rpx0 === 0 && Lib.isFullCircle([pt.x0, pt.x1])) {
         // special case of 100% with no hole
         return 1;
@@ -652,11 +652,11 @@ function getInscribedRadiusFraction(pt) {
     }
 }
 
-function getTextXY(d) {
+function getTextXY(d: any) {
     return getCoords(d.rpx1, d.transform.textPosAngle);
 }
 
-function getCoords(r, angle) {
+function getCoords(r: any, angle: any) {
     return [r * Math.sin(angle), -r * Math.cos(angle)];
 }
 

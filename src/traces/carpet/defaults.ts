@@ -4,7 +4,7 @@ import handleABDefaults from './ab_defaults.js';
 import attributes from './attributes.js';
 import colorAttrs from '../../components/color/attributes.js';
 
-export default function supplyDefaults(traceIn, traceOut, dfltColor, fullLayout) {
+export default function supplyDefaults(traceIn: any, traceOut: any, dfltColor: any, fullLayout: any) {
     function coerce(attr: string, dflt?: any) {
         return Lib.coerce(traceIn, traceOut, attributes, attr, dflt);
     }
