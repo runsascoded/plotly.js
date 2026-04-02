@@ -13,14 +13,14 @@ function minMax(a, depth) {
         return null;
     }
 
-    var min = Infinity;
-    var max = -Infinity;
-    var n = a.length;
-    for(var i = 0; i < n; i++) {
-        var datum = a[i];
+    let min = Infinity;
+    let max = -Infinity;
+    const n = a.length;
+    for(let i = 0; i < n; i++) {
+        const datum = a[i];
 
         if(isArrayOrTypedArray(datum)) {
-            var result = minMax(datum, depth + 1);
+            const result = minMax(datum, depth + 1);
 
             if(result) {
                 min = Math.min(result[0], min);

@@ -1,10 +1,10 @@
 import Lib from '../../lib/index.js';
 
 export default function(pathinfo, operation) {
-    var i, pi0, pi1;
+    let i, pi0, pi1;
 
-    var op0 = function(arr) { return arr.reverse(); };
-    var op1 = function(arr) { return arr; };
+    let op0 = function(arr) { return arr.reverse(); };
+    let op1 = function(arr) { return arr; };
 
     switch(operation) {
         case '=':
@@ -31,7 +31,7 @@ export default function(pathinfo, operation) {
 
             return pathinfo;
         case '][':
-            var tmp = op0;
+            const tmp = op0;
             op0 = op1;
             op1 = tmp;
             // It's a nice rule, except this definitely *is* what's intended here.

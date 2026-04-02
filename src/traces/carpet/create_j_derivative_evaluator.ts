@@ -2,27 +2,27 @@ export default function(arrays, asmoothing, bsmoothing) {
     if(asmoothing && bsmoothing) {
         return function(out, i0, j0, u, v) {
             if(!out) out = [];
-            var f0, f1, f2, f3, ak, k;
+            let f0, f1, f2, f3, ak, k;
 
             // Since it's a grid of control points, the actual indices are * 3:
             i0 *= 3;
             j0 *= 3;
 
             // Precompute some numbers:
-            var u2 = u * u;
-            var u3 = u2 * u;
-            var ou = 1 - u;
-            var ou2 = ou * ou;
-            var ou3 = ou2 * ou;
+            const u2 = u * u;
+            const u3 = u2 * u;
+            const ou = 1 - u;
+            const ou2 = ou * ou;
+            const ou3 = ou2 * ou;
 
-            var v2 = v * v;
-            var ov = 1 - v;
-            var ov2 = ov * ov;
-            var ovv2 = ov * v * 2;
-            var a = -3 * ov2;
-            var b = 3 * (ov2 - ovv2);
-            var c = 3 * (ovv2 - v2);
-            var d = 3 * v2;
+            const v2 = v * v;
+            const ov = 1 - v;
+            const ov2 = ov * ov;
+            const ovv2 = ov * v * 2;
+            const a = -3 * ov2;
+            const b = 3 * (ov2 - ovv2);
+            const c = 3 * (ovv2 - v2);
+            const d = 3 * v2;
 
             for(k = 0; k < arrays.length; k++) {
                 ak = arrays[k];
@@ -44,13 +44,13 @@ export default function(arrays, asmoothing, bsmoothing) {
         // linear interpolations followed by one cubic interpolation of the result
         return function(out, i0, j0, v, u) {
             if(!out) out = [];
-            var f0, f1, f2, f3, k, ak;
+            let f0, f1, f2, f3, k, ak;
             i0 *= 3;
-            var u2 = u * u;
-            var u3 = u2 * u;
-            var ou = 1 - u;
-            var ou2 = ou * ou;
-            var ou3 = ou2 * ou;
+            const u2 = u * u;
+            const u3 = u2 * u;
+            const ou = 1 - u;
+            const ou2 = ou * ou;
+            const ou3 = ou2 * ou;
             for(k = 0; k < arrays.length; k++) {
                 ak = arrays[k];
 
@@ -70,21 +70,21 @@ export default function(arrays, asmoothing, bsmoothing) {
         };
     } else if(bsmoothing) {
         // Same as the above case, except reversed:
-        /* eslint-disable no-unused-vars */
+         
         return function(out, i0, j0, u, v) {
-        /* eslint-enable no-unused-vars */
+         
             if(!out) out = [];
-            var f0, f1, k, ak;
+            let f0, f1, k, ak;
             j0 *= 3;
-            var ou = 1 - u;
-            var v2 = v * v;
-            var ov = 1 - v;
-            var ov2 = ov * ov;
-            var ovv2 = ov * v * 2;
-            var a = -3 * ov2;
-            var b = 3 * (ov2 - ovv2);
-            var c = 3 * (ovv2 - v2);
-            var d = 3 * v2;
+            const ou = 1 - u;
+            const v2 = v * v;
+            const ov = 1 - v;
+            const ov2 = ov * ov;
+            const ovv2 = ov * v * 2;
+            const a = -3 * ov2;
+            const b = 3 * (ov2 - ovv2);
+            const c = 3 * (ovv2 - v2);
+            const d = 3 * v2;
             for(k = 0; k < arrays.length; k++) {
                 ak = arrays[k];
                 f0 = a * ak[j0][i0] + b * ak[j0 + 1][i0] + c * ak[j0 + 2][i0] + d * ak[j0 + 3][i0];
@@ -96,12 +96,12 @@ export default function(arrays, asmoothing, bsmoothing) {
         };
     } else {
         // Finally, both directions are linear:
-        /* eslint-disable no-unused-vars */
+         
         return function(out, i0, j0, v, u) {
-        /* eslint-enable no-unused-vars */
+         
             if(!out) out = [];
-            var f0, f1, k, ak;
-            var ov = 1 - v;
+            let f0, f1, k, ak;
+            const ov = 1 - v;
             for(k = 0; k < arrays.length; k++) {
                 ak = arrays[k];
                 f0 = ak[j0 + 1][i0] - ak[j0][i0];

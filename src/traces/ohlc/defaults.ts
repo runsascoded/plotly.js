@@ -9,7 +9,7 @@ export default function supplyDefaults(traceIn: InputTrace,  traceOut: FullTrace
         return Lib.coerce(traceIn, traceOut, attributes, attr, dflt);
     }
 
-    var len = handleOHLC(traceIn, traceOut, coerce, layout);
+    const len = handleOHLC(traceIn, traceOut, coerce, layout);
     if (!len) {
         traceOut.visible = false;
         return;

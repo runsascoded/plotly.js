@@ -5,26 +5,26 @@ import Template from '../../plot_api/plot_template.js';
 import attributes from './attributes.js';
 
 export default function(traceIn: any, traceOut: any, defaultColor: string, opts: any): void {
-    var objName = 'error_' + opts.axis;
-    var containerOut = Template.newContainer(traceOut, objName);
-    var containerIn = traceIn[objName] || {};
+    const objName = 'error_' + opts.axis;
+    const containerOut = Template.newContainer(traceOut, objName);
+    const containerIn = traceIn[objName] || {};
 
     function coerce(attr: string, dflt?: any): any {
         return Lib.coerce(containerIn, containerOut, attributes, attr, dflt);
     }
 
-    var hasErrorBars = (
+    const hasErrorBars = (
         containerIn.array !== undefined ||
         containerIn.value !== undefined ||
         containerIn.type === 'sqrt'
     );
 
-    var visible = coerce('visible', hasErrorBars);
+    const visible = coerce('visible', hasErrorBars);
 
     if(visible === false) return;
 
-    var type = coerce('type', 'array' in containerIn ? 'data' : 'percent');
-    var symmetric = true;
+    const type = coerce('type', 'array' in containerIn ? 'data' : 'percent');
+    let symmetric = true;
 
     if(type !== 'sqrt') {
         symmetric = coerce('symmetric',
@@ -43,9 +43,9 @@ export default function(traceIn: any, traceOut: any, defaultColor: string, opts:
         if(!symmetric) coerce('valueminus');
     }
 
-    var copyAttr = 'copy_' + opts.inherit + 'style';
+    const copyAttr = 'copy_' + opts.inherit + 'style';
     if(opts.inherit) {
-        var inheritObj = traceOut['error_' + opts.inherit];
+        const inheritObj = traceOut['error_' + opts.inherit];
         if((inheritObj || {}).visible) {
             coerce(copyAttr, !(containerIn.color ||
                                isNumeric(containerIn.thickness) ||

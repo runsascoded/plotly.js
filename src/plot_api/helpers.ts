@@ -6,13 +6,13 @@ import { isIndex, isPlainObject, log, nestedProperty, swapAttrs, warn } from '..
 import AxisIds from '../plots/cartesian/axis_ids.js';
 import Color from '../components/color/index.js';
 
-var cleanId = AxisIds.cleanId;
-var getFromTrace = AxisIds.getFromTrace;
-var traceIs = Registry.traceIs;
+const cleanId = AxisIds.cleanId;
+const getFromTrace = AxisIds.getFromTrace;
+const traceIs = Registry.traceIs;
 
 const AX_LETTERS = ['x', 'y', 'z'];
 
-export var clearPromiseQueue = function (gd?: any) {
+export const clearPromiseQueue = function (gd?: any) {
     if (Array.isArray(gd._promises) && gd._promises.length > 0) {
         log('Clearing previous rejected promises from queue.');
     }
@@ -20,8 +20,8 @@ export var clearPromiseQueue = function (gd?: any) {
     gd._promises = [];
 };
 
-export var cleanLayout = function (layout?: any) {
-    var i, j;
+export const cleanLayout = function (layout?: any) {
+    let i, j;
 
     if (!layout) layout = {};
 
@@ -39,19 +39,19 @@ export var cleanLayout = function (layout?: any) {
         delete layout.scene1;
     }
 
-    var axisAttrRegex = (Registry.subplotsRegistry.cartesian || {}).attrRegex;
-    var polarAttrRegex = (Registry.subplotsRegistry.polar || {}).attrRegex;
-    var ternaryAttrRegex = (Registry.subplotsRegistry.ternary || {}).attrRegex;
-    var sceneAttrRegex = (Registry.subplotsRegistry.gl3d || {}).attrRegex;
+    const axisAttrRegex = (Registry.subplotsRegistry.cartesian || {}).attrRegex;
+    const polarAttrRegex = (Registry.subplotsRegistry.polar || {}).attrRegex;
+    const ternaryAttrRegex = (Registry.subplotsRegistry.ternary || {}).attrRegex;
+    const sceneAttrRegex = (Registry.subplotsRegistry.gl3d || {}).attrRegex;
 
-    var keys = Object.keys(layout);
+    const keys = Object.keys(layout);
     for (i = 0; i < keys.length; i++) {
-        var key = keys[i];
+        const key = keys[i];
 
         if (axisAttrRegex && axisAttrRegex.test(key)) {
             // modifications to cartesian axes
 
-            var ax = layout[key];
+            const ax = layout[key];
             if (ax.anchor && ax.anchor !== 'free') {
                 ax.anchor = cleanId(ax.anchor);
             }
@@ -79,9 +79,9 @@ export var cleanLayout = function (layout?: any) {
         }
     }
 
-    var annotationsLen = Array.isArray(layout.annotations) ? layout.annotations.length : 0;
+    const annotationsLen = Array.isArray(layout.annotations) ? layout.annotations.length : 0;
     for (i = 0; i < annotationsLen; i++) {
-        var ann = layout.annotations[i];
+        const ann = layout.annotations[i];
 
         if (!isPlainObject(ann)) continue;
 
@@ -89,9 +89,9 @@ export var cleanLayout = function (layout?: any) {
         cleanAxRef(ann, 'yref');
     }
 
-    var shapesLen = Array.isArray(layout.shapes) ? layout.shapes.length : 0;
+    const shapesLen = Array.isArray(layout.shapes) ? layout.shapes.length : 0;
     for (i = 0; i < shapesLen; i++) {
-        var shape = layout.shapes[i];
+        const shape = layout.shapes[i];
 
         if (!isPlainObject(shape)) continue;
 
@@ -99,9 +99,9 @@ export var cleanLayout = function (layout?: any) {
         cleanAxRef(shape, 'yref');
     }
 
-    var imagesLen = Array.isArray(layout.images) ? layout.images.length : 0;
+    const imagesLen = Array.isArray(layout.images) ? layout.images.length : 0;
     for (i = 0; i < imagesLen; i++) {
-        var image = layout.images[i];
+        const image = layout.images[i];
 
         if (!isPlainObject(image)) continue;
 
@@ -109,7 +109,7 @@ export var cleanLayout = function (layout?: any) {
         cleanAxRef(image, 'yref');
     }
 
-    var legend = layout.legend;
+    const legend = layout.legend;
     if (legend) {
         // check for old-style legend positioning (x or y is +/- 100)
         if (legend.x > 3) {
@@ -147,17 +147,17 @@ export var cleanLayout = function (layout?: any) {
 };
 
 function cleanAxRef(container?: any, attr?: any): void {
-    var valIn = container[attr];
-    var axLetter = attr.charAt(0);
+    const valIn = container[attr];
+    const axLetter = attr.charAt(0);
     if (valIn && valIn !== 'paper') {
         container[attr] = cleanId(valIn, axLetter, true);
     }
 }
 
-export var cleanData = function (data?: any) {
-    for (var tracei = 0; tracei < data.length; tracei++) {
-        var trace = data[tracei];
-        var i;
+export const cleanData = function (data?: any) {
+    for (let tracei = 0; tracei < data.length; tracei++) {
+        const trace = data[tracei];
+        let i;
 
         // use xbins to bin data in x, and ybins to bin data in y
         if (trace.type === 'histogramy' && 'xbins' in trace && !('ybins' in trace)) {
@@ -202,10 +202,10 @@ export var cleanData = function (data?: any) {
         }
 
         // fix typo in colorscale definition
-        var _module = Registry.getModule(trace);
+        const _module = Registry.getModule(trace);
         if (_module && _module.colorbar) {
-            var containerName = _module.colorbar.container;
-            var container = containerName ? trace[containerName] : trace;
+            const containerName = _module.colorbar.container;
+            const container = containerName ? trace[containerName] : trace;
             if (container && container.colorscale) {
                 if (container.colorscale === 'YIGnBu') container.colorscale = 'YlGnBu';
                 if (container.colorscale === 'YIOrRd') container.colorscale = 'YlOrRd';
@@ -214,10 +214,10 @@ export var cleanData = function (data?: any) {
 
         // fix typo in surface 'highlight*' definitions
         if (trace.type === 'surface' && isPlainObject(trace.contours)) {
-            var dims = ['x', 'y', 'z'];
+            const dims = ['x', 'y', 'z'];
 
             for (i = 0; i < dims.length; i++) {
-                var opts = trace.contours[dims[i]];
+                const opts = trace.contours[dims[i]];
 
                 if (!isPlainObject(opts)) continue;
 
@@ -235,10 +235,10 @@ export var cleanData = function (data?: any) {
 
         // fixes from converting finance from transforms to real trace types
         if (trace.type === 'candlestick' || trace.type === 'ohlc') {
-            var increasingShowlegend = (trace.increasing || {}).showlegend !== false;
-            var decreasingShowlegend = (trace.decreasing || {}).showlegend !== false;
-            var increasingName = cleanFinanceDir(trace.increasing);
-            var decreasingName = cleanFinanceDir(trace.decreasing);
+            const increasingShowlegend = (trace.increasing || {}).showlegend !== false;
+            const decreasingShowlegend = (trace.decreasing || {}).showlegend !== false;
+            const increasingName = cleanFinanceDir(trace.increasing);
+            const decreasingName = cleanFinanceDir(trace.decreasing);
 
             // now figure out something smart to do with the separate direction
             // names we removed
@@ -246,7 +246,7 @@ export var cleanData = function (data?: any) {
                 // both sub-names existed: base name previously had no effect
                 // so ignore it and try to find a shared part of the sub-names
 
-                var newName = commonPrefix(increasingName, decreasingName, increasingShowlegend, decreasingShowlegend);
+                const newName = commonPrefix(increasingName, decreasingName, increasingShowlegend, decreasingShowlegend);
                 // if no common part, leave whatever name was (or wasn't) there
                 if (newName) trace.name = newName;
             } else if ((increasingName || decreasingName) && !trace.name) {
@@ -284,7 +284,7 @@ export var cleanData = function (data?: any) {
 function cleanFinanceDir(dirContainer?: any): any {
     if (!isPlainObject(dirContainer)) return false;
 
-    var dirName = dirContainer.name;
+    const dirName = dirContainer.name;
 
     delete dirContainer.name;
     delete dirContainer.showlegend;
@@ -303,21 +303,21 @@ function commonPrefix(name1?: any, name2?: any, show1?: any, show2?: any): any {
     if (!name1.trim()) return name2;
     if (!name2.trim()) return name1;
 
-    var minLen = Math.min(name1.length, name2.length);
-    var i;
+    const minLen = Math.min(name1.length, name2.length);
+    let i;
     for (i = 0; i < minLen; i++) {
         if (name1.charAt(i) !== name2.charAt(i)) break;
     }
 
-    var out = name1.slice(0, i);
+    const out = name1.slice(0, i);
     return out.trim();
 }
 
 // textposition - support partial attributes (ie just 'top')
 // and incorrect use of middle / center etc.
 function cleanTextPosition(textposition?: any): any {
-    var posY = 'middle';
-    var posX = 'center';
+    let posY = 'middle';
+    let posX = 'center';
 
     if (typeof textposition === 'string') {
         if (textposition.indexOf('top') !== -1) posY = 'top';
@@ -334,16 +334,16 @@ function emptyContainer(outer?: any, innerStr?: any): any {
     return innerStr in outer && typeof outer[innerStr] === 'object' && Object.keys(outer[innerStr]).length === 0;
 }
 
-export var swapXYData = function (trace?: any) {
-    var i;
+export const swapXYData = function (trace?: any) {
+    let i;
     swapAttrs(trace, ['?', '?0', 'd?', '?bins', 'nbins?', 'autobin?', '?src', 'error_?']);
     if (Array.isArray(trace.z) && Array.isArray(trace.z[0])) {
         if (trace.transpose) delete trace.transpose;
         else trace.transpose = true;
     }
     if (trace.error_x && trace.error_y) {
-        var errorY = trace.error_y;
-        var copyYstyle =
+        const errorY = trace.error_y;
+        const copyYstyle =
             'copy_ystyle' in errorY ? errorY.copy_ystyle : !(errorY.color || errorY.thickness || errorY.width);
         swapAttrs(trace, ['error_?.copy_ystyle']);
         if (copyYstyle) {
@@ -351,7 +351,7 @@ export var swapXYData = function (trace?: any) {
         }
     }
     if (typeof trace.hoverinfo === 'string') {
-        var hoverInfoParts = trace.hoverinfo.split('+');
+        const hoverInfoParts = trace.hoverinfo.split('+');
         for (i = 0; i < hoverInfoParts.length; i++) {
             if (hoverInfoParts[i] === 'x') hoverInfoParts[i] = 'y';
             else if (hoverInfoParts[i] === 'y') hoverInfoParts[i] = 'x';
@@ -360,7 +360,7 @@ export var swapXYData = function (trace?: any) {
     }
 };
 
-export var coerceTraceIndices = function (gd?: any, traceIndices?: any) {
+export const coerceTraceIndices = function (gd?: any, traceIndices?: any) {
     if (isNumeric(traceIndices)) {
         return [traceIndices];
     } else if (!Array.isArray(traceIndices) || !traceIndices.length) {
@@ -368,8 +368,8 @@ export var coerceTraceIndices = function (gd?: any, traceIndices?: any) {
             return i;
         });
     } else if (Array.isArray(traceIndices)) {
-        var traceIndicesOut = [];
-        for (var i = 0; i < traceIndices.length; i++) {
+        const traceIndicesOut = [];
+        for (let i = 0; i < traceIndices.length; i++) {
             if (isIndex(traceIndices[i], gd.data.length)) {
                 traceIndicesOut.push(traceIndices[i]);
             } else {
@@ -382,20 +382,20 @@ export var coerceTraceIndices = function (gd?: any, traceIndices?: any) {
     return traceIndices;
 };
 
-export var manageArrayContainers = function (np?: any, newVal?: any, undoit?: any) {
-    var obj = np.obj;
-    var parts = np.parts;
-    var pLength = parts.length;
-    var pLast = parts[pLength - 1];
+export const manageArrayContainers = function (np?: any, newVal?: any, undoit?: any) {
+    const obj = np.obj;
+    const parts = np.parts;
+    const pLength = parts.length;
+    const pLast = parts[pLength - 1];
 
-    var pLastIsNumber = isNumeric(pLast);
+    const pLastIsNumber = isNumeric(pLast);
 
     if (pLastIsNumber && newVal === null) {
         // delete item
 
         // Clear item in array container when new value is null
-        var contPath = parts.slice(0, pLength - 1).join('.');
-        var cont = nestedProperty(obj, contPath).get();
+        const contPath = parts.slice(0, pLength - 1).join('.');
+        const cont = nestedProperty(obj, contPath).get();
         cont.splice(pLast, 1);
 
         // Note that nested property clears null / undefined at end of
@@ -422,15 +422,15 @@ export var manageArrayContainers = function (np?: any, newVal?: any, undoit?: an
  * but we're a little more permissive here and match either
  * '.not_brackets_or_dot' or '[not_brackets_or_dot]'
  */
-var ATTR_TAIL_RE = /(\.[^\[\]\.]+|\[[^\[\]\.]+\])$/;
+const ATTR_TAIL_RE = /(\.[^\[\]\.]+|\[[^\[\]\.]+\])$/;
 
 function getParent(attr?: any): any {
-    var tail = attr.search(ATTR_TAIL_RE);
+    const tail = attr.search(ATTR_TAIL_RE);
     if (tail > 0) return attr.slice(0, tail);
 }
 
-export var hasParent = function (aobj?: any, attr?: any) {
-    var attrParent = getParent(attr);
+export const hasParent = function (aobj?: any, attr?: any) {
+    let attrParent = getParent(attr);
     while (attrParent) {
         if (attrParent in aobj) return true;
         attrParent = getParent(attrParent);
@@ -438,21 +438,21 @@ export var hasParent = function (aobj?: any, attr?: any) {
     return false;
 };
 
-export var clearAxisTypes = function (gd?: any, traces?: any, layoutUpdate?: any) {
-    for (var i = 0; i < traces.length; i++) {
-        var trace = gd._fullData[i];
-        for (var j = 0; j < 3; j++) {
-            var ax = getFromTrace(gd, trace, AX_LETTERS[j]);
+export const clearAxisTypes = function (gd?: any, traces?: any, layoutUpdate?: any) {
+    for (let i = 0; i < traces.length; i++) {
+        const trace = gd._fullData[i];
+        for (let j = 0; j < 3; j++) {
+            const ax = getFromTrace(gd, trace, AX_LETTERS[j]);
 
             // do not clear log type - that's never an auto result so must have been intentional
             if (ax && ax.type !== 'log') {
-                var axAttr = ax._name;
-                var sceneName = ax._id.slice(1);
+                let axAttr = ax._name;
+                const sceneName = ax._id.slice(1);
                 if (sceneName.slice(0, 5) === 'scene') {
                     if (layoutUpdate[sceneName] !== undefined) continue;
                     axAttr = sceneName + '.' + axAttr;
                 }
-                var typeAttr = axAttr + '.type';
+                const typeAttr = axAttr + '.type';
 
                 if (layoutUpdate[axAttr] === undefined && layoutUpdate[typeAttr] === undefined) {
                     nestedProperty(gd.layout, typeAttr).set(null);

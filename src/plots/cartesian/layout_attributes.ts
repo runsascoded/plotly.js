@@ -9,10 +9,10 @@ const { descriptionWithDates } = _axis_format_attributes;
 import _numerical from '../../constants/numerical.js';
 const { ONEDAY } = _numerical;
 import constants from './constants.js';
-var HOUR = constants.HOUR_PATTERN;
-var DAY_OF_WEEK = constants.WEEKDAY_PATTERN;
+const HOUR = constants.HOUR_PATTERN;
+const DAY_OF_WEEK = constants.WEEKDAY_PATTERN;
 
-var minorTickmode = {
+const minorTickmode = {
     valType: 'enumerated',
     values: ['auto', 'linear', 'array'],
     editType: 'ticks',
@@ -29,7 +29,7 @@ var minorTickmode = {
     ].join(' ')
 };
 
-var tickmode = extendFlat({}, minorTickmode, {
+const tickmode = extendFlat({}, minorTickmode, {
     values: minorTickmode.values.slice().concat(['sync']),
     description: [
         minorTickmode.description,
@@ -53,7 +53,7 @@ function makeNticks(minor?: any): any {
     };
 }
 
-var tick0 = {
+const tick0 = {
     valType: 'any',
     editType: 'ticks',
     impliedEdits: {tickmode: 'linear'},
@@ -69,7 +69,7 @@ var tick0 = {
     ].join(' ')
 };
 
-var dtick = {
+const dtick = {
     valType: 'any',
     editType: 'ticks',
     impliedEdits: {tickmode: 'linear'},
@@ -96,7 +96,7 @@ var dtick = {
     ].join(' ')
 };
 
-var tickvals = {
+const tickvals = {
     valType: 'data_array',
     editType: 'ticks',
     description: [
@@ -106,7 +106,7 @@ var tickvals = {
     ].join(' ')
 };
 
-var ticks = {
+const ticks = {
     valType: 'enumerated',
     values: ['outside', 'inside', ''],
     editType: 'ticks',
@@ -119,7 +119,7 @@ var ticks = {
 };
 
 function makeTicklen(minor?: any): any {
-    var obj: any = {
+    const obj: any = {
         valType: 'number',
         min: 0,
         editType: 'ticks',
@@ -132,7 +132,7 @@ function makeTicklen(minor?: any): any {
 }
 
 function makeTickwidth(minor?: any): any {
-    var obj: any = {
+    const obj: any = {
         valType: 'number',
         min: 0,
         editType: 'ticks',
@@ -144,14 +144,14 @@ function makeTickwidth(minor?: any): any {
     return obj;
 }
 
-var tickcolor = {
+const tickcolor = {
     valType: 'color',
     dflt: colorAttrs.defaultLine,
     editType: 'ticks',
     description: 'Sets the tick color.'
 };
 
-var gridcolor = {
+const gridcolor = {
     valType: 'color',
     dflt: colorAttrs.lightLine,
     editType: 'ticks',
@@ -159,7 +159,7 @@ var gridcolor = {
 };
 
 function makeGridwidth(minor?: any): any {
-    var obj: any = {
+    const obj: any = {
         valType: 'number',
         min: 0,
         editType: 'ticks',
@@ -171,9 +171,9 @@ function makeGridwidth(minor?: any): any {
     return obj;
 }
 
-var griddash = extendFlat({}, dash, {editType: 'ticks'});
+const griddash = extendFlat({}, dash, {editType: 'ticks'});
 
-var showgrid = {
+const showgrid = {
     valType: 'boolean',
     editType: 'ticks',
     description: [

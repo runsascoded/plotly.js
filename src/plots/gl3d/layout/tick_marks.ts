@@ -2,16 +2,16 @@ import Axes from '../../cartesian/axes.js';
 import Lib from '../../../lib/index.js';
 export default computeTickMarks;
 
-var AXES_NAMES = ['xaxis', 'yaxis', 'zaxis'];
+const AXES_NAMES = ['xaxis', 'yaxis', 'zaxis'];
 
-var centerPoint = [0, 0, 0];
+const centerPoint = [0, 0, 0];
 
 function contourLevelsFromTicks(ticks) {
-    var result = new Array(3);
-    for(var i = 0; i < 3; ++i) {
-        var tlevel = ticks[i];
-        var clevel = new Array(tlevel.length);
-        for(var j = 0; j < tlevel.length; ++j) {
+    const result = new Array(3);
+    for(let i = 0; i < 3; ++i) {
+        const tlevel = ticks[i];
+        const clevel = new Array(tlevel.length);
+        for(let j = 0; j < tlevel.length; ++j) {
             clevel[j] = tlevel[j].x;
         }
         result[i] = clevel;
@@ -20,14 +20,14 @@ function contourLevelsFromTicks(ticks) {
 }
 
 function computeTickMarks(scene) {
-    var axesOptions = scene.axesOptions;
-    var glRange = scene.glplot.axesPixels;
-    var sceneLayout = scene.fullSceneLayout;
+    const axesOptions = scene.axesOptions;
+    const glRange = scene.glplot.axesPixels;
+    const sceneLayout = scene.fullSceneLayout;
 
-    var ticks = [[], [], []];
+    const ticks = [[], [], []];
 
-    for(var i = 0; i < 3; ++i) {
-        var axes = sceneLayout[AXES_NAMES[i]];
+    for(let i = 0; i < 3; ++i) {
+        const axes = sceneLayout[AXES_NAMES[i]];
 
         axes._length = (glRange[i].hi - glRange[i].lo) *
             glRange[i].pixelsPerDataUnit / scene.dataScale[i];
@@ -49,14 +49,14 @@ function computeTickMarks(scene) {
             // in tickmode part of calcTicks... Treating all axes as 'y' in this case
             // running the tickmode here, then setting
             // automode to linear to get around the 2D handling in calcTicks.
-            var tickModeCached = axes.tickmode;
+            const tickModeCached = axes.tickmode;
             if(axes.tickmode === 'auto') {
                 axes.tickmode = 'linear';
-                var nticks = axes.nticks || Lib.constrain((axes._length / 40), 4, 9);
+                const nticks = axes.nticks || Lib.constrain((axes._length / 40), 4, 9);
                 Axes.autoTicks(axes, Math.abs(axes.range[1] - axes.range[0]) / nticks);
             }
-            var dataTicks = Axes.calcTicks(axes, { msUTC: true });
-            for(var j = 0; j < dataTicks.length; ++j) {
+            const dataTicks = Axes.calcTicks(axes, { msUTC: true });
+            for(let j = 0; j < dataTicks.length; ++j) {
                 dataTicks[j].x = dataTicks[j].x * scene.dataScale[i];
 
                 if(axes.type === 'date') {
@@ -73,9 +73,9 @@ function computeTickMarks(scene) {
     axesOptions.ticks = ticks;
 
     // Calculate tick lengths dynamically
-    for(var i = 0; i < 3; ++i) {
+    for(let i = 0; i < 3; ++i) {
         centerPoint[i] = 0.5 * (scene.glplot.bounds[0][i] + scene.glplot.bounds[1][i]);
-        for(var j = 0; j < 2; ++j) {
+        for(let j = 0; j < 2; ++j) {
             axesOptions.bounds[j][i] = scene.glplot.bounds[j][i];
         }
     }

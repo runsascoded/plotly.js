@@ -7,17 +7,17 @@ import axisIds from './axis_ids.js';
 import constants from './constants.js';
 
 
-var FP_SAFE = numConstants.FP_SAFE;
-var BADNUM = numConstants.BADNUM;
-var LOG_CLIP = numConstants.LOG_CLIP;
-var ONEWEEK = numConstants.ONEWEEK;
-var ONEDAY = numConstants.ONEDAY;
-var ONEHOUR = numConstants.ONEHOUR;
-var ONEMIN = numConstants.ONEMIN;
-var ONESEC = numConstants.ONESEC;
+const FP_SAFE = numConstants.FP_SAFE;
+const BADNUM = numConstants.BADNUM;
+const LOG_CLIP = numConstants.LOG_CLIP;
+const ONEWEEK = numConstants.ONEWEEK;
+const ONEDAY = numConstants.ONEDAY;
+const ONEHOUR = numConstants.ONEHOUR;
+const ONEMIN = numConstants.ONEMIN;
+const ONESEC = numConstants.ONESEC;
 
-var HOUR_PATTERN = constants.HOUR_PATTERN;
-var WEEKDAY_PATTERN = constants.WEEKDAY_PATTERN;
+const HOUR_PATTERN = constants.HOUR_PATTERN;
+const WEEKDAY_PATTERN = constants.WEEKDAY_PATTERN;
 
 function fromLog(v?: any): number {
     return Math.pow(10, v);
@@ -30,8 +30,8 @@ function isValidCategory(v?: any): boolean {
 export default function setConvert(ax?: any, fullLayout?: any): any {
     fullLayout = fullLayout || {};
 
-    var axId = (ax._id || 'x');
-    var axLetter = axId.charAt(0);
+    const axId = (ax._id || 'x');
+    const axLetter = axId.charAt(0);
 
     function toLog(v?: any, clip?: any) {
         if(v > 0) return Math.log(v) / Math.LN10;
@@ -39,8 +39,8 @@ export default function setConvert(ax?: any, fullLayout?: any): any {
         else if(v <= 0 && clip && ax.range && ax.range.length === 2) {
             // clip NaN (ie past negative infinity) to LOG_CLIP axis
             // length past the negative edge
-            var r0 = ax.range[0];
-            var r1 = ax.range[1];
+            const r0 = ax.range[0];
+            const r1 = ax.range[1];
             return 0.5 * (r0 + r1 - 2 * LOG_CLIP * Math.abs(r0 - r1));
         } else return BADNUM;
     }
@@ -63,14 +63,14 @@ export default function setConvert(ax?: any, fullLayout?: any): any {
         // to be a ms, even if it was a string that could be a bare year.
         // Now we convert it as a date if at all possible, and only try
         // as (local) ms if that fails.
-        var ms = dateTime2ms(v, calendar || ax.calendar);
+        let ms = dateTime2ms(v, calendar || ax.calendar);
         if(ms === BADNUM) {
             if(isNumeric(v)) {
                 v = +v;
                 // keep track of tenths of ms, that `new Date` will drop
                 // same logic as in ms2DateTime
-                var msecTenths = Math.floor(mod(v + 0.05, 1) * 10);
-                var msRounded = Math.round(v - msecTenths / 10);
+                const msecTenths = Math.floor(mod(v + 0.05, 1) * 10);
+                const msRounded = Math.round(v - msecTenths / 10);
                 ms = dateTime2ms(new Date(msRounded)) + msecTenths / 10;
             } else return BADNUM;
         }
@@ -110,7 +110,7 @@ export default function setConvert(ax?: any, fullLayout?: any): any {
             } else {
                 ax._categories.push(typeof v === 'number' ? String(v) : v);
 
-                var curLength = ax._categories.length - 1;
+                const curLength = ax._categories.length - 1;
                 ax._categoriesMap[v] = curLength;
 
                 return curLength;
@@ -120,11 +120,11 @@ export default function setConvert(ax?: any, fullLayout?: any): any {
     }
 
     function setMultiCategoryIndex(arrayIn?: any, len?: any) {
-        var arrayOut = new Array(len);
+        const arrayOut = new Array(len);
 
-        for(var i = 0; i < len; i++) {
-            var v0 = (arrayIn[0] || [])[i];
-            var v1 = (arrayIn[1] || [])[i];
+        for(let i = 0; i < len; i++) {
+            const v0 = (arrayIn[0] || [])[i];
+            const v1 = (arrayIn[1] || [])[i];
             arrayOut[i] = getCategoryIndex([v0, v1]);
         }
 
@@ -140,7 +140,7 @@ export default function setConvert(ax?: any, fullLayout?: any): any {
     function getCategoryPosition(v?: any) {
         // d2l/d2c variant that that won't add categories but will also
         // allow numbers to be mapped to the linearized axis positions
-        var index = getCategoryIndex(v);
+        const index = getCategoryIndex(v);
         if(index !== undefined) return index;
         if(isNumeric(v)) return +v;
     }
@@ -154,32 +154,32 @@ export default function setConvert(ax?: any, fullLayout?: any): any {
 
     function _p2l(px?: any, m?: any, b?: any) { return (px - b) / m; }
 
-    var l2p = function l2p(v?: any) {
+    let l2p = function l2p(v?: any) {
         if(!isNumeric(v)) return BADNUM;
         return _l2p(v, ax._m, ax._b);
     };
 
-    var p2l = function(px?: any) {
+    let p2l = function(px?: any) {
         return _p2l(px, ax._m, ax._b);
     };
 
     if(ax.rangebreaks) {
-        var isY = axLetter === 'y';
+        const isY = axLetter === 'y';
 
         l2p = function(v) {
             if(!isNumeric(v)) return BADNUM;
-            var len = ax._rangebreaks.length;
+            const len = ax._rangebreaks.length;
             if(!len) return _l2p(v, ax._m, ax._b);
 
-            var flip = isY;
+            let flip = isY;
             if(ax.range[0] > ax.range[1]) flip = !flip;
-            var signAx = flip ? -1 : 1;
-            var pos = signAx * v;
+            const signAx = flip ? -1 : 1;
+            const pos = signAx * v;
 
-            var q = 0;
-            for(var i = 0; i < len; i++) {
-                var min = signAx * ax._rangebreaks[i].min;
-                var max = signAx * ax._rangebreaks[i].max;
+            let q = 0;
+            for(let i = 0; i < len; i++) {
+                const min = signAx * ax._rangebreaks[i].min;
+                const max = signAx * ax._rangebreaks[i].max;
 
                 if(pos < min) break;
                 if(pos > max) q = i + 1;
@@ -189,17 +189,17 @@ export default function setConvert(ax?: any, fullLayout?: any): any {
                     break;
                 }
             }
-            var b2 = ax._B[q] || 0;
+            const b2 = ax._B[q] || 0;
             if(!isFinite(b2)) return 0; // avoid NaN translate e.g. in positionLabels if one keep zooming exactly into a break
             return _l2p(v, ax._m2, b2);
         };
 
         p2l = function(px) {
-            var len = ax._rangebreaks.length;
+            const len = ax._rangebreaks.length;
             if(!len) return _p2l(px, ax._m, ax._b);
 
-            var q = 0;
-            for(var i = 0; i < len; i++) {
+            let q = 0;
+            for(let i = 0; i < len; i++) {
                 if(px < ax._rangebreaks[i].pmin) break;
                 if(px > ax._rangebreaks[i].pmax) q = i + 1;
             }
@@ -280,7 +280,7 @@ export default function setConvert(ax?: any, fullLayout?: any): any {
         ax.d2r = ax.d2l_noadd = getCategoryPosition;
 
         ax.r2c = function(v?: any) {
-            var index = getRangePosition(v);
+            const index = getRangePosition(v);
             return index !== undefined ? index : ax.fraction2r(0.5);
         };
 
@@ -305,7 +305,7 @@ export default function setConvert(ax?: any, fullLayout?: any): any {
         ax.d2r = ax.d2l_noadd = getCategoryPosition;
 
         ax.r2c = function(v?: any) {
-            var index = getCategoryPosition(v);
+            const index = getCategoryPosition(v);
             return index !== undefined ? index : ax.fraction2r(0.5);
         };
 
@@ -325,35 +325,35 @@ export default function setConvert(ax?: any, fullLayout?: any): any {
         };
 
         ax.setupMultiCategory = function(fullData?: any) {
-            var traceIndices = ax._traceIndices;
-            var i, j;
+            let traceIndices = ax._traceIndices;
+            let i, j;
 
-            var group = ax._matchGroup;
+            const group = ax._matchGroup;
             if(group && ax._categories.length === 0) {
-                for(var axId2 in group) {
+                for(const axId2 in group) {
                     if(axId2 !== axId) {
-                        var ax2: any = fullLayout[axisIds.id2name(axId2)];
+                        const ax2: any = fullLayout[axisIds.id2name(axId2)];
                         traceIndices = traceIndices.concat(ax2._traceIndices);
                     }
                 }
             }
 
             // [ [cnt, {$cat: index}], for 1,2 ]
-            var seen: any = [[0, {}], [0, {}]];
+            const seen: any = [[0, {}], [0, {}]];
             // [ [arrayIn[0][i], arrayIn[1][i]], for i .. N ]
-            var list = [];
+            const list = [];
 
             for(i = 0; i < traceIndices.length; i++) {
-                var trace = fullData[traceIndices[i]];
+                const trace = fullData[traceIndices[i]];
 
                 if(axLetter in trace) {
-                    var arrayIn = trace[axLetter];
-                    var len = trace._length || minRowLength(arrayIn);
+                    const arrayIn = trace[axLetter];
+                    const len = trace._length || minRowLength(arrayIn);
 
                     if(isArrayOrTypedArray(arrayIn[0]) && isArrayOrTypedArray(arrayIn[1])) {
                         for(j = 0; j < len; j++) {
-                            var v0 = arrayIn[0][j];
-                            var v1 = arrayIn[1][j];
+                            const v0 = arrayIn[0][j];
+                            const v1 = arrayIn[1][j];
 
                             if(isValidCategory(v0) && isValidCategory(v1)) {
                                 list.push([v0, v1]);
@@ -371,11 +371,11 @@ export default function setConvert(ax?: any, fullLayout?: any): any {
             }
 
             list.sort(function(a, b) {
-                var ind0 = seen[0][1];
-                var d = ind0[a[0]] - ind0[b[0]];
+                const ind0 = seen[0][1];
+                const d = ind0[a[0]] - ind0[b[0]];
                 if(d) return d;
 
-                var ind1 = seen[1][1];
+                const ind1 = seen[1][1];
                 return ind1[a[1]] - ind1[b[1]];
             });
 
@@ -387,46 +387,46 @@ export default function setConvert(ax?: any, fullLayout?: any): any {
 
     // find the range value at the specified (linear) fraction of the axis
     ax.fraction2r = function(v?: any) {
-        var rl0 = ax.r2l(ax.range[0]);
-        var rl1 = ax.r2l(ax.range[1]);
+        const rl0 = ax.r2l(ax.range[0]);
+        const rl1 = ax.r2l(ax.range[1]);
         return ax.l2r(rl0 + v * (rl1 - rl0));
     };
 
     // find the fraction of the range at the specified range value
     ax.r2fraction = function(v?: any) {
-        var rl0 = ax.r2l(ax.range[0]);
-        var rl1 = ax.r2l(ax.range[1]);
+        const rl0 = ax.r2l(ax.range[0]);
+        const rl1 = ax.r2l(ax.range[1]);
         return (ax.r2l(v) - rl0) / (rl1 - rl0);
     };
 
     ax.limitRange = function(rangeAttr?: any) {
-        var minallowed = ax.minallowed;
-        var maxallowed = ax.maxallowed;
+        const minallowed = ax.minallowed;
+        const maxallowed = ax.maxallowed;
         if(minallowed === undefined && maxallowed === undefined) return;
 
         if(!rangeAttr) rangeAttr = 'range';
-        var range: any = nestedProperty(ax, rangeAttr).get();
-        var rng = simpleMap(range, ax.r2l);
-        var axrev = rng[1] < rng[0];
+        const range: any = nestedProperty(ax, rangeAttr).get();
+        const rng = simpleMap(range, ax.r2l);
+        const axrev = rng[1] < rng[0];
         if(axrev) rng.reverse();
 
-        var bounds = simpleMap([minallowed, maxallowed], ax.r2l);
+        const bounds = simpleMap([minallowed, maxallowed], ax.r2l);
 
         if(minallowed !== undefined && rng[0] < bounds[0]) range[axrev ? 1 : 0] = minallowed;
         if(maxallowed !== undefined && rng[1] > bounds[1]) range[axrev ? 0 : 1] = maxallowed;
 
         if(range[0] === range[1]) {
-            var minL = ax.l2r(minallowed);
-            var maxL = ax.l2r(maxallowed);
+            const minL = ax.l2r(minallowed);
+            const maxL = ax.l2r(maxallowed);
 
             if(minallowed !== undefined) {
-                var _max = minL + 1;
+                let _max = minL + 1;
                 if(maxallowed !== undefined) _max = Math.min(_max, maxL);
                 range[axrev ? 1 : 0] = _max;
             }
 
             if(maxallowed !== undefined) {
-                var _min = maxL + 1;
+                let _min = maxL + 1;
                 if(minallowed !== undefined) _min = Math.max(_min, minL);
                 range[axrev ? 0 : 1] = _min;
             }
@@ -450,8 +450,8 @@ export default function setConvert(ax?: any, fullLayout?: any): any {
         if(!opts) opts = {};
         if(!rangeAttr) rangeAttr = 'range';
 
-        var range: any = nestedProperty(ax, rangeAttr).get();
-        var i, dflt;
+        const range: any = nestedProperty(ax, rangeAttr).get();
+        let i, dflt;
 
         if(ax.type === 'date') dflt = dfltRange(ax.calendar);
         else if(axLetter === 'y') dflt = constants.DFLTRANGEY;
@@ -470,8 +470,8 @@ export default function setConvert(ax?: any, fullLayout?: any): any {
             return;
         }
 
-        var nullRange0 = range[0] === null;
-        var nullRange1 = range[1] === null;
+        const nullRange0 = range[0] === null;
+        const nullRange1 = range[1] === null;
 
         if(ax.type === 'date' && !ax.autorange) {
             // check if milliseconds or js date objects are provided for range
@@ -489,7 +489,7 @@ export default function setConvert(ax?: any, fullLayout?: any): any {
 
                 if(ax.r2l(range[0]) === ax.r2l(range[1])) {
                     // split by +/- 1 second
-                    var linCenter = constrain(ax.r2l(range[0]),
+                    const linCenter = constrain(ax.r2l(range[0]),
                         MIN_MS + 1000, MAX_MS - 1000);
                     range[0] = ax.l2r(linCenter - 1000);
                     range[1] = ax.l2r(linCenter + 1000);
@@ -510,7 +510,7 @@ export default function setConvert(ax?: any, fullLayout?: any): any {
 
                 if(range[0] === range[1]) {
                     // somewhat arbitrary: split by 1 or 1ppm, whichever is bigger
-                    var inc = Math.max(1, Math.abs(range[0] * 1e-6));
+                    const inc = Math.max(1, Math.abs(range[0] * 1e-6));
                     range[0] -= inc;
                     range[1] += inc;
                 }
@@ -520,12 +520,12 @@ export default function setConvert(ax?: any, fullLayout?: any): any {
 
     // set scaling to pixels
     ax.setScale = function(usePrivateRange?: any) {
-        var gs = fullLayout._size;
+        const gs = fullLayout._size;
 
         // make sure we have a domain (pull it in from the axis
         // this one is overlaying if necessary)
         if(ax.overlaying) {
-            var ax2: any = axisIds.getFromId({ _fullLayout: fullLayout }, ax.overlaying);
+            const ax2: any = axisIds.getFromId({ _fullLayout: fullLayout }, ax.overlaying);
             ax.domain = ax2.domain;
         }
 
@@ -533,14 +533,14 @@ export default function setConvert(ax?: any, fullLayout?: any): any {
         // issue if we transform the drawn layer *and* use the new axis range to
         // draw the data. This allows us to construct setConvert using the pre-
         // interaction values of the range:
-        var rangeAttr = (usePrivateRange && ax._r) ? '_r' : 'range';
-        var calendar = ax.calendar;
+        const rangeAttr = (usePrivateRange && ax._r) ? '_r' : 'range';
+        const calendar = ax.calendar;
         ax.cleanRange(rangeAttr);
 
-        var rl0 = ax.r2l(ax[rangeAttr][0], calendar);
-        var rl1 = ax.r2l(ax[rangeAttr][1], calendar);
+        const rl0 = ax.r2l(ax[rangeAttr][0], calendar);
+        const rl1 = ax.r2l(ax[rangeAttr][1], calendar);
 
-        var isY = axLetter === 'y';
+        const isY = axLetter === 'y';
         if(isY) {
             ax._offset = gs.t + (1 - ax.domain[1]) * gs.h;
             ax._length = gs.h * (ax.domain[1] - ax.domain[0]);
@@ -563,7 +563,7 @@ export default function setConvert(ax?: any, fullLayout?: any): any {
         ax._B = [];
 
         if(ax.rangebreaks) {
-            var i, brk;
+            let i, brk;
 
             ax._rangebreaks = ax.locateBreaks(
                 Math.min(rl0, rl1),
@@ -576,10 +576,10 @@ export default function setConvert(ax?: any, fullLayout?: any): any {
                     ax._lBreaks += Math.abs(brk.max - brk.min);
                 }
 
-                var flip = isY;
+                let flip = isY;
                 if(rl0 > rl1) flip = !flip;
                 if(flip) ax._rangebreaks.reverse();
-                var sign = flip ? -1 : 1;
+                const sign = flip ? -1 : 1;
 
                 ax._m2 = sign * ax._length / (Math.abs(rl1 - rl0) - ax._lBreaks);
                 ax._B.push(-ax._m2 * (isY ? rl1 : rl0));
@@ -608,8 +608,8 @@ export default function setConvert(ax?: any, fullLayout?: any): any {
     };
 
     ax.maskBreaks = function(v?: any) {
-        var rangebreaksIn: any = ax.rangebreaks || [];
-        var bnds, b0, b1, vb, vDate;
+        const rangebreaksIn: any = ax.rangebreaks || [];
+        let bnds, b0, b1, vb, vDate;
 
         if(!rangebreaksIn._cachedPatterns) {
             rangebreaksIn._cachedPatterns = rangebreaksIn.map(function(brk) {
@@ -625,12 +625,12 @@ export default function setConvert(ax?: any, fullLayout?: any): any {
             });
         }
 
-        for(var i = 0; i < rangebreaksIn.length; i++) {
-            var brk: any = rangebreaksIn[i];
+        for(let i = 0; i < rangebreaksIn.length; i++) {
+            const brk: any = rangebreaksIn[i];
 
             if(brk.enabled) {
                 if(brk.bounds) {
-                    var pattern = brk.pattern;
+                    const pattern = brk.pattern;
                     bnds = rangebreaksIn._cachedPatterns[i];
                     b0 = bnds[0];
                     b1 = bnds[1];
@@ -648,10 +648,10 @@ export default function setConvert(ax?: any, fullLayout?: any): any {
                             break;
                         case HOUR_PATTERN:
                             vDate = new Date(v);
-                            var hours = vDate.getUTCHours();
-                            var minutes = vDate.getUTCMinutes();
-                            var seconds = vDate.getUTCSeconds();
-                            var milliseconds = vDate.getUTCMilliseconds();
+                            const hours = vDate.getUTCHours();
+                            const minutes = vDate.getUTCMinutes();
+                            const seconds = vDate.getUTCSeconds();
+                            const milliseconds = vDate.getUTCMilliseconds();
 
                             vb = hours + (
                                 minutes / 60 +
@@ -675,8 +675,8 @@ export default function setConvert(ax?: any, fullLayout?: any): any {
 
                     if(vb >= b0 && vb < b1) return BADNUM;
                 } else {
-                    var vals = rangebreaksIn._cachedValues[i];
-                    for(var j = 0; j < vals.length; j++) {
+                    const vals = rangebreaksIn._cachedValues[i];
+                    for(let j = 0; j < vals.length; j++) {
                         b0 = vals[j];
                         b1 = b0 + brk.dvalue;
                         if(v >= b0 && v < b1) return BADNUM;
@@ -688,25 +688,25 @@ export default function setConvert(ax?: any, fullLayout?: any): any {
     };
 
     ax.locateBreaks = function(r0?: any, r1?: any) {
-        var i, bnds, b0, b1;
+        let i, bnds, b0, b1;
 
-        var rangebreaksOut = [];
+        const rangebreaksOut = [];
         if(!ax.rangebreaks) return rangebreaksOut;
 
-        var rangebreaksIn: any = ax.rangebreaks.slice().sort(function(a, b) {
+        const rangebreaksIn: any = ax.rangebreaks.slice().sort(function(a, b) {
             if(a.pattern === WEEKDAY_PATTERN && b.pattern === HOUR_PATTERN) return -1;
             if(b.pattern === WEEKDAY_PATTERN && a.pattern === HOUR_PATTERN) return 1;
             return 0;
         });
 
-        var addBreak = function(min?: any, max?: any) {
+        const addBreak = function(min?: any, max?: any) {
             min = constrain(min, r0, r1);
             max = constrain(max, r0, r1);
             if(min === max) return;
 
-            var isNewBreak = true;
-            for(var j = 0; j < rangebreaksOut.length; j++) {
-                var brkj: any = rangebreaksOut[j];
+            let isNewBreak = true;
+            for(let j = 0; j < rangebreaksOut.length; j++) {
+                const brkj: any = rangebreaksOut[j];
                 if(min < brkj.max && max >= brkj.min) {
                     if(min < brkj.min) {
                         brkj.min = min;
@@ -723,12 +723,12 @@ export default function setConvert(ax?: any, fullLayout?: any): any {
         };
 
         for(i = 0; i < rangebreaksIn.length; i++) {
-            var brk: any = rangebreaksIn[i];
+            const brk: any = rangebreaksIn[i];
 
             if(brk.enabled) {
                 if(brk.bounds) {
-                    var t0 = r0;
-                    var t1 = r1;
+                    let t0 = r0;
+                    let t1 = r1;
                     if(brk.pattern) {
                         // to remove decimal (most often found in auto ranges)
                         t0 = Math.floor(t0);
@@ -739,11 +739,11 @@ export default function setConvert(ax?: any, fullLayout?: any): any {
                     b1 = bnds[1];
 
                     // r0 value as date
-                    var t0Date = new Date(t0);
+                    const t0Date = new Date(t0);
                     // r0 value for break pattern
-                    var bndDelta;
+                    let bndDelta;
                     // step in ms between rangebreaks
-                    var step;
+                    let step;
 
                     switch(brk.pattern) {
                         case WEEKDAY_PATTERN:
@@ -784,12 +784,12 @@ export default function setConvert(ax?: any, fullLayout?: any): any {
                             bndDelta = step;
                     }
 
-                    for(var t = t0; t < t1; t += step) {
+                    for(let t = t0; t < t1; t += step) {
                         addBreak(t, t + bndDelta);
                     }
                 } else {
-                    var vals = simpleMap(brk.values, ax.d2c);
-                    for(var j = 0; j < vals.length; j++) {
+                    const vals = simpleMap(brk.values, ax.d2c);
+                    for(let j = 0; j < vals.length; j++) {
                         b0 = vals[j];
                         b1 = b0 + brk.dvalue;
                         addBreak(b0, b1);
@@ -813,10 +813,10 @@ export default function setConvert(ax?: any, fullLayout?: any): any {
     // in case the expected data isn't there, make a list of
     // integers based on the opposite data
     ax.makeCalcdata = function(trace?: any, axLetter?: any, opts?: any) {
-        var arrayIn, arrayOut, i, len;
+        let arrayIn, arrayOut, i, len;
 
-        var axType = ax.type;
-        var cal = axType === 'date' && trace[axLetter + 'calendar'];
+        const axType = ax.type;
+        const cal = axType === 'date' && trace[axLetter + 'calendar'];
 
         if(axLetter in trace) {
             arrayIn = trace[axLetter];
@@ -839,8 +839,8 @@ export default function setConvert(ax?: any, fullLayout?: any): any {
                 arrayOut[i] = ax.d2c(arrayIn[i], 0, cal, opts);
             }
         } else {
-            var v0 = ((axLetter + '0') in trace) ? ax.d2c(trace[axLetter + '0'], 0, cal) : 0;
-            var dv = (trace['d' + axLetter]) ? Number(trace['d' + axLetter]) : 1;
+            const v0 = ((axLetter + '0') in trace) ? ax.d2c(trace[axLetter + '0'], 0, cal) : 0;
+            const dv = (trace['d' + axLetter]) ? Number(trace['d' + axLetter]) : 1;
 
             // the opposing data, for size if we have x and dx etc
             arrayIn = trace[{x: 'y', y: 'x'}[axLetter]];
@@ -872,7 +872,7 @@ export default function setConvert(ax?: any, fullLayout?: any): any {
     };
 
     ax.getAutorangeDflt = function(range?: any, options?: any) {
-        var autorangeDflt: any = !ax.isValidRange(range, 'nullOk');
+        let autorangeDflt: any = !ax.isValidRange(range, 'nullOk');
         if(autorangeDflt && options && options.reverseDflt) autorangeDflt = 'reversed';
         else if(range) {
             if(range[0] === null && range[1] === null) {
@@ -887,7 +887,7 @@ export default function setConvert(ax?: any, fullLayout?: any): any {
     };
 
     ax.isReversed = function() {
-        var autorange = ax.autorange;
+        const autorange = ax.autorange;
         return (
             autorange === 'reversed' ||
             autorange === 'min reversed' ||
@@ -896,9 +896,9 @@ export default function setConvert(ax?: any, fullLayout?: any): any {
     };
 
     ax.isPtWithinRange = function(d?: any, calendar?: any) {
-        var coord = ax.c2l(d[axLetter], null, calendar);
-        var r0 = ax.r2l(ax.range[0]);
-        var r1 = ax.r2l(ax.range[1]);
+        const coord = ax.c2l(d[axLetter], null, calendar);
+        const r0 = ax.r2l(ax.range[0]);
+        const r1 = ax.r2l(ax.range[1]);
 
         if(r0 < r1) {
             return r0 <= coord && coord <= r1;
@@ -915,13 +915,13 @@ export default function setConvert(ax?: any, fullLayout?: any): any {
 
     // should skip if not category nor multicategory
     ax.clearCalc = function() {
-        var group = ax._matchGroup;
+        const group = ax._matchGroup;
         if(group) {
-            var categories = null;
-            var categoriesMap = null;
+            let categories = null;
+            let categoriesMap = null;
 
-            for(var axId2 in group) {
-                var ax2: any = fullLayout[axisIds.id2name(axId2)];
+            for(const axId2 in group) {
+                const ax2: any = fullLayout[axisIds.id2name(axId2)];
                 if(ax2._categories) {
                     categories = ax2._categories;
                     categoriesMap = ax2._categoriesMap;
@@ -940,7 +940,7 @@ export default function setConvert(ax?: any, fullLayout?: any): any {
         }
 
         if(ax._initialCategories) {
-            for(var j = 0; j < ax._initialCategories.length; j++) {
+            for(let j = 0; j < ax._initialCategories.length; j++) {
                 setCategoryIndex(ax._initialCategories[j]);
             }
         }
@@ -949,12 +949,12 @@ export default function setConvert(ax?: any, fullLayout?: any): any {
     // sort the axis (and all the matching ones) by _initialCategories
     // returns the indices of the traces affected by the reordering
     ax.sortByInitialCategories = function() {
-        var affectedTraces = [];
+        let affectedTraces = [];
 
         ax._emptyCategories();
 
         if(ax._initialCategories) {
-            for(var j = 0; j < ax._initialCategories.length; j++) {
+            for(let j = 0; j < ax._initialCategories.length; j++) {
                 setCategoryIndex(ax._initialCategories[j]);
             }
         }
@@ -962,10 +962,10 @@ export default function setConvert(ax?: any, fullLayout?: any): any {
         affectedTraces = affectedTraces.concat(ax._traceIndices);
 
         // Propagate to matching axes
-        var group = ax._matchGroup;
-        for(var axId2 in group) {
+        const group = ax._matchGroup;
+        for(const axId2 in group) {
             if(axId === axId2) continue;
-            var ax2: any = fullLayout[axisIds.id2name(axId2)];
+            const ax2: any = fullLayout[axisIds.id2name(axId2)];
             ax2._categories = ax._categories;
             ax2._categoriesMap = ax._categoriesMap;
             affectedTraces = affectedTraces.concat(ax2._traceIndices);
@@ -978,7 +978,7 @@ export default function setConvert(ax?: any, fullLayout?: any): any {
     // Default (non-d3) number formatting uses separators directly
     // dates and d3-formatted numbers use the d3 locale
     // Fall back on default format for dummy axes that don't care about formatting
-    var locale = fullLayout._d3locale;
+    const locale = fullLayout._d3locale;
     if(ax.type === 'date') {
         ax._dateFormat = locale ? locale.timeFormat : utcFormat;
         ax._extraFormat = fullLayout._extraFormat;

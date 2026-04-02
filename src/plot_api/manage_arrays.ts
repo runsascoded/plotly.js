@@ -4,24 +4,24 @@ import Loggers from '../lib/loggers.js';
 import { sorterAsc } from '../lib/search.js';
 import Registry from '../registry.js';
 import _req0 from './container_array_match.js';
-export var containerArrayMatch = _req0;
+export const containerArrayMatch = _req0;
 
-export var isAddVal = function isAddVal(val?: any): any {
+export const isAddVal = function isAddVal(val?: any): any {
     return val === 'add' || isPlainObject(val);
 };
 
-export var isRemoveVal = function isRemoveVal(val?: any): boolean {
+export const isRemoveVal = function isRemoveVal(val?: any): boolean {
     return val === null || val === 'remove';
 };
 
-export var applyContainerArrayChanges = function applyContainerArrayChanges(gd?: any, np?: any, edits?: any, flags?: any, _nestedProperty?: any): boolean {
-    var componentType = np.astr;
-    var supplyComponentDefaults = Registry.getComponentMethod(componentType, 'supplyLayoutDefaults');
-    var draw = Registry.getComponentMethod(componentType, 'draw');
-    var drawOne = Registry.getComponentMethod(componentType, 'drawOne');
-    var replotLater = flags.replot || flags.recalc || (supplyComponentDefaults === noop) || (draw === noop);
-    var layout = gd.layout;
-    var fullLayout = gd._fullLayout;
+export const applyContainerArrayChanges = function applyContainerArrayChanges(gd?: any, np?: any, edits?: any, flags?: any, _nestedProperty?: any): boolean {
+    const componentType = np.astr;
+    const supplyComponentDefaults = Registry.getComponentMethod(componentType, 'supplyLayoutDefaults');
+    const draw = Registry.getComponentMethod(componentType, 'draw');
+    const drawOne = Registry.getComponentMethod(componentType, 'drawOne');
+    const replotLater = flags.replot || flags.recalc || (supplyComponentDefaults === noop) || (draw === noop);
+    const layout = gd.layout;
+    const fullLayout = gd._fullLayout;
 
     if(edits['']) {
         if(Object.keys(edits).length > 1) {
@@ -29,7 +29,7 @@ export var applyContainerArrayChanges = function applyContainerArrayChanges(gd?:
                 componentType);
         }
 
-        var fullVal = edits[''][''];
+        const fullVal = edits[''][''];
 
         if(isRemoveVal(fullVal)) np.set(null);
         else if(Array.isArray(fullVal)) np.set(fullVal);
@@ -45,26 +45,26 @@ export var applyContainerArrayChanges = function applyContainerArrayChanges(gd?:
         return true;
     }
 
-    var componentNums = Object.keys(edits).map(Number).sort(sorterAsc);
-    var componentArrayIn = np.get();
-    var componentArray = componentArrayIn || [];
+    const componentNums = Object.keys(edits).map(Number).sort(sorterAsc);
+    const componentArrayIn = np.get();
+    const componentArray = componentArrayIn || [];
     // componentArrayFull is used just to keep splices in line between
     // full and input arrays, so private keys can be copied over after
     // redoing supplyDefaults
     // TODO: this assumes componentArray is in gd.layout - which will not be
     // true after we extend this to restyle
-    var componentArrayFull = _nestedProperty(fullLayout, componentType).get();
+    const componentArrayFull = _nestedProperty(fullLayout, componentType).get();
 
-    var deletes = [];
-    var firstIndexChange = -1;
-    var maxIndex = componentArray.length;
-    var i;
-    var j;
-    var componentNum;
-    var objEdits;
-    var objKeys;
-    var objVal;
-    var adding, prefix;
+    const deletes = [];
+    let firstIndexChange = -1;
+    let maxIndex = componentArray.length;
+    let i;
+    let j;
+    let componentNum;
+    let objEdits;
+    let objKeys;
+    let objVal;
+    let adding, prefix;
 
     // first make the add and edit changes
     for(i = 0; i < componentNums.length; i++) {
@@ -125,7 +125,7 @@ export var applyContainerArrayChanges = function applyContainerArrayChanges(gd?:
     // finally draw all the components we need to
     // if we added or removed any, redraw all after it
     if(drawOne !== noop) {
-        var indicesToDraw;
+        let indicesToDraw;
         if(firstIndexChange === -1) {
             // there's no re-indexing to do, so only redraw components that changed
             indicesToDraw = componentNums;

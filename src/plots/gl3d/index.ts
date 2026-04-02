@@ -10,33 +10,33 @@ import _req1 from './layout/layout_attributes.js';
 import _req2 from './layout/defaults.js';
 import type { GraphDiv } from '../../../types/core';
 
-var GL3D = 'gl3d';
-var SCENE = 'scene';
+const GL3D = 'gl3d';
+const SCENE = 'scene';
 
-export var name = GL3D;
-export var attr = SCENE;
-export var idRoot = SCENE;
-export var idRegex = Lib.counterRegex('scene');
-export var attributes = _req0;
-export var layoutAttributes = _req1;
+export const name = GL3D;
+export const attr = SCENE;
+export const idRoot = SCENE;
+export const idRegex = Lib.counterRegex('scene');
+export const attributes = _req0;
+export const layoutAttributes = _req1;
 
-export var baseLayoutAttrOverrides = overrideAll({
+export const baseLayoutAttrOverrides = overrideAll({
     hoverlabel: fxAttrs.hoverlabel
 }, 'plot', 'nested');
 
-export var supplyLayoutDefaults = _req2;
+export const supplyLayoutDefaults = _req2;
 
-export var plot = function plot(gd: GraphDiv) {
-    var fullLayout = gd._fullLayout;
-    var fullData = gd._fullData;
-    var sceneIds = fullLayout._subplots[GL3D];
+export const plot = function plot(gd: GraphDiv) {
+    const fullLayout = gd._fullLayout;
+    const fullData = gd._fullData;
+    const sceneIds = fullLayout._subplots[GL3D];
 
-    for(var i = 0; i < sceneIds.length; i++) {
-        var sceneId = sceneIds[i];
-        var fullSceneData = getSubplotData(fullData, GL3D, sceneId);
-        var sceneLayout = fullLayout[sceneId];
-        var camera = sceneLayout.camera;
-        var scene = sceneLayout._scene;
+    for(let i = 0; i < sceneIds.length; i++) {
+        const sceneId = sceneIds[i];
+        const fullSceneData = getSubplotData(fullData, GL3D, sceneId);
+        const sceneLayout = fullLayout[sceneId];
+        const camera = sceneLayout.camera;
+        let scene = sceneLayout._scene;
 
         if(!scene) {
             scene = new Scene({
@@ -79,11 +79,11 @@ export var plot = function plot(gd: GraphDiv) {
     }
 };
 
-export var clean = function(newFullData, newFullLayout, oldFullData, oldFullLayout) {
-    var oldSceneKeys = oldFullLayout._subplots[GL3D] || [];
+export const clean = function(newFullData, newFullLayout, oldFullData, oldFullLayout) {
+    const oldSceneKeys = oldFullLayout._subplots[GL3D] || [];
 
-    for(var i = 0; i < oldSceneKeys.length; i++) {
-        var oldSceneKey = oldSceneKeys[i];
+    for(let i = 0; i < oldSceneKeys.length; i++) {
+        const oldSceneKey = oldSceneKeys[i];
 
         if(!newFullLayout[oldSceneKey] && !!oldFullLayout[oldSceneKey]._scene) {
             oldFullLayout[oldSceneKey]._scene.destroy();
@@ -97,18 +97,18 @@ export var clean = function(newFullData, newFullLayout, oldFullData, oldFullLayo
     }
 };
 
-export var toSVG = function(gd) {
-    var fullLayout = gd._fullLayout;
-    var sceneIds = fullLayout._subplots[GL3D];
-    var size = fullLayout._size;
+export const toSVG = function(gd) {
+    const fullLayout = gd._fullLayout;
+    const sceneIds = fullLayout._subplots[GL3D];
+    const size = fullLayout._size;
 
-    for(var i = 0; i < sceneIds.length; i++) {
-        var sceneLayout = fullLayout[sceneIds[i]];
-        var domain = sceneLayout.domain;
-        var scene = sceneLayout._scene;
+    for(let i = 0; i < sceneIds.length; i++) {
+        const sceneLayout = fullLayout[sceneIds[i]];
+        const domain = sceneLayout.domain;
+        const scene = sceneLayout._scene;
 
-        var imageData = scene.toImage('png');
-        var image = fullLayout._glimages.append('svg:image');
+        const imageData = scene.toImage('png');
+        const image = fullLayout._glimages.append('svg:image');
 
         image.attr({
             xmlns: xmlnsNamespaces.svg,
@@ -124,21 +124,21 @@ export var toSVG = function(gd) {
     }
 };
 
-export var cleanId = function cleanId(id) {
+export const cleanId = function cleanId(id) {
     if(!id.match(/^scene[0-9]*$/)) return;
 
-    var sceneNum = id.slice(5);
+    let sceneNum = id.slice(5);
     if(sceneNum === '1') sceneNum = '';
 
     return SCENE + sceneNum;
 };
 
-export var updateFx = function(gd) {
-    var fullLayout = gd._fullLayout;
-    var subplotIds = fullLayout._subplots[GL3D];
+export const updateFx = function(gd) {
+    const fullLayout = gd._fullLayout;
+    const subplotIds = fullLayout._subplots[GL3D];
 
-    for(var i = 0; i < subplotIds.length; i++) {
-        var subplotObj = fullLayout[subplotIds[i]]._scene;
+    for(let i = 0; i < subplotIds.length; i++) {
+        const subplotObj = fullLayout[subplotIds[i]]._scene;
         subplotObj.updateFx(fullLayout.dragmode, fullLayout.hovermode);
     }
 };

@@ -3,27 +3,27 @@ import Lib from '../../lib/index.js';
 import Axes from '../../plots/cartesian/axes.js';
 import _index from '../../components/colorscale/index.js';
 const { extractOpts } = _index;
-var isArrayOrTypedArray = Lib.isArrayOrTypedArray;
+const isArrayOrTypedArray = Lib.isArrayOrTypedArray;
 
 export default function hoverPoints(pointData,  xval,  yval,  hovermode,  opts) {
     if(!opts) opts = {};
-    var isContour = opts.isContour;
+    const isContour = opts.isContour;
 
-    var cd0 = pointData.cd[0];
-    var trace = cd0.trace;
-    var xa = pointData.xa;
-    var ya = pointData.ya;
-    var x = cd0.x;
-    var y = cd0.y;
-    var z = cd0.z;
-    var xc = cd0.xCenter;
-    var yc = cd0.yCenter;
-    var zmask = cd0.zmask;
-    var zhoverformat = trace.zhoverformat;
-    var x2 = x;
-    var y2 = y;
+    const cd0 = pointData.cd[0];
+    const trace = cd0.trace;
+    const xa = pointData.xa;
+    const ya = pointData.ya;
+    const x = cd0.x;
+    const y = cd0.y;
+    const z = cd0.z;
+    const xc = cd0.xCenter;
+    const yc = cd0.yCenter;
+    const zmask = cd0.zmask;
+    const zhoverformat = trace.zhoverformat;
+    let x2 = x;
+    let y2 = y;
 
-    var xl, yl, nx, ny;
+    let xl, yl, nx, ny;
 
     if(pointData.index !== false) {
         try {
@@ -42,7 +42,7 @@ export default function hoverPoints(pointData,  xval,  yval,  hovermode,  opts) 
         return;
     } else {
         if(isContour) {
-            var i2;
+            let i2;
             x2 = [2 * x[0] - x[1]];
 
             for(i2 = 1; i2 < x.length; i2++) {
@@ -60,12 +60,12 @@ export default function hoverPoints(pointData,  xval,  yval,  hovermode,  opts) 
         ny = Math.max(0, Math.min(y2.length - 2, Lib.findBin(yval, y2)));
     }
 
-    var x0 = xa.c2p(x[nx]);
-    var x1 = xa.c2p(x[nx + 1]);
-    var y0 = ya.c2p(y[ny]);
-    var y1 = ya.c2p(y[ny + 1]);
+    let x0 = xa.c2p(x[nx]);
+    let x1 = xa.c2p(x[nx + 1]);
+    let y0 = ya.c2p(y[ny]);
+    let y1 = ya.c2p(y[ny + 1]);
 
-    var _x, _y;
+    let _x, _y;
     if(isContour) {
         _x = cd0.orig_x || x;
         _y = cd0.orig_y || y;
@@ -90,12 +90,12 @@ export default function hoverPoints(pointData,  xval,  yval,  hovermode,  opts) 
         }
     }
 
-    var zVal = z[ny][nx];
+    let zVal = z[ny][nx];
     if(zmask && !zmask[ny][nx]) zVal = undefined;
 
     if(zVal === undefined && !trace.hoverongaps) return;
 
-    var text;
+    let text;
     if(isArrayOrTypedArray(cd0.hovertext) && isArrayOrTypedArray(cd0.hovertext[ny])) {
         text = cd0.hovertext[ny][nx];
     } else if(isArrayOrTypedArray(cd0.text) && isArrayOrTypedArray(cd0.text[ny])) {
@@ -103,15 +103,15 @@ export default function hoverPoints(pointData,  xval,  yval,  hovermode,  opts) 
     }
 
     // dummy axis for formatting the z value
-    var cOpts = extractOpts(trace);
-    var dummyAx = {
+    const cOpts = extractOpts(trace);
+    const dummyAx = {
         type: 'linear',
         range: [cOpts.min, cOpts.max],
         hoverformat: zhoverformat,
         _separators: xa._separators,
         _numFormat: xa._numFormat
     };
-    var zLabel = Axes.tickText(dummyAx, zVal, 'hover').text;
+    const zLabel = Axes.tickText(dummyAx, zVal, 'hover').text;
 
     return [Lib.extendFlat(pointData, {
         index: trace._after2before ? trace._after2before[ny][nx] : [ny, nx],

@@ -15,40 +15,40 @@ import gup from '../../lib/gup.js';
 import svgTextUtils from '../../lib/svg_text_utils.js';
 import Registry from '../../registry.js';
 import alignmentConstants from '../../constants/alignment.js';
-var strTranslate = Lib.strTranslate;
-var strRotate = Lib.strRotate;
-var keyFun = gup.keyFun;
-var repeat = gup.repeat;
-var unwrap = gup.unwrap;
-var CAP_SHIFT = alignmentConstants.CAP_SHIFT;
-var LINE_SPACING = alignmentConstants.LINE_SPACING;
-var TEXTPAD = 3;
+const strTranslate = Lib.strTranslate;
+const strRotate = Lib.strRotate;
+const keyFun = gup.keyFun;
+const repeat = gup.repeat;
+const unwrap = gup.unwrap;
+const CAP_SHIFT = alignmentConstants.CAP_SHIFT;
+const LINE_SPACING = alignmentConstants.LINE_SPACING;
+const TEXTPAD = 3;
 
 // view models
 
 function sankeyModel(layout, d, traceIndex) {
-    var calcData = unwrap(d);
-    var trace = calcData.trace;
-    var domain = trace.domain;
-    var horizontal = trace.orientation === 'h';
-    var nodePad = trace.node.pad;
-    var nodeThickness = trace.node.thickness;
-    var nodeAlign = {
+    const calcData = unwrap(d);
+    const trace = calcData.trace;
+    const domain = trace.domain;
+    const horizontal = trace.orientation === 'h';
+    const nodePad = trace.node.pad;
+    const nodeThickness = trace.node.thickness;
+    const nodeAlign = {
         justify: d3Sankey.sankeyJustify,
         left: d3Sankey.sankeyLeft,
         right: d3Sankey.sankeyRight,
         center: d3Sankey.sankeyCenter
     }[trace.node.align];
 
-    var width = layout.width * (domain.x[1] - domain.x[0]);
-    var height = layout.height * (domain.y[1] - domain.y[0]);
+    const width = layout.width * (domain.x[1] - domain.x[0]);
+    const height = layout.height * (domain.y[1] - domain.y[0]);
 
-    var nodes = calcData._nodes;
-    var links = calcData._links;
-    var circular = calcData.circular;
+    let nodes = calcData._nodes;
+    const links = calcData._links;
+    const circular = calcData.circular;
 
     // Select Sankey generator
-    var sankey;
+    let sankey;
     if(circular) {
         sankey = d3SankeyCircular
             .sankeyCircular()
@@ -69,21 +69,21 @@ function sankeyModel(layout, d, traceIndex) {
       .nodes(nodes)
       .links(links);
 
-    var graph = sankey();
+    const graph = sankey();
 
     if(sankey.nodePadding() < nodePad) {
         Lib.warn('node.pad was reduced to ', sankey.nodePadding(), ' to fit within the figure.');
     }
 
     // Counters for nested loops
-    var i, j, k;
+    let i, j, k;
 
     // Create transient nodes for animations
-    for(var nodePointNumber in calcData._groupLookup) {
-        var groupIndex = parseInt(calcData._groupLookup[nodePointNumber]);
+    for(const nodePointNumber in calcData._groupLookup) {
+        const groupIndex = parseInt(calcData._groupLookup[nodePointNumber]);
 
         // Find node representing groupIndex
-        var groupingNode;
+        let groupingNode;
 
         for(i = 0; i < graph.nodes.length; i++) {
             if(graph.nodes[i].pointNumber === groupIndex) {
@@ -94,7 +94,7 @@ function sankeyModel(layout, d, traceIndex) {
         // If groupinNode is undefined, no links are targeting this group
         if(!groupingNode) continue;
 
-        var child = {
+        const child = {
             pointNumber: parseInt(nodePointNumber),
             x0: groupingNode.x0,
             x1: groupingNode.x1,
@@ -111,11 +111,11 @@ function sankeyModel(layout, d, traceIndex) {
 
     function computeLinkConcentrations() {
         for(i = 0; i < graph.nodes.length; i++) {
-            var node = graph.nodes[i];
+            const node = graph.nodes[i];
             // Links connecting the same two nodes are part of a flow
-            var flows: any = {};
-            var flowKey;
-            var link;
+            const flows: any = {};
+            let flowKey;
+            let link;
             for(j = 0; j < node.targetLinks.length; j++) {
                 link = node.targetLinks[j];
                 flowKey = link.source.pointNumber + ':' + link.target.pointNumber;
@@ -124,14 +124,14 @@ function sankeyModel(layout, d, traceIndex) {
             }
 
             // Compute statistics for each flow
-            var keys = Object.keys(flows);
+            const keys = Object.keys(flows);
             for(j = 0; j < keys.length; j++) {
                 flowKey = keys[j];
-                var flowLinks = flows[flowKey];
+                const flowLinks = flows[flowKey];
 
                 // Find the total size of the flow and total size per label
-                var total = 0;
-                var totalPerLabel: any = {};
+                let total = 0;
+                const totalPerLabel: any = {};
                 for(k = 0; k < flowLinks.length; k++) {
                     link = flowLinks[k];
                     if(!totalPerLabel[link.label]) totalPerLabel[link.label] = 0;
@@ -155,7 +155,7 @@ function sankeyModel(layout, d, traceIndex) {
             }
 
             // Gather statistics of all links at current node
-            var totalOutflow = 0;
+            let totalOutflow = 0;
             for(j = 0; j < node.sourceLinks.length; j++) {
                 totalOutflow += node.sourceLinks[j].value;
             }
@@ -164,7 +164,7 @@ function sankeyModel(layout, d, traceIndex) {
                 link.concentrationOut = link.value / totalOutflow;
             }
 
-            var totalInflow = 0;
+            let totalInflow = 0;
             for(j = 0; j < node.targetLinks.length; j++) {
                 totalInflow += node.targetLinks[j].value;
             }
@@ -180,11 +180,11 @@ function sankeyModel(layout, d, traceIndex) {
     // Push any overlapping nodes down.
     function resolveCollisionsTopToBottom(columns) {
         columns.forEach(function(nodes) {
-            var node;
-            var dy;
-            var y = 0;
-            var n = nodes.length;
-            var i;
+            let node;
+            let dy;
+            let y = 0;
+            const n = nodes.length;
+            let i;
             nodes.sort(function(a, b) {
                 return a.y0 - b.y0;
             });
@@ -204,7 +204,7 @@ function sankeyModel(layout, d, traceIndex) {
     // Group nodes into columns based on their x position
     function snapToColumns(nodes) {
         // Sort nodes by x position
-        var orderedNodes = nodes.map(function(n, i) {
+        const orderedNodes = nodes.map(function(n, i) {
             return {
                 x0: n.x0,
                 index: i
@@ -214,13 +214,13 @@ function sankeyModel(layout, d, traceIndex) {
             return a.x0 - b.x0;
         });
 
-        var columns = [];
-        var colNumber = -1;
-        var colX; // Position of column
-        var lastX = -Infinity; // Position of last node
-        var dx;
+        const columns = [];
+        let colNumber = -1;
+        let colX; // Position of column
+        let lastX = -Infinity; // Position of last node
+        let dx;
         for(i = 0; i < orderedNodes.length; i++) {
-            var node = nodes[orderedNodes[i].index];
+            const node = nodes[orderedNodes[i].index];
             // If the node does not overlap with the last one
             if(node.x0 > lastX + nodeThickness) {
                 // Start a new column
@@ -244,18 +244,18 @@ function sankeyModel(layout, d, traceIndex) {
     if(trace.node.x.length && trace.node.y.length) {
         for(i = 0; i < Math.min(trace.node.x.length, trace.node.y.length, graph.nodes.length); i++) {
             if(trace.node.x[i] && trace.node.y[i]) {
-                var pos = [trace.node.x[i] * width, trace.node.y[i] * height];
+                const pos = [trace.node.x[i] * width, trace.node.y[i] * height];
                 graph.nodes[i].x0 = pos[0] - nodeThickness / 2;
                 graph.nodes[i].x1 = pos[0] + nodeThickness / 2;
 
-                var nodeHeight = graph.nodes[i].y1 - graph.nodes[i].y0;
+                const nodeHeight = graph.nodes[i].y1 - graph.nodes[i].y0;
                 graph.nodes[i].y0 = pos[1] - nodeHeight / 2;
                 graph.nodes[i].y1 = pos[1] + nodeHeight / 2;
             }
         }
         if(trace.arrangement === 'snap') {
             nodes = graph.nodes;
-            var columns = snapToColumns(nodes);
+            const columns = snapToColumns(nodes);
             resolveCollisionsTopToBottom(columns);
         }
         // Update links
@@ -295,10 +295,10 @@ function sankeyModel(layout, d, traceIndex) {
 }
 
 function linkModel(d, l, i) {
-    var tc = tinycolor(l.color);
-    var htc = tinycolor(l.hovercolor);
-    var basicKey = l.source.label + '|' + l.target.label;
-    var key = basicKey + '__' + i;
+    const tc = tinycolor(l.color);
+    const htc = tinycolor(l.hovercolor);
+    const basicKey = l.source.label + '|' + l.target.label;
+    const key = basicKey + '__' + i;
 
     // for event data
     l.trace = d.trace;
@@ -329,12 +329,12 @@ function linkModel(d, l, i) {
 
 function createCircularClosedPathString(link, arrowLen) {
     // Using coordinates computed by d3-sankey-circular
-    var pathString = '';
-    var offset = link.width / 2;
-    var coords = link.circularPathData;
-    var isSourceBeforeTarget = coords.sourceX + coords.verticalBuffer < coords.targetX;
-    var isPathOverlapped = (coords.rightFullExtent - coords.rightLargeArcRadius - arrowLen) <= (coords.leftFullExtent - offset)
-     var diff = Math.abs(coords.rightFullExtent- coords.leftFullExtent - offset) < offset ;
+    let pathString = '';
+    const offset = link.width / 2;
+    const coords = link.circularPathData;
+    const isSourceBeforeTarget = coords.sourceX + coords.verticalBuffer < coords.targetX;
+    const isPathOverlapped = (coords.rightFullExtent - coords.rightLargeArcRadius - arrowLen) <= (coords.leftFullExtent - offset)
+     const diff = Math.abs(coords.rightFullExtent- coords.leftFullExtent - offset) < offset ;
     if (link.circularLinkType === 'top') {
         pathString =
             // start at the left of the target node
@@ -496,34 +496,34 @@ function createCircularClosedPathString(link, arrowLen) {
 }
 
 function linkPath() {
-    var curvature = 0.5;
+    const curvature = 0.5;
     function path(d) {
-        var arrowLen = d.linkArrowLength;
+        let arrowLen = d.linkArrowLength;
         if(d.link.circular) {
             return createCircularClosedPathString(d.link, arrowLen);
         } else {
-            var maxArrowLength = Math.abs((d.link.target.x0 - d.link.source.x1) / 2);
+            const maxArrowLength = Math.abs((d.link.target.x0 - d.link.source.x1) / 2);
             if(arrowLen > maxArrowLength) {
                 arrowLen = maxArrowLength;
             }
-            var x0 = d.link.source.x1;
-            var x1 = d.link.target.x0 - arrowLen;
-            var xi = interpolateNumber(x0, x1);
-            var x2 = xi(curvature);
-            var x3 = xi(1 - curvature);
-            var y0a = d.link.y0 - d.link.width / 2;
-            var y0b = d.link.y0 + d.link.width / 2;
-            var y1a = d.link.y1 - d.link.width / 2;
-            var y1b = d.link.y1 + d.link.width / 2;
-            var start = 'M' + x0 + ',' + y0a;
-            var upperCurve = 'C' + x2 + ',' + y0a +
+            const x0 = d.link.source.x1;
+            const x1 = d.link.target.x0 - arrowLen;
+            const xi = interpolateNumber(x0, x1);
+            const x2 = xi(curvature);
+            const x3 = xi(1 - curvature);
+            const y0a = d.link.y0 - d.link.width / 2;
+            const y0b = d.link.y0 + d.link.width / 2;
+            const y1a = d.link.y1 - d.link.width / 2;
+            const y1b = d.link.y1 + d.link.width / 2;
+            const start = 'M' + x0 + ',' + y0a;
+            const upperCurve = 'C' + x2 + ',' + y0a +
                 ' ' + x3 + ',' + y1a +
                 ' ' + x1 + ',' + y1a;
-            var lowerCurve = 'C' + x3 + ',' + y1b +
+            const lowerCurve = 'C' + x3 + ',' + y1b +
                 ' ' + x2 + ',' + y0b +
                 ' ' + x0 + ',' + y0b;
 
-            var rightEnd = arrowLen > 0 ? 'L' + (x1 + arrowLen) + ',' + (y1a + d.link.width / 2) : '';
+            let rightEnd = arrowLen > 0 ? 'L' + (x1 + arrowLen) + ',' + (y1a + d.link.width / 2) : '';
             rightEnd += 'L' + x1 + ',' + y1b;
             return start + upperCurve + rightEnd + lowerCurve + 'Z';
         }
@@ -532,15 +532,15 @@ function linkPath() {
 }
 
 function nodeModel(d, n) {
-    var tc = tinycolor(n.color);
-    var zoneThicknessPad = c.nodePadAcross;
-    var zoneLengthPad = d.nodePad / 2;
+    const tc = tinycolor(n.color);
+    const zoneThicknessPad = c.nodePadAcross;
+    const zoneLengthPad = d.nodePad / 2;
     n.dx = n.x1 - n.x0;
     n.dy = n.y1 - n.y0;
-    var visibleThickness = n.dx;
-    var visibleLength = Math.max(0.5, n.dy);
+    const visibleThickness = n.dx;
+    const visibleLength = Math.max(0.5, n.dy);
 
-    var key = 'node_' + n.pointNumber;
+    let key = 'node_' + n.pointNumber;
     // If it's a group, it's mutable and should be unique
     if(n.group) {
         key = Lib.randstr();
@@ -615,7 +615,7 @@ function sizeNode(rect) {
 function salientEnough(d) {return (d.link.width > 1 || d.linkLineWidth > 0);}
 
 function sankeyTransform(d) {
-    var offset = strTranslate(d.translateX, d.translateY);
+    const offset = strTranslate(d.translateX, d.translateY);
     return offset + (d.horizontal ? 'matrix(1 0 0 1 0 0)' : 'matrix(0 1 1 0 0 0)');
 }
 
@@ -654,7 +654,7 @@ function attachPointerEvents(selection: any, sankey: any, eventSet: any) {
 }
 
 function attachDragHandler(sankeyNode, sankeyLink, callbacks, gd) {
-    var dragBehavior = d3Drag()
+    const dragBehavior = d3Drag()
         .origin(function(d) {
             return {
                 x: d.node.x0 + d.visibleWidth / 2,
@@ -676,7 +676,7 @@ function attachDragHandler(sankeyNode, sankeyLink, callbacks, gd) {
                 d.interactionState.hovered = false;
             }
             if(d.arrangement === 'snap') {
-                var forceKey = d.traceId + '|' + d.key;
+                const forceKey = d.traceId + '|' + d.key;
                 if(d.forceLayouts[forceKey]) {
                     d.forceLayouts[forceKey].alpha(1);
                 } else { // make a forceLayout if needed
@@ -688,8 +688,8 @@ function attachDragHandler(sankeyNode, sankeyLink, callbacks, gd) {
 
         .on('drag', function(this: any, event: any, d: any) {
             if(d.arrangement === 'fixed') return;
-            var x = event.x;
-            var y = event.y;
+            const x = event.x;
+            let y = event.y;
             if(d.arrangement === 'snap') {
                 d.node.x0 = x - d.visibleWidth / 2;
                 d.node.x1 = x + d.visibleWidth / 2;
@@ -715,7 +715,7 @@ function attachDragHandler(sankeyNode, sankeyLink, callbacks, gd) {
         .on('end', function(this: any, event: any, d: any) {
             if(d.arrangement === 'fixed') return;
             d.interactionState.dragInProgress = false;
-            for(var i = 0; i < d.node.childrenNodes.length; i++) {
+            for(let i = 0; i < d.node.childrenNodes.length; i++) {
                 d.node.childrenNodes[i].x = d.node.x;
                 d.node.childrenNodes[i].y = d.node.y;
             }
@@ -730,7 +730,7 @@ function attachDragHandler(sankeyNode, sankeyLink, callbacks, gd) {
 function attachForce(sankeyNode, forceKey, d, gd) {
     // Attach force to nodes in the same column (same x coordinate)
     switchToForceFormat(d.graph.nodes);
-    var nodes = d.graph.nodes
+    const nodes = d.graph.nodes
         .filter(function(n) {return n.originalX === d.node.originalX;})
         // Filter out children
         .filter(function(n) {return !n.partOfGroup;});
@@ -747,12 +747,12 @@ function attachForce(sankeyNode, forceKey, d, gd) {
 
 function startForce(sankeyNode, sankeyLink, d, forceKey, gd) {
     window.requestAnimationFrame(function faster() {
-        var i;
+        let i;
         for(i = 0; i < c.forceTicksPerFrame; i++) {
             d.forceLayouts[forceKey].tick();
         }
 
-        var nodes = d.graph.nodes;
+        const nodes = d.graph.nodes;
         switchToSankeyFormat(nodes);
 
         d.sankey.update(d.graph);
@@ -763,7 +763,7 @@ function startForce(sankeyNode, sankeyLink, d, forceKey, gd) {
         } else {
             // Make sure the final x position is equal to its original value
             // because the force simulation will have numerical error
-            var x = d.node.originalX;
+            const x = d.node.originalX;
             d.node.x0 = x - d.visibleWidth / 2;
             d.node.x1 = x + d.visibleWidth / 2;
 
@@ -774,9 +774,9 @@ function startForce(sankeyNode, sankeyLink, d, forceKey, gd) {
 
 function snappingForce(sankeyNode, forceKey, nodes, d) {
     return function _snappingForce() {
-        var maxVelocity = 0;
-        for(var i = 0; i < nodes.length; i++) {
-            var n = nodes[i];
+        let maxVelocity = 0;
+        for(let i = 0; i < nodes.length; i++) {
+            const n = nodes[i];
             if(n === d.interactionState.dragInProgress) { // constrain node position to the dragging pointer
                 n.x = n.lastDraggedX;
                 n.y = n.lastDraggedY;
@@ -795,11 +795,11 @@ function snappingForce(sankeyNode, forceKey, nodes, d) {
 // basic data utilities
 
 function persistFinalNodePositions(d, gd) {
-    var x = [];
-    var y = [];
-    for(var i = 0; i < d.graph.nodes.length; i++) {
-        var nodeX = (d.graph.nodes[i].x0 + d.graph.nodes[i].x1) / 2;
-        var nodeY = (d.graph.nodes[i].y0 + d.graph.nodes[i].y1) / 2;
+    const x = [];
+    const y = [];
+    for(let i = 0; i < d.graph.nodes.length; i++) {
+        const nodeX = (d.graph.nodes[i].x0 + d.graph.nodes[i].x1) / 2;
+        const nodeY = (d.graph.nodes[i].y0 + d.graph.nodes[i].y1) / 2;
         x.push(nodeX / d.figure.width);
         y.push(nodeY / d.figure.height);
     }
@@ -813,8 +813,8 @@ function persistFinalNodePositions(d, gd) {
 }
 
 function persistOriginalPlace(nodes) {
-    var distinctLayerPositions = [];
-    var i;
+    const distinctLayerPositions = [];
+    let i;
     for(i = 0; i < nodes.length; i++) {
         nodes[i].originalX = (nodes[i].x0 + nodes[i].x1) / 2;
         nodes[i].originalY = (nodes[i].y0 + nodes[i].y1) / 2;
@@ -840,7 +840,7 @@ function sameLayer(d) {
 
 function switchToForceFormat(nodes) {
     // force uses x, y as centers
-    for(var i = 0; i < nodes.length; i++) {
+    for(let i = 0; i < nodes.length; i++) {
         nodes[i].y = (nodes[i].y0 + nodes[i].y1) / 2;
         nodes[i].x = (nodes[i].x0 + nodes[i].x1) / 2;
     }
@@ -848,7 +848,7 @@ function switchToForceFormat(nodes) {
 
 function switchToSankeyFormat(nodes) {
     // sankey uses x0, x1, y0, y1
-    for(var i = 0; i < nodes.length; i++) {
+    for(let i = 0; i < nodes.length; i++) {
         nodes[i].y0 = nodes[i].y - nodes[i].dy / 2;
         nodes[i].y1 = nodes[i].y0 + nodes[i].dy;
 
@@ -858,22 +858,22 @@ function switchToSankeyFormat(nodes) {
 }
 
 export default function(gd, svg, calcData, layout, callbacks) {
-    var isStatic = gd._context.staticPlot;
+    const isStatic = gd._context.staticPlot;
 
     // To prevent animation on first render
-    var firstRender = false;
+    let firstRender = false;
     Lib.ensureSingle(gd._fullLayout._infolayer, 'g', 'first-render', function() {
         firstRender = true;
     });
 
     // To prevent animation on dragging
-    var dragcover = gd._fullLayout._dragCover;
+    const dragcover = gd._fullLayout._dragCover;
 
-    var styledData = calcData
+    const styledData = calcData
             .filter(function(d) {return unwrap(d).trace.visible;})
             .map(sankeyModel.bind(null, layout));
 
-    var sankey = svg.selectAll('.' + c.cn.sankey)
+    const sankey = svg.selectAll('.' + c.cn.sankey)
         .data(styledData, keyFun);
 
     sankey.exit()
@@ -892,7 +892,7 @@ export default function(gd, svg, calcData, layout, callbacks) {
     sankey.each(function(d, i) {
         gd._fullData[i]._sankey = d;
         // Create dragbox if missing
-        var dragboxClassName = 'bgsankey-' + d.trace.uid + '-' + i;
+        const dragboxClassName = 'bgsankey-' + d.trace.uid + '-' + i;
         Lib.ensureSingle(gd._fullLayout._draggers, 'rect', dragboxClassName);
 
         gd._fullData[i]._bgRect = select('.' + dragboxClassName);
@@ -912,7 +912,7 @@ export default function(gd, svg, calcData, layout, callbacks) {
         .ease(c.ease).duration(c.duration)
         .attr('transform', sankeyTransform);
 
-    var sankeyLinks = sankey.selectAll('.' + c.cn.sankeyLinks)
+    const sankeyLinks = sankey.selectAll('.' + c.cn.sankeyLinks)
         .data(repeat, keyFun);
 
     sankeyLinks.enter()
@@ -920,9 +920,9 @@ export default function(gd, svg, calcData, layout, callbacks) {
         .classed(c.cn.sankeyLinks, true)
         .style('fill', 'none');
 
-    var sankeyLink = sankeyLinks.selectAll('.' + c.cn.sankeyLink)
+    const sankeyLink = sankeyLinks.selectAll('.' + c.cn.sankeyLink)
           .data(function(d) {
-              var links = d.graph.links;
+              const links = d.graph.links;
               return links
                 .filter(function(l) {return l.value;})
                 .map(linkModel.bind(null, d));
@@ -963,7 +963,7 @@ export default function(gd, svg, calcData, layout, callbacks) {
         .style('opacity', 0)
         .remove();
 
-    var sankeyNodeSet = sankey.selectAll('.' + c.cn.sankeyNodeSet)
+    const sankeyNodeSet = sankey.selectAll('.' + c.cn.sankeyNodeSet)
         .data(repeat, keyFun);
 
     sankeyNodeSet.enter()
@@ -979,9 +979,9 @@ export default function(gd, svg, calcData, layout, callbacks) {
             }
         });
 
-    var sankeyNode = sankeyNodeSet.selectAll('.' + c.cn.sankeyNode)
+    const sankeyNode = sankeyNodeSet.selectAll('.' + c.cn.sankeyNode)
         .data(function(d) {
-            var nodes = d.graph.nodes;
+            const nodes = d.graph.nodes;
             persistOriginalPlace(nodes);
             return nodes
               .map(nodeModel.bind(null, d));
@@ -1009,7 +1009,7 @@ export default function(gd, svg, calcData, layout, callbacks) {
         .style('opacity', 0)
         .remove();
 
-    var nodeRect = sankeyNode.selectAll('.' + c.cn.nodeRect)
+    const nodeRect = sankeyNode.selectAll('.' + c.cn.nodeRect)
         .data(repeat);
 
     nodeRect.enter()
@@ -1028,7 +1028,7 @@ export default function(gd, svg, calcData, layout, callbacks) {
         .ease(c.ease).duration(c.duration)
         .call(sizeNode);
 
-    var nodeLabel = sankeyNode.selectAll('.' + c.cn.nodeLabel)
+    const nodeLabel = sankeyNode.selectAll('.' + c.cn.nodeLabel)
         .data(repeat);
 
     nodeLabel.enter()
@@ -1040,7 +1040,7 @@ export default function(gd, svg, calcData, layout, callbacks) {
         .attr('data-notex', 1) // prohibit tex interpretation until we can handle tex and regular text together
         .text(function(d) { return d.node.label; })
         .each(function(d) {
-            var e = select(this);
+            const e = select(this);
             font(e, d.textFont);
             svgTextUtils.convertToTspans(e, gd);
         })
@@ -1048,15 +1048,15 @@ export default function(gd, svg, calcData, layout, callbacks) {
             return (d.horizontal && d.left) ? 'end' : 'start';
         })
         .attr('transform', function(d) {
-            var e = select(this);
+            const e = select(this);
             // how much to shift a multi-line label to center it vertically.
-            var nLines = svgTextUtils.lineCount(e);
-            var blockHeight = d.textFont.size * (
+            const nLines = svgTextUtils.lineCount(e);
+            const blockHeight = d.textFont.size * (
                 (nLines - 1) * LINE_SPACING - CAP_SHIFT
             );
 
-            var posX = d.nodeLineWidth / 2 + TEXTPAD;
-            var posY = ((d.horizontal ? d.visibleHeight : d.visibleWidth) - blockHeight) / 2;
+            let posX = d.nodeLineWidth / 2 + TEXTPAD;
+            const posY = ((d.horizontal ? d.visibleHeight : d.visibleWidth) - blockHeight) / 2;
             if(d.horizontal) {
                 if(d.left) {
                     posX = -posX;
@@ -1065,7 +1065,7 @@ export default function(gd, svg, calcData, layout, callbacks) {
                 }
             }
 
-            var flipText = d.horizontal ? '' : (
+            const flipText = d.horizontal ? '' : (
                 'scale(-1,1)' + strRotate(90)
             );
 

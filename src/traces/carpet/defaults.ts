@@ -11,7 +11,7 @@ export default function supplyDefaults(traceIn, traceOut, dfltColor, fullLayout)
 
     traceOut._clipPathId = 'clip' + traceOut.uid + 'carpet';
 
-    var defaultColor = coerce('color', colorAttrs.defaultLine);
+    const defaultColor = coerce('color', colorAttrs.defaultLine);
     Lib.coerceFont(coerce, 'font', fullLayout.font);
 
     coerce('carpet');
@@ -35,7 +35,7 @@ export default function supplyDefaults(traceIn, traceOut, dfltColor, fullLayout)
     // corresponds to b and the second to a. This sounds backwards but ends up making sense
     // the important part to know is that when you write y[j][i], j goes from 0 to b.length - 1
     // and i goes from 0 to a.length - 1.
-    var validData = handleXYDefaults(traceIn, traceOut, coerce);
+    const validData = handleXYDefaults(traceIn, traceOut, coerce);
     if(!validData) {
         traceOut.visible = false;
     }

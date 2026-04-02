@@ -12,11 +12,11 @@ const { overrideAll } = _edit_types;
 import _constants from './constants.js';
 const { DASHES } = _constants;
 
-var scatterLineAttrs = scatterAttrs.line;
-var scatterMarkerAttrs = scatterAttrs.marker;
-var scatterMarkerLineAttrs = scatterMarkerAttrs.line;
+const scatterLineAttrs = scatterAttrs.line;
+const scatterMarkerAttrs = scatterAttrs.marker;
+const scatterMarkerLineAttrs = scatterMarkerAttrs.line;
 
-var attrs = overrideAll(
+const attrs = overrideAll(
     {
         x: scatterAttrs.x,
         x0: scatterAttrs.x0,

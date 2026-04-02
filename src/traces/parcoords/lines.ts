@@ -2,7 +2,7 @@ import _constants from './constants.js';
 const { maxDimensionCount: maxDim } = _constants;
 import Lib from '../../lib/index.js';
 
-var vertexShaderSource = [
+const vertexShaderSource = [
     'precision highp float;',
     '',
     'varying vec4 fragColor;',
@@ -128,7 +128,7 @@ var vertexShaderSource = [
     '}'
 ].join('\n');
 
-var fragmentShaderSource = [
+const fragmentShaderSource = [
     'precision highp float;',
     '',
     'varying vec4 fragColor;',
@@ -139,15 +139,15 @@ var fragmentShaderSource = [
 ].join('\n');
 
 // don't change; otherwise near/far plane lines are lost
-var depthLimitEpsilon = 1e-6;
+const depthLimitEpsilon = 1e-6;
 
 // precision of multiselect is the full range divided into this many parts
-var maskHeight = 2048;
+const maskHeight = 2048;
 
-var dummyPixel = new Uint8Array(4);
-var dataPixel = new Uint8Array(4);
+const dummyPixel = new Uint8Array(4);
+const dataPixel = new Uint8Array(4);
 
-var paletteTextureConfig = {
+const paletteTextureConfig = {
     shape: [256, 1],
     format: 'rgba',
     type: 'uint8',
@@ -166,17 +166,17 @@ function ensureDraw(regl) {
 }
 
 function clear(regl, x, y, width, height) {
-    var gl = regl._gl;
+    const gl = regl._gl;
     gl.enable(gl.SCISSOR_TEST);
     gl.scissor(x, y, width, height);
     regl.clear({color: [0, 0, 0, 0], depth: 1}); // clearing is done in scissored panel only
 }
 
 function renderBlock(regl, glAes, renderState, blockLineCount, sampleCount, item) {
-    var rafKey = item.key;
+    const rafKey = item.key;
 
     function render(blockNumber) {
-        var count = Math.min(blockLineCount, sampleCount - blockNumber * blockLineCount);
+        const count = Math.min(blockLineCount, sampleCount - blockNumber * blockLineCount);
 
         if(blockNumber === 0) {
             // stop drawing possibly stale glyphs before clearing
@@ -219,8 +219,8 @@ function adjustDepth(d) {
 }
 
 function palette(unitToColor, opacity) {
-    var result = new Array(256);
-    for(var i = 0; i < 256; i++) {
+    const result = new Array(256);
+    for(let i = 0; i < 256; i++) {
         result[i] = unitToColor(i / 255).concat(opacity);
     }
     return result;
@@ -236,10 +236,10 @@ function calcPickColor(i, rgbIndex) {
 }
 
 function makePoints(sampleCount, dims, color) {
-    var points = new Array(sampleCount * (maxDim + 4));
-    var n = 0;
-    for(var i = 0; i < sampleCount; i++) {
-        for(var k = 0; k < maxDim; k++) {
+    const points = new Array(sampleCount * (maxDim + 4));
+    let n = 0;
+    for(let i = 0; i < sampleCount; i++) {
+        for(let k = 0; k < maxDim; k++) {
             points[n++] = (k < dims.length) ? dims[k].paddedUnitValues[i] : 0.5;
         }
         points[n++] = calcPickColor(i, 2);
@@ -251,13 +251,13 @@ function makePoints(sampleCount, dims, color) {
 }
 
 function makeVecAttr(vecIndex, sampleCount, points) {
-    var pointPairs = new Array(sampleCount * 8);
-    var n = 0;
-    for(var i = 0; i < sampleCount; i++) {
-        for(var j = 0; j < 2; j++) {
-            for(var k = 0; k < 4; k++) {
-                var q = vecIndex * 4 + k;
-                var v = points[i * 64 + q];
+    const pointPairs = new Array(sampleCount * 8);
+    let n = 0;
+    for(let i = 0; i < sampleCount; i++) {
+        for(let j = 0; j < 2; j++) {
+            for(let k = 0; k < 4; k++) {
+                const q = vecIndex * 4 + k;
+                let v = points[i * 64 + q];
                 if(q === 63 && j === 0) {
                     v *= -1;
                 }
@@ -269,7 +269,7 @@ function makeVecAttr(vecIndex, sampleCount, points) {
 }
 
 function pad2(num) {
-    var s = '0' + num;
+    const s = '0' + num;
     return s.slice(-2);
 }
 
@@ -278,14 +278,14 @@ function getAttrName(i) {
 }
 
 function setAttributes(attributes, sampleCount, points) {
-    for(var i = 0; i <= maxDim; i += 4) {
+    for(let i = 0; i <= maxDim; i += 4) {
         attributes[getAttrName(i)](makeVecAttr(i / 4, sampleCount, points));
     }
 }
 
 function emptyAttributes(regl) {
-    var attributes: any = {};
-    for(var i = 0; i <= maxDim; i += 4) {
+    const attributes: any = {};
+    for(let i = 0; i <= maxDim; i += 4) {
         attributes[getAttrName(i)] = regl.buffer({usage: 'dynamic', type: 'float', data: new Uint8Array(0)});
     }
     return attributes;
@@ -295,8 +295,8 @@ function makeItem(
     model, leftmost, rightmost, itemNumber, i0, i1, x, y, panelSizeX, panelSizeY,
     crossfilterDimensionIndex, drwLayer, constraints, plotGlPixelRatio
 ) {
-    var dims = [[], []];
-    for(var k = 0; k < 64; k++) {
+    const dims = [[], []];
+    for(let k = 0; k < 64; k++) {
         dims[0][k] = (k === i0) ? 1 : 0;
         dims[1][k] = (k === i1) ? 1 : 0;
     }
@@ -304,19 +304,19 @@ function makeItem(
     y *= plotGlPixelRatio;
     panelSizeX *= plotGlPixelRatio;
     panelSizeY *= plotGlPixelRatio;
-    var overdrag = model.lines.canvasOverdrag * plotGlPixelRatio;
-    var domain = model.domain;
-    var canvasWidth = model.canvasWidth * plotGlPixelRatio;
-    var canvasHeight = model.canvasHeight * plotGlPixelRatio;
-    var padL = model.pad.l * plotGlPixelRatio;
-    var padB = model.pad.b * plotGlPixelRatio;
-    var layoutHeight = model.layoutHeight * plotGlPixelRatio;
-    var layoutWidth = model.layoutWidth * plotGlPixelRatio;
+    const overdrag = model.lines.canvasOverdrag * plotGlPixelRatio;
+    const domain = model.domain;
+    const canvasWidth = model.canvasWidth * plotGlPixelRatio;
+    const canvasHeight = model.canvasHeight * plotGlPixelRatio;
+    const padL = model.pad.l * plotGlPixelRatio;
+    const padB = model.pad.b * plotGlPixelRatio;
+    const layoutHeight = model.layoutHeight * plotGlPixelRatio;
+    const layoutWidth = model.layoutWidth * plotGlPixelRatio;
 
-    var deselectedLinesColor = model.deselectedLines.color;
-    var deselectedLinesOpacity = model.deselectedLines.opacity;
+    const deselectedLinesColor = model.deselectedLines.color;
+    const deselectedLinesOpacity = model.deselectedLines.opacity;
 
-    var itemModel = Lib.extendFlat({
+    const itemModel = Lib.extendFlat({
         key: crossfilterDimensionIndex,
         resolution: [canvasWidth, canvasHeight],
         viewBoxPos: [x + overdrag, y],
@@ -358,9 +358,9 @@ function makeItem(
 }
 
 function expandedPixelRange(bounds) {
-    var dh = maskHeight - 1;
-    var a = Math.max(0, Math.floor(bounds[0] * dh), 0);
-    var b = Math.min(dh, Math.ceil(bounds[1] * dh), dh);
+    const dh = maskHeight - 1;
+    const a = Math.max(0, Math.floor(bounds[0] * dh), 0);
+    const b = Math.min(dh, Math.ceil(bounds[1] * dh), dh);
     return [
         Math.min(a, b),
         Math.max(a, b)
@@ -369,14 +369,14 @@ function expandedPixelRange(bounds) {
 
 export default function(canvasGL, d) {
     // context & pick describe which canvas we're talking about - won't change with new data
-    var isContext = d.context;
-    var isPick = d.pick;
+    const isContext = d.context;
+    const isPick = d.pick;
 
-    var regl = d.regl;
-    var gl = regl._gl;
-    var supportedLineWidth = gl.getParameter(gl.ALIASED_LINE_WIDTH_RANGE);
+    const regl = d.regl;
+    const gl = regl._gl;
+    const supportedLineWidth = gl.getParameter(gl.ALIASED_LINE_WIDTH_RANGE);
     // ensure here that plotGlPixelRatio is within supported range; otherwise regl throws error
-    var plotGlPixelRatio = Math.max(
+    const plotGlPixelRatio = Math.max(
         supportedLineWidth[0],
         Math.min(
             supportedLineWidth[1],
@@ -384,26 +384,26 @@ export default function(canvasGL, d) {
         )
     );
 
-    var renderState = {
+    const renderState = {
         currentRafs: {},
         drawCompleted: true,
         clearOnly: false
     };
 
     // state to be set by update and used later
-    var model;
-    var vm;
-    var initialDims;
-    var sampleCount;
-    var attributes = emptyAttributes(regl);
-    var maskTexture;
-    var paletteTexture = regl.texture(paletteTextureConfig);
+    let model;
+    let vm;
+    let initialDims;
+    let sampleCount;
+    const attributes = emptyAttributes(regl);
+    let maskTexture;
+    let paletteTexture = regl.texture(paletteTextureConfig);
 
-    var prevAxisOrder = [];
+    const prevAxisOrder = [];
 
     update(d);
 
-    var glAes = regl({
+    const glAes = regl({
 
         profile: false,
 
@@ -497,10 +497,10 @@ export default function(canvasGL, d) {
         initialDims = vm.dimensions.slice();
         sampleCount = initialDims[0] ? initialDims[0].values.length : 0;
 
-        var lines = model.lines;
-        var color = isPick ? lines.color.map(function(_, i) {return i / lines.color.length;}) : lines.color;
+        const lines = model.lines;
+        const color = isPick ? lines.color.map(function(_, i) {return i / lines.color.length;}) : lines.color;
 
-        var points = makePoints(sampleCount, initialDims, color);
+        const points = makePoints(sampleCount, initialDims, color);
         setAttributes(attributes, sampleCount, points);
 
         if(!isContext && !isPick) {
@@ -511,34 +511,34 @@ export default function(canvasGL, d) {
     }
 
     function makeConstraints(isContext) {
-        var i, j, k;
+        let i, j, k;
 
-        var limits = [[], []];
+        const limits = [[], []];
         for(k = 0; k < 64; k++) {
-            var p = (!isContext && k < initialDims.length) ?
+            const p = (!isContext && k < initialDims.length) ?
                 initialDims[k].brush.filter.getBounds() : [-Infinity, Infinity];
 
             limits[0][k] = p[0];
             limits[1][k] = p[1];
         }
 
-        var len = maskHeight * 8;
-        var mask = new Array(len);
+        const len = maskHeight * 8;
+        const mask = new Array(len);
         for(i = 0; i < len; i++) {
             mask[i] = 255;
         }
         if(!isContext) {
             for(i = 0; i < initialDims.length; i++) {
-                var u = i % 8;
-                var v = (i - u) / 8;
-                var bitMask = Math.pow(2, u);
-                var dim = initialDims[i];
-                var ranges = dim.brush.filter.get();
+                const u = i % 8;
+                const v = (i - u) / 8;
+                const bitMask = Math.pow(2, u);
+                const dim = initialDims[i];
+                const ranges = dim.brush.filter.get();
                 if(ranges.length < 2) continue; // bail if the bounding box based filter is sufficient
 
-                var prevEnd = expandedPixelRange(ranges[0])[1];
+                let prevEnd = expandedPixelRange(ranges[0])[1];
                 for(j = 1; j < ranges.length; j++) {
-                    var nextRange = expandedPixelRange(ranges[j]);
+                    const nextRange = expandedPixelRange(ranges[j]);
                     for(k = prevEnd + 1; k < nextRange[0]; k++) {
                         mask[k * 8 + v] &= ~bitMask;
                     }
@@ -547,7 +547,7 @@ export default function(canvasGL, d) {
             }
         }
 
-        var textureData = {
+        const textureData = {
             // 8 units x 8 bits = 64 bits, just sufficient for the almost 64 dimensions we support
             shape: [8, maskHeight],
             format: 'alpha',
@@ -574,13 +574,13 @@ export default function(canvasGL, d) {
     }
 
     function renderGLParcoords(panels, setChanged, clearOnly) {
-        var panelCount = panels.length;
-        var i;
+        const panelCount = panels.length;
+        let i;
 
-        var leftmost;
-        var rightmost;
-        var lowestX = Infinity;
-        var highestX = -Infinity;
+        let leftmost;
+        let rightmost;
+        let lowestX = Infinity;
+        let highestX = -Infinity;
 
         for(i = 0; i < panelCount; i++) {
             if(panels[i].dim0.canvasX < lowestX) {
@@ -597,16 +597,16 @@ export default function(canvasGL, d) {
             // clear canvas here, as the panel iteration below will not enter the loop body
             clear(regl, 0, 0, model.canvasWidth, model.canvasHeight);
         }
-        var constraints = makeConstraints(isContext);
+        const constraints = makeConstraints(isContext);
 
         for(i = 0; i < panelCount; i++) {
-            var p = panels[i];
-            var i0 = p.dim0.crossfilterDimensionIndex;
-            var i1 = p.dim1.crossfilterDimensionIndex;
-            var x = p.canvasX;
-            var y = p.canvasY;
-            var nextX = x + p.panelSizeX;
-            var plotGlPixelRatio = p.plotGlPixelRatio;
+            const p = panels[i];
+            const i0 = p.dim0.crossfilterDimensionIndex;
+            const i1 = p.dim1.crossfilterDimensionIndex;
+            const x = p.canvasX;
+            const y = p.canvasY;
+            const nextX = x + p.panelSizeX;
+            const plotGlPixelRatio = p.plotGlPixelRatio;
             if(setChanged ||
                 !prevAxisOrder[i0] ||
                 prevAxisOrder[i0][0] !== x ||
@@ -614,7 +614,7 @@ export default function(canvasGL, d) {
             ) {
                 prevAxisOrder[i0] = [x, nextX];
 
-                var item = makeItem(
+                const item = makeItem(
                     model,
                     leftmost, rightmost, i, i0, i1, x, y,
                     p.panelSizeX, p.panelSizeY,
@@ -626,7 +626,7 @@ export default function(canvasGL, d) {
 
                 renderState.clearOnly = clearOnly;
 
-                var blockLineCount = setChanged ? model.lines.blockLineCount : sampleCount;
+                const blockLineCount = setChanged ? model.lines.blockLineCount : sampleCount;
                 renderBlock(
                     regl, glAes, renderState, blockLineCount, sampleCount, item
                 );
@@ -646,7 +646,7 @@ export default function(canvasGL, d) {
     }
 
     function readPixels(canvasX, canvasY, width, height) {
-        var pixelArray = new Uint8Array(4 * width * height);
+        const pixelArray = new Uint8Array(4 * width * height);
         regl.read({
             x: canvasX,
             y: canvasY,
@@ -661,7 +661,7 @@ export default function(canvasGL, d) {
         canvasGL.style['pointer-events'] = 'none';
         paletteTexture.destroy();
         if(maskTexture) maskTexture.destroy();
-        for(var k in attributes) attributes[k].destroy();
+        for(const k in attributes) attributes[k].destroy();
     }
 
     return {

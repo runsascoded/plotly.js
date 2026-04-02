@@ -15,7 +15,7 @@ function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace, defaultColor: 
         return Lib.coerce(traceIn, traceOut, attributes, attr, dflt);
     }
 
-    var len = handleXYDefaults(traceIn, traceOut, layout, coerce);
+    const len = handleXYDefaults(traceIn, traceOut, layout, coerce);
     if (!len) {
         traceOut.visible = false;
         return;
@@ -37,7 +37,7 @@ function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace, defaultColor: 
     coerce('hovertemplate');
     coerce('hovertemplatefallback');
 
-    var textposition = coerce('textposition');
+    const textposition = coerce('textposition');
     handleText(traceIn, traceOut, layout, coerce, textposition, {
         moduleHasSelected: true,
         moduleHasUnselected: true,
@@ -48,10 +48,10 @@ function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace, defaultColor: 
     });
 
     handleStyleDefaults(traceIn, traceOut, coerce, defaultColor, layout);
-    var lineColor = (traceOut.marker.line || {}).color;
+    const lineColor = (traceOut.marker.line || {}).color;
 
     // override defaultColor for error bars with defaultLine
-    var errorBarsSupplyDefaults = Registry.getComponentMethod('errorbars', 'supplyDefaults');
+    const errorBarsSupplyDefaults = Registry.getComponentMethod('errorbars', 'supplyDefaults');
     errorBarsSupplyDefaults(traceIn, traceOut, lineColor || Color.defaultLine, { axis: 'y' });
     errorBarsSupplyDefaults(traceIn, traceOut, lineColor || Color.defaultLine, { axis: 'x', inherit: 'y' });
 
@@ -59,20 +59,20 @@ function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace, defaultColor: 
 }
 
 function crossTraceDefaults(fullData: FullTrace[], fullLayout: FullLayout): void {
-    var traceIn, traceOut;
+    let traceIn, traceOut;
 
     function coerce(attr: string, dflt?: any) {
         return Lib.coerce(traceOut._input, traceOut, attributes, attr, dflt);
     }
 
-    for (var i = 0; i < fullData.length; i++) {
+    for (let i = 0; i < fullData.length; i++) {
         traceOut = fullData[i];
 
         if (traceOut.type === 'bar') {
             traceIn = traceOut._input;
             // `marker.cornerradius` needs to be coerced here rather than in handleStyleDefaults()
             // because it needs to happen after `layout.barcornerradius` has been coerced
-            var r = coerce('marker.cornerradius', fullLayout.barcornerradius);
+            const r = coerce('marker.cornerradius', fullLayout.barcornerradius);
             if (traceOut.marker) {
                 traceOut.marker.cornerradius = validateCornerradius(r);
             }
@@ -105,35 +105,35 @@ function validateCornerradius(r: any): any {
 
 function handleText(traceIn: InputTrace, traceOut: FullTrace, layout: FullLayout, coerce: any, textposition: any, opts?: any): void {
     opts = opts || {};
-    var moduleHasSelected = !(opts.moduleHasSelected === false);
-    var moduleHasUnselected = !(opts.moduleHasUnselected === false);
-    var moduleHasConstrain = !(opts.moduleHasConstrain === false);
-    var moduleHasCliponaxis = !(opts.moduleHasCliponaxis === false);
-    var moduleHasTextangle = !(opts.moduleHasTextangle === false);
-    var moduleHasInsideanchor = !(opts.moduleHasInsideanchor === false);
-    var hasPathbar = !!opts.hasPathbar;
+    const moduleHasSelected = !(opts.moduleHasSelected === false);
+    const moduleHasUnselected = !(opts.moduleHasUnselected === false);
+    const moduleHasConstrain = !(opts.moduleHasConstrain === false);
+    const moduleHasCliponaxis = !(opts.moduleHasCliponaxis === false);
+    const moduleHasTextangle = !(opts.moduleHasTextangle === false);
+    const moduleHasInsideanchor = !(opts.moduleHasInsideanchor === false);
+    const hasPathbar = !!opts.hasPathbar;
 
-    var hasBoth = Array.isArray(textposition) || textposition === 'auto';
-    var hasInside = hasBoth || textposition === 'inside';
-    var hasOutside = hasBoth || textposition === 'outside';
+    const hasBoth = Array.isArray(textposition) || textposition === 'auto';
+    const hasInside = hasBoth || textposition === 'inside';
+    const hasOutside = hasBoth || textposition === 'outside';
 
     if (hasInside || hasOutside) {
-        var dfltFont = coerceFont(coerce, 'textfont', layout.font);
+        const dfltFont = coerceFont(coerce, 'textfont', layout.font);
 
         // Note that coercing `insidetextfont` is always needed –
         // even if `textposition` is `outside` for each trace – since
         // an outside label can become an inside one, for example because
         // of a bar being stacked on top of it.
-        var insideTextFontDefault = extendFlat({}, dfltFont);
-        var isTraceTextfontColorSet = traceIn.textfont && traceIn.textfont.color;
-        var isColorInheritedFromLayoutFont = !isTraceTextfontColorSet;
+        const insideTextFontDefault = extendFlat({}, dfltFont);
+        const isTraceTextfontColorSet = traceIn.textfont && traceIn.textfont.color;
+        const isColorInheritedFromLayoutFont = !isTraceTextfontColorSet;
         if (isColorInheritedFromLayoutFont) {
             delete insideTextFontDefault.color;
         }
         coerceFont(coerce, 'insidetextfont', insideTextFontDefault);
 
         if (hasPathbar) {
-            var pathbarTextFontDefault = extendFlat({}, dfltFont);
+            const pathbarTextFontDefault = extendFlat({}, dfltFont);
             if (isColorInheritedFromLayoutFont) {
                 delete pathbarTextFontDefault.color;
             }

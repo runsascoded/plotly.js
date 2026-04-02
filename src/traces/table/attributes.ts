@@ -7,6 +7,6 @@ import { attributes as domainAttrs } from '../../plots/domain.js';
 import _axis_format_attributes from '../../plots/cartesian/axis_format_attributes.js';
 const { descriptionOnlyNumbers } = _axis_format_attributes;
 
-var attrs = {};
+const attrs = {};
 
 export default attrs;

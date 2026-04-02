@@ -11,9 +11,9 @@ import svgTextUtils from '../../lib/svg_text_utils.js';
 import interactConstants from '../../constants/interactions.js';
 import _alignment from '../../constants/alignment.js';
 const { OPPOSITE_SIDE } = _alignment;
-var numStripRE = / [XY][0-9]* /;
-var SUBTITLE_PADDING_MATHJAX_EM = 1.6;
-var SUBTITLE_PADDING_EM = 1.6;
+const numStripRE = / [XY][0-9]* /;
+const SUBTITLE_PADDING_MATHJAX_EM = 1.6;
+const SUBTITLE_PADDING_EM = 1.6;
 
 /**
  * Titles - (re)draw titles on the axes and plot:
@@ -48,60 +48,60 @@ var SUBTITLE_PADDING_EM = 1.6;
  *  @return {selection} d3 selection of title container group
  */
 function draw(gd: GraphDiv, titleClass: string, options: any): any {
-    var fullLayout = gd._fullLayout;
+    const fullLayout = gd._fullLayout;
 
-    var cont = options.propContainer;
-    var prop = options.propName;
-    var placeholder = options.placeholder;
-    var traceIndex = options.traceIndex;
-    var avoid = options.avoid || {};
-    var attributes = options.attributes;
-    var transform = options.transform;
-    var group = options.containerGroup;
-    var opacity = 1;
-    var title = cont.title;
-    var txt = (title && title.text ? title.text : '').trim();
-    var titleIsPlaceholder = false;
+    const cont = options.propContainer;
+    const prop = options.propName;
+    const placeholder = options.placeholder;
+    const traceIndex = options.traceIndex;
+    const avoid = options.avoid || {};
+    const attributes = options.attributes;
+    let transform = options.transform;
+    let group = options.containerGroup;
+    let opacity = 1;
+    const title = cont.title;
+    let txt = (title && title.text ? title.text : '').trim();
+    let titleIsPlaceholder = false;
 
-    var titleFont = title && title.font ? title.font : {};
-    var fontFamily = titleFont.family;
-    var fontSize = titleFont.size;
-    var fontColor = titleFont.color;
-    var fontWeight = titleFont.weight;
-    var fontStyle = titleFont.style;
-    var fontVariant = titleFont.variant;
-    var fontTextcase = titleFont.textcase;
-    var fontLineposition = titleFont.lineposition;
-    var fontShadow = titleFont.shadow;
+    const titleFont = title && title.font ? title.font : {};
+    const fontFamily = titleFont.family;
+    const fontSize = titleFont.size;
+    const fontColor = titleFont.color;
+    const fontWeight = titleFont.weight;
+    const fontStyle = titleFont.style;
+    const fontVariant = titleFont.variant;
+    const fontTextcase = titleFont.textcase;
+    const fontLineposition = titleFont.lineposition;
+    const fontShadow = titleFont.shadow;
 
     // Get subtitle properties
-    var subtitleProp = options.subtitlePropName;
-    var subtitleEnabled = !!subtitleProp;
-    var subtitlePlaceholder = options.subtitlePlaceholder;
-    var subtitle = (cont.title || {}).subtitle || {text: '', font: {}};
-    var subtitleTxt = (subtitle.text || '').trim();
-    var subtitleIsPlaceholder = false;
-    var subtitleOpacity = 1;
+    const subtitleProp = options.subtitlePropName;
+    const subtitleEnabled = !!subtitleProp;
+    const subtitlePlaceholder = options.subtitlePlaceholder;
+    const subtitle = (cont.title || {}).subtitle || {text: '', font: {}};
+    let subtitleTxt = (subtitle.text || '').trim();
+    let subtitleIsPlaceholder = false;
+    let subtitleOpacity = 1;
 
-    var subtitleFont = subtitle.font;
-    var subFontFamily = subtitleFont.family;
-    var subFontSize = subtitleFont.size;
-    var subFontColor = subtitleFont.color;
-    var subFontWeight = subtitleFont.weight;
-    var subFontStyle = subtitleFont.style;
-    var subFontVariant = subtitleFont.variant;
-    var subFontTextcase = subtitleFont.textcase;
-    var subFontLineposition = subtitleFont.lineposition;
-    var subFontShadow = subtitleFont.shadow;
+    const subtitleFont = subtitle.font;
+    const subFontFamily = subtitleFont.family;
+    const subFontSize = subtitleFont.size;
+    const subFontColor = subtitleFont.color;
+    const subFontWeight = subtitleFont.weight;
+    const subFontStyle = subtitleFont.style;
+    const subFontVariant = subtitleFont.variant;
+    const subFontTextcase = subtitleFont.textcase;
+    const subFontLineposition = subtitleFont.lineposition;
+    const subFontShadow = subtitleFont.shadow;
 
     // only make this title editable if we positively identify its property
     // as one that has editing enabled.
     // Subtitle is editable if and only if title is editable
-    var editAttr: string | undefined;
+    let editAttr: string | undefined;
     if(prop === 'title.text') editAttr = 'titleText';
     else if(prop.indexOf('axis') !== -1) editAttr = 'axisTitleText';
     else if(prop.indexOf('colorbar') !== -1) editAttr = 'colorbarTitleText';
-    var editable = gd._context.edits[editAttr];
+    const editable = gd._context.edits[editAttr];
 
     function matchesPlaceholder(text: string | undefined, placeholder: string | undefined): boolean {
         if(text === undefined || placeholder === undefined) return false;
@@ -134,15 +134,15 @@ function draw(gd: GraphDiv, titleClass: string, options: any): any {
         txt = templateString(txt, fullLayout._meta);
     }
 
-    var elShouldExist = txt || subtitleTxt || editable;
+    const elShouldExist = txt || subtitleTxt || editable;
 
-    var hColorbarMoveTitle: any;
+    let hColorbarMoveTitle: any;
     if(!group) {
         group = ensureSingle(fullLayout._infolayer, 'g', 'g-' + titleClass);
         hColorbarMoveTitle = fullLayout._hColorbarMoveTitle;
     }
 
-    var el = group.selectAll('text.' + titleClass)
+    const el = group.selectAll('text.' + titleClass)
         .data(elShouldExist ? [0] : []);
     el.enter().append('text');
     el.text(txt)
@@ -154,9 +154,9 @@ function draw(gd: GraphDiv, titleClass: string, options: any): any {
         .attr('class', titleClass);
     el.exit().remove();
 
-    var subtitleEl: any = null;
-    var subtitleClass = titleClass + '-subtitle';
-    var subtitleElShouldExist = subtitleTxt || editable;
+    let subtitleEl: any = null;
+    const subtitleClass = titleClass + '-subtitle';
+    const subtitleElShouldExist = subtitleTxt || editable;
 
     if(subtitleEnabled) {
         subtitleEl = group.selectAll('text.' + subtitleClass)
@@ -173,10 +173,10 @@ function draw(gd: GraphDiv, titleClass: string, options: any): any {
     }
 
     function drawTitle(titleAndSubtitleEls: any): any {
-        var titleEl = titleAndSubtitleEls.title;
-        var subtitleEl = titleAndSubtitleEls.subtitle;
+        const titleEl = titleAndSubtitleEls.title;
+        const subtitleEl = titleAndSubtitleEls.subtitle;
 
-        var transformVal: string | null;
+        let transformVal: string | null;
 
         if(!transform && hColorbarMoveTitle) {
             transform = {};
@@ -202,12 +202,12 @@ function draw(gd: GraphDiv, titleClass: string, options: any): any {
         function adjustSubtitlePosition(titleElMathGroup: any): void {
             if(!titleElMathGroup) return;
 
-            var subtitleElement = select(titleElMathGroup.node().parentNode).select('.' + subtitleClass);
+            const subtitleElement = select(titleElMathGroup.node().parentNode).select('.' + subtitleClass);
             if(!subtitleElement.empty()) {
-                var titleElMathBbox = titleElMathGroup.node().getBBox();
+                const titleElMathBbox = titleElMathGroup.node().getBBox();
                 if(titleElMathBbox.height) {
                     // Position subtitle based on bottom of Mathjax title
-                    var subtitleY = titleElMathBbox.y + titleElMathBbox.height + (SUBTITLE_PADDING_MATHJAX_EM * subFontSize);
+                    const subtitleY = titleElMathBbox.y + titleElMathBbox.height + (SUBTITLE_PADDING_MATHJAX_EM * subFontSize);
                     subtitleElement.attr('y', subtitleY);
                 }
             }
@@ -232,12 +232,12 @@ function draw(gd: GraphDiv, titleClass: string, options: any): any {
             // Set subtitle y position based on bottom of title
             // We need to check the Mathjax group as well, in case the Mathjax
             // has already rendered
-            var titleElMathGroup = group.select('.' + titleClass + '-math-group');
-            var titleElBbox = titleEl.node().getBBox();
-            var titleElMathBbox = titleElMathGroup.node() ? titleElMathGroup.node().getBBox() : undefined;
-            var subtitleY = titleElMathBbox ? titleElMathBbox.y + titleElMathBbox.height + (SUBTITLE_PADDING_MATHJAX_EM * subFontSize) : titleElBbox.y + titleElBbox.height + (SUBTITLE_PADDING_EM * subFontSize);
+            const titleElMathGroup = group.select('.' + titleClass + '-math-group');
+            const titleElBbox = titleEl.node().getBBox();
+            const titleElMathBbox = titleElMathGroup.node() ? titleElMathGroup.node().getBBox() : undefined;
+            const subtitleY = titleElMathBbox ? titleElMathBbox.y + titleElMathBbox.height + (SUBTITLE_PADDING_MATHJAX_EM * subFontSize) : titleElBbox.y + titleElBbox.height + (SUBTITLE_PADDING_EM * subFontSize);
 
-            var subtitleAttributes = extendFlat({}, attributes, {
+            const subtitleAttributes = extendFlat({}, attributes, {
                 y: subtitleY
             });
 
@@ -262,39 +262,39 @@ function draw(gd: GraphDiv, titleClass: string, options: any): any {
     }
 
     function scootTitle(titleAndSubtitleEls: any): void {
-        var titleElIn = titleAndSubtitleEls.title;
-        var titleGroup = select(titleElIn.node().parentNode);
+        const titleElIn = titleAndSubtitleEls.title;
+        const titleGroup = select(titleElIn.node().parentNode);
 
         if(avoid && avoid.selection && avoid.side && txt) {
             titleGroup.attr('transform', null);
 
             // move toward avoid.side (= left, right, top, bottom) if needed
             // can include pad (pixels, default 2)
-            var backside = OPPOSITE_SIDE[avoid.side as keyof typeof OPPOSITE_SIDE];
-            var shiftSign = (avoid.side === 'left' || avoid.side === 'top') ? -1 : 1;
-            var pad = isNumeric(avoid.pad) ? avoid.pad : 2;
+            const backside = OPPOSITE_SIDE[avoid.side as keyof typeof OPPOSITE_SIDE];
+            const shiftSign = (avoid.side === 'left' || avoid.side === 'top') ? -1 : 1;
+            const pad = isNumeric(avoid.pad) ? avoid.pad : 2;
 
-            var titlebb = bBox(titleGroup.node());
+            const titlebb = bBox(titleGroup.node());
 
             // Account for reservedMargins
-            var reservedMargins: Record<string, number> = {t: 0, b: 0, l: 0, r: 0};
-            var margins = gd._fullLayout._reservedMargin;
-            for(var key in margins) {
-                for(var side in margins[key]) {
-                    var val = margins[key][side];
+            const reservedMargins: Record<string, number> = {t: 0, b: 0, l: 0, r: 0};
+            const margins = gd._fullLayout._reservedMargin;
+            for(const key in margins) {
+                for(const side in margins[key]) {
+                    const val = margins[key][side];
                     reservedMargins[side] = Math.max(reservedMargins[side], val);
                 }
             }
-            var paperbb: Record<string, number> = {
+            const paperbb: Record<string, number> = {
                 left: reservedMargins.l,
                 top: reservedMargins.t,
                 right: fullLayout.width - reservedMargins.r,
                 bottom: fullLayout.height - reservedMargins.b
             };
 
-            var maxshift = avoid.maxShift ||
+            const maxshift = avoid.maxShift ||
                 shiftSign * (paperbb[avoid.side] - titlebb[avoid.side]);
-            var shift = 0;
+            let shift = 0;
 
             // Prevent the title going off the paper
             if(maxshift < 0) {
@@ -302,8 +302,8 @@ function draw(gd: GraphDiv, titleClass: string, options: any): any {
             } else {
                 // so we don't have to offset each avoided element,
                 // give the title the opposite offset
-                var offsetLeft = avoid.offsetLeft || 0;
-                var offsetTop = avoid.offsetTop || 0;
+                const offsetLeft = avoid.offsetLeft || 0;
+                const offsetTop = avoid.offsetTop || 0;
                 titlebb.left -= offsetLeft;
                 titlebb.right -= offsetLeft;
                 titlebb.top -= offsetTop;
@@ -312,7 +312,7 @@ function draw(gd: GraphDiv, titleClass: string, options: any): any {
                 // iterate over a set of elements (avoid.selection)
                 // to avoid collisions with
                 avoid.selection.each(function(this: any) {
-                    var avoidbb = bBox(this);
+                    const avoidbb = bBox(this);
 
                     if(bBoxIntersect(titlebb, avoidbb, pad)) {
                         shift = Math.max(shift, shiftSign * (
@@ -325,7 +325,7 @@ function draw(gd: GraphDiv, titleClass: string, options: any): any {
             }
 
             if(shift > 0 || maxshift < 0) {
-                var shiftTemplate: Record<string, [number, number]> = {
+                const shiftTemplate: Record<string, [number, number]> = {
                     left: [-shift, 0],
                     right: [shift, 0],
                     top: [0, -shift],
@@ -377,8 +377,8 @@ function draw(gd: GraphDiv, titleClass: string, options: any): any {
             // Adjust subtitle position now that title placeholder has been added
             // Only adjust if subtitle is enabled and title text was originally empty
             if(subtitleEnabled && !txt) {
-                var titleElBbox = el.node().getBBox();
-                var subtitleY = titleElBbox.y + titleElBbox.height + (SUBTITLE_PADDING_EM * subFontSize);
+                const titleElBbox = el.node().getBBox();
+                const subtitleY = titleElBbox.y + titleElBbox.height + (SUBTITLE_PADDING_EM * subFontSize);
                 subtitleEl.attr('y', subtitleY);
             }
 

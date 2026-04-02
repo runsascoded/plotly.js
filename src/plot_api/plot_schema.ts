@@ -9,19 +9,19 @@ const { configAttributes } = _plot_config;
 import editTypes from './edit_types.js';
 
 
-var IS_SUBPLOT_OBJ = '_isSubplotObj';
-var IS_LINKED_TO_ARRAY = '_isLinkedToArray';
-var ARRAY_ATTR_REGEXPS = '_arrayAttrRegexps';
-var DEPRECATED = '_deprecated';
-var UNDERSCORE_ATTRS = [IS_SUBPLOT_OBJ, IS_LINKED_TO_ARRAY, ARRAY_ATTR_REGEXPS, DEPRECATED];
+const IS_SUBPLOT_OBJ = '_isSubplotObj';
+const IS_LINKED_TO_ARRAY = '_isLinkedToArray';
+const ARRAY_ATTR_REGEXPS = '_arrayAttrRegexps';
+const DEPRECATED = '_deprecated';
+const UNDERSCORE_ATTRS = [IS_SUBPLOT_OBJ, IS_LINKED_TO_ARRAY, ARRAY_ATTR_REGEXPS, DEPRECATED];
 
 export { IS_SUBPLOT_OBJ };
 export { IS_LINKED_TO_ARRAY };
 export { DEPRECATED };
 export { UNDERSCORE_ATTRS };
 
-export var get = function(): any {
-    var traces: any = {};
+export const get = function(): any {
+    const traces: any = {};
 
     Registry.allTypes.forEach(function(type) {
         traces[type] = getTraceAttributes(type);
@@ -65,16 +65,16 @@ export var get = function(): any {
     };
 };
 
-export var crawl = function(attrs?: any, callback?: any, specifiedLevel?: any, attrString?: any): void {
-    var level = specifiedLevel || 0;
+export const crawl = function(attrs?: any, callback?: any, specifiedLevel?: any, attrString?: any): void {
+    const level = specifiedLevel || 0;
     attrString = attrString || '';
 
     Object.keys(attrs).forEach(function(attrName) {
-        var attr: any = attrs[attrName];
+        const attr: any = attrs[attrName];
 
         if(UNDERSCORE_ATTRS.indexOf(attrName) !== -1) return;
 
-        var fullAttrString = (attrString ? attrString + '.' : '') + attrName;
+        const fullAttrString = (attrString ? attrString + '.' : '') + attrName;
         callback(attr, attrName, attrs, level, fullAttrString);
 
         if(isValObject(attr)) return;
@@ -85,21 +85,21 @@ export var crawl = function(attrs?: any, callback?: any, specifiedLevel?: any, a
     });
 };
 
-export var isValObject = function(obj?: any): boolean {
+export const isValObject = function(obj?: any): boolean {
     return obj && obj.valType !== undefined;
 };
 
-export var findArrayAttributes = function(trace?: any): any {
-    var arrayAttributes = [];
-    var stack = [];
-    var isArrayStack = [];
-    var baseContainer, baseAttrName;
+export const findArrayAttributes = function(trace?: any): any {
+    const arrayAttributes = [];
+    let stack = [];
+    let isArrayStack = [];
+    let baseContainer, baseAttrName;
 
     function callback(attr?: any, attrName?: any, attrs?: any, level?: any) {
         stack = stack.slice(0, level).concat([attrName]);
         isArrayStack = isArrayStack.slice(0, level).concat([attr && attr._isLinkedToArray]);
 
-        var splittableAttr = (
+        const splittableAttr = (
             attr &&
             (attr.valType === 'data_array' || attr.arrayOk === true) &&
             !(stack[level - 1] === 'colorbar' && (attrName === 'ticktext' || attrName === 'tickvals'))
@@ -118,8 +118,8 @@ export var findArrayAttributes = function(trace?: any): any {
     }
 
     function crawlIntoTrace(container?: any, i?: any, astrPartial?: any) {
-        var item = container[stack[i]];
-        var newAstrPartial = astrPartial + stack[i];
+        const item = container[stack[i]];
+        const newAstrPartial = astrPartial + stack[i];
         if(i === stack.length - 1) {
             if(isArrayOrTypedArray(item)) {
                 arrayAttributes.push(baseAttrName + newAstrPartial);
@@ -127,7 +127,7 @@ export var findArrayAttributes = function(trace?: any): any {
         } else {
             if(isArrayStack[i]) {
                 if(Array.isArray(item)) {
-                    for(var j = 0; j < item.length; j++) {
+                    for(let j = 0; j < item.length; j++) {
                         if(isPlainObject(item[j])) {
                             crawlIntoTrace(item[j], i + 1, newAstrPartial + '[' + j + '].');
                         }
@@ -149,14 +149,14 @@ export var findArrayAttributes = function(trace?: any): any {
     return arrayAttributes;
 };
 
-export var getTraceValObject = function(trace?: any, parts?: any): any {
-    var head = parts[0];
-    var i = 1; // index to start recursing from
-    var moduleAttrs, valObject;
+export const getTraceValObject = function(trace?: any, parts?: any): any {
+    const head = parts[0];
+    const i = 1; // index to start recursing from
+    let moduleAttrs, valObject;
 
     // first look in the module for this trace
     // components have already merged their trace attributes in here
-    var _module: any = trace._module;
+    let _module: any = trace._module;
     if(!_module) _module = (Registry.modules[trace.type || baseAttributes.type.dflt] || {})._module;
     if(!_module) return false;
 
@@ -165,7 +165,7 @@ export var getTraceValObject = function(trace?: any, parts?: any): any {
 
     // then look in the subplot attributes
     if(!valObject) {
-        var subplotModule = _module.basePlotModule;
+        const subplotModule = _module.basePlotModule;
         if(subplotModule && subplotModule.attributes) {
             valObject = subplotModule.attributes[head];
         }
@@ -177,19 +177,19 @@ export var getTraceValObject = function(trace?: any, parts?: any): any {
     return recurseIntoValObject(valObject, parts, i);
 };
 
-export var getLayoutValObject = function(fullLayout?: any, parts?: any): any {
-    var valObject: any = layoutHeadAttr(fullLayout, parts[0]);
+export const getLayoutValObject = function(fullLayout?: any, parts?: any): any {
+    const valObject: any = layoutHeadAttr(fullLayout, parts[0]);
 
     return recurseIntoValObject(valObject, parts, 1);
 };
 
 function layoutHeadAttr(fullLayout?: any, head?: any): boolean {
-    var i, key, _module, attributes;
+    let i, key, _module, attributes;
 
     // look for attributes of the subplot types used on the plot
-    var basePlotModules = fullLayout._basePlotModules;
+    const basePlotModules = fullLayout._basePlotModules;
     if(basePlotModules) {
-        var out;
+        let out;
         for(i = 0; i < basePlotModules.length; i++) {
             _module = basePlotModules[i];
             if(_module.attrRegex && _module.attrRegex.test(head)) {
@@ -202,14 +202,14 @@ function layoutHeadAttr(fullLayout?: any, head?: any): boolean {
             }
 
             // a module can also override the behavior of base (and component) module layout attrs
-            var baseOverrides = _module.baseLayoutAttrOverrides;
+            const baseOverrides = _module.baseLayoutAttrOverrides;
             if(baseOverrides && head in baseOverrides) return baseOverrides[head];
         }
         if(out) return out;
     }
 
     // look for layout attributes contributed by traces on the plot
-    var modules = fullLayout._modules;
+    const modules = fullLayout._modules;
     if(modules) {
         for(i = 0; i < modules.length; i++) {
             attributes = modules[i].layoutAttributes;
@@ -254,7 +254,7 @@ function recurseIntoValObject(valObject?: any, parts?: any, i?: any): boolean | 
     // setting an internal part below what's in the schema; just return
     // the innermost schema item we find.
     for(; i < parts.length; i++) {
-        var newValObject = valObject[parts[i]];
+        const newValObject = valObject[parts[i]];
         if(isPlainObject(newValObject)) valObject = newValObject;
         else break;
 
@@ -265,16 +265,16 @@ function recurseIntoValObject(valObject?: any, parts?: any, i?: any): boolean | 
             if(!isIndex(parts[i])) return false;
         } else if(valObject.valType === 'info_array') {
             i++;
-            var index = parts[i];
+            const index = parts[i];
             if(!isIndex(index)) return false;
 
-            var items = valObject.items;
+            const items = valObject.items;
             if(Array.isArray(items)) {
                 if(index >= items.length) return false;
                 if(valObject.dimensions === 2) {
                     i++;
                     if(parts.length === i) return valObject;
-                    var index2 = parts[i];
+                    const index2 = parts[i];
                     if(!isIndex(index2)) return false;
                     valObject = items[index][index2];
                 } else valObject = items[index];
@@ -294,18 +294,18 @@ function isIndex(val?: any): any {
 }
 
 function getTraceAttributes(type?: any): any {
-    var _module, basePlotModule;
+    let _module, basePlotModule;
 
     _module = Registry.modules[type]._module,
     basePlotModule = _module.basePlotModule;
 
-    var attributes: any = {};
+    const attributes: any = {};
 
     // make 'type' the first attribute in the object
     attributes.type = null;
 
-    var copyBaseAttributes = extendDeepAll({}, baseAttributes);
-    var copyModuleAttributes = extendDeepAll({}, _module.attributes);
+    const copyBaseAttributes = extendDeepAll({}, baseAttributes);
+    const copyModuleAttributes = extendDeepAll({}, _module.attributes);
 
     // prune global-level trace attributes that are already defined in a trace
     crawl(copyModuleAttributes, function(attr, attrName, attrs, level, fullAttrString) {
@@ -344,7 +344,7 @@ function getTraceAttributes(type?: any): any {
     // 'type' gets overwritten by baseAttributes; reset it here
     attributes.type = type;
 
-    var out: any = {
+    const out: any = {
         meta: _module.meta || {},
         categories: _module.categories || {},
         animatable: Boolean(_module.animatable),
@@ -354,7 +354,7 @@ function getTraceAttributes(type?: any): any {
 
     // trace-specific layout attributes
     if(_module.layoutAttributes) {
-        var layoutAttributes: any = {};
+        const layoutAttributes: any = {};
 
         extendDeepAll(layoutAttributes, _module.layoutAttributes);
         out.layoutAttributes = formatAttributes(layoutAttributes);
@@ -373,8 +373,8 @@ function getTraceAttributes(type?: any): any {
 }
 
 function getLayoutAttributes(): any {
-    var layoutAttributes: any = {};
-    var key, _module;
+    const layoutAttributes: any = {};
+    let key, _module;
 
     // global layout attributes
     extendDeepAll(layoutAttributes, baseLayoutAttributes);
@@ -386,11 +386,11 @@ function getLayoutAttributes(): any {
         if(!_module.layoutAttributes) continue;
 
         if(Array.isArray(_module.attr)) {
-            for(var i = 0; i < _module.attr.length; i++) {
+            for(let i = 0; i < _module.attr.length; i++) {
                 handleBasePlotModule(layoutAttributes, _module, _module.attr[i]);
             }
         } else {
-            var astr = _module.attr === 'subplot' ? _module.name : _module.attr;
+            const astr = _module.attr === 'subplot' ? _module.name : _module.attr;
             handleBasePlotModule(layoutAttributes, _module, astr);
         }
     }
@@ -398,7 +398,7 @@ function getLayoutAttributes(): any {
     // add registered components layout attributes
     for(key in Registry.componentsRegistry) {
         _module = Registry.componentsRegistry[key];
-        var schema = _module.schema;
+        const schema = _module.schema;
 
         if(schema && (schema.subplots || schema.layout)) {
             /*
@@ -411,9 +411,9 @@ function getLayoutAttributes(): any {
              * we will need to extend both this code and mergeComponentAttrsToSubplot
              * (which will not find yaxis only for example)
              */
-            var subplots = schema.subplots;
+            const subplots = schema.subplots;
             if(subplots && subplots.xaxis && !subplots.yaxis) {
-                for(var xkey in subplots.xaxis) {
+                for(const xkey in subplots.xaxis) {
                     delete layoutAttributes.yaxis[xkey];
                 }
             }
@@ -438,7 +438,7 @@ function getLayoutAttributes(): any {
 }
 
 function getFramesAttributes(): any {
-    var attrs: any = {
+    const attrs: any = {
         frames: extendDeepAll({}, frameAttributes)
     };
 
@@ -483,7 +483,7 @@ function formatArrayContainers(attrs?: any): void {
     function callback(attr?: any, attrName?: any, attrs?: any) {
         if(!attr) return;
 
-        var itemName = attr[IS_LINKED_TO_ARRAY];
+        const itemName = attr[IS_LINKED_TO_ARRAY];
 
         if(!itemName) return;
 
@@ -501,11 +501,11 @@ function formatArrayContainers(attrs?: any): void {
 // to ensure JSON.stringify(PlotSchema.get()) gives the intended result.
 function stringify(attrs?: any): void {
     function walk(attr?: any) {
-        for(var k in attr) {
+        for(const k in attr) {
             if(isPlainObject(attr[k])) {
                 walk(attr[k]);
             } else if(Array.isArray(attr[k])) {
-                for(var i = 0; i < attr[k].length; i++) {
+                for(let i = 0; i < attr[k].length; i++) {
                     walk(attr[k][i]);
                 }
             } else {
@@ -521,15 +521,15 @@ function stringify(attrs?: any): void {
 }
 
 function handleBasePlotModule(layoutAttributes?: any, _module?: any, astr?: any): void {
-    var np = nestedProperty(layoutAttributes, astr);
-    var attrs = extendDeepAll({}, _module.layoutAttributes);
+    const np = nestedProperty(layoutAttributes, astr);
+    const attrs = extendDeepAll({}, _module.layoutAttributes);
 
     attrs[IS_SUBPLOT_OBJ] = true;
     np.set(attrs);
 }
 
 function insertAttrs(baseAttrs?: any, newAttrs?: any, astr?: any): void {
-    var np = nestedProperty(baseAttrs, astr);
+    const np = nestedProperty(baseAttrs, astr);
 
     np.set(extendDeepAll(np.get() || {}, newAttrs));
 }

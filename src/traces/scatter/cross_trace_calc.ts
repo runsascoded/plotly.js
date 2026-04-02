@@ -4,17 +4,17 @@ import _cross_trace_calc from '../bar/cross_trace_calc.js';
 const { setGroupPositions } = _cross_trace_calc;
 
 function groupCrossTraceCalc(gd: GraphDiv, plotinfo: PlotInfo): void {
-    var xa = plotinfo.xaxis;
-    var ya = plotinfo.yaxis;
+    const xa = plotinfo.xaxis;
+    const ya = plotinfo.yaxis;
 
-    var fullLayout = gd._fullLayout;
-    var fullTraces = gd._fullData;
-    var calcTraces = gd.calcdata;
-    var calcTracesHorz = [];
-    var calcTracesVert = [];
+    const fullLayout = gd._fullLayout;
+    const fullTraces = gd._fullData;
+    const calcTraces = gd.calcdata;
+    const calcTracesHorz = [];
+    const calcTracesVert = [];
 
-    for(var i = 0; i < fullTraces.length; i++) {
-        var fullTrace = fullTraces[i];
+    for(let i = 0; i < fullTraces.length; i++) {
+        const fullTrace = fullTraces[i];
         if(
             fullTrace.visible === true &&
             fullTrace.type === 'scatter' &&
@@ -29,7 +29,7 @@ function groupCrossTraceCalc(gd: GraphDiv, plotinfo: PlotInfo): void {
         }
     }
 
-    var opts = {
+    const opts = {
         mode: fullLayout.scattermode,
         gap: fullLayout.scattergap
     };
@@ -43,22 +43,22 @@ export default function crossTraceCalc(gd: GraphDiv, plotinfo: PlotInfo): any {
         groupCrossTraceCalc(gd, plotinfo);
     }
 
-    var xa = plotinfo.xaxis;
-    var ya = plotinfo.yaxis;
-    var subplot = xa._id + ya._id;
+    const xa = plotinfo.xaxis;
+    const ya = plotinfo.yaxis;
+    const subplot = xa._id + ya._id;
 
-    var subplotStackOpts = gd._fullLayout._scatterStackOpts[subplot];
+    const subplotStackOpts = gd._fullLayout._scatterStackOpts[subplot];
     if(!subplotStackOpts) return;
 
-    var calcTraces = gd.calcdata;
+    const calcTraces = gd.calcdata;
 
-    var i, j, k, i2, cd, cd0, posj, sumj, norm;
-    var groupOpts, interpolate, groupnorm, posAttr, valAttr;
-    var hasAnyBlanks;
+    let i, j, k, i2, cd, cd0, posj, sumj, norm;
+    let groupOpts, interpolate, groupnorm, posAttr, valAttr;
+    let hasAnyBlanks;
 
-    for(var stackGroup in subplotStackOpts) {
+    for(const stackGroup in subplotStackOpts) {
         groupOpts = subplotStackOpts[stackGroup];
-        var indices = groupOpts.traceIndices;
+        const indices = groupOpts.traceIndices;
 
         // can get here with no indices if the stack axis is non-numeric
         if(!indices.length) continue;
@@ -82,7 +82,7 @@ export default function crossTraceCalc(gd: GraphDiv, plotinfo: PlotInfo): any {
         // as needed.
         // Fill in mising items as we go.
         cd0 = calcTraces[indices[0]];
-        var allPositions = new Array(cd0.length);
+        const allPositions = new Array(cd0.length);
         for(i = 0; i < cd0.length; i++) {
             allPositions[i] = cd0[i][posAttr];
         }
@@ -112,7 +112,7 @@ export default function crossTraceCalc(gd: GraphDiv, plotinfo: PlotInfo): any {
             }
         }
 
-        var serieslen = allPositions.length;
+        const serieslen = allPositions.length;
 
         // stack (and normalize)!
         for(j = 0; j < cd0.length; j++) {
@@ -128,7 +128,7 @@ export default function crossTraceCalc(gd: GraphDiv, plotinfo: PlotInfo): any {
             if(groupnorm) {
                 norm = ((groupnorm === 'fraction') ? sumj : (sumj / 100)) || 1;
                 for(i = 0; i < indices.length; i++) {
-                    var cdj = calcTraces[indices[i]][j];
+                    const cdj = calcTraces[indices[i]][j];
                     cdj[valAttr] /= norm;
                     cdj.sNorm = cdj.s / norm;
                 }
@@ -138,18 +138,18 @@ export default function crossTraceCalc(gd: GraphDiv, plotinfo: PlotInfo): any {
         // autorange
         for(i = 0; i < indices.length; i++) {
             cd = calcTraces[indices[i]];
-            var trace = cd[0].trace;
-            var ppad = calc.calcMarkerSize(trace, trace._rawLength);
-            var arrayPad = Array.isArray(ppad);
+            const trace = cd[0].trace;
+            let ppad = calc.calcMarkerSize(trace, trace._rawLength);
+            const arrayPad = Array.isArray(ppad);
             if((ppad && hasAnyBlanks[i]) || arrayPad) {
-                var ppadRaw = ppad;
+                const ppadRaw = ppad;
                 ppad = new Array(serieslen);
                 for(j = 0; j < serieslen; j++) {
                     ppad[j] = cd[j].gap ? 0 : (arrayPad ? ppadRaw[cd[j].i] : ppadRaw);
                 }
             }
-            var x = new Array(serieslen);
-            var y = new Array(serieslen);
+            const x = new Array(serieslen);
+            const y = new Array(serieslen);
             for(j = 0; j < serieslen; j++) {
                 x[j] = cd[j].x;
                 y[j] = cd[j].y;
@@ -165,7 +165,7 @@ export default function crossTraceCalc(gd: GraphDiv, plotinfo: PlotInfo): any {
 
 function insertBlank(calcTrace: any[], index: number, position: number, traceIndex: number, hasAnyBlanks: boolean[], interpolate: boolean, posAttr: string): void {
     hasAnyBlanks[traceIndex] = true;
-    var newEntry: any = {
+    const newEntry: any = {
         i: null,
         gap: true,
         s: 0
@@ -178,7 +178,7 @@ function insertBlank(calcTrace: any[], index: number, position: number, traceInd
     // We also make it look like a real point - because it's ambiguous which
     // one really is the real one!
     if(index && position === calcTrace[index - 1][posAttr]) {
-        var prevEntry = calcTrace[index - 1];
+        const prevEntry = calcTrace[index - 1];
         newEntry.s = prevEntry.s;
         // TODO is it going to cause any problems to have multiple
         // calcdata points with the same index?
@@ -197,8 +197,8 @@ function insertBlank(calcTrace: any[], index: number, position: number, traceInd
 }
 
 function getInterp(calcTrace: any[], index: number, position: number, posAttr: string): number {
-    var pt0 = calcTrace[index - 1];
-    var pt1 = calcTrace[index + 1];
+    const pt0 = calcTrace[index - 1];
+    const pt1 = calcTrace[index + 1];
     if(!pt1) return pt0.s;
     if(!pt0) return pt1.s;
     return pt0.s + (pt1.s - pt0.s) * (position - pt0[posAttr]) / (pt1[posAttr] - pt0[posAttr]);

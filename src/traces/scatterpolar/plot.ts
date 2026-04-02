@@ -4,40 +4,40 @@ import _numerical from '../../constants/numerical.js';
 const { BADNUM } = _numerical;
 
 export default function plot(gd: GraphDiv, subplot: PlotInfo, moduleCalcData) {
-    var mlayer = subplot.layers.frontplot.select('g.scatterlayer');
+    const mlayer = subplot.layers.frontplot.select('g.scatterlayer');
 
-    var xa = subplot.xaxis;
-    var ya = subplot.yaxis;
+    const xa = subplot.xaxis;
+    const ya = subplot.yaxis;
 
-    var plotinfo: any = {
+    const plotinfo: any = {
         xaxis: xa,
         yaxis: ya,
         plot: subplot.framework,
         layerClipId: subplot._hasClipOnAxisFalse ? subplot.clipIds.forTraces : null
     };
 
-    var radialAxis = subplot.radialAxis;
-    var angularAxis = subplot.angularAxis;
+    const radialAxis = subplot.radialAxis;
+    const angularAxis = subplot.angularAxis;
 
     // convert:
     // 'c' (r,theta) -> 'geometric' (r,theta) -> (x,y)
-    for(var i = 0; i < moduleCalcData.length; i++) {
-        var cdi = moduleCalcData[i];
+    for(let i = 0; i < moduleCalcData.length; i++) {
+        const cdi = moduleCalcData[i];
 
-        for(var j = 0; j < cdi.length; j++) {
+        for(let j = 0; j < cdi.length; j++) {
             if(j === 0) {
                 cdi[0].trace._xA = xa;
                 cdi[0].trace._yA = ya;
             }
 
-            var cd = cdi[j];
-            var r = cd.r;
+            const cd = cdi[j];
+            const r = cd.r;
 
             if(r === BADNUM) {
                 cd.x = cd.y = BADNUM;
             } else {
-                var rg = radialAxis.c2g(r);
-                var thetag = angularAxis.c2g(cd.theta);
+                const rg = radialAxis.c2g(r);
+                const thetag = angularAxis.c2g(cd.theta);
                 cd.x = rg * Math.cos(thetag);
                 cd.y = rg * Math.sin(thetag);
             }

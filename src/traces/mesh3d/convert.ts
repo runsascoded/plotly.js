@@ -21,11 +21,11 @@ function Mesh3DTrace(scene, mesh, uid) {
     this.showContour = false;
 }
 
-var proto = Mesh3DTrace.prototype;
+const proto = Mesh3DTrace.prototype;
 
 proto.handlePick = function(selection) {
     if(selection.object === this.mesh) {
-        var selectIndex = selection.index = selection.data.index;
+        const selectIndex = selection.index = selection.data.index;
 
         if(selection.data._cellCenter) {
             selection.traceCoordinate = selection.data.dataCoordinate;
@@ -37,7 +37,7 @@ proto.handlePick = function(selection) {
             ];
         }
 
-        var text = this.data.hovertext || this.data.text;
+        const text = this.data.hovertext || this.data.text;
         if(isArrayOrTypedArray(text) && text[selectIndex] !== undefined) {
             selection.textLabel = text[selectIndex];
         } else if(text) {
@@ -49,9 +49,9 @@ proto.handlePick = function(selection) {
 };
 
 function parseColorArray(colors) {
-    var b = [];
-    var len = colors.length;
-    for(var i = 0; i < len; i++) {
+    const b = [];
+    const len = colors.length;
+    for(let i = 0; i < len; i++) {
         b[i] = str2RgbaArray(colors[i]);
     }
     return b;
@@ -59,9 +59,9 @@ function parseColorArray(colors) {
 
 // Unpack position data
 function toDataCoords(axis, coord, scale, calendar) {
-    var b = [];
-    var len = coord.length;
-    for(var i = 0; i < len; i++) {
+    const b = [];
+    const len = coord.length;
+    for(let i = 0; i < len; i++) {
         b[i] = axis.d2l(coord[i], 0, calendar) * scale;
     }
     return b;
@@ -69,19 +69,19 @@ function toDataCoords(axis, coord, scale, calendar) {
 
 // Round indices if passed as floats
 function toRoundIndex(a) {
-    var b = [];
-    var len = a.length;
-    for(var i = 0; i < len; i++) {
+    const b = [];
+    const len = a.length;
+    for(let i = 0; i < len; i++) {
         b[i] = Math.round(a[i]);
     }
     return b;
 }
 
 function delaunayCells(delaunayaxis, positions) {
-    var d = ['x', 'y', 'z'].indexOf(delaunayaxis);
-    var b = [];
-    var len = positions.length;
-    for(var i = 0; i < len; i++) {
+    const d = ['x', 'y', 'z'].indexOf(delaunayaxis);
+    const b = [];
+    const len = positions.length;
+    for(let i = 0; i < len; i++) {
         b[i] = [positions[i][(d + 1) % 3], positions[i][(d + 2) % 3]];
     }
     return triangulate(b);
@@ -89,8 +89,8 @@ function delaunayCells(delaunayaxis, positions) {
 
 // Validate indices
 function hasValidIndices(list, numVertices) {
-    var len = list.length;
-    for(var i = 0; i < len; i++) {
+    const len = list.length;
+    for(let i = 0; i < len; i++) {
         if(list[i] <= -0.5 || list[i] >= numVertices - 0.5) { // Note: the indices would be rounded -0.49 is valid.
             return false;
         }
@@ -99,20 +99,20 @@ function hasValidIndices(list, numVertices) {
 }
 
 proto.update = function(data) {
-    var scene = this.scene;
-    var layout = scene.fullSceneLayout;
+    const scene = this.scene;
+    const layout = scene.fullSceneLayout;
 
     this.data = data;
 
-    var numVertices = data.x.length;
+    const numVertices = data.x.length;
 
-    var positions = zip3(
+    const positions = zip3(
         toDataCoords(layout.xaxis, data.x, scene.dataScale[0], data.xcalendar),
         toDataCoords(layout.yaxis, data.y, scene.dataScale[1], data.ycalendar),
         toDataCoords(layout.zaxis, data.z, scene.dataScale[2], data.zcalendar)
     );
 
-    var cells;
+    let cells;
     if(data.i && data.j && data.k) {
         if(
             data.i.length !== data.j.length ||
@@ -136,7 +136,7 @@ proto.update = function(data) {
         cells = delaunayCells(data.delaunayaxis, positions);
     }
 
-    var config: any = {
+    const config: any = {
         positions: positions,
         cells: cells,
         lightPosition: [data.lightposition.x, data.lightposition.y, data.lightposition.z],
@@ -155,9 +155,9 @@ proto.update = function(data) {
     };
 
     if(data.intensity) {
-        var cOpts = extractOpts(data);
+        const cOpts = extractOpts(data);
         this.color = '#fff';
-        var mode = data.intensitymode;
+        const mode = data.intensitymode;
         config[mode + 'Intensity'] = data.intensity;
         config[mode + 'IntensityBounds'] = [cOpts.min, cOpts.max];
         config.colormap = parseColorScale(data);
@@ -182,9 +182,9 @@ proto.dispose = function() {
 };
 
 function createMesh3DTrace(scene, data) {
-    var gl = scene.glplot.gl;
-    var mesh = createMesh({gl: gl});
-    var result = new Mesh3DTrace(scene, mesh, data.uid);
+    const gl = scene.glplot.gl;
+    const mesh = createMesh({gl: gl});
+    const result = new Mesh3DTrace(scene, mesh, data.uid);
     mesh._trace = result;
     result.update(data);
     scene.glplot.add(mesh);

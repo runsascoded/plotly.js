@@ -7,10 +7,10 @@ import type { GraphDiv } from '../../types/core';
  * Copy arg array *without* removing `undefined` values from objects.
  */
 function copyArgArray(gd: GraphDiv, args: any[]): any[] {
-    var copy: any[] = [];
-    var arg: any;
+    const copy: any[] = [];
+    let arg: any;
 
-    for(var i = 0; i < args.length; i++) {
+    for(let i = 0; i < args.length; i++) {
         arg = args[i];
 
         if(arg === gd) copy[i] = arg;
@@ -28,13 +28,13 @@ function copyArgArray(gd: GraphDiv, args: any[]): any[] {
 // Undo/Redo queue for plots
 // -----------------------------------------------------
 
-var queue: Record<string, any> = {};
+const queue: Record<string, any> = {};
 
 /**
  * Add an item to the undoQueue for a graphDiv
  */
 queue.add = function(gd: GraphDiv, undoFunc: Function, undoArgs: any[], redoFunc: Function, redoArgs: any[]): void {
-    var queueObj: any,
+    let queueObj: any,
         queueIndex: number;
 
     // make sure we have the queue and our position in it
@@ -96,7 +96,7 @@ queue.stopSequence = function(gd: GraphDiv): void {
  * Move one step back in the undo queue, and undo the object there.
  */
 queue.undo = function undo(gd: GraphDiv): void {
-    var queueObj: any, i: number;
+    let queueObj: any, i: number;
 
     if(gd.undoQueue === undefined ||
             isNaN(gd.undoQueue.index) ||
@@ -123,7 +123,7 @@ queue.undo = function undo(gd: GraphDiv): void {
  * Redo the current object in the undo, then move forward in the queue.
  */
 queue.redo = function redo(gd: GraphDiv): void {
-    var queueObj: any, i: number;
+    let queueObj: any, i: number;
 
     if(gd.undoQueue === undefined ||
             isNaN(gd.undoQueue.index) ||

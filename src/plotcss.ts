@@ -1,5 +1,5 @@
 import { addStyleRule } from '../src/lib/dom.js';
-var rules = {
+const rules = {
     "X,X div": "direction:ltr;font-family:\"Open Sans\",verdana,arial,sans-serif;margin:0;padding:0;border:0;",
     "X input,X button": "font-family:\"Open Sans\",verdana,arial,sans-serif;",
     "X input:focus,X button:focus": "outline:none;",
@@ -55,8 +55,8 @@ var rules = {
     "Y .notifier-close:hover": "color:#444;text-decoration:none;cursor:pointer;"
 };
 
-for(var selector in rules) {
-    var fullSelector = selector.replace(/^,/,' ,')
+for(const selector in rules) {
+    const fullSelector = selector.replace(/^,/,' ,')
         .replace(/X/g, '.js-plotly-plot .plotly')
         .replace(/Y/g, '.plotly-notifier');
     addStyleRule(fullSelector, rules[selector]);

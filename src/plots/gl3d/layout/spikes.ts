@@ -1,6 +1,6 @@
 import str2RGBArray from '../../../lib/str2rgbarray.js';
 
-var AXES_NAMES = ['xaxis', 'yaxis', 'zaxis'];
+const AXES_NAMES = ['xaxis', 'yaxis', 'zaxis'];
 
 function SpikeOptions() {
     this.enabled = [true, true, true];
@@ -11,11 +11,11 @@ function SpikeOptions() {
     this.lineWidth = [1, 1, 1];
 }
 
-var proto = SpikeOptions.prototype;
+const proto = SpikeOptions.prototype;
 
 proto.merge = function(sceneLayout) {
-    for(var i = 0; i < 3; ++i) {
-        var axes = sceneLayout[AXES_NAMES[i]];
+    for(let i = 0; i < 3; ++i) {
+        const axes = sceneLayout[AXES_NAMES[i]];
 
         if(!axes.visible) {
             this.enabled[i] = false;
@@ -31,7 +31,7 @@ proto.merge = function(sceneLayout) {
 };
 
 function createSpikeOptions(layout) {
-    var result = new SpikeOptions();
+    const result = new SpikeOptions();
     result.merge(layout);
     return result;
 }

@@ -9,17 +9,17 @@ const { ALMOST_EQUAL } = _numerical;
 import _alignment from '../../constants/alignment.js';
 const { FROM_BL } = _alignment;
 
-export var handleDefaults = function(layoutIn?: any, layoutOut?: any, opts?: any): void {
-    var axIds = opts.axIds;
-    var axHasImage = opts.axHasImage;
+export const handleDefaults = function(layoutIn?: any, layoutOut?: any, opts?: any): void {
+    const axIds = opts.axIds;
+    const axHasImage = opts.axHasImage;
 
     // sets of axes linked by `scaleanchor` OR `matches` along with the
     // scaleratios compounded together, populated in handleConstraintDefaults
-    var constraintGroups = layoutOut._axisConstraintGroups = [];
+    const constraintGroups = layoutOut._axisConstraintGroups = [];
     // similar to _axisConstraintGroups, but only matching axes
-    var matchGroups = layoutOut._axisMatchGroups = [];
+    const matchGroups = layoutOut._axisMatchGroups = [];
 
-    var i, group, axId, axName, axIn, axOut, attr, val;
+    let i, group, axId, axName, axIn, axOut, attr, val;
 
     for(i = 0; i < axIds.length; i++) {
         axName = id2name(axIds[i]);
@@ -52,8 +52,8 @@ export var handleDefaults = function(layoutIn?: any, layoutOut?: any, opts?: any
         for(axId in group) {
             axOut = layoutOut[id2name(axId)];
             if(axOut.fixedrange) {
-                for(var axId2 in group) {
-                    var axName2 = id2name(axId2);
+                for(const axId2 in group) {
+                    const axName2 = id2name(axId2);
                     if((layoutIn[axName2] || {}).fixedrange === false) {
                         warn(
                             'fixedrange was specified as false for axis ' +
@@ -92,7 +92,7 @@ export var handleDefaults = function(layoutIn?: any, layoutOut?: any, opts?: any
     // (1) explicitly defined value in the base axis
     // (2) explicitly defined in another axis (arbitrary order)
     // (3) default in the base axis
-    var matchAttrs = [
+    const matchAttrs = [
         'constrain',
         'range',
         'autorange',
@@ -101,8 +101,8 @@ export var handleDefaults = function(layoutIn?: any, layoutOut?: any, opts?: any
         'categoryorder',
         'categoryarray'
     ];
-    var hasRange = false;
-    var hasDayOfWeekBreaks = false;
+    let hasRange = false;
+    let hasDayOfWeekBreaks = false;
 
     function setAttrVal() {
         val = axOut[attr];
@@ -115,10 +115,10 @@ export var handleDefaults = function(layoutIn?: any, layoutOut?: any, opts?: any
         group = matchGroups[i];
 
         // find 'matching' range attrs
-        for(var j = 0; j < matchAttrs.length; j++) {
+        for(let j = 0; j < matchAttrs.length; j++) {
             attr = matchAttrs[j];
             val = null;
-            var baseAx;
+            let baseAx;
             for(axId in group) {
                 axName = id2name(axId);
                 axIn = layoutIn[axName];
@@ -176,16 +176,16 @@ export var handleDefaults = function(layoutIn?: any, layoutOut?: any, opts?: any
 };
 
 function handleOneAxDefaults(axIn?: any, axOut?: any, opts?: any): void {
-    var axIds = opts.axIds;
-    var layoutOut: any = opts.layoutOut;
-    var hasImage = opts.hasImage;
-    var constraintGroups = layoutOut._axisConstraintGroups;
-    var matchGroups = layoutOut._axisMatchGroups;
-    var axId = axOut._id;
-    var axLetter = axId.charAt(0);
-    var splomStash = ((layoutOut._splomAxes || {})[axLetter] || {})[axId] || {};
-    var thisID = axOut._id;
-    var isX = thisID.charAt(0) === 'x';
+    const axIds = opts.axIds;
+    const layoutOut: any = opts.layoutOut;
+    const hasImage = opts.hasImage;
+    const constraintGroups = layoutOut._axisConstraintGroups;
+    const matchGroups = layoutOut._axisMatchGroups;
+    const axId = axOut._id;
+    const axLetter = axId.charAt(0);
+    const splomStash = ((layoutOut._splomAxes || {})[axLetter] || {})[axId] || {};
+    const thisID = axOut._id;
+    const isX = thisID.charAt(0) === 'x';
 
     // Clear _matchGroup & _constraintGroup so relinkPrivateKeys doesn't keep
     // an old one around. If this axis is in a group we'll set this again later
@@ -210,23 +210,23 @@ function handleOneAxDefaults(axIn?: any, axOut?: any, opts?: any): void {
     // If this axis is already part of a constraint group, we can't
     // scaleanchor any other axis in that group, or we'd make a loop.
     // Filter axIds to enforce this, also matching axis types.
-    var thisType = axOut.type;
-    var i, idi;
+    const thisType = axOut.type;
+    let i, idi;
 
-    var linkableAxes = [];
+    let linkableAxes = [];
     for(i = 0; i < axIds.length; i++) {
         idi = axIds[i];
         if(idi === thisID) continue;
 
-        var axi: any = layoutOut[id2name(idi)];
+        const axi: any = layoutOut[id2name(idi)];
         if(axi.type === thisType) {
             linkableAxes.push(idi);
         }
     }
 
-    var thisGroup = getConstraintGroup(constraintGroups, thisID);
+    const thisGroup = getConstraintGroup(constraintGroups, thisID);
     if(thisGroup) {
-        var linkableAxesNoLoops = [];
+        const linkableAxesNoLoops = [];
         for(i = 0; i < linkableAxes.length; i++) {
             idi = linkableAxes[i];
             if(!thisGroup[idi]) linkableAxesNoLoops.push(idi);
@@ -234,9 +234,9 @@ function handleOneAxDefaults(axIn?: any, axOut?: any, opts?: any): void {
         linkableAxes = linkableAxesNoLoops;
     }
 
-    var canLink = linkableAxes.length;
+    const canLink = linkableAxes.length;
 
-    var matches, scaleanchor;
+    let matches, scaleanchor;
 
     if(canLink && (axIn.matches || splomStash.matches)) {
         matches = Lib.coerce(axIn, axOut, {
@@ -251,7 +251,7 @@ function handleOneAxDefaults(axIn?: any, axOut?: any, opts?: any): void {
     // 'matches' wins over 'scaleanchor' - each axis can only specify one
     // constraint, but you can chain matches and scaleanchor constraints by
     // specifying them in separate axes.
-    var scaleanchorDflt = hasImage && !isX ? axOut.anchor : undefined;
+    const scaleanchorDflt = hasImage && !isX ? axOut.anchor : undefined;
     if(canLink && !matches && (axIn.scaleanchor || scaleanchorDflt)) {
         scaleanchor = Lib.coerce(axIn, axOut, {
             scaleanchor: {
@@ -265,8 +265,8 @@ function handleOneAxDefaults(axIn?: any, axOut?: any, opts?: any): void {
         axOut._matchGroup = updateConstraintGroups(matchGroups, thisID, matches, 1);
 
         // Also include match constraints in the scale groups
-        var matchedAx = layoutOut[id2name(matches)];
-        var matchRatio: any = extent(layoutOut, axOut) / extent(layoutOut, matchedAx);
+        const matchedAx = layoutOut[id2name(matches)];
+        let matchRatio: any = extent(layoutOut, axOut) / extent(layoutOut, matchedAx);
         if(isX !== (matches.charAt(0) === 'x')) {
             // We don't yet know the actual scale ratio of x/y matches constraints,
             // due to possible automargins, so just leave a placeholder for this:
@@ -281,7 +281,7 @@ function handleOneAxDefaults(axIn?: any, axOut?: any, opts?: any): void {
     }
 
     if(scaleanchor) {
-        var scaleratio = coerce('scaleratio');
+        let scaleratio = coerce('scaleratio');
 
         // TODO: I suppose I could do attribute.min: Number.MIN_VALUE to avoid zero,
         // but that seems hacky. Better way to say "must be a positive number"?
@@ -300,7 +300,7 @@ function handleOneAxDefaults(axIn?: any, axOut?: any, opts?: any): void {
 }
 
 function extent(layoutOut?: any, ax?: any): any {
-    var domain = ax.domain;
+    let domain = ax.domain;
     if(!domain) {
         // at this point overlaying axes haven't yet inherited their main domains
         // TODO: constrain: domain with overlaying axes is likely a bug.
@@ -310,7 +310,7 @@ function extent(layoutOut?: any, ax?: any): any {
 }
 
 function getConstraintGroup(groups?: any, thisID?: any): any {
-    for(var i = 0; i < groups.length; i++) {
+    for(let i = 0; i < groups.length; i++) {
         if(groups[i][thisID]) {
             return groups[i];
         }
@@ -333,9 +333,9 @@ function getConstraintGroup(groups?: any, thisID?: any): any {
  * scaleratio: the ratio of this axis to the thatID axis
  */
 function updateConstraintGroups(constraintGroups?: any, thisID?: any, thatID?: any, scaleratio?: any): void {
-    var i, j, groupi, keyj, thisGroupIndex;
+    let i, j, groupi, keyj, thisGroupIndex;
 
-    var thisGroup = getConstraintGroup(constraintGroups, thisID);
+    let thisGroup = getConstraintGroup(constraintGroups, thisID);
 
     if(thisGroup === null) {
         thisGroup = {};
@@ -346,14 +346,14 @@ function updateConstraintGroups(constraintGroups?: any, thisID?: any, thatID?: a
         thisGroupIndex = constraintGroups.indexOf(thisGroup);
     }
 
-    var thisGroupKeys = Object.keys(thisGroup);
+    const thisGroupKeys = Object.keys(thisGroup);
 
     // we know that this axis isn't in any other groups, but we don't know
     // about the thatID axis. If it is, we need to merge the groups.
     for(i = 0; i < constraintGroups.length; i++) {
         groupi = constraintGroups[i];
         if(i !== thisGroupIndex && groupi[thatID]) {
-            var baseScale = groupi[thatID];
+            const baseScale = groupi[thatID];
             for(j = 0; j < thisGroupKeys.length; j++) {
                 keyj = thisGroupKeys[j];
                 groupi[keyj] = multiplyScales(baseScale, multiplyScales(scaleratio, thisGroup[keyj]));
@@ -367,7 +367,7 @@ function updateConstraintGroups(constraintGroups?: any, thisID?: any, thatID?: a
     // in its group, and scale the rest of the group to it
     if(scaleratio !== 1) {
         for(j = 0; j < thisGroupKeys.length; j++) {
-            var key = thisGroupKeys[j];
+            const key = thisGroupKeys[j];
             thisGroup[key] = multiplyScales(scaleratio, thisGroup[key]);
         }
     }
@@ -377,9 +377,9 @@ function updateConstraintGroups(constraintGroups?: any, thisID?: any, thatID?: a
 // scales may be numbers or 'x1.3', 'yy4.5' etc to multiply by as-yet-unknown
 // ratios between x and y plot sizes n times
 function multiplyScales(a?: any, b?: any): any {
-    var aPrefix = '';
-    var bPrefix = '';
-    var aLen, bLen;
+    let aPrefix = '';
+    let bPrefix = '';
+    let aLen, bLen;
 
     if(typeof a === 'string') {
         aPrefix = a.match(/^[xy]*/)[0];
@@ -393,7 +393,7 @@ function multiplyScales(a?: any, b?: any): any {
         b = +b.slice(bLen);
     }
 
-    var c = a * b;
+    const c = a * b;
 
     // just two numbers
     if(!aLen && !bLen) {
@@ -415,20 +415,20 @@ function multiplyScales(a?: any, b?: any): any {
 }
 
 function finalRatios(group?: any, fullLayout?: any): any {
-    var size = fullLayout._size;
-    var yRatio = size.h / size.w;
-    var out: any = {};
-    var keys = Object.keys(group);
-    for(var i = 0; i < keys.length; i++) {
-        var key = keys[i];
-        var val = group[key];
+    const size = fullLayout._size;
+    const yRatio = size.h / size.w;
+    const out: any = {};
+    const keys = Object.keys(group);
+    for(let i = 0; i < keys.length; i++) {
+        const key = keys[i];
+        let val = group[key];
 
         if(typeof val === 'string') {
-            var prefix = val.match(/^[xy]*/)[0];
-            var pLen = prefix.length;
+            const prefix = val.match(/^[xy]*/)[0];
+            const pLen = prefix.length;
             val = +val.slice(pLen);
-            var mult = prefix.charAt(0) === 'y' ? yRatio : (1 / yRatio);
-            for(var j = 0; j < pLen; j++) {
+            const mult = prefix.charAt(0) === 'y' ? yRatio : (1 / yRatio);
+            for(let j = 0; j < pLen; j++) {
                 val *= mult;
             }
         }
@@ -438,11 +438,11 @@ function finalRatios(group?: any, fullLayout?: any): any {
     return out;
 }
 
-export var enforce = function enforce(gd?: any): void {
-    var fullLayout = gd._fullLayout;
-    var constraintGroups = fullLayout._axisConstraintGroups || [];
+export const enforce = function enforce(gd?: any): void {
+    const fullLayout = gd._fullLayout;
+    const constraintGroups = fullLayout._axisConstraintGroups || [];
 
-    var i, j, group, axisID, ax, normScale, mode, factor;
+    let i, j, group, axisID, ax, normScale, mode, factor;
 
     // matching constraints are handled in the autorange code when autoranged,
     // or in the supplyDefaults code when explicitly ranged.
@@ -452,19 +452,19 @@ export var enforce = function enforce(gd?: any): void {
     // any changes here should preserve that.
     for(i = 0; i < constraintGroups.length; i++) {
         group = finalRatios(constraintGroups[i], fullLayout);
-        var axisIDs = Object.keys(group);
+        const axisIDs = Object.keys(group);
 
-        var minScale = Infinity;
-        var maxScale = 0;
+        let minScale = Infinity;
+        let maxScale = 0;
         // mostly matchScale will be the same as minScale
         // ie we expand axis ranges to encompass *everything*
         // that's currently in any of their ranges, but during
         // autorange of a subset of axes we will ignore other
         // axes for this purpose.
-        var matchScale = Infinity;
-        var normScales: any = {};
-        var axes: any = {};
-        var hasAnyDomainConstraint = false;
+        let matchScale = Infinity;
+        const normScales: any = {};
+        const axes: any = {};
+        let hasAnyDomainConstraint = false;
 
         // find the (normalized) scale of each axis in the group
         for(j = 0; j < axisIDs.length; j++) {
@@ -514,10 +514,10 @@ export var enforce = function enforce(gd?: any): void {
                 } else {
                     // mode === 'domain'
 
-                    var inputDomain = ax._inputDomain;
-                    var domainShrunk = (ax.domain[1] - ax.domain[0]) /
+                    const inputDomain = ax._inputDomain;
+                    const domainShrunk = (ax.domain[1] - ax.domain[0]) /
                         (inputDomain[1] - inputDomain[0]);
-                    var rangeShrunk = (ax.r2l(ax.range[1]) - ax.r2l(ax.range[0])) /
+                    const rangeShrunk = (ax.r2l(ax.range[1]) - ax.r2l(ax.range[0])) /
                         (ax.r2l(ax._inputRange[1]) - ax.r2l(ax._inputRange[0]));
 
                     factor /= domainShrunk;
@@ -550,26 +550,26 @@ export var enforce = function enforce(gd?: any): void {
                          * outerMin/Max are for - if the expansion was going to
                          * go beyond the original domain, it must be impossible
                          */
-                        var rl0 = ax.r2l(ax.range[0]);
-                        var rl1 = ax.r2l(ax.range[1]);
-                        var rangeCenter = (rl0 + rl1) / 2;
-                        var rangeMin = rangeCenter;
-                        var rangeMax = rangeCenter;
-                        var halfRange = Math.abs(rl1 - rangeCenter);
+                        const rl0 = ax.r2l(ax.range[0]);
+                        const rl1 = ax.r2l(ax.range[1]);
+                        const rangeCenter = (rl0 + rl1) / 2;
+                        let rangeMin = rangeCenter;
+                        let rangeMax = rangeCenter;
+                        const halfRange = Math.abs(rl1 - rangeCenter);
                         // extra tiny bit for rounding errors, in case we actually
                         // *are* expanding to the full domain
-                        var outerMin = rangeCenter - halfRange * factor * 1.0001;
-                        var outerMax = rangeCenter + halfRange * factor * 1.0001;
-                        var getPadMin = autorange.makePadFn(fullLayout, ax, 0);
-                        var getPadMax = autorange.makePadFn(fullLayout, ax, 1);
+                        const outerMin = rangeCenter - halfRange * factor * 1.0001;
+                        const outerMax = rangeCenter + halfRange * factor * 1.0001;
+                        const getPadMin = autorange.makePadFn(fullLayout, ax, 0);
+                        const getPadMax = autorange.makePadFn(fullLayout, ax, 1);
 
                         updateDomain(ax, factor);
-                        var m = Math.abs(ax._m);
-                        var extremes = autorange.concatExtremes(gd, ax);
-                        var minArray = extremes.min;
-                        var maxArray = extremes.max;
-                        var newVal;
-                        var k;
+                        const m = Math.abs(ax._m);
+                        const extremes = autorange.concatExtremes(gd, ax);
+                        const minArray = extremes.min;
+                        const maxArray = extremes.max;
+                        let newVal;
+                        let k;
 
                         for(k = 0; k < minArray.length; k++) {
                             newVal = minArray[k].val - getPadMin(minArray[k]) / m;
@@ -585,7 +585,7 @@ export var enforce = function enforce(gd?: any): void {
                             }
                         }
 
-                        var domainExpand = (rangeMax - rangeMin) / (2 * halfRange);
+                        const domainExpand = (rangeMax - rangeMin) / (2 * halfRange);
                         factor /= domainExpand;
 
                         rangeMin = ax.l2r(rangeMin);
@@ -601,22 +601,22 @@ export var enforce = function enforce(gd?: any): void {
     }
 };
 
-export var getAxisGroup = function getAxisGroup(fullLayout?: any, axId?: any): any {
-    var matchGroups = fullLayout._axisMatchGroups;
+export const getAxisGroup = function getAxisGroup(fullLayout?: any, axId?: any): any {
+    const matchGroups = fullLayout._axisMatchGroups;
 
-    for(var i = 0; i < matchGroups.length; i++) {
-        var group = matchGroups[i];
+    for(let i = 0; i < matchGroups.length; i++) {
+        const group = matchGroups[i];
         if(group[axId]) return 'g' + i;
     }
     return axId;
 };
 
-export var clean = function clean(gd?: any, ax?: any): void {
+export const clean = function clean(gd?: any, ax?: any): void {
     if(ax._inputDomain) {
-        var isConstrained = false;
-        var axId = ax._id;
-        var constraintGroups = gd._fullLayout._axisConstraintGroups;
-        for(var j = 0; j < constraintGroups.length; j++) {
+        let isConstrained = false;
+        const axId = ax._id;
+        const constraintGroups = gd._fullLayout._axisConstraintGroups;
+        for(let j = 0; j < constraintGroups.length; j++) {
             if(constraintGroups[j][axId]) {
                 isConstrained = true;
                 break;
@@ -630,9 +630,9 @@ export var clean = function clean(gd?: any, ax?: any): void {
 };
 
 function updateDomain(ax?: any, factor?: any): void {
-    var inputDomain = ax._inputDomain;
-    var centerFraction = FROM_BL[ax.constraintoward];
-    var center = inputDomain[0] + (inputDomain[1] - inputDomain[0]) * centerFraction;
+    const inputDomain = ax._inputDomain;
+    const centerFraction = FROM_BL[ax.constraintoward];
+    const center = inputDomain[0] + (inputDomain[1] - inputDomain[0]) * centerFraction;
 
     ax.domain = ax._input.domain = [
         center + (inputDomain[0] - center) / factor,

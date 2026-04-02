@@ -1,7 +1,7 @@
 import modeBarButtons from './buttons.js';
-var buttonList = Object.keys(modeBarButtons);
+const buttonList = Object.keys(modeBarButtons);
 
-var DRAW_MODES = [
+const DRAW_MODES = [
     'drawline',
     'drawopenpath',
     'drawclosedpath',
@@ -10,7 +10,7 @@ var DRAW_MODES = [
     'eraseshape'
 ];
 
-var backButtons = [
+const backButtons = [
     'v1hovermode',
     'hoverclosest',
     'hovercompare',
@@ -18,12 +18,12 @@ var backButtons = [
     'togglespikelines'
 ].concat(DRAW_MODES);
 
-var foreButtons = [];
-var addToForeButtons = function(b: any) {
+const foreButtons = [];
+const addToForeButtons = function(b: any) {
     if(backButtons.indexOf(b._cat || b.name) !== -1) return;
     // for convenience add lowercase shotname e.g. zoomin as well fullname zoomInGeo
-    var name = b.name;
-    var _cat = (b._cat || b.name).toLowerCase();
+    const name = b.name;
+    const _cat = (b._cat || b.name).toLowerCase();
     if(foreButtons.indexOf(name) === -1) foreButtons.push(name);
     if(foreButtons.indexOf(_cat) === -1) foreButtons.push(_cat);
 };

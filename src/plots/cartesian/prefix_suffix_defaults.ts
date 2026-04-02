@@ -2,13 +2,13 @@ import getShowAttrDflt from './show_dflt.js';
 
 export default function handlePrefixSuffixDefaults(containerIn?: any, containerOut?: any, coerce?: any, axType?: any, options?: any): void {
     if(!options) options = {};
-    var tickSuffixDflt = options.tickSuffixDflt;
+    const tickSuffixDflt = options.tickSuffixDflt;
 
-    var showAttrDflt = getShowAttrDflt(containerIn);
+    const showAttrDflt = getShowAttrDflt(containerIn);
 
-    var tickPrefix = coerce('tickprefix');
+    const tickPrefix = coerce('tickprefix');
     if(tickPrefix) coerce('showtickprefix', showAttrDflt);
 
-    var tickSuffix = coerce('ticksuffix', tickSuffixDflt);
+    const tickSuffix = coerce('ticksuffix', tickSuffixDflt);
     if(tickSuffix) coerce('showticksuffix', showAttrDflt);
 }

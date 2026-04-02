@@ -12,7 +12,7 @@ import setCursor from '../../lib/setcursor.js';
 import dragElement from '../dragelement/index.js';
 import { arrayEditor } from '../../plot_api/plot_template.js';
 import drawArrowHead from './draw_arrow_head.js';
-var strTranslate = Lib.strTranslate;
+const strTranslate = Lib.strTranslate;
 
 export default {
     draw: draw,
@@ -24,11 +24,11 @@ export default {
  * draw: draw all annotations without any new modifications
  */
 function draw(gd: GraphDiv) {
-    var fullLayout = gd._fullLayout;
+    const fullLayout = gd._fullLayout;
 
     fullLayout._infolayer.selectAll('.annotation').remove();
 
-    for(var i = 0; i < fullLayout.annotations.length; i++) {
+    for(let i = 0; i < fullLayout.annotations.length; i++) {
         if(fullLayout.annotations[i].visible) {
             drawOne(gd, i);
         }
@@ -43,10 +43,10 @@ function draw(gd: GraphDiv) {
  * index (int): the annotation to draw
  */
 function drawOne(gd: GraphDiv, index: any) {
-    var fullLayout = gd._fullLayout;
-    var options = fullLayout.annotations[index] || {};
-    var xa = Axes.getFromId(gd, options.xref);
-    var ya = Axes.getFromId(gd, options.yref);
+    const fullLayout = gd._fullLayout;
+    const options = fullLayout.annotations[index] || {};
+    const xa = Axes.getFromId(gd, options.xref);
+    const ya = Axes.getFromId(gd, options.yref);
 
     if(xa) xa.setScale();
     if(ya) ya.setScale();
@@ -60,11 +60,11 @@ function drawOne(gd: GraphDiv, index: any) {
 // axDomainRef: if true and axa defined, draws relative to axis domain,
 // otherwise draws relative to data (if axa defined) or paper (if not).
 function shiftPosition(axa: FullAxis, dAx: any, axLetter: any, gs: any, options: any) {
-    var optAx = options[axLetter];
-    var axRef = options[axLetter + 'ref'];
-    var vertical = axLetter.indexOf('y') !== -1;
-    var axDomainRef = Axes.getRefType(axRef) === 'domain';
-    var gsDim = vertical ? gs.h : gs.w;
+    const optAx = options[axLetter];
+    const axRef = options[axLetter + 'ref'];
+    const vertical = axLetter.indexOf('y') !== -1;
+    const axDomainRef = Axes.getRefType(axRef) === 'domain';
+    const gsDim = vertical ? gs.h : gs.w;
     if(axa) {
         if(axDomainRef) {
             // here optAx normalized to length of axis (e.g., normally in range
@@ -91,11 +91,11 @@ function shiftPosition(axa: FullAxis, dAx: any, axLetter: any, gs: any, options:
  * @param {object | undefined} ya : ... y-axis
  */
 function drawRaw(gd: GraphDiv, options: any, index: any, subplotId: any, xa: FullAxis, ya: FullAxis) {
-    var fullLayout = gd._fullLayout;
-    var gs = gd._fullLayout._size;
-    var edits = gd._context.edits;
+    const fullLayout = gd._fullLayout;
+    const gs = gd._fullLayout._size;
+    const edits = gd._context.edits;
 
-    var className, containerStr;
+    let className, containerStr;
 
     if(subplotId) {
         className = 'annotation-' + subplotId;
@@ -105,17 +105,17 @@ function drawRaw(gd: GraphDiv, options: any, index: any, subplotId: any, xa: Ful
         containerStr = 'annotations';
     }
 
-    var editHelpers = arrayEditor(gd.layout, containerStr, options);
-    var modifyBase = editHelpers.modifyBase;
-    var modifyItem = editHelpers.modifyItem;
-    var getUpdateObj = editHelpers.getUpdateObj;
+    const editHelpers = arrayEditor(gd.layout, containerStr, options);
+    const modifyBase = editHelpers.modifyBase;
+    const modifyItem = editHelpers.modifyItem;
+    const getUpdateObj = editHelpers.getUpdateObj;
 
     // remove the existing annotation if there is one
     fullLayout._infolayer
         .selectAll('.' + className + '[data-index="' + index + '"]')
         .remove();
 
-    var annClipID = 'clip' + fullLayout._uid + '_ann' + index;
+    const annClipID = 'clip' + fullLayout._uid + '_ann' + index;
 
     // this annotation is gone - quit now after deleting it
     // TODO: use d3 idioms instead of deleting and redrawing every time
@@ -126,27 +126,27 @@ function drawRaw(gd: GraphDiv, options: any, index: any, subplotId: any, xa: Ful
 
     // calculated pixel positions
     // x & y each will get text, head, and tail as appropriate
-    var annPosPx: any = {x: {}, y: {}};
-    var textangle = +options.textangle || 0;
+    const annPosPx: any = {x: {}, y: {}};
+    const textangle = +options.textangle || 0;
 
     // create the components
     // made a single group to contain all, so opacity can work right
     // with border/arrow together this could handle a whole bunch of
     // cleanup at this point, but works for now
-    var annGroup = fullLayout._infolayer.append('g')
+    const annGroup = fullLayout._infolayer.append('g')
         .classed(className, true)
         .attr('data-index', String(index))
         .style('opacity', options.opacity);
 
     // another group for text+background so that they can rotate together
-    var annTextGroup = annGroup.append('g')
+    const annTextGroup = annGroup.append('g')
         .classed('annotation-text-g', true);
 
-    var editTextPosition = edits[options.showarrow ? 'annotationTail' : 'annotationPosition'];
-    var textEvents = options.captureevents || edits.annotationText || editTextPosition;
+    const editTextPosition = edits[options.showarrow ? 'annotationTail' : 'annotationPosition'];
+    const textEvents = options.captureevents || edits.annotationText || editTextPosition;
 
     function makeEventData(initialEvent: any) {
-        var eventData: any = {
+        const eventData: any = {
             index: index,
             annotation: options._input,
             fullAnnotation: options,
@@ -158,7 +158,7 @@ function drawRaw(gd: GraphDiv, options: any, index: any, subplotId: any, xa: Ful
         return eventData;
     }
 
-    var annTextGroupInner = annTextGroup.append('g')
+    const annTextGroupInner = annTextGroup.append('g')
         .style('pointer-events', textEvents ? 'all' : null)
         .call(setCursor, 'pointer')
         .on('click', function(event: any) {
@@ -169,10 +169,10 @@ function drawRaw(gd: GraphDiv, options: any, index: any, subplotId: any, xa: Ful
     if(options.hovertext) {
         annTextGroupInner
         .on('mouseover', function() {
-            var hoverOptions = options.hoverlabel;
-            var hoverFont = hoverOptions.font;
-            var bBox = this.getBoundingClientRect();
-            var bBoxRef = gd.getBoundingClientRect();
+            const hoverOptions = options.hoverlabel;
+            const hoverFont = hoverOptions.font;
+            const bBox = this.getBoundingClientRect();
+            const bBoxRef = gd.getBoundingClientRect();
 
             Fx.loneHover({
                 x0: bBox.left - bBoxRef.left,
@@ -201,19 +201,19 @@ function drawRaw(gd: GraphDiv, options: any, index: any, subplotId: any, xa: Ful
         });
     }
 
-    var borderwidth = options.borderwidth;
-    var borderpad = options.borderpad;
-    var borderfull = borderwidth + borderpad;
+    const borderwidth = options.borderwidth;
+    const borderpad = options.borderpad;
+    const borderfull = borderwidth + borderpad;
 
-    var annTextBG = annTextGroupInner.append('rect')
+    const annTextBG = annTextGroupInner.append('rect')
         .attr('class', 'bg')
         .style('stroke-width', borderwidth + 'px')
         .call(Color.stroke, options.bordercolor)
         .call(Color.fill, options.bgcolor);
 
-    var isSizeConstrained = options.width || options.height;
+    const isSizeConstrained = options.width || options.height;
 
-    var annTextClip = fullLayout._topclips
+    const annTextClip = fullLayout._topclips
         .selectAll('#' + annClipID)
         .data(isSizeConstrained ? [0] : []);
 
@@ -223,13 +223,13 @@ function drawRaw(gd: GraphDiv, options: any, index: any, subplotId: any, xa: Ful
       .append('rect');
     annTextClip.exit().remove();
 
-    var font = options.font;
+    const font = options.font;
 
-    var text = fullLayout._meta ?
+    const text = fullLayout._meta ?
         Lib.templateString(options.text, fullLayout._meta) :
         options.text;
 
-    var annText = annTextGroupInner.append('text')
+    const annText = annTextGroupInner.append('text')
         .classed('annotation-text', true)
         .text(text);
 
@@ -248,9 +248,9 @@ function drawRaw(gd: GraphDiv, options: any, index: any, subplotId: any, xa: Ful
 
     function drawGraphicalElements() {
         // if the text has *only* a link, make the whole box into a link
-        var anchor3 = annText.selectAll('a');
+        const anchor3 = annText.selectAll('a');
         if(anchor3.size() === 1 && anchor3.text() === annText.text()) {
-            var wholeLink = annTextGroupInner.insert('a', ':first-child').attr({
+            const wholeLink = annTextGroupInner.insert('a', ':first-child').attr({
                 'xlink:xlink:href': anchor3.attr('xlink:href'),
                 'xlink:xlink:show': anchor3.attr('xlink:show')
             })
@@ -259,16 +259,16 @@ function drawRaw(gd: GraphDiv, options: any, index: any, subplotId: any, xa: Ful
             wholeLink.node().appendChild(annTextBG.node());
         }
 
-        var mathjaxGroup = annTextGroupInner.select('.annotation-text-math-group');
-        var hasMathjax = !mathjaxGroup.empty();
-        var anntextBB = bBox(
+        const mathjaxGroup = annTextGroupInner.select('.annotation-text-math-group');
+        const hasMathjax = !mathjaxGroup.empty();
+        const anntextBB = bBox(
                 (hasMathjax ? mathjaxGroup : annText).node());
-        var textWidth = anntextBB.width;
-        var textHeight = anntextBB.height;
-        var annWidth = options.width || textWidth;
-        var annHeight = options.height || textHeight;
-        var outerWidth = Math.round(annWidth + 2 * borderfull);
-        var outerHeight = Math.round(annHeight + 2 * borderfull);
+        const textWidth = anntextBB.width;
+        const textHeight = anntextBB.height;
+        const annWidth = options.width || textWidth;
+        const annHeight = options.height || textHeight;
+        const outerWidth = Math.round(annWidth + 2 * borderfull);
+        const outerHeight = Math.round(annHeight + 2 * borderfull);
 
         function shiftFraction(v: any, anchor: any) {
             if(anchor === 'auto') {
@@ -286,29 +286,29 @@ function drawRaw(gd: GraphDiv, options: any, index: any, subplotId: any, xa: Ful
             }[anchor];
         }
 
-        var annotationIsOffscreen = false;
-        var letters = ['x', 'y'];
+        let annotationIsOffscreen = false;
+        const letters = ['x', 'y'];
 
-        for(var i = 0; i < letters.length; i++) {
-            var axLetter = letters[i];
-            var axRef = options[axLetter + 'ref'] || axLetter;
-            var tailRef = options['a' + axLetter + 'ref'];
-            var ax = {x: xa, y: ya}[axLetter];
-            var dimAngle = (textangle + (axLetter === 'x' ? 0 : -90)) * Math.PI / 180;
+        for(let i = 0; i < letters.length; i++) {
+            const axLetter = letters[i];
+            const axRef = options[axLetter + 'ref'] || axLetter;
+            const tailRef = options['a' + axLetter + 'ref'];
+            const ax = {x: xa, y: ya}[axLetter];
+            const dimAngle = (textangle + (axLetter === 'x' ? 0 : -90)) * Math.PI / 180;
             // note that these two can be either positive or negative
-            var annSizeFromWidth = outerWidth * Math.cos(dimAngle);
-            var annSizeFromHeight = outerHeight * Math.sin(dimAngle);
+            const annSizeFromWidth = outerWidth * Math.cos(dimAngle);
+            const annSizeFromHeight = outerHeight * Math.sin(dimAngle);
             // but this one is the positive total size
-            var annSize = Math.abs(annSizeFromWidth) + Math.abs(annSizeFromHeight);
-            var anchor = options[axLetter + 'anchor'];
-            var overallShift = options[axLetter + 'shift'] * (axLetter === 'x' ? 1 : -1);
-            var posPx = annPosPx[axLetter];
-            var basePx;
-            var textPadShift;
-            var alignPosition;
-            var autoAlignFraction;
-            var textShift;
-            var axRefType = Axes.getRefType(axRef);
+            const annSize = Math.abs(annSizeFromWidth) + Math.abs(annSizeFromHeight);
+            const anchor = options[axLetter + 'anchor'];
+            const overallShift = options[axLetter + 'shift'] * (axLetter === 'x' ? 1 : -1);
+            const posPx = annPosPx[axLetter];
+            let basePx;
+            let textPadShift;
+            let alignPosition;
+            let autoAlignFraction;
+            let textShift;
+            const axRefType = Axes.getRefType(axRef);
 
             /*
              * calculate the *primary* pixel position
@@ -317,7 +317,7 @@ function drawRaw(gd: GraphDiv, options: any, index: any, subplotId: any, xa: Ful
              */
             if(ax && (axRefType !== 'domain')) {
                 // check if annotation is off screen, to bypass DOM manipulations
-                var posFraction = ax.r2fraction(options[axLetter]);
+                let posFraction = ax.r2fraction(options[axLetter]);
                 if(posFraction < 0 || posFraction > 1) {
                     if(tailRef === axRef) {
                         posFraction = ax.r2fraction(options['a' + axLetter]);
@@ -331,7 +331,7 @@ function drawRaw(gd: GraphDiv, options: any, index: any, subplotId: any, xa: Ful
                 basePx = ax._offset + ax.r2p(options[axLetter]);
                 autoAlignFraction = 0.5;
             } else {
-                var axRefTypeEqDomain = axRefType === 'domain';
+                const axRefTypeEqDomain = axRefType === 'domain';
                 if(axLetter === 'x') {
                     alignPosition = options[axLetter];
                     basePx = axRefTypeEqDomain ?
@@ -351,7 +351,7 @@ function drawRaw(gd: GraphDiv, options: any, index: any, subplotId: any, xa: Ful
             if(options.showarrow) {
                 posPx.head = basePx;
 
-                var arrowLength = options['a' + axLetter];
+                let arrowLength = options['a' + axLetter];
 
                 // with an arrow, the text rotates around the anchor point
                 textShift = annSizeFromWidth * shiftFraction(0.5, options.xanchor) -
@@ -362,7 +362,7 @@ function drawRaw(gd: GraphDiv, options: any, index: any, subplotId: any, xa: Ful
                     // position is set absolutely, which is consistent with how
                     // it behaves when its position is set in data ('range')
                     // coordinates.
-                    var tailRefType = Axes.getRefType(tailRef);
+                    const tailRefType = Axes.getRefType(tailRef);
                     if(tailRefType === 'domain') {
                         if(axLetter === 'y') {
                             arrowLength = 1 - arrowLength;
@@ -392,13 +392,13 @@ function drawRaw(gd: GraphDiv, options: any, index: any, subplotId: any, xa: Ful
 
                 // constrain pixel/paper referenced so the draggers are at least
                 // partially visible
-                var maxPx = fullLayout[(axLetter === 'x') ? 'width' : 'height'];
+                const maxPx = fullLayout[(axLetter === 'x') ? 'width' : 'height'];
                 if(axRef === 'paper') {
                     posPx.head = Lib.constrain(posPx.head, 1, maxPx - 1);
                 }
                 if(tailRef === 'pixel') {
-                    var shiftPlus = -Math.max(posPx.tail - 3, posPx.text);
-                    var shiftMinus = Math.min(posPx.tail + 3, posPx.text) - maxPx;
+                    const shiftPlus = -Math.max(posPx.tail - 3, posPx.text);
+                    const shiftMinus = Math.min(posPx.tail + 3, posPx.text) - maxPx;
                     if(shiftPlus > 0) {
                         posPx.tail += shiftPlus;
                         posPx.text += shiftPlus;
@@ -436,8 +436,8 @@ function drawRaw(gd: GraphDiv, options: any, index: any, subplotId: any, xa: Ful
             return;
         }
 
-        var xShift = 0;
-        var yShift = 0;
+        let xShift = 0;
+        let yShift = 0;
 
         if(options.align !== 'left') {
             xShift = (annWidth - textWidth) * (options.align === 'center' ? 0.5 : 1);
@@ -453,8 +453,8 @@ function drawRaw(gd: GraphDiv, options: any, index: any, subplotId: any, xa: Ful
             })
             .call(setClipUrl, isSizeConstrained ? annClipID : null, gd);
         } else {
-            var texty = borderfull + yShift - anntextBB.top;
-            var textx = borderfull + xShift - anntextBB.left;
+            const texty = borderfull + yShift - anntextBB.top;
+            const textx = borderfull + xShift - anntextBB.left;
 
             annText.call(svgTextUtils.positionText, textx, texty)
                 .call(setClipUrl, isSizeConstrained ? annClipID : null, gd);
@@ -485,32 +485,32 @@ function drawRaw(gd: GraphDiv, options: any, index: any, subplotId: any, xa: Ful
          * dx and dy are normally zero, but when you are dragging the textbox
          * while the head stays put, dx and dy are the pixel offsets
          */
-        var drawArrow = function(dx: any, dy: any) {
+        const drawArrow = function(dx: any, dy: any) {
             annGroup
                 .selectAll('.annotation-arrow-g')
                 .remove();
 
-            var headX = annPosPx.x.head;
-            var headY = annPosPx.y.head;
-            var tailX = annPosPx.x.tail + dx;
-            var tailY = annPosPx.y.tail + dy;
-            var textX = annPosPx.x.text + dx;
-            var textY = annPosPx.y.text + dy;
+            const headX = annPosPx.x.head;
+            const headY = annPosPx.y.head;
+            let tailX = annPosPx.x.tail + dx;
+            let tailY = annPosPx.y.tail + dy;
+            const textX = annPosPx.x.text + dx;
+            const textY = annPosPx.y.text + dy;
 
             // find the edge of the text box, where we'll start the arrow:
             // create transform matrix to rotate the text box corners
-            var transform = Lib.rotationXYMatrix(textangle, textX, textY);
-            var applyTransform = Lib.apply2DTransform(transform);
-            var applyTransform2 = Lib.apply2DTransform2(transform);
+            const transform = Lib.rotationXYMatrix(textangle, textX, textY);
+            const applyTransform = Lib.apply2DTransform(transform);
+            const applyTransform2 = Lib.apply2DTransform2(transform);
 
             // calculate and transform bounding box
-            var width = +annTextBG.attr('width');
-            var height = +annTextBG.attr('height');
-            var xLeft = textX - 0.5 * width;
-            var xRight = xLeft + width;
-            var yTop = textY - 0.5 * height;
-            var yBottom = yTop + height;
-            var edges = [
+            const width = +annTextBG.attr('width');
+            const height = +annTextBG.attr('height');
+            const xLeft = textX - 0.5 * width;
+            const xRight = xLeft + width;
+            const yTop = textY - 0.5 * height;
+            const yBottom = yTop + height;
+            const edges = [
                 [xLeft, yTop, xLeft, yBottom],
                 [xLeft, yBottom, xRight, yBottom],
                 [xRight, yBottom, xRight, yTop],
@@ -531,7 +531,7 @@ function drawRaw(gd: GraphDiv, options: any, index: any, subplotId: any, xa: Ful
             }
 
             edges.forEach(function(x: any) {
-                var p = Lib.segmentsIntersect(tailX, tailY, headX, headY,
+                const p = Lib.segmentsIntersect(tailX, tailY, headX, headY,
                             x[0], x[1], x[2], x[3]);
                 if(p) {
                     tailX = p.x;
@@ -539,15 +539,15 @@ function drawRaw(gd: GraphDiv, options: any, index: any, subplotId: any, xa: Ful
                 }
             });
 
-            var strokewidth = options.arrowwidth;
-            var arrowColor = options.arrowcolor;
-            var arrowSide = options.arrowside;
+            const strokewidth = options.arrowwidth;
+            const arrowColor = options.arrowcolor;
+            const arrowSide = options.arrowside;
 
-            var arrowGroup = annGroup.append('g')
+            const arrowGroup = annGroup.append('g')
                 .style({opacity: Color.opacity(arrowColor)})
                 .classed('annotation-arrow-g', true);
 
-            var arrow = arrowGroup.append('path')
+            const arrow = arrowGroup.append('path')
                 .attr('d', 'M' + tailX + ',' + tailY + 'L' + headX + ',' + headY)
                 .style('stroke-width', strokewidth + 'px')
                 .call(Color.stroke, Color.rgb(arrowColor));
@@ -557,14 +557,14 @@ function drawRaw(gd: GraphDiv, options: any, index: any, subplotId: any, xa: Ful
             // the arrow dragger is a small square right at the head, then a line to the tail,
             // all expanded by a stroke width of 6px plus the arrow line width
             if(edits.annotationPosition && arrow.node().parentNode && !subplotId) {
-                var arrowDragHeadX = headX;
-                var arrowDragHeadY = headY;
+                let arrowDragHeadX = headX;
+                let arrowDragHeadY = headY;
                 if(options.standoff) {
-                    var arrowLength = Math.sqrt(Math.pow(headX - tailX, 2) + Math.pow(headY - tailY, 2));
+                    const arrowLength = Math.sqrt(Math.pow(headX - tailX, 2) + Math.pow(headY - tailY, 2));
                     arrowDragHeadX += options.standoff * (tailX - headX) / arrowLength;
                     arrowDragHeadY += options.standoff * (tailY - headY) / arrowLength;
                 }
-                var arrowDrag = arrowGroup.append('path')
+                const arrowDrag = arrowGroup.append('path')
                     .classed('annotation-arrow', true)
                     .classed('anndrag', true)
                     .classed('cursor-move', true)
@@ -576,7 +576,7 @@ function drawRaw(gd: GraphDiv, options: any, index: any, subplotId: any, xa: Ful
                     .call(Color.stroke, 'rgba(0,0,0,0)')
                     .call(Color.fill, 'rgba(0,0,0,0)');
 
-                var annx0, anny0;
+                let annx0, anny0;
 
                 // dragger for the arrow & head: translates the whole thing
                 // (head/tail/text) all together
@@ -584,7 +584,7 @@ function drawRaw(gd: GraphDiv, options: any, index: any, subplotId: any, xa: Ful
                     element: arrowDrag.node(),
                     gd: gd,
                     prepFn: function() {
-                        var pos = getTranslate(annTextGroupInner);
+                        const pos = getTranslate(annTextGroupInner);
 
                         annx0 = pos.x;
                         anny0 = pos.y;
@@ -596,9 +596,9 @@ function drawRaw(gd: GraphDiv, options: any, index: any, subplotId: any, xa: Ful
                         }
                     },
                     moveFn: function(dx: any, dy: any) {
-                        var annxy0 = applyTransform(annx0, anny0);
-                        var xcenter = annxy0[0] + dx;
-                        var ycenter = annxy0[1] + dy;
+                        const annxy0 = applyTransform(annx0, anny0);
+                        const xcenter = annxy0[0] + dx;
+                        const ycenter = annxy0[1] + dy;
                         annTextGroupInner.call(setTranslate, xcenter, ycenter);
 
                         modifyItem('x',
@@ -625,7 +625,7 @@ function drawRaw(gd: GraphDiv, options: any, index: any, subplotId: any, xa: Ful
                     },
                     doneFn: function() {
                         Registry.call('_guiRelayout', gd, getUpdateObj());
-                        var notesBox = document.querySelector('.js-notes-box-panel');
+                        const notesBox = document.querySelector('.js-notes-box-panel');
                         if(notesBox) (notesBox as any).redraw((notesBox as any).selectedObj);
                     }
                 });
@@ -636,7 +636,7 @@ function drawRaw(gd: GraphDiv, options: any, index: any, subplotId: any, xa: Ful
 
         // user dragging the annotation (text, not arrow)
         if(editTextPosition) {
-            var baseTextTransform;
+            let baseTextTransform;
 
             // dragger for the textbox: if there's an arrow, just drag the
             // textbox and tail, leave the head untouched
@@ -647,7 +647,7 @@ function drawRaw(gd: GraphDiv, options: any, index: any, subplotId: any, xa: Ful
                     baseTextTransform = annTextGroup.attr('transform');
                 },
                 moveFn: function(dx: any, dy: any) {
-                    var csr = 'pointer';
+                    let csr = 'pointer';
                     if(options.showarrow) {
                         // for these 2 calls to shiftPosition, it is assumed xa, ya are
                         // defined, so gsDim will not be used, but we put it in
@@ -666,14 +666,14 @@ function drawRaw(gd: GraphDiv, options: any, index: any, subplotId: any, xa: Ful
 
                         drawArrow(dx, dy);
                     } else if(!subplotId) {
-                        var xUpdate, yUpdate;
+                        let xUpdate, yUpdate;
                         if(xa) {
                             // shiftPosition will not execute code where xa was
                             // undefined, so we use to calculate xUpdate too
                             xUpdate = shiftPosition(xa, dx, 'x', gs, options);
                         } else {
-                            var widthFraction = options._xsize / gs.w;
-                            var xLeft = options.x + (options._xshift - options.xshift) / gs.w - widthFraction / 2;
+                            const widthFraction = options._xsize / gs.w;
+                            const xLeft = options.x + (options._xshift - options.xshift) / gs.w - widthFraction / 2;
 
                             xUpdate = dragElement.align(xLeft + dx / gs.w,
                                 widthFraction, 0, 1, options.xanchor);
@@ -684,8 +684,8 @@ function drawRaw(gd: GraphDiv, options: any, index: any, subplotId: any, xa: Ful
                             // undefined, so we use to calculate yUpdate too
                             yUpdate = shiftPosition(ya, dy, 'y', gs, options);
                         } else {
-                            var heightFraction = options._ysize / gs.h;
-                            var yBottom = options.y - (options._yshift + options.yshift) / gs.h - heightFraction / 2;
+                            const heightFraction = options._ysize / gs.h;
+                            const yBottom = options.y - (options._yshift + options.yshift) / gs.h - heightFraction / 2;
 
                             yUpdate = dragElement.align(yBottom - dy / gs.h,
                                 heightFraction, 0, 1, options.yanchor);
@@ -715,7 +715,7 @@ function drawRaw(gd: GraphDiv, options: any, index: any, subplotId: any, xa: Ful
                 doneFn: function() {
                     setCursor(annTextGroupInner);
                     Registry.call('_guiRelayout', gd, getUpdateObj());
-                    var notesBox = document.querySelector('.js-notes-box-panel');
+                    const notesBox = document.querySelector('.js-notes-box-panel');
                     if(notesBox) (notesBox as any).redraw((notesBox as any).selectedObj);
                 }
             });

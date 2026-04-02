@@ -1,10 +1,10 @@
 // Inline 4x4 matrix operations (replaces gl-mat4 dependency)
 function mat4Multiply(out: number[], a: number[], b: number[]): number[] {
-    var a00 = a[0], a01 = a[1], a02 = a[2], a03 = a[3];
-    var a10 = a[4], a11 = a[5], a12 = a[6], a13 = a[7];
-    var a20 = a[8], a21 = a[9], a22 = a[10], a23 = a[11];
-    var a30 = a[12], a31 = a[13], a32 = a[14], a33 = a[15];
-    var b0: number, b1: number, b2: number, b3: number;
+    const a00 = a[0], a01 = a[1], a02 = a[2], a03 = a[3];
+    const a10 = a[4], a11 = a[5], a12 = a[6], a13 = a[7];
+    const a20 = a[8], a21 = a[9], a22 = a[10], a23 = a[11];
+    const a30 = a[12], a31 = a[13], a32 = a[14], a33 = a[15];
+    let b0: number, b1: number, b2: number, b3: number;
     b0 = b[0]; b1 = b[1]; b2 = b[2]; b3 = b[3];
     out[0] = b0 * a00 + b1 * a10 + b2 * a20 + b3 * a30;
     out[1] = b0 * a01 + b1 * a11 + b2 * a21 + b3 * a31;
@@ -29,23 +29,23 @@ function mat4Multiply(out: number[], a: number[], b: number[]): number[] {
 }
 
 function mat4Invert(out: number[], a: number[]): number[] | null {
-    var a00 = a[0], a01 = a[1], a02 = a[2], a03 = a[3];
-    var a10 = a[4], a11 = a[5], a12 = a[6], a13 = a[7];
-    var a20 = a[8], a21 = a[9], a22 = a[10], a23 = a[11];
-    var a30 = a[12], a31 = a[13], a32 = a[14], a33 = a[15];
-    var b00 = a00 * a11 - a01 * a10;
-    var b01 = a00 * a12 - a02 * a10;
-    var b02 = a00 * a13 - a03 * a10;
-    var b03 = a01 * a12 - a02 * a11;
-    var b04 = a01 * a13 - a03 * a11;
-    var b05 = a02 * a13 - a03 * a12;
-    var b06 = a20 * a31 - a21 * a30;
-    var b07 = a20 * a32 - a22 * a30;
-    var b08 = a20 * a33 - a23 * a30;
-    var b09 = a21 * a32 - a22 * a31;
-    var b10 = a21 * a33 - a23 * a31;
-    var b11 = a22 * a33 - a23 * a32;
-    var det = b00 * b11 - b01 * b10 + b02 * b09 + b03 * b08 - b04 * b07 + b05 * b06;
+    const a00 = a[0], a01 = a[1], a02 = a[2], a03 = a[3];
+    const a10 = a[4], a11 = a[5], a12 = a[6], a13 = a[7];
+    const a20 = a[8], a21 = a[9], a22 = a[10], a23 = a[11];
+    const a30 = a[12], a31 = a[13], a32 = a[14], a33 = a[15];
+    const b00 = a00 * a11 - a01 * a10;
+    const b01 = a00 * a12 - a02 * a10;
+    const b02 = a00 * a13 - a03 * a10;
+    const b03 = a01 * a12 - a02 * a11;
+    const b04 = a01 * a13 - a03 * a11;
+    const b05 = a02 * a13 - a03 * a12;
+    const b06 = a20 * a31 - a21 * a30;
+    const b07 = a20 * a32 - a22 * a30;
+    const b08 = a20 * a33 - a23 * a30;
+    const b09 = a21 * a32 - a22 * a31;
+    const b10 = a21 * a33 - a23 * a31;
+    const b11 = a22 * a33 - a23 * a32;
+    let det = b00 * b11 - b01 * b10 + b02 * b09 + b03 * b08 - b04 * b07 + b05 * b06;
     if(!det) return null;
     det = 1.0 / det;
     out[0] = (a11 * b11 - a12 * b10 + a13 * b09) * det;
@@ -67,20 +67,20 @@ function mat4Invert(out: number[], a: number[]): number[] | null {
     return out;
 }
 
-export var init2dArray = function(rowLength: number, colLength: number): any[][] {
-    var array = new Array(rowLength);
-    for(var i = 0; i < rowLength; i++) array[i] = new Array(colLength);
+export const init2dArray = function(rowLength: number, colLength: number): any[][] {
+    const array = new Array(rowLength);
+    for(let i = 0; i < rowLength; i++) array[i] = new Array(colLength);
     return array;
 };
 
-export var transposeRagged = function(z: any[][]): any[][] {
-    var maxlen = 0;
-    var zlen = z.length;
-    var i: number, j: number;
+export const transposeRagged = function(z: any[][]): any[][] {
+    let maxlen = 0;
+    const zlen = z.length;
+    let i: number, j: number;
     // Maximum row length:
     for(i = 0; i < zlen; i++) maxlen = Math.max(maxlen, z[i].length);
 
-    var t = new Array(maxlen);
+    const t = new Array(maxlen);
     for(i = 0; i < maxlen; i++) {
         t[i] = new Array(zlen);
         for(j = 0; j < zlen; j++) t[i][j] = z[j][i];
@@ -89,12 +89,12 @@ export var transposeRagged = function(z: any[][]): any[][] {
     return t;
 };
 
-export var dot = function(x: any, y: any): any {
+export const dot = function(x: any, y: any): any {
     if(!(x.length && y.length) || x.length !== y.length) return null;
 
-    var len = x.length;
-    var out: any;
-    var i: number;
+    const len = x.length;
+    let out: any;
+    let i: number;
 
     if(x[0].length) {
         // mat-vec or mat-mat
@@ -102,7 +102,7 @@ export var dot = function(x: any, y: any): any {
         for(i = 0; i < len; i++) out[i] = dot(x[i], y);
     } else if(y[0].length) {
         // vec-mat
-        var yTranspose = transposeRagged(y);
+        const yTranspose = transposeRagged(y);
         out = new Array(yTranspose.length);
         for(i = 0; i < yTranspose.length; i++) out[i] = dot(x, yTranspose[i]);
     } else {
@@ -114,53 +114,53 @@ export var dot = function(x: any, y: any): any {
     return out;
 };
 
-export var translationMatrix = function(x: number, y: number): number[][] {
+export const translationMatrix = function(x: number, y: number): number[][] {
     return [[1, 0, x], [0, 1, y], [0, 0, 1]];
 };
 
-export var rotationMatrix = function(alpha: number): number[][] {
-    var a = alpha * Math.PI / 180;
+export const rotationMatrix = function(alpha: number): number[][] {
+    const a = alpha * Math.PI / 180;
     return [[Math.cos(a), -Math.sin(a), 0],
             [Math.sin(a), Math.cos(a), 0],
             [0, 0, 1]];
 };
 
-export var rotationXYMatrix = function(a: number, x: number, y: number): any {
+export const rotationXYMatrix = function(a: number, x: number, y: number): any {
     return dot(
         dot(translationMatrix(x, y),
                     rotationMatrix(a)),
         translationMatrix(-x, -y));
 };
 
-export var apply3DTransform = function(transform: any): (...args: any[]) => number[] {
+export const apply3DTransform = function(transform: any): (...args: any[]) => number[] {
     return function() {
-        var args = arguments;
-        var xyz = arguments.length === 1 ? args[0] : [args[0], args[1], args[2] || 0];
+        const args = arguments;
+        const xyz = arguments.length === 1 ? args[0] : [args[0], args[1], args[2] || 0];
         return dot(transform, [xyz[0], xyz[1], xyz[2], 1]).slice(0, 3);
     };
 };
 
-export var apply2DTransform = function(transform: any): (...args: any[]) => number[] {
+export const apply2DTransform = function(transform: any): (...args: any[]) => number[] {
     return function() {
-        var args = arguments;
+        let args = arguments;
         if(args.length === 3) {
             args = args[0];
         } // from map
-        var xy = arguments.length === 1 ? args[0] : [args[0], args[1]];
+        const xy = arguments.length === 1 ? args[0] : [args[0], args[1]];
         return dot(transform, [xy[0], xy[1], 1]).slice(0, 2);
     };
 };
 
-export var apply2DTransform2 = function(transform: any): (xys: number[]) => number[] {
-    var at = apply2DTransform(transform);
+export const apply2DTransform2 = function(transform: any): (xys: number[]) => number[] {
+    const at = apply2DTransform(transform);
     return function(xys: number[]): number[] {
         return at(xys.slice(0, 2)).concat(at(xys.slice(2, 4)));
     };
 };
 
-export var convertCssMatrix = function(m: number[] | null | undefined): number[] {
+export const convertCssMatrix = function(m: number[] | null | undefined): number[] {
     if(m) {
-        var len = m.length;
+        const len = m.length;
         if(len === 16) return m;
         if(len === 6) {
             // converts a 2x3 css transform matrix to a 4x4 matrix see https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/matrix
@@ -180,8 +180,8 @@ export var convertCssMatrix = function(m: number[] | null | undefined): number[]
     ];
 };
 
-export var inverseTransformMatrix = function(m: number[]): number[][] {
-    var out: number[] = [];
+export const inverseTransformMatrix = function(m: number[]): number[][] {
+    const out: number[] = [];
     mat4Invert(out, m);
     return [
         [out[0], out[1], out[2], out[3]],

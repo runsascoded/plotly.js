@@ -11,10 +11,10 @@ function isNonBlankString(v) {
 }
 
 export default function calc(gd: GraphDiv, trace: FullTrace) {
-    var len = trace._length;
-    var calcTrace = new Array(len);
+    const len = trace._length;
+    const calcTrace = new Array(len);
 
-    var isValidLoc;
+    let isValidLoc;
 
     if(trace.geojson) {
         isValidLoc = function(v) { return isNonBlankString(v) || isNumeric(v); };
@@ -22,10 +22,10 @@ export default function calc(gd: GraphDiv, trace: FullTrace) {
         isValidLoc = isNonBlankString;
     }
 
-    for(var i = 0; i < len; i++) {
-        var calcPt: any = calcTrace[i] = {};
-        var loc = trace.locations[i];
-        var z = trace.z[i];
+    for(let i = 0; i < len; i++) {
+        const calcPt: any = calcTrace[i] = {};
+        const loc = trace.locations[i];
+        const z = trace.z[i];
 
         if(isValidLoc(loc) && isNumeric(z)) {
             calcPt.loc = loc;

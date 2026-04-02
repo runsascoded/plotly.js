@@ -33,7 +33,7 @@ function LineWithMarkers(scene, uid) {
     this.data = null;
 }
 
-var proto = LineWithMarkers.prototype;
+const proto = LineWithMarkers.prototype;
 
 proto.handlePick = function (selection) {
     if (
@@ -43,7 +43,7 @@ proto.handlePick = function (selection) {
             selection.object === this.textMarkers ||
             selection.object === this.scatterPlot)
     ) {
-        var ind = (selection.index = selection.data.index);
+        const ind = (selection.index = selection.data.index);
 
         if (selection.object.highlight) {
             selection.object.highlight(null);
@@ -71,24 +71,24 @@ proto.handlePick = function (selection) {
 };
 
 function constructDelaunay(points, color, axis) {
-    var u = (axis + 1) % 3;
-    var v = (axis + 2) % 3;
-    var filteredPoints = [];
-    var filteredIds = [];
-    var i;
+    const u = (axis + 1) % 3;
+    const v = (axis + 2) % 3;
+    const filteredPoints = [];
+    const filteredIds = [];
+    let i;
 
     for (i = 0; i < points.length; ++i) {
-        var p = points[i];
+        const p = points[i];
         if (isNaN(p[u]) || !isFinite(p[u]) || isNaN(p[v]) || !isFinite(p[v])) {
             continue;
         }
         filteredPoints.push([p[u], p[v]]);
         filteredIds.push(i);
     }
-    var cells = triangulate(filteredPoints);
+    const cells = triangulate(filteredPoints);
     for (i = 0; i < cells.length; ++i) {
-        var c = cells[i];
-        for (var j = 0; j < c.length; ++j) {
+        const c = cells[i];
+        for (let j = 0; j < c.length; ++j) {
             c[j] = filteredIds[c[j]];
         }
     }
@@ -100,16 +100,16 @@ function constructDelaunay(points, color, axis) {
 }
 
 function calculateErrorParams(errors) {
-    var capSize = [0.0, 0.0, 0.0];
-    var color = [
+    const capSize = [0.0, 0.0, 0.0];
+    const color = [
         [0, 0, 0],
         [0, 0, 0],
         [0, 0, 0]
     ];
-    var lineWidth = [1.0, 1.0, 1.0];
+    const lineWidth = [1.0, 1.0, 1.0];
 
-    for (var i = 0; i < 3; i++) {
-        var e = errors[i];
+    for (let i = 0; i < 3; i++) {
+        let e = errors[i];
 
         if (e && e.copy_zstyle !== false && errors[2].visible !== false) e = errors[2];
         if (!e || !e.visible) continue;
@@ -137,13 +137,13 @@ function parseAlignmentY(a) {
 function calculateTextOffset(tp) {
     // Read out text properties
 
-    var defaultAlignmentX = 0;
-    var defaultAlignmentY = 0;
+    const defaultAlignmentX = 0;
+    const defaultAlignmentY = 0;
 
-    var textOffset: any = [defaultAlignmentX, defaultAlignmentY];
+    const textOffset: any = [defaultAlignmentX, defaultAlignmentY];
 
     if (Array.isArray(tp)) {
-        for (var i = 0; i < tp.length; i++) {
+        for (let i = 0; i < tp.length; i++) {
             textOffset[i] = [defaultAlignmentX, defaultAlignmentY];
             if (tp[i]) {
                 textOffset[i][0] = parseAlignmentX(tp[i]);
@@ -168,12 +168,12 @@ function calculateSymbol(symbolIn) {
 }
 
 function formatParam(paramIn: any, len: any, calculate: any, dflt: any, extraFn?: any) {
-    var paramOut = null;
+    let paramOut = null;
 
     if (Lib.isArrayOrTypedArray(paramIn)) {
         paramOut = [];
 
-        for (var i = 0; i < len; i++) {
+        for (let i = 0; i < len; i++) {
             if (paramIn[i] === undefined) paramOut[i] = dflt;
             else paramOut[i] = calculate(paramIn[i], extraFn);
         }
@@ -183,24 +183,24 @@ function formatParam(paramIn: any, len: any, calculate: any, dflt: any, extraFn?
 }
 
 function convertPlotlyOptions(scene, data) {
-    var points = [];
-    var sceneLayout = scene.fullSceneLayout;
-    var scaleFactor = scene.dataScale;
-    var xaxis = sceneLayout.xaxis;
-    var yaxis = sceneLayout.yaxis;
-    var zaxis = sceneLayout.zaxis;
-    var marker = data.marker;
-    var line = data.line;
-    var x = data.x || [];
-    var y = data.y || [];
-    var z = data.z || [];
-    var len = x.length;
-    var xcalendar = data.xcalendar;
-    var ycalendar = data.ycalendar;
-    var zcalendar = data.zcalendar;
-    var xc, yc, zc;
-    var params, i;
-    var text;
+    const points = [];
+    const sceneLayout = scene.fullSceneLayout;
+    const scaleFactor = scene.dataScale;
+    const xaxis = sceneLayout.xaxis;
+    const yaxis = sceneLayout.yaxis;
+    const zaxis = sceneLayout.zaxis;
+    const marker = data.marker;
+    const line = data.line;
+    const x = data.x || [];
+    const y = data.y || [];
+    const z = data.z || [];
+    const len = x.length;
+    const xcalendar = data.xcalendar;
+    const ycalendar = data.ycalendar;
+    const zcalendar = data.zcalendar;
+    let xc, yc, zc;
+    let params, i;
+    let text;
 
     // Convert points
     for (i = 0; i < len; i++) {
@@ -223,18 +223,18 @@ function convertPlotlyOptions(scene, data) {
     }
 
     function formatter(axName, val) {
-        var ax = sceneLayout[axName];
+        const ax = sceneLayout[axName];
         return Axes.tickText(ax, ax.d2l(val), true).text;
     }
 
     // check texttemplate
-    var texttemplate = data.texttemplate;
+    const texttemplate = data.texttemplate;
     if (texttemplate) {
-        var fullLayout = scene.fullLayout;
-        var d3locale = fullLayout._d3locale;
-        var isArray = Array.isArray(texttemplate);
-        var N = isArray ? Math.min(texttemplate.length, len) : len;
-        var txt = isArray
+        const fullLayout = scene.fullLayout;
+        const d3locale = fullLayout._d3locale;
+        const isArray = Array.isArray(texttemplate);
+        const N = isArray ? Math.min(texttemplate.length, len) : len;
+        const txt = isArray
             ? function (i) {
                   return texttemplate[i];
               }
@@ -245,13 +245,13 @@ function convertPlotlyOptions(scene, data) {
         text = new Array(N);
 
         for (i = 0; i < N; i++) {
-            var d = { x: x[i], y: y[i], z: z[i] };
-            var labels = {
+            const d = { x: x[i], y: y[i], z: z[i] };
+            const labels = {
                 xLabel: formatter('xaxis', x[i]),
                 yLabel: formatter('yaxis', y[i]),
                 zLabel: formatter('zaxis', z[i])
             };
-            var pointValues: any = {};
+            const pointValues: any = {};
             appendArrayPointValue(pointValues, data, i);
             text[i] = Lib.texttemplateString({
                 data: [pointValues, d, data._meta],
@@ -277,7 +277,7 @@ function convertPlotlyOptions(scene, data) {
     }
 
     if ('marker' in data) {
-        var sizeFn = makeBubbleSizeFn(data);
+        const sizeFn = makeBubbleSizeFn(data);
 
         params.scatterColor = formatColor(marker, 1, len);
         params.scatterSize = formatParam(marker.size, len, calculateSize, 20, sizeFn);
@@ -298,12 +298,12 @@ function convertPlotlyOptions(scene, data) {
         params.textAngle = 0;
     }
 
-    var dims = ['x', 'y', 'z'];
+    const dims = ['x', 'y', 'z'];
     params.project = [false, false, false];
     params.projectScale = [1, 1, 1];
     params.projectOpacity = [1, 1, 1];
     for (i = 0; i < 3; ++i) {
-        var projection = data.projection[dims[i]];
+        const projection = data.projection[dims[i]];
         if ((params.project[i] = projection.show)) {
             params.projectOpacity[i] = projection.opacity;
             params.projectScale[i] = projection.scale;
@@ -312,7 +312,7 @@ function convertPlotlyOptions(scene, data) {
 
     params.errorBounds = calculateError(data, scaleFactor, sceneLayout);
 
-    var errorParams = calculateErrorParams([data.error_x, data.error_y, data.error_z]);
+    const errorParams = calculateErrorParams([data.error_x, data.error_y, data.error_z]);
     params.errorColor = errorParams.color;
     params.errorLineWidth = errorParams.lineWidth;
     params.errorCapSize = errorParams.capSize;
@@ -325,7 +325,7 @@ function convertPlotlyOptions(scene, data) {
 
 function _arrayToColor(color) {
     if (Lib.isArrayOrTypedArray(color)) {
-        var c = color[0];
+        const c = color[0];
 
         if (Lib.isArrayOrTypedArray(c)) color = c;
 
@@ -354,18 +354,18 @@ function arrayToColor(colors) {
 }
 
 proto.update = function (data) {
-    var gl = this.scene.glplot.gl;
-    var lineOptions;
-    var scatterOptions;
-    var errorOptions;
-    var textOptions;
-    var dashPattern = DASH_PATTERNS.solid;
+    const gl = this.scene.glplot.gl;
+    let lineOptions;
+    let scatterOptions;
+    let errorOptions;
+    let textOptions;
+    let dashPattern = DASH_PATTERNS.solid;
 
     // Save data
     this.data = data;
 
     // Run data conversion
-    var options = convertPlotlyOptions(this.scene, data);
+    const options = convertPlotlyOptions(this.scene, data);
 
     if ('mode' in options) {
         this.mode = options.mode;
@@ -406,7 +406,7 @@ proto.update = function (data) {
     }
 
     // N.B. marker.opacity must be a scalar for performance
-    var scatterOpacity = data.opacity;
+    let scatterOpacity = data.opacity;
     if (data.marker && data.marker.opacity !== undefined) scatterOpacity *= data.marker.opacity;
 
     scatterOptions = {
@@ -496,7 +496,7 @@ proto.update = function (data) {
     }
 
     if (options.delaunayAxis >= 0) {
-        var delaunayOptions: any = constructDelaunay(options.position, options.delaunayColor, options.delaunayAxis);
+        const delaunayOptions: any = constructDelaunay(options.position, options.delaunayColor, options.delaunayAxis);
         delaunayOptions.opacity = data.opacity;
 
         if (this.delaunayMesh) {
@@ -538,7 +538,7 @@ proto.dispose = function () {
 };
 
 function createLineWithMarkers(scene, data) {
-    var plot = new LineWithMarkers(scene, data.uid);
+    const plot = new LineWithMarkers(scene, data.uid);
     plot.update(data);
     return plot;
 }

@@ -19,12 +19,12 @@ export function traceIs(trace: any, category: string): boolean {
     }
 
     // Slow path: look up by type string (pre-supplyDefaults)
-    var traceType = typeof trace === 'string' ? trace :
+    const traceType = typeof trace === 'string' ? trace :
         (trace && trace.type) ? trace.type : basePlotAttributes.type.dflt;
 
     if(traceType === 'various') return false;
 
-    var _module = modules[traceType];
+    let _module = modules[traceType];
     if(!_module) _module = modules[basePlotAttributes.type.dflt];
     if(!_module) return false;
 

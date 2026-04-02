@@ -1,17 +1,17 @@
 export default function orientText(trace: any, xaxis: any, yaxis: any, xy: any, dxy: any, refDxy?: any) {
-    var dx = dxy[0] * trace.dpdx(xaxis);
-    var dy = dxy[1] * trace.dpdy(yaxis);
-    var flip = 1;
+    const dx = dxy[0] * trace.dpdx(xaxis);
+    const dy = dxy[1] * trace.dpdy(yaxis);
+    let flip = 1;
 
-    var offsetMultiplier = 1.0;
+    let offsetMultiplier = 1.0;
     if(refDxy) {
-        var l1 = Math.sqrt(dxy[0] * dxy[0] + dxy[1] * dxy[1]);
-        var l2 = Math.sqrt(refDxy[0] * refDxy[0] + refDxy[1] * refDxy[1]);
-        var dot = (dxy[0] * refDxy[0] + dxy[1] * refDxy[1]) / l1 / l2;
+        const l1 = Math.sqrt(dxy[0] * dxy[0] + dxy[1] * dxy[1]);
+        const l2 = Math.sqrt(refDxy[0] * refDxy[0] + refDxy[1] * refDxy[1]);
+        const dot = (dxy[0] * refDxy[0] + dxy[1] * refDxy[1]) / l1 / l2;
         offsetMultiplier = Math.max(0.0, dot);
     }
 
-    var angle = Math.atan2(dy, dx) * 180 / Math.PI;
+    let angle = Math.atan2(dy, dx) * 180 / Math.PI;
     if(angle < -90) {
         angle += 180;
         flip = -flip;

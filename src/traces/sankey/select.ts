@@ -1,16 +1,16 @@
 export default function selectPoints(searchInfo: any, selectionTester: any) {
-    var cd = searchInfo.cd;
-    var selection = [];
-    var fullData = cd[0].trace;
+    const cd = searchInfo.cd;
+    const selection = [];
+    const fullData = cd[0].trace;
 
-    var nodes = fullData._sankey.graph.nodes;
+    const nodes = fullData._sankey.graph.nodes;
 
-    for(var i = 0; i < nodes.length; i++) {
-        var node = nodes[i];
+    for(let i = 0; i < nodes.length; i++) {
+        const node = nodes[i];
         if(node.partOfGroup) continue; // Those are invisible
 
         // Position of node's centroid
-        var pos = [(node.x0 + node.x1) / 2, (node.y0 + node.y1) / 2];
+        const pos = [(node.x0 + node.x1) / 2, (node.y0 + node.y1) / 2];
 
         // Swap x and y if trace is vertical
         if(fullData.orientation === 'v') pos.reverse();

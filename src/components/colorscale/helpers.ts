@@ -8,16 +8,16 @@ import _scales from './scales.js';
 const { isValid: isValidScale } = _scales;
 
 function hasColorscale(trace: FullTrace | InputTrace, containerStr: string, colorKey?: string): boolean {
-    var container = containerStr ?
+    const container = containerStr ?
         nestedProperty(trace, containerStr).get() || {} :
         trace;
 
-    var color = container[colorKey || 'color'];
+    let color = container[colorKey || 'color'];
     if(color && color._inputArray) color = color._inputArray;
 
-    var isArrayWithOneNumber = false;
+    let isArrayWithOneNumber = false;
     if(isArrayOrTypedArray(color)) {
-        for(var i = 0; i < color.length; i++) {
+        for(let i = 0; i < color.length; i++) {
             if(isNumeric(color[i])) {
                 isArrayWithOneNumber = true;
                 break;
@@ -36,15 +36,15 @@ function hasColorscale(trace: FullTrace | InputTrace, containerStr: string, colo
     );
 }
 
-var constantAttrs = ['showscale', 'autocolorscale', 'colorscale', 'reversescale', 'colorbar'];
-var letterAttrs = ['min', 'max', 'mid', 'auto'];
+const constantAttrs = ['showscale', 'autocolorscale', 'colorscale', 'reversescale', 'colorbar'];
+const letterAttrs = ['min', 'max', 'mid', 'auto'];
 
 function extractOpts(cont: any): any {
-    var colorAx = cont._colorAx;
-    var cont2 = colorAx ? colorAx : cont;
-    var out: Record<string, any> = {};
-    var cLetter: string;
-    var i: number, k: string;
+    const colorAx = cont._colorAx;
+    const cont2 = colorAx ? colorAx : cont;
+    const out: Record<string, any> = {};
+    let cLetter: string;
+    let i: number, k: string;
 
     for(i = 0; i < constantAttrs.length; i++) {
         k = constantAttrs[i];
@@ -58,7 +58,7 @@ function extractOpts(cont: any): any {
             out[k] = cont2['c' + k];
         }
     } else {
-        var k2: string;
+        let k2: string;
         for(i = 0; i < letterAttrs.length; i++) {
             k = letterAttrs[i];
             k2 = 'c' + k;
@@ -75,7 +75,7 @@ function extractOpts(cont: any): any {
     }
 
     out._sync = function(k: string, v: any): void {
-        var k2 = letterAttrs.indexOf(k) !== -1 ? cLetter + k : k;
+        const k2 = letterAttrs.indexOf(k) !== -1 ? cLetter + k : k;
         cont2[k2] = cont2['_' + k2] = v;
     };
 
@@ -83,20 +83,20 @@ function extractOpts(cont: any): any {
 }
 
 function extractScale(cont: any): { domain: number[]; range: string[] } {
-    var cOpts = extractOpts(cont);
-    var cmin = cOpts.min;
-    var cmax = cOpts.max;
+    const cOpts = extractOpts(cont);
+    const cmin = cOpts.min;
+    const cmax = cOpts.max;
 
-    var scl = cOpts.reversescale ?
+    const scl = cOpts.reversescale ?
         flipScale(cOpts.colorscale) :
         cOpts.colorscale;
 
-    var N = scl.length;
-    var domain = new Array(N);
-    var range = new Array(N);
+    const N = scl.length;
+    const domain = new Array(N);
+    const range = new Array(N);
 
-    for(var i = 0; i < N; i++) {
-        var si = scl[i];
+    for(let i = 0; i < N; i++) {
+        const si = scl[i];
         domain[i] = cmin + si[0] * (cmax - cmin);
         range[i] = si[1];
     }
@@ -105,11 +105,11 @@ function extractScale(cont: any): { domain: number[]; range: string[] } {
 }
 
 function flipScale(scl: any[]): any[] {
-    var N = scl.length;
-    var sclNew = new Array(N);
+    const N = scl.length;
+    const sclNew = new Array(N);
 
-    for(var i = N - 1, j = 0; i >= 0; i--, j++) {
-        var si = scl[i];
+    for(let i = N - 1, j = 0; i >= 0; i--, j++) {
+        const si = scl[i];
         sclNew[j] = [1 - si[0], si[1]];
     }
     return sclNew;
@@ -118,24 +118,24 @@ function flipScale(scl: any[]): any[] {
 function makeColorScaleFunc(specs: any, opts?: any): any {
     opts = opts || {};
 
-    var domain = specs.domain;
-    var range = specs.range;
-    var N = range.length;
-    var _range = new Array(N);
+    const domain = specs.domain;
+    const range = specs.range;
+    const N = range.length;
+    const _range = new Array(N);
 
-    for(var i = 0; i < N; i++) {
-        var rgba = tinycolor(range[i]).toRgb();
+    for(let i = 0; i < N; i++) {
+        const rgba = tinycolor(range[i]).toRgb();
         _range[i] = [rgba.r, rgba.g, rgba.b, rgba.a];
     }
 
-    var _sclFunc = scaleLinear()
+    const _sclFunc = scaleLinear()
         .domain(domain)
         .range(_range)
         .clamp(true);
 
-    var noNumericCheck = opts.noNumericCheck;
-    var returnArray = opts.returnArray;
-    var sclFunc: any;
+    const noNumericCheck = opts.noNumericCheck;
+    const returnArray = opts.returnArray;
+    let sclFunc: any;
 
     if(noNumericCheck && returnArray) {
         sclFunc = _sclFunc;
@@ -168,7 +168,7 @@ function makeColorScaleFuncFromTrace(trace: FullTrace, opts?: any): any {
 }
 
 function colorArray2rbga(colorArray: number[]): string {
-    var colorObj = {
+    const colorObj = {
         r: colorArray[0],
         g: colorArray[1],
         b: colorArray[2],

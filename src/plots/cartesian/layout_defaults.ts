@@ -14,11 +14,11 @@ import axisIds from './axis_ids.js';
 import _constants from './constants.js';
 const { AX_ID_PATTERN } = _constants;
 import Registry from '../../registry.js';
-var id2name = axisIds.id2name;
-var name2id = axisIds.name2id;
+const id2name = axisIds.id2name;
+const name2id = axisIds.name2id;
 
-var traceIs = Registry.traceIs;
-var getComponentMethod = Registry.getComponentMethod;
+const traceIs = Registry.traceIs;
+const getComponentMethod = Registry.getComponentMethod;
 
 function appendList(cont?: any, k?: any, item?: any): void {
     if(Array.isArray(cont[k])) cont[k].push(item);
@@ -26,26 +26,26 @@ function appendList(cont?: any, k?: any, item?: any): void {
 }
 
 export default function supplyLayoutDefaults(layoutIn?: any, layoutOut?: any, fullData?: any): any {
-    var autotypenumbersDflt = layoutOut.autotypenumbers;
+    const autotypenumbersDflt = layoutOut.autotypenumbers;
 
-    var ax2traces: any = {};
-    var xaMayHide: any = {};
-    var yaMayHide: any = {};
-    var xaMustDisplay: any = {};
-    var yaMustDisplay: any = {};
-    var yaMustNotReverse: any = {};
-    var yaMayReverse: any = {};
-    var axHasImage: any = {};
-    var outerTicks: any = {};
-    var noGrids: any = {};
-    var i, j;
+    const ax2traces: any = {};
+    const xaMayHide: any = {};
+    const yaMayHide: any = {};
+    const xaMustDisplay: any = {};
+    const yaMustDisplay: any = {};
+    const yaMustNotReverse: any = {};
+    const yaMayReverse: any = {};
+    const axHasImage: any = {};
+    const outerTicks: any = {};
+    const noGrids: any = {};
+    let i, j;
 
     // look for axes in the data
     for(i = 0; i < fullData.length; i++) {
-        var trace: FullTrace = fullData[i];
+        const trace: FullTrace = fullData[i];
         if(!traceIs(trace, 'cartesian')) continue;
 
-        var xaName;
+        let xaName;
         if(trace.xaxis) {
             xaName = id2name(trace.xaxis);
             appendList(ax2traces, xaName, trace);
@@ -55,7 +55,7 @@ export default function supplyLayoutDefaults(layoutIn?: any, layoutOut?: any, fu
             }
         }
 
-        var yaName;
+        let yaName;
         if(trace.yaxis) {
             yaName = id2name(trace.yaxis);
             appendList(ax2traces, yaName, trace);
@@ -106,40 +106,40 @@ export default function supplyLayoutDefaults(layoutIn?: any, layoutOut?: any, fu
         }
 
         if(traceIs(trace, 'oriented')) {
-            var positionAxis = trace.orientation === 'h' ? yaName : xaName;
+            const positionAxis = trace.orientation === 'h' ? yaName : xaName;
             noGrids[positionAxis] = true;
         }
     }
 
-    var subplots = layoutOut._subplots;
-    var xIds = subplots.xaxis;
-    var yIds = subplots.yaxis;
-    var xNames = simpleMap(xIds, id2name);
-    var yNames = simpleMap(yIds, id2name);
-    var axNames = xNames.concat(yNames);
+    const subplots = layoutOut._subplots;
+    const xIds = subplots.xaxis;
+    const yIds = subplots.yaxis;
+    const xNames = simpleMap(xIds, id2name);
+    const yNames = simpleMap(yIds, id2name);
+    const axNames = xNames.concat(yNames);
 
     // plot_bgcolor only makes sense if there's a (2D) plot!
     // TODO: bgcolor for each subplot, to inherit from the main one
-    var plotBgColor = Color.background;
+    let plotBgColor = Color.background;
     if(xIds.length && yIds.length) {
         plotBgColor = Lib.coerce(layoutIn, layoutOut, basePlotLayoutAttributes, 'plot_bgcolor');
     }
 
-    var bgColor = Color.combine(plotBgColor, layoutOut.paper_bgcolor);
+    const bgColor = Color.combine(plotBgColor, layoutOut.paper_bgcolor);
 
     // name of single axis (e.g. 'xaxis', 'yaxis2')
-    var axName;
+    let axName;
     // id of single axis (e.g. 'y', 'x5')
-    var axId;
+    let axId;
     // 'x' or 'y'
-    var axLetter;
+    let axLetter;
     // input layout axis container
-    var axLayoutIn;
+    let axLayoutIn;
     // full layout axis container
-    var axLayoutOut;
+    let axLayoutOut;
 
     function newAxLayoutOut() {
-        var traces = ax2traces[axName] || [];
+        const traces = ax2traces[axName] || [];
         axLayoutOut._traceIndices = traces.map(function(t) { return t.index; });
         axLayoutOut._annIndices = [];
         axLayoutOut._shapeIndices = [];
@@ -164,11 +164,11 @@ export default function supplyLayoutDefaults(layoutIn?: any, layoutOut?: any, fu
     }
 
     function getOverlayableAxes(axLetter?: any, axName?: any) {
-        var list = (axLetter === 'x') ? xNames : yNames;
-        var out = [];
+        const list = (axLetter === 'x') ? xNames : yNames;
+        const out = [];
 
-        for(var j = 0; j < list.length; j++) {
-            var axName2 = list[j];
+        for(let j = 0; j < list.length; j++) {
+            const axName2 = list[j];
 
             if(axName2 !== axName && !(layoutIn[axName2] || {}).overlaying) {
                 out.push(name2id(axName2));
@@ -179,27 +179,27 @@ export default function supplyLayoutDefaults(layoutIn?: any, layoutOut?: any, fu
     }
 
     // list of available counter axis names
-    var counterAxes = {x: getCounterAxes('x'), y: getCounterAxes('y')};
+    const counterAxes = {x: getCounterAxes('x'), y: getCounterAxes('y')};
     // list of all x AND y axis ids
-    var allAxisIds = counterAxes.x.concat(counterAxes.y);
+    const allAxisIds = counterAxes.x.concat(counterAxes.y);
     // lookup and list of axis ids that axes in axNames have a reference to,
     // even though they are missing from allAxisIds
-    var missingMatchedAxisIdsLookup: any = {};
-    var missingMatchedAxisIds = [];
+    const missingMatchedAxisIdsLookup: any = {};
+    let missingMatchedAxisIds = [];
 
     // fill in 'missing' axis lookup when an axis is set to match an axis
     // not part of the allAxisIds list, save axis type so that we can propagate
     // it to the missing axes
     function addMissingMatchedAxis() {
-        var matchesIn = axLayoutIn.matches;
+        const matchesIn = axLayoutIn.matches;
         if(AX_ID_PATTERN.test(matchesIn) && allAxisIds.indexOf(matchesIn) === -1) {
             missingMatchedAxisIdsLookup[matchesIn] = axLayoutIn.type;
             missingMatchedAxisIds = Object.keys(missingMatchedAxisIdsLookup);
         }
     }
 
-    var hovermode = handleHoverModeDefaults(layoutIn, layoutOut);
-    var unifiedHover = isUnifiedHover(hovermode);
+    const hovermode = handleHoverModeDefaults(layoutIn, layoutOut);
+    const unifiedHover = isUnifiedHover(hovermode);
 
     // first pass creates the containers, determines types, and handles most of the settings
     for(i = 0; i < axNames.length; i++) {
@@ -215,18 +215,18 @@ export default function supplyLayoutDefaults(layoutIn?: any, layoutOut?: any, fu
         axLayoutOut = Template.newContainer(layoutOut, axName, axLetter + 'axis');
         newAxLayoutOut();
 
-        var visibleDflt =
+        const visibleDflt =
             (axLetter === 'x' && !xaMustDisplay[axName] && xaMayHide[axName]) ||
             (axLetter === 'y' && !yaMustDisplay[axName] && yaMayHide[axName]);
 
-        var reverseDflt =
+        const reverseDflt =
             (axLetter === 'y' &&
               (
                 (!yaMustNotReverse[axName] && yaMayReverse[axName]) ||
                 axHasImage[axName]
               ));
 
-        var defaultOptions = {
+        const defaultOptions = {
             hasMinor: true,
             letter: axLetter,
             font: layoutOut.font,
@@ -248,13 +248,13 @@ export default function supplyLayoutDefaults(layoutIn?: any, layoutOut?: any, fu
         handleTypeDefaults(axLayoutIn, axLayoutOut, coerce, defaultOptions);
         handleAxisDefaults(axLayoutIn, axLayoutOut, coerce, defaultOptions, layoutOut);
 
-        var unifiedSpike = unifiedHover && axLetter === hovermode.charAt(0);
-        var spikecolor = coerce2('spikecolor', unifiedHover ? axLayoutOut.color : undefined);
-        var spikethickness = coerce2('spikethickness', unifiedHover ? 1.5 : undefined);
-        var spikedash = coerce2('spikedash', unifiedHover ? 'dot' : undefined);
-        var spikemode = coerce2('spikemode', unifiedHover ? 'across' : undefined);
-        var spikesnap = coerce2('spikesnap');
-        var showSpikes = coerce('showspikes', !!unifiedSpike || !!spikecolor || !!spikethickness || !!spikedash || !!spikemode || !!spikesnap);
+        const unifiedSpike = unifiedHover && axLetter === hovermode.charAt(0);
+        const spikecolor = coerce2('spikecolor', unifiedHover ? axLayoutOut.color : undefined);
+        const spikethickness = coerce2('spikethickness', unifiedHover ? 1.5 : undefined);
+        const spikedash = coerce2('spikedash', unifiedHover ? 'dot' : undefined);
+        const spikemode = coerce2('spikemode', unifiedHover ? 'across' : undefined);
+        const spikesnap = coerce2('spikesnap');
+        const showSpikes = coerce('showspikes', !!unifiedSpike || !!spikecolor || !!spikethickness || !!spikedash || !!spikemode || !!spikesnap);
 
         if(!showSpikes) {
             delete axLayoutOut.spikecolor;
@@ -265,11 +265,11 @@ export default function supplyLayoutDefaults(layoutIn?: any, layoutOut?: any, fu
         }
 
         // If it exists, the the domain of the axis for the anchor of the overlaying axis
-        var overlayingAxis = id2name(axLayoutIn.overlaying);
-        var overlayingAnchorDomain = [0, 1];
+        const overlayingAxis = id2name(axLayoutIn.overlaying);
+        let overlayingAnchorDomain = [0, 1];
 
         if(layoutOut[overlayingAxis] !== undefined) {
-            var overlayingAnchor = id2name(layoutOut[overlayingAxis].anchor);
+            const overlayingAnchor = id2name(layoutOut[overlayingAxis].anchor);
             if(layoutOut[overlayingAnchor] !== undefined) {
                 overlayingAnchorDomain = layoutOut[overlayingAnchor].domain;
             }
@@ -306,7 +306,7 @@ export default function supplyLayoutDefaults(layoutIn?: any, layoutOut?: any, fu
         axLayoutOut = Template.newContainer(layoutOut, axName, axLetter + 'axis');
         newAxLayoutOut();
 
-        var defaultOptions2 = {
+        const defaultOptions2 = {
             letter: axLetter,
             font: layoutOut.font,
             outerTicks: outerTicks[axName],
@@ -343,8 +343,8 @@ export default function supplyLayoutDefaults(layoutIn?: any, layoutOut?: any, fu
     }
 
     // quick second pass for range slider and selector defaults
-    var rangeSliderDefaults = getComponentMethod('rangeslider', 'handleDefaults');
-    var rangeSelectorDefaults = getComponentMethod('rangeselector', 'handleDefaults');
+    const rangeSliderDefaults = getComponentMethod('rangeslider', 'handleDefaults');
+    const rangeSelectorDefaults = getComponentMethod('rangeselector', 'handleDefaults');
 
     for(i = 0; i < xNames.length; i++) {
         axName = xNames[i];
@@ -372,9 +372,9 @@ export default function supplyLayoutDefaults(layoutIn?: any, layoutOut?: any, fu
         axLayoutIn = layoutIn[axName];
         axLayoutOut = layoutOut[axName];
 
-        var anchoredAxis = layoutOut[id2name(axLayoutOut.anchor)];
+        const anchoredAxis = layoutOut[id2name(axLayoutOut.anchor)];
 
-        var fixedRangeDflt = getComponentMethod('rangeslider', 'isVisible')(anchoredAxis);
+        const fixedRangeDflt = getComponentMethod('rangeslider', 'isVisible')(anchoredAxis);
 
         coerce('fixedrange', fixedRangeDflt);
         coerce('modebardisable');

@@ -14,25 +14,25 @@ import computeTickMarks from './layout/tick_marks.js';
 import _autorange from '../cartesian/autorange.js';
 const { applyAutorangeOptions } = _autorange;
 import type { FullLayout } from '../../../types/core';
-var createCamera = glPlot3d.createCamera;
-var createPlot = glPlot3d.createScene;
+const createCamera = glPlot3d.createCamera;
+const createPlot = glPlot3d.createScene;
 
-var preserveDrawingBuffer = Lib.preserveDrawingBuffer();
+let preserveDrawingBuffer = Lib.preserveDrawingBuffer();
 
-var STATIC_CANVAS, STATIC_CONTEXT;
+let STATIC_CANVAS, STATIC_CONTEXT;
 
-var tabletmode = false;
+let tabletmode = false;
 
 function Scene(options: any, fullLayout: FullLayout) {
     // create sub container for plot
-    var sceneContainer = document.createElement('div');
-    var plotContainer = options.container;
+    const sceneContainer = document.createElement('div');
+    const plotContainer = options.container;
 
     // keep a ref to the graph div to fire hover+click events
     this.graphDiv = options.graphDiv;
 
     // create SVG container for hover text
-    var svgContainer = document.createElementNS(
+    const svgContainer = document.createElementNS(
         'http://www.w3.org/2000/svg',
         'svg');
     svgContainer.style.position = 'absolute';
@@ -77,12 +77,12 @@ function Scene(options: any, fullLayout: FullLayout) {
     this.initializeGLPlot();
 }
 
-var proto = Scene.prototype;
+const proto = Scene.prototype;
 
 proto.prepareOptions = function() {
-    var scene = this;
+    const scene = this;
 
-    var opts: any = {
+    const opts: any = {
         canvas: scene.canvas,
         gl: scene.gl,
         glOptions: {
@@ -124,14 +124,14 @@ proto.prepareOptions = function() {
     return opts;
 };
 
-var firstInit = true;
+let firstInit = true;
 
 proto.tryCreatePlot = function() {
-    var scene = this;
+    const scene = this;
 
-    var opts = scene.prepareOptions();
+    const opts = scene.prepareOptions();
 
-    var success = true;
+    let success = true;
 
     try {
         scene.glplot = createPlot(opts);
@@ -168,9 +168,9 @@ proto.tryCreatePlot = function() {
 };
 
 proto.initializeGLCamera = function() {
-    var scene = this;
-    var cameraData = scene.fullSceneLayout.camera;
-    var isOrtho = (cameraData.projection.type === 'orthographic');
+    const scene = this;
+    const cameraData = scene.fullSceneLayout.camera;
+    const isOrtho = (cameraData.projection.type === 'orthographic');
 
     scene.camera = createCamera(scene.container, {
         center: [cameraData.center.x, cameraData.center.y, cameraData.center.z],
@@ -184,11 +184,11 @@ proto.initializeGLCamera = function() {
 };
 
 proto.initializeGLPlot = function() {
-    var scene = this;
+    const scene = this;
 
     scene.initializeGLCamera();
 
-    var success = scene.tryCreatePlot();
+    const success = scene.tryCreatePlot();
     /*
     * createPlot will throw when webgl is not enabled in the client.
     * Lets return an instance of the module with all functions noop'd.
@@ -202,11 +202,11 @@ proto.initializeGLPlot = function() {
 
     scene.make4thDimension();
 
-    var gd = scene.graphDiv;
-    var layout = gd.layout;
+    const gd = scene.graphDiv;
+    const layout = gd.layout;
 
-    var makeUpdate = function() {
-        var update: any = {};
+    const makeUpdate = function() {
+        const update: any = {};
 
         if(scene.isCameraChanged(layout)) {
             // camera updates
@@ -227,10 +227,10 @@ proto.initializeGLPlot = function() {
         return update;
     };
 
-    var relayoutCallback = function(scene) {
+    const relayoutCallback = function(scene) {
         if(scene.fullSceneLayout.dragmode === false) return;
 
-        var update = makeUpdate();
+        const update = makeUpdate();
         scene.saveLayout(layout);
         scene.graphDiv.emit('plotly_relayout', update);
     };
@@ -247,8 +247,8 @@ proto.initializeGLPlot = function() {
         scene.glplot.canvas.addEventListener('wheel', function(e) {
             if(gd._context._scrollZoom.gl3d) {
                 if(scene.camera._ortho) {
-                    var s = (e.deltaX > e.deltaY) ? 1.1 : 1.0 / 1.1;
-                    var o = scene.glplot.getAspectratio();
+                    const s = (e.deltaX > e.deltaY) ? 1.1 : 1.0 / 1.1;
+                    const o = scene.glplot.getAspectratio();
                     scene.glplot.setAspectratio({
                         x: s * o.x,
                         y: s * o.y,
@@ -264,7 +264,7 @@ proto.initializeGLPlot = function() {
             if(scene.fullSceneLayout.dragmode === false) return;
             if(scene.camera.mouseListener.buttons === 0) return;
 
-            var update = makeUpdate();
+            const update = makeUpdate();
             scene.graphDiv.emit('plotly_relayouting', update);
         });
 
@@ -292,19 +292,19 @@ proto.initializeGLPlot = function() {
 };
 
 proto.render = function() {
-    var scene = this;
-    var gd = scene.graphDiv;
-    var trace;
+    const scene = this;
+    const gd = scene.graphDiv;
+    let trace;
 
     // update size of svg container
-    var svgContainer = scene.svgContainer;
-    var clientRect = scene.container.getBoundingClientRect();
+    const svgContainer = scene.svgContainer;
+    const clientRect = scene.container.getBoundingClientRect();
 
     gd._fullLayout._calcInverseTransform(gd);
-    var scaleX = gd._fullLayout._invScaleX;
-    var scaleY = gd._fullLayout._invScaleY;
-    var width = clientRect.width * scaleX;
-    var height = clientRect.height * scaleY;
+    const scaleX = gd._fullLayout._invScaleX;
+    const scaleY = gd._fullLayout._invScaleY;
+    const width = clientRect.width * scaleX;
+    const height = clientRect.height * scaleY;
     svgContainer.setAttributeNS(null, 'viewBox', '0 0 ' + width + ' ' + height);
     svgContainer.setAttributeNS(null, 'width', width);
     svgContainer.setAttributeNS(null, 'height', height);
@@ -313,10 +313,10 @@ proto.render = function() {
     scene.glplot.axes.update(scene.axesOptions);
 
     // check if pick has changed
-    var keys = Object.keys(scene.traces);
-    var lastPicked = null;
-    var selection = scene.glplot.selection;
-    for(var i = 0; i < keys.length; ++i) {
+    const keys = Object.keys(scene.traces);
+    let lastPicked = null;
+    const selection = scene.glplot.selection;
+    for(let i = 0; i < keys.length; ++i) {
         trace = scene.traces[keys[i]];
         if(trace.data.hoverinfo !== 'skip' && trace.handlePick(selection)) {
             lastPicked = trace;
@@ -326,7 +326,7 @@ proto.render = function() {
     }
 
     function formatter(axLetter, val, hoverformat) {
-        var ax = scene.fullSceneLayout[axLetter + 'axis'];
+        const ax = scene.fullSceneLayout[axLetter + 'axis'];
 
         if(ax.type !== 'log') {
             val = ax.d2l(val);
@@ -336,20 +336,20 @@ proto.render = function() {
     }
 
     if(lastPicked !== null) {
-        var pdata = project(scene.glplot.cameraParams, selection.dataCoordinate);
+        const pdata = project(scene.glplot.cameraParams, selection.dataCoordinate);
         trace = lastPicked.data;
-        var traceNow = gd._fullData[trace.index];
-        var ptNumber = selection.index;
+        const traceNow = gd._fullData[trace.index];
+        const ptNumber = selection.index;
 
-        var labels: any = {
+        const labels: any = {
             xLabel: formatter('x', selection.traceCoordinate[0], trace.xhoverformat),
             yLabel: formatter('y', selection.traceCoordinate[1], trace.yhoverformat),
             zLabel: formatter('z', selection.traceCoordinate[2], trace.zhoverformat)
         };
 
-        var hoverinfo = Fx.castHoverinfo(traceNow, scene.fullLayout, ptNumber);
-        var hoverinfoParts = (hoverinfo || '').split('+');
-        var isHoverinfoAll = hoverinfo && hoverinfo === 'all';
+        const hoverinfo = Fx.castHoverinfo(traceNow, scene.fullLayout, ptNumber);
+        const hoverinfoParts = (hoverinfo || '').split('+');
+        const isHoverinfoAll = hoverinfo && hoverinfo === 'all';
 
         if(!traceNow.hovertemplate && !isHoverinfoAll) {
             if(hoverinfoParts.indexOf('x') === -1) labels.xLabel = undefined;
@@ -359,8 +359,8 @@ proto.render = function() {
             if(hoverinfoParts.indexOf('name') === -1) lastPicked.name = undefined;
         }
 
-        var tx;
-        var vectorTx = [];
+        let tx;
+        const vectorTx = [];
 
         if(trace.type === 'cone' || trace.type === 'streamtube') {
             labels.uLabel = formatter('x', selection.traceCoordinate[3], trace.uhoverformat);
@@ -403,7 +403,7 @@ proto.render = function() {
             tx = selection.textLabel;
         }
 
-        var pointData: any = {
+        let pointData: any = {
             x: selection.traceCoordinate[0],
             y: selection.traceCoordinate[1],
             z: selection.traceCoordinate[2],
@@ -419,10 +419,10 @@ proto.render = function() {
             pointData = traceNow._module.eventData(pointData, selection, traceNow, {}, ptNumber);
         }
 
-        var eventData = {points: [pointData]};
+        const eventData = {points: [pointData]};
 
         if(scene.fullSceneLayout.hovermode) {
-            var bbox = [];
+            const bbox = [];
             Fx.loneHover({
                 trace: traceNow,
                 x: (0.5 + 0.5 * pdata[0] / pdata[3]) * width,
@@ -468,11 +468,11 @@ proto.render = function() {
 };
 
 proto.recoverContext = function() {
-    var scene = this;
+    const scene = this;
 
     scene.glplot.dispose();
 
-    var tryRecover = function() {
+    const tryRecover = function() {
         if(scene.glplot.gl.isContextLost()) {
             requestAnimationFrame(tryRecover);
             return;
@@ -487,28 +487,28 @@ proto.recoverContext = function() {
     requestAnimationFrame(tryRecover);
 };
 
-var axisProperties = [ 'xaxis', 'yaxis', 'zaxis' ];
+const axisProperties = [ 'xaxis', 'yaxis', 'zaxis' ];
 
 function computeTraceBounds(scene, trace, bounds) {
-    var fullSceneLayout = scene.fullSceneLayout;
+    const fullSceneLayout = scene.fullSceneLayout;
 
-    for(var d = 0; d < 3; d++) {
-        var axisName = axisProperties[d];
-        var axLetter = axisName.charAt(0);
-        var ax = fullSceneLayout[axisName];
-        var coords = trace[axLetter];
-        var calendar = trace[axLetter + 'calendar'];
-        var len = trace['_' + axLetter + 'length'];
+    for(let d = 0; d < 3; d++) {
+        const axisName = axisProperties[d];
+        const axLetter = axisName.charAt(0);
+        const ax = fullSceneLayout[axisName];
+        const coords = trace[axLetter];
+        const calendar = trace[axLetter + 'calendar'];
+        const len = trace['_' + axLetter + 'length'];
 
         if(!Lib.isArrayOrTypedArray(coords)) {
             bounds[0][d] = Math.min(bounds[0][d], 0);
             bounds[1][d] = Math.max(bounds[1][d], len - 1);
         } else {
-            var v;
+            let v;
 
-            for(var i = 0; i < (len || coords.length); i++) {
+            for(let i = 0; i < (len || coords.length); i++) {
                 if(Lib.isArrayOrTypedArray(coords[i])) {
-                    for(var j = 0; j < coords[i].length; ++j) {
+                    for(let j = 0; j < coords[i].length; ++j) {
                         v = ax.d2l(coords[i][j], 0, calendar);
                         if(!isNaN(v) && isFinite(v)) {
                             bounds[0][d] = Math.min(bounds[0][d], v);
@@ -528,19 +528,19 @@ function computeTraceBounds(scene, trace, bounds) {
 }
 
 function computeAnnotationBounds(scene, bounds) {
-    var fullSceneLayout = scene.fullSceneLayout;
-    var annotations = fullSceneLayout.annotations || [];
+    const fullSceneLayout = scene.fullSceneLayout;
+    const annotations = fullSceneLayout.annotations || [];
 
-    for(var d = 0; d < 3; d++) {
-        var axisName = axisProperties[d];
-        var axLetter = axisName.charAt(0);
-        var ax = fullSceneLayout[axisName];
+    for(let d = 0; d < 3; d++) {
+        const axisName = axisProperties[d];
+        const axLetter = axisName.charAt(0);
+        const ax = fullSceneLayout[axisName];
 
-        for(var j = 0; j < annotations.length; j++) {
-            var ann = annotations[j];
+        for(let j = 0; j < annotations.length; j++) {
+            const ann = annotations[j];
 
             if(ann.visible) {
-                var pos = ax.r2l(ann[axLetter]);
+                const pos = ax.r2l(ann[axLetter]);
                 if(!isNaN(pos) && isFinite(pos)) {
                     bounds[0][d] = Math.min(bounds[0][d], pos);
                     bounds[1][d] = Math.max(bounds[1][d], pos);
@@ -551,17 +551,17 @@ function computeAnnotationBounds(scene, bounds) {
 }
 
 proto.plot = function(sceneData, fullLayout, layout) {
-    var scene = this;
+    const scene = this;
 
     // Save parameters
     scene.plotArgs = [sceneData, fullLayout, layout];
 
     if(scene.glplot.contextLost) return;
 
-    var data, trace;
-    var i, j, axis, axisType;
-    var fullSceneLayout = fullLayout[scene.id];
-    var sceneLayout = layout[scene.id];
+    let data, trace;
+    let i, j, axis, axisType;
+    const fullSceneLayout = fullLayout[scene.id];
+    const sceneLayout = layout[scene.id];
 
     // Update layout
     scene.fullLayout = fullLayout;
@@ -586,7 +586,7 @@ proto.plot = function(sceneData, fullLayout, layout) {
     else if(!Array.isArray(sceneData)) sceneData = [sceneData];
 
     // Compute trace bounding box
-    var dataBounds = [
+    const dataBounds = [
         [Infinity, Infinity, Infinity],
         [-Infinity, -Infinity, -Infinity]
     ];
@@ -599,7 +599,7 @@ proto.plot = function(sceneData, fullLayout, layout) {
     }
     computeAnnotationBounds(this, dataBounds);
 
-    var dataScale = [1, 1, 1];
+    const dataScale = [1, 1, 1];
     for(j = 0; j < 3; ++j) {
         if(dataBounds[1][j] === dataBounds[0][j]) {
             dataScale[j] = 1.0;
@@ -637,7 +637,7 @@ proto.plot = function(sceneData, fullLayout, layout) {
     }
 
     // Remove empty traces
-    var traceIds = Object.keys(scene.traces);
+    const traceIds = Object.keys(scene.traces);
 
     traceIdLoop:
     for(i = 0; i < traceIds.length; ++i) {
@@ -658,9 +658,9 @@ proto.plot = function(sceneData, fullLayout, layout) {
     });
 
     // Update ranges (needs to be called *after* objects are added due to updates)
-    var sceneBounds = [[0, 0, 0], [0, 0, 0]];
-    var axisDataRange = [];
-    var axisTypeRatios: any = {};
+    const sceneBounds = [[0, 0, 0], [0, 0, 0]];
+    const axisDataRange = [];
+    const axisTypeRatios: any = {};
 
     for(i = 0; i < 3; ++i) {
         axis = fullSceneLayout[axisProperties[i]];
@@ -676,20 +676,20 @@ proto.plot = function(sceneData, fullLayout, layout) {
             };
         }
 
-        var range;
+        let range;
 
         if(axis.autorange) {
             sceneBounds[0][i] = Infinity;
             sceneBounds[1][i] = -Infinity;
 
-            var objects = scene.glplot.objects;
-            var annotations = scene.fullSceneLayout.annotations || [];
-            var axLetter = axis._name.charAt(0);
+            const objects = scene.glplot.objects;
+            const annotations = scene.fullSceneLayout.annotations || [];
+            const axLetter = axis._name.charAt(0);
 
             for(j = 0; j < objects.length; j++) {
-                var obj = objects[j];
-                var objBounds = obj.bounds;
-                var pad = obj._trace.data._pad || 0;
+                const obj = objects[j];
+                const objBounds = obj.bounds;
+                const pad = obj._trace.data._pad || 0;
 
                 if(obj.constructor.name === 'ErrorBars' && axis._lowerLogErrorBound) {
                     sceneBounds[0][i] = Math.min(sceneBounds[0][i], axis._lowerLogErrorBound);
@@ -700,11 +700,11 @@ proto.plot = function(sceneData, fullLayout, layout) {
             }
 
             for(j = 0; j < annotations.length; j++) {
-                var ann = annotations[j];
+                const ann = annotations[j];
 
                 // N.B. not taking into consideration the arrowhead
                 if(ann.visible) {
-                    var pos = axis.r2l(ann[axLetter]);
+                    const pos = axis.r2l(ann[axLetter]);
                     sceneBounds[0][i] = Math.min(sceneBounds[0][i], pos);
                     sceneBounds[1][i] = Math.max(sceneBounds[1][i], pos);
                 }
@@ -718,7 +718,7 @@ proto.plot = function(sceneData, fullLayout, layout) {
                 sceneBounds[0][i] = -1;
                 sceneBounds[1][i] = 1;
             } else {
-                var d = sceneBounds[1][i] - sceneBounds[0][i];
+                const d = sceneBounds[1][i] - sceneBounds[0][i];
                 sceneBounds[0][i] -= d / 32.0;
                 sceneBounds[1][i] += d / 32.0;
             }
@@ -735,7 +735,7 @@ proto.plot = function(sceneData, fullLayout, layout) {
 
             if(axis.isReversed()) {
                 // swap bounds:
-                var tmp = sceneBounds[0][i];
+                const tmp = sceneBounds[0][i];
                 sceneBounds[0][i] = sceneBounds[1][i];
                 sceneBounds[1][i] = tmp;
             }
@@ -767,20 +767,20 @@ proto.plot = function(sceneData, fullLayout, layout) {
     /*
      * Dynamically set the aspect ratio depending on the users aspect settings
      */
-    var aspectRatio;
-    var aspectmode = fullSceneLayout.aspectmode;
+    let aspectRatio;
+    const aspectmode = fullSceneLayout.aspectmode;
     if(aspectmode === 'cube') {
         aspectRatio = [1, 1, 1];
     } else if(aspectmode === 'manual') {
-        var userRatio = fullSceneLayout.aspectratio;
+        const userRatio = fullSceneLayout.aspectratio;
         aspectRatio = [userRatio.x, userRatio.y, userRatio.z];
     } else if(aspectmode === 'auto' || aspectmode === 'data') {
-        var axesScaleRatio = [1, 1, 1];
+        const axesScaleRatio = [1, 1, 1];
         // Compute axis scale per category
         for(i = 0; i < 3; ++i) {
             axis = fullSceneLayout[axisProperties[i]];
             axisType = axis.type;
-            var axisRatio = axisTypeRatios[axisType];
+            const axisRatio = axisTypeRatios[axisType];
             axesScaleRatio[i] = Math.pow(axisRatio.acc, 1.0 / axisRatio.count) / dataScale[i];
         }
 
@@ -829,11 +829,11 @@ proto.plot = function(sceneData, fullLayout, layout) {
     }
 
     // Update frame position for multi plots
-    var domain = fullSceneLayout.domain || null;
-    var size = fullLayout._size || null;
+    const domain = fullSceneLayout.domain || null;
+    const size = fullLayout._size || null;
 
     if(domain && size) {
-        var containerStyle = scene.container.style;
+        const containerStyle = scene.container.style;
         containerStyle.position = 'absolute';
         containerStyle.left = (size.l + domain.x[0] * size.w) + 'px';
         containerStyle.top = (size.t + (1 - domain.y[1]) * size.h) + 'px';
@@ -846,7 +846,7 @@ proto.plot = function(sceneData, fullLayout, layout) {
 };
 
 proto.destroy = function() {
-    var scene = this;
+    const scene = this;
 
     if(!scene.glplot) return;
     scene.camera.mouseListener.enabled = false;
@@ -880,21 +880,21 @@ function getLayoutCamera(camera) {
 
 // get camera position in plotly coords from 'gl-plot3d' coords
 proto.getCamera = function() {
-    var scene = this;
+    const scene = this;
     scene.camera.view.recalcMatrix(scene.camera.view.lastT());
     return getLayoutCamera(scene.camera);
 };
 
 // set gl-plot3d camera position and scene aspects with a set of plotly coords
 proto.setViewport = function(sceneLayout) {
-    var scene = this;
-    var cameraData = sceneLayout.camera;
+    const scene = this;
+    const cameraData = sceneLayout.camera;
 
     scene.camera.lookAt.apply(this, getCameraArrays(cameraData));
     scene.glplot.setAspectratio(sceneLayout.aspectratio);
 
-    var newOrtho = (cameraData.projection.type === 'orthographic');
-    var oldOrtho = scene.camera._ortho;
+    const newOrtho = (cameraData.projection.type === 'orthographic');
+    const oldOrtho = scene.camera._ortho;
 
     if(newOrtho !== oldOrtho) {
         scene.glplot.redraw(); // TODO: figure out why we need to redraw here?
@@ -905,23 +905,23 @@ proto.setViewport = function(sceneLayout) {
 };
 
 proto.isCameraChanged = function(layout) {
-    var scene = this;
-    var cameraData = scene.getCamera();
-    var cameraNestedProp = Lib.nestedProperty(layout, scene.id + '.camera');
-    var cameraDataLastSave = cameraNestedProp.get();
+    const scene = this;
+    const cameraData = scene.getCamera();
+    const cameraNestedProp = Lib.nestedProperty(layout, scene.id + '.camera');
+    const cameraDataLastSave = cameraNestedProp.get();
 
     function same(x, y, i, j) {
-        var vectors = ['up', 'center', 'eye'];
-        var components = ['x', 'y', 'z'];
+        const vectors = ['up', 'center', 'eye'];
+        const components = ['x', 'y', 'z'];
         return y[vectors[i]] && (x[vectors[i]][components[j]] === y[vectors[i]][components[j]]);
     }
 
-    var changed = false;
+    let changed = false;
     if(cameraDataLastSave === undefined) {
         changed = true;
     } else {
-        for(var i = 0; i < 3; i++) {
-            for(var j = 0; j < 3; j++) {
+        for(let i = 0; i < 3; i++) {
+            for(let j = 0; j < 3; j++) {
                 if(!same(cameraData, cameraDataLastSave, i, j)) {
                     changed = true;
                     break;
@@ -940,10 +940,10 @@ proto.isCameraChanged = function(layout) {
 };
 
 proto.isAspectChanged = function(layout) {
-    var scene = this;
-    var aspectData = scene.glplot.getAspectratio();
-    var aspectNestedProp = Lib.nestedProperty(layout, scene.id + '.aspectratio');
-    var aspectDataLastSave = aspectNestedProp.get();
+    const scene = this;
+    const aspectData = scene.glplot.getAspectratio();
+    const aspectNestedProp = Lib.nestedProperty(layout, scene.id + '.aspectratio');
+    const aspectDataLastSave = aspectNestedProp.get();
 
     return (
         aspectDataLastSave === undefined || (
@@ -955,23 +955,23 @@ proto.isAspectChanged = function(layout) {
 
 // save camera to user layout (i.e. gd.layout)
 proto.saveLayout = function(layout) {
-    var scene = this;
-    var fullLayout = scene.fullLayout;
+    const scene = this;
+    const fullLayout = scene.fullLayout;
 
-    var cameraData;
-    var cameraNestedProp;
-    var cameraDataLastSave;
+    let cameraData;
+    let cameraNestedProp;
+    let cameraDataLastSave;
 
-    var aspectData;
-    var aspectNestedProp;
-    var aspectDataLastSave;
+    let aspectData;
+    let aspectNestedProp;
+    let aspectDataLastSave;
 
-    var cameraChanged = scene.isCameraChanged(layout);
-    var aspectChanged = scene.isAspectChanged(layout);
+    const cameraChanged = scene.isCameraChanged(layout);
+    const aspectChanged = scene.isAspectChanged(layout);
 
-    var hasChanged = cameraChanged || aspectChanged;
+    const hasChanged = cameraChanged || aspectChanged;
     if(hasChanged) {
-        var preGUI: any = {};
+        const preGUI: any = {};
         if(cameraChanged) {
             cameraData = scene.getCamera();
             cameraNestedProp = Lib.nestedProperty(layout, scene.id + '.camera');
@@ -991,14 +991,14 @@ proto.saveLayout = function(layout) {
         if(cameraChanged) {
             cameraNestedProp.set(cameraData);
 
-            var cameraFullNP = Lib.nestedProperty(fullLayout, scene.id + '.camera');
+            const cameraFullNP = Lib.nestedProperty(fullLayout, scene.id + '.camera');
             cameraFullNP.set(cameraData);
         }
 
         if(aspectChanged) {
             aspectNestedProp.set(aspectData);
 
-            var aspectFullNP = Lib.nestedProperty(fullLayout, scene.id + '.aspectratio');
+            const aspectFullNP = Lib.nestedProperty(fullLayout, scene.id + '.aspectratio');
             aspectFullNP.set(aspectData);
 
             scene.glplot.redraw();
@@ -1009,8 +1009,8 @@ proto.saveLayout = function(layout) {
 };
 
 proto.updateFx = function(dragmode, hovermode) {
-    var scene = this;
-    var camera = scene.camera;
+    const scene = this;
+    const camera = scene.camera;
     if(camera) {
         // rotate and orbital are synonymous
         if(dragmode === 'orbit') {
@@ -1024,19 +1024,19 @@ proto.updateFx = function(dragmode, hovermode) {
             // The setter for camera.mode animates the transition to z-up,
             // but only if we *don't* explicitly set z-up earlier via the
             // relayout. So push `up` back to layout & fullLayout manually now.
-            var gd = scene.graphDiv;
-            var fullLayout = gd._fullLayout;
-            var fullCamera = scene.fullSceneLayout.camera;
-            var x = fullCamera.up.x;
-            var y = fullCamera.up.y;
-            var z = fullCamera.up.z;
+            const gd = scene.graphDiv;
+            const fullLayout = gd._fullLayout;
+            const fullCamera = scene.fullSceneLayout.camera;
+            const x = fullCamera.up.x;
+            const y = fullCamera.up.y;
+            const z = fullCamera.up.z;
             // only push `up` back to (full)layout if it's going to change
             if(z / Math.sqrt(x * x + y * y + z * z) < 0.999) {
-                var attr = scene.id + '.camera.up';
-                var zUp = {x: 0, y: 0, z: 1};
-                var edits: any = {};
+                const attr = scene.id + '.camera.up';
+                const zUp = {x: 0, y: 0, z: 1};
+                const edits: any = {};
                 edits[attr] = zUp;
-                var layout = gd.layout;
+                const layout = gd.layout;
                 Registry.call('_storeDirectGUIEdit', layout, fullLayout._preGUI, edits);
                 fullCamera.up = zUp;
                 Lib.nestedProperty(layout, attr).set(zUp);
@@ -1052,12 +1052,12 @@ proto.updateFx = function(dragmode, hovermode) {
 };
 
 function flipPixels(pixels, w, h) {
-    for(var i = 0, q = h - 1; i < q; ++i, --q) {
-        for(var j = 0; j < w; ++j) {
-            for(var k = 0; k < 4; ++k) {
-                var a = 4 * (w * i + j) + k;
-                var b = 4 * (w * q + j) + k;
-                var tmp = pixels[a];
+    for(let i = 0, q = h - 1; i < q; ++i, --q) {
+        for(let j = 0; j < w; ++j) {
+            for(let k = 0; k < 4; ++k) {
+                const a = 4 * (w * i + j) + k;
+                const b = 4 * (w * q + j) + k;
+                const tmp = pixels[a];
                 pixels[a] = pixels[b];
                 pixels[b] = tmp;
             }
@@ -1066,15 +1066,15 @@ function flipPixels(pixels, w, h) {
 }
 
 function correctRGB(pixels, w, h) {
-    for(var i = 0; i < h; ++i) {
-        for(var j = 0; j < w; ++j) {
-            var k = 4 * (w * i + j);
+    for(let i = 0; i < h; ++i) {
+        for(let j = 0; j < w; ++j) {
+            const k = 4 * (w * i + j);
 
-            var a = pixels[k + 3]; // alpha
+            const a = pixels[k + 3]; // alpha
             if(a > 0) {
-                var q = 255 / a;
+                const q = 255 / a;
 
-                for(var l = 0; l < 3; ++l) { // RGB
+                for(let l = 0; l < 3; ++l) { // RGB
                     pixels[k + l] = Math.min(q * pixels[k + l], 255);
                 }
             }
@@ -1083,7 +1083,7 @@ function correctRGB(pixels, w, h) {
 }
 
 proto.toImage = function(format) {
-    var scene = this;
+    const scene = this;
 
     if(!format) format = 'png';
     if(scene.staticMode) scene.container.appendChild(STATIC_CANVAS);
@@ -1092,26 +1092,26 @@ proto.toImage = function(format) {
     scene.glplot.redraw();
 
     // Grab context and yank out pixels
-    var gl = scene.glplot.gl;
-    var w = gl.drawingBufferWidth;
-    var h = gl.drawingBufferHeight;
+    const gl = scene.glplot.gl;
+    const w = gl.drawingBufferWidth;
+    const h = gl.drawingBufferHeight;
 
     gl.bindFramebuffer(gl.FRAMEBUFFER, null);
 
-    var pixels = new Uint8Array(w * h * 4);
+    const pixels = new Uint8Array(w * h * 4);
     gl.readPixels(0, 0, w, h, gl.RGBA, gl.UNSIGNED_BYTE, pixels);
     flipPixels(pixels, w, h);
     correctRGB(pixels, w, h);
 
-    var canvas = document.createElement('canvas');
+    const canvas = document.createElement('canvas');
     canvas.width = w;
     canvas.height = h;
-    var context = canvas.getContext('2d', {willReadFrequently: true});
-    var imageData = context.createImageData(w, h);
+    const context = canvas.getContext('2d', {willReadFrequently: true});
+    const imageData = context.createImageData(w, h);
     imageData.data.set(pixels);
     context.putImageData(imageData, 0, 0);
 
-    var dataURL;
+    let dataURL;
 
     switch(format) {
         case 'jpeg':
@@ -1130,18 +1130,18 @@ proto.toImage = function(format) {
 };
 
 proto.setConvert = function() {
-    var scene = this;
-    for(var i = 0; i < 3; i++) {
-        var ax = scene.fullSceneLayout[axisProperties[i]];
+    const scene = this;
+    for(let i = 0; i < 3; i++) {
+        const ax = scene.fullSceneLayout[axisProperties[i]];
         Axes.setConvert(ax, scene.fullLayout);
         ax.setScale = Lib.noop;
     }
 };
 
 proto.make4thDimension = function() {
-    var scene = this;
-    var gd = scene.graphDiv;
-    var fullLayout = gd._fullLayout;
+    const scene = this;
+    const gd = scene.graphDiv;
+    const fullLayout = gd._fullLayout;
 
     // mock axis for hover formatting
     scene._mockAxis = {

@@ -9,22 +9,22 @@ import basePlotAttributes from './plots/attributes.js';
 import baseLayoutAttributes from './plots/layout_attributes.js';
 import 'maplibre-gl/dist/maplibre-gl.css';
 
-var extendFlat = ExtendModule.extendFlat;
-var extendDeepAll = ExtendModule.extendDeepAll;
+const extendFlat = ExtendModule.extendFlat;
+const extendDeepAll = ExtendModule.extendDeepAll;
 
-export var modules: Record<string, any> = {};
-export var allCategories: Record<string, any> = {};
-export var allTypes: string[] = [];
-export var subplotsRegistry: Record<string, any> = {};
-export var componentsRegistry: Record<string, any> = {};
-export var layoutArrayContainers: string[] = [];
-export var layoutArrayRegexes: RegExp[] = [];
-export var traceLayoutAttributes: Record<string, any> = {};
-export var localeRegistry: Record<string, any> = {};
-export var apiMethodRegistry: Record<string, any> = {};
-export var collectableSubplotTypes: string[] | null = null;
+export const modules: Record<string, any> = {};
+export const allCategories: Record<string, any> = {};
+export const allTypes: string[] = [];
+export const subplotsRegistry: Record<string, any> = {};
+export const componentsRegistry: Record<string, any> = {};
+export const layoutArrayContainers: string[] = [];
+export const layoutArrayRegexes: RegExp[] = [];
+export const traceLayoutAttributes: Record<string, any> = {};
+export const localeRegistry: Record<string, any> = {};
+export const apiMethodRegistry: Record<string, any> = {};
+export let collectableSubplotTypes: string[] | null = null;
 
-export var register = function register(_modules) {
+export const register = function register(_modules) {
     collectableSubplotTypes = null;
 
     if(!_modules) {
@@ -33,8 +33,8 @@ export var register = function register(_modules) {
         _modules = [_modules];
     }
 
-    for(var i = 0; i < _modules.length; i++) {
-        var newModule = _modules[i];
+    for(let i = 0; i < _modules.length; i++) {
+        const newModule = _modules[i];
 
         if(!newModule) {
             throw new Error('Invalid module was attempted to be registered!');
@@ -54,7 +54,7 @@ export var register = function register(_modules) {
                 registerLocale(newModule);
                 break;
             case 'apiMethod':
-                var name = newModule.name;
+                const name = newModule.name;
                 apiMethodRegistry[name] = newModule.fn;
                 break;
             default:
@@ -63,19 +63,19 @@ export var register = function register(_modules) {
     }
 };
 
-export var getModule = function(trace) {
-    var _module = modules[getTraceType(trace)];
+export const getModule = function(trace) {
+    const _module = modules[getTraceType(trace)];
     if(!_module) return false;
     return _module._module;
 };
 
-export var traceIs = function(traceType, category) {
+export const traceIs = function(traceType, category) {
     traceType = getTraceType(traceType);
 
     // old Chart Studio Cloud workspace hack, nothing to see here
     if(traceType === 'various') return false;
 
-    var _module = modules[traceType];
+    let _module = modules[traceType];
 
     if(!_module) {
         if(traceType) {
@@ -88,23 +88,23 @@ export var traceIs = function(traceType, category) {
     return !!_module.categories[category];
 };
 
-export var getComponentMethod = function(name, method) {
-    var _module = componentsRegistry[name];
+export const getComponentMethod = function(name, method) {
+    const _module = componentsRegistry[name];
 
     if(!_module) return noop;
     return _module[method] || noop;
 };
 
-export var call = function(..._args: any[]) {
-    var name = _args[0];
-    var args = _args.slice(1);
+export const call = function(..._args: any[]) {
+    const name = _args[0];
+    const args = _args.slice(1);
     return apiMethodRegistry[name].apply(null, args);
 };
 
 function registerTraceModule(_module) {
-    var thisType = _module.name;
-    var categoriesIn = _module.categories;
-    var meta = _module.meta;
+    const thisType = _module.name;
+    const categoriesIn = _module.categories;
+    const meta = _module.meta;
 
     if(modules[thisType]) {
         Loggers.log('Type ' + thisType + ' already registered');
@@ -115,8 +115,8 @@ function registerTraceModule(_module) {
         registerSubplot(_module.basePlotModule);
     }
 
-    var categoryObj: any = {};
-    for(var i = 0; i < categoriesIn.length; i++) {
+    const categoryObj: any = {};
+    for(let i = 0; i < categoriesIn.length; i++) {
         categoryObj[categoriesIn[i]] = true;
         allCategories[categoriesIn[i]] = true;
     }
@@ -132,7 +132,7 @@ function registerTraceModule(_module) {
 
     allTypes.push(thisType);
 
-    for(var componentName in componentsRegistry) {
+    for(const componentName in componentsRegistry) {
         mergeComponentAttrsToTrace(componentName, thisType);
     }
 
@@ -145,13 +145,13 @@ function registerTraceModule(_module) {
         extendFlat(traceLayoutAttributes, _module.layoutAttributes);
     }
 
-    var basePlotModule = _module.basePlotModule;
-    var bpmName = basePlotModule.name;
+    const basePlotModule = _module.basePlotModule;
+    const bpmName = basePlotModule.name;
 
     // add mapbox-gl CSS here to avoid console warning on instantiation
     if(bpmName === 'mapbox') {
-        var styleRules = basePlotModule.constants.styleRules;
-        for(var k in styleRules) {
+        const styleRules = basePlotModule.constants.styleRules;
+        for(const k in styleRules) {
             addStyleRule('.js-plotly-plot .plotly .mapboxgl-' + k, styleRules[k]);
         }
     }
@@ -169,7 +169,7 @@ function registerTraceModule(_module) {
 }
 
 function registerSubplot(_module) {
-    var plotType = _module.name;
+    const plotType = _module.name;
 
     if(subplotsRegistry[plotType]) {
         Loggers.log('Plot type ' + plotType + ' already registered.');
@@ -184,7 +184,7 @@ function registerSubplot(_module) {
     // not sure what's best for the 'cartesian' type at this point
     subplotsRegistry[plotType] = _module;
 
-    for(var componentName in componentsRegistry) {
+    for(const componentName in componentsRegistry) {
         mergeComponentAttrsToSubplot(componentName, _module.name);
     }
 }
@@ -194,7 +194,7 @@ function registerComponentModule(_module) {
         throw new Error('Component module *name* must be a string.');
     }
 
-    var name = _module.name;
+    const name = _module.name;
     componentsRegistry[name] = _module;
 
     if(_module.layoutAttributes) {
@@ -204,11 +204,11 @@ function registerComponentModule(_module) {
         findArrayRegexps(_module);
     }
 
-    for(var traceType in modules) {
+    for(const traceType in modules) {
         mergeComponentAttrsToTrace(name, traceType);
     }
 
-    for(var subplotName in subplotsRegistry) {
+    for(const subplotName in subplotsRegistry) {
         mergeComponentAttrsToSubplot(name, subplotName);
     }
 
@@ -222,9 +222,9 @@ function registerTransformModule(_module) {
         throw new Error('Transform module *name* must be a string.');
     }
 
-    var prefix = 'Transform module ' + _module.name;
-    var hasTransform = typeof _module.transform === 'function';
-    var hasCalcTransform = typeof _module.calcTransform === 'function';
+    const prefix = 'Transform module ' + _module.name;
+    const hasTransform = typeof _module.transform === 'function';
+    const hasCalcTransform = typeof _module.calcTransform === 'function';
 
     if(!hasTransform && !hasCalcTransform) {
         throw new Error(prefix + ' is missing a *transform* or *calcTransform* method.');
@@ -245,17 +245,17 @@ function registerTransformModule(_module) {
 }
 
 function registerLocale(_module) {
-    var locale = _module.name;
-    var baseLocale = locale.split('-')[0];
+    const locale = _module.name;
+    const baseLocale = locale.split('-')[0];
 
-    var newDict = _module.dictionary;
-    var newFormat = _module.format;
-    var hasDict = newDict && Object.keys(newDict).length;
-    var hasFormat = newFormat && Object.keys(newFormat).length;
+    const newDict = _module.dictionary;
+    const newFormat = _module.format;
+    const hasDict = newDict && Object.keys(newDict).length;
+    const hasFormat = newFormat && Object.keys(newFormat).length;
 
-    var locales = localeRegistry;
+    const locales = localeRegistry;
 
-    var localeObj = locales[locale];
+    let localeObj = locales[locale];
     if(!localeObj) locales[locale] = localeObj = {};
 
     // Should we use this dict for the base locale?
@@ -265,7 +265,7 @@ function registerLocale(_module) {
     // baseLocale already had a dict or not.
     // Same logic for dateFormats
     if(baseLocale !== locale) {
-        var baseLocaleObj = locales[baseLocale];
+        let baseLocaleObj = locales[baseLocale];
         if(!baseLocaleObj) locales[baseLocale] = baseLocaleObj = {};
 
         if(hasDict && baseLocaleObj.dictionary === localeObj.dictionary) {
@@ -282,9 +282,9 @@ function registerLocale(_module) {
 
 function findArrayRegexps(_module) {
     if(_module.layoutAttributes) {
-        var arrayAttrRegexps = _module.layoutAttributes._arrayAttrRegexps;
+        const arrayAttrRegexps = _module.layoutAttributes._arrayAttrRegexps;
         if(arrayAttrRegexps) {
-            for(var i = 0; i < arrayAttrRegexps.length; i++) {
+            for(let i = 0; i < arrayAttrRegexps.length; i++) {
                 pushUnique(layoutArrayRegexes, arrayAttrRegexps[i]);
             }
         }
@@ -292,25 +292,25 @@ function findArrayRegexps(_module) {
 }
 
 function mergeComponentAttrsToTrace(componentName, traceType) {
-    var componentSchema = componentsRegistry[componentName].schema;
+    const componentSchema = componentsRegistry[componentName].schema;
     if(!componentSchema || !componentSchema.traces) return;
 
-    var traceAttrs = componentSchema.traces[traceType];
+    const traceAttrs = componentSchema.traces[traceType];
     if(traceAttrs) {
         extendDeepAll(modules[traceType]._module.attributes, traceAttrs);
     }
 }
 
 function mergeComponentAttrsToSubplot(componentName, subplotName) {
-    var componentSchema = componentsRegistry[componentName].schema;
+    const componentSchema = componentsRegistry[componentName].schema;
     if(!componentSchema || !componentSchema.subplots) return;
 
-    var subplotModule = subplotsRegistry[subplotName];
-    var subplotAttrs = subplotModule.layoutAttributes;
-    var subplotAttr = subplotModule.attr === 'subplot' ? subplotModule.name : subplotModule.attr;
+    const subplotModule = subplotsRegistry[subplotName];
+    const subplotAttrs = subplotModule.layoutAttributes;
+    let subplotAttr = subplotModule.attr === 'subplot' ? subplotModule.name : subplotModule.attr;
     if(Array.isArray(subplotAttr)) subplotAttr = subplotAttr[0];
 
-    var componentLayoutAttrs = componentSchema.subplots[subplotAttr];
+    const componentLayoutAttrs = componentSchema.subplots[subplotAttr];
     if(subplotAttrs && componentLayoutAttrs) {
         extendDeepAll(subplotAttrs, componentLayoutAttrs);
     }

@@ -5,13 +5,13 @@ import _uniform_text from '../bar/uniform_text.js';
 const { resizeText } = _uniform_text;
 
 export default function style(gd: GraphDiv) {
-    var s = gd._fullLayout._funnelarealayer.selectAll('.trace');
+    const s = gd._fullLayout._funnelarealayer.selectAll('.trace');
     resizeText(gd, s, 'funnelarea');
 
     s.each(function(cd) {
-        var cd0 = cd[0];
-        var trace = cd0.trace;
-        var traceSelection = select(this);
+        const cd0 = cd[0];
+        const trace = cd0.trace;
+        const traceSelection = select(this);
 
         traceSelection.style({opacity: trace.opacity});
 

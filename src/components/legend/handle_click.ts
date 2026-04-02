@@ -2,16 +2,16 @@ import type { GraphDiv } from '../../../types/core';
 import Registry from '../../registry.js';
 import { _, notifier, pushUnique } from '../../lib/index.js';
 
-var SHOWISOLATETIP = true;
+let SHOWISOLATETIP = true;
 
 export default function handleClick(g: any, gd: GraphDiv, numClicks: number): any {
-    var fullLayout = gd._fullLayout;
+    const fullLayout = gd._fullLayout;
 
     if(gd._dragged || gd._editing) return;
 
-    var itemClick = fullLayout.legend.itemclick;
-    var itemDoubleClick = fullLayout.legend.itemdoubleclick;
-    var groupClick = fullLayout.legend.groupclick;
+    const itemClick = fullLayout.legend.itemclick;
+    const itemDoubleClick = fullLayout.legend.itemdoubleclick;
+    const groupClick = fullLayout.legend.groupclick;
 
     if(numClicks === 1 && itemClick === 'toggle' && itemDoubleClick === 'toggleothers' &&
         SHOWISOLATETIP && gd.data && gd._context.showTips
@@ -22,40 +22,40 @@ export default function handleClick(g: any, gd: GraphDiv, numClicks: number): an
         SHOWISOLATETIP = false;
     }
 
-    var mode: any;
+    let mode: any;
     if(numClicks === 1) mode = itemClick;
     else if(numClicks === 2) mode = itemDoubleClick;
     if(!mode) return;
 
-    var toggleGroup = groupClick === 'togglegroup';
+    const toggleGroup = groupClick === 'togglegroup';
 
-    var hiddenSlices = fullLayout.hiddenlabels ?
+    const hiddenSlices = fullLayout.hiddenlabels ?
         fullLayout.hiddenlabels.slice() :
         [];
 
-    var legendItem = g.data()[0][0];
+    const legendItem = g.data()[0][0];
     if(legendItem.groupTitle && legendItem.noClick) return;
 
-    var fullData = gd._fullData;
-    var shapesWithLegend = (fullLayout.shapes || []).filter(function(d: any) { return d.showlegend; });
-    var allLegendItems = fullData.concat(shapesWithLegend);
+    const fullData = gd._fullData;
+    const shapesWithLegend = (fullLayout.shapes || []).filter(function(d: any) { return d.showlegend; });
+    const allLegendItems = fullData.concat(shapesWithLegend);
 
-    var fullTrace = legendItem.trace;
+    let fullTrace = legendItem.trace;
     if(fullTrace._isShape) {
         fullTrace = fullTrace._fullInput;
     }
 
-    var legendgroup = fullTrace.legendgroup;
+    const legendgroup = fullTrace.legendgroup;
 
-    var i: number, j: number, kcont: any, key: string, keys: string[], val: any;
-    var dataUpdate: any = {};
-    var dataIndices: number[] = [];
-    var carrs: any[] = [];
-    var carrIdx: number[] = [];
+    let i: number, j: number, kcont: any, key: string, keys: string[], val: any;
+    const dataUpdate: any = {};
+    const dataIndices: number[] = [];
+    const carrs: any[] = [];
+    const carrIdx: number[] = [];
 
     function insertDataUpdate(traceIndex: number, value: any): number {
-        var attrIndex = dataIndices.indexOf(traceIndex);
-        var valueArray = dataUpdate.visible;
+        let attrIndex = dataIndices.indexOf(traceIndex);
+        let valueArray = dataUpdate.visible;
         if(!valueArray) {
             valueArray = dataUpdate.visible = [];
         }
@@ -70,11 +70,11 @@ export default function handleClick(g: any, gd: GraphDiv, numClicks: number): an
         return attrIndex;
     }
 
-    var updatedShapes = (fullLayout.shapes || []).map(function(d: any) {
+    const updatedShapes = (fullLayout.shapes || []).map(function(d: any) {
         return d._input;
     });
 
-    var shapesUpdated = false;
+    let shapesUpdated = false;
 
     function insertShapesUpdate(shapeIndex: number, value: any): void {
         updatedShapes[shapeIndex].visible = value;
@@ -84,15 +84,15 @@ export default function handleClick(g: any, gd: GraphDiv, numClicks: number): an
     function setVisibility(fullTrace: any, visibility: any): void {
         if(legendItem.groupTitle && !toggleGroup) return;
 
-        var fullInput = fullTrace._fullInput || fullTrace;
-        var isShape = fullInput._isShape;
-        var index = fullInput.index;
+        const fullInput = fullTrace._fullInput || fullTrace;
+        const isShape = fullInput._isShape;
+        let index = fullInput.index;
         if(index === undefined) index = fullInput._index;
 
         // false -> false (not possible since will not be visible in legend)
         // true -> legendonly
         // legendonly -> true
-        var nextVisibility = fullInput.visible === false ? false : visibility;
+        const nextVisibility = fullInput.visible === false ? false : visibility;
 
         if(isShape) {
             insertShapesUpdate(index, nextVisibility);
@@ -101,26 +101,26 @@ export default function handleClick(g: any, gd: GraphDiv, numClicks: number): an
         }
     }
 
-    var thisLegend = fullTrace.legend;
+    const thisLegend = fullTrace.legend;
 
-    var fullInput = fullTrace._fullInput;
-    var isShape = fullInput && fullInput._isShape;
+    const fullInput = fullTrace._fullInput;
+    const isShape = fullInput && fullInput._isShape;
 
     if(!isShape && Registry.traceIs(fullTrace, 'pie-like')) {
-        var thisLabel = legendItem.label;
-        var thisLabelIndex = hiddenSlices.indexOf(thisLabel);
+        const thisLabel = legendItem.label;
+        const thisLabelIndex = hiddenSlices.indexOf(thisLabel);
 
         if(mode === 'toggle') {
             if(thisLabelIndex === -1) hiddenSlices.push(thisLabel);
             else hiddenSlices.splice(thisLabelIndex, 1);
         } else if(mode === 'toggleothers') {
-            var changed = thisLabelIndex !== -1;
-            var unhideList: any[] = [];
+            let changed = thisLabelIndex !== -1;
+            const unhideList: any[] = [];
             for(i = 0; i < gd.calcdata.length; i++) {
-                var cdi = gd.calcdata[i];
+                const cdi = gd.calcdata[i];
                 for(j = 0; j < cdi.length; j++) {
-                    var d = cdi[j];
-                    var dLabel = d.label;
+                    const d = cdi[j];
+                    const dLabel = d.label;
 
                     // ensure we toggle slices that are in this legend)
                     if(thisLegend === cdi[0].trace.legend) {
@@ -134,8 +134,8 @@ export default function handleClick(g: any, gd: GraphDiv, numClicks: number): an
             }
 
             if(!changed) {
-                for(var q = 0; q < unhideList.length; q++) {
-                    var pos = hiddenSlices.indexOf(unhideList[q]);
+                for(let q = 0; q < unhideList.length; q++) {
+                    const pos = hiddenSlices.indexOf(unhideList[q]);
                     if(pos !== -1) {
                         hiddenSlices.splice(pos, 1);
                     }
@@ -145,9 +145,9 @@ export default function handleClick(g: any, gd: GraphDiv, numClicks: number): an
 
         Registry.call('_guiRelayout', gd, 'hiddenlabels', hiddenSlices);
     } else {
-        var hasLegendgroup = legendgroup && legendgroup.length;
-        var traceIndicesInGroup: number[] = [];
-        var tracei: any;
+        const hasLegendgroup = legendgroup && legendgroup.length;
+        const traceIndicesInGroup: number[] = [];
+        let tracei: any;
         if(hasLegendgroup) {
             for(i = 0; i < allLegendItems.length; i++) {
                 tracei = allLegendItems[i];
@@ -159,7 +159,7 @@ export default function handleClick(g: any, gd: GraphDiv, numClicks: number): an
         }
 
         if(mode === 'toggle') {
-            var nextVisibility: any;
+            let nextVisibility: any;
 
             switch(fullTrace.visible) {
                 case true:
@@ -176,7 +176,7 @@ export default function handleClick(g: any, gd: GraphDiv, numClicks: number): an
             if(hasLegendgroup) {
                 if(toggleGroup) {
                     for(i = 0; i < allLegendItems.length; i++) {
-                        var item = allLegendItems[i];
+                        const item = allLegendItems[i];
                         if(item.visible !== false && item.legendgroup === legendgroup) {
                             setVisibility(item, nextVisibility);
                         }
@@ -190,8 +190,8 @@ export default function handleClick(g: any, gd: GraphDiv, numClicks: number): an
         } else if(mode === 'toggleothers') {
             // Compute the clicked index. expandedIndex does what we want for expanded traces
             // but also culls hidden traces. That means we have some work to do.
-            var isClicked: boolean, isInGroup: boolean, notInLegend: boolean, otherState: any, _item: any;
-            var isIsolated = true;
+            let isClicked: boolean, isInGroup: boolean, notInLegend: boolean, otherState: any, _item: any;
+            let isIsolated = true;
             for(i = 0; i < allLegendItems.length; i++) {
                 _item = allLegendItems[i];
                 isClicked = _item === fullTrace;
@@ -235,9 +235,9 @@ export default function handleClick(g: any, gd: GraphDiv, numClicks: number): an
         for(i = 0; i < carrs.length; i++) {
             kcont = carrs[i];
             if(!kcont) continue;
-            var update = kcont.constructUpdate();
+            const update = kcont.constructUpdate();
 
-            var updateKeys = Object.keys(update);
+            const updateKeys = Object.keys(update);
             for(j = 0; j < updateKeys.length; j++) {
                 key = updateKeys[j];
                 val = dataUpdate[key] = dataUpdate[key] || [];

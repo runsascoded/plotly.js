@@ -10,7 +10,7 @@
  * at the moment.
  */
 
-var configAttributes = {
+const configAttributes = {
     staticPlot: {
         valType: 'boolean',
         dflt: false,
@@ -472,11 +472,11 @@ var configAttributes = {
     }
 };
 
-var dfltConfig: any = {};
+const dfltConfig: any = {};
 
 function crawl(src?: any, target?: any): void {
-    for(var k in src) {
-        var obj = src[k];
+    for(const k in src) {
+        const obj = src[k];
         if(obj.valType) {
             target[k] = obj.dflt;
         } else {

@@ -6,7 +6,7 @@ import drawNewSelectionAttrs from '../components/selections/draw_newselection/at
 import padAttrs from './pad_attributes.js';
 import { extendFlat } from '../lib/extend.js';
 
-var globalFont = fontAttrs({
+const globalFont = fontAttrs({
     editType: 'calc',
     description: [
         'Sets the global font.',

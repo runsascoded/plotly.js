@@ -6,7 +6,7 @@ const { extendFlat } = _index;
 import _edit_types from '../../plot_api/edit_types.js';
 const { overrideAll } = _edit_types;
 
-var axisLineGridAttr = overrideAll({
+const axisLineGridAttr = overrideAll({
     color: axesAttrs.color,
     showline: extendFlat({}, axesAttrs.showline, {dflt: true}),
     linecolor: axesAttrs.linecolor,
@@ -17,7 +17,7 @@ var axisLineGridAttr = overrideAll({
     griddash: axesAttrs.griddash
 }, 'plot', 'from-root');
 
-var axisTickAttrs = overrideAll({
+const axisTickAttrs = overrideAll({
     ticklen: axesAttrs.ticklen,
     tickwidth: extendFlat({}, axesAttrs.tickwidth, {dflt: 2}),
     tickcolor: axesAttrs.tickcolor,
@@ -33,7 +33,7 @@ var axisTickAttrs = overrideAll({
     layer: axesAttrs.layer
 }, 'plot', 'from-root');
 
-var realAxisAttrs = extendFlat({
+const realAxisAttrs = extendFlat({
     visible: extendFlat({}, axesAttrs.visible, {dflt: true}),
 
     tickvals: {
@@ -71,7 +71,7 @@ var realAxisAttrs = extendFlat({
     editType: 'calc',
 }, axisLineGridAttr, axisTickAttrs);
 
-var imaginaryAxisAttrs = extendFlat({
+const imaginaryAxisAttrs = extendFlat({
     visible: extendFlat({}, axesAttrs.visible, {dflt: true}),
 
     tickvals: {

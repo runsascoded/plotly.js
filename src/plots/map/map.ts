@@ -10,15 +10,15 @@ import _index from '../../components/selections/index.js';
 const { prepSelect, clearOutline, clearSelectionsCache, selectOnClick } = _index;
 import constants from './constants.js';
 import createMapLayer from './layers.js';
-var drawMode = dragHelpers.drawMode;
-var selectMode = dragHelpers.selectMode;
+const drawMode = dragHelpers.drawMode;
+const selectMode = dragHelpers.selectMode;
 
 function Map(gd, id) {
     this.id = id;
     this.gd = gd;
 
-    var fullLayout = gd._fullLayout;
-    var context = gd._context;
+    const fullLayout = gd._fullLayout;
+    const context = gd._context;
 
     this.container = fullLayout._glcontainer.node();
     this.isStatic = context.staticPlot;
@@ -42,12 +42,12 @@ function Map(gd, id) {
     this.wheeling = false;
 }
 
-var proto = Map.prototype;
+const proto = Map.prototype;
 
 proto.plot = function(calcData, fullLayout, promises) {
-    var self = this;
+    const self = this;
 
-    var promise;
+    let promise;
 
     if(!self.map) {
         promise = new Promise(function(resolve, reject) {
@@ -63,17 +63,17 @@ proto.plot = function(calcData, fullLayout, promises) {
 };
 
 proto.createMap = function(calcData, fullLayout, resolve, reject) {
-    var self = this;
-    var opts = fullLayout[self.id];
+    const self = this;
+    const opts = fullLayout[self.id];
 
     // store style id and URL or object
-    var styleObj = self.styleObj = getStyleObj(opts.style);
+    const styleObj = self.styleObj = getStyleObj(opts.style);
 
-    var bounds = opts.bounds;
-    var maxBounds = bounds ? [[bounds.west, bounds.south], [bounds.east, bounds.north]] : null;
+    const bounds = opts.bounds;
+    const maxBounds = bounds ? [[bounds.west, bounds.south], [bounds.east, bounds.north]] : null;
 
     // create the map!
-    var map = self.map = new maplibregl.Map({
+    const map = self.map = new maplibregl.Map({
         container: self.div,
 
         style: styleObj.style,
@@ -95,12 +95,12 @@ proto.createMap = function(calcData, fullLayout, resolve, reject) {
         compact: true
     }));
 
-    var requestedIcons: any = {};
+    const requestedIcons: any = {};
     map.on('styleimagemissing', function(e) {
-        var id = e.id;
+        const id = e.id;
         if(!requestedIcons[id] && id.includes('-15')) {
             requestedIcons[id] = true;
-            var img = new Image(15, 15);
+            const img = new Image(15, 15);
             img.onload = function() {
                 map.addImage(id, img);
             };
@@ -128,7 +128,7 @@ proto.createMap = function(calcData, fullLayout, resolve, reject) {
         self.initFx(calcData, fullLayout);
     }
 
-    var promises = [];
+    let promises = [];
 
     promises.push(new Promise(function(resolve) {
         map.once('load', resolve);
@@ -145,14 +145,14 @@ proto.createMap = function(calcData, fullLayout, resolve, reject) {
 };
 
 proto.updateMap = function(calcData, fullLayout, resolve, reject) {
-    var self = this;
-    var map = self.map;
-    var opts = fullLayout[this.id];
+    const self = this;
+    const map = self.map;
+    const opts = fullLayout[this.id];
 
     self.rejectOnError(reject);
 
-    var promises = [];
-    var styleObj = getStyleObj(opts.style);
+    let promises = [];
+    const styleObj = getStyleObj(opts.style);
 
     if(JSON.stringify(self.styleObj) !== JSON.stringify(styleObj)) {
         self.styleObj = styleObj;
@@ -178,16 +178,16 @@ proto.updateMap = function(calcData, fullLayout, resolve, reject) {
 };
 
 proto.fillBelowLookup = function(calcData, fullLayout) {
-    var opts = fullLayout[this.id];
-    var layers = opts.layers;
-    var i, val;
+    const opts = fullLayout[this.id];
+    const layers = opts.layers;
+    let i, val;
 
-    var belowLookup = this.belowLookup = {};
-    var hasTraceAtTop = false;
+    const belowLookup = this.belowLookup = {};
+    let hasTraceAtTop = false;
 
     for(i = 0; i < calcData.length; i++) {
-        var trace = calcData[i][0].trace;
-        var _module = trace._module;
+        const trace = calcData[i][0].trace;
+        const _module = trace._module;
 
         if(typeof trace.below === 'string') {
             val = trace.below;
@@ -204,7 +204,7 @@ proto.fillBelowLookup = function(calcData, fullLayout) {
     }
 
     for(i = 0; i < layers.length; i++) {
-        var item = layers[i];
+        const item = layers[i];
 
         if(typeof item.below === 'string') {
             val = item.below;
@@ -225,8 +225,8 @@ proto.fillBelowLookup = function(calcData, fullLayout) {
     // to make `traceHash[k].update()` and `layerList[i].update()`
     // remove/add the all those layers to have preserve
     // the correct layer ordering
-    var val2list: any = {};
-    var k, id;
+    const val2list: any = {};
+    let k, id;
 
     for(k in belowLookup) {
         val = belowLookup[k];
@@ -238,7 +238,7 @@ proto.fillBelowLookup = function(calcData, fullLayout) {
     }
 
     for(val in val2list) {
-        var list = val2list[val];
+        const list = val2list[val];
         if(list.length > 1) {
             for(i = 0; i < list.length; i++) {
                 k = list[i];
@@ -258,21 +258,21 @@ proto.fillBelowLookup = function(calcData, fullLayout) {
     }
 };
 
-var traceType2orderIndex: any = {
+const traceType2orderIndex: any = {
     choroplethmap: 0,
     densitymap: 1,
     scattermap: 2
 };
 
 proto.updateData = function(calcData) {
-    var traceHash = this.traceHash;
-    var traceObj, trace, i, j;
+    const traceHash = this.traceHash;
+    let traceObj, trace, i, j;
 
     // Need to sort here by trace type here,
     // in case traces with different `type` have the same
     // below value, but sorting we ensure that
     // e.g. choroplethmap traces will be below scattermap traces
-    var calcDataSorted = calcData.slice().sort(function(a, b) {
+    const calcDataSorted = calcData.slice().sort(function(a, b) {
         return (
             traceType2orderIndex[a[0].trace.type] -
             traceType2orderIndex[b[0].trace.type]
@@ -281,12 +281,12 @@ proto.updateData = function(calcData) {
 
     // update or create trace objects
     for(i = 0; i < calcDataSorted.length; i++) {
-        var calcTrace = calcDataSorted[i];
+        const calcTrace = calcDataSorted[i];
 
         trace = calcTrace[0].trace;
         traceObj = traceHash[trace.uid];
 
-        var didUpdate = false;
+        let didUpdate = false;
         if(traceObj) {
             if(traceObj.type === trace.type) {
                 traceObj.update(calcTrace);
@@ -301,10 +301,10 @@ proto.updateData = function(calcData) {
     }
 
     // remove empty trace objects
-    var ids = Object.keys(traceHash);
+    const ids = Object.keys(traceHash);
     idLoop:
     for(i = 0; i < ids.length; i++) {
-        var id = ids[i];
+        const id = ids[i];
 
         for(j = 0; j < calcData.length; j++) {
             trace = calcData[j][0].trace;
@@ -318,8 +318,8 @@ proto.updateData = function(calcData) {
 };
 
 proto.updateLayout = function(fullLayout) {
-    var map = this.map;
-    var opts = fullLayout[this.id];
+    const map = this.map;
+    const opts = fullLayout[this.id];
 
     if(!this.dragging && !this.wheeling) {
         map.setCenter(convertCenter(opts.center));
@@ -341,7 +341,7 @@ proto.updateLayout = function(fullLayout) {
 };
 
 proto.resolveOnRender = function(resolve) {
-    var map = this.map;
+    const map = this.map;
 
     map.on('render', function onRender() {
         if(map.loaded()) {
@@ -356,7 +356,7 @@ proto.resolveOnRender = function(resolve) {
 };
 
 proto.rejectOnError = function(reject) {
-    var map = this.map;
+    const map = this.map;
 
     function handler() {
         reject(new Error(constants.mapOnErrorMsg));
@@ -370,9 +370,9 @@ proto.rejectOnError = function(reject) {
 };
 
 proto.createFramework = function(fullLayout) {
-    var self = this;
+    const self = this;
 
-    var div = self.div = document.createElement('div');
+    const div = self.div = document.createElement('div');
     div.id = self.uid;
     div.style.position = 'absolute';
     self.container.appendChild(div);
@@ -399,15 +399,15 @@ proto.createFramework = function(fullLayout) {
 };
 
 proto.initFx = function(calcData, fullLayout) {
-    var self = this;
-    var gd = self.gd;
-    var map = self.map;
+    const self = this;
+    const gd = self.gd;
+    const map = self.map;
 
     // keep track of pan / zoom in user layout and emit relayout event
     map.on('moveend', function(evt) {
         if(!self.map) return;
 
-        var fullLayoutNow = gd._fullLayout;
+        const fullLayoutNow = gd._fullLayout;
 
         // 'moveend' gets triggered by map.setCenter, map.setZoom,
         // map.setBearing and map.setPitch.
@@ -418,10 +418,10 @@ proto.initFx = function(calcData, fullLayout) {
         // duplicate 'plotly_relayout' events.
 
         if(evt.originalEvent || self.wheeling) {
-            var optsNow = fullLayoutNow[self.id];
+            const optsNow = fullLayoutNow[self.id];
             Registry.call('_storeDirectGUIEdit', gd.layout, fullLayoutNow._preGUI, self.getViewEdits(optsNow));
 
-            var viewNow = self.getView();
+            const viewNow = self.getView();
             optsNow._input.center = optsNow.center = viewNow.center;
             optsNow._input.zoom = optsNow.zoom = viewNow.zoom;
             optsNow._input.bearing = optsNow.bearing = viewNow.bearing;
@@ -444,8 +444,8 @@ proto.initFx = function(calcData, fullLayout) {
     });
 
     map.on('mousemove', function(evt) {
-        var bb = self.div.getBoundingClientRect();
-        var xy = [
+        const bb = self.div.getBoundingClientRect();
+        const xy = [
             evt.originalEvent.offsetX,
             evt.originalEvent.offsetY
         ];
@@ -480,7 +480,7 @@ proto.initFx = function(calcData, fullLayout) {
     });
 
     function emitUpdate() {
-        var viewNow = self.getView();
+        const viewNow = self.getView();
         gd.emit('plotly_relayouting', self.getViewEditsWithDerived(viewNow));
     }
 
@@ -488,16 +488,16 @@ proto.initFx = function(calcData, fullLayout) {
     map.on('zoom', emitUpdate);
 
     map.on('dblclick', function() {
-        var optsNow = gd._fullLayout[self.id];
+        const optsNow = gd._fullLayout[self.id];
         Registry.call('_storeDirectGUIEdit', gd.layout, gd._fullLayout._preGUI, self.getViewEdits(optsNow));
 
-        var viewInitial = self.viewInitial;
+        const viewInitial = self.viewInitial;
         map.setCenter(convertCenter(viewInitial.center));
         map.setZoom(viewInitial.zoom);
         map.setBearing(viewInitial.bearing);
         map.setPitch(viewInitial.pitch);
 
-        var viewNow = self.getView();
+        const viewNow = self.getView();
         optsNow._input.center = optsNow.center = viewNow.center;
         optsNow._input.zoom = optsNow.zoom = viewNow.zoom;
         optsNow._input.bearing = optsNow.bearing = viewNow.bearing;
@@ -520,7 +520,7 @@ proto.initFx = function(calcData, fullLayout) {
      */
     self.onClickInPanFn = function(dragOptions) {
         return function(evt) {
-            var clickMode = gd._fullLayout.clickmode;
+            const clickMode = gd._fullLayout.clickmode;
 
             if(clickMode.indexOf('select') > -1) {
                 selectOnClick(evt.originalEvent, gd, [self.xaxis], [self.yaxis], self.id, dragOptions);
@@ -539,29 +539,29 @@ proto.initFx = function(calcData, fullLayout) {
 };
 
 proto.updateFx = function(fullLayout) {
-    var self = this;
-    var map = self.map;
-    var gd = self.gd;
+    const self = this;
+    const map = self.map;
+    const gd = self.gd;
 
     if(self.isStatic) return;
 
     function invert(pxpy) {
-        var obj = self.map.unproject(pxpy);
+        const obj = self.map.unproject(pxpy);
         return [obj.lng, obj.lat];
     }
 
-    var dragMode = fullLayout.dragmode;
-    var fillRangeItems;
+    const dragMode = fullLayout.dragmode;
+    let fillRangeItems;
 
     fillRangeItems = function(eventData, poly) {
         if(poly.isRect) {
-            var ranges = eventData.range = {};
+            const ranges = eventData.range = {};
             ranges[self.id] = [
                 invert([poly.xmin, poly.ymin]),
                 invert([poly.xmax, poly.ymax])
             ];
         } else {
-            var dataPts = eventData.lassoPoints = {};
+            const dataPts = eventData.lassoPoints = {};
             dataPts[self.id] = poly.map(invert);
         }
     };
@@ -570,7 +570,7 @@ proto.updateFx = function(fullLayout) {
     // it's the object that holds persistent selection state.
     // Merge old dragOptions with new to keep possibly initialized
     // persistent selection state.
-    var oldDragOptions = self.dragOptions;
+    const oldDragOptions = self.dragOptions;
     self.dragOptions = Lib.extendDeep(oldDragOptions || {}, {
         dragmode: fullLayout.dragmode,
         element: self.div,
@@ -617,10 +617,10 @@ proto.updateFx = function(fullLayout) {
 };
 
 proto.updateFramework = function(fullLayout) {
-    var domain = fullLayout[this.id].domain;
-    var size = fullLayout._size;
+    const domain = fullLayout[this.id].domain;
+    const size = fullLayout._size;
 
-    var style = this.div.style;
+    const style = this.div.style;
     style.width = size.w * (domain.x[1] - domain.x[0]) + 'px';
     style.height = size.h * (domain.y[1] - domain.y[0]) + 'px';
     style.left = size.l + domain.x[0] * size.w + 'px';
@@ -634,10 +634,10 @@ proto.updateFramework = function(fullLayout) {
 };
 
 proto.updateLayers = function(fullLayout) {
-    var opts = fullLayout[this.id];
-    var layers = opts.layers;
-    var layerList = this.layerList;
-    var i;
+    const opts = fullLayout[this.id];
+    const layers = opts.layers;
+    let layerList = this.layerList;
+    let i;
 
     // if the layer arrays don't match,
     // don't try to be smart,
@@ -676,7 +676,7 @@ proto.toImage = function() {
 // convenience wrapper to create set multiple layer
 // 'layout' or 'paint options at once.
 proto.setOptions = function(id, methodName, opts) {
-    for(var k in opts) {
+    for(const k in opts) {
         this.map[methodName](id, k, opts[k]);
     }
 };
@@ -688,7 +688,7 @@ proto.getMapLayers = function() {
 // convenience wrapper that first check in 'below' references
 // a layer that exist and then add the layer to the map,
 proto.addLayer = function(opts, below) {
-    var map = this.map;
+    const map = this.map;
 
     if(typeof below === 'string') {
         if(below === '') {
@@ -696,8 +696,8 @@ proto.addLayer = function(opts, below) {
             return;
         }
 
-        var mapLayers = this.getMapLayers();
-        for(var i = 0; i < mapLayers.length; i++) {
+        const mapLayers = this.getMapLayers();
+        for(let i = 0; i < mapLayers.length; i++) {
             if(below === mapLayers[i].id) {
                 map.addLayer(opts, below);
                 return;
@@ -722,15 +722,15 @@ proto.project = function(v) {
 
 // get map's current view values in plotly.js notation
 proto.getView = function() {
-    var map = this.map;
-    var mapCenter = map.getCenter();
-    var lon = mapCenter.lng;
-    var lat = mapCenter.lat;
-    var center = { lon: lon, lat: lat };
+    const map = this.map;
+    const mapCenter = map.getCenter();
+    const lon = mapCenter.lng;
+    const lat = mapCenter.lat;
+    const center = { lon: lon, lat: lat };
 
-    var canvas = map.getCanvas();
-    var w = parseInt(canvas.style.width);
-    var h = parseInt(canvas.style.height);
+    const canvas = map.getCanvas();
+    const w = parseInt(canvas.style.width);
+    const h = parseInt(canvas.style.height);
 
     return {
         center: center,
@@ -749,12 +749,12 @@ proto.getView = function() {
 };
 
 proto.getViewEdits = function(cont) {
-    var id = this.id;
-    var keys = ['center', 'zoom', 'bearing', 'pitch'];
-    var obj: any = {};
+    const id = this.id;
+    const keys = ['center', 'zoom', 'bearing', 'pitch'];
+    const obj: any = {};
 
-    for(var i = 0; i < keys.length; i++) {
-        var k = keys[i];
+    for(let i = 0; i < keys.length; i++) {
+        const k = keys[i];
         obj[id + '.' + k] = cont[k];
     }
 
@@ -762,14 +762,14 @@ proto.getViewEdits = function(cont) {
 };
 
 proto.getViewEditsWithDerived = function(cont) {
-    var id = this.id;
-    var obj = this.getViewEdits(cont);
+    const id = this.id;
+    const obj = this.getViewEdits(cont);
     obj[id + '._derived'] = cont._derived;
     return obj;
 };
 
 function getStyleObj(val) {
-    var styleObj: any = {};
+    const styleObj: any = {};
 
     if(Lib.isPlainObject(val)) {
         styleObj.id = val.id;

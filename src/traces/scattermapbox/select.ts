@@ -4,12 +4,12 @@ import _numerical from '../../constants/numerical.js';
 const { BADNUM } = _numerical;
 
 export default function selectPoints(searchInfo, selectionTester) {
-    var cd = searchInfo.cd;
-    var xa = searchInfo.xaxis;
-    var ya = searchInfo.yaxis;
-    var selection = [];
-    var trace = cd[0].trace;
-    var i;
+    const cd = searchInfo.cd;
+    const xa = searchInfo.xaxis;
+    const ya = searchInfo.yaxis;
+    const selection = [];
+    const trace = cd[0].trace;
+    let i;
 
     if(!subtypes.hasMarkers(trace)) return [];
 
@@ -19,12 +19,12 @@ export default function selectPoints(searchInfo, selectionTester) {
         }
     } else {
         for(i = 0; i < cd.length; i++) {
-            var di = cd[i];
-            var lonlat = di.lonlat;
+            const di = cd[i];
+            const lonlat = di.lonlat;
 
             if(lonlat[0] !== BADNUM) {
-                var lonlat2 = [Lib.modHalf(lonlat[0], 360), lonlat[1]];
-                var xy = [xa.c2p(lonlat2), ya.c2p(lonlat2)];
+                const lonlat2 = [Lib.modHalf(lonlat[0], 360), lonlat[1]];
+                const xy = [xa.c2p(lonlat2), ya.c2p(lonlat2)];
 
                 if(selectionTester.contains(xy, null, i, searchInfo)) {
                     selection.push({

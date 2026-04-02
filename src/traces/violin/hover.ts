@@ -7,24 +7,24 @@ import helpers from './helpers.js';
 
 export default function hoverPoints(pointData: any, xval: number, yval: number, hovermode: any, opts?: any): any[] {
     if(!opts) opts = {};
-    var hoverLayer = opts.hoverLayer;
+    const hoverLayer = opts.hoverLayer;
 
-    var cd = pointData.cd;
-    var trace = cd[0].trace;
-    var hoveron = trace.hoveron;
-    var hasHoveronViolins = hoveron.indexOf('violins') !== -1;
-    var hasHoveronKDE = hoveron.indexOf('kde') !== -1;
-    var closeData = [];
-    var closePtData;
-    var violinLineAttrs;
+    const cd = pointData.cd;
+    const trace = cd[0].trace;
+    const hoveron = trace.hoveron;
+    const hasHoveronViolins = hoveron.indexOf('violins') !== -1;
+    const hasHoveronKDE = hoveron.indexOf('kde') !== -1;
+    let closeData = [];
+    let closePtData;
+    let violinLineAttrs;
 
     if(hasHoveronViolins || hasHoveronKDE) {
-        var closeBoxData = boxHoverPoints.hoverOnBoxes(pointData, xval, yval, hovermode);
+        const closeBoxData = boxHoverPoints.hoverOnBoxes(pointData, xval, yval, hovermode);
 
         if(hasHoveronKDE && closeBoxData.length > 0) {
-            var xa = pointData.xa;
-            var ya = pointData.ya;
-            var pLetter, vLetter, pAxis, vAxis, vVal;
+            const xa = pointData.xa;
+            const ya = pointData.ya;
+            let pLetter, vLetter, pAxis, vAxis, vVal;
 
             if(trace.orientation === 'h') {
                 vVal = xval;
@@ -40,15 +40,15 @@ export default function hoverPoints(pointData: any, xval: number, yval: number, 
                 vAxis = ya;
             }
 
-            var di = cd[pointData.index];
+            const di = cd[pointData.index];
 
             if(vVal >= di.span[0] && vVal <= di.span[1]) {
-                var kdePointData = Lib.extendFlat({}, pointData);
-                var vValPx = vAxis.c2p(vVal, true);
-                var kdeVal = helpers.getKdeValue(di, trace, vVal);
-                var pOnPath = helpers.getPositionOnKdePath(di, trace, vValPx);
-                var paOffset = pAxis._offset;
-                var paLength = pAxis._length;
+                const kdePointData = Lib.extendFlat({}, pointData);
+                const vValPx = vAxis.c2p(vVal, true);
+                const kdeVal = helpers.getKdeValue(di, trace, vVal);
+                const pOnPath = helpers.getPositionOnKdePath(di, trace, vValPx);
+                const paOffset = pAxis._offset;
+                const paLength = pAxis._length;
 
                 kdePointData[pLetter + '0'] = pOnPath[0];
                 kdePointData[pLetter + '1'] = pOnPath[1];
@@ -56,8 +56,8 @@ export default function hoverPoints(pointData: any, xval: number, yval: number, 
                 kdePointData[vLetter + 'Label'] = vLetter + ': ' + Axes.hoverLabelText(vAxis, vVal, trace[vLetter + 'hoverformat']) + ', ' + cd[0].t.labels.kde + ' ' + kdeVal.toFixed(3);
 
                 // move the spike to the KDE point
-                var medId = 0;
-                for(var k = 0; k < closeBoxData.length; k++) {
+                let medId = 0;
+                for(let k = 0; k < closeBoxData.length; k++) {
                     if(closeBoxData[k].attr === 'med') {
                         medId = k;
                         break;
@@ -65,7 +65,7 @@ export default function hoverPoints(pointData: any, xval: number, yval: number, 
                 }
 
                 kdePointData.spikeDistance = closeBoxData[medId].spikeDistance;
-                var spikePosAttr = pLetter + 'Spike';
+                const spikePosAttr = pLetter + 'Spike';
                 kdePointData[spikePosAttr] = closeBoxData[medId][spikePosAttr];
                 closeBoxData[medId].spikeDistance = undefined;
                 closeBoxData[medId][spikePosAttr] = undefined;
@@ -92,7 +92,7 @@ export default function hoverPoints(pointData: any, xval: number, yval: number, 
     }
 
     // update violin line (if any)
-    var violinLine = hoverLayer.selectAll('.violinline-' + trace.uid)
+    const violinLine = hoverLayer.selectAll('.violinline-' + trace.uid)
         .data(violinLineAttrs ? [0] : []);
     violinLine.enter().append('line')
         .classed('violinline-' + trace.uid, true)

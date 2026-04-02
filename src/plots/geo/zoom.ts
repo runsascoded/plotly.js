@@ -7,15 +7,15 @@ import { drag as d3Drag } from 'd3-drag';
 import Lib from '../../lib/index.js';
 import Registry from '../../registry.js';
 
-declare var event: any;
-var radians = Math.PI / 180;
-var degrees = 180 / Math.PI;
-var zoomstartStyle = {cursor: 'pointer'};
-var zoomendStyle = {cursor: 'auto'};
+declare let event: any;
+const radians = Math.PI / 180;
+const degrees = 180 / Math.PI;
+const zoomstartStyle = {cursor: 'pointer'};
+const zoomendStyle = {cursor: 'auto'};
 
 function createGeoZoom(geo, geoLayout) {
-    var projection = geo.projection;
-    var zoomConstructor;
+    const projection = geo.projection;
+    let zoomConstructor;
 
     if(geoLayout._isScoped) {
         zoomConstructor = zoomScoped;
@@ -41,21 +41,21 @@ function initZoom(geo, projection) {
 
 // sync zoom updates with user & full layout
 function sync(geo, projection, cb) {
-    var id = geo.id;
-    var gd = geo.graphDiv;
-    var layout = gd.layout;
-    var userOpts = layout[id];
-    var fullLayout = gd._fullLayout;
-    var fullOpts = fullLayout[id];
+    const id = geo.id;
+    const gd = geo.graphDiv;
+    const layout = gd.layout;
+    const userOpts = layout[id];
+    const fullLayout = gd._fullLayout;
+    const fullOpts = fullLayout[id];
 
-    var preGUI: any = {};
-    var eventData: any = {};
+    const preGUI: any = {};
+    const eventData: any = {};
 
     function set(propStr, val) {
         preGUI[id + '.' + propStr] = Lib.nestedProperty(userOpts, propStr).get();
         Registry.call('_storeDirectGUIEdit', layout, fullLayout._preGUI, preGUI);
 
-        var fullNp = Lib.nestedProperty(fullOpts, propStr);
+        const fullNp = Lib.nestedProperty(fullOpts, propStr);
         if(fullNp.get() !== val) {
             fullNp.set(val);
             Lib.nestedProperty(userOpts, propStr).set(val);
@@ -71,7 +71,7 @@ function sync(geo, projection, cb) {
 
 // zoom for scoped projections
 function zoomScoped(geo, projection) {
-    var zoom = initZoom(geo, projection);
+    const zoom = initZoom(geo, projection);
 
     function handleZoomstart() {
         select(this).style(zoomstartStyle);
@@ -83,7 +83,7 @@ function zoomScoped(geo, projection) {
             .translate(event.translate);
         geo.render(true);
 
-        var center = projection.invert(geo.midPt);
+        const center = projection.invert(geo.midPt);
         geo.graphDiv.emit('plotly_relayouting', {
             'geo.projection.scale': projection.scale() / geo.fitScale,
             'geo.center.lon': center[0],
@@ -92,7 +92,7 @@ function zoomScoped(geo, projection) {
     }
 
     function syncCb(set) {
-        var center = projection.invert(geo.midPt);
+        const center = projection.invert(geo.midPt);
 
         set('center.lon', center[0]);
         set('center.lat', center[1]);
@@ -113,20 +113,20 @@ function zoomScoped(geo, projection) {
 
 // zoom for non-clipped projections
 function zoomNonClipped(geo, projection) {
-    var zoom = initZoom(geo, projection);
+    const zoom = initZoom(geo, projection);
 
-    var INSIDETOLORANCEPXS = 2;
+    const INSIDETOLORANCEPXS = 2;
 
-    var mouse0, rotate0, translate0, lastRotate, zoomPoint,
+    let mouse0, rotate0, translate0, lastRotate, zoomPoint,
         mouse1, rotate1, point1, didZoom;
 
     function position(x) { return projection.invert(x); }
 
     function outside(x) {
-        var pos = position(x);
+        const pos = position(x);
         if(!pos) return true;
 
-        var pt = projection(pos);
+        const pt = projection(pos);
         return (
             Math.abs(pt[0] - x[0]) > INSIDETOLORANCEPXS ||
             Math.abs(pt[1] - x[1]) > INSIDETOLORANCEPXS
@@ -168,8 +168,8 @@ function zoomNonClipped(geo, projection) {
         didZoom = true;
         geo.render(true);
 
-        var rotate = projection.rotate();
-        var center = projection.invert(geo.midPt);
+        const rotate = projection.rotate();
+        const center = projection.invert(geo.midPt);
         geo.graphDiv.emit('plotly_relayouting', {
             'geo.projection.scale': projection.scale() / geo.fitScale,
             'geo.center.lon': center[0],
@@ -184,8 +184,8 @@ function zoomNonClipped(geo, projection) {
     }
 
     function syncCb(set) {
-        var rotate = projection.rotate();
-        var center = projection.invert(geo.midPt);
+        const rotate = projection.rotate();
+        const center = projection.invert(geo.midPt);
 
         set('projection.rotation.lon', -rotate[0]);
         set('center.lon', center[0]);
@@ -203,27 +203,27 @@ function zoomNonClipped(geo, projection) {
 // zoom for clipped projections
 // inspired by https://www.jasondavies.com/maps/d3Geo.zoom.js
 function zoomClipped(geo, projection) {
-    var view: any = {r: projection.rotate(), k: projection.scale()};
-    var zoom = initZoom(geo, projection);
-    var event = d3eventDispatch(zoom, 'zoomstart', 'zoom', 'zoomend');
-    var zooming = 0;
-    var zoomOn = zoom.on;
+    const view: any = {r: projection.rotate(), k: projection.scale()};
+    const zoom = initZoom(geo, projection);
+    const event = d3eventDispatch(zoom, 'zoomstart', 'zoom', 'zoomend');
+    let zooming = 0;
+    const zoomOn = zoom.on;
 
-    var zoomPoint;
+    let zoomPoint;
 
     zoom.on('zoomstart', function(event) {
         select(this).style(zoomstartStyle);
 
-        var mouse0 = pointer(event, this);
-        var rotate0 = projection.rotate();
-        var lastRotate = rotate0;
-        var translate0 = projection.translate();
-        var q = quaternionFromEuler(rotate0);
+        let mouse0 = pointer(event, this);
+        const rotate0 = projection.rotate();
+        let lastRotate = rotate0;
+        const translate0 = projection.translate();
+        const q = quaternionFromEuler(rotate0);
 
         zoomPoint = position(projection, mouse0);
 
         zoomOn.call(zoom, 'zoom', function(event) {
-            var mouse1 = pointer(event, this);
+            const mouse1 = pointer(event, this);
 
             projection.scale(view.k = event.scale);
 
@@ -245,10 +245,10 @@ function zoomClipped(geo, projection) {
                     .translate(translate0);
 
                 // calculate the new params
-                var point1 = position(projection, mouse1);
-                var between = rotateBetween(zoomPoint, point1);
-                var newEuler = eulerFromQuaternion(multiply(q, between));
-                var rotateAngles = view.r = unRoll(newEuler, zoomPoint, lastRotate);
+                const point1 = position(projection, mouse1);
+                const between = rotateBetween(zoomPoint, point1);
+                const newEuler = eulerFromQuaternion(multiply(q, between));
+                let rotateAngles = view.r = unRoll(newEuler, zoomPoint, lastRotate);
 
                 if(!isFinite(rotateAngles[0]) || !isFinite(rotateAngles[1]) ||
                    !isFinite(rotateAngles[2])) {
@@ -274,7 +274,7 @@ function zoomClipped(geo, projection) {
     .on('zoom.redraw', function(event) {
         geo.render(true);
 
-        var _rotate = projection.rotate();
+        const _rotate = projection.rotate();
         geo.graphDiv.emit('plotly_relayouting', {
             'geo.projection.scale': projection.scale() / geo.fitScale,
             'geo.projection.rotation.lon': -_rotate[0],
@@ -295,7 +295,7 @@ function zoomClipped(geo, projection) {
     }
 
     function syncCb(set) {
-        var _rotate = projection.rotate();
+        const _rotate = projection.rotate();
         set('projection.rotation.lon', -_rotate[0]);
         set('projection.rotation.lat', -_rotate[1]);
     }
@@ -306,20 +306,20 @@ function zoomClipped(geo, projection) {
 // -- helper functions for zoomClipped
 
 function position(projection, point) {
-    var spherical = projection.invert(point);
+    const spherical = projection.invert(point);
     return spherical && isFinite(spherical[0]) && isFinite(spherical[1]) && cartesian(spherical);
 }
 
 function quaternionFromEuler(euler) {
-    var lambda = 0.5 * euler[0] * radians;
-    var phi = 0.5 * euler[1] * radians;
-    var gamma = 0.5 * euler[2] * radians;
-    var sinLambda = Math.sin(lambda);
-    var cosLambda = Math.cos(lambda);
-    var sinPhi = Math.sin(phi);
-    var cosPhi = Math.cos(phi);
-    var sinGamma = Math.sin(gamma);
-    var cosGamma = Math.cos(gamma);
+    const lambda = 0.5 * euler[0] * radians;
+    const phi = 0.5 * euler[1] * radians;
+    const gamma = 0.5 * euler[2] * radians;
+    const sinLambda = Math.sin(lambda);
+    const cosLambda = Math.cos(lambda);
+    const sinPhi = Math.sin(phi);
+    const cosPhi = Math.cos(phi);
+    const sinGamma = Math.sin(gamma);
+    const cosGamma = Math.cos(gamma);
     return [
         cosLambda * cosPhi * cosGamma + sinLambda * sinPhi * sinGamma,
         sinLambda * cosPhi * cosGamma - cosLambda * sinPhi * sinGamma,
@@ -329,14 +329,14 @@ function quaternionFromEuler(euler) {
 }
 
 function multiply(a, b) {
-    var a0 = a[0];
-    var a1 = a[1];
-    var a2 = a[2];
-    var a3 = a[3];
-    var b0 = b[0];
-    var b1 = b[1];
-    var b2 = b[2];
-    var b3 = b[3];
+    const a0 = a[0];
+    const a1 = a[1];
+    const a2 = a[2];
+    const a3 = a[3];
+    const b0 = b[0];
+    const b1 = b[1];
+    const b2 = b[2];
+    const b3 = b[3];
     return [
         a0 * b0 - a1 * b1 - a2 * b2 - a3 * b3,
         a0 * b1 + a1 * b0 + a2 * b3 - a3 * b2,
@@ -347,10 +347,10 @@ function multiply(a, b) {
 
 function rotateBetween(a, b) {
     if(!a || !b) return;
-    var axis = cross(a, b);
-    var norm = Math.sqrt(dot(axis, axis));
-    var halfgamma = 0.5 * Math.acos(Math.max(-1, Math.min(1, dot(a, b))));
-    var k = Math.sin(halfgamma) / norm;
+    const axis = cross(a, b);
+    const norm = Math.sqrt(dot(axis, axis));
+    const halfgamma = 0.5 * Math.acos(Math.max(-1, Math.min(1, dot(a, b))));
+    const k = Math.sin(halfgamma) / norm;
     return norm && [Math.cos(halfgamma), axis[2] * k, -axis[1] * k, axis[0] * k];
 }
 
@@ -366,24 +366,24 @@ function rotateBetween(a, b) {
 function unRoll(rotateAngles, pt, lastRotate) {
     // calculate the fixed point transformed by these Euler angles
     // but with the desired roll undone
-    var ptRotated = rotateCartesian(pt, 2, rotateAngles[0]);
+    let ptRotated = rotateCartesian(pt, 2, rotateAngles[0]);
     ptRotated = rotateCartesian(ptRotated, 1, rotateAngles[1]);
     ptRotated = rotateCartesian(ptRotated, 0, rotateAngles[2] - lastRotate[2]);
 
-    var x = pt[0];
-    var y = pt[1];
-    var z = pt[2];
-    var f = ptRotated[0];
-    var g = ptRotated[1];
-    var h = ptRotated[2];
+    const x = pt[0];
+    const y = pt[1];
+    const z = pt[2];
+    const f = ptRotated[0];
+    const g = ptRotated[1];
+    const h = ptRotated[2];
 
     // the following essentially solves:
     // ptRotated = rotateCartesian(rotateCartesian(pt, 2, newYaw), 1, newPitch)
     // for newYaw and newPitch, as best it can
-    var theta = Math.atan2(y, x) * degrees;
-    var a = Math.sqrt(x * x + y * y);
-    var b;
-    var newYaw1;
+    const theta = Math.atan2(y, x) * degrees;
+    const a = Math.sqrt(x * x + y * y);
+    let b;
+    let newYaw1;
 
     if(Math.abs(g) > a) {
         newYaw1 = (g > 0 ? 90 : -90) - theta;
@@ -393,21 +393,21 @@ function unRoll(rotateAngles, pt, lastRotate) {
         b = Math.sqrt(a * a - g * g);
     }
 
-    var newYaw2 = 180 - newYaw1 - 2 * theta;
-    var newPitch1 = (Math.atan2(h, f) - Math.atan2(z, b)) * degrees;
-    var newPitch2 = (Math.atan2(h, f) - Math.atan2(z, -b)) * degrees;
+    const newYaw2 = 180 - newYaw1 - 2 * theta;
+    const newPitch1 = (Math.atan2(h, f) - Math.atan2(z, b)) * degrees;
+    const newPitch2 = (Math.atan2(h, f) - Math.atan2(z, -b)) * degrees;
 
     // which is closest to lastRotate[0,1]: newYaw/Pitch or newYaw2/Pitch2?
-    var dist1 = angleDistance(lastRotate[0], lastRotate[1], newYaw1, newPitch1);
-    var dist2 = angleDistance(lastRotate[0], lastRotate[1], newYaw2, newPitch2);
+    const dist1 = angleDistance(lastRotate[0], lastRotate[1], newYaw1, newPitch1);
+    const dist2 = angleDistance(lastRotate[0], lastRotate[1], newYaw2, newPitch2);
 
     if(dist1 <= dist2) return [newYaw1, newPitch1, lastRotate[2]];
     else return [newYaw2, newPitch2, lastRotate[2]];
 }
 
 function angleDistance(yaw0, pitch0, yaw1, pitch1) {
-    var dYaw = angleMod(yaw1 - yaw0);
-    var dPitch = angleMod(pitch1 - pitch0);
+    const dYaw = angleMod(yaw1 - yaw0);
+    const dPitch = angleMod(pitch1 - pitch0);
     return Math.sqrt(dYaw * dYaw + dPitch * dPitch);
 }
 
@@ -420,12 +420,12 @@ function angleMod(angle) {
 // axis is 0 (x), 1 (y), or 2 (z)
 // angle is in degrees
 function rotateCartesian(vector, axis, angle) {
-    var angleRads = angle * radians;
-    var vectorOut = vector.slice();
-    var ax1 = (axis === 0) ? 1 : 0;
-    var ax2 = (axis === 2) ? 1 : 2;
-    var cosa = Math.cos(angleRads);
-    var sina = Math.sin(angleRads);
+    const angleRads = angle * radians;
+    const vectorOut = vector.slice();
+    const ax1 = (axis === 0) ? 1 : 0;
+    const ax2 = (axis === 2) ? 1 : 2;
+    const cosa = Math.cos(angleRads);
+    const sina = Math.sin(angleRads);
 
     vectorOut[ax1] = vector[ax1] * cosa - vector[ax2] * sina;
     vectorOut[ax2] = vector[ax2] * cosa + vector[ax1] * sina;
@@ -441,9 +441,9 @@ function eulerFromQuaternion(q) {
 }
 
 function cartesian(spherical) {
-    var lambda = spherical[0] * radians;
-    var phi = spherical[1] * radians;
-    var cosPhi = Math.cos(phi);
+    const lambda = spherical[0] * radians;
+    const phi = spherical[1] * radians;
+    const cosPhi = Math.cos(phi);
     return [
         cosPhi * Math.cos(lambda),
         cosPhi * Math.sin(lambda),
@@ -452,8 +452,8 @@ function cartesian(spherical) {
 }
 
 function dot(a, b) {
-    var s = 0;
-    for(var i = 0, n = a.length; i < n; ++i) s += a[i] * b[i];
+    let s = 0;
+    for(let i = 0, n = a.length; i < n; ++i) s += a[i] * b[i];
     return s;
 }
 
@@ -470,13 +470,13 @@ function cross(a, b) {
 // the svg:g element containing the brush) and the standard arguments `d` (the
 // target element's data) and `i` (the selection index of the target element).
 function d3eventDispatch(target: any, ...restArgs: string[]): any {
-    var argumentz = restArgs.slice();
+    const argumentz = restArgs.slice();
 
-    var _dispatch: any = (dispatch as any).apply(null, argumentz);
+    const _dispatch: any = (dispatch as any).apply(null, argumentz);
 
     _dispatch.of = function(thiz: any, argumentz: any) {
         return function(e1: any) {
-            var e0: any;
+            let e0: any;
             try {
                 e0 = e1.sourceEvent = event;
                 e1.target = target;

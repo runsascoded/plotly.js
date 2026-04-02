@@ -3,13 +3,13 @@ import _index from '../../lib/index.js';
 const { titleCase } = _index;
 
 export default function getUpdateObject(axisLayout: any, buttonLayout: any) {
-    var axName = axisLayout._name;
-    var update: any = {};
+    const axName = axisLayout._name;
+    const update: any = {};
 
     if(buttonLayout.step === 'all') {
         update[axName + '.autorange'] = true;
     } else {
-        var xrange = getXRange(axisLayout, buttonLayout);
+        const xrange = getXRange(axisLayout, buttonLayout);
 
         update[axName + '.range[0]'] = xrange[0];
         update[axName + '.range[1]'] = xrange[1];
@@ -19,14 +19,14 @@ export default function getUpdateObject(axisLayout: any, buttonLayout: any) {
 }
 
 function getXRange(axisLayout: any, buttonLayout: any) {
-    var currentRange = axisLayout.range;
-    var base = new Date(axisLayout.r2l(currentRange[1]));
-    var step = buttonLayout.step;
+    const currentRange = axisLayout.range;
+    const base = new Date(axisLayout.r2l(currentRange[1]));
+    const step = buttonLayout.step;
 
-    var utcStep = d3Time['utc' + titleCase(step)];
+    const utcStep = d3Time['utc' + titleCase(step)];
 
-    var count = buttonLayout.count;
-    var range0;
+    const count = buttonLayout.count;
+    let range0;
 
     switch(buttonLayout.stepmode) {
         case 'backward':
@@ -34,13 +34,13 @@ function getXRange(axisLayout: any, buttonLayout: any) {
             break;
 
         case 'todate':
-            var base2 = utcStep.offset(base, -count);
+            const base2 = utcStep.offset(base, -count);
 
             range0 = axisLayout.l2r(+utcStep.ceil(base2));
             break;
     }
 
-    var range1 = currentRange[1];
+    const range1 = currentRange[1];
 
     return [range0, range1];
 }

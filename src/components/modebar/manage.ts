@@ -11,9 +11,9 @@ import _index from '../../lib/index.js';
 const { extendDeep } = _index;
 
 export default function manageModeBar(gd: GraphDiv) {
-    var fullLayout = gd._fullLayout;
-    var context = gd._context;
-    var modeBar = fullLayout._modeBar;
+    const fullLayout = gd._fullLayout;
+    const context = gd._context;
+    const modeBar = fullLayout._modeBar;
 
     if(!context.displayModeBar && !context.watermark) {
         if(modeBar) {
@@ -37,8 +37,8 @@ export default function manageModeBar(gd: GraphDiv) {
         ].join(' '));
     }
 
-    var customButtons = context.modeBarButtons;
-    var buttonGroups;
+    const customButtons = context.modeBarButtons;
+    let buttonGroups;
 
     if(Array.isArray(customButtons) && customButtons.length) {
         buttonGroups = fillCustomButton(customButtons);
@@ -54,75 +54,75 @@ export default function manageModeBar(gd: GraphDiv) {
 
 // logic behind which buttons are displayed by default
 function getButtonGroups(gd: GraphDiv) {
-    var fullLayout = gd._fullLayout;
-    var fullData = gd._fullData;
-    var context = gd._context;
+    const fullLayout = gd._fullLayout;
+    const fullData = gd._fullData;
+    const context = gd._context;
 
     function match(name: any, B: any) {
         if(typeof B === 'string') {
             if(B.toLowerCase() === name.toLowerCase()) return true;
         } else {
-            var v0 = B.name;
-            var v1 = (B._cat || B.name);
+            const v0 = B.name;
+            const v1 = (B._cat || B.name);
 
             if(v0 === name || v1 === name.toLowerCase()) return true;
         }
         return false;
     }
 
-    var layoutAdd = fullLayout.modebar.add;
+    let layoutAdd = fullLayout.modebar.add;
     if(typeof layoutAdd === 'string') layoutAdd = [layoutAdd];
 
-    var layoutRemove = fullLayout.modebar.remove;
+    let layoutRemove = fullLayout.modebar.remove;
     if(typeof layoutRemove === 'string') layoutRemove = [layoutRemove];
 
-    var buttonsToAdd = context.modeBarButtonsToAdd.concat(
+    let buttonsToAdd = context.modeBarButtonsToAdd.concat(
         layoutAdd.filter(function(e: any) {
-            for(var i = 0; i < context.modeBarButtonsToRemove.length; i++) {
+            for(let i = 0; i < context.modeBarButtonsToRemove.length; i++) {
                 if(match(e, context.modeBarButtonsToRemove[i])) return false;
             }
             return true;
         })
     );
 
-    var buttonsToRemove = context.modeBarButtonsToRemove.concat(
+    const buttonsToRemove = context.modeBarButtonsToRemove.concat(
         layoutRemove.filter(function(e: any) {
-            for(var i = 0; i < context.modeBarButtonsToAdd.length; i++) {
+            for(let i = 0; i < context.modeBarButtonsToAdd.length; i++) {
                 if(match(e, context.modeBarButtonsToAdd[i])) return false;
             }
             return true;
         })
     );
 
-    var hasCartesian = fullLayout._has('cartesian');
-    var hasGL3D = fullLayout._has('gl3d');
-    var hasGeo = fullLayout._has('geo');
-    var hasPie = fullLayout._has('pie');
-    var hasFunnelarea = fullLayout._has('funnelarea');
-    var hasTernary = fullLayout._has('ternary');
-    var hasMapbox = fullLayout._has('mapbox');
-    var hasMap = fullLayout._has('map');
-    var hasPolar = fullLayout._has('polar');
-    var hasSmith = fullLayout._has('smith');
-    var hasSankey = fullLayout._has('sankey');
-    var allAxesFixed = areAllAxesFixed(fullLayout);
-    var hasUnifiedHoverLabel = isUnifiedHover(fullLayout.hovermode);
+    const hasCartesian = fullLayout._has('cartesian');
+    const hasGL3D = fullLayout._has('gl3d');
+    const hasGeo = fullLayout._has('geo');
+    const hasPie = fullLayout._has('pie');
+    const hasFunnelarea = fullLayout._has('funnelarea');
+    const hasTernary = fullLayout._has('ternary');
+    const hasMapbox = fullLayout._has('mapbox');
+    const hasMap = fullLayout._has('map');
+    const hasPolar = fullLayout._has('polar');
+    const hasSmith = fullLayout._has('smith');
+    const hasSankey = fullLayout._has('sankey');
+    const allAxesFixed = areAllAxesFixed(fullLayout);
+    const hasUnifiedHoverLabel = isUnifiedHover(fullLayout.hovermode);
 
-    var groups = [];
+    const groups = [];
 
     function addGroup(newGroup: any) {
         if(!newGroup.length) return;
 
-        var out = [];
+        const out = [];
 
-        for(var i = 0; i < newGroup.length; i++) {
-            var name = newGroup[i];
-            var B = modeBarButtons[name];
-            var v0 = B.name.toLowerCase();
-            var v1 = (B._cat || B.name).toLowerCase();
-            var found = false;
-            for(var q = 0; q < buttonsToRemove.length; q++) {
-                var t = buttonsToRemove[q].toLowerCase();
+        for(let i = 0; i < newGroup.length; i++) {
+            const name = newGroup[i];
+            const B = modeBarButtons[name];
+            const v0 = B.name.toLowerCase();
+            const v1 = (B._cat || B.name).toLowerCase();
+            let found = false;
+            for(let q = 0; q < buttonsToRemove.length; q++) {
+                const t = buttonsToRemove[q].toLowerCase();
                 if(t === v0 || t === v1) {
                     found = true;
                     break;
@@ -136,15 +136,15 @@ function getButtonGroups(gd: GraphDiv) {
     }
 
     // buttons common to all plot types
-    var commonGroup = ['toImage'];
+    const commonGroup = ['toImage'];
     if(context.showEditInChartStudio) commonGroup.push('editInChartStudio');
     else if(context.showSendToCloud) commonGroup.push('sendDataToCloud');
     addGroup(commonGroup);
 
-    var zoomGroup = [];
-    var hoverGroup = [];
-    var resetGroup = [];
-    var dragModeGroup = [];
+    let zoomGroup = [];
+    let hoverGroup = [];
+    let resetGroup = [];
+    let dragModeGroup = [];
 
     if(+(hasCartesian || hasPie || hasFunnelarea || hasTernary) + +hasGeo + +hasGL3D + +hasMapbox + +hasMap + +hasPolar + +hasSmith > 1) {
         // graphs with more than one plot types get 'union buttons'
@@ -203,8 +203,8 @@ function getButtonGroups(gd: GraphDiv) {
         dragModeGroup.push('select2d', 'lasso2d');
     }
 
-    var enabledHoverGroup = [];
-    var enableHover = function(a: any) {
+    const enabledHoverGroup = [];
+    const enableHover = function(a: any) {
         // return if already added
         if(enabledHoverGroup.indexOf(a) !== -1) return;
         // should be in hoverGroup
@@ -213,9 +213,9 @@ function getButtonGroups(gd: GraphDiv) {
         }
     };
     if(Array.isArray(buttonsToAdd)) {
-        var newList = [];
-        for(var i = 0; i < buttonsToAdd.length; i++) {
-            var b = buttonsToAdd[i];
+        const newList = [];
+        for(let i = 0; i < buttonsToAdd.length; i++) {
+            let b = buttonsToAdd[i];
             if(typeof b === 'string') {
                 b = b.toLowerCase();
 
@@ -258,10 +258,10 @@ function getButtonGroups(gd: GraphDiv) {
 }
 
 function areAllAxesFixed(fullLayout: FullLayout) {
-    var axList = axisIds.list({_fullLayout: fullLayout}, null, true);
+    const axList = axisIds.list({_fullLayout: fullLayout}, null, true);
 
-    for(var i = 0; i < axList.length; i++) {
-        var disabled = axList[i].modebardisable;
+    for(let i = 0; i < axList.length; i++) {
+        const disabled = axList[i].modebardisable;
         if(!axList[i].fixedrange && disabled !== 'autoscale+zoominout' && disabled !== 'zoominout+autoscale') {
             return false;
         }
@@ -273,12 +273,12 @@ function areAllAxesFixed(fullLayout: FullLayout) {
 // look for traces that support selection
 // to be updated as we add more selectPoints handlers
 function isSelectable(fullData: any) {
-    var selectable = false;
+    let selectable = false;
 
-    for(var i = 0; i < fullData.length; i++) {
+    for(let i = 0; i < fullData.length; i++) {
         if(selectable) break;
 
-        var trace = fullData[i];
+        const trace = fullData[i];
 
         if(!trace._module || !trace._module.selectPoints) continue;
 
@@ -304,7 +304,7 @@ function isSelectable(fullData: any) {
 
 // check whether all trace are 'noHover'
 function hasNoHover(fullData: any) {
-    for(var i = 0; i < fullData.length; i++) {
+    for(let i = 0; i < fullData.length; i++) {
         if(!Registry.traceIs(fullData[i], 'noHover')) return false;
     }
     return true;
@@ -313,7 +313,7 @@ function hasNoHover(fullData: any) {
 function appendButtonsToGroups(groups: any, buttons: any) {
     if(buttons.length) {
         if(Array.isArray(buttons[0])) {
-            for(var i = 0; i < buttons.length; i++) {
+            for(let i = 0; i < buttons.length; i++) {
                 groups.push(buttons[i]);
             }
         } else groups.push(buttons);
@@ -324,13 +324,13 @@ function appendButtonsToGroups(groups: any, buttons: any) {
 
 // fill in custom buttons referring to default mode bar buttons
 function fillCustomButton(originalModeBarButtons: any) {
-    var customButtons = extendDeep([], originalModeBarButtons);
+    const customButtons = extendDeep([], originalModeBarButtons);
 
-    for(var i = 0; i < customButtons.length; i++) {
-        var buttonGroup = customButtons[i];
+    for(let i = 0; i < customButtons.length; i++) {
+        const buttonGroup = customButtons[i];
 
-        for(var j = 0; j < buttonGroup.length; j++) {
-            var button = buttonGroup[j];
+        for(let j = 0; j < buttonGroup.length; j++) {
+            const button = buttonGroup[j];
 
             if(typeof button === 'string') {
                 if(modeBarButtons[button] !== undefined) {

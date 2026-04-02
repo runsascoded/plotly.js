@@ -1,6 +1,6 @@
 // Must use one of the following fonts as the family, else default to 'Open Sans Regular'
 // See https://github.com/openmaptiles/fonts/blob/gh-pages/fontstacks.json
-var supportedFonts = [
+const supportedFonts = [
     'Metropolis Black Italic',
     'Metropolis Black',
     'Metropolis Bold Italic',

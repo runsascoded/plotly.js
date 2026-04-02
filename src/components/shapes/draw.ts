@@ -15,7 +15,7 @@ import dragElement from '../dragelement/index.js';
 import setCursor from '../../lib/setcursor.js';
 import constants from './constants.js';
 import helpers from './helpers.js';
-var getPathString = helpers.getPathString;
+const getPathString = helpers.getPathString;
 
 export default {
     draw: draw,
@@ -25,7 +25,7 @@ export default {
 };
 
 function draw(gd: GraphDiv) {
-    var fullLayout = gd._fullLayout;
+    const fullLayout = gd._fullLayout;
 
     // Remove previous shapes before drawing new in shapes in fullLayout.shapes
     fullLayout._shapeUpperLayer.selectAll('path').remove();
@@ -33,15 +33,15 @@ function draw(gd: GraphDiv) {
     fullLayout._shapeUpperLayer.selectAll('text').remove();
     fullLayout._shapeLowerLayer.selectAll('text').remove();
 
-    for(var k in fullLayout._plots) {
-        var shapelayer = fullLayout._plots[k].shapelayer;
+    for(const k in fullLayout._plots) {
+        const shapelayer = fullLayout._plots[k].shapelayer;
         if(shapelayer) {
             shapelayer.selectAll('path').remove();
             shapelayer.selectAll('text').remove();
         }
     }
 
-    for(var i = 0; i < fullLayout.shapes.length; i++) {
+    for(let i = 0; i < fullLayout.shapes.length; i++) {
         if(fullLayout.shapes[i].visible === true) {
             drawOne(gd, i);
         }
@@ -67,9 +67,9 @@ function drawOne(gd: GraphDiv, index: any) {
         .selectAll('.shapelayer [data-index="' + index + '"]')
         .remove();
 
-    var o = helpers.makeShapesOptionsAndPlotinfo(gd, index);
-    var options = o.options;
-    var plotinfo = o.plotinfo;
+    const o = helpers.makeShapesOptionsAndPlotinfo(gd, index);
+    const options = o.options;
+    const plotinfo = o.plotinfo;
 
     // this shape is gone - quit now after deleting it
     // TODO: use d3 idioms instead of deleting and redrawing every time
@@ -83,7 +83,7 @@ function drawOne(gd: GraphDiv, index: any) {
         drawShape(plotinfo.shapelayerBetween);
     } else {
         if(plotinfo._hadPlotinfo) {
-            var mainPlot = plotinfo.mainplotinfo || plotinfo;
+            const mainPlot = plotinfo.mainplotinfo || plotinfo;
             drawShape(mainPlot.shapelayer);
         } else {
             // Fall back to _shapeLowerLayer in case the requested subplot doesn't exist.
@@ -94,27 +94,27 @@ function drawOne(gd: GraphDiv, index: any) {
     }
 
     function drawShape(shapeLayer: any) {
-        var d = getPathString(gd, options);
-        var attrs = {
+        const d = getPathString(gd, options);
+        const attrs = {
             'data-index': index,
             'fill-rule': options.fillrule,
             d: d
         };
 
-        var opacity = options.opacity;
-        var fillColor = options.fillcolor;
-        var lineColor = options.line.width ? options.line.color : 'rgba(0,0,0,0)';
-        var lineWidth = options.line.width;
-        var lineDash = options.line.dash;
+        let opacity = options.opacity;
+        let fillColor = options.fillcolor;
+        const lineColor = options.line.width ? options.line.color : 'rgba(0,0,0,0)';
+        let lineWidth = options.line.width;
+        let lineDash = options.line.dash;
         if(!lineWidth && options.editable === true) {
             // ensure invisible border to activate the shape
             lineWidth = 5;
             lineDash = 'solid';
         }
 
-        var isOpen = d[d.length - 1] !== 'Z';
+        const isOpen = d[d.length - 1] !== 'Z';
 
-        var isActiveShape = couldHaveActiveShape(gd) &&
+        const isActiveShape = couldHaveActiveShape(gd) &&
             options.editable && gd._fullLayout._activeShapeIndex === index;
 
         if(isActiveShape) {
@@ -124,11 +124,11 @@ function drawOne(gd: GraphDiv, index: any) {
             opacity = gd._fullLayout.activeshape.opacity;
         }
 
-        var shapeGroup = shapeLayer.append('g')
+        const shapeGroup = shapeLayer.append('g')
             .classed('shape-group', true)
             .attr({ 'data-index': index });
 
-        var path = shapeGroup.append('path')
+        const path = shapeGroup.append('path')
             .attr(attrs)
             .style('opacity', opacity)
             .call(Color.stroke, lineColor)
@@ -140,7 +140,7 @@ function drawOne(gd: GraphDiv, index: any) {
         // Draw or clear the label
         drawLabel(gd, index, options, shapeGroup);
 
-        var editHelpers;
+        let editHelpers;
         if(isActiveShape || gd._context.edits.shapePosition) editHelpers = arrayEditor(gd.layout, 'shapes', options);
 
         if(isActiveShape) {
@@ -148,7 +148,7 @@ function drawOne(gd: GraphDiv, index: any) {
                 cursor: 'move',
             });
 
-            var dragOptions = {
+            const dragOptions = {
                 element: path.node(),
                 plotinfo: plotinfo,
                 gd: gd,
@@ -157,7 +157,7 @@ function drawOne(gd: GraphDiv, index: any) {
                 isActiveShape: true // i.e. to enable controllers
             };
 
-            var polygons = readPaths(d, gd);
+            const polygons = readPaths(d, gd);
             // display polygons on the screen
             displayOutlines(polygons, path, dragOptions);
         } else {
@@ -180,7 +180,7 @@ function setClipPath(shapePath: any, gd: GraphDiv, shapeOptions: any) {
     //
     // if axis is 'paper' or an axis with " domain" appended, then there is no
     // clip axis
-    var clipAxes = (shapeOptions.xref + shapeOptions.yref).replace(/paper/g, '').replace(/[xyz][0-9]* *domain/g, '');
+    const clipAxes = (shapeOptions.xref + shapeOptions.yref).replace(/paper/g, '').replace(/[xyz][0-9]* *domain/g, '');
 
     setClipUrl(
         shapePath,
@@ -190,51 +190,51 @@ function setClipPath(shapePath: any, gd: GraphDiv, shapeOptions: any) {
 }
 
 function setupDragElement(gd: GraphDiv, shapePath: any, shapeOptions: any, index: any, shapeLayer: any, editHelpers: any) {
-    var MINWIDTH = 10;
-    var MINHEIGHT = 10;
+    const MINWIDTH = 10;
+    const MINHEIGHT = 10;
 
-    var xPixelSized = shapeOptions.xsizemode === 'pixel';
-    var yPixelSized = shapeOptions.ysizemode === 'pixel';
-    var isLine = shapeOptions.type === 'line';
-    var isPath = shapeOptions.type === 'path';
+    const xPixelSized = shapeOptions.xsizemode === 'pixel';
+    const yPixelSized = shapeOptions.ysizemode === 'pixel';
+    const isLine = shapeOptions.type === 'line';
+    const isPath = shapeOptions.type === 'path';
 
-    var modifyItem = editHelpers.modifyItem;
+    const modifyItem = editHelpers.modifyItem;
 
-    var x0, y0, x1, y1, xAnchor, yAnchor;
-    var n0, s0, w0, e0, optN, optS, optW, optE;
-    var pathIn;
+    let x0, y0, x1, y1, xAnchor, yAnchor;
+    let n0, s0, w0, e0, optN, optS, optW, optE;
+    let pathIn;
 
-    var shapeGroup = select(shapePath.node().parentNode);
+    const shapeGroup = select(shapePath.node().parentNode);
 
     // setup conversion functions
-    var xa = Axes.getFromId(gd, shapeOptions.xref);
-    var xRefType = Axes.getRefType(shapeOptions.xref);
-    var ya = Axes.getFromId(gd, shapeOptions.yref);
-    var yRefType = Axes.getRefType(shapeOptions.yref);
-    var shiftXStart = shapeOptions.x0shift;
-    var shiftXEnd = shapeOptions.x1shift;
-    var shiftYStart = shapeOptions.y0shift;
-    var shiftYEnd = shapeOptions.y1shift;
-    var x2p = function(v: any, shift?: any) {
-        var dataToPixel = helpers.getDataToPixel(gd, xa, shift, false, xRefType);
+    const xa = Axes.getFromId(gd, shapeOptions.xref);
+    const xRefType = Axes.getRefType(shapeOptions.xref);
+    const ya = Axes.getFromId(gd, shapeOptions.yref);
+    const yRefType = Axes.getRefType(shapeOptions.yref);
+    const shiftXStart = shapeOptions.x0shift;
+    const shiftXEnd = shapeOptions.x1shift;
+    const shiftYStart = shapeOptions.y0shift;
+    const shiftYEnd = shapeOptions.y1shift;
+    const x2p = function(v: any, shift?: any) {
+        const dataToPixel = helpers.getDataToPixel(gd, xa, shift, false, xRefType);
         return dataToPixel(v);
     };
-    var y2p = function(v: any, shift?: any) {
-        var dataToPixel = helpers.getDataToPixel(gd, ya, shift, true, yRefType);
+    const y2p = function(v: any, shift?: any) {
+        const dataToPixel = helpers.getDataToPixel(gd, ya, shift, true, yRefType);
         return dataToPixel(v);
     };
-    var p2x = helpers.getPixelToData(gd, xa, false, xRefType);
-    var p2y = helpers.getPixelToData(gd, ya, true, yRefType);
+    const p2x = helpers.getPixelToData(gd, xa, false, xRefType);
+    const p2y = helpers.getPixelToData(gd, ya, true, yRefType);
 
-    var sensoryElement = obtainSensoryElement();
-    var dragOptions: any = {
+    const sensoryElement = obtainSensoryElement();
+    const dragOptions: any = {
         element: sensoryElement.node(),
         gd: gd,
         prepFn: startDrag,
         doneFn: endDrag,
         clickFn: abortDrag
     };
-    var dragMode;
+    let dragMode;
 
     dragElement.init(dragOptions);
 
@@ -245,13 +245,13 @@ function setupDragElement(gd: GraphDiv, shapePath: any, shapeOptions: any, index
     }
 
     function createLineDragHandles() {
-        var minSensoryWidth = 10;
-        var sensoryWidth = Math.max(shapeOptions.line.width, minSensoryWidth);
+        const minSensoryWidth = 10;
+        const sensoryWidth = Math.max(shapeOptions.line.width, minSensoryWidth);
 
         // Helper shapes group
         // Note that by setting the `data-index` attr, it is ensured that
         // the helper group is purged in this modules `draw` function
-        var g = shapeLayer.append('g')
+        const g = shapeLayer.append('g')
             .attr('data-index', index)
             .attr('drag-helper', true);
 
@@ -265,10 +265,10 @@ function setupDragElement(gd: GraphDiv, shapePath: any, shapeOptions: any, index
           });
 
         // Helper circles for resizing
-        var circleStyle = {
+        const circleStyle = {
             'fill-opacity': '0' // ensure not visible
         };
-        var circleRadius = Math.max(sensoryWidth / 2, minSensoryWidth);
+        const circleRadius = Math.max(sensoryWidth / 2, minSensoryWidth);
 
         g.append('circle')
           .attr({
@@ -309,15 +309,15 @@ function setupDragElement(gd: GraphDiv, shapePath: any, shapeOptions: any, index
         } else {
             // element might not be on screen at time of setup,
             // so obtain bounding box here
-            var dragBBox = dragOptions.element.getBoundingClientRect();
+            const dragBBox = dragOptions.element.getBoundingClientRect();
 
             // choose 'move' or 'resize'
             // based on initial position of cursor within the drag element
-            var w = dragBBox.right - dragBBox.left;
-            var h = dragBBox.bottom - dragBBox.top;
-            var x = evt.clientX - dragBBox.left;
-            var y = evt.clientY - dragBBox.top;
-            var cursor = (!isPath && w > MINWIDTH && h > MINHEIGHT && !evt.shiftKey) ?
+            const w = dragBBox.right - dragBBox.left;
+            const h = dragBBox.bottom - dragBBox.top;
+            const x = evt.clientX - dragBBox.left;
+            const y = evt.clientY - dragBBox.top;
+            const cursor = (!isPath && w > MINWIDTH && h > MINHEIGHT && !evt.shiftKey) ?
                 dragElement.getCursor(x / w, 1 - y / h) :
                 'move';
 
@@ -401,9 +401,9 @@ function setupDragElement(gd: GraphDiv, shapePath: any, shapeOptions: any, index
 
     function moveShape(dx: any, dy: any) {
         if(shapeOptions.type === 'path') {
-            var noOp = function(coord: any) { return coord; };
-            var moveX = noOp;
-            var moveY = noOp;
+            const noOp = function(coord: any) { return coord; };
+            let moveX = noOp;
+            let moveY = noOp;
 
             if(xPixelSized) {
                 modifyItem('xanchor', shapeOptions.xanchor = p2x(xAnchor + dx));
@@ -444,9 +444,9 @@ function setupDragElement(gd: GraphDiv, shapePath: any, shapeOptions: any, index
     function resizeShape(dx: any, dy: any) {
         if(isPath) {
             // TODO: implement path resize, don't forget to update dragMode code
-            var noOp = function(coord: any) { return coord; };
-            var moveX = noOp;
-            var moveY = noOp;
+            const noOp = function(coord: any) { return coord; };
+            let moveX = noOp;
+            let moveY = noOp;
 
             if(xPixelSized) {
                 modifyItem('xanchor', shapeOptions.xanchor = p2x(xAnchor + dx));
@@ -465,27 +465,27 @@ function setupDragElement(gd: GraphDiv, shapePath: any, shapeOptions: any, index
             modifyItem('path', shapeOptions.path = movePath(pathIn, moveX, moveY));
         } else if(isLine) {
             if(dragMode === 'resize-over-start-point') {
-                var newX0 = x0 + dx;
-                var newY0 = yPixelSized ? y0 - dy : y0 + dy;
+                const newX0 = x0 + dx;
+                const newY0 = yPixelSized ? y0 - dy : y0 + dy;
                 modifyItem('x0', shapeOptions.x0 = xPixelSized ? newX0 : p2x(newX0));
                 modifyItem('y0', shapeOptions.y0 = yPixelSized ? newY0 : p2y(newY0));
             } else if(dragMode === 'resize-over-end-point') {
-                var newX1 = x1 + dx;
-                var newY1 = yPixelSized ? y1 - dy : y1 + dy;
+                const newX1 = x1 + dx;
+                const newY1 = yPixelSized ? y1 - dy : y1 + dy;
                 modifyItem('x1', shapeOptions.x1 = xPixelSized ? newX1 : p2x(newX1));
                 modifyItem('y1', shapeOptions.y1 = yPixelSized ? newY1 : p2y(newY1));
             }
         } else {
-            var has = function(str: any) { return dragMode.indexOf(str) !== -1; };
-            var hasN = has('n');
-            var hasS = has('s');
-            var hasW = has('w');
-            var hasE = has('e');
+            const has = function(str: any) { return dragMode.indexOf(str) !== -1; };
+            const hasN = has('n');
+            const hasS = has('s');
+            const hasW = has('w');
+            const hasE = has('e');
 
-            var newN = hasN ? n0 + dy : n0;
-            var newS = hasS ? s0 + dy : s0;
-            var newW = hasW ? w0 + dx : w0;
-            var newE = hasE ? e0 + dx : e0;
+            let newN = hasN ? n0 + dy : n0;
+            let newS = hasS ? s0 + dy : s0;
+            const newW = hasW ? w0 + dx : w0;
+            const newE = hasE ? e0 + dx : e0;
 
             if(yPixelSized) {
                 // Do things in opposing direction for y-axis.
@@ -520,13 +520,13 @@ function setupDragElement(gd: GraphDiv, shapePath: any, shapeOptions: any, index
         }
 
         function renderAnchor() {
-            var isNotPath = shapeOptions.type !== 'path';
+            const isNotPath = shapeOptions.type !== 'path';
 
             // d3 join with dummy data to satisfy d3 data-binding
-            var visualCues = shapeLayer.selectAll('.visual-cue').data([0]);
+            const visualCues = shapeLayer.selectAll('.visual-cue').data([0]);
 
             // Enter
-            var strokeWidth = 1;
+            const strokeWidth = 1;
             visualCues.enter()
               .append('path')
               .attr({
@@ -538,7 +538,7 @@ function setupDragElement(gd: GraphDiv, shapePath: any, shapeOptions: any, index
               .classed('visual-cue', true);
 
             // Update
-            var posX = x2p(
+            let posX = x2p(
               xPixelSized ?
                 shapeOptions.xanchor :
                 Lib.midRange(
@@ -546,7 +546,7 @@ function setupDragElement(gd: GraphDiv, shapePath: any, shapeOptions: any, index
                     [shapeOptions.x0, shapeOptions.x1] :
                     helpers.extractPathCoords(shapeOptions.path, constants.paramIsX))
             );
-            var posY = y2p(
+            let posY = y2p(
               yPixelSized ?
                 shapeOptions.yanchor :
                 Lib.midRange(
@@ -559,15 +559,15 @@ function setupDragElement(gd: GraphDiv, shapePath: any, shapeOptions: any, index
             posY = helpers.roundPositionForSharpStrokeRendering(posY, strokeWidth);
 
             if(xPixelSized && yPixelSized) {
-                var crossPath = 'M' + (posX - 1 - strokeWidth) + ',' + (posY - 1 - strokeWidth) +
+                const crossPath = 'M' + (posX - 1 - strokeWidth) + ',' + (posY - 1 - strokeWidth) +
                   'h-8v2h8 v8h2v-8 h8v-2h-8 v-8h-2 Z';
                 visualCues.attr('d', crossPath);
             } else if(xPixelSized) {
-                var vBarPath = 'M' + (posX - 1 - strokeWidth) + ',' + (posY - 9 - strokeWidth) +
+                const vBarPath = 'M' + (posX - 1 - strokeWidth) + ',' + (posY - 9 - strokeWidth) +
                   'v18 h2 v-18 Z';
                 visualCues.attr('d', vBarPath);
             } else {
-                var hBarPath = 'M' + (posX - 9 - strokeWidth) + ',' + (posY - 1 - strokeWidth) +
+                const hBarPath = 'M' + (posX - 9 - strokeWidth) + ',' + (posY - 1 - strokeWidth) +
                   'h18 v2 h-18 Z';
                 visualCues.attr('d', hBarPath);
             }
@@ -579,12 +579,12 @@ function setupDragElement(gd: GraphDiv, shapePath: any, shapeOptions: any, index
     }
 
     function deactivateClipPathTemporarily(shapePath: any, shapeOptions: any, gd: GraphDiv) {
-        var xref = shapeOptions.xref;
-        var yref = shapeOptions.yref;
-        var xa = Axes.getFromId(gd, xref);
-        var ya = Axes.getFromId(gd, yref);
+        const xref = shapeOptions.xref;
+        const yref = shapeOptions.yref;
+        const xa = Axes.getFromId(gd, xref);
+        const ya = Axes.getFromId(gd, yref);
 
-        var clipAxes = '';
+        let clipAxes = '';
         if(xref !== 'paper' && !xa.autorange) clipAxes += xref;
         if(yref !== 'paper' && !ya.autorange) clipAxes += yref;
 
@@ -598,13 +598,13 @@ function setupDragElement(gd: GraphDiv, shapePath: any, shapeOptions: any, index
 
 function movePath(pathIn: any, moveX: any, moveY: any) {
     return pathIn.replace(constants.segmentRE, function(segment: any) {
-        var paramNumber = 0;
-        var segmentType = segment.charAt(0);
-        var xParams = constants.paramIsX[segmentType];
-        var yParams = constants.paramIsY[segmentType];
-        var nParams = constants.numParams[segmentType];
+        let paramNumber = 0;
+        const segmentType = segment.charAt(0);
+        const xParams = constants.paramIsX[segmentType];
+        const yParams = constants.paramIsY[segmentType];
+        const nParams = constants.numParams[segmentType];
 
-        var paramString = segment.slice(1).replace(constants.paramRE, function(param: any) {
+        const paramString = segment.slice(1).replace(constants.paramRE, function(param: any) {
             if(paramNumber >= nParams) return param;
 
             if(xParams[paramNumber]) param = moveX(param);
@@ -622,8 +622,8 @@ function movePath(pathIn: any, moveX: any, moveY: any) {
 function activateShape(gd: GraphDiv, path: any) {
     if(!couldHaveActiveShape(gd)) return;
 
-    var element = path.node();
-    var id = +element.getAttribute('data-index');
+    const element = path.node();
+    const id = +element.getAttribute('data-index');
     if(id >= 0) {
         // deactivate if already active
         if(id === gd._fullLayout._activeShapeIndex) {
@@ -640,7 +640,7 @@ function activateShape(gd: GraphDiv, path: any) {
 function deactivateShape(gd: GraphDiv) {
     if(!couldHaveActiveShape(gd)) return;
 
-    var id = gd._fullLayout._activeShapeIndex;
+    const id = gd._fullLayout._activeShapeIndex;
     if(id >= 0) {
         clearOutlineControllers(gd);
         delete gd._fullLayout._activeShapeIndex;
@@ -653,11 +653,11 @@ function eraseActiveShape(gd: GraphDiv) {
 
     clearOutlineControllers(gd);
 
-    var id = gd._fullLayout._activeShapeIndex;
-    var shapes = (gd.layout || {}).shapes || [];
+    const id = gd._fullLayout._activeShapeIndex;
+    const shapes = (gd.layout || {}).shapes || [];
     if(id < shapes.length) {
-        var list = [];
-        for(var q = 0; q < shapes.length; q++) {
+        const list = [];
+        for(let q = 0; q < shapes.length; q++) {
             if(q !== id) {
                 list.push(shapes[q]);
             }

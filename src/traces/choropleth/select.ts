@@ -1,10 +1,10 @@
 export default function selectPoints(searchInfo: any, selectionTester: any) {
-    var cd = searchInfo.cd;
-    var xa = searchInfo.xaxis;
-    var ya = searchInfo.yaxis;
-    var selection = [];
+    const cd = searchInfo.cd;
+    const xa = searchInfo.xaxis;
+    const ya = searchInfo.yaxis;
+    const selection = [];
 
-    var i, di, ct, x, y;
+    let i, di, ct, x, y;
 
     if(selectionTester === false) {
         for(i = 0; i < cd.length; i++) {

@@ -1,6 +1,6 @@
 import { select, selectAll } from 'd3-selection';
 import isNumeric from 'fast-isnumeric';
-var hasHover = typeof matchMedia === 'function' ? !matchMedia('(hover: none)').matches : typeof window !== 'undefined';
+const hasHover = typeof matchMedia === 'function' ? !matchMedia('(hover: none)').matches : typeof window !== 'undefined';
 import Lib, { clearResponsive, equalDomRects, error, extendDeep, extendDeepAll, extendDeepNoArrays, extendFlat, getFullTransformMatrix, getGraphDiv, inverseTransformMatrix, isArrayOrTypedArray, isHidden, isPlainObject, isPlotDiv, isTypedArray, log, nestedProperty, noop, pushUnique, randstr, relativeAttr, sorterDes, syncOrAsync, warn } from '../lib/index.js';
 import Events from '../lib/events.js';
 import Queue from '../lib/queue.js';
@@ -27,8 +27,8 @@ import type { GraphDiv, FullLayout, FullTrace, Layout, PlotConfig } from '../../
 // Lazy-resolve to avoid pulling in ~70KB selections module in lite bundle
 function clearOutline(gd: GraphDiv): void { return Registry.getComponentMethod('selections', 'clearOutline')(gd); }
 
-var numericNameWarningCount = 0;
-var numericNameWarningCountLimit = 5;
+let numericNameWarningCount = 0;
+const numericNameWarningCountLimit = 5;
 
 /**
  * Internal plot-creation function
@@ -52,7 +52,7 @@ var numericNameWarningCountLimit = 5;
  *
  */
 function _doPlot(gd?: any, data?: any, layout?: any, config?: any): any {
-    var frames;
+    let frames;
 
     gd = getGraphDiv(gd);
 
@@ -60,7 +60,7 @@ function _doPlot(gd?: any, data?: any, layout?: any, config?: any): any {
     Events.init(gd);
 
     if (isPlainObject(data)) {
-        var obj = data;
+        const obj = data;
         data = obj.data;
         layout = obj.layout;
         config = obj.config;
@@ -69,7 +69,7 @@ function _doPlot(gd?: any, data?: any, layout?: any, config?: any): any {
 
     performance.mark('plotly-total-start');
 
-    var okToPlot = Events.triggerHandler(gd, 'plotly_beforeplot', [data, layout, config]);
+    const okToPlot = Events.triggerHandler(gd, 'plotly_beforeplot', [data, layout, config]);
     if (okToPlot === false) return Promise.reject();
 
     // if there's no data or layout, and this isn't yet a plotly plot
@@ -105,7 +105,7 @@ function _doPlot(gd?: any, data?: any, layout?: any, config?: any): any {
     // complete, and empty out the promise list again.
     if (!Array.isArray(gd._promises)) gd._promises = [];
 
-    var graphWasEmpty = (gd.data || []).length === 0 && Array.isArray(data);
+    const graphWasEmpty = (gd.data || []).length === 0 && Array.isArray(data);
 
     // if there is already data on the graph, append the new data
     // if you only want to redraw, pass a non-array for data
@@ -130,8 +130,8 @@ function _doPlot(gd?: any, data?: any, layout?: any, config?: any): any {
     performance.mark('plotly-supplyDefaults-end');
     performance.measure('plotly-supplyDefaults', 'plotly-supplyDefaults-start', 'plotly-supplyDefaults-end');
 
-    var fullLayout = gd._fullLayout;
-    var hasCartesian = fullLayout._has('cartesian');
+    let fullLayout = gd._fullLayout;
+    const hasCartesian = fullLayout._has('cartesian');
 
     // so we don't try to re-call _doPlot from inside
     // legend and colorbar, if margins changed
@@ -157,7 +157,7 @@ function _doPlot(gd?: any, data?: any, layout?: any, config?: any): any {
 
     // generate calcdata, if we need to
     // to force redoing calcdata, just delete it before calling _doPlot
-    var recalc = !gd.calcdata || gd.calcdata.length !== (gd._fullData || []).length;
+    const recalc = !gd.calcdata || gd.calcdata.length !== (gd._fullData || []).length;
     if (recalc) {
         performance.mark('plotly-calcdata-start');
         doCalcdata(gd);
@@ -166,7 +166,7 @@ function _doPlot(gd?: any, data?: any, layout?: any, config?: any): any {
     }
 
     // in case it has changed, attach fullData traces to calcdata
-    for (var i = 0; i < gd.calcdata.length; i++) {
+    for (let i = 0; i < gd.calcdata.length; i++) {
         gd.calcdata[i][0].trace = gd._fullData[i];
     }
 
@@ -189,15 +189,15 @@ function _doPlot(gd?: any, data?: any, layout?: any, config?: any): any {
      * start async-friendly code - now we're actually drawing things
      */
 
-    var oldMargins = extendFlat({}, fullLayout._size);
+    const oldMargins = extendFlat({}, fullLayout._size);
 
     // draw framework first so that margin-pushing
     // components can position themselves correctly
-    var drawFrameworkCalls = 0;
+    let drawFrameworkCalls = 0;
     function drawFramework() {
-        var basePlotModules = fullLayout._basePlotModules;
+        const basePlotModules = fullLayout._basePlotModules;
 
-        for (var i = 0; i < basePlotModules.length; i++) {
+        for (let i = 0; i < basePlotModules.length; i++) {
             if (basePlotModules[i].drawFramework) {
                 basePlotModules[i].drawFramework(gd);
             }
@@ -242,7 +242,7 @@ function _doPlot(gd?: any, data?: any, layout?: any, config?: any): any {
                 });
         }
 
-        var plotGlPixelRatio = gd._context.plotGlPixelRatio;
+        const plotGlPixelRatio = gd._context.plotGlPixelRatio;
         if (fullLayout._glcanvas) {
             fullLayout._glcanvas
                 .attr('width', fullLayout.width * plotGlPixelRatio)
@@ -250,7 +250,7 @@ function _doPlot(gd?: any, data?: any, layout?: any, config?: any): any {
                 .style('width', fullLayout.width + 'px')
                 .style('height', fullLayout.height + 'px');
 
-            var regl = fullLayout._glcanvas.data()[0].regl;
+            const regl = fullLayout._glcanvas.data()[0].regl;
             if (regl) {
                 // Unfortunately, this can happen when relayouting to large
                 // width/height on some browsers.
@@ -258,7 +258,7 @@ function _doPlot(gd?: any, data?: any, layout?: any, config?: any): any {
                     Math.floor(fullLayout.width * plotGlPixelRatio) !== regl._gl.drawingBufferWidth ||
                     Math.floor(fullLayout.height * plotGlPixelRatio) !== regl._gl.drawingBufferHeight
                 ) {
-                    var msg = 'WebGL context buffer and canvas dimensions do not match due to browser/WebGL bug.';
+                    const msg = 'WebGL context buffer and canvas dimensions do not match due to browser/WebGL bug.';
                     if (drawFrameworkCalls) {
                         error(msg);
                     } else {
@@ -299,9 +299,9 @@ function _doPlot(gd?: any, data?: any, layout?: any, config?: any): any {
 
         // TODO can this be moved elsewhere?
         if (fullLayout._has('pie')) {
-            var fullData = gd._fullData;
-            for (var i = 0; i < fullData.length; i++) {
-                var trace = fullData[i];
+            const fullData = gd._fullData;
+            for (let i = 0; i < fullData.length; i++) {
+                const trace = fullData[i];
                 if (trace.type === 'pie' && trace.automargin) {
                     allowAutoMargin(gd, 'pie.' + trace.uid + '.automargin');
                 }
@@ -359,7 +359,7 @@ function _doPlot(gd?: any, data?: any, layout?: any, config?: any): any {
 
     function timedMarginPushers() {
         performance.mark('plotly-marginPushers-start');
-        var result = marginPushers();
+        const result = marginPushers();
         performance.mark('plotly-marginPushers-end');
         performance.measure('plotly-marginPushers', 'plotly-marginPushers-start', 'plotly-marginPushers-end');
         return result;
@@ -367,15 +367,15 @@ function _doPlot(gd?: any, data?: any, layout?: any, config?: any): any {
 
     function timedDrawData() {
         performance.mark('plotly-drawData-start');
-        var result = subroutines.drawData(gd);
+        const result = subroutines.drawData(gd);
         performance.mark('plotly-drawData-end');
         performance.measure('plotly-drawData', 'plotly-drawData-start', 'plotly-drawData-end');
         return result;
     }
 
-    var deferAutoMargin = gd._context.deferAutoMargin;
+    const deferAutoMargin = gd._context.deferAutoMargin;
 
-    var seq = [previousPromises, addFrames, drawFramework];
+    const seq = [previousPromises, addFrames, drawFramework];
 
     if (!deferAutoMargin) {
         seq.push(timedMarginPushers, marginPushersAgain);
@@ -386,7 +386,7 @@ function _doPlot(gd?: any, data?: any, layout?: any, config?: any): any {
     seq.push(subroutines.layoutStyles);
     if (hasCartesian) {
         seq.push(drawAxes, function insideTickLabelsAutorange(gd?: any) {
-            var insideTickLabelsUpdaterange = gd._fullLayout._insideTickLabelsUpdaterange;
+            const insideTickLabelsUpdaterange = gd._fullLayout._insideTickLabelsUpdaterange;
             if (insideTickLabelsUpdaterange) {
                 gd._fullLayout._insideTickLabelsUpdaterange = undefined;
 
@@ -421,7 +421,7 @@ function _doPlot(gd?: any, data?: any, layout?: any, config?: any): any {
 
     // even if everything we did was synchronous, return a promise
     // so that the caller doesn't care which route we took
-    var plotDone = syncOrAsync(seq, gd);
+    let plotDone = syncOrAsync(seq, gd);
     if (!plotDone || !plotDone.then) plotDone = Promise.resolve();
 
     return plotDone.then(function () {
@@ -435,7 +435,7 @@ function _doPlot(gd?: any, data?: any, layout?: any, config?: any): any {
             requestAnimationFrame(function () {
                 performance.mark('plotly-deferredMargin-start');
 
-                var deferredSeq: any[] = [timedMarginPushers, marginPushersAgain];
+                const deferredSeq: any[] = [timedMarginPushers, marginPushersAgain];
                 if (hasCartesian) deferredSeq.push(positionAndAutorange);
                 deferredSeq.push(subroutines.layoutStyles);
                 if (hasCartesian) deferredSeq.push(drawAxes);
@@ -445,7 +445,7 @@ function _doPlot(gd?: any, data?: any, layout?: any, config?: any): any {
                     doAutoMargin
                 );
 
-                var deferredDone = syncOrAsync(deferredSeq, gd);
+                let deferredDone = syncOrAsync(deferredSeq, gd);
                 if (!deferredDone || !deferredDone.then) deferredDone = Promise.resolve();
                 deferredDone.then(function () {
                     performance.mark('plotly-deferredMargin-end');
@@ -459,7 +459,7 @@ function _doPlot(gd?: any, data?: any, layout?: any, config?: any): any {
 }
 
 function emitAfterPlot(gd: GraphDiv): void {
-    var fullLayout = gd._fullLayout;
+    const fullLayout = gd._fullLayout;
 
     if (fullLayout._redrawFromAutoMarginCount) {
         fullLayout._redrawFromAutoMarginCount--;
@@ -481,7 +481,7 @@ function setBackground(gd: GraphDiv, bgColor?: any): void {
 }
 
 function opaqueSetBackground(gd: GraphDiv, bgColor?: any): void {
-    var blend = Color.combine(bgColor, 'white');
+    const blend = Color.combine(bgColor, 'white');
     setBackground(gd, blend);
 }
 
@@ -490,13 +490,13 @@ function setPlotContext(gd?: any, config?: any): void {
         gd._context = extendDeep({}, dfltConfig);
 
         // stash <base> href, used to make robust clipPath URLs
-        var base = select('base');
+        const base = select('base');
         gd._context._baseUrl = base.size() && base.attr('href') ? window.location.href.split('#')[0] : '';
     }
 
-    var context = gd._context;
+    const context = gd._context;
 
-    var i, keys, key;
+    let i, keys, key;
 
     if (config) {
         keys = Object.keys(config);
@@ -514,7 +514,7 @@ function setPlotContext(gd?: any, config?: any): void {
 
         // now deal with editable and edits - first editable overrides
         // everything, then edits refines
-        var editable = config.editable;
+        const editable = config.editable;
         if (editable !== undefined) {
             // we're not going to *use* context.editable, we're only going to
             // use context.edits... but keep it for the record
@@ -566,8 +566,8 @@ function setPlotContext(gd?: any, config?: any): void {
     context._hasZeroWidth = context._hasZeroWidth || gd.clientWidth === 0;
 
     // fill context._scrollZoom helper to help manage scrollZoom flaglist
-    var szIn = context.scrollZoom;
-    var szOut: any = (context._scrollZoom = {});
+    const szIn = context.scrollZoom;
+    const szOut: any = (context._scrollZoom = {});
     if (szIn === true) {
         szOut.cartesian = 1;
         szOut.gl3d = 1;
@@ -575,7 +575,7 @@ function setPlotContext(gd?: any, config?: any): void {
         szOut.mapbox = 1;
         szOut.map = 1;
     } else if (typeof szIn === 'string') {
-        var parts = szIn.split('+');
+        const parts = szIn.split('+');
         for (i = 0; i < parts.length; i++) {
             szOut[parts[i]] = 1;
         }
@@ -630,10 +630,10 @@ function newPlot(gd?: any, data?: any, layout?: any, config?: any): any {
  * @param {Number} maxIndex The maximum index allowable (arr.length - 1)
  */
 function positivifyIndices(indices?: any, maxIndex?: any): any {
-    var parentLength = maxIndex + 1;
-    var positiveIndices = [];
-    var i;
-    var index;
+    const parentLength = maxIndex + 1;
+    const positiveIndices = [];
+    let i;
+    let index;
 
     for (i = 0; i < indices.length; i++) {
         index = indices[i];
@@ -656,7 +656,7 @@ function positivifyIndices(indices?: any, maxIndex?: any): any {
  * @param arrayName
  */
 function assertIndexArray(gd?: any, indices?: any, arrayName?: any): void {
-    var i, index;
+    let i, index;
 
     for (i = 0; i < indices.length; i++) {
         index = indices[i];
@@ -724,7 +724,7 @@ function checkMoveTracesArgs(gd?: any, currentIndices?: any, newIndices?: any): 
  * @param newIndices
  */
 function checkAddTracesArgs(gd?: any, traces?: any, newIndices?: any): void {
-    var i, value;
+    let i, value;
 
     // check that gd has attribute 'data' and 'data' is array
     if (!Array.isArray(gd.data)) {
@@ -769,7 +769,7 @@ function checkAddTracesArgs(gd?: any, traces?: any, newIndices?: any): void {
  * @param maxPoints
  */
 function assertExtendTracesArgs(gd?: any, update?: any, indices?: any, maxPoints?: any): void {
-    var maxPointsIsObject = isPlainObject(maxPoints);
+    const maxPointsIsObject = isPlainObject(maxPoints);
 
     if (!Array.isArray(gd.data)) {
         throw new Error('gd.data must be an array');
@@ -784,7 +784,7 @@ function assertExtendTracesArgs(gd?: any, update?: any, indices?: any, maxPoints
 
     assertIndexArray(gd, indices, 'indices');
 
-    for (var key in update) {
+    for (const key in update) {
         /*
          * Verify that the attribute to be updated contains as many trace updates
          * as indices. Failure must result in throw and no-op
@@ -818,9 +818,9 @@ function assertExtendTracesArgs(gd?: any, update?: any, indices?: any, maxPoints
  * @return {Object[]}
  */
 function getExtendProperties(gd?: any, update?: any, indices?: any, maxPoints?: any): any {
-    var maxPointsIsObject = isPlainObject(maxPoints);
-    var updateProps = [];
-    var trace, target, prop, insert, maxp;
+    const maxPointsIsObject = isPlainObject(maxPoints);
+    const updateProps = [];
+    let trace, target, prop, insert, maxp;
 
     // allow scalar index to represent a single trace position
     if (!Array.isArray(indices)) indices = [indices];
@@ -829,8 +829,8 @@ function getExtendProperties(gd?: any, update?: any, indices?: any, maxPoints?: 
     indices = positivifyIndices(indices, gd.data.length - 1);
 
     // loop through all update keys and traces and harvest validated data.
-    for (var key in update) {
-        for (var j = 0; j < indices.length; j++) {
+    for (const key in update) {
+        for (let j = 0; j < indices.length; j++) {
             /*
              * Choose the trace indexed by the indices map argument and get the prop setter-getter
              * instance that references the key and value for this particular trace.
@@ -895,16 +895,16 @@ function getExtendProperties(gd?: any, update?: any, indices?: any, maxPoints?: 
 function spliceTraces(gd?: any, update?: any, indices?: any, maxPoints?: any, updateArray?: any): any {
     assertExtendTracesArgs(gd, update, indices, maxPoints);
 
-    var updateProps = getExtendProperties(gd, update, indices, maxPoints);
-    var undoUpdate: any = {};
-    var undoPoints: any = {};
+    const updateProps = getExtendProperties(gd, update, indices, maxPoints);
+    const undoUpdate: any = {};
+    const undoPoints: any = {};
 
-    for (var i = 0; i < updateProps.length; i++) {
-        var prop = updateProps[i].prop;
-        var maxp = updateProps[i].maxp;
+    for (let i = 0; i < updateProps.length; i++) {
+        const prop = updateProps[i].prop;
+        const maxp = updateProps[i].maxp;
 
         // return new array and remainder
-        var out: any = updateArray(updateProps[i].target, updateProps[i].insert, maxp);
+        const out: any = updateArray(updateProps[i].target, updateProps[i].insert, maxp);
         prop.set(out[0]);
 
         // build the inverse update object for the undo operation
@@ -920,7 +920,7 @@ function spliceTraces(gd?: any, update?: any, indices?: any, maxPoints?: any, up
 }
 
 function concatTypedArray(arr0?: any, arr1?: any): any {
-    var arr2 = new arr0.constructor(arr0.length + arr1.length);
+    const arr2 = new arr0.constructor(arr0.length + arr1.length);
     arr2.set(arr0);
     arr2.set(arr1, arr0.length);
     return arr2;
@@ -947,12 +947,12 @@ function extendTraces(gd?: any, update?: any, indices?: any, maxPoints?: any): a
     gd = getGraphDiv(gd);
 
     function updateArray(target?: any, insert?: any, maxp?: any) {
-        var newArray, remainder;
+        let newArray, remainder;
 
         if (isTypedArray(target)) {
             if (maxp < 0) {
-                var none = new target.constructor(0);
-                var both = concatTypedArray(target, insert);
+                const none = new target.constructor(0);
+                const both = concatTypedArray(target, insert);
 
                 if (maxp < 0) {
                     newArray = both;
@@ -969,14 +969,14 @@ function extendTraces(gd?: any, update?: any, indices?: any, maxPoints?: any): a
                     newArray.set(insert);
                     remainder.set(target);
                 } else if (maxp < insert.length) {
-                    var numberOfItemsFromInsert = insert.length - maxp;
+                    const numberOfItemsFromInsert = insert.length - maxp;
 
                     newArray.set(insert.subarray(numberOfItemsFromInsert));
                     remainder.set(target);
                     remainder.set(insert.subarray(0, numberOfItemsFromInsert), target.length);
                 } else {
-                    var numberOfItemsFromTarget = maxp - insert.length;
-                    var targetBegin = target.length - numberOfItemsFromTarget;
+                    const numberOfItemsFromTarget = maxp - insert.length;
+                    const targetBegin = target.length - numberOfItemsFromTarget;
 
                     newArray.set(target.subarray(targetBegin));
                     newArray.set(insert, numberOfItemsFromTarget);
@@ -991,9 +991,9 @@ function extendTraces(gd?: any, update?: any, indices?: any, maxPoints?: any): a
         return [newArray, remainder];
     }
 
-    var undo = spliceTraces(gd, update, indices, maxPoints, updateArray);
-    var promise = redraw(gd);
-    var undoArgs = [gd, undo.update, indices, undo.maxPoints];
+    const undo = spliceTraces(gd, update, indices, maxPoints, updateArray);
+    const promise = redraw(gd);
+    const undoArgs = [gd, undo.update, indices, undo.maxPoints];
     Queue.add(gd, prependTraces, undoArgs, extendTraces, arguments);
 
     return promise;
@@ -1003,12 +1003,12 @@ function prependTraces(gd?: any, update?: any, indices?: any, maxPoints?: any): 
     gd = getGraphDiv(gd);
 
     function updateArray(target?: any, insert?: any, maxp?: any) {
-        var newArray, remainder;
+        let newArray, remainder;
 
         if (isTypedArray(target)) {
             if (maxp <= 0) {
-                var none = new target.constructor(0);
-                var both = concatTypedArray(insert, target);
+                const none = new target.constructor(0);
+                const both = concatTypedArray(insert, target);
 
                 if (maxp < 0) {
                     newArray = both;
@@ -1025,13 +1025,13 @@ function prependTraces(gd?: any, update?: any, indices?: any, maxPoints?: any): 
                     newArray.set(insert);
                     remainder.set(target);
                 } else if (maxp < insert.length) {
-                    var numberOfItemsFromInsert = insert.length - maxp;
+                    const numberOfItemsFromInsert = insert.length - maxp;
 
                     newArray.set(insert.subarray(0, numberOfItemsFromInsert));
                     remainder.set(insert.subarray(numberOfItemsFromInsert));
                     remainder.set(target, numberOfItemsFromInsert);
                 } else {
-                    var numberOfItemsFromTarget = maxp - insert.length;
+                    const numberOfItemsFromTarget = maxp - insert.length;
 
                     newArray.set(insert);
                     newArray.set(target.subarray(0, numberOfItemsFromTarget), insert.length);
@@ -1046,9 +1046,9 @@ function prependTraces(gd?: any, update?: any, indices?: any, maxPoints?: any): 
         return [newArray, remainder];
     }
 
-    var undo = spliceTraces(gd, update, indices, maxPoints, updateArray);
-    var promise = redraw(gd);
-    var undoArgs = [gd, undo.update, indices, undo.maxPoints];
+    const undo = spliceTraces(gd, update, indices, maxPoints, updateArray);
+    const promise = redraw(gd);
+    const undoArgs = [gd, undo.update, indices, undo.maxPoints];
     Queue.add(gd, extendTraces, undoArgs, prependTraces, arguments);
 
     return promise;
@@ -1066,13 +1066,13 @@ function prependTraces(gd?: any, update?: any, indices?: any, maxPoints?: any): 
 function addTraces(gd?: any, traces?: any, newIndices?: any): any {
     gd = getGraphDiv(gd);
 
-    var currentIndices = [];
-    var undoFunc = deleteTraces;
-    var redoFunc = addTraces;
-    var undoArgs = [gd, currentIndices];
-    var redoArgs = [gd, traces]; // no newIndices here
-    var i;
-    var promise;
+    const currentIndices = [];
+    const undoFunc = deleteTraces;
+    const redoFunc = addTraces;
+    const undoArgs = [gd, currentIndices];
+    const redoArgs = [gd, traces]; // no newIndices here
+    let i;
+    let promise;
 
     // all validation is done elsewhere to remove clutter here
     checkAddTracesArgs(gd, traces, newIndices);
@@ -1140,13 +1140,13 @@ function addTraces(gd?: any, traces?: any, newIndices?: any): any {
 function deleteTraces(gd?: any, indices?: any): any {
     gd = getGraphDiv(gd);
 
-    var traces = [];
-    var undoFunc = addTraces;
-    var redoFunc = deleteTraces;
-    var undoArgs = [gd, traces, indices];
-    var redoArgs = [gd, indices];
-    var i;
-    var deletedTrace;
+    const traces = [];
+    const undoFunc = addTraces;
+    const redoFunc = deleteTraces;
+    const undoArgs = [gd, traces, indices];
+    const redoArgs = [gd, indices];
+    let i;
+    let deletedTrace;
 
     // make sure indices are defined
     if (typeof indices === 'undefined') {
@@ -1166,7 +1166,7 @@ function deleteTraces(gd?: any, indices?: any): any {
         traces.push(deletedTrace);
     }
 
-    var promise = redraw(gd);
+    const promise = redraw(gd);
     Queue.add(gd, undoFunc, undoArgs, redoFunc, redoArgs);
 
     return promise;
@@ -1206,13 +1206,13 @@ function deleteTraces(gd?: any, indices?: any): any {
 function moveTraces(gd?: any, currentIndices?: any, newIndices?: any): any {
     gd = getGraphDiv(gd);
 
-    var newData = [];
-    var movingTraceMap = [];
-    var undoFunc = moveTraces;
-    var redoFunc = moveTraces;
-    var undoArgs = [gd, newIndices, currentIndices];
-    var redoArgs = [gd, currentIndices, newIndices];
-    var i;
+    const newData = [];
+    const movingTraceMap = [];
+    const undoFunc = moveTraces;
+    const redoFunc = moveTraces;
+    const undoArgs = [gd, newIndices, currentIndices];
+    const redoArgs = [gd, currentIndices, newIndices];
+    let i;
 
     // to reduce complexity here, check args elsewhere
     // this throws errors where appropriate
@@ -1263,7 +1263,7 @@ function moveTraces(gd?: any, currentIndices?: any, newIndices?: any): any {
 
     gd.data = newData;
 
-    var promise = redraw(gd);
+    const promise = redraw(gd);
     Queue.add(gd, undoFunc, undoArgs, redoFunc, redoArgs);
 
     return promise;
@@ -1303,7 +1303,7 @@ function restyle(gd?: any, astr?: any, val?: any, _traces?: any): any {
     gd = getGraphDiv(gd);
     helpers.clearPromiseQueue(gd);
 
-    var aobj = {};
+    let aobj = {};
     if (typeof astr === 'string') aobj[astr] = val;
     else if (isPlainObject(astr)) {
         // the 3-arg form
@@ -1316,17 +1316,17 @@ function restyle(gd?: any, astr?: any, val?: any, _traces?: any): any {
 
     if (Object.keys(aobj).length) gd.changed = true;
 
-    var traces = helpers.coerceTraceIndices(gd, _traces);
+    const traces = helpers.coerceTraceIndices(gd, _traces);
 
-    var specs = _restyle(gd, aobj, traces);
-    var flags: any = specs.flags;
+    const specs = _restyle(gd, aobj, traces);
+    const flags: any = specs.flags;
 
     // clear calcdata and/or axis types if required so they get regenerated
     if (flags.calc) gd.calcdata = undefined;
     if (flags.clearAxisTypes) helpers.clearAxisTypes(gd, traces, {});
 
     // fill in redraw sequence
-    var seq = [];
+    const seq = [];
 
     if (flags.fullReplot) {
         seq.push(_doPlot);
@@ -1358,7 +1358,7 @@ function restyle(gd?: any, astr?: any, val?: any, _traces?: any): any {
 
     Queue.add(gd, restyle, [gd, specs.undoit, specs.traces], restyle, [gd, specs.redoit, specs.traces]);
 
-    var plotDone = syncOrAsync(seq, gd);
+    let plotDone = syncOrAsync(seq, gd);
     if (!plotDone || !plotDone.then) plotDone = Promise.resolve();
 
     return plotDone.then(function () {
@@ -1383,10 +1383,10 @@ function makeNP(preGUI?: any, guiEditFlag?: any): any {
     if (!guiEditFlag) return nestedProperty;
 
     return function (container?: any, attr?: any, prefix?: any) {
-        var np: any = nestedProperty(container, attr);
-        var npSet = np.set;
+        const np: any = nestedProperty(container, attr);
+        const npSet = np.set;
         np.set = function (val?: any) {
-            var fullAttr = (prefix || '') + attr;
+            const fullAttr = (prefix || '') + attr;
             storeCurrent(fullAttr, np.get(), val, preGUI);
             npSet(val);
         };
@@ -1396,17 +1396,17 @@ function makeNP(preGUI?: any, guiEditFlag?: any): any {
 
 function storeCurrent(attr?: any, val?: any, newVal?: any, preGUI?: any): void {
     if (Array.isArray(val) || Array.isArray(newVal)) {
-        var arrayVal = Array.isArray(val) ? val : [];
-        var arrayNew = Array.isArray(newVal) ? newVal : [];
-        var maxLen = Math.max(arrayVal.length, arrayNew.length);
-        for (var i = 0; i < maxLen; i++) {
+        const arrayVal = Array.isArray(val) ? val : [];
+        const arrayNew = Array.isArray(newVal) ? newVal : [];
+        const maxLen = Math.max(arrayVal.length, arrayNew.length);
+        for (let i = 0; i < maxLen; i++) {
             storeCurrent(attr + '[' + i + ']', arrayVal[i], arrayNew[i], preGUI);
         }
     } else if (isPlainObject(val) || isPlainObject(newVal)) {
-        var objVal = isPlainObject(val) ? val : {};
-        var objNew = isPlainObject(newVal) ? newVal : {};
-        var objBoth = extendFlat({}, objVal, objNew);
-        for (var key in objBoth) {
+        const objVal = isPlainObject(val) ? val : {};
+        const objNew = isPlainObject(newVal) ? newVal : {};
+        const objBoth = extendFlat({}, objVal, objNew);
+        for (const key in objBoth) {
             storeCurrent(attr + '.' + key, objVal[key], objNew[key], preGUI);
         }
     } else if (preGUI[attr] === undefined) {
@@ -1427,29 +1427,29 @@ function storeCurrent(attr?: any, val?: any, newVal?: any, preGUI?: any): void {
  * @param {object} edits: the {attr: val} object as normally passed to `relayout` etc
  */
 function _storeDirectGUIEdit(container?: any, preGUI?: any, edits?: any): void {
-    for (var attr in edits) {
-        var np: any = nestedProperty(container, attr);
+    for (const attr in edits) {
+        const np: any = nestedProperty(container, attr);
         storeCurrent(attr, np.get(), edits[attr], preGUI);
     }
 }
 
 function _restyle(gd?: any, aobj?: any, traces?: any): any {
-    var fullLayout = gd._fullLayout;
-    var fullData = gd._fullData;
-    var data = gd.data;
-    var guiEditFlag = fullLayout._guiEditing;
-    var layoutNP = makeNP(fullLayout._preGUI, guiEditFlag);
-    var eventData = extendDeepAll({}, aobj);
-    var i;
+    const fullLayout = gd._fullLayout;
+    const fullData = gd._fullData;
+    const data = gd.data;
+    const guiEditFlag = fullLayout._guiEditing;
+    const layoutNP = makeNP(fullLayout._preGUI, guiEditFlag);
+    const eventData = extendDeepAll({}, aobj);
+    let i;
 
     // initialize flags
-    var flags: any = editTypes.traceFlags();
+    const flags: any = editTypes.traceFlags();
 
     // copies of the change (and previous values of anything affected)
     // for the undo / redo queue
-    var redoit = {};
-    var undoit = {};
-    var axlist;
+    const redoit = {};
+    const undoit = {};
+    let axlist;
 
     // make a new empty vals array for undoit
     function a0() {
@@ -1460,7 +1460,7 @@ function _restyle(gd?: any, aobj?: any, traces?: any): any {
 
     // for autoranging multiple axes
     function addToAxlist(axid?: any) {
-        var axName = Axes.id2name(axid);
+        const axName = Axes.id2name(axid);
         if (axlist.indexOf(axName) === -1) axlist.push(axName);
     }
 
@@ -1475,7 +1475,7 @@ function _restyle(gd?: any, aobj?: any, traces?: any): any {
     function getFullTrace(traceIndex?: any) {
         // usually fullData maps 1:1 onto data, but with groupby transforms
         // the fullData index can be greater. Take the *first* matching trace.
-        for (var j = traceIndex; j < fullData.length; j++) {
+        for (let j = traceIndex; j < fullData.length; j++) {
             if (fullData[j]._input === data[traceIndex]) return fullData[j];
         }
         // should never get here - and if we *do* it should cause an error
@@ -1497,12 +1497,12 @@ function _restyle(gd?: any, aobj?: any, traces?: any): any {
         // quit if explicitly setting this elsewhere
         if (attr in aobj || helpers.hasParent(aobj, attr)) return;
 
-        var extraparam;
+        let extraparam;
         if (attr.slice(0, 6) === 'LAYOUT') {
             extraparam = layoutNP(gd.layout, attr.replace('LAYOUT', ''));
         } else {
-            var tracei = traces[i];
-            var preGUI = fullLayout._tracePreGUI[getFullTrace(tracei)._fullInput.uid];
+            const tracei = traces[i];
+            const preGUI = fullLayout._tracePreGUI[getFullTrace(tracei)._fullInput.uid];
             extraparam = makeNP(preGUI, guiEditFlag)(data[tracei], attr);
         }
 
@@ -1531,18 +1531,18 @@ function _restyle(gd?: any, aobj?: any, traces?: any): any {
 
     // now make the changes to gd.data (and occasionally gd.layout)
     // and figure out what kind of graphics update we need to do
-    for (var ai in aobj) {
+    for (let ai in aobj) {
         if (helpers.hasParent(aobj, ai)) {
             throw new Error('cannot set ' + ai + ' and a parent attribute simultaneously');
         }
 
-        var vi = aobj[ai];
-        var cont;
-        var contFull;
-        var param;
-        var oldVal;
-        var newVal;
-        var valObject;
+        let vi = aobj[ai];
+        let cont;
+        let contFull;
+        let param;
+        let oldVal;
+        let newVal;
+        let valObject;
 
         // Backward compatibility shim for turning histogram autobin on,
         // or freezing previous autobinned values.
@@ -1574,22 +1574,22 @@ function _restyle(gd?: any, aobj?: any, traces?: any): any {
         for (i = 0; i < traces.length; i++) {
             cont = data[traces[i]];
             contFull = getFullTrace(traces[i]);
-            var preGUI = fullLayout._tracePreGUI[contFull._fullInput.uid];
+            const preGUI = fullLayout._tracePreGUI[contFull._fullInput.uid];
             param = makeNP(preGUI, guiEditFlag)(cont, ai);
             oldVal = param.get();
             newVal = Array.isArray(vi) ? vi[i % vi.length] : vi;
 
             if (newVal === undefined) continue;
 
-            var finalPart = param.parts[param.parts.length - 1];
-            var prefix = ai.slice(0, ai.length - finalPart.length - 1);
-            var prefixDot = prefix ? prefix + '.' : '';
-            var innerContFull = prefix ? nestedProperty(contFull, prefix).get() : contFull;
+            const finalPart = param.parts[param.parts.length - 1];
+            const prefix = ai.slice(0, ai.length - finalPart.length - 1);
+            const prefixDot = prefix ? prefix + '.' : '';
+            const innerContFull = prefix ? nestedProperty(contFull, prefix).get() : contFull;
 
             valObject = PlotSchema.getTraceValObject(contFull, param.parts);
 
             if (valObject && valObject.impliedEdits && newVal !== null) {
-                for (var impliedKey in valObject.impliedEdits) {
+                for (const impliedKey in valObject.impliedEdits) {
                     doextra(relativeAttr(ai, impliedKey), valObject.impliedEdits[impliedKey], i);
                 }
             } else if (
@@ -1604,26 +1604,26 @@ function _restyle(gd?: any, aobj?: any, traces?: any): any {
                 // original plot size, before anything (like a colorbar)
                 // increases the margins
 
-                var gs = fullLayout._size;
-                var orient = innerContFull.orient;
-                var topOrBottom = orient === 'top' || orient === 'bottom';
+                const gs = fullLayout._size;
+                const orient = innerContFull.orient;
+                const topOrBottom = orient === 'top' || orient === 'bottom';
                 if (finalPart === 'thicknessmode') {
-                    var thicknorm = topOrBottom ? gs.h : gs.w;
+                    const thicknorm = topOrBottom ? gs.h : gs.w;
                     doextra(
                         prefixDot + 'thickness',
                         innerContFull.thickness * (newVal === 'fraction' ? 1 / thicknorm : thicknorm),
                         i
                     );
                 } else {
-                    var lennorm = topOrBottom ? gs.w : gs.h;
+                    const lennorm = topOrBottom ? gs.w : gs.h;
                     doextra(prefixDot + 'len', innerContFull.len * (newVal === 'fraction' ? 1 / lennorm : lennorm), i);
                 }
             } else if (
                 ai === 'type' &&
                 ((newVal === 'pie') !== (oldVal === 'pie') || (newVal === 'funnelarea') !== (oldVal === 'funnelarea'))
             ) {
-                var labelsTo = 'x';
-                var valuesTo = 'y';
+                let labelsTo = 'x';
+                let valuesTo = 'y';
                 if ((newVal === 'bar' || oldVal === 'bar') && cont.orientation === 'h') {
                     labelsTo = 'y';
                     valuesTo = 'x';
@@ -1645,7 +1645,7 @@ function _restyle(gd?: any, aobj?: any, traces?: any): any {
             undoit[ai][i] = undefinedToNull(oldVal);
             // set the new value - if val is an array, it's one el per trace
             // first check for attributes that get more complex alterations
-            var swapAttrs = ['swapxy', 'swapxyaxes', 'orientation', 'orientationaxes'];
+            const swapAttrs = ['swapxy', 'swapxyaxes', 'orientation', 'orientationaxes'];
             if (swapAttrs.indexOf(ai) !== -1) {
                 // setting an orientation: make sure it's changing
                 // before we swap everything else
@@ -1654,7 +1654,7 @@ function _restyle(gd?: any, aobj?: any, traces?: any): any {
                     // obnoxious that we need this level of coupling... but in order to
                     // properly handle setting orientation to `null` we need to mimic
                     // the logic inside Bars.supplyDefaults for default orientation
-                    var defaultOrientation = cont.x && !cont.y ? 'h' : 'v';
+                    const defaultOrientation = cont.x && !cont.y ? 'h' : 'v';
                     if ((param.get() || defaultOrientation) === contFull.orientation) {
                         continue;
                     }
@@ -1703,8 +1703,8 @@ function _restyle(gd?: any, aobj?: any, traces?: any): any {
 
         // swap hovermode if set to "compare x/y data"
         if (ai === 'orientationaxes') {
-            var hovermode = nestedProperty(gd.layout, 'hovermode');
-            var h = hovermode.get();
+            const hovermode = nestedProperty(gd.layout, 'hovermode');
+            const h = hovermode.get();
             if (h === 'x') {
                 hovermode.set('y');
             } else if (h === 'y') {
@@ -1725,7 +1725,7 @@ function _restyle(gd?: any, aobj?: any, traces?: any): any {
         if (['orientation', 'type'].indexOf(ai) !== -1) {
             axlist = [];
             for (i = 0; i < traces.length; i++) {
-                var trace = data[traces[i]];
+                const trace = data[traces[i]];
 
                 if (Registry.traceIs(trace, 'cartesian')) {
                     addToAxlist(trace.xaxis || 'x');
@@ -1775,7 +1775,7 @@ function relayout(gd?: any, astr?: any, val?: any): any {
     gd = getGraphDiv(gd);
     helpers.clearPromiseQueue(gd);
 
-    var aobj: any = {};
+    let aobj: any = {};
     if (typeof astr === 'string') {
         aobj[astr] = val;
     } else if (isPlainObject(astr)) {
@@ -1787,8 +1787,8 @@ function relayout(gd?: any, astr?: any, val?: any): any {
 
     if (Object.keys(aobj).length) gd.changed = true;
 
-    var specs = _relayout(gd, aobj);
-    var flags: any = specs.flags;
+    const specs = _relayout(gd, aobj);
+    const flags: any = specs.flags;
 
     // clear calcdata if required
     if (flags.calc) gd.calcdata = undefined;
@@ -1798,7 +1798,7 @@ function relayout(gd?: any, astr?: any, val?: any): any {
     // even if we don't have anything left in aobj,
     // something may have happened within relayout that we
     // need to wait for
-    var seq = [previousPromises];
+    const seq = [previousPromises];
     if (flags.layoutReplot) {
         seq.push(subroutines.layoutReplot);
     } else if (Object.keys(aobj).length) {
@@ -1819,7 +1819,7 @@ function relayout(gd?: any, astr?: any, val?: any): any {
 
     Queue.add(gd, relayout, [gd, specs.undoit], relayout, [gd, specs.redoit]);
 
-    var plotDone = syncOrAsync(seq, gd);
+    let plotDone = syncOrAsync(seq, gd);
     if (!plotDone || !plotDone.then) plotDone = Promise.resolve(gd);
 
     return plotDone.then(function () {
@@ -1831,32 +1831,32 @@ function relayout(gd?: any, astr?: any, val?: any): any {
 // Optimization mostly for large splom traces where
 // Plots.supplyDefaults can take > 100ms
 function axRangeSupplyDefaultsByPass(gd?: any, flags?: any, specs?: any): boolean {
-    var fullLayout = gd._fullLayout;
+    const fullLayout = gd._fullLayout;
 
     if (!flags.axrange) return false;
 
-    for (var k in flags) {
+    for (const k in flags) {
         if (k !== 'axrange' && flags[k]) return false;
     }
 
-    var axIn, axOut;
-    var coerce = function (attr?: any, dflt?: any) {
+    let axIn, axOut;
+    const coerce = function (attr?: any, dflt?: any) {
         return Lib.coerce(axIn, axOut, cartesianLayoutAttributes, attr, dflt);
     };
 
-    var options = {}; // passing empty options for now!
+    const options = {}; // passing empty options for now!
 
-    for (var axId in specs.rangesAltered) {
-        var axName = Axes.id2name(axId);
+    for (const axId in specs.rangesAltered) {
+        const axName = Axes.id2name(axId);
         axIn = gd.layout[axName];
         axOut = fullLayout[axName];
 
         handleRangeDefaults(axIn, axOut, coerce, options);
 
         if (axOut._matchGroup) {
-            for (var axId2 in axOut._matchGroup) {
+            for (const axId2 in axOut._matchGroup) {
                 if (axId2 !== axId) {
-                    var ax2 = fullLayout[Axes.id2name(axId2)];
+                    const ax2 = fullLayout[Axes.id2name(axId2)];
                     ax2.autorange = axOut.autorange;
                     ax2.range = axOut.range.slice();
                     ax2._input.range = axOut.range.slice();
@@ -1872,13 +1872,13 @@ function addAxRangeSequence(seq?: any, rangesAltered?: any): void {
     // N.B. leave as sequence of subroutines (for now) instead of
     // subroutine of its own so that finalDraw always gets
     // executed after drawData
-    var drawAxes = rangesAltered
+    const drawAxes = rangesAltered
         ? function (gd?: any) {
-              var axIds = [];
-              var skipTitle = true;
+              const axIds = [];
+              const skipTitle = true;
 
-              for (var id in rangesAltered) {
-                  var ax: any = Axes.getFromId(gd, id);
+              for (const id in rangesAltered) {
+                  const ax: any = Axes.getFromId(gd, id);
                   axIds.push(id);
 
                   if ((ax.ticklabelposition || '').indexOf('inside') !== -1) {
@@ -1888,7 +1888,7 @@ function addAxRangeSequence(seq?: any, rangesAltered?: any): void {
                   }
 
                   if (ax._matchGroup) {
-                      for (var id2 in ax._matchGroup) {
+                      for (const id2 in ax._matchGroup) {
                           if (!rangesAltered[id2]) {
                               axIds.push(id2);
                           }
@@ -1911,21 +1911,21 @@ function addAxRangeSequence(seq?: any, rangesAltered?: any): void {
     );
 }
 
-var AX_RANGE_RE = /^[xyz]axis[0-9]*\.range(\[[0|1]\])?$/;
-var AX_AUTORANGE_RE = /^[xyz]axis[0-9]*\.autorange$/;
-var AX_DOMAIN_RE = /^[xyz]axis[0-9]*\.domain(\[[0|1]\])?$/;
+const AX_RANGE_RE = /^[xyz]axis[0-9]*\.range(\[[0|1]\])?$/;
+const AX_AUTORANGE_RE = /^[xyz]axis[0-9]*\.autorange$/;
+const AX_DOMAIN_RE = /^[xyz]axis[0-9]*\.domain(\[[0|1]\])?$/;
 
 function _relayout(gd?: any, aobj?: any): any {
-    var layout = gd.layout;
-    var fullLayout = gd._fullLayout;
-    var guiEditFlag = fullLayout._guiEditing;
-    var layoutNP = makeNP(fullLayout._preGUI, guiEditFlag);
-    var keys = Object.keys(aobj);
-    var axes = Axes.list(gd);
-    var eventData = extendDeepAll({}, aobj);
-    var arrayEdits: any = {};
+    const layout = gd.layout;
+    const fullLayout = gd._fullLayout;
+    const guiEditFlag = fullLayout._guiEditing;
+    const layoutNP = makeNP(fullLayout._preGUI, guiEditFlag);
+    let keys = Object.keys(aobj);
+    const axes = Axes.list(gd);
+    const eventData = extendDeepAll({}, aobj);
+    const arrayEdits: any = {};
 
-    var arrayStr, i, j;
+    let arrayStr, i, j;
 
     keys = Object.keys(aobj);
 
@@ -1934,9 +1934,9 @@ function _relayout(gd?: any, aobj?: any): any {
     for (i = 0; i < keys.length; i++) {
         if (keys[i].indexOf('allaxes') === 0) {
             for (j = 0; j < axes.length; j++) {
-                var scene = axes[j]._id.slice(1);
-                var axisAttr = scene.indexOf('scene') !== -1 ? scene + '.' : '';
-                var newkey = keys[i].replace('allaxes', axisAttr + axes[j]._name);
+                const scene = axes[j]._id.slice(1);
+                const axisAttr = scene.indexOf('scene') !== -1 ? scene + '.' : '';
+                const newkey = keys[i].replace('allaxes', axisAttr + axes[j]._name);
 
                 if (!aobj[newkey]) aobj[newkey] = aobj[keys[i]];
             }
@@ -1946,12 +1946,12 @@ function _relayout(gd?: any, aobj?: any): any {
     }
 
     // initialize flags
-    var flags: any = editTypes.layoutFlags();
+    const flags: any = editTypes.layoutFlags();
 
     // copies of the change (and previous values of anything affected)
     // for the undo / redo queue
-    var redoit: any = {};
-    var undoit: any = {};
+    const redoit: any = {};
+    const undoit: any = {};
 
     // for attrs that interact (like scales & autoscales), save the
     // old vals before making the change
@@ -1969,7 +1969,7 @@ function _relayout(gd?: any, aobj?: any): any {
         // via a parent) do not override with this auto-generated extra
         if (attr in aobj || helpers.hasParent(aobj, attr)) return;
 
-        var p = layoutNP(layout, attr);
+        const p = layoutNP(layout, attr);
         if (!(attr in undoit)) {
             undoit[attr] = undefinedToNull(p.get());
         }
@@ -1979,36 +1979,36 @@ function _relayout(gd?: any, aobj?: any): any {
     // for constraint enforcement: keep track of all axes (as {id: name})
     // we're editing the (auto)range of, so we can tell the others constrained
     // to scale with them that it's OK for them to shrink
-    var rangesAltered: any = {};
-    var ax;
+    const rangesAltered: any = {};
+    let ax;
 
     function recordAlteredAxis(pleafPlus?: any) {
-        var axId = Axes.name2id(pleafPlus.split('.')[0]);
+        const axId = Axes.name2id(pleafPlus.split('.')[0]);
         rangesAltered[axId] = 1;
         return axId;
     }
 
     // alter gd.layout
-    for (var ai in aobj) {
+    for (const ai in aobj) {
         if (helpers.hasParent(aobj, ai)) {
             throw new Error('cannot set ' + ai + ' and a parent attribute simultaneously');
         }
 
-        var p = layoutNP(layout, ai);
-        var vi = aobj[ai];
-        var plen = p.parts.length;
+        const p = layoutNP(layout, ai);
+        const vi = aobj[ai];
+        const plen = p.parts.length;
         // p.parts may end with an index integer if the property is an array
-        var pend = plen - 1;
+        let pend = plen - 1;
         while (pend > 0 && typeof p.parts[pend] !== 'string') pend--;
         // last property in chain (leaf node)
-        var pleaf = p.parts[pend];
+        const pleaf = p.parts[pend];
         // leaf plus immediate parent
-        var pleafPlus = p.parts[pend - 1] + '.' + pleaf;
+        const pleafPlus = p.parts[pend - 1] + '.' + pleaf;
         // trunk nodes (everything except the leaf)
-        var ptrunk = p.parts.slice(0, pend).join('.');
-        var parentIn: any = nestedProperty(gd.layout, ptrunk).get();
-        var parentFull: any = nestedProperty(fullLayout, ptrunk).get();
-        var vOld = p.get();
+        const ptrunk = p.parts.slice(0, pend).join('.');
+        const parentIn: any = nestedProperty(gd.layout, ptrunk).get();
+        const parentFull: any = nestedProperty(fullLayout, ptrunk).get();
+        const vOld = p.get();
 
         if (vi === undefined) continue;
 
@@ -2018,10 +2018,10 @@ function _relayout(gd?: any, aobj?: any): any {
         // op and has no flag.
         undoit[ai] = pleaf === 'reverse' ? vi : undefinedToNull(vOld);
 
-        var valObject: any = PlotSchema.getLayoutValObject(fullLayout, p.parts);
+        const valObject: any = PlotSchema.getLayoutValObject(fullLayout, p.parts);
 
         if (valObject && valObject.impliedEdits && vi !== null) {
-            for (var impliedKey in valObject.impliedEdits) {
+            for (const impliedKey in valObject.impliedEdits) {
                 doextra(relativeAttr(ai, impliedKey), valObject.impliedEdits[impliedKey]);
             }
         }
@@ -2037,7 +2037,7 @@ function _relayout(gd?: any, aobj?: any): any {
                 // currently we don't support autosize one dim only - so
                 // explicitly set the other one. Note that doextra will
                 // ignore this if the same relayout call also provides oppositeAttr
-                var oppositeAttr = ai === 'height' ? 'width' : 'height';
+                const oppositeAttr = ai === 'height' ? 'width' : 'height';
                 doextra(oppositeAttr, fullLayout[oppositeAttr]);
             } else {
                 fullLayout[ai] = gd._initialAutoSize[ai];
@@ -2054,7 +2054,7 @@ function _relayout(gd?: any, aobj?: any): any {
         } else if (pleafPlus.match(AX_AUTORANGE_RE)) {
             recordAlteredAxis(pleafPlus);
             nestedProperty(fullLayout, ptrunk + '._inputRange').set(null);
-            var axFull = nestedProperty(fullLayout, ptrunk).get();
+            const axFull = nestedProperty(fullLayout, ptrunk).get();
             if (axFull._inputDomain) {
                 // if we're autoranging and this axis has a constrained domain,
                 // reset it so we don't get locked into a shrunken size
@@ -2071,8 +2071,8 @@ function _relayout(gd?: any, aobj?: any): any {
         // for log <-> linear
         if (pleaf === 'type') {
             ax = parentIn;
-            var toLog = parentFull.type === 'linear' && vi === 'log';
-            var fromLog = parentFull.type === 'log' && vi === 'linear';
+            const toLog = parentFull.type === 'linear' && vi === 'log';
+            const fromLog = parentFull.type === 'log' && vi === 'linear';
 
             if (toLog || fromLog) {
                 if (!ax || !ax.range) {
@@ -2083,8 +2083,8 @@ function _relayout(gd?: any, aobj?: any): any {
                 } else if (!parentFull.autorange) {
                     // toggling log without autorange: need to also recalculate ranges
                     // because log axes use linearized values for range endpoints
-                    var r0 = ax.range[0];
-                    var r1 = ax.range[1];
+                    let r0 = ax.range[0];
+                    let r1 = ax.range[1];
                     if (toLog) {
                         // if both limits are negative, autorange
                         if (r0 <= 0 && r1 <= 0) {
@@ -2129,8 +2129,8 @@ function _relayout(gd?: any, aobj?: any): any {
             }
             nestedProperty(fullLayout, ptrunk + '._inputRange').set(null);
         } else if (pleaf.match(AX_NAME_PATTERN)) {
-            var fullProp = nestedProperty(fullLayout, ai).get();
-            var newType = (vi || {}).type;
+            const fullProp = nestedProperty(fullLayout, ai).get();
+            let newType = (vi || {}).type;
 
             // This can potentially cause strange behavior if the autotype is not
             // numeric (linear, because we don't auto-log) but the previous type
@@ -2146,12 +2146,12 @@ function _relayout(gd?: any, aobj?: any): any {
         // so we can ensure consistent behavior adding/removing items
         // and order-independence for add/remove/edit all together in
         // one relayout call
-        var containerArrayMatch = manageArrays.containerArrayMatch(ai);
+        const containerArrayMatch = manageArrays.containerArrayMatch(ai);
         if (containerArrayMatch) {
             arrayStr = containerArrayMatch.array;
             i = containerArrayMatch.index;
-            var propStr = containerArrayMatch.property;
-            var updateValObject = valObject || { editType: 'calc' };
+            const propStr = containerArrayMatch.property;
+            const updateValObject = valObject || { editType: 'calc' };
 
             if (i !== '' && propStr === '') {
                 // special handling of undoit if we're adding or removing an element
@@ -2169,7 +2169,7 @@ function _relayout(gd?: any, aobj?: any): any {
 
             // prepare the edits object we'll send to applyContainerArrayChanges
             if (!arrayEdits[arrayStr]) arrayEdits[arrayStr] = {};
-            var objEdits = arrayEdits[arrayStr][i];
+            let objEdits = arrayEdits[arrayStr][i];
             if (!objEdits) objEdits = arrayEdits[arrayStr][i] = {};
             objEdits[propStr] = vi;
 
@@ -2205,7 +2205,7 @@ function _relayout(gd?: any, aobj?: any): any {
 
     // now we've collected component edits - execute them all together
     for (arrayStr in arrayEdits) {
-        var finished = manageArrays.applyContainerArrayChanges(
+        const finished = manageArrays.applyContainerArrayChanges(
             gd,
             layoutNP(layout, arrayStr),
             arrayEdits[arrayStr],
@@ -2216,9 +2216,9 @@ function _relayout(gd?: any, aobj?: any): any {
     }
 
     // figure out if we need to recalculate axis constraints
-    for (var axId in rangesAltered) {
+    for (const axId in rangesAltered) {
         ax = Axes.getFromId(gd, axId);
-        var group = ax && ax._constraintGroup;
+        const group = ax && ax._constraintGroup;
         if (group) {
             // Always recalc if we're changing constrained ranges.
             // Otherwise it's possible to violate the constraints by
@@ -2226,7 +2226,7 @@ function _relayout(gd?: any, aobj?: any): any {
             // this way some ranges may expand beyond what's specified,
             // as they do at first draw, to satisfy the constraints.
             flags.calc = true;
-            for (var groupAxId in group) {
+            for (const groupAxId in group) {
                 if (!rangesAltered[groupAxId]) {
                     Axes.getFromId(gd, groupAxId)._constraintShrinkable = true;
                 }
@@ -2241,7 +2241,7 @@ function _relayout(gd?: any, aobj?: any): any {
     if (updateAutosize(gd) || aobj.height || aobj.width) flags.plot = true;
 
     // update shape legends
-    var shapes = fullLayout.shapes;
+    const shapes = fullLayout.shapes;
     for (i = 0; i < shapes.length; i++) {
         if (shapes[i].showlegend) {
             flags.calc = true;
@@ -2271,9 +2271,9 @@ function _relayout(gd?: any, aobj?: any): any {
  * returns true if either height or width changed
  */
 function updateAutosize(gd?: any): boolean {
-    var fullLayout = gd._fullLayout;
-    var oldWidth = fullLayout.width;
-    var oldHeight = fullLayout.height;
+    const fullLayout = gd._fullLayout;
+    const oldWidth = fullLayout.width;
+    const oldHeight = fullLayout.height;
 
     // calculate autosizing
     if (gd.layout.autosize) plotAutoSize(gd, gd.layout, fullLayout);
@@ -2306,20 +2306,20 @@ function update(gd?: any, traceUpdate?: any, layoutUpdate?: any, _traces?: any):
     if (Object.keys(traceUpdate).length) gd.changed = true;
     if (Object.keys(layoutUpdate).length) gd.changed = true;
 
-    var traces = helpers.coerceTraceIndices(gd, _traces);
+    const traces = helpers.coerceTraceIndices(gd, _traces);
 
-    var restyleSpecs = _restyle(gd, extendFlat({}, traceUpdate), traces);
-    var restyleFlags = restyleSpecs.flags;
+    const restyleSpecs = _restyle(gd, extendFlat({}, traceUpdate), traces);
+    const restyleFlags = restyleSpecs.flags;
 
-    var relayoutSpecs = _relayout(gd, extendFlat({}, layoutUpdate));
-    var relayoutFlags: any = relayoutSpecs.flags;
+    const relayoutSpecs = _relayout(gd, extendFlat({}, layoutUpdate));
+    const relayoutFlags: any = relayoutSpecs.flags;
 
     // clear calcdata and/or axis types if required
     if (restyleFlags.calc || relayoutFlags.calc) gd.calcdata = undefined;
     if (restyleFlags.clearAxisTypes) helpers.clearAxisTypes(gd, traces, layoutUpdate);
 
     // fill in redraw sequence
-    var seq = [];
+    const seq = [];
 
     if (relayoutFlags.layoutReplot) {
         // N.B. works fine when both
@@ -2352,7 +2352,7 @@ function update(gd?: any, traceUpdate?: any, layoutUpdate?: any, _traces?: any):
         restyleSpecs.traces
     ]);
 
-    var plotDone = syncOrAsync(seq, gd);
+    let plotDone = syncOrAsync(seq, gd);
     if (!plotDone || !plotDone.then) plotDone = Promise.resolve(gd);
 
     return plotDone.then(function () {
@@ -2373,7 +2373,7 @@ function update(gd?: any, traceUpdate?: any, layoutUpdate?: any, _traces?: any):
 function guiEdit(func?: any): any {
     return function wrappedEdit(gd?: any) {
         gd._fullLayout._guiEditing = true;
-        var p = func.apply(null, arguments);
+        const p = func.apply(null, arguments);
         gd._fullLayout._guiEditing = false;
         return p;
     };
@@ -2382,7 +2382,7 @@ function guiEdit(func?: any): any {
 // For connecting edited layout attributes to uirevision attrs
 // If no `attr` we use `match[1] + '.uirevision'`
 // Ordered by most common edits first, to minimize our search time
-var layoutUIControlPatterns = [
+const layoutUIControlPatterns = [
     { pattern: /^hiddenlabels/, attr: 'legend.uirevision' },
     { pattern: /^((x|y)axis\d*)\.((auto)?range|title\.text)/ },
 
@@ -2405,7 +2405,7 @@ var layoutUIControlPatterns = [
 
 // same for trace attributes: if `attr` is given it's in layout,
 // or with no `attr` we use `trace.uirevision`
-var traceUIControlPatterns = [
+const traceUIControlPatterns = [
     { pattern: /^selectedpoints$/, attr: 'selectionrevision' },
     // "visible" includes trace.transforms[i].styles[j].value.visible
     { pattern: /(^|value\.)visible$/, attr: 'legend.uirevision' },
@@ -2426,11 +2426,11 @@ var traceUIControlPatterns = [
 ];
 
 function findUIPattern(key?: any, patternSpecs?: any): any {
-    for (var i = 0; i < patternSpecs.length; i++) {
-        var spec = patternSpecs[i];
-        var match = key.match(spec.pattern);
+    for (let i = 0; i < patternSpecs.length; i++) {
+        const spec = patternSpecs[i];
+        const match = key.match(spec.pattern);
         if (match) {
-            var head = match[1] || '';
+            const head = match[1] || '';
             return { head: head, tail: key.slice(head.length + 1), attr: spec.attr };
         }
     }
@@ -2440,10 +2440,10 @@ function findUIPattern(key?: any, patternSpecs?: any): any {
 // inheritance manually. Note that only `undefined` inherits - other
 // falsy values are returned.
 function getNewRev(revAttr?: any, container?: any): any {
-    var newRev = nestedProperty(container, revAttr).get();
+    let newRev = nestedProperty(container, revAttr).get();
     if (newRev !== undefined) return newRev;
 
-    var parts = revAttr.split('.');
+    const parts = revAttr.split('.');
     parts.pop();
     while (parts.length > 1) {
         parts.pop();
@@ -2455,14 +2455,14 @@ function getNewRev(revAttr?: any, container?: any): any {
 }
 
 function getFullTraceIndexFromUid(uid?: any, fullData?: any): number {
-    for (var i = 0; i < fullData.length; i++) {
+    for (let i = 0; i < fullData.length; i++) {
         if (fullData[i]._fullInput.uid === uid) return i;
     }
     return -1;
 }
 
 function getTraceIndexFromUid(uid?: any, data?: any, tracei?: any): any {
-    for (var i = 0; i < data.length; i++) {
+    for (let i = 0; i < data.length; i++) {
         if (data[i].uid === uid) return i;
     }
     // fall back on trace order, but only if user didn't provide a uid for that trace
@@ -2470,8 +2470,8 @@ function getTraceIndexFromUid(uid?: any, data?: any, tracei?: any): any {
 }
 
 function valsMatch(v1?: any, v2?: any): boolean {
-    var v1IsObj = isPlainObject(v1);
-    var v1IsArray = Array.isArray(v1);
+    const v1IsObj = isPlainObject(v1);
+    const v1IsArray = Array.isArray(v1);
     if (v1IsObj || v1IsArray) {
         return (
             ((v1IsObj && isPlainObject(v2)) || (v1IsArray && Array.isArray(v2))) &&
@@ -2482,11 +2482,11 @@ function valsMatch(v1?: any, v2?: any): boolean {
 }
 
 function applyUIRevisions(data?: any, layout?: any, oldFullData?: any, oldFullLayout?: any): any {
-    var layoutPreGUI = oldFullLayout._preGUI;
-    var key, revAttr, oldRev, newRev, match, preGUIVal, newNP, newVal, head, tail;
-    var bothInheritAutorange = [];
-    var newAutorangeIn: any = {};
-    var newRangeAccepted: any = {};
+    const layoutPreGUI = oldFullLayout._preGUI;
+    let key, revAttr, oldRev, newRev, match, preGUIVal, newNP, newVal, head, tail;
+    const bothInheritAutorange = [];
+    const newAutorangeIn: any = {};
+    const newRangeAccepted: any = {};
     for (key in layoutPreGUI) {
         match = findUIPattern(key, layoutUIControlPatterns);
         if (match) {
@@ -2511,14 +2511,14 @@ function applyUIRevisions(data?: any, layout?: any, oldFullData?: any, oldFullLa
                 } else if (tail === 'autorange' || tail.slice(0, 6) === 'range[') {
                     // Special case for (auto)range since we push it back into the layout
                     // so all null should be treated equivalently to autorange: true with any range
-                    var pre0 = layoutPreGUI[head + '.range[0]'];
-                    var pre1 = layoutPreGUI[head + '.range[1]'];
-                    var preAuto = layoutPreGUI[head + '.autorange'];
+                    const pre0 = layoutPreGUI[head + '.range[0]'];
+                    const pre1 = layoutPreGUI[head + '.range[1]'];
+                    const preAuto = layoutPreGUI[head + '.autorange'];
                     if (preAuto || (preAuto === null && pre0 === null && pre1 === null)) {
                         // Only read the input layout once and stash the result,
                         // so we get it before we start modifying it
                         if (!(head in newAutorangeIn)) {
-                            var newContainer: any = nestedProperty(layout, head).get();
+                            const newContainer: any = nestedProperty(layout, head).get();
                             newAutorangeIn[head] =
                                 newContainer &&
                                 (newContainer.autorange ||
@@ -2549,36 +2549,36 @@ function applyUIRevisions(data?: any, layout?: any, oldFullData?: any, oldFullLa
     // If the new figure's matching `range` was kept, and `autorange`
     // wasn't supplied explicitly in either the original or the new figure,
     // we shouldn't alter that - but we may just have done that, so fix it.
-    for (var i = 0; i < bothInheritAutorange.length; i++) {
-        var axAttr = bothInheritAutorange[i];
+    for (let i = 0; i < bothInheritAutorange.length; i++) {
+        const axAttr = bothInheritAutorange[i];
         if (newRangeAccepted[axAttr]) {
-            var newAx = nestedProperty(layout, axAttr).get();
+            const newAx = nestedProperty(layout, axAttr).get();
             if (newAx) delete newAx.autorange;
         }
     }
 
     // Now traces - try to match them up by uid (in case we added/deleted in
     // the middle), then fall back on index.
-    var allTracePreGUI = oldFullLayout._tracePreGUI;
-    for (var uid in allTracePreGUI) {
-        var tracePreGUI = allTracePreGUI[uid];
-        var newTrace = null;
-        var fullInput;
+    const allTracePreGUI = oldFullLayout._tracePreGUI;
+    for (const uid in allTracePreGUI) {
+        const tracePreGUI = allTracePreGUI[uid];
+        let newTrace = null;
+        let fullInput;
         for (key in tracePreGUI) {
             // wait until we know we have preGUI values to look for traces
             // but if we don't find both, stop looking at this uid
             if (!newTrace) {
-                var fulli = getFullTraceIndexFromUid(uid, oldFullData);
+                const fulli = getFullTraceIndexFromUid(uid, oldFullData);
                 if (fulli < 0) {
                     // Somehow we didn't even have this trace in oldFullData...
                     // I guess this could happen with `deleteTraces` or something
                     delete allTracePreGUI[uid];
                     break;
                 }
-                var fullTrace = oldFullData[fulli];
+                const fullTrace = oldFullData[fulli];
                 fullInput = fullTrace._fullInput;
 
-                var newTracei = getTraceIndexFromUid(uid, data, fullInput.index);
+                const newTracei = getTraceIndexFromUid(uid, data, fullInput.index);
                 if (newTracei < 0) {
                     // No match in new data
                     delete allTracePreGUI[uid];
@@ -2641,7 +2641,8 @@ function applyUIRevisions(data?: any, layout?: any, oldFullData?: any, oldFullLa
  *
  */
 function react(gd?: any, data?: any, layout?: any, config?: any): void {
-    var frames, plotDone;
+    let frames, plotDone;
+    let configChanged = false;
 
     function addFrames(..._args: any[]): any {
         return addFrames(gd, frames);
@@ -2650,22 +2651,20 @@ function react(gd?: any, data?: any, layout?: any, config?: any): void {
     gd = getGraphDiv(gd);
     helpers.clearPromiseQueue(gd);
 
-    var oldFullData = gd._fullData;
-    var oldFullLayout = gd._fullLayout;
+    const oldFullData = gd._fullData;
+    const oldFullLayout = gd._fullLayout;
 
     // you can use this as the initial draw as well as to update
     if (!isPlotDiv(gd) || !oldFullData || !oldFullLayout) {
         plotDone = newPlot(gd, data, layout, config);
     } else {
         if (isPlainObject(data)) {
-            var obj = data;
+            const obj = data;
             data = obj.data;
             layout = obj.layout;
             config = obj.config;
             frames = obj.frames;
         }
-
-        var configChanged = false;
         // assume that if there's a config at all, we're reacting to it too,
         // and completely replace the previous config
         if (config) {
@@ -2699,14 +2698,14 @@ function react(gd?: any, data?: any, layout?: any, config?: any): void {
             // if the diff (which we haven't determined yet) says we'll recalc
             supplyDefaults(gd, { skipUpdateCalc: true });
 
-            var newFullData = gd._fullData;
-            var newFullLayout = gd._fullLayout;
-            var immutable = newFullLayout.datarevision === undefined;
-            var transition = newFullLayout.transition;
+            const newFullData = gd._fullData;
+            const newFullLayout = gd._fullLayout;
+            const immutable = newFullLayout.datarevision === undefined;
+            const transition = newFullLayout.transition;
 
-            var relayoutFlags: any = diffLayout(gd, oldFullLayout, newFullLayout, immutable, transition);
-            var newDataRevision = relayoutFlags.newDataRevision;
-            var restyleFlags = diffData(gd, oldFullData, newFullData, immutable, transition, newDataRevision);
+            const relayoutFlags: any = diffLayout(gd, oldFullLayout, newFullLayout, immutable, transition);
+            const newDataRevision = relayoutFlags.newDataRevision;
+            const restyleFlags = diffData(gd, oldFullData, newFullData, immutable, transition, newDataRevision);
 
             // TODO: how to translate this part of relayout to Plotly.react?
             // // Setting width or height to null must reset the graph's width / height
@@ -2722,12 +2721,12 @@ function react(gd?: any, data?: any, layout?: any, config?: any): void {
             // clear calcdata and empty categories if required
             if (restyleFlags.calc || relayoutFlags.calc) {
                 gd.calcdata = undefined;
-                var allNames = Object.getOwnPropertyNames(newFullLayout);
-                for (var q = 0; q < allNames.length; q++) {
-                    var name = allNames[q];
-                    var start = name.substring(0, 5);
+                const allNames = Object.getOwnPropertyNames(newFullLayout);
+                for (let q = 0; q < allNames.length; q++) {
+                    const name = allNames[q];
+                    const start = name.substring(0, 5);
                     if (start === 'xaxis' || start === 'yaxis') {
-                        var emptyCategories = newFullLayout[name]._emptyCategories;
+                        const emptyCategories = newFullLayout[name]._emptyCategories;
                         if (emptyCategories) emptyCategories();
                     }
                 }
@@ -2740,7 +2739,7 @@ function react(gd?: any, data?: any, layout?: any, config?: any): void {
             // must be handled by the user when using Plotly.react.
 
             // fill in redraw sequence
-            var seq = [];
+            const seq = [];
 
             if (frames) {
                 gd._transitionData = {};
@@ -2765,16 +2764,16 @@ function react(gd?: any, data?: any, layout?: any, config?: any): void {
                 gd._fullLayout._skipDefaults = true;
                 seq.push(_doPlot);
             } else {
-                for (var componentType in relayoutFlags.arrays) {
-                    var indices = relayoutFlags.arrays[componentType];
+                for (const componentType in relayoutFlags.arrays) {
+                    const indices = relayoutFlags.arrays[componentType];
                     if (indices.length) {
-                        var drawOne = Registry.getComponentMethod(componentType, 'drawOne');
+                        const drawOne = Registry.getComponentMethod(componentType, 'drawOne');
                         if (drawOne !== noop) {
-                            for (var i = 0; i < indices.length; i++) {
+                            for (let i = 0; i < indices.length; i++) {
                                 drawOne(gd, indices[i]);
                             }
                         } else {
-                            var draw = Registry.getComponentMethod(componentType, 'draw');
+                            const draw = Registry.getComponentMethod(componentType, 'draw');
                             if (draw === noop) {
                                 throw new Error('cannot draw components: ' + componentType);
                             }
@@ -2810,7 +2809,7 @@ function react(gd?: any, data?: any, layout?: any, config?: any): void {
 }
 
 function diffData(gd?: any, oldFullData?: any, newFullData?: any, immutable?: any, transition?: any, newDataRevision?: any): any {
-    var sameTraceLength = oldFullData.length === newFullData.length;
+    const sameTraceLength = oldFullData.length === newFullData.length;
 
     if (!transition && !sameTraceLength) {
         return {
@@ -2819,22 +2818,22 @@ function diffData(gd?: any, oldFullData?: any, newFullData?: any, immutable?: an
         };
     }
 
-    var flags: any = editTypes.traceFlags();
+    const flags: any = editTypes.traceFlags();
     flags.arrays = {};
     flags.nChanges = 0;
     flags.nChangesAnim = 0;
 
-    var i, trace;
+    let i, trace;
 
     function getTraceValObject(parts?: any) {
-        var out: any = PlotSchema.getTraceValObject(trace, parts);
+        const out: any = PlotSchema.getTraceValObject(trace, parts);
         if (!trace._module.animatable && out.anim) {
             out.anim = false;
         }
         return out;
     }
 
-    var diffOpts = {
+    const diffOpts = {
         getValObject: getTraceValObject,
         flags: flags,
         immutable: immutable,
@@ -2843,7 +2842,7 @@ function diffData(gd?: any, oldFullData?: any, newFullData?: any, immutable?: an
         gd: gd
     };
 
-    var seenUIDs: any = {};
+    const seenUIDs: any = {};
 
     for (i = 0; i < oldFullData.length; i++) {
         if (newFullData[i]) {
@@ -2867,7 +2866,7 @@ function diffData(gd?: any, oldFullData?: any, newFullData?: any, immutable?: an
 }
 
 function diffLayout(gd?: any, oldFullLayout?: any, newFullLayout?: any, immutable?: any, transition?: any): any {
-    var flags: any = editTypes.layoutFlags();
+    const flags: any = editTypes.layoutFlags();
     flags.arrays = {};
     flags.rangesAltered = {};
     flags.nChanges = 0;
@@ -2878,16 +2877,16 @@ function diffLayout(gd?: any, oldFullLayout?: any, newFullLayout?: any, immutabl
     }
 
     // Clear out any _inputDomain that's no longer valid
-    for (var key in newFullLayout) {
+    for (const key in newFullLayout) {
         if (!key.startsWith('xaxis') && !key.startsWith('yaxis')) {
             continue;
         }
         if (!oldFullLayout[key]) {
             continue;
         }
-        var newDomain = newFullLayout[key].domain;
-        var oldDomain = oldFullLayout[key].domain;
-        var oldInputDomain = oldFullLayout[key]._inputDomain;
+        const newDomain = newFullLayout[key].domain;
+        const oldDomain = oldFullLayout[key].domain;
+        const oldInputDomain = oldFullLayout[key]._inputDomain;
         if (oldFullLayout[key]._inputDomain) {
             if (newDomain[0] === oldInputDomain[0] && newDomain[1] === oldInputDomain[1]) {
                 // what you're asking for hasn't changed, so let plotly.js start with what it
@@ -2903,7 +2902,7 @@ function diffLayout(gd?: any, oldFullLayout?: any, newFullLayout?: any, immutabl
         }
     }
 
-    var diffOpts = {
+    const diffOpts = {
         getValObject: getLayoutValObject,
         flags: flags,
         immutable: immutable,
@@ -2925,16 +2924,16 @@ function diffLayout(gd?: any, oldFullLayout?: any, newFullLayout?: any, immutabl
 }
 
 function getDiffFlags(oldContainer?: any, newContainer?: any, outerparts?: any, opts?: any): void {
-    var valObject, key, astr;
+    let valObject, key, astr;
 
-    var getValObject = opts.getValObject;
-    var flags: any = opts.flags;
-    var immutable = opts.immutable;
-    var inArray = opts.inArray;
-    var arrayIndex = opts.arrayIndex;
+    const getValObject = opts.getValObject;
+    const flags: any = opts.flags;
+    const immutable = opts.immutable;
+    const inArray = opts.inArray;
+    const arrayIndex = opts.arrayIndex;
 
     function changed() {
-        var editType = valObject.editType;
+        const editType = valObject.editType;
         if (inArray && editType.indexOf('arraydraw') !== -1) {
             pushUnique(flags.arrays[inArray], arrayIndex);
             return;
@@ -2969,9 +2968,9 @@ function getDiffFlags(oldContainer?: any, newContainer?: any, outerparts?: any, 
         // short-circuit based on previous calls or previous keys that already maximized the pathway
         if (flags.calc && !opts.transition) return;
 
-        var oldVal = oldContainer[key];
-        var newVal = newContainer[key];
-        var parts = outerparts.concat(key);
+        const oldVal = oldContainer[key];
+        const newVal = newContainer[key];
+        const parts = outerparts.concat(key);
         astr = parts.join('.');
 
         if (key.charAt(0) === '_' || typeof oldVal === 'function' || oldVal === newVal) continue;
@@ -2980,7 +2979,7 @@ function getDiffFlags(oldContainer?: any, newContainer?: any, outerparts?: any, 
         // and unlike other auto values they don't make it back into the input,
         // so newContainer won't have them.
         if ((key === 'tick0' || key === 'dtick') && outerparts[0] !== 'geo') {
-            var tickMode = newContainer.tickmode;
+            const tickMode = newContainer.tickmode;
             if (tickMode === 'auto' || tickMode === 'array' || !tickMode) continue;
         }
         // FIXME: Similarly for axis ranges for 3D
@@ -2995,19 +2994,19 @@ function getDiffFlags(oldContainer?: any, newContainer?: any, outerparts?: any, 
 
         if (valObject._compareAsJSON && JSON.stringify(oldVal) === JSON.stringify(newVal)) continue;
 
-        var valType = valObject.valType;
-        var i;
+        const valType = valObject.valType;
+        let i;
 
-        var canBeDataArray = valObjectCanBeDataArray(valObject);
-        var wasArray = Array.isArray(oldVal);
-        var nowArray = Array.isArray(newVal);
+        const canBeDataArray = valObjectCanBeDataArray(valObject);
+        const wasArray = Array.isArray(oldVal);
+        const nowArray = Array.isArray(newVal);
 
         // hack for traces that modify the data in supplyDefaults, like
         // converting 1D to 2D arrays, which will always create new objects
         if (wasArray && nowArray) {
-            var inputKey = '_input_' + key;
-            var oldValIn = oldContainer[inputKey];
-            var newValIn = newContainer[inputKey];
+            const inputKey = '_input_' + key;
+            const oldValIn = oldContainer[inputKey];
+            const newValIn = newContainer[inputKey];
             if (Array.isArray(oldValIn) && oldValIn === newValIn) continue;
         }
 
@@ -3015,12 +3014,12 @@ function getDiffFlags(oldContainer?: any, newContainer?: any, outerparts?: any, 
             if (canBeDataArray && wasArray) flags.calc = true;
             else changed();
         } else if (valObject._isLinkedToArray) {
-            var arrayEditIndices = [];
-            var extraIndices = false;
+            const arrayEditIndices = [];
+            let extraIndices = false;
             if (!inArray) flags.arrays[key] = arrayEditIndices;
 
-            var minLen = Math.min(oldVal.length, newVal.length);
-            var maxLen = Math.max(oldVal.length, newVal.length);
+            const minLen = Math.min(oldVal.length, newVal.length);
+            const maxLen = Math.max(oldVal.length, newVal.length);
             if (minLen !== maxLen) {
                 if (valObject.editType === 'arraydraw') {
                     extraIndices = true;
@@ -3130,7 +3129,7 @@ function animate(gd?: any, frameOrGroupNameOrFrameList?: any, animationOpts?: an
         );
     }
 
-    var trans: any = gd._transitionData;
+    const trans: any = gd._transitionData;
 
     // This is the queue of frames that will be animated as soon as possible. They
     // are popped immediately upon the *start* of a transition:
@@ -3139,8 +3138,8 @@ function animate(gd?: any, frameOrGroupNameOrFrameList?: any, animationOpts?: an
     }
 
     animationOpts = supplyAnimationDefaults(animationOpts);
-    var transitionOpts: any = animationOpts.transition;
-    var frameOpts = animationOpts.frame;
+    const transitionOpts: any = animationOpts.transition;
+    const frameOpts = animationOpts.frame;
 
     // Since frames are popped immediately, an empty queue only means all frames have
     // *started* to transition, not that the animation is complete. To solve that,
@@ -3180,7 +3179,7 @@ function animate(gd?: any, frameOrGroupNameOrFrameList?: any, animationOpts?: an
     // condition in which the animation might resolve before a transition is complete
     // or vice versa.
     function callbackOnNthTime(cb?: any, n?: any) {
-        var cnt = 0;
+        let cnt = 0;
         return function () {
             if (cb && ++cnt === n) {
                 return cb();
@@ -3195,7 +3194,7 @@ function animate(gd?: any, frameOrGroupNameOrFrameList?: any, animationOpts?: an
             }
 
             while (trans._frameQueue.length) {
-                var next = trans._frameQueue.pop();
+                const next = trans._frameQueue.pop();
                 if (next.onInterrupt) {
                     next.onInterrupt();
                 }
@@ -3207,8 +3206,8 @@ function animate(gd?: any, frameOrGroupNameOrFrameList?: any, animationOpts?: an
         function queueFrames(frameList?: any) {
             if (frameList.length === 0) return;
 
-            for (var i = 0; i < frameList.length; i++) {
-                var computedFrame;
+            for (let i = 0; i < frameList.length; i++) {
+                let computedFrame;
 
                 if (frameList[i].type === 'byname') {
                     // If it's a named frame, compute it:
@@ -3219,14 +3218,14 @@ function animate(gd?: any, frameOrGroupNameOrFrameList?: any, animationOpts?: an
                     computedFrame = frameList[i].data;
                 }
 
-                var frameOpts = getFrameOpts(i);
-                var transitionOpts: any = getTransitionOpts(i);
+                const frameOpts = getFrameOpts(i);
+                const transitionOpts: any = getTransitionOpts(i);
 
                 // It doesn't make much sense for the transition duration to be greater than
                 // the frame duration, so limit it:
                 transitionOpts.duration = Math.min(transitionOpts.duration, frameOpts.duration);
 
-                var nextFrame: any = {
+                const nextFrame: any = {
                     frame: computedFrame,
                     name: frameList[i].name,
                     frameOpts: frameOpts,
@@ -3278,13 +3277,13 @@ function animate(gd?: any, frameOrGroupNameOrFrameList?: any, animationOpts?: an
                 trans._currentFrame.onComplete();
             }
 
-            var newFrame = (trans._currentFrame = trans._frameQueue.shift());
+            const newFrame = (trans._currentFrame = trans._frameQueue.shift());
 
             if (newFrame) {
                 // Since it's sometimes necessary to do deep digging into frame data,
                 // we'll consider it not 100% impossible for nulls or numbers to sneak through,
                 // so check when casting the name, just to be absolutely certain:
-                var stringName = newFrame.name ? newFrame.name.toString() : null;
+                const stringName = newFrame.name ? newFrame.name.toString() : null;
                 gd._fullLayout._currentFrame = stringName;
 
                 trans._lastFrameAt = Date.now();
@@ -3330,7 +3329,7 @@ function animate(gd?: any, frameOrGroupNameOrFrameList?: any, animationOpts?: an
             trans._runningTransitions = 0;
             trans._currentFrame = null;
 
-            var doFrame = function () {
+            const doFrame = function () {
                 // This *must* be requested before nextFrame since nextFrame may decide
                 // to cancel it if there's nothing more to animated:
                 trans._animationRaf = window.requestAnimationFrame(doFrame);
@@ -3346,7 +3345,7 @@ function animate(gd?: any, frameOrGroupNameOrFrameList?: any, animationOpts?: an
 
         // This is an animate-local counter that helps match up option input list
         // items with the particular frame.
-        var configCounter = 0;
+        let configCounter = 0;
         function setTransitionConfig(frame?: any) {
             if (Array.isArray(transitionOpts)) {
                 if (configCounter >= transitionOpts.length) {
@@ -3362,11 +3361,11 @@ function animate(gd?: any, frameOrGroupNameOrFrameList?: any, animationOpts?: an
         }
 
         // Disambiguate what's sort of frames have been received
-        var i, frame;
-        var frameList: any = [];
-        var allFrames = frameOrGroupNameOrFrameList === undefined || frameOrGroupNameOrFrameList === null;
-        var isFrameArray = Array.isArray(frameOrGroupNameOrFrameList);
-        var isSingleFrame = !allFrames && !isFrameArray && isPlainObject(frameOrGroupNameOrFrameList);
+        let i, frame;
+        let frameList: any = [];
+        const allFrames = frameOrGroupNameOrFrameList === undefined || frameOrGroupNameOrFrameList === null;
+        const isFrameArray = Array.isArray(frameOrGroupNameOrFrameList);
+        const isSingleFrame = !allFrames && !isFrameArray && isPlainObject(frameOrGroupNameOrFrameList);
 
         if (isSingleFrame) {
             // In this case, a simple object has been passed to animate.
@@ -3392,7 +3391,7 @@ function animate(gd?: any, frameOrGroupNameOrFrameList?: any, animationOpts?: an
             }
         } else if (isFrameArray) {
             for (i = 0; i < frameOrGroupNameOrFrameList.length; i++) {
-                var frameOrName = frameOrGroupNameOrFrameList[i];
+                let frameOrName = frameOrGroupNameOrFrameList[i];
                 if (['number', 'string'].indexOf(typeof frameOrName) !== -1) {
                     frameOrName = String(frameOrName);
                     // In this case, there's an array and this frame is a string name:
@@ -3430,9 +3429,9 @@ function animate(gd?: any, frameOrGroupNameOrFrameList?: any, animationOpts?: an
             frameList.reverse();
         }
 
-        var currentFrame = gd._fullLayout._currentFrame;
+        const currentFrame = gd._fullLayout._currentFrame;
         if (currentFrame && animationOpts.fromcurrent) {
-            var idx = -1;
+            let idx = -1;
             for (i = 0; i < frameList.length; i++) {
                 frame = frameList[i];
                 if (frame.type === 'byname' && frame.name === currentFrame) {
@@ -3442,7 +3441,7 @@ function animate(gd?: any, frameOrGroupNameOrFrameList?: any, animationOpts?: an
             }
 
             if (idx > 0 && idx < frameList.length - 1) {
-                var filteredFrameList = [];
+                const filteredFrameList = [];
                 for (i = 0; i < frameList.length; i++) {
                     frame = frameList[i];
                     if (frameList[i].type !== 'byname' || i > idx) {
@@ -3500,9 +3499,9 @@ function addFrames(gd?: any, frameList?: any, indices?: any): any {
         );
     }
 
-    var i, frame, j, idx;
-    var _frames = gd._transitionData._frames;
-    var _frameHash = gd._transitionData._frameHash;
+    let i, frame, j, idx;
+    const _frames = gd._transitionData._frames;
+    const _frameHash = gd._transitionData._frameHash;
 
     if (!Array.isArray(frameList)) {
         throw new Error('addFrames failure: frameList must be an Array of frame definitions' + frameList);
@@ -3513,19 +3512,19 @@ function addFrames(gd?: any, frameList?: any, indices?: any): any {
     //
     // Strictly for sorting. Make sure this is guaranteed to never collide with any
     // already-exisisting indices:
-    var bigIndex = _frames.length + frameList.length * 2;
+    const bigIndex = _frames.length + frameList.length * 2;
 
-    var insertions = [];
-    var _frameHashLocal: any = {};
+    const insertions = [];
+    const _frameHashLocal: any = {};
     for (i = frameList.length - 1; i >= 0; i--) {
         if (!isPlainObject(frameList[i])) continue;
 
         // The entire logic for checking for this type of name collision can be removed once we migrate to ES6 and
         // use a Map instead of an Object instance, as Map keys aren't converted to strings.
-        var lookupName = frameList[i].name;
-        var name = (_frameHash[lookupName] || _frameHashLocal[lookupName] || {}).name;
-        var newName = frameList[i].name;
-        var collisionPresent = _frameHash[name] || _frameHashLocal[name];
+        const lookupName = frameList[i].name;
+        const name = (_frameHash[lookupName] || _frameHashLocal[lookupName] || {}).name;
+        const newName = frameList[i].name;
+        const collisionPresent = _frameHash[name] || _frameHashLocal[name];
 
         if (
             name &&
@@ -3570,9 +3569,9 @@ function addFrames(gd?: any, frameList?: any, indices?: any): any {
         return 0;
     });
 
-    var ops = [];
-    var revops = [];
-    var frameCount = _frames.length;
+    const ops = [];
+    const revops = [];
+    let frameCount = _frames.length;
 
     for (i = insertions.length - 1; i >= 0; i--) {
         frame = insertions[i].frame;
@@ -3607,10 +3606,10 @@ function addFrames(gd?: any, frameList?: any, indices?: any): any {
         }
     }
 
-    var undoFunc = modifyFrames;
-    var redoFunc = modifyFrames;
-    var undoArgs = [gd, revops];
-    var redoArgs = [gd, ops];
+    const undoFunc = modifyFrames;
+    const redoFunc = modifyFrames;
+    const undoArgs = [gd, revops];
+    const redoArgs = [gd, ops];
 
     if (Queue) Queue.add(gd, undoFunc, undoArgs, redoFunc, redoArgs);
 
@@ -3633,10 +3632,10 @@ function deleteFrames(gd?: any, frameList?: any): any {
         throw new Error('This element is not a Plotly plot: ' + gd);
     }
 
-    var i, idx;
-    var _frames = gd._transitionData._frames;
-    var ops = [];
-    var revops = [];
+    let i, idx;
+    const _frames = gd._transitionData._frames;
+    const ops = [];
+    const revops = [];
 
     if (!frameList) {
         frameList = [];
@@ -3654,10 +3653,10 @@ function deleteFrames(gd?: any, frameList?: any): any {
         revops.unshift({ type: 'insert', index: idx, value: _frames[idx] });
     }
 
-    var undoFunc = modifyFrames;
-    var redoFunc = modifyFrames;
-    var undoArgs = [gd, revops];
-    var redoArgs = [gd, ops];
+    const undoFunc = modifyFrames;
+    const redoFunc = modifyFrames;
+    const undoArgs = [gd, revops];
+    const redoArgs = [gd, ops];
 
     if (Queue) Queue.add(gd, undoFunc, undoArgs, redoFunc, redoArgs);
 
@@ -3673,8 +3672,8 @@ function deleteFrames(gd?: any, frameList?: any): any {
 function purge(gd?: any): any {
     gd = getGraphDiv(gd);
 
-    var fullLayout = gd._fullLayout || {} as FullLayout;
-    var fullData = gd._fullData || [];
+    const fullLayout = gd._fullLayout || {} as FullLayout;
+    const fullData = gd._fullData || [];
 
     // remove gl contexts
     cleanPlot([], {}, fullData, fullLayout);
@@ -3696,12 +3695,12 @@ function purge(gd?: any): any {
 
 // determines if the graph div requires a recalculation of its inverse matrix transforms by comparing old + new bounding boxes.
 function calcInverseTransform(gd?: any): void {
-    var fullLayout = gd._fullLayout;
+    const fullLayout = gd._fullLayout;
 
-    var newBBox = gd.getBoundingClientRect();
+    const newBBox = gd.getBoundingClientRect();
     if (equalDomRects(newBBox, fullLayout._lastBBox)) return;
 
-    var m = (fullLayout._invTransform = inverseTransformMatrix(getFullTransformMatrix(gd)));
+    const m = (fullLayout._invTransform = inverseTransformMatrix(getFullTransformMatrix(gd)));
     fullLayout._invScaleX = Math.sqrt(m[0][0] * m[0][0] + m[0][1] * m[0][1] + m[0][2] * m[0][2]);
     fullLayout._invScaleY = Math.sqrt(m[1][0] * m[1][0] + m[1][1] * m[1][1] + m[1][2] * m[1][2]);
     fullLayout._lastBBox = newBBox;
@@ -3711,8 +3710,8 @@ function calcInverseTransform(gd?: any): void {
 // makePlotFramework: Create the plot container and axes
 // -------------------------------------------------------
 function makePlotFramework(gd?: any): void {
-    var gd3 = select(gd);
-    var fullLayout = gd._fullLayout;
+    const gd3 = select(gd);
+    const fullLayout = gd._fullLayout;
 
     fullLayout._calcInverseTransform = calcInverseTransform;
     fullLayout._calcInverseTransform(gd);
@@ -3775,7 +3774,7 @@ function makePlotFramework(gd?: any): void {
     fullLayout._hoverpaper = fullLayout._paperdiv.append('svg').classed('main-svg', true);
 
     if (!fullLayout._uid) {
-        var otherUids: any = {};
+        const otherUids: any = {};
         selectAll('defs').each(function () {
             if (this.id) otherUids[this.id.split('-')[1]] = 1;
         });
@@ -3804,7 +3803,7 @@ function makePlotFramework(gd?: any): void {
     // lower shapes and images which are fully referenced to
     // a subplot still get drawn within the subplot's group
     // so they will work correctly on insets
-    var layerBelow = fullLayout._paper.append('g').classed('layer-below', true);
+    const layerBelow = fullLayout._paper.append('g').classed('layer-below', true);
     fullLayout._imageLowerLayer = layerBelow.append('g').classed('imagelayer', true);
     fullLayout._shapeLowerLayer = layerBelow.append('g').classed('shapelayer', true);
 
@@ -3848,7 +3847,7 @@ function makePlotFramework(gd?: any): void {
     // these are in a different svg element normally, but get collapsed into a single
     // svg when exporting (after inserting 3D)
     // upper shapes/images are only those drawn above the whole plot, including subplots
-    var layerAbove = fullLayout._toppaper.append('g').classed('layer-above', true);
+    const layerAbove = fullLayout._toppaper.append('g').classed('layer-above', true);
     fullLayout._imageUpperLayer = layerAbove.append('g').classed('imagelayer', true);
     fullLayout._shapeUpperLayer = layerAbove.append('g').classed('shapelayer', true);
 
@@ -3885,9 +3884,9 @@ export { relayout };
 export { restyle };
 export { setPlotConfig };
 export { update };
-export var _guiRelayout = guiEdit(relayout);
-export var _guiRestyle = guiEdit(restyle);
-export var _guiUpdate = guiEdit(update);
+export const _guiRelayout = guiEdit(relayout);
+export const _guiRestyle = guiEdit(restyle);
+export const _guiUpdate = guiEdit(update);
 export { _storeDirectGUIEdit };
 
 export default { _guiRelayout, _guiRestyle, _guiUpdate, animate, addFrames, deleteFrames, addTraces, deleteTraces, extendTraces, moveTraces, prependTraces, newPlot, _doPlot, purge, react, redraw, relayout, restyle, setPlotConfig, update, _storeDirectGUIEdit };

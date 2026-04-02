@@ -13,9 +13,9 @@ import xmlnsNamespaces from '../../constants/xmlns_namespaces.js';
 import alignmentConstants from '../../constants/alignment.js';
 import supportsPixelatedImage from '../../lib/supports_pixelated_image.js';
 import { STYLE as PIXELATED_IMAGE_STYLE } from '../../constants/pixelated_image.js';
-var LINE_SPACING = alignmentConstants.LINE_SPACING;
+const LINE_SPACING = alignmentConstants.LINE_SPACING;
 
-var labelClass = 'heatmap-label';
+const labelClass = 'heatmap-label';
 
 function selectLabels(plotGroup) {
     return plotGroup.selectAll('g.' + labelClass);
@@ -26,31 +26,31 @@ function removeLabels(plotGroup) {
 }
 
 export default function(gd, plotinfo, cdheatmaps, heatmapLayer) {
-    var xa = plotinfo.xaxis;
-    var ya = plotinfo.yaxis;
+    const xa = plotinfo.xaxis;
+    const ya = plotinfo.yaxis;
 
     Lib.makeTraceGroups(heatmapLayer, cdheatmaps, 'hm').each(function (cd) {
-        var plotGroup = select(this);
-        var cd0 = cd[0];
-        var trace = cd0.trace;
-        var xGap = trace.xgap || 0;
-        var yGap = trace.ygap || 0;
+        const plotGroup = select(this);
+        const cd0 = cd[0];
+        const trace = cd0.trace;
+        const xGap = trace.xgap || 0;
+        const yGap = trace.ygap || 0;
 
-        var z = cd0.z;
-        var x = cd0.x;
-        var y = cd0.y;
-        var xc = cd0.xCenter;
-        var yc = cd0.yCenter;
-        var isContour = Registry.traceIs(trace, 'contour');
-        var zsmooth = isContour ? 'best' : trace.zsmooth;
+        const z = cd0.z;
+        let x = cd0.x;
+        let y = cd0.y;
+        let xc = cd0.xCenter;
+        let yc = cd0.yCenter;
+        const isContour = Registry.traceIs(trace, 'contour');
+        const zsmooth = isContour ? 'best' : trace.zsmooth;
 
         // get z dims
-        var m = z.length;
-        var n = Lib.maxRowLength(z);
-        var xrev = false;
-        var yrev = false;
+        const m = z.length;
+        const n = Lib.maxRowLength(z);
+        let xrev = false;
+        let yrev = false;
 
-        var left, right, temp, top, bottom, i, j, k;
+        let left, right, temp, top, bottom, i, j, k;
 
         // TODO: if there are multiple overlapping categorical heatmaps,
         // or if we allow category sorting, then the categories may not be
@@ -108,7 +108,7 @@ export default function(gd, plotinfo, cdheatmaps, heatmapLayer) {
             y = cd0.yfill;
         }
 
-        var drawingMethod = 'default';
+        let drawingMethod = 'default';
         if (zsmooth) {
             drawingMethod = zsmooth === 'best' ? 'smooth' : 'fast';
         } else if (trace._islinear && xGap === 0 && yGap === 0 && supportsPixelatedImage()) {
@@ -120,23 +120,23 @@ export default function(gd, plotinfo, cdheatmaps, heatmapLayer) {
         // about this, because zooming doesn't increase number of pixels
         // if zsmooth is best, don't include anything off screen because it takes too long
         if (drawingMethod !== 'fast') {
-            var extra = zsmooth === 'best' ? 0 : 0.5;
+            const extra = zsmooth === 'best' ? 0 : 0.5;
             left = Math.max(-extra * xa._length, left);
             right = Math.min((1 + extra) * xa._length, right);
             top = Math.max(-extra * ya._length, top);
             bottom = Math.min((1 + extra) * ya._length, bottom);
         }
 
-        var imageWidth = Math.round(right - left);
-        var imageHeight = Math.round(bottom - top);
+        const imageWidth = Math.round(right - left);
+        const imageHeight = Math.round(bottom - top);
 
         // setup image nodes
 
         // if image is entirely off-screen, don't even draw it
-        var isOffScreen = left >= xa._length || right <= 0 || top >= ya._length || bottom <= 0;
+        const isOffScreen = left >= xa._length || right <= 0 || top >= ya._length || bottom <= 0;
 
         if (isOffScreen) {
-            var noImage = plotGroup.selectAll('image').data([]);
+            const noImage = plotGroup.selectAll('image').data([]);
             noImage.exit().remove();
 
             removeLabels(plotGroup);
@@ -145,7 +145,7 @@ export default function(gd, plotinfo, cdheatmaps, heatmapLayer) {
 
         // generate image data
 
-        var canvasW, canvasH;
+        let canvasW, canvasH;
         if (drawingMethod === 'fast') {
             canvasW = n;
             canvasH = m;
@@ -154,15 +154,15 @@ export default function(gd, plotinfo, cdheatmaps, heatmapLayer) {
             canvasH = imageHeight;
         }
 
-        var canvas = document.createElement('canvas');
+        const canvas = document.createElement('canvas');
         canvas.width = canvasW;
         canvas.height = canvasH;
-        var context = canvas.getContext('2d', { willReadFrequently: true });
+        const context = canvas.getContext('2d', { willReadFrequently: true });
 
-        var sclFunc = makeColorScaleFuncFromTrace(trace, { noNumericCheck: true, returnArray: true });
+        const sclFunc = makeColorScaleFuncFromTrace(trace, { noNumericCheck: true, returnArray: true });
 
         // map brick boundaries to image pixels
-        var xpx, ypx;
+        let xpx, ypx;
         if (drawingMethod === 'fast') {
             xpx = xrev
                 ? function (index) {
@@ -186,21 +186,21 @@ export default function(gd, plotinfo, cdheatmaps, heatmapLayer) {
         // build the pixel map brick-by-brick
         // cruise through z-matrix row-by-row
         // build a brick at each z-matrix value
-        var yi = ypx(0);
-        var yb: any = [yi, yi];
-        var xbi = xrev ? 0 : 1;
-        var ybi = yrev ? 0 : 1;
+        const yi = ypx(0);
+        let yb: any = [yi, yi];
+        const xbi = xrev ? 0 : 1;
+        const ybi = yrev ? 0 : 1;
         // for collecting an average luminosity of the heatmap
-        var pixcount = 0;
-        var rcount = 0;
-        var gcount = 0;
-        var bcount = 0;
+        let pixcount = 0;
+        let rcount = 0;
+        let gcount = 0;
+        let bcount = 0;
 
-        var xb, xi, v, row, c;
+        let xb, xi, v, row, c;
 
         function setColor(v: any, pixsize?: number) {
             if (v !== undefined) {
-                var c = sclFunc(v);
+                const c = sclFunc(v);
                 c[0] = Math.round(c[0]);
                 c[1] = Math.round(c[1]);
                 c[2] = Math.round(c[2]);
@@ -215,15 +215,15 @@ export default function(gd, plotinfo, cdheatmaps, heatmapLayer) {
         }
 
         function interpColor(r0,  r1,  xinterp,  yinterp) {
-            var z00 = r0[xinterp.bin0];
+            const z00 = r0[xinterp.bin0];
             if (z00 === undefined) return setColor(undefined, 1);
 
-            var z01 = r0[xinterp.bin1];
-            var z10 = r1[xinterp.bin0];
-            var z11 = r1[xinterp.bin1];
-            var dx = z01 - z00 || 0;
-            var dy = z10 - z00 || 0;
-            var dxy;
+            const z01 = r0[xinterp.bin1];
+            const z10 = r1[xinterp.bin0];
+            const z11 = r1[xinterp.bin1];
+            const dx = z01 - z00 || 0;
+            const dy = z10 - z00 || 0;
+            let dxy;
 
             // the bilinear interpolation term needs different calculations
             // for all the different permutations of missing data
@@ -244,8 +244,8 @@ export default function(gd, plotinfo, cdheatmaps, heatmapLayer) {
 
         if (drawingMethod !== 'default') {
             // works fastest with imageData
-            var pxIndex = 0;
-            var pixels;
+            let pxIndex = 0;
+            let pixels;
 
             try {
                 pixels = new Uint8Array(canvasW * canvasH * 4);
@@ -255,14 +255,14 @@ export default function(gd, plotinfo, cdheatmaps, heatmapLayer) {
 
             if (drawingMethod === 'smooth') {
                 // zsmooth="best"
-                var xForPx = xc || x;
-                var yForPx = yc || y;
-                var xPixArray = new Array(xForPx.length);
-                var yPixArray = new Array(yForPx.length);
-                var xinterpArray = new Array(imageWidth);
-                var findInterpX = xc ? findInterpFromCenters : findInterp;
-                var findInterpY = yc ? findInterpFromCenters : findInterp;
-                var yinterp, r0, r1;
+                const xForPx = xc || x;
+                const yForPx = yc || y;
+                const xPixArray = new Array(xForPx.length);
+                const yPixArray = new Array(yForPx.length);
+                const xinterpArray = new Array(imageWidth);
+                const findInterpX = xc ? findInterpFromCenters : findInterp;
+                const findInterpY = yc ? findInterpFromCenters : findInterp;
+                let yinterp, r0, r1;
 
                 // first make arrays of x and y pixel locations of brick boundaries
                 for (i = 0; i < xForPx.length; i++) xPixArray[i] = Math.round(xa.c2p(xForPx[i]) - left);
@@ -295,12 +295,12 @@ export default function(gd, plotinfo, cdheatmaps, heatmapLayer) {
                 }
             }
 
-            var imageData = context.createImageData(canvasW, canvasH);
+            const imageData = context.createImageData(canvasW, canvasH);
             try {
                 imageData.data.set(pixels);
             } catch (e) {
-                var pxArray = imageData.data;
-                var dlen = pxArray.length;
+                const pxArray = imageData.data;
+                const dlen = pxArray.length;
                 for (j = 0; j < dlen; j++) {
                     pxArray[j] = pixels[j];
                 }
@@ -312,8 +312,8 @@ export default function(gd, plotinfo, cdheatmaps, heatmapLayer) {
             // filling potentially large bricks works fastest with fillRect
             // gaps do not need to be exact integers, but if they *are* we will get
             // cleaner edges by rounding at least one edge
-            var xGapLeft = Math.floor(xGap / 2);
-            var yGapTop = Math.floor(yGap / 2);
+            const xGapLeft = Math.floor(xGap / 2);
+            const yGapTop = Math.floor(yGap / 2);
 
             for (j = 0; j < m; j++) {
                 row = z[j];
@@ -343,12 +343,12 @@ export default function(gd, plotinfo, cdheatmaps, heatmapLayer) {
         rcount = Math.round(rcount / pixcount);
         gcount = Math.round(gcount / pixcount);
         bcount = Math.round(bcount / pixcount);
-        var avgColor = tinycolor('rgb(' + rcount + ',' + gcount + ',' + bcount + ')');
+        const avgColor = tinycolor('rgb(' + rcount + ',' + gcount + ',' + bcount + ')');
 
         gd._hmpixcount = (gd._hmpixcount || 0) + pixcount;
         gd._hmlumcount = (gd._hmlumcount || 0) + pixcount * avgColor.getLuminance();
 
-        var image3 = plotGroup.selectAll('image').data(cd);
+        const image3 = plotGroup.selectAll('image').data(cd);
 
         image3.enter().append('svg:image').attr({
             xmlns: xmlnsNamespaces.svg,
@@ -369,27 +369,27 @@ export default function(gd, plotinfo, cdheatmaps, heatmapLayer) {
 
         removeLabels(plotGroup);
 
-        var texttemplate = trace.texttemplate;
+        const texttemplate = trace.texttemplate;
         if (texttemplate) {
             // dummy axis for formatting the z value
-            var cOpts = extractOpts(trace);
-            var dummyAx = {
+            const cOpts = extractOpts(trace);
+            const dummyAx = {
                 type: 'linear',
                 range: [cOpts.min, cOpts.max],
                 _separators: xa._separators,
                 _numFormat: xa._numFormat
             };
 
-            var aHistogram2dContour = trace.type === 'histogram2dcontour';
-            var aContour = trace.type === 'contour';
-            var iStart = aContour ? 1 : 0;
-            var iStop = aContour ? m - 1 : m;
-            var jStart = aContour ? 1 : 0;
-            var jStop = aContour ? n - 1 : n;
+            const aHistogram2dContour = trace.type === 'histogram2dcontour';
+            const aContour = trace.type === 'contour';
+            const iStart = aContour ? 1 : 0;
+            const iStop = aContour ? m - 1 : m;
+            const jStart = aContour ? 1 : 0;
+            const jStop = aContour ? n - 1 : n;
 
-            var textData = [];
+            const textData = [];
             for (i = iStart; i < iStop; i++) {
-                var yVal;
+                let yVal;
                 if (aContour) {
                     yVal = cd0.y[i];
                 } else if (aHistogram2dContour) {
@@ -402,11 +402,11 @@ export default function(gd, plotinfo, cdheatmaps, heatmapLayer) {
                     yVal = (cd0.y[i] + cd0.y[i + 1]) / 2;
                 }
 
-                var _y = Math.round(ya.c2p(yVal));
+                const _y = Math.round(ya.c2p(yVal));
                 if (0 > _y || _y > ya._length) continue;
 
                 for (j = jStart; j < jStop; j++) {
-                    var xVal;
+                    let xVal;
                     if (aContour) {
                         xVal = cd0.x[j];
                     } else if (aHistogram2dContour) {
@@ -419,10 +419,10 @@ export default function(gd, plotinfo, cdheatmaps, heatmapLayer) {
                         xVal = (cd0.x[j] + cd0.x[j + 1]) / 2;
                     }
 
-                    var _x = Math.round(xa.c2p(xVal));
+                    const _x = Math.round(xa.c2p(xVal));
                     if (0 > _x || _x > xa._length) continue;
 
-                    var obj = formatLabels(
+                    const obj = formatLabels(
                         {
                             x: xVal,
                             y: yVal
@@ -434,7 +434,7 @@ export default function(gd, plotinfo, cdheatmaps, heatmapLayer) {
                     obj.x = xVal;
                     obj.y = yVal;
 
-                    var zVal = cd0.z[i][j];
+                    const zVal = cd0.z[i][j];
                     if (zVal === undefined) {
                         obj.z = '';
                         obj.zLabel = '';
@@ -443,11 +443,11 @@ export default function(gd, plotinfo, cdheatmaps, heatmapLayer) {
                         obj.zLabel = Axes.tickText(dummyAx, zVal, 'hover').text;
                     }
 
-                    var theText = cd0.text && cd0.text[i] && cd0.text[i][j];
+                    let theText = cd0.text && cd0.text[i] && cd0.text[i][j];
                     if (theText === undefined || theText === false) theText = '';
                     obj.text = theText;
 
-                    var _t = Lib.texttemplateString({
+                    const _t = Lib.texttemplateString({
                         data: [obj, trace._meta],
                         fallback: trace.texttemplatefallback,
                         labels: obj,
@@ -456,9 +456,9 @@ export default function(gd, plotinfo, cdheatmaps, heatmapLayer) {
                     });
                     if (!_t) continue;
 
-                    var lines = _t.split('<br>');
-                    var nL = lines.length;
-                    var nC = 0;
+                    const lines = _t.split('<br>');
+                    const nL = lines.length;
+                    let nC = 0;
                     for (k = 0; k < nL; k++) {
                         nC = Math.max(nC, lines[k].length);
                     }
@@ -474,25 +474,25 @@ export default function(gd, plotinfo, cdheatmaps, heatmapLayer) {
                 }
             }
 
-            var font = trace.textfont;
-            var fontSize = font.size;
-            var globalFontSize = gd._fullLayout.font.size;
+            const font = trace.textfont;
+            let fontSize = font.size;
+            const globalFontSize = gd._fullLayout.font.size;
 
             if (!fontSize || fontSize === 'auto') {
-                var minW = Infinity;
-                var minH = Infinity;
-                var maxL = 0;
-                var maxC = 0;
+                let minW = Infinity;
+                let minH = Infinity;
+                let maxL = 0;
+                let maxC = 0;
 
                 for (k = 0; k < textData.length; k++) {
-                    var d = textData[k];
+                    const d = textData[k];
                     maxL = Math.max(maxL, d.l);
                     maxC = Math.max(maxC, d.c);
 
                     if (k < textData.length - 1) {
-                        var nextD = textData[k + 1];
-                        var dx = Math.abs(nextD.x - d.x);
-                        var dy = Math.abs(nextD.y - d.y);
+                        const nextD = textData[k + 1];
+                        const dx = Math.abs(nextD.x - d.x);
+                        const dy = Math.abs(nextD.y - d.y);
 
                         if (dx) minW = Math.min(minW, dx);
                         if (dy) minH = Math.min(minH, dy);
@@ -516,14 +516,14 @@ export default function(gd, plotinfo, cdheatmaps, heatmapLayer) {
             }
             if (fontSize <= 0 || !isFinite(fontSize)) return;
 
-            var xFn = function (d) {
+            const xFn = function (d) {
                 return d.x;
             };
-            var yFn = function (d) {
+            const yFn = function (d) {
                 return d.y - fontSize * ((d.l * LINE_SPACING) / 2 - 1);
             };
 
-            var labels = selectLabels(plotGroup).data(textData);
+            const labels = selectLabels(plotGroup).data(textData);
 
             labels
                 .enter()
@@ -532,9 +532,9 @@ export default function(gd, plotinfo, cdheatmaps, heatmapLayer) {
                 .append('text')
                 .attr('text-anchor', 'middle')
                 .each(function (d) {
-                    var thisLabel = select(this);
+                    const thisLabel = select(this);
 
-                    var fontColor = font.color;
+                    let fontColor = font.color;
                     if (!fontColor || fontColor === 'auto') {
                         fontColor = Color.contrast(
                             d.z === undefined ? gd._fullLayout.plot_bgcolor : 'rgba(' + sclFunc(d.z).join() + ')'
@@ -564,13 +564,13 @@ export default function(gd, plotinfo, cdheatmaps, heatmapLayer) {
 
 // get interpolated bin value. Returns {bin0:closest bin, frac:fractional dist to next, bin1:next bin}
 function findInterp(pixel,  pixArray) {
-    var maxBin = pixArray.length - 2;
-    var bin = Lib.constrain(Lib.findBin(pixel, pixArray), 0, maxBin);
-    var pix0 = pixArray[bin];
-    var pix1 = pixArray[bin + 1];
-    var interp = Lib.constrain(bin + (pixel - pix0) / (pix1 - pix0) - 0.5, 0, maxBin);
-    var bin0 = Math.round(interp);
-    var frac = Math.abs(interp - bin0);
+    const maxBin = pixArray.length - 2;
+    const bin = Lib.constrain(Lib.findBin(pixel, pixArray), 0, maxBin);
+    const pix0 = pixArray[bin];
+    const pix1 = pixArray[bin + 1];
+    const interp = Lib.constrain(bin + (pixel - pix0) / (pix1 - pix0) - 0.5, 0, maxBin);
+    const bin0 = Math.round(interp);
+    const frac = Math.abs(interp - bin0);
 
     if (!interp || interp === maxBin || !frac) {
         return {
@@ -587,11 +587,11 @@ function findInterp(pixel,  pixArray) {
 }
 
 function findInterpFromCenters(pixel,  centerPixArray) {
-    var maxBin = centerPixArray.length - 1;
-    var bin = Lib.constrain(Lib.findBin(pixel, centerPixArray), 0, maxBin);
-    var pix0 = centerPixArray[bin];
-    var pix1 = centerPixArray[bin + 1];
-    var frac = (pixel - pix0) / (pix1 - pix0) || 0;
+    const maxBin = centerPixArray.length - 1;
+    const bin = Lib.constrain(Lib.findBin(pixel, centerPixArray), 0, maxBin);
+    const pix0 = centerPixArray[bin];
+    const pix1 = centerPixArray[bin + 1];
+    const frac = (pixel - pix0) / (pix1 - pix0) || 0;
     if (frac <= 0) {
         return {
             bin0: bin,

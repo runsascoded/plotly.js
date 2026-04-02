@@ -10,9 +10,9 @@ import setConvertCartesian from '../cartesian/set_convert.js';
 import layoutAttributes from './layout_attributes.js';
 import constants from './constants.js';
 import type { FullLayout, FullTrace } from '../../../types/core';
-var axisNames = constants.axisNames;
+const axisNames = constants.axisNames;
 
-var makeImagDflt = memoize(function(realTickvals) {
+const makeImagDflt = memoize(function(realTickvals) {
     // TODO: handle this case outside supply defaults step
     if(Lib.isTypedArray(realTickvals)) realTickvals = Array.from(realTickvals);
 
@@ -22,31 +22,31 @@ var makeImagDflt = memoize(function(realTickvals) {
 }, String);
 
 function handleDefaults(contIn, contOut, coerce, opts) {
-    var bgColor = coerce('bgcolor');
+    const bgColor = coerce('bgcolor');
     opts.bgColor = Color.combine(bgColor, opts.paper_bgcolor);
 
-    var subplotData = getSubplotData(opts.fullData, constants.name, opts.id);
-    var layoutOut = opts.layoutOut;
-    var axName;
+    const subplotData = getSubplotData(opts.fullData, constants.name, opts.id);
+    const layoutOut = opts.layoutOut;
+    let axName;
 
     function coerceAxis(attr: string, dflt?: any) {
         return coerce(axName + '.' + attr, dflt);
     }
 
-    for(var i = 0; i < axisNames.length; i++) {
+    for(let i = 0; i < axisNames.length; i++) {
         axName = axisNames[i];
 
         if(!Lib.isPlainObject(contIn[axName])) {
             contIn[axName] = {};
         }
 
-        var axIn = contIn[axName];
-        var axOut = Template.newContainer(contOut, axName);
+        const axIn = contIn[axName];
+        const axOut = Template.newContainer(contOut, axName);
         axOut._id = axOut._name = axName;
         axOut._attr = opts.id + '.' + axName;
         axOut._traceIndices = subplotData.map(function(t) { return t.index; });
 
-        var visible = coerceAxis('visible');
+        const visible = coerceAxis('visible');
 
         axOut.type = 'linear';
         setConvertCartesian(axOut, layoutOut);
@@ -54,13 +54,13 @@ function handleDefaults(contIn, contOut, coerce, opts) {
         handlePrefixSuffixDefaults(axIn, axOut, coerceAxis, axOut.type);
 
         if(visible) {
-            var isRealAxis = axName === 'realaxis';
+            const isRealAxis = axName === 'realaxis';
             if(isRealAxis) coerceAxis('side');
 
             if(isRealAxis) {
                 coerceAxis('tickvals');
             } else {
-                var imagTickvalsDflt = makeImagDflt(
+                const imagTickvalsDflt = makeImagDflt(
                     contOut.realaxis.tickvals ||
                     layoutAttributes.realaxis.tickvals.dflt
                 );
@@ -71,11 +71,11 @@ function handleDefaults(contIn, contOut, coerce, opts) {
             // TODO: handle this case outside supply defaults step
             if(Lib.isTypedArray(axOut.tickvals)) axOut.tickvals = Array.from(axOut.tickvals);
 
-            var dfltColor;
-            var dfltFontColor;
-            var dfltFontSize;
-            var dfltFontFamily;
-            var font = opts.font || {};
+            let dfltColor;
+            let dfltFontColor;
+            let dfltFontSize;
+            let dfltFontFamily;
+            const font = opts.font || {};
 
             if(visible) {
                 dfltColor = coerceAxis('color');
@@ -101,7 +101,7 @@ function handleDefaults(contIn, contOut, coerce, opts) {
             Lib.coerce2(contIn, contOut, layoutAttributes, axName + '.ticklen');
             Lib.coerce2(contIn, contOut, layoutAttributes, axName + '.tickwidth');
             Lib.coerce2(contIn, contOut, layoutAttributes, axName + '.tickcolor', contOut.color);
-            var showTicks = coerceAxis('ticks');
+            const showTicks = coerceAxis('ticks');
             if(!showTicks) {
                 delete contOut[axName].ticklen;
                 delete contOut[axName].tickwidth;
@@ -145,12 +145,12 @@ export default function supplyLayoutDefaults(layoutIn: any, layoutOut: FullLayou
 }
 
 function memoize(fn, keyFn) {
-    var cache: any = {};
+    const cache: any = {};
     return function(val) {
-        var newKey = keyFn ? keyFn(val) : val;
+        const newKey = keyFn ? keyFn(val) : val;
         if(newKey in cache) { return cache[newKey]; }
 
-        var out = fn(val);
+        const out = fn(val);
         cache[newKey] = out;
         return out;
     };

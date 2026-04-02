@@ -1,6 +1,6 @@
 import nestedProperty from './nested_property.js';
 
-var SIMPLE_PROPERTY_REGEX = /^\w*$/;
+const SIMPLE_PROPERTY_REGEX = /^\w*$/;
 
 // bitmask for deciding what's updated. Sometimes the name needs to be updated,
 // sometimes the value needs to be updated, and sometimes both do. This is just
@@ -14,11 +14,11 @@ var SIMPLE_PROPERTY_REGEX = /^\w*$/;
 // null vs undefined confused, so UNSET is just a bit that forces the property
 // update to send `null`, removing the property explicitly rather than setting
 // it to undefined.
-var NONE = 0;
-var NAME = 1;
-var VALUE = 2;
-var BOTH = 3;
-var UNSET = 4;
+const NONE = 0;
+const NAME = 1;
+const VALUE = 2;
+const BOTH = 3;
+const UNSET = 4;
 
 interface KeyedContainerObj {
     set(name: string, value: any): KeyedContainerObj | undefined;
@@ -31,8 +31,8 @@ interface KeyedContainerObj {
 export default function keyedContainer(baseObj: any, path: string, keyName?: string, valueName?: string): KeyedContainerObj {
     keyName = keyName || 'name';
     valueName = valueName || 'value';
-    var i: number, arr: any[], baseProp: any;
-    var changeTypes: Record<number, number> = {};
+    let i: number, arr: any[], baseProp: any;
+    const changeTypes: Record<number, number> = {};
 
     if(path && path.length) {
         baseProp = nestedProperty(baseObj, path);
@@ -44,18 +44,18 @@ export default function keyedContainer(baseObj: any, path: string, keyName?: str
     path = path || '';
 
     // Construct an index:
-    var indexLookup: Record<string, number> = {};
+    const indexLookup: Record<string, number> = {};
     if(arr) {
         for(i = 0; i < arr.length; i++) {
             indexLookup[arr[i][keyName!]] = i;
         }
     }
 
-    var isSimpleValueProp = SIMPLE_PROPERTY_REGEX.test(valueName!);
+    const isSimpleValueProp = SIMPLE_PROPERTY_REGEX.test(valueName!);
 
-    var obj: KeyedContainerObj = {
+    const obj: KeyedContainerObj = {
         set: function(name: string, value: any): KeyedContainerObj | undefined {
-            var changeType = value === null ? UNSET : NONE;
+            let changeType = value === null ? UNSET : NONE;
 
             // create the base array if necessary
             if(!arr) {
@@ -65,7 +65,7 @@ export default function keyedContainer(baseObj: any, path: string, keyName?: str
                 baseProp.set(arr);
             }
 
-            var idx = indexLookup[name];
+            let idx = indexLookup[name];
             if(idx === undefined) {
                 if(changeType === UNSET) return;
 
@@ -76,7 +76,7 @@ export default function keyedContainer(baseObj: any, path: string, keyName?: str
                 changeType = changeType | VALUE;
             }
 
-            var newValue = arr[idx] = arr[idx] || {};
+            const newValue = arr[idx] = arr[idx] || {};
             newValue[keyName!] = name;
 
             if(isSimpleValueProp) {
@@ -98,7 +98,7 @@ export default function keyedContainer(baseObj: any, path: string, keyName?: str
         get: function(name: string): void {
             if(!arr) return;
 
-            var idx = indexLookup[name];
+            const idx = indexLookup[name];
 
             if(idx === undefined) {
                 return undefined;
@@ -109,7 +109,7 @@ export default function keyedContainer(baseObj: any, path: string, keyName?: str
             }
         },
         rename: function(name: string, newName: string): KeyedContainerObj {
-            var idx = indexLookup[name];
+            const idx = indexLookup[name];
 
             if(idx === undefined) return obj;
             changeTypes[idx] = changeTypes[idx] | NAME;
@@ -122,11 +122,11 @@ export default function keyedContainer(baseObj: any, path: string, keyName?: str
             return obj;
         },
         remove: function(name: string): KeyedContainerObj {
-            var idx = indexLookup[name];
+            const idx = indexLookup[name];
 
             if(idx === undefined) return obj;
 
-            var object = arr[idx];
+            const object = arr[idx];
             if(Object.keys(object).length > 2) {
                 // This object contains more than just the key/value, so unset
                 // the value without modifying the entry otherwise:
@@ -151,7 +151,7 @@ export default function keyedContainer(baseObj: any, path: string, keyName?: str
                 // Now check if the top level nested property has any keys left. If so,
                 // the object still has values so we only want to unset the key. If not,
                 // the entire object can be removed since there's no other data.
-                // var topLevelKeys = Object.keys(object[valueName.split('.')[0]] || []);
+                // const topLevelKeys = Object.keys(object[valueName.split('.')[0]] || []);
 
                 changeTypes[idx] = changeTypes[idx] | VALUE | UNSET;
             }
@@ -159,10 +159,10 @@ export default function keyedContainer(baseObj: any, path: string, keyName?: str
             return obj;
         },
         constructUpdate: function(): Record<string, any> {
-            var astr: string, idx: string;
-            var update: Record<string, any> = {};
-            var changed = Object.keys(changeTypes);
-            for(var i = 0; i < changed.length; i++) {
+            let astr: string, idx: string;
+            const update: Record<string, any> = {};
+            const changed = Object.keys(changeTypes);
+            for(let i = 0; i < changed.length; i++) {
                 idx = changed[i];
                 astr = path + '[' + idx + ']';
                 if(arr[idx as any]) {

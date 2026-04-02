@@ -5,25 +5,25 @@ import toLogRange from '../../lib/to_log_range.js';
 export default function convertCoords(gd: GraphDiv, ax: any, newType: any, doExtra: any) {
     ax = ax || {};
 
-    var toLog = (newType === 'log') && (ax.type === 'linear');
-    var fromLog = (newType === 'linear') && (ax.type === 'log');
+    const toLog = (newType === 'log') && (ax.type === 'linear');
+    const fromLog = (newType === 'linear') && (ax.type === 'log');
 
     if(!(toLog || fromLog)) return;
 
-    var images = gd._fullLayout.images;
-    var axLetter = ax._id.charAt(0);
-    var image;
-    var attrPrefix;
+    const images = gd._fullLayout.images;
+    const axLetter = ax._id.charAt(0);
+    let image;
+    let attrPrefix;
 
-    for(var i = 0; i < images.length; i++) {
+    for(let i = 0; i < images.length; i++) {
         image = images[i];
         attrPrefix = 'images[' + i + '].';
 
         if(image[axLetter + 'ref'] === ax._id) {
-            var currentPos = image[axLetter];
-            var currentSize = image['size' + axLetter];
-            var newPos = null;
-            var newSize = null;
+            const currentPos = image[axLetter];
+            const currentSize = image['size' + axLetter];
+            let newPos = null;
+            let newSize = null;
 
             if(toLog) {
                 newPos = toLogRange(currentPos, ax.range);
@@ -31,7 +31,7 @@ export default function convertCoords(gd: GraphDiv, ax: any, newType: any, doExt
                 // this is the inverse of the conversion we do in fromLog below
                 // so that the conversion is reversible (notice the fromLog conversion
                 // is like sinh, and this one looks like arcsinh)
-                var dx = currentSize / Math.pow(10, newPos) / 2;
+                const dx = currentSize / Math.pow(10, newPos) / 2;
                 newSize = 2 * Math.log(dx + Math.sqrt(1 + dx * dx)) / Math.LN10;
             } else {
                 newPos = Math.pow(10, currentPos);

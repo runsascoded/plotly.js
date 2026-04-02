@@ -10,7 +10,7 @@ export default function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace,
         return Lib.coerce(traceIn, traceOut, attributes, attr, dflt);
     }
 
-    var len = handleOHLC(traceIn, traceOut, coerce, layout);
+    const len = handleOHLC(traceIn, traceOut, coerce, layout);
     if (!len) {
         traceOut.visible = false;
         return;
@@ -37,7 +37,7 @@ export default function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace,
 }
 
 function handleDirection(traceIn, traceOut, coerce, direction) {
-    var lineColor = coerce(direction + '.line.color');
+    const lineColor = coerce(direction + '.line.color');
     coerce(direction + '.line.width', traceOut.line.width);
     coerce(direction + '.fillcolor', Color.addOpacity(lineColor, 0.5));
 }

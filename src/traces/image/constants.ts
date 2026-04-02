@@ -27,7 +27,7 @@ export default {
             min: [0, 0, 0],
             max: [360, 100, 100],
             fmt: function(c) {
-                var p = c.slice(0, 3);
+                const p = c.slice(0, 3);
                 p[1] = p[1] + '%';
                 p[2] = p[2] + '%';
                 return p;
@@ -38,7 +38,7 @@ export default {
             min: [0, 0, 0, 0],
             max: [360, 100, 100, 1],
             fmt: function(c) {
-                var p = c.slice(0, 4);
+                const p = c.slice(0, 4);
                 p[1] = p[1] + '%';
                 p[2] = p[2] + '%';
                 return p;

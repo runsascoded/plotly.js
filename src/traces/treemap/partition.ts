@@ -2,21 +2,21 @@ import * as d3Hierarchy from 'd3-hierarchy';
 import flipTree from './flip_tree.js';
 
 export default function partition(entry: any, size: number[], opts: any) {
-    var flipX = opts.flipX;
-    var flipY = opts.flipY;
+    const flipX = opts.flipX;
+    const flipY = opts.flipY;
     // For squarify, transpose is handled via a custom tiling function that
     // inverts the row direction decision. The swapXY coordinate approach
     // doesn't work for squarify because the algorithm's aspect-ratio-based
     // decisions cancel out perfectly when coordinates are swapped back.
-    var swapXY = opts.packing === 'dice-slice' ||
+    const swapXY = opts.packing === 'dice-slice' ||
         (opts.transpose && opts.packing !== 'squarify');
 
-    var top = opts.pad[flipY ? 'bottom' : 'top'];
-    var left = opts.pad[flipX ? 'right' : 'left'];
-    var right = opts.pad[flipX ? 'left' : 'right'];
-    var bottom = opts.pad[flipY ? 'top' : 'bottom'];
+    let top = opts.pad[flipY ? 'bottom' : 'top'];
+    let left = opts.pad[flipX ? 'right' : 'left'];
+    let right = opts.pad[flipX ? 'left' : 'right'];
+    let bottom = opts.pad[flipY ? 'top' : 'bottom'];
 
-    var tmp;
+    let tmp;
     if(swapXY) {
         tmp = left;
         left = top;
@@ -27,7 +27,7 @@ export default function partition(entry: any, size: number[], opts: any) {
         bottom = tmp;
     }
 
-    var result = d3Hierarchy
+    const result = d3Hierarchy
         .treemap()
         .tile(getTilingMethod(opts.packing, opts.squarifyratio, opts.transpose))
         .paddingInner(opts.pad.inner)
@@ -71,22 +71,22 @@ function getTilingMethod(key, squarifyratio, transpose) {
 // Normal squarify uses `dice: dx < dy` (horizontal strips for tall rectangles).
 // Transposed squarify uses `dice: dx >= dy` (horizontal strips for wide rectangles).
 function transposedSquarifyRatio(ratio, parent, x0, y0, x1, y1) {
-    var nodes = parent.children;
-    var nodeValue;
-    var i0 = 0;
-    var i1 = 0;
-    var n = nodes.length;
-    var dx;
-    var dy;
-    var value = parent.value;
-    var sumValue;
-    var minValue;
-    var maxValue;
-    var newRatio;
-    var minRatio;
-    var alpha;
-    var beta;
-    var row;
+    const nodes = parent.children;
+    let nodeValue;
+    let i0 = 0;
+    let i1 = 0;
+    const n = nodes.length;
+    let dx;
+    let dy;
+    let value = parent.value;
+    let sumValue;
+    let minValue;
+    let maxValue;
+    let newRatio;
+    let minRatio;
+    let alpha;
+    let beta;
+    let row;
 
     while(i0 < n) {
         dx = x1 - x0;

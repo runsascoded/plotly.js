@@ -16,10 +16,10 @@ export default function nestedProperty(container: any, propStr: string | number)
         throw 'bad property string';
     }
 
-    var propParts: (string | number)[] = (propStr as string).split('.');
-    var indexed: RegExpMatchArray | null;
-    var indices: string[];
-    var i: number, j: number;
+    const propParts: (string | number)[] = (propStr as string).split('.');
+    let indexed: RegExpMatchArray | null;
+    let indices: string[];
+    let i: number, j: number;
 
     for(j = 0; j < propParts.length; j++) {
         // guard against polluting __proto__ and other internals
@@ -66,12 +66,12 @@ export default function nestedProperty(container: any, propStr: string | number)
 
 function npGet(cont: any, parts: (string | number)[]): (retainNull?: boolean) => any {
     return function(retainNull?: boolean): any {
-        var curCont = cont;
-        var curPart: string | number;
-        var allSame: boolean;
-        var out: any;
-        var i: number;
-        var j: number;
+        let curCont = cont;
+        let curPart: string | number;
+        let allSame: boolean;
+        let out: any;
+        let i: number;
+        let j: number;
 
         for(i = 0; i < parts.length - 1; i++) {
             curPart = parts[i];
@@ -115,19 +115,19 @@ function npGet(cont: any, parts: (string | number)[]): (retainNull?: boolean) =>
  * in restyle/relayout/update for "delete this value" whereas undefined means
  * "ignore this edit"
  */
-var ARGS_PATTERN = /(^|\.)args\[/;
+const ARGS_PATTERN = /(^|\.)args\[/;
 function isDeletable(val: any, propStr: string): boolean {
     return (val === undefined) || (val === null && !propStr.match(ARGS_PATTERN));
 }
 
 function npSet(cont: any, parts: (string | number)[], propStr: string): (val: any) => void {
     return function(val: any): any {
-        var curCont = cont;
-        var propPart = '';
-        var containerLevels: [any, string][] = [[cont, propPart]];
-        var toDelete = isDeletable(val, propStr);
-        var curPart: string | number;
-        var i: number;
+        let curCont = cont;
+        let propPart = '';
+        const containerLevels: [any, string][] = [[cont, propPart]];
+        let toDelete = isDeletable(val, propStr);
+        let curPart: string | number;
+        let i: number;
 
         for(i = 0; i < parts.length - 1; i++) {
             curPart = parts[i];
@@ -176,7 +176,7 @@ function npSet(cont: any, parts: (string | number)[], propStr: string): (val: an
 }
 
 function joinPropStr(propStr: string, newPart: string | number): string {
-    var toAdd: string;
+    let toAdd: string;
     if(isNumeric(newPart)) toAdd = '[' + newPart + ']';
     else if(propStr) toAdd = '.' + newPart;
     else toAdd = String(newPart);
@@ -186,13 +186,13 @@ function joinPropStr(propStr: string, newPart: string | number): string {
 
 // handle special -1 array index
 function setArrayAll(containerArray: any[], innerParts: (string | number)[], val: any, propStr: string): boolean {
-    var arrayVal = isArrayOrTypedArray(val);
-    var allSet = true;
-    var thisVal = val;
-    var thisPropStr = propStr.replace('-1', '0');
-    var deleteThis = arrayVal ? false : isDeletable(val, thisPropStr);
-    var firstPart = innerParts[0];
-    var i: number;
+    const arrayVal = isArrayOrTypedArray(val);
+    let allSet = true;
+    let thisVal = val;
+    let thisPropStr = propStr.replace('-1', '0');
+    let deleteThis = arrayVal ? false : isDeletable(val, thisPropStr);
+    const firstPart = innerParts[0];
+    let i: number;
 
     for(i = 0; i < containerArray.length; i++) {
         thisPropStr = propStr.replace('-1', String(i));

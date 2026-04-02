@@ -13,7 +13,7 @@ export default function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace)
     if (traceOut.source && !traceOut.source.match(dataUri)) delete traceOut.source;
     traceOut._hasSource = !!traceOut.source;
 
-    var z = coerce('z');
+    const z = coerce('z');
     traceOut._hasZ = !(z === undefined || !z.length || !z[0] || !z[0].length);
     if (!traceOut._hasZ && !traceOut._hasSource) {
         traceOut.visible = false;
@@ -25,7 +25,7 @@ export default function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace)
     coerce('dx');
     coerce('dy');
 
-    var cm;
+    let cm;
     if (traceOut._hasZ) {
         coerce('colormodel', 'rgb');
         cm = constants.colormodel[traceOut.colormodel];

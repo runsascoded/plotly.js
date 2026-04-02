@@ -1,7 +1,7 @@
 import type { FullLayout, FullTrace, InputTrace } from '../../../types/core';
 import { dateTick0 } from '../../lib/index.js';
 import numConstants from '../../constants/numerical.js';
-var ONEWEEK = numConstants.ONEWEEK;
+const ONEWEEK = numConstants.ONEWEEK;
 
 function getPeriod0Dflt(period: any, calendar: any): any {
     if(period % ONEWEEK === 0) {
@@ -19,7 +19,7 @@ export default function handlePeriodDefaults(traceIn: InputTrace, traceOut: Full
     }
 
     if(opts.x) {
-        var xperiod = coerce('xperiod');
+        const xperiod = coerce('xperiod');
         if(xperiod) {
             coerce('xperiod0', getPeriod0Dflt(xperiod, traceOut.xcalendar));
             coerce('xperiodalignment');
@@ -27,7 +27,7 @@ export default function handlePeriodDefaults(traceIn: InputTrace, traceOut: Full
     }
 
     if(opts.y) {
-        var yperiod = coerce('yperiod');
+        const yperiod = coerce('yperiod');
         if(yperiod) {
             coerce('yperiod0', getPeriod0Dflt(yperiod, traceOut.ycalendar));
             coerce('yperiodalignment');

@@ -7,13 +7,13 @@ const { resizeText } = _uniform_text;
 import fillOne from './fill_one.js';
 
 function style(gd: GraphDiv): void {
-    var s = gd._fullLayout._sunburstlayer.selectAll('.trace');
+    const s = gd._fullLayout._sunburstlayer.selectAll('.trace');
     resizeText(gd, s, 'sunburst');
 
     s.each(function(cd) {
-        var gTrace = select(this);
-        var cd0 = cd[0];
-        var trace = cd0.trace;
+        const gTrace = select(this);
+        const cd0 = cd[0];
+        const trace = cd0.trace;
 
         gTrace.style('opacity', trace.opacity);
 
@@ -24,11 +24,11 @@ function style(gd: GraphDiv): void {
 }
 
 function styleOne(s: any, pt: any, trace: FullTrace, gd: GraphDiv): void {
-    var cdi = pt.data.data;
-    var isLeaf = !pt.children;
-    var ptNumber = cdi.i;
-    var lineColor = Lib.castOption(trace, ptNumber, 'marker.line.color') || Color.defaultLine;
-    var lineWidth = Lib.castOption(trace, ptNumber, 'marker.line.width') || 0;
+    const cdi = pt.data.data;
+    const isLeaf = !pt.children;
+    const ptNumber = cdi.i;
+    const lineColor = Lib.castOption(trace, ptNumber, 'marker.line.color') || Color.defaultLine;
+    const lineWidth = Lib.castOption(trace, ptNumber, 'marker.line.width') || 0;
 
     s.call(fillOne, pt, trace, gd)
         .style('stroke-width', lineWidth)

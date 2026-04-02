@@ -3,7 +3,7 @@ import contourAttrs from '../contour/attributes.js';
 import colorScaleAttrs from '../../components/colorscale/attributes.js';
 import { extendFlat } from '../../lib/extend.js';
 
-var contourContourAttrs = contourAttrs.contours;
+const contourContourAttrs = contourAttrs.contours;
 
 export default extendFlat({
     carpet: {

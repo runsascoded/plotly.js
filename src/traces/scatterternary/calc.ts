@@ -6,17 +6,17 @@ import calcSelection from '../scatter/calc_selection.js';
 import _calc from '../scatter/calc.js';
 const { calcMarkerSize } = _calc;
 
-var dataArrays = ['a', 'b', 'c'];
-var arraysToFill = {a: ['b', 'c'], b: ['a', 'c'], c: ['a', 'b']};
+const dataArrays = ['a', 'b', 'c'];
+const arraysToFill = {a: ['b', 'c'], b: ['a', 'c'], c: ['a', 'b']};
 
 export default function calc(gd: GraphDiv, trace: FullTrace) {
-    var ternary = gd._fullLayout[trace.subplot];
-    var displaySum = ternary.sum;
-    var normSum = trace.sum || displaySum;
-    var arrays = {a: trace.a, b: trace.b, c: trace.c};
-    var ids = trace.ids;
+    const ternary = gd._fullLayout[trace.subplot];
+    const displaySum = ternary.sum;
+    const normSum = trace.sum || displaySum;
+    const arrays = {a: trace.a, b: trace.b, c: trace.c};
+    const ids = trace.ids;
 
-    var i, j, dataArray, newArray, fillArray1, fillArray2;
+    let i, j, dataArray, newArray, fillArray1, fillArray2;
 
     // fill in one missing component
     for(i = 0; i < dataArrays.length; i++) {
@@ -33,9 +33,9 @@ export default function calc(gd: GraphDiv, trace: FullTrace) {
     }
 
     // make the calcdata array
-    var serieslen = trace._length;
-    var cd = new Array(serieslen);
-    var a, b, c, norm, x, y;
+    const serieslen = trace._length;
+    const cd = new Array(serieslen);
+    let a, b, c, norm, x, y;
     for(i = 0; i < serieslen; i++) {
         a = arrays.a[i];
         b = arrays.b[i];

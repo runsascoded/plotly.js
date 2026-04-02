@@ -14,12 +14,12 @@ import helpers from './helpers.js';
 *   See https://github.com/eligrey/FileSaver.js/blob/master/LICENSE.md
 */
 function fileSaver(url, name, format) {
-    var saveLink = document.createElement('a');
-    var canUseSaveLink = 'download' in saveLink;
+    const saveLink = document.createElement('a');
+    const canUseSaveLink = 'download' in saveLink;
 
-    var promise = new Promise(function(resolve, reject) {
-        var blob;
-        var objectUrl;
+    const promise = new Promise(function(resolve, reject) {
+        let blob;
+        let objectUrl;
 
         if(canUseSaveLink) {
             blob = helpers.createBlob(url, format);
@@ -39,7 +39,7 @@ function fileSaver(url, name, format) {
 
         // Older versions of Safari did not allow downloading of blob urls
         if(Lib.isSafari()) {
-            var prefix = format === 'svg' ? ',' : ';base64,';
+            const prefix = format === 'svg' ? ',' : ';base64,';
             helpers.octetStream(prefix + encodeURIComponent(url));
             return resolve(name);
         }

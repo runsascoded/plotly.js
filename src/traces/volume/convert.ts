@@ -19,24 +19,24 @@ function VolumeTrace(scene, mesh, uid) {
     this.showContour = false;
 }
 
-var proto = VolumeTrace.prototype;
+const proto = VolumeTrace.prototype;
 
 proto.handlePick = function(selection) {
     if(selection.object === this.mesh) {
-        var rawId = selection.data.index;
+        const rawId = selection.data.index;
 
-        var x = this.data._meshX[rawId];
-        var y = this.data._meshY[rawId];
-        var z = this.data._meshZ[rawId];
+        const x = this.data._meshX[rawId];
+        const y = this.data._meshY[rawId];
+        const z = this.data._meshZ[rawId];
 
-        var height = this.data._Ys.length;
-        var depth = this.data._Zs.length;
+        const height = this.data._Ys.length;
+        const depth = this.data._Zs.length;
 
-        var i = findNearestOnAxis(x, this.data._Xs).id;
-        var j = findNearestOnAxis(y, this.data._Ys).id;
-        var k = findNearestOnAxis(z, this.data._Zs).id;
+        const i = findNearestOnAxis(x, this.data._Xs).id;
+        const j = findNearestOnAxis(y, this.data._Ys).id;
+        const k = findNearestOnAxis(z, this.data._Zs).id;
 
-        var selectIndex = selection.index = k + depth * j + depth * height * i;
+        const selectIndex = selection.index = k + depth * j + depth * height * i;
 
         selection.traceCoordinate = [
             this.data._meshX[selectIndex],
@@ -45,7 +45,7 @@ proto.handlePick = function(selection) {
             this.data._value[selectIndex]
         ];
 
-        var text = this.data.hovertext || this.data.text;
+        const text = this.data.hovertext || this.data.text;
         if(isArrayOrTypedArray(text) && text[selectIndex] !== undefined) {
             selection.textLabel = text[selectIndex];
         } else if(text) {
@@ -57,8 +57,8 @@ proto.handlePick = function(selection) {
 };
 
 proto.update = function(data) {
-    var scene = this.scene;
-    var layout = scene.fullSceneLayout;
+    const scene = this.scene;
+    const layout = scene.fullSceneLayout;
 
     this.data = generateIsoMeshes(data);
 
@@ -69,14 +69,14 @@ proto.update = function(data) {
         });
     }
 
-    var positions = zip3(
+    const positions = zip3(
         toDataCoords(layout.xaxis, data._meshX, scene.dataScale[0], data.xcalendar),
         toDataCoords(layout.yaxis, data._meshY, scene.dataScale[1], data.ycalendar),
         toDataCoords(layout.zaxis, data._meshZ, scene.dataScale[2], data.zcalendar));
 
-    var cells = zip3(data._meshI, data._meshJ, data._meshK);
+    const cells = zip3(data._meshI, data._meshJ, data._meshK);
 
-    var config: any = {
+    const config: any = {
         positions: positions,
         cells: cells,
         lightPosition: [data.lightposition.x, data.lightposition.y, data.lightposition.z],
@@ -95,7 +95,7 @@ proto.update = function(data) {
         useFacetNormals: data.flatshading
     };
 
-    var cOpts = extractOpts(data);
+    const cOpts = extractOpts(data);
     config.vertexIntensity = data._meshIntensity;
     config.vertexIntensityBounds = [cOpts.min, cOpts.max];
     config.colormap = parseColorScale(data);
@@ -110,9 +110,9 @@ proto.dispose = function() {
 };
 
 function createVolumeTrace(scene, data) {
-    var gl = scene.glplot.gl;
-    var mesh = createMesh({gl: gl});
-    var result = new VolumeTrace(scene, mesh, data.uid);
+    const gl = scene.glplot.gl;
+    const mesh = createMesh({gl: gl});
+    const result = new VolumeTrace(scene, mesh, data.uid);
 
     mesh._trace = result;
     result.update(data);

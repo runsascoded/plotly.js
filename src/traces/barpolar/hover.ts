@@ -6,29 +6,29 @@ import _hover2 from '../scatterpolar/hover.js';
 const { makeHoverPointText } = _hover2;
 import _helpers from '../../plots/polar/helpers.js';
 const { isPtInsidePolygon } = _helpers;
-var fillText = Lib.fillText;
+const fillText = Lib.fillText;
 
 export default function hoverPoints(pointData, xval, yval) {
-    var cd = pointData.cd;
-    var trace = cd[0].trace;
+    const cd = pointData.cd;
+    const trace = cd[0].trace;
 
-    var subplot = pointData.subplot;
-    var radialAxis = subplot.radialAxis;
-    var angularAxis = subplot.angularAxis;
-    var vangles = subplot.vangles;
-    var inboxFn = vangles ? isPtInsidePolygon : Lib.isPtInsideSector;
-    var maxHoverDistance = pointData.maxHoverDistance;
-    var period = angularAxis._period || 2 * Math.PI;
+    const subplot = pointData.subplot;
+    const radialAxis = subplot.radialAxis;
+    const angularAxis = subplot.angularAxis;
+    const vangles = subplot.vangles;
+    const inboxFn = vangles ? isPtInsidePolygon : Lib.isPtInsideSector;
+    const maxHoverDistance = pointData.maxHoverDistance;
+    const period = angularAxis._period || 2 * Math.PI;
 
-    var rVal = Math.abs(radialAxis.g2p(Math.sqrt(xval * xval + yval * yval)));
-    var thetaVal = Math.atan2(yval, xval);
+    const rVal = Math.abs(radialAxis.g2p(Math.sqrt(xval * xval + yval * yval)));
+    let thetaVal = Math.atan2(yval, xval);
 
     // polar.(x|y)axis.p2c doesn't get the reversed radial axis range case right
     if(radialAxis.range[0] > radialAxis.range[1]) {
         thetaVal += Math.PI;
     }
 
-    var distFn = function(di) {
+    const distFn = function(di) {
         if(inboxFn(rVal, thetaVal, [di.rp0, di.rp1], [di.thetag0, di.thetag1], vangles)) {
             return maxHoverDistance +
                 // add a little to the pseudo-distance for wider bars, so that like scatter,
@@ -45,13 +45,13 @@ export default function hoverPoints(pointData, xval, yval) {
     Fx.getClosest(cd, distFn, pointData);
     if(pointData.index === false) return;
 
-    var index = pointData.index;
-    var cdi = cd[index];
+    const index = pointData.index;
+    const cdi = cd[index];
 
     pointData.x0 = pointData.x1 = cdi.ct[0];
     pointData.y0 = pointData.y1 = cdi.ct[1];
 
-    var _cdi = Lib.extendFlat({}, cdi, {r: cdi.s, theta: cdi.p});
+    const _cdi = Lib.extendFlat({}, cdi, {r: cdi.s, theta: cdi.p});
     fillText(cdi, trace, pointData);
     makeHoverPointText(_cdi, trace, subplot, pointData);
     pointData.hovertemplate = trace.hovertemplate;

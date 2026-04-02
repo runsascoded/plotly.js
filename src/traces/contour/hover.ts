@@ -5,11 +5,11 @@ export default function hoverPoints(pointData,  xval,  yval,  hovermode,  opts) 
     if(!opts) opts = {};
     opts.isContour = true;
 
-    var hoverData = heatmapHoverPoints(pointData, xval, yval, hovermode, opts);
+    const hoverData = heatmapHoverPoints(pointData, xval, yval, hovermode, opts);
 
     if(hoverData) {
         hoverData.forEach(function(hoverPt) {
-            var trace = hoverPt.trace;
+            const trace = hoverPt.trace;
             if(trace.contours.type === 'constraint') {
                 if(trace.fillcolor && Color.opacity(trace.fillcolor)) {
                     hoverPt.color = Color.addOpacity(trace.fillcolor, 1);

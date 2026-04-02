@@ -5,7 +5,7 @@ import colorScaleAttrs from '../../components/colorscale/attributes.js';
 import { hovertemplateAttrs, templatefallbackAttrs } from '../../plots/template_attributes.js';
 import { attributes as domainAttrs } from '../../plots/domain.js';
 
-var line = extendFlat({ editType: 'calc' }, colorScaleAttrs('line', { editTypeOverride: 'calc' }), {
+const line = extendFlat({ editType: 'calc' }, colorScaleAttrs('line', { editTypeOverride: 'calc' }), {
     shape: {
         valType: 'enumerated',
         values: ['linear', 'hspline'],

@@ -1,7 +1,7 @@
 export default function(pathinfo, contours) {
-    var pi0 = pathinfo[0];
-    var z = pi0.z;
-    var i;
+    const pi0 = pathinfo[0];
+    const z = pi0.z;
+    let i;
 
     switch(contours.type) {
         case 'levels':
@@ -9,10 +9,10 @@ export default function(pathinfo, contours) {
             //
             // N.B. using boundaryMin instead of edgeVal2 here makes the
             //      `contour_scatter` mock fail
-            var edgeVal2 = Math.min(z[0][0], z[0][1]);
+            const edgeVal2 = Math.min(z[0][0], z[0][1]);
 
             for(i = 0; i < pathinfo.length; i++) {
-                var pi = pathinfo[i];
+                const pi = pathinfo[i];
                 pi.prefixBoundary = !pi.edgepaths.length &&
                     (edgeVal2 > pi.level || pi.starts.length && edgeVal2 === pi.level);
             }
@@ -24,10 +24,10 @@ export default function(pathinfo, contours) {
             // joinAllPaths does enough already when edgepaths are present
             if(pi0.edgepaths.length) return;
 
-            var na = pi0.x.length;
-            var nb = pi0.y.length;
-            var boundaryMax = -Infinity;
-            var boundaryMin = Infinity;
+            const na = pi0.x.length;
+            const nb = pi0.y.length;
+            let boundaryMax = -Infinity;
+            let boundaryMin = Infinity;
 
             for(i = 0; i < nb; i++) {
                 boundaryMin = Math.min(boundaryMin, z[i][0]);
@@ -42,8 +42,8 @@ export default function(pathinfo, contours) {
                 boundaryMax = Math.max(boundaryMax, z[nb - 1][i]);
             }
 
-            var contoursValue = contours.value;
-            var v1, v2;
+            const contoursValue = contours.value;
+            let v1, v2;
 
             switch(contours._operation) {
                 case '>':

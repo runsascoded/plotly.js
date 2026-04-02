@@ -67,7 +67,7 @@ export default {
 };
 
 function barPolarMarker() {
-    var marker = extendFlat({}, barAttrs.marker);
+    const marker = extendFlat({}, barAttrs.marker);
     delete marker.cornerradius;
     return marker;
 }

@@ -1,14 +1,14 @@
 import sortObjectKeys from '../../lib/sort_object_keys.js';
 
-var requiredVersion = '1.13.4';
+const requiredVersion = '1.13.4';
 
-var OSM = '© <a target="_blank" href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
-var carto = [
+const OSM = '© <a target="_blank" href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
+const carto = [
     '© <a target="_blank" href="https://carto.com/">Carto</a>',
     OSM
 ].join(' ');
 
-var stamenTerrainOrToner = [
+const stamenTerrainOrToner = [
     'Map tiles by <a target="_blank" href="https://stamen.com">Stamen Design</a>',
     'under <a target="_blank" href="https://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>',
     '|',
@@ -16,7 +16,7 @@ var stamenTerrainOrToner = [
     'under <a target="_blank" href="https://www.openstreetmap.org/copyright">ODbL</a>'
 ].join(' ');
 
-var stamenWaterColor = [
+const stamenWaterColor = [
     'Map tiles by <a target="_blank" href="https://stamen.com">Stamen Design</a>',
     'under <a target="_blank" href="https://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>',
     '|',
@@ -24,7 +24,7 @@ var stamenWaterColor = [
     'under <a target="_blank" href="https://creativecommons.org/licenses/by-sa/3.0">CC BY SA</a>'
 ].join(' ');
 
-var stylesNonMapbox = {
+const stylesNonMapbox = {
     'open-street-map': {
         id: 'osm',
         version: 8,
@@ -163,7 +163,7 @@ var stylesNonMapbox = {
     }
 };
 
-var styleValuesNonMapbox = sortObjectKeys(stylesNonMapbox);
+const styleValuesNonMapbox = sortObjectKeys(stylesNonMapbox);
 
 export default {
     requiredVersion: requiredVersion,

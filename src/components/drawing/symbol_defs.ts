@@ -3,12 +3,12 @@ function round(x: number, n: number): number {
     return n ? Math.round(x * (n = Math.pow(10, n))) / n : Math.round(x);
 }
 
-var emptyPath = 'M0,0Z';
-var sqrt2 = Math.sqrt(2);
-var sqrt3 = Math.sqrt(3);
-var PI = Math.PI;
-var cos = Math.cos;
-var sin = Math.sin;
+const emptyPath = 'M0,0Z';
+const sqrt2 = Math.sqrt(2);
+const sqrt3 = Math.sqrt(3);
+const PI = Math.PI;
+const cos = Math.cos;
+const sin = Math.sin;
 
 export default {
     circle: {
@@ -16,8 +16,8 @@ export default {
         f: function(r: number, angle: number | null, standoff: number): string {
             if(skipAngle(angle)) return emptyPath;
 
-            var rs = round(r, 2);
-            var circle = 'M' + rs + ',0A' + rs + ',' + rs + ' 0 1,1 0,-' + rs + 'A' + rs + ',' + rs + ' 0 0,1 ' + rs + ',0Z';
+            const rs = round(r, 2);
+            const circle = 'M' + rs + ',0A' + rs + ',' + rs + ' 0 1,1 0,-' + rs + 'A' + rs + ',' + rs + ' 0 0,1 ' + rs + ',0Z';
             return standoff ? align(angle!, standoff, circle) : circle;
         }
     },
@@ -26,7 +26,7 @@ export default {
         f: function(r: number, angle: number | null, standoff: number): string {
             if(skipAngle(angle)) return emptyPath;
 
-            var rs = round(r, 2);
+            const rs = round(r, 2);
             return align(angle!, standoff, 'M' + rs + ',' + rs + 'H-' + rs + 'V-' + rs + 'H' + rs + 'Z');
         }
     },
@@ -35,7 +35,7 @@ export default {
         f: function(r: number, angle: number | null, standoff: number): string {
             if(skipAngle(angle)) return emptyPath;
 
-            var rd = round(r * 1.3, 2);
+            const rd = round(r * 1.3, 2);
             return align(angle!, standoff, 'M' + rd + ',0L0,' + rd + 'L-' + rd + ',0L0,-' + rd + 'Z');
         }
     },
@@ -44,8 +44,8 @@ export default {
         f: function(r: number, angle: number | null, standoff: number): string {
             if(skipAngle(angle)) return emptyPath;
 
-            var rc = round(r * 0.4, 2);
-            var rc2 = round(r * 1.2, 2);
+            const rc = round(r * 0.4, 2);
+            const rc2 = round(r * 1.2, 2);
             return align(angle!, standoff, 'M' + rc2 + ',' + rc + 'H' + rc + 'V' + rc2 + 'H-' + rc +
                 'V' + rc + 'H-' + rc2 + 'V-' + rc + 'H-' + rc + 'V-' + rc2 +
                 'H' + rc + 'V-' + rc + 'H' + rc2 + 'Z');
@@ -56,11 +56,11 @@ export default {
         f: function(r: number, angle: number | null, standoff: number): string {
             if(skipAngle(angle)) return emptyPath;
 
-            var rx = round(r * 0.8 / sqrt2, 2);
-            var ne = 'l' + rx + ',' + rx;
-            var se = 'l' + rx + ',-' + rx;
-            var sw = 'l-' + rx + ',-' + rx;
-            var nw = 'l-' + rx + ',' + rx;
+            const rx = round(r * 0.8 / sqrt2, 2);
+            const ne = 'l' + rx + ',' + rx;
+            const se = 'l' + rx + ',-' + rx;
+            const sw = 'l-' + rx + ',-' + rx;
+            const nw = 'l-' + rx + ',' + rx;
             return align(angle!, standoff, 'M0,' + rx + ne + se + sw + se + sw + nw + sw + nw + ne + nw + ne + 'Z');
         }
     },
@@ -69,9 +69,9 @@ export default {
         f: function(r: number, angle: number | null, standoff: number): string {
             if(skipAngle(angle)) return emptyPath;
 
-            var rt = round(r * 2 / sqrt3, 2);
-            var r2 = round(r / 2, 2);
-            var rs = round(r, 2);
+            const rt = round(r * 2 / sqrt3, 2);
+            const r2 = round(r / 2, 2);
+            const rs = round(r, 2);
             return align(angle!, standoff, 'M-' + rt + ',' + r2 + 'H' + rt + 'L0,-' + rs + 'Z');
         }
     },
@@ -80,9 +80,9 @@ export default {
         f: function(r: number, angle: number | null, standoff: number): string {
             if(skipAngle(angle)) return emptyPath;
 
-            var rt = round(r * 2 / sqrt3, 2);
-            var r2 = round(r / 2, 2);
-            var rs = round(r, 2);
+            const rt = round(r * 2 / sqrt3, 2);
+            const r2 = round(r / 2, 2);
+            const rs = round(r, 2);
             return align(angle!, standoff, 'M-' + rt + ',-' + r2 + 'H' + rt + 'L0,' + rs + 'Z');
         }
     },
@@ -91,9 +91,9 @@ export default {
         f: function(r: number, angle: number | null, standoff: number): string {
             if(skipAngle(angle)) return emptyPath;
 
-            var rt = round(r * 2 / sqrt3, 2);
-            var r2 = round(r / 2, 2);
-            var rs = round(r, 2);
+            const rt = round(r * 2 / sqrt3, 2);
+            const r2 = round(r / 2, 2);
+            const rs = round(r, 2);
             return align(angle!, standoff, 'M' + r2 + ',-' + rt + 'V' + rt + 'L-' + rs + ',0Z');
         }
     },
@@ -102,9 +102,9 @@ export default {
         f: function(r: number, angle: number | null, standoff: number): string {
             if(skipAngle(angle)) return emptyPath;
 
-            var rt = round(r * 2 / sqrt3, 2);
-            var r2 = round(r / 2, 2);
-            var rs = round(r, 2);
+            const rt = round(r * 2 / sqrt3, 2);
+            const r2 = round(r / 2, 2);
+            const rs = round(r, 2);
             return align(angle!, standoff, 'M-' + r2 + ',-' + rt + 'V' + rt + 'L' + rs + ',0Z');
         }
     },
@@ -113,8 +113,8 @@ export default {
         f: function(r: number, angle: number | null, standoff: number): string {
             if(skipAngle(angle)) return emptyPath;
 
-            var r1 = round(r * 0.6, 2);
-            var r2 = round(r * 1.2, 2);
+            const r1 = round(r * 0.6, 2);
+            const r2 = round(r * 1.2, 2);
             return align(angle!, standoff, 'M-' + r2 + ',-' + r1 + 'H' + r1 + 'V' + r2 + 'Z');
         }
     },
@@ -123,8 +123,8 @@ export default {
         f: function(r: number, angle: number | null, standoff: number): string {
             if(skipAngle(angle)) return emptyPath;
 
-            var r1 = round(r * 0.6, 2);
-            var r2 = round(r * 1.2, 2);
+            const r1 = round(r * 0.6, 2);
+            const r2 = round(r * 1.2, 2);
             return align(angle!, standoff, 'M' + r1 + ',-' + r2 + 'V' + r1 + 'H-' + r2 + 'Z');
         }
     },
@@ -133,8 +133,8 @@ export default {
         f: function(r: number, angle: number | null, standoff: number): string {
             if(skipAngle(angle)) return emptyPath;
 
-            var r1 = round(r * 0.6, 2);
-            var r2 = round(r * 1.2, 2);
+            const r1 = round(r * 0.6, 2);
+            const r2 = round(r * 1.2, 2);
             return align(angle!, standoff, 'M' + r2 + ',' + r1 + 'H-' + r1 + 'V-' + r2 + 'Z');
         }
     },
@@ -143,8 +143,8 @@ export default {
         f: function(r: number, angle: number | null, standoff: number): string {
             if(skipAngle(angle)) return emptyPath;
 
-            var r1 = round(r * 0.6, 2);
-            var r2 = round(r * 1.2, 2);
+            const r1 = round(r * 0.6, 2);
+            const r2 = round(r * 1.2, 2);
             return align(angle!, standoff, 'M-' + r1 + ',' + r2 + 'V-' + r1 + 'H' + r2 + 'Z');
         }
     },
@@ -153,11 +153,11 @@ export default {
         f: function(r: number, angle: number | null, standoff: number): string {
             if(skipAngle(angle)) return emptyPath;
 
-            var x1 = round(r * 0.951, 2);
-            var x2 = round(r * 0.588, 2);
-            var y0 = round(-r, 2);
-            var y1 = round(r * -0.309, 2);
-            var y2 = round(r * 0.809, 2);
+            const x1 = round(r * 0.951, 2);
+            const x2 = round(r * 0.588, 2);
+            const y0 = round(-r, 2);
+            const y1 = round(r * -0.309, 2);
+            const y2 = round(r * 0.809, 2);
             return align(angle!, standoff, 'M' + x1 + ',' + y1 + 'L' + x2 + ',' + y2 + 'H-' + x2 +
                 'L-' + x1 + ',' + y1 + 'L0,' + y0 + 'Z');
         }
@@ -167,9 +167,9 @@ export default {
         f: function(r: number, angle: number | null, standoff: number): string {
             if(skipAngle(angle)) return emptyPath;
 
-            var y0 = round(r, 2);
-            var y1 = round(r / 2, 2);
-            var x = round(r * sqrt3 / 2, 2);
+            const y0 = round(r, 2);
+            const y1 = round(r / 2, 2);
+            const x = round(r * sqrt3 / 2, 2);
             return align(angle!, standoff, 'M' + x + ',-' + y1 + 'V' + y1 + 'L0,' + y0 +
                 'L-' + x + ',' + y1 + 'V-' + y1 + 'L0,-' + y0 + 'Z');
         }
@@ -179,9 +179,9 @@ export default {
         f: function(r: number, angle: number | null, standoff: number): string {
             if(skipAngle(angle)) return emptyPath;
 
-            var x0 = round(r, 2);
-            var x1 = round(r / 2, 2);
-            var y = round(r * sqrt3 / 2, 2);
+            const x0 = round(r, 2);
+            const x1 = round(r / 2, 2);
+            const y = round(r * sqrt3 / 2, 2);
             return align(angle!, standoff, 'M-' + x1 + ',' + y + 'H' + x1 + 'L' + x0 +
                 ',0L' + x1 + ',-' + y + 'H-' + x1 + 'L-' + x0 + ',0Z');
         }
@@ -191,8 +191,8 @@ export default {
         f: function(r: number, angle: number | null, standoff: number): string {
             if(skipAngle(angle)) return emptyPath;
 
-            var a = round(r * 0.924, 2);
-            var b = round(r * 0.383, 2);
+            const a = round(r * 0.924, 2);
+            const b = round(r * 0.383, 2);
             return align(angle!, standoff, 'M-' + b + ',-' + a + 'H' + b + 'L' + a + ',-' + b + 'V' + b +
                 'L' + b + ',' + a + 'H-' + b + 'L-' + a + ',' + b + 'V-' + b + 'Z');
         }
@@ -202,16 +202,16 @@ export default {
         f: function(r: number, angle: number | null, standoff: number): string {
             if(skipAngle(angle)) return emptyPath;
 
-            var rs = r * 1.4;
-            var x1 = round(rs * 0.225, 2);
-            var x2 = round(rs * 0.951, 2);
-            var x3 = round(rs * 0.363, 2);
-            var x4 = round(rs * 0.588, 2);
-            var y0 = round(-rs, 2);
-            var y1 = round(rs * -0.309, 2);
-            var y3 = round(rs * 0.118, 2);
-            var y4 = round(rs * 0.809, 2);
-            var y5 = round(rs * 0.382, 2);
+            const rs = r * 1.4;
+            const x1 = round(rs * 0.225, 2);
+            const x2 = round(rs * 0.951, 2);
+            const x3 = round(rs * 0.363, 2);
+            const x4 = round(rs * 0.588, 2);
+            const y0 = round(-rs, 2);
+            const y1 = round(rs * -0.309, 2);
+            const y3 = round(rs * 0.118, 2);
+            const y4 = round(rs * 0.809, 2);
+            const y5 = round(rs * 0.382, 2);
             return align(angle!, standoff, 'M' + x1 + ',' + y1 + 'H' + x2 + 'L' + x3 + ',' + y3 +
                 'L' + x4 + ',' + y4 + 'L0,' + y5 + 'L-' + x4 + ',' + y4 +
                 'L-' + x3 + ',' + y3 + 'L-' + x2 + ',' + y1 + 'H-' + x1 +
@@ -223,9 +223,9 @@ export default {
         f: function(r: number, angle: number | null, standoff: number): string {
             if(skipAngle(angle)) return emptyPath;
 
-            var y = round(r * 0.66, 2);
-            var x1 = round(r * 0.38, 2);
-            var x2 = round(r * 0.76, 2);
+            const y = round(r * 0.66, 2);
+            const x1 = round(r * 0.38, 2);
+            const x2 = round(r * 0.76, 2);
             return align(angle!, standoff, 'M-' + x2 + ',0l-' + x1 + ',-' + y + 'h' + x2 +
                 'l' + x1 + ',-' + y + 'l' + x1 + ',' + y + 'h' + x2 +
                 'l-' + x1 + ',' + y + 'l' + x1 + ',' + y + 'h-' + x2 +
@@ -237,11 +237,11 @@ export default {
         f: function(r: number, angle: number | null, standoff: number): string {
             if(skipAngle(angle)) return emptyPath;
 
-            var x = round(r * sqrt3 * 0.8, 2);
-            var y1 = round(r * 0.8, 2);
-            var y2 = round(r * 1.6, 2);
-            var rc = round(r * 4, 2);
-            var aPart = 'A ' + rc + ',' + rc + ' 0 0 1 ';
+            const x = round(r * sqrt3 * 0.8, 2);
+            const y1 = round(r * 0.8, 2);
+            const y2 = round(r * 1.6, 2);
+            const rc = round(r * 4, 2);
+            const aPart = 'A ' + rc + ',' + rc + ' 0 0 1 ';
             return align(angle!, standoff, 'M-' + x + ',' + y1 + aPart + x + ',' + y1 +
                 aPart + '0,-' + y2 + aPart + '-' + x + ',' + y1 + 'Z');
         }
@@ -251,11 +251,11 @@ export default {
         f: function(r: number, angle: number | null, standoff: number): string {
             if(skipAngle(angle)) return emptyPath;
 
-            var x = round(r * sqrt3 * 0.8, 2);
-            var y1 = round(r * 0.8, 2);
-            var y2 = round(r * 1.6, 2);
-            var rc = round(r * 4, 2);
-            var aPart = 'A ' + rc + ',' + rc + ' 0 0 1 ';
+            const x = round(r * sqrt3 * 0.8, 2);
+            const y1 = round(r * 0.8, 2);
+            const y2 = round(r * 1.6, 2);
+            const rc = round(r * 4, 2);
+            const aPart = 'A ' + rc + ',' + rc + ' 0 0 1 ';
             return align(angle!, standoff, 'M' + x + ',-' + y1 + aPart + '-' + x + ',-' + y1 +
                 aPart + '0,' + y2 + aPart + x + ',-' + y1 + 'Z');
         }
@@ -265,9 +265,9 @@ export default {
         f: function(r: number, angle: number | null, standoff: number): string {
             if(skipAngle(angle)) return emptyPath;
 
-            var rp = round(r * 1.1, 2);
-            var rc = round(r * 2, 2);
-            var aPart = 'A ' + rc + ',' + rc + ' 0 0 1 ';
+            const rp = round(r * 1.1, 2);
+            const rc = round(r * 2, 2);
+            const aPart = 'A ' + rc + ',' + rc + ' 0 0 1 ';
             return align(angle!, standoff, 'M-' + rp + ',-' + rp + aPart + '-' + rp + ',' + rp +
                 aPart + rp + ',' + rp + aPart + rp + ',-' + rp +
                 aPart + '-' + rp + ',-' + rp + 'Z');
@@ -278,9 +278,9 @@ export default {
         f: function(r: number, angle: number | null, standoff: number): string {
             if(skipAngle(angle)) return emptyPath;
 
-            var rp = round(r * 1.4, 2);
-            var rc = round(r * 1.9, 2);
-            var aPart = 'A ' + rc + ',' + rc + ' 0 0 1 ';
+            const rp = round(r * 1.4, 2);
+            const rc = round(r * 1.9, 2);
+            const aPart = 'A ' + rc + ',' + rc + ' 0 0 1 ';
             return align(angle!, standoff, 'M-' + rp + ',0' + aPart + '0,' + rp +
                 aPart + rp + ',0' + aPart + '0,-' + rp +
                 aPart + '-' + rp + ',0' + 'Z');
@@ -291,8 +291,8 @@ export default {
         f: function(r: number, angle: number | null, standoff: number): string {
             if(skipAngle(angle)) return emptyPath;
 
-            var x = round(r * 0.7, 2);
-            var y = round(r * 1.4, 2);
+            const x = round(r * 0.7, 2);
+            const y = round(r * 1.4, 2);
             return align(angle!, standoff, 'M0,' + y + 'L' + x + ',0L0,-' + y + 'L-' + x + ',0Z');
         }
     },
@@ -301,8 +301,8 @@ export default {
         f: function(r: number, angle: number | null, standoff: number): string {
             if(skipAngle(angle)) return emptyPath;
 
-            var x = round(r * 1.4, 2);
-            var y = round(r * 0.7, 2);
+            const x = round(r * 1.4, 2);
+            const y = round(r * 0.7, 2);
             return align(angle!, standoff, 'M0,' + y + 'L' + x + ',0L0,-' + y + 'L-' + x + ',0Z');
         }
     },
@@ -311,7 +311,7 @@ export default {
         f: function(r: number, angle: number | null, standoff: number): string {
             if(skipAngle(angle)) return emptyPath;
 
-            var rs = round(r, 2);
+            const rs = round(r, 2);
             return align(angle!, standoff, 'M' + rs + ',' + rs + 'H-' + rs + 'L' + rs + ',-' + rs + 'H-' + rs + 'Z');
         },
         noDot: true
@@ -321,7 +321,7 @@ export default {
         f: function(r: number, angle: number | null, standoff: number): string {
             if(skipAngle(angle)) return emptyPath;
 
-            var rs = round(r, 2);
+            const rs = round(r, 2);
             return align(angle!, standoff, 'M' + rs + ',' + rs + 'V-' + rs + 'L-' + rs + ',' + rs + 'V-' + rs + 'Z');
         },
         noDot: true
@@ -331,7 +331,7 @@ export default {
         f: function(r: number, angle: number | null, standoff: number): string {
             if(skipAngle(angle)) return emptyPath;
 
-            var rs = round(r, 2);
+            const rs = round(r, 2);
             return align(angle!, standoff, 'M0,' + rs + 'V-' + rs + 'M' + rs + ',0H-' + rs +
                 'M' + rs + ',0A' + rs + ',' + rs + ' 0 1,1 0,-' + rs +
                 'A' + rs + ',' + rs + ' 0 0,1 ' + rs + ',0Z');
@@ -344,8 +344,8 @@ export default {
         f: function(r: number, angle: number | null, standoff: number): string {
             if(skipAngle(angle)) return emptyPath;
 
-            var rs = round(r, 2);
-            var rc = round(r / sqrt2, 2);
+            const rs = round(r, 2);
+            const rc = round(r / sqrt2, 2);
             return align(angle!, standoff, 'M' + rc + ',' + rc + 'L-' + rc + ',-' + rc +
                 'M' + rc + ',-' + rc + 'L-' + rc + ',' + rc +
                 'M' + rs + ',0A' + rs + ',' + rs + ' 0 1,1 0,-' + rs +
@@ -359,7 +359,7 @@ export default {
         f: function(r: number, angle: number | null, standoff: number): string {
             if(skipAngle(angle)) return emptyPath;
 
-            var rs = round(r, 2);
+            const rs = round(r, 2);
             return align(angle!, standoff, 'M0,' + rs + 'V-' + rs + 'M' + rs + ',0H-' + rs +
                 'M' + rs + ',' + rs + 'H-' + rs + 'V-' + rs + 'H' + rs + 'Z');
         },
@@ -371,7 +371,7 @@ export default {
         f: function(r: number, angle: number | null, standoff: number): string {
             if(skipAngle(angle)) return emptyPath;
 
-            var rs = round(r, 2);
+            const rs = round(r, 2);
             return align(angle!, standoff, 'M' + rs + ',' + rs + 'L-' + rs + ',-' + rs +
                 'M' + rs + ',-' + rs + 'L-' + rs + ',' + rs +
                 'M' + rs + ',' + rs + 'H-' + rs + 'V-' + rs + 'H' + rs + 'Z');
@@ -384,7 +384,7 @@ export default {
         f: function(r: number, angle: number | null, standoff: number): string {
             if(skipAngle(angle)) return emptyPath;
 
-            var rd = round(r * 1.3, 2);
+            const rd = round(r * 1.3, 2);
             return align(angle!, standoff, 'M' + rd + ',0L0,' + rd + 'L-' + rd + ',0L0,-' + rd + 'Z' +
                 'M0,-' + rd + 'V' + rd + 'M-' + rd + ',0H' + rd);
         },
@@ -396,8 +396,8 @@ export default {
         f: function(r: number, angle: number | null, standoff: number): string {
             if(skipAngle(angle)) return emptyPath;
 
-            var rd = round(r * 1.3, 2);
-            var r2 = round(r * 0.65, 2);
+            const rd = round(r * 1.3, 2);
+            const r2 = round(r * 0.65, 2);
             return align(angle!, standoff, 'M' + rd + ',0L0,' + rd + 'L-' + rd + ',0L0,-' + rd + 'Z' +
                 'M-' + r2 + ',-' + r2 + 'L' + r2 + ',' + r2 +
                 'M-' + r2 + ',' + r2 + 'L' + r2 + ',-' + r2);
@@ -410,7 +410,7 @@ export default {
         f: function(r: number, angle: number | null, standoff: number): string {
             if(skipAngle(angle)) return emptyPath;
 
-            var rc = round(r * 1.4, 2);
+            const rc = round(r * 1.4, 2);
             return align(angle!, standoff, 'M0,' + rc + 'V-' + rc + 'M' + rc + ',0H-' + rc);
         },
         needLine: true,
@@ -422,7 +422,7 @@ export default {
         f: function(r: number, angle: number | null, standoff: number): string {
             if(skipAngle(angle)) return emptyPath;
 
-            var rx = round(r, 2);
+            const rx = round(r, 2);
             return align(angle!, standoff, 'M' + rx + ',' + rx + 'L-' + rx + ',-' + rx +
                 'M' + rx + ',-' + rx + 'L-' + rx + ',' + rx);
         },
@@ -435,8 +435,8 @@ export default {
         f: function(r: number, angle: number | null, standoff: number): string {
             if(skipAngle(angle)) return emptyPath;
 
-            var rc = round(r * 1.2, 2);
-            var rs = round(r * 0.85, 2);
+            const rc = round(r * 1.2, 2);
+            const rs = round(r * 0.85, 2);
             return align(angle!, standoff, 'M0,' + rc + 'V-' + rc + 'M' + rc + ',0H-' + rc +
                 'M' + rs + ',' + rs + 'L-' + rs + ',-' + rs +
                 'M' + rs + ',-' + rs + 'L-' + rs + ',' + rs);
@@ -450,8 +450,8 @@ export default {
         f: function(r: number, angle: number | null, standoff: number): string {
             if(skipAngle(angle)) return emptyPath;
 
-            var r1 = round(r / 2, 2);
-            var r2 = round(r, 2);
+            const r1 = round(r / 2, 2);
+            const r2 = round(r, 2);
 
             return align(angle!, standoff, 'M' + r1 + ',' + r2 + 'V-' + r2 +
                 'M' + (r1 - r2) + ',-' + r2 + 'V' + r2 +
@@ -466,9 +466,9 @@ export default {
         f: function(r: number, angle: number | null, standoff: number): string {
             if(skipAngle(angle)) return emptyPath;
 
-            var x = round(r * 1.2, 2);
-            var y0 = round(r * 1.6, 2);
-            var y1 = round(r * 0.8, 2);
+            const x = round(r * 1.2, 2);
+            const y0 = round(r * 1.6, 2);
+            const y1 = round(r * 0.8, 2);
             return align(angle!, standoff, 'M-' + x + ',' + y1 + 'L0,0M' + x + ',' + y1 + 'L0,0M0,-' + y0 + 'L0,0');
         },
         needLine: true,
@@ -480,9 +480,9 @@ export default {
         f: function(r: number, angle: number | null, standoff: number): string {
             if(skipAngle(angle)) return emptyPath;
 
-            var x = round(r * 1.2, 2);
-            var y0 = round(r * 1.6, 2);
-            var y1 = round(r * 0.8, 2);
+            const x = round(r * 1.2, 2);
+            const y0 = round(r * 1.6, 2);
+            const y1 = round(r * 0.8, 2);
             return align(angle!, standoff, 'M-' + x + ',-' + y1 + 'L0,0M' + x + ',-' + y1 + 'L0,0M0,' + y0 + 'L0,0');
         },
         needLine: true,
@@ -494,9 +494,9 @@ export default {
         f: function(r: number, angle: number | null, standoff: number): string {
             if(skipAngle(angle)) return emptyPath;
 
-            var y = round(r * 1.2, 2);
-            var x0 = round(r * 1.6, 2);
-            var x1 = round(r * 0.8, 2);
+            const y = round(r * 1.2, 2);
+            const x0 = round(r * 1.6, 2);
+            const x1 = round(r * 0.8, 2);
             return align(angle!, standoff, 'M' + x1 + ',' + y + 'L0,0M' + x1 + ',-' + y + 'L0,0M-' + x0 + ',0L0,0');
         },
         needLine: true,
@@ -508,9 +508,9 @@ export default {
         f: function(r: number, angle: number | null, standoff: number): string {
             if(skipAngle(angle)) return emptyPath;
 
-            var y = round(r * 1.2, 2);
-            var x0 = round(r * 1.6, 2);
-            var x1 = round(r * 0.8, 2);
+            const y = round(r * 1.2, 2);
+            const x0 = round(r * 1.6, 2);
+            const x1 = round(r * 0.8, 2);
             return align(angle!, standoff, 'M-' + x1 + ',' + y + 'L0,0M-' + x1 + ',-' + y + 'L0,0M' + x0 + ',0L0,0');
         },
         needLine: true,
@@ -522,7 +522,7 @@ export default {
         f: function(r: number, angle: number | null, standoff: number): string {
             if(skipAngle(angle)) return emptyPath;
 
-            var rc = round(r * 1.4, 2);
+            const rc = round(r * 1.4, 2);
             return align(angle!, standoff, 'M' + rc + ',0H-' + rc);
         },
         needLine: true,
@@ -534,7 +534,7 @@ export default {
         f: function(r: number, angle: number | null, standoff: number): string {
             if(skipAngle(angle)) return emptyPath;
 
-            var rc = round(r * 1.4, 2);
+            const rc = round(r * 1.4, 2);
             return align(angle!, standoff, 'M0,' + rc + 'V-' + rc);
         },
         needLine: true,
@@ -546,7 +546,7 @@ export default {
         f: function(r: number, angle: number | null, standoff: number): string {
             if(skipAngle(angle)) return emptyPath;
 
-            var rx = round(r, 2);
+            const rx = round(r, 2);
             return align(angle!, standoff, 'M' + rx + ',-' + rx + 'L-' + rx + ',' + rx);
         },
         needLine: true,
@@ -558,7 +558,7 @@ export default {
         f: function(r: number, angle: number | null, standoff: number): string {
             if(skipAngle(angle)) return emptyPath;
 
-            var rx = round(r, 2);
+            const rx = round(r, 2);
             return align(angle!, standoff, 'M' + rx + ',' + rx + 'L-' + rx + ',-' + rx);
         },
         needLine: true,
@@ -570,8 +570,8 @@ export default {
         f: function(r: number, angle: number | null, standoff: number): string {
             if(skipAngle(angle)) return emptyPath;
 
-            var rx = round(r, 2);
-            var ry = round(r * 2, 2);
+            const rx = round(r, 2);
+            const ry = round(r * 2, 2);
             return align(angle!, standoff, 'M0,0L-' + rx + ',' + ry + 'H' + rx + 'Z');
         },
         backoff: 1,
@@ -582,8 +582,8 @@ export default {
         f: function(r: number, angle: number | null, standoff: number): string {
             if(skipAngle(angle)) return emptyPath;
 
-            var rx = round(r, 2);
-            var ry = round(r * 2, 2);
+            const rx = round(r, 2);
+            const ry = round(r * 2, 2);
             return align(angle!, standoff, 'M0,0L-' + rx + ',-' + ry + 'H' + rx + 'Z');
         },
         noDot: true
@@ -593,8 +593,8 @@ export default {
         f: function(r: number, angle: number | null, standoff: number): string {
             if(skipAngle(angle)) return emptyPath;
 
-            var rx = round(r * 2, 2);
-            var ry = round(r, 2);
+            const rx = round(r * 2, 2);
+            const ry = round(r, 2);
             return align(angle!, standoff, 'M0,0L' + rx + ',-' + ry + 'V' + ry + 'Z');
         },
         noDot: true
@@ -604,8 +604,8 @@ export default {
         f: function(r: number, angle: number | null, standoff: number): string {
             if(skipAngle(angle)) return emptyPath;
 
-            var rx = round(r * 2, 2);
-            var ry = round(r, 2);
+            const rx = round(r * 2, 2);
+            const ry = round(r, 2);
             return align(angle!, standoff, 'M0,0L-' + rx + ',-' + ry + 'V' + ry + 'Z');
         },
         noDot: true
@@ -615,8 +615,8 @@ export default {
         f: function(r: number, angle: number | null, standoff: number): string {
             if(skipAngle(angle)) return emptyPath;
 
-            var rx = round(r, 2);
-            var ry = round(r * 2, 2);
+            const rx = round(r, 2);
+            const ry = round(r * 2, 2);
             return align(angle!, standoff, 'M-' + rx + ',0H' + rx + 'M0,0L-' + rx + ',' + ry + 'H' + rx + 'Z');
         },
         backoff: 1,
@@ -628,8 +628,8 @@ export default {
         f: function(r: number, angle: number | null, standoff: number): string {
             if(skipAngle(angle)) return emptyPath;
 
-            var rx = round(r, 2);
-            var ry = round(r * 2, 2);
+            const rx = round(r, 2);
+            const ry = round(r * 2, 2);
             return align(angle!, standoff, 'M-' + rx + ',0H' + rx + 'M0,0L-' + rx + ',-' + ry + 'H' + rx + 'Z');
         },
         needLine: true,
@@ -640,8 +640,8 @@ export default {
         f: function(r: number, angle: number | null, standoff: number): string {
             if(skipAngle(angle)) return emptyPath;
 
-            var rx = round(r * 2, 2);
-            var ry = round(r, 2);
+            const rx = round(r * 2, 2);
+            const ry = round(r, 2);
             return align(angle!, standoff, 'M0,-' + ry + 'V' + ry + 'M0,0L' + rx + ',-' + ry + 'V' + ry + 'Z');
         },
         needLine: true,
@@ -652,8 +652,8 @@ export default {
         f: function(r: number, angle: number | null, standoff: number): string {
             if(skipAngle(angle)) return emptyPath;
 
-            var rx = round(r * 2, 2);
-            var ry = round(r, 2);
+            const rx = round(r * 2, 2);
+            const ry = round(r, 2);
             return align(angle!, standoff, 'M0,-' + ry + 'V' + ry + 'M0,0L-' + rx + ',-' + ry + 'V' + ry + 'Z');
         },
         needLine: true,
@@ -664,9 +664,9 @@ export default {
         f: function(r: number, angle: number | null, standoff: number): string {
             if(skipAngle(angle)) return emptyPath;
 
-            var headAngle = PI / 2.5;
-            var x = 2 * r * cos(headAngle);
-            var y = 2 * r * sin(headAngle);
+            const headAngle = PI / 2.5;
+            const x = 2 * r * cos(headAngle);
+            const y = 2 * r * sin(headAngle);
 
             return align(angle!, standoff,
                 'M0,0' +
@@ -683,9 +683,9 @@ export default {
         f: function(r: number, angle: number | null, standoff: number): string {
             if(skipAngle(angle)) return emptyPath;
 
-            var headAngle = PI / 4;
-            var x = 2 * r * cos(headAngle);
-            var y = 2 * r * sin(headAngle);
+            const headAngle = PI / 4;
+            const x = 2 * r * cos(headAngle);
+            const y = 2 * r * sin(headAngle);
 
             return align(angle!, standoff,
                 'M0,0' +
@@ -703,8 +703,8 @@ function skipAngle(angle: number | null): boolean {
     return angle === null;
 }
 
-var lastPathIn: string, lastPathOut: string;
-var lastAngle: number, lastStandoff: number;
+let lastPathIn: string, lastPathOut: string;
+let lastAngle: number, lastStandoff: number;
 
 function align(angle: number, standoff: number, path: string): string {
     if((!angle || angle % 360 === 0) && !standoff) return path;
@@ -720,30 +720,30 @@ function align(angle: number, standoff: number, path: string): string {
     lastPathIn = path;
 
     function rotate(t: number, xy: number[]): number[] {
-        var cosT = cos(t);
-        var sinT = sin(t);
+        const cosT = cos(t);
+        const sinT = sin(t);
 
-        var x = xy[0];
-        var y = xy[1] + (standoff || 0);
+        const x = xy[0];
+        const y = xy[1] + (standoff || 0);
         return [
             x * cosT - y * sinT,
             x * sinT + y * cosT
         ];
     }
 
-    var t = angle / 180 * PI;
+    const t = angle / 180 * PI;
 
-    var x = 0;
-    var y = 0;
-    var cmd = parseSvgPath(path);
-    var str = '';
+    let x = 0;
+    let y = 0;
+    const cmd = parseSvgPath(path);
+    let str = '';
 
-    for(var i = 0; i < cmd.length; i++) {
-        var cmdI = cmd[i];
-        var op = cmdI[0];
+    for(let i = 0; i < cmd.length; i++) {
+        const cmdI = cmd[i];
+        let op = cmdI[0];
 
-        var x0 = x;
-        var y0 = y;
+        const x0 = x;
+        const y0 = y;
 
         if(op === 'M' || op === 'L') {
             x = +cmdI[1];
@@ -763,7 +763,7 @@ function align(angle: number, standoff: number, path: string): string {
             x = +cmdI[1];
             y = +cmdI[2];
 
-            var E = rotate(t, [+cmdI[6], +cmdI[7]]);
+            const E = rotate(t, [+cmdI[6], +cmdI[7]]);
             cmdI[6] = E[0];
             cmdI[7] = E[1];
             cmdI[3] = +cmdI[3] + angle;
@@ -777,7 +777,7 @@ function align(angle: number, standoff: number, path: string): string {
             y -= y0;
         }
 
-        var B = rotate(t, [x, y]);
+        const B = rotate(t, [x, y]);
 
         if(op === 'H' || op === 'V') op = 'L';
 

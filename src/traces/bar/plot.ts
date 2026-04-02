@@ -15,13 +15,13 @@ import helpers from './helpers.js';
 import constants from './constants.js';
 import attributes from './attributes.js';
 import { appendArrayPointValue } from '../../components/fx/helpers.js';
-var recordMinTextSize = uniformText.recordMinTextSize;
-var clearMinTextSize = uniformText.clearMinTextSize;
+const recordMinTextSize = uniformText.recordMinTextSize;
+const clearMinTextSize = uniformText.clearMinTextSize;
 
-var attributeText = attributes.text;
-var attributeTextPosition = attributes.textposition;
+const attributeText = attributes.text;
+const attributeTextPosition = attributes.textposition;
 
-var TEXTPAD = constants.TEXTPAD;
+const TEXTPAD = constants.TEXTPAD;
 
 function keyFunc(d: any): string {
     return d.id;
@@ -44,11 +44,11 @@ function dirSign(a: number, b: number): number {
 }
 
 function getXY(di: any, xa: any, ya: any, isHorizontal: boolean): number[][] {
-    var s = [];
-    var p = [];
+    const s = [];
+    const p = [];
 
-    var sAxis = isHorizontal ? xa : ya;
-    var pAxis = isHorizontal ? ya : xa;
+    const sAxis = isHorizontal ? xa : ya;
+    const pAxis = isHorizontal ? ya : xa;
 
     s[0] = sAxis.c2p(di.s0, true);
     p[0] = pAxis.c2p(di.p0, true);
@@ -61,7 +61,7 @@ function getXY(di: any, xa: any, ya: any, isHorizontal: boolean): number[][] {
 
 function transition(selection: any, fullLayout: FullLayout, opts: any, makeOnCompleteCallback: any): any {
     if (!fullLayout.uniformtext.mode && hasTransition(opts)) {
-        var onComplete;
+        let onComplete;
         if (makeOnCompleteCallback) {
             onComplete = makeOnCompleteCallback();
         }
@@ -85,10 +85,10 @@ function hasTransition(transitionOpts: any): boolean {
 }
 
 function plot(gd: GraphDiv, plotinfo: PlotInfo, cdModule: CalcDatum[][], traceLayer: any, opts: any, makeOnCompleteCallback: any): any {
-    var xa = plotinfo.xaxis;
-    var ya = plotinfo.yaxis;
-    var fullLayout = gd._fullLayout;
-    var isStatic = gd._context.staticPlot;
+    const xa = plotinfo.xaxis;
+    const ya = plotinfo.yaxis;
+    const fullLayout = gd._fullLayout;
+    const isStatic = gd._context.staticPlot;
 
     if (!opts) {
         opts = {
@@ -102,48 +102,48 @@ function plot(gd: GraphDiv, plotinfo: PlotInfo, cdModule: CalcDatum[][], traceLa
         clearMinTextSize('bar', fullLayout);
     }
 
-    var bartraces = makeTraceGroups(traceLayer, cdModule, 'trace bars').each(function (cd) {
-        var plotGroup = select(this);
-        var trace = cd[0].trace;
-        var t = cd[0].t;
-        var isWaterfall = trace.type === 'waterfall';
-        var isFunnel = trace.type === 'funnel';
-        var isHistogram = trace.type === 'histogram';
-        var isBar = trace.type === 'bar';
-        var shouldDisplayZeros = isBar || isFunnel;
-        var adjustPixel = 0;
+    const bartraces = makeTraceGroups(traceLayer, cdModule, 'trace bars').each(function (cd) {
+        const plotGroup = select(this);
+        const trace = cd[0].trace;
+        const t = cd[0].t;
+        const isWaterfall = trace.type === 'waterfall';
+        const isFunnel = trace.type === 'funnel';
+        const isHistogram = trace.type === 'histogram';
+        const isBar = trace.type === 'bar';
+        const shouldDisplayZeros = isBar || isFunnel;
+        let adjustPixel = 0;
         if (isWaterfall && trace.connector.visible && trace.connector.mode === 'between') {
             adjustPixel = trace.connector.line.width / 2;
         }
 
-        var isHorizontal = trace.orientation === 'h';
-        var withTransition = hasTransition(opts);
+        const isHorizontal = trace.orientation === 'h';
+        const withTransition = hasTransition(opts);
 
-        var pointGroup = ensureSingle(plotGroup, 'g', 'points');
+        const pointGroup = ensureSingle(plotGroup, 'g', 'points');
 
-        var keyFunc = getKeyFunc(trace);
-        var bars = pointGroup.selectAll('g.point').data(identity, keyFunc);
+        const keyFunc = getKeyFunc(trace);
+        const bars = pointGroup.selectAll('g.point').data(identity, keyFunc);
 
         bars.enter().append('g').classed('point', true);
 
         bars.exit().remove();
 
         bars.each(function (di, i) {
-            var bar = select(this);
+            const bar = select(this);
 
             // now display the bar
             // clipped xf/yf (2nd arg true): non-positive
             // log values go off-screen by plotwidth
             // so you see them continue if you drag the plot
-            var xy = getXY(di, xa, ya, isHorizontal);
+            const xy = getXY(di, xa, ya, isHorizontal);
 
-            var x0 = xy[0][0];
-            var x1 = xy[0][1];
-            var y0 = xy[1][0];
-            var y1 = xy[1][1];
+            let x0 = xy[0][0];
+            let x1 = xy[0][1];
+            let y0 = xy[1][0];
+            let y1 = xy[1][1];
 
             // empty bars
-            var isBlank = (isHorizontal ? x1 - x0 : y1 - y0) === 0;
+            let isBlank = (isHorizontal ? x1 - x0 : y1 - y0) === 0;
 
             // display zeros if line.width > 0
             if (isBlank && shouldDisplayZeros && helpers.getLineWidth(trace, di)) {
@@ -178,12 +178,12 @@ function plot(gd: GraphDiv, plotinfo: PlotInfo, cdModule: CalcDatum[][], traceLa
                 }
             }
 
-            var lw;
-            var mc;
+            let lw;
+            let mc;
 
             if (trace.type === 'waterfall') {
                 if (!isBlank) {
-                    var cont = trace[di.dir].marker;
+                    const cont = trace[di.dir].marker;
                     lw = cont.line.width;
                     mc = cont.color;
                 }
@@ -193,7 +193,7 @@ function plot(gd: GraphDiv, plotinfo: PlotInfo, cdModule: CalcDatum[][], traceLa
             }
 
             function roundWithLine(v: number, _vc?: number, _hideZeroSpan?: boolean): number {
-                var offset = d3Round((lw / 2) % 1, 2);
+                const offset = d3Round((lw / 2) % 1, 2);
 
                 // if there are explicit gaps, don't round,
                 // it can make the gaps look crappy
@@ -221,8 +221,8 @@ function plot(gd: GraphDiv, plotinfo: PlotInfo, cdModule: CalcDatum[][], traceLa
                       : Math.floor(v);
             }
 
-            var op = Color.opacity(mc);
-            var fixpx = op < 1 || lw > 0.01 ? roundWithLine : expandToVisible;
+            const op = Color.opacity(mc);
+            const fixpx = op < 1 || lw > 0.01 ? roundWithLine : expandToVisible;
             if (!gd._context.staticPlot) {
                 // if bars are not fully opaque or they have a line
                 // around them, round to integer pixels, mainly for
@@ -237,11 +237,11 @@ function plot(gd: GraphDiv, plotinfo: PlotInfo, cdModule: CalcDatum[][], traceLa
             }
 
             // Function to convert from size axis values to pixels
-            var c2p = isHorizontal ? xa.c2p : ya.c2p;
+            const c2p = isHorizontal ? xa.c2p : ya.c2p;
 
             // Decide whether to use upper or lower bound of current bar stack
             // as reference point for rounding
-            var outerBound;
+            let outerBound;
             if (di.s0 > 0) {
                 outerBound = di._sMax;
             } else if (di.s0 < 0) {
@@ -254,17 +254,17 @@ function plot(gd: GraphDiv, plotinfo: PlotInfo, cdModule: CalcDatum[][], traceLa
             function calcCornerRadius(crValue, crForm) {
                 if (!crValue) return 0;
 
-                var barWidth = isHorizontal ? Math.abs(y1 - y0) : Math.abs(x1 - x0);
-                var barLength = isHorizontal ? Math.abs(x1 - x0) : Math.abs(y1 - y0);
-                var stackedBarTotalLength = fixpx(Math.abs(c2p(outerBound, true) - c2p(0, true)));
-                var maxRadius = di.hasB
+                const barWidth = isHorizontal ? Math.abs(y1 - y0) : Math.abs(x1 - x0);
+                const barLength = isHorizontal ? Math.abs(x1 - x0) : Math.abs(y1 - y0);
+                const stackedBarTotalLength = fixpx(Math.abs(c2p(outerBound, true) - c2p(0, true)));
+                const maxRadius = di.hasB
                     ? Math.min(barWidth / 2, barLength / 2)
                     : Math.min(barWidth / 2, stackedBarTotalLength);
-                var crPx;
+                let crPx;
 
                 if (crForm === '%') {
                     // If radius is given as a % string, convert to number of pixels
-                    var crPercent = Math.min(50, crValue);
+                    const crPercent = Math.min(50, crValue);
                     crPx = barWidth * (crPercent / 100);
                 } else {
                     // Otherwise, it's already a number of pixels, use the given value
@@ -273,24 +273,24 @@ function plot(gd: GraphDiv, plotinfo: PlotInfo, cdModule: CalcDatum[][], traceLa
                 return fixpx(Math.max(Math.min(crPx, maxRadius), 0));
             }
             // Exclude anything which is not explicitly a bar or histogram chart from rounding
-            var r = isBar || isHistogram ? calcCornerRadius(t.cornerradiusvalue, t.cornerradiusform) : 0;
+            const r = isBar || isHistogram ? calcCornerRadius(t.cornerradiusvalue, t.cornerradiusform) : 0;
             // Construct path string for bar
-            var path, h;
+            let path, h;
             // Default rectangular path (used if no rounding)
-            var rectanglePath = 'M' + x0 + ',' + y0 + 'V' + y1 + 'H' + x1 + 'V' + y0 + 'Z';
-            var overhead = 0;
+            const rectanglePath = 'M' + x0 + ',' + y0 + 'V' + y1 + 'H' + x1 + 'V' + y0 + 'Z';
+            let overhead = 0;
             if (r && di.s) {
                 // Bar has cornerradius, and nonzero size
                 // Check amount of 'overhead' (bars stacked above this one)
                 // to see whether we need to round or not
-                var refPoint = sign(di.s0) === 0 || sign(di.s) === sign(di.s0) ? di.s1 : di.s0;
+                const refPoint = sign(di.s0) === 0 || sign(di.s) === sign(di.s0) ? di.s1 : di.s0;
                 overhead = fixpx(!di.hasB ? Math.abs(c2p(outerBound, true) - c2p(refPoint, true)) : 0);
                 if (overhead < r) {
                     // Calculate parameters for rounded corners
-                    var xdir = dirSign(x0, x1);
-                    var ydir = dirSign(y0, y1);
+                    const xdir = dirSign(x0, x1);
+                    const ydir = dirSign(y0, y1);
                     // Sweep direction for rounded corner arcs
-                    var cornersweep = xdir === -ydir ? 1 : 0;
+                    const cornersweep = xdir === -ydir ? 1 : 0;
                     if (isHorizontal) {
                         // Horizontal bars
                         if (di.hasB) {
@@ -352,9 +352,9 @@ function plot(gd: GraphDiv, plotinfo: PlotInfo, cdModule: CalcDatum[][], traceLa
 
                             // Helper variables to help with extending rounding down to lower bars
                             h = Math.abs(x1 - x0) + overhead;
-                            var dy1 = h < r ? r - Math.sqrt(h * (2 * r - h)) : 0;
-                            var dy2 = overhead > 0 ? Math.sqrt(overhead * (2 * r - overhead)) : 0;
-                            var xminfunc = xdir > 0 ? Math.max : Math.min;
+                            const dy1 = h < r ? r - Math.sqrt(h * (2 * r - h)) : 0;
+                            const dy2 = overhead > 0 ? Math.sqrt(overhead * (2 * r - overhead)) : 0;
+                            const xminfunc = xdir > 0 ? Math.max : Math.min;
 
                             path =
                                 'M' +
@@ -450,9 +450,9 @@ function plot(gd: GraphDiv, plotinfo: PlotInfo, cdModule: CalcDatum[][], traceLa
 
                             // Helper variables to help with extending rounding down to lower bars
                             h = Math.abs(y1 - y0) + overhead;
-                            var dx1 = h < r ? r - Math.sqrt(h * (2 * r - h)) : 0;
-                            var dx2 = overhead > 0 ? Math.sqrt(overhead * (2 * r - overhead)) : 0;
-                            var yminfunc = ydir > 0 ? Math.max : Math.min;
+                            const dx1 = h < r ? r - Math.sqrt(h * (2 * r - h)) : 0;
+                            const dx2 = overhead > 0 ? Math.sqrt(overhead * (2 * r - overhead)) : 0;
+                            const yminfunc = ydir > 0 ? Math.max : Math.min;
 
                             path =
                                 'M' +
@@ -497,13 +497,13 @@ function plot(gd: GraphDiv, plotinfo: PlotInfo, cdModule: CalcDatum[][], traceLa
                 path = rectanglePath;
             }
 
-            var sel = transition(ensureSingle(bar, 'path'), fullLayout, opts, makeOnCompleteCallback);
+            const sel = transition(ensureSingle(bar, 'path'), fullLayout, opts, makeOnCompleteCallback);
             sel.style('vector-effect', isStatic ? 'none' : 'non-scaling-stroke')
                 .attr('d', isNaN((x1 - x0) * (y1 - y0)) || (isBlank && gd._context.staticPlot) ? 'M0,0Z' : path)
                 .call(setClipUrl, plotinfo.layerClipId, gd);
 
             if (!fullLayout.uniformtext.mode && withTransition) {
-                var styleFns = makePointStyleFns(trace);
+                const styleFns = makePointStyleFns(trace);
                 singlePointStyle(di, sel, trace, styleFns, gd);
             }
 
@@ -516,7 +516,7 @@ function plot(gd: GraphDiv, plotinfo: PlotInfo, cdModule: CalcDatum[][], traceLa
 
         // lastly, clip points groups of `cliponaxis !== false` traces
         // on `plotinfo._hasClipOnAxisFalse === true` subplots
-        var hasClipOnAxisFalse = trace.cliponaxis === false;
+        const hasClipOnAxisFalse = trace.cliponaxis === false;
         setClipUrl(plotGroup, hasClipOnAxisFalse ? null : plotinfo.layerClipId, gd);
     });
 
@@ -525,14 +525,14 @@ function plot(gd: GraphDiv, plotinfo: PlotInfo, cdModule: CalcDatum[][], traceLa
 }
 
 function appendBarText(gd: GraphDiv, plotinfo: any, bar: any, cd: any[], i: number, x0: number, x1: number, y0: number, y1: number, r: number, overhead: number, opts: any, makeOnCompleteCallback: any): void {
-    var xa = plotinfo.xaxis;
-    var ya = plotinfo.yaxis;
+    const xa = plotinfo.xaxis;
+    const ya = plotinfo.yaxis;
 
-    var fullLayout = gd._fullLayout;
-    var textPosition;
+    const fullLayout = gd._fullLayout;
+    let textPosition;
 
     function appendTextNode(bar, text, textFont) {
-        var textSelection = ensureSingle(bar, 'text')
+        const textSelection = ensureSingle(bar, 'text')
             .text(text)
             .attr({
                 class: 'bartext bartext-' + textPosition,
@@ -548,20 +548,20 @@ function appendBarText(gd: GraphDiv, plotinfo: any, bar: any, cd: any[], i: numb
     }
 
     // get trace attributes
-    var trace = cd[0].trace;
-    var isHorizontal = trace.orientation === 'h';
+    const trace = cd[0].trace;
+    const isHorizontal = trace.orientation === 'h';
 
-    var text = getText(fullLayout, cd, i, xa, ya);
+    const text = getText(fullLayout, cd, i, xa, ya);
 
     textPosition = getTextPosition(trace, i);
 
     // compute text position
-    var inStackOrRelativeMode = opts.mode === 'stack' || opts.mode === 'relative';
+    const inStackOrRelativeMode = opts.mode === 'stack' || opts.mode === 'relative';
 
-    var calcBar = cd[i];
-    var isOutmostBar = !inStackOrRelativeMode || calcBar._outmost;
-    var hasB = calcBar.hasB;
-    var barIsRounded = r && r - overhead > TEXTPAD;
+    const calcBar = cd[i];
+    const isOutmostBar = !inStackOrRelativeMode || calcBar._outmost;
+    const hasB = calcBar.hasB;
+    const barIsRounded = r && r - overhead > TEXTPAD;
 
     if (
         !text ||
@@ -572,15 +572,15 @@ function appendBarText(gd: GraphDiv, plotinfo: any, bar: any, cd: any[], i: numb
         return;
     }
 
-    var layoutFont = fullLayout.font;
-    var barColor = style.getBarColor(cd[i], trace);
-    var insideTextFont = style.getInsideTextFont(trace, i, layoutFont, barColor);
-    var outsideTextFont = style.getOutsideTextFont(trace, i, layoutFont);
-    var insidetextanchor = trace.insidetextanchor || 'end';
+    const layoutFont = fullLayout.font;
+    const barColor = style.getBarColor(cd[i], trace);
+    const insideTextFont = style.getInsideTextFont(trace, i, layoutFont, barColor);
+    const outsideTextFont = style.getOutsideTextFont(trace, i, layoutFont);
+    const insidetextanchor = trace.insidetextanchor || 'end';
 
     // Special case: don't use the c2p(v, true) value on log size axes,
     // so that we can get correctly inside text scaling
-    var di = bar.datum();
+    const di = bar.datum();
     if (isHorizontal) {
         if (xa.type === 'log' && di.s0 <= 0) {
             if (xa.range[0] < xa.range[1]) {
@@ -600,19 +600,19 @@ function appendBarText(gd: GraphDiv, plotinfo: any, bar: any, cd: any[], i: numb
     }
 
     // Compute width and height of bar
-    var lx = Math.abs(x1 - x0);
-    var ly = Math.abs(y1 - y0);
+    const lx = Math.abs(x1 - x0);
+    const ly = Math.abs(y1 - y0);
 
     // padding excluded
-    var barWidth = lx - 2 * TEXTPAD;
-    var barHeight = ly - 2 * TEXTPAD;
+    const barWidth = lx - 2 * TEXTPAD;
+    const barHeight = ly - 2 * TEXTPAD;
 
-    var textSelection;
+    let textSelection;
 
-    var textBB;
-    var textWidth;
-    var textHeight;
-    var textFont;
+    let textBB;
+    let textWidth;
+    let textHeight;
+    let textFont;
 
     if (textPosition === 'outside') {
         if (!isOutmostBar && !calcBar.hasB) textPosition = 'inside';
@@ -631,9 +631,9 @@ function appendBarText(gd: GraphDiv, plotinfo: any, bar: any, cd: any[], i: numb
             textWidth = textBB.width;
             textHeight = textBB.height;
 
-            var textHasSize = textWidth > 0 && textHeight > 0;
+            const textHasSize = textWidth > 0 && textHeight > 0;
 
-            var fitsInside;
+            let fitsInside;
             if (barIsRounded) {
                 // If bar is rounded, check if text fits between rounded corners
                 if (hasB) {
@@ -682,7 +682,7 @@ function appendBarText(gd: GraphDiv, plotinfo: any, bar: any, cd: any[], i: numb
 
         textSelection = appendTextNode(bar, text, textFont);
 
-        var currentTransform = textSelection.attr('transform');
+        const currentTransform = textSelection.attr('transform');
         textSelection.attr('transform', '');
         (textBB = bBox(textSelection.node())), (textWidth = textBB.width), (textHeight = textBB.height);
         textSelection.attr('transform', currentTransform);
@@ -693,10 +693,10 @@ function appendBarText(gd: GraphDiv, plotinfo: any, bar: any, cd: any[], i: numb
         }
     }
 
-    var angle = trace.textangle;
+    const angle = trace.textangle;
 
     // compute text transform
-    var transform, constrained;
+    let transform, constrained;
     if (textPosition === 'outside') {
         constrained = trace.constraintext === 'both' || trace.constraintext === 'outside';
 
@@ -723,15 +723,15 @@ function appendBarText(gd: GraphDiv, plotinfo: any, bar: any, cd: any[], i: numb
     recordMinTextSize(trace.type === 'histogram' ? 'bar' : trace.type, transform, fullLayout);
     calcBar.transform = transform;
 
-    var s = transition(textSelection, fullLayout, opts, makeOnCompleteCallback);
+    const s = transition(textSelection, fullLayout, opts, makeOnCompleteCallback);
     setTransormAndDisplay(s, transform);
 }
 
 function textfitsInsideBar(barWidth: number, barHeight: number, textWidth: number, textHeight: number, isHorizontal: boolean): boolean {
     if (barWidth < 0 || barHeight < 0) return false;
-    var fitsInside = textWidth <= barWidth && textHeight <= barHeight;
-    var fitsInsideIfRotated = textWidth <= barHeight && textHeight <= barWidth;
-    var fitsInsideIfShrunk = isHorizontal
+    const fitsInside = textWidth <= barWidth && textHeight <= barHeight;
+    const fitsInsideIfRotated = textWidth <= barHeight && textHeight <= barWidth;
+    const fitsInsideIfShrunk = isHorizontal
         ? barWidth >= textWidth * (barHeight / textHeight)
         : barHeight >= textHeight * (barWidth / textWidth);
     return fitsInside || fitsInsideIfRotated || fitsInsideIfShrunk;
@@ -742,9 +742,9 @@ function getRotateFromAngle(angle: any): number {
 }
 
 function getRotatedTextSize(textBB: any, rotate: number): { x: number; y: number } {
-    var a = (Math.PI / 180) * rotate;
-    var absSin = Math.abs(Math.sin(a));
-    var absCos = Math.abs(Math.cos(a));
+    const a = (Math.PI / 180) * rotate;
+    const absSin = Math.abs(Math.sin(a));
+    const absCos = Math.abs(Math.cos(a));
 
     return {
         x: textBB.width * absCos + textBB.height * absSin,
@@ -753,32 +753,32 @@ function getRotatedTextSize(textBB: any, rotate: number): { x: number; y: number
 }
 
 function toMoveInsideBar(x0: number, x1: number, y0: number, y1: number, textBB: any, opts: any): any {
-    var isHorizontal = !!opts.isHorizontal;
-    var constrained = !!opts.constrained;
-    var angle = opts.angle || 0;
-    var anchor = opts.anchor;
-    var isEnd = anchor === 'end';
-    var isStart = anchor === 'start';
-    var leftToRight = opts.leftToRight || 0; // left: -1, center: 0, right: 1
-    var toRight = (leftToRight + 1) / 2;
-    var toLeft = 1 - toRight;
-    var hasB = opts.hasB;
-    var r = opts.r;
-    var overhead = opts.overhead;
+    const isHorizontal = !!opts.isHorizontal;
+    const constrained = !!opts.constrained;
+    const angle = opts.angle || 0;
+    const anchor = opts.anchor;
+    const isEnd = anchor === 'end';
+    const isStart = anchor === 'start';
+    const leftToRight = opts.leftToRight || 0; // left: -1, center: 0, right: 1
+    const toRight = (leftToRight + 1) / 2;
+    const toLeft = 1 - toRight;
+    const hasB = opts.hasB;
+    const r = opts.r;
+    const overhead = opts.overhead;
 
-    var textWidth = textBB.width;
-    var textHeight = textBB.height;
+    const textWidth = textBB.width;
+    const textHeight = textBB.height;
 
-    var lx = Math.abs(x1 - x0);
-    var ly = Math.abs(y1 - y0);
+    let lx = Math.abs(x1 - x0);
+    let ly = Math.abs(y1 - y0);
 
     // compute remaining space
-    var textpad = lx > 2 * TEXTPAD && ly > 2 * TEXTPAD ? TEXTPAD : 0;
+    let textpad = lx > 2 * TEXTPAD && ly > 2 * TEXTPAD ? TEXTPAD : 0;
 
     lx -= 2 * textpad;
     ly -= 2 * textpad;
 
-    var rotate = getRotateFromAngle(angle);
+    let rotate = getRotateFromAngle(angle);
     if (
         angle === 'auto' &&
         !(textWidth <= lx && textHeight <= ly) &&
@@ -788,12 +788,12 @@ function toMoveInsideBar(x0: number, x1: number, y0: number, y1: number, textBB:
         rotate += 90;
     }
 
-    var t = getRotatedTextSize(textBB, rotate);
+    const t = getRotatedTextSize(textBB, rotate);
 
-    var scale, padForRounding;
+    let scale, padForRounding;
     // Scale text for rounded bars
     if (r && r - overhead > TEXTPAD) {
-        var scaleAndPad = scaleTextForRoundedBar(x0, x1, y0, y1, t, r, overhead, isHorizontal, hasB);
+        const scaleAndPad = scaleTextForRoundedBar(x0, x1, y0, y1, t, r, overhead, isHorizontal, hasB);
         scale = scaleAndPad.scale;
         padForRounding = scaleAndPad.pad;
         // Scale text for non-rounded bars
@@ -806,20 +806,20 @@ function toMoveInsideBar(x0: number, x1: number, y0: number, y1: number, textBB:
     }
 
     // compute text and target positions
-    var textX = textBB.left * toLeft + textBB.right * toRight;
-    var textY = (textBB.top + textBB.bottom) / 2;
-    var targetX = (x0 + TEXTPAD) * toLeft + (x1 - TEXTPAD) * toRight;
-    var targetY = (y0 + y1) / 2;
-    var anchorX = 0;
-    var anchorY = 0;
+    const textX = textBB.left * toLeft + textBB.right * toRight;
+    const textY = (textBB.top + textBB.bottom) / 2;
+    let targetX = (x0 + TEXTPAD) * toLeft + (x1 - TEXTPAD) * toRight;
+    let targetY = (y0 + y1) / 2;
+    let anchorX = 0;
+    let anchorY = 0;
     if (isStart || isEnd) {
-        var extrapad = (isHorizontal ? t.x : t.y) / 2;
+        const extrapad = (isHorizontal ? t.x : t.y) / 2;
 
         if (r && (isEnd || hasB)) {
             textpad += padForRounding;
         }
 
-        var dir = isHorizontal ? dirSign(x0, x1) : dirSign(y0, y1);
+        const dir = isHorizontal ? dirSign(x0, x1) : dirSign(y0, y1);
 
         if (isHorizontal) {
             if (isStart) {
@@ -853,14 +853,14 @@ function toMoveInsideBar(x0: number, x1: number, y0: number, y1: number, textBB:
 }
 
 function scaleTextForRoundedBar(x0: number, x1: number, y0: number, y1: number, t: any, r: number, overhead: number, isHorizontal: boolean, hasB: boolean): { scale: number; pad: number } {
-    var barWidth = Math.max(0, Math.abs(x1 - x0) - 2 * TEXTPAD);
-    var barHeight = Math.max(0, Math.abs(y1 - y0) - 2 * TEXTPAD);
-    var R = r - TEXTPAD;
-    var clippedR = overhead ? R - Math.sqrt(R * R - (R - overhead) * (R - overhead)) : R;
-    var rX = hasB ? R * 2 : isHorizontal ? R - overhead : 2 * clippedR;
-    var rY = hasB ? R * 2 : isHorizontal ? 2 * clippedR : R - overhead;
-    var a, b, c;
-    var scale, pad;
+    const barWidth = Math.max(0, Math.abs(x1 - x0) - 2 * TEXTPAD);
+    const barHeight = Math.max(0, Math.abs(y1 - y0) - 2 * TEXTPAD);
+    const R = r - TEXTPAD;
+    const clippedR = overhead ? R - Math.sqrt(R * R - (R - overhead) * (R - overhead)) : R;
+    const rX = hasB ? R * 2 : isHorizontal ? R - overhead : 2 * clippedR;
+    const rY = hasB ? R * 2 : isHorizontal ? 2 * clippedR : R - overhead;
+    let a, b, c;
+    let scale, pad;
 
     if (t.y / t.x >= barHeight / (barWidth - rX)) {
         // Case 1 (Tall text)
@@ -917,16 +917,16 @@ function scaleTextForRoundedBar(x0: number, x1: number, y0: number, y1: number, 
 }
 
 function toMoveOutsideBar(x0: number, x1: number, y0: number, y1: number, textBB: any, opts: any): any {
-    var isHorizontal = !!opts.isHorizontal;
-    var constrained = !!opts.constrained;
-    var angle = opts.angle || 0;
+    const isHorizontal = !!opts.isHorizontal;
+    const constrained = !!opts.constrained;
+    const angle = opts.angle || 0;
 
-    var textWidth = textBB.width;
-    var textHeight = textBB.height;
-    var lx = Math.abs(x1 - x0);
-    var ly = Math.abs(y1 - y0);
+    const textWidth = textBB.width;
+    const textHeight = textBB.height;
+    const lx = Math.abs(x1 - x0);
+    const ly = Math.abs(y1 - y0);
 
-    var textpad;
+    let textpad;
     // Keep the padding so the text doesn't sit right against
     // the bars, but don't factor it into barWidth
     if (isHorizontal) {
@@ -936,24 +936,24 @@ function toMoveOutsideBar(x0: number, x1: number, y0: number, y1: number, textBB
     }
 
     // compute rotate and scale
-    var scale = 1;
+    let scale = 1;
     if (constrained) {
         scale = isHorizontal ? Math.min(1, ly / textHeight) : Math.min(1, lx / textWidth);
     }
 
-    var rotate = getRotateFromAngle(angle);
-    var t = getRotatedTextSize(textBB, rotate);
+    const rotate = getRotateFromAngle(angle);
+    const t = getRotatedTextSize(textBB, rotate);
 
     // compute text and target positions
-    var extrapad = (isHorizontal ? t.x : t.y) / 2;
-    var textX = (textBB.left + textBB.right) / 2;
-    var textY = (textBB.top + textBB.bottom) / 2;
-    var targetX = (x0 + x1) / 2;
-    var targetY = (y0 + y1) / 2;
-    var anchorX = 0;
-    var anchorY = 0;
+    const extrapad = (isHorizontal ? t.x : t.y) / 2;
+    const textX = (textBB.left + textBB.right) / 2;
+    const textY = (textBB.top + textBB.bottom) / 2;
+    let targetX = (x0 + x1) / 2;
+    let targetY = (y0 + y1) / 2;
+    let anchorX = 0;
+    let anchorY = 0;
 
-    var dir = isHorizontal ? dirSign(x1, x0) : dirSign(y0, y1);
+    const dir = isHorizontal ? dirSign(x1, x0) : dirSign(y0, y1);
     if (isHorizontal) {
         targetX = x1 - dir * textpad;
         anchorX = dir * extrapad;
@@ -975,10 +975,10 @@ function toMoveOutsideBar(x0: number, x1: number, y0: number, y1: number, textBB
 }
 
 function getText(fullLayout: any, cd: any[], index: number, xa: any, ya: any): string {
-    var trace = cd[0].trace;
-    var texttemplate = trace.texttemplate;
+    const trace = cd[0].trace;
+    const texttemplate = trace.texttemplate;
 
-    var value;
+    let value;
     if (texttemplate) {
         value = calcTexttemplate(fullLayout, cd, index, xa, ya);
     } else if (trace.textinfo) {
@@ -991,21 +991,21 @@ function getText(fullLayout: any, cd: any[], index: number, xa: any, ya: any): s
 }
 
 function getTextPosition(trace: any, index: number): string {
-    var value = helpers.getValue(trace.textposition, index);
+    const value = helpers.getValue(trace.textposition, index);
     return helpers.coerceEnumerated(attributeTextPosition, value);
 }
 
 function calcTexttemplate(fullLayout: any, cd: any[], index: number, xa: any, ya: any): any {
-    var trace = cd[0].trace;
-    var texttemplate = castOption(trace, index, 'texttemplate');
+    const trace = cd[0].trace;
+    const texttemplate = castOption(trace, index, 'texttemplate');
     if (!texttemplate) return '';
-    var isHistogram = trace.type === 'histogram';
-    var isWaterfall = trace.type === 'waterfall';
-    var isFunnel = trace.type === 'funnel';
-    var isHorizontal = trace.orientation === 'h';
+    const isHistogram = trace.type === 'histogram';
+    const isWaterfall = trace.type === 'waterfall';
+    const isFunnel = trace.type === 'funnel';
+    const isHorizontal = trace.orientation === 'h';
 
-    var pLetter, pAxis;
-    var vLetter, vAxis;
+    let pLetter, pAxis;
+    let vLetter, vAxis;
     if (isHorizontal) {
         pLetter = 'y';
         pAxis = ya;
@@ -1026,19 +1026,19 @@ function calcTexttemplate(fullLayout: any, cd: any[], index: number, xa: any, ya
         return tickText(vAxis, vAxis.c2l(v), true).text;
     }
 
-    var cdi = cd[index];
-    var obj: any = {};
+    const cdi = cd[index];
+    const obj: any = {};
 
     obj.label = cdi.p;
     obj.labelLabel = obj[pLetter + 'Label'] = formatLabel(cdi.p);
 
-    var tx = castOption(trace, cdi.i, 'text');
+    const tx = castOption(trace, cdi.i, 'text');
     if (tx === 0 || tx) obj.text = tx;
 
     obj.value = cdi.s;
     obj.valueLabel = obj[vLetter + 'Label'] = formatNumber(cdi.s);
 
-    var pt: any = {};
+    const pt: any = {};
     appendArrayPointValue(pt, trace, cdi.i);
 
     if (isHistogram || pt.x === undefined) pt.x = isHorizontal ? obj.value : obj.label;
@@ -1067,7 +1067,7 @@ function calcTexttemplate(fullLayout: any, cd: any[], index: number, xa: any, ya
         obj.percenTotalLabel = formatPercent(cdi.sumR);
     }
 
-    var customdata = castOption(trace, cdi.i, 'customdata');
+    const customdata = castOption(trace, cdi.i, 'customdata');
     if (customdata) obj.customdata = customdata;
     return texttemplateString({
         data: [pt, obj, trace._meta],
@@ -1079,29 +1079,29 @@ function calcTexttemplate(fullLayout: any, cd: any[], index: number, xa: any, ya
 }
 
 function calcTextinfo(cd: any[], index: number, xa: any, ya: any): string {
-    var trace = cd[0].trace;
-    var isHorizontal = trace.orientation === 'h';
-    var isWaterfall = trace.type === 'waterfall';
-    var isFunnel = trace.type === 'funnel';
+    const trace = cd[0].trace;
+    const isHorizontal = trace.orientation === 'h';
+    const isWaterfall = trace.type === 'waterfall';
+    const isFunnel = trace.type === 'funnel';
 
     function formatLabel(u) {
-        var pAxis = isHorizontal ? ya : xa;
+        const pAxis = isHorizontal ? ya : xa;
         return tickText(pAxis, u, true).text;
     }
 
     function formatNumber(v) {
-        var sAxis = isHorizontal ? xa : ya;
+        const sAxis = isHorizontal ? xa : ya;
         return tickText(sAxis, +v, true).text;
     }
 
-    var textinfo = trace.textinfo;
-    var cdi = cd[index];
+    const textinfo = trace.textinfo;
+    const cdi = cd[index];
 
-    var parts = textinfo.split('+');
-    var text = [];
-    var tx;
+    const parts = textinfo.split('+');
+    const text = [];
+    let tx;
 
-    var hasFlag = function (flag) {
+    const hasFlag = function (flag) {
         return parts.indexOf(flag) !== -1;
     };
 
@@ -1115,9 +1115,9 @@ function calcTextinfo(cd: any[], index: number, xa: any, ya: any): string {
     }
 
     if (isWaterfall) {
-        var delta = +cdi.rawS || cdi.s;
-        var final = cdi.v;
-        var initial = final - delta;
+        const delta = +cdi.rawS || cdi.s;
+        const final = cdi.v;
+        const initial = final - delta;
 
         if (hasFlag('initial')) text.push(formatNumber(initial));
         if (hasFlag('delta')) text.push(formatNumber(delta));
@@ -1127,12 +1127,12 @@ function calcTextinfo(cd: any[], index: number, xa: any, ya: any): string {
     if (isFunnel) {
         if (hasFlag('value')) text.push(formatNumber(cdi.s));
 
-        var nPercent = 0;
+        let nPercent = 0;
         if (hasFlag('percent initial')) nPercent++;
         if (hasFlag('percent previous')) nPercent++;
         if (hasFlag('percent total')) nPercent++;
 
-        var hasMultiplePercents = nPercent > 1;
+        const hasMultiplePercents = nPercent > 1;
 
         if (hasFlag('percent initial')) {
             tx = formatPercent(cdi.begR);

@@ -3,14 +3,14 @@ import Axes from '../../plots/cartesian/axes.js';
 import Lib from '../../lib/index.js';
 
 export default function setContours(trace: FullTrace,  vals) {
-    var contours = trace.contours;
+    const contours = trace.contours;
 
     // check if we need to auto-choose contour levels
     if(trace.autocontour) {
         // N.B. do not try to use coloraxis cmin/cmax,
         // these values here are meant to remain "per-trace" for now
-        var zmin = trace.zmin;
-        var zmax = trace.zmax;
+        let zmin = trace.zmin;
+        let zmax = trace.zmax;
         if(trace.zauto || zmin === undefined) {
             zmin = Lib.aggNums(Math.min, null, vals);
         }
@@ -18,7 +18,7 @@ export default function setContours(trace: FullTrace,  vals) {
             zmax = Lib.aggNums(Math.max, null, vals);
         }
 
-        var dummyAx: any = autoContours(zmin, zmax, trace.ncontours);
+        const dummyAx: any = autoContours(zmin, zmax, trace.ncontours);
         contours.size = dummyAx.dtick;
         contours.start = Axes.tickFirst(dummyAx);
         dummyAx.range.reverse();
@@ -46,9 +46,9 @@ export default function setContours(trace: FullTrace,  vals) {
         trace._input.autocontour = true;
     } else if(contours.type !== 'constraint') {
         // sanity checks on manually-supplied start/end/size
-        var start = contours.start;
-        var end = contours.end;
-        var inputContours = trace._input.contours;
+        let start = contours.start;
+        let end = contours.end;
+        const inputContours = trace._input.contours;
 
         if(start > end) {
             contours.start = inputContours.start = end;
@@ -57,7 +57,7 @@ export default function setContours(trace: FullTrace,  vals) {
         }
 
         if(!(contours.size > 0)) {
-            var sizeOut;
+            let sizeOut;
             if(start === end) sizeOut = 1;
             else sizeOut = autoContours(start, end, trace.ncontours).dtick;
 
@@ -78,7 +78,7 @@ export default function setContours(trace: FullTrace,  vals) {
  * returns: an axis object
  */
 function autoContours(start,  end,  ncontours) {
-    var dummyAx: any = {
+    const dummyAx: any = {
         type: 'linear',
         range: [start, end]
     };

@@ -1,11 +1,11 @@
 export default function selectPoints(searchInfo,  selectionTester) {
-    var cd = searchInfo.cd;
-    var xa = searchInfo.xaxis;
-    var ya = searchInfo.yaxis;
-    var selection = [];
-    var i;
+    const cd = searchInfo.cd;
+    const xa = searchInfo.xaxis;
+    const ya = searchInfo.yaxis;
+    const selection = [];
+    let i;
     // for (potentially grouped) candlesticks
-    var posOffset = cd[0].t.bPos || 0;
+    const posOffset = cd[0].t.bPos || 0;
 
     if(selectionTester === false) {
         // clear selection
@@ -14,7 +14,7 @@ export default function selectPoints(searchInfo,  selectionTester) {
         }
     } else {
         for(i = 0; i < cd.length; i++) {
-            var di = cd[i];
+            const di = cd[i];
 
             if(selectionTester.contains([xa.c2p(di.pos + posOffset), ya.c2p(di.yc)], null, di.i, searchInfo)) {
                 selection.push({

@@ -6,8 +6,8 @@ import _gup from '../../lib/gup.js';
 const { wrap } = _gup;
 
 export default function calc(gd: GraphDiv, trace: FullTrace) {
-    var lineColor;
-    var cscale;
+    let lineColor;
+    let cscale;
 
     if(Colorscale.hasColorscale(trace, 'line') && isArrayOrTypedArray(trace.line.color)) {
         lineColor = trace.line.color;
@@ -27,8 +27,8 @@ export default function calc(gd: GraphDiv, trace: FullTrace) {
 }
 
 function constHalf(len) {
-    var out = new Array(len);
-    for(var i = 0; i < len; i++) {
+    const out = new Array(len);
+    for(let i = 0; i < len; i++) {
         out[i] = 0.5;
     }
     return out;

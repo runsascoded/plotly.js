@@ -5,33 +5,33 @@ import { setClipUrl } from '../drawing/index.js';
 import subTypes from '../../traces/scatter/subtypes.js';
 
 export default function plot(gd: GraphDiv, traces: any, plotinfo: any, transitionOpts: any): any {
-    var isNew: boolean;
+    let isNew: boolean;
 
-    var xa = plotinfo.xaxis;
-    var ya = plotinfo.yaxis;
+    const xa = plotinfo.xaxis;
+    const ya = plotinfo.yaxis;
 
-    var hasAnimation = transitionOpts && transitionOpts.duration > 0;
-    var isStatic = gd._context.staticPlot;
+    const hasAnimation = transitionOpts && transitionOpts.duration > 0;
+    const isStatic = gd._context.staticPlot;
 
     traces.each(function(this: any, d: any) {
-        var trace = d[0].trace;
-        var xObj = trace.error_x || {};
-        var yObj = trace.error_y || {};
+        const trace = d[0].trace;
+        const xObj = trace.error_x || {};
+        const yObj = trace.error_y || {};
 
-        var keyFunc: ((d: any) => any) | undefined;
+        let keyFunc: ((d: any) => any) | undefined;
 
         if(trace.ids) {
             keyFunc = function(d: any) {return d.id;};
         }
 
-        var sparse = (
+        const sparse = (
             subTypes.hasMarkers(trace) &&
             trace.marker.maxdisplayed > 0
         );
 
         if(!yObj.visible && !xObj.visible) d = [];
 
-        var errorbars = select(this).selectAll('g.errorbar')
+        const errorbars = select(this).selectAll('g.errorbar')
             .data(d, keyFunc);
 
         errorbars.exit().remove();
@@ -43,7 +43,7 @@ export default function plot(gd: GraphDiv, traces: any, plotinfo: any, transitio
 
         errorbars.style('opacity', 1);
 
-        var enter = errorbars.enter().append('g')
+        const enter = errorbars.enter().append('g')
             .classed('errorbar', true);
 
         if(hasAnimation) {
@@ -55,18 +55,18 @@ export default function plot(gd: GraphDiv, traces: any, plotinfo: any, transitio
         setClipUrl(errorbars, plotinfo.layerClipId, gd);
 
         errorbars.each(function(this: any, d: any) {
-            var errorbar = select(this);
-            var coords = errorCoords(d, xa, ya);
+            const errorbar = select(this);
+            const coords = errorCoords(d, xa, ya);
 
             if(sparse && !d.vis) return;
 
-            var path: string;
+            let path: string;
 
-            var yerror = errorbar.select('path.yerror');
+            let yerror = errorbar.select('path.yerror');
             if(yObj.visible && isNumeric(coords.x) &&
                     isNumeric(coords.yh) &&
                     isNumeric(coords.ys)) {
-                var yw = yObj.width;
+                const yw = yObj.width;
 
                 path = 'M' + (coords.x - yw) + ',' +
                     coords.yh + 'h' + (2 * yw) + // hat
@@ -90,11 +90,11 @@ export default function plot(gd: GraphDiv, traces: any, plotinfo: any, transitio
                 yerror.attr('d', path);
             } else yerror.remove();
 
-            var xerror = errorbar.select('path.xerror');
+            let xerror = errorbar.select('path.xerror');
             if(xObj.visible && isNumeric(coords.y) &&
                     isNumeric(coords.xh) &&
                     isNumeric(coords.xs)) {
-                var xw = (xObj.copy_ystyle ? yObj : xObj).width;
+                const xw = (xObj.copy_ystyle ? yObj : xObj).width;
 
                 path = 'M' + coords.xh + ',' +
                     (coords.y - xw) + 'v' + (2 * xw) + // hat
@@ -122,7 +122,7 @@ export default function plot(gd: GraphDiv, traces: any, plotinfo: any, transitio
 }
 
 function errorCoords(d: any, xa: FullAxis, ya: FullAxis): any {
-    var out: Record<string, any> = {
+    const out: Record<string, any> = {
         x: xa.c2p(d.x),
         y: ya.c2p(d.y)
     };

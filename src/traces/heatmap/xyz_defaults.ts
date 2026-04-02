@@ -4,10 +4,10 @@ import Lib from '../../lib/index.js';
 import Registry from '../../registry.js';
 
 export default function handleXYZDefaults(traceIn: InputTrace, traceOut: FullTrace, coerce: any, layout: FullLayout, xName?: string, yName?: string) {
-    var z = coerce('z');
+    const z = coerce('z');
     xName = xName || 'x';
     yName = yName || 'y';
-    var x, y;
+    let x, y;
 
     if(z === undefined || !z.length) return 0;
 
@@ -15,8 +15,8 @@ export default function handleXYZDefaults(traceIn: InputTrace, traceOut: FullTra
         x = coerce(xName);
         y = coerce(yName);
 
-        var xlen = Lib.minRowLength(x);
-        var ylen = Lib.minRowLength(y);
+        const xlen = Lib.minRowLength(x);
+        const ylen = Lib.minRowLength(y);
 
         // column z must be accompanied by xName and yName arrays
         if(xlen === 0 || ylen === 0) return 0;
@@ -34,15 +34,15 @@ export default function handleXYZDefaults(traceIn: InputTrace, traceOut: FullTra
         traceOut._length = null;
     }
 
-    var handleCalendarDefaults = Registry.getComponentMethod('calendars', 'handleTraceDefaults');
+    const handleCalendarDefaults = Registry.getComponentMethod('calendars', 'handleTraceDefaults');
     handleCalendarDefaults(traceIn, traceOut, [xName, yName], layout);
 
     return true;
 }
 
 function coordDefaults(coordStr,  coerce) {
-    var coord = coerce(coordStr);
-    var coordType = coord ? coerce(coordStr + 'type', 'array') : 'scaled';
+    const coord = coerce(coordStr);
+    const coordType = coord ? coerce(coordStr + 'type', 'array') : 'scaled';
 
     if(coordType === 'scaled') {
         coerce(coordStr + '0');
@@ -53,10 +53,10 @@ function coordDefaults(coordStr,  coerce) {
 }
 
 function isValidZ(z) {
-    var allRowsAreArrays = true;
-    var oneRowIsFilled = false;
-    var hasOneNumber = false;
-    var zi;
+    let allRowsAreArrays = true;
+    let oneRowIsFilled = false;
+    let hasOneNumber = false;
+    let zi;
 
     /*
      * Without this step:
@@ -66,14 +66,14 @@ function isValidZ(z) {
      * oneRowIsFilled = false breaks both
      */
 
-    for(var i = 0; i < z.length; i++) {
+    for(let i = 0; i < z.length; i++) {
         zi = z[i];
         if(!Lib.isArrayOrTypedArray(zi)) {
             allRowsAreArrays = false;
             break;
         }
         if(zi.length > 0) oneRowIsFilled = true;
-        for(var j = 0; j < zi.length; j++) {
+        for(let j = 0; j < zi.length; j++) {
             if(isNumeric(zi[j])) {
                 hasOneNumber = true;
                 break;

@@ -3,12 +3,12 @@ import { select } from 'd3-selection';
 import { setTransormAndDisplay } from '../../lib/index.js';
 
 function resizeText(gd: GraphDiv, gTrace: any, traceType: string): void {
-    var fullLayout = gd._fullLayout;
-    var minSize = fullLayout['_' + traceType + 'Text_minsize'];
+    const fullLayout = gd._fullLayout;
+    const minSize = fullLayout['_' + traceType + 'Text_minsize'];
     if(minSize) {
-        var shouldHide = fullLayout.uniformtext.mode === 'hide';
+        const shouldHide = fullLayout.uniformtext.mode === 'hide';
 
-        var selector;
+        let selector;
         switch(traceType) {
             case 'funnelarea' :
             case 'pie' :
@@ -24,11 +24,11 @@ function resizeText(gd: GraphDiv, gTrace: any, traceType: string): void {
         }
 
         gTrace.selectAll(selector).each(function(d) {
-            var transform = d.transform;
+            const transform = d.transform;
             if(transform) {
                 transform.scale = (shouldHide && transform.hide) ? 0 : minSize / transform.fontSize;
 
-                var el = select(this).select('text');
+                const el = select(this).select('text');
                 setTransormAndDisplay(el, transform);
             }
         });
@@ -37,9 +37,9 @@ function resizeText(gd: GraphDiv, gTrace: any, traceType: string): void {
 
 function recordMinTextSize(traceType: string, transform: any, fullLayout: FullLayout): void {
     if(fullLayout.uniformtext.mode) {
-        var minKey = getMinKey(traceType);
-        var minSize = fullLayout.uniformtext.minsize;
-        var size = transform.scale * transform.fontSize;
+        const minKey = getMinKey(traceType);
+        const minSize = fullLayout.uniformtext.minsize;
+        const size = transform.scale * transform.fontSize;
 
         transform.hide = size < minSize;
 
@@ -54,7 +54,7 @@ function recordMinTextSize(traceType: string, transform: any, fullLayout: FullLa
 }
 
 function clearMinTextSize(traceType: string, fullLayout: FullLayout): void {
-    var minKey = getMinKey(traceType);
+    const minKey = getMinKey(traceType);
     fullLayout[minKey] = undefined;
 }
 

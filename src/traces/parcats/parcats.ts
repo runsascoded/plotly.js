@@ -12,16 +12,16 @@ import Lib from '../../lib/index.js';
 import { font } from '../../components/drawing/index.js';
 import tinycolor from 'tinycolor2';
 import svgTextUtils from '../../lib/svg_text_utils.js';
-declare var event: any;
-var strTranslate = Lib.strTranslate;
+declare let event: any;
+const strTranslate = Lib.strTranslate;
 
 function performPlot(parcatsModels, graphDiv, layout: FullLayout, svg) {
-    var isStatic = graphDiv._context.staticPlot;
+    const isStatic = graphDiv._context.staticPlot;
 
-    var viewModels = parcatsModels.map(createParcatsViewModel.bind(0, graphDiv, layout));
+    const viewModels = parcatsModels.map(createParcatsViewModel.bind(0, graphDiv, layout));
 
     // Get (potentially empty) parcatslayer selection with bound data to single element array
-    var layerSelection = svg.selectAll('g.parcatslayer').data([null]);
+    const layerSelection = svg.selectAll('g.parcatslayer').data([null]);
 
     // Initialize single parcatslayer group if it doesn't exist
     layerSelection.enter()
@@ -30,12 +30,12 @@ function performPlot(parcatsModels, graphDiv, layout: FullLayout, svg) {
         .style('pointer-events', isStatic ? 'none' : 'all');
 
     // Bind data to children of layerSelection and get reference to traceSelection
-    var traceSelection = layerSelection
+    const traceSelection = layerSelection
         .selectAll('g.trace.parcats')
         .data(viewModels, key);
 
     // Initialize group for each trace/dimensions
-    var traceEnter = traceSelection.enter()
+    const traceEnter = traceSelection.enter()
         .append('g')
         .attr('class', 'trace parcats');
 
@@ -51,11 +51,11 @@ function performPlot(parcatsModels, graphDiv, layout: FullLayout, svg) {
         .attr('class', 'paths');
 
     // Update paths transform
-    var pathsSelection = traceSelection
+    const pathsSelection = traceSelection
         .select('g.paths');
 
     // Get paths selection
-    var pathSelection = pathsSelection
+    const pathSelection = pathsSelection
         .selectAll('path.path')
         .data(function(d) {
             return d.paths;
@@ -68,7 +68,7 @@ function performPlot(parcatsModels, graphDiv, layout: FullLayout, svg) {
         });
 
     // Create paths
-    var pathSelectionEnter = pathSelection
+    const pathSelectionEnter = pathSelection
         .enter()
         .append('path')
         .attr('class', 'path')
@@ -106,11 +106,11 @@ function performPlot(parcatsModels, graphDiv, layout: FullLayout, svg) {
     traceEnter.append('g').attr('class', 'dimensions');
 
     // Update dimensions transform
-    var dimensionsSelection = traceSelection
+    const dimensionsSelection = traceSelection
         .select('g.dimensions');
 
     // Get dimension selection
-    var dimensionSelection = dimensionsSelection
+    const dimensionSelection = dimensionsSelection
         .selectAll('g.dimension')
         .data(function(d) {
             return d.dimensions;
@@ -130,14 +130,14 @@ function performPlot(parcatsModels, graphDiv, layout: FullLayout, svg) {
     dimensionSelection.exit().remove();
 
     // Get category selection
-    var categorySelection = dimensionSelection
+    const categorySelection = dimensionSelection
         .selectAll('g.category')
         .data(function(d) {
             return d.categories;
         }, key);
 
     // Initialize category groups
-    var categoryGroupEnterSelection = categorySelection
+    const categoryGroupEnterSelection = categorySelection
         .enter()
         .append('g')
         .attr('class', 'category');
@@ -167,7 +167,7 @@ function performPlot(parcatsModels, graphDiv, layout: FullLayout, svg) {
     styleCategoriesNoHover(categoryGroupEnterSelection);
 
     // Initialize color band rects
-    var bandSelection = categorySelection
+    const bandSelection = categorySelection
         .selectAll('rect.bandrect')
         .data(
             /** @param {CategoryViewModel} catViewModel*/
@@ -184,7 +184,7 @@ function performPlot(parcatsModels, graphDiv, layout: FullLayout, svg) {
             return d.color;
         });
 
-    var bandsSelectionEnter = bandSelection.enter()
+    const bandsSelectionEnter = bandSelection.enter()
         .append('rect')
         .attr('class', 'bandrect')
         .attr('stroke-opacity', 0)
@@ -345,8 +345,8 @@ function key(d) {
 /** True if a category view model is in the right-most display dimension
  * @param {CategoryViewModel} d */
 function catInRightDim(d) {
-    var numDims = d.parcatsViewModel.dimensions.length;
-    var leftDimInd = d.parcatsViewModel.dimensions[numDims - 1].model.dimensionInd;
+    const numDims = d.parcatsViewModel.dimensions.length;
+    const leftDimInd = d.parcatsViewModel.dimensions[numDims - 1].model.dimensionInd;
     return d.model.dimensionInd === leftDimInd;
 }
 
@@ -381,8 +381,8 @@ function mouseoverPath(d) {
             stylePathsHover(select(this));
 
             // Emit hover event
-            var points = buildPointsArrayForPath(d);
-            var constraints = buildConstraintsForPath(d);
+            const points = buildPointsArrayForPath(d);
+            const constraints = buildConstraintsForPath(d);
             d.parcatsViewModel.graphDiv.emit('plotly_hover', {
                 points: points, event: event, constraints: constraints
             });
@@ -392,24 +392,24 @@ function mouseoverPath(d) {
                 // hoverinfo is a combination of 'count' and 'probability'
 
                 // Mouse
-                var hoverX = pointer(event, this)[0];
+                const hoverX = pointer(event, this)[0];
 
                 // Label
-                var gd = d.parcatsViewModel.graphDiv;
-                var trace = d.parcatsViewModel.trace;
-                var fullLayout = gd._fullLayout;
-                var rootBBox = fullLayout._paperdiv.node().getBoundingClientRect();
-                var graphDivBBox = d.parcatsViewModel.graphDiv.getBoundingClientRect();
+                const gd = d.parcatsViewModel.graphDiv;
+                const trace = d.parcatsViewModel.trace;
+                const fullLayout = gd._fullLayout;
+                const rootBBox = fullLayout._paperdiv.node().getBoundingClientRect();
+                const graphDivBBox = d.parcatsViewModel.graphDiv.getBoundingClientRect();
 
                 // Find path center in path coordinates
-                var pathCenterX,
+                let pathCenterX,
                     pathCenterY,
                     dimInd;
 
                 for(dimInd = 0; dimInd < (d.leftXs.length - 1); dimInd++) {
                     if(d.leftXs[dimInd] + d.dimWidths[dimInd] - 2 <= hoverX && hoverX <= d.leftXs[dimInd + 1] + 2) {
-                        var leftDim = d.parcatsViewModel.dimensions[dimInd];
-                        var rightDim = d.parcatsViewModel.dimensions[dimInd + 1];
+                        const leftDim = d.parcatsViewModel.dimensions[dimInd];
+                        const rightDim = d.parcatsViewModel.dimensions[dimInd + 1];
                         pathCenterX = (leftDim.x + leftDim.width + rightDim.x) / 2;
                         pathCenterY = (d.topYs[dimInd] + d.topYs[dimInd + 1] + d.height) / 2;
                         break;
@@ -417,20 +417,20 @@ function mouseoverPath(d) {
                 }
 
                 // Find path center in root coordinates
-                var hoverCenterX = d.parcatsViewModel.x + pathCenterX;
-                var hoverCenterY = d.parcatsViewModel.y + pathCenterY;
+                const hoverCenterX = d.parcatsViewModel.x + pathCenterX;
+                const hoverCenterY = d.parcatsViewModel.y + pathCenterY;
 
-                var textColor = tinycolor.mostReadable(d.model.color, ['black', 'white']);
+                const textColor = tinycolor.mostReadable(d.model.color, ['black', 'white']);
 
-                var count = d.model.count;
-                var prob = count / d.parcatsViewModel.model.count;
-                var labels = {
+                const count = d.model.count;
+                const prob = count / d.parcatsViewModel.model.count;
+                const labels = {
                     countLabel: count,
                     probabilityLabel: prob.toFixed(3)
                 };
 
                 // Build hover text
-                var hovertextParts = [];
+                const hovertextParts = [];
                 if(d.parcatsViewModel.hoverinfoItems.indexOf('count') !== -1) {
                     hovertextParts.push(['Count:', labels.countLabel].join(' '));
                 }
@@ -438,8 +438,8 @@ function mouseoverPath(d) {
                     hovertextParts.push(['P:', labels.probabilityLabel].join(' '));
                 }
 
-                var hovertext = hovertextParts.join('<br>');
-                var mouseX = pointer(event, gd)[0];
+                const hovertext = hovertextParts.join('<br>');
+                const mouseX = pointer(event, gd)[0];
 
                 Fx.loneHover({
                     trace: trace,
@@ -487,8 +487,8 @@ function mouseoutPath(d) {
 
         // Emit unhover event
         if(d.parcatsViewModel.hoverinfoItems.indexOf('skip') === -1) {
-            var points = buildPointsArrayForPath(d);
-            var constraints = buildConstraintsForPath(d);
+            const points = buildPointsArrayForPath(d);
+            const constraints = buildConstraintsForPath(d);
             d.parcatsViewModel.graphDiv.emit('plotly_unhover', {
                 points: points, event: event, constraints: constraints
             });
@@ -503,11 +503,11 @@ function mouseoutPath(d) {
  * @param {PathViewModel} d
  */
 function buildPointsArrayForPath(d) {
-    var points = [];
-    var curveNumber = getTraceIndex(d.parcatsViewModel);
+    const points = [];
+    const curveNumber = getTraceIndex(d.parcatsViewModel);
 
-    for(var i = 0; i < d.model.valueInds.length; i++) {
-        var pointNumber = d.model.valueInds[i];
+    for(let i = 0; i < d.model.valueInds.length; i++) {
+        const pointNumber = d.model.valueInds[i];
         points.push({
             curveNumber: curveNumber,
             pointNumber: pointNumber
@@ -523,13 +523,13 @@ function buildPointsArrayForPath(d) {
  * @param {PathViewModel} d
  */
 function buildConstraintsForPath(d) {
-    var constraints: any = {};
-    var dimensions = d.parcatsViewModel.model.dimensions;
+    const constraints: any = {};
+    const dimensions = d.parcatsViewModel.model.dimensions;
 
     // dimensions
-    for(var i = 0; i < dimensions.length; i++) {
-        var dimension = dimensions[i];
-        var category = dimension.categories[d.model.categoryInds[i]];
+    for(let i = 0; i < dimensions.length; i++) {
+        const dimension = dimensions[i];
+        const category = dimension.categories[d.model.categoryInds[i]];
         constraints[dimension.containerInd] = category.categoryValue;
     }
 
@@ -547,8 +547,8 @@ function buildConstraintsForPath(d) {
 function clickPath(d) {
     if(d.parcatsViewModel.hoverinfoItems.indexOf('skip') === -1) {
         // hoverinfo it's skip, so interaction events aren't disabled
-        var points = buildPointsArrayForPath(d);
-        var constraints = buildConstraintsForPath(d);
+        const points = buildPointsArrayForPath(d);
+        const constraints = buildConstraintsForPath(d);
         d.parcatsViewModel.graphDiv.emit('plotly_click', {
             points: points, event: event, constraints: constraints
         });
@@ -609,9 +609,9 @@ function styleBandsNoHover(bandsSelection) {
  * @param {CategoryBandViewModel} catBandViewModel
  */
 function selectPathsThroughCategoryBandColor(catBandViewModel) {
-    var allPaths = catBandViewModel.parcatsViewModel.pathSelection;
-    var dimInd = catBandViewModel.categoryViewModel.model.dimensionInd;
-    var catInd = catBandViewModel.categoryViewModel.model.categoryInd;
+    const allPaths = catBandViewModel.parcatsViewModel.pathSelection;
+    const dimInd = catBandViewModel.categoryViewModel.model.dimensionInd;
+    const catInd = catBandViewModel.categoryViewModel.model.categoryInd;
 
     return allPaths
         .filter(
@@ -631,11 +631,11 @@ function selectPathsThroughCategoryBandColor(catBandViewModel) {
  */
 function styleForCategoryHovermode(bandElement) {
     // Get all bands in the current category
-    var bandSel = select(bandElement.parentNode).selectAll('rect.bandrect');
+    const bandSel = select(bandElement.parentNode).selectAll('rect.bandrect');
 
     // Raise and style paths
     bandSel.each(function(bvm) {
-        var paths = selectPathsThroughCategoryBandColor(bvm);
+        const paths = selectPathsThroughCategoryBandColor(bvm);
         stylePathsHover(paths);
         paths.each(function() {
             // Raise path to top
@@ -656,8 +656,8 @@ function styleForCategoryHovermode(bandElement) {
  *
  */
 function styleForColorHovermode(bandElement) {
-    var bandViewModel = select(bandElement).datum();
-    var catPaths = selectPathsThroughCategoryBandColor(bandViewModel);
+    const bandViewModel = select(bandElement).datum();
+    const catPaths = selectPathsThroughCategoryBandColor(bandViewModel);
     stylePathsHover(catPaths);
     catPaths.each(function() {
         // Raise path to top
@@ -684,21 +684,21 @@ function styleForColorHovermode(bandElement) {
  */
 function emitPointsEventCategoryHovermode(bandElement, eventName, event) {
     // Get all bands in the current category
-    var bandViewModel = select(bandElement).datum();
-    var categoryModel = bandViewModel.categoryViewModel.model;
-    var gd = bandViewModel.parcatsViewModel.graphDiv;
-    var bandSel = select(bandElement.parentNode).selectAll('rect.bandrect');
+    const bandViewModel = select(bandElement).datum();
+    const categoryModel = bandViewModel.categoryViewModel.model;
+    const gd = bandViewModel.parcatsViewModel.graphDiv;
+    const bandSel = select(bandElement.parentNode).selectAll('rect.bandrect');
 
-    var points = [];
+    const points = [];
     bandSel.each(function(bvm) {
-        var paths = selectPathsThroughCategoryBandColor(bvm);
+        const paths = selectPathsThroughCategoryBandColor(bvm);
         paths.each(function(pathViewModel) {
             // Extend points array
             Array.prototype.push.apply(points, buildPointsArrayForPath(pathViewModel));
         });
     });
 
-    var constraints: any = {};
+    const constraints: any = {};
     constraints[categoryModel.dimensionInd] = categoryModel.categoryValue;
     gd.emit(eventName, {
         points: points, event: event, constraints: constraints
@@ -714,18 +714,18 @@ function emitPointsEventCategoryHovermode(bandElement, eventName, event) {
  *  Mouse Event
  */
 function emitPointsEventColorHovermode(bandElement, eventName, event) {
-    var bandViewModel = select(bandElement).datum();
-    var categoryModel = bandViewModel.categoryViewModel.model;
-    var gd = bandViewModel.parcatsViewModel.graphDiv;
-    var paths = selectPathsThroughCategoryBandColor(bandViewModel);
+    const bandViewModel = select(bandElement).datum();
+    const categoryModel = bandViewModel.categoryViewModel.model;
+    const gd = bandViewModel.parcatsViewModel.graphDiv;
+    const paths = selectPathsThroughCategoryBandColor(bandViewModel);
 
-    var points = [];
+    const points = [];
     paths.each(function(pathViewModel) {
         // Extend points array
         Array.prototype.push.apply(points, buildPointsArrayForPath(pathViewModel));
     });
 
-    var constraints: any = {};
+    const constraints: any = {};
     constraints[categoryModel.dimensionInd] = categoryModel.categoryValue;
     // color
     if(bandViewModel.rawColor !== undefined) {
@@ -747,23 +747,23 @@ function emitPointsEventColorHovermode(bandElement, eventName, event) {
  */
 function createHoverLabelForCategoryHovermode(gd: GraphDiv, rootBBox, bandElement) {
     gd._fullLayout._calcInverseTransform(gd);
-    var scaleX = gd._fullLayout._invScaleX;
-    var scaleY = gd._fullLayout._invScaleY;
+    const scaleX = gd._fullLayout._invScaleX;
+    const scaleY = gd._fullLayout._invScaleY;
 
     // Selections
-    var rectSelection = select(bandElement.parentNode).select('rect.catrect');
-    var rectBoundingBox = rectSelection.node().getBoundingClientRect();
+    const rectSelection = select(bandElement.parentNode).select('rect.catrect');
+    const rectBoundingBox = rectSelection.node().getBoundingClientRect();
 
     // Models
     /** @type {CategoryViewModel} */
-    var catViewModel = rectSelection.datum();
-    var parcatsViewModel = catViewModel.parcatsViewModel;
-    var dimensionModel = parcatsViewModel.model.dimensions[catViewModel.model.dimensionInd];
-    var trace = parcatsViewModel.trace;
+    const catViewModel = rectSelection.datum();
+    const parcatsViewModel = catViewModel.parcatsViewModel;
+    const dimensionModel = parcatsViewModel.model.dimensions[catViewModel.model.dimensionInd];
+    const trace = parcatsViewModel.trace;
 
     // Positions
-    var hoverCenterY = rectBoundingBox.top + rectBoundingBox.height / 2;
-    var hoverCenterX,
+    const hoverCenterY = rectBoundingBox.top + rectBoundingBox.height / 2;
+    let hoverCenterX,
         hoverLabelIdealAlign;
 
     if(parcatsViewModel.dimensions.length > 1 &&
@@ -776,17 +776,17 @@ function createHoverLabelForCategoryHovermode(gd: GraphDiv, rootBBox, bandElemen
         hoverLabelIdealAlign = 'right';
     }
 
-    var count = catViewModel.model.count;
-    var catLabel = catViewModel.model.categoryLabel;
-    var prob = count / catViewModel.parcatsViewModel.model.count;
-    var labels = {
+    const count = catViewModel.model.count;
+    const catLabel = catViewModel.model.categoryLabel;
+    const prob = count / catViewModel.parcatsViewModel.model.count;
+    const labels = {
         countLabel: count,
         categoryLabel: catLabel,
         probabilityLabel: prob.toFixed(3)
     };
 
     // Hover label text
-    var hoverinfoParts = [];
+    const hoverinfoParts = [];
     if(catViewModel.parcatsViewModel.hoverinfoItems.indexOf('count') !== -1) {
         hoverinfoParts.push(['Count:', labels.countLabel].join(' '));
     }
@@ -794,7 +794,7 @@ function createHoverLabelForCategoryHovermode(gd: GraphDiv, rootBBox, bandElemen
         hoverinfoParts.push(['P(' + labels.categoryLabel + '):', labels.probabilityLabel].join(' '));
     }
 
-    var hovertext = hoverinfoParts.join('<br>');
+    const hovertext = hoverinfoParts.join('<br>');
     return {
         trace: trace,
         x: scaleX * (hoverCenterX - rootBBox.left),
@@ -828,13 +828,13 @@ function createHoverLabelForCategoryHovermode(gd: GraphDiv, rootBBox, bandElemen
  *
  */
 function createHoverLabelForDimensionHovermode(gd: GraphDiv, rootBBox, bandElement) {
-    var allHoverlabels = [];
+    const allHoverlabels = [];
 
     select(bandElement.parentNode.parentNode)
         .selectAll('g.category')
         .select('rect.catrect')
         .each(function() {
-            var bandNode = this;
+            const bandNode = this;
             allHoverlabels.push(createHoverLabelForCategoryHovermode(gd, rootBBox, bandNode));
         });
 
@@ -852,23 +852,23 @@ function createHoverLabelForDimensionHovermode(gd: GraphDiv, rootBBox, bandEleme
  */
 function createHoverLabelForColorHovermode(gd: GraphDiv, rootBBox, bandElement) {
     gd._fullLayout._calcInverseTransform(gd);
-    var scaleX = gd._fullLayout._invScaleX;
-    var scaleY = gd._fullLayout._invScaleY;
+    const scaleX = gd._fullLayout._invScaleX;
+    const scaleY = gd._fullLayout._invScaleY;
 
-    var bandBoundingBox = bandElement.getBoundingClientRect();
+    const bandBoundingBox = bandElement.getBoundingClientRect();
 
     // Models
     /** @type {CategoryBandViewModel} */
-    var bandViewModel = select(bandElement).datum();
-    var catViewModel = bandViewModel.categoryViewModel;
-    var parcatsViewModel = catViewModel.parcatsViewModel;
-    var dimensionModel = parcatsViewModel.model.dimensions[catViewModel.model.dimensionInd];
-    var trace = parcatsViewModel.trace;
+    const bandViewModel = select(bandElement).datum();
+    const catViewModel = bandViewModel.categoryViewModel;
+    const parcatsViewModel = catViewModel.parcatsViewModel;
+    const dimensionModel = parcatsViewModel.model.dimensions[catViewModel.model.dimensionInd];
+    const trace = parcatsViewModel.trace;
 
     // positions
-    var hoverCenterY = bandBoundingBox.y + bandBoundingBox.height / 2;
+    const hoverCenterY = bandBoundingBox.y + bandBoundingBox.height / 2;
 
-    var hoverCenterX,
+    let hoverCenterX,
         hoverLabelIdealAlign;
     if(parcatsViewModel.dimensions.length > 1 &&
         dimensionModel.displayInd === parcatsViewModel.dimensions.length - 1) {
@@ -881,21 +881,21 @@ function createHoverLabelForColorHovermode(gd: GraphDiv, rootBBox, bandElement) 
     }
 
     // Labels
-    var catLabel = catViewModel.model.categoryLabel;
+    const catLabel = catViewModel.model.categoryLabel;
 
     // Counts
-    var totalCount = bandViewModel.parcatsViewModel.model.count;
+    const totalCount = bandViewModel.parcatsViewModel.model.count;
 
-    var bandColorCount = 0;
+    let bandColorCount = 0;
     bandViewModel.categoryViewModel.bands.forEach(function(b) {
         if(b.color === bandViewModel.color) {
             bandColorCount += b.count;
         }
     });
 
-    var catCount = catViewModel.model.count;
+    const catCount = catViewModel.model.count;
 
-    var colorCount = 0;
+    let colorCount = 0;
     parcatsViewModel.pathSelection.each(
         /** @param {PathViewModel} pathViewModel */
         function(pathViewModel) {
@@ -904,18 +904,18 @@ function createHoverLabelForColorHovermode(gd: GraphDiv, rootBBox, bandElement) 
             }
         });
 
-    var pColorAndCat = bandColorCount / totalCount;
-    var pCatGivenColor = bandColorCount / colorCount;
-    var pColorGivenCat = bandColorCount / catCount;
+    const pColorAndCat = bandColorCount / totalCount;
+    const pCatGivenColor = bandColorCount / colorCount;
+    const pColorGivenCat = bandColorCount / catCount;
 
-    var labels = {
+    const labels = {
         countLabel: bandColorCount,
         categoryLabel: catLabel,
         probabilityLabel: pColorAndCat.toFixed(3)
     };
 
     // Hover label text
-    var hoverinfoParts = [];
+    const hoverinfoParts = [];
     if(catViewModel.parcatsViewModel.hoverinfoItems.indexOf('count') !== -1) {
         hoverinfoParts.push(['Count:', labels.countLabel].join(' '));
     }
@@ -925,10 +925,10 @@ function createHoverLabelForColorHovermode(gd: GraphDiv, rootBBox, bandElement) 
         hoverinfoParts.push('P(color | ' + catLabel + '): ' + pColorGivenCat.toFixed(3));
     }
 
-    var hovertext = hoverinfoParts.join('<br>');
+    const hovertext = hoverinfoParts.join('<br>');
 
     // Compute text color
-    var textColor = tinycolor.mostReadable(bandViewModel.color, ['black', 'white']);
+    const textColor = tinycolor.mostReadable(bandViewModel.color, ['black', 'white']);
 
     return {
         trace: trace,
@@ -969,19 +969,19 @@ function mouseoverCategoryBand(bandViewModel) {
             // hoverinfo is not skip, so we at least style the bands and emit interaction events
 
             // Mouse
-            var mouseY = pointer(event, this)[1];
+            const mouseY = pointer(event, this)[1];
             if(mouseY < -1) {
                 // Hover is above above the category rectangle (probably the dimension title text)
                 return;
             }
 
-            var gd = bandViewModel.parcatsViewModel.graphDiv;
-            var fullLayout = gd._fullLayout;
-            var rootBBox = fullLayout._paperdiv.node().getBoundingClientRect();
-            var hoveron = bandViewModel.parcatsViewModel.hoveron;
+            const gd = bandViewModel.parcatsViewModel.graphDiv;
+            const fullLayout = gd._fullLayout;
+            const rootBBox = fullLayout._paperdiv.node().getBoundingClientRect();
+            const hoveron = bandViewModel.parcatsViewModel.hoveron;
 
             /** @type {HTMLElement} */
-            var bandElement = this;
+            const bandElement = this;
 
             // Handle style and events
             if(hoveron === 'color') {
@@ -994,7 +994,7 @@ function mouseoverCategoryBand(bandViewModel) {
 
             // Handle hover label
             if(bandViewModel.parcatsViewModel.hoverinfoItems.indexOf('none') === -1) {
-                var hoverItems;
+                let hoverItems;
                 if(hoveron === 'category') {
                     hoverItems = createHoverLabelForCategoryHovermode(gd, rootBBox, bandElement);
                 } else if(hoveron === 'color') {
@@ -1020,7 +1020,7 @@ function mouseoverCategoryBand(bandViewModel) {
  * @param {CategoryBandViewModel} bandViewModel
  */
 function mouseoutCategory(bandViewModel) {
-    var parcatsViewModel = bandViewModel.parcatsViewModel;
+    const parcatsViewModel = bandViewModel.parcatsViewModel;
 
     if(!parcatsViewModel.dragDimension) {
         // We're not dragging anything
@@ -1038,8 +1038,8 @@ function mouseoutCategory(bandViewModel) {
 
         // Emit unhover event
         if(parcatsViewModel.hoverinfoItems.indexOf('skip') === -1) {
-            var hoveron = bandViewModel.parcatsViewModel.hoveron;
-            var bandElement = this;
+            const hoveron = bandViewModel.parcatsViewModel.hoveron;
+            const bandElement = this;
 
             // Handle style and events
             if(hoveron === 'color') {
@@ -1074,8 +1074,8 @@ function dragDimensionStart(d) {
         .each(
             /** @param {CategoryViewModel} catViewModel */
             function(catViewModel) {
-                var catMouseX = pointer(event, this)[0];
-                var catMouseY = pointer(event, this)[1];
+                const catMouseX = pointer(event, this)[0];
+                const catMouseY = pointer(event, this)[1];
 
                 if(-2 <= catMouseX && catMouseX <= catViewModel.width + 2 &&
                     -2 <= catMouseY && catMouseY <= catViewModel.height + 2) {
@@ -1126,27 +1126,27 @@ function dragDimension(d) {
         return;
     }
 
-    var dragDimInd = d.dragDimensionDisplayInd;
-    var prevDimInd = dragDimInd - 1;
-    var nextDimInd = dragDimInd + 1;
+    const dragDimInd = d.dragDimensionDisplayInd;
+    const prevDimInd = dragDimInd - 1;
+    const nextDimInd = dragDimInd + 1;
 
-    var dragDimension = d.parcatsViewModel
+    const dragDimension = d.parcatsViewModel
         .dimensions[dragDimInd];
 
     // Update category
     if(d.dragCategoryDisplayInd !== null) {
-        var dragCategory = dragDimension.categories[d.dragCategoryDisplayInd];
+        const dragCategory = dragDimension.categories[d.dragCategoryDisplayInd];
 
         // Update dragY by dy
         dragCategory.model.dragY += event.dy;
-        var categoryY = dragCategory.model.dragY;
+        const categoryY = dragCategory.model.dragY;
 
         // Check for category drag swaps
-        var catDisplayInd = dragCategory.model.displayInd;
-        var dimCategoryViews = dragDimension.categories;
+        const catDisplayInd = dragCategory.model.displayInd;
+        const dimCategoryViews = dragDimension.categories;
 
-        var catAbove = dimCategoryViews[catDisplayInd - 1];
-        var catBelow = dimCategoryViews[catDisplayInd + 1];
+        const catAbove = dimCategoryViews[catDisplayInd - 1];
+        const catBelow = dimCategoryViews[catDisplayInd + 1];
 
         // Check for overlap above
         if(catAbove !== undefined) {
@@ -1174,8 +1174,8 @@ function dragDimension(d) {
         dragDimension.model.dragX = event.x;
 
         // Check for dimension swaps
-        var prevDimension = d.parcatsViewModel.dimensions[prevDimInd];
-        var nextDimension = d.parcatsViewModel.dimensions[nextDimInd];
+        const prevDimension = d.parcatsViewModel.dimensions[prevDimInd];
+        const nextDimension = d.parcatsViewModel.dimensions[nextDimInd];
 
         if(prevDimension !== undefined) {
             if(dragDimension.model.dragX < (prevDimension.x + prevDimension.width)) {
@@ -1224,26 +1224,26 @@ function dragDimensionEnd(d) {
 
     // Compute restyle command
     // -----------------------
-    var restyleData: any = {};
-    var traceInd = getTraceIndex(d.parcatsViewModel);
+    const restyleData: any = {};
+    const traceInd = getTraceIndex(d.parcatsViewModel);
 
     // ### Handle dimension reordering ###
-    var finalDragDimensionDisplayInds = d.parcatsViewModel.model.dimensions.map(function(d) {return d.displayInd;});
-    var anyDimsReordered = d.initialDragDimensionDisplayInds.some(function(initDimDisplay, dimInd) {
+    const finalDragDimensionDisplayInds = d.parcatsViewModel.model.dimensions.map(function(d) {return d.displayInd;});
+    const anyDimsReordered = d.initialDragDimensionDisplayInds.some(function(initDimDisplay, dimInd) {
         return initDimDisplay !== finalDragDimensionDisplayInds[dimInd];
     });
 
     if(anyDimsReordered) {
         finalDragDimensionDisplayInds.forEach(function(finalDimDisplay, dimInd) {
-            var containerInd = d.parcatsViewModel.model.dimensions[dimInd].containerInd;
+            const containerInd = d.parcatsViewModel.model.dimensions[dimInd].containerInd;
             restyleData['dimensions[' + containerInd + '].displayindex'] = finalDimDisplay;
         });
     }
 
     // ### Handle category reordering ###
-    var anyCatsReordered = false;
+    let anyCatsReordered = false;
     if(d.dragCategoryDisplayInd !== null) {
-        var finalDragCategoryDisplayInds = d.model.categories.map(function(c) {
+        const finalDragCategoryDisplayInds = d.model.categories.map(function(c) {
             return c.displayInd;
         });
 
@@ -1253,12 +1253,12 @@ function dragDimensionEnd(d) {
 
         if(anyCatsReordered) {
             // Sort a shallow copy of the category models by display index
-            var sortedCategoryModels = d.model.categories.slice().sort(
+            const sortedCategoryModels = d.model.categories.slice().sort(
                 function(a, b) { return a.displayInd - b.displayInd; });
 
             // Get new categoryarray and ticktext values
-            var newCategoryArray = sortedCategoryModels.map(function(v) { return v.categoryValue; });
-            var newCategoryLabels = sortedCategoryModels.map(function(v) { return v.categoryLabel; });
+            const newCategoryArray = sortedCategoryModels.map(function(v) { return v.categoryValue; });
+            const newCategoryLabels = sortedCategoryModels.map(function(v) { return v.categoryLabel; });
 
             restyleData['dimensions[' + d.model.containerInd + '].categoryarray'] = [newCategoryArray];
             restyleData['dimensions[' + d.model.containerInd + '].ticktext'] = [newCategoryLabels];
@@ -1282,7 +1282,7 @@ function dragDimensionEnd(d) {
     // -------------------
     d.model.dragX = null;
     if(d.dragCategoryDisplayInd !== null) {
-        var dragCategory = d.parcatsViewModel
+        const dragCategory = d.parcatsViewModel
             .dimensions[d.dragDimensionDisplayInd]
             .categories[d.dragCategoryDisplayInd];
 
@@ -1302,11 +1302,11 @@ function dragDimensionEnd(d) {
 
     // Perform transition
     // ------------------
-    var transition = transition()
+    const trans = transition()
         .duration(300)
         .ease('cubic-in-out');
 
-    transition
+    trans
         .each(function() {
             updateSvgCategories(d.parcatsViewModel, true);
             updateSvgPaths(d.parcatsViewModel, true);
@@ -1324,9 +1324,9 @@ function dragDimensionEnd(d) {
  * @param {ParcatsViewModel} parcatsViewModel
  */
 function getTraceIndex(parcatsViewModel) {
-    var traceInd;
-    var allTraces = parcatsViewModel.graphDiv._fullData;
-    for(var i = 0; i < allTraces.length; i++) {
+    let traceInd;
+    const allTraces = parcatsViewModel.graphDiv._fullData;
+    for(let i = 0; i < allTraces.length; i++) {
         if(parcatsViewModel.key === allTraces[i].uid) {
             traceInd = i;
             break;
@@ -1378,7 +1378,7 @@ function updateSvgCategories(parcatsViewModel: any, hasTransition?: any) {
             return d.dimensions;
         }, key);
 
-    var categorySelection = parcatsViewModel.dimensionSelection
+    const categorySelection = parcatsViewModel.dimensionSelection
         .selectAll('g.category')
         .data(function(d) {return d.categories;}, key);
 
@@ -1394,7 +1394,7 @@ function updateSvgCategories(parcatsViewModel: any, hasTransition?: any) {
             return strTranslate(0, d.y);
         });
 
-    var dimLabelSelection = categorySelection.select('.dimlabel');
+    const dimLabelSelection = categorySelection.select('.dimlabel');
 
     // ### Update dimension label
     // Only the top-most display category should have the dimension label
@@ -1411,7 +1411,7 @@ function updateSvgCategories(parcatsViewModel: any, hasTransition?: any) {
     // Update category label
     // Categories in the right-most display dimension have their labels on
     // the right, all others on the left
-    var catLabelSelection = categorySelection.select('.catlabel');
+    const catLabelSelection = categorySelection.select('.catlabel');
     catLabelSelection
         .attr('text-anchor',
             function(d) {
@@ -1435,8 +1435,8 @@ function updateSvgCategories(parcatsViewModel: any, hasTransition?: any) {
             })
         .each(function(d) {
             // Update attriubutes of <tspan> elements
-            var newX;
-            var newAnchor;
+            let newX;
+            let newAnchor;
             if(catInRightDim(d)) {
                 // Place label to the right of category
                 newX = d.width + 5;
@@ -1454,7 +1454,7 @@ function updateSvgCategories(parcatsViewModel: any, hasTransition?: any) {
 
     // Update bands
     // Initialize color band rects
-    var bandSelection = categorySelection
+    const bandSelection = categorySelection
         .selectAll('rect.bandrect')
         .data(
             /** @param {CategoryViewModel} catViewModel*/
@@ -1462,7 +1462,7 @@ function updateSvgCategories(parcatsViewModel: any, hasTransition?: any) {
                 return catViewModel.bands;
             }, key);
 
-    var bandsSelectionEnter = bandSelection.enter()
+    const bandsSelectionEnter = bandSelection.enter()
         .append('rect')
         .attr('class', 'bandrect')
         .attr('cursor', 'move')
@@ -1507,28 +1507,28 @@ function updateSvgCategories(parcatsViewModel: any, hasTransition?: any) {
  */
 function createParcatsViewModel(graphDiv, layout: FullLayout, wrappedParcatsModel) {
     // Unwrap model
-    var parcatsModel = wrappedParcatsModel[0];
+    const parcatsModel = wrappedParcatsModel[0];
 
     // Compute margin
-    var margin = layout.margin || {l: 80, r: 80, t: 100, b: 80};
+    const margin = layout.margin || {l: 80, r: 80, t: 100, b: 80};
 
     // Compute pixel position/extents
-    var trace = parcatsModel.trace;
-    var domain = trace.domain;
-    var figureWidth = layout.width;
-    var figureHeight = layout.height;
-    var traceWidth = Math.floor(figureWidth * (domain.x[1] - domain.x[0]));
-    var traceHeight = Math.floor(figureHeight * (domain.y[1] - domain.y[0]));
-    var traceX = domain.x[0] * figureWidth + margin.l;
-    var traceY = layout.height - domain.y[1] * layout.height + margin.t;
+    const trace = parcatsModel.trace;
+    const domain = trace.domain;
+    const figureWidth = layout.width;
+    const figureHeight = layout.height;
+    const traceWidth = Math.floor(figureWidth * (domain.x[1] - domain.x[0]));
+    const traceHeight = Math.floor(figureHeight * (domain.y[1] - domain.y[0]));
+    const traceX = domain.x[0] * figureWidth + margin.l;
+    const traceY = layout.height - domain.y[1] * layout.height + margin.t;
 
     // Handle path shape
     // -----------------
-    var pathShape = trace.line.shape;
+    const pathShape = trace.line.shape;
 
     // Handle hover info
     // -----------------
-    var hoverinfoItems;
+    let hoverinfoItems;
     if(trace.hoverinfo === 'all') {
         hoverinfoItems = ['count', 'probability'];
     } else {
@@ -1537,7 +1537,7 @@ function createParcatsViewModel(graphDiv, layout: FullLayout, wrappedParcatsMode
 
     // Construct parcatsViewModel
     // --------------------------
-    var parcatsViewModel: any = {
+    const parcatsViewModel: any = {
         trace: trace,
         key: trace.uid,
         model: parcatsModel,
@@ -1590,10 +1590,10 @@ function createParcatsViewModel(graphDiv, layout: FullLayout, wrappedParcatsMode
  */
 function buildSvgPath(leftXPositions, pathYs, dimWidths, pathHeight, curvature) {
     // Compute the x midpoint of each path segment
-    var xRefPoints1 = [];
-    var xRefPoints2 = [];
-    var refInterpolator;
-    var d;
+    const xRefPoints1 = [];
+    const xRefPoints2 = [];
+    let refInterpolator;
+    let d;
 
     for(d = 0; d < dimWidths.length - 1; d++) {
         refInterpolator = interpolateNumber(dimWidths[d] + leftXPositions[d], leftXPositions[d + 1]);
@@ -1602,7 +1602,7 @@ function buildSvgPath(leftXPositions, pathYs, dimWidths, pathHeight, curvature) 
     }
 
     // Move to top of path on left edge of left-most category
-    var svgD = 'M ' + leftXPositions[0] + ',' + pathYs[0];
+    let svgD = 'M ' + leftXPositions[0] + ',' + pathYs[0];
 
     // Horizontal line to right edge
     svgD += 'l' + dimWidths[0] + ',0 ';
@@ -1653,9 +1653,9 @@ function updatePathViewModels(parcatsViewModel) {
     // Initialize an array of the y position of the top of the next path to be added to each category.
     //
     // nextYPositions[d][c] is the y position of the next path through category with index c of dimension with index d
-    var dimensionViewModels = parcatsViewModel.dimensions;
-    var parcatsModel = parcatsViewModel.model;
-    var nextYPositions = dimensionViewModels.map(
+    const dimensionViewModels = parcatsViewModel.dimensions;
+    const parcatsModel = parcatsViewModel.model;
+    const nextYPositions = dimensionViewModels.map(
         function(d) {
             return d.categories.map(
                 function(c) {
@@ -1664,27 +1664,27 @@ function updatePathViewModels(parcatsViewModel) {
         });
 
     // Array from category index to category display index for each true dimension index
-    var catToDisplayIndPerDim = parcatsViewModel.model.dimensions.map(
+    const catToDisplayIndPerDim = parcatsViewModel.model.dimensions.map(
         function(d) {
             return d.categories.map(function(c) {return c.displayInd;});
         });
 
     // Array from true dimension index to dimension display index
-    var dimToDisplayInd = parcatsViewModel.model.dimensions.map(function(d) {return d.displayInd;});
-    var displayToDimInd = parcatsViewModel.dimensions.map(function(d) {return d.model.dimensionInd;});
+    const dimToDisplayInd = parcatsViewModel.model.dimensions.map(function(d) {return d.displayInd;});
+    const displayToDimInd = parcatsViewModel.dimensions.map(function(d) {return d.model.dimensionInd;});
 
     // Array of the x position of the left edge of the rectangles for each dimension
-    var leftXPositions = dimensionViewModels.map(
+    const leftXPositions = dimensionViewModels.map(
         function(d) {
             return d.x;
         });
 
     // Compute dimension widths
-    var dimWidths = dimensionViewModels.map(function(d) {return d.width;});
+    const dimWidths = dimensionViewModels.map(function(d) {return d.width;});
 
     // Build sorted Array of PathModel objects
-    var pathModels = [];
-    for(var p in parcatsModel.paths) {
+    const pathModels = [];
+    for(const p in parcatsModel.paths) {
         if(parcatsModel.paths.hasOwnProperty(p)) {
             pathModels.push(parcatsModel.paths[p]);
         }
@@ -1692,8 +1692,8 @@ function updatePathViewModels(parcatsViewModel) {
 
     // Compute category display inds to use for sorting paths
     function pathDisplayCategoryInds(pathModel) {
-        var dimensionInds = pathModel.categoryInds.map(function(catInd, dimInd) {return catToDisplayIndPerDim[dimInd][catInd];});
-        var displayInds = displayToDimInd.map(function(dimInd) {
+        const dimensionInds = pathModel.categoryInds.map(function(catInd, dimInd) {return catToDisplayIndPerDim[dimInd][catInd];});
+        const displayInds = displayToDimInd.map(function(dimInd) {
             return dimensionInds[dimInd];
         });
         return displayInds;
@@ -1702,8 +1702,8 @@ function updatePathViewModels(parcatsViewModel) {
     // Sort in ascending order by display index array
     pathModels.sort(function(v1, v2) {
         // Build display inds for each path
-        var sortArray1 = pathDisplayCategoryInds(v1);
-        var sortArray2 = pathDisplayCategoryInds(v2);
+        const sortArray1 = pathDisplayCategoryInds(v1);
+        const sortArray2 = pathDisplayCategoryInds(v2);
 
         // Handle path sort order
         if(parcatsViewModel.sortpaths === 'backward') {
@@ -1734,16 +1734,16 @@ function updatePathViewModels(parcatsViewModel) {
     });
 
     // Create path models
-    var pathViewModels = new Array(pathModels.length);
-    var totalCount = dimensionViewModels[0].model.count;
-    var totalHeight = dimensionViewModels[0].categories
+    const pathViewModels = new Array(pathModels.length);
+    const totalCount = dimensionViewModels[0].model.count;
+    const totalHeight = dimensionViewModels[0].categories
         .map(function(c) { return c.height; })
         .reduce(function(v1, v2) { return v1 + v2; });
 
-    for(var pathNumber = 0; pathNumber < pathModels.length; pathNumber++) {
-        var pathModel = pathModels[pathNumber];
+    for(let pathNumber = 0; pathNumber < pathModels.length; pathNumber++) {
+        const pathModel = pathModels[pathNumber];
 
-        var pathHeight;
+        let pathHeight;
         if(totalCount > 0) {
             pathHeight = totalHeight * (pathModel.count / totalCount);
         } else {
@@ -1751,24 +1751,24 @@ function updatePathViewModels(parcatsViewModel) {
         }
 
         // Build path y coords
-        var pathYs = new Array(nextYPositions.length);
-        for(var d = 0; d < pathModel.categoryInds.length; d++) {
-            var catInd = pathModel.categoryInds[d];
-            var catDisplayInd = catToDisplayIndPerDim[d][catInd];
-            var dimDisplayInd = dimToDisplayInd[d];
+        const pathYs = new Array(nextYPositions.length);
+        for(let d = 0; d < pathModel.categoryInds.length; d++) {
+            const catInd = pathModel.categoryInds[d];
+            const catDisplayInd = catToDisplayIndPerDim[d][catInd];
+            const dimDisplayInd = dimToDisplayInd[d];
 
             // Update next y position
             pathYs[dimDisplayInd] = nextYPositions[dimDisplayInd][catDisplayInd];
             nextYPositions[dimDisplayInd][catDisplayInd] += pathHeight;
 
             // Update category color information
-            var catViewModle = parcatsViewModel.dimensions[dimDisplayInd].categories[catDisplayInd];
-            var numBands = catViewModle.bands.length;
-            var lastCatBand = catViewModle.bands[numBands - 1];
+            const catViewModle = parcatsViewModel.dimensions[dimDisplayInd].categories[catDisplayInd];
+            const numBands = catViewModle.bands.length;
+            const lastCatBand = catViewModle.bands[numBands - 1];
 
             if(lastCatBand === undefined || pathModel.rawColor !== lastCatBand.rawColor) {
                 // Create a new band
-                var bandY = lastCatBand === undefined ? 0 : lastCatBand.y + lastCatBand.height;
+                const bandY = lastCatBand === undefined ? 0 : lastCatBand.y + lastCatBand.height;
                 catViewModle.bands.push({
                     key: bandY,
                     color: pathModel.color,
@@ -1782,14 +1782,14 @@ function updatePathViewModels(parcatsViewModel) {
                 });
             } else {
                 // Extend current band
-                var currentBand = catViewModle.bands[numBands - 1];
+                const currentBand = catViewModle.bands[numBands - 1];
                 currentBand.height += pathHeight;
                 currentBand.count += pathModel.count;
             }
         }
 
         // build svg path
-        var svgD;
+        let svgD;
         if(parcatsViewModel.pathShape === 'hspline') {
             svgD = buildSvgPath(leftXPositions, pathYs, dimWidths, pathHeight, 0.5);
         } else {
@@ -1828,7 +1828,7 @@ function updatePathViewModels(parcatsViewModel) {
  */
 function updateDimensionViewModels(parcatsViewModel) {
     // Compute dimension ordering
-    var dimensionsIndInfo = parcatsViewModel.model.dimensions.map(function(d) {
+    const dimensionsIndInfo = parcatsViewModel.model.dimensions.map(function(d) {
         return {displayInd: d.displayInd, dimensionInd: d.dimensionInd};
     });
 
@@ -1836,10 +1836,10 @@ function updateDimensionViewModels(parcatsViewModel) {
         return a.displayInd - b.displayInd;
     });
 
-    var dimensions = [];
-    for(var displayInd in dimensionsIndInfo) {
-        var dimensionInd = dimensionsIndInfo[displayInd].dimensionInd;
-        var dimModel = parcatsViewModel.model.dimensions[dimensionInd];
+    const dimensions = [];
+    for(const displayInd in dimensionsIndInfo) {
+        const dimensionInd = dimensionsIndInfo[displayInd].dimensionInd;
+        const dimModel = parcatsViewModel.model.dimensions[dimensionInd];
         dimensions.push(createDimensionViewModel(parcatsViewModel, dimModel));
     }
 
@@ -1856,15 +1856,15 @@ function updateDimensionViewModels(parcatsViewModel) {
  */
 function createDimensionViewModel(parcatsViewModel, dimensionModel) {
     // Compute dimension x position
-    var categoryLabelPad = 40;
-    var dimWidth = 16;
-    var numDimensions = parcatsViewModel.model.dimensions.length;
-    var displayInd = dimensionModel.displayInd;
+    const categoryLabelPad = 40;
+    const dimWidth = 16;
+    const numDimensions = parcatsViewModel.model.dimensions.length;
+    const displayInd = dimensionModel.displayInd;
 
     // Compute x coordinate values
-    var dimDx;
-    var dimX0;
-    var dimX;
+    let dimDx;
+    let dimX0;
+    let dimX;
 
     if(numDimensions > 1) {
         dimDx = (parcatsViewModel.width - 2 * categoryLabelPad - dimWidth) / (numDimensions - 1);
@@ -1875,23 +1875,23 @@ function createDimensionViewModel(parcatsViewModel, dimensionModel) {
     dimX = dimX0 + dimDx * displayInd;
 
     // Compute categories
-    var categories = [];
-    var maxCats = parcatsViewModel.model.maxCats;
-    var numCats = dimensionModel.categories.length;
-    var catSpacing = 8;
-    var totalCount = dimensionModel.count;
-    var totalHeight = parcatsViewModel.height - catSpacing * (maxCats - 1);
-    var nextCatHeight;
-    var nextCatModel;
-    var nextCat;
-    var catInd;
-    var catDisplayInd;
+    const categories = [];
+    const maxCats = parcatsViewModel.model.maxCats;
+    const numCats = dimensionModel.categories.length;
+    const catSpacing = 8;
+    const totalCount = dimensionModel.count;
+    const totalHeight = parcatsViewModel.height - catSpacing * (maxCats - 1);
+    let nextCatHeight;
+    let nextCatModel;
+    let nextCat;
+    let catInd;
+    let catDisplayInd;
 
     // Compute starting Y offset
-    var nextCatY = (maxCats - numCats) * catSpacing / 2.0;
+    let nextCatY = (maxCats - numCats) * catSpacing / 2.0;
 
     // Compute category ordering
-    var categoryIndInfo = dimensionModel.categories.map(function(c) {
+    const categoryIndInfo = dimensionModel.categories.map(function(c) {
         return {displayInd: c.displayInd, categoryInd: c.categoryInd};
     });
 

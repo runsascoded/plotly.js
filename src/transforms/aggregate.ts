@@ -4,10 +4,10 @@ import PlotSchema from '../plot_api/plot_schema.js';
 import { pointsAccessorFunction } from './helpers.js';
 import _numerical from '../constants/numerical.js';
 const { BADNUM } = _numerical;
-export var moduleType = 'transform';
-export var name = 'aggregate';
+export const moduleType = 'transform';
+export const name = 'aggregate';
 
-export var attrs = {
+export const attrs = {
     enabled: {
         valType: 'boolean',
         dflt: true,
@@ -99,17 +99,17 @@ export var attrs = {
     editType: 'calc'
 };
 
-var aggAttrs = attrs.aggregations;
+const aggAttrs = attrs.aggregations;
 
-export var supplyDefaults = function(transformIn, traceOut) {
-    var transformOut: any = {};
-    var i;
+export const supplyDefaults = function(transformIn, traceOut) {
+    const transformOut: any = {};
+    let i;
 
     function coerce(attr: string, dflt?: any) {
         return Lib.coerce(transformIn, transformOut, attrs, attr, dflt);
     }
 
-    var enabled = coerce('enabled');
+    const enabled = coerce('enabled');
 
     if(!enabled) return transformOut;
 
@@ -123,11 +123,11 @@ export var supplyDefaults = function(transformIn, traceOut) {
      * as distinct from undefined which means this array isn't present in the input
      * missing arrays can still be aggregate outputs for *count* aggregations.
      */
-    var arrayAttrArray = PlotSchema.findArrayAttributes(traceOut);
-    var arrayAttrs: any = {};
+    const arrayAttrArray = PlotSchema.findArrayAttributes(traceOut);
+    const arrayAttrs: any = {};
     for(i = 0; i < arrayAttrArray.length; i++) arrayAttrs[arrayAttrArray[i]] = 1;
 
-    var groups = coerce('groups');
+    const groups = coerce('groups');
 
     if(!Array.isArray(groups)) {
         if(!arrayAttrs[groups]) {
@@ -137,9 +137,9 @@ export var supplyDefaults = function(transformIn, traceOut) {
         arrayAttrs[groups] = 0;
     }
 
-    var aggregationsIn = transformIn.aggregations || [];
-    var aggregationsOut = transformOut.aggregations = new Array(aggregationsIn.length);
-    var aggregationOut;
+    const aggregationsIn = transformIn.aggregations || [];
+    const aggregationsOut = transformOut.aggregations = new Array(aggregationsIn.length);
+    let aggregationOut;
 
     function coercei(attr: string, dflt?: any) {
         return Lib.coerce(aggregationsIn[i], aggregationOut, aggAttrs, attr, dflt);
@@ -147,9 +147,9 @@ export var supplyDefaults = function(transformIn, traceOut) {
 
     for(i = 0; i < aggregationsIn.length; i++) {
         aggregationOut = {_index: i};
-        var target = coercei('target');
-        var func = coercei('func');
-        var enabledi = coercei('enabled');
+        const target = coercei('target');
+        const func = coercei('func');
+        const enabledi = coercei('enabled');
 
         // add this aggregation to the output only if it's the first instance
         // of a valid target attribute - or an unused target attribute with "count"
@@ -176,23 +176,23 @@ export var supplyDefaults = function(transformIn, traceOut) {
     return transformOut;
 };
 
-export var calcTransform = function(gd, trace, opts) {
+export const calcTransform = function(gd, trace, opts) {
     if(!opts.enabled) return;
 
-    var groups = opts.groups;
+    const groups = opts.groups;
 
-    var groupArray = Lib.getTargetArray(trace, {target: groups});
+    const groupArray = Lib.getTargetArray(trace, {target: groups});
     if(!groupArray) return;
 
-    var i, vi, groupIndex, newGrouping;
+    let i, vi, groupIndex, newGrouping;
 
-    var groupIndices: any = {};
-    var indexToPoints: any = {};
-    var groupings = [];
+    const groupIndices: any = {};
+    const indexToPoints: any = {};
+    const groupings = [];
 
-    var originalPointsAccessor = pointsAccessorFunction(trace.transforms, opts);
+    const originalPointsAccessor = pointsAccessorFunction(trace.transforms, opts);
 
-    var len = groupArray.length;
+    let len = groupArray.length;
     if(trace._length) len = Math.min(len, trace._length);
 
     for(i = 0; i < len; i++) {
@@ -211,7 +211,7 @@ export var calcTransform = function(gd, trace, opts) {
 
     opts._indexToPoints = indexToPoints;
 
-    var aggregations = opts.aggregations;
+    const aggregations = opts.aggregations;
 
     for(i = 0; i < aggregations.length; i++) {
         aggregateOneArray(gd, trace, groupings, aggregations[i]);
@@ -231,14 +231,14 @@ export var calcTransform = function(gd, trace, opts) {
 function aggregateOneArray(gd, trace, groupings, aggregation) {
     if(!aggregation.enabled) return;
 
-    var attr = aggregation.target;
-    var targetNP = Lib.nestedProperty(trace, attr);
-    var arrayIn = targetNP.get();
-    var conversions = Axes.getDataConversions(gd, trace, attr, arrayIn);
-    var func = getAggregateFunction(aggregation, conversions);
+    const attr = aggregation.target;
+    const targetNP = Lib.nestedProperty(trace, attr);
+    const arrayIn = targetNP.get();
+    const conversions = Axes.getDataConversions(gd, trace, attr, arrayIn);
+    const func = getAggregateFunction(aggregation, conversions);
 
-    var arrayOut = new Array(groupings.length);
-    for(var i = 0; i < groupings.length; i++) {
+    const arrayOut = new Array(groupings.length);
+    for(let i = 0; i < groupings.length; i++) {
         arrayOut[i] = func(arrayIn, groupings[i]);
     }
     targetNP.set(arrayOut);
@@ -251,9 +251,9 @@ function aggregateOneArray(gd, trace, groupings, aggregation) {
 }
 
 function getAggregateFunction(opts, conversions) {
-    var func = opts.func;
-    var d2c = conversions.d2c;
-    var c2d = conversions.c2d;
+    const func = opts.func;
+    const d2c = conversions.d2c;
+    const c2d = conversions.c2d;
 
     switch(func) {
         // count, first, and last don't depend on anything about the data
@@ -269,9 +269,9 @@ function getAggregateFunction(opts, conversions) {
             // This will produce output in all cases even though it's nonsensical
             // for date or category data.
             return function(array, indices) {
-                var total = 0;
-                for(var i = 0; i < indices.length; i++) {
-                    var vi = d2c(array[indices[i]]);
+                let total = 0;
+                for(let i = 0; i < indices.length; i++) {
+                    const vi = d2c(array[indices[i]]);
                     if(vi !== BADNUM) total += vi;
                 }
                 return c2d(total);
@@ -280,10 +280,10 @@ function getAggregateFunction(opts, conversions) {
         case 'avg':
             // Generally meaningless for category data but it still does something.
             return function(array, indices) {
-                var total = 0;
-                var cnt = 0;
-                for(var i = 0; i < indices.length; i++) {
-                    var vi = d2c(array[indices[i]]);
+                let total = 0;
+                let cnt = 0;
+                for(let i = 0; i < indices.length; i++) {
+                    const vi = d2c(array[indices[i]]);
                     if(vi !== BADNUM) {
                         total += vi;
                         cnt++;
@@ -294,9 +294,9 @@ function getAggregateFunction(opts, conversions) {
 
         case 'min':
             return function(array, indices) {
-                var out = Infinity;
-                for(var i = 0; i < indices.length; i++) {
-                    var vi = d2c(array[indices[i]]);
+                let out = Infinity;
+                for(let i = 0; i < indices.length; i++) {
+                    const vi = d2c(array[indices[i]]);
                     if(vi !== BADNUM) out = Math.min(out, vi);
                 }
                 return (out === Infinity) ? BADNUM : c2d(out);
@@ -304,9 +304,9 @@ function getAggregateFunction(opts, conversions) {
 
         case 'max':
             return function(array, indices) {
-                var out = -Infinity;
-                for(var i = 0; i < indices.length; i++) {
-                    var vi = d2c(array[indices[i]]);
+                let out = -Infinity;
+                for(let i = 0; i < indices.length; i++) {
+                    const vi = d2c(array[indices[i]]);
                     if(vi !== BADNUM) out = Math.max(out, vi);
                 }
                 return (out === -Infinity) ? BADNUM : c2d(out);
@@ -314,10 +314,10 @@ function getAggregateFunction(opts, conversions) {
 
         case 'range':
             return function(array, indices) {
-                var min = Infinity;
-                var max = -Infinity;
-                for(var i = 0; i < indices.length; i++) {
-                    var vi = d2c(array[indices[i]]);
+                let min = Infinity;
+                let max = -Infinity;
+                for(let i = 0; i < indices.length; i++) {
+                    const vi = d2c(array[indices[i]]);
                     if(vi !== BADNUM) {
                         min = Math.min(min, vi);
                         max = Math.max(max, vi);
@@ -328,33 +328,33 @@ function getAggregateFunction(opts, conversions) {
 
         case 'change':
             return function(array, indices) {
-                var first = d2c(array[indices[0]]);
-                var last = d2c(array[indices[indices.length - 1]]);
+                const first = d2c(array[indices[0]]);
+                const last = d2c(array[indices[indices.length - 1]]);
                 return (first === BADNUM || last === BADNUM) ? BADNUM : c2d(last - first);
             };
 
         case 'median':
             return function(array, indices) {
-                var sortCalc = [];
-                for(var i = 0; i < indices.length; i++) {
-                    var vi = d2c(array[indices[i]]);
+                const sortCalc = [];
+                for(let i = 0; i < indices.length; i++) {
+                    const vi = d2c(array[indices[i]]);
                     if(vi !== BADNUM) sortCalc.push(vi);
                 }
                 if(!sortCalc.length) return BADNUM;
                 sortCalc.sort(Lib.sorterAsc);
-                var mid = (sortCalc.length - 1) / 2;
+                const mid = (sortCalc.length - 1) / 2;
                 return c2d((sortCalc[Math.floor(mid)] + sortCalc[Math.ceil(mid)]) / 2);
             };
 
         case 'mode':
             return function(array, indices) {
-                var counts: any = {};
-                var maxCnt = 0;
-                var out = BADNUM;
-                for(var i = 0; i < indices.length; i++) {
-                    var vi = d2c(array[indices[i]]);
+                const counts: any = {};
+                let maxCnt = 0;
+                let out = BADNUM;
+                for(let i = 0; i < indices.length; i++) {
+                    const vi = d2c(array[indices[i]]);
                     if(vi !== BADNUM) {
-                        var counti = counts[vi] = (counts[vi] || 0) + 1;
+                        const counti = counts[vi] = (counts[vi] || 0) + 1;
                         if(counti > maxCnt) {
                             maxCnt = counti;
                             out = vi;
@@ -366,10 +366,10 @@ function getAggregateFunction(opts, conversions) {
 
         case 'rms':
             return function(array, indices) {
-                var total = 0;
-                var cnt = 0;
-                for(var i = 0; i < indices.length; i++) {
-                    var vi = d2c(array[indices[i]]);
+                let total = 0;
+                let cnt = 0;
+                for(let i = 0; i < indices.length; i++) {
+                    const vi = d2c(array[indices[i]]);
                     if(vi !== BADNUM) {
                         total += vi * vi;
                         cnt++;
@@ -383,20 +383,20 @@ function getAggregateFunction(opts, conversions) {
                 // balance numerical stability with performance:
                 // so that we call d2c once per element but don't need to
                 // store them, reference all to the first element
-                var total = 0;
-                var total2 = 0;
-                var cnt = 1;
-                var v0 = BADNUM;
-                var i;
+                let total = 0;
+                let total2 = 0;
+                let cnt = 1;
+                let v0 = BADNUM;
+                let i;
                 for(i = 0; i < indices.length && v0 === BADNUM; i++) {
                     v0 = d2c(array[indices[i]]);
                 }
                 if(v0 === BADNUM) return BADNUM;
 
                 for(; i < indices.length; i++) {
-                    var vi = d2c(array[indices[i]]);
+                    const vi = d2c(array[indices[i]]);
                     if(vi !== BADNUM) {
-                        var dv = vi - v0;
+                        const dv = vi - v0;
                         total += dv;
                         total2 += dv * dv;
                         cnt++;
@@ -409,7 +409,7 @@ function getAggregateFunction(opts, conversions) {
                 // is a number of milliseconds, and for categories it's a number
                 // of category differences, which is not generically meaningful but
                 // as in other cases we don't forbid it.
-                var norm = (opts.funcmode === 'sample') ? (cnt - 1) : cnt;
+                const norm = (opts.funcmode === 'sample') ? (cnt - 1) : cnt;
                 // this is debatable: should a count of 1 return sample stddev of
                 // 0 or undefined?
                 if(!norm) return 0;

@@ -11,8 +11,8 @@ export default function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace,
 
     // read in face/vertex properties
     function readComponents(array) {
-        var ret = array.map(function (attr) {
-            var result = coerce(attr);
+        const ret = array.map(function (attr) {
+            const result = coerce(attr);
 
             if (result && Lib.isArrayOrTypedArray(result)) return result;
             return null;
@@ -25,7 +25,7 @@ export default function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace,
         );
     }
 
-    var coords = readComponents(['x', 'y', 'z']);
+    const coords = readComponents(['x', 'y', 'z']);
     if (!coords) {
         traceOut.visible = false;
         return;
@@ -42,7 +42,7 @@ export default function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace,
         return;
     }
 
-    var handleCalendarDefaults = Registry.getComponentMethod('calendars', 'handleTraceDefaults');
+    const handleCalendarDefaults = Registry.getComponentMethod('calendars', 'handleTraceDefaults');
     handleCalendarDefaults(traceIn, traceOut, ['x', 'y', 'z'], layout);
 
     // Coerce remaining properties
@@ -65,7 +65,7 @@ export default function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace,
         coerce(x);
     });
 
-    var showContour = coerce('contour.show');
+    const showContour = coerce('contour.show');
     if (showContour) {
         coerce('contour.color');
         coerce('contour.width');

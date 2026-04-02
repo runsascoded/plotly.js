@@ -6,9 +6,9 @@ import colorscaleDefaults from '../../components/colorscale/defaults.js';
 import subTypes from './subtypes.js';
 
 export default function markerDefaults(traceIn: InputTrace, traceOut: FullTrace, defaultColor: string, layout: FullLayout, coerce: any, opts?: any): void {
-    var isBubble = subTypes.isBubble(traceIn);
-    var lineColor = (traceIn.line || {}).color;
-    var defaultMLC;
+    const isBubble = subTypes.isBubble(traceIn);
+    const lineColor = (traceIn.line || {}).color;
+    let defaultMLC;
 
     opts = opts || {};
 
@@ -66,7 +66,7 @@ export default function markerDefaults(traceIn: InputTrace, traceOut: FullTrace,
     }
 
     if(opts.gradient) {
-        var gradientType = coerce('marker.gradient.type');
+        const gradientType = coerce('marker.gradient.type');
         if(gradientType !== 'none') {
             coerce('marker.gradient.color');
         }

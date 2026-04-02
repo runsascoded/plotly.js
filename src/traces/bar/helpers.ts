@@ -3,7 +3,7 @@ import isNumeric from 'fast-isnumeric';
 import tinycolor from 'tinycolor2';
 import { isArrayOrTypedArray } from '../../lib/index.js';
 
-export var coerceString = function(attributeDefinition: any, value: any, defaultValue?: any): any {
+export const coerceString = function(attributeDefinition: any, value: any, defaultValue?: any): any {
     if(typeof value === 'string') {
         if(value || !attributeDefinition.noBlank) return value;
     } else if(typeof value === 'number' || value === true) {
@@ -15,13 +15,13 @@ export var coerceString = function(attributeDefinition: any, value: any, default
       attributeDefinition.dflt;
 };
 
-export var coerceNumber = function(attributeDefinition: any, value: any, defaultValue?: any): number {
+export const coerceNumber = function(attributeDefinition: any, value: any, defaultValue?: any): number {
     if(isNumeric(value)) {
         value = +value;
 
-        var min = attributeDefinition.min;
-        var max = attributeDefinition.max;
-        var isOutOfBounds = (min !== undefined && value < min) ||
+        const min = attributeDefinition.min;
+        const max = attributeDefinition.max;
+        const isOutOfBounds = (min !== undefined && value < min) ||
               (max !== undefined && value > max);
 
         if(!isOutOfBounds) return value;
@@ -32,7 +32,7 @@ export var coerceNumber = function(attributeDefinition: any, value: any, default
       attributeDefinition.dflt;
 };
 
-export var coerceColor = function(attributeDefinition: any, value: any, defaultValue?: any): any {
+export const coerceColor = function(attributeDefinition: any, value: any, defaultValue?: any): any {
     if(tinycolor(value).isValid()) return value;
 
     return (defaultValue !== undefined) ?
@@ -40,7 +40,7 @@ export var coerceColor = function(attributeDefinition: any, value: any, defaultV
       attributeDefinition.dflt;
 };
 
-export var coerceEnumerated = function(attributeDefinition: any, value: any, defaultValue?: any): any {
+export const coerceEnumerated = function(attributeDefinition: any, value: any, defaultValue?: any): any {
     if(attributeDefinition.coerceNumber) value = +value;
 
     if(attributeDefinition.values.indexOf(value) !== -1) return value;
@@ -50,15 +50,15 @@ export var coerceEnumerated = function(attributeDefinition: any, value: any, def
       attributeDefinition.dflt;
 };
 
-export var getValue = function(arrayOrScalar: any, index: number): any {
-    var value;
+export const getValue = function(arrayOrScalar: any, index: number): any {
+    let value;
     if(!isArrayOrTypedArray(arrayOrScalar)) value = arrayOrScalar;
     else if(index < arrayOrScalar.length) value = arrayOrScalar[index];
     return value;
 };
 
-export var getLineWidth = function(trace: FullTrace, di: any): number {
-    var w =
+export const getLineWidth = function(trace: FullTrace, di: any): number {
+    const w =
         (0 < di.mlw) ? di.mlw :
         !isArrayOrTypedArray(trace.marker.line.width) ? trace.marker.line.width :
         0;

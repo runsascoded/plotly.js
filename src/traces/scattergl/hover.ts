@@ -4,24 +4,24 @@ import Lib from '../../lib/index.js';
 import getTraceColor from '../scatter/get_trace_color.js';
 
 function hoverPoints(pointData: any, xval: any, yval: any, hovermode?: any) {
-    var cd = pointData.cd;
-    var stash = cd[0].t;
-    var trace = cd[0].trace;
-    var xa = pointData.xa;
-    var ya = pointData.ya;
-    var x = stash.x;
-    var y = stash.y;
-    var xpx = xa.c2p(xval);
-    var ypx = ya.c2p(yval);
-    var maxDistance = pointData.distance;
-    var ids;
+    const cd = pointData.cd;
+    const stash = cd[0].t;
+    const trace = cd[0].trace;
+    const xa = pointData.xa;
+    const ya = pointData.ya;
+    const x = stash.x;
+    const y = stash.y;
+    const xpx = xa.c2p(xval);
+    const ypx = ya.c2p(yval);
+    const maxDistance = pointData.distance;
+    let ids;
 
     // FIXME: make sure this is a proper way to calc search radius
     if(stash.tree) {
-        var xl = xa.p2c(xpx - maxDistance);
-        var xr = xa.p2c(xpx + maxDistance);
-        var yl = ya.p2c(ypx - maxDistance);
-        var yr = ya.p2c(ypx + maxDistance);
+        const xl = xa.p2c(xpx - maxDistance);
+        const xr = xa.p2c(xpx + maxDistance);
+        const yl = ya.p2c(ypx - maxDistance);
+        const yr = ya.p2c(ypx + maxDistance);
 
         if(hovermode === 'x') {
             ids = stash.tree.range(
@@ -40,12 +40,12 @@ function hoverPoints(pointData: any, xval: any, yval: any, hovermode?: any) {
 
     // pick the id closest to the point
     // note that point possibly may not be found
-    var k, closestId, ptx, pty, i, dx, dy, dist, dxy;
+    let k, closestId, ptx, pty, i, dx, dy, dist, dxy;
 
-    var minDist = maxDistance;
+    let minDist = maxDistance;
     if(hovermode === 'x') {
-        var xPeriod = !!trace.xperiodalignment;
-        var yPeriod = !!trace.yperiodalignment;
+        const xPeriod = !!trace.xperiodalignment;
+        const yPeriod = !!trace.yperiodalignment;
 
         for(i = 0; i < ids.length; i++) {
             k = ids[i];
@@ -53,8 +53,8 @@ function hoverPoints(pointData: any, xval: any, yval: any, hovermode?: any) {
 
             dx = Math.abs(xa.c2p(ptx) - xpx);
             if(xPeriod) {
-                var x0 = xa.c2p(trace._xStarts[k]);
-                var x1 = xa.c2p(trace._xEnds[k]);
+                const x0 = xa.c2p(trace._xStarts[k]);
+                const x1 = xa.c2p(trace._xEnds[k]);
 
                 dx = (
                     xpx >= Math.min(x0, x1) &&
@@ -68,8 +68,8 @@ function hoverPoints(pointData: any, xval: any, yval: any, hovermode?: any) {
                 dy = ya.c2p(pty) - ypx;
 
                 if(yPeriod) {
-                    var y0 = ya.c2p(trace._yStarts[k]);
-                    var y1 = ya.c2p(trace._yEnds[k]);
+                    const y0 = ya.c2p(trace._yStarts[k]);
+                    const y1 = ya.c2p(trace._yEnds[k]);
 
                     dy = (
                         ypx >= Math.min(y0, y1) &&
@@ -107,14 +107,14 @@ function hoverPoints(pointData: any, xval: any, yval: any, hovermode?: any) {
 }
 
 function calcHover(pointData, x, y, trace: FullTrace) {
-    var xa = pointData.xa;
-    var ya = pointData.ya;
-    var minDist = pointData.distance;
-    var dxy = pointData.dxy;
-    var id = pointData.index;
+    const xa = pointData.xa;
+    const ya = pointData.ya;
+    const minDist = pointData.distance;
+    const dxy = pointData.dxy;
+    const id = pointData.index;
 
     // the closest data point
-    var di: any = {
+    const di: any = {
         pointNumber: id,
         x: x[id],
         y: y[id]
@@ -126,7 +126,7 @@ function calcHover(pointData, x, y, trace: FullTrace) {
     di.data = Array.isArray(trace.customdata) ? trace.customdata[id] : trace.customdata;
     di.tp = Array.isArray(trace.textposition) ? trace.textposition[id] : trace.textposition;
 
-    var font = trace.textfont;
+    const font = trace.textfont;
     if(font) {
         di.ts = Lib.isArrayOrTypedArray(font.size) ? font.size[id] : font.size;
         di.tc = Lib.isArrayOrTypedArray(font.color) ? font.color[id] : font.color;
@@ -136,7 +136,7 @@ function calcHover(pointData, x, y, trace: FullTrace) {
         di.tv = Array.isArray(font.variant) ? font.variant[id] : font.variant;
     }
 
-    var marker = trace.marker;
+    const marker = trace.marker;
     if(marker) {
         di.ms = Lib.isArrayOrTypedArray(marker.size) ? marker.size[id] : marker.size;
         di.mo = Lib.isArrayOrTypedArray(marker.opacity) ? marker.opacity[id] : marker.opacity;
@@ -145,23 +145,23 @@ function calcHover(pointData, x, y, trace: FullTrace) {
         di.mc = Lib.isArrayOrTypedArray(marker.color) ? marker.color[id] : marker.color;
     }
 
-    var line = marker && marker.line;
+    const line = marker && marker.line;
     if(line) {
         di.mlc = Array.isArray(line.color) ? line.color[id] : line.color;
         di.mlw = Lib.isArrayOrTypedArray(line.width) ? line.width[id] : line.width;
     }
 
-    var grad = marker && marker.gradient;
+    const grad = marker && marker.gradient;
     if(grad && grad.type !== 'none') {
         di.mgt = Array.isArray(grad.type) ? grad.type[id] : grad.type;
         di.mgc = Array.isArray(grad.color) ? grad.color[id] : grad.color;
     }
 
-    var xp = xa.c2p(di.x, true);
-    var yp = ya.c2p(di.y, true);
-    var rad = di.mrc || 1;
+    const xp = xa.c2p(di.x, true);
+    const yp = ya.c2p(di.y, true);
+    const rad = di.mrc || 1;
 
-    var hoverlabel = trace.hoverlabel;
+    const hoverlabel = trace.hoverlabel;
 
     if(hoverlabel) {
         di.hbg = Array.isArray(hoverlabel.bgcolor) ? hoverlabel.bgcolor[id] : hoverlabel.bgcolor;
@@ -171,23 +171,23 @@ function calcHover(pointData, x, y, trace: FullTrace) {
         di.htf = Array.isArray(hoverlabel.font.family) ? hoverlabel.font.family[id] : hoverlabel.font.family;
         di.hnl = Lib.isArrayOrTypedArray(hoverlabel.namelength) ? hoverlabel.namelength[id] : hoverlabel.namelength;
     }
-    var hoverinfo = trace.hoverinfo;
+    const hoverinfo = trace.hoverinfo;
     if(hoverinfo) {
         di.hi = Array.isArray(hoverinfo) ? hoverinfo[id] : hoverinfo;
     }
 
-    var hovertemplate = trace.hovertemplate;
+    const hovertemplate = trace.hovertemplate;
     if(hovertemplate) {
         di.ht = Array.isArray(hovertemplate) ? hovertemplate[id] : hovertemplate;
     }
 
-    var fakeCd: any = {};
+    const fakeCd: any = {};
     fakeCd[pointData.index] = di;
 
-    var origX = trace._origX;
-    var origY = trace._origY;
+    const origX = trace._origX;
+    const origY = trace._origY;
 
-    var pointData2 = Lib.extendFlat({}, pointData, {
+    const pointData2 = Lib.extendFlat({}, pointData, {
         color: getTraceColor(trace, di),
 
         x0: xp - rad,

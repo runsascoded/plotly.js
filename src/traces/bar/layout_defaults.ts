@@ -11,22 +11,22 @@ export default function(layoutIn: Layout, layoutOut: FullLayout, fullData: FullT
         return Lib.coerce(layoutIn, layoutOut, layoutAttributes, attr, dflt);
     }
 
-    var hasBars = false;
-    var shouldBeGapless = false;
-    var gappedAnyway = false;
-    var usedSubplots: any = {};
+    let hasBars = false;
+    let shouldBeGapless = false;
+    let gappedAnyway = false;
+    const usedSubplots: any = {};
 
-    var mode = coerce('barmode');
-    var isGroup = mode === 'group';
+    const mode = coerce('barmode');
+    const isGroup = mode === 'group';
 
-    for(var i = 0; i < fullData.length; i++) {
-        var trace = fullData[i];
+    for(let i = 0; i < fullData.length; i++) {
+        const trace = fullData[i];
         if(Registry.traceIs(trace, 'bar') && trace.visible) hasBars = true;
         else continue;
 
         // if we have at least 2 grouped bar traces on the same subplot,
         // we should default to a gap anyway, even if the data is histograms
-        var subploti = trace.xaxis + trace.yaxis;
+        let subploti = trace.xaxis + trace.yaxis;
         if(isGroup) {
             // with barmode group, bars are grouped next to each other when sharing the same axes
             if(usedSubplots[subploti]) gappedAnyway = true;
@@ -40,7 +40,7 @@ export default function(layoutIn: Layout, layoutOut: FullLayout, fullData: FullT
         }
 
         if(trace.visible && trace.type === 'histogram') {
-            var pa = Axes.getFromId({_fullLayout: layoutOut},
+            const pa = Axes.getFromId({_fullLayout: layoutOut},
                         trace[trace.orientation === 'v' ? 'xaxis' : 'yaxis']);
             if(pa.type !== 'category') shouldBeGapless = true;
         }
@@ -55,6 +55,6 @@ export default function(layoutIn: Layout, layoutOut: FullLayout, fullData: FullT
 
     coerce('bargap', (shouldBeGapless && !gappedAnyway) ? 0 : 0.2);
     coerce('bargroupgap');
-    var r = coerce('barcornerradius');
+    const r = coerce('barcornerradius');
     layoutOut.barcornerradius = validateCornerradius(r);
 }

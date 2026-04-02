@@ -7,48 +7,48 @@ import _hover from '../bar/hover.js';
 const { hoverOnBars } = _hover;
 import delta from '../../constants/delta.js';
 
-var DIRSYMBOL = {
+const DIRSYMBOL = {
     increasing: delta.INCREASING.SYMBOL,
     decreasing: delta.DECREASING.SYMBOL
 };
 
 export default function hoverPoints(pointData,  xval,  yval,  hovermode,  opts) {
-    var point = hoverOnBars(pointData, xval, yval, hovermode, opts);
+    const point = hoverOnBars(pointData, xval, yval, hovermode, opts);
     if(!point) return;
 
-    var cd = point.cd;
-    var trace = cd[0].trace;
-    var isHorizontal = (trace.orientation === 'h');
+    const cd = point.cd;
+    const trace = cd[0].trace;
+    const isHorizontal = (trace.orientation === 'h');
 
-    var vLetter = isHorizontal ? 'x' : 'y';
-    var vAxis = isHorizontal ? pointData.xa : pointData.ya;
+    const vLetter = isHorizontal ? 'x' : 'y';
+    const vAxis = isHorizontal ? pointData.xa : pointData.ya;
 
     function formatNumber(a) {
         return hoverLabelText(vAxis, a, trace[vLetter + 'hoverformat']);
     }
 
     // the closest data point
-    var index = point.index;
-    var di = cd[index];
+    const index = point.index;
+    const di = cd[index];
 
-    var size = (di.isSum) ? di.b + di.s : di.rawS;
+    const size = (di.isSum) ? di.b + di.s : di.rawS;
 
     point.initial = di.b + di.s - size;
     point.delta = size;
     point.final = point.initial + point.delta;
 
-    var v = formatNumber(Math.abs(point.delta));
+    const v = formatNumber(Math.abs(point.delta));
     point.deltaLabel = size < 0 ? '(' + v + ')' : v;
     point.finalLabel = formatNumber(point.final);
     point.initialLabel = formatNumber(point.initial);
 
-    var hoverinfo = di.hi || trace.hoverinfo;
-    var text = [];
+    const hoverinfo = di.hi || trace.hoverinfo;
+    const text = [];
     if(hoverinfo && hoverinfo !== 'none' && hoverinfo !== 'skip') {
-        var isAll = (hoverinfo === 'all');
-        var parts = hoverinfo.split('+');
+        const isAll = (hoverinfo === 'all');
+        const parts = hoverinfo.split('+');
 
-        var hasFlag = function(flag) { return isAll || parts.indexOf(flag) !== -1; };
+        const hasFlag = function(flag) { return isAll || parts.indexOf(flag) !== -1; };
 
         if(!di.isSum) {
             if(hasFlag('final') &&
@@ -77,10 +77,10 @@ export default function hoverPoints(pointData,  xval,  yval,  hovermode,  opts) 
 }
 
 function getTraceColor(trace: FullTrace,  di) {
-    var cont = trace[di.dir].marker;
-    var mc = cont.color;
-    var mlc = cont.line.color;
-    var mlw = cont.line.width;
+    const cont = trace[di.dir].marker;
+    const mc = cont.color;
+    const mlc = cont.line.color;
+    const mlw = cont.line.width;
     if(opacity(mc)) return mc;
     else if(opacity(mlc) && mlw) return mlc;
 }

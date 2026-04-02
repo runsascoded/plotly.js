@@ -1,14 +1,14 @@
 import isNumeric from 'fast-isnumeric';
 import { cleanDate, dateTick0 } from '../../lib/index.js';
 import constants from '../../constants/numerical.js';
-var ONEDAY = constants.ONEDAY;
-var ONEWEEK = constants.ONEWEEK;
+const ONEDAY = constants.ONEDAY;
+const ONEWEEK = constants.ONEWEEK;
 
-export var dtick = function(dtick?: any, axType?: any): any {
-    var isLog = axType === 'log';
-    var isDate = axType === 'date';
-    var isCat = axType === 'category';
-    var dtickDflt = isDate ? ONEDAY : 1;
+export const dtick = function(dtick?: any, axType?: any): any {
+    const isLog = axType === 'log';
+    const isDate = axType === 'date';
+    const isCat = axType === 'category';
+    const dtickDflt = isDate ? ONEDAY : 1;
 
     if(!dtick) return dtickDflt;
 
@@ -30,8 +30,8 @@ export var dtick = function(dtick?: any, axType?: any): any {
         return dtickDflt;
     }
 
-    var prefix = dtick.charAt(0);
-    var dtickNum: any = dtick.slice(1);
+    const prefix = dtick.charAt(0);
+    let dtickNum: any = dtick.slice(1);
     dtickNum = isNumeric(dtickNum) ? Number(dtickNum) : 0;
 
     if((dtickNum <= 0) || !(
@@ -47,7 +47,7 @@ export var dtick = function(dtick?: any, axType?: any): any {
     return dtick;
 };
 
-export var tick0 = function(tick0?: any, axType?: any, calendar?: any, dtick?: any): any {
+export const tick0 = function(tick0?: any, axType?: any, calendar?: any, dtick?: any): any {
     if(axType === 'date') {
         return cleanDate(tick0,
             dateTick0(calendar, (dtick % ONEWEEK === 0) ? 1 : 0)

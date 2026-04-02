@@ -1,12 +1,12 @@
 import Registry from '../registry.js';
 import Lib from '../lib/index.js';
 
-var extendFlat = Lib.extendFlat;
-var extendDeep = Lib.extendDeep;
+const extendFlat = Lib.extendFlat;
+const extendDeep = Lib.extendDeep;
 
 // Put default plotTile layouts here
 function cloneLayoutOverride(tileClass) {
-    var override;
+    let override;
 
     switch(tileClass) {
         case 'themes__thumb':
@@ -41,17 +41,17 @@ function cloneLayoutOverride(tileClass) {
 }
 
 function keyIsAxis(keyName) {
-    var types = ['xaxis', 'yaxis', 'zaxis'];
+    const types = ['xaxis', 'yaxis', 'zaxis'];
     return (types.indexOf(keyName.slice(0, 5)) > -1);
 }
 
 export default function clonePlot(graphObj, options) {
-    var i;
-    var oldData = graphObj.data;
-    var oldLayout = graphObj.layout;
-    var newData = extendDeep([], oldData);
-    var newLayout = extendDeep({}, oldLayout, cloneLayoutOverride(options.tileClass));
-    var context = graphObj._context || {};
+    let i;
+    const oldData = graphObj.data;
+    const oldLayout = graphObj.layout;
+    const newData = extendDeep([], oldData);
+    const newLayout = extendDeep({}, oldLayout, cloneLayoutOverride(options.tileClass));
+    const context = graphObj._context || {};
 
     if(options.width) newLayout.width = options.width;
     if(options.height) newLayout.height = options.height;
@@ -59,7 +59,7 @@ export default function clonePlot(graphObj, options) {
     if(options.tileClass === 'thumbnail' || options.tileClass === 'themes__thumb') {
         // kill annotations
         newLayout.annotations = [];
-        var keys = Object.keys(newLayout);
+        const keys = Object.keys(newLayout);
 
         for(i = 0; i < keys.length; i++) {
             if(keyIsAxis(keys[i])) {
@@ -69,7 +69,7 @@ export default function clonePlot(graphObj, options) {
 
         // kill colorbar and pie labels
         for(i = 0; i < newData.length; i++) {
-            var trace = newData[i];
+            const trace = newData[i];
             trace.showscale = false;
             if(trace.marker) trace.marker.showscale = false;
             if(Registry.traceIs(trace, 'pie-like')) trace.textposition = 'none';
@@ -84,11 +84,11 @@ export default function clonePlot(graphObj, options) {
 
     // TODO: does this scene modification really belong here?
     // If we still need it, can it move into the gl3d module?
-    var sceneIds = Object.keys(newLayout).filter(function(key) {
+    const sceneIds = Object.keys(newLayout).filter(function(key) {
         return key.match(/^scene\d*$/);
     });
     if(sceneIds.length) {
-        var axesImageOverride = {};
+        let axesImageOverride = {};
         if(options.tileClass === 'thumbnail') {
             axesImageOverride = {
                 title: {text: ''},
@@ -98,7 +98,7 @@ export default function clonePlot(graphObj, options) {
             };
         }
         for(i = 0; i < sceneIds.length; i++) {
-            var scene = newLayout[sceneIds[i]];
+            const scene = newLayout[sceneIds[i]];
 
             if(!scene.xaxis) {
                 scene.xaxis = {};
@@ -121,10 +121,10 @@ export default function clonePlot(graphObj, options) {
         }
     }
 
-    var gd = document.createElement('div');
+    const gd = document.createElement('div');
     if(options.tileClass) gd.className = options.tileClass;
 
-    var plotTile: any = {
+    const plotTile: any = {
         gd: gd,
         td: gd, // for external (image server) compatibility
         layout: newLayout,

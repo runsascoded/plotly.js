@@ -1,22 +1,22 @@
 import type { GraphDiv, PlotInfo } from '../../../types/core';
 import _cross_trace_calc from '../box/cross_trace_calc.js';
 const { setPositionOffset } = _cross_trace_calc;
-var orientations = ['v', 'h'];
+const orientations = ['v', 'h'];
 
 export default function crossTraceCalc(gd: GraphDiv, plotinfo: PlotInfo): void {
-    var calcdata = gd.calcdata;
-    var xa = plotinfo.xaxis;
-    var ya = plotinfo.yaxis;
+    const calcdata = gd.calcdata;
+    const xa = plotinfo.xaxis;
+    const ya = plotinfo.yaxis;
 
-    for(var i = 0; i < orientations.length; i++) {
-        var orientation = orientations[i];
-        var posAxis = orientation === 'h' ? ya : xa;
-        var violinList = [];
+    for(let i = 0; i < orientations.length; i++) {
+        const orientation = orientations[i];
+        const posAxis = orientation === 'h' ? ya : xa;
+        const violinList = [];
 
-        for(var j = 0; j < calcdata.length; j++) {
-            var cd = calcdata[j];
-            var t = cd[0].t;
-            var trace = cd[0].trace;
+        for(let j = 0; j < calcdata.length; j++) {
+            const cd = calcdata[j];
+            const t = cd[0].t;
+            const trace = cd[0].trace;
 
             if(trace.visible === true && trace.type === 'violin' &&
                     !t.empty &&

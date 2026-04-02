@@ -1,20 +1,20 @@
 import Lib from '../../lib/index.js';
 
 export default function smoothFill2dArray(data, a, b) {
-    var i, j, k;
-    var ip = [];
-    var jp = [];
-    // var neighborCnts = [];
+    let i, j, k;
+    const ip = [];
+    const jp = [];
+    // const neighborCnts = [];
 
-    var ni = data[0].length;
-    var nj = data.length;
+    const ni = data[0].length;
+    const nj = data.length;
 
     function avgSurrounding(i, j) {
         // As a low-quality start, we can simply average surrounding points (in a not
         // non-uniform grid aware manner):
-        var sum = 0.0;
-        var val;
-        var cnt = 0;
+        let sum = 0.0;
+        let val;
+        let cnt = 0;
         if(i > 0 && (val = data[j][i - 1]) !== undefined) {
             cnt++;
             sum += val;
@@ -39,7 +39,7 @@ export default function smoothFill2dArray(data, a, b) {
     // any neighbors will receive the average. If there are no neighboring points, then they
     // will be set to zero. Also as we go, track the maximum magnitude so that we can scale
     // our tolerance accordingly.
-    var dmax = 0.0;
+    let dmax = 0.0;
     for(i = 0; i < ni; i++) {
         for(j = 0; j < nj; j++) {
             if(data[j][i] === undefined) {
@@ -56,12 +56,12 @@ export default function smoothFill2dArray(data, a, b) {
     if(!ip.length) return data;
 
     // The tolerance doesn't need to be excessive. It's just for display positioning
-    var dxp, dxm, dap, dam, dbp, dbm, c, d, diff, reldiff, overrelaxation;
-    var tol = 1e-5;
-    var resid = 0;
-    var itermax = 100;
-    var iter = 0;
-    var n = ip.length;
+    let dxp, dxm, dap, dam, dbp, dbm, c, d, diff, reldiff, overrelaxation;
+    const tol = 1e-5;
+    let resid = 0;
+    const itermax = 100;
+    let iter = 0;
+    const n = ip.length;
     do {
         resid = 0;
         // Normally we'd loop in two dimensions, but not all points are blank and need
@@ -75,10 +75,10 @@ export default function smoothFill2dArray(data, a, b) {
             // to average at the end, which reduces to laplace's equation with neumann boundary
             // conditions on the first derivative (second derivative is zero so that we get
             // a nice linear extrapolation at the boundaries).
-            var boundaryCnt = 0;
-            var newVal = 0;
+            let boundaryCnt = 0;
+            let newVal = 0;
 
-            var d0, d1, x0, x1, i0, j0;
+            let d0, d1, x0, x1, i0, j0;
             if(i === 0) {
                 // If this lies along the i = 0 boundary, extrapolate from the two points
                 // to the right of this point. Note that the finite differences take into

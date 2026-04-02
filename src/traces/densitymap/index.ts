@@ -19,13 +19,13 @@ export default {
     eventData: _req7,
 
     getBelow: function(trace, subplot) {
-        var mapLayers = subplot.getMapLayers();
+        const mapLayers = subplot.getMapLayers();
 
         // find first layer with `type: 'symbol'`,
         // that is not a plotly layer
-        for(var i = 0; i < mapLayers.length; i++) {
-            var layer = mapLayers[i];
-            var layerId = layer.id;
+        for(let i = 0; i < mapLayers.length; i++) {
+            const layer = mapLayers[i];
+            const layerId = layer.id;
             if(layer.type === 'symbol' &&
                 typeof layerId === 'string' && layerId.indexOf('plotly-') === -1
             ) {

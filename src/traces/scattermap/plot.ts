@@ -3,7 +3,7 @@ import Lib from '../../lib/index.js';
 import convert from './convert.js';
 import _constants from '../../plots/map/constants.js';
 const { traceLayerPrefix: LAYER_PREFIX } = _constants;
-var ORDER = {
+const ORDER = {
     cluster: ['cluster', 'clusterCount', 'circle'],
     nonCluster: ['fill', 'line', 'circle', 'symbol'],
 };
@@ -42,10 +42,10 @@ function ScatterMap(subplot: PlotInfo, uid, clusterEnabled, isHidden) {
     this.below = null;
 }
 
-var proto = ScatterMap.prototype;
+const proto = ScatterMap.prototype;
 
 proto.addSource = function(k, opts, cluster) {
-    var sourceOpts = {
+    const sourceOpts = {
         type: 'geojson',
         data: opts.geojson,
     };
@@ -56,7 +56,7 @@ proto.addSource = function(k, opts, cluster) {
             clusterMaxZoom: cluster.maxzoom,
         });
     }
-    var isSourceExists = this.subplot.map.getSource(this.sourceIds[k]);
+    const isSourceExists = this.subplot.map.getSource(this.sourceIds[k]);
     if(isSourceExists) {
         isSourceExists.setData(opts.geojson);
     } else {
@@ -71,7 +71,7 @@ proto.setSourceData = function(k, opts) {
 };
 
 proto.addLayer = function(k, opts, below) {
-    var source: any = {
+    const source: any = {
         type: opts.type,
         id: this.layerIds[k],
         source: this.sourceIds[k],
@@ -81,10 +81,10 @@ proto.addLayer = function(k, opts, below) {
     if(opts.filter) {
         source.filter = opts.filter;
     }
-    var currentLayerId = this.layerIds[k];
-    var layerExist;
-    var layers = this.subplot.getMapLayers();
-    for(var i = 0; i < layers.length; i++) {
+    const currentLayerId = this.layerIds[k];
+    let layerExist;
+    const layers = this.subplot.getMapLayers();
+    for(let i = 0; i < layers.length; i++) {
         if(layers[i].id === currentLayerId) {
             layerExist = true;
             break;
@@ -102,48 +102,48 @@ proto.addLayer = function(k, opts, below) {
 };
 
 proto.update = function update(calcTrace) {
-    var trace = calcTrace[0].trace;
-    var subplot = this.subplot;
-    var map = subplot.map;
-    var optsAll = convert(subplot.gd, calcTrace);
-    var below = subplot.belowLookup['trace-' + this.uid];
-    var hasCluster = !!(trace.cluster && trace.cluster.enabled);
-    var hadCluster = !!this.clusterEnabled;
-    var lThis = this;
+    const trace = calcTrace[0].trace;
+    const subplot = this.subplot;
+    const map = subplot.map;
+    const optsAll = convert(subplot.gd, calcTrace);
+    const below = subplot.belowLookup['trace-' + this.uid];
+    const hasCluster = !!(trace.cluster && trace.cluster.enabled);
+    const hadCluster = !!this.clusterEnabled;
+    const lThis = this;
 
     function addCluster(noSource?) {
         if(!noSource) lThis.addSource('circle', optsAll.circle, trace.cluster);
-        var order = ORDER.cluster;
-        for(var i = 0; i < order.length; i++) {
-            var k = order[i];
-            var opts = optsAll[k];
+        const order = ORDER.cluster;
+        for(let i = 0; i < order.length; i++) {
+            const k = order[i];
+            const opts = optsAll[k];
             lThis.addLayer(k, opts, below);
         }
     }
 
     function removeCluster(noSource?) {
-        var order = ORDER.cluster;
-        for(var i = order.length - 1; i >= 0; i--) {
-            var k = order[i];
+        const order = ORDER.cluster;
+        for(let i = order.length - 1; i >= 0; i--) {
+            const k = order[i];
             map.removeLayer(lThis.layerIds[k]);
         }
         if(!noSource) map.removeSource(lThis.sourceIds.circle);
     }
 
     function addNonCluster(noSource?) {
-        var order = ORDER.nonCluster;
-        for(var i = 0; i < order.length; i++) {
-            var k = order[i];
-            var opts = optsAll[k];
+        const order = ORDER.nonCluster;
+        for(let i = 0; i < order.length; i++) {
+            const k = order[i];
+            const opts = optsAll[k];
             if(!noSource) lThis.addSource(k, opts);
             lThis.addLayer(k, opts, below);
         }
     }
 
     function removeNonCluster(noSource?) {
-        var order = ORDER.nonCluster;
-        for(var i = order.length - 1; i >= 0; i--) {
-            var k = order[i];
+        const order = ORDER.nonCluster;
+        for(let i = order.length - 1; i >= 0; i--) {
+            const k = order[i];
             map.removeLayer(lThis.layerIds[k]);
             if(!noSource) map.removeSource(lThis.sourceIds[k]);
         }
@@ -158,10 +158,10 @@ proto.update = function update(calcTrace) {
     }
 
     function repaint() {
-        var order = hasCluster ? ORDER.cluster : ORDER.nonCluster;
-        for(var i = 0; i < order.length; i++) {
-            var k = order[i];
-            var opts = optsAll[k];
+        const order = hasCluster ? ORDER.cluster : ORDER.nonCluster;
+        for(let i = 0; i < order.length; i++) {
+            const k = order[i];
+            const opts = optsAll[k];
             if(!opts) continue;
 
             subplot.setOptions(lThis.layerIds[k], 'setLayoutProperty', opts.layout);
@@ -175,8 +175,8 @@ proto.update = function update(calcTrace) {
         }
     }
 
-    var wasHidden = this.isHidden;
-    var isHidden = trace.visible !== true;
+    const wasHidden = this.isHidden;
+    const isHidden = trace.visible !== true;
 
     if(isHidden) {
         if(!wasHidden) remove();
@@ -202,30 +202,30 @@ proto.update = function update(calcTrace) {
 };
 
 proto.dispose = function dispose() {
-    var map = this.subplot.map;
-    var order = this.clusterEnabled ? ORDER.cluster : ORDER.nonCluster;
-    for(var i = order.length - 1; i >= 0; i--) {
-        var k = order[i];
+    const map = this.subplot.map;
+    const order = this.clusterEnabled ? ORDER.cluster : ORDER.nonCluster;
+    for(let i = order.length - 1; i >= 0; i--) {
+        const k = order[i];
         map.removeLayer(this.layerIds[k]);
         map.removeSource(this.sourceIds[k]);
     }
 };
 
 export default function createScatterMap(subplot: PlotInfo, calcTrace) {
-    var trace = calcTrace[0].trace;
-    var hasCluster = trace.cluster && trace.cluster.enabled;
-    var isHidden = trace.visible !== true;
+    const trace = calcTrace[0].trace;
+    const hasCluster = trace.cluster && trace.cluster.enabled;
+    const isHidden = trace.visible !== true;
 
-    var scatterMap = new ScatterMap(
+    const scatterMap = new ScatterMap(
         subplot,
         trace.uid,
         hasCluster,
         isHidden
     );
 
-    var optsAll = convert(subplot.gd, calcTrace);
-    var below = scatterMap.below = subplot.belowLookup['trace-' + trace.uid];
-    var i, k, opts;
+    const optsAll = convert(subplot.gd, calcTrace);
+    const below = scatterMap.below = subplot.belowLookup['trace-' + trace.uid];
+    let i, k, opts;
 
     if(hasCluster) {
         scatterMap.addSource('circle', optsAll.circle, trace.cluster);

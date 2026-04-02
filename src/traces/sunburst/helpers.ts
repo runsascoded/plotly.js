@@ -4,8 +4,8 @@ import Color from '../../components/color/index.js';
 import setCursor from '../../lib/setcursor.js';
 import pieHelpers from '../pie/helpers.js';
 
-export var findEntryWithLevel = function(hierarchy, level) {
-    var out;
+export const findEntryWithLevel = function(hierarchy, level) {
+    let out;
     if(level) {
         hierarchy.eachAfter(function(pt) {
             if(getPtId(pt) === level) {
@@ -16,12 +16,12 @@ export var findEntryWithLevel = function(hierarchy, level) {
     return out || hierarchy;
 };
 
-export var findEntryWithChild = function(hierarchy, childId) {
-    var out;
+export const findEntryWithChild = function(hierarchy, childId) {
+    let out;
     hierarchy.eachAfter(function(pt) {
-        var children = pt.children || [];
-        for(var i = 0; i < children.length; i++) {
-            var child = children[i];
+        const children = pt.children || [];
+        for(let i = 0; i < children.length; i++) {
+            const child = children[i];
             if(getPtId(child) === childId) {
                 return out = pt.copy();
             }
@@ -30,34 +30,34 @@ export var findEntryWithChild = function(hierarchy, childId) {
     return out || hierarchy;
 };
 
-export var isEntry = function(pt) {
+export const isEntry = function(pt) {
     return !pt.parent;
 };
 
-export var isLeaf = function(pt) {
+export const isLeaf = function(pt) {
     return !pt.children;
 };
 
-export var getPtId = function(pt) {
+export const getPtId = function(pt) {
     return pt.data.data.id;
 };
 
-export var getPtLabel = function(pt) {
+export const getPtLabel = function(pt) {
     return pt.data.data.label;
 };
 
-export var getValue = function(d) {
+export const getValue = function(d) {
     return d.value;
 };
 
-export var isHierarchyRoot = function(pt) {
+export const isHierarchyRoot = function(pt) {
     return getParentId(pt) === '';
 };
 
-export var setSliceCursor = function(sliceTop, gd, opts) {
-    var hide = opts.isTransitioning;
+export const setSliceCursor = function(sliceTop, gd, opts) {
+    let hide = opts.isTransitioning;
     if(!hide) {
-        var pt = sliceTop.datum();
+        const pt = sliceTop.datum();
         hide = (
             (opts.hideOnRoot && isHierarchyRoot(pt)) ||
             (opts.hideOnLeaves && isLeaf(pt))
@@ -81,12 +81,12 @@ function determineOutsideTextFont(trace, pt, layoutFont) {
 }
 
 function determineInsideTextFont(trace, pt, layoutFont, opts) {
-    var onPathbar = (opts || {}).onPathbar;
+    const onPathbar = (opts || {}).onPathbar;
 
-    var cdi = pt.data.data;
-    var ptNumber = cdi.i;
+    const cdi = pt.data.data;
+    const ptNumber = cdi.i;
 
-    var customColor = Lib.castOption(trace, ptNumber,
+    let customColor = Lib.castOption(trace, ptNumber,
         (onPathbar ? 'pathbar.textfont' : 'insidetextfont') + '.color'
     );
 
@@ -111,10 +111,10 @@ function determineInsideTextFont(trace, pt, layoutFont, opts) {
     };
 }
 
-export var getInsideTextFontKey = function(keyStr, trace, pt, layoutFont, opts) {
-    var onPathbar = (opts || {}).onPathbar;
-    var cont = onPathbar ? 'pathbar.textfont' : 'insidetextfont';
-    var ptNumber = pt.data.data.i;
+export const getInsideTextFontKey = function(keyStr, trace, pt, layoutFont, opts) {
+    const onPathbar = (opts || {}).onPathbar;
+    const cont = onPathbar ? 'pathbar.textfont' : 'insidetextfont';
+    const ptNumber = pt.data.data.i;
 
     return (
         Lib.castOption(trace, ptNumber, cont + '.' + keyStr) ||
@@ -123,8 +123,8 @@ export var getInsideTextFontKey = function(keyStr, trace, pt, layoutFont, opts) 
     );
 };
 
-export var getOutsideTextFontKey = function(keyStr, trace, pt, layoutFont) {
-    var ptNumber = pt.data.data.i;
+export const getOutsideTextFontKey = function(keyStr, trace, pt, layoutFont) {
+    const ptNumber = pt.data.data.i;
 
     return (
         Lib.castOption(trace, ptNumber, 'outsidetextfont.' + keyStr) ||
@@ -133,27 +133,27 @@ export var getOutsideTextFontKey = function(keyStr, trace, pt, layoutFont) {
     );
 };
 
-export var isOutsideText = function(trace, pt) {
+export const isOutsideText = function(trace, pt) {
     return !trace._hasColorscale && isHierarchyRoot(pt);
 };
 
-export var determineTextFont = function(trace, pt, layoutFont, opts) {
+export const determineTextFont = function(trace, pt, layoutFont, opts) {
     return isOutsideText(trace, pt) ?
         determineOutsideTextFont(trace, pt, layoutFont) :
         determineInsideTextFont(trace, pt, layoutFont, opts);
 };
 
-export var hasTransition = function(transitionOpts) {
+export const hasTransition = function(transitionOpts) {
     // We could optimize hasTransition per trace,
     // as sunburst, treemap & icicle have no cross-trace logic!
     return !!(transitionOpts && transitionOpts.duration > 0);
 };
 
-export var getMaxDepth = function(trace) {
+export const getMaxDepth = function(trace) {
     return trace.maxdepth >= 0 ? trace.maxdepth : Infinity;
 };
 
-export var isHeader = function(pt, trace) { // it is only used in treemap.
+export const isHeader = function(pt, trace) { // it is only used in treemap.
     return !(isLeaf(pt) || pt.depth === trace._maxDepth - 1);
 };
 
@@ -161,25 +161,25 @@ function getParentId(pt) {
     return pt.data.data.pid;
 }
 
-export var getParent = function(hierarchy, pt) {
+export const getParent = function(hierarchy, pt) {
     return findEntryWithLevel(hierarchy, getParentId(pt));
 };
 
-export var listPath = function(d, keyStr) {
-    var parent = d.parent;
+export const listPath = function(d, keyStr) {
+    const parent = d.parent;
     if(!parent) return [];
-    var list = keyStr ? [parent.data[keyStr]] : [parent];
+    const list = keyStr ? [parent.data[keyStr]] : [parent];
     return listPath(parent, keyStr).concat(list);
 };
 
-export var getPath = function(d) {
+export const getPath = function(d) {
     return listPath(d, 'label').join('/') + '/';
 };
 
-export var formatValue = pieHelpers.formatPieValue;
+export const formatValue = pieHelpers.formatPieValue;
 
-export var formatPercent = function(v, separators) {
-    var tx = Lib.formatPercent(v, 0); // use funnel(area) version
+export const formatPercent = function(v, separators) {
+    let tx = Lib.formatPercent(v, 0); // use funnel(area) version
     if(tx === '0%') tx = pieHelpers.formatPiePercent(v, separators); // use pie version
     return tx;
 };

@@ -14,8 +14,8 @@ export default function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace,
         return Lib.coerce(traceIn, traceOut, attributes, attr, dflt);
     }
 
-    var locations = coerce('locations');
-    var z = coerce('z');
+    const locations = coerce('locations');
+    const z = coerce('z');
 
     if (!(locations && locations.length && Lib.isArrayOrTypedArray(z) && z.length)) {
         traceOut.visible = false;
@@ -24,14 +24,14 @@ export default function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace,
 
     traceOut._length = Math.min(locations.length, z.length);
 
-    var geojson = coerce('geojson');
+    const geojson = coerce('geojson');
 
-    var locationmodeDflt;
+    let locationmodeDflt;
     if ((typeof geojson === 'string' && geojson !== '') || Lib.isPlainObject(geojson)) {
         locationmodeDflt = 'geojson-id';
     }
 
-    var locationMode = coerce('locationmode', locationmodeDflt);
+    const locationMode = coerce('locationmode', locationmodeDflt);
 
     if (locationMode === 'country names') {
         Lib.warn(locationmodeBreakingChangeWarning);
@@ -46,7 +46,7 @@ export default function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace,
     coerce('hovertemplate');
     coerce('hovertemplatefallback');
 
-    var mlw = coerce('marker.line.width');
+    const mlw = coerce('marker.line.width');
     if (mlw) coerce('marker.line.color');
     coerce('marker.opacity');
 

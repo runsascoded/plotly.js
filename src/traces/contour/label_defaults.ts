@@ -3,9 +3,9 @@ import Lib from '../../lib/index.js';
 
 export default function handleLabelDefaults(coerce,  layout: FullLayout,  lineColor,  opts) {
     if(!opts) opts = {};
-    var showLabels = coerce('contours.showlabels');
+    const showLabels = coerce('contours.showlabels');
     if(showLabels) {
-        var globalFont = layout.font;
+        const globalFont = layout.font;
         Lib.coerceFont(coerce, 'contours.labelfont', globalFont, { overrideDflt: {
             color: lineColor
         }});

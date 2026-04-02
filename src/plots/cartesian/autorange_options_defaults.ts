@@ -1,7 +1,7 @@
 export default function handleAutorangeOptionsDefaults(coerce?: any, autorange?: any, range?: any): void {
-    var minRange, maxRange;
+    let minRange, maxRange;
     if(range) {
-        var isReversed = (
+        const isReversed = (
             autorange === 'reversed' ||
             autorange === 'min reversed' ||
             autorange === 'max reversed'
@@ -11,8 +11,8 @@ export default function handleAutorangeOptionsDefaults(coerce?: any, autorange?:
         maxRange = range[isReversed ? 0 : 1];
     }
 
-    var minallowed = coerce('autorangeoptions.minallowed', maxRange === null ? minRange : undefined);
-    var maxallowed = coerce('autorangeoptions.maxallowed', minRange === null ? maxRange : undefined);
+    const minallowed = coerce('autorangeoptions.minallowed', maxRange === null ? minRange : undefined);
+    const maxallowed = coerce('autorangeoptions.maxallowed', minRange === null ? maxRange : undefined);
 
     if(minallowed === undefined) coerce('autorangeoptions.clipmin');
     if(maxallowed === undefined) coerce('autorangeoptions.clipmax');

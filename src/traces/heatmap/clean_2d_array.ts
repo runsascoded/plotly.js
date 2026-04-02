@@ -5,7 +5,7 @@ import _numerical from '../../constants/numerical.js';
 const { BADNUM } = _numerical;
 
 export default function clean2dArray(zOld: any,  trace?: FullTrace,  xa?: FullAxis,  ya?: FullAxis) {
-    var rowlen, collen, getCollen, old2new, i, j;
+    let rowlen, collen, getCollen, old2new, i, j;
 
     function cleanZvalue(v) {
         if(!isNumeric(v)) return undefined;
@@ -24,7 +24,7 @@ export default function clean2dArray(zOld: any,  trace?: FullTrace,  xa?: FullAx
         old2new = function(zOld, i, j) { return (zOld[i] || [])[j]; };
     }
 
-    var padOld2new = function(zOld,  i,  j) {
+    const padOld2new = function(zOld,  i,  j) {
         if(i === BADNUM || j === BADNUM) return BADNUM;
         return old2new(zOld, i, j);
     };
@@ -32,14 +32,14 @@ export default function clean2dArray(zOld: any,  trace?: FullTrace,  xa?: FullAx
     function axisMapping(ax: FullAxis) {
         if(trace && trace.type !== 'carpet' && trace.type !== 'contourcarpet' &&
             ax && ax.type === 'category' && trace['_' + ax._id.charAt(0)].length) {
-            var axLetter = ax._id.charAt(0);
-            var axMapping: any = {};
-            var traceCategories = trace['_' + axLetter + 'CategoryMap'] || trace[axLetter];
+            const axLetter = ax._id.charAt(0);
+            const axMapping: any = {};
+            const traceCategories = trace['_' + axLetter + 'CategoryMap'] || trace[axLetter];
             for(i = 0; i < traceCategories.length; i++) {
                 axMapping[traceCategories[i]] = i;
             }
             return function(i) {
-                var ind = axMapping[ax._categories[i]];
+                const ind = axMapping[ax._categories[i]];
                 return ind + 1 ? ind : BADNUM;
             };
         } else {
@@ -47,11 +47,11 @@ export default function clean2dArray(zOld: any,  trace?: FullTrace,  xa?: FullAx
         }
     }
 
-    var xMap = axisMapping(xa);
-    var yMap = axisMapping(ya);
+    const xMap = axisMapping(xa);
+    const yMap = axisMapping(ya);
 
     if(ya && ya.type === 'category') rowlen = ya._categories.length;
-    var zNew = new Array(rowlen);
+    const zNew = new Array(rowlen);
 
     for(i = 0; i < rowlen; i++) {
         if(xa && xa.type === 'category') {

@@ -12,9 +12,9 @@ export default {
 // This does not in any way shape or form support calendars. It's adapted from
 // transforms/filter.js.
 function coerceValue(operation,  value) {
-    var hasArrayValue = Array.isArray(value);
+    const hasArrayValue = Array.isArray(value);
 
-    var coercedValue;
+    let coercedValue;
 
     function coerce(value: any) {
         return isNumeric(value) ? (+value) : null;
@@ -41,8 +41,8 @@ function makeRangeSettings(operation) {
         value = coerceValue(operation, value);
 
         // Ensure proper ordering:
-        var min = Math.min(value[0], value[1]);
-        var max = Math.max(value[0], value[1]);
+        const min = Math.min(value[0], value[1]);
+        const max = Math.max(value[0], value[1]);
 
         return {
             start: min,

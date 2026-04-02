@@ -4,21 +4,21 @@ import { fillGroupStyle, lineGroupStyle, pointStyle, selectedPointStyle, selecte
 import Registry from '../../registry.js';
 
 function style(gd: GraphDiv): void {
-    var s = select(gd).selectAll('g.trace.scatter');
+    const s = select(gd).selectAll('g.trace.scatter');
 
     s.style('opacity', function(d) {
         return d[0].trace.opacity;
     });
 
     s.selectAll('g.points').each(function(d) {
-        var sel = select(this);
-        var trace = d.trace || d[0].trace;
+        const sel = select(this);
+        const trace = d.trace || d[0].trace;
         stylePoints(sel, trace, gd);
     });
 
     s.selectAll('g.text').each(function(d) {
-        var sel = select(this);
-        var trace = d.trace || d[0].trace;
+        const sel = select(this);
+        const trace = d.trace || d[0].trace;
         styleText(sel, trace, gd);
     });
 
@@ -40,7 +40,7 @@ function styleText(sel: any, trace: FullTrace, gd: GraphDiv): void {
 }
 
 function styleOnSelect(gd: GraphDiv, cd: CalcDatum[], sel: any): void {
-    var trace = cd[0].trace;
+    const trace = cd[0].trace;
 
     if(trace.selectedpoints) {
         selectedPointStyle(sel.selectAll('path.point'), trace);

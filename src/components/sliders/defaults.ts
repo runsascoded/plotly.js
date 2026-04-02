@@ -4,8 +4,8 @@ import attributes from './attributes.js';
 import constants from './constants.js';
 import type { FullLayout } from '../../../types/core';
 
-var name = constants.name;
-var stepAttrs = attributes.steps;
+const name = constants.name;
+const stepAttrs = attributes.steps;
 
 export default function slidersDefaults(layoutIn: any, layoutOut: FullLayout) {
     handleArrayContainerDefaults(layoutIn, layoutOut, {
@@ -19,26 +19,26 @@ function sliderDefaults(sliderIn: any, sliderOut: any, layoutOut: FullLayout) {
         return Lib.coerce(sliderIn, sliderOut, attributes, attr, dflt);
     }
 
-    var steps = handleArrayContainerDefaults(sliderIn, sliderOut, {
+    const steps = handleArrayContainerDefaults(sliderIn, sliderOut, {
         name: 'steps',
         handleItemDefaults: stepDefaults
     });
 
-    var stepCount = 0;
-    for(var i = 0; i < steps.length; i++) {
+    let stepCount = 0;
+    for(let i = 0; i < steps.length; i++) {
         if(steps[i].visible) stepCount++;
     }
 
-    var visible;
+    let visible;
     // If it has fewer than two options, it's not really a slider
     if(stepCount < 2) visible = sliderOut.visible = false;
     else visible = coerce('visible');
     if(!visible) return;
 
     sliderOut._stepCount = stepCount;
-    var visSteps = sliderOut._visibleSteps = Lib.filterVisible(steps);
+    const visSteps = sliderOut._visibleSteps = Lib.filterVisible(steps);
 
-    var active = coerce('active');
+    const active = coerce('active');
     if(!(steps[active] || {}).visible) sliderOut.active = visSteps[0]._index;
 
     coerce('x');
@@ -58,7 +58,7 @@ function sliderDefaults(sliderIn: any, sliderOut: any, layoutOut: FullLayout) {
 
     Lib.coerceFont(coerce, 'font', layoutOut.font);
 
-    var currentValueIsVisible = coerce('currentvalue.visible');
+    const currentValueIsVisible = coerce('currentvalue.visible');
 
     if(currentValueIsVisible) {
         coerce('currentvalue.xanchor');
@@ -87,7 +87,7 @@ function stepDefaults(valueIn: any, valueOut: any) {
         return Lib.coerce(valueIn, valueOut, stepAttrs, attr, dflt);
     }
 
-    var visible;
+    let visible;
     if(valueIn.method !== 'skip' && !Array.isArray(valueIn.args)) {
         visible = valueOut.visible = false;
     } else visible = coerce('visible');
@@ -95,7 +95,7 @@ function stepDefaults(valueIn: any, valueOut: any) {
     if(visible) {
         coerce('method');
         coerce('args');
-        var label = coerce('label', 'step-' + valueOut._index);
+        const label = coerce('label', 'step-' + valueOut._index);
         coerce('value', label);
         coerce('execute');
     }

@@ -52,7 +52,7 @@ export default {
 function loneUnhover(containerOrSelection: any): void {
     // duck type whether the arg is a d3 selection because ie9 doesn't
     // handle instanceof like modern browsers do.
-    var selection = isD3Selection(containerOrSelection) ?
+    const selection = isD3Selection(containerOrSelection) ?
             containerOrSelection :
             select(containerOrSelection);
 

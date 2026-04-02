@@ -4,8 +4,8 @@ import handleGroupingDefaults from './grouping_defaults.js';
 import attributes from './attributes.js';
 
 export default function crossTraceDefaults(fullData: FullTrace[], fullLayout: FullLayout): void {
-    var traceIn, traceOut, i;
-    var scattermode = fullLayout.scattermode;
+    let traceIn, traceOut, i;
+    const scattermode = fullLayout.scattermode;
 
     function coerce(attr) {
         return Lib.coerce(traceOut._input, traceOut, attributes, attr);
@@ -23,17 +23,17 @@ export default function crossTraceDefaults(fullData: FullTrace[], fullLayout: Fu
     }
 
     for(i = 0; i < fullData.length; i++) {
-        var tracei = fullData[i];
+        const tracei = fullData[i];
         if(tracei.type !== 'scatter') continue;
 
-        var filli = tracei.fill;
+        const filli = tracei.fill;
         if(filli === 'none' || filli === 'toself') continue;
 
         tracei.opacity = undefined;
 
         if(filli === 'tonexty' || filli === 'tonextx') {
-            for(var j = i - 1; j >= 0; j--) {
-                var tracej = fullData[j];
+            for(let j = i - 1; j >= 0; j--) {
+                const tracej = fullData[j];
 
                 if((tracej.type === 'scatter') &&
                         (tracej.xaxis === tracei.xaxis) &&

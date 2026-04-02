@@ -30,11 +30,11 @@ import Icons from './fonts/ploticon.js';
 import Snapshot from './snapshot/index.js';
 import PlotSchema from './plot_api/plot_schema.js';
 
-var register = Registry.register;
-var Plotly: any = { version, register, Icons, Snapshot, PlotSchema };
-var methodNames = Object.keys(plotApi);
-for(var i = 0; i < methodNames.length; i++) {
-    var name = methodNames[i];
+const register = Registry.register;
+const Plotly: any = { version, register, Icons, Snapshot, PlotSchema };
+const methodNames = Object.keys(plotApi);
+for(let i = 0; i < methodNames.length; i++) {
+    const name = methodNames[i];
     if(name.charAt(0) !== '_') Plotly[name] = plotApi[name];
     register({ moduleType: 'apiMethod', name: name, fn: plotApi[name] });
 }

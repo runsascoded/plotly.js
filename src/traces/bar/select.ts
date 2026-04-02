@@ -1,14 +1,14 @@
 import type { CalcDatum, FullAxis } from '../../../types/core';
 
 export default function selectPoints(searchInfo: any, selectionTester: any): any[] {
-    var cd: CalcDatum[] = searchInfo.cd;
-    var xa: FullAxis = searchInfo.xaxis;
-    var ya: FullAxis = searchInfo.yaxis;
-    var trace = cd[0].trace;
-    var isFunnel = (trace.type === 'funnel');
-    var isHorizontal = (trace.orientation === 'h');
-    var selection = [];
-    var i;
+    const cd: CalcDatum[] = searchInfo.cd;
+    const xa: FullAxis = searchInfo.xaxis;
+    const ya: FullAxis = searchInfo.yaxis;
+    const trace = cd[0].trace;
+    const isFunnel = (trace.type === 'funnel');
+    const isHorizontal = (trace.orientation === 'h');
+    const selection = [];
+    let i;
 
     if(selectionTester === false) {
         // clear selection
@@ -17,8 +17,8 @@ export default function selectPoints(searchInfo: any, selectionTester: any): any
         }
     } else {
         for(i = 0; i < cd.length; i++) {
-            var di = cd[i];
-            var ct = 'ct' in di ? di.ct : getCentroid(di, xa, ya, isHorizontal, isFunnel);
+            const di = cd[i];
+            const ct = 'ct' in di ? di.ct : getCentroid(di, xa, ya, isHorizontal, isFunnel);
 
             if(selectionTester.contains(ct, false, i, searchInfo)) {
                 selection.push({
@@ -37,10 +37,10 @@ export default function selectPoints(searchInfo: any, selectionTester: any): any
 }
 
 function getCentroid(d: any, xa: FullAxis, ya: FullAxis, isHorizontal: boolean, isFunnel: boolean): number[] {
-    var x0 = xa.c2p(isHorizontal ? d.s0 : d.p0, true);
-    var x1 = xa.c2p(isHorizontal ? d.s1 : d.p1, true);
-    var y0 = ya.c2p(isHorizontal ? d.p0 : d.s0, true);
-    var y1 = ya.c2p(isHorizontal ? d.p1 : d.s1, true);
+    const x0 = xa.c2p(isHorizontal ? d.s0 : d.p0, true);
+    const x1 = xa.c2p(isHorizontal ? d.s1 : d.p1, true);
+    const y0 = ya.c2p(isHorizontal ? d.p0 : d.s0, true);
+    const y1 = ya.c2p(isHorizontal ? d.p1 : d.s1, true);
 
     if(isFunnel) {
         return [(x0 + x1) / 2, (y0 + y1) / 2];

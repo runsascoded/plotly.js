@@ -8,19 +8,19 @@
  * to make a nice grid, we'll need to divide the tangent by 2 instead of 3. (The
  * math works out this way if you work through the bezier derivatives)
  */
-var CatmullRomExp = 0.5;
+const CatmullRomExp = 0.5;
 
 export default function makeControlPoints(p0, p1, p2, smoothness) {
-    var d1x = p0[0] - p1[0];
-    var d1y = p0[1] - p1[1];
-    var d2x = p2[0] - p1[0];
-    var d2y = p2[1] - p1[1];
-    var d1a = Math.pow(d1x * d1x + d1y * d1y, CatmullRomExp / 2);
-    var d2a = Math.pow(d2x * d2x + d2y * d2y, CatmullRomExp / 2);
-    var numx = (d2a * d2a * d1x - d1a * d1a * d2x) * smoothness;
-    var numy = (d2a * d2a * d1y - d1a * d1a * d2y) * smoothness;
-    var denom1 = d2a * (d1a + d2a) * 3;
-    var denom2 = d1a * (d1a + d2a) * 3;
+    const d1x = p0[0] - p1[0];
+    const d1y = p0[1] - p1[1];
+    const d2x = p2[0] - p1[0];
+    const d2y = p2[1] - p1[1];
+    const d1a = Math.pow(d1x * d1x + d1y * d1y, CatmullRomExp / 2);
+    const d2a = Math.pow(d2x * d2x + d2y * d2y, CatmullRomExp / 2);
+    const numx = (d2a * d2a * d1x - d1a * d1a * d2x) * smoothness;
+    const numy = (d2a * d2a * d1y - d1a * d1a * d2y) * smoothness;
+    const denom1 = d2a * (d1a + d2a) * 3;
+    const denom2 = d1a * (d1a + d2a) * 3;
 
     return [[
         p1[0] + (denom1 && numx / denom1),

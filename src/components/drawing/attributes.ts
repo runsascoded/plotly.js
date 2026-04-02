@@ -1,4 +1,4 @@
-export var dash = {
+export const dash = {
     valType: 'string',
     values: ['solid', 'dot', 'dash', 'longdash', 'dashdot', 'longdashdot'],
     dflt: 'solid',
@@ -10,7 +10,7 @@ export var dash = {
     ].join(' ')
 };
 
-export var pattern = {
+export const pattern = {
     shape: {
         valType: 'enumerated',
         values: ['', '/', '\\', 'x', '-', '|', '+', '.'],

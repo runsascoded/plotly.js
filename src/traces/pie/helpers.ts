@@ -8,30 +8,30 @@ function format(vRounded: string): string {
     );
 }
 
-export var formatPiePercent = function formatPiePercent(v: number, separators: string): string {
-    var vRounded = format((v * 100).toPrecision(3));
+export const formatPiePercent = function formatPiePercent(v: number, separators: string): string {
+    const vRounded = format((v * 100).toPrecision(3));
     return numSeparate(vRounded, separators) + '%';
 };
 
-export var formatPieValue = function formatPieValue(v: number, separators: string): string {
-    var vRounded = format(v.toPrecision(10));
+export const formatPieValue = function formatPieValue(v: number, separators: string): string {
+    const vRounded = format(v.toPrecision(10));
     return numSeparate(vRounded, separators);
 };
 
-export var getFirstFilled = function getFirstFilled(array: any[], indices: number[]): any {
+export const getFirstFilled = function getFirstFilled(array: any[], indices: number[]): any {
     if(!isArrayOrTypedArray(array)) return;
-    for(var i = 0; i < indices.length; i++) {
-        var v = array[indices[i]];
+    for(let i = 0; i < indices.length; i++) {
+        const v = array[indices[i]];
         if(v || v === 0 || v === '') return v;
     }
 };
 
-export var castOption = function castOption(item: any, indices: number[]): any {
+export const castOption = function castOption(item: any, indices: number[]): any {
     if(isArrayOrTypedArray(item)) return getFirstFilled(item, indices);
     else if(item) return item;
 };
 
-export var getRotationAngle = function(rotation: number | string): number {
+export const getRotationAngle = function(rotation: number | string): number {
     return (rotation === 'auto' ? 0 : rotation as number) * Math.PI / 180;
 };
 

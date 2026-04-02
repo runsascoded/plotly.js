@@ -7,27 +7,27 @@ import _numerical from '../../constants/numerical.js';
 const { BADNUM } = _numerical;
 
 export default function calc(gd: GraphDiv, trace: FullTrace): any[] {
-    var cd = boxCalc(gd, trace);
+    const cd = boxCalc(gd, trace);
 
     if(cd[0].t.empty) return cd;
 
-    var fullLayout = gd._fullLayout;
-    var valAxis = Axes.getFromId(
+    const fullLayout = gd._fullLayout;
+    const valAxis = Axes.getFromId(
         gd,
         trace[trace.orientation === 'h' ? 'xaxis' : 'yaxis']
     );
 
-    var spanMin = Infinity;
-    var spanMax = -Infinity;
-    var maxKDE = 0;
-    var maxCount = 0;
+    let spanMin = Infinity;
+    let spanMax = -Infinity;
+    let maxKDE = 0;
+    let maxCount = 0;
 
-    for(var i = 0; i < cd.length; i++) {
-        var cdi = cd[i];
-        var vals = cdi.pts.map(helpers.extractVal);
+    for(let i = 0; i < cd.length; i++) {
+        const cdi = cd[i];
+        const vals = cdi.pts.map(helpers.extractVal);
 
-        var bandwidth = cdi.bandwidth = calcBandwidth(trace, cdi, vals);
-        var span = cdi.span = calcSpan(trace, cdi, valAxis, bandwidth);
+        const bandwidth = cdi.bandwidth = calcBandwidth(trace, cdi, vals);
+        let span = cdi.span = calcSpan(trace, cdi, valAxis, bandwidth);
 
         if(cdi.min === cdi.max && bandwidth === 0) {
             // if span is zero and bandwidth is zero, we want a violin with zero width
@@ -37,9 +37,9 @@ export default function calc(gd: GraphDiv, trace: FullTrace): any[] {
             maxKDE = Math.max(maxKDE, 1);
         } else {
             // step that well covers the bandwidth and is multiple of span distance
-            var dist = span[1] - span[0];
-            var n = Math.ceil(dist / (bandwidth / 3));
-            var step = dist / n;
+            const dist = span[1] - span[0];
+            const n = Math.ceil(dist / (bandwidth / 3));
+            const step = dist / n;
 
             if(!isFinite(step) || !isFinite(n)) {
                 Lib.error('Something went wrong with computing the violin span');
@@ -47,13 +47,13 @@ export default function calc(gd: GraphDiv, trace: FullTrace): any[] {
                 return cd;
             }
 
-            var kde = helpers.makeKDE(cdi, trace, vals);
+            const kde = helpers.makeKDE(cdi, trace, vals);
             // n intervals means n + 1 sample points to include both endpoints
             cdi.density = new Array(n + 1);
 
-            for(var k = 0; k < cdi.density.length; k++) {
-                var t = span[0] + k * step;
-                var v = kde(t);
+            for(let k = 0; k < cdi.density.length; k++) {
+                const t = span[0] + k * step;
+                const v = kde(t);
                 cdi.density[k] = {v: v, t: t};
                 maxKDE = Math.max(maxKDE, v);
             }
@@ -64,15 +64,15 @@ export default function calc(gd: GraphDiv, trace: FullTrace): any[] {
         spanMax = Math.max(spanMax, span[1]);
     }
 
-    var extremes = Axes.findExtremes(valAxis, [spanMin, spanMax], {padded: true});
+    const extremes = Axes.findExtremes(valAxis, [spanMin, spanMax], {padded: true});
     trace._extremes[valAxis._id] = extremes;
 
     if(trace.width) {
         cd[0].t.maxKDE = maxKDE;
     } else {
-        var violinScaleGroupStats = fullLayout._violinScaleGroupStats;
-        var scaleGroup = trace.scalegroup;
-        var groupStats = violinScaleGroupStats[scaleGroup];
+        const violinScaleGroupStats = fullLayout._violinScaleGroupStats;
+        const scaleGroup = trace.scalegroup;
+        const groupStats = violinScaleGroupStats[scaleGroup];
 
         if(groupStats) {
             groupStats.maxKDE = Math.max(groupStats.maxKDE, maxKDE);
@@ -95,12 +95,12 @@ export default function calc(gd: GraphDiv, trace: FullTrace): any[] {
 // - https://en.wikipedia.org/wiki/Kernel_density_estimation#A_rule-of-thumb_bandwidth_estimator
 // - https://github.com/statsmodels/statsmodels/blob/master/statsmodels/nonparametric/bandwidths.py
 function silvermanRule(len: number, ssd: number, iqr: number): number {
-    var a = Math.min(ssd, iqr / 1.349);
+    const a = Math.min(ssd, iqr / 1.349);
     return 1.059 * a * Math.pow(len, -0.2);
 }
 
 function calcBandwidth(trace: FullTrace, cdi: any, vals: number[]): number {
-    var span = cdi.max - cdi.min;
+    const span = cdi.max - cdi.min;
 
     // If span is zero
     if(!span) {
@@ -124,8 +124,8 @@ function calcBandwidth(trace: FullTrace, cdi: any, vals: number[]): number {
     if(trace.bandwidth) {
         return Math.max(trace.bandwidth, span / 1e4);
     } else {
-        var len = vals.length;
-        var ssd = Lib.stdev(vals, len - 1, cdi.mean);
+        const len = vals.length;
+        const ssd = Lib.stdev(vals, len - 1, cdi.mean);
         return Math.max(
             silvermanRule(len, ssd, cdi.q3 - cdi.q1),
             span / 100
@@ -134,15 +134,15 @@ function calcBandwidth(trace: FullTrace, cdi: any, vals: number[]): number {
 }
 
 function calcSpan(trace: FullTrace, cdi: any, valAxis: FullAxis, bandwidth: number): number[] {
-    var spanmode = trace.spanmode;
-    var spanIn = trace.span || [];
-    var spanTight = [cdi.min, cdi.max];
-    var spanLoose = [cdi.min - 2 * bandwidth, cdi.max + 2 * bandwidth];
-    var spanOut;
+    const spanmode = trace.spanmode;
+    const spanIn = trace.span || [];
+    const spanTight = [cdi.min, cdi.max];
+    const spanLoose = [cdi.min - 2 * bandwidth, cdi.max + 2 * bandwidth];
+    let spanOut;
 
     function calcSpanItem(index) {
-        var s = spanIn[index];
-        var sc = valAxis.type === 'multicategory' ?
+        const s = spanIn[index];
+        const sc = valAxis.type === 'multicategory' ?
             valAxis.r2c(s) :
             valAxis.d2c(s, 0, trace[cdi.valLetter + 'calendar']);
         return sc === BADNUM ? spanLoose[index] : sc;
@@ -157,7 +157,7 @@ function calcSpan(trace: FullTrace, cdi: any, valAxis: FullAxis, bandwidth: numb
     }
 
     // to reuse the equal-range-item block
-    var dummyAx: any = {
+    const dummyAx: any = {
         type: 'linear',
         range: spanOut
     };

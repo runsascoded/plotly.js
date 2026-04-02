@@ -7,8 +7,8 @@ const { axisHoverFormat } = _axis_format_attributes;
 import { hovertemplateAttrs, templatefallbackAttrs } from '../../plots/template_attributes.js';
 import { extendFlat } from '../../lib/extend.js';
 
-var scatterMarkerAttrs = scatterAttrs.marker;
-var scatterMarkerLineAttrs = scatterMarkerAttrs.line;
+const scatterMarkerAttrs = scatterAttrs.marker;
+const scatterMarkerLineAttrs = scatterMarkerAttrs.line;
 
 export default {
     y: {

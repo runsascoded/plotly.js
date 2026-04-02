@@ -5,19 +5,19 @@ import plotAttributes from '../plots/attributes.js';
 import Template from './plot_template.js';
 import _plot_config from './plot_config.js';
 const { dfltConfig } = _plot_config;
-var isPlainObject = Lib.isPlainObject;
+const isPlainObject = Lib.isPlainObject;
 
-export var makeTemplate = function(figure?: any): any {
+export const makeTemplate = function(figure?: any): any {
     figure = Lib.isPlainObject(figure) ? figure : Lib.getGraphDiv(figure);
     figure = Lib.extendDeep({_context: dfltConfig}, {data: figure.data, layout: figure.layout});
     Plots.supplyDefaults(figure);
-    var data = figure.data || [];
-    var layout: any = figure.layout || {};
+    const data = figure.data || [];
+    const layout: any = figure.layout || {};
     // copy over a few items to help follow the schema
     layout._basePlotModules = figure._fullLayout._basePlotModules;
     layout._modules = figure._fullLayout._modules;
 
-    var template: any = {
+    const template: any = {
         data: {},
         layout: {}
     };
@@ -38,11 +38,11 @@ export var makeTemplate = function(figure?: any): any {
         // TODO: allow transforms to contribute to templates?
         // as it stands they are ignored, which may be for the best...
 
-        var traceTemplate = {};
+        const traceTemplate = {};
         walkStyleKeys(trace, traceTemplate, getTraceInfo.bind(null, trace));
 
-        var traceType = Lib.coerce(trace, {}, plotAttributes, 'type');
-        var typeTemplates = template.data[traceType];
+        const traceType = Lib.coerce(trace, {}, plotAttributes, 'type');
+        let typeTemplates = template.data[traceType];
         if(!typeTemplates) typeTemplates = template.data[traceType] = [];
         typeTemplates.push(traceTemplate);
     });
@@ -61,16 +61,16 @@ export var makeTemplate = function(figure?: any): any {
      * a *list* of values, but that would be huge complexity for little gain.
      */
     delete template.layout.template;
-    var oldTemplate = layout.template;
+    const oldTemplate = layout.template;
     if(isPlainObject(oldTemplate)) {
-        var oldLayoutTemplate = oldTemplate.layout;
+        const oldLayoutTemplate = oldTemplate.layout;
 
-        var i, traceType, oldTypeTemplates, oldTypeLen, typeTemplates, typeLen;
+        let i, traceType, oldTypeTemplates, oldTypeLen, typeTemplates, typeLen;
 
         if(isPlainObject(oldLayoutTemplate)) {
             mergeTemplates(oldLayoutTemplate, template.layout);
         }
-        var oldDataTemplate = oldTemplate.data;
+        const oldDataTemplate = oldTemplate.data;
         if(isPlainObject(oldDataTemplate)) {
             for(traceType in template.data) {
                 oldTypeTemplates = oldDataTemplate[traceType];
@@ -104,8 +104,8 @@ function mergeTemplates(oldTemplate?: any, newTemplate?: any): any {
 
     // sort keys so we always get annotationdefaults before annotations etc
     // so arrayTemplater will work right
-    var oldKeys = Object.keys(oldTemplate).sort();
-    var i, j;
+    const oldKeys = Object.keys(oldTemplate).sort();
+    let i, j;
 
     function mergeOne(oldVal?: any, newVal?: any, key?: any) {
         if(isPlainObject(newVal) && isPlainObject(oldVal)) {
@@ -113,13 +113,13 @@ function mergeTemplates(oldTemplate?: any, newTemplate?: any): any {
         } else if(Array.isArray(newVal) && Array.isArray(oldVal)) {
             // Note: omitted `inclusionAttr` from arrayTemplater here,
             // it's irrelevant as we only want the resulting `_template`.
-            var templater = Template.arrayTemplater({_template: oldTemplate}, key);
+            const templater = Template.arrayTemplater({_template: oldTemplate}, key);
             for(j = 0; j < newVal.length; j++) {
-                var item = newVal[j];
-                var oldItem = templater.newItem(item)._template;
+                const item = newVal[j];
+                const oldItem = templater.newItem(item)._template;
                 if(oldItem) mergeTemplates(oldItem, item);
             }
-            var defaultItems = templater.defaultItems();
+            const defaultItems = templater.defaultItems();
             for(j = 0; j < defaultItems.length; j++) newVal.push(defaultItems[j]._template);
 
             // templateitemname only applies to receiving plots
@@ -128,8 +128,8 @@ function mergeTemplates(oldTemplate?: any, newTemplate?: any): any {
     }
 
     for(i = 0; i < oldKeys.length; i++) {
-        var key = oldKeys[i];
-        var oldVal = oldTemplate[key];
+        const key = oldKeys[i];
+        const oldVal = oldTemplate[key];
         if(key in newTemplate) {
             mergeOne(oldVal, newTemplate[key], key);
         } else newTemplate[key] = oldVal;
@@ -137,8 +137,8 @@ function mergeTemplates(oldTemplate?: any, newTemplate?: any): any {
         // if this is a base key from the old template (eg xaxis), look for
         // extended keys (eg xaxis2) in the new template to merge into
         if(getBaseKey(key) === key) {
-            for(var key2 in newTemplate) {
-                var baseKey2 = getBaseKey(key2);
+            for(const key2 in newTemplate) {
+                const baseKey2 = getBaseKey(key2);
                 if(key2 !== baseKey2 && baseKey2 === key && !(key2 in oldTemplate)) {
                     mergeOne(oldVal, newTemplate[key2], key);
                 }
@@ -152,14 +152,14 @@ function getBaseKey(key?: any): any {
 }
 
 function walkStyleKeys(parent?: any, templateOut?: any, getAttributeInfo?: any, path?: any, basePath?: any): void {
-    var pathAttr = basePath && getAttributeInfo(basePath);
-    for(var key in parent) {
-        var child = parent[key];
-        var nextPath = getNextPath(parent, key, path);
-        var nextBasePath = getNextPath(parent, key, basePath);
-        var attr: any = getAttributeInfo(nextBasePath);
+    const pathAttr = basePath && getAttributeInfo(basePath);
+    for(const key in parent) {
+        const child = parent[key];
+        const nextPath = getNextPath(parent, key, path);
+        let nextBasePath = getNextPath(parent, key, basePath);
+        let attr: any = getAttributeInfo(nextBasePath);
         if(!attr) {
-            var baseKey = getBaseKey(key);
+            const baseKey = getBaseKey(key);
             if(baseKey !== key) {
                 nextBasePath = getNextPath(parent, baseKey, basePath);
                 attr = getAttributeInfo(nextBasePath);
@@ -180,13 +180,13 @@ function walkStyleKeys(parent?: any, templateOut?: any, getAttributeInfo?: any, 
         if(!attr.valType && isPlainObject(child)) {
             walkStyleKeys(child, templateOut, getAttributeInfo, nextPath, nextBasePath);
         } else if(attr._isLinkedToArray && Array.isArray(child)) {
-            var dfltDone = false;
-            var namedIndex = 0;
-            var usedNames: any = {};
-            for(var i = 0; i < child.length; i++) {
-                var item = child[i];
+            let dfltDone = false;
+            let namedIndex = 0;
+            const usedNames: any = {};
+            for(let i = 0; i < child.length; i++) {
+                const item = child[i];
                 if(isPlainObject(item)) {
-                    var name = item.name;
+                    const name = item.name;
                     if(name) {
                         if(!usedNames[name]) {
                             // named array items: allow all attributes except data arrays
@@ -197,17 +197,17 @@ function walkStyleKeys(parent?: any, templateOut?: any, getAttributeInfo?: any, 
                             usedNames[name] = 1;
                         }
                     } else if(!dfltDone) {
-                        var dfltKey = Template.arrayDefaultKey(key);
-                        var dfltPath = getNextPath(parent, dfltKey, path);
+                        const dfltKey = Template.arrayDefaultKey(key);
+                        const dfltPath = getNextPath(parent, dfltKey, path);
 
                         // getAttributeInfo will fail if we try to use dfltKey directly.
                         // Instead put this item into the next array element, then
                         // pull it out and move it to dfltKey.
-                        var pathInArray = getNextPath(child, namedIndex, nextPath);
+                        const pathInArray = getNextPath(child, namedIndex, nextPath);
                         walkStyleKeys(item, templateOut, getAttributeInfo, pathInArray,
                             getNextPath(child, namedIndex, nextBasePath));
-                        var itemPropInArray = Lib.nestedProperty(templateOut, pathInArray);
-                        var dfltProp = Lib.nestedProperty(templateOut, dfltPath);
+                        const itemPropInArray = Lib.nestedProperty(templateOut, pathInArray);
+                        const dfltProp = Lib.nestedProperty(templateOut, dfltPath);
                         dfltProp.set(itemPropInArray.get());
                         itemPropInArray.set(null);
 
@@ -216,7 +216,7 @@ function walkStyleKeys(parent?: any, templateOut?: any, getAttributeInfo?: any, 
                 }
             }
         } else {
-            var templateProp = Lib.nestedProperty(templateOut, nextPath);
+            const templateProp = Lib.nestedProperty(templateOut, nextPath);
             templateProp.set(child);
         }
     }
@@ -235,7 +235,7 @@ function getTraceInfo(trace?: any, path?: any): any {
 }
 
 function getNextPath(parent?: any, key?: any, path?: any): any {
-    var nextPath;
+    let nextPath;
     if(!path) nextPath = key;
     else if(Array.isArray(parent)) nextPath = path + '[' + key + ']';
     else nextPath = path + '.' + key;
@@ -243,32 +243,32 @@ function getNextPath(parent?: any, key?: any, path?: any): any {
     return nextPath;
 }
 
-export var validateTemplate = function(figureIn?: any, template?: any): any {
-    var figure: any = Lib.extendDeep({}, {
+export const validateTemplate = function(figureIn?: any, template?: any): any {
+    const figure: any = Lib.extendDeep({}, {
         _context: dfltConfig,
         data: figureIn.data,
         layout: figureIn.layout
     });
-    var layout: any = figure.layout || {};
+    const layout: any = figure.layout || {};
     if(!isPlainObject(template)) template = layout.template || {};
-    var layoutTemplate = template.layout;
-    var dataTemplate = template.data;
-    var errorList = [];
+    const layoutTemplate = template.layout;
+    const dataTemplate = template.data;
+    const errorList = [];
 
     figure.layout = layout;
     figure.layout.template = template;
     Plots.supplyDefaults(figure);
 
-    var fullLayout = figure._fullLayout;
-    var fullData = figure._fullData;
+    const fullLayout = figure._fullLayout;
+    const fullData = figure._fullData;
 
-    var layoutPaths: any = {};
+    const layoutPaths: any = {};
     function crawlLayoutForContainers(obj?: any, paths?: any) {
-        for(var key in obj) {
+        for(const key in obj) {
             if(key.charAt(0) !== '_' && isPlainObject(obj[key])) {
-                var baseKey = getBaseKey(key);
-                var nextPaths = [];
-                var i;
+                const baseKey = getBaseKey(key);
+                const nextPaths = [];
+                let i;
                 for(i = 0; i < paths.length; i++) {
                     nextPaths.push(getNextPath(obj, key, paths[i]));
                     if(baseKey !== key) nextPaths.push(getNextPath(obj, baseKey, paths[i]));
@@ -282,9 +282,9 @@ export var validateTemplate = function(figureIn?: any, template?: any): any {
     }
 
     function crawlLayoutTemplateForContainers(obj?: any, path?: any) {
-        for(var key in obj) {
+        for(const key in obj) {
             if(key.indexOf('defaults') === -1 && isPlainObject(obj[key])) {
-                var nextPath = getNextPath(obj, key, path);
+                const nextPath = getNextPath(obj, key, path);
                 if(layoutPaths[nextPath]) {
                     crawlLayoutTemplateForContainers(obj[key], nextPath);
                 } else {
@@ -304,10 +304,10 @@ export var validateTemplate = function(figureIn?: any, template?: any): any {
     if(!isPlainObject(dataTemplate)) {
         errorList.push({code: 'data'});
     } else {
-        var typeCount: any = {};
-        var traceType;
-        for(var i = 0; i < fullData.length; i++) {
-            var fullTrace = fullData[i];
+        const typeCount: any = {};
+        let traceType;
+        for(let i = 0; i < fullData.length; i++) {
+            const fullTrace = fullData[i];
             traceType = fullTrace.type;
             typeCount[traceType] = (typeCount[traceType] || 0) + 1;
             if(!fullTrace._fullInput._template) {
@@ -321,8 +321,8 @@ export var validateTemplate = function(figureIn?: any, template?: any): any {
             }
         }
         for(traceType in dataTemplate) {
-            var templateCount = dataTemplate[traceType].length;
-            var dataCount = typeCount[traceType] || 0;
+            const templateCount = dataTemplate[traceType].length;
+            const dataCount = typeCount[traceType] || 0;
             if(templateCount > dataCount) {
                 errorList.push({
                     code: 'unused',
@@ -344,10 +344,10 @@ export var validateTemplate = function(figureIn?: any, template?: any): any {
     // _template: false is when someone tried to modify an array item
     // but there was no template with matching name
     function crawlForMissingTemplates(obj?: any, path?: any) {
-        for(var key in obj) {
+        for(const key in obj) {
             if(key.charAt(0) === '_') continue;
-            var val: any = obj[key];
-            var nextPath = getNextPath(obj, key, path);
+            const val: any = obj[key];
+            const nextPath = getNextPath(obj, key, path);
             if(isPlainObject(val)) {
                 if(Array.isArray(obj) && val._template === false && val.templateitemname) {
                     errorList.push({
@@ -368,13 +368,13 @@ export var validateTemplate = function(figureIn?: any, template?: any): any {
 };
 
 function hasPlainObject(arr?: any): any {
-    for(var i = 0; i < arr.length; i++) {
+    for(let i = 0; i < arr.length; i++) {
         if(isPlainObject(arr[i])) return true;
     }
 }
 
 function format(opts?: any): any {
-    var msg;
+    let msg;
     switch(opts.code) {
         case 'data':
             msg = 'The template has no key data.';

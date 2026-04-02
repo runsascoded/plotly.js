@@ -6,15 +6,15 @@ import Lib from '../../lib/index.js';
 import makeComputeError from './compute_error.js';
 
 export default function calc(gd: GraphDiv): void {
-    var calcdata = gd.calcdata;
+    const calcdata = gd.calcdata;
 
-    for(var i = 0; i < calcdata.length; i++) {
-        var calcTrace = calcdata[i];
-        var trace = calcTrace[0].trace;
+    for(let i = 0; i < calcdata.length; i++) {
+        const calcTrace = calcdata[i];
+        const trace = calcTrace[0].trace;
 
         if(trace.visible === true && Registry.traceIs(trace, 'errorBarsOK')) {
-            var xa = Axes.getFromId(gd, trace.xaxis);
-            var ya = Axes.getFromId(gd, trace.yaxis);
+            const xa = Axes.getFromId(gd, trace.xaxis);
+            const ya = Axes.getFromId(gd, trace.yaxis);
             calcOneAxis(calcTrace, trace, xa, 'x');
             calcOneAxis(calcTrace, trace, ya, 'y');
         }
@@ -22,37 +22,37 @@ export default function calc(gd: GraphDiv): void {
 }
 
 function calcOneAxis(calcTrace: any[], trace: FullTrace, axis: FullAxis, coord: string): void {
-    var opts = trace['error_' + coord] || {};
-    var isVisible = (opts.visible && ['linear', 'log'].indexOf(axis.type) !== -1);
-    var vals: number[] = [];
+    const opts = trace['error_' + coord] || {};
+    const isVisible = (opts.visible && ['linear', 'log'].indexOf(axis.type) !== -1);
+    const vals: number[] = [];
 
     if(!isVisible) return;
 
-    var computeError = makeComputeError(opts);
+    const computeError = makeComputeError(opts);
 
-    for(var i = 0; i < calcTrace.length; i++) {
-        var calcPt = calcTrace[i];
+    for(let i = 0; i < calcTrace.length; i++) {
+        const calcPt = calcTrace[i];
 
-        var iIn = calcPt.i;
+        let iIn = calcPt.i;
 
         if(iIn === undefined) iIn = i;
         else if(iIn === null) continue;
 
-        var calcCoord = calcPt[coord];
+        const calcCoord = calcPt[coord];
 
         if(!isNumeric(axis.c2l(calcCoord))) continue;
 
-        var errors = computeError(calcCoord, iIn);
+        const errors = computeError(calcCoord, iIn);
         if(isNumeric(errors[0]) && isNumeric(errors[1])) {
-            var shoe = calcPt[coord + 's'] = calcCoord - errors[0];
-            var hat = calcPt[coord + 'h'] = calcCoord + errors[1];
+            const shoe = calcPt[coord + 's'] = calcCoord - errors[0];
+            const hat = calcPt[coord + 'h'] = calcCoord + errors[1];
             vals.push(shoe, hat);
         }
     }
 
-    var axId = axis._id;
-    var baseExtremes = trace._extremes[axId];
-    var extremes = Axes.findExtremes(
+    const axId = axis._id;
+    const baseExtremes = trace._extremes[axId];
+    const extremes = Axes.findExtremes(
         axis,
         vals,
         Lib.extendFlat({tozero: baseExtremes.opts.tozero}, {padded: true})

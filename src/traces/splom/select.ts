@@ -1,38 +1,38 @@
 import Lib from '../../lib/index.js';
 import subTypes from '../scatter/subtypes.js';
 import helpers from './helpers.js';
-var pushUnique = Lib.pushUnique;
+const pushUnique = Lib.pushUnique;
 
 export default function select(searchInfo, selectionTester) {
-    var cd = searchInfo.cd;
-    var trace = cd[0].trace;
-    var stash = cd[0].t;
-    var scene = searchInfo.scene;
-    var cdata = scene.matrixOptions.cdata;
-    var xa = searchInfo.xaxis;
-    var ya = searchInfo.yaxis;
-    var selection = [];
+    const cd = searchInfo.cd;
+    const trace = cd[0].trace;
+    const stash = cd[0].t;
+    const scene = searchInfo.scene;
+    const cdata = scene.matrixOptions.cdata;
+    const xa = searchInfo.xaxis;
+    const ya = searchInfo.yaxis;
+    const selection = [];
 
     if(!scene) return selection;
 
-    var hasOnlyLines = (!subTypes.hasMarkers(trace) && !subTypes.hasText(trace));
+    const hasOnlyLines = (!subTypes.hasMarkers(trace) && !subTypes.hasText(trace));
     if(trace.visible !== true || hasOnlyLines) return selection;
 
-    var xi = helpers.getDimIndex(trace, xa);
-    var yi = helpers.getDimIndex(trace, ya);
+    const xi = helpers.getDimIndex(trace, xa);
+    const yi = helpers.getDimIndex(trace, ya);
     if(xi === false || yi === false) return selection;
 
-    var xpx = stash.xpx[xi];
-    var ypx = stash.ypx[yi];
-    var x = cdata[xi];
-    var y = cdata[yi];
-    var els = (searchInfo.scene.selectBatch || []).slice();
-    var unels = [];
+    const xpx = stash.xpx[xi];
+    const ypx = stash.ypx[yi];
+    const x = cdata[xi];
+    const y = cdata[yi];
+    const els = (searchInfo.scene.selectBatch || []).slice();
+    const unels = [];
 
     // degenerate polygon does not enable selection
     // filter out points by visible scatter ones
     if(selectionTester !== false && !selectionTester.degenerate) {
-        for(var i = 0; i < x.length; i++) {
+        for(let i = 0; i < x.length; i++) {
             if(selectionTester.contains([xpx[i], ypx[i]], null, i, searchInfo)) {
                 selection.push({
                     pointNumber: i,
@@ -49,7 +49,7 @@ export default function select(searchInfo, selectionTester) {
         }
     }
 
-    var matrixOpts = scene.matrixOptions;
+    const matrixOpts = scene.matrixOptions;
 
     if(!els.length && !unels.length) {
         scene.matrix.update(matrixOpts, null);

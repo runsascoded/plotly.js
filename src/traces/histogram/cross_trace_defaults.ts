@@ -7,25 +7,25 @@ import _defaults from '../bar/defaults.js';
 const { validateCornerradius } = _defaults;
 import { getAxisGroup } from '../../plots/cartesian/constraints.js';
 
-var nestedProperty = Lib.nestedProperty;
+const nestedProperty = Lib.nestedProperty;
 
-var BINATTRS = [
+const BINATTRS = [
     {aStr: {x: 'xbins.start', y: 'ybins.start'}, name: 'start'},
     {aStr: {x: 'xbins.end', y: 'ybins.end'}, name: 'end'},
     {aStr: {x: 'xbins.size', y: 'ybins.size'}, name: 'size'},
     {aStr: {x: 'nbinsx', y: 'nbinsy'}, name: 'nbins'}
 ];
 
-var BINDIRECTIONS = ['x', 'y'];
+const BINDIRECTIONS = ['x', 'y'];
 
 export default function crossTraceDefaults(fullData: FullTrace[], fullLayout: FullLayout): void {
-    var allBinOpts = fullLayout._histogramBinOpts = {};
-    var histTraces = [];
-    var mustMatchTracesLookup: any = {};
-    var otherTracesList = [];
+    const allBinOpts = fullLayout._histogramBinOpts = {};
+    const histTraces = [];
+    const mustMatchTracesLookup: any = {};
+    const otherTracesList = [];
 
-    var traceOut, traces, groupName, binDir;
-    var i, j, k;
+    let traceOut, traces, groupName, binDir;
+    let i, j, k;
 
     function coerce(attr: string, dflt?: any) {
         return Lib.coerce(traceOut._input, traceOut, traceOut._module.attributes, attr, dflt);
@@ -36,19 +36,19 @@ export default function crossTraceDefaults(fullData: FullTrace[], fullLayout: Fu
     }
 
     function getAxisType(traceOut, binDir) {
-        var ax = axisIds.getFromTrace({_fullLayout: fullLayout}, traceOut, binDir);
+        const ax = axisIds.getFromTrace({_fullLayout: fullLayout}, traceOut, binDir);
         return ax.type;
     }
 
     function fillBinOpts(traceOut, groupName, binDir) {
         // N.B. group traces that don't have a bingroup with themselves
-        var fallbackGroupName = traceOut.uid + '__' + binDir;
+        const fallbackGroupName = traceOut.uid + '__' + binDir;
         if(!groupName) groupName = fallbackGroupName;
 
-        var axType = getAxisType(traceOut, binDir);
-        var calendar = traceOut[binDir + 'calendar'] || '';
-        var binOpts = allBinOpts[groupName];
-        var needsNewItem = true;
+        const axType = getAxisType(traceOut, binDir);
+        const calendar = traceOut[binDir + 'calendar'] || '';
+        const binOpts = allBinOpts[groupName];
+        let needsNewItem = true;
 
         if(binOpts) {
             if(axType === binOpts.axType && calendar === binOpts.calendar) {
@@ -101,7 +101,7 @@ export default function crossTraceDefaults(fullData: FullTrace[], fullLayout: Fu
             delete traceOut._yautoBinFinished;
 
             if(traceOut.type === 'histogram') {
-                var r = coerce('marker.cornerradius', fullLayout.barcornerradius);
+                const r = coerce('marker.cornerradius', fullLayout.barcornerradius);
                 if(traceOut.marker) {
                     traceOut.marker.cornerradius = validateCornerradius(r);
                 }
@@ -115,7 +115,7 @@ export default function crossTraceDefaults(fullData: FullTrace[], fullLayout: Fu
         }
     }
 
-    var alignmentOpts = fullLayout._alignmentOpts || {};
+    const alignmentOpts = fullLayout._alignmentOpts || {};
 
     // Look for traces that "have to match", that is:
     // - 1d histogram traces on the same subplot with same orientation under barmode:stack,
@@ -132,8 +132,8 @@ export default function crossTraceDefaults(fullData: FullTrace[], fullLayout: Fu
             binDir = orientation2binDir(traceOut);
 
             if(fullLayout.barmode === 'group' && traceOut.alignmentgroup) {
-                var pa = traceOut[binDir + 'axis'];
-                var aGroupId = getAxisGroup(fullLayout, pa) + traceOut.orientation;
+                const pa = traceOut[binDir + 'axis'];
+                const aGroupId = getAxisGroup(fullLayout, pa) + traceOut.orientation;
                 if((alignmentOpts[aGroupId] || {})[traceOut.alignmentgroup]) {
                     groupName = aGroupId;
                 }
@@ -171,7 +171,7 @@ export default function crossTraceDefaults(fullData: FullTrace[], fullLayout: Fu
             continue;
         }
 
-        var binGroupFound = false;
+        let binGroupFound = false;
         if(traces.length) {
             traceOut = traces[0];
             binGroupFound = coerce('bingroup');
@@ -181,7 +181,7 @@ export default function crossTraceDefaults(fullData: FullTrace[], fullLayout: Fu
 
         for(i = 0; i < traces.length; i++) {
             traceOut = traces[i];
-            var bingroupIn = traceOut._input.bingroup;
+            const bingroupIn = traceOut._input.bingroup;
             if(bingroupIn && bingroupIn !== groupName) {
                 Lib.warn([
                     'Trace', traceOut.index, 'must match',
@@ -203,12 +203,12 @@ export default function crossTraceDefaults(fullData: FullTrace[], fullLayout: Fu
     for(i = 0; i < otherTracesList.length; i++) {
         traceOut = otherTracesList[i];
 
-        var binGroup = coerce('bingroup');
+        const binGroup = coerce('bingroup');
 
         if(traceIs(traceOut, '2dMap')) {
             for(k = 0; k < 2; k++) {
                 binDir = BINDIRECTIONS[k];
-                var binGroupInDir = coerce(binDir + 'bingroup',
+                const binGroupInDir = coerce(binDir + 'bingroup',
                     binGroup ? binGroup + '__' + binDir : null
                 );
                 fillBinOpts(traceOut, binGroupInDir, binDir);
@@ -220,14 +220,14 @@ export default function crossTraceDefaults(fullData: FullTrace[], fullLayout: Fu
 
     // coerce bin attrs!
     for(groupName in allBinOpts) {
-        var binOpts = allBinOpts[groupName];
+        const binOpts = allBinOpts[groupName];
         traces = binOpts.traces;
 
         for(j = 0; j < BINATTRS.length; j++) {
-            var attrSpec = BINATTRS[j];
-            var attr = attrSpec.name;
-            var aStr;
-            var autoVals;
+            const attrSpec = BINATTRS[j];
+            const attr = attrSpec.name;
+            let aStr;
+            let autoVals;
 
             // nbins(x|y) is moot if we have a size. This depends on
             // nbins coming after size in binAttrs.

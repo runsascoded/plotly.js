@@ -5,28 +5,28 @@ import setContours from './set_contours.js';
 import endPlus from './end_plus.js';
 
 export default function calc(gd: GraphDiv,  trace: FullTrace) {
-    var cd = heatmapCalc(gd, trace);
+    const cd = heatmapCalc(gd, trace);
 
-    var zOut = cd[0].z;
+    const zOut = cd[0].z;
     setContours(trace, zOut);
 
-    var contours = trace.contours;
-    var cOpts = Colorscale.extractOpts(trace);
-    var cVals;
+    const contours = trace.contours;
+    const cOpts = Colorscale.extractOpts(trace);
+    let cVals;
 
     if(contours.coloring === 'heatmap' && cOpts.auto && trace.autocontour === false) {
-        var start = contours.start;
-        var end = endPlus(contours);
-        var cs = contours.size || 1;
-        var nc = Math.floor((end - start) / cs) + 1;
+        const start = contours.start;
+        const end = endPlus(contours);
+        let cs = contours.size || 1;
+        let nc = Math.floor((end - start) / cs) + 1;
 
         if(!isFinite(cs)) {
             cs = 1;
             nc = 1;
         }
 
-        var min0 = start - cs / 2;
-        var max0 = min0 + nc * cs;
+        const min0 = start - cs / 2;
+        const max0 = min0 + nc * cs;
         cVals = [min0, max0];
     } else {
         cVals = zOut;

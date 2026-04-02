@@ -4,7 +4,7 @@ import svgSdf from 'svg-path-sdf';
 import rgba from 'color-normalize';
 import Registry from '../../registry.js';
 import Lib from '../../lib/index.js';
-import { symbolNoDot, getMarkerAngle, symbolFuncs } from '../../components/drawing/index.js';
+import { symbolNoDot, symbolNoFill, symbolNumber, getMarkerAngle, symbolFuncs } from '../../components/drawing/index.js';
 import AxisIDs from '../../plots/cartesian/axis_ids.js';
 import _gl_format_color from '../../lib/gl_format_color.js';
 const { formatColor } = _gl_format_color;
@@ -15,9 +15,9 @@ import constants from './constants.js';
 import _interactions from '../../constants/interactions.js';
 const { DESELECTDIM } = _interactions;
 import { appendArrayPointValue } from '../../components/fx/helpers.js';
-var isArrayOrTypedArray = Lib.isArrayOrTypedArray;
+const isArrayOrTypedArray = Lib.isArrayOrTypedArray;
 
-var TEXTOFFSETSIGN = {
+const TEXTOFFSETSIGN = {
     start: 1,
     left: 1,
     end: -1,
@@ -29,9 +29,9 @@ var TEXTOFFSETSIGN = {
 };
 
 function convertStyle(gd: GraphDiv, trace: FullTrace) {
-    var i;
+    let i;
 
-    var opts: any = {
+    const opts: any = {
         marker: undefined,
         markerSel: undefined,
         markerUnsel: undefined,
@@ -44,7 +44,7 @@ function convertStyle(gd: GraphDiv, trace: FullTrace) {
         textUnsel: undefined
     };
 
-    var plotGlPixelRatio = gd._context.plotGlPixelRatio;
+    const plotGlPixelRatio = gd._context.plotGlPixelRatio;
 
     if (trace.visible !== true) return opts;
 
@@ -60,7 +60,7 @@ function convertStyle(gd: GraphDiv, trace: FullTrace) {
         opts.markerUnsel = convertMarkerSelection(gd, trace, trace.unselected);
 
         if (!trace.unselected && isArrayOrTypedArray(trace.marker.opacity)) {
-            var mo = trace.marker.opacity;
+            const mo = trace.marker.opacity;
             opts.markerUnsel.opacity = new Array(mo.length);
             for (i = 0; i < mo.length; i++) {
                 opts.markerUnsel.opacity[i] = DESELECTDIM * mo[i];
@@ -76,7 +76,7 @@ function convertStyle(gd: GraphDiv, trace: FullTrace) {
             opacity: trace.opacity
         };
 
-        var dashes = (constants.DASHES[trace.line.dash] || [1]).slice();
+        const dashes = (constants.DASHES[trace.line.dash] || [1]).slice();
         for (i = 0; i < dashes.length; ++i) {
             dashes[i] *= trace.line.width * plotGlPixelRatio;
         }
@@ -103,29 +103,29 @@ function convertStyle(gd: GraphDiv, trace: FullTrace) {
 }
 
 function convertTextStyle(gd: GraphDiv, trace: FullTrace) {
-    var fullLayout = gd._fullLayout;
-    var count = trace._length;
-    var textfontIn = trace.textfont;
-    var textpositionIn = trace.textposition;
-    var textPos = isArrayOrTypedArray(textpositionIn) ? textpositionIn : [textpositionIn];
-    var tfc = textfontIn.color;
-    var tfs = textfontIn.size;
-    var tff = textfontIn.family;
-    var tfw = textfontIn.weight;
-    var tfy = textfontIn.style;
-    var tfv = textfontIn.variant;
-    var optsOut: any = {};
-    var i;
-    var plotGlPixelRatio = gd._context.plotGlPixelRatio;
+    const fullLayout = gd._fullLayout;
+    const count = trace._length;
+    const textfontIn = trace.textfont;
+    const textpositionIn = trace.textposition;
+    const textPos = isArrayOrTypedArray(textpositionIn) ? textpositionIn : [textpositionIn];
+    const tfc = textfontIn.color;
+    const tfs = textfontIn.size;
+    const tff = textfontIn.family;
+    const tfw = textfontIn.weight;
+    const tfy = textfontIn.style;
+    const tfv = textfontIn.variant;
+    const optsOut: any = {};
+    let i;
+    const plotGlPixelRatio = gd._context.plotGlPixelRatio;
 
-    var texttemplate = trace.texttemplate;
+    const texttemplate = trace.texttemplate;
     if (texttemplate) {
         optsOut.text = [];
 
-        var d3locale = fullLayout._d3locale;
-        var isArray = Array.isArray(texttemplate);
-        var N = isArray ? Math.min(texttemplate.length, count) : count;
-        var txt = isArray
+        const d3locale = fullLayout._d3locale;
+        const isArray = Array.isArray(texttemplate);
+        const N = isArray ? Math.min(texttemplate.length, count) : count;
+        const txt = isArray
             ? function (i) {
                   return texttemplate[i];
               }
@@ -134,9 +134,9 @@ function convertTextStyle(gd: GraphDiv, trace: FullTrace) {
               };
 
         for (i = 0; i < N; i++) {
-            var d = { i: i };
-            var labels = trace._module.formatLabels(d, trace, fullLayout);
-            var pointValues: any = {};
+            const d = { i: i };
+            const labels = trace._module.formatLabels(d, trace, fullLayout);
+            const pointValues: any = {};
             appendArrayPointValue(pointValues, trace, i);
             optsOut.text.push(
                 Lib.texttemplateString({
@@ -169,7 +169,7 @@ function convertTextStyle(gd: GraphDiv, trace: FullTrace) {
     optsOut.baseline = [];
 
     for (i = 0; i < textPos.length; i++) {
-        var tp = textPos[i].split(/\s+/);
+        const tp = textPos[i].split(/\s+/);
 
         switch (tp[1]) {
             case 'left':
@@ -212,7 +212,7 @@ function convertTextStyle(gd: GraphDiv, trace: FullTrace) {
         // if any textfont param is array - make render a batch
         optsOut.font = new Array(count);
         for (i = 0; i < count; i++) {
-            var fonti: any = (optsOut.font[i] = {});
+            const fonti: any = (optsOut.font[i] = {});
 
             fonti.size =
                 (Lib.isTypedArray(tfs) ? tfs[i] : isArrayOrTypedArray(tfs) ? (isNumeric(tfs[i]) ? tfs[i] : 0) : tfs) *
@@ -247,20 +247,20 @@ function weightFallBack(w) {
 }
 
 function convertMarkerStyle(gd: GraphDiv, trace: FullTrace) {
-    var count = trace._length;
-    var optsIn = trace.marker;
-    var optsOut: any = {};
-    var i;
+    const count = trace._length;
+    const optsIn = trace.marker;
+    const optsOut: any = {};
+    let i;
 
-    var multiSymbol = isArrayOrTypedArray(optsIn.symbol);
-    var multiAngle = isArrayOrTypedArray(optsIn.angle);
-    var multiColor = isArrayOrTypedArray(optsIn.color);
-    var multiLineColor = isArrayOrTypedArray(optsIn.line.color);
-    var multiOpacity = isArrayOrTypedArray(optsIn.opacity);
-    var multiSize = isArrayOrTypedArray(optsIn.size);
-    var multiLineWidth = isArrayOrTypedArray(optsIn.line.width);
+    const multiSymbol = isArrayOrTypedArray(optsIn.symbol);
+    const multiAngle = isArrayOrTypedArray(optsIn.angle);
+    const multiColor = isArrayOrTypedArray(optsIn.color);
+    const multiLineColor = isArrayOrTypedArray(optsIn.line.color);
+    const multiOpacity = isArrayOrTypedArray(optsIn.opacity);
+    const multiSize = isArrayOrTypedArray(optsIn.size);
+    const multiLineWidth = isArrayOrTypedArray(optsIn.line.width);
 
-    var isOpen;
+    let isOpen;
     if (!multiSymbol) isOpen = helpers.isOpenSymbol(optsIn.symbol);
 
     // prepare colors
@@ -270,34 +270,34 @@ function convertMarkerStyle(gd: GraphDiv, trace: FullTrace) {
         optsOut.colors = new Array(count);
         optsOut.borderColors = new Array(count);
 
-        var symbols = optsIn.symbol;
-        var angles = optsIn.angle;
-        var colors: any = formatColor(optsIn, optsIn.opacity, count);
-        var borderColors: any = formatColor(optsIn.line, optsIn.opacity, count);
+        let symbols = optsIn.symbol;
+        let angles = optsIn.angle;
+        let colors: any = formatColor(optsIn, optsIn.opacity, count);
+        let borderColors: any = formatColor(optsIn.line, optsIn.opacity, count);
 
         if (!isArrayOrTypedArray(borderColors[0])) {
-            var borderColor = borderColors;
+            const borderColor = borderColors;
             borderColors = Array(count);
             for (i = 0; i < count; i++) {
                 borderColors[i] = borderColor;
             }
         }
         if (!isArrayOrTypedArray(colors[0])) {
-            var color = colors;
+            const color = colors;
             colors = Array(count);
             for (i = 0; i < count; i++) {
                 colors[i] = color;
             }
         }
         if (!isArrayOrTypedArray(symbols)) {
-            var symbol = symbols;
+            const symbol = symbols;
             symbols = Array(count);
             for (i = 0; i < count; i++) {
                 symbols[i] = symbol;
             }
         }
         if (!isArrayOrTypedArray(angles)) {
-            var angle = angles;
+            const angle = angles;
             angles = Array(count);
             for (i = 0; i < count; i++) {
                 angles[i] = angle;
@@ -354,15 +354,15 @@ function convertMarkerStyle(gd: GraphDiv, trace: FullTrace) {
     }
 
     // prepare sizes
-    var sizeFactor = 1;
-    var markerSizeFunc = makeBubbleSizeFn(trace, sizeFactor);
-    var s;
+    const sizeFactor = 1;
+    const markerSizeFunc = makeBubbleSizeFn(trace, sizeFactor);
+    let s;
 
     if (multiSize || multiLineWidth) {
-        var sizes = (optsOut.sizes = new Array(count));
-        var borderSizes = (optsOut.borderSizes = new Array(count));
-        var sizeTotal = 0;
-        var sizeAvg;
+        const sizes = (optsOut.sizes = new Array(count));
+        const borderSizes = (optsOut.borderSizes = new Array(count));
+        let sizeTotal = 0;
+        let sizeAvg;
 
         if (multiSize) {
             for (i = 0; i < count; i++) {
@@ -399,8 +399,8 @@ function convertMarkerStyle(gd: GraphDiv, trace: FullTrace) {
 }
 
 function convertMarkerSelection(gd: GraphDiv, trace: FullTrace, target) {
-    var optsIn = trace.marker;
-    var optsOut: any = {};
+    const optsIn = trace.marker;
+    let optsOut: any = {};
 
     if (!target) return optsOut;
 
@@ -416,12 +416,12 @@ function convertMarkerSelection(gd: GraphDiv, trace: FullTrace, target) {
 }
 
 function convertTextSelection(gd: GraphDiv, trace: FullTrace, target) {
-    var optsOut: any = {};
+    let optsOut: any = {};
 
     if (!target) return optsOut;
 
     if (target.textfont) {
-        var optsIn = {
+        const optsIn = {
             opacity: 1,
             text: trace.text,
             texttemplate: trace.texttemplate,
@@ -438,7 +438,7 @@ function convertTextSelection(gd: GraphDiv, trace: FullTrace, target) {
 }
 
 function convertErrorBarStyle(trace: FullTrace, target, plotGlPixelRatio) {
-    var optsOut: any = {
+    let optsOut: any = {
         capSize: target.width * 2 * plotGlPixelRatio,
         lineWidth: target.thickness * plotGlPixelRatio,
         color: target.color
@@ -451,23 +451,23 @@ function convertErrorBarStyle(trace: FullTrace, target, plotGlPixelRatio) {
     return optsOut;
 }
 
-var SYMBOL_SDF_SIZE = constants.SYMBOL_SDF_SIZE;
-var SYMBOL_SIZE = constants.SYMBOL_SIZE;
-var SYMBOL_STROKE = constants.SYMBOL_STROKE;
-var SYMBOL_SDF: any = {};
-var SYMBOL_SVG_CIRCLE = symbolFuncs[0](SYMBOL_SIZE * 0.05);
+const SYMBOL_SDF_SIZE = constants.SYMBOL_SDF_SIZE;
+const SYMBOL_SIZE = constants.SYMBOL_SIZE;
+const SYMBOL_STROKE = constants.SYMBOL_STROKE;
+const SYMBOL_SDF: any = {};
+const SYMBOL_SVG_CIRCLE = symbolFuncs[0](SYMBOL_SIZE * 0.05);
 
 function getSymbolSdf(d, trace: FullTrace) {
-    var symbol = d.mx;
+    let symbol = d.mx;
     if (symbol === 'circle') return null;
 
-    var symbolPath, symbolSdf;
-    var symbolNumber = symbolNumber(symbol);
-    var symbolFunc = symbolFuncs[symbolNumber % 100];
-    var symbolNoDot = !!symbolNoDot[symbolNumber % 100];
-    var symbolNoFill = !!symbolNoFill[symbolNumber % 100];
+    let symbolPath, symbolSdf;
+    const symNum = symbolNumber(symbol);
+    const symbolFunc = symbolFuncs[symNum % 100];
+    const isNoDot = !!symbolNoDot[symNum % 100];
+    const isNoFill = !!symbolNoFill[symNum % 100];
 
-    var isDot = helpers.isDotSymbol(symbol);
+    const isDot = helpers.isDotSymbol(symbol);
 
     // until we may handle angles in shader?
     if (d.ma) symbol += '_' + d.ma;
@@ -475,8 +475,8 @@ function getSymbolSdf(d, trace: FullTrace) {
     // get symbol sdf from cache or generate it
     if (SYMBOL_SDF[symbol]) return SYMBOL_SDF[symbol];
 
-    var angle = getMarkerAngle(d, trace);
-    if (isDot && !symbolNoDot) {
+    const angle = getMarkerAngle(d, trace);
+    if (isDot && !isNoDot) {
         symbolPath = symbolFunc(SYMBOL_SIZE * 1.1, angle) + SYMBOL_SVG_CIRCLE;
     } else {
         symbolPath = symbolFunc(SYMBOL_SIZE, angle);
@@ -486,7 +486,7 @@ function getSymbolSdf(d, trace: FullTrace) {
         w: SYMBOL_SDF_SIZE,
         h: SYMBOL_SDF_SIZE,
         viewBox: [-SYMBOL_SIZE, -SYMBOL_SIZE, SYMBOL_SIZE, SYMBOL_SIZE],
-        stroke: symbolNoFill ? SYMBOL_STROKE : -SYMBOL_STROKE
+        stroke: isNoFill ? SYMBOL_STROKE : -SYMBOL_STROKE
     });
 
     SYMBOL_SDF[symbol] = symbolSdf;
@@ -495,10 +495,10 @@ function getSymbolSdf(d, trace: FullTrace) {
 }
 
 function convertLinePositions(gd: GraphDiv, trace: FullTrace, positions) {
-    var len = positions.length;
-    var count = len / 2;
-    var linePositions;
-    var i;
+    const len = positions.length;
+    const count = len / 2;
+    let linePositions;
+    let i;
 
     if (subTypes.hasLines(trace) && count) {
         if (trace.line.shape === 'hv') {
@@ -532,7 +532,7 @@ function convertLinePositions(gd: GraphDiv, trace: FullTrace, positions) {
                     }
                     linePositions.push(NaN, NaN);
                 } else {
-                    var midPtX = (positions[i * 2] + positions[i * 2 + 2]) / 2;
+                    const midPtX = (positions[i * 2] + positions[i * 2 + 2]) / 2;
                     linePositions.push(
                         positions[i * 2],
                         positions[i * 2 + 1],
@@ -560,7 +560,7 @@ function convertLinePositions(gd: GraphDiv, trace: FullTrace, positions) {
                     }
                     linePositions.push(NaN, NaN);
                 } else {
-                    var midPtY = (positions[i * 2 + 1] + positions[i * 2 + 3]) / 2;
+                    const midPtY = (positions[i * 2 + 1] + positions[i * 2 + 3]) / 2;
                     linePositions.push(
                         positions[i * 2],
                         positions[i * 2 + 1],
@@ -594,7 +594,7 @@ function convertLinePositions(gd: GraphDiv, trace: FullTrace, positions) {
 
     // If we have data with gaps, we ought to use rect joins
     // FIXME: get rid of this
-    var hasNaN = false;
+    let hasNaN = false;
     for (i = 0; i < linePositions.length; i++) {
         if (isNaN(linePositions[i])) {
             hasNaN = true;
@@ -602,7 +602,7 @@ function convertLinePositions(gd: GraphDiv, trace: FullTrace, positions) {
         }
     }
 
-    var join =
+    const join =
         hasNaN || linePositions.length > constants.TOO_MANY_POINTS
             ? 'rect'
             : subTypes.hasMarkers(trace)
@@ -611,8 +611,8 @@ function convertLinePositions(gd: GraphDiv, trace: FullTrace, positions) {
 
     // fill gaps
     if (hasNaN && trace.connectgaps) {
-        var lastX = linePositions[0];
-        var lastY = linePositions[1];
+        let lastX = linePositions[0];
+        let lastY = linePositions[1];
 
         for (i = 0; i < linePositions.length; i += 2) {
             if (isNaN(linePositions[i]) || isNaN(linePositions[i + 1])) {
@@ -632,36 +632,36 @@ function convertLinePositions(gd: GraphDiv, trace: FullTrace, positions) {
 }
 
 function convertErrorBarPositions(gd: GraphDiv, trace: FullTrace, positions, x, y) {
-    var makeComputeError = Registry.getComponentMethod('errorbars', 'makeComputeError');
-    var xa = AxisIDs.getFromId(gd, trace.xaxis, 'x');
-    var ya = AxisIDs.getFromId(gd, trace.yaxis, 'y');
-    var count = positions.length / 2;
-    var out: any = {};
+    const makeComputeError = Registry.getComponentMethod('errorbars', 'makeComputeError');
+    const xa = AxisIDs.getFromId(gd, trace.xaxis, 'x');
+    const ya = AxisIDs.getFromId(gd, trace.yaxis, 'y');
+    const count = positions.length / 2;
+    const out: any = {};
 
     function convertOneAxis(coords, ax: FullAxis) {
-        var axLetter = ax._id.charAt(0);
-        var opts = trace['error_' + axLetter];
+        const axLetter = ax._id.charAt(0);
+        const opts = trace['error_' + axLetter];
 
         if (opts && opts.visible && (ax.type === 'linear' || ax.type === 'log')) {
-            var computeError = makeComputeError(opts);
-            var pOffset = { x: 0, y: 1 }[axLetter];
-            var eOffset: any = { x: [0, 1, 2, 3], y: [2, 3, 0, 1] }[axLetter];
-            var errors = new Float64Array(4 * count);
-            var minShoe = Infinity;
-            var maxHat = -Infinity;
+            const computeError = makeComputeError(opts);
+            const pOffset = { x: 0, y: 1 }[axLetter];
+            const eOffset: any = { x: [0, 1, 2, 3], y: [2, 3, 0, 1] }[axLetter];
+            const errors = new Float64Array(4 * count);
+            let minShoe = Infinity;
+            let maxHat = -Infinity;
 
-            for (var i = 0, j = 0; i < count; i++, j += 4) {
-                var dc = coords[i];
+            for (let i = 0, j = 0; i < count; i++, j += 4) {
+                const dc = coords[i];
 
                 if (isNumeric(dc)) {
-                    var dl = positions[i * 2 + pOffset];
-                    var vals = computeError(dc, i);
-                    var lv = vals[0];
-                    var hv = vals[1];
+                    const dl = positions[i * 2 + pOffset];
+                    const vals = computeError(dc, i);
+                    const lv = vals[0];
+                    const hv = vals[1];
 
                     if (isNumeric(lv) && isNumeric(hv)) {
-                        var shoe = dc - lv;
-                        var hat = dc + hv;
+                        const shoe = dc - lv;
+                        const hat = dc + hv;
 
                         errors[j + eOffset[0]] = dl - ax.c2l(shoe);
                         errors[j + eOffset[1]] = ax.c2l(hat) - dl;
@@ -688,28 +688,28 @@ function convertErrorBarPositions(gd: GraphDiv, trace: FullTrace, positions, x, 
 }
 
 function convertTextPosition(gd: GraphDiv, trace: FullTrace, textOpts, markerOpts) {
-    var count = trace._length;
-    var out: any = {};
-    var i;
+    const count = trace._length;
+    const out: any = {};
+    let i;
 
     // corresponds to textPointPosition from component.drawing
     if (subTypes.hasMarkers(trace)) {
-        var fontOpts = textOpts.font;
-        var align = textOpts.align;
-        var baseline = textOpts.baseline;
+        const fontOpts = textOpts.font;
+        const align = textOpts.align;
+        const baseline = textOpts.baseline;
         out.offset = new Array(count);
 
         for (i = 0; i < count; i++) {
-            var ms = markerOpts.sizes ? markerOpts.sizes[i] : markerOpts.size;
-            var fs = isArrayOrTypedArray(fontOpts) ? fontOpts[i].size : fontOpts.size;
+            const ms = markerOpts.sizes ? markerOpts.sizes[i] : markerOpts.size;
+            const fs = isArrayOrTypedArray(fontOpts) ? fontOpts[i].size : fontOpts.size;
 
-            var a = isArrayOrTypedArray(align) ? (align.length > 1 ? align[i] : align[0]) : align;
-            var b = isArrayOrTypedArray(baseline) ? (baseline.length > 1 ? baseline[i] : baseline[0]) : baseline;
+            const a = isArrayOrTypedArray(align) ? (align.length > 1 ? align[i] : align[0]) : align;
+            const b = isArrayOrTypedArray(baseline) ? (baseline.length > 1 ? baseline[i] : baseline[0]) : baseline;
 
-            var hSign = TEXTOFFSETSIGN[a];
-            var vSign = TEXTOFFSETSIGN[b];
-            var xPad = ms ? ms / 0.8 + 1 : 0;
-            var yPad = -vSign * xPad - vSign * 0.5;
+            const hSign = TEXTOFFSETSIGN[a];
+            const vSign = TEXTOFFSETSIGN[b];
+            const xPad = ms ? ms / 0.8 + 1 : 0;
+            const yPad = -vSign * xPad - vSign * 0.5;
             out.offset[i] = [(hSign * xPad) / fs, yPad / fs];
         }
     }

@@ -18,13 +18,13 @@ function DensityMap(subplot, uid) {
     this.below = null;
 }
 
-var proto = DensityMap.prototype;
+const proto = DensityMap.prototype;
 
 proto.update = function(calcTrace) {
-    var subplot = this.subplot;
-    var layerList = this.layerList;
-    var optsAll = convert(calcTrace);
-    var below = subplot.belowLookup['trace-' + this.uid];
+    const subplot = this.subplot;
+    const layerList = this.layerList;
+    const optsAll = convert(calcTrace);
+    const below = subplot.belowLookup['trace-' + this.uid];
 
     subplot.map
         .getSource(this.sourceId)
@@ -36,11 +36,11 @@ proto.update = function(calcTrace) {
         this.below = below;
     }
 
-    for(var i = 0; i < layerList.length; i++) {
-        var item = layerList[i];
-        var k = item[0];
-        var id = item[1];
-        var opts = optsAll[k];
+    for(let i = 0; i < layerList.length; i++) {
+        const item = layerList[i];
+        const k = item[0];
+        const id = item[1];
+        const opts = optsAll[k];
 
         subplot.setOptions(id, 'setLayoutProperty', opts.layout);
 
@@ -51,14 +51,14 @@ proto.update = function(calcTrace) {
 };
 
 proto._addLayers = function(optsAll, below) {
-    var subplot = this.subplot;
-    var layerList = this.layerList;
-    var sourceId = this.sourceId;
+    const subplot = this.subplot;
+    const layerList = this.layerList;
+    const sourceId = this.sourceId;
 
-    for(var i = 0; i < layerList.length; i++) {
-        var item = layerList[i];
-        var k = item[0];
-        var opts = optsAll[k];
+    for(let i = 0; i < layerList.length; i++) {
+        const item = layerList[i];
+        const k = item[0];
+        const opts = optsAll[k];
 
         subplot.addLayer({
             type: k,
@@ -71,26 +71,26 @@ proto._addLayers = function(optsAll, below) {
 };
 
 proto._removeLayers = function() {
-    var map = this.subplot.map;
-    var layerList = this.layerList;
+    const map = this.subplot.map;
+    const layerList = this.layerList;
 
-    for(var i = layerList.length - 1; i >= 0; i--) {
+    for(let i = layerList.length - 1; i >= 0; i--) {
         map.removeLayer(layerList[i][1]);
     }
 };
 
 proto.dispose = function() {
-    var map = this.subplot.map;
+    const map = this.subplot.map;
     this._removeLayers();
     map.removeSource(this.sourceId);
 };
 
 export default function createDensityMap(subplot, calcTrace) {
-    var trace = calcTrace[0].trace;
-    var densityMap = new DensityMap(subplot, trace.uid);
-    var sourceId = densityMap.sourceId;
-    var optsAll = convert(calcTrace);
-    var below = densityMap.below = subplot.belowLookup['trace-' + trace.uid];
+    const trace = calcTrace[0].trace;
+    const densityMap = new DensityMap(subplot, trace.uid);
+    const sourceId = densityMap.sourceId;
+    const optsAll = convert(calcTrace);
+    const below = densityMap.below = subplot.belowLookup['trace-' + trace.uid];
 
     subplot.map.addSource(sourceId, {
         type: 'geojson',

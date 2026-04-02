@@ -6,7 +6,7 @@ import mesh3dAttrs from '../mesh3d/attributes.js';
 import baseAttrs from '../../plots/attributes.js';
 import { extendFlat } from '../../lib/extend.js';
 
-var attrs: any = {
+const attrs: any = {
     x: {
         valType: 'data_array',
         editType: 'calc+clearAxisTypes',
@@ -164,7 +164,7 @@ extendFlat(
     })
 );
 
-var fromMesh3d = ['opacity', 'lightposition', 'lighting'];
+const fromMesh3d = ['opacity', 'lightposition', 'lighting'];
 
 fromMesh3d.forEach(function (k) {
     attrs[k] = mesh3dAttrs[k];

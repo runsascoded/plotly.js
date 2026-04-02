@@ -17,10 +17,10 @@ export default function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace,
         return Lib.coerce(traceIn, traceOut, attributes, attr, dflt);
     }
 
-    var isOpen = traceIn.marker ? helpers.isOpenSymbol(traceIn.marker.symbol) : false;
-    var isBubble = subTypes.isBubble(traceIn);
+    const isOpen = traceIn.marker ? helpers.isOpenSymbol(traceIn.marker.symbol) : false;
+    const isBubble = subTypes.isBubble(traceIn);
 
-    var len = handleXYDefaults(traceIn, traceOut, layout, coerce);
+    const len = handleXYDefaults(traceIn, traceOut, layout, coerce);
     if (!len) {
         traceOut.visible = false;
         return;
@@ -30,7 +30,7 @@ export default function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace,
     coerce('xhoverformat');
     coerce('yhoverformat');
 
-    var defaultMode = len < constants.PTS_LINESONLY ? 'lines+markers' : 'lines';
+    const defaultMode = len < constants.PTS_LINESONLY ? 'lines+markers' : 'lines';
 
     coerce('text');
     coerce('hovertext');
@@ -59,15 +59,15 @@ export default function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace,
         });
     }
 
-    var lineColor = (traceOut.line || {}).color;
-    var markerColor = (traceOut.marker || {}).color;
+    const lineColor = (traceOut.line || {}).color;
+    const markerColor = (traceOut.marker || {}).color;
 
     coerce('fill');
     if (traceOut.fill !== 'none') {
         handleFillColorDefaults(traceIn, traceOut, defaultColor, coerce);
     }
 
-    var errorBarsSupplyDefaults = Registry.getComponentMethod('errorbars', 'supplyDefaults');
+    const errorBarsSupplyDefaults = Registry.getComponentMethod('errorbars', 'supplyDefaults');
     errorBarsSupplyDefaults(traceIn, traceOut, lineColor || markerColor || defaultColor, { axis: 'y' });
     errorBarsSupplyDefaults(traceIn, traceOut, lineColor || markerColor || defaultColor, { axis: 'x', inherit: 'y' });
 

@@ -2,7 +2,7 @@ import fontAttrs from '../../plots/font_attributes.js';
 import colorAttrs from '../color/attributes.js';
 import { templatedArray } from '../../plot_api/plot_template.js';
 
-var buttonAttrs = templatedArray('button', {
+const buttonAttrs = templatedArray('button', {
     visible: {
         valType: 'boolean',
         dflt: true,

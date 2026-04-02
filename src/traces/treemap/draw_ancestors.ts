@@ -10,35 +10,35 @@ import constants from './constants.js';
 import helpers from '../sunburst/helpers.js';
 import attachFxHandlers from '../sunburst/fx.js';
 
-var onPathbar = true; // for Ancestors
+const onPathbar = true; // for Ancestors
 
 export default function drawAncestors(gd: GraphDiv, cd: any[], entry: any, slices: any, opts: any) {
-    var barDifY = opts.barDifY;
-    var width = opts.width;
-    var height = opts.height;
-    var viewX = opts.viewX;
-    var viewY = opts.viewY;
-    var pathSlice = opts.pathSlice;
-    var toMoveInsideSlice = opts.toMoveInsideSlice;
-    var strTransform = opts.strTransform;
-    var hasTransition = opts.hasTransition;
-    var handleSlicesExit = opts.handleSlicesExit;
-    var makeUpdateSliceInterpolator = opts.makeUpdateSliceInterpolator;
-    var makeUpdateTextInterpolator = opts.makeUpdateTextInterpolator;
-    var refRect = {};
+    const barDifY = opts.barDifY;
+    const width = opts.width;
+    const height = opts.height;
+    const viewX = opts.viewX;
+    const viewY = opts.viewY;
+    const pathSlice = opts.pathSlice;
+    const toMoveInsideSlice = opts.toMoveInsideSlice;
+    const strTransform = opts.strTransform;
+    const hasTransition = opts.hasTransition;
+    const handleSlicesExit = opts.handleSlicesExit;
+    const makeUpdateSliceInterpolator = opts.makeUpdateSliceInterpolator;
+    const makeUpdateTextInterpolator = opts.makeUpdateTextInterpolator;
+    const refRect = {};
 
-    var isStatic = gd._context.staticPlot;
+    const isStatic = gd._context.staticPlot;
 
-    var fullLayout = gd._fullLayout;
-    var cd0 = cd[0];
-    var trace = cd0.trace;
-    var hierarchy = cd0.hierarchy;
+    const fullLayout = gd._fullLayout;
+    const cd0 = cd[0];
+    const trace = cd0.trace;
+    const hierarchy = cd0.hierarchy;
 
-    var eachWidth = width / trace._entryDepth;
+    const eachWidth = width / trace._entryDepth;
 
-    var pathIds = helpers.listPath(entry.data, 'id');
+    const pathIds = helpers.listPath(entry.data, 'id');
 
-    var sliceData = partition(hierarchy.copy(), [width, height], {
+    let sliceData = partition(hierarchy.copy(), [width, height], {
         packing: 'dice',
         pad: {
             inner: 0,
@@ -51,7 +51,7 @@ export default function drawAncestors(gd: GraphDiv, cd: any[], entry: any, slice
 
     // edit slices that show up on graph
     sliceData = sliceData.filter(function(pt) {
-        var level = pathIds.indexOf(pt.data.id);
+        const level = pathIds.indexOf(pt.data.id);
         if(level === -1) return false;
 
         pt.x0 = eachWidth * level;
@@ -75,12 +75,12 @@ export default function drawAncestors(gd: GraphDiv, cd: any[], entry: any, slice
 
     slices.order();
 
-    var updateSlices = slices;
+    let updateSlices = slices;
     if(hasTransition) {
         updateSlices = updateSlices.transition().on('end', function() {
             // N.B. gd._transitioning is (still) *true* by the time
             // transition updates get here
-            var sliceTop = select(this);
+            const sliceTop = select(this);
             helpers.setSliceCursor(sliceTop, gd, {
                 hideOnRoot: false,
                 hideOnLeaves: false,
@@ -99,15 +99,15 @@ export default function drawAncestors(gd: GraphDiv, cd: any[], entry: any, slice
         pt._hoverX = viewX(pt.x1 - Math.min(width, height) / 2);
         pt._hoverY = viewY(pt.y1 - height / 2);
 
-        var sliceTop = select(this);
+        const sliceTop = select(this);
 
-        var slicePath = Lib.ensureSingle(sliceTop, 'path', 'surface', function(s) {
+        const slicePath = Lib.ensureSingle(sliceTop, 'path', 'surface', function(s) {
             s.style('pointer-events', isStatic ? 'none' : 'all');
         });
 
         if(hasTransition) {
             slicePath.transition().attrTween('d', function(pt2) {
-                var interp = makeUpdateSliceInterpolator(pt2, onPathbar, refRect, [width, height]);
+                const interp = makeUpdateSliceInterpolator(pt2, onPathbar, refRect, [width, height]);
                 return function(t) { return pathSlice(interp(t)); };
             });
         } else {
@@ -133,14 +133,14 @@ export default function drawAncestors(gd: GraphDiv, cd: any[], entry: any, slice
 
         pt._text = (helpers.getPtLabel(pt) || '').split('<br>').join(' ') || '';
 
-        var sliceTextGroup = Lib.ensureSingle(sliceTop, 'g', 'slicetext');
-        var sliceText = Lib.ensureSingle(sliceTextGroup, 'text', '', function(s) {
+        const sliceTextGroup = Lib.ensureSingle(sliceTop, 'g', 'slicetext');
+        const sliceText = Lib.ensureSingle(sliceTextGroup, 'text', '', function(s) {
             // prohibit tex interpretation until we can handle
             // tex and regular text together
             s.attr('data-notex', 1);
         });
 
-        var font = Lib.ensureUniformFontSize(gd, helpers.determineTextFont(trace, pt, fullLayout.font, {
+        const font = Lib.ensureUniformFontSize(gd, helpers.determineTextFont(trace, pt, fullLayout.font, {
             onPathbar: true
         }));
 
@@ -159,7 +159,7 @@ export default function drawAncestors(gd: GraphDiv, cd: any[], entry: any, slice
 
         if(hasTransition) {
             sliceText.transition().attrTween('transform', function(pt2) {
-                var interp = makeUpdateTextInterpolator(pt2, onPathbar, refRect, [width, height]);
+                const interp = makeUpdateTextInterpolator(pt2, onPathbar, refRect, [width, height]);
                 return function(t) { return strTransform(interp(t)); };
             });
         } else {

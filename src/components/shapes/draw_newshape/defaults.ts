@@ -31,20 +31,20 @@ export default function supplyDrawNewShapeDefaults(layoutIn: any, layoutOut: Ful
     coerce('newshape.fillcolor');
     coerce('newshape.fillrule');
     coerce('newshape.opacity');
-    var newshapeLineWidth = coerce('newshape.line.width');
+    const newshapeLineWidth = coerce('newshape.line.width');
     if (newshapeLineWidth) {
-        var bgcolor = (layoutIn || {}).plot_bgcolor || '#FFF';
+        const bgcolor = (layoutIn || {}).plot_bgcolor || '#FFF';
         coerce('newshape.line.color', Color.contrast(bgcolor));
         coerce('newshape.line.dash');
     }
 
-    var isLine = layoutIn.dragmode === 'drawline';
-    var labelText = coerce('newshape.label.text');
-    var labelTextTemplate = coerce('newshape.label.texttemplate');
+    const isLine = layoutIn.dragmode === 'drawline';
+    const labelText = coerce('newshape.label.text');
+    const labelTextTemplate = coerce('newshape.label.texttemplate');
     coerce('newshape.label.texttemplatefallback');
     if (labelText || labelTextTemplate) {
         coerce('newshape.label.textangle');
-        var labelTextPosition = coerce('newshape.label.textposition', isLine ? 'middle' : 'middle center');
+        const labelTextPosition = coerce('newshape.label.textposition', isLine ? 'middle' : 'middle center');
         coerce('newshape.label.xanchor');
         coerce('newshape.label.yanchor', dfltLabelYanchor(isLine, labelTextPosition));
         coerce('newshape.label.padding');

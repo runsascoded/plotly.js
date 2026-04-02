@@ -11,21 +11,21 @@ import { traceIs } from '../../registry.js';
 import type { FullTrace, GraphDiv } from '../../../types/core';
 
 function calc(gd: GraphDiv, trace: FullTrace) {
-    var fullLayout = gd._fullLayout;
-    var subplotId = trace.subplot;
-    var radialAxis = fullLayout[subplotId].radialaxis;
-    var angularAxis = fullLayout[subplotId].angularaxis;
-    var rArray = radialAxis.makeCalcdata(trace, 'r');
-    var thetaArray = angularAxis.makeCalcdata(trace, 'theta');
-    var len = trace._length;
-    var cd = new Array(len);
+    const fullLayout = gd._fullLayout;
+    const subplotId = trace.subplot;
+    const radialAxis = fullLayout[subplotId].radialaxis;
+    const angularAxis = fullLayout[subplotId].angularaxis;
+    const rArray = radialAxis.makeCalcdata(trace, 'r');
+    const thetaArray = angularAxis.makeCalcdata(trace, 'theta');
+    const len = trace._length;
+    const cd = new Array(len);
 
     // 'size' axis variables
-    var sArray = rArray;
+    const sArray = rArray;
     // 'pos' axis variables
-    var pArray = thetaArray;
+    const pArray = thetaArray;
 
-    for(var i = 0; i < len; i++) {
+    for(let i = 0; i < len; i++) {
         cd[i] = {p: pArray[i], s: sArray[i]};
     }
 
@@ -33,7 +33,7 @@ function calc(gd: GraphDiv, trace: FullTrace) {
     // set 'c' value(s) in trace._width and trace._offset,
     // to make Bar.crossTraceCalc "just work"
     function d2c(attr) {
-        var val = trace[attr];
+        const val = trace[attr];
         if(val !== undefined) {
             trace['_' + attr] = isArrayOrTypedArray(val) ?
                 angularAxis.makeCalcdata(trace, attr) :
@@ -68,12 +68,12 @@ function calc(gd: GraphDiv, trace: FullTrace) {
 }
 
 function crossTraceCalc(gd, polarLayout, subplotId) {
-    var calcdata = gd.calcdata;
-    var barPolarCd = [];
+    const calcdata = gd.calcdata;
+    const barPolarCd = [];
 
-    for(var i = 0; i < calcdata.length; i++) {
-        var cdi = calcdata[i];
-        var trace = cdi[0].trace;
+    for(let i = 0; i < calcdata.length; i++) {
+        const cdi = calcdata[i];
+        const trace = cdi[0].trace;
 
         if(trace.visible === true && traceIs(trace, 'bar') &&
             trace.subplot === subplotId
@@ -87,8 +87,8 @@ function crossTraceCalc(gd, polarLayout, subplotId) {
     // TODO clean up!
     // I think we want to call getAutorange on polar.radialaxis
     // NOT on polar._subplot.radialAxis
-    var rAxis = extendFlat({}, polarLayout.radialaxis, {_id: 'x'});
-    var aAxis = polarLayout.angularaxis;
+    const rAxis = extendFlat({}, polarLayout.radialaxis, {_id: 'x'});
+    const aAxis = polarLayout.angularaxis;
 
     setGroupPositions(gd, aAxis, rAxis, barPolarCd, {
         mode: polarLayout.barmode,

@@ -22,7 +22,7 @@ function MapLayer(subplot, index) {
     this.visible = false;
 }
 
-var proto = MapLayer.prototype;
+const proto = MapLayer.prototype;
 
 proto.update = function update(opts) {
     if(!this.visible) {
@@ -46,7 +46,7 @@ proto.update = function update(opts) {
 };
 
 proto.needsNewImage = function(opts) {
-    var map = this.subplot.map;
+    const map = this.subplot.map;
     return (
         map.getSource(this.idSource) &&
         this.sourceType === 'image' &&
@@ -80,7 +80,7 @@ proto.lookupBelow = function() {
 };
 
 proto.updateImage = function(opts) {
-    var map = this.subplot.map;
+    const map = this.subplot.map;
     map.getSource(this.idSource).updateImage({
         url: opts.source, coordinates: opts.coordinates
     });
@@ -88,14 +88,14 @@ proto.updateImage = function(opts) {
     // Since the `updateImage` control flow doesn't call updateLayer,
     // We need to take care of moving the image layer to match the location
     // where updateLayer would have placed it.
-    var _below = this.findFollowingMapLayerId(this.lookupBelow());
+    const _below = this.findFollowingMapLayerId(this.lookupBelow());
     if(_below !== null) {
         this.subplot.map.moveLayer(this.idLayer, _below);
     }
 };
 
 proto.updateSource = function(opts) {
-    var map = this.subplot.map;
+    const map = this.subplot.map;
 
     if(map.getSource(this.idSource)) map.removeSource(this.idSource);
 
@@ -104,18 +104,18 @@ proto.updateSource = function(opts) {
 
     if(!isVisible(opts)) return;
 
-    var sourceOpts = convertSourceOpts(opts);
+    const sourceOpts = convertSourceOpts(opts);
 
     map.addSource(this.idSource, sourceOpts);
 };
 
 proto.findFollowingMapLayerId = function(below) {
     if(below === 'traces') {
-        var mapLayers = this.subplot.getMapLayers();
+        const mapLayers = this.subplot.getMapLayers();
 
         // find id of first plotly trace layer
-        for(var i = 0; i < mapLayers.length; i++) {
-            var layerId = mapLayers[i].id;
+        for(let i = 0; i < mapLayers.length; i++) {
+            const layerId = mapLayers[i].id;
             if(typeof layerId === 'string' &&
                 layerId.indexOf(constants.traceLayerPrefix) === 0
             ) {
@@ -128,10 +128,10 @@ proto.findFollowingMapLayerId = function(below) {
 };
 
 proto.updateLayer = function(opts) {
-    var subplot = this.subplot;
-    var convertedOpts = convertOpts(opts);
-    var below = this.lookupBelow();
-    var _below = this.findFollowingMapLayerId(below);
+    const subplot = this.subplot;
+    const convertedOpts = convertOpts(opts);
+    const below = this.lookupBelow();
+    const _below = this.findFollowingMapLayerId(below);
 
     this.removeLayer();
 
@@ -154,21 +154,21 @@ proto.updateLayer = function(opts) {
 
 proto.updateStyle = function(opts) {
     if(isVisible(opts)) {
-        var convertedOpts = convertOpts(opts);
+        const convertedOpts = convertOpts(opts);
         this.subplot.setOptions(this.idLayer, 'setLayoutProperty', convertedOpts.layout);
         this.subplot.setOptions(this.idLayer, 'setPaintProperty', convertedOpts.paint);
     }
 };
 
 proto.removeLayer = function() {
-    var map = this.subplot.map;
+    const map = this.subplot.map;
     if(map.getLayer(this.idLayer)) {
         map.removeLayer(this.idLayer);
     }
 };
 
 proto.dispose = function() {
-    var map = this.subplot.map;
+    const map = this.subplot.map;
     if(map.getLayer(this.idLayer)) map.removeLayer(this.idLayer);
     if(map.getSource(this.idSource)) map.removeSource(this.idSource);
 };
@@ -176,10 +176,10 @@ proto.dispose = function() {
 function isVisible(opts) {
     if(!opts.visible) return false;
 
-    var source = opts.source;
+    const source = opts.source;
 
     if(Array.isArray(source) && source.length > 0) {
-        for(var i = 0; i < source.length; i++) {
+        for(let i = 0; i < source.length; i++) {
             if(typeof source[i] !== 'string' || source[i].length === 0) {
                 return false;
             }
@@ -192,8 +192,8 @@ function isVisible(opts) {
 }
 
 function convertOpts(opts) {
-    var layout = {};
-    var paint = {};
+    const layout = {};
+    const paint = {};
 
     switch(opts.type) {
         case 'circle':
@@ -224,8 +224,8 @@ function convertOpts(opts) {
             break;
 
         case 'symbol':
-            var symbol = opts.symbol;
-            var textOpts = convertTextOpts(symbol.textposition, symbol.iconsize);
+            const symbol = opts.symbol;
+            const textOpts = convertTextOpts(symbol.textposition, symbol.iconsize);
 
             Lib.extendFlat(layout, {
                 'icon-image': symbol.icon + '-15',
@@ -262,10 +262,10 @@ function convertOpts(opts) {
 }
 
 function convertSourceOpts(opts) {
-    var sourceType = opts.sourcetype;
-    var source = opts.source;
-    var sourceOpts: any = {type: sourceType};
-    var field;
+    const sourceType = opts.sourcetype;
+    const source = opts.source;
+    const sourceOpts: any = {type: sourceType};
+    let field;
 
     if(sourceType === 'geojson') {
         field = 'data';
@@ -289,7 +289,7 @@ function convertSourceOpts(opts) {
 }
 
 export default function createMapLayer(subplot, index, opts) {
-    var mapLayer = new MapLayer(subplot, index);
+    const mapLayer = new MapLayer(subplot, index);
 
     mapLayer.update(opts);
 

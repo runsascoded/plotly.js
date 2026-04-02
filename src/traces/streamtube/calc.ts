@@ -19,15 +19,15 @@ function calc(gd: GraphDiv, trace: FullTrace) {
     trace._y = filter(trace.y, trace._len);
     trace._z = filter(trace.z, trace._len);
 
-    var grid = processGrid(trace);
+    const grid = processGrid(trace);
     trace._gridFill = grid.fill;
     trace._Xs = grid.Xs;
     trace._Ys = grid.Ys;
     trace._Zs = grid.Zs;
     trace._len = grid.len;
 
-    var slen = 0;
-    var startx, starty, startz;
+    let slen = 0;
+    let startx, starty, startz;
     if(trace.starts) {
         startx = filter(trace.starts.x || []);
         starty = filter(trace.starts.y || []);
@@ -38,14 +38,14 @@ function calc(gd: GraphDiv, trace: FullTrace) {
     trace._startsY = starty || [];
     trace._startsZ = startz || [];
 
-    var normMax = 0;
-    var normMin = Infinity;
-    var i;
+    let normMax = 0;
+    let normMin = Infinity;
+    let i;
     for(i = 0; i < trace._len; i++) {
-        var u = trace._u[i];
-        var v = trace._v[i];
-        var w = trace._w[i];
-        var norm = Math.sqrt(u * u + v * v + w * w);
+        const u = trace._u[i];
+        const v = trace._v[i];
+        const w = trace._w[i];
+        const norm = Math.sqrt(u * u + v * v + w * w);
 
         normMax = Math.max(normMax, norm);
         normMin = Math.min(normMin, norm);
@@ -58,15 +58,15 @@ function calc(gd: GraphDiv, trace: FullTrace) {
     });
 
     for(i = 0; i < slen; i++) {
-        var sx = startx[i];
+        const sx = startx[i];
         grid.xMax = Math.max(grid.xMax, sx);
         grid.xMin = Math.min(grid.xMin, sx);
 
-        var sy = starty[i];
+        const sy = starty[i];
         grid.yMax = Math.max(grid.yMax, sy);
         grid.yMin = Math.min(grid.yMin, sy);
 
-        var sz = startz[i];
+        const sz = startz[i];
         grid.zMax = Math.max(grid.zMax, sz);
         grid.zMin = Math.min(grid.zMin, sz);
     }
@@ -79,27 +79,27 @@ function calc(gd: GraphDiv, trace: FullTrace) {
 }
 
 function processGrid(trace: FullTrace) {
-    var x = trace._x;
-    var y = trace._y;
-    var z = trace._z;
-    var len = trace._len;
+    const x = trace._x;
+    const y = trace._y;
+    const z = trace._z;
+    let len = trace._len;
 
-    var i, j, k;
+    let i, j, k;
 
-    var xMax = -Infinity;
-    var xMin = Infinity;
-    var yMax = -Infinity;
-    var yMin = Infinity;
-    var zMax = -Infinity;
-    var zMin = Infinity;
+    let xMax = -Infinity;
+    let xMin = Infinity;
+    let yMax = -Infinity;
+    let yMin = Infinity;
+    let zMax = -Infinity;
+    let zMin = Infinity;
 
-    var gridFill = '';
-    var filledX;
-    var filledY;
-    var filledZ;
-    var firstX, lastX;
-    var firstY, lastY;
-    var firstZ, lastZ;
+    let gridFill = '';
+    let filledX;
+    let filledY;
+    let filledZ;
+    let firstX, lastX;
+    let firstY, lastY;
+    let firstZ, lastZ;
     if(len) {
         firstX = x[0];
         firstY = y[0];
@@ -139,15 +139,15 @@ function processGrid(trace: FullTrace) {
     if(!filledY) gridFill += 'y';
     if(!filledZ) gridFill += 'z';
 
-    var Xs = distinctVals(trace._x);
-    var Ys = distinctVals(trace._y);
-    var Zs = distinctVals(trace._z);
+    let Xs = distinctVals(trace._x);
+    let Ys = distinctVals(trace._y);
+    let Zs = distinctVals(trace._z);
 
     gridFill = gridFill.replace('x', (firstX > lastX ? '-' : '+') + 'x');
     gridFill = gridFill.replace('y', (firstY > lastY ? '-' : '+') + 'y');
     gridFill = gridFill.replace('z', (firstZ > lastZ ? '-' : '+') + 'z');
 
-    var empty = function() {
+    const empty = function() {
         len = 0;
         Xs = [];
         Ys = [];
@@ -157,34 +157,34 @@ function processGrid(trace: FullTrace) {
     // Over-specified mesh case, this would error in tube2mesh
     if(!len || len < Xs.length * Ys.length * Zs.length) empty();
 
-    var getArray = function(c) { return c === 'x' ? x : c === 'y' ? y : z; };
-    var getVals = function(c) { return c === 'x' ? Xs : c === 'y' ? Ys : Zs; };
-    var getDir = function(c) { return c[len - 1] < c[0] ? -1 : 1; };
+    const getArray = function(c) { return c === 'x' ? x : c === 'y' ? y : z; };
+    const getVals = function(c) { return c === 'x' ? Xs : c === 'y' ? Ys : Zs; };
+    const getDir = function(c) { return c[len - 1] < c[0] ? -1 : 1; };
 
-    var arrK = getArray(gridFill[1]);
-    var arrJ = getArray(gridFill[3]);
-    var arrI = getArray(gridFill[5]);
-    var nk = getVals(gridFill[1]).length;
-    var nj = getVals(gridFill[3]).length;
-    var ni = getVals(gridFill[5]).length;
+    const arrK = getArray(gridFill[1]);
+    const arrJ = getArray(gridFill[3]);
+    const arrI = getArray(gridFill[5]);
+    const nk = getVals(gridFill[1]).length;
+    const nj = getVals(gridFill[3]).length;
+    const ni = getVals(gridFill[5]).length;
 
-    var arbitrary = false;
+    let arbitrary = false;
 
-    var getIndex = function(_i, _j, _k) {
+    const getIndex = function(_i, _j, _k) {
         return nk * (nj * _i + _j) + _k;
     };
 
-    var dirK = getDir(getArray(gridFill[1]));
-    var dirJ = getDir(getArray(gridFill[3]));
-    var dirI = getDir(getArray(gridFill[5]));
+    const dirK = getDir(getArray(gridFill[1]));
+    const dirJ = getDir(getArray(gridFill[3]));
+    const dirI = getDir(getArray(gridFill[5]));
 
     for(i = 0; i < ni - 1; i++) {
         for(j = 0; j < nj - 1; j++) {
             for(k = 0; k < nk - 1; k++) {
-                var q000 = getIndex(i, j, k);
-                var q001 = getIndex(i, j, k + 1);
-                var q010 = getIndex(i, j + 1, k);
-                var q100 = getIndex(i + 1, j, k);
+                const q000 = getIndex(i, j, k);
+                const q001 = getIndex(i, j, k + 1);
+                const q010 = getIndex(i, j + 1, k);
+                const q100 = getIndex(i + 1, j, k);
 
                 if(
                     !(arrK[q000] * dirK < arrK[q001] * dirK) ||
@@ -231,8 +231,8 @@ function filter(arr: any, len?: number) {
     // no need for casting typed arrays to numbers
     if(Lib.isTypedArray(arr)) return arr.subarray(0, len);
 
-    var values = [];
-    for(var i = 0; i < len; i++) {
+    const values = [];
+    for(let i = 0; i < len; i++) {
         values[i] = +arr[i];
     }
     return values;

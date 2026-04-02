@@ -11,26 +11,26 @@ import _newshapes from './draw_newshape/newshapes.js';
 const { newShapes, createShapeObj } = _newshapes;
 import newSelections from '../selections/draw_newselection/newselections.js';
 import drawLabel from './display_labels.js';
-var strTranslate = Lib.strTranslate;
+const strTranslate = Lib.strTranslate;
 
-var drawMode = dragHelpers.drawMode;
-var selectMode = dragHelpers.selectMode;
+const drawMode = dragHelpers.drawMode;
+const selectMode = dragHelpers.selectMode;
 
-var i000 = constants.i000;
-var i090 = constants.i090;
-var i180 = constants.i180;
-var i270 = constants.i270;
+const i000 = constants.i000;
+const i090 = constants.i090;
+const i180 = constants.i180;
+const i270 = constants.i270;
 
-var clearOutlineControllers = handleOutline.clearOutlineControllers;
+const clearOutlineControllers = handleOutline.clearOutlineControllers;
 
-var pointsOnRectangle = helpers.pointsOnRectangle;
-var pointsOnEllipse = helpers.pointsOnEllipse;
-var writePaths = helpers.writePaths;
+const pointsOnRectangle = helpers.pointsOnRectangle;
+const pointsOnEllipse = helpers.pointsOnEllipse;
+const writePaths = helpers.writePaths;
 
 export default function displayOutlines(polygons: any, outlines: any, dragOptions: any, nCalls?: any) {
     if(!nCalls) nCalls = 0;
 
-    var gd = dragOptions.gd;
+    const gd = dragOptions.gd;
 
     function redraw() {
         // recursive call
@@ -42,7 +42,7 @@ export default function displayOutlines(polygons: any, outlines: any, dragOption
     }
 
     function update(opts?: any) {
-        var updateObject: any = {};
+        let updateObject: any = {};
 
         if(dragOptions.isActiveShape !== undefined) {
             dragOptions.isActiveShape = false; // i.e. to disable shape controllers
@@ -61,12 +61,12 @@ export default function displayOutlines(polygons: any, outlines: any, dragOption
         }
     }
 
-    var fullLayout = gd._fullLayout;
-    var zoomLayer = fullLayout._zoomlayer;
+    const fullLayout = gd._fullLayout;
+    const zoomLayer = fullLayout._zoomlayer;
 
-    var dragmode = dragOptions.dragmode;
-    var isDrawMode = drawMode(dragmode);
-    var isSelectMode = selectMode(dragmode);
+    const dragmode = dragOptions.dragmode;
+    const isDrawMode = drawMode(dragmode);
+    const isSelectMode = selectMode(dragmode);
 
     if(isDrawMode || isSelectMode) {
         gd._fullLayout._outlining = true;
@@ -78,11 +78,11 @@ export default function displayOutlines(polygons: any, outlines: any, dragOption
     outlines.attr('d', writePaths(polygons));
 
     // add controllers
-    var vertexDragOptions;
-    var groupDragOptions;
-    var indexI; // cell index
-    var indexJ; // vertex or cell-controller index
-    var copyPolygons;
+    let vertexDragOptions;
+    let groupDragOptions;
+    let indexI; // cell index
+    let indexJ; // vertex or cell-controller index
+    let copyPolygons;
 
     if(!nCalls && (
         dragOptions.isActiveShape ||
@@ -90,15 +90,15 @@ export default function displayOutlines(polygons: any, outlines: any, dragOption
     )) {
         copyPolygons = recordPositions([], polygons);
 
-        var g = zoomLayer.append('g').attr('class', 'outline-controllers');
+        const g = zoomLayer.append('g').attr('class', 'outline-controllers');
         addVertexControllers(g);
         addGroupControllers();
     }
 
     // draw label
     if(isDrawMode && dragOptions.hasText) {
-        var shapeGroup = zoomLayer.select('.label-temp');
-        var shapeOptions = createShapeObj(outlines, dragOptions, dragOptions.dragmode);
+        const shapeGroup = zoomLayer.select('.label-temp');
+        const shapeOptions = createShapeObj(outlines, dragOptions, dragOptions.dragmode);
         drawLabel(gd, 'label-temp', shapeOptions, shapeGroup);
     }
 
@@ -112,17 +112,17 @@ export default function displayOutlines(polygons: any, outlines: any, dragOption
     function moveVertexController(dx: any, dy: any) {
         if(!polygons.length) return;
 
-        var x0 = copyPolygons[indexI][indexJ][1];
-        var y0 = copyPolygons[indexI][indexJ][2];
+        const x0 = copyPolygons[indexI][indexJ][1];
+        const y0 = copyPolygons[indexI][indexJ][2];
 
-        var cell = polygons[indexI];
-        var len = cell.length;
+        const cell = polygons[indexI];
+        const len = cell.length;
         if(pointsOnRectangle(cell)) {
-            var _dx = dx;
-            var _dy = dy;
+            let _dx = dx;
+            let _dy = dy;
             if(dragOptions.isActiveSelection) {
                 // handle an edge contoller for rect selections
-                var nextPoint = getNextPoint(cell, indexJ);
+                const nextPoint = getNextPoint(cell, indexJ);
                 if(nextPoint[1] === cell[indexJ][1]) { // a vertical edge
                     _dy = 0;
                 } else { // a horizontal edge
@@ -130,11 +130,11 @@ export default function displayOutlines(polygons: any, outlines: any, dragOption
                 }
             }
 
-            for(var q = 0; q < len; q++) {
+            for(let q = 0; q < len; q++) {
                 if(q === indexJ) continue;
 
                 // move other corners of rectangle
-                var pos = cell[q];
+                const pos = cell[q];
 
                 if(pos[1] === cell[indexJ][1]) {
                     pos[1] = x0 + _dx;
@@ -150,8 +150,8 @@ export default function displayOutlines(polygons: any, outlines: any, dragOption
 
             if(!pointsOnRectangle(cell)) {
                 // reject result to rectangles with ensure areas
-                for(var j = 0; j < len; j++) {
-                    for(var k = 0; k < cell[j].length; k++) {
+                for(let j = 0; j < len; j++) {
+                    for(let k = 0; k < cell[j].length; k++) {
                         cell[j][k] = copyPolygons[indexI][j][k];
                     }
                 }
@@ -173,8 +173,8 @@ export default function displayOutlines(polygons: any, outlines: any, dragOption
         if(!polygons[indexI]) return;
         if(!polygons[indexI].length) return;
 
-        var newPolygon = [];
-        for(var j = 0; j < polygons[indexI].length; j++) {
+        const newPolygon = [];
+        for(let j = 0; j < polygons[indexI].length; j++) {
             if(j !== indexJ) {
                 newPolygon.push(
                     polygons[indexI][j]
@@ -201,7 +201,7 @@ export default function displayOutlines(polygons: any, outlines: any, dragOption
             indexI = +evt.srcElement.getAttribute('data-i');
             indexJ = +evt.srcElement.getAttribute('data-j');
 
-            var cell = polygons[indexI];
+            const cell = polygons[indexI];
             if(
                 !pointsOnRectangle(cell) &&
                 !pointsOnEllipse(cell)
@@ -214,15 +214,15 @@ export default function displayOutlines(polygons: any, outlines: any, dragOption
     function addVertexControllers(g: any) {
         vertexDragOptions = [];
 
-        for(var i = 0; i < polygons.length; i++) {
-            var cell = polygons[i];
+        for(let i = 0; i < polygons.length; i++) {
+            const cell = polygons[i];
 
-            var onRect = pointsOnRectangle(cell);
-            var onEllipse = !onRect && pointsOnEllipse(cell);
+            const onRect = pointsOnRectangle(cell);
+            const onEllipse = !onRect && pointsOnEllipse(cell);
 
             vertexDragOptions[i] = [];
-            var len = cell.length;
-            for(var j = 0; j < len; j++) {
+            const len = cell.length;
+            for(let j = 0; j < len; j++) {
                 if(cell[j][0] === 'Z') continue;
 
                 if(onEllipse &&
@@ -234,14 +234,14 @@ export default function displayOutlines(polygons: any, outlines: any, dragOption
                     continue;
                 }
 
-                var rectSelection = onRect && dragOptions.isActiveSelection;
-                var nextPoint;
+                const rectSelection = onRect && dragOptions.isActiveSelection;
+                let nextPoint;
                 if(rectSelection) nextPoint = getNextPoint(cell, j);
 
-                var x = cell[j][1];
-                var y = cell[j][2];
+                const x = cell[j][1];
+                const y = cell[j][2];
 
-                var vertex = g.append(rectSelection ? 'rect' : 'circle')
+                const vertex = g.append(rectSelection ? 'rect' : 'circle')
                     .attr('data-i', i)
                     .attr('data-j', j)
                     .style({
@@ -253,11 +253,11 @@ export default function displayOutlines(polygons: any, outlines: any, dragOption
 
                 if(rectSelection) {
                     // convert a vertex controller to an edge controller for rect selections
-                    var dx = nextPoint[1] - x;
-                    var dy = nextPoint[2] - y;
+                    const dx = nextPoint[1] - x;
+                    const dy = nextPoint[2] - y;
 
-                    var width = dy ? 5 : Math.max(Math.min(25, Math.abs(dx) - 5), 5);
-                    var height = dx ? 5 : Math.max(Math.min(25, Math.abs(dy) - 5), 5);
+                    const width = dy ? 5 : Math.max(Math.min(25, Math.abs(dx) - 5), 5);
+                    const height = dx ? 5 : Math.max(Math.min(25, Math.abs(dy) - 5), 5);
 
                     vertex.classed(dy ? 'cursor-ew-resize' : 'cursor-ns-resize', true)
                         .attr('width', width)
@@ -288,9 +288,9 @@ export default function displayOutlines(polygons: any, outlines: any, dragOption
     function moveGroup(dx: any, dy: any) {
         if(!polygons.length) return;
 
-        for(var i = 0; i < polygons.length; i++) {
-            for(var j = 0; j < polygons[i].length; j++) {
-                for(var k = 0; k + 2 < polygons[i][j].length; k += 2) {
+        for(let i = 0; i < polygons.length; i++) {
+            for(let j = 0; j < polygons[i].length; j++) {
+                for(let k = 0; k + 2 < polygons[i][j].length; k += 2) {
                     polygons[i][j][k + 1] = copyPolygons[i][j][k + 1] + dx;
                     polygons[i][j][k + 2] = copyPolygons[i][j][k + 2] + dy;
                 }
@@ -326,7 +326,7 @@ export default function displayOutlines(polygons: any, outlines: any, dragOption
 
         if(!polygons.length) return;
 
-        var i = 0;
+        const i = 0;
         groupDragOptions[i] = {
             element: outlines[0][0],
             gd: gd,
@@ -340,12 +340,12 @@ export default function displayOutlines(polygons: any, outlines: any, dragOption
 }
 
 function recordPositions(polygonsOut: any, polygonsIn: any) {
-    for(var i = 0; i < polygonsIn.length; i++) {
-        var cell = polygonsIn[i];
+    for(let i = 0; i < polygonsIn.length; i++) {
+        const cell = polygonsIn[i];
         polygonsOut[i] = [];
-        for(var j = 0; j < cell.length; j++) {
+        for(let j = 0; j < cell.length; j++) {
             polygonsOut[i][j] = [];
-            for(var k = 0; k < cell[j].length; k++) {
+            for(let k = 0; k < cell[j].length; k++) {
                 polygonsOut[i][j][k] = cell[j][k];
             }
         }
@@ -354,10 +354,10 @@ function recordPositions(polygonsOut: any, polygonsIn: any) {
 }
 
 function getNextPoint(cell: any, j: any) {
-    var x = cell[j][1];
-    var y = cell[j][2];
-    var len = cell.length;
-    var nextJ, nextX, nextY;
+    const x = cell[j][1];
+    const y = cell[j][2];
+    const len = cell.length;
+    let nextJ, nextX, nextY;
     nextJ = (j + 1) % len;
     nextX = cell[nextJ][1];
     nextY = cell[nextJ][2];
@@ -383,11 +383,11 @@ function eraseActiveSelection(gd: GraphDiv) {
 
     clearOutlineControllers(gd);
 
-    var id = gd._fullLayout._activeSelectionIndex;
-    var selections = (gd.layout || {}).selections || [];
+    const id = gd._fullLayout._activeSelectionIndex;
+    const selections = (gd.layout || {}).selections || [];
     if(id < selections.length) {
-        var list = [];
-        for(var q = 0; q < selections.length; q++) {
+        const list = [];
+        for(let q = 0; q < selections.length; q++) {
             if(q !== id) {
                 list.push(selections[q]);
             }
@@ -395,7 +395,7 @@ function eraseActiveSelection(gd: GraphDiv) {
 
         delete gd._fullLayout._activeSelectionIndex;
 
-        var erasedSelection = gd._fullLayout.selections[id];
+        const erasedSelection = gd._fullLayout.selections[id];
         gd._fullLayout._deselect = {
             xref: erasedSelection.xref,
             yref: erasedSelection.yref

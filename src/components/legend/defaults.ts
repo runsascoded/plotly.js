@@ -8,40 +8,40 @@ import basePlotLayoutAttributes from '../../plots/layout_attributes.js';
 import helpers from './helpers.js';
 
 function groupDefaults(legendId: string, layoutIn: any, layoutOut: FullLayout, fullData: any[]): any {
-    var containerIn = layoutIn[legendId] || {};
-    var containerOut = Template.newContainer(layoutOut, legendId);
+    const containerIn = layoutIn[legendId] || {};
+    const containerOut = Template.newContainer(layoutOut, legendId);
 
     function coerce(attr: string, dflt?: any): any {
         return Lib.coerce(containerIn, containerOut, attributes, attr, dflt);
     }
 
     // N.B. unified hover needs to inherit from font, bgcolor & bordercolor even when legend.visible is false
-    var itemFont = coerceFont(coerce, 'font', layoutOut.font);
+    const itemFont = coerceFont(coerce, 'font', layoutOut.font);
     coerce('bgcolor', layoutOut.paper_bgcolor);
     coerce('bordercolor');
 
-    var visible = coerce('visible');
+    const visible = coerce('visible');
     if(!visible) return;
 
-    var trace: FullTrace;
-    var traceCoerce = function(attr: string, dflt?: any): any {
-        var traceIn = trace._input;
-        var traceOut = trace;
+    let trace: FullTrace;
+    const traceCoerce = function(attr: string, dflt?: any): any {
+        const traceIn = trace._input;
+        const traceOut = trace;
         return Lib.coerce(traceIn, traceOut, plotsAttrs, attr, dflt);
     };
 
-    var globalFont = layoutOut.font || {};
-    var grouptitlefont = coerceFont(coerce, 'grouptitlefont', globalFont, {
+    const globalFont = layoutOut.font || {};
+    const grouptitlefont = coerceFont(coerce, 'grouptitlefont', globalFont, {
         overrideDflt: {
             size: Math.round(globalFont.size * 1.1)
         }
     });
 
-    var legendTraceCount = 0;
-    var legendReallyHasATrace = false;
-    var defaultOrder = 'normal';
+    let legendTraceCount = 0;
+    let legendReallyHasATrace = false;
+    let defaultOrder = 'normal';
 
-    var shapesWithLegend = (layoutOut.shapes || []).filter(function(d: any) { return d.showlegend; });
+    const shapesWithLegend = (layoutOut.shapes || []).filter(function(d: any) { return d.showlegend; });
 
     function isPieWithLegendArray(trace: FullTrace): boolean {
         return Registry.traceIs(trace, 'pie-like')
@@ -54,8 +54,8 @@ function groupDefaults(legendId: string, layoutIn: any, layoutOut: FullLayout, f
             if (trace.visible) {
                 legendTraceCount++;
             }
-            for(var index = 0; index < trace._length; index++) {
-                var legend = (Array.isArray(trace.legend) ? trace.legend[index] : trace.legend) || 'legend';
+            for(let index = 0; index < trace._length; index++) {
+                const legend = (Array.isArray(trace.legend) ? trace.legend[index] : trace.legend) || 'legend';
                 if(legend === legendId) {
                     // showlegend can be boolean or a boolean array.
                     // will fall back to default if array index is out-of-range
@@ -67,23 +67,23 @@ function groupDefaults(legendId: string, layoutIn: any, layoutOut: FullLayout, f
                 }
             }
             if(legendId === 'legend' && trace._length > trace.legend.length) {
-                for(var idx = trace.legend.length; idx < trace._length; idx++) {
+                for(let idx = trace.legend.length; idx < trace._length; idx++) {
                     legendReallyHasATrace = true;
                     legendTraceCount++;
                 }
             }
         });
 
-    var allLegendItems = fullData.concat(shapesWithLegend).filter(function(d: any) {
+    const allLegendItems = fullData.concat(shapesWithLegend).filter(function(d: any) {
         return !isPieWithLegendArray(trace) && legendId === (d.legend || 'legend');
     });
 
-    for(var i = 0; i < allLegendItems.length; i++) {
+    for(let i = 0; i < allLegendItems.length; i++) {
         trace = allLegendItems[i];
 
         if(!trace.visible) continue;
 
-        var isShape = trace._isShape;
+        const isShape = trace._isShape;
 
         // Note that we explicitly count any trace that is either shown or
         // *would* be shown by default, toward the two traces you need to
@@ -124,7 +124,7 @@ function groupDefaults(legendId: string, layoutIn: any, layoutOut: FullLayout, f
         }
     }
 
-    var showLegend = Lib.coerce(
+    const showLegend = Lib.coerce(
       layoutIn,
       layoutOut,
       basePlotLayoutAttributes,
@@ -145,16 +145,16 @@ function groupDefaults(legendId: string, layoutIn: any, layoutOut: FullLayout, f
 
     coerce('borderwidth');
 
-    var orientation = coerce('orientation');
+    const orientation = coerce('orientation');
 
-    var yref = coerce('yref');
-    var xref = coerce('xref');
+    const yref = coerce('yref');
+    const xref = coerce('xref');
 
-    var isHorizontal = orientation === 'h';
-    var isPaperY = yref === 'paper';
-    var isPaperX = xref === 'paper';
-    var defaultX: number, defaultY: number, defaultYAnchor: string;
-    var defaultXAnchor = 'left';
+    const isHorizontal = orientation === 'h';
+    const isPaperY = yref === 'paper';
+    const isPaperX = xref === 'paper';
+    let defaultX: number, defaultY: number, defaultYAnchor: string;
+    let defaultXAnchor = 'left';
 
     if(isHorizontal) {
         defaultX = 0;
@@ -229,10 +229,10 @@ function groupDefaults(legendId: string, layoutIn: any, layoutOut: FullLayout, f
     coerce('valign');
     noneOrAll(containerIn, containerOut, ['x', 'y']);
 
-    var titleText = coerce('title.text');
+    const titleText = coerce('title.text');
     if(titleText) {
         coerce('title.side', isHorizontal ? 'left' : 'top');
-        var dfltTitleFont = extendFlat({}, itemFont, {
+        const dfltTitleFont = extendFlat({}, itemFont, {
             size: bigFont(itemFont.size)
         });
 
@@ -241,18 +241,18 @@ function groupDefaults(legendId: string, layoutIn: any, layoutOut: FullLayout, f
 }
 
 export default function legendDefaults(layoutIn: any, layoutOut: FullLayout, fullData: any[]): void {
-    var i: number;
+    let i: number;
 
-    var allLegendsData = fullData.slice();
+    const allLegendsData = fullData.slice();
 
     // shapes could also show up in legends
-    var shapes = layoutOut.shapes;
+    const shapes = layoutOut.shapes;
     if(shapes) {
         for(i = 0; i < shapes.length; i++) {
-            var shape = shapes[i];
+            const shape = shapes[i];
             if(!shape.showlegend) continue;
 
-            var mockTrace: any = {
+            const mockTrace: any = {
                 _input: shape._input,
                 visible: shape.visible,
                 showlegend: shape.showlegend,
@@ -263,7 +263,7 @@ export default function legendDefaults(layoutIn: any, layoutOut: FullLayout, ful
         }
     }
 
-    var legends: string[] = ['legend'];
+    let legends: string[] = ['legend'];
     for(i = 0; i < allLegendsData.length; i++) {
         if (Array.isArray(allLegendsData[i].legend)) {
             legends = legends.concat(allLegendsData[i].legend);
@@ -274,7 +274,7 @@ export default function legendDefaults(layoutIn: any, layoutOut: FullLayout, ful
 
     layoutOut._legends = [];
     for(i = 0; i < legends.length; i++) {
-        var legendId = legends[i];
+        const legendId = legends[i];
 
         groupDefaults(legendId, layoutIn, layoutOut, allLegendsData);
 

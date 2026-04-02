@@ -1,10 +1,10 @@
 export default function(opts?: any): any {
-    var variantValues = opts.variantValues;
-    var editType = opts.editType;
-    var colorEditType = opts.colorEditType;
+    const variantValues = opts.variantValues;
+    const editType = opts.editType;
+    let colorEditType = opts.colorEditType;
     if(colorEditType === undefined) colorEditType = editType;
 
-    var weight: any = {
+    const weight: any = {
         editType: editType,
         valType: 'integer',
         min: 1,
@@ -24,7 +24,7 @@ export default function(opts?: any): any {
         weight.max = undefined;
     }
 
-    var attrs: any = {
+    const attrs: any = {
         family: {
             valType: 'string',
             noBlank: true,

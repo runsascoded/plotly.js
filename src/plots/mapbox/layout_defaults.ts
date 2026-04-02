@@ -23,10 +23,10 @@ function handleDefaults(containerIn, containerOut, coerce, opts) {
     coerce('bearing');
     coerce('pitch');
 
-    var west = coerce('bounds.west');
-    var east = coerce('bounds.east');
-    var south = coerce('bounds.south');
-    var north = coerce('bounds.north');
+    const west = coerce('bounds.west');
+    const east = coerce('bounds.east');
+    const south = coerce('bounds.south');
+    const north = coerce('bounds.north');
     if(
         west === undefined ||
         east === undefined ||
@@ -50,10 +50,10 @@ function handleLayerDefaults(layerIn, layerOut) {
         return Lib.coerce(layerIn, layerOut, layoutAttributes.layers, attr, dflt);
     }
 
-    var visible = coerce('visible');
+    const visible = coerce('visible');
     if(visible) {
-        var sourceType = coerce('sourcetype');
-        var mustBeRasterLayer = sourceType === 'raster' || sourceType === 'image';
+        const sourceType = coerce('sourcetype');
+        const mustBeRasterLayer = sourceType === 'raster' || sourceType === 'image';
 
         coerce('source');
         coerce('sourceattribution');
@@ -66,10 +66,10 @@ function handleLayerDefaults(layerIn, layerOut) {
             coerce('coordinates');
         }
 
-        var typeDflt;
+        let typeDflt;
         if(mustBeRasterLayer) typeDflt = 'raster';
 
-        var type = coerce('type', typeDflt);
+        let type = coerce('type', typeDflt);
 
         if(mustBeRasterLayer && type !== 'raster') {
             type = layerOut.type = 'raster';

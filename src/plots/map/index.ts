@@ -8,17 +8,17 @@ import Map from './map.js';
 import _req0 from './layout_attributes.js';
 import _req1 from './layout_defaults.js';
 import type { GraphDiv } from '../../../types/core';
-var strTranslate = Lib.strTranslate;
-var strScale = Lib.strScale;
+const strTranslate = Lib.strTranslate;
+const strScale = Lib.strScale;
 
-var MAP = 'map';
+const MAP = 'map';
 
-export var name = MAP;
-export var attr = 'subplot';
-export var idRoot = MAP;
-export var idRegex = Lib.counterRegex(MAP);
+export const name = MAP;
+export const attr = 'subplot';
+export const idRoot = MAP;
+export const idRegex = Lib.counterRegex(MAP);
 
-export var attributes = {
+export const attributes = {
     subplot: {
         valType: 'subplotid',
         dflt: 'map',
@@ -32,19 +32,19 @@ export var attributes = {
     }
 };
 
-export var layoutAttributes = _req0;
-export var supplyLayoutDefaults = _req1;
+export const layoutAttributes = _req0;
+export const supplyLayoutDefaults = _req1;
 
-export var plot = function plot(gd: GraphDiv) {
-    var fullLayout = gd._fullLayout;
-    var calcData = gd.calcdata;
-    var mapIds = fullLayout._subplots[MAP];
+export const plot = function plot(gd: GraphDiv) {
+    const fullLayout = gd._fullLayout;
+    const calcData = gd.calcdata;
+    const mapIds = fullLayout._subplots[MAP];
 
-    for(var i = 0; i < mapIds.length; i++) {
-        var id = mapIds[i];
-        var subplotCalcData = getSubplotCalcData(calcData, MAP, id);
-        var opts = fullLayout[id];
-        var map = opts._subplot;
+    for(let i = 0; i < mapIds.length; i++) {
+        const id = mapIds[i];
+        const subplotCalcData = getSubplotCalcData(calcData, MAP, id);
+        const opts = fullLayout[id];
+        let map = opts._subplot;
 
         if(!map) {
             map = new Map(gd, id);
@@ -64,11 +64,11 @@ export var plot = function plot(gd: GraphDiv) {
     }
 };
 
-export var clean = function(newFullData, newFullLayout, oldFullData, oldFullLayout) {
-    var oldMapKeys = oldFullLayout._subplots[MAP] || [];
+export const clean = function(newFullData, newFullLayout, oldFullData, oldFullLayout) {
+    const oldMapKeys = oldFullLayout._subplots[MAP] || [];
 
-    for(var i = 0; i < oldMapKeys.length; i++) {
-        var oldMapKey = oldMapKeys[i];
+    for(let i = 0; i < oldMapKeys.length; i++) {
+        const oldMapKey = oldMapKeys[i];
 
         if(!newFullLayout[oldMapKey] && !!oldFullLayout[oldMapKey]._subplot) {
             oldFullLayout[oldMapKey]._subplot.destroy();
@@ -76,18 +76,18 @@ export var clean = function(newFullData, newFullLayout, oldFullData, oldFullLayo
     }
 };
 
-export var toSVG = function(gd) {
-    var fullLayout = gd._fullLayout;
-    var subplotIds = fullLayout._subplots[MAP];
-    var size = fullLayout._size;
+export const toSVG = function(gd) {
+    const fullLayout = gd._fullLayout;
+    const subplotIds = fullLayout._subplots[MAP];
+    const size = fullLayout._size;
 
-    for(var i = 0; i < subplotIds.length; i++) {
-        var opts = fullLayout[subplotIds[i]];
-        var domain = opts.domain;
-        var map = opts._subplot;
+    for(let i = 0; i < subplotIds.length; i++) {
+        const opts = fullLayout[subplotIds[i]];
+        const domain = opts.domain;
+        const map = opts._subplot;
 
-        var imageData = map.toImage('png');
-        var image = fullLayout._glimages.append('svg:image');
+        const imageData = map.toImage('png');
+        const image = fullLayout._glimages.append('svg:image');
 
         image.attr({
             xmlns: xmlnsNamespaces.svg,
@@ -99,16 +99,16 @@ export var toSVG = function(gd) {
             preserveAspectRatio: 'none'
         });
 
-        var subplotDiv = select(opts._subplot.div);
+        const subplotDiv = select(opts._subplot.div);
 
         // Add attributions
-        var attributions = subplotDiv
+        const attributions = subplotDiv
                               .select('.maplibregl-ctrl-attrib').text()
                               .replace('Improve this map', '');
 
-        var attributionGroup = fullLayout._glimages.append('g');
+        const attributionGroup = fullLayout._glimages.append('g');
 
-        var attributionText = attributionGroup.append('text');
+        const attributionText = attributionGroup.append('text');
         attributionText
           .text(attributions)
           .classed('static-attribution', true)
@@ -120,12 +120,12 @@ export var toSVG = function(gd) {
               'data-unformatted': attributions
           });
 
-        var bBox = drawingBBox(attributionText.node());
+        let bBox = drawingBBox(attributionText.node());
 
         // Break into multiple lines twice larger than domain
-        var maxWidth = size.w * (domain.x[1] - domain.x[0]);
+        const maxWidth = size.w * (domain.x[1] - domain.x[0]);
         if((bBox.width > maxWidth / 2)) {
-            var multilineAttributions = attributions.split('|').join('<br>');
+            const multilineAttributions = attributions.split('|').join('<br>');
             attributionText
               .text(multilineAttributions)
               .attr('data-unformatted', multilineAttributions)
@@ -147,20 +147,20 @@ export var toSVG = function(gd) {
           });
 
         // Scale down if larger than domain
-        var scaleRatio = 1;
+        let scaleRatio = 1;
         if((bBox.width + 6) > maxWidth) scaleRatio = maxWidth / (bBox.width + 6);
 
-        var offset = [(size.l + size.w * domain.x[1]), (size.t + size.h * (1 - domain.y[0]))];
+        const offset = [(size.l + size.w * domain.x[1]), (size.t + size.h * (1 - domain.y[0]))];
         attributionGroup.attr('transform', strTranslate(offset[0], offset[1]) + strScale(scaleRatio));
     }
 };
 
-export var updateFx = function(gd) {
-    var fullLayout = gd._fullLayout;
-    var subplotIds = fullLayout._subplots[MAP];
+export const updateFx = function(gd) {
+    const fullLayout = gd._fullLayout;
+    const subplotIds = fullLayout._subplots[MAP];
 
-    for(var i = 0; i < subplotIds.length; i++) {
-        var subplotObj = fullLayout[subplotIds[i]]._subplot;
+    for(let i = 0; i < subplotIds.length; i++) {
+        const subplotObj = fullLayout[subplotIds[i]]._subplot;
         subplotObj.updateFx(fullLayout);
     }
 };

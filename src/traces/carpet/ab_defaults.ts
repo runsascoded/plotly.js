@@ -2,14 +2,14 @@ import handleAxisDefaults from './axis_defaults.js';
 import Template from '../../plot_api/plot_template.js';
 
 export default function handleABDefaults(traceIn, traceOut, fullLayout, coerce, dfltColor) {
-    var a = coerce('a');
+    const a = coerce('a');
 
     if(!a) {
         coerce('da');
         coerce('a0');
     }
 
-    var b = coerce('b');
+    const b = coerce('b');
 
     if(!b) {
         coerce('db');
@@ -20,14 +20,14 @@ export default function handleABDefaults(traceIn, traceOut, fullLayout, coerce, 
 }
 
 function mimickAxisDefaults(traceIn, traceOut, fullLayout, dfltColor) {
-    var axesList = ['aaxis', 'baxis'];
+    const axesList = ['aaxis', 'baxis'];
 
     axesList.forEach(function(axName) {
-        var axLetter = axName.charAt(0);
-        var axIn = traceIn[axName] || {};
-        var axOut = Template.newContainer(traceOut, axName);
+        const axLetter = axName.charAt(0);
+        const axIn = traceIn[axName] || {};
+        const axOut = Template.newContainer(traceOut, axName);
 
-        var defaultOptions = {
+        const defaultOptions = {
             noAutotickangles: true,
             noTicklabelshift: true,
             noTicklabelstandoff: true,

@@ -18,33 +18,33 @@ export default function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace,
     coerce('bandwidth');
     coerce('side');
 
-    var width = coerce('width');
+    const width = coerce('width');
     if(!width) {
         coerce('scalegroup', traceOut.name);
         coerce('scalemode');
     }
 
-    var span = coerce('span');
-    var spanmodeDflt;
+    const span = coerce('span');
+    let spanmodeDflt;
     if(Array.isArray(span)) spanmodeDflt = 'manual';
     coerce('spanmode', spanmodeDflt);
 
-    var lineColor = coerce('line.color', (traceIn.marker || {}).color || defaultColor);
-    var lineWidth = coerce('line.width');
-    var fillColor = coerce('fillcolor', Color.addOpacity(traceOut.line.color, 0.5));
+    const lineColor = coerce('line.color', (traceIn.marker || {}).color || defaultColor);
+    const lineWidth = coerce('line.width');
+    const fillColor = coerce('fillcolor', Color.addOpacity(traceOut.line.color, 0.5));
 
     boxDefaults.handlePointsDefaults(traceIn, traceOut, coerce, {prefix: ''});
 
-    var boxWidth = coerce2('box.width');
-    var boxFillColor = coerce2('box.fillcolor', fillColor);
-    var boxLineColor = coerce2('box.line.color', lineColor);
-    var boxLineWidth = coerce2('box.line.width', lineWidth);
-    var boxVisible = coerce('box.visible', Boolean(boxWidth || boxFillColor || boxLineColor || boxLineWidth));
+    const boxWidth = coerce2('box.width');
+    const boxFillColor = coerce2('box.fillcolor', fillColor);
+    const boxLineColor = coerce2('box.line.color', lineColor);
+    const boxLineWidth = coerce2('box.line.width', lineWidth);
+    const boxVisible = coerce('box.visible', Boolean(boxWidth || boxFillColor || boxLineColor || boxLineWidth));
     if(!boxVisible) traceOut.box = {visible: false};
 
-    var meanLineColor = coerce2('meanline.color', lineColor);
-    var meanLineWidth = coerce2('meanline.width', lineWidth);
-    var meanLineVisible = coerce('meanline.visible', Boolean(meanLineColor || meanLineWidth));
+    const meanLineColor = coerce2('meanline.color', lineColor);
+    const meanLineWidth = coerce2('meanline.width', lineWidth);
+    const meanLineVisible = coerce('meanline.visible', Boolean(meanLineColor || meanLineWidth));
     if(!meanLineVisible) traceOut.meanline = {visible: false};
 
     coerce('quartilemethod');

@@ -7,7 +7,7 @@ import toSVG from '../snapshot/tosvg.js';
 import svgToImg from '../snapshot/svgtoimg.js';
 import { version } from '../version.js';
 
-var attrs: any = {
+const attrs: any = {
     format: {
         valType: 'enumerated',
         values: ['png', 'jpeg', 'webp', 'svg', 'full-json'],
@@ -76,10 +76,10 @@ var attrs: any = {
 function toImage(gd?: any, opts?: any): any {
     opts = opts || {};
 
-    var data;
-    var layout;
-    var config;
-    var fullLayout;
+    let data;
+    let layout;
+    let config;
+    let fullLayout;
 
     if(Lib.isPlainObject(gd)) {
         data = gd.data || [];
@@ -107,27 +107,27 @@ function toImage(gd?: any, opts?: any): any {
         throw new Error('Export format is not ' + Lib.join2(attrs.format.values, ', ', ' or ') + '.');
     }
 
-    var fullOpts = {};
+    const fullOpts = {};
 
     function coerce(attr?: any, dflt?: any) {
         return Lib.coerce(opts, fullOpts, attrs, attr, dflt);
     }
 
-    var format = coerce('format');
-    var width = coerce('width');
-    var height = coerce('height');
-    var scale = coerce('scale');
-    var setBackground = coerce('setBackground');
-    var imageDataOnly = coerce('imageDataOnly');
+    const format = coerce('format');
+    const width = coerce('width');
+    const height = coerce('height');
+    const scale = coerce('scale');
+    const setBackground = coerce('setBackground');
+    const imageDataOnly = coerce('imageDataOnly');
 
     // put the cloned div somewhere off screen before attaching to DOM
-    var clonedGd: any = document.createElement('div');
+    const clonedGd: any = document.createElement('div');
     clonedGd.style.position = 'absolute';
     clonedGd.style.left = '-5000px';
     document.body.appendChild(clonedGd);
 
     // extend layout with image options
-    var layoutImage: any = Lib.extendFlat({}, layout);
+    const layoutImage: any = Lib.extendFlat({}, layout);
     if(width) {
         layoutImage.width = width;
     } else if(opts.width === null && isNumeric(fullLayout.width)) {
@@ -140,13 +140,13 @@ function toImage(gd?: any, opts?: any): any {
     }
 
     // extend config for static plot
-    var configImage = Lib.extendFlat({}, config, {
+    const configImage = Lib.extendFlat({}, config, {
         _exportedPlot: true,
         staticPlot: true,
         setBackground: setBackground
     });
 
-    var redrawFunc = helpers.getRedrawFunc(clonedGd);
+    const redrawFunc = helpers.getRedrawFunc(clonedGd);
 
     function wait() {
         return new Promise(function(resolve) {
@@ -156,9 +156,9 @@ function toImage(gd?: any, opts?: any): any {
 
     function convert() {
         return new Promise(function(resolve, reject) {
-            var svg = toSVG(clonedGd, format, scale);
-            var width = clonedGd._fullLayout.width;
-            var height = clonedGd._fullLayout.height;
+            const svg = toSVG(clonedGd, format, scale);
+            const width = clonedGd._fullLayout.width;
+            const height = clonedGd._fullLayout.height;
 
             function cleanup() {
                 plotApi.purge(clonedGd);
@@ -166,7 +166,7 @@ function toImage(gd?: any, opts?: any): any {
             }
 
             if(format === 'full-json') {
-                var json: any = plots.graphJson(clonedGd, false, 'keepdata', 'object', true, true);
+                let json: any = plots.graphJson(clonedGd, false, 'keepdata', 'object', true, true);
                 json.version = version;
                 json = JSON.stringify(json);
                 cleanup();
@@ -187,7 +187,7 @@ function toImage(gd?: any, opts?: any): any {
                 }
             }
 
-            var canvas: any = document.createElement('canvas');
+            const canvas: any = document.createElement('canvas');
             canvas.id = Lib.randstr();
 
             svgToImg({

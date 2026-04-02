@@ -4,19 +4,19 @@ import Lib from '../../lib/index.js';
 import { translatePoints } from '../../components/drawing/index.js';
 
 // constants for dynamic jitter (ie less jitter for sparser points)
-var JITTERCOUNT = 5; // points either side of this to include
-var JITTERSPREAD = 0.01; // fraction of IQR to count as "dense"
+const JITTERCOUNT = 5; // points either side of this to include
+const JITTERSPREAD = 0.01; // fraction of IQR to count as "dense"
 
 function plot(gd: GraphDiv, plotinfo: PlotInfo, cdbox: any[], boxLayer: any): void {
-    var isStatic = gd._context.staticPlot;
-    var xa = plotinfo.xaxis;
-    var ya = plotinfo.yaxis;
+    const isStatic = gd._context.staticPlot;
+    const xa = plotinfo.xaxis;
+    const ya = plotinfo.yaxis;
 
     Lib.makeTraceGroups(boxLayer, cdbox, 'trace boxes').each(function(cd) {
-        var plotGroup = select(this);
-        var cd0 = cd[0];
-        var t = cd0.t;
-        var trace = cd0.trace;
+        const plotGroup = select(this);
+        const cd0 = cd[0];
+        const t = cd0.t;
+        const trace = cd0.trace;
 
         // whisker width
         t.wdPos = t.bdPos * trace.whiskerwidth;
@@ -26,7 +26,7 @@ function plot(gd: GraphDiv, plotinfo: PlotInfo, cdbox: any[], boxLayer: any): vo
             return;
         }
 
-        var posAxis, valAxis;
+        let posAxis, valAxis;
 
         if(trace.orientation === 'h') {
             posAxis = ya;
@@ -43,22 +43,22 @@ function plot(gd: GraphDiv, plotinfo: PlotInfo, cdbox: any[], boxLayer: any): vo
 }
 
 function plotBoxAndWhiskers(sel: any, axes: { pos: FullAxis; val: FullAxis }, trace: FullTrace, t: any, isStatic?: boolean): void {
-    var isHorizontal = trace.orientation === 'h';
-    var valAxis = axes.val;
-    var posAxis = axes.pos;
-    var posHasRangeBreaks = !!posAxis.rangebreaks;
+    const isHorizontal = trace.orientation === 'h';
+    const valAxis = axes.val;
+    const posAxis = axes.pos;
+    const posHasRangeBreaks = !!posAxis.rangebreaks;
 
-    var bPos = t.bPos;
-    var wdPos = t.wdPos || 0;
-    var bPosPxOffset = t.bPosPxOffset || 0;
-    var whiskerWidth = trace.whiskerwidth || 0;
-    var showWhiskers = (trace.showwhiskers !== false);
-    var notched = trace.notched || false;
-    var nw = notched ? 1 - 2 * trace.notchwidth : 1;
+    const bPos = t.bPos;
+    const wdPos = t.wdPos || 0;
+    const bPosPxOffset = t.bPosPxOffset || 0;
+    const whiskerWidth = trace.whiskerwidth || 0;
+    const showWhiskers = (trace.showwhiskers !== false);
+    const notched = trace.notched || false;
+    const nw = notched ? 1 - 2 * trace.notchwidth : 1;
 
     // to support for one-sided box
-    var bdPos0;
-    var bdPos1;
+    let bdPos0;
+    let bdPos1;
     if(Array.isArray(t.bdPos)) {
         bdPos0 = t.bdPos[0];
         bdPos1 = t.bdPos[1];
@@ -67,7 +67,7 @@ function plotBoxAndWhiskers(sel: any, axes: { pos: FullAxis; val: FullAxis }, tr
         bdPos1 = t.bdPos;
     }
 
-    var paths = sel.selectAll('path.box').data((
+    const paths = sel.selectAll('path.box').data((
         trace.type !== 'violin' ||
         trace.box.visible
     ) ? Lib.identity : []);
@@ -81,25 +81,25 @@ function plotBoxAndWhiskers(sel: any, axes: { pos: FullAxis; val: FullAxis }, tr
     paths.each(function(d) {
         if(d.empty) return select(this).attr('d', 'M0,0Z');
 
-        var lcenter = posAxis.c2l(d.pos + bPos, true);
+        const lcenter = posAxis.c2l(d.pos + bPos, true);
 
-        var pos0 = posAxis.l2p(lcenter - bdPos0) + bPosPxOffset;
-        var pos1 = posAxis.l2p(lcenter + bdPos1) + bPosPxOffset;
-        var posc = posHasRangeBreaks ? (pos0 + pos1) / 2 : posAxis.l2p(lcenter) + bPosPxOffset;
+        const pos0 = posAxis.l2p(lcenter - bdPos0) + bPosPxOffset;
+        const pos1 = posAxis.l2p(lcenter + bdPos1) + bPosPxOffset;
+        const posc = posHasRangeBreaks ? (pos0 + pos1) / 2 : posAxis.l2p(lcenter) + bPosPxOffset;
 
-        var r = trace.whiskerwidth;
-        var posw0 = posHasRangeBreaks ? pos0 * r + (1 - r) * posc : posAxis.l2p(lcenter - wdPos) + bPosPxOffset;
-        var posw1 = posHasRangeBreaks ? pos1 * r + (1 - r) * posc : posAxis.l2p(lcenter + wdPos) + bPosPxOffset;
+        const r = trace.whiskerwidth;
+        const posw0 = posHasRangeBreaks ? pos0 * r + (1 - r) * posc : posAxis.l2p(lcenter - wdPos) + bPosPxOffset;
+        const posw1 = posHasRangeBreaks ? pos1 * r + (1 - r) * posc : posAxis.l2p(lcenter + wdPos) + bPosPxOffset;
 
-        var posm0 = posAxis.l2p(lcenter - bdPos0 * nw) + bPosPxOffset;
-        var posm1 = posAxis.l2p(lcenter + bdPos1 * nw) + bPosPxOffset;
-        var sdmode = trace.sizemode === 'sd';
-        var q1 = valAxis.c2p(sdmode ? d.mean - d.sd : d.q1, true);
-        var q3 = sdmode ? valAxis.c2p(d.mean + d.sd, true) :
+        const posm0 = posAxis.l2p(lcenter - bdPos0 * nw) + bPosPxOffset;
+        const posm1 = posAxis.l2p(lcenter + bdPos1 * nw) + bPosPxOffset;
+        const sdmode = trace.sizemode === 'sd';
+        const q1 = valAxis.c2p(sdmode ? d.mean - d.sd : d.q1, true);
+        const q3 = sdmode ? valAxis.c2p(d.mean + d.sd, true) :
                           valAxis.c2p(d.q3, true);
         // make sure median isn't identical to either of the
         // quartiles, so we can see it
-        var m = Lib.constrain(
+        const m = Lib.constrain(
             sdmode ? valAxis.c2p(d.mean, true) :
                      valAxis.c2p(d.med, true),
             Math.min(q1, q3) + 1, Math.max(q1, q3) - 1
@@ -111,11 +111,11 @@ function plotBoxAndWhiskers(sel: any, axes: { pos: FullAxis; val: FullAxis }, tr
         // - box always has d.lf, but boxpoints can be anything
         // - violin has d.lf and should always use it (boxpoints is undefined)
         // - candlestick has only min/max
-        var useExtremes = (d.lf === undefined) || (trace.boxpoints === false) || sdmode;
-        var lf = valAxis.c2p(useExtremes ? d.min : d.lf, true);
-        var uf = valAxis.c2p(useExtremes ? d.max : d.uf, true);
-        var ln = valAxis.c2p(d.ln, true);
-        var un = valAxis.c2p(d.un, true);
+        const useExtremes = (d.lf === undefined) || (trace.boxpoints === false) || sdmode;
+        const lf = valAxis.c2p(useExtremes ? d.min : d.lf, true);
+        const uf = valAxis.c2p(useExtremes ? d.max : d.uf, true);
+        const ln = valAxis.c2p(d.ln, true);
+        const un = valAxis.c2p(d.un, true);
 
         if(isHorizontal) {
             select(this).attr('d',
@@ -167,20 +167,20 @@ function plotBoxAndWhiskers(sel: any, axes: { pos: FullAxis; val: FullAxis }, tr
 }
 
 function plotPoints(sel: any, axes: { x: FullAxis; y: FullAxis }, trace: FullTrace, t: any): any {
-    var xa = axes.x;
-    var ya = axes.y;
-    var bdPos = t.bdPos;
-    var bPos = t.bPos;
+    const xa = axes.x;
+    const ya = axes.y;
+    const bdPos = t.bdPos;
+    const bPos = t.bPos;
 
     // to support violin points
-    var mode = trace.boxpoints || trace.points;
+    const mode = trace.boxpoints || trace.points;
 
     // repeatable pseudo-random number generator
     Lib.seedPseudoRandom();
 
     // since box plot points get an extra level of nesting, each
     // box needs the trace styling info
-    var fn = function(d) {
+    const fn = function(d) {
         d.forEach(function(v) {
             v.t = t;
             v.trace = trace;
@@ -188,7 +188,7 @@ function plotPoints(sel: any, axes: { x: FullAxis; y: FullAxis }, trace: FullTra
         return d;
     };
 
-    var gPoints = sel.selectAll('g.points')
+    const gPoints = sel.selectAll('g.points')
         .data(mode ? fn : []);
 
     gPoints.enter().append('g')
@@ -196,18 +196,18 @@ function plotPoints(sel: any, axes: { x: FullAxis; y: FullAxis }, trace: FullTra
 
     gPoints.exit().remove();
 
-    var paths = gPoints.selectAll('path')
+    const paths = gPoints.selectAll('path')
         .data(function(d) {
-            var i;
-            var pts = d.pts2;
+            let i;
+            const pts = d.pts2;
 
             // normally use IQR, but if this is 0 or too small, use max-min
-            var typicalSpread = Math.max((d.max - d.min) / 10, d.q3 - d.q1);
-            var minSpread = typicalSpread * 1e-9;
-            var spreadLimit = typicalSpread * JITTERSPREAD;
-            var jitterFactors = [];
-            var maxJitterFactor = 0;
-            var newJitter;
+            const typicalSpread = Math.max((d.max - d.min) / 10, d.q3 - d.q1);
+            const minSpread = typicalSpread * 1e-9;
+            const spreadLimit = typicalSpread * JITTERSPREAD;
+            let jitterFactors = [];
+            let maxJitterFactor = 0;
+            let newJitter;
 
             // dynamic jitter
             if(trace.jitter) {
@@ -220,17 +220,17 @@ function plotPoints(sel: any, axes: { x: FullAxis; y: FullAxis }, trace: FullTra
                     }
                 } else {
                     for(i = 0; i < pts.length; i++) {
-                        var i0 = Math.max(0, i - JITTERCOUNT);
-                        var pmin = pts[i0].v;
-                        var i1 = Math.min(pts.length - 1, i + JITTERCOUNT);
-                        var pmax = pts[i1].v;
+                        const i0 = Math.max(0, i - JITTERCOUNT);
+                        let pmin = pts[i0].v;
+                        const i1 = Math.min(pts.length - 1, i + JITTERCOUNT);
+                        let pmax = pts[i1].v;
 
                         if(mode !== 'all') {
                             if(pts[i].v < d.lf) pmax = Math.min(pmax, d.lf);
                             else pmin = Math.max(pmin, d.uf);
                         }
 
-                        var jitterFactor = Math.sqrt(spreadLimit * (i1 - i0) / (pmax - pmin + minSpread)) || 0;
+                        let jitterFactor = Math.sqrt(spreadLimit * (i1 - i0) / (pmax - pmin + minSpread)) || 0;
                         jitterFactor = Lib.constrain(Math.abs(jitterFactor), 0, 1);
 
                         jitterFactors.push(jitterFactor);
@@ -242,14 +242,14 @@ function plotPoints(sel: any, axes: { x: FullAxis; y: FullAxis }, trace: FullTra
 
             // fills in 'x' and 'y' in calcdata 'pts' item
             for(i = 0; i < pts.length; i++) {
-                var pt = pts[i];
-                var v = pt.v;
+                const pt = pts[i];
+                const v = pt.v;
 
-                var jitterOffset = trace.jitter ?
+                const jitterOffset = trace.jitter ?
                     (newJitter * jitterFactors[i] * (Lib.pseudoRandom() - 0.5)) :
                     0;
 
-                var posPx = d.pos + bPos + bdPos * (trace.pointpos + jitterOffset);
+                const posPx = d.pos + bPos + bdPos * (trace.pointpos + jitterOffset);
 
                 if(trace.orientation === 'h') {
                     pt.y = posPx;
@@ -277,19 +277,19 @@ function plotPoints(sel: any, axes: { x: FullAxis; y: FullAxis }, trace: FullTra
 }
 
 function plotBoxMean(sel: any, axes: { pos: FullAxis; val: FullAxis }, trace: FullTrace, t: any): void {
-    var valAxis = axes.val;
-    var posAxis = axes.pos;
-    var posHasRangeBreaks = !!posAxis.rangebreaks;
+    const valAxis = axes.val;
+    const posAxis = axes.pos;
+    const posHasRangeBreaks = !!posAxis.rangebreaks;
 
-    var bPos = t.bPos;
-    var bPosPxOffset = t.bPosPxOffset || 0;
+    const bPos = t.bPos;
+    const bPosPxOffset = t.bPosPxOffset || 0;
 
     // to support violin mean lines
-    var mode = trace.boxmean || (trace.meanline || {}).visible;
+    const mode = trace.boxmean || (trace.meanline || {}).visible;
 
     // to support for one-sided box
-    var bdPos0;
-    var bdPos1;
+    let bdPos0;
+    let bdPos1;
     if(Array.isArray(t.bdPos)) {
         bdPos0 = t.bdPos[0];
         bdPos1 = t.bdPos[1];
@@ -298,7 +298,7 @@ function plotBoxMean(sel: any, axes: { pos: FullAxis; val: FullAxis }, trace: Fu
         bdPos1 = t.bdPos;
     }
 
-    var paths = sel.selectAll('path.mean').data((
+    const paths = sel.selectAll('path.mean').data((
         (trace.type === 'box' && trace.boxmean) ||
         (trace.type === 'violin' && trace.box.visible && trace.meanline.visible)
     ) ? Lib.identity : []);
@@ -313,15 +313,15 @@ function plotBoxMean(sel: any, axes: { pos: FullAxis; val: FullAxis }, trace: Fu
     paths.exit().remove();
 
     paths.each(function(d) {
-        var lcenter = posAxis.c2l(d.pos + bPos, true);
+        const lcenter = posAxis.c2l(d.pos + bPos, true);
 
-        var pos0 = posAxis.l2p(lcenter - bdPos0) + bPosPxOffset;
-        var pos1 = posAxis.l2p(lcenter + bdPos1) + bPosPxOffset;
-        var posc = posHasRangeBreaks ? (pos0 + pos1) / 2 : posAxis.l2p(lcenter) + bPosPxOffset;
+        const pos0 = posAxis.l2p(lcenter - bdPos0) + bPosPxOffset;
+        const pos1 = posAxis.l2p(lcenter + bdPos1) + bPosPxOffset;
+        const posc = posHasRangeBreaks ? (pos0 + pos1) / 2 : posAxis.l2p(lcenter) + bPosPxOffset;
 
-        var m = valAxis.c2p(d.mean, true);
-        var sl = valAxis.c2p(d.mean - d.sd, true);
-        var sh = valAxis.c2p(d.mean + d.sd, true);
+        const m = valAxis.c2p(d.mean, true);
+        const sl = valAxis.c2p(d.mean - d.sd, true);
+        const sh = valAxis.c2p(d.mean + d.sd, true);
 
         if(trace.orientation === 'h') {
             select(this).attr('d',

@@ -6,9 +6,9 @@ import Fx from '../../components/fx/index.js';
 import Color from '../../components/color/index.js';
 import _constants from './constants.js';
 const { cn } = _constants;
-var numberFormat = Lib.numberFormat;
+const numberFormat = Lib.numberFormat;
 
-var _ = Lib._;
+const _ = Lib._;
 
 function renderableValuePresent(d) {return d !== '';}
 
@@ -73,7 +73,7 @@ function linkHoveredStyle(d, sankey, visitNodes, sankeyLink) {
     });
 
     sankeyLink.each(function(curLink) {
-        var label = curLink.link.label;
+        const label = curLink.link.label;
         if(label !== '') {
             ownTrace(sankey, d)
                 .selectAll('.' + cn.sankeyLink)
@@ -106,7 +106,7 @@ function linkNonHoveredStyle(d, sankey, visitNodes, sankeyLink) {
     });
 
     sankeyLink.each(function(curLink) {
-        var label = curLink.link.label;
+        const label = curLink.link.label;
         if(label !== '') {
             ownTrace(sankey, d)
                 .selectAll('.' + cn.sankeyLink)
@@ -126,22 +126,22 @@ function linkNonHoveredStyle(d, sankey, visitNodes, sankeyLink) {
 
 // does not support array values for now
 function castHoverOption(trace, attr) {
-    var labelOpts = trace.hoverlabel || {};
-    var val = Lib.nestedProperty(labelOpts, attr).get();
+    const labelOpts = trace.hoverlabel || {};
+    const val = Lib.nestedProperty(labelOpts, attr).get();
     return Array.isArray(val) ? false : val;
 }
 
 export default function plot(gd: GraphDiv, calcData: any[]) {
-    var fullLayout = gd._fullLayout;
-    var svg = fullLayout._paper;
-    var size = fullLayout._size;
+    const fullLayout = gd._fullLayout;
+    const svg = fullLayout._paper;
+    const size = fullLayout._size;
 
     // stash initial view
-    for(var i = 0; i < gd._fullData.length; i++) {
+    for(let i = 0; i < gd._fullData.length; i++) {
         if(!gd._fullData[i].visible) continue;
         if(gd._fullData[i].type !== cn.sankey) continue;
         if(!gd._fullData[i]._viewInitial) {
-            var node = gd._fullData[i].node;
+            const node = gd._fullData[i].node;
             gd._fullData[i]._viewInitial = {
                 node: {
                     groups: node.groups.slice(),
@@ -152,14 +152,14 @@ export default function plot(gd: GraphDiv, calcData: any[]) {
         }
     }
 
-    var linkSelect = function(element, d) {
-        var evt = d.link;
+    const linkSelect = function(element, d) {
+        const evt = d.link;
         evt.originalEvent = event;
         gd._hoverdata = [evt];
         Fx.click(gd, { target: true } as any);
     };
 
-    var linkHover = function(element, d, sankey) {
+    const linkHover = function(element, d, sankey) {
         if(gd._fullLayout.hovermode === false) return;
         select(element).call(linkHoveredStyle.bind(0, d, sankey, true));
         if(d.link.trace.link.hoverinfo !== 'skip') {
@@ -171,21 +171,21 @@ export default function plot(gd: GraphDiv, calcData: any[]) {
         }
     };
 
-    var sourceLabel = _(gd, 'source:') + ' ';
-    var targetLabel = _(gd, 'target:') + ' ';
-    var concentrationLabel = _(gd, 'concentration:') + ' ';
-    var incomingLabel = _(gd, 'incoming flow count:') + ' ';
-    var outgoingLabel = _(gd, 'outgoing flow count:') + ' ';
+    const sourceLabel = _(gd, 'source:') + ' ';
+    const targetLabel = _(gd, 'target:') + ' ';
+    const concentrationLabel = _(gd, 'concentration:') + ' ';
+    const incomingLabel = _(gd, 'incoming flow count:') + ' ';
+    const outgoingLabel = _(gd, 'outgoing flow count:') + ' ';
 
-    var linkHoverFollow = function(element, d) {
+    const linkHoverFollow = function(element, d) {
         if(gd._fullLayout.hovermode === false) return;
-        var obj = d.link.trace.link;
+        let obj = d.link.trace.link;
         if(obj.hoverinfo === 'none' || obj.hoverinfo === 'skip') return;
 
-        var hoverItems = [];
+        const hoverItems = [];
 
         function hoverCenterPosition(link) {
-            var hoverCenterX, hoverCenterY;
+            let hoverCenterX, hoverCenterY;
             if(link.circular) {
                 hoverCenterX = (link.circularPathData.leftInnerExtent + link.circularPathData.rightInnerExtent) / 2;
                 hoverCenterY = link.circularPathData.verticalFullExtent;
@@ -193,7 +193,7 @@ export default function plot(gd: GraphDiv, calcData: any[]) {
                 hoverCenterX = (link.source.x1 + link.target.x0) / 2;
                 hoverCenterY = (link.y0 + link.y1) / 2;
             }
-            var center = [hoverCenterX, hoverCenterY];
+            const center = [hoverCenterX, hoverCenterY];
             if(link.trace.orientation === 'v') center.reverse();
             center[0] += d.parent.translateX;
             center[1] += d.parent.translateY;
@@ -201,15 +201,15 @@ export default function plot(gd: GraphDiv, calcData: any[]) {
         }
 
         // For each related links, create a hoverItem
-        var anchorIndex = 0;
-        for(var i = 0; i < d.flow.links.length; i++) {
-            var link = d.flow.links[i];
+        let anchorIndex = 0;
+        for(let i = 0; i < d.flow.links.length; i++) {
+            const link = d.flow.links[i];
             if(gd._fullLayout.hovermode === 'closest' && d.link.pointNumber !== link.pointNumber) continue;
             if(d.link.pointNumber === link.pointNumber) anchorIndex = i;
             link.fullData = link.trace;
             obj = d.link.trace.link;
-            var hoverCenter = hoverCenterPosition(link);
-            var hovertemplateLabels = {valueLabel: numberFormat(d.valueFormat)(link.value) + d.valueSuffix};
+            const hoverCenter = hoverCenterPosition(link);
+            const hovertemplateLabels = {valueLabel: numberFormat(d.valueFormat)(link.value) + d.valueSuffix};
 
             hoverItems.push({
                 x: hoverCenter[0],
@@ -242,7 +242,7 @@ export default function plot(gd: GraphDiv, calcData: any[]) {
             });
         }
 
-        var tooltips = Fx.loneHover(hoverItems, {
+        const tooltips = Fx.loneHover(hoverItems, {
             container: fullLayout._hoverlayer.node(),
             outerContainer: fullLayout._paper.node(),
             gd: gd,
@@ -250,7 +250,7 @@ export default function plot(gd: GraphDiv, calcData: any[]) {
         });
 
         tooltips.each(function() {
-            var tooltip = this;
+            const tooltip = this;
             if(!d.link.concentrationscale) {
                 makeTranslucent(tooltip, 0.65);
             }
@@ -258,7 +258,7 @@ export default function plot(gd: GraphDiv, calcData: any[]) {
         });
     };
 
-    var linkUnhover = function(element, d, sankey) {
+    const linkUnhover = function(element, d, sankey) {
         if(gd._fullLayout.hovermode === false) return;
         select(element).call(linkNonHoveredStyle.bind(0, d, sankey, true));
         if(d.link.trace.link.hoverinfo !== 'skip') {
@@ -272,15 +272,15 @@ export default function plot(gd: GraphDiv, calcData: any[]) {
         Fx.loneUnhover(fullLayout._hoverlayer.node());
     };
 
-    var nodeSelect = function(element, d, sankey) {
-        var evt = d.node;
+    const nodeSelect = function(element, d, sankey) {
+        const evt = d.node;
         evt.originalEvent = event;
         gd._hoverdata = [evt];
         select(element).call(nodeNonHoveredStyle, d, sankey);
         Fx.click(gd, { target: true } as any);
     };
 
-    var nodeHover = function(element, d, sankey) {
+    const nodeHover = function(element, d, sankey) {
         if(gd._fullLayout.hovermode === false) return;
         select(element).call(nodeHoveredStyle, d, sankey);
         if(d.node.trace.node.hoverinfo !== 'skip') {
@@ -292,26 +292,26 @@ export default function plot(gd: GraphDiv, calcData: any[]) {
         }
     };
 
-    var nodeHoverFollow = function(element, d) {
+    const nodeHoverFollow = function(element, d) {
         if(gd._fullLayout.hovermode === false) return;
 
-        var obj = d.node.trace.node;
+        const obj = d.node.trace.node;
         if(obj.hoverinfo === 'none' || obj.hoverinfo === 'skip') return;
-        var nodeRect = select(element).select('.' + cn.nodeRect);
-        var rootBBox = gd._fullLayout._paperdiv.node().getBoundingClientRect();
-        var boundingBox = nodeRect.node().getBoundingClientRect();
-        var hoverCenterX0 = boundingBox.left - 2 - rootBBox.left;
-        var hoverCenterX1 = boundingBox.right + 2 - rootBBox.left;
-        var hoverCenterY = boundingBox.top + boundingBox.height / 4 - rootBBox.top;
+        const nodeRect = select(element).select('.' + cn.nodeRect);
+        const rootBBox = gd._fullLayout._paperdiv.node().getBoundingClientRect();
+        const boundingBox = nodeRect.node().getBoundingClientRect();
+        const hoverCenterX0 = boundingBox.left - 2 - rootBBox.left;
+        const hoverCenterX1 = boundingBox.right + 2 - rootBBox.left;
+        const hoverCenterY = boundingBox.top + boundingBox.height / 4 - rootBBox.top;
 
-        var hovertemplateLabels = {valueLabel: numberFormat(d.valueFormat)(d.node.value) + d.valueSuffix};
+        const hovertemplateLabels = {valueLabel: numberFormat(d.valueFormat)(d.node.value) + d.valueSuffix};
         d.node.fullData = d.node.trace;
 
         gd._fullLayout._calcInverseTransform(gd);
-        var scaleX = gd._fullLayout._invScaleX;
-        var scaleY = gd._fullLayout._invScaleY;
+        const scaleX = gd._fullLayout._invScaleX;
+        const scaleY = gd._fullLayout._invScaleY;
 
-        var tooltip = Fx.loneHover({
+        const tooltip = Fx.loneHover({
             x0: scaleX * hoverCenterX0,
             x1: scaleX * hoverCenterX1,
             y: scaleY * hoverCenterY,
@@ -349,7 +349,7 @@ export default function plot(gd: GraphDiv, calcData: any[]) {
         makeTextContrasty(tooltip);
     };
 
-    var nodeUnhover = function(element, d, sankey) {
+    const nodeUnhover = function(element, d, sankey) {
         if(gd._fullLayout.hovermode === false) return;
         select(element).call(nodeNonHoveredStyle, d, sankey);
         if(d.node.trace.node.hoverinfo !== 'skip') {

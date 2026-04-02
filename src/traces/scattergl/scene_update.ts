@@ -2,9 +2,9 @@ import type { GraphDiv, PlotInfo } from '../../../types/core';
 import Lib from '../../lib/index.js';
 
 export default function sceneUpdate(gd: GraphDiv, subplot: PlotInfo) {
-    var scene = subplot._scene;
+    let scene = subplot._scene;
 
-    var resetOpts = {
+    const resetOpts = {
         // number of traces in subplot, since scene:subplot -> 1:1
         count: 0,
         // whether scene requires init hook in plot call (dirty plot call)
@@ -26,7 +26,7 @@ export default function sceneUpdate(gd: GraphDiv, subplot: PlotInfo) {
     };
 
     // regl- component stubs, initialized in dirty plot call
-    var initOpts = {
+    const initOpts = {
         fill2d: false,
         scatter2d: false,
         error2d: false,
@@ -46,7 +46,7 @@ export default function sceneUpdate(gd: GraphDiv, subplot: PlotInfo) {
 
         // apply new option to all regl components (used on drag)
         scene.update = function update(opt) {
-            var opts = Lib.repeat(opt, scene.count);
+            const opts = Lib.repeat(opt, scene.count);
 
             if(scene.fill2d) scene.fill2d.update(opts);
             if(scene.scatter2d) scene.scatter2d.update(opts);
@@ -54,7 +54,7 @@ export default function sceneUpdate(gd: GraphDiv, subplot: PlotInfo) {
             if(scene.error2d) scene.error2d.update(opts.concat(opts));
             if(scene.select2d) scene.select2d.update(opts);
             if(scene.glText) {
-                for(var i = 0; i < scene.count; i++) {
+                for(let i = 0; i < scene.count; i++) {
                     scene.glText[i].update(opt);
                 }
             }
@@ -62,17 +62,17 @@ export default function sceneUpdate(gd: GraphDiv, subplot: PlotInfo) {
 
         // draw traces in proper order
         scene.draw = function draw() {
-            var count = scene.count;
-            var fill2d = scene.fill2d;
-            var error2d = scene.error2d;
-            var line2d = scene.line2d;
-            var scatter2d = scene.scatter2d;
-            var glText = scene.glText;
-            var select2d = scene.select2d;
-            var selectBatch = scene.selectBatch;
-            var unselectBatch = scene.unselectBatch;
+            const count = scene.count;
+            const fill2d = scene.fill2d;
+            const error2d = scene.error2d;
+            const line2d = scene.line2d;
+            const scatter2d = scene.scatter2d;
+            const glText = scene.glText;
+            const select2d = scene.select2d;
+            const selectBatch = scene.selectBatch;
+            const unselectBatch = scene.unselectBatch;
 
-            for(var i = 0; i < count; i++) {
+            for(let i = 0; i < count; i++) {
                 if(fill2d && scene.fillOrder[i]) {
                     fill2d.draw(scene.fillOrder[i]);
                 }
@@ -85,7 +85,7 @@ export default function sceneUpdate(gd: GraphDiv, subplot: PlotInfo) {
                 }
                 if(scatter2d && scene.markerOptions[i]) {
                     if(unselectBatch[i].length) {
-                        var arg = Lib.repeat([], scene.count);
+                        const arg = Lib.repeat([], scene.count);
                         arg[i] = unselectBatch[i];
                         scatter2d.draw(arg);
                     } else if(!selectBatch[i].length) {

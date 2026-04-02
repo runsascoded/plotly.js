@@ -16,18 +16,18 @@ import _constants from './constants.js';
 const { WEEKDAY_PATTERN: DAY_OF_WEEK, HOUR_PATTERN: HOUR } = _constants;
 
 export default function handleAxisDefaults(containerIn?: any, containerOut?: any, coerce?: any, options?: any, layoutOut?: any): any {
-    var letter = options.letter;
-    var font = options.font || {};
-    var splomStash = options.splomStash || {};
+    const letter = options.letter;
+    const font = options.font || {};
+    const splomStash = options.splomStash || {};
 
-    var visible = coerce('visible', !options.visibleDflt);
+    const visible = coerce('visible', !options.visibleDflt);
 
-    var axTemplate = containerOut._template || {};
-    var axType = containerOut.type || axTemplate.type || '-';
+    const axTemplate = containerOut._template || {};
+    const axType = containerOut.type || axTemplate.type || '-';
 
-    var ticklabelmode;
+    let ticklabelmode;
     if(axType === 'date') {
-        var handleCalendarDefaults = Registry.getComponentMethod('calendars', 'handleDefaults');
+        const handleCalendarDefaults = Registry.getComponentMethod('calendars', 'handleDefaults');
         handleCalendarDefaults(containerIn, containerOut, 'calendar', options.calendar);
 
         if(!options.noTicklabelmode) {
@@ -39,7 +39,7 @@ export default function handleAxisDefaults(containerIn?: any, containerOut?: any
         coerce('ticklabelindex');
     }
 
-    var ticklabelposition = '';
+    let ticklabelposition = '';
     if(!options.noTicklabelposition || axType === 'multicategory') {
         ticklabelposition = Lib.coerce(containerIn, containerOut, {
             ticklabelposition: {
@@ -83,14 +83,14 @@ export default function handleAxisDefaults(containerIn?: any, containerOut?: any
         }
     }
 
-    var dfltColor = coerce('color');
+    const dfltColor = coerce('color');
     // if axis.color was provided, use it for fonts too; otherwise,
     // inherit from global font color in case that was provided.
     // Compare to dflt rather than to containerIn, so we can provide color via
     // template too.
-    var dfltFontColor = (dfltColor !== layoutAttributes.color.dflt) ? dfltColor : font.color;
+    const dfltFontColor = (dfltColor !== layoutAttributes.color.dflt) ? dfltColor : font.color;
     // try to get default title from splom trace, fallback to graph-wide value
-    var dfltTitle = splomStash.label || layoutOut._dfltTitle[letter];
+    const dfltTitle = splomStash.label || layoutOut._dfltTitle[letter];
 
     handlePrefixSuffixDefaults(containerIn, containerOut, coerce, axType, options);
     if(!visible) return containerOut;
@@ -104,7 +104,7 @@ export default function handleAxisDefaults(containerIn?: any, containerOut?: any
     // major ticks
     handleTickValueDefaults(containerIn, containerOut, coerce, axType);
 
-    var hasMinor = options.hasMinor;
+    const hasMinor = options.hasMinor;
     if(hasMinor) {
         // minor ticks
         Template.newContainer(containerOut, 'minor');
@@ -116,7 +116,7 @@ export default function handleAxisDefaults(containerIn?: any, containerOut?: any
     // major and minor ticks
     handleTickMarkDefaults(containerIn, containerOut, coerce, options);
     if(hasMinor) {
-        var keepIsMinor = options.isMinor;
+        const keepIsMinor = options.isMinor;
         options.isMinor = true;
         handleTickMarkDefaults(containerIn, containerOut, coerce, options);
         options.isMinor = keepIsMinor;
@@ -142,7 +142,7 @@ export default function handleAxisDefaults(containerIn?: any, containerOut?: any
     // mirror
     if(containerOut.showline || containerOut.ticks) coerce('mirror');
 
-    var isMultiCategory = axType === 'multicategory';
+    const isMultiCategory = axType === 'multicategory';
 
     if(!options.noTickson &&
         (axType === 'category' || isMultiCategory) &&
@@ -157,7 +157,7 @@ export default function handleAxisDefaults(containerIn?: any, containerOut?: any
     }
 
     if(isMultiCategory) {
-        var showDividers = coerce('showdividers');
+        const showDividers = coerce('showdividers');
         if(showDividers) {
             coerce('dividercolor');
             coerce('dividerwidth');
@@ -174,7 +174,7 @@ export default function handleAxisDefaults(containerIn?: any, containerOut?: any
         if(!containerOut.rangebreaks.length) {
             delete containerOut.rangebreaks;
         } else {
-            for(var k = 0; k < containerOut.rangebreaks.length; k++) {
+            for(let k = 0; k < containerOut.rangebreaks.length; k++) {
                 if(containerOut.rangebreaks[k].pattern === DAY_OF_WEEK) {
                     containerOut._hasDayOfWeekBreaks = true;
                     break;
@@ -184,8 +184,8 @@ export default function handleAxisDefaults(containerIn?: any, containerOut?: any
             setConvert(containerOut, layoutOut);
 
             if(layoutOut._has('scattergl') || layoutOut._has('splom')) {
-                for(var i = 0; i < options.data.length; i++) {
-                    var trace = options.data[i];
+                for(let i = 0; i < options.data.length; i++) {
+                    const trace = options.data[i];
                     if(trace.type === 'scattergl' || trace.type === 'splom') {
                         trace.visible = false;
                         warn(trace.type +
@@ -205,13 +205,13 @@ function rangebreaksDefaults(itemIn?: any, itemOut?: any, containerOut?: any): v
         return Lib.coerce(itemIn, itemOut, layoutAttributes.rangebreaks, attr, dflt);
     }
 
-    var enabled = coerce('enabled');
+    const enabled = coerce('enabled');
 
     if(enabled) {
-        var bnds = coerce('bounds');
+        const bnds = coerce('bounds');
         if(bnds && bnds.length >= 2) {
-            var dfltPattern = '';
-            var i, q;
+            let dfltPattern = '';
+            let i, q;
             if(bnds.length === 2) {
                 for(i = 0; i < 2; i++) {
                     q = indexOfDay(bnds[i]);
@@ -221,7 +221,7 @@ function rangebreaksDefaults(itemIn?: any, itemOut?: any, containerOut?: any): v
                     }
                 }
             }
-            var pattern = coerce('pattern', dfltPattern);
+            const pattern = coerce('pattern', dfltPattern);
             if(pattern === DAY_OF_WEEK) {
                 for(i = 0; i < 2; i++) {
                     q = indexOfDay(bnds[i]);
@@ -273,7 +273,7 @@ function rangebreaksDefaults(itemIn?: any, itemOut?: any, containerOut?: any): v
             }
 
             if(containerOut.autorange === false) {
-                var rng = containerOut.range;
+                const rng = containerOut.range;
 
                 // if bounds are bigger than the (set) range, disable break
                 if(rng[0] < rng[1]) {
@@ -287,7 +287,7 @@ function rangebreaksDefaults(itemIn?: any, itemOut?: any, containerOut?: any): v
                 }
             }
         } else {
-            var values = coerce('values');
+            const values = coerce('values');
 
             if(values && values.length) {
                 coerce('dvalue');
@@ -300,7 +300,7 @@ function rangebreaksDefaults(itemIn?: any, itemOut?: any, containerOut?: any): v
 }
 
 // these numbers are one more than what bounds would be mapped to
-var dayStrToNum = {
+const dayStrToNum = {
     sun: 1,
     mon: 2,
     tue: 3,

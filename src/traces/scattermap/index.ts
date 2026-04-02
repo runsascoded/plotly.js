@@ -23,7 +23,7 @@ export default {
 
     styleOnSelect: function(_, cd) {
         if(cd) {
-            var trace = cd[0].trace;
+            const trace = cd[0].trace;
             trace._glTrace.update(cd);
         }
     },

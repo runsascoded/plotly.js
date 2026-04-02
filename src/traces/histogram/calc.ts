@@ -13,32 +13,32 @@ import doAvg from './average.js';
 import getBinSpanLabelRound from './bin_label_vals.js';
 
 function calc(gd: GraphDiv, trace: FullTrace): any[] {
-    var pos = [];
-    var size = [];
-    var isHorizontal = trace.orientation === 'h';
-    var pa = Axes.getFromId(gd, isHorizontal ? trace.yaxis : trace.xaxis);
-    var mainData = isHorizontal ? 'y' : 'x';
-    var counterData = {x: 'y', y: 'x'}[mainData];
-    var calendar = trace[mainData + 'calendar'];
-    var cumulativeSpec = trace.cumulative;
-    var i;
+    const pos = [];
+    const size = [];
+    const isHorizontal = trace.orientation === 'h';
+    const pa = Axes.getFromId(gd, isHorizontal ? trace.yaxis : trace.xaxis);
+    const mainData = isHorizontal ? 'y' : 'x';
+    const counterData = {x: 'y', y: 'x'}[mainData];
+    const calendar = trace[mainData + 'calendar'];
+    const cumulativeSpec = trace.cumulative;
+    let i;
 
-    var binsAndPos = calcAllAutoBins(gd, trace, pa, mainData);
-    var binSpec = binsAndPos[0];
-    var pos0 = binsAndPos[1];
+    const binsAndPos = calcAllAutoBins(gd, trace, pa, mainData);
+    const binSpec = binsAndPos[0];
+    const pos0 = binsAndPos[1];
 
-    var nonuniformBins = typeof binSpec.size === 'string';
-    var binEdges = [];
-    var bins = nonuniformBins ? binEdges : binSpec;
+    const nonuniformBins = typeof binSpec.size === 'string';
+    const binEdges = [];
+    let bins = nonuniformBins ? binEdges : binSpec;
     // make the empty bin array
-    var inc = [];
-    var counts = [];
-    var inputPoints = [];
-    var total = 0;
-    var norm = trace.histnorm;
-    var func = trace.histfunc;
-    var densityNorm = norm.indexOf('density') !== -1;
-    var i2, binEnd, n;
+    const inc = [];
+    const counts = [];
+    const inputPoints = [];
+    let total = 0;
+    let norm = trace.histnorm;
+    const func = trace.histfunc;
+    let densityNorm = norm.indexOf('density') !== -1;
+    let i2, binEnd, n;
 
     if(cumulativeSpec.enabled && densityNorm) {
         // we treat "cumulative" like it means "integral" if you use a density norm,
@@ -47,13 +47,13 @@ function calc(gd: GraphDiv, trace: FullTrace): any[] {
         densityNorm = false;
     }
 
-    var extremeFunc = func === 'max' || func === 'min';
-    var sizeInit = extremeFunc ? null : 0;
-    var binFunc: (n: number, i: number, size: any[], counterData?: any, counts?: any[]) => number = binFunctions.count;
-    var normFunc = normFunctions[norm];
-    var isAvg = false;
-    var pr2c = function(v) { return pa.r2c(v, 0, calendar); };
-    var rawCounterData;
+    const extremeFunc = func === 'max' || func === 'min';
+    const sizeInit = extremeFunc ? null : 0;
+    let binFunc: (n: number, i: number, size: any[], counterData?: any, counts?: any[]) => number = binFunctions.count;
+    const normFunc = normFunctions[norm];
+    let isAvg = false;
+    const pr2c = function(v) { return pa.r2c(v, 0, calendar); };
+    let rawCounterData;
 
     if(Lib.isArrayOrTypedArray(trace[counterData]) && func !== 'count') {
         rawCounterData = trace[counterData];
@@ -97,8 +97,8 @@ function calc(gd: GraphDiv, trace: FullTrace): any[] {
 
     // stash left and right gaps by group
     if(!gd._fullLayout._roundFnOpts) gd._fullLayout._roundFnOpts = {};
-    var groupName = trace['_' + mainData + 'bingroup'];
-    var roundFnOpts: any = {leftGap: Infinity, rightGap: Infinity};
+    const groupName = trace['_' + mainData + 'bingroup'];
+    let roundFnOpts: any = {leftGap: Infinity, rightGap: Infinity};
     if(groupName) {
         if(!gd._fullLayout._roundFnOpts[groupName]) gd._fullLayout._roundFnOpts[groupName] = roundFnOpts;
         roundFnOpts = gd._fullLayout._roundFnOpts[groupName];
@@ -106,13 +106,13 @@ function calc(gd: GraphDiv, trace: FullTrace): any[] {
 
     // bin the data
     // and make histogram-specific pt-number-to-cd-index map object
-    var nMax = size.length;
-    var uniqueValsPerBin = true;
-    var leftGap = roundFnOpts.leftGap;
-    var rightGap = roundFnOpts.rightGap;
-    var ptNumber2cdIndex: any = {};
+    const nMax = size.length;
+    let uniqueValsPerBin = true;
+    let leftGap = roundFnOpts.leftGap;
+    let rightGap = roundFnOpts.rightGap;
+    const ptNumber2cdIndex: any = {};
     for(i = 0; i < pos0.length; i++) {
-        var posi = pos0[i];
+        const posi = pos0[i];
         n = Lib.findBin(posi, bins);
         if(n >= 0 && n < nMax) {
             total += binFunc(n, i, size, rawCounterData, counts);
@@ -129,11 +129,11 @@ function calc(gd: GraphDiv, trace: FullTrace): any[] {
     roundFnOpts.leftGap = leftGap;
     roundFnOpts.rightGap = rightGap;
 
-    var roundFn;
+    let roundFn;
     if(!uniqueValsPerBin) {
         roundFn = function(v, isRightEdge) {
             return function() {
-                var roundFnOpts = gd._fullLayout._roundFnOpts[groupName];
+                const roundFnOpts = gd._fullLayout._roundFnOpts[groupName];
                 return getBinSpanLabelRound(
                     roundFnOpts.leftGap,
                     roundFnOpts.rightGap,
@@ -150,10 +150,10 @@ function calc(gd: GraphDiv, trace: FullTrace): any[] {
     // after all normalization etc, now we can accumulate if desired
     if(cumulativeSpec.enabled) cdf(size, cumulativeSpec.direction, cumulativeSpec.currentbin);
 
-    var seriesLen = Math.min(pos.length, size.length);
-    var cd = [];
-    var firstNonzero = 0;
-    var lastNonzero = seriesLen - 1;
+    const seriesLen = Math.min(pos.length, size.length);
+    const cd = [];
+    let firstNonzero = 0;
+    let lastNonzero = seriesLen - 1;
 
     // look for empty bins at the ends to remove, so autoscale omits them
     for(i = 0; i < seriesLen; i++) {
@@ -172,7 +172,7 @@ function calc(gd: GraphDiv, trace: FullTrace): any[] {
     // create the "calculated data" to plot
     for(i = firstNonzero; i <= lastNonzero; i++) {
         if((isNumeric(pos[i]) && isNumeric(size[i]))) {
-            var cdi: any = {
+            const cdi: any = {
                 p: pos[i],
                 s: size[i],
                 b: 0
@@ -237,17 +237,17 @@ function calc(gd: GraphDiv, trace: FullTrace): any[] {
  * bingroup.
  */
 function calcAllAutoBins(gd: GraphDiv, trace: FullTrace, pa: FullAxis, mainData: string, _overlayEdgeCase?: boolean): any[] {
-    var binAttr = mainData + 'bins';
-    var fullLayout = gd._fullLayout;
-    var groupName = trace['_' + mainData + 'bingroup'];
-    var binOpts = fullLayout._histogramBinOpts[groupName];
-    var isOverlay = fullLayout.barmode === 'overlay';
-    var i, traces, tracei, calendar, pos0, autoVals, cumulativeSpec;
+    const binAttr = mainData + 'bins';
+    const fullLayout = gd._fullLayout;
+    const groupName = trace['_' + mainData + 'bingroup'];
+    const binOpts = fullLayout._histogramBinOpts[groupName];
+    const isOverlay = fullLayout.barmode === 'overlay';
+    let i, traces, tracei, calendar, pos0, autoVals, cumulativeSpec;
 
-    var r2c = function(v) { return pa.r2c(v, 0, calendar); };
-    var c2r = function(v) { return pa.c2r(v, 0, calendar); };
+    const r2c = function(v) { return pa.r2c(v, 0, calendar); };
+    const c2r = function(v) { return pa.c2r(v, 0, calendar); };
 
-    var cleanBound = pa.type === 'date' ?
+    const cleanBound = pa.type === 'date' ?
         function(v) { return (v || v === 0) ? Lib.cleanDate(v, null, calendar) : null; } :
         function(v) { return isNumeric(v) ? Number(v) : null; };
 
@@ -267,20 +267,20 @@ function calcAllAutoBins(gd: GraphDiv, trace: FullTrace, pa: FullAxis, mainData:
         delete trace['_' + mainData + 'autoBinFinished'];
     } else {
         traces = binOpts.traces;
-        var allPos = [];
+        let allPos = [];
 
         // Note: we're including `legendonly` traces here for autobin purposes,
         // so that showing & hiding from the legend won't affect bins.
         // But this complicates things a bit since those traces don't `calc`,
         // hence `isFirstVisible`.
-        var isFirstVisible = true;
-        var has2dMap = false;
-        var hasHist2dContour = false;
+        let isFirstVisible = true;
+        let has2dMap = false;
+        let hasHist2dContour = false;
         for(i = 0; i < traces.length; i++) {
             tracei = traces[i];
 
             if(tracei.visible) {
-                var mainDatai = binOpts.dirs[i];
+                const mainDatai = binOpts.dirs[i];
                 pos0 = tracei['_' + mainDatai + 'pos0'] = pa.makeCalcdata(tracei, mainDatai);
 
                 allPos = Lib.concat(allPos, pos0);
@@ -304,9 +304,9 @@ function calcAllAutoBins(gd: GraphDiv, trace: FullTrace, pa: FullAxis, mainData:
         }
 
         calendar = traces[0][mainData + 'calendar'];
-        var newBinSpec = Axes.autoBin(allPos, pa, binOpts.nbins, has2dMap, calendar, binOpts.sizeFound && binOpts.size);
+        let newBinSpec = Axes.autoBin(allPos, pa, binOpts.nbins, has2dMap, calendar, binOpts.sizeFound && binOpts.size);
 
-        var autoBin = traces[0]._autoBin = {};
+        const autoBin = traces[0]._autoBin = {};
         autoVals = autoBin[binOpts.dirs[0]] = {};
 
         if(hasHist2dContour) {
@@ -364,21 +364,21 @@ function calcAllAutoBins(gd: GraphDiv, trace: FullTrace, pa: FullAxis, mainData:
     // Each trace can specify its own start/end, or if omitted
     // we ensure they're beyond the bounds of this trace's data,
     // and we need to make sure start is aligned with the main start
-    var traceInputBins = trace._input[binAttr] || {};
-    var traceBinOptsCalc = Lib.extendFlat({}, binOpts);
-    var mainStart = binOpts.start;
-    var startIn = pa.r2l(traceInputBins.start);
-    var hasStart = startIn !== undefined;
+    const traceInputBins = trace._input[binAttr] || {};
+    const traceBinOptsCalc = Lib.extendFlat({}, binOpts);
+    const mainStart = binOpts.start;
+    const startIn = pa.r2l(traceInputBins.start);
+    const hasStart = startIn !== undefined;
     if((binOpts.startFound || hasStart) && startIn !== pa.r2l(mainStart)) {
         // We have an explicit start to reconcile across traces
         // if this trace has an explicit start, shift it down to a bin edge
         // if another trace had an explicit start, shift it down to a
         // bin edge past our data
-        var traceStart = hasStart ?
+        const traceStart = hasStart ?
             startIn :
             Lib.aggNums(Math.min, null, pos0);
 
-        var dummyAx = {
+        const dummyAx = {
             type: (pa.type === 'category' || pa.type === 'multicategory') ? 'linear' : pa.type,
             r2l: pa.r2l,
             dtick: binOpts.size,
@@ -386,7 +386,7 @@ function calcAllAutoBins(gd: GraphDiv, trace: FullTrace, pa: FullAxis, mainData:
             calendar: calendar,
             range: ([traceStart, Axes.tickIncrement(traceStart, binOpts.size, false, calendar)]).map(pa.l2r)
         };
-        var newStart = Axes.tickFirst(dummyAx);
+        let newStart = Axes.tickFirst(dummyAx);
         if(newStart > pa.r2l(traceStart)) {
             newStart = Axes.tickIncrement(newStart, binOpts.size, true, calendar);
         }
@@ -394,13 +394,13 @@ function calcAllAutoBins(gd: GraphDiv, trace: FullTrace, pa: FullAxis, mainData:
         if(!hasStart) Lib.nestedProperty(trace, binAttr + '.start').set(traceBinOptsCalc.start);
     }
 
-    var mainEnd = binOpts.end;
-    var endIn = pa.r2l(traceInputBins.end);
-    var hasEnd = endIn !== undefined;
+    const mainEnd = binOpts.end;
+    const endIn = pa.r2l(traceInputBins.end);
+    const hasEnd = endIn !== undefined;
     if((binOpts.endFound || hasEnd) && endIn !== pa.r2l(mainEnd)) {
         // Reconciling an explicit end is easier, as it doesn't need to
         // match bin edges
-        var traceEnd = hasEnd ?
+        const traceEnd = hasEnd ?
             endIn :
             Lib.aggNums(Math.max, null, pos0);
 
@@ -411,7 +411,7 @@ function calcAllAutoBins(gd: GraphDiv, trace: FullTrace, pa: FullAxis, mainData:
     // Backward compatibility for one-time autobinning.
     // autobin: true is handled in cleanData, but autobin: false
     // needs to be here where we have determined the values.
-    var autoBinAttr = 'autobin' + mainData;
+    const autoBinAttr = 'autobin' + mainData;
     if(trace._input[autoBinAttr] === false) {
         trace._input[binAttr] = Lib.extendFlat({}, trace[binAttr] || {});
         delete trace._input[autoBinAttr];
@@ -428,12 +428,12 @@ function calcAllAutoBins(gd: GraphDiv, trace: FullTrace, pa: FullAxis, mainData:
  * Returns the binSpec for the trace that sparked all this
  */
 function handleSingleValueOverlays(gd: GraphDiv, trace: FullTrace, pa: FullAxis, mainData: string, binAttr: string): any {
-    var fullLayout = gd._fullLayout;
-    var overlaidTraceGroup = getConnectedHistograms(gd, trace);
-    var pastThisTrace = false;
-    var minSize = Infinity;
-    var singleValuedTraces = [trace];
-    var i, tracei, binOpts;
+    const fullLayout = gd._fullLayout;
+    const overlaidTraceGroup = getConnectedHistograms(gd, trace);
+    let pastThisTrace = false;
+    let minSize = Infinity;
+    const singleValuedTraces = [trace];
+    let i, tracei, binOpts;
 
     // first collect all the:
     // - min bin size from all multi-valued traces
@@ -450,9 +450,9 @@ function handleSingleValueOverlays(gd: GraphDiv, trace: FullTrace, pa: FullAxis,
             binOpts = fullLayout._histogramBinOpts[tracei['_' + mainData + 'bingroup']];
             minSize = Math.min(minSize, binOpts.size || tracei[binAttr].size);
         } else {
-            var resulti = calcAllAutoBins(gd, tracei, pa, mainData, true);
-            var binSpeci = resulti[0];
-            var isSingleValued = resulti[2];
+            const resulti = calcAllAutoBins(gd, tracei, pa, mainData, true);
+            const binSpeci = resulti[0];
+            const isSingleValued = resulti[2];
 
             // so we can use this result when we get to tracei in the normal
             // course of events, mark it as done and put _pos0 back
@@ -469,10 +469,10 @@ function handleSingleValueOverlays(gd: GraphDiv, trace: FullTrace, pa: FullAxis,
 
     // find the real data values for each single-valued trace
     // hunt through pos0 for the first valid value
-    var dataVals = new Array(singleValuedTraces.length);
+    const dataVals = new Array(singleValuedTraces.length);
     for(i = 0; i < singleValuedTraces.length; i++) {
-        var pos0 = singleValuedTraces[i]['_' + mainData + 'pos0'];
-        for(var j = 0; j < pos0.length; j++) {
+        const pos0 = singleValuedTraces[i]['_' + mainData + 'pos0'];
+        for(let j = 0; j < pos0.length; j++) {
             if(pos0[j] !== undefined) {
                 dataVals[i] = pos0[j];
                 break;
@@ -489,9 +489,9 @@ function handleSingleValueOverlays(gd: GraphDiv, trace: FullTrace, pa: FullAxis,
     // now apply the min size we found to all single-valued traces
     for(i = 0; i < singleValuedTraces.length; i++) {
         tracei = singleValuedTraces[i];
-        var calendar = tracei[mainData + 'calendar'];
+        const calendar = tracei[mainData + 'calendar'];
 
-        var newBins = {
+        const newBins = {
             start: pa.c2r(dataVals[i] - minSize / 2, 0, calendar),
             end: pa.c2r(dataVals[i] + minSize / 2, 0, calendar),
             size: minSize
@@ -514,14 +514,14 @@ function handleSingleValueOverlays(gd: GraphDiv, trace: FullTrace, pa: FullAxis,
  * would have tons of edge cases and value judgments to make.
  */
 function getConnectedHistograms(gd: GraphDiv, trace: FullTrace): FullTrace[] {
-    var xid = trace.xaxis;
-    var yid = trace.yaxis;
-    var orientation = trace.orientation;
+    const xid = trace.xaxis;
+    const yid = trace.yaxis;
+    const orientation = trace.orientation;
 
-    var out = [];
-    var fullData = gd._fullData;
-    for(var i = 0; i < fullData.length; i++) {
-        var tracei = fullData[i];
+    const out = [];
+    const fullData = gd._fullData;
+    for(let i = 0; i < fullData.length; i++) {
+        const tracei = fullData[i];
         if(tracei.type === 'histogram' &&
             tracei.visible === true &&
             tracei.orientation === orientation &&
@@ -535,7 +535,7 @@ function getConnectedHistograms(gd: GraphDiv, trace: FullTrace): FullTrace[] {
 }
 
 function cdf(size: number[], direction: string, currentBin: string): void {
-    var i, vi, prevSum;
+    let i, vi, prevSum;
 
     function firstHalfPoint(i) {
         prevSum = size[i];

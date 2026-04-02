@@ -6,14 +6,14 @@ import _index from '../../lib/index.js';
 const { fillText } = _index;
 import delta from '../../constants/delta.js';
 
-var DIRSYMBOL: any = {
+const DIRSYMBOL: any = {
     increasing: delta.INCREASING.SYMBOL,
     decreasing: delta.DECREASING.SYMBOL
 };
 
 function hoverPoints(pointData,  xval,  yval,  hovermode) {
-    var cd = pointData.cd;
-    var trace = cd[0].trace;
+    const cd = pointData.cd;
+    const trace = cd[0].trace;
 
     if(trace.hoverlabel.split) {
         return hoverSplit(pointData, xval, yval, hovermode);
@@ -23,55 +23,55 @@ function hoverPoints(pointData,  xval,  yval,  hovermode) {
 }
 
 function _getClosestPoint(pointData,  xval,  yval,  hovermode) {
-    var cd = pointData.cd;
-    var xa = pointData.xa;
-    var trace = cd[0].trace;
-    var t = cd[0].t;
+    const cd = pointData.cd;
+    const xa = pointData.xa;
+    const trace = cd[0].trace;
+    const t = cd[0].t;
 
-    var type = trace.type;
-    var minAttr = type === 'ohlc' ? 'l' : 'min';
-    var maxAttr = type === 'ohlc' ? 'h' : 'max';
+    const type = trace.type;
+    const minAttr = type === 'ohlc' ? 'l' : 'min';
+    const maxAttr = type === 'ohlc' ? 'h' : 'max';
 
-    var hoverPseudoDistance, spikePseudoDistance;
+    let hoverPseudoDistance, spikePseudoDistance;
 
     // potentially shift xval for grouped candlesticks
-    var centerShift = t.bPos || 0;
-    var shiftPos = function(di) { return di.pos + centerShift - xval; };
+    const centerShift = t.bPos || 0;
+    const shiftPos = function(di) { return di.pos + centerShift - xval; };
 
     // ohlc and candlestick call displayHalfWidth different things...
-    var displayHalfWidth = t.bdPos || t.tickLen;
-    var hoverHalfWidth = t.wHover;
+    const displayHalfWidth = t.bdPos || t.tickLen;
+    const hoverHalfWidth = t.wHover;
 
     // if two figures are overlaying, let the narrowest one win
-    var pseudoDistance = Math.min(1, displayHalfWidth / Math.abs(xa.r2c(xa.range[1]) - xa.r2c(xa.range[0])));
+    const pseudoDistance = Math.min(1, displayHalfWidth / Math.abs(xa.r2c(xa.range[1]) - xa.r2c(xa.range[0])));
     hoverPseudoDistance = pointData.maxHoverDistance - pseudoDistance;
     spikePseudoDistance = pointData.maxSpikeDistance - pseudoDistance;
 
     function dx(di) {
-        var pos = shiftPos(di);
+        const pos = shiftPos(di);
         return Fx.inbox(pos - hoverHalfWidth, pos + hoverHalfWidth, hoverPseudoDistance);
     }
 
     function dy(di) {
-        var min = di[minAttr];
-        var max = di[maxAttr];
+        const min = di[minAttr];
+        const max = di[maxAttr];
         return (min === max || Fx.inbox(min - yval, max - yval, hoverPseudoDistance)) as any;
     }
 
     function dxy(di) { return (dx(di) + dy(di)) / 2; }
 
-    var distfn = Fx.getDistanceFunction(hovermode, dx, dy, dxy);
+    const distfn = Fx.getDistanceFunction(hovermode, dx, dy, dxy);
     Fx.getClosest(cd, distfn, pointData);
 
     if(pointData.index === false) return null;
 
-    var di = cd[pointData.index];
+    const di = cd[pointData.index];
 
     if(di.empty) return null;
 
-    var dir = di.dir;
-    var container = trace[dir];
-    var lc = container.line.color;
+    const dir = di.dir;
+    const container = trace[dir];
+    const lc = container.line.color;
 
     if(Color.opacity(lc) && container.line.width) pointData.color = lc;
     else pointData.color = container.fillcolor;
@@ -88,35 +88,35 @@ function _getClosestPoint(pointData,  xval,  yval,  hovermode) {
 }
 
 function hoverSplit(pointData,  xval,  yval,  hovermode) {
-    var cd = pointData.cd;
-    var ya = pointData.ya;
-    var trace = cd[0].trace;
-    var t = cd[0].t;
-    var closeBoxData = [];
+    const cd = pointData.cd;
+    const ya = pointData.ya;
+    const trace = cd[0].trace;
+    const t = cd[0].t;
+    const closeBoxData = [];
 
-    var closestPoint = _getClosestPoint(pointData, xval, yval, hovermode);
+    const closestPoint = _getClosestPoint(pointData, xval, yval, hovermode);
     // skip the rest (for this trace) if we didn't find a close point
     if(!closestPoint) return [];
 
-    var di = cd[closestPoint.index];
-    var hoverinfo = di.hi || trace.hoverinfo || '';
+    const di = cd[closestPoint.index];
+    const hoverinfo = di.hi || trace.hoverinfo || '';
 
     // If hoverinfo is 'none' or 'skip', we don't show any hover labels
     if (hoverinfo === 'none' || hoverinfo === 'skip') return [];
 
-    var attrs = ['high', 'open', 'close', 'low'];
+    const attrs = ['high', 'open', 'close', 'low'];
 
     // several attributes can have the same y-coordinate. We will
     // bunch them together in a single text block. For this, we keep
     // a dictionary mapping y-coord -> point data.
-    var usedVals: any = {};
+    const usedVals: any = {};
 
-    for(var i = 0; i < attrs.length; i++) {
-        var attr = attrs[i];
+    for(let i = 0; i < attrs.length; i++) {
+        const attr = attrs[i];
 
-        var val = trace[attr][closestPoint.index];
-        var valPx = ya.c2p(val, true);
-        var pointData2;
+        const val = trace[attr][closestPoint.index];
+        const valPx = ya.c2p(val, true);
+        let pointData2;
         if(val in usedVals) {
             pointData2 = usedVals[val];
             pointData2.yLabel += '<br>' + t.labels[attr] + Axes.hoverLabelText(ya, val, trace.yhoverformat);
@@ -139,33 +139,33 @@ function hoverSplit(pointData,  xval,  yval,  hovermode) {
 }
 
 function hoverOnPoints(pointData,  xval,  yval,  hovermode) {
-    var cd = pointData.cd;
-    var ya = pointData.ya;
-    var trace = cd[0].trace;
-    var t = cd[0].t;
+    const cd = pointData.cd;
+    const ya = pointData.ya;
+    const trace = cd[0].trace;
+    const t = cd[0].t;
 
-    var closestPoint = _getClosestPoint(pointData, xval, yval, hovermode);
+    const closestPoint = _getClosestPoint(pointData, xval, yval, hovermode);
     // skip the rest (for this trace) if we didn't find a close point
     if(!closestPoint) return [];
 
     // we don't make a calcdata point if we're missing any piece (x/o/h/l/c)
     // so we need to fix the index here to point to the data arrays
-    var cdIndex = closestPoint.index;
-    var di = cd[cdIndex];
-    var i = closestPoint.index = di.i;
-    var dir = di.dir;
+    const cdIndex = closestPoint.index;
+    const di = cd[cdIndex];
+    const i = closestPoint.index = di.i;
+    const dir = di.dir;
 
     function getLabelLine(attr) {
         return t.labels[attr] + Axes.hoverLabelText(ya, trace[attr][i], trace.yhoverformat);
     }
 
-    var hoverinfo = di.hi || trace.hoverinfo || '';
-    var hoverParts = hoverinfo.split('+');
-    var isAll = hoverinfo === 'all';
-    var hasY = isAll || hoverParts.indexOf('y') !== -1;
-    var hasText = isAll || hoverParts.indexOf('text') !== -1;
+    const hoverinfo = di.hi || trace.hoverinfo || '';
+    const hoverParts = hoverinfo.split('+');
+    const isAll = hoverinfo === 'all';
+    const hasY = isAll || hoverParts.indexOf('y') !== -1;
+    const hasText = isAll || hoverParts.indexOf('text') !== -1;
 
-    var textParts = hasY ? [
+    const textParts = hasY ? [
         getLabelLine('open'),
         getLabelLine('high'),
         getLabelLine('low'),

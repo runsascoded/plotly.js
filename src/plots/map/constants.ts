@@ -2,16 +2,16 @@ import sortObjectKeys from '../../lib/sort_object_keys.js';
 import arcgisSatHybrid from './styles/arcgis-sat-hybrid.js';
 import arcgisSat from './styles/arcgis-sat.js';
 
-var OSM = '© <a target="_blank" href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
+const OSM = '© <a target="_blank" href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
 
-var cartoPositron = 'https://basemaps.cartocdn.com/gl/positron-gl-style/style.json';
-var cartoDarkmatter = 'https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json';
-var cartoVoyager = 'https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json';
-var cartoPositronNoLabels = 'https://basemaps.cartocdn.com/gl/positron-nolabels-gl-style/style.json';
-var cartoDarkmatterNoLabels = 'https://basemaps.cartocdn.com/gl/dark-matter-nolabels-gl-style/style.json';
-var cartoVoyagerNoLabels = 'https://basemaps.cartocdn.com/gl/voyager-nolabels-gl-style/style.json';
+const cartoPositron = 'https://basemaps.cartocdn.com/gl/positron-gl-style/style.json';
+const cartoDarkmatter = 'https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json';
+const cartoVoyager = 'https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json';
+const cartoPositronNoLabels = 'https://basemaps.cartocdn.com/gl/positron-nolabels-gl-style/style.json';
+const cartoDarkmatterNoLabels = 'https://basemaps.cartocdn.com/gl/dark-matter-nolabels-gl-style/style.json';
+const cartoVoyagerNoLabels = 'https://basemaps.cartocdn.com/gl/voyager-nolabels-gl-style/style.json';
 
-var stylesMap = {
+const stylesMap = {
     basic: cartoVoyager,
     streets: cartoVoyager,
     outdoors: cartoVoyager,
@@ -62,7 +62,7 @@ var stylesMap = {
     'carto-voyager-nolabels': cartoVoyagerNoLabels,
 };
 
-var styleValuesMap = sortObjectKeys(stylesMap);
+const styleValuesMap = sortObjectKeys(stylesMap);
 
 export default {
     styleValueDflt: 'basic',

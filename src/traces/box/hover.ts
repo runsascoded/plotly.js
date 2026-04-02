@@ -3,14 +3,14 @@ import Axes from '../../plots/cartesian/axes.js';
 import Lib from '../../lib/index.js';
 import Fx from '../../components/fx/index.js';
 import Color from '../../components/color/index.js';
-var fillText = Lib.fillText;
+const fillText = Lib.fillText;
 
 function hoverPoints(pointData: any, xval: number, yval: number, hovermode: any): any[] {
-    var cd = pointData.cd;
-    var trace = cd[0].trace;
-    var hoveron = trace.hoveron;
-    var closeBoxData = [];
-    var closePtData;
+    const cd = pointData.cd;
+    const trace = cd[0].trace;
+    const hoveron = trace.hoveron;
+    let closeBoxData = [];
+    let closePtData;
 
     if(hoveron.indexOf('boxes') !== -1) {
         closeBoxData = closeBoxData.concat(hoverOnBoxes(pointData, xval, yval, hovermode));
@@ -37,25 +37,25 @@ function hoverPoints(pointData: any, xval: number, yval: number, hovermode: any)
 }
 
 function hoverOnBoxes(pointData: any, xval: number, yval: number, hovermode: any): any[] {
-    var cd = pointData.cd;
-    var xa = pointData.xa;
-    var ya = pointData.ya;
-    var trace = cd[0].trace;
-    var t = cd[0].t;
-    var isViolin = trace.type === 'violin';
+    const cd = pointData.cd;
+    const xa = pointData.xa;
+    const ya = pointData.ya;
+    const trace = cd[0].trace;
+    const t = cd[0].t;
+    const isViolin = trace.type === 'violin';
 
-    var pLetter, vLetter, pAxis, vAxis, vVal, pVal, dx, dy, dPos,
+    let pLetter, vLetter, pAxis, vAxis, vVal, pVal, dx, dy, dPos,
         hoverPseudoDistance, spikePseudoDistance;
 
-    var boxDelta = t.bdPos;
-    var boxDeltaPos, boxDeltaNeg;
-    var posAcceptance = t.wHover;
-    var shiftPos = function(di) { return pAxis.c2l(di.pos) + t.bPos - pAxis.c2l(pVal); };
+    const boxDelta = t.bdPos;
+    let boxDeltaPos, boxDeltaNeg;
+    const posAcceptance = t.wHover;
+    const shiftPos = function(di) { return pAxis.c2l(di.pos) + t.bPos - pAxis.c2l(pVal); };
 
     if(isViolin && trace.side !== 'both') {
         if(trace.side === 'positive') {
             dPos = function(di) {
-                var pos = shiftPos(di);
+                const pos = shiftPos(di);
                 return Fx.inbox(pos, pos + posAcceptance, hoverPseudoDistance);
             };
             boxDeltaPos = boxDelta;
@@ -63,7 +63,7 @@ function hoverOnBoxes(pointData: any, xval: number, yval: number, hovermode: any
         }
         if(trace.side === 'negative') {
             dPos = function(di) {
-                var pos = shiftPos(di);
+                const pos = shiftPos(di);
                 return Fx.inbox(pos - posAcceptance, pos, hoverPseudoDistance);
             };
             boxDeltaPos = 0;
@@ -71,13 +71,13 @@ function hoverOnBoxes(pointData: any, xval: number, yval: number, hovermode: any
         }
     } else {
         dPos = function(di) {
-            var pos = shiftPos(di);
+            const pos = shiftPos(di);
             return Fx.inbox(pos - posAcceptance, pos + posAcceptance, hoverPseudoDistance);
         };
         boxDeltaPos = boxDeltaNeg = boxDelta;
     }
 
-    var dVal;
+    let dVal;
 
     if(isViolin) {
         dVal = function(di) {
@@ -110,21 +110,21 @@ function hoverOnBoxes(pointData: any, xval: number, yval: number, hovermode: any
     }
 
     // if two boxes are overlaying, let the narrowest one win
-    var pseudoDistance = Math.min(1, boxDelta / Math.abs(pAxis.r2c(pAxis.range[1]) - pAxis.r2c(pAxis.range[0])));
+    const pseudoDistance = Math.min(1, boxDelta / Math.abs(pAxis.r2c(pAxis.range[1]) - pAxis.r2c(pAxis.range[0])));
     hoverPseudoDistance = pointData.maxHoverDistance - pseudoDistance;
     spikePseudoDistance = pointData.maxSpikeDistance - pseudoDistance;
 
     function dxy(di) { return (dx(di) + dy(di)) / 2; }
-    var distfn = Fx.getDistanceFunction(hovermode, dx, dy, dxy);
+    const distfn = Fx.getDistanceFunction(hovermode, dx, dy, dxy);
     Fx.getClosest(cd, distfn, pointData);
 
     // skip the rest (for this trace) if we didn't find a close point
     // and create the item(s) in closedata for this point
     if(pointData.index === false) return [];
 
-    var di = cd[pointData.index];
-    var lc = trace.line.color;
-    var mc = (trace.marker || {}).color;
+    const di = cd[pointData.index];
+    const lc = trace.line.color;
+    const mc = (trace.marker || {}).color;
 
     if(Color.opacity(lc) && trace.line.width) pointData.color = lc;
     else if(Color.opacity(mc) && trace.boxpoints) pointData.color = mc;
@@ -135,39 +135,39 @@ function hoverOnBoxes(pointData: any, xval: number, yval: number, hovermode: any
 
     pointData[pLetter + 'LabelVal'] = di.orig_p !== undefined ? di.orig_p : di.pos;
 
-    var spikePosAttr = pLetter + 'Spike';
+    const spikePosAttr = pLetter + 'Spike';
     pointData.spikeDistance = dxy(di) * spikePseudoDistance / hoverPseudoDistance;
     pointData[spikePosAttr] = pAxis.c2p(di.pos, true);
 
-    var hasMean = trace.boxmean || (trace.sizemode === 'sd') || (trace.meanline || {}).visible;
-    var hasFences = trace.boxpoints || trace.points;
+    const hasMean = trace.boxmean || (trace.sizemode === 'sd') || (trace.meanline || {}).visible;
+    const hasFences = trace.boxpoints || trace.points;
 
     // labels with equal values (e.g. when min === q1) should still be presented in the order they have when they're unequal
-    var attrs =
+    const attrs =
         (hasFences && hasMean) ? ['max', 'uf', 'q3', 'med', 'mean', 'q1', 'lf', 'min'] :
         (hasFences && !hasMean) ? ['max', 'uf', 'q3', 'med', 'q1', 'lf', 'min'] :
         (!hasFences && hasMean) ? ['max', 'q3', 'med', 'mean', 'q1', 'min'] :
         ['max', 'q3', 'med', 'q1', 'min'];
 
-    var rev = vAxis.range[1] < vAxis.range[0];
+    const rev = vAxis.range[1] < vAxis.range[0];
 
     if(trace.orientation === (rev ? 'v' : 'h')) {
         attrs.reverse();
     }
 
-    var spikeDistance = pointData.spikeDistance;
-    var spikePosition = pointData[spikePosAttr];
+    const spikeDistance = pointData.spikeDistance;
+    const spikePosition = pointData[spikePosAttr];
 
-    var closeBoxData = [];
-    for(var i = 0; i < attrs.length; i++) {
-        var attr = attrs[i];
+    const closeBoxData = [];
+    for(let i = 0; i < attrs.length; i++) {
+        const attr = attrs[i];
 
         if(!(attr in di)) continue;
 
         // copy out to a new object for each value to label
-        var val = di[attr];
-        var valPx = vAxis.c2p(val, true);
-        var pointData2 = Lib.extendFlat({}, pointData);
+        const val = di[attr];
+        const valPx = vAxis.c2p(val, true);
+        const pointData2 = Lib.extendFlat({}, pointData);
 
         pointData2.attr = attr;
         pointData2[vLetter + '0'] = pointData2[vLetter + '1'] = valPx;
@@ -192,7 +192,7 @@ function hoverOnBoxes(pointData: any, xval: number, yval: number, hovermode: any
     pointData.name = '';
     pointData.spikeDistance = undefined;
     pointData[spikePosAttr] = undefined;
-    for(var k = 0; k < closeBoxData.length; k++) {
+    for(let k = 0; k < closeBoxData.length; k++) {
         if(closeBoxData[k].attr !== 'med') {
             closeBoxData[k].name = '';
             closeBoxData[k].spikeDistance = undefined;
@@ -207,35 +207,35 @@ function hoverOnBoxes(pointData: any, xval: number, yval: number, hovermode: any
 }
 
 function hoverOnPoints(pointData: any, xval: number, yval: number): any {
-    var cd = pointData.cd;
-    var xa = pointData.xa;
-    var ya = pointData.ya;
-    var trace = cd[0].trace;
-    var xPx = xa.c2p(xval);
-    var yPx = ya.c2p(yval);
-    var closePtData;
+    const cd = pointData.cd;
+    const xa = pointData.xa;
+    const ya = pointData.ya;
+    const trace = cd[0].trace;
+    const xPx = xa.c2p(xval);
+    const yPx = ya.c2p(yval);
+    let closePtData;
 
-    var dx = function(di) {
-        var rad = Math.max(3, di.mrc || 0);
+    const dx = function(di) {
+        const rad = Math.max(3, di.mrc || 0);
         return Math.max(Math.abs(xa.c2p(di.x) - xPx) - rad, 1 - 3 / rad);
     };
-    var dy = function(di) {
-        var rad = Math.max(3, di.mrc || 0);
+    const dy = function(di) {
+        const rad = Math.max(3, di.mrc || 0);
         return Math.max(Math.abs(ya.c2p(di.y) - yPx) - rad, 1 - 3 / rad);
     };
-    var distfn = Fx.quadrature(dx, dy);
+    const distfn = Fx.quadrature(dx, dy);
 
     // show one point per trace
-    var ijClosest: false | [number, number] = false;
-    var di, pt;
+    let ijClosest: false | [number, number] = false;
+    let di, pt;
 
-    for(var i = 0; i < cd.length; i++) {
+    for(let i = 0; i < cd.length; i++) {
         di = cd[i];
 
-        for(var j = 0; j < (di.pts || []).length; j++) {
+        for(let j = 0; j < (di.pts || []).length; j++) {
             pt = di.pts[j];
 
-            var newDistance = distfn(pt);
+            const newDistance = distfn(pt);
             if(newDistance <= pointData.distance) {
                 pointData.distance = newDistance;
                 ijClosest = [i, j];
@@ -248,9 +248,9 @@ function hoverOnPoints(pointData: any, xval: number, yval: number): any {
     di = cd[ijClosest[0]];
     pt = di.pts[ijClosest[1]];
 
-    var xc = xa.c2p(pt.x, true);
-    var yc = ya.c2p(pt.y, true);
-    var rad = pt.mrc || 1;
+    const xc = xa.c2p(pt.x, true);
+    const yc = ya.c2p(pt.y, true);
+    const rad = pt.mrc || 1;
 
     closePtData = Lib.extendFlat({}, pointData, {
         // corresponds to index in x/y input data array
@@ -265,9 +265,9 @@ function hoverOnPoints(pointData: any, xval: number, yval: number): any {
         hovertemplate: trace.hovertemplate
     });
 
-    var origPos = di.orig_p;
-    var pos = origPos !== undefined ? origPos : di.pos;
-    var pa;
+    const origPos = di.orig_p;
+    const pos = origPos !== undefined ? origPos : di.pos;
+    let pa;
     if(trace.orientation === 'h') {
         pa = ya;
         closePtData.xLabelVal = pt.x;
@@ -278,7 +278,7 @@ function hoverOnPoints(pointData: any, xval: number, yval: number): any {
         closePtData.yLabelVal = pt.y;
     }
 
-    var pLetter = pa._id.charAt(0);
+    const pLetter = pa._id.charAt(0);
     closePtData[pLetter + 'Spike'] = pa.c2p(di.pos, true);
 
     fillText(pt, trace, closePtData);

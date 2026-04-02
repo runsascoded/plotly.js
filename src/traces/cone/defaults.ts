@@ -8,13 +8,13 @@ export default function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace,
         return Lib.coerce(traceIn, traceOut, attributes, attr, dflt);
     }
 
-    var u = coerce('u');
-    var v = coerce('v');
-    var w = coerce('w');
+    const u = coerce('u');
+    const v = coerce('v');
+    const w = coerce('w');
 
-    var x = coerce('x');
-    var y = coerce('y');
-    var z = coerce('z');
+    const x = coerce('x');
+    const y = coerce('y');
+    const z = coerce('z');
 
     if (
         !u ||
@@ -34,7 +34,7 @@ export default function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace,
         return;
     }
 
-    var sizemode = coerce('sizemode');
+    const sizemode = coerce('sizemode');
     coerce('sizeref', sizemode === 'raw' ? 1 : 0.5);
 
     coerce('anchor');

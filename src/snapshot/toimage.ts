@@ -14,10 +14,10 @@ import type { GraphDiv } from '../../types/core';
  */
 function toImage(gd: GraphDiv, opts: any) {
     // first clone the GD so we can operate in a clean environment
-    var ev = new EventEmitter();
+    let ev = new EventEmitter();
 
-    var clone = clonePlot(gd, {format: 'png'});
-    var clonedGd: any = clone.gd;
+    const clone = clonePlot(gd, {format: 'png'});
+    const clonedGd: any = clone.gd;
 
     // put the cloned div somewhere off screen before attaching to DOM
     clonedGd.style.position = 'absolute';
@@ -25,12 +25,12 @@ function toImage(gd: GraphDiv, opts: any) {
     document.body.appendChild(clonedGd);
 
     function wait() {
-        var delay = helpers.getDelay(clonedGd._fullLayout);
+        const delay = helpers.getDelay(clonedGd._fullLayout);
 
         setTimeout(function() {
-            var svg = toSVG(clonedGd);
+            const svg = toSVG(clonedGd);
 
-            var canvas = document.createElement('canvas');
+            const canvas = document.createElement('canvas');
             canvas.id = Lib.randstr();
 
             ev = svgToImg({
@@ -48,7 +48,7 @@ function toImage(gd: GraphDiv, opts: any) {
         }, delay);
     }
 
-    var redrawFunc = helpers.getRedrawFunc(clonedGd);
+    const redrawFunc = helpers.getRedrawFunc(clonedGd);
 
     Registry.call('_doPlot', clonedGd, clone.data, clone.layout, clone.config)
         .then(redrawFunc)

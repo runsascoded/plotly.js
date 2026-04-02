@@ -3,7 +3,7 @@ import { counter as counterRegex } from '../../lib/regex.js';
 import sortObjectKeys from '../../lib/sort_object_keys.js';
 import _scales from './scales.js';
 const { scales: palettes } = _scales;
-var paletteStr = sortObjectKeys(palettes);
+const paletteStr = sortObjectKeys(palettes);
 
 function code(s: string): string {
     return '`' + s + '`';
@@ -13,15 +13,15 @@ export default function colorScaleAttrs(context: string, opts?: any): any {
     context = context || '';
     opts = opts || {};
 
-    var cLetter = opts.cLetter || 'c';
-    var onlyIfNumerical = ('onlyIfNumerical' in opts) ? opts.onlyIfNumerical : Boolean(context);
-    var noScale = ('noScale' in opts) ? opts.noScale : context === 'marker.line';
-    var showScaleDflt = ('showScaleDflt' in opts) ? opts.showScaleDflt : cLetter === 'z';
-    var colorscaleDflt = typeof opts.colorscaleDflt === 'string' ? palettes[opts.colorscaleDflt] : null;
-    var editTypeOverride = opts.editTypeOverride || '';
-    var contextHead = context ? (context + '.') : '';
+    const cLetter = opts.cLetter || 'c';
+    const onlyIfNumerical = ('onlyIfNumerical' in opts) ? opts.onlyIfNumerical : Boolean(context);
+    const noScale = ('noScale' in opts) ? opts.noScale : context === 'marker.line';
+    const showScaleDflt = ('showScaleDflt' in opts) ? opts.showScaleDflt : cLetter === 'z';
+    const colorscaleDflt = typeof opts.colorscaleDflt === 'string' ? palettes[opts.colorscaleDflt] : null;
+    const editTypeOverride = opts.editTypeOverride || '';
+    const contextHead = context ? (context + '.') : '';
 
-    var colorAttr, colorAttrFull;
+    let colorAttr, colorAttrFull;
 
     if('colorAttr' in opts) {
         colorAttr = opts.colorAttr;
@@ -31,24 +31,24 @@ export default function colorScaleAttrs(context: string, opts?: any): any {
         colorAttrFull = 'in ' + code(contextHead + colorAttr);
     }
 
-    var effectDesc = onlyIfNumerical ?
+    const effectDesc = onlyIfNumerical ?
         ' Has an effect only if ' + colorAttrFull + ' is set to a numerical array.' :
         '';
 
-    var auto = cLetter + 'auto';
-    var min = cLetter + 'min';
-    var max = cLetter + 'max';
-    var mid = cLetter + 'mid';
-    var autoFull = code(contextHead + auto);
-    var minFull = code(contextHead + min);
-    var maxFull = code(contextHead + max);
-    var minmaxFull = minFull + ' and ' + maxFull;
-    var autoImpliedEdits: Record<string, any> = {};
+    const auto = cLetter + 'auto';
+    const min = cLetter + 'min';
+    const max = cLetter + 'max';
+    const mid = cLetter + 'mid';
+    const autoFull = code(contextHead + auto);
+    const minFull = code(contextHead + min);
+    const maxFull = code(contextHead + max);
+    const minmaxFull = minFull + ' and ' + maxFull;
+    const autoImpliedEdits: Record<string, any> = {};
     autoImpliedEdits[min] = autoImpliedEdits[max] = undefined;
-    var minmaxImpliedEdits: Record<string, any> = {};
+    const minmaxImpliedEdits: Record<string, any> = {};
     minmaxImpliedEdits[auto] = false;
 
-    var attrs: Record<string, any> = {};
+    const attrs: Record<string, any> = {};
 
     if(colorAttr === 'color') {
         attrs.color = {

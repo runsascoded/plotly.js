@@ -20,7 +20,7 @@ export default function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace,
         return Lib.coerce(traceIn, traceOut, attributes, attr, dflt);
     }
 
-    var len = handleXYDefaults(traceIn, traceOut, layout, coerce);
+    const len = handleXYDefaults(traceIn, traceOut, layout, coerce);
     if (!len) traceOut.visible = false;
 
     if (!traceOut.visible) return;
@@ -31,12 +31,12 @@ export default function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace,
 
     coerce('zorder');
 
-    var stackGroupOpts = handleStackDefaults(traceIn, traceOut, layout, coerce);
+    const stackGroupOpts = handleStackDefaults(traceIn, traceOut, layout, coerce);
     if (layout.scattermode === 'group' && traceOut.orientation === undefined) {
         coerce('orientation', 'v');
     }
 
-    var defaultMode = !stackGroupOpts && len < constants.PTS_LINESONLY ? 'lines+markers' : 'lines';
+    const defaultMode = !stackGroupOpts && len < constants.PTS_LINESONLY ? 'lines+markers' : 'lines';
     coerce('text');
     coerce('hovertext');
     coerce('mode', defaultMode);
@@ -58,7 +58,7 @@ export default function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace,
         handleTextDefaults(traceIn, traceOut, layout, coerce);
     }
 
-    var dfltHoverOn = [];
+    const dfltHoverOn = [];
 
     if (subTypes.hasMarkers(traceOut) || subTypes.hasText(traceOut)) {
         coerce('cliponaxis');
@@ -77,8 +77,8 @@ export default function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace,
         coercePattern(coerce, 'fillpattern', traceOut.fillcolor, false);
     }
 
-    var lineColor = (traceOut.line || {}).color;
-    var markerColor = (traceOut.marker || {}).color;
+    const lineColor = (traceOut.line || {}).color;
+    const markerColor = (traceOut.marker || {}).color;
 
     if (traceOut.fill === 'tonext' || traceOut.fill === 'toself') {
         dfltHoverOn.push('fills');
@@ -88,7 +88,7 @@ export default function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace,
         coerce('hovertemplate');
         coerce('hovertemplatefallback');
     }
-    var errorBarsSupplyDefaults = Registry.getComponentMethod('errorbars', 'supplyDefaults');
+    const errorBarsSupplyDefaults = Registry.getComponentMethod('errorbars', 'supplyDefaults');
     errorBarsSupplyDefaults(traceIn, traceOut, lineColor || markerColor || defaultColor, { axis: 'y' });
     errorBarsSupplyDefaults(traceIn, traceOut, lineColor || markerColor || defaultColor, { axis: 'x', inherit: 'y' });
 

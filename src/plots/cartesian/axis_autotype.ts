@@ -3,19 +3,19 @@ import { cleanNumber, isArrayOrTypedArray, isDateTime } from '../../lib/index.js
 import _numerical from '../../constants/numerical.js';
 const { BADNUM } = _numerical;
 
-var round = Math.round;
+const round = Math.round;
 
 export default function autoType(array?: any, calendar?: any, opts?: any): string {
-    var a = array;
+    let a = array;
 
-    var noMultiCategory = opts.noMultiCategory;
+    const noMultiCategory = opts.noMultiCategory;
     if(isArrayOrTypedArray(a) && !a.length) return '-';
     if(!noMultiCategory && multiCategory(a)) return 'multicategory';
     if(noMultiCategory && Array.isArray(a[0])) { // no need to flat typed arrays here
-        var b = [];
-        for(var i = 0; i < a.length; i++) {
+        const b = [];
+        for(let i = 0; i < a.length; i++) {
             if(isArrayOrTypedArray(a[i])) {
-                for(var j = 0; j < a[i].length; j++) {
+                for(let j = 0; j < a[i].length; j++) {
                     b.push(a[i][j]);
                 }
             }
@@ -25,7 +25,7 @@ export default function autoType(array?: any, calendar?: any, opts?: any): strin
 
     if(moreDates(a, calendar)) return 'date';
 
-    var convertNumeric = opts.autotypenumbers !== 'strict'; // compare against strict, just in case autotypenumbers was not provided in opts
+    const convertNumeric = opts.autotypenumbers !== 'strict'; // compare against strict, just in case autotypenumbers was not provided in opts
     if(category(a, convertNumeric)) return 'category';
     if(linearOK(a, convertNumeric)) return 'linear';
 
@@ -39,9 +39,9 @@ function hasTypeNumber(v?: any, convertNumeric?: any): any {
 // is there at least one number in array? If not, we should leave
 // ax.type empty so it can be autoset later
 function linearOK(a?: any, convertNumeric?: any): boolean {
-    var len = a.length;
+    const len = a.length;
 
-    for(var i = 0; i < len; i++) {
+    for(let i = 0; i < len; i++) {
         if(hasTypeNumber(a[i], convertNumeric)) return true;
     }
 
@@ -55,17 +55,17 @@ function linearOK(a?: any, convertNumeric?: any): boolean {
 // numbers and a few dates
 // as with categories, consider DISTINCT values only.
 function moreDates(a?: any, calendar?: any): boolean {
-    var len = a.length;
+    const len = a.length;
 
-    var inc = getIncrement(len);
-    var dats = 0;
-    var nums = 0;
-    var seen = {};
+    const inc = getIncrement(len);
+    let dats = 0;
+    let nums = 0;
+    const seen = {};
 
-    for(var f = 0; f < len; f += inc) {
-        var i = round(f);
-        var ai = a[i];
-        var stri = String(ai);
+    for(let f = 0; f < len; f += inc) {
+        const i = round(f);
+        const ai = a[i];
+        const stri = String(ai);
         if(seen[stri]) continue;
         seen[stri] = 1;
 
@@ -84,21 +84,21 @@ function getIncrement(len?: any): number {
 // are the (x,y)-values in gd.data mostly text?
 // require twice as many DISTINCT categories as distinct numbers
 function category(a?: any, convertNumeric?: any): boolean {
-    var len = a.length;
+    const len = a.length;
 
-    var inc = getIncrement(len);
-    var nums = 0;
-    var cats = 0;
-    var seen: any = {};
+    const inc = getIncrement(len);
+    let nums = 0;
+    let cats = 0;
+    const seen: any = {};
 
-    for(var f = 0; f < len; f += inc) {
-        var i = round(f);
-        var ai = a[i];
-        var stri = String(ai);
+    for(let f = 0; f < len; f += inc) {
+        const i = round(f);
+        const ai = a[i];
+        const stri = String(ai);
         if(seen[stri]) continue;
         seen[stri] = 1;
 
-        var t = typeof ai;
+        const t = typeof ai;
         if(t === 'boolean') cats++;
         else if(convertNumeric ? cleanNumber(ai) !== BADNUM : t === 'number') nums++;
         else if(t === 'string') cats++;

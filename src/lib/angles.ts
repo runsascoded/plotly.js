@@ -1,7 +1,7 @@
 import { mod, modHalf } from './mod.js';
 
-var PI = Math.PI;
-var twoPI = 2 * PI;
+const PI = Math.PI;
+const twoPI = 2 * PI;
 
 function deg2rad(deg: number): number { return deg / 180 * PI; }
 
@@ -53,7 +53,7 @@ function angleDist(a: number, b: number): number {
 function isAngleInsideSector(a: number, aBnds: [number, number]): boolean {
     if(isFullCircle(aBnds)) return true;
 
-    var s0: number, s1: number;
+    let s0: number, s1: number;
 
     if(aBnds[0] < aBnds[1]) {
         s0 = aBnds[0];
@@ -67,8 +67,8 @@ function isAngleInsideSector(a: number, aBnds: [number, number]): boolean {
     s1 = mod(s1, twoPI);
     if(s0 > s1) s1 += twoPI;
 
-    var a0 = mod(a, twoPI);
-    var a1 = a0 + twoPI;
+    const a0 = mod(a, twoPI);
+    const a1 = a0 + twoPI;
 
     return (a0 >= s0 && a0 <= s1) || (a1 >= s0 && a1 <= s1);
 }
@@ -85,7 +85,7 @@ function isAngleInsideSector(a: number, aBnds: [number, number]): boolean {
 function isPtInsideSector(r: number, a: number, rBnds: [number, number], aBnds: [number, number]): boolean {
     if(!isAngleInsideSector(a, aBnds)) return false;
 
-    var r0: number, r1: number;
+    let r0: number, r1: number;
 
     if(rBnds[0] < rBnds[1]) {
         r0 = rBnds[0];
@@ -103,9 +103,9 @@ function _path(r0: number | null, r1: number, a0: number, a1: number, cx: number
     cx = cx || 0;
     cy = cy || 0;
 
-    var isCircle = isFullCircle([a0, a1]);
-    var aStart: number, aMid: number, aEnd: number;
-    var rStart: number, rEnd: number;
+    const isCircle = isFullCircle([a0, a1]);
+    let aStart: number, aMid: number, aEnd: number;
+    let rStart: number, rEnd: number;
 
     if(isCircle) {
         aStart = 0;
@@ -134,12 +134,12 @@ function _path(r0: number | null, r1: number, a0: number, a1: number, cx: number
         return [r * Math.cos(a) + cx, cy - r * Math.sin(a)];
     }
 
-    var largeArc = Math.abs(aEnd! - aStart!) <= PI ? 0 : 1;
+    const largeArc = Math.abs(aEnd! - aStart!) <= PI ? 0 : 1;
     function arc(r: number, a: number, cw: number): string {
         return 'A' + [r, r] + ' ' + [0, largeArc, cw] + ' ' + pt(r, a);
     }
 
-    var p: string;
+    let p: string;
 
     if(isCircle) {
         if(rStart === null) {

@@ -1,15 +1,15 @@
 import setCursor from './setcursor.js';
 
-var STASHATTR = 'data-savedcursor';
-var NO_CURSOR = '!!';
+const STASHATTR = 'data-savedcursor';
+const NO_CURSOR = '!!';
 
 export default function overrideCursor(el3: any, csr?: string): void {
-    var savedCursor = el3.attr(STASHATTR);
+    const savedCursor = el3.attr(STASHATTR);
     if(csr) {
         if(!savedCursor) {
-            var classes = (el3.attr('class') || '').split(' ');
-            for(var i = 0; i < classes.length; i++) {
-                var cls = classes[i];
+            const classes = (el3.attr('class') || '').split(' ');
+            for(let i = 0; i < classes.length; i++) {
+                const cls = classes[i];
                 if(cls.indexOf('cursor-') === 0) {
                     el3.attr(STASHATTR, cls.slice(7))
                         .classed(cls, false);

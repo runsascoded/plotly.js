@@ -11,18 +11,18 @@ import setContours from '../contour/set_contours.js';
 import type { FullTrace, GraphDiv } from '../../../types/core';
 
 export default function calc(gd: GraphDiv, trace: FullTrace) {
-    var carpet = trace._carpetTrace = lookupCarpet(gd, trace);
+    const carpet = trace._carpetTrace = lookupCarpet(gd, trace);
     if(!carpet || !carpet.visible || carpet.visible === 'legendonly') return;
 
     if(!trace.a || !trace.b) {
         // Look up the original incoming carpet data:
-        var carpetdata = gd.data[carpet.index];
+        const carpetdata = gd.data[carpet.index];
 
         // Look up the incoming trace data, *except* perform a shallow
         // copy so that we're not actually modifying it when we use it
         // to supply defaults:
-        var tracedata = gd.data[trace.index];
-        // var tracedata = extendFlat({}, gd.data[trace.index]);
+        const tracedata = gd.data[trace.index];
+        // const tracedata = extendFlat({}, gd.data[trace.index]);
 
         // If the data is not specified
         if(!tracedata.a) tracedata.a = carpetdata.a;
@@ -31,7 +31,7 @@ export default function calc(gd: GraphDiv, trace: FullTrace) {
         supplyDefaults(tracedata, trace, trace._defaultColor, gd._fullLayout);
     }
 
-    var cd = heatmappishCalc(gd, trace);
+    const cd = heatmappishCalc(gd, trace);
     setContours(trace, trace._z);
 
     return cd;
@@ -40,10 +40,10 @@ export default function calc(gd: GraphDiv, trace: FullTrace) {
 function heatmappishCalc(gd, trace) {
     // prepare the raw data
     // run makeCalcdata on x and y even for heatmaps, in case of category mappings
-    var carpet = trace._carpetTrace;
-    var aax = carpet.aaxis;
-    var bax = carpet.baxis;
-    var a,
+    const carpet = trace._carpetTrace;
+    const aax = carpet.aaxis;
+    const bax = carpet.baxis;
+    let a,
         a0,
         da,
         b,
@@ -72,13 +72,13 @@ function heatmappishCalc(gd, trace) {
     interp2d(z, trace._emptypoints);
 
     // create arrays of brick boundaries, to be used by autorange and heatmap.plot
-    var xlen = Lib.maxRowLength(z);
-    var xIn = trace.xtype === 'scaled' ? '' : a;
-    var xArray = makeBoundArray(trace, xIn, a0, da, xlen, aax);
-    var yIn = trace.ytype === 'scaled' ? '' : b;
-    var yArray = makeBoundArray(trace, yIn, b0, db, z.length, bax);
+    const xlen = Lib.maxRowLength(z);
+    const xIn = trace.xtype === 'scaled' ? '' : a;
+    const xArray = makeBoundArray(trace, xIn, a0, da, xlen, aax);
+    const yIn = trace.ytype === 'scaled' ? '' : b;
+    const yArray = makeBoundArray(trace, yIn, b0, db, z.length, bax);
 
-    var cd0 = {
+    const cd0 = {
         a: xArray,
         b: yArray,
         z: z,

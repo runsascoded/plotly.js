@@ -2,16 +2,16 @@ import { select, selectAll } from 'd3-selection';
 import { getModuleCalcData } from '../../plots/get_data.js';
 import parcoordsPlot from './plot.js';
 import xmlnsNamespaces from '../../constants/xmlns_namespaces.js';
-export var name = 'parcoords';
+export const name = 'parcoords';
 
-export var plot = function(gd) {
-    var calcData = getModuleCalcData(gd.calcdata, 'parcoords')[0];
+export const plot = function(gd) {
+    const calcData = getModuleCalcData(gd.calcdata, 'parcoords')[0];
     if(calcData.length) parcoordsPlot(gd, calcData);
 };
 
-export var clean = function(newFullData, newFullLayout, oldFullData, oldFullLayout) {
-    var hadParcoords = (oldFullLayout._has && oldFullLayout._has('parcoords'));
-    var hasParcoords = (newFullLayout._has && newFullLayout._has('parcoords'));
+export const clean = function(newFullData, newFullLayout, oldFullData, oldFullLayout) {
+    const hadParcoords = (oldFullLayout._has && oldFullLayout._has('parcoords'));
+    const hasParcoords = (newFullLayout._has && newFullLayout._has('parcoords'));
 
     if(hadParcoords && !hasParcoords) {
         oldFullLayout._paperdiv.selectAll('.parcoords').remove();
@@ -19,16 +19,16 @@ export var clean = function(newFullData, newFullLayout, oldFullData, oldFullLayo
     }
 };
 
-export var toSVG = function(gd) {
-    var imageRoot = gd._fullLayout._glimages;
-    var root = select(gd).selectAll('.svg-container');
-    var canvases = root.filter(function(d, i) {return i === root.size() - 1;})
+export const toSVG = function(gd) {
+    const imageRoot = gd._fullLayout._glimages;
+    const root = select(gd).selectAll('.svg-container');
+    const canvases = root.filter(function(d, i) {return i === root.size() - 1;})
         .selectAll('.gl-canvas-context, .gl-canvas-focus');
 
     function canvasToImage() {
-        var canvas = this;
-        var imageData = canvas.toDataURL('image/png');
-        var image = imageRoot.append('svg:image');
+        const canvas = this;
+        const imageData = canvas.toDataURL('image/png');
+        const image = imageRoot.append('svg:image');
 
         image.attr({
             xmlns: xmlnsNamespaces.svg,

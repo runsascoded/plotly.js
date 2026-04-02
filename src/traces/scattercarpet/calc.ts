@@ -8,9 +8,9 @@ const { calcMarkerSize } = _calc;
 import lookupCarpet from '../carpet/lookup_carpetid.js';
 
 export default function calc(gd: GraphDiv, trace: FullTrace) {
-    var carpet = trace._carpetTrace = lookupCarpet(gd, trace);
+    const carpet = trace._carpetTrace = lookupCarpet(gd, trace);
     if(!carpet || !carpet.visible || carpet.visible === 'legendonly') return;
-    var i;
+    let i;
 
     // Transfer this over from carpet before plotting since this is a necessary
     // condition in order for cartesian to actually plot this trace:
@@ -18,16 +18,16 @@ export default function calc(gd: GraphDiv, trace: FullTrace) {
     trace.yaxis = carpet.yaxis;
 
     // make the calcdata array
-    var serieslen = trace._length;
-    var cd = new Array(serieslen);
-    var a, b;
-    var needsCull = false;
+    const serieslen = trace._length;
+    const cd = new Array(serieslen);
+    let a, b;
+    let needsCull = false;
     for(i = 0; i < serieslen; i++) {
         a = trace.a[i];
         b = trace.b[i];
         if(isNumeric(a) && isNumeric(b)) {
-            var xy = carpet.ab2xy(+a, +b, true);
-            var visible = carpet.isVisible(+a, +b);
+            const xy = carpet.ab2xy(+a, +b, true);
+            const visible = carpet.isVisible(+a, +b);
             if(!visible) needsCull = true;
             cd[i] = {x: xy[0], y: xy[1], a: a, b: b, vis: visible};
         } else cd[i] = {x: false, y: false};

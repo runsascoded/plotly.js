@@ -4,28 +4,28 @@ const { BADNUM } = _numerical;
 import alignPeriod from '../../plots/cartesian/align_period.js';
 
 export default function convertColumnData(trace,  ax1,  ax2,  var1Name,  var2Name,  arrayVarNames) {
-    var colLen = trace._length;
-    var col1 = ax1.makeCalcdata(trace, var1Name);
-    var col2 = ax2.makeCalcdata(trace, var2Name);
+    const colLen = trace._length;
+    let col1 = ax1.makeCalcdata(trace, var1Name);
+    let col2 = ax2.makeCalcdata(trace, var2Name);
     col1 = alignPeriod(trace, ax1, var1Name, col1).vals;
     col2 = alignPeriod(trace, ax2, var2Name, col2).vals;
 
-    var textCol = trace.text;
-    var hasColumnText = (textCol !== undefined && Lib.isArray1D(textCol));
-    var hoverTextCol = trace.hovertext;
-    var hasColumnHoverText = (hoverTextCol !== undefined && Lib.isArray1D(hoverTextCol));
-    var i, j;
+    const textCol = trace.text;
+    const hasColumnText = (textCol !== undefined && Lib.isArray1D(textCol));
+    const hoverTextCol = trace.hovertext;
+    const hasColumnHoverText = (hoverTextCol !== undefined && Lib.isArray1D(hoverTextCol));
+    let i, j;
 
-    var col1dv = Lib.distinctVals(col1);
-    var col1vals = col1dv.vals;
-    var col2dv = Lib.distinctVals(col2);
-    var col2vals = col2dv.vals;
-    var newArrays = [];
-    var text;
-    var hovertext;
+    const col1dv = Lib.distinctVals(col1);
+    const col1vals = col1dv.vals;
+    const col2dv = Lib.distinctVals(col2);
+    const col2vals = col2dv.vals;
+    const newArrays = [];
+    let text;
+    let hovertext;
 
-    var nI = col2vals.length;
-    var nJ = col1vals.length;
+    const nI = col2vals.length;
+    const nJ = col1vals.length;
 
     for(i = 0; i < arrayVarNames.length; i++) {
         newArrays[i] = Lib.init2dArray(nI, nJ);
@@ -38,17 +38,17 @@ export default function convertColumnData(trace,  ax1,  ax2,  var1Name,  var2Nam
         hovertext = Lib.init2dArray(nI, nJ);
     }
 
-    var after2before = Lib.init2dArray(nI, nJ);
+    const after2before = Lib.init2dArray(nI, nJ);
 
     for(i = 0; i < colLen; i++) {
         if(col1[i] !== BADNUM && col2[i] !== BADNUM) {
-            var i1 = Lib.findBin(col1[i] + col1dv.minDiff / 2, col1vals);
-            var i2 = Lib.findBin(col2[i] + col2dv.minDiff / 2, col2vals);
+            const i1 = Lib.findBin(col1[i] + col1dv.minDiff / 2, col1vals);
+            const i2 = Lib.findBin(col2[i] + col2dv.minDiff / 2, col2vals);
 
             for(j = 0; j < arrayVarNames.length; j++) {
-                var arrayVarName = arrayVarNames[j];
-                var arrayVar = trace[arrayVarName];
-                var newArray = newArrays[j];
+                const arrayVarName = arrayVarNames[j];
+                const arrayVar = trace[arrayVarName];
+                const newArray = newArrays[j];
                 newArray[i2][i1] = arrayVar[i];
                 after2before[i2][i1] = i;
             }

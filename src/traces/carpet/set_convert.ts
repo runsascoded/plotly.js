@@ -6,26 +6,26 @@ import createIDerivativeEvaluator from './create_i_derivative_evaluator.js';
 import createJDerivativeEvaluator from './create_j_derivative_evaluator.js';
 
 export default function setConvert(trace) {
-    var a = trace._a;
-    var b = trace._b;
-    var na = a.length;
-    var nb = b.length;
-    var aax = trace.aaxis;
-    var bax = trace.baxis;
+    const a = trace._a;
+    const b = trace._b;
+    const na = a.length;
+    const nb = b.length;
+    const aax = trace.aaxis;
+    const bax = trace.baxis;
 
     // Grab the limits once rather than recomputing the bounds for every point
     // independently:
-    var amin = a[0];
-    var amax = a[na - 1];
-    var bmin = b[0];
-    var bmax = b[nb - 1];
-    var arange = a[a.length - 1] - a[0];
-    var brange = b[b.length - 1] - b[0];
+    let amin = a[0];
+    let amax = a[na - 1];
+    let bmin = b[0];
+    let bmax = b[nb - 1];
+    const arange = a[a.length - 1] - a[0];
+    const brange = b[b.length - 1] - b[0];
 
     // Compute the tolerance so that points are visible slightly outside the
     // defined carpet axis:
-    var atol = arange * constants.RELATIVE_CULL_TOLERANCE;
-    var btol = brange * constants.RELATIVE_CULL_TOLERANCE;
+    const atol = arange * constants.RELATIVE_CULL_TOLERANCE;
+    const btol = brange * constants.RELATIVE_CULL_TOLERANCE;
 
     // Expand the limits to include the relative tolerance:
     amin -= atol;
@@ -42,14 +42,14 @@ export default function setConvert(trace) {
     };
 
     trace.setScale = function() {
-        var x = trace._x;
-        var y = trace._y;
+        const x = trace._x;
+        const y = trace._y;
 
         // This is potentially a very expensive step! It does the bulk of the work of constructing
         // an expanded basis of control points. Note in particular that it overwrites the existing
         // basis without creating a new array since that would potentially thrash the garbage
         // collector.
-        var result = computeControlPoints(trace._xctrl, trace._yctrl, x, y, aax.smoothing, bax.smoothing);
+        const result = computeControlPoints(trace._xctrl, trace._yctrl, x, y, aax.smoothing, bax.smoothing);
         trace._xctrl = result[0];
         trace._yctrl = result[1];
 
@@ -68,14 +68,14 @@ export default function setConvert(trace) {
      * is *linear* interpolation, even if the data is interpolated bicubically.
      */
     trace.i2a = function(i) {
-        var i0 = Math.max(0, Math.floor(i[0]), na - 2);
-        var ti = i[0] - i0;
+        const i0 = Math.max(0, Math.floor(i[0]), na - 2);
+        const ti = i[0] - i0;
         return (1 - ti) * a[i0] + ti * a[i0 + 1];
     };
 
     trace.j2b = function(j) {
-        var j0 = Math.max(0, Math.floor(j[1]), na - 2);
-        var tj = j[1] - j0;
+        const j0 = Math.max(0, Math.floor(j[1]), na - 2);
+        const tj = j[1] - j0;
         return (1 - tj) * b[j0] + tj * b[j0 + 1];
     };
 
@@ -89,16 +89,16 @@ export default function setConvert(trace) {
      * been enforced already.
      */
     trace.a2i = function(aval) {
-        var i0 = Math.max(0, Math.min(search(aval, a), na - 2));
-        var a0 = a[i0];
-        var a1 = a[i0 + 1];
+        const i0 = Math.max(0, Math.min(search(aval, a), na - 2));
+        const a0 = a[i0];
+        const a1 = a[i0 + 1];
         return Math.max(0, Math.min(na - 1, i0 + (aval - a0) / (a1 - a0)));
     };
 
     trace.b2j = function(bval) {
-        var j0 = Math.max(0, Math.min(search(bval, b), nb - 2));
-        var b0 = b[j0];
-        var b1 = b[j0 + 1];
+        const j0 = Math.max(0, Math.min(search(bval, b), nb - 2));
+        const b0 = b[j0];
+        const b1 = b[j0 + 1];
         return Math.max(0, Math.min(nb - 1, j0 + (bval - b0) / (b1 - b0)));
     };
 
@@ -118,21 +118,21 @@ export default function setConvert(trace) {
         if(!extrapolate && (aval < a[0] || aval > a[na - 1] || bval < b[0] || bval > b[nb - 1])) {
             return [false, false];
         }
-        var i = trace.a2i(aval);
-        var j = trace.b2j(bval);
+        const i = trace.a2i(aval);
+        const j = trace.b2j(bval);
 
-        var pt = trace.evalxy([], i, j);
+        const pt = trace.evalxy([], i, j);
 
         if(extrapolate) {
             // This section uses the boundary derivatives to extrapolate linearly outside
             // the defined range. Consider a scatter line with one point inside the carpet
             // axis and one point outside. If we don't extrapolate, we can't draw the line
             // at all.
-            var iex = 0;
-            var jex = 0;
-            var der = [];
+            let iex = 0;
+            let jex = 0;
+            const der = [];
 
-            var i0, ti, j0, tj;
+            let i0, ti, j0, tj;
             if(aval < a[0]) {
                 i0 = 0;
                 ti = 0;
@@ -193,7 +193,7 @@ export default function setConvert(trace) {
 
         // u = u || 0;
 
-        var i0 = Math.max(0, Math.min(a.length - 2, i));
+        const i0 = Math.max(0, Math.min(a.length - 2, i));
 
         // The step (denominator) is implicitly 1 since that's the grid spacing.
         return a[i0 + 1] - a[i0];
@@ -201,7 +201,7 @@ export default function setConvert(trace) {
 
     trace.dbdj = function(j /* , v*/) {
         // See above caveats for dadi which also apply here
-        var j0 = Math.max(0, Math.min(b.length - 2, j));
+        const j0 = Math.max(0, Math.min(b.length - 2, j));
 
         // The step (denominator) is implicitly 1 since that's the grid spacing.
         return b[j0 + 1] - b[j0];
@@ -213,15 +213,15 @@ export default function setConvert(trace) {
     // NB: separate grid cell + fractional grid cell coordinate format is due to the discontinuous
     // derivative, as described better in create_i_derivative_evaluator.js
     trace.dxyda = function(i0, j0, u, v) {
-        var dxydi = trace.dxydi(null, i0, j0, u, v);
-        var dadi = trace.dadi(i0, u);
+        const dxydi = trace.dxydi(null, i0, j0, u, v);
+        const dadi = trace.dadi(i0, u);
 
         return [dxydi[0] / dadi, dxydi[1] / dadi];
     };
 
     trace.dxydb = function(i0, j0, u, v) {
-        var dxydj = trace.dxydj(null, i0, j0, u, v);
-        var dbdj = trace.dbdj(j0, v);
+        const dxydj = trace.dxydj(null, i0, j0, u, v);
+        const dbdj = trace.dbdj(j0, v);
 
         return [dxydj[0] / dbdj, dxydj[1] / dbdj];
     };
@@ -230,9 +230,9 @@ export default function setConvert(trace) {
     // directions (as is the case with labels). In that case, we can do a very rough finite
     // difference and spare having to worry about precise grid coordinates:
     trace.dxyda_rough = function(a, b, reldiff) {
-        var h = arange * (reldiff || 0.1);
-        var plus = trace.ab2xy(a + h, b, true);
-        var minus = trace.ab2xy(a - h, b, true);
+        const h = arange * (reldiff || 0.1);
+        const plus = trace.ab2xy(a + h, b, true);
+        const minus = trace.ab2xy(a - h, b, true);
 
         return [
             (plus[0] - minus[0]) * 0.5 / h,
@@ -241,9 +241,9 @@ export default function setConvert(trace) {
     };
 
     trace.dxydb_rough = function(a, b, reldiff) {
-        var h = brange * (reldiff || 0.1);
-        var plus = trace.ab2xy(a, b + h, true);
-        var minus = trace.ab2xy(a, b - h, true);
+        const h = brange * (reldiff || 0.1);
+        const plus = trace.ab2xy(a, b + h, true);
+        const minus = trace.ab2xy(a, b - h, true);
 
         return [
             (plus[0] - minus[0]) * 0.5 / h,

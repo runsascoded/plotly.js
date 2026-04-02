@@ -1,5 +1,5 @@
 import type { CalcDatum, FullLayout, GraphDiv } from '../../../types/core';
-declare var d: any;
+declare let d: any;
 import { axisLeft } from 'd3-axis';
 import { select } from 'd3-selection';
 import { scaleLinear, scaleLog, scaleOrdinal } from 'd3-scale';
@@ -19,13 +19,13 @@ import helpers from './helpers.js';
 import c from './constants.js';
 import brush from './axisbrush.js';
 import lineLayerMaker from './lines.js';
-var isArrayOrTypedArray = Lib.isArrayOrTypedArray;
-var numberFormat = Lib.numberFormat;
-var strRotate = Lib.strRotate;
-var strTranslate = Lib.strTranslate;
-var keyFun = gup.keyFun;
-var repeat = gup.repeat;
-var unwrap = gup.unwrap;
+const isArrayOrTypedArray = Lib.isArrayOrTypedArray;
+const numberFormat = Lib.numberFormat;
+const strRotate = Lib.strRotate;
+const strTranslate = Lib.strTranslate;
+const keyFun = gup.keyFun;
+const repeat = gup.repeat;
+const unwrap = gup.unwrap;
 
 function findExtreme(fn, values, len) {
     return Lib.aggNums(fn, null, values, len);
@@ -39,7 +39,7 @@ function findExtremes(values, len) {
 }
 
 function dimensionExtent(dimension) {
-    var range = dimension.range;
+    const range = dimension.range;
     return range ?
         fixExtremes(range[0], range[1]) :
         findExtremes(dimension.values, dimension._length);
@@ -73,7 +73,7 @@ function fixExtremes(lo, hi) {
 function toText(formatter, texts) {
     if(texts) {
         return function(v, i) {
-            var text = texts[i];
+            const text = texts[i];
             if(text === null || text === undefined) return formatter(v);
             return text;
         };
@@ -82,13 +82,13 @@ function toText(formatter, texts) {
 }
 
 function domainScale(height, padding, dimension, tickvals, ticktext) {
-    var extent = dimensionExtent(dimension);
+    const extent = dimensionExtent(dimension);
     if(tickvals) {
         return scaleOrdinal()
             .domain(tickvals.map(toText(numberFormat(dimension.tickformat), ticktext)))
             .range(tickvals
                 .map(function(d) {
-                    var unitVal = (d - extent[0]) / (extent[1] - extent[0]);
+                    const unitVal = (d - extent[0]) / (extent[1] - extent[0]);
                     return (height - padding + unitVal * (2 * padding - height));
                 })
             );
@@ -111,7 +111,7 @@ function domainToPaddedUnitScale(dimension, padFraction) {
 function ordinalScale(dimension) {
     if(!dimension.tickvals) return;
 
-    var extent = dimensionExtent(dimension);
+    const extent = dimensionExtent(dimension);
     return scaleOrdinal()
         .domain(dimension.tickvals)
         .range(dimension.tickvals.map(function(d) {
@@ -120,16 +120,16 @@ function ordinalScale(dimension) {
 }
 
 function unitToColorScale(cscale) {
-    var colorStops = cscale.map(function(d) { return d[0]; });
-    var colorTuples = cscale.map(function(d) {
-        var RGBA = rgba(d[1]);
+    const colorStops = cscale.map(function(d) { return d[0]; });
+    const colorTuples = cscale.map(function(d) {
+        const RGBA = rgba(d[1]);
         return rgb('rgb(' + RGBA[0] + ',' + RGBA[1] + ',' + RGBA[2] + ')');
     });
-    var prop = function(n) { return function(o) { return o[n]; }; };
+    const prop = function(n) { return function(o) { return o[n]; }; };
 
     // We can't use d3 color interpolation as we may have non-uniform color palette raster
     // (various color stop distances).
-    var polylinearUnitScales = 'rgb'.split('').map(function(key) {
+    const polylinearUnitScales = 'rgb'.split('').map(function(key) {
         return scaleLinear()
             .clamp(true)
             .domain(colorStops)
@@ -150,26 +150,26 @@ function someFiltersActive(view) {
 }
 
 function model(layout: FullLayout, d, i) {
-    var cd0 = unwrap(d);
-    var trace = cd0.trace;
-    var lineColor = helpers.convertTypedArray(cd0.lineColor);
-    var line = trace.line;
-    var deselectedLines = {
+    const cd0 = unwrap(d);
+    const trace = cd0.trace;
+    const lineColor = helpers.convertTypedArray(cd0.lineColor);
+    const line = trace.line;
+    const deselectedLines = {
         color: rgba(trace.unselected.line.color),
         opacity: trace.unselected.line.opacity
     };
-    var cOpts = Colorscale.extractOpts(line);
-    var cscale = cOpts.reversescale ? Colorscale.flipScale(cd0.cscale) : cd0.cscale;
-    var domain = trace.domain;
-    var dimensions = trace.dimensions;
-    var width = layout.width;
-    var labelAngle = trace.labelangle;
-    var labelSide = trace.labelside;
-    var labelFont = trace.labelfont;
-    var tickFont = trace.tickfont;
-    var rangeFont = trace.rangefont;
+    const cOpts = Colorscale.extractOpts(line);
+    const cscale = cOpts.reversescale ? Colorscale.flipScale(cd0.cscale) : cd0.cscale;
+    const domain = trace.domain;
+    const dimensions = trace.dimensions;
+    const width = layout.width;
+    const labelAngle = trace.labelangle;
+    const labelSide = trace.labelside;
+    const labelFont = trace.labelfont;
+    const tickFont = trace.tickfont;
+    const rangeFont = trace.rangefont;
 
-    var lines = Lib.extendDeepNoArrays({}, line, {
+    const lines = Lib.extendDeepNoArrays({}, line, {
         color: lineColor.map(scaleLinear().domain(
             dimensionExtent({
                 values: lineColor,
@@ -181,12 +181,12 @@ function model(layout: FullLayout, d, i) {
         canvasOverdrag: c.overdrag * c.canvasPixelRatio
     });
 
-    var groupWidth = Math.floor(width * (domain.x[1] - domain.x[0]));
-    var groupHeight = Math.floor(layout.height * (domain.y[1] - domain.y[0]));
+    const groupWidth = Math.floor(width * (domain.x[1] - domain.x[0]));
+    const groupHeight = Math.floor(layout.height * (domain.y[1] - domain.y[0]));
 
-    var pad = layout.margin || {l: 80, r: 80, t: 100, b: 80};
-    var rowContentWidth = groupWidth;
-    var rowHeight = groupHeight;
+    const pad = layout.margin || {l: 80, r: 80, t: 100, b: 80};
+    const rowContentWidth = groupWidth;
+    const rowHeight = groupHeight;
 
     return {
         key: i,
@@ -216,42 +216,42 @@ function model(layout: FullLayout, d, i) {
 }
 
 function viewModel(state, callbacks, model) {
-    var width = model.width;
-    var height = model.height;
-    var dimensions = model.dimensions;
-    var canvasPixelRatio = model.canvasPixelRatio;
+    const width = model.width;
+    const height = model.height;
+    const dimensions = model.dimensions;
+    const canvasPixelRatio = model.canvasPixelRatio;
 
-    var xScale = function(d) {return width * d / Math.max(1, model.colCount - 1);};
+    const xScale = function(d) {return width * d / Math.max(1, model.colCount - 1);};
 
-    var unitPad = c.verticalPadding / height;
-    var _unitToPaddedPx = unitToPaddedPx(height, c.verticalPadding);
+    const unitPad = c.verticalPadding / height;
+    const _unitToPaddedPx = unitToPaddedPx(height, c.verticalPadding);
 
-    var vm: any = {
+    const vm: any = {
         key: model.key,
         xScale: xScale,
         model: model,
         inBrushDrag: false // consider factoring it out and putting it in a centralized global-ish gesture state object
     };
 
-    var uniqueKeys: any = {};
+    const uniqueKeys: any = {};
 
     vm.dimensions = dimensions.filter(helpers.isVisible).map(function(dimension, i) {
-        var domainToPaddedUnit = domainToPaddedUnitScale(dimension, unitPad);
-        var foundKey = uniqueKeys[dimension.label];
+        const domainToPaddedUnit = domainToPaddedUnitScale(dimension, unitPad);
+        const foundKey = uniqueKeys[dimension.label];
         uniqueKeys[dimension.label] = (foundKey || 0) + 1;
-        var key = dimension.label + (foundKey ? '__' + foundKey : '');
-        var specifiedConstraint = dimension.constraintrange;
-        var filterRangeSpecified = specifiedConstraint && specifiedConstraint.length;
+        const key = dimension.label + (foundKey ? '__' + foundKey : '');
+        let specifiedConstraint = dimension.constraintrange;
+        const filterRangeSpecified = specifiedConstraint && specifiedConstraint.length;
         if(filterRangeSpecified && !isArrayOrTypedArray(specifiedConstraint[0])) {
             specifiedConstraint = [specifiedConstraint];
         }
-        var filterRange = filterRangeSpecified ?
+        const filterRange = filterRangeSpecified ?
             specifiedConstraint.map(function(d) { return d.map(domainToPaddedUnit); }) :
             [[-Infinity, Infinity]];
-        var brushMove = function() {
-            var p = vm;
+        const brushMove = function() {
+            const p = vm;
             p.focusLayer && p.focusLayer.render(p.panels, true);
-            var filtersActive = someFiltersActive(p);
+            const filtersActive = someFiltersActive(p);
             if(!state.contextShown() && filtersActive) {
                 p.contextLayer && p.contextLayer.render(p.panels, true);
                 state.contextShown(true);
@@ -261,13 +261,13 @@ function viewModel(state, callbacks, model) {
             }
         };
 
-        var truncatedValues = dimension.values;
+        let truncatedValues = dimension.values;
         if(truncatedValues.length > dimension._length) {
             truncatedValues = truncatedValues.slice(0, dimension._length);
         }
 
-        var tickvals = dimension.tickvals;
-        var ticktext;
+        let tickvals = dimension.tickvals;
+        let ticktext;
         function makeTickItem(v, i) { return {val: v, text: ticktext[i]}; }
         function sortTickItem(a, b) { return a.val - b.val; }
         if(isArrayOrTypedArray(tickvals) && tickvals.length) {
@@ -285,10 +285,10 @@ function viewModel(state, callbacks, model) {
             }
 
             // check if we need to sort tickvals/ticktext
-            for(var j = 1; j < tickvals.length; j++) {
+            for(let j = 1; j < tickvals.length; j++) {
                 if(tickvals[j] < tickvals[j - 1]) {
-                    var tickItems = tickvals.map(makeTickItem).sort(sortTickItem);
-                    for(var k = 0; k < tickvals.length; k++) {
+                    const tickItems = tickvals.map(makeTickItem).sort(sortTickItem);
+                    for(let k = 0; k < tickvals.length; k++) {
                         tickvals[k] = tickItems[k].val;
                         ticktext[k] = tickItems[k].text;
                     }
@@ -335,10 +335,10 @@ function viewModel(state, callbacks, model) {
                     vm.pickLayer && vm.pickLayer.render(vm.panels, true);
                     state.linePickActive(true);
                     if(callbacks && callbacks.filterChanged) {
-                        var invScale = domainToPaddedUnit.invert;
+                        const invScale = domainToPaddedUnit.invert;
 
                         // update gd.data as if a Plotly.restyle were fired
-                        var newRanges = f.map(function(r) {
+                        const newRanges = f.map(function(r) {
                             return r.map(invScale).sort(Lib.sorterAsc);
                         }).sort(function(a, b) { return a[0] - b[0]; });
                         callbacks.filterChanged(vm.key, dimension._index, newRanges);
@@ -359,8 +359,8 @@ function styleExtentTexts(selection) {
 }
 
 function parcoordsInteractionState() {
-    var linePickActive = true;
-    var contextShown = false;
+    let linePickActive = true;
+    let contextShown = false;
     return {
         linePickActive: function(val?: any) {return arguments.length ? linePickActive = !!val : linePickActive;},
         contextShown: function(val?: any) {return arguments.length ? contextShown = !!val : contextShown;}
@@ -368,10 +368,10 @@ function parcoordsInteractionState() {
 }
 
 function calcTilt(angle, position) {
-    var dir = (position === 'top') ? 1 : -1;
-    var radians = angle * Math.PI / 180;
-    var dx = Math.sin(radians);
-    var dy = Math.cos(radians);
+    const dir = (position === 'top') ? 1 : -1;
+    const radians = angle * Math.PI / 180;
+    const dx = Math.sin(radians);
+    const dy = Math.cos(radians);
     return {
         dir: dir,
         dx: dx,
@@ -381,12 +381,12 @@ function calcTilt(angle, position) {
 }
 
 function updatePanelLayout(yAxis, vm, plotGlPixelRatio) {
-    var panels = vm.panels || (vm.panels = []);
-    var data = yAxis.data();
-    for(var i = 0; i < data.length - 1; i++) {
-        var p = panels[i] || (panels[i] = {});
-        var dim0 = data[i];
-        var dim1 = data[i + 1];
+    const panels = vm.panels || (vm.panels = []);
+    const data = yAxis.data();
+    for(let i = 0; i < data.length - 1; i++) {
+        const p = panels[i] || (panels[i] = {});
+        const dim0 = data[i];
+        const dim1 = data[i + 1];
         p.dim0 = dim0;
         p.dim1 = dim1;
         p.canvasX = dim0.canvasX;
@@ -399,14 +399,14 @@ function updatePanelLayout(yAxis, vm, plotGlPixelRatio) {
 }
 
 function calcAllTicks(cd: CalcDatum[]) {
-    for(var i = 0; i < cd.length; i++) {
-        for(var j = 0; j < cd[i].length; j++) {
-            var trace = cd[i][j].trace;
-            var dimensions = trace.dimensions;
+    for(let i = 0; i < cd.length; i++) {
+        for(let j = 0; j < cd[i].length; j++) {
+            const trace = cd[i][j].trace;
+            const dimensions = trace.dimensions;
 
-            for(var k = 0; k < dimensions.length; k++) {
-                var values = dimensions[k].values;
-                var dim = dimensions[k]._ax;
+            for(let k = 0; k < dimensions.length; k++) {
+                const values = dimensions[k].values;
+                const dim = dimensions[k]._ax;
 
                 if(dim) {
                     if(!dim.range) {
@@ -434,26 +434,26 @@ function linearFormat(dim, v) {
 
 function extremeText(d, isTop) {
     if(d.ordinal) return '';
-    var domain = d.domainScale.domain();
-    var v = (domain[isTop ? domain.length - 1 : 0]);
+    const domain = d.domainScale.domain();
+    const v = (domain[isTop ? domain.length - 1 : 0]);
 
     return linearFormat(d.model.dimensions[d.visibleIndex], v);
 }
 
 export default function parcoords(gd: GraphDiv, cdModule: any, layout: any, callbacks: any) {
-    var isStatic = gd._context.staticPlot;
+    const isStatic = gd._context.staticPlot;
 
-    var fullLayout = gd._fullLayout;
-    var svg = fullLayout._toppaper;
-    var glContainer = fullLayout._glcontainer;
-    var plotGlPixelRatio = gd._context.plotGlPixelRatio;
-    var paperColor = gd._fullLayout.paper_bgcolor;
+    const fullLayout = gd._fullLayout;
+    const svg = fullLayout._toppaper;
+    const glContainer = fullLayout._glcontainer;
+    const plotGlPixelRatio = gd._context.plotGlPixelRatio;
+    const paperColor = gd._fullLayout.paper_bgcolor;
 
     calcAllTicks(cdModule);
 
-    var state = parcoordsInteractionState();
+    const state = parcoordsInteractionState();
 
-    var vm = cdModule
+    const vm = cdModule
         .filter(function(d) { return unwrap(d).trace.visible; })
         .map(model.bind(0, layout))
         .map(viewModel.bind(0, state, callbacks));
@@ -462,7 +462,7 @@ export default function parcoords(gd: GraphDiv, cdModule: any, layout: any, call
         return Lib.extendFlat(d, vm[i]);
     });
 
-    var glLayers = glContainer.selectAll('.gl-canvas')
+    const glLayers = glContainer.selectAll('.gl-canvas')
         .each(function(d) {
             // FIXME: figure out how to handle multiple instances
             d.viewModel = vm[0];
@@ -471,30 +471,29 @@ export default function parcoords(gd: GraphDiv, cdModule: any, layout: any, call
             d.model = d.viewModel ? d.viewModel.model : null;
         });
 
-    var lastHovered = null;
+    let lastHovered = null;
 
-    var pickLayer = glLayers.filter(function(d) {return d.pick;});
+    const pickLayer = glLayers.filter(function(d) {return d.pick;});
 
     // emit hover / unhover event
     pickLayer
         .style('pointer-events', isStatic ? 'none' : 'auto')
         .on('mousemove', function(event: any) {
             if(state.linePickActive() && d.lineLayer && callbacks && callbacks.hover) {
-                var event = event;
-                var cw = this.width;
-                var ch = this.height;
-                var pointer = pointer(event, this);
-                var x = pointer[0];
-                var y = pointer[1];
+                const cw = this.width;
+                const ch = this.height;
+                const ptr = pointer(event, this);
+                const x = ptr[0];
+                const y = ptr[1];
 
                 if(x < 0 || y < 0 || x >= cw || y >= ch) {
                     return;
                 }
-                var pixel = d.lineLayer.readPixel(x, ch - 1 - y);
-                var found = pixel[3] !== 0;
+                const pixel = d.lineLayer.readPixel(x, ch - 1 - y);
+                const found = pixel[3] !== 0;
                 // inverse of the calcPickColor in `lines.js`; detailed comment there
-                var curveNumber = found ? pixel[2] + 256 * (pixel[1] + 256 * pixel[0]) : null;
-                var eventData = {
+                const curveNumber = found ? pixel[2] + 256 * (pixel[1] + 256 * pixel[0]) : null;
+                const eventData = {
                     x: x,
                     y: y,
                     clientX: event.clientX,
@@ -517,7 +516,7 @@ export default function parcoords(gd: GraphDiv, cdModule: any, layout: any, call
         .style('opacity', function(d) {return d.pick ? 0 : 1;});
 
     svg.style('background', 'rgba(255, 255, 255, 0)');
-    var controlOverlay = svg.selectAll('.' + c.cn.parcoords)
+    const controlOverlay = svg.selectAll('.' + c.cn.parcoords)
         .data(vm, keyFun);
 
     controlOverlay.exit().remove();
@@ -532,7 +531,7 @@ export default function parcoords(gd: GraphDiv, cdModule: any, layout: any, call
         return strTranslate(d.model.translateX, d.model.translateY);
     });
 
-    var parcoordsControlView = controlOverlay.selectAll('.' + c.cn.parcoordsControlView)
+    const parcoordsControlView = controlOverlay.selectAll('.' + c.cn.parcoordsControlView)
         .data(repeat, keyFun);
 
     parcoordsControlView.enter()
@@ -543,7 +542,7 @@ export default function parcoords(gd: GraphDiv, cdModule: any, layout: any, call
         return strTranslate(d.model.pad.l, d.model.pad.t);
     });
 
-    var yAxis = parcoordsControlView.selectAll('.' + c.cn.yAxis)
+    const yAxis = parcoordsControlView.selectAll('.' + c.cn.yAxis)
         .data(function(p) { return p.dimensions; }, keyFun);
 
     yAxis.enter()
@@ -563,7 +562,7 @@ export default function parcoords(gd: GraphDiv, cdModule: any, layout: any, call
 
                 if(d.key || d.key === 0) d.viewModel[d.key] = d.lineLayer;
 
-                var setChanged = (!d.context || // don't update background
+                const setChanged = (!d.context || // don't update background
                                   callbacks);   // unless there is a callback on the context layer. Should we test the callback?
 
                 d.lineLayer.render(d.viewModel.panels, setChanged);
@@ -578,7 +577,7 @@ export default function parcoords(gd: GraphDiv, cdModule: any, layout: any, call
     yAxis.call(d3Drag()
         .origin(function(d) { return d; })
         .on('drag', function(event: any) {
-            var p = d.parent;
+            const p = d.parent;
             state.linePickActive(false);
             d.x = Math.max(-c.overdrag, Math.min(d.model.width + c.overdrag, event.x));
             d.canvasX = d.x * d.model.canvasPixelRatio;
@@ -600,7 +599,7 @@ export default function parcoords(gd: GraphDiv, cdModule: any, layout: any, call
             p.focusLayer.render && p.focusLayer.render(p.panels);
         })
         .on('end', function(event: any) {
-            var p = d.parent;
+            const p = d.parent;
             d.x = d.xScale(d.xIndex);
             d.canvasX = d.x * d.model.canvasPixelRatio;
             updatePanelLayout(yAxis, p, plotGlPixelRatio);
@@ -620,7 +619,7 @@ export default function parcoords(gd: GraphDiv, cdModule: any, layout: any, call
     yAxis.exit()
         .remove();
 
-    var axisOverlays = yAxis.selectAll('.' + c.cn.axisOverlays)
+    const axisOverlays = yAxis.selectAll('.' + c.cn.axisOverlays)
         .data(repeat, keyFun);
 
     axisOverlays.enter()
@@ -629,7 +628,7 @@ export default function parcoords(gd: GraphDiv, cdModule: any, layout: any, call
 
     axisOverlays.selectAll('.' + c.cn.axis).remove();
 
-    var axis = axisOverlays.selectAll('.' + c.cn.axis)
+    const axis = axisOverlays.selectAll('.' + c.cn.axis)
         .data(repeat, keyFun);
 
     axis.enter()
@@ -638,9 +637,9 @@ export default function parcoords(gd: GraphDiv, cdModule: any, layout: any, call
 
     axis
         .each(function(d) {
-            var wantedTickCount = d.model.height / d.model.tickDistance;
-            var scale = d.domainScale;
-            var sdom = scale.domain();
+            const wantedTickCount = d.model.height / d.model.tickDistance;
+            const scale = d.domainScale;
+            const sdom = scale.domain();
             select(this)
                 .call(axisLeft()
                     
@@ -666,14 +665,14 @@ export default function parcoords(gd: GraphDiv, cdModule: any, layout: any, call
     axis.selectAll('text')
         .style('cursor', 'default');
 
-    var axisHeading = axisOverlays.selectAll('.' + c.cn.axisHeading)
+    const axisHeading = axisOverlays.selectAll('.' + c.cn.axisHeading)
         .data(repeat, keyFun);
 
     axisHeading.enter()
         .append('g')
         .classed(c.cn.axisHeading, true);
 
-    var axisTitle = axisHeading.selectAll('.' + c.cn.axisTitle)
+    const axisTitle = axisHeading.selectAll('.' + c.cn.axisTitle)
         .data(repeat, keyFun);
 
     axisTitle.enter()
@@ -686,13 +685,13 @@ export default function parcoords(gd: GraphDiv, cdModule: any, layout: any, call
     axisTitle
         .text(function(d) { return d.label; })
         .each(function(d) {
-            var e = select(this);
+            const e = select(this);
             font(e, d.model.labelFont);
             svgTextUtils.convertToTspans(e, gd);
         })
         .attr('transform', function(d) {
-            var tilt = calcTilt(d.model.labelAngle, d.model.labelSide);
-            var r = c.axisTitleOffset;
+            const tilt = calcTilt(d.model.labelAngle, d.model.labelSide);
+            const r = c.axisTitleOffset;
             return (
                 (tilt.dir > 0 ? '' : strTranslate(0, 2 * r + d.model.height)) +
                 strRotate(tilt.degrees) +
@@ -700,9 +699,9 @@ export default function parcoords(gd: GraphDiv, cdModule: any, layout: any, call
             );
         })
         .attr('text-anchor', function(d) {
-            var tilt = calcTilt(d.model.labelAngle, d.model.labelSide);
-            var adx = Math.abs(tilt.dx);
-            var ady = Math.abs(tilt.dy);
+            const tilt = calcTilt(d.model.labelAngle, d.model.labelSide);
+            const adx = Math.abs(tilt.dx);
+            const ady = Math.abs(tilt.dy);
 
             if(2 * adx > ady) {
                 return (tilt.dir * tilt.dx < 0) ? 'start' : 'end';
@@ -711,14 +710,14 @@ export default function parcoords(gd: GraphDiv, cdModule: any, layout: any, call
             }
         });
 
-    var axisExtent = axisOverlays.selectAll('.' + c.cn.axisExtent)
+    const axisExtent = axisOverlays.selectAll('.' + c.cn.axisExtent)
         .data(repeat, keyFun);
 
     axisExtent.enter()
         .append('g')
         .classed(c.cn.axisExtent, true);
 
-    var axisExtentTop = axisExtent.selectAll('.' + c.cn.axisExtentTop)
+    const axisExtentTop = axisExtent.selectAll('.' + c.cn.axisExtentTop)
         .data(repeat, keyFun);
 
     axisExtentTop.enter()
@@ -728,7 +727,7 @@ export default function parcoords(gd: GraphDiv, cdModule: any, layout: any, call
     axisExtentTop
         .attr('transform', strTranslate(0, -c.axisExtentOffset));
 
-    var axisExtentTopText = axisExtentTop.selectAll('.' + c.cn.axisExtentTopText)
+    const axisExtentTopText = axisExtentTop.selectAll('.' + c.cn.axisExtentTopText)
         .data(repeat, keyFun);
 
     axisExtentTopText.enter()
@@ -740,7 +739,7 @@ export default function parcoords(gd: GraphDiv, cdModule: any, layout: any, call
         .text(function(d) { return extremeText(d, true); })
         .each(function(d) { font(select(this), d.model.rangeFont); });
 
-    var axisExtentBottom = axisExtent.selectAll('.' + c.cn.axisExtentBottom)
+    const axisExtentBottom = axisExtent.selectAll('.' + c.cn.axisExtentBottom)
         .data(repeat, keyFun);
 
     axisExtentBottom.enter()
@@ -752,7 +751,7 @@ export default function parcoords(gd: GraphDiv, cdModule: any, layout: any, call
             return strTranslate(0, d.model.height + c.axisExtentOffset);
         });
 
-    var axisExtentBottomText = axisExtentBottom.selectAll('.' + c.cn.axisExtentBottomText)
+    const axisExtentBottomText = axisExtentBottom.selectAll('.' + c.cn.axisExtentBottomText)
         .data(repeat, keyFun);
 
     axisExtentBottomText.enter()

@@ -1,17 +1,17 @@
 import Lib from '../../lib/index.js';
 
 export default function convertTextOpts(textposition, iconSize) {
-    var parts = textposition.split(' ');
-    var vPos = parts[0];
-    var hPos = parts[1];
+    const parts = textposition.split(' ');
+    const vPos = parts[0];
+    const hPos = parts[1];
 
     // ballpack values
-    var factor = Lib.isArrayOrTypedArray(iconSize) ? Lib.mean(iconSize) : iconSize;
-    var xInc = 0.5 + (factor / 100);
-    var yInc = 1.5 + (factor / 100);
+    const factor = Lib.isArrayOrTypedArray(iconSize) ? Lib.mean(iconSize) : iconSize;
+    const xInc = 0.5 + (factor / 100);
+    const yInc = 1.5 + (factor / 100);
 
-    var anchorVals = ['', ''];
-    var offset = [0, 0];
+    const anchorVals = ['', ''];
+    const offset = [0, 0];
 
     switch(vPos) {
         case 'top':
@@ -39,7 +39,7 @@ export default function convertTextOpts(textposition, iconSize) {
     //  center, left, right, top, bottom,
     //  top-left, top-right, bottom-left, bottom-right
 
-    var anchor;
+    let anchor;
     if(anchorVals[0] && anchorVals[1]) anchor = anchorVals.join('-');
     else if(anchorVals[0]) anchor = anchorVals[0];
     else if(anchorVals[1]) anchor = anchorVals[1];

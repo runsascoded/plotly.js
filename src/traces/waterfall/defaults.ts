@@ -9,9 +9,9 @@ import attributes from './attributes.js';
 import Color from '../../components/color/index.js';
 import delta from '../../constants/delta.js';
 
-var INCREASING_COLOR = delta.INCREASING.COLOR;
-var DECREASING_COLOR = delta.DECREASING.COLOR;
-var TOTALS_COLOR = '#4499FF';
+const INCREASING_COLOR = delta.INCREASING.COLOR;
+const DECREASING_COLOR = delta.DECREASING.COLOR;
+const TOTALS_COLOR = '#4499FF';
 
 function handleDirection(coerce,  direction,  defaultColor: string) {
     coerce(direction + '.marker.color', defaultColor);
@@ -24,7 +24,7 @@ function supplyDefaults(traceIn: InputTrace,  traceOut: FullTrace,  defaultColor
         return Lib.coerce(traceIn, traceOut, attributes, attr, dflt);
     }
 
-    var len = handleXYDefaults(traceIn, traceOut, layout, coerce);
+    const len = handleXYDefaults(traceIn, traceOut, layout, coerce);
     if (!len) {
         traceOut.visible = false;
         return;
@@ -47,7 +47,7 @@ function supplyDefaults(traceIn: InputTrace,  traceOut: FullTrace,  defaultColor
     coerce('hovertemplate');
     coerce('hovertemplatefallback');
 
-    var textposition = coerce('textposition');
+    const textposition = coerce('textposition');
     handleText(traceIn, traceOut, layout, coerce, textposition, {
         moduleHasSelected: false,
         moduleHasUnselected: false,
@@ -67,10 +67,10 @@ function supplyDefaults(traceIn: InputTrace,  traceOut: FullTrace,  defaultColor
     handleDirection(coerce, 'decreasing', DECREASING_COLOR);
     handleDirection(coerce, 'totals', TOTALS_COLOR);
 
-    var connectorVisible = coerce('connector.visible');
+    const connectorVisible = coerce('connector.visible');
     if (connectorVisible) {
         coerce('connector.mode');
-        var connectorLineWidth = coerce('connector.line.width');
+        const connectorLineWidth = coerce('connector.line.width');
         if (connectorLineWidth) {
             coerce('connector.line.color');
             coerce('connector.line.dash');
@@ -80,13 +80,13 @@ function supplyDefaults(traceIn: InputTrace,  traceOut: FullTrace,  defaultColor
 }
 
 function crossTraceDefaults(fullData,  fullLayout: FullLayout) {
-    var traceIn, traceOut;
+    let traceIn, traceOut;
 
     function coerce(attr: string) {
         return Lib.coerce(traceOut._input, traceOut, attributes, attr);
     }
     if (fullLayout.waterfallmode === 'group') {
-        for (var i = 0; i < fullData.length; i++) {
+        for (let i = 0; i < fullData.length; i++) {
             traceOut = fullData[i];
             traceIn = traceOut._input;
 

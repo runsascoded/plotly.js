@@ -7,18 +7,18 @@ function sign(x) {
 
 // adapted from Mike Bostock's https://observablehq.com/@mbostock/smith-chart
 function smith(a) {
-    var R = a[0];
-    var X = a[1];
+    const R = a[0];
+    const X = a[1];
 
     if(!isFinite(R) || !isFinite(X)) return [1, 0];
 
-    var D = (R + 1) * (R + 1) + X * X;
+    const D = (R + 1) * (R + 1) + X * X;
     return [(R * R + X * X - 1) / D, 2 * X / D];
 }
 
 function transform(subplot, a) {
-    var x = a[0];
-    var y = a[1];
+    const x = a[0];
+    const y = a[1];
 
     return [
         x * subplot.radius + subplot.cx,
@@ -31,13 +31,13 @@ function scale(subplot, r) {
 }
 
 function reactanceArc(subplot, X, R1, R2) {
-    var t1 = transform(subplot, smith([R1, X]));
-    var x1 = t1[0];
-    var y1 = t1[1];
+    const t1 = transform(subplot, smith([R1, X]));
+    const x1 = t1[0];
+    const y1 = t1[1];
 
-    var t2 = transform(subplot, smith([R2, X]));
-    var x2 = t2[0];
-    var y2 = t2[1];
+    const t2 = transform(subplot, smith([R2, X]));
+    const x2 = t2[0];
+    const y2 = t2[1];
 
     if(X === 0) {
         return [
@@ -46,7 +46,7 @@ function reactanceArc(subplot, X, R1, R2) {
         ].join(' ');
     }
 
-    var r = scale(subplot, 1 / Math.abs(X));
+    const r = scale(subplot, 1 / Math.abs(X));
 
     return [
         'M' + x1 + ',' + y1,
@@ -55,20 +55,20 @@ function reactanceArc(subplot, X, R1, R2) {
 }
 
 function resistanceArc(subplot, R, X1, X2) {
-    var r = scale(subplot, 1 / (R + 1));
+    const r = scale(subplot, 1 / (R + 1));
 
-    var t1 = transform(subplot, smith([R, X1]));
-    var x1 = t1[0];
-    var y1 = t1[1];
+    const t1 = transform(subplot, smith([R, X1]));
+    const x1 = t1[0];
+    const y1 = t1[1];
 
-    var t2 = transform(subplot, smith([R, X2]));
-    var x2 = t2[0];
-    var y2 = t2[1];
+    const t2 = transform(subplot, smith([R, X2]));
+    const x2 = t2[0];
+    const y2 = t2[1];
 
     if(sign(X1) !== sign(X2)) {
-        var t0 = transform(subplot, smith([R, 0]));
-        var x0 = t0[0];
-        var y0 = t0[1];
+        const t0 = transform(subplot, smith([R, 0]));
+        const x0 = t0[0];
+        const y0 = t0[1];
 
         return [
             'M' + x1 + ',' + y1,

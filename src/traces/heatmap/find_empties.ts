@@ -2,21 +2,21 @@ import _index from '../../lib/index.js';
 const { maxRowLength } = _index;
 
 export default function findEmpties(z) {
-    var empties = [];
-    var neighborHash: Record<string, any> = {};
-    var noNeighborList: any[] = [];
-    var nextRow = z[0];
-    var row: any[] = [];
-    var blank = [0, 0, 0];
-    var rowLength = maxRowLength(z);
-    var prevRow: any;
-    var i: number;
-    var j: number;
-    var thisPt: any;
-    var p: any;
-    var neighborCount: number;
-    var newNeighborHash: Record<string, any>;
-    var foundNewNeighbors: boolean;
+    const empties = [];
+    const neighborHash: Record<string, any> = {};
+    const noNeighborList: any[] = [];
+    let nextRow = z[0];
+    let row: any[] = [];
+    const blank = [0, 0, 0];
+    const rowLength = maxRowLength(z);
+    let prevRow: any;
+    let i: number;
+    let j: number;
+    let thisPt: any;
+    let p: any;
+    let neighborCount: number;
+    let newNeighborHash: Record<string, any>;
+    let foundNewNeighbors: boolean;
 
     for(i = 0; i < z.length; i++) {
         prevRow = row;

@@ -4,40 +4,40 @@ import constants from './constants.js';
 import cartesianHelpers from '../../selections/helpers.js';
 import handleOutline from '.././handle_outline.js';
 import helpers from './helpers.js';
-var drawMode = dragHelpers.drawMode;
-var openMode = dragHelpers.openMode;
+const drawMode = dragHelpers.drawMode;
+const openMode = dragHelpers.openMode;
 
-var i000 = constants.i000;
-var i090 = constants.i090;
-var i180 = constants.i180;
-var i270 = constants.i270;
-var cos45 = constants.cos45;
-var sin45 = constants.sin45;
+const i000 = constants.i000;
+const i090 = constants.i090;
+const i180 = constants.i180;
+const i270 = constants.i270;
+const cos45 = constants.cos45;
+const sin45 = constants.sin45;
 
-var p2r = cartesianHelpers.p2r;
-var r2p = cartesianHelpers.r2p;
+const p2r = cartesianHelpers.p2r;
+const r2p = cartesianHelpers.r2p;
 
-var clearOutline = handleOutline.clearOutline;
+const clearOutline = handleOutline.clearOutline;
 
-var readPaths = helpers.readPaths;
-var writePaths = helpers.writePaths;
-var ellipseOver = helpers.ellipseOver;
-var fixDatesForPaths = helpers.fixDatesForPaths;
+const readPaths = helpers.readPaths;
+const writePaths = helpers.writePaths;
+const ellipseOver = helpers.ellipseOver;
+const fixDatesForPaths = helpers.fixDatesForPaths;
 
 function newShapes(outlines: any, dragOptions: any) {
     if(!outlines.length) return;
-    var e = outlines[0][0]; // pick first
+    const e = outlines[0][0]; // pick first
     if(!e) return;
 
-    var gd = dragOptions.gd;
+    const gd = dragOptions.gd;
 
-    var isActiveShape = dragOptions.isActiveShape;
-    var dragmode = dragOptions.dragmode;
+    const isActiveShape = dragOptions.isActiveShape;
+    let dragmode = dragOptions.dragmode;
 
-    var shapes = (gd.layout || {}).shapes || [];
+    const shapes = (gd.layout || {}).shapes || [];
 
     if(!drawMode(dragmode) && isActiveShape !== undefined) {
-        var id = gd._fullLayout._activeShapeIndex;
+        const id = gd._fullLayout._activeShapeIndex;
         if(id < shapes.length) {
             switch(gd._fullLayout.shapes[id].type) {
                 case 'rect':
@@ -50,7 +50,7 @@ function newShapes(outlines: any, dragOptions: any) {
                     dragmode = 'drawline';
                     break;
                 case 'path':
-                    var path = shapes[id].path || '';
+                    const path = shapes[id].path || '';
                     if(path[path.length - 1] === 'Z') {
                         dragmode = 'drawclosedpath';
                     } else {
@@ -61,30 +61,30 @@ function newShapes(outlines: any, dragOptions: any) {
         }
     }
 
-    var newShape = createShapeObj(outlines, dragOptions, dragmode);
+    const newShape = createShapeObj(outlines, dragOptions, dragmode);
 
     clearOutline(gd);
 
-    var editHelpers = dragOptions.editHelpers;
-    var modifyItem = (editHelpers || {}).modifyItem;
+    const editHelpers = dragOptions.editHelpers;
+    const modifyItem = (editHelpers || {}).modifyItem;
 
-    var allShapes = [];
-    for(var q = 0; q < shapes.length; q++) {
-        var beforeEdit = gd._fullLayout.shapes[q];
+    const allShapes = [];
+    for(let q = 0; q < shapes.length; q++) {
+        const beforeEdit = gd._fullLayout.shapes[q];
         allShapes[q] = beforeEdit._input;
 
         if(
             isActiveShape !== undefined &&
             q === gd._fullLayout._activeShapeIndex
         ) {
-            var afterEdit = newShape;
+            const afterEdit = newShape;
 
             switch(beforeEdit.type) {
                 case 'line':
                 case 'rect':
                 case 'circle':
 
-                    var xaxis = axis_ids.getFromId(gd, beforeEdit.xref);
+                    const xaxis = axis_ids.getFromId(gd, beforeEdit.xref);
                     if (beforeEdit.xref.charAt(0) === 'x' && xaxis.type.includes('category')) {
                         modifyItem('x0', afterEdit.x0 - (beforeEdit.x0shift || 0));
                         modifyItem('x1', afterEdit.x1 - (beforeEdit.x1shift || 0));
@@ -92,7 +92,7 @@ function newShapes(outlines: any, dragOptions: any) {
                         modifyItem('x0', afterEdit.x0);
                         modifyItem('x1', afterEdit.x1);
                     }
-                    var yaxis = axis_ids.getFromId(gd, beforeEdit.yref);
+                    const yaxis = axis_ids.getFromId(gd, beforeEdit.yref);
                     if (beforeEdit.yref.charAt(0) === 'y' && yaxis.type.includes('category')) {
                         modifyItem('y0', afterEdit.y0 - (beforeEdit.y0shift || 0));
                         modifyItem('y1', afterEdit.y1 - (beforeEdit.y1shift || 0));
@@ -118,23 +118,23 @@ function newShapes(outlines: any, dragOptions: any) {
 }
 
 function createShapeObj(outlines: any, dragOptions: any, dragmode: any) {
-    var e = outlines[0][0]; // pick first outline
-    var gd = dragOptions.gd;
+    const e = outlines[0][0]; // pick first outline
+    const gd = dragOptions.gd;
 
-    var d = e.getAttribute('d');
-    var newStyle = gd._fullLayout.newshape;
-    var plotinfo = dragOptions.plotinfo;
-    var isActiveShape = dragOptions.isActiveShape;
+    const d = e.getAttribute('d');
+    const newStyle = gd._fullLayout.newshape;
+    const plotinfo = dragOptions.plotinfo;
+    const isActiveShape = dragOptions.isActiveShape;
 
-    var xaxis = plotinfo.xaxis;
-    var yaxis = plotinfo.yaxis;
-    var xPaper = !!plotinfo.domain || !plotinfo.xaxis;
-    var yPaper = !!plotinfo.domain || !plotinfo.yaxis;
+    const xaxis = plotinfo.xaxis;
+    const yaxis = plotinfo.yaxis;
+    const xPaper = !!plotinfo.domain || !plotinfo.xaxis;
+    const yPaper = !!plotinfo.domain || !plotinfo.yaxis;
 
-    var isOpenMode = openMode(dragmode);
-    var polygons = readPaths(d, gd, plotinfo, isActiveShape);
+    const isOpenMode = openMode(dragmode);
+    const polygons = readPaths(d, gd, plotinfo, isActiveShape);
 
-    var newShape: any = {
+    const newShape: any = {
         editable: true,
 
         visible: newStyle.visible,
@@ -168,7 +168,7 @@ function createShapeObj(outlines: any, dragOptions: any, dragmode: any) {
         newShape.fillrule = newStyle.fillrule;
     }
 
-    var cell;
+    let cell;
     // line, rect and circle can be in one cell
     // only define cell if there is single cell
     if(polygons.length === 1) cell = polygons[0];
@@ -198,22 +198,22 @@ function createShapeObj(outlines: any, dragOptions: any, dragmode: any) {
     ) {
         newShape.type = 'circle'; // an ellipse!
 
-        var xA = cell[i000][1];
-        var xB = cell[i090][1];
-        var xC = cell[i180][1];
-        var xD = cell[i270][1];
+        let xA = cell[i000][1];
+        let xB = cell[i090][1];
+        let xC = cell[i180][1];
+        let xD = cell[i270][1];
 
-        var yA = cell[i000][2];
-        var yB = cell[i090][2];
-        var yC = cell[i180][2];
-        var yD = cell[i270][2];
+        let yA = cell[i000][2];
+        let yB = cell[i090][2];
+        let yC = cell[i180][2];
+        let yD = cell[i270][2];
 
-        var xDateOrLog = plotinfo.xaxis && (
+        const xDateOrLog = plotinfo.xaxis && (
             plotinfo.xaxis.type === 'date' ||
             plotinfo.xaxis.type === 'log'
         );
 
-        var yDateOrLog = plotinfo.yaxis && (
+        const yDateOrLog = plotinfo.yaxis && (
             plotinfo.yaxis.type === 'date' ||
             plotinfo.yaxis.type === 'log'
         );
@@ -232,11 +232,11 @@ function createShapeObj(outlines: any, dragOptions: any, dragmode: any) {
             yD = r2p(plotinfo.yaxis, yD);
         }
 
-        var x0 = (xB + xD) / 2;
-        var y0 = (yA + yC) / 2;
-        var rx = (xD - xB + xC - xA) / 2;
-        var ry = (yD - yB + yC - yA) / 2;
-        var pos = ellipseOver({
+        const x0 = (xB + xD) / 2;
+        const y0 = (yA + yC) / 2;
+        const rx = (xD - xB + xC - xA) / 2;
+        const ry = (yD - yB + yC - yA) / 2;
+        const pos = ellipseOver({
             x0: x0,
             y0: y0,
             x1: x0 + rx * cos45,

@@ -9,7 +9,7 @@ import _req2 from './compute_error.js';
 import _req3 from './plot.js';
 import _req4 from './style.js';
 
-var xyAttrs: Record<string, any> = {
+const xyAttrs: Record<string, any> = {
     error_x: Lib.extendFlat({}, attributes),
     error_y: Lib.extendFlat({}, attributes)
 };
@@ -17,7 +17,7 @@ delete xyAttrs.error_x.copy_zstyle;
 delete xyAttrs.error_y.copy_zstyle;
 delete xyAttrs.error_y.copy_ystyle;
 
-var xyzAttrs: Record<string, any> = {
+const xyzAttrs: Record<string, any> = {
     error_x: Lib.extendFlat({}, attributes),
     error_y: Lib.extendFlat({}, attributes),
     error_z: Lib.extendFlat({}, attributes)

@@ -11,38 +11,38 @@ import helpers from '../sunburst/helpers.js';
 import attachFxHandlers from '../sunburst/fx.js';
 import { formatSliceLabel } from '../sunburst/plot.js';
 
-var onPathbar = false; // for Descendants
+const onPathbar = false; // for Descendants
 
 export default function drawDescendants(gd: GraphDiv, cd: any[], entry: any, slices: any, opts: any) {
-    var width = opts.width;
-    var height = opts.height;
-    var viewX = opts.viewX;
-    var viewY = opts.viewY;
-    var pathSlice = opts.pathSlice;
-    var toMoveInsideSlice = opts.toMoveInsideSlice;
-    var strTransform = opts.strTransform;
-    var hasTransition = opts.hasTransition;
-    var handleSlicesExit = opts.handleSlicesExit;
-    var makeUpdateSliceInterpolator = opts.makeUpdateSliceInterpolator;
-    var makeUpdateTextInterpolator = opts.makeUpdateTextInterpolator;
-    var prevEntry = opts.prevEntry;
-    var refRect = {};
+    const width = opts.width;
+    const height = opts.height;
+    const viewX = opts.viewX;
+    const viewY = opts.viewY;
+    const pathSlice = opts.pathSlice;
+    const toMoveInsideSlice = opts.toMoveInsideSlice;
+    const strTransform = opts.strTransform;
+    const hasTransition = opts.hasTransition;
+    const handleSlicesExit = opts.handleSlicesExit;
+    const makeUpdateSliceInterpolator = opts.makeUpdateSliceInterpolator;
+    const makeUpdateTextInterpolator = opts.makeUpdateTextInterpolator;
+    const prevEntry = opts.prevEntry;
+    const refRect = {};
 
-    var isStatic = gd._context.staticPlot;
+    const isStatic = gd._context.staticPlot;
 
-    var fullLayout = gd._fullLayout;
-    var cd0 = cd[0];
-    var trace = cd0.trace;
+    const fullLayout = gd._fullLayout;
+    const cd0 = cd[0];
+    const trace = cd0.trace;
 
-    var hasLeft = trace.textposition.indexOf('left') !== -1;
-    var hasRight = trace.textposition.indexOf('right') !== -1;
-    var hasBottom = trace.textposition.indexOf('bottom') !== -1;
+    const hasLeft = trace.textposition.indexOf('left') !== -1;
+    const hasRight = trace.textposition.indexOf('right') !== -1;
+    const hasBottom = trace.textposition.indexOf('bottom') !== -1;
 
-    var noRoomForHeader = (!hasBottom && !trace.marker.pad.t) || (hasBottom && !trace.marker.pad.b);
+    const noRoomForHeader = (!hasBottom && !trace.marker.pad.t) || (hasBottom && !trace.marker.pad.b);
 
     // N.B. slice data isn't the calcdata,
     // grab corresponding calcdata item in sliceData[i].data.data
-    var allData = partition(entry, [width, height], {
+    const allData = partition(entry, [width, height], {
         packing: trace.tiling.packing,
         squarifyratio: trace.tiling.squarifyratio,
         flipX: trace.tiling.flip.indexOf('x') > -1,
@@ -57,12 +57,12 @@ export default function drawDescendants(gd: GraphDiv, cd: any[], entry: any, sli
         }
     });
 
-    var sliceData = allData.descendants();
+    const sliceData = allData.descendants();
 
-    var minVisibleDepth = Infinity;
-    var maxVisibleDepth = -Infinity;
+    let minVisibleDepth = Infinity;
+    let maxVisibleDepth = -Infinity;
     sliceData.forEach(function(pt) {
-        var depth = pt.depth;
+        const depth = pt.depth;
         if(depth >= trace._maxDepth) {
             // hide slices that won't show up on graph
             pt.x0 = pt.x1 = (pt.x0 + pt.x1) / 2;
@@ -85,9 +85,9 @@ export default function drawDescendants(gd: GraphDiv, cd: any[], entry: any, sli
     slices.order();
 
     // next coords of previous entry
-    var nextOfPrevEntry = null;
+    let nextOfPrevEntry = null;
     if(hasTransition && prevEntry) {
-        var prevEntryId = helpers.getPtId(prevEntry);
+        const prevEntryId = helpers.getPtId(prevEntry);
         slices.each(function(pt) {
             if(nextOfPrevEntry === null && (helpers.getPtId(pt) === prevEntryId)) {
                 nextOfPrevEntry = {
@@ -100,7 +100,7 @@ export default function drawDescendants(gd: GraphDiv, cd: any[], entry: any, sli
         });
     }
 
-    var getRefRect = function() {
+    const getRefRect = function() {
         return nextOfPrevEntry || {
             x0: 0,
             x1: width,
@@ -109,12 +109,12 @@ export default function drawDescendants(gd: GraphDiv, cd: any[], entry: any, sli
         };
     };
 
-    var updateSlices = slices;
+    let updateSlices = slices;
     if(hasTransition) {
         updateSlices = updateSlices.transition().on('end', function() {
             // N.B. gd._transitioning is (still) *true* by the time
             // transition updates get here
-            var sliceTop = select(this);
+            const sliceTop = select(this);
             helpers.setSliceCursor(sliceTop, gd, {
                 hideOnRoot: true,
                 hideOnLeaves: false,
@@ -124,7 +124,7 @@ export default function drawDescendants(gd: GraphDiv, cd: any[], entry: any, sli
     }
 
     updateSlices.each(function(pt) {
-        var isHeader = helpers.isHeader(pt, trace);
+        const isHeader = helpers.isHeader(pt, trace);
 
         // for bbox
         pt._x0 = viewX(pt.x0);
@@ -137,15 +137,15 @@ export default function drawDescendants(gd: GraphDiv, cd: any[], entry: any, sli
                 viewY(pt.y1 - trace.marker.pad.b / 2) :
                 viewY(pt.y0 + trace.marker.pad.t / 2);
 
-        var sliceTop = select(this);
+        const sliceTop = select(this);
 
-        var slicePath = Lib.ensureSingle(sliceTop, 'path', 'surface', function(s) {
+        const slicePath = Lib.ensureSingle(sliceTop, 'path', 'surface', function(s) {
             s.style('pointer-events', isStatic ? 'none' : 'all');
         });
 
         if(hasTransition) {
             slicePath.transition().attrTween('d', function(pt2) {
-                var interp = makeUpdateSliceInterpolator(pt2, onPathbar, getRefRect(), [width, height]);
+                const interp = makeUpdateSliceInterpolator(pt2, onPathbar, getRefRect(), [width, height]);
                 return function(t) { return pathSlice(interp(t)); };
             });
         } else {
@@ -175,18 +175,18 @@ export default function drawDescendants(gd: GraphDiv, cd: any[], entry: any, sli
             }
         }
 
-        var sliceTextGroup = Lib.ensureSingle(sliceTop, 'g', 'slicetext');
-        var sliceText = Lib.ensureSingle(sliceTextGroup, 'text', '', function(s) {
+        const sliceTextGroup = Lib.ensureSingle(sliceTop, 'g', 'slicetext');
+        const sliceText = Lib.ensureSingle(sliceTextGroup, 'text', '', function(s) {
             // prohibit tex interpretation until we can handle
             // tex and regular text together
             s.attr('data-notex', 1);
         });
 
         // @ts-expect-error determineTextFont accepts optional 4th arg
-        var font = Lib.ensureUniformFontSize(gd, helpers.determineTextFont(trace, pt, fullLayout.font));
+        const font = Lib.ensureUniformFontSize(gd, helpers.determineTextFont(trace, pt, fullLayout.font));
 
-        var text = pt._text || ' '; // use one space character instead of a blank string to avoid jumps during transition
-        var singleLineHeader = isHeader && text.indexOf('<br>') === -1;
+        const text = pt._text || ' '; // use one space character instead of a blank string to avoid jumps during transition
+        const singleLineHeader = isHeader && text.indexOf('<br>') === -1;
 
         sliceText.text(text)
             .classed('slicetext', true)
@@ -203,7 +203,7 @@ export default function drawDescendants(gd: GraphDiv, cd: any[], entry: any, sli
 
         if(hasTransition) {
             sliceText.transition().attrTween('transform', function(pt2) {
-                var interp = makeUpdateTextInterpolator(pt2, onPathbar, getRefRect(), [width, height]);
+                const interp = makeUpdateTextInterpolator(pt2, onPathbar, getRefRect(), [width, height]);
                 return function(t) { return strTransform(interp(t)); };
             });
         } else {

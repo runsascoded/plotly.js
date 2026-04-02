@@ -4,14 +4,14 @@ import _index from '../../lib/index.js';
 const { fillText } = _index;
 
 export default function hoverPoints(pointData, xval, yval) {
-    var cd = pointData.cd;
-    var trace = cd[0].trace;
-    var geo = pointData.subplot;
+    const cd = pointData.cd;
+    const trace = cd[0].trace;
+    const geo = pointData.subplot;
 
-    var pt, i, j, isInside;
+    let pt, i, j, isInside;
 
-    var xy = [xval, yval];
-    var altXy = [xval + 360, yval];
+    const xy = [xval, yval];
+    const altXy = [xval + 360, yval];
 
     for(i = 0; i < cd.length; i++) {
         pt = cd[i];
@@ -51,20 +51,20 @@ export default function hoverPoints(pointData, xval, yval) {
 function makeHoverInfo(pointData, trace, pt) {
     if(trace.hovertemplate) return;
 
-    var hoverinfo = pt.hi || trace.hoverinfo;
-    var loc = String(pt.loc);
+    const hoverinfo = pt.hi || trace.hoverinfo;
+    const loc = String(pt.loc);
 
-    var parts = (hoverinfo === 'all') ?
+    const parts = (hoverinfo === 'all') ?
         attributes.hoverinfo.flags :
         hoverinfo.split('+');
 
-    var hasName = (parts.indexOf('name') !== -1);
-    var hasLocation = (parts.indexOf('location') !== -1);
-    var hasZ = (parts.indexOf('z') !== -1);
-    var hasText = (parts.indexOf('text') !== -1);
-    var hasIdAsNameLabel = !hasName && hasLocation;
+    const hasName = (parts.indexOf('name') !== -1);
+    const hasLocation = (parts.indexOf('location') !== -1);
+    const hasZ = (parts.indexOf('z') !== -1);
+    const hasText = (parts.indexOf('text') !== -1);
+    const hasIdAsNameLabel = !hasName && hasLocation;
 
-    var text = [];
+    const text = [];
 
     if(hasIdAsNameLabel) {
         pointData.nameOverride = loc;

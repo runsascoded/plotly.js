@@ -8,16 +8,16 @@ import _uniform_text from './uniform_text.js';
 const { resizeText } = _uniform_text;
 import attributes from './attributes.js';
 import helpers from './helpers.js';
-var attributeTextFont = attributes.textfont;
-var attributeInsideTextFont = attributes.insidetextfont;
-var attributeOutsideTextFont = attributes.outsidetextfont;
+const attributeTextFont = attributes.textfont;
+const attributeInsideTextFont = attributes.insidetextfont;
+const attributeOutsideTextFont = attributes.outsidetextfont;
 
 function style(gd: GraphDiv): any {
-    var s = select(gd).selectAll('g[class^="barlayer"]').selectAll('g.trace');
+    const s = select(gd).selectAll('g[class^="barlayer"]').selectAll('g.trace');
     resizeText(gd, s, 'bar');
 
-    var barcount = s.size();
-    var fullLayout = gd._fullLayout;
+    const barcount = s.size();
+    const fullLayout = gd._fullLayout;
 
     // trace styling
     s.style('opacity', function(d) { return d[0].trace.opacity; })
@@ -35,8 +35,8 @@ function style(gd: GraphDiv): any {
     });
 
     s.selectAll('g.points').each(function(d) {
-        var sel = select(this);
-        var trace = d[0].trace;
+        const sel = select(this);
+        const trace = d[0].trace;
         stylePoints(sel, trace, gd);
     });
 
@@ -50,15 +50,15 @@ function stylePoints(sel: any, trace: FullTrace, gd: GraphDiv): void {
 
 function styleTextPoints(sel: any, trace: FullTrace, gd: GraphDiv): void {
     sel.selectAll('text').each(function(d) {
-        var tx = select(this);
-        var textFont = ensureUniformFontSize(gd, determineFont(tx, d, trace, gd));
+        const tx = select(this);
+        const textFont = ensureUniformFontSize(gd, determineFont(tx, d, trace, gd));
 
         font(tx, textFont);
     });
 }
 
 function styleOnSelect(gd: GraphDiv, cd: CalcDatum[], sel: any): void {
-    var trace = cd[0].trace;
+    const trace = cd[0].trace;
 
     if(trace.selectedpoints) {
         stylePointsInSelectionMode(sel, trace, gd);
@@ -75,13 +75,13 @@ function stylePointsInSelectionMode(s: any, trace: FullTrace, gd: GraphDiv): voi
 
 function styleTextInSelectionMode(txs: any, trace: FullTrace, gd: GraphDiv): void {
     txs.each(function(d) {
-        var tx = select(this);
-        var textFont;
+        const tx = select(this);
+        let textFont;
 
         if(d.selected) {
             textFont = ensureUniformFontSize(gd, determineFont(tx, d, trace, gd));
 
-            var selectedFontColor = trace.selected.textfont && trace.selected.textfont.color;
+            const selectedFontColor = trace.selected.textfont && trace.selected.textfont.color;
             if(selectedFontColor) {
                 textFont.color = selectedFontColor;
             }
@@ -94,11 +94,11 @@ function styleTextInSelectionMode(txs: any, trace: FullTrace, gd: GraphDiv): voi
 }
 
 function determineFont(tx: any, d: any, trace: FullTrace, gd: GraphDiv): any {
-    var layoutFont = gd._fullLayout.font;
-    var textFont = trace.textfont;
+    const layoutFont = gd._fullLayout.font;
+    let textFont = trace.textfont;
 
     if(tx.classed('bartext-inside')) {
-        var barColor = getBarColor(d, trace);
+        const barColor = getBarColor(d, trace);
         textFont = getInsideTextFont(trace, d.i, layoutFont, barColor);
     } else if(tx.classed('bartext-outside')) {
         textFont = getOutsideTextFont(trace, d.i, layoutFont);
@@ -113,9 +113,9 @@ function getTextFont(trace: FullTrace, index: number, defaultValue: any): any {
 }
 
 function getInsideTextFont(trace: FullTrace, index: number, layoutFont: any, barColor: any): any {
-    var defaultFont = getTextFont(trace, index, layoutFont);
+    let defaultFont = getTextFont(trace, index, layoutFont);
 
-    var wouldFallBackToLayoutFont =
+    const wouldFallBackToLayoutFont =
       (trace._input.textfont === undefined || trace._input.textfont.color === undefined) ||
       (Array.isArray(trace.textfont.color) && trace.textfont.color[index] === undefined);
     if(wouldFallBackToLayoutFont) {
@@ -137,7 +137,7 @@ function getInsideTextFont(trace: FullTrace, index: number, layoutFont: any, bar
 }
 
 function getOutsideTextFont(trace: FullTrace, index: number, layoutFont: any): any {
-    var defaultFont = getTextFont(trace, index, layoutFont);
+    const defaultFont = getTextFont(trace, index, layoutFont);
     return getFontValue(
       attributeOutsideTextFont, trace.outsidetextfont, index, defaultFont);
 }
@@ -145,15 +145,15 @@ function getOutsideTextFont(trace: FullTrace, index: number, layoutFont: any): a
 function getFontValue(attributeDefinition: any, attributeValue: any, index: number, defaultValue: any): any {
     attributeValue = attributeValue || {};
 
-    var familyValue = helpers.getValue(attributeValue.family, index);
-    var sizeValue = helpers.getValue(attributeValue.size, index);
-    var colorValue = helpers.getValue(attributeValue.color, index);
-    var weightValue = helpers.getValue(attributeValue.weight, index);
-    var styleValue = helpers.getValue(attributeValue.style, index);
-    var variantValue = helpers.getValue(attributeValue.variant, index);
-    var textcaseValue = helpers.getValue(attributeValue.textcase, index);
-    var linepositionValue = helpers.getValue(attributeValue.lineposition, index);
-    var shadowValue = helpers.getValue(attributeValue.shadow, index);
+    const familyValue = helpers.getValue(attributeValue.family, index);
+    const sizeValue = helpers.getValue(attributeValue.size, index);
+    const colorValue = helpers.getValue(attributeValue.color, index);
+    const weightValue = helpers.getValue(attributeValue.weight, index);
+    const styleValue = helpers.getValue(attributeValue.style, index);
+    const variantValue = helpers.getValue(attributeValue.variant, index);
+    const textcaseValue = helpers.getValue(attributeValue.textcase, index);
+    const linepositionValue = helpers.getValue(attributeValue.lineposition, index);
+    const shadowValue = helpers.getValue(attributeValue.shadow, index);
 
     return {
         family: helpers.coerceString(

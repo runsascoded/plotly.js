@@ -3,7 +3,7 @@ import { extendFlat } from '../../lib/extend.js';
 import makeFillcolorAttr from '../scatter/fillcolor_attribute.js';
 import scatterAttrs from '../scatter/attributes.js';
 import baseAttrs from '../../plots/attributes.js';
-var lineAttrs = scatterAttrs.line;
+const lineAttrs = scatterAttrs.line;
 
 export default {
     mode: scatterAttrs.mode,

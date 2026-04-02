@@ -5,7 +5,7 @@ export default function handleHeatmapLabelDefaults(coerce,  layout: FullLayout) 
     coerce('texttemplate');
     coerce('texttemplatefallback');
 
-    var fontDflt = Lib.extendFlat({}, layout.font, {
+    const fontDflt = Lib.extendFlat({}, layout.font, {
         color: 'auto',
         size: 'auto'
     });

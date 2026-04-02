@@ -9,60 +9,60 @@ const { calcAllAutoBins } = _calc;
 import type { FullTrace, GraphDiv } from '../../../types/core';
 
 export default function calc(gd: GraphDiv, trace: FullTrace) {
-    var xa = Axes.getFromId(gd, trace.xaxis);
-    var ya = Axes.getFromId(gd, trace.yaxis);
+    const xa = Axes.getFromId(gd, trace.xaxis);
+    const ya = Axes.getFromId(gd, trace.yaxis);
 
-    var xcalendar = trace.xcalendar;
-    var ycalendar = trace.ycalendar;
-    var xr2c = function(v) { return xa.r2c(v, 0, xcalendar); };
-    var yr2c = function(v) { return ya.r2c(v, 0, ycalendar); };
-    var xc2r = function(v) { return xa.c2r(v, 0, xcalendar); };
-    var yc2r = function(v) { return ya.c2r(v, 0, ycalendar); };
+    const xcalendar = trace.xcalendar;
+    const ycalendar = trace.ycalendar;
+    const xr2c = function(v) { return xa.r2c(v, 0, xcalendar); };
+    const yr2c = function(v) { return ya.r2c(v, 0, ycalendar); };
+    const xc2r = function(v) { return xa.c2r(v, 0, xcalendar); };
+    const yc2r = function(v) { return ya.c2r(v, 0, ycalendar); };
 
-    var i, j, n, m;
+    let i, j, n, m;
 
     // calculate the bins
-    var xBinsAndPos = calcAllAutoBins(gd, trace, xa, 'x');
-    var xBinSpec = xBinsAndPos[0];
-    var xPos0 = xBinsAndPos[1];
-    var yBinsAndPos = calcAllAutoBins(gd, trace, ya, 'y');
-    var yBinSpec = yBinsAndPos[0];
-    var yPos0 = yBinsAndPos[1];
+    const xBinsAndPos = calcAllAutoBins(gd, trace, xa, 'x');
+    const xBinSpec = xBinsAndPos[0];
+    const xPos0 = xBinsAndPos[1];
+    const yBinsAndPos = calcAllAutoBins(gd, trace, ya, 'y');
+    const yBinSpec = yBinsAndPos[0];
+    const yPos0 = yBinsAndPos[1];
 
-    var serieslen = trace._length;
+    const serieslen = trace._length;
     if(xPos0.length > serieslen) xPos0.splice(serieslen, xPos0.length - serieslen);
     if(yPos0.length > serieslen) yPos0.splice(serieslen, yPos0.length - serieslen);
 
     // make the empty bin array & scale the map
-    var z = [];
-    var onecol = [];
-    var zerocol = [];
-    var nonuniformBinsX = typeof xBinSpec.size === 'string';
-    var nonuniformBinsY = typeof yBinSpec.size === 'string';
-    var xEdges = [];
-    var yEdges = [];
-    var xbins = nonuniformBinsX ? xEdges : xBinSpec;
-    var ybins = nonuniformBinsY ? yEdges : yBinSpec;
-    var total = 0;
-    var counts = [];
-    var inputPoints = [];
-    var norm = trace.histnorm;
-    var func = trace.histfunc;
-    var densitynorm = norm.indexOf('density') !== -1;
-    var extremefunc = func === 'max' || func === 'min';
-    var sizeinit = extremefunc ? null : 0;
-    var binfunc = binFunctions.count;
-    var normfunc = normFunctions[norm];
-    var doavg = false;
-    var xinc = [];
-    var yinc = [];
+    const z = [];
+    const onecol = [];
+    const zerocol = [];
+    const nonuniformBinsX = typeof xBinSpec.size === 'string';
+    const nonuniformBinsY = typeof yBinSpec.size === 'string';
+    const xEdges = [];
+    const yEdges = [];
+    let xbins = nonuniformBinsX ? xEdges : xBinSpec;
+    let ybins = nonuniformBinsY ? yEdges : yBinSpec;
+    let total = 0;
+    const counts = [];
+    const inputPoints = [];
+    const norm = trace.histnorm;
+    const func = trace.histfunc;
+    const densitynorm = norm.indexOf('density') !== -1;
+    const extremefunc = func === 'max' || func === 'min';
+    const sizeinit = extremefunc ? null : 0;
+    let binfunc = binFunctions.count;
+    const normfunc = normFunctions[norm];
+    let doavg = false;
+    let xinc = [];
+    let yinc = [];
 
     // set a binning function other than count?
     // for binning functions: check first for 'z',
     // then 'mc' in case we had a colored scatter plot
     // and want to transfer these colors to the 2D histo
     // TODO: axe this, make it the responsibility of the app changing type? or an impliedEdit?
-    var rawCounterData = ('z' in trace) ?
+    const rawCounterData = ('z' in trace) ?
         trace.z :
         (('marker' in trace && Array.isArray(trace.marker.color)) ?
             trace.marker.color : '');
@@ -72,9 +72,9 @@ export default function calc(gd: GraphDiv, trace: FullTrace) {
     }
 
     // decrease end a little in case of rounding errors
-    var xBinSize = xBinSpec.size;
-    var xBinStart = xr2c(xBinSpec.start);
-    var xBinEnd = xr2c(xBinSpec.end) +
+    const xBinSize = xBinSpec.size;
+    const xBinStart = xr2c(xBinSpec.start);
+    const xBinEnd = xr2c(xBinSpec.end) +
         (xBinStart - Axes.tickIncrement(xBinStart, xBinSize, false, xcalendar)) / 1e6;
 
     for(i = xBinStart; i < xBinEnd; i = Axes.tickIncrement(i, xBinSize, false, xcalendar)) {
@@ -84,28 +84,28 @@ export default function calc(gd: GraphDiv, trace: FullTrace) {
     }
     xEdges.push(i);
 
-    var nx = onecol.length;
-    var dx = (i - xBinStart) / nx;
-    var x0 = xc2r(xBinStart + dx / 2);
+    const nx = onecol.length;
+    const dx = (i - xBinStart) / nx;
+    const x0 = xc2r(xBinStart + dx / 2);
 
-    var yBinSize = yBinSpec.size;
-    var yBinStart = yr2c(yBinSpec.start);
-    var yBinEnd = yr2c(yBinSpec.end) +
+    const yBinSize = yBinSpec.size;
+    const yBinStart = yr2c(yBinSpec.start);
+    const yBinEnd = yr2c(yBinSpec.end) +
         (yBinStart - Axes.tickIncrement(yBinStart, yBinSize, false, ycalendar)) / 1e6;
 
     for(i = yBinStart; i < yBinEnd; i = Axes.tickIncrement(i, yBinSize, false, ycalendar)) {
         z.push(onecol.slice());
         yEdges.push(i);
-        var ipCol = new Array(nx);
+        const ipCol = new Array(nx);
         for(j = 0; j < nx; j++) ipCol[j] = [];
         inputPoints.push(ipCol);
         if(doavg) counts.push(zerocol.slice());
     }
     yEdges.push(i);
 
-    var ny = z.length;
-    var dy = (i - yBinStart) / ny;
-    var y0 = yc2r(yBinStart + dy / 2);
+    const ny = z.length;
+    const dy = (i - yBinStart) / ny;
+    const y0 = yc2r(yBinStart + dy / 2);
 
     if(densitynorm) {
         xinc = makeIncrements(onecol.length, xbins, dx, nonuniformBinsX);
@@ -118,17 +118,17 @@ export default function calc(gd: GraphDiv, trace: FullTrace) {
     if(!nonuniformBinsY && ya.type === 'date') ybins = binsToCalc(yr2c, ybins);
 
     // put data into bins
-    var uniqueValsPerX = true;
-    var uniqueValsPerY = true;
-    var xVals = new Array(nx);
-    var yVals = new Array(ny);
-    var xGapLow = Infinity;
-    var xGapHigh = Infinity;
-    var yGapLow = Infinity;
-    var yGapHigh = Infinity;
+    let uniqueValsPerX = true;
+    let uniqueValsPerY = true;
+    const xVals = new Array(nx);
+    const yVals = new Array(ny);
+    let xGapLow = Infinity;
+    let xGapHigh = Infinity;
+    let yGapLow = Infinity;
+    let yGapHigh = Infinity;
     for(i = 0; i < serieslen; i++) {
-        var xi = xPos0[i];
-        var yi = yPos0[i];
+        const xi = xPos0[i];
+        const yi = yPos0[i];
         n = Lib.findBin(xi, xbins);
         m = Lib.findBin(yi, ybins);
         if(n >= 0 && n < nx && m >= 0 && m < ny) {
@@ -173,12 +173,12 @@ export default function calc(gd: GraphDiv, trace: FullTrace) {
 }
 
 function makeIncrements(len, bins, dv, nonuniform) {
-    var out = new Array(len);
-    var i;
+    const out = new Array(len);
+    let i;
     if(nonuniform) {
         for(i = 0; i < len; i++) out[i] = 1 / (bins[i + 1] - bins[i]);
     } else {
-        var inc = 1 / dv;
+        const inc = 1 / dv;
         for(i = 0; i < len; i++) out[i] = inc;
     }
     return out;
@@ -193,13 +193,13 @@ function binsToCalc(r2c, bins) {
 }
 
 function getRanges(edges, uniqueVals, gapLow, gapHigh, ax, calendar) {
-    var i;
-    var len = edges.length - 1;
-    var out = new Array(len);
-    var roundFn = getBinSpanLabelRound(gapLow, gapHigh, edges, ax, calendar);
+    let i;
+    const len = edges.length - 1;
+    const out = new Array(len);
+    const roundFn = getBinSpanLabelRound(gapLow, gapHigh, edges, ax, calendar);
 
     for(i = 0; i < len; i++) {
-        var v = (uniqueVals || [])[i];
+        const v = (uniqueVals || [])[i];
         out[i] = v === undefined ?
             [roundFn(edges[i]), roundFn(edges[i + 1], true)] :
             [v, v];

@@ -3,15 +3,15 @@ import scatterPlot from '../scatter/plot.js';
 import _numerical from '../../constants/numerical.js';
 const { BADNUM } = _numerical;
 import helpers from '../../plots/smith/helpers.js';
-var smith = helpers.smith;
+const smith = helpers.smith;
 
 export default function plot(gd: GraphDiv, subplot: PlotInfo, moduleCalcData) {
-    var mlayer = subplot.layers.frontplot.select('g.scatterlayer');
+    const mlayer = subplot.layers.frontplot.select('g.scatterlayer');
 
-    var xa = subplot.xaxis;
-    var ya = subplot.yaxis;
+    const xa = subplot.xaxis;
+    const ya = subplot.yaxis;
 
-    var plotinfo: any = {
+    const plotinfo: any = {
         xaxis: xa,
         yaxis: ya,
         plot: subplot.framework,
@@ -20,22 +20,22 @@ export default function plot(gd: GraphDiv, subplot: PlotInfo, moduleCalcData) {
 
     // convert:
     // 'c' (real,imag) -> (x,y)
-    for(var i = 0; i < moduleCalcData.length; i++) {
-        var cdi = moduleCalcData[i];
+    for(let i = 0; i < moduleCalcData.length; i++) {
+        const cdi = moduleCalcData[i];
 
-        for(var j = 0; j < cdi.length; j++) {
+        for(let j = 0; j < cdi.length; j++) {
             if(j === 0) {
                 cdi[0].trace._xA = xa;
                 cdi[0].trace._yA = ya;
             }
 
-            var cd = cdi[j];
-            var real = cd.real;
+            const cd = cdi[j];
+            const real = cd.real;
 
             if(real === BADNUM) {
                 cd.x = cd.y = BADNUM;
             } else {
-                var t = smith([real, cd.imag]);
+                const t = smith([real, cd.imag]);
 
                 cd.x = t[0];
                 cd.y = t[1];

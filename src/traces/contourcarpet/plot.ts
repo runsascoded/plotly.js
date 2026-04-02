@@ -15,35 +15,35 @@ import axisAlignedLine from '../carpet/axis_aligned_line.js';
 import type { GraphDiv } from '../../../types/core';
 
 export default function plot(gd: GraphDiv, plotinfo, cdcontours, contourcarpetLayer) {
-    var xa = plotinfo.xaxis;
-    var ya = plotinfo.yaxis;
+    const xa = plotinfo.xaxis;
+    const ya = plotinfo.yaxis;
 
     Lib.makeTraceGroups(contourcarpetLayer, cdcontours, 'contour').each(function(cd) {
-        var plotGroup = select(this);
-        var cd0 = cd[0];
-        var trace = cd0.trace;
+        const plotGroup = select(this);
+        const cd0 = cd[0];
+        const trace = cd0.trace;
 
-        var carpet = trace._carpetTrace = lookupCarpet(gd, trace);
-        var carpetcd = gd.calcdata[carpet.index][0];
+        const carpet = trace._carpetTrace = lookupCarpet(gd, trace);
+        const carpetcd = gd.calcdata[carpet.index][0];
 
         if(!carpet.visible || carpet.visible === 'legendonly') return;
 
-        var a = cd0.a;
-        var b = cd0.b;
-        var contours = trace.contours;
-        var pathinfo = emptyPathinfo(contours, plotinfo, cd0);
-        var isConstraint = contours.type === 'constraint';
-        var operation = contours._operation;
-        var coloring = isConstraint ? (operation === '=' ? 'lines' : 'fill') : contours.coloring;
+        const a = cd0.a;
+        const b = cd0.b;
+        const contours = trace.contours;
+        const pathinfo = emptyPathinfo(contours, plotinfo, cd0);
+        const isConstraint = contours.type === 'constraint';
+        const operation = contours._operation;
+        const coloring = isConstraint ? (operation === '=' ? 'lines' : 'fill') : contours.coloring;
 
         // Map [a, b] (data) --> [i, j] (pixels)
         function ab2p(ab) {
-            var pt = carpet.ab2xy(ab[0], ab[1], true);
+            const pt = carpet.ab2xy(ab[0], ab[1], true);
             return [xa.c2p(pt[0]), ya.c2p(pt[1])];
         }
 
         // Define the perimeter in a/b coordinates:
-        var perimeter = [
+        const perimeter = [
             [a[0], b[b.length - 1]],
             [a[a.length - 1], b[b.length - 1]],
             [a[a.length - 1], b[0]],
@@ -52,8 +52,8 @@ export default function plot(gd: GraphDiv, plotinfo, cdcontours, contourcarpetLa
 
         // Extract the contour levels:
         makeCrossings(pathinfo);
-        var atol = (a[a.length - 1] - a[0]) * 1e-8;
-        var btol = (b[b.length - 1] - b[0]) * 1e-8;
+        const atol = (a[a.length - 1] - a[0]) * 1e-8;
+        const btol = (b[b.length - 1] - b[0]) * 1e-8;
         findAllPaths(pathinfo, atol, btol);
 
         // Constraints might need to be draw inverted, which is not something contours
@@ -64,7 +64,7 @@ export default function plot(gd: GraphDiv, plotinfo, cdcontours, contourcarpetLa
         // TODO: Perhaps this should be generalized and *all* paths should be drawn as
         // closed regions so that translucent contour levels would be valid.
         // See: https://github.com/plotly/plotly.js/issues/1356
-        var fillPathinfo = pathinfo;
+        let fillPathinfo = pathinfo;
         if(contours.type === 'constraint') {
             fillPathinfo = convertToConstraints(pathinfo, operation);
         }
@@ -75,8 +75,8 @@ export default function plot(gd: GraphDiv, plotinfo, cdcontours, contourcarpetLa
         // draw everything
 
         // Compute the boundary path
-        var seg, xp, yp, i;
-        var segs = [];
+        let seg, xp, yp, i;
+        const segs = [];
         for(i = carpetcd.clipsegments.length - 1; i >= 0; i--) {
             seg = carpetcd.clipsegments[i];
             xp = map1dArray([], seg.x, xa.c2p);
@@ -86,7 +86,7 @@ export default function plot(gd: GraphDiv, plotinfo, cdcontours, contourcarpetLa
             segs.push(makepath(xp, yp, seg.bicubic));
         }
 
-        var boundaryPath = 'M' + segs.join('L') + 'Z';
+        const boundaryPath = 'M' + segs.join('L') + 'Z';
 
         // Draw the baseline background fill that fills in the space behind any other
         // contour levels:
@@ -106,7 +106,7 @@ export default function plot(gd: GraphDiv, plotinfo, cdcontours, contourcarpetLa
 }
 
 function mapPathinfo(pathinfo, map) {
-    var i, j, k, pi, pedgepaths, ppaths, pedgepath, ppath, path;
+    let i, j, k, pi, pedgepaths, ppaths, pedgepath, ppath, path;
 
     for(i = 0; i < pathinfo.length; i++) {
         pi = pathinfo[i];
@@ -132,21 +132,21 @@ function mapPathinfo(pathinfo, map) {
 }
 
 function makeLinesAndLabels(plotgroup, pathinfo, gd, cd0, contours, plotinfo, carpet) {
-    var isStatic = gd._context.staticPlot;
-    var lineContainer = Lib.ensureSingle(plotgroup, 'g', 'contourlines');
-    var showLines = contours.showlines !== false;
-    var showLabels = contours.showlabels;
-    var clipLinesForLabels = showLines && showLabels;
+    const isStatic = gd._context.staticPlot;
+    const lineContainer = Lib.ensureSingle(plotgroup, 'g', 'contourlines');
+    const showLines = contours.showlines !== false;
+    const showLabels = contours.showlabels;
+    const clipLinesForLabels = showLines && showLabels;
 
     // Even if we're not going to show lines, we need to create them
     // if we're showing labels, because the fill paths include the perimeter
     // so can't be used to position the labels correctly.
     // In this case we'll remove the lines after making the labels.
-    var linegroup = contourPlot.createLines(lineContainer, showLines || showLabels, pathinfo, isStatic);
+    const linegroup = contourPlot.createLines(lineContainer, showLines || showLabels, pathinfo, isStatic);
 
-    var lineClip = contourPlot.createLineClip(lineContainer, clipLinesForLabels, gd, cd0.trace.uid);
+    const lineClip = contourPlot.createLineClip(lineContainer, clipLinesForLabels, gd, cd0.trace.uid);
 
-    var labelGroup = plotgroup.selectAll('g.contourlabels')
+    const labelGroup = plotgroup.selectAll('g.contourlabels')
         .data(showLabels ? [0] : []);
 
     labelGroup.exit().remove();
@@ -155,33 +155,33 @@ function makeLinesAndLabels(plotgroup, pathinfo, gd, cd0, contours, plotinfo, ca
         .classed('contourlabels', true);
 
     if(showLabels) {
-        var xa = plotinfo.xaxis;
-        var ya = plotinfo.yaxis;
-        var xLen = xa._length;
-        var yLen = ya._length;
+        const xa = plotinfo.xaxis;
+        const ya = plotinfo.yaxis;
+        const xLen = xa._length;
+        const yLen = ya._length;
         // for simplicity use the xy box for label clipping outline.
-        var labelClipPathData = [[
+        const labelClipPathData = [[
             [0, 0],
             [xLen, 0],
             [xLen, yLen],
             [0, yLen]
         ]];
 
-        var labelData = [];
+        const labelData = [];
 
         // invalidate the getTextLocation cache in case paths changed
         Lib.clearLocationCache();
 
-        var contourFormat = contourPlot.labelFormatter(gd, cd0);
+        const contourFormat = contourPlot.labelFormatter(gd, cd0);
 
-        var dummyText = tester.append('text')
+        const dummyText = tester.append('text')
             .attr('data-notex', 1)
             .call(font, contours.labelfont);
 
         // use `bounds` only to keep labels away from the x/y boundaries
         // `constrainToCarpet` below ensures labels don't go off the
         // carpet edges
-        var bounds = {
+        const bounds = {
             left: 0,
             right: xLen,
             center: xLen / 2,
@@ -190,29 +190,29 @@ function makeLinesAndLabels(plotgroup, pathinfo, gd, cd0, contours, plotinfo, ca
             middle: yLen / 2
         };
 
-        var plotDiagonal = Math.sqrt(xLen * xLen + yLen * yLen);
+        const plotDiagonal = Math.sqrt(xLen * xLen + yLen * yLen);
 
         // the path length to use to scale the number of labels to draw:
-        var normLength = constants.LABELDISTANCE * plotDiagonal /
+        const normLength = constants.LABELDISTANCE * plotDiagonal /
             Math.max(1, pathinfo.length / constants.LABELINCREASE);
 
         linegroup.each(function(d) {
-            var textOpts = contourPlot.calcTextOpts(d.level, contourFormat, dummyText, gd);
+            const textOpts = contourPlot.calcTextOpts(d.level, contourFormat, dummyText, gd);
 
             select(this).selectAll('path').each(function(pathData) {
-                var path = this;
-                var pathBounds = Lib.getVisibleSegment(path, bounds, textOpts.height / 2);
+                const path = this;
+                const pathBounds = Lib.getVisibleSegment(path, bounds, textOpts.height / 2);
                 if(!pathBounds) return;
 
                 constrainToCarpet(path, pathData, d, pathBounds, carpet, textOpts.height);
 
                 if(pathBounds.len < (textOpts.width + textOpts.height) * constants.LABELMIN) return;
 
-                var maxLabels = Math.min(Math.ceil(pathBounds.len / normLength),
+                const maxLabels = Math.min(Math.ceil(pathBounds.len / normLength),
                     constants.LABELMAX);
 
-                for(var i = 0; i < maxLabels; i++) {
-                    var loc = contourPlot.findBestTextLocation(path, pathBounds, textOpts,
+                for(let i = 0; i < maxLabels; i++) {
+                    const loc = contourPlot.findBestTextLocation(path, pathBounds, textOpts,
                         labelData, bounds);
 
                     if(!loc) break;
@@ -234,23 +234,23 @@ function makeLinesAndLabels(plotgroup, pathinfo, gd, cd0, contours, plotinfo, ca
 // figure out if this path goes off the edge of the carpet
 // and shorten the part we call visible to keep labels away from the edge
 function constrainToCarpet(path, pathData, levelData, pathBounds, carpet, textHeight) {
-    var pathABData;
-    for(var i = 0; i < levelData.pedgepaths.length; i++) {
+    let pathABData;
+    for(let i = 0; i < levelData.pedgepaths.length; i++) {
         if(pathData === levelData.pedgepaths[i]) {
             pathABData = levelData.edgepaths[i];
         }
     }
     if(!pathABData) return;
 
-    var aMin = carpet.a[0];
-    var aMax = carpet.a[carpet.a.length - 1];
-    var bMin = carpet.b[0];
-    var bMax = carpet.b[carpet.b.length - 1];
+    const aMin = carpet.a[0];
+    const aMax = carpet.a[carpet.a.length - 1];
+    const bMin = carpet.b[0];
+    const bMax = carpet.b[carpet.b.length - 1];
 
     function getOffset(abPt, pathVector) {
-        var offset = 0;
-        var edgeVector;
-        var dAB = 0.1;
+        let offset = 0;
+        let edgeVector;
+        const dAB = 0.1;
         if(Math.abs(abPt[0] - aMin) < dAB || Math.abs(abPt[0] - aMax) < dAB) {
             edgeVector = normalizeVector(carpet.dxydb_rough(abPt[0], abPt[1], dAB));
             offset = Math.max(offset, textHeight * vectorTan(pathVector, edgeVector) / 2);
@@ -263,10 +263,10 @@ function constrainToCarpet(path, pathData, levelData, pathBounds, carpet, textHe
         return offset;
     }
 
-    var startVector = getUnitVector(path, 0, 1);
-    var endVector = getUnitVector(path, pathBounds.total, pathBounds.total - 1);
-    var minStart = getOffset(pathABData[0], startVector);
-    var maxEnd = pathBounds.total - getOffset(pathABData[pathABData.length - 1], endVector);
+    const startVector = getUnitVector(path, 0, 1);
+    const endVector = getUnitVector(path, pathBounds.total, pathBounds.total - 1);
+    const minStart = getOffset(pathABData[0], startVector);
+    const maxEnd = pathBounds.total - getOffset(pathABData[pathABData.length - 1], endVector);
 
     if(pathBounds.min < minStart) pathBounds.min = minStart;
     if(pathBounds.max > maxEnd) pathBounds.max = maxEnd;
@@ -275,35 +275,35 @@ function constrainToCarpet(path, pathData, levelData, pathBounds, carpet, textHe
 }
 
 function getUnitVector(path, p0, p1) {
-    var pt0 = path.getPointAtLength(p0);
-    var pt1 = path.getPointAtLength(p1);
-    var dx = pt1.x - pt0.x;
-    var dy = pt1.y - pt0.y;
-    var len = Math.sqrt(dx * dx + dy * dy);
+    const pt0 = path.getPointAtLength(p0);
+    const pt1 = path.getPointAtLength(p1);
+    const dx = pt1.x - pt0.x;
+    const dy = pt1.y - pt0.y;
+    const len = Math.sqrt(dx * dx + dy * dy);
     return [dx / len, dy / len];
 }
 
 function normalizeVector(v) {
-    var len = Math.sqrt(v[0] * v[0] + v[1] * v[1]);
+    const len = Math.sqrt(v[0] * v[0] + v[1] * v[1]);
     return [v[0] / len, v[1] / len];
 }
 
 function vectorTan(v0, v1) {
-    var cos = Math.abs(v0[0] * v1[0] + v0[1] * v1[1]);
-    var sin = Math.sqrt(1 - cos * cos);
+    const cos = Math.abs(v0[0] * v1[0] + v0[1] * v1[1]);
+    const sin = Math.sqrt(1 - cos * cos);
     return sin / cos;
 }
 
 function makeBackground(plotgroup, clipsegments, xaxis, yaxis, isConstraint, coloring) {
-    var seg, xp, yp, i;
-    var bggroup = Lib.ensureSingle(plotgroup, 'g', 'contourbg');
+    let seg, xp, yp, i;
+    const bggroup = Lib.ensureSingle(plotgroup, 'g', 'contourbg');
 
-    var bgfill = bggroup.selectAll('path')
+    const bgfill = bggroup.selectAll('path')
         .data((coloring === 'fill' && !isConstraint) ? [0] : []);
     bgfill.enter().append('path');
     bgfill.exit().remove();
 
-    var segs = [];
+    const segs = [];
     for(i = 0; i < clipsegments.length; i++) {
         seg = clipsegments[i];
         xp = map1dArray([], seg.x, xaxis.c2p);
@@ -317,15 +317,15 @@ function makeBackground(plotgroup, clipsegments, xaxis, yaxis, isConstraint, col
 }
 
 function makeFills(trace, plotgroup, xa, ya, pathinfo, perimeter, ab2p, carpet, carpetcd, coloring, boundaryPath) {
-    var hasFills = coloring === 'fill';
+    const hasFills = coloring === 'fill';
 
     // fills prefixBoundary in pathinfo items
     if(hasFills) {
         closeBoundaries(pathinfo, trace.contours);
     }
 
-    var fillgroup = Lib.ensureSingle(plotgroup, 'g', 'contourfill');
-    var fillitems = fillgroup.selectAll('path').data(hasFills ? pathinfo : []);
+    const fillgroup = Lib.ensureSingle(plotgroup, 'g', 'contourfill');
+    const fillitems = fillgroup.selectAll('path').data(hasFills ? pathinfo : []);
     fillitems.enter().append('path');
     fillitems.exit().remove();
     fillitems.each(function(pi) {
@@ -334,7 +334,7 @@ function makeFills(trace, plotgroup, xa, ya, pathinfo, perimeter, ab2p, carpet, 
         // if the whole perimeter is above this level, start with a path
         // enclosing the whole thing. With all that, the parity should mean
         // that we always fill everything above the contour, nothing below
-        var fullpath = (pi.prefixBoundary ? boundaryPath : '') +
+        const fullpath = (pi.prefixBoundary ? boundaryPath : '') +
             joinAllPaths(trace, pi, perimeter, ab2p, carpet, carpetcd, xa, ya);
 
         if(!fullpath) {
@@ -348,15 +348,15 @@ function makeFills(trace, plotgroup, xa, ya, pathinfo, perimeter, ab2p, carpet, 
 }
 
 function joinAllPaths(trace, pi, perimeter, ab2p, carpet, carpetcd, xa, ya) {
-    var i;
-    var fullpath = '';
+    let i;
+    let fullpath = '';
 
-    var startsleft = pi.edgepaths.map(function(v, i) { return i; });
-    var newloop = true;
-    var endpt, newendpt, cnt, nexti, possiblei, addpath;
+    const startsleft = pi.edgepaths.map(function(v, i) { return i; });
+    let newloop = true;
+    let endpt, newendpt, cnt, nexti, possiblei, addpath;
 
-    var atol = Math.abs(perimeter[0][0] - perimeter[2][0]) * 1e-4;
-    var btol = Math.abs(perimeter[0][1] - perimeter[2][1]) * 1e-4;
+    const atol = Math.abs(perimeter[0][0] - perimeter[2][0]) * 1e-4;
+    const btol = Math.abs(perimeter[0][1] - perimeter[2][1]) * 1e-4;
 
     function istop(pt) { return Math.abs(pt[1] - perimeter[0][1]) < btol; }
     function isbottom(pt) { return Math.abs(pt[1] - perimeter[2][1]) < btol; }
@@ -364,8 +364,8 @@ function joinAllPaths(trace, pi, perimeter, ab2p, carpet, carpetcd, xa, ya) {
     function isright(pt) { return Math.abs(pt[0] - perimeter[2][0]) < atol; }
 
     function pathto(pt0, pt1) {
-        var i, j, segments, axis;
-        var path = '';
+        let i, j, segments, axis;
+        let path = '';
 
         if((istop(pt0) && !isright(pt0)) || (isbottom(pt0) && !isleft(pt0))) {
             axis = carpet.aaxis;
@@ -378,7 +378,7 @@ function joinAllPaths(trace, pi, perimeter, ab2p, carpet, carpetcd, xa, ya) {
         for(i = 1; i < segments.length; i++) {
             path += axis.smoothing ? 'C' : 'L';
             for(j = 0; j < segments[i].length; j++) {
-                var pt = segments[i][j];
+                const pt = segments[i][j];
                 path += [xa.c2p(pt[0]), ya.c2p(pt[1])] + ' ';
             }
         }
@@ -389,7 +389,7 @@ function joinAllPaths(trace, pi, perimeter, ab2p, carpet, carpetcd, xa, ya) {
     i = 0;
     endpt = null;
     while(startsleft.length) {
-        var startpt = pi.edgepaths[i][0];
+        const startpt = pi.edgepaths[i][0];
 
         if(endpt) {
             fullpath += pathto(endpt, startpt);
@@ -419,7 +419,7 @@ function joinAllPaths(trace, pi, perimeter, ab2p, carpet, carpetcd, xa, ya) {
             }
 
             for(possiblei = 0; possiblei < pi.edgepaths.length; possiblei++) {
-                var ptNew = pi.edgepaths[possiblei][0];
+                const ptNew = pi.edgepaths[possiblei][0];
                 // is ptNew on the (horz. or vert.) segment from endpt to newendpt?
                 if(Math.abs(endpt[0] - newendpt[0]) < atol) {
                     if(Math.abs(endpt[0] - ptNew[0]) < atol &&

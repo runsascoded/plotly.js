@@ -3,7 +3,7 @@ import Color from '../../components/color/index.js';
 import subtypes from './subtypes.js';
 
 export default function getTraceColor(trace: FullTrace, di: CalcDatum): string {
-    var lc, tc;
+    let lc, tc;
 
     // TODO: text modes
 
@@ -14,8 +14,8 @@ export default function getTraceColor(trace: FullTrace, di: CalcDatum): string {
     } else if(trace.mode === 'none') {
         return trace.fill ? trace.fillcolor : '';
     } else {
-        var mc = di.mcc || (trace.marker || {}).color;
-        var mlc = di.mlcc || ((trace.marker || {}).line || {}).color;
+        const mc = di.mcc || (trace.marker || {}).color;
+        const mlc = di.mlcc || ((trace.marker || {}).line || {}).color;
 
         tc = (mc && Color.opacity(mc)) ? mc :
             (mlc && Color.opacity(mlc) &&

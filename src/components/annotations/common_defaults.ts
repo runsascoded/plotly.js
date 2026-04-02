@@ -4,15 +4,15 @@ import Color from '../color/index.js';
 
 export default function handleAnnotationCommonDefaults(annIn: any, annOut: any, fullLayout: FullLayout, coerce: any) {
     coerce('opacity');
-    var bgColor = coerce('bgcolor');
+    const bgColor = coerce('bgcolor');
 
-    var borderColor = coerce('bordercolor');
-    var borderOpacity = Color.opacity(borderColor);
+    const borderColor = coerce('bordercolor');
+    const borderOpacity = Color.opacity(borderColor);
 
     coerce('borderpad');
 
-    var borderWidth = coerce('borderwidth');
-    var showArrow = coerce('showarrow');
+    const borderWidth = coerce('borderwidth');
+    const showArrow = coerce('showarrow');
 
     coerce('text', showArrow ? ' ' : fullLayout._dfltTitle.annotation);
     coerce('textangle');
@@ -21,13 +21,13 @@ export default function handleAnnotationCommonDefaults(annIn: any, annOut: any, 
     coerce('width');
     coerce('align');
 
-    var h = coerce('height');
+    const h = coerce('height');
     if(h) coerce('valign');
 
     if(showArrow) {
-        var arrowside = coerce('arrowside');
-        var arrowhead;
-        var arrowsize;
+        const arrowside = coerce('arrowside');
+        let arrowhead;
+        let arrowsize;
 
         if(arrowside.indexOf('end') !== -1) {
             arrowhead = coerce('arrowhead');
@@ -44,19 +44,19 @@ export default function handleAnnotationCommonDefaults(annIn: any, annOut: any, 
         coerce('startstandoff');
     }
 
-    var hoverText = coerce('hovertext');
-    var globalHoverLabel = fullLayout.hoverlabel || {};
+    const hoverText = coerce('hovertext');
+    const globalHoverLabel = fullLayout.hoverlabel || {};
 
     if(hoverText) {
-        var hoverBG = coerce('hoverlabel.bgcolor', globalHoverLabel.bgcolor ||
+        const hoverBG = coerce('hoverlabel.bgcolor', globalHoverLabel.bgcolor ||
             (Color.opacity(bgColor) ? Color.rgb(bgColor) : Color.defaultLine)
         );
 
-        var hoverBorder = coerce('hoverlabel.bordercolor', globalHoverLabel.bordercolor ||
+        const hoverBorder = coerce('hoverlabel.bordercolor', globalHoverLabel.bordercolor ||
             Color.contrast(hoverBG)
         );
 
-        var fontDflt = Lib.extendFlat({}, globalHoverLabel.font);
+        const fontDflt = Lib.extendFlat({}, globalHoverLabel.font);
         if(!fontDflt.color) {
             fontDflt.color = hoverBorder;
         }

@@ -1,11 +1,11 @@
 export default function makeClipPath(xctrl, yctrl, aax, bax) {
-    var i, x, y;
-    var segments = [];
+    let i, x, y;
+    const segments = [];
 
-    var asmoothing = !!aax.smoothing;
-    var bsmoothing = !!bax.smoothing;
-    var nea1 = xctrl[0].length - 1;
-    var neb1 = xctrl.length - 1;
+    const asmoothing = !!aax.smoothing;
+    const bsmoothing = !!bax.smoothing;
+    const nea1 = xctrl[0].length - 1;
+    const neb1 = xctrl.length - 1;
 
     // Along the lower a axis:
     for(i = 0, x = [], y = []; i <= nea1; i++) {

@@ -6,22 +6,22 @@ import axisIds from '../../plots/cartesian/axis_ids.js';
 import xmlnsNamespaces from '../../constants/xmlns_namespaces.js';
 
 export default function draw(gd: GraphDiv) {
-    var fullLayout = gd._fullLayout;
-    var imageDataAbove = [];
-    var imageDataSubplot: any = {};
-    var imageDataBelow = [];
-    var subplot;
-    var i;
+    const fullLayout = gd._fullLayout;
+    const imageDataAbove = [];
+    const imageDataSubplot: any = {};
+    const imageDataBelow = [];
+    let subplot;
+    let i;
 
     // Sort into top, subplot, and bottom layers
     for(i = 0; i < fullLayout.images.length; i++) {
-        var img = fullLayout.images[i];
+        const img = fullLayout.images[i];
 
         if(img.visible) {
             if(img.layer === 'below' && img.xref !== 'paper' && img.yref !== 'paper') {
                 subplot = axisIds.ref2id(img.xref) + axisIds.ref2id(img.yref);
 
-                var plotinfo = fullLayout._plots[subplot];
+                const plotinfo = fullLayout._plots[subplot];
 
                 if(!plotinfo) {
                     // Fall back to _imageLowerLayer in case the requested subplot doesn't exist.
@@ -47,7 +47,7 @@ export default function draw(gd: GraphDiv) {
         }
     }
 
-    var anchors = {
+    const anchors = {
         x: {
             left: { sizing: 'xMin', offset: 0 },
             center: { sizing: 'xMid', offset: -1 / 2 },
@@ -62,7 +62,7 @@ export default function draw(gd: GraphDiv) {
 
     // Images must be converted to dataURL's for exporting.
     function setImage(d: any) {
-        var thisImage = select(this);
+        const thisImage = select(this);
 
         if(this._imgSrc === d.source) {
             return;
@@ -74,22 +74,22 @@ export default function draw(gd: GraphDiv) {
             thisImage.attr('xlink:href', d.source);
             this._imgSrc = d.source;
         } else {
-            var imagePromise: Promise<void> = new Promise(function(resolve: any) {
-                var img = new Image();
+            const imagePromise: Promise<void> = new Promise(function(resolve: any) {
+                const img = new Image();
                 this.img = img;
 
                 // If not set, a `tainted canvas` error is thrown
                 img.setAttribute('crossOrigin', 'anonymous');
                 img.onerror = errorHandler;
                 img.onload = function(this: any) {
-                    var canvas = document.createElement('canvas');
+                    const canvas = document.createElement('canvas');
                     canvas.width = this.width;
                     canvas.height = this.height;
 
-                    var ctx = canvas.getContext('2d', {willReadFrequently: true});
+                    const ctx = canvas.getContext('2d', {willReadFrequently: true});
                     ctx.drawImage(this as any, 0, 0);
 
-                    var dataURL = canvas.toDataURL('image/png');
+                    const dataURL = canvas.toDataURL('image/png');
 
                     thisImage.attr('xlink:href', dataURL);
 
@@ -115,16 +115,16 @@ export default function draw(gd: GraphDiv) {
     }
 
     function applyAttributes(d: any) {
-        var thisImage = select(this);
+        const thisImage = select(this);
 
         // Axes if specified
-        var xa = Axes.getFromId(gd, d.xref);
-        var ya = Axes.getFromId(gd, d.yref);
-        var xIsDomain = Axes.getRefType(d.xref) === 'domain';
-        var yIsDomain = Axes.getRefType(d.yref) === 'domain';
+        const xa = Axes.getFromId(gd, d.xref);
+        const ya = Axes.getFromId(gd, d.yref);
+        const xIsDomain = Axes.getRefType(d.xref) === 'domain';
+        const yIsDomain = Axes.getRefType(d.yref) === 'domain';
 
-        var size = fullLayout._size;
-        var width, height;
+        const size = fullLayout._size;
+        let width, height;
         if(xa !== undefined) {
             width = ((typeof(d.xref) === 'string') && xIsDomain) ?
                 xa._length * d.sizex :
@@ -141,13 +141,13 @@ export default function draw(gd: GraphDiv) {
         }
 
         // Offsets for anchor positioning
-        var xOffset = width * anchors.x[d.xanchor].offset;
-        var yOffset = height * anchors.y[d.yanchor].offset;
+        const xOffset = width * anchors.x[d.xanchor].offset;
+        const yOffset = height * anchors.y[d.yanchor].offset;
 
-        var sizing = anchors.x[d.xanchor].sizing + anchors.y[d.yanchor].sizing;
+        let sizing = anchors.x[d.xanchor].sizing + anchors.y[d.yanchor].sizing;
 
         // Final positions
-        var xPos, yPos;
+        let xPos, yPos;
         if(xa !== undefined) {
             xPos = ((typeof(d.xref) === 'string') && xIsDomain) ?
                 xa._length * d.x + xa._offset :
@@ -188,9 +188,9 @@ export default function draw(gd: GraphDiv) {
         });
 
         // Set proper clipping on images
-        var xId = xa && (Axes.getRefType(d.xref) !== 'domain') ? xa._id : '';
-        var yId = ya && (Axes.getRefType(d.yref) !== 'domain') ? ya._id : '';
-        var clipAxes = xId + yId;
+        const xId = xa && (Axes.getRefType(d.xref) !== 'domain') ? xa._id : '';
+        const yId = ya && (Axes.getRefType(d.yref) !== 'domain') ? ya._id : '';
+        const clipAxes = xId + yId;
 
         setClipUrl(
             thisImage,
@@ -205,9 +205,9 @@ export default function draw(gd: GraphDiv) {
 
     function imgSort(a: any, b: any) { return a._index - b._index; }
 
-    var imagesBelow = fullLayout._imageLowerLayer.selectAll('image')
+    const imagesBelow = fullLayout._imageLowerLayer.selectAll('image')
         .data(imageDataBelow, imgDataFunc);
-    var imagesAbove = fullLayout._imageUpperLayer.selectAll('image')
+    const imagesAbove = fullLayout._imageUpperLayer.selectAll('image')
         .data(imageDataAbove, imgDataFunc);
 
     imagesBelow.enter().append('image');
@@ -227,15 +227,15 @@ export default function draw(gd: GraphDiv) {
     imagesBelow.sort(imgSort);
     imagesAbove.sort(imgSort);
 
-    var allSubplots = Object.keys(fullLayout._plots);
+    const allSubplots = Object.keys(fullLayout._plots);
     for(i = 0; i < allSubplots.length; i++) {
         subplot = allSubplots[i];
-        var subplotObj = fullLayout._plots[subplot];
+        const subplotObj = fullLayout._plots[subplot];
 
         // filter out overlaid plots (which have their images on the main plot)
         if(!subplotObj.imagelayer) continue;
 
-        var imagesOnSubplot = subplotObj.imagelayer.selectAll('image')
+        const imagesOnSubplot = subplotObj.imagelayer.selectAll('image')
             // even if there are no images on this subplot, we need to run
             // enter and exit in case there were previously
             .data(imageDataSubplot[subplot] || [], imgDataFunc);

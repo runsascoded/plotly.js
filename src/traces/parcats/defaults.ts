@@ -14,7 +14,7 @@ function handleLineDefaults(traceIn: InputTrace, traceOut: FullTrace, defaultCol
     coerce('line.hovertemplate');
     coerce('line.hovertemplatefallback');
 
-    var lineColor = coerce('line.color', layout.colorway[0]);
+    const lineColor = coerce('line.color', layout.colorway[0]);
     if (hasColorscale(traceIn, 'line') && Lib.isArrayOrTypedArray(lineColor)) {
         if (lineColor.length) {
             coerce('line.colorscale');
@@ -32,8 +32,8 @@ function dimensionDefaults(dimensionIn, dimensionOut) {
         return Lib.coerce(dimensionIn, dimensionOut, attributes.dimensions, attr, dflt);
     }
 
-    var values = coerce('values');
-    var visible = coerce('visible');
+    const values = coerce('values');
+    let visible = coerce('visible');
     if (!(values && values.length)) {
         visible = dimensionOut.visible = false;
     }
@@ -44,12 +44,12 @@ function dimensionDefaults(dimensionIn, dimensionOut) {
         coerce('displayindex', dimensionOut._index);
 
         // Category level
-        var arrayIn = dimensionIn.categoryarray;
-        var isValidArray = (Lib.isArrayOrTypedArray(arrayIn) && arrayIn.length > 0) || isTypedArraySpec(arrayIn);
+        const arrayIn = dimensionIn.categoryarray;
+        const isValidArray = (Lib.isArrayOrTypedArray(arrayIn) && arrayIn.length > 0) || isTypedArraySpec(arrayIn);
 
-        var orderDefault;
+        let orderDefault;
         if (isValidArray) orderDefault = 'array';
-        var order = coerce('categoryorder', orderDefault);
+        const order = coerce('categoryorder', orderDefault);
 
         // coerce 'categoryarray' only in array order case
         if (order === 'array') {
@@ -72,12 +72,12 @@ export default function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace,
         return Lib.coerce(traceIn, traceOut, attributes, attr, dflt);
     }
 
-    var dimensions = handleArrayContainerDefaults(traceIn, traceOut, {
+    const dimensions = handleArrayContainerDefaults(traceIn, traceOut, {
         name: 'dimensions',
         handleItemDefaults: dimensionDefaults
     });
 
-    var len = handleLineDefaults(traceIn, traceOut, defaultColor, layout, coerce);
+    const len = handleLineDefaults(traceIn, traceOut, defaultColor, layout, coerce);
 
     handleDomainDefaults(traceOut, layout, coerce);
 
@@ -95,7 +95,7 @@ export default function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace,
     coerce('sortpaths');
     coerce('counts');
 
-    var layoutFont = layout.font;
+    const layoutFont = layout.font;
 
     Lib.coerceFont(coerce, 'labelfont', layoutFont, {
         overrideDflt: {

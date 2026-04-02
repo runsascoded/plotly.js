@@ -1,10 +1,10 @@
 import { extendFlat } from '../lib/extend.js';
 
-export var attributes = function(opts?: any, extra?: any): any {
+export const attributes = function(opts?: any, extra?: any): any {
     opts = opts || {};
     extra = extra || {};
 
-    var base = {
+    const base = {
         valType: 'info_array',
         editType: opts.editType,
         items: [
@@ -14,11 +14,11 @@ export var attributes = function(opts?: any, extra?: any): any {
         dflt: [0, 1]
     };
 
-    var namePart = opts.name ? opts.name + ' ' : '';
-    var contPart = opts.trace ? 'trace ' : 'subplot ';
-    var descPart = extra.description ? ' ' + extra.description : '';
+    const namePart = opts.name ? opts.name + ' ' : '';
+    const contPart = opts.trace ? 'trace ' : 'subplot ';
+    const descPart = extra.description ? ' ' + extra.description : '';
 
-    var out: any = {
+    const out: any = {
         x: extendFlat({}, base, {
             description: [
                 'Sets the horizontal domain of this ',
@@ -74,27 +74,27 @@ export var attributes = function(opts?: any, extra?: any): any {
     return out;
 };
 
-export var defaults = function(containerOut?: any, layout?: any, coerce?: any, dfltDomains?: any): void {
-    var dfltX = (dfltDomains && dfltDomains.x) || [0, 1];
-    var dfltY = (dfltDomains && dfltDomains.y) || [0, 1];
+export const defaults = function(containerOut?: any, layout?: any, coerce?: any, dfltDomains?: any): void {
+    let dfltX = (dfltDomains && dfltDomains.x) || [0, 1];
+    let dfltY = (dfltDomains && dfltDomains.y) || [0, 1];
 
-    var grid = layout.grid;
+    const grid = layout.grid;
     if(grid) {
-        var column = coerce('domain.column');
+        const column = coerce('domain.column');
         if(column !== undefined) {
             if(column < grid.columns) dfltX = grid._domains.x[column];
             else delete containerOut.domain.column;
         }
 
-        var row = coerce('domain.row');
+        const row = coerce('domain.row');
         if(row !== undefined) {
             if(row < grid.rows) dfltY = grid._domains.y[row];
             else delete containerOut.domain.row;
         }
     }
 
-    var x = coerce('domain.x', dfltX);
-    var y = coerce('domain.y', dfltY);
+    const x = coerce('domain.x', dfltX);
+    const y = coerce('domain.y', dfltY);
 
     // don't accept bad input data
     if(!(x[0] < x[1])) containerOut.domain.x = dfltX.slice();

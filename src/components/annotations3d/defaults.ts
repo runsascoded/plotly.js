@@ -18,16 +18,16 @@ function handleAnnotationDefaults(annIn: any, annOut: any, sceneLayout: any, opt
     }
 
     function coercePosition(axLetter: any) {
-        var axName = axLetter + 'axis';
+        const axName = axLetter + 'axis';
 
         // mock in such way that getFromId grabs correct 3D axis
-        var gdMock = { _fullLayout: {} };
+        const gdMock = { _fullLayout: {} };
         gdMock._fullLayout[axName] = sceneLayout[axName];
 
         return Axes.coercePosition(annOut, gdMock, coerce, axLetter, axLetter, 0.5);
     }
 
-    var visible = coerce('visible');
+    const visible = coerce('visible');
     if(!visible) return;
 
     handleAnnotationCommonDefaults(annIn, annOut, opts.fullLayout, coerce);

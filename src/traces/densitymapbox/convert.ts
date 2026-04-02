@@ -7,15 +7,15 @@ const { BADNUM } = _numerical;
 import { makeBlank } from '../../lib/geojson_utils.js';
 
 export default function convert(calcTrace) {
-    var trace = calcTrace[0].trace;
-    var isVisible = (trace.visible === true && trace._length !== 0);
+    const trace = calcTrace[0].trace;
+    const isVisible = (trace.visible === true && trace._length !== 0);
 
-    var heatmap = {
+    const heatmap = {
         layout: {visibility: 'none'},
         paint: {}
     };
 
-    var opts = trace._opts = {
+    const opts = trace._opts = {
         heatmap: heatmap,
         geojson: makeBlank()
     };
@@ -23,23 +23,23 @@ export default function convert(calcTrace) {
     // early return if not visible or placeholder
     if(!isVisible) return opts;
 
-    var features = [];
-    var i;
+    const features = [];
+    let i;
 
-    var z = trace.z;
-    var radius = trace.radius;
-    var hasZ = Lib.isArrayOrTypedArray(z) && z.length;
-    var hasArrayRadius = Lib.isArrayOrTypedArray(radius);
+    const z = trace.z;
+    const radius = trace.radius;
+    const hasZ = Lib.isArrayOrTypedArray(z) && z.length;
+    const hasArrayRadius = Lib.isArrayOrTypedArray(radius);
 
     for(i = 0; i < calcTrace.length; i++) {
-        var cdi = calcTrace[i];
-        var lonlat = cdi.lonlat;
+        const cdi = calcTrace[i];
+        const lonlat = cdi.lonlat;
 
         if(lonlat[0] !== BADNUM) {
-            var props: any = {};
+            const props: any = {};
 
             if(hasZ) {
-                var zi = cdi.z;
+                const zi = cdi.z;
                 props.z = zi !== BADNUM ? zi : 0;
             }
             if(hasArrayRadius) {
@@ -54,18 +54,18 @@ export default function convert(calcTrace) {
         }
     }
 
-    var cOpts = Colorscale.extractOpts(trace);
-    var scl = cOpts.reversescale ?
+    const cOpts = Colorscale.extractOpts(trace);
+    const scl = cOpts.reversescale ?
         Colorscale.flipScale(cOpts.colorscale) :
         cOpts.colorscale;
 
     // Add alpha channel to first colorscale step.
     // If not, we would essentially color the entire map.
     // See https://docs.mapbox.com/mapbox-gl-js/example/heatmap-layer/
-    var scl01 = scl[0][1];
-    var color0 = Color.opacity(scl01) < 1 ? scl01 : Color.addOpacity(scl01, 0);
+    const scl01 = scl[0][1];
+    const color0 = Color.opacity(scl01) < 1 ? scl01 : Color.addOpacity(scl01, 0);
 
-    var heatmapColor = [
+    const heatmapColor = [
         'interpolate', ['linear'],
         ['heatmap-density'],
         0, color0
@@ -77,7 +77,7 @@ export default function convert(calcTrace) {
     // Those "weights" have to be in [0, 1], we can do this either:
     // - as here using a mapbox-gl expression
     // - or, scale the 'z' property in the feature loop
-    var zExp = [
+    const zExp = [
         'interpolate', ['linear'],
         ['get', 'z'],
         cOpts.min, 0,

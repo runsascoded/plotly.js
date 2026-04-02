@@ -10,19 +10,19 @@ import _calc from '../scatter/calc.js';
 const { calcMarkerSize } = _calc;
 
 export default function calc(gd: GraphDiv, trace: FullTrace) {
-    var fullLayout = gd._fullLayout;
-    var subplotId = trace.subplot;
-    var radialAxis = fullLayout[subplotId].radialaxis;
-    var angularAxis = fullLayout[subplotId].angularaxis;
-    var rArray = radialAxis.makeCalcdata(trace, 'r');
-    var thetaArray = angularAxis.makeCalcdata(trace, 'theta');
-    var len = trace._length;
-    var cd = new Array(len);
+    const fullLayout = gd._fullLayout;
+    const subplotId = trace.subplot;
+    const radialAxis = fullLayout[subplotId].radialaxis;
+    const angularAxis = fullLayout[subplotId].angularaxis;
+    const rArray = radialAxis.makeCalcdata(trace, 'r');
+    const thetaArray = angularAxis.makeCalcdata(trace, 'theta');
+    const len = trace._length;
+    const cd = new Array(len);
 
-    for(var i = 0; i < len; i++) {
-        var r = rArray[i];
-        var theta = thetaArray[i];
-        var cdi: any = cd[i] = {};
+    for(let i = 0; i < len; i++) {
+        const r = rArray[i];
+        const theta = thetaArray[i];
+        const cdi: any = cd[i] = {};
 
         if(isNumeric(r) && isNumeric(theta)) {
             cdi.r = r;
@@ -32,7 +32,7 @@ export default function calc(gd: GraphDiv, trace: FullTrace) {
         }
     }
 
-    var ppad = calcMarkerSize(trace, len);
+    const ppad = calcMarkerSize(trace, len);
     trace._extremes.x = Axes.findExtremes(radialAxis, rArray, {ppad: ppad});
 
     calcColorscale(gd, trace);

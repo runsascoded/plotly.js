@@ -7,27 +7,27 @@ import svgTextUtils from '../../lib/svg_text_utils.js';
 import Lib from '../../lib/index.js';
 import alignmentConstants from '../../constants/alignment.js';
 import type { GraphDiv } from '../../../types/core';
-var strRotate = Lib.strRotate;
-var strTranslate = Lib.strTranslate;
+const strRotate = Lib.strRotate;
+const strTranslate = Lib.strTranslate;
 
 export default function plot(gd: GraphDiv, plotinfo, cdcarpet, carpetLayer) {
-    var isStatic = gd._context.staticPlot;
-    var xa = plotinfo.xaxis;
-    var ya = plotinfo.yaxis;
-    var fullLayout = gd._fullLayout;
-    var clipLayer = fullLayout._clips;
+    const isStatic = gd._context.staticPlot;
+    const xa = plotinfo.xaxis;
+    const ya = plotinfo.yaxis;
+    const fullLayout = gd._fullLayout;
+    const clipLayer = fullLayout._clips;
 
     Lib.makeTraceGroups(carpetLayer, cdcarpet, 'trace').each(function(cd) {
-        var axisLayer = select(this);
-        var cd0 = cd[0];
-        var trace = cd0.trace;
-        var aax = trace.aaxis;
-        var bax = trace.baxis;
+        const axisLayer = select(this);
+        const cd0 = cd[0];
+        const trace = cd0.trace;
+        const aax = trace.aaxis;
+        const bax = trace.baxis;
 
-        var minorLayer = Lib.ensureSingle(axisLayer, 'g', 'minorlayer');
-        var majorLayer = Lib.ensureSingle(axisLayer, 'g', 'majorlayer');
-        var boundaryLayer = Lib.ensureSingle(axisLayer, 'g', 'boundarylayer');
-        var labelLayer = Lib.ensureSingle(axisLayer, 'g', 'labellayer');
+        const minorLayer = Lib.ensureSingle(axisLayer, 'g', 'minorlayer');
+        const majorLayer = Lib.ensureSingle(axisLayer, 'g', 'majorlayer');
+        const boundaryLayer = Lib.ensureSingle(axisLayer, 'g', 'boundarylayer');
+        const labelLayer = Lib.ensureSingle(axisLayer, 'g', 'labellayer');
 
         axisLayer.style('opacity', trace.opacity);
 
@@ -41,8 +41,8 @@ export default function plot(gd: GraphDiv, plotinfo, cdcarpet, carpetLayer) {
         drawGridLines(xa, ya, boundaryLayer, aax, 'a-boundary', aax._boundarylines, isStatic);
         drawGridLines(xa, ya, boundaryLayer, bax, 'b-boundary', bax._boundarylines, isStatic);
 
-        var labelOrientationA = drawAxisLabels(gd, xa, ya, trace, cd0, labelLayer, aax._labels, 'a-label');
-        var labelOrientationB = drawAxisLabels(gd, xa, ya, trace, cd0, labelLayer, bax._labels, 'b-label');
+        const labelOrientationA = drawAxisLabels(gd, xa, ya, trace, cd0, labelLayer, aax._labels, 'a-label');
+        const labelOrientationB = drawAxisLabels(gd, xa, ya, trace, cd0, labelLayer, bax._labels, 'b-label');
 
         drawAxisTitles(gd, labelLayer, trace, cd0, xa, ya, labelOrientationA, labelOrientationB);
 
@@ -51,18 +51,18 @@ export default function plot(gd: GraphDiv, plotinfo, cdcarpet, carpetLayer) {
 }
 
 function drawClipPath(trace, t, layer, xaxis, yaxis) {
-    var seg, xp, yp, i;
+    let seg, xp, yp, i;
 
-    var clip = layer.select('#' + trace._clipPathId);
+    let clip = layer.select('#' + trace._clipPathId);
 
     if(!clip.size()) {
         clip = layer.append('clipPath')
             .classed('carpetclip', true);
     }
 
-    var path = Lib.ensureSingle(clip, 'path', 'carpetboundary');
-    var segments = t.clipsegments;
-    var segs = [];
+    const path = Lib.ensureSingle(clip, 'path', 'carpetboundary');
+    const segments = t.clipsegments;
+    const segs = [];
 
     for(i = 0; i < segments.length; i++) {
         seg = segments[i];
@@ -74,30 +74,30 @@ function drawClipPath(trace, t, layer, xaxis, yaxis) {
     // This could be optimized ever so slightly to avoid no-op L segments
     // at the corners, but it's so negligible that I don't think it's worth
     // the extra complexity
-    var clipPathData = 'M' + segs.join('L') + 'Z';
+    const clipPathData = 'M' + segs.join('L') + 'Z';
     clip.attr('id', trace._clipPathId);
     path.attr('d', clipPathData);
 }
 
 function drawGridLines(xaxis: any, yaxis: any, layer: any, axis: any, axisLetter: string, gridlines: any, _isMajor?: any, isStatic?: any) {
-    var lineClass = 'const-' + axisLetter + '-lines';
-    var gridJoin = layer.selectAll('.' + lineClass).data(gridlines);
+    const lineClass = 'const-' + axisLetter + '-lines';
+    const gridJoin = layer.selectAll('.' + lineClass).data(gridlines);
 
     gridJoin.enter().append('path')
         .classed(lineClass, true)
         .style('vector-effect', isStatic ? 'none' : 'non-scaling-stroke');
 
     gridJoin.each(function(d) {
-        var gridline = d;
-        var x = gridline.x;
-        var y = gridline.y;
+        const gridline = d;
+        const x = gridline.x;
+        const y = gridline.y;
 
-        var xp = map1dArray([], x, xaxis.c2p);
-        var yp = map1dArray([], y, yaxis.c2p);
+        const xp = map1dArray([], x, xaxis.c2p);
+        const yp = map1dArray([], y, yaxis.c2p);
 
-        var path = 'M' + makepath(xp, yp, gridline.smoothing);
+        const path = 'M' + makepath(xp, yp, gridline.smoothing);
 
-        var el = select(this);
+        const el = select(this);
 
         el.attr('d', path)
             .style('stroke-width', gridline.width)
@@ -110,22 +110,22 @@ function drawGridLines(xaxis: any, yaxis: any, layer: any, axis: any, axisLetter
 }
 
 function drawAxisLabels(gd, xaxis, yaxis, trace, t, layer, labels, labelClass) {
-    var labelJoin = layer.selectAll('text.' + labelClass).data(labels);
+    const labelJoin = layer.selectAll('text.' + labelClass).data(labels);
 
     labelJoin.enter().append('text')
         .classed(labelClass, true);
 
-    var maxExtent = 0;
-    var labelOrientation: any = {};
+    let maxExtent = 0;
+    let labelOrientation: any = {};
 
     labelJoin.each(function(label, i) {
         // Most of the positioning is done in calc_labels. Only the parts that depend upon
         // the screen space representation of the x and y axes are here:
-        var orientation;
+        let orientation;
         if(label.axis.tickangle === 'auto') {
             orientation = orientText(trace, xaxis, yaxis, label.xy, label.dxy);
         } else {
-            var angle = (label.axis.tickangle + 180.0) * Math.PI / 180.0;
+            const angle = (label.axis.tickangle + 180.0) * Math.PI / 180.0;
             orientation = orientText(trace, xaxis, yaxis, label.xy, [Math.cos(angle), Math.sin(angle)]);
         }
 
@@ -133,9 +133,9 @@ function drawAxisLabels(gd, xaxis, yaxis, trace, t, layer, labels, labelClass) {
             // TODO: offsetMultiplier? Not currently used anywhere...
             labelOrientation = {angle: orientation.angle, flip: orientation.flip};
         }
-        var direction = (label.endAnchor ? -1 : 1) * orientation.flip;
+        const direction = (label.endAnchor ? -1 : 1) * orientation.flip;
 
-        var labelEl = select(this)
+        const labelEl = select(this)
             .attr({
                 'text-anchor': direction > 0 ? 'start' : 'end',
                 'data-notex': 1
@@ -144,7 +144,7 @@ function drawAxisLabels(gd, xaxis, yaxis, trace, t, layer, labels, labelClass) {
             .text(label.text)
             .call(svgTextUtils.convertToTspans, gd);
 
-        var bbox = bBox(this);
+        const bbox = bBox(this);
 
         labelEl.attr('transform',
                 // Translate to the correct point:
@@ -165,12 +165,12 @@ function drawAxisLabels(gd, xaxis, yaxis, trace, t, layer, labels, labelClass) {
 }
 
 function drawAxisTitles(gd, layer, trace, t, xa, ya, labelOrientationA, labelOrientationB) {
-    var a, b, xy, dxy;
+    let a, b, xy, dxy;
 
-    var aMin = Lib.aggNums(Math.min, null, trace.a);
-    var aMax = Lib.aggNums(Math.max, null, trace.a);
-    var bMin = Lib.aggNums(Math.min, null, trace.b);
-    var bMax = Lib.aggNums(Math.max, null, trace.b);
+    const aMin = Lib.aggNums(Math.min, null, trace.a);
+    const aMax = Lib.aggNums(Math.max, null, trace.a);
+    const bMin = Lib.aggNums(Math.min, null, trace.b);
+    const bMax = Lib.aggNums(Math.max, null, trace.b);
 
     a = 0.5 * (aMin + aMax);
     b = bMin;
@@ -191,35 +191,35 @@ function drawAxisTitles(gd, layer, trace, t, xa, ya, labelOrientationA, labelOri
     drawAxisTitle(gd, layer, trace, t, xy, dxy, trace.baxis, xa, ya, labelOrientationB, 'b-title');
 }
 
-var lineSpacing = alignmentConstants.LINE_SPACING;
-var midShift = ((1 - alignmentConstants.MID_SHIFT) / lineSpacing) + 1;
+const lineSpacing = alignmentConstants.LINE_SPACING;
+const midShift = ((1 - alignmentConstants.MID_SHIFT) / lineSpacing) + 1;
 
 function drawAxisTitle(gd, layer, trace, t, xy, dxy, axis, xa, ya, labelOrientation, labelClass) {
-    var data = [];
+    const data = [];
     if(axis.title.text) data.push(axis.title.text);
-    var titleJoin = layer.selectAll('text.' + labelClass).data(data);
-    var offset = labelOrientation.maxExtent;
+    const titleJoin = layer.selectAll('text.' + labelClass).data(data);
+    let offset = labelOrientation.maxExtent;
 
     titleJoin.enter().append('text')
         .classed(labelClass, true);
 
     // There's only one, but we'll do it as a join so it's updated nicely:
     titleJoin.each(function() {
-        var orientation = orientText(trace, xa, ya, xy, dxy);
+        const orientation = orientText(trace, xa, ya, xy, dxy);
 
         if(['start', 'both'].indexOf(axis.showticklabels) === -1) {
             offset = 0;
         }
 
         // In addition to the size of the labels, add on some extra padding:
-        var titleSize = axis.title.font.size;
+        const titleSize = axis.title.font.size;
         offset += titleSize + axis.title.offset;
 
-        var labelNorm = labelOrientation.angle + (labelOrientation.flip < 0 ? 180 : 0);
-        var angleDiff = (labelNorm - orientation.angle + 450) % 360;
-        var reverseTitle = angleDiff > 90 && angleDiff < 270;
+        const labelNorm = labelOrientation.angle + (labelOrientation.flip < 0 ? 180 : 0);
+        const angleDiff = (labelNorm - orientation.angle + 450) % 360;
+        const reverseTitle = angleDiff > 90 && angleDiff < 270;
 
-        var el = select(this);
+        const el = select(this);
 
         el.text(axis.title.text)
             .call(svgTextUtils.convertToTspans, gd);

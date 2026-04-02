@@ -2,17 +2,17 @@ import type { CalcDatum, FullAxis } from '../../../types/core';
 import subtypes from './subtypes.js';
 
 export default function selectPoints(searchInfo: any, selectionTester: any): any[] {
-    var cd: CalcDatum[] = searchInfo.cd;
-    var xa: FullAxis = searchInfo.xaxis;
-    var ya: FullAxis = searchInfo.yaxis;
-    var selection = [];
-    var trace = cd[0].trace;
-    var i;
-    var di;
-    var x;
-    var y;
+    const cd: CalcDatum[] = searchInfo.cd;
+    const xa: FullAxis = searchInfo.xaxis;
+    const ya: FullAxis = searchInfo.yaxis;
+    const selection = [];
+    const trace = cd[0].trace;
+    let i;
+    let di;
+    let x;
+    let y;
 
-    var hasOnlyLines = (!subtypes.hasMarkers(trace) && !subtypes.hasText(trace));
+    const hasOnlyLines = (!subtypes.hasMarkers(trace) && !subtypes.hasText(trace));
     if(hasOnlyLines) return [];
 
     if(selectionTester === false) { // clear selection

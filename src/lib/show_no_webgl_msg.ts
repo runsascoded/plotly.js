@@ -1,9 +1,9 @@
 import Color from '../components/color/index.js';
 
-var noop = function(): void {};
+const noop = function(): void {};
 
 export default function showNoWebGlMsg(scene: any): false {
-    for(var prop in scene) {
+    for(const prop in scene) {
         if(typeof scene[prop] === 'function') scene[prop] = noop;
     }
 
@@ -11,7 +11,7 @@ export default function showNoWebGlMsg(scene: any): false {
         scene.container.parentNode.removeChild(scene.container);
     };
 
-    var div = document.createElement('div');
+    const div = document.createElement('div');
     div.className = 'no-webgl';
     div.style.cursor = 'pointer';
     div.style.fontSize = '24px';
@@ -22,7 +22,7 @@ export default function showNoWebGlMsg(scene: any): false {
     div.style['background-color' as any] = Color.lightLine;
     div.style['z-index' as any] = '30';
 
-    var p = document.createElement('p');
+    const p = document.createElement('p');
     p.textContent = 'WebGL is not supported by your browser - visit https://get.webgl.org for more info';
     p.style.position = 'relative';
     p.style.top = '50%';

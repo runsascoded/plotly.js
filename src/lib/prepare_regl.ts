@@ -3,8 +3,8 @@ import createRegl from '@plotly/regl';
 import type { GraphDiv } from '../../types/core';
 
 export default function prepareRegl(gd: GraphDiv, extensions?: string[], reglPrecompiled?: any): boolean {
-    var fullLayout = gd._fullLayout;
-    var success = true;
+    const fullLayout = gd._fullLayout;
+    let success = true;
 
     fullLayout._glcanvas.each(function(this: HTMLCanvasElement, d: any) {
         if(d.regl) {

@@ -4,17 +4,17 @@ import constraintMapping from './constraint_mapping.js';
 import endPlus from './end_plus.js';
 
 export default function emptyPathinfo(contours,  plotinfo: PlotInfo,  cd0) {
-    var contoursFinal = (contours.type === 'constraint') ?
+    const contoursFinal = (contours.type === 'constraint') ?
         constraintMapping[contours._operation](contours.value) :
         contours;
 
-    var cs = contoursFinal.size;
-    var pathinfo = [];
-    var end = endPlus(contoursFinal);
+    const cs = contoursFinal.size;
+    const pathinfo = [];
+    const end = endPlus(contoursFinal);
 
-    var carpet = cd0.trace._carpetTrace;
+    const carpet = cd0.trace._carpetTrace;
 
-    var basePathinfo = carpet ? {
+    const basePathinfo = carpet ? {
         // store axes so we can convert to px
         xaxis: carpet.aaxis,
         yaxis: carpet.baxis,
@@ -28,7 +28,7 @@ export default function emptyPathinfo(contours,  plotinfo: PlotInfo,  cd0) {
         y: cd0.y
     };
 
-    for(var ci = contoursFinal.start; ci < end; ci += cs) {
+    for(let ci = contoursFinal.start; ci < end; ci += cs) {
         pathinfo.push(Lib.extendFlat({
             level: ci,
             // all the cells with nontrivial marching index

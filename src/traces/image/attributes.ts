@@ -6,11 +6,11 @@ import { extendFlat } from '../../lib/extend.js';
 import _constants from './constants.js';
 const { colormodel } = _constants;
 
-var cm = ['rgb', 'rgba', 'rgba256', 'hsl', 'hsla'];
-var zminDesc = [];
-var zmaxDesc = [];
-for (var i = 0; i < cm.length; i++) {
-    var cr = colormodel[cm[i]];
+const cm = ['rgb', 'rgba', 'rgba256', 'hsl', 'hsla'];
+const zminDesc = [];
+const zmaxDesc = [];
+for (let i = 0; i < cm.length; i++) {
+    const cr = colormodel[cm[i]];
     zminDesc.push('For the `' + cm[i] + '` colormodel, it is [' + (cr.zminDflt || cr.min).join(', ') + '].');
     zmaxDesc.push('For the `' + cm[i] + '` colormodel, it is [' + (cr.zmaxDflt || cr.max).join(', ') + '].');
 }

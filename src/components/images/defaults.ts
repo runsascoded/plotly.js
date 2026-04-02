@@ -3,10 +3,10 @@ import Lib from '../../lib/index.js';
 import Axes from '../../plots/cartesian/axes.js';
 import handleArrayContainerDefaults from '../../plots/array_container_defaults.js';
 import attributes from './attributes.js';
-var name = 'images';
+const name = 'images';
 
 export default function supplyLayoutDefaults(layoutIn: any, layoutOut: FullLayout) {
-    var opts = {
+    const opts = {
         name: name,
         handleItemDefaults: imageDefaults
     };
@@ -19,8 +19,8 @@ function imageDefaults(imageIn: any, imageOut: any, fullLayout: FullLayout) {
         return Lib.coerce(imageIn, imageOut, attributes, attr, dflt);
     }
 
-    var source = coerce('source');
-    var visible = coerce('visible', !!source);
+    const source = coerce('source');
+    const visible = coerce('visible', !!source);
 
     if(!visible) return imageOut;
 
@@ -32,16 +32,16 @@ function imageDefaults(imageIn: any, imageOut: any, fullLayout: FullLayout) {
     coerce('sizing');
     coerce('opacity');
 
-    var gdMock = { _fullLayout: fullLayout };
-    var axLetters = ['x', 'y'];
+    const gdMock = { _fullLayout: fullLayout };
+    const axLetters = ['x', 'y'];
 
-    for(var i = 0; i < 2; i++) {
+    for(let i = 0; i < 2; i++) {
         // 'paper' is the fallback axref
-        var axLetter = axLetters[i];
-        var axRef = Axes.coerceRef(imageIn, imageOut, gdMock, axLetter, 'paper', undefined);
+        const axLetter = axLetters[i];
+        const axRef = Axes.coerceRef(imageIn, imageOut, gdMock, axLetter, 'paper', undefined);
 
         if(axRef !== 'paper') {
-            var ax = Axes.getFromId(gdMock, axRef);
+            const ax = Axes.getFromId(gdMock, axRef);
             ax._imgIndices.push(imageOut._index);
         }
 

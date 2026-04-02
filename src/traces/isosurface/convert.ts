@@ -8,10 +8,10 @@ import _index2 from '../../components/colorscale/index.js';
 const { extractOpts } = _index2;
 import zip3 from '../../plots/gl3d/zip3.js';
 
-var findNearestOnAxis = function(w, arr) {
-    for(var q = arr.length - 1; q > 0; q--) {
-        var min = Math.min(arr[q], arr[q - 1]);
-        var max = Math.max(arr[q], arr[q - 1]);
+const findNearestOnAxis = function(w, arr) {
+    for(let q = arr.length - 1; q > 0; q--) {
+        const min = Math.min(arr[q], arr[q - 1]);
+        const max = Math.max(arr[q], arr[q - 1]);
         if(max > min && min < w && w <= max) {
             return {
                 id: q,
@@ -34,24 +34,24 @@ function IsosurfaceTrace(scene, mesh, uid) {
     this.showContour = false;
 }
 
-var proto = IsosurfaceTrace.prototype;
+const proto = IsosurfaceTrace.prototype;
 
 proto.handlePick = function(selection) {
     if(selection.object === this.mesh) {
-        var rawId = selection.data.index;
+        const rawId = selection.data.index;
 
-        var x = this.data._meshX[rawId];
-        var y = this.data._meshY[rawId];
-        var z = this.data._meshZ[rawId];
+        const x = this.data._meshX[rawId];
+        const y = this.data._meshY[rawId];
+        const z = this.data._meshZ[rawId];
 
-        var height = this.data._Ys.length;
-        var depth = this.data._Zs.length;
+        const height = this.data._Ys.length;
+        const depth = this.data._Zs.length;
 
-        var i = findNearestOnAxis(x, this.data._Xs).id;
-        var j = findNearestOnAxis(y, this.data._Ys).id;
-        var k = findNearestOnAxis(z, this.data._Zs).id;
+        const i = findNearestOnAxis(x, this.data._Xs).id;
+        const j = findNearestOnAxis(y, this.data._Ys).id;
+        const k = findNearestOnAxis(z, this.data._Zs).id;
 
-        var selectIndex = selection.index = k + depth * j + depth * height * i;
+        const selectIndex = selection.index = k + depth * j + depth * height * i;
 
         selection.traceCoordinate = [
             this.data._meshX[selectIndex],
@@ -60,7 +60,7 @@ proto.handlePick = function(selection) {
             this.data._value[selectIndex]
         ];
 
-        var text = this.data.hovertext || this.data.text;
+        const text = this.data.hovertext || this.data.text;
         if(isArrayOrTypedArray(text) && text[selectIndex] !== undefined) {
             selection.textLabel = text[selectIndex];
         } else if(text) {
@@ -72,8 +72,8 @@ proto.handlePick = function(selection) {
 };
 
 proto.update = function(data) {
-    var scene = this.scene;
-    var layout = scene.fullSceneLayout;
+    const scene = this.scene;
+    const layout = scene.fullSceneLayout;
 
     this.data = generateIsoMeshes(data);
 
@@ -84,14 +84,14 @@ proto.update = function(data) {
         });
     }
 
-    var positions = zip3(
+    const positions = zip3(
         toDataCoords(layout.xaxis, data._meshX, scene.dataScale[0], data.xcalendar),
         toDataCoords(layout.yaxis, data._meshY, scene.dataScale[1], data.ycalendar),
         toDataCoords(layout.zaxis, data._meshZ, scene.dataScale[2], data.zcalendar));
 
-    var cells = zip3(data._meshI, data._meshJ, data._meshK);
+    const cells = zip3(data._meshI, data._meshJ, data._meshK);
 
-    var config: any = {
+    const config: any = {
         positions: positions,
         cells: cells,
         lightPosition: [data.lightposition.x, data.lightposition.y, data.lightposition.z],
@@ -109,7 +109,7 @@ proto.update = function(data) {
         useFacetNormals: data.flatshading
     };
 
-    var cOpts = extractOpts(data);
+    const cOpts = extractOpts(data);
     config.vertexIntensity = data._meshIntensity;
     config.vertexIntensityBounds = [cOpts.min, cOpts.max];
     config.colormap = parseColorScale(data);
@@ -123,37 +123,37 @@ proto.dispose = function() {
     this.mesh.dispose();
 };
 
-var GRID_TYPES = ['xyz', 'xzy', 'yxz', 'yzx', 'zxy', 'zyx'];
+const GRID_TYPES = ['xyz', 'xzy', 'yxz', 'yzx', 'zxy', 'zyx'];
 
 function generateIsoMeshes(data) {
     data._meshI = [];
     data._meshJ = [];
     data._meshK = [];
 
-    var showSurface = data.surface.show;
-    var showSpaceframe = data.spaceframe.show;
+    const showSurface = data.surface.show;
+    const showSpaceframe = data.spaceframe.show;
 
-    var surfaceFill = data.surface.fill;
-    var spaceframeFill = data.spaceframe.fill;
+    const surfaceFill = data.surface.fill;
+    const spaceframeFill = data.spaceframe.fill;
 
-    var drawingSurface = false;
-    var drawingSpaceframe = false;
+    let drawingSurface = false;
+    let drawingSpaceframe = false;
 
-    var numFaces = 0;
-    var numVertices;
-    var beginVertextLength;
+    let numFaces = 0;
+    let numVertices;
+    let beginVertextLength;
 
-    var Xs = data._Xs;
-    var Ys = data._Ys;
-    var Zs = data._Zs;
+    const Xs = data._Xs;
+    const Ys = data._Ys;
+    const Zs = data._Zs;
 
-    var width = Xs.length;
-    var height = Ys.length;
-    var depth = Zs.length;
+    const width = Xs.length;
+    const height = Ys.length;
+    const depth = Zs.length;
 
-    var filled = GRID_TYPES.indexOf(data._gridFill.replace(/-/g, '').replace(/\+/g, ''));
+    const filled = GRID_TYPES.indexOf(data._gridFill.replace(/-/g, '').replace(/\+/g, ''));
 
-    var getIndex = function(i, j, k) {
+    const getIndex = function(i, j, k) {
         switch(filled) {
             case 5: // 'zyx'
                 return k + depth * j + depth * height * i;
@@ -170,22 +170,22 @@ function generateIsoMeshes(data) {
         }
     };
 
-    var minValues = data._minValues;
-    var maxValues = data._maxValues;
+    const minValues = data._minValues;
+    const maxValues = data._maxValues;
 
-    var vMin = data._vMin;
-    var vMax = data._vMax;
+    const vMin = data._vMin;
+    const vMax = data._vMax;
 
-    var allXs;
-    var allYs;
-    var allZs;
-    var allVs;
+    let allXs;
+    let allYs;
+    let allZs;
+    let allVs;
 
     function findVertexId(x, y, z) {
         // could be used to find the vertex id of previously generated vertex within the group
 
-        var len = allVs.length;
-        for(var f = beginVertextLength; f < len; f++) {
+        const len = allVs.length;
+        for(let f = beginVertextLength; f < len; f++) {
             if(
                 x === allXs[f] &&
                 y === allYs[f] &&
@@ -231,40 +231,40 @@ function generateIsoMeshes(data) {
     }
 
     function getCenter(A, B, C) {
-        var M = [];
-        for(var i = 0; i < A.length; i++) {
+        const M = [];
+        for(let i = 0; i < A.length; i++) {
             M[i] = (A[i] + B[i] + C[i]) / 3.0;
         }
         return M;
     }
 
     function getBetween(A, B, r) {
-        var M = [];
-        for(var i = 0; i < A.length; i++) {
+        const M = [];
+        for(let i = 0; i < A.length; i++) {
             M[i] = A[i] * (1 - r) + r * B[i];
         }
         return M;
     }
 
-    var activeFill;
+    let activeFill;
     function setFill(fill) {
         activeFill = fill;
     }
 
     function createOpenTri(xyzv, abc) {
-        var A = xyzv[0];
-        var B = xyzv[1];
-        var C = xyzv[2];
-        var G = getCenter(A, B, C);
+        const A = xyzv[0];
+        const B = xyzv[1];
+        const C = xyzv[2];
+        const G = getCenter(A, B, C);
 
-        var r = Math.sqrt(1 - activeFill);
-        var p1 = getBetween(G, A, r);
-        var p2 = getBetween(G, B, r);
-        var p3 = getBetween(G, C, r);
+        const r = Math.sqrt(1 - activeFill);
+        const p1 = getBetween(G, A, r);
+        const p2 = getBetween(G, B, r);
+        const p3 = getBetween(G, C, r);
 
-        var a = abc[0];
-        var b = abc[1];
-        var c = abc[2];
+        const a = abc[0];
+        const b = abc[1];
+        const c = abc[2];
 
         return {
             xyzv: [
@@ -293,29 +293,29 @@ function generateIsoMeshes(data) {
     function drawTri(style: any, xyzv: any, abc: any): any {
         beginGroup();
 
-        var allXYZVs = [xyzv];
-        var allABCs = [abc];
+        let allXYZVs = [xyzv];
+        let allABCs = [abc];
         if(activeFill >= 1) {
             allXYZVs = [xyzv];
             allABCs = [abc];
         } else if(activeFill > 0) {
-            var openTri = createOpenTri(xyzv, abc);
+            const openTri = createOpenTri(xyzv, abc);
             allXYZVs = openTri.xyzv;
             allABCs = openTri.abc;
         }
 
-        for(var f = 0; f < allXYZVs.length; f++) {
+        for(let f = 0; f < allXYZVs.length; f++) {
             xyzv = allXYZVs[f];
             abc = allABCs[f];
 
-            var pnts = [];
-            for(var i = 0; i < 3; i++) {
-                var x = xyzv[i][0];
-                var y = xyzv[i][1];
-                var z = xyzv[i][2];
-                var v = xyzv[i][3];
+            const pnts = [];
+            for(let i = 0; i < 3; i++) {
+                const x = xyzv[i][0];
+                const y = xyzv[i][1];
+                const z = xyzv[i][2];
+                const v = xyzv[i][3];
 
-                var id = (abc[i] > -1) ? abc[i] : findVertexId(x, y, z);
+                const id = (abc[i] > -1) ? abc[i] : findVertexId(x, y, z);
                 if(id > -1) {
                     pnts[i] = id;
                 } else {
@@ -328,7 +328,7 @@ function generateIsoMeshes(data) {
     }
 
     function drawQuad(style: any, xyzv: any, abcd: any): any {
-        var makeTri = function(i, j, k) {
+        const makeTri = function(i, j, k) {
             drawTri(style, [xyzv[i], xyzv[j], xyzv[k]], [abcd[i], abcd[j], abcd[k]]);
         };
 
@@ -337,7 +337,7 @@ function generateIsoMeshes(data) {
     }
 
     function drawTetra(style: any, xyzv: any, abcd: any): any {
-        var makeTri = function(i, j, k) {
+        const makeTri = function(i, j, k) {
             drawTri(style, [xyzv[i], xyzv[j], xyzv[k]], [abcd[i], abcd[j], abcd[k]]);
         };
 
@@ -348,15 +348,15 @@ function generateIsoMeshes(data) {
     }
 
     function calcIntersection(pointOut, pointIn, min, max) {
-        var value = pointOut[3];
+        let value = pointOut[3];
 
         if(value < min) value = min;
         if(value > max) value = max;
 
-        var ratio = (pointOut[3] - value) / (pointOut[3] - pointIn[3] + 0.000000001); // we had to add this error to force solve the tiny caps
+        const ratio = (pointOut[3] - value) / (pointOut[3] - pointIn[3] + 0.000000001); // we had to add this error to force solve the tiny caps
 
-        var result = [];
-        for(var s = 0; s < 4; s++) {
+        const result = [];
+        for(let s = 0; s < 4; s++) {
             result[s] = (1 - ratio) * pointOut[s] + ratio * pointIn[s];
         }
         return result;
@@ -370,7 +370,7 @@ function generateIsoMeshes(data) {
     }
 
     function almostInFinalRange(value) {
-        var vErr = 0.001 * (vMax - vMin);
+        const vErr = 0.001 * (vMax - vMin);
         return (
             value >= vMin - vErr &&
             value <= vMax + vErr
@@ -378,9 +378,9 @@ function generateIsoMeshes(data) {
     }
 
     function getXYZV(indecies) {
-        var xyzv = [];
-        for(var q = 0; q < 4; q++) {
-            var index = indecies[q];
+        const xyzv = [];
+        for(let q = 0; q < 4; q++) {
+            const index = indecies[q];
             xyzv.push(
                 [
                     data._x[index],
@@ -394,7 +394,7 @@ function generateIsoMeshes(data) {
         return xyzv;
     }
 
-    var MAX_PASS = 3;
+    const MAX_PASS = 3;
 
     function tryCreateTri(style: any, xyzv: any, abc: any, min: any, max: any, nPass?: any) {
         if(!nPass) nPass = 1;
@@ -403,9 +403,9 @@ function generateIsoMeshes(data) {
         // to run faster! But it is possible to comment this line
         // to reduce the number of vertices.
 
-        var result = false;
+        let result = false;
 
-        var ok = [
+        const ok = [
             inRange(xyzv[0][3], min, max),
             inRange(xyzv[1][3], min, max),
             inRange(xyzv[2][3], min, max)
@@ -415,7 +415,7 @@ function generateIsoMeshes(data) {
             return false;
         }
 
-        var tryDrawTri = function(style, xyzv, abc) {
+        const tryDrawTri = function(style, xyzv, abc) {
             if( // we check here if the points are in `real` iso-min/max range
                 almostInFinalRange(xyzv[0][3]) &&
                 almostInFinalRange(xyzv[1][3]) &&
@@ -433,7 +433,7 @@ function generateIsoMeshes(data) {
             return tryDrawTri(style, xyzv, abc) || result;
         }
 
-        var interpolated = false;
+        let interpolated = false;
 
         [
             [0, 1, 2],
@@ -441,12 +441,12 @@ function generateIsoMeshes(data) {
             [1, 2, 0]
         ].forEach(function(e) {
             if(ok[e[0]] && ok[e[1]] && !ok[e[2]]) {
-                var A = xyzv[e[0]];
-                var B = xyzv[e[1]];
-                var C = xyzv[e[2]];
+                const A = xyzv[e[0]];
+                const B = xyzv[e[1]];
+                const C = xyzv[e[2]];
 
-                var p1 = calcIntersection(C, A, min, max);
-                var p2 = calcIntersection(C, B, min, max);
+                const p1 = calcIntersection(C, A, min, max);
+                const p2 = calcIntersection(C, B, min, max);
 
                 result = tryDrawTri(style, [p2, p1, A], [-1, -1, abc[e[0]]]) || result;
                 result = tryDrawTri(style, [A, B, p2], [abc[e[0]], abc[e[1]], -1]) || result;
@@ -462,12 +462,12 @@ function generateIsoMeshes(data) {
             [2, 0, 1]
         ].forEach(function(e) {
             if(ok[e[0]] && !ok[e[1]] && !ok[e[2]]) {
-                var A = xyzv[e[0]];
-                var B = xyzv[e[1]];
-                var C = xyzv[e[2]];
+                const A = xyzv[e[0]];
+                const B = xyzv[e[1]];
+                const C = xyzv[e[2]];
 
-                var p1 = calcIntersection(B, A, min, max);
-                var p2 = calcIntersection(C, A, min, max);
+                const p1 = calcIntersection(B, A, min, max);
+                const p2 = calcIntersection(C, A, min, max);
 
                 result = tryDrawTri(style, [p2, p1, A], [-1, -1, abc[e[0]]]) || result;
 
@@ -478,11 +478,11 @@ function generateIsoMeshes(data) {
     }
 
     function tryCreateTetra(style, abcd, min, max) {
-        var result = false;
+        let result = false;
 
-        var xyzv = getXYZV(abcd);
+        const xyzv = getXYZV(abcd);
 
-        var ok = [
+        const ok = [
             inRange(xyzv[0][3], min, max),
             inRange(xyzv[1][3], min, max),
             inRange(xyzv[2][3], min, max),
@@ -500,7 +500,7 @@ function generateIsoMeshes(data) {
             return result;
         }
 
-        var interpolated = false;
+        let interpolated = false;
 
         [
             [0, 1, 2, 3],
@@ -509,17 +509,17 @@ function generateIsoMeshes(data) {
             [1, 2, 3, 0]
         ].forEach(function(e) {
             if(ok[e[0]] && ok[e[1]] && ok[e[2]] && !ok[e[3]]) {
-                var A = xyzv[e[0]];
-                var B = xyzv[e[1]];
-                var C = xyzv[e[2]];
-                var D = xyzv[e[3]];
+                const A = xyzv[e[0]];
+                const B = xyzv[e[1]];
+                const C = xyzv[e[2]];
+                const D = xyzv[e[3]];
 
                 if(drawingSpaceframe) {
                     result = drawTri(style, [A, B, C], [abcd[e[0]], abcd[e[1]], abcd[e[2]]]) || result;
                 } else {
-                    var p1 = calcIntersection(D, A, min, max);
-                    var p2 = calcIntersection(D, B, min, max);
-                    var p3 = calcIntersection(D, C, min, max);
+                    const p1 = calcIntersection(D, A, min, max);
+                    const p2 = calcIntersection(D, B, min, max);
+                    const p3 = calcIntersection(D, C, min, max);
 
                     result = drawTri(null, [p1, p2, p3], [-1, -1, -1]) || result;
                 }
@@ -538,15 +538,15 @@ function generateIsoMeshes(data) {
             [1, 3, 2, 0]
         ].forEach(function(e) {
             if(ok[e[0]] && ok[e[1]] && !ok[e[2]] && !ok[e[3]]) {
-                var A = xyzv[e[0]];
-                var B = xyzv[e[1]];
-                var C = xyzv[e[2]];
-                var D = xyzv[e[3]];
+                const A = xyzv[e[0]];
+                const B = xyzv[e[1]];
+                const C = xyzv[e[2]];
+                const D = xyzv[e[3]];
 
-                var p1 = calcIntersection(C, A, min, max);
-                var p2 = calcIntersection(C, B, min, max);
-                var p3 = calcIntersection(D, B, min, max);
-                var p4 = calcIntersection(D, A, min, max);
+                const p1 = calcIntersection(C, A, min, max);
+                const p2 = calcIntersection(C, B, min, max);
+                const p3 = calcIntersection(D, B, min, max);
+                const p4 = calcIntersection(D, A, min, max);
 
                 if(drawingSpaceframe) {
                     result = drawTri(style, [A, p4, p1], [abcd[e[0]], -1, -1]) || result;
@@ -567,14 +567,14 @@ function generateIsoMeshes(data) {
             [3, 0, 1, 2]
         ].forEach(function(e) {
             if(ok[e[0]] && !ok[e[1]] && !ok[e[2]] && !ok[e[3]]) {
-                var A = xyzv[e[0]];
-                var B = xyzv[e[1]];
-                var C = xyzv[e[2]];
-                var D = xyzv[e[3]];
+                const A = xyzv[e[0]];
+                const B = xyzv[e[1]];
+                const C = xyzv[e[2]];
+                const D = xyzv[e[3]];
 
-                var p1 = calcIntersection(B, A, min, max);
-                var p2 = calcIntersection(C, A, min, max);
-                var p3 = calcIntersection(D, A, min, max);
+                const p1 = calcIntersection(B, A, min, max);
+                const p2 = calcIntersection(C, A, min, max);
+                const p3 = calcIntersection(D, A, min, max);
 
                 if(drawingSpaceframe) {
                     result = drawTri(style, [A, p1, p2], [abcd[e[0]], -1, -1]) || result;
@@ -591,7 +591,7 @@ function generateIsoMeshes(data) {
     }
 
     function addCube(style, p000, p001, p010, p011, p100, p101, p110, p111, min, max) {
-        var result = false;
+        let result = false;
 
         if(drawingSurface) {
             if(styleIncludes(style, 'A')) {
@@ -639,17 +639,17 @@ function generateIsoMeshes(data) {
     function beginSection(style: any, i: number, j: number, k: number, min: any, max: any, distRatios: any, _previousResult?: any) {
         // used to create slices between axis points
 
-        var result = false;
-        var A, B, C, D;
+        let result = false;
+        let A, B, C, D;
 
-        var makeSection = function() {
+        const makeSection = function() {
             result = tryCreateTri(style, [A, B, C], [-1, -1, -1], min, max) || result;
             result = tryCreateTri(style, [C, D, A], [-1, -1, -1], min, max) || result;
         };
 
-        var rX = distRatios[0];
-        var rY = distRatios[1];
-        var rZ = distRatios[2];
+        const rX = distRatios[0];
+        const rY = distRatios[1];
+        const rZ = distRatios[2];
 
         if(rX) {
             A = getBetween(getXYZV([getIndex(i, j - 0, k - 0)])[0], getXYZV([getIndex(i - 1, j - 0, k - 0)])[0], rX);
@@ -681,7 +681,7 @@ function generateIsoMeshes(data) {
     function begin3dCell(style, p000, p001, p010, p011, p100, p101, p110, p111, min, max, isEven) {
         // used to create spaceframe and/or iso-surfaces
 
-        var cellStyle = style;
+        let cellStyle = style;
         if(isEven) {
             if(drawingSurface && style === 'even') cellStyle = null;
             return addCube(cellStyle, p000, p001, p010, p011, p100, p101, p110, p111, min, max);
@@ -692,12 +692,12 @@ function generateIsoMeshes(data) {
     }
 
     function draw2dX(style, items, min, max, previousResult) {
-        var result = [];
-        var n = 0;
-        for(var q = 0; q < items.length; q++) {
-            var i = items[q];
-            for(var k = 1; k < depth; k++) {
-                for(var j = 1; j < height; j++) {
+        const result = [];
+        let n = 0;
+        for(let q = 0; q < items.length; q++) {
+            const i = items[q];
+            for(let k = 1; k < depth; k++) {
+                for(let j = 1; j < height; j++) {
                     result.push(
                         begin2dCell(style,
                             getIndex(i, j - 1, k - 1),
@@ -718,12 +718,12 @@ function generateIsoMeshes(data) {
     }
 
     function draw2dY(style, items, min, max, previousResult) {
-        var result = [];
-        var n = 0;
-        for(var q = 0; q < items.length; q++) {
-            var j = items[q];
-            for(var i = 1; i < width; i++) {
-                for(var k = 1; k < depth; k++) {
+        const result = [];
+        let n = 0;
+        for(let q = 0; q < items.length; q++) {
+            const j = items[q];
+            for(let i = 1; i < width; i++) {
+                for(let k = 1; k < depth; k++) {
                     result.push(
                         begin2dCell(style,
                             getIndex(i - 1, j, k - 1),
@@ -744,12 +744,12 @@ function generateIsoMeshes(data) {
     }
 
     function draw2dZ(style, items, min, max, previousResult) {
-        var result = [];
-        var n = 0;
-        for(var q = 0; q < items.length; q++) {
-            var k = items[q];
-            for(var j = 1; j < height; j++) {
-                for(var i = 1; i < width; i++) {
+        const result = [];
+        let n = 0;
+        for(let q = 0; q < items.length; q++) {
+            const k = items[q];
+            for(let j = 1; j < height; j++) {
+                for(let i = 1; i < width; i++) {
                     result.push(
                         begin2dCell(style,
                             getIndex(i - 1, j - 1, k),
@@ -770,9 +770,9 @@ function generateIsoMeshes(data) {
     }
 
     function draw3d(style, min, max) {
-        for(var k = 1; k < depth; k++) {
-            for(var j = 1; j < height; j++) {
-                for(var i = 1; i < width; i++) {
+        for(let k = 1; k < depth; k++) {
+            for(let j = 1; j < height; j++) {
+                for(let i = 1; i < width; i++) {
                     begin3dCell(style,
                         getIndex(i - 1, j - 1, k - 1),
                         getIndex(i - 1, j - 1, k),
@@ -804,12 +804,12 @@ function generateIsoMeshes(data) {
     }
 
     function drawSectionX(style, items, min, max, distRatios, previousResult) {
-        var result = [];
-        var n = 0;
-        for(var q = 0; q < items.length; q++) {
-            var i = items[q];
-            for(var k = 1; k < depth; k++) {
-                for(var j = 1; j < height; j++) {
+        const result = [];
+        let n = 0;
+        for(let q = 0; q < items.length; q++) {
+            const i = items[q];
+            for(let k = 1; k < depth; k++) {
+                for(let j = 1; j < height; j++) {
                     result.push(
                         beginSection(style, i, j, k, min, max, distRatios[q],
                             (previousResult && previousResult[n]) ? previousResult[n] : []
@@ -823,12 +823,12 @@ function generateIsoMeshes(data) {
     }
 
     function drawSectionY(style, items, min, max, distRatios, previousResult) {
-        var result = [];
-        var n = 0;
-        for(var q = 0; q < items.length; q++) {
-            var j = items[q];
-            for(var i = 1; i < width; i++) {
-                for(var k = 1; k < depth; k++) {
+        const result = [];
+        let n = 0;
+        for(let q = 0; q < items.length; q++) {
+            const j = items[q];
+            for(let i = 1; i < width; i++) {
+                for(let k = 1; k < depth; k++) {
                     result.push(
                         beginSection(style, i, j, k, min, max, distRatios[q],
                             (previousResult && previousResult[n]) ? previousResult[n] : []
@@ -842,12 +842,12 @@ function generateIsoMeshes(data) {
     }
 
     function drawSectionZ(style, items, min, max, distRatios, previousResult) {
-        var result = [];
-        var n = 0;
-        for(var q = 0; q < items.length; q++) {
-            var k = items[q];
-            for(var j = 1; j < height; j++) {
-                for(var i = 1; i < width; i++) {
+        const result = [];
+        let n = 0;
+        for(let q = 0; q < items.length; q++) {
+            const k = items[q];
+            for(let j = 1; j < height; j++) {
+                for(let i = 1; i < width; i++) {
                     result.push(
                         beginSection(style, i, j, k, min, max, distRatios[q],
                             (previousResult && previousResult[n]) ? previousResult[n] : []
@@ -861,18 +861,18 @@ function generateIsoMeshes(data) {
     }
 
     function createRange(a, b) {
-        var range = [];
-        for(var q = a; q < b; q++) {
+        const range = [];
+        for(let q = a; q < b; q++) {
             range.push(q);
         }
         return range;
     }
 
     function insertGridPoints() {
-        for(var i = 0; i < width; i++) {
-            for(var j = 0; j < height; j++) {
-                for(var k = 0; k < depth; k++) {
-                    var index = getIndex(i, j, k);
+        for(let i = 0; i < width; i++) {
+            for(let j = 0; j < height; j++) {
+                for(let k = 0; k < depth; k++) {
+                    const index = getIndex(i, j, k);
                     addVertex(
                         data._x[index],
                         data._y[index],
@@ -890,7 +890,7 @@ function generateIsoMeshes(data) {
         // insert grid points
         insertGridPoints();
 
-        var activeStyle = null;
+        const activeStyle = null;
 
         // draw spaceframes
         if(showSpaceframe && spaceframeFill) {
@@ -903,15 +903,15 @@ function generateIsoMeshes(data) {
         if(showSurface && surfaceFill) {
             setFill(surfaceFill);
 
-            var surfacePattern = data.surface.pattern;
-            var surfaceCount = data.surface.count;
-            for(var q = 0; q < surfaceCount; q++) {
-                var ratio = (surfaceCount === 1) ? 0.5 : q / (surfaceCount - 1);
-                var level = (1 - ratio) * vMin + ratio * vMax;
+            const surfacePattern = data.surface.pattern;
+            const surfaceCount = data.surface.count;
+            for(let q = 0; q < surfaceCount; q++) {
+                const ratio = (surfaceCount === 1) ? 0.5 : q / (surfaceCount - 1);
+                const level = (1 - ratio) * vMin + ratio * vMax;
 
-                var d1 = Math.abs(level - minValues);
-                var d2 = Math.abs(level - maxValues);
-                var ranges = (d1 > d2) ?
+                const d1 = Math.abs(level - minValues);
+                const d2 = Math.abs(level - maxValues);
+                const ranges = (d1 > d2) ?
                     [minValues, level] :
                     [level, maxValues];
 
@@ -919,30 +919,30 @@ function generateIsoMeshes(data) {
             }
         }
 
-        var setupMinMax = [
+        const setupMinMax = [
             [ Math.min(vMin, maxValues), Math.max(vMin, maxValues) ],
             [ Math.min(minValues, vMax), Math.max(minValues, vMax) ]
         ];
 
         ['x', 'y', 'z'].forEach(function(e) {
-            var preRes = [];
-            for(var s = 0; s < setupMinMax.length; s++) {
-                var count = 0;
+            const preRes = [];
+            for(let s = 0; s < setupMinMax.length; s++) {
+                let count = 0;
 
-                var activeMin = setupMinMax[s][0];
-                var activeMax = setupMinMax[s][1];
+                const activeMin = setupMinMax[s][0];
+                const activeMax = setupMinMax[s][1];
 
                 // draw slices
-                var slice = data.slices[e];
+                const slice = data.slices[e];
                 if(slice.show && slice.fill) {
                     setFill(slice.fill);
 
-                    var exactIndices = [];
-                    var ceilIndices = [];
-                    var distRatios = [];
+                    let exactIndices = [];
+                    const ceilIndices = [];
+                    const distRatios = [];
                     if(slice.locations.length) {
-                        for(var q = 0; q < slice.locations.length; q++) {
-                            var near = findNearestOnAxis(
+                        for(let q = 0; q < slice.locations.length; q++) {
+                            const near = findNearestOnAxis(
                                 slice.locations[q],
                                 (e === 'x') ? Xs :
                                 (e === 'y') ? Ys : Zs
@@ -995,7 +995,7 @@ function generateIsoMeshes(data) {
                 }
 
                 // draw caps
-                var cap = data.caps[e];
+                const cap = data.caps[e];
                 if(cap.show && cap.fill) {
                     setFill(cap.fill);
                     if(e === 'x') {
@@ -1031,9 +1031,9 @@ function generateIsoMeshes(data) {
 }
 
 function createIsosurfaceTrace(scene, data) {
-    var gl = scene.glplot.gl;
-    var mesh = createMesh({gl: gl});
-    var result = new IsosurfaceTrace(scene, mesh, data.uid);
+    const gl = scene.glplot.gl;
+    const mesh = createMesh({gl: gl});
+    const result = new IsosurfaceTrace(scene, mesh, data.uid);
 
     mesh._trace = result;
     result.update(data);

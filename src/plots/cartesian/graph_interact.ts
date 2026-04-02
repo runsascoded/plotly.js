@@ -8,8 +8,8 @@ const { makeDragBox } = _dragbox;
 import _constants from './constants.js';
 const { DRAGGERSIZE } = _constants;
 
-export var initInteractions = function initInteractions(gd: GraphDiv): void {
-    var fullLayout = gd._fullLayout;
+export const initInteractions = function initInteractions(gd: GraphDiv): void {
+    const fullLayout = gd._fullLayout;
 
     if(gd._context.staticPlot) {
         // this sweeps up more than just cartesian drag elements...
@@ -19,12 +19,12 @@ export var initInteractions = function initInteractions(gd: GraphDiv): void {
 
     if(!fullLayout._has('cartesian') && !fullLayout._has('splom')) return;
 
-    var subplots = Object.keys(fullLayout._plots || {}).sort(function(a, b) {
+    const subplots = Object.keys(fullLayout._plots || {}).sort(function(a, b) {
         // sort overlays last, then by x axis number, then y axis number
         if((fullLayout._plots[a].mainplot && true) ===
             (fullLayout._plots[b].mainplot && true)) {
-            var aParts = a.split('y');
-            var bParts = b.split('y');
+            const aParts = a.split('y');
+            const bParts = b.split('y');
             return (aParts[0] === bParts[0]) ?
                 (Number(aParts[1] || 1) - Number(bParts[1] || 1)) :
                 (Number(aParts[0] || 1) - Number(bParts[0] || 1));
@@ -33,16 +33,16 @@ export var initInteractions = function initInteractions(gd: GraphDiv): void {
     });
 
     subplots.forEach(function(subplot) {
-        var plotinfo = fullLayout._plots[subplot];
-        var xa: any = plotinfo.xaxis;
-        var ya = plotinfo.yaxis;
+        const plotinfo = fullLayout._plots[subplot];
+        const xa: any = plotinfo.xaxis;
+        const ya = plotinfo.yaxis;
 
         // main and corner draggers need not be repeated for
         // overlaid subplots - these draggers drag them all
         if(!plotinfo.mainplot) {
             // main dragger goes over the grids and data, so we use its
             // mousemove events for all data hover effects
-            var maindrag: any = makeDragBox(gd, plotinfo, xa._offset, ya._offset,
+            const maindrag: any = makeDragBox(gd, plotinfo, xa._offset, ya._offset,
                 xa._length, ya._length, 'ns', 'ew');
 
             maindrag.onmousemove = function(evt?: any) {
@@ -97,7 +97,7 @@ export var initInteractions = function initInteractions(gd: GraphDiv): void {
             // these drag each axis separately
             if(subplot === xa._mainSubplot) {
                 // the y position of the main x axis line
-                var y0 = xa._mainLinePosition;
+                let y0 = xa._mainLinePosition;
                 if(xa.side === 'top') y0 -= DRAGGERSIZE;
                 makeDragBox(gd, plotinfo, xa._offset + xa._length * 0.1, y0,
                     xa._length * 0.8, DRAGGERSIZE, '', 'ew');
@@ -109,7 +109,7 @@ export var initInteractions = function initInteractions(gd: GraphDiv): void {
             // y axis draggers
             if(subplot === ya._mainSubplot) {
                 // the x position of the main y axis line
-                var x0 = ya._mainLinePosition;
+                let x0 = ya._mainLinePosition;
                 if(ya.side !== 'right') x0 -= DRAGGERSIZE;
                 makeDragBox(gd, plotinfo, x0, ya._offset + ya._length * 0.1,
                     DRAGGERSIZE, ya._length * 0.8, 'ns', '');
@@ -124,7 +124,7 @@ export var initInteractions = function initInteractions(gd: GraphDiv): void {
     // In case you mousemove over some hovertext, send it to Fx.hover too
     // we do this so that we can put the hover text in front of everything,
     // but still be able to interact with everything as if it isn't there
-    var hoverLayer: any = fullLayout._hoverlayer.node();
+    const hoverLayer: any = fullLayout._hoverlayer.node();
 
     hoverLayer.onmousemove = function(evt?: any) {
         evt.target = gd._fullLayout._lasthover;
@@ -144,9 +144,9 @@ export var initInteractions = function initInteractions(gd: GraphDiv): void {
     updateFx(gd);
 };
 
-export var updateFx = function(gd: GraphDiv): void {
-    var fullLayout = gd._fullLayout;
-    var cursor = fullLayout.dragmode === 'pan' ? 'move' : 'crosshair';
+export const updateFx = function(gd: GraphDiv): void {
+    const fullLayout = gd._fullLayout;
+    const cursor = fullLayout.dragmode === 'pan' ? 'move' : 'crosshair';
     setCursor(fullLayout._draggers, cursor);
 };
 

@@ -8,13 +8,13 @@ function style(gd, calcTrace) {
 }
 
 function styleTrace(gd, calcTrace) {
-    var trace = calcTrace[0].trace;
-    var s = calcTrace[0].node3;
-    var locs = s.selectAll('.choroplethlocation');
-    var marker = trace.marker || {};
-    var markerLine = marker.line || {};
+    const trace = calcTrace[0].trace;
+    const s = calcTrace[0].node3;
+    const locs = s.selectAll('.choroplethlocation');
+    const marker = trace.marker || {};
+    const markerLine = marker.line || {};
 
-    var sclFunc = Colorscale.makeColorScaleFuncFromTrace(trace);
+    const sclFunc = Colorscale.makeColorScaleFuncFromTrace(trace);
 
     locs.each(function(d) {
         select(this)
@@ -28,8 +28,8 @@ function styleTrace(gd, calcTrace) {
 }
 
 function styleOnSelect(gd, calcTrace) {
-    var s = calcTrace[0].node3;
-    var trace = calcTrace[0].trace;
+    const s = calcTrace[0].node3;
+    const trace = calcTrace[0].trace;
 
     if(trace.selectedpoints) {
         selectedPointStyle(s.selectAll('.choroplethlocation'), trace);

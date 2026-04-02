@@ -18,7 +18,7 @@ export default function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace,
         return Lib.coerce2(traceIn, traceOut, attributes, attr, dflt);
     }
 
-    var len = handleLonLatDefaults(traceIn, traceOut, coerce);
+    const len = handleLonLatDefaults(traceIn, traceOut, coerce);
     if (!len) {
         traceOut.visible = false;
         return;
@@ -40,7 +40,7 @@ export default function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace,
         coerce('marker.angle');
 
         // array marker.size and marker.color are only supported with circles
-        var marker = traceOut.marker;
+        const marker = traceOut.marker;
         if (marker.symbol !== 'circle') {
             if (Lib.isArrayOrTypedArray(marker.size)) marker.size = marker.size[0];
             if (Lib.isArrayOrTypedArray(marker.color)) marker.color = marker.color[0];
@@ -52,23 +52,23 @@ export default function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace,
         coerce('connectgaps');
     }
 
-    var clusterMaxzoom = coerce2('cluster.maxzoom');
-    var clusterStep = coerce2('cluster.step');
-    var clusterColor = coerce2('cluster.color', (traceOut.marker && traceOut.marker.color) || defaultColor);
-    var clusterSize = coerce2('cluster.size');
-    var clusterOpacity = coerce2('cluster.opacity');
+    const clusterMaxzoom = coerce2('cluster.maxzoom');
+    const clusterStep = coerce2('cluster.step');
+    const clusterColor = coerce2('cluster.color', (traceOut.marker && traceOut.marker.color) || defaultColor);
+    const clusterSize = coerce2('cluster.size');
+    const clusterOpacity = coerce2('cluster.opacity');
 
-    var clusterEnabledDflt =
+    const clusterEnabledDflt =
         clusterMaxzoom !== false ||
         clusterStep !== false ||
         clusterColor !== false ||
         clusterSize !== false ||
         clusterOpacity !== false;
 
-    var clusterEnabled = coerce('cluster.enabled', clusterEnabledDflt);
+    const clusterEnabled = coerce('cluster.enabled', clusterEnabledDflt);
 
     if (clusterEnabled || subTypes.hasText(traceOut)) {
-        var layoutFontFamily = layout.font.family;
+        const layoutFontFamily = layout.font.family;
 
         handleTextDefaults(traceIn, traceOut, layout, coerce, {
             noSelect: true,
@@ -95,9 +95,9 @@ export default function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace,
 }
 
 function handleLonLatDefaults(traceIn: InputTrace, traceOut: FullTrace, coerce) {
-    var lon = coerce('lon') || [];
-    var lat = coerce('lat') || [];
-    var len = Math.min(lon.length, lat.length);
+    const lon = coerce('lon') || [];
+    const lat = coerce('lat') || [];
+    const len = Math.min(lon.length, lat.length);
     traceOut._length = len;
 
     return len;

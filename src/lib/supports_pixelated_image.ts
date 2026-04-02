@@ -2,7 +2,7 @@ import constants from '../constants/pixelated_image.js';
 import { tester } from '../components/drawing/index.js';
 import Lib from '../lib/index.js';
 
-var _supportsPixelated: boolean | null = null;
+let _supportsPixelated: boolean | null = null;
 
 /**
  * Check browser support for pixelated image rendering
@@ -17,25 +17,25 @@ function supportsPixelatedImage(): boolean {
     _supportsPixelated = false;
 
     // @see https://github.com/plotly/plotly.js/issues/6604
-    var unsupportedBrowser = Lib.isSafari() || Lib.isMacWKWebView() || Lib.isIOS();
+    const unsupportedBrowser = Lib.isSafari() || Lib.isMacWKWebView() || Lib.isIOS();
 
     if(window.navigator.userAgent && !unsupportedBrowser) {
-        var declarations = Array.from(constants.CSS_DECLARATIONS).reverse();
+        const declarations = Array.from(constants.CSS_DECLARATIONS).reverse();
 
-        var supports = (window.CSS && window.CSS.supports) || (window as any).supportsCSS;
+        const supports = (window.CSS && window.CSS.supports) || (window as any).supportsCSS;
         if(typeof supports === 'function') {
             _supportsPixelated = declarations.some(function(d: any) {
                 return supports.apply(null, d);
             });
         } else {
-            var image3 = tester.append('image')
+            const image3 = tester.append('image')
                 .attr('style', constants.STYLE);
 
-            var cStyles = window.getComputedStyle(image3.node());
-            var imageRendering = cStyles.imageRendering;
+            const cStyles = window.getComputedStyle(image3.node());
+            const imageRendering = cStyles.imageRendering;
 
             _supportsPixelated = declarations.some(function(d: any) {
-                var value = d[1];
+                const value = d[1];
                 return (
                     imageRendering === value ||
                     imageRendering === value.toLowerCase()

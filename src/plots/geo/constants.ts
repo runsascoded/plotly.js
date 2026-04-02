@@ -1,4 +1,4 @@
-export var projNames = {
+export const projNames = {
     airy: 'airy',
     aitoff: 'aitoff',
     'albers usa': 'albersUsa',
@@ -116,9 +116,9 @@ export var projNames = {
     winkel3: 'winkel3',
 };
 
-export var axesNames = ['lonaxis', 'lataxis'];
+export const axesNames = ['lonaxis', 'lataxis'];
 
-export var lonaxisSpan = {
+export const lonaxisSpan = {
     orthographic: 180,
     'azimuthal equal area': 360,
     'azimuthal equidistant': 360,
@@ -129,13 +129,13 @@ export var lonaxisSpan = {
     '*': 360
 };
 
-export var lataxisSpan = {
+export const lataxisSpan = {
     'conic conformal': 150,
     stereographic: 179.5,
     '*': 180
 };
 
-export var scopeDefaults = {
+export const scopeDefaults = {
     world: {
         lonaxisRange: [-180, 180],
         lataxisRange: [-90, 90],
@@ -193,26 +193,26 @@ export var scopeDefaults = {
     },
 };
 
-export var clipPad = 1e-3;
-export var precision = 0.1;
-export var landColor = '#F0DC82';
-export var waterColor = '#3399FF';
+export const clipPad = 1e-3;
+export const precision = 0.1;
+export const landColor = '#F0DC82';
+export const waterColor = '#3399FF';
 
-export var locationmodeToLayer = {
+export const locationmodeToLayer = {
     'ISO-3': 'countries',
     'USA-states': 'subunits',
     'country names': 'countries'
 };
 
-export var sphereSVG = {type: 'Sphere'};
+export const sphereSVG = {type: 'Sphere'};
 
-export var fillLayers = {
+export const fillLayers = {
     ocean: 1,
     land: 1,
     lakes: 1
 };
 
-export var lineLayers = {
+export const lineLayers = {
     subunits: 1,
     countries: 1,
     coastlines: 1,
@@ -220,7 +220,7 @@ export var lineLayers = {
     frame: 1
 };
 
-export var layers = [
+export const layers = [
     'bg',
     'ocean', 'land', 'lakes',
     'subunits', 'countries', 'coastlines', 'rivers',
@@ -229,7 +229,7 @@ export var layers = [
     'frontplot'
 ];
 
-export var layersForChoropleth = [
+export const layersForChoropleth = [
     'bg',
     'ocean', 'land',
     'subunits', 'countries', 'coastlines',
@@ -239,7 +239,7 @@ export var layersForChoropleth = [
     'frontplot'
 ];
 
-export var layerNameToAdjective = {
+export const layerNameToAdjective = {
     ocean: 'ocean',
     land: 'land',
     lakes: 'lake',

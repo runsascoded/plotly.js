@@ -2,21 +2,21 @@ import colorscaleCalc from '../../components/colorscale/calc.js';
 import type { FullTrace, GraphDiv } from '../../../types/core';
 
 export default function calc(gd: GraphDiv, trace: FullTrace) {
-    var u = trace.u;
-    var v = trace.v;
-    var w = trace.w;
-    var len = Math.min(
+    const u = trace.u;
+    const v = trace.v;
+    const w = trace.w;
+    const len = Math.min(
         trace.x.length, trace.y.length, trace.z.length,
         u.length, v.length, w.length
     );
-    var normMax = -Infinity;
-    var normMin = Infinity;
+    let normMax = -Infinity;
+    let normMin = Infinity;
 
-    for(var i = 0; i < len; i++) {
-        var uu = u[i];
-        var vv = v[i];
-        var ww = w[i];
-        var norm = Math.sqrt(uu * uu + vv * vv + ww * ww);
+    for(let i = 0; i < len; i++) {
+        const uu = u[i];
+        const vv = v[i];
+        const ww = w[i];
+        const norm = Math.sqrt(uu * uu + vv * vv + ww * ww);
 
         normMax = Math.max(normMax, norm);
         normMin = Math.min(normMin, norm);

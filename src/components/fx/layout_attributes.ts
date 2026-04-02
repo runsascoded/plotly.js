@@ -1,7 +1,7 @@
 import constants from './constants.js';
 import fontAttrs from '../../plots/font_attributes.js';
 
-var font = fontAttrs({
+const font = fontAttrs({
     editType: 'none',
     description: 'Sets the default hover label font used by all traces on the graph.'
 });

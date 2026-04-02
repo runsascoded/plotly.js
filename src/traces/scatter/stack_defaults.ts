@@ -1,19 +1,19 @@
 import type { FullLayout, FullTrace, InputTrace } from '../../../types/core';
 
-var perStackAttrs = ['orientation', 'groupnorm', 'stackgaps'];
+const perStackAttrs = ['orientation', 'groupnorm', 'stackgaps'];
 
 export default function handleStackDefaults(traceIn: InputTrace, traceOut: FullTrace, layout: FullLayout, coerce: any): any {
-    var stackOpts = layout._scatterStackOpts;
+    const stackOpts = layout._scatterStackOpts;
 
-    var stackGroup = coerce('stackgroup');
+    const stackGroup = coerce('stackgroup');
     if(stackGroup) {
         // use independent stacking options per subplot
-        var subplot = traceOut.xaxis + traceOut.yaxis;
-        var subplotStackOpts = stackOpts[subplot];
+        const subplot = traceOut.xaxis + traceOut.yaxis;
+        let subplotStackOpts = stackOpts[subplot];
         if(!subplotStackOpts) subplotStackOpts = stackOpts[subplot] = {};
 
-        var groupOpts = subplotStackOpts[stackGroup];
-        var firstTrace = false;
+        let groupOpts = subplotStackOpts[stackGroup];
+        let firstTrace = false;
         if(groupOpts) {
             groupOpts.traces.push(traceOut);
         } else {
@@ -37,16 +37,16 @@ export default function handleStackDefaults(traceIn: InputTrace, traceOut: FullT
         // in principle it should be OK I guess, as long as explicit group styles
         // don't override explicit base-trace styles?
 
-        var dflts: any = {
+        const dflts: any = {
             orientation: (traceOut.x && !traceOut.y) ? 'h' : 'v'
         };
 
-        for(var i = 0; i < perStackAttrs.length; i++) {
-            var attr = perStackAttrs[i];
-            var attrFound = attr + 'Found';
+        for(let i = 0; i < perStackAttrs.length; i++) {
+            const attr = perStackAttrs[i];
+            const attrFound = attr + 'Found';
             if(!groupOpts[attrFound]) {
-                var traceHasAttr = traceIn[attr] !== undefined;
-                var isOrientation = attr === 'orientation';
+                const traceHasAttr = traceIn[attr] !== undefined;
+                const isOrientation = attr === 'orientation';
                 if(traceHasAttr || firstTrace) {
                     groupOpts[attr] = coerce(attr, dflts[attr]);
 
@@ -78,8 +78,8 @@ export default function handleStackDefaults(traceIn: InputTrace, traceOut: FullT
 
                             // orientation can affect default fill of previous traces
                             if(isOrientation) {
-                                for(var j = 0; j < groupOpts.traces.length - 1; j++) {
-                                    var trace2 = groupOpts.traces[j];
+                                for(let j = 0; j < groupOpts.traces.length - 1; j++) {
+                                    const trace2 = groupOpts.traces[j];
                                     if(trace2._input.fill !== trace2.fill) {
                                         trace2.fill = groupOpts.fillDflt;
                                     }

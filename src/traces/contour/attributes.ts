@@ -6,12 +6,12 @@ import { dash } from '../../components/drawing/attributes.js';
 import fontAttrs from '../../plots/font_attributes.js';
 import { extendFlat } from '../../lib/extend.js';
 import filterOps from '../../constants/filter_ops.js';
-var axisHoverFormat = axisFormat.axisHoverFormat;
-var descriptionOnlyNumbers = axisFormat.descriptionOnlyNumbers;
-var COMPARISON_OPS2 = filterOps.COMPARISON_OPS2;
-var INTERVAL_OPS = filterOps.INTERVAL_OPS;
+const axisHoverFormat = axisFormat.axisHoverFormat;
+const descriptionOnlyNumbers = axisFormat.descriptionOnlyNumbers;
+const COMPARISON_OPS2 = filterOps.COMPARISON_OPS2;
+const INTERVAL_OPS = filterOps.INTERVAL_OPS;
 
-var scatterLineAttrs = scatterAttrs.line;
+const scatterLineAttrs = scatterAttrs.line;
 
 export default extendFlat(
     {

@@ -7,7 +7,7 @@ export default function(layoutIn: Layout, layoutOut: FullLayout): void {
         return Lib.coerce(layoutIn, layoutOut, layoutAttributes, attr, dflt);
     }
 
-    var groupBarmode = layoutOut.barmode === 'group';
+    const groupBarmode = layoutOut.barmode === 'group';
 
     if(layoutOut.scattermode === 'group') {
         coerce('scattergap', groupBarmode ? layoutOut.bargap : 0.2);

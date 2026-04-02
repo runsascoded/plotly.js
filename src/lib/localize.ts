@@ -2,7 +2,7 @@ import Registry from '../registry.js';
 import type { GraphDiv } from '../../types/core';
 
 export default function localize(gd: GraphDiv, s: string): string {
-    var locale = gd._context.locale;
+    let locale = gd._context.locale;
 
     /*
      * Priority of lookup:
@@ -15,18 +15,18 @@ export default function localize(gd: GraphDiv, s: string): string {
      * only what's different from the base locale, everything else will
      * fall back on the base.
      */
-    for(var i = 0; i < 2; i++) {
-        var locales = gd._context.locales;
-        for(var j = 0; j < 2; j++) {
-            var dict = (locales[locale] || {}).dictionary;
+    for(let i = 0; i < 2; i++) {
+        let locales = gd._context.locales;
+        for(let j = 0; j < 2; j++) {
+            const dict = (locales[locale] || {}).dictionary;
             if(dict) {
-                var out = dict[s];
+                const out = dict[s];
                 if(out) return out;
             }
             locales = Registry.localeRegistry;
         }
 
-        var baseLocale = locale.split('-')[0];
+        const baseLocale = locale.split('-')[0];
         if(baseLocale === locale) break;
         locale = baseLocale;
     }

@@ -11,9 +11,9 @@ import setConvert from '../../plots/cartesian/set_convert.js';
 import autoType from '../../plots/cartesian/axis_autotype.js';
 
 export default function handleAxisDefaults(containerIn, containerOut, options) {
-    var letter = options.letter;
-    var font = options.font || {};
-    var attributes = carpetAttrs[letter + 'axis'];
+    const letter = options.letter;
+    const font = options.font || {};
+    const attributes = carpetAttrs[letter + 'axis'];
 
     function coerce(attr: string, dflt?: any) {
         return Lib.coerce(containerIn, containerOut, attributes, attr, dflt);
@@ -31,7 +31,7 @@ export default function handleAxisDefaults(containerIn, containerOut, options) {
 
     // now figure out type and do some more initialization
     coerce('autotypenumbers', options.autotypenumbersDflt);
-    var axType = coerce('type');
+    let axType = coerce('type');
     if(axType === '-') {
         if(options.data) setAutoType(containerOut, options.data);
 
@@ -78,7 +78,7 @@ export default function handleAxisDefaults(containerIn, containerOut, options) {
     containerOut._hovertitle = letter;
 
     if(axType === 'date') {
-        var handleCalendarDefaults = Registry.getComponentMethod('calendars', 'handleDefaults');
+        const handleCalendarDefaults = Registry.getComponentMethod('calendars', 'handleDefaults');
         handleCalendarDefaults(containerIn, containerOut, 'calendar', options.calendar);
     }
 
@@ -87,12 +87,12 @@ export default function handleAxisDefaults(containerIn, containerOut, options) {
     setConvert(containerOut, options.fullLayout);
     containerOut.c2p = Lib.identity;
 
-    var dfltColor = coerce('color', options.dfltColor);
+    const dfltColor = coerce('color', options.dfltColor);
     // if axis.color was provided, use it for fonts too; otherwise,
     // inherit from global font color in case that was provided.
-    var dfltFontColor = (dfltColor === containerIn.color) ? dfltColor : font.color;
+    const dfltFontColor = (dfltColor === containerIn.color) ? dfltColor : font.color;
 
-    var title = coerce('title.text');
+    const title = coerce('title.text');
     if(title) {
         Lib.coerceFont(coerce, 'title.font', font, { overrideDflt: {
             size: Lib.bigFont(font.size),
@@ -103,7 +103,7 @@ export default function handleAxisDefaults(containerIn, containerOut, options) {
 
     coerce('tickangle');
 
-    var autoRange = coerce('autorange', !containerOut.isValidRange(containerIn.range));
+    const autoRange = coerce('autorange', !containerOut.isValidRange(containerIn.range));
 
     if(autoRange) coerce('rangemode');
 
@@ -120,10 +120,10 @@ export default function handleAxisDefaults(containerIn, containerOut, options) {
         dataAttr: letter
     });
 
-    var gridColor = coerce2('gridcolor', addOpacity(dfltColor, 0.3));
-    var gridWidth = coerce2('gridwidth');
-    var gridDash = coerce2('griddash');
-    var showGrid = coerce('showgrid');
+    const gridColor = coerce2('gridcolor', addOpacity(dfltColor, 0.3));
+    const gridWidth = coerce2('gridwidth');
+    const gridDash = coerce2('griddash');
+    const showGrid = coerce('showgrid');
 
     if(!showGrid) {
         delete containerOut.gridcolor;
@@ -131,18 +131,18 @@ export default function handleAxisDefaults(containerIn, containerOut, options) {
         delete containerOut.griddash;
     }
 
-    var startLineColor = coerce2('startlinecolor', dfltColor);
-    var startLineWidth = coerce2('startlinewidth', gridWidth);
-    var showStartLine = coerce('startline', containerOut.showgrid || !!startLineColor || !!startLineWidth);
+    const startLineColor = coerce2('startlinecolor', dfltColor);
+    const startLineWidth = coerce2('startlinewidth', gridWidth);
+    const showStartLine = coerce('startline', containerOut.showgrid || !!startLineColor || !!startLineWidth);
 
     if(!showStartLine) {
         delete containerOut.startlinecolor;
         delete containerOut.startlinewidth;
     }
 
-    var endLineColor = coerce2('endlinecolor', dfltColor);
-    var endLineWidth = coerce2('endlinewidth', gridWidth);
-    var showEndLine = coerce('endline', containerOut.showgrid || !!endLineColor || !!endLineWidth);
+    const endLineColor = coerce2('endlinecolor', dfltColor);
+    const endLineWidth = coerce2('endlinewidth', gridWidth);
+    const showEndLine = coerce('endline', containerOut.showgrid || !!endLineColor || !!endLineWidth);
 
     if(!showEndLine) {
         delete containerOut.endlinecolor;
@@ -197,11 +197,11 @@ function setAutoType(ax, data) {
     // only autotype if type is '-'
     if(ax.type !== '-') return;
 
-    var id = ax._id;
-    var axLetter = id.charAt(0);
+    const id = ax._id;
+    const axLetter = id.charAt(0);
 
-    var calAttr = axLetter + 'calendar';
-    var calendar = ax[calAttr];
+    const calAttr = axLetter + 'calendar';
+    const calendar = ax[calAttr];
 
     ax.type = autoType(data, calendar, {
         autotypenumbers: ax.autotypenumbers

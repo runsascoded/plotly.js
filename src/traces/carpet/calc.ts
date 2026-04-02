@@ -13,14 +13,14 @@ import setConvert from './set_convert.js';
 import type { FullTrace, GraphDiv } from '../../../types/core';
 
 export default function calc(gd: GraphDiv, trace: FullTrace) {
-    var xa = Axes.getFromId(gd, trace.xaxis);
-    var ya = Axes.getFromId(gd, trace.yaxis);
-    var aax = trace.aaxis;
-    var bax = trace.baxis;
+    const xa = Axes.getFromId(gd, trace.xaxis);
+    const ya = Axes.getFromId(gd, trace.yaxis);
+    const aax = trace.aaxis;
+    const bax = trace.baxis;
 
-    var x = trace.x;
-    var y = trace.y;
-    var cols = [];
+    let x = trace.x;
+    let y = trace.y;
+    const cols = [];
     if(x && isArray1D(x)) cols.push('x');
     if(y && isArray1D(y)) cols.push('y');
 
@@ -28,16 +28,16 @@ export default function calc(gd: GraphDiv, trace: FullTrace) {
         convertColumnData(trace, aax, bax, 'a', 'b', cols);
     }
 
-    var a = trace._a = trace._a || trace.a;
-    var b = trace._b = trace._b || trace.b;
+    const a = trace._a = trace._a || trace.a;
+    const b = trace._b = trace._b || trace.b;
     x = trace._x || trace.x;
     y = trace._y || trace.y;
 
-    var t: any = {};
+    const t: any = {};
 
     if(trace._cheater) {
-        var avals = aax.cheatertype === 'index' ? a.length : a;
-        var bvals = bax.cheatertype === 'index' ? b.length : b;
+        const avals = aax.cheatertype === 'index' ? a.length : a;
+        const bvals = bax.cheatertype === 'index' ? b.length : b;
         x = cheaterBasis(avals, bvals, trace.cheaterslope);
     }
 
@@ -58,19 +58,19 @@ export default function calc(gd: GraphDiv, trace: FullTrace) {
 
     // This is a rather expensive scan. Nothing guarantees monotonicity,
     // so we need to scan through all data to get proper ranges:
-    var xrange = arrayMinmax(x);
-    var yrange = arrayMinmax(y);
+    let xrange = arrayMinmax(x);
+    let yrange = arrayMinmax(y);
 
-    var dx = 0.5 * (xrange[1] - xrange[0]);
-    var xc = 0.5 * (xrange[1] + xrange[0]);
+    const dx = 0.5 * (xrange[1] - xrange[0]);
+    const xc = 0.5 * (xrange[1] + xrange[0]);
 
-    var dy = 0.5 * (yrange[1] - yrange[0]);
-    var yc = 0.5 * (yrange[1] + yrange[0]);
+    const dy = 0.5 * (yrange[1] - yrange[0]);
+    const yc = 0.5 * (yrange[1] + yrange[0]);
 
     // Expand the axes to fit the plot, except just grow it by a factor of 1.3
     // because the labels should be taken into account except that's difficult
     // hence 1.3.
-    var grow = 1.3;
+    const grow = 1.3;
     xrange = [xc - dx * grow, xc + dx * grow];
     yrange = [yc - dy * grow, yc + dy * grow];
 

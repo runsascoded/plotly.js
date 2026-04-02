@@ -8,16 +8,16 @@ import { getFromId } from '../../plots/cartesian/axis_ids.js';
 import _axes from '../../plots/cartesian/axes.js';
 const { shouldShowZeroLine } = _axes;
 
-var SPLOM = 'splom';
+const SPLOM = 'splom';
 
-var reglPrecompiled: any = {};
+const reglPrecompiled: any = {};
 
 function plot(gd: GraphDiv) {
-    var fullLayout = gd._fullLayout;
-    var _module = Registry.getModule(SPLOM);
-    var splomCalcData = getModuleCalcData(gd.calcdata, _module)[0];
+    const fullLayout = gd._fullLayout;
+    const _module = Registry.getModule(SPLOM);
+    const splomCalcData = getModuleCalcData(gd.calcdata, _module)[0];
 
-    var success = prepareRegl(gd, ['ANGLE_instanced_arrays', 'OES_element_index_uint'], reglPrecompiled);
+    const success = prepareRegl(gd, ['ANGLE_instanced_arrays', 'OES_element_index_uint'], reglPrecompiled);
     if(!success) return;
 
     if(fullLayout._hasOnlyLargeSploms) {
@@ -28,17 +28,17 @@ function plot(gd: GraphDiv) {
 }
 
 function drag(gd: GraphDiv) {
-    var cd = gd.calcdata;
-    var fullLayout = gd._fullLayout;
+    const cd = gd.calcdata;
+    const fullLayout = gd._fullLayout;
 
     if(fullLayout._hasOnlyLargeSploms) {
         updateGrid(gd);
     }
 
-    for(var i = 0; i < cd.length; i++) {
-        var cd0 = cd[i][0];
-        var trace = cd0.trace;
-        var scene = fullLayout._splomScenes[trace.uid];
+    for(let i = 0; i < cd.length; i++) {
+        const cd0 = cd[i][0];
+        const trace = cd0.trace;
+        const scene = fullLayout._splomScenes[trace.uid];
 
         if(trace.type === 'splom' && scene && scene.matrix) {
             dragOne(gd, trace, scene);
@@ -47,21 +47,21 @@ function drag(gd: GraphDiv) {
 }
 
 function dragOne(gd: GraphDiv, trace: FullTrace, scene) {
-    var visibleLength = scene.matrixOptions.data.length;
-    var visibleDims = trace._visibleDims;
-    var ranges = scene.viewOpts.ranges = new Array(visibleLength);
+    const visibleLength = scene.matrixOptions.data.length;
+    const visibleDims = trace._visibleDims;
+    const ranges = scene.viewOpts.ranges = new Array(visibleLength);
 
-    for(var k = 0; k < visibleDims.length; k++) {
-        var i = visibleDims[k];
-        var rng = ranges[k] = new Array(4);
+    for(let k = 0; k < visibleDims.length; k++) {
+        const i = visibleDims[k];
+        const rng = ranges[k] = new Array(4);
 
-        var xa = getFromId(gd, trace._diag[i][0]);
+        const xa = getFromId(gd, trace._diag[i][0]);
         if(xa) {
             rng[0] = xa.r2l(xa.range[0]);
             rng[2] = xa.r2l(xa.range[1]);
         }
 
-        var ya = getFromId(gd, trace._diag[i][1]);
+        const ya = getFromId(gd, trace._diag[i][1]);
         if(ya) {
             rng[1] = ya.r2l(ya.range[0]);
             rng[3] = ya.r2l(ya.range[1]);
@@ -76,9 +76,9 @@ function dragOne(gd: GraphDiv, trace: FullTrace, scene) {
 }
 
 function updateGrid(gd: GraphDiv) {
-    var fullLayout = gd._fullLayout;
-    var regl = fullLayout._glcanvas.data()[0].regl;
-    var splomGrid = fullLayout._splomGrid;
+    const fullLayout = gd._fullLayout;
+    const regl = fullLayout._glcanvas.data()[0].regl;
+    let splomGrid = fullLayout._splomGrid;
 
     if(!splomGrid) {
         splomGrid = fullLayout._splomGrid = createLine(regl);
@@ -87,16 +87,16 @@ function updateGrid(gd: GraphDiv) {
 }
 
 function makeGridData(gd: GraphDiv) {
-    var plotGlPixelRatio = gd._context.plotGlPixelRatio;
-    var fullLayout = gd._fullLayout;
-    var gs = fullLayout._size;
-    var fullView = [
+    const plotGlPixelRatio = gd._context.plotGlPixelRatio;
+    const fullLayout = gd._fullLayout;
+    const gs = fullLayout._size;
+    const fullView = [
         0, 0,
         fullLayout.width * plotGlPixelRatio,
         fullLayout.height * plotGlPixelRatio
     ];
-    var lookup: any = {};
-    var k;
+    const lookup: any = {};
+    let k;
 
     function push(prefix, ax: FullAxis, x0, x1, y0, y1) {
         x0 *= plotGlPixelRatio;
@@ -104,9 +104,9 @@ function makeGridData(gd: GraphDiv) {
         y0 *= plotGlPixelRatio;
         y1 *= plotGlPixelRatio;
 
-        var lcolor = ax[prefix + 'color'];
-        var lwidth = ax[prefix + 'width'];
-        var key = String(lcolor + lwidth);
+        const lcolor = ax[prefix + 'color'];
+        const lwidth = ax[prefix + 'width'];
+        const key = String(lcolor + lwidth);
 
         if(key in lookup) {
             lookup[key].data.push(NaN, NaN, x0, x1, y0, y1);
@@ -124,21 +124,21 @@ function makeGridData(gd: GraphDiv) {
     }
 
     for(k in fullLayout._splomSubplots) {
-        var sp = fullLayout._plots[k];
-        var xa = sp.xaxis;
-        var ya = sp.yaxis;
-        var xVals = xa._gridVals;
-        var yVals = ya._gridVals;
-        var xOffset = xa._offset;
-        var xLength = xa._length;
-        var yLength = ya._length;
+        const sp = fullLayout._plots[k];
+        const xa = sp.xaxis;
+        const ya = sp.yaxis;
+        const xVals = xa._gridVals;
+        const yVals = ya._gridVals;
+        const xOffset = xa._offset;
+        const xLength = xa._length;
+        const yLength = ya._length;
 
         // ya.l2p assumes top-to-bottom coordinate system (a la SVG),
         // we need to compute bottom-to-top offsets and slopes:
-        var yOffset = gs.b + ya.domain[0] * gs.h;
-        var ym = -ya._m;
-        var yb = -ym * ya.r2l(ya.range[0], ya.calendar);
-        var x, y;
+        const yOffset = gs.b + ya.domain[0] * gs.h;
+        const ym = -ya._m;
+        const yb = -ym * ya.r2l(ya.range[0], ya.calendar);
+        let x, y;
 
         if(xa.showgrid) {
             for(k = 0; k < xVals.length; k++) {
@@ -162,7 +162,7 @@ function makeGridData(gd: GraphDiv) {
         }
     }
 
-    var gridBatches = [];
+    const gridBatches = [];
     for(k in lookup) {
         gridBatches.push(lookup[k]);
     }
@@ -171,20 +171,20 @@ function makeGridData(gd: GraphDiv) {
 }
 
 function clean(newFullData, newFullLayout, oldFullData, oldFullLayout) {
-    var lookup: any = {};
-    var i;
+    const lookup: any = {};
+    let i;
 
     if(oldFullLayout._splomScenes) {
         for(i = 0; i < newFullData.length; i++) {
-            var newTrace = newFullData[i];
+            const newTrace = newFullData[i];
             if(newTrace.type === 'splom') {
                 lookup[newTrace.uid] = 1;
             }
         }
         for(i = 0; i < oldFullData.length; i++) {
-            var oldTrace = oldFullData[i];
+            const oldTrace = oldFullData[i];
             if(!lookup[oldTrace.uid]) {
-                var scene = oldFullLayout._splomScenes[oldTrace.uid];
+                const scene = oldFullLayout._splomScenes[oldTrace.uid];
                 if(scene && scene.destroy) scene.destroy();
                 // must first set scene to null in order to get garbage collected
                 oldFullLayout._splomScenes[oldTrace.uid] = null;

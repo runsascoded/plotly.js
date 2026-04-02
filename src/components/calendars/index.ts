@@ -2,25 +2,25 @@ import calendars from './calendars.js';
 import Lib from '../../lib/index.js';
 import constants from '../../constants/numerical.js';
 
-var EPOCHJD = constants.EPOCHJD;
-var ONEDAY = constants.ONEDAY;
+const EPOCHJD = constants.EPOCHJD;
+const ONEDAY = constants.ONEDAY;
 
-var attributes = {
+const attributes = {
     valType: 'enumerated',
     values: Lib.sortObjectKeys(calendars.calendars),
     editType: 'calc',
     dflt: 'gregorian'
 };
 
-var handleDefaults = function(contIn: any, contOut: any, attr: any, dflt: any) {
-    var attrs: any = {};
+const handleDefaults = function(contIn: any, contOut: any, attr: any, dflt: any) {
+    const attrs: any = {};
     attrs[attr] = attributes;
 
     return Lib.coerce(contIn, contOut, attrs, attr, dflt);
 };
 
-var handleTraceDefaults = function(traceIn: any, traceOut: any, coords: any, layout: any) {
-    for(var i = 0; i < coords.length; i++) {
+const handleTraceDefaults = function(traceIn: any, traceOut: any, coords: any, layout: any) {
+    for(let i = 0; i < coords.length; i++) {
         handleDefaults(traceIn, traceOut, coords[i] + 'calendar', layout.calendar);
     }
 };
@@ -29,7 +29,7 @@ var handleTraceDefaults = function(traceIn: any, traceOut: any, coords: any, lay
 // 2000-01-01 (or even 0000-01-01) for them all but they don't necessarily
 // all support either of those dates. Instead I'll use the most significant
 // number they *do* support, biased toward the present day.
-var CANONICAL_TICK = {
+const CANONICAL_TICK = {
     chinese: '2000-01-01',
     coptic: '2000-01-01',
     discworld: '2000-01-01',
@@ -51,7 +51,7 @@ var CANONICAL_TICK = {
 // Discworld and Mayan calendars don't have 7-day weeks but we're going to give them
 // 7-day week ticks so start on our Sundays.
 // If anyone really cares we can customize the auto tick spacings for these calendars.
-var CANONICAL_SUNDAY = {
+const CANONICAL_SUNDAY = {
     chinese: '2000-01-02',
     coptic: '2000-01-03',
     discworld: '2000-01-03',
@@ -69,7 +69,7 @@ var CANONICAL_SUNDAY = {
     ummalqura: '1400-01-06'
 };
 
-var DFLTRANGE = {
+const DFLTRANGE = {
     chinese: ['2000-01-01', '2001-01-01'],
     coptic: ['1700-01-01', '1701-01-01'],
     discworld: ['1800-01-01', '1801-01-01'],
@@ -92,8 +92,8 @@ var DFLTRANGE = {
  * to know d3's specifiers. Map space padding to no padding, and unknown fields
  * to an ugly placeholder
  */
-var UNKNOWN = '##';
-var d3ToWorldCalendars: any = {
+const UNKNOWN = '##';
+const d3ToWorldCalendars: any = {
     d: {0: 'dd', '-': 'd'}, // 2-digit or unpadded day of month
     e: {0: 'd', '-': 'd'}, // alternate, always unpadded day of month
     a: {0: 'D', '-': 'D'}, // short weekday name
@@ -114,10 +114,10 @@ var d3ToWorldCalendars: any = {
 };
 
 function worldCalFmt(fmt: any, x: any, calendar: any) {
-    var dateJD = Math.floor((x + 0.05) / ONEDAY) + EPOCHJD;
-    var cDate = getCal(calendar).fromJD(dateJD);
-    var i = 0;
-    var modifier, directive, directiveLen, directiveObj, replacementPart;
+    const dateJD = Math.floor((x + 0.05) / ONEDAY) + EPOCHJD;
+    const cDate = getCal(calendar).fromJD(dateJD);
+    let i = 0;
+    let modifier, directive, directiveLen, directiveObj, replacementPart;
 
     while((i = fmt.indexOf('%', i)) !== -1) {
         modifier = fmt.charAt(i + 1);
@@ -149,9 +149,9 @@ function worldCalFmt(fmt: any, x: any, calendar: any) {
 
 // cache world calendars, so we don't have to reinstantiate
 // during each date-time conversion
-var allCals: any = {};
+const allCals: any = {};
 function getCal(calendar: any) {
-    var calendarObj = allCals[calendar];
+    let calendarObj = allCals[calendar];
     if(calendarObj) return calendarObj;
 
     calendarObj = allCals[calendar] = calendars.instance(calendar);
@@ -166,19 +166,19 @@ function makeTraceAttrsDescription(coord: any) {
     return 'Sets the calendar system to use with `' + coord + '` date data.';
 }
 
-var xAttrs = {
+const xAttrs = {
     xcalendar: makeAttrs(makeTraceAttrsDescription('x'))
 };
 
-var xyAttrs = Lib.extendFlat({}, xAttrs, {
+const xyAttrs = Lib.extendFlat({}, xAttrs, {
     ycalendar: makeAttrs(makeTraceAttrsDescription('y'))
 });
 
-var xyzAttrs = Lib.extendFlat({}, xyAttrs, {
+const xyzAttrs = Lib.extendFlat({}, xyAttrs, {
     zcalendar: makeAttrs(makeTraceAttrsDescription('z'))
 });
 
-var axisAttrs = makeAttrs([
+const axisAttrs = makeAttrs([
     'Sets the calendar system to use for `range` and `tick0`',
     'if this is a date axis. This does not set the calendar for',
     'interpreting data on this axis, that\'s specified in the trace',

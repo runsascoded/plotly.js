@@ -107,7 +107,7 @@ export default {
 };
 
 function funnelMarker() {
-    var marker = extendFlat({}, barAttrs.marker);
+    const marker = extendFlat({}, barAttrs.marker);
     delete marker.pattern;
     delete marker.cornerradius;
     return marker;

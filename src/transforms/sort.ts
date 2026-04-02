@@ -3,10 +3,10 @@ import Axes from '../plots/cartesian/axes.js';
 import { pointsAccessorFunction } from './helpers.js';
 import _numerical from '../constants/numerical.js';
 const { BADNUM } = _numerical;
-export var moduleType = 'transform';
-export var name = 'sort';
+export const moduleType = 'transform';
+export const name = 'sort';
 
-export var attributes = {
+export const attributes = {
     enabled: {
         valType: 'boolean',
         dflt: true,
@@ -47,14 +47,14 @@ export var attributes = {
     editType: 'calc'
 };
 
-export var supplyDefaults = function(transformIn) {
-    var transformOut = {};
+export const supplyDefaults = function(transformIn) {
+    const transformOut = {};
 
     function coerce(attr: string, dflt?: any) {
         return Lib.coerce(transformIn, transformOut, attributes, attr, dflt);
     }
 
-    var enabled = coerce('enabled');
+    const enabled = coerce('enabled');
 
     if(enabled) {
         coerce('target');
@@ -64,28 +64,28 @@ export var supplyDefaults = function(transformIn) {
     return transformOut;
 };
 
-export var calcTransform = function(gd, trace, opts) {
+export const calcTransform = function(gd, trace, opts) {
     if(!opts.enabled) return;
 
-    var targetArray = Lib.getTargetArray(trace, opts);
+    const targetArray = Lib.getTargetArray(trace, opts);
     if(!targetArray) return;
 
-    var target = opts.target;
+    const target = opts.target;
 
-    var len = targetArray.length;
+    let len = targetArray.length;
     if(trace._length) len = Math.min(len, trace._length);
 
-    var arrayAttrs = trace._arrayAttrs;
-    var d2c = Axes.getDataToCoordFunc(gd, trace, target, targetArray);
-    var indices = getIndices(opts, targetArray, d2c, len);
-    var originalPointsAccessor = pointsAccessorFunction(trace.transforms, opts);
-    var indexToPoints: any = {};
-    var i, j;
+    const arrayAttrs = trace._arrayAttrs;
+    const d2c = Axes.getDataToCoordFunc(gd, trace, target, targetArray);
+    const indices = getIndices(opts, targetArray, d2c, len);
+    const originalPointsAccessor = pointsAccessorFunction(trace.transforms, opts);
+    const indexToPoints: any = {};
+    let i, j;
 
     for(i = 0; i < arrayAttrs.length; i++) {
-        var np = Lib.nestedProperty(trace, arrayAttrs[i]);
-        var arrayOld = np.get();
-        var arrayNew = new Array(len);
+        const np = Lib.nestedProperty(trace, arrayAttrs[i]);
+        const arrayOld = np.get();
+        const arrayNew = new Array(len);
 
         for(j = 0; j < len; j++) {
             arrayNew[j] = arrayOld[indices[j]];
@@ -103,9 +103,9 @@ export var calcTransform = function(gd, trace, opts) {
 };
 
 function getIndices(opts, targetArray, d2c, len) {
-    var sortedArray = new Array(len);
-    var indices = new Array(len);
-    var i;
+    const sortedArray = new Array(len);
+    const indices = new Array(len);
+    let i;
 
     for(i = 0; i < len; i++) {
         sortedArray[i] = {v: targetArray[i], i: i};
@@ -124,8 +124,8 @@ function getSortFunc(opts, d2c) {
     switch(opts.order) {
         case 'ascending':
             return function(a, b) {
-                var ac = d2c(a.v);
-                var bc = d2c(b.v);
+                const ac = d2c(a.v);
+                const bc = d2c(b.v);
                 if(ac === BADNUM) {
                     return 1;
                 }
@@ -136,8 +136,8 @@ function getSortFunc(opts, d2c) {
             };
         case 'descending':
             return function(a, b) {
-                var ac = d2c(a.v);
-                var bc = d2c(b.v);
+                const ac = d2c(a.v);
+                const bc = d2c(b.v);
                 if(ac === BADNUM) {
                     return 1;
                 }

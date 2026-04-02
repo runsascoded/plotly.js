@@ -15,7 +15,7 @@ function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace, defaultColor: 
         return Lib.coerce(traceIn, traceOut, attributes, attr, dflt);
     }
 
-    var len = handleRThetaDefaults(traceIn, traceOut, layout, coerce);
+    const len = handleRThetaDefaults(traceIn, traceOut, layout, coerce);
     if (!len) {
         traceOut.visible = false;
         return;
@@ -46,7 +46,7 @@ function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace, defaultColor: 
         handleTextDefaults(traceIn, traceOut, layout, coerce);
     }
 
-    var dfltHoverOn = [];
+    const dfltHoverOn = [];
 
     if (subTypes.hasMarkers(traceOut) || subTypes.hasText(traceOut)) {
         coerce('cliponaxis');
@@ -70,8 +70,8 @@ function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace, defaultColor: 
 }
 
 function handleRThetaDefaults(traceIn: InputTrace, traceOut: FullTrace, layout: FullLayout, coerce) {
-    var r = coerce('r');
-    var theta = coerce('theta');
+    let r = coerce('r');
+    let theta = coerce('theta');
 
     // TODO: handle this case outside supply defaults step
     if (Lib.isTypedArray(r)) {
@@ -81,7 +81,7 @@ function handleRThetaDefaults(traceIn: InputTrace, traceOut: FullTrace, layout: 
         traceOut.theta = theta = Array.from(theta);
     }
 
-    var len;
+    let len;
 
     if (r) {
         if (theta) {

@@ -2,10 +2,10 @@ import Lib from '../../lib/index.js';
 import _polygon from '../../lib/polygon.js';
 const { tester: polygonTester } = _polygon;
 
-var findIndexOfMin = Lib.findIndexOfMin;
-var isAngleInsideSector = Lib.isAngleInsideSector;
-var angleDelta = Lib.angleDelta;
-var angleDist = Lib.angleDist;
+const findIndexOfMin = Lib.findIndexOfMin;
+const isAngleInsideSector = Lib.isAngleInsideSector;
+const angleDelta = Lib.angleDelta;
+const angleDist = Lib.angleDist;
 
 /**
  * is pt (r,a) inside polygon made up vertices at angles 'vangles'
@@ -21,7 +21,7 @@ var angleDist = Lib.angleDist;
 function isPtInsidePolygon(r, a, rBnds, aBnds, vangles) {
     if(!isAngleInsideSector(a, aBnds)) return false;
 
-    var r0, r1;
+    let r0, r1;
 
     if(rBnds[0] < rBnds[1]) {
         r0 = rBnds[0];
@@ -31,9 +31,9 @@ function isPtInsidePolygon(r, a, rBnds, aBnds, vangles) {
         r1 = rBnds[0];
     }
 
-    var polygonIn = polygonTester(makePolygon(r0, aBnds[0], aBnds[1], vangles));
-    var polygonOut = polygonTester(makePolygon(r1, aBnds[0], aBnds[1], vangles));
-    var xy = [r * Math.cos(a), r * Math.sin(a)];
+    const polygonIn = polygonTester(makePolygon(r0, aBnds[0], aBnds[1], vangles));
+    const polygonOut = polygonTester(makePolygon(r1, aBnds[0], aBnds[1], vangles));
+    const xy = [r * Math.cos(a), r * Math.sin(a)];
     return polygonOut.contains(xy) && !polygonIn.contains(xy);
 }
 
@@ -42,16 +42,16 @@ function isPtInsidePolygon(r, a, rBnds, aBnds, vangles) {
 // given an (xp,yp) pair on the 'v0' <-> 'v1' line
 // (N.B. 'v0' and 'v1' are angles in radians)
 function findIntersectionXY(v0, v1, a, xpyp) {
-    var xstar, ystar;
+    let xstar, ystar;
 
-    var xp = xpyp[0];
-    var yp = xpyp[1];
-    var dsin = clampTiny(Math.sin(v1) - Math.sin(v0));
-    var dcos = clampTiny(Math.cos(v1) - Math.cos(v0));
-    var tanA = Math.tan(a);
-    var cotanA = clampTiny(1 / tanA);
-    var m = dsin / dcos;
-    var b = yp - m * xp;
+    const xp = xpyp[0];
+    const yp = xpyp[1];
+    const dsin = clampTiny(Math.sin(v1) - Math.sin(v0));
+    const dcos = clampTiny(Math.cos(v1) - Math.cos(v0));
+    const tanA = Math.tan(a);
+    const cotanA = clampTiny(1 / tanA);
+    const m = dsin / dcos;
+    const b = yp - m * xp;
 
     if(cotanA) {
         if(dsin && dcos) {
@@ -93,13 +93,13 @@ function findIntersectionXY(v0, v1, a, xpyp) {
 // where f(x) = m*x + t + yp
 // and   (x0, x1) = (-b +/- del) / (2*a)
 function findXYatLength(l, m, xp, yp) {
-    var t = -m * xp;
-    var a = m * m + 1;
-    var b = 2 * (m * t - xp);
-    var c = t * t + xp * xp - l * l;
-    var del = Math.sqrt(b * b - 4 * a * c);
-    var x0 = (-b + del) / (2 * a);
-    var x1 = (-b - del) / (2 * a);
+    const t = -m * xp;
+    const a = m * m + 1;
+    const b = 2 * (m * t - xp);
+    const c = t * t + xp * xp - l * l;
+    const del = Math.sqrt(b * b - 4 * a * c);
+    const x0 = (-b + del) / (2 * a);
+    const x1 = (-b - del) / (2 * a);
     return [
         [x0, m * x0 + t + yp],
         [x1, m * x1 + t + yp]
@@ -107,11 +107,11 @@ function findXYatLength(l, m, xp, yp) {
 }
 
 function makeRegularPolygon(r, vangles) {
-    var len = vangles.length;
-    var vertices = new Array(len + 1);
-    var i;
+    const len = vangles.length;
+    const vertices = new Array(len + 1);
+    let i;
     for(i = 0; i < len; i++) {
-        var va = vangles[i];
+        const va = vangles[i];
         vertices[i] = [r * Math.cos(va), r * Math.sin(va)];
     }
     vertices[i] = vertices[0].slice();
@@ -119,9 +119,9 @@ function makeRegularPolygon(r, vangles) {
 }
 
 function makeClippedPolygon(r, a0, a1, vangles) {
-    var len = vangles.length;
-    var vertices = [];
-    var i, j;
+    const len = vangles.length;
+    const vertices = [];
+    let i, j;
 
     function a2xy(a) {
         return [r * Math.cos(a), r * Math.sin(a)];
@@ -141,25 +141,25 @@ function makeClippedPolygon(r, a0, a1, vangles) {
 
     // find index in sector closest to a0
     // use it to find intersection of v[i0] <-> v[i0-1] edge with sector radius
-    var i0 = findIndexOfMin(vangles, function(v) {
+    const i0 = findIndexOfMin(vangles, function(v) {
         return isInside(v) ? angleDist(v, a0) : Infinity;
     });
-    var xy0 = findXY(vangles[i0], vangles[cycleIndex(i0 - 1)], a0);
+    const xy0 = findXY(vangles[i0], vangles[cycleIndex(i0 - 1)], a0);
     vertices.push(xy0);
 
     // fill in in-sector vertices
     for(i = i0, j = 0; j < len; i++, j++) {
-        var va = vangles[cycleIndex(i)];
+        const va = vangles[cycleIndex(i)];
         if(!isInside(va)) break;
         vertices.push(a2xy(va));
     }
 
     // find index in sector closest to a1,
     // use it to find intersection of v[iN] <-> v[iN+1] edge with sector radius
-    var iN = findIndexOfMin(vangles, function(v) {
+    const iN = findIndexOfMin(vangles, function(v) {
         return isInside(v) ? angleDist(v, a1) : Infinity;
     });
-    var xyN = findXY(vangles[iN], vangles[cycleIndex(iN + 1)], a1);
+    const xyN = findXY(vangles[iN], vangles[cycleIndex(iN + 1)], a1);
     vertices.push(xyN);
 
     vertices.push([0, 0]);
@@ -175,12 +175,12 @@ function makePolygon(r, a0, a1, vangles) {
 }
 
 function findPolygonOffset(r, a0, a1, vangles) {
-    var minX = Infinity;
-    var minY = Infinity;
-    var vertices = makePolygon(r, a0, a1, vangles);
+    let minX = Infinity;
+    let minY = Infinity;
+    const vertices = makePolygon(r, a0, a1, vangles);
 
-    for(var i = 0; i < vertices.length; i++) {
-        var v = vertices[i];
+    for(let i = 0; i < vertices.length; i++) {
+        const v = vertices[i];
         minX = Math.min(minX, v[0]);
         minY = Math.min(minY, -v[1]);
     }
@@ -195,12 +195,12 @@ function findPolygonOffset(r, a0, a1, vangles) {
  * @return {2-item array}
  */
 function findEnclosingVertexAngles(a, vangles) {
-    var minFn = function(v) {
-        var adelta = angleDelta(v, a);
+    const minFn = function(v) {
+        const adelta = angleDelta(v, a);
         return adelta > 0 ? adelta : Infinity;
     };
-    var i0 = findIndexOfMin(vangles, minFn);
-    var i1 = Lib.mod(i0 + 1, vangles.length);
+    const i0 = findIndexOfMin(vangles, minFn);
+    const i1 = Lib.mod(i0 + 1, vangles.length);
     return [vangles[i0], vangles[i1]];
 }
 
@@ -213,11 +213,11 @@ function transformForSVG(pts0, cx, cy) {
     cx = cx || 0;
     cy = cy || 0;
 
-    var len = pts0.length;
-    var pts1 = new Array(len);
+    const len = pts0.length;
+    const pts1 = new Array(len);
 
-    for(var i = 0; i < len; i++) {
-        var pt = pts0[i];
+    for(let i = 0; i < len; i++) {
+        const pt = pts0[i];
         pts1[i] = [cx + pt[0], cy - pt[1]];
     }
     return pts1;
@@ -236,7 +236,7 @@ function transformForSVG(pts0, cx, cy) {
  *
  */
 function pathPolygon(r, a0, a1, vangles, cx, cy) {
-    var poly = makePolygon(r, a0, a1, vangles);
+    const poly = makePolygon(r, a0, a1, vangles);
     return 'M' + transformForSVG(poly, cx, cy).join('L');
 }
 
@@ -257,7 +257,7 @@ function pathPolygon(r, a0, a1, vangles, cx, cy) {
  *
  */
 function pathPolygonAnnulus(r0, r1, a0, a1, vangles, cx, cy) {
-    var rStart, rEnd;
+    let rStart, rEnd;
 
     if(r0 < r1) {
         rStart = r0;
@@ -267,8 +267,8 @@ function pathPolygonAnnulus(r0, r1, a0, a1, vangles, cx, cy) {
         rEnd = r0;
     }
 
-    var inner = transformForSVG(makePolygon(rStart, a0, a1, vangles), cx, cy);
-    var outer = transformForSVG(makePolygon(rEnd, a0, a1, vangles), cx, cy);
+    const inner = transformForSVG(makePolygon(rStart, a0, a1, vangles), cx, cy);
+    const outer = transformForSVG(makePolygon(rEnd, a0, a1, vangles), cx, cy);
     return 'M' + outer.reverse().join('L') + 'M' + inner.join('L');
 }
 

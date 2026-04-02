@@ -9,15 +9,15 @@ const { idRegex: cartesianIdRegex } = _constants;
 import { templatedArray } from '../../plot_api/plot_template.js';
 import { extendFlat } from '../../lib/extend.js';
 
-var scatterMarkerAttrs = scatterAttrs.marker;
-var scatterMarkerLineAttrs = scatterMarkerAttrs.line;
+const scatterMarkerAttrs = scatterAttrs.marker;
+const scatterMarkerLineAttrs = scatterMarkerAttrs.line;
 
-var markerLineAttrs = extendFlat(colorScaleAttrs('marker.line', { editTypeOverride: 'calc' }), {
+const markerLineAttrs = extendFlat(colorScaleAttrs('marker.line', { editTypeOverride: 'calc' }), {
     width: extendFlat({}, scatterMarkerLineAttrs.width, { editType: 'calc' }),
     editType: 'calc'
 });
 
-var markerAttrs = extendFlat(colorScaleAttrs('marker'), {
+const markerAttrs = extendFlat(colorScaleAttrs('marker'), {
     symbol: scatterMarkerAttrs.symbol,
     angle: scatterMarkerAttrs.angle,
     size: extendFlat({}, scatterMarkerAttrs.size, { editType: 'markerSize' }),

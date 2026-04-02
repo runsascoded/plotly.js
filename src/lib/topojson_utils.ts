@@ -1,7 +1,7 @@
 import { locationmodeToLayer } from '../plots/geo/constants.js';
 import { feature as topojsonFeature } from 'topojson-client';
 
-var topojsonUtils: Record<string, (...args: any[]) => any> = {};
+const topojsonUtils: Record<string, (...args: any[]) => any> = {};
 
 topojsonUtils.getTopojsonName = function(geoLayout: any): string {
     return [
@@ -17,8 +17,8 @@ topojsonUtils.getTopojsonPath = function(topojsonURL: string, topojsonName: stri
 };
 
 topojsonUtils.getTopojsonFeatures = function(trace: any, topojson: any): any[] {
-    var layer = locationmodeToLayer[trace.locationmode];
-    var obj = topojson.objects[layer];
+    const layer = locationmodeToLayer[trace.locationmode];
+    const obj = topojson.objects[layer];
 
     return topojsonFeature(topojson, obj).features;
 };

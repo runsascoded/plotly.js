@@ -3,7 +3,7 @@ import Registry from '../../registry.js';
 import { hover } from './hover.js';
 
 export default function click(gd: GraphDiv, evt: MouseEvent, subplot?: string): void {
-    var annotationsDone = Registry.getComponentMethod('annotations', 'onClick')(gd, gd._hoverdata);
+    const annotationsDone = Registry.getComponentMethod('annotations', 'onClick')(gd, gd._hoverdata);
 
     // fallback to fail-safe in case the plot type's hover method doesn't pass the subplot.
     // Ternary, for example, didn't, but it was caught because tested.

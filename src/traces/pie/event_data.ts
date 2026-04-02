@@ -2,7 +2,7 @@ import type { FullTrace } from '../../../types/core';
 import { appendArrayMultiPointValues } from '../../components/fx/helpers.js';
 
 export default function eventData(pt: any, trace: FullTrace): any {
-    var out: any = {
+    const out: any = {
         curveNumber: trace.index,
         pointNumbers: pt.pts,
         data: trace._input,

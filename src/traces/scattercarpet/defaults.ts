@@ -20,9 +20,9 @@ export default function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace,
     traceOut.xaxis = 'x';
     traceOut.yaxis = 'y';
 
-    var a = coerce('a');
-    var b = coerce('b');
-    var len = Math.min(a.length, b.length);
+    const a = coerce('a');
+    const b = coerce('b');
+    const len = Math.min(a.length, b.length);
 
     if (!len) {
         traceOut.visible = false;
@@ -36,7 +36,7 @@ export default function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace,
     coerce('texttemplatefallback');
     coerce('hovertext');
 
-    var defaultMode = len < constants.PTS_LINESONLY ? 'lines+markers' : 'lines';
+    const defaultMode = len < constants.PTS_LINESONLY ? 'lines+markers' : 'lines';
     coerce('mode', defaultMode);
 
     if (subTypes.hasMarkers(traceOut)) {
@@ -53,7 +53,7 @@ export default function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace,
         handleTextDefaults(traceIn, traceOut, layout, coerce);
     }
 
-    var dfltHoverOn = [];
+    const dfltHoverOn = [];
 
     if (subTypes.hasMarkers(traceOut) || subTypes.hasText(traceOut)) {
         coerce('marker.maxdisplayed');
@@ -70,7 +70,7 @@ export default function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace,
         dfltHoverOn.push('fills');
     }
 
-    var hoverOn = coerce('hoveron', dfltHoverOn.join('+') || 'points');
+    const hoverOn = coerce('hoveron', dfltHoverOn.join('+') || 'points');
     if (hoverOn !== 'fills') {
         coerce('hovertemplate');
         coerce('hovertemplatefallback');

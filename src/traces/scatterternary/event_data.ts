@@ -4,7 +4,7 @@ export default function eventData(out, pt, trace: FullTrace, cd: CalcDatum[], po
     if(pt.ya) out.yaxis = pt.ya;
 
     if(cd[pointNumber]) {
-        var cdi = cd[pointNumber];
+        const cdi = cd[pointNumber];
 
         // N.B. These are the normalized coordinates.
         out.a = cdi.a;

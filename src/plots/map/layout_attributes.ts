@@ -10,7 +10,7 @@ const { overrideAll } = _edit_types;
 import { templatedArray } from '../../plot_api/plot_template.js';
 import constants from './constants.js';
 
-var fontAttr = fontAttrs({
+const fontAttr = fontAttrs({
     noFontVariant: true,
     noFontShadow: true,
     noFontLineposition: true,
@@ -22,7 +22,7 @@ var fontAttr = fontAttrs({
 });
 fontAttr.family.dflt = 'Open Sans Regular, Arial Unicode MS Regular';
 
-var attrs = overrideAll({
+const attrs = overrideAll({
     _arrayAttrRegexps: [Lib.counterRegex('map', '.layers', true)],
 
     domain: domainAttrs({name: 'map'}),

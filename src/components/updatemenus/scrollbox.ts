@@ -68,33 +68,33 @@ ScrollBox.barColor = '#808BA4';
  * @param {number}  [translateY=0]  Vertical offset (in pixels)
  */
 ScrollBox.prototype.enable = function enable(position: any, translateX: any, translateY: any) {
-    var fullLayout = this.gd._fullLayout;
-    var fullWidth = fullLayout.width;
-    var fullHeight = fullLayout.height;
+    const fullLayout = this.gd._fullLayout;
+    const fullWidth = fullLayout.width;
+    const fullHeight = fullLayout.height;
 
     // compute position of scrollbox
     this.position = position;
 
-    var l = this.position.l;
-    var w = this.position.w;
-    var t = this.position.t;
-    var h = this.position.h;
-    var direction = this.position.direction;
-    var isDown = (direction === 'down');
-    var isLeft = (direction === 'left');
-    var isRight = (direction === 'right');
-    var isUp = (direction === 'up');
-    var boxW = w;
-    var boxH = h;
-    var boxL, boxR;
-    var boxT, boxB;
+    const l = this.position.l;
+    const w = this.position.w;
+    const t = this.position.t;
+    const h = this.position.h;
+    const direction = this.position.direction;
+    let isDown = (direction === 'down');
+    const isLeft = (direction === 'left');
+    const isRight = (direction === 'right');
+    const isUp = (direction === 'up');
+    let boxW = w;
+    let boxH = h;
+    let boxL, boxR;
+    let boxT, boxB;
 
     if(!isDown && !isLeft && !isRight && !isUp) {
         this.position.direction = 'down';
         isDown = true;
     }
 
-    var isVertical = isDown || isUp;
+    const isVertical = isDown || isUp;
     if(isVertical) {
         boxL = l;
         boxR = boxL + boxW;
@@ -135,16 +135,16 @@ ScrollBox.prototype.enable = function enable(position: any, translateX: any, tra
     };
 
     // compute position of horizontal scroll bar
-    var needsHorizontalScrollBar = (w > boxW);
-    var hbarW = ScrollBox.barLength + 2 * ScrollBox.barPad;
-    var hbarH = ScrollBox.barWidth + 2 * ScrollBox.barPad;
+    const needsHorizontalScrollBar = (w > boxW);
+    const hbarW = ScrollBox.barLength + 2 * ScrollBox.barPad;
+    const hbarH = ScrollBox.barWidth + 2 * ScrollBox.barPad;
     // draw horizontal scrollbar on the bottom side
-    var hbarL = l;
-    var hbarT = t + h;
+    const hbarL = l;
+    let hbarT = t + h;
 
     if(hbarT + hbarH > fullHeight) hbarT = fullHeight - hbarH;
 
-    var hbar = this.container.selectAll('rect.scrollbar-horizontal').data(
+    const hbar = this.container.selectAll('rect.scrollbar-horizontal').data(
             (needsHorizontalScrollBar) ? [0] : []);
 
     hbar.exit()
@@ -175,16 +175,16 @@ ScrollBox.prototype.enable = function enable(position: any, translateX: any, tra
     }
 
     // compute position of vertical scroll bar
-    var needsVerticalScrollBar = (h > boxH);
-    var vbarW = ScrollBox.barWidth + 2 * ScrollBox.barPad;
-    var vbarH = ScrollBox.barLength + 2 * ScrollBox.barPad;
+    const needsVerticalScrollBar = (h > boxH);
+    const vbarW = ScrollBox.barWidth + 2 * ScrollBox.barPad;
+    const vbarH = ScrollBox.barLength + 2 * ScrollBox.barPad;
     // draw vertical scrollbar on the right side
-    var vbarL = l + w;
-    var vbarT = t;
+    let vbarL = l + w;
+    const vbarT = t;
 
     if(vbarL + vbarW > fullWidth) vbarL = fullWidth - vbarW;
 
-    var vbar = this.container.selectAll('rect.scrollbar-vertical').data(
+    const vbar = this.container.selectAll('rect.scrollbar-vertical').data(
             (needsVerticalScrollBar) ? [0] : []);
 
     vbar.exit()
@@ -215,13 +215,13 @@ ScrollBox.prototype.enable = function enable(position: any, translateX: any, tra
     }
 
     // setup a clip path (if scroll bars are needed)
-    var clipId = this.id;
-    var clipL = boxL - 0.5;
-    var clipR = (needsVerticalScrollBar) ? boxR + vbarW + 0.5 : boxR + 0.5;
-    var clipT = boxT - 0.5;
-    var clipB = (needsHorizontalScrollBar) ? boxB + hbarH + 0.5 : boxB + 0.5;
+    const clipId = this.id;
+    const clipL = boxL - 0.5;
+    const clipR = (needsVerticalScrollBar) ? boxR + vbarW + 0.5 : boxR + 0.5;
+    const clipT = boxT - 0.5;
+    const clipB = (needsHorizontalScrollBar) ? boxB + hbarH + 0.5 : boxB + 0.5;
 
-    var clipPath = fullLayout._topdefs.selectAll('#' + clipId)
+    const clipPath = fullLayout._topdefs.selectAll('#' + clipId)
         .data((needsHorizontalScrollBar || needsVerticalScrollBar) ? [0] : []);
 
     clipPath.exit().remove();
@@ -260,7 +260,7 @@ ScrollBox.prototype.enable = function enable(position: any, translateX: any, tra
 
     // set up drag listeners (if scroll bars are needed)
     if(needsHorizontalScrollBar || needsVerticalScrollBar) {
-        var onBoxDrag = d3Drag()
+        const onBoxDrag = d3Drag()
             .on('start', function(event: any) {
                 event.sourceEvent.preventDefault();
             })
@@ -272,7 +272,7 @@ ScrollBox.prototype.enable = function enable(position: any, translateX: any, tra
             .on('.drag', null)
             .call(onBoxDrag);
 
-        var onBarDrag = d3Drag()
+        const onBarDrag = d3Drag()
             .on('start', function(event: any) {
                 event.sourceEvent.preventDefault();
                 event.sourceEvent.stopPropagation();
@@ -337,8 +337,8 @@ ScrollBox.prototype.disable = function disable() {
  * @method
  */
 ScrollBox.prototype._onBoxDrag = function _onBoxDrag(event: any) {
-    var translateX = this.translateX;
-    var translateY = this.translateY;
+    let translateX = this.translateX;
+    let translateY = this.translateY;
 
     if(this.hbar) {
         translateX -= event.dx;
@@ -357,8 +357,8 @@ ScrollBox.prototype._onBoxDrag = function _onBoxDrag(event: any) {
  * @method
  */
 ScrollBox.prototype._onBoxWheel = function _onBoxWheel(event: any) {
-    var translateX = this.translateX;
-    var translateY = this.translateY;
+    let translateX = this.translateX;
+    let translateY = this.translateY;
 
     if(this.hbar) {
         translateX += event.deltaY;
@@ -377,27 +377,27 @@ ScrollBox.prototype._onBoxWheel = function _onBoxWheel(event: any) {
  * @method
  */
 ScrollBox.prototype._onBarDrag = function _onBarDrag(event: any) {
-    var translateX = this.translateX;
-    var translateY = this.translateY;
+    let translateX = this.translateX;
+    let translateY = this.translateY;
 
     if(this.hbar) {
-        var xMin = translateX + this._hbarXMin;
-        var xMax = xMin + this._hbarTranslateMax;
-        var x = Lib.constrain(event.x, xMin, xMax);
-        var xf = (x - xMin) / (xMax - xMin);
+        const xMin = translateX + this._hbarXMin;
+        const xMax = xMin + this._hbarTranslateMax;
+        const x = Lib.constrain(event.x, xMin, xMax);
+        const xf = (x - xMin) / (xMax - xMin);
 
-        var translateXMax = this.position.w - this._box.w;
+        const translateXMax = this.position.w - this._box.w;
 
         translateX = xf * translateXMax;
     }
 
     if(this.vbar) {
-        var yMin = translateY + this._vbarYMin;
-        var yMax = yMin + this._vbarTranslateMax;
-        var y = Lib.constrain(event.y, yMin, yMax);
-        var yf = (y - yMin) / (yMax - yMin);
+        const yMin = translateY + this._vbarYMin;
+        const yMax = yMin + this._vbarTranslateMax;
+        const y = Lib.constrain(event.y, yMin, yMax);
+        const yf = (y - yMin) / (yMax - yMin);
 
-        var translateYMax = this.position.h - this._box.h;
+        const translateYMax = this.position.h - this._box.h;
 
         translateY = yf * translateYMax;
     }
@@ -414,8 +414,8 @@ ScrollBox.prototype._onBarDrag = function _onBarDrag(event: any) {
  */
 ScrollBox.prototype.setTranslate = function setTranslate(translateX: any, translateY: any) {
     // store translateX and translateY (needed by mouse event handlers)
-    var translateXMax = this.position.w - this._box.w;
-    var translateYMax = this.position.h - this._box.h;
+    const translateXMax = this.position.w - this._box.w;
+    const translateYMax = this.position.h - this._box.h;
 
     translateX = Lib.constrain(translateX || 0, 0, translateXMax);
     translateY = Lib.constrain(translateY || 0, 0, translateYMax);
@@ -435,7 +435,7 @@ ScrollBox.prototype.setTranslate = function setTranslate(translateX: any, transl
     }
 
     if(this.hbar) {
-        var xf = translateX / translateXMax;
+        const xf = translateX / translateXMax;
 
         this.hbar.call(setTranslate,
             translateX + xf * this._hbarTranslateMax,
@@ -443,7 +443,7 @@ ScrollBox.prototype.setTranslate = function setTranslate(translateX: any, transl
     }
 
     if(this.vbar) {
-        var yf = translateY / translateYMax;
+        const yf = translateY / translateYMax;
 
         this.vbar.call(setTranslate,
             translateX,

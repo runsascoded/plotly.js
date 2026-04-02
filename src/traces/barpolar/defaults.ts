@@ -10,7 +10,7 @@ export default function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace,
         return Lib.coerce(traceIn, traceOut, attributes, attr, dflt);
     }
 
-    var len = handleRThetaDefaults(traceIn, traceOut, layout, coerce);
+    const len = handleRThetaDefaults(traceIn, traceOut, layout, coerce);
     if (!len) {
         traceOut.visible = false;
         return;
@@ -28,13 +28,13 @@ export default function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace,
     coerce('hovertemplate');
     coerce('hovertemplatefallback');
 
-    // var textPosition = coerce('textposition');
-    // var hasBoth = Array.isArray(textPosition) || textPosition === 'auto';
-    // var hasInside = hasBoth || textPosition === 'inside';
-    // var hasOutside = hasBoth || textPosition === 'outside';
+    // const textPosition = coerce('textposition');
+    // const hasBoth = Array.isArray(textPosition) || textPosition === 'auto';
+    // const hasInside = hasBoth || textPosition === 'inside';
+    // const hasOutside = hasBoth || textPosition === 'outside';
 
     // if(hasInside || hasOutside) {
-    //     var textFont = coerceFont(coerce, 'textfont', layout.font);
+    //     const textFont = coerceFont(coerce, 'textfont', layout.font);
     //     if(hasInside) coerceFont(coerce, 'insidetextfont', textFont);
     //     if(hasOutside) coerceFont(coerce, 'outsidetextfont', textFont);
     //     coerce('constraintext');

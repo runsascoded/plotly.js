@@ -3,21 +3,21 @@ import isNumeric from 'fast-isnumeric';
 import tinycolor from 'tinycolor2';
 import Color from '../../components/color/index.js';
 
-var extendedColorWayList: Record<string, string[]> = {};
+const extendedColorWayList: Record<string, string[]> = {};
 
 function calc(gd: GraphDiv, trace: FullTrace): any[] {
-    var cd: any[] = [];
+    let cd: any[] = [];
 
-    var fullLayout = gd._fullLayout;
-    var hiddenLabels = fullLayout.hiddenlabels || [];
+    const fullLayout = gd._fullLayout;
+    const hiddenLabels = fullLayout.hiddenlabels || [];
 
-    var labels = trace.labels;
-    var colors = trace.marker.colors || [];
-    var vals = trace.values;
-    var len = trace._length;
-    var hasValues = trace._hasValues && len;
+    let labels = trace.labels;
+    const colors = trace.marker.colors || [];
+    const vals = trace.values;
+    const len = trace._length;
+    const hasValues = trace._hasValues && len;
 
-    var i, pt;
+    let i, pt;
 
     if(trace.dlabel) {
         labels = new Array(len);
@@ -26,13 +26,13 @@ function calc(gd: GraphDiv, trace: FullTrace): any[] {
         }
     }
 
-    var allThisTraceLabels: Record<string, number> = {};
-    var pullColor = makePullColorFn(fullLayout['_' + trace.type + 'colormap']);
-    var vTotal = 0;
-    var isAggregated = false;
+    const allThisTraceLabels: Record<string, number> = {};
+    const pullColor = makePullColorFn(fullLayout['_' + trace.type + 'colormap']);
+    let vTotal = 0;
+    let isAggregated = false;
 
     for(i = 0; i < len; i++) {
-        var v: number, label: string, hidden: boolean;
+        let v: number, label: string, hidden: boolean;
         if(hasValues) {
             v = vals[i];
             if(!isNumeric(v)) continue;
@@ -43,7 +43,7 @@ function calc(gd: GraphDiv, trace: FullTrace): any[] {
         if(label === undefined || label === '') label = i;
         label = String(label);
 
-        var thisLabelIndex = allThisTraceLabels[label];
+        const thisLabelIndex = allThisTraceLabels[label];
         if(thisLabelIndex === undefined) {
             allThisTraceLabels[label] = cd.length;
 
@@ -76,7 +76,7 @@ function calc(gd: GraphDiv, trace: FullTrace): any[] {
     // Drop aggregate sums of value 0 or less
     cd = cd.filter(function(elem: any) { return elem.v >= 0; });
 
-    var shouldSort = (trace.type === 'funnelarea') ? isAggregated : trace.sort;
+    const shouldSort = (trace.type === 'funnelarea') ? isAggregated : trace.sort;
     if(shouldSort) cd.sort(function(a: any, b: any) { return b.v - a.v; });
 
     // include the sum of all values in the first point
@@ -107,26 +107,26 @@ function makePullColorFn(colorMap: Record<string, any>) {
  * in the order slices will be displayed
  */
 function crossTraceCalc(gd: GraphDiv, plotinfo: any): void { // TODO: should we name the second argument opts?
-    var desiredType = (plotinfo || {}).type;
+    let desiredType = (plotinfo || {}).type;
     if(!desiredType) desiredType = 'pie';
 
-    var fullLayout = gd._fullLayout;
-    var calcdata = gd.calcdata;
-    var colorWay = fullLayout[desiredType + 'colorway'];
-    var colorMap = fullLayout['_' + desiredType + 'colormap'];
+    const fullLayout = gd._fullLayout;
+    const calcdata = gd.calcdata;
+    let colorWay = fullLayout[desiredType + 'colorway'];
+    const colorMap = fullLayout['_' + desiredType + 'colormap'];
 
     if(fullLayout['extend' + desiredType + 'colors']) {
         colorWay = generateExtendedColors(colorWay, extendedColorWayList);
     }
-    var dfltColorCount = 0;
+    let dfltColorCount = 0;
 
-    for(var i = 0; i < calcdata.length; i++) {
-        var cd = calcdata[i];
-        var traceType = cd[0].trace.type;
+    for(let i = 0; i < calcdata.length; i++) {
+        const cd = calcdata[i];
+        const traceType = cd[0].trace.type;
         if(traceType !== desiredType) continue;
 
-        for(var j = 0; j < cd.length; j++) {
-            var pt = cd[j];
+        for(let j = 0; j < cd.length; j++) {
+            const pt = cd[j];
             if(pt.color === false) {
                 // have we seen this label and assigned a color to it in a previous trace?
                 if(colorMap[pt.label]) {
@@ -145,9 +145,9 @@ function crossTraceCalc(gd: GraphDiv, plotinfo: any): void { // TODO: should we 
  * itself lighter then darker before repeating
  */
 function generateExtendedColors(colorList: string[], extendedColorWays: Record<string, string[]>): string[] {
-    var i: number;
-    var colorString = JSON.stringify(colorList);
-    var colors = extendedColorWays[colorString];
+    let i: number;
+    const colorString = JSON.stringify(colorList);
+    let colors = extendedColorWays[colorString];
     if(!colors) {
         colors = colorList.slice();
 

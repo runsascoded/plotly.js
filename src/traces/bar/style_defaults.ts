@@ -6,8 +6,8 @@ import colorscaleDefaults from '../../components/colorscale/defaults.js';
 import { coercePattern } from '../../lib/index.js';
 
 export default function handleStyleDefaults(traceIn: InputTrace, traceOut: FullTrace, coerce: any, defaultColor: string, layout: FullLayout): void {
-    var markerColor = coerce('marker.color', defaultColor);
-    var hasMarkerColorscale = hasColorscale(traceIn, 'marker');
+    const markerColor = coerce('marker.color', defaultColor);
+    const hasMarkerColorscale = hasColorscale(traceIn, 'marker');
     if(hasMarkerColorscale) {
         colorscaleDefaults(
             traceIn, traceOut, layout, coerce, {prefix: 'marker.', cLetter: 'c'}

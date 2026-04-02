@@ -5,13 +5,13 @@ const { counterRegex } = _index;
 import _req0 from './layout_attributes.js';
 import _req1 from './layout_defaults.js';
 import type { GraphDiv } from '../../../types/core';
-var TERNARY = 'ternary';
+const TERNARY = 'ternary';
 
-export var name = TERNARY;
-export var attr = 'subplot';
-export var idRoot = TERNARY;
-export var idRegex = counterRegex(TERNARY);
-export var attributes = {};
+export const name = TERNARY;
+export const attr = 'subplot';
+export const idRoot = TERNARY;
+export const idRegex = counterRegex(TERNARY);
+export const attributes = {};
 attributes[attr] = {
     valType: 'subplotid',
     dflt: 'ternary',
@@ -24,18 +24,18 @@ attributes[attr] = {
     ].join(' ')
 };
 
-export var layoutAttributes = _req0;
-export var supplyLayoutDefaults = _req1;
+export const layoutAttributes = _req0;
+export const supplyLayoutDefaults = _req1;
 
-export var plot = function plot(gd: GraphDiv) {
-    var fullLayout = gd._fullLayout;
-    var calcData = gd.calcdata;
-    var ternaryIds = fullLayout._subplots[TERNARY];
+export const plot = function plot(gd: GraphDiv) {
+    const fullLayout = gd._fullLayout;
+    const calcData = gd.calcdata;
+    const ternaryIds = fullLayout._subplots[TERNARY];
 
-    for(var i = 0; i < ternaryIds.length; i++) {
-        var ternaryId = ternaryIds[i];
-        var ternaryCalcData = getSubplotCalcData(calcData, TERNARY, ternaryId);
-        var ternary = fullLayout[ternaryId]._subplot;
+    for(let i = 0; i < ternaryIds.length; i++) {
+        const ternaryId = ternaryIds[i];
+        const ternaryCalcData = getSubplotCalcData(calcData, TERNARY, ternaryId);
+        let ternary = fullLayout[ternaryId]._subplot;
 
         // If ternary is not instantiated, create one!
         if(!ternary) {
@@ -54,12 +54,12 @@ export var plot = function plot(gd: GraphDiv) {
     }
 };
 
-export var clean = function(newFullData, newFullLayout, oldFullData, oldFullLayout) {
-    var oldTernaryKeys = oldFullLayout._subplots[TERNARY] || [];
+export const clean = function(newFullData, newFullLayout, oldFullData, oldFullLayout) {
+    const oldTernaryKeys = oldFullLayout._subplots[TERNARY] || [];
 
-    for(var i = 0; i < oldTernaryKeys.length; i++) {
-        var oldTernaryKey = oldTernaryKeys[i];
-        var oldTernary = oldFullLayout[oldTernaryKey]._subplot;
+    for(let i = 0; i < oldTernaryKeys.length; i++) {
+        const oldTernaryKey = oldTernaryKeys[i];
+        const oldTernary = oldFullLayout[oldTernaryKey]._subplot;
 
         if(!newFullLayout[oldTernaryKey] && !!oldTernary) {
             oldTernary.plotContainer.remove();
@@ -72,8 +72,8 @@ export var clean = function(newFullData, newFullLayout, oldFullData, oldFullLayo
     }
 };
 
-export var updateFx = function(gd) {
-    var fullLayout = gd._fullLayout;
+export const updateFx = function(gd) {
+    const fullLayout = gd._fullLayout;
     fullLayout._ternarylayer
         .selectAll('g.toplevel')
         .style('cursor', fullLayout.dragmode === 'pan' ? 'move' : 'crosshair');

@@ -5,19 +5,19 @@ import toLogRange from '../../lib/to_log_range.js';
 export default function convertCoords(gd: GraphDiv, ax: any, newType: any, doExtra: any) {
     ax = ax || {};
 
-    var toLog = (newType === 'log') && (ax.type === 'linear');
-    var fromLog = (newType === 'linear') && (ax.type === 'log');
+    const toLog = (newType === 'log') && (ax.type === 'linear');
+    const fromLog = (newType === 'linear') && (ax.type === 'log');
 
     if(!(toLog || fromLog)) return;
 
-    var annotations = gd._fullLayout.annotations;
-    var axLetter = ax._id.charAt(0);
-    var ann;
-    var attrPrefix;
+    const annotations = gd._fullLayout.annotations;
+    const axLetter = ax._id.charAt(0);
+    let ann;
+    let attrPrefix;
 
     function convert(attr: any) {
-        var currentVal = ann[attr];
-        var newVal = null;
+        const currentVal = ann[attr];
+        let newVal = null;
 
         if(toLog) newVal = toLogRange(currentVal, ax.range);
         else newVal = Math.pow(10, currentVal);
@@ -28,7 +28,7 @@ export default function convertCoords(gd: GraphDiv, ax: any, newType: any, doExt
         doExtra(attrPrefix + attr, newVal);
     }
 
-    for(var i = 0; i < annotations.length; i++) {
+    for(let i = 0; i < annotations.length; i++) {
         ann = annotations[i];
         attrPrefix = 'annotations[' + i + '].';
 

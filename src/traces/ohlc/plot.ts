@@ -3,24 +3,24 @@ import { select } from 'd3-selection';
 import Lib from '../../lib/index.js';
 
 export default function plot(gd: GraphDiv,  plotinfo: PlotInfo,  cdOHLC,  ohlcLayer) {
-    var ya = plotinfo.yaxis;
-    var xa = plotinfo.xaxis;
-    var posHasRangeBreaks = !!xa.rangebreaks;
+    const ya = plotinfo.yaxis;
+    const xa = plotinfo.xaxis;
+    const posHasRangeBreaks = !!xa.rangebreaks;
 
     Lib.makeTraceGroups(ohlcLayer, cdOHLC, 'trace ohlc').each(function(cd) {
-        var plotGroup = select(this);
-        var cd0 = cd[0];
-        var t = cd0.t;
-        var trace = cd0.trace;
+        const plotGroup = select(this);
+        const cd0 = cd[0];
+        const t = cd0.t;
+        const trace = cd0.trace;
 
         if(trace.visible !== true || t.empty) {
             plotGroup.remove();
             return;
         }
 
-        var tickLen = t.tickLen;
+        const tickLen = t.tickLen;
 
-        var paths = plotGroup.selectAll('path').data(Lib.identity);
+        const paths = plotGroup.selectAll('path').data(Lib.identity);
 
         paths.enter().append('path');
 
@@ -29,14 +29,14 @@ export default function plot(gd: GraphDiv,  plotinfo: PlotInfo,  cdOHLC,  ohlcLa
         paths.attr('d', function(d) {
             if(d.empty) return 'M0,0Z';
 
-            var xo = xa.c2p(d.pos - tickLen, true);
-            var xc = xa.c2p(d.pos + tickLen, true);
-            var x = posHasRangeBreaks ? (xo + xc) / 2 : xa.c2p(d.pos, true);
+            const xo = xa.c2p(d.pos - tickLen, true);
+            const xc = xa.c2p(d.pos + tickLen, true);
+            const x = posHasRangeBreaks ? (xo + xc) / 2 : xa.c2p(d.pos, true);
 
-            var yo = ya.c2p(d.o, true);
-            var yh = ya.c2p(d.h, true);
-            var yl = ya.c2p(d.l, true);
-            var yc = ya.c2p(d.c, true);
+            const yo = ya.c2p(d.o, true);
+            const yh = ya.c2p(d.h, true);
+            const yl = ya.c2p(d.l, true);
+            const yc = ya.c2p(d.c, true);
 
             return 'M' + xo + ',' + yo + 'H' + x +
                 'M' + x + ',' + yh + 'V' + yl +

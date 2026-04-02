@@ -7,21 +7,21 @@ const { DESELECTDIM } = _interactions;
 import barStyle from '../bar/style.js';
 import _uniform_text from '../bar/uniform_text.js';
 const { resizeText } = _uniform_text;
-var styleTextPoints = barStyle.styleTextPoints;
+const styleTextPoints = barStyle.styleTextPoints;
 
 function style(gd: GraphDiv,  cd,  sel) {
-    var s = sel ? sel : select(gd).selectAll('g[class^="funnellayer"]').selectAll('g.trace');
+    const s = sel ? sel : select(gd).selectAll('g[class^="funnellayer"]').selectAll('g.trace');
     resizeText(gd, s, 'funnel');
 
     s.style('opacity', function(d) { return d[0].trace.opacity; });
 
     s.each(function(d) {
-        var gTrace = select(this);
-        var trace = d[0].trace;
+        const gTrace = select(this);
+        const trace = d[0].trace;
 
         gTrace.selectAll('.point > path').each(function(di) {
             if(!di.isBlank) {
-                var cont = trace.marker;
+                const cont = trace.marker;
 
                 select(this)
                     .call(Color.fill, di.mc || cont.color)
@@ -38,7 +38,7 @@ function style(gd: GraphDiv,  cd,  sel) {
         });
 
         gTrace.selectAll('.lines').each(function() {
-            var cont = trace.connector.line;
+            const cont = trace.connector.line;
 
             lineGroupStyle(
                 select(this).selectAll('path'),

@@ -2,10 +2,10 @@ import Lib from '../../lib/index.js';
 import Axes from '../../plots/cartesian/axes.js';
 
 export default function convert(scene: any) {
-    var fullSceneLayout = scene.fullSceneLayout;
-    var anns = fullSceneLayout.annotations;
+    const fullSceneLayout = scene.fullSceneLayout;
+    const anns = fullSceneLayout.annotations;
 
-    for(var i = 0; i < anns.length; i++) {
+    for(let i = 0; i < anns.length; i++) {
         mockAnnAxes(anns[i], scene);
     }
 
@@ -15,11 +15,11 @@ export default function convert(scene: any) {
 }
 
 function mockAnnAxes(ann: any, scene: any) {
-    var fullSceneLayout = scene.fullSceneLayout;
-    var domain = fullSceneLayout.domain;
-    var size = scene.fullLayout._size;
+    const fullSceneLayout = scene.fullSceneLayout;
+    const domain = fullSceneLayout.domain;
+    const size = scene.fullLayout._size;
 
-    var base = {
+    const base = {
         // this gets fill in on render
         pdata: null,
 

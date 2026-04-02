@@ -71,7 +71,7 @@ function makeCapAttr(axLetter) {
     };
 }
 
-var attrs = overrideAll(
+const attrs = overrideAll(
     extendFlat(
         {
             x: {

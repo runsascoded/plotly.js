@@ -106,7 +106,7 @@ function makeContourAttr(axLetter) {
     };
 }
 
-var attrs = overrideAll(
+const attrs = overrideAll(
     extendFlat(
         {
             z: {

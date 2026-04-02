@@ -1,6 +1,6 @@
 import tinycolor from 'tinycolor2';
 
-var scales: Record<string, any[][]> = {
+const scales: Record<string, any[][]> = {
     Greys: [
         [0, 'rgb(0,0,0)'], [1, 'rgb(255,255,255)']
     ],
@@ -127,7 +127,7 @@ var scales: Record<string, any[][]> = {
     ]
 };
 
-var defaultScale = scales.RdBu;
+const defaultScale = scales.RdBu;
 
 function getScale(scl: any, dflt?: any): any {
     if(!dflt) dflt = defaultScale;
@@ -152,7 +152,7 @@ function getScale(scl: any, dflt?: any): any {
 }
 
 function isValidScaleArray(scl: any): boolean {
-    var highestVal = 0;
+    let highestVal = 0;
 
     if(!Array.isArray(scl) || scl.length < 2) return false;
 
@@ -160,8 +160,8 @@ function isValidScaleArray(scl: any): boolean {
 
     if(+scl[0][0] !== 0 || +scl[scl.length - 1][0] !== 1) return false;
 
-    for(var i = 0; i < scl.length; i++) {
-        var si = scl[i];
+    for(let i = 0; i < scl.length; i++) {
+        const si = scl[i];
 
         if(si.length !== 2 || +si[0] < highestVal || !tinycolor(si[1]).isValid()) {
             return false;

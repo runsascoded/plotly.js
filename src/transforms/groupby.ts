@@ -2,10 +2,10 @@ import Lib from '../lib/index.js';
 import PlotSchema from '../plot_api/plot_schema.js';
 import Plots from '../plots/plots.js';
 import { pointsAccessorFunction } from './helpers.js';
-export var moduleType = 'transform';
-export var name = 'groupby';
+export const moduleType = 'transform';
+export const name = 'groupby';
 
-export var attributes = {
+export const attributes = {
     enabled: {
         valType: 'boolean',
         dflt: true,
@@ -64,29 +64,29 @@ export var attributes = {
     editType: 'calc'
 };
 
-export var supplyDefaults = function(transformIn, traceOut, layout) {
-    var i;
-    var transformOut: any = {};
+export const supplyDefaults = function(transformIn, traceOut, layout) {
+    let i;
+    const transformOut: any = {};
 
     function coerce(attr: string, dflt?: any) {
         return Lib.coerce(transformIn, transformOut, attributes, attr, dflt);
     }
 
-    var enabled = coerce('enabled');
+    const enabled = coerce('enabled');
 
     if(!enabled) return transformOut;
 
     coerce('groups');
     coerce('nameformat', layout._dataLength > 1 ? '%{group} (%{trace})' : '%{group}');
 
-    var styleIn = transformIn.styles;
-    var styleOut = transformOut.styles = [];
+    const styleIn = transformIn.styles;
+    const styleOut = transformOut.styles = [];
 
     if(styleIn) {
         for(i = 0; i < styleIn.length; i++) {
-            var thisStyle: any = styleOut[i] = {};
+            const thisStyle: any = styleOut[i] = {};
             Lib.coerce(styleIn[i], styleOut[i], attributes.styles, 'target');
-            var value = Lib.coerce(styleIn[i], styleOut[i], attributes.styles, 'value');
+            const value = Lib.coerce(styleIn[i], styleOut[i], attributes.styles, 'value');
 
             // so that you can edit value in place and have Plotly.react notice it, or
             // rebuild it every time and have Plotly.react NOT think it changed:
@@ -99,9 +99,9 @@ export var supplyDefaults = function(transformIn, traceOut, layout) {
     return transformOut;
 };
 
-export var transform = function(data, state) {
-    var newTraces, i, j;
-    var newData = [];
+export const transform = function(data, state) {
+    let newTraces, i, j;
+    const newData = [];
 
     for(i = 0; i < data.length; i++) {
         newTraces = transformOne(data[i], state);
@@ -115,26 +115,26 @@ export var transform = function(data, state) {
 };
 
 function transformOne(trace, state) {
-    var i, j, k, attr, srcArray, groupName, newTrace, transforms, arrayLookup;
-    var groupNameObj;
+    let i, j, k, attr, srcArray, groupName, newTrace, transforms, arrayLookup;
+    let groupNameObj;
 
-    var opts = state.transform;
-    var transformIndex = state.transformIndex;
-    var groups = trace.transforms[transformIndex].groups;
-    var originalPointsAccessor = pointsAccessorFunction(trace.transforms, opts);
+    const opts = state.transform;
+    const transformIndex = state.transformIndex;
+    const groups = trace.transforms[transformIndex].groups;
+    const originalPointsAccessor = pointsAccessorFunction(trace.transforms, opts);
 
     if(!(Lib.isArrayOrTypedArray(groups)) || groups.length === 0) {
         return [trace];
     }
 
-    var groupNames = Lib.filterUnique(groups);
-    var newData = new Array(groupNames.length);
-    var len = groups.length;
+    const groupNames = Lib.filterUnique(groups);
+    const newData = new Array(groupNames.length);
+    const len = groups.length;
 
-    var arrayAttrs = PlotSchema.findArrayAttributes(trace);
+    const arrayAttrs = PlotSchema.findArrayAttributes(trace);
 
-    var styles = opts.styles || [];
-    var styleLookup: any = {};
+    const styles = opts.styles || [];
+    const styleLookup: any = {};
     for(i = 0; i < styles.length; i++) {
         styleLookup[styles[i].target] = styles[i].value;
     }
@@ -144,8 +144,8 @@ function transformOne(trace, state) {
     }
 
     // An index to map group name --> expanded trace index
-    var indexLookup: any = {};
-    var indexCnts: any = {};
+    const indexLookup: any = {};
+    const indexCnts: any = {};
 
     for(i = 0; i < groupNames.length; i++) {
         groupName = groupNames[i];
@@ -157,7 +157,7 @@ function transformOne(trace, state) {
         newTrace._group = groupName;
         newTrace.transforms[transformIndex]._indexToPoints = {};
 
-        var suppliedName = null;
+        let suppliedName = null;
         if(groupNameObj) {
             suppliedName = groupNameObj.get(groupName);
         }
@@ -213,7 +213,7 @@ function transformOne(trace, state) {
     for(j = 0; j < len; j++) {
         newTrace = newData[indexLookup[groups[j]]];
 
-        var indexToPoints = newTrace.transforms[transformIndex]._indexToPoints;
+        const indexToPoints = newTrace.transforms[transformIndex]._indexToPoints;
         indexToPoints[indexCnts[groups[j]]] = originalPointsAccessor(j);
         indexCnts[groups[j]]++;
     }

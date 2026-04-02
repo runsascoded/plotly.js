@@ -8,9 +8,9 @@ import { extendFlat } from '../../lib/extend.js';
 import _edit_types from '../../plot_api/edit_types.js';
 const { overrideAll } = _edit_types;
 
-var scatterMarkerAttrs = scatterAttrs.marker;
-var scatterLineAttrs = scatterAttrs.line;
-var scatterMarkerLineAttrs = scatterMarkerAttrs.line;
+const scatterMarkerAttrs = scatterAttrs.marker;
+const scatterLineAttrs = scatterAttrs.line;
+const scatterMarkerLineAttrs = scatterMarkerAttrs.line;
 
 const breakingChangeWarning = [
     'The library used by the *country names* `locationmode` option is changing in an upcoming version.',

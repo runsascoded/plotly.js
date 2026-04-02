@@ -17,28 +17,28 @@ function handleAnnotationDefaults(annIn: any, annOut: any, fullLayout: FullLayou
         return Lib.coerce(annIn, annOut, attributes, attr, dflt);
     }
 
-    var visible = coerce('visible');
-    var clickToShow = coerce('clicktoshow');
+    const visible = coerce('visible');
+    const clickToShow = coerce('clicktoshow');
 
     if(!(visible || clickToShow)) return;
 
     handleAnnotationCommonDefaults(annIn, annOut, fullLayout, coerce);
 
-    var showArrow = annOut.showarrow;
+    const showArrow = annOut.showarrow;
 
     // positioning
-    var axLetters = ['x', 'y'];
-    var arrowPosDflt = [-10, -30];
-    var gdMock = {_fullLayout: fullLayout};
+    const axLetters = ['x', 'y'];
+    const arrowPosDflt = [-10, -30];
+    const gdMock = {_fullLayout: fullLayout};
 
-    for(var i = 0; i < 2; i++) {
-        var axLetter = axLetters[i];
+    for(let i = 0; i < 2; i++) {
+        const axLetter = axLetters[i];
 
         // xref, yref
-        var axRef = Axes.coerceRef(annIn, annOut, gdMock, axLetter, '', 'paper');
+        const axRef = Axes.coerceRef(annIn, annOut, gdMock, axLetter, '', 'paper');
 
         if(axRef !== 'paper') {
-            var ax = Axes.getFromId(gdMock, axRef);
+            const ax = Axes.getFromId(gdMock, axRef);
             ax._annIndices.push(annOut._index);
         }
 
@@ -46,9 +46,9 @@ function handleAnnotationDefaults(annIn: any, annOut: any, fullLayout: FullLayou
         Axes.coercePosition(annOut, gdMock, coerce, axRef, axLetter, 0.5);
 
         if(showArrow) {
-            var arrowPosAttr = 'a' + axLetter;
+            const arrowPosAttr = 'a' + axLetter;
             // axref, ayref
-            var aaxRef = Axes.coerceRef(annIn, annOut, gdMock, arrowPosAttr, 'pixel',
+            let aaxRef = Axes.coerceRef(annIn, annOut, gdMock, arrowPosAttr, 'pixel',
                     ['pixel', 'paper']);
 
             // for now the arrow can only be on the same axis or specified as pixels
@@ -59,7 +59,7 @@ function handleAnnotationDefaults(annIn: any, annOut: any, fullLayout: FullLayou
             }
 
             // ax, ay
-            var aDflt = (aaxRef === 'pixel') ? arrowPosDflt[i] : 0.4;
+            const aDflt = (aaxRef === 'pixel') ? arrowPosDflt[i] : 0.4;
             Axes.coercePosition(annOut, gdMock, coerce, aaxRef, arrowPosAttr, aDflt);
         }
 
@@ -79,8 +79,8 @@ function handleAnnotationDefaults(annIn: any, annOut: any, fullLayout: FullLayou
     }
 
     if(clickToShow) {
-        var xClick = coerce('xclick');
-        var yClick = coerce('yclick');
+        const xClick = coerce('xclick');
+        const yClick = coerce('yclick');
 
         // put the actual click data to bind to into private attributes
         // so we don't have to do this little bit of logic on every hover event

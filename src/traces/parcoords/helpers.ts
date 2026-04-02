@@ -1,15 +1,15 @@
 import _index from '../../lib/index.js';
 const { isTypedArray } = _index;
 
-export var convertTypedArray = function(a) {
+export const convertTypedArray = function(a) {
     return isTypedArray(a) ? Array.prototype.slice.call(a) : a;
 };
 
-export var isOrdinal = function(dimension) {
+export const isOrdinal = function(dimension) {
     return !!dimension.tickvals;
 };
 
-export var isVisible = function(dimension) {
+export const isVisible = function(dimension) {
     return dimension.visible || !('visible' in dimension);
 };
 

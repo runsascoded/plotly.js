@@ -13,8 +13,8 @@ function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace, defaultColor: 
 }
 
 function supplyIsoDefaults(traceIn, traceOut, defaultColor, layout, coerce) {
-    var isomin = coerce('isomin');
-    var isomax = coerce('isomax');
+    const isomin = coerce('isomin');
+    const isomax = coerce('isomax');
 
     if(isomax !== undefined && isomax !== null &&
         isomin !== undefined && isomin !== null &&
@@ -24,10 +24,10 @@ function supplyIsoDefaults(traceIn, traceOut, defaultColor, layout, coerce) {
         traceOut.isomax = null;
     }
 
-    var x = coerce('x');
-    var y = coerce('y');
-    var z = coerce('z');
-    var value = coerce('value');
+    const x = coerce('x');
+    const y = coerce('y');
+    const z = coerce('z');
+    const value = coerce('value');
 
     if(
         !x || !x.length ||
@@ -39,40 +39,40 @@ function supplyIsoDefaults(traceIn, traceOut, defaultColor, layout, coerce) {
         return;
     }
 
-    var handleCalendarDefaults = Registry.getComponentMethod('calendars', 'handleTraceDefaults');
+    const handleCalendarDefaults = Registry.getComponentMethod('calendars', 'handleTraceDefaults');
     handleCalendarDefaults(traceIn, traceOut, ['x', 'y', 'z'], layout);
 
     coerce('valuehoverformat');
     ['x', 'y', 'z'].forEach(function(dim) {
         coerce(dim + 'hoverformat');
 
-        var capDim = 'caps.' + dim;
-        var showCap = coerce(capDim + '.show');
+        const capDim = 'caps.' + dim;
+        const showCap = coerce(capDim + '.show');
         if(showCap) {
             coerce(capDim + '.fill');
         }
 
-        var sliceDim = 'slices.' + dim;
-        var showSlice = coerce(sliceDim + '.show');
+        const sliceDim = 'slices.' + dim;
+        const showSlice = coerce(sliceDim + '.show');
         if(showSlice) {
             coerce(sliceDim + '.fill');
             coerce(sliceDim + '.locations');
         }
     });
 
-    var showSpaceframe = coerce('spaceframe.show');
+    const showSpaceframe = coerce('spaceframe.show');
     if(showSpaceframe) {
         coerce('spaceframe.fill');
     }
 
-    var showSurface = coerce('surface.show');
+    const showSurface = coerce('surface.show');
     if(showSurface) {
         coerce('surface.count');
         coerce('surface.fill');
         coerce('surface.pattern');
     }
 
-    var showContour = coerce('contour.show');
+    const showContour = coerce('contour.show');
     if(showContour) {
         coerce('contour.color');
         coerce('contour.width');

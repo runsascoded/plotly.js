@@ -6,7 +6,7 @@ import _edit_types from '../../plot_api/edit_types.js';
 const { overrideAll } = _edit_types;
 import sortObjectKeys from '../../lib/sort_object_keys.js';
 
-var geoAxesAttrs = {
+const geoAxesAttrs = {
     range: {
         valType: 'info_array',
         items: [
@@ -54,7 +54,7 @@ var geoAxesAttrs = {
     griddash: dash
 };
 
-var attrs = overrideAll({
+const attrs = overrideAll({
     domain: domainAttrs({name: 'geo'}, {
         description: [
             'Note that geo subplots are constrained by domain.',

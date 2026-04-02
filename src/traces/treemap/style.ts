@@ -8,13 +8,13 @@ const { resizeText } = _uniform_text;
 import fillOne from '../sunburst/fill_one.js';
 
 function style(gd: GraphDiv): void {
-    var s = gd._fullLayout._treemaplayer.selectAll('.trace');
+    const s = gd._fullLayout._treemaplayer.selectAll('.trace');
     resizeText(gd, s, 'treemap');
 
     s.each(function(cd) {
-        var gTrace = select(this);
-        var cd0 = cd[0];
-        var trace = cd0.trace;
+        const gTrace = select(this);
+        const cd0 = cd[0];
+        const trace = cd0.trace;
 
         gTrace.style('opacity', trace.opacity);
 
@@ -27,14 +27,14 @@ function style(gd: GraphDiv): void {
 }
 
 function styleOne(s: any, pt: any, trace: FullTrace, gd: GraphDiv, opts?: any): void {
-    var hovered = (opts || {}).hovered;
-    var cdi = pt.data.data;
-    var ptNumber = cdi.i;
-    var lineColor;
-    var lineWidth;
-    var fillColor = cdi.color;
-    var isRoot = helpers.isHierarchyRoot(pt);
-    var opacity = 1;
+    const hovered = (opts || {}).hovered;
+    const cdi = pt.data.data;
+    const ptNumber = cdi.i;
+    let lineColor;
+    let lineWidth;
+    let fillColor = cdi.color;
+    const isRoot = helpers.isHierarchyRoot(pt);
+    let opacity = 1;
 
     if(hovered) {
         lineColor = trace._hovered.marker.line.color;
@@ -49,13 +49,13 @@ function styleOne(s: any, pt: any, trace: FullTrace, gd: GraphDiv, opts?: any): 
             lineWidth = Lib.castOption(trace, ptNumber, 'marker.line.width') || 0;
 
             if(!trace._hasColorscale && !pt.onPathbar) {
-                var depthfade = trace.marker.depthfade;
+                const depthfade = trace.marker.depthfade;
                 if(depthfade) {
-                    var fadedColor = Color.combine(Color.addOpacity(trace._backgroundColor, 0.75), fillColor);
-                    var n;
+                    const fadedColor = Color.combine(Color.addOpacity(trace._backgroundColor, 0.75), fillColor);
+                    let n;
 
                     if(depthfade === true) {
-                        var maxDepth = helpers.getMaxDepth(trace);
+                        const maxDepth = helpers.getMaxDepth(trace);
                         if(isFinite(maxDepth)) {
                             if(helpers.isLeaf(pt)) {
                                 n = 0;
@@ -71,8 +71,8 @@ function styleOne(s: any, pt: any, trace: FullTrace, gd: GraphDiv, opts?: any): 
                     }
 
                     if(n > 0) {
-                        for(var i = 0; i < n; i++) {
-                            var ratio = 0.5 * i / n;
+                        for(let i = 0; i < n; i++) {
+                            const ratio = 0.5 * i / n;
                             fillColor = Color.combine(Color.addOpacity(fadedColor, ratio), fillColor);
                         }
                     }

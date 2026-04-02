@@ -9,18 +9,18 @@ import svgTextUtils from '../../lib/svg_text_utils.js';
 import { arrayEditor } from '../../plot_api/plot_template.js';
 import constants from './constants.js';
 import alignmentConstants from '../../constants/alignment.js';
-var strTranslate = Lib.strTranslate;
-var LINE_SPACING = alignmentConstants.LINE_SPACING;
-var FROM_TL = alignmentConstants.FROM_TL;
-var FROM_BR = alignmentConstants.FROM_BR;
+const strTranslate = Lib.strTranslate;
+const LINE_SPACING = alignmentConstants.LINE_SPACING;
+const FROM_TL = alignmentConstants.FROM_TL;
+const FROM_BR = alignmentConstants.FROM_BR;
 
 export default function draw(gd: GraphDiv) {
-    var staticPlot = gd._context.staticPlot;
-    var fullLayout = gd._fullLayout;
-    var sliderData = makeSliderData(fullLayout, gd);
+    const staticPlot = gd._context.staticPlot;
+    const fullLayout = gd._fullLayout;
+    const sliderData = makeSliderData(fullLayout, gd);
 
     // draw a container for *all* sliders:
-    var sliders = fullLayout._infolayer
+    const sliders = fullLayout._infolayer
         .selectAll('g.' + constants.containerClassName)
         .data(sliderData.length > 0 ? [0] : []);
 
@@ -49,7 +49,7 @@ export default function draw(gd: GraphDiv) {
     // Return early if no menus visible:
     if(sliderData.length === 0) return;
 
-    var sliderGroups = sliders.selectAll('g.' + constants.groupClassName)
+    const sliderGroups = sliders.selectAll('g.' + constants.groupClassName)
         .data(sliderData, keyFunction);
 
     sliderGroups.enter().append('g')
@@ -60,13 +60,13 @@ export default function draw(gd: GraphDiv) {
         .remove();
 
     // Find the dimensions of the sliders:
-    for(var i = 0; i < sliderData.length; i++) {
-        var sliderOpts = sliderData[i];
+    for(let i = 0; i < sliderData.length; i++) {
+        const sliderOpts = sliderData[i];
         findDimensions(gd, sliderOpts);
     }
 
     sliderGroups.each(function(sliderOpts: any) {
-        var gSlider = select(this);
+        const gSlider = select(this);
 
         computeLabelSteps(sliderOpts);
 
@@ -77,7 +77,7 @@ export default function draw(gd: GraphDiv) {
             // the join data that creates this slider. So if this slider still exists,
             // the group should be valid, *to the best of my knowledge.* If not,
             // we'd have to look it up by d3 data join index/key.
-            var opts = gSlider.data()[0];
+            const opts = gSlider.data()[0];
 
             if(opts.active === data.index) return;
             if(opts._dragging) return;
@@ -95,11 +95,11 @@ function autoMarginId(sliderOpts: any) {
 
 // This really only just filters by visibility:
 function makeSliderData(fullLayout: FullLayout, gd: GraphDiv) {
-    var contOpts = fullLayout[constants.name];
-    var sliderData = [];
+    const contOpts = fullLayout[constants.name];
+    const sliderData = [];
 
-    for(var i = 0; i < contOpts.length; i++) {
-        var item = contOpts[i];
+    for(let i = 0; i < contOpts.length; i++) {
+        const item = contOpts[i];
         if(!item.visible) continue;
         item._gd = gd;
         sliderData.push(item);
@@ -115,31 +115,31 @@ function keyFunction(opts: any) {
 
 // Compute the dimensions (mutates sliderOpts):
 function findDimensions(gd: GraphDiv, sliderOpts: any) {
-    var sliderLabels = tester.selectAll('g.' + constants.labelGroupClass)
+    const sliderLabels = tester.selectAll('g.' + constants.labelGroupClass)
         .data(sliderOpts._visibleSteps);
 
     sliderLabels.enter().append('g')
         .classed(constants.labelGroupClass, true);
 
     // loop over fake buttons to find width / height
-    var maxLabelWidth = 0;
-    var labelHeight = 0;
+    let maxLabelWidth = 0;
+    let labelHeight = 0;
     sliderLabels.each(function(stepOpts: any) {
-        var labelGroup = select(this);
+        const labelGroup = select(this);
 
-        var text = drawLabel(labelGroup, {step: stepOpts}, sliderOpts);
+        const text = drawLabel(labelGroup, {step: stepOpts}, sliderOpts);
 
-        var textNode = text.node();
+        const textNode = text.node();
         if(textNode) {
-            var bBox = bBox(textNode);
-            labelHeight = Math.max(labelHeight, bBox.height);
-            maxLabelWidth = Math.max(maxLabelWidth, bBox.width);
+            const bb = bBox(textNode);
+            labelHeight = Math.max(labelHeight, bb.height);
+            maxLabelWidth = Math.max(maxLabelWidth, bb.width);
         }
     });
 
     sliderLabels.remove();
 
-    var dims: any = sliderOpts._dims = {};
+    const dims: any = sliderOpts._dims = {};
 
     dims.inputAreaWidth = Math.max(
         constants.railWidth,
@@ -148,7 +148,7 @@ function findDimensions(gd: GraphDiv, sliderOpts: any) {
 
     // calculate some overall dimensions - some of these are needed for
     // calculating the currentValue dimensions
-    var graphSize = gd._fullLayout._size;
+    const graphSize = gd._fullLayout._size;
     dims.lx = graphSize.l + graphSize.w * sliderOpts.x;
     dims.ly = graphSize.t + graphSize.h * (1 - sliderOpts.y);
 
@@ -164,9 +164,9 @@ function findDimensions(gd: GraphDiv, sliderOpts: any) {
     dims.inputAreaStart = 0;
     dims.inputAreaLength = Math.round(dims.outerLength - sliderOpts.pad.l - sliderOpts.pad.r);
 
-    var textableInputLength = dims.inputAreaLength - 2 * constants.stepInset;
-    var availableSpacePerLabel = textableInputLength / (sliderOpts._stepCount - 1);
-    var computedSpacePerLabel = maxLabelWidth + constants.labelPadding;
+    const textableInputLength = dims.inputAreaLength - 2 * constants.stepInset;
+    const availableSpacePerLabel = textableInputLength / (sliderOpts._stepCount - 1);
+    const computedSpacePerLabel = maxLabelWidth + constants.labelPadding;
     dims.labelStride = Math.max(1, Math.ceil(computedSpacePerLabel / availableSpacePerLabel));
     dims.labelHeight = labelHeight;
 
@@ -179,12 +179,12 @@ function findDimensions(gd: GraphDiv, sliderOpts: any) {
 
     if(sliderOpts.currentvalue.visible) {
         // Get the dimensions of the current value label:
-        var dummyGroup = tester.append('g');
+        const dummyGroup = tester.append('g');
 
         sliderLabels.each(function(stepOpts: any) {
-            var curValPrefix = drawCurrentValue(dummyGroup, sliderOpts, stepOpts.label);
-            var curValSize = (curValPrefix.node() && bBox(curValPrefix.node())) || {width: 0, height: 0};
-            var lines = svgTextUtils.lineCount(curValPrefix);
+            const curValPrefix = drawCurrentValue(dummyGroup, sliderOpts, stepOpts.label);
+            const curValSize = (curValPrefix.node() && bBox(curValPrefix.node())) || {width: 0, height: 0};
+            const lines = svgTextUtils.lineCount(curValPrefix);
             dims.currentValueMaxWidth = Math.max(dims.currentValueMaxWidth, Math.ceil(curValSize.width));
             dims.currentValueHeight = Math.max(dims.currentValueHeight, Math.ceil(curValSize.height));
             dims.currentValueMaxLines = Math.max(dims.currentValueMaxLines, lines);
@@ -197,7 +197,7 @@ function findDimensions(gd: GraphDiv, sliderOpts: any) {
 
     dims.height = dims.currentValueTotalHeight + constants.tickOffset + sliderOpts.ticklen + constants.labelOffset + dims.labelHeight + sliderOpts.pad.t + sliderOpts.pad.b;
 
-    var xanchor = 'left';
+    let xanchor = 'left';
     if(Lib.isRightAnchor(sliderOpts)) {
         dims.lx -= dims.outerLength;
         xanchor = 'right';
@@ -207,7 +207,7 @@ function findDimensions(gd: GraphDiv, sliderOpts: any) {
         xanchor = 'center';
     }
 
-    var yanchor = 'top';
+    let yanchor = 'top';
     if(Lib.isBottomAnchor(sliderOpts)) {
         dims.ly -= dims.height;
         yanchor = 'bottom';
@@ -222,7 +222,7 @@ function findDimensions(gd: GraphDiv, sliderOpts: any) {
     dims.lx = Math.round(dims.lx);
     dims.ly = Math.round(dims.ly);
 
-    var marginOpts: any = {
+    const marginOpts: any = {
         y: sliderOpts.y,
         b: dims.height * FROM_BR[yanchor],
         t: dims.height * FROM_TL[yanchor]
@@ -261,7 +261,7 @@ function drawSlider(gd: GraphDiv, sliderGroup: any, sliderOpts: any) {
         .call(drawTouchRect, gd, sliderOpts)
         .call(drawGrip, gd, sliderOpts);
 
-    var dims = sliderOpts._dims;
+    const dims = sliderOpts._dims;
 
     // Position the rectangle:
     setTranslate(sliderGroup, dims.lx + sliderOpts.pad.l, dims.ly + sliderOpts.pad.t);
@@ -273,8 +273,8 @@ function drawSlider(gd: GraphDiv, sliderGroup: any, sliderOpts: any) {
 function drawCurrentValue(sliderGroup: any, sliderOpts: any, valueOverride: any) {
     if(!sliderOpts.currentvalue.visible) return;
 
-    var dims = sliderOpts._dims;
-    var x0, textAnchor;
+    const dims = sliderOpts._dims;
+    let x0, textAnchor;
 
     switch(sliderOpts.currentvalue.xanchor) {
         case 'right':
@@ -293,20 +293,20 @@ function drawCurrentValue(sliderGroup: any, sliderOpts: any, valueOverride: any)
             textAnchor = 'left';
     }
 
-    var text = Lib.ensureSingle(sliderGroup, 'text', constants.labelClass, function(s: any) {
+    const text = Lib.ensureSingle(sliderGroup, 'text', constants.labelClass, function(s: any) {
         s.attr({
             'text-anchor': textAnchor,
             'data-notex': 1
         });
     });
 
-    var str = sliderOpts.currentvalue.prefix ? sliderOpts.currentvalue.prefix : '';
+    let str = sliderOpts.currentvalue.prefix ? sliderOpts.currentvalue.prefix : '';
 
     if(typeof valueOverride === 'string') {
         str += valueOverride;
     } else {
-        var curVal = sliderOpts.steps[sliderOpts.active].label;
-        var _meta = sliderOpts._gd._fullLayout._meta;
+        let curVal = sliderOpts.steps[sliderOpts.active].label;
+        const _meta = sliderOpts._gd._fullLayout._meta;
         if(_meta) curVal = Lib.templateString(curVal, _meta);
         str += curVal;
     }
@@ -319,9 +319,9 @@ function drawCurrentValue(sliderGroup: any, sliderOpts: any, valueOverride: any)
         .text(str)
         .call(svgTextUtils.convertToTspans, sliderOpts._gd);
 
-    var lines = svgTextUtils.lineCount(text);
+    const lines = svgTextUtils.lineCount(text);
 
-    var y0 = (dims.currentValueMaxLines + 1 - lines) *
+    const y0 = (dims.currentValueMaxLines + 1 - lines) *
         sliderOpts.currentvalue.font.size * LINE_SPACING;
 
     svgTextUtils.positionText(text, x0, y0);
@@ -330,7 +330,7 @@ function drawCurrentValue(sliderGroup: any, sliderOpts: any, valueOverride: any)
 }
 
 function drawGrip(sliderGroup: any, gd: GraphDiv, sliderOpts: any) {
-    var grip = Lib.ensureSingle(sliderGroup, 'rect', constants.gripRectClass, function(s: any) {
+    const grip = Lib.ensureSingle(sliderGroup, 'rect', constants.gripRectClass, function(s: any) {
         s.call(attachGripEvents, gd, sliderGroup, sliderOpts)
             .style('pointer-events', 'all');
     });
@@ -347,15 +347,15 @@ function drawGrip(sliderGroup: any, gd: GraphDiv, sliderOpts: any) {
 }
 
 function drawLabel(item: any, data: any, sliderOpts: any) {
-    var text = Lib.ensureSingle(item, 'text', constants.labelClass, function(s: any) {
+    const text = Lib.ensureSingle(item, 'text', constants.labelClass, function(s: any) {
         s.attr({
             'text-anchor': 'middle',
             'data-notex': 1
         });
     });
 
-    var tx = data.step.label;
-    var _meta = sliderOpts._gd._fullLayout._meta;
+    let tx = data.step.label;
+    const _meta = sliderOpts._gd._fullLayout._meta;
     if(_meta) tx = Lib.templateString(tx, _meta);
 
     text.call(font, sliderOpts.font)
@@ -366,10 +366,10 @@ function drawLabel(item: any, data: any, sliderOpts: any) {
 }
 
 function drawLabelGroup(sliderGroup: any, sliderOpts: any) {
-    var labels = Lib.ensureSingle(sliderGroup, 'g', constants.labelsClass);
-    var dims = sliderOpts._dims;
+    const labels = Lib.ensureSingle(sliderGroup, 'g', constants.labelsClass);
+    const dims = sliderOpts._dims;
 
-    var labelItems = labels.selectAll('g.' + constants.labelGroupClass)
+    const labelItems = labels.selectAll('g.' + constants.labelGroupClass)
         .data(dims.labelSteps);
 
     labelItems.enter().append('g')
@@ -378,7 +378,7 @@ function drawLabelGroup(sliderGroup: any, sliderOpts: any) {
     labelItems.exit().remove();
 
     labelItems.each(function(d: any) {
-        var item = select(this);
+        const item = select(this);
 
         item.call(drawLabel, d, sliderOpts);
 
@@ -396,8 +396,8 @@ function drawLabelGroup(sliderGroup: any, sliderOpts: any) {
 }
 
 function handleInput(gd: GraphDiv, sliderGroup: any, sliderOpts: any, normalizedPosition: any, doTransition: any) {
-    var quantizedPosition = Math.round(normalizedPosition * (sliderOpts._stepCount - 1));
-    var quantizedIndex = sliderOpts._visibleSteps[quantizedPosition]._index;
+    const quantizedPosition = Math.round(normalizedPosition * (sliderOpts._stepCount - 1));
+    const quantizedIndex = sliderOpts._visibleSteps[quantizedPosition]._index;
 
     if(quantizedIndex !== sliderOpts.active) {
         setActive(gd, sliderGroup, sliderOpts, quantizedIndex, true, doTransition);
@@ -405,14 +405,14 @@ function handleInput(gd: GraphDiv, sliderGroup: any, sliderOpts: any, normalized
 }
 
 function setActive(gd: GraphDiv, sliderGroup: any, sliderOpts: any, index: any, doCallback: any, doTransition: any) {
-    var previousActive = sliderOpts.active;
+    const previousActive = sliderOpts.active;
     sliderOpts.active = index;
 
     // due to templating, it's possible this slider doesn't even exist yet
     arrayEditor(gd.layout, constants.name, sliderOpts)
         .applyUpdate('active', index);
 
-    var step = sliderOpts.steps[sliderOpts.active];
+    const step = sliderOpts.steps[sliderOpts.active];
 
     sliderGroup.call(setGripPosition, sliderOpts, doTransition);
     sliderGroup.call(drawCurrentValue, sliderOpts);
@@ -433,7 +433,7 @@ function setActive(gd: GraphDiv, sliderGroup: any, sliderOpts: any, index: any, 
         } else {
             sliderGroup._nextMethod = {step: step, doCallback: doCallback, doTransition: doTransition};
             sliderGroup._nextMethodRaf = window.requestAnimationFrame(function() {
-                var _step = sliderGroup._nextMethod.step;
+                const _step = sliderGroup._nextMethod.step;
                 if(!_step.method) return;
 
                 if(_step.execute) {
@@ -450,8 +450,8 @@ function setActive(gd: GraphDiv, sliderGroup: any, sliderOpts: any, index: any, 
 function attachGripEvents(item: any, gd: GraphDiv, sliderGroup: any) {
     if(gd._context.staticPlot) return;
 
-    var node = sliderGroup.node();
-    var $gd = select(gd);
+    const node = sliderGroup.node();
+    const $gd = select(gd);
 
     // NB: This is *not* the same as sliderOpts itself! These callbacks
     // are in a closure so this array won't actually be correct if the
@@ -463,22 +463,22 @@ function attachGripEvents(item: any, gd: GraphDiv, sliderGroup: any) {
     }
 
     function mouseDownHandler() {
-        var sliderOpts = getSliderOpts();
+        const sliderOpts = getSliderOpts();
         gd.emit('plotly_sliderstart', {slider: sliderOpts});
 
-        var grip = sliderGroup.select('.' + constants.gripRectClass);
+        const grip = sliderGroup.select('.' + constants.gripRectClass);
 
         event.stopPropagation();
         event.preventDefault();
         grip.call(Color.fill, sliderOpts.activebgcolor);
 
-        var normalizedPosition = positionToNormalizedValue(sliderOpts, pointer(event, node)[0]);
+        const normalizedPosition = positionToNormalizedValue(sliderOpts, pointer(event, node)[0]);
         handleInput(gd, sliderGroup, sliderOpts, normalizedPosition, true);
         sliderOpts._dragging = true;
 
         function mouseMoveHandler() {
-            var sliderOpts = getSliderOpts();
-            var normalizedPosition = positionToNormalizedValue(sliderOpts, pointer(event, node)[0]);
+            const sliderOpts = getSliderOpts();
+            const normalizedPosition = positionToNormalizedValue(sliderOpts, pointer(event, node)[0]);
             handleInput(gd, sliderGroup, sliderOpts, normalizedPosition, false);
         }
 
@@ -486,7 +486,7 @@ function attachGripEvents(item: any, gd: GraphDiv, sliderGroup: any) {
         $gd.on('touchmove', mouseMoveHandler);
 
         function mouseUpHandler() {
-            var sliderOpts = getSliderOpts();
+            const sliderOpts = getSliderOpts();
             sliderOpts._dragging = false;
             grip.call(Color.fill, sliderOpts.bgcolor);
             $gd.on('mouseup', null);
@@ -509,9 +509,9 @@ function attachGripEvents(item: any, gd: GraphDiv, sliderGroup: any) {
 }
 
 function drawTicks(sliderGroup: any, sliderOpts: any) {
-    var tick = sliderGroup.selectAll('rect.' + constants.tickRectClass)
+    const tick = sliderGroup.selectAll('rect.' + constants.tickRectClass)
         .data(sliderOpts._visibleSteps);
-    var dims = sliderOpts._dims;
+    const dims = sliderOpts._dims;
 
     tick.enter().append('rect')
         .classed(constants.tickRectClass, true);
@@ -524,8 +524,8 @@ function drawTicks(sliderGroup: any, sliderOpts: any) {
     });
 
     tick.each(function(d: any, i: any) {
-        var isMajor = i % dims.labelStride === 0;
-        var item = select(this);
+        const isMajor = i % dims.labelStride === 0;
+        const item = select(this);
 
         item
             .attr({height: isMajor ? sliderOpts.ticklen : sliderOpts.minorticklen})
@@ -539,11 +539,11 @@ function drawTicks(sliderGroup: any, sliderOpts: any) {
 }
 
 function computeLabelSteps(sliderOpts: any) {
-    var dims = sliderOpts._dims;
+    const dims = sliderOpts._dims;
     dims.labelSteps = [];
-    var nsteps = sliderOpts._stepCount;
+    const nsteps = sliderOpts._stepCount;
 
-    for(var i = 0; i < nsteps; i += dims.labelStride) {
+    for(let i = 0; i < nsteps; i += dims.labelStride) {
         dims.labelSteps.push({
             fraction: i / (nsteps - 1),
             step: sliderOpts._visibleSteps[i]
@@ -552,23 +552,23 @@ function computeLabelSteps(sliderOpts: any) {
 }
 
 function setGripPosition(sliderGroup: any, sliderOpts: any, doTransition: any) {
-    var grip = sliderGroup.select('rect.' + constants.gripRectClass);
+    const grip = sliderGroup.select('rect.' + constants.gripRectClass);
 
-    var quantizedIndex = 0;
-    for(var i = 0; i < sliderOpts._stepCount; i++) {
+    let quantizedIndex = 0;
+    for(let i = 0; i < sliderOpts._stepCount; i++) {
         if(sliderOpts._visibleSteps[i]._index === sliderOpts.active) {
             quantizedIndex = i;
             break;
         }
     }
 
-    var x = normalizedValueToPosition(sliderOpts, quantizedIndex / (sliderOpts._stepCount - 1));
+    const x = normalizedValueToPosition(sliderOpts, quantizedIndex / (sliderOpts._stepCount - 1));
 
     // If this is true, then *this component* is already invoking its own command
     // and has triggered its own animation.
     if(sliderOpts._invokingCommand) return;
 
-    var el = grip;
+    let el = grip;
     if(doTransition && sliderOpts.transition.duration > 0) {
         el = el.transition()
             .duration(sliderOpts.transition.duration)
@@ -582,20 +582,20 @@ function setGripPosition(sliderGroup: any, sliderOpts: any, doTransition: any) {
 
 // Convert a number from [0-1] to a pixel position relative to the slider group container:
 function normalizedValueToPosition(sliderOpts: any, normalizedPosition: any) {
-    var dims = sliderOpts._dims;
+    const dims = sliderOpts._dims;
     return dims.inputAreaStart + constants.stepInset +
         (dims.inputAreaLength - 2 * constants.stepInset) * Math.min(1, Math.max(0, normalizedPosition));
 }
 
 // Convert a position relative to the slider group to a nubmer in [0, 1]
 function positionToNormalizedValue(sliderOpts: any, position: any) {
-    var dims = sliderOpts._dims;
+    const dims = sliderOpts._dims;
     return Math.min(1, Math.max(0, (position - constants.stepInset - dims.inputAreaStart) / (dims.inputAreaLength - 2 * constants.stepInset - 2 * dims.inputAreaStart)));
 }
 
 function drawTouchRect(sliderGroup: any, gd: GraphDiv, sliderOpts: any) {
-    var dims = sliderOpts._dims;
-    var rect = Lib.ensureSingle(sliderGroup, 'rect', constants.railTouchRectClass, function(s: any) {
+    const dims = sliderOpts._dims;
+    const rect = Lib.ensureSingle(sliderGroup, 'rect', constants.railTouchRectClass, function(s: any) {
         s.call(attachGripEvents, gd, sliderGroup, sliderOpts)
             .style('pointer-events', 'all');
     });
@@ -611,9 +611,9 @@ function drawTouchRect(sliderGroup: any, gd: GraphDiv, sliderOpts: any) {
 }
 
 function drawRail(sliderGroup: any, sliderOpts: any) {
-    var dims = sliderOpts._dims;
-    var computedLength = dims.inputAreaLength - constants.railInset * 2;
-    var rect = Lib.ensureSingle(sliderGroup, 'rect', constants.railRectClass);
+    const dims = sliderOpts._dims;
+    const computedLength = dims.inputAreaLength - constants.railInset * 2;
+    const rect = Lib.ensureSingle(sliderGroup, 'rect', constants.railRectClass);
 
     rect.attr({
         width: computedLength,

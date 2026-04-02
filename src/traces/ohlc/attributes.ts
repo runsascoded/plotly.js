@@ -8,10 +8,10 @@ import { dash } from '../../components/drawing/attributes.js';
 import fxAttrs from '../../components/fx/attributes.js';
 import delta from '../../constants/delta.js';
 
-var INCREASING_COLOR = delta.INCREASING.COLOR;
-var DECREASING_COLOR = delta.DECREASING.COLOR;
+const INCREASING_COLOR = delta.INCREASING.COLOR;
+const DECREASING_COLOR = delta.DECREASING.COLOR;
 
-var lineAttrs = scatterAttrs.line;
+const lineAttrs = scatterAttrs.line;
 
 function directionAttrs(lineColorDefault) {
     return {

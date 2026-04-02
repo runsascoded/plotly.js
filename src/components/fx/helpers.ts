@@ -1,16 +1,16 @@
 import type { FullTrace } from '../../../types/core';
 import { isArrayOrTypedArray, nestedProperty } from '../../lib/index.js';
 
-export var getSubplot = function(trace: FullTrace): string {
+export const getSubplot = function(trace: FullTrace): string {
     return trace.subplot || trace.xaxis + trace.yaxis || trace.geo;
 };
 
-export var isTraceInSubplots = function(trace: FullTrace, subplots: string[]): boolean {
+export const isTraceInSubplots = function(trace: FullTrace, subplots: string[]): boolean {
     if (trace.type === 'splom') {
-        var xaxes = trace.xaxes || [];
-        var yaxes = trace.yaxes || [];
-        for (var i = 0; i < xaxes.length; i++) {
-            for (var j = 0; j < yaxes.length; j++) {
+        const xaxes = trace.xaxes || [];
+        const yaxes = trace.yaxes || [];
+        for (let i = 0; i < xaxes.length; i++) {
+            for (let j = 0; j < yaxes.length; j++) {
                 if (subplots.indexOf(xaxes[i] + yaxes[j]) !== -1) {
                     return true;
                 }
@@ -22,28 +22,28 @@ export var isTraceInSubplots = function(trace: FullTrace, subplots: string[]): b
     return subplots.indexOf(getSubplot(trace)) !== -1;
 };
 
-export var flat = function(subplots: any[], v: any): any[] {
-    var out = new Array(subplots.length);
-    for (var i = 0; i < subplots.length; i++) {
+export const flat = function(subplots: any[], v: any): any[] {
+    const out = new Array(subplots.length);
+    for (let i = 0; i < subplots.length; i++) {
         out[i] = v;
     }
     return out;
 };
 
-export var p2c = function(axArray: any[], v: any): any[] {
-    var out = new Array(axArray.length);
-    for (var i = 0; i < axArray.length; i++) {
+export const p2c = function(axArray: any[], v: any): any[] {
+    const out = new Array(axArray.length);
+    for (let i = 0; i < axArray.length; i++) {
         out[i] = axArray[i].p2c(v);
     }
     return out;
 };
 
-export var getDistanceFunction = function(mode: string, dx: any, dy: any, dxy?: any): any {
+export const getDistanceFunction = function(mode: string, dx: any, dy: any, dxy?: any): any {
     if (mode === 'closest') return dxy || quadrature(dx, dy);
     return mode.charAt(0) === 'x' ? dx : dy;
 };
 
-export var getClosest = function(cd: any[], distfn: (di: any) => number, pointData: any): any {
+export const getClosest = function(cd: any[], distfn: (di: any) => number, pointData: any): any {
     // do we already have a point number? (array mode only)
     if (pointData.index !== false) {
         if (pointData.index >= 0 && pointData.index < cd.length) {
@@ -56,10 +56,10 @@ export var getClosest = function(cd: any[], distfn: (di: any) => number, pointDa
         // do this for 'closest'
 
         // defined outside the for to improve the garbage collector performance
-        var newDistance = Infinity;
+        let newDistance = Infinity;
         // the browser engine typically optimizes the length, but it is outside the cycle if it does not
-        var len = cd.length;
-        for (var i = 0; i < len; i++) {
+        const len = cd.length;
+        for (let i = 0; i < len; i++) {
             newDistance = distfn(cd[i]);
             if (newDistance <= pointData.distance) {
                 pointData.index = i;
@@ -70,23 +70,23 @@ export var getClosest = function(cd: any[], distfn: (di: any) => number, pointDa
     return pointData;
 };
 
-export var inbox = function(v0: number, v1: number, passVal: number): number {
+export const inbox = function(v0: number, v1: number, passVal: number): number {
     return v0 * v1 < 0 || v0 === 0 ? passVal : Infinity;
 };
 
-export var quadrature = function(dx: (di: any) => number, dy: (di: any) => number): (di: any) => number {
+export const quadrature = function(dx: (di: any) => number, dy: (di: any) => number): (di: any) => number {
     return function(di: any): number {
-        var x = dx(di);
-        var y = dy(di);
+        const x = dx(di);
+        const y = dy(di);
         return Math.sqrt(x * x + y * y);
     };
 };
 
-export var makeEventData = function(pt: any, trace: FullTrace, cd: any): any {
+export const makeEventData = function(pt: any, trace: FullTrace, cd: any): any {
     // hover uses 'index', select uses 'pointNumber'
-    var pointNumber = 'index' in pt ? pt.index : pt.pointNumber;
+    const pointNumber = 'index' in pt ? pt.index : pt.pointNumber;
 
-    var out: any = {
+    let out: any = {
         data: trace._input,
         fullData: trace,
         curveNumber: trace.index,
@@ -94,7 +94,7 @@ export var makeEventData = function(pt: any, trace: FullTrace, cd: any): any {
     };
 
     if (trace._indexToPoints) {
-        var pointIndices = trace._indexToPoints[pointNumber];
+        const pointIndices = trace._indexToPoints[pointNumber];
 
         if (pointIndices.length === 1) {
             out.pointIndex = pointIndices[0];
@@ -124,42 +124,42 @@ export var makeEventData = function(pt: any, trace: FullTrace, cd: any): any {
     return out;
 };
 
-export var appendArrayPointValue = function(pointData: any, trace: FullTrace, pointNumber: any): void {
-    var arrayAttrs = trace._arrayAttrs;
+export const appendArrayPointValue = function(pointData: any, trace: FullTrace, pointNumber: any): void {
+    const arrayAttrs = trace._arrayAttrs;
 
     if (!arrayAttrs) {
         return;
     }
 
-    for (var i = 0; i < arrayAttrs.length; i++) {
-        var astr = arrayAttrs[i];
-        var key = getPointKey(astr);
+    for (let i = 0; i < arrayAttrs.length; i++) {
+        const astr = arrayAttrs[i];
+        const key = getPointKey(astr);
 
         if (pointData[key] === undefined) {
-            var val = nestedProperty(trace, astr).get();
-            var pointVal = getPointData(val, pointNumber);
+            const val = nestedProperty(trace, astr).get();
+            const pointVal = getPointData(val, pointNumber);
 
             if (pointVal !== undefined) pointData[key] = pointVal;
         }
     }
 };
 
-export var appendArrayMultiPointValues = function(pointData: any, trace: FullTrace, pointNumbers: any[]): void {
-    var arrayAttrs = trace._arrayAttrs;
+export const appendArrayMultiPointValues = function(pointData: any, trace: FullTrace, pointNumbers: any[]): void {
+    const arrayAttrs = trace._arrayAttrs;
 
     if (!arrayAttrs) {
         return;
     }
 
-    for (var i = 0; i < arrayAttrs.length; i++) {
-        var astr = arrayAttrs[i];
-        var key = getPointKey(astr);
+    for (let i = 0; i < arrayAttrs.length; i++) {
+        const astr = arrayAttrs[i];
+        const key = getPointKey(astr);
 
         if (pointData[key] === undefined) {
-            var val = nestedProperty(trace, astr).get();
-            var keyVal = new Array(pointNumbers.length);
+            const val = nestedProperty(trace, astr).get();
+            const keyVal = new Array(pointNumbers.length);
 
-            for (var j = 0; j < pointNumbers.length; j++) {
+            for (let j = 0; j < pointNumbers.length; j++) {
                 keyVal[j] = getPointData(val, pointNumbers[j]);
             }
             pointData[key] = keyVal;
@@ -167,7 +167,7 @@ export var appendArrayMultiPointValues = function(pointData: any, trace: FullTra
     }
 };
 
-var pointKeyMap: Record<string, string> = {
+const pointKeyMap: Record<string, string> = {
     ids: 'id',
     locations: 'location',
     labels: 'label',
@@ -190,22 +190,22 @@ function getPointData(val: any, pointNumber: any): void {
     }
 }
 
-var xyHoverMode: Record<string, boolean> = {
+const xyHoverMode: Record<string, boolean> = {
     x: true,
     y: true
 };
 
-var unifiedHoverMode: Record<string, boolean> = {
+const unifiedHoverMode: Record<string, boolean> = {
     'x unified': true,
     'y unified': true
 };
 
-export var isUnifiedHover = function(hovermode: any): boolean {
+export const isUnifiedHover = function(hovermode: any): boolean {
     if (typeof hovermode !== 'string') return false;
     return !!unifiedHoverMode[hovermode];
 };
 
-export var isXYhover = function(hovermode: any): boolean {
+export const isXYhover = function(hovermode: any): boolean {
     if (typeof hovermode !== 'string') return false;
     return !!xyHoverMode[hovermode];
 };

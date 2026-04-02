@@ -12,7 +12,7 @@ export default function supplyDefaults(traceIn: InputTrace,  traceOut: FullTrace
         return Lib.coerce(traceIn, traceOut, attributes, attr, dflt);
     }
 
-    var validData = handleXYZDefaults(traceIn, traceOut, coerce, layout);
+    const validData = handleXYZDefaults(traceIn, traceOut, coerce, layout);
     if (!validData) {
         traceOut.visible = false;
         return;

@@ -21,30 +21,30 @@ function ensureSingleAndAddDatum(parent?: any, nodeType?: any, className?: any):
     });
 }
 
-var zindexSeparator = constants.zindexSeparator;
+const zindexSeparator = constants.zindexSeparator;
 
-export var name = 'cartesian';
-export var attr = ['xaxis', 'yaxis'];
-export var idRoot = ['x', 'y'];
-export var idRegex = constants.idRegex;
-export var attrRegex = constants.attrRegex;
-export var attributes = _req0;
-export var layoutAttributes = _req1;
-export var supplyLayoutDefaults = _req2;
-export var transitionAxes = _req3;
+export const name = 'cartesian';
+export const attr = ['xaxis', 'yaxis'];
+export const idRoot = ['x', 'y'];
+export const idRegex = constants.idRegex;
+export const attrRegex = constants.attrRegex;
+export const attributes = _req0;
+export const layoutAttributes = _req1;
+export const supplyLayoutDefaults = _req2;
+export const transitionAxes = _req3;
 
-export var finalizeSubplots = function(layoutIn?: any, layoutOut?: any): void {
-    var subplots = layoutOut._subplots;
-    var xList = subplots.xaxis;
-    var yList = subplots.yaxis;
-    var spSVG = subplots.cartesian;
-    var spAll = spSVG;
-    var allX: any = {};
-    var allY: any = {};
-    var i, xi, yi;
+export const finalizeSubplots = function(layoutIn?: any, layoutOut?: any): void {
+    const subplots = layoutOut._subplots;
+    const xList = subplots.xaxis;
+    const yList = subplots.yaxis;
+    const spSVG = subplots.cartesian;
+    const spAll = spSVG;
+    const allX: any = {};
+    const allY: any = {};
+    let i, xi, yi;
 
     for(i = 0; i < spAll.length; i++) {
-        var parts = spAll[i].split('y');
+        const parts = spAll[i].split('y');
         allX[parts[0]] = 1;
         allY['y' + parts[1]] = 1;
     }
@@ -87,9 +87,9 @@ export var finalizeSubplots = function(layoutIn?: any, layoutOut?: any): void {
     if(!spAll.length) {
         xi = '';
         yi = '';
-        for(var ki in layoutIn) {
+        for(const ki in layoutIn) {
             if(constants.attrRegex.test(ki)) {
-                var axLetter = ki.charAt(0);
+                const axLetter = ki.charAt(0);
                 if(axLetter === 'x') {
                     if(!xi || (+ki.slice(5) < +xi.slice(5))) {
                         xi = ki;
@@ -107,11 +107,11 @@ export var finalizeSubplots = function(layoutIn?: any, layoutOut?: any): void {
     }
 };
 
-export var plot = function(gd: GraphDiv, traces?: any, transitionOpts?: any, makeOnCompleteCallback?: any): void {
-    var fullLayout = gd._fullLayout;
-    var subplots = fullLayout._subplots.cartesian;
-    var calcdata = gd.calcdata;
-    var i;
+export const plot = function(gd: GraphDiv, traces?: any, transitionOpts?: any, makeOnCompleteCallback?: any): void {
+    const fullLayout = gd._fullLayout;
+    const subplots = fullLayout._subplots.cartesian;
+    const calcdata = gd.calcdata;
+    let i;
 
     // Traces is a list of trace indices to (re)plot. If it's not provided,
     // then it's a complete replot so we create a new list and add all trace indices
@@ -124,18 +124,18 @@ export var plot = function(gd: GraphDiv, traces?: any, transitionOpts?: any, mak
         for(i = 0; i < calcdata.length; i++) traces.push(i);
     }
 
-    var zindices = fullLayout._zindices;
+    const zindices = fullLayout._zindices;
     // Plot each zorder group in ascending order
-    for(var z = 0; z < zindices.length; z++) {
-        var zorder = zindices[z];
+    for(let z = 0; z < zindices.length; z++) {
+        const zorder = zindices[z];
 
         // For each subplot
         for(i = 0; i < subplots.length; i++) {
-            var subplot = subplots[i];
-            var subplotInfo = fullLayout._plots[subplot];
+            const subplot = subplots[i];
+            let subplotInfo = fullLayout._plots[subplot];
 
             if(z > 0) {
-                var idWithZ = subplotInfo.id;
+                let idWithZ = subplotInfo.id;
                 if(idWithZ.indexOf(zindexSeparator) !== -1) continue;
                 idWithZ += zindexSeparator + (z + 1);
                 subplotInfo = extendFlat({}, subplotInfo, {
@@ -145,13 +145,13 @@ export var plot = function(gd: GraphDiv, traces?: any, transitionOpts?: any, mak
             }
 
             // Get all calcdata (traces) for this subplot:
-            var cdSubplot = [];
-            var pcd;
+            const cdSubplot = [];
+            let pcd;
 
             // For each trace
-            for(var j = 0; j < calcdata.length; j++) {
-                var cd = calcdata[j];
-                var trace = cd[0].trace;
+            for(let j = 0; j < calcdata.length; j++) {
+                const cd = calcdata[j];
+                const trace = cd[0].trace;
 
                 if(zorder !== (trace.zorder || 0)) continue;
 
@@ -191,29 +191,29 @@ export var plot = function(gd: GraphDiv, traces?: any, transitionOpts?: any, mak
 };
 
 function plotOne(gd: GraphDiv, plotinfo: PlotInfo, cdSubplot?: any, transitionOpts?: any, makeOnCompleteCallback?: any): any {
-    var traceLayerClasses = constants.traceLayerClasses;
-    var fullLayout = gd._fullLayout;
-    var zindices = fullLayout._zindices;
+    const traceLayerClasses = constants.traceLayerClasses;
+    const fullLayout = gd._fullLayout;
+    const zindices = fullLayout._zindices;
 
-    var modules = fullLayout._modules;
-    var _module, cdModuleAndOthers, cdModule;
+    const modules = fullLayout._modules;
+    let _module, cdModuleAndOthers, cdModule;
 
-    var layerData = [];
-    var zoomScaleQueryParts = [];
+    const layerData = [];
+    const zoomScaleQueryParts = [];
 
     // Plot each zorder group in ascending order
-    for(var z = 0; z < zindices.length; z++) {
-        var zorder = zindices[z];
+    for(let z = 0; z < zindices.length; z++) {
+        const zorder = zindices[z];
         // For each "module" (trace type)
-        for(var i = 0; i < modules.length; i++) {
+        for(let i = 0; i < modules.length; i++) {
             _module = modules[i];
-            var name = _module.name;
-            var categories = Registry.modules[name].categories;
+            const name = _module.name;
+            const categories = Registry.modules[name].categories;
 
             if(categories.svg) {
-                var classBaseName = (_module.layerName || name + 'layer');
-                var className = classBaseName + (z ? Number(z) + 1 : '');
-                var plotMethod = _module.plot;
+                const classBaseName = (_module.layerName || name + 'layer');
+                const className = classBaseName + (z ? Number(z) + 1 : '');
+                const plotMethod = _module.plot;
 
                 // plot all visible traces of this type on this subplot at once
                 cdModuleAndOthers = getModuleCalcData(cdSubplot, plotMethod, zorder);
@@ -246,7 +246,7 @@ function plotOne(gd: GraphDiv, plotinfo: PlotInfo, cdSubplot?: any, transitionOp
         );
     });
 
-    var layers = plotinfo.plot.selectAll('g.mlayer')
+    const layers = plotinfo.plot.selectAll('g.mlayer')
         .data(layerData, function(d) { return d.className; });
 
     layers.enter().append('g')
@@ -259,8 +259,8 @@ function plotOne(gd: GraphDiv, plotinfo: PlotInfo, cdSubplot?: any, transitionOp
     layers.order();
 
     layers.each(function(d) {
-        var sel = select(this);
-        var className = d.className;
+        const sel = select(this);
+        const className = d.className;
 
         d.plotMethod(
             gd, plotinfo, d.cdModule, sel,
@@ -289,7 +289,7 @@ function plotOne(gd: GraphDiv, plotinfo: PlotInfo, cdSubplot?: any, transitionOp
         }
 
         if(zoomScaleQueryParts.length) {
-            var traces = plotinfo.plot
+            const traces = plotinfo.plot
                 .selectAll(zoomScaleQueryParts.join(','))
                 .selectAll('.trace');
 
@@ -299,12 +299,12 @@ function plotOne(gd: GraphDiv, plotinfo: PlotInfo, cdSubplot?: any, transitionOp
     }
 }
 
-export var clean = function(newFullData: FullTrace[], newFullLayout: FullLayout, oldFullData: FullTrace[], oldFullLayout: FullLayout): void {
-    var oldPlots = oldFullLayout._plots || {};
-    var newPlots = newFullLayout._plots || {};
-    var oldSubplotList = oldFullLayout._subplots || {} as any;
-    var plotinfo;
-    var i, k;
+export const clean = function(newFullData: FullTrace[], newFullLayout: FullLayout, oldFullData: FullTrace[], oldFullLayout: FullLayout): void {
+    const oldPlots = oldFullLayout._plots || {};
+    const newPlots = newFullLayout._plots || {};
+    const oldSubplotList = oldFullLayout._subplots || {} as any;
+    let plotinfo;
+    let i, k;
 
     // when going from a large splom graph to something else,
     // we need to clear <g subplot> so that the new cartesian subplot
@@ -316,8 +316,8 @@ export var clean = function(newFullData: FullTrace[], newFullLayout: FullLayout,
         }
     }
 
-    var hadGl = (oldFullLayout._has && oldFullLayout._has('gl'));
-    var hasGl = (newFullLayout._has && newFullLayout._has('gl'));
+    const hadGl = (oldFullLayout._has && oldFullLayout._has('gl'));
+    const hasGl = (newFullLayout._has && newFullLayout._has('gl'));
 
     if(hadGl && !hasGl) {
         for(k in oldPlots) {
@@ -329,17 +329,17 @@ export var clean = function(newFullData: FullTrace[], newFullLayout: FullLayout,
     // delete any titles we don't need anymore
     // check if axis list has changed, and if so clear old titles
     if(oldSubplotList.xaxis && oldSubplotList.yaxis) {
-        var oldAxIDs = axisIds.listIds({_fullLayout: oldFullLayout});
+        const oldAxIDs = axisIds.listIds({_fullLayout: oldFullLayout});
         for(i = 0; i < oldAxIDs.length; i++) {
-            var oldAxId = oldAxIDs[i];
+            const oldAxId = oldAxIDs[i];
             if(!newFullLayout[axisIds.id2name(oldAxId)]) {
                 oldFullLayout._infolayer.selectAll('.g-' + oldAxId + 'title').remove();
             }
         }
     }
 
-    var hadCartesian = (oldFullLayout._has && oldFullLayout._has('cartesian'));
-    var hasCartesian = (newFullLayout._has && newFullLayout._has('cartesian'));
+    const hadCartesian = (oldFullLayout._has && oldFullLayout._has('cartesian'));
+    const hasCartesian = (newFullLayout._has && newFullLayout._has('cartesian'));
 
     if(hadCartesian && !hasCartesian) {
         // if we've gotten rid of all cartesian traces, remove all the subplot svg items
@@ -352,13 +352,13 @@ export var clean = function(newFullData: FullTrace[], newFullLayout: FullLayout,
         // otherwise look for subplots we need to remove
 
         for(i = 0; i < oldSubplotList.cartesian.length; i++) {
-            var oldSubplotId = oldSubplotList.cartesian[i];
+            const oldSubplotId = oldSubplotList.cartesian[i];
 
             // skip zindex layes in this process
             if(oldSubplotId.indexOf(zindexSeparator) !== -1) continue;
 
             if(!newPlots[oldSubplotId]) {
-                var selector = '.' + oldSubplotId + ',.' + oldSubplotId + '-x,.' + oldSubplotId + '-y';
+                const selector = '.' + oldSubplotId + ',.' + oldSubplotId + '-x,.' + oldSubplotId + '-y';
                 oldFullLayout._cartesianlayer.selectAll(selector).remove();
                 removeSubplotExtras(oldSubplotId, oldFullLayout);
             }
@@ -366,24 +366,24 @@ export var clean = function(newFullData: FullTrace[], newFullLayout: FullLayout,
     }
 };
 
-export var drawFramework = function(gd: GraphDiv): any {
-    var fullLayout = gd._fullLayout;
-    var calcdata = gd.calcdata;
-    var i;
+export const drawFramework = function(gd: GraphDiv): any {
+    const fullLayout = gd._fullLayout;
+    const calcdata = gd.calcdata;
+    let i;
 
     // Separate traces by zorder and plot each zorder group separately
-    var traceZorderGroups: any = {};
+    const traceZorderGroups: any = {};
     for(i = 0; i < calcdata.length; i++) {
-        var cdi = calcdata[i][0];
-        var trace = cdi.trace;
+        const cdi = calcdata[i][0];
+        const trace = cdi.trace;
 
-        var zi = trace.zorder || 0;
+        const zi = trace.zorder || 0;
         if(!traceZorderGroups[zi]) traceZorderGroups[zi] = [];
         traceZorderGroups[zi].push(cdi);
     }
 
     // Group by zorder group in ascending order
-    var zindices = Object.keys(traceZorderGroups)
+    let zindices = Object.keys(traceZorderGroups)
         .map(Number)
         .sort(sorterAsc);
 
@@ -391,16 +391,16 @@ export var drawFramework = function(gd: GraphDiv): any {
 
     fullLayout._zindices = zindices;
 
-    var initialSubplotData = makeSubplotData(gd);
+    const initialSubplotData = makeSubplotData(gd);
 
-    var len = initialSubplotData.length;
-    var subplotData = [];
+    const len = initialSubplotData.length;
+    let subplotData = [];
     for(i = 0; i < len; i++) {
         subplotData[i] = initialSubplotData[i].slice();
     }
 
-    for(var z = 1; z < zindices.length; z++) {
-        var newSubplotData = [];
+    for(let z = 1; z < zindices.length; z++) {
+        const newSubplotData = [];
         for(i = 0; i < len; i++) {
             newSubplotData[i] = initialSubplotData[i].slice();
             newSubplotData[i][0] += zindexSeparator + (z + 1);
@@ -408,7 +408,7 @@ export var drawFramework = function(gd: GraphDiv): any {
         subplotData = subplotData.concat(newSubplotData);
     }
 
-    var subplotLayers = fullLayout._cartesianlayer.selectAll('.subplot')
+    const subplotLayers = fullLayout._cartesianlayer.selectAll('.subplot')
         .data(subplotData, String);
 
     subplotLayers.enter().append('g')
@@ -420,14 +420,14 @@ export var drawFramework = function(gd: GraphDiv): any {
         .call(purgeSubplotLayers, fullLayout);
 
     subplotLayers.each(function(d) {
-        var id = d[0];
-        var posZ = id.indexOf(zindexSeparator);
-        var hasZ = posZ !== -1;
-        var idWithoutZ = hasZ ?
+        const id = d[0];
+        const posZ = id.indexOf(zindexSeparator);
+        const hasZ = posZ !== -1;
+        const idWithoutZ = hasZ ?
             id.slice(0, posZ) :
             id;
 
-        var plotinfo = fullLayout._plots[id];
+        let plotinfo = fullLayout._plots[id];
         if(!plotinfo) {
             plotinfo = extendFlat({}, fullLayout._plots[idWithoutZ]);
 
@@ -452,23 +452,23 @@ export var drawFramework = function(gd: GraphDiv): any {
     });
 };
 
-export var rangePlot = function(gd?: any, plotinfo?: any, cdSubplot?: any): void {
+export const rangePlot = function(gd?: any, plotinfo?: any, cdSubplot?: any): void {
     makeSubplotLayer(gd, plotinfo);
     plotOne(gd, plotinfo, cdSubplot);
     plotsStyle(gd);
 };
 
 function makeSubplotData(gd?: any): any {
-    var fullLayout = gd._fullLayout;
-    var numZ = fullLayout._zindices.length;
+    const fullLayout = gd._fullLayout;
+    const numZ = fullLayout._zindices.length;
 
-    var ids = fullLayout._subplots.cartesian;
-    var len = ids.length;
-    var i, j, id, plotinfo, xa, ya;
+    const ids = fullLayout._subplots.cartesian;
+    const len = ids.length;
+    let i, j, id, plotinfo, xa, ya;
 
     // split 'regular' and 'overlaying' subplots
-    var regulars = [];
-    var overlays = [];
+    const regulars = [];
+    const overlays = [];
 
     for(i = 0; i < len; i++) {
         id = ids[i];
@@ -476,10 +476,10 @@ function makeSubplotData(gd?: any): any {
         xa = plotinfo.xaxis;
         ya = plotinfo.yaxis;
 
-        var xa2 = xa._mainAxis;
-        var ya2 = ya._mainAxis;
-        var mainplot = xa2._id + ya2._id;
-        var mainplotinfo = fullLayout._plots[mainplot];
+        const xa2 = xa._mainAxis;
+        const ya2 = ya._mainAxis;
+        const mainplot = xa2._id + ya2._id;
+        const mainplotinfo = fullLayout._plots[mainplot];
         plotinfo.overlays = [];
 
         if(mainplot !== id && mainplotinfo) {
@@ -501,8 +501,8 @@ function makeSubplotData(gd?: any): any {
     }
 
     // put 'regular' subplot data before 'overlaying'
-    var subplotIds = regulars.concat(overlays);
-    var subplotData = [];
+    const subplotIds = regulars.concat(overlays);
+    const subplotData = [];
 
     for(i = 0; i < len; i++) {
         id = subplotIds[i];
@@ -510,10 +510,10 @@ function makeSubplotData(gd?: any): any {
         xa = plotinfo.xaxis;
         ya = plotinfo.yaxis;
 
-        var d = [];
+        let d = [];
 
-        for(var z = 1; z <= numZ; z++) {
-            var zStr = '';
+        for(let z = 1; z <= numZ; z++) {
+            let zStr = '';
             if(z > 1) zStr += zindexSeparator + z;
 
             // use info about axis layer and overlaying pattern
@@ -537,19 +537,19 @@ function makeSubplotData(gd?: any): any {
 }
 
 function makeSubplotLayer(gd?: any, plotinfo?: any): void {
-    var fullLayout = gd._fullLayout;
-    var plotgroup = plotinfo.plotgroup;
-    var id = plotinfo.id;
+    const fullLayout = gd._fullLayout;
+    const plotgroup = plotinfo.plotgroup;
+    const id = plotinfo.id;
 
-    var posZ = id.indexOf(zindexSeparator);
-    var hasZ = posZ !== -1;
+    const posZ = id.indexOf(zindexSeparator);
+    const hasZ = posZ !== -1;
 
-    var xLayer = constants.layerValue2layerClass[plotinfo.xaxis.layer];
-    var yLayer = constants.layerValue2layerClass[plotinfo.yaxis.layer];
-    var hasOnlyLargeSploms = fullLayout._hasOnlyLargeSploms;
+    const xLayer = constants.layerValue2layerClass[plotinfo.xaxis.layer];
+    const yLayer = constants.layerValue2layerClass[plotinfo.yaxis.layer];
+    const hasOnlyLargeSploms = fullLayout._hasOnlyLargeSploms;
 
-    var hasMultipleZ = fullLayout._zindices.length > 1;
-    var mainplotinfo = plotinfo.mainplotinfo;
+    const hasMultipleZ = fullLayout._zindices.length > 1;
+    const mainplotinfo = plotinfo.mainplotinfo;
 
     if(!plotinfo.mainplot || hasMultipleZ) {
         if(hasOnlyLargeSploms) {
@@ -564,7 +564,7 @@ function makeSubplotLayer(gd?: any, plotinfo?: any): void {
             plotinfo.yaxislayer = ensureSingle(plotgroup, 'g', 'yaxislayer-above');
         } else {
             if(!hasZ) {
-                var backLayer = ensureSingle(plotgroup, 'g', 'layer-subplot');
+                const backLayer = ensureSingle(plotgroup, 'g', 'layer-subplot');
                 plotinfo.shapelayer = ensureSingle(backLayer, 'g', 'shapelayer');
                 plotinfo.imagelayer = ensureSingle(backLayer, 'g', 'imagelayer');
 
@@ -578,7 +578,7 @@ function makeSubplotLayer(gd?: any, plotinfo?: any): void {
                     plotinfo.zerolinelayer = ensureSingle(plotgroup, 'g', 'zerolinelayer');
                 }
 
-                var betweenLayer = ensureSingle(plotgroup, 'g', 'layer-between');
+                const betweenLayer = ensureSingle(plotgroup, 'g', 'layer-between');
                 plotinfo.shapelayerBetween = ensureSingle(betweenLayer, 'g', 'shapelayer');
                 plotinfo.imagelayerBetween = ensureSingle(betweenLayer, 'g', 'imagelayer');
 
@@ -617,9 +617,9 @@ function makeSubplotLayer(gd?: any, plotinfo?: any): void {
             }
         }
     } else {
-        var mainplotgroup = mainplotinfo.plotgroup;
-        var xId = id + '-x';
-        var yId = id + '-y';
+        const mainplotgroup = mainplotinfo.plotgroup;
+        const xId = id + '-x';
+        const yId = id + '-y';
 
         // now make the components of overlaid subplots
         // overlays don't have backgrounds, and append all
@@ -656,7 +656,7 @@ function makeSubplotLayer(gd?: any, plotinfo?: any): void {
         if(!hasOnlyLargeSploms) {
             ensureSingleAndAddDatum(plotinfo.minorGridlayer, 'g', plotinfo.xaxis._id);
             ensureSingleAndAddDatum(plotinfo.minorGridlayer, 'g', plotinfo.yaxis._id);
-            var minorGridNode = plotinfo.minorGridlayer.node();
+            const minorGridNode = plotinfo.minorGridlayer.node();
             if(minorGridNode) {
                 select(minorGridNode).selectChildren('g')
                     .sort(axisIds.idSort);
@@ -664,7 +664,7 @@ function makeSubplotLayer(gd?: any, plotinfo?: any): void {
 
             ensureSingleAndAddDatum(plotinfo.gridlayer, 'g', plotinfo.xaxis._id);
             ensureSingleAndAddDatum(plotinfo.gridlayer, 'g', plotinfo.yaxis._id);
-            var gridNode = plotinfo.gridlayer.node();
+            const gridNode = plotinfo.gridlayer.node();
             if(gridNode) {
                 select(gridNode).selectChildren('g')
                     .sort(axisIds.idSort);
@@ -684,11 +684,11 @@ function makeSubplotLayer(gd?: any, plotinfo?: any): void {
 function purgeSubplotLayers(layers?: any, fullLayout?: any): void {
     if(!layers) return;
 
-    var overlayIdsToRemove: any = {};
+    const overlayIdsToRemove: any = {};
 
     layers.each(function(d) {
-        var id = d[0];
-        var plotgroup = select(this);
+        const id = d[0];
+        const plotgroup = select(this);
 
         plotgroup.remove();
         removeSubplotExtras(id, fullLayout);
@@ -700,12 +700,12 @@ function purgeSubplotLayers(layers?: any, fullLayout?: any): void {
 
     // must remove overlaid subplot trace layers 'manually'
 
-    for(var k in fullLayout._plots) {
-        var subplotInfo = fullLayout._plots[k];
-        var overlays = subplotInfo.overlays || [];
+    for(const k in fullLayout._plots) {
+        const subplotInfo = fullLayout._plots[k];
+        const overlays = subplotInfo.overlays || [];
 
-        for(var j = 0; j < overlays.length; j++) {
-            var overlayInfo = overlays[j];
+        for(let j = 0; j < overlays.length; j++) {
+            const overlayInfo = overlays[j];
 
             if(overlayIdsToRemove[overlayInfo.id]) {
                 overlayInfo.plot.selectAll('.trace').remove();
@@ -719,16 +719,16 @@ function removeSubplotExtras(subplotId?: any, fullLayout?: any): void {
     fullLayout._defs.select('#clip' + fullLayout._uid + subplotId + 'plot').remove();
 }
 
-export var toSVG = function(gd?: any): any {
-    var imageRoot = gd._fullLayout._glimages;
-    var root = select(gd).selectAll('.svg-container');
-    var canvases = root.filter(function(d, i) {return i === root.size() - 1;})
+export const toSVG = function(gd?: any): any {
+    const imageRoot = gd._fullLayout._glimages;
+    const root = select(gd).selectAll('.svg-container');
+    const canvases = root.filter(function(d, i) {return i === root.size() - 1;})
         .selectAll('.gl-canvas-context, .gl-canvas-focus');
 
     function canvasToImage() {
-        var canvas = this;
-        var imageData = canvas.toDataURL('image/png');
-        var image = imageRoot.append('svg:image');
+        const canvas = this;
+        const imageData = canvas.toDataURL('image/png');
+        const image = imageRoot.append('svg:image');
 
         image.attr({
             xmlns: xmlnsNamespaces.svg,
@@ -744,6 +744,6 @@ export var toSVG = function(gd?: any): any {
     canvases.each(canvasToImage);
 };
 
-export var updateFx = _req4;
+export const updateFx = _req4;
 
 export default { name, attr, idRoot, idRegex, attrRegex, attributes, layoutAttributes, supplyLayoutDefaults, transitionAxes, finalizeSubplots, plot, clean, drawFramework, rangePlot, toSVG, updateFx };

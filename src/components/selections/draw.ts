@@ -7,7 +7,7 @@ import Color from '../color/index.js';
 import { dashLine, setClipUrl } from '../drawing/index.js';
 import { arrayEditor } from '../../plot_api/plot_template.js';
 import helpers from '../shapes/helpers.js';
-var getPathString = helpers.getPathString;
+const getPathString = helpers.getPathString;
 
 export default {
     draw: draw,
@@ -16,19 +16,19 @@ export default {
 };
 
 function draw(gd: GraphDiv) {
-    var fullLayout = gd._fullLayout;
+    const fullLayout = gd._fullLayout;
 
     clearOutlineControllers(gd);
 
     // Remove previous selections before drawing new selections in fullLayout.selections
     fullLayout._selectionLayer.selectAll('path').remove();
 
-    for(var k in fullLayout._plots) {
-        var selectionLayer = fullLayout._plots[k].selectionLayer;
+    for(const k in fullLayout._plots) {
+        const selectionLayer = fullLayout._plots[k].selectionLayer;
         if(selectionLayer) selectionLayer.selectAll('path').remove();
     }
 
-    for(var i = 0; i < fullLayout.selections.length; i++) {
+    for(let i = 0; i < fullLayout.selections.length; i++) {
         drawOne(gd, i);
     }
 }
@@ -44,9 +44,9 @@ function drawOne(gd: GraphDiv, index: any) {
         .selectAll('.selectionlayer [data-index="' + index + '"]')
         .remove();
 
-    var o = helpers.makeSelectionsOptionsAndPlotinfo(gd, index);
-    var options = o.options;
-    var plotinfo = o.plotinfo;
+    const o = helpers.makeSelectionsOptionsAndPlotinfo(gd, index);
+    const options = o.options;
+    const plotinfo = o.plotinfo;
 
     // this selection is gone - quit now after deleting it
     // TODO: use d3 idioms instead of deleting and redrawing every time
@@ -55,25 +55,25 @@ function drawOne(gd: GraphDiv, index: any) {
     drawSelection(gd._fullLayout._selectionLayer);
 
     function drawSelection(selectionLayer: any) {
-        var d = getPathString(gd, options);
-        var attrs = {
+        const d = getPathString(gd, options);
+        const attrs = {
             'data-index': index,
             'fill-rule': 'evenodd',
             d: d
         };
 
-        var opacity = options.opacity;
-        var fillColor = 'rgba(0,0,0,0)';
-        var lineColor = options.line.color || Color.contrast(gd._fullLayout.plot_bgcolor);
-        var lineWidth = options.line.width;
-        var lineDash = options.line.dash;
+        let opacity = options.opacity;
+        let fillColor = 'rgba(0,0,0,0)';
+        const lineColor = options.line.color || Color.contrast(gd._fullLayout.plot_bgcolor);
+        let lineWidth = options.line.width;
+        let lineDash = options.line.dash;
         if(!lineWidth) {
             // ensure invisible border to activate the selection
             lineWidth = 5;
             lineDash = 'solid';
         }
 
-        var isActiveSelection = couldHaveActiveSelection(gd) &&
+        const isActiveSelection = couldHaveActiveSelection(gd) &&
             gd._fullLayout._activeSelectionIndex === index;
 
         if(isActiveSelection) {
@@ -81,9 +81,9 @@ function drawOne(gd: GraphDiv, index: any) {
             opacity = gd._fullLayout.activeselection.opacity;
         }
 
-        var allPaths = [];
-        for(var sensory = 1; sensory >= 0; sensory--) {
-            var path = selectionLayer.append('path')
+        const allPaths = [];
+        for(let sensory = 1; sensory >= 0; sensory--) {
+            const path = selectionLayer.append('path')
                 .attr(attrs)
                 .style('opacity', sensory ? 0.1 : opacity)
                 .call(Color.stroke, lineColor)
@@ -97,13 +97,13 @@ function drawOne(gd: GraphDiv, index: any) {
             setClipPath(path, gd, options);
 
             if(isActiveSelection) {
-                var editHelpers = arrayEditor(gd.layout, 'selections', options);
+                const editHelpers = arrayEditor(gd.layout, 'selections', options);
 
                 path.style({
                     cursor: 'move',
                 });
 
-                var dragOptions = {
+                const dragOptions = {
                     element: path.node(),
                     plotinfo: plotinfo,
                     gd: gd,
@@ -111,7 +111,7 @@ function drawOne(gd: GraphDiv, index: any) {
                     isActiveSelection: true // i.e. to enable controllers
                 };
 
-                var polygons = readPaths(d, gd);
+                const polygons = readPaths(d, gd);
                 // display polygons on the screen
                 displayOutlines(polygons, path, dragOptions);
             } else {
@@ -121,15 +121,15 @@ function drawOne(gd: GraphDiv, index: any) {
             allPaths[sensory] = path;
         }
 
-        var forePath = allPaths[0];
-        var backPath = allPaths[1];
+        const forePath = allPaths[0];
+        const backPath = allPaths[1];
 
         backPath.node().addEventListener('click', function() { return activateSelection(gd, forePath); });
     }
 }
 
 function setClipPath(selectionPath: any, gd: GraphDiv, selectionOptions: any) {
-    var clipAxes = selectionOptions.xref + selectionOptions.yref;
+    const clipAxes = selectionOptions.xref + selectionOptions.yref;
 
     setClipUrl(
         selectionPath,
@@ -141,8 +141,8 @@ function setClipPath(selectionPath: any, gd: GraphDiv, selectionOptions: any) {
 function activateSelection(gd: GraphDiv, path: any) {
     if(!couldHaveActiveSelection(gd)) return;
 
-    var element = path.node();
-    var id = +element.getAttribute('data-index');
+    const element = path.node();
+    const id = +element.getAttribute('data-index');
     if(id >= 0) {
         // deactivate if already active
         if(id === gd._fullLayout._activeSelectionIndex) {
@@ -159,7 +159,7 @@ function activateSelection(gd: GraphDiv, path: any) {
 function activateLastSelection(gd: GraphDiv) {
     if(!couldHaveActiveSelection(gd)) return;
 
-    var id = gd._fullLayout.selections.length - 1;
+    const id = gd._fullLayout.selections.length - 1;
     gd._fullLayout._activeSelectionIndex = id;
     gd._fullLayout._deactivateSelection = deactivateSelection;
     draw(gd);
@@ -168,7 +168,7 @@ function activateLastSelection(gd: GraphDiv) {
 function deactivateSelection(gd: GraphDiv) {
     if(!couldHaveActiveSelection(gd)) return;
 
-    var id = gd._fullLayout._activeSelectionIndex;
+    const id = gd._fullLayout._activeSelectionIndex;
     if(id >= 0) {
         clearOutlineControllers(gd);
         delete gd._fullLayout._activeSelectionIndex;

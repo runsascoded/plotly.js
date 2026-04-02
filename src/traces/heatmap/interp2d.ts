@@ -1,7 +1,7 @@
 import Lib from '../../lib/index.js';
 
-var INTERPTHRESHOLD = 1e-2;
-var NEIGHBORSHIFTS = [[-1, 0], [1, 0], [0, -1], [0, 1]];
+const INTERPTHRESHOLD = 1e-2;
+const NEIGHBORSHIFTS = [[-1, 0], [1, 0], [0, -1], [0, 1]];
 
 function correctionOvershoot(maxFractionalChange) {
     // start with less overshoot, until we know it's converging,
@@ -10,8 +10,8 @@ function correctionOvershoot(maxFractionalChange) {
 }
 
 export default function interp2d(z,  emptyPoints) {
-    var maxFractionalChange = 1;
-    var i;
+    let maxFractionalChange = 1;
+    let i;
 
     // one pass to fill in a starting value for all the empties
     iterateInterp2d(z, emptyPoints);
@@ -36,20 +36,20 @@ export default function interp2d(z,  emptyPoints) {
 }
 
 function iterateInterp2d(z: any, emptyPoints: any[], overshoot?: number) {
-    var maxFractionalChange = 0;
-    var thisPt;
-    var i;
-    var j;
-    var p;
-    var q;
-    var neighborShift;
-    var neighborRow;
-    var neighborVal;
-    var neighborCount;
-    var neighborSum;
-    var initialVal;
-    var minNeighbor;
-    var maxNeighbor;
+    let maxFractionalChange = 0;
+    let thisPt;
+    let i;
+    let j;
+    let p;
+    let q;
+    let neighborShift;
+    let neighborRow;
+    let neighborVal;
+    let neighborCount;
+    let neighborSum;
+    let initialVal;
+    let minNeighbor;
+    let maxNeighbor;
 
     for(p = 0; p < emptyPoints.length; p++) {
         thisPt = emptyPoints[p];

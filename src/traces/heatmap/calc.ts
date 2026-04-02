@@ -16,14 +16,14 @@ const { BADNUM } = _numerical;
 export default function calc(gd: GraphDiv,  trace: FullTrace) {
     // prepare the raw data
     // run makeCalcdata on x and y even for heatmaps, in case of category mappings
-    var xa = Axes.getFromId(gd, trace.xaxis || 'x');
-    var ya = Axes.getFromId(gd, trace.yaxis || 'y');
-    var isContour = Registry.traceIs(trace, 'contour');
-    var isHist = Registry.traceIs(trace, 'histogram');
-    var zsmooth = isContour ? 'best' : trace.zsmooth;
-    var x, x0, dx, origX;
-    var y, y0, dy, origY;
-    var z, i, binned;
+    const xa = Axes.getFromId(gd, trace.xaxis || 'x');
+    const ya = Axes.getFromId(gd, trace.yaxis || 'y');
+    const isContour = Registry.traceIs(trace, 'contour');
+    const isHist = Registry.traceIs(trace, 'histogram');
+    let zsmooth = isContour ? 'best' : trace.zsmooth;
+    let x, x0, dx, origX;
+    let y, y0, dy, origY;
+    let z, i, binned;
 
     // cancel minimum tick spacings (only applies to bars and boxes)
     xa._minDtick = 0;
@@ -43,7 +43,7 @@ export default function calc(gd: GraphDiv,  trace: FullTrace) {
 
         z = binned.z;
     } else {
-        var zIn = trace.z;
+        let zIn = trace.z;
         if(Lib.isArray1D(zIn)) {
             convertColumnData(trace, xa, ya, 'x', 'y', ['z']);
             x = trace._x;
@@ -90,8 +90,8 @@ export default function calc(gd: GraphDiv,  trace: FullTrace) {
 
     function scaleIsLinear(s) {
         if(s.length > 1) {
-            var avgdx = (s[s.length - 1] - s[0]) / (s.length - 1);
-            var maxErrX = Math.abs(avgdx / 100);
+            const avgdx = (s[s.length - 1] - s[0]) / (s.length - 1);
+            const maxErrX = Math.abs(avgdx / 100);
             for(i = 0; i < s.length - 1; i++) {
                 if(Math.abs(s[i + 1] - s[i] - avgdx) > maxErrX) {
                     return false;
@@ -116,16 +116,16 @@ export default function calc(gd: GraphDiv,  trace: FullTrace) {
     }
 
     // create arrays of brick boundaries, to be used by autorange and heatmap.plot
-    var xlen = Lib.maxRowLength(z);
-    var xIn = trace.xtype === 'scaled' ? '' : x;
-    var xArray = makeBoundArray(trace, xIn, x0, dx, xlen, xa);
-    var yIn = trace.ytype === 'scaled' ? '' : y;
-    var yArray = makeBoundArray(trace, yIn, y0, dy, z.length, ya);
+    const xlen = Lib.maxRowLength(z);
+    const xIn = trace.xtype === 'scaled' ? '' : x;
+    const xArray = makeBoundArray(trace, xIn, x0, dx, xlen, xa);
+    const yIn = trace.ytype === 'scaled' ? '' : y;
+    const yArray = makeBoundArray(trace, yIn, y0, dy, z.length, ya);
 
     trace._extremes[xa._id] = Axes.findExtremes(xa, xArray);
     trace._extremes[ya._id] = Axes.findExtremes(ya, yArray);
 
-    var cd0: any = {
+    const cd0: any = {
         x: xArray,
         y: yArray,
         z: z,
@@ -154,7 +154,7 @@ export default function calc(gd: GraphDiv,  trace: FullTrace) {
     }
 
     if(isContour && trace.contours && trace.contours.coloring === 'heatmap') {
-        var dummyTrace: any = {
+        const dummyTrace: any = {
             type: trace.type === 'contour' ? 'heatmap' : 'histogram2d',
             xcalendar: trace.xcalendar,
             ycalendar: trace.ycalendar
@@ -167,23 +167,23 @@ export default function calc(gd: GraphDiv,  trace: FullTrace) {
 }
 
 function skipBreaks(a) {
-    var b = [];
-    var len = a.length;
-    for(var i = 0; i < len; i++) {
-        var v = a[i];
+    const b = [];
+    const len = a.length;
+    for(let i = 0; i < len; i++) {
+        const v = a[i];
         if(v !== BADNUM) b.push(v);
     }
     return b;
 }
 
 function dropZonBreaks(x,  y,  z) {
-    var newZ = [];
-    var k = -1;
-    for(var i = 0; i < z.length; i++) {
+    const newZ = [];
+    let k = -1;
+    for(let i = 0; i < z.length; i++) {
         if(y[i] === BADNUM) continue;
         k++;
         newZ[k] = [];
-        for(var j = 0; j < z[i].length; j++) {
+        for(let j = 0; j < z[i].length; j++) {
             if(x[j] === BADNUM) continue;
 
             newZ[k].push(z[i][j]);

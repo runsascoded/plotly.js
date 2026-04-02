@@ -14,10 +14,10 @@ export default function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace,
         return Lib.coerce(traceIn, traceOut, attributes, attr, dflt);
     }
 
-    var a = coerce('a');
-    var b = coerce('b');
-    var c = coerce('c');
-    var len;
+    const a = coerce('a');
+    const b = coerce('b');
+    const c = coerce('c');
+    let len;
 
     // allow any one array to be missing, len is the minimum length of those
     // present. Note that after coerce data_array's are either Arrays (which
@@ -51,7 +51,7 @@ export default function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace,
         coerce('hovertemplatefallback');
     }
 
-    var defaultMode = len < constants.PTS_LINESONLY ? 'lines+markers' : 'lines';
+    const defaultMode = len < constants.PTS_LINESONLY ? 'lines+markers' : 'lines';
     coerce('mode', defaultMode);
 
     if (subTypes.hasMarkers(traceOut)) {
@@ -70,7 +70,7 @@ export default function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace,
         handleTextDefaults(traceIn, traceOut, layout, coerce);
     }
 
-    var dfltHoverOn = [];
+    const dfltHoverOn = [];
 
     if (subTypes.hasMarkers(traceOut) || subTypes.hasText(traceOut)) {
         coerce('cliponaxis');
