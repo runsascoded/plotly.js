@@ -1,6 +1,6 @@
 import type { FullTrace, GraphDiv } from '../../../types/core';
 import { select } from 'd3-selection';
-import Registry from '../../registry.js';
+import { _storeDirectGUIEdit, animate } from '../../plot_api/plot_api.js';
 import { appendArrayPointValue } from '../../components/fx/helpers.js';
 import Fx from '../../components/fx/index.js';
 import Lib from '../../lib/index.js';
@@ -258,7 +258,7 @@ export default function attachFxHandlers(sliceTop: any, entry: any, gd: GraphDiv
 
         // store 'old' level in guiEdit stash, so that subsequent Plotly.react
         // calls with the same uirevision can start from the same entry
-        Registry.call('_storeDirectGUIEdit', traceNow, fullLayoutNow._tracePreGUI[traceNow.uid], {
+        _storeDirectGUIEdit(traceNow, fullLayoutNow._tracePreGUI[traceNow.uid], {
             level: traceNow.level
         });
 
@@ -281,7 +281,7 @@ export default function attachFxHandlers(sliceTop: any, entry: any, gd: GraphDiv
         };
 
         Fx.loneUnhover(fullLayoutNow._hoverlayer.node());
-        Registry.call('animate', gd, frame, animOpts);
+        animate(gd, frame, animOpts);
     };
 
     sliceTop.on('mouseover', onMouseOver);

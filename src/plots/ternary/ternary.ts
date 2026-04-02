@@ -1,6 +1,6 @@
 import { select } from 'd3-selection';
 import tinycolor from 'tinycolor2';
-import Registry from '../../registry.js';
+import { _guiRelayout } from '../../plot_api/plot_api.js';
 import Lib from '../../lib/index.js';
 import Color from '../../components/color/index.js';
 import { hideOutsideRangePoints, setClipUrl } from '../../components/drawing/index.js';
@@ -559,7 +559,7 @@ proto.initInteractions = function() {
 
         if(numClicks === 2) {
             gd.emit('plotly_doubleclick', null);
-            Registry.call('_guiRelayout', gd, makeUpdate({a: 0, b: 0, c: 0}));
+            _guiRelayout(gd, makeUpdate({a: 0, b: 0, c: 0}));
         }
 
         if(clickMode.indexOf('select') > -1 && numClicks === 1) {
@@ -667,7 +667,7 @@ proto.initInteractions = function() {
 
         if(mins === mins0) return;
 
-        Registry.call('_guiRelayout', gd, makeUpdate(mins));
+        _guiRelayout(gd, makeUpdate(mins));
 
         if(SHOWZOOMOUTTIP && gd.data && gd._context.showTips) {
             Lib.notifier(_(gd, 'Double-click to zoom back out'), 'long');
@@ -741,7 +741,7 @@ proto.initInteractions = function() {
     }
 
     function dragDone() {
-        Registry.call('_guiRelayout', gd, makeUpdate(mins));
+        _guiRelayout(gd, makeUpdate(mins));
     }
 
     // finally, set up hover and click

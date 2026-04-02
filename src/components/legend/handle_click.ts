@@ -1,5 +1,5 @@
 import type { GraphDiv } from '../../../types/core';
-import Registry from '../../registry.js';
+import { _guiRelayout, _guiRestyle, _guiUpdate } from '../../plot_api/plot_api.js';
 import { traceIs } from '../../lib/trace_categories.js';
 import { _, notifier, pushUnique } from '../../lib/index.js';
 
@@ -142,7 +142,7 @@ export default function handleClick(g: any, gd: GraphDiv, numClicks: number): an
             }
         }
 
-        Registry.call('_guiRelayout', gd, 'hiddenlabels', hiddenSlices);
+        _guiRelayout(gd, 'hiddenlabels', hiddenSlices);
     } else {
         const hasLegendgroup = legendgroup && legendgroup.length;
         const traceIndicesInGroup: number[] = [];
@@ -260,9 +260,9 @@ export default function handleClick(g: any, gd: GraphDiv, numClicks: number): an
         }
 
         if(shapesUpdated) {
-            Registry.call('_guiUpdate', gd, dataUpdate, {shapes: updatedShapes}, dataIndices);
+            _guiUpdate(gd, dataUpdate, {shapes: updatedShapes}, dataIndices);
         } else {
-            Registry.call('_guiRestyle', gd, dataUpdate, dataIndices);
+            _guiRestyle(gd, dataUpdate, dataIndices);
         }
     }
 }

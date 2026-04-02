@@ -1,5 +1,5 @@
 import * as d3Ease from 'd3-ease';
-import Registry from '../../registry.js';
+import { relayout } from '../../plot_api/plot_api.js';
 import { simpleMap } from '../../lib/index.js';
 import { hideOutsideRangePoints, setPointGroupScale, setScale, setTextPointsScale, setTranslate } from '../../components/drawing/index.js';
 import Axes from './axes.js';
@@ -125,7 +125,7 @@ export default function transitionAxes(gd?: any, edits?: any, transitionOpts?: a
         // Signal that this transition has completed:
         onComplete && onComplete();
 
-        return Registry.call('relayout', gd, aobj).then(() => {
+        return relayout(gd, aobj).then(() => {
             for(let i = 0; i < edits.length; i++) {
                 unsetSubplotTransform(edits[i].plotinfo);
             }
@@ -143,7 +143,7 @@ export default function transitionAxes(gd?: any, edits?: any, transitionOpts?: a
             if(edit.yr0) aobj[ya._name + '.range'] = edit.yr0.slice();
         }
 
-        return Registry.call('relayout', gd, aobj).then(() => {
+        return relayout(gd, aobj).then(() => {
             for(let i = 0; i < edits.length; i++) {
                 unsetSubplotTransform(edits[i].plotinfo);
             }

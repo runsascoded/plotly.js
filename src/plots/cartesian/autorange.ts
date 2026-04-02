@@ -3,7 +3,7 @@ import isNumeric from 'fast-isnumeric';
 import { deg2rad, extendFlat, isArrayOrTypedArray, simpleMap } from '../../lib/index.js';
 import _numerical from '../../constants/numerical.js';
 const { FP_SAFE } = _numerical;
-import Registry from '../../registry.js';
+import { _storeDirectGUIEdit } from '../../plot_api/plot_api.js';
 import { bBox } from '../../components/drawing/index.js';
 import axIds from './axis_ids.js';
 const getFromId = axIds.getFromId;
@@ -384,7 +384,7 @@ function doAutoRange(gd?: any, ax?: any, presetRange?: any): void {
         const edits: any = {};
         edits[ax._attr + '.range'] = ax.range;
         edits[ax._attr + '.autorange'] = ax.autorange;
-        Registry.call('_storeDirectGUIEdit', gd.layout, gd._fullLayout._preGUI, edits);
+        _storeDirectGUIEdit(gd.layout, gd._fullLayout._preGUI, edits);
 
         axIn.range = ax.range.slice();
         axIn.autorange = ax.autorange;

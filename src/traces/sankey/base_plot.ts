@@ -9,7 +9,7 @@ import dragElement from '../../components/dragelement/index.js';
 import _index from '../../components/selections/index.js';
 const { prepSelect } = _index;
 import Lib from '../../lib/index.js';
-import Registry from '../../registry.js';
+import { _guiRestyle } from '../../plot_api/plot_api.js';
 
 const SANKEY = 'sankey';
 
@@ -116,7 +116,7 @@ function subplotUpdateFx(gd: GraphDiv, index: number) {
                 .filter(Boolean)
                 .concat([newGroup]);
 
-            Registry.call('_guiRestyle', gd, {
+            _guiRestyle(gd, {
                 'node.groups': [ newGroups ]
             }, index);
         }

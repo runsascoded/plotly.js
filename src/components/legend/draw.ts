@@ -3,7 +3,7 @@ import { zoom as d3Zoom } from 'd3-zoom';
 import { drag as d3Drag } from 'd3-drag';
 import { constrain, ensureSingle, ensureSingleById, identity, isBottomAnchor, isCenterAnchor, isMiddleAnchor, isRightAnchor, log, syncOrAsync, templateString } from '../../lib/index.js';
 import { autoMargin, previousPromises } from '../../plots/plots.js';
-import Registry from '../../registry.js';
+import { _guiRelayout, _guiRestyle } from '../../plot_api/plot_api.js';
 import { traceIs } from '../../lib/trace_categories.js';
 import Events from '../../lib/events.js';
 import dragElement from '../dragelement/index.js';
@@ -443,7 +443,7 @@ function drawOne(gd: GraphDiv, opts: any): any {
                             const obj: any = {};
                             obj[legendId + '.x'] = xf;
                             obj[legendId + '.y'] = yf;
-                            Registry.call('_guiRelayout', gd, obj);
+                            _guiRelayout(gd, obj);
                         }
                     },
                     clickFn: function(numClicks: number, e: any) {
@@ -560,9 +560,9 @@ function drawTexts(g: any, gd: GraphDiv, legendObj: any): void {
                 update.name = newName;
 
                 if(fullInput._isShape) {
-                    return Registry.call('_guiRelayout', gd, 'shapes[' + trace.index + '].name', update.name);
+                    return _guiRelayout(gd, 'shapes[' + trace.index + '].name', update.name);
                 } else {
-                    return Registry.call('_guiRestyle', gd, update, trace.index);
+                    return _guiRestyle(gd, update, trace.index);
                 }
             });
     } else {

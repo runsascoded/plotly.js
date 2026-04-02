@@ -1,6 +1,6 @@
 import type { GraphDiv, FullAxis } from '../../../types/core';
 import Lib from '../../lib/index.js';
-import Registry from '../../registry.js';
+import { update as plotUpdate } from '../../plot_api/plot_api.js';
 import { arrayEditor } from '../../plot_api/plot_template.js';
 
 export default {
@@ -55,7 +55,7 @@ function onClick(gd: GraphDiv, hoverData: any) {
         Lib.extendFlat(update, editHelpers.getUpdateObj());
     }
 
-    return Registry.call('update', gd, {}, update);
+    return plotUpdate(gd, {}, update);
 }
 
 /*

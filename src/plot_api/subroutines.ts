@@ -1,6 +1,7 @@
 import { select } from 'd3-selection';
 import type { FullAxis, FullLayout, GraphDiv } from '../../types/core';
 import Registry from '../registry.js';
+import { _doPlot } from './plot_api.js';
 import { allowAutoMargin, autoMargin, doAutoMargin, previousPromises, style } from '../plots/plots.js';
 import { ensureSingle, ensureSingleById, isBottomAnchor, isLeftAnchor, isMiddleAnchor, isRightAnchor, isTopAnchor, pushUnique, syncOrAsync } from '../lib/index.js';
 import svgTextUtils from '../lib/svg_text_utils.js';
@@ -665,7 +666,7 @@ export function doColorBars(gd: GraphDiv): any {
 export function layoutReplot(gd: GraphDiv): any {
     const layout = gd.layout;
     gd.layout = (undefined as any);
-    return Registry.call('_doPlot', gd, '', layout);
+    return _doPlot(gd, '', layout);
 }
 
 export function doLegend(gd: GraphDiv): any {

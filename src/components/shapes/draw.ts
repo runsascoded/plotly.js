@@ -1,6 +1,6 @@
 import type { GraphDiv } from '../../../types/core';
 import { select } from 'd3-selection';
-import Registry from '../../registry.js';
+import { _guiRelayout } from '../../plot_api/plot_api.js';
 import Lib from '../../lib/index.js';
 import Axes from '../../plots/cartesian/axes.js';
 import { readPaths } from './draw_newshape/helpers.js';
@@ -384,7 +384,7 @@ function setupDragElement(gd: GraphDiv, shapePath: any, shapeOptions: any, index
 
         // Don't rely on clipPath being activated during re-layout
         setClipPath(shapePath, gd, shapeOptions);
-        Registry.call('_guiRelayout', gd, editHelpers.getUpdateObj());
+        _guiRelayout(gd, editHelpers.getUpdateObj());
     }
 
     function abortDrag() {
@@ -657,7 +657,7 @@ function eraseActiveShape(gd: GraphDiv) {
 
         delete gd._fullLayout._activeShapeIndex;
 
-        return Registry.call('_guiRelayout', gd, {
+        return _guiRelayout(gd, {
             shapes: list
         });
     }

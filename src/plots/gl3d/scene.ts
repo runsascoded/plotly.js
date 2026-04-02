@@ -2,6 +2,7 @@ import { gl_plot3d as glPlot3d } from '../../../stackgl_modules/esm.js';
 import getContext from 'webgl-context';
 import passiveSupported from 'has-passive-events';
 import Registry from '../../registry.js';
+import { _storeDirectGUIEdit } from '../../plot_api/plot_api.js';
 import Lib from '../../lib/index.js';
 import Axes from '../../plots/cartesian/axes.js';
 import Fx from '../../components/fx/index.js';
@@ -984,7 +985,7 @@ proto.saveLayout = function(layout: any) {
 
             preGUI[scene.id + '.aspectratio'] = aspectDataLastSave;
         }
-        Registry.call('_storeDirectGUIEdit', layout, fullLayout._preGUI, preGUI);
+        _storeDirectGUIEdit(layout, fullLayout._preGUI, preGUI);
 
         if(cameraChanged) {
             cameraNestedProp.set(cameraData);
@@ -1035,7 +1036,7 @@ proto.updateFx = function(dragmode: any, hovermode: any) {
                 const edits: any = {};
                 edits[attr] = zUp;
                 const layout = gd.layout;
-                Registry.call('_storeDirectGUIEdit', layout, fullLayout._preGUI, edits);
+                _storeDirectGUIEdit(layout, fullLayout._preGUI, edits);
                 fullCamera.up = zUp;
                 Lib.nestedProperty(layout, attr).set(zUp);
             }

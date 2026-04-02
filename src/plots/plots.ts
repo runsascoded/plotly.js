@@ -4,6 +4,7 @@ import { formatLocale } from 'd3-format';
 import isNumeric from 'fast-isnumeric';
 import * as b64encode from 'base64-arraybuffer';
 import Registry from '../registry.js';
+import { _doPlot, redraw, relayout } from '../plot_api/plot_api.js';
 import { traceIs } from '../lib/trace_categories.js';
 import PlotSchema from '../plot_api/plot_schema.js';
 import Template from '../plot_api/plot_template.js';
@@ -81,7 +82,7 @@ export function resize(gd?: any): any {
             // nor should it be included in the undo queue
             gd.autoplay = true;
 
-            Registry.call('relayout', gd, {autosize: true}).then(() => {
+            relayout(gd, {autosize: true}).then(() => {
                 gd.changed = oldchanged;
                 // Only resolve if a new call hasn't been made!
                 if(gd._resolveResize === resolve) {
@@ -1999,7 +2000,7 @@ export function doAutoMargin(gd: GraphDiv): void {
         const maxNumberOfRedraws = 3 * (1 + Object.keys(pushMarginIds).length);
 
         if(fullLayout._redrawFromAutoMarginCount < maxNumberOfRedraws) {
-            return Registry.call('_doPlot', gd);
+            return _doPlot(gd);
         } else {
             fullLayout._size = oldMargins;
             warn('Too many auto-margin redraws.');
@@ -2768,7 +2769,7 @@ function _transition(gd?: any, transitionOpts?: any, opts?: any): any {
 
             if(opts.redraw) {
                 gd._transitionData._interruptCallbacks.push(function() {
-                    return Registry.call('redraw', gd);
+                    return redraw(gd);
                 });
             }
 
@@ -2809,7 +2810,7 @@ function _transition(gd?: any, transitionOpts?: any, opts?: any): any {
 
         return Promise.resolve().then(() => {
             if(opts.redraw) {
-                return Registry.call('redraw', gd);
+                return redraw(gd);
             }
         }).then(() => {
             // Set transitioning false again once the redraw has occurred. This is used, for example,

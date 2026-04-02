@@ -5,7 +5,7 @@ import { pointer } from 'd3-selection';
 import { zoom as d3Zoom } from 'd3-zoom';
 import { drag as d3Drag } from 'd3-drag';
 import Lib from '../../lib/index.js';
-import Registry from '../../registry.js';
+import { _storeDirectGUIEdit } from '../../plot_api/plot_api.js';
 
 declare let event: any;
 const radians = Math.PI / 180;
@@ -53,7 +53,7 @@ function sync(geo: any, projection: any, cb: any) {
 
     function set(propStr: any, val: any) {
         preGUI[id + '.' + propStr] = Lib.nestedProperty(userOpts, propStr).get();
-        Registry.call('_storeDirectGUIEdit', layout, fullLayout._preGUI, preGUI);
+        _storeDirectGUIEdit(layout, fullLayout._preGUI, preGUI);
 
         const fullNp = Lib.nestedProperty(fullOpts, propStr);
         if(fullNp.get() !== val) {
