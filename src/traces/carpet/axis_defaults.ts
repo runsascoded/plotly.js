@@ -1,7 +1,7 @@
 import carpetAttrs from './attributes.js';
 import _index from '../../components/color/index.js';
 const { addOpacity } = _index;
-import { getComponentMethod } from '../../registry.js';
+import { handleDefaults as calendarDefaults } from '../../components/calendars/index.js';
 import Lib from '../../lib/index.js';
 import handleTickValueDefaults from '../../plots/cartesian/tick_value_defaults.js';
 import handleTickLabelDefaults from '../../plots/cartesian/tick_label_defaults.js';
@@ -78,8 +78,7 @@ export default function handleAxisDefaults(containerIn: any, containerOut: any, 
     containerOut._hovertitle = letter;
 
     if(axType === 'date') {
-        const handleCalendarDefaults = getComponentMethod('calendars', 'handleDefaults');
-        handleCalendarDefaults(containerIn, containerOut, 'calendar', options.calendar);
+        calendarDefaults(containerIn, containerOut, 'calendar', options.calendar);
     }
 
     // we need some of the other functions setConvert attaches, but for

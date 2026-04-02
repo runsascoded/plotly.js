@@ -1,5 +1,5 @@
 import isNumeric from 'fast-isnumeric';
-import { getComponentMethod } from '../../registry.js';
+import { handleDefaults as calendarDefaults } from '../../components/calendars/index.js';
 import Lib, { bigFont, coerceFont, warn } from '../../lib/index.js';
 import Template from '../../plot_api/plot_template.js';
 import handleArrayContainerDefaults from '../array_container_defaults.js';
@@ -27,8 +27,7 @@ export default function handleAxisDefaults(containerIn?: any, containerOut?: any
 
     let ticklabelmode;
     if(axType === 'date') {
-        const handleCalendarDefaults = getComponentMethod('calendars', 'handleDefaults');
-        handleCalendarDefaults(containerIn, containerOut, 'calendar', options.calendar);
+        calendarDefaults(containerIn, containerOut, 'calendar', options.calendar);
 
         if(!options.noTicklabelmode) {
             ticklabelmode = coerce('ticklabelmode');

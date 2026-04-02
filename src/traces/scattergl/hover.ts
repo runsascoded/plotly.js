@@ -1,5 +1,5 @@
 import type { FullTrace } from '../../../types/core';
-import { getComponentMethod } from '../../registry.js';
+import { errorbarHoverInfo } from '../../components/errorbars/index.js';
 import Lib from '../../lib/index.js';
 import getTraceColor from '../scatter/get_trace_color.js';
 
@@ -210,7 +210,7 @@ function calcHover(pointData: any, x: any, y: any, trace: FullTrace) {
     else if(trace.text) pointData2.text = trace.text;
 
     Lib.fillText(di, trace, pointData2);
-    getComponentMethod('errorbars', 'hoverInfo')(di, trace, pointData2);
+    errorbarHoverInfo(di, trace, pointData2);
 
     return pointData2;
 }

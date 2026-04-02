@@ -13,6 +13,9 @@ import _req4 from './layout_defaults.js';
 import _req5 from './calc.js';
 import _req6 from './click.js';
 
+export { _req3 as fxSupplyDefaults };
+export { _req5 as fxCalc };
+
 export default {
     moduleType: 'component',
     name: 'fx',

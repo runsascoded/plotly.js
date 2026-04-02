@@ -2,7 +2,7 @@ import type { FullLayout, FullTrace, InputTrace } from '../../../types/core';
 import isNumeric from 'fast-isnumeric';
 import Lib, { coerceFont, coerceSelectionMarkerOpacity, extendFlat } from '../../lib/index.js';
 import Color from '../../components/color/index.js';
-import { getComponentMethod } from '../../registry.js';
+import { errorbarSupplyDefaults } from '../../components/errorbars/index.js';
 import handleXYDefaults from '../scatter/xy_defaults.js';
 import handlePeriodDefaults from '../scatter/period_defaults.js';
 import handleStyleDefaults from './style_defaults.js';
@@ -51,9 +51,8 @@ function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace, defaultColor: 
     const lineColor = (traceOut.marker.line || {}).color;
 
     // override defaultColor for error bars with defaultLine
-    const errorBarsSupplyDefaults = getComponentMethod('errorbars', 'supplyDefaults');
-    errorBarsSupplyDefaults(traceIn, traceOut, lineColor || Color.defaultLine, { axis: 'y' });
-    errorBarsSupplyDefaults(traceIn, traceOut, lineColor || Color.defaultLine, { axis: 'x', inherit: 'y' });
+    errorbarSupplyDefaults(traceIn, traceOut, lineColor || Color.defaultLine, { axis: 'y' });
+    errorbarSupplyDefaults(traceIn, traceOut, lineColor || Color.defaultLine, { axis: 'x', inherit: 'y' });
 
     coerceSelectionMarkerOpacity(traceOut, coerce);
 }

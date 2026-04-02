@@ -1,4 +1,4 @@
-import { getComponentMethod } from '../../registry.js';
+import { handleTraceDefaults as calendarTraceDefaults } from '../../components/calendars/index.js';
 import Lib from '../../lib/index.js';
 import colorscaleDefaults from '../../components/colorscale/defaults.js';
 import attributes from './attributes.js';
@@ -42,8 +42,7 @@ export default function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace,
         return;
     }
 
-    const handleCalendarDefaults = getComponentMethod('calendars', 'handleTraceDefaults');
-    handleCalendarDefaults(traceIn, traceOut, ['x', 'y', 'z'], layout);
+    calendarTraceDefaults(traceIn, traceOut, ['x', 'y', 'z'], layout);
 
     // Coerce remaining properties
     [

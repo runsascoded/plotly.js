@@ -3,7 +3,7 @@ import { transition } from 'd3-transition';
 import { select } from 'd3-selection';
 import 'd3-transition';
 import { extent } from 'd3-array';
-import { getComponentMethod } from '../../registry.js';
+import { errorbarPlot } from '../../components/errorbars/index.js';
 import { ensureSingle, identity, noop, simpleMap } from '../../lib/index.js';
 import { hideOutsideRangePoint, lineGroupStyle, makePointStyleFns, pointStyle, setClipUrl, singleFillStyle, singleLineStyle, singlePointStyle, smoothclosed, smoothopen, steps, textPointStyle, translatePoint, translatePoints } from '../../components/drawing/index.js';
 import subTypes from './subtypes.js';
@@ -132,7 +132,7 @@ function plotOne(gd: GraphDiv, idx: number, plotinfo: PlotInfo, cdscatter: CalcD
     const text = ensureSingle(tr, 'g', 'text');
 
     // error bars are at the bottom
-    getComponentMethod('errorbars', 'plot')(gd, errorBarGroup, plotinfo, transitionOpts);
+    errorbarPlot(gd, errorBarGroup, plotinfo, transitionOpts);
 
     if(trace.visible !== true) return;
 

@@ -1,5 +1,5 @@
 import Lib from '../../lib/index.js';
-import { getComponentMethod } from '../../registry.js';
+import { handleTraceDefaults as calendarTraceDefaults } from '../../components/calendars/index.js';
 import attributes from './attributes.js';
 import colorscaleDefaults from '../../components/colorscale/defaults.js';
 import type { FullLayout, FullTrace, InputTrace } from '../../../types/core';
@@ -39,8 +39,7 @@ function supplyIsoDefaults(traceIn: any, traceOut: any, defaultColor: any, layou
         return;
     }
 
-    const handleCalendarDefaults = getComponentMethod('calendars', 'handleTraceDefaults');
-    handleCalendarDefaults(traceIn, traceOut, ['x', 'y', 'z'], layout);
+    calendarTraceDefaults(traceIn, traceOut, ['x', 'y', 'z'], layout);
 
     coerce('valuehoverformat');
     ['x', 'y', 'z'].forEach((dim) => {

@@ -1,6 +1,6 @@
 import type { FullLayout, FullTrace, InputTrace } from '../../../types/core';
 import Lib from '../../lib/index.js';
-import { getComponentMethod } from '../../registry.js';
+import { handleTraceDefaults as calendarTraceDefaults } from '../../components/calendars/index.js';
 import Color from '../../components/color/index.js';
 import handlePeriodDefaults from '../scatter/period_defaults.js';
 import handleGroupingDefaults from '../scatter/grouping_defaults.js';
@@ -225,8 +225,7 @@ function handleSampleDefaults(traceIn: InputTrace, traceOut: FullTrace, coerce: 
         }
     }
 
-    const handleCalendarDefaults = getComponentMethod('calendars', 'handleTraceDefaults');
-    handleCalendarDefaults(traceIn, traceOut, ['x', 'y'], layout);
+    calendarTraceDefaults(traceIn, traceOut, ['x', 'y'], layout);
 }
 
 function handlePointsDefaults(traceIn: InputTrace, traceOut: FullTrace, coerce: Function, opts: { prefix: string }): void {

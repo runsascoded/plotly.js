@@ -1,4 +1,4 @@
-import { getComponentMethod } from '../../registry.js';
+import { handleTraceDefaults as calendarTraceDefaults } from '../../components/calendars/index.js';
 import Lib from '../../lib/index.js';
 
 export default function handleSampleDefaults(traceIn: any, traceOut: any, coerce: any, layout: any) {
@@ -17,8 +17,7 @@ export default function handleSampleDefaults(traceIn: any, traceOut: any, coerce
 
     traceOut._length = Math.min(xlen, ylen);
 
-    const handleCalendarDefaults = getComponentMethod('calendars', 'handleTraceDefaults');
-    handleCalendarDefaults(traceIn, traceOut, ['x', 'y'], layout);
+    calendarTraceDefaults(traceIn, traceOut, ['x', 'y'], layout);
 
     // if marker.color is an array, we can use it in aggregation instead of z
     const hasAggregationData = coerce('z') || coerce('marker.color');

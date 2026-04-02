@@ -1,7 +1,7 @@
 import type { FullLayout, FullTrace, InputTrace } from '../../../types/core';
 import isNumeric from 'fast-isnumeric';
 import Lib from '../../lib/index.js';
-import { getComponentMethod } from '../../registry.js';
+import { handleTraceDefaults as calendarTraceDefaults } from '../../components/calendars/index.js';
 
 export default function handleXYZDefaults(traceIn: InputTrace, traceOut: FullTrace, coerce: any, layout: FullLayout, xName?: string, yName?: string) {
     const z = coerce('z');
@@ -34,8 +34,7 @@ export default function handleXYZDefaults(traceIn: InputTrace, traceOut: FullTra
         traceOut._length = null;
     }
 
-    const handleCalendarDefaults = getComponentMethod('calendars', 'handleTraceDefaults');
-    handleCalendarDefaults(traceIn, traceOut, [xName, yName], layout);
+    calendarTraceDefaults(traceIn, traceOut, [xName, yName], layout);
 
     return true;
 }

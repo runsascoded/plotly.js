@@ -7,6 +7,8 @@ import _req3 from './defaults.js';
 import _req4 from './cross_trace_defaults.js';
 import _req5 from './calc.js';
 
+export { _req4 as crossTraceDefaults };
+
 export default {
     moduleType: 'component',
     name: 'colorscale',
