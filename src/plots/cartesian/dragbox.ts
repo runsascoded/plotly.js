@@ -2,7 +2,7 @@ import { select } from 'd3-selection';
 import { _, apply3DTransform, ensureSingle, extendFlat, log, notifier, numberFormat, simpleMap, strTranslate, syncOrAsync } from '../../lib/index.js';
 import tinycolor from 'tinycolor2';
 import supportsPassive from 'has-passive-events';
-import Registry from '../../registry.js';
+import { getComponentMethod, subplotsRegistry } from '../../registry.js';
 import { _guiRelayout } from '../../plot_api/plot_api.js';
 import svgTextUtils from '../../lib/svg_text_utils.js';
 import Color from '../../components/color/index.js';
@@ -27,9 +27,9 @@ const freeMode = helpers.freeMode;
 // Lazy-resolve selections via Registry to avoid pulling in ~70KB when
 // the selections component isn't registered (e.g. in the lite bundle).
 // Returns the function if registered, noop otherwise.
-function prepSelect(...args: any[]): void { return Registry.getComponentMethod('selections', 'prepSelect').apply(null, args); }
-function clearOutline(...args: any[]): void { return Registry.getComponentMethod('selections', 'clearOutline').apply(null, args); }
-function selectOnClick(...args: any[]): void { return Registry.getComponentMethod('selections', 'selectOnClick').apply(null, args); }
+function prepSelect(...args: any[]): void { return getComponentMethod('selections', 'prepSelect').apply(null, args); }
+function clearOutline(...args: any[]): void { return getComponentMethod('selections', 'clearOutline').apply(null, args); }
+function selectOnClick(...args: any[]): void { return getComponentMethod('selections', 'selectOnClick').apply(null, args); }
 const MINDRAG = constants.MINDRAG;
 const MINZOOM = constants.MINZOOM;
 
@@ -883,7 +883,7 @@ function makeDragBox(gd: GraphDiv, plotinfo: PlotInfo, x?: any, y?: any, w?: any
         }
 
         if(hasSplom) {
-            Registry.subplotsRegistry.splom.drag(gd);
+            subplotsRegistry.splom.drag(gd);
         }
 
         if(hasScatterGl) {

@@ -2,7 +2,7 @@ import isPlainObject from '../lib/is_plain_object.js';
 import noop from '../lib/noop.js';
 import Loggers from '../lib/loggers.js';
 import { sorterAsc } from '../lib/search.js';
-import Registry from '../registry.js';
+import { getComponentMethod } from '../registry.js';
 import _req0 from './container_array_match.js';
 export const containerArrayMatch = _req0;
 
@@ -16,9 +16,9 @@ export function isRemoveVal(val?: any): boolean {
 
 export function applyContainerArrayChanges(gd?: any, np?: any, edits?: any, flags?: any, _nestedProperty?: any): boolean {
     const componentType = np.astr;
-    const supplyComponentDefaults = Registry.getComponentMethod(componentType, 'supplyLayoutDefaults');
-    const draw = Registry.getComponentMethod(componentType, 'draw');
-    const drawOne = Registry.getComponentMethod(componentType, 'drawOne');
+    const supplyComponentDefaults = getComponentMethod(componentType, 'supplyLayoutDefaults');
+    const draw = getComponentMethod(componentType, 'draw');
+    const drawOne = getComponentMethod(componentType, 'drawOne');
     const replotLater = flags.replot || flags.recalc || (supplyComponentDefaults === noop) || (draw === noop);
     const layout = gd.layout;
     const fullLayout = gd._fullLayout;

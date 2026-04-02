@@ -1,6 +1,6 @@
 import type { FullAxis, FullTrace, GraphDiv } from '../../../types/core';
 import createLine from 'regl-line2d';
-import Registry from '../../registry.js';
+import { getModule } from '../../registry.js';
 import prepareRegl from '../../lib/prepare_regl.js';
 import { getModuleCalcData } from '../../plots/get_data.js';
 import Cartesian from '../../plots/cartesian/index.js';
@@ -14,7 +14,7 @@ const reglPrecompiled: any = {};
 
 function plot(gd: GraphDiv) {
     const fullLayout = gd._fullLayout;
-    const _module = Registry.getModule(SPLOM);
+    const _module = getModule(SPLOM);
     const splomCalcData = getModuleCalcData(gd.calcdata, _module)[0];
 
     const success = prepareRegl(gd, ['ANGLE_instanced_arrays', 'OES_element_index_uint'], reglPrecompiled);

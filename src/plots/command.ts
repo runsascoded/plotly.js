@@ -1,4 +1,4 @@
-import Registry from '../registry.js';
+import { apiMethodRegistry } from '../registry.js';
 import { isPlainObject, log, nestedProperty, warn } from '../lib/index.js';
 
 export function manageCommandObserver(gd?: any, container?: any, commandList?: any, onchange?: any): any {
@@ -215,7 +215,7 @@ function bindingValueHasChanged(gd?: any, binding?: any, cache?: any): any {
 export function executeAPICommand(gd?: any, method?: any, args?: any): any {
     if(method === 'skip') return Promise.resolve();
 
-    const _method = Registry.apiMethodRegistry[method];
+    const _method = apiMethodRegistry[method];
     const allArgs = [gd];
     if(!Array.isArray(args)) args = [];
 

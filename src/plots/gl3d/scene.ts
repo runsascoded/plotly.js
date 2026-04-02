@@ -1,7 +1,7 @@
 import { gl_plot3d as glPlot3d } from '../../../stackgl_modules/esm.js';
 import getContext from 'webgl-context';
 import passiveSupported from 'has-passive-events';
-import Registry from '../../registry.js';
+import { getComponentMethod } from '../../registry.js';
 import { _storeDirectGUIEdit } from '../../plot_api/plot_api.js';
 import Lib from '../../lib/index.js';
 import Axes from '../../plots/cartesian/axes.js';
@@ -72,8 +72,8 @@ function Scene(this: any, options: any, fullLayout: FullLayout) {
 
     this.contourLevels = [ [], [], [] ];
 
-    this.convertAnnotations = Registry.getComponentMethod('annotations3d', 'convert');
-    this.drawAnnotations = Registry.getComponentMethod('annotations3d', 'draw');
+    this.convertAnnotations = getComponentMethod('annotations3d', 'convert');
+    this.drawAnnotations = getComponentMethod('annotations3d', 'draw');
 
     this.initializeGLPlot();
 }

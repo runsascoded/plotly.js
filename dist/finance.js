@@ -8470,27 +8470,10 @@ var Plotly = (() => {
     if (!_module) return false;
     return _module._module;
   }
-  function traceIs(traceType, category2) {
-    traceType = getTraceType(traceType);
-    if (traceType === "various") return false;
-    let _module = modules[traceType];
-    if (!_module) {
-      if (traceType) {
-        loggers_default.log("Unrecognized trace type " + traceType + ".");
-      }
-      _module = modules[attributes_default2.type.dflt];
-    }
-    return !!_module.categories[category2];
-  }
   function getComponentMethod(name9, method) {
     const _module = componentsRegistry[name9];
     if (!_module) return noop2;
     return _module[method] || noop2;
-  }
-  function call(..._args) {
-    const name9 = _args[0];
-    const args = _args.slice(1);
-    return apiMethodRegistry[name9].apply(null, args);
   }
   function registerTraceModule(_module) {
     const thisType = _module.name;
@@ -8649,7 +8632,6 @@ var Plotly = (() => {
     if (typeof traceType === "object") traceType = traceType.type;
     return traceType;
   }
-  var registry_default = { modules, allCategories, allTypes, subplotsRegistry, componentsRegistry, layoutArrayContainers, layoutArrayRegexes, traceLayoutAttributes, localeRegistry, apiMethodRegistry, collectableSubplotTypes, register, getModule, traceIs, getComponentMethod, call };
 
   // src/plot_api/plot_api.ts
   var import_fast_isnumeric26 = __toESM(require_fast_isnumeric(), 1);
@@ -11917,7 +11899,7 @@ var Plotly = (() => {
   var DATETIME_REGEXP_CN = /^\s*(-?\d\d\d\d|\d\d)(-(\d?\di?)(-(\d?\d)([ Tt]([01]?\d|2[0-3])(:([0-5]\d)(:([0-5]\d(\.\d+)?))?(Z|z|[+\-]\d\d(:?\d\d)?)?)?)?)?)?\s*$/m;
   var YFIRST = (/* @__PURE__ */ new Date()).getFullYear() - 70;
   function isWorldCalendar(calendar) {
-    return calendar && registry_default.componentsRegistry.calendars && typeof calendar === "string" && calendar !== "gregorian";
+    return calendar && componentsRegistry.calendars && typeof calendar === "string" && calendar !== "gregorian";
   }
   function dateTick0(calendar, dayOfWeek) {
     const tick03 = _dateTick0(calendar, !!dayOfWeek);
@@ -11928,14 +11910,14 @@ var Plotly = (() => {
   }
   function _dateTick0(calendar, sunday2) {
     if (isWorldCalendar(calendar)) {
-      return sunday2 ? registry_default.getComponentMethod("calendars", "CANONICAL_SUNDAY")[calendar] : registry_default.getComponentMethod("calendars", "CANONICAL_TICK")[calendar];
+      return sunday2 ? getComponentMethod("calendars", "CANONICAL_SUNDAY")[calendar] : getComponentMethod("calendars", "CANONICAL_TICK")[calendar];
     } else {
       return sunday2 ? "2000-01-02" : "2000-01-01";
     }
   }
   function dfltRange(calendar) {
     if (isWorldCalendar(calendar)) {
-      return registry_default.getComponentMethod("calendars", "DFLTRANGE")[calendar];
+      return getComponentMethod("calendars", "DFLTRANGE")[calendar];
     } else {
       return ["2000-01-01", "2001-01-01"];
     }
@@ -11979,7 +11961,7 @@ var Plotly = (() => {
       y = Number(y);
       let cDate;
       try {
-        const calInstance = registry_default.getComponentMethod("calendars", "getCal")(calendar);
+        const calInstance = getComponentMethod("calendars", "getCal")(calendar);
         if (isChinese) {
           const isIntercalary = m.charAt(m.length - 1) === "i";
           m = parseInt(m, 10);
@@ -12024,7 +12006,7 @@ var Plotly = (() => {
       const dateJD = Math.floor(msRounded / ONEDAY) + EPOCHJD;
       const timeMs = Math.floor(mod2(ms, ONEDAY));
       try {
-        dateStr = registry_default.getComponentMethod("calendars", "getCal")(calendar).fromJD(dateJD).formatDate("yyyy-mm-dd");
+        dateStr = getComponentMethod("calendars", "getCal")(calendar).fromJD(dateJD).formatDate("yyyy-mm-dd");
       } catch (e) {
         dateStr = utcFormat("G%Y-%m-%d")(new Date(msRounded));
       }
@@ -12110,7 +12092,7 @@ var Plotly = (() => {
     });
     if (isWorldCalendar(calendar)) {
       try {
-        fmt = registry_default.getComponentMethod("calendars", "worldCalFmt")(fmt, x, calendar);
+        fmt = getComponentMethod("calendars", "worldCalFmt")(fmt, x, calendar);
       } catch (e) {
         return "Invalid";
       }
@@ -12153,7 +12135,7 @@ var Plotly = (() => {
     if (calendar) {
       try {
         const dateJD = Math.round(ms / ONEDAY) + EPOCHJD;
-        const calInstance = registry_default.getComponentMethod("calendars", "getCal")(calendar);
+        const calInstance = getComponentMethod("calendars", "getCal")(calendar);
         const cDate = calInstance.fromJD(dateJD);
         if (dMonth % 12) calInstance.add(cDate, dMonth, "m");
         else calInstance.add(cDate, dMonth / 12, "y");
@@ -12172,7 +12154,7 @@ var Plotly = (() => {
     let blankCount = 0;
     let d;
     let di;
-    const calInstance = isWorldCalendar(calendar) && registry_default.getComponentMethod("calendars", "getCal")(calendar);
+    const calInstance = isWorldCalendar(calendar) && getComponentMethod("calendars", "getCal")(calendar);
     for (let i = 0; i < data.length; i++) {
       di = data[i];
       if (!(0, import_fast_isnumeric5.default)(di)) {
@@ -12972,7 +12954,7 @@ var Plotly = (() => {
           const out = dict[s];
           if (out) return out;
         }
-        locales = registry_default.localeRegistry;
+        locales = localeRegistry;
       }
       const baseLocale = locale4.split("-")[0];
       if (baseLocale === locale4) break;
@@ -14167,7 +14149,7 @@ var Plotly = (() => {
   var queue_default = queue;
 
   // src/lib/trace_categories.ts
-  function traceIs2(trace, category2) {
+  function traceIs(trace, category2) {
     if (trace && trace._module && trace._module.categories && !Array.isArray(trace._module.categories)) {
       return !!trace._module.categories[category2];
     }
@@ -14233,7 +14215,7 @@ var Plotly = (() => {
   var UNDERSCORE_ATTRS = [IS_SUBPLOT_OBJ, IS_LINKED_TO_ARRAY, ARRAY_ATTR_REGEXPS, DEPRECATED];
   function get3() {
     const traces = {};
-    registry_default.allTypes.forEach((type) => {
+    allTypes.forEach((type) => {
       traces[type] = getTraceAttributes(type);
     });
     return {
@@ -14333,7 +14315,7 @@ var Plotly = (() => {
     const i = 1;
     let moduleAttrs, valObject;
     let _module = trace._module;
-    if (!_module) _module = (registry_default.modules[trace.type || attributes_default2.type.dflt] || {})._module;
+    if (!_module) _module = (modules[trace.type || attributes_default2.type.dflt] || {})._module;
     if (!_module) return false;
     moduleAttrs = _module.attributes;
     valObject = moduleAttrs && moduleAttrs[head];
@@ -14375,8 +14357,8 @@ var Plotly = (() => {
         }
       }
     }
-    for (key in registry_default.componentsRegistry) {
-      _module = registry_default.componentsRegistry[key];
+    for (key in componentsRegistry) {
+      _module = componentsRegistry[key];
       if (_module.name === "colorscale" && head.indexOf("coloraxis") === 0) {
         return _module.layoutAttributes[head];
       } else if (!_module.schema && head === _module.name) {
@@ -14426,7 +14408,7 @@ var Plotly = (() => {
   }
   function getTraceAttributes(type) {
     let _module, basePlotModule;
-    _module = registry_default.modules[type]._module, basePlotModule = _module.basePlotModule;
+    _module = modules[type]._module, basePlotModule = _module.basePlotModule;
     const attributes5 = {};
     attributes5.type = null;
     const copyBaseAttributes = extendDeepAll({}, attributes_default2);
@@ -14436,14 +14418,14 @@ var Plotly = (() => {
       if (attr2 === void 0) nestedProperty2(copyModuleAttributes, fullAttrString).set(void 0);
     });
     extendDeepAll(attributes5, copyBaseAttributes);
-    if (traceIs2(type, "noOpacity")) {
+    if (traceIs(type, "noOpacity")) {
       delete attributes5.opacity;
     }
-    if (!traceIs2(type, "showLegend")) {
+    if (!traceIs(type, "showLegend")) {
       delete attributes5.showlegend;
       delete attributes5.legendgroup;
     }
-    if (traceIs2(type, "noHover")) {
+    if (traceIs(type, "noHover")) {
       delete attributes5.hoverinfo;
       delete attributes5.hoverlabel;
     }
@@ -14480,8 +14462,8 @@ var Plotly = (() => {
     const layoutAttributes3 = {};
     let key, _module;
     extendDeepAll(layoutAttributes3, layout_attributes_default2);
-    for (key in registry_default.subplotsRegistry) {
-      _module = registry_default.subplotsRegistry[key];
+    for (key in subplotsRegistry) {
+      _module = subplotsRegistry[key];
       if (!_module.layoutAttributes) continue;
       if (Array.isArray(_module.attr)) {
         for (let i = 0; i < _module.attr.length; i++) {
@@ -14492,8 +14474,8 @@ var Plotly = (() => {
         handleBasePlotModule(layoutAttributes3, _module, astr);
       }
     }
-    for (key in registry_default.componentsRegistry) {
-      _module = registry_default.componentsRegistry[key];
+    for (key in componentsRegistry) {
+      _module = componentsRegistry[key];
       const schema = _module.schema;
       if (schema && (schema.subplots || schema.layout)) {
         const subplots = schema.subplots;
@@ -14886,7 +14868,7 @@ var Plotly = (() => {
   function getFromTrace(gd, fullTrace, type) {
     const fullLayout = gd._fullLayout;
     let ax = null;
-    if (traceIs2(fullTrace, "gl3d")) {
+    if (traceIs(fullTrace, "gl3d")) {
       const scene = fullTrace.scene;
       if (scene.slice(0, 5) === "scene") {
         ax = fullLayout[scene][type + "axis"];
@@ -14954,7 +14936,7 @@ var Plotly = (() => {
     const remainingCalcData = [];
     let plotMethod;
     if (typeof arg1 === "string") {
-      plotMethod = registry_default.getModule(arg1).plot;
+      plotMethod = getModule(arg1).plot;
     } else if (typeof arg1 === "function") {
       plotMethod = arg1;
     } else {
@@ -15140,7 +15122,7 @@ var Plotly = (() => {
   }
   function executeAPICommand(gd, method, args) {
     if (method === "skip") return Promise.resolve();
-    const _method = registry_default.apiMethodRegistry[method];
+    const _method = apiMethodRegistry[method];
     const allArgs = [gd];
     if (!Array.isArray(args)) args = [];
     for (let i = 0; i < args.length; i++) {
@@ -15272,7 +15254,7 @@ var Plotly = (() => {
   // src/plots/plots.ts
   var { BADNUM: BADNUM5 } = numerical_default;
   var attributes = attributes_default2;
-  attributes.type.values = registry_default.allTypes;
+  attributes.type.values = allTypes;
   var fontAttrs = font_attributes_default;
   var layoutAttributes = layout_attributes_default2;
   var executeAPICommand2 = command_default.executeAPICommand;
@@ -15284,9 +15266,9 @@ var Plotly = (() => {
     return new Promise(function(resolve) {
       setTimeout(function() {
         if (!gd._fullLayout) return;
-        registry_default.getComponentMethod("annotations", "draw")(gd);
-        registry_default.getComponentMethod("legend", "draw")(gd);
-        registry_default.getComponentMethod("colorbar", "draw")(gd);
+        getComponentMethod("annotations", "draw")(gd);
+        getComponentMethod("legend", "draw")(gd);
+        getComponentMethod("colorbar", "draw")(gd);
         resolve(previousPromises(gd));
       }, 300);
     });
@@ -15473,7 +15455,7 @@ var Plotly = (() => {
     const splomXa = Object.keys(splomAxes.x);
     const splomYa = Object.keys(splomAxes.y);
     if (splomXa.length > 1 && splomYa.length > 1) {
-      registry_default.getComponentMethod("grid", "sizeDefaults")(newLayout, newFullLayout);
+      getComponentMethod("grid", "sizeDefaults")(newLayout, newFullLayout);
       for (i = 0; i < splomXa.length; i++) {
         pushUnique2(subplots.xaxis, splomXa[i]);
       }
@@ -15518,7 +15500,7 @@ var Plotly = (() => {
     }
     fillMetaTextHelpers(newFullData, newFullLayout);
     relinkPrivateKeys2(newFullLayout, oldFullLayout);
-    registry_default.getComponentMethod("colorscale", "crossTraceDefaults")(newFullData, newFullLayout);
+    getComponentMethod("colorscale", "crossTraceDefaults")(newFullData, newFullLayout);
     if (!newFullLayout._preGUI) newFullLayout._preGUI = {};
     if (!newFullLayout._tracePreGUI) newFullLayout._tracePreGUI = {};
     const tracePreGUI = newFullLayout._tracePreGUI;
@@ -15534,7 +15516,7 @@ var Plotly = (() => {
       if (uids[uid] === "old") delete tracePreGUI[uid];
     }
     initMargins(newFullLayout);
-    registry_default.getComponentMethod("rangeslider", "makeData")(newFullLayout);
+    getComponentMethod("rangeslider", "makeData")(newFullLayout);
     if (!skipUpdateCalc && oldCalcdata.length === newFullData.length) {
       supplyDefaultsUpdateCalc(oldCalcdata, newFullData);
     }
@@ -15590,14 +15572,13 @@ var Plotly = (() => {
     return out;
   }
   function emptySubplotLists() {
-    let collectableSubplotTypes2 = registry_default.collectableSubplotTypes;
+    let collectableSubplotTypes2 = collectableSubplotTypes;
     const out = {};
     let i, j;
     if (!collectableSubplotTypes2) {
       collectableSubplotTypes2 = [];
-      const subplotsRegistry2 = registry_default.subplotsRegistry;
-      for (const subplotType in subplotsRegistry2) {
-        const subplotModule = subplotsRegistry2[subplotType];
+      for (const subplotType in subplotsRegistry) {
+        const subplotModule = subplotsRegistry[subplotType];
         const subplotAttr = subplotModule.attr;
         if (subplotAttr) {
           collectableSubplotTypes2.push(subplotType);
@@ -15639,13 +15620,13 @@ var Plotly = (() => {
           includeFormat(formatj);
           if (formatDone) break;
         }
-        locales = registry_default.localeRegistry;
+        locales = localeRegistry;
       }
       const baseLocale = locale4.split("-")[0];
       if (formatDone || baseLocale === locale4) break;
       locale4 = baseLocale;
     }
-    if (!formatDone) includeFormat(registry_default.localeRegistry.en.format);
+    if (!formatDone) includeFormat(localeRegistry.en.format);
     return formatObj;
   }
   function getFormatter(formatObj, separators) {
@@ -15720,7 +15701,7 @@ var Plotly = (() => {
     for (i = 0; i < modules2.length; i++) {
       const name9 = modules2[i].name;
       if (name9 === category2) return true;
-      const _module = registry_default.modules[name9];
+      const _module = modules[name9];
       if (_module && _module.categories[category2]) return true;
     }
     return false;
@@ -15821,7 +15802,7 @@ var Plotly = (() => {
       ax._counterAxes.sort(axis_ids_default.idSort);
       ax._subplotsWith.sort(subplotSort);
       ax._mainSubplot = findMainSubplot(ax, newFullLayout);
-      if (ax._counterAxes.length && (ax.spikemode && ax.spikemode.indexOf("across") !== -1 || ax.automargin && ax.mirror && ax.anchor !== "free" || registry_default.getComponentMethod("rangeslider", "isVisible")(ax))) {
+      if (ax._counterAxes.length && (ax.spikemode && ax.spikemode.indexOf("across") !== -1 || ax.automargin && ax.mirror && ax.anchor !== "free" || getComponentMethod("rangeslider", "isVisible")(ax))) {
         let min3 = 1;
         let max3 = 0;
         for (j = 0; j < ax._counterAxes.length; j++) {
@@ -15919,10 +15900,10 @@ var Plotly = (() => {
       fullTrace._input = trace;
       fullTrace._fullInput = fullTrace;
       pushModule(fullTrace);
-      if (traceIs2(fullTrace, "carpetAxis")) {
+      if (traceIs(fullTrace, "carpetAxis")) {
         carpetIndex[fullTrace.carpet] = fullTrace;
       }
-      if (traceIs2(fullTrace, "carpetDependent")) {
+      if (traceIs(fullTrace, "carpetDependent")) {
         carpetDependents.push(i);
       }
     }
@@ -16009,7 +15990,7 @@ var Plotly = (() => {
     coerce3("type");
     coerce3("name", layout._traceWord + " " + traceInIndex);
     coerce3("uirevision", layout.uirevision);
-    const _module = registry_default.getModule(traceOut);
+    const _module = getModule(traceOut);
     traceOut._module = _module;
     if (_module) {
       const basePlotModule = _module.basePlotModule;
@@ -16037,7 +16018,7 @@ var Plotly = (() => {
       coerce3("customdata");
       coerce3("ids");
       coerce3("meta");
-      if (traceIs2(traceOut, "showLegend")) {
+      if (traceIs(traceOut, "showLegend")) {
         lib_default.coerce(
           traceIn,
           traceOut,
@@ -16061,16 +16042,16 @@ var Plotly = (() => {
       if (_module) {
         _module.supplyDefaults(traceIn, traceOut, defaultColor, layout);
       }
-      if (!traceIs2(traceOut, "noOpacity")) {
+      if (!traceIs(traceOut, "noOpacity")) {
         coerce3("opacity");
       }
-      if (traceIs2(traceOut, "notLegendIsolatable")) {
+      if (traceIs(traceOut, "notLegendIsolatable")) {
         traceOut.visible = !!traceOut.visible;
       }
-      if (!traceIs2(traceOut, "noHover")) {
+      if (!traceIs(traceOut, "noHover")) {
         if (!traceOut.hovertemplate) coerceHoverinfo(traceIn, traceOut, layout);
         if (traceOut.type !== "parcats") {
-          registry_default.getComponentMethod("fx", "supplyDefaults")(traceIn, traceOut, defaultColor, layout);
+          getComponentMethod("fx", "supplyDefaults")(traceIn, traceOut, defaultColor, layout);
         }
       }
       if (_module && _module.selectPoints) {
@@ -16146,7 +16127,7 @@ var Plotly = (() => {
     coerce3("margin.pad");
     coerce3("margin.autoexpand");
     if (layoutIn.width && layoutIn.height) sanitizeMargins(layoutOut);
-    registry_default.getComponentMethod("grid", "sizeDefaults")(layoutIn, layoutOut);
+    getComponentMethod("grid", "sizeDefaults")(layoutIn, layoutOut);
     coerce3("paper_bgcolor");
     coerce3("separators", formatObj.decimal + formatObj.thousands);
     coerce3("hidesources");
@@ -16155,15 +16136,15 @@ var Plotly = (() => {
     const uirevision = coerce3("uirevision");
     coerce3("editrevision", uirevision);
     coerce3("selectionrevision", uirevision);
-    registry_default.getComponentMethod(
+    getComponentMethod(
       "modebar",
       "supplyLayoutDefaults"
     )(layoutIn, layoutOut);
-    registry_default.getComponentMethod(
+    getComponentMethod(
       "shapes",
       "supplyDrawNewShapeDefaults"
     )(layoutIn, layoutOut, coerce3);
-    registry_default.getComponentMethod(
+    getComponentMethod(
       "selections",
       "supplyDrawNewSelectionDefaults"
     )(layoutIn, layoutOut, coerce3);
@@ -16173,11 +16154,11 @@ var Plotly = (() => {
       coerce3("transition.easing");
       coerce3("transition.ordering");
     }
-    registry_default.getComponentMethod(
+    getComponentMethod(
       "calendars",
       "handleDefaults"
     )(layoutIn, layoutOut, "calendar");
-    registry_default.getComponentMethod(
+    getComponentMethod(
       "fx",
       "supplyLayoutGlobalDefaults"
     )(layoutIn, layoutOut, coerce3);
@@ -16223,12 +16204,11 @@ var Plotly = (() => {
     sanitizeMargins(fullLayout);
   }
   function supplyLayoutModuleDefaults(layoutIn, layoutOut, fullData, transitionData) {
-    const componentsRegistry2 = registry_default.componentsRegistry;
     const basePlotModules = layoutOut._basePlotModules;
     let component, i, _module;
-    const Cartesian = registry_default.subplotsRegistry.cartesian;
-    for (component in componentsRegistry2) {
-      _module = componentsRegistry2[component];
+    const Cartesian = subplotsRegistry.cartesian;
+    for (component in componentsRegistry) {
+      _module = componentsRegistry[component];
       if (_module.includeBasePlot) {
         _module.includeBasePlot(layoutIn, layoutOut);
       }
@@ -16237,7 +16217,7 @@ var Plotly = (() => {
       basePlotModules.push(Cartesian);
     }
     if (layoutOut._has("cartesian")) {
-      registry_default.getComponentMethod("grid", "contentDefaults")(layoutIn, layoutOut);
+      getComponentMethod("grid", "contentDefaults")(layoutIn, layoutOut);
       Cartesian.finalizeSubplots(layoutIn, layoutOut);
     }
     for (const subplotType in layoutOut._subplots) {
@@ -16263,8 +16243,8 @@ var Plotly = (() => {
         _module.supplyLayoutDefaults(layoutIn, layoutOut, fullData, transitionData);
       }
     }
-    for (component in componentsRegistry2) {
-      _module = componentsRegistry2[component];
+    for (component in componentsRegistry) {
+      _module = componentsRegistry[component];
       if (_module.supplyLayoutDefaults) {
         _module.supplyLayoutDefaults(layoutIn, layoutOut, fullData);
       }
@@ -16838,7 +16818,7 @@ var Plotly = (() => {
     return dest;
   }
   var dataArrayContainers = ["transforms", "dimensions"];
-  var layoutArrayContainers2 = registry_default.layoutArrayContainers;
+  var layoutArrayContainers2 = layoutArrayContainers;
   function extendTrace(destTrace, srcTrace) {
     return extendObjectWithContainers(destTrace, srcTrace, dataArrayContainers);
   }
@@ -17158,7 +17138,7 @@ var Plotly = (() => {
         }
         for (j = 0; j < trace.transforms.length; j++) {
           const transform = trace.transforms[j];
-          _module = registry_default.transformsRegistry[transform.type];
+          _module = void 0;
           if (_module && _module.calcTransform) {
             trace._hasCalcTransform = true;
             hasCalcTransform = true;
@@ -17207,8 +17187,8 @@ var Plotly = (() => {
       for (i = 0; i < sorted.length; i++) calci(sorted[i], false);
       doCrossTraceCalc(gd);
     }
-    registry_default.getComponentMethod("fx", "calc")(gd);
-    registry_default.getComponentMethod("errorbars", "calc")(gd);
+    getComponentMethod("fx", "calc")(gd);
+    getComponentMethod("errorbars", "calc")(gd);
   }
   var sortAxisCategoriesByValueRegex = /(total|sum|min|max|mean|geometric mean|median) (ascending|descending)/;
   function sortAxisCategoriesByValue(axList, gd) {
@@ -17284,7 +17264,7 @@ var Plotly = (() => {
           const fullTrace = gd._fullData[traceIndex];
           if (fullTrace.visible !== true) continue;
           const type = fullTrace.type;
-          if (traceIs2(fullTrace, "histogram")) {
+          if (traceIs(fullTrace, "histogram")) {
             delete fullTrace._xautoBinFinished;
             delete fullTrace._yautoBinFinished;
           }
@@ -17434,7 +17414,7 @@ var Plotly = (() => {
     const B = fullLayout._previousSelections;
     fullLayout._previousSelections = A;
     const mayEmitSelected = fullLayout._reselect || JSON.stringify(A) !== JSON.stringify(B);
-    registry_default.getComponentMethod("selections", "reselect")(gd, mayEmitSelected);
+    getComponentMethod("selections", "reselect")(gd, mayEmitSelected);
   }
   function generalUpdatePerTraceModule(gd, subplot, subplotCalcData, subplotLayout) {
     const traceHashOld = subplot.traceHash;
@@ -17464,7 +17444,7 @@ var Plotly = (() => {
     subplot.traceHash = traceHash;
   }
   function plotBasePlot(desiredType, gd, traces, transitionOpts, makeOnCompleteCallback) {
-    const _module = registry_default.getModule(desiredType);
+    const _module = getModule(desiredType);
     const cdmodule = getModuleCalcData(gd.calcdata, _module)[0];
     _module.plot(gd, cdmodule, transitionOpts, makeOnCompleteCallback);
   }
@@ -21590,7 +21570,7 @@ var Plotly = (() => {
       const colorAxes = layout._colorAxes || {};
       const colorAx = coerce3(prefix + "coloraxis");
       if (colorAx) {
-        const colorbarVisuals = traceIs2(parentContOut, "contour") && nestedProperty2(parentContOut, "contours.coloring").get() || "heatmap";
+        const colorbarVisuals = traceIs(parentContOut, "contour") && nestedProperty2(parentContOut, "contours.coloring").get() || "heatmap";
         const stash = colorAxes[colorAx];
         if (stash) {
           stash[2].push(thisFn);
@@ -22775,7 +22755,7 @@ var Plotly = (() => {
       const trace = d[0].trace;
       const xcalendar = trace.xcalendar;
       const ycalendar = trace.ycalendar;
-      const selector = traceIs2(trace, "bar-like") ? ".bartext" : ".point,.textpoint";
+      const selector = traceIs(trace, "bar-like") ? ".bartext" : ".point,.textpoint";
       traceGroups.selectAll(selector).each(function(d2) {
         hideOutsideRangePoint(d2, select_default2(this), xa, ya, xcalendar, ycalendar);
       });
@@ -23357,7 +23337,7 @@ var Plotly = (() => {
     const marker2 = trace.marker;
     out.markerScale = tryColorscale(marker2, "");
     out.lineScale = tryColorscale(marker2, "line");
-    if (traceIs2(trace, "symbols")) {
+    if (traceIs(trace, "symbols")) {
       out.ms2mrc = subtypes_default.isBubble(trace) ? makeBubbleSizeFn(trace) : function() {
         return (marker2.size || 6) / 2;
       };
@@ -23407,7 +23387,7 @@ var Plotly = (() => {
     const usms = unselectedMarker.size;
     const smsIsDefined = sms !== void 0;
     const usmsIsDefined = usms !== void 0;
-    if (traceIs2(trace, "symbols") && (smsIsDefined || usmsIsDefined)) {
+    if (traceIs(trace, "symbols") && (smsIsDefined || usmsIsDefined)) {
       out.selectedSizeFn = function(d) {
         const base = d.mrc || ms / 2;
         if (d.selected) {
@@ -23563,7 +23543,7 @@ var Plotly = (() => {
       const tp = d.tp || trace.textposition;
       const fontSize = extracTextFontSize(d, trace);
       color_default.fill(tx, tc);
-      const dontTouchParent = traceIs2(trace, "bar-like");
+      const dontTouchParent = traceIs(trace, "bar-like");
       textPointPosition(tx, tp, fontSize, d.mrc2 || d.mrc, dontTouchParent);
     });
   }
@@ -25589,7 +25569,7 @@ var Plotly = (() => {
     axIds = axIds ? axIds : axes.listIds(gd);
     const fullLayout = gd._fullLayout;
     function _redrawOneComp(moduleName, methodName, stashName, shortCircuit) {
-      const method = registry_default.getComponentMethod(moduleName, methodName);
+      const method = getComponentMethod(moduleName, methodName);
       const stash = {};
       for (let i = 0; i < axIds.length; i++) {
         const ax = fullLayout[axes.id2name(axIds[i])];
@@ -27260,7 +27240,7 @@ var Plotly = (() => {
         ax._depth = majorTickSigns[4] * (getLabelLevelBbox()[ax.side] - mainLinePositionShift);
       });
     }
-    const hasRangeSlider = registry_default.getComponentMethod("rangeslider", "isVisible")(ax);
+    const hasRangeSlider = getComponentMethod("rangeslider", "isVisible")(ax);
     if (!opts.skipTitle && !(hasRangeSlider && ax.side === "bottom")) {
       seq.push(function() {
         return drawTitle(gd, ax);
@@ -27361,7 +27341,7 @@ var Plotly = (() => {
         }
       }
       if (hasRangeSlider) {
-        rangeSliderPush = registry_default.getComponentMethod("rangeslider", "autoMarginOpts")(gd, ax);
+        rangeSliderPush = getComponentMethod("rangeslider", "autoMarginOpts")(gd, ax);
       }
       if (typeof ax.automargin === "string") {
         filterPush(push, ax.automargin);
@@ -28321,7 +28301,7 @@ var Plotly = (() => {
     for (let i = 0; i < fullData.length; i++) {
       const trace = fullData[i];
       if (trace.visible === true && trace.xaxis + trace.yaxis === subplot) {
-        if (traceIs2(trace, "bar-like") && trace.orientation === { x: "h", y: "v" }[axLetter]) return true;
+        if (traceIs(trace, "bar-like") && trace.orientation === { x: "h", y: "v" }[axLetter]) return true;
         if (trace.fill && trace.fill.charAt(trace.fill.length - 1) === axLetter) return true;
       }
     }
@@ -28342,7 +28322,7 @@ var Plotly = (() => {
           allowAutoMargin(gd, axMirrorAutoMarginID(ax));
         }
       }
-      if (registry_default.getComponentMethod("rangeslider", "isVisible")(ax)) {
+      if (getComponentMethod("rangeslider", "isVisible")(ax)) {
         allowAutoMargin(gd, rangeSliderAutoMarginID(ax));
       }
     }
@@ -29185,7 +29165,7 @@ var Plotly = (() => {
     let defaultOrder = "normal";
     const shapesWithLegend = (layoutOut.shapes || []).filter((d) => d.showlegend);
     function isPieWithLegendArray(trace2) {
-      return traceIs2(trace2, "pie-like") && trace2._length != null && (Array.isArray(trace2.legend) || Array.isArray(trace2.showlegend));
+      return traceIs(trace2, "pie-like") && trace2._length != null && (Array.isArray(trace2.legend) || Array.isArray(trace2.showlegend));
     }
     fullData.filter(isPieWithLegendArray).forEach((trace2) => {
       if (trace2.visible) {
@@ -29217,14 +29197,14 @@ var Plotly = (() => {
         legendTraceCount++;
         if (trace.showlegend) {
           legendReallyHasATrace = true;
-          if (!isShape && traceIs2(trace, "pie-like") || trace._input.showlegend === true) {
+          if (!isShape && traceIs(trace, "pie-like") || trace._input.showlegend === true) {
             legendTraceCount++;
           }
         }
         coerceFont(traceCoerce, "legendgrouptitle.font", grouptitlefont);
         traceCoerce("legendsymbol.path");
       }
-      if (!isShape && traceIs2(trace, "bar") && layoutOut.barmode === "stack" || ["tonextx", "tonexty"].indexOf(trace.fill) !== -1) {
+      if (!isShape && traceIs(trace, "bar") && layoutOut.barmode === "stack" || ["tonextx", "tonexty"].indexOf(trace.fill) !== -1) {
         defaultOrder = helpers_default3.isGrouped({ traceorder: defaultOrder }) ? "grouped+reversed" : "reversed";
       }
       if (trace.legendgroup !== void 0 && trace.legendgroup !== "") {
@@ -29253,7 +29233,7 @@ var Plotly = (() => {
     let defaultXAnchor = "left";
     if (isHorizontal) {
       defaultX = 0;
-      if (registry_default.getComponentMethod("rangeslider", "isVisible")(layoutIn.xaxis)) {
+      if (getComponentMethod("rangeslider", "isVisible")(layoutIn.xaxis)) {
         if (isPaperY) {
           defaultY = 1.1;
           defaultYAnchor = "bottom";
@@ -29645,7 +29625,7 @@ var Plotly = (() => {
     const thisLegend = fullTrace.legend;
     const fullInput = fullTrace._fullInput;
     const isShape = fullInput && fullInput._isShape;
-    if (!isShape && traceIs2(fullTrace, "pie-like")) {
+    if (!isShape && traceIs(fullTrace, "pie-like")) {
       const thisLabel = legendItem.label;
       const thisLabelIndex = hiddenSlices.indexOf(thisLabel);
       if (mode === "toggle") {
@@ -29727,7 +29707,7 @@ var Plotly = (() => {
           notInLegend = _item.showlegend !== true;
           if (isClicked || notInLegend) continue;
           isInGroup = hasLegendgroup && _item.legendgroup === legendgroup;
-          if (!isInGroup && _item.legend === thisLegend && _item.visible === true && !traceIs2(_item, "notLegendIsolatable")) {
+          if (!isInGroup && _item.legend === thisLegend && _item.visible === true && !traceIs(_item, "notLegendIsolatable")) {
             isIsolated = false;
             break;
           }
@@ -29735,7 +29715,7 @@ var Plotly = (() => {
         for (i = 0; i < allLegendItems.length; i++) {
           _item = allLegendItems[i];
           if (_item.visible === false || _item.legend !== thisLegend) continue;
-          if (traceIs2(_item, "notLegendIsolatable")) {
+          if (traceIs(_item, "notLegendIsolatable")) {
             continue;
           }
           switch (fullTrace.visible) {
@@ -29828,7 +29808,7 @@ var Plotly = (() => {
       let lid = trace.legend;
       const lgroup = trace.legendgroup;
       if (!inHover && (!trace.visible || !trace.showlegend)) continue;
-      if (traceIs2(trace, "pie-like")) {
+      if (traceIs(trace, "pie-like")) {
         const legendPerSlice = Array.isArray(trace.legend);
         const showlegendPerSlice = Array.isArray(trace.showlegend);
         if (!slicesShown[lgroup]) slicesShown[lgroup] = {};
@@ -29913,7 +29893,7 @@ var Plotly = (() => {
       if (groupTitle) {
         let hasPieLike = false;
         for (j = 0; j < legendData[i].length; j++) {
-          if (traceIs2(legendData[i][j].trace, "pie-like")) {
+          if (traceIs(legendData[i][j].trace, "pie-like")) {
             hasPieLike = true;
             break;
           }
@@ -30237,7 +30217,7 @@ var Plotly = (() => {
         // Square with rounded corners
         "M6,6H-6V-6H6Z"
       );
-      const isVisible2 = !desiredType ? traceIs2(trace, "bar") : trace.visible && trace.type === desiredType;
+      const isVisible2 = !desiredType ? traceIs(trace, "bar") : trace.visible && trace.type === desiredType;
       const barpath = select_default2(lThis).select("g.legendpoints").selectAll("path.legend" + desiredType).data(isVisible2 ? [d] : []);
       const barpathEnter = barpath.enter().append("path").classed("legend" + desiredType, true).attr("d", pathStr).attr("transform", centerTransform);
       barpath.exit().remove();
@@ -30286,7 +30266,7 @@ var Plotly = (() => {
     }
     function styleBoxes(d) {
       const trace = d[0].trace;
-      const boxJoin = select_default2(this).select("g.legendpoints").selectAll("path.legendbox").data(trace.visible && traceIs2(trace, "box-violin") ? [d] : []);
+      const boxJoin = select_default2(this).select("g.legendpoints").selectAll("path.legendbox").data(trace.visible && traceIs(trace, "box-violin") ? [d] : []);
       const boxEnter = boxJoin.enter().append("path").classed("legendbox", true).attr("d", "M6,6H-6V-6H6Z").attr("transform", centerTransform);
       boxJoin.exit().remove();
       const pts = boxJoin.merge(boxEnter);
@@ -30350,7 +30330,7 @@ var Plotly = (() => {
     function stylePieLike(d, lThis, desiredType) {
       const d0 = d[0];
       const trace = d0.trace;
-      const isVisible2 = !desiredType ? traceIs2(trace, desiredType) : trace.visible && trace.type === desiredType;
+      const isVisible2 = !desiredType ? traceIs(trace, desiredType) : trace.visible && trace.type === desiredType;
       const pieJoin = select_default2(lThis).select("g.legendpoints").selectAll("path.legend" + desiredType).data(isVisible2 ? [d] : []);
       const pieEnter = pieJoin.enter().append("path").classed("legend" + desiredType, true).attr("d", "M6,6H-6V-6H6Z").attr("transform", centerTransform);
       pieJoin.exit().remove();
@@ -30669,7 +30649,7 @@ var Plotly = (() => {
     const traces = tracesJoin.enter().append("g").attr("class", "traces").merge(tracesJoin);
     traces.style("opacity", function(d) {
       const trace = d[0].trace;
-      if (traceIs2(trace, "pie-like")) {
+      if (traceIs(trace, "pie-like")) {
         return hiddenSlices.indexOf(d[0].label) !== -1 ? 0.5 : 1;
       } else {
         return trace.visible === "legendonly" ? 0.5 : 1;
@@ -30882,7 +30862,7 @@ var Plotly = (() => {
     if (trace._group) {
       evtData.group = trace._group;
     }
-    if (traceIs2(trace, "pie-like")) {
+    if (traceIs(trace, "pie-like")) {
       evtData.label = legendItem.datum()[0].label;
     }
     const clickVal = events_default.triggerHandler(gd, "plotly_legendclick", evtData);
@@ -30903,7 +30883,7 @@ var Plotly = (() => {
     const legendId = getId(legendObj);
     const legendItem = g.data()[0][0];
     const trace = legendItem.trace;
-    const isPieLike = traceIs2(trace, "pie-like");
+    const isPieLike = traceIs(trace, "pie-like");
     const isEditable = !legendObj._inHover && gd._context.edits.legendText && !isPieLike;
     const maxNameLength = legendObj._maxNameLength;
     let name9, textFont;
@@ -31345,7 +31325,7 @@ var Plotly = (() => {
         let y0 = Math.min(_y0, _y1);
         let y1 = Math.max(_y0, _y1);
         const trace = hoverItem.trace;
-        if (traceIs2(trace, "gl3d")) {
+        if (traceIs(trace, "gl3d")) {
           const container = gd._fullLayout[trace.scene]._scene.container;
           const dx = container.offsetLeft;
           const dy = container.offsetTop;
@@ -31884,7 +31864,7 @@ var Plotly = (() => {
       alignHoverText(hoverLabels, rotateLabels, fullLayout._invScaleX, fullLayout._invScaleY);
     }
     if (eventTarget && eventTarget.tagName) {
-      const hasClickToShow2 = registry_default.getComponentMethod("annotations", "hasClickToShow")(gd, newhoverdata);
+      const hasClickToShow2 = getComponentMethod("annotations", "hasClickToShow")(gd, newhoverdata);
       overrideCursor(select_default2(eventTarget), hasClickToShow2 ? "pointer" : "");
     }
     if (!eventTarget || noHoverEvent || !hoverChanged(gd, evt, oldhoverdata)) return;
@@ -32159,7 +32139,7 @@ var Plotly = (() => {
       const winningPoint = groupedHoverData[0];
       const avgX = (winningPoint.x0 + winningPoint.x1) / 2;
       const avgY = (winningPoint.y0 + winningPoint.y1) / 2;
-      const pointWon = !(traceIs2(winningPoint.trace, "bar-like") || traceIs2(winningPoint.trace, "box-violin"));
+      const pointWon = !(traceIs(winningPoint.trace, "bar-like") || traceIs(winningPoint.trace, "box-violin"));
       let lyBottom, lyTop;
       if (axLetter === "y") {
         if (pointWon) {
@@ -32867,7 +32847,7 @@ var Plotly = (() => {
     const last = [];
     for (let i = 0; i < hoverData.length; i++) {
       const d = hoverData[i];
-      if (traceIs2(d.trace, "bar-like") || traceIs2(d.trace, "box-violin")) {
+      if (traceIs(d.trace, "bar-like") || traceIs(d.trace, "box-violin")) {
         last.push(d);
       } else if (d.trace[axLetter + "period"]) {
         second2.push(d);
@@ -33030,8 +33010,8 @@ var Plotly = (() => {
     for (let i = 0; i < calcdata.length; i++) {
       const cd = calcdata[i];
       const trace = cd[0].trace;
-      if (traceIs2(trace, "pie-like")) continue;
-      const fillFn = traceIs2(trace, "2dMap") ? paste : fillArray;
+      if (traceIs(trace, "pie-like")) continue;
+      const fillFn = traceIs(trace, "2dMap") ? paste : fillArray;
       fillFn(trace.hoverinfo, cd, "hi", makeCoerceHoverInfo(trace));
       if (trace.hovertemplate) fillFn(trace.hovertemplate, cd, "ht");
       if (!trace.hoverlabel) continue;
@@ -33057,7 +33037,7 @@ var Plotly = (() => {
 
   // src/components/fx/click.ts
   function click(gd, evt, subplot) {
-    const annotationsDone = registry_default.getComponentMethod("annotations", "onClick")(gd, gd._hoverdata);
+    const annotationsDone = getComponentMethod("annotations", "onClick")(gd, gd._hoverdata);
     if (subplot !== void 0) {
       hover(gd, evt, subplot, true);
     }
@@ -33628,7 +33608,7 @@ var Plotly = (() => {
     fullLayout._paperdiv.style("width", gd._context.responsive && fullLayout.autosize && !gd._context._hasZeroWidth && !gd.layout.width ? "100%" : fullLayout.width + "px").style("height", gd._context.responsive && fullLayout.autosize && !gd._context._hasZeroHeight && !gd.layout.height ? "100%" : fullLayout.height + "px").selectAll(".main-svg").call(setSize, fullLayout.width, fullLayout.height);
     gd._context.setBackground(gd, fullLayout.paper_bgcolor);
     drawMainTitle(gd);
-    registry_default.getComponentMethod("modebar", "manage")(gd);
+    getComponentMethod("modebar", "manage")(gd);
     if (!fullLayout._has("cartesian")) {
       return previousPromises(gd);
     }
@@ -34028,11 +34008,11 @@ var Plotly = (() => {
       redrawReglTraces(gd);
     }
     style(gd);
-    registry_default.getComponentMethod("legend", "draw")(gd);
+    getComponentMethod("legend", "draw")(gd);
     return previousPromises(gd);
   }
   function doColorBars(gd) {
-    registry_default.getComponentMethod("colorbar", "draw")(gd);
+    getComponentMethod("colorbar", "draw")(gd);
     return previousPromises(gd);
   }
   function layoutReplot(gd) {
@@ -34041,13 +34021,13 @@ var Plotly = (() => {
     return _doPlot(gd, "", layout);
   }
   function doLegend(gd) {
-    registry_default.getComponentMethod("legend", "draw")(gd);
+    getComponentMethod("legend", "draw")(gd);
     return previousPromises(gd);
   }
   function doTicksRelayout(gd) {
     axes_default.draw(gd, "redraw");
     if (gd._fullLayout._hasOnlyLargeSploms) {
-      registry_default.subplotsRegistry.splom.updateGrid(gd);
+      subplotsRegistry.splom.updateGrid(gd);
       clearGlCanvases(gd);
       redrawReglTraces(gd);
     }
@@ -34056,7 +34036,7 @@ var Plotly = (() => {
   }
   function doModeBar(gd) {
     const fullLayout = gd._fullLayout;
-    registry_default.getComponentMethod("modebar", "manage")(gd);
+    getComponentMethod("modebar", "manage")(gd);
     for (let i = 0; i < fullLayout._basePlotModules.length; i++) {
       const updateFx3 = fullLayout._basePlotModules[i].updateFx;
       if (updateFx3) updateFx3(gd);
@@ -34081,10 +34061,10 @@ var Plotly = (() => {
     }
     redrawReglTraces(gd);
     style(gd);
-    registry_default.getComponentMethod("selections", "draw")(gd);
-    registry_default.getComponentMethod("shapes", "draw")(gd);
-    registry_default.getComponentMethod("annotations", "draw")(gd);
-    registry_default.getComponentMethod("images", "draw")(gd);
+    getComponentMethod("selections", "draw")(gd);
+    getComponentMethod("shapes", "draw")(gd);
+    getComponentMethod("annotations", "draw")(gd);
+    getComponentMethod("images", "draw")(gd);
     fullLayout._replotting = false;
     return previousPromises(gd);
   }
@@ -34143,15 +34123,15 @@ var Plotly = (() => {
     enforceAxisConstraints(gd);
   }
   function finalDraw(gd) {
-    registry_default.getComponentMethod("rangeslider", "draw")(gd);
-    registry_default.getComponentMethod("rangeselector", "draw")(gd);
+    getComponentMethod("rangeslider", "draw")(gd);
+    getComponentMethod("rangeselector", "draw")(gd);
   }
   function drawMarginPushers(gd) {
-    registry_default.getComponentMethod("legend", "draw")(gd);
-    registry_default.getComponentMethod("rangeselector", "draw")(gd);
-    registry_default.getComponentMethod("sliders", "draw")(gd);
-    registry_default.getComponentMethod("updatemenus", "draw")(gd);
-    registry_default.getComponentMethod("colorbar", "draw")(gd);
+    getComponentMethod("legend", "draw")(gd);
+    getComponentMethod("rangeselector", "draw")(gd);
+    getComponentMethod("sliders", "draw")(gd);
+    getComponentMethod("updatemenus", "draw")(gd);
+    getComponentMethod("colorbar", "draw")(gd);
   }
   var subroutines_default = { layoutStyles, drawMainTitle, doTraceStyle, doColorBars, layoutReplot, doLegend, doTicksRelayout, doModeBar, doCamera, drawData, redrawReglTraces, doAutoRangeAndConstraints, finalDraw, drawMarginPushers };
 
@@ -34160,13 +34140,13 @@ var Plotly = (() => {
   var selectingOrDrawing2 = helpers_default5.selectingOrDrawing;
   var freeMode2 = helpers_default5.freeMode;
   function prepSelect(...args) {
-    return registry_default.getComponentMethod("selections", "prepSelect").apply(null, args);
+    return getComponentMethod("selections", "prepSelect").apply(null, args);
   }
   function clearOutline(...args) {
-    return registry_default.getComponentMethod("selections", "clearOutline").apply(null, args);
+    return getComponentMethod("selections", "clearOutline").apply(null, args);
   }
   function selectOnClick(...args) {
-    return registry_default.getComponentMethod("selections", "selectOnClick").apply(null, args);
+    return getComponentMethod("selections", "selectOnClick").apply(null, args);
   }
   var MINDRAG = constants_default2.MINDRAG;
   var MINZOOM = constants_default2.MINZOOM;
@@ -34771,7 +34751,7 @@ var Plotly = (() => {
         }
       }
       if (hasSplom) {
-        registry_default.subplotsRegistry.splom.drag(gd);
+        subplotsRegistry.splom.drag(gd);
       }
       if (hasScatterGl) {
         for (i = 0; i < subplots.length; i++) {
@@ -35287,8 +35267,8 @@ var Plotly = (() => {
 
   // src/plot_api/container_array_match.ts
   function containerArrayMatch(astr) {
-    const rootContainers = registry_default.layoutArrayContainers;
-    const regexpContainers = registry_default.layoutArrayRegexes;
+    const rootContainers = layoutArrayContainers;
+    const regexpContainers = layoutArrayRegexes;
     const rootPart = astr.split("[")[0];
     let arrayStr;
     let match;
@@ -35318,9 +35298,9 @@ var Plotly = (() => {
   }
   function applyContainerArrayChanges(gd, np, edits, flags, _nestedProperty) {
     const componentType = np.astr;
-    const supplyComponentDefaults = registry_default.getComponentMethod(componentType, "supplyLayoutDefaults");
-    const draw13 = registry_default.getComponentMethod(componentType, "draw");
-    const drawOne5 = registry_default.getComponentMethod(componentType, "drawOne");
+    const supplyComponentDefaults = getComponentMethod(componentType, "supplyLayoutDefaults");
+    const draw13 = getComponentMethod(componentType, "draw");
+    const drawOne5 = getComponentMethod(componentType, "drawOne");
     const replotLater = flags.replot || flags.recalc || supplyComponentDefaults === noop2 || draw13 === noop2;
     const layout = gd.layout;
     const fullLayout = gd._fullLayout;
@@ -35454,10 +35434,10 @@ var Plotly = (() => {
       if (!layout.scene) layout.scene = layout.scene1;
       delete layout.scene1;
     }
-    const axisAttrRegex = (registry_default.subplotsRegistry.cartesian || {}).attrRegex;
-    const polarAttrRegex = (registry_default.subplotsRegistry.polar || {}).attrRegex;
-    const ternaryAttrRegex = (registry_default.subplotsRegistry.ternary || {}).attrRegex;
-    const sceneAttrRegex = (registry_default.subplotsRegistry.gl3d || {}).attrRegex;
+    const axisAttrRegex = (subplotsRegistry.cartesian || {}).attrRegex;
+    const polarAttrRegex = (subplotsRegistry.polar || {}).attrRegex;
+    const ternaryAttrRegex = (subplotsRegistry.ternary || {}).attrRegex;
+    const sceneAttrRegex = (subplotsRegistry.gl3d || {}).attrRegex;
     const keys = Object.keys(layout);
     for (i = 0; i < keys.length; i++) {
       const key = keys[i];
@@ -35557,10 +35537,10 @@ var Plotly = (() => {
       }
       if (trace.xaxis) trace.xaxis = cleanId2(trace.xaxis, "x");
       if (trace.yaxis) trace.yaxis = cleanId2(trace.yaxis, "y");
-      if (traceIs2(trace, "gl3d") && trace.scene) {
-        trace.scene = registry_default.subplotsRegistry.gl3d.cleanId(trace.scene);
+      if (traceIs(trace, "gl3d") && trace.scene) {
+        trace.scene = subplotsRegistry.gl3d.cleanId(trace.scene);
       }
-      if (!traceIs2(trace, "pie-like") && !traceIs2(trace, "bar-like")) {
+      if (!traceIs(trace, "pie-like") && !traceIs(trace, "bar-like")) {
         if (Array.isArray(trace.textposition)) {
           for (i = 0; i < trace.textposition.length; i++) {
             trace.textposition[i] = cleanTextPosition(trace.textposition[i]);
@@ -35569,7 +35549,7 @@ var Plotly = (() => {
           trace.textposition = cleanTextPosition(trace.textposition);
         }
       }
-      const _module = registry_default.getModule(trace);
+      const _module = getModule(trace);
       if (_module && _module.colorbar) {
         const containerName = _module.colorbar.container;
         const container = containerName ? trace[containerName] : trace;
@@ -35782,7 +35762,7 @@ var Plotly = (() => {
   var { dfltConfig: dfltConfig4 } = plot_config_default;
   var { AX_NAME_PATTERN } = constants_default2;
   function clearOutline2(gd) {
-    return registry_default.getComponentMethod("selections", "clearOutline")(gd);
+    return getComponentMethod("selections", "clearOutline")(gd);
   }
   var numericNameWarningCount = 0;
   var numericNameWarningCountLimit = 5;
@@ -35953,8 +35933,8 @@ var Plotly = (() => {
       }
       return syncOrAsync(
         [
-          registry_default.getComponentMethod("shapes", "calcAutorange"),
-          registry_default.getComponentMethod("annotations", "calcAutorange"),
+          getComponentMethod("shapes", "calcAutorange"),
+          getComponentMethod("annotations", "calcAutorange"),
           doAutoRangeAndConstraints2
         ],
         gd
@@ -35964,7 +35944,7 @@ var Plotly = (() => {
       if (gd._transitioning) return;
       subroutines_default.doAutoRangeAndConstraints(gd);
       if (graphWasEmpty) axes_default.saveRangeInitial(gd);
-      registry_default.getComponentMethod("rangeslider", "calcAutorange")(gd);
+      getComponentMethod("rangeslider", "calcAutorange")(gd);
     }
     function drawAxes() {
       return axes_default.draw(gd, graphWasEmpty ? "" : "redraw");
@@ -36735,7 +36715,7 @@ var Plotly = (() => {
           if (oldVal === "pie" || oldVal === "funnelarea") {
             nestedProperty2(cont, "marker.color").set(nestedProperty2(cont, "marker.colors").get());
             fullLayout._pielayer.selectAll("g.trace").remove();
-          } else if (traceIs2(cont, "cartesian")) {
+          } else if (traceIs(cont, "cartesian")) {
             nestedProperty2(cont, "marker.colors").set(nestedProperty2(cont, "marker.color").get());
           }
         }
@@ -36758,7 +36738,7 @@ var Plotly = (() => {
           flags.calc = true;
         } else {
           if (valObject) {
-            if (valObject.arrayOk && !traceIs2(contFull, "regl") && (isArrayOrTypedArray(newVal) || isArrayOrTypedArray(oldVal))) {
+            if (valObject.arrayOk && !traceIs(contFull, "regl") && (isArrayOrTypedArray(newVal) || isArrayOrTypedArray(oldVal))) {
               flags.calc = true;
             } else edit_types_default.update(flags, valObject);
           } else {
@@ -36787,7 +36767,7 @@ var Plotly = (() => {
         axlist = [];
         for (i = 0; i < traces.length; i++) {
           const trace = data[traces[i]];
-          if (traceIs2(trace, "cartesian")) {
+          if (traceIs(trace, "cartesian")) {
             addToAxlist(trace.xaxis || "x");
             addToAxlist(trace.yaxis || "y");
           }
@@ -37032,8 +37012,8 @@ var Plotly = (() => {
           if (Array.isArray(fullLayout._subplots.polar) && fullLayout._subplots.polar.length && fullLayout[p.parts[0]] && p.parts[1] === "radialaxis") {
             delete fullLayout[p.parts[0]]._subplot.viewInitial["radialaxis.range"];
           }
-          registry_default.getComponentMethod("annotations", "convertCoords")(gd, parentFull, vi, doextra);
-          registry_default.getComponentMethod("images", "convertCoords")(gd, parentFull, vi, doextra);
+          getComponentMethod("annotations", "convertCoords")(gd, parentFull, vi, doextra);
+          getComponentMethod("images", "convertCoords")(gd, parentFull, vi, doextra);
         } else {
           doextra(ptrunk + ".autorange", true);
           doextra(ptrunk + ".range", null);
@@ -37043,8 +37023,8 @@ var Plotly = (() => {
         const fullProp = nestedProperty2(fullLayout, ai).get();
         let newType = (vi || {}).type;
         if (!newType || newType === "-") newType = "linear";
-        registry_default.getComponentMethod("annotations", "convertCoords")(gd, fullProp, newType, doextra);
-        registry_default.getComponentMethod("images", "convertCoords")(gd, fullProp, newType, doextra);
+        getComponentMethod("annotations", "convertCoords")(gd, fullProp, newType, doextra);
+        getComponentMethod("images", "convertCoords")(gd, fullProp, newType, doextra);
       }
       const containerArrayMatch3 = manage_arrays_default.containerArrayMatch(ai);
       if (containerArrayMatch3) {
@@ -37455,13 +37435,13 @@ var Plotly = (() => {
           for (const componentType in relayoutFlags.arrays) {
             const indices = relayoutFlags.arrays[componentType];
             if (indices.length) {
-              const drawOne5 = registry_default.getComponentMethod(componentType, "drawOne");
+              const drawOne5 = getComponentMethod(componentType, "drawOne");
               if (drawOne5 !== noop3) {
                 for (let i = 0; i < indices.length; i++) {
                   drawOne5(gd, indices[i]);
                 }
               } else {
-                const draw13 = registry_default.getComponentMethod(componentType, "draw");
+                const draw13 = getComponentMethod(componentType, "draw");
                 if (draw13 === noop3) {
                   throw new Error("cannot draw components: " + componentType);
                 }
@@ -38469,7 +38449,7 @@ var Plotly = (() => {
   }
   function getRedrawFunc(gd) {
     return function() {
-      registry_default.getComponentMethod("colorbar", "draw")(gd);
+      getComponentMethod("colorbar", "draw")(gd);
     };
   }
   function encodeSVG(svg2) {
@@ -39230,7 +39210,7 @@ var Plotly = (() => {
   var animate2 = plot_api_default.animate;
   var setPlotConfig2 = plot_api_default.setPlotConfig;
   function deleteActiveShape(gd) {
-    return registry_default.getComponentMethod("shapes", "eraseActiveShape")(getGraphDiv3(gd));
+    return getComponentMethod("shapes", "eraseActiveShape")(getGraphDiv3(gd));
   }
   var toImage2 = to_image_default;
   var validate3 = validate2;
@@ -39998,7 +39978,7 @@ var Plotly = (() => {
     const x = coerce3("x");
     const y = coerce3("y");
     let len2;
-    const handleCalendarDefaults = registry_default.getComponentMethod("calendars", "handleTraceDefaults");
+    const handleCalendarDefaults = getComponentMethod("calendars", "handleTraceDefaults");
     handleCalendarDefaults(traceIn, traceOut, ["x", "y"], layout);
     if (x) {
       const xlen = minRowLength(x);
@@ -40302,7 +40282,7 @@ var Plotly = (() => {
       coerce3("hovertemplate");
       coerce3("hovertemplatefallback");
     }
-    const errorBarsSupplyDefaults = registry_default.getComponentMethod("errorbars", "supplyDefaults");
+    const errorBarsSupplyDefaults = getComponentMethod("errorbars", "supplyDefaults");
     errorBarsSupplyDefaults(traceIn, traceOut, lineColor || markerColor || defaultColor, { axis: "y" });
     errorBarsSupplyDefaults(traceIn, traceOut, lineColor || markerColor || defaultColor, { axis: "x", inherit: "y" });
     coerceSelectionMarkerOpacity(traceOut, coerce3);
@@ -40797,7 +40777,7 @@ var Plotly = (() => {
     const calcTracesVert = [];
     for (let i = 0; i < fullTraces.length; i++) {
       const fullTrace = fullTraces[i];
-      if (fullTrace.visible === true && traceIs2(fullTrace, "bar") && fullTrace.xaxis === xa._id && fullTrace.yaxis === ya._id) {
+      if (fullTrace.visible === true && traceIs(fullTrace, "bar") && fullTrace.xaxis === xa._id && fullTrace.yaxis === ya._id) {
         if (fullTrace.orientation === "h") {
           calcTracesHorz.push(calcTraces[i]);
         } else {
@@ -42191,7 +42171,7 @@ var Plotly = (() => {
     const lines = ensureSingle(tr, "g", "lines");
     const points = ensureSingle(tr, "g", "points");
     const text = ensureSingle(tr, "g", "text");
-    registry_default.getComponentMethod("errorbars", "plot")(gd, errorBarGroup, plotinfo, transitionOpts);
+    getComponentMethod("errorbars", "plot")(gd, errorBarGroup, plotinfo, transitionOpts);
     if (trace.visible !== true) return;
     transition4(tr).style("opacity", trace.opacity);
     let ownFillEl3, tonext;
@@ -42570,7 +42550,7 @@ var Plotly = (() => {
     });
     s.selectAll("g.trace path.js-line").call(lineGroupStyle);
     s.selectAll("g.trace path.js-fill").call(fillGroupStyle, gd, false);
-    registry_default.getComponentMethod("errorbars", "style")(s);
+    getComponentMethod("errorbars", "style")(s);
   }
   function stylePoints(sel, trace, gd) {
     pointStyle(sel.selectAll("path.point"), trace, gd);
@@ -42684,7 +42664,7 @@ var Plotly = (() => {
           hovertemplate: trace.hovertemplate
         });
         fillText(di, trace, pointData);
-        registry_default.getComponentMethod("errorbars", "hoverInfo")(di, trace, pointData);
+        getComponentMethod("errorbars", "hoverInfo")(di, trace, pointData);
         return [pointData];
       }
     }
@@ -42880,7 +42860,7 @@ var Plotly = (() => {
     }
     const calAttr = axLetter + "calendar";
     let calendar = d0[calAttr];
-    const opts = { noMultiCategory: !traceIs2(d0, "cartesian") || traceIs2(d0, "noMultiCategory") };
+    const opts = { noMultiCategory: !traceIs(d0, "cartesian") || traceIs(d0, "noMultiCategory") };
     if (d0.type === "box" && d0._hasPreCompStats && axLetter === { h: "x", v: "y" }[d0.orientation || "v"]) {
       opts.noMultiCategory = true;
     }
@@ -42890,7 +42870,7 @@ var Plotly = (() => {
       const boxPositions = [];
       for (i = 0; i < data.length; i++) {
         const trace = data[i];
-        if (!traceIs2(trace, "box-violin") || (trace[axLetter + "axis"] || axLetter) !== id2) continue;
+        if (!traceIs(trace, "box-violin") || (trace[axLetter + "axis"] || axLetter) !== id2) continue;
         if (trace[posLetter] !== void 0) boxPositions.push(trace[posLetter][0]);
         else if (trace.name !== void 0) boxPositions.push(trace.name);
         else boxPositions.push("text");
@@ -42925,8 +42905,8 @@ var Plotly = (() => {
   }
   function isBoxWithoutPositionCoords(trace, axLetter) {
     const posLetter = getBoxPosLetter(trace);
-    const isBox = traceIs2(trace, "box-violin");
-    const isCandlestick = traceIs2(trace._fullInput || {}, "candlestick");
+    const isBox = traceIs(trace, "box-violin");
+    const isCandlestick = traceIs(trace._fullInput || {}, "candlestick");
     return isBox && !isCandlestick && axLetter === posLetter && trace[posLetter] === void 0 && trace[posLetter + "0"] === void 0;
   }
 
@@ -43056,7 +43036,7 @@ var Plotly = (() => {
     const axType = containerOut.type || axTemplate.type || "-";
     let ticklabelmode;
     if (axType === "date") {
-      const handleCalendarDefaults = registry_default.getComponentMethod("calendars", "handleDefaults");
+      const handleCalendarDefaults = getComponentMethod("calendars", "handleDefaults");
       handleCalendarDefaults(containerIn, containerOut, "calendar", options.calendar);
       if (!options.noTicklabelmode) {
         ticklabelmode = coerce3("ticklabelmode");
@@ -43357,7 +43337,6 @@ var Plotly = (() => {
   var { AX_ID_PATTERN } = constants_default2;
   var id2name2 = axis_ids_default.id2name;
   var name2id2 = axis_ids_default.name2id;
-  var getComponentMethod2 = registry_default.getComponentMethod;
   function appendList(cont, k, item) {
     if (Array.isArray(cont[k])) cont[k].push(item);
     else cont[k] = [item];
@@ -43377,7 +43356,7 @@ var Plotly = (() => {
     let i, j;
     for (i = 0; i < fullData.length; i++) {
       const trace = fullData[i];
-      if (!traceIs2(trace, "cartesian")) continue;
+      if (!traceIs(trace, "cartesian")) continue;
       let xaName;
       if (trace.xaxis) {
         xaName = id2name2(trace.xaxis);
@@ -43411,18 +43390,18 @@ var Plotly = (() => {
           yaMustDisplay[yaName] = true;
           yaMustNotReverse[yaName] = true;
         }
-        if (!traceIs2(trace, "carpet") || trace.type === "carpet" && !trace._cheater) {
+        if (!traceIs(trace, "carpet") || trace.type === "carpet" && !trace._cheater) {
           if (xaName) xaMustDisplay[xaName] = true;
         }
       }
       if (trace.type === "carpet" && trace._cheater) {
         if (xaName) xaMayHide[xaName] = true;
       }
-      if (traceIs2(trace, "2dMap")) {
+      if (traceIs(trace, "2dMap")) {
         outerTicks[xaName] = true;
         outerTicks[yaName] = true;
       }
-      if (traceIs2(trace, "oriented")) {
+      if (traceIs(trace, "oriented")) {
         const positionAxis = trace.orientation === "h" ? yaName : xaName;
         noGrids[positionAxis] = true;
       }
@@ -43591,8 +43570,8 @@ var Plotly = (() => {
       addMissingMatchedAxis();
       axLayoutOut._input = axLayoutIn;
     }
-    const rangeSliderDefaults = getComponentMethod2("rangeslider", "handleDefaults");
-    const rangeSelectorDefaults = getComponentMethod2("rangeselector", "handleDefaults");
+    const rangeSliderDefaults = getComponentMethod("rangeslider", "handleDefaults");
+    const rangeSelectorDefaults = getComponentMethod("rangeselector", "handleDefaults");
     for (i = 0; i < xNames.length; i++) {
       axName = xNames[i];
       axLayoutIn = layoutIn[axName];
@@ -43615,7 +43594,7 @@ var Plotly = (() => {
       axLayoutIn = layoutIn[axName];
       axLayoutOut = layoutOut[axName];
       const anchoredAxis = layoutOut[id2name2(axLayoutOut.anchor)];
-      const fixedRangeDflt = getComponentMethod2("rangeslider", "isVisible")(anchoredAxis);
+      const fixedRangeDflt = getComponentMethod("rangeslider", "isVisible")(anchoredAxis);
       coerce3("fixedrange", fixedRangeDflt);
       coerce3("modebardisable");
     }
@@ -43890,7 +43869,7 @@ var Plotly = (() => {
       for (let i = 0; i < modules2.length; i++) {
         _module = modules2[i];
         const name9 = _module.name;
-        const categories = registry_default.modules[name9].categories;
+        const categories = modules[name9].categories;
         if (categories.svg) {
           const classBaseName = _module.layerName || name9 + "layer";
           const className = classBaseName + (z ? Number(z) + 1 : "");
@@ -43941,7 +43920,7 @@ var Plotly = (() => {
       }
     });
     if (fullLayout._has("scattergl")) {
-      _module = registry_default.getModule("scattergl");
+      _module = getModule("scattergl");
       cdModule = getModuleCalcData(cdSubplot, _module)[0];
       _module.plot(gd, plotinfo, cdModule);
     }
@@ -45672,7 +45651,7 @@ var Plotly = (() => {
     return function includeComponents(layoutIn, layoutOut) {
       const array2 = layoutIn[containerArrayName];
       if (!Array.isArray(array2)) return;
-      const Cartesian = registry_default.subplotsRegistry.cartesian;
+      const Cartesian = subplotsRegistry.cartesian;
       const idRegex3 = Cartesian.idRegex;
       const subplots = layoutOut._subplots;
       const xaList = subplots.xaxis;
@@ -46039,7 +46018,7 @@ var Plotly = (() => {
     draw: draw5
   };
   function includeGL3D(layoutIn, layoutOut) {
-    const GL3D = registry_default.subplotsRegistry.gl3d;
+    const GL3D = subplotsRegistry.gl3d;
     if (!GL3D) return;
     const attrRegex2 = GL3D.attrRegex;
     const keys = Object.keys(layoutIn);
@@ -48311,7 +48290,7 @@ var Plotly = (() => {
     for (let i = 0; i < searchTraces.length; i++) {
       const searchInfo = searchTraces[i];
       const cd = searchInfo.cd;
-      if (traceIs2(cd[0].trace, "regl")) {
+      if (traceIs(cd[0].trace, "regl")) {
         hasRegl = true;
       }
       const _module = searchInfo._module;
@@ -53824,7 +53803,7 @@ var Plotly = (() => {
     if (!opts.inherit || !containerOut[copyAttr]) {
       coerce3("color", defaultColor);
       coerce3("thickness");
-      coerce3("width", traceIs2(traceOut, "gl3d") ? 0 : 4);
+      coerce3("width", traceIs(traceOut, "gl3d") ? 0 : 4);
     }
   }
 
@@ -53898,7 +53877,7 @@ var Plotly = (() => {
     for (let i = 0; i < calcdata.length; i++) {
       const calcTrace = calcdata[i];
       const trace = calcTrace[0].trace;
-      if (trace.visible === true && traceIs2(trace, "errorBarsOK")) {
+      if (trace.visible === true && traceIs(trace, "errorBarsOK")) {
         const xa = axes_default.getFromId(gd, trace.xaxis);
         const ya = axes_default.getFromId(gd, trace.yaxis);
         calcOneAxis(calcTrace, trace, xa, "x");
@@ -55187,7 +55166,7 @@ var Plotly = (() => {
     },
     icon: ploticon_default.eraseshape,
     click: function(gd) {
-      return registry_default.getComponentMethod("shapes", "eraseActiveShape")(gd);
+      return getComponentMethod("shapes", "eraseActiveShape")(gd);
     }
   };
   modeBarButtons.zoomIn2d = {
@@ -56323,11 +56302,11 @@ var Plotly = (() => {
       if (selectable) break;
       const trace = fullData[i];
       if (!trace._module || !trace._module.selectPoints) continue;
-      if (traceIs2(trace, "scatter-like")) {
+      if (traceIs(trace, "scatter-like")) {
         if (subtypes_default.hasMarkers(trace) || subtypes_default.hasText(trace)) {
           selectable = true;
         }
-      } else if (traceIs2(trace, "box-violin")) {
+      } else if (traceIs(trace, "box-violin")) {
         if (trace.boxpoints === "all" || trace.points === "all") {
           selectable = true;
         }
@@ -56339,7 +56318,7 @@ var Plotly = (() => {
   }
   function hasNoHover(fullData) {
     for (let i = 0; i < fullData.length; i++) {
-      if (!traceIs2(fullData[i], "noHover")) return false;
+      if (!traceIs(fullData[i], "noHover")) return false;
     }
     return true;
   }
@@ -56506,7 +56485,7 @@ var Plotly = (() => {
         const trace = newData[i];
         trace.showscale = false;
         if (trace.marker) trace.marker.showscale = false;
-        if (traceIs2(trace, "pie-like")) trace.textposition = "none";
+        if (traceIs(trace, "pie-like")) trace.textposition = "none";
       }
     }
     if (Array.isArray(options.annotations)) {
@@ -56615,19 +56594,18 @@ var Plotly = (() => {
   var snapshot_default = Snapshot;
 
   // src/core.ts
-  var register2 = registry_default.register;
-  var Plotly = { version, register: register2, Icons: ploticon_default, Snapshot: snapshot_default, PlotSchema: plot_schema_default };
+  var Plotly = { version, register, Icons: ploticon_default, Snapshot: snapshot_default, PlotSchema: plot_schema_default };
   var methodNames = Object.keys(plot_api_default2);
   for (let i = 0; i < methodNames.length; i++) {
     const name9 = methodNames[i];
     if (name9.charAt(0) !== "_") Plotly[name9] = plot_api_default2[name9];
-    register2({ moduleType: "apiMethod", name: name9, fn: plot_api_default2[name9] });
+    register({ moduleType: "apiMethod", name: name9, fn: plot_api_default2[name9] });
   }
-  register2(scatter_default);
-  register2([annotations_default, annotations3d_default, selections_default, shapes_default, images_default, updatemenus_default, sliders_default, rangeslider_default, rangeselector_default, grid_default, errorbars_default, colorscale_default, colorbar_default, legend_default, fx_default, modebar_default2]);
-  register2([locale_en_default, locale_en_us_default]);
+  register(scatter_default);
+  register([annotations_default, annotations3d_default, selections_default, shapes_default, images_default, updatemenus_default, sliders_default, rangeslider_default, rangeselector_default, grid_default, errorbars_default, colorscale_default, colorbar_default, legend_default, fx_default, modebar_default2]);
+  register([locale_en_default, locale_en_us_default]);
   if (typeof window !== "undefined" && window.PlotlyLocales && Array.isArray(window.PlotlyLocales)) {
-    register2(window.PlotlyLocales);
+    register(window.PlotlyLocales);
     delete window.PlotlyLocales;
   }
   Plotly.Plots = { resize: plots_default.resize, graphJson: plots_default.graphJson, sendDataToCloud: plots_default.sendDataToCloud };
@@ -56974,7 +56952,7 @@ var Plotly = (() => {
     });
     handleStyleDefaults(traceIn, traceOut, coerce3, defaultColor, layout);
     const lineColor = (traceOut.marker.line || {}).color;
-    const errorBarsSupplyDefaults = registry_default.getComponentMethod("errorbars", "supplyDefaults");
+    const errorBarsSupplyDefaults = getComponentMethod("errorbars", "supplyDefaults");
     errorBarsSupplyDefaults(traceIn, traceOut, lineColor || color_default.defaultLine, { axis: "y" });
     errorBarsSupplyDefaults(traceIn, traceOut, lineColor || color_default.defaultLine, { axis: "x", inherit: "y" });
     coerceSelectionMarkerOpacity(traceOut, coerce3);
@@ -57071,7 +57049,7 @@ var Plotly = (() => {
     const isGroup = mode === "group";
     for (let i = 0; i < fullData.length; i++) {
       const trace = fullData[i];
-      if (traceIs2(trace, "bar") && trace.visible) hasBars = true;
+      if (traceIs(trace, "bar") && trace.visible) hasBars = true;
       else continue;
       let subploti = trace.xaxis + trace.yaxis;
       if (isGroup) {
@@ -57297,7 +57275,7 @@ var Plotly = (() => {
       const trace = d[0].trace;
       stylePoints2(sel, trace, gd);
     });
-    registry_default.getComponentMethod("errorbars", "style")(s);
+    getComponentMethod("errorbars", "style")(s);
   }
   function stylePoints2(sel, trace, gd) {
     pointStyle(sel.selectAll("path"), trace, gd);
@@ -57316,7 +57294,7 @@ var Plotly = (() => {
       stylePointsInSelectionMode(sel, trace, gd);
     } else {
       stylePoints2(sel, trace, gd);
-      registry_default.getComponentMethod("errorbars", "style")(sel);
+      getComponentMethod("errorbars", "style")(sel);
     }
   }
   function stylePointsInSelectionMode(s, trace, gd) {
@@ -57694,7 +57672,7 @@ var Plotly = (() => {
       const hasClipOnAxisFalse = trace.cliponaxis === false;
       setClipUrl(plotGroup, hasClipOnAxisFalse ? null : plotinfo.layerClipId, gd);
     });
-    registry_default.getComponentMethod("errorbars", "plot")(gd, bartraces, plotinfo, opts);
+    getComponentMethod("errorbars", "plot")(gd, bartraces, plotinfo, opts);
   }
   function appendBarText(gd, plotinfo, bar, cd, i, x0, x1, y0, y1, r, overhead, opts, makeOnCompleteCallback) {
     const xa = plotinfo.xaxis;
@@ -58188,7 +58166,7 @@ var Plotly = (() => {
       const trace = cd[0].trace;
       const di = cd[barPointData.index];
       barPointData.color = getTraceColor2(trace, di);
-      registry_default.getComponentMethod("errorbars", "hoverInfo")(di, trace, barPointData);
+      getComponentMethod("errorbars", "hoverInfo")(di, trace, barPointData);
       return [barPointData];
     }
   }
@@ -59049,7 +59027,7 @@ var Plotly = (() => {
     let hasTraceType = false;
     for (let i = 0; i < fullData.length; i++) {
       const trace = fullData[i];
-      if (traceIs2(trace, category2)) {
+      if (traceIs(trace, category2)) {
         hasTraceType = true;
         break;
       }
@@ -59242,7 +59220,7 @@ var Plotly = (() => {
     const low = coerce3("low");
     const close = coerce3("close");
     coerce3("hoverlabel.split");
-    const handleCalendarDefaults = registry_default.getComponentMethod("calendars", "handleTraceDefaults");
+    const handleCalendarDefaults = getComponentMethod("calendars", "handleTraceDefaults");
     handleCalendarDefaults(traceIn, traceOut, ["x"], layout);
     if (!(open && high && low && close)) return;
     let len2 = Math.min(open.length, high.length, low.length, close.length);
@@ -62634,7 +62612,7 @@ var Plotly = (() => {
       return;
     }
     traceOut._length = len2;
-    const handleCalendarDefaults = registry_default.getComponentMethod("calendars", "handleTraceDefaults");
+    const handleCalendarDefaults = getComponentMethod("calendars", "handleTraceDefaults");
     handleCalendarDefaults(traceIn, traceOut, ["x", "y"], layout);
     const hasAggregationData = traceOut[aggLetter];
     if (hasAggregationData) coerce3("histfunc");
@@ -62643,7 +62621,7 @@ var Plotly = (() => {
     handleStyleDefaults(traceIn, traceOut, coerce3, defaultColor, layout);
     lib_default.coerceSelectionMarkerOpacity(traceOut, coerce3);
     const lineColor = (traceOut.marker.line || {}).color;
-    const errorBarsSupplyDefaults = registry_default.getComponentMethod("errorbars", "supplyDefaults");
+    const errorBarsSupplyDefaults = getComponentMethod("errorbars", "supplyDefaults");
     errorBarsSupplyDefaults(traceIn, traceOut, lineColor || color_default.defaultLine, { axis: "y" });
     errorBarsSupplyDefaults(traceIn, traceOut, lineColor || color_default.defaultLine, { axis: "x", inherit: "y" });
     coerce3("zorder");
@@ -62727,7 +62705,7 @@ var Plotly = (() => {
     }
     for (i = 0; i < fullData.length; i++) {
       traceOut = fullData[i];
-      if (traceIs2(traceOut, "histogram")) {
+      if (traceIs(traceOut, "histogram")) {
         histTraces.push(traceOut);
         delete traceOut._xautoBinFinished;
         delete traceOut._yautoBinFinished;
@@ -62737,7 +62715,7 @@ var Plotly = (() => {
             traceOut.marker.cornerradius = validateCornerradius3(r);
           }
         }
-        if (!traceIs2(traceOut, "2dMap")) {
+        if (!traceIs(traceOut, "2dMap")) {
           handleGroupingDefaults(traceOut._input, traceOut, fullLayout, coerce3, fullLayout.barmode);
         }
       }
@@ -62746,7 +62724,7 @@ var Plotly = (() => {
     for (i = 0; i < histTraces.length; i++) {
       traceOut = histTraces[i];
       groupName = "";
-      if (!traceIs2(traceOut, "2dMap")) {
+      if (!traceIs(traceOut, "2dMap")) {
         binDir = orientation2binDir(traceOut);
         if (fullLayout.barmode === "group" && traceOut.alignmentgroup) {
           const pa = traceOut[binDir + "axis"];
@@ -62802,7 +62780,7 @@ var Plotly = (() => {
     for (i = 0; i < otherTracesList.length; i++) {
       traceOut = otherTracesList[i];
       const binGroup = coerce3("bingroup");
-      if (traceIs2(traceOut, "2dMap")) {
+      if (traceIs(traceOut, "2dMap")) {
         for (k = 0; k < 2; k++) {
           binDir = BINDIRECTIONS[k];
           const binGroupInDir = coerce3(
@@ -63274,7 +63252,7 @@ var Plotly = (() => {
               delete tracei._autoBin;
               tracei["_" + mainData + "autoBinFinished"] = 1;
             }
-            if (traceIs2(tracei, "2dMap")) {
+            if (traceIs(tracei, "2dMap")) {
               has2dMap = true;
             }
             if (tracei.type === "histogram2dcontour") {
@@ -63305,7 +63283,7 @@ var Plotly = (() => {
           ));
         }
       }
-      if (isOverlay && !traceIs2(trace, "2dMap") && newBinSpec._dataSpan === 0 && pa.type !== "category" && pa.type !== "multicategory" && trace.bingroup === "" && typeof trace.xbins === "undefined") {
+      if (isOverlay && !traceIs(trace, "2dMap") && newBinSpec._dataSpan === 0 && pa.type !== "category" && pa.type !== "multicategory" && trace.bingroup === "" && typeof trace.xbins === "undefined") {
         if (_overlayEdgeCase) return [newBinSpec, pos0, true];
         newBinSpec = handleSingleValueOverlays(gd, trace, pa, mainData, binAttr);
       }

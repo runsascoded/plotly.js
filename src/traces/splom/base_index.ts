@@ -1,4 +1,4 @@
-import Registry from '../../registry.js';
+import { register } from '../../registry.js';
 import Grid from '../../components/grid/index.js';
 import _req0 from './attributes.js';
 import _req1 from './defaults.js';
@@ -40,4 +40,4 @@ export default {
 
 // splom traces use the 'grid' component to generate their axes,
 // register it here
-Registry.register(Grid);
+register(Grid);

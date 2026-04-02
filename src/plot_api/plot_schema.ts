@@ -1,4 +1,4 @@
-import Registry from '../registry.js';
+import { allTypes, componentsRegistry, modules, subplotsRegistry } from '../registry.js';
 import { traceIs } from '../lib/trace_categories.js';
 import Lib, { extendDeepAll, isArrayOrTypedArray, isPlainObject, nestedProperty, valObjectMeta } from '../lib/index.js';
 import baseAttributes from '../plots/attributes.js';
@@ -24,7 +24,7 @@ export { UNDERSCORE_ATTRS };
 export function get(): any {
     const traces: any = {};
 
-    Registry.allTypes.forEach((type) => {
+    allTypes.forEach((type) => {
         traces[type] = getTraceAttributes(type);
     });
 
@@ -158,7 +158,7 @@ export function getTraceValObject(trace?: any, parts?: any): any {
     // first look in the module for this trace
     // components have already merged their trace attributes in here
     let _module: any = trace._module;
-    if(!_module) _module = (Registry.modules[trace.type || baseAttributes.type.dflt] || {})._module;
+    if(!_module) _module = (modules[trace.type || baseAttributes.type.dflt] || {})._module;
     if(!_module) return false;
 
     moduleAttrs = _module.attributes;
@@ -228,8 +228,8 @@ function layoutHeadAttr(fullLayout?: any, head?: any): boolean {
      * inside a container matching the module `name`
      * eg `attributes` (array) or `legend` (object)
      */
-    for(key in Registry.componentsRegistry) {
-        _module = Registry.componentsRegistry[key];
+    for(key in componentsRegistry) {
+        _module = componentsRegistry[key];
         if(_module.name === 'colorscale' && head.indexOf('coloraxis') === 0) {
             return _module.layoutAttributes[head];
         } else if(!_module.schema && (head === _module.name)) {
@@ -297,7 +297,7 @@ function isIndex(val?: any): any {
 function getTraceAttributes(type?: any): any {
     let _module, basePlotModule;
 
-    _module = Registry.modules[type]._module,
+    _module = modules[type]._module,
     basePlotModule = _module.basePlotModule;
 
     const attributes: any = {};
@@ -381,8 +381,8 @@ function getLayoutAttributes(): any {
     extendDeepAll(layoutAttributes, baseLayoutAttributes);
 
     // add base plot module layout attributes
-    for(key in Registry.subplotsRegistry) {
-        _module = Registry.subplotsRegistry[key];
+    for(key in subplotsRegistry) {
+        _module = subplotsRegistry[key];
 
         if(!_module.layoutAttributes) continue;
 
@@ -397,8 +397,8 @@ function getLayoutAttributes(): any {
     }
 
     // add registered components layout attributes
-    for(key in Registry.componentsRegistry) {
-        _module = Registry.componentsRegistry[key];
+    for(key in componentsRegistry) {
+        _module = componentsRegistry[key];
         const schema = _module.schema;
 
         if(schema && (schema.subplots || schema.layout)) {

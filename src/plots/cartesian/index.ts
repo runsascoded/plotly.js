@@ -1,5 +1,5 @@
 import { select } from 'd3-selection';
-import Registry from '../../registry.js';
+import { getModule, modules as registryModules } from '../../registry.js';
 import { ensureSingle, extendFlat, pushUnique, sorterAsc } from '../../lib/index.js';
 import { style as plotsStyle } from '../plots.js';
 import { setClipUrl } from '../../components/drawing/index.js';
@@ -208,7 +208,7 @@ function plotOne(gd: GraphDiv, plotinfo: PlotInfo, cdSubplot?: any, transitionOp
         for(let i = 0; i < modules.length; i++) {
             _module = modules[i];
             const name = _module.name;
-            const categories = Registry.modules[name].categories;
+            const categories = registryModules[name].categories;
 
             if(categories.svg) {
                 const classBaseName = (_module.layerName || name + 'layer');
@@ -276,7 +276,7 @@ function plotOne(gd: GraphDiv, plotinfo: PlotInfo, cdSubplot?: any, transitionOp
 
     // call Scattergl.plot separately
     if(fullLayout._has('scattergl')) {
-        _module = Registry.getModule('scattergl');
+        _module = getModule('scattergl');
         cdModule = getModuleCalcData(cdSubplot, _module)[0];
         _module.plot(gd, plotinfo, cdModule);
     }

@@ -9783,7 +9783,7 @@ var Plotly = (() => {
   var DATETIME_REGEXP_CN = /^\s*(-?\d\d\d\d|\d\d)(-(\d?\di?)(-(\d?\d)([ Tt]([01]?\d|2[0-3])(:([0-5]\d)(:([0-5]\d(\.\d+)?))?(Z|z|[+\-]\d\d(:?\d\d)?)?)?)?)?)?\s*$/m;
   var YFIRST = (/* @__PURE__ */ new Date()).getFullYear() - 70;
   function isWorldCalendar(calendar) {
-    return calendar && registry_default.componentsRegistry.calendars && typeof calendar === "string" && calendar !== "gregorian";
+    return calendar && componentsRegistry.calendars && typeof calendar === "string" && calendar !== "gregorian";
   }
   function dateTick0(calendar, dayOfWeek) {
     const tick03 = _dateTick0(calendar, !!dayOfWeek);
@@ -9794,14 +9794,14 @@ var Plotly = (() => {
   }
   function _dateTick0(calendar, sunday2) {
     if (isWorldCalendar(calendar)) {
-      return sunday2 ? registry_default.getComponentMethod("calendars", "CANONICAL_SUNDAY")[calendar] : registry_default.getComponentMethod("calendars", "CANONICAL_TICK")[calendar];
+      return sunday2 ? getComponentMethod("calendars", "CANONICAL_SUNDAY")[calendar] : getComponentMethod("calendars", "CANONICAL_TICK")[calendar];
     } else {
       return sunday2 ? "2000-01-02" : "2000-01-01";
     }
   }
   function dfltRange(calendar) {
     if (isWorldCalendar(calendar)) {
-      return registry_default.getComponentMethod("calendars", "DFLTRANGE")[calendar];
+      return getComponentMethod("calendars", "DFLTRANGE")[calendar];
     } else {
       return ["2000-01-01", "2001-01-01"];
     }
@@ -9845,7 +9845,7 @@ var Plotly = (() => {
       y = Number(y);
       let cDate;
       try {
-        const calInstance = registry_default.getComponentMethod("calendars", "getCal")(calendar);
+        const calInstance = getComponentMethod("calendars", "getCal")(calendar);
         if (isChinese) {
           const isIntercalary = m.charAt(m.length - 1) === "i";
           m = parseInt(m, 10);
@@ -9890,7 +9890,7 @@ var Plotly = (() => {
       const dateJD = Math.floor(msRounded / ONEDAY) + EPOCHJD;
       const timeMs = Math.floor(mod2(ms, ONEDAY));
       try {
-        dateStr = registry_default.getComponentMethod("calendars", "getCal")(calendar).fromJD(dateJD).formatDate("yyyy-mm-dd");
+        dateStr = getComponentMethod("calendars", "getCal")(calendar).fromJD(dateJD).formatDate("yyyy-mm-dd");
       } catch (e) {
         dateStr = utcFormat("G%Y-%m-%d")(new Date(msRounded));
       }
@@ -9976,7 +9976,7 @@ var Plotly = (() => {
     });
     if (isWorldCalendar(calendar)) {
       try {
-        fmt = registry_default.getComponentMethod("calendars", "worldCalFmt")(fmt, x, calendar);
+        fmt = getComponentMethod("calendars", "worldCalFmt")(fmt, x, calendar);
       } catch (e) {
         return "Invalid";
       }
@@ -10019,7 +10019,7 @@ var Plotly = (() => {
     if (calendar) {
       try {
         const dateJD = Math.round(ms / ONEDAY) + EPOCHJD;
-        const calInstance = registry_default.getComponentMethod("calendars", "getCal")(calendar);
+        const calInstance = getComponentMethod("calendars", "getCal")(calendar);
         const cDate = calInstance.fromJD(dateJD);
         if (dMonth % 12) calInstance.add(cDate, dMonth, "m");
         else calInstance.add(cDate, dMonth / 12, "y");
@@ -10038,7 +10038,7 @@ var Plotly = (() => {
     let blankCount = 0;
     let d;
     let di;
-    const calInstance = isWorldCalendar(calendar) && registry_default.getComponentMethod("calendars", "getCal")(calendar);
+    const calInstance = isWorldCalendar(calendar) && getComponentMethod("calendars", "getCal")(calendar);
     for (let i = 0; i < data.length; i++) {
       di = data[i];
       if (!(0, import_fast_isnumeric5.default)(di)) {
@@ -10838,7 +10838,7 @@ var Plotly = (() => {
           const out = dict[s];
           if (out) return out;
         }
-        locales = registry_default.localeRegistry;
+        locales = localeRegistry;
       }
       const baseLocale = locale4.split("-")[0];
       if (baseLocale === locale4) break;
@@ -12099,7 +12099,7 @@ var Plotly = (() => {
   var UNDERSCORE_ATTRS = [IS_SUBPLOT_OBJ, IS_LINKED_TO_ARRAY, ARRAY_ATTR_REGEXPS, DEPRECATED];
   function get3() {
     const traces = {};
-    registry_default.allTypes.forEach((type) => {
+    allTypes.forEach((type) => {
       traces[type] = getTraceAttributes(type);
     });
     return {
@@ -12199,7 +12199,7 @@ var Plotly = (() => {
     const i = 1;
     let moduleAttrs, valObject;
     let _module = trace._module;
-    if (!_module) _module = (registry_default.modules[trace.type || attributes_default2.type.dflt] || {})._module;
+    if (!_module) _module = (modules[trace.type || attributes_default2.type.dflt] || {})._module;
     if (!_module) return false;
     moduleAttrs = _module.attributes;
     valObject = moduleAttrs && moduleAttrs[head];
@@ -12241,8 +12241,8 @@ var Plotly = (() => {
         }
       }
     }
-    for (key in registry_default.componentsRegistry) {
-      _module = registry_default.componentsRegistry[key];
+    for (key in componentsRegistry) {
+      _module = componentsRegistry[key];
       if (_module.name === "colorscale" && head.indexOf("coloraxis") === 0) {
         return _module.layoutAttributes[head];
       } else if (!_module.schema && head === _module.name) {
@@ -12292,7 +12292,7 @@ var Plotly = (() => {
   }
   function getTraceAttributes(type) {
     let _module, basePlotModule;
-    _module = registry_default.modules[type]._module, basePlotModule = _module.basePlotModule;
+    _module = modules[type]._module, basePlotModule = _module.basePlotModule;
     const attributes3 = {};
     attributes3.type = null;
     const copyBaseAttributes = extendDeepAll({}, attributes_default2);
@@ -12346,8 +12346,8 @@ var Plotly = (() => {
     const layoutAttributes3 = {};
     let key, _module;
     extendDeepAll(layoutAttributes3, layout_attributes_default2);
-    for (key in registry_default.subplotsRegistry) {
-      _module = registry_default.subplotsRegistry[key];
+    for (key in subplotsRegistry) {
+      _module = subplotsRegistry[key];
       if (!_module.layoutAttributes) continue;
       if (Array.isArray(_module.attr)) {
         for (let i = 0; i < _module.attr.length; i++) {
@@ -12358,8 +12358,8 @@ var Plotly = (() => {
         handleBasePlotModule(layoutAttributes3, _module, astr);
       }
     }
-    for (key in registry_default.componentsRegistry) {
-      _module = registry_default.componentsRegistry[key];
+    for (key in componentsRegistry) {
+      _module = componentsRegistry[key];
       const schema = _module.schema;
       if (schema && (schema.subplots || schema.layout)) {
         const subplots = schema.subplots;
@@ -12820,7 +12820,7 @@ var Plotly = (() => {
     const remainingCalcData = [];
     let plotMethod;
     if (typeof arg1 === "string") {
-      plotMethod = registry_default.getModule(arg1).plot;
+      plotMethod = getModule(arg1).plot;
     } else if (typeof arg1 === "function") {
       plotMethod = arg1;
     } else {
@@ -13006,7 +13006,7 @@ var Plotly = (() => {
   }
   function executeAPICommand(gd, method, args) {
     if (method === "skip") return Promise.resolve();
-    const _method = registry_default.apiMethodRegistry[method];
+    const _method = apiMethodRegistry[method];
     const allArgs = [gd];
     if (!Array.isArray(args)) args = [];
     for (let i = 0; i < args.length; i++) {
@@ -13138,7 +13138,7 @@ var Plotly = (() => {
   // src/plots/plots.ts
   var { BADNUM: BADNUM5 } = numerical_default;
   var attributes = attributes_default2;
-  attributes.type.values = registry_default.allTypes;
+  attributes.type.values = allTypes;
   var fontAttrs = font_attributes_default;
   var layoutAttributes = layout_attributes_default2;
   var executeAPICommand2 = command_default.executeAPICommand;
@@ -13150,9 +13150,9 @@ var Plotly = (() => {
     return new Promise(function(resolve) {
       setTimeout(function() {
         if (!gd._fullLayout) return;
-        registry_default.getComponentMethod("annotations", "draw")(gd);
-        registry_default.getComponentMethod("legend", "draw")(gd);
-        registry_default.getComponentMethod("colorbar", "draw")(gd);
+        getComponentMethod("annotations", "draw")(gd);
+        getComponentMethod("legend", "draw")(gd);
+        getComponentMethod("colorbar", "draw")(gd);
         resolve(previousPromises(gd));
       }, 300);
     });
@@ -13339,7 +13339,7 @@ var Plotly = (() => {
     const splomXa = Object.keys(splomAxes.x);
     const splomYa = Object.keys(splomAxes.y);
     if (splomXa.length > 1 && splomYa.length > 1) {
-      registry_default.getComponentMethod("grid", "sizeDefaults")(newLayout, newFullLayout);
+      getComponentMethod("grid", "sizeDefaults")(newLayout, newFullLayout);
       for (i = 0; i < splomXa.length; i++) {
         pushUnique2(subplots.xaxis, splomXa[i]);
       }
@@ -13384,7 +13384,7 @@ var Plotly = (() => {
     }
     fillMetaTextHelpers(newFullData, newFullLayout);
     relinkPrivateKeys2(newFullLayout, oldFullLayout);
-    registry_default.getComponentMethod("colorscale", "crossTraceDefaults")(newFullData, newFullLayout);
+    getComponentMethod("colorscale", "crossTraceDefaults")(newFullData, newFullLayout);
     if (!newFullLayout._preGUI) newFullLayout._preGUI = {};
     if (!newFullLayout._tracePreGUI) newFullLayout._tracePreGUI = {};
     const tracePreGUI = newFullLayout._tracePreGUI;
@@ -13400,7 +13400,7 @@ var Plotly = (() => {
       if (uids[uid] === "old") delete tracePreGUI[uid];
     }
     initMargins(newFullLayout);
-    registry_default.getComponentMethod("rangeslider", "makeData")(newFullLayout);
+    getComponentMethod("rangeslider", "makeData")(newFullLayout);
     if (!skipUpdateCalc && oldCalcdata.length === newFullData.length) {
       supplyDefaultsUpdateCalc(oldCalcdata, newFullData);
     }
@@ -13456,14 +13456,13 @@ var Plotly = (() => {
     return out;
   }
   function emptySubplotLists() {
-    let collectableSubplotTypes2 = registry_default.collectableSubplotTypes;
+    let collectableSubplotTypes2 = collectableSubplotTypes;
     const out = {};
     let i, j;
     if (!collectableSubplotTypes2) {
       collectableSubplotTypes2 = [];
-      const subplotsRegistry2 = registry_default.subplotsRegistry;
-      for (const subplotType in subplotsRegistry2) {
-        const subplotModule = subplotsRegistry2[subplotType];
+      for (const subplotType in subplotsRegistry) {
+        const subplotModule = subplotsRegistry[subplotType];
         const subplotAttr = subplotModule.attr;
         if (subplotAttr) {
           collectableSubplotTypes2.push(subplotType);
@@ -13505,13 +13504,13 @@ var Plotly = (() => {
           includeFormat(formatj);
           if (formatDone) break;
         }
-        locales = registry_default.localeRegistry;
+        locales = localeRegistry;
       }
       const baseLocale = locale4.split("-")[0];
       if (formatDone || baseLocale === locale4) break;
       locale4 = baseLocale;
     }
-    if (!formatDone) includeFormat(registry_default.localeRegistry.en.format);
+    if (!formatDone) includeFormat(localeRegistry.en.format);
     return formatObj;
   }
   function getFormatter(formatObj, separators) {
@@ -13586,7 +13585,7 @@ var Plotly = (() => {
     for (i = 0; i < modules2.length; i++) {
       const name2 = modules2[i].name;
       if (name2 === category2) return true;
-      const _module = registry_default.modules[name2];
+      const _module = modules[name2];
       if (_module && _module.categories[category2]) return true;
     }
     return false;
@@ -13687,7 +13686,7 @@ var Plotly = (() => {
       ax._counterAxes.sort(axis_ids_default.idSort);
       ax._subplotsWith.sort(subplotSort);
       ax._mainSubplot = findMainSubplot(ax, newFullLayout);
-      if (ax._counterAxes.length && (ax.spikemode && ax.spikemode.indexOf("across") !== -1 || ax.automargin && ax.mirror && ax.anchor !== "free" || registry_default.getComponentMethod("rangeslider", "isVisible")(ax))) {
+      if (ax._counterAxes.length && (ax.spikemode && ax.spikemode.indexOf("across") !== -1 || ax.automargin && ax.mirror && ax.anchor !== "free" || getComponentMethod("rangeslider", "isVisible")(ax))) {
         let min = 1;
         let max = 0;
         for (j = 0; j < ax._counterAxes.length; j++) {
@@ -13875,7 +13874,7 @@ var Plotly = (() => {
     coerce3("type");
     coerce3("name", layout._traceWord + " " + traceInIndex);
     coerce3("uirevision", layout.uirevision);
-    const _module = registry_default.getModule(traceOut);
+    const _module = getModule(traceOut);
     traceOut._module = _module;
     if (_module) {
       const basePlotModule = _module.basePlotModule;
@@ -13936,7 +13935,7 @@ var Plotly = (() => {
       if (!traceIs2(traceOut, "noHover")) {
         if (!traceOut.hovertemplate) coerceHoverinfo(traceIn, traceOut, layout);
         if (traceOut.type !== "parcats") {
-          registry_default.getComponentMethod("fx", "supplyDefaults")(traceIn, traceOut, defaultColor, layout);
+          getComponentMethod("fx", "supplyDefaults")(traceIn, traceOut, defaultColor, layout);
         }
       }
       if (_module && _module.selectPoints) {
@@ -14012,7 +14011,7 @@ var Plotly = (() => {
     coerce3("margin.pad");
     coerce3("margin.autoexpand");
     if (layoutIn.width && layoutIn.height) sanitizeMargins(layoutOut);
-    registry_default.getComponentMethod("grid", "sizeDefaults")(layoutIn, layoutOut);
+    getComponentMethod("grid", "sizeDefaults")(layoutIn, layoutOut);
     coerce3("paper_bgcolor");
     coerce3("separators", formatObj.decimal + formatObj.thousands);
     coerce3("hidesources");
@@ -14021,15 +14020,15 @@ var Plotly = (() => {
     const uirevision = coerce3("uirevision");
     coerce3("editrevision", uirevision);
     coerce3("selectionrevision", uirevision);
-    registry_default.getComponentMethod(
+    getComponentMethod(
       "modebar",
       "supplyLayoutDefaults"
     )(layoutIn, layoutOut);
-    registry_default.getComponentMethod(
+    getComponentMethod(
       "shapes",
       "supplyDrawNewShapeDefaults"
     )(layoutIn, layoutOut, coerce3);
-    registry_default.getComponentMethod(
+    getComponentMethod(
       "selections",
       "supplyDrawNewSelectionDefaults"
     )(layoutIn, layoutOut, coerce3);
@@ -14039,11 +14038,11 @@ var Plotly = (() => {
       coerce3("transition.easing");
       coerce3("transition.ordering");
     }
-    registry_default.getComponentMethod(
+    getComponentMethod(
       "calendars",
       "handleDefaults"
     )(layoutIn, layoutOut, "calendar");
-    registry_default.getComponentMethod(
+    getComponentMethod(
       "fx",
       "supplyLayoutGlobalDefaults"
     )(layoutIn, layoutOut, coerce3);
@@ -14089,12 +14088,11 @@ var Plotly = (() => {
     sanitizeMargins(fullLayout);
   }
   function supplyLayoutModuleDefaults(layoutIn, layoutOut, fullData, transitionData) {
-    const componentsRegistry2 = registry_default.componentsRegistry;
     const basePlotModules = layoutOut._basePlotModules;
     let component, i, _module;
-    const Cartesian = registry_default.subplotsRegistry.cartesian;
-    for (component in componentsRegistry2) {
-      _module = componentsRegistry2[component];
+    const Cartesian = subplotsRegistry.cartesian;
+    for (component in componentsRegistry) {
+      _module = componentsRegistry[component];
       if (_module.includeBasePlot) {
         _module.includeBasePlot(layoutIn, layoutOut);
       }
@@ -14103,7 +14101,7 @@ var Plotly = (() => {
       basePlotModules.push(Cartesian);
     }
     if (layoutOut._has("cartesian")) {
-      registry_default.getComponentMethod("grid", "contentDefaults")(layoutIn, layoutOut);
+      getComponentMethod("grid", "contentDefaults")(layoutIn, layoutOut);
       Cartesian.finalizeSubplots(layoutIn, layoutOut);
     }
     for (const subplotType in layoutOut._subplots) {
@@ -14129,8 +14127,8 @@ var Plotly = (() => {
         _module.supplyLayoutDefaults(layoutIn, layoutOut, fullData, transitionData);
       }
     }
-    for (component in componentsRegistry2) {
-      _module = componentsRegistry2[component];
+    for (component in componentsRegistry) {
+      _module = componentsRegistry[component];
       if (_module.supplyLayoutDefaults) {
         _module.supplyLayoutDefaults(layoutIn, layoutOut, fullData);
       }
@@ -14704,7 +14702,7 @@ var Plotly = (() => {
     return dest;
   }
   var dataArrayContainers = ["transforms", "dimensions"];
-  var layoutArrayContainers2 = registry_default.layoutArrayContainers;
+  var layoutArrayContainers2 = layoutArrayContainers;
   function extendTrace(destTrace, srcTrace) {
     return extendObjectWithContainers(destTrace, srcTrace, dataArrayContainers);
   }
@@ -15024,7 +15022,7 @@ var Plotly = (() => {
         }
         for (j = 0; j < trace.transforms.length; j++) {
           const transform = trace.transforms[j];
-          _module = registry_default.transformsRegistry[transform.type];
+          _module = void 0;
           if (_module && _module.calcTransform) {
             trace._hasCalcTransform = true;
             hasCalcTransform = true;
@@ -15073,8 +15071,8 @@ var Plotly = (() => {
       for (i = 0; i < sorted.length; i++) calci(sorted[i], false);
       doCrossTraceCalc(gd);
     }
-    registry_default.getComponentMethod("fx", "calc")(gd);
-    registry_default.getComponentMethod("errorbars", "calc")(gd);
+    getComponentMethod("fx", "calc")(gd);
+    getComponentMethod("errorbars", "calc")(gd);
   }
   var sortAxisCategoriesByValueRegex = /(total|sum|min|max|mean|geometric mean|median) (ascending|descending)/;
   function sortAxisCategoriesByValue(axList, gd) {
@@ -15300,7 +15298,7 @@ var Plotly = (() => {
     const B = fullLayout._previousSelections;
     fullLayout._previousSelections = A;
     const mayEmitSelected = fullLayout._reselect || JSON.stringify(A) !== JSON.stringify(B);
-    registry_default.getComponentMethod("selections", "reselect")(gd, mayEmitSelected);
+    getComponentMethod("selections", "reselect")(gd, mayEmitSelected);
   }
   function generalUpdatePerTraceModule(gd, subplot, subplotCalcData, subplotLayout) {
     const traceHashOld = subplot.traceHash;
@@ -15330,7 +15328,7 @@ var Plotly = (() => {
     subplot.traceHash = traceHash;
   }
   function plotBasePlot(desiredType, gd, traces, transitionOpts, makeOnCompleteCallback) {
-    const _module = registry_default.getModule(desiredType);
+    const _module = getModule(desiredType);
     const cdmodule = getModuleCalcData(gd.calcdata, _module)[0];
     _module.plot(gd, cdmodule, transitionOpts, makeOnCompleteCallback);
   }
@@ -23009,7 +23007,7 @@ var Plotly = (() => {
     axIds = axIds ? axIds : axes.listIds(gd);
     const fullLayout = gd._fullLayout;
     function _redrawOneComp(moduleName, methodName, stashName, shortCircuit) {
-      const method = registry_default.getComponentMethod(moduleName, methodName);
+      const method = getComponentMethod(moduleName, methodName);
       const stash = {};
       for (let i = 0; i < axIds.length; i++) {
         const ax = fullLayout[axes.id2name(axIds[i])];
@@ -24680,7 +24678,7 @@ var Plotly = (() => {
         ax._depth = majorTickSigns[4] * (getLabelLevelBbox()[ax.side] - mainLinePositionShift);
       });
     }
-    const hasRangeSlider = registry_default.getComponentMethod("rangeslider", "isVisible")(ax);
+    const hasRangeSlider = getComponentMethod("rangeslider", "isVisible")(ax);
     if (!opts.skipTitle && !(hasRangeSlider && ax.side === "bottom")) {
       seq.push(function() {
         return drawTitle(gd, ax);
@@ -24781,7 +24779,7 @@ var Plotly = (() => {
         }
       }
       if (hasRangeSlider) {
-        rangeSliderPush = registry_default.getComponentMethod("rangeslider", "autoMarginOpts")(gd, ax);
+        rangeSliderPush = getComponentMethod("rangeslider", "autoMarginOpts")(gd, ax);
       }
       if (typeof ax.automargin === "string") {
         filterPush(push, ax.automargin);
@@ -25762,7 +25760,7 @@ var Plotly = (() => {
           allowAutoMargin(gd, axMirrorAutoMarginID(ax));
         }
       }
-      if (registry_default.getComponentMethod("rangeslider", "isVisible")(ax)) {
+      if (getComponentMethod("rangeslider", "isVisible")(ax)) {
         allowAutoMargin(gd, rangeSliderAutoMarginID(ax));
       }
     }
@@ -26673,7 +26671,7 @@ var Plotly = (() => {
     let defaultXAnchor = "left";
     if (isHorizontal) {
       defaultX = 0;
-      if (registry_default.getComponentMethod("rangeslider", "isVisible")(layoutIn.xaxis)) {
+      if (getComponentMethod("rangeslider", "isVisible")(layoutIn.xaxis)) {
         if (isPaperY) {
           defaultY = 1.1;
           defaultYAnchor = "bottom";
@@ -29289,7 +29287,7 @@ var Plotly = (() => {
       alignHoverText(hoverLabels, rotateLabels, fullLayout._invScaleX, fullLayout._invScaleY);
     }
     if (eventTarget && eventTarget.tagName) {
-      const hasClickToShow = registry_default.getComponentMethod("annotations", "hasClickToShow")(gd, newhoverdata);
+      const hasClickToShow = getComponentMethod("annotations", "hasClickToShow")(gd, newhoverdata);
       overrideCursor(select_default2(eventTarget), hasClickToShow ? "pointer" : "");
     }
     if (!eventTarget || noHoverEvent || !hoverChanged(gd, evt, oldhoverdata)) return;
@@ -30462,7 +30460,7 @@ var Plotly = (() => {
 
   // src/components/fx/click.ts
   function click(gd, evt, subplot) {
-    const annotationsDone = registry_default.getComponentMethod("annotations", "onClick")(gd, gd._hoverdata);
+    const annotationsDone = getComponentMethod("annotations", "onClick")(gd, gd._hoverdata);
     if (subplot !== void 0) {
       hover(gd, evt, subplot, true);
     }
@@ -31033,7 +31031,7 @@ var Plotly = (() => {
     fullLayout._paperdiv.style("width", gd._context.responsive && fullLayout.autosize && !gd._context._hasZeroWidth && !gd.layout.width ? "100%" : fullLayout.width + "px").style("height", gd._context.responsive && fullLayout.autosize && !gd._context._hasZeroHeight && !gd.layout.height ? "100%" : fullLayout.height + "px").selectAll(".main-svg").call(setSize, fullLayout.width, fullLayout.height);
     gd._context.setBackground(gd, fullLayout.paper_bgcolor);
     drawMainTitle(gd);
-    registry_default.getComponentMethod("modebar", "manage")(gd);
+    getComponentMethod("modebar", "manage")(gd);
     if (!fullLayout._has("cartesian")) {
       return previousPromises(gd);
     }
@@ -31433,11 +31431,11 @@ var Plotly = (() => {
       redrawReglTraces(gd);
     }
     style(gd);
-    registry_default.getComponentMethod("legend", "draw")(gd);
+    getComponentMethod("legend", "draw")(gd);
     return previousPromises(gd);
   }
   function doColorBars(gd) {
-    registry_default.getComponentMethod("colorbar", "draw")(gd);
+    getComponentMethod("colorbar", "draw")(gd);
     return previousPromises(gd);
   }
   function layoutReplot(gd) {
@@ -31446,13 +31444,13 @@ var Plotly = (() => {
     return _doPlot(gd, "", layout);
   }
   function doLegend(gd) {
-    registry_default.getComponentMethod("legend", "draw")(gd);
+    getComponentMethod("legend", "draw")(gd);
     return previousPromises(gd);
   }
   function doTicksRelayout(gd) {
     axes_default.draw(gd, "redraw");
     if (gd._fullLayout._hasOnlyLargeSploms) {
-      registry_default.subplotsRegistry.splom.updateGrid(gd);
+      subplotsRegistry.splom.updateGrid(gd);
       clearGlCanvases(gd);
       redrawReglTraces(gd);
     }
@@ -31461,7 +31459,7 @@ var Plotly = (() => {
   }
   function doModeBar(gd) {
     const fullLayout = gd._fullLayout;
-    registry_default.getComponentMethod("modebar", "manage")(gd);
+    getComponentMethod("modebar", "manage")(gd);
     for (let i = 0; i < fullLayout._basePlotModules.length; i++) {
       const updateFx3 = fullLayout._basePlotModules[i].updateFx;
       if (updateFx3) updateFx3(gd);
@@ -31486,10 +31484,10 @@ var Plotly = (() => {
     }
     redrawReglTraces(gd);
     style(gd);
-    registry_default.getComponentMethod("selections", "draw")(gd);
-    registry_default.getComponentMethod("shapes", "draw")(gd);
-    registry_default.getComponentMethod("annotations", "draw")(gd);
-    registry_default.getComponentMethod("images", "draw")(gd);
+    getComponentMethod("selections", "draw")(gd);
+    getComponentMethod("shapes", "draw")(gd);
+    getComponentMethod("annotations", "draw")(gd);
+    getComponentMethod("images", "draw")(gd);
     fullLayout._replotting = false;
     return previousPromises(gd);
   }
@@ -31548,15 +31546,15 @@ var Plotly = (() => {
     enforceAxisConstraints(gd);
   }
   function finalDraw(gd) {
-    registry_default.getComponentMethod("rangeslider", "draw")(gd);
-    registry_default.getComponentMethod("rangeselector", "draw")(gd);
+    getComponentMethod("rangeslider", "draw")(gd);
+    getComponentMethod("rangeselector", "draw")(gd);
   }
   function drawMarginPushers(gd) {
-    registry_default.getComponentMethod("legend", "draw")(gd);
-    registry_default.getComponentMethod("rangeselector", "draw")(gd);
-    registry_default.getComponentMethod("sliders", "draw")(gd);
-    registry_default.getComponentMethod("updatemenus", "draw")(gd);
-    registry_default.getComponentMethod("colorbar", "draw")(gd);
+    getComponentMethod("legend", "draw")(gd);
+    getComponentMethod("rangeselector", "draw")(gd);
+    getComponentMethod("sliders", "draw")(gd);
+    getComponentMethod("updatemenus", "draw")(gd);
+    getComponentMethod("colorbar", "draw")(gd);
   }
   var subroutines_default = { layoutStyles, drawMainTitle, doTraceStyle, doColorBars, layoutReplot, doLegend, doTicksRelayout, doModeBar, doCamera, drawData, redrawReglTraces, doAutoRangeAndConstraints, finalDraw, drawMarginPushers };
 
@@ -31565,13 +31563,13 @@ var Plotly = (() => {
   var selectingOrDrawing2 = helpers_default4.selectingOrDrawing;
   var freeMode2 = helpers_default4.freeMode;
   function prepSelect(...args) {
-    return registry_default.getComponentMethod("selections", "prepSelect").apply(null, args);
+    return getComponentMethod("selections", "prepSelect").apply(null, args);
   }
   function clearOutline(...args) {
-    return registry_default.getComponentMethod("selections", "clearOutline").apply(null, args);
+    return getComponentMethod("selections", "clearOutline").apply(null, args);
   }
   function selectOnClick(...args) {
-    return registry_default.getComponentMethod("selections", "selectOnClick").apply(null, args);
+    return getComponentMethod("selections", "selectOnClick").apply(null, args);
   }
   var MINDRAG = constants_default2.MINDRAG;
   var MINZOOM = constants_default2.MINZOOM;
@@ -32176,7 +32174,7 @@ var Plotly = (() => {
         }
       }
       if (hasSplom) {
-        registry_default.subplotsRegistry.splom.drag(gd);
+        subplotsRegistry.splom.drag(gd);
       }
       if (hasScatterGl) {
         for (i = 0; i < subplots.length; i++) {
@@ -32692,8 +32690,8 @@ var Plotly = (() => {
 
   // src/plot_api/container_array_match.ts
   function containerArrayMatch(astr) {
-    const rootContainers = registry_default.layoutArrayContainers;
-    const regexpContainers = registry_default.layoutArrayRegexes;
+    const rootContainers = layoutArrayContainers;
+    const regexpContainers = layoutArrayRegexes;
     const rootPart = astr.split("[")[0];
     let arrayStr;
     let match;
@@ -32723,9 +32721,9 @@ var Plotly = (() => {
   }
   function applyContainerArrayChanges(gd, np, edits, flags, _nestedProperty) {
     const componentType = np.astr;
-    const supplyComponentDefaults = registry_default.getComponentMethod(componentType, "supplyLayoutDefaults");
-    const draw4 = registry_default.getComponentMethod(componentType, "draw");
-    const drawOne3 = registry_default.getComponentMethod(componentType, "drawOne");
+    const supplyComponentDefaults = getComponentMethod(componentType, "supplyLayoutDefaults");
+    const draw4 = getComponentMethod(componentType, "draw");
+    const drawOne3 = getComponentMethod(componentType, "drawOne");
     const replotLater = flags.replot || flags.recalc || supplyComponentDefaults === noop2 || draw4 === noop2;
     const layout = gd.layout;
     const fullLayout = gd._fullLayout;
@@ -32859,10 +32857,10 @@ var Plotly = (() => {
       if (!layout.scene) layout.scene = layout.scene1;
       delete layout.scene1;
     }
-    const axisAttrRegex = (registry_default.subplotsRegistry.cartesian || {}).attrRegex;
-    const polarAttrRegex = (registry_default.subplotsRegistry.polar || {}).attrRegex;
-    const ternaryAttrRegex = (registry_default.subplotsRegistry.ternary || {}).attrRegex;
-    const sceneAttrRegex = (registry_default.subplotsRegistry.gl3d || {}).attrRegex;
+    const axisAttrRegex = (subplotsRegistry.cartesian || {}).attrRegex;
+    const polarAttrRegex = (subplotsRegistry.polar || {}).attrRegex;
+    const ternaryAttrRegex = (subplotsRegistry.ternary || {}).attrRegex;
+    const sceneAttrRegex = (subplotsRegistry.gl3d || {}).attrRegex;
     const keys = Object.keys(layout);
     for (i = 0; i < keys.length; i++) {
       const key = keys[i];
@@ -32963,7 +32961,7 @@ var Plotly = (() => {
       if (trace.xaxis) trace.xaxis = cleanId2(trace.xaxis, "x");
       if (trace.yaxis) trace.yaxis = cleanId2(trace.yaxis, "y");
       if (traceIs2(trace, "gl3d") && trace.scene) {
-        trace.scene = registry_default.subplotsRegistry.gl3d.cleanId(trace.scene);
+        trace.scene = subplotsRegistry.gl3d.cleanId(trace.scene);
       }
       if (!traceIs2(trace, "pie-like") && !traceIs2(trace, "bar-like")) {
         if (Array.isArray(trace.textposition)) {
@@ -32974,7 +32972,7 @@ var Plotly = (() => {
           trace.textposition = cleanTextPosition(trace.textposition);
         }
       }
-      const _module = registry_default.getModule(trace);
+      const _module = getModule(trace);
       if (_module && _module.colorbar) {
         const containerName = _module.colorbar.container;
         const container = containerName ? trace[containerName] : trace;
@@ -33187,7 +33185,7 @@ var Plotly = (() => {
   var { dfltConfig: dfltConfig4 } = plot_config_default;
   var { AX_NAME_PATTERN } = constants_default2;
   function clearOutline2(gd) {
-    return registry_default.getComponentMethod("selections", "clearOutline")(gd);
+    return getComponentMethod("selections", "clearOutline")(gd);
   }
   var numericNameWarningCount = 0;
   var numericNameWarningCountLimit = 5;
@@ -33358,8 +33356,8 @@ var Plotly = (() => {
       }
       return syncOrAsync(
         [
-          registry_default.getComponentMethod("shapes", "calcAutorange"),
-          registry_default.getComponentMethod("annotations", "calcAutorange"),
+          getComponentMethod("shapes", "calcAutorange"),
+          getComponentMethod("annotations", "calcAutorange"),
           doAutoRangeAndConstraints2
         ],
         gd
@@ -33369,7 +33367,7 @@ var Plotly = (() => {
       if (gd._transitioning) return;
       subroutines_default.doAutoRangeAndConstraints(gd);
       if (graphWasEmpty) axes_default.saveRangeInitial(gd);
-      registry_default.getComponentMethod("rangeslider", "calcAutorange")(gd);
+      getComponentMethod("rangeslider", "calcAutorange")(gd);
     }
     function drawAxes() {
       return axes_default.draw(gd, graphWasEmpty ? "" : "redraw");
@@ -34437,8 +34435,8 @@ var Plotly = (() => {
           if (Array.isArray(fullLayout._subplots.polar) && fullLayout._subplots.polar.length && fullLayout[p.parts[0]] && p.parts[1] === "radialaxis") {
             delete fullLayout[p.parts[0]]._subplot.viewInitial["radialaxis.range"];
           }
-          registry_default.getComponentMethod("annotations", "convertCoords")(gd, parentFull, vi, doextra);
-          registry_default.getComponentMethod("images", "convertCoords")(gd, parentFull, vi, doextra);
+          getComponentMethod("annotations", "convertCoords")(gd, parentFull, vi, doextra);
+          getComponentMethod("images", "convertCoords")(gd, parentFull, vi, doextra);
         } else {
           doextra(ptrunk + ".autorange", true);
           doextra(ptrunk + ".range", null);
@@ -34448,8 +34446,8 @@ var Plotly = (() => {
         const fullProp = nestedProperty2(fullLayout, ai).get();
         let newType = (vi || {}).type;
         if (!newType || newType === "-") newType = "linear";
-        registry_default.getComponentMethod("annotations", "convertCoords")(gd, fullProp, newType, doextra);
-        registry_default.getComponentMethod("images", "convertCoords")(gd, fullProp, newType, doextra);
+        getComponentMethod("annotations", "convertCoords")(gd, fullProp, newType, doextra);
+        getComponentMethod("images", "convertCoords")(gd, fullProp, newType, doextra);
       }
       const containerArrayMatch3 = manage_arrays_default.containerArrayMatch(ai);
       if (containerArrayMatch3) {
@@ -34860,13 +34858,13 @@ var Plotly = (() => {
           for (const componentType in relayoutFlags.arrays) {
             const indices = relayoutFlags.arrays[componentType];
             if (indices.length) {
-              const drawOne3 = registry_default.getComponentMethod(componentType, "drawOne");
+              const drawOne3 = getComponentMethod(componentType, "drawOne");
               if (drawOne3 !== noop3) {
                 for (let i = 0; i < indices.length; i++) {
                   drawOne3(gd, indices[i]);
                 }
               } else {
-                const draw4 = registry_default.getComponentMethod(componentType, "draw");
+                const draw4 = getComponentMethod(componentType, "draw");
                 if (draw4 === noop3) {
                   throw new Error("cannot draw components: " + componentType);
                 }
@@ -35874,7 +35872,7 @@ var Plotly = (() => {
   }
   function getRedrawFunc(gd) {
     return function() {
-      registry_default.getComponentMethod("colorbar", "draw")(gd);
+      getComponentMethod("colorbar", "draw")(gd);
     };
   }
   function encodeSVG(svg2) {
@@ -36635,7 +36633,7 @@ var Plotly = (() => {
   var animate2 = plot_api_default.animate;
   var setPlotConfig2 = plot_api_default.setPlotConfig;
   function deleteActiveShape(gd) {
-    return registry_default.getComponentMethod("shapes", "eraseActiveShape")(getGraphDiv3(gd));
+    return getComponentMethod("shapes", "eraseActiveShape")(getGraphDiv3(gd));
   }
   var toImage2 = to_image_default;
   var validate3 = validate2;
@@ -37403,7 +37401,7 @@ var Plotly = (() => {
     const x = coerce3("x");
     const y = coerce3("y");
     let len2;
-    const handleCalendarDefaults = registry_default.getComponentMethod("calendars", "handleTraceDefaults");
+    const handleCalendarDefaults = getComponentMethod("calendars", "handleTraceDefaults");
     handleCalendarDefaults(traceIn, traceOut, ["x", "y"], layout);
     if (x) {
       const xlen = minRowLength(x);
@@ -37707,7 +37705,7 @@ var Plotly = (() => {
       coerce3("hovertemplate");
       coerce3("hovertemplatefallback");
     }
-    const errorBarsSupplyDefaults = registry_default.getComponentMethod("errorbars", "supplyDefaults");
+    const errorBarsSupplyDefaults = getComponentMethod("errorbars", "supplyDefaults");
     errorBarsSupplyDefaults(traceIn, traceOut, lineColor || markerColor || defaultColor, { axis: "y" });
     errorBarsSupplyDefaults(traceIn, traceOut, lineColor || markerColor || defaultColor, { axis: "x", inherit: "y" });
     coerceSelectionMarkerOpacity(traceOut, coerce3);
@@ -39596,7 +39594,7 @@ var Plotly = (() => {
     const lines = ensureSingle(tr, "g", "lines");
     const points = ensureSingle(tr, "g", "points");
     const text = ensureSingle(tr, "g", "text");
-    registry_default.getComponentMethod("errorbars", "plot")(gd, errorBarGroup, plotinfo, transitionOpts);
+    getComponentMethod("errorbars", "plot")(gd, errorBarGroup, plotinfo, transitionOpts);
     if (trace.visible !== true) return;
     transition4(tr).style("opacity", trace.opacity);
     let ownFillEl3, tonext;
@@ -39975,7 +39973,7 @@ var Plotly = (() => {
     });
     s.selectAll("g.trace path.js-line").call(lineGroupStyle);
     s.selectAll("g.trace path.js-fill").call(fillGroupStyle, gd, false);
-    registry_default.getComponentMethod("errorbars", "style")(s);
+    getComponentMethod("errorbars", "style")(s);
   }
   function stylePoints(sel, trace, gd) {
     pointStyle(sel.selectAll("path.point"), trace, gd);
@@ -40089,7 +40087,7 @@ var Plotly = (() => {
           hovertemplate: trace.hovertemplate
         });
         fillText(di, trace, pointData);
-        registry_default.getComponentMethod("errorbars", "hoverInfo")(di, trace, pointData);
+        getComponentMethod("errorbars", "hoverInfo")(di, trace, pointData);
         return [pointData];
       }
     }
@@ -40461,7 +40459,7 @@ var Plotly = (() => {
     const axType = containerOut.type || axTemplate.type || "-";
     let ticklabelmode;
     if (axType === "date") {
-      const handleCalendarDefaults = registry_default.getComponentMethod("calendars", "handleDefaults");
+      const handleCalendarDefaults = getComponentMethod("calendars", "handleDefaults");
       handleCalendarDefaults(containerIn, containerOut, "calendar", options.calendar);
       if (!options.noTicklabelmode) {
         ticklabelmode = coerce3("ticklabelmode");
@@ -40762,7 +40760,6 @@ var Plotly = (() => {
   var { AX_ID_PATTERN } = constants_default2;
   var id2name2 = axis_ids_default.id2name;
   var name2id2 = axis_ids_default.name2id;
-  var getComponentMethod2 = registry_default.getComponentMethod;
   function appendList(cont, k, item) {
     if (Array.isArray(cont[k])) cont[k].push(item);
     else cont[k] = [item];
@@ -40996,8 +40993,8 @@ var Plotly = (() => {
       addMissingMatchedAxis();
       axLayoutOut._input = axLayoutIn;
     }
-    const rangeSliderDefaults = getComponentMethod2("rangeslider", "handleDefaults");
-    const rangeSelectorDefaults = getComponentMethod2("rangeselector", "handleDefaults");
+    const rangeSliderDefaults = getComponentMethod("rangeslider", "handleDefaults");
+    const rangeSelectorDefaults = getComponentMethod("rangeselector", "handleDefaults");
     for (i = 0; i < xNames.length; i++) {
       axName = xNames[i];
       axLayoutIn = layoutIn[axName];
@@ -41020,7 +41017,7 @@ var Plotly = (() => {
       axLayoutIn = layoutIn[axName];
       axLayoutOut = layoutOut[axName];
       const anchoredAxis = layoutOut[id2name2(axLayoutOut.anchor)];
-      const fixedRangeDflt = getComponentMethod2("rangeslider", "isVisible")(anchoredAxis);
+      const fixedRangeDflt = getComponentMethod("rangeslider", "isVisible")(anchoredAxis);
       coerce3("fixedrange", fixedRangeDflt);
       coerce3("modebardisable");
     }
@@ -41295,7 +41292,7 @@ var Plotly = (() => {
       for (let i = 0; i < modules2.length; i++) {
         _module = modules2[i];
         const name2 = _module.name;
-        const categories = registry_default.modules[name2].categories;
+        const categories = modules[name2].categories;
         if (categories.svg) {
           const classBaseName = _module.layerName || name2 + "layer";
           const className = classBaseName + (z ? Number(z) + 1 : "");
@@ -41346,7 +41343,7 @@ var Plotly = (() => {
       }
     });
     if (fullLayout._has("scattergl")) {
-      _module = registry_default.getModule("scattergl");
+      _module = getModule("scattergl");
       cdModule = getModuleCalcData(cdSubplot, _module)[0];
       _module.plot(gd, plotinfo, cdModule);
     }
@@ -44742,7 +44739,7 @@ var Plotly = (() => {
     return function includeComponents(layoutIn, layoutOut) {
       const array2 = layoutIn[containerArrayName];
       if (!Array.isArray(array2)) return;
-      const Cartesian = registry_default.subplotsRegistry.cartesian;
+      const Cartesian = subplotsRegistry.cartesian;
       const idRegex3 = Cartesian.idRegex;
       const subplots = layoutOut._subplots;
       const xaList = subplots.xaxis;
@@ -45658,7 +45655,7 @@ var Plotly = (() => {
     },
     icon: ploticon_default.eraseshape,
     click: function(gd) {
-      return registry_default.getComponentMethod("shapes", "eraseActiveShape")(gd);
+      return getComponentMethod("shapes", "eraseActiveShape")(gd);
     }
   };
   modeBarButtons.zoomIn2d = {
@@ -47447,7 +47444,7 @@ var Plotly = (() => {
     });
     handleStyleDefaults(traceIn, traceOut, coerce3, defaultColor, layout);
     const lineColor = (traceOut.marker.line || {}).color;
-    const errorBarsSupplyDefaults = registry_default.getComponentMethod("errorbars", "supplyDefaults");
+    const errorBarsSupplyDefaults = getComponentMethod("errorbars", "supplyDefaults");
     errorBarsSupplyDefaults(traceIn, traceOut, lineColor || color_default.defaultLine, { axis: "y" });
     errorBarsSupplyDefaults(traceIn, traceOut, lineColor || color_default.defaultLine, { axis: "x", inherit: "y" });
     coerceSelectionMarkerOpacity(traceOut, coerce3);
@@ -47770,7 +47767,7 @@ var Plotly = (() => {
       const trace = d[0].trace;
       stylePoints2(sel, trace, gd);
     });
-    registry_default.getComponentMethod("errorbars", "style")(s);
+    getComponentMethod("errorbars", "style")(s);
   }
   function stylePoints2(sel, trace, gd) {
     pointStyle(sel.selectAll("path"), trace, gd);
@@ -47789,7 +47786,7 @@ var Plotly = (() => {
       stylePointsInSelectionMode(sel, trace, gd);
     } else {
       stylePoints2(sel, trace, gd);
-      registry_default.getComponentMethod("errorbars", "style")(sel);
+      getComponentMethod("errorbars", "style")(sel);
     }
   }
   function stylePointsInSelectionMode(s, trace, gd) {
@@ -48167,7 +48164,7 @@ var Plotly = (() => {
       const hasClipOnAxisFalse = trace.cliponaxis === false;
       setClipUrl(plotGroup, hasClipOnAxisFalse ? null : plotinfo.layerClipId, gd);
     });
-    registry_default.getComponentMethod("errorbars", "plot")(gd, bartraces, plotinfo, opts);
+    getComponentMethod("errorbars", "plot")(gd, bartraces, plotinfo, opts);
   }
   function appendBarText(gd, plotinfo, bar, cd, i, x0, x1, y0, y1, r, overhead, opts, makeOnCompleteCallback) {
     const xa = plotinfo.xaxis;
@@ -48661,7 +48658,7 @@ var Plotly = (() => {
       const trace = cd[0].trace;
       const di = cd[barPointData.index];
       barPointData.color = getTraceColor2(trace, di);
-      registry_default.getComponentMethod("errorbars", "hoverInfo")(di, trace, barPointData);
+      getComponentMethod("errorbars", "hoverInfo")(di, trace, barPointData);
       return [barPointData];
     }
   }

@@ -1,4 +1,4 @@
-import Registry from '../../registry.js';
+import { getComponentMethod } from '../../registry.js';
 import Lib from '../../lib/index.js';
 import colorscaleDefaults from '../../components/colorscale/defaults.js';
 import attributes from './attributes.js';
@@ -58,7 +58,7 @@ function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace, defaultColor: 
     traceOut._xlength = Array.isArray(x) && Lib.isArrayOrTypedArray(x[0]) ? z.length : z[0].length;
     traceOut._ylength = z.length;
 
-    const handleCalendarDefaults = Registry.getComponentMethod('calendars', 'handleTraceDefaults');
+    const handleCalendarDefaults = getComponentMethod('calendars', 'handleTraceDefaults');
     handleCalendarDefaults(traceIn, traceOut, ['x', 'y', 'z'], layout);
 
     coerce('text');

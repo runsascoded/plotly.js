@@ -1,6 +1,6 @@
 import Lib from '../../../lib/index.js';
 import Color from '../../../components/color/index.js';
-import Registry from '../../../registry.js';
+import { getComponentMethod } from '../../../registry.js';
 import handleSubplotDefaults from '../../subplot_defaults.js';
 import supplyGl3dAxisLayoutDefaults from './axis_defaults.js';
 import layoutAttributes from './layout_attributes.js';
@@ -103,7 +103,7 @@ function handleGl3dDefaults(sceneLayoutIn: any, sceneLayoutOut: any, coerce: any
         fullLayout: opts.fullLayout
     });
 
-    Registry.getComponentMethod('annotations3d', 'handleDefaults')(
+    getComponentMethod('annotations3d', 'handleDefaults')(
         sceneLayoutIn, sceneLayoutOut, opts
     );
 

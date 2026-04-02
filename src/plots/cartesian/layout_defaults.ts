@@ -13,12 +13,11 @@ import handlePositionDefaults from './position_defaults.js';
 import axisIds from './axis_ids.js';
 import _constants from './constants.js';
 const { AX_ID_PATTERN } = _constants;
-import Registry from '../../registry.js';
+import { getComponentMethod } from '../../registry.js';
 import { traceIs } from '../../lib/trace_categories.js';
 const id2name = axisIds.id2name;
 const name2id = axisIds.name2id;
 
-const getComponentMethod = Registry.getComponentMethod;
 
 function appendList(cont?: any, k?: any, item?: any): void {
     if(Array.isArray(cont[k])) cont[k].push(item);

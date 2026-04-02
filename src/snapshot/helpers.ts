@@ -1,4 +1,4 @@
-import Registry from '../registry.js';
+import { getComponentMethod } from '../registry.js';
 import type { FullLayout, GraphDiv } from '../../types/core';
 
 export function getDelay(fullLayout: FullLayout) {
@@ -13,7 +13,7 @@ export function getDelay(fullLayout: FullLayout) {
 
 export function getRedrawFunc(gd: GraphDiv) {
     return function() {
-        Registry.getComponentMethod('colorbar', 'draw')(gd);
+        getComponentMethod('colorbar', 'draw')(gd);
     };
 }
 

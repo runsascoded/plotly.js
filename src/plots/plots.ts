@@ -3,7 +3,7 @@ import { timeFormatLocale } from 'd3-time-format';
 import { formatLocale } from 'd3-format';
 import isNumeric from 'fast-isnumeric';
 import * as b64encode from 'base64-arraybuffer';
-import Registry from '../registry.js';
+import { allTypes, collectableSubplotTypes as _collectableSubplotTypes, componentsRegistry, getComponentMethod, getModule, layoutArrayContainers as registryLayoutArrayContainers, localeRegistry, modules as registryModules, subplotsRegistry } from '../registry.js';
 import { _doPlot, redraw, relayout } from '../plot_api/plot_api.js';
 import { traceIs } from '../lib/trace_categories.js';
 import PlotSchema from '../plot_api/plot_schema.js';
@@ -26,7 +26,7 @@ import type { GraphDiv, FullLayout, FullTrace, FullAxis, CalcData, CalcDatum } f
 
 
 export const attributes = _req0;
-attributes.type.values = (Registry.allTypes as any);
+attributes.type.values = (allTypes as any);
 export const fontAttrs = _req1;
 export const layoutAttributes = _req2;
 
@@ -44,9 +44,9 @@ export function redrawText(gd?: any): any {
     return new Promise(function(resolve) {
         setTimeout(function() {
             if(!gd._fullLayout) return;
-            Registry.getComponentMethod('annotations', 'draw')(gd);
-            Registry.getComponentMethod('legend', 'draw')(gd);
-            Registry.getComponentMethod('colorbar', 'draw')(gd);
+            getComponentMethod('annotations', 'draw')(gd);
+            getComponentMethod('legend', 'draw')(gd);
+            getComponentMethod('colorbar', 'draw')(gd);
             resolve(previousPromises(gd));
         }, 300);
     });
@@ -387,7 +387,7 @@ export function supplyDefaults(gd?: any, opts?: any): void {
     const splomXa = Object.keys(splomAxes.x);
     const splomYa = Object.keys(splomAxes.y);
     if(splomXa.length > 1 && splomYa.length > 1) {
-        Registry.getComponentMethod('grid', 'sizeDefaults')(newLayout, newFullLayout);
+        getComponentMethod('grid', 'sizeDefaults')(newLayout, newFullLayout);
 
         for(i = 0; i < splomXa.length; i++) {
             pushUnique(subplots.xaxis, splomXa[i]);
@@ -472,7 +472,7 @@ export function supplyDefaults(gd?: any, opts?: any): void {
     relinkPrivateKeys(newFullLayout, oldFullLayout);
 
     // colorscale crossTraceDefaults needs newFullLayout with relinked keys
-    Registry.getComponentMethod('colorscale', 'crossTraceDefaults')(newFullData, newFullLayout);
+    getComponentMethod('colorscale', 'crossTraceDefaults')(newFullData, newFullLayout);
 
     // For persisting GUI-driven changes in layout
     // _preGUI and _tracePreGUI were already copied over in relinkPrivateKeys
@@ -496,7 +496,7 @@ export function supplyDefaults(gd?: any, opts?: any): void {
     initMargins(newFullLayout);
 
     // collect and do some initial calculations for rangesliders
-    Registry.getComponentMethod('rangeslider', 'makeData')(newFullLayout);
+    getComponentMethod('rangeslider', 'makeData')(newFullLayout);
 
     // update object references in calcdata
     if(!skipUpdateCalc && oldCalcdata.length === newFullData.length) {
@@ -577,14 +577,12 @@ function getTraceUids(oldFullData?: any, newData?: any): any {
  * do not need to be collected because we just draw all visible traces.
  */
 function emptySubplotLists(): any {
-    let collectableSubplotTypes: any[] | null = Registry.collectableSubplotTypes;
+    let collectableSubplotTypes: any[] | null = _collectableSubplotTypes;
     const out: any = {};
     let i, j;
 
     if(!collectableSubplotTypes) {
         collectableSubplotTypes = [] as any[];
-
-        const subplotsRegistry = Registry.subplotsRegistry;
 
         for(const subplotType in subplotsRegistry) {
             const subplotModule = subplotsRegistry[subplotType];
@@ -650,7 +648,7 @@ function getFormatObj(gd?: any, formatKeys?: any): any {
                 includeFormat(formatj);
                 if(formatDone) break;
             }
-            locales = Registry.localeRegistry;
+            locales = localeRegistry;
         }
 
         const baseLocale = locale.split('-')[0];
@@ -659,7 +657,7 @@ function getFormatObj(gd?: any, formatKeys?: any): any {
     }
 
     // lastly pick out defaults from english (non-US, as DMY is so much more common)
-    if(!formatDone) includeFormat(Registry.localeRegistry.en.format);
+    if(!formatDone) includeFormat(localeRegistry.en.format);
 
     return formatObj;
 }
@@ -771,7 +769,7 @@ export function _hasPlotType(this: any, category?: any): boolean {
         const name = modules[i].name;
         if(name === category) return true;
         // N.B. this is modules[i] along with 'categories' as a hash object
-        const _module: any = Registry.modules[name];
+        const _module: any = registryModules[name];
         if(_module && _module.categories[category]) return true;
     }
 
@@ -940,7 +938,7 @@ export function linkSubplots(newFullData?: any, newFullLayout?: any, oldFullData
         if(ax._counterAxes.length && (
             (ax.spikemode && ax.spikemode.indexOf('across') !== -1) ||
             (ax.automargin && ax.mirror && ax.anchor !== 'free') ||
-            Registry.getComponentMethod('rangeslider', 'isVisible')(ax)
+            getComponentMethod('rangeslider', 'isVisible')(ax)
         )) {
             let min = 1;
             let max = 0;
@@ -1212,7 +1210,7 @@ export function supplyTraceDefaults(traceIn?: any, traceOut?: any, colorIndex?: 
 
     // we want even invisible traces to make their would-be subplots visible
     // so coerce the subplot id(s) now no matter what
-    const _module: any = Registry.getModule(traceOut);
+    const _module: any = getModule(traceOut);
 
     traceOut._module = _module;
     if(_module) {
@@ -1284,7 +1282,7 @@ export function supplyTraceDefaults(traceIn?: any, traceOut?: any, colorIndex?: 
 
             // parcats support hover, but not hoverlabel stylings (yet)
             if(traceOut.type !== 'parcats') {
-                Registry.getComponentMethod('fx', 'supplyDefaults')(traceIn, traceOut, defaultColor, layout);
+                getComponentMethod('fx', 'supplyDefaults')(traceIn, traceOut, defaultColor, layout);
             }
         }
 
@@ -1395,7 +1393,7 @@ export function supplyLayoutGlobalDefaults(layoutIn?: any, layoutOut?: any, form
 
     if(layoutIn.width && layoutIn.height) sanitizeMargins(layoutOut);
 
-    Registry.getComponentMethod('grid', 'sizeDefaults')(layoutIn, layoutOut);
+    getComponentMethod('grid', 'sizeDefaults')(layoutIn, layoutOut);
 
     coerce('paper_bgcolor');
 
@@ -1409,17 +1407,17 @@ export function supplyLayoutGlobalDefaults(layoutIn?: any, layoutOut?: any, form
     coerce('editrevision', uirevision);
     coerce('selectionrevision', uirevision);
 
-    Registry.getComponentMethod(
+    getComponentMethod(
         'modebar',
         'supplyLayoutDefaults'
     )(layoutIn, layoutOut);
 
-    Registry.getComponentMethod(
+    getComponentMethod(
         'shapes',
         'supplyDrawNewShapeDefaults'
     )(layoutIn, layoutOut, coerce);
 
-    Registry.getComponentMethod(
+    getComponentMethod(
         'selections',
         'supplyDrawNewSelectionDefaults'
     )(layoutIn, layoutOut, coerce);
@@ -1433,12 +1431,12 @@ export function supplyLayoutGlobalDefaults(layoutIn?: any, layoutOut?: any, form
         coerce('transition.ordering');
     }
 
-    Registry.getComponentMethod(
+    getComponentMethod(
         'calendars',
         'handleDefaults'
     )(layoutIn, layoutOut, 'calendar');
 
-    Registry.getComponentMethod(
+    getComponentMethod(
         'fx',
         'supplyLayoutGlobalDefaults'
     )(layoutIn, layoutOut, coerce);
@@ -1515,11 +1513,10 @@ export function plotAutoSize(gd?: any, layout?: any, fullLayout?: any): void {
 };
 
 export function supplyLayoutModuleDefaults(layoutIn?: any, layoutOut?: any, fullData?: any, transitionData?: any): void {
-    const componentsRegistry = Registry.componentsRegistry;
     const basePlotModules = layoutOut._basePlotModules;
     let component, i, _module;
 
-    const Cartesian = Registry.subplotsRegistry.cartesian;
+    const Cartesian = subplotsRegistry.cartesian;
 
     // check if any components need to add more base plot modules
     // that weren't captured by traces
@@ -1538,7 +1535,7 @@ export function supplyLayoutModuleDefaults(layoutIn?: any, layoutOut?: any, full
 
     // ensure all cartesian axes have at least one subplot
     if(layoutOut._has('cartesian')) {
-        Registry.getComponentMethod('grid', 'contentDefaults')(layoutIn, layoutOut);
+        getComponentMethod('grid', 'contentDefaults')(layoutIn, layoutOut);
         Cartesian.finalizeSubplots(layoutIn, layoutOut);
     }
 
@@ -2416,7 +2413,7 @@ export function extendObjectWithContainers(dest?: any, src?: any, containerPaths
 };
 
 export const dataArrayContainers = ['transforms', 'dimensions'];
-export const layoutArrayContainers = Registry.layoutArrayContainers;
+export const layoutArrayContainers = registryLayoutArrayContainers;
 
 /*
  * Extend a trace definition. This method:
@@ -2945,7 +2942,7 @@ export function doCalcdata(gd: GraphDiv, traces?: any): void {
             for(j = 0; j < trace.transforms.length; j++) {
                 const transform = trace.transforms[j];
 
-                _module = (Registry as any).transformsRegistry[transform.type];
+                _module = undefined as any; // transformsRegistry was removed in v3
                 if(_module && _module.calcTransform) {
                     trace._hasCalcTransform = true;
                     hasCalcTransform = true;
@@ -3028,8 +3025,8 @@ export function doCalcdata(gd: GraphDiv, traces?: any): void {
         doCrossTraceCalc(gd);
     }
 
-    Registry.getComponentMethod('fx', 'calc')(gd);
-    Registry.getComponentMethod('errorbars', 'calc')(gd);
+    getComponentMethod('fx', 'calc')(gd);
+    getComponentMethod('errorbars', 'calc')(gd);
 };
 
 const sortAxisCategoriesByValueRegex = /(total|sum|min|max|mean|geometric mean|median) (ascending|descending)/;
@@ -3307,7 +3304,7 @@ export function reselect(gd?: any): void {
     const mayEmitSelected = fullLayout._reselect ||
         JSON.stringify(A) !== JSON.stringify(B);
 
-    Registry.getComponentMethod('selections', 'reselect')(gd, mayEmitSelected);
+    getComponentMethod('selections', 'reselect')(gd, mayEmitSelected);
 };
 
 export function generalUpdatePerTraceModule(gd: GraphDiv, subplot?: any, subplotCalcData?: any, subplotLayout?: any): void {
@@ -3354,7 +3351,7 @@ export function generalUpdatePerTraceModule(gd: GraphDiv, subplot?: any, subplot
 };
 
 export function plotBasePlot(desiredType?: any, gd?: any, traces?: any, transitionOpts?: any, makeOnCompleteCallback?: any): void {
-    const _module = Registry.getModule(desiredType);
+    const _module = getModule(desiredType);
     const cdmodule = getModuleCalcData(gd.calcdata, _module)[0];
     _module.plot(gd, cdmodule, transitionOpts, makeOnCompleteCallback);
 };
