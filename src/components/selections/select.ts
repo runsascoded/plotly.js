@@ -2,6 +2,7 @@ import type { FullAxis, GraphDiv } from '../../../types/core';
 import polybool from 'polybooljs';
 import pointInPolygon from 'point-in-polygon/nested';
 import Registry from '../../registry.js';
+import { traceIs } from '../../lib/trace_categories.js';
 import { dashStyle } from '../drawing/index.js';
 import Color from '../color/index.js';
 import Fx from '../fx/index.js';
@@ -986,7 +987,7 @@ function updateReglSelectedState(gd: GraphDiv, searchTraces: any) {
         const searchInfo = searchTraces[i];
         const cd = searchInfo.cd;
 
-        if(Registry.traceIs(cd[0].trace, 'regl')) {
+        if(traceIs(cd[0].trace, 'regl')) {
             hasRegl = true;
         }
 

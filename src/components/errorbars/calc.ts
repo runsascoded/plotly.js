@@ -1,6 +1,6 @@
 import type { GraphDiv, FullAxis, FullTrace } from '../../../types/core';
 import isNumeric from 'fast-isnumeric';
-import Registry from '../../registry.js';
+import { traceIs } from '../../lib/trace_categories.js';
 import Axes from '../../plots/cartesian/axes.js';
 import Lib from '../../lib/index.js';
 import makeComputeError from './compute_error.js';
@@ -12,7 +12,7 @@ export default function calc(gd: GraphDiv): void {
         const calcTrace = calcdata[i];
         const trace = calcTrace[0].trace;
 
-        if(trace.visible === true && Registry.traceIs(trace, 'errorBarsOK')) {
+        if(trace.visible === true && traceIs(trace, 'errorBarsOK')) {
             const xa = Axes.getFromId(gd, trace.xaxis);
             const ya = Axes.getFromId(gd, trace.yaxis);
             calcOneAxis(calcTrace, trace, xa, 'x');

@@ -1,5 +1,6 @@
 import isNumeric from 'fast-isnumeric';
 import Registry from '../registry.js';
+import { traceIs } from '../lib/trace_categories.js';
 import { isIndex, isPlainObject, log, nestedProperty, swapAttrs, warn } from '../lib/index.js';
 // Note: subplotsRegistry access goes through Registry directly
 // (no longer mixed into Plots via extendFlat)
@@ -8,7 +9,6 @@ import Color from '../components/color/index.js';
 
 const cleanId = AxisIds.cleanId;
 const getFromTrace = AxisIds.getFromTrace;
-const traceIs = Registry.traceIs;
 
 const AX_LETTERS = ['x', 'y', 'z'];
 

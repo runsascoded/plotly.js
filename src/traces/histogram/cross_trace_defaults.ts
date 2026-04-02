@@ -1,7 +1,7 @@
 import type { FullLayout, FullTrace } from '../../../types/core';
 import Lib from '../../lib/index.js';
 import axisIds from '../../plots/cartesian/axis_ids.js';
-import { traceIs } from '../../registry.js';
+import { traceIs } from '../../lib/trace_categories.js';
 import handleGroupingDefaults from '../scatter/grouping_defaults.js';
 import _defaults from '../bar/defaults.js';
 const { validateCornerradius } = _defaults;

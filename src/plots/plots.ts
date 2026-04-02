@@ -4,6 +4,7 @@ import { formatLocale } from 'd3-format';
 import isNumeric from 'fast-isnumeric';
 import * as b64encode from 'base64-arraybuffer';
 import Registry from '../registry.js';
+import { traceIs } from '../lib/trace_categories.js';
 import PlotSchema from '../plot_api/plot_schema.js';
 import Template from '../plot_api/plot_template.js';
 import Lib, { _, adjustFormat, aggNums, clearResponsive, clearThrottle, coerceFont, coerceHoverinfo, constrain, ensureSingle, expandObjectPaths, extendDeepNoArrays, extendFlat, filterVisible, geometricMean, getGraphDiv, identity, isArrayBuffer, isHidden, isJSDate, isPlainObject, isPlotDiv, isTypedArray, mean, median, ms2DateTimeLocal, nestedProperty, noFormat, pushUnique, randstr, relinkPrivateKeys, simpleMap, subplotSort, syncOrAsync, warn, warnBadFormat } from '../lib/index.js';
@@ -1087,11 +1088,11 @@ export function supplyDataDefaults(dataIn: any, dataOut: FullTrace[], layout: an
 
         pushModule(fullTrace);
 
-        if(Registry.traceIs(fullTrace, 'carpetAxis')) {
+        if(traceIs(fullTrace, 'carpetAxis')) {
             carpetIndex[fullTrace.carpet] = fullTrace;
         }
 
-        if(Registry.traceIs(fullTrace, 'carpetDependent')) {
+        if(traceIs(fullTrace, 'carpetDependent')) {
             carpetDependents.push(i);
         }
     }
@@ -1244,7 +1245,7 @@ export function supplyTraceDefaults(traceIn?: any, traceOut?: any, colorIndex?: 
         coerce('ids');
         coerce('meta');
 
-        if(Registry.traceIs(traceOut, 'showLegend')) {
+        if(traceIs(traceOut, 'showLegend')) {
             Lib.coerce(traceIn, traceOut,
                 _module.attributes.showlegend ? _module.attributes : attributes,
                 'showlegend'
@@ -1267,17 +1268,17 @@ export function supplyTraceDefaults(traceIn?: any, traceOut?: any, colorIndex?: 
             _module.supplyDefaults(traceIn, traceOut, defaultColor, layout);
         }
 
-        if(!Registry.traceIs(traceOut, 'noOpacity')) {
+        if(!traceIs(traceOut, 'noOpacity')) {
             coerce('opacity');
         }
 
-        if(Registry.traceIs(traceOut, 'notLegendIsolatable')) {
+        if(traceIs(traceOut, 'notLegendIsolatable')) {
             // This clears out the legendonly state for traces like carpet that
             // cannot be isolated in the legend
             traceOut.visible = !!traceOut.visible;
         }
 
-        if(!Registry.traceIs(traceOut, 'noHover')) {
+        if(!traceIs(traceOut, 'noHover')) {
             if(!traceOut.hovertemplate) coerceHoverinfo(traceIn, traceOut, layout);
 
             // parcats support hover, but not hoverlabel stylings (yet)
@@ -3105,7 +3106,7 @@ function sortAxisCategoriesByValue(axList?: any, gd?: any): any {
                 if(fullTrace.visible !== true) continue;
 
                 const type = fullTrace.type;
-                if(Registry.traceIs(fullTrace, 'histogram')) {
+                if(traceIs(fullTrace, 'histogram')) {
                     delete fullTrace._xautoBinFinished;
                     delete fullTrace._yautoBinFinished;
                 }

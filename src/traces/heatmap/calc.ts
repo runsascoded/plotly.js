@@ -1,5 +1,5 @@
 import type { FullTrace, GraphDiv } from '../../../types/core';
-import Registry from '../../registry.js';
+import { traceIs } from '../../lib/trace_categories.js';
 import Lib from '../../lib/index.js';
 import Axes from '../../plots/cartesian/axes.js';
 import alignPeriod from '../../plots/cartesian/align_period.js';
@@ -18,8 +18,8 @@ export default function calc(gd: GraphDiv,  trace: FullTrace) {
     // run makeCalcdata on x and y even for heatmaps, in case of category mappings
     const xa = Axes.getFromId(gd, trace.xaxis || 'x');
     const ya = Axes.getFromId(gd, trace.yaxis || 'y');
-    const isContour = Registry.traceIs(trace, 'contour');
-    const isHist = Registry.traceIs(trace, 'histogram');
+    const isContour = traceIs(trace, 'contour');
+    const isHist = traceIs(trace, 'histogram');
     let zsmooth = isContour ? 'best' : trace.zsmooth;
     let x, x0, dx, origX;
     let y, y0, dy, origY;

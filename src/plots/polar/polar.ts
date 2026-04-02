@@ -1,6 +1,7 @@
 import { select } from 'd3-selection';
 import tinycolor from 'tinycolor2';
 import Registry from '../../registry.js';
+import { traceIs } from '../../lib/trace_categories.js';
 import Lib from '../../lib/index.js';
 import Color from '../../components/color/index.js';
 import { bBox, getTranslate, hideOutsideRangePoints, setClipUrl } from '../../components/drawing/index.js';
@@ -1259,7 +1260,7 @@ proto.updateRadialDrag = function(fullLayout: any, polarLayout: any, rngIndex: a
             const moduleCalcDataVisible = Lib.filterVisible(moduleCalcData);
             const _module = moduleCalcData[0][0].trace._module;
             _module.plot(gd, _this, moduleCalcDataVisible, polarLayoutNow);
-            if(Registry.traceIs(traceType, 'gl') && moduleCalcDataVisible.length) hasRegl = true;
+            if(traceIs(traceType, 'gl') && moduleCalcDataVisible.length) hasRegl = true;
         }
 
         if(hasRegl) {
@@ -1388,7 +1389,7 @@ proto.updateAngularDrag = function(fullLayout: any) {
         let hasRegl = false;
 
         for(const traceType in _this.traceHash) {
-            if(Registry.traceIs(traceType, 'gl')) {
+            if(traceIs(traceType, 'gl')) {
                 const moduleCalcData = _this.traceHash[traceType];
                 const moduleCalcDataVisible = Lib.filterVisible(moduleCalcData);
                 const _module = moduleCalcData[0][0].trace._module;

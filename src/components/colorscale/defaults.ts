@@ -4,7 +4,7 @@ import hasColorbar from '../colorbar/has_colorbar.js';
 import colorbarDefaults from '../colorbar/defaults.js';
 import _scales from './scales.js';
 const { isValid: isValidScale } = _scales;
-import { traceIs } from '../../registry.js';
+import { traceIs } from '../../lib/trace_categories.js';
 
 function npMaybe(parentCont: any, prefix: string): any {
     const containerStr = prefix.slice(0, prefix.length - 1);

@@ -1,4 +1,4 @@
-import Registry from '../../registry.js';
+import { traceIs } from '../../lib/trace_categories.js';
 import constants from './constants.js';
 
 export function id2name(id?: any): any {
@@ -76,7 +76,7 @@ export function getFromTrace(gd?: any, fullTrace?: any, type?: any): any {
     const fullLayout = gd._fullLayout;
     let ax = null;
 
-    if(Registry.traceIs(fullTrace, 'gl3d')) {
+    if(traceIs(fullTrace, 'gl3d')) {
         const scene = fullTrace.scene;
         if(scene.slice(0, 5) === 'scene') {
             ax = fullLayout[scene][type + 'axis'];

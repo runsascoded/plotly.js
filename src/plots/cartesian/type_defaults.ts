@@ -1,4 +1,4 @@
-import { traceIs } from '../../registry.js';
+import { traceIs } from '../../lib/trace_categories.js';
 import autoType from './axis_autotype.js';
 
 export default function handleTypeDefaults(containerIn?: any, containerOut?: any, coerce?: any, options?: any): void {

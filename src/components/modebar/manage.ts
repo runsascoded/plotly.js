@@ -1,7 +1,7 @@
 import type { FullLayout, GraphDiv } from '../../../types/core';
 import axisIds from '../../plots/cartesian/axis_ids.js';
 import scatterSubTypes from '../../traces/scatter/subtypes.js';
-import Registry from '../../registry.js';
+import { traceIs } from '../../lib/trace_categories.js';
 import { isUnifiedHover } from '../fx/helpers.js';
 import createModeBar from './modebar.js';
 import modeBarButtons from './buttons.js';
@@ -282,11 +282,11 @@ function isSelectable(fullData: any) {
 
         if(!trace._module || !trace._module.selectPoints) continue;
 
-        if(Registry.traceIs(trace, 'scatter-like')) {
+        if(traceIs(trace, 'scatter-like')) {
             if(scatterSubTypes.hasMarkers(trace) || scatterSubTypes.hasText(trace)) {
                 selectable = true;
             }
-        } else if(Registry.traceIs(trace, 'box-violin')) {
+        } else if(traceIs(trace, 'box-violin')) {
             if(trace.boxpoints === 'all' || trace.points === 'all') {
                 selectable = true;
             }
@@ -305,7 +305,7 @@ function isSelectable(fullData: any) {
 // check whether all trace are 'noHover'
 function hasNoHover(fullData: any) {
     for(let i = 0; i < fullData.length; i++) {
-        if(!Registry.traceIs(fullData[i], 'noHover')) return false;
+        if(!traceIs(fullData[i], 'noHover')) return false;
     }
     return true;
 }

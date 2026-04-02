@@ -4,6 +4,7 @@ import { drag as d3Drag } from 'd3-drag';
 import { constrain, ensureSingle, ensureSingleById, identity, isBottomAnchor, isCenterAnchor, isMiddleAnchor, isRightAnchor, log, syncOrAsync, templateString } from '../../lib/index.js';
 import { autoMargin, previousPromises } from '../../plots/plots.js';
 import Registry from '../../registry.js';
+import { traceIs } from '../../lib/trace_categories.js';
 import Events from '../../lib/events.js';
 import dragElement from '../dragelement/index.js';
 import { bBox, font, getTranslate, setClipUrl, setRect, setTranslate } from '../drawing/index.js';
@@ -199,7 +200,7 @@ function drawOne(gd: GraphDiv, opts: any): any {
 
     traces.style('opacity', function(d: any) {
         const trace = d[0].trace;
-        if(Registry.traceIs(trace, 'pie-like')) {
+        if(traceIs(trace, 'pie-like')) {
             return hiddenSlices.indexOf(d[0].label) !== -1 ? 0.5 : 1;
         } else {
             return trace.visible === 'legendonly' ? 0.5 : 1;
@@ -492,7 +493,7 @@ function clickOrDoubleClick(gd: GraphDiv, legend: any, legendItem: any, numClick
     if(trace._group) {
         evtData.group = trace._group;
     }
-    if(Registry.traceIs(trace, 'pie-like')) {
+    if(traceIs(trace, 'pie-like')) {
         evtData.label = legendItem.datum()[0].label;
     }
     const clickVal = Events.triggerHandler(gd, 'plotly_legendclick', evtData);
@@ -516,7 +517,7 @@ function drawTexts(g: any, gd: GraphDiv, legendObj: any): void {
     const legendId = getId(legendObj);
     const legendItem = g.data()[0][0];
     const trace = legendItem.trace;
-    const isPieLike = Registry.traceIs(trace, 'pie-like');
+    const isPieLike = traceIs(trace, 'pie-like');
     const isEditable = !legendObj._inHover && gd._context.edits.legendText && !isPieLike;
     const maxNameLength = legendObj._maxNameLength;
 

@@ -4,7 +4,7 @@ function d3Round(x: number, n: number): number { return n ? Math.round(x * (n = 
 import { ensureSingle, ensureSingleById, extendFlat, extractOption, identity, isArrayOrTypedArray, nestedProperty, numberFormat, strTranslate, texttemplateString } from '../../lib/index.js';
 import isNumeric from 'fast-isnumeric';
 import tinycolor from 'tinycolor2';
-import Registry from '../../registry.js';
+import { traceIs } from '../../lib/trace_categories.js';
 import Color from '../color/index.js';
 import Colorscale from '../colorscale/index.js';
 import svgTextUtils from '../../lib/svg_text_utils.js';
@@ -125,7 +125,7 @@ export function hideOutsideRangePoints(traceGroups: any, subplot: any): void {
         const trace = d[0].trace;
         const xcalendar = trace.xcalendar;
         const ycalendar = trace.ycalendar;
-        const selector = Registry.traceIs(trace, 'bar-like') ? '.bartext' : '.point,.textpoint';
+        const selector = traceIs(trace, 'bar-like') ? '.bartext' : '.point,.textpoint';
 
         traceGroups.selectAll(selector).each(function (this: any, d: any) {
             hideOutsideRangePoint(d, select(this), xa, ya, xcalendar, ycalendar);
@@ -960,7 +960,7 @@ export function makePointStyleFns(trace: FullTrace): any {
     out.markerScale = tryColorscale(marker, '');
     out.lineScale = tryColorscale(marker, 'line');
 
-    if (Registry.traceIs(trace, 'symbols')) {
+    if (traceIs(trace, 'symbols')) {
         out.ms2mrc = subTypes.isBubble(trace)
             ? makeBubbleSizeFn(trace)
             : function () {
@@ -1025,7 +1025,7 @@ export function makeSelectedPointStyleFns(trace: FullTrace): any {
     const smsIsDefined = sms !== undefined;
     const usmsIsDefined = usms !== undefined;
 
-    if (Registry.traceIs(trace, 'symbols') && (smsIsDefined || usmsIsDefined)) {
+    if (traceIs(trace, 'symbols') && (smsIsDefined || usmsIsDefined)) {
         out.selectedSizeFn = function (d: any): number {
             const base = d.mrc || ms / 2;
 
@@ -1225,7 +1225,7 @@ export function selectedTextStyle(s: any, trace: FullTrace): void {
         const fontSize = extracTextFontSize(d, trace);
 
         Color.fill(tx, tc);
-        const dontTouchParent = Registry.traceIs(trace, 'bar-like');
+        const dontTouchParent = traceIs(trace, 'bar-like');
         textPointPosition(tx, tp, fontSize, d.mrc2 || d.mrc, dontTouchParent);
     });
 }

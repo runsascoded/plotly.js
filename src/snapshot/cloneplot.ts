@@ -1,4 +1,4 @@
-import Registry from '../registry.js';
+import { traceIs } from '../lib/trace_categories.js';
 import Lib from '../lib/index.js';
 
 const extendFlat = Lib.extendFlat;
@@ -72,7 +72,7 @@ export default function clonePlot(graphObj: any, options: any) {
             const trace = newData[i];
             trace.showscale = false;
             if(trace.marker) trace.marker.showscale = false;
-            if(Registry.traceIs(trace, 'pie-like')) trace.textposition = 'none';
+            if(traceIs(trace, 'pie-like')) trace.textposition = 'none';
         }
     }
 
