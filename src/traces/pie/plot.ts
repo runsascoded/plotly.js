@@ -391,7 +391,7 @@ function attachFxHandlers(sliceTop: any, gd: GraphDiv, cd: any[]): any {
     // in the same slice that you moused up in
     if (!('_hasHoverEvent' in trace)) trace._hasHoverEvent = false;
 
-    sliceTop.on('mouseover', function (pt) {
+    sliceTop.on('mouseover', function (event: any, pt: any) {
         // in case fullLayout or fullData has changed without a replot
         var fullLayout2 = gd._fullLayout;
         var trace2 = gd._fullData[trace.index];
@@ -506,7 +506,7 @@ function attachFxHandlers(sliceTop: any, gd: GraphDiv, cd: any[]): any {
         }
     });
 
-    sliceTop.on('click', function (pt) {
+    sliceTop.on('click', function (event: any, pt: any) {
         // TODO: this does not support right-click. If we want to support it, we
         // would likely need to change pie to use dragElement instead of straight
         // map subplot event binding. Or perhaps better, make a simple wrapper with the

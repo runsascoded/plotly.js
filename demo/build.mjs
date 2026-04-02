@@ -88,16 +88,15 @@ Plotly.newPlot(el, [{ z: z, type: 'heatmap', colorscale: 'Viridis' }],
     { title: 'Heatmap', width: 800, height: 400 });`,
     },
     {
-        id: 'box-violin',
-        title: 'Box + Violin',
-        desc: 'Statistical distributions',
+        id: 'box',
+        title: 'Box Plot',
+        desc: 'Statistical box plots',
         upstreamBundle: 'plotly.min.js',
         factoryCode: `
 import { createPlotly } from '../../src/core-factory.js';
 import box from '../../src/traces/box/index.js';
-import violin from '../../src/traces/violin/index.js';
 import legend from '../../src/components/legend/index.js';
-var Plotly = createPlotly({ traces: [box, violin], components: [legend] });
+var Plotly = createPlotly({ traces: [box], components: [legend] });
 `,
         plotCode: `
 function seededRandom(seed) { return function() { seed = (seed * 16807 + 0) % 2147483647; return seed / 2147483647; }; }
@@ -106,7 +105,7 @@ var y1 = [], y2 = [];
 for(var i = 0; i < 200; i++) { y1.push(rng() * 10 + 5); y2.push(rng() * rng() * 20); }
 Plotly.newPlot(el, [
     { y: y1, type: 'box', name: 'Normal' },
-    { y: y2, type: 'violin', name: 'Skewed', side: 'positive' },
+    { y: y2, type: 'box', name: 'Skewed' },
 ], { title: 'Box + Violin', width: 800, height: 400 });`,
     },
 ];
