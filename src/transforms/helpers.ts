@@ -1,4 +1,4 @@
-export const pointsAccessorFunction = function(transforms: any, opts: any) {
+export function pointsAccessorFunction(transforms: any, opts: any) {
     let tr;
     let prevIndexToPoints;
     for(let i = 0; i < transforms.length; i++) {
@@ -11,6 +11,6 @@ export const pointsAccessorFunction = function(transforms: any, opts: any) {
         function(i: any) {return prevIndexToPoints[i];} :
         function(i: any) {return [i];};
     return originalPointsAccessor;
-};
+}
 
 export default { pointsAccessorFunction };

@@ -10,7 +10,7 @@ const kernels = {
     }
 };
 
-export const makeKDE = function(calcItem: any, trace: FullTrace, vals: number[]): (x: number) => number {
+export function makeKDE(calcItem: any, trace: FullTrace, vals: number[]): (x: number) => number {
     const len = vals.length;
     const kernel = kernels.gaussian;
     const bandwidth = calcItem.bandwidth;
@@ -24,9 +24,9 @@ export const makeKDE = function(calcItem: any, trace: FullTrace, vals: number[])
         }
         return factor * sum;
     };
-};
+}
 
-export const getPositionOnKdePath = function(calcItem: any, trace: FullTrace, valuePx: number): [number, number] {
+export function getPositionOnKdePath(calcItem: any, trace: FullTrace, valuePx: number): [number, number] {
     let posLetter, valLetter;
 
     if(trace.orientation === 'h') {
@@ -51,14 +51,14 @@ export const getPositionOnKdePath = function(calcItem: any, trace: FullTrace, va
         posCenterPx;
 
     return [posOnPath0, posOnPath1];
-};
+}
 
-export const getKdeValue = function(calcItem: any, trace: FullTrace, valueDist: number): number {
+export function getKdeValue(calcItem: any, trace: FullTrace, valueDist: number): number {
     const vals = calcItem.pts.map(extractVal);
     const kde = makeKDE(calcItem, trace, vals);
     return kde(valueDist) / calcItem.posDensityScale;
-};
+}
 
-export const extractVal = function(o: any): number { return o.v; };
+export function extractVal(o: any): number { return o.v; }
 
 export default { makeKDE, getPositionOnKdePath, getKdeValue, extractVal };

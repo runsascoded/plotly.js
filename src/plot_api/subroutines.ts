@@ -22,9 +22,9 @@ const SVG_TEXT_ANCHOR_START = 'start';
 const SVG_TEXT_ANCHOR_MIDDLE = 'middle';
 const SVG_TEXT_ANCHOR_END = 'end';
 
-export const layoutStyles = function(gd: GraphDiv): any {
+export function layoutStyles(gd: GraphDiv): any {
     return syncOrAsync([doAutoMargin, lsInner], gd);
-};
+}
 
 function overlappingDomain(xDomain?: any, yDomain?: any, domains?: any): boolean {
     for(let i = 0; i < domains.length; i++) {
@@ -399,7 +399,7 @@ function findCounterAxisLineWidth(ax?: any, side?: any, counterAx?: any, axList?
     return 0;
 }
 
-export const drawMainTitle = function(gd: GraphDiv): void {
+export function drawMainTitle(gd: GraphDiv): void {
     const title: any = gd._fullLayout.title;
     const fullLayout = gd._fullLayout;
     const textAnchor = getMainTitleTextAnchor(fullLayout);
@@ -462,7 +462,7 @@ export const drawMainTitle = function(gd: GraphDiv): void {
             }
         }
     }
-};
+}
 
 function isOutsideContainer(gd?: any, title?: any, position?: any, y?: any, titleHeight?: any): any {
     const plotHeight = title.yref === 'paper' ? gd._fullLayout._size.h : gd._fullLayout.height;
@@ -620,7 +620,7 @@ function getMainTitleDy(fullLayout?: any): any {
     return dy;
 }
 
-export const doTraceStyle = function(gd: GraphDiv): any {
+export function doTraceStyle(gd: GraphDiv): any {
     const calcdata = gd.calcdata;
     const editStyleCalls: any[] = [];
     let i;
@@ -655,25 +655,25 @@ export const doTraceStyle = function(gd: GraphDiv): any {
     Registry.getComponentMethod('legend', 'draw')(gd);
 
     return previousPromises(gd);
-};
+}
 
-export const doColorBars = function(gd: GraphDiv): any {
+export function doColorBars(gd: GraphDiv): any {
     Registry.getComponentMethod('colorbar', 'draw')(gd);
     return previousPromises(gd);
-};
+}
 
-export const layoutReplot = function(gd: GraphDiv): any {
+export function layoutReplot(gd: GraphDiv): any {
     const layout = gd.layout;
     gd.layout = (undefined as any);
     return Registry.call('_doPlot', gd, '', layout);
-};
+}
 
-export const doLegend = function(gd: GraphDiv): any {
+export function doLegend(gd: GraphDiv): any {
     Registry.getComponentMethod('legend', 'draw')(gd);
     return previousPromises(gd);
-};
+}
 
-export const doTicksRelayout = function(gd: GraphDiv): any {
+export function doTicksRelayout(gd: GraphDiv): any {
     Axes.draw(gd, 'redraw');
 
     if(gd._fullLayout._hasOnlyLargeSploms) {
@@ -684,9 +684,9 @@ export const doTicksRelayout = function(gd: GraphDiv): any {
 
     drawMainTitle(gd);
     return previousPromises(gd);
-};
+}
 
-export const doModeBar = function(gd: GraphDiv): any {
+export function doModeBar(gd: GraphDiv): any {
     const fullLayout = gd._fullLayout;
 
     Registry.getComponentMethod('modebar', 'manage')(gd);
@@ -697,9 +697,9 @@ export const doModeBar = function(gd: GraphDiv): any {
     }
 
     return previousPromises(gd);
-};
+}
 
-export const doCamera = function(gd: GraphDiv): void {
+export function doCamera(gd: GraphDiv): void {
     const fullLayout = gd._fullLayout;
     const sceneIds = fullLayout._subplots.gl3d;
 
@@ -709,9 +709,9 @@ export const doCamera = function(gd: GraphDiv): void {
 
         scene.setViewport(sceneLayout);
     }
-};
+}
 
-export const drawData = function(gd: GraphDiv): any {
+export function drawData(gd: GraphDiv): any {
     const fullLayout = gd._fullLayout;
 
     clearGlCanvases(gd);
@@ -738,9 +738,9 @@ export const drawData = function(gd: GraphDiv): any {
     fullLayout._replotting = false;
 
     return previousPromises(gd);
-};
+}
 
-export const redrawReglTraces = function(gd: GraphDiv): void {
+export function redrawReglTraces(gd: GraphDiv): void {
     const fullLayout = gd._fullLayout;
 
     if(fullLayout._has('regl')) {
@@ -781,9 +781,9 @@ export const redrawReglTraces = function(gd: GraphDiv): void {
             if(sp._scene) sp._scene.draw();
         }
     }
-};
+}
 
-export const doAutoRangeAndConstraints = function(gd: GraphDiv): void {
+export function doAutoRangeAndConstraints(gd: GraphDiv): void {
     const axList = Axes.list(gd, '', true);
     let ax;
 
@@ -813,9 +813,9 @@ export const doAutoRangeAndConstraints = function(gd: GraphDiv): void {
     }
 
     enforceAxisConstraints(gd);
-};
+}
 
-export const finalDraw = function(gd: GraphDiv): void {
+export function finalDraw(gd: GraphDiv): void {
     // TODO: rangesliders really belong in marginPushers but they need to be
     // drawn after data - can we at least get the margin pushing part separated
     // out and done earlier?
@@ -825,14 +825,14 @@ export const finalDraw = function(gd: GraphDiv): void {
     // autorange and update axis ranges (which rangeselector needs to know which
     // button is active). Can we break out its automargin step from its draw step?
     Registry.getComponentMethod('rangeselector', 'draw')(gd);
-};
+}
 
-export const drawMarginPushers = function(gd: GraphDiv): void {
+export function drawMarginPushers(gd: GraphDiv): void {
     Registry.getComponentMethod('legend', 'draw')(gd);
     Registry.getComponentMethod('rangeselector', 'draw')(gd);
     Registry.getComponentMethod('sliders', 'draw')(gd);
     Registry.getComponentMethod('updatemenus', 'draw')(gd);
     Registry.getComponentMethod('colorbar', 'draw')(gd);
-};
+}
 
 export default { layoutStyles, drawMainTitle, doTraceStyle, doColorBars, layoutReplot, doLegend, doTicksRelayout, doModeBar, doCamera, drawData, redrawReglTraces, doAutoRangeAndConstraints, finalDraw, drawMarginPushers };

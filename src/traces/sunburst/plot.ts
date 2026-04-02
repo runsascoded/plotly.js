@@ -21,7 +21,7 @@ const clearMinTextSize = uniformText.clearMinTextSize;
 const computeTransform = piePlot.computeTransform;
 const transformInsideText = piePlot.transformInsideText;
 
-export const plot = function (gd: GraphDiv, cdmodule: any[], transitionOpts: any, makeOnCompleteCallback: any) {
+export function plot(gd: GraphDiv, cdmodule: any[], transitionOpts: any, makeOnCompleteCallback: any) {
     const fullLayout = gd._fullLayout;
     const layer = fullLayout._sunburstlayer;
     let join, onComplete: any;
@@ -81,7 +81,7 @@ export const plot = function (gd: GraphDiv, cdmodule: any[], transitionOpts: any
     if (isFullReplot) {
         join.exit().remove();
     }
-};
+}
 
 function plotOne(gd: GraphDiv, cd: any[], element: Element, transitionOpts: any) {
     const isStatic = gd._context.staticPlot;
@@ -528,7 +528,7 @@ function partition(entry: any) {
     return d3Hierarchy.partition().size([2 * Math.PI, entry.height + 1])(entry);
 }
 
-export const formatSliceLabel = function (pt: any, entry: any, trace: any, cd: any, fullLayout: any) {
+export function formatSliceLabel(pt: any, entry: any, trace: any, cd: any, fullLayout: any) {
     const texttemplate = trace.texttemplate;
     const textinfo = trace.textinfo;
 
@@ -641,7 +641,7 @@ export const formatSliceLabel = function (pt: any, entry: any, trace: any, cd: a
         locale: fullLayout._d3locale,
         template: txt
     });
-};
+}
 
 function getInscribedRadiusFraction(pt: any) {
     if (pt.rpx0 === 0 && Lib.isFullCircle([pt.x0, pt.x1])) {

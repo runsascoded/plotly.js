@@ -28,9 +28,9 @@ export const deleteFrames = main.deleteFrames;
 export const animate = main.animate;
 export const setPlotConfig = main.setPlotConfig;
 
-export const deleteActiveShape = function(gd?: any): any {
+export function deleteActiveShape(gd?: any): any {
     return Registry.getComponentMethod('shapes', 'eraseActiveShape')(getGraphDiv(gd));
-};
+}
 
 export const toImage = _req0;
 export const validate = _req1;

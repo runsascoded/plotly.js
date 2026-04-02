@@ -9,7 +9,7 @@ const { ALMOST_EQUAL } = _numerical;
 import _alignment from '../../constants/alignment.js';
 const { FROM_BL } = _alignment;
 
-export const handleDefaults = function(layoutIn?: any, layoutOut?: any, opts?: any): void {
+export function handleDefaults(layoutIn?: any, layoutOut?: any, opts?: any): void {
     const axIds = opts.axIds;
     const axHasImage = opts.axHasImage;
 
@@ -173,7 +173,7 @@ export const handleDefaults = function(layoutIn?: any, layoutOut?: any, opts?: a
             }
         }
     }
-};
+}
 
 function handleOneAxDefaults(axIn?: any, axOut?: any, opts?: any): void {
     const axIds = opts.axIds;
@@ -438,7 +438,7 @@ function finalRatios(group?: any, fullLayout?: any): any {
     return out;
 }
 
-export const enforce = function enforce(gd?: any): void {
+export function enforce(gd?: any): void {
     const fullLayout = gd._fullLayout;
     const constraintGroups = fullLayout._axisConstraintGroups || [];
 
@@ -599,9 +599,9 @@ export const enforce = function enforce(gd?: any): void {
             }
         }
     }
-};
+}
 
-export const getAxisGroup = function getAxisGroup(fullLayout?: any, axId?: any): any {
+export function getAxisGroup(fullLayout?: any, axId?: any): any {
     const matchGroups = fullLayout._axisMatchGroups;
 
     for(let i = 0; i < matchGroups.length; i++) {
@@ -609,9 +609,9 @@ export const getAxisGroup = function getAxisGroup(fullLayout?: any, axId?: any):
         if(group[axId]) return 'g' + i;
     }
     return axId;
-};
+}
 
-export const clean = function clean(gd?: any, ax?: any): void {
+export function clean(gd?: any, ax?: any): void {
     if(ax._inputDomain) {
         let isConstrained = false;
         const axId = ax._id;
@@ -627,7 +627,7 @@ export const clean = function clean(gd?: any, ax?: any): void {
             delete ax._inputDomain;
         }
     }
-};
+}
 
 function updateDomain(ax?: any, factor?: any): void {
     const inputDomain = ax._inputDomain;

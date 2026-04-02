@@ -15,21 +15,21 @@ function primitivesLoopSplice(source: any[], target: any[]): boolean {
     return true;
 }
 
-export const extendFlat = function(...args: any[]): any {
+export function extendFlat(...args: any[]): any {
     return _extend(args, false, false, false);
-};
+}
 
-export const extendDeep = function(...args: any[]): any {
+export function extendDeep(...args: any[]): any {
     return _extend(args, true, false, false);
-};
+}
 
-export const extendDeepAll = function(...args: any[]): any {
+export function extendDeepAll(...args: any[]): any {
     return _extend(args, true, true, false);
-};
+}
 
-export const extendDeepNoArrays = function(...args: any[]): any {
+export function extendDeepNoArrays(...args: any[]): any {
     return _extend(args, true, false, true);
-};
+}
 
 /*
  * Inspired by https://github.com/justmoon/node-extend/blob/master/index.js

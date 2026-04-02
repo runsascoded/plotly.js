@@ -9,7 +9,7 @@ const { BADNUM } = _numerical;
 // linelow
 const roundingError = 1e-9;
 
-export const findBin = function(val: number, bins: any, linelow?: boolean): number {
+export function findBin(val: number, bins: any, linelow?: boolean): number {
     if(isNumeric(bins.start)) {
         return linelow ?
             Math.ceil((val - bins.start) / bins.size - roundingError) - 1 :
@@ -35,17 +35,17 @@ export const findBin = function(val: number, bins: any, linelow?: boolean): numb
         if(c > 90) loggers.log('Long binary search...');
         return n1 - 1;
     }
-};
+}
 
 function lessThan(a: number, b: number): boolean { return a < b; }
 function lessOrEqual(a: number, b: number): boolean { return a <= b; }
 function greaterThan(a: number, b: number): boolean { return a > b; }
 function greaterOrEqual(a: number, b: number): boolean { return a >= b; }
 
-export const sorterAsc = function(a: number, b: number): number { return a - b; };
-export const sorterDes = function(a: number, b: number): number { return b - a; };
+export function sorterAsc(a: number, b: number): number { return a - b; }
+export function sorterDes(a: number, b: number): number { return b - a; }
 
-export const distinctVals = function(valsIn: number[]): { vals: number[]; minDiff: number } {
+export function distinctVals(valsIn: number[]): { vals: number[]; minDiff: number } {
     const vals = valsIn.slice();  // otherwise we sort the original array...
     vals.sort(sorterAsc); // undefined listed in the end
 
@@ -78,7 +78,7 @@ export const distinctVals = function(valsIn: number[]): { vals: number[]; minDif
     return {vals: newVals, minDiff: minDiff};
 };
 
-export const roundUp = function(val: number, arrayIn: number[], reverse?: boolean): number {
+export function roundUp(val: number, arrayIn: number[], reverse?: boolean): number {
     let low = 0;
     let high = arrayIn.length - 1;
     let mid: number;
@@ -93,9 +93,9 @@ export const roundUp = function(val: number, arrayIn: number[], reverse?: boolea
         else high = mid - dhigh;
     }
     return arrayIn[low];
-};
+}
 
-export const sort = function<T>(array: T[], sortFn: (a: T, b: T) => number): T[] {
+export function sort<T>(array: T[], sortFn: (a: T, b: T) => number): T[] {
     let notOrdered = 0;
     let notReversed = 0;
     for(let i = 1; i < array.length; i++) {
@@ -105,9 +105,9 @@ export const sort = function<T>(array: T[], sortFn: (a: T, b: T) => number): T[]
         if(notOrdered && notReversed) return array.sort(sortFn);
     }
     return notReversed ? array : array.reverse();
-};
+}
 
-export const findIndexOfMin = function<T>(arr: T[], fn?: (d: T) => number): number | undefined {
+export function findIndexOfMin<T>(arr: T[], fn?: (d: T) => number): number | undefined {
     fn = fn || identity as any;
 
     let min = Infinity;
@@ -121,6 +121,6 @@ export const findIndexOfMin = function<T>(arr: T[], fn?: (d: T) => number): numb
         }
     }
     return ind;
-};
+}
 
 export default { findBin, sorterAsc, sorterDes, distinctVals, roundUp, sort, findIndexOfMin };

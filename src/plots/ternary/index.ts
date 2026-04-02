@@ -27,7 +27,7 @@ export const attributes = {};
 export const layoutAttributes = _req0;
 export const supplyLayoutDefaults = _req1;
 
-export const plot = function plot(gd: GraphDiv) {
+export function plot(gd: GraphDiv) {
     const fullLayout = gd._fullLayout;
     const calcData = gd.calcdata;
     const ternaryIds = fullLayout._subplots[TERNARY];
@@ -53,9 +53,9 @@ export const plot = function plot(gd: GraphDiv) {
 
         ternary.plot(ternaryCalcData, fullLayout, gd._promises);
     }
-};
+}
 
-export const clean = function(newFullData: any, newFullLayout: any, oldFullData: any, oldFullLayout: any) {
+export function clean(newFullData: any, newFullLayout: any, oldFullData: any, oldFullLayout: any) {
     const oldTernaryKeys = oldFullLayout._subplots[TERNARY] || [];
 
     for(let i = 0; i < oldTernaryKeys.length; i++) {
@@ -71,13 +71,13 @@ export const clean = function(newFullData: any, newFullLayout: any, oldFullData:
             oldTernary.layers['c-title'].remove();
         }
     }
-};
+}
 
-export const updateFx = function(gd: any) {
+export function updateFx(gd: any) {
     const fullLayout = gd._fullLayout;
     fullLayout._ternarylayer
         .selectAll('g.toplevel')
         .style('cursor', fullLayout.dragmode === 'pan' ? 'move' : 'crosshair');
-};
+}
 
 export default { name, attr, idRoot, idRegex, attributes, layoutAttributes, supplyLayoutDefaults, plot, clean, updateFx };

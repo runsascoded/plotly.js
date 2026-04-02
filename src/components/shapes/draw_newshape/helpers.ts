@@ -11,7 +11,7 @@ const r2p = cartesianHelpers.r2p;
 const iC = [0, 3, 4, 5, 6, 1, 2];
 const iQS = [0, 3, 4, 1, 2];
 
-export const writePaths = function(polygons: any) {
+export function writePaths(polygons: any) {
     const nI = polygons.length;
     if(!nI) return 'M0,0Z';
 
@@ -42,9 +42,9 @@ export const writePaths = function(polygons: any) {
     }
 
     return str;
-};
+}
 
-export const readPaths = function(str: any, gd: GraphDiv, plotinfo?: any, isActiveShape?: any) {
+export function readPaths(str: any, gd: GraphDiv, plotinfo?: any, isActiveShape?: any) {
     const cmd = parseSvgPath(str);
 
     const polys: any[] = [];
@@ -204,7 +204,7 @@ export const readPaths = function(str: any, gd: GraphDiv, plotinfo?: any, isActi
     }
 
     return polys;
-};
+}
 
 function almostEq(a: any, b: any) {
     return Math.abs(a - b) <= 1e-6;
@@ -219,7 +219,7 @@ function dist(a: any, b: any) {
     );
 }
 
-export const pointsOnRectangle = function(cell: any) {
+export function pointsOnRectangle(cell: any) {
     const len = cell.length;
     if(len !== 5) return false;
 
@@ -245,9 +245,9 @@ export const pointsOnRectangle = function(cell: any) {
         dist(cell[0], cell[1]) *
         dist(cell[0], cell[3])
     );
-};
+}
 
-export const pointsOnEllipse = function(cell: any) {
+export function pointsOnEllipse(cell: any) {
     let len = cell.length;
     if(len !== CIRCLE_SIDES + 1) return false;
 
@@ -265,9 +265,9 @@ export const pointsOnEllipse = function(cell: any) {
         )) return false;
     }
     return true;
-};
+}
 
-export const handleEllipse = function(isEllipse: any, start: any, end: any) {
+export function handleEllipse(isEllipse: any, start: any, end: any) {
     if(!isEllipse) return [start, end]; // i.e. case of line
 
     const pos = ellipseOver({
@@ -295,9 +295,9 @@ export const handleEllipse = function(isEllipse: any, start: any, end: any) {
         ]);
     }
     return cell;
-};
+}
 
-export const ellipseOver = function(pos: any) {
+export function ellipseOver(pos: any) {
     let x0 = pos.x0;
     let y0 = pos.y0;
     const x1 = pos.x1;
@@ -322,9 +322,9 @@ export const ellipseOver = function(pos: any) {
         x1: cx + dx,
         y1: cy + dy
     };
-};
+}
 
-export const fixDatesForPaths = function(polygons: any, xaxis: any, yaxis: any) {
+export function fixDatesForPaths(polygons: any, xaxis: any, yaxis: any) {
     const xIsDate = xaxis.type === 'date';
     const yIsDate = yaxis.type === 'date';
     if(!xIsDate && !yIsDate) return polygons;
@@ -339,6 +339,6 @@ export const fixDatesForPaths = function(polygons: any, xaxis: any, yaxis: any) 
     }
 
     return polygons;
-};
+}
 
 export default { writePaths, readPaths, pointsOnRectangle, pointsOnEllipse, handleEllipse, ellipseOver, fixDatesForPaths };

@@ -3,26 +3,26 @@ import constants from './constants.js';
 import Lib from '../../lib/index.js';
 import Axes from '../../plots/cartesian/axes.js';
 
-export const rangeToShapePosition = function(ax: FullAxis) {
+export function rangeToShapePosition(ax: FullAxis) {
     return (ax.type === 'log') ? ax.r2d : function(v: any) { return v; };
-};
+}
 
-export const shapePositionToRange = function(ax: FullAxis) {
+export function shapePositionToRange(ax: FullAxis) {
     return (ax.type === 'log') ? ax.d2r : function(v: any, _clip?: any) { return v; };
-};
+}
 
-export const decodeDate = function(convertToPx: any) {
+export function decodeDate(convertToPx: any) {
     return function(v: any) {
         if(v.replace) v = v.replace('_', ' ');
         return convertToPx(v);
     };
-};
+}
 
-export const encodeDate = function(convertToDate: any) {
+export function encodeDate(convertToDate: any) {
     return function(v: any) { return convertToDate(v).replace(' ', '_'); };
-};
+}
 
-export const extractPathCoords = function(path: any, paramsToUse: any, isRaw?: any) {
+export function extractPathCoords(path: any, paramsToUse: any, isRaw?: any) {
     const extractedCoordinates: any[] = [];
 
     const segments = path.match(constants.segmentRE);
@@ -40,9 +40,9 @@ export const extractPathCoords = function(path: any, paramsToUse: any, isRaw?: a
     });
 
     return extractedCoordinates;
-};
+}
 
-export const getDataToPixel = function(gd: GraphDiv, axis: FullAxis, shift: any, isVertical: any, refType: any) {
+export function getDataToPixel(gd: GraphDiv, axis: FullAxis, shift: any, isVertical: any, refType: any) {
     const gs = gd._fullLayout._size;
     let dataToPixel;
 
@@ -68,9 +68,9 @@ export const getDataToPixel = function(gd: GraphDiv, axis: FullAxis, shift: any,
     }
 
     return dataToPixel;
-};
+}
 
-export const getPixelToData = function(gd: GraphDiv, axis: FullAxis, isVertical: any, opt: any) {
+export function getPixelToData(gd: GraphDiv, axis: FullAxis, isVertical: any, opt: any) {
     const gs = gd._fullLayout._size;
     let pixelToData;
 
@@ -91,16 +91,16 @@ export const getPixelToData = function(gd: GraphDiv, axis: FullAxis, isVertical:
     }
 
     return pixelToData;
-};
+}
 
-export const roundPositionForSharpStrokeRendering = function(pos: any, strokeWidth: any) {
+export function roundPositionForSharpStrokeRendering(pos: any, strokeWidth: any) {
     const strokeWidthIsOdd = Math.round(strokeWidth % 2) === 1;
     const posValAsInt = Math.round(pos);
 
     return strokeWidthIsOdd ? posValAsInt + 0.5 : posValAsInt;
-};
+}
 
-export const makeShapesOptionsAndPlotinfo = function(gd: GraphDiv, index: any) {
+export function makeShapesOptionsAndPlotinfo(gd: GraphDiv, index: any) {
     const options = gd._fullLayout.shapes![index] || {};
 
     let plotinfo: any = gd._fullLayout._plots[options.xref + options.yref];
@@ -122,9 +122,9 @@ export const makeShapesOptionsAndPlotinfo = function(gd: GraphDiv, index: any) {
         options: options,
         plotinfo: plotinfo
     };
-};
+}
 
-export const makeSelectionsOptionsAndPlotinfo = function(gd: GraphDiv, index: any) {
+export function makeSelectionsOptionsAndPlotinfo(gd: GraphDiv, index: any) {
     const options = gd._fullLayout.selections[index] || {};
 
     let plotinfo: any = gd._fullLayout._plots[options.xref + options.yref];
@@ -141,9 +141,9 @@ export const makeSelectionsOptionsAndPlotinfo = function(gd: GraphDiv, index: an
         options: options,
         plotinfo: plotinfo
     };
-};
+}
 
-export const getPathString = function(gd: GraphDiv, options: any) {
+export function getPathString(gd: GraphDiv, options: any) {
     const type = options.type;
     const xRefType = Axes.getRefType(options.xref);
     const yRefType = Axes.getRefType(options.yref);
@@ -215,7 +215,7 @@ export const getPathString = function(gd: GraphDiv, options: any) {
     const topPt = cx + ',' + (cy - ry);
     return 'M' + rightPt + rArc + ' 0 1,1 ' + topPt +
         rArc + ' 0 0,1 ' + rightPt + 'Z';
-};
+}
 
 function convertPath(options: any, x2p: any, y2p: any) {
     const pathIn = options.path;

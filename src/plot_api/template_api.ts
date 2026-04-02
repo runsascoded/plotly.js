@@ -7,7 +7,7 @@ import _plot_config from './plot_config.js';
 const { dfltConfig } = _plot_config;
 const isPlainObject = Lib.isPlainObject;
 
-export const makeTemplate = function(figure?: any): any {
+export function makeTemplate(figure?: any): any {
     figure = Lib.isPlainObject(figure) ? figure : Lib.getGraphDiv(figure);
     figure = Lib.extendDeep({_context: dfltConfig}, {data: figure.data, layout: figure.layout});
     Plots.supplyDefaults(figure);
@@ -95,7 +95,7 @@ export const makeTemplate = function(figure?: any): any {
     }
 
     return template;
-};
+}
 
 function mergeTemplates(oldTemplate?: any, newTemplate?: any): any {
     // we don't care about speed here, just make sure we have a totally
@@ -243,7 +243,7 @@ function getNextPath(parent?: any, key?: any, path?: any): any {
     return nextPath;
 }
 
-export const validateTemplate = function(figureIn?: any, template?: any): any {
+export function validateTemplate(figureIn?: any, template?: any): any {
     const figure: any = Lib.extendDeep({}, {
         _context: dfltConfig,
         data: figureIn.data,
@@ -365,7 +365,7 @@ export const validateTemplate = function(figureIn?: any, template?: any): any {
     crawlForMissingTemplates({data: fullData, layout: fullLayout}, '');
 
     if(errorList.length) return errorList.map(format);
-};
+}
 
 function hasPlainObject(arr?: any): any {
     for(let i = 0; i < arr.length; i++) {

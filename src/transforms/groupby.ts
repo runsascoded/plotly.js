@@ -64,7 +64,7 @@ export const attributes = {
     editType: 'calc'
 };
 
-export const supplyDefaults = function(transformIn: any, traceOut: any, layout: any) {
+export function supplyDefaults(transformIn: any, traceOut: any, layout: any) {
     let i;
     const transformOut: any = {};
 
@@ -97,9 +97,9 @@ export const supplyDefaults = function(transformIn: any, traceOut: any, layout: 
     }
 
     return transformOut;
-};
+}
 
-export const transform = function(data: any, state: any) {
+export function transform(data: any, state: any) {
     let newTraces, i, j;
     const newData: any[] = [];
 
@@ -112,7 +112,7 @@ export const transform = function(data: any, state: any) {
     }
 
     return newData;
-};
+}
 
 function transformOne(trace: any, state: any) {
     let i, j, k, attr, srcArray, groupName, newTrace, transforms, arrayLookup;

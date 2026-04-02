@@ -4,12 +4,12 @@ import parcoordsPlot from './plot.js';
 import xmlnsNamespaces from '../../constants/xmlns_namespaces.js';
 export const name = 'parcoords';
 
-export const plot = function(gd: any) {
+export function plot(gd: any) {
     const calcData = getModuleCalcData(gd.calcdata, 'parcoords')[0];
     if(calcData.length) parcoordsPlot(gd, calcData);
-};
+}
 
-export const clean = function(newFullData: any, newFullLayout: any, oldFullData: any, oldFullLayout: any) {
+export function clean(newFullData: any, newFullLayout: any, oldFullData: any, oldFullLayout: any) {
     const hadParcoords = (oldFullLayout._has && oldFullLayout._has('parcoords'));
     const hasParcoords = (newFullLayout._has && newFullLayout._has('parcoords'));
 
@@ -17,9 +17,9 @@ export const clean = function(newFullData: any, newFullLayout: any, oldFullData:
         oldFullLayout._paperdiv.selectAll('.parcoords').remove();
         oldFullLayout._glimages.selectAll('*').remove();
     }
-};
+}
 
-export const toSVG = function(gd: any) {
+export function toSVG(gd: any) {
     const imageRoot = gd._fullLayout._glimages;
     const root = select(gd).selectAll('.svg-container');
     const canvases = root.filter((d: any, i: any) => i === root.size() - 1)
@@ -50,6 +50,6 @@ export const toSVG = function(gd: any) {
         selectAll('#filterBarPattern')
             .attr('id', 'filterBarPattern');
     }, 60);
-};
+}
 
 export default { name, plot, clean, toSVG };

@@ -29,7 +29,7 @@ function isArray1D(a: any): boolean {
 }
 export { isArray1D };
 
-export const ensureArray = function(out: any, n: number): any[] {
+export function ensureArray(out: any, n: number): any[] {
     // TODO: typed array support here? This is only used in
     // traces/carpet/compute_control_points
     if(!isArray(out)) out = [];
@@ -39,7 +39,7 @@ export const ensureArray = function(out: any, n: number): any[] {
     out.length = n;
 
     return out;
-};
+}
 
 const typedArrays: Record<string, any> = {
     u1c: typeof Uint8ClampedArray === 'undefined' ? undefined :
@@ -94,7 +94,7 @@ function isArrayBuffer(a: any): boolean {
 }
 export { isArrayBuffer };
 
-export const decodeTypedArraySpec = function(vIn: any): any {
+export function decodeTypedArraySpec(vIn: any): any {
     let out: any = [];
     const v = coerceTypedArraySpec(vIn);
     const dtype = v.dtype;
@@ -152,9 +152,9 @@ export const decodeTypedArraySpec = function(vIn: any): any {
     vIn._inputArray = out;
 
     return out;
-};
+}
 
-export const isTypedArraySpec = function(v: any): boolean {
+export function isTypedArraySpec(v: any): boolean {
     return (
         isPlainObject(v) &&
         v.hasOwnProperty('dtype') && (typeof v.dtype === 'string') &&
@@ -165,7 +165,7 @@ export const isTypedArraySpec = function(v: any): boolean {
             v.hasOwnProperty('shape') && (typeof v.shape === 'string' || typeof v.shape === 'number')
         ))
     );
-};
+}
 
 function coerceTypedArraySpec(v: any): { bdata: any; dtype: string; shape: any } {
     return {
@@ -175,7 +175,7 @@ function coerceTypedArraySpec(v: any): { bdata: any; dtype: string; shape: any }
     };
 }
 
-export const concat = function(...arrays: any[]): any {
+export function concat(...arrays: any[]): any {
     const args: any[] = [];
     let allArray = true;
     let totalLen = 0;
@@ -234,15 +234,15 @@ export const concat = function(...arrays: any[]): any {
         posi! += j;
     }
     return out;
-};
+}
 
-export const maxRowLength = function(z: any): number {
+export function maxRowLength(z: any): number {
     return _rowLength(z, Math.max, 0);
-};
+}
 
-export const minRowLength = function(z: any): number {
+export function minRowLength(z: any): number {
     return _rowLength(z, Math.min, Infinity);
-};
+}
 
 function _rowLength(z: any, fn: (a: number, b: number) => number, len0: number): number {
     if(isArrayOrTypedArray(z)) {

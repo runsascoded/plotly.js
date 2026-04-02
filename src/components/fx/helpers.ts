@@ -1,11 +1,11 @@
 import type { FullTrace } from '../../../types/core';
 import { isArrayOrTypedArray, nestedProperty } from '../../lib/index.js';
 
-export const getSubplot = function(trace: FullTrace): string {
+export function getSubplot(trace: FullTrace): string {
     return trace.subplot || trace.xaxis + trace.yaxis || trace.geo;
-};
+}
 
-export const isTraceInSubplots = function(trace: FullTrace, subplots: string[]): boolean {
+export function isTraceInSubplots(trace: FullTrace, subplots: string[]): boolean {
     if (trace.type === 'splom') {
         const xaxes = trace.xaxes || [];
         const yaxes = trace.yaxes || [];
@@ -20,30 +20,30 @@ export const isTraceInSubplots = function(trace: FullTrace, subplots: string[]):
     }
 
     return subplots.indexOf(getSubplot(trace)) !== -1;
-};
+}
 
-export const flat = function(subplots: any[], v: any): any[] {
+export function flat(subplots: any[], v: any): any[] {
     const out = new Array(subplots.length);
     for (let i = 0; i < subplots.length; i++) {
         out[i] = v;
     }
     return out;
-};
+}
 
-export const p2c = function(axArray: any[], v: any): any[] {
+export function p2c(axArray: any[], v: any): any[] {
     const out = new Array(axArray.length);
     for (let i = 0; i < axArray.length; i++) {
         out[i] = axArray[i].p2c(v);
     }
     return out;
-};
+}
 
-export const getDistanceFunction = function(mode: string, dx: any, dy: any, dxy?: any): any {
+export function getDistanceFunction(mode: string, dx: any, dy: any, dxy?: any): any {
     if (mode === 'closest') return dxy || quadrature(dx, dy);
     return mode.charAt(0) === 'x' ? dx : dy;
-};
+}
 
-export const getClosest = function(cd: any[], distfn: (di: any) => number, pointData: any): any {
+export function getClosest(cd: any[], distfn: (di: any) => number, pointData: any): any {
     // do we already have a point number? (array mode only)
     if (pointData.index !== false) {
         if (pointData.index >= 0 && pointData.index < cd.length) {
@@ -68,21 +68,21 @@ export const getClosest = function(cd: any[], distfn: (di: any) => number, point
         }
     }
     return pointData;
-};
+}
 
-export const inbox = function(v0: number, v1: number, passVal: number): number {
+export function inbox(v0: number, v1: number, passVal: number): number {
     return v0 * v1 < 0 || v0 === 0 ? passVal : Infinity;
-};
+}
 
-export const quadrature = function(dx: (di: any) => number, dy: (di: any) => number): (di: any) => number {
+export function quadrature(dx: (di: any) => number, dy: (di: any) => number): (di: any) => number {
     return function(di: any): number {
         const x = dx(di);
         const y = dy(di);
         return Math.sqrt(x * x + y * y);
     };
-};
+}
 
-export const makeEventData = function(pt: any, trace: FullTrace, cd: any): any {
+export function makeEventData(pt: any, trace: FullTrace, cd: any): any {
     // hover uses 'index', select uses 'pointNumber'
     const pointNumber = 'index' in pt ? pt.index : pt.pointNumber;
 
@@ -122,9 +122,9 @@ export const makeEventData = function(pt: any, trace: FullTrace, cd: any): any {
     appendArrayPointValue(out, trace, pointNumber);
 
     return out;
-};
+}
 
-export const appendArrayPointValue = function(pointData: any, trace: FullTrace, pointNumber: any): void {
+export function appendArrayPointValue(pointData: any, trace: FullTrace, pointNumber: any): void {
     const arrayAttrs = trace._arrayAttrs;
 
     if (!arrayAttrs) {
@@ -142,9 +142,9 @@ export const appendArrayPointValue = function(pointData: any, trace: FullTrace, 
             if (pointVal !== undefined) pointData[key] = pointVal;
         }
     }
-};
+}
 
-export const appendArrayMultiPointValues = function(pointData: any, trace: FullTrace, pointNumbers: any[]): void {
+export function appendArrayMultiPointValues(pointData: any, trace: FullTrace, pointNumbers: any[]): void {
     const arrayAttrs = trace._arrayAttrs;
 
     if (!arrayAttrs) {
@@ -165,7 +165,7 @@ export const appendArrayMultiPointValues = function(pointData: any, trace: FullT
             pointData[key] = keyVal;
         }
     }
-};
+}
 
 const pointKeyMap: Record<string, string> = {
     ids: 'id',
@@ -200,14 +200,14 @@ const unifiedHoverMode: Record<string, boolean> = {
     'y unified': true
 };
 
-export const isUnifiedHover = function(hovermode: any): boolean {
+export function isUnifiedHover(hovermode: any): boolean {
     if (typeof hovermode !== 'string') return false;
     return !!unifiedHoverMode[hovermode];
-};
+}
 
-export const isXYhover = function(hovermode: any): boolean {
+export function isXYhover(hovermode: any): boolean {
     if (typeof hovermode !== 'string') return false;
     return !!xyHoverMode[hovermode];
-};
+}
 
 export default { getSubplot, isTraceInSubplots, flat, p2c, getDistanceFunction, getClosest, inbox, quadrature, makeEventData, appendArrayPointValue, appendArrayMultiPointValues, isUnifiedHover, isXYhover };

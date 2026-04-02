@@ -2,7 +2,7 @@ import Registry from '../registry.js';
 import _constants from './cartesian/constants.js';
 const { SUBPLOT_PATTERN } = _constants;
 
-export const getSubplotCalcData = function(calcData?: any, type?: any, subplotId?: any): any {
+export function getSubplotCalcData(calcData?: any, type?: any, subplotId?: any): any {
     const basePlotModule = Registry.subplotsRegistry[type];
     if(!basePlotModule) return [];
 
@@ -17,9 +17,9 @@ export const getSubplotCalcData = function(calcData?: any, type?: any, subplotId
     }
 
     return subplotCalcData;
-};
+}
 
-export const getModuleCalcData = function(calcdata?: any, arg1?: any, arg2?: any): any {
+export function getModuleCalcData(calcdata?: any, arg1?: any, arg2?: any): any {
     const moduleCalcData: any[] = [];
     const remainingCalcData: any[] = [];
 
@@ -57,9 +57,9 @@ export const getModuleCalcData = function(calcdata?: any, arg1?: any, arg2?: any
     }
 
     return [moduleCalcData, remainingCalcData];
-};
+}
 
-export const getSubplotData = function getSubplotData(data?: any, type?: any, subplotId?: any): any {
+export function getSubplotData(data?: any, type?: any, subplotId?: any): any {
     if(!Registry.subplotsRegistry[type]) return [];
 
     const attr = Registry.subplotsRegistry[type].attr;
@@ -73,6 +73,6 @@ export const getSubplotData = function getSubplotData(data?: any, type?: any, su
     }
 
     return subplotData;
-};
+}
 
 export default { getSubplotCalcData, getModuleCalcData, getSubplotData };

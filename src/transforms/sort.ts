@@ -47,7 +47,7 @@ export const attributes = {
     editType: 'calc'
 };
 
-export const supplyDefaults = function(transformIn: any) {
+export function supplyDefaults(transformIn: any) {
     const transformOut = {};
 
     function coerce(attr: string, dflt?: any) {
@@ -62,9 +62,9 @@ export const supplyDefaults = function(transformIn: any) {
     }
 
     return transformOut;
-};
+}
 
-export const calcTransform = function(gd: any, trace: any, opts: any) {
+export function calcTransform(gd: any, trace: any, opts: any) {
     if(!opts.enabled) return;
 
     const targetArray = Lib.getTargetArray(trace, opts);
@@ -100,7 +100,7 @@ export const calcTransform = function(gd: any, trace: any, opts: any) {
 
     opts._indexToPoints = indexToPoints;
     trace._length = len;
-};
+}
 
 function getIndices(opts: any, targetArray: any, d2c: any, len: any) {
     const sortedArray = new Array(len);

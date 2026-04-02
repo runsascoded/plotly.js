@@ -6,7 +6,7 @@ interface ThrottleCache {
 
 const timerCache: Record<string, ThrottleCache> = {};
 
-export const throttle = function throttle(id: string, minInterval: number, callback: () => void): void {
+export function throttle(id: string, minInterval: number, callback: () => void): void {
     let cache = timerCache[id];
     const now = Date.now();
 
@@ -44,9 +44,9 @@ export const throttle = function throttle(id: string, minInterval: number, callb
         exec();
         cache.timer = null;
     }, minInterval);
-};
+}
 
-export const done = function(id: string): Promise<void> {
+export function done(id: string): Promise<void> {
     const cache = timerCache[id];
     if(!cache || !cache.timer) return Promise.resolve();
 
@@ -58,16 +58,16 @@ export const done = function(id: string): Promise<void> {
             cache.onDone = null;
         };
     });
-};
+}
 
-export const clear = function(id?: string): void {
+export function clear(id?: string): void {
     if(id) {
         _clearTimeout(timerCache[id]);
         delete timerCache[id];
     } else {
         for(const idi in timerCache) clear(idi);
     }
-};
+}
 
 function _clearTimeout(cache: ThrottleCache | undefined): void {
     if(cache && cache.timer !== null) {

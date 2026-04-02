@@ -67,13 +67,13 @@ function mat4Invert(out: number[], a: number[]): number[] | null {
     return out;
 }
 
-export const init2dArray = function(rowLength: number, colLength: number): any[][] {
+export function init2dArray(rowLength: number, colLength: number): any[][] {
     const array = new Array(rowLength);
     for(let i = 0; i < rowLength; i++) array[i] = new Array(colLength);
     return array;
-};
+}
 
-export const transposeRagged = function(z: any[][]): any[][] {
+export function transposeRagged(z: any[][]): any[][] {
     let maxlen = 0;
     const zlen = z.length;
     let i: number, j: number;
@@ -87,9 +87,9 @@ export const transposeRagged = function(z: any[][]): any[][] {
     }
 
     return t;
-};
+}
 
-export const dot = function(x: any, y: any): any {
+export function dot(x: any, y: any): any {
     if(!(x.length && y.length) || x.length !== y.length) return null;
 
     const len = x.length;
@@ -112,34 +112,34 @@ export const dot = function(x: any, y: any): any {
     }
 
     return out;
-};
+}
 
-export const translationMatrix = function(x: number, y: number): number[][] {
+export function translationMatrix(x: number, y: number): number[][] {
     return [[1, 0, x], [0, 1, y], [0, 0, 1]];
-};
+}
 
-export const rotationMatrix = function(alpha: number): number[][] {
+export function rotationMatrix(alpha: number): number[][] {
     const a = alpha * Math.PI / 180;
     return [[Math.cos(a), -Math.sin(a), 0],
             [Math.sin(a), Math.cos(a), 0],
             [0, 0, 1]];
-};
+}
 
-export const rotationXYMatrix = function(a: number, x: number, y: number): any {
+export function rotationXYMatrix(a: number, x: number, y: number): any {
     return dot(
         dot(translationMatrix(x, y),
                     rotationMatrix(a)),
         translationMatrix(-x, -y));
-};
+}
 
-export const apply3DTransform = function(transform: any): (...args: any[]) => number[] {
+export function apply3DTransform(transform: any): (...args: any[]) => number[] {
     return function(...args: any[]) {
         const xyz = args.length === 1 ? args[0] : [args[0], args[1], args[2] || 0];
         return dot(transform, [xyz[0], xyz[1], xyz[2], 1]).slice(0, 3);
     };
-};
+}
 
-export const apply2DTransform = function(transform: any): (...args: any[]) => number[] {
+export function apply2DTransform(transform: any): (...args: any[]) => number[] {
     return function(...args: any[]) {
         if(args.length === 3) {
             args = args[0];
@@ -147,16 +147,16 @@ export const apply2DTransform = function(transform: any): (...args: any[]) => nu
         const xy = args.length === 1 ? args[0] : [args[0], args[1]];
         return dot(transform, [xy[0], xy[1], 1]).slice(0, 2);
     };
-};
+}
 
-export const apply2DTransform2 = function(transform: any): (xys: number[]) => number[] {
+export function apply2DTransform2(transform: any): (xys: number[]) => number[] {
     const at = apply2DTransform(transform);
     return function(xys: number[]): number[] {
         return at(xys.slice(0, 2)).concat(at(xys.slice(2, 4)));
     };
-};
+}
 
-export const convertCssMatrix = function(m: number[] | null | undefined): number[] {
+export function convertCssMatrix(m: number[] | null | undefined): number[] {
     if(m) {
         const len = m.length;
         if(len === 16) return m;
@@ -176,9 +176,9 @@ export const convertCssMatrix = function(m: number[] | null | undefined): number
         0, 0, 1, 0,
         0, 0, 0, 1
     ];
-};
+}
 
-export const inverseTransformMatrix = function(m: number[]): number[][] {
+export function inverseTransformMatrix(m: number[]): number[][] {
     const out: number[] = [];
     mat4Invert(out, m);
     return [
@@ -187,7 +187,7 @@ export const inverseTransformMatrix = function(m: number[]): number[][] {
         [out[8], out[9], out[10], out[11]],
         [out[12], out[13], out[14], out[15]]
     ];
-};
+}
 
 export { mat4Multiply, mat4Invert };
 export default { init2dArray, transposeRagged, dot, translationMatrix, rotationMatrix, rotationXYMatrix, apply3DTransform, apply2DTransform, apply2DTransform2, convertCssMatrix, inverseTransformMatrix };

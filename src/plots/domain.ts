@@ -1,6 +1,6 @@
 import { extendFlat } from '../lib/extend.js';
 
-export const attributes = function(opts?: any, extra?: any): any {
+export function attributes(opts?: any, extra?: any): any {
     opts = opts || {};
     extra = extra || {};
 
@@ -72,9 +72,9 @@ export const attributes = function(opts?: any, extra?: any): any {
     }
 
     return out;
-};
+}
 
-export const defaults = function(containerOut?: any, layout?: any, coerce?: any, dfltDomains?: any): void {
+export function defaults(containerOut?: any, layout?: any, coerce?: any, dfltDomains?: any): void {
     let dfltX = (dfltDomains && dfltDomains.x) || [0, 1];
     let dfltY = (dfltDomains && dfltDomains.y) || [0, 1];
 
@@ -99,6 +99,6 @@ export const defaults = function(containerOut?: any, layout?: any, coerce?: any,
     // don't accept bad input data
     if(!(x[0] < x[1])) containerOut.domain.x = dfltX.slice();
     if(!(y[0] < y[1])) containerOut.domain.y = dfltY.slice();
-};
+}
 
 export default { attributes, defaults };
