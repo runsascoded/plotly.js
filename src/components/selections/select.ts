@@ -1,7 +1,8 @@
 import type { FullAxis, GraphDiv } from '../../../types/core';
 import polybool from 'polybooljs';
 import pointInPolygon from 'point-in-polygon/nested';
-import Registry from '../../registry.js';
+import { _guiRelayout } from '../../plot_api/plot_api.js';
+import { traceIs } from '../../lib/trace_categories.js';
 import { dashStyle } from '../drawing/index.js';
 import Color from '../color/index.js';
 import Fx from '../fx/index.js';
@@ -184,7 +185,7 @@ function prepSelect(evt: any, startX: any, startY: any, dragOptions: any, mode: 
             if(selectionErased) {
                 gd._fullLayout._noEmitSelectedAtStart = true;
 
-                Registry.call('_guiRelayout', gd, {
+                _guiRelayout(gd, {
                     selections: list
                 });
             }
@@ -425,7 +426,7 @@ function prepSelect(evt: any, startX: any, startY: any, dragOptions: any, mode: 
                         if(subSelections.length < allSelections.length) {
                             gd._fullLayout._noEmitSelectedAtStart = true;
 
-                            Registry.call('_guiRelayout', gd, {
+                            _guiRelayout(gd, {
                                 selections: subSelections
                             });
                         }
@@ -732,7 +733,7 @@ function clearSelectionsCache(dragOptions: any, immediateSelect?: any) {
                 shapes = newShapes(outlines, dragOptions);
             }
             if(shapes) {
-                Registry.call('_guiRelayout', gd, {
+                _guiRelayout(gd, {
                     shapes: shapes
                 });
             }
@@ -748,7 +749,7 @@ function clearSelectionsCache(dragOptions: any, immediateSelect?: any) {
             if(selections) {
                 gd._fullLayout._noEmitSelectedAtStart = true;
 
-                Registry.call('_guiRelayout', gd, {
+                _guiRelayout(gd, {
                     selections: selections
                 }).then(() => {
                     if(immediateSelect) { activateLastSelection(gd); }
@@ -986,7 +987,7 @@ function updateReglSelectedState(gd: GraphDiv, searchTraces: any) {
         const searchInfo = searchTraces[i];
         const cd = searchInfo.cd;
 
-        if(Registry.traceIs(cd[0].trace, 'regl')) {
+        if(traceIs(cd[0].trace, 'regl')) {
             hasRegl = true;
         }
 

@@ -1,6 +1,7 @@
 import { select } from 'd3-selection';
 import tinycolor from 'tinycolor2';
-import Registry from '../../registry.js';
+import { _guiRelayout } from '../../plot_api/plot_api.js';
+import { traceIs } from '../../lib/trace_categories.js';
 import Lib from '../../lib/index.js';
 import Color from '../../components/color/index.js';
 import { bBox, getTranslate, hideOutsideRangePoints, setClipUrl } from '../../components/drawing/index.js';
@@ -1036,7 +1037,7 @@ proto.updateHoverAndMainDrag = function(fullLayout: any) {
 
         dragBox.showDoubleClickNotifier(gd);
 
-        Registry.call('_guiRelayout', gd, updateObj);
+        _guiRelayout(gd, updateObj);
     }
 
     function computeZoomUpdates(update: any) {
@@ -1062,7 +1063,7 @@ proto.updateHoverAndMainDrag = function(fullLayout: any) {
             }
 
             gd.emit('plotly_doubleclick', null);
-            Registry.call('_guiRelayout', gd, updateObj);
+            _guiRelayout(gd, updateObj);
         }
 
         if(clickMode.indexOf('select') > -1 && numClicks === 1) {
@@ -1202,9 +1203,9 @@ proto.updateRadialDrag = function(fullLayout: any, polarLayout: any, rngIndex: a
 
     function doneFn() {
         if(angle1 !== null) {
-            Registry.call('_guiRelayout', gd, _this.id + '.radialaxis.angle', angle1);
+            _guiRelayout(gd, _this.id + '.radialaxis.angle', angle1);
         } else if(rprime !== null) {
-            Registry.call('_guiRelayout', gd, _this.id + '.radialaxis.range[' + rngIndex + ']', rprime);
+            _guiRelayout(gd, _this.id + '.radialaxis.range[' + rngIndex + ']', rprime);
         }
     }
 
@@ -1259,7 +1260,7 @@ proto.updateRadialDrag = function(fullLayout: any, polarLayout: any, rngIndex: a
             const moduleCalcDataVisible = Lib.filterVisible(moduleCalcData);
             const _module = moduleCalcData[0][0].trace._module;
             _module.plot(gd, _this, moduleCalcDataVisible, polarLayoutNow);
-            if(Registry.traceIs(traceType, 'gl') && moduleCalcDataVisible.length) hasRegl = true;
+            if(traceIs(traceType, 'gl') && moduleCalcDataVisible.length) hasRegl = true;
         }
 
         if(hasRegl) {
@@ -1388,7 +1389,7 @@ proto.updateAngularDrag = function(fullLayout: any) {
         let hasRegl = false;
 
         for(const traceType in _this.traceHash) {
-            if(Registry.traceIs(traceType, 'gl')) {
+            if(traceIs(traceType, 'gl')) {
                 const moduleCalcData = _this.traceHash[traceType];
                 const moduleCalcDataVisible = Lib.filterVisible(moduleCalcData);
                 const _module = moduleCalcData[0][0].trace._module;
@@ -1420,7 +1421,7 @@ proto.updateAngularDrag = function(fullLayout: any) {
 
         const updateObj = {};
         computeRotationUpdates(updateObj);
-        Registry.call('_guiRelayout', gd, updateObj);
+        _guiRelayout(gd, updateObj);
     }
 
     dragOpts.prepFn = function(evt: any, startX: any, startY: any) {

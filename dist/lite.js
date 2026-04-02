@@ -12032,6 +12032,19 @@ var Plotly = (() => {
   };
   var queue_default = queue;
 
+  // src/lib/trace_categories.ts
+  function traceIs2(trace, category2) {
+    if (trace && trace._module && trace._module.categories && !Array.isArray(trace._module.categories)) {
+      return !!trace._module.categories[category2];
+    }
+    const traceType = typeof trace === "string" ? trace : trace && trace.type ? trace.type : attributes_default2.type.dflt;
+    if (traceType === "various") return false;
+    let _module = modules[traceType];
+    if (!_module) _module = modules[attributes_default2.type.dflt];
+    if (!_module) return false;
+    return !!_module.categories[category2];
+  }
+
   // src/plots/frame_attributes.ts
   var frame_attributes_default = {
     _isLinkedToArray: "frames_entry",
@@ -12289,14 +12302,14 @@ var Plotly = (() => {
       if (attr2 === void 0) nestedProperty2(copyModuleAttributes, fullAttrString).set(void 0);
     });
     extendDeepAll(attributes3, copyBaseAttributes);
-    if (registry_default.traceIs(type, "noOpacity")) {
+    if (traceIs2(type, "noOpacity")) {
       delete attributes3.opacity;
     }
-    if (!registry_default.traceIs(type, "showLegend")) {
+    if (!traceIs2(type, "showLegend")) {
       delete attributes3.showlegend;
       delete attributes3.legendgroup;
     }
-    if (registry_default.traceIs(type, "noHover")) {
+    if (traceIs2(type, "noHover")) {
       delete attributes3.hoverinfo;
       delete attributes3.hoverlabel;
     }
@@ -12739,7 +12752,7 @@ var Plotly = (() => {
   function getFromTrace(gd, fullTrace, type) {
     const fullLayout = gd._fullLayout;
     let ax = null;
-    if (registry_default.traceIs(fullTrace, "gl3d")) {
+    if (traceIs2(fullTrace, "gl3d")) {
       const scene = fullTrace.scene;
       if (scene.slice(0, 5) === "scene") {
         ax = fullLayout[scene][type + "axis"];
@@ -13163,7 +13176,7 @@ var Plotly = (() => {
         delete gd.layout.height;
         const oldchanged = gd.changed;
         gd.autoplay = true;
-        registry_default.call("relayout", gd, { autosize: true }).then(() => {
+        relayout(gd, { autosize: true }).then(() => {
           gd.changed = oldchanged;
           if (gd._resolveResize === resolve) {
             delete gd._resolveResize;
@@ -13772,10 +13785,10 @@ var Plotly = (() => {
       fullTrace._input = trace;
       fullTrace._fullInput = fullTrace;
       pushModule(fullTrace);
-      if (registry_default.traceIs(fullTrace, "carpetAxis")) {
+      if (traceIs2(fullTrace, "carpetAxis")) {
         carpetIndex[fullTrace.carpet] = fullTrace;
       }
-      if (registry_default.traceIs(fullTrace, "carpetDependent")) {
+      if (traceIs2(fullTrace, "carpetDependent")) {
         carpetDependents.push(i);
       }
     }
@@ -13890,7 +13903,7 @@ var Plotly = (() => {
       coerce3("customdata");
       coerce3("ids");
       coerce3("meta");
-      if (registry_default.traceIs(traceOut, "showLegend")) {
+      if (traceIs2(traceOut, "showLegend")) {
         lib_default.coerce(
           traceIn,
           traceOut,
@@ -13914,13 +13927,13 @@ var Plotly = (() => {
       if (_module) {
         _module.supplyDefaults(traceIn, traceOut, defaultColor, layout);
       }
-      if (!registry_default.traceIs(traceOut, "noOpacity")) {
+      if (!traceIs2(traceOut, "noOpacity")) {
         coerce3("opacity");
       }
-      if (registry_default.traceIs(traceOut, "notLegendIsolatable")) {
+      if (traceIs2(traceOut, "notLegendIsolatable")) {
         traceOut.visible = !!traceOut.visible;
       }
-      if (!registry_default.traceIs(traceOut, "noHover")) {
+      if (!traceIs2(traceOut, "noHover")) {
         if (!traceOut.hovertemplate) coerceHoverinfo(traceIn, traceOut, layout);
         if (traceOut.type !== "parcats") {
           registry_default.getComponentMethod("fx", "supplyDefaults")(traceIn, traceOut, defaultColor, layout);
@@ -14424,7 +14437,7 @@ var Plotly = (() => {
       }
       const maxNumberOfRedraws = 3 * (1 + Object.keys(pushMarginIds).length);
       if (fullLayout._redrawFromAutoMarginCount < maxNumberOfRedraws) {
-        return registry_default.call("_doPlot", gd);
+        return _doPlot(gd);
       } else {
         fullLayout._size = oldMargins;
         warn("Too many auto-margin redraws.");
@@ -14902,7 +14915,7 @@ var Plotly = (() => {
         });
         if (opts.redraw) {
           gd._transitionData._interruptCallbacks.push(function() {
-            return registry_default.call("redraw", gd);
+            return redraw(gd);
           });
         }
         gd._transitionData._interruptCallbacks.push(function() {
@@ -14928,7 +14941,7 @@ var Plotly = (() => {
       flushCallbacks(gd._transitionData._interruptCallbacks);
       return Promise.resolve().then(() => {
         if (opts.redraw) {
-          return registry_default.call("redraw", gd);
+          return redraw(gd);
         }
       }).then(() => {
         gd._transitioning = false;
@@ -15137,7 +15150,7 @@ var Plotly = (() => {
           const fullTrace = gd._fullData[traceIndex];
           if (fullTrace.visible !== true) continue;
           const type = fullTrace.type;
-          if (registry_default.traceIs(fullTrace, "histogram")) {
+          if (traceIs2(fullTrace, "histogram")) {
             delete fullTrace._xautoBinFinished;
             delete fullTrace._yautoBinFinished;
           }
@@ -18997,7 +19010,7 @@ var Plotly = (() => {
       const colorAxes = layout._colorAxes || {};
       const colorAx = coerce3(prefix + "coloraxis");
       if (colorAx) {
-        const colorbarVisuals = traceIs(parentContOut, "contour") && nestedProperty2(parentContOut, "contours.coloring").get() || "heatmap";
+        const colorbarVisuals = traceIs2(parentContOut, "contour") && nestedProperty2(parentContOut, "contours.coloring").get() || "heatmap";
         const stash = colorAxes[colorAx];
         if (stash) {
           stash[2].push(thisFn);
@@ -20182,7 +20195,7 @@ var Plotly = (() => {
       const trace = d[0].trace;
       const xcalendar = trace.xcalendar;
       const ycalendar = trace.ycalendar;
-      const selector = registry_default.traceIs(trace, "bar-like") ? ".bartext" : ".point,.textpoint";
+      const selector = traceIs2(trace, "bar-like") ? ".bartext" : ".point,.textpoint";
       traceGroups.selectAll(selector).each(function(d2) {
         hideOutsideRangePoint(d2, select_default2(this), xa, ya, xcalendar, ycalendar);
       });
@@ -20764,7 +20777,7 @@ var Plotly = (() => {
     const marker2 = trace.marker;
     out.markerScale = tryColorscale(marker2, "");
     out.lineScale = tryColorscale(marker2, "line");
-    if (registry_default.traceIs(trace, "symbols")) {
+    if (traceIs2(trace, "symbols")) {
       out.ms2mrc = subtypes_default.isBubble(trace) ? makeBubbleSizeFn(trace) : function() {
         return (marker2.size || 6) / 2;
       };
@@ -20814,7 +20827,7 @@ var Plotly = (() => {
     const usms = unselectedMarker.size;
     const smsIsDefined = sms !== void 0;
     const usmsIsDefined = usms !== void 0;
-    if (registry_default.traceIs(trace, "symbols") && (smsIsDefined || usmsIsDefined)) {
+    if (traceIs2(trace, "symbols") && (smsIsDefined || usmsIsDefined)) {
       out.selectedSizeFn = function(d) {
         const base = d.mrc || ms / 2;
         if (d.selected) {
@@ -20970,7 +20983,7 @@ var Plotly = (() => {
       const tp = d.tp || trace.textposition;
       const fontSize = extracTextFontSize(d, trace);
       color_default.fill(tx, tc);
-      const dontTouchParent = registry_default.traceIs(trace, "bar-like");
+      const dontTouchParent = traceIs2(trace, "bar-like");
       textPointPosition(tx, tp, fontSize, d.mrc2 || d.mrc, dontTouchParent);
     });
   }
@@ -21602,9 +21615,9 @@ var Plotly = (() => {
       } else el.on(".opacity", null);
       el.call(svg_text_utils_default.makeEditable, { gd }).on("edit", function(text) {
         if (traceIndex !== void 0) {
-          registry_default.call("_guiRestyle", gd, prop, text, traceIndex);
+          _guiRestyle(gd, prop, text, traceIndex);
         } else {
-          registry_default.call("_guiRelayout", gd, prop, text);
+          _guiRelayout(gd, prop, text);
         }
       }).on("cancel", function() {
         this.text(this.attr("data-unformatted")).call(titleLayout);
@@ -21622,7 +21635,7 @@ var Plotly = (() => {
           subtitleIsPlaceholder = true;
         } else subtitleEl.on(".opacity", null);
         subtitleEl.call(svg_text_utils_default.makeEditable, { gd }).on("edit", function(text) {
-          registry_default.call("_guiRelayout", gd, "title.subtitle.text", text);
+          _guiRelayout(gd, "title.subtitle.text", text);
         }).on("cancel", function() {
           this.text(this.attr("data-unformatted")).call(titleLayout);
         }).on("input", function(d) {
@@ -21973,7 +21986,7 @@ var Plotly = (() => {
       const edits = {};
       edits[ax._attr + ".range"] = ax.range;
       edits[ax._attr + ".autorange"] = ax.autorange;
-      registry_default.call("_storeDirectGUIEdit", gd.layout, gd._fullLayout._preGUI, edits);
+      _storeDirectGUIEdit(gd.layout, gd._fullLayout._preGUI, edits);
       axIn.range = ax.range.slice();
       axIn.autorange = ax.autorange;
     }
@@ -25728,7 +25741,7 @@ var Plotly = (() => {
     for (let i = 0; i < fullData.length; i++) {
       const trace = fullData[i];
       if (trace.visible === true && trace.xaxis + trace.yaxis === subplot) {
-        if (registry_default.traceIs(trace, "bar-like") && trace.orientation === { x: "h", y: "v" }[axLetter]) return true;
+        if (traceIs2(trace, "bar-like") && trace.orientation === { x: "h", y: "v" }[axLetter]) return true;
         if (trace.fill && trace.fill.charAt(trace.fill.length - 1) === axLetter) return true;
       }
     }
@@ -26592,7 +26605,7 @@ var Plotly = (() => {
     let defaultOrder = "normal";
     const shapesWithLegend = (layoutOut.shapes || []).filter((d) => d.showlegend);
     function isPieWithLegendArray(trace2) {
-      return registry_default.traceIs(trace2, "pie-like") && trace2._length != null && (Array.isArray(trace2.legend) || Array.isArray(trace2.showlegend));
+      return traceIs2(trace2, "pie-like") && trace2._length != null && (Array.isArray(trace2.legend) || Array.isArray(trace2.showlegend));
     }
     fullData.filter(isPieWithLegendArray).forEach((trace2) => {
       if (trace2.visible) {
@@ -26624,14 +26637,14 @@ var Plotly = (() => {
         legendTraceCount++;
         if (trace.showlegend) {
           legendReallyHasATrace = true;
-          if (!isShape && registry_default.traceIs(trace, "pie-like") || trace._input.showlegend === true) {
+          if (!isShape && traceIs2(trace, "pie-like") || trace._input.showlegend === true) {
             legendTraceCount++;
           }
         }
         coerceFont(traceCoerce, "legendgrouptitle.font", grouptitlefont);
         traceCoerce("legendsymbol.path");
       }
-      if (!isShape && registry_default.traceIs(trace, "bar") && layoutOut.barmode === "stack" || ["tonextx", "tonexty"].indexOf(trace.fill) !== -1) {
+      if (!isShape && traceIs2(trace, "bar") && layoutOut.barmode === "stack" || ["tonextx", "tonexty"].indexOf(trace.fill) !== -1) {
         defaultOrder = helpers_default3.isGrouped({ traceorder: defaultOrder }) ? "grouped+reversed" : "reversed";
       }
       if (trace.legendgroup !== void 0 && trace.legendgroup !== "") {
@@ -27052,7 +27065,7 @@ var Plotly = (() => {
     const thisLegend = fullTrace.legend;
     const fullInput = fullTrace._fullInput;
     const isShape = fullInput && fullInput._isShape;
-    if (!isShape && registry_default.traceIs(fullTrace, "pie-like")) {
+    if (!isShape && traceIs2(fullTrace, "pie-like")) {
       const thisLabel = legendItem.label;
       const thisLabelIndex = hiddenSlices.indexOf(thisLabel);
       if (mode === "toggle") {
@@ -27084,7 +27097,7 @@ var Plotly = (() => {
           }
         }
       }
-      registry_default.call("_guiRelayout", gd, "hiddenlabels", hiddenSlices);
+      _guiRelayout(gd, "hiddenlabels", hiddenSlices);
     } else {
       const hasLegendgroup = legendgroup && legendgroup.length;
       const traceIndicesInGroup = [];
@@ -27134,7 +27147,7 @@ var Plotly = (() => {
           notInLegend = _item.showlegend !== true;
           if (isClicked || notInLegend) continue;
           isInGroup = hasLegendgroup && _item.legendgroup === legendgroup;
-          if (!isInGroup && _item.legend === thisLegend && _item.visible === true && !registry_default.traceIs(_item, "notLegendIsolatable")) {
+          if (!isInGroup && _item.legend === thisLegend && _item.visible === true && !traceIs2(_item, "notLegendIsolatable")) {
             isIsolated = false;
             break;
           }
@@ -27142,7 +27155,7 @@ var Plotly = (() => {
         for (i = 0; i < allLegendItems.length; i++) {
           _item = allLegendItems[i];
           if (_item.visible === false || _item.legend !== thisLegend) continue;
-          if (registry_default.traceIs(_item, "notLegendIsolatable")) {
+          if (traceIs2(_item, "notLegendIsolatable")) {
             continue;
           }
           switch (fullTrace.visible) {
@@ -27180,9 +27193,9 @@ var Plotly = (() => {
         }
       }
       if (shapesUpdated) {
-        registry_default.call("_guiUpdate", gd, dataUpdate, { shapes: updatedShapes }, dataIndices);
+        _guiUpdate(gd, dataUpdate, { shapes: updatedShapes }, dataIndices);
       } else {
-        registry_default.call("_guiRestyle", gd, dataUpdate, dataIndices);
+        _guiRestyle(gd, dataUpdate, dataIndices);
       }
     }
   }
@@ -27235,7 +27248,7 @@ var Plotly = (() => {
       let lid = trace.legend;
       const lgroup = trace.legendgroup;
       if (!inHover && (!trace.visible || !trace.showlegend)) continue;
-      if (registry_default.traceIs(trace, "pie-like")) {
+      if (traceIs2(trace, "pie-like")) {
         const legendPerSlice = Array.isArray(trace.legend);
         const showlegendPerSlice = Array.isArray(trace.showlegend);
         if (!slicesShown[lgroup]) slicesShown[lgroup] = {};
@@ -27320,7 +27333,7 @@ var Plotly = (() => {
       if (groupTitle) {
         let hasPieLike = false;
         for (j = 0; j < legendData[i].length; j++) {
-          if (registry_default.traceIs(legendData[i][j].trace, "pie-like")) {
+          if (traceIs2(legendData[i][j].trace, "pie-like")) {
             hasPieLike = true;
             break;
           }
@@ -27629,7 +27642,7 @@ var Plotly = (() => {
         // Square with rounded corners
         "M6,6H-6V-6H6Z"
       );
-      const isVisible = !desiredType ? registry_default.traceIs(trace, "bar") : trace.visible && trace.type === desiredType;
+      const isVisible = !desiredType ? traceIs2(trace, "bar") : trace.visible && trace.type === desiredType;
       const barpath = select_default2(lThis).select("g.legendpoints").selectAll("path.legend" + desiredType).data(isVisible ? [d] : []);
       const barpathEnter = barpath.enter().append("path").classed("legend" + desiredType, true).attr("d", pathStr).attr("transform", centerTransform);
       barpath.exit().remove();
@@ -27678,7 +27691,7 @@ var Plotly = (() => {
     }
     function styleBoxes(d) {
       const trace = d[0].trace;
-      const boxJoin = select_default2(this).select("g.legendpoints").selectAll("path.legendbox").data(trace.visible && registry_default.traceIs(trace, "box-violin") ? [d] : []);
+      const boxJoin = select_default2(this).select("g.legendpoints").selectAll("path.legendbox").data(trace.visible && traceIs2(trace, "box-violin") ? [d] : []);
       const boxEnter = boxJoin.enter().append("path").classed("legendbox", true).attr("d", "M6,6H-6V-6H6Z").attr("transform", centerTransform);
       boxJoin.exit().remove();
       const pts = boxJoin.merge(boxEnter);
@@ -27742,7 +27755,7 @@ var Plotly = (() => {
     function stylePieLike(d, lThis, desiredType) {
       const d0 = d[0];
       const trace = d0.trace;
-      const isVisible = !desiredType ? registry_default.traceIs(trace, desiredType) : trace.visible && trace.type === desiredType;
+      const isVisible = !desiredType ? traceIs2(trace, desiredType) : trace.visible && trace.type === desiredType;
       const pieJoin = select_default2(lThis).select("g.legendpoints").selectAll("path.legend" + desiredType).data(isVisible ? [d] : []);
       const pieEnter = pieJoin.enter().append("path").classed("legend" + desiredType, true).attr("d", "M6,6H-6V-6H6Z").attr("transform", centerTransform);
       pieJoin.exit().remove();
@@ -28061,7 +28074,7 @@ var Plotly = (() => {
     const traces = tracesJoin.enter().append("g").attr("class", "traces").merge(tracesJoin);
     traces.style("opacity", function(d) {
       const trace = d[0].trace;
-      if (registry_default.traceIs(trace, "pie-like")) {
+      if (traceIs2(trace, "pie-like")) {
         return hiddenSlices.indexOf(d[0].label) !== -1 ? 0.5 : 1;
       } else {
         return trace.visible === "legendonly" ? 0.5 : 1;
@@ -28232,7 +28245,7 @@ var Plotly = (() => {
                 const obj = {};
                 obj[legendId + ".x"] = xf;
                 obj[legendId + ".y"] = yf;
-                registry_default.call("_guiRelayout", gd, obj);
+                _guiRelayout(gd, obj);
               }
             },
             clickFn: function(numClicks, e) {
@@ -28274,7 +28287,7 @@ var Plotly = (() => {
     if (trace._group) {
       evtData.group = trace._group;
     }
-    if (registry_default.traceIs(trace, "pie-like")) {
+    if (traceIs2(trace, "pie-like")) {
       evtData.label = legendItem.datum()[0].label;
     }
     const clickVal = events_default.triggerHandler(gd, "plotly_legendclick", evtData);
@@ -28295,7 +28308,7 @@ var Plotly = (() => {
     const legendId = getId(legendObj);
     const legendItem = g.data()[0][0];
     const trace = legendItem.trace;
-    const isPieLike = registry_default.traceIs(trace, "pie-like");
+    const isPieLike = traceIs2(trace, "pie-like");
     const isEditable = !legendObj._inHover && gd._context.edits.legendText && !isPieLike;
     const maxNameLength = legendObj._maxNameLength;
     let name2, textFont;
@@ -28325,9 +28338,9 @@ var Plotly = (() => {
         const update3 = {};
         update3.name = newName;
         if (fullInput._isShape) {
-          return registry_default.call("_guiRelayout", gd, "shapes[" + trace.index + "].name", update3.name);
+          return _guiRelayout(gd, "shapes[" + trace.index + "].name", update3.name);
         } else {
-          return registry_default.call("_guiRestyle", gd, update3, trace.index);
+          return _guiRestyle(gd, update3, trace.index);
         }
       });
     } else {
@@ -28737,7 +28750,7 @@ var Plotly = (() => {
         let y0 = Math.min(_y0, _y1);
         let y1 = Math.max(_y0, _y1);
         const trace = hoverItem.trace;
-        if (registry_default.traceIs(trace, "gl3d")) {
+        if (traceIs2(trace, "gl3d")) {
           const container = gd._fullLayout[trace.scene]._scene.container;
           const dx = container.offsetLeft;
           const dy = container.offsetTop;
@@ -29551,7 +29564,7 @@ var Plotly = (() => {
       const winningPoint = groupedHoverData[0];
       const avgX = (winningPoint.x0 + winningPoint.x1) / 2;
       const avgY = (winningPoint.y0 + winningPoint.y1) / 2;
-      const pointWon = !(registry_default.traceIs(winningPoint.trace, "bar-like") || registry_default.traceIs(winningPoint.trace, "box-violin"));
+      const pointWon = !(traceIs2(winningPoint.trace, "bar-like") || traceIs2(winningPoint.trace, "box-violin"));
       let lyBottom, lyTop;
       if (axLetter === "y") {
         if (pointWon) {
@@ -30259,7 +30272,7 @@ var Plotly = (() => {
     const last = [];
     for (let i = 0; i < hoverData.length; i++) {
       const d = hoverData[i];
-      if (registry_default.traceIs(d.trace, "bar-like") || registry_default.traceIs(d.trace, "box-violin")) {
+      if (traceIs2(d.trace, "bar-like") || traceIs2(d.trace, "box-violin")) {
         last.push(d);
       } else if (d.trace[axLetter + "period"]) {
         second.push(d);
@@ -30422,8 +30435,8 @@ var Plotly = (() => {
     for (let i = 0; i < calcdata.length; i++) {
       const cd = calcdata[i];
       const trace = cd[0].trace;
-      if (registry_default.traceIs(trace, "pie-like")) continue;
-      const fillFn = registry_default.traceIs(trace, "2dMap") ? paste : fillArray;
+      if (traceIs2(trace, "pie-like")) continue;
+      const fillFn = traceIs2(trace, "2dMap") ? paste : fillArray;
       fillFn(trace.hoverinfo, cd, "hi", makeCoerceHoverInfo(trace));
       if (trace.hovertemplate) fillFn(trace.hovertemplate, cd, "ht");
       if (!trace.hoverlabel) continue;
@@ -31430,7 +31443,7 @@ var Plotly = (() => {
   function layoutReplot(gd) {
     const layout = gd.layout;
     gd.layout = void 0;
-    return registry_default.call("_doPlot", gd, "", layout);
+    return _doPlot(gd, "", layout);
   }
   function doLegend(gd) {
     registry_default.getComponentMethod("legend", "draw")(gd);
@@ -31730,7 +31743,7 @@ var Plotly = (() => {
           }).on("edit", function(text) {
             const v = ax.d2r(text);
             if (v !== void 0) {
-              registry_default.call("_guiRelayout", gd2, attrStr, v);
+              _guiRelayout(gd2, attrStr, v);
             }
           });
         }
@@ -32139,7 +32152,7 @@ var Plotly = (() => {
         }
       }
       gd.emit("plotly_doubleclick", null);
-      registry_default.call("_guiRelayout", gd, attrs2);
+      _guiRelayout(gd, attrs2);
     }
     function dragTail() {
       updateSubplots([0, 0, pw, ph]);
@@ -32147,7 +32160,7 @@ var Plotly = (() => {
         previousPromises,
         function() {
           gd._fullLayout._replotting = false;
-          registry_default.call("_guiRelayout", gd, updates);
+          _guiRelayout(gd, updates);
         }
       ], gd);
     }
@@ -32824,7 +32837,6 @@ var Plotly = (() => {
   var import_fast_isnumeric25 = __toESM(require_fast_isnumeric(), 1);
   var cleanId2 = axis_ids_default.cleanId;
   var getFromTrace2 = axis_ids_default.getFromTrace;
-  var traceIs2 = registry_default.traceIs;
   var AX_LETTERS = ["x", "y", "z"];
   function clearPromiseQueue(gd) {
     if (Array.isArray(gd._promises) && gd._promises.length > 0) {
@@ -34128,7 +34140,7 @@ var Plotly = (() => {
           if (oldVal === "pie" || oldVal === "funnelarea") {
             nestedProperty2(cont, "marker.color").set(nestedProperty2(cont, "marker.colors").get());
             fullLayout._pielayer.selectAll("g.trace").remove();
-          } else if (registry_default.traceIs(cont, "cartesian")) {
+          } else if (traceIs2(cont, "cartesian")) {
             nestedProperty2(cont, "marker.colors").set(nestedProperty2(cont, "marker.color").get());
           }
         }
@@ -34151,7 +34163,7 @@ var Plotly = (() => {
           flags.calc = true;
         } else {
           if (valObject) {
-            if (valObject.arrayOk && !registry_default.traceIs(contFull, "regl") && (isArrayOrTypedArray(newVal) || isArrayOrTypedArray(oldVal))) {
+            if (valObject.arrayOk && !traceIs2(contFull, "regl") && (isArrayOrTypedArray(newVal) || isArrayOrTypedArray(oldVal))) {
               flags.calc = true;
             } else edit_types_default.update(flags, valObject);
           } else {
@@ -34180,7 +34192,7 @@ var Plotly = (() => {
         axlist = [];
         for (i = 0; i < traces.length; i++) {
           const trace = data[traces[i]];
-          if (registry_default.traceIs(trace, "cartesian")) {
+          if (traceIs2(trace, "cartesian")) {
             addToAxlist(trace.xaxis || "x");
             addToAxlist(trace.yaxis || "y");
           }
@@ -38190,7 +38202,7 @@ var Plotly = (() => {
     const calcTracesVert = [];
     for (let i = 0; i < fullTraces.length; i++) {
       const fullTrace = fullTraces[i];
-      if (fullTrace.visible === true && registry_default.traceIs(fullTrace, "bar") && fullTrace.xaxis === xa._id && fullTrace.yaxis === ya._id) {
+      if (fullTrace.visible === true && traceIs2(fullTrace, "bar") && fullTrace.xaxis === xa._id && fullTrace.yaxis === ya._id) {
         if (fullTrace.orientation === "h") {
           calcTracesHorz.push(calcTraces[i]);
         } else {
@@ -40273,7 +40285,7 @@ var Plotly = (() => {
     }
     const calAttr = axLetter + "calendar";
     let calendar = d0[calAttr];
-    const opts = { noMultiCategory: !traceIs(d0, "cartesian") || traceIs(d0, "noMultiCategory") };
+    const opts = { noMultiCategory: !traceIs2(d0, "cartesian") || traceIs2(d0, "noMultiCategory") };
     if (d0.type === "box" && d0._hasPreCompStats && axLetter === { h: "x", v: "y" }[d0.orientation || "v"]) {
       opts.noMultiCategory = true;
     }
@@ -40283,7 +40295,7 @@ var Plotly = (() => {
       const boxPositions = [];
       for (i = 0; i < data.length; i++) {
         const trace = data[i];
-        if (!traceIs(trace, "box-violin") || (trace[axLetter + "axis"] || axLetter) !== id2) continue;
+        if (!traceIs2(trace, "box-violin") || (trace[axLetter + "axis"] || axLetter) !== id2) continue;
         if (trace[posLetter] !== void 0) boxPositions.push(trace[posLetter][0]);
         else if (trace.name !== void 0) boxPositions.push(trace.name);
         else boxPositions.push("text");
@@ -40318,8 +40330,8 @@ var Plotly = (() => {
   }
   function isBoxWithoutPositionCoords(trace, axLetter) {
     const posLetter = getBoxPosLetter(trace);
-    const isBox = traceIs(trace, "box-violin");
-    const isCandlestick = traceIs(trace._fullInput || {}, "candlestick");
+    const isBox = traceIs2(trace, "box-violin");
+    const isCandlestick = traceIs2(trace._fullInput || {}, "candlestick");
     return isBox && !isCandlestick && axLetter === posLetter && trace[posLetter] === void 0 && trace[posLetter + "0"] === void 0;
   }
 
@@ -40750,7 +40762,6 @@ var Plotly = (() => {
   var { AX_ID_PATTERN } = constants_default2;
   var id2name2 = axis_ids_default.id2name;
   var name2id2 = axis_ids_default.name2id;
-  var traceIs3 = registry_default.traceIs;
   var getComponentMethod2 = registry_default.getComponentMethod;
   function appendList(cont, k, item) {
     if (Array.isArray(cont[k])) cont[k].push(item);
@@ -40771,7 +40782,7 @@ var Plotly = (() => {
     let i, j;
     for (i = 0; i < fullData.length; i++) {
       const trace = fullData[i];
-      if (!traceIs3(trace, "cartesian")) continue;
+      if (!traceIs2(trace, "cartesian")) continue;
       let xaName;
       if (trace.xaxis) {
         xaName = id2name2(trace.xaxis);
@@ -40805,18 +40816,18 @@ var Plotly = (() => {
           yaMustDisplay[yaName] = true;
           yaMustNotReverse[yaName] = true;
         }
-        if (!traceIs3(trace, "carpet") || trace.type === "carpet" && !trace._cheater) {
+        if (!traceIs2(trace, "carpet") || trace.type === "carpet" && !trace._cheater) {
           if (xaName) xaMustDisplay[xaName] = true;
         }
       }
       if (trace.type === "carpet" && trace._cheater) {
         if (xaName) xaMayHide[xaName] = true;
       }
-      if (traceIs3(trace, "2dMap")) {
+      if (traceIs2(trace, "2dMap")) {
         outerTicks[xaName] = true;
         outerTicks[yaName] = true;
       }
-      if (traceIs3(trace, "oriented")) {
+      if (traceIs2(trace, "oriented")) {
         const positionAxis = trace.orientation === "h" ? yaName : xaName;
         noGrids[positionAxis] = true;
       }
@@ -41101,7 +41112,7 @@ var Plotly = (() => {
         if (edit.yr1) aobj[ya._name + ".range"] = edit.yr1.slice();
       }
       onComplete && onComplete();
-      return registry_default.call("relayout", gd, aobj).then(() => {
+      return relayout(gd, aobj).then(() => {
         for (let i = 0; i < edits.length; i++) {
           unsetSubplotTransform(edits[i].plotinfo);
         }
@@ -41116,7 +41127,7 @@ var Plotly = (() => {
         if (edit.xr0) aobj[xa._name + ".range"] = edit.xr0.slice();
         if (edit.yr0) aobj[ya._name + ".range"] = edit.yr0.slice();
       }
-      return registry_default.call("relayout", gd, aobj).then(() => {
+      return relayout(gd, aobj).then(() => {
         for (let i = 0; i < edits.length; i++) {
           unsetSubplotTransform(edits[i].plotinfo);
         }
@@ -42890,7 +42901,7 @@ var Plotly = (() => {
         gd._fullLayout._reselect = true;
       }
       if (Object.keys(updateObject).length) {
-        registry_default.call((opts || {}).redrawing ? "relayout" : "_guiRelayout", gd, updateObject);
+        ((opts || {}).redrawing ? relayout : _guiRelayout)(gd, updateObject);
       }
     }
     const fullLayout = gd._fullLayout;
@@ -43127,7 +43138,7 @@ var Plotly = (() => {
         xref: erasedSelection.xref,
         yref: erasedSelection.yref
       };
-      registry_default.call("_guiRelayout", gd, {
+      _guiRelayout(gd, {
         selections: list2
       });
     }
@@ -43380,7 +43391,7 @@ var Plotly = (() => {
       setCursor(shapePath);
       removeVisualCues(shapeLayer);
       setClipPath(shapePath, gd, shapeOptions);
-      registry_default.call("_guiRelayout", gd, editHelpers.getUpdateObj());
+      _guiRelayout(gd, editHelpers.getUpdateObj());
     }
     function abortDrag() {
       if (shouldSkipEdits(gd)) return;
@@ -43598,7 +43609,7 @@ var Plotly = (() => {
         }
       }
       delete gd._fullLayout._activeShapeIndex;
-      return registry_default.call("_guiRelayout", gd, {
+      return _guiRelayout(gd, {
         shapes: list2
       });
     }
@@ -45033,7 +45044,7 @@ var Plotly = (() => {
     if (!opts.inherit || !containerOut[copyAttr]) {
       coerce3("color", defaultColor);
       coerce3("thickness");
-      coerce3("width", registry_default.traceIs(traceOut, "gl3d") ? 0 : 4);
+      coerce3("width", traceIs2(traceOut, "gl3d") ? 0 : 4);
     }
   }
 
@@ -45107,7 +45118,7 @@ var Plotly = (() => {
     for (let i = 0; i < calcdata.length; i++) {
       const calcTrace = calcdata[i];
       const trace = calcTrace[0].trace;
-      if (trace.visible === true && registry_default.traceIs(trace, "errorBarsOK")) {
+      if (trace.visible === true && traceIs2(trace, "errorBarsOK")) {
         const xa = axes_default.getFromId(gd, trace.xaxis);
         const ya = axes_default.getFromId(gd, trace.yaxis);
         calcOneAxis(calcTrace, trace, xa, "x");
@@ -45519,7 +45530,7 @@ var Plotly = (() => {
           opts[key] = toImageButtonOptions[key];
         }
       });
-      registry_default.call("downloadImage", gd, opts).then((filename) => {
+      download_default(gd, opts).then((filename) => {
         lib_default.notifier(_(gd, "Snapshot succeeded") + " - " + filename, "long");
       }).catch(() => {
         lib_default.notifier(_(gd, "Sorry, there was a problem downloading your snapshot!"), "long");
@@ -45783,7 +45794,7 @@ var Plotly = (() => {
       aobj[astr] = val;
     }
     fullLayout._cartesianSpikesEnabled = allSpikesEnabled;
-    registry_default.call("_guiRelayout", gd, aobj);
+    _guiRelayout(gd, aobj);
   }
   modeBarButtons.zoom3d = {
     name: "zoom3d",
@@ -45839,7 +45850,7 @@ var Plotly = (() => {
     }
     const val2d = val === "pan" ? val : "zoom";
     layoutUpdate.dragmode = val2d;
-    registry_default.call("_guiRelayout", gd, layoutUpdate);
+    _guiRelayout(gd, layoutUpdate);
   }
   modeBarButtons.resetCameraDefault3d = {
     name: "resetCameraDefault3d",
@@ -45894,7 +45905,7 @@ var Plotly = (() => {
         aobj[aspectmode] = scene.viewInitial.aspectmode;
       }
     }
-    registry_default.call("_guiRelayout", gd, aobj);
+    _guiRelayout(gd, aobj);
   }
   modeBarButtons.hoverClosest3d = {
     name: "hoverClosest3d",
@@ -45940,7 +45951,7 @@ var Plotly = (() => {
   }
   function handleHover3d(gd, ev) {
     const layoutUpdate = getNextHover3d(gd, ev);
-    registry_default.call("_guiRelayout", gd, layoutUpdate);
+    _guiRelayout(gd, layoutUpdate);
   }
   modeBarButtons.zoomInGeo = {
     name: "zoomInGeo",
@@ -46000,7 +46011,7 @@ var Plotly = (() => {
       if (attr2 === "zoom") {
         const scale = geoLayout.projection.scale;
         const newScale = val === "in" ? 2 * scale : 0.5 * scale;
-        registry_default.call("_guiRelayout", gd, id2 + ".projection.scale", newScale);
+        _guiRelayout(gd, id2 + ".projection.scale", newScale);
       }
     }
     if (attr2 === "reset") {
@@ -46029,7 +46040,7 @@ var Plotly = (() => {
   }
   function toggleHover(gd) {
     const newHover = getNextHover(gd);
-    registry_default.call("_guiRelayout", gd, "hovermode", newHover);
+    _guiRelayout(gd, "hovermode", newHover);
   }
   modeBarButtons.resetViewSankey = {
     name: "resetSankeyGroup",
@@ -46049,7 +46060,7 @@ var Plotly = (() => {
         aObj["node.x"].push(viewInitial.node.x.slice());
         aObj["node.y"].push(viewInitial.node.y.slice());
       }
-      registry_default.call("restyle", gd, aObj);
+      restyle(gd, aObj);
     }
   };
   modeBarButtons.toggleHover = {
@@ -46065,7 +46076,7 @@ var Plotly = (() => {
     click: function(gd, ev) {
       const layoutUpdate = getNextHover3d(gd, ev);
       layoutUpdate.hovermode = getNextHover(gd);
-      registry_default.call("_guiRelayout", gd, layoutUpdate);
+      _guiRelayout(gd, layoutUpdate);
     }
   };
   modeBarButtons.resetViews = {
@@ -46098,7 +46109,7 @@ var Plotly = (() => {
       const fullLayout = gd._fullLayout;
       const allSpikesEnabled = fullLayout._cartesianSpikesEnabled;
       fullLayout._cartesianSpikesEnabled = allSpikesEnabled === "on" ? "off" : "on";
-      registry_default.call("_guiRelayout", gd, setSpikelineVisibility(gd));
+      _guiRelayout(gd, setSpikelineVisibility(gd));
     }
   };
   function setSpikelineVisibility(gd) {
@@ -46199,7 +46210,7 @@ var Plotly = (() => {
       const next = val === "in" ? scalar * current : current / scalar;
       aObj[id2 + ".zoom"] = next;
     }
-    registry_default.call("_guiRelayout", gd, aObj);
+    _guiRelayout(gd, aObj);
   }
   function resetView(gd, subplotType) {
     const fullLayout = gd._fullLayout;
@@ -46215,7 +46226,7 @@ var Plotly = (() => {
         aObj[id2 + "." + key] = viewInitial[key];
       }
     }
-    registry_default.call("_guiRelayout", gd, aObj);
+    _guiRelayout(gd, aObj);
   }
   var buttons_default = modeBarButtons;
 
@@ -46783,11 +46794,11 @@ var Plotly = (() => {
       if (selectable) break;
       const trace = fullData[i];
       if (!trace._module || !trace._module.selectPoints) continue;
-      if (registry_default.traceIs(trace, "scatter-like")) {
+      if (traceIs2(trace, "scatter-like")) {
         if (subtypes_default.hasMarkers(trace) || subtypes_default.hasText(trace)) {
           selectable = true;
         }
-      } else if (registry_default.traceIs(trace, "box-violin")) {
+      } else if (traceIs2(trace, "box-violin")) {
         if (trace.boxpoints === "all" || trace.points === "all") {
           selectable = true;
         }
@@ -46799,7 +46810,7 @@ var Plotly = (() => {
   }
   function hasNoHover(fullData) {
     for (let i = 0; i < fullData.length; i++) {
-      if (!registry_default.traceIs(fullData[i], "noHover")) return false;
+      if (!traceIs2(fullData[i], "noHover")) return false;
     }
     return true;
   }
@@ -46966,7 +46977,7 @@ var Plotly = (() => {
         const trace = newData[i];
         trace.showscale = false;
         if (trace.marker) trace.marker.showscale = false;
-        if (registry_default.traceIs(trace, "pie-like")) trace.textposition = "none";
+        if (traceIs2(trace, "pie-like")) trace.textposition = "none";
       }
     }
     if (Array.isArray(options.annotations)) {
@@ -47055,7 +47066,7 @@ var Plotly = (() => {
       }, delay);
     }
     const redrawFunc = helpers_default6.getRedrawFunc(clonedGd);
-    registry_default.call("_doPlot", clonedGd, clone2.data, clone2.layout, clone2.config).then(redrawFunc).then(wait).catch((err) => {
+    _doPlot(clonedGd, clone2.data, clone2.layout, clone2.config).then(redrawFunc).then(wait).catch((err) => {
       ev.emit("error", err);
     });
     return ev;
@@ -47533,7 +47544,7 @@ var Plotly = (() => {
     const isGroup = mode === "group";
     for (let i = 0; i < fullData.length; i++) {
       const trace = fullData[i];
-      if (registry_default.traceIs(trace, "bar") && trace.visible) hasBars = true;
+      if (traceIs2(trace, "bar") && trace.visible) hasBars = true;
       else continue;
       let subploti = trace.xaxis + trace.yaxis;
       if (isGroup) {

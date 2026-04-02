@@ -13,7 +13,7 @@ import { font } from '../../components/drawing/index.js';
 import Lib from '../../lib/index.js';
 import gup from '../../lib/gup.js';
 import svgTextUtils from '../../lib/svg_text_utils.js';
-import Registry from '../../registry.js';
+import { _guiRestyle } from '../../plot_api/plot_api.js';
 import alignmentConstants from '../../constants/alignment.js';
 const strTranslate = Lib.strTranslate;
 const strRotate = Lib.strRotate;
@@ -799,7 +799,7 @@ function persistFinalNodePositions(d: any, gd: any) {
         x.push(nodeX / d.figure.width);
         y.push(nodeY / d.figure.height);
     }
-    Registry.call('_guiRestyle', gd, {
+    _guiRestyle(gd, {
         'node.x': [x],
         'node.y': [y]
     }, d.trace.index)

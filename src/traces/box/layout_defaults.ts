@@ -1,5 +1,5 @@
 import type { FullLayout, FullTrace, Layout } from '../../../types/core';
-import Registry from '../../registry.js';
+import { traceIs } from '../../lib/trace_categories.js';
 import Lib from '../../lib/index.js';
 import layoutAttributes from './layout_attributes.js';
 
@@ -10,7 +10,7 @@ function _supply(layoutIn: Layout, layoutOut: FullLayout, fullData: FullTrace[],
     for(let i = 0; i < fullData.length; i++) {
         const trace = fullData[i];
 
-        if(Registry.traceIs(trace, category)) {
+        if(traceIs(trace, category)) {
             hasTraceType = true;
             break;
         }

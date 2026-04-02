@@ -3,6 +3,7 @@ function d3Round(x?: any, n?: any): any { return n ? Math.round(x * (n = Math.po
 import isNumeric from 'fast-isnumeric';
 import { allowAutoMargin, autoMargin } from '../../plots/plots.js';
 import Registry from '../../registry.js';
+import { traceIs } from '../../lib/trace_categories.js';
 import Lib, { aggNums, bBoxIntersect, bigFont, coerce, constrain, dateTick0, deg2rad, distinctVals, ensureNumber, error, extendFlat, findExactDates, increment, incrementMonth, interp, isArrayOrTypedArray, mod, nestedProperty, numSeparate, pushUnique, roundUp, simpleMap, stdev, strTranslate, swapAttrs, syncOrAsync } from '../../lib/index.js';
 import svgTextUtils from '../../lib/svg_text_utils.js';
 import Titles from '../../components/titles/index.js';
@@ -4392,7 +4393,7 @@ function hasBarsOrFill(gd?: any, ax?: any): boolean {
 
         if(trace.visible === true && (trace.xaxis + trace.yaxis) === subplot) {
             if(
-                Registry.traceIs(trace, 'bar-like') &&
+                traceIs(trace, 'bar-like') &&
                 trace.orientation === ({x: 'h', y: 'v'} as any)[axLetter]
             ) return true;
 

@@ -1,46 +1,46 @@
-Autoscale                                              // components/modebar/buttons.ts:185
-Box Select                                             // components/modebar/buttons.ts:81
-Click to enter Colorscale title                        // plots/plots.ts:182
+Autoscale                                              // components/modebar/buttons.ts:187
+Box Select                                             // components/modebar/buttons.ts:83
+Click to enter Colorscale title                        // plots/plots.ts:184
 Click to enter Component A title                       // plots/ternary/ternary.ts:271
 Click to enter Component B title                       // plots/ternary/ternary.ts:281
 Click to enter Component C title                       // plots/ternary/ternary.ts:291
-Click to enter Plot subtitle                           // plots/plots.ts:179
-Click to enter Plot title                              // plots/plots.ts:178
-Click to enter X axis title                            // plots/plots.ts:180
-Click to enter Y axis title                            // plots/plots.ts:181
-Click to enter radial axis title                       // plots/polar/polar.ts:424
-Compare data on hover                                  // components/modebar/buttons.ts:219
-Double-click on legend to isolate one trace            // components/legend/handle_click.ts:11
+Click to enter Plot subtitle                           // plots/plots.ts:181
+Click to enter Plot title                              // plots/plots.ts:180
+Click to enter X axis title                            // plots/plots.ts:182
+Click to enter Y axis title                            // plots/plots.ts:183
+Click to enter radial axis title                       // plots/polar/polar.ts:425
+Compare data on hover                                  // components/modebar/buttons.ts:221
+Double-click on legend to isolate one trace            // components/legend/handle_click.ts:12
 Double-click to zoom back out                          // plots/ternary/ternary.ts:496
-Download plot                                          // components/modebar/buttons.ts:15
-Download plot as a PNG                                 // components/modebar/buttons.ts:13
-Draw circle                                            // components/modebar/buttons.ts:142
-Draw closed freeform                                   // components/modebar/buttons.ts:102
-Draw line                                              // components/modebar/buttons.ts:122
-Draw open freeform                                     // components/modebar/buttons.ts:112
-Draw rectangle                                         // components/modebar/buttons.ts:132
-Edit in Chart Studio                                   // components/modebar/buttons.ts:38
-Erase active shape                                     // components/modebar/buttons.ts:152
-Lasso Select                                           // components/modebar/buttons.ts:92
-Orbital rotation                                       // components/modebar/buttons.ts:319
-Pan                                                    // components/modebar/buttons.ts:70
+Download plot                                          // components/modebar/buttons.ts:17
+Download plot as a PNG                                 // components/modebar/buttons.ts:15
+Draw circle                                            // components/modebar/buttons.ts:144
+Draw closed freeform                                   // components/modebar/buttons.ts:104
+Draw line                                              // components/modebar/buttons.ts:124
+Draw open freeform                                     // components/modebar/buttons.ts:114
+Draw rectangle                                         // components/modebar/buttons.ts:134
+Edit in Chart Studio                                   // components/modebar/buttons.ts:40
+Erase active shape                                     // components/modebar/buttons.ts:154
+Lasso Select                                           // components/modebar/buttons.ts:94
+Orbital rotation                                       // components/modebar/buttons.ts:321
+Pan                                                    // components/modebar/buttons.ts:72
 Produced with Plotly.js                                // components/modebar/modebar.ts:203
-Reset                                                  // components/modebar/buttons.ts:477
-Reset axes                                             // components/modebar/buttons.ts:196
-Reset camera to default                                // components/modebar/buttons.ts:354
-Reset camera to last save                              // components/modebar/buttons.ts:364
-Reset view                                             // components/modebar/buttons.ts:543
-Reset views                                            // components/modebar/buttons.ts:580
-Show closest data on hover                             // components/modebar/buttons.ts:207
-Snapshot succeeded                                     // components/modebar/buttons.ts:29
-Sorry, there was a problem downloading your snapshot!  // components/modebar/buttons.ts:31
-Taking snapshot - this may take a few seconds          // components/modebar/buttons.ts:22
-Toggle Spike Lines                                     // components/modebar/buttons.ts:598
-Toggle show closest data on hover                      // components/modebar/buttons.ts:409
-Turntable rotation                                     // components/modebar/buttons.ts:329
-Zoom                                                   // components/modebar/buttons.ts:59
-Zoom in                                                // components/modebar/buttons.ts:163
-Zoom out                                               // components/modebar/buttons.ts:174
+Reset                                                  // components/modebar/buttons.ts:479
+Reset axes                                             // components/modebar/buttons.ts:198
+Reset camera to default                                // components/modebar/buttons.ts:356
+Reset camera to last save                              // components/modebar/buttons.ts:366
+Reset view                                             // components/modebar/buttons.ts:545
+Reset views                                            // components/modebar/buttons.ts:582
+Show closest data on hover                             // components/modebar/buttons.ts:209
+Snapshot succeeded                                     // components/modebar/buttons.ts:31
+Sorry, there was a problem downloading your snapshot!  // components/modebar/buttons.ts:33
+Taking snapshot - this may take a few seconds          // components/modebar/buttons.ts:24
+Toggle Spike Lines                                     // components/modebar/buttons.ts:600
+Toggle show closest data on hover                      // components/modebar/buttons.ts:411
+Turntable rotation                                     // components/modebar/buttons.ts:331
+Zoom                                                   // components/modebar/buttons.ts:61
+Zoom in                                                // components/modebar/buttons.ts:165
+Zoom out                                               // components/modebar/buttons.ts:176
 close:                                                 // traces/ohlc/calc.ts:81
 concentration:                                         // traces/sankey/plot.ts:133
 high:                                                  // traces/ohlc/calc.ts:79
@@ -55,12 +55,12 @@ mean ± σ:                                              // traces/box/calc.ts:2
 mean:                                                  // traces/box/calc.ts:223
 median:                                                // traces/box/calc.ts:216
 min:                                                   // traces/box/calc.ts:217
-new text                                               // plots/plots.ts:183
+new text                                               // plots/plots.ts:185
 open:                                                  // traces/ohlc/calc.ts:78
 outgoing flow count:                                   // traces/sankey/plot.ts:135
 q1:                                                    // traces/box/calc.ts:218
 q3:                                                    // traces/box/calc.ts:219
 source:                                                // traces/sankey/plot.ts:131
 target:                                                // traces/sankey/plot.ts:132
-trace                                                  // plots/plots.ts:185
+trace                                                  // plots/plots.ts:187
 upper fence:                                           // traces/box/calc.ts:226

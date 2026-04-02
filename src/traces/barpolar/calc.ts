@@ -7,7 +7,7 @@ import arraysToCalcdata from '../bar/arrays_to_calcdata.js';
 import _cross_trace_calc from '../bar/cross_trace_calc.js';
 const { setGroupPositions } = _cross_trace_calc;
 import calcSelection from '../scatter/calc_selection.js';
-import { traceIs } from '../../registry.js';
+import { traceIs } from '../../lib/trace_categories.js';
 import type { FullTrace, GraphDiv } from '../../../types/core';
 
 function calc(gd: GraphDiv, trace: FullTrace) {

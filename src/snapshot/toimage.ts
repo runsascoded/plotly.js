@@ -1,5 +1,5 @@
 import { EventEmitter } from 'events';
-import Registry from '../registry.js';
+import { _doPlot } from '../plot_api/plot_api.js';
 import Lib from '../lib/index.js';
 import helpers from './helpers.js';
 import clonePlot from './cloneplot.js';
@@ -50,7 +50,7 @@ function toImage(gd: GraphDiv, opts: any) {
 
     const redrawFunc = helpers.getRedrawFunc(clonedGd);
 
-    Registry.call('_doPlot', clonedGd, clone.data, clone.layout, clone.config)
+    _doPlot(clonedGd, clone.data, clone.layout, clone.config)
         .then(redrawFunc)
         .then(wait)
         .catch((err: any) => {

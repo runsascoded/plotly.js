@@ -1,5 +1,6 @@
 import type { FullLayout, FullTrace } from '../../../types/core';
 import Registry from '../../registry.js';
+import { traceIs } from '../../lib/trace_categories.js';
 import Lib, { bigFont, coerceFont, extendFlat, noneOrAll, pushUnique } from '../../lib/index.js';
 import Template from '../../plot_api/plot_template.js';
 import plotsAttrs from '../../plots/attributes.js';
@@ -44,7 +45,7 @@ function groupDefaults(legendId: string, layoutIn: any, layoutOut: FullLayout, f
     const shapesWithLegend = (layoutOut.shapes || []).filter((d: any) => d.showlegend);
 
     function isPieWithLegendArray(trace: FullTrace): boolean {
-        return Registry.traceIs(trace, 'pie-like')
+        return traceIs(trace, 'pie-like')
             && trace._length != null
             && (Array.isArray(trace.legend) || Array.isArray(trace.showlegend));
     }
@@ -100,7 +101,7 @@ function groupDefaults(legendId: string, layoutIn: any, layoutOut: FullLayout, f
                 legendReallyHasATrace = true;
                 // Always show the legend by default if there's a pie,
                 // or if there's only one trace but it's explicitly shown
-                if(!isShape && Registry.traceIs(trace, 'pie-like') ||
+                if(!isShape && traceIs(trace, 'pie-like') ||
                     trace._input.showlegend === true
                 ) {
                     legendTraceCount++;
@@ -110,7 +111,7 @@ function groupDefaults(legendId: string, layoutIn: any, layoutOut: FullLayout, f
             coerceFont(traceCoerce, 'legendgrouptitle.font', grouptitlefont);
             traceCoerce('legendsymbol.path');
         }
-        if((!isShape && Registry.traceIs(trace, 'bar') && layoutOut.barmode === 'stack') ||
+        if((!isShape && traceIs(trace, 'bar') && layoutOut.barmode === 'stack') ||
             ['tonextx', 'tonexty'].indexOf(trace.fill) !== -1) {
             defaultOrder = helpers.isGrouped({ traceorder: defaultOrder }) ?
                 'grouped+reversed' : 'reversed';

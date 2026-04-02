@@ -1,4 +1,4 @@
-import Registry from '../../registry.js';
+import { traceIs } from '../../lib/trace_categories.js';
 import helpers from './helpers.js';
 
 export default function getLegendData(calcdata: any[], opts: any, hasMultipleLegends?: boolean): any[] {
@@ -44,7 +44,7 @@ export default function getLegendData(calcdata: any[], opts: any, hasMultipleLeg
 
         if(!inHover && (!trace.visible || !trace.showlegend)) continue;
 
-        if(Registry.traceIs(trace, 'pie-like')) {
+        if(traceIs(trace, 'pie-like')) {
             const legendPerSlice = Array.isArray(trace.legend);
             const showlegendPerSlice = Array.isArray(trace.showlegend);
             if(!slicesShown[lgroup]) slicesShown[lgroup] = {};
@@ -148,7 +148,7 @@ export default function getLegendData(calcdata: any[], opts: any, hasMultipleLeg
         if(groupTitle) {
             let hasPieLike = false;
             for(j = 0; j < legendData[i].length; j++) {
-                if(Registry.traceIs(legendData[i][j].trace, 'pie-like')) {
+                if(traceIs(legendData[i][j].trace, 'pie-like')) {
                     hasPieLike = true;
                     break;
                 }

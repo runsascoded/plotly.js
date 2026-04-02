@@ -1,4 +1,5 @@
 import Registry from '../registry.js';
+import { traceIs } from '../lib/trace_categories.js';
 import Lib, { extendDeepAll, isArrayOrTypedArray, isPlainObject, nestedProperty, valObjectMeta } from '../lib/index.js';
 import baseAttributes from '../plots/attributes.js';
 import baseLayoutAttributes from '../plots/layout_attributes.js';
@@ -318,14 +319,14 @@ function getTraceAttributes(type?: any): any {
     extendDeepAll(attributes, copyBaseAttributes);
 
     // prune-out base attributes based on trace module categories
-    if(Registry.traceIs(type, 'noOpacity')) {
+    if(traceIs(type, 'noOpacity')) {
         delete attributes.opacity;
     }
-    if(!Registry.traceIs(type, 'showLegend')) {
+    if(!traceIs(type, 'showLegend')) {
         delete attributes.showlegend;
         delete attributes.legendgroup;
     }
-    if(Registry.traceIs(type, 'noHover')) {
+    if(traceIs(type, 'noHover')) {
         delete attributes.hoverinfo;
         delete attributes.hoverlabel;
     }

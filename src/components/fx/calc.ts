@@ -1,7 +1,7 @@
 import type { GraphDiv, FullTrace, CalcDatum } from '../../../types/core';
 import { fillArray, identity } from '../../lib/index.js';
 import { coerceHoverinfo } from '../../lib/index.js';
-import Registry from '../../registry.js';
+import { traceIs } from '../../lib/trace_categories.js';
 
 export default function calc(gd: GraphDiv): void {
     const calcdata = gd.calcdata;
@@ -20,9 +20,9 @@ export default function calc(gd: GraphDiv): void {
         // don't include hover calc fields for pie traces
         // as calcdata items might be sorted by value and
         // won't match the data array order.
-        if(Registry.traceIs(trace, 'pie-like')) continue;
+        if(traceIs(trace, 'pie-like')) continue;
 
-        const fillFn = Registry.traceIs(trace, '2dMap') ? paste : fillArray;
+        const fillFn = traceIs(trace, '2dMap') ? paste : fillArray;
 
         fillFn(trace.hoverinfo, cd, 'hi', makeCoerceHoverInfo(trace));
 

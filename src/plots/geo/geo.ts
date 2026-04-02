@@ -1,7 +1,7 @@
 import { select } from 'd3-selection';
 import * as geo from 'd3-geo';
 import * as geoProjection from 'd3-geo-projection';
-import Registry from '../../registry.js';
+import { _guiRelayout } from '../../plot_api/plot_api.js';
 import Lib from '../../lib/index.js';
 import Color from '../../components/color/index.js';
 import { dashLine, setClipUrl, setRect } from '../../components/drawing/index.js';
@@ -434,7 +434,7 @@ proto.updateFx = function(fullLayout: any, geoLayout: any) {
             updateObj[_this.id + '.' + k] = viewInitial[k];
         }
 
-        Registry.call('_guiRelayout', gd, updateObj);
+        _guiRelayout(gd, updateObj);
         gd.emit('plotly_doubleclick', null);
     }
 

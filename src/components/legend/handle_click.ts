@@ -1,5 +1,6 @@
 import type { GraphDiv } from '../../../types/core';
-import Registry from '../../registry.js';
+import { _guiRelayout, _guiRestyle, _guiUpdate } from '../../plot_api/plot_api.js';
+import { traceIs } from '../../lib/trace_categories.js';
 import { _, notifier, pushUnique } from '../../lib/index.js';
 
 let SHOWISOLATETIP = true;
@@ -104,7 +105,7 @@ export default function handleClick(g: any, gd: GraphDiv, numClicks: number): an
     const fullInput = fullTrace._fullInput;
     const isShape = fullInput && fullInput._isShape;
 
-    if(!isShape && Registry.traceIs(fullTrace, 'pie-like')) {
+    if(!isShape && traceIs(fullTrace, 'pie-like')) {
         const thisLabel = legendItem.label;
         const thisLabelIndex = hiddenSlices.indexOf(thisLabel);
 
@@ -141,7 +142,7 @@ export default function handleClick(g: any, gd: GraphDiv, numClicks: number): an
             }
         }
 
-        Registry.call('_guiRelayout', gd, 'hiddenlabels', hiddenSlices);
+        _guiRelayout(gd, 'hiddenlabels', hiddenSlices);
     } else {
         const hasLegendgroup = legendgroup && legendgroup.length;
         const traceIndicesInGroup: number[] = [];
@@ -198,7 +199,7 @@ export default function handleClick(g: any, gd: GraphDiv, numClicks: number): an
 
                 isInGroup = (hasLegendgroup && _item.legendgroup === legendgroup);
 
-                if(!isInGroup && _item.legend === thisLegend && _item.visible === true && !Registry.traceIs(_item, 'notLegendIsolatable')) {
+                if(!isInGroup && _item.legend === thisLegend && _item.visible === true && !traceIs(_item, 'notLegendIsolatable')) {
                     isIsolated = false;
                     break;
                 }
@@ -210,7 +211,7 @@ export default function handleClick(g: any, gd: GraphDiv, numClicks: number): an
                 // False is sticky; we don't change it. Also ensure we don't change states of itmes in other legend
                 if(_item.visible === false || _item.legend !== thisLegend) continue;
 
-                if(Registry.traceIs(_item, 'notLegendIsolatable')) {
+                if(traceIs(_item, 'notLegendIsolatable')) {
                     continue;
                 }
 
@@ -259,9 +260,9 @@ export default function handleClick(g: any, gd: GraphDiv, numClicks: number): an
         }
 
         if(shapesUpdated) {
-            Registry.call('_guiUpdate', gd, dataUpdate, {shapes: updatedShapes}, dataIndices);
+            _guiUpdate(gd, dataUpdate, {shapes: updatedShapes}, dataIndices);
         } else {
-            Registry.call('_guiRestyle', gd, dataUpdate, dataIndices);
+            _guiRestyle(gd, dataUpdate, dataIndices);
         }
     }
 }

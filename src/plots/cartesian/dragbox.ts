@@ -3,6 +3,7 @@ import { _, apply3DTransform, ensureSingle, extendFlat, log, notifier, numberFor
 import tinycolor from 'tinycolor2';
 import supportsPassive from 'has-passive-events';
 import Registry from '../../registry.js';
+import { _guiRelayout } from '../../plot_api/plot_api.js';
 import svgTextUtils from '../../lib/svg_text_utils.js';
 import Color from '../../components/color/index.js';
 import { hideOutsideRangePoints, setPointGroupScale, setRect, setScale, setTextPointsScale, setTranslate } from '../../components/drawing/index.js';
@@ -292,7 +293,7 @@ function makeDragBox(gd: GraphDiv, plotinfo: PlotInfo, x?: any, y?: any, w?: any
                     .on('edit', function(text: any) {
                         const v = ax.d2r(text);
                         if(v !== undefined) {
-                            Registry.call('_guiRelayout', gd, attrStr, v);
+                            _guiRelayout(gd, attrStr, v);
                         }
                     });
             }
@@ -841,7 +842,7 @@ function makeDragBox(gd: GraphDiv, plotinfo: PlotInfo, x?: any, y?: any, w?: any
         }
 
         gd.emit('plotly_doubleclick', null);
-        Registry.call('_guiRelayout', gd, attrs);
+        _guiRelayout(gd, attrs);
     }
 
     // dragTail - finish a drag event with a redraw
@@ -857,7 +858,7 @@ function makeDragBox(gd: GraphDiv, plotinfo: PlotInfo, x?: any, y?: any, w?: any
             previousPromises,
             function() {
                 gd._fullLayout._replotting = false;
-                Registry.call('_guiRelayout', gd, updates);
+                _guiRelayout(gd, updates);
             }
         ], gd);
     }

@@ -5,6 +5,7 @@ import Lib, { clearResponsive, equalDomRects, error, extendDeep, extendDeepAll, 
 import Events from '../lib/events.js';
 import Queue from '../lib/queue.js';
 import Registry from '../registry.js';
+import { traceIs } from '../lib/trace_categories.js';
 import PlotSchema from './plot_schema.js';
 import { addLinks, allowAutoMargin, cleanPlot, clearAutoMarginIds, computeFrame, createTransitionData, dataArrayContainers, didMarginChange, doAutoMargin, doCalcdata, modifyFrames, plotAutoSize, previousPromises, purge as plotsPurge, redrag, rehover, reselect, resize, supplyAnimationDefaults, supplyDefaults, supplyDefaultsUpdateCalc, supplyFrameDefaults, transition as plotsTransition, transitionFromReact } from '../plots/plots.js';
 import Axes from '../plots/cartesian/axes.js';
@@ -1630,7 +1631,7 @@ function _restyle(gd?: any, aobj?: any, traces?: any): any {
 
                     // super kludgy - but if all pies are gone we won't remove them otherwise
                     fullLayout._pielayer.selectAll('g.trace').remove();
-                } else if (Registry.traceIs(cont, 'cartesian')) {
+                } else if (traceIs(cont, 'cartesian')) {
                     nestedProperty(cont, 'marker.colors').set(nestedProperty(cont, 'marker.color').get());
                 }
             }
@@ -1669,7 +1670,7 @@ function _restyle(gd?: any, aobj?: any, traces?: any): any {
                     // ... but no need to this for regl-based traces
                     if (
                         valObject.arrayOk &&
-                        !Registry.traceIs(contFull, 'regl') &&
+                        !traceIs(contFull, 'regl') &&
                         (isArrayOrTypedArray(newVal) || isArrayOrTypedArray(oldVal))
                     ) {
                         flags.calc = true;
@@ -1720,7 +1721,7 @@ function _restyle(gd?: any, aobj?: any, traces?: any): any {
             for (i = 0; i < traces.length; i++) {
                 const trace = data[traces[i]];
 
-                if (Registry.traceIs(trace, 'cartesian')) {
+                if (traceIs(trace, 'cartesian')) {
                     addToAxlist(trace.xaxis || 'x');
                     addToAxlist(trace.yaxis || 'y');
                 }

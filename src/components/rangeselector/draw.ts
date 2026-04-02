@@ -1,6 +1,6 @@
 import type { GraphDiv } from '../../../types/core';
 import { select } from 'd3-selection';
-import Registry from '../../registry.js';
+import { _guiRelayout } from '../../plot_api/plot_api.js';
 import Plots from '../../plots/plots.js';
 import Color from '../color/index.js';
 import { bBox, font } from '../drawing/index.js';
@@ -59,7 +59,7 @@ export default function draw(gd: GraphDiv) {
             button.on('click', function() {
                 if(gd._dragged) return;
 
-                Registry.call('_guiRelayout', gd, update);
+                _guiRelayout(gd, update);
             });
 
             button.on('mouseover', function() {

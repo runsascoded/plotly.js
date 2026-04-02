@@ -1,5 +1,7 @@
 import type { GraphDiv } from '../../../types/core';
 import Registry from '../../registry.js';
+import { _guiRelayout, restyle } from '../../plot_api/plot_api.js';
+import downloadImage from '../../snapshot/download.js';
 import Plots from '../../plots/plots.js';
 import axisIds from '../../plots/cartesian/axis_ids.js';
 import Icons from '../../fonts/ploticon.js';
@@ -55,7 +57,7 @@ modeBarButtons.toImage = {
             }
         });
 
-        Registry.call('downloadImage', gd, opts)
+        downloadImage(gd, opts)
           .then((filename: any) => {
               Lib.notifier(_(gd, 'Snapshot succeeded') + ' - ' + filename, 'long');
           })
@@ -314,7 +316,7 @@ function handleCartesian(gd: GraphDiv, ev: any) {
 
     fullLayout._cartesianSpikesEnabled = allSpikesEnabled;
 
-    Registry.call('_guiRelayout', gd, aobj);
+    _guiRelayout(gd, aobj);
 }
 
 modeBarButtons.zoom3d = {
@@ -372,7 +374,7 @@ function handleDrag3d(gd: GraphDiv, ev: any) {
     const val2d = (val === 'pan') ? val : 'zoom';
     layoutUpdate.dragmode = val2d;
 
-    Registry.call('_guiRelayout', gd, layoutUpdate);
+    _guiRelayout(gd, layoutUpdate);
 }
 
 modeBarButtons.resetCameraDefault3d = {
@@ -431,7 +433,7 @@ function handleCamera3d(gd: GraphDiv, ev: any) {
         }
     }
 
-    Registry.call('_guiRelayout', gd, aobj);
+    _guiRelayout(gd, aobj);
 }
 
 modeBarButtons.hoverClosest3d = {
@@ -486,7 +488,7 @@ function getNextHover3d(gd: GraphDiv, ev: any) {
 
 function handleHover3d(gd: GraphDiv, ev: any) {
     const layoutUpdate = getNextHover3d(gd, ev);
-    Registry.call('_guiRelayout', gd, layoutUpdate);
+    _guiRelayout(gd, layoutUpdate);
 }
 
 modeBarButtons.zoomInGeo = {
@@ -546,7 +548,7 @@ function handleGeo(gd: GraphDiv, ev: any) {
             const scale = geoLayout.projection.scale;
             const newScale = (val === 'in') ? 2 * scale : 0.5 * scale;
 
-            Registry.call('_guiRelayout', gd, id + '.projection.scale', newScale);
+            _guiRelayout(gd, id + '.projection.scale', newScale);
         }
     }
 
@@ -579,7 +581,7 @@ function getNextHover(gd: GraphDiv) {
 
 function toggleHover(gd: GraphDiv) {
     const newHover = getNextHover(gd);
-    Registry.call('_guiRelayout', gd, 'hovermode', newHover);
+    _guiRelayout(gd, 'hovermode', newHover);
 }
 
 modeBarButtons.resetViewSankey = {
@@ -598,7 +600,7 @@ modeBarButtons.resetViewSankey = {
             aObj['node.x'].push(viewInitial.node.x.slice());
             aObj['node.y'].push(viewInitial.node.y.slice());
         }
-        Registry.call('restyle', gd, aObj);
+        restyle(gd, aObj);
     }
 };
 
@@ -616,7 +618,7 @@ modeBarButtons.toggleHover = {
         const layoutUpdate = getNextHover3d(gd, ev);
         layoutUpdate.hovermode = getNextHover(gd);
 
-        Registry.call('_guiRelayout', gd, layoutUpdate);
+        _guiRelayout(gd, layoutUpdate);
     }
 };
 
@@ -651,7 +653,7 @@ modeBarButtons.toggleSpikelines = {
         const allSpikesEnabled = fullLayout._cartesianSpikesEnabled;
 
         fullLayout._cartesianSpikesEnabled = allSpikesEnabled === 'on' ? 'off' : 'on';
-        Registry.call('_guiRelayout', gd, setSpikelineVisibility(gd));
+        _guiRelayout(gd, setSpikelineVisibility(gd));
     }
 };
 
@@ -754,7 +756,7 @@ function _handleMapZoom(gd: GraphDiv, ev: any, mapType: any) {
         aObj[id + '.zoom'] = next;
     }
 
-    Registry.call('_guiRelayout', gd, aObj);
+    _guiRelayout(gd, aObj);
 }
 
 function resetView(gd: GraphDiv, subplotType: any) {
@@ -774,7 +776,7 @@ function resetView(gd: GraphDiv, subplotType: any) {
         }
     }
 
-    Registry.call('_guiRelayout', gd, aObj);
+    _guiRelayout(gd, aObj);
 }
 
 export default modeBarButtons;

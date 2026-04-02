@@ -1,7 +1,7 @@
 import type { FullAxis, FullTrace, GraphDiv } from '../../../types/core';
 import isNumeric from 'fast-isnumeric';
 import Lib from '../../lib/index.js';
-import Registry from '../../registry.js';
+import { traceIs } from '../../lib/trace_categories.js';
 import Axes from '../../plots/cartesian/axes.js';
 import _helpers from '../../components/colorscale/helpers.js';
 const { hasColorscale } = _helpers;
@@ -294,7 +294,7 @@ function calcAllAutoBins(gd: GraphDiv, trace: FullTrace, pa: FullAxis, mainData:
                         delete tracei._autoBin;
                         tracei['_' + mainData + 'autoBinFinished'] = 1;
                     }
-                    if(Registry.traceIs(tracei, '2dMap')) {
+                    if(traceIs(tracei, '2dMap')) {
                         has2dMap = true;
                     }
                     if(tracei.type === 'histogram2dcontour') {
@@ -326,7 +326,7 @@ function calcAllAutoBins(gd: GraphDiv, trace: FullTrace, pa: FullAxis, mainData:
         // Edge case: single-valued histogram overlaying others
         // Use them all together to calculate the bin size for the single-valued one
         // Don't re-calculate bin width if user manually specified it (checing in bingroup=='' or xbins is defined)
-        if(isOverlay && !Registry.traceIs(trace, '2dMap') && newBinSpec._dataSpan === 0 &&
+        if(isOverlay && !traceIs(trace, '2dMap') && newBinSpec._dataSpan === 0 &&
         pa.type !== 'category' && pa.type !== 'multicategory' &&
         trace.bingroup === '' && (typeof trace.xbins === 'undefined')) {
             // Several single-valued histograms! Stop infinite recursion,

@@ -1,12 +1,12 @@
 import type { FullAxis, FullTrace } from '../../../types/core';
-import Registry from '../../registry.js';
+import { traceIs } from '../../lib/trace_categories.js';
 import _index from '../../lib/index.js';
 const { isArrayOrTypedArray } = _index;
 
 export default function makeBoundArray(trace: FullTrace,  arrayIn: any,  v0In: any,  dvIn: any,  numbricks: any,  ax: FullAxis) {
     let arrayOut: any[] = [];
-    const isContour = Registry.traceIs(trace, 'contour');
-    const isHist = Registry.traceIs(trace, 'histogram');
+    const isContour = traceIs(trace, 'contour');
+    const isHist = traceIs(trace, 'histogram');
     let v0;
     let dv;
     let i;

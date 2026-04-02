@@ -1,5 +1,5 @@
 import type { FullLayout, FullTrace, Layout } from '../../../types/core';
-import Registry from '../../registry.js';
+import { traceIs } from '../../lib/trace_categories.js';
 import Axes from '../../plots/cartesian/axes.js';
 import Lib from '../../lib/index.js';
 import layoutAttributes from './layout_attributes.js';
@@ -21,7 +21,7 @@ export default function(layoutIn: Layout, layoutOut: FullLayout, fullData: FullT
 
     for(let i = 0; i < fullData.length; i++) {
         const trace = fullData[i];
-        if(Registry.traceIs(trace, 'bar') && trace.visible) hasBars = true;
+        if(traceIs(trace, 'bar') && trace.visible) hasBars = true;
         else continue;
 
         // if we have at least 2 grouped bar traces on the same subplot,

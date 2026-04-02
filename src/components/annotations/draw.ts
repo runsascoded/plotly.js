@@ -1,6 +1,6 @@
 import type { GraphDiv, FullAxis } from '../../../types/core';
 import { selectAll } from 'd3-selection';
-import Registry from '../../registry.js';
+import { _guiRelayout } from '../../plot_api/plot_api.js';
 import Plots from '../../plots/plots.js';
 import Lib from '../../lib/index.js';
 import Axes from '../../plots/cartesian/axes.js';
@@ -617,7 +617,7 @@ function drawRaw(gd: GraphDiv, options: any, index: any, subplotId: any, xa: Ful
                                    xcenter + ',' + ycenter + ')');
                     },
                     doneFn: function() {
-                        Registry.call('_guiRelayout', gd, getUpdateObj());
+                        _guiRelayout(gd, getUpdateObj());
                         const notesBox = document.querySelector('.js-notes-box-panel');
                         if(notesBox) (notesBox as any).redraw((notesBox as any).selectedObj);
                     }
@@ -705,7 +705,7 @@ function drawRaw(gd: GraphDiv, options: any, index: any, subplotId: any, xa: Ful
                 },
                 doneFn: function() {
                     setCursor(annTextGroupInner);
-                    Registry.call('_guiRelayout', gd, getUpdateObj());
+                    _guiRelayout(gd, getUpdateObj());
                     const notesBox = document.querySelector('.js-notes-box-panel');
                     if(notesBox) (notesBox as any).redraw((notesBox as any).selectedObj);
                 }
@@ -730,7 +730,7 @@ function drawRaw(gd: GraphDiv, options: any, index: any, subplotId: any, xa: Ful
                     modifyBase(ya._name + '.autorange', true);
                 }
 
-                Registry.call('_guiRelayout', gd, getUpdateObj());
+                _guiRelayout(gd, getUpdateObj());
             });
     } else annText.call(textLayout);
 }

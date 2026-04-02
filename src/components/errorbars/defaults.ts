@@ -1,5 +1,5 @@
 import isNumeric from 'fast-isnumeric';
-import Registry from '../../registry.js';
+import { traceIs } from '../../lib/trace_categories.js';
 import Lib from '../../lib/index.js';
 import Template from '../../plot_api/plot_template.js';
 import attributes from './attributes.js';
@@ -55,6 +55,6 @@ export default function(traceIn: any, traceOut: any, defaultColor: string, opts:
     if(!opts.inherit || !containerOut[copyAttr]) {
         coerce('color', defaultColor);
         coerce('thickness');
-        coerce('width', Registry.traceIs(traceOut, 'gl3d') ? 0 : 4);
+        coerce('width', traceIs(traceOut, 'gl3d') ? 0 : 4);
     }
 }

@@ -3,7 +3,7 @@ import { select } from 'd3-selection';
 import { extent, min, max } from 'd3-array';
 import tinycolor from 'tinycolor2';
 import Plots from '../../plots/plots.js';
-import Registry from '../../registry.js';
+import { _guiRelayout, _guiRestyle } from '../../plot_api/plot_api.js';
 import Axes from '../../plots/cartesian/axes.js';
 import dragElement from '../dragelement/index.js';
 import Lib from '../../lib/index.js';
@@ -888,9 +888,9 @@ function makeEditable(g: any, opts: any, gd: GraphDiv) {
                 update[opts._propPrefix + 'x'] = xf;
                 update[opts._propPrefix + 'y'] = yf;
                 if(opts._traceIndex !== undefined) {
-                    Registry.call('_guiRestyle', gd, update, opts._traceIndex);
+                    _guiRestyle(gd, update, opts._traceIndex);
                 } else {
-                    Registry.call('_guiRelayout', gd, update);
+                    _guiRelayout(gd, update);
                 }
             }
         }

@@ -12,6 +12,7 @@ import Axes from '../../plots/cartesian/axes.js';
 import _constants from '../../plots/cartesian/constants.js';
 const { zindexSeparator } = _constants;
 import Registry from '../../registry.js';
+import { traceIs } from '../../lib/trace_categories.js';
 import helpers from './helpers.js';
 import constants from './constants.js';
 import legendSupplyDefaults from '../legend/defaults.js';
@@ -87,7 +88,7 @@ export function loneHover(hoverItems: any, opts: any): any {
             let y1 = Math.max(_y0, _y1);
 
             const trace = hoverItem.trace;
-            if (Registry.traceIs(trace, 'gl3d')) {
+            if (traceIs(trace, 'gl3d')) {
                 const container = gd._fullLayout[trace.scene]._scene.container;
                 const dx = container.offsetLeft;
                 const dy = container.offsetTop;
@@ -1245,7 +1246,7 @@ function createHoverText(hoverData: any[], opts: any): any {
         const avgY = (winningPoint.y0 + winningPoint.y1) / 2;
         // When a scatter (or e.g. heatmap) point wins, it's OK for the hovelabel to occlude the bar and other points.
         const pointWon = !(
-            Registry.traceIs(winningPoint.trace, 'bar-like') || Registry.traceIs(winningPoint.trace, 'box-violin')
+            traceIs(winningPoint.trace, 'bar-like') || traceIs(winningPoint.trace, 'box-violin')
         );
 
         let lyBottom, lyTop;
@@ -2325,7 +2326,7 @@ function orderRangePoints(hoverData: any[], hovermode: any): any[] {
     for (let i = 0; i < hoverData.length; i++) {
         const d = hoverData[i];
 
-        if (Registry.traceIs(d.trace, 'bar-like') || Registry.traceIs(d.trace, 'box-violin')) {
+        if (traceIs(d.trace, 'bar-like') || traceIs(d.trace, 'box-violin')) {
             last.push(d);
         } else if (d.trace[axLetter + 'period']) {
             second.push(d);

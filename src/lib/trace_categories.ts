@@ -9,12 +9,15 @@
  * a fully-defaulted trace object, enabling tree-shaking by removing
  * the Registry dependency.
  */
-import { getModule, modules } from '../registry.js';
+import { modules } from '../registry.js';
 import basePlotAttributes from '../plots/attributes.js';
 
 export function traceIs(trace: any, category: string): boolean {
     // Fast path: trace already has _module (post-supplyDefaults)
-    if(trace && trace._module && trace._module.categories) {
+    // Note: _module.categories is an array on the raw module but
+    // an object after registration. Check for object type.
+    if(trace && trace._module && trace._module.categories &&
+        !Array.isArray(trace._module.categories)) {
         return !!trace._module.categories[category];
     }
 

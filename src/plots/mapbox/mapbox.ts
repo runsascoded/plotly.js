@@ -1,7 +1,7 @@
 import mapboxgl from '@plotly/mapbox-gl/dist/mapbox-gl-unminified';
 import Lib from '../../lib/index.js';
 import geoUtils from '../../lib/geo_location_utils.js';
-import Registry from '../../registry.js';
+import { _storeDirectGUIEdit } from '../../plot_api/plot_api.js';
 import Axes from '../cartesian/axes.js';
 import dragElement from '../../components/dragelement/index.js';
 import Fx from '../../components/fx/index.js';
@@ -410,7 +410,7 @@ proto.initFx = function(calcData: any, fullLayout: any) {
 
         if(evt.originalEvent || self.wheeling) {
             const optsNow = fullLayoutNow[self.id];
-            Registry.call('_storeDirectGUIEdit', gd.layout, fullLayoutNow._preGUI, self.getViewEdits(optsNow));
+            _storeDirectGUIEdit( gd.layout, fullLayoutNow._preGUI, self.getViewEdits(optsNow));
 
             const viewNow = self.getView();
             optsNow._input.center = optsNow.center = viewNow.center;
@@ -480,7 +480,7 @@ proto.initFx = function(calcData: any, fullLayout: any) {
 
     map.on('dblclick', function() {
         const optsNow = gd._fullLayout[self.id];
-        Registry.call('_storeDirectGUIEdit', gd.layout, gd._fullLayout._preGUI, self.getViewEdits(optsNow));
+        _storeDirectGUIEdit( gd.layout, gd._fullLayout._preGUI, self.getViewEdits(optsNow));
 
         const viewInitial = self.viewInitial;
         map.setCenter(convertCenter(viewInitial.center));

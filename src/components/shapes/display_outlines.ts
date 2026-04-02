@@ -2,7 +2,7 @@ import type { GraphDiv } from '../../../types/core';
 import Lib from '../../lib/index.js';
 import dragElement from '../dragelement/index.js';
 import dragHelpers from '../dragelement/helpers.js';
-import Registry from '../../registry.js';
+import { _guiRelayout, relayout } from '../../plot_api/plot_api.js';
 import Color from '../color/index.js';
 import constants from './draw_newshape/constants.js';
 import handleOutline from './handle_outline.js';
@@ -57,7 +57,7 @@ export default function displayOutlines(polygons: any, outlines: any, dragOption
         }
 
         if(Object.keys(updateObject).length) {
-            Registry.call((opts || {}).redrawing ? 'relayout' : '_guiRelayout', gd, updateObject);
+            ((opts || {}).redrawing ? relayout : _guiRelayout)(gd, updateObject);
         }
     }
 
@@ -399,7 +399,7 @@ function eraseActiveSelection(gd: GraphDiv) {
             yref: erasedSelection.yref
         };
 
-        Registry.call('_guiRelayout', gd, {
+        _guiRelayout(gd, {
             selections: list
         });
     }

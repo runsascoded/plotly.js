@@ -3,7 +3,7 @@ import isNumeric from 'fast-isnumeric';
 import { isArrayOrTypedArray } from '../../lib/index.js';
 import _numerical from '../../constants/numerical.js';
 const { BADNUM } = _numerical;
-import Registry from '../../registry.js';
+import { traceIs } from '../../lib/trace_categories.js';
 import Axes from '../../plots/cartesian/axes.js';
 import { getAxisGroup } from '../../plots/cartesian/constraints.js';
 import Sieve from './sieve.js';
@@ -29,7 +29,7 @@ function crossTraceCalc(gd: GraphDiv, plotinfo: PlotInfo): void {
         const fullTrace = fullTraces[i];
         if(
             fullTrace.visible === true &&
-            Registry.traceIs(fullTrace, 'bar') &&
+            traceIs(fullTrace, 'bar') &&
             fullTrace.xaxis === xa._id &&
             fullTrace.yaxis === ya._id
         ) {

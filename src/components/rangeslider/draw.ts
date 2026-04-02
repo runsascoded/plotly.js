@@ -1,6 +1,6 @@
 import type { GraphDiv } from '../../../types/core';
 import { select } from 'd3-selection';
-import Registry from '../../registry.js';
+import { _guiRelayout } from '../../plot_api/plot_api.js';
 import Plots from '../../plots/plots.js';
 import Lib from '../../lib/index.js';
 import { crispRound, setClipUrl } from '../drawing/index.js';
@@ -324,7 +324,7 @@ function setDataRange(rangeSlider: any, gd: GraphDiv, axisOpts: any, opts: any) 
     const dataMax = clamp(opts.p2d(opts._pixelMax));
 
     window.requestAnimationFrame(function() {
-        Registry.call('_guiRelayout', gd, axisOpts._name + '.range', [dataMin, dataMax]);
+        _guiRelayout(gd, axisOpts._name + '.range', [dataMin, dataMax]);
     });
 }
 

@@ -1,5 +1,5 @@
 import { select } from 'd3-selection';
-import Registry from '../../registry.js';
+import { traceIs } from '../../lib/trace_categories.js';
 import { constrain, ensureSingle, isArrayOrTypedArray, mean, minExtend, nestedProperty, strTranslate } from '../../lib/index.js';
 import { dashLine, fillGroupStyle, getPatternAttr, gradient, lineGroupStyle, pattern, pointStyle, textPointStyle, tryColorscale } from '../drawing/index.js';
 import Color from '../color/index.js';
@@ -372,7 +372,7 @@ export default function style(s: any, gd: GraphDiv, legend?: any): any {
             'M6,3a3,3,0,0,1-3,3H-3a3,3,0,0,1-3-3V-3a3,3,0,0,1,3-3H3a3,3,0,0,1,3,3Z' : // Square with rounded corners
             'M6,6H-6V-6H6Z'; // Normal square
 
-        const isVisible = (!desiredType) ? Registry.traceIs(trace, 'bar') :
+        const isVisible = (!desiredType) ? traceIs(trace, 'bar') :
             (trace.visible && trace.type === desiredType);
 
         const barpath = select(lThis).select('g.legendpoints')
@@ -433,7 +433,7 @@ export default function style(s: any, gd: GraphDiv, legend?: any): any {
 
         const boxJoin = select(this).select('g.legendpoints')
             .selectAll('path.legendbox')
-            .data(trace.visible && Registry.traceIs(trace, 'box-violin') ? [d] : []);
+            .data(trace.visible && traceIs(trace, 'box-violin') ? [d] : []);
         const boxEnter = boxJoin.enter().append('path').classed('legendbox', true)
             // if we want the median bar, prepend M6,0H-6
             .attr('d', 'M6,6H-6V-6H6Z')
@@ -533,7 +533,7 @@ export default function style(s: any, gd: GraphDiv, legend?: any): any {
         const d0 = d[0];
         const trace = d0.trace;
 
-        const isVisible = (!desiredType) ? Registry.traceIs(trace, desiredType) :
+        const isVisible = (!desiredType) ? traceIs(trace, desiredType!) :
             (trace.visible && trace.type === desiredType);
 
         const pieJoin = select(lThis).select('g.legendpoints')

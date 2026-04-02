@@ -1,6 +1,6 @@
 import { select } from 'd3-selection';
 import tinycolor from 'tinycolor2';
-import Registry from '../../registry.js';
+import { traceIs } from '../../lib/trace_categories.js';
 import { font as drawingFont } from '../../components/drawing/index.js';
 import Axes from '../../plots/cartesian/axes.js';
 import Lib from '../../lib/index.js';
@@ -41,7 +41,7 @@ export default function(gd: any, plotinfo: any, cdheatmaps: any, heatmapLayer: a
         let y = cd0.y;
         let xc = cd0.xCenter;
         let yc = cd0.yCenter;
-        const isContour = Registry.traceIs(trace, 'contour');
+        const isContour = traceIs(trace, 'contour');
         const zsmooth = isContour ? 'best' : trace.zsmooth;
 
         // get z dims

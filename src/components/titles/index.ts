@@ -3,7 +3,7 @@ import { select } from 'd3-selection';
 function d3Round(x: number, n?: number): number { return n ? Math.round(x * (n = Math.pow(10, n))) / n : Math.round(x); }
 import isNumeric from 'fast-isnumeric';
 import { previousPromises } from '../../plots/plots.js';
-import Registry from '../../registry.js';
+import { _guiRelayout, _guiRestyle } from '../../plot_api/plot_api.js';
 import { bBoxIntersect, ensureSingle, extendFlat, setAttrs, strTranslate, syncOrAsync, templateString } from '../../lib/index.js';
 import { bBox, font } from '../drawing/index.js';
 import Color from '../color/index.js';
@@ -359,9 +359,9 @@ function draw(gd: GraphDiv, titleClass: string, options: any): any {
         el.call(svgTextUtils.makeEditable, {gd: gd})
             .on('edit', function(this: any, text: string) {
                 if(traceIndex !== undefined) {
-                    Registry.call('_guiRestyle', gd, prop, text, traceIndex);
+                    _guiRestyle(gd, prop, text, traceIndex);
                 } else {
-                    Registry.call('_guiRelayout', gd, prop, text);
+                    _guiRelayout(gd, prop, text);
                 }
             })
             .on('cancel', function(this: any) {
@@ -388,7 +388,7 @@ function draw(gd: GraphDiv, titleClass: string, options: any): any {
             } else subtitleEl.on('.opacity', null);
             subtitleEl.call(svgTextUtils.makeEditable, {gd: gd})
                 .on('edit', function(this: any, text: string) {
-                    Registry.call('_guiRelayout', gd, 'title.subtitle.text', text);
+                    _guiRelayout(gd, 'title.subtitle.text', text);
                 })
                 .on('cancel', function(this: any) {
                     this.text(this.attr('data-unformatted'))
