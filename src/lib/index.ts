@@ -1,4 +1,4 @@
-import { selection } from 'd3-selection';
+import { select, selection } from 'd3-selection';
 import { utcFormat } from 'd3-time-format';
 import { format as d3Format } from 'd3-format';
 import isNumeric from 'fast-isnumeric';
@@ -731,8 +731,11 @@ export function isD3Selection(obj: any): boolean {
  *
  */
 export function ensureSingle(parent: any, nodeType: string, className?: string, enterFn?: any): any {
-    const sel = parent.select(nodeType + (className ? '.' + className : ''));
-    if (sel.size()) return sel;
+    // Use querySelector instead of d3 .select() to avoid data propagation
+    const node = parent.node();
+    const selector = nodeType + (className ? '.' + className : '');
+    const existing = node && node.querySelector(':scope > ' + selector);
+    if (existing) return select(existing);
 
     const layer = parent.append(nodeType);
     if (className) layer.classed(className, true);
@@ -752,8 +755,9 @@ export function ensureSingle(parent: any, nodeType: string, className?: string, 
  * @return {d3 selection} selection of new layer
  */
 export function ensureSingleById(parent: any, nodeType: string, id: string, enterFn?: any): any {
-    const sel = parent.select(nodeType + '#' + id);
-    if (sel.size()) return sel;
+    const node = parent.node();
+    const existing = node && node.querySelector(':scope > ' + nodeType + '#' + id);
+    if (existing) return select(existing);
 
     const layer = parent.append(nodeType).attr('id', id);
     if (enterFn) layer.call(enterFn);
