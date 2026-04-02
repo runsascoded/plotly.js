@@ -138,7 +138,7 @@ extendFlat(
 );
 
 const fromMesh3d = ['opacity', 'lightposition', 'lighting'];
-fromMesh3d.forEach(function (k) {
+fromMesh3d.forEach((k) => {
     attrs[k] = mesh3dAttrs[k];
 });
 

@@ -19,7 +19,7 @@ export const initInteractions = function initInteractions(gd: GraphDiv): void {
 
     if(!fullLayout._has('cartesian') && !fullLayout._has('splom')) return;
 
-    const subplots = Object.keys(fullLayout._plots || {}).sort(function(a, b) {
+    const subplots = Object.keys(fullLayout._plots || {}).sort((a, b) => {
         // sort overlays last, then by x axis number, then y axis number
         if((fullLayout._plots[a].mainplot && true) ===
             (fullLayout._plots[b].mainplot && true)) {
@@ -32,7 +32,7 @@ export const initInteractions = function initInteractions(gd: GraphDiv): void {
         return fullLayout._plots[a].mainplot ? 1 : -1;
     });
 
-    subplots.forEach(function(subplot) {
+    subplots.forEach((subplot) => {
         const plotinfo = fullLayout._plots[subplot];
         const xa: any = plotinfo.xaxis;
         const ya = plotinfo.yaxis;

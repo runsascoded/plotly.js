@@ -13,7 +13,7 @@ const _ = Lib._;
 function renderableValuePresent(d: any) {return d !== '';}
 
 function ownTrace(selection: any, d: any) {
-    return selection.filter(function(s: any) {return s.key === d.traceId;});
+    return selection.filter((s: any) => s.key === d.traceId);
 }
 
 function makeTranslucent(element: any, alpha: any) {
@@ -77,7 +77,7 @@ function linkHoveredStyle(d: any, sankey: any, visitNodes: any, sankeyLink: any)
         if(label !== '') {
             ownTrace(sankey, d)
                 .selectAll('.' + cn.sankeyLink)
-                .filter(function(l: any) {return l.link.label === label;})
+                .filter((l: any) => l.link.label === label)
                 .style('fill', function(l: any) {
                     if(!l.link.concentrationscale) {
                         return l.tinyColorHoverHue;
@@ -110,7 +110,7 @@ function linkNonHoveredStyle(d: any, sankey: any, visitNodes: any, sankeyLink: a
         if(label !== '') {
             ownTrace(sankey, d)
                 .selectAll('.' + cn.sankeyLink)
-                .filter(function(l: any) {return l.link.label === label;})
+                .filter((l: any) => l.link.label === label)
                 .style('fill', function(l: any) {return l.tinyColorHue;})
                 .style('fill-opacity', function(l: any) {return l.tinyColorAlpha;});
         }

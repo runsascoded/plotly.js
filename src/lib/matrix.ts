@@ -133,20 +133,18 @@ export const rotationXYMatrix = function(a: number, x: number, y: number): any {
 };
 
 export const apply3DTransform = function(transform: any): (...args: any[]) => number[] {
-    return function() {
-        const args = arguments;
-        const xyz = arguments.length === 1 ? args[0] : [args[0], args[1], args[2] || 0];
+    return function(...args: any[]) {
+        const xyz = args.length === 1 ? args[0] : [args[0], args[1], args[2] || 0];
         return dot(transform, [xyz[0], xyz[1], xyz[2], 1]).slice(0, 3);
     };
 };
 
 export const apply2DTransform = function(transform: any): (...args: any[]) => number[] {
-    return function() {
-        let args = arguments;
+    return function(...args: any[]) {
         if(args.length === 3) {
             args = args[0];
         } // from map
-        const xy = arguments.length === 1 ? args[0] : [args[0], args[1]];
+        const xy = args.length === 1 ? args[0] : [args[0], args[1]];
         return dot(transform, [xy[0], xy[1], 1]).slice(0, 2);
     };
 };

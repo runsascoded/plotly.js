@@ -19,7 +19,7 @@ export default function supplyLayoutDefaults(layoutIn: any, layoutOut: FullLayou
 
 function handleGeoDefaults(geoLayoutIn: any, geoLayoutOut: any, coerce: any, opts: any) {
     const subplotData = getSubplotData(opts.fullData, 'geo', opts.id);
-    const traceIndices = subplotData.map(function(t: any) { return t.index; });
+    const traceIndices = subplotData.map((t: any) => t.index);
 
     const resolution = coerce('resolution');
     let scope = coerce('scope');

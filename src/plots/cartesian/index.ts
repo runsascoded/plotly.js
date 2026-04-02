@@ -239,7 +239,7 @@ function plotOne(gd: GraphDiv, plotinfo: PlotInfo, cdSubplot?: any, transitionOp
         }
     }
     // Sort the layers primarily by zindex, then by i
-    layerData.sort(function(a, b) {
+    layerData.sort((a, b) => {
         return (
             ((a as any).zindex || 0) - ((b as any).zindex || 0) ||
             ((a as any).i - (b as any).i)
@@ -724,7 +724,7 @@ function removeSubplotExtras(subplotId?: any, fullLayout?: any): void {
 export const toSVG = function(gd?: any): any {
     const imageRoot = gd._fullLayout._glimages;
     const root = select(gd).selectAll('.svg-container');
-    const canvases = root.filter(function(d: any, i: any) {return i === root.size() - 1;})
+    const canvases = root.filter((d: any, i: any) => i === root.size() - 1)
         .selectAll('.gl-canvas-context, .gl-canvas-focus');
 
     function canvasToImage(this: any) {

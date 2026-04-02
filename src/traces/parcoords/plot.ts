@@ -35,7 +35,7 @@ function plot(gd: GraphDiv, cdModule: any) {
 
     const size = fullLayout._size;
 
-    cdModule.forEach(function(d: any, i: any) {
+    cdModule.forEach((d: any, i: any) => {
         const trace = d[0].trace;
         fullIndices[i] = trace.index;
         const iIn = inputIndices[i] = trace.index;
@@ -45,7 +45,7 @@ function plot(gd: GraphDiv, cdModule: any) {
 
     const filterChanged = function(i: any, initialDimIndex: any, newRanges: any) {
         const dim = initialDims[i][initialDimIndex];
-        let newConstraints: any = newRanges.map(function(r: any) { return r.slice(); });
+        let newConstraints: any = newRanges.map((r: any) => r.slice());
 
         const aStr = 'dimensions[' + initialDimIndex + '].constraintrange';
         const preGUI = fullLayout._tracePreGUI[gd._fullData[fullIndices[i]]._fullInput.uid];
@@ -84,11 +84,9 @@ function plot(gd: GraphDiv, cdModule: any) {
         const orig = sorter(visibleIndices, initialDims[i].filter(isVisible));
         currentDims[i].sort(orig);
 
-        initialDims[i].filter(function(d: any) {return !isVisible(d);})
-             .sort(function(d: any) {
-                 return initialDims[i].indexOf(d);
-             })
-            .forEach(function(d: any) {
+        initialDims[i].filter((d: any) => !isVisible(d))
+             .sort((d: any) => initialDims[i].indexOf(d))
+            .forEach((d: any) => {
                 currentDims[i].splice(currentDims[i].indexOf(d), 1);
                 currentDims[i].splice(initialDims[i].indexOf(d), 0, d);
             });

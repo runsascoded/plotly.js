@@ -298,7 +298,7 @@ export const symbolNoDot: Record<number, boolean> = {};
 export const symbolNoFill: Record<number, boolean> = {};
 export const symbolList: any[] = [];
 
-Object.keys(SYMBOLDEFS).forEach(function (k: string) {
+Object.keys(SYMBOLDEFS).forEach((k: string) => {
     const symDef = SYMBOLDEFS[k];
     const n = symDef.n;
     symbolList.push(

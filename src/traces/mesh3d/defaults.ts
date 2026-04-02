@@ -11,7 +11,7 @@ export default function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace,
 
     // read in face/vertex properties
     function readComponents(array: any) {
-        const ret = array.map(function (attr: any) {
+        const ret = array.map((attr: any) => {
             const result = coerce(attr);
 
             if (result && Lib.isArrayOrTypedArray(result)) return result;
@@ -61,7 +61,7 @@ export default function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace,
         'alphahull',
         'delaunayaxis',
         'opacity'
-    ].forEach(function (x) {
+    ].forEach((x) => {
         coerce(x);
     });
 

@@ -84,9 +84,7 @@ export default function clonePlot(graphObj: any, options: any) {
 
     // TODO: does this scene modification really belong here?
     // If we still need it, can it move into the gl3d module?
-    const sceneIds = Object.keys(newLayout).filter(function(key) {
-        return key.match(/^scene\d*$/);
-    });
+    const sceneIds = Object.keys(newLayout).filter((key) => key.match(/^scene\d*$/));
     if(sceneIds.length) {
         let axesImageOverride = {};
         if(options.tileClass === 'thumbnail') {

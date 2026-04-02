@@ -31454,8 +31454,8 @@ var Plotly = (() => {
                 }
                 return d || hull.idx - edge.idx;
               }
-              function splitHulls(hulls, points, event2) {
-                var splitIdx = bsearch.le(hulls, event2, findSplit);
+              function splitHulls(hulls, points, event) {
+                var splitIdx = bsearch.le(hulls, event, findSplit);
                 var hull = hulls[splitIdx];
                 var upperIds = hull.upperIds;
                 var x = upperIds[upperIds.length - 1];
@@ -31463,14 +31463,14 @@ var Plotly = (() => {
                 hulls.splice(
                   splitIdx + 1,
                   0,
-                  new PartialHull(event2.a, event2.b, event2.idx, [x], upperIds)
+                  new PartialHull(event.a, event.b, event.idx, [x], upperIds)
                 );
               }
-              function mergeHulls(hulls, points, event2) {
-                var tmp = event2.a;
-                event2.a = event2.b;
-                event2.b = tmp;
-                var mergeIdx = bsearch.eq(hulls, event2, findSplit);
+              function mergeHulls(hulls, points, event) {
+                var tmp = event.a;
+                event.a = event.b;
+                event.b = tmp;
+                var mergeIdx = bsearch.eq(hulls, event, findSplit);
                 var upper = hulls[mergeIdx];
                 var lower2 = hulls[mergeIdx - 1];
                 lower2.upperIds = upper.upperIds;
@@ -31509,14 +31509,14 @@ var Plotly = (() => {
                 var hull = [new PartialHull([minX, 1], [minX, 0], -1, [], [], [], [])];
                 var cells = [];
                 for (var i = 0, numEvents = events.length; i < numEvents; ++i) {
-                  var event2 = events[i];
-                  var type = event2.type;
+                  var event = events[i];
+                  var type = event.type;
                   if (type === EVENT_POINT) {
-                    addPoint(cells, hull, points, event2.a, event2.idx);
+                    addPoint(cells, hull, points, event.a, event.idx);
                   } else if (type === EVENT_START) {
-                    splitHulls(hull, points, event2);
+                    splitHulls(hull, points, event);
                   } else {
-                    mergeHulls(hull, points, event2);
+                    mergeHulls(hull, points, event);
                   }
                 }
                 return cells;
@@ -37986,8 +37986,8 @@ var Plotly = (() => {
 
   // node_modules/.pnpm/d3-selection@3.0.0/node_modules/d3-selection/src/selection/on.js
   function contextListener(listener) {
-    return function(event2) {
-      listener.call(this, event2, this.__data__);
+    return function(event) {
+      listener.call(this, event, this.__data__);
     };
   }
   function parseTypenames(typenames) {
@@ -38049,15 +38049,15 @@ var Plotly = (() => {
 
   // node_modules/.pnpm/d3-selection@3.0.0/node_modules/d3-selection/src/selection/dispatch.js
   function dispatchEvent(node, type, params) {
-    var window2 = window_default(node), event2 = window2.CustomEvent;
-    if (typeof event2 === "function") {
-      event2 = new event2(type, params);
+    var window2 = window_default(node), event = window2.CustomEvent;
+    if (typeof event === "function") {
+      event = new event(type, params);
     } else {
-      event2 = window2.document.createEvent("Event");
-      if (params) event2.initEvent(type, params.bubbles, params.cancelable), event2.detail = params.detail;
-      else event2.initEvent(type, false, false);
+      event = window2.document.createEvent("Event");
+      if (params) event.initEvent(type, params.bubbles, params.cancelable), event.detail = params.detail;
+      else event.initEvent(type, false, false);
     }
-    node.dispatchEvent(event2);
+    node.dispatchEvent(event);
   }
   function dispatchConstant(type, params) {
     return function() {
@@ -38140,30 +38140,30 @@ var Plotly = (() => {
   }
 
   // node_modules/.pnpm/d3-selection@3.0.0/node_modules/d3-selection/src/sourceEvent.js
-  function sourceEvent_default(event2) {
+  function sourceEvent_default(event) {
     let sourceEvent;
-    while (sourceEvent = event2.sourceEvent) event2 = sourceEvent;
-    return event2;
+    while (sourceEvent = event.sourceEvent) event = sourceEvent;
+    return event;
   }
 
   // node_modules/.pnpm/d3-selection@3.0.0/node_modules/d3-selection/src/pointer.js
-  function pointer_default(event2, node) {
-    event2 = sourceEvent_default(event2);
-    if (node === void 0) node = event2.currentTarget;
+  function pointer_default(event, node) {
+    event = sourceEvent_default(event);
+    if (node === void 0) node = event.currentTarget;
     if (node) {
       var svg2 = node.ownerSVGElement || node;
       if (svg2.createSVGPoint) {
         var point = svg2.createSVGPoint();
-        point.x = event2.clientX, point.y = event2.clientY;
+        point.x = event.clientX, point.y = event.clientY;
         point = point.matrixTransform(node.getScreenCTM().inverse());
         return [point.x, point.y];
       }
       if (node.getBoundingClientRect) {
         var rect = node.getBoundingClientRect();
-        return [event2.clientX - rect.left - node.clientLeft, event2.clientY - rect.top - node.clientTop];
+        return [event.clientX - rect.left - node.clientLeft, event.clientY - rect.top - node.clientTop];
       }
     }
-    return [event2.pageX, event2.pageY];
+    return [event.pageX, event.pageY];
   }
 
   // node_modules/.pnpm/d3-selection@3.0.0/node_modules/d3-selection/src/selectAll.js
@@ -39480,10 +39480,10 @@ var Plotly = (() => {
     };
   }
   function styleMaybeRemove(id2, name8) {
-    var on0, on1, listener0, key = "style." + name8, event2 = "end." + key, remove2;
+    var on0, on1, listener0, key = "style." + name8, event = "end." + key, remove2;
     return function() {
       var schedule = set2(this, id2), on = schedule.on, listener = schedule.value[key] == null ? remove2 || (remove2 = styleRemove2(name8)) : void 0;
-      if (on !== on0 || listener0 !== listener) (on1 = (on0 = on).copy()).on(event2, listener0 = listener);
+      if (on !== on0 || listener0 !== listener) (on1 = (on0 = on).copy()).on(event, listener0 = listener);
       schedule.on = on1;
     };
   }
@@ -40530,19 +40530,17 @@ var Plotly = (() => {
     );
   };
   var apply3DTransform = function(transform) {
-    return function() {
-      const args = arguments;
-      const xyz = arguments.length === 1 ? args[0] : [args[0], args[1], args[2] || 0];
+    return function(...args) {
+      const xyz = args.length === 1 ? args[0] : [args[0], args[1], args[2] || 0];
       return dot(transform, [xyz[0], xyz[1], xyz[2], 1]).slice(0, 3);
     };
   };
   var apply2DTransform = function(transform) {
-    return function() {
-      let args = arguments;
+    return function(...args) {
       if (args.length === 3) {
         args = args[0];
       }
-      const xy = arguments.length === 1 ? args[0] : [args[0], args[1]];
+      const xy = args.length === 1 ? args[0] : [args[0], args[1]];
       return dot(transform, [xy[0], xy[1], 1]).slice(0, 2);
     };
   };
@@ -40666,7 +40664,7 @@ var Plotly = (() => {
     if (!element) {
       element = document;
     }
-    element.querySelectorAll(selector).forEach(function(el) {
+    element.querySelectorAll(selector).forEach((el) => {
       if (!el.getAttribute(eventAddedAttrName)) {
         el.addEventListener("mouseenter", function() {
           const childEl = this.querySelector(childSelector);
@@ -40708,7 +40706,7 @@ var Plotly = (() => {
       0,
       1
     ];
-    allElements.forEach(function(e) {
+    allElements.forEach((e) => {
       const t = getElementTransformMatrix(e);
       if (t) {
         const m = matrix_default.convertCssMatrix(t);
@@ -40721,9 +40719,7 @@ var Plotly = (() => {
     const style5 = window.getComputedStyle(element, null);
     const transform = style5.getPropertyValue("-webkit-transform") || style5.getPropertyValue("-moz-transform") || style5.getPropertyValue("-ms-transform") || style5.getPropertyValue("-o-transform") || style5.getPropertyValue("transform");
     if (transform === "none") return null;
-    return transform.replace("matrix", "").replace("3d", "").slice(1, -1).split(",").map(function(n) {
-      return +n;
-    });
+    return transform.replace("matrix", "").replace("3d", "").slice(1, -1).split(",").map((n) => +n);
   }
   function getElementAndAncestors(element) {
     const allElements = [];
@@ -48088,11 +48084,11 @@ var Plotly = (() => {
   }
   var firefoxVersion = getFirefoxVersion();
   var isProblematicFirefox = firefoxVersion !== null && firefoxVersion < 86;
-  function getPositionFromD3Event(event2) {
+  function getPositionFromD3Event(event) {
     if (isProblematicFirefox) {
-      return [event2.layerX, event2.layerY];
+      return [event.layerX, event.layerY];
     } else {
-      return [event2.offsetX, event2.offsetY];
+      return [event.offsetX, event.offsetY];
     }
   }
   var lib = {};
@@ -48286,27 +48282,27 @@ var Plotly = (() => {
     constructor() {
       this._events = {};
     }
-    on(event2, fn) {
-      const handlers = this._events[event2];
-      if (!handlers) this._events[event2] = fn;
-      else if (typeof handlers === "function") this._events[event2] = [handlers, fn];
+    on(event, fn) {
+      const handlers = this._events[event];
+      if (!handlers) this._events[event] = fn;
+      else if (typeof handlers === "function") this._events[event] = [handlers, fn];
       else handlers.push(fn);
       return this;
     }
-    once(event2, fn) {
+    once(event, fn) {
       const self = this;
-      function wrapper() {
-        self.removeListener(event2, wrapper);
-        fn.apply(this, arguments);
+      function wrapper(...args) {
+        self.removeListener(event, wrapper);
+        fn.apply(this, args);
       }
       wrapper.listener = fn;
-      return this.on(event2, wrapper);
+      return this.on(event, wrapper);
     }
-    removeListener(event2, fn) {
-      const handlers = this._events[event2];
+    removeListener(event, fn) {
+      const handlers = this._events[event];
       if (!handlers) return this;
       if (typeof handlers === "function") {
-        if (handlers === fn || handlers.listener === fn) delete this._events[event2];
+        if (handlers === fn || handlers.listener === fn) delete this._events[event];
       } else {
         for (let i = handlers.length - 1; i >= 0; i--) {
           if (handlers[i] === fn || handlers[i].listener === fn) {
@@ -48314,18 +48310,18 @@ var Plotly = (() => {
             break;
           }
         }
-        if (handlers.length === 0) delete this._events[event2];
-        else if (handlers.length === 1) this._events[event2] = handlers[0];
+        if (handlers.length === 0) delete this._events[event];
+        else if (handlers.length === 1) this._events[event] = handlers[0];
       }
       return this;
     }
-    removeAllListeners(event2) {
-      if (event2) delete this._events[event2];
+    removeAllListeners(event) {
+      if (event) delete this._events[event];
       else this._events = {};
       return this;
     }
-    emit(event2, data) {
-      const handlers = this._events[event2];
+    emit(event, data) {
+      const handlers = this._events[event];
       if (!handlers) return false;
       if (typeof handlers === "function") handlers.call(this, data);
       else {
@@ -48350,9 +48346,9 @@ var Plotly = (() => {
       plotObj._internalOnce = internalEv.once.bind(internalEv);
       plotObj._removeInternalListener = internalEv.removeListener.bind(internalEv);
       plotObj._removeAllInternalListeners = internalEv.removeAllListeners.bind(internalEv);
-      plotObj.emit = function(event2, data) {
-        ev.emit(event2, data);
-        internalEv.emit(event2, data);
+      plotObj.emit = function(event, data) {
+        ev.emit(event, data);
+        internalEv.emit(event, data);
       };
       if (typeof plotObj.addEventListener === "function") {
         plotObj.addEventListener("wheel", () => {
@@ -48365,15 +48361,15 @@ var Plotly = (() => {
      * all handlers for a particular event and returns the return value
      * of the LAST handler.
      */
-    triggerHandler: function(plotObj, event2, data) {
+    triggerHandler: function(plotObj, event, data) {
       let nodeEventHandlerValue;
       const ev = plotObj._ev;
       if (!ev) return;
-      let handlers = ev._events[event2];
+      let handlers = ev._events[event];
       if (!handlers) return;
       function apply(handler) {
         if (handler.listener) {
-          ev.removeListener(event2, handler.listener);
+          ev.removeListener(event, handler.listener);
           if (!handler.fired) {
             handler.fired = true;
             return handler.listener.apply(ev, [data]);
@@ -48549,7 +48545,7 @@ var Plotly = (() => {
   var UNDERSCORE_ATTRS = [IS_SUBPLOT_OBJ, IS_LINKED_TO_ARRAY, ARRAY_ATTR_REGEXPS, DEPRECATED];
   var get3 = function() {
     const traces = {};
-    registry_default.allTypes.forEach(function(type) {
+    registry_default.allTypes.forEach((type) => {
       traces[type] = getTraceAttributes(type);
     });
     return {
@@ -48589,7 +48585,7 @@ var Plotly = (() => {
   var crawl2 = function(attrs8, callback, specifiedLevel, attrString) {
     const level = specifiedLevel || 0;
     attrString = attrString || "";
-    Object.keys(attrs8).forEach(function(attrName) {
+    Object.keys(attrs8).forEach((attrName) => {
       const attr3 = attrs8[attrName];
       if (UNDERSCORE_ATTRS.indexOf(attrName) !== -1) return;
       const fullAttrString = (attrString ? attrString + "." : "") + attrName;
@@ -49583,7 +49579,7 @@ var Plotly = (() => {
     return bindings;
   }
   function crawl3(attrs8, callback, path, depth) {
-    Object.keys(attrs8).forEach(function(attrName) {
+    Object.keys(attrs8).forEach((attrName) => {
       const attr3 = attrs8[attrName];
       if (attrName[0] === "_") return;
       const thisPath = path + (depth > 0 ? "." : "") + attrName;
@@ -50911,7 +50907,7 @@ var Plotly = (() => {
     [
       "_adjustTickLabelsOverflow",
       "_hideCounterAxisInsideTickLabels"
-    ].forEach(function(k) {
+    ].forEach((k) => {
       for (let i = 0; i < axList.length; i++) {
         const hideFn = axList[i][k];
         if (hideFn) hideFn();
@@ -50944,7 +50940,7 @@ var Plotly = (() => {
       if (isPlainObject2(d)) {
         const o = {};
         let src;
-        Object.keys(d).sort().forEach(function(v) {
+        Object.keys(d).sort().forEach((v) => {
           if (["_", "["].indexOf(v.charAt(0)) !== -1) return;
           if (typeof d[v] === "function") {
             if (keepFunction) o[v] = "_function";
@@ -50988,9 +50984,7 @@ var Plotly = (() => {
         }, keepFunction);
       }
       if (dIsArray) {
-        return d.map(function(x) {
-          return stripObj(x, keepFunction);
-        });
+        return d.map((x) => stripObj(x, keepFunction));
       }
       if (dIsTypedArray) {
         return simpleMap(d, identity3);
@@ -50999,7 +50993,7 @@ var Plotly = (() => {
       return d;
     }
     const obj = {
-      data: (data || []).map(function(v) {
+      data: (data || []).map((v) => {
         const d = stripObj(v);
         if (dataonly) {
           delete d.fit;
@@ -51689,9 +51683,7 @@ var Plotly = (() => {
         }
         categoriesAggregatedValue.sort(order === "descending" ? sortDescending : sortAscending);
         ax._categoriesAggregatedValue = categoriesAggregatedValue;
-        ax._initialCategories = categoriesAggregatedValue.map(function(c) {
-          return c[0];
-        });
+        ax._initialCategories = categoriesAggregatedValue.map((c) => c[0]);
         affectedTraces = affectedTraces.concat(ax.sortByInitialCategories());
       }
     }
@@ -52540,7 +52532,7 @@ var Plotly = (() => {
       const fontSize = parseFloat(cStyle.fontSize || 12);
       let initialText = options.text;
       if (initialText === void 0) initialText = context.attr("data-unformatted");
-      div.classed("plugin-editable editable", true).style("position", "absolute").style("font-family", cStyle.fontFamily || "Arial").style("font-size", fontSize).style("color", options.fill || cStyle.fill || "black").style("opacity", 1).style("background-color", options.background || "transparent").style("outline", "#ffffff33 1px solid").style("margin", [-fontSize / 8 + 1, 0, 0, -1].join("px ") + "px").style("padding", "0").style("box-sizing", "border-box").attr("contenteditable", true).text(initialText).call(alignHTMLWith(context, container, options)).on("blur", function(event2) {
+      div.classed("plugin-editable editable", true).style("position", "absolute").style("font-family", cStyle.fontFamily || "Arial").style("font-size", fontSize).style("color", options.fill || cStyle.fill || "black").style("opacity", 1).style("background-color", options.background || "transparent").style("outline", "#ffffff33 1px solid").style("margin", [-fontSize / 8 + 1, 0, 0, -1].join("px ") + "px").style("padding", "0").style("box-sizing", "border-box").attr("contenteditable", true).text(initialText).call(alignHTMLWith(context, container, options)).on("blur", function(event) {
         gd._editing = false;
         context.text(this.textContent).style("opacity", 1);
         const svgClass = select_default2(this).attr("class");
@@ -52554,18 +52546,18 @@ var Plotly = (() => {
         select_default2(this).transition().duration(0).remove();
         select_default2(document).on("mouseup", null);
         d.call("edit", context, text);
-      }).on("focus", function(event2) {
+      }).on("focus", function(event) {
         const editDiv = this;
         gd._editing = true;
-        select_default2(document).on("mouseup", function(event3) {
-          if (event3.target === editDiv) return false;
+        select_default2(document).on("mouseup", function(event2) {
+          if (event2.target === editDiv) return false;
           if (document.activeElement === div.node()) div.node().blur();
         });
-      }).on("keyup", function(event2) {
-        if (event2.which === 27) {
+      }).on("keyup", function(event) {
+        if (event.which === 27) {
           gd._editing = false;
           context.style("opacity", 1);
-          select_default2(this).style("opacity", 0).on("blur", function(event3) {
+          select_default2(this).style("opacity", 0).on("blur", function(event2) {
             return false;
           }).transition().remove();
           d.call("cancel", context, this.textContent);
@@ -52573,8 +52565,8 @@ var Plotly = (() => {
           d.call("input", context, this.textContent);
           select_default2(this).call(alignHTMLWith(context, container, options));
         }
-      }).on("keydown", function(event2) {
-        if (event2.which === 13) this.blur();
+      }).on("keydown", function(event) {
+        if (event.which === 13) this.blur();
       }).call(selectElementContents);
     }
     if (options.immediate) handleClick2();
@@ -55662,9 +55654,7 @@ var Plotly = (() => {
   // src/plots/cartesian/show_dflt.ts
   function getShowAttrDflt(containerIn) {
     const showAttrsAll = ["showexponent", "showtickprefix", "showticksuffix"];
-    const showAttrs = showAttrsAll.filter(function(a) {
-      return containerIn[a] !== void 0;
-    });
+    const showAttrs = showAttrsAll.filter((a) => containerIn[a] !== void 0);
     const sameVal = function(a) {
       return containerIn[a] === containerIn[showAttrs[0]];
     };
@@ -57257,7 +57247,7 @@ var Plotly = (() => {
   var symbolNoDot = {};
   var symbolNoFill = {};
   var symbolList = [];
-  Object.keys(symbol_defs_default).forEach(function(k) {
+  Object.keys(symbol_defs_default).forEach((k) => {
     const symDef = symbol_defs_default[k];
     const n = symDef.n;
     symbolList.push(
@@ -59366,7 +59356,7 @@ var Plotly = (() => {
             }
           }
         }
-        list2.sort(function(a, b) {
+        list2.sort((a, b) => {
           const ind0 = seen[0][1];
           const d = ind0[a[0]] - ind0[b[0]];
           if (d) return d;
@@ -59543,7 +59533,7 @@ var Plotly = (() => {
       const rangebreaksIn = ax.rangebreaks || [];
       let bnds, b02, b12, vb, vDate;
       if (!rangebreaksIn._cachedPatterns) {
-        rangebreaksIn._cachedPatterns = rangebreaksIn.map(function(brk) {
+        rangebreaksIn._cachedPatterns = rangebreaksIn.map((brk) => {
           return brk.enabled && brk.bounds ? simpleMap(
             brk.bounds,
             brk.pattern ? cleanNumber2 : ax.d2c
@@ -59552,9 +59542,7 @@ var Plotly = (() => {
         });
       }
       if (!rangebreaksIn._cachedValues) {
-        rangebreaksIn._cachedValues = rangebreaksIn.map(function(brk) {
-          return brk.enabled && brk.values ? simpleMap(brk.values, ax.d2c).sort(sorterAsc) : null;
-        });
+        rangebreaksIn._cachedValues = rangebreaksIn.map((brk) => brk.enabled && brk.values ? simpleMap(brk.values, ax.d2c).sort(sorterAsc) : null);
       }
       for (let i = 0; i < rangebreaksIn.length; i++) {
         const brk = rangebreaksIn[i];
@@ -59606,7 +59594,7 @@ var Plotly = (() => {
       let i, bnds, b02, b12;
       const rangebreaksOut = [];
       if (!ax.rangebreaks) return rangebreaksOut;
-      const rangebreaksIn = ax.rangebreaks.slice().sort(function(a, b) {
+      const rangebreaksIn = ax.rangebreaks.slice().sort((a, b) => {
         if (a.pattern === WEEKDAY_PATTERN && b.pattern === HOUR_PATTERN) return -1;
         if (b.pattern === WEEKDAY_PATTERN && a.pattern === HOUR_PATTERN) return 1;
         return 0;
@@ -59677,9 +59665,7 @@ var Plotly = (() => {
           }
         }
       }
-      rangebreaksOut.sort(function(a, b) {
-        return a.min - b.min;
-      });
+      rangebreaksOut.sort((a, b) => a.min - b.min);
       return rangebreaksOut;
     };
     ax.makeCalcdata = function(trace, axLetter2, opts) {
@@ -59882,9 +59868,7 @@ var Plotly = (() => {
     const attrDef = {};
     if (!dflt) dflt = axlist[0] || (typeof extraOption === "string" ? extraOption : extraOption[0]);
     if (!extraOption) extraOption = dflt;
-    axlist = axlist.concat(axlist.map(function(x) {
-      return x + " domain";
-    }));
+    axlist = axlist.concat(axlist.map((x) => x + " domain"));
     attrDef[refAttr] = {
       valType: "enumerated",
       values: axlist.concat(extraOption ? typeof extraOption === "string" ? [extraOption] : extraOption : []),
@@ -60521,18 +60505,10 @@ var Plotly = (() => {
       if (isPeriod && tickVals.length) {
         allTickVals = allTickVals.slice(1);
       }
-      allTickVals = allTickVals.sort(function(a, b) {
-        return a.value - b.value;
-      }).filter(function(tick, index, self) {
-        return index === 0 || tick.value !== self[index - 1].value;
-      });
-      const majorTickIndices = allTickVals.map(function(item, index) {
-        return item.minor === void 0 && !item.skipLabel ? index : null;
-      }).filter(function(index) {
-        return index !== null;
-      });
-      majorTickIndices.forEach(function(majorIdx) {
-        ticklabelIndex.map(function(nextLabelIdx) {
+      allTickVals = allTickVals.sort((a, b) => a.value - b.value).filter((tick, index, self) => index === 0 || tick.value !== self[index - 1].value);
+      const majorTickIndices = allTickVals.map((item, index) => item.minor === void 0 && !item.skipLabel ? index : null).filter((index) => index !== null);
+      majorTickIndices.forEach((majorIdx) => {
+        ticklabelIndex.map((nextLabelIdx) => {
           const minorIdx = majorIdx + nextLabelIdx;
           if (minorIdx >= 0 && minorIdx < allTickVals.length) {
             pushUnique2(allTicklabelVals, allTickVals[minorIdx]);
@@ -60543,9 +60519,7 @@ var Plotly = (() => {
     if (hasMinor) {
       const canOverlap = ax.minor.ticks === "inside" && ax.ticks === "outside" || ax.minor.ticks === "outside" && ax.ticks === "inside";
       if (!canOverlap) {
-        const majorValues = tickVals.map(function(d) {
-          return d.value;
-        });
+        const majorValues = tickVals.map((d) => d.value);
         const list2 = [];
         for (let k = 0; k < minorTickVals.length; k++) {
           const T = minorTickVals[k];
@@ -60652,9 +60626,7 @@ var Plotly = (() => {
   };
   function filterRangeBreaks(ax, ticksOut) {
     if (ax.rangebreaks) {
-      ticksOut = ticksOut.filter(function(d) {
-        return ax.maskBreaks(d.x) !== BADNUM8;
-      });
+      ticksOut = ticksOut.filter((d) => ax.maskBreaks(d.x) !== BADNUM8);
     }
     return ticksOut;
   }
@@ -61316,7 +61288,7 @@ var Plotly = (() => {
     const subplotObj = gd._fullLayout._subplots;
     const allSubplots = subplotObj.cartesian.concat(subplotObj.gl2d || []);
     const out = ax ? axes.findSubplotsWithAxis(allSubplots, ax) : allSubplots;
-    out.sort(function(a, b) {
+    out.sort((a, b) => {
       const aParts = a.slice(1).split("y");
       const bParts = b.slice(1).split("y");
       if (aParts[0] === bParts[0]) return +aParts[1] - +bParts[1];
@@ -61389,12 +61361,8 @@ var Plotly = (() => {
     }
     const axList = !arg || arg === "redraw" ? axes.listIds(gd) : arg;
     const fullAxList = axes.list(gd);
-    const overlayingShiftedAx = fullAxList.filter(function(ax) {
-      return ax.autoshift;
-    }).map(function(ax) {
-      return ax.overlaying;
-    });
-    axList.map(function(axId) {
+    const overlayingShiftedAx = fullAxList.filter((ax) => ax.autoshift).map((ax) => ax.overlaying);
+    axList.map((axId) => {
       const ax = axes.getFromId(gd, axId);
       if (ax.tickmode === "sync" && ax.overlaying) {
         const overlayingIndex = axList.findIndex(function(axis) {
@@ -61406,7 +61374,7 @@ var Plotly = (() => {
       }
     });
     const axShifts = { false: { left: 0, right: 0 } };
-    return syncOrAsync(axList.map(function(axId) {
+    return syncOrAsync(axList.map((axId) => {
       return function() {
         if (!axId) return;
         const ax = axes.getFromId(gd, axId);
@@ -61732,15 +61700,15 @@ var Plotly = (() => {
   };
   function filterPush(push, automargin) {
     if (!push) return;
-    const keepMargin = Object.keys(MARGIN_MAPPING).reduce(function(data, nextKey) {
+    const keepMargin = Object.keys(MARGIN_MAPPING).reduce((data, nextKey) => {
       if (automargin.indexOf(nextKey) !== -1) {
-        MARGIN_MAPPING[nextKey].forEach(function(key) {
+        MARGIN_MAPPING[nextKey].forEach((key) => {
           data[key] = 1;
         });
       }
       return data;
     }, {});
-    Object.keys(push).forEach(function(key) {
+    Object.keys(push).forEach((key) => {
       if (!keepMargin[key]) {
         if (key.length === 1) push[key] = 0;
         else delete push[key];
@@ -61841,9 +61809,7 @@ var Plotly = (() => {
     let out = [-1, 1, main16, -main16];
     const ticks3 = minor ? (ax.minor || {}).ticks : ax.ticks;
     if (ticks3 !== "inside" === (axLetter === "x")) {
-      out = out.map(function(v) {
-        return -v;
-      });
+      out = out.map((v) => -v);
     }
     if (ax.side) {
       out.push({ l: -1, t: -1, r: 1, b: 1 }[ax.side.charAt(0)]);
@@ -62067,16 +62033,12 @@ var Plotly = (() => {
     const vals = [].concat(
       ax.minor && ax.minor.ticks ? (
         // minor vals
-        opts.vals.filter(function(d) {
-          return d.minor && !d.noTick;
-        })
+        opts.vals.filter((d) => d.minor && !d.noTick)
       ) : []
     ).concat(
       ax.ticks ? (
         // major vals
-        opts.vals.filter(function(d) {
-          return !d.minor && !d.noTick;
-        })
+        opts.vals.filter((d) => !d.minor && !d.noTick)
       ) : []
     );
     const ticks3 = opts.layer.selectAll("path." + cls).data(vals, tickDataFn);
@@ -62100,12 +62062,8 @@ var Plotly = (() => {
     }
     const cls = ax._id + "grid";
     const hasMinor = ax.minor && ax.minor.showgrid;
-    const minorVals = hasMinor ? opts.vals.filter(function(d) {
-      return d.minor;
-    }) : [];
-    let majorVals = ax.showgrid ? opts.vals.filter(function(d) {
-      return !d.minor;
-    }) : [];
+    const minorVals = hasMinor ? opts.vals.filter((d) => d.minor) : [];
+    let majorVals = ax.showgrid ? opts.vals.filter((d) => !d.minor) : [];
     const counterAx = opts.counterAxis;
     if (counterAx && axes.shouldShowZeroLine(gd, ax, counterAx)) {
       const isArrayMode = ax.tickmode === "array";
@@ -62152,9 +62110,7 @@ var Plotly = (() => {
     const zl = opts.layer.selectAll("path." + cls).data(show ? [{ x: 0, id: ax._id }] : []);
     zl.exit().remove();
     const zlEnter = zl.enter().append("path").classed(cls, 1).classed("zl", 1).classed("crisp", opts.crisp !== false).each(function() {
-      opts.layer.selectAll("path").sort(function(da, db) {
-        return idSort2(da.id, db.id);
-      });
+      opts.layer.selectAll("path").sort((da, db) => idSort2(da.id, db.id));
     });
     zl.merge(zlEnter).attr("transform", opts.transFn).attr("d", opts.path).call(color_default.stroke, ax.zerolinecolor || color_default.defaultLine).style("stroke-width", crispRound(gd, ax.zerolinewidth, ax._gw || 1) + "px").style("display", null);
     hideCounterAxisInsideTickLabels(ax, [ZERO_PATH]);
@@ -62165,9 +62121,7 @@ var Plotly = (() => {
     const axId = ax._id;
     const zerolineIsAbove = ax.zerolinelayer === "above traces";
     const cls = opts.cls || axId + "tick";
-    const vals = opts.vals.filter(function(d) {
-      return d.text;
-    });
+    const vals = opts.vals.filter((d) => d.text);
     const labelFns = opts.labelFns;
     const tickAngle = opts.secondary ? 0 : ax.tickangle;
     const prevAngle = (ax._prevTickAngles || {})[cls];
@@ -62296,7 +62250,7 @@ var Plotly = (() => {
         if (ax._id !== plotinfo.xaxis._id && ax._id !== plotinfo.yaxis._id) continue;
         anchoredAxes.push(isX ? plotinfo.yaxis : plotinfo.xaxis);
       }
-      anchoredAxes.forEach(function(anchorAx2, idx) {
+      anchoredAxes.forEach((anchorAx2, idx) => {
         if (anchorAx2 && insideTicklabelposition(anchorAx2)) {
           (partialOpts || [
             ZERO_PATH,
@@ -62304,7 +62258,7 @@ var Plotly = (() => {
             GRID_PATH,
             TICK_PATH,
             TICK_TEXT
-          ]).forEach(function(e) {
+          ]).forEach((e) => {
             const isPeriodLabel = e.K === "tick" && e.L === "text" && ax.ticklabelmode === "period";
             const mainPlotinfo = fullLayout._plots[ax._mainSubplot];
             let sel;
@@ -62644,9 +62598,7 @@ var Plotly = (() => {
     return rng[0] * rng[1] <= 0 && ax.zeroline && (ax.type === "linear" || ax.type === "-") && !(ax.rangebreaks && ax.maskBreaks(0) === BADNUM8) && (clipEnds(ax, 0) || !anyCounterAxLineAtZero(gd, ax, counterAxis, rng) || hasBarsOrFill(gd, ax));
   };
   axes.clipEnds = function(ax, vals) {
-    return vals.filter(function(d) {
-      return clipEnds(ax, d.x);
-    });
+    return vals.filter((d) => clipEnds(ax, d.x));
   };
   function clipEnds(ax, l) {
     const p = ax.l2p(l);
@@ -63191,7 +63143,7 @@ var Plotly = (() => {
 
   // src/lib/setcursor.ts
   function setCursor(el3, csr) {
-    (el3.attr("class") || "").split(" ").forEach(function(cls) {
+    (el3.attr("class") || "").split(" ").forEach((cls) => {
       if (cls.indexOf("cursor-") === 0) el3.classed(cls, false);
     });
     if (csr) el3.classed("cursor-" + csr, true);
@@ -63556,13 +63508,11 @@ var Plotly = (() => {
     let legendTraceCount = 0;
     let legendReallyHasATrace = false;
     let defaultOrder = "normal";
-    const shapesWithLegend = (layoutOut.shapes || []).filter(function(d) {
-      return d.showlegend;
-    });
+    const shapesWithLegend = (layoutOut.shapes || []).filter((d) => d.showlegend);
     function isPieWithLegendArray(trace2) {
       return registry_default.traceIs(trace2, "pie-like") && trace2._length != null && (Array.isArray(trace2.legend) || Array.isArray(trace2.showlegend));
     }
-    fullData.filter(isPieWithLegendArray).forEach(function(trace2) {
+    fullData.filter(isPieWithLegendArray).forEach((trace2) => {
       if (trace2.visible) {
         legendTraceCount++;
       }
@@ -63583,9 +63533,7 @@ var Plotly = (() => {
         }
       }
     });
-    const allLegendItems = fullData.concat(shapesWithLegend).filter(function(d) {
-      return !isPieWithLegendArray(trace) && legendId === (d.legend || "legend");
-    });
+    const allLegendItems = fullData.concat(shapesWithLegend).filter((d) => !isPieWithLegendArray(trace) && legendId === (d.legend || "legend"));
     for (let i = 0; i < allLegendItems.length; i++) {
       trace = allLegendItems[i];
       if (!trace.visible) continue;
@@ -63738,12 +63686,12 @@ var Plotly = (() => {
   // node_modules/.pnpm/d3-drag@3.0.0/node_modules/d3-drag/src/noevent.js
   var nonpassive = { passive: false };
   var nonpassivecapture = { capture: true, passive: false };
-  function nopropagation(event2) {
-    event2.stopImmediatePropagation();
+  function nopropagation(event) {
+    event.stopImmediatePropagation();
   }
-  function noevent_default(event2) {
-    event2.preventDefault();
-    event2.stopImmediatePropagation();
+  function noevent_default(event) {
+    event.preventDefault();
+    event.stopImmediatePropagation();
   }
 
   // node_modules/.pnpm/d3-drag@3.0.0/node_modules/d3-drag/src/nodrag.js
@@ -63808,14 +63756,14 @@ var Plotly = (() => {
   };
 
   // node_modules/.pnpm/d3-drag@3.0.0/node_modules/d3-drag/src/drag.js
-  function defaultFilter(event2) {
-    return !event2.ctrlKey && !event2.button;
+  function defaultFilter(event) {
+    return !event.ctrlKey && !event.button;
   }
   function defaultContainer() {
     return this.parentNode;
   }
-  function defaultSubject(event2, d) {
-    return d == null ? { x: event2.x, y: event2.y } : d;
+  function defaultSubject(event, d) {
+    return d == null ? { x: event.x, y: event.y } : d;
   }
   function defaultTouchable() {
     return navigator.maxTouchPoints || "ontouchstart" in this;
@@ -63825,68 +63773,68 @@ var Plotly = (() => {
     function drag(selection2) {
       selection2.on("mousedown.drag", mousedowned).filter(touchable).on("touchstart.drag", touchstarted).on("touchmove.drag", touchmoved, nonpassive).on("touchend.drag touchcancel.drag", touchended).style("touch-action", "none").style("-webkit-tap-highlight-color", "rgba(0,0,0,0)");
     }
-    function mousedowned(event2, d) {
-      if (touchending || !filter5.call(this, event2, d)) return;
-      var gesture = beforestart(this, container.call(this, event2, d), event2, d, "mouse");
+    function mousedowned(event, d) {
+      if (touchending || !filter5.call(this, event, d)) return;
+      var gesture = beforestart(this, container.call(this, event, d), event, d, "mouse");
       if (!gesture) return;
-      select_default2(event2.view).on("mousemove.drag", mousemoved, nonpassivecapture).on("mouseup.drag", mouseupped, nonpassivecapture);
-      nodrag_default(event2.view);
-      nopropagation(event2);
+      select_default2(event.view).on("mousemove.drag", mousemoved, nonpassivecapture).on("mouseup.drag", mouseupped, nonpassivecapture);
+      nodrag_default(event.view);
+      nopropagation(event);
       mousemoving = false;
-      mousedownx = event2.clientX;
-      mousedowny = event2.clientY;
-      gesture("start", event2);
+      mousedownx = event.clientX;
+      mousedowny = event.clientY;
+      gesture("start", event);
     }
-    function mousemoved(event2) {
-      noevent_default(event2);
+    function mousemoved(event) {
+      noevent_default(event);
       if (!mousemoving) {
-        var dx = event2.clientX - mousedownx, dy = event2.clientY - mousedowny;
+        var dx = event.clientX - mousedownx, dy = event.clientY - mousedowny;
         mousemoving = dx * dx + dy * dy > clickDistance2;
       }
-      gestures.mouse("drag", event2);
+      gestures.mouse("drag", event);
     }
-    function mouseupped(event2) {
-      select_default2(event2.view).on("mousemove.drag mouseup.drag", null);
-      yesdrag(event2.view, mousemoving);
-      noevent_default(event2);
-      gestures.mouse("end", event2);
+    function mouseupped(event) {
+      select_default2(event.view).on("mousemove.drag mouseup.drag", null);
+      yesdrag(event.view, mousemoving);
+      noevent_default(event);
+      gestures.mouse("end", event);
     }
-    function touchstarted(event2, d) {
-      if (!filter5.call(this, event2, d)) return;
-      var touches = event2.changedTouches, c = container.call(this, event2, d), n = touches.length, i, gesture;
+    function touchstarted(event, d) {
+      if (!filter5.call(this, event, d)) return;
+      var touches = event.changedTouches, c = container.call(this, event, d), n = touches.length, i, gesture;
       for (i = 0; i < n; ++i) {
-        if (gesture = beforestart(this, c, event2, d, touches[i].identifier, touches[i])) {
-          nopropagation(event2);
-          gesture("start", event2, touches[i]);
+        if (gesture = beforestart(this, c, event, d, touches[i].identifier, touches[i])) {
+          nopropagation(event);
+          gesture("start", event, touches[i]);
         }
       }
     }
-    function touchmoved(event2) {
-      var touches = event2.changedTouches, n = touches.length, i, gesture;
+    function touchmoved(event) {
+      var touches = event.changedTouches, n = touches.length, i, gesture;
       for (i = 0; i < n; ++i) {
         if (gesture = gestures[touches[i].identifier]) {
-          noevent_default(event2);
-          gesture("drag", event2, touches[i]);
+          noevent_default(event);
+          gesture("drag", event, touches[i]);
         }
       }
     }
-    function touchended(event2) {
-      var touches = event2.changedTouches, n = touches.length, i, gesture;
+    function touchended(event) {
+      var touches = event.changedTouches, n = touches.length, i, gesture;
       if (touchending) clearTimeout(touchending);
       touchending = setTimeout(function() {
         touchending = null;
       }, 500);
       for (i = 0; i < n; ++i) {
         if (gesture = gestures[touches[i].identifier]) {
-          nopropagation(event2);
-          gesture("end", event2, touches[i]);
+          nopropagation(event);
+          gesture("end", event, touches[i]);
         }
       }
     }
-    function beforestart(that, container2, event2, d, identifier, touch) {
-      var dispatch2 = listeners.copy(), p = pointer_default(touch || event2, container2), dx, dy, s;
+    function beforestart(that, container2, event, d, identifier, touch) {
+      var dispatch2 = listeners.copy(), p = pointer_default(touch || event, container2), dx, dy, s;
       if ((s = subject.call(that, new DragEvent("beforestart", {
-        sourceEvent: event2,
+        sourceEvent: event,
         target: drag,
         identifier,
         active,
@@ -63898,7 +63846,7 @@ var Plotly = (() => {
       }), d)) == null) return;
       dx = s.x - p[0] || 0;
       dy = s.y - p[1] || 0;
-      return function gesture(type, event3, touch2) {
+      return function gesture(type, event2, touch2) {
         var p0 = p, n;
         switch (type) {
           case "start":
@@ -63908,14 +63856,14 @@ var Plotly = (() => {
             delete gestures[identifier], --active;
           // falls through
           case "drag":
-            p = pointer_default(touch2 || event3, container2), n = active;
+            p = pointer_default(touch2 || event2, container2), n = active;
             break;
         }
         dispatch2.call(
           type,
           that,
           new DragEvent(type, {
-            sourceEvent: event3,
+            sourceEvent: event2,
             subject: s,
             target: drag,
             identifier,
@@ -63975,9 +63923,7 @@ var Plotly = (() => {
     const legendItem = g.data()[0][0];
     if (legendItem.groupTitle && legendItem.noClick) return;
     const fullData = gd._fullData;
-    const shapesWithLegend = (fullLayout.shapes || []).filter(function(d) {
-      return d.showlegend;
-    });
+    const shapesWithLegend = (fullLayout.shapes || []).filter((d) => d.showlegend);
     const allLegendItems = fullData.concat(shapesWithLegend);
     let fullTrace = legendItem.trace;
     if (fullTrace._isShape) {
@@ -64002,9 +63948,7 @@ var Plotly = (() => {
       valueArray[attrIndex] = value;
       return attrIndex;
     }
-    const updatedShapes = (fullLayout.shapes || []).map(function(d) {
-      return d._input;
-    });
+    const updatedShapes = (fullLayout.shapes || []).map((d) => d._input);
     let shapesUpdated = false;
     function insertShapesUpdate(shapeIndex, value) {
       updatedShapes[shapeIndex].visible = value;
@@ -64271,12 +64215,12 @@ var Plotly = (() => {
         a.trace.legendrank - b.trace.legendrank || a._preSort - b._preSort
       );
     };
-    legendData.forEach(function(a, k) {
+    legendData.forEach((a, k) => {
       a[0]._preGroupSort = k;
     });
     legendData.sort(orderFn1);
     for (i = 0; i < legendData.length; i++) {
-      legendData[i].forEach(function(a, k) {
+      legendData[i].forEach((a, k) => {
         a._preSort = k;
       });
       legendData[i].sort(orderFn2);
@@ -65110,15 +65054,15 @@ var Plotly = (() => {
           clipPath.select("rect").attr("width", legendObj._width - 2 * bw + constants_default3.scrollBarWidth + constants_default3.scrollBarMargin).attr("height", legendObj._effHeight - 2 * bw).attr("x", bw).attr("y", bw + scrollBoxY);
           setClipUrl(scrollBox, clipId, gd);
           scrollHandler(scrollBoxY, scrollBarHeight, scrollRatio);
-          legend.on("wheel", function(event2) {
+          legend.on("wheel", function(event) {
             scrollBoxY = constrain(
-              legendObj._scrollY + event2.deltaY / scrollBoxYMax * scrollBarYMax,
+              legendObj._scrollY + event.deltaY / scrollBoxYMax * scrollBarYMax,
               0,
               scrollBoxYMax
             );
             scrollHandler(scrollBoxY, scrollBarHeight, scrollRatio);
             if (scrollBoxY !== 0 && scrollBoxY !== scrollBoxYMax) {
-              event2.preventDefault();
+              event.preventDefault();
             }
           });
           let eventY0, eventY1, scrollBoxY0;
@@ -65130,16 +65074,16 @@ var Plotly = (() => {
             const y = (eventY02 - eventY12) / scrollRatio + scrollBoxY02;
             return constrain(y, 0, scrollBoxYMax);
           };
-          const scrollBarDrag = drag_default().on("start", function(event2) {
-            const e = event2.sourceEvent;
+          const scrollBarDrag = drag_default().on("start", function(event) {
+            const e = event.sourceEvent;
             if (e.type === "touchstart") {
               eventY0 = e.changedTouches[0].clientY;
             } else {
               eventY0 = e.clientY;
             }
             scrollBoxY0 = scrollBoxY;
-          }).on("drag", function(event2) {
-            const e = event2.sourceEvent;
+          }).on("drag", function(event) {
+            const e = event.sourceEvent;
             if (e.buttons === 2 || e.ctrlKey) return;
             if (e.type === "touchmove") {
               eventY1 = e.changedTouches[0].clientY;
@@ -65150,14 +65094,14 @@ var Plotly = (() => {
             scrollHandler(scrollBoxY, scrollBarHeight, scrollRatio);
           });
           scrollBar.call(scrollBarDrag);
-          const scrollBoxTouchDrag = drag_default().on("start", function(event2) {
-            const e = event2.sourceEvent;
+          const scrollBoxTouchDrag = drag_default().on("start", function(event) {
+            const e = event.sourceEvent;
             if (e.type === "touchstart") {
               eventY0 = e.changedTouches[0].clientY;
               scrollBoxY0 = scrollBoxY;
             }
-          }).on("drag", function(event2) {
-            const e = event2.sourceEvent;
+          }).on("drag", function(event) {
+            const e = event.sourceEvent;
             if (e.type === "touchmove") {
               eventY1 = e.changedTouches[0].clientY;
               scrollBoxY = getNaturalDragY(scrollBoxY0, eventY0, eventY1);
@@ -65292,8 +65236,8 @@ var Plotly = (() => {
     const textGap = legendObj.indentation + legendObj.itemwidth + constants_default3.itemGap * 2;
     svg_text_utils_default.positionText(textEl, textGap, 0);
     if (isEditable) {
-      textEl.call(svg_text_utils_default.makeEditable, { gd, text: name8 }).call(textLayout, g, gd, legendObj).on("edit", function(event2) {
-        const newName = event2;
+      textEl.call(svg_text_utils_default.makeEditable, { gd, text: name8 }).call(textLayout, g, gd, legendObj).on("edit", function(event) {
+        const newName = event;
         this.text(ensureLength(newName, maxNameLength)).call(textLayout, g, gd, legendObj);
         const fullInput = legendItem.trace._fullInput || {};
         const update3 = {};
@@ -65326,7 +65270,7 @@ var Plotly = (() => {
       s.call(color_default.fill, "rgba(0,0,0,0)");
     });
     if (gd._context.staticPlot) return;
-    traceToggle.on("mousedown", function(event2) {
+    traceToggle.on("mousedown", function(event) {
       newMouseDownTime = (/* @__PURE__ */ new Date()).getTime();
       if (newMouseDownTime - gd._legendMouseDownTime < doubleClickDelay) {
         numClicks += 1;
@@ -65335,13 +65279,13 @@ var Plotly = (() => {
         gd._legendMouseDownTime = newMouseDownTime;
       }
     });
-    traceToggle.on("mouseup", function(event2) {
+    traceToggle.on("mouseup", function(event) {
       if (gd._dragged || gd._editing) return;
       const legend = gd._fullLayout[legendId];
       if ((/* @__PURE__ */ new Date()).getTime() - gd._legendMouseDownTime > doubleClickDelay) {
         numClicks = Math.max(numClicks - 1, 1);
       }
-      clickOrDoubleClick(gd, legend, g, numClicks, event2);
+      clickOrDoubleClick(gd, legend, g, numClicks, event);
     });
   }
   function textLayout(s, g, gd, legendObj, aTitle) {
@@ -65699,7 +65643,7 @@ var Plotly = (() => {
     const gd = opts.gd;
     const gTop = getTopOffset(gd);
     const gLeft = getLeftOffset(gd);
-    const pointsData = hoverItems.map(function(hoverItem) {
+    const pointsData = hoverItems.map((hoverItem) => {
       const _x0 = hoverItem._x0 || hoverItem.x0 || hoverItem.x || 0;
       const _x1 = hoverItem._x1 || hoverItem.x1 || hoverItem.x || 0;
       const _y0 = hoverItem._y0 || hoverItem.y0 || hoverItem.y || 0;
@@ -65780,9 +65724,7 @@ var Plotly = (() => {
     const tooltipSpacing = 5;
     let lastBottomY = 0;
     let anchor = 0;
-    hoverLabel.sort(function(a, b) {
-      return a.y0 - b.y0;
-    }).each(function(d, i) {
+    hoverLabel.sort((a, b) => a.y0 - b.y0).each(function(d, i) {
       const topY = d.y0 - d.by / 2;
       if (topY - tooltipSpacing < lastBottomY) {
         d.offset = lastBottomY - topY + tooltipSpacing;
@@ -65833,9 +65775,7 @@ var Plotly = (() => {
       }
     }
     if (plotinfo && hoversubplots !== "single") {
-      const overlayedSubplots = plotinfo.overlays.map(function(pi2) {
-        return pi2.id;
-      });
+      const overlayedSubplots = plotinfo.overlays.map((pi2) => pi2.id);
       subplots = subplots.concat(overlayedSubplots);
     }
     const len2 = subplots.length;
@@ -65890,7 +65830,7 @@ var Plotly = (() => {
       }
     } else {
       const zorderedCalcdata = gd.calcdata.slice();
-      zorderedCalcdata.sort(function(a, b) {
+      zorderedCalcdata.sort((a, b) => {
         const aZorder = a[0].trace.zorder || 0;
         const bZorder = b[0].trace.zorder || 0;
         return aZorder - bZorder;
@@ -66059,15 +65999,11 @@ var Plotly = (() => {
               hoverLayer: fullLayout._hoverlayer
             });
             if (closestPoints) {
-              closestPoints = closestPoints.filter(function(point) {
-                return point.spikeDistance <= spikedistance;
-              });
+              closestPoints = closestPoints.filter((point) => point.spikeDistance <= spikedistance);
             }
             if (closestPoints && closestPoints.length) {
               let tmpPoint;
-              const closestVPoints = closestPoints.filter(function(point) {
-                return point.xa.showspikes && point.xa.spikesnap !== "hovered data";
-              });
+              const closestVPoints = closestPoints.filter((point) => point.xa.showspikes && point.xa.spikesnap !== "hovered data");
               if (closestVPoints.length) {
                 const closestVPt = closestVPoints[0];
                 if ((0, import_fast_isnumeric24.default)(closestVPt.x0) && (0, import_fast_isnumeric24.default)(closestVPt.y0)) {
@@ -66077,9 +66013,7 @@ var Plotly = (() => {
                   }
                 }
               }
-              const closestHPoints = closestPoints.filter(function(point) {
-                return point.ya.showspikes && point.ya.spikesnap !== "hovered data";
-              });
+              const closestHPoints = closestPoints.filter((point) => point.ya.showspikes && point.ya.spikesnap !== "hovered data");
               if (closestHPoints.length) {
                 const closestHPt = closestHPoints[0];
                 if ((0, import_fast_isnumeric24.default)(closestHPt.x0) && (0, import_fast_isnumeric24.default)(closestHPt.y0)) {
@@ -66137,12 +66071,8 @@ var Plotly = (() => {
     };
     gd._spikepoints = newspikepoints;
     const sortHoverData = function() {
-      const hoverDataInSubplot = hoverData.filter(function(a) {
-        return firstXaxis && firstXaxis._id === a.xa._id && firstYaxis && firstYaxis._id === a.ya._id;
-      });
-      const hoverDataOutSubplot = hoverData.filter(function(a) {
-        return !(firstXaxis && firstXaxis._id === a.xa._id && firstYaxis && firstYaxis._id === a.ya._id);
-      });
+      const hoverDataInSubplot = hoverData.filter((a) => firstXaxis && firstXaxis._id === a.xa._id && firstYaxis && firstYaxis._id === a.ya._id);
+      const hoverDataOutSubplot = hoverData.filter((a) => !(firstXaxis && firstXaxis._id === a.xa._id && firstYaxis && firstYaxis._id === a.ya._id));
       hoverDataInSubplot.sort(distanceSort);
       hoverDataOutSubplot.sort(distanceSort);
       hoverData = hoverDataInSubplot.concat(hoverDataOutSubplot);
@@ -66153,14 +66083,10 @@ var Plotly = (() => {
     const spikeOnWinning = (axLetter === "x" || axLetter === "y") && hoverData[0] && cartesianScatterPoints[hoverData[0].trace.type];
     if (hasCartesian && spikedistance !== 0) {
       if (hoverData.length !== 0) {
-        const tmpHPointData = hoverData.filter(function(point) {
-          return point.ya.showspikes;
-        });
+        const tmpHPointData = hoverData.filter((point) => point.ya.showspikes);
         const tmpHPoint = selectClosestPoint(tmpHPointData, spikedistance, spikeOnWinning);
         spikePoints.hLinePoint = fillSpikePoint(tmpHPoint);
-        const tmpVPointData = hoverData.filter(function(point) {
-          return point.xa.showspikes;
-        });
+        const tmpVPointData = hoverData.filter((point) => point.xa.showspikes);
         const tmpVPoint = selectClosestPoint(tmpVPointData, spikedistance, spikeOnWinning);
         spikePoints.vLinePoint = fillSpikePoint(tmpVPoint);
       }
@@ -66531,9 +66457,7 @@ var Plotly = (() => {
         pt._distinct = true;
         mockLegend.entries.push([pt]);
       }
-      mockLegend.entries.sort(function(a, b) {
-        return a[0].trace.index - b[0].trace.index;
-      });
+      mockLegend.entries.sort((a, b) => a[0].trace.index - b[0].trace.index);
       mockLegend.layer = container;
       mockLegend._inHover = true;
       mockLegend._groupTitleFont = hoverlabel.grouptitlefont;
@@ -66554,22 +66478,16 @@ var Plotly = (() => {
         } else {
           lyTop = Math.min.apply(
             null,
-            groupedHoverData.map(function(c) {
-              return Math.min(c.y0, c.y1);
-            })
+            groupedHoverData.map((c) => Math.min(c.y0, c.y1))
           );
           lyBottom = Math.max.apply(
             null,
-            groupedHoverData.map(function(c) {
-              return Math.max(c.y0, c.y1);
-            })
+            groupedHoverData.map((c) => Math.max(c.y0, c.y1))
           );
         }
       } else {
         lyTop = lyBottom = mean(
-          groupedHoverData.map(function(c) {
-            return (c.y0 + c.y1) / 2;
-          })
+          groupedHoverData.map((c) => (c.y0 + c.y1) / 2)
         ) - tHeight / 2;
       }
       let lxRight, lxLeft;
@@ -66580,22 +66498,16 @@ var Plotly = (() => {
         } else {
           lxRight = Math.max.apply(
             null,
-            groupedHoverData.map(function(c) {
-              return Math.max(c.x0, c.x1);
-            })
+            groupedHoverData.map((c) => Math.max(c.x0, c.x1))
           );
           lxLeft = Math.min.apply(
             null,
-            groupedHoverData.map(function(c) {
-              return Math.min(c.x0, c.x1);
-            })
+            groupedHoverData.map((c) => Math.min(c.x0, c.x1))
           );
         }
       } else {
         lxRight = lxLeft = mean(
-          groupedHoverData.map(function(c) {
-            return (c.x0 + c.x1) / 2;
-          })
+          groupedHoverData.map((c) => (c.x0 + c.x1) / 2)
         ) - tWidth / 2;
       }
       const xOffset = xa._offset;
@@ -66899,7 +66811,7 @@ var Plotly = (() => {
         }
       ];
     });
-    pointgroups.sort(function(a, b) {
+    pointgroups.sort((a, b) => {
       return a[0].posref - b[0].posref || // for equal positions, sort trace indices increasing or decreasing
       // depending on whether the axis is reversed or not... so stacked
       // traces will generally keep their order even if one trace adds
@@ -69511,7 +69423,7 @@ var Plotly = (() => {
       return;
     }
     if (!fullLayout._has("cartesian") && !fullLayout._has("splom")) return;
-    const subplots = Object.keys(fullLayout._plots || {}).sort(function(a, b) {
+    const subplots = Object.keys(fullLayout._plots || {}).sort((a, b) => {
       if ((fullLayout._plots[a].mainplot && true) === (fullLayout._plots[b].mainplot && true)) {
         const aParts = a.split("y");
         const bParts = b.split("y");
@@ -69519,7 +69431,7 @@ var Plotly = (() => {
       }
       return fullLayout._plots[a].mainplot ? 1 : -1;
     });
-    subplots.forEach(function(subplot) {
+    subplots.forEach((subplot) => {
       const plotinfo = fullLayout._plots[subplot];
       const xa = plotinfo.xaxis;
       const ya = plotinfo.yaxis;
@@ -70082,9 +69994,7 @@ var Plotly = (() => {
     if ((0, import_fast_isnumeric25.default)(traceIndices)) {
       return [traceIndices];
     } else if (!Array.isArray(traceIndices) || !traceIndices.length) {
-      return gd.data.map(function(_2, i) {
-        return i;
-      });
+      return gd.data.map((_2, i) => i);
     } else if (Array.isArray(traceIndices)) {
       const traceIndicesOut = [];
       for (let i = 0; i < traceIndices.length; i++) {
@@ -70722,7 +70632,7 @@ var Plotly = (() => {
     arr2.set(arr1, arr0.length);
     return arr2;
   }
-  function extendTraces(gd, update3, indices, maxPoints) {
+  function extendTraces(gd, update3, indices, maxPoints, ...rest) {
     gd = getGraphDiv(gd);
     function updateArray(target, insert, maxp) {
       let newArray, remainder;
@@ -70765,10 +70675,10 @@ var Plotly = (() => {
     const undo2 = spliceTraces(gd, update3, indices, maxPoints, updateArray);
     const promise = redraw(gd);
     const undoArgs = [gd, undo2.update, indices, undo2.maxPoints];
-    queue_default.add(gd, prependTraces, undoArgs, extendTraces, arguments);
+    queue_default.add(gd, prependTraces, undoArgs, extendTraces, [gd, update3, indices, maxPoints, ...rest]);
     return promise;
   }
-  function prependTraces(gd, update3, indices, maxPoints) {
+  function prependTraces(gd, update3, indices, maxPoints, ...rest) {
     gd = getGraphDiv(gd);
     function updateArray(target, insert, maxp) {
       let newArray, remainder;
@@ -70810,7 +70720,7 @@ var Plotly = (() => {
     const undo2 = spliceTraces(gd, update3, indices, maxPoints, updateArray);
     const promise = redraw(gd);
     const undoArgs = [gd, undo2.update, indices, undo2.maxPoints];
-    queue_default.add(gd, extendTraces, undoArgs, prependTraces, arguments);
+    queue_default.add(gd, extendTraces, undoArgs, prependTraces, [gd, update3, indices, maxPoints, ...rest]);
     return promise;
   }
   function addTraces(gd, traces, newIndices) {
@@ -70826,9 +70736,7 @@ var Plotly = (() => {
     if (!Array.isArray(traces)) {
       traces = [traces];
     }
-    traces = traces.map(function(trace) {
-      return extendFlat({}, trace);
-    });
+    traces = traces.map((trace) => extendFlat({}, trace));
     helpers_default5.cleanData(traces);
     for (i = 0; i < traces.length; i++) {
       gd.data.push(traces[i]);
@@ -70909,9 +70817,7 @@ var Plotly = (() => {
     for (i = 0; i < currentIndices.length; i++) {
       movingTraceMap.push({ newIndex: newIndices[i], trace: gd.data[currentIndices[i]] });
     }
-    movingTraceMap.sort(function(a, b) {
-      return a.newIndex - b.newIndex;
-    });
+    movingTraceMap.sort((a, b) => a.newIndex - b.newIndex);
     for (i = 0; i < movingTraceMap.length; i += 1) {
       newData.splice(movingTraceMap[i].newIndex, 0, movingTraceMap[i].trace);
     }
@@ -71016,9 +70922,7 @@ var Plotly = (() => {
     const undoit = {};
     let axlist;
     function a0() {
-      return traces.map(function() {
-        return void 0;
-      });
+      return traces.map(() => void 0);
     }
     function addToAxlist(axid) {
       const axName = axes_default.id2name(axid);
@@ -71037,7 +70941,7 @@ var Plotly = (() => {
     }
     function doextra(attr3, val, i2) {
       if (Array.isArray(attr3)) {
-        attr3.forEach(function(a) {
+        attr3.forEach((a) => {
           doextra(a, val, i2);
         });
         return;
@@ -71344,7 +71248,7 @@ var Plotly = (() => {
     const undoit = {};
     function doextra(attr3, val) {
       if (Array.isArray(attr3)) {
-        attr3.forEach(function(a) {
+        attr3.forEach((a) => {
           doextra(a, val);
         });
         return;
@@ -71590,9 +71494,9 @@ var Plotly = (() => {
     });
   }
   function guiEdit(func) {
-    return function wrappedEdit(gd) {
+    return function wrappedEdit(gd, ...args) {
       gd._fullLayout._guiEditing = true;
-      const p = func.apply(null, arguments);
+      const p = func(gd, ...args);
       gd._fullLayout._guiEditing = false;
       return p;
     };
@@ -72387,7 +72291,7 @@ var Plotly = (() => {
         index: indices && indices[i] !== void 0 && indices[i] !== null ? indices[i] : bigIndex + i
       });
     }
-    insertions.sort(function(a, b) {
+    insertions.sort((a, b) => {
       if (a.index > b.index) return -1;
       if (a.index < b.index) return 1;
       return 0;
@@ -72552,7 +72456,7 @@ var Plotly = (() => {
       data: {},
       layout: {}
     };
-    data.forEach(function(trace) {
+    data.forEach((trace) => {
       const traceTemplate = {};
       walkStyleKeys(trace, traceTemplate, getTraceInfo.bind(null, trace));
       const traceType = lib_default.coerce(trace, {}, attributes_default2, "type");
@@ -76344,7 +76248,7 @@ var Plotly = (() => {
     }
     const cdscatterSorted = cdscatter.slice();
     if (needsSort) {
-      cdscatterSorted.sort(function(a, b) {
+      cdscatterSorted.sort((a, b) => {
         const traceA = a[0].trace;
         const traceB = b[0].trace;
         return traceA._groupIndex - traceB._groupIndex || traceA.index - traceB.index;
@@ -76803,19 +76707,13 @@ var Plotly = (() => {
     }
     trace._ownPolygons = thisPolygons;
     function visFilter(d) {
-      return d.filter(function(v) {
-        return !v.gap && v.vis;
-      });
+      return d.filter((v) => !v.gap && v.vis);
     }
     function visFilterWithGaps(d) {
-      return d.filter(function(v) {
-        return v.vis;
-      });
+      return d.filter((v) => v.vis);
     }
     function gapFilter(d) {
-      return d.filter(function(v) {
-        return !v.gap;
-      });
+      return d.filter((v) => !v.gap);
     }
     function keyFunc(d) {
       return d.id;
@@ -76925,22 +76823,20 @@ var Plotly = (() => {
     if (!subtypes_default.hasMarkers(trace)) return;
     const mnum = trace.marker.maxdisplayed;
     if (mnum === 0) return;
-    const cd = cdscatter.filter(function(v) {
-      return v.x >= xr[0] && v.x <= xr[1] && v.y >= yr[0] && v.y <= yr[1];
-    });
+    const cd = cdscatter.filter((v) => v.x >= xr[0] && v.x <= xr[1] && v.y >= yr[0] && v.y <= yr[1]);
     const inc = Math.ceil(cd.length / mnum);
     let tnum = 0;
-    cdscatterAll.forEach(function(cdj, j) {
+    cdscatterAll.forEach((cdj, j) => {
       const tracei = cdj[0].trace;
       if (subtypes_default.hasMarkers(tracei) && tracei.marker.maxdisplayed > 0 && j < idx) {
         tnum++;
       }
     });
     const i0 = Math.round(tnum * inc / 3 + Math.floor(tnum / 3) * inc / 7.1);
-    cdscatter.forEach(function(v) {
+    cdscatter.forEach((v) => {
       delete v.vis;
     });
-    cd.forEach(function(v, i) {
+    cd.forEach((v, i) => {
       if (Math.round((i + i0) % inc) === 0) v.vis = true;
     });
   }
@@ -77861,9 +77757,7 @@ var Plotly = (() => {
     let axLayoutOut;
     function newAxLayoutOut() {
       const traces = ax2traces[axName] || [];
-      axLayoutOut._traceIndices = traces.map(function(t) {
-        return t.index;
-      });
+      axLayoutOut._traceIndices = traces.map((t) => t.index);
       axLayoutOut._annIndices = [];
       axLayoutOut._shapeIndices = [];
       axLayoutOut._selectionIndices = [];
@@ -78331,7 +78225,7 @@ var Plotly = (() => {
         }
       }
     }
-    layerData.sort(function(a, b) {
+    layerData.sort((a, b) => {
       return (a.zindex || 0) - (b.zindex || 0) || a.i - b.i;
     });
     const layersJoin = plotinfo.plot.selectAll("g.mlayer").data(layerData, function(d) {
@@ -78675,9 +78569,7 @@ var Plotly = (() => {
   var toSVG2 = function(gd) {
     const imageRoot = gd._fullLayout._glimages;
     const root2 = select_default2(gd).selectAll(".svg-container");
-    const canvases = root2.filter(function(d, i) {
-      return i === root2.size() - 1;
-    }).selectAll(".gl-canvas-context, .gl-canvas-focus");
+    const canvases = root2.filter((d, i) => i === root2.size() - 1).selectAll(".gl-canvas-context, .gl-canvas-focus");
     function canvasToImage() {
       const canvas = this;
       const imageData = canvas.toDataURL("image/png");
@@ -78946,9 +78838,9 @@ var Plotly = (() => {
       }
       return eventData;
     }
-    const annTextGroupInner = annTextGroup.append("g").style("pointer-events", textEvents ? "all" : null).call(setCursor, "pointer").on("click", function(event2) {
+    const annTextGroupInner = annTextGroup.append("g").style("pointer-events", textEvents ? "all" : null).call(setCursor, "pointer").on("click", function(event) {
       gd._dragging = false;
-      gd.emit("plotly_clickannotation", makeEventData2(event2));
+      gd.emit("plotly_clickannotation", makeEventData2(event));
     });
     if (options.hovertext) {
       annTextGroupInner.on("mouseover", function() {
@@ -79198,7 +79090,7 @@ var Plotly = (() => {
           [xRight, yBottom, xRight, yTop],
           [xRight, yTop, xLeft, yTop]
         ].map(applyTransform2);
-        if (edges.reduce(function(a, x) {
+        if (edges.reduce((a, x) => {
           return a ^ !!lib_default.segmentsIntersect(
             headX,
             headY,
@@ -79212,7 +79104,7 @@ var Plotly = (() => {
         }, false)) {
           return;
         }
-        edges.forEach(function(x) {
+        edges.forEach((x) => {
           const p = lib_default.segmentsIntersect(
             tailX,
             tailY,
@@ -80136,7 +80028,7 @@ var Plotly = (() => {
   }
   function annAutorange(gd) {
     const fullLayout = gd._fullLayout;
-    lib_default.filterVisible(fullLayout.annotations).forEach(function(ann) {
+    lib_default.filterVisible(fullLayout.annotations).forEach((ann) => {
       const xa = axes_default.getFromId(gd, ann.xref);
       const ya = axes_default.getFromId(gd, ann.yref);
       const xRefType = axes_default.getRefType(ann.xref);
@@ -81194,7 +81086,7 @@ var Plotly = (() => {
   var extractPathCoords = function(path, paramsToUse, isRaw) {
     const extractedCoordinates = [];
     const segments = path.match(constants_default6.segmentRE);
-    segments.forEach(function(segment) {
+    segments.forEach((segment) => {
       const relevantParamIdx = paramsToUse[segment.charAt(0)].drawn;
       if (relevantParamIdx === void 0) return;
       const params = segment.slice(1).match(constants_default6.paramRE);
@@ -85270,13 +85162,13 @@ var Plotly = (() => {
       delete this._clipRect;
     }
     if (needsHorizontalScrollBar || needsVerticalScrollBar) {
-      const onBoxDrag = drag_default().on("start", function(event2) {
-        event2.sourceEvent.preventDefault();
+      const onBoxDrag = drag_default().on("start", function(event) {
+        event.sourceEvent.preventDefault();
       }).on("drag", this._onBoxDrag.bind(this));
       this.container.on("wheel", null).on("wheel", this._onBoxWheel.bind(this)).on(".drag", null).call(onBoxDrag);
-      const onBarDrag = drag_default().on("start", function(event2) {
-        event2.sourceEvent.preventDefault();
-        event2.sourceEvent.stopPropagation();
+      const onBarDrag = drag_default().on("start", function(event) {
+        event.sourceEvent.preventDefault();
+        event.sourceEvent.stopPropagation();
       }).on("drag", this._onBarDrag.bind(this));
       if (needsHorizontalScrollBar) {
         this.hbar.on(".drag", null).call(onBarDrag);
@@ -85308,35 +85200,35 @@ var Plotly = (() => {
       delete this._vbarTranslateMax;
     }
   };
-  ScrollBox.prototype._onBoxDrag = function _onBoxDrag(event2) {
+  ScrollBox.prototype._onBoxDrag = function _onBoxDrag(event) {
     let translateX = this.translateX;
     let translateY = this.translateY;
     if (this.hbar) {
-      translateX -= event2.dx;
+      translateX -= event.dx;
     }
     if (this.vbar) {
-      translateY -= event2.dy;
+      translateY -= event.dy;
     }
     this.setTranslate(translateX, translateY);
   };
-  ScrollBox.prototype._onBoxWheel = function _onBoxWheel(event2) {
+  ScrollBox.prototype._onBoxWheel = function _onBoxWheel(event) {
     let translateX = this.translateX;
     let translateY = this.translateY;
     if (this.hbar) {
-      translateX += event2.deltaY;
+      translateX += event.deltaY;
     }
     if (this.vbar) {
-      translateY += event2.deltaY;
+      translateY += event.deltaY;
     }
     this.setTranslate(translateX, translateY);
   };
-  ScrollBox.prototype._onBarDrag = function _onBarDrag(event2) {
+  ScrollBox.prototype._onBarDrag = function _onBarDrag(event) {
     let translateX = this.translateX;
     let translateY = this.translateY;
     if (this.hbar) {
       const xMin = translateX + this._hbarXMin;
       const xMax = xMin + this._hbarTranslateMax;
-      const x = lib_default.constrain(event2.x, xMin, xMax);
+      const x = lib_default.constrain(event.x, xMin, xMax);
       const xf = (x - xMin) / (xMax - xMin);
       const translateXMax = this.position.w - this._box.w;
       translateX = xf * translateXMax;
@@ -85344,7 +85236,7 @@ var Plotly = (() => {
     if (this.vbar) {
       const yMin = translateY + this._vbarYMin;
       const yMax = yMin + this._vbarTranslateMax;
-      const y = lib_default.constrain(event2.y, yMin, yMax);
+      const y = lib_default.constrain(event.y, yMin, yMax);
       const yf = (y - yMin) / (yMax - yMin);
       const translateYMax = this.position.h - this._box.h;
       translateY = yf * translateYMax;
@@ -85474,17 +85366,17 @@ var Plotly = (() => {
       s.attr("text-anchor", "end").call(font2, menuOpts.font).text(constants_default8.arrowSymbol[menuOpts.direction]);
     });
     arrow.attr("x", dims.headerWidth - constants_default8.arrowOffsetX + menuOpts.pad.l).attr("y", dims.headerHeight / 2 + constants_default8.textOffsetY + menuOpts.pad.t);
-    header.on("click", function(event2) {
+    header.on("click", function(event) {
       gButton.call(
         removeAllButtons,
         String(isActive(gButton, menuOpts) ? -1 : menuOpts._index)
       );
       drawButtons(gd, gHeader, gButton, scrollBox, menuOpts);
     });
-    header.on("mouseover", function(event2) {
+    header.on("mouseover", function(event) {
       header.call(styleOnMouseOver);
     });
-    header.on("mouseout", function(event2) {
+    header.on("mouseout", function(event) {
       header.call(styleOnMouseOut, menuOpts);
     });
     setTranslate(gHeader, dims.lx, dims.ly);
@@ -85537,8 +85429,8 @@ var Plotly = (() => {
     buttons.each(function(buttonOpts, buttonIndex) {
       const button = select_default2(this);
       button.call(drawItem, menuOpts, buttonOpts, gd).call(setItemPosition, menuOpts, posOpts);
-      button.on("click", function(event2) {
-        if (event2.defaultPrevented) return;
+      button.on("click", function(event) {
+        if (event.defaultPrevented) return;
         if (buttonOpts.execute) {
           if (buttonOpts.args2 && menuOpts.active === buttonIndex) {
             setActive(gd, menuOpts, buttonOpts, gHeader, gButton, scrollBox, -1);
@@ -85550,10 +85442,10 @@ var Plotly = (() => {
         }
         gd.emit("plotly_buttonclicked", { menu: menuOpts, button: buttonOpts, active: menuOpts.active });
       });
-      button.on("mouseover", function(event2) {
+      button.on("mouseover", function(event) {
         button.call(styleOnMouseOver);
       });
-      button.on("mouseout", function(event2) {
+      button.on("mouseout", function(event) {
         button.call(styleOnMouseOut, menuOpts);
         buttons.call(styleButtons, menuOpts);
       });
@@ -86449,7 +86341,7 @@ var Plotly = (() => {
     function getSliderOpts() {
       return sliderGroup.data()[0];
     }
-    function mouseDownHandler() {
+    function mouseDownHandler(event) {
       const sliderOpts = getSliderOpts();
       gd.emit("plotly_sliderstart", { slider: sliderOpts });
       const grip = sliderGroup.select("." + constants_default9.gripRectClass);
@@ -86459,9 +86351,9 @@ var Plotly = (() => {
       const normalizedPosition = positionToNormalizedValue(sliderOpts, pointer_default(event, node)[0]);
       handleInput(gd, sliderGroup, sliderOpts, normalizedPosition, true);
       sliderOpts._dragging = true;
-      function mouseMoveHandler() {
+      function mouseMoveHandler(event2) {
         const sliderOpts2 = getSliderOpts();
-        const normalizedPosition2 = positionToNormalizedValue(sliderOpts2, pointer_default(event, node)[0]);
+        const normalizedPosition2 = positionToNormalizedValue(sliderOpts2, pointer_default(event2, node)[0]);
         handleInput(gd, sliderGroup, sliderOpts2, normalizedPosition2, false);
       }
       $gd.on("mousemove", mouseMoveHandler);
@@ -86788,11 +86680,7 @@ var Plotly = (() => {
     coerce3("range");
     const subplots = layoutOut._subplots;
     if (subplots) {
-      const yIds = subplots.cartesian.filter(function(subplotId) {
-        return subplotId.slice(0, Math.max(0, subplotId.indexOf("y"))) === axis_ids_default.name2id(axName);
-      }).map(function(subplotId) {
-        return subplotId.slice(subplotId.indexOf("y"), subplotId.length);
-      });
+      const yIds = subplots.cartesian.filter((subplotId) => subplotId.slice(0, Math.max(0, subplotId.indexOf("y"))) === axis_ids_default.name2id(axName)).map((subplotId) => subplotId.slice(subplotId.indexOf("y"), subplotId.length));
       const yNames = lib_default.simpleMap(yIds, axis_ids_default.id2name);
       for (let i = 0; i < yNames.length; i++) {
         const yName = yNames[i];
@@ -86951,12 +86839,12 @@ var Plotly = (() => {
       }
     });
   }
-  function eventX(event2) {
-    if (typeof event2.clientX === "number") {
-      return event2.clientX;
+  function eventX(event) {
+    if (typeof event.clientX === "number") {
+      return event.clientX;
     }
-    if (event2.touches && event2.touches.length > 0) {
-      return event2.touches[0].clientX;
+    if (event.touches && event.touches.length > 0) {
+      return event.touches[0].clientX;
     }
     return 0;
   }
@@ -86965,9 +86853,9 @@ var Plotly = (() => {
     const slideBox = rangeSlider.select("rect." + constants_default10.slideBoxClassName).node();
     const grabAreaMin = rangeSlider.select("rect." + constants_default10.grabAreaMinClassName).node();
     const grabAreaMax = rangeSlider.select("rect." + constants_default10.grabAreaMaxClassName).node();
-    function mouseDownHandler(event2) {
-      const target = event2.target;
-      const startX = eventX(event2);
+    function mouseDownHandler(event) {
+      const target = event.target;
+      const startX = eventX(event);
       const offsetX = startX - rangeSlider.node().getBoundingClientRect().left;
       const minVal = opts.d2p(axisOpts._rl[0]);
       const maxVal = opts.d2p(axisOpts._rl[1]);
@@ -87432,9 +87320,7 @@ var Plotly = (() => {
     }
   }
   function getPosDflt(containerOut, layout, counterAxes) {
-    const anchoredList = counterAxes.filter(function(ax) {
-      return layout[ax].anchor === containerOut._id;
-    });
+    const anchoredList = counterAxes.filter((ax) => layout[ax].anchor === containerOut._id);
     let posY = 0;
     for (let i = 0; i < anchoredList.length; i++) {
       const domain = layout[anchoredList[i]].domain;
@@ -88881,9 +88767,7 @@ var Plotly = (() => {
       const fills = g.select("." + cn.cbfills).selectAll("rect." + cn.cbfill).attr("style", "").data(fillLevels);
       const fillsEnter = fills.enter().append("rect").classed(cn.cbfill, true).attr("style", "");
       fills.exit().remove();
-      const zBounds = zrange.map(ax.c2p).map(Math.round).sort(function(a, b) {
-        return a - b;
-      });
+      const zBounds = zrange.map(ax.c2p).map(Math.round).sort((a, b) => a - b);
       fills.merge(fillsEnter).each(function(d, i) {
         const z = [
           i === 0 ? zrange[0] : (fillLevels[i] + fillLevels[i - 1]) / 2,
@@ -89179,9 +89063,7 @@ var Plotly = (() => {
           if (l > zrange[0] && l < zrange[1]) fillLevels.push(l);
         }
       } else {
-        fillLevels = lineLevels.map(function(v) {
-          return v - levelsIn.size / 2;
-        });
+        fillLevels = lineLevels.map((v) => v - levelsIn.size / 2);
         fillLevels.push(fillLevels[fillLevels.length - 1] + levelsIn.size);
       }
     } else if (opts._fillcolor && typeof opts._fillcolor === "string") {
@@ -89484,7 +89366,7 @@ var Plotly = (() => {
       const toImageButtonOptions = gd._context.toImageButtonOptions;
       const opts = { format: toImageButtonOptions.format || "png" };
       lib_default.notifier(_(gd, "Taking snapshot - this may take a few seconds"), "long");
-      ["filename", "width", "height", "scale"].forEach(function(key) {
+      ["filename", "width", "height", "scale"].forEach((key) => {
         if (key in toImageButtonOptions) {
           opts[key] = toImageButtonOptions[key];
         }
@@ -90214,7 +90096,7 @@ var Plotly = (() => {
     if (foreButtons.indexOf(name8) === -1) foreButtons.push(name8);
     if (foreButtons.indexOf(_cat) === -1) foreButtons.push(_cat);
   };
-  buttonList.forEach(function(k) {
+  buttonList.forEach((k) => {
     addToForeButtons(buttons_default[k]);
   });
   foreButtons.sort();
@@ -90327,7 +90209,7 @@ var Plotly = (() => {
     }
     const style5 = fullLayout.modebar;
     const groupSelector = "#" + modeBarId + " .modebar-group";
-    document.querySelectorAll(groupSelector).forEach(function(group) {
+    document.querySelectorAll(groupSelector).forEach((group) => {
       group.style.backgroundColor = style5.bgcolor;
     });
     const needsNewButtons = !this.hasButtons(buttons);
@@ -90358,9 +90240,9 @@ var Plotly = (() => {
     this.buttons = buttons;
     this.buttonElements = [];
     this.buttonsNames = [];
-    this.buttons.forEach(function(buttonGroup) {
+    this.buttons.forEach((buttonGroup) => {
       const group = _this.createGroup();
-      buttonGroup.forEach(function(buttonConfig) {
+      buttonGroup.forEach((buttonConfig) => {
         const buttonName = buttonConfig.name;
         if (!buttonName) {
           throw new Error("must provide button 'name' in button config");
@@ -90451,7 +90333,7 @@ var Plotly = (() => {
   proto.updateActiveButton = function(buttonClicked) {
     const fullLayout = this.graphInfo._fullLayout;
     const dataAttrClicked = buttonClicked !== void 0 ? buttonClicked.getAttribute("data-attr") : null;
-    this.buttonElements.forEach(function(button) {
+    this.buttonElements.forEach((button) => {
       const thisval = button.getAttribute("data-val") || true;
       const dataAttr = button.getAttribute("data-attr");
       const isToggleButton = button.getAttribute("data-toggle") === "true";
@@ -90586,7 +90468,7 @@ var Plotly = (() => {
     let layoutRemove = fullLayout.modebar.remove;
     if (typeof layoutRemove === "string") layoutRemove = [layoutRemove];
     let buttonsToAdd = context.modeBarButtonsToAdd.concat(
-      layoutAdd.filter(function(e) {
+      layoutAdd.filter((e) => {
         for (let i = 0; i < context.modeBarButtonsToRemove.length; i++) {
           if (match(e, context.modeBarButtonsToRemove[i])) return false;
         }
@@ -90594,7 +90476,7 @@ var Plotly = (() => {
       })
     );
     const buttonsToRemove = context.modeBarButtonsToRemove.concat(
-      layoutRemove.filter(function(e) {
+      layoutRemove.filter((e) => {
         for (let i = 0; i < context.modeBarButtonsToAdd.length; i++) {
           if (match(e, context.modeBarButtonsToAdd[i])) return false;
         }
@@ -90944,9 +90826,7 @@ var Plotly = (() => {
         newLayout.annotations.push(options.annotations[i]);
       }
     }
-    const sceneIds = Object.keys(newLayout).filter(function(key) {
-      return key.match(/^scene\d*$/);
-    });
+    const sceneIds = Object.keys(newLayout).filter((key) => key.match(/^scene\d*$/));
     if (sceneIds.length) {
       let axesImageOverride = {};
       if (options.tileClass === "thumbnail") {
@@ -91542,10 +91422,10 @@ var Plotly = (() => {
         scene.graphDiv.emit("plotly_relayouting", update3);
       });
       if (!scene.staticMode) {
-        scene.glplot.canvas.addEventListener("webglcontextlost", function(event2) {
+        scene.glplot.canvas.addEventListener("webglcontextlost", function(event) {
           if (gd && gd.emit) {
             gd.emit("plotly_webglcontextlost", {
-              event: event2,
+              event,
               layer: scene.id
             });
           }
@@ -91848,9 +91728,7 @@ var Plotly = (() => {
         trace.dispose();
         delete scene.traces[traceIds[i]];
       }
-    scene.glplot.objects.sort(function(a, b) {
-      return a._trace.data.index - b._trace.data.index;
-    });
+    scene.glplot.objects.sort((a, b) => a._trace.data.index - b._trace.data.index);
     const sceneBounds = [[0, 0, 0], [0, 0, 0]];
     const axisDataRange = [];
     const axisTypeRatios = {};
@@ -93426,7 +93304,7 @@ var Plotly = (() => {
     })
   );
   var fromMesh3d = ["opacity", "lightposition", "lighting"];
-  fromMesh3d.forEach(function(k) {
+  fromMesh3d.forEach((k) => {
     attrs3[k] = attributes_default23[k];
   });
   attrs3.hoverinfo = extendFlat({}, attributes_default2.hoverinfo, {
@@ -93562,7 +93440,7 @@ var Plotly = (() => {
     const cOpts = colorscale_default.extractOpts(cont);
     let colorscale = cOpts.colorscale;
     if (cOpts.reversescale) colorscale = colorscale_default.flipScale(cOpts.colorscale);
-    return colorscale.map(function(elem) {
+    return colorscale.map((elem) => {
       const index = elem[0];
       const color3 = tinycolor(elem[1]);
       const rgb2 = color3.toRgb();
@@ -93968,7 +93846,7 @@ var Plotly = (() => {
     const handleCalendarDefaults = registry_default.getComponentMethod("calendars", "handleTraceDefaults");
     handleCalendarDefaults(traceIn, traceOut, ["x", "y", "z"], layout);
     coerce3("valuehoverformat");
-    ["x", "y", "z"].forEach(function(dim) {
+    ["x", "y", "z"].forEach((dim) => {
       coerce3(dim + "hoverformat");
       const capDim = "caps." + dim;
       const showCap = coerce3(capDim + ".show");
@@ -94013,7 +93891,7 @@ var Plotly = (() => {
       "lightposition.z",
       "flatshading",
       "opacity"
-    ].forEach(function(x2) {
+    ].forEach((x2) => {
       coerce3(x2);
     });
     colorScaleDefaults(traceIn, traceOut, layout, coerce3, { prefix: "", cLetter: "c" });
@@ -94327,9 +94205,7 @@ var Plotly = (() => {
     const layout = scene.fullSceneLayout;
     this.data = generateIsoMeshes(data);
     function toDataCoords2(axis, coord, scale, calendar) {
-      return coord.map(function(x) {
-        return axis.d2l(x, 0, calendar) * scale;
-      });
+      return coord.map((x) => axis.d2l(x, 0, calendar) * scale);
     }
     const positions = zip3(
       toDataCoords2(layout.xaxis, data._meshX, scene.dataScale[0], data.xcalendar),
@@ -94614,7 +94490,7 @@ var Plotly = (() => {
         [0, 1, 2],
         [2, 0, 1],
         [1, 2, 0]
-      ].forEach(function(e) {
+      ].forEach((e) => {
         if (ok[e[0]] && ok[e[1]] && !ok[e[2]]) {
           const A = xyzv[e[0]];
           const B = xyzv[e[1]];
@@ -94631,7 +94507,7 @@ var Plotly = (() => {
         [0, 1, 2],
         [1, 2, 0],
         [2, 0, 1]
-      ].forEach(function(e) {
+      ].forEach((e) => {
         if (ok[e[0]] && !ok[e[1]] && !ok[e[2]]) {
           const A = xyzv[e[0]];
           const B = xyzv[e[1]];
@@ -94668,7 +94544,7 @@ var Plotly = (() => {
         [3, 0, 1, 2],
         [2, 3, 0, 1],
         [1, 2, 3, 0]
-      ].forEach(function(e) {
+      ].forEach((e) => {
         if (ok[e[0]] && ok[e[1]] && ok[e[2]] && !ok[e[3]]) {
           const A = xyzv[e[0]];
           const B = xyzv[e[1]];
@@ -94693,7 +94569,7 @@ var Plotly = (() => {
         [3, 0, 1, 2],
         [0, 2, 3, 1],
         [1, 3, 2, 0]
-      ].forEach(function(e) {
+      ].forEach((e) => {
         if (ok[e[0]] && ok[e[1]] && !ok[e[2]] && !ok[e[3]]) {
           const A = xyzv[e[0]];
           const B = xyzv[e[1]];
@@ -94718,7 +94594,7 @@ var Plotly = (() => {
         [1, 2, 3, 0],
         [2, 3, 0, 1],
         [3, 0, 1, 2]
-      ].forEach(function(e) {
+      ].forEach((e) => {
         if (ok[e[0]] && !ok[e[1]] && !ok[e[2]] && !ok[e[3]]) {
           const A = xyzv[e[0]];
           const B = xyzv[e[1]];
@@ -95051,7 +94927,7 @@ var Plotly = (() => {
         [Math.min(vMin, maxValues), Math.max(vMin, maxValues)],
         [Math.min(minValues, vMax), Math.max(minValues, vMax)]
       ];
-      ["x", "y", "z"].forEach(function(e) {
+      ["x", "y", "z"].forEach((e) => {
         const preRes = [];
         for (let s = 0; s < setupMinMax.length; s++) {
           let count = 0;
@@ -95187,7 +95063,7 @@ var Plotly = (() => {
       return lib_default.coerce(traceIn, traceOut, attributes_default23, attr3, dflt);
     }
     function readComponents(array2) {
-      const ret = array2.map(function(attr3) {
+      const ret = array2.map((attr3) => {
         const result = coerce3(attr3);
         if (result && lib_default.isArrayOrTypedArray(result)) return result;
         return null;
@@ -95223,7 +95099,7 @@ var Plotly = (() => {
       "alphahull",
       "delaunayaxis",
       "opacity"
-    ].forEach(function(x) {
+    ].forEach((x) => {
       coerce3(x);
     });
     const showContour = coerce3("contour.show");
@@ -95777,9 +95653,7 @@ var Plotly = (() => {
     if (lib_default.isArrayOrTypedArray(color3)) {
       const c = color3[0];
       if (lib_default.isArrayOrTypedArray(c)) color3 = c;
-      return "rgb(" + color3.slice(0, 3).map(function(x) {
-        return Math.round(x * 255);
-      }) + ")";
+      return "rgb(" + color3.slice(0, 3).map((x) => Math.round(x * 255)) + ")";
     }
     return null;
   }
@@ -96354,7 +96228,7 @@ var Plotly = (() => {
     })
   );
   var fromMesh3d2 = ["opacity", "lightposition", "lighting"];
-  fromMesh3d2.forEach(function(k) {
+  fromMesh3d2.forEach((k) => {
     attrs6[k] = attributes_default23[k];
   });
   attrs6.hoverinfo = extendFlat({}, attributes_default2.hoverinfo, {
@@ -96671,7 +96545,7 @@ var Plotly = (() => {
       "hidesurface",
       "connectgaps",
       "opacity"
-    ].forEach(function(x2) {
+    ].forEach((x2) => {
       coerce3(x2);
     });
     const surfaceColor = coerce3("surfacecolor");
@@ -96885,9 +96759,7 @@ var Plotly = (() => {
         empties.push(newNeighborHash[thisPt]);
       }
     }
-    return empties.sort(function(a, b) {
-      return b[2] - a[2];
-    });
+    return empties.sort((a, b) => b[2] - a[2]);
   }
 
   // src/traces/surface/convert.ts
@@ -97971,9 +97843,7 @@ var Plotly = (() => {
     const layout = scene.fullSceneLayout;
     this.data = generateIsoMeshes2(data);
     function toDataCoords2(axis, coord, scale, calendar) {
-      return coord.map(function(x) {
-        return axis.d2l(x, 0, calendar) * scale;
-      });
+      return coord.map((x) => axis.d2l(x, 0, calendar) * scale);
     }
     const positions = zip3(
       toDataCoords2(layout.xaxis, data._meshX, scene.dataScale[0], data.xcalendar),

@@ -156,7 +156,7 @@ proto.updateLayers = function(ternaryLayout: any) {
             } else if(d === 'aline' || d === 'bline' || d === 'cline') {
                 s.append('path');
             } else if(d === 'grids') {
-                grids.forEach(function(d) {
+                grids.forEach((d) => {
                     layers[d] = s.append('g').classed('grid ' + d, true);
                 });
             }

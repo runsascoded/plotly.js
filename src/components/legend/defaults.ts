@@ -41,7 +41,7 @@ function groupDefaults(legendId: string, layoutIn: any, layoutOut: FullLayout, f
     let legendReallyHasATrace = false;
     let defaultOrder = 'normal';
 
-    const shapesWithLegend = (layoutOut.shapes || []).filter(function(d: any) { return d.showlegend; });
+    const shapesWithLegend = (layoutOut.shapes || []).filter((d: any) => d.showlegend);
 
     function isPieWithLegendArray(trace: FullTrace): boolean {
         return Registry.traceIs(trace, 'pie-like')
@@ -50,7 +50,7 @@ function groupDefaults(legendId: string, layoutIn: any, layoutOut: FullLayout, f
     }
     fullData
         .filter(isPieWithLegendArray)
-        .forEach(function (trace: FullTrace) {
+        .forEach((trace: FullTrace) => {
             if (trace.visible) {
                 legendTraceCount++;
             }
@@ -74,9 +74,7 @@ function groupDefaults(legendId: string, layoutIn: any, layoutOut: FullLayout, f
             }
         });
 
-    const allLegendItems = fullData.concat(shapesWithLegend).filter(function(d: any) {
-        return !isPieWithLegendArray(trace) && legendId === (d.legend || 'legend');
-    });
+    const allLegendItems = fullData.concat(shapesWithLegend).filter((d: any) => !isPieWithLegendArray(trace) && legendId === (d.legend || 'legend'));
 
     for(let i = 0; i < allLegendItems.length; i++) {
         trace = allLegendItems[i];

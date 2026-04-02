@@ -8,7 +8,7 @@ Click to enter Plot subtitle                           // plots/plots.ts:179
 Click to enter Plot title                              // plots/plots.ts:178
 Click to enter X axis title                            // plots/plots.ts:180
 Click to enter Y axis title                            // plots/plots.ts:181
-Click to enter radial axis title                       // plots/polar/polar.ts:428
+Click to enter radial axis title                       // plots/polar/polar.ts:424
 Compare data on hover                                  // components/modebar/buttons.ts:219
 Double-click on legend to isolate one trace            // components/legend/handle_click.ts:11
 Double-click to zoom back out                          // plots/ternary/ternary.ts:496
@@ -42,9 +42,9 @@ Zoom                                                   // components/modebar/but
 Zoom in                                                // components/modebar/buttons.ts:163
 Zoom out                                               // components/modebar/buttons.ts:174
 close:                                                 // traces/ohlc/calc.ts:81
-concentration:                                         // traces/sankey/plot.ts:139
+concentration:                                         // traces/sankey/plot.ts:133
 high:                                                  // traces/ohlc/calc.ts:79
-incoming flow count:                                   // traces/sankey/plot.ts:140
+incoming flow count:                                   // traces/sankey/plot.ts:134
 kde:                                                   // traces/violin/calc.ts:69
 lat:                                                   // traces/scattergeo/calc.ts:42
 lon:                                                   // traces/scattergeo/calc.ts:43
@@ -57,10 +57,10 @@ median:                                                // traces/box/calc.ts:216
 min:                                                   // traces/box/calc.ts:217
 new text                                               // plots/plots.ts:183
 open:                                                  // traces/ohlc/calc.ts:78
-outgoing flow count:                                   // traces/sankey/plot.ts:141
+outgoing flow count:                                   // traces/sankey/plot.ts:135
 q1:                                                    // traces/box/calc.ts:218
 q3:                                                    // traces/box/calc.ts:219
-source:                                                // traces/sankey/plot.ts:137
-target:                                                // traces/sankey/plot.ts:138
+source:                                                // traces/sankey/plot.ts:131
+target:                                                // traces/sankey/plot.ts:132
 trace                                                  // plots/plots.ts:185
 upper fence:                                           // traces/box/calc.ts:226

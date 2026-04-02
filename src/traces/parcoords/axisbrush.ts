@@ -100,9 +100,7 @@ function setHighlight(d: any) {
 }
 
 function unitToPx(unitRanges: any, height: any) {
-    return unitRanges.map(function(pr: any) {
-        return pr.map(function(v: any) { return Math.max(0, v * height); }).sort(sortAsc);
-    });
+    return unitRanges.map((pr: any) => pr.map((v: any) => Math.max(0, v * height)).sort(sortAsc));
 }
 
 // is the cursor over the north, middle, or south of a bar?
@@ -222,9 +220,7 @@ function dragstart(lThis: any, d: any) {
     s.clickableOrdinalRange = interval.clickableOrdinalRange;
     s.stayingIntervals = (d.multiselect && b.filterSpecified) ? b.filter.getConsolidated() : [];
     if(unitRange) {
-        s.stayingIntervals = s.stayingIntervals.filter(function(int2: any) {
-            return int2[0] !== unitRange[0] && int2[1] !== unitRange[1];
-        });
+        s.stayingIntervals = s.stayingIntervals.filter((int2: any) => int2[0] !== unitRange[0] && int2[1] !== unitRange[1]);
     }
     s.startExtent = interval.region ? unitRange[interval.region === 's' ? 1 : 0] : unitLocation;
     d.parent.inBrushDrag = true;
@@ -421,7 +417,7 @@ function ensureAxisBrush(axisOverlays: any, paperColor: any, gd: GraphDiv) {
 }
 
 function getBrushExtent(brush: any) {
-    return brush.svgBrush.extent.map(function(e: any) {return e.slice();});
+    return brush.svgBrush.extent.map((e: any) => e.slice());
 }
 
 function brushClear(brush: any) {
@@ -472,7 +468,7 @@ function makeFilter() {
     return {
         set: function(a: any) {
             filter = a
-                .map(function(d: any) { return d.slice().sort(sortAsc); })
+                .map((d: any) => d.slice().sort(sortAsc))
                 .sort(startAsc);
 
             // handle unselected case
@@ -483,9 +479,7 @@ function makeFilter() {
             }
 
             consolidated = dedupeRealRanges(filter);
-            bounds = filter.reduce(function(p, n) {
-                return [Math.min(p[0], n[0]), Math.max(p[1], n[1])];
-            }, [Infinity, -Infinity]);
+            bounds = filter.reduce((p, n) => [Math.min(p[0], n[0]), Math.max(p[1], n[1])], [Infinity, -Infinity]);
         },
         get: function() { return filter.slice(); },
         getConsolidated: function() { return consolidated; },
@@ -512,7 +506,7 @@ function makeBrush(state: any, rangeSpecified: any, initialRange: any, brushStar
 // seemed to make more sense just to put the whole routine here
 function cleanRanges(ranges: any, dimension: any) {
     if(Array.isArray(ranges[0])) {
-        ranges = ranges.map(function(ri: any) { return ri.sort(sortAsc); });
+        ranges = ranges.map((ri: any) => ri.sort(sortAsc));
 
         if(!dimension.multiselect) ranges = [ranges[0]];
         else ranges = dedupeRealRanges(ranges.sort(startAsc));
@@ -521,14 +515,14 @@ function cleanRanges(ranges: any, dimension: any) {
     // ordinal snapping
     if(dimension.tickvals) {
         const sortedTickVals = dimension.tickvals.slice().sort(sortAsc);
-        ranges = ranges.map(function(ri: any) {
+        ranges = ranges.map((ri: any) => {
             const rSnapped = [
                 ordinalScaleSnap(0, sortedTickVals, ri[0], []),
                 ordinalScaleSnap(1, sortedTickVals, ri[1], [])
             ];
             if(rSnapped[1] > rSnapped[0]) return rSnapped;
         })
-        .filter(function(ri: any) { return ri; });
+        .filter((ri: any) => ri);
 
         if(!ranges.length) return;
     }

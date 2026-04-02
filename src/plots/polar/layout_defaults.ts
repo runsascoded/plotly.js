@@ -44,7 +44,7 @@ function handleDefaults(contIn: any, contOut: any, coerce: any, opts: any) {
         const axOut = Template.newContainer(contOut, axName);
         axOut._id = axOut._name = axName;
         axOut._attr = opts.id + '.' + axName;
-        axOut._traceIndices = subplotData.map(function(t: any) { return t.index; });
+        axOut._traceIndices = subplotData.map((t: any) => t.index);
 
         const dataAttr = (constants.axisName2dataArray as any)[axName];
         let axType = handleAxisTypeDefaults(axIn, axOut, coerceAxis, subplotData, dataAttr, opts);

@@ -2014,7 +2014,7 @@ function refineTicks(gd?: any): void {
     [
         '_adjustTickLabelsOverflow',
         '_hideCounterAxisInsideTickLabels'
-    ].forEach(function(k) {
+    ].forEach((k) => {
         for(let i = 0; i < axList.length; i++) {
             const hideFn = axList[i][k];
             if(hideFn) hideFn();
@@ -2079,7 +2079,7 @@ export function graphJson(gd?: any, dataonly?: any, mode?: any, output?: any, us
         if(isPlainObject(d)) {
             const o: any = {};
             let src;
-            Object.keys(d).sort().forEach(function(v) {
+            Object.keys(d).sort().forEach((v) => {
                 // remove private elements and functions
                 // _ is for private, [ is a mistake ie [object Object]
                 if(['_', '['].indexOf(v.charAt(0)) !== -1) return;
@@ -2140,7 +2140,7 @@ export function graphJson(gd?: any, dataonly?: any, mode?: any, output?: any, us
         }
 
         if(dIsArray) {
-            return d.map(function(x) {return stripObj(x, keepFunction);});
+            return d.map((x) => stripObj(x, keepFunction));
         }
 
         if(dIsTypedArray) {
@@ -2155,7 +2155,7 @@ export function graphJson(gd?: any, dataonly?: any, mode?: any, output?: any, us
     }
 
     const obj: any = {
-        data: (data || []).map(function(v: any) {
+        data: (data || []).map((v: any) => {
             const d = stripObj(v);
             // fit has some little arrays in it that don't contain data,
             // just fit params and meta
@@ -3203,9 +3203,7 @@ function sortAxisCategoriesByValue(axList?: any, gd?: any): any {
             ax._categoriesAggregatedValue = categoriesAggregatedValue;
 
             // Set new category order
-            ax._initialCategories = categoriesAggregatedValue.map(function(c) {
-                return c[0];
-            });
+            ax._initialCategories = categoriesAggregatedValue.map((c) => c[0]);
 
             // Sort all matching axes
             affectedTraces = affectedTraces.concat(ax.sortByInitialCategories());

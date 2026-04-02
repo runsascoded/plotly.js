@@ -27,7 +27,7 @@ const addToForeButtons = function(b: any) {
     if(foreButtons.indexOf(name) === -1) foreButtons.push(name);
     if(foreButtons.indexOf(_cat) === -1) foreButtons.push(_cat);
 };
-buttonList.forEach(function(k: any) {
+buttonList.forEach((k: any) => {
     addToForeButtons(modeBarButtons[k]);
 });
 foreButtons.sort();

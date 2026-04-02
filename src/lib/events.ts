@@ -23,9 +23,9 @@ class MiniEmitter {
 
     once(event: string, fn: EventHandler): this {
         const self = this;
-        function wrapper(this: any) {
+        function wrapper(this: any, ...args: any[]) {
             self.removeListener(event, wrapper);
-            fn.apply(this, arguments as any);
+            fn.apply(this, args);
         }
         (wrapper as WrappedHandler).listener = fn;
         return this.on(event, wrapper);

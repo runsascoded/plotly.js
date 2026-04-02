@@ -16,7 +16,7 @@ const makeImagDflt = memoize(function(realTickvals: any) {
     // TODO: handle this case outside supply defaults step
     if(Lib.isTypedArray(realTickvals)) realTickvals = Array.from(realTickvals);
 
-    return realTickvals.slice().reverse().map(function(x: any) { return -x; })
+    return realTickvals.slice().reverse().map((x: any) => -x)
         .concat([0])
         .concat(realTickvals);
 }, String);
@@ -44,7 +44,7 @@ function handleDefaults(contIn: any, contOut: any, coerce: any, opts: any) {
         const axOut = Template.newContainer(contOut, axName);
         axOut._id = axOut._name = axName;
         axOut._attr = opts.id + '.' + axName;
-        axOut._traceIndices = subplotData.map(function(t: any) { return t.index; });
+        axOut._traceIndices = subplotData.map((t: any) => t.index);
 
         const visible = coerceAxis('visible');
 

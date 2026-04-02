@@ -209,7 +209,7 @@ export default function calcGridlines(trace: any, axisLetter: any, crossAxisLett
         bounds = [
             Math.floor(((data.length - 1) - axis.arraytick0) / axis.arraydtick * (1 + eps)),
             Math.ceil((- axis.arraytick0) / axis.arraydtick / (1 + eps))
-        ].sort(function(a, b) {return a - b;});
+        ].sort((a, b) => a - b);
 
         // Unpack sorted values so we can be sure to avoid infinite loops if something
         // is backwards:
@@ -287,7 +287,7 @@ export default function calcGridlines(trace: any, axisLetter: any, crossAxisLett
         bounds = [
             Math.floor((data[data.length - 1] - axis.tick0) / axis.dtick * (1 + eps)),
             Math.ceil((data[0] - axis.tick0) / axis.dtick / (1 + eps))
-        ].sort(function(a, b) {return a - b;});
+        ].sort((a, b) => a - b);
 
         // Unpack sorted values so we can be sure to avoid infinite loops if something
         // is backwards:

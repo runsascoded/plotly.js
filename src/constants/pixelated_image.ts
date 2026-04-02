@@ -8,8 +8,6 @@ export const CSS_DECLARATIONS: readonly [string, string][] = [
     ['image-rendering', 'pixelated']
 ];
 
-export const STYLE: string = CSS_DECLARATIONS.map(function(d) {
-    return d.join(': ') + '; ';
-}).join('');
+export const STYLE: string = CSS_DECLARATIONS.map((d) => d.join(': ') + '; ').join('');
 
 export default { CSS_DECLARATIONS, STYLE };

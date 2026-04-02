@@ -39,7 +39,7 @@ export const splitToPanels = function(d: any) {
 
 export const splitToCells = function(d: any) {
     const fromTo = rowFromTo(d);
-    return (d.values || []).slice(fromTo[0], fromTo[1]).map(function(v: any, i: any) {
+    return (d.values || []).slice(fromTo[0], fromTo[1]).map((v: any, i: any) => {
         // By keeping identical key, a DOM node removal, creation and addition is spared, important when visible
         // grid has a lot of elements (quadratic with xcol/ycol count).
         // But it has to be busted when `svgUtil.convertToTspans` is used as it reshapes cell subtrees asynchronously,

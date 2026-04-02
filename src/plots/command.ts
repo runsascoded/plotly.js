@@ -362,7 +362,7 @@ function computeDataBindings(gd?: any, args?: any): any {
 }
 
 function crawl(attrs?: any, callback?: any, path?: any, depth?: any): void {
-    Object.keys(attrs).forEach(function(attrName) {
+    Object.keys(attrs).forEach((attrName) => {
         const attr: any = attrs[attrName];
 
         if(attrName[0] === '_') return;

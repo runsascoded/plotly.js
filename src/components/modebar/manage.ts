@@ -77,7 +77,7 @@ function getButtonGroups(gd: GraphDiv) {
     if(typeof layoutRemove === 'string') layoutRemove = [layoutRemove];
 
     let buttonsToAdd = context.modeBarButtonsToAdd.concat(
-        layoutAdd.filter(function(e: any) {
+        layoutAdd.filter((e: any) => {
             for(let i = 0; i < context.modeBarButtonsToRemove.length; i++) {
                 if(match(e, context.modeBarButtonsToRemove[i])) return false;
             }
@@ -86,7 +86,7 @@ function getButtonGroups(gd: GraphDiv) {
     );
 
     const buttonsToRemove = context.modeBarButtonsToRemove.concat(
-        layoutRemove.filter(function(e: any) {
+        layoutRemove.filter((e: any) => {
             for(let i = 0; i < context.modeBarButtonsToAdd.length; i++) {
                 if(match(e, context.modeBarButtonsToAdd[i])) return false;
             }

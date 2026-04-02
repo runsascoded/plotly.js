@@ -34842,19 +34842,17 @@ void main() {
     );
   };
   var apply3DTransform = function(transform) {
-    return function() {
-      const args = arguments;
-      const xyz = arguments.length === 1 ? args[0] : [args[0], args[1], args[2] || 0];
+    return function(...args) {
+      const xyz = args.length === 1 ? args[0] : [args[0], args[1], args[2] || 0];
       return dot(transform, [xyz[0], xyz[1], xyz[2], 1]).slice(0, 3);
     };
   };
   var apply2DTransform = function(transform) {
-    return function() {
-      let args = arguments;
+    return function(...args) {
       if (args.length === 3) {
         args = args[0];
       }
-      const xy = arguments.length === 1 ? args[0] : [args[0], args[1]];
+      const xy = args.length === 1 ? args[0] : [args[0], args[1]];
       return dot(transform, [xy[0], xy[1], 1]).slice(0, 2);
     };
   };
@@ -34978,7 +34976,7 @@ void main() {
     if (!element) {
       element = document;
     }
-    element.querySelectorAll(selector).forEach(function(el) {
+    element.querySelectorAll(selector).forEach((el) => {
       if (!el.getAttribute(eventAddedAttrName)) {
         el.addEventListener("mouseenter", function() {
           const childEl = this.querySelector(childSelector);
@@ -35020,7 +35018,7 @@ void main() {
       0,
       1
     ];
-    allElements.forEach(function(e) {
+    allElements.forEach((e) => {
       const t = getElementTransformMatrix(e);
       if (t) {
         const m = matrix_default.convertCssMatrix(t);
@@ -35033,9 +35031,7 @@ void main() {
     const style5 = window.getComputedStyle(element, null);
     const transform = style5.getPropertyValue("-webkit-transform") || style5.getPropertyValue("-moz-transform") || style5.getPropertyValue("-ms-transform") || style5.getPropertyValue("-o-transform") || style5.getPropertyValue("transform");
     if (transform === "none") return null;
-    return transform.replace("matrix", "").replace("3d", "").slice(1, -1).split(",").map(function(n) {
-      return +n;
-    });
+    return transform.replace("matrix", "").replace("3d", "").slice(1, -1).split(",").map((n) => +n);
   }
   function getElementAndAncestors(element) {
     const allElements = [];
@@ -42607,9 +42603,9 @@ void main() {
     }
     once(event2, fn) {
       const self2 = this;
-      function wrapper() {
+      function wrapper(...args) {
         self2.removeListener(event2, wrapper);
-        fn.apply(this, arguments);
+        fn.apply(this, args);
       }
       wrapper.listener = fn;
       return this.on(event2, wrapper);
@@ -42861,7 +42857,7 @@ void main() {
   var UNDERSCORE_ATTRS = [IS_SUBPLOT_OBJ, IS_LINKED_TO_ARRAY, ARRAY_ATTR_REGEXPS, DEPRECATED];
   var get3 = function() {
     const traces = {};
-    registry_default.allTypes.forEach(function(type) {
+    registry_default.allTypes.forEach((type) => {
       traces[type] = getTraceAttributes(type);
     });
     return {
@@ -42901,7 +42897,7 @@ void main() {
   var crawl2 = function(attrs3, callback, specifiedLevel, attrString) {
     const level = specifiedLevel || 0;
     attrString = attrString || "";
-    Object.keys(attrs3).forEach(function(attrName) {
+    Object.keys(attrs3).forEach((attrName) => {
       const attr2 = attrs3[attrName];
       if (UNDERSCORE_ATTRS.indexOf(attrName) !== -1) return;
       const fullAttrString = (attrString ? attrString + "." : "") + attrName;
@@ -43884,7 +43880,7 @@ void main() {
     return bindings;
   }
   function crawl3(attrs3, callback, path, depth) {
-    Object.keys(attrs3).forEach(function(attrName) {
+    Object.keys(attrs3).forEach((attrName) => {
       const attr2 = attrs3[attrName];
       if (attrName[0] === "_") return;
       const thisPath = path + (depth > 0 ? "." : "") + attrName;
@@ -45212,7 +45208,7 @@ void main() {
     [
       "_adjustTickLabelsOverflow",
       "_hideCounterAxisInsideTickLabels"
-    ].forEach(function(k) {
+    ].forEach((k) => {
       for (let i = 0; i < axList.length; i++) {
         const hideFn = axList[i][k];
         if (hideFn) hideFn();
@@ -45245,7 +45241,7 @@ void main() {
       if (isPlainObject2(d2)) {
         const o = {};
         let src;
-        Object.keys(d2).sort().forEach(function(v) {
+        Object.keys(d2).sort().forEach((v) => {
           if (["_", "["].indexOf(v.charAt(0)) !== -1) return;
           if (typeof d2[v] === "function") {
             if (keepFunction) o[v] = "_function";
@@ -45289,9 +45285,7 @@ void main() {
         }, keepFunction);
       }
       if (dIsArray) {
-        return d2.map(function(x) {
-          return stripObj(x, keepFunction);
-        });
+        return d2.map((x) => stripObj(x, keepFunction));
       }
       if (dIsTypedArray) {
         return simpleMap(d2, identity3);
@@ -45300,7 +45294,7 @@ void main() {
       return d2;
     }
     const obj = {
-      data: (data || []).map(function(v) {
+      data: (data || []).map((v) => {
         const d2 = stripObj(v);
         if (dataonly) {
           delete d2.fit;
@@ -45990,9 +45984,7 @@ void main() {
         }
         categoriesAggregatedValue.sort(order === "descending" ? sortDescending : sortAscending);
         ax._categoriesAggregatedValue = categoriesAggregatedValue;
-        ax._initialCategories = categoriesAggregatedValue.map(function(c) {
-          return c[0];
-        });
+        ax._initialCategories = categoriesAggregatedValue.map((c) => c[0]);
         affectedTraces = affectedTraces.concat(ax.sortByInitialCategories());
       }
     }
@@ -50039,9 +50031,7 @@ void main() {
   // src/plots/cartesian/show_dflt.ts
   function getShowAttrDflt(containerIn) {
     const showAttrsAll = ["showexponent", "showtickprefix", "showticksuffix"];
-    const showAttrs = showAttrsAll.filter(function(a) {
-      return containerIn[a] !== void 0;
-    });
+    const showAttrs = showAttrsAll.filter((a) => containerIn[a] !== void 0);
     const sameVal = function(a) {
       return containerIn[a] === containerIn[showAttrs[0]];
     };
@@ -51634,7 +51624,7 @@ void main() {
   var symbolNoDot = {};
   var symbolNoFill = {};
   var symbolList = [];
-  Object.keys(symbol_defs_default).forEach(function(k) {
+  Object.keys(symbol_defs_default).forEach((k) => {
     const symDef = symbol_defs_default[k];
     const n = symDef.n;
     symbolList.push(
@@ -53743,7 +53733,7 @@ void main() {
             }
           }
         }
-        list2.sort(function(a, b) {
+        list2.sort((a, b) => {
           const ind0 = seen[0][1];
           const d2 = ind0[a[0]] - ind0[b[0]];
           if (d2) return d2;
@@ -53920,7 +53910,7 @@ void main() {
       const rangebreaksIn = ax.rangebreaks || [];
       let bnds, b02, b12, vb, vDate;
       if (!rangebreaksIn._cachedPatterns) {
-        rangebreaksIn._cachedPatterns = rangebreaksIn.map(function(brk) {
+        rangebreaksIn._cachedPatterns = rangebreaksIn.map((brk) => {
           return brk.enabled && brk.bounds ? simpleMap(
             brk.bounds,
             brk.pattern ? cleanNumber2 : ax.d2c
@@ -53929,9 +53919,7 @@ void main() {
         });
       }
       if (!rangebreaksIn._cachedValues) {
-        rangebreaksIn._cachedValues = rangebreaksIn.map(function(brk) {
-          return brk.enabled && brk.values ? simpleMap(brk.values, ax.d2c).sort(sorterAsc) : null;
-        });
+        rangebreaksIn._cachedValues = rangebreaksIn.map((brk) => brk.enabled && brk.values ? simpleMap(brk.values, ax.d2c).sort(sorterAsc) : null);
       }
       for (let i = 0; i < rangebreaksIn.length; i++) {
         const brk = rangebreaksIn[i];
@@ -53983,7 +53971,7 @@ void main() {
       let i, bnds, b02, b12;
       const rangebreaksOut = [];
       if (!ax.rangebreaks) return rangebreaksOut;
-      const rangebreaksIn = ax.rangebreaks.slice().sort(function(a, b) {
+      const rangebreaksIn = ax.rangebreaks.slice().sort((a, b) => {
         if (a.pattern === WEEKDAY_PATTERN && b.pattern === HOUR_PATTERN) return -1;
         if (b.pattern === WEEKDAY_PATTERN && a.pattern === HOUR_PATTERN) return 1;
         return 0;
@@ -54054,9 +54042,7 @@ void main() {
           }
         }
       }
-      rangebreaksOut.sort(function(a, b) {
-        return a.min - b.min;
-      });
+      rangebreaksOut.sort((a, b) => a.min - b.min);
       return rangebreaksOut;
     };
     ax.makeCalcdata = function(trace, axLetter2, opts) {
@@ -54259,9 +54245,7 @@ void main() {
     const attrDef = {};
     if (!dflt) dflt = axlist[0] || (typeof extraOption === "string" ? extraOption : extraOption[0]);
     if (!extraOption) extraOption = dflt;
-    axlist = axlist.concat(axlist.map(function(x) {
-      return x + " domain";
-    }));
+    axlist = axlist.concat(axlist.map((x) => x + " domain"));
     attrDef[refAttr] = {
       valType: "enumerated",
       values: axlist.concat(extraOption ? typeof extraOption === "string" ? [extraOption] : extraOption : []),
@@ -54898,18 +54882,10 @@ void main() {
       if (isPeriod && tickVals.length) {
         allTickVals = allTickVals.slice(1);
       }
-      allTickVals = allTickVals.sort(function(a, b) {
-        return a.value - b.value;
-      }).filter(function(tick, index, self2) {
-        return index === 0 || tick.value !== self2[index - 1].value;
-      });
-      const majorTickIndices = allTickVals.map(function(item, index) {
-        return item.minor === void 0 && !item.skipLabel ? index : null;
-      }).filter(function(index) {
-        return index !== null;
-      });
-      majorTickIndices.forEach(function(majorIdx) {
-        ticklabelIndex.map(function(nextLabelIdx) {
+      allTickVals = allTickVals.sort((a, b) => a.value - b.value).filter((tick, index, self2) => index === 0 || tick.value !== self2[index - 1].value);
+      const majorTickIndices = allTickVals.map((item, index) => item.minor === void 0 && !item.skipLabel ? index : null).filter((index) => index !== null);
+      majorTickIndices.forEach((majorIdx) => {
+        ticklabelIndex.map((nextLabelIdx) => {
           const minorIdx = majorIdx + nextLabelIdx;
           if (minorIdx >= 0 && minorIdx < allTickVals.length) {
             pushUnique2(allTicklabelVals, allTickVals[minorIdx]);
@@ -54920,9 +54896,7 @@ void main() {
     if (hasMinor) {
       const canOverlap = ax.minor.ticks === "inside" && ax.ticks === "outside" || ax.minor.ticks === "outside" && ax.ticks === "inside";
       if (!canOverlap) {
-        const majorValues = tickVals.map(function(d2) {
-          return d2.value;
-        });
+        const majorValues = tickVals.map((d2) => d2.value);
         const list2 = [];
         for (let k = 0; k < minorTickVals.length; k++) {
           const T = minorTickVals[k];
@@ -55029,9 +55003,7 @@ void main() {
   };
   function filterRangeBreaks(ax, ticksOut) {
     if (ax.rangebreaks) {
-      ticksOut = ticksOut.filter(function(d2) {
-        return ax.maskBreaks(d2.x) !== BADNUM8;
-      });
+      ticksOut = ticksOut.filter((d2) => ax.maskBreaks(d2.x) !== BADNUM8);
     }
     return ticksOut;
   }
@@ -55693,7 +55665,7 @@ void main() {
     const subplotObj = gd._fullLayout._subplots;
     const allSubplots = subplotObj.cartesian.concat(subplotObj.gl2d || []);
     const out = ax ? axes.findSubplotsWithAxis(allSubplots, ax) : allSubplots;
-    out.sort(function(a, b) {
+    out.sort((a, b) => {
       const aParts = a.slice(1).split("y");
       const bParts = b.slice(1).split("y");
       if (aParts[0] === bParts[0]) return +aParts[1] - +bParts[1];
@@ -55766,12 +55738,8 @@ void main() {
     }
     const axList = !arg || arg === "redraw" ? axes.listIds(gd) : arg;
     const fullAxList = axes.list(gd);
-    const overlayingShiftedAx = fullAxList.filter(function(ax) {
-      return ax.autoshift;
-    }).map(function(ax) {
-      return ax.overlaying;
-    });
-    axList.map(function(axId) {
+    const overlayingShiftedAx = fullAxList.filter((ax) => ax.autoshift).map((ax) => ax.overlaying);
+    axList.map((axId) => {
       const ax = axes.getFromId(gd, axId);
       if (ax.tickmode === "sync" && ax.overlaying) {
         const overlayingIndex = axList.findIndex(function(axis2) {
@@ -55783,7 +55751,7 @@ void main() {
       }
     });
     const axShifts = { false: { left: 0, right: 0 } };
-    return syncOrAsync(axList.map(function(axId) {
+    return syncOrAsync(axList.map((axId) => {
       return function() {
         if (!axId) return;
         const ax = axes.getFromId(gd, axId);
@@ -56109,15 +56077,15 @@ void main() {
   };
   function filterPush(push, automargin) {
     if (!push) return;
-    const keepMargin = Object.keys(MARGIN_MAPPING).reduce(function(data, nextKey) {
+    const keepMargin = Object.keys(MARGIN_MAPPING).reduce((data, nextKey) => {
       if (automargin.indexOf(nextKey) !== -1) {
-        MARGIN_MAPPING[nextKey].forEach(function(key) {
+        MARGIN_MAPPING[nextKey].forEach((key) => {
           data[key] = 1;
         });
       }
       return data;
     }, {});
-    Object.keys(push).forEach(function(key) {
+    Object.keys(push).forEach((key) => {
       if (!keepMargin[key]) {
         if (key.length === 1) push[key] = 0;
         else delete push[key];
@@ -56218,9 +56186,7 @@ void main() {
     let out = [-1, 1, main16, -main16];
     const ticks3 = minor ? (ax.minor || {}).ticks : ax.ticks;
     if (ticks3 !== "inside" === (axLetter === "x")) {
-      out = out.map(function(v) {
-        return -v;
-      });
+      out = out.map((v) => -v);
     }
     if (ax.side) {
       out.push({ l: -1, t: -1, r: 1, b: 1 }[ax.side.charAt(0)]);
@@ -56444,16 +56410,12 @@ void main() {
     const vals = [].concat(
       ax.minor && ax.minor.ticks ? (
         // minor vals
-        opts.vals.filter(function(d2) {
-          return d2.minor && !d2.noTick;
-        })
+        opts.vals.filter((d2) => d2.minor && !d2.noTick)
       ) : []
     ).concat(
       ax.ticks ? (
         // major vals
-        opts.vals.filter(function(d2) {
-          return !d2.minor && !d2.noTick;
-        })
+        opts.vals.filter((d2) => !d2.minor && !d2.noTick)
       ) : []
     );
     const ticks3 = opts.layer.selectAll("path." + cls).data(vals, tickDataFn);
@@ -56477,12 +56439,8 @@ void main() {
     }
     const cls = ax._id + "grid";
     const hasMinor = ax.minor && ax.minor.showgrid;
-    const minorVals = hasMinor ? opts.vals.filter(function(d2) {
-      return d2.minor;
-    }) : [];
-    let majorVals = ax.showgrid ? opts.vals.filter(function(d2) {
-      return !d2.minor;
-    }) : [];
+    const minorVals = hasMinor ? opts.vals.filter((d2) => d2.minor) : [];
+    let majorVals = ax.showgrid ? opts.vals.filter((d2) => !d2.minor) : [];
     const counterAx = opts.counterAxis;
     if (counterAx && axes.shouldShowZeroLine(gd, ax, counterAx)) {
       const isArrayMode = ax.tickmode === "array";
@@ -56529,9 +56487,7 @@ void main() {
     const zl = opts.layer.selectAll("path." + cls).data(show ? [{ x: 0, id: ax._id }] : []);
     zl.exit().remove();
     const zlEnter = zl.enter().append("path").classed(cls, 1).classed("zl", 1).classed("crisp", opts.crisp !== false).each(function() {
-      opts.layer.selectAll("path").sort(function(da, db) {
-        return idSort2(da.id, db.id);
-      });
+      opts.layer.selectAll("path").sort((da, db) => idSort2(da.id, db.id));
     });
     zl.merge(zlEnter).attr("transform", opts.transFn).attr("d", opts.path).call(color_default.stroke, ax.zerolinecolor || color_default.defaultLine).style("stroke-width", crispRound(gd, ax.zerolinewidth, ax._gw || 1) + "px").style("display", null);
     hideCounterAxisInsideTickLabels(ax, [ZERO_PATH]);
@@ -56542,9 +56498,7 @@ void main() {
     const axId = ax._id;
     const zerolineIsAbove = ax.zerolinelayer === "above traces";
     const cls = opts.cls || axId + "tick";
-    const vals = opts.vals.filter(function(d2) {
-      return d2.text;
-    });
+    const vals = opts.vals.filter((d2) => d2.text);
     const labelFns = opts.labelFns;
     const tickAngle = opts.secondary ? 0 : ax.tickangle;
     const prevAngle = (ax._prevTickAngles || {})[cls];
@@ -56673,7 +56627,7 @@ void main() {
         if (ax._id !== plotinfo.xaxis._id && ax._id !== plotinfo.yaxis._id) continue;
         anchoredAxes.push(isX ? plotinfo.yaxis : plotinfo.xaxis);
       }
-      anchoredAxes.forEach(function(anchorAx2, idx) {
+      anchoredAxes.forEach((anchorAx2, idx) => {
         if (anchorAx2 && insideTicklabelposition(anchorAx2)) {
           (partialOpts || [
             ZERO_PATH,
@@ -56681,7 +56635,7 @@ void main() {
             GRID_PATH,
             TICK_PATH,
             TICK_TEXT
-          ]).forEach(function(e) {
+          ]).forEach((e) => {
             const isPeriodLabel = e.K === "tick" && e.L === "text" && ax.ticklabelmode === "period";
             const mainPlotinfo = fullLayout._plots[ax._mainSubplot];
             let sel;
@@ -57021,9 +56975,7 @@ void main() {
     return rng[0] * rng[1] <= 0 && ax.zeroline && (ax.type === "linear" || ax.type === "-") && !(ax.rangebreaks && ax.maskBreaks(0) === BADNUM8) && (clipEnds(ax, 0) || !anyCounterAxLineAtZero(gd, ax, counterAxis, rng) || hasBarsOrFill(gd, ax));
   };
   axes.clipEnds = function(ax, vals) {
-    return vals.filter(function(d2) {
-      return clipEnds(ax, d2.x);
-    });
+    return vals.filter((d2) => clipEnds(ax, d2.x));
   };
   function clipEnds(ax, l) {
     const p = ax.l2p(l);
@@ -57568,7 +57520,7 @@ void main() {
 
   // src/lib/setcursor.ts
   function setCursor(el3, csr) {
-    (el3.attr("class") || "").split(" ").forEach(function(cls) {
+    (el3.attr("class") || "").split(" ").forEach((cls) => {
       if (cls.indexOf("cursor-") === 0) el3.classed(cls, false);
     });
     if (csr) el3.classed("cursor-" + csr, true);
@@ -57933,13 +57885,11 @@ void main() {
     let legendTraceCount = 0;
     let legendReallyHasATrace = false;
     let defaultOrder = "normal";
-    const shapesWithLegend = (layoutOut.shapes || []).filter(function(d2) {
-      return d2.showlegend;
-    });
+    const shapesWithLegend = (layoutOut.shapes || []).filter((d2) => d2.showlegend);
     function isPieWithLegendArray(trace2) {
       return registry_default.traceIs(trace2, "pie-like") && trace2._length != null && (Array.isArray(trace2.legend) || Array.isArray(trace2.showlegend));
     }
-    fullData.filter(isPieWithLegendArray).forEach(function(trace2) {
+    fullData.filter(isPieWithLegendArray).forEach((trace2) => {
       if (trace2.visible) {
         legendTraceCount++;
       }
@@ -57960,9 +57910,7 @@ void main() {
         }
       }
     });
-    const allLegendItems = fullData.concat(shapesWithLegend).filter(function(d2) {
-      return !isPieWithLegendArray(trace) && legendId === (d2.legend || "legend");
-    });
+    const allLegendItems = fullData.concat(shapesWithLegend).filter((d2) => !isPieWithLegendArray(trace) && legendId === (d2.legend || "legend"));
     for (let i = 0; i < allLegendItems.length; i++) {
       trace = allLegendItems[i];
       if (!trace.visible) continue;
@@ -58352,9 +58300,7 @@ void main() {
     const legendItem = g.data()[0][0];
     if (legendItem.groupTitle && legendItem.noClick) return;
     const fullData = gd._fullData;
-    const shapesWithLegend = (fullLayout.shapes || []).filter(function(d2) {
-      return d2.showlegend;
-    });
+    const shapesWithLegend = (fullLayout.shapes || []).filter((d2) => d2.showlegend);
     const allLegendItems = fullData.concat(shapesWithLegend);
     let fullTrace = legendItem.trace;
     if (fullTrace._isShape) {
@@ -58379,9 +58325,7 @@ void main() {
       valueArray[attrIndex] = value;
       return attrIndex;
     }
-    const updatedShapes = (fullLayout.shapes || []).map(function(d2) {
-      return d2._input;
-    });
+    const updatedShapes = (fullLayout.shapes || []).map((d2) => d2._input);
     let shapesUpdated = false;
     function insertShapesUpdate(shapeIndex, value) {
       updatedShapes[shapeIndex].visible = value;
@@ -58648,12 +58592,12 @@ void main() {
         a.trace.legendrank - b.trace.legendrank || a._preSort - b._preSort
       );
     };
-    legendData.forEach(function(a, k) {
+    legendData.forEach((a, k) => {
       a[0]._preGroupSort = k;
     });
     legendData.sort(orderFn1);
     for (i = 0; i < legendData.length; i++) {
-      legendData[i].forEach(function(a, k) {
+      legendData[i].forEach((a, k) => {
         a._preSort = k;
       });
       legendData[i].sort(orderFn2);
@@ -60076,7 +60020,7 @@ void main() {
     const gd = opts.gd;
     const gTop = getTopOffset(gd);
     const gLeft = getLeftOffset(gd);
-    const pointsData = hoverItems.map(function(hoverItem) {
+    const pointsData = hoverItems.map((hoverItem) => {
       const _x0 = hoverItem._x0 || hoverItem.x0 || hoverItem.x || 0;
       const _x1 = hoverItem._x1 || hoverItem.x1 || hoverItem.x || 0;
       const _y0 = hoverItem._y0 || hoverItem.y0 || hoverItem.y || 0;
@@ -60157,9 +60101,7 @@ void main() {
     const tooltipSpacing = 5;
     let lastBottomY = 0;
     let anchor = 0;
-    hoverLabel.sort(function(a, b) {
-      return a.y0 - b.y0;
-    }).each(function(d2, i) {
+    hoverLabel.sort((a, b) => a.y0 - b.y0).each(function(d2, i) {
       const topY = d2.y0 - d2.by / 2;
       if (topY - tooltipSpacing < lastBottomY) {
         d2.offset = lastBottomY - topY + tooltipSpacing;
@@ -60210,9 +60152,7 @@ void main() {
       }
     }
     if (plotinfo && hoversubplots !== "single") {
-      const overlayedSubplots = plotinfo.overlays.map(function(pi2) {
-        return pi2.id;
-      });
+      const overlayedSubplots = plotinfo.overlays.map((pi2) => pi2.id);
       subplots = subplots.concat(overlayedSubplots);
     }
     const len2 = subplots.length;
@@ -60267,7 +60207,7 @@ void main() {
       }
     } else {
       const zorderedCalcdata = gd.calcdata.slice();
-      zorderedCalcdata.sort(function(a, b) {
+      zorderedCalcdata.sort((a, b) => {
         const aZorder = a[0].trace.zorder || 0;
         const bZorder = b[0].trace.zorder || 0;
         return aZorder - bZorder;
@@ -60436,15 +60376,11 @@ void main() {
               hoverLayer: fullLayout._hoverlayer
             });
             if (closestPoints) {
-              closestPoints = closestPoints.filter(function(point) {
-                return point.spikeDistance <= spikedistance;
-              });
+              closestPoints = closestPoints.filter((point) => point.spikeDistance <= spikedistance);
             }
             if (closestPoints && closestPoints.length) {
               let tmpPoint;
-              const closestVPoints = closestPoints.filter(function(point) {
-                return point.xa.showspikes && point.xa.spikesnap !== "hovered data";
-              });
+              const closestVPoints = closestPoints.filter((point) => point.xa.showspikes && point.xa.spikesnap !== "hovered data");
               if (closestVPoints.length) {
                 const closestVPt = closestVPoints[0];
                 if ((0, import_fast_isnumeric24.default)(closestVPt.x0) && (0, import_fast_isnumeric24.default)(closestVPt.y0)) {
@@ -60454,9 +60390,7 @@ void main() {
                   }
                 }
               }
-              const closestHPoints = closestPoints.filter(function(point) {
-                return point.ya.showspikes && point.ya.spikesnap !== "hovered data";
-              });
+              const closestHPoints = closestPoints.filter((point) => point.ya.showspikes && point.ya.spikesnap !== "hovered data");
               if (closestHPoints.length) {
                 const closestHPt = closestHPoints[0];
                 if ((0, import_fast_isnumeric24.default)(closestHPt.x0) && (0, import_fast_isnumeric24.default)(closestHPt.y0)) {
@@ -60514,12 +60448,8 @@ void main() {
     };
     gd._spikepoints = newspikepoints;
     const sortHoverData = function() {
-      const hoverDataInSubplot = hoverData.filter(function(a) {
-        return firstXaxis && firstXaxis._id === a.xa._id && firstYaxis && firstYaxis._id === a.ya._id;
-      });
-      const hoverDataOutSubplot = hoverData.filter(function(a) {
-        return !(firstXaxis && firstXaxis._id === a.xa._id && firstYaxis && firstYaxis._id === a.ya._id);
-      });
+      const hoverDataInSubplot = hoverData.filter((a) => firstXaxis && firstXaxis._id === a.xa._id && firstYaxis && firstYaxis._id === a.ya._id);
+      const hoverDataOutSubplot = hoverData.filter((a) => !(firstXaxis && firstXaxis._id === a.xa._id && firstYaxis && firstYaxis._id === a.ya._id));
       hoverDataInSubplot.sort(distanceSort);
       hoverDataOutSubplot.sort(distanceSort);
       hoverData = hoverDataInSubplot.concat(hoverDataOutSubplot);
@@ -60530,14 +60460,10 @@ void main() {
     const spikeOnWinning = (axLetter === "x" || axLetter === "y") && hoverData[0] && cartesianScatterPoints[hoverData[0].trace.type];
     if (hasCartesian && spikedistance !== 0) {
       if (hoverData.length !== 0) {
-        const tmpHPointData = hoverData.filter(function(point) {
-          return point.ya.showspikes;
-        });
+        const tmpHPointData = hoverData.filter((point) => point.ya.showspikes);
         const tmpHPoint = selectClosestPoint(tmpHPointData, spikedistance, spikeOnWinning);
         spikePoints.hLinePoint = fillSpikePoint(tmpHPoint);
-        const tmpVPointData = hoverData.filter(function(point) {
-          return point.xa.showspikes;
-        });
+        const tmpVPointData = hoverData.filter((point) => point.xa.showspikes);
         const tmpVPoint = selectClosestPoint(tmpVPointData, spikedistance, spikeOnWinning);
         spikePoints.vLinePoint = fillSpikePoint(tmpVPoint);
       }
@@ -60908,9 +60834,7 @@ void main() {
         pt._distinct = true;
         mockLegend.entries.push([pt]);
       }
-      mockLegend.entries.sort(function(a, b) {
-        return a[0].trace.index - b[0].trace.index;
-      });
+      mockLegend.entries.sort((a, b) => a[0].trace.index - b[0].trace.index);
       mockLegend.layer = container;
       mockLegend._inHover = true;
       mockLegend._groupTitleFont = hoverlabel.grouptitlefont;
@@ -60931,22 +60855,16 @@ void main() {
         } else {
           lyTop = Math.min.apply(
             null,
-            groupedHoverData.map(function(c) {
-              return Math.min(c.y0, c.y1);
-            })
+            groupedHoverData.map((c) => Math.min(c.y0, c.y1))
           );
           lyBottom = Math.max.apply(
             null,
-            groupedHoverData.map(function(c) {
-              return Math.max(c.y0, c.y1);
-            })
+            groupedHoverData.map((c) => Math.max(c.y0, c.y1))
           );
         }
       } else {
         lyTop = lyBottom = mean(
-          groupedHoverData.map(function(c) {
-            return (c.y0 + c.y1) / 2;
-          })
+          groupedHoverData.map((c) => (c.y0 + c.y1) / 2)
         ) - tHeight / 2;
       }
       let lxRight, lxLeft;
@@ -60957,22 +60875,16 @@ void main() {
         } else {
           lxRight = Math.max.apply(
             null,
-            groupedHoverData.map(function(c) {
-              return Math.max(c.x0, c.x1);
-            })
+            groupedHoverData.map((c) => Math.max(c.x0, c.x1))
           );
           lxLeft = Math.min.apply(
             null,
-            groupedHoverData.map(function(c) {
-              return Math.min(c.x0, c.x1);
-            })
+            groupedHoverData.map((c) => Math.min(c.x0, c.x1))
           );
         }
       } else {
         lxRight = lxLeft = mean(
-          groupedHoverData.map(function(c) {
-            return (c.x0 + c.x1) / 2;
-          })
+          groupedHoverData.map((c) => (c.x0 + c.x1) / 2)
         ) - tWidth / 2;
       }
       const xOffset = xa._offset;
@@ -61276,7 +61188,7 @@ void main() {
         }
       ];
     });
-    pointgroups.sort(function(a, b) {
+    pointgroups.sort((a, b) => {
       return a[0].posref - b[0].posref || // for equal positions, sort trace indices increasing or decreasing
       // depending on whether the axis is reversed or not... so stacked
       // traces will generally keep their order even if one trace adds
@@ -63888,7 +63800,7 @@ void main() {
       return;
     }
     if (!fullLayout._has("cartesian") && !fullLayout._has("splom")) return;
-    const subplots = Object.keys(fullLayout._plots || {}).sort(function(a, b) {
+    const subplots = Object.keys(fullLayout._plots || {}).sort((a, b) => {
       if ((fullLayout._plots[a].mainplot && true) === (fullLayout._plots[b].mainplot && true)) {
         const aParts = a.split("y");
         const bParts = b.split("y");
@@ -63896,7 +63808,7 @@ void main() {
       }
       return fullLayout._plots[a].mainplot ? 1 : -1;
     });
-    subplots.forEach(function(subplot) {
+    subplots.forEach((subplot) => {
       const plotinfo = fullLayout._plots[subplot];
       const xa = plotinfo.xaxis;
       const ya = plotinfo.yaxis;
@@ -64459,9 +64371,7 @@ void main() {
     if ((0, import_fast_isnumeric25.default)(traceIndices)) {
       return [traceIndices];
     } else if (!Array.isArray(traceIndices) || !traceIndices.length) {
-      return gd.data.map(function(_2, i) {
-        return i;
-      });
+      return gd.data.map((_2, i) => i);
     } else if (Array.isArray(traceIndices)) {
       const traceIndicesOut = [];
       for (let i = 0; i < traceIndices.length; i++) {
@@ -65099,7 +65009,7 @@ void main() {
     arr2.set(arr1, arr0.length);
     return arr2;
   }
-  function extendTraces(gd, update3, indices, maxPoints) {
+  function extendTraces(gd, update3, indices, maxPoints, ...rest) {
     gd = getGraphDiv(gd);
     function updateArray(target, insert, maxp) {
       let newArray, remainder;
@@ -65142,10 +65052,10 @@ void main() {
     const undo2 = spliceTraces(gd, update3, indices, maxPoints, updateArray);
     const promise = redraw(gd);
     const undoArgs = [gd, undo2.update, indices, undo2.maxPoints];
-    queue_default.add(gd, prependTraces, undoArgs, extendTraces, arguments);
+    queue_default.add(gd, prependTraces, undoArgs, extendTraces, [gd, update3, indices, maxPoints, ...rest]);
     return promise;
   }
-  function prependTraces(gd, update3, indices, maxPoints) {
+  function prependTraces(gd, update3, indices, maxPoints, ...rest) {
     gd = getGraphDiv(gd);
     function updateArray(target, insert, maxp) {
       let newArray, remainder;
@@ -65187,7 +65097,7 @@ void main() {
     const undo2 = spliceTraces(gd, update3, indices, maxPoints, updateArray);
     const promise = redraw(gd);
     const undoArgs = [gd, undo2.update, indices, undo2.maxPoints];
-    queue_default.add(gd, extendTraces, undoArgs, prependTraces, arguments);
+    queue_default.add(gd, extendTraces, undoArgs, prependTraces, [gd, update3, indices, maxPoints, ...rest]);
     return promise;
   }
   function addTraces(gd, traces, newIndices) {
@@ -65203,9 +65113,7 @@ void main() {
     if (!Array.isArray(traces)) {
       traces = [traces];
     }
-    traces = traces.map(function(trace) {
-      return extendFlat({}, trace);
-    });
+    traces = traces.map((trace) => extendFlat({}, trace));
     helpers_default5.cleanData(traces);
     for (i = 0; i < traces.length; i++) {
       gd.data.push(traces[i]);
@@ -65286,9 +65194,7 @@ void main() {
     for (i = 0; i < currentIndices.length; i++) {
       movingTraceMap.push({ newIndex: newIndices[i], trace: gd.data[currentIndices[i]] });
     }
-    movingTraceMap.sort(function(a, b) {
-      return a.newIndex - b.newIndex;
-    });
+    movingTraceMap.sort((a, b) => a.newIndex - b.newIndex);
     for (i = 0; i < movingTraceMap.length; i += 1) {
       newData.splice(movingTraceMap[i].newIndex, 0, movingTraceMap[i].trace);
     }
@@ -65393,9 +65299,7 @@ void main() {
     const undoit = {};
     let axlist;
     function a0() {
-      return traces.map(function() {
-        return void 0;
-      });
+      return traces.map(() => void 0);
     }
     function addToAxlist(axid) {
       const axName = axes_default.id2name(axid);
@@ -65414,7 +65318,7 @@ void main() {
     }
     function doextra(attr2, val, i2) {
       if (Array.isArray(attr2)) {
-        attr2.forEach(function(a) {
+        attr2.forEach((a) => {
           doextra(a, val, i2);
         });
         return;
@@ -65721,7 +65625,7 @@ void main() {
     const undoit = {};
     function doextra(attr2, val) {
       if (Array.isArray(attr2)) {
-        attr2.forEach(function(a) {
+        attr2.forEach((a) => {
           doextra(a, val);
         });
         return;
@@ -65967,9 +65871,9 @@ void main() {
     });
   }
   function guiEdit(func) {
-    return function wrappedEdit(gd) {
+    return function wrappedEdit(gd, ...args) {
       gd._fullLayout._guiEditing = true;
-      const p = func.apply(null, arguments);
+      const p = func(gd, ...args);
       gd._fullLayout._guiEditing = false;
       return p;
     };
@@ -66764,7 +66668,7 @@ void main() {
         index: indices && indices[i] !== void 0 && indices[i] !== null ? indices[i] : bigIndex + i
       });
     }
-    insertions.sort(function(a, b) {
+    insertions.sort((a, b) => {
       if (a.index > b.index) return -1;
       if (a.index < b.index) return 1;
       return 0;
@@ -66929,7 +66833,7 @@ void main() {
       data: {},
       layout: {}
     };
-    data.forEach(function(trace) {
+    data.forEach((trace) => {
       const traceTemplate = {};
       walkStyleKeys(trace, traceTemplate, getTraceInfo.bind(null, trace));
       const traceType = lib_default.coerce(trace, {}, attributes_default2, "type");
@@ -70721,7 +70625,7 @@ void main() {
     }
     const cdscatterSorted = cdscatter.slice();
     if (needsSort) {
-      cdscatterSorted.sort(function(a, b) {
+      cdscatterSorted.sort((a, b) => {
         const traceA = a[0].trace;
         const traceB = b[0].trace;
         return traceA._groupIndex - traceB._groupIndex || traceA.index - traceB.index;
@@ -71180,19 +71084,13 @@ void main() {
     }
     trace._ownPolygons = thisPolygons;
     function visFilter(d2) {
-      return d2.filter(function(v) {
-        return !v.gap && v.vis;
-      });
+      return d2.filter((v) => !v.gap && v.vis);
     }
     function visFilterWithGaps(d2) {
-      return d2.filter(function(v) {
-        return v.vis;
-      });
+      return d2.filter((v) => v.vis);
     }
     function gapFilter(d2) {
-      return d2.filter(function(v) {
-        return !v.gap;
-      });
+      return d2.filter((v) => !v.gap);
     }
     function keyFunc(d2) {
       return d2.id;
@@ -71302,22 +71200,20 @@ void main() {
     if (!subtypes_default.hasMarkers(trace)) return;
     const mnum = trace.marker.maxdisplayed;
     if (mnum === 0) return;
-    const cd = cdscatter.filter(function(v) {
-      return v.x >= xr[0] && v.x <= xr[1] && v.y >= yr[0] && v.y <= yr[1];
-    });
+    const cd = cdscatter.filter((v) => v.x >= xr[0] && v.x <= xr[1] && v.y >= yr[0] && v.y <= yr[1]);
     const inc = Math.ceil(cd.length / mnum);
     let tnum = 0;
-    cdscatterAll.forEach(function(cdj, j) {
+    cdscatterAll.forEach((cdj, j) => {
       const tracei = cdj[0].trace;
       if (subtypes_default.hasMarkers(tracei) && tracei.marker.maxdisplayed > 0 && j < idx) {
         tnum++;
       }
     });
     const i0 = Math.round(tnum * inc / 3 + Math.floor(tnum / 3) * inc / 7.1);
-    cdscatter.forEach(function(v) {
+    cdscatter.forEach((v) => {
       delete v.vis;
     });
-    cd.forEach(function(v, i) {
+    cd.forEach((v, i) => {
       if (Math.round((i + i0) % inc) === 0) v.vis = true;
     });
   }
@@ -72238,9 +72134,7 @@ void main() {
     let axLayoutOut;
     function newAxLayoutOut() {
       const traces = ax2traces[axName] || [];
-      axLayoutOut._traceIndices = traces.map(function(t) {
-        return t.index;
-      });
+      axLayoutOut._traceIndices = traces.map((t) => t.index);
       axLayoutOut._annIndices = [];
       axLayoutOut._shapeIndices = [];
       axLayoutOut._selectionIndices = [];
@@ -72708,7 +72602,7 @@ void main() {
         }
       }
     }
-    layerData.sort(function(a, b) {
+    layerData.sort((a, b) => {
       return (a.zindex || 0) - (b.zindex || 0) || a.i - b.i;
     });
     const layersJoin = plotinfo.plot.selectAll("g.mlayer").data(layerData, function(d2) {
@@ -73052,9 +72946,7 @@ void main() {
   var toSVG2 = function(gd) {
     const imageRoot = gd._fullLayout._glimages;
     const root2 = select_default2(gd).selectAll(".svg-container");
-    const canvases = root2.filter(function(d2, i) {
-      return i === root2.size() - 1;
-    }).selectAll(".gl-canvas-context, .gl-canvas-focus");
+    const canvases = root2.filter((d2, i) => i === root2.size() - 1).selectAll(".gl-canvas-context, .gl-canvas-focus");
     function canvasToImage() {
       const canvas = this;
       const imageData = canvas.toDataURL("image/png");
@@ -73575,7 +73467,7 @@ void main() {
           [xRight, yBottom, xRight, yTop],
           [xRight, yTop, xLeft, yTop]
         ].map(applyTransform2);
-        if (edges.reduce(function(a, x) {
+        if (edges.reduce((a, x) => {
           return a ^ !!lib_default.segmentsIntersect(
             headX,
             headY,
@@ -73589,7 +73481,7 @@ void main() {
         }, false)) {
           return;
         }
-        edges.forEach(function(x) {
+        edges.forEach((x) => {
           const p = lib_default.segmentsIntersect(
             tailX,
             tailY,
@@ -74513,7 +74405,7 @@ void main() {
   }
   function annAutorange(gd) {
     const fullLayout = gd._fullLayout;
-    lib_default.filterVisible(fullLayout.annotations).forEach(function(ann) {
+    lib_default.filterVisible(fullLayout.annotations).forEach((ann) => {
       const xa = axes_default.getFromId(gd, ann.xref);
       const ya = axes_default.getFromId(gd, ann.yref);
       const xRefType = axes_default.getRefType(ann.xref);
@@ -75571,7 +75463,7 @@ void main() {
   var extractPathCoords = function(path, paramsToUse, isRaw) {
     const extractedCoordinates = [];
     const segments = path.match(constants_default6.segmentRE);
-    segments.forEach(function(segment) {
+    segments.forEach((segment) => {
       const relevantParamIdx = paramsToUse[segment.charAt(0)].drawn;
       if (relevantParamIdx === void 0) return;
       const params = segment.slice(1).match(constants_default6.paramRE);
@@ -80826,19 +80718,19 @@ void main() {
     function getSliderOpts() {
       return sliderGroup.data()[0];
     }
-    function mouseDownHandler() {
+    function mouseDownHandler(event2) {
       const sliderOpts = getSliderOpts();
       gd.emit("plotly_sliderstart", { slider: sliderOpts });
       const grip = sliderGroup.select("." + constants_default9.gripRectClass);
-      event.stopPropagation();
-      event.preventDefault();
+      event2.stopPropagation();
+      event2.preventDefault();
       grip.call(color_default.fill, sliderOpts.activebgcolor);
-      const normalizedPosition = positionToNormalizedValue(sliderOpts, pointer_default(event, node)[0]);
+      const normalizedPosition = positionToNormalizedValue(sliderOpts, pointer_default(event2, node)[0]);
       handleInput(gd, sliderGroup, sliderOpts, normalizedPosition, true);
       sliderOpts._dragging = true;
-      function mouseMoveHandler() {
+      function mouseMoveHandler(event3) {
         const sliderOpts2 = getSliderOpts();
-        const normalizedPosition2 = positionToNormalizedValue(sliderOpts2, pointer_default(event, node)[0]);
+        const normalizedPosition2 = positionToNormalizedValue(sliderOpts2, pointer_default(event3, node)[0]);
         handleInput(gd, sliderGroup, sliderOpts2, normalizedPosition2, false);
       }
       $gd.on("mousemove", mouseMoveHandler);
@@ -81165,11 +81057,7 @@ void main() {
     coerce3("range");
     const subplots = layoutOut._subplots;
     if (subplots) {
-      const yIds = subplots.cartesian.filter(function(subplotId) {
-        return subplotId.slice(0, Math.max(0, subplotId.indexOf("y"))) === axis_ids_default.name2id(axName);
-      }).map(function(subplotId) {
-        return subplotId.slice(subplotId.indexOf("y"), subplotId.length);
-      });
+      const yIds = subplots.cartesian.filter((subplotId) => subplotId.slice(0, Math.max(0, subplotId.indexOf("y"))) === axis_ids_default.name2id(axName)).map((subplotId) => subplotId.slice(subplotId.indexOf("y"), subplotId.length));
       const yNames = lib_default.simpleMap(yIds, axis_ids_default.id2name);
       for (let i = 0; i < yNames.length; i++) {
         const yName = yNames[i];
@@ -81809,9 +81697,7 @@ void main() {
     }
   }
   function getPosDflt(containerOut, layout, counterAxes) {
-    const anchoredList = counterAxes.filter(function(ax) {
-      return layout[ax].anchor === containerOut._id;
-    });
+    const anchoredList = counterAxes.filter((ax) => layout[ax].anchor === containerOut._id);
     let posY = 0;
     for (let i = 0; i < anchoredList.length; i++) {
       const domain = layout[anchoredList[i]].domain;
@@ -83258,9 +83144,7 @@ void main() {
       const fills = g.select("." + cn.cbfills).selectAll("rect." + cn.cbfill).attr("style", "").data(fillLevels);
       const fillsEnter = fills.enter().append("rect").classed(cn.cbfill, true).attr("style", "");
       fills.exit().remove();
-      const zBounds = zrange.map(ax.c2p).map(Math.round).sort(function(a, b) {
-        return a - b;
-      });
+      const zBounds = zrange.map(ax.c2p).map(Math.round).sort((a, b) => a - b);
       fills.merge(fillsEnter).each(function(d2, i) {
         const z = [
           i === 0 ? zrange[0] : (fillLevels[i] + fillLevels[i - 1]) / 2,
@@ -83556,9 +83440,7 @@ void main() {
           if (l > zrange[0] && l < zrange[1]) fillLevels.push(l);
         }
       } else {
-        fillLevels = lineLevels.map(function(v) {
-          return v - levelsIn.size / 2;
-        });
+        fillLevels = lineLevels.map((v) => v - levelsIn.size / 2);
         fillLevels.push(fillLevels[fillLevels.length - 1] + levelsIn.size);
       }
     } else if (opts._fillcolor && typeof opts._fillcolor === "string") {
@@ -83861,7 +83743,7 @@ void main() {
       const toImageButtonOptions = gd._context.toImageButtonOptions;
       const opts = { format: toImageButtonOptions.format || "png" };
       lib_default.notifier(_(gd, "Taking snapshot - this may take a few seconds"), "long");
-      ["filename", "width", "height", "scale"].forEach(function(key) {
+      ["filename", "width", "height", "scale"].forEach((key) => {
         if (key in toImageButtonOptions) {
           opts[key] = toImageButtonOptions[key];
         }
@@ -84591,7 +84473,7 @@ void main() {
     if (foreButtons.indexOf(name7) === -1) foreButtons.push(name7);
     if (foreButtons.indexOf(_cat) === -1) foreButtons.push(_cat);
   };
-  buttonList.forEach(function(k) {
+  buttonList.forEach((k) => {
     addToForeButtons(buttons_default[k]);
   });
   foreButtons.sort();
@@ -84704,7 +84586,7 @@ void main() {
     }
     const style5 = fullLayout.modebar;
     const groupSelector = "#" + modeBarId + " .modebar-group";
-    document.querySelectorAll(groupSelector).forEach(function(group) {
+    document.querySelectorAll(groupSelector).forEach((group) => {
       group.style.backgroundColor = style5.bgcolor;
     });
     const needsNewButtons = !this.hasButtons(buttons);
@@ -84735,9 +84617,9 @@ void main() {
     this.buttons = buttons;
     this.buttonElements = [];
     this.buttonsNames = [];
-    this.buttons.forEach(function(buttonGroup) {
+    this.buttons.forEach((buttonGroup) => {
       const group = _this.createGroup();
-      buttonGroup.forEach(function(buttonConfig) {
+      buttonGroup.forEach((buttonConfig) => {
         const buttonName = buttonConfig.name;
         if (!buttonName) {
           throw new Error("must provide button 'name' in button config");
@@ -84828,7 +84710,7 @@ void main() {
   proto.updateActiveButton = function(buttonClicked) {
     const fullLayout = this.graphInfo._fullLayout;
     const dataAttrClicked = buttonClicked !== void 0 ? buttonClicked.getAttribute("data-attr") : null;
-    this.buttonElements.forEach(function(button) {
+    this.buttonElements.forEach((button) => {
       const thisval = button.getAttribute("data-val") || true;
       const dataAttr = button.getAttribute("data-attr");
       const isToggleButton = button.getAttribute("data-toggle") === "true";
@@ -84963,7 +84845,7 @@ void main() {
     let layoutRemove = fullLayout.modebar.remove;
     if (typeof layoutRemove === "string") layoutRemove = [layoutRemove];
     let buttonsToAdd = context.modeBarButtonsToAdd.concat(
-      layoutAdd.filter(function(e) {
+      layoutAdd.filter((e) => {
         for (let i = 0; i < context.modeBarButtonsToRemove.length; i++) {
           if (match(e, context.modeBarButtonsToRemove[i])) return false;
         }
@@ -84971,7 +84853,7 @@ void main() {
       })
     );
     const buttonsToRemove = context.modeBarButtonsToRemove.concat(
-      layoutRemove.filter(function(e) {
+      layoutRemove.filter((e) => {
         for (let i = 0; i < context.modeBarButtonsToAdd.length; i++) {
           if (match(e, context.modeBarButtonsToAdd[i])) return false;
         }
@@ -85321,9 +85203,7 @@ void main() {
         newLayout.annotations.push(options.annotations[i]);
       }
     }
-    const sceneIds = Object.keys(newLayout).filter(function(key) {
-      return key.match(/^scene\d*$/);
-    });
+    const sceneIds = Object.keys(newLayout).filter((key) => key.match(/^scene\d*$/));
     if (sceneIds.length) {
       let axesImageOverride = {};
       if (options.tileClass === "thumbnail") {
@@ -85751,11 +85631,7 @@ void main() {
     return dashArray;
   }
   function unitToPx(unitRanges, height) {
-    return unitRanges.map(function(pr) {
-      return pr.map(function(v) {
-        return Math.max(0, v * height);
-      }).sort(sortAsc);
-    });
+    return unitRanges.map((pr) => pr.map((v) => Math.max(0, v * height)).sort(sortAsc));
   }
   function getRegion(fPix, y) {
     const pad3 = constants_default14.bar.handleHeight;
@@ -85853,9 +85729,7 @@ void main() {
     s.clickableOrdinalRange = interval2.clickableOrdinalRange;
     s.stayingIntervals = d2.multiselect && b.filterSpecified ? b.filter.getConsolidated() : [];
     if (unitRange) {
-      s.stayingIntervals = s.stayingIntervals.filter(function(int2) {
-        return int2[0] !== unitRange[0] && int2[1] !== unitRange[1];
-      });
+      s.stayingIntervals = s.stayingIntervals.filter((int2) => int2[0] !== unitRange[0] && int2[1] !== unitRange[1]);
     }
     s.startExtent = interval2.region ? unitRange[interval2.region === "s" ? 1 : 0] : unitLocation;
     d2.parent.inBrushDrag = true;
@@ -85994,9 +85868,7 @@ void main() {
     renderAxisBrush(axisBrush.merge(axisBrushEnter), paperColor, gd);
   }
   function getBrushExtent(brush) {
-    return brush.svgBrush.extent.map(function(e) {
-      return e.slice();
-    });
+    return brush.svgBrush.extent.map((e) => e.slice());
   }
   function brushClear(brush) {
     brush.filterSpecified = false;
@@ -86035,16 +85907,12 @@ void main() {
     let bounds;
     return {
       set: function(a) {
-        filter3 = a.map(function(d2) {
-          return d2.slice().sort(sortAsc);
-        }).sort(startAsc);
+        filter3 = a.map((d2) => d2.slice().sort(sortAsc)).sort(startAsc);
         if (filter3.length === 1 && filter3[0][0] === -Infinity && filter3[0][1] === Infinity) {
           filter3 = [[0, -1]];
         }
         consolidated = dedupeRealRanges(filter3);
-        bounds = filter3.reduce(function(p, n) {
-          return [Math.min(p[0], n[0]), Math.max(p[1], n[1])];
-        }, [Infinity, -Infinity]);
+        bounds = filter3.reduce((p, n) => [Math.min(p[0], n[0]), Math.max(p[1], n[1])], [Infinity, -Infinity]);
       },
       get: function() {
         return filter3.slice();
@@ -86075,23 +85943,19 @@ void main() {
   }
   function cleanRanges(ranges, dimension) {
     if (Array.isArray(ranges[0])) {
-      ranges = ranges.map(function(ri) {
-        return ri.sort(sortAsc);
-      });
+      ranges = ranges.map((ri) => ri.sort(sortAsc));
       if (!dimension.multiselect) ranges = [ranges[0]];
       else ranges = dedupeRealRanges(ranges.sort(startAsc));
     } else ranges = [ranges.sort(sortAsc)];
     if (dimension.tickvals) {
       const sortedTickVals = dimension.tickvals.slice().sort(sortAsc);
-      ranges = ranges.map(function(ri) {
+      ranges = ranges.map((ri) => {
         const rSnapped = [
           ordinalScaleSnap(0, sortedTickVals, ri[0], []),
           ordinalScaleSnap(1, sortedTickVals, ri[1], [])
         ];
         if (rSnapped[1] > rSnapped[0]) return rSnapped;
-      }).filter(function(ri) {
-        return ri;
-      });
+      }).filter((ri) => ri);
       if (!ranges.length) return;
     }
     return ranges.length > 1 ? ranges : ranges[0];
@@ -86938,9 +86802,7 @@ void main() {
       initialDims = vm.dimensions.slice();
       sampleCount = initialDims[0] ? initialDims[0].values.length : 0;
       const lines = model2.lines;
-      const color3 = isPick ? lines.color.map(function(_2, i) {
-        return i / lines.color.length;
-      }) : lines.color;
+      const color3 = isPick ? lines.color.map((_2, i) => i / lines.color.length) : lines.color;
       const points = makePoints(sampleCount, initialDims, color3);
       setAttributes(attributes5, sampleCount, points);
       if (!isContext && !isPick) {
@@ -87153,7 +87015,7 @@ void main() {
     const extent3 = dimensionExtent(dimension);
     if (tickvals2) {
       return ordinal().domain(tickvals2.map(toText(numberFormat2(dimension.tickformat), ticktext))).range(
-        tickvals2.map(function(d2) {
+        tickvals2.map((d2) => {
           const unitVal = (d2 - extent3[0]) / (extent3[1] - extent3[0]);
           return height - padding + unitVal * (2 * padding - height);
         })
@@ -87170,15 +87032,11 @@ void main() {
   function ordinalScale(dimension) {
     if (!dimension.tickvals) return;
     const extent3 = dimensionExtent(dimension);
-    return ordinal().domain(dimension.tickvals).range(dimension.tickvals.map(function(d2) {
-      return (d2 - extent3[0]) / (extent3[1] - extent3[0]);
-    }));
+    return ordinal().domain(dimension.tickvals).range(dimension.tickvals.map((d2) => (d2 - extent3[0]) / (extent3[1] - extent3[0])));
   }
   function unitToColorScale(cscale) {
-    const colorStops = cscale.map(function(d2) {
-      return d2[0];
-    });
-    const colorTuples = cscale.map(function(d2) {
+    const colorStops = cscale.map((d2) => d2[0]);
+    const colorTuples = cscale.map((d2) => {
       const RGBA = rgba2(d2[1]);
       return rgb("rgb(" + RGBA[0] + "," + RGBA[1] + "," + RGBA[2] + ")");
     });
@@ -87187,13 +87045,11 @@ void main() {
         return o[n];
       };
     };
-    const polylinearUnitScales = "rgb".split("").map(function(key) {
+    const polylinearUnitScales = "rgb".split("").map((key) => {
       return linear3().clamp(true).domain(colorStops).range(colorTuples.map(prop(key)));
     });
     return function(d2) {
-      return polylinearUnitScales.map(function(s) {
-        return s(d2);
-      });
+      return polylinearUnitScales.map((s) => s(d2));
     };
   }
   function someFiltersActive(view) {
@@ -87280,7 +87136,7 @@ void main() {
       // consider factoring it out and putting it in a centralized global-ish gesture state object
     };
     const uniqueKeys = {};
-    vm.dimensions = dimensions.filter(helpers_default11.isVisible).map(function(dimension, i) {
+    vm.dimensions = dimensions.filter(helpers_default11.isVisible).map((dimension, i) => {
       const domainToPaddedUnit = domainToPaddedUnitScale(dimension, unitPad);
       const foundKey = uniqueKeys[dimension.label];
       uniqueKeys[dimension.label] = (foundKey || 0) + 1;
@@ -87290,9 +87146,7 @@ void main() {
       if (filterRangeSpecified && !isArrayOrTypedArray4(specifiedConstraint[0])) {
         specifiedConstraint = [specifiedConstraint];
       }
-      const filterRange = filterRangeSpecified ? specifiedConstraint.map(function(d2) {
-        return d2.map(domainToPaddedUnit);
-      }) : [[-Infinity, Infinity]];
+      const filterRange = filterRangeSpecified ? specifiedConstraint.map((d2) => d2.map(domainToPaddedUnit)) : [[-Infinity, Infinity]];
       const brushMove = function() {
         const p = vm;
         p.focusLayer && p.focusLayer.render(p.panels, true);
@@ -87376,11 +87230,7 @@ void main() {
             state.linePickActive(true);
             if (callbacks && callbacks.filterChanged) {
               const invScale = domainToPaddedUnit.invert;
-              const newRanges = f.map(function(r) {
-                return r.map(invScale).sort(lib_default.sorterAsc);
-              }).sort(function(a, b) {
-                return a[0] - b[0];
-              });
+              const newRanges = f.map((r) => r.map(invScale).sort(lib_default.sorterAsc)).sort((a, b) => a[0] - b[0]);
               callbacks.filterChanged(vm.key, dimension._index, newRanges);
             }
           }
@@ -87476,9 +87326,7 @@ void main() {
     const paperColor = gd._fullLayout.paper_bgcolor;
     calcAllTicks(cdModule);
     const state = parcoordsInteractionState();
-    const vm = cdModule.filter(function(d2) {
-      return unwrap(d2).trace.visible;
-    }).map(model.bind(0, layout)).map(viewModel.bind(0, state, callbacks));
+    const vm = cdModule.filter((d2) => unwrap(d2).trace.visible).map(model.bind(0, layout)).map(viewModel.bind(0, state, callbacks));
     glContainer.each(function(d2, i) {
       return lib_default.extendFlat(d2, vm[i]);
     });
@@ -87489,9 +87337,7 @@ void main() {
       d2.model = d2.viewModel ? d2.viewModel.model : null;
     });
     let lastHovered = null;
-    const pickLayer = glLayers.filter(function(d2) {
-      return d2.pick;
-    });
+    const pickLayer = glLayers.filter((d2) => d2.pick);
     pickLayer.style("pointer-events", isStatic ? "none" : "auto").on("mousemove", function(event2) {
       if (state.linePickActive() && d.lineLayer && callbacks && callbacks.hover) {
         const cw = this.width;
@@ -87568,17 +87414,13 @@ void main() {
         state.linePickActive(false);
         d.x = Math.max(-constants_default14.overdrag, Math.min(d.model.width + constants_default14.overdrag, event2.x));
         d.canvasX = d.x * d.model.canvasPixelRatio;
-        yAxis.sort(function(a, b) {
-          return a.x - b.x;
-        }).each(function(e, i) {
+        yAxis.sort((a, b) => a.x - b.x).each(function(e, i) {
           e.xIndex = i;
           e.x = d === e ? e.x : e.xScale(e.xIndex);
           e.canvasX = e.x * e.model.canvasPixelRatio;
         });
         updatePanelLayout(yAxis, p, plotGlPixelRatio);
-        yAxis.filter(function(e) {
-          return Math.abs(d.xIndex - e.xIndex) !== 0;
-        }).attr("transform", function(d2) {
+        yAxis.filter((e) => Math.abs(d.xIndex - e.xIndex) !== 0).attr("transform", function(d2) {
           return strTranslate11(d2.xScale(d2.xIndex), 0);
         });
         select_default2(this).attr("transform", strTranslate11(d.x, 0));
@@ -87600,9 +87442,7 @@ void main() {
         p.pickLayer && p.pickLayer.render(p.panels, true);
         state.linePickActive(true);
         if (callbacks && callbacks.axesMoved) {
-          callbacks.axesMoved(p.key, p.dimensions.map(function(e) {
-            return e.crossfilterDimensionIndex;
-          }));
+          callbacks.axesMoved(p.key, p.dimensions.map((e) => e.crossfilterDimensionIndex));
         }
       })
     );
@@ -87781,7 +87621,7 @@ void main() {
     const fullIndices = {};
     const inputIndices = {};
     const size = fullLayout._size;
-    cdModule.forEach(function(d2, i) {
+    cdModule.forEach((d2, i) => {
       const trace = d2[0].trace;
       fullIndices[i] = trace.index;
       const iIn = inputIndices[i] = trace.index;
@@ -87790,9 +87630,7 @@ void main() {
     });
     const filterChanged = function(i, initialDimIndex, newRanges) {
       const dim = initialDims[i][initialDimIndex];
-      let newConstraints = newRanges.map(function(r) {
-        return r.slice();
-      });
+      let newConstraints = newRanges.map((r) => r.slice());
       const aStr = "dimensions[" + initialDimIndex + "].constraintrange";
       const preGUI = fullLayout._tracePreGUI[gd._fullData[fullIndices[i]]._fullInput.uid];
       if (preGUI[aStr] === void 0) {
@@ -87823,11 +87661,7 @@ void main() {
     const axesMoved = function(i, visibleIndices) {
       const orig = sorter(visibleIndices, initialDims[i].filter(isVisible2));
       currentDims[i].sort(orig);
-      initialDims[i].filter(function(d2) {
-        return !isVisible2(d2);
-      }).sort(function(d2) {
-        return initialDims[i].indexOf(d2);
-      }).forEach(function(d2) {
+      initialDims[i].filter((d2) => !isVisible2(d2)).sort((d2) => initialDims[i].indexOf(d2)).forEach((d2) => {
         currentDims[i].splice(currentDims[i].indexOf(d2), 1);
         currentDims[i].splice(initialDims[i].indexOf(d2), 0, d2);
       });
@@ -87874,9 +87708,7 @@ void main() {
   var toSVG3 = function(gd) {
     const imageRoot = gd._fullLayout._glimages;
     const root2 = select_default2(gd).selectAll(".svg-container");
-    const canvases = root2.filter(function(d2, i) {
-      return i === root2.size() - 1;
-    }).selectAll(".gl-canvas-context, .gl-canvas-focus");
+    const canvases = root2.filter((d2, i) => i === root2.size() - 1).selectAll(".gl-canvas-context, .gl-canvas-focus");
     function canvasToImage() {
       const canvas = this;
       const imageData = canvas.toDataURL("image/png");
@@ -88338,7 +88170,7 @@ void main() {
     const cOpts = colorscale_default.extractOpts(cont);
     let colorscale = cOpts.colorscale;
     if (cOpts.reversescale) colorscale = colorscale_default.flipScale(cOpts.colorscale);
-    return colorscale.map(function(elem) {
+    return colorscale.map((elem) => {
       const index = elem[0];
       const color3 = tinycolor(elem[1]);
       const rgb3 = color3.toRgb();
@@ -89033,7 +88865,7 @@ void main() {
         if (scene.line2d && scene.line2d.destroy) scene.line2d.destroy();
         if (scene.select2d && scene.select2d.destroy) scene.select2d.destroy();
         if (scene.glText) {
-          scene.glText.forEach(function(text) {
+          scene.glText.forEach((text) => {
             if (text.destroy) text.destroy();
           });
         }
@@ -89388,7 +89220,7 @@ void main() {
         } else if (count < scene.glText.length) {
           const textsToRemove = scene.glText.length - count;
           const removedTexts = scene.glText.splice(count, textsToRemove);
-          removedTexts.forEach(function(text) {
+          removedTexts.forEach((text) => {
             text.destroy();
           });
         }
@@ -89398,7 +89230,7 @@ void main() {
       }
       if (scene.line2d) {
         scene.line2d.update(scene.lineOptions);
-        scene.lineOptions = scene.lineOptions.map(function(lineOptions) {
+        scene.lineOptions = scene.lineOptions.map((lineOptions) => {
           if (lineOptions && lineOptions.positions) {
             const srcPos = lineOptions.positions;
             let firstptdef = 0;
@@ -89424,7 +89256,7 @@ void main() {
       }
       scene.fillOrder = lib_default.repeat(null, count);
       if (scene.fill2d) {
-        scene.fillOptions = scene.fillOptions.map(function(fillOptions, i2) {
+        scene.fillOptions = scene.fillOptions.map((fillOptions, i2) => {
           const cdscatter = cdata[i2];
           if (!fillOptions || !cdscatter || !cdscatter[0] || !cdscatter[0].trace) return;
           const cd = cdscatter[0];
@@ -89579,7 +89411,7 @@ void main() {
         scene.select2d.update(scene.markerSelectedOptions);
       }
       if (scene.glText) {
-        cdata.forEach(function(cdscatter) {
+        cdata.forEach((cdscatter) => {
           const trace = ((cdscatter || [])[0] || {}).trace || {};
           if (subtypes_default.hasText(trace)) {
             styleTextSelection3(cdscatter);
@@ -89617,7 +89449,7 @@ void main() {
       scene.select2d.update(vpRange);
     }
     if (scene.glText) {
-      scene.glText.forEach(function(text) {
+      scene.glText.forEach((text) => {
         text.update(vpRange0);
       });
     }

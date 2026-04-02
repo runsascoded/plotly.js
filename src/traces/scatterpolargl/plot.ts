@@ -17,7 +17,7 @@ export default function plot(gd: GraphDiv, subplot: PlotInfo, cdata: any) {
     const angularAxis = subplot.angularAxis;
     const scene = sceneUpdate(gd, subplot);
 
-    cdata.forEach(function(cdscatter: any) {
+    cdata.forEach((cdscatter: any) => {
         if(!cdscatter || !cdscatter[0] || !cdscatter[0].trace) return;
         const cd = cdscatter[0];
         const trace = cd.trace;

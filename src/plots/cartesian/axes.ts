@@ -104,7 +104,7 @@ axes.coerceRef = function(containerIn?: any, containerOut?: any, gd?: any, attr?
 
     if(!dflt) dflt = axlist[0] || (typeof extraOption === 'string' ? extraOption : extraOption[0]);
     if(!extraOption) extraOption = dflt;
-    axlist = axlist.concat(axlist.map(function(x: any) { return x + ' domain'; }));
+    axlist = axlist.concat(axlist.map((x: any) => x + ' domain'));
 
     // data-ref annotations are not supported in gl2d yet
 
@@ -1099,20 +1099,16 @@ axes.calcTicks = function calcTicks(ax?: any, opts?: any) {
 
         allTickVals =
             allTickVals
-            .sort(function(a, b) { return (a as any).value - (b as any).value; })
-            .filter(function(tick, index, self) {
-                return index === 0 || (tick as any).value !== (self[index - 1] as any).value;
-            });
+            .sort((a, b) => (a as any).value - (b as any).value)
+            .filter((tick, index, self) => index === 0 || (tick as any).value !== (self[index - 1] as any).value);
 
         const majorTickIndices =
             allTickVals
-            .map(function(item, index) {
-                return (item as any).minor === undefined && !(item as any).skipLabel ? index : null;
-            })
-            .filter(function(index) { return index !== null; });
+            .map((item, index) => (item as any).minor === undefined && !(item as any).skipLabel ? index : null)
+            .filter((index) => index !== null);
 
-        majorTickIndices.forEach(function(majorIdx) {
-            ticklabelIndex.map(function(nextLabelIdx: any) {
+        majorTickIndices.forEach((majorIdx) => {
+            ticklabelIndex.map((nextLabelIdx: any) => {
                 const minorIdx = majorIdx + nextLabelIdx;
                 if(minorIdx >= 0 && minorIdx < allTickVals.length) {
                     pushUnique(allTicklabelVals, allTickVals[minorIdx]);
@@ -1129,7 +1125,7 @@ axes.calcTicks = function calcTicks(ax?: any, opts?: any) {
         if(!canOverlap) {
             // remove duplicate minors
 
-            const majorValues = tickVals.map(function(d) { return (d as any).value; });
+            const majorValues = tickVals.map((d) => (d as any).value);
 
             const list: any[] = [];
             for(let k = 0; k < minorTickVals.length; k++) {
@@ -1271,9 +1267,7 @@ axes.calcTicks = function calcTicks(ax?: any, opts?: any) {
 function filterRangeBreaks(ax?: any, ticksOut?: any): any {
     if(ax.rangebreaks) {
         // remove ticks falling inside rangebreaks
-        ticksOut = ticksOut.filter(function(d: any) {
-            return ax.maskBreaks(d.x) !== BADNUM;
-        });
+        ticksOut = ticksOut.filter((d: any) => ax.maskBreaks(d.x) !== BADNUM);
     }
 
     return ticksOut;
@@ -2280,7 +2274,7 @@ axes.getSubplots = function(gd?: any, ax?: any) {
 
     const out: any = ax ? axes.findSubplotsWithAxis(allSubplots, ax) : allSubplots;
 
-    out.sort(function(a: any, b: any) {
+    out.sort((a: any, b: any) => {
         const aParts = a.slice(1).split('y');
         const bParts = b.slice(1).split('y');
 
@@ -2408,14 +2402,10 @@ axes.draw = function(gd?: any, arg?: any, opts?: any) {
 
     const fullAxList = axes.list(gd);
     // Get the list of the overlaying axis for all 'shift' axes
-    const overlayingShiftedAx = fullAxList.filter(function(ax: any) {
-        return ax.autoshift;
-    }).map(function(ax: any) {
-        return ax.overlaying;
-    });
+    const overlayingShiftedAx = fullAxList.filter((ax: any) => ax.autoshift).map((ax: any) => ax.overlaying);
 
     // order axes that have dependency to other axes
-    axList.map(function(axId: any) {
+    axList.map((axId: any) => {
         const ax = axes.getFromId(gd, axId);
 
         if(ax.tickmode === 'sync' && ax.overlaying) {
@@ -2429,7 +2419,7 @@ axes.draw = function(gd?: any, arg?: any, opts?: any) {
 
     const axShifts = {false: {left: 0, right: 0}};
 
-    return syncOrAsync(axList.map(function(axId: any) {
+    return syncOrAsync(axList.map((axId: any) => {
         return function() {
             if(!axId) return;
 
@@ -2884,13 +2874,13 @@ axes.drawOne = function(gd?: any, ax?: any, opts?: any) {
 function filterPush(push?: any, automargin?: any): any {
     if(!push) return;
 
-    const keepMargin = Object.keys(MARGIN_MAPPING).reduce(function(data, nextKey) {
+    const keepMargin = Object.keys(MARGIN_MAPPING).reduce((data, nextKey) => {
         if(automargin.indexOf(nextKey) !== -1) {
-            (MARGIN_MAPPING as any)[nextKey].forEach(function(key: any) { (data as any)[key] = 1;});
+            (MARGIN_MAPPING as any)[nextKey].forEach((key: any) => { (data as any)[key] = 1;});
         }
         return data;
     }, {});
-    Object.keys(push).forEach(function(key) {
+    Object.keys(push).forEach((key) => {
         if(!(keepMargin as any)[key]) {
             if(key.length === 1) push[key] = 0;
             else delete push[key];
@@ -3035,7 +3025,7 @@ axes.getTickSigns = function(ax?: any, minor?: any) {
 
     const ticks = minor ? (ax.minor || {}).ticks : ax.ticks;
     if((ticks !== 'inside') === (axLetter === 'x')) {
-        out = out.map(function(v: any) { return -v; });
+        out = out.map((v: any) => -v);
     }
     // independent of `ticks`; do not flip this one
     if(ax.side) {
@@ -3380,12 +3370,12 @@ axes.drawTicks = function(gd?: any, ax?: any, opts?: any) {
     const vals = []
         .concat(ax.minor && ax.minor.ticks ?
             // minor vals
-            opts.vals.filter(function(d: any) { return d.minor && !d.noTick; }) :
+            opts.vals.filter((d: any) => d.minor && !d.noTick) :
             []
         )
         .concat(ax.ticks ?
             // major vals
-            opts.vals.filter(function(d: any) { return !d.minor && !d.noTick; }) :
+            opts.vals.filter((d: any) => !d.minor && !d.noTick) :
             []
         );
 
@@ -3449,8 +3439,8 @@ axes.drawGrid = function(gd?: any, ax?: any, opts?: any) {
     const cls = ax._id + 'grid';
 
     const hasMinor = ax.minor && ax.minor.showgrid;
-    const minorVals = hasMinor ? opts.vals.filter(function(d: any) { return d.minor; }) : [];
-    let majorVals = ax.showgrid ? opts.vals.filter(function(d: any) { return !d.minor; }) : [];
+    const minorVals = hasMinor ? opts.vals.filter((d: any) => d.minor) : [];
+    let majorVals = ax.showgrid ? opts.vals.filter((d: any) => !d.minor) : [];
 
     const counterAx = opts.counterAxis;
     if(counterAx && axes.shouldShowZeroLine(gd, ax, counterAx)) {
@@ -3550,9 +3540,7 @@ axes.drawZeroLine = function(gd?: any, ax?: any, opts?: any) {
             // use the fact that only one element can enter to trigger a sort.
             // If several zerolines enter at the same time we will sort once per,
             // but generally this should be a minimal overhead.
-            opts.layer.selectAll('path').sort(function(da: any, db: any) {
-                return idSort(da.id, db.id);
-            });
+            opts.layer.selectAll('path').sort((da: any, db: any) => idSort(da.id, db.id));
         });
 
     zl.merge(zlEnter).attr('transform', opts.transFn)
@@ -3596,7 +3584,7 @@ axes.drawLabels = function(gd?: any, ax?: any, opts?: any) {
     const zerolineIsAbove = ax.zerolinelayer === 'above traces';
     const cls = opts.cls || axId + 'tick';
 
-    const vals = opts.vals.filter(function(d: any) { return d.text; });
+    const vals = opts.vals.filter((d: any) => d.text);
 
     const labelFns = opts.labelFns;
     const tickAngle = opts.secondary ? 0 : ax.tickangle;
@@ -3786,7 +3774,7 @@ axes.drawLabels = function(gd?: any, ax?: any, opts?: any) {
             anchoredAxes.push(isX ? plotinfo.yaxis : plotinfo.xaxis);
         }
 
-        anchoredAxes.forEach(function(anchorAx, idx) {
+        anchoredAxes.forEach((anchorAx, idx) => {
             if(anchorAx && insideTicklabelposition(anchorAx)) {
                 (partialOpts || [
                     ZERO_PATH,
@@ -3794,7 +3782,7 @@ axes.drawLabels = function(gd?: any, ax?: any, opts?: any) {
                     GRID_PATH,
                     TICK_PATH,
                     TICK_TEXT
-                ]).forEach(function(e: any) {
+                ]).forEach((e: any) => {
                     const isPeriodLabel =
                         e.K === 'tick' &&
                         e.L === 'text' &&
@@ -4337,7 +4325,7 @@ axes.shouldShowZeroLine = function(gd?: any, ax?: any, counterAxis?: any) {
 };
 
 axes.clipEnds = function(ax?: any, vals?: any) {
-    return vals.filter(function(d: any) { return clipEnds(ax, d.x); });
+    return vals.filter((d: any) => clipEnds(ax, d.x));
 };
 
 function clipEnds(ax?: any, l?: any): any {

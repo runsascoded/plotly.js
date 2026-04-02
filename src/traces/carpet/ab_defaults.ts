@@ -22,7 +22,7 @@ export default function handleABDefaults(traceIn: any, traceOut: any, fullLayout
 function mimickAxisDefaults(traceIn: any, traceOut: any, fullLayout: any, dfltColor: any) {
     const axesList = ['aaxis', 'baxis'];
 
-    axesList.forEach(function(axName) {
+    axesList.forEach((axName) => {
         const axLetter = axName.charAt(0);
         const axIn = traceIn[axName] || {};
         const axOut = Template.newContainer(traceOut, axName);

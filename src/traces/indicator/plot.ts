@@ -322,7 +322,7 @@ function drawBulletGauge(gd: any, plotGroup: any, cd: any, opts: any) {
     }
     fgBulletJoin.exit().remove();
 
-    const data = cd.filter(function() {return trace.gauge.threshold.value || trace.gauge.threshold.value === 0;});
+    const data = cd.filter(() => trace.gauge.threshold.value || trace.gauge.threshold.value === 0);
     const thresholdJoin = bulletMerged.selectAll('g.threshold-bullet').data(data);
     const thresholdEnter = thresholdJoin.enter().append('g').classed('threshold-bullet', true);
     thresholdEnter.append('line');

@@ -19,7 +19,7 @@ export default function plot(gd: GraphDiv, wrappedTraceHolders: any[]) {
     const dynamic = !gd._context.staticPlot;
 
     const table = gd._fullLayout._paper.selectAll('.' + c.cn.table)
-        .data(wrappedTraceHolders.map(function(wrappedTraceHolder) {
+        .data(wrappedTraceHolders.map((wrappedTraceHolder) => {
             const traceHolder = gup.unwrap(wrappedTraceHolder);
             const trace = traceHolder.trace;
             return prepareData(gd, trace);
@@ -58,7 +58,7 @@ export default function plot(gd: GraphDiv, wrappedTraceHolders: any[]) {
         cvEnter
             .on('mousemove', function(this: any, event: any, d: any) {
                 tableControlView
-                    .filter(function(dd: any) {return d === dd;})
+                    .filter((dd: any) => d === dd)
                     .call(renderScrollbarKit, gd);
             })
             .on(wheelEvent, function(this: any, event: any, d: any) {
@@ -117,7 +117,7 @@ export default function plot(gd: GraphDiv, wrappedTraceHolders: any[]) {
                 raiseToTop(this);
                 d.calcdata.columnDragInProgress = true;
                 // @ts-expect-error renderScrollbarKit accepts variable args
-                renderScrollbarKit(tableControlView.filter(function(dd) {return d.calcdata.key === dd.key;}), gd);
+                renderScrollbarKit(tableControlView.filter((dd) => d.calcdata.key === dd.key), gd);
                 return d;
             })
             .on('drag', function(this: any, event: any, d: any) {
@@ -125,14 +125,14 @@ export default function plot(gd: GraphDiv, wrappedTraceHolders: any[]) {
                 const getter = function(dd: any) {return (d === dd ? event.x : dd.x) + dd.columnWidth / 2;};
                 d.x = Math.max(-c.overdrag, Math.min(d.calcdata.width + c.overdrag - d.columnWidth, event.x));
 
-                const sortableColumns = flatData(yColumn).filter(function(dd: any) {return dd.calcdata.key === d.calcdata.key;});
-                const newOrder = sortableColumns.sort(function(a: any, b: any) {return getter(a) - getter(b);});
-                newOrder.forEach(function(dd: any, i: number) {
+                const sortableColumns = flatData(yColumn).filter((dd: any) => dd.calcdata.key === d.calcdata.key);
+                const newOrder = sortableColumns.sort((a: any, b: any) => getter(a) - getter(b));
+                newOrder.forEach((dd: any, i: number) => {
                     dd.xIndex = i;
                     dd.x = d === dd ? dd.x : dd.xScale(dd);
                 });
 
-                yColumn.filter(function(dd: any) {return d !== dd;})
+                yColumn.filter((dd: any) => d !== dd)
                     .transition()
                     .ease(c.transitionEase)
                     .duration(c.transitionDuration)
@@ -147,7 +147,7 @@ export default function plot(gd: GraphDiv, wrappedTraceHolders: any[]) {
                 d.x = d.xScale(d);
                 d.calcdata.columnDragInProgress = false;
                 easeColumn(movedColumn, d, 0);
-                columnMoved(gd, p, p.columns.map(function(dd: any) {return dd.xIndex;}));
+                columnMoved(gd, p, p.columns.map((dd: any) => dd.xIndex));
             })
         );
     }
@@ -263,8 +263,8 @@ function columnBoundaryClipKey(gd: any, d: any) {
 }
 
 function flatData(selection: any) {
-    return [].concat.apply([], selection.map(function(g: any) {return g;}))
-        .map(function(g: any) {return g.__data__;});
+    return [].concat.apply([], selection.map((g: any) => g))
+        .map((g: any) => g.__data__);
 }
 
 function renderScrollbarKit(tableControlView: any, gd: any, bypassVisibleBar: any) {
@@ -561,8 +561,8 @@ function populateCellText(cellText: any, tableControlView: any, allColumnBlock: 
             if(d.wrappingNeeded) {
                 const hrefPreservedText = c.wrapSplitCharacter === ' ' ? prefixSuffixedText.replace(/<a href=/ig, '<a_href=') : prefixSuffixedText;
                 const fragments = hrefPreservedText.split(c.wrapSplitCharacter);
-                const hrefRestoredFragments = c.wrapSplitCharacter === ' ' ? fragments.map(function(frag: any) {return frag.replace(/<a_href=/ig, '<a href=');}) : fragments;
-                d.fragments = hrefRestoredFragments.map(function(f: any) {return {text: f, width: null};});
+                const hrefRestoredFragments = c.wrapSplitCharacter === ' ' ? fragments.map((frag: any) => frag.replace(/<a_href=/ig, '<a href=')) : fragments;
+                d.fragments = hrefRestoredFragments.map((f: any) => ({text: f, width: null}));
                 d.fragments.push({fragment: c.wrapSpacer, width: null});
                 textToRender = hrefRestoredFragments.join(c.lineBreaker) + c.lineBreaker + c.wrapSpacer;
             } else {
@@ -608,9 +608,7 @@ function hasWrapCharacter(text: any) {return text.indexOf(c.wrapSplitCharacter) 
 
 function columnMoved(gd: any, calcdata: any, indices: any) {
     const o = calcdata.gdColumnsOriginalOrder;
-    calcdata.gdColumns.sort(function(a: any, b: any) {
-        return indices[o.indexOf(a)] - indices[o.indexOf(b)];
-    });
+    calcdata.gdColumns.sort((a: any, b: any) => indices[o.indexOf(a)] - indices[o.indexOf(b)]);
 
     calcdata.columnorder = indices;
 
@@ -650,7 +648,7 @@ function headerBlock(d: any) {return d.type === 'header';}
 
 function headerHeight(d: any) {
     const headerBlocks = d.rowBlocks.length ? d.rowBlocks[0].auxiliaryBlocks : [];
-    return headerBlocks.reduce(function(p: any, n: any) {return p + rowsHeight(n, Infinity);}, 0);
+    return headerBlocks.reduce((p: any, n: any) => p + rowsHeight(n, Infinity), 0);
 }
 
 function findPagesAndCacheHeights(blocks: any, scrollY: any, scrollHeight: any) {
@@ -735,7 +733,7 @@ function makeDragRow(gd: any, allTableControlView: any, optionalMultiplier: any,
     return function dragRow(eventD: any) {
         // may come from whichever DOM event target: drag, wheel, bar... eventD corresponds to event target
         const d = eventD.calcdata ? eventD.calcdata : eventD;
-        const tableControlView = allTableControlView.filter(function(dd: any) {return d.key === dd.key;});
+        const tableControlView = allTableControlView.filter((dd: any) => d.key === dd.key);
         const multiplier = optionalMultiplier || d.scrollbarState.dragMultiplier;
 
         const initialScrollY = d.scrollY;
@@ -757,7 +755,7 @@ function conditionalPanelRerender(gd: any, tableControlView: any, cellsColumnBlo
         d.currentRepaint[revolverIndex] = setTimeout(function() {
             // setTimeout might lag rendering but yields a smoother scroll, because fast scrolling makes
             // some repaints invisible ie. wasteful (DOM work blocks the main thread)
-            const toRerender = cellsColumnBlock.filter(function(d: any, i: any) {return i === revolverIndex && pages[i] !== prevPages[i];});
+            const toRerender = cellsColumnBlock.filter((d: any, i: any) => i === revolverIndex && pages[i] !== prevPages[i]);
             renderColumnCellTree(gd, tableControlView, toRerender, cellsColumnBlock);
             prevPages[revolverIndex] = pages[revolverIndex];
         });
@@ -865,7 +863,7 @@ function xPosition(d: any, optionalWidth: any) {
 function setCellHeightAndPositionY(columnCell: any) {
     columnCell
         .attr('transform', function(d: any) {
-            const headerHeight = d.rowBlocks[0].auxiliaryBlocks.reduce(function(p: any, n: any) {return p + rowsHeight(n, Infinity);}, 0);
+            const headerHeight = d.rowBlocks[0].auxiliaryBlocks.reduce((p: any, n: any) => p + rowsHeight(n, Infinity), 0);
             const l = getBlock(d);
             const rowAnchor = rowsHeight(l, d.key);
             const yOffset = rowAnchor + headerHeight;

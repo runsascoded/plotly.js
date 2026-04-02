@@ -370,7 +370,7 @@ export default function setConvert(ax?: any, fullLayout?: any): any {
                 }
             }
 
-            list.sort(function(a, b) {
+            list.sort((a, b) => {
                 const ind0 = seen[0][1];
                 const d = ind0[a[0]] - ind0[b[0]];
                 if(d) return d;
@@ -612,7 +612,7 @@ export default function setConvert(ax?: any, fullLayout?: any): any {
         let bnds, b0, b1, vb, vDate;
 
         if(!rangebreaksIn._cachedPatterns) {
-            rangebreaksIn._cachedPatterns = rangebreaksIn.map(function(brk: any) {
+            rangebreaksIn._cachedPatterns = rangebreaksIn.map((brk: any) => {
                 return brk.enabled && brk.bounds ? simpleMap(brk.bounds, brk.pattern ?
                     cleanNumber :
                     ax.d2c // case of pattern: ''
@@ -620,9 +620,7 @@ export default function setConvert(ax?: any, fullLayout?: any): any {
             });
         }
         if(!rangebreaksIn._cachedValues) {
-            rangebreaksIn._cachedValues = rangebreaksIn.map(function(brk: any) {
-                return brk.enabled && brk.values ? simpleMap(brk.values, ax.d2c).sort(sorterAsc) : null;
-            });
+            rangebreaksIn._cachedValues = rangebreaksIn.map((brk: any) => brk.enabled && brk.values ? simpleMap(brk.values, ax.d2c).sort(sorterAsc) : null);
         }
 
         for(let i = 0; i < rangebreaksIn.length; i++) {
@@ -693,7 +691,7 @@ export default function setConvert(ax?: any, fullLayout?: any): any {
         const rangebreaksOut: any[] = [];
         if(!ax.rangebreaks) return rangebreaksOut;
 
-        const rangebreaksIn: any = ax.rangebreaks.slice().sort(function(a: any, b: any) {
+        const rangebreaksIn: any = ax.rangebreaks.slice().sort((a: any, b: any) => {
             if(a.pattern === WEEKDAY_PATTERN && b.pattern === HOUR_PATTERN) return -1;
             if(b.pattern === WEEKDAY_PATTERN && a.pattern === HOUR_PATTERN) return 1;
             return 0;
@@ -798,7 +796,7 @@ export default function setConvert(ax?: any, fullLayout?: any): any {
             }
         }
 
-        rangebreaksOut.sort(function(a, b) { return (a as any).min - (b as any).min; });
+        rangebreaksOut.sort((a, b) => (a as any).min - (b as any).min);
 
         return rangebreaksOut;
     };

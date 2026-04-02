@@ -351,7 +351,7 @@ function joinAllPaths(trace: any, pi: any, perimeter: any, ab2p: any, carpet: an
     let i;
     let fullpath = '';
 
-    const startsleft = pi.edgepaths.map(function(v: any, i: any) { return i; });
+    const startsleft = pi.edgepaths.map((v: any, i: any) => i);
     let newloop = true;
     let endpt, newendpt, cnt, nexti, possiblei, addpath;
 
