@@ -66,3 +66,29 @@ jobs:
 
       - name: Compare bundle sizes (fork vs upstream)
         run: node perf/bundle-compare/compare.mjs
+
+  demo-e2e:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Install Playwright Chromium
+        run: pnpm exec playwright install chromium
+
+      - name: Build demo apps
+        run: node demo/build.mjs
+
+      - name: Run demo E2E tests
+        run: node demo/test.mjs

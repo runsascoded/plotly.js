@@ -1,7 +1,9 @@
 name: Build dist branch
 
 on:
-  push:
+  workflow_run:
+    workflows: ["Performance benchmarks"]
+    types: [completed]
     branches: [main]
   workflow_dispatch:
     inputs:
@@ -13,6 +15,7 @@ on:
 jobs:
   build-dist:
     runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
     steps:
       - uses: runsascoded/npm-dist@v1
         with:

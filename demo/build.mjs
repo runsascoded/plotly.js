@@ -110,10 +110,22 @@ Plotly.newPlot(el, [
     },
 ];
 
-const upstreamPath = join(root, 'perf/bundle-compare/upstream/plotly-basic.min.js');
+const upstreamDir = join(root, 'perf/bundle-compare/upstream');
+const upstreamPath = join(upstreamDir, 'plotly-basic.min.js');
 if(!existsSync(upstreamPath)) {
-    console.error('Missing upstream bundle — run perf/bundle-compare/compare.mjs first');
-    process.exit(1);
+    // Download upstream plotly.js bundles
+    console.log('Downloading upstream plotly.js v3.3.1...');
+    mkdirSync(upstreamDir, { recursive: true });
+    const { execSync } = await import('child_process');
+    for(const [pkg, file] of [
+        ['plotly.js-dist-min', 'plotly.min.js'],
+        ['plotly.js-basic-dist-min', 'plotly-basic.min.js'],
+    ]) {
+        execSync(`npm pack ${pkg}@3.3.1 2>/dev/null`, { cwd: upstreamDir });
+        const tgz = `${pkg}-3.3.1.tgz`;
+        execSync(`tar xzf ${tgz} --strip-components=1 -C . && rm ${tgz}`, { cwd: upstreamDir });
+    }
+    console.log('  done');
 }
 
 const results = [];
