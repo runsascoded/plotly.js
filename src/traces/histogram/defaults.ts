@@ -1,5 +1,5 @@
 import type { FullLayout, FullTrace, InputTrace } from '../../../types/core';
-import Registry from '../../registry.js';
+import { getComponentMethod } from '../../registry.js';
 import Lib from '../../lib/index.js';
 import Color from '../../components/color/index.js';
 import _defaults from '../bar/defaults.js';
@@ -52,7 +52,7 @@ export default function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace,
 
     traceOut._length = len;
 
-    const handleCalendarDefaults = Registry.getComponentMethod('calendars', 'handleTraceDefaults');
+    const handleCalendarDefaults = getComponentMethod('calendars', 'handleTraceDefaults');
     handleCalendarDefaults(traceIn, traceOut, ['x', 'y'], layout);
 
     const hasAggregationData = traceOut[aggLetter];
@@ -70,7 +70,7 @@ export default function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace,
     const lineColor = (traceOut.marker.line || {}).color;
 
     // override defaultColor for error bars with defaultLine
-    const errorBarsSupplyDefaults = Registry.getComponentMethod('errorbars', 'supplyDefaults');
+    const errorBarsSupplyDefaults = getComponentMethod('errorbars', 'supplyDefaults');
     errorBarsSupplyDefaults(traceIn, traceOut, lineColor || Color.defaultLine, { axis: 'y' });
     errorBarsSupplyDefaults(traceIn, traceOut, lineColor || Color.defaultLine, { axis: 'x', inherit: 'y' });
 

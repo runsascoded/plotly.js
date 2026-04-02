@@ -1,6 +1,6 @@
 import { select } from 'd3-selection';
 import type { FullAxis, FullLayout, GraphDiv } from '../../types/core';
-import Registry from '../registry.js';
+import Registry, { getComponentMethod } from '../registry.js';
 import { _doPlot } from './plot_api.js';
 import { allowAutoMargin, autoMargin, doAutoMargin, previousPromises, style } from '../plots/plots.js';
 import { ensureSingle, ensureSingleById, isBottomAnchor, isLeftAnchor, isMiddleAnchor, isRightAnchor, isTopAnchor, pushUnique, syncOrAsync } from '../lib/index.js';
@@ -65,7 +65,7 @@ function lsInner(gd: GraphDiv): any {
     gd._context.setBackground(gd, (fullLayout.paper_bgcolor as any));
 
     drawMainTitle(gd);
-    Registry.getComponentMethod('modebar', 'manage')(gd);
+    getComponentMethod('modebar', 'manage')(gd);
 
     // _has('cartesian') means SVG specifically
     if(!fullLayout._has('cartesian')) {
@@ -653,13 +653,13 @@ export function doTraceStyle(gd: GraphDiv): any {
     }
 
     style(gd);
-    Registry.getComponentMethod('legend', 'draw')(gd);
+    getComponentMethod('legend', 'draw')(gd);
 
     return previousPromises(gd);
 }
 
 export function doColorBars(gd: GraphDiv): any {
-    Registry.getComponentMethod('colorbar', 'draw')(gd);
+    getComponentMethod('colorbar', 'draw')(gd);
     return previousPromises(gd);
 }
 
@@ -670,7 +670,7 @@ export function layoutReplot(gd: GraphDiv): any {
 }
 
 export function doLegend(gd: GraphDiv): any {
-    Registry.getComponentMethod('legend', 'draw')(gd);
+    getComponentMethod('legend', 'draw')(gd);
     return previousPromises(gd);
 }
 
@@ -690,7 +690,7 @@ export function doTicksRelayout(gd: GraphDiv): any {
 export function doModeBar(gd: GraphDiv): any {
     const fullLayout = gd._fullLayout;
 
-    Registry.getComponentMethod('modebar', 'manage')(gd);
+    getComponentMethod('modebar', 'manage')(gd);
 
     for(let i = 0; i < fullLayout._basePlotModules.length; i++) {
         const updateFx = fullLayout._basePlotModules[i].updateFx;
@@ -730,10 +730,10 @@ export function drawData(gd: GraphDiv): any {
 
     // draw components that can be drawn on axes,
     // and that do not push the margins
-    Registry.getComponentMethod('selections', 'draw')(gd);
-    Registry.getComponentMethod('shapes', 'draw')(gd);
-    Registry.getComponentMethod('annotations', 'draw')(gd);
-    Registry.getComponentMethod('images', 'draw')(gd);
+    getComponentMethod('selections', 'draw')(gd);
+    getComponentMethod('shapes', 'draw')(gd);
+    getComponentMethod('annotations', 'draw')(gd);
+    getComponentMethod('images', 'draw')(gd);
 
     // Mark the first render as complete
     fullLayout._replotting = false;
@@ -820,20 +820,20 @@ export function finalDraw(gd: GraphDiv): void {
     // TODO: rangesliders really belong in marginPushers but they need to be
     // drawn after data - can we at least get the margin pushing part separated
     // out and done earlier?
-    Registry.getComponentMethod('rangeslider', 'draw')(gd);
+    getComponentMethod('rangeslider', 'draw')(gd);
     // TODO: rangeselector only needs to be here (in addition to drawMarginPushers)
     // because the margins need to be fully determined before we can call
     // autorange and update axis ranges (which rangeselector needs to know which
     // button is active). Can we break out its automargin step from its draw step?
-    Registry.getComponentMethod('rangeselector', 'draw')(gd);
+    getComponentMethod('rangeselector', 'draw')(gd);
 }
 
 export function drawMarginPushers(gd: GraphDiv): void {
-    Registry.getComponentMethod('legend', 'draw')(gd);
-    Registry.getComponentMethod('rangeselector', 'draw')(gd);
-    Registry.getComponentMethod('sliders', 'draw')(gd);
-    Registry.getComponentMethod('updatemenus', 'draw')(gd);
-    Registry.getComponentMethod('colorbar', 'draw')(gd);
+    getComponentMethod('legend', 'draw')(gd);
+    getComponentMethod('rangeselector', 'draw')(gd);
+    getComponentMethod('sliders', 'draw')(gd);
+    getComponentMethod('updatemenus', 'draw')(gd);
+    getComponentMethod('colorbar', 'draw')(gd);
 }
 
 export default { layoutStyles, drawMainTitle, doTraceStyle, doColorBars, layoutReplot, doLegend, doTicksRelayout, doModeBar, doCamera, drawData, redrawReglTraces, doAutoRangeAndConstraints, finalDraw, drawMarginPushers };

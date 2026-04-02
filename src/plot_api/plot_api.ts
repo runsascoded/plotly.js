@@ -4,7 +4,7 @@ const hasHover = typeof matchMedia === 'function' ? !matchMedia('(hover: none)')
 import Lib, { clearResponsive, equalDomRects, error, extendDeep, extendDeepAll, extendDeepNoArrays, extendFlat, getFullTransformMatrix, getGraphDiv, inverseTransformMatrix, isArrayOrTypedArray, isHidden, isPlainObject, isPlotDiv, isTypedArray, log, nestedProperty, noop, pushUnique, randstr, relativeAttr, sorterDes, syncOrAsync, warn } from '../lib/index.js';
 import Events from '../lib/events.js';
 import Queue from '../lib/queue.js';
-import Registry from '../registry.js';
+import { getComponentMethod } from '../registry.js';
 import { traceIs } from '../lib/trace_categories.js';
 import PlotSchema from './plot_schema.js';
 import { addLinks, allowAutoMargin, cleanPlot, clearAutoMarginIds, computeFrame, createTransitionData, dataArrayContainers, didMarginChange, doAutoMargin, doCalcdata, modifyFrames, plotAutoSize, previousPromises, purge as plotsPurge, redrag, rehover, reselect, resize, supplyAnimationDefaults, supplyDefaults, supplyDefaultsUpdateCalc, supplyFrameDefaults, transition as plotsTransition, transitionFromReact } from '../plots/plots.js';
@@ -26,7 +26,7 @@ const { AX_NAME_PATTERN } = _constants;
 import type { GraphDiv, FullLayout, FullTrace, Layout, PlotConfig } from '../../types/core';
 
 // Lazy-resolve to avoid pulling in ~70KB selections module in lite bundle
-function clearOutline(gd: GraphDiv): void { return Registry.getComponentMethod('selections', 'clearOutline')(gd); }
+function clearOutline(gd: GraphDiv): void { return getComponentMethod('selections', 'clearOutline')(gd); }
 
 let numericNameWarningCount = 0;
 const numericNameWarningCountLimit = 5;
@@ -329,8 +329,8 @@ function _doPlot(gd?: any, data?: any, layout?: any, config?: any): any {
         // see https://github.com/plotly/plotly.js/issues/1111
         return syncOrAsync(
             [
-                Registry.getComponentMethod('shapes', 'calcAutorange'),
-                Registry.getComponentMethod('annotations', 'calcAutorange'),
+                getComponentMethod('shapes', 'calcAutorange'),
+                getComponentMethod('annotations', 'calcAutorange'),
                 doAutoRangeAndConstraints
             ],
             gd
@@ -349,7 +349,7 @@ function _doPlot(gd?: any, data?: any, layout?: any, config?: any): any {
         // this one is different from shapes/annotations calcAutorange
         // the others incorporate those components into ax._extremes,
         // this one actually sets the ranges in rangesliders.
-        Registry.getComponentMethod('rangeslider', 'calcAutorange')(gd);
+        getComponentMethod('rangeslider', 'calcAutorange')(gd);
     }
 
     // draw ticks, titles, and calculate axis scaling (._b, ._m)
@@ -2113,8 +2113,8 @@ function _relayout(gd?: any, aobj?: any): any {
 
                 // Annotations and images also need to convert to/from linearized coords
                 // Shapes do not need this :)
-                Registry.getComponentMethod('annotations', 'convertCoords')(gd, parentFull, vi, doextra);
-                Registry.getComponentMethod('images', 'convertCoords')(gd, parentFull, vi, doextra);
+                getComponentMethod('annotations', 'convertCoords')(gd, parentFull, vi, doextra);
+                getComponentMethod('images', 'convertCoords')(gd, parentFull, vi, doextra);
             } else {
                 // any other type changes: the range from the previous type
                 // will not make sense, so autorange it.
@@ -2130,8 +2130,8 @@ function _relayout(gd?: any, aobj?: any): any {
             // numeric (linear, because we don't auto-log) but the previous type
             // was log. That's a very strange edge case though
             if (!newType || newType === '-') newType = 'linear';
-            Registry.getComponentMethod('annotations', 'convertCoords')(gd, fullProp, newType, doextra);
-            Registry.getComponentMethod('images', 'convertCoords')(gd, fullProp, newType, doextra);
+            getComponentMethod('annotations', 'convertCoords')(gd, fullProp, newType, doextra);
+            getComponentMethod('images', 'convertCoords')(gd, fullProp, newType, doextra);
         }
 
         // alter gd.layout
@@ -2761,13 +2761,13 @@ function react(gd?: any, data?: any, layout?: any, config?: any): void {
                 for (const componentType in relayoutFlags.arrays) {
                     const indices = relayoutFlags.arrays[componentType];
                     if (indices.length) {
-                        const drawOne = Registry.getComponentMethod(componentType, 'drawOne');
+                        const drawOne = getComponentMethod(componentType, 'drawOne');
                         if (drawOne !== noop) {
                             for (let i = 0; i < indices.length; i++) {
                                 drawOne(gd, indices[i]);
                             }
                         } else {
-                            const draw = Registry.getComponentMethod(componentType, 'draw');
+                            const draw = getComponentMethod(componentType, 'draw');
                             if (draw === noop) {
                                 throw new Error('cannot draw components: ' + componentType);
                             }

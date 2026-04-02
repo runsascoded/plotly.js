@@ -1,5 +1,5 @@
 import type { FullLayout, FullTrace, InputTrace } from '../../../types/core';
-import Registry from '../../registry.js';
+import { getComponentMethod } from '../../registry.js';
 import Lib from '../../lib/index.js';
 
 export default function handleOHLC(traceIn: InputTrace,  traceOut: FullTrace,  coerce: any,  layout: FullLayout) {
@@ -11,7 +11,7 @@ export default function handleOHLC(traceIn: InputTrace,  traceOut: FullTrace,  c
 
     coerce('hoverlabel.split');
 
-    const handleCalendarDefaults = Registry.getComponentMethod('calendars', 'handleTraceDefaults');
+    const handleCalendarDefaults = getComponentMethod('calendars', 'handleTraceDefaults');
     handleCalendarDefaults(traceIn, traceOut, ['x'], layout);
 
     if(!(open && high && low && close)) return;

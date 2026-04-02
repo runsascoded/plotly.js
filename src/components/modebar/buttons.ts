@@ -1,5 +1,5 @@
 import type { GraphDiv } from '../../../types/core';
-import Registry from '../../registry.js';
+import { getComponentMethod } from '../../registry.js';
 import { _guiRelayout, restyle } from '../../plot_api/plot_api.js';
 import downloadImage from '../../snapshot/download.js';
 import Plots from '../../plots/plots.js';
@@ -174,7 +174,7 @@ modeBarButtons.eraseshape = {
     name: 'eraseshape',
     title: function(gd: GraphDiv) { return _(gd, 'Erase active shape'); },
     icon: Icons.eraseshape,
-    click: function(gd: GraphDiv) { return Registry.getComponentMethod('shapes', 'eraseActiveShape')(gd); }
+    click: function(gd: GraphDiv) { return getComponentMethod('shapes', 'eraseActiveShape')(gd); }
 };
 
 modeBarButtons.zoomIn2d = {

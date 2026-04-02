@@ -1,9 +1,9 @@
-import Registry from '../../registry.js';
+import { getComponentMethod } from '../../registry.js';
 
 function calculateAxisErrors(data: any, params: any, scaleFactor: any, axis: any) {
     if(!params || !params.visible) return null;
 
-    const computeError = Registry.getComponentMethod('errorbars', 'makeComputeError')(params);
+    const computeError = getComponentMethod('errorbars', 'makeComputeError')(params);
     const result = new Array(data.length);
 
     for(let i = 0; i < data.length; i++) {

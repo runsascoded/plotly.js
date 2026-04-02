@@ -1,6 +1,6 @@
 import type { FullTrace } from '../../../types/core';
 import Fx from '../../components/fx/index.js';
-import Registry from '../../registry.js';
+import { getComponentMethod } from '../../registry.js';
 import Color from '../../components/color/index.js';
 import { fillText } from '../../lib/index.js';
 import { getLineWidth } from './helpers.js';
@@ -18,7 +18,7 @@ function hoverPoints(pointData: any, xval: number, yval: number, hovermode: any,
         const di = cd[barPointData.index];
 
         barPointData.color = getTraceColor(trace, di);
-        Registry.getComponentMethod('errorbars', 'hoverInfo')(di, trace, barPointData);
+        getComponentMethod('errorbars', 'hoverInfo')(di, trace, barPointData);
 
         return [barPointData];
     }

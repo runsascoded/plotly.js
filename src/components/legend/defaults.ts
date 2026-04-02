@@ -1,5 +1,5 @@
 import type { FullLayout, FullTrace } from '../../../types/core';
-import Registry from '../../registry.js';
+import { getComponentMethod } from '../../registry.js';
 import { traceIs } from '../../lib/trace_categories.js';
 import Lib, { bigFont, coerceFont, extendFlat, noneOrAll, pushUnique } from '../../lib/index.js';
 import Template from '../../plot_api/plot_template.js';
@@ -158,7 +158,7 @@ function groupDefaults(legendId: string, layoutIn: any, layoutOut: FullLayout, f
     if(isHorizontal) {
         defaultX = 0;
 
-        if(Registry.getComponentMethod('rangeslider', 'isVisible')(layoutIn.xaxis)) {
+        if(getComponentMethod('rangeslider', 'isVisible')(layoutIn.xaxis)) {
             if(isPaperY) {
                 defaultY = 1.1;
                 defaultYAnchor = 'bottom';

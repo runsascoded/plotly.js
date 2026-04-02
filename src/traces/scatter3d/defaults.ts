@@ -1,5 +1,5 @@
 import type { FullLayout, FullTrace, InputTrace } from '../../../types/core';
-import Registry from '../../registry.js';
+import { getComponentMethod } from '../../registry.js';
 import Lib from '../../lib/index.js';
 import subTypes from '../scatter/subtypes.js';
 import handleMarkerDefaults from '../scatter/marker_defaults.js';
@@ -61,7 +61,7 @@ export default function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace,
         }
     }
 
-    const errorBarsSupplyDefaults = Registry.getComponentMethod('errorbars', 'supplyDefaults');
+    const errorBarsSupplyDefaults = getComponentMethod('errorbars', 'supplyDefaults');
     errorBarsSupplyDefaults(traceIn, traceOut, lineColor || markerColor || defaultColor, { axis: 'z' });
     errorBarsSupplyDefaults(traceIn, traceOut, lineColor || markerColor || defaultColor, { axis: 'y', inherit: 'z' });
     errorBarsSupplyDefaults(traceIn, traceOut, lineColor || markerColor || defaultColor, { axis: 'x', inherit: 'z' });
@@ -73,7 +73,7 @@ function handleXYZDefaults(traceIn: InputTrace, traceOut: FullTrace, coerce: any
     const y = coerce('y');
     const z = coerce('z');
 
-    const handleCalendarDefaults = Registry.getComponentMethod('calendars', 'handleTraceDefaults');
+    const handleCalendarDefaults = getComponentMethod('calendars', 'handleTraceDefaults');
     handleCalendarDefaults(traceIn, traceOut, ['x', 'y', 'z'], layout);
 
     if (x && y && z) {

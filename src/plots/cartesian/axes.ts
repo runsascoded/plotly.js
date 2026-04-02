@@ -2,7 +2,7 @@ import { select } from 'd3-selection';
 function d3Round(x?: any, n?: any): any { return n ? Math.round(x * (n = Math.pow(10, n))) / n : Math.round(x); }
 import isNumeric from 'fast-isnumeric';
 import { allowAutoMargin, autoMargin } from '../../plots/plots.js';
-import Registry from '../../registry.js';
+import { getComponentMethod } from '../../registry.js';
 import { traceIs } from '../../lib/trace_categories.js';
 import Lib, { aggNums, bBoxIntersect, bigFont, coerce, constrain, dateTick0, deg2rad, distinctVals, ensureNumber, error, extendFlat, findExactDates, increment, incrementMonth, interp, isArrayOrTypedArray, mod, nestedProperty, numSeparate, pushUnique, roundUp, simpleMap, stdev, strTranslate, swapAttrs, syncOrAsync } from '../../lib/index.js';
 import svgTextUtils from '../../lib/svg_text_utils.js';
@@ -187,7 +187,7 @@ axes.redrawComponents = function(gd?: any, axIds?: any) {
     const fullLayout = gd._fullLayout;
 
     function _redrawOneComp(moduleName?: any, methodName?: any, stashName?: any, shortCircuit?: any) {
-        const method = Registry.getComponentMethod(moduleName, methodName);
+        const method = getComponentMethod(moduleName, methodName);
         const stash: any = {};
 
         for(let i = 0; i < axIds.length; i++) {
@@ -2739,7 +2739,7 @@ axes.drawOne = function(gd?: any, ax?: any, opts?: any) {
         });
     }
 
-    const hasRangeSlider = Registry.getComponentMethod('rangeslider', 'isVisible')(ax);
+    const hasRangeSlider = getComponentMethod('rangeslider', 'isVisible')(ax);
 
     if(!opts.skipTitle &&
         !(hasRangeSlider && ax.side === 'bottom')
@@ -2856,7 +2856,7 @@ axes.drawOne = function(gd?: any, ax?: any, opts?: any) {
             }
         }
         if(hasRangeSlider) {
-            rangeSliderPush = Registry.getComponentMethod('rangeslider', 'autoMarginOpts')(gd, ax);
+            rangeSliderPush = getComponentMethod('rangeslider', 'autoMarginOpts')(gd, ax);
         }
 
         if(typeof ax.automargin === 'string') {
@@ -4431,7 +4431,7 @@ axes.allowAutoMargin = function(gd?: any) {
                 allowAutoMargin(gd, axMirrorAutoMarginID(ax));
             }
         }
-        if(Registry.getComponentMethod('rangeslider', 'isVisible')(ax)) {
+        if(getComponentMethod('rangeslider', 'isVisible')(ax)) {
             allowAutoMargin(gd, rangeSliderAutoMarginID(ax));
         }
     }

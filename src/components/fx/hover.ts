@@ -11,7 +11,7 @@ import dragElement from '../dragelement/index.js';
 import Axes from '../../plots/cartesian/axes.js';
 import _constants from '../../plots/cartesian/constants.js';
 const { zindexSeparator } = _constants;
-import Registry from '../../registry.js';
+import { getComponentMethod } from '../../registry.js';
 import { traceIs } from '../../lib/trace_categories.js';
 import helpers from './helpers.js';
 import constants from './constants.js';
@@ -827,7 +827,7 @@ function _hover(gd: GraphDiv, evt: any, subplot: any, noHoverEvent: any, eventTa
     } // TODO: tagName hack is needed to appease geo.js's hack of using eventTarget=true
     // we should improve the "fx" API so other plots can use it without these hack.
     if (eventTarget && eventTarget.tagName) {
-        const hasClickToShow = Registry.getComponentMethod('annotations', 'hasClickToShow')(gd, newhoverdata);
+        const hasClickToShow = getComponentMethod('annotations', 'hasClickToShow')(gd, newhoverdata);
         overrideCursor(select(eventTarget), hasClickToShow ? 'pointer' : '');
     }
 

@@ -1,7 +1,7 @@
 import type { FullAxis } from '../../../types/core';
 import { extendFlat, fillText, isArrayOrTypedArray } from '../../lib/index.js';
 import Fx from '../../components/fx/index.js';
-import Registry from '../../registry.js';
+import { getComponentMethod } from '../../registry.js';
 import getTraceColor from './get_trace_color.js';
 import Color from '../../components/color/index.js';
 
@@ -111,7 +111,7 @@ export default function hoverPoints(pointData: any, xval: number, yval: number, 
             });
 
             fillText(di, trace, pointData);
-            Registry.getComponentMethod('errorbars', 'hoverInfo')(di, trace, pointData);
+            getComponentMethod('errorbars', 'hoverInfo')(di, trace, pointData);
 
             return [pointData];
         }

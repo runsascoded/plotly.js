@@ -3,7 +3,7 @@ import { select } from 'd3-selection';
 import Color from '../../components/color/index.js';
 import { font, pointStyle, selectedPointStyle, selectedTextStyle } from '../../components/drawing/index.js';
 import { ensureUniformFontSize } from '../../lib/index.js';
-import Registry from '../../registry.js';
+import { getComponentMethod } from '../../registry.js';
 import _uniform_text from './uniform_text.js';
 const { resizeText } = _uniform_text;
 import attributes from './attributes.js';
@@ -40,7 +40,7 @@ function style(gd: GraphDiv): any {
         stylePoints(sel, trace, gd);
     });
 
-    Registry.getComponentMethod('errorbars', 'style')(s);
+    getComponentMethod('errorbars', 'style')(s);
 }
 
 function stylePoints(sel: any, trace: FullTrace, gd: GraphDiv): void {
@@ -64,7 +64,7 @@ function styleOnSelect(gd: GraphDiv, cd: CalcDatum[], sel: any): void {
         stylePointsInSelectionMode(sel, trace, gd);
     } else {
         stylePoints(sel, trace, gd);
-        Registry.getComponentMethod('errorbars', 'style')(sel);
+        getComponentMethod('errorbars', 'style')(sel);
     }
 }
 
