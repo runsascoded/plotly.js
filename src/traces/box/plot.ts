@@ -72,13 +72,13 @@ function plotBoxAndWhiskers(sel: any, axes: { pos: FullAxis; val: FullAxis }, tr
         trace.box.visible
     ) ? Lib.identity : []);
 
-    paths.enter().append('path')
+    const pathsEnter = paths.enter().append('path')
         .style('vector-effect', isStatic ? 'none' : 'non-scaling-stroke')
         .attr('class', 'box');
 
     paths.exit().remove();
 
-    paths.each(function(this: any, d: any) {
+    paths.merge(pathsEnter).each(function(this: any, d: any) {
         if(d.empty) return select(this).attr('d', 'M0,0Z');
 
         const lcenter = posAxis.c2l(d.pos + bPos, true);
@@ -191,12 +191,12 @@ function plotPoints(sel: any, axes: { x: FullAxis; y: FullAxis }, trace: FullTra
     const gPoints = sel.selectAll('g.points')
         .data(mode ? fn : []);
 
-    gPoints.enter().append('g')
+    const gPointsEnter = gPoints.enter().append('g')
         .attr('class', 'points');
 
     gPoints.exit().remove();
 
-    const paths = gPoints.selectAll('path')
+    const paths = gPoints.merge(gPointsEnter).selectAll('path')
         .data(function(d: any) {
             let i;
             const pts = d.pts2;
@@ -268,12 +268,12 @@ function plotPoints(sel: any, axes: { x: FullAxis; y: FullAxis }, trace: FullTra
             return pts;
         });
 
-    paths.enter().append('path')
+    const pointsEnter = paths.enter().append('path')
         .classed('point', true);
 
     paths.exit().remove();
 
-    paths.call(translatePoints, xa, ya);
+    paths.merge(pointsEnter).call(translatePoints, xa, ya);
 }
 
 function plotBoxMean(sel: any, axes: { pos: FullAxis; val: FullAxis }, trace: FullTrace, t: any): void {
@@ -303,14 +303,14 @@ function plotBoxMean(sel: any, axes: { pos: FullAxis; val: FullAxis }, trace: Fu
         (trace.type === 'violin' && trace.box.visible && trace.meanline.visible)
     ) ? Lib.identity : []);
 
-    paths.enter().append('path')
+    const meanEnter = paths.enter().append('path')
         .attr('class', 'mean')
         .style('fill', 'none')
         .style('vector-effect', 'non-scaling-stroke');
 
     paths.exit().remove();
 
-    paths.each(function(this: any, d: any) {
+    paths.merge(meanEnter).each(function(this: any, d: any) {
         const lcenter = posAxis.c2l(d.pos + bPos, true);
 
         const pos0 = posAxis.l2p(lcenter - bdPos0) + bPosPxOffset;

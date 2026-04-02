@@ -43,8 +43,9 @@ function plot(gd: GraphDiv, cdModule: any[]): any {
         plotGroup.each(function (this: any) {
             const slices = select(this).selectAll('g.slice').data(cd);
 
-            slices.enter().append('g').classed('slice', true);
+            const slicesEnter = slices.enter().append('g').classed('slice', true);
             slices.exit().remove();
+            const slicesMerged = slices.merge(slicesEnter);
 
             const quadrants: any[][][] = [
                 [[], []], // y<0: x<0, x>=0
@@ -52,7 +53,7 @@ function plot(gd: GraphDiv, cdModule: any[]): any {
             ];
             let hasOutsideText = false;
 
-            slices.each(function (this: any, pt: any, i: any) {
+            slicesMerged.each(function (this: any, pt: any, i: any) {
                 if (pt.hidden) {
                     select(this).selectAll('path,g').remove();
                     return;
@@ -67,13 +68,14 @@ function plot(gd: GraphDiv, cdModule: any[]): any {
                 let cx = cd0.cx;
                 let cy = cd0.cy;
                 const sliceTop = select(this);
-                const slicePath = sliceTop.selectAll('path.surface').data([pt]);
+                const slicePathJoin = sliceTop.selectAll('path.surface').data([pt]);
 
-                slicePath
+                const slicePath = slicePathJoin
                     .enter()
                     .append('path')
                     .classed('surface', true)
-                    .style('pointer-events', isStatic ? 'none' : 'all');
+                    .style('pointer-events', isStatic ? 'none' : 'all')
+                    .merge(slicePathJoin);
 
                 sliceTop.call(attachFxHandlers, gd, cd);
 
@@ -161,10 +163,10 @@ function plot(gd: GraphDiv, cdModule: any[]): any {
                     .selectAll('g.slicetext')
                     .data(pt.text && textPosition !== 'none' ? [0] : []);
 
-                sliceTextGroup.enter().append('g').classed('slicetext', true);
+                const sliceTextGroupEnter = sliceTextGroup.enter().append('g').classed('slicetext', true);
                 sliceTextGroup.exit().remove();
 
-                sliceTextGroup.each(function (this: any) {
+                sliceTextGroup.merge(sliceTextGroupEnter).each(function (this: any) {
                     const sliceText = Lib.ensureSingle(select(this), 'text', '', function (this: any, s: any) {
                         // prohibit tex interpretation until we can handle
                         // tex and regular text together
@@ -234,10 +236,10 @@ function plot(gd: GraphDiv, cdModule: any[]): any {
                 .selectAll('g.titletext')
                 .data(trace.title.text ? [0] : []);
 
-            titleTextGroup.enter().append('g').classed('titletext', true);
+            const titleTextGroupEnter = titleTextGroup.enter().append('g').classed('titletext', true);
             titleTextGroup.exit().remove();
 
-            titleTextGroup.each(function (this: any) {
+            titleTextGroup.merge(titleTextGroupEnter).each(function (this: any) {
                 const titleText = Lib.ensureSingle(select(this), 'text', '', function (this: any, s: any) {
                     // prohibit tex interpretation as above
                     s.attr('data-notex', 1);

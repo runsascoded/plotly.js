@@ -94,11 +94,11 @@ export default function hoverPoints(pointData: any, xval: number, yval: number, 
     // update violin line (if any)
     const violinLine = hoverLayer.selectAll('.violinline-' + trace.uid)
         .data(violinLineAttrs ? [0] : []);
-    violinLine.enter().append('line')
+    const violinLineEnter = violinLine.enter().append('line')
         .classed('violinline-' + trace.uid, true)
         .attr('stroke-width', 1.5);
     violinLine.exit().remove();
-    Lib.setAttrs(violinLine, violinLineAttrs).call(Color.stroke, pointData.color);
+    Lib.setAttrs(violinLine.merge(violinLineEnter), violinLineAttrs).call(Color.stroke, pointData.color);
 
     // same combine logic as box hoverPoints
     if(hovermode === 'closest') {

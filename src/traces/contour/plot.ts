@@ -69,9 +69,9 @@ function makeBackground(plotgroup: any,  perimeter: any,  contours: any) {
 
     const bgfill = bggroup.selectAll('path')
         .data(contours.coloring === 'fill' ? [0] : []);
-    bgfill.enter().append('path');
+    const bgfillEnter = bgfill.enter().append('path');
     bgfill.exit().remove();
-    bgfill
+    bgfill.merge(bgfillEnter)
         .attr('d', 'M' + perimeter.join('L') + 'Z')
         .style('stroke', 'none');
 }
@@ -88,9 +88,9 @@ function makeFills(plotgroup: any,  pathinfo: any,  perimeter: any,  contours: a
     const fillgroup = Lib.ensureSingle(plotgroup, 'g', 'contourfill');
 
     const fillitems = fillgroup.selectAll('path').data(hasFills ? pathinfo : []);
-    fillitems.enter().append('path');
+    const fillitemsEnter = fillitems.enter().append('path');
     fillitems.exit().remove();
-    fillitems.each(function(this: any, pi: any) {
+    fillitems.merge(fillitemsEnter).each(function(this: any, pi: any) {
         // join all paths for this level together into a single path
         // first follow clockwise around the perimeter to close any open paths
         // if the whole perimeter is above this level, start with a path
@@ -216,8 +216,10 @@ function makeLinesAndLabels(plotgroup: any,  pathinfo: any,  gd: GraphDiv,  cd0:
 
     labelGroup.exit().remove();
 
-    labelGroup.enter().append('g')
+    const labelGroupEnter = labelGroup.enter().append('g')
         .classed('contourlabels', true);
+
+    const labelGroupMerged = labelGroup.merge(labelGroupEnter);
 
     if(showLabels) {
         const labelClipPathData: any[] = [];
@@ -309,7 +311,7 @@ function makeLinesAndLabels(plotgroup: any,  pathinfo: any,  gd: GraphDiv,  cd0:
 
         dummyText.remove();
 
-        drawLabels(labelGroup, labelData, gd, lineClip,
+        drawLabels(labelGroupMerged, labelData, gd, lineClip,
             clipLinesForLabels ? labelClipPathData : null);
     }
 
@@ -323,34 +325,36 @@ export const createLines = function(lineContainer: any,  makeLines: any,  pathin
         .data(makeLines ? pathinfo : []);
 
     linegroup.exit().remove();
-    linegroup.enter().append('g')
+    const linegroupEnter = linegroup.enter().append('g')
         .classed('contourlevel', true);
+
+    const linegroupMerged = linegroup.merge(linegroupEnter);
 
     if(makeLines) {
         // pedgepaths / ppaths are used by contourcarpet, for the paths transformed from a/b to x/y
         // edgepaths / paths are used by contour since it's in x/y from the start
-        const opencontourlines = linegroup.selectAll('path.openline')
+        const opencontourlines = linegroupMerged.selectAll('path.openline')
             .data(function(d: any) { return d.pedgepaths || d.edgepaths; });
 
         opencontourlines.exit().remove();
-        opencontourlines.enter().append('path')
+        const openEnter = opencontourlines.enter().append('path')
             .classed('openline', true);
 
-        opencontourlines
+        opencontourlines.merge(openEnter)
             .attr('d', function(d: any) {
                 return smoothopen(d, smoothing);
             })
             .style('stroke-miterlimit', 1)
             .style('vector-effect', isStatic ? 'none' : 'non-scaling-stroke');
 
-        const closedcontourlines = linegroup.selectAll('path.closedline')
+        const closedcontourlines = linegroupMerged.selectAll('path.closedline')
             .data(function(d: any) { return d.ppaths || d.paths; });
 
         closedcontourlines.exit().remove();
-        closedcontourlines.enter().append('path')
+        const closedEnter = closedcontourlines.enter().append('path')
             .classed('closedline', true);
 
-        closedcontourlines
+        closedcontourlines.merge(closedEnter)
             .attr('d', function(d: any) {
                 return smoothclosed(d, smoothing);
             })
@@ -358,7 +362,7 @@ export const createLines = function(lineContainer: any,  makeLines: any,  pathin
             .style('vector-effect', isStatic ? 'none' : 'non-scaling-stroke');
     }
 
-    return linegroup;
+    return linegroupMerged;
 };
 
 export const createLineClip = function(lineContainer: any,  clipLinesForLabels: any,  gd: GraphDiv,  uid: any) {
@@ -612,12 +616,13 @@ function clipGaps(plotGroup: any,  plotinfo: PlotInfo,  gd: GraphDiv,  cd0: any,
     const clips = gd._fullLayout._clips;
     let clipId = 'clip' + trace.uid;
 
-    const clipPath = clips.selectAll('#' + clipId)
+    const clipPathJoin = clips.selectAll('#' + clipId)
         .data(trace.connectgaps ? [] : [0]);
-    clipPath.enter().append('clipPath')
+    const clipPathEnter = clipPathJoin.enter().append('clipPath')
         .classed('contourclip', true)
         .attr('id', clipId);
-    clipPath.exit().remove();
+    clipPathJoin.exit().remove();
+    const clipPath = clipPathJoin.merge(clipPathEnter);
 
     if(trace.connectgaps === false) {
         const clipPathInfo: any = {

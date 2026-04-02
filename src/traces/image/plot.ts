@@ -123,11 +123,12 @@ export default function plot(gd: GraphDiv, plotinfo: any, cdimage: any[], imageL
         const image3 = plotGroup.selectAll('image')
             .data([cd]);
 
-        image3.enter().append('svg:image')
+        const image3Enter = image3.enter().append('svg:image')
             .attr('xmlns', xmlnsNamespaces.svg)
             .attr('preserveAspectRatio', 'none');
 
         image3.exit().remove();
+        const image3Merged = image3.merge(image3Enter);
 
         let style = (trace.zsmooth === false) ? PIXELATED_IMAGE_STYLE : '';
 
@@ -146,7 +147,7 @@ export default function plot(gd: GraphDiv, plotinfo: any, cdimage: any[], imageL
                     strTranslate(-tx + 'px', -ty + 'px') + ';';
             }
         }
-        image3.attr('style', style);
+        image3Merged.attr('style', style);
 
         const p = new Promise<void>(function(resolve) {
             if(trace._hasZ) {
@@ -209,7 +210,7 @@ export default function plot(gd: GraphDiv, plotinfo: any, cdimage: any[], imageL
                 }
             }
 
-            image3
+            image3Merged
                 .attr('xlink:href', href)
                 .attr('height', imageHeight)
                 .attr('width', imageWidth)

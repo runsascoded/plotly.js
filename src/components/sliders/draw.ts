@@ -24,7 +24,7 @@ export default function draw(gd: GraphDiv) {
         .selectAll('g.' + constants.containerClassName)
         .data(sliderData.length > 0 ? [0] : []);
 
-    sliders.enter().append('g')
+    const slidersEnter = sliders.enter().append('g')
         .classed(constants.containerClassName, true)
         .style('cursor', staticPlot ? null : 'ew-resize');
 
@@ -49,15 +49,19 @@ export default function draw(gd: GraphDiv) {
     // Return early if no menus visible:
     if(sliderData.length === 0) return;
 
-    const sliderGroups = sliders.selectAll('g.' + constants.groupClassName)
+    const slidersMerged = sliders.merge(slidersEnter);
+
+    const sliderGroupsJoin = slidersMerged.selectAll('g.' + constants.groupClassName)
         .data(sliderData, keyFunction);
 
-    sliderGroups.enter().append('g')
+    const sliderGroupsEnter = sliderGroupsJoin.enter().append('g')
         .classed(constants.groupClassName, true);
 
-    sliderGroups.exit()
+    sliderGroupsJoin.exit()
         .each(clearSlider)
         .remove();
+
+    const sliderGroups = sliderGroupsJoin.merge(sliderGroupsEnter);
 
     // Find the dimensions of the sliders:
     for(let i = 0; i < sliderData.length; i++) {
@@ -115,11 +119,13 @@ function keyFunction(opts: any) {
 
 // Compute the dimensions (mutates sliderOpts):
 function findDimensions(gd: GraphDiv, sliderOpts: any) {
-    const sliderLabels = tester.selectAll('g.' + constants.labelGroupClass)
+    const sliderLabelsJoin = tester.selectAll('g.' + constants.labelGroupClass)
         .data(sliderOpts._visibleSteps);
 
-    sliderLabels.enter().append('g')
+    const sliderLabelsEnter = sliderLabelsJoin.enter().append('g')
         .classed(constants.labelGroupClass, true);
+
+    const sliderLabels = sliderLabelsJoin.merge(sliderLabelsEnter);
 
     // loop over fake buttons to find width / height
     let maxLabelWidth = 0;
@@ -366,15 +372,15 @@ function drawLabelGroup(sliderGroup: any, sliderOpts: any) {
     const labels = Lib.ensureSingle(sliderGroup, 'g', constants.labelsClass);
     const dims = sliderOpts._dims;
 
-    const labelItems = labels.selectAll('g.' + constants.labelGroupClass)
+    const labelItemsJoin = labels.selectAll('g.' + constants.labelGroupClass)
         .data(dims.labelSteps);
 
-    labelItems.enter().append('g')
+    const labelItemsEnter = labelItemsJoin.enter().append('g')
         .classed(constants.labelGroupClass, true);
 
-    labelItems.exit().remove();
+    labelItemsJoin.exit().remove();
 
-    labelItems.each(function(this: any, d: any) {
+    labelItemsJoin.merge(labelItemsEnter).each(function(this: any, d: any) {
         const item = select(this);
 
         item.call(drawLabel, d, sliderOpts);
@@ -510,16 +516,18 @@ function drawTicks(sliderGroup: any, sliderOpts: any) {
         .data(sliderOpts._visibleSteps);
     const dims = sliderOpts._dims;
 
-    tick.enter().append('rect')
+    const tickEnter = tick.enter().append('rect')
         .classed(constants.tickRectClass, true);
 
     tick.exit().remove();
 
-    tick
+    const tickMerged = tick.merge(tickEnter);
+
+    tickMerged
         .attr('width', sliderOpts.tickwidth + 'px')
         .attr('shape-rendering', 'crispEdges');
 
-    tick.each(function(this: any, d: any, i: any) {
+    tickMerged.each(function(this: any, d: any, i: any) {
         const isMajor = i % dims.labelStride === 0;
         const item = select(this);
 

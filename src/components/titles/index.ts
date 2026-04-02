@@ -142,9 +142,10 @@ function draw(gd: GraphDiv, titleClass: string, options: any): any {
         hColorbarMoveTitle = fullLayout._hColorbarMoveTitle;
     }
 
-    const el = group.selectAll('text.' + titleClass)
+    const elJoin = group.selectAll('text.' + titleClass)
         .data(elShouldExist ? [0] : []);
-    el.enter().append('text');
+    elJoin.exit().remove();
+    const el = elJoin.enter().append('text').merge(elJoin);
     el.text(txt)
         // this is hacky, but convertToTspans uses the class
         // to determine whether to rotate mathJax...
@@ -152,18 +153,17 @@ function draw(gd: GraphDiv, titleClass: string, options: any): any {
         // correct one (only relevant for colorbars, at least
         // for now) - ie don't use .classed
         .attr('class', titleClass);
-    el.exit().remove();
 
     let subtitleEl: any = null;
     const subtitleClass = titleClass + '-subtitle';
     const subtitleElShouldExist = subtitleTxt || editable;
 
     if(subtitleEnabled) {
-        subtitleEl = group.selectAll('text.' + subtitleClass)
+        const subtitleJoin = group.selectAll('text.' + subtitleClass)
             .data(subtitleElShouldExist ? [0] : []);
-        subtitleEl.enter().append('text');
+        subtitleJoin.exit().remove();
+        subtitleEl = subtitleJoin.enter().append('text').merge(subtitleJoin);
         subtitleEl.text(subtitleTxt).attr('class', subtitleClass);
-        subtitleEl.exit().remove();
     }
 
     if(!elShouldExist) return group;

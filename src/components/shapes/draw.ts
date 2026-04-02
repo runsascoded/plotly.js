@@ -517,11 +517,10 @@ function setupDragElement(gd: GraphDiv, shapePath: any, shapeOptions: any, index
             const isNotPath = shapeOptions.type !== 'path';
 
             // d3 join with dummy data to satisfy d3 data-binding
-            const visualCues = shapeLayer.selectAll('.visual-cue').data([0]);
+            const visualCuesJoin = shapeLayer.selectAll('.visual-cue').data([0]);
 
-            // Enter
             const strokeWidth = 1;
-            visualCues.enter()
+            const visualCuesEnter = visualCuesJoin.enter()
               .append('path')
               .attr('fill', '#fff')
               .attr('fill-rule', 'evenodd')
@@ -529,7 +528,8 @@ function setupDragElement(gd: GraphDiv, shapePath: any, shapeOptions: any, index
               .attr('stroke-width', strokeWidth)
               .classed('visual-cue', true);
 
-            // Update
+            const visualCues = visualCuesJoin.merge(visualCuesEnter);
+
             let posX = x2p(
               xPixelSized ?
                 shapeOptions.xanchor :

@@ -189,13 +189,13 @@ function drawOne(gd: GraphDiv, opts: any): any {
          .call(Color.fill, constants.scrollBarColor);
     });
 
-    const groups = scrollBox.selectAll('g.groups').data(legendData);
-    groups.enter().append('g').attr('class', 'groups');
-    groups.exit().remove();
+    const groupsJoin = scrollBox.selectAll('g.groups').data(legendData);
+    groupsJoin.exit().remove();
+    const groups = groupsJoin.enter().append('g').attr('class', 'groups').merge(groupsJoin);
 
-    const traces = groups.selectAll('g.traces').data(identity);
-    traces.enter().append('g').attr('class', 'traces');
-    traces.exit().remove();
+    const tracesJoin = groups.selectAll('g.traces').data(identity);
+    tracesJoin.exit().remove();
+    const traces = tracesJoin.enter().append('g').attr('class', 'traces').merge(tracesJoin);
 
     traces.style('opacity', function(d: any) {
         const trace = d[0].trace;

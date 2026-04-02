@@ -364,7 +364,7 @@ function renderAxisBrush(axisBrush: any, paperColor: any, gd: GraphDiv) {
 
     const background = axisBrush.selectAll('.background').data(repeat);
 
-    background.enter()
+    const backgroundEnter = background.enter()
         .append('rect')
         .classed('background', true)
         .call(barHorizontalSetup)
@@ -372,7 +372,7 @@ function renderAxisBrush(axisBrush: any, paperColor: any, gd: GraphDiv) {
         .style('pointer-events', isStatic ? 'none' : 'auto') // parent pointer events are disabled; we must have it to register events
         .attr('transform', strTranslate(0, c.verticalPadding));
 
-    background
+    background.merge(backgroundEnter)
         .call(attachDragBehavior)
         .attr('height', function(d: any) {
             return d.height - c.verticalPadding;
@@ -380,7 +380,7 @@ function renderAxisBrush(axisBrush: any, paperColor: any, gd: GraphDiv) {
 
     const highlightShadow = axisBrush.selectAll('.highlight-shadow').data(repeat); // we have a set here, can't call it `extent`
 
-    highlightShadow.enter()
+    const highlightShadowEnter = highlightShadow.enter()
         .append('line')
         .classed('highlight-shadow', true)
         .attr('x', -c.bar.width / 2)
@@ -389,13 +389,13 @@ function renderAxisBrush(axisBrush: any, paperColor: any, gd: GraphDiv) {
         .attr('opacity', c.bar.strokeOpacity)
         .attr('stroke-linecap', 'butt');
 
-    highlightShadow
+    highlightShadow.merge(highlightShadowEnter)
         .attr('y1', function(d: any) { return d.height; })
         .call(styleHighlight);
 
     const highlight = axisBrush.selectAll('.highlight').data(repeat); // we have a set here, can't call it `extent`
 
-    highlight.enter()
+    const highlightEnter = highlight.enter()
         .append('line')
         .classed('highlight', true)
         .attr('x', -c.bar.width / 2)
@@ -404,7 +404,7 @@ function renderAxisBrush(axisBrush: any, paperColor: any, gd: GraphDiv) {
         .attr('opacity', c.bar.fillOpacity)
         .attr('stroke-linecap', 'butt');
 
-    highlight
+    highlight.merge(highlightEnter)
         .attr('y1', function(d: any) { return d.height; })
         .call(styleHighlight);
 }
@@ -413,11 +413,11 @@ function ensureAxisBrush(axisOverlays: any, paperColor: any, gd: GraphDiv) {
     const axisBrush = axisOverlays.selectAll('.' + c.cn.axisBrush)
         .data(repeat, keyFun);
 
-    axisBrush.enter()
+    const axisBrushEnter = axisBrush.enter()
         .append('g')
         .classed(c.cn.axisBrush, true);
 
-    renderAxisBrush(axisBrush, paperColor, gd);
+    renderAxisBrush(axisBrush.merge(axisBrushEnter), paperColor, gd);
 }
 
 function getBrushExtent(brush: any) {

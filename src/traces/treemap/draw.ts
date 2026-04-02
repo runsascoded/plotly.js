@@ -25,10 +25,11 @@ export default function _plot(gd: GraphDiv, cdmodule: any[], transitionOpts: any
     join = layer.selectAll('g.trace.' + type)
         .data(cdmodule, function(cd: any) { return cd[0].trace.uid; });
 
-    join.enter().append('g')
+    const joinEnter = join.enter().append('g')
         .classed('trace', true)
         .classed(type, true);
 
+    join = join.merge(joinEnter);
     join.order();
 
     if(!fullLayout.uniformtext.mode && helpers.hasTransition(transitionOpts)) {

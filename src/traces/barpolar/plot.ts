@@ -19,14 +19,14 @@ export default function plot(gd: GraphDiv, subplot: any, cdbar: any) {
         const pointGroup = Lib.ensureSingle(plotGroup, 'g', 'points');
         const bars = pointGroup.selectAll('g.point').data(Lib.identity);
 
-        bars.enter().append('g')
+        const barsEnter = bars.enter().append('g')
             .style('vector-effect', isStatic ? 'none' : 'non-scaling-stroke')
             .style('stroke-miterlimit', 2)
             .classed('point', true);
 
         bars.exit().remove();
 
-        bars.each(function(this: any, di: any) {
+        bars.merge(barsEnter).each(function(this: any, di: any) {
             const bar = select(this);
 
             const rp0 = di.rp0 = radialAxis.c2p(di.s0);

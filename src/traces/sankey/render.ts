@@ -879,7 +879,7 @@ export default function(gd: any, svg: any, calcData: any, layout: any, callbacks
     sankey.exit()
         .remove();
 
-    sankey.enter()
+    const sankeyEnter = sankey.enter()
         .append('g')
         .classed(c.cn.sankey, true)
         .style('box-sizing', 'content-box')
@@ -889,7 +889,8 @@ export default function(gd: any, svg: any, calcData: any, layout: any, callbacks
         .style('pointer-events', isStatic ? 'none' : 'auto')
         .attr('transform', sankeyTransform);
 
-    sankey.each(function(d: any, i: any) {
+    const sankeyMerged = sankey.merge(sankeyEnter);
+    sankeyMerged.each(function(d: any, i: any) {
         gd._fullData[i]._sankey = d;
         // Create dragbox if missing
         const dragboxClassName = 'bgsankey-' + d.trace.uid + '-' + i;
@@ -909,19 +910,19 @@ export default function(gd: any, svg: any, calcData: any, layout: any, callbacks
           .style('stroke-width', 0);
     });
 
-    sankey.transition()
+    sankeyMerged.transition()
         .ease(c.ease).duration(c.duration)
         .attr('transform', sankeyTransform);
 
-    const sankeyLinks = sankey.selectAll('.' + c.cn.sankeyLinks)
+    const sankeyLinks = sankeyMerged.selectAll('.' + c.cn.sankeyLinks)
         .data(repeat, keyFun);
 
-    sankeyLinks.enter()
+    const sankeyLinksEnter = sankeyLinks.enter()
         .append('g')
         .classed(c.cn.sankeyLinks, true)
         .style('fill', 'none');
 
-    const sankeyLink = sankeyLinks.selectAll('.' + c.cn.sankeyLink)
+    const sankeyLink = sankeyLinks.merge(sankeyLinksEnter).selectAll('.' + c.cn.sankeyLink)
           .data(function(d: any) {
               const links = d.graph.links;
               return links
@@ -929,12 +930,13 @@ export default function(gd: any, svg: any, calcData: any, layout: any, callbacks
                 .map(linkModel.bind(null, d));
           }, keyFun);
 
-    sankeyLink
+    const sankeyLinkEnter = sankeyLink
           .enter().append('path')
           .classed(c.cn.sankeyLink, true)
-          .call(attachPointerEvents, sankey, callbacks.linkEvents);
+          .call(attachPointerEvents, sankeyMerged, callbacks.linkEvents);
 
-    sankeyLink
+    const sankeyLinkMerged = sankeyLink.merge(sankeyLinkEnter);
+    sankeyLinkMerged
         .style('stroke', function(d: any) {
             return salientEnough(d) ? Color.tinyRGB(tinycolor(d.linkLineColor)) : d.tinyColorHue;
         })
@@ -952,7 +954,7 @@ export default function(gd: any, svg: any, calcData: any, layout: any, callbacks
         })
         .attr('d', linkPath());
 
-    sankeyLink
+    sankeyLinkMerged
         .style('opacity', function() { return (gd._context.staticPlot || firstRender || dragcover) ? 1 : 0;})
         .transition()
         .ease(c.ease).duration(c.duration)
@@ -964,14 +966,15 @@ export default function(gd: any, svg: any, calcData: any, layout: any, callbacks
         .style('opacity', 0)
         .remove();
 
-    const sankeyNodeSet = sankey.selectAll('.' + c.cn.sankeyNodeSet)
+    const sankeyNodeSet = sankeyMerged.selectAll('.' + c.cn.sankeyNodeSet)
         .data(repeat, keyFun);
 
-    sankeyNodeSet.enter()
+    const sankeyNodeSetEnter = sankeyNodeSet.enter()
         .append('g')
         .classed(c.cn.sankeyNodeSet, true);
 
-    sankeyNodeSet
+    const sankeyNodeSetMerged = sankeyNodeSet.merge(sankeyNodeSetEnter);
+    sankeyNodeSetMerged
         .style('cursor', function(d: any) {
             switch(d.arrangement) {
                 case 'fixed': return 'default';
@@ -980,7 +983,7 @@ export default function(gd: any, svg: any, calcData: any, layout: any, callbacks
             }
         });
 
-    const sankeyNode = sankeyNodeSet.selectAll('.' + c.cn.sankeyNode)
+    const sankeyNode = sankeyNodeSetMerged.selectAll('.' + c.cn.sankeyNode)
         .data(function(d: any) {
             const nodes = d.graph.nodes;
             persistOriginalPlace(nodes);
@@ -988,17 +991,18 @@ export default function(gd: any, svg: any, calcData: any, layout: any, callbacks
               .map(nodeModel.bind(null, d));
         }, keyFun);
 
-    sankeyNode.enter()
+    const sankeyNodeEnter = sankeyNode.enter()
         .append('g')
         .classed(c.cn.sankeyNode, true)
         .call(updateNodePositions)
         .style('opacity', function(n: any) { return ((gd._context.staticPlot || firstRender) && !n.partOfGroup) ? 1 : 0;});
 
-    sankeyNode
-        .call(attachPointerEvents, sankey, callbacks.nodeEvents)
-        .call(attachDragHandler, sankeyLink, callbacks, gd); // has to be here as it binds sankeyLink
+    const sankeyNodeMerged = sankeyNode.merge(sankeyNodeEnter);
+    sankeyNodeMerged
+        .call(attachPointerEvents, sankeyMerged, callbacks.nodeEvents)
+        .call(attachDragHandler, sankeyLinkMerged, callbacks, gd); // has to be here as it binds sankeyLink
 
-    sankeyNode
+    sankeyNodeMerged
         .transition()
         .ease(c.ease).duration(c.duration)
         .call(updateNodePositions)
@@ -1010,34 +1014,35 @@ export default function(gd: any, svg: any, calcData: any, layout: any, callbacks
         .style('opacity', 0)
         .remove();
 
-    const nodeRect = sankeyNode.selectAll('.' + c.cn.nodeRect)
+    const nodeRect = sankeyNodeMerged.selectAll('.' + c.cn.nodeRect)
         .data(repeat);
 
-    nodeRect.enter()
+    const nodeRectEnter = nodeRect.enter()
         .append('rect')
         .classed(c.cn.nodeRect, true)
         .call(sizeNode);
 
-    nodeRect
+    const nodeRectMerged = nodeRect.merge(nodeRectEnter);
+    nodeRectMerged
         .style('stroke-width', function(d: any) {return d.nodeLineWidth;})
         .style('stroke', function(d: any) {return Color.tinyRGB(tinycolor(d.nodeLineColor));})
         .style('stroke-opacity', function(d: any) {return Color.opacity(d.nodeLineColor);})
         .style('fill', function(d: any) {return d.tinyColorHue;})
         .style('fill-opacity', function(d: any) {return d.tinyColorAlpha;});
 
-    nodeRect.transition()
+    nodeRectMerged.transition()
         .ease(c.ease).duration(c.duration)
         .call(sizeNode);
 
-    const nodeLabel = sankeyNode.selectAll('.' + c.cn.nodeLabel)
+    const nodeLabel = sankeyNodeMerged.selectAll('.' + c.cn.nodeLabel)
         .data(repeat);
 
-    nodeLabel.enter()
+    const nodeLabelEnter = nodeLabel.enter()
         .append('text')
         .classed(c.cn.nodeLabel, true)
         .style('cursor', 'default');
 
-    nodeLabel
+    nodeLabel.merge(nodeLabelEnter)
         .attr('data-notex', 1) // prohibit tex interpretation until we can handle tex and regular text together
         .text(function(d: any) { return d.node.label; })
         .each(function(this: any, d: any) {

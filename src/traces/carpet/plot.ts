@@ -83,11 +83,11 @@ function drawGridLines(xaxis: any, yaxis: any, layer: any, axis: any, axisLetter
     const lineClass = 'const-' + axisLetter + '-lines';
     const gridJoin = layer.selectAll('.' + lineClass).data(gridlines);
 
-    gridJoin.enter().append('path')
+    const gridJoinEnter = gridJoin.enter().append('path')
         .classed(lineClass, true)
         .style('vector-effect', isStatic ? 'none' : 'non-scaling-stroke');
 
-    gridJoin.each(function(this: any, d: any) {
+    gridJoin.merge(gridJoinEnter).each(function(this: any, d: any) {
         const gridline = d;
         const x = gridline.x;
         const y = gridline.y;
@@ -112,13 +112,13 @@ function drawGridLines(xaxis: any, yaxis: any, layer: any, axis: any, axisLetter
 function drawAxisLabels(gd: any, xaxis: any, yaxis: any, trace: any, t: any, layer: any, labels: any, labelClass: any) {
     const labelJoin = layer.selectAll('text.' + labelClass).data(labels);
 
-    labelJoin.enter().append('text')
+    const labelJoinEnter = labelJoin.enter().append('text')
         .classed(labelClass, true);
 
     let maxExtent = 0;
     let labelOrientation: any = {};
 
-    labelJoin.each(function(this: any, label: any, i: any) {
+    labelJoin.merge(labelJoinEnter).each(function(this: any, label: any, i: any) {
         // Most of the positioning is done in calc_labels. Only the parts that depend upon
         // the screen space representation of the x and y axes are here:
         let orientation;
@@ -198,11 +198,11 @@ function drawAxisTitle(gd: any, layer: any, trace: any, t: any, xy: any, dxy: an
     const titleJoin = layer.selectAll('text.' + labelClass).data(data);
     let offset = labelOrientation.maxExtent;
 
-    titleJoin.enter().append('text')
+    const titleJoinEnter = titleJoin.enter().append('text')
         .classed(labelClass, true);
 
     // There's only one, but we'll do it as a join so it's updated nicely:
-    titleJoin.each(function(this: any) {
+    titleJoin.merge(titleJoinEnter).each(function(this: any) {
         const orientation = orientText(trace, xa, ya, xy, dxy);
 
         if(['start', 'both'].indexOf(axis.showticklabels) === -1) {

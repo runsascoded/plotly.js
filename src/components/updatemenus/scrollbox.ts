@@ -27,21 +27,22 @@ function ScrollBox(this: any, gd: GraphDiv, container: any, id: any) {
     this.vbar = null;  // vertical scrollbar D3 selection
 
     // <rect> element to capture pointer events
-    this.bg = this.container.selectAll('rect.scrollbox-bg').data([0]);
+    const bgJoin = this.container.selectAll('rect.scrollbox-bg').data([0]);
 
-    this.bg.exit()
+    bgJoin.exit()
         .on('.drag', null)
         .on('wheel', null)
         .remove();
 
-    this.bg.enter().append('rect')
+    this.bg = bgJoin.enter().append('rect')
         .classed('scrollbox-bg', true)
         .style('pointer-events', 'all')
         .attr('opacity', 0)
         .attr('x', 0)
         .attr('y', 0)
         .attr('width', 0)
-        .attr('height', 0);
+        .attr('height', 0)
+        .merge(bgJoin);
 }
 
 // scroll bar dimensions
@@ -149,12 +150,12 @@ ScrollBox.prototype.enable = function enable(position: any, translateX: any, tra
         .on('.drag', null)
         .remove();
 
-    hbar.enter().append('rect')
+    const hbarEnter = hbar.enter().append('rect')
         .classed('scrollbar-horizontal', true)
         .call(Color.fill, ScrollBox.barColor);
 
     if(needsHorizontalScrollBar) {
-        this.hbar = hbar
+        this.hbar = hbar.merge(hbarEnter)
             .attr('rx', ScrollBox.barRadius)
             .attr('ry', ScrollBox.barRadius)
             .attr('x', hbarL)
@@ -188,12 +189,12 @@ ScrollBox.prototype.enable = function enable(position: any, translateX: any, tra
         .on('.drag', null)
         .remove();
 
-    vbar.enter().append('rect')
+    const vbarEnter = vbar.enter().append('rect')
         .classed('scrollbar-vertical', true)
         .call(Color.fill, ScrollBox.barColor);
 
     if(needsVerticalScrollBar) {
-        this.vbar = vbar
+        this.vbar = vbar.merge(vbarEnter)
             .attr('rx', ScrollBox.barRadius)
             .attr('ry', ScrollBox.barRadius)
             .attr('x', vbarL)
@@ -222,12 +223,12 @@ ScrollBox.prototype.enable = function enable(position: any, translateX: any, tra
 
     clipPath.exit().remove();
 
-    clipPath.enter()
-        .append('clipPath').attr('id', clipId)
-        .append('rect');
+    const clipPathEnter = clipPath.enter()
+        .append('clipPath').attr('id', clipId);
+    clipPathEnter.append('rect');
 
     if(needsHorizontalScrollBar || needsVerticalScrollBar) {
-        this._clipRect = clipPath.select('rect')
+        this._clipRect = clipPath.merge(clipPathEnter).select('rect')
             .attr('x', Math.floor(clipL))
             .attr('y', Math.floor(clipT))
             .attr('width', Math.ceil(clipR) - Math.floor(clipL))

@@ -246,16 +246,17 @@ function plotOne(gd: GraphDiv, plotinfo: PlotInfo, cdSubplot?: any, transitionOp
         );
     });
 
-    const layers = plotinfo.plot.selectAll('g.mlayer')
+    const layersJoin = plotinfo.plot.selectAll('g.mlayer')
         .data(layerData, function(d: any) { return d.className; });
 
-    layers.enter().append('g')
+    const layersEnter = layersJoin.enter().append('g')
         .attr('class', function(d: any) { return d.className; })
         .classed('mlayer', true)
         .classed('rangeplot', plotinfo.isRangePlot);
 
-    layers.exit().remove();
+    layersJoin.exit().remove();
 
+    const layers = layersJoin.merge(layersEnter);
     layers.order();
 
     layers.each(function(this: any, d: any) {
@@ -411,15 +412,16 @@ export const drawFramework = function(gd: GraphDiv): any {
     const subplotLayers = fullLayout._cartesianlayer.selectAll('.subplot')
         .data(subplotData, String);
 
-    subplotLayers.enter().append('g')
+    const subplotLayersEnter = subplotLayers.enter().append('g')
         .attr('class', function(d: any) { return 'subplot ' + d[0]; });
-
-    subplotLayers.order();
 
     subplotLayers.exit()
         .call(purgeSubplotLayers, fullLayout);
 
-    subplotLayers.each(function(this: any, d: any) {
+    const subplotLayersMerged = subplotLayers.merge(subplotLayersEnter);
+    subplotLayersMerged.order();
+
+    subplotLayersMerged.each(function(this: any, d: any) {
         const id = d[0];
         const posZ = id.indexOf(zindexSeparator);
         const hasZ = posZ !== -1;

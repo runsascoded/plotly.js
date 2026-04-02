@@ -350,11 +350,11 @@ export default function(gd: any, plotinfo: any, cdheatmaps: any, heatmapLayer: a
 
         const image3 = plotGroup.selectAll('image').data(cd);
 
-        image3.enter().append('svg:image')
+        const image3Enter = image3.enter().append('svg:image')
             .attr('xmlns', xmlnsNamespaces.svg)
             .attr('preserveAspectRatio', 'none');
 
-        image3
+        image3.merge(image3Enter)
             .attr('height', imageHeight)
             .attr('width', imageWidth)
             .attr('x', left)

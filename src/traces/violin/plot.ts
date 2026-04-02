@@ -47,13 +47,13 @@ export default function plot(gd: GraphDiv, plotinfo: PlotInfo, cdViolins: any[],
 
         const violins = plotGroup.selectAll('path.violin').data(Lib.identity);
 
-        violins.enter().append('path')
+        const violinsEnter = violins.enter().append('path')
             .style('vector-effect', isStatic ? 'none' : 'non-scaling-stroke')
             .attr('class', 'violin');
 
         violins.exit().remove();
 
-        violins.each(function(this: any, d: any) {
+        violins.merge(violinsEnter).each(function(this: any, d: any) {
             const pathSel = select(this);
             const density = d.density;
             const len = density.length;
@@ -159,12 +159,12 @@ export default function plot(gd: GraphDiv, plotinfo: PlotInfo, cdViolins: any[],
         // N.B. use different class name than boxPlot.plotBoxMean,
         // to avoid selectAll conflict
         const meanPaths = plotGroup.selectAll('path.meanline').data(fn || []);
-        meanPaths.enter().append('path')
+        const meanPathsEnter = meanPaths.enter().append('path')
             .attr('class', 'meanline')
             .style('fill', 'none')
             .style('vector-effect', isStatic ? 'none' : 'non-scaling-stroke');
         meanPaths.exit().remove();
-        meanPaths.each(function(this: any, d: any) {
+        meanPaths.merge(meanPathsEnter).each(function(this: any, d: any) {
             const v = valAxis.c2p(d.mean, true);
             const p = helpers.getPositionOnKdePath(d, trace, v);
 

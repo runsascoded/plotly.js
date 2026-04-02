@@ -52,9 +52,11 @@ export default function plot(gd: GraphDiv, traces: any, plotinfo: any, transitio
                 .style('opacity', 1);
         }
 
-        setClipUrl(errorbars, plotinfo.layerClipId, gd);
+        const merged = errorbars.merge(enter);
 
-        errorbars.each(function(this: any, d: any) {
+        setClipUrl(merged, plotinfo.layerClipId, gd);
+
+        merged.each(function(this: any, d: any) {
             const errorbar = select(this);
             const coords = errorCoords(d, xa, ya);
 

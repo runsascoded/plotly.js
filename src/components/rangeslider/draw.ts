@@ -56,12 +56,12 @@ export default function(gd: GraphDiv) {
     // return early if no range slider is visible
     if(rangeSliderData.length === 0) return;
 
-    rangeSliders.enter().append('g')
+    const rangeSliderEnter = rangeSliders.enter().append('g')
         .classed(constants.containerClassName, true)
         .attr('pointer-events', 'all');
 
     // for all present range sliders
-    rangeSliders.each(function(this: any, axisOpts: any) {
+    rangeSliders.merge(rangeSliderEnter).each(function(this: any, axisOpts: any) {
         const rangeSlider = select(this);
         const opts = axisOpts[constants.name];
         const oppAxisOpts = fullLayout[axisIDs.id2name(axisOpts.anchor)];
@@ -435,17 +435,18 @@ function drawRangePlot(rangeSlider: any, gd: GraphDiv, axisOpts: any, opts: any)
     const rangePlots = rangeSlider.selectAll('g.' + constants.rangePlotClassName)
         .data(axisOpts._subplotsWith, Lib.identity);
 
-    rangePlots.enter().append('g')
+    const rangePlotsEnter = rangePlots.enter().append('g')
         .attr('class', function(id: any) { return constants.rangePlotClassName + ' ' + id; })
         .call(setClipUrl, opts._clipId, gd);
 
-    rangePlots.order();
-
     rangePlots.exit().remove();
+
+    const rangePlotsMerged = rangePlots.merge(rangePlotsEnter);
+    rangePlotsMerged.order();
 
     let mainplotinfo: any;
 
-    rangePlots.each(function(this: any, id: any, i: any) {
+    rangePlotsMerged.each(function(this: any, id: any, i: any) {
         const plotgroup = select(this);
         const isMainPlot = (i === 0);
 

@@ -136,7 +136,7 @@ proto.updateLayers = function(ternaryLayout: any) {
 
     const grids = ['agrid', 'bgrid', 'cgrid'];
 
-    toplevel.enter().append('g')
+    const toplevelEnter = toplevel.enter().append('g')
         .attr('class', function(d: any) { return 'toplevel ' + d; })
         .each(function(this: any, d: any) {
             const s = select(this);
@@ -162,7 +162,7 @@ proto.updateLayers = function(ternaryLayout: any) {
             }
         });
 
-    toplevel.order();
+    toplevel.merge(toplevelEnter).order();
 };
 
 const whRatio = Math.sqrt(4 / 3);

@@ -227,7 +227,7 @@ function _doPlot(gd?: any, data?: any, layout?: any, config?: any): any {
                 }
             );
 
-            fullLayout._glcanvas
+            fullLayout._glcanvas = fullLayout._glcanvas
                 .enter()
                 .append('canvas')
                 .attr('class', function (d?: any) {
@@ -237,7 +237,8 @@ function _doPlot(gd?: any, data?: any, layout?: any, config?: any): any {
                 .style('top', 0)
                 .style('left', 0)
                 .style('overflow', 'visible')
-                .style('pointer-events', 'none');
+                .style('pointer-events', 'none')
+                .merge(fullLayout._glcanvas);
         }
 
         const plotGlPixelRatio = gd._context.plotGlPixelRatio;
@@ -3715,37 +3716,25 @@ function makePlotFramework(gd?: any): void {
     fullLayout._calcInverseTransform(gd);
 
     // Plot container
-    fullLayout._container = gd3.selectAll('.plot-container').data([0]);
-    fullLayout._container
+    const containerJoin = gd3.selectAll('.plot-container').data([0]);
+    fullLayout._container = containerJoin
         .enter()
         .insert('div', ':first-child')
         .classed('plot-container', true)
         .classed('plotly', true)
-        // The plot container should always take the full with the height of its
-        // parent (the graph div). This ensures that for responsive plots
-        // without a height or width set, the paper div will take up the full
-        // height & width of the graph div.
-        // So, for responsive plots without a height or width set, if the plot
-        // container's height is left to 'auto', its height will be dictated by
-        // its childrens' height. (The plot container's only child is the paper
-        // div.)
-        // In this scenario, the paper div's height will be set to 100%,
-        // which will be 100% of the plot container's auto height. That is
-        // meaninglesss, so the browser will use the paper div's children to set
-        // the height of the plot container instead. However, the paper div's
-        // children do not have any height, because they are all positioned
-        // absolutely, and therefore take up no space.
         .style('width', '100%')
-        .style('height', '100%');
+        .style('height', '100%')
+        .merge(containerJoin);
 
     // Make the svg container
-    fullLayout._paperdiv = fullLayout._container.selectAll('.svg-container').data([0]);
-    fullLayout._paperdiv
+    const paperdivJoin = fullLayout._container.selectAll('.svg-container').data([0]);
+    fullLayout._paperdiv = paperdivJoin
         .enter()
         .append('div')
         .classed('user-select-none', true)
         .classed('svg-container', true)
-        .style('position', 'relative');
+        .style('position', 'relative')
+        .merge(paperdivJoin);
 
     // Make the graph containers
     // start fresh each time we get here, so we know the order comes out
@@ -3753,9 +3742,9 @@ function makePlotFramework(gd?: any): void {
     // TODO: sort out all the ordering so we don't have to
     // explicitly delete anything
     // FIXME: parcoords reuses this object, not the best pattern
-    fullLayout._glcontainer = fullLayout._paperdiv.selectAll('.gl-container').data([{}]);
+    const glcontainerJoin = fullLayout._paperdiv.selectAll('.gl-container').data([{}]);
 
-    fullLayout._glcontainer.enter().append('div').classed('gl-container', true);
+    fullLayout._glcontainer = glcontainerJoin.enter().append('div').classed('gl-container', true).merge(glcontainerJoin);
 
     fullLayout._paperdiv.selectAll('.main-svg').remove();
     fullLayout._paperdiv.select('.modebar-container').remove();

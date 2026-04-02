@@ -446,9 +446,9 @@ function gradientWithBounds(sel: any, gd: GraphDiv, gradientID: string, type: st
 
             const stops = el.selectAll('stop').data(colorStops);
             stops.exit().remove();
-            stops.enter().append('stop');
+            const stopsEnter = stops.enter().append('stop');
 
-            stops.each(function (this: any, d: any) {
+            stops.merge(stopsEnter).each(function (this: any, d: any) {
                 const tc = tinycolor(d[1]);
                 select(this)
                     .attr('offset', d[0] + '%')

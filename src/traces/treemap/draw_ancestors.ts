@@ -68,11 +68,12 @@ export default function drawAncestors(gd: GraphDiv, cd: any[], entry: any, slice
 
     slices = slices.data(sliceData, helpers.getPtId);
 
-    slices.enter().append('g')
+    const slicesEnter = slices.enter().append('g')
         .classed('pathbar', true);
 
     handleSlicesExit(slices, onPathbar, refRect, [width, height], pathSlice);
 
+    slices = slices.merge(slicesEnter);
     slices.order();
 
     let updateSlices = slices;

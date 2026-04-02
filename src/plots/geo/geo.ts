@@ -342,7 +342,7 @@ proto.updateBaseLayers = function(fullLayout: any, geoLayout: any) {
         select(this).remove();
     });
 
-    join.enter().append('g')
+    const joinEnter = join.enter().append('g')
         .attr('class', function(d: any) { return 'layer ' + d; })
         .each(function(this: any, d: any) {
             const layer = layers[d] = select(this);
@@ -369,9 +369,10 @@ proto.updateBaseLayers = function(fullLayout: any, geoLayout: any) {
             }
         });
 
-    join.order();
+    const joinMerged = join.merge(joinEnter);
+    joinMerged.order();
 
-    join.each(function(d: any) {
+    joinMerged.each(function(d: any) {
         const path = basePaths[d];
         const adj = (constants.layerNameToAdjective as any)[d];
 

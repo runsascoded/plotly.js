@@ -3,17 +3,16 @@
  *
  * Remaining patches:
  * - .attr('name') getter on empty selections (v3 returns undefined, v7 crashes)
- * - Enter/update auto-merge: v3 auto-merged enter().append() into update selection
  * - .select() data non-propagation: v4+ propagates parent __data__ to children
  *
  * REMOVED (all call sites converted to v7 native):
  * - .style({obj}) object form → individual .style('key', val) calls
  * - .attr({obj}) object form → individual .attr('key', val) calls or setAttrs()
+ * - Enter/update auto-merge: all call sites now use explicit .merge() or .join()
  */
 import { selection } from 'd3-selection';
 import 'd3-transition';
 
-const _origEnter = (selection.prototype as any).enter;
 const _origSelect = (selection.prototype as any).select;
 
 // Patch .select() to NOT propagate parent data to child (v3 behavior).
@@ -55,46 +54,4 @@ const _origAttr = (selection.prototype as any).attr;
         return undefined;
     }
     return _origAttr.apply(this, arguments);
-};
-
-// Patch .enter() to auto-merge entered nodes back into the update selection (v3 behavior).
-// In d3 v3, after enter().append(), the appended nodes were automatically part of the
-// update selection. In v4+, enter and update are separate selections. This polyfill
-// wraps .append() and .insert() on enter selections to merge entered nodes back.
-(selection.prototype as any).enter = function(this: any): any {
-    const enterSel = _origEnter.call(this);
-    const updateSel = this;
-    const _origAppend = enterSel.append;
-    const _origInsert = enterSel.insert;
-
-    enterSel.append = function(this: any): any {
-        const result = _origAppend.apply(this, arguments);
-        // Merge entered nodes into the update selection's _groups
-        const enterGroups = result._groups;
-        const updateGroups = updateSel._groups;
-        for(let i = 0; i < updateGroups.length; i++) {
-            for(let j = 0; j < updateGroups[i].length; j++) {
-                if(!updateGroups[i][j] && enterGroups[i] && enterGroups[i][j]) {
-                    updateGroups[i][j] = enterGroups[i][j];
-                }
-            }
-        }
-        return result;
-    };
-
-    enterSel.insert = function(this: any): any {
-        const result = _origInsert.apply(this, arguments);
-        const enterGroups = result._groups;
-        const updateGroups = updateSel._groups;
-        for(let i = 0; i < updateGroups.length; i++) {
-            for(let j = 0; j < updateGroups[i].length; j++) {
-                if(!updateGroups[i][j] && enterGroups[i] && enterGroups[i][j]) {
-                    updateGroups[i][j] = enterGroups[i][j];
-                }
-            }
-        }
-        return result;
-    };
-
-    return enterSel;
 };

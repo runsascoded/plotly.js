@@ -51,7 +51,7 @@ export default function draw(gd: GraphDiv) {
         .selectAll('g.' + constants.containerClassName)
         .data(menuData.length > 0 ? [0] : []);
 
-    menus.enter().append('g')
+    const menusEnter = menus.enter().append('g')
         .classed(constants.containerClassName, true)
         .style('cursor', 'pointer');
 
@@ -68,15 +68,17 @@ export default function draw(gd: GraphDiv) {
     // return early if no update menus are visible
     if(menuData.length === 0) return;
 
+    const menusMerged = menus.merge(menusEnter);
+
     // join header group
-    const headerGroups = menus.selectAll('g.' + constants.headerGroupClassName)
+    const headerGroupsJoin = menusMerged.selectAll('g.' + constants.headerGroupClassName)
         .data(menuData, keyFunction);
 
-    headerGroups.enter().append('g')
+    const headerGroupsEnter = headerGroupsJoin.enter().append('g')
         .classed(constants.headerGroupClassName, true);
 
     // draw dropdown button container
-    const gButton = Lib.ensureSingle(menus, 'g', constants.dropdownButtonGroupClassName, function(s: any) {
+    const gButton = Lib.ensureSingle(menusMerged, 'g', constants.dropdownButtonGroupClassName, function(s: any) {
         s.style('pointer-events', 'all');
     });
 
@@ -92,16 +94,18 @@ export default function draw(gd: GraphDiv) {
     const scrollBox: any = (new ScrollBox(gd, gButton, scrollBoxId) as any);
 
     // remove exiting header, remove dropped buttons and reset margins
-    if(headerGroups.enter().size()) {
+    if(headerGroupsEnter.size()) {
         // make sure gButton is on top of all headers
         gButton.node().parentNode.appendChild(gButton.node());
         gButton.call(removeAllButtons);
     }
 
-    headerGroups.exit().each(function(menuOpts: any) {
+    headerGroupsJoin.exit().each(function(menuOpts: any) {
         gButton.call(removeAllButtons);
         clearAutoMargin(menuOpts);
     }).remove();
+
+    const headerGroups = headerGroupsJoin.merge(headerGroupsEnter);
 
     // draw headers!
     headerGroups.each(function(this: any, menuOpts: any) {
@@ -228,16 +232,16 @@ function drawButtons(gd: GraphDiv, gHeader: any, gButton: any, scrollBox: any, m
 
     const klass = menuOpts.type === 'dropdown' ? constants.dropdownButtonClassName : constants.buttonClassName;
 
-    const buttons = gButton.selectAll('g.' + klass)
+    const buttonsJoin = gButton.selectAll('g.' + klass)
         .data(Lib.filterVisible(buttonData));
 
-    const enter = buttons.enter().append('g')
+    const buttonsEnter = buttonsJoin.enter().append('g')
         .classed(klass, true);
 
-    const exit = buttons.exit();
+    const exit = buttonsJoin.exit();
 
     if(menuOpts.type === 'dropdown') {
-        enter.attr('opacity', '0')
+        buttonsEnter.attr('opacity', '0')
             .transition()
             .attr('opacity', '1');
 
@@ -247,6 +251,8 @@ function drawButtons(gd: GraphDiv, gHeader: any, gButton: any, scrollBox: any, m
     } else {
         exit.remove();
     }
+
+    const buttons = buttonsJoin.merge(buttonsEnter);
 
     let x0 = 0;
     let y0 = 0;
@@ -473,16 +479,16 @@ function findDimensions(gd: GraphDiv, menuOpts: any) {
         ly: 0
     };
 
-    const fakeButtons = tester.selectAll('g.' + constants.dropdownButtonClassName)
+    const fakeButtonsJoin = tester.selectAll('g.' + constants.dropdownButtonClassName)
         .data(Lib.filterVisible(menuOpts.buttons));
 
-    fakeButtons.enter().append('g')
+    const fakeButtonsEnter = fakeButtonsJoin.enter().append('g')
         .classed(constants.dropdownButtonClassName, true);
 
     const isVertical = ['up', 'down'].indexOf(menuOpts.direction) !== -1;
 
     // loop over fake buttons to find width / height
-    fakeButtons.each(function(this: any, buttonOpts: any, i: any) {
+    fakeButtonsJoin.merge(fakeButtonsEnter).each(function(this: any, buttonOpts: any, i: any) {
         const button = select(this);
 
         button.call(drawItem, menuOpts, buttonOpts, gd);
@@ -542,7 +548,7 @@ function findDimensions(gd: GraphDiv, menuOpts: any) {
         dims.totalWidth += constants.arrowPadX;
     }
 
-    fakeButtons.remove();
+    fakeButtonsJoin.remove();
 
     const paddedWidth = dims.totalWidth + menuOpts.pad.l + menuOpts.pad.r;
     const paddedHeight = dims.totalHeight + menuOpts.pad.t + menuOpts.pad.b;

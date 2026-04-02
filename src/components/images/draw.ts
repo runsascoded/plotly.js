@@ -209,22 +209,25 @@ export default function draw(gd: GraphDiv) {
     const imagesAbove = fullLayout._imageUpperLayer.selectAll('image')
         .data(imageDataAbove, imgDataFunc);
 
-    imagesBelow.enter().append('image');
-    imagesAbove.enter().append('image');
+    const imagesBelowEnter = imagesBelow.enter().append('image');
+    const imagesAboveEnter = imagesAbove.enter().append('image');
 
     imagesBelow.exit().remove();
     imagesAbove.exit().remove();
 
-    imagesBelow.each(function(this: any, d: any) {
+    const imagesBelowMerged = imagesBelow.merge(imagesBelowEnter);
+    const imagesAboveMerged = imagesAbove.merge(imagesAboveEnter);
+
+    imagesBelowMerged.each(function(this: any, d: any) {
         setImage.bind(this)(d);
         applyAttributes.bind(this)(d);
     });
-    imagesAbove.each(function(this: any, d: any) {
+    imagesAboveMerged.each(function(this: any, d: any) {
         setImage.bind(this)(d);
         applyAttributes.bind(this)(d);
     });
-    imagesBelow.sort(imgSort);
-    imagesAbove.sort(imgSort);
+    imagesBelowMerged.sort(imgSort);
+    imagesAboveMerged.sort(imgSort);
 
     const allSubplots = Object.keys(fullLayout._plots);
     for(i = 0; i < allSubplots.length; i++) {
@@ -239,13 +242,12 @@ export default function draw(gd: GraphDiv) {
             // enter and exit in case there were previously
             .data(imageDataSubplot[subplot] || [], imgDataFunc);
 
-        imagesOnSubplot.enter().append('image');
+        const imagesOnSubplotEnter = imagesOnSubplot.enter().append('image');
         imagesOnSubplot.exit().remove();
 
-        imagesOnSubplot.each(function(this: any, d: any) {
+        imagesOnSubplot.merge(imagesOnSubplotEnter).each(function(this: any, d: any) {
             setImage.bind(this)(d);
             applyAttributes.bind(this)(d);
-        });
-        imagesOnSubplot.sort(imgSort);
+        }).sort(imgSort);
     }
 }

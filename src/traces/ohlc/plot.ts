@@ -22,11 +22,11 @@ export default function plot(gd: GraphDiv,  plotinfo: PlotInfo,  cdOHLC: any,  o
 
         const paths = plotGroup.selectAll('path').data(Lib.identity);
 
-        paths.enter().append('path');
+        const pathsEnter = paths.enter().append('path');
 
         paths.exit().remove();
 
-        paths.attr('d', function(d: any) {
+        paths.merge(pathsEnter).attr('d', function(d: any) {
             if(d.empty) return 'M0,0Z';
 
             const xo = xa.c2p(d.pos - tickLen, true);

@@ -33,11 +33,17 @@ function draw(gd: GraphDiv) {
         .selectAll('g.' + cn.colorbar)
         .data(makeColorBarData(gd), function(opts: any) { return opts._id; });
 
-    colorBars.enter().append('g')
+    colorBars.exit()
+        .each(function(opts: any) { Plots.autoMargin(gd, opts._id); })
+        .remove();
+
+    const colorBarsEnter = colorBars.enter().append('g')
         .attr('class', function(opts: any) { return opts._id; })
         .classed(cn.colorbar, true);
 
-    colorBars.each(function(this: any, opts: any) {
+    const colorBarsMerged = colorBars.merge(colorBarsEnter);
+
+    colorBarsMerged.each(function(this: any, opts: any) {
         const g = select(this);
 
         Lib.ensureSingle(g, 'rect', cn.cbbg);
@@ -55,11 +61,7 @@ function draw(gd: GraphDiv) {
         }
     });
 
-    colorBars.exit()
-        .each(function(opts: any) { Plots.autoMargin(gd, opts._id); })
-        .remove();
-
-    colorBars.order();
+    colorBarsMerged.order();
 }
 
 function makeColorBarData(gd: GraphDiv) {
@@ -509,7 +511,7 @@ function drawColorBar(g: any, opts: any, gd: GraphDiv) {
             .selectAll('rect.' + cn.cbfill)
             .attr('style', '')
             .data(fillLevels);
-        fills.enter().append('rect')
+        const fillsEnter = fills.enter().append('rect')
             .classed(cn.cbfill, true)
             .attr('style', '');
         fills.exit().remove();
@@ -519,7 +521,7 @@ function drawColorBar(g: any, opts: any, gd: GraphDiv) {
             .map(Math.round)
             .sort(function(a: any, b: any) { return a - b; });
 
-        fills.each(function(this: any, d: any, i: any) {
+        fills.merge(fillsEnter).each(function(this: any, d: any, i: any) {
             const z = [
                 (i === 0) ? zrange[0] : (fillLevels[i] + fillLevels[i - 1]) / 2,
                 (i === fillLevels.length - 1) ? zrange[1] : (fillLevels[i] + fillLevels[i + 1]) / 2
@@ -556,10 +558,10 @@ function drawColorBar(g: any, opts: any, gd: GraphDiv) {
         const lines = g.select('.' + cn.cblines)
             .selectAll('path.' + cn.cbline)
             .data(line.color && line.width ? lineLevels : []);
-        lines.enter().append('path')
+        const linesEnter = lines.enter().append('path')
             .classed(cn.cbline, true);
         lines.exit().remove();
-        lines.each(function(this: any, d: any) {
+        lines.merge(linesEnter).each(function(this: any, d: any) {
             const a = uPx;
             const b = (Math.round(ax.c2p(d)) + (line.width / 2) % 1);
 

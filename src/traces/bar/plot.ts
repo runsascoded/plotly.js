@@ -124,11 +124,11 @@ function plot(gd: GraphDiv, plotinfo: PlotInfo, cdModule: CalcDatum[][], traceLa
         const keyFunc = getKeyFunc(trace);
         const bars = pointGroup.selectAll('g.point').data(identity, keyFunc);
 
-        bars.enter().append('g').classed('point', true);
+        const barsEnter = bars.enter().append('g').classed('point', true);
 
         bars.exit().remove();
 
-        bars.each(function (this: any, di: any, i: any) {
+        bars.merge(barsEnter).each(function (this: any, di: any, i: any) {
             const bar = select(this);
 
             // now display the bar

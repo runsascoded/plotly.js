@@ -148,7 +148,7 @@ proto.updateLayers = function(fullLayout: any, polarLayout: any) {
     const join = _this.framework.selectAll('.' + subLayer)
         .data(layerData, String);
 
-    join.enter().append('g')
+    const joinEnter = join.enter().append('g')
         .attr('class', function(d: any) { return subLayer + ' ' + d;})
         .each(function(this: any, d: any) {
             const sel = layers[d] = select(this);
@@ -182,7 +182,7 @@ proto.updateLayers = function(fullLayout: any, polarLayout: any) {
             }
         });
 
-    join.order();
+    join.merge(joinEnter).order();
 };
 
 /* Polar subplots juggle with 6 'axis objects' (!), these are:

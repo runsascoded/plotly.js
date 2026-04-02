@@ -41,11 +41,11 @@ export default function plot(gd: GraphDiv,  cdModule: any) {
         plotGroup.each(function(this: any) {
             const slices = select(this).selectAll('g.slice').data(cd);
 
-            slices.enter().append('g')
+            const slicesEnter = slices.enter().append('g')
                 .classed('slice', true);
             slices.exit().remove();
 
-            slices.each(function(this: any, pt: any, i: any) {
+            slices.merge(slicesEnter).each(function(this: any, pt: any, i: any) {
                 if(pt.hidden) {
                     select(this).selectAll('path,g').remove();
                     return;
@@ -60,7 +60,7 @@ export default function plot(gd: GraphDiv,  cdModule: any) {
                 const sliceTop = select(this);
                 const slicePath = sliceTop.selectAll('path.surface').data([pt]);
 
-                slicePath.enter().append('path')
+                const slicePathEnter = slicePath.enter().append('path')
                     .classed('surface', true)
                     .style('pointer-events', isStatic ? 'none' : 'all');
 
@@ -73,7 +73,7 @@ export default function plot(gd: GraphDiv,  cdModule: any) {
                     line(pt.BL, pt.TL) +
                     'Z';
 
-                slicePath.attr('d', shape);
+                slicePath.merge(slicePathEnter).attr('d', shape);
 
                 // add text
                 formatSliceLabel(gd, pt, cd0);
@@ -81,11 +81,11 @@ export default function plot(gd: GraphDiv,  cdModule: any) {
                 const sliceTextGroup = sliceTop.selectAll('g.slicetext')
                     .data(pt.text && (textPosition !== 'none') ? [0] : []);
 
-                sliceTextGroup.enter().append('g')
+                const sliceTextGroupEnter = sliceTextGroup.enter().append('g')
                     .classed('slicetext', true);
                 sliceTextGroup.exit().remove();
 
-                sliceTextGroup.each(function(this: any) {
+                sliceTextGroup.merge(sliceTextGroupEnter).each(function(this: any) {
                     const sliceText = Lib.ensureSingle(select(this), 'text', '', function(this: any, s: any) {
                         // prohibit tex interpretation until we can handle
                         // tex and regular text together
@@ -131,11 +131,11 @@ export default function plot(gd: GraphDiv,  cdModule: any) {
             const titleTextGroup = select(this).selectAll('g.titletext')
                 .data(trace.title.text ? [0] : []);
 
-            titleTextGroup.enter().append('g')
+            const titleTextGroupEnter = titleTextGroup.enter().append('g')
                 .classed('titletext', true);
             titleTextGroup.exit().remove();
 
-            titleTextGroup.each(function(this: any) {
+            titleTextGroup.merge(titleTextGroupEnter).each(function(this: any) {
                 const titleText = Lib.ensureSingle(select(this), 'text', '', function(this: any, s: any) {
                     // prohibit tex interpretation as above
                     s.attr('data-notex', 1);

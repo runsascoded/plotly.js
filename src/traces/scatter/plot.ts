@@ -27,11 +27,12 @@ export default function plot(gd: GraphDiv, plotinfo: PlotInfo, cdscatter: CalcDa
         .data(cdscatterSorted, function(d: any) { return d[0].trace.uid; });
 
     // Append new traces:
-    join.enter().append('g')
+    const joinEnter = join.enter().append('g')
         .attr('class', function(d: any) {
             return 'trace scatter trace' + d[0].trace.uid;
         })
         .style('stroke-miterlimit', 2);
+    join = join.merge(joinEnter);
     join.order();
 
     createFills(gd, join, plotinfo);
@@ -88,13 +89,13 @@ function createFills(gd: GraphDiv, traceJoin: any, plotinfo: PlotInfo): void {
 
         const fillJoin = fills.selectAll('g').data(fillData, identity);
 
-        fillJoin.enter().append('g');
+        const fillJoinEnter = fillJoin.enter().append('g');
 
         fillJoin.exit()
             .each(function(d: any) { trace[d] = null; })
             .remove();
 
-        fillJoin.order().each(function(this: any, d: any) {
+        fillJoin.merge(fillJoinEnter).order().each(function(this: any, d: any) {
             // make a path element inside the fill group, just so
             // we can give it its own data later on and the group can
             // keep its simple '_*Fill' data
@@ -318,13 +319,13 @@ function plotOne(gd: GraphDiv, idx: number, plotinfo: PlotInfo, cdscatter: CalcD
 
     lineJoin.each(makeUpdate(false));
 
-    lineJoin.enter().append('path')
+    const lineJoinEnter = lineJoin.enter().append('path')
         .classed('js-line', true)
         .style('vector-effect', isStatic ? 'none' : 'non-scaling-stroke')
         .call(lineGroupStyle)
         .each(makeUpdate(true));
 
-    setClipUrl(lineJoin, (plotinfo.layerClipId as any), gd);
+    setClipUrl(lineJoin.merge(lineJoinEnter), (plotinfo.layerClipId as any), gd);
 
     function clearFill(selection: any) {
         transition(selection).attr('d', 'M0,0Z');
@@ -525,6 +526,7 @@ function plotOne(gd: GraphDiv, idx: number, plotinfo: PlotInfo, cdscatter: CalcD
                 .style('opacity', 1);
         }
 
+        join = join.merge(enter);
         join.order();
 
         let styleFns: any;
@@ -566,8 +568,10 @@ function plotOne(gd: GraphDiv, idx: number, plotinfo: PlotInfo, cdscatter: CalcD
 
         // each text needs to go in its own 'g' in case
         // it gets converted to mathjax
-        join.enter().append('g').classed('textpoint', true).append('text');
+        const textEnter = join.enter().append('g').classed('textpoint', true);
+        textEnter.append('text');
 
+        join = join.merge(textEnter);
         join.order();
 
         join.each(function(this: any, d: any) {

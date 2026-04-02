@@ -521,33 +521,36 @@ export default function parcoords(gd: GraphDiv, cdModule: any, layout: any, call
 
     controlOverlay.exit().remove();
 
-    controlOverlay.enter()
+    const controlOverlayEnter = controlOverlay.enter()
         .append('g')
         .classed(c.cn.parcoords, true)
         .style('shape-rendering', 'crispEdges')
         .style('pointer-events', 'none');
 
-    controlOverlay.attr('transform', function(d: any) {
+    const controlOverlayMerged = controlOverlay.merge(controlOverlayEnter);
+    controlOverlayMerged.attr('transform', function(d: any) {
         return strTranslate(d.model.translateX, d.model.translateY);
     });
 
-    const parcoordsControlView = controlOverlay.selectAll('.' + c.cn.parcoordsControlView)
+    const parcoordsControlViewJoin = controlOverlayMerged.selectAll('.' + c.cn.parcoordsControlView)
         .data(repeat, keyFun);
 
-    parcoordsControlView.enter()
+    const parcoordsControlView = parcoordsControlViewJoin.enter()
         .append('g')
-        .classed(c.cn.parcoordsControlView, true);
+        .classed(c.cn.parcoordsControlView, true)
+        .merge(parcoordsControlViewJoin);
 
     parcoordsControlView.attr('transform', function(d: any) {
         return strTranslate(d.model.pad.l, d.model.pad.t);
     });
 
-    const yAxis = parcoordsControlView.selectAll('.' + c.cn.yAxis)
+    const yAxisJoin = parcoordsControlView.selectAll('.' + c.cn.yAxis)
         .data(function(p: any) { return p.dimensions; }, keyFun);
 
-    yAxis.enter()
+    const yAxis = yAxisJoin.enter()
         .append('g')
-        .classed(c.cn.yAxis, true);
+        .classed(c.cn.yAxis, true)
+        .merge(yAxisJoin);
 
     parcoordsControlView.each(function(p: any) {
         updatePanelLayout(yAxis, p, plotGlPixelRatio);
@@ -619,21 +622,23 @@ export default function parcoords(gd: GraphDiv, cdModule: any, layout: any, call
     yAxis.exit()
         .remove();
 
-    const axisOverlays = yAxis.selectAll('.' + c.cn.axisOverlays)
+    const axisOverlaysJoin = yAxis.selectAll('.' + c.cn.axisOverlays)
         .data(repeat, keyFun);
 
-    axisOverlays.enter()
+    const axisOverlays = axisOverlaysJoin.enter()
         .append('g')
-        .classed(c.cn.axisOverlays, true);
+        .classed(c.cn.axisOverlays, true)
+        .merge(axisOverlaysJoin);
 
     axisOverlays.selectAll('.' + c.cn.axis).remove();
 
-    const axis = axisOverlays.selectAll('.' + c.cn.axis)
+    const axisJoin = axisOverlays.selectAll('.' + c.cn.axis)
         .data(repeat, keyFun);
 
-    axis.enter()
+    const axis = axisJoin.enter()
         .append('g')
-        .classed(c.cn.axis, true);
+        .classed(c.cn.axis, true)
+        .merge(axisJoin);
 
     axis
         .each(function(this: any, d: any) {
@@ -665,22 +670,24 @@ export default function parcoords(gd: GraphDiv, cdModule: any, layout: any, call
     axis.selectAll('text')
         .style('cursor', 'default');
 
-    const axisHeading = axisOverlays.selectAll('.' + c.cn.axisHeading)
+    const axisHeadingJoin = axisOverlays.selectAll('.' + c.cn.axisHeading)
         .data(repeat, keyFun);
 
-    axisHeading.enter()
+    const axisHeading = axisHeadingJoin.enter()
         .append('g')
-        .classed(c.cn.axisHeading, true);
+        .classed(c.cn.axisHeading, true)
+        .merge(axisHeadingJoin);
 
-    const axisTitle = axisHeading.selectAll('.' + c.cn.axisTitle)
+    const axisTitleJoin = axisHeading.selectAll('.' + c.cn.axisTitle)
         .data(repeat, keyFun);
 
-    axisTitle.enter()
+    const axisTitle = axisTitleJoin.enter()
         .append('text')
         .classed(c.cn.axisTitle, true)
         .attr('text-anchor', 'middle')
         .style('cursor', 'ew-resize')
-        .style('pointer-events', isStatic ? 'none' : 'auto');
+        .style('pointer-events', isStatic ? 'none' : 'auto')
+        .merge(axisTitleJoin);
 
     axisTitle
         .text(function(d: any) { return d.label; })
@@ -710,55 +717,60 @@ export default function parcoords(gd: GraphDiv, cdModule: any, layout: any, call
             }
         });
 
-    const axisExtent = axisOverlays.selectAll('.' + c.cn.axisExtent)
+    const axisExtentJoin = axisOverlays.selectAll('.' + c.cn.axisExtent)
         .data(repeat, keyFun);
 
-    axisExtent.enter()
+    const axisExtent = axisExtentJoin.enter()
         .append('g')
-        .classed(c.cn.axisExtent, true);
+        .classed(c.cn.axisExtent, true)
+        .merge(axisExtentJoin);
 
-    const axisExtentTop = axisExtent.selectAll('.' + c.cn.axisExtentTop)
+    const axisExtentTopJoin = axisExtent.selectAll('.' + c.cn.axisExtentTop)
         .data(repeat, keyFun);
 
-    axisExtentTop.enter()
+    const axisExtentTop = axisExtentTopJoin.enter()
         .append('g')
-        .classed(c.cn.axisExtentTop, true);
+        .classed(c.cn.axisExtentTop, true)
+        .merge(axisExtentTopJoin);
 
     axisExtentTop
         .attr('transform', strTranslate(0, -c.axisExtentOffset));
 
-    const axisExtentTopText = axisExtentTop.selectAll('.' + c.cn.axisExtentTopText)
+    const axisExtentTopTextJoin = axisExtentTop.selectAll('.' + c.cn.axisExtentTopText)
         .data(repeat, keyFun);
 
-    axisExtentTopText.enter()
+    const axisExtentTopText = axisExtentTopTextJoin.enter()
         .append('text')
         .classed(c.cn.axisExtentTopText, true)
-        .call(styleExtentTexts);
+        .call(styleExtentTexts)
+        .merge(axisExtentTopTextJoin);
 
     axisExtentTopText
         .text(function(d: any) { return extremeText(d, true); })
         .each(function(this: any, d: any) { font(select(this), d.model.rangeFont); });
 
-    const axisExtentBottom = axisExtent.selectAll('.' + c.cn.axisExtentBottom)
+    const axisExtentBottomJoin = axisExtent.selectAll('.' + c.cn.axisExtentBottom)
         .data(repeat, keyFun);
 
-    axisExtentBottom.enter()
+    const axisExtentBottom = axisExtentBottomJoin.enter()
         .append('g')
-        .classed(c.cn.axisExtentBottom, true);
+        .classed(c.cn.axisExtentBottom, true)
+        .merge(axisExtentBottomJoin);
 
     axisExtentBottom
         .attr('transform', function(d: any) {
             return strTranslate(0, d.model.height + c.axisExtentOffset);
         });
 
-    const axisExtentBottomText = axisExtentBottom.selectAll('.' + c.cn.axisExtentBottomText)
+    const axisExtentBottomTextJoin = axisExtentBottom.selectAll('.' + c.cn.axisExtentBottomText)
         .data(repeat, keyFun);
 
-    axisExtentBottomText.enter()
+    const axisExtentBottomText = axisExtentBottomTextJoin.enter()
         .append('text')
         .classed(c.cn.axisExtentBottomText, true)
         .attr('dy', '0.75em')
-        .call(styleExtentTexts);
+        .call(styleExtentTexts)
+        .merge(axisExtentBottomTextJoin);
 
     axisExtentBottomText
         .text(function(d: any) { return extremeText(d, false); })

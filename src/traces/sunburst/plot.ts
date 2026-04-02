@@ -38,8 +38,9 @@ export const plot = function (gd: GraphDiv, cdmodule: any[], transitionOpts: any
     });
 
     // using same 'stroke-linejoin' as pie traces
-    join.enter().append('g').classed('trace', true).classed('sunburst', true).attr('stroke-linejoin', 'round');
+    const joinEnter = join.enter().append('g').classed('trace', true).classed('sunburst', true).attr('stroke-linejoin', 'round');
 
+    join = join.merge(joinEnter);
     join.order();
 
     if (hasTransition) {
@@ -183,7 +184,7 @@ function plotOne(gd: GraphDiv, cd: any[], element: Element, transitionOpts: any)
 
     slices = slices.data(sliceData, helpers.getPtId);
 
-    slices.enter().append('g').classed('slice', true);
+    const slicesEnter = slices.enter().append('g').classed('slice', true);
 
     if (hasTransition) {
         slices
@@ -208,6 +209,7 @@ function plotOne(gd: GraphDiv, cd: any[], element: Element, transitionOpts: any)
         slices.exit().remove();
     }
 
+    slices = slices.merge(slicesEnter);
     slices.order();
 
     // next x1 (i.e. sector end angle) of previous entry

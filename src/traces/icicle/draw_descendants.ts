@@ -70,11 +70,12 @@ export default function drawDescendants(gd: GraphDiv, cd: any[], entry: any, sli
 
     trace._maxVisibleLayers = isFinite(maxVisibleDepth) ? maxVisibleDepth - minVisibleDepth + 1 : 0;
 
-    slices.enter().append('g')
+    const slicesEnter = slices.enter().append('g')
         .classed('slice', true);
 
     handleSlicesExit(slices, onPathbar, refRect, [width, height], pathSlice);
 
+    slices = slices.merge(slicesEnter);
     slices.order();
 
     // next coords of previous entry

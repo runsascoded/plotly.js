@@ -213,15 +213,16 @@ function drawRaw(gd: GraphDiv, options: any, index: any, subplotId: any, xa: Ful
 
     const isSizeConstrained = options.width || options.height;
 
-    const annTextClip = fullLayout._topclips
+    const annTextClipJoin = fullLayout._topclips
         .selectAll('#' + annClipID)
         .data(isSizeConstrained ? [0] : []);
 
-    annTextClip.enter().append('clipPath')
+    const annTextClipEnter = annTextClipJoin.enter().append('clipPath')
         .classed('annclip', true)
-        .attr('id', annClipID)
-      .append('rect');
-    annTextClip.exit().remove();
+        .attr('id', annClipID);
+    annTextClipEnter.append('rect');
+    annTextClipJoin.exit().remove();
+    const annTextClip = annTextClipJoin.merge(annTextClipEnter);
 
     const font = options.font;
 

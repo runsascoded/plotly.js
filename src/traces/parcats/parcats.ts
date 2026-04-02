@@ -24,13 +24,15 @@ function performPlot(parcatsModels: any, graphDiv: any, layout: FullLayout, svg:
     const layerSelection = svg.selectAll('g.parcatslayer').data([null]);
 
     // Initialize single parcatslayer group if it doesn't exist
-    layerSelection.enter()
+    const layerEnter = layerSelection.enter()
         .append('g')
         .attr('class', 'parcatslayer')
         .style('pointer-events', isStatic ? 'none' : 'all');
 
+    const layerMerged = layerSelection.merge(layerEnter);
+
     // Bind data to children of layerSelection and get reference to traceSelection
-    const traceSelection = layerSelection
+    const traceSelection = layerMerged
         .selectAll('g.trace.parcats')
         .data(viewModels, key);
 
@@ -39,19 +41,21 @@ function performPlot(parcatsModels: any, graphDiv: any, layout: FullLayout, svg:
         .append('g')
         .attr('class', 'trace parcats');
 
-    // Update properties for each trace
-    traceSelection
-        .attr('transform', function(d: any) {
-            return strTranslate(d.x, d.y);
-        });
-
     // Initialize paths group
     traceEnter
         .append('g')
         .attr('class', 'paths');
 
+    const traceMerged = traceSelection.merge(traceEnter);
+
+    // Update properties for each trace
+    traceMerged
+        .attr('transform', function(d: any) {
+            return strTranslate(d.x, d.y);
+        });
+
     // Update paths transform
-    const pathsSelection = traceSelection
+    const pathsSelection = traceMerged
         .select('g.paths');
 
     // Get paths selection
@@ -80,8 +84,10 @@ function performPlot(parcatsModels: any, graphDiv: any, layout: FullLayout, svg:
 
     stylePathsNoHover(pathSelectionEnter);
 
+    const pathMerged = pathSelection.merge(pathSelectionEnter);
+
     // Set path geometry
-    pathSelection
+    pathMerged
         .attr('d', function(d: any) {
             return d.svgD;
         });
@@ -90,14 +96,14 @@ function performPlot(parcatsModels: any, graphDiv: any, layout: FullLayout, svg:
     if(!pathSelectionEnter.empty()) {
         // Only sort paths if there has been a change.
         // Otherwise paths are already sorted or a hover operation may be in progress
-        pathSelection.sort(compareRawColor);
+        pathMerged.sort(compareRawColor);
     }
 
     // Remove any old paths
     pathSelection.exit().remove();
 
     // Path hover
-    pathSelection
+    pathMerged
         .on('mouseover', mouseoverPath)
         .on('mouseout', mouseoutPath)
         .on('click', clickPath);
@@ -106,7 +112,7 @@ function performPlot(parcatsModels: any, graphDiv: any, layout: FullLayout, svg:
     traceEnter.append('g').attr('class', 'dimensions');
 
     // Update dimensions transform
-    const dimensionsSelection = traceSelection
+    const dimensionsSelection = traceMerged
         .select('g.dimensions');
 
     // Get dimension selection
@@ -117,12 +123,14 @@ function performPlot(parcatsModels: any, graphDiv: any, layout: FullLayout, svg:
         }, key);
 
     // Create dimension groups
-    dimensionSelection.enter()
+    const dimensionEnter = dimensionSelection.enter()
         .append('g')
         .attr('class', 'dimension');
 
+    const dimensionMerged = dimensionSelection.merge(dimensionEnter);
+
     // Update dimension group transforms
-    dimensionSelection.attr('transform', function(d: any) {
+    dimensionMerged.attr('transform', function(d: any) {
         return strTranslate(d.x, 0);
     });
 
@@ -130,7 +138,7 @@ function performPlot(parcatsModels: any, graphDiv: any, layout: FullLayout, svg:
     dimensionSelection.exit().remove();
 
     // Get category selection
-    const categorySelection = dimensionSelection
+    const categorySelection = dimensionMerged
         .selectAll('g.category')
         .data(function(d: any) {
             return d.categories;
@@ -142,8 +150,10 @@ function performPlot(parcatsModels: any, graphDiv: any, layout: FullLayout, svg:
         .append('g')
         .attr('class', 'category');
 
+    const categoryMerged = categorySelection.merge(categoryGroupEnterSelection);
+
     // Update category transforms
-    categorySelection
+    categoryMerged
         .attr('transform', function(d: any) {
             return strTranslate(0, d.y);
         });
@@ -155,7 +165,7 @@ function performPlot(parcatsModels: any, graphDiv: any, layout: FullLayout, svg:
         .attr('pointer-events', 'none');
 
     // Update rectangle
-    categorySelection.select('rect.catrect')
+    categoryMerged.select('rect.catrect')
         .attr('fill', 'none')
         .attr('width', function(d: any) {
             return d.width;
@@ -167,7 +177,7 @@ function performPlot(parcatsModels: any, graphDiv: any, layout: FullLayout, svg:
     styleCategoriesNoHover(categoryGroupEnterSelection);
 
     // Initialize color band rects
-    const bandSelection = categorySelection
+    const bandSelection = categoryMerged
         .selectAll('rect.bandrect')
         .data(
             /** @param {CategoryViewModel} catViewModel*/
@@ -193,7 +203,7 @@ function performPlot(parcatsModels: any, graphDiv: any, layout: FullLayout, svg:
         })
         .attr('fill-opacity', 0);
 
-    bandSelection
+    bandSelection.merge(bandsSelectionEnter)
         .attr('fill', function(d: any) {
             return d.color;
         })
@@ -1472,7 +1482,8 @@ function updateSvgCategories(parcatsViewModel: any, hasTransition?: any) {
         })
         .attr('fill-opacity', 0);
 
-    bandSelection
+    const bandMerged = bandSelection.merge(bandsSelectionEnter);
+    bandMerged
         .attr('fill', function(d: any) {
             return d.color;
         })
@@ -1489,7 +1500,7 @@ function updateSvgCategories(parcatsViewModel: any, hasTransition?: any) {
     styleBandsNoHover(bandsSelectionEnter);
 
     // Raise bands to the top
-    bandSelection.each(function(this: any) {Lib.raiseToTop(this);});
+    bandMerged.each(function(this: any) {Lib.raiseToTop(this);});
 
     // Remove unused bands
     bandSelection.exit().remove();

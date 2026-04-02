@@ -159,12 +159,12 @@ function lsInner(gd: GraphDiv): any {
     const lowerBackgrounds = fullLayout._bgLayer.selectAll('.bg')
         .data(lowerBackgroundIDs);
 
-    lowerBackgrounds.enter().append('rect')
+    const lowerBgEnter = lowerBackgrounds.enter().append('rect')
         .classed('bg', true);
 
     lowerBackgrounds.exit().remove();
 
-    lowerBackgrounds.each(function(this: any, subplot: any) {
+    lowerBackgrounds.merge(lowerBgEnter).each(function(this: any, subplot: any) {
         fullLayout._plots[subplot].bg = select(this);
     });
 

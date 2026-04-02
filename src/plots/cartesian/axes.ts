@@ -2336,14 +2336,14 @@ axes.makeClipPaths = function(gd?: any) {
     const axClips = fullLayout._clips.selectAll('.axesclip')
         .data(clipList, function(d: any) { return d.x._id + d.y._id; });
 
-    axClips.enter().append('clipPath')
+    const axClipsEnter = axClips.enter().append('clipPath')
         .classed('axesclip', true)
-        .attr('id', function(d: any) { return 'clip' + fullLayout._uid + d.x._id + d.y._id; })
-      .append('rect');
+        .attr('id', function(d: any) { return 'clip' + fullLayout._uid + d.x._id + d.y._id; });
+    axClipsEnter.append('rect');
 
     axClips.exit().remove();
 
-    axClips.each(function(this: any, d: any) {
+    axClips.merge(axClipsEnter).each(function(this: any, d: any) {
         select(this).select('rect')
             .attr('x', d.x._offset || 0)
             .attr('y', d.y._offset || 0)
@@ -3394,7 +3394,7 @@ axes.drawTicks = function(gd?: any, ax?: any, opts?: any) {
 
     ticks.exit().remove();
 
-    ticks.enter().append('path')
+    const ticksEnter = ticks.enter().append('path')
         .classed(cls, 1)
         .classed('ticks', 1)
         .classed('crisp', opts.crisp !== false)
@@ -3413,7 +3413,7 @@ axes.drawTicks = function(gd?: any, ax?: any, opts?: any) {
 
     hideCounterAxisInsideTickLabels(ax, [TICK_PATH]);
 
-    ticks.attr('transform', opts.transFn);
+    ticks.merge(ticksEnter).attr('transform', opts.transFn);
 };
 
 /**
@@ -3485,11 +3485,11 @@ axes.drawGrid = function(gd?: any, ax?: any, opts?: any) {
 
         grid.exit().remove();
 
-        grid.enter().append('path')
+        const gridEnter = grid.enter().append('path')
             .classed(cls, 1)
             .classed('crisp', opts.crisp !== false);
 
-        grid.attr('transform', opts.transFn)
+        grid.merge(gridEnter).attr('transform', opts.transFn)
             .attr('d', opts.path)
             .each(function(this: any, d: any) {
                 return Color.stroke(select(this), d.minor ?
@@ -3542,7 +3542,7 @@ axes.drawZeroLine = function(gd?: any, ax?: any, opts?: any) {
 
     zl.exit().remove();
 
-    zl.enter().append('path')
+    const zlEnter = zl.enter().append('path')
         .classed(cls, 1)
         .classed('zl', 1)
         .classed('crisp', opts.crisp !== false)
@@ -3555,7 +3555,7 @@ axes.drawZeroLine = function(gd?: any, ax?: any, opts?: any) {
             });
         });
 
-    zl.attr('transform', opts.transFn)
+    zl.merge(zlEnter).attr('transform', opts.transFn)
         .attr('d', opts.path)
         .call(Color.stroke, ax.zerolinecolor || Color.defaultLine)
         .style('stroke-width', crispRound(gd, ax.zerolinewidth, ax._gw || 1) + 'px')
@@ -3603,14 +3603,14 @@ axes.drawLabels = function(gd?: any, ax?: any, opts?: any) {
 
     const prevAngle = (ax._prevTickAngles || {})[cls];
 
-    const tickLabels = opts.layer.selectAll('g.' + cls)
+    const tickLabelsJoin = opts.layer.selectAll('g.' + cls)
         .data(ax.showticklabels ? vals : [], tickDataFn);
 
     const labelsReady: any[] = [];
 
-    tickLabels.enter().append('g')
-        .classed(cls, 1)
-        .append('text')
+    const tickLabelsEnter = tickLabelsJoin.enter().append('g')
+        .classed(cls, 1);
+    tickLabelsEnter.append('text')
             // only so tex has predictable alignment that we can
             // alter later
             .attr('text-anchor', 'middle')
@@ -3650,7 +3650,9 @@ axes.drawLabels = function(gd?: any, ax?: any, opts?: any) {
 
     hideCounterAxisInsideTickLabels(ax, [TICK_TEXT]);
 
-    tickLabels.exit().remove();
+    tickLabelsJoin.exit().remove();
+
+    const tickLabels = tickLabelsJoin.merge(tickLabelsEnter);
 
     if(opts.repositionOnUpdate) {
         tickLabels.each(function(this: any, d: any) {
@@ -4135,13 +4137,13 @@ function drawDividers(gd?: any, ax?: any, opts?: any): void {
 
     dividers.exit().remove();
 
-    dividers.enter().insert('path', ':first-child')
+    const dividersEnter = dividers.enter().insert('path', ':first-child')
         .classed(cls, 1)
         .classed('crisp', 1)
         .call(Color.stroke, ax.dividercolor)
         .style('stroke-width', crispRound(gd, ax.dividerwidth, 1) + 'px');
 
-    dividers
+    dividers.merge(dividersEnter)
         .attr('transform', opts.transFn)
         .attr('d', opts.path);
 }

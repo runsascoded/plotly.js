@@ -948,9 +948,10 @@ function createHoverText(hoverData: any[], opts: any): any {
         if (allHaveZ) showCommonLabel = false;
     }
 
-    const commonLabel = container.selectAll('g.axistext').data(showCommonLabel ? [0] : []);
-    commonLabel.enter().append('g').classed('axistext', true);
-    commonLabel.exit().remove();
+    const commonLabelJoin = container.selectAll('g.axistext').data(showCommonLabel ? [0] : []);
+    const commonLabelEnter = commonLabelJoin.enter().append('g').classed('axistext', true);
+    commonLabelJoin.exit().remove();
+    const commonLabel = commonLabelJoin.merge(commonLabelEnter);
 
     // set rect (without arrow) behind label below for later collision detection
     const commonLabelRect: any = {
@@ -1156,9 +1157,11 @@ function createHoverText(hoverData: any[], opts: any): any {
                 clipPath = null;
             }
 
-            const textClip = fullLayout._topclips.selectAll('#' + clipId).data(clipPath ? [0] : []);
-            textClip.enter().append('clipPath').attr('id', clipId).append('path');
-            textClip.exit().remove();
+            const textClipJoin = fullLayout._topclips.selectAll('#' + clipId).data(clipPath ? [0] : []);
+            const textClipEnter = textClipJoin.enter().append('clipPath').attr('id', clipId);
+            textClipEnter.append('path');
+            textClipJoin.exit().remove();
+            const textClip = textClipJoin.merge(textClipEnter);
             textClip.select('path').attr('d', clipPath);
             setClipUrl(ltext, (clipPath ? clipId : null as any), gd);
         }
@@ -1375,12 +1378,12 @@ function createHoverText(hoverData: any[], opts: any): any {
     // show all the individual labels
 
     // first create the objects
-    const hoverLabels = container.selectAll('g.hovertext').data(hoverData, function (d: any) {
+    const hoverLabelsJoin = container.selectAll('g.hovertext').data(hoverData, function (d: any) {
         // N.B. when multiple items have the same result key-function value,
         // only the first of those items in hoverData gets rendered
         return hoverDataKey(d);
     });
-    hoverLabels
+    const hoverLabelsEnter = hoverLabelsJoin
         .enter()
         .append('g')
         .classed('hovertext', true)
@@ -1402,7 +1405,9 @@ function createHoverText(hoverData: any[], opts: any): any {
                 size: fontSize
             });
         });
-    hoverLabels.exit().remove();
+    hoverLabelsJoin.exit().remove();
+
+    const hoverLabels = hoverLabelsJoin.merge(hoverLabelsEnter);
 
     // then put the text in, position the pointer to the data,
     // and figure out sizes

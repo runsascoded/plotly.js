@@ -43,14 +43,15 @@ function plotConnectors(gd: GraphDiv,  plotinfo: PlotInfo,  cdModule: any,  trac
 
         const connectors = group.selectAll('g.line').data(Lib.identity);
 
-        connectors.enter().append('g')
+        const connectorsEnter = connectors.enter().append('g')
             .classed('line', true);
 
         connectors.exit().remove();
 
-        const len = connectors.size();
+        const connectorsMerged = connectors.merge(connectorsEnter);
+        const len = connectorsMerged.size();
 
-        connectors.each(function(this: any, di: any, i: any) {
+        connectorsMerged.each(function(this: any, di: any, i: any) {
             // don't draw lines between nulls
             if(i !== len - 1 && !di.cNext) return;
 

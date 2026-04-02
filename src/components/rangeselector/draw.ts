@@ -21,27 +21,31 @@ export default function draw(gd: GraphDiv) {
     const selectors = fullLayout._infolayer.selectAll('.rangeselector')
         .data(makeSelectorData(gd), selectorKeyFunc);
 
-    selectors.enter().append('g')
+    const selectorsEnter = selectors.enter().append('g')
         .classed('rangeselector', true);
 
     selectors.exit().remove();
 
-    selectors
+    const selectorsMerged = selectors.merge(selectorsEnter);
+
+    selectorsMerged
         .style('cursor', 'pointer')
         .style('pointer-events', 'all');
 
-    selectors.each(function(this: any, d: any) {
+    selectorsMerged.each(function(this: any, d: any) {
         const selector = select(this);
         const axisLayout = d;
         const selectorLayout = axisLayout.rangeselector;
 
-        const buttons = selector.selectAll('g.button')
+        const buttonsJoin = selector.selectAll('g.button')
             .data(Lib.filterVisible(selectorLayout.buttons));
 
-        buttons.enter().append('g')
+        const buttonsEnter = buttonsJoin.enter().append('g')
             .classed('button', true);
 
-        buttons.exit().remove();
+        buttonsJoin.exit().remove();
+
+        const buttons = buttonsJoin.merge(buttonsEnter);
 
         buttons.each(function(this: any, d: any) {
             const button = select(this);

@@ -56,27 +56,27 @@ export default function style(s: any, gd: GraphDiv, legend?: any): any {
             layers.attr('transform', strTranslate(markerOffsetX, markerOffsetY));
         }
 
-        const fill = layers
+        const fillJoin = layers
             .selectAll('g.legendfill')
                 .data([d]);
-        fill.enter().append('g')
+        fillJoin.enter().append('g')
             .classed('legendfill', true);
 
-        const line = layers
+        const lineJoin = layers
             .selectAll('g.legendlines')
                 .data([d]);
-        line.enter().append('g')
+        lineJoin.enter().append('g')
             .classed('legendlines', true);
 
-        const symbol = layers
+        const symbolJoin = layers
             .selectAll('g.legendsymbols')
                 .data([d]);
-        symbol.enter().append('g')
-            .classed('legendsymbols', true);
+        const symbol = symbolJoin.enter().append('g')
+            .classed('legendsymbols', true).merge(symbolJoin);
 
-        symbol.selectAll('g.legendpoints')
-            .data([d])
-          .enter().append('g')
+        const lpJoin = symbol.selectAll('g.legendpoints')
+            .data([d]);
+        lpJoin.enter().append('g')
             .classed('legendpoints', true);
     })
     .each(styleSpatial)
@@ -107,16 +107,16 @@ export default function style(s: any, gd: GraphDiv, legend?: any): any {
         ptgroup.selectAll(':not(.legendcustomsymbol)').remove();
 
         // Render custom SVG path
-        const pts = ptgroup.selectAll('path.legendcustomsymbol')
+        const ptsJoin = ptgroup.selectAll('path.legendcustomsymbol')
             .data([d]);
-        pts.enter().append('path')
+        const ptsEnter = ptsJoin.enter().append('path')
             .classed('legendcustomsymbol', true)
             .attr('transform', centerTransform);
-        pts.exit().remove();
+        ptsJoin.exit().remove();
 
         const fillColor = (trace.marker && trace.marker.color) ||
             (trace.line && trace.line.color) || null;
-        pts.attr('d', customPath)
+        ptsJoin.merge(ptsEnter).attr('d', customPath)
             .style('fill', fillColor)
             .style('stroke', 'none');
     }
@@ -171,11 +171,11 @@ export default function style(s: any, gd: GraphDiv, legend?: any): any {
 
         const this3 = select(this);
 
-        const fill = this3.select('.legendfill').selectAll('path')
+        const fillSel = this3.select('.legendfill').selectAll('path')
             .data(showFill || showGradientFill ? [d] : []);
-        fill.enter().append('path').classed('js-fill', true);
-        fill.exit().remove();
-        fill.attr('d', pathStart + 'h' + itemWidth + 'v6h-' + itemWidth + 'z')
+        const fillEnter = fillSel.enter().append('path').classed('js-fill', true);
+        fillSel.exit().remove();
+        fillSel.merge(fillEnter).attr('d', pathStart + 'h' + itemWidth + 'v6h-' + itemWidth + 'z')
             .call(fillStyle);
 
         if(showLine || showGradientLine) {
@@ -184,10 +184,10 @@ export default function style(s: any, gd: GraphDiv, legend?: any): any {
             dMod = [minExtend(d0, {trace: tMod})];
         }
 
-        const line = this3.select('.legendlines').selectAll('path')
+        const lineSel = this3.select('.legendlines').selectAll('path')
             .data(showLine || showGradientLine ? [dMod] : []);
-        line.enter().append('path').classed('js-line', true);
-        line.exit().remove();
+        const lineEnter = lineSel.enter().append('path').classed('js-line', true);
+        lineSel.exit().remove();
 
         // this is ugly... but you can't apply a gradient to a perfectly
         // horizontal or vertical line. Presumably because then
@@ -195,7 +195,7 @@ export default function style(s: any, gd: GraphDiv, legend?: any): any {
         // though there *is* no vertical variation in this case.
         // so add an invisibly small angle to the line
         // This issue (and workaround) exist across (Mac) Chrome, FF, and Safari
-        line.attr('d', pathStart + (showGradientLine ? 'l' + itemWidth + ',0.0001' : 'h' + itemWidth))
+        lineSel.merge(lineEnter).attr('d', pathStart + (showGradientLine ? 'l' + itemWidth + ',0.0001' : 'h' + itemWidth))
             .call(showLine ? lineGroupStyle : lineGradient);
     }
 
@@ -290,26 +290,26 @@ export default function style(s: any, gd: GraphDiv, legend?: any): any {
 
         const ptgroup = select(this).select('g.legendpoints');
 
-        const pts = ptgroup.selectAll('path.scatterpts')
+        const ptsScatter = ptgroup.selectAll('path.scatterpts')
             .data(showMarker ? dMod : []);
         // make sure marker is on the bottom, in case it enters after text
-        pts.enter().insert('path', ':first-child')
+        const ptsScatterEnter = ptsScatter.enter().insert('path', ':first-child')
             .classed('scatterpts', true)
             .attr('transform', centerTransform);
-        pts.exit().remove();
-        pts.call(pointStyle, tMod, gd);
+        ptsScatter.exit().remove();
+        ptsScatter.merge(ptsScatterEnter).call(pointStyle, tMod, gd);
 
         // 'mrc' is set in pointStyle and used in textPointStyle:
         // constrain it here
         if(showMarker) dMod[0].mrc = 3;
 
-        const txt = ptgroup.selectAll('g.pointtext')
+        const txtJoin = ptgroup.selectAll('g.pointtext')
             .data(showText ? dMod : []);
-        txt.enter()
-            .append('g').classed('pointtext', true)
-                .append('text').attr('transform', centerTransform);
-        txt.exit().remove();
-        txt.selectAll('text').call(textPointStyle, tMod, gd);
+        const txtEnter = txtJoin.enter()
+            .append('g').classed('pointtext', true);
+        txtEnter.append('text').attr('transform', centerTransform);
+        txtJoin.exit().remove();
+        txtJoin.merge(txtEnter).selectAll('text').call(textPointStyle, tMod, gd);
     }
 
     function styleWaterfalls(this: any, d: any): void {
@@ -331,15 +331,15 @@ export default function style(s: any, gd: GraphDiv, legend?: any): any {
                 [['increasing', 'M-6,-6V6H6Z'], ['decreasing', 'M6,6V-6H-6Z']];
         }
 
-        const pts = select(this).select('g.legendpoints')
+        const ptsWF = select(this).select('g.legendpoints')
             .selectAll('path.legendwaterfall')
             .data(ptsData);
-        pts.enter().append('path').classed('legendwaterfall', true)
+        const ptsWFEnter = ptsWF.enter().append('path').classed('legendwaterfall', true)
             .attr('transform', centerTransform)
             .style('stroke-miterlimit', 1);
-        pts.exit().remove();
+        ptsWF.exit().remove();
 
-        pts.each(function(this: any, dd: any) {
+        ptsWF.merge(ptsWFEnter).each(function(this: any, dd: any) {
             const pt = select(this);
             const cont = trace[dd[0]].marker;
             const lw = boundLineWidth(undefined, cont.line, MAX_MARKER_LINE_WIDTH, CST_MARKER_LINE_WIDTH);
@@ -378,12 +378,12 @@ export default function style(s: any, gd: GraphDiv, legend?: any): any {
         const barpath = select(lThis).select('g.legendpoints')
             .selectAll('path.legend' + desiredType)
             .data(isVisible ? [d] : []);
-        barpath.enter().append('path').classed('legend' + desiredType, true)
+        const barpathEnter = barpath.enter().append('path').classed('legend' + desiredType, true)
             .attr('d', pathStr)
             .attr('transform', centerTransform);
         barpath.exit().remove();
 
-        barpath.each(function(this: any, d: any) {
+        barpath.merge(barpathEnter).each(function(this: any, d: any) {
             const p = select(this);
             const d0 = d[0];
             const w = boundLineWidth(d0.mlw, marker.line, MAX_MARKER_LINE_WIDTH, CST_MARKER_LINE_WIDTH);
@@ -431,15 +431,16 @@ export default function style(s: any, gd: GraphDiv, legend?: any): any {
     function styleBoxes(this: any, d: any): void {
         const trace = d[0].trace;
 
-        const pts = select(this).select('g.legendpoints')
+        const boxJoin = select(this).select('g.legendpoints')
             .selectAll('path.legendbox')
             .data(trace.visible && Registry.traceIs(trace, 'box-violin') ? [d] : []);
-        pts.enter().append('path').classed('legendbox', true)
+        const boxEnter = boxJoin.enter().append('path').classed('legendbox', true)
             // if we want the median bar, prepend M6,0H-6
             .attr('d', 'M6,6H-6V-6H6Z')
             .attr('transform', centerTransform);
-        pts.exit().remove();
+        boxJoin.exit().remove();
 
+        const pts = boxJoin.merge(boxEnter);
         pts.each(function(this: any) {
             const p = select(this);
 
@@ -469,19 +470,19 @@ export default function style(s: any, gd: GraphDiv, legend?: any): any {
     function styleCandles(this: any, d: any): void {
         const trace = d[0].trace;
 
-        const pts = select(this).select('g.legendpoints')
+        const candleJoin = select(this).select('g.legendpoints')
             .selectAll('path.legendcandle')
             .data(trace.visible && trace.type === 'candlestick' ? [d, d] : []);
-        pts.enter().append('path').classed('legendcandle', true)
+        const candleEnter = candleJoin.enter().append('path').classed('legendcandle', true)
             .attr('d', function(_: any, i: any) {
                 if(i) return 'M-15,0H-8M-8,6V-6H8Z'; // increasing
                 return 'M15,0H8M8,-6V6H-8Z'; // decreasing
             })
             .attr('transform', centerTransform)
             .style('stroke-miterlimit', 1);
-        pts.exit().remove();
+        candleJoin.exit().remove();
 
-        pts.each(function(this: any, _: any, i: number) {
+        candleJoin.merge(candleEnter).each(function(this: any, _: any, i: number) {
             const p = select(this);
             const cont = trace[i ? 'increasing' : 'decreasing'];
             const w = boundLineWidth(undefined, cont.line, MAX_MARKER_LINE_WIDTH, CST_MARKER_LINE_WIDTH);
@@ -496,19 +497,19 @@ export default function style(s: any, gd: GraphDiv, legend?: any): any {
     function styleOHLC(this: any, d: any): void {
         const trace = d[0].trace;
 
-        const pts = select(this).select('g.legendpoints')
+        const ohlcJoin = select(this).select('g.legendpoints')
             .selectAll('path.legendohlc')
             .data(trace.visible && trace.type === 'ohlc' ? [d, d] : []);
-        pts.enter().append('path').classed('legendohlc', true)
+        const ohlcEnter = ohlcJoin.enter().append('path').classed('legendohlc', true)
             .attr('d', function(_: any, i: any) {
                 if(i) return 'M-15,0H0M-8,-6V0'; // increasing
                 return 'M15,0H0M8,6V0'; // decreasing
             })
             .attr('transform', centerTransform)
             .style('stroke-miterlimit', 1);
-        pts.exit().remove();
+        ohlcJoin.exit().remove();
 
-        pts.each(function(this: any, _: any, i: number) {
+        ohlcJoin.merge(ohlcEnter).each(function(this: any, _: any, i: number) {
             const p = select(this);
             const cont = trace[i ? 'increasing' : 'decreasing'];
             const w = boundLineWidth(undefined, cont.line, MAX_MARKER_LINE_WIDTH, CST_MARKER_LINE_WIDTH);
@@ -535,14 +536,15 @@ export default function style(s: any, gd: GraphDiv, legend?: any): any {
         const isVisible = (!desiredType) ? Registry.traceIs(trace, desiredType) :
             (trace.visible && trace.type === desiredType);
 
-        const pts = select(lThis).select('g.legendpoints')
+        const pieJoin = select(lThis).select('g.legendpoints')
             .selectAll('path.legend' + desiredType)
             .data(isVisible ? [d] : []);
-        pts.enter().append('path').classed('legend' + desiredType, true)
+        const pieEnter = pieJoin.enter().append('path').classed('legend' + desiredType, true)
             .attr('d', 'M6,6H-6V-6H6Z')
             .attr('transform', centerTransform);
-        pts.exit().remove();
+        pieJoin.exit().remove();
 
+        const pts = pieJoin.merge(pieEnter);
         if(pts.size()) {
             const cont = trace.marker || {};
             const lw = boundLineWidth(pieCastOption(cont.line.width, d0.pts), cont.line, MAX_MARKER_LINE_WIDTH, CST_MARKER_LINE_WIDTH);
@@ -634,15 +636,15 @@ export default function style(s: any, gd: GraphDiv, legend?: any): any {
             }
         }
 
-        const pts = select(this).select('g.legendpoints')
+        const spatialJoin = select(this).select('g.legendpoints')
             .selectAll('path.legend3dandfriends')
             .data(ptsData);
-        pts.enter().append('path').classed('legend3dandfriends', true)
+        const spatialEnter = spatialJoin.enter().append('path').classed('legend3dandfriends', true)
             .attr('transform', centerTransform)
             .style('stroke-miterlimit', 1);
-        pts.exit().remove();
+        spatialJoin.exit().remove();
 
-        pts.each(function(this: any, dd: any, i: number) {
+        spatialJoin.merge(spatialEnter).each(function(this: any, dd: any, i: number) {
             const pt = select(this);
 
             const cOpts = extractOpts(trace);

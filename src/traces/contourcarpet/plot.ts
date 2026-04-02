@@ -146,13 +146,13 @@ function makeLinesAndLabels(plotgroup: any, pathinfo: any, gd: any, cd0: any, co
 
     const lineClip = contourPlot.createLineClip(lineContainer, clipLinesForLabels, gd, cd0.trace.uid);
 
-    const labelGroup = plotgroup.selectAll('g.contourlabels')
+    const labelGroupJoin = plotgroup.selectAll('g.contourlabels')
         .data(showLabels ? [0] : []);
 
-    labelGroup.exit().remove();
+    labelGroupJoin.exit().remove();
 
-    labelGroup.enter().append('g')
-        .classed('contourlabels', true);
+    const labelGroup = labelGroupJoin.enter().append('g')
+        .classed('contourlabels', true).merge(labelGroupJoin);
 
     if(showLabels) {
         const xa = plotinfo.xaxis;
@@ -300,7 +300,7 @@ function makeBackground(plotgroup: any, clipsegments: any, xaxis: any, yaxis: an
 
     const bgfill = bggroup.selectAll('path')
         .data((coloring === 'fill' && !isConstraint) ? [0] : []);
-    bgfill.enter().append('path');
+    const bgfillEnter = bgfill.enter().append('path');
     bgfill.exit().remove();
 
     const segs: any[] = [];
@@ -311,7 +311,7 @@ function makeBackground(plotgroup: any, clipsegments: any, xaxis: any, yaxis: an
         segs.push(makepath(xp, yp, seg.bicubic));
     }
 
-    bgfill
+    bgfill.merge(bgfillEnter)
         .attr('d', 'M' + segs.join('L') + 'Z')
         .style('stroke', 'none');
 }
@@ -326,9 +326,9 @@ function makeFills(trace: any, plotgroup: any, xa: any, ya: any, pathinfo: any, 
 
     const fillgroup = Lib.ensureSingle(plotgroup, 'g', 'contourfill');
     const fillitems = fillgroup.selectAll('path').data(hasFills ? pathinfo : []);
-    fillitems.enter().append('path');
+    const fillitemsEnter = fillitems.enter().append('path');
     fillitems.exit().remove();
-    fillitems.each(function(this: any, pi: any) {
+    fillitems.merge(fillitemsEnter).each(function(this: any, pi: any) {
         // join all paths for this level together into a single path
         // first follow clockwise around the perimeter to close any open paths
         // if the whole perimeter is above this level, start with a path

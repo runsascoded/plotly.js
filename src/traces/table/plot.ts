@@ -27,7 +27,7 @@ export default function plot(gd: GraphDiv, wrappedTraceHolders: any[]) {
 
     table.exit().remove();
 
-    table.enter()
+    const tableEnter = table.enter()
         .append('g')
         .classed(c.cn.table, true)
         .attr('overflow', 'visible')
@@ -38,14 +38,15 @@ export default function plot(gd: GraphDiv, wrappedTraceHolders: any[]) {
         .style('shape-rendering', 'crispEdges')
         .style('pointer-events', 'all');
 
-    table
+    const tableMerged = table.merge(tableEnter);
+    tableMerged
         .attr('width', function(d: any) {return d.width + d.size.l + d.size.r;})
         .attr('height', function(d: any) {return d.height + d.size.t + d.size.b;})
         .attr('transform', function(d: any) {
             return strTranslate(d.translateX, d.translateY);
         });
 
-    const tableControlView = table.selectAll('.' + c.cn.tableControlView)
+    const tableControlView = tableMerged.selectAll('.' + c.cn.tableControlView)
         .data(gup.repeat, gup.keyFun);
 
     const cvEnter = tableControlView.enter()
@@ -74,36 +75,38 @@ export default function plot(gd: GraphDiv, wrappedTraceHolders: any[]) {
             .call(renderScrollbarKit, gd, true);
     }
 
-    tableControlView
+    const tableControlViewMerged = tableControlView.merge(cvEnter);
+    tableControlViewMerged
         .attr('transform', function(d: any) {return strTranslate(d.size.l, d.size.t);});
 
     // scrollBackground merely ensures that mouse events are captured even on crazy fast scrollwheeling
     // otherwise rendering glitches may occur
-    const scrollBackground = tableControlView.selectAll('.' + c.cn.scrollBackground)
+    const scrollBackground = tableControlViewMerged.selectAll('.' + c.cn.scrollBackground)
         .data(gup.repeat, gup.keyFun);
 
-    scrollBackground.enter()
+    const scrollBackgroundEnter = scrollBackground.enter()
         .append('rect')
         .classed(c.cn.scrollBackground, true)
         .attr('fill', 'none');
 
-    scrollBackground
+    scrollBackground.merge(scrollBackgroundEnter)
         .attr('width', function(d: any) {return d.width;})
         .attr('height', function(d: any) {return d.height;});
 
-    tableControlView.each(function(this: any, d: any) {
+    tableControlViewMerged.each(function(this: any, d: any) {
         setClipUrl(select(this), scrollAreaBottomClipKey(gd, d), gd);
     });
 
-    const yColumn = tableControlView.selectAll('.' + c.cn.yColumn)
+    const yColumnJoin = tableControlViewMerged.selectAll('.' + c.cn.yColumn)
         .data(function(vm: any) {return vm.columns;}, gup.keyFun);
 
-    yColumn.enter()
+    const yColumnEnter = yColumnJoin.enter()
         .append('g')
         .classed(c.cn.yColumn, true);
 
-    yColumn.exit().remove();
+    yColumnJoin.exit().remove();
 
+    const yColumn = yColumnJoin.merge(yColumnEnter);
     yColumn.attr('transform', function(d: any) {return strTranslate(d.x, 0);});
 
     if(dynamic) {
@@ -156,18 +159,19 @@ export default function plot(gd: GraphDiv, wrappedTraceHolders: any[]) {
     const columnBlock = yColumn.selectAll('.' + c.cn.columnBlock)
         .data(splitData.splitToPanels, gup.keyFun);
 
-    columnBlock.enter()
+    const columnBlockEnter = columnBlock.enter()
         .append('g')
         .classed(c.cn.columnBlock, true)
         .attr('id', function(d: any) {return d.key;});
 
-    columnBlock
+    const columnBlockMerged = columnBlock.merge(columnBlockEnter);
+    columnBlockMerged
         .style('cursor', function(d: any) {
             return d.dragHandle ? 'ew-resize' : d.calcdata.scrollbarState.barWiggleRoom ? 'ns-resize' : 'default';
         });
 
-    const headerColumnBlock = columnBlock.filter(headerBlock);
-    const cellsColumnBlock = columnBlock.filter(cellsBlock);
+    const headerColumnBlock = columnBlockMerged.filter(headerBlock);
+    const cellsColumnBlock = columnBlockMerged.filter(cellsBlock);
 
     if(dynamic) {
         cellsColumnBlock.call(d3Drag()
@@ -185,28 +189,28 @@ export default function plot(gd: GraphDiv, wrappedTraceHolders: any[]) {
 
     // initial rendering: header is rendered first, as it may may have async LaTeX (show header first)
     // but blocks are _entered_ the way they are due to painter's algo (header on top)
-    renderColumnCellTree(gd, tableControlView, headerColumnBlock, columnBlock);
-    renderColumnCellTree(gd, tableControlView, cellsColumnBlock, columnBlock);
+    renderColumnCellTree(gd, tableControlViewMerged, headerColumnBlock, columnBlockMerged);
+    renderColumnCellTree(gd, tableControlViewMerged, cellsColumnBlock, columnBlockMerged);
 
-    const scrollAreaClip = tableControlView.selectAll('.' + c.cn.scrollAreaClip)
+    const scrollAreaClip = tableControlViewMerged.selectAll('.' + c.cn.scrollAreaClip)
         .data(gup.repeat, gup.keyFun);
 
-    scrollAreaClip.enter()
+    const scrollAreaClipEnter = scrollAreaClip.enter()
         .append('clipPath')
         .classed(c.cn.scrollAreaClip, true)
         .attr('id', function(d: any) {return scrollAreaBottomClipKey(gd, d);});
 
-    const scrollAreaClipRect = scrollAreaClip.selectAll('.' + c.cn.scrollAreaClipRect)
+    const scrollAreaClipRect = scrollAreaClip.merge(scrollAreaClipEnter).selectAll('.' + c.cn.scrollAreaClipRect)
         .data(gup.repeat, gup.keyFun);
 
-    scrollAreaClipRect.enter()
+    const scrollAreaClipRectEnter = scrollAreaClipRect.enter()
         .append('rect')
         .classed(c.cn.scrollAreaClipRect, true)
         .attr('x', -c.overdrag)
         .attr('y', -c.uplift)
         .attr('fill', 'none');
 
-    scrollAreaClipRect
+    scrollAreaClipRect.merge(scrollAreaClipRectEnter)
         .attr('width', function(d: any) {return d.width + 2 * c.overdrag;})
         .attr('height', function(d: any) {return d.height + c.uplift;});
 
@@ -221,28 +225,29 @@ export default function plot(gd: GraphDiv, wrappedTraceHolders: any[]) {
         .data(gup.repeat, gup.keyFun);
 
     // SVG spec doesn't mandate wrapping into a <defs> and doesn't seem to cause a speed difference
-    columnBoundaryClippath.enter()
+    const columnBoundaryClippathEnter = columnBoundaryClippath.enter()
         .append('clipPath')
         .classed(c.cn.columnBoundaryClippath, true);
 
-    columnBoundaryClippath
+    const columnBoundaryClippathMerged = columnBoundaryClippath.merge(columnBoundaryClippathEnter);
+    columnBoundaryClippathMerged
         .attr('id', function(d: any) {return columnBoundaryClipKey(gd, d);});
 
-    const columnBoundaryRect = columnBoundaryClippath.selectAll('.' + c.cn.columnBoundaryRect)
+    const columnBoundaryRect = columnBoundaryClippathMerged.selectAll('.' + c.cn.columnBoundaryRect)
         .data(gup.repeat, gup.keyFun);
 
-    columnBoundaryRect.enter()
+    const columnBoundaryRectEnter = columnBoundaryRect.enter()
         .append('rect')
         .classed(c.cn.columnBoundaryRect, true)
         .attr('fill', 'none');
 
-    columnBoundaryRect
+    columnBoundaryRect.merge(columnBoundaryRectEnter)
         .attr('width', function(d: any) { return d.columnWidth + 2 * roundHalfWidth(d); })
         .attr('height', function(d: any) {return d.calcdata.height + 2 * roundHalfWidth(d) + c.uplift;})
         .attr('x', function(d: any) { return -roundHalfWidth(d); })
         .attr('y', function(d: any) { return -roundHalfWidth(d); });
 
-    updateBlockYPosition(null, cellsColumnBlock, tableControlView);
+    updateBlockYPosition(null, cellsColumnBlock, tableControlViewMerged);
 }
 
 function roundHalfWidth(d: any) {
@@ -271,12 +276,13 @@ function renderScrollbarKit(tableControlView: any, gd: any, bypassVisibleBar: an
     const scrollbarKit = tableControlView.selectAll('.' + c.cn.scrollbarKit)
         .data(gup.repeat, gup.keyFun);
 
-    scrollbarKit.enter()
+    const scrollbarKitEnter = scrollbarKit.enter()
         .append('g')
         .classed(c.cn.scrollbarKit, true)
         .style('shape-rendering', 'geometricPrecision');
 
-    scrollbarKit
+    const scrollbarKitMerged = scrollbarKit.merge(scrollbarKitEnter);
+    scrollbarKitMerged
         .each(function(d: any) {
             const s = d.scrollbarState;
             s.totalHeight = calcTotalHeight(d);
@@ -295,29 +301,32 @@ function renderScrollbarKit(tableControlView: any, gd: any, bypassVisibleBar: an
             return strTranslate(xPosition, headerHeight(d));
         });
 
-    const scrollbar = scrollbarKit.selectAll('.' + c.cn.scrollbar)
+    const scrollbar = scrollbarKitMerged.selectAll('.' + c.cn.scrollbar)
         .data(gup.repeat, gup.keyFun);
 
-    scrollbar.enter()
+    const scrollbarEnter = scrollbar.enter()
         .append('g')
         .classed(c.cn.scrollbar, true);
 
-    const scrollbarSlider = scrollbar.selectAll('.' + c.cn.scrollbarSlider)
+    const scrollbarMerged = scrollbar.merge(scrollbarEnter);
+
+    const scrollbarSlider = scrollbarMerged.selectAll('.' + c.cn.scrollbarSlider)
         .data(gup.repeat, gup.keyFun);
 
-    scrollbarSlider.enter()
+    const scrollbarSliderEnter = scrollbarSlider.enter()
         .append('g')
         .classed(c.cn.scrollbarSlider, true);
 
-    scrollbarSlider
+    const scrollbarSliderMerged = scrollbarSlider.merge(scrollbarSliderEnter);
+    scrollbarSliderMerged
         .attr('transform', function(d: any) {
             return strTranslate(0, d.scrollbarState.topY || 0);
         });
 
-    const scrollbarGlyph = scrollbarSlider.selectAll('.' + c.cn.scrollbarGlyph)
+    const scrollbarGlyph = scrollbarSliderMerged.selectAll('.' + c.cn.scrollbarGlyph)
         .data(gup.repeat, gup.keyFun);
 
-    scrollbarGlyph.enter()
+    const scrollbarGlyphEnter = scrollbarGlyph.enter()
         .append('line')
         .classed(c.cn.scrollbarGlyph, true)
         .attr('stroke', 'black')
@@ -325,7 +334,8 @@ function renderScrollbarKit(tableControlView: any, gd: any, bypassVisibleBar: an
         .attr('stroke-linecap', 'round')
         .attr('y1', c.scrollbarWidth / 2);
 
-    scrollbarGlyph
+    const scrollbarGlyphMerged = scrollbarGlyph.merge(scrollbarGlyphEnter);
+    scrollbarGlyphMerged
         .attr('y2', function(d: any) {
             return d.scrollbarState.barLength - c.scrollbarWidth / 2;
         })
@@ -334,17 +344,17 @@ function renderScrollbarKit(tableControlView: any, gd: any, bypassVisibleBar: an
         });
 
     // cancel transition: possible pending (also, delayed) transition
-    scrollbarGlyph
+    scrollbarGlyphMerged
         .transition().delay(0).duration(0);
 
-    scrollbarGlyph
+    scrollbarGlyphMerged
         .transition().delay(c.scrollbarHideDelay).duration(c.scrollbarHideDuration)
         .attr('stroke-opacity', 0);
 
-    const scrollbarCaptureZone = scrollbar.selectAll('.' + c.cn.scrollbarCaptureZone)
+    const scrollbarCaptureZone = scrollbarMerged.selectAll('.' + c.cn.scrollbarCaptureZone)
         .data(gup.repeat, gup.keyFun);
 
-    scrollbarCaptureZone.enter()
+    const scrollbarCaptureZoneEnter = scrollbarCaptureZone.enter()
         .append('line')
         .classed(c.cn.scrollbarCaptureZone, true)
         .attr('stroke', 'white')
@@ -375,7 +385,7 @@ function renderScrollbarKit(tableControlView: any, gd: any, bypassVisibleBar: an
             })
         );
 
-    scrollbarCaptureZone
+    scrollbarCaptureZone.merge(scrollbarCaptureZoneEnter)
         .attr('y2', function(d: any) {
             return d.scrollbarState.scrollableAreaHeight;
         });
@@ -385,8 +395,8 @@ function renderScrollbarKit(tableControlView: any, gd: any, bypassVisibleBar: an
     // in the Chrome PDF viewer
     // https://github.com/plotly/streambed/issues/11618
     if(gd._context.staticPlot) {
-        scrollbarGlyph.remove();
-        scrollbarCaptureZone.remove();
+        scrollbarGlyphMerged.remove();
+        scrollbarCaptureZone.merge(scrollbarCaptureZoneEnter).remove();
     }
 }
 
@@ -420,64 +430,64 @@ function renderColumnCells(columnBlock: any) {
     const columnCells = columnBlock.selectAll('.' + c.cn.columnCells)
         .data(gup.repeat, gup.keyFun);
 
-    columnCells.enter()
+    const columnCellsEnter = columnCells.enter()
         .append('g')
         .classed(c.cn.columnCells, true);
 
     columnCells.exit()
         .remove();
 
-    return columnCells;
+    return columnCells.merge(columnCellsEnter);
 }
 
 function renderColumnCell(columnCells: any) {
     const columnCell = columnCells.selectAll('.' + c.cn.columnCell)
         .data(splitData.splitToCells, function(d: any) {return d.keyWithinBlock;});
 
-    columnCell.enter()
+    const columnCellEnter = columnCell.enter()
         .append('g')
         .classed(c.cn.columnCell, true);
 
     columnCell.exit()
         .remove();
 
-    return columnCell;
+    return columnCell.merge(columnCellEnter);
 }
 
 function renderCellRect(columnCell: any) {
     const cellRect = columnCell.selectAll('.' + c.cn.cellRect)
         .data(gup.repeat, function(d: any) {return d.keyWithinBlock;});
 
-    cellRect.enter()
+    const cellRectEnter = cellRect.enter()
         .append('rect')
         .classed(c.cn.cellRect, true);
 
-    return cellRect;
+    return cellRect.merge(cellRectEnter);
 }
 
 function renderCellText(cellTextHolder: any) {
     const cellText = cellTextHolder.selectAll('.' + c.cn.cellText)
         .data(gup.repeat, function(d: any) {return d.keyWithinBlock;});
 
-    cellText.enter()
+    const cellTextEnter = cellText.enter()
         .append('text')
         .classed(c.cn.cellText, true)
         .style('cursor', function() {return 'auto';})
         .on('mousedown', function(event: any) {event.stopPropagation();});
 
-    return cellText;
+    return cellText.merge(cellTextEnter);
 }
 
 function renderCellTextHolder(columnCell: any) {
     const cellTextHolder = columnCell.selectAll('.' + c.cn.cellTextHolder)
         .data(gup.repeat, function(d: any) {return d.keyWithinBlock;});
 
-    cellTextHolder.enter()
+    const cellTextHolderEnter = cellTextHolder.enter()
         .append('g')
         .classed(c.cn.cellTextHolder, true)
         .style('shape-rendering', 'geometricPrecision');
 
-    return cellTextHolder;
+    return cellTextHolder.merge(cellTextHolderEnter);
 }
 
 function supplyStylingValues(columnCell: any) {

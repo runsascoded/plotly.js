@@ -43,14 +43,15 @@ function plotConnectorRegions(gd: GraphDiv,  plotinfo: PlotInfo,  cdModule: any,
 
         const connectors = group.selectAll('g.region').data(Lib.identity);
 
-        connectors.enter().append('g')
+        const connectorsEnter = connectors.enter().append('g')
             .classed('region', true);
 
         connectors.exit().remove();
 
-        const len = connectors.size();
+        const connectorsMerged = connectors.merge(connectorsEnter);
+        const len = connectorsMerged.size();
 
-        connectors.each(function(this: any, di: any, i: any) {
+        connectorsMerged.each(function(this: any, di: any, i: any) {
             // don't draw lines between nulls
             if(i !== len - 1 && !di.cNext) return;
 
@@ -99,16 +100,17 @@ function plotConnectorLines(gd: GraphDiv,  plotinfo: PlotInfo,  cdModule: any,  
 
         const isHorizontal = (trace.orientation === 'h');
 
-        const connectors = group.selectAll('g.line').data(Lib.identity);
+        const lineConnectors = group.selectAll('g.line').data(Lib.identity);
 
-        connectors.enter().append('g')
+        const lineConnectorsEnter = lineConnectors.enter().append('g')
             .classed('line', true);
 
-        connectors.exit().remove();
+        lineConnectors.exit().remove();
 
-        const len = connectors.size();
+        const lineConnectorsMerged = lineConnectors.merge(lineConnectorsEnter);
+        const len = lineConnectorsMerged.size();
 
-        connectors.each(function(this: any, di: any, i: any) {
+        lineConnectorsMerged.each(function(this: any, di: any, i: any) {
             // don't draw lines between nulls
             if(i !== len - 1 && !di.cNext) return;
 

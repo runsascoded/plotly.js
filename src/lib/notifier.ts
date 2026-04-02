@@ -12,12 +12,13 @@ export default function(text: string, displayLength?: number | string): void {
     if(isNumeric(displayLength)) ts = displayLength as number;
     else if(displayLength === 'long') ts = 3000;
 
-    const notifierContainer = select('body')
+    let notifierContainer: any = select('body')
         .selectAll('.plotly-notifier')
         .data([0]);
-    notifierContainer.enter()
+    const notifierEnter = notifierContainer.enter()
         .append('div')
         .classed('plotly-notifier', true);
+    notifierContainer = notifierContainer.merge(notifierEnter);
 
     const notes = notifierContainer.selectAll('.notifier-note').data(NOTEDATA);
 

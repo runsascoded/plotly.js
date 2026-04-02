@@ -178,9 +178,9 @@ export default function plot(gd: any, cdModule: any, transitionOpts: any, makeOn
         }
 
         // title
-        const title = plotGroup.selectAll('text.title').data(cd);
-        title.exit().remove();
-        title.enter().append('text').classed('title', true);
+        const titleJoin = plotGroup.selectAll('text.title').data(cd);
+        titleJoin.exit().remove();
+        const title = titleJoin.enter().append('text').classed('title', true).merge(titleJoin);
         title
             .attr('text-anchor', function() {
                 return isBullet ? anchor.right : anchor[trace.title.align];
@@ -236,13 +236,15 @@ function drawBulletGauge(gd: any, plotGroup: any, cd: any, opts: any) {
     let ax: any, vals, transFn, tickSign, shift;
 
     // Enter bullet, axis
-    bullet.enter().append('g').classed('bullet', true);
-    bullet.attr('transform', strTranslate(size.l, size.t));
+    const bulletEnter = bullet.enter().append('g').classed('bullet', true);
+    const bulletMerged = bullet.merge(bulletEnter);
+    bulletMerged.attr('transform', strTranslate(size.l, size.t));
 
-    axisLayer.enter().append('g')
+    const axisLayerEnter = axisLayer.enter().append('g')
         .classed('bulletaxis', true)
         .classed('crisp', true);
-    axisLayer.selectAll('g.' + 'xbulletaxis' + 'tick,path,text').remove();
+    const axisLayerMerged = axisLayer.merge(axisLayerEnter);
+    axisLayerMerged.selectAll('g.' + 'xbulletaxis' + 'tick,path,text').remove();
 
     // Draw bullet
     const bulletHeight = size.h; // use all vertical domain
@@ -264,14 +266,14 @@ function drawBulletGauge(gd: any, plotGroup: any, cd: any, opts: any) {
     if(ax.visible) {
         Axes.drawTicks(gd, ax, {
             vals: ax.ticks === 'inside' ? Axes.clipEnds(ax, vals) : vals,
-            layer: axisLayer,
+            layer: axisLayerMerged,
             path: Axes.makeTickPath(ax, shift, tickSign),
             transFn: transFn
         });
 
         Axes.drawLabels(gd, ax, {
             vals: vals,
-            layer: axisLayer,
+            layer: axisLayerMerged,
             transFn: transFn,
             labelFns: Axes.makeLabelFns(ax, shift)
         });
@@ -287,16 +289,19 @@ function drawBulletGauge(gd: any, plotGroup: any, cd: any, opts: any) {
 
     // Draw bullet background, steps
     const boxes = [gaugeBg].concat(trace.gauge.steps);
-    const bgBullet = bullet.selectAll('g.bg-bullet').data(boxes);
-    bgBullet.enter().append('g').classed('bg-bullet', true).append('rect');
-    bgBullet.select('rect')
+    const bgBullet = bulletMerged.selectAll('g.bg-bullet').data(boxes);
+    const bgBulletEnter = bgBullet.enter().append('g').classed('bg-bullet', true);
+    bgBulletEnter.append('rect');
+    bgBullet.merge(bgBulletEnter).select('rect')
         .call(drawRect)
         .call(styleShape);
     bgBullet.exit().remove();
 
     // Draw value bar with transitions
-    const fgBullet = bullet.selectAll('g.value-bullet').data([trace.gauge.bar]);
-    fgBullet.enter().append('g').classed('value-bullet', true).append('rect');
+    const fgBulletJoin = bulletMerged.selectAll('g.value-bullet').data([trace.gauge.bar]);
+    const fgBulletEnter = fgBulletJoin.enter().append('g').classed('value-bullet', true);
+    fgBulletEnter.append('rect');
+    const fgBullet = fgBulletJoin.merge(fgBulletEnter);
     fgBullet.select('rect')
         .attr('height', innerBulletHeight)
         .attr('y', (bulletHeight - innerBulletHeight) / 2)
@@ -315,26 +320,28 @@ function drawBulletGauge(gd: any, plotGroup: any, cd: any, opts: any) {
                 Math.max(0, ax.c2p(Math.min(trace.gauge.axis.range[1], cd[0].y))) :
                 0);
     }
-    fgBullet.exit().remove();
+    fgBulletJoin.exit().remove();
 
     const data = cd.filter(function() {return trace.gauge.threshold.value || trace.gauge.threshold.value === 0;});
-    const threshold = bullet.selectAll('g.threshold-bullet').data(data);
-    threshold.enter().append('g').classed('threshold-bullet', true).append('line');
-    threshold.select('line')
+    const thresholdJoin = bulletMerged.selectAll('g.threshold-bullet').data(data);
+    const thresholdEnter = thresholdJoin.enter().append('g').classed('threshold-bullet', true);
+    thresholdEnter.append('line');
+    thresholdJoin.merge(thresholdEnter).select('line')
         .attr('x1', ax.c2p(trace.gauge.threshold.value))
         .attr('x2', ax.c2p(trace.gauge.threshold.value))
         .attr('y1', (1 - trace.gauge.threshold.thickness) / 2 * bulletHeight)
         .attr('y2', (1 - (1 - trace.gauge.threshold.thickness) / 2) * bulletHeight)
         .call(Color.stroke, trace.gauge.threshold.line.color)
         .style('stroke-width', trace.gauge.threshold.line.width);
-    threshold.exit().remove();
+    thresholdJoin.exit().remove();
 
-    const bulletOutline = bullet.selectAll('g.gauge-outline').data([gaugeOutline]);
-    bulletOutline.enter().append('g').classed('gauge-outline', true).append('rect');
-    bulletOutline.select('rect')
+    const bulletOutlineJoin = bulletMerged.selectAll('g.gauge-outline').data([gaugeOutline]);
+    const bulletOutlineEnter = bulletOutlineJoin.enter().append('g').classed('gauge-outline', true);
+    bulletOutlineEnter.append('rect');
+    bulletOutlineJoin.merge(bulletOutlineEnter).select('rect')
         .call(drawRect)
         .call(styleShape);
-    bulletOutline.exit().remove();
+    bulletOutlineJoin.exit().remove();
 }
 
 function drawAngularGauge(gd: any, plotGroup: any, cd: any, opts: any) {
@@ -383,13 +390,15 @@ function drawAngularGauge(gd: any, plotGroup: any, cd: any, opts: any) {
     let ax, vals, transFn, tickSign;
 
     // Enter gauge and axis
-    gauge.enter().append('g').classed('angular', true);
-    gauge.attr('transform', strTranslate(gaugePosition[0], gaugePosition[1]));
+    const gaugeEnter = gauge.enter().append('g').classed('angular', true);
+    const gaugeMerged = gauge.merge(gaugeEnter);
+    gaugeMerged.attr('transform', strTranslate(gaugePosition[0], gaugePosition[1]));
 
-    axisLayer.enter().append('g')
+    const axisLayerEnter = axisLayer.enter().append('g')
         .classed('angularaxis', true)
         .classed('crisp', true);
-    axisLayer.selectAll('g.' + 'xangularaxis' + 'tick,path,text').remove();
+    const axisLayerMerged = axisLayer.merge(axisLayerEnter);
+    axisLayerMerged.selectAll('g.' + 'xangularaxis' + 'tick,path,text').remove();
 
     // @ts-expect-error mockAxis called with 2 args (3rd is optional)
     ax = mockAxis(gd, trace.gauge.axis);
@@ -448,13 +457,13 @@ function drawAngularGauge(gd: any, plotGroup: any, cd: any, opts: any) {
         const pad = (ax.linewidth || 1) / 2;
         Axes.drawTicks(gd, ax, {
             vals: vals,
-            layer: axisLayer,
+            layer: axisLayerMerged,
             path: 'M' + (tickSign * pad) + ',0h' + (tickSign * ax.ticklen),
             transFn: transFn2
         });
         Axes.drawLabels(gd, ax, {
             vals: vals,
-            layer: axisLayer,
+            layer: axisLayerMerged,
             transFn: transFn,
             labelFns: labelFns
         });
@@ -462,15 +471,18 @@ function drawAngularGauge(gd: any, plotGroup: any, cd: any, opts: any) {
 
     // Draw background + steps
     let arcs = [gaugeBg].concat(trace.gauge.steps);
-    const bgArc = gauge.selectAll('g.bg-arc').data(arcs);
-    bgArc.enter().append('g').classed('bg-arc', true).append('path');
-    bgArc.select('path').call(drawArc).call(styleShape);
-    bgArc.exit().remove();
+    const bgArcJoin = gaugeMerged.selectAll('g.bg-arc').data(arcs);
+    const bgArcEnter = bgArcJoin.enter().append('g').classed('bg-arc', true);
+    bgArcEnter.append('path');
+    bgArcJoin.merge(bgArcEnter).select('path').call(drawArc).call(styleShape);
+    bgArcJoin.exit().remove();
 
     // Draw foreground with transition
     const valueArcPathGenerator = arcPathGenerator(trace.gauge.bar.thickness);
-    const valueArc = gauge.selectAll('g.value-arc').data([trace.gauge.bar]);
-    valueArc.enter().append('g').classed('value-arc', true).append('path');
+    const valueArcJoin = gaugeMerged.selectAll('g.value-arc').data([trace.gauge.bar]);
+    const valueArcEnter = valueArcJoin.enter().append('g').classed('value-arc', true);
+    valueArcEnter.append('path');
+    const valueArc = valueArcJoin.merge(valueArcEnter);
     const valueArcPath = valueArc.select('path');
     if(hasTransition(transitionOpts)) {
         valueArcPath
@@ -487,7 +499,7 @@ function drawAngularGauge(gd: any, plotGroup: any, cd: any, opts: any) {
             'M0,0Z');
     }
     valueArcPath.call(styleShape);
-    valueArc.exit().remove();
+    valueArcJoin.exit().remove();
 
     // Draw threshold
     arcs = [];
@@ -503,16 +515,18 @@ function drawAngularGauge(gd: any, plotGroup: any, cd: any, opts: any) {
             thickness: trace.gauge.threshold.thickness
         });
     }
-    const thresholdArc = gauge.selectAll('g.threshold-arc').data(arcs);
-    thresholdArc.enter().append('g').classed('threshold-arc', true).append('path');
-    thresholdArc.select('path').call(drawArc).call(styleShape);
-    thresholdArc.exit().remove();
+    const thresholdArcJoin = gaugeMerged.selectAll('g.threshold-arc').data(arcs);
+    const thresholdArcEnter = thresholdArcJoin.enter().append('g').classed('threshold-arc', true);
+    thresholdArcEnter.append('path');
+    thresholdArcJoin.merge(thresholdArcEnter).select('path').call(drawArc).call(styleShape);
+    thresholdArcJoin.exit().remove();
 
     // Draw border last
-    const gaugeBorder = gauge.selectAll('g.gauge-outline').data([gaugeOutline]);
-    gaugeBorder.enter().append('g').classed('gauge-outline', true).append('path');
-    gaugeBorder.select('path').call(drawArc).call(styleShape);
-    gaugeBorder.exit().remove();
+    const gaugeBorderJoin = gaugeMerged.selectAll('g.gauge-outline').data([gaugeOutline]);
+    const gaugeBorderEnter = gaugeBorderJoin.enter().append('g').classed('gauge-outline', true);
+    gaugeBorderEnter.append('path');
+    gaugeBorderJoin.merge(gaugeBorderEnter).select('path').call(drawArc).call(styleShape);
+    gaugeBorderJoin.exit().remove();
 }
 
 function drawNumbers(gd: any, plotGroup: any, cd: any, opts: any) {
@@ -536,8 +550,8 @@ function drawNumbers(gd: any, plotGroup: any, cd: any, opts: any) {
         data.push('delta');
         if(trace.delta.position === 'left') data.reverse();
     }
-    const sel = numbers.selectAll('text').data(data);
-    sel.enter().append('text');
+    const selJoin = numbers.selectAll('text').data(data);
+    const sel = selJoin.enter().append('text').merge(selJoin);
     sel
         .attr('text-anchor', function() {return numbersAnchor;})
         .attr('class', function(d: any) { return d;})
