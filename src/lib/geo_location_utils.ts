@@ -311,7 +311,7 @@ function fetchTraceGeoData(calcData: any[]): Promise<any>[] {
 
     function fetch(url: string): Promise<any> {
         return new Promise(function(resolve, reject) {
-            window.fetch(url).then(function(r) {
+            window.fetch(url).then((r) => {
                 if(!r.ok) {
                     delete PlotlyGeoAssets[url];
                     const msg = r.status === 404 ?
@@ -320,7 +320,7 @@ function fetchTraceGeoData(calcData: any[]): Promise<any>[] {
                     throw new Error(msg);
                 }
                 return r.json();
-            }).then(function(d) {
+            }).then((d) => {
                 PlotlyGeoAssets[url] = d;
                 return resolve(d);
             });

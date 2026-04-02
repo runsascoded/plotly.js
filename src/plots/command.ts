@@ -223,7 +223,7 @@ export const executeAPICommand = function(gd?: any, method?: any, args?: any): a
         allArgs.push(args[i]);
     }
 
-    return _method.apply(null, allArgs).catch(function(err: any) {
+    return _method.apply(null, allArgs).catch((err: any) => {
         warn('API call to Plotly.' + method + ' rejected.', err);
         return Promise.reject(err);
     });

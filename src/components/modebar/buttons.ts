@@ -56,10 +56,10 @@ modeBarButtons.toImage = {
         });
 
         Registry.call('downloadImage', gd, opts)
-          .then(function(filename: any) {
+          .then((filename: any) => {
               Lib.notifier(_(gd, 'Snapshot succeeded') + ' - ' + filename, 'long');
           })
-          .catch(function() {
+          .catch(() => {
               Lib.notifier(_(gd, 'Sorry, there was a problem downloading your snapshot!'), 'long');
           });
     }

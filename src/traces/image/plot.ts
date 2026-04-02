@@ -182,7 +182,7 @@ export default function plot(gd: GraphDiv, plotinfo: any, cdimage: any[], imageL
                 }
             }
         })
-        .then(function() {
+        .then(() => {
             let href, canvas;
             if(trace._hasZ) {
                 canvas = drawMagnifiedPixelsOnCanvas(function(i: any, j: any) {

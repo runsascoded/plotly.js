@@ -221,8 +221,8 @@ function toImage(gd?: any, opts?: any): any {
             .then(redrawFunc)
             .then(wait)
             .then(convert)
-            .then(function(url: any) { resolve(urlToImageData(url)); })
-            .catch(function(err: any) { reject(err); });
+            .then((url: any) => { resolve(urlToImageData(url)); })
+            .catch((err: any) => { reject(err); });
     });
 }
 

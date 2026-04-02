@@ -303,7 +303,7 @@ function texToSVG(_texString: string, _config: any, _callback: any): void {
         setRenderer3();
         (MathJax as any).startup.defaultReady();
 
-        (MathJax as any).startup.promise.then(function() {
+        (MathJax as any).startup.promise.then(() => {
             initiateMathJax();
             finalizeMathJax();
 

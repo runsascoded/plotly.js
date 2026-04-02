@@ -35,12 +35,12 @@ function downloadImage(gd: GraphDiv, opts: any) {
         let filename = opts.filename || gd.fn || 'newplot';
         filename += '.' + opts.format.replace('-', '.');
 
-        promise.then(function(result: any) {
+        promise.then((result: any) => {
             if(_gd) _gd._snapshotInProgress = false;
             return fileSaver(result, filename, opts.format);
-        }).then(function(name: any) {
+        }).then((name: any) => {
             resolve(name);
-        }).catch(function(err: any) {
+        }).catch((err: any) => {
             if(_gd) _gd._snapshotInProgress = false;
             reject(err);
         });

@@ -3627,7 +3627,7 @@ axes.drawLabels = function(gd?: any, ax?: any, opts?: any) {
                     // all here so take it out of gd._promises and
                     // instead position the label and promise this in
                     // labelsReady
-                    labelsReady.push(gd._promises.pop().then(function() {
+                    labelsReady.push(gd._promises.pop().then(() => {
                         positionLabels(thisLabel, tickAngle);
                     }));
                 } else {
