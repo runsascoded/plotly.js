@@ -18,7 +18,7 @@
  */
 import './lib/d3-compat.js';
 import 'd3-transition';
-import Registry from './registry.js';
+import { register } from './registry.js';
 // Import plot_api.js directly (not index.js) to avoid pulling in
 // to_image, validate, template_api, snapshot/download
 import main from './plot_api/plot_api.js';
@@ -46,7 +46,6 @@ const apiMethodNames = [
 ];
 
 export function createPlotly({ traces = [], components = [], Icons, Snapshot, PlotSchema }: any = {}) {
-    const register = Registry.register;
     const Plotly: any = { version, register };
     if(Icons) Plotly.Icons = Icons;
     if(Snapshot) Plotly.Snapshot = Snapshot;

@@ -1,8 +1,8 @@
-import Registry from '../registry.js';
+import { layoutArrayContainers, layoutArrayRegexes } from '../registry.js';
 
 export default function containerArrayMatch(astr?: any): any {
-    const rootContainers = Registry.layoutArrayContainers;
-    const regexpContainers = Registry.layoutArrayRegexes;
+    const rootContainers = layoutArrayContainers;
+    const regexpContainers = layoutArrayRegexes;
     const rootPart = astr.split('[')[0];
     let arrayStr;
     let match;

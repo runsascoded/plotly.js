@@ -1,6 +1,6 @@
 import "./lib/d3-compat.js";
 import "d3-transition";
-import Registry from './registry.js';
+import { register } from './registry.js';
 import plotApi from './plot_api/index.js';
 import FxModule from './components/fx/index.js';
 import PlotsModule from './plots/plots.js';
@@ -30,7 +30,6 @@ import Icons from './fonts/ploticon.js';
 import Snapshot from './snapshot/index.js';
 import PlotSchema from './plot_api/plot_schema.js';
 
-const register = Registry.register;
 const Plotly: any = { version, register, Icons, Snapshot, PlotSchema };
 const methodNames = Object.keys(plotApi);
 for(let i = 0; i < methodNames.length; i++) {

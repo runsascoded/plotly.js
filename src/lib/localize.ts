@@ -1,4 +1,4 @@
-import Registry from '../registry.js';
+import { localeRegistry } from '../registry.js';
 import type { GraphDiv } from '../../types/core';
 
 export default function localize(gd: GraphDiv, s: string): string {
@@ -23,7 +23,7 @@ export default function localize(gd: GraphDiv, s: string): string {
                 const out = dict[s];
                 if(out) return out;
             }
-            locales = Registry.localeRegistry;
+            locales = localeRegistry;
         }
 
         const baseLocale = locale.split('-')[0];

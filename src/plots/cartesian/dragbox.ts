@@ -2,7 +2,7 @@ import { select } from 'd3-selection';
 import { _, apply3DTransform, ensureSingle, extendFlat, log, notifier, numberFormat, simpleMap, strTranslate, syncOrAsync } from '../../lib/index.js';
 import tinycolor from 'tinycolor2';
 import supportsPassive from 'has-passive-events';
-import Registry, { getComponentMethod } from '../../registry.js';
+import { getComponentMethod, subplotsRegistry } from '../../registry.js';
 import { _guiRelayout } from '../../plot_api/plot_api.js';
 import svgTextUtils from '../../lib/svg_text_utils.js';
 import Color from '../../components/color/index.js';
@@ -883,7 +883,7 @@ function makeDragBox(gd: GraphDiv, plotinfo: PlotInfo, x?: any, y?: any, w?: any
         }
 
         if(hasSplom) {
-            Registry.subplotsRegistry.splom.drag(gd);
+            subplotsRegistry.splom.drag(gd);
         }
 
         if(hasScatterGl) {

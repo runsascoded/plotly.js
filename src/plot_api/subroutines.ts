@@ -1,6 +1,6 @@
 import { select } from 'd3-selection';
 import type { FullAxis, FullLayout, GraphDiv } from '../../types/core';
-import Registry, { getComponentMethod } from '../registry.js';
+import { getComponentMethod, subplotsRegistry } from '../registry.js';
 import { _doPlot } from './plot_api.js';
 import { allowAutoMargin, autoMargin, doAutoMargin, previousPromises, style } from '../plots/plots.js';
 import { ensureSingle, ensureSingleById, isBottomAnchor, isLeftAnchor, isMiddleAnchor, isRightAnchor, isTopAnchor, pushUnique, syncOrAsync } from '../lib/index.js';
@@ -678,7 +678,7 @@ export function doTicksRelayout(gd: GraphDiv): any {
     Axes.draw(gd, 'redraw');
 
     if(gd._fullLayout._hasOnlyLargeSploms) {
-        Registry.subplotsRegistry.splom.updateGrid(gd);
+        subplotsRegistry.splom.updateGrid(gd);
         clearGlCanvases(gd);
         redrawReglTraces(gd);
     }

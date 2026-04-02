@@ -1,4 +1,4 @@
-import Registry from '../../registry.js';
+import { subplotsRegistry } from '../../registry.js';
 import Lib from '../../lib/index.js';
 import axisIds from './axis_ids.js';
 
@@ -7,7 +7,7 @@ export default function makeIncludeComponents(containerArrayName?: any): any {
         const array = layoutIn[containerArrayName];
         if(!Array.isArray(array)) return;
 
-        const Cartesian = Registry.subplotsRegistry.cartesian;
+        const Cartesian = subplotsRegistry.cartesian;
         const idRegex = Cartesian.idRegex;
         const subplots = layoutOut._subplots;
         const xaList = subplots.xaxis;

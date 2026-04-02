@@ -4,7 +4,7 @@ import Loggers from './loggers.js';
 import _mod from './mod.js';
 const { mod } = _mod;
 import constants from '../constants/numerical.js';
-import Registry, { getComponentMethod } from '../registry.js';
+import { componentsRegistry, getComponentMethod } from '../registry.js';
 import { utcFormat } from 'd3-time-format';
 const BADNUM: number = (constants.BADNUM as any);
 const ONEDAY: number = constants.ONEDAY;
@@ -23,7 +23,7 @@ const YFIRST: number = new Date().getFullYear() - 70;
 function isWorldCalendar(calendar: any): boolean {
     return (
         calendar &&
-        Registry.componentsRegistry.calendars &&
+        componentsRegistry.calendars &&
         typeof calendar === 'string' && calendar !== 'gregorian'
     );
 }

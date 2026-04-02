@@ -1,5 +1,5 @@
 import isNumeric from 'fast-isnumeric';
-import Registry from '../registry.js';
+import { getModule, subplotsRegistry } from '../registry.js';
 import { traceIs } from '../lib/trace_categories.js';
 import { isIndex, isPlainObject, log, nestedProperty, swapAttrs, warn } from '../lib/index.js';
 // Note: subplotsRegistry access goes through Registry directly
@@ -39,10 +39,10 @@ export function cleanLayout(layout?: any) {
         delete layout.scene1;
     }
 
-    const axisAttrRegex = (Registry.subplotsRegistry.cartesian || {}).attrRegex;
-    const polarAttrRegex = (Registry.subplotsRegistry.polar || {}).attrRegex;
-    const ternaryAttrRegex = (Registry.subplotsRegistry.ternary || {}).attrRegex;
-    const sceneAttrRegex = (Registry.subplotsRegistry.gl3d || {}).attrRegex;
+    const axisAttrRegex = (subplotsRegistry.cartesian || {}).attrRegex;
+    const polarAttrRegex = (subplotsRegistry.polar || {}).attrRegex;
+    const ternaryAttrRegex = (subplotsRegistry.ternary || {}).attrRegex;
+    const sceneAttrRegex = (subplotsRegistry.gl3d || {}).attrRegex;
 
     const keys = Object.keys(layout);
     for (i = 0; i < keys.length; i++) {
@@ -188,7 +188,7 @@ export function cleanData(data?: any) {
 
         // scene ids scene1 -> scene
         if (traceIs(trace, 'gl3d') && trace.scene) {
-            trace.scene = Registry.subplotsRegistry.gl3d.cleanId(trace.scene);
+            trace.scene = subplotsRegistry.gl3d.cleanId(trace.scene);
         }
 
         if (!traceIs(trace, 'pie-like') && !traceIs(trace, 'bar-like')) {
@@ -202,7 +202,7 @@ export function cleanData(data?: any) {
         }
 
         // fix typo in colorscale definition
-        const _module = Registry.getModule(trace);
+        const _module = getModule(trace);
         if (_module && _module.colorbar) {
             const containerName = _module.colorbar.container;
             const container = containerName ? trace[containerName] : trace;
