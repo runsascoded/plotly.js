@@ -4,9 +4,6 @@ import { formatLocale } from 'd3-format';
 import isNumeric from 'fast-isnumeric';
 import * as b64encode from 'base64-arraybuffer';
 import { allTypes, collectableSubplotTypes as _collectableSubplotTypes, componentsRegistry, getComponentMethod, getModule, layoutArrayContainers as registryLayoutArrayContainers, localeRegistry, modules as registryModules, subplotsRegistry } from '../registry.js';
-import { crossTraceDefaults as colorscaleCrossTraceDefaults } from '../components/colorscale/index.js';
-import { errorbarCalc } from '../components/errorbars/index.js';
-import { fxSupplyDefaults, fxCalc } from '../components/fx/index.js';
 import { _doPlot, redraw, relayout } from '../plot_api/plot_api.js';
 import { traceIs } from '../lib/trace_categories.js';
 import PlotSchema from '../plot_api/plot_schema.js';
@@ -475,7 +472,7 @@ export function supplyDefaults(gd?: any, opts?: any): void {
     relinkPrivateKeys(newFullLayout, oldFullLayout);
 
     // colorscale crossTraceDefaults needs newFullLayout with relinked keys
-    colorscaleCrossTraceDefaults(newFullData, newFullLayout);
+    getComponentMethod('colorscale', 'crossTraceDefaults')(newFullData, newFullLayout);
 
     // For persisting GUI-driven changes in layout
     // _preGUI and _tracePreGUI were already copied over in relinkPrivateKeys
@@ -1285,7 +1282,7 @@ export function supplyTraceDefaults(traceIn?: any, traceOut?: any, colorIndex?: 
 
             // parcats support hover, but not hoverlabel stylings (yet)
             if(traceOut.type !== 'parcats') {
-                fxSupplyDefaults(traceIn, traceOut, defaultColor, layout);
+                getComponentMethod('fx', 'supplyDefaults')(traceIn, traceOut, defaultColor, layout);
             }
         }
 
@@ -3028,8 +3025,8 @@ export function doCalcdata(gd: GraphDiv, traces?: any): void {
         doCrossTraceCalc(gd);
     }
 
-    fxCalc(gd);
-    errorbarCalc(gd);
+    getComponentMethod('fx', 'calc')(gd);
+    getComponentMethod('errorbars', 'calc')(gd);
 };
 
 const sortAxisCategoriesByValueRegex = /(total|sum|min|max|mean|geometric mean|median) (ascending|descending)/;

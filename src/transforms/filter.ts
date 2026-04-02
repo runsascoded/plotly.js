@@ -1,5 +1,5 @@
 import Lib from '../lib/index.js';
-import { handleDefaults as calendarDefaults } from '../components/calendars/index.js';
+import { getComponentMethod } from '../registry.js';
 import Axes from '../plots/cartesian/axes.js';
 import { pointsAccessorFunction } from './helpers.js';
 import filterOps from '../constants/filter_ops.js';
@@ -132,8 +132,9 @@ export function supplyDefaults(transformIn: any) {
         coerce('operation');
         coerce('value');
 
-        calendarDefaults(transformIn, transformOut, 'valuecalendar', null);
-        calendarDefaults(transformIn, transformOut, 'targetcalendar', null);
+        const handleCalendarDefaults = getComponentMethod('calendars', 'handleDefaults');
+        handleCalendarDefaults(transformIn, transformOut, 'valuecalendar', null);
+        handleCalendarDefaults(transformIn, transformOut, 'targetcalendar', null);
     }
 
     return transformOut;

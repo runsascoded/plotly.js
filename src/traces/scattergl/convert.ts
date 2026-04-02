@@ -2,7 +2,7 @@ import type { FullAxis, FullTrace, GraphDiv } from '../../../types/core';
 import isNumeric from 'fast-isnumeric';
 import svgSdf from 'svg-path-sdf';
 import rgba from 'color-normalize';
-import { makeComputeError } from '../../components/errorbars/index.js';
+import { getComponentMethod } from '../../registry.js';
 import Lib from '../../lib/index.js';
 import { symbolNoDot, symbolNoFill, symbolNumber, getMarkerAngle, symbolFuncs } from '../../components/drawing/index.js';
 import AxisIDs from '../../plots/cartesian/axis_ids.js';
@@ -632,6 +632,7 @@ function convertLinePositions(gd: GraphDiv, trace: FullTrace, positions: any) {
 }
 
 function convertErrorBarPositions(gd: GraphDiv, trace: FullTrace, positions: any, x: any, y: any) {
+    const makeComputeError = getComponentMethod('errorbars', 'makeComputeError');
     const xa = AxisIDs.getFromId(gd, trace.xaxis, 'x');
     const ya = AxisIDs.getFromId(gd, trace.yaxis, 'y');
     const count = positions.length / 2;

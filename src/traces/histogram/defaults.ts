@@ -1,6 +1,5 @@
 import type { FullLayout, FullTrace, InputTrace } from '../../../types/core';
-import { handleTraceDefaults as calendarTraceDefaults } from '../../components/calendars/index.js';
-import { errorbarSupplyDefaults } from '../../components/errorbars/index.js';
+import { getComponentMethod } from '../../registry.js';
 import Lib from '../../lib/index.js';
 import Color from '../../components/color/index.js';
 import _defaults from '../bar/defaults.js';
@@ -53,7 +52,8 @@ export default function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace,
 
     traceOut._length = len;
 
-    calendarTraceDefaults(traceIn, traceOut, ['x', 'y'], layout);
+    const handleCalendarDefaults = getComponentMethod('calendars', 'handleTraceDefaults');
+    handleCalendarDefaults(traceIn, traceOut, ['x', 'y'], layout);
 
     const hasAggregationData = traceOut[aggLetter];
     if (hasAggregationData) coerce('histfunc');
@@ -70,8 +70,9 @@ export default function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace,
     const lineColor = (traceOut.marker.line || {}).color;
 
     // override defaultColor for error bars with defaultLine
-    errorbarSupplyDefaults(traceIn, traceOut, lineColor || Color.defaultLine, { axis: 'y' });
-    errorbarSupplyDefaults(traceIn, traceOut, lineColor || Color.defaultLine, { axis: 'x', inherit: 'y' });
+    const errorBarsSupplyDefaults = getComponentMethod('errorbars', 'supplyDefaults');
+    errorBarsSupplyDefaults(traceIn, traceOut, lineColor || Color.defaultLine, { axis: 'y' });
+    errorBarsSupplyDefaults(traceIn, traceOut, lineColor || Color.defaultLine, { axis: 'x', inherit: 'y' });
 
     coerce('zorder');
 }

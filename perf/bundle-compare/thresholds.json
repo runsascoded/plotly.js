@@ -1,13 +1,13 @@
 {
     "upstream_full__min_": 4831960,
     "upstream_basic__min_": 1114829,
-    "fork_full__min_": 4813870,
-    "fork_basic__min_": 1074277,
-    "fork_minimal__min_": 966618,
-    "fork_lite__min_": 827205,
+    "fork_full__min_": 4813834,
+    "fork_basic__min_": 1074283,
+    "fork_minimal__min_": 966624,
+    "fork_lite__min_": 827211,
     "app___upstream_basic": 1115586,
-    "app___fork_basic": 1074412,
-    "app___fork_lite": 827284,
-    "fork_factory__min_": 696926,
-    "app___fork_factory": 696926
+    "app___fork_basic": 1074418,
+    "app___fork_lite": 827290,
+    "fork_factory__min_": 696932,
+    "app___fork_factory": 696932
 }

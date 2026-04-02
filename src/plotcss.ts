@@ -59,5 +59,5 @@ for(var selector in rules) {
     var fullSelector = selector.replace(/^,/,' ,')
         .replace(/X/g, '.js-plotly-plot .plotly')
         .replace(/Y/g, '.plotly-notifier');
-    addStyleRule(fullSelector, rules[selector]);
+    addStyleRule(fullSelector, (rules as any)[selector]);
 }

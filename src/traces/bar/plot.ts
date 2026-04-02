@@ -6,7 +6,7 @@ import { castOption, ensureSingle, ensureUniformFontSize, formatPercent, identit
 import svgTextUtils from '../../lib/svg_text_utils.js';
 import Color from '../../components/color/index.js';
 import { bBox, font, hideOutsideRangePoint, makePointStyleFns, setClipUrl, singlePointStyle } from '../../components/drawing/index.js';
-import { errorbarPlot } from '../../components/errorbars/index.js';
+import { getComponentMethod } from '../../registry.js';
 import _axes from '../../plots/cartesian/axes.js';
 const { tickText } = _axes;
 import uniformText from './uniform_text.js';
@@ -521,7 +521,7 @@ function plot(gd: GraphDiv, plotinfo: PlotInfo, cdModule: CalcDatum[][], traceLa
     });
 
     // error bars are on the top
-    errorbarPlot(gd, bartraces, plotinfo, opts);
+    getComponentMethod('errorbars', 'plot')(gd, bartraces, plotinfo, opts);
 }
 
 function appendBarText(gd: GraphDiv, plotinfo: any, bar: any, cd: any[], i: number, x0: number, x1: number, y0: number, y1: number, r: number, overhead: number, opts: any, makeOnCompleteCallback: any): void {

@@ -1,13 +1,14 @@
 import type { FullLayout, FullTrace, InputTrace } from '../../../types/core';
 import { minRowLength } from '../../lib/index.js';
-import { handleTraceDefaults as calendarTraceDefaults } from '../../components/calendars/index.js';
+import { getComponentMethod } from '../../registry.js';
 
 export default function handleXYDefaults(traceIn: InputTrace, traceOut: FullTrace, layout: FullLayout, coerce: any): number {
     const x = coerce('x');
     const y = coerce('y');
     let len;
 
-    calendarTraceDefaults(traceIn, traceOut, ['x', 'y'], layout);
+    const handleCalendarDefaults = getComponentMethod('calendars', 'handleTraceDefaults');
+    handleCalendarDefaults(traceIn, traceOut, ['x', 'y'], layout);
 
     if(x) {
         const xlen = minRowLength(x);

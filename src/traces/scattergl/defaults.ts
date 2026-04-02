@@ -1,6 +1,6 @@
 import type { FullLayout, FullTrace, InputTrace } from '../../../types/core';
 import Lib from '../../lib/index.js';
-import { errorbarSupplyDefaults } from '../../components/errorbars/index.js';
+import { getComponentMethod } from '../../registry.js';
 import helpers from './helpers.js';
 import attributes from './attributes.js';
 import constants from '../scatter/constants.js';
@@ -67,8 +67,9 @@ export default function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace,
         handleFillColorDefaults(traceIn, traceOut, defaultColor, coerce);
     }
 
-    errorbarSupplyDefaults(traceIn, traceOut, lineColor || markerColor || defaultColor, { axis: 'y' });
-    errorbarSupplyDefaults(traceIn, traceOut, lineColor || markerColor || defaultColor, { axis: 'x', inherit: 'y' });
+    const errorBarsSupplyDefaults = getComponentMethod('errorbars', 'supplyDefaults');
+    errorBarsSupplyDefaults(traceIn, traceOut, lineColor || markerColor || defaultColor, { axis: 'y' });
+    errorBarsSupplyDefaults(traceIn, traceOut, lineColor || markerColor || defaultColor, { axis: 'x', inherit: 'y' });
 
     Lib.coerceSelectionMarkerOpacity(traceOut, coerce);
 }

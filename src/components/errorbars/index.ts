@@ -27,13 +27,6 @@ delete xyzAttrs.error_y.copy_ystyle;
 delete xyzAttrs.error_z.copy_ystyle;
 delete xyzAttrs.error_z.copy_zstyle;
 
-export { hoverInfo as errorbarHoverInfo };
-export { _req0 as errorbarSupplyDefaults };
-export { _req1 as errorbarCalc };
-export { _req2 as makeComputeError };
-export { _req3 as errorbarPlot };
-export { _req4 as errorbarStyle };
-
 export default {
     moduleType: 'component',
     name: 'errorbars',
