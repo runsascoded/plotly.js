@@ -9,7 +9,7 @@ const DUMMY_SUB = 'TOBESTRIPPED';
 const DUMMY_REGEX = new RegExp('("' + DUMMY_SUB + ')|(' + DUMMY_SUB + '")', 'g');
 
 function htmlEntityDecode(s: any) {
-    const hiddenDiv = select('body').append('div').style({display: 'none'}).html('');
+    const hiddenDiv = select('body').append('div').style('display', 'none').html('');
     const replaced = s.replace(/(&[^;]*;)/gi, function(d: any) {
         if(d === '&lt;') { return '&#60;'; } // special handling for brackets
         if(d === '&rt;') { return '&#62;'; }
@@ -77,7 +77,8 @@ export default function toSVG(gd: GraphDiv, format?: string, scale?: number) {
     svg.node().style.background = '';
 
     svg.selectAll('text')
-        .attr({'data-unformatted': null, 'data-math': null})
+        .attr('data-unformatted', null)
+        .attr('data-math', null)
         .each(function(this: any) {
             const txt = select(this);
 
@@ -91,7 +92,9 @@ export default function toSVG(gd: GraphDiv, format?: string, scale?: number) {
             } else {
                 // clear other visibility/display values to default
                 // to not potentially confuse non-browser SVG implementations
-                txt.style({visibility: null, display: null});
+                txt
+                    .style('visibility', null)
+                    .style('display', null);
             }
 
             // Font family styles break things because of quotation marks,

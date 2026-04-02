@@ -583,20 +583,16 @@ export const drawLabels = function(labelGroup: any,  labelData: any,  gd: GraphD
     labels.exit().remove();
 
     labels.enter().append('text')
-        .attr({
-            'data-notex': 1,
-            'text-anchor': 'middle'
-        })
+        .attr('data-notex', 1)
+        .attr('text-anchor', 'middle')
         .each(function(this: any, d: any) {
             const x = d.x + Math.sin(d.theta) * d.dy;
             const y = d.y - Math.cos(d.theta) * d.dy;
             select(this)
                 .text(d.text)
-                .attr({
-                    x: x,
-                    y: y,
-                    transform: 'rotate(' + (180 * d.theta / Math.PI) + ' ' + x + ' ' + y + ')'
-                })
+                .attr('x', x)
+                .attr('y', y)
+                .attr('transform', 'rotate(' + (180 * d.theta / Math.PI) + ' ' + x + ' ' + y + ')')
                 .call(svgTextUtils.convertToTspans, gd);
         });
 

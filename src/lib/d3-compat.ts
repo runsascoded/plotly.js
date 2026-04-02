@@ -14,8 +14,6 @@
 import { selection } from 'd3-selection';
 import 'd3-transition';
 
-const _origStyle = (selection.prototype as any).style;
-const _origAttr = (selection.prototype as any).attr;
 const _origEnter = (selection.prototype as any).enter;
 const _origSelect = (selection.prototype as any).select;
 
@@ -48,20 +46,12 @@ const _origSelect = (selection.prototype as any).select;
     return _origSelect.apply(this, arguments);
 };
 
-// Patch .style() to accept object arg
-(selection.prototype as any).style = function(this: any, nameOrObj: any, value?: any, priority?: any): any {
-    if(typeof nameOrObj === 'object' && nameOrObj !== null) {
-        for(const key in nameOrObj) {
-            _origStyle.call(this, key, nameOrObj[key]);
-        }
-        return this;
-    }
-    return _origStyle.apply(this, arguments);
-};
+// .style({obj}) polyfill REMOVED — all call sites converted to individual calls.
+// .attr({obj}) still needed for ~40 call sites that pass object variables.
 
-// Patch .attr() to accept object arg AND handle null-node getters
+const _origAttr = (selection.prototype as any).attr;
 (selection.prototype as any).attr = function(this: any, nameOrObj: any, value?: any): any {
-    // Object form: .attr({key: val, ...})
+    // Object form: .attr({key: val, ...}) — still used by ~40 call sites
     if(typeof nameOrObj === 'object' && nameOrObj !== null && !(nameOrObj instanceof String)) {
         for(const key in nameOrObj) {
             _origAttr.call(this, key, nameOrObj[key]);
@@ -69,7 +59,7 @@ const _origSelect = (selection.prototype as any).select;
         return this;
     }
     // Getter form with no node: return undefined (v3 compat) instead of crashing
-    if(arguments.length === 1 && !this.node()) {
+    if(arguments.length === 1 && typeof nameOrObj === 'string' && !this.node()) {
         return undefined;
     }
     return _origAttr.apply(this, arguments);

@@ -294,10 +294,9 @@ function drawCurrentValue(sliderGroup: any, sliderOpts: any, valueOverride: any)
     }
 
     const text = Lib.ensureSingle(sliderGroup, 'text', constants.labelClass, function(s: any) {
-        s.attr({
-            'text-anchor': textAnchor,
-            'data-notex': 1
-        });
+        s
+            .attr('text-anchor', textAnchor)
+            .attr('data-notex', 1);
     });
 
     let str = sliderOpts.currentvalue.prefix ? sliderOpts.currentvalue.prefix : '';
@@ -335,12 +334,11 @@ function drawGrip(sliderGroup: any, gd: GraphDiv, sliderOpts: any) {
             .style('pointer-events', 'all');
     });
 
-    grip.attr({
-        width: constants.gripWidth,
-        height: constants.gripHeight,
-        rx: constants.gripRadius,
-        ry: constants.gripRadius,
-    })
+    grip
+        .attr('width', constants.gripWidth)
+        .attr('height', constants.gripHeight)
+        .attr('rx', constants.gripRadius)
+        .attr('ry', constants.gripRadius)
     .call(Color.stroke, sliderOpts.bordercolor)
     .call(Color.fill, sliderOpts.bgcolor)
     .style('stroke-width', sliderOpts.borderwidth + 'px');
@@ -348,10 +346,9 @@ function drawGrip(sliderGroup: any, gd: GraphDiv, sliderOpts: any) {
 
 function drawLabel(item: any, data: any, sliderOpts: any) {
     const text = Lib.ensureSingle(item, 'text', constants.labelClass, function(s: any) {
-        s.attr({
-            'text-anchor': 'middle',
-            'data-notex': 1
-        });
+        s
+            .attr('text-anchor', 'middle')
+            .attr('data-notex', 1);
     });
 
     let tx = data.step.label;
@@ -518,17 +515,16 @@ function drawTicks(sliderGroup: any, sliderOpts: any) {
 
     tick.exit().remove();
 
-    tick.attr({
-        width: sliderOpts.tickwidth + 'px',
-        'shape-rendering': 'crispEdges'
-    });
+    tick
+        .attr('width', sliderOpts.tickwidth + 'px')
+        .attr('shape-rendering', 'crispEdges');
 
     tick.each(function(this: any, d: any, i: any) {
         const isMajor = i % dims.labelStride === 0;
         const item = select(this);
 
         item
-            .attr({height: isMajor ? sliderOpts.ticklen : sliderOpts.minorticklen})
+            .attr('height', isMajor ? sliderOpts.ticklen : sliderOpts.minorticklen)
             .call(Color.fill, isMajor ? sliderOpts.tickcolor : sliderOpts.tickcolor);
 
         setTranslate(item,
@@ -600,10 +596,9 @@ function drawTouchRect(sliderGroup: any, gd: GraphDiv, sliderOpts: any) {
             .style('pointer-events', 'all');
     });
 
-    rect.attr({
-        width: dims.inputAreaLength,
-        height: Math.max(dims.inputAreaWidth, constants.tickOffset + sliderOpts.ticklen + dims.labelHeight)
-    })
+    rect
+        .attr('width', dims.inputAreaLength)
+        .attr('height', Math.max(dims.inputAreaWidth, constants.tickOffset + sliderOpts.ticklen + dims.labelHeight))
         .call(Color.fill, sliderOpts.bgcolor)
         .attr('opacity', 0);
 
@@ -615,13 +610,12 @@ function drawRail(sliderGroup: any, sliderOpts: any) {
     const computedLength = dims.inputAreaLength - constants.railInset * 2;
     const rect = Lib.ensureSingle(sliderGroup, 'rect', constants.railRectClass);
 
-    rect.attr({
-        width: computedLength,
-        height: constants.railWidth,
-        rx: constants.railRadius,
-        ry: constants.railRadius,
-        'shape-rendering': 'crispEdges'
-    })
+    rect
+        .attr('width', computedLength)
+        .attr('height', constants.railWidth)
+        .attr('rx', constants.railRadius)
+        .attr('ry', constants.railRadius)
+        .attr('shape-rendering', 'crispEdges')
     .call(Color.stroke, sliderOpts.bordercolor)
     .call(Color.fill, sliderOpts.bgcolor)
     .style('stroke-width', sliderOpts.borderwidth + 'px');

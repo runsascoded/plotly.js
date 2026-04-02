@@ -1047,7 +1047,8 @@ function makeDragBox(gd: GraphDiv, plotinfo: PlotInfo, x?: any, y?: any, w?: any
 function makeDragger(plotinfo?: any, nodeName?: any, dragClass?: any, cursor?: any): any {
     const dragger3 = ensureSingle(plotinfo.draglayer, nodeName, dragClass, function(s: any) {
         s.classed('drag', true)
-            .style({fill: 'transparent', 'stroke-width': 0})
+            .style('fill', 'transparent')
+            .style('stroke-width', 0)
             .attr('data-subplot', plotinfo.id);
     });
 
@@ -1167,10 +1168,8 @@ function getDragCursor(nsew?: any, dragmode?: any, isMainDrag?: any): any {
 function makeZoombox(zoomlayer?: any, lum?: any, xs?: any, ys?: any, path0?: any): any {
     return zoomlayer.append('path')
         .attr('class', 'zoombox')
-        .style({
-            fill: lum > 0.2 ? 'rgba(0,0,0,0)' : 'rgba(255,255,255,0)',
-            'stroke-width': 0
-        })
+        .style('fill', lum > 0.2 ? 'rgba(0,0,0,0)' : 'rgba(255,255,255,0)')
+        .style('stroke-width', 0)
         .attr('transform', strTranslate(xs, ys))
         .attr('d', path0 + 'Z');
 }
@@ -1178,12 +1177,10 @@ function makeZoombox(zoomlayer?: any, lum?: any, xs?: any, ys?: any, path0?: any
 function makeCorners(zoomlayer?: any, xs?: any, ys?: any): any {
     return zoomlayer.append('path')
         .attr('class', 'zoombox-corners')
-        .style({
-            fill: Color.background,
-            stroke: Color.defaultLine,
-            'stroke-width': 1,
-            opacity: 0
-        })
+        .style('fill', Color.background)
+        .style('stroke', Color.defaultLine)
+        .style('stroke-width', 1)
+        .style('opacity', 0)
         .attr('transform', strTranslate(xs, ys))
         .attr('d', 'M0,0Z');
 }

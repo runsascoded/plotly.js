@@ -99,9 +99,7 @@ function drawOne(gd: GraphDiv, index: any) {
             if(isActiveSelection) {
                 const editHelpers = arrayEditor(gd.layout, 'selections', options);
 
-                path.style({
-                    cursor: 'move',
-                });
+                path.style('cursor', 'move');
 
                 const dragOptions = {
                     element: path.node(),

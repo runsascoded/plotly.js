@@ -34,10 +34,8 @@ function style(gd: GraphDiv, cd?: any[], sel?: any): any {
         } else {
             styleBox(allBoxes, lineWidth, trace.line.color, trace.fillcolor);
             el.selectAll('path.mean')
-                .style({
-                    'stroke-width': lineWidth,
-                    'stroke-dasharray': (2 * lineWidth) + 'px,' + lineWidth + 'px'
-                })
+                .style('stroke-width', lineWidth)
+                .style('stroke-dasharray', (2 * lineWidth) + 'px,' + lineWidth + 'px')
                 .call(Color.stroke, trace.line.color);
 
             const pts = el.selectAll('path.point');

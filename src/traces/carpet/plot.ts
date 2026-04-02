@@ -136,10 +136,8 @@ function drawAxisLabels(gd: any, xaxis: any, yaxis: any, trace: any, t: any, lay
         const direction = (label.endAnchor ? -1 : 1) * orientation.flip;
 
         const labelEl = select(this)
-            .attr({
-                'text-anchor': direction > 0 ? 'start' : 'end',
-                'data-notex': 1
-            })
+            .attr('text-anchor', direction > 0 ? 'start' : 'end')
+            .attr('data-notex', 1)
             .call(font, label.font)
             .text(label.text)
             .call(svgTextUtils.convertToTspans, gd);

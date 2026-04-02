@@ -116,7 +116,7 @@ export default function drawLabel(gd: GraphDiv, index: any, options: any, shapeG
 
     // Do an initial render so we can get the text bounding box height
     labelText.call(function (s: any) {
-        s.call(drawingFont, font).attr({});
+        s.call(drawingFont, font);
         svgTextUtils.convertToTspans(s, gd);
         return s;
     });
@@ -131,16 +131,14 @@ export default function drawLabel(gd: GraphDiv, index: any, options: any, shapeG
 
     // Update (x,y) position, xanchor, and angle
     labelText
-        .attr({
-            'text-anchor': ({
+        .attr('text-anchor', ({
                 left: 'start',
                 center: 'middle',
                 right: 'end'
-            } as any)[xanchor],
-            y: texty,
-            x: textx,
-            transform: 'rotate(' + textangle + ',' + textx + ',' + texty + ')'
-        })
+            } as any)[xanchor])
+        .attr('y', texty)
+        .attr('x', textx)
+        .attr('transform', 'rotate(' + textangle + ',' + textx + ',' + texty + ')')
         .call(svgTextUtils.positionText, textx, texty);
 }
 

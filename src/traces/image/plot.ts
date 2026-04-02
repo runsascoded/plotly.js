@@ -123,10 +123,9 @@ export default function plot(gd: GraphDiv, plotinfo: any, cdimage: any[], imageL
         const image3 = plotGroup.selectAll('image')
             .data([cd]);
 
-        image3.enter().append('svg:image').attr({
-            xmlns: xmlnsNamespaces.svg,
-            preserveAspectRatio: 'none'
-        });
+        image3.enter().append('svg:image')
+            .attr('xmlns', xmlnsNamespaces.svg)
+            .attr('preserveAspectRatio', 'none');
 
         image3.exit().remove();
 
@@ -210,13 +209,12 @@ export default function plot(gd: GraphDiv, plotinfo: any, cdimage: any[], imageL
                 }
             }
 
-            image3.attr({
-                'xlink:href': href,
-                height: imageHeight,
-                width: imageWidth,
-                x: left,
-                y: top
-            });
+            image3
+                .attr('xlink:href', href)
+                .attr('height', imageHeight)
+                .attr('width', imageWidth)
+                .attr('x', left)
+                .attr('y', top);
         });
 
         gd._promises.push(p);

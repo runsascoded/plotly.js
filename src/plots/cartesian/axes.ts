@@ -2344,12 +2344,11 @@ axes.makeClipPaths = function(gd?: any) {
     axClips.exit().remove();
 
     axClips.each(function(this: any, d: any) {
-        select(this).select('rect').attr({
-            x: d.x._offset || 0,
-            y: d.y._offset || 0,
-            width: d.x._length || 1,
-            height: d.y._length || 1
-        });
+        select(this).select('rect')
+            .attr('x', d.x._offset || 0)
+            .attr('y', d.y._offset || 0)
+            .attr('width', d.x._length || 1)
+            .attr('height', d.y._length || 1);
     });
 };
 
@@ -3683,10 +3682,9 @@ axes.drawLabels = function(gd?: any, ax?: any, opts?: any) {
 
             if(mathjaxGroup.empty()) {
                 const thisText = thisLabel.select('text');
-                thisText.attr({
-                    transform: transform,
-                    'text-anchor': anchor
-                });
+                thisText
+                    .attr('transform', transform)
+                    .attr('text-anchor', anchor);
 
                 thisText.style('display', null); // visible
 

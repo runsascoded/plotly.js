@@ -178,14 +178,13 @@ export default function draw(gd: GraphDiv) {
                 break;
         }
 
-        thisImage.attr({
-            x: xPos,
-            y: yPos,
-            width: width,
-            height: height,
-            preserveAspectRatio: sizing,
-            opacity: d.opacity
-        });
+        thisImage
+            .attr('x', xPos)
+            .attr('y', yPos)
+            .attr('width', width)
+            .attr('height', height)
+            .attr('preserveAspectRatio', sizing)
+            .attr('opacity', d.opacity);
 
         // Set proper clipping on images
         const xId = xa && (Axes.getRefType(d.xref) !== 'domain') ? xa._id : '';

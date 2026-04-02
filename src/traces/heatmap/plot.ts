@@ -350,18 +350,16 @@ export default function(gd: any, plotinfo: any, cdheatmaps: any, heatmapLayer: a
 
         const image3 = plotGroup.selectAll('image').data(cd);
 
-        image3.enter().append('svg:image').attr({
-            xmlns: xmlnsNamespaces.svg,
-            preserveAspectRatio: 'none'
-        });
+        image3.enter().append('svg:image')
+            .attr('xmlns', xmlnsNamespaces.svg)
+            .attr('preserveAspectRatio', 'none');
 
-        image3.attr({
-            height: imageHeight,
-            width: imageWidth,
-            x: left,
-            y: top,
-            'xlink:href': canvas.toDataURL('image/png')
-        });
+        image3
+            .attr('height', imageHeight)
+            .attr('width', imageWidth)
+            .attr('x', left)
+            .attr('y', top)
+            .attr('xlink:href', canvas.toDataURL('image/png'));
 
         if (drawingMethod === 'fast' && !zsmooth) {
             image3.attr('style', PIXELATED_IMAGE_STYLE);

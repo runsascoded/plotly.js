@@ -92,15 +92,16 @@ color.contrast = function(cstr: string, lightAmount?: number, darkAmount?: numbe
 
 color.stroke = function(s: any, c: string): void {
     const tc = tinycolor(c);
-    s.style({stroke: color.tinyRGB(tc), 'stroke-opacity': tc.getAlpha()});
+    s
+        .style('stroke', color.tinyRGB(tc))
+        .style('stroke-opacity', tc.getAlpha());
 };
 
 color.fill = function(s: any, c: string): void {
     const tc = tinycolor(c);
-    s.style({
-        fill: color.tinyRGB(tc),
-        'fill-opacity': tc.getAlpha()
-    });
+    s
+        .style('fill', color.tinyRGB(tc))
+        .style('fill-opacity', tc.getAlpha());
 };
 
 // search container for colors with the deprecated rgb(fractions) format

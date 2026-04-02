@@ -393,11 +393,10 @@ function setPixelRange(rangeSlider: any, gd: GraphDiv, axisOpts: any, opts: any,
 
 function drawBg(rangeSlider: any, gd: GraphDiv, axisOpts: any, opts: any) {
     const bg = Lib.ensureSingle(rangeSlider, 'rect', constants.bgClassName, function(s: any) {
-        s.attr({
-            x: 0,
-            y: 0,
-            'shape-rendering': 'crispEdges'
-        });
+        s
+            .attr('x', 0)
+            .attr('y', 0)
+            .attr('shape-rendering', 'crispEdges');
     });
 
     const borderCorrect = (opts.borderwidth % 2) === 0 ?
@@ -407,12 +406,11 @@ function drawBg(rangeSlider: any, gd: GraphDiv, axisOpts: any, opts: any) {
     const offsetShift = -opts._offsetShift;
     const lw = crispRound(gd, opts.borderwidth);
 
-    bg.attr({
-        width: opts._width + borderCorrect,
-        height: opts._height + borderCorrect,
-        transform: strTranslate(offsetShift, offsetShift),
-        'stroke-width': lw
-    })
+    bg
+        .attr('width', opts._width + borderCorrect)
+        .attr('height', opts._height + borderCorrect)
+        .attr('transform', strTranslate(offsetShift, offsetShift))
+        .attr('stroke-width', lw)
     .call(Color.stroke, opts.bordercolor)
     .call(Color.fill, opts.bgcolor);
 }
@@ -421,13 +419,14 @@ function addClipPath(rangeSlider: any, gd: GraphDiv, axisOpts: any, opts: any) {
     const fullLayout = gd._fullLayout;
 
     const clipPath = Lib.ensureSingleById(fullLayout._topdefs, 'clipPath', opts._clipId, function(s: any) {
-        s.append('rect').attr({ x: 0, y: 0 });
+        s.append('rect')
+            .attr('x', 0)
+            .attr('y', 0);
     });
 
-    clipPath.select('rect').attr({
-        width: opts._width,
-        height: opts._height
-    });
+    clipPath.select('rect')
+        .attr('width', opts._width)
+        .attr('height', opts._height);
 }
 
 function drawRangePlot(rangeSlider: any, gd: GraphDiv, axisOpts: any, opts: any) {
@@ -530,11 +529,10 @@ function filterRangePlotCalcData(calcData: any, subplotId: any) {
 
 function drawMasks(rangeSlider: any, gd: GraphDiv, axisOpts: any, opts: any, oppAxisRangeOpts: any) {
     const maskMin = Lib.ensureSingle(rangeSlider, 'rect', constants.maskMinClassName, function(s: any) {
-        s.attr({
-            x: 0,
-            y: 0,
-            'shape-rendering': 'crispEdges'
-        });
+        s
+            .attr('x', 0)
+            .attr('y', 0)
+            .attr('shape-rendering', 'crispEdges');
     });
 
     maskMin
@@ -542,10 +540,9 @@ function drawMasks(rangeSlider: any, gd: GraphDiv, axisOpts: any, opts: any, opp
         .call(Color.fill, constants.maskColor);
 
     const maskMax = Lib.ensureSingle(rangeSlider, 'rect', constants.maskMaxClassName, function(s: any) {
-        s.attr({
-            y: 0,
-            'shape-rendering': 'crispEdges'
-        });
+        s
+            .attr('y', 0)
+            .attr('shape-rendering', 'crispEdges');
     });
 
     maskMax
@@ -555,10 +552,9 @@ function drawMasks(rangeSlider: any, gd: GraphDiv, axisOpts: any, opts: any, opp
     // masks used for oppAxis zoom
     if(oppAxisRangeOpts.rangemode !== 'match') {
         const maskMinOppAxis = Lib.ensureSingle(rangeSlider, 'rect', constants.maskMinOppAxisClassName, function(s: any) {
-            s.attr({
-                y: 0,
-                'shape-rendering': 'crispEdges'
-            });
+            s
+                .attr('y', 0)
+                .attr('shape-rendering', 'crispEdges');
         });
 
         maskMinOppAxis
@@ -566,10 +562,9 @@ function drawMasks(rangeSlider: any, gd: GraphDiv, axisOpts: any, opts: any, opp
             .call(Color.fill, constants.maskOppAxisColor);
 
         const maskMaxOppAxis = Lib.ensureSingle(rangeSlider, 'rect', constants.maskMaxOppAxisClassName, function(s: any) {
-            s.attr({
-                y: 0,
-                'shape-rendering': 'crispEdges'
-            });
+            s
+                .attr('y', 0)
+                .attr('shape-rendering', 'crispEdges');
         });
 
         maskMaxOppAxis
@@ -583,17 +578,15 @@ function drawSlideBox(rangeSlider: any, gd: GraphDiv, axisOpts: any, opts: any) 
     if(gd._context.staticPlot) return;
 
     const slideBox = Lib.ensureSingle(rangeSlider, 'rect', constants.slideBoxClassName, function(s: any) {
-        s.attr({
-            y: 0,
-            cursor: constants.slideBoxCursor,
-            'shape-rendering': 'crispEdges'
-        });
+        s
+            .attr('y', 0)
+            .attr('cursor', constants.slideBoxCursor)
+            .attr('shape-rendering', 'crispEdges');
     });
 
-    slideBox.attr({
-        height: opts._height,
-        fill: constants.slideBoxFill
-    });
+    slideBox
+        .attr('height', opts._height)
+        .attr('fill', constants.slideBoxFill);
 }
 
 function drawGrabbers(rangeSlider: any, gd: GraphDiv, axisOpts: any, opts: any) {

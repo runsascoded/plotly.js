@@ -117,12 +117,11 @@ export function addLinks(gd?: any): void {
     const fullLayout = gd._fullLayout;
 
     const linkContainer = ensureSingle(fullLayout._paper, 'text', 'js-plot-link-container', function(s: any) {
-        s.style({
-            'font-family': '"Open Sans", Arial, sans-serif',
-            'font-size': '12px',
-            fill: Color.defaultLine,
-            'pointer-events': 'all'
-        })
+        s
+            .style('font-family', '"Open Sans", Arial, sans-serif')
+            .style('font-size', '12px')
+            .style('fill', Color.defaultLine)
+            .style('pointer-events', 'all')
         .each(function(this: any) {
             const links = select(this);
             links.append('tspan').classed('js-link-to-tool', true);
@@ -170,11 +169,9 @@ export function addLinks(gd?: any): void {
 function positionPlayWithData(gd?: any, container?: any): void {
     container.text('');
     const link = container.append('a')
-        .attr({
-            'xlink:xlink:href': '#',
-            class: 'link--impt link--embedview',
-            'font-weight': 'bold'
-        })
+        .attr('xlink:xlink:href', '#')
+        .attr('class', 'link--impt link--embedview')
+        .attr('font-weight', 'bold')
         .text(gd._context.linkText + ' ' + String.fromCharCode(187));
 
     if(gd._context.sendData) {
@@ -184,10 +181,9 @@ function positionPlayWithData(gd?: any, container?: any): void {
     } else {
         const path: any = window.location.pathname.split('/');
         const query = window.location.search;
-        link.attr({
-            'xlink:xlink:show': 'new',
-            'xlink:xlink:href': '/' + path[2].split('.')[0] + '/' + path[1] + query
-        });
+        link
+            .attr('xlink:xlink:show', 'new')
+            .attr('xlink:xlink:href', '/' + path[2].split('.')[0] + '/' + path[1] + query);
     }
 }
 
@@ -204,18 +200,14 @@ export function sendDataToCloud(gd?: any): boolean {
 
     const hiddenform = hiddenformDiv
         .append('form')
-        .attr({
-            action: baseUrl + '/external',
-            method: 'post',
-            target: '_blank'
-        });
+        .attr('action', baseUrl + '/external')
+        .attr('method', 'post')
+        .attr('target', '_blank');
 
     const hiddenformInput = hiddenform
         .append('input')
-        .attr({
-            type: 'text',
-            name: 'data'
-        });
+        .attr('type', 'text')
+        .attr('name', 'data');
 
     hiddenformInput.node().value = graphJson(gd, false, 'keepdata');
     hiddenform.node().submit();

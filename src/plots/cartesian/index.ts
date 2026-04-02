@@ -730,15 +730,14 @@ export const toSVG = function(gd?: any): any {
         const imageData = canvas.toDataURL('image/png');
         const image = imageRoot.append('svg:image');
 
-        image.attr({
-            xmlns: xmlnsNamespaces.svg,
-            'xlink:href': imageData,
-            preserveAspectRatio: 'none',
-            x: 0,
-            y: 0,
-            width: canvas.style.width,
-            height: canvas.style.height
-        });
+        image
+            .attr('xmlns', xmlnsNamespaces.svg)
+            .attr('xlink:href', imageData)
+            .attr('preserveAspectRatio', 'none')
+            .attr('x', 0)
+            .attr('y', 0)
+            .attr('width', canvas.style.width)
+            .attr('height', canvas.style.height);
     }
 
     canvases.each(canvasToImage);

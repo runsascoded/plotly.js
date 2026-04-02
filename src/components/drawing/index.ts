@@ -169,10 +169,9 @@ export function dashLine(s: any, dash: string, lineWidth: number): void {
 
     dash = dashStyle(dash, lineWidth);
 
-    s.style({
-        'stroke-dasharray': dash,
-        'stroke-width': lineWidth + 'px'
-    });
+    s
+        .style('stroke-dasharray', dash)
+        .style('stroke-width', lineWidth + 'px');
 }
 
 export function dashStyle(dash: string, lineWidth: number): string {
@@ -449,11 +448,10 @@ function gradientWithBounds(sel: any, gd: GraphDiv, gradientID: string, type: st
 
             stops.each(function (this: any, d: any) {
                 const tc = tinycolor(d[1]);
-                select(this).attr({
-                    offset: d[0] + '%',
-                    'stop-color': Color.tinyRGB(tc),
-                    'stop-opacity': tc.getAlpha()
-                });
+                select(this)
+                    .attr('offset', d[0] + '%')
+                    .attr('stop-color', Color.tinyRGB(tc))
+                    .attr('stop-opacity', tc.getAlpha());
             });
         });
 
@@ -725,13 +723,12 @@ export function pattern(
         .each(function (this: any) {
             const el = select(this);
 
-            el.attr({
-                id: fullID,
-                width: width + 'px',
-                height: height + 'px',
-                patternUnits: 'userSpaceOnUse',
-                patternTransform: isLegend ? 'scale(0.8)' : ''
-            });
+            el
+                .attr('id', fullID)
+                .attr('width', width + 'px')
+                .attr('height', height + 'px')
+                .attr('patternUnits', 'userSpaceOnUse')
+                .attr('patternTransform', isLegend ? 'scale(0.8)' : '');
 
             if (bgcolor) {
                 const bgC = tinycolor(bgcolor);
@@ -743,12 +740,10 @@ export function pattern(
                 rects
                     .enter()
                     .append('rect')
-                    .attr({
-                        width: width + 'px',
-                        height: height + 'px',
-                        fill: bgRGB,
-                        'fill-opacity': bgAlpha
-                    });
+                    .attr('width', width + 'px')
+                    .attr('height', height + 'px')
+                    .attr('fill', bgRGB)
+                    .attr('fill-opacity', bgAlpha);
             }
 
             const patterns = el.selectAll(patternTag).data([0]);
@@ -865,10 +860,9 @@ export function singlePointStyle(d: any, sel: any, trace: FullTrace, fns: any, g
     }
 
     if (d.om) {
-        sel.call(Color.stroke, fillColor).style({
-            'stroke-width': (lineWidth || 1) + 'px',
-            fill: 'none'
-        });
+        sel.call(Color.stroke, fillColor)
+            .style('stroke-width', (lineWidth || 1) + 'px')
+            .style('fill', 'none');
     } else {
         sel.style('stroke-width', (d.isBlank ? 0 : lineWidth) + 'px');
 
@@ -1398,21 +1392,20 @@ export { applyBackoff };
 
 export function makeTester(): void {
     const _tester = ensureSingleById(select('body'), 'svg', 'js-plotly-tester', function (s: any) {
-        s.attr(xmlnsNamespaces.svgAttrs).style({
-            position: 'absolute',
-            left: '-10000px',
-            top: '-10000px',
-            width: '9000px',
-            height: '9000px',
-            'z-index': '1'
-        });
+        s.attr('xmlns', xmlnsNamespaces.svg)
+            .attr('xmlns:xlink', xmlnsNamespaces.xlink)
+            .style('position', 'absolute')
+            .style('left', '-10000px')
+            .style('top', '-10000px')
+            .style('width', '9000px')
+            .style('height', '9000px')
+            .style('z-index', '1');
     });
 
     const _testref = ensureSingle(_tester, 'path', 'js-reference-point', function (s: any) {
-        s.attr('d', 'M0,0H1V1H0Z').style({
-            'stroke-width': 0,
-            fill: 'black'
-        });
+        s.attr('d', 'M0,0H1V1H0Z')
+            .style('stroke-width', 0)
+            .style('fill', 'black');
     });
 
     tester = _tester;

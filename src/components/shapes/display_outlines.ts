@@ -244,12 +244,10 @@ export default function displayOutlines(polygons: any, outlines: any, dragOption
                 const vertex = g.append(rectSelection ? 'rect' : 'circle')
                     .attr('data-i', i)
                     .attr('data-j', j)
-                    .style({
-                        fill: Color.background,
-                        stroke: Color.defaultLine,
-                        'stroke-width': 1,
-                        'shape-rendering': 'crispEdges',
-                    });
+                    .style('fill', Color.background)
+                    .style('stroke', Color.defaultLine)
+                    .style('stroke-width', 1)
+                    .style('shape-rendering', 'crispEdges');
 
                 if(rectSelection) {
                     // convert a vertex controller to an edge controller for rect selections

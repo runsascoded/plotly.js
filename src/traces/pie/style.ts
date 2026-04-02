@@ -13,7 +13,7 @@ export default function style(gd: GraphDiv): void {
         const trace = cd0.trace;
         const traceSelection = select(this);
 
-        traceSelection.style({opacity: trace.opacity});
+        traceSelection.style('opacity', trace.opacity);
 
         traceSelection.selectAll('path.surface').each(function(this: any, pt: any) {
             select(this).call(styleOne, pt, trace, gd);

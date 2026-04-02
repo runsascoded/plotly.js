@@ -905,7 +905,8 @@ export default function(gd: any, svg: any, calcData: any, layout: any, callbacks
           .attr('x', d.translateX)
           .attr('y', d.translateY)
           .classed('bgsankey', true)
-          .style({fill: 'transparent', 'stroke-width': 0});
+          .style('fill', 'transparent')
+          .style('stroke-width', 0);
     });
 
     sankey.transition()

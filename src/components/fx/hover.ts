@@ -962,7 +962,7 @@ function createHoverText(hoverData: any[], opts: any): any {
     commonLabel.each(function (this: any) {
         const label = select(this);
         const lpath = ensureSingle(label, 'path', '', function (s: any) {
-            s.style({ 'stroke-width': '1px' });
+            s.style('stroke-width', '1px');
         });
         const ltext = ensureSingle(label, 'text', '', function (s: any) {
             // prohibit tex interpretation until we can handle
@@ -986,10 +986,9 @@ function createHoverText(hoverData: any[], opts: any): any {
             color: commonLabelOptsFont.color || contrastColor
         };
 
-        lpath.style({
-            fill: commonBgColor,
-            stroke: commonStroke
-        });
+        lpath
+            .style('fill', commonBgColor)
+            .style('stroke', commonStroke);
 
         ltext
             .text(t0)
@@ -1477,10 +1476,9 @@ function createHoverText(hoverData: any[], opts: any): any {
             g.select('rect').remove();
         }
 
-        g.select('path').style({
-            fill: numsColor,
-            stroke: contrastColor
-        });
+        g.select('path')
+            .style('fill', numsColor)
+            .style('stroke', contrastColor);
 
         let htx = d.xa._offset + (d.x0 + d.x1) / 2;
         let hty = d.ya._offset + (d.y0 + d.y1) / 2;
@@ -2194,29 +2192,25 @@ function createSpikelines(gd: GraphDiv, closestPoints: any, opts: any): void {
             // Foreground horizontal line (to y-axis)
             container
                 .insert('line', ':first-child')
-                .attr({
-                    x1: xBase,
-                    x2: xEndSpike,
-                    y1: hLinePointY,
-                    y2: hLinePointY,
-                    'stroke-width': yThickness,
-                    stroke: yColor,
-                    'stroke-dasharray': dashStyle(ya.spikedash, yThickness)
-                })
+                .attr('x1', xBase)
+                .attr('x2', xEndSpike)
+                .attr('y1', hLinePointY)
+                .attr('y2', hLinePointY)
+                .attr('stroke-width', yThickness)
+                .attr('stroke', yColor)
+                .attr('stroke-dasharray', dashStyle(ya.spikedash, yThickness))
                 .classed('spikeline', true)
                 .classed('crisp', true);
 
             // Background horizontal Line (to y-axis)
             container
                 .insert('line', ':first-child')
-                .attr({
-                    x1: xBase,
-                    x2: xEndSpike,
-                    y1: hLinePointY,
-                    y2: hLinePointY,
-                    'stroke-width': yThickness + 2,
-                    stroke: contrastColor
-                })
+                .attr('x1', xBase)
+                .attr('x2', xEndSpike)
+                .attr('y1', hLinePointY)
+                .attr('y2', hLinePointY)
+                .attr('stroke-width', yThickness + 2)
+                .attr('stroke', contrastColor)
                 .classed('spikeline', true)
                 .classed('crisp', true);
         }
@@ -2224,12 +2218,10 @@ function createSpikelines(gd: GraphDiv, closestPoints: any, opts: any): void {
         if (yMode.indexOf('marker') !== -1) {
             container
                 .insert('circle', ':first-child')
-                .attr({
-                    cx: xEdge + (ya.side !== 'right' ? yThickness : -yThickness),
-                    cy: hLinePointY,
-                    r: yThickness,
-                    fill: yColor
-                })
+                .attr('cx', xEdge + (ya.side !== 'right' ? yThickness : -yThickness))
+                .attr('cy', hLinePointY)
+                .attr('r', yThickness)
+                .attr('fill', yColor)
                 .classed('spikeline', true);
         }
     }
@@ -2278,29 +2270,25 @@ function createSpikelines(gd: GraphDiv, closestPoints: any, opts: any): void {
             // Foreground vertical line (to x-axis)
             container
                 .insert('line', ':first-child')
-                .attr({
-                    x1: vLinePointX,
-                    x2: vLinePointX,
-                    y1: yBase,
-                    y2: yEndSpike,
-                    'stroke-width': xThickness,
-                    stroke: xColor,
-                    'stroke-dasharray': dashStyle(xa.spikedash, xThickness)
-                })
+                .attr('x1', vLinePointX)
+                .attr('x2', vLinePointX)
+                .attr('y1', yBase)
+                .attr('y2', yEndSpike)
+                .attr('stroke-width', xThickness)
+                .attr('stroke', xColor)
+                .attr('stroke-dasharray', dashStyle(xa.spikedash, xThickness))
                 .classed('spikeline', true)
                 .classed('crisp', true);
 
             // Background vertical line (to x-axis)
             container
                 .insert('line', ':first-child')
-                .attr({
-                    x1: vLinePointX,
-                    x2: vLinePointX,
-                    y1: yBase,
-                    y2: yEndSpike,
-                    'stroke-width': xThickness + 2,
-                    stroke: contrastColor
-                })
+                .attr('x1', vLinePointX)
+                .attr('x2', vLinePointX)
+                .attr('y1', yBase)
+                .attr('y2', yEndSpike)
+                .attr('stroke-width', xThickness + 2)
+                .attr('stroke', contrastColor)
                 .classed('spikeline', true)
                 .classed('crisp', true);
         }
@@ -2309,12 +2297,10 @@ function createSpikelines(gd: GraphDiv, closestPoints: any, opts: any): void {
         if (xMode.indexOf('marker') !== -1) {
             container
                 .insert('circle', ':first-child')
-                .attr({
-                    cx: vLinePointX,
-                    cy: yEdge - (xa.side !== 'top' ? xThickness : -xThickness),
-                    r: xThickness,
-                    fill: xColor
-                })
+                .attr('cx', vLinePointX)
+                .attr('cy', yEdge - (xa.side !== 'top' ? xThickness : -xThickness))
+                .attr('r', xThickness)
+                .attr('fill', xColor)
                 .classed('spikeline', true);
         }
     }

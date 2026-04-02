@@ -73,7 +73,7 @@ function plot(gd: GraphDiv, cdModule: any[]): any {
                     .enter()
                     .append('path')
                     .classed('surface', true)
-                    .style({ 'pointer-events': isStatic ? 'none' : 'all' });
+                    .style('pointer-events', isStatic ? 'none' : 'all');
 
                 sliceTop.call(attachFxHandlers, gd, cd);
 
@@ -180,11 +180,9 @@ function plot(gd: GraphDiv, cdModule: any[]): any {
 
                     sliceText
                         .text(pt.text)
-                        .attr({
-                            class: 'slicetext',
-                            transform: '',
-                            'text-anchor': 'middle'
-                        })
+                        .attr('class', 'slicetext')
+                        .attr('transform', '')
+                        .attr('text-anchor', 'middle')
                         .call(drawingFont, font)
                         .call(svgTextUtils.convertToTspans, gd);
 
@@ -252,11 +250,9 @@ function plot(gd: GraphDiv, cdModule: any[]): any {
 
                 titleText
                     .text(txt)
-                    .attr({
-                        class: 'titletext',
-                        transform: '',
-                        'text-anchor': 'middle'
-                    })
+                    .attr('class', 'titletext')
+                    .attr('transform', '')
+                    .attr('text-anchor', 'middle')
                     .call(drawingFont, trace.title.font)
                     .call(svgTextUtils.convertToTspans, gd);
 
@@ -367,11 +363,9 @@ function plotTextLines(slices: any, trace: FullTrace): void {
 
         Lib.ensureSingle(sliceTop, 'path', 'textline')
             .call(Color.stroke, trace.outsidetextfont.color)
-            .attr({
-                'stroke-width': Math.min(2, trace.outsidetextfont.size / 8),
-                d: textLinePath,
-                fill: 'none'
-            });
+            .attr('stroke-width', Math.min(2, trace.outsidetextfont.size / 8))
+            .attr('d', textLinePath)
+            .attr('fill', 'none');
     });
 }
 

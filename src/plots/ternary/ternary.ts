@@ -596,21 +596,17 @@ proto.initInteractions = function() {
         zb = zoomLayer.append('path')
             .attr('class', 'zoombox')
             .attr('transform', strTranslate(_this.x0, _this.y0))
-            .style({
-                fill: lum > 0.2 ? 'rgba(0,0,0,0)' : 'rgba(255,255,255,0)',
-                'stroke-width': 0
-            })
+            .style('fill', lum > 0.2 ? 'rgba(0,0,0,0)' : 'rgba(255,255,255,0)')
+            .style('stroke-width', 0)
             .attr('d', path0);
 
         corners = zoomLayer.append('path')
             .attr('class', 'zoombox-corners')
             .attr('transform', strTranslate(_this.x0, _this.y0))
-            .style({
-                fill: Color.background,
-                stroke: Color.defaultLine,
-                'stroke-width': 1,
-                opacity: 0
-            })
+            .style('fill', Color.background)
+            .style('stroke', Color.defaultLine)
+            .style('stroke-width', 1)
+            .style('opacity', 0)
             .attr('d', 'M0,0Z');
 
         _this.clearOutline(gd);

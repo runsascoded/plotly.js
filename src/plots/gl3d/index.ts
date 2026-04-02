@@ -111,15 +111,14 @@ export const toSVG = function(gd: any) {
         const imageData = scene.toImage('png');
         const image = fullLayout._glimages.append('svg:image');
 
-        image.attr({
-            xmlns: xmlnsNamespaces.svg,
-            'xlink:href': imageData,
-            x: size.l + size.w * domain.x[0],
-            y: size.t + size.h * (1 - domain.y[1]),
-            width: size.w * (domain.x[1] - domain.x[0]),
-            height: size.h * (domain.y[1] - domain.y[0]),
-            preserveAspectRatio: 'none'
-        });
+        image
+            .attr('xmlns', xmlnsNamespaces.svg)
+            .attr('xlink:href', imageData)
+            .attr('x', size.l + size.w * domain.x[0])
+            .attr('y', size.t + size.h * (1 - domain.y[1]))
+            .attr('width', size.w * (domain.x[1] - domain.x[0]))
+            .attr('height', size.h * (domain.y[1] - domain.y[0]))
+            .attr('preserveAspectRatio', 'none');
 
         scene.destroy();
     }

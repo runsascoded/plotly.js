@@ -26,10 +26,9 @@ export default function draw(gd: GraphDiv) {
 
     selectors.exit().remove();
 
-    selectors.style({
-        cursor: 'pointer',
-        'pointer-events': 'all'
-    });
+    selectors
+        .style('cursor', 'pointer')
+        .style('pointer-events', 'all');
 
     selectors.each(function(this: any, d: any) {
         const selector = select(this);
@@ -111,10 +110,9 @@ function drawButtonRect(button: any, selectorLayout: any, d: any) {
         s.attr('shape-rendering', 'crispEdges');
     });
 
-    rect.attr({
-        rx: constants.rx,
-        ry: constants.ry
-    });
+    rect
+        .attr('rx', constants.rx)
+        .attr('ry', constants.ry);
 
     rect.call(Color.stroke, selectorLayout.bordercolor)
         .call(Color.fill, getFillColor(selectorLayout, d))
@@ -186,12 +184,11 @@ function reposition(gd: GraphDiv, buttons: any, opts: any, axName: any, selector
 
         button.attr('transform', strTranslate(borderWidth + width, borderWidth));
 
-        rect.attr({
-            x: 0,
-            y: 0,
-            width: wEff,
-            height: height
-        });
+        rect
+            .attr('x', 0)
+            .attr('y', 0)
+            .attr('width', wEff)
+            .attr('height', height);
 
         svgTextUtils.positionText(text, wEff / 2,
             height / 2 - ((tLines - 1) * tHeight / 2) + 3);

@@ -534,13 +534,11 @@ function appendBarText(gd: GraphDiv, plotinfo: any, bar: any, cd: any[], i: numb
     function appendTextNode(bar: any, text: any, textFont: any) {
         const textSelection = ensureSingle(bar, 'text')
             .text(text)
-            .attr({
-                class: 'bartext bartext-' + textPosition,
-                'text-anchor': 'middle',
-                // prohibit tex interpretation until we can handle
-                // tex and regular text together
-                'data-notex': 1
-            })
+            .attr('class', 'bartext bartext-' + textPosition)
+            .attr('text-anchor', 'middle')
+            // prohibit tex interpretation until we can handle
+            // tex and regular text together
+            .attr('data-notex', 1)
             .call(font, textFont)
             .call(svgTextUtils.convertToTspans, gd);
 

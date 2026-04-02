@@ -27,14 +27,12 @@ export const convertToTspans = function(_context: any, gd: GraphDiv, _callback?:
     parent.selectAll('svg.' + svgClass).remove();
     parent.selectAll('g.' + svgClass + '-group').remove();
     _context.style('display', null)
-        .attr({
-            // some callers use data-unformatted *from the <text> element* in 'cancel'
-            // so we need it here even if we're going to turn it into math
-            // these two (plus style and text-anchor attributes) form the key we're
-            // going to use for Drawing.bBox
-            'data-unformatted': str,
-            'data-math': 'N'
-        });
+        // some callers use data-unformatted *from the <text> element* in 'cancel'
+        // so we need it here even if we're going to turn it into math
+        // these two (plus style and text-anchor attributes) form the key we're
+        // going to use for Drawing.bBox
+        .attr('data-unformatted', str)
+        .attr('data-math', 'N');
 
     function showText(): void {
         if(!parent.empty()) {
@@ -78,11 +76,9 @@ export const convertToTspans = function(_context: any, gd: GraphDiv, _callback?:
 
                 const mathjaxGroup = parent.append('g')
                     .classed(svgClass + '-group', true)
-                    .attr({
-                        'pointer-events': 'none',
-                        'data-unformatted': str,
-                        'data-math': 'Y'
-                    });
+                    .attr('pointer-events', 'none')
+                    .attr('data-unformatted', str)
+                    .attr('data-math', 'Y');
 
                 mathjaxGroup.node().appendChild(newSvg.node());
 
@@ -95,16 +91,18 @@ export const convertToTspans = function(_context: any, gd: GraphDiv, _callback?:
                 const w0 = _svgBBox.width;
                 const h0 = _svgBBox.height;
 
-                newSvg.attr({
-                    class: svgClass,
-                    height: h0,
-                    preserveAspectRatio: 'xMinYMin meet'
-                })
-                .style({overflow: 'visible', 'pointer-events': 'none'});
+                newSvg
+                    .attr('class', svgClass)
+                    .attr('height', h0)
+                    .attr('preserveAspectRatio', 'xMinYMin meet')
+                .style('overflow', 'visible')
+                .style('pointer-events', 'none');
 
                 const fill = _context.node().style.fill || 'black';
                 const g = newSvg.select('g');
-                g.attr({fill: fill, stroke: fill});
+                g
+                    .attr('fill', fill)
+                    .attr('stroke', fill);
 
                 let bb = g.node().getBoundingClientRect();
                 let w = bb.width;
@@ -127,10 +125,8 @@ export const convertToTspans = function(_context: any, gd: GraphDiv, _callback?:
                 const dy = -textHeight / 4;
 
                 if(svgClass[0] === 'y') {
-                    mathjaxGroup.attr({
-                        transform: 'rotate(' + [-90, x, y] +
-                        ')' + strTranslate(-w / 2, dy - h / 2)
-                    });
+                    mathjaxGroup.attr('transform', 'rotate(' + [-90, x, y] +
+                        ')' + strTranslate(-w / 2, dy - h / 2));
                 } else if(svgClass[0] === 'l') {
                     y = dy - h / 2;
                 } else if(svgClass[0] === 'a' && svgClass.indexOf('atitle') !== 0) {
@@ -146,10 +142,9 @@ export const convertToTspans = function(_context: any, gd: GraphDiv, _callback?:
                     y = y + dy - h / 2;
                 }
 
-                newSvg.attr({
-                    x: x,
-                    y: y
-                });
+                newSvg
+                    .attr('x', x)
+                    .attr('y', y);
 
                 if(_callback) _callback.call(_context, mathjaxGroup);
                 resolve(mathjaxGroup);
@@ -235,12 +230,10 @@ function texToSVG(_texString: string, _config: any, _callback: any): void {
     const initiateMathJax = function() {
         const randomID = 'math-output-' + randstr({}, 64);
         tmpDiv = select('body').append('div')
-            .attr({id: randomID})
-            .style({
-                visibility: 'hidden',
-                position: 'absolute',
-                'font-size': _config.fontSize + 'px'
-            })
+            .attr('id', randomID)
+            .style('visibility', 'hidden')
+            .style('position', 'absolute')
+            .style('font-size', _config.fontSize + 'px')
             .text(cleanEscapesForTex(_texString));
 
         const tmpNode = tmpDiv.node();
@@ -557,10 +550,9 @@ function buildSVGText(containerNode: any, str: string): boolean {
         currentLine++;
 
         const lineNode = document.createElementNS(xmlnsNamespaces.svg, 'tspan');
-        select(lineNode).attr({
-            class: 'line',
-            dy: (currentLine * LINE_SPACING) + 'em'
-        });
+        select(lineNode)
+            .attr('class', 'line')
+            .attr('dy', (currentLine * LINE_SPACING) + 'em');
         containerNode.appendChild(lineNode);
 
         currentNode = lineNode;
@@ -808,7 +800,9 @@ export const positionText = function positionText(s: any, x?: number, y?: number
         const thisY = setOrGet('y', y);
 
         if(this.nodeName === 'text') {
-            text.selectAll('tspan.line').attr({x: thisX, y: thisY});
+            text.selectAll('tspan.line')
+                .attr('x', thisX)
+                .attr('y', thisY);
         }
     });
 };
@@ -851,11 +845,10 @@ function alignHTMLWith(_base: any, container: any, options: any): (this: any) =>
             y0 = transformedCoords[1];
         }
 
-        this.style({
-            top: y0 + 'px',
-            left: x0 + 'px',
-            'z-index': 1000
-        });
+        this
+            .style('top', y0 + 'px')
+            .style('left', x0 + 'px')
+            .style('z-index', 1000);
         return this;
     };
 }
@@ -878,20 +871,20 @@ export const makeEditable = function(context: any, options: any): any {
     const d = dispatch('edit', 'input', 'cancel');
     const handlerElement = _delegate || context;
 
-    context.style({'pointer-events': _delegate ? 'none' : 'all'});
+    context.style('pointer-events', _delegate ? 'none' : 'all');
 
     if(context.size() !== 1) throw new Error('boo');
 
     function handleClick(): void {
         appendEditable();
-        context.style({opacity: 0});
+        context.style('opacity', 0);
         // also hide any mathjax svg
         const svgClass = handlerElement.attr('class');
         let mathjaxClass: string;
         if(svgClass) mathjaxClass = '.' + svgClass.split(' ')[0] + '-math-group';
         else mathjaxClass = '[class*=-math-group]';
         if(mathjaxClass) {
-            select(context.node().parentNode).select(mathjaxClass).style({opacity: 0});
+            select(context.node().parentNode).select(mathjaxClass).style('opacity', 0);
         }
     }
 
@@ -916,31 +909,29 @@ export const makeEditable = function(context: any, options: any): any {
         if(initialText === undefined) initialText = context.attr('data-unformatted');
 
         div.classed('plugin-editable editable', true)
-            .style({
-                position: 'absolute',
-                'font-family': cStyle.fontFamily || 'Arial',
-                'font-size': fontSize,
-                color: options.fill || cStyle.fill || 'black',
-                opacity: 1,
-                'background-color': options.background || 'transparent',
-                outline: '#ffffff33 1px solid',
-                margin: [-fontSize / 8 + 1, 0, 0, -1].join('px ') + 'px',
-                padding: '0',
-                'box-sizing': 'border-box'
-            })
-            .attr({contenteditable: true})
+            .style('position', 'absolute')
+            .style('font-family', cStyle.fontFamily || 'Arial')
+            .style('font-size', fontSize)
+            .style('color', options.fill || cStyle.fill || 'black')
+            .style('opacity', 1)
+            .style('background-color', options.background || 'transparent')
+            .style('outline', '#ffffff33 1px solid')
+            .style('margin', [-fontSize / 8 + 1, 0, 0, -1].join('px ') + 'px')
+            .style('padding', '0')
+            .style('box-sizing', 'border-box')
+            .attr('contenteditable', true)
             .text(initialText)
             .call(alignHTMLWith(context, container, options))
             .on('blur', function(this: any, event: any) {
                 gd._editing = false;
                 context.text(this.textContent)
-                    .style({opacity: 1});
+                    .style('opacity', 1);
                 const svgClass = select(this).attr('class');
                 let mathjaxClass: string;
                 if(svgClass) mathjaxClass = '.' + svgClass.split(' ')[0] + '-math-group';
                 else mathjaxClass = '[class*=-math-group]';
                 if(mathjaxClass) {
-                    select(context.node().parentNode).select(mathjaxClass).style({opacity: 0});
+                    select(context.node().parentNode).select(mathjaxClass).style('opacity', 0);
                 }
                 const text = this.textContent;
                 select(this).transition().duration(0).remove();
@@ -958,9 +949,9 @@ export const makeEditable = function(context: any, options: any): any {
             .on('keyup', function(this: any, event: any) {
                 if(event.which === 27) {
                     gd._editing = false;
-                    context.style({opacity: 1});
+                    context.style('opacity', 1);
                     select(this)
-                        .style({opacity: 0})
+                        .style('opacity', 0)
                         .on('blur', function(event: any) { return false; })
                         .transition().remove();
                     d.call('cancel', context, this.textContent);

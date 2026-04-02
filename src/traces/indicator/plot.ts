@@ -753,7 +753,9 @@ function drawNumbers(gd: any, plotGroup: any, cd: any, opts: any) {
             };
         }
 
-        delta.attr({dx: dx, dy: dy});
+        delta
+            .attr('dx', dx)
+            .attr('dy', dy);
     }
 
     // Resize numbers to fit within space and position

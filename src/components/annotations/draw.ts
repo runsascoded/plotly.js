@@ -235,12 +235,10 @@ function drawRaw(gd: GraphDiv, options: any, index: any, subplotId: any, xa: Ful
 
     function textLayout(s: any) {
         s.call(font, font)
-        .attr({
-            'text-anchor': ({
+        .attr('text-anchor', ({
                 left: 'start',
                 right: 'end'
-            } as any)[options.align] || 'middle'
-        });
+            } as any)[options.align] || 'middle');
 
         svgTextUtils.convertToTspans(s, gd, drawGraphicalElements);
         return s;
@@ -250,11 +248,10 @@ function drawRaw(gd: GraphDiv, options: any, index: any, subplotId: any, xa: Ful
         // if the text has *only* a link, make the whole box into a link
         const anchor3 = annText.selectAll('a');
         if(anchor3.size() === 1 && anchor3.text() === annText.text()) {
-            const wholeLink = annTextGroupInner.insert('a', ':first-child').attr({
-                'xlink:xlink:href': anchor3.attr('xlink:href'),
-                'xlink:xlink:show': anchor3.attr('xlink:show')
-            })
-            .style({cursor: 'pointer'});
+            const wholeLink = annTextGroupInner.insert('a', ':first-child')
+                .attr('xlink:xlink:href', anchor3.attr('xlink:href'))
+                .attr('xlink:xlink:show', anchor3.attr('xlink:show'))
+            .style('cursor', 'pointer');
 
             wholeLink.node().appendChild(annTextBG.node());
         }
@@ -447,10 +444,9 @@ function drawRaw(gd: GraphDiv, options: any, index: any, subplotId: any, xa: Ful
         }
 
         if(hasMathjax) {
-            mathjaxGroup.select('svg').attr({
-                x: borderfull + xShift - 1,
-                y: borderfull + yShift
-            })
+            mathjaxGroup.select('svg')
+                .attr('x', borderfull + xShift - 1)
+                .attr('y', borderfull + yShift)
             .call(setClipUrl, isSizeConstrained ? annClipID : null, gd);
         } else {
             const texty = borderfull + yShift - anntextBB.top;
@@ -476,8 +472,8 @@ function drawRaw(gd: GraphDiv, options: any, index: any, subplotId: any, xa: Ful
          * because we needed that for autoranging anyway, so now whether
          * we have an arrow or not, we rotate about the text center.
          */
-        annTextGroup.attr({transform: 'rotate(' + textangle + ',' +
-                            annPosPx.x.text + ',' + annPosPx.y.text + ')'});
+        annTextGroup.attr('transform', 'rotate(' + textangle + ',' +
+                            annPosPx.x.text + ',' + annPosPx.y.text + ')');
 
         /*
          * add the arrow
@@ -544,7 +540,7 @@ function drawRaw(gd: GraphDiv, options: any, index: any, subplotId: any, xa: Ful
             const arrowSide = options.arrowside;
 
             const arrowGroup = annGroup.append('g')
-                .style({opacity: Color.opacity(arrowColor)})
+                .style('opacity', Color.opacity(arrowColor))
                 .classed('annotation-arrow-g', true);
 
             const arrow = arrowGroup.append('path')
@@ -568,10 +564,8 @@ function drawRaw(gd: GraphDiv, options: any, index: any, subplotId: any, xa: Ful
                     .classed('annotation-arrow', true)
                     .classed('anndrag', true)
                     .classed('cursor-move', true)
-                    .attr({
-                        d: 'M3,3H-3V-3H3ZM0,0L' + (tailX - arrowDragHeadX) + ',' + (tailY - arrowDragHeadY),
-                        transform: strTranslate(arrowDragHeadX, arrowDragHeadY)
-                    })
+                    .attr('d', 'M3,3H-3V-3H3ZM0,0L' + (tailX - arrowDragHeadX) + ',' + (tailY - arrowDragHeadY))
+                    .attr('transform', strTranslate(arrowDragHeadX, arrowDragHeadY))
                     .style('stroke-width', (strokewidth + 6) + 'px')
                     .call(Color.stroke, 'rgba(0,0,0,0)')
                     .call(Color.fill, 'rgba(0,0,0,0)');
@@ -618,10 +612,8 @@ function drawRaw(gd: GraphDiv, options: any, index: any, subplotId: any, xa: Ful
                         }
 
                         arrowGroup.attr('transform', strTranslate(dx, dy));
-                        annTextGroup.attr({
-                            transform: 'rotate(' + textangle + ',' +
-                                   xcenter + ',' + ycenter + ')'
-                        });
+                        annTextGroup.attr('transform', 'rotate(' + textangle + ',' +
+                                   xcenter + ',' + ycenter + ')');
                     },
                     doneFn: function() {
                         Registry.call('_guiRelayout', gd, getUpdateObj());
@@ -701,9 +693,7 @@ function drawRaw(gd: GraphDiv, options: any, index: any, subplotId: any, xa: Ful
                         }
                     } else return;
 
-                    annTextGroup.attr({
-                        transform: strTranslate(dx, dy) + baseTextTransform
-                    });
+                    annTextGroup.attr('transform', strTranslate(dx, dy) + baseTextTransform);
 
                     setCursor(annTextGroupInner, csr);
                 },

@@ -233,13 +233,11 @@ function _doPlot(gd?: any, data?: any, layout?: any, config?: any): any {
                 .attr('class', function (d?: any) {
                     return 'gl-canvas gl-canvas-' + d.key.replace('Layer', '');
                 })
-                .style({
-                    position: 'absolute',
-                    top: 0,
-                    left: 0,
-                    overflow: 'visible',
-                    'pointer-events': 'none'
-                });
+                .style('position', 'absolute')
+                .style('top', 0)
+                .style('left', 0)
+                .style('overflow', 'visible')
+                .style('pointer-events', 'none');
         }
 
         const plotGlPixelRatio = gd._context.plotGlPixelRatio;
@@ -3737,10 +3735,8 @@ function makePlotFramework(gd?: any): void {
         // the height of the plot container instead. However, the paper div's
         // children do not have any height, because they are all positioned
         // absolutely, and therefore take up no space.
-        .style({
-            width: '100%',
-            height: '100%'
-        });
+        .style('width', '100%')
+        .style('height', '100%');
 
     // Make the svg container
     fullLayout._paperdiv = fullLayout._container.selectAll('.svg-container').data([0]);
@@ -3781,7 +3777,9 @@ function makePlotFramework(gd?: any): void {
         fullLayout._uid = randstr(otherUids);
     }
 
-    fullLayout._paperdiv.selectAll('.main-svg').attr(xmlnsNamespaces.svgAttrs);
+    fullLayout._paperdiv.selectAll('.main-svg')
+        .attr('xmlns', xmlnsNamespaces.svg)
+        .attr('xmlns:xlink', xmlnsNamespaces.xlink);
 
     fullLayout._defs = fullLayout._paper.append('defs').attr('id', 'defs-' + fullLayout._uid);
 

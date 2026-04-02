@@ -120,12 +120,10 @@ function prepSelect(evt: any, startX: any, startY: any, dragOptions: any, mode: 
     outlines.enter()
         .append('path')
         .attr('class', 'select-outline select-outline-' + plotinfo.id)
-        .style({
-            opacity: isDrawMode ? newStyle.opacity / 2 : 1,
-            'stroke-dasharray': dashStyle(newStyle.line.dash, newStyle.line.width),
-            'stroke-width': newStyle.line.width + 'px',
-            'shape-rendering': 'crispEdges'
-        })
+        .style('opacity', isDrawMode ? newStyle.opacity / 2 : 1)
+        .style('stroke-dasharray', dashStyle(newStyle.line.dash, newStyle.line.width))
+        .style('stroke-width', newStyle.line.width + 'px')
+        .style('shape-rendering', 'crispEdges')
         .call(Color.stroke, strokeC)
         .call(Color.fill, fillC)
         .attr('fill-rule', 'evenodd')
@@ -135,11 +133,9 @@ function prepSelect(evt: any, startX: any, startY: any, dragOptions: any, mode: 
 
     const corners = zoomLayer.append('path')
         .attr('class', 'zoombox-corners')
-        .style({
-            fill: Color.background,
-            stroke: Color.defaultLine,
-            'stroke-width': 1
-        })
+        .style('fill', Color.background)
+        .style('stroke', Color.defaultLine)
+        .style('stroke-width', 1)
         .attr('transform', transform)
         .attr('d', 'M0,0Z');
 
@@ -150,7 +146,7 @@ function prepSelect(evt: any, startX: any, startY: any, dragOptions: any, mode: 
             shapeGroup = zoomLayer.append('g')
                 .classed('label-temp', true)
                 .classed('select-outline', true)
-                .style({ opacity: 0.8 });
+                .style('opacity', 0.8);
         }
     }
 

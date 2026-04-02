@@ -697,10 +697,8 @@ function drawColorBar(g: any, opts: any, gd: GraphDiv) {
             2 * xpad + moveX
         ), 2))
         .call(Color.stroke, opts.outlinecolor)
-        .style({
-            fill: 'none',
-            'stroke-width': outlinewidth
-        });
+        .style('fill', 'none')
+        .style('stroke-width', outlinewidth);
 
         let xShift = ((isVertical ? xRatio * outerThickness : 0));
         let yShift = ((isVertical ? 0 : (1 - yRatio) * outerThickness - moveY));

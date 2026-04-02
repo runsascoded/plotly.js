@@ -189,10 +189,9 @@ function drawHeader(gd: GraphDiv, gHeader: any, gButton: any, scrollBox: any, me
             .text((constants.arrowSymbol as any)[menuOpts.direction]);
     });
 
-    arrow.attr({
-        x: dims.headerWidth - constants.arrowOffsetX + menuOpts.pad.l,
-        y: dims.headerHeight / 2 + constants.textOffsetY + menuOpts.pad.t
-    });
+    arrow
+        .attr('x', dims.headerWidth - constants.arrowOffsetX + menuOpts.pad.l)
+        .attr('y', dims.headerHeight / 2 + constants.textOffsetY + menuOpts.pad.t);
 
     header.on('click', function(event: any) {
         gButton.call(removeAllButtons,
@@ -409,11 +408,10 @@ function drawItem(item: any, menuOpts: any, itemOpts: any, gd: GraphDiv) {
 
 function drawItemRect(item: any, menuOpts: any) {
     const rect = Lib.ensureSingle(item, 'rect', constants.itemRectClassName, function(s: any) {
-        s.attr({
-            rx: constants.rx,
-            ry: constants.ry,
-            'shape-rendering': 'crispEdges'
-        });
+        s
+            .attr('rx', constants.rx)
+            .attr('ry', constants.ry)
+            .attr('shape-rendering', 'crispEdges');
     });
 
     rect.call(Color.stroke, menuOpts.bordercolor)
@@ -423,10 +421,9 @@ function drawItemRect(item: any, menuOpts: any) {
 
 function drawItemText(item: any, menuOpts: any, itemOpts: any, gd: GraphDiv) {
     const text = Lib.ensureSingle(item, 'text', constants.itemTextClassName, function(s: any) {
-        s.attr({
-            'text-anchor': 'start',
-            'data-notex': 1
-        });
+        s
+            .attr('text-anchor', 'start')
+            .attr('data-notex', 1);
     });
 
     let tx = itemOpts.label;
@@ -607,12 +604,11 @@ function setItemPosition(item: any, menuOpts: any, posOpts: any, overrideOpts: a
     const isVertical = ['up', 'down'].indexOf(menuOpts.direction) !== -1;
     const finalHeight = overrideOpts.height || (isVertical ? dims.heights[index] : dims.height1);
 
-    rect.attr({
-        x: 0,
-        y: 0,
-        width: overrideOpts.width || (isVertical ? dims.width1 : dims.widths[index]),
-        height: finalHeight
-    });
+    rect
+        .attr('x', 0)
+        .attr('y', 0)
+        .attr('width', overrideOpts.width || (isVertical ? dims.width1 : dims.widths[index]))
+        .attr('height', finalHeight);
 
     const tHeight = menuOpts.font.size * LINE_SPACING;
     const tLines = svgTextUtils.lineCount(text);

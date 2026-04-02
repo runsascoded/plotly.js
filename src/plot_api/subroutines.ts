@@ -56,10 +56,9 @@ function lsInner(gd: GraphDiv): any {
     // We can't leave the height or width unset because all of the contents of
     // the paper div are positioned absolutely (and will therefore not take up
     // any space).
-    fullLayout._paperdiv.style({
-        width: (gd._context.responsive && fullLayout.autosize && !gd._context._hasZeroWidth && !gd.layout.width) ? '100%' : fullLayout.width + 'px',
-        height: (gd._context.responsive && fullLayout.autosize && !gd._context._hasZeroHeight && !gd.layout.height) ? '100%' : fullLayout.height + 'px'
-    })
+    fullLayout._paperdiv
+        .style('width', (gd._context.responsive && fullLayout.autosize && !gd._context._hasZeroWidth && !gd.layout.width) ? '100%' : fullLayout.width + 'px')
+        .style('height', (gd._context.responsive && fullLayout.autosize && !gd._context._hasZeroHeight && !gd.layout.height) ? '100%' : fullLayout.height + 'px')
     .selectAll('.main-svg')
     .call(setSize, fullLayout.width, fullLayout.height);
     gd._context.setBackground(gd, (fullLayout.paper_bgcolor as any));
@@ -199,10 +198,9 @@ function lsInner(gd: GraphDiv): any {
                     .append('rect');
             });
 
-            plotinfo.clipRect = plotClip.select('rect').attr({
-                width: xa._length,
-                height: ya._length
-            });
+            plotinfo.clipRect = plotClip.select('rect')
+                .attr('width', xa._length)
+                .attr('height', ya._length);
 
             setTranslate(plotinfo.plot, xa._offset, ya._offset);
 
@@ -430,12 +428,11 @@ export const drawMainTitle = function(gd: GraphDiv): void {
         if(pushMargin > 0) {
             applyTitleAutoMargin(gd, y, pushMargin, titleHeight);
             // Re-position the title once we know where it needs to be
-            titleObj.attr({
-                x: x,
-                y: y,
-                'text-anchor': textAnchor,
-                dy: getMainTitleDyAdj(title.yanchor)
-            }).call(svgTextUtils.positionText, x, y);
+            titleObj
+                .attr('x', x)
+                .attr('y', y)
+                .attr('text-anchor', textAnchor)
+                .attr('dy', getMainTitleDyAdj(title.yanchor)).call(svgTextUtils.positionText, x, y);
 
             const extraLines = (title.text.match(svgTextUtils.BR_TAG_ALL) || []).length;
             if(extraLines) {
@@ -457,12 +454,11 @@ export const drawMainTitle = function(gd: GraphDiv): void {
                 const titleBB = titleObj.node().getBBox();
                 const titleBottom = titleBB.y + titleBB.height;
                 const subtitleY = titleBottom + Titles.SUBTITLE_PADDING_EM * title.subtitle.font.size;
-                subtitleObj.attr({
-                    x: x,
-                    y: subtitleY,
-                    'text-anchor': textAnchor,
-                    dy: getMainTitleDyAdj(title.yanchor)
-                }).call(svgTextUtils.positionText, x, subtitleY);
+                subtitleObj
+                    .attr('x', x)
+                    .attr('y', subtitleY)
+                    .attr('text-anchor', textAnchor)
+                    .attr('dy', getMainTitleDyAdj(title.yanchor)).call(svgTextUtils.positionText, x, subtitleY);
             }
         }
     }

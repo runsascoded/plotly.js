@@ -273,21 +273,19 @@ function drawOne(gd: GraphDiv, opts: any): any {
                 // if unified hover, let it be its full size
                 if(inHover) height = legendObj._height;
 
-                bg.attr({
-                    width: legendObj._width - bw,
-                    height: height - bw,
-                    x: bw / 2,
-                    y: bw / 2
-                });
+                bg
+                    .attr('width', legendObj._width - bw)
+                    .attr('height', height - bw)
+                    .attr('x', bw / 2)
+                    .attr('y', bw / 2);
 
                 setTranslate(scrollBox, 0, 0);
 
-                clipPath.select('rect').attr({
-                    width: legendObj._width - 2 * bw,
-                    height: height - 2 * bw,
-                    x: bw,
-                    y: bw
-                });
+                clipPath.select('rect')
+                    .attr('width', legendObj._width - 2 * bw)
+                    .attr('height', height - 2 * bw)
+                    .attr('x', bw)
+                    .attr('y', bw);
 
                 setClipUrl(scrollBox, clipId, gd);
 
@@ -306,25 +304,23 @@ function drawOne(gd: GraphDiv, opts: any): any {
 
                 // increase the background and clip-path width
                 // by the scrollbar width and margin
-                bg.attr({
-                    width: legendObj._width -
+                bg
+                    .attr('width', legendObj._width -
                         2 * bw +
                         constants.scrollBarWidth +
-                        constants.scrollBarMargin,
-                    height: legendObj._effHeight - bw,
-                    x: bw / 2,
-                    y: bw / 2
-                });
+                        constants.scrollBarMargin)
+                    .attr('height', legendObj._effHeight - bw)
+                    .attr('x', bw / 2)
+                    .attr('y', bw / 2);
 
-                clipPath.select('rect').attr({
-                    width: legendObj._width -
+                clipPath.select('rect')
+                    .attr('width', legendObj._width -
                         2 * bw +
                         constants.scrollBarWidth +
-                        constants.scrollBarMargin,
-                    height: legendObj._effHeight - 2 * bw,
-                    x: bw,
-                    y: bw + scrollBoxY
-                });
+                        constants.scrollBarMargin)
+                    .attr('height', legendObj._effHeight - 2 * bw)
+                    .attr('x', bw)
+                    .attr('y', bw + scrollBoxY);
 
                 setClipUrl(scrollBox, clipId, gd);
 

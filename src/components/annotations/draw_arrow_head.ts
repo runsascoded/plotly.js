@@ -45,7 +45,9 @@ export default function drawArrowHead(el3: any, ends: any, options: any) {
 
             end.x += backOffX;
             end.y += backOffY;
-            el3.attr({x2: end.x, y2: end.y});
+            el3
+                .attr('x2', end.x)
+                .attr('y2', end.y);
         }
 
         if(startBackOff) {
@@ -58,7 +60,9 @@ export default function drawArrowHead(el3: any, ends: any, options: any) {
 
             start.x -= startBackOffX;
             start.y -= startbackOffY;
-            el3.attr({x1: start.x, y1: start.y});
+            el3
+                .attr('x1', start.x)
+                .attr('y1', start.y);
         }
     } else if(el.nodeName === 'path') {
         const pathlen = el.getTotalLength();
@@ -100,18 +104,13 @@ export default function drawArrowHead(el3: any, ends: any, options: any) {
         if(arrowHeadStyle.noRotate) rot = 0;
 
         select(el.parentNode).append('path')
-            .attr({
-                class: el3.attr('class'),
-                d: arrowHeadStyle.path,
-                transform:
-                    strTranslate(p.x, p.y) +
+            .attr('class', el3.attr('class'))
+            .attr('d', arrowHeadStyle.path)
+            .attr('transform', strTranslate(p.x, p.y) +
                     strRotate(rot * 180 / Math.PI) +
-                    strScale(arrowScale)
-            })
-            .style({
-                fill: Color.rgb(options.arrowcolor),
-                'stroke-width': 0
-            });
+                    strScale(arrowScale))
+            .style('fill', Color.rgb(options.arrowcolor))
+            .style('stroke-width', 0);
     }
 
     if(doStart) drawhead(startHeadStyle, start, startRot, startScale);

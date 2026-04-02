@@ -305,10 +305,8 @@ function plotBoxMean(sel: any, axes: { pos: FullAxis; val: FullAxis }, trace: Fu
 
     paths.enter().append('path')
         .attr('class', 'mean')
-        .style({
-            fill: 'none',
-            'vector-effect': 'non-scaling-stroke'
-        });
+        .style('fill', 'none')
+        .style('vector-effect', 'non-scaling-stroke');
 
     paths.exit().remove();
 

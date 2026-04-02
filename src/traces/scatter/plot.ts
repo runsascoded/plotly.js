@@ -593,7 +593,9 @@ function plotOne(gd: GraphDiv, idx: number, plotinfo: PlotInfo, cdscatter: CalcD
                 const y = ya.c2p(d.y);
 
                 select(this).selectAll('tspan.line').each(function(this: any) {
-                    transition(select(this)).attr({x: x, y: y});
+                    transition(select(this))
+                        .attr('x', x)
+                        .attr('y', y);
                 });
             });
 

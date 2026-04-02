@@ -126,7 +126,7 @@ function drawOne(gd: GraphDiv, index: any) {
 
         const shapeGroup = shapeLayer.append('g')
             .classed('shape-group', true)
-            .attr({ 'data-index': index });
+            .attr('data-index', index);
 
         const path = shapeGroup.append('path')
             .attr(attrs)
@@ -144,9 +144,7 @@ function drawOne(gd: GraphDiv, index: any) {
         if(isActiveShape || gd._context.edits.shapePosition) editHelpers = arrayEditor(gd.layout, 'shapes', options);
 
         if(isActiveShape) {
-            path.style({
-                cursor: 'move',
-            });
+            path.style('cursor', 'move');
 
             const dragOptions = {
                 element: path.node(),
@@ -258,11 +256,9 @@ function setupDragElement(gd: GraphDiv, shapePath: any, shapeOptions: any, index
         // Helper path for moving
         g.append('path')
           .attr('d', shapePath.attr('d'))
-          .style({
-              cursor: 'move',
-              'stroke-width': sensoryWidth,
-              'stroke-opacity': '0' // ensure not visible
-          });
+          .style('cursor', 'move')
+          .style('stroke-width', sensoryWidth)
+          .style('stroke-opacity', '0'); // ensure not visible
 
         // Helper circles for resizing
         const circleStyle = {
@@ -271,22 +267,18 @@ function setupDragElement(gd: GraphDiv, shapePath: any, shapeOptions: any, index
         const circleRadius = Math.max(sensoryWidth / 2, minSensoryWidth);
 
         g.append('circle')
-          .attr({
-              'data-line-point': 'start-point',
-              cx: xPixelSized ? x2p(shapeOptions.xanchor) + shapeOptions.x0 : x2p(shapeOptions.x0, shiftXStart),
-              cy: yPixelSized ? y2p(shapeOptions.yanchor) - shapeOptions.y0 : y2p(shapeOptions.y0, shiftYStart),
-              r: circleRadius
-          })
+          .attr('data-line-point', 'start-point')
+          .attr('cx', xPixelSized ? x2p(shapeOptions.xanchor) + shapeOptions.x0 : x2p(shapeOptions.x0, shiftXStart))
+          .attr('cy', yPixelSized ? y2p(shapeOptions.yanchor) - shapeOptions.y0 : y2p(shapeOptions.y0, shiftYStart))
+          .attr('r', circleRadius)
           .style(circleStyle)
           .classed('cursor-grab', true);
 
         g.append('circle')
-          .attr({
-              'data-line-point': 'end-point',
-              cx: xPixelSized ? x2p(shapeOptions.xanchor) + shapeOptions.x1 : x2p(shapeOptions.x1, shiftXEnd),
-              cy: yPixelSized ? y2p(shapeOptions.yanchor) - shapeOptions.y1 : y2p(shapeOptions.y1, shiftYEnd),
-              r: circleRadius
-          })
+          .attr('data-line-point', 'end-point')
+          .attr('cx', xPixelSized ? x2p(shapeOptions.xanchor) + shapeOptions.x1 : x2p(shapeOptions.x1, shiftXEnd))
+          .attr('cy', yPixelSized ? y2p(shapeOptions.yanchor) - shapeOptions.y1 : y2p(shapeOptions.y1, shiftYEnd))
+          .attr('r', circleRadius)
           .style(circleStyle)
           .classed('cursor-grab', true);
 
@@ -529,12 +521,10 @@ function setupDragElement(gd: GraphDiv, shapePath: any, shapeOptions: any, index
             const strokeWidth = 1;
             visualCues.enter()
               .append('path')
-              .attr({
-                  fill: '#fff',
-                  'fill-rule': 'evenodd',
-                  stroke: '#000',
-                  'stroke-width': strokeWidth
-              })
+              .attr('fill', '#fff')
+              .attr('fill-rule', 'evenodd')
+              .attr('stroke', '#000')
+              .attr('stroke-width', strokeWidth)
               .classed('visual-cue', true);
 
             // Update

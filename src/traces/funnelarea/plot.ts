@@ -62,7 +62,7 @@ export default function plot(gd: GraphDiv,  cdModule: any) {
 
                 slicePath.enter().append('path')
                     .classed('surface', true)
-                    .style({'pointer-events': isStatic ? 'none' : 'all'});
+                    .style('pointer-events', isStatic ? 'none' : 'all');
 
                 sliceTop.call(attachFxHandlers, gd, cd);
 
@@ -95,11 +95,9 @@ export default function plot(gd: GraphDiv,  cdModule: any) {
                     const font = Lib.ensureUniformFontSize(gd, determineInsideTextFont(trace, pt, (fullLayout.font as any)));
 
                     sliceText.text(pt.text)
-                        .attr({
-                            class: 'slicetext',
-                            transform: '',
-                            'text-anchor': 'middle'
-                        })
+                        .attr('class', 'slicetext')
+                        .attr('transform', '')
+                        .attr('text-anchor', 'middle')
                         .call(drawingFont, font)
                         .call(svgTextUtils.convertToTspans, gd);
 
@@ -149,11 +147,9 @@ export default function plot(gd: GraphDiv,  cdModule: any) {
                 }
 
                 titleText.text(txt)
-                    .attr({
-                        class: 'titletext',
-                        transform: '',
-                        'text-anchor': 'middle',
-                    })
+                    .attr('class', 'titletext')
+                    .attr('transform', '')
+                    .attr('text-anchor', 'middle')
                 .call(drawingFont, trace.title.font)
                 .call(svgTextUtils.convertToTspans, gd);
 
