@@ -92,3 +92,29 @@ jobs:
 
       - name: Run demo E2E tests
         run: node demo/test.mjs
+
+  dist-smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Install Playwright Chromium
+        run: pnpm exec playwright install chromium
+
+      - name: Build all bundles
+        run: pnpm run build
+
+      - name: Smoke test dist bundles
+        run: node tasks/test_dist_bundles.mjs

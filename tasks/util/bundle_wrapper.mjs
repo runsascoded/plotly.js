@@ -45,7 +45,9 @@ export default async function _bundle(pathToIndex, pathToBundle, opts, cb) {
 
     await build(config);
 
-    addWrapper(pathToBundle);
+    // esbuild IIFE wraps default export as { default: ... }
+    // Unwrap so window.Plotly is the actual Plotly object
+    fsExtra.appendFileSync(pathToBundle, '\nPlotly = Plotly.default || Plotly;\n');
 
     if (cb) cb();
 }
