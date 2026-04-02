@@ -386,7 +386,7 @@ function prepSelect(evt: any, startX: any, startY: any, dragOptions: any, mode: 
 
         const clickmode = fullLayout.clickmode;
 
-        throttle.done(throttleID).then(function() {
+        throttle.done(throttleID).then(() => {
             throttle.clear(throttleID);
             if(numClicks === 2) {
                 // clear selection on doubleclick
@@ -453,7 +453,7 @@ function prepSelect(evt: any, startX: any, startY: any, dragOptions: any, mode: 
     dragOptions.doneFn = function() {
         corners.remove();
 
-        throttle.done(throttleID).then(function() {
+        throttle.done(throttleID).then(() => {
             throttle.clear(throttleID);
 
             if(!immediateSelect && currentPolygon && dragOptions.selectionDefs) {
@@ -750,7 +750,7 @@ function clearSelectionsCache(dragOptions: any, immediateSelect?: any) {
 
                 Registry.call('_guiRelayout', gd, {
                     selections: selections
-                }).then(function() {
+                }).then(() => {
                     if(immediateSelect) { activateLastSelection(gd); }
                 });
             }

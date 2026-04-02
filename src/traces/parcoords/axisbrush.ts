@@ -290,7 +290,7 @@ function dragend(lThis: any, d: any) {
         return; // no need to fuse intervals or snap to ordinals, so we can bail early
     }
 
-    const mergeIntervals = function() {
+    const mergeIntervals = () => {
         // Key piece of logic: once the button is released, possibly overlapping intervals will be fused:
         // Here it's done immediately on click release while on ordinal snap transition it's done at the end
         filter.set(filter.getConsolidated());

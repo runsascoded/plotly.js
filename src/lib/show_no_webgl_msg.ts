@@ -1,6 +1,6 @@
 import Color from '../components/color/index.js';
 
-const noop = function(): void {};
+const noop = (): void => {};
 
 export default function showNoWebGlMsg(scene: any): false {
     for(const prop in scene) {

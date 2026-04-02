@@ -36,7 +36,7 @@ export default function hoverPoints(pointData: any,  xval: any,  yval: any,  hov
         const isAll = (hoverinfo === 'all');
         const parts = hoverinfo.split('+');
 
-        const hasFlag = function(flag: any) { return isAll || parts.indexOf(flag) !== -1; };
+        const hasFlag = (flag: any) => { return isAll || parts.indexOf(flag) !== -1; };
 
         if(hasFlag('percent initial')) {
             text.push(point.percentInitialLabel + ' of initial');

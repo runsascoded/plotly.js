@@ -36,7 +36,7 @@ function _getClosestPoint(pointData: any,  xval: any,  yval: any,  hovermode: an
 
     // potentially shift xval for grouped candlesticks
     const centerShift = t.bPos || 0;
-    const shiftPos = function(di: any) { return di.pos + centerShift - xval; };
+    const shiftPos = (di: any) => { return di.pos + centerShift - xval; };
 
     // ohlc and candlestick call displayHalfWidth different things...
     const displayHalfWidth = t.bdPos || t.tickLen;

@@ -72,7 +72,7 @@ function setConvertAngular(ax: any, polarLayout: any) {
         const len = trace._length;
         let arrayOut, i;
 
-        const _d2c = function(v: any) { return ax.d2c(v, trace.thetaunit); };
+        const _d2c = (v: any) => { return ax.d2c(v, trace.thetaunit); };
 
         if(arrayIn) {
             arrayOut = new Array(len);
@@ -101,8 +101,8 @@ function setConvertAngular(ax: any, polarLayout: any) {
         const dir = ({clockwise: -1, counterclockwise: 1} as any)[ax.direction];
         const rot = deg2rad(ax.rotation);
 
-        const rad2g = function(v: any) { return dir * v + rot; };
-        const g2rad = function(v: any) { return (v - rot) / dir; };
+        const rad2g = (v: any) => { return dir * v + rot; };
+        const g2rad = (v: any) => { return (v - rot) / dir; };
 
         let rad2c: any, c2rad: any;
         let rad2t: any, t2rad: any;

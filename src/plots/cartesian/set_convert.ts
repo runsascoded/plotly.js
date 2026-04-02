@@ -697,7 +697,7 @@ export default function setConvert(ax?: any, fullLayout?: any): any {
             return 0;
         });
 
-        const addBreak = function(min?: any, max?: any) {
+        const addBreak = (min?: any, max?: any) => {
             min = constrain(min, r0, r1);
             max = constrain(max, r0, r1);
             if(min === max) return;

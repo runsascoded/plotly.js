@@ -15,7 +15,7 @@ import closeBoundaries from './close_boundaries.js';
 import constants from './constants.js';
 const costConstants = constants.LABELOPTIMIZER;
 
-export const plot = function plot(gd: GraphDiv,  plotinfo: PlotInfo,  cdcontours: any,  contourLayer: any) {
+export function plot(gd: GraphDiv,  plotinfo: PlotInfo,  cdcontours: any,  contourLayer: any) {
     const xa = plotinfo.xaxis;
     const ya = plotinfo.yaxis;
 
@@ -62,7 +62,7 @@ export const plot = function plot(gd: GraphDiv,  plotinfo: PlotInfo,  cdcontours
         makeLinesAndLabels(plotGroup, pathinfo, gd, cd0, contours);
         clipGaps(plotGroup, plotinfo, gd, cd0, perimeter);
     });
-};
+}
 
 function makeBackground(plotgroup: any,  perimeter: any,  contours: any) {
     const bggroup = Lib.ensureSingle(plotgroup, 'g', 'contourbg');
@@ -318,7 +318,7 @@ function makeLinesAndLabels(plotgroup: any,  pathinfo: any,  gd: GraphDiv,  cd0:
     if(showLabels && !showLines) linegroup.remove();
 }
 
-export const createLines = function(lineContainer: any,  makeLines: any,  pathinfo: any,  isStatic: any) {
+export function createLines(lineContainer: any,  makeLines: any,  pathinfo: any,  isStatic: any) {
     const smoothing = pathinfo[0].smoothing;
 
     const linegroup = lineContainer.selectAll('g.contourlevel')
@@ -363,9 +363,9 @@ export const createLines = function(lineContainer: any,  makeLines: any,  pathin
     }
 
     return linegroupMerged;
-};
+}
 
-export const createLineClip = function(lineContainer: any,  clipLinesForLabels: any,  gd: GraphDiv,  uid: any) {
+export function createLineClip(lineContainer: any,  clipLinesForLabels: any,  gd: GraphDiv,  uid: any) {
     const clips = gd._fullLayout._clips;
     const clipId = clipLinesForLabels ? ('clipline' + uid) : null;
 
@@ -380,9 +380,9 @@ export const createLineClip = function(lineContainer: any,  clipLinesForLabels: 
     setClipUrl(lineContainer, (clipId as any), gd);
 
     return lineClip;
-};
+}
 
-export const labelFormatter = function(gd: GraphDiv,  cd0: any) {
+export function labelFormatter(gd: GraphDiv,  cd0: any) {
     const fullLayout = gd._fullLayout;
     const trace = cd0.trace;
     const contours = trace.contours;
@@ -425,9 +425,9 @@ export const labelFormatter = function(gd: GraphDiv,  cd0: any) {
     }
 
     return function(v: any) { return Axes.tickText(formatAxis, v).text; };
-};
+}
 
-export const calcTextOpts = function(level: any,  contourFormat: any,  dummyText: any,  gd: GraphDiv) {
+export function calcTextOpts(level: any,  contourFormat: any,  dummyText: any,  gd: GraphDiv) {
     const text = contourFormat(level);
     dummyText.text(text)
         .call(svgTextUtils.convertToTspans, gd);
@@ -443,9 +443,9 @@ export const calcTextOpts = function(level: any,  contourFormat: any,  dummyText
         level: level,
         dy: (bb.top + bb.bottom) / 2
     };
-};
+}
 
-export const findBestTextLocation = function(path: any,  pathBounds: any,  textOpts: any,  labelData: any,  plotBounds: any) {
+export function findBestTextLocation(path: any,  pathBounds: any,  textOpts: any,  labelData: any,  plotBounds: any) {
     const textWidth = textOpts.width;
 
     let p0, dp, pMax, pMin, loc;
@@ -479,7 +479,7 @@ export const findBestTextLocation = function(path: any,  pathBounds: any,  textO
         pMax = p0 + dp * 1.5;
     }
     if(cost <= costConstants.MAXCOST) return loc;
-};
+}
 
 /*
  * locationCost: a cost function for label locations
@@ -538,7 +538,7 @@ function locationCost(loc: any,  textOpts: any,  labelData: any,  bounds: any) {
     return cost;
 }
 
-export const addLabelData = function(loc: any,  textOpts: any,  labelData: any,  labelClipPathData: any) {
+export function addLabelData(loc: any,  textOpts: any,  labelData: any,  labelClipPathData: any) {
     const fontSize = textOpts.fontSize;
     const w = textOpts.width + fontSize / 3;
     const h = Math.max(0, textOpts.height - fontSize / 3);
@@ -550,7 +550,7 @@ export const addLabelData = function(loc: any,  textOpts: any,  labelData: any, 
     const sin = Math.sin(theta);
     const cos = Math.cos(theta);
 
-    const rotateXY = function(dx: any,  dy: any) {
+    const rotateXY = (dx: any,  dy: any) => {
         return [
             x + dx * cos - dy * sin,
             y + dx * sin + dy * cos
@@ -576,9 +576,9 @@ export const addLabelData = function(loc: any,  textOpts: any,  labelData: any, 
     });
 
     labelClipPathData.push(bBoxPts);
-};
+}
 
-export const drawLabels = function(labelGroup: any,  labelData: any,  gd: GraphDiv,  lineClip: any,  labelClipPathData: any) {
+export function drawLabels(labelGroup: any,  labelData: any,  gd: GraphDiv,  lineClip: any,  labelClipPathData: any) {
     const labels = labelGroup.selectAll('text')
         .data(labelData, function(d: any) {
             return d.text + ',' + d.x + ',' + d.y + ',' + d.theta;
@@ -609,7 +609,7 @@ export const drawLabels = function(labelGroup: any,  labelData: any,  gd: GraphD
         const lineClipPath = Lib.ensureSingle(lineClip, 'path', '');
         lineClipPath.attr('d', clipPath);
     }
-};
+}
 
 function clipGaps(plotGroup: any,  plotinfo: PlotInfo,  gd: GraphDiv,  cd0: any,  perimeter: any) {
     const trace = cd0.trace;

@@ -803,7 +803,7 @@ function persistFinalNodePositions(d: any, gd: any) {
         'node.x': [x],
         'node.y': [y]
     }, d.trace.index)
-    .then(function() {
+    .then(() => {
         if(gd._fullLayout._dragCover) gd._fullLayout._dragCover.remove();
     });
 }

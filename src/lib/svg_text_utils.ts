@@ -10,7 +10,7 @@ const { LINE_SPACING } = _alignment;
 
 const FIND_TEX = /([^$]*)([$]+[^$]*[$]+)([^$]*)/;
 
-export const convertToTspans = function(_context: any, gd: GraphDiv, _callback?: any): any {
+export function convertToTspans(_context: any, gd: GraphDiv, _callback?: any): any {
     const str = _context.text();
 
     // Until we get tex integrated more fully (so it can be used along with non-tex)
@@ -153,7 +153,7 @@ export const convertToTspans = function(_context: any, gd: GraphDiv, _callback?:
     } else showText();
 
     return _context;
-};
+}
 
 // MathJax
 
@@ -185,7 +185,7 @@ function texToSVG(_texString: string, _config: any, _callback: any): void {
         originalProcessSectionDelay: any,
         tmpDiv: any;
 
-    const setConfig2 = function() {
+    const setConfig2 = () => {
         originalConfig = extendDeepAll({}, (MathJax as any).Hub.config);
 
         originalProcessSectionDelay = (MathJax as any).Hub.processSectionDelay;
@@ -203,7 +203,7 @@ function texToSVG(_texString: string, _config: any, _callback: any): void {
         });
     };
 
-    const setConfig3 = function() {
+    const setConfig3 = () => {
         originalConfig = extendDeepAll({}, (MathJax as any).config);
 
         if(!(MathJax as any).config.tex) {
@@ -213,21 +213,21 @@ function texToSVG(_texString: string, _config: any, _callback: any): void {
         (MathJax as any).config.tex.inlineMath = inlineMath;
     };
 
-    const setRenderer2 = function() {
+    const setRenderer2 = () => {
         originalRenderer = (MathJax as any).Hub.config.menuSettings.renderer;
         if(originalRenderer !== 'SVG') {
             return (MathJax as any).Hub.setRenderer('SVG');
         }
     };
 
-    const setRenderer3 = function() {
+    const setRenderer3 = () => {
         originalRenderer = (MathJax as any).config.startup.output;
         if(originalRenderer !== 'svg') {
             (MathJax as any).config.startup.output = 'svg';
         }
     };
 
-    const initiateMathJax = function() {
+    const initiateMathJax = () => {
         const randomID = 'math-output-' + randstr({}, 64);
         tmpDiv = select('body').append('div')
             .attr('id', randomID)
@@ -243,7 +243,7 @@ function texToSVG(_texString: string, _config: any, _callback: any): void {
             (MathJax as any).typeset([tmpNode]);
     };
 
-    const finalizeMathJax = function() {
+    const finalizeMathJax = () => {
         const sel = tmpDiv.select(
             MathJaxVersion === 2 ? '.MathJax_SVG' : '.MathJax'
         );
@@ -266,26 +266,26 @@ function texToSVG(_texString: string, _config: any, _callback: any): void {
         tmpDiv.remove();
     };
 
-    const resetRenderer2 = function() {
+    const resetRenderer2 = () => {
         if(originalRenderer !== 'SVG') {
             return (MathJax as any).Hub.setRenderer(originalRenderer);
         }
     };
 
-    const resetRenderer3 = function() {
+    const resetRenderer3 = () => {
         if(originalRenderer !== 'svg') {
             (MathJax as any).config.startup.output = originalRenderer;
         }
     };
 
-    const resetConfig2 = function() {
+    const resetConfig2 = () => {
         if(originalProcessSectionDelay !== undefined) {
             (MathJax as any).Hub.processSectionDelay = originalProcessSectionDelay;
         }
         return (MathJax as any).Hub.Config(originalConfig);
     };
 
-    const resetConfig3 = function() {
+    const resetConfig3 = () => {
         (MathJax as any).config = originalConfig;
     };
 
@@ -303,7 +303,7 @@ function texToSVG(_texString: string, _config: any, _callback: any): void {
         setRenderer3();
         (MathJax as any).startup.defaultReady();
 
-        (MathJax as any).startup.promise.then(function() {
+        (MathJax as any).startup.promise.then(() => {
             initiateMathJax();
             finalizeMathJax();
 
@@ -399,7 +399,7 @@ function getQuotedMatch(_str: string, re: RegExp): string | null {
 
 const COLORMATCH = /(^|;)\s*color:/;
 
-export const plainText = function(_str: string, opts?: any): string {
+export function plainText(_str: string, opts?: any): string {
     opts = opts || {};
 
     const len = (opts.len !== undefined && opts.len !== -1) ? opts.len : Infinity;
@@ -450,7 +450,7 @@ export const plainText = function(_str: string, opts?: any): string {
     }
 
     return newParts.join('');
-};
+}
 
 /*
  * N.B. HTML entities are listed without the leading '&' and trailing ';'
@@ -722,7 +722,7 @@ function sanitizeHref(href: string): string {
     }
 }
 
-export const sanitizeHTML = function sanitizeHTML(str: string): string {
+export function sanitizeHTML(str: string): string {
     str = str.replace(NEWLINES, ' ');
 
     const rootNode = document.createElement('p');
@@ -777,13 +777,13 @@ export const sanitizeHTML = function sanitizeHTML(str: string): string {
     }
     const key = 'innerHTML'; // i.e. to avoid pass test-syntax
     return rootNode[key];
-};
+}
 
-export const lineCount = function lineCount(s: any): number {
+export function lineCount(s: any): number {
     return s.selectAll('tspan.line').size() || 1;
-};
+}
 
-export const positionText = function positionText(s: any, x?: number, y?: number): void {
+export function positionText(s: any, x?: number, y?: number): void {
     return s.each(function(this: any) {
         const text = select(this);
 
@@ -807,7 +807,7 @@ export const positionText = function positionText(s: any, x?: number, y?: number
                 .attr('y', thisY);
         }
     });
-};
+}
 
 function alignHTMLWith(_base: any, container: any, options: any): (this: any) => any {
     const alignH = options.horizontalAlign;
@@ -857,7 +857,7 @@ function alignHTMLWith(_base: any, container: any, options: any): (this: any) =>
 
 const onePx = '1px ';
 
-export const makeTextShadow = function(color: string): string {
+export function makeTextShadow(color: string): string {
     const x = onePx;
     const y = onePx;
     const b = onePx;
@@ -865,9 +865,9 @@ export const makeTextShadow = function(color: string): string {
         '-' + x + '-' + y + b + color + ', ' +
         x + '-' + y + b + color + ', ' +
         '-' + x + y + b + color;
-};
+}
 
-export const makeEditable = function(context: any, options: any): any {
+export function makeEditable(context: any, options: any): any {
     const gd = options.gd;
     const _delegate = options.delegate;
     const d = dispatch('edit', 'input', 'cancel');
@@ -972,6 +972,6 @@ export const makeEditable = function(context: any, options: any): any {
     else handlerElement.on('click', handleClick);
 
     return Object.assign(context, { on: d.on.bind(d) });
-};
+}
 
 export default { convertToTspans, NEWLINES, BR_TAG_ALL, plainText, sanitizeHTML, lineCount, positionText, makeTextShadow, makeEditable, convertEntities };

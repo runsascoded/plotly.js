@@ -6,15 +6,15 @@ import Registry from '../registry.js';
 import _req0 from './container_array_match.js';
 export const containerArrayMatch = _req0;
 
-export const isAddVal = function isAddVal(val?: any): any {
+export function isAddVal(val?: any): any {
     return val === 'add' || isPlainObject(val);
-};
+}
 
-export const isRemoveVal = function isRemoveVal(val?: any): boolean {
+export function isRemoveVal(val?: any): boolean {
     return val === null || val === 'remove';
-};
+}
 
-export const applyContainerArrayChanges = function applyContainerArrayChanges(gd?: any, np?: any, edits?: any, flags?: any, _nestedProperty?: any): boolean {
+export function applyContainerArrayChanges(gd?: any, np?: any, edits?: any, flags?: any, _nestedProperty?: any): boolean {
     const componentType = np.astr;
     const supplyComponentDefaults = Registry.getComponentMethod(componentType, 'supplyLayoutDefaults');
     const draw = Registry.getComponentMethod(componentType, 'draw');
@@ -149,6 +149,6 @@ export const applyContainerArrayChanges = function applyContainerArrayChanges(gd
     } else draw(gd);
 
     return true;
-};
+}
 
 export default { containerArrayMatch, isAddVal, isRemoveVal, applyContainerArrayChanges };

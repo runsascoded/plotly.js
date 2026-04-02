@@ -343,12 +343,12 @@ function drawOne(gd: GraphDiv, opts: any): any {
 
                 let eventY0: any, eventY1, scrollBoxY0: any;
 
-                const getScrollBarDragY = function(scrollBoxY0: any, eventY0: any, eventY1: any) {
+                const getScrollBarDragY = (scrollBoxY0: any, eventY0: any, eventY1: any) => {
                     const y = ((eventY1 - eventY0) / scrollRatio) + scrollBoxY0;
                     return constrain(y, 0, scrollBoxYMax);
                 };
 
-                const getNaturalDragY = function(scrollBoxY0: any, eventY0: any, eventY1: any) {
+                const getNaturalDragY = (scrollBoxY0: any, eventY0: any, eventY1: any) => {
                     const y = ((eventY0 - eventY1) / scrollRatio) + scrollBoxY0;
                     return constrain(y, 0, scrollBoxYMax);
                 };

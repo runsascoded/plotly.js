@@ -48,7 +48,7 @@ export const supplyLayoutDefaults = _req2;
 
 let firstPlot = true;
 
-export const plot = function plot(gd: GraphDiv) {
+export function plot(gd: GraphDiv) {
     if(firstPlot) {
         firstPlot = false;
         Lib.warn(deprecationWarning);
@@ -88,9 +88,9 @@ export const plot = function plot(gd: GraphDiv) {
 
         mapbox.plot(subplotCalcData, fullLayout, gd._promises);
     }
-};
+}
 
-export const clean = function(newFullData: any, newFullLayout: any, oldFullData: any, oldFullLayout: any) {
+export function clean(newFullData: any, newFullLayout: any, oldFullData: any, oldFullLayout: any) {
     const oldMapboxKeys = oldFullLayout._subplots[MAPBOX] || [];
 
     for(let i = 0; i < oldMapboxKeys.length; i++) {
@@ -100,9 +100,9 @@ export const clean = function(newFullData: any, newFullLayout: any, oldFullData:
             oldFullLayout[oldMapboxKey]._subplot.destroy();
         }
     }
-};
+}
 
-export const toSVG = function(gd: any) {
+export function toSVG(gd: any) {
     const fullLayout = gd._fullLayout;
     const subplotIds = fullLayout._subplots[MAPBOX];
     const size = fullLayout._size;
@@ -202,7 +202,7 @@ export const toSVG = function(gd: any) {
         const offset = [(size.l + size.w * domain.x[1]), (size.t + size.h * (1 - domain.y[0]))];
         attributionGroup.attr('transform', strTranslate(offset[0], offset[1]) + strScale(scaleRatio));
     }
-};
+}
 
 // N.B. mapbox-gl only allows one accessToken to be set per page:
 // https://github.com/mapbox/mapbox-gl-js/issues/6331
@@ -273,7 +273,7 @@ function isStyleRequireAccessToken(s: any) {
     );
 }
 
-export const updateFx = function(gd: any) {
+export function updateFx(gd: any) {
     const fullLayout = gd._fullLayout;
     const subplotIds = fullLayout._subplots[MAPBOX];
 
@@ -281,6 +281,6 @@ export const updateFx = function(gd: any) {
         const subplotObj = fullLayout[subplotIds[i]]._subplot;
         subplotObj.updateFx(fullLayout);
     }
-};
+}
 
 export default { constants, name, attr, idRoot, idRegex, attributes, layoutAttributes, supplyLayoutDefaults, plot, clean, toSVG, updateFx };

@@ -1,6 +1,6 @@
 import { extendFlat } from '../../lib/extend.js';
 
-export const splitToPanels = function(d: any) {
+export function splitToPanels(d: any) {
     const prevPages = [0, 0];
     const headerPanel = extendFlat({}, d, {
         key: 'header',
@@ -35,9 +35,9 @@ export const splitToPanels = function(d: any) {
     });
     // order due to SVG using painter's algo:
     return [revolverPanel1, revolverPanel2, headerPanel];
-};
+}
 
-export const splitToCells = function(d: any) {
+export function splitToCells(d: any) {
     const fromTo = rowFromTo(d);
     return (d.values || []).slice(fromTo[0], fromTo[1]).map((v: any, i: any) => {
         // By keeping identical key, a DOM node removal, creation and addition is spared, important when visible
@@ -58,7 +58,7 @@ export const splitToCells = function(d: any) {
             value: v
         };
     });
-};
+}
 
 function rowFromTo(d: any) {
     const rowBlock = d.rowBlocks[d.page];

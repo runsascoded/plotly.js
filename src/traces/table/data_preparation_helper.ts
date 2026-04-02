@@ -7,7 +7,7 @@ import { isArrayOrTypedArray } from '../../lib/array.js';
 
 export default function calc(gd: GraphDiv, trace: FullTrace) {
     const cellsValues = squareStringMatrix(trace.cells.values);
-    const slicer = function(a: any) {
+    const slicer = (a: any) => {
         return a.slice(trace.header.values.length, a.length);
     };
     let headerValuesIn = squareStringMatrix(trace.header.values);

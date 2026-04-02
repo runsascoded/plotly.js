@@ -8,7 +8,7 @@ import _index2 from '../../components/colorscale/index.js';
 const { extractOpts } = _index2;
 import zip3 from '../../plots/gl3d/zip3.js';
 
-const findNearestOnAxis = function(w: any, arr: any) {
+const findNearestOnAxis = (w: any, arr: any) => {
     for(let q = arr.length - 1; q > 0; q--) {
         const min = Math.min(arr[q], arr[q - 1]);
         const max = Math.max(arr[q], arr[q - 1]);
@@ -151,7 +151,7 @@ function generateIsoMeshes(data: any) {
 
     const filled = GRID_TYPES.indexOf(data._gridFill.replace(/-/g, '').replace(/\+/g, ''));
 
-    const getIndex = function(i: any, j: any, k: any) {
+    const getIndex = (i: any, j: any, k: any) => {
         switch(filled) {
             case 5: // 'zyx'
                 return k + depth * j + depth * height * i;
@@ -326,7 +326,7 @@ function generateIsoMeshes(data: any) {
     }
 
     function drawQuad(style: any, xyzv: any, abcd: any): any {
-        const makeTri = function(i: any, j: any, k: any) {
+        const makeTri = (i: any, j: any, k: any) => {
             drawTri(style, [xyzv[i], xyzv[j], xyzv[k]], [abcd[i], abcd[j], abcd[k]]);
         };
 
@@ -335,7 +335,7 @@ function generateIsoMeshes(data: any) {
     }
 
     function drawTetra(style: any, xyzv: any, abcd: any): any {
-        const makeTri = function(i: any, j: any, k: any) {
+        const makeTri = (i: any, j: any, k: any) => {
             drawTri(style, [xyzv[i], xyzv[j], xyzv[k]], [abcd[i], abcd[j], abcd[k]]);
         };
 
@@ -413,7 +413,7 @@ function generateIsoMeshes(data: any) {
             return false;
         }
 
-        const tryDrawTri = function(style: any, xyzv: any, abc: any): any {
+        const tryDrawTri = (style: any, xyzv: any, abc: any): any => {
             if( // we check here if the points are in `real` iso-min/max range
                 almostInFinalRange(xyzv[0][3]) &&
                 almostInFinalRange(xyzv[1][3]) &&
@@ -640,7 +640,7 @@ function generateIsoMeshes(data: any) {
         let result = false;
         let A: any, B: any, C: any, D: any;
 
-        const makeSection = function() {
+        const makeSection = () => {
             result = tryCreateTri(style, [A, B, C], [-1, -1, -1], min, max) || result;
             result = tryCreateTri(style, [C, D, A], [-1, -1, -1], min, max) || result;
         };

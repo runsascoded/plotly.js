@@ -14,10 +14,10 @@ export default function calc(gd: GraphDiv, trace: FullTrace) {
 
     const xcalendar = trace.xcalendar;
     const ycalendar = trace.ycalendar;
-    const xr2c = function(v: any) { return xa.r2c(v, 0, xcalendar); };
-    const yr2c = function(v: any) { return ya.r2c(v, 0, ycalendar); };
-    const xc2r = function(v: any) { return xa.c2r(v, 0, xcalendar); };
-    const yc2r = function(v: any) { return ya.c2r(v, 0, ycalendar); };
+    const xr2c = (v: any) => { return xa.r2c(v, 0, xcalendar); };
+    const yr2c = (v: any) => { return ya.r2c(v, 0, ycalendar); };
+    const xc2r = (v: any) => { return xa.c2r(v, 0, xcalendar); };
+    const yc2r = (v: any) => { return ya.c2r(v, 0, ycalendar); };
 
     let i, j, n, m;
 

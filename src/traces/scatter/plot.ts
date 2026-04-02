@@ -332,7 +332,7 @@ function plotOne(gd: GraphDiv, idx: number, plotinfo: PlotInfo, cdscatter: CalcD
     }
 
     // helper functions to create polygons for hoveron fill detection
-    const makeSelfPolygons = function() {
+    const makeSelfPolygons = () => {
         const polygons = new Array(fillsegments.length);
         for(i = 0; i < fillsegments.length; i++) {
             polygons[i] = polygonTester(fillsegments[i]);
@@ -340,7 +340,7 @@ function plotOne(gd: GraphDiv, idx: number, plotinfo: PlotInfo, cdscatter: CalcD
         return polygons;
     };
 
-    const makePolygonsToPrevious = function(prevFillsegments: any) {
+    const makePolygonsToPrevious = (prevFillsegments: any) => {
         let polygons, i;
         if(!prevFillsegments || prevFillsegments.length === 0) {
             // if there are no fill segments of a previous trace, stretch the

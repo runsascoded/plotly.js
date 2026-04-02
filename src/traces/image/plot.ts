@@ -93,8 +93,8 @@ export default function plot(gd: GraphDiv, plotinfo: any, cdimage: any[], imageL
             canvas.height = imageHeight;
             const context = canvas.getContext('2d', {willReadFrequently: true});
 
-            const ipx = function(i: any) {return Lib.constrain(Math.round(xa.c2p(x0 + i * dx) - left), 0, imageWidth);};
-            const jpx = function(j: any) {return Lib.constrain(Math.round(ya.c2p(y0 + j * dy) - top), 0, imageHeight);};
+            const ipx = (i: any) => {return Lib.constrain(Math.round(xa.c2p(x0 + i * dx) - left), 0, imageWidth);};
+            const jpx = (j: any) => {return Lib.constrain(Math.round(ya.c2p(y0 + j * dy) - top), 0, imageHeight);};
 
             const cr = (constants.colormodel as any)[trace.colormodel];
             const colormodel = (cr.colormodel || trace.colormodel);
@@ -182,7 +182,7 @@ export default function plot(gd: GraphDiv, plotinfo: any, cdimage: any[], imageL
                 }
             }
         })
-        .then(function() {
+        .then(() => {
             let href, canvas;
             if(trace._hasZ) {
                 canvas = drawMagnifiedPixelsOnCanvas(function(i: any, j: any) {

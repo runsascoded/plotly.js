@@ -32,14 +32,14 @@ templateAttrs[TEMPLATEITEMNAME] = {
     ].join(' ')
 };
 
-export const templatedArray = function(name?: any, attrs?: any): any {
+export function templatedArray(name?: any, attrs?: any): any {
     attrs._isLinkedToArray = name;
     attrs.name = templateAttrs.name;
     attrs[TEMPLATEITEMNAME] = templateAttrs[TEMPLATEITEMNAME];
     return attrs;
-};
+}
 
-export const traceTemplater = function(dataTemplate?: any): any {
+export function traceTemplater(dataTemplate?: any): any {
     const traceCounts: any = {};
     let traceType, typeTemplates;
 
@@ -77,18 +77,18 @@ export const traceTemplater = function(dataTemplate?: any): any {
         newTrace: newTrace
         // TODO: function to figure out what's left & what didn't work
     };
-};
+}
 
-export const newContainer = function(container?: any, name?: any, baseName?: any): any {
+export function newContainer(container?: any, name?: any, baseName?: any): any {
     const template = container._template;
     let part = template && (template[name] || (baseName && template[baseName]));
     if(!isPlainObject(part)) part = null;
 
     const out: any = container[name] = {_template: part};
     return out;
-};
+}
 
-export const arrayTemplater = function(container?: any, name?: any, inclusionAttr?: any): any {
+export function arrayTemplater(container?: any, name?: any, inclusionAttr?: any): any {
     const template = container._template;
     const defaultsTemplate = template && template[arrayDefaultKey(name)];
     let templateItems = template && template[name];
@@ -162,7 +162,7 @@ export const arrayTemplater = function(container?: any, name?: any, inclusionAtt
         newItem: newItem,
         defaultItems: defaultItems
     };
-};
+}
 
 function validItemName(name?: any): boolean {
     return name && typeof name === 'string';
@@ -177,7 +177,7 @@ function arrayDefaultKey(name?: any): any {
 }
 export { arrayDefaultKey };
 
-export const arrayEditor = function(parentIn?: any, containerStr?: any, itemOut?: any): any {
+export function arrayEditor(parentIn?: any, containerStr?: any, itemOut?: any): any {
     const lengthIn = (nestedProperty(parentIn, containerStr).get() || []).length;
     let index = itemOut._index;
     // Check that we are indeed off the end of this container.
@@ -231,6 +231,6 @@ export const arrayEditor = function(parentIn?: any, containerStr?: any, itemOut?
         getUpdateObj: getUpdateObj,
         applyUpdate: applyUpdate
     };
-};
+}
 
 export default { templatedArray, traceTemplater, newContainer, arrayTemplater, arrayEditor, arrayDefaultKey };

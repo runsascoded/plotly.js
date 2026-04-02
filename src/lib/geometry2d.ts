@@ -58,7 +58,7 @@ function segmentsIntersect(x1: number, y1: number, x2: number, y2: number, x3: n
     return {x: x1 + a * t, y: y1 + d * t};
 }
 
-export const segmentDistance = function segmentDistance(x1: number, y1: number, x2: number, y2: number, x3: number, y3: number, x4: number, y4: number): number {
+export function segmentDistance(x1: number, y1: number, x2: number, y2: number, x3: number, y3: number, x4: number, y4: number): number {
     if(segmentsIntersect(x1, y1, x2, y2, x3, y3, x4, y4)) return 0;
 
     // the two segments and their lengths squared
@@ -78,7 +78,7 @@ export const segmentDistance = function segmentDistance(x1: number, y1: number, 
     );
 
     return Math.sqrt(dist2);
-};
+}
 
 /*
  * distance squared from segment ab to point c
@@ -110,7 +110,7 @@ let locationCache: Record<number, TextLocation>;
 let workingPath: SVGPathLike | null;
 let workingTextWidth: number;
 
-export const getTextLocation = function getTextLocation(path: SVGPathLike, totalPathLen: number, positionOnPath: number, textWidth: number): TextLocation {
+export function getTextLocation(path: SVGPathLike, totalPathLen: number, positionOnPath: number, textWidth: number): TextLocation {
     if(path !== workingPath || textWidth !== workingTextWidth) {
         locationCache = {};
         workingPath = path;
@@ -135,13 +135,13 @@ export const getTextLocation = function getTextLocation(path: SVGPathLike, total
     const out: TextLocation = {x: x, y: y, theta: theta};
     locationCache[positionOnPath] = out;
     return out;
-};
+}
 
-export const clearLocationCache = function(): void {
+export function clearLocationCache(): void {
     workingPath = null;
-};
+}
 
-export const getVisibleSegment = function getVisibleSegment(path: SVGPathLike, bounds: Bounds, buffer: number): VisibleSegment | undefined {
+export function getVisibleSegment(path: SVGPathLike, bounds: Bounds, buffer: number): VisibleSegment | undefined {
     const left = bounds.left;
     const right = bounds.right;
     const top = bounds.top;
@@ -188,9 +188,9 @@ export const getVisibleSegment = function getVisibleSegment(path: SVGPathLike, b
             Math.abs(pt0!.x - ptTotal!.x) < 0.1 &&
             Math.abs(pt0!.y - ptTotal!.y) < 0.1
     };
-};
+}
 
-export const findPointOnPath = function findPointOnPath(path: SVGPathLike, val: number, coord: 'x' | 'y', opts?: FindPointOpts): Point {
+export function findPointOnPath(path: SVGPathLike, val: number, coord: 'x' | 'y', opts?: FindPointOpts): Point {
     opts = opts || {};
 
     const pathLength = opts.pathLength || path.getTotalLength();
@@ -225,6 +225,6 @@ export const findPointOnPath = function findPointOnPath(path: SVGPathLike, val: 
         }
     }
     return pt!;
-};
+}
 
 export default { segmentDistance, getTextLocation, clearLocationCache, getVisibleSegment, findPointOnPath, segmentsIntersect };

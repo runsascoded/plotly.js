@@ -127,7 +127,7 @@ proto.createMap = function(calcData: any, fullLayout: any, resolve: any, reject:
 
     promises = promises.concat((geoUtils.fetchTraceGeoData(calcData) as any));
 
-    Promise.all(promises).then(function() {
+    Promise.all(promises).then(() => {
         self.fillBelowLookup(calcData, fullLayout);
         self.updateData(calcData);
         self.updateLayout(fullLayout);
@@ -160,7 +160,7 @@ proto.updateMap = function(calcData: any, fullLayout: any, resolve: any, reject:
 
     promises = promises.concat((geoUtils.fetchTraceGeoData(calcData) as any));
 
-    Promise.all(promises).then(function() {
+    Promise.all(promises).then(() => {
         self.fillBelowLookup(calcData, fullLayout);
         self.updateData(calcData);
         self.updateLayout(fullLayout);

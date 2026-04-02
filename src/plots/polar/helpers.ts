@@ -195,7 +195,7 @@ function findPolygonOffset(r: any, a0: any, a1: any, vangles: any) {
  * @return {2-item array}
  */
 function findEnclosingVertexAngles(a: any, vangles: any) {
-    const minFn = function(v: any) {
+    const minFn = (v: any) => {
         const adelta = angleDelta(v, a);
         return adelta > 0 ? adelta : Infinity;
     };

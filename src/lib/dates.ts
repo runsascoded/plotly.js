@@ -28,14 +28,14 @@ function isWorldCalendar(calendar: any): boolean {
     );
 }
 
-export const dateTick0 = function(calendar: any, dayOfWeek: number): any {
+export function dateTick0(calendar: any, dayOfWeek: number): any {
     const tick0 = _dateTick0(calendar, !!dayOfWeek);
     if(dayOfWeek < 2) return tick0;
 
     let v = dateTime2ms(tick0, calendar);
     v += ONEDAY * (dayOfWeek - 1); // shift Sunday to Monday, etc.
     return ms2DateTime(v, 0, calendar);
-};
+}
 
 /*
  * _dateTick0: get the canonical tick for this calendar
@@ -52,24 +52,24 @@ function _dateTick0(calendar: any, sunday: boolean): string {
     }
 }
 
-export const dfltRange = function(calendar: any): string[] {
+export function dfltRange(calendar: any): string[] {
     if(isWorldCalendar(calendar)) {
         return Registry.getComponentMethod('calendars', 'DFLTRANGE')[calendar];
     } else {
         return ['2000-01-01', '2001-01-01'];
     }
-};
+}
 
-export const isJSDate = function(v: any): boolean {
+export function isJSDate(v: any): boolean {
     return typeof v === 'object' && v !== null && typeof v.getTime === 'function';
-};
+}
 
 // The absolute limits of our date-time system
 // This is a little weird: we use MIN_MS and MAX_MS in dateTime2ms
 // but we use dateTime2ms to calculate them (after defining it!)
 let MIN_MS: number, MAX_MS: number;
 
-export const dateTime2ms = function(s: any, calendar?: any): number {
+export function dateTime2ms(s: any, calendar?: any): number {
     // first check if s is a date object
     if(isJSDate(s)) {
         // Convert to the UTC milliseconds that give the same
@@ -154,14 +154,14 @@ export const dateTime2ms = function(s: any, calendar?: any): number {
     if(date.getUTCDate() !== d) return BADNUM;
 
     return date.getTime() + S * ONESEC;
-};
+}
 
 MIN_MS = dateTime2ms('-9999');
 MAX_MS = dateTime2ms('9999-12-31 23:59:59.9999');
 
-export const isDateTime = function(s: any, calendar?: any): boolean {
+export function isDateTime(s: any, calendar?: any): boolean {
     return (dateTime2ms(s, calendar) !== BADNUM);
-};
+}
 
 // pad a number with zeroes, to given # of digits before the decimal point
 function lpad(val: number, digits: number): string {
@@ -180,7 +180,7 @@ const NINETYDAYS = 90 * ONEDAY;
 const THREEHOURS = 3 * ONEHOUR;
 const FIVEMIN = 5 * ONEMIN;
 
-export const ms2DateTime = function(ms: number, r?: number, calendar?: any): string | number {
+export function ms2DateTime(ms: number, r?: number, calendar?: any): string | number {
     if(typeof ms !== 'number' || !(ms >= MIN_MS && ms <= MAX_MS)) return BADNUM;
 
     if(!r) r = 0;
@@ -230,9 +230,9 @@ export const ms2DateTime = function(ms: number, r?: number, calendar?: any): str
     }
 
     return includeTime(dateStr, h, m, s, msec10);
-};
+}
 
-export const ms2DateTimeLocal = function(ms: number): string | number {
+export function ms2DateTimeLocal(ms: number): string | number {
     if(!(ms >= MIN_MS + ONEDAY && ms <= MAX_MS - ONEDAY)) return BADNUM;
 
     const msecTenths = Math.floor(mod(ms + 0.05, 1) * 10);
@@ -244,7 +244,7 @@ export const ms2DateTimeLocal = function(ms: number): string | number {
     const msec10 = d.getUTCMilliseconds() * 10 + msecTenths;
 
     return includeTime(dateStr, h, m, s, msec10);
-};
+}
 
 function includeTime(dateStr: string, h: number, m: number, s: number, msec10: number): string {
     // include each part that has nonzero data in or after it
@@ -265,7 +265,7 @@ function includeTime(dateStr: string, h: number, m: number, s: number, msec10: n
     return dateStr;
 }
 
-export const cleanDate = function(v: any, dflt?: any, calendar?: any): any {
+export function cleanDate(v: any, dflt?: any, calendar?: any): any {
     // let us use cleanDate to provide a missing default without an error
     if(v === BADNUM) return dflt;
     if(isJSDate(v) || (typeof v === 'number' && isFinite(v))) {
@@ -286,7 +286,7 @@ export const cleanDate = function(v: any, dflt?: any, calendar?: any): any {
         return dflt;
     }
     return v;
-};
+}
 
 /*
  *  Date formatting for ticks and hovertext
@@ -374,7 +374,7 @@ function formatTime(x: number, tr: any): string {
     return timeStr;
 }
 
-export const formatDate = function(x: number, fmt: string, tr: any, formatter: any, calendar?: any, extraFormat?: any): string {
+export function formatDate(x: number, fmt: string, tr: any, formatter: any, calendar?: any, extraFormat?: any): string {
     calendar = isWorldCalendar(calendar) && calendar;
 
     if(!fmt) {
@@ -388,7 +388,7 @@ export const formatDate = function(x: number, fmt: string, tr: any, formatter: a
     }
 
     return modDateFormat(fmt, x, formatter, calendar);
-};
+}
 
 /*
  * incrementMonth: make a new milliseconds value from the given one,
@@ -418,7 +418,7 @@ export const formatDate = function(x: number, fmt: string, tr: any, formatter: a
  */
 const THREEDAYS = 3 * ONEDAY;
 
-export const incrementMonth = function(ms: number, dMonth: number, calendar?: any): number {
+export function incrementMonth(ms: number, dMonth: number, calendar?: any): number {
     calendar = isWorldCalendar(calendar) && calendar;
 
     // pull time out and operate on pure dates, then add time back at the end
@@ -445,9 +445,9 @@ export const incrementMonth = function(ms: number, dMonth: number, calendar?: an
 
     const y = new Date(ms + THREEDAYS);
     return y.setUTCMonth(y.getUTCMonth() + dMonth) + timeMs - THREEDAYS;
-};
+}
 
-export const findExactDates = function(data: any[], calendar?: any): { exactYears: number; exactMonths: number; exactDays: number } {
+export function findExactDates(data: any[], calendar?: any): { exactYears: number; exactMonths: number; exactDays: number } {
     let exactYears = 0;
     let exactMonths = 0;
     let exactDays = 0;

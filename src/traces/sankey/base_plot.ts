@@ -19,13 +19,13 @@ export const baseLayoutAttrOverrides = overrideAll({
     hoverlabel: fxAttrs.hoverlabel
 }, 'plot', 'nested');
 
-export const plot = function(gd: GraphDiv): void {
+export function plot(gd: GraphDiv): void {
     const calcData = getModuleCalcData(gd.calcdata, SANKEY)[0];
     sankeyPlot(gd, calcData);
     updateFx(gd);
-};
+}
 
-export const clean = function(newFullData: FullTrace[], newFullLayout: FullLayout, oldFullData: FullTrace[], oldFullLayout: FullLayout) {
+export function clean(newFullData: FullTrace[], newFullLayout: FullLayout, oldFullData: FullTrace[], oldFullLayout: FullLayout) {
     const hadPlot = (oldFullLayout._has && oldFullLayout._has(SANKEY));
     const hasPlot = (newFullLayout._has && newFullLayout._has(SANKEY));
 
@@ -33,13 +33,13 @@ export const clean = function(newFullData: FullTrace[], newFullLayout: FullLayou
         oldFullLayout._paperdiv.selectAll('.sankey').remove();
         oldFullLayout._paperdiv.selectAll('.bgsankey').remove();
     }
-};
+}
 
-export const updateFx = function(gd: GraphDiv): void {
+export function updateFx(gd: GraphDiv): void {
     for(let i = 0; i < gd._fullData.length; i++) {
         subplotUpdateFx(gd, i);
     }
-};
+}
 
 function subplotUpdateFx(gd: GraphDiv, index: number) {
     const trace = gd._fullData[index];

@@ -1,7 +1,7 @@
 import _numerical from '../constants/numerical.js';
 const { BADNUM } = _numerical;
 
-export const calcTraceToLineCoords = function(calcTrace: any[]): number[][][] {
+export function calcTraceToLineCoords(calcTrace: any[]): number[][][] {
     const trace = calcTrace[0].trace;
     const connectgaps = trace.connectgaps;
 
@@ -25,14 +25,14 @@ export const calcTraceToLineCoords = function(calcTrace: any[]): number[][][] {
     }
 
     return coords;
-};
+}
 
 interface GeoJSONGeometry {
     type: string;
     coordinates: any;
 }
 
-export const makeLine = function(coords: number[][][]): GeoJSONGeometry {
+export function makeLine(coords: number[][][]): GeoJSONGeometry {
     if(coords.length === 1) {
         return {
             type: 'LineString',
@@ -44,9 +44,9 @@ export const makeLine = function(coords: number[][][]): GeoJSONGeometry {
             coordinates: coords
         };
     }
-};
+}
 
-export const makePolygon = function(coords: number[][][]): GeoJSONGeometry {
+export function makePolygon(coords: number[][][]): GeoJSONGeometry {
     if(coords.length === 1) {
         return {
             type: 'Polygon',
@@ -64,13 +64,13 @@ export const makePolygon = function(coords: number[][][]): GeoJSONGeometry {
             coordinates: _coords
         };
     }
-};
+}
 
-export const makeBlank = function(): GeoJSONGeometry {
+export function makeBlank(): GeoJSONGeometry {
     return {
         type: 'Point',
         coordinates: []
     };
-};
+}
 
 export default { calcTraceToLineCoords, makeLine, makePolygon, makeBlank };

@@ -389,7 +389,7 @@ function _doPlot(gd?: any, data?: any, layout?: any, config?: any): any {
             if (insideTickLabelsUpdaterange) {
                 gd._fullLayout._insideTickLabelsUpdaterange = undefined;
 
-                return relayout(gd, insideTickLabelsUpdaterange).then(function () {
+                return relayout(gd, insideTickLabelsUpdaterange).then(() => {
                     Axes.saveRangeInitial(gd, true);
                 });
             }
@@ -423,7 +423,7 @@ function _doPlot(gd?: any, data?: any, layout?: any, config?: any): any {
     let plotDone = syncOrAsync(seq, gd);
     if (!plotDone || !plotDone.then) plotDone = Promise.resolve();
 
-    return plotDone.then(function () {
+    return plotDone.then(() => {
         performance.mark('plotly-total-end');
         performance.measure('plotly-total', 'plotly-total-start', 'plotly-total-end');
         emitAfterPlot(gd);
@@ -446,7 +446,7 @@ function _doPlot(gd?: any, data?: any, layout?: any, config?: any): any {
 
                 let deferredDone = syncOrAsync(deferredSeq, gd);
                 if (!deferredDone || !deferredDone.then) deferredDone = Promise.resolve();
-                deferredDone.then(function () {
+                deferredDone.then(() => {
                     performance.mark('plotly-deferredMargin-end');
                     performance.measure('plotly-deferredMargin', 'plotly-deferredMargin-start', 'plotly-deferredMargin-end');
                 });
@@ -598,7 +598,7 @@ function redraw(gd?: any): any {
     helpers.cleanLayout(gd.layout);
 
     gd.calcdata = undefined;
-    return _doPlot(gd).then(function () {
+    return _doPlot(gd).then(() => {
         gd.emit('plotly_redraw');
         return gd;
     });
@@ -1356,7 +1356,7 @@ function restyle(gd?: any, astr?: any, val?: any, _traces?: any): any {
     let plotDone = syncOrAsync(seq, gd);
     if (!plotDone || !plotDone.then) plotDone = Promise.resolve();
 
-    return plotDone.then(function () {
+    return plotDone.then(() => {
         gd.emit('plotly_restyle', specs.eventData);
         return gd;
     });
@@ -1815,7 +1815,7 @@ function relayout(gd?: any, astr?: any, val?: any): any {
     let plotDone = syncOrAsync(seq, gd);
     if (!plotDone || !plotDone.then) plotDone = Promise.resolve(gd);
 
-    return plotDone.then(function () {
+    return plotDone.then(() => {
         gd.emit('plotly_relayout', specs.eventData);
         return gd;
     });
@@ -2348,7 +2348,7 @@ function update(gd?: any, traceUpdate?: any, layoutUpdate?: any, _traces?: any):
     let plotDone = syncOrAsync(seq, gd);
     if (!plotDone || !plotDone.then) plotDone = Promise.resolve(gd);
 
-    return plotDone.then(function () {
+    return plotDone.then(() => {
         gd.emit('plotly_update', {
             data: restyleSpecs.eventData,
             layout: relayoutSpecs.eventData
@@ -3292,7 +3292,7 @@ function animate(gd?: any, frameOrGroupNameOrFrameList?: any, animationOpts?: an
                     helpers.coerceTraceIndices(gd, newFrame.frame.traces),
                     newFrame.frameOpts,
                     newFrame.transitionOpts
-                ).then(function () {
+                ).then(() => {
                     if (newFrame.onComplete) {
                         newFrame.onComplete();
                     }

@@ -37,7 +37,7 @@ export default function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace,
 
     const colors = layout.colorway;
 
-    const defaultNodePalette = function(i: any) {return colors[i % colors.length];};
+    const defaultNodePalette = (i: any) => {return colors[i % colors.length];};
 
     coerceNode('color', nodeOut.label.map((d: any, i: any) => Color.addOpacity(defaultNodePalette(i), 0.8)));
     coerceNode('customdata');

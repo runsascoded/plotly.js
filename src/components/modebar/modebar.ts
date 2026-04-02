@@ -257,7 +257,7 @@ proto.updateActiveButton = function(buttonClicked: any) {
 
         // set style on button based on its state at the moment this is called
         // (e.g. during the handling when a modebar button is clicked)
-        const updateButtonStyle = function(button: any, isActive: any) {
+        const updateButtonStyle = (button: any, isActive: any) => {
             const style = fullLayout.modebar;
             const childEl = button.querySelector('.icon path');
             if(childEl) {

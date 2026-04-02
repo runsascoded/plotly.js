@@ -52,7 +52,7 @@ function distanceSort(a: any, b: any): number {
     return a.distance - b.distance;
 }
 
-export const hover = function hover(gd: GraphDiv, evt: any, subplot?: any, noHoverEvent?: boolean): void {
+export function hover(gd: GraphDiv, evt: any, subplot?: any, noHoverEvent?: boolean): void {
     gd = getGraphDiv(gd) as GraphDiv;
     // The 'target' property changes when bubbling out of Shadow DOM.
     // Throttling can delay reading the target, so we save the current value.
@@ -60,9 +60,9 @@ export const hover = function hover(gd: GraphDiv, evt: any, subplot?: any, noHov
     throttle(gd._fullLayout._uid + constants.HOVERID, constants.HOVERMINTIME, function () {
         _hover(gd, evt, subplot, noHoverEvent, eventTarget);
     });
-};
+}
 
-export const loneHover = function loneHover(hoverItems: any, opts: any): any {
+export function loneHover(hoverItems: any, opts: any): any {
     let multiHover = true;
     if (!Array.isArray(hoverItems)) {
         multiHover = false;
@@ -191,7 +191,7 @@ export const loneHover = function loneHover(hoverItems: any, opts: any): any {
     alignHoverText(hoverLabel, rotateLabels, scaleX, scaleY);
 
     return multiHover ? hoverLabel : hoverLabel.node();
-};
+}
 
 // The actual implementation is here:
 function _hover(gd: GraphDiv, evt: any, subplot: any, noHoverEvent: any, eventTarget: any): any {

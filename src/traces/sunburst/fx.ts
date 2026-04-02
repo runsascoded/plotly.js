@@ -29,7 +29,7 @@ export default function attachFxHandlers(sliceTop: any, entry: any, gd: GraphDiv
     // in the same slice that you moused up in
     if(!('_hasHoverEvent' in trace)) trace._hasHoverEvent = false;
 
-    const onMouseOver = function(event: any, pt: any) {
+    const onMouseOver = (event: any, pt: any) => {
         const fullLayoutNow = gd._fullLayout;
 
         if(gd._dragging || fullLayoutNow.hovermode === false) return;
@@ -42,7 +42,7 @@ export default function attachFxHandlers(sliceTop: any, entry: any, gd: GraphDiv
 
         const val = helpers.getValue(pt);
 
-        const _cast = function(astr: any) {
+        const _cast = (astr: any) => {
             return Lib.castOption(traceNow, ptNumber, astr);
         };
 
@@ -67,7 +67,7 @@ export default function attachFxHandlers(sliceTop: any, entry: any, gd: GraphDiv
             const hoverPt: Record<string, any> = {};
             let parts: any[] = [];
             const thisText: any[] = [];
-            const hasFlag = function(flag: any) { return parts.indexOf(flag) !== -1; };
+            const hasFlag = (flag: any) => { return parts.indexOf(flag) !== -1; };
 
             if(hoverinfo) {
                 parts = hoverinfo === 'all' ?
@@ -91,7 +91,7 @@ export default function attachFxHandlers(sliceTop: any, entry: any, gd: GraphDiv
 
             let tx: any;
             const allPercents: any[] = [];
-            const insertPercent = function() {
+            const insertPercent = () => {
                 if(allPercents.indexOf(tx) === -1) { // no need to add redundant info
                     thisText.push(tx);
                     allPercents.push(tx);

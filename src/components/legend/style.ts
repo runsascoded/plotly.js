@@ -25,7 +25,7 @@ export default function style(s: any, gd: GraphDiv, legend?: any): any {
     const centerPos = (itemWidth + constants.itemGap * 2) / 2;
     const centerTransform = strTranslate(centerPos, 0);
 
-    const boundLineWidth = function(mlw: any, cont: any, max: number, cst: number): number {
+    const boundLineWidth = (mlw: any, cont: any, max: number, cst: number): number => {
         let v;
         if(mlw + 1) {
             v = mlw;
@@ -138,7 +138,7 @@ export default function style(s: any, gd: GraphDiv, legend?: any): any {
         const colorscale = cOpts.colorscale;
         const reversescale = cOpts.reversescale;
 
-        const fillStyle = function(s: any): void {
+        const fillStyle = (s: any): void => {
             if(s.size()) {
                 if(showFill) {
                     fillGroupStyle(s, gd, true);
@@ -151,7 +151,7 @@ export default function style(s: any, gd: GraphDiv, legend?: any): any {
             }
         };
 
-        const lineGradient = function(s: any): void {
+        const lineGradient = (s: any): void => {
             if(s.size()) {
                 const gradientID = 'legendline-' + trace.uid;
                 lineGroupStyle(s);
@@ -650,7 +650,7 @@ export default function style(s: any, gd: GraphDiv, legend?: any): any {
             const cOpts = extractOpts(trace);
             const colorscale = cOpts.colorscale;
             const reversescale = cOpts.reversescale;
-            const fillGradient = function(s: any): void {
+            const fillGradient = (s: any): void => {
                 if(s.size()) {
                     const gradientID = 'legendfill-' + trace.uid;
                     gradient(s, gd, gradientID,

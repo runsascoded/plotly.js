@@ -12,14 +12,14 @@ const attributes = {
     dflt: 'gregorian'
 };
 
-const handleDefaults = function(contIn: any, contOut: any, attr: any, dflt: any) {
+const handleDefaults = (contIn: any, contOut: any, attr: any, dflt: any) => {
     const attrs: any = {};
     attrs[attr] = attributes;
 
     return Lib.coerce(contIn, contOut, attrs, attr, dflt);
 };
 
-const handleTraceDefaults = function(traceIn: any, traceOut: any, coords: any, layout: any) {
+const handleTraceDefaults = (traceIn: any, traceOut: any, coords: any, layout: any) => {
     for(let i = 0; i < coords.length; i++) {
         handleDefaults(traceIn, traceOut, coords[i] + 'calendar', layout.calendar);
     }

@@ -13,7 +13,7 @@ const sunburstExtendedColorWays = {};
 const treemapExtendedColorWays = {};
 const icicleExtendedColorWays = {};
 
-export const calc = function(gd: GraphDiv, trace: FullTrace) {
+export function calc(gd: GraphDiv, trace: FullTrace) {
     const fullLayout = gd._fullLayout;
     const ids = trace.ids;
     const hasIds = Lib.isArrayOrTypedArray(ids);
@@ -25,18 +25,18 @@ export const calc = function(gd: GraphDiv, trace: FullTrace) {
 
     const parent2children: any = {};
     const refs: any = {};
-    const addToLookup = function(parent: any, v: any) {
+    const addToLookup = (parent: any, v: any) => {
         if(parent2children[parent]) parent2children[parent].push(v);
         else parent2children[parent] = [v];
         refs[v] = 1;
     };
 
     // treat number `0` as valid
-    const isValidKey = function(k: any) {
+    const isValidKey = (k: any) => {
         return k || typeof k === 'number';
     };
 
-    const isValidVal = function(i: any) {
+    const isValidVal = (i: any) => {
         return !hasValues || (isNumeric(values[i]) && values[i] >= 0);
     };
 
@@ -225,9 +225,9 @@ export const calc = function(gd: GraphDiv, trace: FullTrace) {
     (cd[0] as any).hierarchy = hierarchy;
 
     return cd;
-};
+}
 
-export const _runCrossTraceCalc = function(desiredType: string, gd: GraphDiv) {
+export function _runCrossTraceCalc(desiredType: string, gd: GraphDiv) {
     const fullLayout = gd._fullLayout;
     const calcdata = gd.calcdata;
     let colorWay = fullLayout[desiredType + 'colorway'];
@@ -275,11 +275,11 @@ export const _runCrossTraceCalc = function(desiredType: string, gd: GraphDiv) {
             cd0.hierarchy.each(pickColor);
         }
     }
-};
+}
 
-export const crossTraceCalc = function(gd: GraphDiv) {
+export function crossTraceCalc(gd: GraphDiv) {
     return _runCrossTraceCalc('sunburst', gd);
-};
+}
 
 function countDescendants(node: any, trace: FullTrace, opts: { branches: boolean; leaves: boolean }) {
     let nChild = 0;

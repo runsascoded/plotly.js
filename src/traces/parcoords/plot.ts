@@ -43,7 +43,7 @@ function plot(gd: GraphDiv, cdModule: any) {
         initialDims[i] = gd.data[iIn].dimensions.slice();
     });
 
-    const filterChanged = function(i: any, initialDimIndex: any, newRanges: any) {
+    const filterChanged = (i: any, initialDimIndex: any, newRanges: any) => {
         const dim = initialDims[i][initialDimIndex];
         let newConstraints: any = newRanges.map((r: any) => r.slice());
 
@@ -72,15 +72,15 @@ function plot(gd: GraphDiv, cdModule: any) {
         gd.emit('plotly_restyle', [restyleData, [inputIndices[i]]]);
     };
 
-    const hover = function(eventData: any) {
+    const hover = (eventData: any) => {
         gd.emit('plotly_hover', eventData);
     };
 
-    const unhover = function(eventData: any) {
+    const unhover = (eventData: any) => {
         gd.emit('plotly_unhover', eventData);
     };
 
-    const axesMoved = function(i: any, visibleIndices: any) {
+    const axesMoved = (i: any, visibleIndices: any) => {
         const orig = sorter(visibleIndices, initialDims[i].filter(isVisible));
         currentDims[i].sort(orig);
 

@@ -1,7 +1,7 @@
 import Registry from '../registry.js';
 import { isPlainObject, log, nestedProperty, warn } from '../lib/index.js';
 
-export const manageCommandObserver = function(gd?: any, container?: any, commandList?: any, onchange?: any): any {
+export function manageCommandObserver(gd?: any, container?: any, commandList?: any, onchange?: any): any {
     let ret: any = {};
     let enabled = true;
 
@@ -104,9 +104,9 @@ export const manageCommandObserver = function(gd?: any, container?: any, command
     }
 
     return ret;
-};
+}
 
-export const hasSimpleAPICommandBindings = function(gd?: any, commandList?: any, bindingsByValue?: any): any {
+export function hasSimpleAPICommandBindings(gd?: any, commandList?: any, bindingsByValue?: any): any {
     let i;
     const n = commandList.length;
 
@@ -177,7 +177,7 @@ export const hasSimpleAPICommandBindings = function(gd?: any, commandList?: any,
     }
 
     return refBinding;
-};
+}
 
 function bindingValueHasChanged(gd?: any, binding?: any, cache?: any): any {
     let container, value, obj;
@@ -212,7 +212,7 @@ function bindingValueHasChanged(gd?: any, binding?: any, cache?: any): any {
     };
 }
 
-export const executeAPICommand = function(gd?: any, method?: any, args?: any): any {
+export function executeAPICommand(gd?: any, method?: any, args?: any): any {
     if(method === 'skip') return Promise.resolve();
 
     const _method = Registry.apiMethodRegistry[method];
@@ -223,13 +223,13 @@ export const executeAPICommand = function(gd?: any, method?: any, args?: any): a
         allArgs.push(args[i]);
     }
 
-    return _method.apply(null, allArgs).catch(function(err: any) {
+    return _method.apply(null, allArgs).catch((err: any) => {
         warn('API call to Plotly.' + method + ' rejected.', err);
         return Promise.reject(err);
     });
-};
+}
 
-export const computeAPICommandBindings = function(gd?: any, method?: any, args?: any): any {
+export function computeAPICommandBindings(gd?: any, method?: any, args?: any): any {
     let bindings;
 
     if(!Array.isArray(args)) args = [];
@@ -255,7 +255,7 @@ export const computeAPICommandBindings = function(gd?: any, method?: any, args?:
             bindings = [];
     }
     return bindings;
-};
+}
 
 function computeAnimateBindings(gd?: any, args?: any): any {
     // We'll assume that the only relevant modification an animation

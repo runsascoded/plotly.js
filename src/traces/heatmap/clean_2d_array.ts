@@ -24,7 +24,7 @@ export default function clean2dArray(zOld: any,  trace?: FullTrace,  xa?: FullAx
         old2new = function(zOld: any, i: any, j: any) { return (zOld[i] || [])[j]; };
     }
 
-    const padOld2new = function(zOld: any,  i: any,  j: any) {
+    const padOld2new = (zOld: any,  i: any,  j: any) => {
         if(i === BADNUM || j === BADNUM) return BADNUM;
         return old2new(zOld, i, j);
     };

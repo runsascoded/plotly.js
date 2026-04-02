@@ -112,7 +112,7 @@ proto.plot = function(geoCalcData: any, fullLayout: any, promises: any, replot: 
     geoPromises = geoPromises.concat((geoUtils.fetchTraceGeoData(geoCalcData) as any));
 
     promises.push(new Promise<void>(function(resolve, reject) {
-        Promise.all(geoPromises).then(function() {
+        Promise.all(geoPromises).then(() => {
             _this.topojson = PlotlyGeoAssets.topojson[_this.topojsonName];
             _this.update(geoCalcData, fullLayout);
             resolve();
@@ -126,7 +126,7 @@ proto.fetchTopojson = function() {
     const topojsonPath = topojsonUtils.getTopojsonPath(_this.topojsonURL, _this.topojsonName);
 
     return new Promise<void>(function(resolve, reject) {
-        window.fetch(topojsonPath).then(function(r) {
+        window.fetch(topojsonPath).then((r) => {
                 if(!r.ok) {
                     if(r.status === 404) {
                         throw new Error([
@@ -143,7 +143,7 @@ proto.fetchTopojson = function() {
                     }
                 }
                 return r.json();
-            }).then(function(topojson) {
+            }).then((topojson) => {
                 PlotlyGeoAssets.topojson[_this.topojsonName] = topojson;
                 resolve();
             }).catch(reject);
@@ -445,7 +445,7 @@ proto.updateFx = function(fullLayout: any, geoLayout: any) {
         ]);
     }
 
-    const fillRangeItems = function(eventData: any, poly: any) {
+    const fillRangeItems = (eventData: any, poly: any) => {
         if(poly.isRect) {
             const ranges = eventData.range = {};
             (ranges as any)[_this.id] = [
@@ -672,7 +672,7 @@ function getProjection(geoLayout: any) {
         geoLayout._isClipped ? (constants.lonaxisSpan as any)[projType] / 2 : null;
 
     const methods = ['center', 'rotate', 'parallels', 'clipExtent'];
-    const dummyFn = function(_: any) { return _ ? projection : []; };
+    const dummyFn = (_: any) => { return _ ? projection : []; };
 
     for(let i = 0; i < methods.length; i++) {
         const m = methods[i];

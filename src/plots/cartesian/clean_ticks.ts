@@ -4,7 +4,7 @@ import constants from '../../constants/numerical.js';
 const ONEDAY = constants.ONEDAY;
 const ONEWEEK = constants.ONEWEEK;
 
-export const dtick = function(dtick?: any, axType?: any): any {
+export function dtick(dtick?: any, axType?: any): any {
     const isLog = axType === 'log';
     const isDate = axType === 'date';
     const isCat = axType === 'category';
@@ -45,9 +45,9 @@ export const dtick = function(dtick?: any, axType?: any): any {
     }
 
     return dtick;
-};
+}
 
-export const tick0 = function(tick0?: any, axType?: any, calendar?: any, dtick?: any): any {
+export function tick0(tick0?: any, axType?: any, calendar?: any, dtick?: any): any {
     if(axType === 'date') {
         return cleanDate(tick0,
             dateTick0(calendar, (dtick % ONEWEEK === 0) ? 1 : 0)
@@ -59,6 +59,6 @@ export const tick0 = function(tick0?: any, axType?: any, calendar?: any, dtick?:
     }
     // Aside from date axes, tick0 must be numeric
     return isNumeric(tick0) ? Number(tick0) : 0;
-};
+}
 
 export default { dtick, tick0 };

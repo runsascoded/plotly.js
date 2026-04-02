@@ -392,7 +392,7 @@ export const valObjectMeta: Record<string, any> = {
     }
 };
 
-export const coerce = function(containerIn: any, containerOut: any, attributes: any, attribute: string, dflt?: any): any {
+export function coerce(containerIn: any, containerOut: any, attributes: any, attribute: string, dflt?: any): any {
     const opts = nestedProperty(attributes, attribute).get();
     const propIn = nestedProperty(containerIn, attribute);
     const propOut = nestedProperty(containerOut, attribute);
@@ -439,17 +439,17 @@ export const coerce = function(containerIn: any, containerOut: any, attributes: 
         out = propOut.get();
     }
     return out;
-};
+}
 
-export const coerce2 = function(containerIn: any, containerOut: any, attributes: any, attribute: string, dflt?: any): any {
+export function coerce2(containerIn: any, containerOut: any, attributes: any, attribute: string, dflt?: any): any {
     const propIn = nestedProperty(containerIn, attribute);
     const propOut = coerce(containerIn, containerOut, attributes, attribute, dflt);
     const valIn = propIn.get();
 
     return (valIn !== undefined && valIn !== null) ? propOut : false;
-};
+}
 
-export const coerceFont = function(coerce: any, attr: string, dfltObj?: any, opts?: any): any {
+export function coerceFont(coerce: any, attr: string, dfltObj?: any, opts?: any): any {
     if(!opts) opts = {};
     dfltObj = extendFlat({}, dfltObj);
     dfltObj = extendFlat(dfltObj, opts.overrideDflt || {});
@@ -474,9 +474,9 @@ export const coerceFont = function(coerce: any, attr: string, dfltObj?: any, opt
     }
 
     return out;
-};
+}
 
-export const coercePattern = function(coerce: any, attr: string, markerColor: any, hasMarkerColorscale: boolean): void {
+export function coercePattern(coerce: any, attr: string, markerColor: any, hasMarkerColorscale: boolean): void {
     const shape = coerce(attr + '.shape');
     let path: any;
     if(!shape) {
@@ -507,9 +507,9 @@ export const coercePattern = function(coerce: any, attr: string, markerColor: an
             1
         );
     }
-};
+}
 
-export const coerceHoverinfo = function(traceIn: any, traceOut: any, layoutOut: FullLayout): any {
+export function coerceHoverinfo(traceIn: any, traceOut: any, layoutOut: FullLayout): any {
     const moduleAttrs = traceOut._module.attributes;
     const attrs = moduleAttrs.hoverinfo ? moduleAttrs : baseTraceAttrs;
 
@@ -526,9 +526,9 @@ export const coerceHoverinfo = function(traceIn: any, traceOut: any, layoutOut: 
     }
 
     return coerce(traceIn, traceOut, attrs, 'hoverinfo', dflt);
-};
+}
 
-export const coerceSelectionMarkerOpacity = function(traceOut: any, coerce: any): void {
+export function coerceSelectionMarkerOpacity(traceOut: any, coerce: any): void {
     if(!traceOut.marker) return;
 
     const mo = traceOut.marker.opacity;
@@ -550,7 +550,7 @@ export const coerceSelectionMarkerOpacity = function(traceOut: any, coerce: any)
 
     coerce('selected.marker.opacity', smoDflt);
     coerce('unselected.marker.opacity', usmoDflt);
-};
+}
 
 function validate(value: any, opts: any): boolean {
     const valObjectDef = valObjectMeta[opts.valType];

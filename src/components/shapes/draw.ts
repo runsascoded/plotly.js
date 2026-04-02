@@ -215,11 +215,11 @@ function setupDragElement(gd: GraphDiv, shapePath: any, shapeOptions: any, index
     const shiftXEnd = shapeOptions.x1shift;
     const shiftYStart = shapeOptions.y0shift;
     const shiftYEnd = shapeOptions.y1shift;
-    const x2p = function(v: any, shift?: any) {
+    const x2p = (v: any, shift?: any) => {
         const dataToPixel = helpers.getDataToPixel(gd, xa, shift, false, xRefType);
         return dataToPixel(v);
     };
-    const y2p = function(v: any, shift?: any) {
+    const y2p = (v: any, shift?: any) => {
         const dataToPixel = helpers.getDataToPixel(gd, ya, shift, true, yRefType);
         return dataToPixel(v);
     };
@@ -395,7 +395,7 @@ function setupDragElement(gd: GraphDiv, shapePath: any, shapeOptions: any, index
 
     function moveShape(dx: any, dy: any) {
         if(shapeOptions.type === 'path') {
-            const noOp = function(coord: any) { return coord; };
+            const noOp = (coord: any) => { return coord; };
             let moveX = noOp;
             let moveY = noOp;
 
@@ -438,7 +438,7 @@ function setupDragElement(gd: GraphDiv, shapePath: any, shapeOptions: any, index
     function resizeShape(dx: any, dy: any) {
         if(isPath) {
             // TODO: implement path resize, don't forget to update dragMode code
-            const noOp = function(coord: any) { return coord; };
+            const noOp = (coord: any) => { return coord; };
             let moveX = noOp;
             let moveY = noOp;
 
@@ -470,7 +470,7 @@ function setupDragElement(gd: GraphDiv, shapePath: any, shapeOptions: any, index
                 modifyItem('y1', shapeOptions.y1 = yPixelSized ? newY1 : p2y(newY1));
             }
         } else {
-            const has = function(str: any) { return dragMode.indexOf(str) !== -1; };
+            const has = (str: any) => { return dragMode.indexOf(str) !== -1; };
             const hasN = has('n');
             const hasS = has('s');
             const hasW = has('w');

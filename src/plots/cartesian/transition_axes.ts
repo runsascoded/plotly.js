@@ -125,7 +125,7 @@ export default function transitionAxes(gd?: any, edits?: any, transitionOpts?: a
         // Signal that this transition has completed:
         onComplete && onComplete();
 
-        return Registry.call('relayout', gd, aobj).then(function() {
+        return Registry.call('relayout', gd, aobj).then(() => {
             for(let i = 0; i < edits.length; i++) {
                 unsetSubplotTransform(edits[i].plotinfo);
             }
@@ -143,7 +143,7 @@ export default function transitionAxes(gd?: any, edits?: any, transitionOpts?: a
             if(edit.yr0) aobj[ya._name + '.range'] = edit.yr0.slice();
         }
 
-        return Registry.call('relayout', gd, aobj).then(function() {
+        return Registry.call('relayout', gd, aobj).then(() => {
             for(let i = 0; i < edits.length; i++) {
                 unsetSubplotTransform(edits[i].plotinfo);
             }

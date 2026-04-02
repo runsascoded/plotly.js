@@ -6,18 +6,18 @@ const TABLE = 'table';
 
 export const name = TABLE;
 
-export const plot = function(gd: GraphDiv): void {
+export function plot(gd: GraphDiv): void {
     const calcData = getModuleCalcData(gd.calcdata, TABLE)[0];
     if(calcData.length) tablePlot(gd, calcData);
-};
+}
 
-export const clean = function(newFullData: FullTrace[], newFullLayout: FullLayout, oldFullData: FullTrace[], oldFullLayout: FullLayout) {
+export function clean(newFullData: FullTrace[], newFullLayout: FullLayout, oldFullData: FullTrace[], oldFullLayout: FullLayout) {
     const hadTable = (oldFullLayout._has && oldFullLayout._has(TABLE));
     const hasTable = (newFullLayout._has && newFullLayout._has(TABLE));
 
     if(hadTable && !hasTable) {
         oldFullLayout._paperdiv.selectAll('.table').remove();
     }
-};
+}
 
 export default { name, plot, clean };

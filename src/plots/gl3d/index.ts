@@ -26,7 +26,7 @@ export const baseLayoutAttrOverrides = overrideAll({
 
 export const supplyLayoutDefaults = _req2;
 
-export const plot = function plot(gd: GraphDiv) {
+export function plot(gd: GraphDiv) {
     const fullLayout = gd._fullLayout;
     const fullData = gd._fullData;
     const sceneIds = fullLayout._subplots[GL3D];
@@ -78,9 +78,9 @@ export const plot = function plot(gd: GraphDiv) {
 
         scene.plot(fullSceneData, fullLayout, gd.layout);
     }
-};
+}
 
-export const clean = function(newFullData: any, newFullLayout: any, oldFullData: any, oldFullLayout: any) {
+export function clean(newFullData: any, newFullLayout: any, oldFullData: any, oldFullLayout: any) {
     const oldSceneKeys = oldFullLayout._subplots[GL3D] || [];
 
     for(let i = 0; i < oldSceneKeys.length; i++) {
@@ -96,9 +96,9 @@ export const clean = function(newFullData: any, newFullLayout: any, oldFullData:
             }
         }
     }
-};
+}
 
-export const toSVG = function(gd: any) {
+export function toSVG(gd: any) {
     const fullLayout = gd._fullLayout;
     const sceneIds = fullLayout._subplots[GL3D];
     const size = fullLayout._size;
@@ -122,18 +122,18 @@ export const toSVG = function(gd: any) {
 
         scene.destroy();
     }
-};
+}
 
-export const cleanId = function cleanId(id: any) {
+export function cleanId(id: any) {
     if(!id.match(/^scene[0-9]*$/)) return;
 
     let sceneNum = id.slice(5);
     if(sceneNum === '1') sceneNum = '';
 
     return SCENE + sceneNum;
-};
+}
 
-export const updateFx = function(gd: any) {
+export function updateFx(gd: any) {
     const fullLayout = gd._fullLayout;
     const subplotIds = fullLayout._subplots[GL3D];
 
@@ -141,6 +141,6 @@ export const updateFx = function(gd: any) {
         const subplotObj = fullLayout[subplotIds[i]]._scene;
         subplotObj.updateFx(fullLayout.dragmode, fullLayout.hovermode);
     }
-};
+}
 
 export default { name, attr, idRoot, idRegex, attributes, layoutAttributes, baseLayoutAttrOverrides, supplyLayoutDefaults, plot, clean, toSVG, cleanId, updateFx };

@@ -111,7 +111,7 @@ export const attributes = {
     editType: 'calc'
 };
 
-export const supplyDefaults = function(transformIn: any) {
+export function supplyDefaults(transformIn: any) {
     const transformOut: any = {};
 
     function coerce(attr: string, dflt?: any) {
@@ -138,9 +138,9 @@ export const supplyDefaults = function(transformIn: any) {
     }
 
     return transformOut;
-};
+}
 
-export const calcTransform = function(gd: any, trace: any, opts: any) {
+export function calcTransform(gd: any, trace: any, opts: any) {
     if(!opts.enabled) return;
 
     const targetArray = Lib.getTargetArray(trace, opts);
@@ -213,7 +213,7 @@ export const calcTransform = function(gd: any, trace: any, opts: any) {
 
     opts._indexToPoints = indexToPoints;
     trace._length = index;
-};
+}
 
 function getFilterFunc(opts: any, d2c: any, targetCalendar: any) {
     const operation = opts.operation;
@@ -224,8 +224,8 @@ function getFilterFunc(opts: any, d2c: any, targetCalendar: any) {
         return array.indexOf(operation) !== -1;
     }
 
-    const d2cValue = function(v: any) { return d2c(v, 0, opts.valuecalendar); };
-    const d2cTarget = function(v: any) { return d2c(v, 0, targetCalendar); };
+    const d2cValue = (v: any) => { return d2c(v, 0, opts.valuecalendar); };
+    const d2cTarget = (v: any) => { return d2c(v, 0, targetCalendar); };
 
     let coercedValue: any;
 

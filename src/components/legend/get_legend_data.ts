@@ -107,14 +107,14 @@ export default function getLegendData(calcdata: any[], opts: any, hasMultipleLeg
         legendData[i][0]._preGroupSort = i;
     }
 
-    const orderFn1 = function(a: any, b: any): number {
+    const orderFn1 = (a: any, b: any): number => {
         return (
             // fallback for old Chrome < 70 https://bugs.chromium.org/p/v8/issues/detail?id=90
             ((a[0]._groupMinRank - b[0]._groupMinRank) || (a[0]._preGroupSort - b[0]._preGroupSort))
         );
     };
 
-    const orderFn2 = function(a: any, b: any): number {
+    const orderFn2 = (a: any, b: any): number => {
         return (
             // fallback for old Chrome < 70 https://bugs.chromium.org/p/v8/issues/detail?id=90
             ((a.trace.legendrank - b.trace.legendrank) || (a._preSort - b._preSort))

@@ -20,7 +20,7 @@ export { IS_LINKED_TO_ARRAY };
 export { DEPRECATED };
 export { UNDERSCORE_ATTRS };
 
-export const get = function(): any {
+export function get(): any {
     const traces: any = {};
 
     Registry.allTypes.forEach((type) => {
@@ -63,9 +63,9 @@ export const get = function(): any {
 
         config: formatAttributes(configAttributes)
     };
-};
+}
 
-export const crawl = function(attrs?: any, callback?: any, specifiedLevel?: any, attrString?: any): void {
+export function crawl(attrs?: any, callback?: any, specifiedLevel?: any, attrString?: any): void {
     const level = specifiedLevel || 0;
     attrString = attrString || '';
 
@@ -83,13 +83,13 @@ export const crawl = function(attrs?: any, callback?: any, specifiedLevel?: any,
             crawl(attr, callback, level + 1, fullAttrString);
         }
     });
-};
+}
 
-export const isValObject = function(obj?: any): boolean {
+export function isValObject(obj?: any): boolean {
     return obj && obj.valType !== undefined;
-};
+}
 
-export const findArrayAttributes = function(trace?: any): any {
+export function findArrayAttributes(trace?: any): any {
     const arrayAttributes: any[] = [];
     let stack: any[] = [];
     let isArrayStack: any[] = [];
@@ -147,9 +147,9 @@ export const findArrayAttributes = function(trace?: any): any {
     }
 
     return arrayAttributes;
-};
+}
 
-export const getTraceValObject = function(trace?: any, parts?: any): any {
+export function getTraceValObject(trace?: any, parts?: any): any {
     const head = parts[0];
     const i = 1; // index to start recursing from
     let moduleAttrs, valObject;
@@ -175,13 +175,13 @@ export const getTraceValObject = function(trace?: any, parts?: any): any {
     if(!valObject) valObject = (baseAttributes as any)[head];
 
     return recurseIntoValObject(valObject, parts, i);
-};
+}
 
-export const getLayoutValObject = function(fullLayout?: any, parts?: any): any {
+export function getLayoutValObject(fullLayout?: any, parts?: any): any {
     const valObject: any = layoutHeadAttr(fullLayout, parts[0]);
 
     return recurseIntoValObject(valObject, parts, 1);
-};
+}
 
 function layoutHeadAttr(fullLayout?: any, head?: any): boolean {
     let i, key, _module, attributes;

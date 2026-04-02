@@ -101,7 +101,7 @@ export const attrs = {
 
 const aggAttrs = attrs.aggregations;
 
-export const supplyDefaults = function(transformIn: any, traceOut: any) {
+export function supplyDefaults(transformIn: any, traceOut: any) {
     const transformOut: any = {};
     let i: any;
 
@@ -174,9 +174,9 @@ export const supplyDefaults = function(transformIn: any, traceOut: any) {
     }
 
     return transformOut;
-};
+}
 
-export const calcTransform = function(gd: any, trace: any, opts: any) {
+export function calcTransform(gd: any, trace: any, opts: any) {
     if(!opts.enabled) return;
 
     const groups = opts.groups;
@@ -226,7 +226,7 @@ export const calcTransform = function(gd: any, trace: any, opts: any) {
     }
 
     trace._length = groupings.length;
-};
+}
 
 function aggregateOneArray(gd: any, trace: any, groupings: any, aggregation: any) {
     if(!aggregation.enabled) return;

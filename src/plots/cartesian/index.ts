@@ -33,7 +33,7 @@ export const layoutAttributes = _req1;
 export const supplyLayoutDefaults = _req2;
 export const transitionAxes = _req3;
 
-export const finalizeSubplots = function(layoutIn?: any, layoutOut?: any): void {
+export function finalizeSubplots(layoutIn?: any, layoutOut?: any): void {
     const subplots = layoutOut._subplots;
     const xList = subplots.xaxis;
     const yList = subplots.yaxis;
@@ -105,9 +105,9 @@ export const finalizeSubplots = function(layoutIn?: any, layoutOut?: any): void 
         yList.push(yi);
         spSVG.push(xi + yi);
     }
-};
+}
 
-export const plot = function(gd: GraphDiv, traces?: any, transitionOpts?: any, makeOnCompleteCallback?: any): void {
+export function plot(gd: GraphDiv, traces?: any, transitionOpts?: any, makeOnCompleteCallback?: any): void {
     const fullLayout = gd._fullLayout;
     const subplots = fullLayout._subplots.cartesian;
     const calcdata = gd.calcdata;
@@ -188,7 +188,7 @@ export const plot = function(gd: GraphDiv, traces?: any, transitionOpts?: any, m
             plotOne(gd, subplotInfo, cdSubplot, transitionOpts, makeOnCompleteCallback);
         }
     }
-};
+}
 
 function plotOne(gd: GraphDiv, plotinfo: PlotInfo, cdSubplot?: any, transitionOpts?: any, makeOnCompleteCallback?: any): any {
     const traceLayerClasses = constants.traceLayerClasses;
@@ -300,7 +300,7 @@ function plotOne(gd: GraphDiv, plotinfo: PlotInfo, cdSubplot?: any, transitionOp
     }
 }
 
-export const clean = function(newFullData: FullTrace[], newFullLayout: FullLayout, oldFullData: FullTrace[], oldFullLayout: FullLayout): void {
+export function clean(newFullData: FullTrace[], newFullLayout: FullLayout, oldFullData: FullTrace[], oldFullLayout: FullLayout): void {
     const oldPlots = oldFullLayout._plots || {};
     const newPlots = newFullLayout._plots || {};
     const oldSubplotList = oldFullLayout._subplots || {} as any;
@@ -365,9 +365,9 @@ export const clean = function(newFullData: FullTrace[], newFullLayout: FullLayou
             }
         }
     }
-};
+}
 
-export const drawFramework = function(gd: GraphDiv): any {
+export function drawFramework(gd: GraphDiv): any {
     const fullLayout = gd._fullLayout;
     const calcdata = gd.calcdata;
     let i;
@@ -452,13 +452,13 @@ export const drawFramework = function(gd: GraphDiv): any {
             }
         }
     });
-};
+}
 
-export const rangePlot = function(gd?: any, plotinfo?: any, cdSubplot?: any): void {
+export function rangePlot(gd?: any, plotinfo?: any, cdSubplot?: any): void {
     makeSubplotLayer(gd, plotinfo);
     plotOne(gd, plotinfo, cdSubplot);
     plotsStyle(gd);
-};
+}
 
 function makeSubplotData(gd?: any): any {
     const fullLayout = gd._fullLayout;
@@ -721,7 +721,7 @@ function removeSubplotExtras(subplotId?: any, fullLayout?: any): void {
     fullLayout._defs.select('#clip' + fullLayout._uid + subplotId + 'plot').remove();
 }
 
-export const toSVG = function(gd?: any): any {
+export function toSVG(gd?: any): any {
     const imageRoot = gd._fullLayout._glimages;
     const root = select(gd).selectAll('.svg-container');
     const canvases = root.filter((d: any, i: any) => i === root.size() - 1)
@@ -743,7 +743,7 @@ export const toSVG = function(gd?: any): any {
     }
 
     canvases.each(canvasToImage);
-};
+}
 
 export const updateFx = _req4;
 

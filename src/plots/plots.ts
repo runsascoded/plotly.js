@@ -80,7 +80,7 @@ export function resize(gd?: any): any {
             // nor should it be included in the undo queue
             gd.autoplay = true;
 
-            Registry.call('relayout', gd, {autosize: true}).then(function() {
+            Registry.call('relayout', gd, {autosize: true}).then(() => {
                 gd.changed = oldchanged;
                 // Only resolve if a new call hasn't been made!
                 if(gd._resolveResize === resolve) {
@@ -100,7 +100,7 @@ export function resize(gd?: any): any {
 export function previousPromises(gd?: any): any {
     if((gd._promises || []).length) {
         return Promise.all(gd._promises)
-            .then(function() { gd._promises = []; });
+            .then(() => { gd._promises = []; });
     }
 };
 
@@ -2806,11 +2806,11 @@ function _transition(gd?: any, transitionOpts?: any, opts?: any): any {
 
         flushCallbacks(gd._transitionData._interruptCallbacks);
 
-        return Promise.resolve().then(function() {
+        return Promise.resolve().then(() => {
             if(opts.redraw) {
                 return Registry.call('redraw', gd);
             }
-        }).then(function() {
+        }).then(() => {
             // Set transitioning false again once the redraw has occurred. This is used, for example,
             // to prevent the trailing redraw from autoranging:
             gd._transitioning = false;
@@ -2848,7 +2848,7 @@ function _transition(gd?: any, transitionOpts?: any, opts?: any): any {
         transitionStarting = Promise.resolve();
     }
 
-    return transitionStarting.then(function() { return gd; });
+    return transitionStarting.then(() => gd);
 }
 
 export function doCalcdata(gd: GraphDiv, traces?: any): void {

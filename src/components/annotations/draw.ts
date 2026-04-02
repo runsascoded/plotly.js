@@ -482,7 +482,7 @@ function drawRaw(gd: GraphDiv, options: any, index: any, subplotId: any, xa: Ful
          * dx and dy are normally zero, but when you are dragging the textbox
          * while the head stays put, dx and dy are the pixel offsets
          */
-        const drawArrow = function(dx: any, dy: any) {
+        const drawArrow = (dx: any, dy: any) => {
             annGroup
                 .selectAll('.annotation-arrow-g')
                 .remove();

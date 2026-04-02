@@ -12,15 +12,15 @@ const traceIs = Registry.traceIs;
 
 const AX_LETTERS = ['x', 'y', 'z'];
 
-export const clearPromiseQueue = function (gd?: any) {
+export function clearPromiseQueue(gd?: any) {
     if (Array.isArray(gd._promises) && gd._promises.length > 0) {
         log('Clearing previous rejected promises from queue.');
     }
 
     gd._promises = [];
-};
+}
 
-export const cleanLayout = function (layout?: any) {
+export function cleanLayout(layout?: any) {
     let i, j;
 
     if (!layout) layout = {};
@@ -144,7 +144,7 @@ export const cleanLayout = function (layout?: any) {
     }
 
     return layout;
-};
+}
 
 function cleanAxRef(container?: any, attr?: any): void {
     const valIn = container[attr];
@@ -154,7 +154,7 @@ function cleanAxRef(container?: any, attr?: any): void {
     }
 }
 
-export const cleanData = function (data?: any) {
+export function cleanData(data?: any) {
     for (let tracei = 0; tracei < data.length; tracei++) {
         const trace = data[tracei];
         let i;
@@ -279,7 +279,7 @@ export const cleanData = function (data?: any) {
             delete trace.ybins;
         }
     }
-};
+}
 
 function cleanFinanceDir(dirContainer?: any): any {
     if (!isPlainObject(dirContainer)) return false;
@@ -334,7 +334,7 @@ function emptyContainer(outer?: any, innerStr?: any): any {
     return innerStr in outer && typeof outer[innerStr] === 'object' && Object.keys(outer[innerStr]).length === 0;
 }
 
-export const swapXYData = function (trace?: any) {
+export function swapXYData(trace?: any) {
     let i;
     swapAttrs(trace, ['?', '?0', 'd?', '?bins', 'nbins?', 'autobin?', '?src', 'error_?']);
     if (Array.isArray(trace.z) && Array.isArray(trace.z[0])) {
@@ -358,9 +358,9 @@ export const swapXYData = function (trace?: any) {
         }
         trace.hoverinfo = hoverInfoParts.join('+');
     }
-};
+}
 
-export const coerceTraceIndices = function (gd?: any, traceIndices?: any) {
+export function coerceTraceIndices(gd?: any, traceIndices?: any) {
     if (isNumeric(traceIndices)) {
         return [traceIndices];
     } else if (!Array.isArray(traceIndices) || !traceIndices.length) {
@@ -378,9 +378,9 @@ export const coerceTraceIndices = function (gd?: any, traceIndices?: any) {
     }
 
     return traceIndices;
-};
+}
 
-export const manageArrayContainers = function (np?: any, newVal?: any, undoit?: any) {
+export function manageArrayContainers(np?: any, newVal?: any, undoit?: any) {
     const obj = np.obj;
     const parts = np.parts;
     const pLength = parts.length;
@@ -412,7 +412,7 @@ export const manageArrayContainers = function (np?: any, newVal?: any, undoit?: 
         // np.set is all we need.
         np.set(newVal);
     }
-};
+}
 
 /*
  * Match the part to strip off to turn an attribute into its parent
@@ -427,16 +427,16 @@ function getParent(attr?: any): any {
     if (tail > 0) return attr.slice(0, tail);
 }
 
-export const hasParent = function (aobj?: any, attr?: any) {
+export function hasParent(aobj?: any, attr?: any) {
     let attrParent = getParent(attr);
     while (attrParent) {
         if (attrParent in aobj) return true;
         attrParent = getParent(attrParent);
     }
     return false;
-};
+}
 
-export const clearAxisTypes = function (gd?: any, traces?: any, layoutUpdate?: any) {
+export function clearAxisTypes(gd?: any, traces?: any, layoutUpdate?: any) {
     for (let i = 0; i < traces.length; i++) {
         const trace = gd._fullData[i];
         for (let j = 0; j < 3; j++) {
@@ -458,7 +458,7 @@ export const clearAxisTypes = function (gd?: any, traces?: any, layoutUpdate?: a
             }
         }
     }
-};
+}
 
 /**
  * Check if two collections (object or array) are equal

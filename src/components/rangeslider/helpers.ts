@@ -12,7 +12,7 @@ function isVisible(ax: FullAxis) {
 }
 export { isVisible };
 
-export const makeData = function(fullLayout: FullLayout) {
+export function makeData(fullLayout: FullLayout) {
     const axes = axisIDs.list({ _fullLayout: fullLayout }, 'x', true);
     const margin = fullLayout.margin;
     const rangeSliderData: any[] = [];
@@ -31,9 +31,9 @@ export const makeData = function(fullLayout: FullLayout) {
     }
 
     fullLayout._rangeSliderData = rangeSliderData;
-};
+}
 
-export const autoMarginOpts = function(gd: GraphDiv, ax: FullAxis) {
+export function autoMarginOpts(gd: GraphDiv, ax: FullAxis) {
     const fullLayout = gd._fullLayout;
     const opts = ax[name];
     const axLetter = ax._id.charAt(0);
@@ -61,6 +61,6 @@ export const autoMarginOpts = function(gd: GraphDiv, ax: FullAxis) {
         b: opts._height + bottomDepth + Math.max((fullLayout.margin!.b as any), titleHeight),
         pad: constants.extraPad + opts._offsetShift * 2
     };
-};
+}
 
 export default { makeData, autoMarginOpts, isVisible };

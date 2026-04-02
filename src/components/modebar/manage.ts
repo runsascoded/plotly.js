@@ -204,7 +204,7 @@ function getButtonGroups(gd: GraphDiv) {
     }
 
     const enabledHoverGroup: any[] = [];
-    const enableHover = function(a: any) {
+    const enableHover = (a: any) => {
         // return if already added
         if(enabledHoverGroup.indexOf(a) !== -1) return;
         // should be in hoverGroup

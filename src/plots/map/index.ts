@@ -35,7 +35,7 @@ export const attributes = {
 export const layoutAttributes = _req0;
 export const supplyLayoutDefaults = _req1;
 
-export const plot = function plot(gd: GraphDiv) {
+export function plot(gd: GraphDiv) {
     const fullLayout = gd._fullLayout;
     const calcData = gd.calcdata;
     const mapIds = fullLayout._subplots[MAP];
@@ -63,9 +63,9 @@ export const plot = function plot(gd: GraphDiv) {
 
         map.plot(subplotCalcData, fullLayout, gd._promises);
     }
-};
+}
 
-export const clean = function(newFullData: any, newFullLayout: any, oldFullData: any, oldFullLayout: any) {
+export function clean(newFullData: any, newFullLayout: any, oldFullData: any, oldFullLayout: any) {
     const oldMapKeys = oldFullLayout._subplots[MAP] || [];
 
     for(let i = 0; i < oldMapKeys.length; i++) {
@@ -75,9 +75,9 @@ export const clean = function(newFullData: any, newFullLayout: any, oldFullData:
             oldFullLayout[oldMapKey]._subplot.destroy();
         }
     }
-};
+}
 
-export const toSVG = function(gd: any) {
+export function toSVG(gd: any) {
     const fullLayout = gd._fullLayout;
     const subplotIds = fullLayout._subplots[MAP];
     const size = fullLayout._size;
@@ -149,9 +149,9 @@ export const toSVG = function(gd: any) {
         const offset = [(size.l + size.w * domain.x[1]), (size.t + size.h * (1 - domain.y[0]))];
         attributionGroup.attr('transform', strTranslate(offset[0], offset[1]) + strScale(scaleRatio));
     }
-};
+}
 
-export const updateFx = function(gd: any) {
+export function updateFx(gd: any) {
     const fullLayout = gd._fullLayout;
     const subplotIds = fullLayout._subplots[MAP];
 
@@ -159,6 +159,6 @@ export const updateFx = function(gd: any) {
         const subplotObj = fullLayout[subplotIds[i]]._subplot;
         subplotObj.updateFx(fullLayout);
     }
-};
+}
 
 export default { name, attr, idRoot, idRegex, attributes, layoutAttributes, supplyLayoutDefaults, plot, clean, toSVG, updateFx };

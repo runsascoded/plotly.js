@@ -24,7 +24,7 @@ export const localeRegistry: Record<string, any> = {};
 export const apiMethodRegistry: Record<string, any> = {};
 export let collectableSubplotTypes: string[] | null = null;
 
-export const register = function register(_modules: any) {
+export function register(_modules: any) {
     collectableSubplotTypes = null;
 
     if(!_modules) {
@@ -61,15 +61,15 @@ export const register = function register(_modules: any) {
                 throw new Error('Invalid module was attempted to be registered!');
         }
     }
-};
+}
 
-export const getModule = function(trace: any) {
+export function getModule(trace: any) {
     const _module = modules[getTraceType(trace)];
     if(!_module) return false;
     return _module._module;
-};
+}
 
-export const traceIs = function(traceType: any, category: any) {
+export function traceIs(traceType: any, category: any) {
     traceType = getTraceType(traceType);
 
     // old Chart Studio Cloud workspace hack, nothing to see here
@@ -86,20 +86,20 @@ export const traceIs = function(traceType: any, category: any) {
     }
 
     return !!_module.categories[category];
-};
+}
 
-export const getComponentMethod = function(name: any, method: any) {
+export function getComponentMethod(name: any, method: any) {
     const _module = componentsRegistry[name];
 
     if(!_module) return noop;
     return _module[method] || noop;
-};
+}
 
-export const call = function(..._args: any[]) {
+export function call(..._args: any[]) {
     const name = _args[0];
     const args = _args.slice(1);
     return apiMethodRegistry[name].apply(null, args);
-};
+}
 
 function registerTraceModule(_module: any) {
     const thisType = _module.name;

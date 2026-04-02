@@ -101,7 +101,7 @@ export default function drawDescendants(gd: GraphDiv, cd: any[], entry: any, sli
         });
     }
 
-    const getRefRect = function() {
+    const getRefRect = () => {
         return nextOfPrevEntry || {
             x0: 0,
             x1: width,
