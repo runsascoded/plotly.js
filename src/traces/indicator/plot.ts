@@ -409,7 +409,7 @@ function drawAngularGauge(gd: any, plotGroup: any, cd: any, opts: any) {
     ax.setScale();
 
     // 't'ick to 'g'eometric radians is used all over the place here
-    const t2g = function(d: any) {
+    const t2g = (d: any) => {
         return (ax.range[0] - d.x) / (ax.range[1] - ax.range[0]) * Math.PI + Math.PI;
     };
 
@@ -437,7 +437,7 @@ function drawAngularGauge(gd: any, plotGroup: any, cd: any, opts: any) {
         const rad = t2g(d);
         return -0.5 * (1 + Math.sin(rad)) * h;
     };
-    const _transFn = function(rad: any) {
+    const _transFn = (rad: any) => {
         return strTranslate(
             gaugePosition[0] + radius * Math.cos(rad),
             gaugePosition[1] - radius * Math.sin(rad)
@@ -446,7 +446,7 @@ function drawAngularGauge(gd: any, plotGroup: any, cd: any, opts: any) {
     transFn = function(d: any) {
         return _transFn(t2g(d));
     };
-    const transFn2 = function(d: any) {
+    const transFn2 = (d: any) => {
         const rad = t2g(d);
         return _transFn(rad) + 'rotate(' + -rad2deg(rad) + ')';
     };
@@ -586,7 +586,7 @@ function drawNumbers(gd: any, plotGroup: any, cd: any, opts: any) {
         bignumberAx.setScale();
         Axes.prepTicks(bignumberAx);
 
-        const bignumberFmt = function(v: any) { return Axes.tickText(bignumberAx, v).text;};
+        const bignumberFmt = (v: any) => { return Axes.tickText(bignumberAx, v).text;};
         const bignumberSuffix = trace.number.suffix;
         const bignumberPrefix = trace.number.prefix;
 
@@ -631,19 +631,19 @@ function drawNumbers(gd: any, plotGroup: any, cd: any, opts: any) {
         deltaAx.setScale();
         Axes.prepTicks(deltaAx);
 
-        const deltaFmt = function(v: any) { return Axes.tickText(deltaAx, v).text;};
+        const deltaFmt = (v: any) => { return Axes.tickText(deltaAx, v).text;};
         const deltaSuffix = trace.delta.suffix;
         const deltaPrefix = trace.delta.prefix;
 
-        const deltaValue = function(d: any) {
+        const deltaValue = (d: any) => {
             const value = trace.delta.relative ? d.relativeDelta : d.delta;
             return value;
         };
-        const deltaFormatText = function(value: any, numberFmt: any) {
+        const deltaFormatText = (value: any, numberFmt: any) => {
             if(value === 0 || typeof value !== 'number' || isNaN(value)) return '-';
             return (value > 0 ? trace.delta.increasing.symbol : trace.delta.decreasing.symbol) + deltaPrefix + numberFmt(value) + deltaSuffix;
         };
-        const deltaFill = function(d: any) {
+        const deltaFill = (d: any) => {
             return d.delta >= 0 ? trace.delta.increasing.color : trace.delta.decreasing.color;
         };
         if(trace._deltaLastValue === undefined) {

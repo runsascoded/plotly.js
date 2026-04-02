@@ -152,14 +152,14 @@ export default function plot(gd: GraphDiv, calcData: any[]) {
         }
     }
 
-    const linkSelect = function(element: any, d: any) {
+    const linkSelect = (element: any, d: any) => {
         const evt = d.link;
         evt.originalEvent = event;
         gd._hoverdata = [evt];
         Fx.click(gd, { target: true } as any);
     };
 
-    const linkHover = function(element: any, d: any, sankey: any) {
+    const linkHover = (element: any, d: any, sankey: any) => {
         if(gd._fullLayout.hovermode === false) return;
         select(element).call(linkHoveredStyle.bind(0, d, sankey, true));
         if(d.link.trace.link.hoverinfo !== 'skip') {
@@ -258,7 +258,7 @@ export default function plot(gd: GraphDiv, calcData: any[]) {
         });
     };
 
-    const linkUnhover = function(element: any, d: any, sankey: any) {
+    const linkUnhover = (element: any, d: any, sankey: any) => {
         if(gd._fullLayout.hovermode === false) return;
         select(element).call(linkNonHoveredStyle.bind(0, d, sankey, true));
         if(d.link.trace.link.hoverinfo !== 'skip') {
@@ -272,7 +272,7 @@ export default function plot(gd: GraphDiv, calcData: any[]) {
         Fx.loneUnhover(fullLayout._hoverlayer.node());
     };
 
-    const nodeSelect = function(element: any, d: any, sankey: any) {
+    const nodeSelect = (element: any, d: any, sankey: any) => {
         const evt = d.node;
         evt.originalEvent = event;
         gd._hoverdata = [evt];
@@ -280,7 +280,7 @@ export default function plot(gd: GraphDiv, calcData: any[]) {
         Fx.click(gd, { target: true } as any);
     };
 
-    const nodeHover = function(element: any, d: any, sankey: any) {
+    const nodeHover = (element: any, d: any, sankey: any) => {
         if(gd._fullLayout.hovermode === false) return;
         select(element).call(nodeHoveredStyle, d, sankey);
         if(d.node.trace.node.hoverinfo !== 'skip') {
@@ -292,7 +292,7 @@ export default function plot(gd: GraphDiv, calcData: any[]) {
         }
     };
 
-    const nodeHoverFollow = function(element: any, d: any) {
+    const nodeHoverFollow = (element: any, d: any) => {
         if(gd._fullLayout.hovermode === false) return;
 
         const obj = d.node.trace.node;
@@ -349,7 +349,7 @@ export default function plot(gd: GraphDiv, calcData: any[]) {
         makeTextContrasty(tooltip);
     };
 
-    const nodeUnhover = function(element: any, d: any, sankey: any) {
+    const nodeUnhover = (element: any, d: any, sankey: any) => {
         if(gd._fullLayout.hovermode === false) return;
         select(element).call(nodeNonHoveredStyle, d, sankey);
         if(d.node.trace.node.hoverinfo !== 'skip') {

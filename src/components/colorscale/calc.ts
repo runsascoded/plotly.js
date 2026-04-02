@@ -19,8 +19,8 @@ export default function calc(gd: GraphDiv, trace: FullTrace, opts: any): any {
     let max = cOpts.max;
     const mid = cOpts.mid;
 
-    const minVal = function(): number { return aggNums(Math.min, null, vals); };
-    const maxVal = function(): number { return aggNums(Math.max, null, vals); };
+    const minVal = (): number => { return aggNums(Math.min, null, vals); };
+    const maxVal = (): number => { return aggNums(Math.max, null, vals); };
 
     if(min === undefined) {
         min = minVal();

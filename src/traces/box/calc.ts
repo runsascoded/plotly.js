@@ -63,7 +63,7 @@ export default function calc(gd: GraphDiv, trace: FullTrace): any[] {
 
     if(trace._hasPreCompStats) {
         const valArrayRaw = trace[valLetter];
-        const d2c = function(k: any) { return valAxis.d2c((trace[k] || [])[i]); };
+        const d2c = (k: any) => { return valAxis.d2c((trace[k] || [])[i]); };
         let minVal = Infinity;
         let maxVal = -Infinity;
 

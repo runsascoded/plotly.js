@@ -185,7 +185,7 @@ function texToSVG(_texString: string, _config: any, _callback: any): void {
         originalProcessSectionDelay: any,
         tmpDiv: any;
 
-    const setConfig2 = function() {
+    const setConfig2 = () => {
         originalConfig = extendDeepAll({}, (MathJax as any).Hub.config);
 
         originalProcessSectionDelay = (MathJax as any).Hub.processSectionDelay;
@@ -203,7 +203,7 @@ function texToSVG(_texString: string, _config: any, _callback: any): void {
         });
     };
 
-    const setConfig3 = function() {
+    const setConfig3 = () => {
         originalConfig = extendDeepAll({}, (MathJax as any).config);
 
         if(!(MathJax as any).config.tex) {
@@ -213,21 +213,21 @@ function texToSVG(_texString: string, _config: any, _callback: any): void {
         (MathJax as any).config.tex.inlineMath = inlineMath;
     };
 
-    const setRenderer2 = function() {
+    const setRenderer2 = () => {
         originalRenderer = (MathJax as any).Hub.config.menuSettings.renderer;
         if(originalRenderer !== 'SVG') {
             return (MathJax as any).Hub.setRenderer('SVG');
         }
     };
 
-    const setRenderer3 = function() {
+    const setRenderer3 = () => {
         originalRenderer = (MathJax as any).config.startup.output;
         if(originalRenderer !== 'svg') {
             (MathJax as any).config.startup.output = 'svg';
         }
     };
 
-    const initiateMathJax = function() {
+    const initiateMathJax = () => {
         const randomID = 'math-output-' + randstr({}, 64);
         tmpDiv = select('body').append('div')
             .attr('id', randomID)
@@ -243,7 +243,7 @@ function texToSVG(_texString: string, _config: any, _callback: any): void {
             (MathJax as any).typeset([tmpNode]);
     };
 
-    const finalizeMathJax = function() {
+    const finalizeMathJax = () => {
         const sel = tmpDiv.select(
             MathJaxVersion === 2 ? '.MathJax_SVG' : '.MathJax'
         );
@@ -266,26 +266,26 @@ function texToSVG(_texString: string, _config: any, _callback: any): void {
         tmpDiv.remove();
     };
 
-    const resetRenderer2 = function() {
+    const resetRenderer2 = () => {
         if(originalRenderer !== 'SVG') {
             return (MathJax as any).Hub.setRenderer(originalRenderer);
         }
     };
 
-    const resetRenderer3 = function() {
+    const resetRenderer3 = () => {
         if(originalRenderer !== 'svg') {
             (MathJax as any).config.startup.output = originalRenderer;
         }
     };
 
-    const resetConfig2 = function() {
+    const resetConfig2 = () => {
         if(originalProcessSectionDelay !== undefined) {
             (MathJax as any).Hub.processSectionDelay = originalProcessSectionDelay;
         }
         return (MathJax as any).Hub.Config(originalConfig);
     };
 
-    const resetConfig3 = function() {
+    const resetConfig3 = () => {
         (MathJax as any).config = originalConfig;
     };
 

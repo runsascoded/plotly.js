@@ -1,7 +1,7 @@
 export default function getShowAttrDflt(containerIn?: any): any {
     const showAttrsAll = ['showexponent', 'showtickprefix', 'showticksuffix'];
     const showAttrs = showAttrsAll.filter((a) => containerIn[a] !== undefined);
-    const sameVal = function(a?: any) {
+    const sameVal = (a?: any) => {
         return containerIn[a] === containerIn[showAttrs[0]];
     };
 

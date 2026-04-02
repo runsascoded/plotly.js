@@ -50,7 +50,7 @@ function hoverOnBoxes(pointData: any, xval: number, yval: number, hovermode: any
     const boxDelta = t.bdPos;
     let boxDeltaPos, boxDeltaNeg;
     const posAcceptance = t.wHover;
-    const shiftPos = function(di: any) { return pAxis.c2l(di.pos) + t.bPos - pAxis.c2l(pVal); };
+    const shiftPos = (di: any) => { return pAxis.c2l(di.pos) + t.bPos - pAxis.c2l(pVal); };
 
     if(isViolin && trace.side !== 'both') {
         if(trace.side === 'positive') {
@@ -215,11 +215,11 @@ function hoverOnPoints(pointData: any, xval: number, yval: number): any {
     const yPx = ya.c2p(yval);
     let closePtData;
 
-    const dx = function(di: any) {
+    const dx = (di: any) => {
         const rad = Math.max(3, di.mrc || 0);
         return Math.max(Math.abs(xa.c2p(di.x) - xPx) - rad, 1 - 3 / rad);
     };
-    const dy = function(di: any) {
+    const dy = (di: any) => {
         const rad = Math.max(3, di.mrc || 0);
         return Math.max(Math.abs(ya.c2p(di.y) - yPx) - rad, 1 - 3 / rad);
     };

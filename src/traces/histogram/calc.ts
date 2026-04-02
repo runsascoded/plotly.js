@@ -52,7 +52,7 @@ function calc(gd: GraphDiv, trace: FullTrace): any[] {
     let binFunc: (n: number, i: number, size: any[], counterData?: any, counts?: any[]) => number = binFunctions.count;
     const normFunc = (normFunctions as any)[norm];
     let isAvg = false;
-    const pr2c = function(v: any) { return pa.r2c(v, 0, calendar); };
+    const pr2c = (v: any) => { return pa.r2c(v, 0, calendar); };
     let rawCounterData;
 
     if(Lib.isArrayOrTypedArray(trace[counterData]) && func !== 'count') {
@@ -245,8 +245,8 @@ function calcAllAutoBins(gd: GraphDiv, trace: FullTrace, pa: FullAxis, mainData:
     const isOverlay = fullLayout.barmode === 'overlay';
     let i, traces: any, tracei, calendar: any, pos0, autoVals: any, cumulativeSpec;
 
-    const r2c = function(v: any) { return pa.r2c(v, 0, calendar); };
-    const c2r = function(v: any) { return pa.c2r(v, 0, calendar); };
+    const r2c = (v: any) => { return pa.r2c(v, 0, calendar); };
+    const c2r = (v: any) => { return pa.c2r(v, 0, calendar); };
 
     const cleanBound = pa.type === 'date' ?
         function(v: any) { return (v || v === 0) ? Lib.cleanDate(v, null, calendar) : null; } :

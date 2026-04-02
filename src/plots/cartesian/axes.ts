@@ -1201,7 +1201,7 @@ axes.calcTicks = function calcTicks(ax?: any, opts?: any) {
     ax._inCalcTicks = true;
 
     let lastVisibleHead: any;
-    const hideLabel = function(tick?: any) {
+    const hideLabel = (tick?: any) => {
         tick.text = '';
         ax._prevDateHead = lastVisibleHead;
     };
@@ -1667,7 +1667,7 @@ axes.tickText = function(ax?: any, x?: any, hover?: any, noSuffixPrefix?: any) {
     const tickVal2l = axType === 'category' ? ax.d2l_noadd : ax.d2l;
     let i;
 
-    const inbounds = function(v?: any) {
+    const inbounds = (v?: any) => {
         const p = ax.l2p(v);
         return p >= 0 && p <= ax._length ? v : null;
     };
@@ -2894,7 +2894,7 @@ function getBoundaryVals(ax?: any, vals?: any): any {
 
     // boundaryVals are never used for labels;
     // no need to worry about the other tickTextObj keys
-    const _push = function(d?: any, bndIndex?: any) {
+    const _push = (d?: any, bndIndex?: any) => {
         const xb = d.xbnd[bndIndex];
         if(xb !== null) {
             out.push(extendFlat({}, d, {x: xb}));
@@ -2939,7 +2939,7 @@ function getDividerVals(ax?: any, vals?: any): any {
 
     // never used for labels;
     // no need to worry about the other tickTextObj keys
-    const _push = function(d?: any, bndIndex?: any) {
+    const _push = (d?: any, bndIndex?: any) => {
         const xb = d.xbnd[bndIndex];
         if(xb !== null) {
             out.push(extendFlat({}, d, {x: xb}));
@@ -3097,7 +3097,7 @@ function getPosX(d?: any): any {
 function getTickLabelUV(ax?: any): any {
     const ticklabelposition = ax.ticklabelposition || '';
     const tickson = ax.tickson || '';
-    const has = function(str?: any) {
+    const has = (str?: any) => {
         return ticklabelposition.indexOf(str) !== -1;
     };
 
@@ -3193,7 +3193,7 @@ axes.makeLabelFns = function(ax?: any, shift?: any, angle?: any) {
     const ticklabelposition = ax.ticklabelposition || '';
     const tickson = ax.tickson || '';
 
-    const has = function(str?: any) {
+    const has = (str?: any) => {
         return ticklabelposition.indexOf(str) !== -1;
     };
 
@@ -3922,7 +3922,7 @@ axes.drawLabels = function(gd?: any, ax?: any, opts?: any) {
                 const ticklabelposition = ax.ticklabelposition || '';
                 const tickson = ax.tickson ||'';
 
-                const has = function(str?: any) {
+                const has = (str?: any) => {
                     return ticklabelposition.indexOf(str) !== -1;
                 };
                 const isTop = has('top');

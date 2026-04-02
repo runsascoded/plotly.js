@@ -25,18 +25,18 @@ export function calc(gd: GraphDiv, trace: FullTrace) {
 
     const parent2children: any = {};
     const refs: any = {};
-    const addToLookup = function(parent: any, v: any) {
+    const addToLookup = (parent: any, v: any) => {
         if(parent2children[parent]) parent2children[parent].push(v);
         else parent2children[parent] = [v];
         refs[v] = 1;
     };
 
     // treat number `0` as valid
-    const isValidKey = function(k: any) {
+    const isValidKey = (k: any) => {
         return k || typeof k === 'number';
     };
 
-    const isValidVal = function(i: any) {
+    const isValidVal = (i: any) => {
         return !hasValues || (isNumeric(values[i]) && values[i] >= 0);
     };
 

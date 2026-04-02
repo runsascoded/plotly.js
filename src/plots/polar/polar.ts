@@ -626,7 +626,7 @@ proto.updateAngularAxis = function(fullLayout: any, polarLayout: any) {
         ax.dtick = rad2deg(ax.dtick);
     }
 
-    const _transFn = function(rad: any) {
+    const _transFn = (rad: any) => {
         return strTranslate(cx + radius * Math.cos(rad), cy - radius * Math.sin(rad));
     };
 
@@ -1562,7 +1562,7 @@ function computeSectorBBox(sector: any) {
 }
 
 function snapToVertexAngle(a: any, vangles: any) {
-    const fn = function(v: any) { return Lib.angleDist(a, v); };
+    const fn = (v: any) => { return Lib.angleDist(a, v); };
     const ind = Lib.findIndexOfMin(vangles, fn);
     return vangles[ind];
 }

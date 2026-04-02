@@ -224,8 +224,8 @@ function getFilterFunc(opts: any, d2c: any, targetCalendar: any) {
         return array.indexOf(operation) !== -1;
     }
 
-    const d2cValue = function(v: any) { return d2c(v, 0, opts.valuecalendar); };
-    const d2cTarget = function(v: any) { return d2c(v, 0, targetCalendar); };
+    const d2cValue = (v: any) => { return d2c(v, 0, opts.valuecalendar); };
+    const d2cTarget = (v: any) => { return d2c(v, 0, targetCalendar); };
 
     let coercedValue: any;
 

@@ -123,7 +123,7 @@ function unitToColorScale(cscale: any) {
         const RGBA = rgba(d[1]);
         return rgb('rgb(' + RGBA[0] + ',' + RGBA[1] + ',' + RGBA[2] + ')');
     });
-    const prop = function(n: any) { return function(o: any) { return o[n]; }; };
+    const prop = (n: any) => { return function(o: any) { return o[n]; }; };
 
     // We can't use d3 color interpolation as we may have non-uniform color palette raster
     // (various color stop distances).
@@ -217,7 +217,7 @@ function viewModel(state: any, callbacks: any, model: any) {
     const dimensions = model.dimensions;
     const canvasPixelRatio = model.canvasPixelRatio;
 
-    const xScale = function(d: any) {return width * d / Math.max(1, model.colCount - 1);};
+    const xScale = (d: any) => {return width * d / Math.max(1, model.colCount - 1);};
 
     const unitPad = c.verticalPadding / height;
     const _unitToPaddedPx = unitToPaddedPx(height, c.verticalPadding);
@@ -244,7 +244,7 @@ function viewModel(state: any, callbacks: any, model: any) {
         const filterRange = filterRangeSpecified ?
             specifiedConstraint.map((d: any) => d.map(domainToPaddedUnit)) :
             [[-Infinity, Infinity]];
-        const brushMove = function() {
+        const brushMove = () => {
             const p = vm;
             p.focusLayer && p.focusLayer.render(p.panels, true);
             const filtersActive = someFiltersActive(p);

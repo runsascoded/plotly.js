@@ -205,7 +205,7 @@ proto.initializeGLPlot = function() {
     const gd = scene.graphDiv;
     const layout = gd.layout;
 
-    const makeUpdate = function() {
+    const makeUpdate = () => {
         const update: any = {};
 
         if(scene.isCameraChanged(layout)) {
@@ -227,7 +227,7 @@ proto.initializeGLPlot = function() {
         return update;
     };
 
-    const relayoutCallback = function(scene: any) {
+    const relayoutCallback = (scene: any) => {
         if(scene.fullSceneLayout.dragmode === false) return;
 
         const update = makeUpdate();
@@ -472,7 +472,7 @@ proto.recoverContext = function() {
 
     scene.glplot.dispose();
 
-    const tryRecover = function() {
+    const tryRecover = () => {
         if(scene.glplot.gl.isContextLost()) {
             requestAnimationFrame(tryRecover);
             return;

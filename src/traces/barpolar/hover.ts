@@ -28,7 +28,7 @@ export default function hoverPoints(pointData: any, xval: any, yval: any) {
         thetaVal += Math.PI;
     }
 
-    const distFn = function(di: any) {
+    const distFn = (di: any) => {
         if(inboxFn(rVal, thetaVal, [di.rp0, di.rp1], [di.thetag0, di.thetag1], vangles)) {
             return maxHoverDistance +
                 // add a little to the pseudo-distance for wider bars, so that like scatter,

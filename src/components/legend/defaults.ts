@@ -24,7 +24,7 @@ function groupDefaults(legendId: string, layoutIn: any, layoutOut: FullLayout, f
     if(!visible) return;
 
     let trace: FullTrace;
-    const traceCoerce = function(attr: string, dflt?: any): any {
+    const traceCoerce = (attr: string, dflt?: any): any => {
         const traceIn = trace._input;
         const traceOut = trace;
         return Lib.coerce(traceIn, traceOut, plotsAttrs, attr, dflt);

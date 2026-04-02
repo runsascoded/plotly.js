@@ -550,7 +550,7 @@ export function addLabelData(loc: any,  textOpts: any,  labelData: any,  labelCl
     const sin = Math.sin(theta);
     const cos = Math.cos(theta);
 
-    const rotateXY = function(dx: any,  dy: any) {
+    const rotateXY = (dx: any,  dy: any) => {
         return [
             x + dx * cos - dy * sin,
             y + dx * sin + dy * cos

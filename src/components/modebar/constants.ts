@@ -19,7 +19,7 @@ const backButtons = [
 ].concat(DRAW_MODES);
 
 const foreButtons: any[] = [];
-const addToForeButtons = function(b: any) {
+const addToForeButtons = (b: any) => {
     if(backButtons.indexOf(b._cat || b.name) !== -1) return;
     // for convenience add lowercase shotname e.g. zoomin as well fullname zoomInGeo
     const name = b.name;

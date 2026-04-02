@@ -49,7 +49,7 @@ export function readPaths(str: any, gd: GraphDiv, plotinfo?: any, isActiveShape?
 
     const polys: any[] = [];
     let n = -1;
-    const newPoly = function() {
+    const newPoly = () => {
         n++;
         polys[n] = [];
     };
@@ -59,7 +59,7 @@ export function readPaths(str: any, gd: GraphDiv, plotinfo?: any, isActiveShape?
     let y = 0;
     let initX;
     let initY;
-    const recStart = function() {
+    const recStart = () => {
         initX = x;
         initY = y;
     };

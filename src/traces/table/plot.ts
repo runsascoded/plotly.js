@@ -122,7 +122,7 @@ export default function plot(gd: GraphDiv, wrappedTraceHolders: any[]) {
             })
             .on('drag', function(this: any, event: any, d: any) {
                 const movedColumn = select(this);
-                const getter = function(dd: any) {return (d === dd ? event.x : dd.x) + dd.columnWidth / 2;};
+                const getter = (dd: any) => {return (d === dd ? event.x : dd.x) + dd.columnWidth / 2;};
                 d.x = Math.max(-c.overdrag, Math.min(d.calcdata.width + c.overdrag - d.columnWidth, event.x));
 
                 const sortableColumns = flatData(yColumn).filter((dd: any) => dd.calcdata.key === d.calcdata.key);
