@@ -39,17 +39,10 @@ export default function drawLabel(gd: GraphDiv, index: any, options: any, shapeG
         text = options.label.text;
     }
 
-    const labelGroupAttrs = {
-        'data-index': index
-    };
     const font = options.label.font;
 
-    const labelTextAttrs = {
-        'data-notex': 1
-    };
-
-    const labelGroup = shapeGroup.append('g').attr(labelGroupAttrs).classed('shape-label', true);
-    const labelText = labelGroup.append('text').attr(labelTextAttrs).classed('shape-label-text', true).text(text);
+    const labelGroup = shapeGroup.append('g').attr('data-index', index).classed('shape-label', true);
+    const labelText = labelGroup.append('text').attr('data-notex', 1).classed('shape-label-text', true).text(text);
 
     // Get x and y bounds of shape
     let shapex0, shapex1, shapey0, shapey1;

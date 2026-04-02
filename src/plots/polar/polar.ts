@@ -1579,7 +1579,7 @@ function snapToVertexAngle(a: any, vangles: any) {
 function updateElement(sel: any, showAttr: any, attrs: any) {
     if(showAttr) {
         sel.attr('display', null);
-        sel.attr(attrs);
+        for(const k in attrs) sel.attr(k, attrs[k]);
     } else if(sel) {
         sel.attr('display', 'none');
     }

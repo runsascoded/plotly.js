@@ -611,7 +611,8 @@ function buildSVGText(containerNode: any, str: string): boolean {
             currentNode.appendChild(newNode);
         }
 
-        select(newNode).attr(nodeAttrs);
+        const newNodeSel = select(newNode);
+        for(const k in nodeAttrs) newNodeSel.attr(k, nodeAttrs[k]);
 
         currentNode = nodeSpec.node = newNode;
         nodeStack.push(nodeSpec);
@@ -762,7 +763,8 @@ export const sanitizeHTML = function sanitizeHTML(str: string): string {
 
                 const newNode = document.createElement(tagType);
                 currentNode.appendChild(newNode);
-                select(newNode).attr(nodeAttrs);
+                const newNodeSel = select(newNode);
+                for(const k in nodeAttrs) newNodeSel.attr(k, nodeAttrs[k]);
 
                 currentNode = newNode;
                 nodeStack.push(newNode);

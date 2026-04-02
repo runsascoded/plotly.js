@@ -132,24 +132,26 @@ export function addLinks(gd?: any): void {
 
     // The text node inside svg
     const text = linkContainer.node();
-    const attrs: any = {y: fullLayout._paper.attr('height') - 9};
+    const y = fullLayout._paper.attr('height') - 9;
 
     // If text's width is bigger than the layout
     // Check that text is a child node or document.body
     // because otherwise Edge might throw an exception
     // when calling getComputedTextLength().
     // Apparently offsetParent is null for invisibles.
+    let textAnchor: string;
+    let x: number;
     if(document.body.contains(text) && text.getComputedTextLength() >= (fullLayout.width - 20)) {
         // Align the text at the left
-        attrs['text-anchor'] = 'start';
-        attrs.x = 5;
+        textAnchor = 'start';
+        x = 5;
     } else {
         // Align the text at the right
-        attrs['text-anchor'] = 'end';
-        attrs.x = fullLayout._paper.attr('width') - 7;
+        textAnchor = 'end';
+        x = fullLayout._paper.attr('width') - 7;
     }
 
-    linkContainer.attr(attrs);
+    linkContainer.attr('y', y).attr('text-anchor', textAnchor).attr('x', x);
 
     const toolspan = linkContainer.select('.js-link-to-tool');
     const spacespan = linkContainer.select('.js-link-spacer');

@@ -1,15 +1,14 @@
 /**
- * d3 v3 → v7 compatibility polyfill.
+ * d3 v3 → v7 compatibility shim (shrinking — most polyfills removed).
  *
- * Patches Selection.prototype to handle v3 patterns:
- * - .style({key: val, ...}) and .attr({key: val, ...}) object form (removed in v4)
+ * Remaining patches:
  * - .attr('name') getter on empty selections (v3 returns undefined, v7 crashes)
- * - Enter/update auto-merge: in v3, enter().append() auto-merged into the update
- *   selection. In v4+, they're separate and require explicit .merge(). This polyfill
- *   restores v3 behavior so that the update selection includes entered nodes.
- * - .select() data propagation: v4+ propagates parent data to children via .select(),
- *   v3 did not. Patched to preserve children's existing data.
- * - Ensures d3-transition is loaded (extends Selection.prototype.transition)
+ * - Enter/update auto-merge: v3 auto-merged enter().append() into update selection
+ * - .select() data non-propagation: v4+ propagates parent __data__ to children
+ *
+ * REMOVED (all call sites converted to v7 native):
+ * - .style({obj}) object form → individual .style('key', val) calls
+ * - .attr({obj}) object form → individual .attr('key', val) calls or setAttrs()
  */
 import { selection } from 'd3-selection';
 import 'd3-transition';
@@ -46,20 +45,13 @@ const _origSelect = (selection.prototype as any).select;
     return _origSelect.apply(this, arguments);
 };
 
-// .style({obj}) polyfill REMOVED — all call sites converted to individual calls.
-// .attr({obj}) still needed for ~40 call sites that pass object variables.
+// .style({obj}) and .attr({obj}) polyfills REMOVED.
+// All call sites converted to individual .style()/.attr() calls or setAttrs() helper.
 
+// Patch .attr() getter on empty selection: return undefined instead of crashing (v3 compat)
 const _origAttr = (selection.prototype as any).attr;
-(selection.prototype as any).attr = function(this: any, nameOrObj: any, value?: any): any {
-    // Object form: .attr({key: val, ...}) — still used by ~40 call sites
-    if(typeof nameOrObj === 'object' && nameOrObj !== null && !(nameOrObj instanceof String)) {
-        for(const key in nameOrObj) {
-            _origAttr.call(this, key, nameOrObj[key]);
-        }
-        return this;
-    }
-    // Getter form with no node: return undefined (v3 compat) instead of crashing
-    if(arguments.length === 1 && typeof nameOrObj === 'string' && !this.node()) {
+(selection.prototype as any).attr = function(this: any, name: any, value?: any): any {
+    if(arguments.length === 1 && typeof name === 'string' && !this.node()) {
         return undefined;
     }
     return _origAttr.apply(this, arguments);

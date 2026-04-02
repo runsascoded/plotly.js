@@ -92,6 +92,11 @@ const MAX_SAFE: number = numConstants.FP_SAFE;
 const MIN_SAFE: number = -MAX_SAFE;
 const BADNUM: number = (numConstants.BADNUM as any);
 
+export function setAttrs(sel: any, attrs: Record<string, any>): any {
+    for(const k in attrs) sel.attr(k, attrs[k]);
+    return sel;
+}
+
 export function adjustFormat(formatStr: string): string {
     if (!formatStr || /^\d[.]\df/.test(formatStr) || /[.]\d%/.test(formatStr)) return formatStr;
 
@@ -1653,5 +1658,6 @@ lib.ensureUniformFontSize = ensureUniformFontSize;
 lib.join2 = join2;
 lib.bigFont = bigFont;
 lib.getPositionFromD3Event = getPositionFromD3Event;
+lib.setAttrs = setAttrs;
 
 export default lib;

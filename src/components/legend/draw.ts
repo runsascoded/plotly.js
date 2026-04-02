@@ -182,7 +182,10 @@ function drawOne(gd: GraphDiv, opts: any): any {
     }
 
     const scrollBar = ensureSingle(legend, 'rect', 'scrollbar', function(s: any) {
-        s.attr(constants.scrollBarEnterAttrs)
+        s.attr('rx', constants.scrollBarEnterAttrs.rx)
+         .attr('ry', constants.scrollBarEnterAttrs.ry)
+         .attr('width', constants.scrollBarEnterAttrs.width)
+         .attr('height', constants.scrollBarEnterAttrs.height)
          .call(Color.fill, constants.scrollBarColor);
     });
 

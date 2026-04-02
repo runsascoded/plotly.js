@@ -84,7 +84,9 @@ function drawOne(gd: GraphDiv, index: any) {
         const allPaths: any[] = [];
         for(let sensory = 1; sensory >= 0; sensory--) {
             const path = selectionLayer.append('path')
-                .attr(attrs)
+                .attr('data-index', attrs['data-index'])
+                .attr('fill-rule', attrs['fill-rule'])
+                .attr('d', attrs.d)
                 .style('opacity', sensory ? 0.1 : opacity)
                 .call(Color.stroke, lineColor)
                 .call(Color.fill, fillColor)

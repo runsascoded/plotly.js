@@ -438,7 +438,9 @@ function gradientWithBounds(sel: any, gd: GraphDiv, gradientID: string, type: st
         .append(info.node)
         .each(function (this: any) {
             const el = select(this);
-            if (info.attrs) el.attr(info.attrs);
+            if (info.attrs) {
+                for(const k in info.attrs) el.attr(k, info.attrs[k]);
+            }
 
             el.attr('id', fullID);
 
@@ -748,7 +750,8 @@ export function pattern(
 
             const patterns = el.selectAll(patternTag).data([0]);
             patterns.exit().remove();
-            patterns.enter().append(patternTag).attr(patternAttrs);
+            const patternEl = patterns.enter().append(patternTag);
+            for(const k in patternAttrs) patternEl.attr(k, (patternAttrs as any)[k]);
         });
 
     sel.style('fill', getFullUrl(fullID, gd)).style('fill-opacity', null);

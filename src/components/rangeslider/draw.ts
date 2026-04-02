@@ -595,45 +595,37 @@ function drawGrabbers(rangeSlider: any, gd: GraphDiv, axisOpts: any, opts: any) 
     const grabberMax = Lib.ensureSingle(rangeSlider, 'g', constants.grabberMaxClassName);
 
     // <g handle />
-    const handleFixAttrs = {
-        x: 0,
-        width: constants.handleWidth,
-        rx: constants.handleRadius,
-        fill: Color.background,
-        stroke: Color.defaultLine,
-        'stroke-width': constants.handleStrokeWidth,
-        'shape-rendering': 'crispEdges'
-    };
-    const handleDynamicAttrs = {
-        y: Math.round(opts._height / 4),
-        height: Math.round(opts._height / 2),
-    };
-    const handleMin = Lib.ensureSingle(grabberMin, 'rect', constants.handleMinClassName, function(s: any) {
-        s.attr(handleFixAttrs);
-    });
-    handleMin.attr(handleDynamicAttrs);
+    function setHandleFixAttrs(s: any) {
+        s.attr('x', 0)
+            .attr('width', constants.handleWidth)
+            .attr('rx', constants.handleRadius)
+            .attr('fill', Color.background)
+            .attr('stroke', Color.defaultLine)
+            .attr('stroke-width', constants.handleStrokeWidth)
+            .attr('shape-rendering', 'crispEdges');
+    }
+    const handleDynamicY = Math.round(opts._height / 4);
+    const handleDynamicHeight = Math.round(opts._height / 2);
+    const handleMin = Lib.ensureSingle(grabberMin, 'rect', constants.handleMinClassName, setHandleFixAttrs);
+    handleMin.attr('y', handleDynamicY).attr('height', handleDynamicHeight);
 
-    const handleMax = Lib.ensureSingle(grabberMax, 'rect', constants.handleMaxClassName, function(s: any) {
-        s.attr(handleFixAttrs);
-    });
-    handleMax.attr(handleDynamicAttrs);
+    const handleMax = Lib.ensureSingle(grabberMax, 'rect', constants.handleMaxClassName, setHandleFixAttrs);
+    handleMax.attr('y', handleDynamicY).attr('height', handleDynamicHeight);
 
     // <g grabarea />
-    const grabAreaFixAttrs = {
-        width: constants.grabAreaWidth,
-        x: 0,
-        y: 0,
-        fill: constants.grabAreaFill,
-        cursor: !gd._context.staticPlot ? constants.grabAreaCursor : undefined,
-    };
+    function setGrabAreaFixAttrs(s: any) {
+        s.attr('width', constants.grabAreaWidth)
+            .attr('x', 0)
+            .attr('y', 0)
+            .attr('fill', constants.grabAreaFill);
+        if(!gd._context.staticPlot) {
+            s.attr('cursor', constants.grabAreaCursor);
+        }
+    }
 
-    const grabAreaMin = Lib.ensureSingle(grabberMin, 'rect', constants.grabAreaMinClassName, function(s: any) {
-        s.attr(grabAreaFixAttrs);
-    });
+    const grabAreaMin = Lib.ensureSingle(grabberMin, 'rect', constants.grabAreaMinClassName, setGrabAreaFixAttrs);
     grabAreaMin.attr('height', opts._height);
 
-    const grabAreaMax = Lib.ensureSingle(grabberMax, 'rect', constants.grabAreaMaxClassName, function(s: any) {
-        s.attr(grabAreaFixAttrs);
-    });
+    const grabAreaMax = Lib.ensureSingle(grabberMax, 'rect', constants.grabAreaMaxClassName, setGrabAreaFixAttrs);
     grabAreaMax.attr('height', opts._height);
 }

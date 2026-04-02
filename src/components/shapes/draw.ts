@@ -129,7 +129,9 @@ function drawOne(gd: GraphDiv, index: any) {
             .attr('data-index', index);
 
         const path = shapeGroup.append('path')
-            .attr(attrs)
+            .attr('data-index', attrs['data-index'])
+            .attr('fill-rule', attrs['fill-rule'])
+            .attr('d', attrs.d)
             .style('opacity', opacity)
             .call(Color.stroke, lineColor)
             .call(Color.fill, fillColor)

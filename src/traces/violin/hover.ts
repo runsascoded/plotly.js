@@ -98,7 +98,7 @@ export default function hoverPoints(pointData: any, xval: number, yval: number, 
         .classed('violinline-' + trace.uid, true)
         .attr('stroke-width', 1.5);
     violinLine.exit().remove();
-    violinLine.attr(violinLineAttrs).call(Color.stroke, pointData.color);
+    Lib.setAttrs(violinLine, violinLineAttrs).call(Color.stroke, pointData.color);
 
     // same combine logic as box hoverPoints
     if(hovermode === 'closest') {

@@ -4,7 +4,7 @@ function d3Round(x: number, n?: number): number { return n ? Math.round(x * (n =
 import isNumeric from 'fast-isnumeric';
 import { previousPromises } from '../../plots/plots.js';
 import Registry from '../../registry.js';
-import { bBoxIntersect, ensureSingle, extendFlat, strTranslate, syncOrAsync, templateString } from '../../lib/index.js';
+import { bBoxIntersect, ensureSingle, extendFlat, setAttrs, strTranslate, syncOrAsync, templateString } from '../../lib/index.js';
 import { bBox, font } from '../drawing/index.js';
 import Color from '../color/index.js';
 import svgTextUtils from '../../lib/svg_text_utils.js';
@@ -225,7 +225,7 @@ function draw(gd: GraphDiv, titleClass: string, options: any): any {
             shadow: fontShadow,
             lineposition: fontLineposition,
         })
-        .attr(attributes)
+        .call(setAttrs, attributes)
             .call(svgTextUtils.convertToTspans, gd, adjustSubtitlePosition);
 
         if(subtitleEl && !subtitleEl.empty()) {
@@ -254,7 +254,7 @@ function draw(gd: GraphDiv, titleClass: string, options: any): any {
                 shadow: subFontShadow,
                 lineposition: subFontLineposition,
             })
-            .attr(subtitleAttributes)
+            .call(setAttrs, subtitleAttributes)
                 .call(svgTextUtils.convertToTspans, gd);
         }
 
